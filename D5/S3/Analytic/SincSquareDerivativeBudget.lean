@@ -7,6 +7,7 @@
    digest: Positive integral recurrences bound all derivatives of the entire cosine root. -/
 
 import D5.S3.Observer.AgencyHolonomy.OrderedTimeSimplexSecondMagnusAverage
+import D5.S3.FluidDynamics.Fourier.PeriodicAllenCahnDecay
 import Mathlib.Analysis.Analytic.OfScalars
 import Mathlib.Analysis.Analytic.ChangeOrigin
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
@@ -94,29 +95,6 @@ private theorem psi_deriv_integral_pos {t : ℝ} (ht : 0 < t) :
   rw [(psi_hasDerivAt_pos ht).deriv, hi]
   ring
 
-/-- Differentiate a continuous parameter integral with continuous partial derivative. -/
-private theorem integral_hasDerivAt {F F' : ℝ → ℝ → ℝ}
-    (hF : Continuous F.uncurry) (hF' : Continuous F'.uncurry)
-    (hd : ∀ x r, HasDerivAt (fun y => F y r) (F' x r) x) (x : ℝ) :
-    HasDerivAt (fun y => ∫ r in (0 : ℝ)..1, F y r)
-      (∫ r in (0 : ℝ)..1, F' x r) x := by
-  obtain ⟨C, hC⟩ := (isCompact_Icc.prod isCompact_Icc).exists_bound_of_continuousOn
-    (s := Icc (x - 1) (x + 1) ×ˢ Icc (0 : ℝ) 1) hF'.continuousOn
-  refine (intervalIntegral.hasDerivAt_integral_of_dominated_loc_of_deriv_le
-    (s := Ioo (x - 1) (x + 1)) (bound := fun _ => C)
-    (Ioo_mem_nhds (by linarith) (by linarith)) ?_ ?_ ?_ ?_
-    intervalIntegrable_const ?_).2
-  · exact Filter.Eventually.of_forall fun y =>
-      (hF.comp (continuous_const.prodMk continuous_id)).aestronglyMeasurable
-  · exact (hF.comp (continuous_const.prodMk continuous_id)).intervalIntegrable _ _
-  · exact (hF'.comp (continuous_const.prodMk continuous_id)).aestronglyMeasurable
-  · apply Filter.Eventually.of_forall
-    intro r hr y hy
-    rw [uIoc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hr
-    exact hC (y, r) ⟨⟨hy.1.le, hy.2.le⟩, ⟨hr.1.le, hr.2⟩⟩
-  · exact Filter.Eventually.of_forall fun r _ y _ => hd y r
-
-
 private theorem weighted_integral_iteratedDeriv (w a : ℝ → ℝ)
     (hw : Continuous w) (ha : Continuous a) (n : ℕ) :
     iteratedDeriv n (fun t => ∫ r in (0 : ℝ)..1, w r * psi (a r * t)) =
@@ -129,14 +107,15 @@ private theorem weighted_integral_iteratedDeriv (w a : ℝ → ℝ)
     have hc := psi_smooth.continuous_iteratedDeriv n (by simp)
     have hc' := psi_smooth.continuous_iteratedDeriv (n + 1) (by simp)
     apply HasDerivAt.deriv
-    apply integral_hasDerivAt
+    apply D5.S3.FluidDynamics.Fourier.PeriodicAllenCahnDecay.deriv_integral_compact
       (F := fun x r => w r * (a r) ^ n * iteratedDeriv n psi (a r * x))
-      (F' := fun x r => w r * (a r) ^ (n + 1) * iteratedDeriv (n + 1) psi (a r * x))
-    · exact ((hw.comp continuous_snd).mul ((ha.comp continuous_snd).pow _)).mul
-        (hc.comp ((ha.comp continuous_snd).mul continuous_fst))
-    · exact ((hw.comp continuous_snd).mul ((ha.comp continuous_snd).pow _)).mul
-        (hc'.comp ((ha.comp continuous_snd).mul continuous_fst))
-    · intro x r
+      (H := fun x r => w r * (a r) ^ (n + 1) * iteratedDeriv (n + 1) psi (a r * x))
+      (δ := 1) (by norm_num) (by norm_num)
+    · exact (((hw.comp continuous_snd).mul ((ha.comp continuous_snd).pow _)).mul
+        (hc.comp ((ha.comp continuous_snd).mul continuous_fst))).continuousOn
+    · exact (((hw.comp continuous_snd).mul ((ha.comp continuous_snd).pow _)).mul
+        (hc'.comp ((ha.comp continuous_snd).mul continuous_fst))).continuousOn
+    · intro x _ r _
       have hd := ((psi_smooth.differentiable_iteratedDeriv n (by simp) (a r * x)).hasDerivAt.comp x
         ((hasDerivAt_id x).const_mul (a r))).const_mul (w r * (a r) ^ n)
       simp only [iteratedDeriv_succ, pow_succ] at hd ⊢
