@@ -72,6 +72,20 @@ internal sealed class LayeredLocalCacheSoundnessDocument : IScribeDocumentDefini
                             + "The shared schedules may differ by module; no single shared "
                             + "cache snapshot is required.")),
                     Paragraph(Text(
+                        "Fix the snapshot, shared lookup schedules, and plan p. For any "
+                            + "two local layers that agree at every node of Q, execution "
+                            + "produces identical ordered event lists and identical final "
+                            + "records on Q. Outside Q, each final layer retains its own "
+                            + "initial records. The two initial layers need not be reachable "
+                            + "or have honest provenance. Dependency closure makes the "
+                            + "input artifact sets equal at each step; the current keys, "
+                            + "local hits, shared lookups, compilation choices, and stored "
+                            + "artifacts then agree. Updating the same node with the same "
+                            + "record preserves agreement on Q, so induction gives the "
+                            + "whole execution result. This semantic independence from "
+                            + "outside records does not require the final layers to agree "
+                            + "outside Q and does not depend on the event read-set annotation.")),
+                    Paragraph(Text(
                         "The probe follows the same dependency plan and performs the same "
                             + "key computation, lookups, and restoration writes, but stops "
                             + "at the first double miss. It never invokes the compiler. "
@@ -82,7 +96,7 @@ internal sealed class LayeredLocalCacheSoundnessDocument : IScribeDocumentDefini
                             + "current key misses both layers. This comparison fixes the "
                             + "initial local layer and the shared lookup schedules in both runs.")),
                     Paragraph(Text(
-                        "These conclusions are conditional on the stated collision law "
+                        "Artifact correctness is conditional on the stated collision law "
                             + "and honest store semantics. A local record represents a "
                             + "complete artifact; arbitrary corruption and concurrent local "
                             + "mutation are excluded from the history operations. The theorem "

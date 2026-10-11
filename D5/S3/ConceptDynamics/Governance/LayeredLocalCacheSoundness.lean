@@ -438,6 +438,55 @@ private theorem execute_reads (S : Snapshot B.Node B.Src)
       refine ⟨htail.1, ?_, htail.2.2⟩
       simpa only [localHit, put, Function.update_of_ne ne] using htail.2.1
 
+private theorem execute_locality (S : Snapshot B.Node B.Src)
+    (shared : B.Node → B.Key → Option B.Art) (Q : Set B.Node)
+    (closed : ∀ n ∈ Q, ∀ d ∈ S.deps n, d ∈ Q)
+    (xs : List B.Node) (within : ∀ n ∈ xs, n ∈ Q)
+    (L₁ L₂ : Local B) (agree : ∀ n ∈ Q, L₁ n = L₂ n) :
+    (execute B S shared L₁ xs).events = (execute B S shared L₂ xs).events ∧
+    (∀ n ∈ Q, (execute B S shared L₁ xs).layer n =
+      (execute B S shared L₂ xs).layer n) := by
+  classical
+  induction xs generalizing L₁ L₂ with
+  | nil => exact ⟨rfl, agree⟩
+  | cons n ns ih =>
+    have hn : n ∈ Q := within n List.mem_cons_self
+    have inp : inputs B S L₁ n = inputs B S L₂ n := by
+      ext a
+      simp only [inputs, Set.mem_ofPred_eq]
+      constructor
+      · rintro ⟨d, hd, k, hk⟩
+        exact ⟨d, hd, k, (agree d (closed n hn d hd)) ▸ hk⟩
+      · rintro ⟨d, hd, k, hk⟩
+        exact ⟨d, hd, k, (agree d (closed n hn d hd)).symm ▸ hk⟩
+    have hit : ∀ k, localHit B L₁ n k = localHit B L₂ n k := by
+      intro k
+      simp only [localHit, agree n hn]
+    have look : ∀ k, lookup B (shared n) L₁ n k = lookup B (shared n) L₂ n k := by
+      intro k
+      simp only [lookup, hit]
+    have art : ∀ h, artifact B S L₁ n h = artifact B S L₂ n h := by
+      intro h
+      cases h <;> simp only [artifact, inp]
+    have updated : ∀ k a, ∀ m ∈ Q,
+        put B L₁ n k a m = put B L₂ n k a m := by
+      intro k a m hm
+      by_cases e : m = n
+      · subst m; simp only [put, Function.update_self]
+      · simp only [put, Function.update_of_ne e, agree m hm]
+    have tail := ih (fun m hm => within m (List.mem_cons_of_mem n hm))
+      (put B L₁ n (B.hash (S.src n) (B.digest '' inputs B S L₂ n))
+        (artifact B S L₂ n (lookup B (shared n) L₂ n
+          (B.hash (S.src n) (B.digest '' inputs B S L₂ n)))))
+      (put B L₂ n (B.hash (S.src n) (B.digest '' inputs B S L₂ n))
+        (artifact B S L₂ n (lookup B (shared n) L₂ n
+          (B.hash (S.src n) (B.digest '' inputs B S L₂ n)))))
+      (updated _ _)
+    rw [execute, execute]
+    dsimp only
+    simp only [inp, hit, look, art]
+    exact ⟨congrArg (List.cons _) tail.1, tail.2⟩
+
 private theorem probe_spec (S : Snapshot B.Node B.Src)
     (shared : B.Node → B.Key → Option B.Art) (xs : List B.Node) (L : Local B) :
     ((∃ L', probe B S shared L xs = .ok L') ↔
@@ -467,7 +516,8 @@ private theorem probe_spec (S : Snapshot B.Node B.Src)
         exact ⟨e,List.mem_cons_of_mem _ he,hen,hec⟩
 
 /-- K1--K3: correctness, persistent reachability, exact access and compile events,
-and a noncompiling probe with a concrete double-miss diagnostic. -/
+semantic independence from local records outside demand, and a noncompiling probe
+with a concrete double-miss diagnostic. -/
 structure Guarantees (S : Snapshot M.B.Node M.B.Src)
     (schedule : M.B.Node → List (Op M.B.Node M.B.Src))
     (L : Local M.B) (p : Plan M.B S) (r : Result M.B) : Prop where
@@ -476,6 +526,16 @@ structure Guarantees (S : Snapshot M.B.Node M.B.Src)
   visits : r.events.map Event.node = p.nodes
   outside : ∀ n, ¬ Demand M.B S p.roots n → r.layer n = L n
   reads : ∀ n, (∃ e ∈ r.events, n ∈ e.reads) ↔ Demand M.B S p.roots n
+  locality : ∀ (L₁ L₂ : Local M.B),
+    (∀ n, Demand M.B S p.roots n → L₁ n = L₂ n) →
+    (execute M.B S (fun n => run M.B (schedule n)) L₁ p.nodes).events =
+      (execute M.B S (fun n => run M.B (schedule n)) L₂ p.nodes).events ∧
+    (∀ n, Demand M.B S p.roots n →
+      (execute M.B S (fun n => run M.B (schedule n)) L₁ p.nodes).layer n =
+        (execute M.B S (fun n => run M.B (schedule n)) L₂ p.nodes).layer n) ∧
+    (∀ n, ¬ Demand M.B S p.roots n →
+      (execute M.B S (fun n => run M.B (schedule n)) L₁ p.nodes).layer n = L₁ n ∧
+      (execute M.B S (fun n => run M.B (schedule n)) L₂ p.nodes).layer n = L₂ n)
   workload : ∀ n, (∃ e ∈ r.events, e.node = n ∧ e.compiled = true) ↔
     Demand M.B S p.roots n ∧ localHit M.B L n (traceKey M.B S n) = none ∧
       run M.B (schedule n) (traceKey M.B S n) = none
@@ -527,7 +587,7 @@ private theorem plan_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
       refine ⟨e,he,hen,se.2.mpr ?_⟩
       have hl' : e.localRead = none := by simpa [re.2.1,se.1,hen] using hl
       exact ⟨hl',by simpa [re.2.2,hl',se.1,hen] using hc⟩
-  refine ⟨?_, Reachable.execute S hS p schedule writers hL, hf.1, ?_, ?_, work, hp.1, ?_⟩
+  refine ⟨?_, Reachable.execute S hS p schedule writers hL, hf.1, ?_, ?_, ?_, work, hp.1, ?_⟩
   · intro n hn
     exact hs.2.1 n (Or.inr ((p.exactDemand n).mpr (Demand.root hn)))
   · intro n hn
@@ -545,11 +605,22 @@ private theorem plan_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
         rw [hf.1]; exact (p.exactDemand n).mpr hn
       obtain ⟨e,he,hen⟩ := List.mem_map.mp mem
       exact ⟨e,he,by rw [(hr e he).1,hen]; exact Set.mem_insert _ _⟩
+  · intro L₁ L₂ agree
+    have same := execute_locality M.B S (fun n => run M.B (schedule n))
+      {n | Demand M.B S p.roots n} (fun _ hn _ hd => Demand.dep hn hd)
+      p.nodes (fun n hn => (p.exactDemand n).mp hn) L₁ L₂ agree
+    refine ⟨same.1, same.2, ?_⟩
+    intro n hn
+    have outside : n ∉ p.nodes := fun h => hn ((p.exactDemand n).mp h)
+    exact ⟨(execute_frame M.B S _ p.nodes L₁).2 n outside,
+      (execute_frame M.B S _ p.nodes L₂).2 n outside⟩
   · intro n hn
     exact (work n).mp (hp.2 n hn)
 
 /-- Every finite root request admits a dependency plan, and ordinary execution
-from any reachable local layer satisfies correctness, locality and readiness. -/
+from any reachable local layer satisfies correctness, locality and readiness.
+For this plan, any two local layers agreeing on demand have identical event
+traces and final records on demand, and each preserves its own outside records. -/
 theorem layered_cache_contract (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src)
     (hS : S ∈ M.snapshots) (schedule : M.B.Node → List (Op M.B.Node M.B.Src))
     (writers : ∀ n W m, Op.store W m ∈ schedule n → W ∈ M.snapshots)

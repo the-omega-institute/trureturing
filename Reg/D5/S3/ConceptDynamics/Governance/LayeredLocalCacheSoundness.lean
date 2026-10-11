@@ -25,6 +25,8 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- The law includes semantic locality for every pair of local layers agreeing
+on demand, as well as correctness, exact compilation work and probe readiness. -/
 abbrev arena : Arena where
   signature := signature.{u}
   Law r := ∀ (M : Model.{u}) (S : Snapshot M.B.Node M.B.Src) (_ : S ∈ M.snapshots)
