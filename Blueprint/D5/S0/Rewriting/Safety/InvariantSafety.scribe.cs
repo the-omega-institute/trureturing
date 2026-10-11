@@ -128,7 +128,8 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                         + "Native git worktree add on the retained branch reconstructs its tracked "
                         + "snapshot, subject to intact objects and normal checkout semantics. "
                         + "Neither a remote nor publication confirmation is needed for this local route. "
-                        + "A failed checkpoint or absence of a usable current branch retains the tree. "
+                        + "Detached HEAD acquires a new local branch at the checkpoint commit before deletion. "
+                        + "A failed checkpoint or branch creation retains the tree. "
                         + "Later deletion of the branch or object store is outside this guarantee.")),
                 Paragraph(Text(
                     "Cooperative workers may edit one checkout concurrently. Snapshot claims require "
@@ -198,8 +199,8 @@ internal sealed class InvariantSafetyDocument : IScribeDocumentDefinition
                         + "accurate partial-failure reporting remain. Active programs, cwd, open "
                         + "resources, protocol participation, cache use and remote confirmation "
                         + "do not qualify or veto deletion. Eligible registered trees first commit "
-                        + "outstanding ordinary changes to their current branch; only successful "
-                        + "checkpointing permits deletion. The recovery branch survives the entire "
+                        + "outstanding ordinary changes, then retain the current branch or create "
+                        + "a recovery branch for detached HEAD; deletion requires this support. The recovery branch survives the entire "
                         + "invocation. Ordinary non-worktree artifacts retain their independent policy. "
                         + "The stronger seven-effect argument does not certify this eligibility rule; "
                         + "local branch recovery and remote-confirmed durability have distinct premises. "
