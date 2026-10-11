@@ -750,3 +750,117 @@ own estimate. CR16 supplies no lower bound at $B$, no PG15 exterior slack,
 and no estimate for the independent fixed-source finite head. Those
 obligations and RH remain unproved. This is a paper application only,
 with no Lean verification or originality claim.
+
+## The full removal gain pays a linear complete-head allowance
+
+Keep the original fixed $b,d$, witness $X$, every label $p$ and every
+maximizing tie $N=pu$ from CR1--CR4. Write $t=\log p$,
+$B=\log u$, $A=B+t$, $s_B=\sqrt B\log B$, and
+$v_{p,u}=t/\sqrt B$. The same actual core is $u=N_A^{\rm str}$,
+so $K(A)=B$.
+
+The [existing full-real-clock activation correction](../ArithSums/nicolas2025comparison.md#the-arithmetic-correction-vanishes-at-the-paid-heat-scale)
+is valid for the strict prefix. It gives
+$K(x)=\psi(x)+O(\sqrt x[\log(2x)]^{5/2})$ for every real $x>1$.
+Reuse its unconditional PNT input and the original uniform escape of the
+source clocks. Then, uniformly over all original labels and ties,
+
+$$
+K(A)=A+o(A),\qquad A/B\longrightarrow1,\qquad t/B\longrightarrow0.
+\tag{CR17}
+$$
+
+This uses no short-interval estimate, no own-clock optimum at $B$, and
+no comparison $B\ge X$.
+
+### The retained height increment supplies its own coefficient
+
+CR4 retains the full same-source height
+
+$$
+F(u)-\gamma\ge\frac d2X^{-b}+D_t(B)-c_p,
+\qquad c_p=\log(1+1/p)\le e^{-\ell}.
+$$
+
+The strictly decreasing price gives
+$t/(A\log A)\le D_t(B)\le t/(B\log B)$. Define the normalized
+removal coefficient
+
+$$
+\chi_{p,u}=\frac{B\log B}{t}[D_t(B)-c_p].
+$$
+
+Using the original $t\ge\ell$, $A\le R$ and $\log R=o(\ell)$,
+
+$$
+\frac{B\log B}{A\log A}
+-\frac{R\log R}{\ell}e^{-\ell}
+\le\chi_{p,u}\le1.
+\tag{CR18}
+$$
+
+The lower correction tends to zero, while CR17 sends the first term to
+one. Consequently $\chi_{p,u}\to1$ uniformly on the entire original
+family. Both the original constants and all ties remain; the common
+analytic/source start is existential, with no numeric value supplied.
+In particular
+
+$$
+s_B[D_t(B)-c_p]=\chi_{p,u}v_{p,u}.
+$$
+
+Reuse the [existing unrestricted integer identity OCQ13](../ArithSums/nicolas2025comparison.md)
+at this same core clock. Let $R_{\rm pp}(B)$ denote its original
+unrestricted prime-power reserve and $d_B(u)$ its actual own-price
+defect. They are distinct from the source-window ceiling $R$, strict
+stock $K(v)$ and extended GA2 core $K_u(B)$ in CR16. The supplier keeps
+all positive integers, including one, and gives
+
+$$
+-s_B I_\psi(B)
+=s_B(F(u)-\gamma)+s_B R_{\rm pp}(B)+s_Bd_B(u),
+\qquad R_{\rm pp}(B)\ge0,\quad d_B(u)\ge0.
+$$
+
+Thus the unabridged height, rather than a second use of CR3's partly
+height-derived bound, supplies
+
+$$
+-s_B I_\psi(B)\ge
+\frac d2\sqrt B\log B\,X^{-b}+\chi_{p,u}v_{p,u}.
+\tag{CR19}
+$$
+
+No positive contribution is counted twice.
+
+### The residual margin keeps the original witness scale
+
+Fix $0\le\kappa<1$ once. Uniform convergence in CR18 permits one
+common start with $\chi_{p,u}\ge(1+\kappa)/2$. If $B\ge X$, the first
+term of CR19 is at least $(d/2)X^{1/2-b}\log X$. If $B<X$, then
+
+$$
+v_{p,u}\ge\frac\ell{\sqrt X}
+=\frac d8X^{1/2-b}\log X,
+$$
+
+and the remaining $(\chi_{p,u}-\kappa)v_{p,u}$ is at least
+$d(1-\kappa)X^{1/2-b}\log X/16$. Both branches retain nonnegative
+other terms. Therefore every original label and maximizing tie satisfies
+
+$$
+\boxed{
+-s_BI_\psi(B)\ge
+\kappa\frac{\log p}{\sqrt B}
++\frac{d(1-\kappa)}{16}X^{1/2-b}\log X.}
+\tag{CR20}
+$$
+
+The last term tends to infinity uniformly because the original
+$b<1/2$ is fixed. In particular $\kappa=1/2$ leaves the coefficient
+$d/32$. The boundary $\kappa=1$ is not established by this argument.
+Neither $v_{p,u}$ alone nor a different source clock is required to
+have a diverging lower bound.
+
+These are paper applications of the named suppliers, without Lean
+verification or a claim of literature originality.
