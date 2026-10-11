@@ -697,3 +697,56 @@ global H2 over all labelled competitors remain absent, with the H2 scope
 fixed above. Nonnegativity of the reference measure and that asymptotic
 coefficient alone therefore do not pay the missing comparison. This conclusion does not establish nonimplication from the full
 actual RH-failure hypotheses, refute RH or prove the actual estimate.
+
+## The complete signed-tail consumer remains at the core's own clock
+
+For each original core $u$ in CR1--CR3 put $B=\log u$,
+$L_B=\log B$ and $T_B=\sqrt B\,L_B$. Its strict all-integer right-tail
+property gives the existing GA2 condition by taking $v=au$ for each
+integer $a\ge2$; $a=1$ is equality. Uniform $B\to\infty$ permits one
+common source start after which
+
+$$
+B\ge\max\{\log N^{(0)},e^{26}\},
+$$
+
+so the supplier thresholds $u\ge N^{(0)}$ and $L_B\ge26$ both hold.
+There is no numeric value supplied for that common witness start. Apply of the [existing complete GA2 core identity
+and effective allowance](../ArithSums/nicolas2025comparison.md#the-same-effective-allowance-on-actual-ga2-cores),
+A3--A5, after one common start. Keep its entire original improper integral
+
+$$
+I_\psi(B)=\int_B^\infty(\psi(v)-v)
+\frac{1+\log v}{v^2\log^2v}\,dv,
+\qquad \gamma-F(u)=I_\psi(B)+K_u(B),
+\qquad T_B K_u(B)>\mathcal E(L_B).
+$$
+
+Here $K_u(B)$ is the supplier's extended arithmetic core, distinct from
+PG1's strict inventory clock $K(v)$. Every extra support term, prime power,
+elementary correction and infinite endpoint in that supplier remains.
+CR3 gives the instantiated all-original-core upper comparison
+
+$$
+\boxed{
+T_B I_\psi(B)<-\mathcal E(L_B)
+-\frac d{64}B^{1/2-b}\log B.}
+\tag{CR16}
+$$
+
+The existing allowance is $\mathcal E(L_B)>0.65$ for $L_B\ge26$,
+and the original $0<b<1/2$ and $d>0$ are fixed. Thus, for every fixed $M\ge0$, one common sufficiently
+large witness start makes $T_B I_\psi(B)<-M$ for **every** original label
+and maximizing tie. This is uniform on the entire original family, with
+no clock comparison between $B$ and $X$ required.
+
+This uses the [existing CNS oscillation/tail consumer](../Arith/caveney2012sacaga.md#inherited-oscillation-relaxes-the-eventual-signed-target)
+with CR3's newly paid original-core scope and exponent; it does not repeat
+that consumer as a new analytic theorem or introduce a different kernel.
+The integral is evaluated at $B=\log u$, not at the forced integer clock
+$A=\log(pu)$, an auxiliary prime or a freely selected real center. A lower
+bound at one of those other clocks cannot be transported here without its
+own estimate. CR16 supplies no lower bound at $B$, no PG15 exterior slack,
+and no estimate for the independent fixed-source finite head. Those
+obligations and RH remain unproved. This is a paper application only,
+with no Lean verification or originality claim.
