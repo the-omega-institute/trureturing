@@ -490,4 +490,92 @@ theorem rank_comparison [FiniteDimensional K V]
   have nullity := (T ^ r).finrank_range_add_finrank_ker
   omega
 
+/-- On every eigenspace of a commuting operator, the sl₂ lowering operator has
+maximal power ranks among operators lowering the integral weight filtration by two. -/
+theorem eigenspace_rank_comparison [FiniteDimensional K V]
+    {h e f U : Module.End K V} (a : Sl2Relations h e f) (hw : IntegralWeights h)
+    (T : Module.End K V) (hT : ∀ s : ℤ, (weightLE h s).map T ≤ weightLE h (s - 2))
+    (hUh : Commute U h) (hUe : Commute U e) (hUf : Commute U f) (hUT : Commute U T)
+    (μ : K) (r : ℕ) :
+    finrank K (LinearMap.range
+      ((T.restrict (Module.End.mapsTo_genEigenspace_of_comm hUT μ 1)) ^ r)) ≤
+    finrank K (LinearMap.range
+      ((f.restrict (Module.End.mapsTo_genEigenspace_of_comm hUf μ 1)) ^ r)) := by
+  classical
+  let W := U.eigenspace μ
+  have invariant (A : Module.End K V) (hUA : Commute U A) :
+      ∀ v ∈ W, A v ∈ W := Module.End.mapsTo_genEigenspace_of_comm hUA μ 1
+  let H := h.restrict (invariant h hUh)
+  let E := e.restrict (invariant e hUe)
+  let F := f.restrict (invariant f hUf)
+  let L := T.restrict (invariant T hUT)
+  have relations : Sl2Relations H E F := by
+    constructor
+    · ext v
+      exact congrArg (fun A : Module.End K V => A (v : V)) a.ef
+    · ext v
+      exact congrArg (fun A : Module.End K V => A (v : V)) a.he
+    · ext v
+      exact congrArg (fun A : Module.End K V => A (v : V)) a.hf
+  have weight_eq (s : ℤ) : weightSpace H s = (weightSpace h s).comap W.subtype :=
+    h.genEigenspace_restrict W 1 (s : K) (invariant h hUh)
+  -- Independence forces every weight component of an eigenvector of U to have
+  -- the same eigenvalue of U. The argument also applies to any selected weights.
+  have selected_weights (P : ℤ → Prop) :
+      (⨆ s, ⨆ (_ : P s), weightSpace H s) =
+        (⨆ s, ⨆ (_ : P s), weightSpace h s).comap W.subtype := by
+    apply le_antisymm
+    · refine iSup₂_le fun s hs => ?_
+      rw [weight_eq]
+      exact Submodule.comap_mono (le_iSup_of_le s (le_iSup_of_le hs le_rfl))
+    · intro v hv
+      obtain ⟨x, hx, hsum⟩ := (Submodule.mem_iSup_iff_exists_finsupp
+        (fun s => ⨆ (_ : P s), weightSpace h s) (v : V)).mp hv
+      have hxweight (s : ℤ) : x s ∈ weightSpace h s :=
+        (show (⨆ (_ : P s), weightSpace h s) ≤ weightSpace h s from
+          iSup_le fun _ => le_rfl) (hx s)
+      have defect_weight (s : ℤ) : U (x s) - μ • x s ∈ weightSpace h s :=
+        (weightSpace h s).sub_mem
+          (Module.End.mapsTo_genEigenspace_of_comm hUh.symm (s : K) 1 (hxweight s))
+          ((weightSpace h s).smul_mem μ (hxweight s))
+      have defect_sum : ∑ s ∈ x.support, (U (x s) - μ • x s) = 0 := by
+        rw [Finset.sum_sub_distrib, ← map_sum, ← Finset.smul_sum]
+        change U (x.sum fun _ z => z) - μ • (x.sum fun _ z => z) = 0
+        rw [hsum, Module.End.mem_eigenspace_iff.mp v.property, sub_self]
+      have defect_zero := (iSupIndep_iff_finsetSum_eq_zero_imp_eq_zero
+        (weightSpace h)).mp (weight_independent h) x.support
+        (fun s => U (x s) - μ • x s) (fun s _ => defect_weight s) defect_sum
+      have hxW (s : ℤ) : x s ∈ W := by
+        by_cases hs : s ∈ x.support
+        · exact Module.End.mem_eigenspace_iff.mpr (sub_eq_zero.mp (defect_zero s hs))
+        · simp only [Finsupp.notMem_support_iff.mp hs, Submodule.zero_mem]
+      let y : ℤ → W := fun s => ⟨x s, hxW s⟩
+      have hy (s : ℤ) : y s ∈ ⨆ (_ : P s), weightSpace H s := by
+        by_cases hs : P s
+        · apply Submodule.mem_iSup_of_mem hs
+          rw [weight_eq]
+          exact hxweight s
+        · have hz : x s = 0 := by simpa [hs] using hx s
+          have hyz : y s = 0 := Subtype.ext hz
+          rw [hyz]
+          exact Submodule.zero_mem _
+      have sum_y : ∑ s ∈ x.support, y s = v := by
+        apply Subtype.ext
+        change W.subtype (∑ s ∈ x.support, y s) = (v : V)
+        rw [map_sum]
+        exact hsum
+      rw [← sum_y]
+      exact Submodule.sum_mem _ fun s _ => Submodule.mem_iSup_of_mem s (hy s)
+  have integral : IntegralWeights H := by
+    obtain ⟨S, hS⟩ := hw
+    refine ⟨S, ?_⟩
+    rw [selected_weights (fun s => s ∈ S), hS, Submodule.comap_top]
+  have filtration (s : ℤ) : weightLE H s = (weightLE h s).comap W.subtype :=
+    selected_weights (fun t => t ≤ s)
+  have lowers (s : ℤ) : (weightLE H s).map L ≤ weightLE H (s - 2) := by
+    rintro _ ⟨v, hv, rfl⟩
+    rw [filtration] at hv ⊢
+    exact hT s (Submodule.mem_map_of_mem hv)
+  exact rank_comparison relations integral L lowers r
+
 end D5.S3.Quantum.SpinChains.Sl2WeightFiltration
