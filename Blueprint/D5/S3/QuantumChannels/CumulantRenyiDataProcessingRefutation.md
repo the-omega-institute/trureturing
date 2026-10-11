@@ -4,9 +4,23 @@
 
 Meunson and Deesuwan (arXiv:2606.31205) define a cumulant-based quantum relative Renyi functional for alpha > 1 and state in the abstract and conclusion that its quantum data-processing inequality under arbitrary CPTP maps remains open. For every alpha > 1 a pair of positive definite qubit states and the complete dephasing channel increase the functional, so the inequality fails at every order above one.
 
-**Theorem 1.1 (The action of complete dephasing).**
+**Theorem 1.1 (Functional calculus for a self-adjoint involution).**
 
-$$\forall A : \mathbb{C}^{2\times 2}, \operatorname{pinchingEnd}\left(\right)\left(A\right) = \operatorname{diagonal}\left(\operatorname{diag}\left(A\right)\right)$$
+$$\forall n : \operatorname{Type}, [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall f : \mathbb{R} \to \mathbb{R}, \forall a : \mathbb{R}, \forall b : \mathbb{R}, \forall H : \operatorname{Matrix}\left(n, n, \mathbb{C}\right), (\operatorname{IsSelfAdjoint}\left(H\right)) \Rightarrow ((H \cdot H = 1) \Rightarrow (\operatorname{cfc}\left(f, a \cdot 1 + b \cdot H\right) = \frac{f\left(a + b\right) + f\left(a - b\right)}{2} \cdot 1 + \frac{f\left(a + b\right) - f\left(a - b\right)}{2} \cdot H))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.two_point_cfc` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* A. Meunson; T. Deesuwan (2026). *Cumulant-based quantum relative Rényi functional*. DOI: [10.48550/arXiv.2606.31205](https://doi.org/10.48550/arXiv.2606.31205). URL: <https://arxiv.org/abs/2606.31205v1>.
+
+*Commentary.*
+
+For a self-adjoint complex matrix H with H squared equal to the identity, the spectrum lies in {1, -1}. For every real function f and real a and b, the function of a I + b H is the sum of the mean of f(a+b) and f(a-b) times I and half their difference times H. No continuity hypothesis on f is needed because the spectrum is finite.
+
+**Theorem 1.2 (The action of complete dephasing).**
+
+$$\forall A : \mathbb{C}^{2\times 2}, \operatorname{pinchingEnd}\left(A\right) = \operatorname{diagonal}\left(![A\left(0, 0\right), A\left(1, 1\right)]\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.dephase_apply` (`✓ std3`). ∎
 
@@ -18,9 +32,9 @@ $$\forall A : \mathbb{C}^{2\times 2}, \operatorname{pinchingEnd}\left(\right)\le
 
 For every complex two by two matrix A, complete dephasing keeps its two diagonal entries and sets the off-diagonal entries to zero.
 
-**Theorem 1.2 (The Kraus representation of complete dephasing).**
+**Theorem 1.3 (The Kraus representation of complete dephasing).**
 
-$$\operatorname{pinchingEnd}\left(\right) = \operatorname{ofKraus}\left((\lambda j : \operatorname{Fin}\left(2\right), \operatorname{single}\left(j, j, 1\right)), (\lambda j : \operatorname{Fin}\left(2\right), \operatorname{single}\left(j, j, 1\right))\right)$$
+$$(\operatorname{pinchingEnd} : \operatorname{MatrixMap}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)) = \operatorname{ofKraus}\left((\lambda j : \operatorname{Fin}\left(2\right), \operatorname{single}\left(j, j, 1\right)), (\lambda j : \operatorname{Fin}\left(2\right), \operatorname{single}\left(j, j, 1\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.pinching_kraus` (`✓ std3`). ∎
 
@@ -32,7 +46,7 @@ $$\operatorname{pinchingEnd}\left(\right) = \operatorname{ofKraus}\left((\lambda
 
 For j in Fin 2, the family K(j)=single(j,j,1) consists of the two computational basis projectors. The linear map pinchingEnd is exactly their finite Kraus map, ofKraus(K,K).
 
-**Definition 1.3 (The cumulant-based relative Renyi functional).**
+**Definition 1.4 (The cumulant-based relative Renyi functional).**
 
 $$\forall d : \mathbb{N}, \forall \alpha : \mathbb{R}, \forall A : \mathbb{C}^{d\times d}, \forall B : \mathbb{C}^{d\times d}, \operatorname{cuRenyi}\left(\alpha, A, B\right) = \frac{1}{(\alpha - 1)} \cdot \operatorname{ln}\left(\operatorname{Re}\left(\operatorname{Tr}\left(A \cdot \operatorname{exp}\left((\alpha - 1) \cdot (\operatorname{log}\left(A\right) - \operatorname{log}\left(B\right))\right)\right)\right)\right)$$
 
@@ -44,7 +58,7 @@ $$\forall d : \mathbb{N}, \forall \alpha : \mathbb{R}, \forall A : \mathbb{C}^{d
 
 Definition 3 of the paper, on faithful inputs: for complex d by d matrices A and B and real alpha, the value is 1/(alpha-1) times the real logarithm of the real part of Tr(A exp((alpha-1)(log A - log B))). Log of a matrix is continuous functional calculus for the real logarithm and exp is the matrix exponential, as in the frozen alpha-zero refutation for the same paper. On positive definite A and B the trace is a positive real number, and the formula is the paper's.
 
-**Definition 1.4 (The data-processing inequality at alpha).**
+**Definition 1.5 (The data-processing inequality at alpha).**
 
 $$\forall \alpha : \mathbb{R}, \operatorname{QDPI}\left(\alpha\right) \Leftrightarrow (\forall d : \mathbb{N}, \forall \rho : \mathbb{C}^{d\times d}, \forall \sigma : \mathbb{C}^{d\times d}, \forall N : \operatorname{MatrixMap}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), (\operatorname{IsDensity}\left(\rho\right)) \Rightarrow ((\operatorname{IsDensity}\left(\sigma\right)) \Rightarrow ((\operatorname{PosDef}\left(\rho\right)) \Rightarrow ((\operatorname{PosDef}\left(\sigma\right)) \Rightarrow ((\operatorname{IsCPTP}\left(N\right)) \Rightarrow ((\operatorname{PosDef}\left(N\left(\rho\right)\right)) \Rightarrow ((\operatorname{PosDef}\left(N\left(\sigma\right)\right)) \Rightarrow (\operatorname{cuRenyi}\left(\alpha, N\left(\rho\right), N\left(\sigma\right)\right) \le \operatorname{cuRenyi}\left(\alpha, \rho, \sigma\right)))))))))$$
 
@@ -56,7 +70,7 @@ $$\forall \alpha : \mathbb{R}, \operatorname{QDPI}\left(\alpha\right) \Leftright
 
 Section III of the paper states data processing as S_alpha(rho||sigma) >= S_alpha(N(rho)||N(sigma)) for every CPTP map N and states with supp(rho) contained in supp(sigma). QDPI(alpha) states it for density matrices rho and sigma on C^d of every dimension d that are positive definite, for every CPTP map N on d by d complex matrices with positive definite outputs. IsDensity and IsCPTP are the frozen definitions of the alpha-zero refutation for the same paper. Faithful inputs satisfy the support condition, and faithful outputs need no convention for the logarithm of a singular matrix.
 
-**Definition 1.5 (Data processing for some order above one).**
+**Definition 1.6 (Data processing for some order above one).**
 
 $$claim \Leftrightarrow (\exists \alpha : \mathbb{R}, (1 < \alpha) \land (\operatorname{QDPI}\left(\alpha\right)))$$
 
@@ -68,7 +82,7 @@ $$claim \Leftrightarrow (\exists \alpha : \mathbb{R}, (1 < \alpha) \land (\opera
 
 The open question of the abstract and conclusion, in its weakest form: some alpha > 1 satisfies QDPI(alpha). Its negation refutes data processing at every order above one, already for faithful inputs and outputs.
 
-**Theorem 1.6 (No order above one satisfies data processing).**
+**Theorem 1.7 (No order above one satisfies data processing).**
 
 $$\neg claim$$
 
@@ -94,6 +108,7 @@ Fix alpha > 1, put t = alpha - 1, x = 16^(1 + 1/t), r = (x - 1)/(x + 1) and a = 
 - Truth anchor: `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.dephase_apply`
 - Truth anchor: `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.pinching_kraus`
 - Truth anchor: `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.result`
+- Truth anchor: `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.two_point_cfc`
 - Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
 - Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](CoPRelativeQuantumnessRefutation.md)
 - Dependency: [D5/S3/QuantumChannels/ProjectionDiagnostics/StaticDynamicScalarSeparation](ProjectionDiagnostics/StaticDynamicScalarSeparation.md)
