@@ -347,19 +347,41 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void DetachedWorktreesUseSamePolicyInBothScopes(bool lanesOnly)
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void DetachedWorktreesUseSamePolicyInBothScopes(bool lanesOnly, bool dirty)
     {
         using var fixture = new CleanLanesFixture();
         var stale = fixture.AddDetachedJudge("trureturing-old-detached");
+        var head = fixture.Head(stale);
+        if (dirty)
+        {
+            File.WriteAllText(Path.Combine(stale, "README.md"), "detached tracked\n");
+            File.WriteAllText(Path.Combine(stale, "untracked"), "detached untracked\n");
+        }
         fixture.AdvanceBase(300);
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "push", "origin", "dev");
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "branch", "lane/governance/recovery-old", head);
         var recent = fixture.AddDetachedJudge("trureturing-recent-detached");
         var args = lanesOnly ? new[] { "--force", "--lanes-only" } : new[] { "--force" };
         var result = fixture.Run(args);
-        Assert.False(result.Success);
-        Assert.True(Directory.Exists(stale));
-        Assert.Equal("checkpoint_failed:checkpoint_current_branch_required", ReasonFor(result.Output, stale));
+        Assert.True(result.Success, result.Output + result.Error);
+        Assert.False(Directory.Exists(stale));
+        var item = ReadItems(result.Output).Single(item => item.GetProperty("path").GetString() == stale);
+        Assert.Equal("removed", item.GetProperty("action").GetString());
+        var recovery = item.GetProperty("recovery_branch").GetString()!;
+        Assert.StartsWith("refs/heads/lane/governance/recovery-", recovery);
+        Assert.Equal(lanesOnly, fixture.BranchExists("lane/governance/recovery-old"));
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "add", stale, recovery["refs/heads/".Length..]);
+        if (dirty)
+        {
+            Assert.Equal("detached tracked\n", File.ReadAllText(Path.Combine(stale, "README.md")));
+            Assert.Equal("detached untracked\n", File.ReadAllText(Path.Combine(stale, "untracked")));
+            Assert.Equal(head, CleanLanesFixture.Git(stale, "rev-parse", "HEAD^").Trim());
+        }
+        else Assert.Equal(head, fixture.Head(stale));
         Assert.True(Directory.Exists(recent));
         Assert.Equal("not_far_behind", ReasonFor(result.Output, recent));
     }
