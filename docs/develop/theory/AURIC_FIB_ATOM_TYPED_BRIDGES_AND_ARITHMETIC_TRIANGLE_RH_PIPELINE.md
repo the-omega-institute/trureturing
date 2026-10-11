@@ -6200,3 +6200,64 @@ L_w.
 
 这套骨架把“引力”和“量子”都降为可检查的数学接口。它不从物理直觉反向定义数学对象，而是先在有限矩阵、凸集、图边界和谱理论中建立可形式化的闭环。
 
+
+
+---
+
+## 36. 外部量子网络锚点与证据边界
+
+本节只登记外部结果在管线中的位置，不把外部论文的结论转写成 Auric FIB 的内部定理。
+
+### 锚点 36.1（量子 inflation）
+
+Smith、Wolfe 和 Spekkens 的 *Fully quantum inflation: quantum marginal problem constraints in the service of causal inference*（arXiv:2501.12320）把 inflation 方法推广到量子边缘问题，用量子边缘约束检验给定多方量子态是否兼容指定的量子因果结构，并专门讨论了 triangle scenario。
+
+它支持本卷的类型分离：
+
+\[
+\text{经典 triangle-local 分布}
+\subsetneq
+\text{量子 triangle-network 输出}.
+\]
+
+它也给出下一步的形式化方向：在定义 30.1--30.2 的有限源状态和局部 CPTP 映射后，构造复制网络的量子边缘约束。当前文件尚未完成该 inflation 证书，因此不能从有限 CPTP 定义直接推出量子三角兼容性判定。
+
+### 锚点 36.2（三角网络量子非局域性的实验语义）
+
+Wang 等人的 *Experimental genuine quantum nonlocality in the triangle network*（arXiv:2401.15428）报告了三角网络结构中的量子相关实验，并针对 elegant distribution 给出量子非局域性的实验证据。
+
+该结果只能作为以下桥接的实验语义背景：
+
+\[
+\text{有限量子源}
+\longrightarrow
+\text{局部节点测量}
+\longrightarrow
+\text{三角输出分布}.
+\]
+
+它不改变本卷的数学边界：实验相关性不提供 FIB 五态编码，也不证明任意 FIB 概率律具有三个独立量子源分解。
+
+### 锚点 36.3（对本卷的最小影响）
+
+外部量子网络结果对当前理论只增加两个可检验目标：
+
+1. 给定有限 \(\omega_{AB},\omega_{BC},\omega_{CA}\) 和局部 CPTP 映射，生成完整输出态的量子 inflation 复制约束；
+2. 给定 FIB 对角输出，判定它是否存在一个满足源独立性、维数上界和局部响应结构的量子 triangle lift。
+
+在这两个目标完成以前，本文使用的关系仍然是：
+
+\[
+\text{FIB 对角量子嵌入}
+\subseteq
+\text{有限量子网络载体},
+\]
+
+而不是
+
+\[
+\text{任意 FIB 律}
+=
+\text{量子 triangle-network 律}.
+\]
+
