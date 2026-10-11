@@ -10,7 +10,7 @@ internal sealed class HarmonicDualMaximizerDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive stationary harmonic-dual masses on independent configurations have uniform "
-        + "bounds along every legal addition. Square-root regularization attains a positive maximum.",
+        + "bounds along every legal addition. Base degree at most three gives a unique positive maximum.",
         H("Parallel flips and harmonic-dual maximizers"),
         Blocks(
             Paragraph(Text(
@@ -76,11 +76,34 @@ internal sealed class HarmonicDualMaximizerDocument : IScribeDocumentDefinition
                     + "Coordinate exchanges preserve the simplex locally; their zero derivatives "
                     + "give the common stationary value. The parallel-flip bounds then apply.")),
                     Paragraph(Text(
-                        "These statements concern positive stationary masses and regularized "
-                        + "maxima. They do not assert uniqueness or full support for the "
-                        + "unregularized objective. Passing to zero regularization requires "
-                        + "a uniform positive coordinate bound; uniqueness additionally requires "
-                        + "the equality case of edge concavity and connectedness."))), DescribeRole.Theorem),
+                        "The ratio bounds are independent of epsilon."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("unique-positive-maximum"),
+                DeclarationHandle.Create(Prefix + "unique_positive_maximum"),
+                H("Unique positive unregularized maximum"),
+                StatementSource.FromAuthor(UniqueFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Assume every degree of the base graph is at most three. Impose the ratio "
+                    + "bounds in their linear form on the compact probability domain. "
+                    + "All positive regularized maximizers lie in this closed subset. "
+                    + "The upper bounds make the empty-set mass maximal. Its mass is positive "
+                    + "by normalization, and the strictly positive lower factors propagate "
+                    + "positivity along insertions to every independent configuration.")),
+                    Paragraph(Text(
+                        "Maximize the unregularized objective on this compact subset. "
+                        + "The square-root sum is bounded by the number of configurations. "
+                        + "Comparison with positive regularized maxima at arbitrarily small "
+                        + "epsilon shows that this maximum is global.")),
+                    Paragraph(Text(
+                        "At a positive maximum the derivative loads are equal. The supporting "
+                        + "linear bound for each harmonic edge has equality exactly when the "
+                        + "two endpoint mass ratios agree. Equality of the total values forces "
+                        + "equality on every edge, even if a competing maximum has zero masses. "
+                        + "Deletion paths connect every independent configuration to the empty "
+                        + "set; normalization then identifies the two probability vectors.")),
+                    Paragraph(Text(
+                        "The theorem uses independent subsets. A formulation on admissible "
+                        + "Boolean words additionally needs the support bijection and the "
+                        + "identification of singleton toggles with Hamming-one edges."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "The parallel-flip comparison is a derivation from the independent-set model. "
                 + "Finite compactness, differentiation and elementary inequalities are supplied "
@@ -153,6 +176,14 @@ internal sealed class HarmonicDualMaximizerDocument : IScribeDocumentDefinition
                 All("S", Sets(), Imp(Not(Independent(F.Id("S"))), Eq(Nu(F.Id("S")), D(0)))))))));
     private static Formula StationaryFormula() => Disp(Graph(All("nu", Mass(), All("e", Real(), All("t", Real(),
         Imp(And(Le(D(0), F.Id("e")), And(Positive(), Stationary())), Ratios()))))));
+    private static Formula UniqueFormula() => Disp(Graph(Imp(
+        All("i", V(), Le(Call("degree", Hh(), F.Id("i")), D(3))),
+        Some("nu", Mass(), And(Member(F.Id("nu"), Domain()),
+            And(Call("IsMaxOn", Call("harmonicDual", Hh()), Domain(), F.Id("nu")),
+                And(Positive(), And(Ratios(), All("mu", Mass(),
+                    Imp(And(Member(F.Id("mu"), Domain()),
+                            Call("IsMaxOn", Call("harmonicDual", Hh()), Domain(), F.Id("mu"))),
+                        Eq(F.Id("mu"), F.Id("nu"))))))))))));
     private static Formula MaximumFormula() => Disp(Graph(All("e", Real(), Imp(Lt(D(0), F.Id("e")),
         Some("nu", Mass(), And(Member(F.Id("nu"), Domain()),
             And(Call("IsMaxOn", Call("regularizedDual", Hh(), F.Id("e")), Domain(), F.Id("nu")),

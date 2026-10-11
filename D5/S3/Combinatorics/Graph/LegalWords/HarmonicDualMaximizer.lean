@@ -461,6 +461,20 @@ private theorem flip_sum (f : Finset V → Finset V → ℝ) (i : V) :
   · intro S hS
     simp only [symmDiff_symmDiff_cancel_right]
 
+private theorem flipped_load_sum (ν w : Finset V → ℝ) : (∑ S ∈ configurations H univ, ∑ j : V,
+    if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
+      w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) =
+    ∑ S ∈ configurations H univ, w S * coordinateLoad H ν S := by
+  simp_rw [coordinateLoad, mul_sum, flipTerm, mul_ite, mul_zero]
+  conv_lhs => rw [sum_comm]
+  conv_rhs => rw [sum_comm]
+  apply sum_congr rfl
+  intro j _
+  convert flip_sum H (fun S T => w T * (ν S / (ν S + ν T))^2) j using 1
+  apply sum_congr rfl
+  intro S hS
+  rw [add_comm (ν (S ∆ {j}))]
+
 private theorem regularized_derivative (ε : ℝ) (ν w : Finset V → ℝ)
     (hp : ∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S) :
     HasDerivAt (fun t : ℝ => regularizedDual H ε (fun S => ν S + t*w S))
@@ -490,19 +504,7 @@ private theorem regularized_derivative (ε : ℝ) (ν w : Finset V → ℝ)
   have hR := HasDerivAt.sum (u := configurations H univ) (fun S hS => (hd S).sqrt (by
     have hSi : H.IsIndepSet (S : Set V) := by simpa [configurations] using hS
     simpa using ne_of_gt (hp S hSi)))
-  have hsflip : (∑ S ∈ configurations H univ, ∑ j : V,
-      if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
-        w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) =
-      ∑ S ∈ configurations H univ, w S * coordinateLoad H ν S := by
-    simp_rw [coordinateLoad, mul_sum, flipTerm, mul_ite, mul_zero]
-    conv_lhs => rw [sum_comm]
-    conv_rhs => rw [sum_comm]
-    apply sum_congr rfl
-    intro j _
-    convert flip_sum H (fun S T => w T * (ν S / (ν S + ν T))^2) j using 1
-    apply sum_congr rfl
-    intro S hS
-    rw [add_comm (ν (S ∆ {j}))]
+  have hsflip := flipped_load_sum H ν w
   have htotal := hφ.add (hR.const_mul ε)
   simp only [Finset.sum_apply] at htotal
   change HasDerivAt (fun t : ℝ => regularizedDual H ε (fun S => ν S + t*w S)) _ 0 at htotal
@@ -575,7 +577,302 @@ theorem regularized_maximum (ε : ℝ) (hε : 0 < ε) :
   exact ⟨ν, hν, hmax, hp, fun i S hi hS => stationary_ratio_bounds H ν hε.le hp hs i S hi hS⟩
 
 
+private def ratioDomain : Set (Finset V → ℝ) :=
+  {ν | ν ∈ probabilities H ∧ ∀ (i : V) (S : Finset V),
+    i ∉ S → H.IsIndepSet (↑(insert i S) : Set V) →
+      (4 - (H.degree i : ℝ)) / (4 + (H.degree i : ℝ)) * ν S ≤ ν (insert i S) ∧
+      ν (insert i S) ≤ ν S}
+
+private theorem ratioDomain_compact : IsCompact (ratioDomain H) := by
+  have hc : IsClosed {ν : Finset V → ℝ | ∀ (i : V) (S : Finset V),
+      i ∉ S → H.IsIndepSet (↑(insert i S) : Set V) →
+        (4 - (H.degree i : ℝ)) / (4 + (H.degree i : ℝ)) * ν S ≤ ν (insert i S) ∧
+        ν (insert i S) ≤ ν S} := by
+    simp_rw [Set.ofPred_forall]
+    refine isClosed_iInter fun i => isClosed_iInter fun S =>
+      isClosed_iInter fun _ => isClosed_iInter fun _ => ?_
+    exact (isClosed_le (continuous_const.mul (continuous_apply S))
+      (continuous_apply (insert i S))).inter
+      (isClosed_le (continuous_apply (insert i S)) (continuous_apply S))
+  exact (probabilities_compact H).inter_right hc
+
+private theorem regularized_in_ratioDomain (ε : ℝ) (hε : 0 < ε) :
+    ∃ ν ∈ ratioDomain H, IsMaxOn (regularizedDual H ε) (probabilities H) ν := by
+  obtain ⟨ν, hν, hm, hp, hr⟩ := regularized_maximum H ε hε
+  refine ⟨ν, ⟨hν, ?_⟩, hm⟩
+  intro i S hi hS
+  have hpos := hp S ((independent_insert H S i).mp hS).1
+  exact ⟨(le_div_iff₀ hpos).mp (hr i S hi hS).1,
+    (div_le_one hpos).mp (hr i S hi hS).2⟩
+
+private theorem ratioDomain_positive (hd : ∀ i : V, H.degree i ≤ 3)
+    (ν : Finset V → ℝ) (hν : ν ∈ ratioDomain H) :
+    ∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S := by
+  have hupper : ∀ S : Finset V, H.IsIndepSet (S : Set V) → ν S ≤ ν ∅ := by
+    intro S
+    induction S using Finset.induction_on with
+    | empty => exact fun _ => le_rfl
+    | @insert i S hi ih =>
+      intro hS
+      exact (hν.2 i S hi hS).2.trans (ih ((independent_insert H S i).mp hS).1)
+  have hzero : 0 < ν ∅ := by
+    by_contra hn
+    have hz : ν ∅ = 0 := le_antisymm (le_of_not_gt hn) (hν.1.1.1 ∅)
+    have hall : ∀ S, ν S = 0 := by
+      intro S
+      by_cases hS : H.IsIndepSet (S : Set V)
+      · exact le_antisymm (hz ▸ hupper S hS) (hν.1.1.1 S)
+      · exact hν.1.2 S hS
+    have hs := hν.1.1.2
+    simp only [hall, sum_const_zero] at hs
+    norm_num at hs
+  intro S
+  induction S using Finset.induction_on with
+  | empty => exact fun _ => hzero
+  | @insert i S hi ih =>
+    intro hS
+    have hg : (H.degree i : ℝ) ≤ 3 := by exact_mod_cast hd i
+    have hl : 0 < (4 - (H.degree i : ℝ)) / (4 + (H.degree i : ℝ)) :=
+      div_pos (by linarith) (by positivity)
+    exact (mul_pos hl (ih ((independent_insert H S i).mp hS).1)).trans_le (hν.2 i S hi hS).1
+
+private theorem regularizer_bound (ν : Finset V → ℝ) (hν : ν ∈ probabilities H) :
+    ∑ S ∈ configurations H univ, Real.sqrt (ν S) ≤ (configurations H univ).card := by
+  calc
+    _ ≤ ∑ _S ∈ configurations H univ, (1 : ℝ) := by
+      apply sum_le_sum
+      intro S hS
+      simpa using Real.sqrt_le_sqrt (mem_Icc_of_mem_stdSimplex hν.1 S).2
+    _ = _ := by simp
+
+/-- Base graphs of degree at most three have a positive unregularized maximizer obeying
+all degree-dependent legal-addition ratios. -/
+private theorem positive_maximum (hd : ∀ i : V, H.degree i ≤ 3) :
+    ∃ ν ∈ probabilities H, IsMaxOn (harmonicDual H) (probabilities H) ν ∧
+      (∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S) ∧
+      ∀ (i : V) (S : Finset V), i ∉ S → H.IsIndepSet (↑(insert i S) : Set V) →
+        (4 - (H.degree i : ℝ)) / (4 + (H.degree i : ℝ)) ≤ ν (insert i S) / ν S ∧
+        ν (insert i S) / ν S ≤ 1 := by
+  obtain ⟨ρ, hρ, _⟩ := regularized_in_ratioDomain H 1 (by norm_num)
+  have hc : ContinuousOn (harmonicDual H) (ratioDomain H) := by
+    have hc := (regularized_continuous H 0).mono
+      (show ratioDomain H ⊆ probabilities H from fun _ h => h.1)
+    have hz : regularizedDual H 0 = harmonicDual H := by
+      funext μ
+      simp [regularizedDual]
+    rwa [hz] at hc
+  obtain ⟨ν, hν, hmax⟩ := (ratioDomain_compact H).exists_isMaxOn ⟨ρ, hρ⟩ hc
+  have hp := ratioDomain_positive H hd ν hν
+  refine ⟨ν, hν.1, ?_, hp, ?_⟩
+  · intro μ hμ
+    change harmonicDual H μ ≤ harmonicDual H ν
+    apply le_of_forall_pos_le_add
+    intro δ hδ
+    obtain ⟨ε, hε, hsmall⟩ := exists_pos_mul_lt hδ ((configurations H univ).card : ℝ)
+    obtain ⟨ρ, hρ, hr⟩ := regularized_in_ratioDomain H ε hε
+    have hreg := regularizer_bound H ρ hρ.1
+    have hnonneg : 0 ≤ ∑ S ∈ configurations H univ, Real.sqrt (μ S) :=
+      sum_nonneg fun _ _ => Real.sqrt_nonneg _
+    have hm : regularizedDual H ε μ ≤ regularizedDual H ε ρ := hr hμ
+    have hφ : harmonicDual H ρ ≤ harmonicDual H ν := hmax hρ
+    have hregmul := mul_le_mul_of_nonneg_left hreg hε.le
+    have hposit := mul_nonneg hε.le hnonneg
+    unfold regularizedDual at hm
+    nlinarith
+  · intro i S hi hS
+    have hpos := hp S ((independent_insert H S i).mp hS).1
+    exact ⟨(le_div_iff₀ hpos).mpr (hν.2 i S hi hS).1,
+      (div_le_one hpos).mpr (hν.2 i S hi hS).2⟩
+
+
+private theorem harmonic_support {a b x y : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hx : 0 ≤ x) (hy : 0 ≤ y) :
+    x*y/(x+y) ≤ x*(b/(a+b))^2 + y*(a/(a+b))^2 ∧
+      (x*y/(x+y) = x*(b/(a+b))^2 + y*(a/(a+b))^2 ↔ x*b = y*a) := by
+  by_cases hz : x+y = 0
+  · have hx0 : x = 0 := by linarith
+    have hy0 : y = 0 := by linarith
+    simp [hx0, hy0]
+  have hab : a+b ≠ 0 := ne_of_gt (add_pos ha hb)
+  have hp : 0 < (x+y)*(a+b)^2 :=
+    mul_pos (lt_of_le_of_ne (add_nonneg hx hy) (Ne.symm hz)) (sq_pos_of_pos (add_pos ha hb))
+  have hid : x*(b/(a+b))^2 + y*(a/(a+b))^2 - x*y/(x+y) =
+      (x*b-y*a)^2 / ((x+y)*(a+b)^2) := by
+    field_simp
+    ring
+  refine ⟨?_, ?_⟩
+  · have := div_nonneg (sq_nonneg (x*b-y*a)) hp.le
+    linarith
+  · constructor
+    · intro he
+      by_contra hn
+      have := div_pos (sq_pos_of_ne_zero (sub_ne_zero.mpr hn)) hp
+      linarith
+    · intro he
+      rw [sub_eq_zero.mpr he, zero_pow (by norm_num : 2 ≠ 0), zero_div] at hid
+      linarith
+
+private theorem weighted_edge_sum (ν μ : Finset V → ℝ) :
+    (∑ S ∈ configurations H univ, ∑ i : V,
+      if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+        μ S * (ν (S ∆ {i}) / (ν S + ν (S ∆ {i})))^2 +
+        μ (S ∆ {i}) * (ν S / (ν S + ν (S ∆ {i})))^2 else 0) =
+      2 * ∑ S ∈ configurations H univ, μ S * coordinateLoad H ν S := by
+  have hs (S : Finset V) (i : V) :
+      (if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+        μ S * (ν (S ∆ {i}) / (ν S + ν (S ∆ {i})))^2 +
+        μ (S ∆ {i}) * (ν S / (ν S + ν (S ∆ {i})))^2 else 0) =
+      μ S * flipTerm H ν S i +
+        (if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+          μ (S ∆ {i}) * (ν S / (ν S + ν (S ∆ {i})))^2 else 0) := by
+    unfold flipTerm
+    split <;> simp_all
+  simp_rw [hs, sum_add_distrib]
+  rw [flipped_load_sum H ν μ]
+  simp only [coordinateLoad, mul_sum]
+  ring_nf
+  simp only [sum_mul]
+
+private theorem probability_sum (ν : Finset V → ℝ) (hν : ν ∈ probabilities H) :
+    ∑ S ∈ configurations H univ, ν S = 1 := by
+  rw [show (∑ S ∈ configurations H univ, ν S) = ∑ S, ν S from ?_]
+  · exact hν.1.2
+  · apply sum_subset (subset_univ _)
+    intro S hS hn
+    exact hν.2 S (by simpa [configurations] using hn)
+
+private theorem harmonic_euler (ν : Finset V → ℝ)
+    (hp : ∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S) :
+    harmonicDual H ν = ∑ S ∈ configurations H univ, ν S * coordinateLoad H ν S := by
+  have he : (∑ S ∈ configurations H univ, ∑ i : V,
+      if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+        ν S * ν (S ∆ {i}) / (ν S + ν (S ∆ {i})) else 0) =
+      2 * ∑ S ∈ configurations H univ, ν S * coordinateLoad H ν S := by
+    rw [← weighted_edge_sum H ν ν]
+    apply sum_congr rfl
+    intro S hS
+    have hSi : H.IsIndepSet (S : Set V) := by simpa [configurations] using hS
+    apply sum_congr rfl
+    intro i hi
+    by_cases hT : H.IsIndepSet (↑(S ∆ {i}) : Set V)
+    · simp only [if_pos hT]
+      exact (harmonic_support (hp S hSi) (hp _ hT) (hp S hSi).le (hp _ hT).le).2.mpr (mul_comm _ _)
+    · simp only [if_neg hT]
+  unfold harmonicDual
+  rw [he]
+  ring
+
+private theorem maximum_edge_ratio (ν μ : Finset V → ℝ)
+    (hν : ν ∈ probabilities H) (hμ : μ ∈ probabilities H)
+    (hp : ∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S)
+    (hνmax : IsMaxOn (harmonicDual H) (probabilities H) ν)
+    (hμmax : IsMaxOn (harmonicDual H) (probabilities H) μ) :
+    ∀ (S : Finset V) (i : V), H.IsIndepSet (S : Set V) →
+      H.IsIndepSet (↑(S ∆ {i}) : Set V) → μ S * ν (S ∆ {i}) = μ (S ∆ {i}) * ν S := by
+  have hreg : IsMaxOn (regularizedDual H 0) (probabilities H) ν := by
+    have hz : regularizedDual H 0 = harmonicDual H := by
+      funext ρ
+      simp [regularizedDual]
+    rwa [hz]
+  obtain ⟨τ, hs⟩ := regularized_stationary H 0 ν hν hp hreg
+  simp only [zero_div, add_zero] at hs
+  have hw (ρ : Finset V → ℝ) (hρ : ρ ∈ probabilities H) :
+      (∑ S ∈ configurations H univ, ρ S * coordinateLoad H ν S) = τ := by
+    calc
+      _ = ∑ S ∈ configurations H univ, ρ S * τ := by
+        apply sum_congr rfl
+        intro S hS
+        rw [hs S (by simpa [configurations] using hS)]
+      _ = τ := by rw [← sum_mul, probability_sum H ρ hρ, one_mul]
+  have heq : harmonicDual H μ = τ := by
+    have he := harmonic_euler H ν hp
+    rw [hw ν hν] at he
+    exact le_antisymm ((hνmax hμ).trans he.le) (he.ge.trans (hμmax hν))
+  let f (S : Finset V) (i : V) : ℝ :=
+    if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+      μ S * (ν (S ∆ {i}) / (ν S + ν (S ∆ {i})))^2 +
+      μ (S ∆ {i}) * (ν S / (ν S + ν (S ∆ {i})))^2 -
+      μ S * μ (S ∆ {i}) / (μ S + μ (S ∆ {i})) else 0
+  have hf : ∀ S ∈ configurations H univ, ∀ i : V, 0 ≤ f S i := by
+    intro S hS i
+    have hSi : H.IsIndepSet (S : Set V) := by simpa [configurations] using hS
+    dsimp [f]
+    split
+    · rename_i hT
+      exact sub_nonneg.mpr (harmonic_support (hp _ hSi) (hp _ hT) (hμ.1.1 _) (hμ.1.1 _)).1
+    · exact le_rfl
+  have hsum : (∑ S ∈ configurations H univ, ∑ i : V, f S i) = 0 := by
+    have hsplit (S : Finset V) (i : V) : f S i =
+        (if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+          μ S * (ν (S ∆ {i}) / (ν S + ν (S ∆ {i})))^2 +
+          μ (S ∆ {i}) * (ν S / (ν S + ν (S ∆ {i})))^2 else 0) -
+        (if H.IsIndepSet (↑(S ∆ {i}) : Set V) then
+          μ S * μ (S ∆ {i}) / (μ S + μ (S ∆ {i})) else 0) := by
+      dsimp [f]; split <;> simp_all
+    simp_rw [hsplit, sum_sub_distrib]
+    rw [weighted_edge_sum H ν μ, hw μ hμ]
+    have hφ := heq
+    unfold harmonicDual at hφ
+    linarith
+  intro S i hS hT
+  have hSK : S ∈ configurations H univ := by simp [configurations, hS]
+  have hout : (∑ j : V, f S j) = 0 :=
+    (sum_eq_zero_iff_of_nonneg (fun T hT => sum_nonneg (fun j _ => hf T hT j))).mp hsum S hSK
+  have hfi : f S i = 0 := (sum_eq_zero_iff_of_nonneg (fun j _ => hf S hSK j)).mp hout i (mem_univ _)
+  simp only [f, if_pos hT, sub_eq_zero] at hfi
+  exact (harmonic_support (hp _ hS) (hp _ hT) (hμ.1.1 _) (hμ.1.1 _)).2.mp hfi.symm
+
+/-- A positive harmonic-dual maximum determines every other maximum by edge equality. -/
+private theorem maximum_unique (ν μ : Finset V → ℝ)
+    (hν : ν ∈ probabilities H) (hμ : μ ∈ probabilities H)
+    (hp : ∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S)
+    (hνmax : IsMaxOn (harmonicDual H) (probabilities H) ν)
+    (hμmax : IsMaxOn (harmonicDual H) (probabilities H) μ) : μ = ν := by
+  have hr := maximum_edge_ratio H ν μ hν hμ hp hνmax hμmax
+  have he : H.IsIndepSet (↑(∅ : Finset V) : Set V) := by
+    simp [SimpleGraph.IsIndepSet, Set.Pairwise]
+  have hp0 := hp ∅ he
+  have hcross : ∀ S : Finset V, μ S * ν ∅ = ν S * μ ∅ := by
+    intro S
+    by_cases hS : H.IsIndepSet (S : Set V)
+    · induction S using Finset.induction_on with
+      | empty => ring
+      | @insert i S hi ih =>
+        have hSi := ((independent_insert H S i).mp hS).1
+        have hstep := hr S i hSi (by rwa [flip_absent S hi])
+        rw [flip_absent S hi] at hstep
+        have hind := ih hSi
+        have hpos := hp S hSi
+        have hA := congrArg (fun x : ℝ => x * ν ∅) hstep
+        have hB := congrArg (fun x : ℝ => x * ν (insert i S)) hind
+        have hc : ν S * (μ (insert i S) * ν ∅ - ν (insert i S) * μ ∅) = 0 := by
+          nlinarith [hA, hB]
+        exact sub_eq_zero.mp ((mul_eq_zero.mp hc).resolve_left (ne_of_gt hpos))
+    · rw [hν.2 S hS, hμ.2 S hS]
+      ring
+  have h0 : ν ∅ = μ ∅ := by
+    have hs := congrArg (fun f : Finset V → ℝ => ∑ S, f S) (funext hcross)
+    simpa only [← sum_mul, hν.1.2, hμ.1.2, one_mul] using hs
+  funext S
+  have hh := hcross S
+  rw [← h0] at hh
+  exact mul_right_cancel₀ (ne_of_gt hp0) hh
+
+/-- Degree at most three gives a unique harmonic-dual maximizing probability,
+with full support and the degree-dependent legal-addition bounds. -/
+theorem unique_positive_maximum (hd : ∀ i : V, H.degree i ≤ 3) :
+    ∃ ν ∈ probabilities H, IsMaxOn (harmonicDual H) (probabilities H) ν ∧
+      (∀ S : Finset V, H.IsIndepSet (S : Set V) → 0 < ν S) ∧
+      (∀ (i : V) (S : Finset V), i ∉ S → H.IsIndepSet (↑(insert i S) : Set V) →
+        (4 - (H.degree i : ℝ)) / (4 + (H.degree i : ℝ)) ≤ ν (insert i S) / ν S ∧
+        ν (insert i S) / ν S ≤ 1) ∧
+      ∀ μ ∈ probabilities H, IsMaxOn (harmonicDual H) (probabilities H) μ → μ = ν := by
+  obtain ⟨ν, hν, hm, hp, hr⟩ := positive_maximum H hd
+  exact ⟨ν, hν, hm, hp, hr, fun μ hμ hmax => maximum_unique H ν μ hν hμ hp hm hmax⟩
+
 #print axioms stationary_ratio_bounds
 #print axioms regularized_maximum
+#print axioms positive_maximum
+#print axioms unique_positive_maximum
 
 end D5.S3.Combinatorics.Graph.LegalWords.HarmonicDualMaximizer
