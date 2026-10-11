@@ -55,7 +55,7 @@ internal sealed class BinaryBinBaseChangeDocument : IScribeDocumentDefinition
     private static Formula Smul(Formula x, Formula y) => Seq(x, Sp, Cdot, Sp, y);
     private static Formula Tensor(Formula x, Formula y) =>
         Call("tensor", x, y);
-    private static Formula ArrowOf(Formula x, Formula y) => new Formula.TypeArrow(x, y);
+    private static Formula ArrowOf(Formula x, Formula y) => Parenthesized(new Formula.TypeArrow(x, y));
     private static Formula Lambda(string name, Formula type, Formula body) =>
         Parenthesized(Seq(Parenthesized(Seq(F.Id(name), Sp, Colon, Sp, type)), Sp, Mapsto, Sp, body));
     private static Formula Assumption(Formula x, Formula body) =>

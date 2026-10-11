@@ -15,7 +15,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     private static Formula Letter => Call("Letter");
     private static Formula Sites => Call("Pos", A, B);
     private static Formula Words => Call("Word", A, B);
-    private static Formula RawWords => new Formula.TypeArrow(Sites, Letter);
+    private static Formula RawWords => Parenthesized(new Formula.TypeArrow(Sites, Letter));
     private static Formula Vectors => Call("Space", K, A, B);
     private static Formula Length => PlusOf(PlusOf(A, B), D(2));
 
@@ -294,12 +294,15 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     private static Formula MarkedFin(Formula x) => MarkedCall("Fin", x);
     private static Formula MarkedIndex(Formula value, Formula length) =>
         MarkedParenthesized(Seq(MarkedCall("Fin.mk", value), Sp, Colon, Sp, MarkedFin(length)));
-    private static Formula MarkedBin(Formula x) => new Formula.TypeArrow(MarkedFin(x), MarkedBool);
+    private static Formula MarkedBin(Formula x) => MarkedParenthesized(new Formula.TypeArrow(MarkedFin(x), MarkedBool));
     private static Formula MarkedAssumption(Formula x, Formula body) => Seq(OpenBracket, x, CloseBracket, Sp, body);
     private static Formula MarkedAB(Formula body) => MarkedAll("a", MarkedNats, MarkedAll("b", MarkedNats, body));
     private static Formula MarkedFieldAB(Formula body) => MarkedAll("K", MarkedCall("Type"), MarkedAssumption(MarkedCall("Field", MarkedK), MarkedAB(body)));
     private static Formula MarkedLambda(string name, Formula type, Formula body) =>
         MarkedParenthesized(Seq(MarkedParenthesized(Seq(F.Id(name), Sp, Colon, Sp, type)), Sp, Mapsto, Sp, body));
+    private static Formula MarkedSigma(string name, Formula type, Formula body) =>
+        MarkedParenthesized(Seq(Sigma, Sp,
+            MarkedParenthesized(Seq(F.Id(name), Sp, Colon, Sp, type)), Comma, Sp, body));
     private static Formula MarkedSum(string name, Formula type, Formula body) =>
         Seq(new Formula.Subscript(F.Sum, Seq(F.Id(name), InMacro, type)), Sp, MarkedParenthesized(body));
     private static Formula MarkedWord(Formula x) => MarkedCall("Prod.fst", MarkedCall("val", x));
@@ -359,8 +362,8 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     {
         var m = F.Id("m"); var n = F.Id("n");
         var fields = MarkedCall("Prod", MarkedSites,
-            MarkedCall("Sigma", MarkedNats, MarkedLambda("m", MarkedNats,
-                MarkedCall("Sigma", MarkedNats, MarkedLambda("n", MarkedNats, MarkedCall("Prod", MarkedBin(m), MarkedBin(n)))))));
+            MarkedSigma("m", MarkedNats,
+                MarkedSigma("n", MarkedNats, MarkedCall("Prod", MarkedBin(m), MarkedBin(n)))));
         return MarkedAB(MarkedEq(MarkedCoords, MarkedCall("Subtype", MarkedLambda("c", fields,
             MarkedAnd(MarkedEq(MarkedAdd(MarkedCM, MarkedCN), MarkedAdd(MarkedA, MarkedB)), MarkedEq(MarkedAdd(MarkedCall("ones", MarkedCU), MarkedCall("ones", MarkedCV)), MarkedB))))));
     }

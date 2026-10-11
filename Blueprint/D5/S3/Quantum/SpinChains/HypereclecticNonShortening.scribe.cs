@@ -127,8 +127,8 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
     private static Formula Nats() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Rats() => Seq(Mathbb, Grp(F.Id("Q")));
     private static Formula Fin(Formula n) => Call("Fin", n);
-    private static Formula Word(Formula n) => new Formula.TypeArrow(Fin(n), Call("Bool"));
-    private static Formula Vectors(Formula n) => new Formula.TypeArrow(Word(n), Rats());
+    private static Formula Word(Formula n) => Parenthesized(new Formula.TypeArrow(Fin(n), Call("Bool")));
+    private static Formula Vectors(Formula n) => Parenthesized(new Formula.TypeArrow(Word(n), Rats()));
     private static Formula Sum(Formula n, Formula i, Formula body) =>
         Seq(new Formula.Subscript(F.Sum, Seq(i, InMacro, Fin(n))), Sp, body);
     private static Formula At(Formula w, Formula i) => Apply(w, i);
