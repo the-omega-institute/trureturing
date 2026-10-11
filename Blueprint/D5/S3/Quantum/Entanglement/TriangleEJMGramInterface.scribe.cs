@@ -7,9 +7,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
 internal sealed class TriangleEJMGramInterfaceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Quantum/baumer2024trianglelocal");
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite exact bridge for PR #15164 has been formalized over rational weights. The regular tetrahedron Gram entries produce the three EJM probability classes 25/256, 1/256 and 5/256, and the three independent source visibilities produce an explicit eight-term multi-affine mixture. These declarations are probability identities only. They do not assert triangle locality of EJM and do not provide an inflation certificate.",
         H("Exact EJM Gram probabilities and independent-source noise"),
@@ -57,7 +54,7 @@ internal sealed class TriangleEJMGramInterfaceDocument : IScribeDocumentDefiniti
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(Source),
+            AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))),
             role);
 }
