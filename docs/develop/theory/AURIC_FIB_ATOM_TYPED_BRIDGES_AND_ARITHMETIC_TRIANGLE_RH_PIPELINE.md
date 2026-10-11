@@ -864,3 +864,84 @@ end AuricFIB
 10. 再定义算术编码、三角提升和 RH 缺陷传送。
 
 这样可以把有限五态代数与尚未完成的外部桥接分开，避免 bridge-only 定义污染基础定理。
+
+
+## 14. 有限三角提升的精确契约
+
+上一节的 TriangleLift 是桥接占位。对当前五态理论，较小且可形式化的版本应先固定为有限源空间。
+
+~~~lean
+abbrev FiniteDist (α : Type) [Fintype α] := α → ℝ
+
+def IsFiniteDist (μ : FiniteDist α) : Prop :=
+  (∀ a, 0 ≤ μ a) ∧ (∑ a, μ a = 1)
+
+structure LocalKernel (Ω Out : Type) [Fintype Out] where
+  prob : Ω → Out → ℝ
+  nonnegative : ∀ ω o, 0 ≤ prob ω o
+  normalized : ∀ ω, ∑ o, prob ω o = 1
+
+structure TriangleLiftFinite
+    (Λα Λβ Λγ : Type)
+    [Fintype Λα] [Fintype Λβ] [Fintype Λγ] where
+  μα : FiniteDist Λα
+  μβ : FiniteDist Λβ
+  μγ : FiniteDist Λγ
+  μα_prob : IsFiniteDist μα
+  μβ_prob : IsFiniteDist μβ
+  μγ_prob : IsFiniteDist μγ
+  A : LocalKernel (Λβ × Λγ) Bool
+  B : LocalKernel (Λγ × Λα) Bool
+  C : LocalKernel (Λα × Λβ) Bool
+
+def triangleObserved
+    (T : TriangleLiftFinite Λα Λβ Λγ)
+    (a b c : Bool) : ℝ :=
+  ∑ α, ∑ β, ∑ γ,
+    T.μα α * T.μβ β * T.μγ γ
+      * T.A.prob (β, γ) a
+      * T.B.prob (γ, α) b
+      * T.C.prob (α, β) c
+
+theorem triangleObserved_probability
+    (T : TriangleLiftFinite Λα Λβ Λγ)
+    : IsFiniteDist (triangleObserved T) := by
+  sorry
+
+def LocalPushforward
+    (T : TriangleLiftFinite Λα Λβ Λγ)
+    (q : Law) : Prop :=
+  ∃ f : Bool × Bool × Bool → Mode,
+    q = fun s =>
+      ∑ abc, if f abc = s then triangleObserved T abc else 0
+~~~
+
+这个有限版本把三件事分开：
+
+1. \(\mu_\alpha\mu_\beta\mu_\gamma\) 的独立源乘积；
+2. 每个观察者只读取相邻的两个源；
+3. FIB 五态律是最终输出的有限事件推前。
+
+因此可以单独证明：
+
+\[
+\text{TriangleLiftFinite}
+\Longrightarrow
+\text{IsProbability}(q),
+\]
+
+再研究 \(q\) 的 \((X,Y,Z,\kappa)\) 坐标。若要研究非二值输出，只需把 Bool 替换为有限输出类型。
+
+对素数驱动，同样优先使用有限版本：
+
+~~~lean
+structure ArithmeticEncoding (C : Type) where
+  encode : C → Law
+  valid : ∀ c, IsProbability (encode c)
+  visible_driver : C → ℝ × ℝ × ℝ
+  visible_correct :
+    ∀ c, visible (encode c) = visible_driver c
+~~~
+
+这样可以把“算术输入改变哪一个 FIB 模式质量”作为一个可计算函数，而不是用模式名称相似性代替编码定义。
+
