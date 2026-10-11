@@ -1,35 +1,105 @@
 name: Lean build cache publication
 
+# Scheduled runs keep the protected-dev Release publication contract.  Manual
+# runs are the independent Actions-cache producer: dispatch on the exact
+# protected branch ref, provide a 40-hex commit reachable from that branch, and
+# allow up to the GitHub-hosted 360-minute job limit.  Example:
+# gh workflow run lean-cache-publish.yml --ref dev \
+#   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
   schedule:
     - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'Exact protected source ref (refs/heads/dev or refs/heads/integration-...)'
+        required: true
+        type: string
+        default: refs/heads/dev
+      source_sha:
+        description: '40-hex commit reachable from source_ref; the producer checks this pin'
+        required: true
+        type: string
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   publish:
     name: Publish the Lean build cache
-    if: github.ref == 'refs/heads/dev'
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.ref == 'refs/heads/dev')
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    timeout-minutes: ${{ github.event_name == 'workflow_dispatch' && 360 || 120 }}
     env:
-      STRATALINT_CACHE_WRITES: 'false'
+      STRATALINT_CACHE_WRITES: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
+          fetch-depth: 2
           persist-credentials: false
+      - name: Validate the manual source ref and immutable pin
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          WORKFLOW_REF: ${{ github.ref }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_REF" == "$WORKFLOW_REF" ]] || {
+            echo "CACHE_SOURCE_ERROR source_ref must equal the workflow dispatch ref" >&2
+            exit 2
+          }
+          [[ "$SOURCE_REF" =~ ^refs/heads/(dev|integration-[A-Za-z0-9._/-]+)$ ]] || {
+            echo "CACHE_SOURCE_ERROR source ref is outside dev/integration protected scope" >&2
+            exit 2
+          }
+          git check-ref-format "$SOURCE_REF" >/dev/null || {
+            echo "CACHE_SOURCE_ERROR source ref is not a valid Git ref" >&2
+            exit 2
+          }
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ && "$SOURCE_SHA" != "$(printf '%040d' 0)" ]] || {
+            echo "CACHE_SOURCE_ERROR source_sha must be a nonzero 40-hex SHA" >&2
+            exit 2
+          }
+          branch="${SOURCE_REF#refs/heads/}"
+          protected="$(gh api "repos/$REPOSITORY/branches/$branch" --jq '.protected')"
+          [[ "$protected" == true ]] || {
+            echo "CACHE_SOURCE_ERROR source branch is not protected" >&2
+            exit 2
+          }
+          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" --jq '.merge_base_commit.sha')"
+          [[ "$merge_base" == "$SOURCE_SHA" ]] || {
+            echo "CACHE_SOURCE_ERROR source_sha is not an ancestor of the protected branch" >&2
+            exit 2
+          }
+          {
+            echo "STRATALINT_CACHE_SOURCE_REF=$SOURCE_REF"
+            echo "STRATALINT_CACHE_SOURCE_COMMIT=$SOURCE_SHA"
+            echo "STRATALINT_CACHE_CHECKED_OUT_SHA=$SOURCE_SHA"
+            echo "STRATALINT_CACHE_SOURCE_VALIDATED=true"
+          } >> "$GITHUB_ENV"
       - name: Validate candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          GITHUB_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+      - name: Build the Lean producer for the manual seed
+        if: github.event_name == 'workflow_dispatch'
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
+      - name: Build the scheduled Release producer
+        if: github.event_name == 'schedule'
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - id: keys
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
         if: steps.keys.outputs.elan_key != ''
@@ -62,7 +132,64 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Build once and publish the successful snapshot
+      - name: Build the report and run the compiled judge
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
+          if [[ -n "$producer" ]]; then
+            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+          else
+            unset STRATALINT_LEAN_PRODUCER_DLL
+          fi
+          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+          make compiled-judge-test
+      - id: project_snapshot
+        name: Prepare the manual project seed
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          STRATALINT_CACHE_WRITES: 'true'
+          STRATALINT_REPORT_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
+      - name: Require a usable manual project seed
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          READY: ${{ steps.project_snapshot.outputs.project_ready }}
+          MATCHED: ${{ steps.project.outputs.cache-matched-key }}
+        run: |
+          if [[ "$READY" != true && -z "$MATCHED" ]]; then
+            echo "CACHE_SEED_ERROR manual build produced no accepted project seed" >&2
+            exit 1
+          fi
+      - name: Publish the manual project seed
+        if: github.event_name == 'workflow_dispatch' && steps.project_snapshot.outputs.project_ready == 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+      - id: dependency_snapshot
+        name: Prepare the manual dependency seed
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          STRATALINT_CACHE_WRITES: 'true'
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
+      - name: Publish the manual dependency seed
+        if: github.event_name == 'workflow_dispatch' && steps.dependency_snapshot.outputs.dependency_ready == 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+      - name: Publish the manual toolchain seed
+        if: github.event_name == 'workflow_dispatch' && steps.elan.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - name: Publish the protected-dev Release snapshot
+        if: github.event_name == 'schedule'
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib
