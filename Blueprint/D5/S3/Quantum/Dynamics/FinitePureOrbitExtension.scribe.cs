@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Dynamics;
 internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Purity of the first twice-dimension channel iterates forces purity for every later iterate.",
+        "For a channel given by a complete finite Kraus family, purity of its first twice-dimension iterates forces purity forever.",
         H("Finite pure-direction orbit extension"),
         Blocks(
             Paragraph(Text(
@@ -25,8 +25,11 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                 "For a nonzero complex vector v, directionState(v) normalizes by the square "
                 + "root of the sum of squared coordinate moduli. Its matrix is the outer "
                 + "product of v and its conjugate divided by that sum. In the channel formulas, "
-                + "Vector(d) is complex d-space, KrausIndex(d) is Fin(d) times Fin(d), and "
-                + "Kraus(C,u) is the canonical Kraus matrix for C at u.")),
+                + "Vector(d) is complex d-space, I is any finite index type, and K(u) is a "
+                + "complex d-by-d matrix. KrausAction(C,K) means that C(X) is the sum of "
+                + "K(u) X K(u)* over u in I, for every matrix X. Complete(K) means that "
+                + "the sum of K(u)* K(u) is the identity. For a complete table, "
+                + "Channel(K) denotes the channel selected by finite_kraus_quantum_channel.")),
             Describe.Lean(
                 DescribeId.Create("map-direction-state"),
                 DeclarationHandle.Create(
@@ -35,7 +38,7 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(Transition()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every dimension d, CPTP channel C, nonzero vectors v and w, and "
+                    "For every dimension d, finite Kraus family K representing a CPTP channel C, nonzero vectors v and w, and "
                     + "Kraus coefficient tuple mu, if every K(u)v equals mu(u)w, then C sends "
                     + "directionState(v) exactly to directionState(w). The input and output "
                     + "vectors need not have equal mass. Trace preservation determines the "
@@ -51,7 +54,7 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                 Blocks(
                     Paragraph(Text(
                         "For arbitrary d and N, let rho be a sequence of density states for "
-                        + "a fixed CPTP channel C. Suppose rho(n+1)=C(rho(n)) for n<N, "
+                        + "a fixed CPTP channel C with the specified finite Kraus family K. Suppose rho(n+1)=C(rho(n)) for n<N, "
                         + "and rho(n) is pure for n at most N. There exist an endomorphism A "
                         + "and a nonzero x representing rho(0), such that A^n x is nonzero "
                         + "for n at most N and every Kraus image of A^n x is a scalar multiple "
@@ -106,8 +109,10 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every natural dimension d, every CPTP channel C on complex d-space, "
-                        + "and every density state rho, suppose C iterated n times on rho is pure "
+                        "For every natural dimension d and every finite family K of complex d-by-d "
+                        + "matrices whose adjoint products sum to the identity, let C be the channel "
+                        + "selected by finite_kraus_quantum_channel. For every density state rho, "
+                        + "suppose C iterated n times on rho is pure "
                         + "for n less than 2d. Then every iterate is pure. This includes the pure "
                         + "initial state and assumes neither unitality nor orthogonality nor periodicity. "
                         + "The zero-dimensional case has no density state.")),
@@ -127,8 +132,14 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
                         "Finally, trace preservation makes the channel action on each normalized "
                         + "orbit direction equal to the next normalized direction. Induction gives "
                         + "equality with the actual mapState iterates of the original channel and "
-                        + "initial state. The finite-prefix lift and exact transition are proved "
-                        + "as consumed auxiliary declarations in this module."))),
+                        + "initial state. The finite-prefix lift and exact transition supply this "
+                        + "identification.")),
+                    Paragraph(Text(
+                        "The statement here takes a finite Kraus table as input. Choi's "
+                        + "finite-dimensional Kraus representation theorem implies that every "
+                        + "abstract CPTP channel has such a table; that literature-attested "
+                        + "representation theorem is an additional dependency for the abstract-channel "
+                        + "corollary and is not proved here."))),
                 DescribeRole.Theorem))));
 
     private static Formula All(string name, Formula type, Formula body) =>
@@ -136,14 +147,14 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
 
     private static Formula ChannelFormula()
     {
-        Formula nat = Seq(Mathbb, Grp(F.Id("N")));
-        Formula pure = Call("IsPure", Call("iterate", F.Id("C"), F.Id("n"), F.Id("r")));
-        return Disp(All("d", nat,
-            All("C", Call("QuantumChannel", F.Id("d")),
-            All("r", Call("DensityState", F.Id("d")), Seq(
-                Open, All("n", nat, Seq(F.Id("n"), Lt, D(2), F.Id("d"),
+        Formula pure = Call("IsPure", Call("iterate", Call("Channel", F.Id("K")), F.Id("n"), F.Id("r")));
+        return Disp(All("d", NatType(),
+            All("I", Call("FiniteType"), All("K", Arrow(Index(), Call("Matrix", F.Id("d"))),
+            Seq(Call("Complete", F.Id("K")), Sp, Rightarrow, Sp,
+            All("r", State(), Seq(
+                Open, All("n", NatType(), Seq(F.Id("n"), Lt, D(2), F.Id("d"),
                     Sp, Rightarrow, Sp, pure)), Close,
-                Sp, Rightarrow, Sp, All("n", nat, pure))))));
+                Sp, Rightarrow, Sp, All("n", NatType(), pure))))))));
     }
 
     private static Formula Formula()
@@ -183,7 +194,7 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
     private static Formula NatType() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Vec() => Call("Vector", F.Id("d"));
     private static Formula State() => Call("DensityState", F.Id("d"));
-    private static Formula Index() => Call("KrausIndex", F.Id("d"));
+    private static Formula Index() => F.Id("I");
     private static Formula Arrow(Formula a, Formula b) => Seq(a, To, b);
     private static Formula P(Formula v) => Call("directionState", v);
     private static Formula R(Formula n) => Seq(F.Id("r"), Open, n, Close);
@@ -206,14 +217,15 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
     {
         Formula u = F.Id("u"), v = F.Id("v"), w = F.Id("w");
         return Disp(All("d", NatType(),
+            All("I", Call("FiniteType"), All("K", Arrow(Index(), Call("Matrix", F.Id("d"))),
             All("C", Call("QuantumChannel", F.Id("d")),
             All("v", Vec(), All("w", Vec(),
             All("m", Arrow(Index(), Seq(Mathbb, Grp(F.Id("C")))), Seq(
-                Open, And(Nonzero(v), Nonzero(w),
-                    All("u", Index(), Seq(Call("Kraus", F.Id("C"), u), v,
+                Open, And(Call("KrausAction", F.Id("C"), F.Id("K")), Nonzero(v), Nonzero(w),
+                    All("u", Index(), Seq(Call("apply", F.Id("K"), u), v,
                         Eq, F.Id("m"), Open, u, Close, w))), Close,
                 Sp, Rightarrow, Sp,
-                Call("mapState", F.Id("C"), P(v)), Eq, P(w))))))));
+                Call("mapState", F.Id("C"), P(v)), Eq, P(w))))))))));
     }
 
     private static Formula Lift()
@@ -224,18 +236,19 @@ internal sealed class FinitePureOrbitExtensionDocument : IScribeDocumentDefiniti
             Sp, Rightarrow, Sp, Nonzero(LiftOrbit(n))));
         Formula collinearPrefix = All("n", NatType(), Seq(n, Lt, F.Id("N"),
             Sp, Rightarrow, Sp, Ex("m", Arrow(Index(), Seq(Mathbb, Grp(F.Id("C")))),
-                All("u", Index(), Seq(Call("Kraus", F.Id("C"), u), LiftOrbit(n),
+                All("u", Index(), Seq(Call("apply", F.Id("K"), u), LiftOrbit(n),
                     Eq, F.Id("m"), Open, u, Close, LiftOrbit(successor))))));
         return Disp(All("d", NatType(), All("N", NatType(),
+            All("I", Call("FiniteType"), All("K", Arrow(Index(), Call("Matrix", F.Id("d"))),
             All("C", Call("QuantumChannel", F.Id("d")),
             All("r", Arrow(NatType(), State()), Seq(
-                Open, And(
+                Open, And(Call("KrausAction", F.Id("C"), F.Id("K")),
                     All("n", NatType(), Seq(n, Lt, F.Id("N"), Sp, Rightarrow, Sp,
                         R(successor), Eq, Call("mapState", F.Id("C"), R(n)))),
                     All("n", NatType(), Seq(n, Le, Sp, F.Id("N"), Sp, Rightarrow, Sp,
                         Call("IsPure", R(n))))), Close,
                 Sp, Rightarrow, RowBreak, Grp(),
                 Ex("A", Call("End", Vec()), Ex("x", Vec(),
-                    And(Nonzero(x), Seq(P(x), Eq, R(D(0))), nonzeroPrefix, collinearPrefix)))))))));
+                    And(Nonzero(x), Seq(P(x), Eq, R(D(0))), nonzeroPrefix, collinearPrefix)))))))))));
     }
 }

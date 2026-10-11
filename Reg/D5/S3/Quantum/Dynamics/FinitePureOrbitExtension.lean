@@ -11,6 +11,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
+open _root_.D5.S3.Quantum.Foundation.FiniteKrausChannel
+open scoped BigOperators
 
 set_option quotPrecheck false in
 local notation "identityChannel" => fun (d : ℕ) =>
@@ -147,6 +149,8 @@ end Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension
 
 namespace Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Channel
 
+universe u
+
 open _root_.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension
 open _root_.D5.S3.Quantum.Foundation.FiniteStateChannel
 open _root_.D5.S3.Quantum.Foundation.FiniteDiamondDistance
@@ -192,18 +196,21 @@ def rejected : Realization signature :=
 
 @[reducible] def arena : Arena where
   signature := signature
-  Law R := ∀ {d : ℕ} (channel : QuantumChannel (Fin d) (Fin d))
-    (ρ : DensityState (Fin d))
-    (_hpure : ∀ n < R.readout () () d, IsPure ((channel.mapState)^[n] ρ)),
-    ∀ n : ℕ, IsPure ((channel.mapState)^[n] ρ)
+  Law R := ∀ {d : ℕ} {κ : Type u} [Fintype κ]
+    (K : κ → Matrix (Fin d) (Fin d) ℂ)
+    (hK : ∑ u, (K u).conjTranspose * K u = 1) (ρ : DensityState (Fin d))
+    (_hpure : ∀ n < R.readout () () d,
+      IsPure (((finite_kraus_quantum_channel K hK).choose.mapState)^[n] ρ)),
+    ∀ n : ℕ, IsPure (((finite_kraus_quantum_channel K hK).choose.mapState)^[n] ρ)
 
-private theorem actual_law : arena.Law actual := @finite_pure_prefix_extension
+private theorem actual_law : arena.{u}.Law actual := @finite_pure_prefix_extension.{u}
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  exact mixed_not_pure (h (identityChannel 2) mixed (fun n hn => (Nat.not_lt_zero n hn).elim) 0)
+  exact mixed_not_pure (h (κ := PUnit.{u+1}) (fun _ => 1) (by simp) mixed
+    (fun n hn => (Nat.not_lt_zero n hn).elim) 0)
 
-def registration : Registration arena (arena.Law actual) where
+def registration : Registration arena.{u} (arena.{u}.Law actual) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -220,14 +227,14 @@ def registration : Registration arena (arena.Law actual) where
     exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
 
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@finite_pure_prefix_extension)
+    (@finite_pure_prefix_extension.{u})
     (type_of% (realize signature (fun _ _ n => 2 * n) (fun e => nomatch e))) Type Unit := {
   unitName := `Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Channel.informationUnit,
   realizationName := `Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Channel.registration,
   realizationSource := none, generated := false,
-  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source arena ⟨registration⟩,
+  realization := .source arena.{u} ⟨registration.{u}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature (fun _ _ n => 2 * n) (fun e => nomatch e)),
@@ -237,7 +244,7 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Dynamics.FinitePureOrbitExtension,
     definition := none, coordinates := #[],
     readouts := #[{
-      path := #["body", "body", "body", "domain", "body", "domain", "arg"],
+      path := #["body", "body", "body", "body", "body", "body", "domain", "body", "domain", "arg"],
       stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
@@ -255,6 +262,8 @@ open LeanInformationAudit
 open scoped BigOperators ComplexOrder MatrixOrder Matrix
 
 namespace Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Kraus
+
+universe u
 
 set_option quotPrecheck false in
 local notation "basisState" => fun {d : ℕ} (i : Fin d) =>
@@ -284,26 +293,32 @@ def rejected : Realization signature :=
 
 @[reducible] def arena : Arena where
   signature := signature
-  Law R := ∀ {d N : ℕ}
-    (channel : QuantumChannel (Fin d) (Fin d)) (ρ : ℕ → DensityState (Fin d))
+  Law R := ∀ {d N : ℕ} {κ : Type u} [Fintype κ]
+    (channel : QuantumChannel (Fin d) (Fin d))
+    (K : κ → Matrix (Fin d) (Fin d) ℂ)
+    (_hK : ∀ X : Matrix (Fin d) (Fin d) ℂ,
+      CStarMatrix.ofMatrix.symm (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+        ∑ u, K u * X * (K u).conjTranspose)
+    (ρ : ℕ → DensityState (Fin d))
     (_hstep : ∀ n < N, ρ (n + 1) = channel.mapState (ρ n))
     (_hpure : ∀ n ≤ N, IsPure (ρ n)),
     ∃ (A : Module.End ℂ (Fin d → ℂ)) (x : Fin d → ℂ),
       (∃ hx : x ≠ 0, directionState x hx = ρ 0) ∧
       (∀ n ≤ N, R.readout () ⟨d, A, n⟩ x ≠ 0) ∧
-      ∀ n < N, ∃ μ : Fin d × Fin d → ℂ,
-        ∀ u, (krausRepresentation channel.toCompletelyPositiveMap).1 u *ᵥ ((A ^ n) x) =
+      ∀ n < N, ∃ μ : κ → ℂ,
+        ∀ u, K u *ᵥ ((A ^ n) x) =
           μ u • ((A ^ (n + 1)) x)
 
-private theorem actual_law : arena.Law actual := @linear_lift_of_pure_prefix
+private theorem actual_law : arena.{u}.Law actual := @linear_lift_of_pure_prefix.{u}
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  obtain ⟨A, x, _, hn, _⟩ := h (N := 0) (identityChannel 1) (fun _ => basisState 0)
+  obtain ⟨A, x, _, hn, _⟩ := h (N := 0) (identityChannel 1) (fun _ : PUnit.{u+1} => 1)
+    (by intro X; simp; rfl) (fun _ => basisState 0)
     (fun n hn => (Nat.not_lt_zero n hn).elim) (fun _ _ => ⟨_, rfl⟩)
   exact hn 0 (Nat.zero_le _) rfl
 
-def registration : Registration arena (arena.Law actual) where
+def registration : Registration arena.{u} (arena.{u}.Law actual) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -323,14 +338,14 @@ def registration : Registration arena (arena.Law actual) where
     exact zero_ne_one hh
 
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@linear_lift_of_pure_prefix)
+    (@linear_lift_of_pure_prefix.{u})
     (type_of% (realize signature (fun _ p v => (p.2.1 ^ p.2.2) v) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Kraus.Lift.informationUnit,
   realizationName := `Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Kraus.Lift.registration,
   realizationSource := none, generated := false,
-  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source arena ⟨registration⟩,
+  realization := .source arena.{u} ⟨registration.{u}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature (fun _ p v => (p.2.1 ^ p.2.2) v) (fun e => nomatch e)),
@@ -338,9 +353,10 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.Dynamics.FinitePureOrbitExtension,
-    definition := none, coordinates := #[0, 6, 8],
+    definition := none, coordinates := #[0, 10, 12],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "body",
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "arg", "body",
         "arg", "body", "arg", "fn", "arg", "body", "body", "fn", "arg"],
       stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
       booleanPredicate := false }] },
@@ -371,29 +387,37 @@ def rejected : Realization signature :=
 
 @[reducible] def arena : Arena where
   signature := signature
-  Law R := ∀ {d : ℕ} (channel : QuantumChannel (Fin d) (Fin d))
+  Law R := ∀ {d : ℕ} {κ : Type u} [Fintype κ]
+    (channel : QuantumChannel (Fin d) (Fin d))
+    (K : κ → Matrix (Fin d) (Fin d) ℂ)
+    (_hK : ∀ X : Matrix (Fin d) (Fin d) ℂ,
+      CStarMatrix.ofMatrix.symm (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+        ∑ u, K u * X * (K u).conjTranspose)
     (v w : Fin d → ℂ) (hv : v ≠ 0) (hw : w ≠ 0)
-    (μ : Fin d × Fin d → ℂ)
-    (_hcol : ∀ u, (krausRepresentation channel.toCompletelyPositiveMap).1 u *ᵥ v = μ u • w),
+    (μ : κ → ℂ)
+    (_hcol : ∀ u, K u *ᵥ v = μ u • w),
     R.readout () ⟨d, channel⟩ (directionState v hv) = directionState w hw
 
-private theorem actual_law : arena.Law actual := @map_directionState_of_collinear
+private theorem actual_law : arena.{u}.Law actual := @map_directionState_of_collinear.{u}
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   obtain ⟨A, x, ⟨hx, hinit⟩, hnz, hcol⟩ :=
-    linear_lift_of_pure_prefix (N := 1) (identityChannel 2) (fun _ => basisState 0)
+    linear_lift_of_pure_prefix (N := 1) (identityChannel 2)
+      (fun _ : PUnit.{u+1} => 1) (by intro X; simp; rfl) (fun _ => basisState 0)
       (fun _ _ => rfl) (fun _ _ => ⟨_, rfl⟩)
   obtain ⟨μ, hμ⟩ := hcol 0 (by omega)
   have hy := hnz 1 (le_refl _)
-  have hbad := h (identityChannel 2) x ((A ^ 1) x) hx hy μ (by simpa using hμ)
+  have hbad := h (identityChannel 2) (fun _ : PUnit.{u+1} => 1)
+    (by intro X; simp; rfl) x ((A ^ 1) x) hx hy μ (by simpa using hμ)
   change basisState 1 = directionState ((A ^ 1) x) hy at hbad
-  have hgood := map_directionState_of_collinear (identityChannel 2) x ((A ^ 1) x)
+  have hgood := map_directionState_of_collinear (identityChannel 2) (fun _ : PUnit.{u+1} => 1)
+    (by intro X; simp; rfl) x ((A ^ 1) x)
     hx hy μ (by simpa using hμ)
   change directionState x hx = directionState ((A ^ 1) x) hy at hgood
   exact basisState_ne (hinit.symm.trans (hgood.trans hbad.symm))
 
-def registration : Registration arena (arena.Law actual) where
+def registration : Registration arena.{u} (arena.{u}.Law actual) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actual_law, rejected, rejected_law⟩
@@ -410,14 +434,14 @@ def registration : Registration arena (arena.Law actual) where
     exact ⟨⟨2, identityChannel 2⟩, basisState 0, basisState 1, basisState_ne⟩
 
 def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@map_directionState_of_collinear)
+    (@map_directionState_of_collinear.{u})
     (type_of% (realize signature (fun _ p ρ => p.2.mapState ρ) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Kraus.Transition.informationUnit,
   realizationName := `Reg.D5.S3.Quantum.Dynamics.FinitePureOrbitExtension.Kraus.Transition.registration,
   realizationSource := none, generated := false,
-  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source arena ⟨registration⟩,
+  realization := .source arena.{u} ⟨registration.{u}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature (fun _ p ρ => p.2.mapState ρ) (fun e => nomatch e)),
@@ -425,9 +449,10 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.Dynamics.FinitePureOrbitExtension,
-    definition := none, coordinates := #[0, 1],
+    definition := none, coordinates := #[0, 3],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "fn", "arg"],
       stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
       booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,

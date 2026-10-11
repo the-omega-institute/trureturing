@@ -197,7 +197,8 @@ theorem linear_lift_of_pure_prefix {d N : ℕ} {κ : Type*} [Fintype κ]
     (K : κ → Matrix (Fin d) (Fin d) ℂ)
     (hK : ∀ X : Matrix (Fin d) (Fin d) ℂ,
       CStarMatrix.ofMatrix.symm (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
-        ∑ u, K u * X * (K u).conjTranspose) (ρ : ℕ → DensityState (Fin d))
+        ∑ u, K u * X * (K u).conjTranspose)
+    (ρ : ℕ → DensityState (Fin d))
     (hstep : ∀ n < N, ρ (n + 1) = channel.mapState (ρ n))
     (hpure : ∀ n ≤ N, IsPure (ρ n)) :
     ∃ (A : Module.End ℂ (Fin d → ℂ)) (x : Fin d → ℂ),
@@ -226,7 +227,7 @@ theorem linear_lift_of_pure_prefix {d N : ℕ} {κ : Type*} [Fintype κ]
     exact hψ (n + 1) n.isLt
   choose c hcol hweight using hc
   obtain ⟨h, hh⟩ := Module.Dual.exists_forall_ne_zero_of_forall_exists
-    (fun n : Fin N => dotProductEquiv ℂ (κ) (c n)) (by
+    (fun n : Fin N => dotProductEquiv ℂ κ (c n)) (by
       intro n
       refine ⟨star (c n), ?_⟩
       change c n ⬝ᵥ star (c n) ≠ 0
