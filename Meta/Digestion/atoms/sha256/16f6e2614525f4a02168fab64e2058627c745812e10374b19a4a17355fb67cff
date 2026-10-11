@@ -1,0 +1,2 @@
+由既有观察秩前提，$A_n|_{T_n}$ 的秩为 $n$；其参数对应可直接由 $A_n(\mathbf e_{\{i\}}-\mathbf e_\varnothing)=\mathbf e_i$ 看出。若 $v\in\ker(A_n|_{T_n})$，满射性给出 $B_nf=v$，于是 $A_nB_nf=0$；这证明限制映射的满射性，其核恰是 $\ker B_n$。故得到所述正合列。由秩－零度公式，$\operatorname{rank}B_n=V_n-1$，所以 $c_n=E_n-V_n+1$，并得到中间空间维数。所用秩与商空间结论分别见 Axler，前引书定理 3.21 和 §3E。
+
