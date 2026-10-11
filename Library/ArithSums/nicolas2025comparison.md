@@ -12868,3 +12868,270 @@ Stieltjes errors do not bound the whole terminal comparison. No fixed
 \(\kappa\), source sign, RH, stronger external formal closure or
 all-integer Robin/5040 proof is supplied. The original signed target for
 every \(n>5040\) remains **ACTIVE_UNPROVED**.
+
+
+## Actual Euler-layer separation and the occupied-subtraction scale
+
+These are ordinary mathematical deductions from the actual Euler layers,
+the preceding source geometry, and classical PNT. They do not supply a
+Lean proof or the favorable bound (A12). The source application retains
+all original least full-domain maximizers, every good edge and its entire
+selected interval. Each center has the core of its own edge; no single
+core common to different edges is assumed.
+
+For an actual prime \(q\) and \(k\ge1\), write
+\[
+ h_q=\log q,\quad n_{q,k}=q^k,\quad
+ \beta_{q,k}=\log\left(1+\frac1{q+\cdots+q^k}\right),\quad
+ r_{q,k}=\beta_{q,k}/h_q,
+ \qquad\lambda(\tau_{q,k})=r_{q,k}.
+\]
+The decreasing bijection \(\lambda:(1,\infty)\to(0,\infty)\)
+defines \(\tau_{q,k}\) uniquely. The strict actual inventory uses
+\(\tau_{q,k}<x\), and the weak reference inventory uses
+\(q^k\le x\). In particular
+\[
+ q<\tau_{q,1}<q+1,\qquad \tau_{q,k}<q^k\quad(k\ge2).
+\tag{A20}
+\]
+Indeed \(1/(S+1)<\log(1+1/S)<1/S\) for \(S>0\).
+For \(k=1\), divide by \(\log q\) and compare with
+\(\lambda(q)\) and \(\lambda(q+1)\). For \(k\ge2\),
+\(S+1=1+q+\cdots+q^k<2q^k\le kq^k\), so
+\(r_{q,k}>1/(kq^k\log q)=\lambda(q^k)\).
+
+**Proposition (separation of the two higher-layer phases).** If
+\(k\ge2\) and \(n=q^k\ge16\), then
+\[
+ \tau_{q,k}<3n/4.
+\tag{A21}
+\]
+Consequently, for \(t\ge243\),
+\[
+ t<n\le B_t\ \Longrightarrow\ \tau_{q,k}<t,
+ \qquad
+ t\le\tau_{q,k}\le B_t\ \Longrightarrow\ n>B_t.
+\tag{A22}
+\]
+On an original selected edge, every higher reference atom in the
+forward kernel is therefore already occupied in that edge's literal
+\(U\); every first-layer reference prime in \((t,B_t]\) is absent
+from \(U\).
+
+*Proof.* Since
+\(S+1=(q^{k+1}-1)/(q-1)<nq/(q-1)\),
+\[
+ r_{q,k}>\frac{k(1-1/q)}{n\log n}.
+\]
+The size restriction gives \(k(1-1/q)\ge8/5\): for \(k\ge4\)
+it is at least 2; for \(k=3\) it excludes \(q=2\); for \(k=2\)
+it forces \(q\ge5\). Also \(n\ge16>(4/3)^6\), whence
+\(6\log(3n/4)>5\log n\). Thus
+\[
+ r_{q,k}>\frac8{5n\log n}
+ >\frac1{(3n/4)\log(3n/4)}=\lambda(3n/4),
+\]
+which proves (A21). For \(t\ge3^5\),
+\(H_t\le t/3\) and \(B_t\le4t/3\). These inequalities prove
+both implications in (A22), including their strict endpoints.
+Strict occupation in the edge's \(U\) is exactly \(\tau<t\).
+For a prime \(q>t\), (A20) gives \(\tau_{q,1}>t\), so its
+first layer is absent. \(\square\)
+
+For the actual atom use
+\[
+ k_t^{\rm str}(x)=k_t(x)+b(t)\mathbf1_{x=t}.
+\]
+This keeps the initially tied actual activation, whereas the reference
+atom at \(t\) has zero weight. Both terminal weights vanish. By (A22),
+the two terms of
+\(z_{q,k}(t)=h_q[k_t^{\rm str}(\tau_{q,k})-k_t(q^k)]\)
+cannot both be nonzero for \(t\ge243\). Hence, layer by layer,
+\[
+ (z_{q,k})_-=h_qk_t(q^k),\qquad
+ (z_{q,k})_+=h_qk_t^{\rm str}(\tau_{q,k})\quad(k\ge2).
+\tag{A23}
+\]
+These identities concern the parts of each response, not the parts of
+the sum. Integrating over the complete \(S_X\) gives the reference and
+actual higher-layer sums
+\[
+ H_{\rm ref}=\sum_{q,k\ge2}h_q\mathcal W(q^k),\qquad
+ H_{\rm act}=\sum_{q,k\ge2}h_q\mathcal W(\tau_{q,k}).
+\]
+Initial ties form a finite set of centers and have zero integration
+measure. All contributing layers lie in one finite support: if
+\(\tau_{q,k}\le2\mathcal R\), then
+\(q^k\log q<2\mathcal R\log(2\mathcal R)\), since
+\(r_{q,k}<1/(q^k\log q)\).
+
+### The exact subtraction is larger than a fixed multiple of the mass
+
+Put
+\[
+ A_S(x)=\int_{\substack{t\in S\\t<x<B_t}}\frac{dt}{w(t)t^{11/10}}.
+\]
+The strict/weak conventions and (A20) give the exact pulse identity
+\[
+ Q(x)=\sum_{q,k\ge2}h_q\mathbf1_{\tau_{q,k}<x<q^k}
+ -\sum_qh_q\mathbf1_{q\le x\le\tau_{q,1}}.
+\]
+Finite Stieltjes integration against the absolutely continuous
+\(\mathcal W\), followed by (A1), yields
+\[
+\begin{aligned}
+ \sum_{q,k}h_q[\mathcal W(\tau_{q,k})-\mathcal W(q^k)]
+ ={}&\sum_qh_q\int_q^{\tau_{q,1}}\mathcal W'(x)\,dx\\
+ &+\sum_{q,k\ge2}h_q\int_{\tau_{q,k}}^{q^k}w(x)A_S(x)\,dx
+ -L_{\rm occ}(X),
+\end{aligned}
+\]
+where
+\[
+ L_{\rm occ}(X)=\sum_{q,k\ge2}h_q
+       \int_{S_X\cap(\tau_{q,k},q^k)}b(t)\,dt.
+\tag{A24}
+\]
+This is the original source-local subtraction in the pulse split. It
+has no restriction \(q^k\le B_t\); it is not \(H_{\rm ref}\).
+The finite support just established justifies each interchange.
+
+**Proposition (compulsory scale of the occupied subtraction).** There
+is one finite common start such that every qualifying original witness
+beyond it, with its complete unchanged \(S_X\), satisfies
+\[
+ L_{\rm occ}(X)\ge\frac1{32}\int_{S_X}t^{1/5}\,dt
+ \ge\frac{\ell^{1/5}}{32}M_X.
+\tag{A25}
+\]
+
+*Proof.* Fix a PNT start \(Y\) such that
+\(99y/100\le\theta(y)\le101y/100\) for every \(y\ge Y\).
+Take \(t\ge\max(243,Y^2)\), write \(y=\sqrt t\), and put
+\(c=2/\sqrt3>23/20\). The actual primes \(y<q\le cy\) have
+\(t<q^2\le4t/3\); (A21) gives \(\tau_{q,2}<t\).
+Their exact mass is
+\[
+ \theta(cy)-\theta(y)
+ \ge\left(\frac{99c}{100}-\frac{101}{100}\right)y
+ >\frac{257}{2000}y>\frac18\sqrt t.
+\]
+For \(x\ge243\), the exact logarithmic derivative is
+\[
+ -xw'(x)/w(x)=2+2/\log x-1/(1+\log x)<4.
+\]
+Integrating this bound gives
+\(w(B_t)/w(t)\ge(t/B_t)^4\ge(3/4)^4>1/4\).
+Since \(w\) decreases,
+\[
+ b(t)=\frac{\int_t^{B_t}w(x)dx}{w(t)t^{11/10}}
+ \ge\tfrac14 t^{-3/10}.
+\]
+Every square just counted occurs in the integrand of (A24), even if
+it lies beyond \(B_t\). Their contribution is at least
+\(t^{1/5}/32\); the remaining terms are nonnegative. Integration over
+exactly \(S_X\) proves (A25). The start is finite and unspecified;
+its enlargement for the original source premises is retained. \(\square\)
+
+Thus treating this raw subtraction as \(o(M_X)\), or as bounded by
+\(CM_X\) for a fixed \(C\) along the cofinal original family, has
+the wrong scale. The positive \(wA_S\) term contains the corresponding
+large cancellation. This does not make the centered net response large:
+the already proved reference estimate is
+\(H_{\rm ref}=(1/4+o(1))M_X\). Formula (A23) locates its entire
+negative phase in layers already occupied in the same edge's \(U\).
+The raw subtraction and that negative-phase mass are distinct quantities.
+
+### What legal 5040 integer comparisons exclude
+
+**Proposition (source-relative activation exclusion).** Retain an
+original good edge with endpoint sources \(pU,rU\), clocks \(A<C\),
+strict inventory \(U\) on \([A,C]\), and labels
+\(p,r>2\mathcal R\). For \(t\in[A,C]\), \(t\ge64\), an actual
+prime \(q\le2t\), \(h=\log q\), and \(e=v_q(U)\), one has
+\[
+ \tau_{q,e+1}>t+h/3.
+\]
+If \(e>v_q(5040)\), then also
+\[
+ \tau_{q,e}<t-h/2.
+\tag{A26}
+\]
+The label and source premises are indispensable; no new integer
+maximality at an interpolated real center is asserted.
+
+*Proof.* The labels exceed \(q\), so \(q\ne p,r\). The insertion
+\(rU\to rUq\) stays in the original \(5040r\) class. Maximality gives
+\[
+ \beta_{q,e+1}\le f(C+h)-f(C)\le f(t+h)-f(t).
+\]
+If \(e>v_q(5040)\), deletion \(pU\to pU/q\) stays in the original
+\(5040p\) class and gives a smaller integer. Least attainment makes
+its objective comparison strict:
+\[
+ \beta_{q,e}>f(A)-f(A-h)\ge f(t)-f(t-h).
+\]
+All logarithms are legal, since \(p>q\) and \(U\ge5040\).
+Both transfers use decrease of the corresponding increments of the
+concave \(f\). Strict convexity of \(\lambda=f'\) gives
+\[
+ r_{q,e}>\frac1h\int_{t-h}^t\lambda(s)ds
+ >\lambda(t-h/2),
+\]
+which proves the deletion assertion.
+For insertion, \(h\le\log(2t)\le t/10\). The exact formula for
+\(w\) implies
+\[
+ \frac{w(t+h)}{w(t)}\ge(10/11)^4>2/3.
+\]
+Indeed \(t/(t+h)\ge10/11\),
+\(\log(t+h)-\log t\le h/t\le1/10\le(\log t)/10\), and the
+remaining numerator ratio is at least one. Therefore
+\[
+\begin{aligned}
+ \lambda(t)-r_{q,e+1}
+ &\ge\frac1h\int_0^h(h-u)w(t+u)du\\
+ &\ge\frac h2w(t+h)>\frac h3w(t)
+ \ge\int_0^{h/3}w(t+u)du.
+\end{aligned}
+\]
+It follows that \(r_{q,e+1}<\lambda(t+h/3)\), proving the insertion
+assertion. \(\square\)
+
+In particular, a sufficiently late original selected center has no
+prime in \((t,t+L(t)]\), where \(L(t)=(\log t)/3-1>0\). If such
+a prime existed, (A20) would make it absent from \(U\), so (A26) and
+(A20) would imply both
+\(\tau_{q,1}>t+(\log q)/3\) and
+\(\tau_{q,1}<q+1\le t+(\log t)/3<t+(\log q)/3\).
+But the baseline of this excluded segment is at most
+\[
+ \int_t^{t+L(t)}k_t(x)dx\le b(t)L(t)
+ \le t^{-3/10}\log t/3.
+\]
+Its integral over the complete \(S_X\) is at most
+\(M_X\ell^{-3/10}\log\ell/3=o(M_X)\). This genuine exclusion
+therefore supplies no fixed favorable coefficient.
+
+Finally the conservation test \(g=\mathcal W'/w\) has no globally
+nondecreasing or globally nonincreasing representative on
+\((1,\infty)\). It vanishes almost everywhere before and after the
+compact support \([\ell,2\mathcal R]\). A monotone representative
+with those two properties must vanish everywhere. Then absolute
+continuity forces \(\mathcal W\) to be constant, and compact support
+forces it to be zero, contrary to \(\int\mathcal W=\mathcal D>0\).
+This rules out the global monotone-test shortcut for the actual weight.
+
+The unpaid absolute first-prime level is still
+\[
+ J_{\rm prime}(X)=\sum_qh_q\mathcal W_X(q)-\mathcal D_X,
+ \qquad\mathcal I_X=J_{\rm prime}(X)+H_{\rm ref}(X).
+\]
+Using the already proved \(H_{\rm ref}/M_X=1/4+o(1)\), (A12) is
+equivalent, with fixed slack and the same every-start existence
+quantifiers, to a lower bound
+\(J_{\rm prime}\ge-\kappa_{\rm prime}M_X\) for one prefixed
+\(\kappa_{\rm prime}<\sqrt2/4\). None of (A20)--(A26) supplies
+this signed lower bound. The actual discrete \(\mathcal C_X\ge0\),
+the distinct interpolation costs, and the complete original family
+in (A9)--(A12) remain unchanged. RH and unrestricted Robin remain unproved.
