@@ -48,10 +48,14 @@ on the finite values $C_x$ is imposed.
 
 All finite execution records, stopping events and query sets are
 measurable, using discrete fields for actions and integer responses and
-Borel fields for real proposals. The associated $T_x,h_x,C_x$ are
-measurable on their terminating domains. Arbitrary totalizations on
-null nontermination sets do not change any probability below. The
-sourcewise error and worst-source error are
+Borel fields for real proposals. For each fixed source $x$, the
+terminating domain $L_x$ is measurable and has full measure, and
+$T_x,h_x,C_x$ are measurable there. On $\Theta\setminus L_x$ give them
+the fixed defaults $+\infty$, the empty record and $0$, respectively.
+These totalizations are measurable even when $(\Theta,\mathcal F,\mu)$ is
+not complete, since each default is constant on a measurable set.
+Any other measurable totalizations agreeing on $L_x$ give the same
+probabilities below. The sourcewise error and worst-source error are
 
 $$
 e_x(P)=\mu\{C_x<g(x)\},\qquad
@@ -145,7 +149,7 @@ $$
 \tag{2.4}
 $$
 
-The integrand may be defined arbitrarily on the null omitted set.
+Set the integrand to zero on the measurable null omitted set.
 For $0\le q\le s$, its value is
 $\prod_{i=0}^{q-1}(t-i)/(N-i)$; adding a factor in $[0,1]$ cannot
 increase it. Empty products cover $s=0$, including $t=0$.
@@ -689,42 +693,6 @@ restoration of a state with the reference scalar response law are one
 sufficient way to establish (6.1). Fresh randomness alone is not that
 restoration.
 
-**Theorem 6.2 (when the existing scalar calculation applies to actual retry).**
-Under Assumption 6.1 the actual repeated controller has
-
-$$
-\widetilde h_x=\frac{h_x}{h_x+d_x},\qquad
-\widetilde e_x=\frac{e_x}{h_x+d_x}
-\quad\text{if }h_x+d_x>0,
-\tag{6.2}
-$$
-
-and both proposal probabilities are zero when $h_x+d_x=0$.
-These are the scalar restart identities of
-[KBonacci, Corollary 39.2, equation (39.3)](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md),
-with actual legal regeneration supplying their applicability here.
-The assertion is sourcewise; it does not replace $x$ by a prior mixture.
-
-**Proof.** The finite almost-sure recovery on $R$ makes
-$\Pr_x(A_{j+1})=r_x\Pr_x(A_j)$ by (6.1) and conditional expectation.
-Thus $\Pr_x(A_j)=r_x^{j-1}$. Proposal and false proposal at attempt
-$j$ have probabilities $r_x^{j-1}h_x$ and $r_x^{j-1}e_x$.
-These events are disjoint across $j$, and each contains only a finite
-number of finite past attempts and finite recoveries. Summing their
-geometric series proves (6.2). This is precisely the established scalar
-argument; independence of complete attempt records is stronger than
-needed for these four probabilities.
-
-If $h_x+d_x>0$, then $r_x<1$, so the event of infinitely many returned
-retries has probability $\lim_m r_x^m=0$. The remaining nonproposal
-mass $d_x/(h_x+d_x)$ is literal divergence in an attempt. If
-$h_x+d_x=0$, each reached attempt returns $R$ almost surely, no
-proposal can occur, and the controller makes infinitely many attempts
-almost surely. Each restart has a transition charge, so this case is
-literal divergence of the full execution, despite almost-sure finitude
-of each individual attempt and recovery. Countably many sourcewise
-null recovery failures remain null for each fixed source. $\square$
-
 The regeneration hypothesis concerns conditional laws at actual cuts.
 [Finite Start Predictive Memory, Assumption 10.1 and Definition 11.1](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md)
 separates one fixed source, authentic calibration and acquired updates
@@ -742,7 +710,9 @@ $v$. Every such action costs one call. Independently on each invocation,
 it restores $u$ with probability $\alpha\in[0,1]$ and otherwise halts
 with finite abort. Each Attempt at $u$ also costs one call and uses an
 independent fair bit. The controller stops on a proposal or abort and,
-after a retry, uses Reset before its next attempt. Its probabilities are
+after a retry, uses Reset before its next attempt. At $\alpha=1$ this
+actual recovery meets Assumption 6.1; at $\alpha<1$ it does not.
+Accounting for the actual reset outcomes, its probabilities are
 
 $$
 \Pr(\text{proposal})=\frac1{2-\alpha},\qquad
@@ -758,14 +728,69 @@ literally diverges, the same mass $(1-\alpha)/(2-\alpha)$ is divergence
 rather than finite abort; the expected number of initiated calls stays
 the same, whereas infinite internal execution is then possible.
 
-**Proof.** Reaching another ready attempt requires both a retry and a
-successful reset, of probability $\alpha/2$ conditional on every
-reached ready state. Thus the chance of reaching attempt $j$ is
-$(\alpha/2)^{j-1}$. Sum the disjoint proposal events, each having this
-probability times $1/2$, and abort events, each having it times
-$(1-\alpha)/2$. Their sums are (6.3). The infinite-retry event has
-probability $\lim_m(\alpha/2)^m=0$. Summing the probabilities of
-initiating each attempt and reset gives their expected counts.
+**Proof.** The scalar supplier is
+[KBonacci, Corollary 39.2, equation (39.3)](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md),
+including its disjoint-attempt calculation and zero-denominator case.
+To apply it to actual recovery under Assumption 6.1, fix one original
+source $x$. Removing each finite recovery segment preserves the
+attempt outcome and false-proposal labels, and every reached $R$ is
+followed legally by another attempt at that same $x$. By (6.1) and
+iterated conditional expectation, every finite string of retry outcomes
+followed by a proposal or divergence has the same probability as in
+the supplier's reference restart experiment. This verifies the
+correspondence needed for its scalar calculation; independence of
+complete attempt records is stronger than required. Countably many
+sourcewise null recovery failures remain null for each fixed $x$.
+Thus the credited identities used for this comparison are
+
+$$
+\widetilde h_x=\frac{h_x}{h_x+d_x},\qquad
+\widetilde e_x=\frac{e_x}{h_x+d_x}
+\quad\text{if }h_x+d_x>0,
+\tag{6.2}
+$$
+
+with both zero when $h_x+d_x=0$. When the denominator is positive,
+the supplier's calculation gives zero mass to infinitely many returned
+retries, leaving nonproposal mass $d_x/(h_x+d_x)$ as literal divergence
+in an attempt. When it is zero, every reached attempt returns $R$
+almost surely and the actual controller makes infinitely many attempts
+almost surely. The positive transition charge of every restart makes
+this literal divergence of the full execution, even though each
+attempt and recovery is finite almost surely. These are sourcewise
+comparisons and do not replace $x$ by a prior mixture.
+
+In the present two-state system, $\alpha=1$ supplies legal finite
+restoration of $u$ after each retry and the independent fair attempt
+bit supplies (6.1), with $(h,e,d,r)=(1/2,0,0,1/2)$. Equation (6.2)
+therefore gives proposal probability 1 and false-proposal probability
+zero, with no divergence. The reset calls still carry their own costs.
+For $\alpha<1$ a reached reset fails with positive probability, so this
+application of Assumption 6.1 is unavailable.
+
+For every $\alpha\in[0,1]$, the chance of reaching attempt $j$ in the
+actual system is $(\alpha/2)^{j-1}$: reaching another ready attempt
+requires both a retry and a successful reset. Thus endless returned
+retries have probability $\lim_m(\alpha/2)^m=0$. Let $p$ and $a$ be
+the actual eventual proposal and finite-abort probabilities. Conditioning
+on the first Attempt and its possible Reset gives
+
+$$
+p=\tfrac12+\tfrac\alpha2p,\qquad
+a=\tfrac{1-\alpha}{2}+\tfrac\alpha2a.
+$$
+
+Solving these two equations proves (6.3). Let $M$ and $G$ be the
+expected counts of initiated Attempt and Reset calls. The above
+reach probabilities are at most $2^{1-j}$, so both expectations are
+finite. Conditioning on the same first step then gives
+
+$$
+M=1+\tfrac\alpha2M,\qquad
+G=\tfrac12+\tfrac\alpha2G,
+$$
+
+hence $M=2/(2-\alpha)$ and $G=1/(2-\alpha)$.
 
 For $\alpha>0$, the first $m$ attempts can all return retry and be
 successfully reset, an event of positive probability $(\alpha/2)^m$;
