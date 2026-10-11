@@ -7090,3 +7090,485 @@ F_Q(\rho_j;\dot{\rho}_j)
 \]
 
 这条链条仍然只使用有限概率、有限矩阵和 CPTP 映射。它还没有给出引力，也没有把 FIB 的五态载体识别成物理量子系统。
+
+
+---
+
+## 41. Typed unified-field architecture
+
+The phrase “one unified field” becomes mathematically usable only after the field, its observations, its reference state, and its generator are typed separately. Define a finite or inverse-limit realization
+
+\[
+\mathfrak U=
+(\mathcal X,\mathcal B,\mathcal K,\mathsf O,\pi,E,S,L,M,B,\mathsf G,\mathsf C),
+\]
+
+where:
+
+- \(\mathcal X\) is the state carrier. It may be a finite probability carrier, a finite-dimensional density-matrix state space, a graph field, or a compatible inverse-limit field;
+- \(\mathcal B\) is the observable/context family;
+- \(\mathcal K\) is the finite incidence, cochain, or graph complex that records locality and boundary;
+- \(\mathsf O:\mathcal X\to\mathcal Y\) is a selected observation or readout;
+- \(\pi\) is a reference state, such as a Gibbs state, product source law, equilibrium law, or FIB completion;
+- \(E\) and \(S\) are energy and entropy functionals;
+- \(L\) is the reversible operator and \(M\) is the dissipative operator;
+- \(B\) is an external port or source map;
+- \(\mathsf G\) is the state generator;
+- \(\mathsf C\) is a family of conserved quantities.
+
+The primitive object is this typed architecture, rather than an identification of all physical theories with one untyped variable. A realization is structure-preserving when
+
+\[
+L_x^*=-L_x,\qquad
+M_x^*=M_x\succeq 0,
+\]
+
+and the GENERIC degeneracy conditions hold:
+
+\[
+L_x\,dS_x=0,\qquad
+M_x\,dE_x=0.
+\]
+
+The closed generator is
+
+\[
+\dot x
+=
+\mathsf G(x)
+=
+L_x\,dE_x+M_x\,dS_x.
+\tag{41.1}
+\]
+
+For an open port, add \(B(x)u\). The finite-dimensional calculation is exact:
+
+\[
+\dot E
+=
+\langle dE,L\,dE\rangle
++
+\langle dE,M\,dS\rangle
+=
+0,
+\]
+
+and
+
+\[
+\dot S
+=
+\langle dS,L\,dE\rangle
++
+\langle dS,M\,dS\rangle
+=
+\langle dS,M\,dS\rangle
+\geq 0.
+\tag{41.2}
+\]
+
+With a port and output \(y=B^*dE\),
+
+\[
+\dot E=y^\top u,\qquad
+\dot S=\langle dS,M\,dS\rangle.
+\tag{41.3}
+\]
+
+At inverse temperature \(\beta\), define
+
+\[
+F_\beta=E-\beta^{-1}S.
+\]
+
+For a purely dissipative isothermal realization written as
+
+\[
+\dot x=(L-M)dF_\beta,
+\]
+
+one obtains
+
+\[
+\dot F_\beta
+=
+-\langle dF_\beta,M\,dF_\beta\rangle
+\leq 0.
+\tag{41.4}
+\]
+
+Equations (41.1)–(41.4) are the mathematical core of the user's decomposition: dynamics is the generator and its trajectory, thermodynamics is a reference-dependent monotone functional, and current or forcing enters through a port. The same algebra supports classical, graph, and finite quantum realizations. It does not by itself identify their physical units or continuum limits.
+
+The GENERIC interpretation of dissipative electromagnetism has been developed explicitly by coarse-graining microscopic Maxwell dynamics and writing macroscopic Maxwell equations in the reversible-irreversible form. This is a useful external anchor for the present typed interface. See Jelić, Hütter, and Öttinger, arXiv:1001.0899.
+
+## 42. Observation closure is the unifying criterion
+
+Given a state observation
+
+\[
+\mathsf O:\mathcal X\to\mathcal Y
+\]
+
+and a generator \(\mathsf G\), define the closure residual
+
+\[
+\mathcal R_{\mathsf O}(x)
+=
+D\mathsf O_x[\mathsf G(x)]
+-
+\overline{\mathsf G}(\mathsf O(x)),
+\tag{42.1}
+\]
+
+whenever a candidate reduced generator \(\overline{\mathsf G}\) has been chosen. Exact autonomous closure is the equation
+
+\[
+\mathcal R_{\mathsf O}=0.
+\tag{42.2}
+\]
+
+For a flow \(\Phi_\tau\), (42.2) is equivalent to the intertwining relation
+
+\[
+\mathsf O\circ\Phi_\tau
+=
+\overline\Phi_\tau\circ\mathsf O.
+\tag{42.3}
+\]
+
+Thus the same criterion can be instantiated at different layers:
+
+- in the classical predictive setting, \(OA=KO\) is exact finite-dimensional closure;
+- for FIB, \(\mathsf O_{\mathrm{FIB}}(p)=(X,Y,Z)\), and closure fails when the projected generator depends on \(\kappa\);
+- for quantum observables, closure is invariance of the observable algebra under \(A\mapsto i[H,A]+\mathcal D^\dagger(A)\);
+- for electromagnetism, the residual contains unobserved field components, gauge holonomy, and boundary port terms;
+- for hidden-memory elimination, the residual is represented by a memory kernel or a conditional prediction defect.
+
+The quantity \(\mathcal R_{\mathsf O}\) is the rigorous version of “information escape” at the dynamical level. A static fiber can be nontrivial even when a statistic is currently constant. A dynamic escape occurs when the generator moves two points in the same observation fiber into distinguishable future observations. Consequently, the correct order is
+
+\[
+\text{state carrier}
+\longrightarrow
+\text{observation quotient}
+\longrightarrow
+\text{generator}
+\longrightarrow
+\text{closure residual}.
+\]
+
+This also gives a precise distinction between a static field and an autonomous observed field. A field may exist as a compatible inverse-limit state while its current finite readout fails to close under the generator.
+
+## 43. Current as a derived conservation flux
+
+Let \(C^0(\mathcal K)\) be node quantities and \(C^1(\mathcal K)\) oriented edge fluxes. Let
+
+\[
+B:C^1(\mathcal K)\to C^0(\mathcal K)
+\]
+
+be the signed incidence divergence. A node density \(q\) and edge current \(j\) obey
+
+\[
+\dot q=-Bj.
+\tag{43.1}
+\]
+
+For a closed graph, \(\mathbf 1^\top B=0\), hence
+
+\[
+\frac{d}{d\tau}\mathbf 1^\top q=0.
+\tag{43.2}
+\]
+
+This is the finite form of a continuity equation. Given a constitutive mobility \(K\succeq0\) and a node potential \(\mu(q)\), the gradient-flow current is
+
+\[
+j=-K B^\top \mu(q),
+\qquad
+\dot q=B K B^\top\mu(q).
+\tag{43.3}
+\]
+
+The sign convention may be reversed by choosing \(B\) as an in-flow rather than out-flow divergence. The invariant statement is that current is an edge flux whose divergence changes the local conserved quantity.
+
+For a general conserved observable \(Q:\mathcal X\to\mathbb R\), the field-generated current is the derived rate
+
+\[
+I_Q(x)=dQ_x[\mathsf G(x)].
+\tag{43.4}
+\]
+
+If \(Q\) is localizable, (43.4) decomposes into boundary fluxes of the form (43.1). Therefore the mathematically correct version of “electric current is a result of the field” is:
+
+\[
+\text{current}
+=
+\text{the conserved flux induced by the coupled field generator},
+\]
+
+under an explicit constitutive law, action, or port model. In elementary Maxwell equations \(j^\mu\) may be supplied as an external source. In a coupled matter-gauge theory, it is obtained by varying the matter action with respect to the gauge potential, and local gauge invariance gives its continuity equation. Charge conservation alone determines the Maxwell source equations only after constitutive and boundary assumptions are supplied. See De Zela, arXiv:physics/0506054.
+
+On a finite cochain complex, the gauge realization is
+
+\[
+A\in C^1(\mathcal K),\qquad
+F=d_1A,\qquad
+d_1d_0=0.
+\]
+
+The identity \(d_1d_0=0\) is the discrete analogue of \(d^2=0\), hence the homogeneous field constraint is structural. The inhomogeneous equation couples the codifferential of \(F\) to the current \(j\). This is the bridge from the graph incidence carrier to electromagnetic curvature. The field \(A\), curvature \(F\), and current \(j\) occupy different typed slots and should not be collapsed into the same variable.
+
+The triangle network has a related incidence pattern, but its product-source condition is a probability factorization on hidden edge variables. It is not the same object as the divergence of an edge current. The two structures can be placed on one typed carrier only after their maps and constraints are separately defined.
+
+## 44. Thermodynamics is relative to a reference and an observation level
+
+For a reference state \(\pi_\beta\), define the relative free-energy defect
+
+\[
+\mathfrak F_\beta(\rho)
+=
+\beta^{-1}D(\rho\Vert\pi_\beta),
+\tag{44.1}
+\]
+
+up to an additive reference constant. In a finite Gibbs realization
+
+\[
+\pi_\beta
+=
+\frac{e^{-\beta H}}{\operatorname{tr}(e^{-\beta H})},
+\]
+
+this is equivalent to
+
+\[
+\mathfrak F_\beta(\rho)
+=
+\operatorname{tr}(H\rho)-\beta^{-1}S_{\mathrm{vN}}(\rho)
+-\text{constant}.
+\tag{44.2}
+\]
+
+The word “relative” has two independent meanings in the project:
+
+1. the state is compared with a chosen reference equilibrium or product state;
+2. the observer sees only a quotient \(\mathsf O(\rho)\), so the measured defect is relative to an observation algebra.
+
+For a coarse-graining \(\mathsf O\) represented by a completely positive trace-preserving map,
+
+\[
+D(\rho\Vert\pi_\beta)
+\geq
+D(\mathsf O\rho\Vert\mathsf O\pi_\beta).
+\tag{44.3}
+\]
+
+Define the lost relative information
+
+\[
+\mathfrak I_{\mathsf O}(\rho\Vert\pi_\beta)
+=
+D(\rho\Vert\pi_\beta)
+-
+D(\mathsf O\rho\Vert\mathsf O\pi_\beta)
+\geq 0.
+\tag{44.4}
+\]
+
+This is the observation-level information ledger. It is the mathematically controlled version of local information escape. It depends on \(\mathsf O\) and \(\pi_\beta\); it is not an absolute scalar called “heat”.
+
+For the FIB carrier, \(\mathsf O_{\mathrm{FIB}}(p)=(X,Y,Z)\) forgets \(\kappa\). On the sector \(z=0\), the conditional defect is
+
+\[
+(1-Z)
+D\!\left(
+p_{xy\mid z=0}
+\middle\|
+p_{x\mid z=0}p_{y\mid z=0}
+\right),
+\]
+
+which vanishes exactly at
+
+\[
+(1-Z)\kappa-XY=0.
+\]
+
+The hidden joint mode \(25\) therefore provides a finite exact example of a reference-dependent, observation-dependent thermodynamic defect.
+
+For classical Markov dynamics, the relative free-energy functional decreases under detailed-balance evolution. The entropy-production and free-energy identities separate spontaneous relaxation from externally maintained housekeeping dissipation. See Ge and Qian, arXiv:0911.3984. For quantum Markov semigroups, quantum detailed balance gives the corresponding equilibrium and entropy-production structure through relative entropy of the forward and backward evolution. See Fagnola and Rebolledo, arXiv:1212.1366.
+
+This supports the project's static-field convention: the compatible field state may be static, while \(\tau\) is a bookkeeping parameter for a chosen generator. Physical time is a further realization of \(\tau\), requiring an operational clock and a continuum limit. The mathematical entropy ledger can be established before that physical interpretation.
+
+## 45. Quantum interaction as noncommutative field closure
+
+A finite quantum realization uses a density operator
+
+\[
+\rho\in\mathsf D(\mathcal H),
+\]
+
+with generator
+
+\[
+\dot\rho
+=
+-i[H,\rho]
++
+\mathcal D(\rho).
+\tag{45.1}
+\]
+
+The commutator is the reversible interaction sector. The completely positive dissipator \(\mathcal D\) is the irreversible or environment-coupled sector. In the Heisenberg picture,
+
+\[
+\dot A
+=
+i[H,A]
++
+\mathcal D^\dagger(A).
+\tag{45.2}
+\]
+
+Let \(\mathcal A_{\mathsf O}\) be the algebra generated by the selected observables. Exact quantum closure means
+
+\[
+i[H,\mathcal A_{\mathsf O}]
++
+\mathcal D^\dagger(\mathcal A_{\mathsf O})
+\subseteq
+\mathcal A_{\mathsf O}.
+\tag{45.3}
+\]
+
+The residual of (45.3) is the noncommutative form of hidden interaction. If \(V\) is the interaction part in
+
+\[
+H=H_A\otimes I+I\otimes H_B+V,
+\]
+
+then \(V\) changes the future of the selected algebra precisely when its commutator leaves that algebra. This is the quantum version of a memory kernel or a nonzero FIB \(\kappa\)-dependence.
+
+The existing finite quantum interfaces in the theory volume already provide density operators, CPTP maps, quantum triangle sources, trace-norm contraction, quantum relative entropy, and finite Hamiltonian closure tests. The present unified-field statement is therefore:
+
+\[
+\text{quantum interaction}
+=
+\text{noncommutative generator action}
++
+\text{possible failure of observable closure}.
+\]
+
+A full quantum field theory adds operator-valued fields and locality axioms. Those are a later realization layer. The finite matrix architecture gives a type-correct starting point and does not claim to be a completed QFT.
+
+## 46. Light and sound as normal-mode branches
+
+Let \(\Phi_*\) be a stationary field state:
+
+\[
+\mathsf G(\Phi_*)=0.
+\]
+
+A fixed point is a state, not a wave. Linearize with
+
+\[
+\Phi=\Phi_*+\varepsilon v,
+\qquad
+\dot v=A_*v+O(\varepsilon),
+\qquad
+A_*=D\mathsf G_{\Phi_*}.
+\tag{46.1}
+\]
+
+The spectral branches of \(A_*\) classify the local processes:
+
+\[
+\lambda=i\omega
+\]
+
+gives a nondissipative oscillatory mode,
+
+\[
+\operatorname{Re}\lambda<0
+\]
+
+gives a decaying mode, and
+
+\[
+\lambda=0
+\]
+
+gives a conserved, neutral, or critical direction subject to the nonlinear stability conditions.
+
+This makes the user's light and sound intuition precise. Light and sound are candidate normal-mode families of the same field architecture, with different observable ports and constitutive blocks:
+
+- an electromagnetic port uses a gauge connection, field curvature, and Maxwell constitutive map;
+- an acoustic port uses density, momentum, pressure, and a medium constitutive map.
+
+A coupled finite linearization can be written
+
+\[
+A_*=
+\begin{pmatrix}
+A_{\mathrm{EM}} & C\\
+C^* & A_{\mathrm{mat}}
+\end{pmatrix}.
+\tag{46.2}
+\]
+
+The eigenvectors of this block operator are the actual modes. In a decoupled limit they separate into electromagnetic and acoustic branches. With coupling, hybrid modes can occur. The propagation laws, such as \(\omega\approx c|k|\) or \(\omega\approx c_s|k|\), come from the respective spatial operators and constitutive assumptions. They do not follow from the abstract unified architecture alone.
+
+Thus:
+
+\[
+\text{static field}
+\longrightarrow
+\text{stationary point}
+\longrightarrow
+\text{linearized generator}
+\longrightarrow
+\text{normal modes}.
+\]
+
+“Light” and “sound” are therefore field excitations or readout branches. They are not generally fixed points themselves. A fixed point is the background around which the modes are defined.
+
+The project's gravitational candidate belongs one level higher. A graph Dirichlet form, Fisher Hessian, effective resistance, or holonomy defect can produce a metric-like structure. To identify it with physical gravity, one still needs a continuum limit, a diffeomorphism-covariant field equation, a stress-energy coupling, and observable predictions. The present finite results define a geometry interface and a closure residual. They do not yet prove an Einstein or Ricci realization.
+
+## 47. Formalization ledger and next theorem chain
+
+The most direct formalization sequence is now:
+
+1. define a finite StructurePreservingGenerator record containing the state carrier, energy, entropy, skew operator, positive operator, reference state, observation map, and closure residual;
+2. prove (41.2) and (41.4) from skew-symmetry, positivity, and degeneracy alone;
+3. define a finite graph current with \(\dot q=-Bj\), prove charge conservation, and connect it to the existing graph Dirichlet energy;
+4. define \(\mathsf O_{\mathrm{FIB}}\) and prove that \(\mathcal R_{\mathsf O}=0\) is equivalent to generator invariance of the \(\kappa\)-fibers;
+5. instantiate the quantum closure residual with the existing commutator-orbit and Hamiltonian-effect theorems;
+6. instantiate the electromagnetic cochain \(A\mapsto F=dA\) and prove the homogeneous constraint from \(d^2=0\);
+7. define light and sound as labeled spectral subspaces of \(D\mathsf G_{\Phi_*}\), with the label carried by the observation port and constitutive block;
+8. only after these steps introduce continuum, physical units, or gravitational interpretation.
+
+The resulting theorem hierarchy is:
+
+\[
+\begin{aligned}
+&\text{state-flow-conservation}\\
+&\Downarrow\\
+&\text{observation quotient and closure residual}\\
+&\Downarrow\\
+&\text{reversible/dissipative split}\\
+&\Downarrow\\
+&\text{current, entropy defect, quantum commutator, gauge curvature}\\
+&\Downarrow\\
+&\text{normal modes and geometry interfaces}.
+\end{aligned}
+\]
+
+This is the strict mathematical content of a unified-field program in the current trureturing architecture. The commonality lies in the typed state, conservation law, generator, observation map, and defect functional. Maxwell theory, stochastic thermodynamics, finite quantum dynamics, FIB geometry, and triangle-source networks are distinct realizations connected by explicit maps. A physical identification requires proving those maps and their limiting laws.
+
+### External anchors for this extension
+
+- Jelić, Hütter, and Öttinger, *Dissipative electromagnetism from a nonequilibrium thermodynamics perspective*, arXiv:1001.0899.
+- De Zela, *The way back: from charge conservation to Maxwell equations*, arXiv:physics/0506054.
+- Ge and Qian, *The Physical Origins of Entropy Production, Free Energy Dissipation and their Mathematical Representations*, arXiv:0911.3984.
+- Fagnola and Rebolledo, *Entropy Production for Quantum Markov Semigroups*, arXiv:1212.1366.
+- Onsager, *Reciprocal Relations in Irreversible Processes II*, Physical Review 38 (1931).
