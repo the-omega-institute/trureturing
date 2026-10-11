@@ -14,6 +14,8 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
         "Powers of the one-wall hypereclectic Hamiltonian have maximal rank between levels.",
         H("Non-shortening in the one-wall hypereclectic spin chain"),
         Blocks(
+            LiteratureNode("lowering_kernel_zero", "Zero kernel of a lowering power", KernelFormula(),
+                "Problem 1.55(b) gives the polynomial identity for a primitive vector, and part (f) gives the nonvanishing lowering string. The induction extends this to a vector killed by a raising power."),
             Node("level", "The inversion level", LevelFormula(),
                 "A Boolean word records the letters before the fixed wall 3: false denotes 1 and true denotes 2. Its level counts a 2 before a 1. This is S = Σ_{j=1}^{M−1} j n_j in Eq. (3.18), printed p. 10: each 1 in the j-th gap has exactly j twos to its left. All indices are zero-based. Subtraction of natural numbers is truncated at zero throughout these formulas.",
                 DescribeRole.Definition),
@@ -67,6 +69,47 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
         name == "result" ? new OpenProblemResolutionClaim(
             ProblemSlugRef.Create("ahn-corcoran-staudacher-2021-hypereclectic-non-shortening"),
             ResolutionKind.Proved) : null);
+
+    private static DocumentBlock.Describe LiteratureNode(string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create("hypereclectic-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name),
+            H(title), StatementSource.FromAuthor(formula),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/LieTheory/etingof2011introduction")),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula KernelFormula()
+    {
+        var field = F.Id("K"); var space = F.Id("V");
+        var h = F.Id("h"); var e = F.Id("e"); var f = F.Id("f");
+        var n = F.Id("n"); var v = F.Id("v"); var q = F.Id("q"); var k = F.Id("k");
+        var end = new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("Module"), Dot, F.Id("End"))), [field, space]);
+        var weight = Equal(Apply(h, v), Seq(Parenthesized(Seq(q, Sp, Colon, Sp, field)), Sp, Cdot, Sp, v));
+        var bound = Le(k, q);
+        var raising = Equal(Apply(Parenthesized(new Formula.Power(e, n)), v), D(0));
+        var lowering = Equal(Apply(Parenthesized(new Formula.Power(f, k)), v), D(0));
+        Formula body = Imp(weight, Imp(bound, Imp(raising,
+            Imp(lowering, Equal(v, D(0))))));
+        body = All("k", Nats(), body);
+        body = All("q", Nats(), body);
+        body = All("v", space, body);
+        body = All("n", Nats(), body);
+        body = Assumption(new Formula.Apply(
+            Seq(Operatorname, Grp(F.Id("IsSl"), D(2), F.Id("Triple"))), [h, e, f]), body);
+        body = All("f", end, body);
+        body = All("e", end, body);
+        body = All("h", end, body);
+        body = Assumption(Call("Module", field, space), body);
+        body = Assumption(Call("AddCommGroup", space), body);
+        body = All("V", Call("Type"), body);
+        body = Assumption(Call("CharZero", field), body);
+        body = Assumption(Call("Field", field), body);
+        return Disp(All("K", Call("Type"), body));
+    }
+
+    private static Formula Assumption(Formula x, Formula body) => Seq(OpenBracket, x, CloseBracket, Sp, body);
+    private static Formula Le(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(Parenthesized(x), FormulaLogicOperator.Implies, Parenthesized(y));
 
     private static Formula All(string variable, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable),

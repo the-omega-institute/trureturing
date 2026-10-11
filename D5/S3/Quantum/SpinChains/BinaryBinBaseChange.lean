@@ -6,7 +6,7 @@
    utility: none
    digest: Binary-bin scalar extension gives a two-bin sl₂ action in characteristic zero. -/
 
-import D5.S3.Quantum.SpinChains.HypereclecticNonShortening
+import D5.S3.Quantum.SpinChains.Sl2WeightFiltration
 import Mathlib.LinearAlgebra.TensorProduct.Pi
 import Mathlib.LinearAlgebra.TensorProduct.Tower
 
