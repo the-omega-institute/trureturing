@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import Mathlib.LinearAlgebra.CrossProduct
+import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
 open scoped ComplexOrder
@@ -383,7 +384,6 @@ private lemma incompatible_parameters (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ �
 
 private abbrev cross (a b : V) : V :=
   WithLp.toLp 2 (crossProduct (WithLp.ofLp a) (WithLp.ofLp b))
-
 private lemma cross_geometry (a b : V) :
     ⟪a, cross a b⟫_ℝ = 0 ∧ ⟪b, cross a b⟫_ℝ = 0 ∧
       ‖cross a b‖ ^ 2 = ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2 := by
@@ -394,7 +394,6 @@ private lemma cross_geometry (a b : V) :
   rw [dot_self_cross, dot_cross_self, cross_dot_cross]
   simp only [← hd, real_inner_self_eq_norm_sq, real_inner_comm b a, pow_two]
   trivial
-
 private lemma gram_complete (a b r : V) :
     (‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) * ‖r‖ ^ 2 =
       ‖b‖ ^ 2 * ⟪r, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪r, a⟫_ℝ * ⟪r, b⟫_ℝ +
@@ -402,7 +401,6 @@ private lemma gram_complete (a b r : V) :
   simp [EuclideanSpace.real_norm_sq_eq, PiLp.inner_apply, Fin.sum_univ_succ,
     cross, cross_apply]
   ring
-
 private lemma normal_exists (a b : V)
     (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) :
     ∃ m : V, ‖m‖ = 1 ∧ ⟪m, a⟫_ℝ = 0 ∧ ⟪m, b⟫_ℝ = 0 ∧
@@ -422,7 +420,6 @@ private lemma normal_exists (a b : V)
     rw [← hc]
     field_simp
     nlinarith [hg]
-
 private lemma radial_root (k M L : ℝ) (hk : k < 0) (hM : 0 < M) (hL : 0 ≤ L)
     (h1 : 0 ≤ k + M + L) :
     ∃ R : ℝ, R = -2 * k / (M + Real.sqrt (M ^ 2 - 4 * L * k)) ∧
@@ -443,5 +440,226 @@ private lemma radial_root (k M L : ℝ) (hk : k < 0) (hM : 0 < M) (hL : 0 ≤ L)
       linear_combination he
     rw [hf, mul_nonneg_iff_of_pos_right hp, sub_nonneg]
   exact ⟨R, rfl, hR, (ht 1 (by norm_num)).mp (by simpa using h1), he, ht⟩
-
+private def radialM (a b e : V) : ℝ :=
+  ⟪e, a⟫_ℝ ^ 2 + ⟪e, b⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪e, a⟫_ℝ * ⟪e, b⟫_ℝ
+private def radialL (a b e : V) : ℝ := ⟪e, a⟫_ℝ ^ 2 * ⟪e, b⟫_ℝ ^ 2
+private lemma meridian_formula (a b m e : V) (hma : ⟪m, a⟫_ℝ = 0)
+    (hmb : ⟪m, b⟫_ℝ = 0) (u v : ℝ) :
+    quartic a b (u • m + v • e) = K a b + v ^ 2 * radialM a b e +
+      v ^ 4 * radialL a b e := by
+  simp only [quartic, radialM, radialL, inner_add_left, real_inner_smul_left, hma, hmb]
+  ring
+private lemma meridian_positive (a b e : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
+    (hE : ‖b‖ ^ 2 * ⟪e, a⟫_ℝ ^ 2 - 2 * ⟪a, b⟫_ℝ * ⟪e, a⟫_ℝ * ⟪e, b⟫_ℝ +
+      ‖a‖ ^ 2 * ⟪e, b⟫_ℝ ^ 2 = ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2)
+    (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) :
+    0 < radialM a b e ∧ 0 ≤ quartic a b e := by
+  dsimp only [radialM]
+  have hA : ‖a‖ ^ 2 ≤ 1 := by nlinarith [norm_nonneg a]
+  have hB : ‖b‖ ^ 2 ≤ 1 := by nlinarith [norm_nonneg b]
+  constructor
+  · nlinarith [mul_nonneg (sub_nonneg.mpr hA) (sq_nonneg ⟪e, b⟫_ℝ),
+      mul_nonneg (sub_nonneg.mpr hB) (sq_nonneg ⟪e, a⟫_ℝ)]
+  · have hp := mul_nonneg (by nlinarith : 0 ≤ 1 - ‖a‖ ^ 2 + ⟪e, a⟫_ℝ ^ 2)
+      (by nlinarith : 0 ≤ 1 - ‖b‖ ^ 2 + ⟪e, b⟫_ℝ ^ 2)
+    dsimp only [quartic, K]
+    nlinarith [hE]
+private def cap (m p : V) (t : ℝ) : V :=
+  t • p + Real.sqrt (1 - ‖t • p‖ ^ 2) • m
+private lemma boundary_transfer (a b c d m p : V) (hm : ‖m‖ = 1)
+    (hp : ‖p‖ ≤ 1) (hpm : ⟪p, m⟫_ℝ = 0)
+    (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0) (hk : K a b < 0)
+    (heq : ∀ n : V, ‖n‖ = 1 → (0 ≤ quartic a b n ↔ 0 ≤ quartic c d n))
+    (hz : quartic a b (cap m p 1) = 0) : quartic c d (cap m p 1) = 0 := by
+  have hu (t : ℝ) (ht : t ∈ Set.Icc 0 1) : ‖cap m p t‖ = 1 := by
+    refine D5.S3.Arith.Lattices.Klartag.norm_padUnit ?_ hm ?_
+    · rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg ht.1]
+      exact (mul_le_mul_of_nonneg_right ht.2 (norm_nonneg p)).trans (by simpa using hp)
+    · simp [real_inner_smul_left, hpm]
+  have hf (t : ℝ) : quartic a b (cap m p t) =
+      K a b + t ^ 2 * radialM a b p + t ^ 4 * radialL a b p := by
+    rw [cap, add_comm, meridian_formula a b m p hma hmb]
+  have hn (t : ℝ) (ht : t ∈ Set.Ioo 0 1) : quartic c d (cap m p t) ≤ 0 := by
+    have ht2 : 0 < 1 - t ^ 2 := by nlinarith [ht.1, ht.2]
+    have hneg := mul_neg_of_pos_of_neg ht2 hk
+    have hL : 0 ≤ radialL a b p := mul_nonneg (sq_nonneg _) (sq_nonneg _)
+    have hq : quartic a b (cap m p t) < 0 := by
+      rw [hf] at hz ⊢
+      nlinarith [mul_nonneg (mul_nonneg (sq_nonneg t) ht2.le) hL]
+    exact (lt_of_not_ge (fun h => hq.not_ge ((heq _ (hu t ⟨ht.1.le, ht.2.le⟩)).mpr h))).le
+  have hg : Continuous (fun t => quartic c d (cap m p t)) := by
+    unfold quartic cap
+    fun_prop
+  have hl := le_on_closure hn hg.continuousOn continuousOn_const
+    (show (1 : ℝ) ∈ closure (Set.Ioo (0 : ℝ) 1) by
+      rw [closure_Ioo zero_ne_one]; exact ⟨zero_le_one, le_rfl⟩)
+  exact le_antisymm hl ((heq _ (hu 1 ⟨zero_le_one, le_rfl⟩)).mp (by rw [hz]))
+private lemma coplanarity (a b : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
+    (hb : ∀ i, ‖b i‖ ≤ 1) (hia : Incompatible a) (hib : Incompatible b)
+    (heq : ∀ n : V, ‖n‖ = 1 →
+      (0 ≤ quartic (a 0) (a 1) n ↔ 0 ≤ quartic (b 0) (b 1) n)) :
+    ∃ m : V, ‖m‖ = 1 ∧ (∀ i, ⟪m, a i⟫_ℝ = 0) ∧ (∀ i, ⟪m, b i⟫_ℝ = 0) := by
+  obtain ⟨hka, _, hDa⟩ := incompatible_parameters a ha hia
+  obtain ⟨_, _, hDb⟩ := incompatible_parameters b hb hib
+  obtain ⟨m, hm, hma, hma', hGa⟩ := normal_exists (a 0) (a 1) hDa
+  obtain ⟨m', hm', hmb, hmb', hGb⟩ := normal_exists (b 0) (b 1) hDb
+  refine ⟨m, hm, (by intro i; fin_cases i <;> assumption), ?_⟩
+  let t := ⟪m, m'⟫_ℝ
+  by_cases hp : project m m' = 0
+  · have hd : m' = t • m := by dsimp [project, t] at hp ⊢; exact sub_eq_zero.mp hp
+    have ht : t ≠ 0 := by intro ht; simp only [ht, zero_smul] at hd; rw [hd] at hm'; simp at hm'
+    intro i
+    have hi : ⟪m', b i⟫_ℝ = 0 := by fin_cases i <;> assumption
+    rw [hd, real_inner_smul_left] at hi
+    exact (mul_eq_zero.mp hi).resolve_left ht
+  exfalso
+  let s := ‖project m m'‖
+  have hs : 0 < s := norm_pos_iff.mpr hp
+  let e := s⁻¹ • project m m'
+  have he : ‖e‖ = 1 := by dsimp [e, s]; exact norm_smul_inv_norm hp
+  have hme : ⟪m, e⟫_ℝ = 0 := by simp [e, inner_smul_right, project_orth m m' hm]
+  have hem : ⟪e, m⟫_ℝ = 0 := (real_inner_comm m e).trans hme
+  have hd : m' = t • m + s • e := by
+    simp only [e, smul_smul, mul_inv_cancel₀ hs.ne', one_smul]
+    dsimp only [project, t]
+    module
+  have hc : t ^ 2 + s ^ 2 = 1 := by have h := project_sq m m' hm; rw [hm'] at h; nlinarith
+  let e' := s • m - t • e
+  have he' : ‖e'‖ = 1 := by
+    have h := norm_sub_sq_real (s • m) (t • e)
+    simp only [norm_smul, mul_pow, Real.norm_eq_abs, sq_abs, hm, he,
+      real_inner_smul_left, inner_smul_right, hme] at h
+    dsimp only [e']; nlinarith [norm_nonneg (s • m - t • e)]
+  have hme' : ⟪m', e'⟫_ℝ = 0 := by
+    rw [hd]; simp [e', inner_add_left, inner_sub_right, real_inner_smul_left,
+      inner_smul_right, hm, he, hme, hem]; ring
+  have hEa := hGa e
+  have hEb := hGb e'
+  rw [he, hem] at hEa
+  rw [he', real_inner_comm m' e', hme'] at hEb
+  norm_num only [one_pow, zero_pow, sub_zero, mul_one] at hEa hEb
+  obtain ⟨hMa, hFa⟩ := meridian_positive (a 0) (a 1) e (ha 0) (ha 1) hEa.symm hDa
+  obtain ⟨hMb, hFb⟩ := meridian_positive (b 0) (b 1) e' (hb 0) (hb 1) hEb.symm hDb
+  have hLa : 0 ≤ radialL (a 0) (a 1) e := mul_nonneg (sq_nonneg _) (sq_nonneg _)
+  have hLb : 0 ≤ radialL (b 0) (b 1) e' := mul_nonneg (sq_nonneg _) (sq_nonneg _)
+  have h1 : 0 ≤ K (a 0) (a 1) + radialM (a 0) (a 1) e + radialL (a 0) (a 1) e := by
+    convert hFa using 1; dsimp only [quartic, radialM, radialL]; ring
+  obtain ⟨R, _, hR, hR1, hroot, hthreshold⟩ :=
+    radial_root _ _ _ hka hMa hLa h1
+  have hRt : R ≤ t ^ 2 := by
+    apply (hthreshold (t ^ 2) (sq_nonneg t)).mp
+    have h := (heq e' he').mpr hFb
+    dsimp only [e'] at h
+    rw [sub_eq_add_neg, ← neg_smul, meridian_formula _ _ m e hma hma'] at h
+    convert h using 1; ring
+  have hRlt : R < 1 := by nlinarith only [hc, hRt, sq_pos_of_pos hs]
+  let q := Real.sqrt (1 - R)
+  let r := Real.sqrt R
+  have hq : 0 < q := Real.sqrt_pos.mpr (by linarith)
+  have hr : 0 < r := Real.sqrt_pos.mpr hR
+  have hr2 : r ^ 2 = R := Real.sq_sqrt hR.le
+  have hz (v : ℝ) (hv : v ^ 2 = R) : quartic (b 0) (b 1) (q • m + v • e) = 0 := by
+    have hpv : ‖v • e‖ ≤ 1 := by
+      rw [norm_smul, he, mul_one, Real.norm_eq_abs]
+      nlinarith only [hv, hR1, sq_abs v, abs_nonneg v]
+    have hc : cap m (v • e) 1 = q • m + v • e := by
+      simp only [cap, one_smul, norm_smul, Real.norm_eq_abs, sq_abs, he, mul_one, hv]
+      exact add_comm _ _
+    rw [← hc]
+    apply boundary_transfer (a 0) (a 1) (b 0) (b 1) m (v • e) hm hpv
+      (by simp [real_inner_smul_left, hem]) hma hma' hka heq
+    rw [hc, meridian_formula _ _ m e hma hma']
+    rw [show v ^ 4 = (v ^ 2) ^ 2 by ring, hv]
+    nlinarith only [hroot]
+  have hrot (u v : ℝ) : u • m + v • e =
+      (u * t + v * s) • m' + (u * s - v * t) • e' := by
+    rw [hd]; ext i
+    simp [e', PiLp.add_apply, PiLp.sub_apply, PiLp.smul_apply]
+    linear_combination -(u * m i + v * e i) * hc
+  have hzp := hz r hr2
+  have hzn := hz (-r) (by simpa using hr2)
+  rw [hrot, meridian_formula _ _ m' e' hmb hmb'] at hzp hzn
+  have hdif : ((q * s - r * t) ^ 2 - (q * s - -r * t) ^ 2) *
+      (radialM (b 0) (b 1) e' + radialL (b 0) (b 1) e' *
+        ((q * s - r * t) ^ 2 + (q * s - -r * t) ^ 2)) = 0 := by
+    linear_combination hzp - hzn
+  have hpos : 0 < radialM (b 0) (b 1) e' + radialL (b 0) (b 1) e' *
+      ((q * s - r * t) ^ 2 + (q * s - -r * t) ^ 2) := by positivity
+  have heqz := (mul_eq_zero.mp hdif).resolve_right hpos.ne'
+  have ht0 : (q * s * r) * t = 0 := by nlinarith only [heqz]
+  have ht : t = 0 := (mul_eq_zero.mp ht0).resolve_left (mul_pos (mul_pos hq hs) hr).ne'
+  rw [ht] at hRt
+  nlinarith only [hRt, hR]
+private def curve (k c x y : ℝ) : ℝ := x ^ 2 * y ^ 2 + x ^ 2 + y ^ 2 - 2 * c * x * y + k
+private lemma feasible_zero (a b m : V) (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
+    (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0)
+    (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2) (x y : ℝ)
+    (hz : curve (K a b) ⟪a, b⟫_ℝ x y = 0) :
+    ∃ p : V, ‖p‖ ≤ 1 ∧ ⟪p, m⟫_ℝ = 0 ∧ ⟪p, a⟫_ℝ = x ∧ ⟪p, b⟫_ℝ = y := by
+  let D := ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2
+  let p := D⁻¹ • ((‖b‖ ^ 2 * x - ⟪a, b⟫_ℝ * y) • a +
+    (‖a‖ ^ 2 * y - ⟪a, b⟫_ℝ * x) • b)
+  have hxy : ⟪p, a⟫_ℝ = x ∧ ⟪p, b⟫_ℝ = y := by
+    constructor <;> dsimp only [p, D] <;>
+      simp only [real_inner_smul_left, inner_add_left, real_inner_self_eq_norm_sq,
+        real_inner_comm a b] <;> field_simp [hD.ne'] <;> ring
+  obtain ⟨hac, hbc, _⟩ := cross_geometry a b
+  have hpc : ⟪p, cross a b⟫_ℝ = 0 := by
+    simp only [p, inner_add_left, real_inner_smul_left, hac, hbc, mul_zero, add_zero]
+  have hn := gram_complete a b p
+  simp only [hxy.1, hxy.2, hpc, zero_pow (by decide : 2 ≠ 0), add_zero] at hn
+  have hA : ‖a‖ ^ 2 ≤ 1 := by nlinarith [norm_nonneg a]
+  have hB : ‖b‖ ^ 2 ≤ 1 := by nlinarith [norm_nonneg b]
+  have hprod := mul_nonneg (by nlinarith : 0 ≤ 1 - ‖a‖ ^ 2 + x ^ 2)
+    (by nlinarith : 0 ≤ 1 - ‖b‖ ^ 2 + y ^ 2)
+  have hsq : ‖p‖ ^ 2 ≤ 1 := by
+    apply (mul_le_mul_iff_right₀ hD).mp
+    dsimp only [curve, K] at hz
+    nlinarith [hn, hprod]
+  refine ⟨p, (by nlinarith [norm_nonneg p]), ?_, hxy⟩
+  simp only [p, inner_add_left, real_inner_smul_left,
+    real_inner_comm m a, real_inner_comm m b, hma, hmb, mul_zero, add_zero]
+private lemma common_boundary_zero (a b c d m : V) (hm : ‖m‖ = 1)
+    (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1) (hma : ⟪m, a⟫_ℝ = 0) (hmb : ⟪m, b⟫_ℝ = 0)
+    (hk : K a b < 0) (hD : 0 < ‖a‖ ^ 2 * ‖b‖ ^ 2 - ⟪a, b⟫_ℝ ^ 2)
+    (heq : ∀ n : V, ‖n‖ = 1 → (0 ≤ quartic a b n ↔ 0 ≤ quartic c d n))
+    (x y : ℝ) (hz : curve (K a b) ⟪a, b⟫_ℝ x y = 0) :
+    ∃ n : V, ‖n‖ = 1 ∧ ⟪n, a⟫_ℝ = x ∧ ⟪n, b⟫_ℝ = y ∧ quartic c d n = 0 := by
+  obtain ⟨p, hp, hpm, hpa, hpb⟩ := feasible_zero a b m ha hb hma hmb hD x y hz
+  have hxy : ⟪cap m p 1, a⟫_ℝ = x ∧ ⟪cap m p 1, b⟫_ℝ = y := by
+    simp [cap, inner_add_left, real_inner_smul_left, hma, hmb, hpa, hpb]
+  have hzero : quartic a b (cap m p 1) = 0 := by
+    dsimp only [quartic]; rw [hxy.1, hxy.2]
+    dsimp only [curve] at hz; linarith only [hz]
+  exact ⟨cap m p 1, (by simpa only [cap, one_smul] using
+    D5.S3.Arith.Lattices.Klartag.norm_padUnit hp hm hpm), hxy.1, hxy.2,
+    boundary_transfer a b c d m p hm hp hpm hma hmb hk heq hzero⟩
+private def delta (a b : V) (x : ℝ) : ℝ :=
+  -x ^ 4 + (‖a‖ ^ 2 + ‖b‖ ^ 2 - 2) * x ^ 2 - K a b
+private def branch (a b : V) (x s : ℝ) : ℝ :=
+  (⟪a, b⟫_ℝ * x + s * Real.sqrt (delta a b x)) / (1 + x ^ 2)
+private lemma boundary_branches (a b : V) (hk : K a b < 0) :
+    ∃ ε : ℝ, 0 < ε ∧ ∀ x ∈ Set.Ioo 0 ε, 0 < delta a b x ∧
+      curve (K a b) ⟪a, b⟫_ℝ x (branch a b x 1) = 0 ∧
+      curve (K a b) ⟪a, b⟫_ℝ x (branch a b x (-1)) = 0 ∧
+      branch a b x 1 ≠ branch a b x (-1) := by
+  have hc : Continuous (delta a b) := by unfold delta; fun_prop
+  have hp : 0 < delta a b 0 := by simpa [delta] using neg_pos.mpr hk
+  obtain ⟨l, ε, ⟨hl, hε⟩, hI⟩ :=
+    (continuousAt_const.eventually_lt hc.continuousAt hp).exists_Ioo_subset
+  refine ⟨ε, hε, fun x hx => ?_⟩
+  have hd : 0 < delta a b x := hI ⟨hl.trans hx.1, hx.2⟩
+  have hs := Real.sq_sqrt hd.le
+  have hH : (1 + x ^ 2 : ℝ) ≠ 0 := by positivity
+  have hz (s : ℝ) (hs : s ^ 2 = delta a b x) :
+      curve (K a b) ⟪a, b⟫_ℝ x ((⟪a, b⟫_ℝ * x + s) / (1 + x ^ 2)) = 0 := by
+    unfold curve K; field_simp
+    dsimp only [delta, K] at hs
+    linear_combination (1 + x ^ 2) * hs
+  refine ⟨hd, (by simpa [branch] using hz _ hs),
+    (by simpa [branch] using hz _ (show (-Real.sqrt (delta a b x)) ^ 2 = _ by simpa using hs)), ?_⟩
+  intro he
+  have he' := (div_left_inj' hH).mp he
+  have hpos := Real.sqrt_pos.mpr hd
+  nlinarith
 end D5.S3.Quantum.ToriiTakakuraImamuraRigidity
