@@ -51,7 +51,7 @@ private theorem marker_input_consistent (r : ℕ) (rho : Bool) (w : Finset ℕ) 
   · simp [hc, hn, syndrome, add_comm, add_left_comm, add_assoc]
   · simp [hc]
 
-private theorem edge_cut_wait {r j d : ℕ} (i : Fin r) (hj : 1 ≤ j)
+theorem edge_cut_wait {r j d : ℕ} (i : Fin r) (_hj : 1 ≤ j)
     (hd : initialLength r + i.val + 1 ≤ d) (hdj : d < identityEnd r + j) :
     atCut (edgePrefix r (i.val + 1) j) d =
       insert (initialLength r + i.val + 1) (Icc 1 (initialLength r)) := by
@@ -112,7 +112,7 @@ private theorem early_color_wait {r j D : ℕ} (G : SimpleGraph (Fin r))
     have hQ : ¬ pairCount r < d + 1 - identityEnd r := by omega
     simp [coloringPreProgram, markerInput, bareAddress, hv.1, hv.2, hb, hB, hcard, hQ]
 
-private theorem early_rank_at_endpoint {r j : ℕ} (G : SimpleGraph (Fin r))
+theorem early_rank_at_endpoint {r j : ℕ} (G : SimpleGraph (Fin r))
     (hr : 3 ≤ r) (hj : 1 ≤ j) (hjQ : j ≤ pairCount r)
     (u v : Fin r) (he : edgeAt r j = some (u, v)) (hG : G.Adj u v)
     (rho : Bool) (i : Fin r) (hi : i = u ∨ i = v) (ha : rho = true ∨ i.val + 1 ≠ 3) :
@@ -151,8 +151,7 @@ private theorem early_rank_at_endpoint {r j : ℕ} (G : SimpleGraph (Fin r))
         · rintro rfl
           exact ⟨⟨Or.inl rfl, hu⟩, hlt⟩
       rw [hf]
-      simp only [hboth, and_self, and_true, true_and, false_and, ↓reduceIte,
-        card_singleton, card_empty]
+      simp only [hboth, and_self, ↓reduceIte, card_singleton]
     · have hu : ¬ (rho = true ∨ u.val + 1 ≠ 3) := by tauto
       have hf : ((({u.val + 1, v.val + 1} : Finset ℕ).filter
           (fun a => rho = true ∨ a ≠ 3)).filter (· < v.val + 1)) = ∅ := by
@@ -164,8 +163,7 @@ private theorem early_rank_at_endpoint {r j : ℕ} (G : SimpleGraph (Fin r))
         · exact hu ha
         · omega
       rw [hf]
-      simp only [hboth, and_self, and_true, true_and, false_and, ↓reduceIte,
-        card_singleton, card_empty]
+      simp only [hboth, and_true, ↓reduceIte, card_empty]
 
 /-- A retained endpoint acquires its graph color before the tail and converts
 it at the actual first latch to the colex rank after the seed-zero deletion. -/
@@ -230,7 +228,7 @@ theorem c7_early_latch {r j D : ℕ} (G : SimpleGraph (Fin r))
       hB, hE, hidx, he, hG, hcard, hcolor]
     split <;> rfl
 
-private theorem selection_before_end {r c : ℕ} (G : SimpleGraph (Fin r))
+theorem selection_before_end {r c : ℕ} (G : SimpleGraph (Fin r))
     (hr : 3 ≤ r) (w : Finset ℕ) (hs : FirstSelected r G c w) : c < wordLength r := by
   obtain ⟨d, hd, _⟩ := schedule_first_freeze G hr w
   by_contra hn
@@ -284,7 +282,7 @@ theorem coloring_pre_program_correct {r D : ℕ} (G : SimpleGraph (Fin r))
       cases rho
       · right
         intro hi3
-        have hbad : (0 : ZMod 2) = 1 := by simpa [hi3] using hsy
+        have hbad : (0 : ZMod 2) = 1 := by simpa only [hi3, Bool.false_eq_true, and_self, ↓reduceIte] using hsy
         exact zero_ne_one hbad
       · exact Or.inl rfl
     have hb : bareAddress r rho c p = earlyAddress r j := by

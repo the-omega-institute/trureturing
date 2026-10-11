@@ -212,7 +212,7 @@ private theorem trigger_early {r j : ℕ} {G : SimpleGraph (Fin r)}
     exact Or.inr (Or.inr (Or.inr ⟨i, hi, hir, hid,
       Or.inl ⟨j, hf, by omega, le_rfl, Or.inl ⟨he, rfl⟩⟩⟩))
 
-theorem edge_prefix_identities {r i j : ℕ} (hi : 1 ≤ i) (hir : i ≤ r)
+private theorem edge_prefix_identities {r i j : ℕ} (hi : 1 ≤ i) (hir : i ≤ r)
     (hj : 1 ≤ j) : identities r (edgePrefix r i j) = {i} := by
   ext k
   simp only [identities, mem_filter, mem_Icc, edgePrefix, mem_insert, mem_singleton]
@@ -688,7 +688,7 @@ def writeThenLatch {Z : Type} (s : LatchedRegister Z) (b : BareAddress)
 
 def atCut (w : Finset ℕ) (c : ℕ) : Finset ℕ := w.filter (· ≤ c)
 
-theorem trigger_congr {r c : ℕ} (G : SimpleGraph (Fin r))
+private theorem trigger_congr {r c : ℕ} (G : SimpleGraph (Fin r))
     (w v : Finset ℕ) (h : ∀ k, k ≤ c → (k ∈ w ↔ k ∈ v)) :
     Trigger r G c w ↔ Trigger r G c v := by
   have forward : ∀ (x y : Finset ℕ),

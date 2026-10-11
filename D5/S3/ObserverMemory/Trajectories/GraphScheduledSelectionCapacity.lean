@@ -88,7 +88,7 @@ theorem run_at_first_selection {Z : Type} {r c : ℕ}
 
 /-- A first zero in the initial block has a singleton unpruned dictionary and
 is latched as canonical zero by the same pre-decision color program. -/
-theorem c7_initial_zero_latch {r c D : ℕ} (G : SimpleGraph (Fin r))
+private theorem c7_initial_zero_latch {r c D : ℕ} (G : SimpleGraph (Fin r))
     (hr : 3 ≤ r) (hc : 1 ≤ c) (hcB : c ≤ initialLength r)
     (rho : Bool) (color : G.Coloring (Fin D)) (hD : 2 ≤ D) :
     let w := Icc 1 (c - 1)
@@ -130,7 +130,7 @@ private theorem onehot_identities {r i : ℕ} (hi : 1 ≤ i) (hir : i ≤ r) :
   simp only [identities, mem_filter, mem_Icc, mem_insert, mem_singleton]
   omega
 
-private theorem zero_deadline_support {r i : ℕ} (G : SimpleGraph (Fin r))
+theorem zero_deadline_support {r i : ℕ} (G : SimpleGraph (Fin r))
     (hr : 3 ≤ r) (hi : 1 ≤ i) (hir : i ≤ r) (w : Finset ℕ)
     (hw : IsPrefix (identityEnd r + pairCount r + i) w) :
     FirstSelected r G (identityEnd r + pairCount r + i) w ↔
@@ -197,7 +197,7 @@ private theorem zero_deadline_support {r i : ℕ} (G : SimpleGraph (Fin r))
 
 /-- A one-hot identity with no tail one before its deadline has a singleton
 unpruned dictionary and the canonical zero output for both seeds. -/
-theorem c7_zero_deadline_latch {r i D : ℕ} (G : SimpleGraph (Fin r))
+private theorem c7_zero_deadline_latch {r i D : ℕ} (G : SimpleGraph (Fin r))
     (hr : 3 ≤ r) (hi : 1 ≤ i) (hir : i ≤ r) (rho : Bool)
     (color : G.Coloring (Fin D)) (hD : 2 ≤ D) :
     let w := insert (initialLength r + i) (Icc 1 (initialLength r))
@@ -287,7 +287,7 @@ private theorem empty_identity_support {r : ℕ} (G : SimpleGraph (Fin r))
 
 /-- An empty identity block keeps zero throughout its acquisition and latches
 that zero as the rank in the entire selected dictionary. -/
-theorem c7_empty_identity_latch {r D : ℕ} (G : SimpleGraph (Fin r))
+private theorem c7_empty_identity_latch {r D : ℕ} (G : SimpleGraph (Fin r))
     (hr : 3 ≤ r) (rho : Bool) (color : G.Coloring (Fin D)) (hD : 2 ≤ D) :
     let w := Icc 1 (initialLength r)
     let c := identityEnd r
@@ -414,8 +414,15 @@ private theorem two_identity_support {r j : ℕ} (G : SimpleGraph (Fin r))
       omega
     have hsort : ({u.val + 1, v.val + 1} : Finset ℕ).sort (· ≤ ·) =
         [u.val + 1, v.val + 1] := by
-      have hn : [u.val + 1, v.val + 1].Nodup := by simp; exact ne_of_lt huv
-      have hp : [u.val + 1, v.val + 1].Pairwise (· ≤ ·) := by simp; exact le_of_lt huv
+      have hn : [u.val + 1, v.val + 1].Nodup := by
+        simp only [List.nodup_cons, List.mem_cons, Nat.add_right_cancel_iff, List.not_mem_nil,
+          or_false, not_false_eq_true, List.nodup_nil, and_self, and_true]
+        exact ne_of_lt huv
+      have hp : [u.val + 1, v.val + 1].Pairwise (· ≤ ·) := by
+        simp only [List.pairwise_cons, List.mem_cons, List.not_mem_nil, or_false,
+          Order.add_one_le_iff, forall_eq, Order.lt_add_one_iff, Fin.val_fin_le,
+          IsEmpty.forall_iff, implies_true, List.Pairwise.nil, and_self, and_true]
+        exact le_of_lt huv
       simpa using (List.toFinset_sort (r := (· ≤ ·)) hn).mpr hp
     have ht : ((identities r (insert (initialLength r + u.val + 1)
         (insert (initialLength r + v.val + 1) (Icc 1 (initialLength r))))).sort (· ≤ ·)).take 2 =
@@ -443,7 +450,7 @@ private theorem two_identity_support {r j : ℕ} (G : SimpleGraph (Fin r))
 
 /-- The two-identity schedule identifies both positions without a suffix or
 acceptance filter, and its late latch clears the register to the unique rank. -/
-theorem c7_two_identity_latch {r j D : ℕ} (G : SimpleGraph (Fin r))
+private theorem c7_two_identity_latch {r j D : ℕ} (G : SimpleGraph (Fin r))
     (hr : 3 ≤ r) (hj : 1 ≤ j) (hjQ : j ≤ pairCount r)
     (u v : Fin r) (he : edgeAt r j = some (u, v)) (rho : Bool)
     (color : G.Coloring (Fin D)) (hD : 2 ≤ D) :
