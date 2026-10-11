@@ -81,7 +81,7 @@ golden-ledger/
 地层是显式语义坐标,由疆域词表决定:`Meta/domains.yaml` 每个疆域必须携 `stratum` 字段,落格 `S<stratum>/<疆域>/<模块>.lean`。执法两条:(i)H1 闭包不变量:S_k 单元之库内 import 闭包 ⊆ S_{≤k}(同层互引合法,S0 亦然);(ii)一致性:单元 import 闭包之最高地层 ≤ 其疆域地层。`1 + max(import 之地层)` 仅为新概念选层之下界启发,不再定义地层。
 
 ## 2.3 生长律
-目录 >12 文件或文件 >400 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 深度无上限:满桶在任一层皆可就地裂出子疆域,SL-003 只数目录内文件、不数子目录,故裂的代价恒为一层而非一次全局重排(2026-09-08:实现侧原将坐标钉死为三或四段,压力遂横向外溢,`D5/S3/ConceptDynamics` 由此长出120 个平铺兄弟子疆域;放开后旧地址一条不翻,属保守扩展)。 容量只约束骨骼:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 数据文件豁免 SL-003 文件行数软硬上限,扩展名不区分大小写,目录容量仍按既有规则计算。Blueprint Markdown 是 FILEMAP `kind=generated` 的人读投影,不另计容量——同一文档的结构名额已由其 `.scribe.cs` 定义支付;文档 GID 须指向既存 Lean 模块,且真实树上的 `.scribe.cs` 定义、反射发现项与同 stem `.md` 路径保持双射,若把源与投影重复计数,合法的十二模块 Lean 桶在第七个蓝图化模块处即溢出其 Blueprint 镜像(2026-07-30,#499/#543 撞墙先例)。该排除与双射只守结构槽及镜像存在性,不校验 `.md` 内容,也不赋予其内容或历史权威。
+目录内计容量文件 >96 或 SL-003 登记材料(`Meta/ci-checks.json`,含根目录与 `D5/` 下的 Lean 源及 `Reg/`)中的文件 >1000 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 深度无上限:满桶在任一层皆可就地裂出子疆域,SL-003 只数目录内文件、不数子目录,故裂的代价恒为一层而非一次全局重排。阈值常量唯一住在 `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`:文件 >800 行为 Observe 软提示,>1000 行 Block;目录准入上限 96,改动触及的目录超限且含受保护基线没有的计容量路径即 Block,否则 Observe;全树另以 192 为容忍上限,超出即 Block。 容量只约束骨骼:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 数据文件豁免 SL-003 文件行数软硬上限,扩展名不区分大小写,目录容量仍按既有规则计算。Blueprint Markdown 是 FILEMAP `kind=generated` 的人读投影,不另计容量——同一文档的结构名额已由其 `.scribe.cs` 定义支付;文档 GID 须指向既存 Lean 模块,且真实树上的 `.scribe.cs` 定义、反射发现项与同 stem `.md` 路径保持双射,若把源与投影重复计数,满额 Lean 桶的 Blueprint 镜像在半数模块蓝图化后即超限。该排除与双射只守结构槽及镜像存在性,不校验 `.md` 内容,也不赋予其内容或历史权威。
 
 **理论文档容量(delta-only)。** SL-003 对 `docs/develop/theory/**` 中新增或修改的 Markdown 检查候选全文,硬上限为 5,000 行;扩展名不区分大小写,空行计入,末尾换行符不额外计一行。超过上限即 Block,诊断包含路径、实测行数和上限。删除路径不读正文;未触及的历史长卷、check-current 及 repository capacity-audit 不进行这项检查,判官实现变更也不扩大理论文档选集。新内容超出单卷篇幅时写入同主题续卷并通过引用衔接,保留既有条目、编号与引用。此谓词只约束文档大小,不校验理论数学内容,也不建立 Lean 对理论正文的依赖。
 
@@ -101,7 +101,7 @@ golden-ledger/
 
 **A4 疆域码** 受控词表 `Meta/domains.yaml`(CamelCase+一行定义);新疆域 = machine-decide admission;词表外目录名 = SL-011 红。
 
-**A5 文件与模块** CamelCase.lean;一文件一主概念;≤400 行;**文件头强制六行**(SL-012;v7.1 增 digest):
+**A5 文件与模块** CamelCase.lean;一文件一主概念;≤1000 行(>800 行 Observe);**文件头强制六行**(SL-012;v7.1 增 digest):
 ```lean
 /- GID: D5/S3/Spectral/GapLabeling
    generality: G|I|E
@@ -455,49 +455,6 @@ project 恢复在 current 与 Lean build 单元中先查读者可见的种子：
 
 工作流不新增文本形状测试；消费 workflow 的生产逻辑可以使用既有合成夹具。实际事件、候选版本、required 名称、权限、覆盖、缓存与性能必须依 CLAUDE.md §8.12 真跑核验。integration 保持每个原始 PR 的独立复测和稳定条数要求，部署资格与本地实现/测试成功分开报告。产物只保留正式结果、必要实验程序与读数，不保存迁移流水。
 
-**A23 Lean 本地共享 artifact cache**
-
-本节规定主检出 donor 的 clonefile、Lake 共享 artifact cache、每个 worktree 自身的 `.lake`、报告种子和跨会话复用之间的关系。Lake 的共享缓存仍是 `~/.elan/toolchains/<lean-toolchain>/lake/cache`；入口不设置 `LAKE_CACHE_DIR`。目录按工具链分区并可被同一工具链的多个项目使用。缓存与检出同一文件系统时，Lake 以硬链接恢复和写入；跨文件系统时退化为复制，语义不变。
-
-**入口矩阵。** 以下是 #15158 的目标契约；现行实现差异见“现行入口”。所有入口默认不使用 donor clonefile。全量入口是不带 `LEAN_TARGETS` 的 `make lean`、`make lean-report`、`make test` 和 `make gate`；定向入口是 `make lean LEAN_TARGETS=…`、`make lean-report-scoped`、`deposit`、`deposit-uncovered`、`cover`、`cover-batch` 和 `emit`。两类入口都按「worktree 本地有效产物 → Lake 共享缓存 → 本地编译」取得所需产物；全量与定向只改变请求的目标范围。定向范围包括所选目标、准入检查点名的 utility 输入及它们的 import 闭包，并不声称只编译命令中列出的模块。`make test`、`make gate` 调用的全量报告也遵守全量入口规则。
-
-入口不把 `.lake` 的存在、warm/cold 标签或报告种子缺失称为缓存不足。Lake 先按本次请求解析真实任务，并尝试本地有效产物和共享缓存；只有仍有必需任务需要构建，且 Lake 原生不编译探测给出 needs-build，才是本次请求意义下的「缓存不足」。探测可能恢复文件或物化依赖，不能视为只读扫描。配置错误、依赖取包失败、文件系统错误以及报告 bundle 不兼容分别报告为各自错误；新改动产生的正常增量编译也不证明 donor 能补。定向入口的未命中直接交给 Lake 本地构建，不提示重播。
-
-**位置、读者与写者。** 所有 linked worktree 与 CI 都是读者。入口与各 lakefile 均不设置 `LAKE_ARTIFACT_CACHE`、`LAKE_RESTORE_ARTIFACTS` 或 `enableArtifactCache`；在此缺省下 Lake 读取共享缓存、不向其发布本地构建产物。`LAKE_ARTIFACT_CACHE=false` 同时关闭读取，不用于表达只读。命中时，Lake 将模块的全部产物恢复到读者的 build 目录，lean-inspector 照旧从该目录读取；未命中时在本地编译，产物不进入共享缓存。以 Lake 远端缓存服务映射导入的条目在读取时可能下载到该目录，这类映射不在本节规则内。CI 不运行 warm，不写入共享缓存；runner 随 `~/.elan` 恢复的目录按同一读者规则使用。
-
-本仓库唯一的写者是主检出上的 `make warm-donor`；同一工具链的其他项目也可能写入该目录。本仓库只在「清理」一段规定的维护操作中整体清空该目录，此外不删除条目。warm-donor 要求干净的 dev 检出，以 `LAKE_ARTIFACT_CACHE=true LAKE_RESTORE_ARTIFACTS=true` 运行 `make lean` 与 `make lean-report REBUILD_REPORT_CACHE=1`。后者遍历逐模块报告 facet；已是最新的产物直接写入缓存，不重新编译。warm 遍历到的模块产物和逐模块报告 artifact 都写入缓存；主检出的 build 目录保留这些产物。Lake 把写入缓存的文件设为只读；写 `.lake/build` 的程序先删除目标再写入，不原地改写已有文件。
-
-**依赖源码。** `.lake/packages` 缺少依赖源码时，由 canonical ensure 所属的启动流程按 manifest 调用 Lake 依赖物化，取得指定 revision。这是 Git 取得源码，不是 donor clonefile；调用者不得在冷树先裸跑 `lake`。依赖包自己的产物仍按「本地有效产物 → 共享缓存 → 本地编译」处理。网络、Git 或指定 revision 取得失败如实失败，不静默改成整树复制。
-
-**跨会话复用。** 被复用的 worktree 保留既有 `.lake`，它是下一次 canonical 入口的增量起点；会话切换不是失效原因。复用边界见 A20。复用键不含会话号、HEAD、BASE 或 donor 身份，也不把程序字节、全局摘要、会话号或提交号加入 §10.4 的键。pin 不兼容由现役门明确拒绝并给出恢复路径。`make worktree` 复用只执行既有分支、祖先、pin 和非 symlink 校验，不物化、修复或替换缓存。
-
-**显式 clonefile 补救。** 全量入口在完成本地和共享恢复后得到 Lake needs-build，才提示 AI 选择补救。补救须在本 worktree 的缓存任务结束后，只删除该 worktree 的 `.lake`，核对 donor 有实际预热完成的收据，再以一次性显式 clonefile 选择运行 `lean-cache-ensure` 从主检出播种；参数名由 #15158 实施确定，本规范不把它写成现有可运行命令。`warm-donor` 退出 0 且收据为 `skipped` 不算预热。补救不清共享缓存、不碰其他 worktree、不运行 `clean-all`；clonefile 后仍由 Lake 补差，不承诺零编译或更快。默认不 clonefile，因此删除 `.lake` 后再运行默认 ensure 不会隐式恢复 clonefile。
-
-**清理。** warm 不清理缓存。本仓库写入缓存的内容是自上次清理以来各次 warm 写入的产物之并。`lake cache clean` 删除整个工具链缓存目录，是单独的维护操作，只在主机上没有使用该工具链的 Lean 构建或报告时运行。清理若与读者并发：读者查找时产物文件已缺失且无可用存档，Lake 记录警告并按未命中在本地编译；读者已解析路径而文件在恢复前被删除，则恢复以构建错误终止，重跑按未命中处理。两种情况都不使读者得到与输入哈希不符的产物，前提是实际出现的产物之间没有内容哈希碰撞。
-
-**报告种子。** 整库报告种子由报告、四个 sidecar 和成功收据组成，只服务 `make lean-report` 以及调用它的 `make test`、`make gate`。`make lean` 本身不需要它。`make lean-report-scoped` 及其调用者不读取也不覆盖整库种子；逐模块 `:report` 产物与聚合报告种子是不同对象。linked worktree 缺少有效整库种子时，拟议规则是从主检出复制完整种子（报告、四个 sidecar 和成功收据），沿用既有完整性和格式检查，再由 Lake `:report` 增量补齐；当前入口仍以 `reason=linked-worktree` 拒绝，此复制规则和其余 A23 写者调整由 #15158 跟踪。`judgeInputs` 与 utility 输入不进入共享缓存，由各 worktree 自行生成。
-
-**弱参数与键。** 已核对 Lake 行为：`weakLeanArgs = ["-j1"]` 不进入 Lake trace。成功产物在 `-j1` 下不变是本节的建模前提；不由此推导并发、耗时或内存收益。继续遵守 §10.4 的程序字节禁令，不新增全局摘要、会话号或提交号作为复用键。
-
-**正确性与验证边界。** 以下断言只在列明的模型和前提下成立；旧定理的边界保留。
-
-- 对共享缓存的正确性，已冻结 `D5/S3/ConceptDynamics/Governance/TraceKeyedArtifactCacheSoundness.cachedBuild_eq_build` 承担「写者存入从零构建产物、任意 clean/读者查找交错仍得到从零构建结果」；`cachedBuild_restores_unaffected` 承担「写者与读者快照在模块源码和递归依赖上不变且键命中时恢复该缓存产物」。模型把每次查找视为原子读取，命中分支的“恢复而不编译”是模型求值结论，模型不计编译次数；定理不要求读者只读，写入者只要写入从零构建产物，读者结果仍正确，本仓库的只读约束只为使写入和清理由主检出独占；Lake 路径解析、硬链接/复制和其中的文件系统失败仍由清理段说明，不由定理覆盖。
-- 对任意可达本地层（空层、跨会话保留层或 donor 拷贝层），已冻结 `D5/S3/ConceptDynamics/Governance/LayeredLocalCacheSoundness.layered_cache_contract` 的 `Reachable` 前提成立。其结论中的 `planFor` 根集等式承担请求根集不变；`Guarantees.roots` 承担每个请求根的最终记录等于 `(traceKey, 从零构建产物)`；`Guarantees.reusable` 承担结果层仍为 `Reachable`。因此这些本地层都能作为有效的增量起点。
-- `Guarantees.visits` 承担访问序列等于计划节点序列，`Guarantees.reads` 承担读集恰为需求闭包。`Guarantees.outside` 只承担闭包外记录不被修改；`Guarantees.locality` 承担闭包外记录不影响执行及需求内结果。`Guarantees.workload` 承担编译集恰为需求内本地层与共享层都未命中的双未命中。故定向操作不需要整份 clonefile；其访问范围是目标、utility 输入及 import 闭包。
-- `Guarantees.ready` 承担探测成功当且仅当执行轨迹没有编译事件，即就绪当且仅当零编译；`Guarantees.needs` 承担探测报错节点必是需求内双未命中。该模型结论对应 Lake 原生不编译探测，但 Lake 的失败不都属于双未命中，映射本身是未经机器验证的前提。
-
-上述模型与 Lake 的对应还要求以下未经机器验证的前提：Lake 输入哈希与模型 `src`/`deps` 对应（源码、选项、模块名、平台、工具链、import/传递 trace、额外目标和插件均已计入）；`BuildSystem.compile` 是确定性的，`hash` 与 `digest` 合成的 `traceKey` 对应 Lake 输入哈希；Lake 的 mtime 判定以及缺产物或归档修复分支不在模型内；记录级写入具有原子性；模块之间被中断的构建按依赖闭合前缀的完整执行解释，这只是解释，不是另一条定理；Lake 调度对应按依赖顺序、每模块一次的执行器；模型探测器对应 Lake 原生不编译探测；`NoCollision` 覆盖共享同一工具链缓存的所有项目，且 Lake hash 不是密码学哈希；donor 与旧本地层确实由模型允许的快照、执行、删除、清空或拷贝来源生成；写者增量构建等于从零构建。模型不证明报告 bundle、依赖物化、pin 检查或文件系统恢复策略。
-
-**现行入口。** 现行 ensure 尚未执行本节目标契约；现行行为的唯一真源是 `LeanCacheEnsureCommand.EnsureLocked` 及其测试。
-
-- **整份 clonefile。** linked worktree 在 `.lake` 缺失、stamp 不匹配或损坏，或缺失 stamp 未满足项目层 `Cold ∧ Clear` 时，选到符合 pin、温热、锁和空闲检查的主检出 donor 才会自动整份播种；非 linked 检出在新建或移除后重建 `.lake` 路径选到登记 donor 时也会整份播种。linked 只使用主检出 donor，非 linked 使用 Git 登记 donor，后者不要求项目层温热。
-- **build 层 clonefile。** 私有 `.lake` 缺失 stamp、项目层为 `Cold` 且 `.lake/build` 为 `Clear` 时，linked worktree 可从符合条件的主检出 donor 只播种 `.lake/build`，非 linked 检出可从温热登记 donor 只播种该层；linked 要求主 donor，非 linked 未选到 donor、枚举失败或尝试无结果时转原地重产。
-- **拒绝或失败。** 播种前因无效 writer guard、symlink 或非目录 `.lake`、linked 所需主 donor 不可用而拒绝时，不自动播种；stamp 匹配但项目层为 `Cold` 的 linked worktree 即使主 donor 可用也拒绝且不自动播种，要求删除本 `.lake` 后重播。linked 播种过程中及播种后的复核、发布或收尾失败会返回失败，可能已留下已发布的 build 层。
-- **原地重产。** 已有非 linked `.lake` 的缺失或损坏 stamp 在未走成 build 层播种时，直接在原地尝试运行当前 pin 的 cache-get，成功后写回 stamp，包括主检出；非 linked build 层候选未选到 donor、donor 枚举失败或尝试返回空结果时也走这条路径。
-- **clonefile 或发布异常。** clonefile 调用、staging 复核、rename、发布或清理异常在对应播种路径中直接失败，不回退到普通复制、cache-get 或原地重产。
-
-定向报告入口已上线。默认不 clonefile、显式 clonefile 选择、linked 种子复制和 A23 写者调整均由 #15158 跟踪。
-
 ---
 
 # 第四部:harness 执法(不变量·状态机)
@@ -507,7 +464,7 @@ project 恢复在 current 与 Lean build 单元中先查读者可见的种子：
 |---|---|---|
 | H1 | 向下 import(地层单调) | SL-001 |
 | H2 | sorry 仅居 X_Frontier | SL-002 |
-| H3 | 容量阈(目录≤12 文件、文件≤400 行)⟹ 分裂协议 | SL-003 |
+| H3 | 容量阈(目录≤96 文件、文件≤1000 行)⟹ 分裂协议 | SL-003 |
 | H4 | 镜像律(B/E 存在或显式 waiver) | SL-004 |
 | H5 | 编年历史归 git(无机器判官;2026-09-02 owner 裁决,SL-005 已退役) | — |
 | H6 | 徽章由语法生成,禁手写状态 | SL-006 |

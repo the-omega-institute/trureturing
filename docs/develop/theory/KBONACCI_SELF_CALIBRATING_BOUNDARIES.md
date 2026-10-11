@@ -4645,3 +4645,249 @@ has unbounded $\Omega$. For finite-valued index-side $\alpha$, at least one $P_a
 The bounds are local to the supplied information and need not share any global constant. The target remains the number of distinct prime divisors. None of the decoding conclusions recovers prime exponents, the hidden integer, or its generating label; any such recovery requires its own identifiability argument under the chosen source promise. Numerical overlap of windows is handled by the labeled source (36.1), not by postulating a function assigning a unique index to every $n\in W$. The adaptive impossibility applies only while the information consists of an index-side value with infinite compatible index set and finite divisibility answers. Magnitude or support promises change the compatible sources and must be included before invoking it. No claim about arbitrary arithmetic predicates, efficient factorization, or uniform calibration on all of $W$ follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 37. Finite-valued advice and persistent obstruction to adaptive upper calibration
+
+**Definition 37.1 (Advice, probe cylinders and persistent unboundedness).** Retain exactly the labeled source $X$, numerical map $N$ and target $\Omega$ of (36.1). For finite $S\subset\mathbb P$ and a realized pattern $b\in d_S(N[X])$, write
+
+$$
+C(S,b)=\{x\in X:d_S(N(x))=b\}.
+$$
+
+Theorem 35.2 and Corollary 35.3, pulled back along the surjection $N:X\to W$, give
+
+$$
+\sup_{x\in C(S,b)}\Omega(x)=+\infty.
+\tag{37.1}
+$$
+
+In fact every $b\in\{0,1\}^{S}$ is realized. This is unboundedness across the window union in (36.1).
+
+Let $\beta:X\to E$ be any supplied side observation with finite attained range $E_0=\beta[X]$. Only $E_0$ must be finite; the ambient set $E$ need not be. No computability, continuity, measurability or index-only condition is imposed on $\beta$. For $x\in X$ and finite $T\subset\mathbb P$, define
+
+$$
+\begin{aligned}
+J_\beta(x,T)
+&=\{y\in X:\beta(y)=\beta(x),\ d_T(N(y))=d_T(N(x))\},\\
+B_\beta
+&=\{x\in X:\text{for every finite }T\subset\mathbb P,
+\ \sup_{y\in J_\beta(x,T)}\Omega(y)=+\infty\}.
+\end{aligned}
+\tag{37.2}
+$$
+
+Every $J_\beta(x,T)$ contains $x$. Thus $x\notin B_\beta$ means that some finite $T$ and finite real $M$ satisfy $\Omega(y)\le M$ for every $y\in J_\beta(x,T)$. The set $B_\beta$ depends only on the supplied observation and source, not on a query procedure.
+
+**Theorem 37.2 (Unbounded persistent sources in every probe cylinder).** For every $\beta$ as in Definition 37.1, every finite $S\subset\mathbb P$, every realized $b\in d_S(N[X])$, and every finite real threshold $K$, there exists
+
+$$
+x\in C(S,b)\cap B_\beta
+\quad\text{with}\quad \Omega(x)>K.
+\tag{37.3}
+$$
+
+**Proof.** Fix $S,b,K$ and suppose, to the contrary, that every $x\in C(S,b)$ with $\Omega(x)>K$ lies outside $B_\beta$. Put $m=|E_0|\ge1$. We construct nonempty finite probe cylinders $D_j$, sets $A_j\subseteq E_0$ of $j$ distinct advice values, and finite real bounds $H_j\ge K$, for $0\le j\le m$, satisfying
+
+$$
+D_j\subseteq C(S,b),\qquad
+\Omega(y)\le H_j
+\quad\text{whenever }y\in D_j\text{ and }\beta(y)\in A_j.
+\tag{37.4}
+$$
+
+Start with $D_0=C(S,b)$, $A_0=\varnothing$ and $H_0=\max\{K,0\}$. Suppose the data are constructed for $j<m$, and write $D_j=C(S_j,b_j)$. By (37.1), choose $x_j\in D_j$ with $\Omega(x_j)>H_j$. Its advice value $e_j=\beta(x_j)$ is not in $A_j$, by (37.4). Since $\Omega(x_j)>K$ and $D_j\subseteq C(S,b)$, the contrary assumption gives $x_j\notin B_\beta$. Hence there are a finite prime set $T_j$ and a finite real $M_j$ such that
+
+$$
+\Omega(y)\le M_j\qquad(y\in J_\beta(x_j,T_j)).
+\tag{37.5}
+$$
+
+Set
+
+$$
+\begin{aligned}
+D_{j+1}
+&=D_j\cap C(T_j,d_{T_j}(N(x_j)))\\
+&=C(S_j\cup T_j,d_{S_j\cup T_j}(N(x_j))),\\
+A_{j+1}&=A_j\cup\{e_j\},\qquad
+H_{j+1}=\max\{H_j,M_j\}.
+\end{aligned}
+\tag{37.6}
+$$
+
+The equality of cylinders holds because $x_j\in D_j$, so the two patterns agree on their overlap. This cylinder contains $x_j$ and is again a nonempty finite probe cylinder. The bounds for advice values in $A_j$ persist under restriction to $D_{j+1}$; the bound for $e_j$ follows from (37.5), since its sources in $D_{j+1}$ belong to $J_\beta(x_j,T_j)$. Thus (37.4) holds at $j+1$, with one additional distinct advice value.
+
+After $m$ steps, $A_m=E_0$. Equation (37.4) therefore bounds $\Omega$ by the finite number $H_m$ on all of $D_m$. This contradicts (37.1) for the nonempty cylinder $D_m$, proving (37.3).
+
+The finite induction removes an advice value from the possible values of sources above the current bound; it does not remove all sources of that value. No regularity of the advice cells is used. The integer $m$ counts this proof's restrictions, not the number of queries made by a procedure or an effective method for selecting witnesses. In contrast with Proposition 36.5, which selects an unbounded advice cell separately for each fixed probe menu, (37.3) selects one actual $x$ before quantifying over every finite further menu $T$ in (37.2).
+
+The finite-partition viewpoint for discrete advice and discontinuity obstructions is established background; see Martin Ziegler, *Real Computation with Least Discrete Advice: A Complexity Theory of Nonuniform Computability*, [arXiv:0811.3782v5, Sections 1.2 and 2.1](https://arxiv.org/html/0811.3782v5), [doi:10.1016/j.apal.2011.12.030](https://doi.org/10.1016/j.apal.2011.12.030). The argument above uses the elementary finite-color elimination principle directly on the cylinders (37.1). It does not apply a represented-space or Cauchy-representation theorem to $X$. The source-specific conclusion (37.3) is a deduction from the every-pattern unboundedness supplied by Theorem 35.2 and Corollary 35.3; no literature-priority claim is made.
+
+**Corollary 37.3 (No total finite upper certification with finite-valued advice).** Let $\beta$ satisfy Definition 37.1. Consider a deterministic procedure on an unknown $x\in X$ whose source information consists only of $\beta(x)$ and answers to queries $p\mid N(x)$ for primes $p$. The next query, stopping decision and output may depend on the advice, the preceding query-answer transcript and fixed parameters common to all of $X$. A successful halt occurs after finite execution and outputs a finite real number $c$ as an upper certificate. Soundness means that every such output on every $x\in X$ satisfies $\Omega(x)\le c$; successful halting is not assumed.
+
+Every sound procedure of this kind has no successful halt on any $x\in B_\beta$. In particular, no such procedure is total in the sense of successfully halting with a finite upper certificate on every source. Each finite cylinder $C(S,b)$ contains noncertifying sources with unbounded $\Omega$, and the same set $B_\beta$ obstructs every such sound procedure. No uniform bound on query depth is assumed. If every allowed halt must output a finite upper certificate, every run on $B_\beta$ genuinely fails to halt. If other halt outcomes are allowed, abort, unknown and $+\infty$ are not finite upper certificates.
+
+**Proof.** Suppose a sound procedure successfully halts at $x\in B_\beta$. Deduplicate the primes in its finite realized transcript into $T$; repeated answers are consistent. Every $y\in J_\beta(x,T)$ has the same initial advice and follows the same entire finite execution. Indeed, at the start both runs have the same fixed parameters and advice. Inductively, the same earlier transcript gives the same next query or stopping decision, and membership in $J_\beta(x,T)$ gives the same answer to each prime on the path. Thus every such $y$ reaches the same successful halt and finite output $c$. This is the deterministic transcript argument of Theorem 35.6 with the advice held fixed; it includes a transcript of length zero.
+
+Soundness then gives $\Omega(y)\le c$ for all $y\in J_\beta(x,T)$, contradicting (37.2). Theorem 37.2 supplies sources in $B_\beta$ of arbitrarily large $\Omega$ in every $C(S,b)$, which proves the remaining assertions. The finite set $T$ was extracted from the single hypothesized successful run, so it can depend on that source and that procedure.
+
+In the calibration language of (36.2), for $o_{\beta,T}(y)=(\beta(y),d_T(N(y)))$ and every $x\in B_\beta$, the upper endpoint obeys
+
+$$
+U_{o_{\beta,T}}(o_{\beta,T}(x))=+\infty
+\qquad\text{for every finite }T\subset\mathbb P.
+\tag{37.7}
+$$
+
+Thus no finite stage along such an actual source provides a finite upper calibration, even if the stage and probes depend on its earlier answers. For any fixed $S,b$, subtracting the constant observed contribution yields the further source-specific consequence
+
+$$
+\sup_{x\in C(S,b)\cap B_\beta}\rho_S(N(x))=+\infty.
+\tag{37.8}
+$$
+
+To see this for any finite threshold $H$, apply (37.3) with $K=H+\sum_{p\in S}b_p$ and use $\rho_S(N(x))=\Omega(x)-\sum_{p\in S}b_p$. The sufficient index, magnitude and complete-support promises of Proposition 36.4 remain applicable on their declared domains. Such promises change the compatible sources; (37.7) does not turn a bounded individual advice cell into an unbounded one.
+
+The finite-path argument is standard decision-tree reasoning; compare the deterministic query-tree background in [Magniez, Nayak, Santha, Sherman, Tardos and Xiao, *Improved bounds for the randomized decision tree complexity of recursive majority*, p. 2](https://arxiv.org/abs/1309.7565v1), as recorded in [the existing source note](../../../Library/ConceptDynamics/magniez2013randomized.md). Finite-domain depth bounds from that setting are not used here. The conclusion concerns deterministic prime-divisibility queries on (36.1); it gives neither an obstruction for arbitrary predicates or randomized protocols nor a factoring-complexity, efficient witness-selection or physical-resource bound. Every individual window is finite; (37.3) and (37.8) range over the window union.
+
+**Proposition 37.4 (Bounded cells, partial success and the finite-range boundary).** On the same source $X$, define the two-valued observation
+
+$$
+\beta_1(x)=
+\begin{cases}
+0,&\Omega(x)\le1,\\
+1,&\Omega(x)>1.
+\end{cases}
+\tag{37.9}
+$$
+
+Both cells are occupied, the zero cell is bounded, and
+
+$$
+B_{\beta_1}=\{x\in X:\Omega(x)>1\}.
+\tag{37.10}
+$$
+
+A sound partial procedure may successfully output $1$ without prime queries on the zero cell and make no successful output on the one cell. In contrast, allowing advice that is a finite string at each source with infinitely many possible strings permits a sound total procedure with no prime queries: take $\gamma(x)=1^{\Omega(x)}$ and output its length.
+
+**Proof.** Proposition 35.5 supplies the labeled sources $(7,2)$ and $(13,26)$ with target values $1$ and $2$, so both cells in (37.9) are occupied. If $\beta_1(x)=0$, every $J_{\beta_1}(x,T)$ has target at most $1$, and $x\notin B_{\beta_1}$. If $\beta_1(x)=1$, fix any finite $T$. The cylinder $C(T,d_T(N(x)))$ has unbounded target by (37.1). Removing its sources with target at most $1$ leaves an unbounded set, exactly $J_{\beta_1}(x,T)$. Explicitly, for any finite $H$, choose in the cylinder a source with target greater than $\max\{1,H\}$; it belongs to that joint cell. This proves (37.10).
+
+The stated partial procedure is sound by the definition of the zero cell; on the one cell it may run forever. Replacing this nonhalting branch by unknown gives a procedure that halts everywhere but is still not total finite upper certification. This refutes both the assertion that every cell of every finite-valued observation must be unbounded and the assertion that no source can admit sound partial certification with such advice.
+
+Finally, every $\Omega(x)$ is a finite integer, so $\gamma(x)$ is a finite word over the one-letter alphabet and its length is exactly the target. Equation (37.1) for $S=\varnothing$ makes these lengths unbounded, hence the attained range of $\gamma$ is infinite. Reading the supplied word and returning its length terminates at each source, but the finite-range hypothesis of Theorem 37.2 fails. This is a distinction between finite attained range and pointwise finite strings of unbounded possible lengths, not a way to obtain the advice from the prime-query transcript.
+
+## 追加锚（本行以下为增补区）
+
+## 38. Randomized upper proposals under a uniform error budget
+
+**Definition 38.1 (Common tapes and the finite upper-output task).** Retain exactly $X,N,\Omega$ from (36.1), and $\beta:X\to E$, its finite attained range $E_0$, $J_\beta$ and $B_\beta$ from Definition 37.1. Fix one probability space $(\Theta,\mathcal F,\mu)$ common to every source. A tape $\theta\in\Theta$ fixes a deterministic procedure whose only source inputs are $\beta(x)$ and Boolean answers to prime-divisibility queries $p\mid N(x)$. Its next action, stopping decision and output depend only on that tape, the advice, its preceding execution and fixed parameters shared by all sources. No distribution on $X$ is imposed; source independence means that the tape law and these rules are the same for every fixed $x$.
+
+For each $x$, let $L_x\subseteq\Theta$ be the event of literal termination after finite execution, and let $H_x\subseteq L_x$ be the event that this termination outputs a finite real number $C_x(\theta)$ as a proposed upper bound. A finite proposal may be correct or false. Other terminal outcomes, including unknown, abort and $+\infty$, belong to $L_x\setminus H_x$. There is one terminal outcome per run; intermediate numerical values are not upper outputs. On $H_x$, write $\tau_x(\theta)\in\mathbb N_0$ for its finite execution length and $Q_x(\theta)$ for the finite set of primes queried on that execution, including the empty set when no query occurs.
+
+Measurability is part of the contract: for every fixed $x$, all finite execution records and terminal outcomes are measurable in $\theta$, with discrete query, answer and status fields and Borel real-output fields. In particular $L_x,H_x\in\mathcal F$, and the restricted maps $\tau_x$, $Q_x$ and $C_x$ on $H_x$ are measurable, where finite prime sets carry their countable discrete sigma algebra. Thus the truncation events below and the false-output event are measurable. No regularity of $\beta$ on $X$ is required. Define
+
+$$
+\begin{aligned}
+F_x&=\{\theta\in H_x:C_x(\theta)<\Omega(x)\},&
+S_x&=H_x\setminus F_x,\\
+U_x&=\Theta\setminus H_x,&
+D_x&=\Theta\setminus L_x.
+\end{aligned}
+\tag{38.1}
+$$
+
+Here $S_x$ is finite successful output, meaning correctness at the actual source; it does not assert soundness on the whole observation cell. $U_x$ is operational uncertainty for this task: no finite upper proposal is returned. It includes unknown/abort and infinite outputs as well as literal nontermination $D_x$. It is neither posterior uncertainty nor the event of an incorrect proposal. The latter is $F_x$; failure to obtain a correct finite output is $U_x\cup F_x=\Theta\setminus S_x$.
+
+The common-tape convention follows the distribution-over-deterministic-procedures convention in [Magniez et al., *Improved bounds for the randomized decision tree complexity of recursive majority*, p. 2](https://arxiv.org/pdf/1309.7565v1), also recorded in [the existing source note](../../../Library/ConceptDynamics/magniez2013randomized.md). Its finite Boolean input domain and depth bounds are not hypotheses here. The distinction between one input-independent law, sourcewise probabilistic correctness and every-tape correctness is already present in [ExactRealProbeCosts](../../../D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts.lean); those exact-real probes do not replace the prime queries in this definition.
+
+**Theorem 38.2 (Uniform false-output control bounds finite output on $B_\beta$).** For every procedure satisfying Definition 38.1 and every common $\delta\in[0,1]$, suppose
+
+$$
+\mu(F_y)\le\delta\qquad\text{for every }y\in X.
+\tag{38.2}
+$$
+
+Then, for every $x\in B_\beta$,
+
+$$
+\mu(H_x)\le\delta,\qquad
+\mu(U_x)\ge1-\delta,\qquad
+\mu(S_x)\le\delta-\mu(F_x)\le\delta.
+\tag{38.3}
+$$
+
+There is no uniform query-depth or execution-horizon assumption. At $\delta=0$, (38.3) asserts almost-sure absence of finite output at each obstructed source, without asserting absence on every declared tape. In particular, for $\delta<1$ no such procedure returns a finite upper proposal almost surely at every source. The obstructing set is the same procedure-independent $B_\beta$ as in Section 37, which has unbounded target in every finite probe cylinder by Theorem 37.2.
+
+**Proof.** Fix $x\in B_\beta$. Enumerate all primes increasingly as $p_1,p_2,\ldots$ and put $P_m=\{p_1,\ldots,p_m\}$ for $m\ge1$. On the common tape space define
+
+$$
+A_m=\{\theta\in H_x:\tau_x(\theta)\le m,\ Q_x(\theta)\subseteq P_m,\ C_x(\theta)\le m\}.
+\tag{38.4}
+$$
+
+These are measurable increasing events and $\bigcup_{m\ge1}A_m=H_x$: each execution producing a finite proposal has finite length, finitely many queried primes and a finite real output. This exhaustion does not bound these quantities uniformly over tapes or sources.
+
+For each $m$, persistent unboundedness gives one source
+
+$$
+y_m\in J_\beta(x,P_m),\qquad \Omega(y_m)>m.
+\tag{38.5}
+$$
+
+This $y_m$ depends on $x,m$ but not on the tape. For every $\theta\in A_m$, run both sources with that very same tape. They have the same advice, and every prime queried along the run at $x$ lies in $P_m$, on which their answers agree. The deterministic finite-execution transport used in Corollary 37.3 therefore makes the run at $y_m$ terminate with exactly $C_x(\theta)\le m<\Omega(y_m)$. This is the same-history transport of [PassivePolicyNormalization, `execute_transfer`](../../../D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.lean), with tape and advice fixed; no new generic transport assertion is needed. Consequently
+
+$$
+A_m\subseteq F_{y_m},\qquad
+\mu(A_m)\le\mu(F_{y_m})\le\delta.
+\tag{38.6}
+$$
+
+Continuity from below now yields $\mu(H_x)=\lim_m\mu(A_m)\le\delta$. Taking complements and using $H_x=S_x\sqcup F_x$ proves (38.3). The proof selects one actual source for the entire event $A_m$, not a different source for each tape. Both inclusion and probability comparison use the common law $\mu$; merely finding a bad source separately for each tape would not establish (38.6).
+
+The source-specific probability bridge is a `repo-derived` deduction from persistent unboundedness and finite-path transport, with ordinary probability continuity. The every-pattern arithmetic supplier remains Theorem 35.2 through Sections 36–37. No Lean/kernel verification or literature priority is claimed. Established confidence-impossibility background includes the Gleser–Hwang theorem as presented by [Moss, *Infinite Diameter Confidence Sets in Hedges' Publication Bias Model*, Theorem 4](https://arxiv.org/pdf/1912.09180v3), and [Bertanha–Moreira, *Impossible Inference in Econometrics: Theory and Applications*, Theorem 3](https://arxiv.org/pdf/1612.02024v5). Moss assumes pointwise convergence of dominated densities to a density, support inclusion and diverging parameter size; Bertanha–Moreira use a common weak limit of convex mixtures from each parameter class and specified boundary-continuity conditions. Those hypotheses are not imported here. These results provide context; (38.4)–(38.6) supply the prime-query argument.
+
+**Proposition 38.3 (Sharpness, coverage and termination).** Write $h_x=\mu(H_x)$, $e_x=\mu(F_x)$ and $s_x=\mu(S_x)$. Under (38.2), at every $x\in B_\beta$,
+
+$$
+0\le s_x=h_x-e_x\le\delta-e_x,\qquad
+\mu(\Theta\setminus S_x)=1-h_x+e_x\ge1-\delta+e_x.
+\tag{38.7}
+$$
+
+When $h_x>0$, coverage conditional on a finite proposal is
+
+$$
+\mu(S_x\mid H_x)=1-\frac{e_x}{h_x}.
+\tag{38.8}
+$$
+
+The unconditional error guarantee $e_x\le\delta$ alone does not give conditional coverage $1-\delta$. The bound $h_x\le\delta$ is sharp; for $0<\delta<1$, conditional coverage can be either zero or one within the same admissible procedure. Moreover (38.3) gives no lower bound $1-\delta$ on literal nontermination unless every allowed terminal outcome is a finite upper proposal.
+
+**Proof.** Equations (38.7)–(38.8) follow from the disjoint decomposition $H_x=S_x\sqcup F_x$. For the assertions of attainability, take constant $\beta$, so $B_\beta=X$ by (37.1). Use a Bernoulli tape of success probability $\delta$: on success output the upper proposal $1$ without queries, and otherwise halt with unknown. Then for every $x$,
+
+$$
+h_x=\delta,\qquad
+e_x=\delta\,\mathbf1_{\{\Omega(x)>1\}},\qquad
+s_x=\delta\,\mathbf1_{\{\Omega(x)\le1\}},\qquad
+\mu(D_x)=0.
+\tag{38.9}
+$$
+
+The labeled sources $(7,2)$ and $(13,26)$ have target values $1$ and $2$, respectively, as supplied by Proposition 37.4. For $\delta>0$ their conditional coverages are one and zero. Thus all probabilities in (38.9) meet the common error budget, attain $h_x=\delta$, and separate conditional coverage from unconditional successful-output probability. For $\delta=0$ the finite-proposal probability is zero and conditional coverage is undefined. If every halt must instead be a finite upper proposal, then $L_x=H_x$, hence $D_x=U_x$ and (38.3) does yield $\mu(D_x)\ge1-\delta$.
+
+**Proposition 38.4 (Pointwise budgets without a common gap from one).** Replacing the single bound $\delta<1$ by merely a source-dependent bound $\delta_x<1$ does not preclude finite upper output with probability one, even with constant advice and no queries.
+
+**Proof.** On the same source $X$, draw an integer $K\ge1$ from the source-independent law $\mu(K=k)=2^{-k}$ and immediately output $K$. Every tape in this discrete probability space gives a finite output. For $m=\Omega(x)\ge1$, the geometric sum gives
+
+$$
+h_x=1,\qquad
+e_x=\mu(K<m)=1-2^{-(m-1)}<1,\qquad
+s_x=2^{-(m-1)}>0.
+\tag{38.10}
+$$
+
+Here $\Omega(x)\ge1$ because every source has $N(x)>1$. Taking $\delta_x=e_x$ proves the assertion. Unboundedness of $\Omega$ gives $\sup_x\delta_x=1$, so this example supplies no common budget smaller than one and does not contradict Theorem 38.2. A source-dependent budget with a common upper bound below one is still covered by that theorem.
+
+The calibration meaning of Theorem 38.2 is task-relative: on the intrinsic obstruction $B_\beta$, uniformly limiting false finite upper proposals to $\delta$ also limits the probability of obtaining any finite proposal to $\delta$. Randomization alone leaves at least $1-\delta$ probability without such a proposal; counting actual incorrect proposals as unresolved increases the failure probability as in (38.7). The local upper endpoint (37.7) remains infinite at each finite prime transcript. The claim does not rule out bounded advice cells or the explicit index, magnitude and complete-support promises of Proposition 36.4. Source-correlated random tapes, hidden source inputs and arbitrary non-prime probes fall outside Definition 38.1; no factoring-efficiency, uniform resource or physical conclusion follows.
+
+## 追加锚（本行以下为增补区）
