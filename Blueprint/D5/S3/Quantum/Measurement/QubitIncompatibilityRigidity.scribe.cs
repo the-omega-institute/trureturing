@@ -26,13 +26,6 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
                                 Call("ite", Equal(X("s"), Typed(Num(0), Fin(2))),
                                     Typed(Num(1), Complexes()), Typed(Negate(Num(1)), Complexes())),
                                 At(Qualified("FourQubitParentConstruction", "B"), X("v"))))))))),
-            Node("IsPOVM", "A joint POVM", "The four positive effects sum to the identity matrix.",
-                DescribeRole.Definition, All("G", Parents(),
-                    Equivalence(Call("IsPOVM", X("G")), And(
-                        All("q", Outcomes(), At(Qualified("Matrix", "PosSemidef"), At(X("G"), X("q")))),
-                        Equal(SumOver("s", Fin(2), SumOver("t", Fin(2),
-                            At(X("G"), Pair(X("s"), X("t"))))),
-                            Typed(Num(1), X("QubitMatrix"))))))),
             Node("marginal", "Marginal effects", "The first marginal sums over the second outcome, and the second marginal sums over the first outcome.",
                 DescribeRole.Definition, All("G", Parents(), All("i", Fin(2), All("s", Fin(2),
                     Equal(Call("marginal", X("G"), X("i"), X("s")),
@@ -42,7 +35,7 @@ internal sealed class QubitIncompatibilityRigidityDocument : IScribeDocumentDefi
             Node("SCompatible", "Compatibility on a state set", "A joint POVM reproduces both observable distributions on every density matrix in the given state set. bornProbability is the complex trace of the matrix product.",
                 DescribeRole.Definition, All("S", StateSets(), All("a", Vectors(),
                     Equivalence(Call("SCompatible", X("S"), X("a")), Ex("G", Parents(), And(
-                        Call("IsPOVM", X("G")), All("rho", X("Density"), Implication(
+                        At(Qualified("ConcealmentKernelNecessityRefutation", "IsPOVM"), X("G")), All("rho", X("Density"), Implication(
                             Member(X("rho"), X("S")), All("i", Fin(2), All("s", Fin(2),
                                 Equal(Call("bornProbability", Call("val", X("rho")),
                                     Call("marginal", X("G"), X("i"), X("s"))),

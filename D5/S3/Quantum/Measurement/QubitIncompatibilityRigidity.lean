@@ -10,14 +10,13 @@ import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import D5.S3.Arith.Lattices.Klartag.State.PaddingMap
 noncomputable section
 open D5.S3.Quantum.FiniteDimensional
+open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
 open scoped ComplexOrder
 namespace D5.S3.Quantum.Measurement.QubitIncompatibilityRigidity
 abbrev Density := {ρ : QubitMatrix // ρ.PosSemidef ∧ Matrix.trace ρ = 1}
 def effect (v : EuclideanSpace ℝ (Fin 3)) (s : Fin 2) : QubitMatrix :=
   (1 / 2 : ℂ) • ((1 : QubitMatrix) + (if s = 0 then (1 : ℂ) else -1) •
     D5.S3.Quantum.Measurement.FourQubitParentConstruction.B v)
-def IsPOVM (G : Fin 2 × Fin 2 → QubitMatrix) : Prop :=
-  (∀ q, (G q).PosSemidef) ∧ (∑ s : Fin 2, ∑ t : Fin 2, G (s, t)) = 1
 def marginal (G : Fin 2 × Fin 2 → QubitMatrix) (i s : Fin 2) : QubitMatrix :=
   if i = 0 then ∑ t : Fin 2, G (s, t) else ∑ t : Fin 2, G (t, s)
 def SCompatible (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) : Prop :=
@@ -124,7 +123,8 @@ private lemma marginal_psd {G : Fin 2 × Fin 2 → QubitMatrix} (hG : IsPOVM G)
 
 private lemma marginal_sum {G : Fin 2 × Fin 2 → QubitMatrix} (hG : IsPOVM G)
     (i : Fin 2) : marginal G i 0 + marginal G i 1 = 1 := by
-  fin_cases i <;> simpa [marginal, Fin.sum_univ_two, add_assoc, add_comm, add_left_comm]
+  fin_cases i <;> simpa [marginal, Fintype.sum_prod_type, Fin.sum_univ_two, add_assoc, add_comm,
+    add_left_comm]
     using hG.2
 
 private def Joint (a b : EuclideanSpace ℝ (Fin 3)) : Prop :=
@@ -221,7 +221,7 @@ private lemma joint_criterion (a b : EuclideanSpace ℝ (Fin 3)) :
     all_goals
       ext i j
       fin_cases i <;> fin_cases j <;>
-        simp [G, marginal, Fin.sum_univ_two, B,
+        simp [G, marginal, Fintype.sum_prod_type, Fin.sum_univ_two, B,
           D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
           D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula] <;> ring
 
@@ -795,11 +795,12 @@ private def flip (s : Fin 2) : Fin 2 := if s = 0 then 1 else 0
 private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → EuclideanSpace ℝ (Fin 3)) :
     SCompatible S a → SCompatible S (fun i => if i = 0 then -a i else a i) := by
   rintro ⟨G, hG, h⟩
-  rw [IsPOVM.eq_1] at hG
+  rw [IsPOVM] at hG
   refine ⟨(fun q => G (flip q.1, q.2)), ?_, ?_⟩
   · constructor
     · intro q; exact hG.1 (flip q.1, q.2)
-    · simpa [flip.eq_1, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc]
+    · simpa [Fintype.sum_prod_type, flip.eq_1, Fin.sum_univ_two, add_comm,
+        add_left_comm, add_assoc]
         using hG.2
   · intro ρ hρ i s; fin_cases i <;> fin_cases s
     · simpa [marginal.eq_1, flip.eq_1, effect_neg] using h ρ hρ 0 1
@@ -820,7 +821,8 @@ private lemma compat_flip_second_mp (S : Set Density) (a : Fin 2 → EuclideanSp
   refine ⟨(fun q => G (q.1, flip q.2)), ?_, ?_⟩
   · constructor
     · intro q; exact hG.1 (q.1, flip q.2)
-    · simpa [IsPOVM, flip, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc] using hG.2
+    · simpa [IsPOVM, Fintype.sum_prod_type, flip, Fin.sum_univ_two, add_comm,
+        add_left_comm, add_assoc] using hG.2
   · intro ρ hρ i s; fin_cases i <;> fin_cases s
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 0
     · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 1
@@ -840,7 +842,8 @@ private lemma compat_exchange_mp (S : Set Density) (a : Fin 2 → EuclideanSpace
   refine ⟨(fun q => G (q.2, q.1)), ?_, ?_⟩
   · constructor
     · intro q; exact hG.1 (q.2, q.1)
-    · simpa [Fin.sum_univ_two, add_comm, add_left_comm, add_assoc] using hG.2
+    · simpa [Fintype.sum_prod_type, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc]
+        using hG.2
   · intro ρ hρ i s; fin_cases i <;> fin_cases s
     · simpa [marginal] using h ρ hρ 1 0
     · simpa [marginal] using h ρ hρ 1 1
