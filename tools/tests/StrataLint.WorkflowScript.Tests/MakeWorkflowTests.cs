@@ -89,6 +89,7 @@ public sealed partial class MakeWorkflowTests
         "auric-fib-analysis-test",
         "auric-fib-compiled-test",
         "auric-fib-report",
+        "auric-fib-universal-test",
         "help",
         "settle-batch",
         "dotnet",

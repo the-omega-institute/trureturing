@@ -153,5 +153,4 @@ auric-fib-compiled-test:
 
 # Source-owned generic clients use the same report facets and custody consumer.
 auric-fib-universal-test:
-	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="leanInspector/reportInspector LeanInformationAuditRegAnalysis.AuricFib.Main LeanInformationAuditRegTests.AuricFib.UniversalFixture" >&2
-	@cd "$(REPOSITORY)" && python3 -B tools/lean-inspector/tests/test_auric_fib_universal.py -v
+	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="leanInspector/reportInspector LeanInformationAuditRegAnalysis.AuricFib.Main LeanInformationAuditRegTests.AuricFib.UniversalFixture" >&2 && cd "$(REPOSITORY)" && python3 -B tools/lean-inspector/tests/test_auric_fib_universal.py -v
