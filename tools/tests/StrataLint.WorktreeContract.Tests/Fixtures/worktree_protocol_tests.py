@@ -18,6 +18,7 @@ import unittest
 from native_fixture import NativeFixture
 from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
+from detached_recovery_cases import DetachedRecoveryCases
 
 ROOT = Path(sys.argv.pop(1)).resolve()
 SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
@@ -26,7 +27,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
@@ -334,14 +335,6 @@ class ProtocolTests(CleanupAnchorCases, MirrorCases, NativeFixture):
             self.remove()
         self.assertFalse(self.tree.exists())
 
-    def test_detached_checkout_is_retained_with_specific_failure(self):
-        self.g(self.tree, "checkout", "--detach")
-        (self.tree / "owned").write_text("uncommitted detached\n")
-        result = self.remove(74)
-        self.assertIn("checkpoint_current_branch_required", result.stdout)
-        self.assertTrue(self.tree.exists())
-        self.assertEqual("uncommitted detached\n", (self.tree / "owned").read_text())
-
     def test_whole_batch_preflight_preserves_eligible_member(self):
         other = self.root / "second"
         self.g(self.main, "worktree", "add", "--detach", other, "HEAD")
@@ -536,7 +529,13 @@ import json,subprocess,sys
 a=sys.argv[1:]
 if a[:2]==["auth","status"]: pass
 elif a[:2]==["repo","view"]: print("fixture/repo")
-elif a[0]=="api": print(json.dumps(dict(protected=True,protection=dict(required_status_checks=dict(contexts=["required"])))))
+elif a[0]=="api":
+    if "/branches/" in a[1]: print(json.dumps(dict(protected=True,protection=dict(required_status_checks=dict(contexts=["required"])))))
+    elif "/commits/" in a[1]: print(json.dumps([dict(number=11)]))
+    elif a[1].endswith("/pulls/11"):
+        landing=subprocess.check_output(["git","rev-parse","origin/dev"],text=True).strip()
+        print(json.dumps(dict(number=11,merged=True,base=dict(ref="dev",repo=dict(full_name="fixture/repo")),merge_commit_sha=landing)))
+    else: raise SystemExit("unexpected API call: "+repr(a))
 elif a[:2]==["pr","list"]: print("[]")
 elif a[:2]==["pr","create"]: print("https://example.invalid/fixture/repo/pull/17")
 elif a[:2]==["pr","checks"]:

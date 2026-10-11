@@ -105,7 +105,7 @@ def prepend {A : Type*} (a : A) (x : ℕ → A) : ℕ → A
   | 0 => a
   | n+1 => x n
 
-@[fun_prop] private theorem measurable_prepend {A : Type*} [MeasurableSpace A] (a : A) :
+@[fun_prop] theorem measurable_prepend {A : Type*} [MeasurableSpace A] (a : A) :
     Measurable (prepend a) := by
   apply measurable_pi_lambda
   intro n
@@ -231,7 +231,7 @@ def rawFrom (x : ℕ → Marked Z) : Stream := fun n =>
   | some (.read b) => b
   | _ => 0
 
-@[fun_prop] private theorem rawFrom_measurable : Measurable (rawFrom (Z := Z)) := by
+@[fun_prop] theorem rawFrom_measurable : Measurable (rawFrom (Z := Z)) := by
   apply measurable_pi_lambda
   intro n
   change Measurable (fun x : ℕ → Marked Z => match (x (n+1)).2 with
@@ -561,7 +561,7 @@ private theorem decode_first (M : Observer Z) (z : Z) (y : Marked Z) (q : Operat
     | stop b =>
       exact delivered_stream_eq _ (stop_delivered _ _ b hf) _ _
 
-private theorem marked_some_mass (M : Observer Z) (e : InstalledEmitter M)
+theorem marked_some_mass (M : Observer Z) (e : InstalledEmitter M)
     (z z' : Z) (op : Operation) :
     markedRow M e (z,none) (z',some op) = e.emit z (some op) * M.update op z z' := by
   classical
