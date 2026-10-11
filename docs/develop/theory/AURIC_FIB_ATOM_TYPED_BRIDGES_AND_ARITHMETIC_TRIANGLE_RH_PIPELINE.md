@@ -1358,7 +1358,8 @@ r_{j+1,j}:E_{j+1}\to E_j
 或相应线性映射，使得其推前满足
 \[
 \pi_{\#}\Delta_{j+1}\subseteq\Delta_j,\qquad
-P_j\pi_{\#}=P_{j+1}\ \text{在指定读出上的交换关系},
+\exists\,\rho_{j+1,j}:\mathbb R^{m_{j+1}}\to\mathbb R^{m_j},\qquad
+\rho_{j+1,j}P_{j+1}=P_j\pi_{\#},
 \]
 \[
 B_jr_{\#}=\pi_{\#}B_{j+1}.
@@ -1379,7 +1380,7 @@ q_{j+1,j}(p,v,z)
 =\left\{(c_j)_j:
 c_j\in C_j,\ q_{j+1,j}(c_{j+1})=c_j\right\}.
 \]
-其元素只是所有有限层记录的相容族，不携带先验时间参数、惯性参数或连续空间。称 \(c=(c_j)_j\) 为熵稳定静态场，若每个 \(p_j\) 位于 \(\Delta_j^\circ\)，并且对所有允许切向量 \(u\in T_{p_j}\Delta_j\)
+其元素只是所有有限层记录的相容族，不携带先验时间参数、惯性参数或连续空间。逆极限非空性不是集合论自动事实，必须由这些压缩映射的相容性与有限层一致性另行证明。称 \(c=(c_j)_j\) 为熵稳定静态场，若每个 \(p_j\) 位于 \(\Delta_j^\circ\)，并且对所有允许切向量 \(u\in T_{p_j}\Delta_j\)
 \[
 D^2\mathcal V_{\mathrm{ent}}(p_j)[u,u]
 =\sum_{v\in V_j}\frac{u_v^2}{p_{j,v}}\ge0.
