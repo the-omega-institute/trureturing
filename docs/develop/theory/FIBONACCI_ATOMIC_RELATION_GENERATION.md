@@ -70163,3 +70163,116 @@ Euler 权重。要把 FIB 地址用于（457.3），必须增加能恢复这些
 
 本节是 §456 的同一 CA 胞腔内代数分解；它没有给出连续包络差的全局符号，
 没有证明 Robin 不等式或 RH，也没有把有限自匹配点的正裕度提升为无穷全称结论。
+
+## 458. 连续包络差的 Mertens—截断—取整三项分解
+
+§457 的连续包络仍把有限素数乘积和 Robin 预算放在同一个符号里。再引入
+
+$$
+\mathcal M(P)=\prod_{p\le P}(1-p^{-1})^{-1},
+$$
+
+$$
+\mathfrak m(P)
+=\log\frac{\mathcal M(P)}{e^\gamma\log P},
+$$
+
+以及连续指数造成的衰减
+
+$$
+\mathcal A_P(\varepsilon)
+=\log\frac{\mathcal M(P)}{\mathcal C_P(\varepsilon)}.
+$$
+
+因为 \(p^{-1-\varepsilon}<p^{-1}\)，有
+
+$$
+\boxed{\mathcal A_P(\varepsilon)\ge0.}
+\tag{458.1}
+$$
+
+### 命题 458.1（自匹配点的三项精确账本）
+
+在严格自匹配根 \(t\) 上，记 \(\varepsilon_*=(t\log t)^{-1}\)，并令 \(P\)
+为 \(N^-(t)\) 的最大支撑素数。则
+
+$$
+\boxed{
+\log\frac{e^\gamma\log\log N^-(t)}
+{\sigma(N^-(t))/N^-(t)}
+=
+\log\frac{\log t}{\log P}
+-\mathfrak m(P)
++\mathcal A_P(\varepsilon_*)
++\mathcal L_P(\varepsilon_*).
+}
+\tag{458.2}
+$$
+
+**证明。** 由（457.3），连续包络部分为
+
+$$
+\gamma+\log(\log t)-\log\mathcal C_P(\varepsilon_*).
+$$
+
+又
+
+$$
+\log\mathcal C_P(\varepsilon_*)
+=\log\mathcal M(P)-\mathcal A_P(\varepsilon_*)
+=\gamma+\log(\log P)+\mathfrak m(P)
+-\mathcal A_P(\varepsilon_*).
+$$
+
+代入并保留（457.3）的 \(\mathcal L_P\) 即得（458.2）。\(\square\)
+
+因此，自匹配根上的 Robin 不等式等价于同一个实际支撑上的严格条件
+
+$$
+\boxed{
+\mathfrak m(P)
+<
+\log\frac{\log t}{\log P}\,+\mathcal A_P(\varepsilon_*)\,+\mathcal L_P(\varepsilon_*).
+}
+\tag{458.3}
+$$
+
+左侧是有限 Mertens 乘积相对于 \(e^\gamma\log P\) 的实际偏差；右侧的三项
+分别来自支撑截断、连续价格衰减和整数取整。这个条件没有把 Mertens 误差
+替换成平均估计，也没有把取整损失隐藏进定义。
+
+### 命题 458.2（连续价格衰减的显式上界）
+
+对 \(\varepsilon>0\)，有
+
+$$
+\boxed{
+0\le\mathcal A_P(\varepsilon)
+\le
+\varepsilon\sum_{p\le P}\frac{\log p}{p-1}.
+}
+\tag{458.4}
+$$
+
+**证明。** 对每个 \(p\)，函数
+
+$$
+u\longmapsto\log(1-p^{-1-u})
+$$
+
+的导数为
+
+$$
+\frac{(\log p)p^{-1-u}}{1-p^{-1-u}},
+$$
+
+它在 \(u\ge0\) 上不超过 \(\log p/(p-1)\)。从 \(u=0\) 积分到
+\(u=\varepsilon\)，再求和即得（458.4）。\(\square\)
+
+式（458.3）把当前未解决的无界问题进一步缩成一个联合估计：要从 FIB
+来源得到 Robin 正性，必须控制同一支撑 \(P\) 上的 \(\mathfrak m(P)\)，并同时
+保留 \(\mathcal L_P\) 的加权分数部信息。只控制 \(N\equiv1\pmod{F_r}\)，或只
+控制 \(\mathcal M(P)\) 的无符号上界，都不能推出（458.3）。
+
+本节是 §457 的代数重排；它没有提供 \(\mathfrak m(P)\) 的新全局界，
+没有证明（458.3）对所有自匹配根成立，也没有证明 Robin 不等式或 RH。
