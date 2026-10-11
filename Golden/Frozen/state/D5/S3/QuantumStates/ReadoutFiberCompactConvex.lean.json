@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d1c533563ad8b2a03a5319bae00ec2e7723fb243495c8632c3aa6bf54781dd31"}
+{"statement_id":"sha256:d1c533563ad8b2a03a5319bae00ec2e7723fb243495c8632c3aa6bf54781dd31","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:QuantumStates),25:ReadoutFiberCompactConvex),12:readoutFiber)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:QuantumStates),25:ReadoutFiberCompactConvex),28:readout_fiber_compact_convex)","kind":"theorem"}]}

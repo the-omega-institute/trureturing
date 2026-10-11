@@ -1,1 +1,1 @@
-{"statement_id":"sha256:3f67ab8c854b11c5928416583b316a9188b3436195f3ab6fad3bf48637ec3e8e"}
+{"statement_id":"sha256:3f67ab8c854b11c5928416583b316a9188b3436195f3ab6fad3bf48637ec3e8e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),10:Experiment),32:OffPolicyResidualIdentifiability),17:offPolicyResidual)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),10:Experiment),32:OffPolicyResidualIdentifiability),56:target_policy_identifiable_iff_off_policy_residual_empty)","kind":"theorem"}]}

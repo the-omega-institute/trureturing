@@ -1,1 +1,1 @@
-{"statement_id":"sha256:dad8407d360b3b2698765ed3516864fb40e96d41cda615c029685fd9979b91a2"}
+{"statement_id":"sha256:dad8407d360b3b2698765ed3516864fb40e96d41cda615c029685fd9979b91a2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:TwoColorPartition),24:AndrewsElBachraouiBounds),20:odd_divisors_card_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:TwoColorPartition),24:AndrewsElBachraouiBounds),37:gauss_product_coefficient_count_bound)","kind":"theorem"}]}

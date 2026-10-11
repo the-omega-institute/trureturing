@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ab42622dba2b3e3120e73f689371d5623ba920bf25ae2f202ac04baf4ce94648"}
+{"statement_id":"sha256:ab42622dba2b3e3120e73f689371d5623ba920bf25ae2f202ac04baf4ce94648","declarations":[{"declaration_name_key":"ns(ns(n0,6:Erdos7),41:supermodular_max_of_increasing_difference)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),12:Supermodular),27:nested_increment_increasing)","kind":"theorem"}]}

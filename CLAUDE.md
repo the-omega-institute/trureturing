@@ -304,7 +304,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 **地址由算法算出,不开会。** GID 是规范地址(F 层为字面路径),地层由 import 偏序算;桶满只裂不迁,历史只追加。算法地址使并行贡献不撞址。
 **禁历史兼容:现状唯一,历史归 git。** 工作树只呈当前最优形态;格式/规则/词表/语料单 PR 全量迁移并机器验证,不留 grandfather、legacy alias、旧格式双读、待晋升隔离区或 deprecated 存根。禁的是为旧状态保留运行时机制;Chronicle/冻结账本/spec 修订等当前审计链不是兼容层,历史归 git,过程材料仍依第 2.10 条不保存。
 **数据居所律**:harness 在 `tools/`,测试在 `tools/tests/`;程序集目录(`tools/StrataLint.*/`、`tools/tests/*/`)源码只许类型/逻辑/loader/writer/测试等程序,整个 `tools/` 保护面不得住 `kind=data`。判例、常数、目录条目、文档等声明实例须在程序目录外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{BACKFILL.yaml,FILEMAP.toml,domains.yaml}`、`Library/`、`docs/develop/theory/`、`Evidence/`、`D5/*.lean`),或测试项目内部的合成 fixture(非 canonical 数据)。类型/schema 留程序集,实例集合移出;类型内封闭字母表(S0–S4、PLANE)可写死并加一处锚定测试。数据文件的 parse 是 harness,须 fail-closed loader+schema。内容不因重要而进入 SL-022;golden corpus/判例住顶层 `Golden/`,由 strict loader 守。
-**停用边界**:`Meta/StrataLint/` 旧位置不复存在,保守扩展重放/C0/证书机器已退役。旧 accepted 事件账本的 append-only diff 守护属 SL-008 而非 SL-022,仅是 2026-08-13 样本的历史执法归属;当前 SL-008 只判成员状态与当前树一致,无历史单调判官(第 1.3、4.7 条)。
+**停用边界**:`Meta/StrataLint/` 旧位置不复存在,保守扩展重放/C0/证书机器已退役。当前 SL-008 只判成员状态与当前树一致,无历史单调判官(第 1.3、4.7 条)。
 *成熟锚*:SSOT、事件溯源、内容寻址、mathlib 治理、trunk-based 单版本、expand–contract 必收尾、git 历史库、config outside binary、资产/引擎分离。〔守护:**硬+软**·GID/地层/词表/文件头由 lint 判;兼容垫层靠评审,识别即拆〕
 
 ### 4.3 依赖骨骼与叙事真源
@@ -375,7 +375,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **纯理论正文 PR 不进入上述消化链**:它可以只落 `docs/develop/theory/**`，不要求本 PR 生成 atom、backfill 或 coverage；该 PR 不声明任何消化终态。后续若提交 ingest、cover 或 deposit，才按下列对应形态核对。
 **三类改动形态,面集合封闭;deposit 与 cover 可在同一 PR、同一工作树顺序执行**:
 
-- **deposit**(含无 atom 的 deposit-uncovered):`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/state/**`(accepted 事件目录的过渡形态仅属 #4687 的有界 contract 证据,非第二种当前成员格式)。
+- **deposit**(含无 atom 的 deposit-uncovered):`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/state/**`。
 - **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
 - **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
 **停用机制边界**:两 PR 律、预登记 formalization 收据及其机器均已退役;「边即数据,不记动作」,不得据此重建动作收据或要求 deposit/cover 分两 PR。
@@ -393,7 +393,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 4.2 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第 1.2 条总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
 **多驱动者并行不必分配领域**:GID 代数定地址(第 4.2 条);两人重证同命题却不会使机器红,故开工前、开 PR 前各查本仓声明(第 3.1 条)。
 *成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 判冻结成员当前态 C1–C5 与当前树一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;accepted 事件账本的 append-only 守护归属限于第 4.2 条的记录样本;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门判；新增形式化的精确 ATOM 覆盖依据由 SL-031 按交付目标检查，不做全账一致性审计。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
+〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 判冻结成员当前态 C1–C5 与当前树一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门判；新增形式化的精确 ATOM 覆盖依据由 SL-031 按交付目标检查，不做全账一致性审计。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
 
 ### 4.8 生长、抽象与容量压力
 
@@ -526,7 +526,7 @@ Delivery follows push/remote confirmation, PR, required checks, MERGED, then fir
 **成本与收益并列**:N PR 对应 N 轮 required CI、N 正文;worktree count follows compatibility and task needs, with cross-session reuse(缓存随 ff-merge 作废)。同文重复只证明重复评审/冲突成本,不证明全批同判或总收益为零。纯新增回滚便利、没有文件数红规则,也不能推出整个 PR 必放行;说拆分由机器要求时须点名红判词,否则给真实理由或不拆。
 **有界反例(#6164,2026-09-07)**:37 模块/74 文件一次由 `ledger-align --add ×37` 产生,`selectors_considered=3641 changed=0 added=37 unchanged=3604 conflicts=0`,零冲突五项全真。拆 6 PR 付 6 轮 CI、6 份相同 73 行正文,并 ff-merge 5 条落后 262–2078 提交的 lane;缓存重热成本未测(`ASSUMED-UNVERIFIED`)。其中 20 模块缺 `utility:`,单批会连坐其余 17,拆出头齐的 7 条可合,所以判词维有收益,却不验证当时按连通分量盲拆的方法。全仓无按文件数判红规则,超 p75 说明是软评审义务,非机器硬约束。
 **唤醒域结论**:该样本 36 个初落地未冻模块因 deposit 阻断(#6165)未触发当时首冻门,与 37 补冻/20 缺头/17 连坐/7 已合是不同口径。依赖“本应发生而被别处阻断”的动作唤醒门会静默漏审,分区规则不修此缺口。旧“冻结触发缺口仍 open”已 inactive;第 3.4 条现役 changed-unfrozen D5 Lean ∪ first-pin 已补输入域,正文变更/缺头也唤醒,judge-only 不扫未变历史。此硬保证不证明分类/源句映射语义,后者仍靠独立评审。
-**硬软分列**:同案事件账本样本中 `ValidateChangedAcceptedFreezePins` 对新增/修改 accepted 事件要求同 PR 状态片,缺则硬红;`DagLedgerLoader.DependenciesPlaced` 位于 CLI 路径,不在规则面。当前 loader 同时接受事件身份与派生的 `FrozenNodeId`,仅按 accepted 事件文件名扫描不能判定前置悬空;完整闭合性须由实际 DAG loader 核验(#5214)。事件/状态片硬配对不等于依赖闭包软成组;把软说成机器必须、硬说成建议同样错误,软评审纪律仍有约束力。
+**硬软分列**：SL-008 检查状态片路径、闭键 schema、模块存在、Closed、pin 与声明清单同当前报告一致；pin 变化为 Observe。依赖由源码 import 解析，状态片不存前置边，登记或重新钉定不检查全账闭包。内容成组的软评审纪律不冒充事件配对或依赖闭包机器门。
 *成熟锚*:Goodhart、避免 cargo cult、精益、判据化例外、bulkhead 故障隔离;“风险为零则拆分收益为零”只限所论冲突维。〔守护:**软+硬投影**·零冲突五项可由 RawChangeKind/changed-path/producer 确定性重放判,但当前无此规则,记 open。全批同判须真实判词读数;理由适用性靠评审。明知五项全真且全批同判仍按文件数拆,与攒大 PR 同属阈值代替理由;混合判词仍须分区,不可 lint 不豁免〕
 
 ### 6.4 运行中的不变量先立门后补账
@@ -637,7 +637,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 **现役条件恰四项 AND**:①只恢复可逆面,不触冻结/atom/内容;触及则正常门+既有 revocation/errata。②PR 引 dev 红具名判词原文及肇事 merge SHA。③合入后首个 dev push 全部 required checks必须真跑并留结论,只免自身等待不免落地检测。④仍红即未恢复,继续定位,不得二次绕过。只授权撤因,不扩修器/内容/任何前向变更或 admin 权限,第 7.8 条不变。
 **精确逆**:`git revert -m 1 <merge>` 完整撤那一笔而保留后续提交;落地树不必等于 last-green 或任一祖先整树。
 **先归因撤因,再修器**:钉 last-green run/SHA、first-red run/SHA、failing dev SHA 第一父与全部 required checks具名判词,沿 first-parent 找绿→红 edge。该 edge 只给候选 transition,还须过**因果门**:最小复现/反事实固定其他输入,只移除候选 delta 即消除同一判词;显式对齐 `BaseSnapshot`/candidate 输入版本,排除滞后一拍。未闭合即 `ASSUMED-UNVERIFIED`,继续诊断,不得因及时而猜撤无辜 PR。
-归因成立立即开该 merge 的逆 PR,不排无关 PR 在恢复前;自身被红门挡可援上述四条件。不得借此删冻结条目(含旧 `Golden/Frozen/accepted/**`)、删改 atom 或绕撤销协议。逆 PR MERGED 才算落地,其后首个 dev push 全部 required checks全绿才算恢复;仍红按新判词诊断,不把 merge 冒充完成。
+归因成立立即开该 merge 的逆 PR,不排无关 PR 在恢复前;自身被红门挡可援上述四条件。不得借此删冻结状态片、删改 atom 或绕过冻结状态删除的现行判定。逆 PR MERGED 才算落地,其后首个 dev push 全部 required checks全绿才算恢复;仍红按新判词诊断,不把 merge 冒充完成。
 **撤因与修器两个 PR**(第 6.2 条):根因修复走正门,CI 分类/逐原 PR 集成/稳定条数依第 8.12 条,多层判官改造依第 8.14 条,最小单层 hotfix 依第 5.5 条直达 dev。与第 8.15 条并行:内容 lane 可先改投 `integration-theory-<date>` 自保,不必等恢复;改投不能替代撤因或声称 dev 已绿。
 **必要反例**:#4198 在健康 base 上是真 revert,自身 engineering 224/225、1 fail,故无条件放行纯 revert 会隐藏真红。#4305 的绿→红 transition 实由前笔 #4295 的 `ScribeTestSymbolBinder` 与滞后一拍 BaseSnapshot 造成;候选 edge 不等于根因,计划须读 BaseSnapshot、candidate 程序集及测试发现输入,不能由 base 独定(2026-08-31 GitHub checks/git 树记录)。该 dev 红已实证,“全部 open PR 同红”未逐一核实,`ASSUMED-UNVERIFIED`。
 〔守护:**全软+deferred**·归因、字段/引用由判词、复现/反事实与对手官核验。恢复结果须列 failing run、具名判词、归因 merge SHA、revert PR、恢复后首个 dev 全部 required checks run,PR 引判词原文与已归因 transition SHA。当前 tools/.github **no consumer/deferred**,有无字段现役门同判,正文可改,不称硬投影。未来升硬须候选判官中经独立评审核对的消费者(现役 SL-029 警告不提供分区保护)读取不可变 SHA-bound 工件,编辑使门失效,fail-closed 验上述时序。旧 base `pure-revert-detect.sh` 直通 classifier inactive(删除 `7ffc6b054a`),本款无机器放行;若重建只能候选规则,依第 7.13 条自锁条件并补四项判据与两维反例集合,禁 base 脚本/CI 直通〕
@@ -646,7 +646,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 **DEFERRED·更广终态(no current consumer)**:owner「**未来你不能用管理员权限,而是规则允许**」的目标是 CI 识别 revert 后三 job 跳过全部重步骤直接产成功 required checks,由 auto-merge 合入,全程无人无特权(第 7.16 条)。该目标未有当前消费者;第 7.5 条与第 7.14 条 的现役禁令不许 base 侧自动 classifier 或 CI 直通。本款不授权新 classifier/CI bypass/其他机制;合规实现建成前仅四条件临时 admin 通道可用,建成后停 admin 路径。
 **DEFERRED 目标的判据恰好三项,不多不少**:①**精确逆**——逐 path 比对 OID / mode / gitlink **四组反向相等**(候选新 == 目标旧 ∧ 候选旧 == 目标新),path 集合完全相同(`--no-renames`)、**无额外 path**;②**目标须为 first-parent 链上的 merge**,即一个 PR 的落地单位;③**逃生舱自身不得被该 revert 触及**。该目标**不需要**再判「门是否自锁」——倒流回来的状态不需要判官验证,**判它是不是倒流就够了**;**不限作用路径**,任何 PR 的精确逆都属其目标范围,**不设 harness-only 之类的路径白名单**——「一模一样逆某个 PR」本身已经是最强的约束,再加路径限制是重复设防。
-**DEFERRED 目标中的冻结恢复边界**:上述「不限路径」的 owner 具名裁定包含含冻结条目 PR 的精确逆。旧事件账本语境指删除 `Golden/Frozen/accepted/**` 中的条目,其原规则描述为 SL-008 append-only、第 1.3 条「冻结节点永不解冻」;当前成员身份按 `Golden/Frozen/state/<module>.lean.json` 状态片,不以旧事件目录或旧 append-only 口径替代。目标的倒流语义是:那些条目本就不属于被撤销的那个状态,删除它们是**恢复**而非**解冻**,与第 1.3 条「勘误 ≠ 解冻」同向,由「精确逆某个 PR」这一机器判据代替 revocation 的人工判词。该目标只覆盖「某个 PR 的一模一样逆」;任何**非精确逆**的冻结条目删改仍走 revocation / errata,SL-008 对它不变。凡依该目标删除冻结条目,PR 说明须列出完整被删条目以供追账;此 all-path/frozen 范围**不进入现役四条件 admin 通道**。
+**DEFERRED 目标中的冻结恢复边界**:上述「不限路径」的 owner 具名裁定包含含冻结条目 PR 的精确逆。当前成员身份按 `Golden/Frozen/state/<module>.lean.json` 状态片，冻结状态删除的现行判定不变。目标的倒流语义是:那些条目本就不属于被撤销的那个状态,删除它们是**恢复**而非**解冻**,与第 1.3 条「勘误 ≠ 解冻」同向,由「精确逆某个 PR」这一机器判据代替 revocation 的人工判词。该目标只覆盖「某个 PR 的一模一样逆」;任何**非精确逆**的冻结条目删改仍遵守冻结状态删除及 errata 的现行判定，SL-008 对它不变。凡依该目标删除冻结条目,PR 说明须列出完整被删条目以供追账;此 all-path/frozen 范围**不进入现役四条件 admin 通道**。
 **DEFERRED·尚未统一的来源边界**:第 7.13 条的自锁判别与第 7.14 条 的四条件恢复操作面,和上述不另判自锁、全路径三条件目标的资格面并未统一。两面分别保留,不合成七条件、不选择其一替掉另一面;更广目标不得冒充当前放行规则。
 
 ### 7.16 稳态全自主与无须人审铁律
@@ -795,7 +795,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成�
 
 ### 8.15 dev 红时的内容 lane 改投
 
-**dev 因 harness 红,仅增加数据的内容/理论 lane 改投 `integration-theory-<date>`。** 适用面封闭为①`D5/**/*.lean`;②`Blueprint/**/*.scribe.cs` 及其 md 投影;③`Golden/Frozen/accepted/**`;④`Meta/Digestion/**`。仅加 DAG 节点、不改判官/门/workflow;触 tools/**、.github/workflows/** 或任何判官/准入面不得援引,须第 8.12/8.14 条。
+**dev 因 harness 红,仅增加数据的内容/理论 lane 改投 `integration-theory-<date>`。** 适用面封闭为①`D5/**/*.lean`;②`Blueprint/**/*.scribe.cs` 及其 md 投影;③`Golden/Frozen/state/**`;④`Meta/Digestion/**`。仅加 DAG 节点、不改判官/门/workflow;触 tools/**、.github/workflows/** 或任何判官/准入面不得援引,须第 8.12/8.14 条。
 判据为红因层次:dev 全部 required checks因判官逻辑/自锁/workflow/准入面红,该 lane 自身未红且只在四面才可改投。Lean 编译、SL-008、coverage 等内容判词须自己修;不能只凭所改路径认定无因果关系。
 **步骤**:从当时 dev 建新日子命名分支,内容 PR base 改投它;若他人已建且当前绿,直接共用,不另建。dev 全部 required checks一恢复绿即整体 PR 回 dev,带其新增量复测全部 required checks,不得跨过下一次 harness 红。创建/红绿时间由 CI 可查;分支若跨第二红说明首次绿未及时合。合回即删除,下次取新日子重建,不复用陈旧支。
 改投不绕门:integration 全部 required checks照跑,只改候选/受保护基线,不改变 pull_request 使用 PR merge-tree workflow;逐 run 版本/范围依第 8.12 条,回 dev 再验。改投不替代第 7.14 条恢复 dev。重复红在无关 harness 时应换 base,不陪跑。**归因边界**:测试由 CI workflow 内的单元白名单选择,单项目入口校验其真实执行证据;一个实证 dev 红不推出全部 open PR 同红,未逐一核实者 `ASSUMED-UNVERIFIED`。
@@ -932,22 +932,21 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 ### 10.5 git 已入账事实与重放禁令
 
 **已入 git 的信息完全信任,禁止为验证它而重算/重放/重建**:OID 已定字节,再证明仍是原值零信息。
-①账本 statement_id/witness_id/frozen_node_id 写入 accepted 即终局,直接读,不从报告重导比对。②OID 存在/类型验证只做 base→candidate 增量,base 已验者跳过。③纯判词 f(账本)按 head 内容地址记忆,不全量重放。④派生值日后所需输入与结果同存,不靠重建旧环境取原料。⑤升级后不得 build 旧版本取事实,缺必要数据补记录,不补旧工具链/算力。④⑤的“需要”依第 10.7 条细化,**不包括旧公理闭包**。
-**INACTIVE·#1947 旧归因**:升级重建 v4.31 取旧闭包的问题不是 witness_id 只存哈希没存原料,而是问错比对对象;修法见第 10.7 条,不得为旧闭包补存储。
-*成熟锚*:git/Merkle、引用透明、增量构建、append-only、既判力。〔守护:**软+硬投影**·重放识别靠评审;所需输入闭包和值同事件可由 schema 判,验证仅增量可由 changed-path 判〕
+①冻结成员身份取 `Golden/Frozen/state/<module>.lean.json` 的存在；状态片仅存 `statement_id` 与有序唯一的声明名称键/种类清单。SL-008 与覆盖核对把该 pin 和清单同当前范围报告比较；这是当前树一致性检查，不是重建旧环境。②OID 存在/类型验证只做 base→candidate 增量，base 已验者跳过。③纯判词 f(账本)按内容地址记忆，不全量重放。④依赖由当前 Lean 源码 import 解析，不持久化到状态片。⑤升级后不得 build 旧版本取事实；旧侧声明根取受保护基线状态片，新侧取候选范围报告，不存或比较旧公理闭包。
+*成熟锚*:git/Merkle、引用透明、增量构建、既判力。〔守护:**软+硬投影**·重放识别靠评审；状态 schema 与当前范围报告一致性由现役读取器和 SL-008 检查〕
 
 ### 10.6 重放验证与必要查询
 
 **重放验证与重复查询处方不同**:结果只与 git 已存值比对,相等放行不等报错,即零信息重放,删验证;结果真正进入后续判词输入则是查询,合法但重复同纯函数时按内容地址记忆。只有一次计算就无缓存收益,不得买椟还珠。
-**必要查询例**:`FrozenLedgerBaseViewReader.ReadActiveEntry` 沿 previous_attestation_event_hash 取继承字段构成 FrozenActiveEntry,无比对,属查询。2026-08-17 样本扫1972片/9.6MB约2s,无关改动已0读取(#2059),触 Lean 时一次为 SL-008 冻结检查所需,故不建 memo、记 material 非 blocking。不能删重放后补缓存,也不能为一次查询造缓存。
+**必要查询例**：`FrozenStateCatalog.Load` 读取模块成员、pin 与声明清单；当前声明解析使用当前范围报告，依赖使用 `LeanImportAdjacency.BuildFromSources`。登记或重新钉定模块 M 只写 M 的状态片；内容相同不写，不重写冻结下游，不要求整库报告或全账闭包检查。必要的当前树查询不以事件历史或旧环境重建为输入。
 
 ### 10.7 账本强度、许可集与升级门 open
 
-**账本冻真值、强度不退化;保证在门,不在存档。** 强度是给定 toolchain/pin 下的公理闭包。写入门:能 append Freeze ⟺ 当下已验证该节点公理闭包落在许可集内;升级门须在**新环境**全量重算,全部冻结节点仍在许可集才放行,任一退化红。
-第 10.5 条只要求日后所需输入同存;未来需要当前 mathlib 闭包,不需要旧环境闭包。存旧闭包并与新值比是重审已死环境,既增存储又招重放。#1947 根因是升级问错对象:只比许可集,永不比存档旧值;取历史环境派生值即违例,修比对对象而非补旧闭包存储。
+**账本冻真值、强度不退化；保证在门，不在存档。** 强度是给定 toolchain/pin 下的公理闭包。登记 Closed 模块须有当前 Lean 范围报告与标准公理闭包。mathlib 升级授权保留有效 pin 变化、源码命题等价和候选标准公理闭包条件：旧侧声明根取受保护基线状态片的 `declarations`，新侧取候选范围报告，全部受保护成员的候选闭包仍在许可集才放行。
+第 10.5 条只要求保留未来判词需要的输入；状态片不存旧公理闭包、逐声明摘要、依赖边或动作历史。升级检查候选环境的许可集，不比较旧环境的派生闭包。
 **许可集红线**:唯一真源,测试钉死成员恰为该集合,任何放宽走 τ=0 贵路;否则先放宽再写弱节点仍绿,保证消失。
 **逐字段分层**:真源=树上无物可重导、断言当时事实,必守;加工产物=原料哈希且携权威,存值为地址,重算验证即重放;纯投影=同值第二名,消除。可机器判①升级只比许可集;②许可集单一且加公理变异有具名红测试;③写入无绕门入口。
-〔守护:**软+硬投影**·目的靠评审,许可集/变异、比对对象、入口可查。**升级保证仍 open**:2026-08-16 写入门1016事件且每 PR在跑,EnvironmentRecoordinate=0,唯一真跑#1947整体回滚;不冒领跨环境不退化已证可用〕
+〔守护:**软+硬投影**·目的靠评审，许可集/变异、源码等价、有效 pin 变化及候选公理闭包由现役授权入口检查；跨环境的通用数学不退化保证仍 open〕
 
 ## 11. 古典不动点与成熟锚
 

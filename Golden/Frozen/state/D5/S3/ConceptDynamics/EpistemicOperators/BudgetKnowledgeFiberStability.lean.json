@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ea645ce7084243bff1f19f480b80a1ac2dfc742203ed4fd3099821541b2d5ea6"}
+{"statement_id":"sha256:ea645ce7084243bff1f19f480b80a1ac2dfc742203ed4fd3099821541b2d5ea6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),18:EpistemicOperators),29:BudgetKnowledgeFiberStability),15:budgetKnowledge)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),18:EpistemicOperators),29:BudgetKnowledgeFiberStability),32:budget_knowledge_fiber_stability)","kind":"theorem"}]}

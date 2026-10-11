@@ -1,1 +1,1 @@
-{"statement_id":"sha256:cd0e52b7e317a52fad71c60acc2c568545589b4b50761ecedc07435d4cf1bb56"}
+{"statement_id":"sha256:cd0e52b7e317a52fad71c60acc2c568545589b4b50761ecedc07435d4cf1bb56","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Analysis),18:CompletedProductL2),32:exists_completed_product_unitary)","kind":"theorem"}]}

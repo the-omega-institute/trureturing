@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8452058f7ac686d17af23faa3eb448bf9560221077b9c7ef9d5c3cb3d56b56ca"}
+{"statement_id":"sha256:8452058f7ac686d17af23faa3eb448bf9560221077b9c7ef9d5c3cb3d56b56ca","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),29:RankOneMorphismIterationBound),10:Parameters),12:strip_period)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),29:RankOneMorphismIterationBound),10:Parameters),13:height_subray)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b0e3d70a8c84dcb7d4fc1f5dcb93fd04cd7bf251f57ac0a3bed4ed89c0c977ac"}
+{"statement_id":"sha256:b0e3d70a8c84dcb7d4fc1f5dcb93fd04cd7bf251f57ac0a3bed4ed89c0c977ac","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),17:PredictionFactors),39:ConditionalProbabilityProfileMinimality),42:conditional_probability_profile_is_minimal)","kind":"theorem"}]}

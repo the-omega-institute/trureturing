@@ -96,7 +96,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
         var registrations = Enumerable.Range(1, 23).Except([5, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(number => new RuleRegistration(
                 Descriptor(
                     number,
@@ -218,7 +218,7 @@ public sealed class RuleCatalogAssociationTests
         var setterId = RuleId.CreateKnown(1);
         var finderId = RuleId.CreateKnown(2);
         var remainingIds = Enumerable.Range(1, 23).Except([5, 7, 9, 13, 14, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(RuleId.CreateKnown)
             .Where(id => id != setterId && id != finderId)
             .ToImmutableArray();
@@ -262,7 +262,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var rule = new CountingUnaffectedRule();
         var registrations = Enumerable.Range(1, 23).Except([5, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(number => Registration(
                 Descriptor(
                     number,
@@ -456,7 +456,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var state = new OrderDependentState();
         var registrations = Enumerable.Range(1, 23).Except([5, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(number => new RuleRegistration(
                 Descriptor(number, $"descriptor {number}", DisplaySeverity.Error, AdmissionEffect.Block),
                 number switch

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:fd9874db17eae905d1f97de38636c49d35abd7c8c9be8d8f1ba781a4c15bc79b"}
+{"statement_id":"sha256:fd9874db17eae905d1f97de38636c49d35abd7c8c9be8d8f1ba781a4c15bc79b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Divergence),9:DpiDefect),17:dpi_defect_nonneg)","kind":"theorem"}]}

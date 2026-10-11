@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f1681899030bd7ce233f25880cd561fceb27a71198c7c07c9d071a85d3de8251"}
+{"statement_id":"sha256:f1681899030bd7ce233f25880cd561fceb27a71198c7c07c9d071a85d3de8251","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),29:GoldenLucasNonsquareThreshold),32:golden_lucas_nonsquare_threshold)","kind":"theorem"}]}

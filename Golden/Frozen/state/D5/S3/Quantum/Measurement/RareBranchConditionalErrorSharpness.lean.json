@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7b93f8e4b4a11c4e9efaff1e14b9f6933cac8342d4e6f09098cf21038e4a3b35"}
+{"statement_id":"sha256:7b93f8e4b4a11c4e9efaff1e14b9f6933cac8342d4e6f09098cf21038e4a3b35","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Measurement),35:RareBranchConditionalErrorSharpness),39:rare_branch_conditional_error_sharpness)","kind":"theorem"}]}

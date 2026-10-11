@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8b4f112e0155f5023541b96a7ed3e6dc9d63946c18c5ae47bcb22541960bc37e"}
+{"statement_id":"sha256:8b4f112e0155f5023541b96a7ed3e6dc9d63946c18c5ae47bcb22541960bc37e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),18:RefinementGeometry),25:LocalGlobalAtlasExactness),28:local_global_atlas_exactness)","kind":"theorem"}]}

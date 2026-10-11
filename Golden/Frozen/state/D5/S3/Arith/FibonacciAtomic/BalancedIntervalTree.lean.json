@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f2c1810342201db526f8e474f67e119ee4e930b13b6585bace4aede229f78825"}
+{"statement_id":"sha256:f2c1810342201db526f8e474f67e119ee4e930b13b6585bace4aede229f78825","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),20:BalancedIntervalTree),6:result)","kind":"theorem"}]}

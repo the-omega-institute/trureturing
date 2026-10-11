@@ -1,1 +1,1 @@
-{"statement_id":"sha256:dc25912c787d404dfb9262a7df241b2dcfa9c2ac076a0cd0bcfc3b4830d7621b"}
+{"statement_id":"sha256:dc25912c787d404dfb9262a7df241b2dcfa9c2ac076a0cd0bcfc3b4830d7621b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),5:Graph),13:DUFRowPayment),6:result)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),5:Graph),13:DUFRowPayment),8:rowDelta)","kind":"def"}]}

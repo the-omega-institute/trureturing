@@ -1,1 +1,1 @@
-{"statement_id":"sha256:483fc138646208605776c4abb6b7ceca8cda6961d2917a4180b3b62d09fd1a68"}
+{"statement_id":"sha256:483fc138646208605776c4abb6b7ceca8cda6961d2917a4180b3b62d09fd1a68","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),12:Entanglement),11:AbsolutePPT),21:HalfspaceConeTransfer),18:halfspace_transfer)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:046a0b8984ed57e930343d57f66270c94f40b1aef0ff725c6f0be7a03082bda4"}
+{"statement_id":"sha256:046a0b8984ed57e930343d57f66270c94f40b1aef0ff725c6f0be7a03082bda4","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),16:ChineseRemainder),27:chinese_remainder_bijective)","kind":"theorem"}]}

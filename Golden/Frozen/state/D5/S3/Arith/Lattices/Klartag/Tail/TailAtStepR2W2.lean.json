@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6fba823c73f632b58485feb1bc5e74fd708024c7629313012a070fae82c6c97e"}
+{"statement_id":"sha256:6fba823c73f632b58485feb1bc5e74fd708024c7629313012a070fae82c6c97e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),4:Tail),14:TailAtStepR2W2),12:markov_tight)","kind":"theorem"}]}

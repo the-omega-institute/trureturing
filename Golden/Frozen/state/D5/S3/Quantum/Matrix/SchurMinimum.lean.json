@@ -1,1 +1,1 @@
-{"statement_id":"sha256:728cc51ddc52c8e210b60c965fd55c7bfbe7f437163200a456cf80bf10e376c7"}
+{"statement_id":"sha256:728cc51ddc52c8e210b60c965fd55c7bfbe7f437163200a456cf80bf10e376c7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),6:Matrix),12:SchurMinimum),24:schur_quadratic_is_least)","kind":"theorem"}]}

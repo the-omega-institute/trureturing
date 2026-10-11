@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d6af139d7a542ce50b34a2b36cd28757829501ccfa673f16ed93dbe5d6d79326"}
+{"statement_id":"sha256:d6af139d7a542ce50b34a2b36cd28757829501ccfa673f16ed93dbe5d6d79326","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),14:Eigenstructure),15:UnitJordanDrift),14:unitJordanStep)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),14:Eigenstructure),15:UnitJordanDrift),35:unit_jordan_iterate_eq_linear_drift)","kind":"theorem"}]}

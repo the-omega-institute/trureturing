@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2705b13501b6b9dba2439709af6da43301b64053ddfe627149d2af80fea2d672"}
+{"statement_id":"sha256:2705b13501b6b9dba2439709af6da43301b64053ddfe627149d2af80fea2d672","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Prediction),28:PredictionPartitionStability),35:prediction_partition_stable_forever)","kind":"theorem"}]}

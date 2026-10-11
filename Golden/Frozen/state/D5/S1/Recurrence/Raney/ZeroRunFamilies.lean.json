@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6d7d0307c05edd5ca1add3b09bdeeac95613e4f6f014bfc1956f3b6f5861b9cc"}
+{"statement_id":"sha256:6d7d0307c05edd5ca1add3b09bdeeac95613e4f6f014bfc1956f3b6f5861b9cc","declarations":[{"declaration_name_key":"ns(ns(ns(n0,11:TrureTuring),5:Raney),11:raneyNumber)","kind":"def"},{"declaration_name_key":"ns(ns(ns(n0,11:TrureTuring),5:Raney),35:raney_zero_run_coefficient_families)","kind":"theorem"}]}

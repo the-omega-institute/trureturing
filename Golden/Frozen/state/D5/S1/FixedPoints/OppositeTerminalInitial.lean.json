@@ -1,1 +1,1 @@
-{"statement_id":"sha256:695bcf496a9168f432f2581b0d947eaa927674b523a73973521eed3b4808bb2b"}
+{"statement_id":"sha256:695bcf496a9168f432f2581b0d947eaa927674b523a73973521eed3b4808bb2b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),11:FixedPoints),23:OppositeTerminalInitial),23:terminal_iff_initial_op)","kind":"theorem"}]}

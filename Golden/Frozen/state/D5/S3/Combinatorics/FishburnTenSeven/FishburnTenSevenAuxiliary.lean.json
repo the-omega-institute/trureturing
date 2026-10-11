@@ -1,1 +1,1 @@
-{"statement_id":"sha256:74f35d813bb04a031f716316fabc7b22b6b744040994ed4f8574bcec797aab5b"}
+{"statement_id":"sha256:74f35d813bb04a031f716316fabc7b22b6b744040994ed4f8574bcec797aab5b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),16:FishburnTenSeven),25:FishburnTenSevenAuxiliary),15:H_maximum_equiv)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),16:FishburnTenSeven),25:FishburnTenSevenAuxiliary),20:H_head_decomposition)","kind":"theorem"}]}

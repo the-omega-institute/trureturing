@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4ebd9d750fceaef98384b07a47a1b68ea3dabc10c243ad15bd50e74c5779846c"}
+{"statement_id":"sha256:4ebd9d750fceaef98384b07a47a1b68ea3dabc10c243ad15bd50e74c5779846c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),12:Certificates),5:Games),35:CrimRectairSquareBoundaryRefutation),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),12:Certificates),5:Games),35:CrimRectairSquareBoundaryRefutation),6:result)","kind":"theorem"}]}

@@ -15,7 +15,6 @@ public sealed record TowerBootstrapSyntax(
     string Id,
     string Judge,
     string Reason,
-    string GenesisEvent,
     string Commit,
     int PullRequest,
     string Verification);

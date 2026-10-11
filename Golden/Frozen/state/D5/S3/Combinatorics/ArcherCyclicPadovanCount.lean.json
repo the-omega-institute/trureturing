@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7aa42486c61e09bf4f9cb4bfa21fda7887c3986a6f9a0a742a21b042cb557e87"}
+{"statement_id":"sha256:7aa42486c61e09bf4f9cb4bfa21fda7887c3986a6f9a0a742a21b042cb557e87","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),24:ArcherCyclicPadovanCount),20:main_card_recurrence)","kind":"theorem"}]}

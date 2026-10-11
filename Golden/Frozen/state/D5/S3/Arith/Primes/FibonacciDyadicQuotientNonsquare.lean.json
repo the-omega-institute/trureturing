@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d7bf4fb5b1afea58aa44c2a50c71439e8316ec7f747134dfd23afa260edf9a89"}
+{"statement_id":"sha256:d7bf4fb5b1afea58aa44c2a50c71439e8316ec7f747134dfd23afa260edf9a89","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),32:FibonacciDyadicQuotientNonsquare),35:fibonacci_dyadic_quotient_nonsquare)","kind":"theorem"}]}

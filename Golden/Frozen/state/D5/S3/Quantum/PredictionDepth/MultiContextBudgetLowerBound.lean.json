@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f45dd6675896893925667aaa68d49791e934783b53db556afedfe35f65284de5"}
+{"statement_id":"sha256:f45dd6675896893925667aaa68d49791e934783b53db556afedfe35f65284de5","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),15:PredictionDepth),28:MultiContextBudgetLowerBound),32:multi_context_budget_lower_bound)","kind":"theorem"}]}

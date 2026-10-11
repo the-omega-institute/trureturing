@@ -1,1 +1,1 @@
-{"statement_id":"sha256:aba27df7a51aba563d29db1b8daa8ee453492fc20baaffbe47d2be348db6003a"}
+{"statement_id":"sha256:aba27df7a51aba563d29db1b8daa8ee453492fc20baaffbe47d2be348db6003a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),26:FibonacciOddIndexNonsquare),29:fibonacci_odd_index_nonsquare)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a576d24f311f2be1b1868488cbb3347276005f1de35563144660358a54a13431"}
+{"statement_id":"sha256:a576d24f311f2be1b1868488cbb3347276005f1de35563144660358a54a13431","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Divergence),11:StrictGibbs),23:kl_divergence_pos_of_ne)","kind":"theorem"}]}

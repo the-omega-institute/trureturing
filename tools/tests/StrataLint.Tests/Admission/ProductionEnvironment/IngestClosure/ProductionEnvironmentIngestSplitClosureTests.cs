@@ -233,7 +233,7 @@ public sealed partial class ProductionEnvironmentTests
     [Theory]
     [InlineData("entry")]
     [InlineData("source-metadata")]
-    [InlineData("accepted-event")]
+    [InlineData("state-record")]
     [InlineData("atomizer-data")]
     [InlineData("cas")]
     [InlineData("tail")]
@@ -245,7 +245,7 @@ public sealed partial class ProductionEnvironmentTests
         {
             "entry" => DirectoryAtomPath(entry.AtomId, "residual-open"),
             "source-metadata" => DirectorySourceMetadataPath(),
-            "accepted-event" => FrozenLedgerChangeClassifier.AcceptedRoot + "/changed.json",
+            "state-record" => FrozenStatePath.Root + "/D5/S0/Carrier/Changed.lean.json",
             "atomizer-data" => TheoryAtomizerDataLoader.DataPath,
             "cas" => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..],
             "tail" => entry.Receipts.TailAuthorization!.Path,

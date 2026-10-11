@@ -156,7 +156,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckAdmitsAnAddedAcceptedEventWithMatchingStatePinWithoutSidecarRead()
+    public void CheckAdmitsAnAddedStatePinWithoutSidecarRead()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -166,16 +166,8 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestFileMap.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestFileMap.Domains;
         AddFrozenLedger(fixture);
-        var addedEventPath = fixture.Files.Keys
-            .First(FrozenLedgerChangeClassifier.IsAcceptedEventPath);
-        var snapshotWithEvent = Decode(Snapshot(fixture.Files));
-        var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
-            FrozenAcceptedEventLoader.LoadFiles(
-                [snapshotWithEvent.Files[RepoPath.CreateKnown(addedEventPath)]]));
-        var statePath = FrozenStatePath.FromModulePath(
-            Assert.Single(loaded.Events).DescriptorPath).Value;
+        var addedEventPath = fixture.Files.Keys.First(FrozenStatePath.IsUnderRoot);
         fixture.Baseline.Remove(addedEventPath);
-        Assert.Contains(statePath, fixture.Files.Keys);
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var gateway = new FakeRepositoryGateway(
@@ -380,7 +372,7 @@ public sealed partial class ProductionEnvironmentTests
                 .OrderBy(static item => item.Value, StringComparer.Ordinal));
     }
 
-    private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
+    private static void AddFrozenLedger(RuleFixture fixture)
     {
         const string toolchain = "leanprover/lean4:v4.24.0\n";
         const string lakefile = "name = \"Fixture\"\n";
@@ -390,12 +382,10 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["lakefile.toml"] = lakefile;
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports);
-        var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
-        var baselineCapability = FrozenLedgerTestData.Baseline(baselineCatalog);
-        var currentEvents = FrozenLedgerTestData.EventFiles(currentCatalog);
-        SetLedger(fixture.Files, currentEvents);
-        SetLedger(fixture.Baseline, baselineEvents);
-        return baselineCapability;
+        var baselineEvents = FrozenLedgerTestData.StateFiles(baselineCatalog);
+        var currentEvents = FrozenLedgerTestData.StateFiles(currentCatalog);
+        FrozenLedgerTestData.AddLedgerFiles(fixture.Files, currentEvents);
+        FrozenLedgerTestData.AddLedgerFiles(fixture.Baseline, baselineEvents);
 
         static FrozenMaterialCatalog Catalog(
             IReadOnlyDictionary<string, string> files,
@@ -416,7 +406,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        _ = AddFrozenLedger(fixture);
+        AddFrozenLedger(fixture);
         SettleCurrentCoverage(fixture);
         var settled = BackfillInventoryLoader.Load(Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot);
@@ -448,7 +438,7 @@ public sealed partial class ProductionEnvironmentTests
                 {
                     Coverage = entry.Coverage.Select(edge => edge with
                     {
-                        TargetStatementId = FrozenStatementReceiptTestData.Resolve(fixture.Files, edge.Gid),
+                        TargetStatementId = FrozenStatementReceiptTestData.Resolve(fixture.Files, edge.Gid, LeanAxiomReport.Create(fixture.Reports)),
                     }).ToImmutableArray(),
                 }).ToImmutableArray(),
             }).ToImmutableArray());

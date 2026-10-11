@@ -14,7 +14,7 @@ public sealed partial class DigestionLedgerTests
     private static readonly string TestModuleStatementId = FrozenStatementReceiptTestData.Id('a');
 
     private static (string Path, byte[] Bytes)[] FrozenLedgerFiles(string modulePath, params string[] selectors) =>
-        FrozenStatementReceiptTestData.LedgerFiles(new FrozenStatementReceiptTestData.Module(
+        FrozenStatementReceiptTestData.LedgerFiles(out _, new FrozenStatementReceiptTestData.Module(
             modulePath, TestModuleStatementId, selectors.Select(selector =>
                 new FrozenStatementReceiptTestData.Declaration(selector, FrozenStatementReceiptTestData.Id('b')))
                 .ToImmutableArray()));

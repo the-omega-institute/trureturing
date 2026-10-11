@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5a7b717797de6716b277058bf76efed9bdf820c5fca7796f3bec2f41d09d9237"}
+{"statement_id":"sha256:5a7b717797de6716b277058bf76efed9bdf820c5fca7796f3bec2f41d09d9237","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),18:DivisorLogEnvelope),13:moebiusLogSum)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),18:DivisorLogEnvelope),17:full_log_envelope)","kind":"theorem"}]}

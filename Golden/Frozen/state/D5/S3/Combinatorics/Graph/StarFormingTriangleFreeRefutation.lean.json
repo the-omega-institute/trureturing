@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c930ea28f062278f50cdb7d06caad4460fd55e7d43a6d4bf9a177e1ecff6a0a4"}
+{"statement_id":"sha256:c930ea28f062278f50cdb7d06caad4460fd55e7d43a6d4bf9a177e1ecff6a0a4","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),5:Graph),33:StarFormingTriangleFreeRefutation),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),5:Graph),33:StarFormingTriangleFreeRefutation),6:result)","kind":"theorem"}]}

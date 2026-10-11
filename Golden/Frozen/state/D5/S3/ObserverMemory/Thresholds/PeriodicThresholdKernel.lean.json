@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2685654be9a4cc9ff4afc2cb723eca45f6619b9ff165cbd005024d4d43662e00"}
+{"statement_id":"sha256:2685654be9a4cc9ff4afc2cb723eca45f6619b9ff165cbd005024d4d43662e00","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Thresholds),23:PeriodicThresholdKernel),23:reachablePeriodicStates)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Thresholds),23:PeriodicThresholdKernel),41:eventual_threshold_iff_reachable_periodic)","kind":"theorem"}]}

@@ -406,7 +406,7 @@ public sealed partial class DigestionAlignmentTests
             (targetPath, target),
             (record.DefinitionPath, definition),
             (record.EmissionPath, emission),
-            .. FrozenStatementReceiptTestData.LedgerFiles(
+            .. FrozenStatementReceiptTestData.LedgerFiles(out _,
                 new FrozenStatementReceiptTestData.Module(
                     targetPath,
                     targetStatementId,

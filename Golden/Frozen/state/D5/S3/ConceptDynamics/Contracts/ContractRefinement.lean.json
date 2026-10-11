@@ -1,1 +1,1 @@
-{"statement_id":"sha256:aacfe19ec9745daa3cce6b394bd8b34f96f9dac3415126dbfb497ff4b9c296da"}
+{"statement_id":"sha256:aacfe19ec9745daa3cce6b394bd8b34f96f9dac3415126dbfb497ff4b9c296da","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),9:Contracts),18:ContractRefinement),28:strong_contract_refines_weak)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:359a0d38892efb483e21237f3e31b78cd16a2e2b2e6ce79fda83d84b0b0057ad"}
+{"statement_id":"sha256:359a0d38892efb483e21237f3e31b78cd16a2e2b2e6ce79fda83d84b0b0057ad","declarations":[{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),6:WeilEF),10:Hfn_mirror)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),6:WeilEF),11:EF_lit_zeta)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),6:WeilEF),21:EF_lit_zetaZeroConfig)","kind":"theorem"}]}

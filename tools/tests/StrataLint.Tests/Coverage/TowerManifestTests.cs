@@ -13,8 +13,7 @@ public sealed class TowerManifestTests
             Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
             Component("baseline", "ci-jobs", ["current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
-            (RuleFixture.WorkflowPath, "jobs:\n  other-job:\n    name: Other\n"),
-            LedgerAnchorFile());
+            (RuleFixture.WorkflowPath, "jobs:\n  other-job:\n    name: Other\n"));
         var catalog = Catalog(RuleId.CreateKnown(1));
 
         var outcome = TowerManifestValidator.Validate(syntax, snapshot, catalog);
@@ -35,8 +34,7 @@ public sealed class TowerManifestTests
             Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
             Component("baseline", "ci-jobs", ["current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
-            (RuleFixture.WorkflowPath, "jobs:\n  delta:\n    name: Baseline\n"),
-            LedgerAnchorFile());
+            (RuleFixture.WorkflowPath, "jobs:\n  delta:\n    name: Baseline\n"));
         var catalog = Catalog(RuleId.CreateKnown(1));
 
         var outcome = TowerManifestValidator.Validate(syntax, snapshot, catalog);
@@ -60,15 +58,14 @@ public sealed class TowerManifestTests
             (RuleFixture.WorkflowPath, """
                 on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}
                 jobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}
-                """),
-            LedgerAnchorFile());
+                """));
 
         var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.Validate(syntax, snapshot, Catalog(RuleId.CreateKnown(1))));
 
         Assert.Contains(accepted.Manifest.Checks, item => item is { Subject: "rules", Status: "verified" });
         Assert.Contains(accepted.Manifest.Checks, item => item is { Subject: "baseline", Status: "verified" });
-        Assert.Contains(accepted.Manifest.Checks, item => item is { Subject: "bootstrap-pr-1", Status: "verified" });
+        Assert.DoesNotContain(accepted.Manifest.Checks, item => item is { Subject: "bootstrap-pr-1", Status: "verified" });
         Assert.Contains(
             accepted.Manifest.Checks,
             item => item is { Subject: "bootstrap-pr-1", Status: "ASSUMED-UNVERIFIED" });
@@ -80,8 +77,7 @@ public sealed class TowerManifestTests
         var syntax = Syntax(Component("checks", "ci-jobs", ["tests-fixture", "current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (".github/workflows/ci-tests-fixture.yml", "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {tests-fixture: {uses: ./unit.yml}}"),
-            (".github/workflows/ci-current.yml", "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}"),
-            LedgerAnchorFile());
+            (".github/workflows/ci-current.yml", "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}"));
         var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.Validate(syntax, snapshot, Catalog()));
         Assert.Equal(2, accepted.Manifest.Checks.Count(check => check.Subject == "checks"));
@@ -105,7 +101,6 @@ public sealed class TowerManifestTests
               id: bootstrap-pr-1
               judge: open
               reason: "Godel boundary: the trust root cannot prove its own consistency."
-              genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
               commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
               pull_request: 1
               verification: ASSUMED-UNVERIFIED
@@ -168,7 +163,7 @@ public sealed class TowerManifestTests
         // Without the structural rejection the actual pass reports
         // "verified: repository files=0" for a component that guards nothing.
         Assert.IsType<TowerValidationOutcome.Rejected>(
-            TowerManifestValidator.Validate(syntax, Snapshot(LedgerAnchorFile()), Catalog()));
+            TowerManifestValidator.Validate(syntax, Snapshot(), Catalog()));
     }
 
     [Fact]
@@ -215,7 +210,6 @@ public sealed class TowerManifestTests
         "bootstrap-pr-1",
         "open",
         "Godel boundary: the trust root cannot prove its own consistency.",
-        "sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262",
         "f3f471846dd81cfcc39ecaa386966fcf0b058464",
         1,
         "ASSUMED-UNVERIFIED");
@@ -241,11 +235,6 @@ public sealed class TowerManifestTests
             files.Select(static item => RawRepositoryEntry.FromText(item.Path, item.Text)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
-
-    private static (string Path, string Text) LedgerAnchorFile() => (
-        FrozenLedgerChangeClassifier.AcceptedRoot
-            + "/fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262.json",
-        "{\"event_hash\":\"sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262\",\"event_type\":\"Freeze\"}\n");
 
     private sealed class TowerRule : IRepositoryRule
     {

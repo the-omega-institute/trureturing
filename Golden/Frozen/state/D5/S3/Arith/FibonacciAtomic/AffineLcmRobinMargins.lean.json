@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f3e417cc46f32dcc839d12257acc0ec97e83889d6cb6b8a2150a05b7af6fb164"}
+{"statement_id":"sha256:f3e417cc46f32dcc839d12257acc0ec97e83889d6cb6b8a2150a05b7af6fb164","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),21:AffineLcmRobinMargins),6:result)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a90e93c9226ad45e63d649cabb3e29d2209608b36e6e4233e0d869d44ecba1b8"}
+{"statement_id":"sha256:a90e93c9226ad45e63d649cabb3e29d2209608b36e6e4233e0d869d44ecba1b8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),9:Contracts),43:VerificationCollisionContractIncompleteness),42:verification_collision_contract_incomplete)","kind":"theorem"}]}
