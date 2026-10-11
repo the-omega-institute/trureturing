@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
@@ -53,21 +54,10 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_one)
 open D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
-  (pauli_square pauli_hermitian pauli_trace_pair)
+  (pauli_trace_pair)
+open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+  (wordUnit word_hermitian word_expansion letterProduct letterPhase letter_mul word_one)
 
-private theorem pauli_rec (p : Pauli) : pauliMatrix p = Pauli.rec (1 : Matrix (Fin 2) (Fin 2) ℂ) qubitX (Complex.I • (qubitX * qubitZ)) qubitZ p := by cases p <;> rfl
-private theorem word_square (p : Fin 2 → Pauli) : wordOp p * wordOp p = (1 : Mat) := by
-  unfold wordOp
-  rw [tensor_mul]
-  simp_rw [pauli_square]
-  exact tensor_one
-private theorem word_star (p : Fin 2 → Pauli) : star (wordOp p) = wordOp p := by
-  ext x y
-  simp -implicitDefEqProofs only [wordOp, tensorOp, star_apply, of_apply, star_prod]
-  apply Finset.prod_congr rfl
-  intro i _
-  simpa -implicitDefEqProofs only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply] using
-    congrFun (congrFun (pauli_hermitian (p i)) (x i)) (y i)
 private theorem word_trace_mul (p q : Fin 2 → Pauli) :
     trace (wordOp p * wordOp q) = if p = q then (4 : ℂ) else 0 := by
   unfold wordOp
@@ -110,25 +100,6 @@ private theorem rho_E (x : Param) : rho (E x) = x := by
   simp -implicitDefEqProofs
 private theorem E_injective : Function.Injective E :=
   Function.LeftInverse.injective rho_E
-private theorem sum_states {A : Type*} [AddCommMonoid A] (f : BasisState → A) :
-    ∑ x, f x = f ![0,0] + f ![0,1] + f ![1,0] + f ![1,1] := by
-  rw [← Equiv.sum_comp (finTwoArrowEquiv (Fin 2)).symm]
-  dsimp only [finTwoArrowEquiv]
-  simp -implicitDefEqProofs [Fintype.sum_prod_type, Fin.sum_univ_two, add_assoc]
-set_option maxHeartbeats 2000000 in
--- The finite reconstruction expands sixteen matrix entries in the fifteen Pauli coordinates.
-private theorem pauli_expansion (M : Mat) :
-    (∑ i, (trace (wordOp (labels i) * M) / 4) • wordOp (labels i)) +
-      (trace M / 4) • (1 : Mat) = M := by
-  dsimp only [wordOp, tensorOp]
-  simp -implicitDefEqProofs only [pauli_rec]
-  ext x y
-  obtain ⟨⟨a,b⟩, rfl⟩ := (finTwoArrowEquiv (Fin 2)).symm.surjective x
-  obtain ⟨⟨c,d⟩, rfl⟩ := (finTwoArrowEquiv (Fin 2)).symm.surjective y
-  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    (dsimp only [finTwoArrowEquiv]; simp -implicitDefEqProofs [labels_unfold, qubitX, qubitZ, trace, diag,
-      Matrix.mul_apply, Matrix.one_apply, sum_states, Fin.prod_univ_two, smul_eq_mul,
-      Fin.sum_univ_succ]) <;> ring_nf <;> simp -implicitDefEqProofs [Complex.I_sq] <;> ring
 private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M) = M := by
   have hr (i : Fin 15) : ((trace (wordOp (labels i) * M)).re : ℂ) =
       trace (wordOp (labels i) * M) := by
@@ -136,8 +107,17 @@ private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M)
     change star (trace (wordOp (labels i) * M)) = _
     rw [← trace_conjTranspose, conjTranspose_mul]
     change trace (star M * star (wordOp (labels i))) = _
-    rw [hs, word_star, trace_mul_comm]
-  apply Eq.trans ?_ (by simpa -implicitDefEqProofs [ht] using pauli_expansion M)
+    rw [hs, (fun p : Fin 2 → Pauli => (Matrix.star_eq_conjTranspose (wordOp p)).trans (word_hermitian p)), trace_mul_comm]
+  have expansion := word_expansion (n := 2) M
+  let enumeration : Fin 16 ≃ (Fin 2 → Pauli) := Equiv.ofBijective
+    (fun i : Fin 16 => Fin.cases (fun _ => Pauli.I) labels i)
+    (by constructor <;> decide)
+  rw [← Equiv.sum_comp enumeration] at expansion
+  rw [Fin.sum_univ_succ] at expansion
+  simp only [enumeration, Equiv.ofBijective_apply, Fin.cases_zero,
+    Fin.cases_succ, word_one, one_mul, ht, mul_zero, zero_smul, zero_add] at expansion
+  norm_num only [pow_two, show (2 : ℂ) * 2 = 4 by norm_num] at expansion
+  apply Eq.trans ?_ expansion.symm
   change (∑ i, rho M i • wordOp (labels i)) = _
   apply Finset.sum_congr rfl
   intro i _
@@ -145,7 +125,7 @@ private theorem E_rho (M : Mat) (hs : star M = M) (ht : trace M = 0) : E (rho M)
   ext x y
   change (((trace (wordOp (labels i) * M)).re / 4 : ℝ) : ℂ) * _ = _
   rw [Complex.ofReal_div, Complex.ofReal_ofNat, hr]
-  rfl
+  simp only [Matrix.smul_apply, smul_eq_mul, div_eq_mul_inv, one_mul, mul_comm]
 private theorem rotation_complex (p : NonIdentityPauli) (a : ℝ) :
     rotation p a = (Real.cos (a / 2) : ℂ) • (1 : Mat) -
       ((Real.sin (a / 2) : ℂ) * Complex.I) • wordOp p.val := by
@@ -159,10 +139,10 @@ private theorem rotation_unitary (p : NonIdentityPauli) (a : ℝ) :
       Real.cos (a / 2) ^ 2 + Real.sin (a / 2) ^ 2 = 1)
   rw [Unitary.mem_iff, rotation_complex]
   simp -implicitDefEqProofs only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
-    Complex.conj_ofReal, Complex.conj_I, word_star]
+    Complex.conj_ofReal, Complex.conj_I, (fun p : Fin 2 → Pauli => (Matrix.star_eq_conjTranspose (wordOp p)).trans (word_hermitian p))]
   constructor <;>
     simp -implicitDefEqProofs only [mul_sub, sub_mul, Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one,
-      word_square, smul_smul] <;>
+      (show ∀ p : Fin 2 → Pauli, wordOp p * wordOp p = (1 : Mat) from fun p => (wordUnit p).val_inv), smul_smul] <;>
     calc _ = ((Real.cos (a / 2) : ℂ) ^ 2 + (Real.sin (a / 2) : ℂ) ^ 2) • (1 : Mat) := by
           match_scalars
           all_goals ring_nf
@@ -211,7 +191,7 @@ private theorem gate_deriv (P : Fin 15 → NonIdentityPauli) (α : Param) (j : F
   ext1 h
   simp -implicitDefEqProofs only [gateD_unfold, d, _root_.sub_apply, ContinuousLinearMap.smulRight_apply,
     _root_.smul_apply, ContinuousLinearMap.proj_apply, rotation_complex, mul_sub, Matrix.mul_smul,
-    mul_one, word_square, smul_smul]
+    mul_one, (show ∀ p : Fin 2 → Pauli, wordOp p * wordOp p = (1 : Mat) from fun p => (wordUnit p).val_inv), smul_smul]
   ext x y
   simp -implicitDefEqProofs only [Matrix.sub_apply, Matrix.smul_apply, Complex.real_smul, smul_eq_mul,
     Complex.ofReal_mul, Complex.ofReal_neg, Complex.ofReal_div, Complex.ofReal_ofNat]
@@ -266,7 +246,7 @@ private theorem J_H_unfold : J_H = fun P α => fun i j => rho (H P α j) i := rf
 
 private theorem H_star (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     star (H P α j) = H P α j := by
-  simp -implicitDefEqProofs only [H, star_mul, star_star, word_star, mul_assoc]
+  simp -implicitDefEqProofs only [H, star_mul, star_star, (fun p : Fin 2 → Pauli => (Matrix.star_eq_conjTranspose (wordOp p)).trans (word_hermitian p)), mul_assoc]
 
 private theorem H_trace (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     trace (H P α j) = 0 := by
@@ -425,14 +405,14 @@ private theorem rotation_conjugation (p : NonIdentityPauli) (a : ℝ) (Q : Mat) 
     exact_mod_cast (by linarith : Real.sin a / 2 = Real.sin (a / 2) * Real.cos (a / 2))
   rw [conjStep, hc', hs', ht', rotation_complex]
   simp -implicitDefEqProofs only [star_sub, star_smul, star_one, star_mul, Complex.star_def,
-    Complex.conj_ofReal, Complex.conj_I, word_star, mul_sub, sub_mul,
+    Complex.conj_ofReal, Complex.conj_I, (fun p : Fin 2 → Pauli => (Matrix.star_eq_conjTranspose (wordOp p)).trans (word_hermitian p)), mul_sub, sub_mul,
     Matrix.smul_mul, Matrix.mul_smul, one_mul, mul_one, smul_smul, smul_sub, mul_assoc]
   match_scalars <;> ring_nf
   all_goals simp -implicitDefEqProofs [Complex.I_sq]
 private theorem conjStep_comm (p : NonIdentityPauli) (a : ℝ) (Q : Mat)
     (hq : wordOp p.val * Q = Q * wordOp p.val) : conjStep p a Q = Q := by
   have hh : wordOp p.val * Q * wordOp p.val = Q := by
-    rw [hq, mul_assoc, word_square, mul_one]
+    rw [hq, mul_assoc, (show ∀ p : Fin 2 → Pauli, wordOp p * wordOp p = (1 : Mat) from fun p => (wordUnit p).val_inv), mul_one]
   rw [conjStep, hh, hq]
   simp -implicitDefEqProofs only [sub_self, smul_zero, sub_zero]
   module
@@ -441,7 +421,7 @@ private theorem conjStep_anticomm (p : NonIdentityPauli) (a : ℝ) (Q : Mat)
     conjStep p a Q = (Real.cos a : ℂ) • Q -
       ((Real.sin a : ℂ) * Complex.I) • (wordOp p.val * Q) := by
   have hh : wordOp p.val * Q * wordOp p.val = -Q := by
-    rw [hq, neg_mul, mul_assoc, word_square, mul_one]
+    rw [hq, neg_mul, mul_assoc, (show ∀ p : Fin 2 → Pauli, wordOp p * wordOp p = (1 : Mat) from fun p => (wordUnit p).val_inv), mul_one]
   have hqp : Q * wordOp p.val = -(wordOp p.val * Q) := by rw [hq, neg_neg]
   simp -implicitDefEqProofs only [conjStep, hh, hqp, smul_neg, sub_neg_eq_add, smul_add]
   module
@@ -556,32 +536,17 @@ private theorem coordinate_inverse :
       rational_certificate.2.2.1, map_one]
   · simp -implicitDefEqProofs only [U_unfold, mul_assoc, ← mul_assoc (ratReal certN) (ratReal certNi),
       ← map_mul, rational_certificate.2.2.2.1, map_one, one_mul, hS']
-private noncomputable def pauliProd (p q : Pauli) : Pauli :=
-  Pauli.rec q (Pauli.rec .X .I .Z .Y q) (Pauli.rec .Y .Z .I .X q)
-    (Pauli.rec .Z .Y .X .I q) p
-private theorem pauliProd_unfold : pauliProd = fun p q => Pauli.rec q (Pauli.rec .X .I .Z .Y q) (Pauli.rec .Y .Z .I .X q) (Pauli.rec .Z .Y .X .I q) p := rfl
-
-private noncomputable def pauliPhase (p q : Pauli) : ℂ :=
-  Pauli.rec 1 (Pauli.rec 1 1 Complex.I (-Complex.I) q)
-    (Pauli.rec 1 (-Complex.I) 1 Complex.I q) (Pauli.rec 1 Complex.I (-Complex.I) 1 q) p
-private theorem pauliPhase_unfold : pauliPhase = fun p q => Pauli.rec 1 (Pauli.rec 1 1 Complex.I (-Complex.I) q) (Pauli.rec 1 (-Complex.I) 1 Complex.I q) (Pauli.rec 1 Complex.I (-Complex.I) 1 q) p := rfl
-
-private theorem pauli_product (p q : Pauli) :
-    pauliMatrix p * pauliMatrix q = pauliPhase p q • pauliMatrix (pauliProd p q) := by
-  simp -implicitDefEqProofs only [pauli_rec]
-  cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp -implicitDefEqProofs [qubitX, qubitZ, pauliProd_unfold, pauliPhase_unfold, mul_apply, smul_eq_mul]
 private theorem word_product (p q : Fin 2 → Pauli) :
-    wordOp p * wordOp q = (∏ i, pauliPhase (p i) (q i)) •
-      wordOp ![pauliProd (p 0) (q 0), pauliProd (p 1) (q 1)] := by
+    wordOp p * wordOp q = (∏ i, letterPhase (p i) (q i)) •
+      wordOp ![letterProduct (p 0) (q 0), letterProduct (p 1) (q 1)] := by
   unfold wordOp; rw [tensor_mul]
   ext x y
-  simp -implicitDefEqProofs [tensorOp, pauli_product, Fin.prod_univ_two, smul_eq_mul]; ring
+  simp -implicitDefEqProofs [tensorOp, letter_mul, Fin.prod_univ_two, smul_eq_mul]; ring
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (sgn anticomm)
 private theorem pauli_commutation (p q : Pauli) :
     pauliMatrix p * pauliMatrix q = (sgn p q : ℂ) • (pauliMatrix q * pauliMatrix p) := by
-  cases p <;> cases q <;> simp -implicitDefEqProofs [pauli_product, sgn, anticomm,
-    pauliProd_unfold, pauliPhase_unfold, smul_smul, smul_neg, neg_smul]
+  cases p <;> cases q <;> simp -implicitDefEqProofs [letter_mul, sgn, anticomm,
+    letterProduct, letterPhase, smul_smul, smul_neg, neg_smul]
 private theorem word_commutation (p q : Fin 2 → Pauli) :
     wordOp p * wordOp q = (∏ i, (sgn (p i) (q i) : ℂ)) • (wordOp q * wordOp p) := by
   unfold wordOp; rw [tensor_mul, tensor_mul]
@@ -593,7 +558,7 @@ private theorem conjStep_word (p : NonIdentityPauli) (a : ℝ) (q : Fin 2 → Pa
     conjStep p a (wordOp q) =
       if sgn (p.val 0) (q 0) * sgn (p.val 1) (q 1) = -1 then
         (Real.cos a : ℂ) • wordOp q - ((Real.sin a : ℂ) * Complex.I *
-          (∏ i, pauliPhase (p.val i) (q i))) • wordOp ![pauliProd (p.val 0) (q 0), pauliProd (p.val 1) (q 1)]
+          (∏ i, letterPhase (p.val i) (q i))) • wordOp ![letterProduct (p.val 0) (q 0), letterProduct (p.val 1) (q 1)]
       else wordOp q := by
   have hh := word_commutation p.val q
   simp -implicitDefEqProofs only [Fin.prod_univ_two, ← Int.cast_mul] at hh
@@ -639,7 +604,7 @@ private theorem witness_columns (j : Fin 15) :
       ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, Rat.cast_zero, mul_zero, zero_smul, one_ne_zero, or_true, cons_val_one, Rat.cast_one, mul_one, add_zero,
       zero_add, Fin.mk_one, List.finRange, List.ofFn_succ, List.ofFn_zero, List.take_succ_cons, List.foldr_cons, List.foldr, conjStep_word, sgn, anticomm, Bool.false_eq_true,
       bne_self_eq_false, Int.reduceNeg, reduceCtorEq, Fin.reduceFinMk, bne_iff_ne, not_false_eq_true, mul_neg, Nat.succ_eq_add_one, Nat.reduceAdd, Real.cos_zero,
-      Complex.ofReal_one, one_smul, Real.sin_zero, Complex.ofReal_zero, zero_mul, pauliPhase_unfold, Fin.prod_univ_two, neg_zero, pauliProd_unfold, sub_zero, neg_neg, Real.cos_pi_div_four,
+      Complex.ofReal_one, one_smul, Real.sin_zero, Complex.ofReal_zero, zero_mul, letterPhase, Fin.prod_univ_two, neg_zero, letterProduct, sub_zero, neg_neg, Real.cos_pi_div_four,
       Complex.ofReal_div, Complex.ofReal_ofNat, Real.sin_pi_div_four, neg_smul, sub_neg_eq_add, conjStep_add, conjStep_smul, smul_add, Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat,
       Rat.cast_inv, conjStep_sub] <;> match_scalars
   all_goals
@@ -664,16 +629,13 @@ private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D 
              simp -implicitDefEqProofs only [B_unfold, U_unfold, mul_assoc]
        _ = D := by rw [scaling_inverse.1, scaling_inverse.2]
                    simp -implicitDefEqProofs only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D_unfold]
-private theorem sqrt_inverse : (Real.sqrt 2)⁻¹ = Real.sqrt 2 / 2 := by
-  have hs : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
-  field_simp; nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
 private theorem H_witness (j : Fin 15) : H witnessP point j =
     (colScale j)⁻¹ • E (fun i => rowScale i * (certA i j : ℝ)) := by
   have hs : colScale j ≠ 0 := by simp -implicitDefEqProofs only [colScale_unfold]; split_ifs <;> positivity
   rw [← witness_columns, smul_smul, inv_mul_cancel₀ hs, one_smul]
 private theorem B_row (i : Fin 15) : B 12 i = (certz i : ℝ) / rowScale i := by
   fin_cases i <;> simp -implicitDefEqProofs [B_unfold, Ri, mul_diagonal, ratReal_unfold, certK_unfold, certL_unfold, certe_unfold, certz_unfold, div_eq_mul_inv,
-    rowScale_unfold, sqrt_inverse]
+    rowScale_unfold, ← Real.sqrt_div_self]
 set_option maxHeartbeats 2000000 in
 -- Only the four left-kernel coordinates contribute to this commutator contraction.
 private theorem contracted_derivative :
@@ -691,17 +653,17 @@ private theorem contracted_derivative :
   simp -implicitDefEqProofs only [J_D_unfold, H_D_unfold, H_witness, colScale_unfold, Fin.isValue, Finset.mem_insert, Finset.mem_singleton, E_unfold, Fin.sum_univ_succ, Fin.succ_zero_eq_one, Fin.succ_one_eq_two, Fin.reduceSucc, Finset.univ_unique, Fin.default_eq_zero,
     Finset.sum_singleton, rowScale_unfold, certA_unfold, one_div, transpose_apply, cons_val', cons_val_fin_one, ite_mul, one_mul, _root_.add_apply, ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply, zero_ne_one, Fin.reduceEq, or_self,
     or_false, ↓reduceIte, cons_val_zero, one_ne_zero, or_true, cons_val_one, cons_val, smul_add, map_add, map_smul, prefixG_unfold, Fin.mk_eq_zero, Fin.mk_eq_one, ContinuousLinearMap.add_comp, ContinuousLinearMap.smul_comp,
-    ContinuousLinearMap.coe_pi', sqrt_inverse, Rat.cast_zero, mul_zero, Fin.coe_ofNat_eq_mod, Nat.zero_mod, Finset.univ_eq_empty, Finset.sum_empty, ContinuousLinearMap.comp_zero, smul_zero, Rat.cast_one, mul_one, add_zero, sub_self,
+    ContinuousLinearMap.coe_pi', ← Real.sqrt_div_self, Rat.cast_zero, mul_zero, Fin.coe_ofNat_eq_mod, Nat.zero_mod, Finset.univ_eq_empty, Finset.sum_empty, ContinuousLinearMap.comp_zero, smul_zero, Rat.cast_one, mul_one, add_zero, sub_self,
     _root_.zero_apply, zero_mul, Nat.reduceMod, Fin.val_eq_zero, Fin.zero_eta, zero_smul, zero_add, Finset.sum_const, Finset.card_singleton, one_smul, ContinuousLinearMap.comp_apply, _root_.smul_apply, _root_.sub_apply, mulVec_diagonal,
     Rat.cast_div, Rat.cast_neg, Rat.cast_ofNat, ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply', Fin.val_eq_zero_iff, Fin.val_succ, Fin.mk_one, Fin.succ_ne_zero, ContinuousLinearMap.comp_add, inv_one, Nat.add_eq_right,
     false_or, cons_val_succ', Nat.reduceAdd, Fin.reduceFinMk, Rat.cast_inv, map_zero, ne_eq, not_false_eq_true, div_self]
-  simp -implicitDefEqProofs only [mul_add, word_product, Fin.prod_univ_two, pauliProd_unfold, pauliPhase_unfold,
+  simp -implicitDefEqProofs only [mul_add, word_product, Fin.prod_univ_two, letterProduct, letterPhase,
     labels_unfold, cons_val_zero, cons_val_one, smul_smul, mul_one, one_mul, mul_neg]
   simp -implicitDefEqProofs only [rho_unfold, labels_unfold, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.isValue, cons_val', cons_val_zero, cons_val_fin_one, cons_val, cons_val_one, mul_one, one_smul, sub_self, smul_zero, mul_zero, trace_zero, Complex.zero_re, zero_div, zero_mul, mul_neg, neg_mul, Complex.I_mul_I, neg_neg, neg_smul, smul_neg, one_mul, add_sub_add_left_eq_sub, Algebra.mul_smul_comm, mul_sub, trace_smul, trace_sub,
     trace_neg, word_trace_mul, vecCons_inj, reduceCtorEq, and_true, and_self, ↓reduceIte, smul_eq_mul, neg_zero, mul_add, trace_add, Complex.real_smul, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_neg, Complex.ofReal_one,
     Complex.ofReal_ofNat, add_zero, zero_add, sub_neg_eq_add, Complex.add_re, Complex.mul_re, Complex.div_ofNat_re, Complex.neg_re, Complex.I_re, Complex.ofReal_re, Complex.one_re, Complex.ofReal_im, Complex.div_ofNat_im, Complex.neg_im,
     Complex.one_im, sub_zero, Complex.mul_im, Complex.re_ofNat, Complex.I_im, Complex.im_ofNat, zero_sub, and_false, Complex.ofReal_inv, Complex.sub_re, Complex.inv_re, Complex.normSq_ofNat, div_self_mul_self', Complex.inv_im]
-  ring_nf; simp -implicitDefEqProofs only [h6, sqrt_inverse]; nlinarith [hs]
+  ring_nf; simp -implicitDefEqProofs only [h6, ← Real.sqrt_div_self]; nlinarith [hs]
 private theorem coordinate_det : det B ≠ 0 ∧ det U ≠ 0 := by
   constructor
   · intro h; have hh := congrArg det coordinate_inverse.1; simp -implicitDefEqProofs [det_mul, h] at hh
@@ -732,8 +694,6 @@ private theorem det_comp_strict {n : Type*} [Fintype n] [DecidableEq n]
     (hf : HasStrictFDerivAt f fD a) :
     HasStrictFDerivAt (fun x => det (Matrix.of (f x))) ((detDiff (f a)).comp fD) a := by
   simpa -implicitDefEqProofs only [detDiff_unfold, Function.comp_def, detForm_apply] using ((detForm (n := n)).1.hasStrictFDerivAt _).comp a hf
-private theorem detDiff_comp_apply {n : Type*} [Fintype n] [DecidableEq n] (M : n → n → ℝ) (L : Param →L[ℝ] (n → n → ℝ)) (h : Param) :
-    ((detDiff M).comp L) h = detDiff M (L h) := by rw [ContinuousLinearMap.comp_apply]
 private noncomputable def g (α : Param) : ℝ := det (Matrix.of (normalize (J_H witnessP α)))
 private noncomputable def gD (α : Param) : Param →L[ℝ] ℝ :=
   (detDiff (normalize (J_H witnessP α))).comp (normalize.comp (fderiv ℝ (J_H witnessP) α))
@@ -771,7 +731,7 @@ private theorem normalized_pivot (T : Fin 15 → Fin 15 → ℝ) :
 set_option maxRecDepth 2000 in
 set_option backward.isDefEq.respectTransparency true in
 private theorem gD_eval (α h : Param) : gD α h = detDiff (normalize (J_H witnessP α)) (normalize (J_D witnessP α h)) := by
-  unfold gD; rw [detDiff_comp_apply, ContinuousLinearMap.comp_apply]
+  unfold gD; rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply]
   apply congrArg (fun M : Fin 15 → Fin 15 → ℝ =>
     detDiff (normalize (J_H witnessP α)) (normalize M))
   ext i j

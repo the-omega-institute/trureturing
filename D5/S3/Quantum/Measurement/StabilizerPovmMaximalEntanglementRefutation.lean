@@ -67,7 +67,8 @@ abbrev Operator (n : ℕ) := Matrix ((Fin n → Fin 2)) ((Fin n → Fin 2)) ℂ
 def Phase (c : ℂ) : Prop := c = 1 ∨ c = -1 ∨ c = Complex.I ∨ c = -Complex.I
 def letterProduct : Pauli → Pauli → Pauli | .I, q => q | p, .I => p | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I | .X, .Y => .Z | .Y, .X => .Z | .X, .Z => .Y | .Z, .X => .Y | .Y, .Z => .X | .Z, .Y => .X
 def letterPhase : Pauli → Pauli → ℂ | .X, .Y => Complex.I | .Y, .Z => Complex.I | .Z, .X => Complex.I | .Y, .X => -Complex.I | .Z, .Y => -Complex.I | .X, .Z => -Complex.I | _, _ => 1
-lemma letter_mul (p q : Pauli) : pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := by
+lemma letter_mul (p q : Pauli) :
+    pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := by
   cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp [letterPhase, letterProduct, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two]
 lemma tensor_one {n : ℕ} : tensorOp (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by classical
@@ -90,7 +91,6 @@ def pauliGroup (n : ℕ) : Subgroup (Operator n)ˣ := by
     ext x z; simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]; simp_rw [← Finset.prod_mul_distrib]; rw [Finset.prod_univ_sum, Fintype.piFinset_univ])
   have tensor_smul {n : ℕ} (c : Fin n → ℂ) (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : tensorOp (fun i => c i • M i) = (∏ i, c i) • tensorOp M := (by ext x y; simp [tensorOp, Finset.prod_mul_distrib])
   have letter_phase (p q : Pauli) : Phase (letterPhase p q) := (by cases p <;> cases q <;> simp [letterPhase, Phase])
-  have letter_mul (p q : Pauli) : pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := (by cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [letterPhase, letterProduct, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two])
   have word_mul {n : ℕ} (v w : (Fin n → Pauli)) : wordOp v * wordOp w = (∏ i, letterPhase (v i) (w i)) • wordOp (fun i => letterProduct (v i) (w i)) := (by unfold wordOp; rw [tensor_mul]; simp_rw [letter_mul]; exact tensor_smul _ _)
   exact {
     carrier := {u | ∃ c : ℂ, Phase c ∧ ∃ w : (Fin n → Pauli), (u : Operator n) = c • wordOp w}
@@ -350,7 +350,6 @@ def supportedPauliGroup (n : ℕ) (J : Set (Fin n)) : Subgroup (Operator n)ˣ :=
     ext x z; simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]; simp_rw [← Finset.prod_mul_distrib]; rw [Finset.prod_univ_sum, Fintype.piFinset_univ])
   have tensor_smul {n : ℕ} (c : Fin n → ℂ) (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : tensorOp (fun i => c i • M i) = (∏ i, c i) • tensorOp M := (by ext x y; simp [tensorOp, Finset.prod_mul_distrib])
   have letter_phase (p q : Pauli) : Phase (letterPhase p q) := (by cases p <;> cases q <;> simp [letterPhase, Phase])
-  have letter_mul (p q : Pauli) : pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := (by cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [letterPhase, letterProduct, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two])
   have word_one {n : ℕ} : wordOp (fun _ : Fin n => Pauli.I) = 1 := tensor_one
   have word_mul {n : ℕ} (v w : (Fin n → Pauli)) : wordOp v * wordOp w = (∏ i, letterPhase (v i) (w i)) • wordOp (fun i => letterProduct (v i) (w i)) := (by unfold wordOp; rw [tensor_mul]; simp_rw [letter_mul]; exact tensor_smul _ _)
   exact {
@@ -402,7 +401,6 @@ private lemma ancilla_injective {n : ℕ} (S : StabilizerGroup (n+n)) (hmax : en
   have tensor_smul {n : ℕ} (c : Fin n → ℂ) (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : tensorOp (fun i => c i • M i) = (∏ i, c i) • tensorOp M := (by ext x y; simp [tensorOp, Finset.prod_mul_distrib])
   have pauli_sq (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := (by cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two])
   have letter_phase (p q : Pauli) : Phase (letterPhase p q) := (by cases p <;> cases q <;> simp [letterPhase, Phase])
-  have letter_mul (p q : Pauli) : pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := (by cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [letterPhase, letterProduct, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two])
   have word_sq {n : ℕ} (w : (Fin n → Pauli)) : wordOp w * wordOp w = 1 := (by unfold wordOp; rw [tensor_mul]; simp_rw [pauli_sq]; exact tensor_one)
   have word_mul {n : ℕ} (v w : (Fin n → Pauli)) : wordOp v * wordOp w = (∏ i, letterPhase (v i) (w i)) • wordOp (fun i => letterProduct (v i) (w i)) := (by unfold wordOp; rw [tensor_mul]; simp_rw [letter_mul]; exact tensor_smul _ _)
   have stabilizer_involution {n : ℕ} (S : StabilizerGroup n) {u : (Operator n)ˣ} (hu : u ∈ S.subgroup) : u*u = 1 := (by obtain ⟨c, hc, w, hw⟩ := S.pauli hu; obtain h | h := stabilizer_real_phase S hu hc hw; all_goals apply Units.ext; simp [hw, h, word_sq])
