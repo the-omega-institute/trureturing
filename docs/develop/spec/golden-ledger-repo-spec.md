@@ -81,7 +81,7 @@ golden-ledger/
 地层是显式语义坐标,由疆域词表决定:`Meta/domains.yaml` 每个疆域必须携 `stratum` 字段,落格 `S<stratum>/<疆域>/<模块>.lean`。执法两条:(i)H1 闭包不变量:S_k 单元之库内 import 闭包 ⊆ S_{≤k}(同层互引合法,S0 亦然);(ii)一致性:单元 import 闭包之最高地层 ≤ 其疆域地层。`1 + max(import 之地层)` 仅为新概念选层之下界启发,不再定义地层。
 
 ## 2.3 生长律
-目录 >12 文件或文件 >400 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 深度无上限:满桶在任一层皆可就地裂出子疆域,SL-003 只数目录内文件、不数子目录,故裂的代价恒为一层而非一次全局重排(2026-09-08:实现侧原将坐标钉死为三或四段,压力遂横向外溢,`D5/S3/ConceptDynamics` 由此长出120 个平铺兄弟子疆域;放开后旧地址一条不翻,属保守扩展)。 容量只约束骨骼:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 数据文件豁免 SL-003 文件行数软硬上限,扩展名不区分大小写,目录容量仍按既有规则计算。Blueprint Markdown 是 FILEMAP `kind=generated` 的人读投影,不另计容量——同一文档的结构名额已由其 `.scribe.cs` 定义支付;文档 GID 须指向既存 Lean 模块,且真实树上的 `.scribe.cs` 定义、反射发现项与同 stem `.md` 路径保持双射,若把源与投影重复计数,合法的十二模块 Lean 桶在第七个蓝图化模块处即溢出其 Blueprint 镜像(2026-07-30,#499/#543 撞墙先例)。该排除与双射只守结构槽及镜像存在性,不校验 `.md` 内容,也不赋予其内容或历史权威。
+目录内计容量文件 >96 或 SL-003 登记材料(`Meta/ci-checks.json`,含根目录与 `D5/` 下的 Lean 源及 `Reg/`)中的文件 >1000 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 深度无上限:满桶在任一层皆可就地裂出子疆域,SL-003 只数目录内文件、不数子目录,故裂的代价恒为一层而非一次全局重排。阈值常量唯一住在 `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`:文件 >800 行为 Observe 软提示,>1000 行 Block;目录准入上限 96,改动触及的目录超限且含受保护基线没有的计容量路径即 Block,否则 Observe;全树另以 192 为容忍上限,超出即 Block。 容量只约束骨骼:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 数据文件豁免 SL-003 文件行数软硬上限,扩展名不区分大小写,目录容量仍按既有规则计算。Blueprint Markdown 是 FILEMAP `kind=generated` 的人读投影,不另计容量——同一文档的结构名额已由其 `.scribe.cs` 定义支付;文档 GID 须指向既存 Lean 模块,且真实树上的 `.scribe.cs` 定义、反射发现项与同 stem `.md` 路径保持双射,若把源与投影重复计数,满额 Lean 桶的 Blueprint 镜像在半数模块蓝图化后即超限。该排除与双射只守结构槽及镜像存在性,不校验 `.md` 内容,也不赋予其内容或历史权威。
 
 **理论文档容量(delta-only)。** SL-003 对 `docs/develop/theory/**` 中新增或修改的 Markdown 检查候选全文,硬上限为 5,000 行;扩展名不区分大小写,空行计入,末尾换行符不额外计一行。超过上限即 Block,诊断包含路径、实测行数和上限。删除路径不读正文;未触及的历史长卷、check-current 及 repository capacity-audit 不进行这项检查,判官实现变更也不扩大理论文档选集。新内容超出单卷篇幅时写入同主题续卷并通过引用衔接,保留既有条目、编号与引用。此谓词只约束文档大小,不校验理论数学内容,也不建立 Lean 对理论正文的依赖。
 
@@ -101,7 +101,7 @@ golden-ledger/
 
 **A4 疆域码** 受控词表 `Meta/domains.yaml`(CamelCase+一行定义);新疆域 = machine-decide admission;词表外目录名 = SL-011 红。
 
-**A5 文件与模块** CamelCase.lean;一文件一主概念;≤400 行;**文件头强制六行**(SL-012;v7.1 增 digest):
+**A5 文件与模块** CamelCase.lean;一文件一主概念;≤1000 行(>800 行 Observe);**文件头强制六行**(SL-012;v7.1 增 digest):
 ```lean
 /- GID: D5/S3/Spectral/GapLabeling
    generality: G|I|E
@@ -464,7 +464,7 @@ project 恢复在 current 与 Lean build 单元中先查读者可见的种子：
 |---|---|---|
 | H1 | 向下 import(地层单调) | SL-001 |
 | H2 | sorry 仅居 X_Frontier | SL-002 |
-| H3 | 容量阈(目录≤12 文件、文件≤400 行)⟹ 分裂协议 | SL-003 |
+| H3 | 容量阈(目录≤96 文件、文件≤1000 行)⟹ 分裂协议 | SL-003 |
 | H4 | 镜像律(B/E 存在或显式 waiver) | SL-004 |
 | H5 | 编年历史归 git(无机器判官;2026-09-02 owner 裁决,SL-005 已退役) | — |
 | H6 | 徽章由语法生成,禁手写状态 | SL-006 |
