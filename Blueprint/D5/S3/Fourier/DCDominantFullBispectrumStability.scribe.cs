@@ -12,7 +12,7 @@ internal sealed class DCDominantFullBispectrumStabilityDocument : IScribeDocumen
             DeclarationHandle.Create("D5/S3/Fourier/DCDominantFullBispectrumStability.full_bispectrum_stability_dc_dominant"),
             H("Uncalibrated recovery with a closed error threshold"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/bendory2017bispectrum")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Fourier/bendory2017bispectrum")),
             Blocks(
                 Paragraph(Text(
                     "Let N be any positive natural number and let f and g be arbitrary complex signals on ZMod N. "
