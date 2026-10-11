@@ -60,6 +60,10 @@ $$\forall n \in \mathrm{Nat},\; \forall G \in \operatorname{SimpleGraph}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mulas-zhang-zucal-2023-non-backtracking-gap-min-degree` (proved) by `D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mulas-zhang-zucal-2023-non-backtracking-gap-min-degree","declaration_gid":"D5/S3/Combinatorics/NonBacktracking/LaplacianGapMinDegree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. Mulas; D. Zhang; G. Zucal (2024). *There is no going back: Properties of the non-backtracking Laplacian*. DOI: [10.1016/j.laa.2023.10.014](https://doi.org/10.1016/j.laa.2023.10.014). URL: <https://arxiv.org/abs/2303.00373v2>.

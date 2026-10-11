@@ -19,13 +19,14 @@ internal sealed class LaplacianGapMinDegreeDocument : IScribeDocumentDefinition
             Node("transition", "Non-backtracking transition", "nbTransition", TransitionFormula(), "The transition from an arc [u,v] to an arc [v,w] has weight 1/(degree(v)-1) exactly when w is different from u; all other entries are zero." , DescribeRole.Definition),
             Node("gap", "Spectral gap", "nbGap", GapFormula(), "The gap is the infimum of the norms of the complex eigenvalues of the complexified transition matrix." , DescribeRole.Definition),
             Node("claim", "Conjecture 5.3", "claim", ClaimFormula(), "The source states verbatim on printed page 16: “If G is not the cycle graph, then ε ≤ 1/(δ−1).” The encoding quantifies over finite simple graphs of positive order with minimum degree at least two, excludes graph isomorphism with the cycle graph, and uses nbGap G for ε." , DescribeRole.Definition),
-            Node("result", "The non-backtracking gap bound", "result", ClaimFormula(), "The result proves the quoted Conjecture 5.3. For minimum degree two, the all-ones vector is an eigenvector with eigenvalue one. For minimum degree at least three, the factorization P=RS with symmetric inverse factor T yields a Hermitian pencil T−tR; a dimension count and endpoint sign change give a singular t in [δ−1,Δ), hence a positive real transition eigenvalue at most 1/(δ−1). The cycle exclusion is therefore unnecessary." , DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+            Node("result", "The non-backtracking gap bound", "result", ClaimFormula(), "The result proves the quoted Conjecture 5.3. For minimum degree two, the all-ones vector is an eigenvector with eigenvalue one. For minimum degree at least three, the factorization P=RS with symmetric inverse factor T yields a Hermitian pencil T−tR; a dimension count and endpoint sign change give a singular t in [δ−1,Δ), hence a positive real transition eigenvalue at most 1/(δ−1). The cycle exclusion is therefore unnecessary." , DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("mulas-zhang-zucal-2023-non-backtracking-gap-min-degree"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, DescribeRole role,
-        AssessedProvenance? provenance = null) =>
+        AssessedProvenance? provenance = null, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("nbl-" + id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string value) => F.Id(value);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Real() => new Formula.NamedConstant(FormulaIdentifier.Create("Real"));
