@@ -468,4 +468,75 @@ private theorem J_recurrence (P : Fin 15 → NonIdentityPauli) (α : Param) (i j
       (fun k M => conjStep (P k) (α k) M) (wordOp (P j).val)) i := by
   simp only [J_H, H, prefixOp, list_conjugation]
 
+-- Rational row and column coordinates; the exceptional parameter index is 12.
+private abbrev RatMat := Matrix (Fin 15) (Fin 15) ℚ
+private def certA : RatMat := Matrix.transpose
+  ![![0,0,0,0,0,0,0,0,0,1,0,0,0,0,0], ![0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    ![0,0,0,0,1,0,0,0,0,0,0,0,0,0,0], ![0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+    ![0,0,0,0,0,0,0,0,0,0,0,0,1,0,0], ![0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+    ![0,0,0,0,-1/2,1/2,0,0,0,0,0,0,0,0,0], ![0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
+    ![1/4,1/4,0,0,0,0,-1/2,0,-1/4,1/4,0,1/2,0,0,0],
+    ![1/4,1/4,0,0,0,0,1/2,0,-1/4,1/4,0,-1/2,0,0,0],
+    ![1/4,1/4,0,0,0,0,1/2,0,1/4,-1/4,0,1/2,0,0,0],
+    ![0,0,0,-1/2,0,0,0,1/2,0,0,0,0,-1/4,1/4,1/2],
+    ![-1/4,1/4,1/2,0,-1/4,-1/4,0,0,1/4,1/4,0,0,0,0,0],
+    ![0,0,0,1/2,0,0,0,1/2,0,0,0,0,-1/4,1/4,-1/2],
+    ![0,0,0,1,0,0,0,0,0,0,0,0,0,0,1]]
+private def certL : RatMat :=
+  ![![0,0,0,0,0,0,0,0,1,1,0,0,0,0,0], ![-1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    ![0,0,0,0,1,1,0,0,0,0,0,0,0,0,0], ![0,0,0,0,0,0,0,-1/2,0,0,0,0,0,1,0],
+    ![0,0,0,0,0,0,0,1/2,0,0,0,0,1,0,0], ![0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+    ![0,0,0,0,0,2,0,0,0,0,0,0,0,0,0], ![0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
+    ![0,0,0,0,0,0,0,0,-2,0,0,1,0,0,0], ![2,0,0,0,0,0,0,0,0,0,0,-1,0,0,0],
+    ![2,0,0,0,0,0,0,0,2,0,0,0,0,0,0], ![0,0,0,-1/2,0,0,0,1,0,0,0,0,0,0,1/2],
+    ![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], ![0,0,0,1/2,0,0,0,1,0,0,0,0,0,0,-1/2],
+    ![0,0,0,1/2,0,0,0,0,0,0,0,0,0,0,1/2]]
+private def certu : Fin 15 → ℚ := ![-1/2,-1/2,1/2,0,0,-1/2,1/2,0,1/2,1/2,0,0,1,0,0]
+private def certz : Fin 15 → ℚ := ![-2,0,0,0,0,0,1,0,-2,0,0,1,0,0,0]
+private def certe : Fin 15 → ℚ := Pi.single 12 1
+private def certr : Fin 15 → ℚ := Pi.single 6 1
+private def certD : RatMat := diagonal (fun i => if i = 12 then 0 else 1)
+private def certN : RatMat := 1 + vecMulVec (certu - certe) certe
+private def certNi : RatMat := 1 - vecMulVec (certu - certe) certe
+private def certK : RatMat := certL + vecMulVec certe certz
+private def certKi : RatMat := certA * certD + vecMulVec certr certe
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 2000000 in
+-- The kernel reduces five finite rational matrix identities.
+private theorem rational_certificate :
+    certA *ᵥ certu = 0 ∧ certz ᵥ* certA = 0 ∧
+    certK * certKi = 1 ∧ certN * certNi = 1 ∧ certK * certA * certN = certD := by
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> decide +kernel
+private noncomputable def ratReal : RatMat →+* Matrix (Fin 15) (Fin 15) ℝ :=
+  (Rat.castHom ℝ).mapMatrix
+private noncomputable def rowScale (i : Fin 15) : ℝ :=
+  if i ∈ ({0,1,4,5,8,9,12,13} : Finset (Fin 15)) then Real.sqrt 2 else 1
+private noncomputable def colScale (i : Fin 15) : ℝ :=
+  if i ∈ ({0,1,2,3,4,14} : Finset (Fin 15)) then Real.sqrt 2 else 1
+private noncomputable def R : Matrix (Fin 15) (Fin 15) ℝ := diagonal rowScale
+private noncomputable def Ri : Matrix (Fin 15) (Fin 15) ℝ := diagonal (fun i => (rowScale i)⁻¹)
+private noncomputable def S : Matrix (Fin 15) (Fin 15) ℝ := diagonal colScale
+private noncomputable def Si : Matrix (Fin 15) (Fin 15) ℝ := diagonal (fun i => (colScale i)⁻¹)
+private theorem scaling_inverse : Ri * R = 1 ∧ Si * S = 1 := by
+  have hs : Real.sqrt 2 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
+  constructor
+  · rw [Ri, R, diagonal_mul_diagonal]; apply diagonal_eq_one.mpr
+    ext i; simp only [rowScale]; split_ifs <;> simp [hs]
+  · rw [Si, S, diagonal_mul_diagonal]; apply diagonal_eq_one.mpr
+    ext i; simp only [colScale]; split_ifs <;> simp [hs]
+private noncomputable def B : Matrix (Fin 15) (Fin 15) ℝ := ratReal certK * Ri
+private noncomputable def U : Matrix (Fin 15) (Fin 15) ℝ := S * ratReal certN
+private noncomputable def D : Matrix (Fin 15) (Fin 15) ℝ := ratReal certD
+private noncomputable def v : Param := S *ᵥ (fun i => (certu i : ℝ))
+private theorem coordinate_inverse :
+    B * (R * ratReal certKi) = 1 ∧ U * (ratReal certNi * Si) = 1 := by
+  have hR := scaling_inverse.1
+  have hS := scaling_inverse.2
+  have hS' : S * Si = 1 := mul_eq_one_comm.mp hS
+  constructor
+  · simp only [B, mul_assoc, ← mul_assoc Ri R, hR, one_mul, ← map_mul,
+      rational_certificate.2.2.1, map_one]
+  · simp only [U, mul_assoc, ← mul_assoc (ratReal certN) (ratReal certNi),
+      ← map_mul, rational_certificate.2.2.2.1, map_one, one_mul, hS']
+
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
