@@ -277,7 +277,7 @@ private theorem spectralEntropy_kronecker {m : Type*} [Fintype m] [DecidableEq m
           Finset.sum_congr rfl fun i _ => by rw [← Finset.mul_sum]]
     rw [← Finset.sum_mul, hsumρ, one_mul]
 
-private theorem re_trace_cfc {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ) :
+theorem re_trace_cfc {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ) :
     (cfc f A).trace.re = ∑ i, f (hA.eigenvalues i) := by
   rw [hA.cfc_eq f]
   unfold Matrix.IsHermitian.cfc
