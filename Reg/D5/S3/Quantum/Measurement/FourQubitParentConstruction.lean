@@ -844,7 +844,7 @@ theorem hermitianNegative : ¬ hermitianArena.Law scalarRejected := by
   intro h; have hh := congrArg Complex.im ((h 0 0).apply 0 0)
   norm_num [scalarRejected, realize] at hh
 @[reducible] def detArena : Arena :=
-  ⟨realVectorSignature, fun R => ∀ (t : ℝ) (a : Vec), 
+  ⟨realVectorSignature, fun R => ∀ (t : ℝ) (a : Vec),
     Matrix.det (scalarB t a) = ((t^2 - (R.readout () () a)^2 : ℝ) : ℂ)⟩
 theorem detNegative : ¬ detArena.Law normRejected := by
   intro h; have hh := h 0 0
@@ -857,23 +857,19 @@ theorem decompositionNegative : ¬ decompositionArena.Law scalarRejected := by
   intro h; have hh := congrArg (fun A : Mat => (A 0 0).im) (h 0 (by simp))
   norm_num [scalarRejected, realize] at hh
 @[reducible] def doubleArena : Arena :=
-  ⟨scalarSignature, fun R => ∀ (t : ℝ) (a : Vec), (1 / 2 : ℂ) • R.readout () (2*t) ((2 : ℝ) • a) =
-    scalarB t a⟩
+  ⟨scalarSignature, fun R => ∀ (t : ℝ) (a : Vec), (1 / 2 : ℂ) • scalarB (2*t) ((2 : ℝ) • a) =
+    R.readout () t a⟩
 theorem doubleNegative : ¬ doubleArena.Law scalarRejected := by
   intro h; have hh := congrArg (fun A : Mat => (A 0 0).im) (h 0 0)
-  norm_num [scalarRejected, realize, scalarB, B_formula] at hh
-  dsimp only [Pi.smul_apply, smul_eq_mul, Matrix.one_apply] at hh
-  norm_num [Complex.mul_im] at hh
+  dsimp [scalarRejected, realize] at hh
+  norm_num [scalarB, B_formula, Complex.mul_im] at hh
 @[reducible] def complementArena : Arena :=
   ⟨scalarSignature, fun R =>
-    ∀ (t : ℝ) (a : Vec), (1 / 2 : ℂ) • R.readout () (2-t) (-a) = 1 - (1 / 2 : ℂ) • scalarB t a⟩
+    ∀ (t : ℝ) (a : Vec), (1 / 2 : ℂ) • scalarB (2-t) (-a) = 1 - (1 / 2 : ℂ) • R.readout () t a⟩
 theorem complementNegative : ¬ complementArena.Law scalarRejected := by
   intro h; have hh := congrArg (fun A : Mat => (A 0 0).im) (h 0 0)
-  norm_num [scalarRejected, realize, scalarB, B_formula] at hh
-  simp only [Matrix.sub_apply] at hh
-  norm_num [Complex.mul_re, Matrix.cons_val_zero] at hh
-  rw [Matrix.one_apply_eq] at hh
-  norm_num at hh
+  dsimp [scalarRejected, realize] at hh
+  norm_num [scalarB, B_formula, Complex.mul_im] at hh
 def hermitianEvidence : Registration hermitianArena (type_of% (@scalarB_hermitian)) := {
   actual := scalarActual, bridge := Iff.rfl
   variation := ⟨@scalarB_hermitian, scalarRejected, hermitianNegative⟩
@@ -918,7 +914,8 @@ noncomputable def detRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_
   variation := .absent, sensitivity := .absent, sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
     coordinates := #[], readouts := #[⟨
-      #["body", "body", "arg", "arg", "arg"], 1, false, none, false⟩] }, continuation := .unknown
+      #["body", "body", "arg", "arg", "arg", "fn", "arg"],
+      1, false, none, false⟩] }, continuation := .unknown
   partialSensitivity := none, escapeFrom := none, familyRecord := none, options := #[] }
 def decomposeEvidence :
     Registration decompositionArena (type_of% (@hermitian_decomposition)) := {
@@ -968,7 +965,7 @@ noncomputable def doubleRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,
   variation := .absent, sensitivity := .absent, sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
     coordinates := #[0], readouts := #[⟨
-      #["body", "body", "fn", "arg", "arg"], 1, false, none, false⟩] }, continuation := .unknown
+      #["body", "body", "arg"], 1, false, none, false⟩] }, continuation := .unknown
   partialSensitivity := none, escapeFrom := none, familyRecord := none, options := #[] }
 def complementEvidence : Registration complementArena (type_of% (@half_scalarB_complement)) := {
   actual := scalarActual, bridge := Iff.rfl
@@ -993,6 +990,6 @@ noncomputable def complementRegistration : Contract.Registration.{_,_,_,0,0,0,_,
   variation := .absent, sensitivity := .absent, sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
     coordinates := #[0], readouts := #[⟨
-      #["body", "body", "fn", "arg", "arg"], 1, false, none, false⟩] }, continuation := .unknown
+      #["body", "body", "arg", "arg", "arg"], 1, false, none, false⟩] }, continuation := .unknown
   partialSensitivity := none, escapeFrom := none, familyRecord := none, options := #[] }
 end Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction
