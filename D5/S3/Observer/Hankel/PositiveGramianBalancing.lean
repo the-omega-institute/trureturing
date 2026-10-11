@@ -7,7 +7,6 @@
    digest: Construct mutually inverse balancing coordinates from two positive definite Gramians. -/
 
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.Tactic
 
 noncomputable section
 set_option autoImplicit false
