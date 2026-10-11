@@ -9,8 +9,6 @@
 import Mathlib.Algebra.Module.PID
 import Mathlib.Algebra.Polynomial.Module.AEval
 import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Nilpotent.Basic
-import Mathlib.LinearAlgebra.Dimension.Constructions
 
 /- The PID structure theorem supplies the primary decomposition and its induction.
    Polynomial linearity preserves the operator action, and the quotient power
