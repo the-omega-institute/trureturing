@@ -123,4 +123,269 @@ noncomputable def registration_1 :
 
 #print axioms registration
 
+
+namespace cyclic_parsevalAudit
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ a b => a = b) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {N : ℕ} [NeZero N] (f : ZMod N → ℂ),
+    R.readout () () (∑ x, ‖f x‖ ^ 2) (𝔼 k, ‖ZMod.dft f k‖ ^ 2)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (fun _ : ZMod 1 => 0)
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congr_fun h 0
+  have hf : (1 : ℝ) = 0 := Eq.mp he rfl
+  norm_num at hf
+
+def registration : Registration arena
+    (type_of% (@_root_.D5.S3.Fourier.FullBispectrumStability.cyclic_parseval)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Fourier.FullBispectrumStability.cyclic_parseval,
+    rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (show j = i from @Subsingleton.elim Unit _ j i)).elim, rfl, rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := dependence
+
+noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Fourier.FullBispectrumStability.cyclic_parseval)
+    (type_of% (realize signature (fun _ _ a b => a = b) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Fourier.FullBispectrumStability.cyclic_parseval.information_unit,
+  realizationName := `Reg.D5.S3.Fourier.FullBispectrumStability.cyclic_parsevalAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ a b => a = b) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.FullBispectrumStability,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms registration
+
+end cyclic_parsevalAudit
+
+namespace dft_translationAudit
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ a b => a = b) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {N : ℕ} [NeZero N] (f : ZMod N → ℂ) (t k : ZMod N),
+    R.readout () () (ZMod.dft (fun x => f (x - t)) k)
+      (ZMod.stdAddChar (-(k * t)) * ZMod.dft f k)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (fun _ : ZMod 1 => 0) 0 0
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congr_fun h 0
+  have hf : (1 : ℂ) = 0 := Eq.mp he rfl
+  norm_num at hf
+
+def registration : Registration arena
+    (type_of% (@_root_.D5.S3.Fourier.FullBispectrumStability.dft_translation)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Fourier.FullBispectrumStability.dft_translation,
+    rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (show j = i from @Subsingleton.elim Unit _ j i)).elim, rfl, rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := dependence
+
+noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Fourier.FullBispectrumStability.dft_translation)
+    (type_of% (realize signature (fun _ _ a b => a = b) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Fourier.FullBispectrumStability.dft_translation.information_unit,
+  realizationName := `Reg.D5.S3.Fourier.FullBispectrumStability.dft_translationAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ a b => a = b) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.FullBispectrumStability,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms registration
+
+end dft_translationAudit
+
+namespace unit_mul_conjAudit
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ a b => a = b) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (z : ℂ), ‖z‖ = 1 → R.readout () () (z * conj z) 1
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h 1 (by norm_num)
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have he := congr_fun h 0
+  have hf : (1 : ℂ) = 0 := Eq.mp he rfl
+  norm_num at hf
+
+def registration : Registration arena
+    (type_of% (@_root_.D5.S3.Fourier.FullBispectrumStability.unit_mul_conj)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Fourier.FullBispectrumStability.unit_mul_conj,
+    rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (show j = i from @Subsingleton.elim Unit _ j i)).elim, rfl, rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := dependence
+
+noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Fourier.FullBispectrumStability.unit_mul_conj)
+    (type_of% (realize signature (fun _ _ a b => a = b) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Fourier.FullBispectrumStability.unit_mul_conj.information_unit,
+  realizationName := `Reg.D5.S3.Fourier.FullBispectrumStability.unit_mul_conjAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ a b => a = b) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Fourier.FullBispectrumStability,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms registration
+
+end unit_mul_conjAudit
+
 end Reg.D5.S3.Fourier.FullBispectrumStability

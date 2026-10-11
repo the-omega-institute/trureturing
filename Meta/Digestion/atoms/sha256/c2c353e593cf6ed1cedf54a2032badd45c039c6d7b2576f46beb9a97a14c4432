@@ -1,0 +1,54 @@
+**定义 27.1（Two binary tables on the entire original source）。** Retain the matched original reader (15.1)–(15.4), all actual joint histories of Lemma 15.1 and (25.3), and the entire INITIAL, action, endpoint, absorption, stopping and fee contract of Definitions 18.1 and 25.1. Fix
+
+$$
+m\ge5,\qquad k=2m-2,\qquad T=2m-1,\qquad
+g=\gcd(m,T)=1,\qquad P=\mathbb Z/T\mathbb Z,
+\qquad U=\{2,\ldots,m-1\}.
+\tag{27.1}
+$$
+
+Choose arbitrary subsets $H_0,H_1\subseteq U$ of even cardinality, including the empty set. For each $v\in\mathbb F_2$ choose labels $A_v\ne B_v$, with no restriction on cross-value coincidences. On every legal INITIAL record, with $j=-\theta_{\rm INITIAL}\pmod T$ represented in $\{0,\ldots,T-1\}$, set
+
+$$
+f(v,-j,s)=\lambda_v(j)=
+\begin{cases}
+B_v,&j\in H_v,\\
+A_v,&j\notin H_v,
+\end{cases}
+\qquad 0\le s<k,\qquad f(\bot)=y_\bot.
+\tag{27.2}
+$$
+
+The independently observed initial-bottom label $y_\bot$ is arbitrary. The target is evaluated at the immutable INITIAL record, retaining its free value $v$. All phases and inherited tails remain in the source, including those outside $U$ with label $A_v$. Actual histories realizing them are exactly the supplied joint witnesses (25.3); their unobserved lengths are not controller inputs.
+
+Both original alphabets separately contain every length-$m$ binary word, since $m<k$. Their common internal legality does not remove cross-block rejection. Only the initial reading and subsequent complete-block endpoints are visible. Every emitted complete block costs one, including a zero wait and the remainder of a block after any interior rejection. GLOBAL means one preset literal word at each emitted block number for all still-running archives and both free-value fibres. A source may stop on its own acquired archive. There is no reset, copy, interior observation, hidden INITIAL clock or query to an unexecuted branch.
+
+The supplied literal interface [INITIAL target-cost theory, Interface 1.4](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee) uses the ordered full paths
+
+$$
+\begin{aligned}
+W_0&=\{0,1,\ldots,m\},\\
+W_1&=\{m,m+1,\ldots,T-1,0,1\}=P\setminus U,\\
+W_2&=\{1,2,\ldots,m+1\}.
+\end{aligned}
+\tag{27.3}
+$$
+
+Here $2m\equiv1\pmod T$. Each path has $m+1$ distinct vertices, including both physical endpoints. For a successful word $X=X_0\cdots X_{m-1}$ at index $t$, its actual endpoint difference is
+
+$$
+q_t(j)=\bigoplus_{i=0}^{m-1}X_i c_{-j+tm+i}.
+\tag{27.4}
+$$
+
+It vanishes outside $W_t$ and has even total charge on the full path. For $t\in\{0,2\}$ and an even $H\subseteq U$, denote its supplied literal inverse by
+
+$$
+\mathcal B_t(H)_i=
+\bigoplus_{h=0}^{i}\mathbf1_H(tm+h\bmod T),
+\qquad 0\le i<m.
+\tag{27.5}
+$$
+
+This notation uses the existing path inverse; it does not assert that arbitrary rows on different archives are simultaneously realizable. Its uses below include their actual tail and seam proofs.
+

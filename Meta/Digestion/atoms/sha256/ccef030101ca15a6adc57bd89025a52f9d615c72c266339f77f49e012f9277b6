@@ -1,0 +1,50 @@
+**Proposition 28.3 (Three concrete full-source consumers).** The following words use the same stream at each displayed block index for both free values and every live archive. The listed charge supports are computed from (28.12) and the original coefficient cycle; the decoders map the resulting charge code to the membership pair and then use the remembered free value.
+
+$$
+\begin{array}{c|c|c|c|c|c}
+ m&k&H_0&H_1&(C_{\rm ad},C_{\rm pre})&\text{one GLOBAL stream}\\ \hline
+ 5&8&\{2\}&\{3\}&(2,3)&00111\mid10000\mid00111\\
+ 6&10&\{2,3,4\}&\{5\}&(2,3)&001011\mid100000\mid000011\\
+ 7&12&\{2,3\}&\{4,5,6\}&(2,2)&0010000\mid1010101
+\end{array}
+\tag{28.21}
+$$
+
+For $m=5$, the three charge supports are
+
+$$
+ \{2,5\},\quad\{5,6\},\quad\{3,6\};
+\tag{28.22}
+$$
+
+for $m=6$ they are
+
+$$
+ \{2,3,4,6\},\quad\{6,7\},\quad\{5,7\};
+\tag{28.23}
+$$
+
+and for $m=7$ the two supports are
+
+$$
+ \{2,3\},\quad\{0,1,7,8,9,10,11,12\}=P\setminus U.
+\tag{28.24}
+$$
+
+The first two rows are distinct odd singleton and even-width complementary odd consumers. Their adaptive words are respectively $00111\mid10000$ and $00011\mid10000$ for the two singleton fibres in the first row, and $001011\mid100000$ and $000001\mid100000$ in the second row. The third row is an odd-width nonsingleton two-block consumer; its first fibre uses the one-block word $0010000$, while the second odd fibre uses $0000101\mid1000000$.
+
+For the first row, phases $2,3,4$ have codes $100,001,000$; phases $5,6$ have $110,011$, and all remaining outside phases have $000$. The first three codes correspond respectively to $(1,0),(0,1),(0,0)$, and the latter two also correspond to $(0,0)$, so the decoder returns exactly the required $A_v/B_v$ label. For the second row, phases $2,3,4,5$ have codes $100,100,100,001$; phases $6,7$ have $110,011$; all remaining phases have $000$. The same membership-pair decoder is exact. For the third row, the two internal classes have codes $10$ and $00$, while every outside phase has code $01$; these are the three required joined labels.
+
+Each first word begins with zero and therefore succeeds from every inherited tail. The maximum run joining a seam in the three-block streams is four for $m=5$ and three for $m=6$; for the two-block stream it is one. All are below $k$ (and every internal run is at most $m<k$). The charge tables include both physical endpoints, so these checks cover every phase, both values and every $0\le s<k$. The actual jointly attainable histories for every displayed source are the supplied witnesses (25.3). No source uses an interior observation, an INITIAL clock, another archive's endpoint, a reset, a copy, an unpaid wait or an unexecuted branch.
+
+
+**Mathematical boundary 28.4 (Falsifiers and residual scope).** A correct two-block GLOBAL controller for distinct nonempty supports with $m$ even or $r\ne2$ would falsify (28.5). Its stream would have to evade the forced root zero, create a nonzero second-window charge on a phase in $U$, or violate the full-path parity equation (28.20); each is an explicit reader-level falsifier. A phase-dependent rejection from a common current tail, or a distinction produced after absorption, would falsify the lower-bound mechanism. Conversely, a charge mismatch in (28.12), a code collision between unequal membership pairs, a rejecting inherited tail, an unsafe seam, different words at one GLOBAL index, an uncharged complete block, an interior observation or an unexecuted-branch endpoint would falsify the corresponding upper witness. Failure of one displayed stream alone does not rule out another stream at that fee.
+
+The result is restricted to $m\ge5$, $k=2m-2$, $g=1$, tail-independent binary tables with supports inside $U$, two free values and the original phase/tail prior. It does not classify exterior or boundary supports, more than two target labels per fibre, tail-sensitive targets, other $(k,m)$, other phase orbits, or general competing GLOBAL streams outside this support family. It does not add a memory, chronology, reset, physical-resource, offline-computation or cross-reader cost theorem. The full all-$k\ge2$, all-$m\ge1$, arbitrary attainable immutable INITIAL-target objective remains open.
+
+**Mathematical citation 28.5 (Supplied results and new content).** The complete source, matched coefficients, actual joint histories, endpoint observations, absorbing rejection and complete-block fee are supplied by (15.1)–(15.4), Lemma 15.1, (25.3) and Definitions 18.1 and 27.1. The individual adaptive classification (28.4) is the exact reuse of [PREFIX_DEADLINE_AND_WRAP_COST, Theorem 6.1](KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md#6-上半窄宽度的全部二标签分类), under the explicit correspondence (28.7). The path inverse (28.8), the charge windows (28.12) and full-path parity are the supplied original-reader interface (27.3)–(27.5) and INITIAL target-cost Interface 1.4. The free-value reduction to one ordered joined target is [INITIAL target-cost theory, Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres), including its own stopping and absorption semantics.
+
+The arbitrary-support three-block stream (28.9)–(28.13), the exceptional two-block stream (28.14)–(28.16), and the necessity of the condition $m$ odd with $r=2$ in (28.19)–(28.20) are repo-derived ordinary mathematical deductions. The equivalence (28.6), the three concrete consumers and their charge tables are applications of those deductions. The earlier even-support result is recovered as stated, not replaced. No Lean/kernel verification or literature-priority claim is made.
+
+The remaining all-target objective is unchanged: exact adaptive and one-GLOBAL worst emitted-complete-block fees for every attainable immutable INITIAL target, both original alphabets and all $k\ge2,m\ge1$.
+
