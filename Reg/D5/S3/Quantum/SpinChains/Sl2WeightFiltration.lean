@@ -841,6 +841,81 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[] }
 end rank_comparison
 
+namespace eigenspace_rank_comparison
+abbrev arena : Arena where
+  signature := natSignature
+  Law R := ∀ {K : Type u} {V : Type v} [Field K] [CharZero K]
+    [AddCommGroup V] [Module K V] [FiniteDimensional K V] {h e f U : Module.End K V}
+    (_a : Sl2Relations h e f) (_hw : IntegralWeights h)
+    (T : Module.End K V) (_hT : ∀ s : ℤ, (weightLE h s).map T ≤ weightLE h (s - 2))
+    (_hUh : Commute U h) (_hUe : Commute U e) (hUf : Commute U f) (hUT : Commute U T)
+    (μ : K) (r : ℕ),
+    R.readout () () (Module.finrank K (LinearMap.range
+      ((T.restrict (Module.End.mapsTo_genEigenspace_of_comm hUT μ 1)) ^ r)))
+      (Module.finrank K (LinearMap.range
+        ((f.restrict (Module.End.mapsTo_genEigenspace_of_comm hUf μ 1)) ^ r)))
+
+theorem rejected_law : ¬ arena.{u, v}.Law natRejected := by
+  intro law
+  exact law (K := testK.{u}) (V := testV.{v}) zeroRelations zeroIntegral 0
+    (by intro s; simp) (Commute.zero_left _) (Commute.zero_left _)
+    (Commute.zero_left _) (Commute.zero_left _) 0 0
+
+def family : Registration arena.{u, v} (type_of% @eigenspace_rank_comparison.{u, v}) where
+  actual := natLe
+  bridge := Iff.rfl
+  variation := ⟨@eigenspace_rank_comparison.{u, v}, natRejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨natRejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := natLeDependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@eigenspace_rank_comparison.{u, v}) (Realization natSignature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.SpinChains.Sl2WeightFiltration.eigenspace_rank_comparison.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.SpinChains.Sl2WeightFiltration.eigenspace_rank_comparison.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u, v}⟩
+  objectArena := .source ⟨arena.{u, v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source arena.{u, v} ⟨family.{u, v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨True.intro⟩ True.intro
+  readout := some (realize natSignature natLe.readout natLe.anchor)
+  variation := .evidence ⟨True.intro⟩ True.intro
+  sensitivity := .evidence ⟨True.intro⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.SpinChains.Sl2WeightFiltration
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body",
+        "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+#print axioms _root_.D5.S3.Quantum.SpinChains.Sl2WeightFiltration.eigenspace_rank_comparison
+#print axioms family
+#print axioms registration
+
+end eigenspace_rank_comparison
+
 namespace lowering_kernel_zero
 universe u_3 u_4
 
