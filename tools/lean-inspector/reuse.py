@@ -26,7 +26,7 @@ import zlib
 import materials
 import publication
 
-SCHEMA = 'stratalint-lean-report-reuse-v4'
+SCHEMA = 'stratalint-lean-report-reuse-bootstrap-probe'
 BASE_SCHEMA = 'stratalint-lean-report-seed-base-v2'
 BASE_RECORD = '.lake/lean-report-seed-base.json'
 SUFFIX = '.reuse.json'

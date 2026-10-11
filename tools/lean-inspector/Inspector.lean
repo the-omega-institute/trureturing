@@ -1,3 +1,4 @@
+-- Cache bootstrap probe exercises program-only publication work.
 -- Statement encodings are spooled here; the producer compactor computes the
 -- byte-identical .NET statement addresses before publishing the report.
 
