@@ -406,3 +406,399 @@ At the endpoints, $\delta=0$ gives the common formulas $\Delta_{\mathrm{meas}}^{
 The arithmetic inputs are exactly the every-pattern unboundedness of Section 35, the labeled source of (36.1), the persistence and finite-color results of Section 37, and the anchor facts and finite-execution marker supplier of Proposition 39.3. The event-TV and finite-record transport facts are reused from Theorem 40.2, with the normalization cited in Definition 40.1. These are ordinary theory deductions under the stipulated source-relative law contract; they make no claim about physical realization, efficiency, uniform execution horizons, literature priority, Lean, or kernel verification.
 
 ## 追加锚（本行以下为增补区）
+
+## 43. One common reference: attained radius and the optimizer distinction
+
+**Definition 43.1 (Common-reference radius at constant zero advice).** Retain the actual labeled source $X$, integer map $N$, and target $\Omega$ from (36.1), the common deterministic tape-dependent rules and measurable events of Definition 40.1, and the constant supplied advice $\beta_0(y)=0$ of (42.1). The anchor remains $x_*=(7,2)$, with $N(x_*)=27$ and $\Omega(x_*)=1$. Fix $0\le\delta,\eta\le1$ and an anchor row $(h,d,z)\in\mathscr S$ as in (42.3). Require
+
+$$
+e_y\le\delta h_y\quad(y\in X),\qquad
+(h_{x_*},d_{x_*},z_{x_*})=(h,d,z).
+\tag{43.1}
+$$
+
+In place of the diameter cap in (40.3), choose one probability measure $\nu$ on the same measurable space $(\Theta,\mathcal F)$ as all the source laws and impose
+
+$$
+\rho_\nu=\sup_{y\in X}\operatorname{TV}(\mu_y,\nu)\le\eta.
+\tag{43.2}
+$$
+
+The reference may be chosen jointly with the procedure and full law family, but the chosen $\nu$ is fixed for all $y$. It is not a source input, an acquired observation, or a sampling operation. Neither (43.1) nor an anchor terminal-row condition is imposed on $\nu$. In particular, the same deterministic rules can have a conditional error greater than $\delta$ under $\nu$ without violating this definition. The optimization ranges over the common procedure, its common carrier, the full source-law family, and this one reference. Proposal probabilities away from the anchor need not equal $h$.
+
+For a fixed procedure and family, distinguish its best reference radius
+
+$$
+\operatorname{rad}(\mu)=\inf_{\nu\in\mathcal P(\Theta,\mathcal F)}
+\sup_{y\in X}\operatorname{TV}(\mu_y,\nu)
+\tag{43.3}
+$$
+
+from the minimum over all admissible procedures and families. An assertion of attainment specifies a reference realizing the radius, not only the infimum in (43.3). The event-supremum TV normalization is (40.2). Its standard finite-space sum formula, triangle inequality and bounded-test dual are given in Levin and Peres, with contributions by Wilmer, *Markov Chains and Mixing Times*, second edition, [Chapter 4, Proposition 4.2, Remark 4.4 and Proposition 4.5, printed pp. 48--49](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf). The measurable-space arguments below use event inequalities directly; the finite-space citation is not an assumption that every carrier is finite.
+
+**Theorem 43.2 (Reference-envelope necessity on the full source).** For every admissible measurable carrier, procedure, family, and common reference in Definition 43.1, put
+
+$$
+M=\sup_{y\in X}\nu(H_y),\qquad U=\sup_{y\in X}h_y.
+$$
+
+Then
+
+$$
+(1-\delta)M\le\rho_\nu,\qquad
+U\le M+\rho_\nu,\qquad
+(1-\delta)U\le(2-\delta)\rho_\nu.
+\tag{43.4}
+$$
+
+In particular, every attainable anchor row under the radius cap satisfies
+
+$$
+(1-\delta)h\le(2-\delta)\eta.
+\tag{43.5}
+$$
+
+No uniform execution horizon or sourcewise proposal probability is required.
+
+**Proof.** Let $S_y=H_y\setminus F_y$ be the measurable event of a correct finite proposal, so that $F_y,S_y$ are disjoint and $H_y=F_y\sqcup S_y$. The signed error test
+
+$$
+g_y=\mathbf1_{F_y}-\delta\mathbf1_{H_y}
+=(1-\delta)\mathbf1_{F_y}-\delta\mathbf1_{S_y}
+\tag{43.6}
+$$
+
+has values $1-\delta,-\delta,0$ on $F_y,S_y,\Theta\setminus H_y$, respectively. Its oscillation is at most one, including the endpoints. More explicitly, the two event-TV comparisons give
+
+$$
+\begin{aligned}
+\int g_y\,d\nu-\int g_y\,d\mu_y
+&=(1-\delta)\bigl[\nu(F_y)-\mu_y(F_y)\bigr]
+ +\delta\bigl[\mu_y(S_y)-\nu(S_y)\bigr]\\
+&\le\bigl[(1-\delta)+\delta\bigr]\operatorname{TV}(\mu_y,\nu)
+\le\rho_\nu.
+\end{aligned}
+\tag{43.7}
+$$
+
+Thus (43.1) implies
+
+$$
+\nu(F_y)-\delta\nu(H_y)\le\rho_\nu
+\qquad(y\in X).
+\tag{43.8}
+$$
+
+The single allowance in (43.7) uses the disjoint false/correct partition. Treating $F_y$ and $H_y$ as unrelated positive tests would give a different bound.
+
+Fix an arbitrary actual source $x$. Use exactly the increasing finite-record events $A_m$ of (40.6), now for the run at $x$: the finite proposal has execution length at most $m$, queries only the first $m$ primes $P_m$, and is at most $m$. They satisfy $A_m\uparrow H_x$. Every finite real proposal, including a negative one, is eventually within this upper cutoff. Constant zero advice and (37.1) supply one actual source $y_m$ with
+
+$$
+d_{P_m}(N(y_m))=d_{P_m}(N(x)),\qquad \Omega(y_m)>m.
+\tag{43.9}
+$$
+
+It is chosen for the whole event before quantifying over tapes. The finite-execution transport of Corollary 37.3 and Theorem 38.2 gives the literal inclusion $A_m\subseteq F_{y_m}$, on every declared tape. Hence (43.8) yields
+
+$$
+\nu(A_m)\le\nu(F_{y_m})\le\delta\nu(H_{y_m})+\rho_\nu
+\le\delta M+\rho_\nu.
+\tag{43.10}
+$$
+
+Continuity from below under this one fixed $\nu$ gives $\nu(H_x)\le\delta M+\rho_\nu$. Taking the supremum over $x$ proves $(1-\delta)M\le\rho_\nu$. Although the comparison source varies with $m$, neither its laws nor its proposal events are passed through a limit; the only exhaustion is under $\nu$ at the fixed source $x$.
+
+Separately, event-TV gives $h_y\le\nu(H_y)+\rho_\nu\le M+\rho_\nu$. Taking the supremum proves the middle inequality in (43.4). Multiplying it by $1-\delta\ge0$ and using the first inequality proves the last one. The anchor and cap give (43.5). There is no division by $1-\delta$, so the proof includes $\delta=1$, as well as $h=0$ and $\rho_\nu=0$. $\square$
+
+**Theorem 43.3 (Exact attained measurable-carrier radius).** Under Definition 43.1 the minimum over arbitrary measurable common carriers is attained and equals
+
+$$
+\rho_{\mathrm{meas}}^{\min}(\delta;h,d,z)
+=\frac{(1-\delta)h}{2-\delta}.
+\tag{43.11}
+$$
+
+The exact radius-cap region is
+
+$$
+\mathcal C_{\mathrm{meas}}(\delta,\eta)
+=\{(h,d,z)\in\mathscr S:(1-\delta)h\le(2-\delta)\eta\}.
+\tag{43.12}
+$$
+
+A countably infinite common carrier suffices, with finite support for every source law and for the reference. The attainer can be chosen invariant under numerical duplication of the source labels.
+
+**Proof.** Theorem 43.2 gives the lower bound. To prove actual all-source attainment, set
+
+$$
+q=\frac{h}{2-\delta},\qquad r=(1-\delta)q,
+\qquad q+r=h.
+\tag{43.13}
+$$
+
+Reuse the carrier and deterministic rules of (42.11). Thus $W=N[X]$ is countably infinite, and
+
+$$
+\Theta_\infty=\{a,b,c\}\mathbin{\sqcup}\{p_n:n\in W,\ n\ne27\}
+$$
+
+has its full power-set sigma algebra. Tape $a$ immediately proposes $1$, tape $b$ queries an infinite fixed sequence of primes without terminating, tape $c$ immediately returns unknown, and tape $p_n$ immediately proposes $\omega(n)$. These same rules apply to every source and every tape with supplied advice zero. The parameter $n$ in a tape name is a fixed tape parameter, not access to the hidden source integer. In particular, the divergent rule makes infinitely many execution steps; it does not return unknown or an infinite proposal.
+
+Choose the single common reference with masses
+
+$$
+\nu(a)=q,\qquad \nu(b)=d+r,\qquad \nu(c)=z,
+\qquad \nu(p_n)=0\quad(n\ne27).
+\tag{43.14}
+$$
+
+It is nonnegative and normalized because $q+d+r+z=h+d+z=1$. Assign laws on every labeled source by
+
+$$
+\begin{array}{c|cccc}
+ &a&b&c&p_n\\ \hline
+N(y)=27 &h&d&z&0\quad(n\ne27)\\
+N(y)=n\ne27 &\delta q&d+r&z&r
+\end{array}
+\tag{43.15}
+$$
+
+In the second line all $p_m$ with $m\ne n$ have mass zero. This line has total mass $\delta q+(d+r)+z+r=q+(d+r)+z=1$, since $\delta q+r=q$. The laws therefore are probability measures on the one declared carrier. The classification in (43.15) specifies the permitted source/tape law relation and is not a deterministic branch using $N(y)$.
+
+At every label with numerical value $27$, the proposal on $a$ is correct and the row is exactly $(h,d,z)$, with error zero. At every other label $N(y)=n$, the $p_n$ proposal is correct. The $a$ proposal is false precisely when $\omega(n)>1$, because every source has $N(y)>1$ and hence $\Omega(y)\ge1$. Thus the complete outcome rows are
+
+| Actual numerical source class | $h_y$ | $e_y$ | $d_y$ | $z_y$ |
+| --- | --- | --- | --- | --- |
+| $N(y)=27$ | $h$ | $0$ | $d$ | $z$ |
+| $N(y)=n\ne27$ | $q$ | $\delta q\,\mathbf1_{\{\omega(n)>1\}}$ | $d+r$ | $z$ |
+
+In particular $e_y\le\delta h_y$ on every actual source, with no conditional probability assigned when $h_y=0$. Sources of target one outside $27$ are included. Numerical duplicates have the same law, target, prime responses and deterministic outcomes; no selection of a generating label occurs. Every finite-record event and Borel output restriction is measurable on the countable power-set space.
+
+For the law $\alpha$ at numerical value $27$, the signed difference from the reference is
+
+$$
+\alpha-\nu=r(\delta_a-\delta_b),
+\tag{43.16}
+$$
+
+where $\delta_\theta$ denotes a unit point mass at tape $\theta$. For the law $\gamma_n$ at $n\ne27$ it is
+
+$$
+\gamma_n-\nu=r(\delta_{p_n}-\delta_a).
+\tag{43.17}
+$$
+
+In each case event-TV is at most $r$ and an indicated singleton event attains $r$. This also holds when $r=0$. Consequently $\rho_\nu=r$, proving (43.11). Necessity and this all-source attainer give (43.12), including its boundary.
+
+The reference in (43.14) is chosen once and independently of the later source index. Its proposal probability is $q$ everywhere, and at a source of target greater than one its entire proposal mass is false. This is permitted because the error condition constrains the actual laws (43.15), not the reference. The construction does not provide an operation for acquiring those laws from advice or prime responses, or an effective exact sampler for arbitrary real masses. Its common carrier is countably infinite even though each actual law has at most four atoms and the reference has three. $\square$
+
+**Theorem 43.4 (Exact attained finite-carrier radius).** When the common carrier is finite, the minimum and cap region are
+
+$$
+\rho_{\mathrm{fin}}^{\min}(\delta;h,d,z)
+=\begin{cases}h/2,&0\le\delta<1,\\0,&\delta=1,\end{cases}
+\tag{43.18}
+$$
+
+$$
+\mathcal C_{\mathrm{fin}}(\delta,\eta)
+=\begin{cases}
+\{(h,d,z)\in\mathscr S:h\le2\eta\},&0\le\delta<1,\\
+\mathscr S,&\delta=1.
+\end{cases}
+\tag{43.19}
+$$
+
+Both minima are attained on a three-point common carrier.
+
+**Proof.** For any reference on any common measurable space, event-TV gives the triangle bound
+
+$$
+\operatorname{TV}(\mu_u,\mu_v)
+\le\operatorname{TV}(\mu_u,\nu)+\operatorname{TV}(\nu,\mu_v),
+\qquad \Delta\le2\rho_\nu.
+\tag{43.20}
+$$
+
+If the carrier is finite and $\delta<1$, Theorem 42.3 gives $\Delta\ge\sup_yh_y\ge h$, so (43.20) implies $\rho_\nu\ge h/2$. This invokes the finite-color persistent-source necessity of that theorem, which applies to every finite cardinality, rather than assuming that two extreme laws describe every family.
+
+For attainment reuse exactly its three-tape procedure: $a$ proposes $1$, $b$ diverges literally, and $c$ returns unknown. Give every source with $N(y)=27$ the law $\alpha=(h,d,z)$ and every other source the law $\gamma=(0,d+h,z)$. The anchor row is the prescribed one; away from $27$ there are no proposals, so all-source error is zero. Choose the midpoint reference
+
+$$
+\nu_{\mathrm{mid}}=(\alpha+\gamma)/2=(h/2,d+h/2,z).
+\tag{43.21}
+$$
+
+Each law differs from it by moving mass $h/2$ between $a$ and $b$, so both TV distances are $h/2$. Both source classes are occupied, for example by $(7,2)$ and $(5,1)$, respectively. This proves an attained minimum for $\delta<1$, also when $h=0$.
+
+At $\delta=1$ use the same procedure and the common law $\alpha$ at every source, with reference $\alpha$. The error is at most $h_y$ at every source and the radius is zero. Finite-record measurability and invariance under numerical duplication are immediate for these finite laws and common tape rules. Imposing the cap proves (43.19). $\square$
+
+**Corollary 43.5 (Endpoints, simplex faces and the strict carrier separation).** All regions (43.12) and (43.19) include their boundary rows and attainments. They have the following consequences.
+
+1. At $\delta=0$, both minima equal $h/2$. At $\delta=1$, both are zero and every simplex row is admitted for every $\eta\ge0$.
+2. If $h=0$, every row $(0,d,z)$ with $d+z=1$ has a common-law attainer and radius zero. At $\eta=0$ and $\delta<1$, both regions force $h=0$; at $\eta=1$, every simplex row is admitted.
+3. For $0\le\delta<1$, the largest anchor proposal mass at radius cap $\eta$ is $\min\{1,(2-\delta)\eta/(1-\delta)\}$ in the measurable class and $\min\{1,2\eta\}$ in the finite class. Within either class, the split of $1-h$ between literal divergence $d$ and finite nonproposal $z$ does not affect its minimum radius. This includes both faces $d=0$ and $z=0$ and their intersection $(1,0,0)$.
+4. If $0<\delta<1$ and $h>0$, the finite minimum is strictly larger:
+
+   $$
+   \frac h2-\frac{(1-\delta)h}{2-\delta}
+   =\frac{\delta h}{2(2-\delta)}>0.
+   \tag{43.22}
+   $$
+
+   For fixed $h>0$, the finite minimum stays $h/2$ as $\delta\uparrow1$ and becomes zero at $\delta=1$, while the measurable minimum tends to zero continuously.
+
+**Proof.** Substitute the specified parameters into (43.11)--(43.12) and (43.18)--(43.19), dividing only when $1-\delta>0$. The simplex imposes $h\le1$; every remaining nonnegative split $d+z=1-h$ is realized by the corresponding full-source attainer. Equation (43.22) follows by a common denominator. All zero-proposal statements use the inequality $e_y\le\delta h_y$ itself, not an undefined conditional ratio. The common law at $h=0$ places masses $d,z$ on the divergent and unknown tapes. A larger finite carrier cannot improve (43.18), whereas (43.15) already realizes the measurable optimum on a countably infinite carrier. $\square$
+
+**Proposition 43.6 (Best references for the two existing diameter constructions).** Put $t=(1-\delta)h$. The countable private-atom family (42.12), including its law at $27$, has attained best reference radius
+
+$$
+\operatorname{rad}(\mu^{42.2})=t.
+\tag{43.23}
+$$
+
+For $\delta<1$ the two-law finite family (42.20) has attained best radius $h/2$, so it minimizes both finite-carrier diameter and finite-carrier radius. For $\delta=1$ the common-law attainers have both quantities zero.
+
+**Proof.** In (42.12), each source of numerical value $n\ne27$ has mass $t$ on its own distinct atom $p_n$. Since $W\setminus\{27\}$ is countably infinite, enumerate distinct such values $n_j$. For any probability reference $\nu$ on the same power-set space, countable additivity gives
+
+$$
+\nu(\{p_{n_j}\})\longrightarrow0.
+\tag{43.24}
+$$
+
+Indeed these singletons are disjoint and their masses have sum at most one. The singleton event at $p_{n_j}$ implies
+
+$$
+\sup_{y\in X}\operatorname{TV}(\mu_y,\nu)
+\ge\sup_j\bigl|t-\nu(\{p_{n_j}\})\bigr|\ge t.
+\tag{43.25}
+$$
+
+Choosing the law at $27$ as the reference gives distance $t$ to every other law by (42.14), and zero to itself. This proves (43.23) with attainment, for all endpoints as well. Only the private atoms of this particular family are used; their radius conclusion is not a lower bound for every admissible family.
+
+The finite family has only the two distinct laws $\alpha,\gamma$ of Theorem 43.4, with TV distance $h$. Their midpoint has radius $h/2$, and (43.20) prevents any smaller radius. Its finite diameter optimality is Theorem 42.3, while its finite radius optimality is Theorem 43.4. If $h>0$ and $\delta<1$, then $t/(2-\delta)<t$, so the old countable diameter attainer does not attain the measurable radius minimum; this includes $\delta=0$. When $h=0$ or $\delta=1$, $t=0$ and it attains both zero minima. $\square$
+
+**Theorem 43.7 (Every measurable radius attainer has diameter twice its radius).** Suppose $0\le\delta<1$ and $h>0$. If an admissible procedure, full law family and common reference attain (43.11), write $r=\rho_\nu=(1-\delta)h/(2-\delta)$. Then their diameter satisfies
+
+$$
+\Delta=2r.
+\tag{43.26}
+$$
+
+The same diameter conclusion holds for a fixed admissible family whose best reference radius (43.3) equals $r$, even if that infimum is not attained. Consequently, for $0<\delta<1$ and $h>0$, no procedure and law family can minimize both global measurable radius and diameter. At $\delta=0$ simultaneous optima exist, and they also exist when $h=0$ or $\delta=1$.
+
+**Proof.** Use the envelope $M$ of Theorem 43.2. Since $\delta<1$ and this radius is minimal, its inequalities give
+
+$$
+h\le\nu(H_{x_*})+r\le M+r
+\le\frac r{1-\delta}+r=h.
+\tag{43.27}
+$$
+
+Thus all inequalities are equalities, and with $q=h/(2-\delta)$,
+
+$$
+\nu(H_{x_*})=M=q,\qquad r=(1-\delta)q.
+\tag{43.28}
+$$
+
+Take the anchor truncations $A_m$ and actual matching high-target sources $y_m$ from (43.9). They satisfy $A_m\subseteq F_{y_m}$ and $A_m\uparrow H_{x_*}$. Because $S_{y_m}$ is disjoint from $F_{y_m}$,
+
+$$
+\nu(S_{y_m})\le\nu(H_{y_m})-\nu(A_m)
+\le q-\nu(A_m)\longrightarrow0.
+\tag{43.29}
+$$
+
+This is a bound on their correct-proposal mass under the fixed reference, not a claim that the comparison laws converge or that their correct events are nested. On the actual comparison law, conditional error gives
+
+$$
+(1-\delta)h_{y_m}\le\mu_{y_m}(S_{y_m})
+\le\nu(S_{y_m})+r.
+\tag{43.30}
+$$
+
+Using the diameter on the anchor event and then the error hypothesis therefore yields
+
+$$
+\begin{aligned}
+\mu_{x_*}(A_m)
+&\le\mu_{y_m}(A_m)+\Delta
+\le\delta h_{y_m}+\Delta\\
+&\le\Delta+\frac{\delta}{1-\delta}
+\bigl[\nu(S_{y_m})+r\bigr].
+\end{aligned}
+\tag{43.31}
+$$
+
+Taking the limit of the fixed-anchor probabilities and using (43.29) gives
+
+$$
+h\le\Delta+\frac{\delta r}{1-\delta}
+=\Delta+\delta q,
+\qquad \Delta\ge h-\delta q=2r.
+\tag{43.32}
+$$
+
+This includes $\delta=0$; division was only by $1-\delta>0$. The reverse bound is (43.20), proving (43.26).
+
+For the assertion about a reference infimum, suppose $\operatorname{rad}(\mu)=r$. For any $\varepsilon>0$, choose one reference with $\rho_\nu\le r+\varepsilon$ and use its envelope $M$. Theorem 43.2 and the anchor event give
+
+$$
+M\le q+\frac{\varepsilon}{1-\delta},\qquad
+\nu(H_{x_*})\ge q-\varepsilon,\qquad
+M-\nu(H_{x_*})\le\frac{2-\delta}{1-\delta}\varepsilon.
+$$
+
+Without assuming equality in the envelope bound, the same truncations instead give $\nu(S_{y_m})\le M-\nu(A_m)$. Repeating (43.30)--(43.31) and taking the fixed-anchor limit yields
+
+$$
+\begin{aligned}
+h&\le\Delta+\frac{\delta}{1-\delta}
+\bigl[M-\nu(H_{x_*})+\rho_\nu\bigr]\\
+&\le\Delta+\delta q+
+\frac{\delta(3-2\delta)}{(1-\delta)^2}\varepsilon.
+\end{aligned}
+$$
+
+Letting $\varepsilon$ decrease to zero proves $\Delta\ge h-\delta q=2r$. Equation (43.20) applied to each such reference gives $\Delta\le2r+2\varepsilon$, and hence $\Delta\le2r$. No limit of measures or construction of an unattained center is used.
+
+By Theorem 42.2 the global measurable diameter minimum is $t=(1-\delta)h$. If $0<\delta<1$ and $h>0$, (43.26) gives $2r=2t/(2-\delta)>t$. Thus a radius attainer cannot also minimize measurable diameter. The explicit measurable attainer in (43.15) has anchor-to-other-law distance $2r$: its difference is $2r\delta_a-r\delta_b-r\delta_{p_n}$. Two distinct nonanchor laws differ by $r(\delta_{p_n}-\delta_{p_m})$ and have distance $r$, confirming the diameter directly on actual occupied source classes. At $\delta=0$ the midpoint finite attainer has diameter $h$ and radius $h/2$, equal to both measurable minima. At $h=0$ or $\delta=1$ the common-law constructions have diameter and radius zero. $\square$
+
+**Proposition 43.8 (A finite diameter minimizer need not minimize finite radius).** For every $0\le\delta<1$ and every $(h,d,z)\in\mathscr S$ with $h>0$, there is an admissible full-source family on a finite common carrier with diameter $h$ and attained best reference radius $2h/3$. It minimizes finite-carrier diameter but not finite-carrier radius.
+
+**Proof.** Use the five tapes $\{a,u,v,b,c\}$ with the full sigma algebra. Tape $a$ immediately proposes $1$, tapes $u,v,b$ each diverge through infinitely many prime queries, and tape $c$ immediately returns unknown. These common rules use only supplied advice zero and prime responses. Let $\kappa=d\delta_b+z\delta_c$, and define three probability laws
+
+$$
+\alpha_a=\kappa+h\delta_a,\qquad
+\alpha_u=\kappa+h\delta_u,\qquad
+\alpha_v=\kappa+h\delta_v.
+\tag{43.33}
+$$
+
+Assign $\alpha_a$ to every label with $N(y)=27$, $\alpha_u$ to every label with $N(y)=6$, and $\alpha_v$ to every remaining label. The classes are disjoint and exhaust $X$. They are all occupied: $(7,2)$ gives $27$, $(5,1)$ gives $6$, and $(13,26)$ gives $6059$, using Proposition 39.3 and Proposition 35.5. At the first class the row is $(h,d,z)$ and the proposal $1$ is correct; on both other classes all mass outside the unknown tape diverges, so $h_y=e_y=0$. Thus the error condition holds on all sources for every stated $\delta$, and numerical duplicates are treated identically. Every finite-record event is measurable on this finite carrier.
+
+Each pair of laws in (43.33) differs by moving mass $h$ between its two distinct private tapes, so the diameter is exactly $h$, the finite minimum from Theorem 42.3. The reference
+
+$$
+\bar\nu=\kappa+\frac h3(\delta_a+\delta_u+\delta_v)
+\tag{43.34}
+$$
+
+has distance $2h/3$ to each law, by the event-TV sum formula or the event consisting of the other two private tapes. To prove that this reference is best, let $\nu$ be any probability reference on this same carrier and put $T=\nu(\{a,u,v\})$. The singleton of each private tape has mass $h$ under its corresponding law. Averaging these three event lower bounds gives
+
+$$
+\sup_{i\in\{a,u,v\}}\operatorname{TV}(\alpha_i,\nu)
+\ge h-T/3.
+\tag{43.35}
+$$
+
+Under $\alpha_i$ the union of the other two private tapes has mass zero. Averaging these other three event bounds gives a lower bound $2T/3$. If $T\le h$, (43.35) is at least $2h/3$; if $T\ge h$, the second lower bound is at least $2h/3$. Thus every reference has radius at least $2h/3$, attained by (43.34). Since $2h/3>h/2$, the family fails to minimize finite radius. This is an actual all-source example, so the cooptimality of the particular two-law construction in Proposition 43.6 does not extend to all finite diameter minimizers. $\square$
+
+**Proposition 43.9 (An exact numerical diagnostic for the two objectives).** At $\delta=1/2$ and anchor row $(h,d,z)=(1/2,1/2,0)$, the measurable radius minimum is $1/6$ and the finite radius minimum is $1/4$. The old countable diameter attainer has diameter $1/4$ and best radius $1/4$. The measurable radius attainer has diameter $1/3$. In particular, half of the minimum measurable diameter, namely $1/8$, is insufficient as a common-reference radius at this row.
+
+**Proof.** Equations (43.11) and (43.18) give $1/6$ and $1/4$. In (43.13) one has $q=1/3$ and $r=1/6$; the reference is $(1/3,2/3,0)$ on $(a,b,c)$, the anchor law is $(1/2,1/2,0)$, and each other numerical source has masses $1/6,2/3,0,1/6$ on $(a,b,c,p_n)$. Thus every other source proposes with probability $1/3$ and has false mass at most $1/6$. The TV distances and diameter are those of (43.16)--(43.17) and Theorem 43.7. Theorem 42.2 and Proposition 43.6 give the old family's two values $1/4$. Finally (43.5) rules out radius $1/8$, since $(1-\delta)h=1/4>(2-\delta)/8=3/16$.
+
+The source-specific conclusions (43.4), (43.11), (43.18) and (43.26), and the actual-source optimizer comparison, are ordinary `repo-derived` deductions from the unchanged arithmetic source and persistence results of Sections 35--37 and the tape constructions of Section 42. The finite-record exhaustion and deterministic transport are reused from Sections 38--40. The event-TV, triangle and finite-space sum facts cited in Definition 43.1 are standard intermediate ingredients, rather than newly claimed general TV theorems. In this contract positive radius permits a stipulated source-correlated law relation; pure source-independent randomness has a common law and radius zero when that law is chosen as reference. By (43.5), at $\delta<1$ radius zero forces $h=0$. The constructions provide no law-acquisition operation, effective sampler for arbitrary real masses, magnitude promise, uniform execution bound, physical realization, literature-priority claim or Lean/kernel verification. $\square$
+
+## 追加锚（本行以下为增补区）
