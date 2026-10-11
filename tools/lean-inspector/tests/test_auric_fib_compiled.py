@@ -425,7 +425,7 @@ class CompiledFibIntegration(unittest.TestCase):
         self.application = self.application[:index] + saved + self.application[index:]
         self.write_sources()
         self.assertEqual(self.first, self.build())
-        self.application = self.application.replace('evidence := .native bridge (.declared "compiled source fixture" acquiredMasses)\n    [] [.seam, .guard, .reply, .atom]',
+        self.application = self.application.replace('evidence := .native { reconstruction := .exact } bridge (.declared "compiled source fixture" acquiredMasses)\n    [] [.seam, .guard, .reply, .atom]',
             'evidence := .unsupported "continuation contract unavailable"', 1)
         self.write_sources()
         unavailable = self.build()
