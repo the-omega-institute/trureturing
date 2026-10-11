@@ -4362,3 +4362,694 @@ p_{j,25}=\kappa_j
 
 若要同时获得二者，必须分别验证仿射 bonding 条件和概率推前的 Fisher 条件。
 
+
+
+
+---
+
+## 24. 场、能量、轨迹与可见流形的最小数学闭包
+
+前文已经定义了局部五态概率律、Fisher 线元、图 Dirichlet 能量、边界 seam 和逆极限纤维。本节把“场产生能量、能量形成分布、分布产生轨迹、轨迹形成可见流形”改写成有限维数学对象。这里的“产生”表示由给定场状态通过明确的函数或动力学生成元导出，不表示额外的物理本体假设。
+
+### 定义 24.1（有限图上的静态概率场）
+
+令 \(G=(V,E)\) 是有限连通图。对每个节点 \(v\in V\)，给定一个局部概率纤维
+
+\[
+F_v\subseteq\Delta(\Sigma),
+\]
+
+并令
+
+\[
+\mathcal C_G=\prod_{v\in V}F_v
+\]
+
+为有限图上的场配置空间。一个场配置记为
+
+\[
+\Phi=(p_v)_{v\in V}\in\mathcal C_G.
+\]
+
+若所有 \(p_v\) 的坐标都严格为正，则 \(\mathcal C_G^\circ\) 是一个有限维光滑流形的相对内部；其切空间由每个节点的质量零向量组成。
+
+### 定义 24.2（场势与边耦合）
+
+对每个节点给定局部势函数
+
+\[
+U_v:F_v\longrightarrow\mathbb R,
+\]
+
+对每条有向边 \(e=(u,v)\) 给定线性边读出
+
+\[
+L_e:\mathbb R^\Sigma\longrightarrow\mathbb R^{m_e},
+\qquad
+R_e:\mathbb R^\Sigma\longrightarrow\mathbb R^{m_e},
+\]
+
+以及正半定权矩阵 \(M_e\succeq0\)。定义场能量
+
+\[
+\mathcal E(\Phi)
+=
+\sum_{v\in V}U_v(p_v)
++
+\frac12
+\sum_{e=(u,v)\in E}
+\left\|
+L_ep_u-R_ep_v
+\right\|_{M_e}^{2},
+\]
+
+其中
+
+\[
+\|q\|_{M_e}^{2}=q^{\mathsf T}M_eq.
+\]
+
+第一项是节点势，第二项是相邻局部场之间的兼容成本。若 \(L_e=R_e=I\)，第二项就是普通图上的加权 Dirichlet 耦合。
+
+### 定理 24.3（场能量的非负分解）
+
+若每个 \(U_v\) 有下界，并且 \(M_e\succeq0\)，则
+
+\[
+\mathcal E(\Phi)
+\]
+
+由节点势和边界失配的非负二次项组成。若两个场配置 \(\Phi,\Psi\) 在所有节点上具有相同的局部势值，且
+
+\[
+L_ep_u-R_ep_v
+=
+L_e q_u-R_e q_v
+\]
+
+对相应的边读出成立，则它们具有相同的边耦合能量。
+
+#### 证明
+
+对每条边，
+
+\[
+\left\|
+L_ep_u-R_ep_v
+\right\|_{M_e}^{2}
+\ge0
+\]
+
+来自 \(M_e\succeq0\)。逐项求和即可得到分解。第二个结论来自边差向量相同导致二次型相同。证毕。
+
+### 定义 24.4（场导出的能量分布）
+
+若 \(\mathcal E_v(\Phi)\ge0\) 是节点 \(v\) 的局部能量贡献，并且
+
+\[
+\mathcal E_{\mathrm{tot}}(\Phi)
+=
+\sum_{v\in V}\mathcal E_v(\Phi)>0,
+\]
+
+则定义能量分布
+
+\[
+\pi_\Phi(v)
+=
+\frac{\mathcal E_v(\Phi)}
+{\mathcal E_{\mathrm{tot}}(\Phi)}.
+\]
+
+因此能量分布不是与场并列的原始变量，而是场配置和势函数的推前。若势函数为五态函数 \(\varepsilon:\Sigma\to\mathbb R\)，则单节点平均能量为
+
+\[
+\overline{\varepsilon}(p)
+=
+\sum_{s\in\Sigma}p_s\varepsilon(s).
+\]
+
+对原生数值读出
+
+\[
+\varepsilon(0)=0,\quad
+\varepsilon(2)=2,\quad
+\varepsilon(3)=3,\quad
+\varepsilon(5)=5,\quad
+\varepsilon(25)=7,
+\]
+
+有
+
+\[
+\overline{\varepsilon}(p)=2X+3Z+5Y,
+\]
+
+而二阶能量为
+
+\[
+\sum_s p_s\varepsilon(s)^2
+=
+4X+9Z+25Y+20\kappa.
+\]
+
+因此一次能量均值只看到三维可见投影，二阶能量已经看到隐藏 seam \(\kappa\)。这给出“场产生能量分布”的严格版本：隐藏联合关系在低阶观测中可以退化，在更高阶能量矩中恢复。
+
+### 定义 24.5（场产生的轨迹）
+
+令 \(\mathsf M_\Phi\) 是切空间上的正半定 mobility 算子。若 \(\mathcal E\) 在 \(\mathcal C_G^\circ\) 上可微，则定义耗散轨迹
+
+\[
+\dot\Phi_t
+=
+-\mathsf M_{\Phi_t}\nabla\mathcal E(\Phi_t).
+\]
+
+若给定切空间上的反对称算子 \(\mathsf J_\Phi^*=-\mathsf J_\Phi\)，则定义保守轨迹
+
+\[
+\dot\Phi_t
+=
+\mathsf J_{\Phi_t}\nabla\mathcal E(\Phi_t).
+\]
+
+这两种生成元应当分开记账：\(\mathsf M_\Phi\) 负责沿势下降的耗散，\(\mathsf J_\Phi\) 负责不改变一阶能量的相位运动。
+
+### 定理 24.6（梯度轨迹的能量耗散）
+
+在耗散轨迹存在且保持在 \(\mathcal C_G^\circ\) 内的时间区间上，有
+
+\[
+\frac{d}{dt}\mathcal E(\Phi_t)
+=
+-\left\langle
+\nabla\mathcal E(\Phi_t),
+\mathsf M_{\Phi_t}\nabla\mathcal E(\Phi_t)
+\right\rangle
+\le0.
+\]
+
+在保守轨迹上，有
+
+\[
+\frac{d}{dt}\mathcal E(\Phi_t)=0.
+\]
+
+#### 证明
+
+由链式法则，
+
+\[
+\frac{d}{dt}\mathcal E(\Phi_t)
+=
+\left\langle
+\nabla\mathcal E(\Phi_t),\dot\Phi_t
+\right\rangle.
+\]
+
+代入耗散生成元得到第一式，正半定性给出不等式。代入保守生成元得到
+
+\[
+\langle\nabla\mathcal E,\mathsf J_\Phi\nabla\mathcal E\rangle=0
+\]
+
+因为 \(\mathsf J_\Phi\) 反对称。证毕。
+
+### 定义 24.7（场配置的可见流形）
+
+令
+
+\[
+\mathsf P:\mathcal C_G\longrightarrow\mathbb R^{3|V|}
+\]
+
+把每个局部概率律送到其 \((X,Y,Z)\) 坐标。定义可见场空间
+
+\[
+\mathcal M_{\mathrm{vis}}
+=
+\mathsf P(\mathcal C_G).
+\]
+
+若在某个场配置的邻域内 \(\mathsf P\) 的秩恒为 \(3|V|\)，则该邻域的可见像可使用 \(3|V|\) 个局部坐标描述。其完整场配置仍然包含 \(\mathsf P\) 的纤维方向。
+
+这给出“三维是视角”的严格数学表述：
+
+\[
+\text{三维可见空间}
+=
+\text{完整场配置空间经过观察映射后的像}.
+\]
+
+它不推出完整场本身只有三维，也不自动给出物理时空、Lorentz 结构或引力方程。
+
+---
+
+## 25. \(1\to2\to3\to5\) 的精确组合解释
+
+用户提出的“一个、镜像成二、二生三、三开始出现无限可能、\(2+3=5\)”可以分解成三个可以分别形式化的命题：反向读取产生镜像，局部合法支持数满足 Fibonacci 递推，三坐标投影的五态载体具有二维不可见部分。
+
+### 定义 25.1（无相邻支持场）
+
+令
+
+\[
+\mathcal W_n
+=
+\left\{
+w=(w_1,\ldots,w_n)\in\{0,1\}^n:
+w_iw_{i+1}=0
+\right\}.
+\]
+
+其中 \(w_i=1\) 表示第 \(i\) 个原子模式被激活。定义反向读取
+
+\[
+\mathsf r_n(w_1,\ldots,w_n)
+=
+(w_n,\ldots,w_1).
+\]
+
+由于无相邻条件在反向下保持，\(\mathsf r_n\) 是 \(\mathcal W_n\) 上的 involution：
+
+\[
+\mathsf r_n^2=\mathrm{id}.
+\]
+
+这就是局部场的离散镜像。它只反转读取方向，不改变合法性。
+
+### 定理 25.2（\(2,3,5\) 的支持计数）
+
+有
+
+\[
+|\mathcal W_1|=2,\qquad
+|\mathcal W_2|=3,\qquad
+|\mathcal W_3|=5.
+\]
+
+更一般地，
+
+\[
+|\mathcal W_n|
+=
+|\mathcal W_{n-1}|
++
+|\mathcal W_{n-2}|.
+\]
+
+若以 \(F_0=0,F_1=1\) 记 Fibonacci 数，则
+
+\[
+|\mathcal W_n|=F_{n+2}.
+\]
+
+#### 证明
+
+按最后一位分类。若 \(w_n=0\)，前 \(n-1\) 位任意属于 \(\mathcal W_{n-1}\)。若 \(w_n=1\)，则 \(w_{n-1}=0\)，去掉最后两位后得到 \(\mathcal W_{n-2}\)。两个集合不相交且覆盖全部 \(\mathcal W_n\)，所以
+
+\[
+|\mathcal W_n|
+=
+|\mathcal W_{n-1}|+|\mathcal W_{n-2}|.
+\]
+
+初值为
+
+\[
+\mathcal W_1=\{0,1\},
+\]
+
+以及
+
+\[
+\mathcal W_2=\{00,01,10\}.
+\]
+
+因此 \(|\mathcal W_1|=2\)、\(|\mathcal W_2|=3\)、\(|\mathcal W_3|=5\)。Fibonacci 表达式由同一递推和初值得到。证毕。
+
+长度二时，
+
+\[
+\mathcal W_2=\{00,01,10\}
+\]
+
+的镜像轨道为
+
+\[
+\{00\},\qquad \{01,10\}.
+\]
+
+这里一个非平凡镜像轨道确实由两个方向组成，第三个状态是镜像固定点。长度三时，
+
+\[
+\mathcal W_3
+=
+\{000,001,010,100,101\},
+\]
+
+并且
+
+\[
+\mathsf r_3(001)=100.
+\]
+
+这说明“镜像二元关系”和“新增固定点”同时存在。下一层继续按最后一位分裂，就产生更多合法轨迹。
+
+### 定义 25.3（五态载体的三位窗口编码）
+
+对长度三的支持词定义
+
+\[
+\ell(000)=0,\qquad
+\ell(100)=2,\qquad
+\ell(010)=3,\qquad
+\ell(001)=5,\qquad
+\ell(101)=25.
+\]
+
+于是
+
+\[
+\ell(\mathcal W_3)=\{0,2,3,5,25\}=\Sigma.
+\]
+
+其中 \(25\) 表示第一个和第三个位置同时激活的联合状态。它的原生加性读出为
+
+\[
+2+5=7,
+\]
+
+这正是前文数值函数 \(W\) 在状态 \(25\) 上的取值。标签 \(25\) 是联合状态名称，数值读出 \(7\) 是另一种明确的函数，两者不能混用。
+
+反向读取在五态上诱导
+
+\[
+0\leftrightarrow0,\qquad
+2\leftrightarrow5,\qquad
+3\leftrightarrow3,\qquad
+25\leftrightarrow25.
+\]
+
+这是 FIB 五态载体内部的一个自然离散镜像。它与 zeta 功能方程的镜像属于不同层次：前者是局部支持读取的 involution，后者是完成 \(L\)-函数零点的复反射。若要将二者识别，仍需显式的 RH bridge。
+
+### 定理 25.4（\(2+3=5\) 的可见/不可见维数分解）
+
+令
+
+\[
+E=\mathbb R^\Sigma
+\]
+
+为五态权重空间，定义未归一化可见映射
+
+\[
+P:E\longrightarrow\mathbb R^3,
+\qquad
+P(p)=(X,Y,Z).
+\]
+
+则
+
+\[
+\operatorname{rank}P=3,
+\]
+
+并且
+
+\[
+\ker P
+=
+\operatorname{span}\{e_0,d\},
+\]
+
+其中 \(e_0\) 是零态坐标向量，且
+
+\[
+d=(1,-1,0,-1,1).
+\]
+
+因此
+
+\[
+\dim E
+=
+\dim\ker P+\dim\operatorname{im}P
+=
+2+3=5.
+\]
+
+在概率归一化切空间
+
+\[
+T_0=\left\{v\in E:\sum_{s\in\Sigma}v_s=0\right\}
+\]
+
+上，
+
+\[
+\ker(P|_{T_0})=\mathbb R d.
+\]
+
+#### 证明
+
+若 \(P(p)=0\)，则
+
+\[
+p_2+p_{25}=0,\qquad
+p_5+p_{25}=0,\qquad
+p_3=0.
+\]
+
+于是
+
+\[
+p=(p_0,p_2,0,p_2,-p_2)
+=
+p_0e_0-p_2d.
+\]
+
+所以
+
+\[
+\ker P=\operatorname{span}\{e_0,d\}.
+\]
+
+由 \(X,Y,Z\) 三个坐标在 \(e_2,e_5,e_3\) 方向上独立，\(\operatorname{rank}P=3\)。秩零度定理给出
+
+\[
+5=2+3.
+\]
+
+由于
+
+\[
+\sum_s d_s=0,\qquad \sum_s(e_0)_s=1,
+\]
+
+有
+
+\[
+\ker P\cap T_0=\mathbb R d.
+\]
+
+证毕。
+
+这个定理给出“二维加三维等于五态”的精确版本：
+
+- 三维是可见坐标 \((X,Y,Z)\)；
+- 二维是未归一化观察中不可见的两个方向；
+- 其中一个是总质量/归一化方向；
+- 另一个是归一化后真正留下的隐藏联合 seam \(d\)。
+
+所以在合法概率场上，真正的隐藏自由度仍是一维 \(\kappa\)，而不是二维。二维加三维是五态线性载体的分解，归一化后变成三维可见加一维隐藏。
+
+### 推论 25.5（三维可见状态产生无限轨迹空间）
+
+定义无限合法支持空间
+
+\[
+\mathcal W_\infty
+=
+\left\{
+w\in\{0,1\}^{\mathbb N}:w_iw_{i+1}=0
+\right\},
+\]
+
+以及左移
+
+\[
+\sigma(w_1,w_2,w_3,\ldots)
+=
+(w_2,w_3,\ldots).
+\]
+
+对每个 \(w\in\mathcal W_\infty\)，其长度三局部窗口给出一条五态轨迹
+
+\[
+s_k(w)
+=
+\ell(w_{k+1},w_{k+2},w_{k+3}).
+\]
+
+因此
+
+\[
+w\longmapsto
+(s_0(w),s_1(w),s_2(w),\ldots)
+\]
+
+把无限支持场送到五态轨迹空间。若局部能量为 \(\varepsilon:\Sigma\to\mathbb R\)，则定义经验能量分布
+
+\[
+\mu_N^w
+=
+\frac1N\sum_{k=0}^{N-1}
+\delta_{s_k(w)}
+\]
+
+和经验能量
+
+\[
+\mathcal E_N(w)
+=
+\frac1N\sum_{k=0}^{N-1}
+\varepsilon(s_k(w)).
+\]
+
+因此“从三开始出现无限可能”的严格含义是：三位局部窗口已经可以作为无限无相邻支持场的 cylinder state，左移作用产生无限长轨迹；有限五态概率律是这些轨迹的局部经验分布或概率推前。
+
+这里的轨迹空间是符号动力系统，不是预先假定的物理时间。若要解释为连续时间动力学，还需要另给流、速率或连续插值。
+
+---
+
+## 26. 场、轨迹与 RH 能级的候选连接
+
+前文的五态场和 Fibonacci 支持已经给出局部转移结构。若把一个局部能量势 \(\varphi\) 放到无限支持场上，可以定义加权转移算子
+
+\[
+(\mathcal L_s f)(w)
+=
+e^{-s\varphi(w)}
+f(\sigma w).
+\]
+
+对有限窗口，这相当于一个加权邻接矩阵；其特征值控制允许轨迹的增长率、压力和能量分布。无权 Fibonacci 转移的邻接矩阵为
+
+\[
+A_{\mathrm{Fib}}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+\]
+
+其特征值为
+
+\[
+\varphi,\qquad -\varphi^{-1}.
+\]
+
+这解释了黄金比例首先出现在支持计数和局部传输谱中。它提供的是 field-side transfer spectrum。
+
+若要把这个结构提升为 Hilbert–Pólya 型算子，必须增加一个算术边界结构。一个可形式化的目标是寻找：
+
+1. 每个素数或 sector 的局部传输块 \(G_{p,\pi}\)；
+2. 由 Fibonacci/FIB 支持给出的隐藏 fiber 和 holonomy；
+3. Gamma 因子对应的 archimedean boundary；
+4. sector 对偶 \(\pi\leftrightarrow\widetilde\pi\) 对应的反射；
+5. 一个正定兼容度量 \(G\)；
+6. 一个正则化行列式或迹公式，满足
+   \[
+   \det_{\mathrm{reg}}(z-H)
+   =
+   C\,\Xi(z)
+   \]
+   或其一般 \(L\)-函数版本。
+
+在这条链中，FIB 三维几何提供局部传输和隐藏状态；Fisher/Dirichlet 能量提供候选正定度量；Cayley/Krein 提供零点反射与负模态判据；Weil 显式公式负责把素数源和零点谱连起来。
+
+当前可证明的结构只支持以下条件式命题：
+
+\[
+\begin{aligned}
+&\text{若存在一个由算术局部块和边界条件构造的闭合自伴 }H,\\
+&\text{且其谱行列式等于完成的 }\Xi\text{ 或 }\Lambda,\\
+&\text{则所有非平凡零点都在临界线上。}
+\end{aligned}
+\]
+
+FIB 到 \(H\) 的构造、FIB 缺陷到 Cayley 缺陷的守恒、以及谱行列式识别，仍然是桥接接口，不能由局部 Fibonacci 递推自动推出。
+
+---
+
+## 27. 本节的形式化边界
+
+本节新增的可直接形式化内容为：
+
+1. 有限图概率场 \(\mathcal C_G\)；
+2. 节点势与边耦合能量；
+3. 场能量的非负分解；
+4. 概率场到能量分布的推前；
+5. 梯度轨迹的能量耗散；
+6. 五态载体的精确维数分解
+   \[
+   5=2+3;
+   \]
+7. 无相邻支持的反射 involution；
+8. \(|\mathcal W_1|=2\)、\(|\mathcal W_2|=3\)、\(|\mathcal W_3|=5\)；
+9. Fibonacci 支持递推；
+10. 三位窗口到五态载体的编码；
+11. 无限支持场到五态轨迹的局部推前；
+12. 局部势产生经验能量分布的定义。
+
+以下对象仍然是显式桥接目标：
+
+1. 素数分类到支持场 \(\mathcal W_\infty\) 的具体编码；
+2. 素数权重到局部势 \(\varphi\) 的唯一构造；
+3. FIB transfer operator 到 completed \(L\)-function 的谱行列式；
+4. 局部反向读取到 \(s\mapsto1-\overline{s}\) 的复反射；
+5. Fisher/Dirichlet 正定度量到 Hilbert–Pólya 自伴算子的构造；
+6. 无限轨迹空间的连续流形结构；
+7. 物理能量、时间、引力或量子 Hamiltonian 的解释。
+
+因此，本节的核心结论是：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{场配置决定局部势和耦合，}\\
+&\text{势决定能量分布，}\\
+&\text{场上的 shift 或梯度生成元决定轨迹，}\\
+&\text{观察映射决定可见流形，}\\
+&\text{镜像与 Fibonacci 递推决定局部状态的闭包方式。}
+\end{aligned}
+}
+\]
+
+对当前 Auric FIB ATOM 载体，最严格的数字结构是
+
+\[
+\boxed{
+\dim(\text{unobserved linear sector})
++
+\dim(\text{visible quotient})
+=
+2+3=5,
+}
+\]
+
+以及
+
+\[
+\boxed{
+|\mathcal W_1|=2,\qquad
+|\mathcal W_2|=3,\qquad
+|\mathcal W_3|=5,
+\qquad
+|\mathcal W_n|=F_{n+2}.
+}
+\]
+
+“镜像、三维视角、联合隐藏关系、无限轨迹和 Fibonacci”因此可以放进同一个有限到无限的组合场框架。把它们继续连接到 RH，需要完成算术编码、正定谱度量和完成 \(L\)-函数的 trace/determinant bridge。
