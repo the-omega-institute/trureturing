@@ -8319,8 +8319,18 @@ Together with (OCQ4), they put $B_0$ and every $B_i$ inside $J_X$
 eventually. This uses the entire optimizer clock, not just (ASC2)'s
 first-prime endpoints, and makes no substitution $A_p=b_p$.
 
-For any nonnegative absolutely continuous $f$ on $J_X$, (OCQ3)
-and ordinary right-endpoint BV quadrature give
+For quadrature, directly reuse S. S. Dragomir, *The Ostrowski integral
+inequality for mappings of bounded variation*, *Bulletin of the
+Australian Mathematical Society* **60** (1999), 495–508,
+[DOI 10.1017/S0004972700036662](https://doi.org/10.1017/S0004972700036662),
+Corollary 7, equations (5.16)–(5.17), printed p. 507. Its arbitrary
+partition is $(B_i)_{i=0}^k$, its sample in the $i$th cell is the
+right endpoint $B_i$, and its mesh is $\mu_X$. The published error
+bound is mesh times total variation; for absolutely continuous $f$,
+that variation is $\int|f'|$. No generic quadrature proof is repeated.
+
+For any nonnegative absolutely continuous $f$ on $J_X$, this supplier
+and (OCQ3) give
 
 $$
 \begin{aligned}
@@ -8353,8 +8363,8 @@ $$
 \tag{OCQ6}
 $$
 
-Under the named ceiling (ASC1), reuse the coefficient estimate (H5),
-its retained finite low-height part, the finite reciprocal-square
+Under the named ceiling (ASC1), directly reuse the complete
+coefficient bound (GH2), the finite reciprocal-square
 mass $\mathcal C_\zeta$ in (GE1), and the classical zero count
 $\sum_{|\gamma|\le H}m_\rho/|\rho|=O(\log^2(2H))$. They give,
 uniformly on $J_X$,
@@ -8400,7 +8410,9 @@ $$
 \tag{OCQ10}
 $$
 
-It is not established by (OCQ7), the zero ceiling, finite zero
+This input is required along all sufficiently large scales carrying
+the original source; a bound only on an unrelated subsequence does
+not supply that quantifier. It is not established by (OCQ7), the zero ceiling, finite zero
 verification, PNT or quadrature. Indeed, the unsigned bound (OCQ7)
 only gives $O(X^{7/4})$ for this integral, which does not pay
 (OCQ10). This route still lacks a sufficient directed estimate of the same
@@ -8446,7 +8458,7 @@ $$
 $$
 
 At $n=N_p$, its own clock and the unrestricted sufficiently large
-reserve $R(A_p)>0$ give
+reserve $R(A_p)>0$ supplied in (GAI3)–(GAI4) give
 
 $$
 U_p=T(A_p)\bigl(\log G(N_p)-\gamma+R(A_p)+d_{N_p}\bigr)
