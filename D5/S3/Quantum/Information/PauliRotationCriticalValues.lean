@@ -7,19 +7,6 @@
    digest: Two-qubit Pauli rotation circuits and their critical-value Hausdorff dimension. -/
 
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import Mathlib.Analysis.Matrix.Normed
-import Mathlib.Analysis.Calculus.FDeriv.Mul
-import Mathlib.Analysis.Calculus.FDeriv.Star
-import Mathlib.Analysis.Calculus.FDeriv.ContinuousAlternatingMap
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.Topology.MetricSpace.HausdorffDimension
-import Mathlib.Analysis.Calculus.InverseFunctionTheorem.FDeriv
-import Mathlib.Analysis.Analytic.IsolatedZeros
-import Mathlib.Analysis.Analytic.CPolynomial
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Measure.Typeclasses.NullSingletonClass
 
 set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
