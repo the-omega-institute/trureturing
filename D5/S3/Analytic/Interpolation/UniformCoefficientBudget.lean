@@ -6,6 +6,8 @@
    utility: none
    digest: Derivative budgets bound exact interpolation without node separation. -/
 
+import D5.S3.Analytic.SincSquareDerivativeBudget
+import Mathlib.Data.Finsupp.Basic
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.Analysis.Calculus.LocalExtr.Rolle
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
