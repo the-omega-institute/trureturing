@@ -668,7 +668,7 @@ private theorem rate_necessity (T : Parameters)
     have hh := (hf n).2
     simpa only [mul_comm] using hh
 
-private theorem endpoint_coordinates (r : unitInterval) (s : ActivePhase)
+theorem endpoint_coordinates (r : unitInterval) (s : ActivePhase)
     (n : ℕ) (b : Letter) :
     (explicitStoppedWordLaw s r).real {some (typeWord s n b)} =
       pureCoord (r:ℝ) s n b := by
@@ -692,7 +692,7 @@ private theorem endpoint_coordinates (r : unitInterval) (s : ActivePhase)
       simp [bernoulliMeasure, alphaMass, betaMass, pureCoord, pureCoeff,
         unitInterval.coe_symm_eq] <;> ring
 
-private theorem endpoint_immediate (r : unitInterval) :
+theorem endpoint_immediate (r : unitInterval) :
     (explicitStoppedWordLaw .beta r).real {some [1]} = 1-(r:ℝ) := by
   rw [Measure.real, explicit_finite_mass,
     if_pos (show ∃ b, WordFamily .beta b [1] from ⟨1,Or.inl ⟨rfl,rfl⟩⟩)]
