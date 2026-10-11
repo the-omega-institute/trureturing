@@ -1714,3 +1714,147 @@ signed prime-error interaction, not the full original integral or its
 finite head; CR21/CR23, PG15/J and RH remain unproved.
 
 
+## A single core-selected height pays the complete compensation change
+
+Keep CR40--44's actual sources and all original window conventions.
+Fix $0<\kappa<1$ and $0<a<5\kappa/8$ once. Choose a fixed
+$\eta>0$ with $a(8/5+\eta)\le\kappa$. Define, retaining every
+actual zero's real part and multiplicity,
+
+$$
+Z_x(T)=2\operatorname{Re}\sum_{0<\operatorname{Im}\rho\le T}
+m_\rho\frac{x^\rho}{\rho}.
+$$
+
+Apply the [existing CHJ selected-height supplier](../Analytic/cullyhugilljohnston2026truncation.md)
+directly at the same actual core clock $B$, with
+$Y_B=(\sqrt B-4)/4$. Beyond one common unknown source start,
+$B\ge\exp(10^{13})$ and the strict supplier domain holds. It gives
+one individual height $\tau_B\in[Y_B,2Y_B]$ such that
+
+$$
+\psi(B)=B-Z_B(\tau_B)+e_B,
+\qquad |e_B|\le\frac{79.24B}{\sqrt B-4}\le80\sqrt B.
+$$
+
+Combining this actual error contract with CR44, rather than choosing
+an independently favorable head, yields
+
+$$
+\boxed{
+\frac{aZ_B(\tau_B)-\kappa t}{\sqrt B}
+\le a(C'_\eta+80).}
+\tag{CR45}
+$$
+
+No $A$-selected height is imposed in this route. In particular these
+$B$-selected heights are not asserted to satisfy CR34's separate
+$A$-tail contracts.
+
+### Pay the original compensation, its change and all deterministic terms jointly
+
+For one label define the actual finite heads at one common *individual*
+height $T$ by
+
+$$
+\begin{aligned}
+H_{A,\kappa}(T)&=2\operatorname{Re}
+\sum_{0<\operatorname{Im}\rho\le T}m_\rho
+\left[s_BF_B(\rho)-\frac{\kappa A^\rho}{\sqrt B\rho}\right],\\
+H_{B,a}(T)&=2\operatorname{Re}
+\sum_{0<\operatorname{Im}\rho\le T}m_\rho
+\left[s_BF_B(\rho)-\frac{aB^\rho}{\sqrt B\rho}\right].
+\end{aligned}
+$$
+
+The first is the original CR28 compensation; the second is a comparison
+head whose entire change is retained below. Let $S_{A,\kappa}(T)$ be
+the original compensated suffix in CR29's real symmetric-height ordering.
+It asserts no ordinary complex positive-ordinate limit. Put
+
+$$
+\mathcal D_{A,\kappa}=r_B+\frac\kappa{\sqrt B}
+\left[Q(A)-q(A)+\tfrac12\Lambda_{\mathbb R}(A)\right].
+$$
+
+The complete original account is
+
+$$
+H_{A,\kappa}(T)+S_{A,\kappa}(T)+\mathcal D_{A,\kappa}
+=-s_BI_\psi(B)-\kappa t/\sqrt B.
+$$
+
+Subtract the comparison head at that same height. With the *original*
+full degree-two suffix
+$T_F(B,T)=2s_B\operatorname{Re}\sum_{\operatorname{Im}\rho>T}m_\rho F_B(\rho)$,
+the exact result is
+
+$$
+\begin{aligned}
+S_{A,\kappa}(T)+H_{A,\kappa}(T)-H_{B,a}(T)
++\mathcal D_{A,\kappa}
+=T_F(B,T)+r_B+\frac{aZ_B(T)-\kappa t}{\sqrt B}.
+\end{aligned}
+$$
+
+The actual stock, pole/trivial-zero and half-prime-power terms cancel
+only within this joint equality; none is dropped separately.
+Reuse CR34's complete original J4 account
+$T_F(B,T)=-\mu_B(T)+e_F(B,T)$ with
+$\mu_B\ge0$ and $|e_F|\le\varepsilon_F$.
+At $T=\tau_B\asymp\sqrt B$, its full allowance is $o_X(1)$
+uniformly, as is $r_B$. CR45 therefore pays, with a fixed finite
+constant $C_{\eta,a}$,
+
+$$
+\boxed{
+\sum_{i<m}\delta_i\left[
+ S_{A_i,\kappa}(\tau_i)+H_{A_i,\kappa}(\tau_i)
+ -H_{B_i,a}(\tau_i)+\mathcal D_{A_i,\kappa}\right]
+\le C_{\eta,a}L_X.}
+\tag{CR46}
+$$
+
+This jointly pays the original $A$-compensated suffix, its complete
+finite-head change to $B$-compensation and every deterministic term.
+It does not assert favorable signs or separate small bounds for those
+three pieces. It requires no intersection of favorable height sets.
+Every sufficiently large qualifying original full window and every
+tie assignment admit individual $B$-selected heights; there is no
+common-height assertion across different cores.
+
+### Retain a complete original-coefficient upper enclosure
+
+At these heights use the complete original $F_B$ enclosure
+
+$$
+U(B,\tau_B)=2s_B\operatorname{Re}
+\sum_{0<\operatorname{Im}\rho\le\tau_B}m_\rho F_B(\rho)
++r_B-\mu_B(\tau_B)+\varepsilon_F(B,\tau_B)
+\ge-s_BI_\psi(B).
+$$
+
+Exact coefficients introduce no coefficient approximation error.
+CR45 and the same signed suffix contract give
+
+$$
+\boxed{
+\sum_{i<m}\delta_iU(B_i,\tau_i)
+\le\kappa V_X^{\rm lag}+C_{\eta,a}L_X
++\sum_{i<m}\delta_iH_{B_i,a}(\tau_i).}
+\tag{CR47}
+$$
+
+The final same-clock compensated head remains unpaid. A sufficient
+cofinal-full-window upper bound for it must retain every maximizing
+tie, these actual height contracts, all real parts and multiplicities,
+and any numerical enclosure errors. None is supplied here.
+
+CR43's actual arithmetic bound permits the fixed comparison coefficient
+$a<5\kappa/8$ and makes the joint payment without presuming a favorable
+head or a separate $A$-tail estimate. It does not replace the original
+coefficient, count the source height twice, expend the reserve or
+assume self-tangency of the cores. The named prime interval theorem,
+CHJ supplier and original J4 are directly reused. This is a
+supplier-relative paper application with no originality or Lean claim;
+the complete CR21/CR23 upper estimate, PG15/J and RH remain unproved.
