@@ -1,0 +1,57 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
+internal sealed class ActualCutPartitionDecoderDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite retained expressions determine common-suffix recuts.",
+        H("Finite source-free recutting"),
+        Blocks(
+            Definition("decoderHoles", "Reached new addresses",
+                "Finite navigation of the retained old expression identifies the reached Q addresses and orders them lexicographically."),
+            Definition("decoderClass", "Global-label comparison",
+                "Each extracted local expression retains the same global old class names. Syntactic equality of these finite expressions determines the first new class ordinal."),
+            Definition("recutRow", "Literal exterior recutting",
+                "Traverse the old term and replace each reached new cut by its new canonical hole label, copying all remaining constructors and concrete leaves."),
+            Definition("rowDecoder", "Total finite decoder",
+                "The decoder takes Q and the retained old term only. It neither selects a realizing source nor receives hidden hole values. It is total on raw terms and correct on all realized common-suffix rows."),
+            Theorem("common_local_kernel", "Exact local-expression kernel",
+                "Under P = Q S, two extracted local terms are equal exactly when their actual Q subtrees are equal, including absent addresses. Forward evaluation uses the same proof valuation. Reverse equality cuts the same actual subtree synchronously by the same suffix S."),
+            Theorem("commonSuffix_decoder_correct", "Exact row computation",
+                "For every actual source, common-suffix cuts make rowDecoder return its precise canonical Q row, preserving the exterior, reached set, absence guards, and complete partition."),
+            Theorem("commonSuffix_recovers", "Sufficient recovery",
+                "Equal old rows give equal decoder outputs, hence equal new rows. The decoder supplies the native kernel inclusion."),
+            Theorem("commonSuffix_unique", "Unique nonempty suffix",
+                "For nonempty prefix-free Q, each q section computes the same S. Prefix ownership and cancellation prove uniqueness."),
+            Definition("cutProduct", "Finite cut concatenation",
+                "Finite union and image compute all q ++ s for q in Q and s in S."),
+            Definition("commonSuffixTest", "Executable finite comparison",
+                "Sort Q. If empty, compare P with the empty set. Otherwise take its first q, compute cutSection P q, and compare P with the finite cut product. Every operation has finite decidable equality."),
+            Theorem("commonSuffixTest_correct", "Exact decision criterion",
+                "For arbitrary finite prefix-free P and Q, the Boolean comparison returns true exactly when a finite prefix-free common suffix exists."),
+            Definition("HoleExterior", "Independently addressed exterior",
+                "Each hole is named by its native address. Sorting these unique addresses gives the lexicographic hole numbering, while every exterior constructor and concrete Boolean leaf remains literal."),
+            Definition("cutExterior", "Literal exterior computation",
+                "Stop at public cuts, mark the reached hole by its address, and copy every constructor and concrete leaf outside the cuts. The result contains no hole value."),
+            Definition("actualPartition", "Complete finite partition",
+                "The finite set contains exactly the pairs of reached holes with equal actual subtrees. Every other reached pair records a genuine disequality."),
+            Definition("literalRecord", "Exterior and partition record",
+                "This pair computes the addressed exterior and the complete finite partition independently of the class-labelled row representation."),
+            Theorem("canonicalRow_record_iff", "Faithful representation bridge",
+                "Two sources have the same canonicalRow exactly when their independent exterior and complete partition records agree. The forward direction extracts the exterior and partition. The reverse direction fixes the same reached-hole ordering and first matching indices, then renames the same exterior. Consequently the canonical representation carries exactly the record information, including empty and root holes, without disclosing hidden values, sizes or acquisition traces."),
+            Paragraph(Text("The decoder compares actual retained syntax, not independently renumbered local partitions. Arbitrary substitution injectivity is not used. Absence is determined by visible strict-prefix leaves. The finite decision procedure examines public words only; it does not inspect a source."))
+        )));
+
+    private static DocumentBlock Definition(string n, string title, string prose) => Describe.Lean(
+        DescribeId.Create("actualcutpartitiondecoder-" + n.Replace("_", "-").ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + n), H(title), StatementSource.WithoutFormula(),
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
+        DescribeRole.Definition);
+
+    private static DocumentBlock Theorem(string n, string title, string prose) => Describe.Lean(
+        DescribeId.Create("actualcutpartitiondecoder-" + n.Replace("_", "-").ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + n), H(title), StatementSource.WithoutFormula(),
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
+        DescribeRole.Theorem);
+
+}
