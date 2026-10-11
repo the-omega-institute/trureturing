@@ -842,10 +842,10 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 end rank_comparison
 
 namespace lowering_kernel_zero
-universe u_1 u_2
+universe u_3 u_4
 
 abbrev signature : Signature where
-  Params := Type u_2
+  Params := Type u_4
   State p := p
   Role := Unit
   finiteRole := inferInstance
@@ -854,24 +854,24 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u_2} :=
+def actual : Realization signature.{u_4} :=
   realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
 
-def rejected : Realization signature.{u_2} :=
+def rejected : Realization signature.{u_4} :=
   realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature.{u_2}
-  Law R := ∀ {K : Type u_1} [Field K] [CharZero K]
-    {V : Type u_2} [AddCommGroup V] [Module K V]
+  signature := signature.{u_4}
+  Law R := ∀ {K : Type u_3} [Field K] [CharZero K]
+    {V : Type u_4} [AddCommGroup V] [Module K V]
     {h e f : Module.End K V} (_t : IsSl2Triple h e f) (n : ℕ),
     ∀ (v : V) (q k : ℕ), h v = (q : K) • v → k ≤ q →
       (e ^ n) v = 0 → (f ^ k) v = 0 → R.readout () V v 0
 
-theorem rejected_law : ¬ arena.{u_1, u_2}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_3, u_4}.Law rejected := by
   intro law
-  let K := ULift.{u_1} ℚ
-  let V := ULift.{u_2} (ℚ × ℚ)
+  let K := ULift.{u_3} ℚ
+  let V := ULift.{u_4} (ℚ × ℚ)
   let : CharZero K := ⟨fun m n eq =>
     (Nat.cast_injective : Function.Injective (fun j : ℕ => (j : ℚ)))
       (congrArg ULift.down eq)⟩
@@ -931,7 +931,7 @@ theorem rejected_law : ¬ arena.{u_1, u_2}.Law rejected := by
       simp [sub_eq_add_neg]
   exact law triple 0 0 0 0 (by simp) (by omega) (by simp) (by simp)
 
-def family : Registration arena.{u_1, u_2} (type_of% @lowering_kernel_zero.{u_1, u_2}) where
+def family : Registration arena.{u_3, u_4} (type_of% @lowering_kernel_zero.{u_3, u_4}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨lowering_kernel_zero, rejected, rejected_law⟩
@@ -945,27 +945,27 @@ def family : Registration arena.{u_1, u_2} (type_of% @lowering_kernel_zero.{u_1,
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨ULift.{u_2} Bool, ⟨false⟩, ⟨true⟩, ?_⟩
+    refine ⟨ULift.{u_4} Bool, ⟨false⟩, ⟨true⟩, ?_⟩
     intro he
     have hp := congrFun he (ULift.up false)
     change (ULift.up false = ULift.up false) = (ULift.up true = ULift.up false) at hp
-    have impossible : (ULift.up true : ULift.{u_2} Bool) = ULift.up false := hp ▸ rfl
+    have impossible : (ULift.up true : ULift.{u_4} Bool) = ULift.up false := hp ▸ rfl
     cases impossible
 
-def registration : Contract.Registration.{_, _, _, 0, 0, 0, u_2 + 1, u_2, 0, u_2, 0, 0}
-    (@lowering_kernel_zero.{u_1, u_2}) (Realization signature.{u_2}) Unit Unit := {
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, u_4 + 1, u_4, 0, u_4, 0, 0}
+    (@lowering_kernel_zero.{u_3, u_4}) (Realization signature.{u_4}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.SpinChains.Sl2WeightFiltration.lowering_kernel_zero.unit
   realizationName := `Reg.D5.S3.Quantum.SpinChains.Sl2WeightFiltration.lowering_kernel_zero.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u_1, u_2}⟩
-  objectArena := .source ⟨arena.{u_1, u_2}⟩
+  arena := .source ⟨arena.{u_3, u_4}⟩
+  objectArena := .source ⟨arena.{u_3, u_4}⟩
   catalog := Lean.Name.anonymous
   localNames := true
-  realization := .source arena.{u_1, u_2} ⟨family.{u_1, u_2}⟩
+  realization := .source arena.{u_3, u_4} ⟨family.{u_3, u_4}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨True.intro⟩ True.intro
-  readout := some (realize signature.{u_2} actual.readout actual.anchor)
+  readout := some (realize signature.{u_4} actual.readout actual.anchor)
   variation := .evidence ⟨True.intro⟩ True.intro
   sensitivity := .evidence ⟨True.intro⟩ True.intro
   partialSensitivity := none
@@ -988,7 +988,6 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, u_2 + 1, u_2, 0, u_2
 
 #print axioms family
 #print axioms registration
-
 
 end lowering_kernel_zero
 
