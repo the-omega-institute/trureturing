@@ -65,8 +65,15 @@ open D5.S3.Quantum.Information.SignedPauliSumNormRefutation
 abbrev State (n : ℕ) := (Fin n → Fin 2) → ℂ
 abbrev Operator (n : ℕ) := Matrix ((Fin n → Fin 2)) ((Fin n → Fin 2)) ℂ
 def Phase (c : ℂ) : Prop := c = 1 ∨ c = -1 ∨ c = Complex.I ∨ c = -Complex.I
-def letterProduct : Pauli → Pauli → Pauli | .I, q => q | p, .I => p | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I | .X, .Y => .Z | .Y, .X => .Z | .X, .Z => .Y | .Z, .X => .Y | .Y, .Z => .X | .Z, .Y => .X
-def letterPhase : Pauli → Pauli → ℂ | .X, .Y => Complex.I | .Y, .Z => Complex.I | .Z, .X => Complex.I | .Y, .X => -Complex.I | .Z, .Y => -Complex.I | .X, .Z => -Complex.I | _, _ => 1
+def letterProduct : Pauli → Pauli → Pauli
+  | .I, q => q | p, .I => p
+  | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I
+  | .X, .Y => .Z | .Y, .X => .Z | .X, .Z => .Y
+  | .Z, .X => .Y | .Y, .Z => .X | .Z, .Y => .X
+def letterPhase : Pauli → Pauli → ℂ
+  | .X, .Y => Complex.I | .Y, .Z => Complex.I | .Z, .X => Complex.I
+  | .Y, .X => -Complex.I | .Z, .Y => -Complex.I | .X, .Z => -Complex.I
+  | _, _ => 1
 lemma letter_mul (p q : Pauli) :
     pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := by
   cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;>
