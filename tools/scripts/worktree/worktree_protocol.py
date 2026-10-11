@@ -281,13 +281,17 @@ def main(argv=None):
     retirement.add_argument("--commit", required=True)
     retirement.add_argument("--preview", action="store_true")
     retirement.add_argument("--expected-reflog-sha256")
-    mirror = commands.add_parser("prepare-mirror")
-    mirror.add_argument("--path", type=Path, required=True)
-    mirror.add_argument("--branch", required=True)
-    mirror.add_argument("--base", required=True)
-    mirror.add_argument("--merge", required=True)
-    mirror.add_argument("--message", required=True)
-    mirror.add_argument("--remote", default="origin")
+    for action in ("prepare-mirror", "validate-mirror"):
+        mirror = commands.add_parser(action)
+        mirror.add_argument("--base", required=True)
+        mirror.add_argument("--merge", required=True)
+        mirror.add_argument("--message", required=True)
+        if action == "prepare-mirror":
+            mirror.add_argument("--path", type=Path, required=True)
+            mirror.add_argument("--branch", required=True)
+            mirror.add_argument("--remote", default="origin")
+        else:
+            mirror.add_argument("--commit", required=True)
     for action in ("checkpoint", "publish", "finalize"):
         publication = commands.add_parser(action)
         publication.add_argument("--path", type=Path, default=Path.cwd())
@@ -318,6 +322,10 @@ def main(argv=None):
         elif options.action == "prepare-mirror":
             from worktree_publication import prepare_mirror
             print(json.dumps(prepare_mirror(options)), flush=True)
+        elif options.action == "validate-mirror":
+            from worktree_publication import validate_mirror
+            print(json.dumps(validate_mirror(options.source, options.commit, options.base,
+                                            options.merge, options.message)), flush=True)
         else:
             from worktree_publication import checkpoint, publish, finalize
             print(json.dumps(dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)), flush=True)
