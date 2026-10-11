@@ -568,3 +568,129 @@ for $\sqrt A\log A\,I_\psi(A)$ at the selected integer. The original
 signed estimate and RH remain unproved. This is a paper-level source
 scope assessment and elementary counterestimate, not an originality
 claim or a new Hilbert–Pólya criterion.
+
+## Fixed-table upper allowances at the actual CA inventory
+
+The source's inverse-product theorem, equations `bnd:prod3`–`bnd:prod4`
+in [arXiv:2608.01498v1](https://arxiv.org/src/2608.01498v1), supplies
+
+$$
+\mathcal M(P):=\prod_{p\le P}(1-p^{-1})^{-1}
+\le e^\gamma\log P\left(1+\frac{c}{(\log P)^\ell}\right),
+\qquad P\ge x_0\ge2,
+$$
+
+where $\ell\in\{1,2,3,4,5\}$ and
+$c=\mathcal D'_\ell(x_0)>0$ are fixed after choosing the source row.
+The [existing Nicolas comparison](../ArithSums/nicolas2025comparison.md#explicit-comparison-at-the-same-candidate)
+already explains why fixed inverse-logarithmic allowances do not reach
+the square-root Euler compensation scale. The calculation below applies
+that existing obstruction to the particular certificate in
+[the complete-inventory continuation, §459](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_FULL_STOCK.md).
+It is an application of existing Euler-factor and PNT estimates, not a new
+prime-distribution result, a literature novelty claim, or Lean verification.
+
+Use the actual strict inventory at price $\varepsilon(t)=1/(t\log t)$:
+
+$$
+G_p(a)=\sum_{j=0}^ap^{-j},\qquad
+r_{p,k}=\frac{\log(G_p(k)/G_p(k-1))}{\log p},\qquad
+a_p(t)=\#\{k\ge1:r_{p,k}>\varepsilon(t)\}.
+$$
+
+For $t\ge4$, let $P=P(t)$ be its largest support prime and
+$N^-(t)=\prod_pp^{a_p(t)}$. The first-layer marginal is decreasing in $p$,
+so support consists of all primes through $P$. Put
+
+$$
+T(t)=-\sum_{p\le P}\log(1-p^{-a_p(t)-1}).
+$$
+
+The standard finite Euler identity is
+$\log Z(N^-(t))=\log\mathcal M(P)-T(t)$; this is also the correction
+in the [existing full-support core](../Analytic/polak2026finiterobinca.md#directly-reusable-effective-core).
+Consequently the continuation's continuous-price attenuation and floor
+loss satisfy $\mathcal A_P+\mathcal L_P=T$ on a stable cell. Changing
+price inside that cell changes their allocation but leaves their sum
+fixed. No improvement of a lower bound for one part can exceed $T$.
+
+Here is a uniform upper estimate at the same actual inventory. For an
+active $p$, take $k=a_p(t)+1$. The rejected next layer has
+$r_{p,k}\le\varepsilon(t)$, including equality at an event. Since
+
+$$
+\log\left(1+\frac1{p+\cdots+p^k}\right)
+>\frac1{p+\cdots+p^k+1}\ge\frac1{3p^k},
+$$
+
+we obtain
+
+$$
+p^{-a_p(t)-1}<\frac{3\log p}{t\log t}.
+$$
+
+Every active exponent is at least one, so $u=p^{-a_p-1}\le1/4$ and
+$-\log(1-u)\le4u/3$. For $p\le\sqrt t$, each summand is at most $2/t$;
+there are at most $\sqrt t$ such primes. For $p>\sqrt t$, bound it by
+$4/(3p^2)$ and use the ordinary decreasing integer tail. Thus
+
+$$
+0\le T(t)\le\frac2{\sqrt t}
+ +\frac43\left(\frac1{\sqrt t}+\frac1t\right)
+\le\frac4{\sqrt t}\qquad(t\ge4).
+$$
+
+This repeats no CA asymptotic or finite scan: it uses the actual rejected
+layer and the same elementary tail comparison as the
+[existing Euler inventory estimates, §§93 and 98](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+The coarse constant suffices for the method comparison.
+
+The support gap also cannot pay a fixed inverse-logarithmic allowance.
+The inequalities
+
+$$
+\frac{\log(1+1/p)}{\log p}
+>\frac1{(p+1)\log p}>\frac1{t\log t}
+\quad(p\le t-1),
+$$
+
+and $r_{p,1}<1/(p\log p)\le1/(t\log t)$ for $p\ge t$ show that every
+prime at most $t-1$ is active and $P<t$. The unconditional quantitative
+PNT supplier already given above implies, for every fixed $J>0$,
+$\vartheta(x)=x+O_J(x/(\log x)^J)$. For any fixed $A>0$, apply this
+at $t-1$ and $t-1-t/(\log t)^A$, using $J>A$. Their theta difference is
+positive for all sufficiently large $t$, so that interval contains an
+active prime. It follows that
+
+$$
+P=t+O_A\left(\frac{t}{(\log t)^A}\right),\qquad
+G(t):=\log\frac{\log t}{\log P}
+=O_A((\log t)^{-A-1}).
+$$
+
+Each assertion has a threshold depending on its fixed order; no uniform
+bound for a growing $A$ or a numeric threshold is asserted. In particular,
+for the fixed $\ell$ above, $G(t)=o((\log P)^{-\ell})$.
+
+At a strict stable self-match $t=\log N^-(t)$, the certificate threshold is
+
+$$
+\Theta_+(t)=\max\left\{0,
+\log\left(1+\frac{c}{(\log P)^\ell}\right)-G(t)\right\}.
+$$
+
+Hence
+
+$$
+\Theta_+(t)\sim\frac{c}{(\log P)^\ell}>0,\qquad
+\frac{T(t)}{\Theta_+(t)}\longrightarrow0.
+$$
+
+The proposed $T>\Theta_+$ certificate therefore fails at every sufficiently
+large self-match, even with the full exact correction. The smaller floor
+certificate cannot pass there either. This tests the sufficient condition
+produced by one fixed positive source allowance, not the sign of the
+actual Mertens error or Robin margin. It does not exclude finite-scale
+applications, a scale-dependent choice of $x_0$, or a correlated signed
+Mertens–size estimate. Those alternatives require their own bounds at the
+same actual source; the scalar split by itself provides none.

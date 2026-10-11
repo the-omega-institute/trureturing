@@ -13,7 +13,7 @@ triage: anchor
 
 # Young-lattice excess and depth
 
-The source is Ricardo Gómez-Aíza, [arXiv:2608.22561v1](https://arxiv.org/pdf/2608.22561), submitted 23 August 2026. The inspected PDF has SHA-256 709e095dc39c5134769cd36739faec517490f12136998a5a85de71758137ce8b. This card records the stated generating functions and asymptotic interfaces; the source was not independently formalized here.
+The source is Ricardo Gómez-Aíza, [arXiv:2608.22561v1](https://arxiv.org/pdf/2608.22561v1), submitted 23 August 2026. The inspected PDF has SHA-256 709e095dc39c5134769cd36739faec517490f12136998a5a85de71758137ce8b. This card records the stated generating functions and asymptotic interfaces; the source was not independently formalized here.
 
 For the Espinosa sums
 
@@ -32,10 +32,10 @@ $$
 The finite product
 
 $$
-F_n(u,v)=\prod_{q=1}^n\left(1+v\frac{e^{u/q}-1}{u}\right)
+F_n(u,v)=\prod_{q=1}^n\left(1+v(e^{u/q}-1)\right)
 $$
 
-has coefficient \([u^jv^i]F_n=E_{i,j}(n)\). After replacing \(v\) by \(z/u\), the coefficient of \(u^{r-1}\) collects the whole fixed-excess diagonal, so the non-hook terms are indexed by partitions of \(r-1\), rather than treated as unrelated exceptions.
+has coefficient \([u^jv^i]F_n=E_{i,j}(n)\), as in the source’s equation (1). After replacing \(v\) by \(z/u\), the coefficient of \(u^{r-1}\) collects the whole fixed-excess diagonal, so the non-hook terms are indexed by partitions of \(r-1\), rather than treated as unrelated exceptions.
 
 The limiting product
 
@@ -73,7 +73,7 @@ Z(N)=\sum_{d_i\le D_r(N)}\frac1{d_i}
    +\sum_{d_i>D_r(N)}\frac1{d_i}.
 $$
 
-The first term is the realized branch prefix and the second is a nonnegative divisor tail. Thus a FIB-to-branch map would have to control this tail at the same \(N\); the positive array identity for \(e^\gamma\) does not supply that pointwise control. This is a new interface statement for the project, while the branch construction and its asymptotics remain literature results.
+The first term is the realized branch prefix and the second is a nonnegative divisor tail. Thus a FIB-to-branch map would have to control this tail at the same \(N\); the positive array identity for \(e^\gamma\) does not supply that pointwise control. This is the standard finite-sum decomposition applied to the proposed source map, not new mathematical content; the branch construction and its asymptotics are cited literature results.
 
 The source's fixed-\(r\) limits are not uniform in \(r\), and its Abel-regularized depth identity is not an Euler-price or floor-residual estimate. It therefore does not close the current missing implication
 
@@ -82,3 +82,9 @@ $$
 \Longrightarrow
 \text{CA/SA source with a signed Robin margin}.
 $$
+
+The five labels of a single FIB window cannot injectively encode the seven
+partition shapes of excess five. This is only a cardinality obstruction to
+that single-window identification; it leaves multiwindow encodings and
+aggregation maps undecided. Neither this elementary check nor the finite-sum
+decomposition is a new partition or Robin theorem.
