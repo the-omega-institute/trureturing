@@ -1,6 +1,7 @@
 """Real Git mirror preflight, conflict and publication recovery probes."""
 
 import json
+import subprocess
 
 
 class MirrorCases:
@@ -50,7 +51,7 @@ class MirrorCases:
         self.assertIn("publication-rejected", result.stderr)
         self.assertEqual("feature\n", (failed / "owned").read_text())
         head = self.g(failed, "rev-parse", "HEAD").strip()
-        self.assertEqual([self.base, feature], self.g(failed, "show", "-s", "--format=%P", head).split())
+        self.assertEqual([self.base], self.g(failed, "show", "-s", "--format=%P", head).split())
         self.assertEqual(head, self.g(self.main, "rev-parse", "refs/heads/" + branch).strip())
         self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + branch))
         self.run_protocol("remove", "--names", failed.name, expect=68)
@@ -69,3 +70,87 @@ class MirrorCases:
         self.assertFalse(failed.exists())
         self.assertEqual(before, self.g(self.main, "worktree", "list", "--porcelain"))
         self.assertEqual("", self.g(self.main, "for-each-ref", "refs/heads/" + branch))
+
+    def mirror_landing(self, branch, name, subject, squash=False):
+        self.g(self.main, "switch", "-c", branch)
+        (self.main / name).write_text(name + "\n")
+        self.g(self.main, "add", name)
+        self.g(self.main, "commit", "-m", name)
+        self.g(self.main, "switch", "dev")
+        if squash:
+            self.g(self.main, "merge", "--squash", branch)
+            self.g(self.main, "commit", "-m", subject)
+        else:
+            self.g(self.main, "merge", "--no-ff", "-m", subject, branch)
+        return self.g(self.main, "rev-parse", "HEAD").strip()
+
+    def patch_id(self, parent, head):
+        patch = self.g(self.main, "diff", "--binary", parent, head)
+        return subprocess.run(["git", "patch-id", "--stable"], input=patch,
+                              text=True, capture_output=True, check=True).stdout.split()[:1]
+
+    def test_mirror_only_target_delta_with_missing_merge_and_squash(self):
+        self.mirror_landing("earlier-merge", "earlier-merge", "custom earlier merge")
+        self.mirror_landing("earlier-squash", "earlier-squash", "earlier squash (#12)", squash=True)
+        for squash in (False, True):
+            with self.subTest(squash=squash):
+                name = "target-" + str(squash)
+                subject = "custom target (#13)"
+                landing = self.mirror_landing(name, name, subject, squash=squash)
+                mirror = self.root / name
+                result = self.run_protocol("prepare-mirror", "--path", mirror, "--branch", "mirror/" + name,
+                    "--base", self.base, "--merge", landing, "--message", "mirror: #13 " + subject)
+                head = json.loads(result.stdout)["commit"]
+                self.assertEqual([self.base], self.g(mirror, "show", "-s", "--format=%P", head).split())
+                self.assertEqual([name], self.g(mirror, "diff", "--name-only", self.base, head).splitlines())
+                self.assertEqual(self.patch_id(landing + "^1", landing), self.patch_id(self.base, head))
+                self.assertEqual(landing, self.g(mirror, "show", "-s",
+                    "--format=%(trailers:key=Original-Dev-Commit,valueonly)", head).strip())
+                self.assertEqual("mirror: #13 " + subject, self.g(mirror, "show", "-s", "--format=%s", head).strip())
+
+    def test_mirror_validator_rejects_wrong_delta_identity_parent_and_base(self):
+        landing = self.mirror_landing("feature", "feature", "custom feature")
+        message = "mirror: #11 custom feature"
+        mirror = self.root / "mirror-valid"
+        result = self.run_protocol("prepare-mirror", "--path", mirror, "--branch", "mirror/valid",
+            "--base", self.base, "--merge", landing, "--message", message)
+        head = json.loads(result.stdout)["commit"]
+        def validate(commit, base=self.base, expected=0):
+            return self.run_protocol("validate-mirror", "--commit", commit, "--base", base,
+                "--merge", landing, "--message", message, expect=expected)
+        self.assertEqual(self.base, json.loads(validate(head).stdout)["base"])
+        for fault in ("identity", "delta", "two-parents", "outside-base"):
+            with self.subTest(fault=fault):
+                tree = self.g(self.main, "rev-parse", (self.base if fault == "delta" else head) + "^{tree}").strip()
+                parents = ["-p", self.base]
+                if fault == "two-parents": parents += ["-p", landing]
+                if fault == "outside-base": parents = ["-p", landing]
+                original = self.base if fault == "identity" else landing
+                invalid = self.g(self.main, "commit-tree", tree, *parents, "-m",
+                    message + "\n\nOriginal-Dev-Commit: " + original).strip()
+                validate(invalid, expected=73)
+
+    def test_mirror_retained_commit_reused_on_descendant_integration_base(self):
+        landing = self.mirror_landing("feature", "feature", "feature (#11)", squash=True)
+        mirror = self.root / "retained"
+        branch = "mirror/retained"
+        message = "mirror: #11 feature (#11)"
+        hook = self.remote / "hooks/pre-receive"
+        hook.write_text("#!/bin/sh\nexit 1\n")
+        hook.chmod(0o755)
+        self.run_protocol("prepare-mirror", "--path", mirror, "--branch", branch, "--base", self.base,
+                          "--merge", landing, "--message", message, expect=73)
+        head = self.g(mirror, "rev-parse", "HEAD").strip()
+        self.g(self.main, "worktree", "unlock", mirror)
+        self.g(self.main, "worktree", "remove", mirror)
+        self.g(self.main, "switch", "-c", "integration", self.base)
+        (self.main / "independent").write_text("integration\n")
+        self.g(self.main, "add", "independent")
+        self.g(self.main, "commit", "-m", "integration advance")
+        tip = self.g(self.main, "rev-parse", "HEAD").strip()
+        hook.unlink()
+        result = self.run_protocol("prepare-mirror", "--path", mirror, "--branch", branch, "--base", tip,
+                                  "--merge", landing, "--message", message)
+        self.assertEqual(head, json.loads(result.stdout)["commit"])
+        self.assertEqual([self.base], self.g(mirror, "show", "-s", "--format=%P", head).split())
+        self.assertEqual(head, self.g(self.remote, "rev-parse", "refs/heads/" + branch).strip())
