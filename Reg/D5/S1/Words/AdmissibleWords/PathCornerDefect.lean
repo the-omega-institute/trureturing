@@ -31,8 +31,7 @@ abbrev arena : Arena where
     (univ.filter fun i => occupancy w i = 0).card +
         (univ.filter fun e : Fin (m + 1) =>
           occupancy w e.castSucc + occupancy w e.succ = 1).card =
-      R.readout () () m + (univ.filter fun i : Fin (m + 2) =>
-          w i = true ∧ 0 < i.val ∧ i.val < m + 1).card
+      R.readout () () m + (univ.filter fun d : Fin m => w d.castSucc.succ = true).card
 
 def actual : Realization signature :=
   realize signature (fun _ _ x => x + 2) (fun e => nomatch e)
@@ -49,8 +48,8 @@ theorem rejected_law : ¬ arena.Law rejected := by
       (univ.filter fun e : Fin 1 =>
         occupancy (fun _ : Fin 2 => false) e.castSucc +
           occupancy (fun _ : Fin 2 => false) e.succ = 1).card =
-    (0 : ℕ) + (univ.filter fun i : Fin 2 =>
-      (fun _ : Fin 2 => false) i = true ∧ 0 < i.val ∧ i.val < 0 + 1).card at hbad
+    (0 : ℕ) + (univ.filter fun d : Fin 0 =>
+      (fun _ : Fin 2 => false) d.castSucc.succ = true).card at hbad
   simp [occupancy] at hbad
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
@@ -66,8 +65,7 @@ def registration : Registration arena
       (univ.filter fun i => occupancy w i = 0).card +
           (univ.filter fun e : Fin (m + 1) =>
             occupancy w e.castSucc + occupancy w e.succ = 1).card =
-        (m + 2) + (univ.filter fun i : Fin (m + 2) =>
-            w i = true ∧ 0 < i.val ∧ i.val < m + 1).card) where
+        (m + 2) + (univ.filter fun d : Fin m => w d.castSucc.succ = true).card) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨tight_count_eq_add_interior, rejected, rejected_law⟩
