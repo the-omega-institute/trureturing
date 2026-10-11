@@ -4,7 +4,7 @@
 
 The two binary arcs between two cyclic walls carry an sl2 action that descends to literal words and has the physical lowering operator.
 
-Let K be a field of characteristic zero and let a,b be natural numbers. Use the literal counted words, marked cover, binary coordinates and maps Q,S,Jstar of TwoWallWords and TwoWallMarked. A coordinate c has entries p,m,n,u,v with m+n=a+b and ones(u)+ones(v)=b. True is letter two and false is letter one. Every finite sum below is over bonds, preserving transition multiplicities. Fin(m−1) is empty for m=0 or m=1; subtraction in these index bounds is natural subtraction. Binary positions have zero-based indices, so the coefficient associated with j is (j+1)(m−j−1).
+Let K be a field of characteristic zero and let a,b be natural numbers. Use the literal counted words, marked cover, binary coordinates and maps Q,S,Jstar of TwoWallWords. A coordinate c has entries p,m,n,u,v with m+n=a+b and ones(u)+ones(v)=b. True is letter two and false is letter one. Every finite sum below is over bonds, preserving transition multiplicities. Fin(m−1) is empty for m=0 or m=1; subtraction in these index bounds is natural subtraction. Binary positions have zero-based indices, so the coefficient associated with j is (j+1)(m−j−1).
 
 **Definition 1.1 (Swapping an inner bond of the first arc).**
 
@@ -138,4 +138,4 @@ Embed the coordinate delta basis injectively into the direct sum of the two-bin 
 - Truth anchor: `D5/S3/Quantum/SpinChains/TwoWallSl2.markedF`
 - Truth anchor: `D5/S3/Quantum/SpinChains/TwoWallSl2.markedH`
 - Truth anchor: `D5/S3/Quantum/SpinChains/TwoWallSl2.rightMove`
-- Dependency: [D5/S3/Quantum/SpinChains/TwoWallMarked](TwoWallMarked.md)
+- Dependency: [D5/S3/Quantum/SpinChains/TwoWallWords](TwoWallWords.md)

@@ -12,7 +12,7 @@ open scoped BigOperators
 
 namespace D5.S3.Quantum.SpinChains.TwoWallWeights
 
-open TwoWallWords TwoWallMarked TwoWallSl2 Sl2WeightFiltration
+open TwoWallWords TwoWallSl2 Sl2WeightFiltration
 open HypereclecticNonShortening (level)
 open D5.S1.Words.ParityCode.OddTopWeight (ones)
 

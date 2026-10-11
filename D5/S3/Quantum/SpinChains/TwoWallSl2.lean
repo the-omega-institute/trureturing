@@ -6,7 +6,7 @@
    utility: none
    digest: The two binary arcs of a marked cyclic word carry a translation invariant sl₂ action. -/
 
-import D5.S3.Quantum.SpinChains.TwoWallMarked
+import D5.S3.Quantum.SpinChains.TwoWallWords
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.LinearAlgebra.DFinsupp
 
@@ -14,7 +14,7 @@ open scoped BigOperators TensorProduct
 
 namespace D5.S3.Quantum.SpinChains.TwoWallSl2
 
-open TwoWallWords TwoWallMarked BinaryBinBaseChange HypereclecticNonShortening
+open TwoWallWords BinaryBinBaseChange HypereclecticNonShortening
 open Sl2WeightFiltration
 open D5.S1.Words.ParityCode.OddTopWeight (ones)
 

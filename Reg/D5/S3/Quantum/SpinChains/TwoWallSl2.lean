@@ -6,7 +6,6 @@ import Mathlib.Algebra.Field.ULift
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.SpinChains.TwoWallWords
-open _root_.D5.S3.Quantum.SpinChains.TwoWallMarked
 open _root_.D5.S3.Quantum.SpinChains.TwoWallSl2
 open _root_.D5.S3.Quantum.SpinChains.Sl2WeightFiltration
 open _root_.D5.S3.Quantum.SpinChains.HypereclecticNonShortening (level)
