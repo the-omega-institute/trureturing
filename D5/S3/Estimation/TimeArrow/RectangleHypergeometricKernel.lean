@@ -543,7 +543,7 @@ private theorem native_conditioned_four_cell_law {M q s : ℕ} (S : Support M q)
 outside-row counts are fixed. This is a union of native history events. -/
 def nativeMarginRectangleEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
     (o : Obs M s e) (V : Finset {i : Fin M // i ∈ S.val})
-    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U : ℕ)
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R : ℕ)
     (test : Finset {i : Fin M // i ∈ S.val} → Finset (Finset {i : Fin M // i ∈ S.val})) :
     Finset (Fiber S e o) := by
   classical
@@ -553,7 +553,7 @@ def nativeMarginRectangleEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
 
 private theorem native_margin_events_disjoint {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (V : Finset {i : Fin M // i ∈ S.val})
-    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U : ℕ)
+    (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R : ℕ)
     (test : Finset {i : Fin M // i ∈ S.val} → Finset (Finset {i : Fin M // i ∈ S.val})) :
     Set.PairwiseDisjoint (↑(V.powersetCard R)) (fun A => nativeRectangleEvent S e o
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
@@ -596,9 +596,9 @@ theorem native_margin_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M 
     (hneg : (∑ i ∈ univ \ V, outsideM i) + U * l + (V.card - U) * (l + 1) =
       (signedDepartureBlocks S e o 1).card)
     (hR : R ≤ V.card) (hU : U ≤ V.card) (ht : t ≤ U) :
-    conditionalFiberMass S r e o (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+    conditionalFiberMass S r e o (nativeMarginRectangleEvent S e o V outsideP outsideM k l R
         (fun A => intersectionEvent V A U t)) /
-      conditionalFiberMass S r e o (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+      conditionalFiberMass S r e o (nativeMarginRectangleEvent S e o V outsideP outsideM k l R
         (fun _ => V.powersetCard U)) =
       ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) /
         (V.card.choose U : ℝ) := by
@@ -632,12 +632,12 @@ theorem native_margin_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M 
   have hsum (test : Finset {i : Fin M // i ∈ S.val} →
       Finset (Finset {i : Fin M // i ∈ S.val})) :
       conditionalFiberMass S r e o
-        (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U test) =
+        (nativeMarginRectangleEvent S e o V outsideP outsideM k l R test) =
         ∑ A ∈ V.powersetCard R, conditionalFiberMass S r e o (nativeRectangleEvent S e o
           (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
           V outsideM l (test A)) := by
     unfold conditionalFiberMass nativeMarginRectangleEvent
-    rw [sum_biUnion (native_margin_events_disjoint S e o V outsideP outsideM k l R U test), sum_div]
+    rw [sum_biUnion (native_margin_events_disjoint S e o V outsideP outsideM k l R test), sum_div]
   rw [hsum, hsum]
   have hhit : (∑ A ∈ V.powersetCard R, conditionalFiberMass S r e o (nativeRectangleEvent S e o
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
@@ -699,7 +699,7 @@ theorem native_margin_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
     (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U : ℕ)
     (hout : ∀ i ∉ V, ¬ ((outsideP i = k ∨ outsideP i = k + 1) ∧
       (outsideM i = l ∨ outsideM i = l + 1))) :
-    nativeMarginRectangleEvent S e o V outsideP outsideM k l R U (fun _ => V.powersetCard U) =
+    nativeMarginRectangleEvent S e o V outsideP outsideM k l R (fun _ => V.powersetCard U) =
       (univ.filter fun y : Fiber S e o => nativeMarginRectangleReadout S e o k l y =
         (V, (fun i => if i ∈ V then none else some (outsideP i, outsideM i)), R, U)) := by
   classical
@@ -799,9 +799,9 @@ private theorem native_margin_a_event_eq {M q s : ℕ} (S : Support M q)
     (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U t : ℕ)
     (hout : ∀ i ∉ V, ¬ ((outsideP i = k ∨ outsideP i = k + 1) ∧
       (outsideM i = l ∨ outsideM i = l + 1))) :
-    (nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+    (nativeMarginRectangleEvent S e o V outsideP outsideM k l R
       (fun _ => V.powersetCard U)).filter (fun y => nativeRectangleACount S e o k l y = t) =
-    nativeMarginRectangleEvent S e o V outsideP outsideM k l R U
+    nativeMarginRectangleEvent S e o V outsideP outsideM k l R
       (fun A => intersectionEvent V A U t) := by
   classical
   unfold nativeMarginRectangleEvent

@@ -678,7 +678,6 @@ private theorem native_group_zero_posterior_approximation :
   change |(∑ i ∈ G, inclusion q r e o i) -
     (G.card : ℝ) * Real.sigmoid (z0 - Real.log B0 + Real.log t)| ≤
       C / 4 * (G.card : ℝ) / V
-  have hVp : 0 < V := hV0.trans_le hvar
   have ha : 0 ≤ compensation M q r := by unfold compensation; positivity
   by_cases hG : G.Nonempty
   · obtain ⟨i, hi⟩ := hG
@@ -799,6 +798,122 @@ private theorem native_environment_calibration_identification {M q s : ℕ}
   intro i
   have hi := native_environment_outside_score S r e o k l z y henv.symm i.val i.property
   simp only [E, Equiv.subtypeEquivRight_apply, hi.1]
+
+
+/-- The original four signal-cell sizes give exactly the two numerical
+margins and A-count in the native conditional readout. -/
+private theorem native_calibration_counts_margins {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (y : NativeSignalConditionalFiber.Fiber S e o) :
+    let V := RectangleHypergeometricKernel.nativeRectangleRows S e o k l y
+    let C := fun j => (nativeCalibrationCells S e y.val k l j).card
+    V.card = C 0 + C 1 + C 2 + C 3 ∧
+      (V.filter fun i => count e y.val i.val 1 = k).card = C 0 + C 2 ∧
+      (V.filter fun i => count e y.val i.val (-1) = l).card = C 0 + C 1 ∧
+      RectangleHypergeometricKernel.nativeRectangleACount S e o k l y = C 0 := by
+  classical
+  dsimp only
+  have hc (J : Finset (Fin 4)) :
+      ((univ : Finset {i : Fin M // i ∈ S.val}).filter fun i =>
+        ∃ j ∈ J, nativeRowCell S e y.val k l i.val = some j).card =
+      ∑ j ∈ J, (nativeCalibrationCells S e y.val k l j).card := by
+    let P := (univ : Finset (Fin M)).filter fun i =>
+      ∃ j ∈ J, nativeRowCell S e y.val k l i = some j
+    have hs : ∀ i ∈ P, i ∈ S.val := by
+      intro i hi
+      obtain ⟨j, _, hj⟩ := (mem_filter.mp hi).2
+      exact ((native_row_cell_iff S e y.val k l i j).mp hj).1
+    have he : (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
+        ∃ j ∈ J, nativeRowCell S e y.val k l i.val = some j) =
+          P.subtype (fun i => i ∈ S.val) := by
+      ext i
+      simp [P]
+    rw [he, card_subtype, filter_true_of_mem hs]
+    have hf := sum_card_fiberwise_eq_card_filter (univ : Finset (Fin M))
+      (J.image (some : Fin 4 → Option (Fin 4))) (nativeRowCell S e y.val k l)
+    rw [sum_image (fun _ _ _ _ h => Option.some.inj h)] at hf
+    simpa [P, nativeCalibrationCells, eq_comm] using hf.symm
+  have hN : RectangleHypergeometricKernel.nativeRectangleRows S e o k l y =
+      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
+        ∃ j ∈ (univ : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
+    ext i
+    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff,
+      i.property, Fin.exists_fin_succ]
+    omega
+  have hR : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
+      (fun i => count e y.val i.val 1 = k) =
+      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
+        ∃ j ∈ ({0, 2} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
+    ext i
+    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]
+    omega
+  have hU : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
+      (fun i => count e y.val i.val (-1) = l) =
+      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
+        ∃ j ∈ ({0, 1} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
+    ext i
+    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]
+    omega
+  have hA : (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
+      count e y.val i.val 1 = k ∧ count e y.val i.val (-1) = l) =
+      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
+        ∃ j ∈ ({0} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
+    ext i
+    simp [native_row_cell_iff, i.property]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [hN, hc]
+    simp [Fin.sum_univ_four, add_assoc]
+  · rw [hR, hc]
+    simp
+  · rw [hU, hc]
+    simp
+  · unfold RectangleHypergeometricKernel.nativeRectangleACount
+    rw [hA, hc]
+    simp
+
+
+/-- The original full calibration on one environment fiber is exactly the
+moving four-cell equation with the native N, R, U, and A count. -/
+private theorem native_environment_full_calibration {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (y z : NativeSignalConditionalFiber.Fiber S e o)
+    (henv : RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l y =
+      RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l z)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (t : ℝ) (ht : 0 < t) :
+    let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+    let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+    let x := z0 - Real.log B0 + Real.log t
+    let V := RectangleHypergeometricKernel.nativeRectangleRows S e o k l z
+    let R := (V.filter fun i => count e z.val i.val 1 = k).card
+    let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+    let A := RectangleHypergeometricKernel.nativeRectangleACount S e o k l y
+    let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
+      fun i => score q r e z.val i.val - z0
+    (∑ i : Fin M, t * weight q r e y.val i / (B0 + t * weight q r e y.val i)) =
+      calibratedMean outside r (compensation M q r) V.card R U A x := by
+  classical
+  dsimp only
+  rw [native_environment_calibration_identification S r e o k l y z henv
+    hq hqm hr hr1 ha ha1 t ht]
+  have hc := native_calibration_counts_margins S e o k l y
+  dsimp only at hc
+  have hV := congrArg (fun v => v.1.card) henv
+  have hR := congrArg (fun v => v.2.2.1) henv
+  have hU := congrArg (fun v => v.2.2.2) henv
+  change (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).card =
+    (RectangleHypergeometricKernel.nativeRectangleRows S e o k l z).card at hV
+  change ((RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
+    fun i => count e y.val i.val 1 = k).card = _ at hR
+  change ((RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
+    fun i => count e y.val i.val (-1) = l).card = _ at hU
+  congr 1
+  · exact_mod_cast hc.1.symm.trans hV
+  · exact_mod_cast hc.2.1.symm.trans hR
+  · exact_mod_cast hc.2.2.1.symm.trans hU
+  · exact_mod_cast hc.2.2.2.symm
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration

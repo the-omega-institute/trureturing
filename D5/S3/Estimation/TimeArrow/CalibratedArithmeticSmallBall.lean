@@ -121,7 +121,7 @@ open scoped Classical in
 and the number of count values in each band. A posterior approximation is
 paid only by widening the small-ball event. -/
 theorem moving_center_small_ball (p f g : ℤ → ℝ) (T : Finset ℤ) (a b : ℤ)
-    (s K τ err A tail : ℝ) (hab : a ≤ b) (hs : 0 < s) (hK : 0 ≤ K)
+    (s K τ err A tail : ℝ) (hab : a ≤ b) (hs : 0 < s)
     (hτ : 0 ≤ τ) (herr : 0 ≤ err) (hA : 0 ≤ A)
     (hp : ∀ t, 0 ≤ p t) (hmax : ∀ t ∈ Icc a b, p t ≤ A)
     (hlower : ∀ x ∈ Icc a b, ∀ y ∈ Icc a b,
@@ -200,7 +200,7 @@ posterior approximation, and uniform feedback bounds are explicit inputs. -/
 private theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U q bg : ℝ) (θ : ℝ → ℝ) (p f : ℤ → ℝ)
     (T : Finset ℤ) (a b : ℤ) (s K τ err A tail : ℝ)
-    (hab : a ≤ b) (hs : 0 < s) (hK : 0 ≤ K)
+    (hab : a ≤ b) (hs : 0 < s)
     (hτ : 0 ≤ τ) (herr : 0 ≤ err) (hA : 0 ≤ A) (hp : ∀ t, 0 ≤ p t)
     (hmax : ∀ t ∈ Icc a b, p t ≤ A)
     (hcurve : ∀ x ∈ Set.Icc (a : ℝ) (b : ℝ), DifferentiableAt ℝ θ x ∧
@@ -239,7 +239,7 @@ private theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside
     (fun x hx => by rw [(hder x (interior_subset hx)).deriv]; exact (hfeedback x hx).1)
   have hu := (convex_Icc (a : ℝ) (b : ℝ)).image_sub_le_mul_sub_of_deriv_le hcont hdiff
     (fun x hx => by rw [(hder x (interior_subset hx)).deriv]; exact (hfeedback x hx).2)
-  apply moving_center_small_ball p f (fun t => G t) T a b s K τ err A tail hab hs hK
+  apply moving_center_small_ball p f (fun t => G t) T a b s K τ err A tail hab hs
     hτ herr hA hp hmax
   · intro x hx y hy hxy
     have hxR : (x : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
