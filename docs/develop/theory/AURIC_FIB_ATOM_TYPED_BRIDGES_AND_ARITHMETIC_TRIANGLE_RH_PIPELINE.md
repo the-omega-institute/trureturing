@@ -2195,3 +2195,594 @@ H_{\mathrm{field}}\psi_\rho=-i(\rho-\tfrac12)\psi_\rho
 8. **物理语义检查。** 任何能量、质量、时间和量子化术语都必须绑定到新增的数学结构。
 
 本账本将外部研究转化为可追踪的形式化义务。它不增加未证明的统一场结论，而是规定从 Auric FIB 有限结构走向 Dirichlet 极限、信息梯度流、triangle inflation 和 RH 自伴谱时，每一步必须补充什么。
+
+
+---
+
+## 20. 有限层相容载体、Fisher 曲率与 Dirichlet 极限
+
+本节给出一个只使用有限维凸性、概率核、加权 Hilbert 空间和二次型的桥接定理。它把“逆极限中的静态记录”“FIB 隐藏曲率”和“图 Dirichlet 形式”放在同一个可检查的账本中。任何连续流形、物理能量、时间参数或量子化均不属于本节的原生输入。
+
+### 20.1 有限层数据
+
+对每个 \(j\in\mathbb N\)，给定有限顶点集 \(V_j\)、有限边集 \(E_j\)、顶点概率测度 \(\mu_j\) 和正边测度 \(\nu_j\)。定义
+
+\[
+\Pi_j^\delta
+=
+\left\{
+p=(p_v)_{v\in V_j}:
+p_v\in\Delta(\Sigma),\ 
+p_{v,s}\ge\delta
+\right\},
+\qquad
+0<\delta\le\frac15.
+\]
+
+这里 \(\delta\) 只用于保证 Fisher 曲率有限。若允许概率落在边界，应把 Fisher 泛函取为扩展值 \(+\infty\)，并另行证明下半连续性。
+
+令
+
+\[
+\mathcal H_j=\mathbb R^{V_j},
+\qquad
+\mathcal E_j=\mathbb R^{E_j},
+\]
+
+并使用加权内积
+
+\[
+\langle f,g\rangle_{\mu_j}
+=
+\sum_{v\in V_j}\mu_j(v)f_vg_v,
+\qquad
+\langle \eta,\zeta\rangle_{\nu_j}
+=
+\sum_{e\in E_j}\nu_j(e)\eta_e\zeta_e.
+\]
+
+令 \(B_j:\mathcal E_j\to\mathcal H_j\) 为已有的边界算子，令
+
+\[
+G_j=B_j^*:\mathcal H_j\to\mathcal E_j.
+\]
+
+定义图 Dirichlet 二次型
+
+\[
+\mathcal Q_j(f)
+=
+\|G_jf\|_{\nu_j}^{\,2}
+=
+\langle f,B_jB_j^*f\rangle_{\mu_j}.
+\]
+
+这一步只使用有限图的边界矩阵和加权线性代数。
+
+对每个 \(j\)，令 \(\mathsf C_j^R\) 是当前理论中有限载体的一个非空紧凸截面。例如可以取
+
+\[
+\mathsf C_j^R
+=
+\mathsf P_j^\delta
+\times
+\mathsf D_j^R
+\times
+\mathsf N_j^R
+\times
+\mathsf Z_j^R,
+\]
+
+其中 \(\mathsf P_j^\delta\subseteq\Pi_j^\delta\)，其余三个因子是现有图场、隐藏切向量和边流空间中的闭有界凸集。有限维性保证这些截面紧。这里 \(R\) 是数学截断参数，不被解释成物理半径或能量。
+
+### 定义 20.1（相容有限层系统）
+
+一个相容有限层系统包括连续仿射满射
+
+\[
+\rho_j:\mathsf C_{j+1}^R\longrightarrow\mathsf C_j^R.
+\]
+
+其概率分量记为
+
+\[
+q_j:\Pi_{j+1}^\delta\longrightarrow\Pi_j^\delta.
+\]
+
+若存在顶点映射 \(\pi_j:V_{j+1}\to V_j\) 和条件权重 \(a_j(w\mid v)\)，满足
+
+\[
+a_j(w\mid v)\ge0,
+\qquad
+\sum_{\pi_j(w)=v}a_j(w\mid v)=1,
+\]
+
+\[
+\mu_{j+1}(w)
+=
+\mu_j(\pi_j(w))a_j(w\mid\pi_j(w)),
+\]
+
+则概率推前写成
+
+\[
+(q_jp)_v
+=
+\sum_{\pi_j(w)=v}
+a_j(w\mid v)p_w.
+\]
+
+这保证每个粗层节点仍然携带一个单独归一化的五态概率律。它没有把 \((\Delta(\Sigma))^{V_j}\) 偷换成一个全局单纯形。
+
+### 定理 20.2（紧相容载体的逆极限非空性）
+
+设 \(\{\mathsf C_j^R,\rho_j\}_{j\ge0}\) 是相容有限层系统，且每个 \(\rho_j\) 连续、仿射、满射。则
+
+\[
+\mathsf C_\infty^R
+=
+\varprojlim_j(\mathsf C_j^R,\rho_j)
+=
+\left\{
+(c_j)_j:
+\rho_j(c_{j+1})=c_j
+\right\}
+\]
+
+是非空紧凸集。
+
+#### 证明
+
+令
+
+\[
+\mathsf K=\prod_{j\ge0}\mathsf C_j^R.
+\]
+
+由于每个 \(\mathsf C_j^R\) 是紧空间，\(\mathsf K\) 是紧空间。对每个 \(m\) 定义
+
+\[
+F_m
+=
+\left\{
+(c_j)_j\in\mathsf K:
+\rho_j(c_{j+1})=c_j,\ 0\le j<m
+\right\}.
+\]
+
+每个 \(F_m\) 是闭集。它非空的原因是从任意 \(c_m\in\mathsf C_m^R\) 开始，利用 \(\rho_{m-1},\ldots,\rho_0\) 的满射性逐层选取 \(c_{m-1},\ldots,c_0\)，再任意补充尚未约束的更高层坐标。更直接地，对任意有限指标集，只涉及有限条相容方程，而满射性保证这些方程有解。因此 \(\{F_m\}\) 具有有限交性质。由紧性，
+
+\[
+\bigcap_{m\ge0}F_m\neq\varnothing.
+\]
+
+该交集正是 \(\mathsf C_\infty^R\)。仿射映射的相容方程定义了凸集，所以逆极限也是凸的。证毕。
+
+这个结论只保证截断载体的非空性。若要去掉 \(R\) 或 \(\delta\)，必须再证明截面族在相应极限中的紧性或下半连续性。
+
+### 定义 20.3（层级 Fisher 曲率）
+
+对 \(p\in\Pi_j^\delta\) 和质量守恒切向量 \(u=(u_{v,s})\)，定义
+
+\[
+\mathcal I_j(p;u)
+=
+\sum_{v\in V_j}\mu_j(v)
+\sum_{s\in\Sigma}
+\frac{u_{v,s}^{\,2}}{p_{v,s}}.
+\]
+
+当 \(u_{v,\cdot}=d\) 时，这就是每个局部 FIB seam 的加权总 Fisher 曲率。
+
+### 定理 20.4（相容粗粒化下的 Fisher 单调性）
+
+设 \(q_j\) 由定义 20.1 的条件权重给出，令
+
+\[
+p_j=q_jp_{j+1},
+\qquad
+u_j=Dq_j\,u_{j+1}.
+\]
+
+则
+
+\[
+\boxed{
+\mathcal I_j(p_j;u_j)
+\le
+\mathcal I_{j+1}(p_{j+1};u_{j+1}).
+}
+\]
+
+如果 \((p_j,u_j)_j\) 是相容族，则
+
+\[
+\mathcal I_0\le\mathcal I_1\le\mathcal I_2\le\cdots.
+\]
+
+#### 证明
+
+固定 \(v\in V_j\) 和 \(s\in\Sigma\)。记
+
+\[
+p_{j,v,s}
+=
+\sum_{\pi_j(w)=v}a_j(w\mid v)p_{j+1,w,s},
+\]
+
+\[
+u_{j,v,s}
+=
+\sum_{\pi_j(w)=v}a_j(w\mid v)u_{j+1,w,s}.
+\]
+
+加权 Cauchy–Schwarz 不等式给出
+
+\[
+\frac{u_{j,v,s}^{\,2}}{p_{j,v,s}}
+\le
+\sum_{\pi_j(w)=v}
+a_j(w\mid v)
+\frac{u_{j+1,w,s}^{\,2}}{p_{j+1,w,s}}.
+\]
+
+乘以 \(\mu_j(v)\)，对 \(v,s\) 求和，并使用
+
+\[
+\mu_j(v)a_j(w\mid v)=\mu_{j+1}(w),
+\]
+
+得到
+
+\[
+\mathcal I_j(p_j;u_j)
+\le
+\mathcal I_{j+1}(p_{j+1};u_{j+1}).
+\]
+
+证毕。
+
+特别地，如果每层的隐藏方向由
+
+\[
+u_{j,v,\cdot}=d
+\]
+
+给出，并且 \(q_jd=d\)，则 FIB seam 曲率沿细化方向单调不减。等号当且仅当每个状态 \(s\) 的 score
+
+\[
+\frac{u_{j+1,w,s}}{p_{j+1,w,s}}
+\]
+
+在每个聚合纤维 \(\pi_j^{-1}(v)\) 上几乎处处为常数。这是 Cauchy–Schwarz 等号条件的直接展开。
+
+### 定义 20.5（梯度交换的图压缩）
+
+令
+
+\[
+R_j:\mathcal H_{j+1}\longrightarrow\mathcal H_j
+\]
+
+是顶点场的层间压缩，令
+
+\[
+S_j:\mathcal E_{j+1}\longrightarrow\mathcal E_j
+\]
+
+是边梯度的层间压缩。称 \((R_j,S_j)\) 为 Dirichlet 相容，如果
+
+\[
+G_jR_j=S_jG_{j+1},
+\qquad
+\|S_j\|_{\nu_{j+1}\to\nu_j}\le1.
+\]
+
+这一定义直接记录了图梯度在层间投影下如何交换。仅有边界散度交换
+
+\[
+B_jS_j=R_jB_{j+1}
+\]
+
+还不足以推出 Dirichlet 能量单调性，因为二次型使用的是 \(B_j^*=G_j\)。
+
+### 定理 20.6（Dirichlet 能量的粗粒化收缩）
+
+若 \((R_j,S_j)\) Dirichlet 相容，则对所有 \(f\in\mathcal H_{j+1}\)，
+
+\[
+\boxed{
+\mathcal Q_j(R_jf)
+\le
+\mathcal Q_{j+1}(f).
+}
+\]
+
+#### 证明
+
+由梯度交换条件，
+
+\[
+\mathcal Q_j(R_jf)
+=
+\|G_jR_jf\|_{\nu_j}^{\,2}
+=
+\|S_jG_{j+1}f\|_{\nu_j}^{\,2}.
+\]
+
+由于 \(\|S_j\|\le1\)，
+
+\[
+\|S_jG_{j+1}f\|_{\nu_j}^{\,2}
+\le
+\|G_{j+1}f\|_{\nu_{j+1}}^{\,2}
+=
+\mathcal Q_{j+1}(f).
+\]
+
+证毕。
+
+因此，对任意相容场族 \(f_j=R_jf_{j+1}\)，有
+
+\[
+\mathcal Q_0(f_0)
+\le
+\mathcal Q_1(f_1)
+\le
+\mathcal Q_2(f_2)
+\le\cdots.
+\]
+
+这是一个纯图论和 Hilbert 空间结论。它说明图层越细，能够承载的 Dirichlet 能量不减。它没有指定能量的物理单位。
+
+### 推论 20.7（谱隙在显式可见子空间上传递）
+
+设 \(U_{j+1}\subseteq\mathcal H_{j+1}\) 是一个子空间，\(R_jU_{j+1}\) 位于粗层的零均值子空间，并且存在 \(c_j>0\) 使
+
+\[
+\|R_jf\|_{\mu_j}
+\ge
+c_j\|f\|_{\mu_{j+1}},
+\qquad
+f\in U_{j+1}.
+\]
+
+如果粗层满足
+
+\[
+\mathcal Q_j(g)
+\ge
+\lambda_j\|g\|_{\mu_j}^{\,2},
+\qquad
+g\in R_jU_{j+1},
+\]
+
+则细层满足
+
+\[
+\mathcal Q_{j+1}(f)
+\ge
+c_j^2\lambda_j\|f\|_{\mu_{j+1}}^{\,2},
+\qquad
+f\in U_{j+1}.
+\]
+
+#### 证明
+
+由定理 20.6 和粗层 Poincaré 不等式，
+
+\[
+\mathcal Q_{j+1}(f)
+\ge
+\mathcal Q_j(R_jf)
+\ge
+\lambda_j\|R_jf\|_{\mu_j}^{\,2}
+\ge
+c_j^2\lambda_j\|f\|_{\mu_{j+1}}^{\,2}.
+\]
+
+证毕。
+
+该推论只对 \(R_j\) 不丢失的指定子空间成立。对被粗粒化消除的高频方向，不能从粗层谱隙反推细层谱隙。
+
+### 20.2 逆极限与 Mosco 极限的最小桥
+
+令 \(\mathcal H\) 是一个共同 Hilbert 宿主空间，并给出等距嵌入
+
+\[
+\iota_j:\mathcal H_j\hookrightarrow\mathcal H.
+\]
+
+将有限层二次型延拓为 \(\mathcal H\) 上的扩展泛函
+
+\[
+\overline{\mathcal Q}_j(u)
+=
+\begin{cases}
+\mathcal Q_j(f),&u=\iota_jf,\\
++\infty,&u\notin\iota_j\mathcal H_j.
+\end{cases}
+\]
+
+以下三条是把图二次型推进到 Dirichlet 极限所需的最小形式化账本：
+
+\[
+\tag{M1}
+u_j\rightharpoonup u
+\Longrightarrow
+\mathcal Q(u)
+\le
+\liminf_{j\to\infty}\overline{\mathcal Q}_j(u_j),
+\]
+
+\[
+\tag{M2}
+\forall u\in D(\mathcal Q),\ \exists u_j\to u\text{ 强收敛},
+\qquad
+\limsup_{j\to\infty}\overline{\mathcal Q}_j(u_j)
+\le
+\mathcal Q(u),
+\]
+
+\[
+\tag{M3}
+\text{有限能量子水平集具有共同宿主空间中的相对紧性}.
+\]
+
+(M1) 是 Mosco 下极限，(M2) 是恢复序列，(M3) 是从有限层抽取极限场时所需的紧性。若只要定义闭极限二次型，(M1) 和 (M2) 是核心条件。若还要得到相容静态场、最小值收敛或特征函数收敛，必须增加 (M3) 或等价的 compactness 条件。
+
+### 定理 20.8（相容恢复序列的能量识别）
+
+假设 \(\overline{\mathcal Q}_j\) 满足 (M1) 和 (M2)。若相容场族 \(f_j\) 满足
+
+\[
+\iota_jf_j\longrightarrow f
+\quad\text{强收敛},
+\]
+
+并且它本身是一个恢复序列，即
+
+\[
+\limsup_j\overline{\mathcal Q}_j(\iota_jf_j)
+\le
+\mathcal Q(f),
+\]
+
+则
+
+\[
+\lim_j\mathcal Q_j(f_j)
+=
+\mathcal Q(f).
+\]
+
+#### 证明
+
+由强收敛推出弱收敛，再由 (M1) 得到
+
+\[
+\mathcal Q(f)
+\le
+\liminf_j\mathcal Q_j(f_j).
+\]
+
+由恢复条件得到
+
+\[
+\limsup_j\mathcal Q_j(f_j)
+\le
+\mathcal Q(f).
+\]
+
+两式合并即得极限存在且等于 \(\mathcal Q(f)\)。证毕。
+
+这个定理明确指出：逆极限相容性本身不等于 Dirichlet 能量收敛。还必须证明相容族在共同宿主空间中是恢复序列。
+
+### 定理 20.9（严格凸静态截面的极限稳定性）
+
+在定理 20.8 的假设下，令 \(\ell_j\in\mathcal H_j^*\) 是连续线性泛函，并假设其经 \(\iota_j\) 传到共同宿主空间后收敛为 \(\ell\)。定义
+
+\[
+\mathcal F_j(f)
+=
+\frac12\mathcal Q_j(f)-\ell_j(f),
+\qquad
+\mathcal F(f)
+=
+\frac12\mathcal Q(f)-\ell(f).
+\]
+
+若：
+
+1. \(\mathcal F_j\) 的有限能量子水平集在 \(\mathcal H\) 中相对紧；
+2. \(\mathcal Q\) 在其定义域上严格凸；
+3. 每个 \(\mathcal F_j\) 有最小元 \(f_j\)；
+
+则 \(f_j\) 的任意弱聚点都是 \(\mathcal F\) 的唯一最小元。若 (M3) 给出强预紧性，则
+
+\[
+\iota_jf_j\longrightarrow f_*
+\]
+
+强收敛，并且
+
+\[
+\mathcal F_j(f_j)\longrightarrow\mathcal F(f_*).
+\]
+
+#### 证明
+
+取任意弱聚点 \(f\)。由子水平紧性和 (M1)，对最小元序列有
+
+\[
+\mathcal Q(f)
+\le
+\liminf_j\mathcal Q_j(f_j).
+\]
+
+线性项在弱收敛下连续，因此
+
+\[
+\mathcal F(f)
+\le
+\liminf_j\mathcal F_j(f_j).
+\]
+
+对任意 \(g\in D(\mathcal Q)\)，由 (M2) 取恢复序列 \(g_j\)。最小性给出
+
+\[
+\mathcal F_j(f_j)
+\le
+\mathcal F_j(g_j).
+\]
+
+取上极限得到
+
+\[
+\limsup_j\mathcal F_j(f_j)
+\le
+\mathcal F(g).
+\]
+
+合并后得到
+
+\[
+\mathcal F(f)\le\mathcal F(g)
+\]
+
+对所有 \(g\in D(\mathcal Q)\) 成立。因此 \(f\) 是极小元。严格凸性保证极小元唯一，记为 \(f_*\)。所有聚点相同，结合 (M3) 即得强收敛。能量收敛由定理 20.8 和最小性得到。证毕。
+
+### 20.3 这组定理在现有架构中的准确含义
+
+上述结果允许我们严格声明：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{有限五态概率载体的相容逆极限可非空；}\\
+&\text{Fisher seam 曲率在粗粒化下满足数据处理单调性；}\\
+&\text{图 Dirichlet 二次型在梯度交换且边压缩为收缩时单调下降；}\\
+&\text{相容逆极限只有在共同宿主空间的 Mosco/恢复条件下才产生 Dirichlet 极限；}\\
+&\text{严格凸有限层静态最小元在 equicoercive 条件下收敛到唯一极限最小元。}
+\end{aligned}
+}
+\]
+
+这些结论仍然没有引入：
+
+\[
+\text{物理质量},
+\quad
+\text{时间},
+\quad
+\text{Hamiltonian},
+\quad
+\text{量子态},
+\quad
+\text{光滑黎曼流形},
+\quad
+\text{RH 自伴算子}.
+\]
+
+若要继续向黎曼几何推进，必须在定理 20.8 之后额外证明极限二次型来自某个度量测度空间。若要继续向光滑流形推进，还要补充维数、非塌缩、Ricci 下界、注入半径和光滑重构条件。若要继续向物理解释推进，则必须另建桥接结构，不能由本节反向补定义。
+
