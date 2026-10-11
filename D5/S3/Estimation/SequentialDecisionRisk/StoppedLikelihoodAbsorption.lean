@@ -7,6 +7,7 @@
    digest: Finite martingale maximal moments and stopped likelihood absorption. -/
 
 import Mathlib.Probability.Martingale.OptionalStopping
+import Mathlib.Order.PartialSups
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Real
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
@@ -29,19 +30,18 @@ local notation "PMax" => fun (f : ℕ → ℝ) (n : ℕ) =>
   (range (n + 1)).sup' nonempty_range_add_one f
 
 private lemma prefix_max_zero (f : ℕ → ℝ) : PMax f 0 = f 0 := by
-  simp
+  simpa only [partialSups_eq_sup'_range] using (partialSups_zero f)
 
 private lemma prefix_max_succ (f : ℕ → ℝ) (n : ℕ) :
     PMax f (n + 1) = max (PMax f n) (f (n + 1)) := by
-  calc
-    PMax f (n + 1) = f (n + 1) ⊔ PMax f n := by
-      simpa only [range_add_one] using
-        (sup'_insert (s := range (n + 1)) nonempty_range_add_one f (b := n + 1))
-    _ = _ := max_comm _ _
+  have h := partialSups_succ f n
+  change partialSups f (n + 1) = max (partialSups f n) (f (n + 1)) at h
+  simpa only [partialSups_eq_sup'_range] using h
 
 variable {Ω : Type*} {mΩ : MeasurableSpace Ω} {μ : Measure Ω}
   [IsFiniteMeasure μ] {ℱ : Filtration ℕ mΩ}
 
+omit [IsFiniteMeasure μ] in
 private lemma martingale_abs_submartingale {f : ℕ → Ω → ℝ}
     (hf : Martingale f ℱ μ) : Submartingale (fun n ω => |f n ω|) ℱ μ := by
   refine ⟨fun n => ?_, ?_, fun n => (hf.integrable n).abs⟩
@@ -272,7 +272,7 @@ private lemma bounded_integrable {g : Ω → ℝ} (hg : StronglyMeasurable g)
 
 private lemma finite_even_terminal_integral {f : ℕ → Ω → ℝ}
     (hf : Martingale f ℱ μ) (hf0 : ∀ ω, f 0 ω = 0)
-    {R : ℝ} (hR : 0 ≤ R) (hbdd : ∀ i ω, |f i ω| ≤ R)
+    {R : ℝ} (_hR : 0 ≤ R) (hbdd : ∀ i ω, |f i ω| ≤ R)
     {m : ℕ} (hm : 0 < m) (n : ℕ) :
     (∫ ω, f n ω ^ (2 * m) ∂μ) ≤ (2 * m : ℝ) ^ 2 *
       ∫ ω, (PMax (fun i => |f i ω|) n) ^ (2 * m - 2) * Quad f n ω ∂μ := by
@@ -286,8 +286,9 @@ private lemma finite_even_terminal_integral {f : ℕ → Ω → ℝ}
     bounded_integrable (((hf.stronglyMeasurable n).mono (ℱ.le n)).pow _)
       (fun ω => by rw [abs_pow]; exact pow_le_pow_left₀ (abs_nonneg _) (hbdd n ω) _)
   have hdelta : ∀ i, Integrable (fun ω => (f (i + 1) ω - f i ω) ^ 2) μ := fun i =>
-    bounded_integrable (R := (2 * R) ^ 2) ((((hf.stronglyMeasurable (i + 1)).mono (ℱ.le (i + 1))).sub
-      ((hf.stronglyMeasurable i).mono (ℱ.le i))).pow 2)
+    bounded_integrable (R := (2 * R) ^ 2)
+      ((((hf.stronglyMeasurable (i + 1)).mono (ℱ.le (i + 1))).sub
+        ((hf.stronglyMeasurable i).mono (ℱ.le i))).pow 2)
       (fun ω => by
         rw [abs_pow]
         apply pow_le_pow_left₀ (abs_nonneg _)
@@ -580,7 +581,7 @@ private lemma stopped_likelihood_absorption_aux {L : ℕ → Ω → ℝ}
             dsimp [K]; ring
           _ ≤ _ := by
             dsimp [K]
-            gcongr <;> positivity
+            gcongr
   have hi := integral_mono_of_nonneg (ae_of_all μ (fun ω =>
     pow_nonneg (sum_nonneg (fun i _ => sq_nonneg _)) m))
     ((hUint.add (hTint.const_mul ((n : ℝ) ^ m))).const_mul K) (ae_of_all μ hpoint)
