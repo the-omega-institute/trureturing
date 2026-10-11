@@ -64,7 +64,9 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
         DescribeRole role) => Describe.Lean(
         DescribeId.Create("hypereclectic-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula),
-        role == DescribeRole.Theorem ? AssessedProvenance.FromRepo() : AssessedProvenance.FromLiterature(Source),
+        role == DescribeRole.Theorem
+            ? name == "result" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromRepo()
+            : AssessedProvenance.FromLiterature(Source),
         Blocks(Paragraph(Text(prose))), role,
         name == "result" ? new OpenProblemResolutionClaim(
             ProblemSlugRef.Create("ahn-corcoran-staudacher-2021-hypereclectic-non-shortening"),
