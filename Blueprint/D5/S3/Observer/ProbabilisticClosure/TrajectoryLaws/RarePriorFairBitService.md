@@ -58,7 +58,19 @@ $$\forall ( \operatorname{p} : \operatorname{Packet} ) , ( \operatorname{wordMas
 
 The seven independent fair singleton masses multiply to one over 128 for every packet.
 
-**Theorem 1.5 (survival geometric).**
+**Theorem 1.5 (Packet singleton law).**
+
+$$\forall (\operatorname{p} : \operatorname{Packet}) , \operatorname{packetLaw} \{\operatorname{p}\} = (1/128 : \mathbb{R}_{\geq 0}^{\infty})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.packet_law_singleton` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing packet measure assigns one over 128 to each singleton. RarePriorSerialExecution uses this original supplier in its vector packet law and positive acceptance proof.
+
+**Theorem 1.6 (survival geometric).**
 
 $$\forall ( \operatorname{m} : \mathbb{N} ) , ( \operatorname{survivalMass} \operatorname{m} = ( 7 / 32 ) ^{\operatorname{m}} )$$
 
@@ -70,7 +82,7 @@ $$\forall ( \operatorname{m} : \mathbb{N} ) , ( \operatorname{survivalMass} \ope
 
 Exactly 28 of the 128 packet addresses reject. Iterating the rejection recurrence multiplies survival by seven over 32.
 
-**Theorem 1.6 (exact service law).**
+**Theorem 1.7 (exact service law).**
 
 $$\operatorname{returnedAlphaMass} . \operatorname{ordinary} = 2 / 5 \land \operatorname{returnedAlphaMass} . \operatorname{high} = 9 / 10 \land \operatorname{returnedAlphaMass} . \operatorname{low} = 1 / 100 \land \operatorname{Tendsto} \operatorname{survivalMass} \operatorname{atTop} ( \operatorname{nhds} 0 )$$
 
@@ -82,7 +94,7 @@ $$\operatorname{returnedAlphaMass} . \operatorname{ordinary} = 2 / 5 \land \oper
 
 Summing the geometric first-return masses gives the three threshold fractions. The rejection survival tends to zero.
 
-**Theorem 1.7 (actual survival probability).**
+**Theorem 1.8 (actual survival probability).**
 
 $$\forall ( \operatorname{m} : \mathbb{N} ) , ( \operatorname{packetStreamLaw} ( \operatorname{survives} \operatorname{m} ) = ( 7 / 32 : \mathbb{R}_{\geq 0}^{\infty} ) ^{\operatorname{m}} )$$
 
@@ -94,7 +106,7 @@ $$\forall ( \operatorname{m} : \mathbb{N} ) , ( \operatorname{packetStreamLaw} (
 
 Independent stream cylinders requiring m rejected packets have measure equal to the mth power of seven over 32.
 
-**Theorem 1.8 (almost sure service return).**
+**Theorem 1.9 (almost sure service return).**
 
 $$\operatorname{packetStreamLaw} ( \operatorname{iInter} \operatorname{m} : \mathbb{N} , \operatorname{survives} \operatorname{m} ) = 0$$
 
@@ -106,7 +118,7 @@ $$\operatorname{packetStreamLaw} ( \operatorname{iInter} \operatorname{m} : \mat
 
 Continuity of measure for the decreasing rejection cylinders gives zero measure to infinite rejection.
 
-**Theorem 1.9 (actual service output law).**
+**Theorem 1.10 (actual service output law).**
 
 $$\forall ( \operatorname{t} : \operatorname{Threshold} ) , ( \operatorname{packetStreamLaw} ( \operatorname{iUnion} \operatorname{m} : \mathbb{N} , \operatorname{alphaReturnEvent} \operatorname{t} \operatorname{m} ) = \operatorname{ENNReal} . \operatorname{ofReal} ( \operatorname{returnedAlphaMass} \operatorname{t} ) )$$
 
@@ -118,7 +130,7 @@ $$\forall ( \operatorname{t} : \operatorname{Threshold} ) , ( \operatorname{pack
 
 Disjoint first-alpha-return cylinders have the computed product masses, whose countable sum is the returned alpha mass.
 
-**Theorem 1.10 (every microstate returns).**
+**Theorem 1.11 (every microstate returns).**
 
 $$\forall ( \operatorname{s} : \operatorname{Service} ) , ( \operatorname{packetStreamLaw} ( \operatorname{neverReturns} \operatorname{s} ) = 0 )$$
 
@@ -130,7 +142,7 @@ $$\forall ( \operatorname{s} : \operatorname{Service} ) , ( \operatorname{packet
 
 The first partial trial either returns or resets. Any subsequent nonreturning trajectory lies in a shifted infinite rejection event of measure zero.
 
-**Theorem 1.11 (rational service realization).**
+**Theorem 1.12 (rational service realization).**
 
 $$\forall ( \operatorname{t} : \operatorname{Threshold} ) , ( \operatorname{packetStreamLaw} ( \operatorname{iUnion} \operatorname{m} : \mathbb{N} , \operatorname{alphaReturnEvent} \operatorname{t} \operatorname{m} ) = \operatorname{ENNReal} . \operatorname{ofReal} ( ( \operatorname{threshold} \operatorname{t} ) . \operatorname{val} / ( 100 : \mathbb{R} ) ) \land ( \forall \operatorname{s} \operatorname{q} : \operatorname{Service} , \operatorname{microWeight} \operatorname{s} \operatorname{q} = 0 \lor \operatorname{microWeight} \operatorname{s} \operatorname{q} = 1 / 2 \lor \operatorname{microWeight} \operatorname{s} \operatorname{q} = 1 ) \land ( \forall \operatorname{s} : \operatorname{Service} , \operatorname{packetStreamLaw} ( \operatorname{neverReturns} \operatorname{s} ) = 0 ) )$$
 
@@ -142,7 +154,19 @@ $$\forall ( \operatorname{t} : \operatorname{Threshold} ) , ( \operatorname{pack
 
 The measured first-return law, allowed microstep weights and almost-sure return hold together for the explicit service.
 
-**Theorem 1.12 (operational service realization).**
+**Theorem 1.13 (Rejected prefix resets).**
+
+$$\forall (\operatorname{t} : \operatorname{Threshold}) , \forall (\operatorname{omega} : \mathbb{N} \to \operatorname{Packet}) , \forall (\operatorname{m} : \mathbb{N}) , (\forall \operatorname{j} < \operatorname{m} , 100 \leq (\operatorname{packetEquiv} (\operatorname{omega} \operatorname{j})).\operatorname{val}) \to \operatorname{trialRun} (\operatorname{entry} \operatorname{t}) \operatorname{omega} \operatorname{m} = \operatorname{entry} \operatorname{t}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.prefix_reset` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every finite rejected prefix leaves the actual trialRun at its prescribed reset entry. RarePriorSerialExecution uses this original supplier to identify the returned service after the first accepted packet.
+
+**Theorem 1.14 (operational service realization).**
 
 $$\forall ( \operatorname{t} : \operatorname{Threshold} ) , ( \operatorname{alphaOutputEvent} \operatorname{t} = \operatorname{iUnion} \operatorname{m} : \mathbb{N} , \operatorname{alphaReturnEvent} \operatorname{t} \operatorname{m} \land \operatorname{packetStreamLaw} ( \operatorname{alphaOutputEvent} \operatorname{t} ) = \operatorname{ENNReal} . \operatorname{ofReal} ( ( \operatorname{threshold} \operatorname{t} ) . \operatorname{val} / ( 100 : \mathbb{R} ) ) \land ( \forall \operatorname{s} \operatorname{q} : \operatorname{Service} , \operatorname{microWeight} \operatorname{s} \operatorname{q} = 0 \lor \operatorname{microWeight} \operatorname{s} \operatorname{q} = 1 / 2 \lor \operatorname{microWeight} \operatorname{s} \operatorname{q} = 1 ) \land ( \forall \operatorname{s} : \operatorname{Service} , \operatorname{packetStreamLaw} ( \operatorname{neverReturns} \operatorname{s} ) = 0 ) \land \operatorname{packetStreamLaw} ( \operatorname{iInter} \operatorname{m} : \mathbb{N} , \operatorname{survives} \operatorname{m} ) = 0 )$$
 
@@ -164,7 +188,9 @@ The canonical trajectory retains the first accepted result. Its eventual alpha o
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.fair_packet_mass`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.microstep_weights`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.operational_service_realization`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.packet_law_singleton`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.packet_transaction`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.prefix_reset`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.rational_service_realization`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.seven_bit_candidate`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorFairBitService.survival_geometric`
