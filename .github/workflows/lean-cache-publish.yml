@@ -90,8 +90,11 @@ jobs:
         env:
           CI_HIT_PATHS: '*'
           CI_PUSH_BEFORE: ${{ github.event.before }}
-          GITHUB_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
-        run: bash tools/scripts/workflow/ci-entry.sh
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
+          fi
+          bash tools/scripts/workflow/ci-entry.sh
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
