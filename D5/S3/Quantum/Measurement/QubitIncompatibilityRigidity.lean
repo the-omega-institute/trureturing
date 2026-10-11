@@ -63,7 +63,7 @@ private lemma B_formula (t : ℝ) (v : V) :
       D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
 
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
-  (scalarB_hermitian scalarB_det half_scalarB_posSemidef_iff
+  (scalarB_hermitian half_scalarB_posSemidef_iff
     hermitian_decomposition half_scalarB_double half_scalarB_complement trace_B_mul)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix)
 
@@ -73,11 +73,6 @@ private lemma B_hermitian (t : ℝ) (v : V) : (B t v).IsHermitian :=
 private lemma B_trace (t : ℝ) (v : V) : Matrix.trace (B t v) = (t : ℂ) := by
   rw [B_formula]
   simp [blochMatrix, Matrix.trace, Fin.sum_univ_two]
-  ring
-
-private lemma B_det (t : ℝ) (v : V) :
-    Matrix.det (B t v) = ((t ^ 2 - ‖v‖ ^ 2) / 4 : ℝ) := by
-  simp [B, scalarB_det, Complex.ofReal_div]
   ring
 
 private lemma B_psd (t : ℝ) (v : V) : (B t v).PosSemidef ↔ ‖v‖ ≤ t :=
@@ -767,7 +762,8 @@ private lemma plane_coordinates (a b m c : V) (hm : ‖m‖ = 1)
       simp only [inner_sub_left, inner_add_left, real_inner_smul_left,
         real_inner_self_eq_norm_sq, real_inner_comm a b] <;> field_simp [hDexp, hDexp2] <;> ring
   have hrm : ⟪r, m⟫_ℝ = 0 := by
-    simp [r, inner_sub_left, inner_add_left, real_inner_smul_left, real_inner_comm m a, real_inner_comm m b, real_inner_comm m c, hma, hmb, hmc]
+    simp [r, inner_sub_left, inner_add_left, real_inner_smul_left, real_inner_comm m a,
+      real_inner_comm m b, real_inner_comm m c, hma, hmb, hmc]
   have hgm := gram_complete a b m
   simp only [hm, hma, hmb] at hgm
   obtain ⟨_, _, hc⟩ := cross_geometry a b
@@ -799,10 +795,11 @@ private lemma incompatible_nonzero (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 
   have hD := (incompatible_parameters a ha hi).2.2
   fin_cases i
   · change a 0 = 0 at hzero
-    simpa [hzero] using hD
+    simp [hzero] at hD
   · change a 1 = 0 at hzero
-    simpa [hzero] using hD
-private lemma effect_neg (v : V) (s : Fin 2) : effect (-v) s = effect v (if s = 0 then 1 else 0) := by
+    simp [hzero] at hD
+private lemma effect_neg (v : V) (s : Fin 2) :
+    effect (-v) s = effect v (if s = 0 then 1 else 0) := by
   fin_cases s <;> simp [effect, pauli, neg_smul]
 private def flip (s : Fin 2) : Fin 2 := if s = 0 then 1 else 0
 private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → V) :
@@ -894,8 +891,10 @@ theorem result : claim := by
         curve (K (b 0) (b 1)) ⟪b 0, b 1⟫_ℝ (u*x+v*y) (w*x+z*y) = 0 := by
       obtain ⟨n, _, hx, hy, hn⟩ := common_boundary_zero (a 0) (a 1) (b 0) (b 1) m hm
         (ha 0) (ha 1) (hma 0) (hma 1) hk hD heq x y hz
-      have hx' : ⟪n, b 0⟫_ℝ = u*x+v*y := by rw [hc]; simp [inner_add_right, inner_smul_right, hx, hy]
-      have hy' : ⟪n, b 1⟫_ℝ = w*x+z*y := by rw [hd]; simp [inner_add_right, inner_smul_right, hx, hy]
+      have hx' : ⟪n, b 0⟫_ℝ = u*x+v*y := by
+        rw [hc]; simp [inner_add_right, inner_smul_right, hx, hy]
+      have hy' : ⟪n, b 1⟫_ℝ = w*x+z*y := by
+        rw [hd]; simp [inner_add_right, inner_smul_right, hx, hy]
       dsimp only [quartic] at hn
       rw [hx', hy'] at hn
       dsimp only [curve]; linear_combination hn
