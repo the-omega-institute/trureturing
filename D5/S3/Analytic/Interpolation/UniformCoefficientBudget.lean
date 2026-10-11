@@ -31,7 +31,7 @@ private theorem rolle_nodes (n : ℕ) (f : ℝ → ℝ) (a b : ℝ)
     have hstep (i : Fin (n + 1)) :
         ∃ x ∈ Ioo (z i.castSucc) (z i.succ), deriv f x = 0 := by
       apply exists_deriv_eq_zero (hz (by simp))
-      · exact (by simpa using hc 0 (by omega)).mono
+      · exact (show ContinuousOn f (Icc a b) by simpa using hc 0 (by omega)).mono
           (Icc_subset_Icc (hzi i.castSucc).1 (hzi i.succ).2)
       · rw [hfz, hfz]
     choose w hw hwzero using hstep
