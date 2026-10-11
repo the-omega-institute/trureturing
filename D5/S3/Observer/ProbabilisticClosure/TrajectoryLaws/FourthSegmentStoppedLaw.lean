@@ -340,7 +340,7 @@ theorem cylinder_mass (r : unitInterval) (w : List Letter) :
       rw [hm, Fin.prod_univ_succ]
       simpa only [rawReadLaw, Kernel.const_apply] using h
 
-private theorem bernoulli_alpha (r : unitInterval) :
+theorem bernoulli_alpha (r : unitInterval) :
     (bernoulliMeasure (0 : Letter) 1 r) {0} = alphaMass r := by
   simp [bernoulliMeasure, alphaMass]
 
@@ -561,7 +561,7 @@ theorem p_word_length (j : ℕ) (b : Letter) :
   simp [pWord, hl]
   split_ifs <;> simp
 
-private theorem p_word_injective (i j : ℕ) (a b : Letter) :
+theorem p_word_injective (i j : ℕ) (a b : Letter) :
     pWord i a = pWord j b ↔ i = j ∧ a = b := by
   constructor
   · intro h

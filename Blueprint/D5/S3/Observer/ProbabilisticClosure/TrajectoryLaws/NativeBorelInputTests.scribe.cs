@@ -1,0 +1,37 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws;
+internal sealed class NativeBorelInputTestsDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelInputTests.";
+    public DocumentDefinition Create()
+    {
+        Formula s=F.Id("s"), r=F.Id("r"), t=F.Id("t"), d=F.Id("D"), n=F.Id("n"), j=F.Id("j"), i=F.Id("i"), b=F.Id("b"), q=F.Id("Q"), w=F.Id("W"), theta=F.Id("theta"), flow=F.Id("F"), nu=F.Id("nu"), kernel=F.Id("K");
+        Formula bp=All(Imp(Call("IsProbabilityMeasure",nu),Imp(Call("IsMarkovKernel",kernel),Iffn(Call("AE",nu,q,Eqn(Call("residualB",q),Call("barycenter",Call("beta"),kernel,q))),Call("InputTests",nu,Call("residualB"),Call("barycenterFamily",Call("beta"),kernel))))),("nu","MeasurePDescriptor"),("K","KernelPB"));
+        Formula ap=All(Imp(Call("IsProbabilityMeasure",nu),Imp(Call("IsMarkovKernel",kernel),Iffn(Call("AE",nu,w,Eqn(Call("residualA",w),Call("barycenter",Call("p"),kernel,w))),Call("InputTests",nu,Call("residualA"),Call("barycenterFamily",Call("p"),kernel))))),("nu","MeasureBDescriptor"),("K","KernelBP"));
+        Formula gamma=F.Id("Gamma"), family=F.Id("R"), atom=F.Id("a"), phi=F.Id("phi");
+        Formula jb=All(Imp(Call("IsProbabilityMeasure",nu),Imp(Call("IsMarkovKernel",kernel),Imp(Eqn(gamma,Call("compProd",nu,kernel)),Iffn(Call("AE",nu,q,Eqn(Call("residualB",q),Call("barycenter",Call("beta"),kernel,q))),Call("JointInputTests",gamma,Call("unnormalizedB")))))), ("nu","MeasurePDescriptor"),("K","KernelPB"),("Gamma","JointMeasurePB"));
+        Formula ja=All(Imp(Call("IsProbabilityMeasure",nu),Imp(Call("IsMarkovKernel",kernel),Imp(Eqn(gamma,Call("compProd",nu,kernel)),Iffn(Call("AE",nu,w,Eqn(Call("residualA",w),Call("barycenter",Call("p"),kernel,w))),Call("JointInputTests",gamma,Call("unnormalizedA")))))), ("nu","MeasureBDescriptor"),("K","KernelBP"),("Gamma","JointMeasureBP"));
+        Formula jointIdentity=All(Imp(Call("JointIdentityHypotheses",s,t,nu,kernel,gamma,family,phi),Eqn(Call("MarginalSignedIntegral",nu,kernel,family,atom,phi),Call("JointSignedIntegral",gamma,family,atom,phi))), ("s","ActivePhase"),("t","ActivePhase"),("nu","MeasureRegularDescriptor"),("K","KernelRegularDescriptors"),("Gamma","JointMeasure"),("R","OppositeLawFamily"),("a","ValidTail"),("phi","BorelRealInputFunction"));
+        return DocumentDefinition.Create(ScribeNode.Create("Full bounded Borel input tests",H("Complete conditional rows"),Blocks(
+            Paragraph(Text("discrepancy(R,S,t,x) is the signed real difference R(x){t}-S(x){t}, using Measure.real after probability normalization establishes finiteness. InputTests(nu,R,S) means: for every complete target atom t and every Borel real input function phi with some finite pointwise absolute bound M, integral phi(x) discrepancy(R,S,t,x) dnu(x)=0. The bound may depend on phi and on the selected coordinate. JointInputTests(Gamma,H) uses the same quantifiers, with integral phi(z.first)*H(a,z) dGamma(z)=0. unnormalizedB(a,(Q,W)) means law(Q).real{prependB(a)}-(1-u(Q)).toReal*law(W).real{a}; unnormalizedA(a,(W,Q)) means law(W).real{prependA(a)}-v(W).toReal*law(Q).real{a}. This is signed real subtraction.")),
+            Node("normalizedB_iff_input_tests",bp,"KernelPB is a Markov kernel PDescriptor to BDescriptor, and barycenter(beta,K,Q) is lawKernel(beta) composed with K(Q). The statement assumes neither normalizedB nor a CommonFlow. Indicators of arbitrary measurable input sets give zero set integrals; integrability of each signed coordinate follows from the two probability bounds. The exact Mathlib set-integral uniqueness theorem proves one a.e. equality per atom. Only the countable complete atom family is intersected before singleton extensionality recovers full measure equality. Infinity is included; no uncountable intersection over input tests occurs."),
+            Node("normalizedA_iff_input_tests",ap,"KernelBP is a Markov kernel BDescriptor to PDescriptor. The same characterization is proved for residualA and barycenter(p,K,W), with the entire original input descriptor and its unweighted marginal. The displayed tests here are marginal integrals against the barycenter discrepancy. The full joint-test theorems below identify these marginal tests with signed tests on the same given joint law."),
+            Node("input_test_joint_identity", jointIdentity, "JointIdentityHypotheses means nu is a probability measure, K is Markov, Gamma=nu compProd K, R is measurable with every row a probability law, and phi is measurable with a finite absolute bound. MarginalSignedIntegral is integral phi(x)*[R(x).real{a}-barycenter(t,K,x).real{a}] dnu(x); JointSignedIntegral is integral phi(z.first)*[R(z.first).real{a}-law(z.second).real{a}] dGamma(z). For arbitrary phases s,t, a probability marginal nu, one Markov kernel K, and Gamma=nu compProd K, let R be any measurable family of full opposite probability laws. For every complete atom a and every bounded actual TV-Borel real input test phi, the integral of phi times [R{a}-barycenter{a}] over nu equals the integral of phi(z.first) times [R(z.first){a}-law(z.second){a}] over this same Gamma. Fubini is applied only after the joint signed integrand is shown bounded and integrable. Gamma is fixed before the test quantifiers."),
+            Node("normalizedB_iff_full_joint_tests", jb, "With nu a probability measure, B a Markov kernel and this fixed Gamma=nu compProd B, the full residualB equation almost everywhere is equivalent to zero integral against every bounded actual TV-Borel real input test and every complete beta atom of law(Q){prependB(a)}-(1-u(Q))*law(W){a}. The formula uses real masses after finiteness. Original denominator 1-u lies in [3/5,2/3]; multiplying and dividing the test by it preserve measurable boundedness. No normalized field is assumed."),
+            Node("normalizedA_iff_full_joint_tests", ja, "The complete-coordinate topology theorem identifies actual TV-Borel with inherited Giry on each unchanged regular descriptor. For the reversed fixed joint Gamma=nu compProd A, the same equivalence uses law(W){prependA(a)}-v(W)*law(Q){a}, for every complete p atom. The original denominator v lies in [1/3,2/5], and its reciprocal is bounded by three. These are the same acquired joint realizations and their unweighted input margins, including the infinity test."))));
+    }
+    private static DocumentBlock.Describe Node(string declaration, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
+        DescribeId.Create(declaration.Replace('_','-').ToLowerInvariant()), DeclarationHandle.Create(Prefix+declaration),
+        H(declaration.Replace('_',' ')), StatementSource.FromAuthor(Disp(formula)),
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+    private static Formula Eqn(Formula a, Formula b) => Seq(a, Eq, b);
+    private static Formula Iffn(Formula a, Formula b) => Seq(Open,a,Close,Leftrightarrow,Open,b,Close);
+    private static Formula Imp(Formula a, Formula b) => Seq(Open,a,Close,Rightarrow,Open,b,Close);
+    private static Formula All(Formula body, params (string Name,string Type)[] xs) {
+        for(int k=xs.Length-1;k>=0;k--) body=Seq(Forall,Sp,F.Id(xs[k].Name),Colon,Sp,F.Id(xs[k].Type),Comma,Sp,body);
+        return body;
+    }
+}
