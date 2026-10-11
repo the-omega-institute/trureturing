@@ -243,8 +243,10 @@ private theorem bandDerivative_continuous {a b c : ℝ} (hc : 0 < c) (ha : 0 < a
   intro t ht
   have ht0 : 0 < t := ha.trans_le ht.1
   have hl := Real.continuousAt_log (div_ne_zero ht0.ne' hc.ne')
-  exact ((hl.comp t (continuousAt_id.div_const c)).add_const 1 |>.div
-    ((continuousAt_id.pow 2).mul ((hl.comp t (continuousAt_id.div_const c)).pow 2))
+  have hlog : ContinuousAt (fun s : ℝ => Real.log (s / c)) t :=
+    hl.comp' (f := fun s : ℝ => s / c) (continuousAt_id.div_const c)
+  exact ((hlog.add_const 1).div
+    ((continuousAt_id.pow 2).mul (hlog.pow 2))
     (by have := hz t ht; positivity)).continuousWithinAt
 
 private theorem bandDerivative_cap {A c t : ℝ} (hA : Real.exp 78 ≤ A)
@@ -349,7 +351,8 @@ private theorem reciprocalLog_FTC {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
   have hd : ∀ t ∈ uIcc a b, HasDerivAt (fun s => -reciprocalLog c s) (bandDerivative c t) t := by
     intro t ht
     rw [uIcc_of_le hab] at ht
-    simpa using (reciprocalLog_deriv hc (ha.trans_le ht.1) (hz t ht).ne').neg
+    simpa only [neg_neg] using
+      (reciprocalLog_deriv hc (ha.trans_le ht.1) (hz t ht).ne').fun_neg
   have h := intervalIntegral.integral_eq_sub_of_hasDerivAt hd hi
   linarith
 
@@ -377,6 +380,8 @@ private theorem band_mass_forward {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
     apply intervalIntegral.integral_congr
     intro t ht
     rw [uIcc_of_le hab] at ht
+    change deriv (reciprocalLog c) t * Chebyshev.psi t =
+      -(bandDerivative c t * Chebyshev.psi t)
     rw [hderiv t ht]
     ring
   rw [hdiff] at habel
@@ -394,8 +399,9 @@ private theorem band_mass_reverse {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) (hab :
   have hfor := band_mass_forward hc ha hab hz
   have hk := bandDerivative_continuous hc ha hz
   have hi := hk.intervalIntegrable_of_Icc (μ := volume) hab
-  have hip := (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr
-    (prefix_product_integrable ha.le hk.integrableOn_Icc (μ := volume))
+  have hip : IntervalIntegrable (fun t => bandDerivative c t * Chebyshev.psi t)
+      volume a b := (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr
+    (prefix_product_integrable ha.le (hk.integrableOn_Icc (μ := volume)))
   simp only [weightedPrefix_sub, weightedPrefix_const] at *
   rw [show (fun t => bandDerivative c t * (Chebyshev.psi b - Chebyshev.psi t)) =
     (fun t => bandDerivative c t * Chebyshev.psi b - bandDerivative c t * Chebyshev.psi t) by funext t; ring,
@@ -444,7 +450,8 @@ private theorem triangle_volume_reverse {a b c : ℝ} (hc : 0 < c) (ha : 0 < a) 
   have hparts := intervalIntegral.integral_mul_deriv_eq_deriv_mul
     (u := fun t : ℝ => b - t) (v := reciprocalLog c)
     (u' := fun _ => (-1 : ℝ)) (v' := fun t => -bandDerivative c t)
-    (fun t _ => (hasDerivAt_const t b).sub (hasDerivAt_id t)) hd intervalIntegrable_const hki.neg
+    (fun t _ => by simpa only [id_eq] using
+      HasDerivAt.const_sub b (hasDerivAt_id t)) hd intervalIntegrable_const hki.neg
   rw [show (fun t => (b - t) * -bandDerivative c t) =
     (fun t => -(bandDerivative c t * (b - t))) by funext t; ring,
     intervalIntegral.integral_neg] at hparts
@@ -640,7 +647,7 @@ private theorem forward_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
   have hk := bandDerivative_continuous hc0 ha0 hz
   have hkcoord : ContinuousOn (fun r => bandDerivative c (A + r)) (Icc 0 h) :=
     hk.comp (continuousOn_const.add continuousOn_id) (fun r hr => hband ▸ hmap r hr)
-  have hip := prefix_product_integrable ha0.le hk.integrableOn_Icc (μ := volume)
+  have hip := prefix_product_integrable ha0.le (hk.integrableOn_Icc (μ := volume))
   have hi : IntervalIntegrable (fun t => bandDerivative c t * (Chebyshev.psi t - Chebyshev.psi A))
       volume A (c * A) := by
     have hs := hip.sub (hk.integrableOn_Icc (μ := volume).mul_const (Chebyshev.psi A))
@@ -697,7 +704,8 @@ private theorem reverse_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
   have hk := bandDerivative_continuous hc0 (mul_pos hc0 ha0) hz
   have hkcoord : ContinuousOn (fun r => bandDerivative c (A - r)) (Icc 0 h) :=
     hk.comp (continuousOn_const.sub continuousOn_id) (fun r hr => hband ▸ hmap r hr)
-  have hip := prefix_product_integrable (mul_pos hc0 ha0).le hk.integrableOn_Icc (μ := volume)
+  have hip := prefix_product_integrable (mul_pos hc0 ha0).le
+    (hk.integrableOn_Icc (μ := volume))
   have hi : IntervalIntegrable (fun t => bandDerivative c t * (Chebyshev.psi A - Chebyshev.psi t))
       volume (c * A) A := by
     have hs := (hk.integrableOn_Icc (μ := volume).mul_const (Chebyshev.psi A)).sub hip
