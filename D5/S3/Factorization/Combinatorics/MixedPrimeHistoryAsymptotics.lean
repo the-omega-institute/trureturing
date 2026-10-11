@@ -13,6 +13,8 @@ import Mathlib.Analysis.Analytic.OfScalars
 import Mathlib.Analysis.Analytic.ChangeOrigin
 import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
+import Mathlib.Analysis.Complex.RemovableSingularity
+import Mathlib.Analysis.Normed.Module.Ball.Pointwise
 
 set_option autoImplicit false
 
@@ -755,5 +757,147 @@ theorem critical_control (t : ℝ) (ht : 0 < t) :
     obtain ⟨r, har, hrρ⟩ := exists_between haρ
     obtain ⟨B, hB0, hB, _, hcomp, _⟩ := control r ((sq_nonneg _).trans_lt har) hrρ
     exact ⟨r, har, hrρ, B, hB0, hB, hcomp a ha har⟩
+
+private theorem prime_analytic :
+    AnalyticOnNhd ℂ (primeSeries (𝕜 := ℂ)) (Metric.ball 0 1) := by
+  intro z hz
+  obtain ⟨a, hza, ha⟩ := exists_between (show ‖z‖ < 1 by simpa using hz)
+  have hdiff : DifferentiableOn ℂ (primeSeries (𝕜 := ℂ)) (Metric.ball 0 a) := by
+    apply Complex.differentiableOn_tsum_of_summable_norm
+      (summable_geometric_of_lt_one ((norm_nonneg z).trans hza.le) ha)
+    · intro q
+      by_cases hq : q.Prime <;> simp only [hq, if_true, if_false] <;> fun_prop
+    · exact Metric.isOpen_ball
+    · intro q w hw
+      by_cases hq : q.Prime
+      · simp only [if_pos hq, norm_pow]
+        exact pow_le_pow_left₀ (norm_nonneg w) (by simpa using (Metric.mem_ball.mp hw).le) _
+      · simp only [if_neg hq, norm_zero]
+        exact pow_nonneg ((norm_nonneg z).trans hza.le) _
+  exact hdiff.analyticAt (Metric.isOpen_ball.mem_nhds (by simpa using hza))
+
+private theorem prime_ofReal (x : ℝ) : primeSeries (x : ℂ) = ((primeSeries x : ℝ) : ℂ) := by
+  unfold primeSeries
+  rw [Complex.ofReal_tsum]
+  apply tsum_congr
+  intro q
+  split_ifs <;> simp
+
+private theorem numerator_positive (t ρ : ℝ) (ht : 0 < t) (hρ : 0 < ρ) :
+    ∃ b : ℝ, 0 < b ∧ numerator t (ρ : ℂ) = (b : ℂ) := by
+  let f (x : ℝ) := ∑' n : ℕ, weightedCount t n * x ^ n
+  have hf (x : ℝ) : generating t (x : ℂ) = (f x : ℂ) := by
+    simp only [generating, f, Complex.ofReal_tsum, Complex.ofReal_mul, Complex.ofReal_pow]
+  have hp (x : ℝ) (hx : 0 ≤ x) : 0 ≤ f x :=
+    tsum_nonneg (fun n => mul_nonneg (weighted_nonneg t ht.le n) (pow_nonneg hx n))
+  refine ⟨ρ + t * ∑' q : ℕ, if q.Prime then f (ρ ^ q) else 0, ?_, ?_⟩
+  · exact add_pos_of_pos_of_nonneg hρ (mul_nonneg ht.le
+      (tsum_nonneg (fun q => by split_ifs <;> simp [hp _ (pow_nonneg hρ.le q)])))
+  · simp only [numerator, ← Complex.ofReal_pow, hf, Complex.ofReal_add,
+      Complex.ofReal_mul, Complex.ofReal_tsum]
+    congr 2
+    apply tsum_congr
+    intro q
+    split_ifs <;> simp
+
+/-- Subtracting the positive principal part leaves an analytic function on a larger disk. -/
+theorem pole_decomposition (t : ℝ) (ht : 0 < t) :
+    ∃ ρ C R : ℝ, 0 < ρ ∧ ρ < R ∧ R < 1 ∧ 0 < C ∧ t * primeSeries ρ = 1 ∧
+      ∃ E : ℂ → ℂ, AnalyticOnNhd ℂ E (Metric.ball 0 R) ∧
+        ∀ z : ℂ, ‖z‖ < ρ → generating t z = (C : ℂ) / (1 - z / ρ) + E z := by
+  obtain ⟨ρ, hρ, _, _, _, hN, hF, _, ⟨d, hd, hder⟩, hzero⟩ := critical_control t ht
+  let D (z : ℂ) := 1 - (t : ℂ) * primeSeries z
+  let g := dslope D (ρ : ℂ)
+  have hD0 : D (ρ : ℂ) = 0 := by
+    dsimp [D]
+    rw [prime_ofReal, ← Complex.ofReal_mul, hρ.2.2]
+    simp
+  have hderD : HasDerivAt D (-(t : ℂ) * d) (ρ : ℂ) := by
+    simpa only [neg_mul] using (hder.const_mul (t : ℂ)).const_sub 1
+  have hgρ : g (ρ : ℂ) = -(t : ℂ) * d := by
+    exact (dslope_same D (ρ : ℂ)).trans hderD.deriv
+  have hgρ0 : g (ρ : ℂ) ≠ 0 := by
+    rw [hgρ]
+    exact mul_ne_zero (neg_ne_zero.mpr (by exact_mod_cast ht.ne')) (by exact_mod_cast hd.ne')
+  have hρsqrt : ρ < Real.sqrt ρ := by
+    apply (Real.lt_sqrt hρ.1.le).mpr
+    nlinarith [hρ.2.1]
+  have hsqrt1 : Real.sqrt ρ < 1 := by simpa using Real.sqrt_lt_sqrt hρ.1.le hρ.2.1
+  have hga : AnalyticOnNhd ℂ g (Metric.ball 0 (Real.sqrt ρ)) := by
+    have hD : DifferentiableOn ℂ D (Metric.ball 0 (Real.sqrt ρ)) := by
+      intro z hz
+      exact (differentiableWithinAt_const (c := (1 : ℂ))).sub
+        ((prime_analytic z (by
+          simp only [Metric.mem_ball, dist_zero_right] at hz ⊢
+          exact hz.trans hsqrt1)).differentiableAt.differentiableWithinAt.const_mul _)
+    have hg := (Complex.differentiableOn_dslope
+      (Metric.isOpen_ball.mem_nhds (show (ρ : ℂ) ∈ Metric.ball 0 (Real.sqrt ρ) by
+        simpa [abs_of_pos hρ.1] using hρsqrt))).mpr hD
+    exact hg.analyticOnNhd Metric.isOpen_ball
+  have hgnz (z : ℂ) (hz : ‖z‖ ≤ ρ) : g z ≠ 0 := by
+    intro hg0
+    have hzρ : z = (ρ : ℂ) := by
+      apply hzero z hz
+      have h := sub_smul_dslope D (ρ : ℂ) z
+      change (z - (ρ : ℂ)) * g z = D z - D (ρ : ℂ) at h
+      simpa [hg0, hD0] using h.symm
+    exact hgρ0 (hzρ ▸ hg0)
+  let U := Metric.ball (0 : ℂ) (Real.sqrt ρ) ∩ g ⁻¹' ({0}ᶜ)
+  have hU : IsOpen U := hga.continuousOn.isOpen_inter_preimage
+    Metric.isOpen_ball isClosed_singleton.isOpen_compl
+  have hclosed : Metric.closedBall (0 : ℂ) ρ ⊆ U := by
+    intro z hz
+    have hz' : ‖z‖ ≤ ρ := by simpa using hz
+    exact ⟨by simpa using hz'.trans_lt hρsqrt, hgnz z hz'⟩
+  obtain ⟨δ, hδ, hδU⟩ := (isCompact_closedBall (0 : ℂ) ρ).exists_thickening_subset_open hU hclosed
+  rw [thickening_closedBall hδ hρ.1.le] at hδU
+  obtain ⟨R, hρR, hR⟩ := exists_between (lt_min (by linarith : ρ < δ + ρ) hρsqrt)
+  have hRδ : R < δ + ρ := hR.trans_le (min_le_left _ _)
+  have hRsqrt : R < Real.sqrt ρ := hR.trans_le (min_le_right _ _)
+  have hgR (z : ℂ) (hz : z ∈ Metric.ball 0 R) : g z ≠ 0 :=
+    (hδU (Metric.ball_subset_ball hRδ.le hz)).2
+  let H (z : ℂ) := numerator t z / g z
+  have hH : AnalyticOnNhd ℂ H (Metric.ball 0 R) := by
+    intro z hz
+    exact (hN z (Metric.ball_subset_ball hRsqrt.le hz)).div
+      (hga z (Metric.ball_subset_ball hRsqrt.le hz)) (hgR z hz)
+  obtain ⟨b, hb, hNb⟩ := numerator_positive t ρ ht hρ.1
+  let C := b / (t * ρ * d)
+  have hC : 0 < C := div_pos hb (mul_pos (mul_pos ht hρ.1) hd)
+  have hHρ : H (ρ : ℂ) = -(C : ℂ) * ρ := by
+    dsimp [H, C]
+    rw [hNb, hgρ]
+    push_cast
+    field_simp [show (ρ : ℂ) ≠ 0 by exact_mod_cast hρ.1.ne']
+  refine ⟨ρ, C, R, hρ.1, hρR, hRsqrt.trans hsqrt1, hC, hρ.2.2,
+    dslope H (ρ : ℂ), ?_, ?_⟩
+  · exact ((Complex.differentiableOn_dslope
+      (Metric.isOpen_ball.mem_nhds (show (ρ : ℂ) ∈ Metric.ball 0 R by
+        simpa [abs_of_pos hρ.1] using hρR))).mpr hH.differentiableOn).analyticOnNhd
+      Metric.isOpen_ball
+  · intro z hz
+    have hzR : z ∈ Metric.ball 0 R := by simpa using hz.trans hρR
+    have hzρ : z ≠ (ρ : ℂ) := by
+      intro he
+      simpa [he, abs_of_pos hρ.1] using hz
+    have hs := sub_smul_dslope D (ρ : ℂ) z
+    change (z - (ρ : ℂ)) * g z = D z - D (ρ : ℂ) at hs
+    rw [hD0, sub_zero] at hs
+    have he := sub_smul_dslope H (ρ : ℂ) z
+    change (z - (ρ : ℂ)) * dslope H (ρ : ℂ) z = H z - H (ρ : ℂ) at he
+    rw [hHρ] at he
+    have hfg : (z - (ρ : ℂ)) * generating t z = H z := by
+      apply (eq_div_iff (hgR z hzR)).mpr
+      rw [mul_right_comm, hs]
+      exact hF z hz
+    have hρne : (ρ : ℂ) ≠ 0 := by exact_mod_cast hρ.1.ne'
+    have hzsub : 1 - z / (ρ : ℂ) ≠ 0 := by
+      intro heq
+      have hh := (div_eq_iff hρne).mp (sub_eq_zero.mp heq).symm
+      exact hzρ (by simpa using hh)
+    apply (mul_left_cancel₀ (sub_ne_zero.mpr hzρ))
+    rw [mul_add, he, hfg]
+    field_simp
+    <;> ring
 
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryAsymptotics

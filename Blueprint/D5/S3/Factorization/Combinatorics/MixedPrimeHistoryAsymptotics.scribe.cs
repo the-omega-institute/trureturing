@@ -89,5 +89,22 @@ internal sealed class MixedPrimeHistoryAsymptoticsDocument : IScribeDocumentDefi
                     + "level before one. Uniform geometric convergence gives continuity "
                     + "on each compact subinterval, so the intermediate value theorem "
                     + "and strict increase yield the unique root."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mixedprimehistoryasymptotics-pole-decomposition"),
+                DeclarationHandle.Create("D5/S3/Factorization/Combinatorics/MixedPrimeHistoryAsymptotics.pole_decomposition"),
+                H("A positive simple pole and an analytic remainder"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive t there are positive rho and C and a real R with "
+                    + "rho less than R less than one and t P(rho) = 1. There is a complex "
+                    + "function E analytic on the open R disk such that, for every z in "
+                    + "the open rho disk, F(z) = C/(1-z/rho) + E(z). The denominator "
+                    + "divided difference has its derivative value at rho and has no zeros "
+                    + "on the closed rho disk. Compactness enlarges that disk while keeping "
+                    + "the divided difference nonzero. The numerator at rho is a positive "
+                    + "real number b, and C = b/(t rho P'(rho)). A second divided difference "
+                    + "constructs the analytic remainder, including its value at rho."))),
                 DescribeRole.Theorem))));
 }
