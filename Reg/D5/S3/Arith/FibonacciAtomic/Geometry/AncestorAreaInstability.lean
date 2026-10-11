@@ -49,24 +49,24 @@ def arena : Arena where
         (n : ℝ)/2 ≤ max |E (midpoint n) - (depth (T n) : ℝ)|
           |E (midpoint n) - (depth (U n) : ℝ)|)
 
-theorem actual_law : arena.Law actual := result
-
-theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have he := (h.1 3 (by decide)).2.2.2.2.2.2.1
-  change ‖(0 : Fin ((T 3).length-1) → ℝ) - 0‖ = 1 at he
-  norm_num at he
-
 def evidence : Registration arena (arena.Law actual) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨actual_law, rejected, rejected_law⟩
+  variation := ⟨result, rejected, by
+    intro h
+    have he := (h.1 3 (by decide)).2.2.2.2.2.2.1
+    change ‖(0 : Fin ((T 3).length-1) → ℝ) - 0‖ = 1 at he
+    norm_num at he⟩
   sensitivity := by
     unfold Sensitivity
     dsimp only [arena, signature]
     constructor
     · intro i
-      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      refine ⟨rejected, ?_, rfl, by
+        intro h
+        have he := (h.1 3 (by decide)).2.2.2.2.2.2.1
+        change ‖(0 : Fin ((T 3).length-1) → ℝ) - 0‖ = 1 at he
+        norm_num at he⟩
       intro j hj
       exact (hj (Subsingleton.elim j i)).elim
     · intro i; exact nomatch i
@@ -109,8 +109,6 @@ def registration : Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
   familyRecord := none
   options := #[] }
 
-#print axioms actual_law
-#print axioms rejected_law
 #print axioms evidence
 #print axioms registration
 
