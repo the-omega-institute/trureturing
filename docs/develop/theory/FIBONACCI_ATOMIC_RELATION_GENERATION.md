@@ -69854,3 +69854,176 @@ $$
 它只说明 CA 优化源可以被库存参数化；要得到 FIB 覆盖，还要证明该 CA 节点
 的库存指数或事件子集满足指定五窗来源。对 Robin 而言，仍需在同一个 CA 节点
 上控制点值余量；参数化本身不产生正号。
+
+## 456. CA 胞腔内的 floor residual 与 FIB 同余脱钩
+
+上一节把严格库存根识别成 CA 来源，但这仍没有说明 Vega 窗口中的分数部
+残差由什么决定。本节给出一个精确的局部接口：**在同一个 CA 指数剖面的
+稳定胞腔内，整数及其所有 FIB 同余保持不变，而 floor residual 严格变化。**
+这不是重复 CA 极值约化；它说明为什么同余观察本身不能支付 Vega 的残差义务。
+
+对素数 \(p\) 和参数 \(\varepsilon>0\)，置
+
+$$
+Y_p(\varepsilon)
+=\frac{\log\!\left((p^{1+\varepsilon}-1)/(p^\varepsilon-1)\right)}{\log p}.
+\tag{456.1}
+$$
+
+有限几何和满足
+
+$$
+\frac{G_p(a)}{G_p(a-1)}
+=\frac{p^{a+1}-1}{p^{a+1}-p}.
+\tag{456.2}
+$$
+
+因此
+
+$$
+\frac{G_p(a)}{G_p(a-1)}>p^\varepsilon
+\iff
+a+1<Y_p(\varepsilon).
+\tag{456.3}
+$$
+
+在非事件参数（即没有 \(Y_p(\varepsilon)\in\mathbb Z\)）处，严格库存的
+指数恰为
+
+$$
+a_p^-(\varepsilon)=\left\lfloor Y_p(\varepsilon)\right\rfloor-1.
+\tag{456.4}
+$$
+
+在 \(Y_p(\varepsilon)\in\mathbb Z\) 时，严格端点和含同价层的右端点相差一层；
+这正是 \(N^-\) 与 \(N^+\) 的事件区别，不能用一个 floor 公式掩盖。
+
+固定一个稳定胞腔，使指数向量 \(a_p\) 和最大支撑素数 \(P\) 不变。定义
+
+$$
+\mathcal S_P(\varepsilon)
+=\sum_{p\le P}Y_p(\varepsilon)\log p,
+\qquad
+\mathcal F_P(\varepsilon)
+=\sum_{p\le P}\{Y_p(\varepsilon)\}\log p,
+\qquad
+\vartheta(P)=\sum_{p\le P}\log p.
+$$
+
+由（456.4）得到 Vega 分解的精确版本
+
+$$
+\boxed{
+\log N
+=\mathcal S_P(\varepsilon)-\mathcal F_P(\varepsilon)-\vartheta(P).
+}
+\tag{456.5}
+$$
+
+它只是把同一个整数的 CA 指数逐素数展开；没有把 residual 当成新的独立
+权重，也没有把它误认为只由 \(N\) 决定的量。
+
+### 命题 456.1（稳定胞腔内 residual 严格变化）
+
+在上述稳定胞腔内，
+
+$$
+\boxed{
+\mathcal F_P'(\varepsilon)=\mathcal S_P'(\varepsilon)<0.
+}
+\tag{456.6}
+$$
+
+因而同一整数 \(N\)、同一素数支撑、同一 CA 指数向量以及同一同余条件，
+对应一整段不同的 floor residual。
+
+**证明。** 直接微分（456.1）：
+
+$$
+Y_p'(\varepsilon)
+=\frac1{1-p^{-(1+\varepsilon)}}
+-\frac1{1-p^{-\varepsilon}}<0.
+\tag{456.7}
+$$
+
+稳定胞腔内没有分数部穿越整数，故
+\(\{Y_p(\varepsilon)\}'=Y_p'(\varepsilon)\)。
+逐项求和即得
+
+$$
+\mathcal F_P'=\sum_{p\le P}Y_p'\log p
+=\mathcal S_P'<0.
+$$
+
+另一方面，指数向量固定，所以（456.5）的左端 \(\log N\) 和
+\(\vartheta(P)\) 都固定；这也直接给出同一恒等式。若 \(M\mid N-1\)，
+例如 \(M=F_r\) 的 FIB 仿射条件 \(N=1+F_rg\)，则该同余在整个胞腔内
+保持不变，而（456.6）说明 residual 仍严格变化。证毕。 \(\square\)
+
+### 有限仿射命中的校准
+
+对 §454 的
+
+$$
+N_*=2^7 3^4 5^3 7^2\cdot11\cdots67
+=1+F_{11}g_*，
+$$
+
+相邻支撑层给出稳定胞腔的参数端点
+
+$$
+\varepsilon_- = r_{71,1},
+\qquad
+\varepsilon_+ = r_{67,1},
+$$
+
+令 \(t(\varepsilon)\) 为方程
+
+$$
+t(\varepsilon)\log t(\varepsilon)=\frac1\varepsilon
+$$
+
+的唯一解。对应的参数区间换成 \(t\) 后约为
+
+$$
+67.4027034<t<71.4038295.
+$$
+
+在整个开区间内，\(N^-\)、\(N_*\)、\(N_*\equiv1\pmod{F_{11}}\) 和完整
+素数幂剖面都不变；但直接代入（456.1）得到
+
+$$
+\mathcal F_{67}(\varepsilon_-^+)\approx17.4914833,
+\qquad
+\mathcal F_{67}(\varepsilon_+^-)\approx16.1452215,
+$$
+
+而自匹配点 \(t_*=\log N_*\) 的值为
+
+$$
+\mathcal F_{67}(\varepsilon_*)\approx17.0092851.
+$$
+
+这些小数只用于校准（456.6）的严格变化；恒等式、端点和同余结论均由
+（456.1）--（456.7）承担。
+
+### 边界 456.2（当前 FIB 观察还缺什么）
+
+命题 456.1 给出一个明确的同观察不可识别性：知道 \(N\) 的 FIB 仿射同余、
+CA 支撑和指数剖面，并不能确定 Vega 的 \(\mathcal F_P(\varepsilon)\)，因为
+同一剖面允许一整段 \(\varepsilon\) 而 residual 在该段严格变化。自匹配条件
+
+$$
+\varepsilon_*=\frac1{(\log N)\log\log N}
+$$
+
+会从胞腔中选出一个参数，但它提供的是额外的实数尺度方程，不是 FIB 同余
+的推论。因此，若要用 Vega 窗口推进 Robin，必须再证明以下至少一项：
+
+1. 自匹配尺度 \(\varepsilon_*\) 处的 \(\mathcal F_P\) 有独立的点值界；
+2. FIB 地址能控制 \(\mathcal S_P(\varepsilon_*)\) 的误差，从而通过（456.5）支付 residual；
+3. 引入保留 \(\varepsilon_*\) 与完整指数剖面的新观察，而不是继续只使用
+   \(N\equiv1\pmod{F_r}\)。
+
+所以，严格自匹配根的 CA 识别已经完成，但“FIB 同余 \(\Rightarrow\) Robin
+符号”仍然没有成立；本节把缺口收缩为同一 CA 胞腔内的实参数 residual 控制。
