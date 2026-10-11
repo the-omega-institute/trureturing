@@ -4455,3 +4455,193 @@ The restriction to sufficiently large prime indices is essential to this proof. 
 The constructed integer has at least $K$ distinct prime divisors outside $S$. Nothing here asserts that it is prime, has exactly $K$ prime divisors in total or outside $S$, is squarefree, satisfies or violates Robin's inequality, or is colossally abundant (CA) or superabundant (SA). The numerical comparison with $5040$ has only the baseline role stated in Proposition 35.5. No uniform low-$\omega$ witness for all patterns, same-window low-$\omega$ companion, or bound on computational, query or physical resources for constructing or recognizing the witnesses is asserted. The information obstruction is for finitely many prime-divisibility bits on the whole family $W$, not arbitrary predicates or all arithmetic observations. The argument is ordinary theory prose and asserts no Lean/kernel verification.
 
 ## 追加锚（本行以下为增补区）
+
+## 36. Local self-calibration from window and prime-support side information
+
+This section uses exactly the numerical source $W$ and prime-divisibility observations of Section 35. Its conclusions are `repo-derived` deductions from Theorem 35.2 and elementary finite-set and divisibility arguments. They are ordinary mathematical theory prose, with no claim of Lean/kernel verification or literature priority. The added information is an explicit source relation; it is not inferred for free from the old probe bits.
+
+**Definitions (labeled source and calibration intervals).** Let $\mathbb P$ denote the positive primes and $\mathbb N_0$ the nonnegative integers. Retain the Fibonacci recurrence $F_0=0$, $F_1=1$, $F_{j+2}=F_{j+1}+F_j$ and write
+
+$$
+\begin{aligned}
+L_r&=\lceil F_r/10\rceil,& U_r&=\lfloor F_r/5\rfloor,&
+I_r&=[L_r,U_r]\cap\mathbb Z,\\
+X&=\{(r,g):r\in\mathbb P,\ g\in I_r\},&
+N(r,g)&=1+F_rg,& \Omega(r,g)&=\omega(N(r,g)).
+\end{aligned}
+\tag{36.1}
+$$
+
+Thus $W_r=\{N(r,g):g\in I_r\}$ and $N[X]=W=\bigcup_{r\in\mathbb P}W_r$, where an interval with $L_r>U_r$ is empty. The target $\omega(n)$ counts distinct prime divisors, with $\omega(1)=0$. For finite $S\subset\mathbb P$, write $d_S(n)=(\mathbf1_{p\mid n})_{p\in S}$ and $\rho_S(n)=\omega(n)-\sum_{p\in S}\mathbf1_{p\mid n}$ for the probe record and the unobserved support size. For $S=\varnothing$ there is one empty pattern, its sum is zero and $\rho_S=\omega$.
+
+The labels in $X$ keep the generating window explicit: if two windows share a numerical value, their labeled sources remain distinct. A numerical observation on $W$ is pulled back along $N$. Supplying $r$ means supplying the label, or the promise $n\in W_r$; it does not assume a unique index determined by $n$. None of these labels is a phase or an endpoint fee from the earlier sections.
+
+For any observation $o:X\to Y$ and any occupied cell $C_y=o^{-1}(\{y\})\ne\varnothing$, define
+
+$$
+L_o(y)=\min_{x\in C_y}\Omega(x),\qquad
+U_o(y)=\sup_{x\in C_y}\Omega(x)\in\mathbb N_0\cup\{+\infty\}.
+\tag{36.2}
+$$
+
+The minimum exists because the values are nonnegative integers; a finite supremum is also attained. No calibration interval is assigned to an empty cell. The interval $[L_o(y),U_o(y)]$ encloses the possible target values; it need not contain only attainable values. A sound finite upper certificate at $y$ is a finite number $c(y)$ with $\Omega(x)\le c(y)$ for every $x\in C_y$. Such a certificate exists exactly when $U_o(y)<\infty$. An exact decoder $D:o[X]\to\mathbb N_0$ with $D(o(x))=\Omega(x)$ exists exactly when every occupied cell has one $\Omega$ value, equivalently $L_o(y)=U_o(y)$. These are set-theoretic criteria, not computability assertions.
+
+Say $\widetilde o$ refines $o$ when $o=h\circ\widetilde o$ for some map $h$ on the attained observations. For every occupied refined cell with $y=h(\widetilde y)$,
+
+$$
+L_o(y)\le L_{\widetilde o}(\widetilde y)
+\le U_{\widetilde o}(\widetilde y)\le U_o(y).
+\tag{36.3}
+$$
+
+Indeed, its sources form a nonempty subset of $C_y$, so taking the minimum and supremum gives these inequalities. The decoding criteria follow by constancy on each fibre, and the certificate criterion follows by the definition of supremum. If $o$ includes a finite probe record $d_S(N(x))=b$, then the observed contribution gives the sound lower bound
+
+$$
+\sum_{p\in S}b_p\le L_o(y)\le\Omega(x)\le U_o(y)
+\qquad(x\in C_y).
+\tag{36.4}
+$$
+
+This lower bound need not be sharp. Refinement can raise the lower endpoint and lower the upper endpoint, while exactness requires the endpoints to coincide.
+
+**Theorem 36.1 (The index-fibre criterion and finite completion of probes).** Let $\alpha:\mathbb P\to A$ be any index-side observation, let $S\subset\mathbb P$ be finite, and put
+
+$$
+\begin{aligned}
+o_{\alpha,S}(r,g)&=(\alpha(r),d_S(N(r,g))),\\
+C_{a,b}&=\{(r,g)\in X:\alpha(r)=a,\ d_S(N(r,g))=b\},\\
+P_a&=\{r\in\mathbb P:\alpha(r)=a,\ I_r\ne\varnothing\},\\
+P_{a,b}&=\{r\in P_a:\exists g\in I_r,\ d_S(N(r,g))=b\}.
+\end{aligned}
+\tag{36.5}
+$$
+
+Here $P_a$ is compatible with the side information, while $P_{a,b}$ is compatible with the entire observed record. For every occupied $C_{a,b}$,
+
+$$
+\begin{aligned}
+U_{o_{\alpha,S}}(a,b)<\infty
+&\ \Longleftrightarrow\ P_a\text{ is bounded}
+\ \Longleftrightarrow\ P_a\text{ is finite}\\
+&\ \Longleftrightarrow\ P_{a,b}\text{ is bounded}
+\ \Longleftrightarrow\ P_{a,b}\text{ is finite}.
+\end{aligned}
+\tag{36.6}
+$$
+
+If $P_a$ is finite, it is nonempty under this occupancy assumption, and
+
+$$
+B_a=\max_{r\in P_a}(1+F_rU_r),\qquad
+U_{o_{\alpha,S}}(a,b)\le\lfloor\log_2 B_a\rfloor<\infty.
+\tag{36.7}
+$$
+
+Given an explicit valid integer bound $B\ge B_a$, a finite additional set of prime queries recovers $\Omega$ exactly: with $Q_B=\{p\in\mathbb P:p\le B\}$,
+
+$$
+\Omega(x)=\sum_{p\in Q_B}\mathbf1_{p\mid N(x)}
+\qquad(x=(r,g)\in X,\ \alpha(r)=a).
+\tag{36.8}
+$$
+
+The added queries are only those in $Q_B\setminus S$. Exact recovery from $(a,b)$ itself, without these additional answers, still requires a singleton $\Omega$ fibre, or $L_{o_{\alpha,S}}(a,b)=U_{o_{\alpha,S}}(a,b)$.
+
+**Proof.** A subset of the positive integers is bounded if and only if it is finite. If $P_a$ is finite, its finitely many windows contain finitely many labeled sources, and every one has $1\le N(r,g)\le B_a$. The product of the distinct prime divisors of any positive integer $n$ divides $n$ and is at least $2^{\omega(n)}$. Therefore $2^{\Omega(r,g)}\le N(r,g)\le B_a$, giving (36.7). Every prime divisor is at most $N(r,g)\le B$, which proves (36.8).
+
+Conversely, suppose $P_a$ is unbounded. Fix any $b\in\{0,1\}^{S}$ and any integer $K\ge1$. Choose $r\in P_a$ with $r\ge R(S,K)$, where $R(S,K)$ is the threshold of Theorem 35.2. That theorem applies to this chosen prime index, however sparse $P_a$ is, and supplies $g\in I_r$ with
+
+$$
+d_S(N(r,g))=b,\qquad
+\Omega(r,g)=\rho_S(N(r,g))+\sum_{p\in S}b_p
+\ge K+\sum_{p\in S}b_p.
+\tag{36.9}
+$$
+
+Thus every pattern has an occupied cell and both its residual support and its total support are unbounded. This proves the reverse implication for $P_a$. In addition, Theorem 35.2 with $K=1$ gives
+
+$$
+P_a\setminus P_{a,b}\subseteq\{r\in\mathbb P:r<R(S,1)\}.
+\tag{36.10}
+$$
+
+Only finitely many indices can be lost when the bits are imposed. Since $P_{a,b}\subseteq P_a$, their boundedness and finiteness are equivalent, proving (36.6). This does not assert that every small window realizes every pattern: empty windows have already been removed, and primes dividing $F_r$ can force zero bits in the remaining small windows. The exactness assertion is the fibre criterion in (36.2), not a consequence of finiteness alone.
+
+**Corollary 36.2 (The adaptive obstruction inside an infinite index cell).** Fix $a$ with $P_a$ infinite. Consider a deterministic procedure whose only source information is $\alpha(r)=a$ and answers to prime-divisibility queries about $N(r,g)$. Its next prime, stopping decision and output may depend on $a$, the preceding transcript and parameters common to this entire index cell. Every finite realized transcript leaves $\Omega$ unbounded on its compatible sources. Hence no such transcript can be a sound leaf outputting a finite upper bound, or certifying $\Omega\le c$ for finite $c$.
+
+**Proof.** Deduplicate the finitely many queried primes into $S$ and their consistent answers into $b$. All sources in $C_{a,b}$ follow the same path: equal earlier answers force the same next query or stopping decision. Theorem 36.1 makes this cell's $\Omega$ values unbounded, so one finite upper output cannot be sound for all of them. The argument includes the empty transcript, repeated queries and a source-dependent number of queries; it does not assume a uniform bound on transcript length. It permits halting with no finite upper claim, and says nothing about procedures supplied with further source information. With constant $\alpha$, it recovers the global obstruction of Section 35. With exact $r$, the compatible index set is a singleton and this obstruction no longer applies.
+
+**Proposition 36.3 (A fixed window and finite probes need not determine $\omega$).** For the exact supplied index $r=13$ and $S=\{2,5\}$, one occupied observation cell contains two different $\omega$ values:
+
+$$
+\begin{aligned}
+F_{13}&=233,& I_{13}&=[24,46]\cap\mathbb Z,\\
+5593&=1+233\cdot24=7\cdot17\cdot47,& \omega(5593)&=3,\\
+6059&=1+233\cdot26=73\cdot83,& \omega(6059)&=2.
+\end{aligned}
+\tag{36.11}
+$$
+
+Both integers have $d_{\{2,5\}}=(0,0)$. Thus exact index information supplies finite upper calibration without, in general, exact target recovery from the index and the existing probes.
+
+**Proof.** The Fibonacci recurrence gives $F_{13}=233$; hence $L_{13}=\lceil233/10\rceil=24$ and $U_{13}=\lfloor233/5\rfloor=46$. The index $13$ is prime and both $24,26$ lie in the interval. Direct multiplication gives the two factorizations in (36.11). Trial division by primes not exceeding each factor's square root verifies that $7,17,47,73,83$ are prime; the only trial primes needed are among $2,3,5,7$. The factors in each product are distinct. Both products are odd and neither is a multiple of $5$, giving the same zero bits and the stated unequal counts. The window magnitude bound is
+
+$$
+1+F_{13}U_{13}=1+233\cdot46=10719,
+\qquad 2^{13}\le10719<2^{14}.
+\tag{36.12}
+$$
+
+For $o=o_{\mathrm{id},\{2,5\}}$ and $y=(13,(0,0))$, it follows that $L_o(y)\le2<3\le U_o(y)\le13$. These inequalities exhibit a nonzero exactness gap, without claiming either endpoint is sharp.
+
+**Proposition 36.4 (Four sufficient forms of side information).** In the source $X$, each of the following supplied relations gives finite upper calibration on every occupied cell to which the relation applies. The stated decoder uses further prime-divisibility answers; none of these relations alone is asserted to determine $\Omega$.
+
+1. **Exact window label.** A supplied nonempty index $r$ gives $N\le B_r=1+F_rU_r$ and $\Omega\le\lfloor\log_2B_r\rfloor$. Querying all primes at most $B_r$ gives the exact count.
+2. **Bounded index bucket.** A bucket value $a$ supplied with a known positive integer bound $R(a)$ and the promise $r\le R(a)$ gives a finite window union. For an occupied bucket,
+
+   $$
+   N\le M_a=1+F_{R(a)}\lfloor F_{R(a)}/5\rfloor,
+   \qquad \Omega\le\lfloor\log_2M_a\rfloor.
+   \tag{36.13}
+   $$
+
+   Querying all primes at most $M_a$ gives the exact count. For example, the supplied bucket number $j$ with $2^{j-1}<r\le2^j$ has the available bound $R(j)=2^j$.
+3. **Magnitude bound.** A supplied integer $M\ge1$ and the promise $1\le N\le M$ give $\Omega\le\lfloor\log_2M\rfloor$. Querying all primes at most $M$ gives the exact count, without supplying a generating index.
+4. **Certified complete prime-support envelope.** A supplied finite set $T\subset\mathbb P$ and the sound promise
+
+   $$
+   \{p\in\mathbb P:p\mid N(x)\}\subseteq T
+   \tag{36.14}
+   $$
+
+   for every source $x$ compatible with the supplied information give $\Omega\le|T|$. The set may contain primes that do not divide the actual integer; completeness means that no prime divisor lies outside it. For an additional occupied probe record $d_S(N)=b$, set $A_b=\sum_{p\in S}b_p$. Then
+
+   $$
+   A_b\le\Omega\le A_b+|T\setminus S|\le|T|.
+   \tag{36.15}
+   $$
+
+   Querying every prime in $T\setminus S$ gives $\Omega=\sum_{p\in T}\mathbf1_{p\mid N}$ exactly.
+
+**Proof.** The first relation is Theorem 36.1 with $\alpha(r)=r$. For the second, occupied windows have $r\ge5$: $I_2=I_3=\varnothing$, while $I_5=\{1\}$. Fibonacci monotonicity therefore gives $F_r\le F_{R(a)}$ and $U_r\le\lfloor F_{R(a)}/5\rfloor$, proving (36.13). The finite prime-query formula follows as in (36.8). For the third, $2^{\Omega}\le N\le M$ gives the bound and every prime divisor is at most $M$. For the fourth, occupancy forces $b_p=0$ at any queried prime outside $T$; the observed divisors contribute $A_b\le|S\cap T|$, and all remaining distinct divisors lie in $T\setminus S$. This proves (36.15) and the decoding formula.
+
+Empty promises create no occupied cell. In particular, $T=\varnothing$ would force $N=1$ for a positive integer, but no source in $X$ has that value: nonempty windows have $g\ge1$ and $F_r\ge5$. A bound $M=1$ is likewise empty here, although the convention $\omega(1)=0$ makes the general counting formula consistent. The completeness of $T$ and the magnitude or index bounds are source promises; a finite list of tested primes by itself certifies none of them on all of $W$.
+
+The finiteness in Theorem 36.1 is distinct from effectively available decoder data. An arbitrary map $\alpha$ need not provide a way to enumerate its finite fibre $P_a$, compute $B_a$, or find a valid upper bound from $a$. A supplied numerical index bound or magnitude bound does provide such finite data. In the support case the decoder needs the complete finite list $T$, not merely an assertion that the actual integer has finitely many prime divisors, which is already true for every $N$. Given these data, finite enumeration and the indicated finite queries suffice; no factoring-efficiency, polynomial-time, uniform query-budget or physical-resource bound is asserted.
+
+**Proposition 36.5 (Finite-valued side observations and the global/local distinction).** A finite-valued side observation does not automatically calibrate every source. More precisely, for any finite-valued $\beta:X\to E$, any finite $S\subset\mathbb P$ and every $b\in\{0,1\}^{S}$, at least one occupied joint cell
+
+$$
+\{x\in X:\beta(x)=e,\ d_S(N(x))=b\}
+\tag{36.16}
+$$
+
+has unbounded $\Omega$. For finite-valued index-side $\alpha$, at least one $P_a$ is infinite, and in that same index cell every finite probe pattern has unbounded $\Omega$ and Corollary 36.2 applies. Nevertheless, individual cells selected by additional source relations can have finite upper bounds, as in Proposition 36.4. There is no finite constant bounding $\Omega$ on all of $X$, or $\omega$ on all of $W$.
+
+**Proof.** For each fixed $S,b$, Theorem 35.2 makes the pullback of $W_{S,b}$ to $X$ unbounded in $\Omega$. Its partition by the finitely many values of $\beta$ must have an unbounded part: otherwise the maximum of the finitely many finite bounds on its occupied parts would bound the whole fibre. For index-side $\alpha$, infinitely many prime indices have nonempty windows, and finitely many finite sets cannot cover them. An infinite $P_a$ therefore exists and Theorem 36.1 applies. Taking $S=\varnothing$ in Theorem 35.2 rules out a global constant. These statements do not say that every cell of an arbitrary $\beta$ is unbounded, nor extend the index-only criterion to arbitrary restrictions on $g$ or $N$.
+
+**Scope 36.6 (The self-calibration bridge and its remaining exactness gap).** Section 35 diagnoses the original probe fibres: their upper endpoint is infinite at every finite record, including adaptive records. Adding a sound relation about the window, index range, magnitude or complete support refines those fibres. Theorem 36.1 classifies exactly when index-side refinement makes the upper endpoint finite, and Proposition 36.4 gives explicit finite decoding data for four sufficient relations. The interval $[L_o(y),U_o(y)]$ measures what remains unresolved: finite $U_o(y)$ permits upper calibration, while exact recovery from the current observation requires $L_o(y)=U_o(y)$. Proposition 36.3 separates these two conditions inside one fixed window. Further queries can close this gap when a complete finite probe envelope is available; merely processing the unchanged record cannot separate its unequal target values.
+
+The bounds are local to the supplied information and need not share any global constant. The target remains the number of distinct prime divisors. None of the decoding conclusions recovers prime exponents, the hidden integer, or its generating label; any such recovery requires its own identifiability argument under the chosen source promise. Numerical overlap of windows is handled by the labeled source (36.1), not by postulating a function assigning a unique index to every $n\in W$. The adaptive impossibility applies only while the information consists of an index-side value with infinite compatible index set and finite divisibility answers. Magnitude or support promises change the compatible sources and must be included before invoking it. No claim about arbitrary arithmetic predicates, efficient factorization, or uniform calibration on all of $W$ follows.
+
+## 追加锚（本行以下为增补区）
