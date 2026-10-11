@@ -296,4 +296,86 @@ private theorem circuit_strict (P : Fin 15 → NonIdentityPauli) (α : Param) :
   rw [circuit_eq_list]
   exact list_deriv P (List.finRange 15) α
 
+private noncomputable def H (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) : Mat :=
+  prefixOp P α j.val * wordOp (P j).val * star (prefixOp P α j.val)
+
+private noncomputable def J_H (P : Fin 15 → NonIdentityPauli) (α : Param) :
+    Fin 15 → Fin 15 → ℝ := fun i j => rho (H P α j) i
+
+private theorem H_star (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    star (H P α j) = H P α j := by
+  simp only [H, star_mul, star_star, word_star, mul_assoc]
+
+private theorem H_trace (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
+    trace (H P α j) = 0 := by
+  have hI : wordOp (fun _ : Fin 2 => Pauli.I) = (1 : Mat) := tensor_identity
+  have hz : trace (wordOp (P j).val) = 0 := by
+    simpa only [hI, mul_one, if_neg (P j).property] using
+      word_trace_mul (P j).val (fun _ => Pauli.I)
+  rw [H, trace_mul_cycle, Unitary.star_mul_self_of_mem (prefix_unitary P α j.val), one_mul, hz]
+
+private theorem E_J_mulVec (P : Fin 15 → NonIdentityPauli) (α h : Param) :
+    E ((J_H P α : Matrix (Fin 15) (Fin 15) ℝ) *ᵥ h) = ∑ j, h j • H P α j := by
+  have hv : (J_H P α : Matrix (Fin 15) (Fin 15) ℝ) *ᵥ h = ∑ j, h j • rho (H P α j) := by
+    ext i
+    simp [J_H, Matrix.mulVec, dotProduct, mul_comm]
+  rw [hv, map_sum]
+  simp only [map_smul, E_rho _ (H_star P α _) (H_trace P α _)]
+
+private theorem circuit_fderiv (P : Fin 15 → NonIdentityPauli) (α h : Param) :
+    fderiv ℝ (circuit P) α h = (-Complex.I / 2) •
+      (E ((J_H P α : Matrix (Fin 15) (Fin 15) ℝ) *ᵥ h) * circuit P α) := by
+  rw [(circuit_strict P α).hasFDerivAt.fderiv, E_J_mulVec]
+  simp only [listD, _root_.sum_apply,
+    ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply]
+  change (∑ j, h j • ((-Complex.I / 2) • (H P α j * circuit P α))) = _
+  simp_rw [smul_comm (h _) (-Complex.I / 2), ← Matrix.smul_mul]
+  rw [← Finset.sum_mul, ← Finset.smul_sum]
+
+private theorem circuit_ker (P : Fin 15 → NonIdentityPauli) (α : Param) :
+    LinearMap.ker (fderiv ℝ (circuit P) α).toLinearMap =
+      LinearMap.ker (Matrix.mulVecLin (J_H P α)) := by
+  ext h
+  change fderiv ℝ (circuit P) α h = 0 ↔ (J_H P α : Matrix (Fin 15) (Fin 15) ℝ) *ᵥ h = 0
+  rw [circuit_fderiv]
+  constructor
+  · intro hh
+    have hz := congrArg (fun M : Mat => M * star (circuit P α)) hh
+    simp only [Matrix.smul_mul, mul_assoc,
+      Unitary.mul_star_self_of_mem (circuit_unitary P α), mul_one, zero_mul] at hz
+    have hc : (-Complex.I / 2 : ℂ) ≠ 0 :=
+      div_ne_zero (neg_ne_zero.mpr Complex.I_ne_zero) (by norm_num)
+    exact E_injective (by simpa using (smul_eq_zero.mp hz).resolve_left hc)
+  · intro hh; simp [hh]
+
+private theorem derivative_rank (P : Fin 15 → NonIdentityPauli) (α : Param) :
+    derivativeRank P α = Matrix.rank (J_H P α) := by
+  have hf := (fderiv ℝ (circuit P) α).toLinearMap.finrank_range_add_finrank_ker
+  have hj := (Matrix.mulVecLin (J_H P α)).finrank_range_add_finrank_ker
+  rw [circuit_ker] at hf
+  exact Nat.add_right_cancel (hf.trans hj.symm)
+
+private theorem critical_eq_det_zero (P : Fin 15 → NonIdentityPauli) :
+    critical P = {α | Matrix.det (J_H P α) = 0} := by
+  ext α
+  change derivativeRank P α < 15 ↔ _
+  rw [derivative_rank]
+  constructor
+  · intro hh
+    by_contra hd
+    have hr := Matrix.rank_of_det_ne_zero hd
+    simp only [Fintype.card_fin] at hr
+    omega
+  · intro hd
+    obtain ⟨v, hv, hz⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hd
+    have hk : LinearMap.ker (Matrix.mulVecLin (J_H P α)) ≠ ⊥ := by
+      intro he
+      exact hv (by simpa only [he, Submodule.mem_bot] using
+        (show v ∈ LinearMap.ker (Matrix.mulVecLin (J_H P α)) from hz))
+    have hp := Submodule.one_le_finrank_iff.mpr hk
+    have hr := (Matrix.mulVecLin (J_H P α)).finrank_range_add_finrank_ker
+    simp only [Module.finrank_pi, Module.finrank_self, Fintype.card_fin, mul_one] at hr
+    change Matrix.rank (J_H P α) + _ = 15 at hr
+    omega
+
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
