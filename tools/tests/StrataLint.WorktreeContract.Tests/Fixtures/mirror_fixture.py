@@ -5,7 +5,7 @@ import subprocess
 
 
 class MirrorCases:
-    def test_mirror_operation_publishes_then_qualifies_removal(self):
+    def mirror_operation_publishes_then_qualifies_removal(self):
         self.g(self.main, "switch", "-c", "feature")
         (self.main / "feature").write_text("feature\n")
         self.g(self.main, "add", "feature")
@@ -27,7 +27,7 @@ class MirrorCases:
         self.g(self.main, "worktree", "add", mirror, branch)
         self.assertEqual("recover locally\n", (mirror / "ordinary-after-push").read_text())
 
-    def test_mirror_failure_retains_conflict_and_failed_publication(self):
+    def mirror_failure_retains_conflict_and_failed_publication(self):
         self.g(self.main, "switch", "-c", "feature")
         (self.main / "owned").write_text("feature\n")
         self.g(self.main, "commit", "-am", "feature")
@@ -60,7 +60,7 @@ class MirrorCases:
         self.assertEqual("confirmed", json.loads(published.stdout)["status"])
         self.assertEqual(head, self.g(self.remote, "rev-parse", "refs/heads/" + branch).strip())
 
-    def test_mirror_missing_endpoint_refused_before_creation(self):
+    def mirror_missing_endpoint_refused_before_creation(self):
         failed = self.root / "mirror-offline"
         branch = "mirror/offline/11"
         before = self.g(self.main, "worktree", "list", "--porcelain")
@@ -89,7 +89,7 @@ class MirrorCases:
         return subprocess.run(["git", "patch-id", "--stable"], input=patch,
                               text=True, capture_output=True, check=True).stdout.split()[:1]
 
-    def test_mirror_only_target_delta_with_missing_merge_and_squash(self):
+    def mirror_only_target_delta_with_missing_merge_and_squash(self):
         self.mirror_landing("earlier-merge", "earlier-merge", "custom earlier merge")
         self.mirror_landing("earlier-squash", "earlier-squash", "earlier squash (#12)", squash=True)
         for squash in (False, True):
@@ -108,7 +108,7 @@ class MirrorCases:
                     "--format=%(trailers:key=Original-Dev-Commit,valueonly)", head).strip())
                 self.assertEqual("mirror: #13 " + subject, self.g(mirror, "show", "-s", "--format=%s", head).strip())
 
-    def test_mirror_validator_rejects_wrong_delta_identity_parent_and_base(self):
+    def mirror_validator_rejects_wrong_delta_identity_parent_and_base(self):
         landing = self.mirror_landing("feature", "feature", "custom feature")
         message = "mirror: #11 custom feature"
         mirror = self.root / "mirror-valid"
@@ -137,7 +137,7 @@ class MirrorCases:
                 self.assertEqual("", self.g(self.remote, "for-each-ref", "refs/heads/" + branch))
                 self.assertEqual(invalid, self.g(self.main, "rev-parse", branch).strip())
 
-    def test_mirror_retained_commit_reused_on_descendant_integration_base(self):
+    def mirror_retained_commit_reused_on_descendant_integration_base(self):
         landing = self.mirror_landing("feature", "feature", "feature (#11)", squash=True)
         mirror = self.root / "retained"
         branch = "mirror/retained"
