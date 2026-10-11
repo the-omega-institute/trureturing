@@ -215,11 +215,11 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ) (v w : Fin n → Pauli), R.readout () n v * wordOp w = (∏ i, letterPhase (v i) (w i)) • wordOp (fun i => letterProduct (v i) (w i))
+  Law R := ∀ {n : ℕ} (v w : Fin n → Pauli), R.readout () n v * wordOp w = (∏ i, letterPhase (v i) (w i)) • wordOp (fun i => letterProduct (v i) (w i))
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have bad := h 0 (fun i => Fin.elim0 i) (fun i => Fin.elim0 i)
+  have bad := @h 0 (fun i => Fin.elim0 i) (fun i => Fin.elim0 i)
   dsimp only [rejected, realize] at bad
   rw [zero_mul] at bad
   have entry := congrFun (congrFun bad (fun i => Fin.elim0 i)) (fun i => Fin.elim0 i)
@@ -305,11 +305,11 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ) (v w : Fin n → Pauli), Matrix.trace (R.readout () n v * wordOp w) = if v = w then (2 : ℂ)^n else 0
+  Law R := ∀ {n : ℕ} (v w : Fin n → Pauli), Matrix.trace (R.readout () n v * wordOp w) = if v = w then (2 : ℂ)^n else 0
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have bad := h 0 (fun i => Fin.elim0 i) (fun i => Fin.elim0 i)
+  have bad := @h 0 (fun i => Fin.elim0 i) (fun i => Fin.elim0 i)
   simp [rejected, realize, wordOp, tensorOp, Matrix.trace, Matrix.diag,
     Matrix.mul_apply] at bad
 
@@ -391,11 +391,11 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (n : ℕ) (v w : Fin n → Pauli), R.readout () n v * wordOp w = (∏ i, (sgn (v i) (w i) : ℂ)) • (wordOp w * wordOp v)
+  Law R := ∀ {n : ℕ} (v w : Fin n → Pauli), R.readout () n v * wordOp w = (∏ i, (sgn (v i) (w i) : ℂ)) • (wordOp w * wordOp v)
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have bad := h 0 (fun i => Fin.elim0 i) (fun i => Fin.elim0 i)
+  have bad := @h 0 (fun i => Fin.elim0 i) (fun i => Fin.elim0 i)
   dsimp only [rejected, realize] at bad
   rw [zero_mul] at bad
   have entry := congrFun (congrFun bad (fun i => Fin.elim0 i)) (fun i => Fin.elim0 i)
