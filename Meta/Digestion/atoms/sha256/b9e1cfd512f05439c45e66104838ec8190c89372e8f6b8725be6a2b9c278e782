@@ -1,0 +1,26 @@
+**Proof (the common-archive leaf lemma).** Fix one value $v$ and a finite set $S$ of tail-zero INITIAL phases whose target labels are pairwise distinct. Use the actual witnesses supplied by (33.4), one for each retained phase. Within any reached archive containing some of these witnesses, all retained sources have undergone the same literal actions and hence have the same current tail. A next complete word therefore either succeeds on every member of that archive or rejects every member. Uniform rejection produces one absorbing child and cannot separate two unequal immutable labels; a correct controller may therefore reject a non-singleton archive only when that archive is already homogeneous. A correct early stop is also one homogeneous leaf. If a successful action is issued, its endpoint difference has at most two scalar values.
+
+At emitted index $t$, the full-path charge support is contained in
+
+$$
+W_t=tm+\{0,\ldots,m\}\pmod T,
+$$
+
+and the path schedule through the horizons used here is (33.9):
+
+$$
+W_{2q}=[q,q+m],qquad
+W_{2q+1}=[m+q,\ldots,T-1,0,\ldots,q+1].
+\tag{34.6}
+$$
+
+The displayed odd paths miss $J$. More generally, the odd path with index $2q+1$ misses $J\cup\{d-1\}$ whenever $q+1\le d-2$. This is a statement about the actual emitted index, so it remains true at every adaptive node; changing the word does not change the phase path. Induction down the adaptive archive tree now gives
+
+$$
+\#\{\text{homogeneous leaves on }S\}
+\le2^{\lfloor(c+1)/2\rfloor}
+\tag{34.7}
+$$
+
+for a controller of fee at most $c$, whenever all odd indices before that horizon miss $S$. Even levels can at most double the number of nonempty archives, odd levels are unary on $S$, and rejection or early stopping never adds a label-dependent branch. This induction allows arbitrary literal words, archive-dependent feedback, waits, rejection attempts and source-local stopping.
+

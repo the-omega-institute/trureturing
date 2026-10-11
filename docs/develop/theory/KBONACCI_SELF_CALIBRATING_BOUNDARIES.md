@@ -4272,3 +4272,186 @@ Thus a claimed adaptive formula that counts only internal labels, or only joined
 **Scope 34.5 (What this closes and what remains open).** The separate adaptive target left open in Scope 33.5 is settled here for the exact family of Definition 33.1. Theorem 34.2 settles the adaptive fee for the entire delayed-interior family of Definition 33.1 and retains the exact GLOBAL fee from Theorem 33.2. It does not price arbitrary tail-dependent tables, arbitrary exterior layouts, different phase intervals, other $(k,m)$ geometries, memory or offline computation, physical-resource costs, stochastic laws, or the all-parameter exact-fee problem. Proposition 34.3 is a fixed-fibre boundary result and does not replace the two-fibre theorem. The arguments are ordinary mathematical proofs using the supplied KBonacci interfaces; they are not Lean/kernel verification, axiom auditing, coverage certification or a literature-priority claim.
 
 **Mathematical citation 34.6 (Supplied machinery and new content).** The complete source and endpoint contract, actual witnesses, matched coefficient paths, ordered-path literal inverse, common-tail adaptive leaf induction, and the $2d-1$ GLOBAL construction are supplied by Definitions 15.1, 18.1, 29.1, 31.1 and Theorem 33.2. The new content is the scalar-fibre exact classification (34.4), its observation-tree lower bounds at three horizons, the literal $2h-1$ and $2d-2$ adaptive constructions, and the two-label parity boundary (34.14). The free-value split is an explicit use of the free initial observation, not a hidden selection by phase or archive.
+
+## 35. Exact finite divisibility fibres in canonical Fibonacci windows
+
+**Definition 35.1 (Windows, probes and the unobserved prime support).** Let $\mathbb P$ denote the positive primes and let
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{j+2}=F_{j+1}+F_j.
+$$
+
+For $r\in\mathbb P$, define
+
+$$
+\begin{aligned}
+L_r&=\left\lceil F_r/10\right\rceil,&
+U_r&=\left\lfloor F_r/5\right\rfloor,\\
+I_r&=[L_r,U_r]\cap\mathbb Z,&
+W_r&=\{1+F_rg:g\in I_r\},\qquad
+W=\bigcup_{r\in\mathbb P}W_r.
+\end{aligned}
+\tag{35.1}
+$$
+
+Each $I_r$, and hence each $W_r$, is finite; an interval with $L_r>U_r$ is empty. For a positive integer $n$, let $\omega(n)=\#\{p\in\mathbb P:p\mid n\}$ count distinct prime divisors, with $\omega(1)=0$. For a finite set $S\subset\mathbb P$ of distinct probes, put
+
+$$
+\begin{aligned}
+d_S(n)&=(\mathbf 1_{p\mid n})_{p\in S}\in\{0,1\}^{S},\\
+\rho_S(n)&=\omega(n)-\sum_{p\in S}\mathbf 1_{p\mid n}
+          =\#\{p\in\mathbb P\setminus S:p\mid n\},\\
+W_{S,b}&=\{n\in W:d_S(n)=b\}\qquad(b\in\{0,1\}^{S}).
+\end{aligned}
+\tag{35.2}
+$$
+
+Thus the observer knows membership in the whole family $W$ and the indicated bits. The numerical value of $n$, its generating index $r$, a magnitude bound and additional arithmetic observations are not part of $d_S$. The prime-index variable here is local to (35.1), not a phase or an endpoint fee from Sections 33–34. Repeated queries to the same prime give one coordinate of $S$. For $S=\varnothing$, the bit space has one empty pattern, the sum is zero and $\rho_\varnothing=\omega$.
+
+**Theorem 35.2 (Every exact finite probe pattern retains arbitrarily many unseen prime divisors).** For every finite $S\subset\mathbb P$ and every integer $K\ge1$, there exists an integer $R(S,K)$ such that
+
+$$
+\begin{gathered}
+\forall r\in\mathbb P,\quad r\ge R(S,K)\ \Longrightarrow\\
+\forall b\in\{0,1\}^{S},\quad \exists g\in I_r:\\
+d_S(1+F_rg)=b\quad\hbox{and}\quad \rho_S(1+F_rg)\ge K.
+\end{gathered}
+\tag{35.3}
+$$
+
+The threshold is independent of $b$. In particular, the quantifiers are one threshold, then every sufficiently large prime index, then every pattern; they do not select a separate threshold for each pattern.
+
+**Proof.** Reuse the Fibonacci entry-rank, CRT and interval method supplied by [FIBONACCI_ATOMIC_RELATION_GENERATION, Section 258.6b, current-dev supplier](FIBONACCI_ATOMIC_RELATION_GENERATION.md). Its standard entry-rank interface is
+
+$$
+z(q)=\min\{j\ge1:q\mid F_j\},\qquad
+q\mid F_j\ \Longleftrightarrow\ z(q)\mid j
+\quad(q\in\mathbb P,\ j\ge1).
+\tag{35.4}
+$$
+
+The rank exists, and $z(q)\ge3$ because $F_1=F_2=1$. These are supplied Fibonacci facts, not new entry-rank results. The strengthening below imposes both the positive and the negative observed bits while reserving distinct unobserved divisors in the same integer.
+
+Choose $T$ to be the first $K$ primes outside $S$, so $T\cap S=\varnothing$ and $|T|=K$. Set
+
+$$
+Q=\prod_{q\in S\cup T}q.
+$$
+
+This choice depends only on $S,K$. Fibonacci growth permits an integer $R=R(S,K)\ge3$ satisfying
+
+$$
+R>\max_{q\in S\cup T}z(q),\qquad F_R\ge10(Q+1).
+\tag{35.5}
+$$
+
+Fix any prime $r\ge R$. If some $q\in S\cup T$ divided $F_r$, (35.4) would give $z(q)\mid r$. But $3\le z(q)<r$ and $r$ is prime, a contradiction. Consequently
+
+$$
+\gcd(F_r,Q)=1.
+\tag{35.6}
+$$
+
+For any chosen $b\in\{0,1\}^{S}$, impose the simultaneous congruences
+
+$$
+g\equiv
+\begin{cases}
+-F_r^{-1}\pmod q,&q\in T,\\
+-F_r^{-1}\pmod q,&q\in S\text{ and }b_q=1,\\
+0\pmod q,&q\in S\text{ and }b_q=0.
+\end{cases}
+\tag{35.7}
+$$
+
+Here each inverse is taken modulo its indicated prime. Distinct prime moduli are coprime, so the Chinese remainder theorem supplies a residue $a\in\{0,\ldots,Q-1\}$ satisfying all of (35.7).
+
+It remains to realize this residue inside the actual window. Write $F_r=10h+s$ with $0\le s\le9$. Since $F_r\ge F_R\ge10(Q+1)$, we have $h\ge Q+1$. Also $L_r\le h+1$ and $U_r\ge2h$, whence
+
+$$
+U_r-L_r\ge h-1\ge Q.
+\tag{35.8}
+$$
+
+An explicit representative is
+
+$$
+g=a+Q\left\lceil\frac{L_r-a}{Q}\right\rceil.
+\tag{35.9}
+$$
+
+The ceiling inequalities give $L_r\le g<L_r+Q\le U_r$, so $g\in I_r$. Set $n=1+F_rg$. Every prime in $T$, and every $q\in S$ with $b_q=1$, divides $n$. For $q\in S$ with $b_q=0$, (35.7) instead gives $n\equiv1\pmod q$, hence $q\nmid n$. Therefore the observed bits are exactly $b$, and the $K$ distinct divisors in $T\subset\mathbb P\setminus S$ give $\rho_S(n)\ge K$. Neither (35.5) nor (35.8) depends on $b$. This proves (35.3), including $S=\varnothing$.
+
+**Corollary 35.3 (No finite upper certificate on a probe fibre).** For every finite $S\subset\mathbb P$ and every $b\in\{0,1\}^{S}$, the fibre $W_{S,b}$ is nonempty and
+
+$$
+\sup_{n\in W_{S,b}}\rho_S(n)
+=\sup_{n\in W_{S,b}}\omega(n)=+\infty.
+\tag{35.10}
+$$
+
+Let $U:\{0,1\}^{S}\to\mathbb R\cup\{+\infty\}$ be a sound upper certificate, meaning that $\omega(n)\le U(d_S(n))$ for every $n\in W$. Then $U(b)=+\infty$ for every pattern $b$. The same conclusion holds for a sound upper certificate for $\rho_S$.
+
+**Proof.** For every integer $K\ge1$, choose a prime $r\ge R(S,K)$ and apply Theorem 35.2 to the fixed pattern $b$. Primes are unbounded, so such an index exists. On this fibre,
+
+$$
+\omega(n)=\rho_S(n)+\sum_{p\in S}b_p.
+\tag{35.11}
+$$
+
+The second term is fixed and finite, which proves both suprema. A finite $U(b)$ would bound the corresponding unbounded fibre, a contradiction. Consequently no rule using only these bits can soundly certify $\omega(n)\le B$ at any pattern for finite $B$. Positive bits can give lower bounds; the assertion concerns upper certificates.
+
+**Corollary 35.4 (A matched observation with an arbitrarily larger prime support).** For every finite $S\subset\mathbb P$, every $n_0\in W$ and every integer $H\ge1$, there exists $n_1\in W$ with
+
+$$
+d_S(n_1)=d_S(n_0),\qquad
+\omega(n_1)-\omega(n_0)\ge H.
+\tag{35.12}
+$$
+
+Moreover, $n_1$ can be chosen in every sufficiently large prime-index window, with $n_0$ fixed.
+
+**Proof.** Put $b=d_S(n_0)$ and $K=\rho_S(n_0)+H\ge1$. Theorem 35.2 gives, for every prime $r\ge R(S,K)$, an $n_1\in W_r$ with these same bits and $\rho_S(n_1)\ge\rho_S(n_0)+H$. Subtract (35.11) for the two integers: the observed contribution cancels, giving (35.12). The same conclusion for a real $H\ge1$ follows by applying the integer case to $\lceil H\rceil$. This is a comparison across the family of windows; it does not place a low-$\omega$ companion in the same window as $n_1$.
+
+**Proposition 35.5 (Two exact numerical anchors and their pattern restrictions).** The family contains
+
+$$
+\begin{aligned}
+27&=1+F_7\cdot2=1+13\cdot2=3^3,
+& I_7&=[2,2]\cap\mathbb Z,\\
+6059&=1+F_{13}\cdot26=1+233\cdot26=73\cdot83,
+& I_{13}&=[24,46]\cap\mathbb Z.
+\end{aligned}
+\tag{35.13}
+$$
+
+Thus $\omega(27)=1$ and $\omega(6059)=2$, with $6059>5040$. They have the same zero pattern for $S=\{2,5\}$, but they do not have the same pattern for every finite $S$.
+
+**Proof.** The Fibonacci recurrence gives $F_7=13$ and $F_{13}=233$; taking the displayed ceilings and floors gives the two intervals. The indices $7,13$ are prime, and $2,26$ belong to the respective intervals. The factorization of $27$ is immediate. Multiplication gives $73\cdot83=6059$; neither factor is divisible by $2,3,5,7$, the only primes below their square roots, so both are prime. Neither integer is divisible by $2$ or $5$, whereas $3\mid27$ and $3\nmid6059$, establishing the pattern claims.
+
+For arbitrary $S$, the first anchor belongs only to the pattern induced by the support $\{3\}$, and the second only to that induced by $\{73,83\}$. Taking either as $n_0$ in Corollary 35.4 gives arbitrarily large prime-support gaps with that anchor's own pattern. In particular, $6059$ supplies a cross-window $\omega=2$ baseline above $5040$; it is not a uniform low-$\omega$ baseline for every pattern. For the all-one pattern, (35.11) already forces $\omega(n)\ge|S|$, so it cannot imply a low-$\omega$ witness. No existence of a low-$\omega$ witness for an arbitrary other pattern follows either.
+
+**Theorem 35.6 (Finite adaptive transcripts cannot certify a finite upper bound).** Consider a deterministic observation-only procedure on an unknown $n\in W$. At each step it may query whether a selected prime divides $n$; the next prime, the stopping decision and the output depend only on its preceding query-answer transcript and fixed parameters common to all $n\in W$. No finite transcript realized by such a procedure can soundly output a finite upper bound for $\omega(n)$, or certify $\omega(n)\le B$ for a finite $B$.
+
+**Proof.** Fix a finite realized transcript $((p_1,b_1),\ldots,(p_m,b_m))$. Deduplicate its primes to obtain a finite set $S$, and let $b\in\{0,1\}^{S}$ be the recorded answers. Repeated queries have consistent answers because the transcript was realized by one integer. Every $n'\in W_{S,b}$ follows the same path: at the first step the rule chooses the same prime; inductively, equal earlier answers imply the same next query or stopping decision, and membership in the fibre supplies the same next answer. At the transcript's endpoint the rule therefore produces the same output for every member of $W_{S,b}$. Corollary 35.3 makes their $\omega$ values unbounded, contradicting soundness of any finite upper output. A transcript of length zero uses $S=\varnothing$ and obeys the same argument.
+
+This argument allows an input-dependent finite number of queries and arbitrary processing of the transcript; it does not assume a predetermined probe list or a uniform query bound. It only excludes sound finite upper outputs under the stated information restriction. Supplying $n$, $r$, a magnitude bound, or other arithmetic observations changes that restriction, so the theorem cannot be applied without rechecking the enlarged observation fibres. For example, a known bound $1\le n\le M$ gives $\omega(n)\le\lfloor\log_2 M\rfloor$, since $2^{\omega(n)}\le n$. A supplied nonempty window index gives the finite bound $n\le1+F_rU_r$. These finite domains are consistent with (35.10), whose supremum ranges over the unbounded union $W$.
+
+**Proposition 35.7 (Pointwise exhaustion is not uniform calibration).** Let $S_1\subseteq S_2\subseteq\cdots$ be finite prime sets with $\bigcup_{j\ge1}S_j=\mathbb P$. For each fixed $n\in W$, there is $J(n)$ such that $\rho_{S_j}(n)=0$ for all $j\ge J(n)$. Nevertheless, for every finite $j$ and every $b\in\{0,1\}^{S_j}$,
+
+$$
+\sup_{n\in W_{S_j,b}}\rho_{S_j}(n)=+\infty,
+\qquad
+\sup_{n\in W}\rho_{S_j}(n)=+\infty.
+\tag{35.14}
+$$
+
+**Proof.** The fixed integer $n$ has finitely many distinct prime divisors. Exhaustion and monotonicity of the sets $S_j$ put all of them in one $S_{J(n)}$, after which the residual is zero. At each finite stage, Corollary 35.3 applies to $S_j$ and every one of its patterns, proving (35.14). Thus the order of quantifiers matters: every fixed source is eventually exhausted, while at each finite stage other sources in the same observation fibre have arbitrarily large residual. This is pointwise, non-uniform calibration, not an observation-only certificate that the actual residual has reached zero.
+
+**Mathematical citation and scope 35.8 (Supplied method and the exact strengthening).** The cited current-dev supplier file FIBONACCI_ATOMIC_RELATION_GENERATION, Section 258.6b, supplies unbounded $\omega$ in the canonical window union and the entry-rank/CRT/interval construction. The Fibonacci entry-rank criterion, the Chinese remainder theorem and infinitude of primes are reused classical ingredients. The added deduction is (35.3): every exact finite bit pattern, including its zero coordinates, has at least $K$ unobserved prime divisors in every prime-index window beyond one pattern-independent threshold. The fibre certificates, matched pairs, adaptive-transcript obstruction and non-uniform exhaustion are consequences of this strengthened statement. These are `repo-derived` ordinary mathematical deductions, not a claim of literature priority or of a new CRT or entry-rank theorem.
+
+The restriction to sufficiently large prime indices is essential to this proof. If a queried prime $p$ divides $F_r$, then every $1+F_rg$ is $1$ modulo $p$, so that coordinate is forced to zero throughout that window. Small windows can also be empty. The threshold (35.5) excludes these obstructions for the selected finite set $S\cup T$; it does not assert every pattern in every small window. Each individual window remains finite, with a finite maximum of $\omega$ when it is nonempty. Increasing $K$ may require increasing the window index; no fixed finite window has unbounded prime support.
+
+The constructed integer has at least $K$ distinct prime divisors outside $S$. Nothing here asserts that it is prime, has exactly $K$ prime divisors in total or outside $S$, is squarefree, satisfies or violates Robin's inequality, or is colossally abundant (CA) or superabundant (SA). The numerical comparison with $5040$ has only the baseline role stated in Proposition 35.5. No uniform low-$\omega$ witness for all patterns, same-window low-$\omega$ companion, or bound on computational, query or physical resources for constructing or recognizing the witnesses is asserted. The information obstruction is for finitely many prime-divisibility bits on the whole family $W$, not arbitrary predicates or all arithmetic observations. The argument is ordinary theory prose and asserts no Lean/kernel verification.
+
+## 追加锚（本行以下为增补区）
