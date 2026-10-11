@@ -677,6 +677,43 @@ $$
 
 For any prescribed $\varepsilon>0$, choose $\delta,\varepsilon'$ small enough to write this as $(Dq_n)^\varepsilon D^{1/2}q_n^{1/4}\mathcal N_\delta(W_M)$. For $W_t(x)=x^{it}W(x)$, $\mathcal N_\delta(W_t)\le(1+|t|)\mathcal N_\delta(W)$. Three logarithmic derivatives control this norm on a fixed compact annulus. The norm-height cost is explicit and uses the original cumulative height allowance. This is a source-conditional analytical application with separately paid theta hypotheses, not a complete local Lean certification, a new general large sieve, or a full sixth-order residual estimate.
 
+### Consumer on the actual restricted pairing
+
+The outer coefficient after the exact additive-character transport remains
+
+$$
+b_n=\nu(n)W_S(q_n/N)\gamma_1(n).
+$$
+
+On the retained squarefree indices, $|\gamma_1(n)|=1$. Summing the angular supplier with this original coefficient, including its ray-class label, gives
+
+$$
+|Q_{\rm sf}(D,N)|
+\ll_{\mathcal A,\delta,\varepsilon}
+(DN)^\varepsilon D^{1/2}N^{5/4}
+\mathcal N_\delta(W_M)\|W_S\|_\infty.
+$$
+
+For divisor-bounded outer coefficients, their additional $N^\varepsilon$ cost can be absorbed by choosing the supplier's exponents smaller initially. This is a bound for the original restricted pairing with its actual outer phase; it does not choose a new outer vector, normalize the pairing by a fictitious row count, or supply a mean-square estimate for all mixed columns.
+
+Both the cubic large sieve and the angular supplier apply to these fixed profiles, so the available estimate is
+
+$$
+|Q_{\rm sf}(D,N)|\ll (DN)^\varepsilon\|W_S\|_\infty
+\min\left\{
+(DN)^{1/2}\left(D+N+(DN)^{2/3}\right)^{1/2}\|W_M\|_\infty,
+\ D^{1/2}N^{5/4}\mathcal N_\delta(W_M)
+\right\}.
+$$
+
+For bounded fixed profiles and $D=N^a$, the cubic power of $N$ is $5(a+1)/6$ for $1/2\le a\le2$, $a/2+1$ for $a\le1/2$, and $a+1/2$ for $a\ge2$. The angular power is $a/2+5/4$. It is strictly smaller precisely when $a>5/4$. At balance $D\asymp N$ and $K=DN$, the angular bound is $K^{7/8+\varepsilon}$, which is weaker than the reused cubic bound $K^{5/6+\varepsilon}$. This comparison is for the same restricted pairing and fixed coefficient norms.
+
+The height cost can erase the unbalanced gain. If the common Mellin/norm modulation is $\ll H$, the angular term pays $H$. In $5/4<a\le2$, the power margin is $(4a-5)/12$, so a strict improvement with $H\ll N^h$ requires $h<(4a-5)/12$, with positive room for the $\varepsilon$ losses. For example, at $D=N^{3/2}$ the two exponents are $2$ and $25/12$; the available margin is $1/12$ before the height cost. For $a\ge2$ the margin is $(2a-3)/4$. The actual detector must furnish these lengths and its original cumulative height budget; neither is freely reset in this application.
+
+The estimate is asymmetric. Interchanging $d,n$ in the exact original pairing and converting $\gamma_1(n)$ by the signal identity puts an extra $\mu(n)$ inside the prospective theta sum. That coefficient is not a fixed ray weight. Thus the pointwise angular bound cannot be invoked in the swapped direction without an additional supplier. The cubic operator bound remains available in either direction with the actual coefficient vectors.
+
+This closes a source-conditional fixed-ray angular interface on the coprime squarefree packet and supplies a useful unbalanced consumer. Nonsquarefree indices, shared primes, the actual-order-six full coefficient contraction, and restoration of the original signed Robin expression are separate obligations. In particular it does not prove $[-I_\psi(A)]_+=o(A^{-\eta_R})$ on the actual unbounded $N=C_A$, or replace the signed target by $Q_{\rm sf}$.
+
 ## The possible FIB interface
 
 The active carrier expression in the current native packet is
