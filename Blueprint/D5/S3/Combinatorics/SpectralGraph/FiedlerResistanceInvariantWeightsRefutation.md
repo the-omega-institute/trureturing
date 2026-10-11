@@ -132,6 +132,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cruz-menendez-2023-fiedler-resistance-invariant-weights` (refuted) by `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cruz-menendez-2023-fiedler-resistance-invariant-weights","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Cruz Ortega; F. Menéndez-Conde (2023). *Conectividad algebraica máxima para caminos con resistencia total fija*. DOI: [10.15381/pesquimat.v26i2.24218](https://doi.org/10.15381/pesquimat.v26i2.24218). URL: <https://arxiv.org/abs/2306.08187v1>.

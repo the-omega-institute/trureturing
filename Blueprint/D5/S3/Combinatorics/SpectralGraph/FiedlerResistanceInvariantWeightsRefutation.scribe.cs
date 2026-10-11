@@ -36,13 +36,17 @@ internal sealed class FiedlerResistanceInvariantWeightsRefutationDocument : IScr
                 "Section 5, page 7, states verbatim: “We conjecture that – in the same fashion of what happens with the absolute algebraic connectivity – the maximal value of (3) is attained always for weight distributions that are invariant under automorphisms of the graph.” Equation (3) defines ă(G) = max {λ2(G;ω) | R(G;ω)=R(G)}. The encoding quantifies over connected finite simple graphs of order at least three and asserts an invariant feasible assignment dominating every feasible assignment; it does not assume existence of a maximum separately."),
             Node("result", "Refutation on K23", "result", new Formula.Not(Call("claim")),
                 "Let the hubs be 0 and 1 and the leaves be 2, 3 and 4. Conductances 32/23 on the edges incident to hub 0 and 16/23 on those incident to hub 1 give total resistance 23/3, equal to the unweighted value, and algebraic connectivity 48/23. Rayleigh lower bounds and the leaf-difference eigenvector certify that value, while explicit harmonic voltages certify the resistances. Hub and leaf swaps force every invariant feasible assignment to have weight one on each edge and algebraic connectivity two. Since 48/23>2, no invariant assignment can attain the constrained maximum, whether or not the maximum exists.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cruz-menendez-2023-fiedler-resistance-invariant-weights"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("fk-" + id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => StrataLint.Scribe.FormulaDsl.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
