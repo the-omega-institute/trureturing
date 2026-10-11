@@ -110,5 +110,75 @@ private theorem same_fiber_probability {M q s : ℕ} (S : Support M q)
     change chi (o' k.succ) = chi (o k.succ) at hy
     simp only [transition, hx, hy]
 
+/-- Each complete history fiber is a product of its individual vertex fibers.
+No independence assumption is imposed on the path edges. -/
+def fiberSiteEquiv {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) : Fiber S e o ≃
+      ((k : Sites s e) → {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) where
+  toFun y k := ⟨siteEquiv M s e y.val k, congrFun y.property k⟩
+  invFun f := ⟨(siteEquiv M s e).symm (fun k => (f k).val), by
+    funext k
+    simp only [collapsedObs, Equiv.apply_symm_apply]
+    exact (f k).property⟩
+  left_inv y := by
+    apply Subtype.ext
+    exact (siteEquiv M s e).symm_apply_apply y.val
+  right_inv f := by
+    funext k
+    apply Subtype.ext
+    exact congrFun ((siteEquiv M s e).apply_symm_apply (fun k => (f k).val)) k
+
+/-- Finite conditional probability on a positive native history fiber. -/
+def conditionalFiberMass {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (o : Obs M s e) (A : Finset (Fiber S e o)) : ℝ := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  exact (∑ y ∈ A, probability r e S y.val) /
+    (∑ y : Fiber S e o, probability r e S y.val)
+
+private theorem conditionalFiberMass_eq_card {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e)
+    (hp : 0 < probability r e S o) (A : Finset (Fiber S e o)) :
+    conditionalFiberMass S r e o A =
+      (A.card : ℝ) / Nat.card (Fiber S e o) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  have hy (y : Fiber S e o) : probability r e S y.val = probability r e S o :=
+    same_fiber_probability S r e o y.val y.property
+  simp only [conditionalFiberMass, hy, sum_const, nsmul_eq_mul, card_univ,
+    Nat.card_eq_fintype_card]
+  exact mul_div_mul_right _ _ (ne_of_gt hp)
+
+/-- A product of finite allowed sets inside the individual vertex fibers. -/
+def siteCylinder {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
+    [Fintype (Sites s e)]
+    (A : (k : Sites s e) →
+      Finset {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) :
+    Finset (Fiber S e o) := by
+  classical
+  exact (Fintype.piFinset A).map (fiberSiteEquiv S e o).symm.toEmbedding
+
+/-- The exact native conditional probability of every site cylinder factors.
+In particular, consecutive erased path vertices remain separate coordinates. -/
+theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (A : (k : Sites s e) →
+      Finset {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) :
+    conditionalFiberMass S r e o (siteCylinder S e o A) =
+      (∏ k, (A k).card : ℝ) /
+      (∏ k, Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} : ℝ) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  letI (k : Sites s e) :
+      Fintype {x : Vertex M // collapseVertex S x = collapsedObs S e o k} :=
+    Fintype.ofFinite _
+  have hp := ((finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.1 S o).1
+  rw [conditionalFiberMass_eq_card S r e o hp]
+  have hc := Fintype.card_congr (fiberSiteEquiv S e o)
+  simp only [siteCylinder, card_map, Fintype.card_piFinset, Nat.cast_prod]
+  simp only [Nat.card_eq_fintype_card, hc, Fintype.card_pi, Nat.cast_prod]
+
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
