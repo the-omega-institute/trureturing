@@ -779,3 +779,477 @@ def pressure_zero_iff_rate_registration :
 #print axioms pressure_zero_iff_rate_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal191
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open scoped ENNReal NNReal
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.AnalyticWitnesses
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+
+def language : Set (ℤ → CuLetter) := {fun _ => .u}
+theorem occupied : language.Nonempty := ⟨fun _ => .u, rfl⟩
+def emptyWord : OccurringWord language := ⟨[], fun _ => .u, rfl, 0, by intro i; exact Fin.elim0 i⟩
+def unitWord : OccurringWord language := ⟨[.u], fun _ => .u, rfl, 0, by intro i; simp⟩
+theorem terms_differ : wordTerm 1 emptyWord.val ≠ wordTerm 1 unitWord.val := by
+  norm_num [wordTerm, emptyWord, unitWord, wordWeight, Real.rpow_neg_one]
+
+theorem negative : pressure language (pressure language 0 + 1) < 0 := by
+  have nonnegative := pressure_zero_nonneg language occupied
+  have h := (pressure_shift_bounds language occupied 0 (pressure language 0 + 1)
+    (by linarith)).2
+  simp only [zero_add] at h
+  linarith
+
+theorem partitions_differ : ∃ k : ℕ,
+    partitionSum language 0 (pressure language 0 + 1) ≠
+      partitionSum language k (pressure language 0 + 1) := by
+  by_contra h
+  push_neg at h
+  have hs := negative_pressure_summable language occupied _ negative
+  have same : (fun k : ℕ => partitionSum language k (pressure language 0 + 1)) =
+      (fun _ : ℕ => partitionSum language 0 (pressure language 0 + 1)) := by
+    funext k
+    exact (h k).symm
+  rw [same, summable_const_iff] at hs
+  exact (ne_of_gt (partition_positive language occupied 0 _)) hs
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.AnalyticWitnesses
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal186
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Set (ℤ → CuLetter)
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun p => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature
+        (fun _ X η => pressure X η) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 1) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (occupied : X.Nonempty),
+  ∃! η : ℝ, 0 ≤ η ∧ r.readout () X η = (0 : ℝ)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨η, hη, _⟩ := h Set.univ ⟨(fun _ => .u), Set.mem_univ _⟩
+  have impossible := hη.2
+  norm_num [rejected, realize] at impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.pressure_unique_zero) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.pressure_unique_zero, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨Set.univ, 0, 1, ?_⟩
+    exact ne_of_gt (pressure_strictAnti Set.univ ⟨(fun _ => .u), Set.mem_univ _⟩
+      (by norm_num : (0 : ℝ) < 1))
+
+def pressure_unique_zero_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.pressure_unique_zero)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ X η => pressure X η) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal186.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal186.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+        (fun _ X η => pressure X η) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms pressure_unique_zero_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal186
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal187
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ X : Set (ℤ → CuLetter), ℝ
+  State := fun p => OccurringWord p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun p => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature
+        (fun _ p w => wordTerm p.2 w.val) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (θ : ℝ), ((∑' w : OccurringWord X, ENNReal.ofReal (r.readout () ⟨X, θ⟩ w)) = ∑' k : ℕ, ENNReal.ofReal (partitionSum X k θ)) ∧ ((∑' w : OccurringWord X, ENNReal.ofReal (wordTerm θ w.val)) = ∑' T : ℕ, ENNReal.ofReal ((factorCount X T : ℝ) * ((2 : ℝ) ^ (-θ)) ^ T))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h AnalyticWitnesses.language 0).1
+  have eqn := (whole_series_regrouping AnalyticWitnesses.language 0).1
+  rw [whole_series_nonpositive AnalyticWitnesses.language AnalyticWitnesses.occupied 0 le_rfl] at eqn
+  simp only [rejected, realize, ENNReal.ofReal_zero, tsum_zero] at impossible
+  exact ENNReal.zero_ne_top (impossible.trans eqn.symm)
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_regrouping) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_regrouping, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨AnalyticWitnesses.language, 1⟩, AnalyticWitnesses.emptyWord, AnalyticWitnesses.unitWord, ?_⟩
+    exact AnalyticWitnesses.terms_differ
+
+def whole_series_regrouping_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_regrouping)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p w => wordTerm p.2 w.val) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal187.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal187.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+        (fun _ p w => wordTerm p.2 w.val) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms whole_series_regrouping_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal187
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal188
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ X : Set (ℤ → CuLetter), ℝ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun p => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => partitionSum p.1 k p.2) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (θ : ℝ), (Summable (fun k : ℕ => r.readout () ⟨X, θ⟩ k) ↔ (∑' w : OccurringWord X, ENNReal.ofReal (wordTerm θ w.val)) < ∞) ∧ (Summable (fun T : ℕ => (factorCount X T : ℝ) * ((2 : ℝ) ^ (-θ)) ^ T) ↔ (∑' w : OccurringWord X, ENNReal.ofReal (wordTerm θ w.val)) < ∞)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h AnalyticWitnesses.language 0).1.mp (by
+    change Summable (fun _ : ℕ => (0 : ℝ))
+    exact summable_zero)
+  rw [whole_series_nonpositive AnalyticWitnesses.language AnalyticWitnesses.occupied 0 le_rfl] at impossible
+  exact (lt_irrefl _) impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_finiteness) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_finiteness, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    obtain ⟨k, hk⟩ := AnalyticWitnesses.partitions_differ
+    exact ⟨⟨AnalyticWitnesses.language, pressure AnalyticWitnesses.language 0 + 1⟩, 0, k, hk⟩
+
+def whole_series_finiteness_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_finiteness)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => partitionSum p.1 k p.2) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal188.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal188.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => partitionSum p.1 k p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "body"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms whole_series_finiteness_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal188
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal189
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ X : Set (ℤ → CuLetter), ℝ
+  State := fun p => OccurringWord p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun p => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature
+        (fun _ p w => wordTerm p.2 w.val) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (occupied : X.Nonempty) (θ : ℝ) (nonpositive : θ ≤ 0), (∑' w : OccurringWord X, ENNReal.ofReal (r.readout () ⟨X, θ⟩ w)) = ∞
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := h AnalyticWitnesses.language AnalyticWitnesses.occupied 0 le_rfl
+  simpa [rejected, realize] using impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_nonpositive) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_nonpositive, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨AnalyticWitnesses.language, 1⟩, AnalyticWitnesses.emptyWord, AnalyticWitnesses.unitWord, ?_⟩
+    exact AnalyticWitnesses.terms_differ
+
+def whole_series_nonpositive_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.whole_series_nonpositive)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p w => wordTerm p.2 w.val) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal189.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal189.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+        (fun _ p w => wordTerm p.2 w.val) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "arg"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms whole_series_nonpositive_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal189
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal190
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Σ X : Set (ℤ → CuLetter), ℝ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun p => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature := realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => partitionSum p.1 k p.2) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 1) (fun e => nomatch e)
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (occupied : X.Nonempty) (θ : ℝ) (negative : pressure X θ < 0), Summable (fun k : ℕ => r.readout () ⟨X, θ⟩ k)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := h AnalyticWitnesses.language AnalyticWitnesses.occupied
+    (pressure AnalyticWitnesses.language 0 + 1) AnalyticWitnesses.negative
+  change Summable (fun _ : ℕ => (1 : ℝ)) at impossible
+  simpa only [summable_const_iff, one_ne_zero] using impossible
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.negative_pressure_summable) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.negative_pressure_summable, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    obtain ⟨k, hk⟩ := AnalyticWitnesses.partitions_differ
+    exact ⟨⟨AnalyticWitnesses.language, pressure AnalyticWitnesses.language 0 + 1⟩, 0, k, hk⟩
+
+def negative_pressure_summable_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.negative_pressure_summable)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => partitionSum p.1 k p.2) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal190.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal190.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => partitionSum p.1 k p.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "body"]
+      stateBinder := 4
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms negative_pressure_summable_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal190
