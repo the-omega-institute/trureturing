@@ -106,6 +106,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hirche-guan-tomamichel-2023-renyi-order-three-equality` (proved) by `D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hirche-guan-tomamichel-2023-renyi-order-three-equality","declaration_gid":"D5/S3/Quantum/Information/RenyiInformationCombiningOrderThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Christoph Hirche; Xinyue Guan; Marco Tomamichel (2023). *Chain Rules for Rényi Information Combining*. DOI: [10.1109/ISIT54713.2023.10206941](https://doi.org/10.1109/ISIT54713.2023.10206941). URL: <https://arxiv.org/abs/2305.02589v1>.
