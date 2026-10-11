@@ -610,7 +610,7 @@ end RegularTable
 def endpointA : unitInterval := ⟨1/3, by norm_num⟩
 def endpointB : unitInterval := ⟨2/5, by norm_num⟩
 
-private lemma endpoint_probability (phase : ActivePhase) (r : unitInterval) :
+lemma endpoint_probability (phase : ActivePhase) (r : unitInterval) :
     IsProbabilityMeasure (explicitStoppedWordLaw phase r) := by
   rw [← (actual_fourth_segment_stopped_word_law r phase).2]
   exact Measure.isProbabilityMeasure_map
