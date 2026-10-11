@@ -13,6 +13,8 @@ triage: anchor
 
 # Finite Gaussian and log-determinant identities
 
+The book was published by MIT Press in 2006 (ISBN 026218253X).
+
 Appendix A.2--A.3.1, printed pages 200--202, equations (A.4)--(A.15),
 states these identities for finite real Gaussian vectors with symmetric
 positive-definite covariance or precision matrices. The determinant update and
