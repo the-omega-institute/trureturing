@@ -44,3 +44,7 @@ open set give visits in every tail. These are derivations in the module;
 this note does not attribute the unrestricted rectangular statement,
 its fixed-shift formulation, or its precise curve to Theorem 1.2, and
 makes no mathematical novelty claim.
+
+## Verified locator
+
+DOI and publisher article: https://doi.org/10.1007/s00605-025-02057-2

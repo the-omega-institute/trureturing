@@ -15,7 +15,11 @@ internal sealed class MultivariateWeylRectanglesDocument : IScribeDocumentDefini
                 + "A(N,f) for their normalized complex average. Let chi(alpha,Q,n) be "
                 + "exp(2 pi I alpha Q(n)), where Q is an integer polynomial in d variables. "
                 + "The average on an empty box is zero; all limit statements concern "
-                + "eventually positive side lengths.")),
+                + "eventually positive side lengths. In the formulas, BoxAverage is A, "
+                + "polynomialPhase is chi, monomialOrbit(alpha,e,a) is the torus map "
+                + "defined by these shifted monomials, and HaarIntegral is integration "
+                + "against normalized Haar measure. Curve(B,t) has coordinate "
+                + "t^(B^i.val); Fin(d) uses indices zero through d-1.")),
             Describe.Lean(
                 DescribeId.Create("polynomial-rectangular-cancellation"),
                 DeclarationHandle.Create(
@@ -116,32 +120,88 @@ internal sealed class MultivariateWeylRectanglesDocument : IScribeDocumentDefini
                         + "for t >= 1, giving all coordinate bounds at the same visit."))),
                 DescribeRole.Theorem))));
 
+    private static Formula Word(string value) => F.Id(value);
+    private static Formula NumberType(string value) => F.Seq(F.Mathbb, F.Grp(Word(value)));
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new System.Collections.Generic.List<Formula>
+            { F.Operatorname, F.Grp(Word(name)), F.Open };
+        for (var i = 0; i < arguments.Length; i++)
+        {
+            if (i != 0) items.Add(F.Comma);
+            items.Add(arguments[i]);
+        }
+        items.Add(F.Close);
+        return F.Seq(items.ToArray());
+    }
+    private static Formula Apply(Formula function, Formula argument) =>
+        F.Seq(function, F.Open, argument, F.Close);
+    private static Formula Bound(Formula quantifier, string name, Formula type) =>
+        F.Seq(quantifier, F.Sp, F.Open, Word(name), F.Colon, type, F.Close, F.Comma, F.Sp);
+    private static Formula All(string name, Formula type) => Bound(F.Forall, name, type);
+    private static Formula FinD() => Call("Fin", Word("d"));
+    private static Formula TupleType() => F.Seq(FinD(), F.To, F.Sp, NumberType("N"));
+    private static Formula Torus() => Call("UnitAddTorus", Word("K"));
+    private static Formula Observable() => Call("C", Torus(), NumberType("C"));
+    private static Formula Orbit(Formula shift) =>
+        Call("monomialOrbit", Word("alpha"), Word("e"), shift);
+    private static Formula Curve(Formula time) => Call("Curve", Word("B"), time);
+    private static Formula Integral() => Call("HaarIntegral", Word("F"));
+    private static Formula FamilyParameters() => F.Seq(
+        All("d", NumberType("N")), All("K", Call("Type")),
+        F.OpenBracket, Call("Fintype", Word("K")), F.CloseBracket, F.Comma, F.Sp,
+        All("alpha", F.Seq(NumberType("R"), F.Setminus, NumberType("Q"))),
+        All("e", F.Seq(Word("K"), F.To, F.Sp, Call("Finsupp", FinD(), NumberType("N")))));
+    private static Formula FamilyHypotheses() => F.Seq(
+        Call("Injective", Word("e")), F.Land, F.Sp,
+        F.Open, All("j", Word("K")), Apply(Word("e"), Word("j")),
+        F.Neq, F.Sp, F.D(0), F.Close);
+    private static Formula DigitHypothesis() => F.Seq(
+        F.Open, All("j", Word("K")), All("i", FinD()),
+        Apply(Apply(Word("e"), Word("j")), Word("i")), F.Lt, Word("B"), F.Close);
+
     private static Formula CurveLimit() => F.Disp(F.Seq(
-        F.Lim, F.Underscore, F.Grp(F.Id("L"), F.To, F.Infty), F.Sp,
+        FamilyParameters(), All("B", NumberType("N")), All("F", Observable()),
+        F.Open, FamilyHypotheses(), F.Land, F.Sp, F.D(2), F.Leq, F.Sp, Word("B"),
+        F.Land, F.Sp, DigitHypothesis(), F.Close, F.Implies, F.Sp,
+        F.Lim, F.Underscore, F.Grp(Word("L"), F.To, F.Infty), F.Sp,
         new Formula.Fraction(F.Seq(F.Sum, F.Underscore,
-            F.Grp(F.Id("t"), F.Eq, F.D(1)), F.Caret, F.Grp(F.Id("L")), F.Sp,
-            F.Id("F"), F.Open, F.Id("x"), F.Open, F.Id("n"), F.Open,
-            F.Id("t"), F.Close, F.Close, F.Close), F.Id("L")),
-        F.Eq, F.Int, F.Sp, F.Id("F"), F.Sp, F.Id("d"), F.Mu));
+            F.Grp(Word("t"), F.Eq, F.D(1)), F.Caret, F.Grp(Word("L")), F.Sp,
+            Apply(Word("F"), Apply(Orbit(F.D(0)), Curve(Word("t"))))), Word("L")),
+        F.Eq, Integral()));
 
     private static Formula Visit() => F.Disp(F.Seq(
-        F.Forall, F.Sp, F.Id("T"), F.Comma, F.Sp, F.Exists, F.Sp,
-        F.Id("t"), F.Geq, F.Id("max"), F.Open, F.Id("T"), F.Comma, F.D(1), F.Close,
-        F.Comma, F.Sp, F.Id("x"), F.Open, F.Id("n"), F.Open, F.Id("t"), F.Close, F.Close,
-        F.InMacro, F.Id("U"), F.Comma, F.Sp, F.Forall, F.Sp, F.Id("i"), F.Comma, F.Sp,
-        F.Id("n"), F.Open, F.Id("t"), F.Close, F.Underscore, F.Grp(F.Id("i")),
-        F.Geq, F.Id("T")));
+        FamilyParameters(), All("B", NumberType("N")),
+        All("U", Call("Set", Torus())), All("T", NumberType("N")),
+        F.Open, F.D(0), F.Lt, Word("d"), F.Land, F.Sp, FamilyHypotheses(),
+        F.Land, F.Sp, F.Open, All("i", FinD()), Bound(F.Exists, "j", Word("K")),
+        Apply(Word("e"), Word("j")), F.Eq, Call("single", Word("i"), F.D(1)), F.Close,
+        F.Land, F.Sp, DigitHypothesis(), F.Land, F.Sp,
+        Call("IsOpen", Word("U")), F.Land, F.Sp, Call("Nonempty", Word("U")), F.Close,
+        F.Implies, F.Sp, Bound(F.Exists, "t", NumberType("N")),
+        Call("max", Word("T"), F.D(1)), F.Leq, F.Sp, Word("t"), F.Land, F.Sp,
+        Apply(Orbit(F.D(0)), Curve(Word("t"))), F.InMacro, F.Sp, Word("U"),
+        F.Land, F.Sp, F.Open, All("i", FinD()), Word("T"), F.Leq, F.Sp,
+        Apply(Curve(Word("t")), Word("i")), F.Close));
 
     private static Formula Cancellation() => F.Disp(F.Seq(
-        F.Forall, F.Sp, F.Id("epsilon"), F.Gt, F.D(0), F.Comma, F.Sp,
-        F.Exists, F.Sp, F.Id("R"), F.Geq, F.D(1), F.Comma, F.Sp,
-        F.Forall, F.Sp, F.Id("N"), F.Geq, F.Id("R"), F.Comma, F.Sp,
-        new Formula.Norm(F.Seq(F.Id("A"), F.Open, F.Id("N"), F.Comma,
-            F.Id("chi"), F.Open, F.Alpha, F.Comma, F.Id("Q"), F.Close, F.Close)),
-        F.Lt, F.Id("epsilon")));
+        All("d", NumberType("N")),
+        All("alpha", F.Seq(NumberType("R"), F.Setminus, NumberType("Q"))),
+        All("Q", Call("MvPolynomial", FinD(), NumberType("Z"))),
+        F.D(0), F.Lt, Call("totalDegree", Word("Q")), F.Implies, F.Sp,
+        All("epsilon", NumberType("R")), F.D(0), F.Lt, Word("epsilon"), F.Implies, F.Sp,
+        Bound(F.Exists, "R", NumberType("N")), F.D(1), F.Leq, F.Sp, Word("R"),
+        F.Land, F.Sp, F.Open, All("N", TupleType()),
+        F.Open, All("i", FinD()), Word("R"), F.Leq, F.Sp,
+        Apply(Word("N"), Word("i")), F.Close, F.Implies, F.Sp,
+        new Formula.Norm(Call("BoxAverage", Word("N"),
+            Call("polynomialPhase", Word("alpha"), Word("Q")))),
+        F.Lt, Word("epsilon"), F.Close));
 
     private static Formula Equidistribution() => F.Disp(F.Seq(
-        F.Lim, F.Underscore, F.Grp(F.Id("N"), F.To, F.Infty), F.Sp,
-        F.Id("A"), F.Open, F.Id("N"), F.Comma, F.Id("F"), F.Circ, F.Id("x"), F.Close,
-        F.Eq, F.Int, F.Sp, F.Id("F"), F.Sp, F.Id("d"), F.Mu));
+        FamilyParameters(), All("a", TupleType()), All("F", Observable()),
+        F.Open, FamilyHypotheses(), F.Close, F.Implies, F.Sp,
+        F.Lim, F.Underscore, F.Grp(Word("N"), F.To, F.Infty), F.Sp,
+        Call("BoxAverage", Word("N"), F.Seq(Word("F"), F.Circ, F.Sp, Orbit(Word("a")))),
+        F.Eq, Integral()));
 }
