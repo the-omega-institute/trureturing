@@ -3813,3 +3813,245 @@ The calibrated relation is the compatibility of an arbitrary adaptive phase code
 The sharp supremum in (32.4), individual exact fees of arbitrary $\lambda$, differing free-value tables, tail-sensitive targets, other $(k,m)$ and phase orbits, and the original all-parameter arbitrary-INITIAL exact-fee objective retain their remaining obligations. No optimum for offline search, target presentation, memory or a different physical resource follows. For an arbitrary label set the construction is semantic; an effective selection can use a presented finite partition or decidable table, as in INITIAL Note 5.3, without an asserted complexity bound. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 33. Delayed interior labels: exact 2d-1 GLOBAL fee without a parity certificate
+
+**Definition 33.1 (Arbitrary joined labels on a delayed interior interval).** Retain the original integer weights, matched scalar reader and complete full-INITIAL source of Definitions 30.1 and 31.1, with the observation and fee contract of [INITIAL target-cost theory, Definitions 1.1–1.3 and Interface 1.4](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee). Fix integers
+
+$$
+ m\ge5,\qquad 3\le d\le m-2,\qquad
+ k=2m-2,\qquad T=2m-1,\qquad P=\mathbb Z/T\mathbb Z,
+ \qquad J=\{d,d+1,\ldots,m-1\},\qquad O=P\setminus J.
+\tag{33.1}
+$$
+
+Represent $j=-\theta_{\rm INITIAL}$ by $0\le j<T$. For a label set $Y$, take tail-independent tables $\lambda_0,\lambda_1:P\to Y$ and define the immutable target and its ordered value join by
+
+$$
+\begin{aligned}
+ f_\lambda(v,-j,s)&=\lambda_v(j)
+ &&(v\in\mathbb F_2,\ j\in P,\ 0\le s<k),\\
+ f_\lambda(\bot)&=y_\bot,\qquad
+ \Lambda(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+ R=\Lambda[J],\qquad r=|R|.
+\end{aligned}
+\tag{33.2}
+$$
+
+Assume only the following exterior and cardinality conditions:
+
+$$
+ \Lambda(j)=o\quad(j\in O),\qquad
+ o\in Y\times Y,\qquad 2^{d-1}<r\le2^d.
+\tag{33.3}
+$$
+
+The two tables may differ. The outside pair $o$ may also occur in $J$; no condition on label multiplicities or zero-sum coding is imposed. The independently observed initial-bottom label $y_\bot$ is arbitrary, including coincidences with live labels.
+
+All finite actual complete-block histories remain sources, including all rejected histories. In particular every value, phase and legal inherited tail is jointly actual. To recall the supplied witness (31.4), write $c_i=\mathbf1_{\{0,T-1\}}(i\bmod T)$ and choose
+
+$$
+ \ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,\qquad
+ \ell\ge s+2,\qquad
+ \rho=\bigoplus_{i=\ell-s}^{\ell-1}c_i,\qquad
+ w=(v\oplus\rho)0^{\ell-s-1}1^s.
+\tag{33.4}
+$$
+
+Since $\gcd(m,T)=1$, compatible lengths exist. The separating zero makes $w$ legal and its entire record is $(v,-j,s)$. The actual history $1^{2m}$ realizes bottom. These histories have lengths divisible by $m$; their histories and lengths are unobserved, and their lengths need not agree. Neither $J$ nor any chosen tail narrows the source prior.
+
+Both original alphabets are retained: all literal length-$m$ words and all internally legal length-$m$ words coincide because $m<k$. The prohibition on $1^k$ still applies across seams, and rejection is absorbing. Only the INITIAL scalar value or bottom is free. Every later observation is the endpoint of an actually issued complete length-$m$ block; every issued block costs one, including waits, clearing, padding and the remainder of a block after interior rejection. GLOBAL requires one preselected literal stream at each emitted block index, shared by both values and every live archive. Stopping and decoding may use that source's own acquired archive. There is no reset, copy, interior observation, hidden INITIAL clock, borrowed record or unpaid preparation. Offline selection and storage are outside this block fee.
+
+**Theorem 33.2 (Exact arbitrary-table GLOBAL law on the delayed interior).** For every target in Definition 33.1, under either original alphabet,
+
+$$
+ \boxed{C_{\rm pre}(f_\lambda)=2d-1.}
+\tag{33.5}
+$$
+
+This statement assigns no exact adaptive fee. Its lower bound includes arbitrary literal words, waits, rejecting attempts and early endpoint stops. Its upper bound is one safe fixed prefix of $2d-1$ complete blocks on the full original source.
+
+Proof (value joining before the root and witness restriction). Apply the supplied exact GLOBAL-to-joined value law, [INITIAL target-cost theory, Definition 29.1 and Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres), to obtain
+
+$$
+ G(v,-j,s)=\Lambda(j),\qquad
+ C_{\rm pre}(f_\lambda)=C_{\rm pre}(G).
+\tag{33.6}
+$$
+
+Give initial bottom an independent pair label. This reduction preserves the same literal stream and its worst complete-block fee. Successful scalar outputs complement when the INITIAL value changes, while rejection and its subsequent outputs agree. Thus one actually acquired archive determines both value-translated strings. Retaining the first component answer and continuing until the second component stops uses the maximum of their stopping depths, including absorption. Conversely the remembered free value selects a component of the joined answer. No second source is executed and no unacquired endpoint is used.
+
+Because $r>1$, $G$ is nonconstant on each free-value fibre of the full source, so no correct root can stop freely there. If its first bit were one, the actual terminal-tail sources $(v,-j,k-1)$ would all reject immediately. Among these sources are two different joined labels. They have the same completed rejecting archive, and absorption makes every continuation identical. This collision forces the root to start zero. Such a root clears every inherited tail within the paid word, succeeds because its remaining $m-1$ bits cannot contain $1^k$, and leaves a current tail determined by that literal word. This is the supplied full-source root argument of Sections 25–26 and 30–32, applied to $G$ after (33.6).
+
+Fix one free value $v$. For each distinct $z\in R$, choose exactly one phase $j_z\in J$ with $\Lambda(j_z)=z$, and retain the actual tail-zero sources
+
+$$
+ \mathcal Q=\{(v,-j_z,0):z\in R\}.
+\tag{33.7}
+$$
+
+Only the lower-bound argument is restricted to these $r$ witnesses. At every common reached archive their current tails agree: their initial tails agree, and every preceding literal action in that archive was the same. Rejection of a next word depends only on that common tail and the word, so it either rejects all those candidates or succeeds on all. A common rejection is one absorbing child; it cannot distinguish unequal immutable labels. A correct early stop likewise has only one label.
+
+Proof (the restricted leaf bound at the actual calendar). Reuse the full-path charge interface (30.7)–(30.8), equivalently INITIAL Interface 1.4. A successful word $x_0\cdots x_{m-1}$ at emitted index $t$ has endpoint difference
+
+$$
+ q_t(j)=\bigoplus_{i=0}^{m-1}x_i c_{-j+tm+i},\qquad
+ \operatorname{supp}(q_t)\subseteq W_t=tm+\{0,\ldots,m\}\pmod T.
+\tag{33.8}
+$$
+
+As $2m\equiv1\pmod T$, through index $2d-2$ these actual ordered paths are
+
+$$
+\begin{aligned}
+ W_{2h}&=[h,h+1,\ldots,h+m] &&(0\le h\le d-1),\\
+ W_{2h+1}&=[m+h,\ldots,T-1,0,\ldots,h+1]
+ &&(0\le h\le d-2).
+\end{aligned}
+\tag{33.9}
+$$
+
+The bound $d\le m-2$ makes the even paths nonwrapping and these displayed orders valid. On every even path, $h\le d-1<\min J$ and $\max J=m-1<h+m$, so $J$ lies in its strict interior. On every displayed odd path, $h+1\le d-1<\min J$ and $m+h>\max J$, so the path misses $J$ entirely.
+
+Consequently, on the restricted family $\mathcal Q$, any successful odd action in (33.9) has zero increment and only one endpoint child. Any successful even action has at most two scalar endpoint children. These odd levels are unary only on this witness family; outside sources can have nonzero odd increments. Uniform rejection and correct early homogeneous stopping cannot increase the number of leaves. The supplied binary-leaf induction of Corollary 19.3, with these unary levels inserted, therefore bounds every controller of worst fee at most $2d-2$ by
+
+$$
+ \#\{\text{nonempty homogeneous leaves on }\mathcal Q\}
+ \le2^{d-1}<r.
+\tag{33.10}
+$$
+
+Indeed at that fee the emitted indices are at most $0,\ldots,2d-3$, containing exactly $d-1$ possible binary levels $0,2,\ldots,2d-4$. The $r$ witnesses require different leaf labels. All original words were allowed in this argument: a zero wait consumes its actual index, a rejecting word pays its entire block and supplies no later distinction, and an early stop replaces a subtree by one homogeneous leaf. No free wait moves a source to index $2d-2$. This proves $C_{\rm pre}(G)\ge2d-1$, hence the lower half of (33.5) by (33.6).
+
+Proof (even coding supports with one actual parity donor). Choose any injection $\alpha:R\to\mathbb F_2^d$, which exists because $r\le2^d$. If $o\in R$, its code is part of this injection with no prescribed value. If $o\notin R$, no $\alpha(o)$ is needed. Put
+
+$$
+\begin{aligned}
+ p&=\bigoplus_{j\in J}\alpha(\Lambda(j)),\\
+ S_h&=\{j\in J:\alpha(\Lambda(j))_h=1\},\qquad
+ p_h=|S_h|\bmod2 &&(0\le h<d),\\
+ E_{2h}&=
+ \begin{cases}S_h,&p_h=0,\\S_h\cup\{m\},&p_h=1.
+ \end{cases}
+\end{aligned}
+\tag{33.11}
+$$
+
+The sum defining $p$ counts every phase, hence all label multiplicities; $p_h$ is its $h$-th coordinate. Every $E_{2h}$ is even. Phase $m$ is an actual outside source and belongs to every $W_{2h}$ in (33.9). It is the right endpoint when $h=0$, and a strict interior vertex when $h>0$. Thus the entire support lies in the strict interior for $h>0$; at the root its only possible endpoint charge is at $m$. All left endpoints $h$ are uncharged. The outside source at $m$ keeps its original label and will be decoded by the flags below.
+
+Proof (two outside flags within the existing odd slots). Define
+
+$$
+ \delta=\begin{cases}1,&m\text{ even},\\0,&m\text{ odd},\end{cases}
+ \qquad
+ A=\begin{cases}W_1,&\delta=0,\\W_1\setminus\{0\},&\delta=1.
+ \end{cases}
+\tag{33.12}
+$$
+
+Here $W_1=[m,m+1,\ldots,T-1,0,1]$. It has $m+1$ vertices, so $|A|=m+1-\delta$ is even. For the last odd index $2d-3$, put
+
+$$
+\begin{aligned}
+ B_0&=\{2,\ldots,d-1\}\cup
+ \begin{cases}\varnothing,&\delta=0,\\\{0\},&\delta=1,\end{cases}\\
+ B&=\begin{cases}B_0,&|B_0|\text{ even},\\B_0\cup\{1\},&|B_0|\text{ odd}.
+ \end{cases}
+\end{aligned}
+\tag{33.13}
+$$
+
+$B$ is even and is contained in the low segment $\{0,\ldots,d-1\}$ of $W_{2d-3}$. Both $A$ and $B$ miss $J$. Every phase in $\{m,\ldots,T-1\}$ and phase one belongs to $A$, every phase $2,\ldots,d-1$ belongs to $B$, and phase zero belongs to $A$ when $\delta=0$ and to $B$ when $\delta=1$. Therefore
+
+$$
+ A\cup B=\{0,\ldots,d-1\}\cup\{m,\ldots,T-1\}=O.
+\tag{33.14}
+$$
+
+These two supports may overlap at phase one. The decoder will use Boolean OR, not XOR. Since $d\ge3$, the first and last odd slots are distinct. Prescribe
+
+$$
+ E_1=A,\qquad E_{2d-3}=B,\qquad
+ E_t=\varnothing\quad\text{at every other odd }t\in\{0,\ldots,2d-2\}.
+\tag{33.15}
+$$
+
+Together (33.11)–(33.15) specify even supports on all the actual paths, without any zero-sum requirement on $p$.
+
+Proof (literal inverse, inherited tails and every seam). For each $0\le t\le2d-2$, use the supplied full ordered-path inverse, INITIAL Interface 1.4, with $u_t=tm\bmod T$:
+
+$$
+ X^{(t)}_i=\bigoplus_{b=0}^{i}\mathbf1_{E_t}(u_t+b\bmod T),
+ \qquad 0\le i<m.
+\tag{33.16}
+$$
+
+Even full-path charge makes the terminal-vertex charge correct as well. Consequently this actual literal word has successful charge exactly $\mathbf1_{E_t}$ on every phase, including all outside phases; it has zero charge off its path. No independently chosen response row is substituted for a literal action.
+
+Every even coding word starts zero because its left endpoint $h$ is absent from $E_{2h}$. At $h=0$ the terminal bit is $\mathbf1_{E_0}(m)=p_0$, so the root need not end zero. Its terminal one-run is nevertheless at most $m-1$. For every $h>0$ the right endpoint $h+m$ is uncharged, and the coding word ends zero. The first odd word has its first two charges equal to one, at $m,m+1\in A$, so (33.16) gives first two bits $1,0$ and leading one-run exactly one. The last odd word starts zero: its path starts at $m+d-2$, outside the low support $B$. Every other odd word is $0^m$.
+
+The root's first zero clears every inherited tail, including $k-1$, within the first paid block. Every word contains a zero; its internal one-runs have length at most $m-1<k$. The only seam following a possibly nonzero-ended even word is the root-to-first-flag seam. Its one-run is at most
+
+$$
+ (m-1)+1=m<2m-2=k.
+\tag{33.17}
+$$
+
+After every odd word the next even word starts zero, and all later even words end zero. These facts check every remaining seam, including the last flag followed by the last coding word. Thus the entire concatenation of all $2d-1$ blocks is safe for every phase, both free values and all legal inherited tails, in both original alphabets. There is no extra clearing block.
+
+Proof (own-endpoint decoding and the attained GLOBAL fee). Preselect the one prefix $X^{(0)}\mid\cdots\mid X^{(2d-2)}$. Let $y_0=v,y_1,\ldots,y_{2d-1}$ be this source's own acquired scalar readings and define
+
+$$
+ \Delta_t=y_{t+1}\oplus y_t,\qquad
+ F=\Delta_1\lor\Delta_{2d-3},\qquad
+ a=(\Delta_0,\Delta_2,\ldots,\Delta_{2d-2}).
+\tag{33.18}
+$$
+
+If $j\in J$, both flag differences vanish and $a=\alpha(\Lambda(j))$, since the parity donor $m$ is outside $J$. Decode $\alpha^{-1}(a)$, including when this label is $o\in R$. If $j\in O$, (33.14) gives $F=1$; return $o$ regardless of $a$. In particular the donor phase $m$, whose even vector is $p$, is correctly recognized as outside. Overlap of $A,B$ creates flag pair $(1,1)$ and still gives $F=1$. Thus on every live source the joined decoder is
+
+$$
+ \widehat\Lambda=
+ \begin{cases}
+ o,&F=1,\\
+ \alpha^{-1}(a),&F=0,
+ \end{cases}
+ \qquad\text{return the component }\widehat\Lambda_v.
+\tag{33.19}
+$$
+
+The inverse is only used on its image: $F=0$ implies $j\in J$. The remembered free value selects exactly $\lambda_v(j)$. Initial bottom stops freely with $y_\bot$. All live sources may stop at the last displayed endpoint, and an infinite zero-word extension, if desired, is unissued and uncharged. The same literal word is used at every emitted index across both values and all archives. All $d$ coding blocks and $d-1$ odd blocks, including any zero waits, are included in the fee. This proves $C_{\rm pre}(f_\lambda)\le2d-1$ and completes (33.5). $\square$
+
+**Proposition 33.3 (Five internal labels beyond an outside-zero zero-sum certificate).** Take $m=8,d=3,k=14,T=15$ and $J=\{3,4,5,6,7\}$. Let $O_{\rm lab},L_1,\ldots,L_5$ be six pairwise distinct scalar labels. Use the same table in both fibres, with $\lambda_v(2+i)=L_i$ for $1\le i\le5$ and $\lambda_v(j)=O_{\rm lab}$ off $J$, independently of every legal tail. Then $r=5$, the outside pair is $o=(O_{\rm lab},O_{\rm lab})\notin R$, and (33.5) gives $C_{\rm pre}=5$. There is no injective coding $\gamma:R\cup\{o\}\to\mathbb F_2^3$ with both $\gamma(o)=0$ and $\bigoplus_{j\in J}\gamma(\Lambda(j))=0$.
+
+Proof. Such a $\gamma$ would assign five distinct nonzero vectors to the five internal labels. The XOR of all seven nonzero vectors of $\mathbb F_2^3$ is zero, since each coordinate occurs four times. The XOR of the chosen five equals the XOR of the other two; those two are distinct, so their XOR is nonzero. This excludes precisely the outside-zero certificate just stated, without asserting that every unrestricted five-point coding has nonzero sum.
+
+For explicit supports of a five-block attainment, choose, in coordinate order $h=0,1,2$,
+
+$$
+ \bigl(\alpha((L_1,L_1)),\ldots,\alpha((L_5,L_5))\bigr)
+ =\bigl((1,0,0),(0,1,0),(1,1,0),(0,0,1),(1,0,1)\bigr).
+\tag{33.20}
+$$
+
+Here $p=(1,0,0)$ and $\delta=1$. The construction gives
+
+$$
+\begin{aligned}
+ E_0&=\{3,5,7,8\},& E_1&=\{1,8,9,10,11,12,13,14\},\\
+ E_2&=\{4,5\},& E_3&=\{0,2\},& E_4&=\{6,7\}.
+\end{aligned}
+\tag{33.21}
+$$
+
+Their actual ordered paths are respectively $[0,\ldots,8]$, $[8,\ldots,14,0,1]$, $[1,\ldots,9]$, $[9,\ldots,14,0,1,2]$ and $[2,\ldots,10]$. Every displayed support is even and contained in its path. The two odd supports cover exactly $P\setminus J$; the even coordinates on phases $3,\ldots,7$ are the five distinct vectors in (33.20). Formula (33.16) supplies all five complete words, with the inherited-tail and seam proof (33.17). Four paid blocks have only two binary opportunities on the five chosen internal witnesses, so at most four homogeneous leaves. This proves the stated attainment and obstruction while keeping every exterior source and inherited tail. $\square$
+
+**Mathematical citation 33.4 (Supplied machinery and the new construction).** The matched coefficients and bit semantics, joint actual histories, full-source root collision and complete-block fee are supplied by (15.1)–(15.4), Lemma 15.1, (31.4) and INITIAL Chapter 1. The literal even-charge inverse is supplied by (27.3)–(27.5) and INITIAL Interface 1.4; the common-tail binary-leaf induction is supplied by Corollary 19.3 and Section 30. Exact same-stream value joining, with its stopping and absorption semantics, is INITIAL Theorem 29.2. These results are used as intermediate machinery, not asserted again as new general results.
+
+Section 30 is the row-column/grid special case of the present GLOBAL law: with its exponent denoted by $a$, set $d=2a$, extend its grid to $J=\{2a,\ldots,m-1\}$ by the outside pair on any padding phases, and obtain $r=2^{2a}=2^d$ and fee $4a-1$. Its balanced coordinate supports already have even multiplicities. That special structure does not supply arbitrary internal tables with an unrestricted parity vector $p$. Section 32 supplies only the $+4$ conversion upper bound for equal free-value tables; it does not determine this exact fee. The new construction is the actual outside donor in (33.11) together with the two even outside flags (33.12)–(33.15), their common safe literal realization and OR decoder. It discharges parity without removing sources or assuming a zero-sum certificate, at the same calendar horizon as the restricted lower bound. Proposition 33.3 exhibits a table outside the outside-zero certificate condition.
+
+The broader identification and parity-query comparisons remain those credited in Section 32: van den Bos and Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*](https://arxiv.org/abs/1907.11034), and Chistopolskaya and Podolskii, [*Parity Decision Tree Complexity is Greater Than Granularity*](https://arxiv.org/abs/1810.08668). Abstract state tests or unrestricted parity questions do not supply the particular moving-path supports, literal inverse safety or complete-block fee used here. Theorem 33.2 is a repo-derived ordinary mathematical deduction on the supplied reader interfaces; no literature-priority claim is made.
+
+**Scope 33.5 (Remaining targets and resource boundary).** The exact adaptive fee for the general family (33.1)–(33.3) remains a separate target. Arbitrary label layouts without this delayed constant-exterior structure, other widths and phase orbits, differing free-value tables beyond a joined constant exterior, and tail-sensitive labels retain their unresolved cases. The original all-parameter objective remains exact adaptive and GLOBAL worst complete-block fees for every attainable immutable INITIAL target, under both original alphabets and all $k\ge2,m\ge1$. The present deterministic endpoint theorem makes no stochastic or full-law inference and supplies no memory, offline-computation, physical-resource or cross-reader cost law. Selecting the finite injection is semantic; no complexity bound for presenting or searching the table is asserted.
+
+## 追加锚（本行以下为增补区）
