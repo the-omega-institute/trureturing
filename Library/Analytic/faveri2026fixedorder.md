@@ -407,6 +407,55 @@ This is a substitution and residue calculation from the existing Poisson formula
 
 For comparison, absolute values and divisor bounds give only $|\mathcal C_{6,L_j}[c_j]|\ll_\varepsilon K^{4/3+\varepsilon}$. Write $h=gx,k=gy$ with $(x,y)=1$. The good conductor weight is at most $w(x)w(y)$, where $w(x)=\prod_{6\nmid v_{\mathfrak p}(x)}q_{\mathfrak p}^{-1/3}$. Its Dirichlet series converges for $\Re s>2/3$, so $\sum_{q_x\le X}w(x)\ll_\varepsilon X^{2/3+\varepsilon}$. Summing the two cofactors and then $g$ gives $K^{4/3+\varepsilon}$; the finite local products and divisor-bounded coefficients cost only $K^\varepsilon$. At $K\asymp U_j$, the desired pole-contraction scale is instead $K^{7/6+\varepsilon}$, leaving a $K^{1/6}$ saving to obtain. The row Möbius factor $M_{P,L_j}(5)$ is distinct from the original column coefficient $\mu(d)$; it does not establish cancellation of that coefficient contraction.
 
+#### Paying a large higher-multiplicity tail of the pole contraction
+
+The conductor weight also gives an absolute bound for a specified part of the actual pole contraction. This application uses the same $w(x)$ as above, de Faveri's higher-multiplicity decomposition (3.3), and the standard positive Dirichlet-series Rankin bound. It does not estimate the shifted integral or assert cancellation of root numbers.
+
+For a good integral cofactor $x\in I(S)$, write $x=z^6a$ with $a$ sixth-power-free, and define
+
+$$
+B(x)=q_{a/\operatorname{rad}(a)}.
+$$
+
+Thus $B(x)=1$ for a squarefree sixth-free part; it measures only the excess exponents after the common gcd and sixth powers have been removed. For $1\le Y\le K$, let $\mathcal C_{6,L}^{>Y}[c_j]$ retain exactly the actual-order-six pairs $h=gx,k=gy$, $(x,y)=1$, satisfying $\max(B(x),B(y))>Y$. This is a partition of the original coefficient contraction, with all phases, physical labels, and local masks retained.
+
+For $0<e<2/3$, put $s=2/3+e$ and $d=2/3-e$. The positive weighted Dirichlet series has Euler factors
+
+$$
+\sum_{x\in I(S)}\frac{w(x)B(x)^d}{q_x^s}
+=\prod_{\mathfrak p\notin S}
+\frac{1+\sum_{r=1}^{5}q_{\mathfrak p}^{-1/3-rs+(r-1)d}}
+     {1-q_{\mathfrak p}^{-6s}}.
+$$
+
+For $r=1,\ldots,5$, the exponent $1/3+rs-(r-1)d$ is $1+(2r-1)e>1$, while $6s>1$. The product therefore converges. Rankin's positive majorization gives
+
+$$
+\sum_{\substack{q_x\le X\\B(x)>Y}}w(x)
+\ll_e X^{2/3+e}Y^{-2/3+e},
+\qquad
+\sum_{q_x\le X}w(x)\ll_e X^{2/3+e}.
+$$
+
+Before absorbing the local coefficient bounds, the two possible large-$B$ cofactors and the sum over all common gcds give $K^{4/3+2e}Y^{-2/3+e}$. The remaining local factors cost a further $K^{e'}$, for any fixed $e'>0$. Choosing $e,e'$ small enough for a prescribed $\varepsilon$ gives
+
+$$
+\left|\mathcal C_{6,L}^{>Y}[c_j]\right|
+\ll_\varepsilon K^{4/3+\varepsilon}Y^{-2/3+\varepsilon}.
+$$
+
+Indeed, at fixed $g\in I(S)$ both cofactors have norm at most $K/q_g$, and $\sum_{g\in I(S)}q_g^{-4/3-2e}$ converges. The original divisor-bounded $c_j$, conductor factor, $\vartheta(\mathfrak f)$, and finite local products satisfy the same absolute bounds used above; $|M_{P,L}(5)|\le\zeta_F(5)$ uniformly in $L,P$. Dropping coprimality and the actual-order selector occurs only in this positive absolute majorant, without replacing the signed summand. Sixth powers and all common gcds are included by the Euler factors and the outer sum.
+
+For $1\le U_j\le K^2$, take
+
+$$
+Y=(K^2/U_j)^{1/4}.
+$$
+
+Then $1\le Y\le K^{1/2}$. Since $K^{4/3}Y^{-2/3}=U_j^{1/6}K$, the raw error $K^{2e+e'}Y^e$ is absorbed by choosing $e,e'$ small enough. This tail is consequently $\ll_\varepsilon(U_jK)^\varepsilon U_j^{1/6}K$, which pays its pole contribution at scale $U_jK$. At $U_j\asymp K$, the cutoff is $Y\asymp K^{1/4}$. If $U_j\ge K^2$, the already stated full absolute pole bound $K^{4/3+\varepsilon}$ suffices at that pole scale. These statements cover the specified pole subterm, not the other dual terms.
+
+The remaining pole head retains both $B(h/g),B(k/g)\le Y$ and all original coefficients, including the squarefree sector. Large original multiplicity alone does not force a pair into the tail: common powers cancel in $h/g,k/g$, and sixth powers do not enter $B$. The full signed goal still requires control of this head, the shifted integral, and the other dual terms on the actual detector lengths. This is an application of the supplied conductor weight and a standard Rankin estimate; no new general tail theorem or complete analytic Lean certification is claimed.
+
 The actual-order restriction matters. For a ratio of order $o\in\{2,3\}$, all pure dual $o$-th powers have character value one. The portion of those powers outside the sixth powers has Dirichlet factor
 
 $$
