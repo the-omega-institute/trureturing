@@ -64,6 +64,21 @@ private theorem collapseVertex_eq_none {M q : ℕ} (S : Support M q) (x : Vertex
   | inl i => simp [collapseVertex]
   | inr i => simp [collapseVertex]
 
+/-- An erased vertex is exactly a freely chosen member of the true support. -/
+def signalVertexEquiv {M q : ℕ} (S : Support M q) :
+    {x : Vertex M // collapseVertex S x = none} ≃ {i : Fin M // i ∈ S.val} := by
+  classical
+  refine (Equiv.ofBijective
+    (fun i : {i : Fin M // i ∈ S.val} =>
+      (⟨Sum.inl i.val, by simp [collapseVertex, i.property]⟩ :
+        {x : Vertex M // collapseVertex S x = none})) ?_).symm
+  constructor
+  · intro i j h
+    exact Subtype.ext (Sum.inl.inj (congrArg Subtype.val h))
+  · intro x
+    rcases (collapseVertex_eq_none S x.val).mp x.property with ⟨i, hi, hx⟩
+    exact ⟨⟨i, hi⟩, Subtype.ext hx.symm⟩
+
 private theorem collapseVertex_preserves {M q : ℕ} (S : Support M q)
     (r : ℝ) {x y : Vertex M} (h : collapseVertex S x = collapseVertex S y) :
     b r S x = b r S y ∧ chi x = chi y := by
@@ -83,6 +98,40 @@ private theorem collapseVertex_preserves {M q : ℕ} (S : Support M q)
     cases y with
     | inl j => by_cases hj : j ∈ S.val <;> simp [collapseVertex, hj] at h
     | inr j => simp [b, chi]
+
+private theorem collapseVertex_injective_off_signal {M q : ℕ} (S : Support M q)
+    {x y : Vertex M} (hy : collapseVertex S y ≠ none)
+    (h : collapseVertex S x = collapseVertex S y) : x = y := by
+  classical
+  cases x with
+  | inl i =>
+    cases y with
+    | inl j =>
+      have hj : j ∉ S.val := by simpa [collapseVertex] using hy
+      have hi : i ∉ S.val := by
+        intro hi
+        exact hy (h.symm.trans (by simp [collapseVertex, hi]))
+      simpa [collapseVertex, hi, hj] using h
+    | inr j => by_cases hi : i ∈ S.val <;> simp [collapseVertex, hi] at h
+  | inr i =>
+    cases y with
+    | inl j =>
+      have hj : j ∉ S.val := by simpa [collapseVertex] using hy
+      simp [collapseVertex, hj] at h
+    | inr j => simpa [collapseVertex] using h
+
+private theorem vertex_fiber_card {M q : ℕ} (S : Support M q) (y : Vertex M) :
+    Nat.card {x : Vertex M // collapseVertex S x = collapseVertex S y} =
+      if collapseVertex S y = none then q else 1 := by
+  classical
+  by_cases hy : collapseVertex S y = none
+  · simp only [hy, if_true]
+    rw [Nat.card_congr (signalVertexEquiv S)]
+    simpa only [Nat.card_eq_fintype_card, Fintype.card_coe] using S.property
+  · simp only [hy, if_false]
+    apply Nat.card_eq_one_iff_exists.mpr
+    refine ⟨⟨y, rfl⟩, fun x => Subtype.ext ?_⟩
+    exact collapseVertex_injective_off_signal S hy x.property
 
 private theorem same_fiber_probability {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o o' : Obs M s e)
@@ -158,6 +207,14 @@ def siteCylinder {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e
   classical
   exact (Fintype.piFinset A).map (fiberSiteEquiv S e o).symm.toEmbedding
 
+/-- Every signal position has exactly `q` choices and every un-erased position
+has one choice. This includes the terminal path position. -/
+private theorem native_conditional_site_sizes {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (k : Sites s e) :
+    Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} =
+      if collapsedObs S e o k = none then q else 1 :=
+  vertex_fiber_card S (siteEquiv M s e o k)
+
 /-- The exact native conditional probability of every site cylinder factors.
 In particular, consecutive erased path vertices remain separate coordinates. -/
 theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
@@ -168,8 +225,18 @@ theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
       Finset {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) :
     conditionalFiberMass S r e o (siteCylinder S e o A) =
       (∏ k, (A k).card : ℝ) /
-      (∏ k, Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} : ℝ) := by
+      (∏ k, Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} : ℝ) ∧
+    (∀ A : Set (Obs M s e), @MeasurableSet (Obs M s e) (collapsedSigma S e) A ↔
+      ∃ B : Set (Sites s e → Option (Vertex M)), (collapsedObs S e) ⁻¹' B = A) ∧
+    (∀ k : Sites s e,
+      Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} =
+        if collapsedObs S e o k = none then q else 1) := by
   classical
+  refine ⟨?_, ?_, native_conditional_site_sizes S e o⟩
+  swap
+  · intro A
+    exact ⟨fun ⟨B, _, hB⟩ => ⟨B, hB⟩,
+      fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top B, hB⟩⟩
   letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
   letI (k : Sites s e) :
       Fintype {x : Vertex M // collapseVertex S x = collapsedObs S e o k} :=
@@ -179,6 +246,43 @@ theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
   have hc := Fintype.card_congr (fiberSiteEquiv S e o)
   simp only [siteCylinder, card_map, Fintype.card_piFinset, Nat.cast_prod]
   simp only [Nat.card_eq_fintype_card, hc, Fintype.card_pi, Nat.cast_prod]
+
+def departureSite (s : ℕ) (e : Experiment) (k : Fin s) : Sites s e :=
+  match e with
+  | .pair => (k, false)
+  | .path => k.castSucc
+
+def successorSite (s : ℕ) (e : Experiment) (k : Fin s) : Sites s e :=
+  match e with
+  | .pair => (k, true)
+  | .path => k.succ
+
+/-- The two departure counts use actual departure labels and successor signs
+fixed by the very same complete collapsed-history fiber. -/
+theorem native_fiber_departure_counts {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (y : Fiber S e o) (i : Fin M) (z : ℝ) :
+    count e y.val i z =
+      (Finset.univ.filter fun k : Fin s =>
+        siteEquiv M s e y.val (departureSite s e k) = Sum.inl i ∧
+          chi (siteEquiv M s e o (successorSite s e k)) = z).card := by
+  classical
+  apply congrArg Finset.card
+  ext k
+  have hchi := (collapseVertex_preserves S 0
+    (congrFun y.property (successorSite s e k))).2
+  cases e with
+  | pair =>
+    change chi (y.val k).2 = chi (o k).2 at hchi
+    change k ∈ (univ.filter fun a =>
+      (y.val a).1 = Sum.inl i ∧ chi (y.val a).2 = z) ↔
+      k ∈ (univ.filter fun a => (y.val a).1 = Sum.inl i ∧ chi (o a).2 = z)
+    simp only [mem_filter, mem_univ, true_and, hchi]
+  | path =>
+    change chi (y.val k.succ) = chi (o k.succ) at hchi
+    change k ∈ (univ.filter fun a : Fin s =>
+      y.val a.castSucc = Sum.inl i ∧ chi (y.val a.succ) = z) ↔
+      k ∈ (univ.filter fun a : Fin s => y.val a.castSucc = Sum.inl i ∧ chi (o a.succ) = z)
+    simp only [mem_filter, mem_univ, true_and, hchi]
 
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
