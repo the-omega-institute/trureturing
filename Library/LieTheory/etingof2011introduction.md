@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.0901.0827
 url: https://arxiv.org/abs/0901.0827v5
 claim: "Problem 1.55 develops the finite-dimensional representation theory of sl(2) from the relations HE − EH = 2E, HF − FH = −2F, EF − FE = H: part (b) gives, for a vector w with Ew = 0, a degree-k polynomial P_k with E^k F^k w = P_k(H) w, and part (f) shows that a finite-dimensional irreducible representation with highest weight λ has basis v, Fv, …, F^λ v."
 strata_touched:
-  - D5/S3/Quantum/SpinChains/Sl2WeightFiltration
+  - D5/S3/Quantum/SpinChains/HypereclecticNonShortening
 license: citation-only
 triage: anchor
 ---
@@ -35,4 +35,4 @@ Part (f) (p. 21): "Show that for each N > 0, there exists a unique up to isomorp
 
 ## Use in this repository
 
-`D5/S3/Quantum/SpinChains/Sl2WeightFiltration.lowering_kernel_zero` states, over any field of characteristic zero, that a vector of natural weight q annihilated by a power of the raising operator and by F^k with k ≤ q is zero. This is the nonvanishing of the lowering string of a primitive vector in parts (b) and (f), stated for a vector that is not assumed primitive. The repository proof inducts on the raising length and uses Mathlib's `IsSl2Triple.HasPrimitiveVectorWith.pow_toEnd_f_ne_zero_of_eq_nat`.
+`D5/S3/Quantum/SpinChains/HypereclecticNonShortening.lowering_kernel_zero` states, over any field of characteristic zero, that a vector of natural weight q annihilated by a power of the raising operator and by F^k with k ≤ q is zero. This is the nonvanishing of the lowering string of a primitive vector in parts (b) and (f), stated for a vector that is not assumed primitive. The repository proof inducts on the raising length and uses Mathlib's `IsSl2Triple.HasPrimitiveVectorWith.pow_toEnd_f_ne_zero_of_eq_nat`.
