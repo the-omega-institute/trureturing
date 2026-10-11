@@ -35876,6 +35876,38 @@ $$
 
 所以，接受 Mishra--Sarkar 的 $\omega\le6$ 外部定理时，得到的只是一个条件筛选：它排除低素因子数的 FIB 点，却不能覆盖整个 $1+F_rg$ 族。要继续证明 Robin，必须转向同一实际候选的 CA/SA 价格源保持、或直接控制完整有符号余量；仅增加窗口枚举或重复该截断判据不会缩小全称缺口。
 
+### 258.6b 规范 FIB 窗口联合族中的 $\omega$ 也无界
+
+同样的障碍不会因把 $g$ 限制在窗口
+
+$$
+I_r=\left[\left\lceil\frac{F_r}{10}\right\rceil,
+\left\lfloor\frac{F_r}{5}\right\rfloor\right]\cap\mathbb Z
+$$
+
+而消失。对每个 $k\ge1$，存在无穷多个素数指标 $r$ 以及 $g\in I_r$，使
+
+$$
+\omega(1+F_rg)\ge k.
+$$
+
+取 $k$ 个互异素数 $q_1,\ldots,q_k$，并令 $z(q_i)$ 为其 Fibonacci 进入秩。选取大于全部 $z(q_i)$ 的素数指标 $r$。由标准进入秩判据
+
+$$
+q_i\mid F_r\iff z(q_i)\mid r,
+$$
+
+可知 $q_i\nmid F_r$，故 $F_r$ 在每个 $q_i$ 模下可逆。令 $Q=\prod_iq_i$；CRT 给出一个类 $g_0\pmod Q$，满足
+
+$$
+F_rg_0\equiv-1\pmod {q_i}
+\qquad(1\le i\le k).
+$$
+
+素数指标可以任意增大，而 $|I_r|\asymp F_r$；因此对充分大的所选 $r$，窗口 $I_r$ 的长度至少为 $Q$，其中含有某个 $g\equiv g_0\pmod Q$。于是每个 $q_i$ 都整除 $1+F_rg$，得到所述下界。沿着更大的素数指标重复这一构造，即得无穷多个窗口点。
+
+这个结论只说明窗口联合族的不同素因子数没有统一上界；它没有声称每个窗口都含有高 $\omega$ 点，也没有给出这些点的 Robin 符号。因而 Mishra--Sarkar 的低 $\omega$ 筛选在这些窗口中仍是局部过滤器，不能成为全局 FIB 证明；剩余缺口仍是 CA/SA 来源保持或同一候选上的有符号 Robin 估计。
+
 ### 258.7 26-free 筛在 FIB 窗口上的精确余类投影
 
 [Fabbian 的显式 Mertens 预印本](../../../Library/ArithSums/fabbian2026mertens.md)声称：对 $n>5040$，条件 $v_2(n)\le25$ 足以推出 Robin 严格不等式。把这个外部条件投影到
