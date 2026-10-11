@@ -122,6 +122,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -181,6 +182,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -475,6 +477,10 @@ jobs:
             tools/scripts/workflow/test_ci_detect.py
             tools/scripts/workflow/test_ci_required.py
             [tests-cli]
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_anchor_cases.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/mirror_fixture.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/native_fixture.py
             # WorktreeMakeWorkflowTests copies the root dispatch table.
             Makefile
             tools/StrataLint.Engineering/*
@@ -482,6 +488,7 @@ jobs:
             Golden/Projection/*
             Meta/ci-cache-paths.json
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -556,6 +563,7 @@ jobs:
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -635,6 +643,7 @@ jobs:
             D5/X_Frontier/ValuesProducer.lean
             Golden/values-kernels.toml
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1158,6 +1167,7 @@ jobs:
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1238,6 +1248,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1342,6 +1353,7 @@ jobs:
             docs/develop/theory/INTERFACE_PHILOSOPHY.md
             docs/develop/theory/PERIODIC_TREE_registry.jsonl
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1465,6 +1477,7 @@ jobs:
             D5/S3/Midline/GoldenSpectralMarker.lean
             Golden/Projection/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1498,6 +1511,10 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-workflow-script]
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_anchor_cases.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/mirror_fixture.py
+            tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/native_fixture.py
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
@@ -1631,6 +1648,7 @@ jobs:
             tools/StrataLint.Engine/*
             tools/Trureturing.Truth/*
             tools/StrataLint.Cli/*
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Configuration/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
@@ -1737,6 +1755,7 @@ jobs:
             tools/Architecture/BannedSymbols*.txt
             tools/Architecture/ScribeScriptAllowlist.txt
             tools/StrataLint.Scribe/Vendor/Katex/katex.min.js
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Cli/**/*.cs
             tools/StrataLint.Cli/*.csproj
             tools/StrataLint.Cli/packages.lock.json
