@@ -278,7 +278,6 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hm : Scale.sampleLength 0 1 1 = 0 := by norm_num [Scale.sampleLength]
   rw [hm]
   norm_num [Selection.failureMass]
-  decide
 
 def proof_record : Registration arena sourceStatement where
   actual := actual

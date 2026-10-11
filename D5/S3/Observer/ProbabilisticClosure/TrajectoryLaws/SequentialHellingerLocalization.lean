@@ -223,7 +223,7 @@ theorem common_energy_localization
     let RY : ℝ≥0 := ⟨2 * ((K : ℝ) + 1), by positivity⟩
     have hbD n : eLpNorm (fun ω => ∑ i ∈ range n, D K i ω) 1 μ ≤
         (RD : ℝ≥0∞) := by
-      rw [eLpNorm_one_eq_lintegral_enorm,
+      rw [eLpNorm_one_eq_lintegral_enorm (hmi.integrable n).aestronglyMeasurable,
         ← ofReal_integral_norm_eq_lintegral_enorm (hmi.integrable n)]
       rw [← ENNReal.ofReal_coe_nnreal]
       change ENNReal.ofReal _ ≤ ENNReal.ofReal (2 * ((K : ℝ) + 1) + 1)
@@ -242,7 +242,7 @@ theorem common_energy_localization
         _ ≤ _ := by linarith [(hjoint K n).1]
     have hbY n : eLpNorm (fun ω => ∑ i ∈ range n, Y K i ω) 1 μ ≤
         (RY : ℝ≥0∞) := by
-      rw [eLpNorm_one_eq_lintegral_enorm,
+      rw [eLpNorm_one_eq_lintegral_enorm (hsi n).aestronglyMeasurable,
         ← ofReal_integral_norm_eq_lintegral_enorm (hsi n)]
       rw [← ENNReal.ofReal_coe_nnreal]
       change ENNReal.ofReal _ ≤ ENNReal.ofReal (2 * ((K : ℝ) + 1))
@@ -372,7 +372,7 @@ private lemma normalized_product_zero
     have heq := hm.setIntegral_eq (i := 0) (j := n) (Nat.zero_le n) MeasurableSet.univ
     simpa using heq.symm
   have hb n : eLpNorm (fun ω => ∏ i ∈ range n, r i ω / ρ i ω) 1 μ ≤ (1 : ℝ≥0) := by
-    rw [eLpNorm_one_eq_lintegral_enorm,
+    rw [eLpNorm_one_eq_lintegral_enorm (hm.integrable n).aestronglyMeasurable,
       ← ofReal_integral_norm_eq_lintegral_enorm (hm.integrable n)]
     simp only [Real.norm_eq_abs, abs_of_nonneg (hnonneg n _), hint, ENNReal.ofReal_one]
     exact le_rfl
@@ -572,7 +572,7 @@ theorem trajectory_hellinger_likelihood_limits
     | zero => simpa [Z] using (memLp_top_const (1 : ℝ) (μ := P))
     | succ n ih =>
       simpa only [Z, prod_range_succ, Pi.mul_def] using
-        ((hWtop n).mul ih : MemLp (Z n * W n) ∞ P)
+        (ih.mul (hWtop n) : MemLp (Z n * W n) ∞ P)
   have hWmean n : P[W n | F n] =ᵐ[P] 1 := by
     have hwi : Integrable (r n * (fun x => (ρ n x)⁻¹)) P := by
       simpa only [W, div_eq_mul_inv, Pi.mul_def] using (hWtop n).integrable le_top

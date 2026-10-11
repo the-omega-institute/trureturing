@@ -299,6 +299,7 @@ private theorem rawTarget_probability (μ : PMF Depth) (h : List Operation)
     apply ProbabilityTheory.cond_isProbabilityMeasure
     rw [history_mass μ h c hc]
     exact ne_of_gt (normalizer_bounds μ h c hc).1
+  unfold rawTarget
   exact inferInstance
 
 /-- All legal phase histories, with no bound on paid rejections or fourth returns. -/

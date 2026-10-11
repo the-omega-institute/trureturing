@@ -26,8 +26,9 @@ open D5.S3.Estimation.DataProcessing.MeasurableTotalVariationTriangle
 def lawfulTail (s : ActivePhase) (z : Runtime) : Measure (ValidTail s) :=
   (pathLaw z).map fun p => NativeObserverJointLaw.validStopped s (fun n => (p n).2)
 private theorem lawfulTail_probability (s : ActivePhase) (z : Runtime) :
-    IsProbabilityMeasure (lawfulTail s z) :=
-  inferInstance
+    IsProbabilityMeasure (lawfulTail s z) := by
+  unfold lawfulTail
+  infer_instance
 private theorem lawfulTail_reconstruction (s : ActivePhase) (z : Runtime)
     (c : AcquiredNativeState) (hf : z.fields = c.source.finiteFields)
     (hs : c.source.finiteFields.control = .fourth (.active s)) :
@@ -284,6 +285,7 @@ def rawLaw (s : ActivePhase) (z : Runtime) : Measure RawTail :=
 private theorem rawLaw_probability (s : ActivePhase) (z : Runtime) :
     IsProbabilityMeasure (rawLaw s z) := by
   haveI := lawfulTail_probability s z
+  unfold rawLaw
   exact inferInstance
 private theorem rawLaw_finite (s : ActivePhase) (z : Runtime) (w : List Letter) :
     rawLaw s z {some w} =

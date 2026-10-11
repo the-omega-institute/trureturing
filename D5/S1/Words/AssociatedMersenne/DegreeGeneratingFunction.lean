@@ -72,7 +72,7 @@ local notation "X" => (PowerSeries.X : (PowerSeries (Polynomial ℤ)))
 
 local notation "Y" => (PowerSeries.C (Polynomial.X : Polynomial ℤ) : (PowerSeries (Polynomial ℤ)))
 
-local notation "D" => PowerSeries.derivative (Polynomial ℤ)
+local notation "D" => PowerSeries.derivative (R := Polynomial ℤ)
 
 noncomputable def degSeries : PowerSeries (Polynomial ℤ) :=
   PowerSeries.mk (fun n => ∑ k ∈ Finset.range (n + 1),
@@ -357,7 +357,7 @@ private lemma runPolynomial_gt (n ell : Nat) (hn : n < ell) : runPolynomial n el
 private lemma marked_word_coefficient (n ell : Nat) :
     runPolynomial n (ell+1)=
       PowerSeries.coeff n (X*Matrix.trace (A^ell*dMatrix A))+
-      if ell=0 then PowerSeries.coeff n (X*(PowerSeries.derivative (Polynomial ℤ) (X*(1-Y)*Rser))) else 0 := by
+      if ell=0 then PowerSeries.coeff n (X*(PowerSeries.derivative (R := Polynomial ℤ) (X*(1-Y)*Rser))) else 0 := by
   have hw := polynomial_marked_double_count n (ell+1)
   rw [tuple_transfer_coefficient] at hw
   simp only [Nat.cast_add,Nat.cast_one] at hw
@@ -385,8 +385,8 @@ private theorem degSeries_eq_graphTransferSeries : degSeries=graphTransferSeries
   simp_rw [marked_word_coefficient]
   rw [Finset.sum_add_distrib]
   have hi : (∑ ell ∈ Finset.range (n+1),
-      if ell=0 then PowerSeries.coeff n (X*(PowerSeries.derivative (Polynomial ℤ) (X*(1-Y)*Rser))) else 0) =
-      PowerSeries.coeff n (X*(PowerSeries.derivative (Polynomial ℤ) (X*(1-Y)*Rser))) := by
+      if ell=0 then PowerSeries.coeff n (X*(PowerSeries.derivative (R := Polynomial ℤ) (X*(1-Y)*Rser))) else 0) =
+      PowerSeries.coeff n (X*(PowerSeries.derivative (R := Polynomial ℤ) (X*(1-Y)*Rser))) := by
     simp
   rw [hi,← coeff_euler_transferTrace,← coeff_zeroSeries]
   simp only [graphTransferSeries,map_add,add_assoc]

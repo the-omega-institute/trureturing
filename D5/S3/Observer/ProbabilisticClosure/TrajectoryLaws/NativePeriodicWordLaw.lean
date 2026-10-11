@@ -142,15 +142,17 @@ def emitter (T : Parameters) : InstalledEmitter (observer T) where
 def streamLaw (T : Parameters) (z : Config) : Measure Stream :=
   (markedLaw (observer T) (emitter T) (z, none)).map rawFrom
 
-instance (T : Parameters) (z : Config) : IsProbabilityMeasure (streamLaw T z) :=
-  inferInstance
+instance (T : Parameters) (z : Config) : IsProbabilityMeasure (streamLaw T z) := by
+  unfold streamLaw
+  infer_instance
 
 def wordLaw (T : Parameters) (s : ActivePhase) (z : Config) : Measure RawTail :=
   (streamLaw T z).map (stoppedReadWord s)
 
 instance (T : Parameters) (s : ActivePhase) (z : Config) :
-    IsProbabilityMeasure (wordLaw T s z) :=
-  inferInstance
+    IsProbabilityMeasure (wordLaw T s z) := by
+  unfold wordLaw
+  infer_instance
 
 def cylinderMass (T : Parameters) (z : Config) (w : List Letter) : ℝ≥0∞ :=
   streamLaw T z (prefixCylinder w)

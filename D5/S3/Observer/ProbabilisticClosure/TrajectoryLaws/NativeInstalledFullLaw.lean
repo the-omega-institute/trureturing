@@ -484,8 +484,9 @@ def fullLaw (M : Observer Z) (e : InstalledEmitter M) (z : Z) : Measure FullTran
   (markedLaw M e (z,none)).map (markedTranscript M)
 
 instance (M : Observer Z) (e : InstalledEmitter M) (z : Z) :
-    IsProbabilityMeasure (fullLaw M e z) :=
-  inferInstance
+    IsProbabilityMeasure (fullLaw M e z) := by
+  unfold fullLaw
+  infer_instance
 
 private theorem fullLaw_native (M : Observer Z) (e : InstalledEmitter M) (z : Z) :
     fullLaw M e z = nativeLaw M e z := by
@@ -508,8 +509,9 @@ def tailLaw (M : Observer Z) (e : InstalledEmitter M) (s : ActivePhase) (z : Z) 
   (markedLaw M e (z,none)).map (fun x => tailValue s (rawFrom x))
 
 instance (M : Observer Z) (e : InstalledEmitter M) (s : ActivePhase) (z : Z) :
-    IsProbabilityMeasure (tailLaw M e s z) :=
-  inferInstance
+    IsProbabilityMeasure (tailLaw M e s z) := by
+  unfold tailLaw
+  infer_instance
 
 /-- The installed law is the literal full-record renderer of a configuration-only fourth tail. -/
 theorem installed_configuration_identity (M : Observer Z) (e : InstalledEmitter M)

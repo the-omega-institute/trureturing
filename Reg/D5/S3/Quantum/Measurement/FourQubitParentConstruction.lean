@@ -37,8 +37,6 @@ theorem vectorDependence : ObservationalDependence vectorSignature vectorActual 
   intro h
   have hh := congrArg (fun A : Mat => A 0 0) h
   norm_num [vectorActual, realize, B_formula, Matrix.cons_val_succ, Matrix.cons_val_zero] at hh
-  change (0 : ℂ) = 1 at hh
-  norm_num at hh
 
 @[reducible] def formulaArena : Arena where
   signature := vectorSignature
