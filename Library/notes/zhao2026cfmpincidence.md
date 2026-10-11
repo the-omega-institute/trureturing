@@ -3378,6 +3378,10 @@ $$\chi(\partial N_n)=8n-36n+24n=-4n,\qquad
 
 原 §124 的中心提升改变边圈周期：六度变十二度，对应原角的 $4\pi$ 累积。本节四条整边圈电压均为零，局部星逐片覆盖，恰是排除该分歧缺陷所需的条件。对偶图的覆盖或边界圈的覆盖都不能替代 (28.8)。
 
+### Cyclic triangle disk supplier
+
+The companion Lean unit D5/S3/Geometry/Gluing/CyclicTriangleDisk.lean supplies the closed cyclic triangle fan disk: it uses the original directed seam and EqvGen quotient, an explicit radial map, and proves normal-form exactness, exact fibers, continuity, surjectivity, and a homeomorphism for every positive n. For sector i, the auxiliary angle is (2*pi/n)*i at zero radius and (2*pi/n)*(i+a/(a+b)) at positive radius; the radial map itself is zero at every sector apex. This supplier is intentionally limited to the disk construction; the original link-3r orbit, saturated open chart, marked CFMP closure, and full geometric integration remain outside its scope.
+
 ## Barycentric subdivision stars
 
 The [canonical literature note](../Geometry/delfsknebusch1984separation.md)
