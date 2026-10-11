@@ -83,7 +83,7 @@ def ejmFiniteLaw : Erdos7.FiniteLaw (Outcome × Outcome × Outcome) where
   weight_sum := by
     change ∑ t : Outcome × Outcome × Outcome,
       ejmGramProbability t.1 t.2.1 t.2.2 = 1
-    simpa only [Fintype.sum_prod_type] using ejmGramProbability_mass
+    simpa [Fintype.sum_prod_type] using ejmGramProbability_mass
 
 /-- The eight coefficients of independent source visibilities. The index is
 the binary ideal/noisy choice for the three edges, in the order
@@ -131,9 +131,9 @@ theorem independentSourceNoise_affine_alpha
     independentSourceNoise wα wβ wγ P a b c =
       (1 - wα) * independentSourceNoise 0 wβ wγ P a b c +
         wα * independentSourceNoise 1 wβ wγ P a b c := by
-  rw [independentSourceNoise_eight_terms,
-    independentSourceNoise_eight_terms,
-    independentSourceNoise_eight_terms]
+  rw [independentSourceNoise_eight_terms wα wβ wγ P a b c,
+    independentSourceNoise_eight_terms 0 wβ wγ P a b c,
+    independentSourceNoise_eight_terms 1 wβ wγ P a b c]
   ring
 
 end D5.S3.Quantum.Entanglement.TriangleEJMGramInterface
