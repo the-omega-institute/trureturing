@@ -78,6 +78,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/WassersteinComplexityNonconvex.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bunth-pitrik-titkos-virosztek-2024-wasserstein-complexity-convexity` (refuted) by `D5/S3/Quantum/QuantumChannels/WassersteinComplexityNonconvex.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bunth-pitrik-titkos-virosztek-2024-wasserstein-complexity-convexity","declaration_gid":"D5/S3/Quantum/QuantumChannels/WassersteinComplexityNonconvex.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* G. Bunth; J. Pitrik; T. Titkos; D. Virosztek (2024). *On the metric property of quantum Wasserstein divergences*. DOI: [10.1103/PhysRevA.110.022211](https://doi.org/10.1103/PhysRevA.110.022211). URL: <https://arxiv.org/abs/2402.13150v4>.
