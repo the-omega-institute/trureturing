@@ -62,5 +62,29 @@ internal sealed class MixedPrimeHistoryAsymptoticsDocument : IScribeDocumentDefi
                     + "The initial coefficient at endpoint one contributes z; endpoint zero "
                     + "contributes zero. Absolute convergence justifies the Cauchy product "
                     + "for additive letters and the divisor reindexing for multiplicative letters."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mixedprimehistoryasymptotics-critical-control"),
+                DeclarationHandle.Create("D5/S3/Factorization/Combinatorics/MixedPrimeHistoryAsymptotics.critical_control"),
+                H("The unique critical radius and its analytic disks"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every fixed positive t there is a unique rho strictly between zero "
+                    + "and one satisfying t P(rho) = 1. Every positive r less than rho admits "
+                    + "one positive constant controlling all endpoint weights after multiplication "
+                    + "by r to the endpoint power. The actual F is analytic on the rho disk, "
+                    + "its numerator is analytic on the square-root-rho disk, and their "
+                    + "last-letter functional equation holds throughout the rho disk. "
+                    + "For every nonnegative a with a squared less than rho, one can choose "
+                    + "r strictly between a squared and rho and then one positive B that "
+                    + "controls all endpoint weights and all prime compositions on the "
+                    + "closed a disk. The choices precede the prime and complex-point quantifiers.")),
+                    Paragraph(Text(
+                    "Strict increase follows already from the prime two term. Arbitrarily "
+                    + "large finite sets of primes force P to cross every fixed positive "
+                    + "level before one. Uniform geometric convergence gives continuity "
+                    + "on each compact subinterval, so the intermediate value theorem "
+                    + "and strict increase yield the unique root."))),
                 DescribeRole.Theorem))));
 }

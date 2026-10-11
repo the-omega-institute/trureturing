@@ -504,4 +504,142 @@ theorem subcritical_functional_equation (t r : ℝ) (ht : 0 < t) (hr : 0 < r)
   unfold numerator
   linear_combination hf
 
+private theorem prime_zero : primeSeries (0 : ℝ) = 0 := by
+  calc
+    _ = ∑' _q : ℕ, (0 : ℝ) := by
+      apply tsum_congr
+      intro q
+      by_cases hq : q.Prime
+      · simp [hq, zero_pow hq.ne_zero]
+      · simp [hq]
+    _ = 0 := tsum_zero
+
+private theorem prime_continuous (a : ℝ) (ha : 0 ≤ a) (ha1 : a < 1) :
+    ContinuousOn (primeSeries (𝕜 := ℝ)) (Set.Icc 0 a) := by
+  classical
+  apply continuousOn_tsum (u := fun q : ℕ => a ^ q)
+  · intro q
+    by_cases hq : q.Prime
+    · simpa only [if_pos hq] using (continuous_pow q).continuousOn
+    · simpa only [if_neg hq] using continuousOn_const (c := (0 : ℝ))
+  · exact summable_geometric_of_lt_one ha ha1
+  · intro q x hx
+    by_cases hq : q.Prime
+    · simp only [if_pos hq, Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hx.1 q)]
+      exact pow_le_pow_left₀ hx.1 hx.2 _
+    · simp only [if_neg hq, norm_zero]
+      exact pow_nonneg ha _
+
+private theorem prime_strict (x y : ℝ) (hx : 0 ≤ x) (hxy : x < y) (hy : y < 1) :
+    primeSeries x < primeSeries y := by
+  apply Summable.tsum_lt_tsum (i := 2)
+  · intro q
+    by_cases hq : q.Prime
+    · simp only [if_pos hq]
+      exact pow_le_pow_left₀ hx hxy.le _
+    · simp only [if_neg hq, le_refl]
+  · simp only [Nat.prime_two, if_true]
+    nlinarith
+  · exact prime_summable x hx (hxy.trans hy)
+  · exact prime_summable y (hx.trans hxy.le) hy
+
+private theorem prime_crosses (t : ℝ) (ht : 0 < t) :
+    ∃ a : ℝ, 0 < a ∧ a < 1 ∧ 1 < t * primeSeries a := by
+  classical
+  obtain ⟨N, hN⟩ := exists_nat_gt (1 / t)
+  have hNt : 1 < t * (N : ℝ) := by
+    have h := (div_lt_iff₀ ht).mp hN
+    linarith
+  obtain ⟨S, hS, hcard⟩ := Nat.infinite_setOfPred_prime.exists_subset_card_eq N
+  have hc : ContinuousAt (fun x : ℝ => t * ∑ q ∈ S, x ^ q) 1 := by fun_prop
+  have hev : ∀ᶠ x : ℝ in nhds 1, 1 < t * ∑ q ∈ S, x ^ q :=
+    (tendsto_order.mp hc.tendsto).1 1 (by simpa [hcard] using hNt)
+  obtain ⟨δ, hδ, hnear⟩ := Metric.eventually_nhds_iff.mp hev
+  obtain ⟨ε, hε0, hε⟩ := exists_between (lt_min hδ (by norm_num : (0 : ℝ) < 1))
+  have hεδ : ε < δ := hε.trans_le (min_le_left _ _)
+  have hε1 : ε < 1 := hε.trans_le (min_le_right _ _)
+  have ha0 : 0 < 1 - ε := by linarith
+  have ha1 : 1 - ε < 1 := by linarith
+  refine ⟨1 - ε, ha0, ha1, ?_⟩
+  have hlarge : 1 < t * ∑ q ∈ S, (1 - ε) ^ q :=
+    hnear (by simpa [Real.dist_eq, abs_of_nonneg hε0.le] using hεδ)
+  have hsum : (∑ q ∈ S, (1 - ε) ^ q) ≤ primeSeries (1 - ε) := by
+    calc
+      _ = ∑ q ∈ S, if q.Prime then (1 - ε) ^ q else 0 := by
+        apply Finset.sum_congr rfl
+        intro q hq
+        rw [if_pos (show q.Prime from hS hq)]
+      _ ≤ _ := Summable.sum_le_tsum S (fun q _ => by split_ifs <;> positivity)
+        (prime_summable _ ha0.le ha1)
+  exact hlarge.trans_le (mul_le_mul_of_nonneg_left hsum ht.le)
+
+private theorem unique_critical_root (t : ℝ) (ht : 0 < t) :
+    ∃! ρ : ℝ, 0 < ρ ∧ ρ < 1 ∧ t * primeSeries ρ = 1 := by
+  obtain ⟨a, ha0, ha1, hat⟩ := prime_crosses t ht
+  have hc := (continuousOn_const (c := t)).mul (prime_continuous a ha0.le ha1)
+  obtain ⟨ρ, hρa, hρ⟩ := intermediate_value_Icc ha0.le hc
+    (show (1 : ℝ) ∈ Set.Icc (t * primeSeries 0) (t * primeSeries a) by
+      rw [prime_zero, mul_zero]
+      exact ⟨by norm_num, hat.le⟩)
+  change t * primeSeries ρ = 1 at hρ
+  have hρ0 : 0 < ρ := by
+    have hn : ρ ≠ 0 := by intro h; simp [h, prime_zero] at hρ
+    exact lt_of_le_of_ne hρa.1 (Ne.symm hn)
+  have hρ1 : ρ < 1 := hρa.2.trans_lt ha1
+  refine ⟨ρ, ⟨hρ0, hρ1, hρ⟩, ?_⟩
+  intro σ hσ
+  apply le_antisymm
+  · by_contra h
+    have hx := mul_lt_mul_of_pos_left (prime_strict ρ σ hρ0.le (lt_of_not_ge h) hσ.2.1) ht
+    rw [hρ, hσ.2.2] at hx
+    exact (lt_irrefl _ hx)
+  · by_contra h
+    have hx := mul_lt_mul_of_pos_left (prime_strict σ ρ hσ.1.le (lt_of_not_ge h) hρ1) ht
+    rw [hρ, hσ.2.2] at hx
+    exact (lt_irrefl _ hx)
+
+/-- The unique critical radius supports the common endpoint and prime-composition bounds. -/
+theorem critical_control (t : ℝ) (ht : 0 < t) :
+    ∃ ρ : ℝ, (0 < ρ ∧ ρ < 1 ∧ t * primeSeries ρ = 1) ∧
+      (∀ σ : ℝ, 0 < σ → σ < 1 → t * primeSeries σ = 1 → σ = ρ) ∧
+      (∀ r : ℝ, 0 < r → r < ρ →
+        ∃ B : ℝ, 0 < B ∧ ∀ n : ℕ, weightedCount t n * r ^ n ≤ B) ∧
+      AnalyticOnNhd ℂ (generating t) (Metric.ball 0 ρ) ∧
+      AnalyticOnNhd ℂ (numerator t) (Metric.ball 0 (Real.sqrt ρ)) ∧
+      (∀ z : ℂ, ‖z‖ < ρ →
+        (1 - (t : ℂ) * primeSeries z) * generating t z = numerator t z) ∧
+      (∀ a : ℝ, 0 ≤ a → a ^ 2 < ρ → ∃ r : ℝ, a ^ 2 < r ∧ r < ρ ∧
+        ∃ B : ℝ, 0 < B ∧ (∀ n : ℕ, weightedCount t n * r ^ n ≤ B) ∧
+          ∀ q : ℕ, q.Prime → ∀ z : ℂ, ‖z‖ ≤ a →
+            ‖generating t (z ^ q)‖ ≤ B * a ^ q / (r - a ^ 2)) := by
+  obtain ⟨ρ, hρ, huniq⟩ := unique_critical_root t ht
+  have hsub (r : ℝ) (hr : 0 < r) (hrρ : r < ρ) : t * primeSeries r < 1 := by
+    rw [← hρ.2.2]
+    exact mul_lt_mul_of_pos_left (prime_strict r ρ hr.le hrρ hρ.2.1) ht
+  have control (r : ℝ) (hr : 0 < r) (hrρ : r < ρ) :=
+    subcritical_analytic_control t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ)
+  refine ⟨ρ, hρ, fun σ hσ0 hσ1 hσ => huniq σ ⟨hσ0, hσ1, hσ⟩,
+    fun r hr hrρ => subcritical_bound t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ), ?_, ?_, ?_, ?_⟩
+  · intro z hz
+    obtain ⟨r, hzr, hrρ⟩ := exists_between (show ‖z‖ < ρ by simpa using hz)
+    obtain ⟨B, _, _, ha, _⟩ := control r ((norm_nonneg z).trans_lt hzr) hrρ
+    exact ha z (by simpa using hzr)
+  · intro z hz
+    have hz' : ‖z‖ < Real.sqrt ρ := by simpa using hz
+    have hzsq : ‖z‖ ^ 2 < ρ := by
+      nlinarith [Real.sq_sqrt hρ.1.le, norm_nonneg z, Real.sqrt_nonneg ρ]
+    obtain ⟨r, hzr, hrρ⟩ := exists_between hzsq
+    obtain ⟨B, _, _, _, _, ha⟩ := control r ((sq_nonneg _).trans_lt hzr) hrρ
+    apply ha z
+    have h := (Real.lt_sqrt (norm_nonneg z)).mpr hzr
+    simpa using h
+  · intro z hz
+    obtain ⟨r, hzr, hrρ⟩ := exists_between hz
+    have hr := (norm_nonneg z).trans_lt hzr
+    exact subcritical_functional_equation t r ht hr (hrρ.trans hρ.2.1) (hsub r hr hrρ) z hzr
+  · intro a ha haρ
+    obtain ⟨r, har, hrρ⟩ := exists_between haρ
+    obtain ⟨B, hB0, hB, _, hcomp, _⟩ := control r ((sq_nonneg _).trans_lt har) hrρ
+    exact ⟨r, har, hrρ, B, hB0, hB, hcomp a ha har⟩
+
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryAsymptotics
