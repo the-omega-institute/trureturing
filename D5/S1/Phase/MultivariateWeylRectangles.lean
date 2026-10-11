@@ -117,9 +117,9 @@ private theorem cancellation_of_correlations {ι β : Type*} (l : Filter β)
         _ = _ := by simp
     rw [hdiag]
     field_simp
-
   have hb := hlim.eventually (gt_mem_nhds hHsmall)
-  have hg := (hgap.norm).eventually (gt_mem_nhds (show ‖(0 : ℂ)‖ < ε / 2 by simpa only [norm_zero] using half_pos hε))
+  have hg := (hgap.norm).eventually (gt_mem_nhds
+    (show ‖(0 : ℂ)‖ < ε / 2 by simpa only [norm_zero] using half_pos hε))
   filter_upwards [hb, hg] with b hb hg
   rw [dist_zero_right]
   have hs := smoothing_sq_le (s b) H z
@@ -251,11 +251,8 @@ private theorem low_mono {p : MvPolynomial (Fin d) ℤ} {m n : ℕ}
   MvPolynomial.restrictSupport_mono ℤ (fun _ hv => lt_of_lt_of_le hv hmn) h
 
 private theorem low_zero {p : MvPolynomial (Fin d) ℤ} (h : p ∈ low 0) : p = 0 := by
-  apply MvPolynomial.ext
-  intro v
-  by_contra hv
-  have hmem : v ∈ p.support := mem_support_iff.mpr (by simpa using hv)
-  exact Nat.not_lt_zero _ (h hmem)
+  apply MvPolynomial.support_eq_empty.mp
+  exact Finset.eq_empty_iff_forall_notMem.mpr fun v hv => Nat.not_lt_zero _ (h hv)
 
 private theorem low_mul_X {p : MvPolynomial (Fin d) ℤ} {n : ℕ}
     (h : p ∈ low n) (j : Fin d) : p * X j ∈ low (n + 1) := by
@@ -366,14 +363,7 @@ private theorem translation_jet (i : Fin d) (h : ℤ) (Q : MvPolynomial (Fin d) 
 
 private theorem low_homogeneous_zero {p : MvPolynomial (Fin d) ℤ} {n : ℕ}
     (hp : p ∈ low n) : homogeneousComponent n p = 0 := by
-  apply MvPolynomial.ext
-  intro v
-  rw [coeff_homogeneousComponent, coeff_zero]
-  split_ifs with hv
-  · by_contra hc
-    have hd : v.degree < n := hp (mem_support_iff.mpr hc)
-    omega
-  · rfl
+  exact homogeneousComponent_eq_zero' n p (fun v hv => ne_of_lt (hp hv))
 
 private theorem homogeneous_pderiv (Q : MvPolynomial (Fin d) ℤ) (i : Fin d) (n : ℕ) :
     homogeneousComponent n (pderiv i Q) = pderiv i (homogeneousComponent (n + 1) Q) := by
@@ -694,7 +684,7 @@ private theorem character_monomialOrbit {d : ℕ} (α : ℝ)
   congr 1
   simp only [map_sum, MvPolynomial.eval_monomial]
   push_cast
-  simp only [one_mul, Complex.ofReal_one, div_one, Finset.mul_sum]
+  simp only [one_mul, div_one, Finset.mul_sum]
   apply sum_congr rfl
   intro j _
   simp only [Finsupp.prod]
@@ -782,7 +772,7 @@ theorem monomial_curve_equidistribution {d : ℕ} (α : ℝ) (hα : Irrational �
     ext j
     apply congrArg (fun x : ℝ => (x : UnitAddCircle))
     congr 1
-    simp only [monomialOrbit, MvPolynomial.eval_monomial, one_mul]
+    simp only [MvPolynomial.eval_monomial, one_mul]
     simp only [e', Finsupp.prod_single_index, pow_zero]
     rw [Finsupp.prod_pow, hc]
     push_cast

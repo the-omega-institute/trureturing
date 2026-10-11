@@ -22,7 +22,8 @@ internal sealed class MultivariateWeylRectanglesDocument : IScribeDocumentDefini
                     "D5/S1/Phase/MultivariateWeylRectangles.polynomial_rectangular_cancellation"),
                 H("One threshold for all rectangular shapes"),
                 StatementSource.FromAuthor(Cancellation()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Fourier/yifrach2025weyl")),
                 Blocks(
                     Paragraph(Text(
                         "For every irrational real alpha and every integer polynomial Q of "
@@ -51,7 +52,8 @@ internal sealed class MultivariateWeylRectanglesDocument : IScribeDocumentDefini
                     "D5/S1/Phase/MultivariateWeylRectangles.monomial_rectangular_equidistribution"),
                 H("Continuous observables of shifted monomial families"),
                 StatementSource.FromAuthor(Equidistribution()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Fourier/yifrach2025weyl")),
                 Blocks(
                     Paragraph(Text(
                         "Let K be any finite index type and e:K -> (Fin d -> finite-support N) "
@@ -75,7 +77,8 @@ internal sealed class MultivariateWeylRectanglesDocument : IScribeDocumentDefini
                     "D5/S1/Phase/MultivariateWeylRectangles.monomial_curve_equidistribution"),
                 H("A common integer parameter for all input coordinates"),
                 StatementSource.FromAuthor(CurveLimit()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Fourier/yifrach2025weyl")),
                 Blocks(
                     Paragraph(Text(
                         "For the same irrational alpha and injective nonzero exponent family, "
@@ -97,7 +100,8 @@ internal sealed class MultivariateWeylRectanglesDocument : IScribeDocumentDefini
                     "D5/S1/Phase/MultivariateWeylRectangles.monomial_curve_visits"),
                 H("Open-set visits beyond every input threshold"),
                 StatementSource.FromAuthor(Visit()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Fourier/yifrach2025weyl")),
                 Blocks(
                     Paragraph(Text(
                         "Assume d > 0 and that every input monomial occurs in the exponent "
