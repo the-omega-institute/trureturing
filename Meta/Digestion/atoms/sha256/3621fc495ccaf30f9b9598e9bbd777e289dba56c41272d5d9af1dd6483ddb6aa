@@ -1,0 +1,47 @@
+**Definition 34.1 (Scalar images of the delayed-interior family).** Retain the complete source, observations, literal actions, inherited tails, absorbing rejection, complete-block fee and GLOBAL contract of Definition 33.1. Thus
+
+$$
+ m\ge5,\qquad 3\le d\le m-2,
+ \qquad k=2m-2,\qquad T=2m-1,
+ \qquad J=\{d,\ldots,m-1\},
+$$
+
+and the joined interior image satisfies
+
+$$
+2^{d-1}<|\Lambda[J]|\le2^d.
+$$
+
+For each freely observed initial value $v\in\mathbb F_2$, write
+
+$$
+ a_v=\lambda_v(j)\quad(j\in O=P\setminus J),
+ \qquad r_v=|\lambda_v[J]|,
+ \qquad n_v=|\lambda_v[J]\cup\{a_v\}|.
+\tag{34.1}
+$$
+
+Thus $r_v\le n_v\le r_v+1$, and consequently $M\le N\le M+1$.
+
+Put
+
+$$
+ H=2^{d-1},\qquad M=\max(r_0,r_1),\qquad N=\max(n_0,n_1).
+\tag{34.2}
+$$
+
+The quantities $r_v$ and $n_v$ count scalar labels in one free-value fibre. They do not count ordered joined pairs, and they do not identify the two fibres. Since
+
+$$
+|\Lambda[J]|\le r_0r_1\le n_0n_1,
+$$
+
+while $|\Lambda[J]|>H\ge4$, the present full contract implies
+
+$$
+N\ge3.
+\tag{34.3}
+$$
+
+This last fact is needed below: the small-image formula is a statement about the full two-fibre family, not an unconditional formula for an isolated fibre with only one or two scalar labels.
+

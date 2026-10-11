@@ -1,0 +1,13 @@
+**Proof (the three lower bounds).** First suppose $M>H$. Choose a value $v$ with $r_v=M$ and retain one tail-zero witness in $J$ for each distinct scalar label in $\lambda_v[J]$. A correct controller cannot stop for free on this fibre. If its first bit were one, all actual terminal-tail sources would reject into the same absorbing archive, although the retained fibre has different target labels; hence the root starts with zero. Through fee $2d-2$, the only possible splitting levels on this witness set are the $d-1$ even indices $0,2,\ldots,2d-4$. By (34.7) there are at most $2^{d-1}=H$ homogeneous leaves, fewer than $M$. Thus $C_{\rm ad}\ge2d-1$. The fixed GLOBAL protocol of Theorem 33.2 is also an adaptive protocol, so $C_{\rm ad}\le2d-1$.
+
+Now suppose $M\le H<N$. Since $N\le M+1$, necessarily $M=H$ and $N=H+1$. Choose a value $v$ with $n_v=N$. The exterior label is then absent from $\lambda_v[J]$; retain witnesses in $J$ for its $H$ internal labels and one witness at phase $d-1$ for $a_v$. Through fee $2d-3$, every odd path still ends below phase $d-1$, so (34.7) gives at most $2^{d-1}=H$ leaves for $H+1$ distinct required labels. Therefore $C_{\rm ad}\ge2d-2$.
+
+Finally suppose $N\le H$, and set $h=\lceil\log_2N\rceil$. Choose a value $v$ with $n_v=N$. Retain one witness for each label in $\lambda_v[J]\cup\{a_v\}$, taking the exterior representative $d-1$ when $a_v$ is absent from the interior image. The odd paths before fee $2h-1$ miss all these representatives, because $h\le d-1$. If the fee were at most $2h-2$, only $h-1$ even levels could split, so (34.7) gives at most $2^{h-1}<N$ homogeneous leaves. Thus
+
+$$
+C_{\rm ad}\ge2h-1.
+\tag{34.8}
+$$
+
+These lower bounds use fixed actual witnesses and do not choose a new tail after an adaptive query. They also remain valid if a live label happens to equal the bottom label or if labels coincide across the two free-value fibres.
+

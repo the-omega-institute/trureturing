@@ -15,8 +15,10 @@ open scoped BigOperators ComplexConjugate
 
 noncomputable section
 
-open private phase phase_norm phase_reconstruct unit_mul_conj radial_identity
-  raw_weighted_defect weighted_correction cyclic_parseval dft_translation
+open D5.S3.Fourier.FullBispectrumStability (cyclic_parseval dft_translation unit_mul_conj)
+
+open private phase phase_norm phase_reconstruct radial_identity
+  raw_weighted_defect weighted_correction
   signal_translation_separation squared_triangle from D5.S3.Fourier.FullBispectrumStability
 
 set_option maxHeartbeats 800000 in
