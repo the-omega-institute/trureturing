@@ -88,7 +88,8 @@ private lemma numerator_complex_integrable {L : ℝ} (hL : 0 < L) :
 
 private lemma numerator_integrable {L : ℝ} (hL : 0 < L) :
     IntegrableOn (numerator L) (Ioi 0) := by
-  simpa only [Complex.ofReal_re] using (numerator_complex_integrable hL).re
+  simpa only [RCLike.re_to_complex, Complex.ofReal_re] using
+    (numerator_complex_integrable hL).re
 
 private lemma numerator_complex_integral {L : ℝ} (hL : 0 < L) :
     (∫ t in Ioi (0 : ℝ), (numerator L t : ℂ)) = (logWeight L : ℂ) := by
@@ -101,6 +102,7 @@ private lemma numerator_complex_integral {L : ℝ} (hL : 0 < L) :
       rw [← integral_add h0 h1]
       apply setIntegral_congr_fun measurableSet_Ioi
       intro t _
+      dsimp only
       rw [numerator_coe]
       simp only [pow_zero, pow_one, one_mul]
       ring
@@ -114,7 +116,7 @@ private lemma numerator_complex_integral {L : ℝ} (hL : 0 < L) :
 private lemma numerator_integral {L : ℝ} (hL : 0 < L) :
     (∫ t in Ioi (0 : ℝ), numerator L t) = logWeight L := by
   apply Complex.ofReal_injective
-  rw [← integral_ofReal]
+  rw [← integral_complex_ofReal]
   exact numerator_complex_integral hL
 
 private lemma logIntegrand_integrable {L : ℝ} {s : ℂ}
@@ -225,6 +227,7 @@ private lemma kernel_integral_t (s : ℂ) {x : ℝ} (hx : 0 < x) :
     (∫ t in Ioi (0 : ℝ), kernel s (x, t)) = logIntegrand s x := by
   simp_rw [kernel_as_numerator]
   rw [integral_const_mul, numerator_complex_integral hx]
+  rfl
 
 private lemma denominator_norm {s : ℂ} (hs : s.re < 1) {t : ℝ} (ht : 0 ≤ t) :
     ‖1 - s‖ ≤ ‖(1 - s) + (t : ℂ)‖ := by
@@ -355,5 +358,32 @@ theorem complete_coefficient_laplace {A : ℝ} {s : ℂ}
     _ = _ := by
       field_simp [norm_ne_zero_iff.mpr hs0, norm_ne_zero_iff.mpr (one_sub_ne_zero hσ1)]
       <;> ring
+
+#print axioms complete_coefficient_laplace
+
+-- Temporary compiler inspection; removed before the final source-bound report.
+run_cmd do
+  let env ← Lean.getEnv
+  let some info := env.find?
+      `D5.S3.Arith.Robin.CompleteCoefficientLaplace.complete_coefficient_laplace
+    | throwError "Complete coefficient declaration was not elaborated"
+  let mut pending : Array (Array String × Lean.Expr) := #[(#[], info.type)]
+  while !pending.isEmpty do
+    let (path, e) := pending.back!
+    pending := pending.pop
+    if e.isAppOfArity `D5.S3.Arith.Robin.CompleteCoefficientLaplace.physicalIntegrand 1 then
+      Lean.logInfo m!"COMPILER_PHYSICAL_READOUT_PATH {repr path}"
+    match e with
+    | .app f a =>
+        pending := pending.push (path.push "fn", f) |>.push (path.push "arg", a)
+    | .forallE _ d b _ =>
+        pending := pending.push (path.push "domain", d) |>.push (path.push "body", b)
+    | .lam _ d b _ =>
+        pending := pending.push (path.push "domain", d) |>.push (path.push "body", b)
+    | .letE _ t v b _ =>
+        pending := pending.push (path.push "type", t) |>.push (path.push "value", v)
+          |>.push (path.push "body", b)
+    | .mdata _ b | .proj _ _ b => pending := pending.push (path.push "body", b)
+    | _ => pure ()
 
 end D5.S3.Arith.Robin.CompleteCoefficientLaplace
