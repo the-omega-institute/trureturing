@@ -169,7 +169,7 @@ private theorem prime_weighted_isOpen_iff (s : ℝ) (hs : 1 < s)
         dsimp [ε]
         rw [← Finset.mul_prod_erase places factor hp']
         exact mul_le_of_le_one_right (hfactor_pos p).le
-          (Finset.prod_le_one
+          (Finset.prod_le_one₀
             (fun q hq => (hfactor_pos q).le)
             (fun q hq => hfactor_le_one q))
       have hdistance_lt :

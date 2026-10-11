@@ -380,7 +380,7 @@ private theorem hasDerivAt_log_eulerProduct (S : Finset ℕ)
   have hdiv : deriv (eulerProduct S) s / eulerProduct S s = eulerSlope S s := by
     change logDeriv (eulerProduct S) s = eulerSlope S s
     unfold eulerProduct
-    rw [logDeriv_prod
+    rw [logDeriv_fun_prod
       (fun p hp => (localFactor_pos (hPrime p hp) hs).ne')
       (fun p hp => (hasDerivAt_localFactor (hPrime p hp) s).differentiableAt)]
     unfold eulerSlope

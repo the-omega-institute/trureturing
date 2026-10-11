@@ -63,7 +63,8 @@ theorem four_uncertainties_have_all_truth_profiles (profile : Fin 4 -> Bool) :
       by_contra profileFalse
       have evidenceInjective : Function.Injective
           (fun state : Bool => if profile 0 = true then false else state) := by
-        simp [profileFalse]
+        intro x y hxy
+        simpa only [if_neg profileFalse] using hxy
       exact notInjective evidenceInjective
     · intro profileTrue
       apply Function.not_injective_iff.mpr

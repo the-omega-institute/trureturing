@@ -165,9 +165,11 @@ theorem physical_modulation_hasDerivAt_iff (hbar : ℝ) (hhbar : 0 < hbar)
       simpa using hdct
     have hen : Tendsto (fun t => eLpNorm (q t - k) 2 (volume : Measure E))
         (𝓝[≠] (0 : ℝ)) (𝓝 0) := by
-      simp_rw [eLpNorm_eq_lintegral_rpow_enorm_toReal
-        (by norm_num : (2 : ℝ≥0∞) ≠ 0) (by norm_num : (2 : ℝ≥0∞) ≠ ∞)]
-      simpa using hi.ennrpow_const (1 / (2 : ℝ))
+      simpa only [fun t => eLpNorm_eq_lintegral_rpow_enorm_toReal
+        (by norm_num : (2 : ℝ≥0∞) ≠ 0) (by norm_num : (2 : ℝ≥0∞) ≠ ∞)
+        ((hq t).sub hk).aestronglyMeasurable, ENNReal.toReal_ofNat, Pi.sub_apply,
+        ENNReal.zero_rpow_of_pos (by norm_num : (0 : ℝ) < 1 / 2)]
+        using hi.ennrpow_const (1 / (2 : ℝ))
     have hlim := (Lp.tendsto_Lp_iff_tendsto_eLpNorm'' q hq k hk).mpr hen
     have hkeq : hk.toLp k = c • hz.toLp z := by
       apply Lp.ext

@@ -293,7 +293,7 @@ theorem eulerProduct_comparison (N : ℕ) {r : ℝ} (hr : 0 ≤ r) :
   calc
     _ ≤ ∏ p ∈ N.primesLE,
         (1 - (p : ℝ) ^ (-(1 + r)))⁻¹ * Real.exp (2 * r * Real.log p / p) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro p hp
         apply inv_nonneg.mpr
         apply sub_nonneg.mpr
@@ -378,7 +378,7 @@ lemma eulerProduct_pos (N : ℕ) {σ : ℝ} (hσ : 0 < σ) : 0 < eulerProduct N 
 /-- The finite Euler product decreases as its positive exponent increases. -/
 lemma eulerProduct_antitone (N : ℕ) {σ τ : ℝ} (hσ : 0 < σ) (hστ : σ ≤ τ) :
     eulerProduct N τ ≤ eulerProduct N σ := by
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro p hp
     exact inv_nonneg.mpr (sub_nonneg.mpr (Real.rpow_lt_one_of_one_lt_of_neg
       (by exact_mod_cast (Nat.mem_primesLE.mp hp).2.one_lt) (by linarith)).le)
@@ -445,7 +445,7 @@ theorem divisorEulerMoment_ge_eulerProduct {Z Y : ℕ} (hZY : Z ≤ Y) {t : ℝ}
   apply mul_le_mul_of_nonneg_right _ (eulerProduct_pos Z (by linarith)).le
   rw [auxiliaryProduct, divisorEulerMoment_primeProduct _
     (fun _ hp => auxiliaryPrimes_prime hp)]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro p hp
     exact (inv_pos.mpr (sub_pos.mpr (Real.rpow_lt_one_of_one_lt_of_neg
       (by exact_mod_cast (auxiliaryPrimes_prime hp).one_lt) (by linarith)))).le

@@ -83,7 +83,8 @@ private theorem compactification_of_paired_atom
   unfold cayleyCompactification
   rw [MeasureTheory.withDensity_smul_measure,
     MeasureTheory.withDensity_add_measure]
-  simp only [MeasureTheory.dirac_withDensity, Measure.map_smul,
+  simp only [MeasureTheory.dirac_withDensity,
+    Measure.map_smul _ (measurable_cayley_circle a ha).aemeasurable,
     Measure.map_add _ _ (measurable_cayley_circle a ha), Measure.map_dirac,
     resolventDensity, neg_sq, smul_add, smul_smul]
 

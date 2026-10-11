@@ -22,6 +22,7 @@ public sealed class NamedSourceReferenceTests
     [InlineData(false, "malformed-name")]
     [InlineData(false, "trailing-material")]
     [InlineData(false, "legacy-identity")]
+    [InlineData(true, "legacy-identity")]
     public void named_reference_uses_raw_rigid_universes_and_structural_names(bool negated, string mutation)
     {
         // Synthetic statement-v1 materials exercise the bounded grammar beyond
@@ -58,7 +59,10 @@ public sealed class NamedSourceReferenceTests
         });
         void Check() => InformationTemplateDefinitionReference.Check(binding,
             mutation == "wrong-statement" ? new string('0', 64)
-                : negated ? negativeHash : referenceHash, theorem, definition);
+                : mutation == "legacy-identity"
+                    ? negated ? "707564a4041c1bf2627e069ead2754a3de3c4bfc60642f419a2e2ec671a61f91"
+                        : "65960cfc15c52484d5f0825d7c9279debbdd37c841d4c3eddb3f9461b8cf9df9"
+                    : negated ? negativeHash : referenceHash, theorem, definition);
         if (mutation == "valid") Check();
         else Assert.Throws<FormatException>(Check);
     }

@@ -4,6 +4,8 @@
 
 This module supplies the indicated step in the unbounded solidification construction.
 
+The degreewise adjunction uses Mathlib's Functor.mapHomologicalComplexCompIso for categories with zero morphisms and functors preserving zero morphisms. It applies to complexes of any shape and requires no additivity.
+
 **Definition 1.1 (exact Derived Homology Iso).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/Solid/ComplexAdjunction.exactDerivedHomologyIso`
@@ -33,4 +35,3 @@ The exact derived inclusion remains a right-derived functor after any postcompos
 - Truth anchor: `D5/S3/HomologicalAlgebra/Solid/ComplexAdjunction.derivedInclusion_postcomp_isRightDerivedFunctor`
 - Truth anchor: `D5/S3/HomologicalAlgebra/Solid/ComplexAdjunction.exactDerivedHomologyIso`
 - Dependency: [D5/S3/HomologicalAlgebra/Solid/Definitions](Definitions.md)
-- Dependency: [D5/S3/HomologicalAlgebra/Solid/ExactFunctorNatTrans](ExactFunctorNatTrans.md)

@@ -8,6 +8,7 @@
 
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.GCD
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -73,41 +74,75 @@ private theorem antisigma_eq_triangular_sub_sigma (n : ℕ) :
       (s := Finset.Icc 1 n) (p := fun d => d ∣ n) (f := fun d => d)
     omega
 
+private theorem prime_110879 : Nat.Prime 110879 := by norm_num
+
 private theorem sigma_332640 :
     ArithmeticFunction.sigma 1 332640 = 1451520 := by
-  rw [show (332640 : ℕ) = 2 ^ 5 * 3 ^ 3 * 5 ^ 1 * 7 ^ 1 * 11 ^ 1 by norm_num,
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
-      (by decide : Nat.Coprime (2 ^ 5 * 3 ^ 3 * 5 ^ 1 * 7 ^ 1) (11 ^ 1)),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
-      (by decide : Nat.Coprime (2 ^ 5 * 3 ^ 3 * 5 ^ 1) (7 ^ 1)),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
-      (by decide : Nat.Coprime (2 ^ 5 * 3 ^ 3) (5 ^ 1)),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
-      (by decide : Nat.Coprime (2 ^ 5) (3 ^ 3)),
-    ArithmeticFunction.sigma_one_apply_prime_pow (by norm_num : Nat.Prime 2),
-    ArithmeticFunction.sigma_one_apply_prime_pow (by norm_num : Nat.Prime 3),
-    ArithmeticFunction.sigma_one_apply_prime_pow (by norm_num : Nat.Prime 5),
-    ArithmeticFunction.sigma_one_apply_prime_pow (by norm_num : Nat.Prime 7),
-    ArithmeticFunction.sigma_one_apply_prime_pow (by norm_num : Nat.Prime 11)]
-  norm_num [Finset.sum_range_succ]
+  let σ := ArithmeticFunction.sigma 1
+  have h2 : σ (2 ^ 5) = 63 := by
+    exact (ArithmeticFunction.sigma_one_apply_prime_pow (i := 5)
+      (by norm_num : Nat.Prime 2)).trans (by norm_num [Finset.sum_range_succ])
+  have h3 : σ (3 ^ 3) = 40 := by
+    exact (ArithmeticFunction.sigma_one_apply_prime_pow (i := 3)
+      (by norm_num : Nat.Prime 3)).trans (by norm_num [Finset.sum_range_succ])
+  have h5 : σ (5 ^ 1) = 6 := by
+    exact (ArithmeticFunction.sigma_one_apply_prime_pow (i := 1)
+      (by norm_num : Nat.Prime 5)).trans (by norm_num [Finset.sum_range_succ])
+  have h7 : σ (7 ^ 1) = 8 := by
+    exact (ArithmeticFunction.sigma_one_apply_prime_pow (i := 1)
+      (by norm_num : Nat.Prime 7)).trans (by norm_num [Finset.sum_range_succ])
+  have h11 : σ (11 ^ 1) = 12 := by
+    exact (ArithmeticFunction.sigma_one_apply_prime_pow (i := 1)
+      (by norm_num : Nat.Prime 11)).trans (by norm_num [Finset.sum_range_succ])
+  have h23 : σ (2 ^ 5 * 3 ^ 3) = 63 * 40 :=
+    ((ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime
+      (by norm_num [Nat.Coprime] : Nat.Coprime (2 ^ 5) (3 ^ 3))).trans
+      (congrArg₂ (· * ·) h2 h3)
+  have h235 : σ (2 ^ 5 * 3 ^ 3 * 5 ^ 1) = 63 * 40 * 6 :=
+    ((ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime
+      (by norm_num [Nat.Coprime] : Nat.Coprime (2 ^ 5 * 3 ^ 3) (5 ^ 1))).trans
+      (congrArg₂ (· * ·) h23 h5)
+  have h2357 : σ (2 ^ 5 * 3 ^ 3 * 5 ^ 1 * 7 ^ 1) = 63 * 40 * 6 * 8 :=
+    ((ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime
+      (by norm_num [Nat.Coprime] : Nat.Coprime (2 ^ 5 * 3 ^ 3 * 5 ^ 1) (7 ^ 1))).trans
+      (congrArg₂ (· * ·) h235 h7)
+  have h235711 : σ (2 ^ 5 * 3 ^ 3 * 5 ^ 1 * 7 ^ 1 * 11 ^ 1) = 63 * 40 * 6 * 8 * 12 :=
+    ((ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime
+      (by norm_num [Nat.Coprime] : Nat.Coprime (2 ^ 5 * 3 ^ 3 * 5 ^ 1 * 7 ^ 1) (11 ^ 1))).trans
+      (congrArg₂ (· * ·) h2357 h11)
+  exact (congrArg σ (show (332640 : ℕ) = 2 ^ 5 * 3 ^ 3 * 5 ^ 1 * 7 ^ 1 * 11 ^ 1
+    by norm_num)).trans (h235711.trans (by norm_num))
 
 private theorem sigma_332637 :
     ArithmeticFunction.sigma 1 332637 = 443520 := by
-  rw [show (332637 : ℕ) = 3 ^ 1 * 110879 ^ 1 by norm_num,
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
-      (by decide : Nat.Coprime (3 ^ 1) (110879 ^ 1)),
-    ArithmeticFunction.sigma_one_apply_prime_pow (by norm_num : Nat.Prime 3),
-    ArithmeticFunction.sigma_one_apply_prime_pow (by norm_num : Nat.Prime 110879)]
-  norm_num [Finset.sum_range_succ]
+  have h3 : ArithmeticFunction.sigma 1 3 = 4 := by
+    simpa only [pow_one, Finset.sum_range_succ, Finset.sum_range_zero,
+      pow_zero, zero_add, Nat.reduceAdd] using
+      (ArithmeticFunction.sigma_one_apply_prime_pow (i := 1) Nat.prime_three)
+  have hp : ArithmeticFunction.sigma 1 110879 = 110880 := by
+    simpa only [pow_one, Finset.sum_range_succ, Finset.sum_range_zero,
+      pow_zero, zero_add, Nat.reduceAdd] using
+      (ArithmeticFunction.sigma_one_apply_prime_pow (i := 1) prime_110879)
+  have hcop : Nat.Coprime 3 110879 :=
+    Nat.prime_three.coprime_iff_not_dvd.mpr (by norm_num)
+  have hprod : ArithmeticFunction.sigma 1 (3 * 110879) = 4 * 110880 :=
+    ((ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime hcop).trans
+      (congrArg₂ (· * ·) h3 hp)
+  exact (congrArg (ArithmeticFunction.sigma 1)
+    (show (332637 : ℕ) = 3 * 110879 by norm_num)).trans
+    (hprod.trans (by norm_num))
 
 /-- At `n = 332640`, antisigma is smaller than at `n - 3 = 332637`,
 contradicting the literal A231548 conjecture. -/
 theorem result : ¬ claim := by
-  have hprevious : antisigma (332640 - 3) = 55323409683 := by
-    rw [show 332640 - 3 = 332637 by norm_num,
-      antisigma_eq_triangular_sub_sigma, sigma_332637]
-  have hcurrent : antisigma 332640 = 55323399600 := by
-    rw [antisigma_eq_triangular_sub_sigma, sigma_332640]
+  have hprevious : antisigma (332640 - 3) = 55323409683 :=
+    (antisigma_eq_triangular_sub_sigma 332637).trans
+      ((congrArg (fun x : ℕ => 332637 * (332637 + 1) / 2 - x) sigma_332637).trans
+        (by norm_num))
+  have hcurrent : antisigma 332640 = 55323399600 :=
+    (antisigma_eq_triangular_sub_sigma 332640).trans
+      ((congrArg (fun x : ℕ => 332640 * (332640 + 1) / 2 - x) sigma_332640).trans
+        (by norm_num))
   intro hclaim
   have hle := hclaim 332640 (by norm_num)
   rw [hprevious, hcurrent] at hle

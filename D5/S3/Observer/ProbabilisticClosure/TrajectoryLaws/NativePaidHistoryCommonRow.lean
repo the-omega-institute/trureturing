@@ -153,7 +153,7 @@ private theorem mixture_renderer (M : Observer Z) (e : InstalledEmitter M)
   rw [tailMixture, Measure.map_finset_sum' (measurable_of_countable _).aemeasurable]
   apply Finset.sum_congr rfl
   intro z _
-  rw [Measure.map_smul]
+  rw [Measure.map_smul _ (measurable_of_countable _).aemeasurable]
   by_cases hz : row M H.val.1 z = 0
   · simp [hz]
   · rw [installed_configuration_identity M e s z H.val.2
@@ -727,7 +727,7 @@ def pureTail (k : Depth) (s : ActivePhase) : Measure (ValidTail s) :=
   (rawReadLaw (rate k)).map (validStopped s)
 
 instance (k : Depth) (s : ActivePhase) : IsProbabilityMeasure (pureTail k s) :=
-  Measure.isProbabilityMeasure_map (validStopped_measurable s).aemeasurable
+  inferInstance
 
 private theorem target_mixture_apply (μ : PMF Depth) (s : ActivePhase) (H : PhaseHistory s) (E : Set (ValidTail s)) (hE : MeasurableSet E) :
     rawTarget μ H.val.1 H.val.2 s E =

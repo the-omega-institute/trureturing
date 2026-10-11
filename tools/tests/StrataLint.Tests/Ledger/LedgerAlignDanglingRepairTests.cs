@@ -8,6 +8,176 @@ namespace StrataLint.Tests;
 public sealed partial class LedgerAlignWriterTests
 {
     [Theory]
+    [InlineData(false, false, false)]
+    [InlineData(false, false, true)]
+    [InlineData(false, true, false)]
+    [InlineData(false, true, true)]
+    [InlineData(true, false, false)]
+    [InlineData(true, false, true)]
+    [InlineData(true, true, false)]
+    [InlineData(true, true, true)]
+    public void ReplacementReconcilesRecordedConsumersAndAlternatingTransitiveEdges(
+        bool eventIdentities, bool detachTransitiveConsumer, bool scoped)
+    {
+        var original = BuildCatalog(
+            Module("A"), Module("B", imports: ["A"]), Module("C", imports: ["B"]),
+            Module("D"), Module("E"), Module("F", imports: ["E"]));
+        var current = new[]
+        {
+            Module("A") with { StatementMaterial = "new prerequisite statement" },
+            Module("B"), Module("C", imports: detachTransitiveConsumer ? [] : ["B"]),
+            Module("D"), Module("E", imports: ["C"]), Module("F"),
+        };
+        using var fixture = new AlignFixture(current);
+        fixture.InstallAccepted(RecordedConsumerEvents(original, eventIdentities));
+        foreach (var module in current)
+            fixture.InstallState(module.Name, original.ByPath[RepoPathFor(module.Name)].StatementId);
+        var before = ReadRepairEvents(fixture.AcceptedFiles());
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(before, [], out _));
+        var unrelated = fixture.EventBytes("D");
+
+        var result = scoped ? fixture.Align("--selector", PathFor("A")) : fixture.Align();
+
+        Assert.True(result.Success, result.Error);
+        var after = ReadRepairEvents(fixture.AcceptedFiles());
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(after, [], out _));
+        Assert.Equal(6, after.Length);
+        Assert.Equal(6, fixture.StateFileCount());
+        Assert.Equal(unrelated, fixture.EventBytes("D"));
+        var expected = BuildCatalog(current);
+        foreach (var name in new[] { "A", "B", "C", "E", "F" })
+        {
+            var oldEvent = before.Single(item => item.DescriptorPath == RepoPathFor(name));
+            var replacement = after.Single(item => item.DescriptorPath == RepoPathFor(name));
+            Assert.NotEqual(oldEvent.EventHash, replacement.EventHash);
+            Assert.Equal(expected.ByPath[RepoPathFor(name)].StatementId.Value, fixture.StatePin(name));
+            Assert.Equal(fixture.StatePin(name), fixture.EventPin(name));
+            if (name != "A")
+            {
+                Assert.Equal(oldEvent.Payload.GetProperty("statement_id").GetString(),
+                    replacement.Payload.GetProperty("statement_id").GetString());
+                Assert.Equal(oldEvent.Payload.GetProperty("declaration_statement_ids").GetRawText(),
+                    replacement.Payload.GetProperty("declaration_statement_ids").GetRawText());
+            }
+        }
+        foreach (var name in new[] { "B", "F" }.Concat(detachTransitiveConsumer ? ["C"] : Array.Empty<string>()))
+            Assert.Empty(after.Single(item => item.DescriptorPath == RepoPathFor(name))
+                .Payload.GetProperty("prerequisite_frozen_node_ids").EnumerateArray());
+        if (!detachTransitiveConsumer) AssertPrerequisite(after, "C", "B");
+        AssertPrerequisite(after, "E", "C");
+        var published = fixture.AllPublishedBytes();
+        Assert.True(fixture.AlignWithAcceptedWritesDenied().Success);
+        Assert.Equal(published, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
+    public void ScopedReplacementRepinsChangedRecordedConsumer()
+    {
+        var original = BuildCatalog(Module("A"), Module("B", imports: ["A"]));
+        var current = new[]
+        {
+            Module("A") with { StatementMaterial = "new prerequisite statement" },
+            Module("B") with { StatementMaterial = "new consumer statement" },
+        };
+        using var fixture = new AlignFixture(current);
+        fixture.InstallAccepted(original);
+        foreach (var name in new[] { "A", "B" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+
+        var result = fixture.Align("--selector", PathFor("A"));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("changed=2", result.Output, StringComparison.Ordinal);
+        var expected = BuildCatalog(current);
+        foreach (var name in new[] { "A", "B" })
+        {
+            Assert.Equal(expected.ByPath[RepoPathFor(name)].StatementId.Value, fixture.StatePin(name));
+            Assert.Equal(fixture.StatePin(name), fixture.EventPin(name));
+        }
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(ReadRepairEvents(fixture.AcceptedFiles()), [], out _));
+    }
+
+    [Theory]
+    [InlineData("state-conflict")]
+    [InlineData("open-consumer")]
+    [InlineData("unrelated-dangling")]
+    public void RecordedConsumerReplacementRefusesInvalidPublication(string variant)
+    {
+        var original = BuildCatalog(Module("A"), Module("B", imports: ["A"]), Module("D"));
+        using var fixture = new AlignFixture(
+            Module("A") with { StatementMaterial = "new prerequisite statement" },
+            Module("B", source: variant == "open-consumer" ? "-- TASK D5-T0001\n" + Source("B") : null,
+                axioms: variant == "open-consumer" ? ["sorryAx"] : []), Module("D"));
+        fixture.InstallAccepted(original.ClosedNodes.Select(material => EventFile(
+            "Freeze", FrozenLedgerCanonicalWriter.FreezeElement(FrozenLedgerCanonicalWriter.FreezePayload(
+                variant == "unrelated-dangling" && material.RepoPath == RepoPathFor("D")
+                    ? material with { PrerequisiteFrozenNodeIds = [FrozenNodeId.Create(Sha256("unresolved unrelated edge"))] }
+                    : material)))));
+        foreach (var name in new[] { "A", "B", "D" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+        if (variant == "state-conflict") fixture.InstallState("B", StatementId.Create(Sha256("conflicting consumer pin")));
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align("--selector", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains(variant switch
+        {
+            "state-conflict" => "conflict",
+            "open-consumer" => "TruthState=Open",
+            _ => "does not form a closed dependency DAG",
+        }, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
+    public void DanglingRepairReconcilesRecordedConsumerThenCurrentDescendant()
+    {
+        var original = BuildCatalog(RepairModules());
+        using var fixture = new AlignFixture(
+            Module("A"), Module("B", imports: ["A"]), Module("C"), Module("D", imports: ["C"]));
+        fixture.InstallAccepted(DanglingEvents(original));
+        foreach (var name in new[] { "A", "B", "C", "D" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+        var stable = fixture.EventBytes("A");
+
+        var result = fixture.Align("--selector", PathFor("B"));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("seed_modules=1 reattested_modules=3", result.Output, StringComparison.Ordinal);
+        var after = ReadRepairEvents(fixture.AcceptedFiles());
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(after, [], out _));
+        Assert.Equal(stable, fixture.EventBytes("A"));
+        AssertPrerequisite(after, "B", "A");
+        AssertPrerequisite(after, "D", "C");
+        Assert.Empty(after.Single(item => item.DescriptorPath == RepoPathFor("C"))
+            .Payload.GetProperty("prerequisite_frozen_node_ids").EnumerateArray());
+        foreach (var name in new[] { "A", "B", "C", "D" })
+            Assert.Equal(original.ByPath[RepoPathFor(name)].StatementId.Value, fixture.StatePin(name));
+    }
+
+    private static ImmutableArray<RepositoryFile> RecordedConsumerEvents(
+        FrozenMaterialCatalog catalog, bool eventIdentities)
+    {
+        var events = ImmutableArray.CreateBuilder<RepositoryFile>();
+        var eventByNode = new Dictionary<FrozenNodeId, FrozenNodeId>();
+        foreach (var material in catalog.ClosedNodes.OrderBy(static item => item.RepoPath.Value, StringComparer.Ordinal))
+        {
+            var recorded = eventIdentities ? material with
+            {
+                PrerequisiteFrozenNodeIds = material.PrerequisiteFrozenNodeIds
+                    .Select(identity => eventByNode[identity]).OrderBy(static identity => identity.Value, StringComparer.Ordinal)
+                    .ToImmutableArray(),
+            } : material;
+            var file = EventFile("Freeze", FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(recorded)));
+            eventByNode.Add(material.FrozenNodeId, FrozenNodeId.Create(Assert.Single(ReadRepairEvents([file])).EventHash));
+            events.Add(file);
+        }
+        return events.ToImmutable();
+    }
+
+    [Theory]
     [InlineData(true, false)]
     [InlineData(false, false)]
     [InlineData(true, true)]

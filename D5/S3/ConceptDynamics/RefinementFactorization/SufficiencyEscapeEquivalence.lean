@@ -103,13 +103,13 @@ theorem identity_readout_sufficiency_witness :
     · intro impossible
       exact impossible.elim
   have kernelInclusion : Setoid.ker q ≤ Setoid.ker target :=
-    (equivalence.out 0 1).mp emptyEscape
+    (equivalence.out 1 2).mp emptyEscape
   have fiberConstancy : Function.FactorsThrough target q :=
-    (equivalence.out 1 2).mp kernelInclusion
+    (equivalence.out 2 3).mp kernelInclusion
   have imageDescent :
       ∃ descend : Set.range q → Bool,
         target = descend ∘ Set.rangeFactorization q :=
-    (equivalence.out 2 3).mp fiberConstancy
+    (equivalence.out 3 4).mp fiberConstancy
   have distinctRange :
       ∃ left right : Set.range q, left ≠ right := by
     refine ⟨Set.rangeFactorization q false,
@@ -140,15 +140,15 @@ theorem constant_readout_escape_witness :
     exact escapedPair
   have noKernelInclusion : ¬Setoid.ker q ≤ Setoid.ker target := by
     intro kernelInclusion
-    exact nonemptyEscape ((equivalence.out 0 1).mpr kernelInclusion)
+    exact nonemptyEscape ((equivalence.out 1 2).mpr kernelInclusion)
   have noFiberConstancy : ¬Function.FactorsThrough target q := by
     intro fiberConstancy
-    exact nonemptyEscape ((equivalence.out 0 2).mpr fiberConstancy)
+    exact nonemptyEscape ((equivalence.out 1 3).mpr fiberConstancy)
   have noImageDescent :
       ¬∃ descend : Set.range q → Bool,
         target = descend ∘ Set.rangeFactorization q := by
     intro imageDescent
-    exact nonemptyEscape ((equivalence.out 0 3).mpr imageDescent)
+    exact nonemptyEscape ((equivalence.out 1 4).mpr imageDescent)
   exact ⟨nonemptyEscape, noKernelInclusion, noFiberConstancy,
     noImageDescent, escapedPair⟩
 

@@ -538,8 +538,8 @@ theorem result : ¬ claim := by
       (mul_eq_zero.mp hz).resolve_left (by norm_num)
     have hh := (add_eq_zero_iff_of_nonneg (hB.dotProduct_mulVec_nonneg (e j))
       (hB.dotProduct_mulVec_nonneg (u j))).mp he
-    exact ⟨(hB.dotProduct_mulVec_zero_iff (e j)).mp hh.1,
-      (hB.dotProduct_mulVec_zero_iff (u j)).mp hh.2⟩
+    exact ⟨(hB.dotProduct_mulVec_zero_iff (x := (e j))).mp hh.1,
+      (hB.dotProduct_mulVec_zero_iff (x := (u j))).mp hh.2⟩
   have two_zero (B : Matrix (Fin 3) (Fin 3) ℂ) (hB : B.PosSemidef)
       (hne : B ≠ 0) (j l : Fin 3) (hj : Matrix.trace (B * rho j) = 0)
       (hl : Matrix.trace (B * rho l) = 0) : j = l := by

@@ -26,6 +26,5 @@ For non-torsion Mordell points with independent cubic rotations, the half-x-coor
 - Dependency: [D5/S3/Factorization/Mordell/CanonicalPointHeight](CanonicalPointHeight.md)
 - Dependency: [D5/S3/Factorization/Mordell/GoldenCubicBlockMordellTwists](GoldenCubicBlockMordellTwists.md)
 - Dependency: [D5/S3/Factorization/Mordell/PointVariableChange](PointVariableChange.md)
-- Dependency: [D5/S3/Factorization/Mordell/SymmetricSquareAddition](SymmetricSquareAddition.md)
 - Dependency: [D5/S3/Factorization/MordellTwoAdicNonTorsion](../MordellTwoAdicNonTorsion.md)
 - Dependency: [D5/S3/QuadraticForms/ParallelogramConstruction](../../QuadraticForms/ParallelogramConstruction.md)

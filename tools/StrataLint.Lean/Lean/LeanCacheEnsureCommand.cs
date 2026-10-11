@@ -32,9 +32,9 @@ internal static partial class LeanCacheEnsureCommand
             }.Where(static detail => detail is not null));
     }
 
-    internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR] [--donor-repository DIR]";
+    internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR] [--donor-repository DIR] [--donor-worktree DIR]";
     internal const string WriterUsage =
-        "USAGE: StrataLint worktree with-cache-writer [--path DIR] [--donor-repository DIR] -- COMMAND [ARG ...]";
+        "USAGE: StrataLint worktree with-cache-writer [--path DIR] [--donor-repository DIR] [--donor-worktree DIR] -- COMMAND [ARG ...]";
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -72,13 +72,14 @@ internal static partial class LeanCacheEnsureCommand
         IDirectoryCloner cloner,
         Action<string>? removePartial,
         ILeanCacheStateProbe stateProbe,
-        bool continueOnCacheGetFailure = false)
+        bool continueOnCacheGetFailure = false,
+        Func<string, string?>? readEnvironment = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
-        if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root, out var donorRepository))
+        if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root, out var donorRepository, out var exactDonorWorktree))
         {
             return new CommandResult(false, string.Empty, Usage + "\n");
         }
@@ -129,7 +130,7 @@ internal static partial class LeanCacheEnsureCommand
             removePartial,
             continueOnCacheGetFailure,
             stateProbe,
-            out _, donorRepository);
+            out _, donorRepository, readEnvironment ?? Environment.GetEnvironmentVariable, exactDonorWorktree);
     }
 
     internal static CommandResult RunWithWriter(
@@ -157,7 +158,7 @@ internal static partial class LeanCacheEnsureCommand
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
         ArgumentNullException.ThrowIfNull(readEnvironment);
-        if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command, out var donorRepository))
+        if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command, out var donorRepository, out var exactDonorWorktree))
         {
             return new CommandResult(false, string.Empty, WriterUsage + "\n");
         }
@@ -196,7 +197,7 @@ internal static partial class LeanCacheEnsureCommand
             removePartial: null,
             continueOnCacheGetFailure: true,
             stateProbe,
-            out var cacheState, donorRepository);
+            out var cacheState, donorRepository, readEnvironment, exactDonorWorktree);
         if (!ensured.Success) return ensured;
 
         var receipt = ensured.Output;
@@ -266,17 +267,29 @@ internal static partial class LeanCacheEnsureCommand
         bool continueOnCacheGetFailure,
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
-        string? donorRepository)
+        string? donorRepository,
+        Func<string, string?> readEnvironment,
+        string? exactDonorWorktree)
     {
         cacheState = null;
         var archive = LeanArchiveAttempt.Skipped("not reached");
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
         string? stampMiss = null;
+        var bootstrapPinMigration = false;
         var missingDonorClonefile = ClonefileReceipt.NotRun;
         try
         {
             if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
+            if (exactDonorWorktree is not null)
+            {
+                if (Directory.Exists(lake) || File.Exists(lake))
+                    return FailureReceipt("refused", root, null, "none", pins.Sha256,
+                        "exact donor selection requires an absent target .lake");
+                return ProvisionLinkedFromMain(root, pins, runner, cloner, writerGuard,
+                    removePartial, stateProbe, GitWorktreeInventory.Locate(root, runner),
+                    donorRepository, false, null, out cacheState, exactDonorWorktree);
+            }
             var projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
 
             string? missReason = null;
@@ -290,7 +303,8 @@ internal static partial class LeanCacheEnsureCommand
                     if (projectWarmth.State == OleanWarmth.Cold)
                     {
                         var location = GitWorktreeInventory.Locate(root, runner);
-                        if (location.IsLinked)
+                        bootstrapPinMigration = CanBootstrapPinMigration(location, pins, readEnvironment);
+                        if (location.IsLinked && !bootstrapPinMigration)
                         {
                             using var mainDonor = GitWorktreeInventory.SelectMainDonor(
                                 location,
@@ -314,7 +328,9 @@ internal static partial class LeanCacheEnsureCommand
                         // A main checkout may fill an empty project layer from the Release archive.
                         var contentRoot = stateProbe.InspectContentRoot(
                             Path.Combine(lake, "build"));
-                        archive = contentRoot.Clear
+                        archive = location.IsLinked
+                            ? LeanArchiveAttempt.Skipped(LinkedArchiveDisabled)
+                            : contentRoot.Clear
                             ? LeanArchiveFetch.Run(root, runner, ArchiveBudget, writerGuard)
                             : LeanArchiveAttempt.Skipped(
                                 contentRoot.Error ?? "content root already exists");
@@ -336,19 +352,20 @@ internal static partial class LeanCacheEnsureCommand
                         donor: null,
                         method: "none",
                         pins.Sha256,
-                        reason: null,
+                        reason: bootstrapPinMigration ? "explicit cold-build consent for a new mathlib partition" : null,
                         LeanCacheProvisioner.InspectMathlibOleans(lake),
                         archive: archive),
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState, writerGuard, runner);
+                        out cacheState, writerGuard, runner, bootstrapPinMigration);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
                 {
                     var location = GitWorktreeInventory.Locate(root, runner);
-                    if (location.IsLinked)
+                    bootstrapPinMigration = CanBootstrapPinMigration(location, pins, readEnvironment);
+                    if (location.IsLinked && !bootstrapPinMigration)
                     {
                         return ProvisionLinkedFromMain(
                             root,
@@ -359,6 +376,7 @@ internal static partial class LeanCacheEnsureCommand
                             removePartial,
                             stateProbe,
                             location,
+                            donorRepository,
                             replaceExisting: true,
                             stampMiss,
                             out cacheState);
@@ -383,6 +401,7 @@ internal static partial class LeanCacheEnsureCommand
                                 writerGuard,
                                 stateProbe,
                                 location,
+                                donorRepository,
                                 stampMiss,
                                 out cacheState);
                         }
@@ -396,6 +415,7 @@ internal static partial class LeanCacheEnsureCommand
                             removePartial,
                             stateProbe,
                             location,
+                            donorRepository,
                             replaceExisting: true,
                             stampMiss,
                             out cacheState);
@@ -470,7 +490,8 @@ internal static partial class LeanCacheEnsureCommand
                     }
 
                     // Main checkouts retain in-place reproduction for missing or corrupt stamps.
-                    // Linked worktrees return above and provision only from their main checkout.
+                    // Linked worktrees use the main checkout, or an explicitly registered
+                    // current-pin donor inventory when the main checkout is unavailable.
                     try
                     {
                         var reproduced = LeanCacheProvisioner.ReproduceExisting(
@@ -559,9 +580,10 @@ internal static partial class LeanCacheEnsureCommand
             }
 
             var worktreeLocation = GitWorktreeInventory.Locate(root, runner);
-            if (worktreeLocation.IsLinked)
+            if (worktreeLocation.IsLinked && !bootstrapPinMigration)
             {
-                return ProvisionLinkedFromMain(
+                bootstrapPinMigration = CanBootstrapPinMigration(worktreeLocation, pins, readEnvironment);
+                if (!bootstrapPinMigration) return ProvisionLinkedFromMain(
                     root,
                     pins,
                     runner,
@@ -570,12 +592,15 @@ internal static partial class LeanCacheEnsureCommand
                     removePartial,
                     stateProbe,
                     worktreeLocation,
+                    donorRepository,
                     replaceExisting: false,
                     stampMiss,
                     out cacheState);
             }
 
-            using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner, donorRepository);
+            using var selection = bootstrapPinMigration
+                ? new LeanCacheDonorSelection(null, "explicit cold-build consent for a new mathlib partition")
+                : GitWorktreeInventory.SelectDonor(root, pins, runner, donorRepository);
             try
             {
                 var provisioned = removePartial is null
@@ -600,12 +625,12 @@ internal static partial class LeanCacheEnsureCommand
                     ? selection.ProjectWarmth ?? projectWarmth
                     : projectWarmth;
 
-                // Main checkouts may use cache-get and the Release archive. Linked worktrees
-                // return before this point and only clone a warm main-checkout cache.
+                // Linked pin migrations use the current-pin producer without a donor.
+                // Release archive retrieval remains confined to main checkouts.
                 var warmthAfterProvision = provisioned.Strategy == "cloned"
                     ? stateProbe.ProbeOleans(ProjectOleanRoot(lake))
                     : finalProjectWarmth;
-                if (warmthAfterProvision.State == OleanWarmth.Cold)
+                if (!worktreeLocation.IsLinked && warmthAfterProvision.State == OleanWarmth.Cold)
                 {
                     archive = LeanArchiveFetch.Run(root, runner, ArchiveBudget, writerGuard);
                     if (archive.Outcome == LeanArchiveOutcome.Unpacked)
@@ -636,12 +661,12 @@ internal static partial class LeanCacheEnsureCommand
                     root,
                     finalProjectWarmth,
                     stateProbe,
-                    out cacheState, writerGuard, runner);
+                    out cacheState, writerGuard, runner, bootstrapPinMigration);
             }
             catch (LeanCacheProvisionException exception)
             {
                 if (IsSymlink(lake)) return RefusedSymlink(root, pins.Sha256);
-                if (continueOnCacheGetFailure
+                if (!bootstrapPinMigration && continueOnCacheGetFailure
                     && exception.SafeToContinueToBuild
                     && !File.Exists(lake))
                 {
@@ -702,6 +727,17 @@ internal static partial class LeanCacheEnsureCommand
         }
     }
 
+    private static bool CanBootstrapPinMigration(
+        LeanWorktreeLocation location, LeanPinSet pins, Func<string, string?> readEnvironment)
+    {
+        if (!location.IsLinked) return false;
+        var mainPins = LeanPinSet.TryReadWorktree(location.MainCheckout, out _);
+        // Consent authorizes a fresh producer for a validated, different partition.
+        // It does not admit unknown stamps, select unverified donors or relax locks.
+        return mainPins is not null && !pins.SamePartition(mainPins)
+            && string.Equals(readEnvironment(ColdBuildConsentVariable), "1", StringComparison.Ordinal);
+    }
+
     private static CommandResult ProvisionLinkedFromMain(
         string root,
         LeanPinSet pins,
@@ -711,16 +747,20 @@ internal static partial class LeanCacheEnsureCommand
         Action<string>? removePartial,
         ILeanCacheStateProbe stateProbe,
         LeanWorktreeLocation location,
+        string? donorRepository,
         bool replaceExisting,
         string? stampMiss,
-        out CacheState? cacheState)
+        out CacheState? cacheState,
+        string? exactDonorWorktree = null)
     {
         cacheState = null;
-        using var selection = GitWorktreeInventory.SelectMainDonor(
+        using var selection = SelectLinkedDonor(
+            root,
             location,
             pins,
             runner,
-            stateProbe);
+            stateProbe,
+            donorRepository, exactDonorWorktree);
         if (selection.Donor is null)
             return LinkedFailure(root, pins, location, selection.Notice, stampMiss);
 
@@ -741,7 +781,7 @@ internal static partial class LeanCacheEnsureCommand
                 SuccessReceipt(
                     "seeded",
                     root,
-                    location.MainCheckout,
+                    selection.Donor,
                     provisioned.Method,
                     pins.Sha256,
                     provisioned.Warning,
@@ -778,15 +818,18 @@ internal static partial class LeanCacheEnsureCommand
         LeanCacheWriterGuard writerGuard,
         ILeanCacheStateProbe stateProbe,
         LeanWorktreeLocation location,
+        string? donorRepository,
         string? stampMiss,
         out CacheState? cacheState)
     {
         cacheState = null;
-        using var selection = GitWorktreeInventory.SelectMainDonor(
+        using var selection = SelectLinkedDonor(
+            root,
             location,
             pins,
             runner,
-            stateProbe);
+            stateProbe,
+            donorRepository);
         if (selection.Donor is null)
             return LinkedFailure(root, pins, location, selection.Notice, stampMiss);
 
@@ -815,7 +858,7 @@ internal static partial class LeanCacheEnsureCommand
                 SuccessReceipt(
                     "seeded",
                     root,
-                    location.MainCheckout,
+                    selection.Donor,
                     attempt.Result.Method,
                     pins.Sha256,
                     attempt.Warning,
@@ -844,52 +887,33 @@ internal static partial class LeanCacheEnsureCommand
         }
     }
 
-    private static CommandResult LinkedLaneReseedFailure(
+    private static LeanCacheDonorSelection SelectLinkedDonor(
         string root,
-        LeanPinSet pins,
         LeanWorktreeLocation location,
-        string? stampMiss,
-        ClonefileReceipt? clonefile = null,
-        string? reason = null)
+        LeanPinSet pins,
+        IWorktreeProcessRunner runner,
+        ILeanCacheStateProbe stateProbe,
+        string? donorRepository,
+        string? exactDonorWorktree = null)
     {
-        var lake = ShellQuote(LeanCacheGuard.PhysicalPath(Path.Combine(root, ".lake")));
-        var remediation = "the lane's content layer is cold while the main checkout is warm: "
-            + $"remove {lake} and re-run so ensure seeds it from the main checkout";
-        return FailureReceipt(
-            "failed",
-            root,
-            location.MainCheckout,
-            "none",
-            pins.Sha256,
-            JoinReasons(reason, remediation) ?? remediation,
-            stampMiss,
-            clonefile,
-            LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
-    }
+        if (exactDonorWorktree is not null)
+            return GitWorktreeInventory.SelectDonor(root, pins, runner, stateProbe,
+                requireProjectWarm: true, donorRepository, exactDonorWorktree);
+        var main = GitWorktreeInventory.SelectMainDonor(location, pins, runner, stateProbe);
+        if (main.Donor is not null || string.IsNullOrWhiteSpace(donorRepository)) return main;
 
-    private static CommandResult LinkedFailure(
-        string root,
-        LeanPinSet pins,
-        LeanWorktreeLocation location,
-        string? reason,
-        string? stampMiss,
-        ClonefileReceipt? clonefile = null)
-    {
-        var remediation = "sync dev and warm the dev cache: "
-            + $"make -C {ShellQuote(location.MainCheckout)} warm-donor";
-        var completeReason = reason?.Contains(remediation, StringComparison.Ordinal) == true
-            ? reason
-            : JoinReasons(reason, remediation) ?? remediation;
-        return FailureReceipt(
-            "failed",
+        var mainNotice = main.Notice;
+        main.Dispose();
+        var registered = GitWorktreeInventory.SelectDonor(
             root,
-            location.MainCheckout,
-            "none",
-            pins.Sha256,
-            completeReason,
-            stampMiss,
-            clonefile,
-            LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
+            pins,
+            runner,
+            stateProbe,
+            requireProjectWarm: true,
+            donorRepository: donorRepository);
+        return registered.Donor is null
+            ? new LeanCacheDonorSelection(null, JoinReasons(mainNotice, registered.Notice))
+            : registered;
     }
 
     private static CommandResult SuccessWithState(
@@ -899,7 +923,8 @@ internal static partial class LeanCacheEnsureCommand
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
         LeanCacheWriterGuard writerGuard,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        bool coldBuildConsent = false)
     {
         // Every successful donor/provision path meets here while holding the
         // writer lock, including a warm donor that bypassed cold-cache fallback.
@@ -945,7 +970,8 @@ internal static partial class LeanCacheEnsureCommand
         cacheState = new CacheState(
             stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
             projectWarmth);
-        return result with { Output = RecordCacheState(result.Output, cacheState) };
+        var receipt = RecordCacheState(result.Output, cacheState);
+        return result with { Output = coldBuildConsent ? RecordColdBuildConsent(receipt) : receipt };
     }
 
     /// <summary>
@@ -956,85 +982,6 @@ internal static partial class LeanCacheEnsureCommand
         TimeSpan.FromMinutes(
             LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
                 - LeanCacheBudgetPolicy.PostArchiveReserveMinutes);
-
-    private static string RecordColdBuildConsent(string receipt)
-    {
-        const string prefix = "LEAN_CACHE ";
-        if (!receipt.StartsWith(prefix, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("Lean cache receipt has an unexpected prefix");
-        }
-        var payload = JsonNode.Parse(receipt[prefix.Length..]) as JsonObject
-            ?? throw new InvalidOperationException("Lean cache receipt is not a JSON object");
-        payload["cold_build_consent"] = true;
-        return prefix + payload.ToJsonString() + "\n";
-    }
-
-    private static string RecordCacheState(string receipt, CacheState cacheState)
-    {
-        const string prefix = "LEAN_CACHE ";
-        if (!receipt.StartsWith(prefix, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("Lean cache receipt has an unexpected prefix");
-        }
-        var payload = JsonNode.Parse(receipt[prefix.Length..]) as JsonObject
-            ?? throw new InvalidOperationException("Lean cache receipt is not a JSON object");
-        payload["mathlib_olean_state"] = ReceiptWarmth(cacheState.Mathlib.State);
-        payload["mathlib_olean_probe_error"] = cacheState.Mathlib.Error;
-        payload["project_olean_state"] = ReceiptWarmth(cacheState.Project.State);
-        payload["project_olean_probe_error"] = cacheState.Project.Error;
-        return prefix + payload.ToJsonString() + "\n";
-    }
-
-    private static string ReceiptWarmth(OleanWarmth warmth) => warmth switch
-    {
-        OleanWarmth.Cold => "cold",
-        OleanWarmth.Warm => "warm",
-        OleanWarmth.ProbeFailed => "probe_failed",
-        _ => throw new ArgumentOutOfRangeException(nameof(warmth), warmth, null),
-    };
-
-    private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
-
-    private static string ProjectOleanRoot(string lake) =>
-        Path.Combine(lake, "build", "lib", "lean");
-
-    private static string MathlibOleanRoot(string lake) =>
-        Path.Combine(lake, "packages", "mathlib", ".lake", "build", "lib", "lean");
-
-    private static bool TryParseWriter(
-        string repositoryRoot,
-        IReadOnlyList<string> arguments,
-        out string root,
-        out string[] command,
-        out string? donorRepository)
-    {
-        var index = 0;
-        while (index < arguments.Count && arguments[index] != "--") index++;
-        if (!TryParseWorktreeRoot(repositoryRoot, arguments.Take(index).ToArray(), out root, out donorRepository)
-            || index + 1 >= arguments.Count)
-        {
-            command = [];
-            return false;
-        }
-        command = arguments.Skip(index + 1).ToArray();
-        return true;
-    }
-
-    private static string? JoinReasons(string? first, string? second)
-    {
-        if (string.IsNullOrWhiteSpace(first)) return second;
-        if (string.IsNullOrWhiteSpace(second)) return first;
-        return first + "; " + second;
-    }
-
-    private static string? ReceiptStampMiss(LeanCacheStampState state) => state switch
-    {
-        LeanCacheStampState.Missing => "missing",
-        LeanCacheStampState.Corrupt => "corrupt",
-        LeanCacheStampState.Mismatch => "mismatch",
-        _ => null,
-    };
 
     private static bool IsSymlink(string path) =>
         (Directory.Exists(path) || File.Exists(path))

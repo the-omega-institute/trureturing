@@ -8,6 +8,7 @@ internal sealed class ComplexAdjunctionDocument : IScribeDocumentDefinition
         "This module supplies the indicated step in the unbounded solidification construction.",
         H("Complex Adjunction"),
         Blocks(
+            Paragraph(Text("The degreewise adjunction uses Mathlib's Functor.mapHomologicalComplexCompIso for categories with zero morphisms and functors preserving zero morphisms. It applies to complexes of any shape and requires no additivity.")),
             Describe.Lean(
                 DescribeId.Create("solid-complexadjunction-exactderivedhomologyiso"),
                 DeclarationHandle.Create("D5/S3/HomologicalAlgebra/Solid/ComplexAdjunction.exactDerivedHomologyIso"),

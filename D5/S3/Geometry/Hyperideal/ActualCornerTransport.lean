@@ -408,7 +408,7 @@ theorem actual_corner_transport (q : Pairing T) (u v : S → Corner T) (w : S �
       _ = 3 * B := by
           rcases o with ⟨t,j⟩
           fin_cases j <;> norm_num [endpoints,Fin.sum_univ_succ] <;>
-            simp only [Fin.ext_iff] <;> norm_num <;> ring
+            norm_num <;> ring
   exact ⟨paths,follows,simple,nilpath,counts,anti,chi_bound,support,divergence,
     load_anti,load_bound,zeroM,deficit,local_bound⟩
 

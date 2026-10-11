@@ -60,6 +60,194 @@ class NativeBatchPartitionTests:
 
 
 class NativeRecoveryConsumerTests:
+    def test_registry_program_obligation_follows_compiled_classification(self):
+        registry = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
+        registry.write_text('def invalidRegistry : False := True.intro\n')
+        first = self.build()
+        self.assertFalse((self.root / '.lake/build/lib/lean/LeanInformationAudit/TemplateEnrollment.olean').exists())
+        before = self.report()[1:]
+        self.record_result('untyped-invalid-registry', dict(raw_exit=first.returncode,
+            stdout=first.stdout, stderr=first.stderr))
+        self.write('D5/Alone.lean', 'namespace LeanInformationAudit.Contract\n'
+            'structure Registration where\n  value : Nat\nend LeanInformationAudit.Contract\n'
+            'def typedEntry : LeanInformationAudit.Contract.Registration := { value := 1 }\n')
+        for target in ['D5.Alone:report', ':report']:
+            rejected = self.run_lake('build', target, success=False)
+            self.record_result('typed-invalid-' + target.replace(':', '-'), dict(target=target,
+                raw_exit=rejected.returncode, stdout=rejected.stdout, stderr=rejected.stderr))
+            self.assertIn('Building LeanInformationAudit.TemplateEnrollment', rejected.stdout + rejected.stderr)
+            self.assertIn('Type mismatch', rejected.stdout + rejected.stderr)
+            self.assertEqual(before, self.report()[1:])
+        registry.unlink()
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        for row in policy['dependency_sources']['include']:
+            if row['pattern'] == 'LeanInformationAudit/TemplateEnrollment.lean': row['optional'] = True
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        config = self.root / 'lakefile.toml'
+        config.write_text(config.read_text().replace('"LeanInformationAudit.TemplateEnrollment", ', ''))
+        for target in ['D5.Alone:report', ':report']:
+            rejected = self.run_lake('build', target, success=False)
+            self.assertIn('IE-C050 reason=incomplete_closure rule=dtr.report_producer', rejected.stdout + rejected.stderr)
+            self.record_result('typed-missing-' + target.replace(':', '-'), dict(target=target,
+                raw_exit=rejected.returncode, stdout=rejected.stdout, stderr=rejected.stderr))
+        self.write('D5/Alone.lean', 'def alone : Nat := 1\n')
+        untyped = self.build()
+        self.record_result('untyped-missing-registry', dict(raw_exit=untyped.returncode,
+            stdout=untyped.stdout, stderr=untyped.stderr))
+
+    def test_shared_typed_registry_has_one_native_compiler_writer(self):
+        from packages.reg import NativeRegSupport
+        from test_reuse import EXECUTION
+        NativeRegSupport.reg_package(self)
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = EXECUTION
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        core = self.root / 'tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean'
+        core.write_text(core.read_text() + '\nnamespace LeanInformationAudit.Contract\n'
+            'structure Registration where\n  value : Nat\nend LeanInformationAudit.Contract\n')
+        typed = [f'Reg.Leaf{index:03}' for index in range(8)]
+        for index, name in enumerate(typed):
+            self.write(name.replace('.', '/') + '.lean',
+                'import LeanInformationAuditInterface.Contract.Core\n'
+                f'def {name}.entry : LeanInformationAudit.Contract.Registration := {{ value := {index} }}\n')
+        work = self.root / 'module-work.jsonl'
+        self.env['STRATALINT_INSPECTOR_MODULE_WORK'] = str(work)
+        result = self.guarded_command(['make', 'lean-report',
+            'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], env=self.env)
+        report = self.root / '.lake/build/stratalint/raw-lean-report.json'
+        log = Path(str(report) + '.logs/report.stdout.log')
+        output = log.read_text() if log.exists() else result.stdout + result.stderr
+        writers = [line for line in output.splitlines() if re.search(
+            r'\b(?:Built|Building) LeanInformationAudit\.TemplateEnrollment \(', line)]
+        artifacts = {}
+        for path in (self.root / '.lake/build/lib/lean/LeanInformationAudit').glob('TemplateEnrollment.*'):
+            info = path.stat()
+            artifacts[path.name] = dict(mode=info.st_mode & 0o777, inode=info.st_ino,
+                nlink=info.st_nlink, sha256=publication.digest(path))
+        private_inodes = all((self.root / relative).stat().st_ino != (self.donor.root / relative).stat().st_ino
+            for relative, entry in self.donor_inventory.items() if entry[0] == 'file')
+        cache_links = []
+        ilean = self.root / '.lake/build/lib/lean/LeanInformationAudit/TemplateEnrollment.ilean'
+        if ilean.exists():
+            for path in (self.root / '.lake/artifact-cache').rglob('*'):
+                if path.is_file() and path.stat().st_ino == ilean.stat().st_ino:
+                    cache_links.append(dict(path=path.relative_to(self.root).as_posix(),
+                        mode=path.stat().st_mode & 0o777, sha256=publication.digest(path)))
+        data = dict(raw_make_exit=result.returncode, typed_consumers=typed,
+            compiler_writers=writers, artifacts=artifacts, stdout=result.stdout, stderr=result.stderr,
+            compiler_seed_used=False, donor_private_inodes=private_inodes, readonly_cache_links=cache_links,
+            donor_inventory_preserved=self.inventory(self.donor.root) == self.donor_inventory)
+        paths = [log] if log.exists() else []
+        if work.exists(): paths.append(work)
+        paths.extend(self.root / name for name in [
+            'tools/lean-inspector/lakefile.lean', 'LeanInformationAudit/TemplateEnrollment.lean',
+            'tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean',
+            'lakefile.toml', 'lean-report-inputs.json'])
+        if result.returncode == 0:
+            rows = self.report()[0]
+            data['report_modules'] = [row['module'] for row in rows]
+            records = [json.loads(line) for line in work.read_text().splitlines()]
+            data['assessed_modules'] = sorted(row['module'] for row in records if row['operation'] == 'assess')
+            data['classified_inputs'] = {name: json.loads((self.root /
+                f'.lake/build/lean-inspector/judge-inputs/{name}.json').read_text())['inputs'] for name in typed}
+            data['report_members'] = {suffix: publication.digest(publication.member(report, suffix))
+                for suffix in (*publication.SUFFIXES, '.reuse.json')}
+            data['origins'] = self.origins()
+            cached = []
+            for path in (self.root / '.lake/artifact-cache/outputs').glob('*/*.json'):
+                descriptor = json.loads(path.read_text())['data']
+                if isinstance(descriptor, str) and descriptor.endswith('.zip'):
+                    cached.append((path.parent.name, publication.digest(
+                        self.root / '.lake/artifact-cache/artifacts' / descriptor)))
+                    paths.append(path)
+            data['module_cache_scopes'] = {name: sorted({scope for scope, digest in cached
+                if digest == publication.digest(self.root / f'.lake/build/lean-inspector/modules/{name}.zip')})
+                for name in data['report_modules']}
+            paths.extend(publication.member(report, suffix) for suffix in (*publication.SUFFIXES, '.reuse.json'))
+        self.record_result('shared-registry', data, paths)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(writers), 1, output)
+        self.assertNotIn('permission denied', output.lower())
+        self.assertEqual(data['report_modules'], sorted(['D5.A', 'D5.Alone', 'D5.B', 'Fixture', *typed]))
+        self.assertEqual(data['assessed_modules'], typed)
+        for name, scopes in data['module_cache_scopes'].items():
+            self.assertEqual(scopes, ['reg' if name in typed else 'trureturing'])
+        for name, inputs in data['classified_inputs'].items():
+            self.assertEqual(inputs, [dict(type='LeanInformationAudit.Contract.Registration', owner=name, name=name + '.entry')])
+        self.assertEqual(artifacts['TemplateEnrollment.ilean']['mode'], 0o444)
+        self.assertGreaterEqual(artifacts['TemplateEnrollment.ilean']['nlink'], 2)
+        self.assertTrue(private_inodes)
+        self.assertTrue(cache_links)
+        for link in cache_links:
+            self.assertEqual(link['mode'], 0o444)
+            self.assertEqual(link['sha256'], artifacts['TemplateEnrollment.ilean']['sha256'])
+        self.check_donor()
+
+    def test_report_registers_pending_compiler_and_classification_jobs(self):
+        # Hold an early target's real compiler/classifier until Lake has
+        # registered the whole batch. A serial prerequisite await cannot cross
+        # this barrier; no wall-time speedup or source spelling is the oracle.
+        barrier = r'''    let some phasePath ← IO.getEnv "STRATALINT_INSPECTOR_PHASES"
+      | throw <| IO.userError "registration fixture requires phase observations"
+    IO.FS.writeFile (phasePath ++ ".started") "started"
+    let mut registered := false
+    for _ in [:200] do
+      for line in (← IO.FS.readFile phasePath).splitOn "\n" do
+        if let .ok row := Lean.Json.parse line then
+          if (row.getObjValAs? String "phase").toOption == some "lake-prepare-register" &&
+              (row.getObjValAs? String "boundary").toOption == some "finish" then
+            registered := true
+      if registered then break
+      IO.sleep 50
+    unless registered do
+      throw <| IO.userError "report registration awaited an unfinished prerequisite"
+    IO.FS.writeFile (phasePath ++ ".released") "registered"
+'''
+        expected = ['D5.A', 'D5.Alone', 'D5.B', 'Fixture']
+        module = self.root / 'D5/A.lean'
+        classifier = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
+        original_module, original_classifier = module.read_text(), classifier.read_text()
+        for obligation in ['compiler', 'classification']:
+            with self.subTest(obligation=obligation):
+                phases = self.root / (obligation + '-phases.jsonl')
+                phases.write_text('')
+                self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
+                if obligation == 'compiler':
+                    module.write_text('import Lean\n' + original_module + '\n#eval show IO Unit from do\n' +
+                                      '\n'.join(line[2:] for line in barrier.splitlines()) + '\n')
+                else:
+                    module.write_text(original_module)
+                    entry = '    let mut paths := #[]\n'
+                    classifier.write_text(original_classifier.replace(entry,
+                        '    if moduleName == "D5.A" then\n' +
+                        '\n'.join('  ' + line for line in barrier.splitlines()) + '\n' + entry))
+                # Every case starts with cold target/classification artifacts;
+                # the class-owned producer seed remains a Lake-managed input.
+                shutil.rmtree(self.root / '.lake/build/lib', ignore_errors=True)
+                shutil.rmtree(self.root / '.lake/build/lean-inspector/judge-inputs', ignore_errors=True)
+                shutil.rmtree(self.root / '.lake/build/lean-inspector/modules', ignore_errors=True)
+                result = self.build(success=None)
+                observations = [json.loads(line) for line in phases.read_text().splitlines()]
+                data = dict(obligation=obligation, raw_exit=result.returncode,
+                    stdout=result.stdout, stderr=result.stderr, phases=observations,
+                    barrier_started=Path(str(phases) + '.started').exists(),
+                    barrier_released=Path(str(phases) + '.released').exists())
+                if result.returncode == 0:
+                    data['report_modules'] = [row['module'] for row in self.report()[0]]
+                    data['classified_modules'] = sorted(path.stem for path in
+                        (self.root / '.lake/build/lean-inspector/judge-inputs').glob('*.json'))
+                self.record_result(obligation, data, [phases])
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertTrue(data['barrier_started'], 'fixture must execute the actual prerequisite')
+                self.assertTrue(data['barrier_released'], 'registration must finish while prerequisite is pending')
+                self.assertEqual(data['report_modules'], expected)
+                self.assertEqual(data['classified_modules'], expected)
+                for phase in ['lake-prepare-register', 'lake-prepare', 'lake-source-whitelists']:
+                    self.assertEqual([row['boundary'] for row in observations if row['phase'] == phase],
+                                     ['start', 'finish'])
+        classifier.write_text(original_classifier)
+        module.write_text(original_module)
+
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()
         self.publish()
@@ -140,6 +328,30 @@ class NativeRecoveryConsumerTests:
         self.write('D5/A.lean', 'def invalid : False := True.intro\n')
         self.build(success=False)
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
+        self.write('External.lean', 'def claim : False := True.intro\n')
+        self.utility()
+        rejected = self.build(success=False)
+        self.assertIn('External.lean', rejected.stdout + rejected.stderr)
+        self.record_result('claim-compiler-failure', dict(raw_exit=rejected.returncode,
+            stdout=rejected.stdout, stderr=rejected.stderr))
+        self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
+        self.utility()
+
+        # Even existing warm reports require successful input classification.
+        classifier = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
+        original = classifier.read_text()
+        classifier.write_text(original.replace('    let mut paths := #[]\n',
+            '    if moduleName == "D5.A" then\n'
+            '      throw <| IO.userError "required fixture classification failure"\n'
+            '    let mut paths := #[]\n'))
+        (self.root / '.lake/build/lean-inspector/judge-inputs/D5.A.json').unlink(missing_ok=True)
+        for scope, target in [('module', 'D5.A:report'), ('package', ':report')]:
+            rejected = self.run_lake('build', target, success=False)
+            self.assertIn('required fixture classification failure', rejected.stdout + rejected.stderr)
+            self.record_result('classification-' + scope + '-failure',
+                dict(target=target, raw_exit=rejected.returncode,
+                     stdout=rejected.stdout, stderr=rejected.stderr))
+        classifier.write_text(original)
         self.write('utility.json', '{invalid')
         self.build(success=False)
         self.utility()

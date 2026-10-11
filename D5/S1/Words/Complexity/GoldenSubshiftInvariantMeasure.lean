@@ -121,11 +121,10 @@ private lemma integral_pushforward (f : GoldenPoint →ᵇ ℝ) (nu : Measure Go
     f.continuous.aestronglyMeasurable
 
 private lemma toMeasure_map (nu : ProbabilityMeasure GoldenPoint) :
-    ((ProbabilityMeasure.map nu forwardShift_continuous.measurable.aemeasurable :
+    ((ProbabilityMeasure.map nu forwardShift :
         ProbabilityMeasure GoldenPoint) : Measure GoldenPoint)
       = Measure.map forwardShift (nu : Measure GoldenPoint) :=
   ProbabilityMeasure.toMeasure_map nu
-    (Continuous.measurable forwardShift_continuous).aemeasurable
 
 private lemma ext_of_integrals (mu1 mu2 : ProbabilityMeasure GoldenPoint)
     (h : ∀ f : GoldenPoint →ᵇ ℝ,
@@ -165,7 +164,7 @@ theorem exists_invariant_probabilityMeasure :
   obtain ⟨mu, phi, hphi, hconv⟩ := SeqCompactSpace.tendsto_subseq (cesaroProb x0)
   refine ⟨mu, forwardShift_continuous.measurable, ?_⟩
   have hcoe : ((ProbabilityMeasure.map mu
-      forwardShift_continuous.measurable.aemeasurable : ProbabilityMeasure GoldenPoint) :
+      forwardShift : ProbabilityMeasure GoldenPoint) :
       Measure GoldenPoint) = Measure.map forwardShift (mu : Measure GoldenPoint) :=
     toMeasure_map mu
   rw [← hcoe]
@@ -174,15 +173,15 @@ theorem exists_invariant_probabilityMeasure :
   intro f
   have hmap : Tendsto
       (fun n => ProbabilityMeasure.map (cesaroProb x0 (phi n))
-        forwardShift_continuous.measurable.aemeasurable)
-      atTop (𝓝 (ProbabilityMeasure.map mu forwardShift_continuous.measurable.aemeasurable)) :=
+        forwardShift)
+      atTop (𝓝 (ProbabilityMeasure.map mu forwardShift)) :=
     ((ProbabilityMeasure.continuous_map forwardShift_continuous).tendsto mu).comp hconv
   have hA := ProbabilityMeasure.tendsto_iff_forall_integral_tendsto.mp hmap f
   have hB := ProbabilityMeasure.tendsto_iff_forall_integral_tendsto.mp hconv f
   have hdiff := hA.sub hB
   have hval : ∀ n : ℕ,
       (∫ y, f y ∂((ProbabilityMeasure.map (cesaroProb x0 (phi n))
-          forwardShift_continuous.measurable.aemeasurable :
+          forwardShift :
             ProbabilityMeasure GoldenPoint) : Measure GoldenPoint))
         - (∫ y, f y ∂((cesaroProb x0 (phi n) :
             ProbabilityMeasure GoldenPoint) : Measure GoldenPoint))
@@ -216,7 +215,7 @@ theorem exists_invariant_probabilityMeasure :
     exact mul_le_mul_of_nonneg_left hb (by positivity)
   have hdiff0 : Tendsto (fun n : ℕ =>
       (∫ y, f y ∂((ProbabilityMeasure.map (cesaroProb x0 (phi n))
-          forwardShift_continuous.measurable.aemeasurable :
+          forwardShift :
             ProbabilityMeasure GoldenPoint) : Measure GoldenPoint))
         - (∫ y, f y ∂((cesaroProb x0 (phi n) :
             ProbabilityMeasure GoldenPoint) : Measure GoldenPoint)))

@@ -118,7 +118,7 @@ private theorem pair_good (A B : Finset (Fin n)) (hAB : A.card + B.card = 2 * k)
   · simpa only [Finsupp.add_apply, Finset.sum_add_distrib, sum_squarefree] using hAB
 
 private theorem coeff_matchingSum_zero (d : Fin n →₀ ℕ) (hd : ¬ GoodExponent k d) :
-    coeff d (matchingSum (X : Fin n → MvPolynomial (Fin n) ℚ) k) = 0 := by
+    AddMonoidAlgebra.coeff (matchingSum (X : Fin n → MvPolynomial (Fin n) ℚ) k) d = 0 := by
   classical
   rw [coeff_matchingSum_eq_decoration_fiber]
   apply Finset.sum_eq_zero
@@ -131,7 +131,7 @@ private theorem coeff_matchingSum_zero (d : Fin n →₀ ℕ) (hd : ¬ GoodExpon
 
 private theorem coeff_esymm_mul_zero (i j : ℕ) (hij : i + j = 2 * k)
     (d : Fin n →₀ ℕ) (hd : ¬ GoodExponent k d) :
-    coeff d (esymm (Fin n) ℚ i * esymm (Fin n) ℚ j) = 0 := by
+    AddMonoidAlgebra.coeff (esymm (Fin n) ℚ i * esymm (Fin n) ℚ j) d = 0 := by
   classical
   rw [coeff_esymm_mul_eq_card]
   have he : elementaryFiber n i j d = ∅ := by
@@ -213,7 +213,7 @@ private theorem shifted_factorial_sum (n k a : ℕ) (hk : 2 * k ≤ n) (ha : a �
 private theorem coeff_matchingNumerator_fiber (n k : ℕ) (hk : 2 * k ≤ n)
     (S T : Finset (Fin n)) (hST : Disjoint S T) (hS : S.card ≤ k)
     (hT : T.card = 2 * (k - S.card)) :
-    coeff (fiberExponent S T) (matchingNumerator n k) =
+    AddMonoidAlgebra.coeff (matchingNumerator n k) (fiberExponent S T) =
       (-1 : ℚ) ^ (k - S.card) *
         (((2 * (k - S.card)).factorial : ℚ) / ((k - S.card).factorial : ℚ) *
           ((n - 2 * k + S.card).factorial : ℚ) * ((n - k).factorial : ℚ)) := by

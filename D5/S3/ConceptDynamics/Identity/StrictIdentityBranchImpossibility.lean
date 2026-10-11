@@ -5,7 +5,7 @@
    anchors: []
    digest: Two distinct objects cannot both be strictly identical to one object. -/
 
-import Mathlib.Logic.Basic
+import Mathlib.Basic.Logic.Basic
 
 /- Library-search audit trail (2026-08-25):
    * Repository searches for the three-object statement, strict identity, and

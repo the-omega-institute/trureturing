@@ -207,7 +207,7 @@ private theorem rejected_identity : ¬ identityArena.{u}.Law lawRejected := by
   have hp : IsProbabilityMeasure
       ((tailLaw base.observer baseEmitter .p (ULift.up activeFields)).map
         (fullRenderer (representative activeFields) .p)) :=
-    Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    inferInstance
   change (0 : ℝ≥0∞) =
     ((tailLaw base.observer baseEmitter .p (ULift.up activeFields)).map
       (fullRenderer (representative activeFields) .p)) Set.univ at hm

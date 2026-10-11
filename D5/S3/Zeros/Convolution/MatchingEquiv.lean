@@ -340,8 +340,7 @@ theorem card_matchingMonomialFiber_mul (n k : ℕ) (S T : Finset (Fin n))
 theorem coeff_matchingSum_fiber (n k : ℕ) (S T : Finset (Fin n))
     (hST : Disjoint S T) (hk : 2 * k ≤ n)
     (hS : S.card ≤ k) (hT : T.card = 2 * (k - S.card)) :
-    MvPolynomial.coeff (fiberExponent S T)
-      (matchingSum (MvPolynomial.X : Fin n → MvPolynomial (Fin n) ℚ) k) =
+    AddMonoidAlgebra.coeff (matchingSum (MvPolynomial.X : Fin n → MvPolynomial (Fin n) ℚ) k) (fiberExponent S T) =
       (-1 : ℚ) ^ (k - S.card) * ((n - 2 * k + S.card).factorial : ℚ) *
         ((2 * (k - S.card)).factorial : ℚ) /
           (((n - 2 * k).factorial : ℚ) * ((k - S.card).factorial : ℚ)) := by

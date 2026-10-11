@@ -482,8 +482,10 @@ internal sealed record LeanWorktreeLocation(
     string MainCheckout);
 
 /// <summary>
-/// Resolves cache donors. A linked worktree may use only the main checkout of its repository;
-/// main-worktree and standalone callers retain the registered-worktree donor inventory.
+/// Resolves cache donors. A linked worktree uses its main checkout by default; when an explicit
+/// donor repository is supplied, it may use that repository's registered current-pin inventory
+/// after the main checkout is unavailable. Main-worktree and standalone callers retain the
+/// registered-worktree donor inventory.
 /// </summary>
 internal static class GitWorktreeInventory
 {
@@ -507,7 +509,8 @@ internal static class GitWorktreeInventory
         IWorktreeProcessRunner runner,
         ILeanCacheStateProbe stateProbe,
         bool requireProjectWarm,
-        string? donorRepository = null)
+        string? donorRepository = null,
+        string? exactDonorWorktree = null)
     {
         ArgumentNullException.ThrowIfNull(stateProbe);
         var targetRoot = LeanCacheGuard.PhysicalPath(repositoryRoot);
@@ -522,6 +525,16 @@ internal static class GitWorktreeInventory
             .Select(LeanCacheGuard.PhysicalPath)
             .Where(root => !string.Equals(root, targetRoot, StringComparison.Ordinal))
             .Distinct(StringComparer.Ordinal);
+        if (exactDonorWorktree is not null)
+        {
+            var requested = Path.GetFullPath(exactDonorWorktree);
+            if (!string.Equals(requested, LeanCacheGuard.PhysicalPath(requested), StringComparison.Ordinal)
+                || File.GetAttributes(requested).HasFlag(FileAttributes.ReparsePoint))
+                return new(null, "exact donor must be a canonical physical worktree path, not a symlink");
+            if (!ordered.Contains(requested, StringComparer.Ordinal))
+                return new(null, "exact donor is not a registered worktree distinct from the target");
+            ordered = [requested];
+        }
         var sawCache = false;
         var sawMismatch = false;
         var sawSymlink = false;

@@ -64,7 +64,7 @@ theorem arbitrary_coordinate_erasure_criterion
     have hprefixLeSelected :
         prefixProduct m (n - s.val) <= ∏ i : Fin (n - s.val), m (selection i) := by
       simp only [prefixProduct]
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro i _
         exact Nat.zero_le _
       · intro i _

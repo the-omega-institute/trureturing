@@ -41,7 +41,7 @@ theorem measureTailSection_tailMap (S : LightProfinite)
     measureTailSection S ≫ measureTailMap S c = familyToIntegerMeasures S c := by
   apply Pi.hom_ext
   intro j
-  simp only [Category.assoc, measureTailMap, familyToIntegerMeasures, Pi.lift_π]
+  simp only [Category.assoc, measureTailMap, familyToIntegerMeasures, Pi.lift_comp_π]
   apply (freeHomDiscreteEquiv ℤ S (ModuleCat.of ℤ ℤ)).injective
   ext s
   dsimp only [measureTailSection]

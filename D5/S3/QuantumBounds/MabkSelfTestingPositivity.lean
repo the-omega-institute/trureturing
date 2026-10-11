@@ -64,7 +64,7 @@ private theorem product_gap {ι : Type*} (E : Finset ι)
       have hsum : ∀ j ∈ E, u j + z j = 1 := fun j hj => huz j (mem_insert_of_mem hj)
       have hprod0 : 0 ≤ ∏ j ∈ E, u j := prod_nonneg fun j hj => (huc j hj).1
       have hprod1 : (∏ j ∈ E, u j) ≤ 1 :=
-        prod_le_one (fun j hj => (huc j hj).1) (fun j hj => (huc j hj).2)
+        prod_le_one₀ (fun j hj => (huc j hj).1) (fun j hj => (huc j hj).2)
       have hpower : (1 / 2 : ℝ) ^ E.card = (1 / 2 : ℝ) ^ (E.card - 1) * (1 / 2) := by
         conv_lhs =>
           rw [show E.card = (E.card - 1) + 1 by have := Finset.card_pos.mpr hE; omega,
@@ -266,12 +266,12 @@ theorem result : claim := by
   have hA0 (E : Finset (Fin n)) : 0 ≤ A E := prod_nonneg fun i _ => ha0 i
   have hB0 (E : Finset (Fin n)) : 0 ≤ B E := prod_nonneg fun i _ => hb0 i
   have hX0 (E : Finset (Fin n)) : 0 ≤ X E := prod_nonneg fun i _ => hx0 i
-  have hX1 (E : Finset (Fin n)) : X E ≤ 1 := prod_le_one (fun i _ => hx0 i) (fun i _ => hx1 i)
+  have hX1 (E : Finset (Fin n)) : X E ≤ 1 := prod_le_one₀ (fun i _ => hx0 i) (fun i _ => hx1 i)
   have hY0 (E : Finset (Fin n)) : 0 ≤ Y E := prod_nonneg fun i _ => hy0 i
   have hAX (E : Finset (Fin n)) : (X E) ^ 2 ≤ A E := by
     dsimp [X, A]
     rw [← prod_pow]
-    exact prod_le_prod (fun i _ => sq_nonneg _) (fun i _ => ha i)
+    exact prod_le_prod₀ (fun i _ => sq_nonneg _) (fun i _ => ha i)
   have hsq (E : Finset (Fin n)) : (Y E) ^ 2 = ∏ i ∈ E, v i * (2 - v i) := by
     dsimp [Y]; rw [← prod_pow]; exact prod_congr rfl fun i _ => hysq i
   have hx_sq (E : Finset (Fin n)) : (X E) ^ 2 = ∏ i ∈ E, (1 - v i) ^ 2 := by

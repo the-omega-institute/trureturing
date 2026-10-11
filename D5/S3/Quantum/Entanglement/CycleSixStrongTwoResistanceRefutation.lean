@@ -171,10 +171,6 @@ theorem result : ¬ claim := by
       Fin.ext_iff]
     simp only [← pow_add]
     apply congrArg (fun k : ℕ => (-1 : ℂ) ^ k)
-    dsimp only [Fin.succ]
-    simp only [show (⟨3, by decide⟩ : Fin 6) = 3 from rfl,
-      show (⟨4, by decide⟩ : Fin 6) = 4 from rfl,
-      show (⟨5, by decide⟩ : Fin 6) = 5 from rfl]
     ring
   have hbis : IsBiseparable
       (partialTrace (Matrix.vecMulVec (cycleGraphState 6) (star (cycleGraphState 6))) J) := by

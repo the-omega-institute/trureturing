@@ -301,7 +301,7 @@ theorem golden_two_shadow_bound
   refine ⟨H, hHContraction, hDNorm.le.trans hrLeT, ?_⟩
   intro hTwoShadow
   have hGoldenBound : ‖H.adjoint ∘L H‖ ≤ Real.goldenRatio⁻¹ :=
-    ((golden_two_shadow_equivalences H hHContraction).out 0 2).mp
+    ((golden_two_shadow_equivalences H hHContraction).out 1 3).mp
       hTwoShadow
   rw [hDNorm] at hGoldenBound
   exact (not_lt_of_ge hGoldenBound) hrGt

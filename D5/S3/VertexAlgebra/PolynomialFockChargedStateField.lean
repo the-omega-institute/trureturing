@@ -64,7 +64,7 @@ theorem charged_statefield_coefficients (lambda : ℂ) (u v : Fock) (n : ℤ) :
     ((chargedY lambda u) [[n]]) v =
       ∑ e ∈ u.support,
         ∑ R ∈ (Finset.univ : Finset (Fin (occurrences e).length)).powerset,
-          (MvPolynomial.coeff e u * weight (occurrences e) R) •
+          (AddMonoidAlgebra.coeff u e * weight (occurrences e) R) •
             ((wordField (keep (occurrences e) R)) [[n - shift (occurrences e) R]]) v := by
   classical
   let keep (w : List ℕ) (R : Finset (Fin w.length)) :=
@@ -308,12 +308,12 @@ theorem charged_statefield_coefficients (lambda : ℂ) (u v : Fock) (n : ℤ) :
       rw [mul_comm (weight w R)]
   change ((chargedY lambda u) [[n]]) v =
     ∑ e ∈ u.support, ∑ R ∈ (Finset.univ : Finset (Fin (occurrences e).length)).powerset,
-      (MvPolynomial.coeff e u * weight (occurrences e) R) •
+      (AddMonoidAlgebra.coeff u e * weight (occurrences e) R) •
         ((wordField (keep (occurrences e) R)) [[n-shift (occurrences e) R]]) v
   -- Basis coordinates are the actual polynomial coefficients.
   rw [chargedY, (MvPolynomial.basisMonomials ℕ ℂ).constr_apply]
   change ((∑ e ∈ u.support,
-    MvPolynomial.coeff e u • chargedWordField lambda (occurrences e)) [[n]]) v = _
+    AddMonoidAlgebra.coeff u e • chargedWordField lambda (occurrences e)) [[n]]) v = _
   simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, LinearMap.sum_apply,
     LinearMap.smul_apply]
   apply Finset.sum_congr rfl

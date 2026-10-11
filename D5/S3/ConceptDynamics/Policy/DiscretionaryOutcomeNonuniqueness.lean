@@ -5,7 +5,7 @@
    anchors: []
    digest: Two licensed outcomes in one public-law fiber rule out unique determination. -/
 
-import Mathlib.Logic.ExistsUnique
+import Mathlib.Basic.ExistsUnique
 
 /- Library-search audit trail (2026-08-27):
    * Repository name and body-shape searches found no theorem negating unique

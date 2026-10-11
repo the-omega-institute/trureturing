@@ -726,8 +726,8 @@ theorem result : ¬ dinovTwoDofMinimumClause := by
     have huWval (j : Bool) : actualUncertainty lawW j = sqrt (15/16 : ℝ) := by rw [huW]; obtain ⟨hqq,hpp,hqp⟩ := witness_covariance_blocks j; norm_num [uncertainty, hqq, hpp, hqp]
     have huCval (j : Bool) : actualUncertainty lawC j = 1 := by rw [huC]; obtain ⟨hqq,hpp,hqp⟩ := comparator_covariance_blocks j; norm_num [uncertainty, hqq, hpp, hqp]
     have huStrict (j : Bool) : actualUncertainty lawW j < actualUncertainty lawC j := by rw [huW, huC]; exact strict_uncertainty_same_realization j
-    have hProbW : IsProbabilityMeasure lawW := by rw [← hW]; letI := witness_probability; exact Measure.isProbabilityMeasure_map hC2.aemeasurable
-    have hProbC : IsProbabilityMeasure lawC := by rw [← hC]; letI := comparator_probability; exact Measure.isProbabilityMeasure_map hC2.aemeasurable
+    have hProbW : IsProbabilityMeasure lawW := by rw [← hW]; letI := witness_probability; exact inferInstance
+    have hProbC : IsProbabilityMeasure lawC := by rw [← hC]; letI := comparator_probability; exact inferInstance
     have hwpos : 0 < rho_w (0,1) := by norm_num [rho_w, R2]; positivity
     have hcpos : 0 < rho_c (0,1) := by unfold rho_c; positivity
     have hnrw (x : ℝ × ℝ) : 0 ≤ rho_w x := nonneg_of_mul_nonneg_left (nFw (x,(0,1))) hwpos; have hnrc (x : ℝ × ℝ) : 0 ≤ rho_c x := nonneg_of_mul_nonneg_left (nFc (x,(0,1))) hcpos
@@ -861,9 +861,9 @@ theorem result : ¬ dinovTwoDofMinimumClause := by
     have hcR : Measure.map radialAction (volume.withDensity (fun x => ENNReal.ofReal (Fc x))) = commonActionLaw := by
       rw [← hcCart]; change Measure.map radialAction (Measure.map C2 comparatorLaw) = _; rw [Measure.map_map hR hC, Measure.map_congr hAEc]; exact hcchart
     let : IsProbabilityMeasure witnessLaw := witness_probability; let : IsProbabilityMeasure comparatorLaw := comparator_probability
-    have hpW : IsProbabilityMeasure torusWitnessLaw := by rw [← hwK]; exact Measure.isProbabilityMeasure_map hK2.measurable.aemeasurable
-    have hpC : IsProbabilityMeasure torusComparatorLaw := by rw [← hcK]; exact Measure.isProbabilityMeasure_map hK2.measurable.aemeasurable
-    have hpA : IsProbabilityMeasure commonActionLaw := by rw [← hwchart]; exact Measure.isProbabilityMeasure_map hcap.aemeasurable
+    have hpW : IsProbabilityMeasure torusWitnessLaw := by rw [← hwK]; exact inferInstance
+    have hpC : IsProbabilityMeasure torusComparatorLaw := by rw [← hcK]; exact inferInstance
+    have hpA : IsProbabilityMeasure commonActionLaw := by rw [← hwchart]; exact inferInstance
     exact ⟨hwA, hcA, hwR, hcR, hpW, hpC, hpA⟩
   have torus_fibers_and_source_entropy : (∀ J₁ J₂ : ℝ, (∫ ts : Real.Angle × Real.Angle, densityA ((ts.1, J₁), (ts.2, J₂))) = exp (-(J₁ + J₂))) ∧ (∀ J₁ J₂ : ℝ, (∫ ts : Real.Angle × Real.Angle,
         comparatorDensityA ((ts.1, J₁), (ts.2, J₂))) = exp (-(J₁ + J₂))) ∧

@@ -631,7 +631,7 @@ theorem finite_support_bayes {M q s : ℕ} {r : ℝ}
       have hprod : (∏ i ∈ A.val \ T.val, w i) ≤ ∏ i ∈ T.val \ A.val, w i := by
         rw [← prod_coe_sort (A.val \ T.val) w, ← prod_coe_sort (T.val \ A.val) w,
           ← bij.prod_comp (fun i => w i)]
-        exact prod_le_prod (fun i _ => (hp.2.1 i).1.le) (fun i _ => hwi i)
+        exact prod_le_prod₀ (fun i _ => (hp.2.1 i).1.le) (fun i _ => hwi i)
       have hsum : (∑ i ∈ A.val \ T.val, inclusion q r e o i) ≤
           ∑ i ∈ T.val \ A.val, inclusion q r e o i := by
         rw [← sum_coe_sort (A.val \ T.val) (inclusion q r e o),

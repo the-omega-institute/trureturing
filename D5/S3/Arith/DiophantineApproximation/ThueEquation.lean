@@ -482,7 +482,7 @@ theorem Polynomial.finite_setOf_eval_homogenize_eq {g : ℤ[X]} {d : ℕ} (hd : 
       linarith
     have hP : (‖(x : ℂ) / y‖ - Rs) ^ n ≤ ∏ r ∈ R, ‖(x : ℂ) / y - r‖ ^ rs.count r := by
       rw [← hsum, ← Finset.prod_pow_eq_pow_sum]
-      exact Finset.prod_le_prod (fun _ _ ↦ pow_nonneg (by linarith) _)
+      exact Finset.prod_le_prod₀ (fun _ _ ↦ pow_nonneg (by linarith) _)
         fun r hr ↦ pow_le_pow_left₀ (by linarith) (hfac r hr) _
     have hn1 : n ≠ 0 := by omega
     have hP1 : ‖(x : ℂ) / y‖ - Rs ≤ (‖(x : ℂ) / y‖ - Rs) ^ n := le_self_pow₀ (by linarith) hn1
@@ -614,7 +614,7 @@ theorem Polynomial.finite_setOf_eval_homogenize_eq {g : ℤ[X]} {d : ℕ} (hd : 
   -- the nearest root is within `δ / 2`
   have hρn : ρ ^ n ≤ P := by
     rw [← hsum, ← Finset.prod_pow_eq_pow_sum]
-    exact Finset.prod_le_prod (fun _ _ ↦ pow_nonneg hρ0 _)
+    exact Finset.prod_le_prod₀ (fun _ _ ↦ pow_nonneg hρ0 _)
       fun r hr ↦ pow_le_pow_left₀ hρ0 (hmin₀ r hr) _
   have hρy : ρ * |(y : ℝ)| ≤ max 1 |(m : ℝ)| := by
     refine hImported5 (μ := n) (by omega) ?_
@@ -649,7 +649,7 @@ theorem Polynomial.finite_setOf_eval_homogenize_eq {g : ℤ[X]} {d : ℕ} (hd : 
             fun _ _ _ ↦ Nat.zero_le _
       _ = ∏ r ∈ R.erase r₀, δ' ^ rs.count r := (Finset.prod_pow_eq_pow_sum _ _ _).symm
       _ ≤ ∏ r ∈ R.erase r₀, ‖t - r‖ ^ rs.count r :=
-          Finset.prod_le_prod (fun _ _ ↦ pow_nonneg hδ'0.le _)
+          Finset.prod_le_prod₀ (fun _ _ ↦ pow_nonneg hδ'0.le _)
             fun r hr ↦ pow_le_pow_left₀ hδ'0.le (hfar r hr) _
   have hPsplit : P = ρ ^ rs.count r₀ * ∏ r ∈ R.erase r₀, ‖t - r‖ ^ rs.count r :=
     (Finset.mul_prod_erase R (fun r ↦ ‖t - r‖ ^ rs.count r) hr₀).symm

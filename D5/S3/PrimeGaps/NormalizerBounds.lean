@@ -215,7 +215,7 @@ lemma divisorEulerMoment_tilt (ps : Finset ℕ) (hps : ∀ p ∈ ps, p.Prime)
     divisorEulerMoment (∏ p ∈ ps, p) γ ≤
       divisorEulerMoment (∏ p ∈ ps, p) 0 *
         Real.exp (E * γ * ∑ p ∈ ps, Real.log p / p) := by
-  have h := Finset.prod_le_prod (s := ps)
+  have h := Finset.prod_le_prod₀ (s := ps)
     (f := fun p : ℕ => 1 + (p : ℝ) ^ γ / ((p : ℝ) - 1))
     (g := fun p : ℕ => (1 + 1 / ((p : ℝ) - 1)) * Real.exp (E * γ * Real.log p / p))
     (fun p hp => by

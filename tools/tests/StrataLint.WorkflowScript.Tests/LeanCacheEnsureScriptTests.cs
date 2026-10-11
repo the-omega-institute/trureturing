@@ -7,8 +7,10 @@ namespace StrataLint.WorkflowScript.Tests;
 [Collection("Lean cache environment")]
 public sealed class LeanCacheEnsureScriptTests
 {
-    [Fact]
-    public void MissingLakeDelegatesToCanonicalWorktreeEnsureCacheCommand()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("requested donor with spaces")]
+    public void MissingLakeDelegatesToCanonicalWorktreeEnsureCacheCommand(string? exactDonor)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -27,12 +29,13 @@ public sealed class LeanCacheEnsureScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" exec /bin/bash \"$4\"",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" STRATALINT_LEAN_CACHE_DONOR_WORKTREE=\"$5\" exec /bin/bash \"$4\"",
                 "lean-cache-test",
                 installed.Bin,
                 installed.ArgumentsPath,
                 installed.DotnetCwdPath,
                 installed.Script,
+                exactDonor ?? string.Empty,
             ],
             installed.Caller,
             TestBudgets.ScriptProcessHangGuard,
@@ -62,7 +65,8 @@ public sealed class LeanCacheEnsureScriptTests
                 "--configuration",
                 "Release",
                 "--",
-                "ensure-cache") + "\n",
+                "ensure-cache") + "\n"
+                + (exactDonor is null ? string.Empty : "--donor-worktree\n" + exactDonor + "\n"),
             installed.ArgumentsText);
         Assert.Equal(canonicalRepository + "\n", installed.DotnetCwdText);
     }

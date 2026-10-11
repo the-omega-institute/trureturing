@@ -789,8 +789,6 @@ private theorem joint_actual_records (Q : ℝ → Fin 6) (hQ : instrument Q) :
     simp only [Nat.mul_zero, bitShift, Nat.add_zero, he, add_zero] at h
     rw [h2] at h
     norm_num [phaseColor] at h
-    have hc := congrArg Fin.val h
-    norm_num at hc
   · rintro ⟨N, hN⟩
     apply hn true
     refine ⟨N + 3, ?_⟩

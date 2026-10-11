@@ -157,7 +157,7 @@ private theorem bloch_expectation (A : (Matrix (Fin 2) (Fin 2) ℂ)) (v : (Eucli
     apply Complex.ext <;>
       simp [blochCenter,Matrix.trace,Matrix.diag,blochReadout,bloch,Matrix.vecMulVec,dotProduct,
         Matrix.mulVec,Fin.sum_univ_two,Complex.sq_norm,Complex.normSq_apply] <;> ring
-  simpa [hv,Matrix.toEuclideanLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
+  simpa [hv,Matrix.toLpLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
     dotProduct_comm] using hid
 
 private theorem qubit_numericalRange_eq_bloch_image (A : (Matrix (Fin 2) (Fin 2) ℂ)) :
@@ -207,7 +207,7 @@ private theorem one_dimensional_numericalRange (A : (Matrix (Fin 1) (Fin 1) ℂ)
       have h := EuclideanSpace.norm_sq_eq v
       simpa [hv,←Complex.normSq_eq_norm_sq] using h.symm
     simp only [mem_singleton_iff]
-    simp [Matrix.toEuclideanLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
+    simp [Matrix.toLpLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
       Matrix.mulVec,dotProduct,Fin.sum_univ_succ]
     have hstar : star (v 0) * v 0 = 1 := by
       have h := Complex.normSq_eq_conj_mul_self (z := v 0)
@@ -219,7 +219,7 @@ private theorem one_dimensional_numericalRange (A : (Matrix (Fin 1) (Fin 1) ℂ)
   · rintro rfl
     refine ⟨WithLp.toLp 2 (fun _ => 1), ?_, ?_⟩
     · simp [EuclideanSpace.norm_eq,Fin.sum_univ_succ]
-    · simp [Matrix.toEuclideanLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
+    · simp [Matrix.toLpLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
       Matrix.mulVec,dotProduct,Fin.sum_univ_succ]
 
 private theorem small_matrix_numericalRange_convex {n : ℕ} (hn : n ≤ 2) (A : (Matrix (Fin n) (Fin n) ℂ)) :

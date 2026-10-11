@@ -76,7 +76,8 @@ theorem gaussian_difference_law (v : ℝ≥0) :
       (fun z : ℝ × ℝ => -z.2) = gaussianReal 0 v := by
     rw [← Function.comp_def, ← Measure.map_map measurable_neg measurable_snd]
     simp [gaussianReal_map_neg]
-  simpa only [Pi.add_def, id_eq, sub_eq_add_neg, zero_add] using h hf hg
+  simpa only [Pi.add_def, id_eq, sub_eq_add_neg, zero_add] using
+    h ⟨by fun_prop, hf⟩ ⟨by fun_prop, hg⟩
 
 theorem gaussian_fourth (v : ℝ≥0) :
     (∫ x : ℝ, x^4 ∂gaussianReal 0 v) = 3 * (v : ℝ)^2 := by

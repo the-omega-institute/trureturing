@@ -21,7 +21,7 @@ open MvPolynomial
 variable {K sigma : Type*} [Field K] [Fintype sigma]
 
 private theorem coeff_single_linear_form_pow (c : sigma → K) (i : sigma) (n k : ℕ) :
-    coeff (Finsupp.single i n) ((∑ j, c j • (X j : MvPolynomial sigma K)) ^ k) =
+    AddMonoidAlgebra.coeff ((∑ j, c j • (X j : MvPolynomial sigma K)) ^ k) (Finsupp.single i n) =
       if n = k then (c i) ^ n else 0 := by
   classical
   rw [coeff_linearCombination_X_pow_of_fintype]
@@ -32,8 +32,7 @@ private theorem coeff_single_linear_form_pow (c : sigma → K) (i : sigma) (n k 
 
 private theorem coeff_single_aeval_linear_form (c : sigma → K) (i : sigma)
     (F : Polynomial K) (n : ℕ) :
-    coeff (Finsupp.single i n)
-      (Polynomial.aeval (∑ j, c j • (X j : MvPolynomial sigma K)) F) =
+    AddMonoidAlgebra.coeff (Polynomial.aeval (∑ j, c j • (X j : MvPolynomial sigma K)) F) (Finsupp.single i n) =
       F.coeff n * (c i) ^ n := by
   classical
   rw [Polynomial.aeval_eq_sum_range, coeff_sum]
@@ -51,7 +50,7 @@ private theorem aeval_linear_form_injective (c : sigma → K) (i : sigma) (hi : 
       (∑ j, c j • (X j : MvPolynomial sigma K))) := by
   intro F G hFG
   ext n
-  have h := congrArg (coeff (Finsupp.single i n)) hFG
+  have h := congrArg ((fun p => AddMonoidAlgebra.coeff p (Finsupp.single i n))) hFG
   rw [coeff_single_aeval_linear_form, coeff_single_aeval_linear_form] at h
   exact mul_right_cancel₀ (pow_ne_zero n hi) h
 
@@ -64,8 +63,7 @@ private theorem nat_degree_le_of_rectangular_support
   classical
   by_cases hF : F = 0
   · simp [hF]
-  · have hc : coeff (Finsupp.single i F.natDegree)
-        (Polynomial.aeval (∑ j, c j • (X j : MvPolynomial sigma K)) F) ≠ 0 := by
+  · have hc : AddMonoidAlgebra.coeff (Polynomial.aeval (∑ j, c j • (X j : MvPolynomial sigma K)) F) (Finsupp.single i F.natDegree) ≠ 0 := by
       rw [coeff_single_aeval_linear_form, Polynomial.coeff_natDegree]
       exact mul_ne_zero (Polynomial.leadingCoeff_ne_zero.mpr hF) (pow_ne_zero _ hi)
     simpa using hbox _ (mem_support_iff.mpr hc) i
@@ -125,12 +123,12 @@ private theorem submodule_eq_bot_of_zero_box
   apply le_antisymm ?_ bot_le
   intro p hp
   change p = 0
-  have he : p = C (coeff 0 p) := by
+  have he : p = C (AddMonoidAlgebra.coeff p 0) := by
     apply eq_monomial_of_support_subset_singleton
     intro d hd
     ext i
     exact Nat.eq_zero_of_le_zero (by simpa [ha i] using hbox p hp d hd i)
-  have hz : coeff 0 p = 0 := hconst _ (he ▸ hp)
+  have hz : AddMonoidAlgebra.coeff p 0 = 0 := hconst _ (he ▸ hp)
   simpa [hz] using he
 
 /-- A rectangularly supported subspace excluding nonzero constants and closed

@@ -71,7 +71,7 @@ theorem directory_escape_probability_exact [Fintype A] [Fintype Y] [Nonempty Y]
             Nat.card {g : A → A → Y // IsEscaped f g} := by
         rw [Nat.card_eq_fintype_card]
         apply Fintype.card_congr
-        exact Equiv.setCongr (by
+        exact Set.equivOfEq (by
           ext g
           exact directoryEscapes_iff_isEscaped f g)
       have hTotalCard :

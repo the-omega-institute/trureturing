@@ -35,7 +35,7 @@ def markedInitial (z : Runtime) : Measure Marked :=
   (bernoulliMeasure (0 : Letter) 1 (emissionParameter z)).map fun x => (z,x)
 
 instance (z : Runtime) : IsProbabilityMeasure (markedInitial z) :=
-  Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+  inferInstance
 
 def markedKernel : Kernel Marked Marked where
   toFun m :=
@@ -44,7 +44,7 @@ def markedKernel : Kernel Marked Marked where
   measurable' := measurable_of_countable _
 
 instance : IsMarkovKernel markedKernel := ⟨fun _ =>
-  Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable⟩
+  inferInstance⟩
 
 def pathLaw (z : Runtime) : Measure (ℕ → Marked) :=
   Kernel.trajMeasure (X := fun _ => Marked) (markedInitial z)
@@ -63,7 +63,7 @@ theorem fields_measurable (f : FiniteFields) : Measurable (fieldsTranscript f) :
   have he : fieldsTranscript f = fullTranscript c :=
     funext fun ω => (full_fields_factorization c ω).1.symm
   rw [he]
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   exact (measurable_of_countable (fun r : Option (List Operation × AcquiredNativeState × ℕ) =>
     r.map fun p => (p.1,p.2.1.source.finiteFields,eventBlocks f p.1))).comp
@@ -200,7 +200,7 @@ theorem conditioned_read_path (z : Runtime) (x : Letter) :
     ProbabilityTheory.cond_isProbabilityMeasure (hmass ▸ hib)
   haveI : IsProbabilityMeasure ((ProbabilityTheory.cond (pathLaw z) {p | p 0 = (z,x)}).map
       (fun p n => p (n+1))) :=
-    Measure.isProbabilityMeasure_map (Measurable.aemeasurable (by fun_prop))
+    inferInstance
   apply paths_ext
   intro n
   apply Measure.ext_of_singleton
@@ -473,7 +473,7 @@ theorem generated_full_law (z : Runtime) :
         renderPath z p = fullTranscript c (fun k => (p k).2)) ∧
     (∀ᵐ p ∂pathLaw z, (p 0).1 = z ∧
       ∀ n, (p (n+1)).1 = readAdvance (p n).1 (p n).2) := by
-  refine ⟨Measure.isProbabilityMeasure_map (render_measurable z).aemeasurable,
+  refine ⟨inferInstance,
     ?_,?_,?_,?_,?_,path_tracks z⟩
   · cases ht : selectedThreshold z <;> norm_num [emissionParameter,ht,threshold]
   · cases ht : selectedThreshold z <;> norm_num [emissionParameter,ht,threshold]

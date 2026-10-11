@@ -101,8 +101,8 @@ private theorem sigma_mul_prime {q n : ℕ} (hq : q.Prime) (hn : n ≠ 0) :
   generalize n / q ^ a = m at hcop hdecomp ⊢
   subst hdecomp
   have hmul : q ^ a * m * q = q ^ (a + 1) * m := by ring
-  rw [hmul, ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime (hcop (a + 1)),
-    ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime (hcop a),
+  rw [hmul, (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime (hcop (a + 1)),
+    (ArithmeticFunction.isMultiplicative_sigma (k := 1)).map_mul_of_coprime (hcop a),
     sigma_prime_pow_succ hq a]
   ring
 

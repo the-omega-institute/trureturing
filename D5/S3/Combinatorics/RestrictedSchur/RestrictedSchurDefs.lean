@@ -10,8 +10,11 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Nat.Lattice
 
+import Mathlib.Order.Lattice.Nat
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
 
 namespace D5.S3.Combinatorics.RestrictedSchur.RestrictedSchurDefs
 

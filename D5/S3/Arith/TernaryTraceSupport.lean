@@ -181,9 +181,7 @@ private theorem trace_degree (m : ℕ) : (tracePoly m).natDegree ≤ 2 * m / 3 :
     · simp [tracePoly]
     · simp [tracePoly]
     · norm_num [tracePoly]
-      apply Polynomial.natDegree_add_le_of_degree_le
-      · simp
-      · exact (Polynomial.natDegree_mul_le).trans (by norm_num)
+      exact (Polynomial.natDegree_mul_le).trans (by norm_num)
     · change (tracePoly (m+3)).natDegree ≤ _
       rw [tracePoly]
       apply (Polynomial.natDegree_add_le _ _).trans

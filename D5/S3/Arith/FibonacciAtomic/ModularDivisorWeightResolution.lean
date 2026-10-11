@@ -169,7 +169,7 @@ theorem result (C : ℝ) (hC : 1 < C) :
       intro p hp
       exact ((prime p hp).coprime_factorial_of_lt (mem_Ioc.mp (mem_filter.mp hp).1).1).symm
     have hqbound : q ≤ primorial ⌊x⌋₊ := by
-      apply Finset.prod_le_prod_of_subset_of_one_le
+      apply Finset.prod_le_prod_of_subset_of_one_le₀
       · intro p hp
         obtain ⟨hpI, hprime⟩ := mem_filter.mp hp
         exact mem_filter.mpr ⟨mem_range.mpr (by have := (mem_Ioc.mp hpI).2; omega), hprime⟩
@@ -285,7 +285,7 @@ theorem result (C : ℝ) (hC : 1 < C) :
         _ = (m : ℝ)⁻¹ - (⌊x⌋₊ : ℝ)⁻¹ := telescope _ hN
         _ ≤ (m : ℝ)⁻¹ := sub_le_self _ (by positivity)
     have Tpos : 0 < T := prod_pos (fun p hp => sub_pos.mpr (invbounds p hp).2)
-    have Tup : T ≤ 1 := prod_le_one
+    have Tup : T ≤ 1 := prod_le_one₀
       (fun p hp => (sub_pos.mpr (invbounds p hp).2).le)
       (fun p hp => sub_le_self _ (invbounds p hp).1)
     have Tlow : 1 - (m : ℝ)⁻¹ ≤ T := by
@@ -296,7 +296,7 @@ theorem result (C : ℝ) (hC : 1 < C) :
       apply sum_le_sum
       intro p hp
       apply mul_le_of_le_one_right (invbounds p hp).1
-      exact prod_le_one
+      exact prod_le_one₀
         (fun j hj => (sub_pos.mpr (invbounds j (mem_filter.mp hj).1).2).le)
         (fun j hj => sub_le_self _ (invbounds j (mem_filter.mp hj).1).1)
     refine ⟨Tpos, Tlow, Tup, ?_⟩

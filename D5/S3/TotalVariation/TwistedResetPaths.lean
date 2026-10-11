@@ -236,7 +236,6 @@ theorem loop_mass_pos (k : ℕ) (hk : 2 ≤ k) (p : ℝ) (hp : 0 < p)
       intro s
       have h := hjoin (2 * m + 1) 2 s (!s.1,z) (!s.1,z) (ih s) (htwo (!s.1))
       convert h using 1
-      congr 2
   have hentry : 0 < (kernel k p ^ L) (false,z) (true,z) := by
     obtain ⟨m, hEven | hOdd⟩ := Nat.even_or_odd' L
     · have hm : 0 < m := by omega

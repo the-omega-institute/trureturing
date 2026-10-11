@@ -131,19 +131,19 @@ private theorem transfer_diagonal (a b : ℂ) :
 private theorem coefficient_span {n : ℕ} (d : Fin n → (Fin 2 →₀ ℕ))
     (hd : Function.Injective d) (v : Fin n → (Fin 3 → ℂ)) :
     Submodule.span ℂ (Set.range fun s => fun i =>
-      coeff s (∑ r, monomial (d r) (v r i))) = Submodule.span ℂ (Set.range v) := by
+      (∑ r, monomial (d r) (v r i)).coeff s) = Submodule.span ℂ (Set.range v) := by
   classical
   apply le_antisymm
   · apply Submodule.span_le.mpr
     rintro _ ⟨s, rfl⟩
-    have hc : (fun i => coeff s (∑ r, monomial (d r) (v r i))) =
+    have hc : (fun i => (∑ r, monomial (d r) (v r i)).coeff s) =
         ∑ r, if d r = s then v r else 0 := by
       funext i
       simp only [coeff_sum, coeff_monomial, Finset.sum_apply]
       apply Finset.sum_congr rfl
       intro r _
       by_cases h : d r = s <;> simp [h, eq_comm]
-    change (fun i => coeff s (∑ r, monomial (d r) (v r i))) ∈ _
+    change (fun i => (∑ r, monomial (d r) (v r i)).coeff s) ∈ _
     rw [hc]
     apply Submodule.sum_mem
     intro r _
@@ -152,7 +152,7 @@ private theorem coefficient_span {n : ℕ} (d : Fin n → (Fin 2 →₀ ℕ))
     · simp [h]
   · apply Submodule.span_le.mpr
     rintro _ ⟨r, rfl⟩
-    have hc : (fun i => coeff (d r) (∑ t, monomial (d t) (v t i))) = v r := by
+    have hc : (fun i => (∑ t, monomial (d t) (v t i)).coeff (d r)) = v r := by
       funext i
       simp [coeff_sum, coeff_monomial, hd.eq_iff]
     rw [← hc]

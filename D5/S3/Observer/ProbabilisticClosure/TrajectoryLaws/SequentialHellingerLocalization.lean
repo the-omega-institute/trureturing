@@ -387,7 +387,7 @@ private lemma normalized_product_zero
     intro n
     calc
       _ ≤ ∏ i ∈ range n, Real.exp (-(1 - ρ i ω)) := by
-        apply prod_le_prod (fun i _ => (hρ i ω).le)
+        apply prod_le_prod₀ (fun i _ => (hρ i ω).le)
         intro i _
         have h := Real.add_one_le_exp (ρ i ω - 1)
         simpa only [sub_add_cancel, neg_sub] using h
@@ -701,7 +701,7 @@ private lemma full_prefix_filtration {A : Type*} [MeasurableSpace A] :
       (⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n) inferInstance id := by
     letI : MeasurableSpace (ℕ → A) :=
       ⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n
-    apply measurable_pi_lambda
+    apply Measurable.of_eval
     intro n
     have hc : Measurable[Filtration.piLE (X := fun _ : ℕ => A) n]
         (fun x : ℕ → A => x n) := by
@@ -826,7 +826,7 @@ theorem trajectory_hellinger_dichotomy
       1 - bhattacharyya (p (H n x)) (q (H n x))) :=
     (measurable_of_countable (fun u : Fin n → A =>
       1 - bhattacharyya (p (List.ofFn u)) (q (List.ofFn u)))).comp
-        (measurable_pi_lambda _ (fun i => measurable_pi_apply (i : ℕ)))
+        (Measurable.of_eval (fun i => measurable_pi_apply (i : ℕ)))
   have hC : MeasurableSet C :=
     measurableSet_lt (Measurable.ennreal_tsum (fun n => (hm n).ennreal_ofReal)) measurable_const
   have hsum x (hx : x ∈ C) : Summable (fun n =>

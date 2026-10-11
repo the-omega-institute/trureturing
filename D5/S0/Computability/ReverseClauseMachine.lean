@@ -495,6 +495,7 @@ def reverseExecution (w : List Bool) : Nonempty (EvalsToInTime reverseMachine.st
         apply single
         apply congrArg some
         dsimp [FinTM2.step,TM2.step,reverseMachine,TM2.stepAux,reverseCfg,reverseWords,read,held,haltList]
+        dsimp only [cond]
         congr 1
         funext k
         cases k with

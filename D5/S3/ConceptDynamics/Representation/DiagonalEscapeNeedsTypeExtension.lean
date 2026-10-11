@@ -66,7 +66,7 @@ theorem effective_descent_not_state_faithfulness :
       ¬ StateFaithfulness (fun _ : Bool => false) := by
   constructor
   · apply ((deterministic_interface_sixfold_equivalence
-      (fun _ : Bool => false) (id : Bool -> Bool)).out 1 0).mp
+      (fun _ : Bool => false) (id : Bool -> Bool)).out 2 1).mp
     intro x y _
     rfl
   · intro hInjective
@@ -89,7 +89,7 @@ theorem effective_descent_not_representation_surjectivity :
       ¬ RepresentationSurjectivity (fun _ : Bool => false) := by
   constructor
   · apply ((deterministic_interface_sixfold_equivalence
-      (id : Bool -> Bool) (id : Bool -> Bool)).out 1 0).mp
+      (id : Bool -> Bool) (id : Bool -> Bool)).out 2 1).mp
     intro x y hxy
     exact hxy
   · intro hSurjective
@@ -113,7 +113,7 @@ theorem effective_descent_not_self_description_closure :
       ¬ SelfDescriptionClosure Bool := by
   constructor
   · apply ((deterministic_interface_sixfold_equivalence
-      (id : Bool -> Bool) Bool.not).out 1 0).mp
+      (id : Bool -> Bool) Bool.not).out 2 1).mp
     intro x y hxy
     exact congrArg Bool.not hxy
   · exact bool_not_self_description
@@ -132,7 +132,7 @@ theorem empty_degenerate_audit :
   · intro value
     exact ⟨value, rfl⟩
   · apply ((deterministic_interface_sixfold_equivalence
-      (id : Empty -> Empty) (id : Empty -> Empty)).out 1 0).mp
+      (id : Empty -> Empty) (id : Empty -> Empty)).out 2 1).mp
     intro x y hxy
     exact hxy
   · rintro ⟨evaluator, hSurjective⟩
@@ -153,7 +153,7 @@ theorem unit_degenerate_audit :
   · intro value
     exact ⟨value, rfl⟩
   · apply ((deterministic_interface_sixfold_equivalence
-      (id : Unit -> Unit) (id : Unit -> Unit)).out 1 0).mp
+      (id : Unit -> Unit) (id : Unit -> Unit)).out 2 1).mp
     intro x y _
     exact Subsingleton.elim x y
   · refine ⟨fun _ _ => (), ?_⟩

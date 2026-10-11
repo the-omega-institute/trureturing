@@ -191,10 +191,10 @@ theorem li_curvature_fourier_representation
               rw [mul_pow, phaseDistanceSquare]
               field_simp [show 4 * xi ^ 2 + 1 ≠ 0 by positivity]
   letI phaseProbability : IsProbabilityMeasure (Measure.map phase rho) :=
-    Measure.isProbabilityMeasure_map phaseMeasurable.aemeasurable
+    inferInstance
   letI reflectedPhaseProbability :
       IsProbabilityMeasure (Measure.map reflectedPhase rho) :=
-    Measure.isProbabilityMeasure_map reflectedPhaseMeasurable.aemeasurable
+    inferInstance
   have curvatureMeasureProbability : IsProbabilityMeasure curvatureMeasure := by
     let half : unitInterval := ⟨1 / 2, by constructor <;> norm_num⟩
     have halfNNReal : unitInterval.toNNReal half = (1 / 2 : NNReal) := by

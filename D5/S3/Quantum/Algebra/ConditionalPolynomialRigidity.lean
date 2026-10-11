@@ -56,7 +56,7 @@ private theorem totalDegree_pderiv_lt (p : MvPolynomial sigma K) (i : sigma)
   rw [totalDegree]
   apply (Finset.sup_lt_iff hp).2
   intro d hdmem
-  have hcoeff : coeff (d + Finsupp.single i 1) p ≠ 0 := by
+  have hcoeff : AddMonoidAlgebra.coeff p (d + Finsupp.single i 1) ≠ 0 := by
     have h := mem_support_iff.mp hdmem
     rw [coeff_pderiv] at h
     exact (mul_ne_zero_iff.mp h).1

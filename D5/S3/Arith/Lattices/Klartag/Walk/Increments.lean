@@ -354,7 +354,7 @@ theorem map_phi (r : ℝ) (p : UT n) :
       have hpi := iIndepFun_pi (X := fun _ : Fin 2 => (id : ℝ → ℝ))
         (μ := fun _ : Fin 2 => gaussianReal 0 (vOf r)) (fun _ => aemeasurable_id)
       exact hpi.indepFun (by decide)
-    have hsum := gaussianReal_add_gaussianReal_of_indepFun hind (hev 0).map_eq (hev 1).map_eq
+    have hsum := gaussianReal_add_gaussianReal_of_indepFun hind (hev 0) (hev 1)
     rw [show (fun z : Fin 2 → ℝ => z 0 + z 1)
         = (fun z : Fin 2 → ℝ => z 0) + (fun z : Fin 2 → ℝ => z 1) from rfl, hsum]
     refine gaussianReal_ext_iff.2 ⟨by ring, ?_⟩

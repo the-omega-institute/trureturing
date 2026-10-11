@@ -36,17 +36,22 @@ theorem hasSubgaussianMGF_of_hasLaw_gaussianReal {Ω : Type*} [MeasurableSpace �
       rw [hX.map_eq]; exact integrable_exp_mul_gaussianReal t
     rwa [integrable_map_measure (by fun_prop) hX.aemeasurable] at h1
   · intro t
-    exact le_of_eq (by rw [mgf_gaussianReal hX.map_eq t]; simp)
+    exact le_of_eq (by rw [mgf_gaussianReal hX t]; simp)
 
-/-- A nondegenerate Gaussian map equality also certifies a.e. measurability: a nonmeasurable
-map has zero pushforward, whereas every Gaussian law is a probability measure. -/
+/-- A nondegenerate Gaussian map equality certifies a.e. measurability because
+the Gaussian law has no atoms, while the fallback pushforward is a Dirac mass. -/
 theorem hasSubgaussianMGF_of_map_gaussianReal {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
     {X : Ω → ℝ} {v : ℝ≥0} (hX : P.map X = gaussianReal 0 v) (_hv : v ≠ 0) :
     HasSubgaussianMGF X v P := by
   have hXm : AEMeasurable X P := by
-    apply AEMeasurable.of_map_ne_zero
-    rw [hX]
-    exact IsProbabilityMeasure.ne_zero _
+    rcases eq_or_ne P 0 with rfl | hP
+    · exact aemeasurable_zero_measure
+    by_contra hnot
+    have hdirac := Measure.map_of_not_aemeasurable_of_ne_zero hnot hP
+    haveI : NullSingletonClass (gaussianReal 0 v) := nullSingletonClass_gaussianReal _hv
+    have hsingle := congrArg
+      (fun μ : Measure ℝ => μ {(Classical.ofNonempty : ℝ)}) (hX.symm.trans hdirac)
+    simpa using hsingle
   exact hasSubgaussianMGF_of_hasLaw_gaussianReal ⟨hXm, hX⟩
 
 /-- The bilinear form of a symmetric matrix is symmetric. -/

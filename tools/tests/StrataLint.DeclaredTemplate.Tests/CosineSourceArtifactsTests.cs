@@ -49,7 +49,7 @@ public sealed class CosineSourceArtifactsTests
         var originals = new Dictionary<string, string>
         {
             ["CosineIntegralLattice"] = "e0d4dfd71fff6148ed327281e10e00eba7ac6b10bb74b32f0db75da35e73c684",
-            ["CosineNormalizedRemainder"] = "18a9d7b6459793134253d1c16e78de919b5eb119c81bbe0f9456887cffd3ce48",
+            ["CosineNormalizedRemainder"] = "6e2dcbb117d6d9144d07ed6f4b9fdb7002049718d6bd9b7a1f745aff2c919b4c",
             ["CosineIntegralGram"] = "e5780e2f5a10d6a8b4181d20bd3617b9c775183eea45100b577bb4d1c6fd0f07"
         };
         var selected = originals.Keys.Select(name => RepoPath.CreateKnown("Reg/" + prefix + name + ".lean"))

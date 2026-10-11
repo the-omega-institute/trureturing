@@ -250,7 +250,7 @@ theorem cutoffMagnus_cancellation [Finite A] :
     have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
       funext w
       simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
+        Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
     calc
       _ = cutoffMul r (cutoffRestriction r 1)
           (cutoffRestriction r (cutoffLift r p)) := by rw [cutoffOne, hrestrict]
@@ -262,7 +262,7 @@ theorem cutoffMagnus_cancellation [Finite A] :
     have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
       funext w
       simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
+        Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
     calc
       _ = cutoffMul r (cutoffRestriction r (cutoffLift r p))
           (cutoffRestriction r 1) := by rw [cutoffOne, hrestrict]
@@ -275,7 +275,7 @@ theorem cutoffMagnus_cancellation [Finite A] :
         cutoffRestriction r (cutoffLift r x) = x := by
       funext w
       simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
+        Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
     have hp := hrestrict p
     have hq := hrestrict q
     have hs := hrestrict s

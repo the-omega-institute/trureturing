@@ -143,14 +143,14 @@ def streamLaw (T : Parameters) (z : Config) : Measure Stream :=
   (markedLaw (observer T) (emitter T) (z, none)).map rawFrom
 
 instance (T : Parameters) (z : Config) : IsProbabilityMeasure (streamLaw T z) :=
-  Measure.isProbabilityMeasure_map measurable_raw.aemeasurable
+  inferInstance
 
 def wordLaw (T : Parameters) (s : ActivePhase) (z : Config) : Measure RawTail :=
   (streamLaw T z).map (stoppedReadWord s)
 
 instance (T : Parameters) (s : ActivePhase) (z : Config) :
     IsProbabilityMeasure (wordLaw T s z) :=
-  Measure.isProbabilityMeasure_map (measurable_stopped_read_word s).aemeasurable
+  inferInstance
 
 def cylinderMass (T : Parameters) (z : Config) (w : List Letter) : ℝ≥0∞ :=
   streamLaw T z (prefixCylinder w)
@@ -161,7 +161,7 @@ private theorem initial_mark_irrelevance (T : Parameters) (z : Config) (a : Opti
     marked_regenerate (observer T) (emitter T) (z,none),
     Measure.map_finset_sum' measurable_raw.aemeasurable,
     Measure.map_finset_sum' measurable_raw.aemeasurable]
-  simp only [Measure.map_smul]
+  simp only [Measure.map_smul _ measurable_raw.aemeasurable]
   apply Finset.sum_congr rfl
   intro y _
   rw [Measure.map_map measurable_raw (measurable_prefix _),
@@ -211,7 +211,7 @@ private theorem cylinder_recursion (T : Parameters) (z : Config) (s : ActivePhas
         cylinderMass T (successor (.read b) z) w := by
   rw [cylinderMass, streamLaw, marked_regenerate (observer T) (emitter T) (z,none),
     Measure.map_finset_sum' measurable_raw.aemeasurable]
-  simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.map_smul,
+  simp only [Measure.coe_finsetSum, Finset.sum_apply, Measure.map_smul _ measurable_raw.aemeasurable,
     Measure.smul_apply, smul_eq_mul,
     Measure.map_map measurable_raw (measurable_prefix _)]
   rw [row_active T z s hc]

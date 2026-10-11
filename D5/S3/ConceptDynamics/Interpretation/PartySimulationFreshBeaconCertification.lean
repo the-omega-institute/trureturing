@@ -166,7 +166,7 @@ theorem party_simulation_and_fresh_beacon_certification
     have honestRecordMeasurable : Measurable (fun seed : Seed =>
         fun index : Fin m =>
           (partySuite seed index, expected (partySuite seed index))) := by
-      exact measurable_pi_lambda _ fun index =>
+      exact Measurable.of_eval fun index =>
         let suiteAtIndex :=
           (measurable_pi_apply index).comp partySuiteMeasurable
         suiteAtIndex.prodMk (expectedMeasurable.comp suiteAtIndex)
@@ -210,7 +210,7 @@ theorem party_simulation_and_fresh_beacon_certification
           expected (suiteMap taskAnchor.2 index)}
     let _ : IsProbabilityMeasure inducedSuiteLaw := by
       dsimp only [inducedSuiteLaw]
-      exact Measure.isProbabilityMeasure_map suiteMapMeasurable.aemeasurable
+      exact inferInstance
     let _ : IsProbabilityMeasure idealSuiteLaw := by
       dsimp only [idealSuiteLaw]
       infer_instance

@@ -74,7 +74,7 @@ theorem lagrange_squared_basis_norm_le
     ‖(Lagrange.basis s (fun j => z j ^ 2) i).eval (w ^ 2)‖ ≤
       squaredNodeBudget s radius gap R i := by
   rw [Lagrange.basis, eval_prod, norm_prod]
-  apply Finset.prod_le_prod
+  apply Finset.prod_le_prod₀
   · intro j _
     exact norm_nonneg _
   · intro j hj
@@ -91,7 +91,7 @@ theorem squaredNodeBudget_le_growth
   unfold squaredNodeBudget
   calc
     _ ≤ ∏ j ∈ s.erase i, R ^ 2 * ((1 ^ 2 + radius j ^ 2) / gap i j) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro j hj
         exact div_nonneg (by positivity) (hgap j hj).le
       · intro j hj

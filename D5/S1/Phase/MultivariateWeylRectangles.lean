@@ -651,7 +651,7 @@ private theorem shifted_polynomial (Q : MvPolynomial (Fin d) ℤ)
   change T (-a) (T a Q) = _ at he
   rw [← AlgHom.comp_apply, hinv] at he
   have hc : Q = MvPolynomial.C
-      (MvPolynomial.coeff 0 (T a Q)) := by simpa [T] using he
+      (AddMonoidAlgebra.coeff (T a Q) 0) := by simpa [T] using he
   rw [hc, MvPolynomial.totalDegree_C] at hQ
   omega
 
@@ -721,7 +721,7 @@ theorem monomial_rectangular_equidistribution {d : ℕ} (α : ℝ) (hα : Irrati
   by_contra hn
   have hC := MvPolynomial.totalDegree_eq_zero_iff_eq_C.mp (Nat.eq_zero_of_not_pos hn)
   obtain ⟨j, hj⟩ := Function.ne_iff.mp hk
-  have hc := congrArg (MvPolynomial.coeff (e j)) hC
+  have hc := congrArg (fun p => AddMonoidAlgebra.coeff p (e j)) hC
   simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial] at hc
   have hcoeff : (∑ i : κ, if e i = e j then k i else 0) = k j := by
     simp [he.eq_iff]

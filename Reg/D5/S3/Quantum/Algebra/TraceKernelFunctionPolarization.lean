@@ -3,6 +3,7 @@ import D5.S3.Quantum.Algebra.TraceKernelFunctionPolarization
 import Reg.Support.DependentFamily
 open scoped BigOperators Matrix
 open MvPolynomial Finset
+local notation "coeff" m:arg p:arg => AddMonoidAlgebra.coeff p m
 open _root_.D5.S3.Quantum.Algebra.TraceKernelFunctionPolarization
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit

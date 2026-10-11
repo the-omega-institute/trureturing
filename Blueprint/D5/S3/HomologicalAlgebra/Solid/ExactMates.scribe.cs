@@ -8,6 +8,7 @@ internal sealed class ExactMatesDocument : IScribeDocumentDefinition
         "Compatibility of an exact adjunction and its mates with the unbounded derived localization. New proofs, released under the Apache 2.0 license. The localization constructions used here are Mathlib's proved constructions.",
         H("Exact Mates"),
         Blocks(
+            Paragraph(Text("The degreewise composition comparison is supplied directly by Mathlib's Functor.mapHomologicalComplexCompIso under zero-morphism-preservation assumptions. Derived natural transformations, their shift compatibility and the complex-representative formula are supplied by Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor.")),
             Describe.Lean(
                 DescribeId.Create("solid-exactmates-exactadjunctionderived-unit-mate"),
                 DeclarationHandle.Create("D5/S3/HomologicalAlgebra/Solid/ExactMates.exactAdjunctionDerived_unit_mate"),

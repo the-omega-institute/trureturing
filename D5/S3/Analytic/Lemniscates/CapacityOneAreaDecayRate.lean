@@ -159,7 +159,7 @@ private lemma tuple_vandermonde_upper {s : ℕ} (a : Fin s → ℂ) (ha : ∀ i,
             _ ≤ 4 ^ i.val := pow_le_pow_left₀ (norm_nonneg _) (tuple_norm _ (ha _)) _
             _ ≤ 4 ^ s := pow_le_pow_right₀ (by norm_num) i.isLt.le
         have hr : (∏ b ∈ Finset.univ.erase i, ‖a (σ b)‖^b.val) ≤ 1 := by
-          apply Finset.prod_le_one (fun b hb => by positivity)
+          apply Finset.prod_le_one₀ (fun b hb => by positivity)
           intro b hb
           apply pow_le_one₀ (norm_nonneg _)
           apply tuple_disc _ (ha _)
@@ -170,7 +170,7 @@ private lemma tuple_vandermonde_upper {s : ℕ} (a : Fin s → ℂ) (ha : ∀ i,
         exact (mul_le_mul hi hr (Finset.prod_nonneg fun b hb => by positivity)
           (by positivity)).trans_eq (mul_one _)
       · have hprod : (∏ i : Fin s, ‖a (σ i)‖^i.val) ≤ 1 := by
-          apply Finset.prod_le_one (fun b hb => by positivity)
+          apply Finset.prod_le_one₀ (fun b hb => by positivity)
           intro i hi
           apply pow_le_one₀ (norm_nonneg _)
           exact tuple_disc _ (ha _) (fun h => he ⟨_, h⟩)

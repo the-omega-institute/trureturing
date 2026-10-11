@@ -29,7 +29,7 @@ theorem result (Ω : Type) [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityM
     (ha : ∀ n, Summable (fun j => (a n j)^2))
     (hM : Tendsto (fun n => ⨆ j, |a n j|) atTop (𝓝 0))
     (hS : Tendsto (fun n => ∑' j, (a n j)^2) atTop (𝓝 ((v : ℝ)/2))) :
-    letI := Measure.isProbabilityMeasure_map hX
+    letI : IsProbabilityMeasure (P.map X) := inferInstance
     ∃ (hmem : ∀ n j, MemLp (fun ω => a n j*((G n j ω)^2-1)) 2 P)
       (Q : ℕ → Lp ℝ 2 P),
       (∀ n, HasSum (fun j => (hmem n j).toLp
@@ -40,7 +40,6 @@ theorem result (Ω : Type) [MeasurableSpace Ω] (P : Measure Ω) [IsProbabilityM
   classical
   obtain ⟨hmem, Q, hQ, hlim⟩ :=
     CountableGaussianQuadraticLimit.result Ω P G a v hG hind ha hM hS
-  have := Measure.isProbabilityMeasure_map hX
   refine ⟨hmem, Q, hQ, ?_⟩
   let M (n : ℕ) : ℝ := ⨆ j, |a n j|
   have hle (n j : ℕ) : |a n j| ≤ M n := by

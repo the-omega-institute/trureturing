@@ -86,7 +86,7 @@ theorem residual_tail_contraction (Q : α → Matrix (Fin d) (Fin d) ℂ)
     have hfinite : (spectrum ℝ R ∩ Set.Ioi 0).Finite :=
       R.finite_real_spectrum.subset Set.inter_subset_left
     let _ : Nontrivial (Matrix (Fin d) (Fin d) ℂ) := nontrivial_of_ne R 0 hRne
-    have hnorm_mem : ‖R‖ ∈ spectrum ℝ R := CStarAlgebra.norm_mem_spectrum_of_nonneg hR0
+    have hnorm_mem : ‖R‖ ∈ spectrum ℝ R := CStarAlgebra.norm_mem_spectrum_of_nonneg R hR0
     have hpositive_nonempty : (spectrum ℝ R ∩ Set.Ioi 0).Nonempty :=
       ⟨‖R‖, hnorm_mem, norm_pos_iff.mpr hRne⟩
     obtain ⟨r₀, hr₀mem, hr₀min⟩ :=
@@ -143,7 +143,7 @@ theorem residual_tail_contraction (Q : α → Matrix (Fin d) (Fin d) ℂ)
       have hX : X.PosSemidef := Matrix.nonneg_iff_posSemidef.mp hX0
       have hkernel : ∀ w : Fin d → ℂ, R *ᵥ w = 0 → X *ᵥ w = 0 := by
         intro w hRw
-        apply (hX.dotProduct_mulVec_zero_iff w).mp
+        apply (hX.dotProduct_mulVec_zero_iff (x := w)).mp
         have hdiff : (R - X).PosSemidef := Matrix.le_iff.mp hXR
         have hXquad : 0 ≤ star w ⬝ᵥ (X *ᵥ w) := hX.dotProduct_mulVec_nonneg w
         have hdiffquad : 0 ≤ star w ⬝ᵥ ((R - X) *ᵥ w) :=
@@ -275,7 +275,7 @@ theorem residual_tail_contraction (Q : α → Matrix (Fin d) (Fin d) ℂ)
       intro n
       calc
         ‖Rn n‖ ≤ ‖q ^ (n / M) • R‖ :=
-          CStarAlgebra.norm_le_norm_of_nonneg_of_le (hRn0 n) (hbound n)
+          CStarAlgebra.norm_le_norm_of_le_of_nonneg (hbound n) (hRn0 n)
         _ = q ^ (n / M) * ‖R‖ := by
           rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (pow_nonneg hq0.le _)]
     have hqfloorSum : ∑' n : ℕ, q ^ (n / M) = (M : ℝ) / (1 - q) := by
@@ -498,7 +498,7 @@ theorem residual_tail_contraction (Q : α → Matrix (Fin d) (Fin d) ℂ)
         apply tendsto_zero_iff_norm_tendsto_zero.mpr
         apply squeeze_zero (fun k => norm_nonneg ((noClickDual Q)^[k] X)) _ hscaledNormLim
         intro k
-        exact CStarAlgebra.norm_le_norm_of_nonneg_of_le (hrem0 k) (hremUpper k)
+        exact CStarAlgebra.norm_le_norm_of_le_of_nonneg (hremUpper k) (hrem0 k)
       have hconstT : Tendsto (fun _ : ℕ => X) atTop (𝓝 (T + 0)) :=
         (hpartialTend.add hremLim).congr'
           (Eventually.of_forall fun k => (hiterateX k).symm)

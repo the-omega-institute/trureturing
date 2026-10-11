@@ -127,7 +127,7 @@ private theorem squarefree_product_le (F : Finset ℕ) (b : ℕ) (hb : 2 ≤ b)
     nlinarith
   calc
     _ ≤ ∏ x ∈ ({q} : Finset ℕ), ((x : ℚ)+1)/(x : ℚ)^2 :=
-      prod_le_prod_of_subset_of_le_one (singleton_subset_iff.mpr hq)
+      prod_le_prod_of_subset_of_le_one₀ (singleton_subset_iff.mpr hq)
         (fun x _ => by positivity) (fun x hx _ => hunit x hx)
     _ = ((q : ℚ)+1)/(q : ℚ)^2 := by simp
     _ ≤ _ := squarefree_factor_le hb (hF q hq)
@@ -216,13 +216,13 @@ private theorem support_products_lt (F : Finset ℕ) (p : ℕ) (e : ℕ → ℕ)
     exact pow_le_pow_right₀ (by linarith) (he q hq)
   have hA : (∏ q ∈ F, (1 + 1 / (q : ℚ) ^ e q)) ≤
       ∏ q ∈ F, (1 + 1 / (q : ℚ)^2) := by
-    apply prod_le_prod (fun _ _ => by positivity)
+    apply prod_le_prod₀ (fun _ _ => by positivity)
     intro q hq
     have hq' : (0 : ℚ) < q := by exact_mod_cast (by have := (hF q hq).1; omega : 0 < q)
     exact add_le_add (le_refl 1) (one_div_le_one_div_of_le (by positivity) (hpow q hq))
   have hB : (∏ q ∈ F, ((q : ℚ) + 1) / (q : ℚ) ^ e q) ≤
       ∏ q ∈ F, ((q : ℚ) + 1) / (q : ℚ)^2 := by
-    apply prod_le_prod (fun _ _ => by positivity)
+    apply prod_le_prod₀ (fun _ _ => by positivity)
     intro q hq
     have hq' : (0 : ℚ) < q := by exact_mod_cast (by have := (hF q hq).1; omega : 0 < q)
     exact div_le_div_of_nonneg_left (by positivity) (by positivity) (hpow q hq)

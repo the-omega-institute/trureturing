@@ -53,7 +53,7 @@ theorem logDeriv_centralProduct {J : Type*} (s : Finset J)
     (hw : ∀ j ∈ s, 1 + v j * w ≠ 0) :
     logDeriv (centralProduct s v m) w = centralLogSum s v m w := by
   unfold centralProduct centralLogSum
-  rw [logDeriv_prod (f := fun j z => (1 + v j * z) ^ m j)
+  rw [logDeriv_fun_prod (f := fun j z => (1 + v j * z) ^ m j)
     (fun j hj => pow_ne_zero _ (hw j hj)) (fun j _ => by fun_prop)]
   apply Finset.sum_congr rfl
   intro j _

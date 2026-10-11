@@ -96,7 +96,7 @@ theorem maximumBlindCoordinateCount_prefix_bounds
       prefixProduct m (maximumBlindCoordinateCount m n K) ≤
         ∏ i : Fin (maximumBlindCoordinateCount m n K), m (selection i) := by
     simp only [prefixProduct]
-    apply Finset.prod_le_prod
+    apply Finset.prod_le_prod₀
     · intro i _
       exact Nat.zero_le _
     · intro i _

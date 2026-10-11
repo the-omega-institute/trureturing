@@ -383,7 +383,7 @@ theorem graded_congruence_spectrum {n : ℕ} (H : ℝ → Matrix (Fin n) (Fin n)
         exact hf j
       rw [← Finset.map_orderEmbOfFin_univ s hs]
       rw [Finset.prod_map]
-      exact Finset.prod_le_prod (fun j _ => hvals (f j)) (fun j _ => hp j)
+      exact Finset.prod_le_prod₀ (fun j _ => hvals (f j)) (fun j _ => hp j)
     have hsand' : ∀ s : Finset (Fin n), s.card = k.val →
         (∏ i : s, vals i.1) ≤ ∏ j : Fin k, vals (Fin.castLE (Nat.le_of_lt_succ k.isLt) j) := by
       intro s hs

@@ -286,7 +286,7 @@ theorem canonical_product_recovery_chain
     have hquad : star (Pi.single (i,j) (1 : ℂ)) ⬝ᵥ
         T *ᵥ Pi.single (i,j) 1 = 0 := by
       simpa [Matrix.mulVec, dotProduct, Pi.single_apply] using hd
-    have hz := (hT.dotProduct_mulVec_zero_iff (Pi.single (i,j) 1)).mp hquad
+    have hz := (hT.dotProduct_mulVec_zero_iff (x := (Pi.single (i,j) 1))).mp hquad
     simpa [Matrix.mulVec, dotProduct, Pi.single_apply] using congrFun hz p
   let D : Matrix (a × b) (a × b) ℂ :=
     Matrix.diagonal (fun p => (chi (hR.isHermitian.eigenvalues p.1) : ℂ))

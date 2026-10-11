@@ -139,14 +139,14 @@ private theorem prefix_suffix_independent (μ : Measure A) [IsProbabilityMeasure
     indep_iSup_of_disjoint (fun i => (measurable_pi_apply i).comap_le) hind hd
   have hp : @Measurable (ℕ → A) (Fin n → A) below MeasurableSpace.pi
       (fun ω i => ω i.val) := by
-    apply (@measurable_pi_lambda (ℕ → A) (Fin n) (fun _ => A) below
+    apply (@Measurable.of_eval (ℕ → A) (Fin n) (fun _ => A) below
       (fun _ => inferInstance))
     intro i
     apply measurable_iff_comap_le.mpr
     change m i.val ≤ below
     exact le_iSup_of_le i.val (le_iSup_of_le i.isLt le_rfl)
   have ht : @Measurable (ℕ → A) (ℕ → A) above MeasurableSpace.pi (shift n) := by
-    apply (@measurable_pi_lambda (ℕ → A) ℕ (fun _ => A) above
+    apply (@Measurable.of_eval (ℕ → A) ℕ (fun _ => A) above
       (fun _ => inferInstance))
     intro i
     apply measurable_iff_comap_le.mpr
@@ -255,7 +255,7 @@ theorem first_acceptance_restart (μ : Measure A) [IsProbabilityMeasure μ]
   let ν := Measure.infinitePi (fun _ : ℕ => μ)
   have hm := restart_measurable accept fallback ha
   haveI : IsProbabilityMeasure (ν.map (restart accept fallback)) :=
-    Measure.isProbabilityMeasure_map hm.aemeasurable
+    inferInstance
   apply Measure.ext_prod
   intro U T hU hT
   rw [Measure.map_apply hm (hU.prod hT),Measure.prod_prod,
@@ -314,7 +314,7 @@ private theorem unused_measurable (accept : Set A) (fallback : A)
 
 private theorem draws_measurable (accept : Set A) (fallback : A)
     (ha : MeasurableSet accept) : Measurable (draws accept fallback) := by
-  apply measurable_pi_lambda
+  apply Measurable.of_eval
   intro n
   exact (restart_measurable accept fallback ha).fst.comp
     (unused_measurable accept fallback ha n)

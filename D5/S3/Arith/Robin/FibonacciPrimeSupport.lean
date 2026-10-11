@@ -163,7 +163,7 @@ private theorem big_part_le (S : Finset ℕ)
           have : (0 : ℝ) ≤ 1 / ((Nat.fib M : ℝ) - 1) := div_nonneg zero_le_one (by linarith)
           linarith
   calc ∏ p ∈ S, (p : ℝ) / ((p : ℝ) - 1)
-      ≤ ∏ p ∈ S, Real.exp (1 / ((p : ℝ) - 1)) := Finset.prod_le_prod hnonneg hfac
+      ≤ ∏ p ∈ S, Real.exp (1 / ((p : ℝ) - 1)) := Finset.prod_le_prod₀ hnonneg hfac
     _ = Real.exp (∑ p ∈ S, 1 / ((p : ℝ) - 1)) := (Real.exp_sum _ _).symm
     _ ≤ Real.exp (1 / 4) := Real.exp_le_exp.mpr hsum
 
@@ -184,7 +184,7 @@ private theorem small_part_le (T : Finset ℕ) (hT : ∀ p ∈ T, p.Prime ∧ p 
   rw [← Finset.inter_eq_right.mpr hsub, ← Finset.prod_ite_mem]
   calc ∏ i ∈ ({2, 3, 5} : Finset ℕ), (if i ∈ T then (i : ℝ) / ((i : ℝ) - 1) else 1)
       ≤ ∏ i ∈ ({2, 3, 5} : Finset ℕ), (i : ℝ) / ((i : ℝ) - 1) := by
-        refine Finset.prod_le_prod (fun i hi => ?_) (fun i hi => ?_)
+        refine Finset.prod_le_prod₀ (fun i hi => ?_) (fun i hi => ?_)
         · split_ifs
           · exact zero_le_one.trans (hone i hi)
           · exact zero_le_one

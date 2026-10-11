@@ -64,7 +64,6 @@ theorem result {Ω : Type*} [MeasurableSpace Ω]
     rw [Lp.enorm_def]
     exact (eLpNorm_congr_ae (Lp.coeFn_sub (f (grid n t)) (f t))).symm
   have hconv := summable_norm_of_tsum_eLpNorm_ne_top (by norm_num : (1 : ℝ≥0∞) ≤ 2)
-    (fun n => ((Lp.aestronglyMeasurable (f (grid n t))).sub (Lp.aestronglyMeasurable (f t))))
     herror
   filter_upwards [hconv] with z hz
   have H : Tendsto (fun n => Xn n (t,z) - f t z) atTop (𝓝 0) :=

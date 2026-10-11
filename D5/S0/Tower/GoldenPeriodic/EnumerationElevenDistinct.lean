@@ -24,7 +24,6 @@ theorem golden_period_eleven_orbits_ad_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-    decide
 theorem golden_period_eleven_orbits_eh_nodup :
     (goldenPeriodElevenOrbitsEH.flatMap goldenOrbitStates).Nodup := by
     norm_num [goldenPeriodElevenOrbitsEH, goldenPeriodElevenOrbitE,
@@ -33,7 +32,6 @@ theorem golden_period_eleven_orbits_eh_nodup :
       goldenApplyStepCode, goldenStepAffine, goldenIdentityAffine,
       goldenStepTarget, goldenCodeAdd, goldenCodeMul, goldenCodePhi,
       goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-    decide
 theorem golden_period_eleven_orbits_im_nodup :
     (goldenPeriodElevenOrbitsIM.flatMap goldenOrbitStates).Nodup := by
     norm_num [goldenPeriodElevenOrbitsIM, goldenPeriodElevenOrbitI,
@@ -42,7 +40,6 @@ theorem golden_period_eleven_orbits_im_nodup :
       goldenTraceCode, goldenApplyStepCode, goldenStepAffine,
       goldenIdentityAffine, goldenStepTarget, goldenCodeAdd, goldenCodeMul,
       goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-    decide
 theorem golden_period_eleven_orbits_nr_nodup :
     (goldenPeriodElevenOrbitsNR.flatMap goldenOrbitStates).Nodup := by
     norm_num [goldenPeriodElevenOrbitsNR, goldenPeriodElevenOrbitN,
@@ -51,7 +48,6 @@ theorem golden_period_eleven_orbits_nr_nodup :
       goldenTraceCode, goldenApplyStepCode, goldenStepAffine,
       goldenIdentityAffine, goldenStepTarget, goldenCodeAdd, goldenCodeMul,
       goldenCodePhi, goldenCodeZero, goldenCodeOne, goldenCodeNeg, qphi]
-    decide
 theorem golden_period_eleven_orbits_ad_eh_disjoint : List.Disjoint
       (goldenPeriodElevenOrbitsAD.flatMap goldenOrbitStates)
       (goldenPeriodElevenOrbitsEH.flatMap goldenOrbitStates) := by

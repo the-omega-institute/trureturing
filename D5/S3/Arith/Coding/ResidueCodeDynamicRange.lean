@@ -207,7 +207,7 @@ theorem maximum_dynamic_range_iff_min_distance (m : ℕ → ℕ) (n d K : ℕ)
     have hprefix_le_selected :
         prefixProduct m k ≤ ∏ i : Fin k, m (selection i) := by
       simp only [prefixProduct]
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro i _
         exact Nat.zero_le _
       · intro i _

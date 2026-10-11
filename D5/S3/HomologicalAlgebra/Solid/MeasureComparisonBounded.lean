@@ -71,7 +71,7 @@ theorem boundedTailNumerator_comparison (S : LightProfinite)
   apply Pi.hom_ext
   intro j
   simp only [boundedTailNumerator, Category.assoc, boundedFamilyMap_comparison,
-    familyToIntegerMeasures, measureTailMap, Pi.lift_π]
+    familyToIntegerMeasures, measureTailMap, Pi.lift_comp_π]
   apply (freeProductHomEquiv (ℕ∪{∞}) S).injective
   have hleft : freeProductHomEquiv (ℕ∪{∞}) S
       ((freeTensorIsoInt (ℕ∪{∞}) S).hom ≫
@@ -211,7 +211,7 @@ theorem measureTailMap_add (S : LightProfinite)
     measureTailMap S (c + d) = measureTailMap S c + measureTailMap S d := by
   apply Pi.hom_ext
   intro j
-  simp only [measureTailMap, Pi.lift_π, Preadditive.add_comp]
+  simp only [measureTailMap, Pi.lift_comp_π, Preadditive.add_comp]
   exact measureTailCoordinate_add S c d j
 
 /-- Explicit numerator coordinates of the tail, including the infinity row. -/
@@ -254,7 +254,7 @@ theorem measureTailMap_naturality {S' S : LightProfinite} (f : S' ⟶ S)
       measureTailMap S' (pullIntegerFamily f c) := by
   apply Pi.hom_ext
   intro j
-  simp only [Category.assoc, measureTailMap, Pi.lift_π]
+  simp only [Category.assoc, measureTailMap, Pi.lift_comp_π]
   apply (cancel_epi (P_proj ▷ freeOn S')).1
   rw [← Category.assoc, ← whisker_exchange, Category.assoc]
   apply (freeProductHomEquiv (ℕ∪{∞}) S').injective
@@ -386,7 +386,7 @@ theorem boundedMeasureTail_on_family (S : LightProfinite)
     funext j
     dsimp only [boundedIntegerCoordinates, boundedFamilySection]
     rw [freeSectionEquiv_coordinate]
-    simp only [familyToIntegerMeasures, Pi.lift_π, AddEquiv.apply_symm_apply]
+    simp only [familyToIntegerMeasures, Pi.lift_comp_π, AddEquiv.apply_symm_apply]
   apply (cancel_mono boundedIntegerMeasuresInclusion).1
   simp only [boundedIntegerTail, boundedTailMap_comparison]
   rw [hc]
@@ -547,7 +547,7 @@ theorem boundedIntegerCoordinates_section (S : LightProfinite)
       (freeSectionEquiv S integerMeasures).symm x.val := by
   apply Pi.hom_ext
   intro j
-  simp only [familyToIntegerMeasures, Pi.lift_π]
+  simp only [familyToIntegerMeasures, Pi.lift_comp_π]
   apply (freeHomIntAddEquiv S).injective
   rw [AddEquiv.apply_symm_apply, ← freeSectionEquiv_coordinate, Equiv.apply_symm_apply]
   rfl

@@ -78,8 +78,7 @@ theorem negative_determinants (size : ℕ) :
         intro row column
         simp only [Matrix.submatrix_apply, matrix, Matrix.of_apply,
           Fin.succAbove_zero, Fin.succAbove_last, Fin.val_succ, Fin.val_castSucc]
-        congr 2
-        omega
+        rw [show count - (row.val + 1) = count - 1 - row.val by omega]
       change matrix.det = _
       rw [Matrix.det_succ_column matrix (Fin.last count), sum_eq_single 0]
       · simp only [Fin.val_zero, Fin.val_last, zero_add, matrix, Matrix.of_apply,

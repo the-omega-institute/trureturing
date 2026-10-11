@@ -225,7 +225,7 @@ meta def evalArakelovMulHeight : PositivityExt where eval {u α} _ pα? e :=
         have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -295,7 +295,7 @@ meta def evalArakelovLogHeight : PositivityExt where eval {u α} _ pα? e :=
         have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -365,7 +365,7 @@ meta def evalArakelovMulHeight₁ : PositivityExt where eval {u α} _ pα? e :=
         have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -440,7 +440,7 @@ meta def evalArakelovLogHeight₁ : PositivityExt where eval {u α} _ pα? e :=
         have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -515,7 +515,7 @@ meta def evalProjArakelovMulHeight : PositivityExt where eval {u α} _ pα? e :=
         have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))
@@ -590,7 +590,7 @@ meta def evalProjArakelovLogHeight : PositivityExt where eval {u α} _ pα? e :=
         have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
         have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
         rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod fun v _ ↦ ?_)
+        refine one_le_mul_of_one_le_of_one_le (_root_.Finset.one_le_prod₀ fun v _ ↦ ?_)
           (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
         have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
           le_trans (le_of_eq (by simp [hi']))

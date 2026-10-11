@@ -400,8 +400,8 @@ private lemma local_edges_degree (A : Fin 6 → Fin 6 → Bool) (hs : ∀ r t, A
   fin_cases v <;>
     simp only [localDegree, Fin.sum_univ_succ] <;>
     dsimp +instances [localEdges] <;>
-    norm_num <;> simp [Fin.ext_iff] <;>
-    simp only [hs 1 0, hs 2 0, hs 2 1, hs 3 0, hs 3 1, hs 3 2, hs 4 0, hs 4 1, hs 4 2, hs 4 3, hs 5 0, hs 5 1, hs 5 2, hs 5 3, hs 5 4] <;> omega
+    norm_num <;> (try simp [Fin.ext_iff]) <;>
+    (try simp only [hs 1 0, hs 2 0, hs 2 1, hs 3 0, hs 3 1, hs 3 2, hs 4 0, hs 4 1, hs 4 2, hs 4 3, hs 5 0, hs 5 1, hs 5 2, hs 5 3, hs 5 4]) <;> omega
 private lemma encoded_neighbours {m : ℕ} [NeZero m] (hm : 1 < m) (i : Fin m) (r : Fin 6) : (Finset.univ.filter (fun w : Fin m × Fin 6 => hardwareAdj (blockEquiv m (i,r)) (blockEquiv m w))) = if r = 4 then insert (i - 1, 5) ((localNeighbours r).image (fun t => (i,t))) else if r = 5 then insert (i + 1, 4) ((localNeighbours r).image (fun t => (i,t))) else (localNeighbours r).image (fun t => (i,t)) := by
   ext w
   obtain ⟨j,t⟩ := w

@@ -62,8 +62,8 @@ theorem iSup_coeff_prod_le (s : Finset ι) (f : ι → MvPolynomial σ K) {B C :
         (mul_le_mul (hf a (Finset.mem_insert_self a s))
           (ih (fun b hb ↦ hsupp b (Finset.mem_insert_of_mem hb))
             fun b hb ↦ hf b (Finset.mem_insert_of_mem hb))
-          ((Real.iSup_nonneg fun ν ↦ (v).nonneg (MvPolynomial.coeff ν (_)))) hC)
-        (mul_nonneg ((Real.iSup_nonneg fun ν ↦ (v).nonneg (MvPolynomial.coeff ν (_)))) ((Real.iSup_nonneg fun ν ↦ (v).nonneg (MvPolynomial.coeff ν (_)))))
+          ((Real.iSup_nonneg fun ν ↦ (v).nonneg (AddMonoidAlgebra.coeff (_) ν))) hC)
+        (mul_nonneg ((Real.iSup_nonneg fun ν ↦ (v).nonneg (AddMonoidAlgebra.coeff (_) ν))) ((Real.iSup_nonneg fun ν ↦ (v).nonneg (AddMonoidAlgebra.coeff (_) ν))))
         (le_trans zero_le_one hB)) (le_of_eq (by ring)) |>.trans (le_of_eq rfl)
 
 /-- **The local factor of a finite product at a nonarchimedean absolute value**, by Gauss's
@@ -96,7 +96,7 @@ theorem iSup_coeff_prod_le_of_isNonarchimedean (hv : IsNonarchimedean v) (s : Fi
       rw [Finset.prod_insert ha, Finset.card_insert_of_notMem ha, pow_succ',
         iSup_coeff_mul hv]
       exact mul_le_mul (hf a (Finset.mem_insert_self a s))
-        (ih fun b hb ↦ hf b (Finset.mem_insert_of_mem hb)) ((Real.iSup_nonneg fun ν ↦ (v).nonneg (MvPolynomial.coeff ν (_)))) hC
+        (ih fun b hb ↦ hf b (Finset.mem_insert_of_mem hb)) ((Real.iSup_nonneg fun ν ↦ (v).nonneg (AddMonoidAlgebra.coeff (_) ν))) hC
 
 end Local
 
@@ -251,7 +251,7 @@ theorem mulHeight_det_le (A : Matrix (Fin n) (Fin n) (MvPolynomial σ K))
           simp only [Function.mem_mulSupport] at hv ⊢
           exact fun h ↦ hv (by rw [h, one_pow])
       rw [finprod_pow (hSupport hx)]
-      exact finprod_le_finprod (hSupport hz) (fun v ↦ hGnn v.val)
+      exact finprod_le_finprod₀ (hSupport hz) (fun v ↦ hGnn v.val)
         hFp fun v ↦ hnon v.val v.prop
     have hXnn : (0 : ℝ) ≤ (archAbsVal.map fun v ↦ ⨆ i : (σ →₀ ℕ), v (x i)).prod :=
       Multiset.prod_nonneg fun a ha ↦ by
@@ -274,14 +274,14 @@ theorem mulHeight_det_le (A : Matrix (Fin n) (Fin n) (MvPolynomial σ K))
     (fun h ↦ hP (by ext ν; exact congrFun (congrArg DFunLike.coe h) ν))
     hone (fun v hv ↦ ?_) fun v hv ↦ ?_
   · refine le_trans (iSup_coeff_det_le A hB
-      (mul_nonneg (le_trans zero_le_one hC) ((Real.iSup_nonneg fun ν ↦ (v).nonneg (MvPolynomial.coeff ν (P))))) hsupp (harch v hv))
+      (mul_nonneg (le_trans zero_le_one hC) ((Real.iSup_nonneg fun ν ↦ (v).nonneg (AddMonoidAlgebra.coeff (P) ν)))) hsupp (harch v hv))
       (le_of_eq ?_)
     change (n.factorial : ℝ) * (B * (C * (⨆ ν, v (P.coeff ν)))) ^ n
       = (n.factorial : ℝ) * (B * C) ^ n * (⨆ ν, v (P.coeff ν)) ^ n
     rw [mul_pow]
     ring
   · exact iSup_coeff_det_le_of_isNonarchimedean (AdmissibleAbsValues.isNonarchimedean v hv) A
-      ((Real.iSup_nonneg fun ν ↦ (v).nonneg (MvPolynomial.coeff ν (P)))) (hnon v hv)
+      ((Real.iSup_nonneg fun ν ↦ (v).nonneg (AddMonoidAlgebra.coeff (P) ν))) (hnon v hv)
 
 end Det
 

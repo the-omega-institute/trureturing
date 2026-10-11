@@ -84,7 +84,7 @@ private theorem column_eq_zero_of_diagonal_eq_zero
     (rho : SystemRecordMatrix) (hRho : rho.PosSemidef) (k : Fin 2 × Fin 2)
     (hDiagonal : rho k k = 0) :
     Matrix.mulVec rho (basisVector k) = 0 := by
-  apply (hRho.dotProduct_mulVec_zero_iff (basisVector k)).mp
+  apply (hRho.dotProduct_mulVec_zero_iff (x := (basisVector k))).mp
   simp [basisVector, Matrix.mulVec, dotProduct, hDiagonal]
 
 private theorem diagonal_eq_zero_of_re_eq_zero

@@ -152,7 +152,7 @@ theorem golden_cubic_primary_product (j : ℕ) (hj : 1 ≤ j) :
     obtain ⟨g, hg⟩ := (IsPrincipalIdealRing.principal P).principal
     have hn : Ideal.absNorm P = p := hPnorm p hpB
     have hnormabs : (Algebra.norm ℤ g).natAbs = p := by
-      simpa only [hg, Ideal.absNorm_span_singleton] using hn
+      simpa only [hg, Ideal.absNorm_span_singleton] using! hn
     have halg : Algebra.norm ℤ g = QuadraticAlgebra.norm g := by
       rw [Algebra.norm_apply]
       exact QuadraticAlgebra.det_toLinearMap_eq_norm g

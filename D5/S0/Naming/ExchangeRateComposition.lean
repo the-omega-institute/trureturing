@@ -6,6 +6,7 @@
    digest: Exchange rates multiply when normal translations compose. -/
 
 import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Order.Filter.AtTopBot.Archimedean
 
 namespace D5.S0.Naming.ExchangeRateComposition
 

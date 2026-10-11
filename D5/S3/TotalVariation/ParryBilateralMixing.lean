@@ -115,7 +115,7 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
     mul_nonneg (hπ _) (hH m w)
   have hC (ell : ℤ) (m : ℕ) (w : Fin (m + 1) → State k) :
       MeasurableSet (C ell m w) :=
-    (measurable_pi_lambda _ fun i => measurable_pi_apply (ell + i.val))
+    (Measurable.of_eval fun i => measurable_pi_apply (ell + i.val))
       (measurableSet_singleton w)
   have hmass (ell : ℤ) (m : ℕ) (w : Fin (m + 1) → State k) :
       (ν : Measure (ℤ → State k)).real (C ell m w) = L m w := by
@@ -349,7 +349,7 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
         exact (mul_le_mul_of_nonneg_right measureReal_le_one hε).trans_eq (one_mul ε)
   let S : (ℤ → State k) → (ℤ → State k) := fun x t => x (t + 1)
   have hS : MeasurePreserving S (ν : Measure (ℤ → State k)) ν :=
-    ⟨measurable_pi_lambda _ fun t => measurable_pi_apply (t + 1), hνshift⟩
+    ⟨Measurable.of_eval fun t => measurable_pi_apply (t + 1), hνshift⟩
   have hiter (n : ℕ) (x : ℤ → State k) (t : ℤ) : S^[n] x t = x (t + n) := by
     induction n generalizing t with
     | zero => simp
@@ -361,7 +361,7 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
       omega
   have hEmeas (ell : ℤ) (a : ℕ) (A : Finset (Fin (a + 1) → State k)) :
       MeasurableSet (E ell a A) :=
-    (measurable_pi_lambda _ fun i => measurable_pi_apply (ell + i.val)) A.measurableSet
+    (Measurable.of_eval fun i => measurable_pi_apply (ell + i.val)) A.measurableSet
   have hfinite (A : Set (ℤ → State k))
       (hA : A ∈ measurableCylinders (fun _ : ℤ => State k)) :
       ∃ a : ℕ, ∃ U : Finset (Fin (2 * a + 1) → State k), A = E (-(a : ℤ)) (2 * a) U := by
@@ -528,7 +528,7 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
   have hFpres : MeasurePreserving F ρ ν := ⟨hF.measurable, hpush⟩
   have hσ : Measurable (relationShift (k := k)) := by
     apply Measurable.subtype_mk
-    exact measurable_pi_lambda _ fun t => (measurable_pi_apply (t + 1)).comp measurable_subtype_coe
+    exact Measurable.of_eval fun t => (measurable_pi_apply (t + 1)).comp measurable_subtype_coe
   have hTmeas : Measurable T := by
     refine Measurable.prodMk ?_ (hσ.comp measurable_snd)
     exact (measurable_of_countable (fun p : Bool × Bool => xor p.1 (!p.2))).comp
@@ -582,7 +582,7 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
     have hz : ρ.real A = 0 ∨ ρ.real A = 1 := by
       have hh : ρ.real A * (ρ.real A - 1) = 0 := by nlinarith only [ha]
       simpa only [sub_eq_zero] using mul_eq_zero.mp hh
-    rw [eventuallyConst_set]
+    rw [eventuallyEmptyOrUniv_iff]
     rcases hz with hz | ho
     · right
       rw [ae_iff]
@@ -650,7 +650,7 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
       ∃ h : RelationPath k → Bool, Measurable h ∧ Δ h = stationaryDefect k R f := by
     let h (r : RelationPath k) := f (fun i : Fin R => r.val (-(R : ℤ) + i.val))
     have hh : Measurable h := (measurable_of_countable f).comp
-      (measurable_pi_lambda _ fun i =>
+      (Measurable.of_eval fun i =>
         (measurable_pi_apply (-(R : ℤ) + i.val)).comp measurable_subtype_coe)
     let U : Finset (Fin (R + 1 + 1) → State k) :=
       Finset.univ.filter (fun w => prefixRuleDefect f (w 0, Fin.tail w) = true)

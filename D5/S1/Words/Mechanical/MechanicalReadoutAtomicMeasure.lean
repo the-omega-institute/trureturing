@@ -269,7 +269,8 @@ theorem geometric_atomic_support (r x : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
       _ ≤ μ U := by
         change _ ≤ geometricAtomicMeasure r x U
         rw [geometricAtomicMeasure, Measure.sum_apply _ hU.measurableSet]
-        exact ENNReal.le_tsum a
+        exact ENNReal.le_tsum (f := fun i =>
+          (ENNReal.ofReal (atomicCoefficient r i) • Measure.dirac (atomicPoint x i)) U) a
   have hIco : Set.Ico (0 : ℝ) 1 ⊆ μ.support := by
     intro y hy
     exact Measure.isClosed_support.mem_of_tendsto

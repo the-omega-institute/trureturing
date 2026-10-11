@@ -63,7 +63,7 @@ theorem binary_character_rank_and_redundancy
     exact
       ((binary_character_redundancy_criterion
         (fun i : {candidate : I // candidate ≠ j} => characters i.1)
-        (characters j)).out 1 2).mp characterInOtherSpan
+        (characters j)).out 2 3).mp characterInOtherSpan
 
 #print axioms binary_character_rank_and_redundancy
 

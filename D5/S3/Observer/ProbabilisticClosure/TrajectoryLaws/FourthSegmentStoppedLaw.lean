@@ -253,7 +253,7 @@ def prefixCylinder (w : List Letter) : Set Stream := {ω | Prefix ω w}
 
 private theorem measurable_prefix (n : ℕ) : Measurable (fun ω : Stream => readPrefix ω n) := by
   exact (measurable_of_countable (fun v : Fin n → Letter => List.ofFn v)).comp
-    (measurable_pi_lambda _ (fun i => measurable_pi_apply i.val))
+    (Measurable.of_eval (fun i => measurable_pi_apply i.val))
 
 theorem measurable_cylinder (w : List Letter) : MeasurableSet (prefixCylinder w) :=
   (measurable_prefix w.length) (measurableSet_singleton w)

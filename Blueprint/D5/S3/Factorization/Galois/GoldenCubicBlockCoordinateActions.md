@@ -39,6 +39,5 @@ The actual complex cubic tower is a Galois composite of the cubic splitting fiel
 - Dependency: [D5/S3/Factorization/Mordell/CanonicalPointHeight](../Mordell/CanonicalPointHeight.md)
 - Dependency: [D5/S3/Factorization/Mordell/GoldenCubicBlockMordellTwists](../Mordell/GoldenCubicBlockMordellTwists.md)
 - Dependency: [D5/S3/Factorization/Mordell/PointVariableChange](../Mordell/PointVariableChange.md)
-- Dependency: [D5/S3/Factorization/Mordell/SymmetricSquareAddition](../Mordell/SymmetricSquareAddition.md)
 - Dependency: [D5/S3/Factorization/MordellTwoAdicNonTorsion](../MordellTwoAdicNonTorsion.md)
 - Dependency: [D5/S3/QuadraticForms/ParallelogramConstruction](../../QuadraticForms/ParallelogramConstruction.md)

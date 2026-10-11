@@ -55,7 +55,7 @@ private theorem actualLeadingDifference_homogeneous [Finite A] (r : ℕ)
               cutoffMagnus r (positivePairWords r index).2 := by
         funext z
         simp [cutoffRestriction, cutoffLift,
-          Finsupp.mapDomain_apply Subtype.val_injective]
+          Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
       have hlift := congrFun hrestrict ⟨w, Nat.le_of_lt hlt⟩
       have hcoeffAt : (actualLeadingDifference r index).coeff w =
           (cutoffMagnus r (positivePairWords r index).1 -
@@ -142,7 +142,7 @@ private theorem actualLeadingDifference_one [Finite A] [LinearOrder A]
             (toRationalWordPolynomial (wordMonomial [index 0])) := by
       funext z
       simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
+        Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
     exact congrFun hrestrict ⟨w, hw⟩
   · have hliftZero :
         (cutoffLift 1
@@ -220,7 +220,7 @@ private theorem actualLeadingDifference_successor
               (positivePairWords (r + 1) (Fin.init index)).2 := by
       funext z
       simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
+        Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
     have hlift := congrFun hrestrict ⟨w.1, hw'⟩
     have hcoeffAt : p.coeff w.1 =
         (cutoffMagnus (r + 1)
@@ -333,7 +333,7 @@ private theorem actualLeadingDifference_successor
           cutoffRestriction cutoff ⁅p, q⁆ := by
       funext z
       simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
+        Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
     exact congrFun hrestrict ⟨w, hw⟩
   · have hliftZero :
         (cutoffLift cutoff
