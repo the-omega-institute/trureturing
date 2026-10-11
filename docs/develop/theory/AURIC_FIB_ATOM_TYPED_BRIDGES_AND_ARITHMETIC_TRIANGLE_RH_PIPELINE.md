@@ -4009,3 +4009,273 @@ p_{j,25}=\kappa_j
 
 若要同时获得二者，必须分别验证仿射 bonding 条件和概率推前的 Fisher 条件。
 
+### 定理 22.11（隐藏 seam 与循环空间的生成函数和增长分离）
+
+令
+
+\[
+P_n(u)=\sum_{k\ge0}N_{n,k}u^k,
+\qquad
+N_{n,k}=\binom{n-k+1}{k}.
+\]
+
+则二元生成函数为
+
+\[
+\sum_{n\ge0}P_n(u)z^n
+=
+\frac{1+uz}{1-z-uz^2}.
+\]
+
+令
+
+\[
+H(z)=\sum_{n\ge0}h_nz^n,
+\qquad
+C(z)=\sum_{n\ge0}c_nz^n.
+\]
+
+则
+
+\[
+\boxed{
+H(z)=\frac{z^3}{(1-z)^2(1-z-z^2)},
+\qquad
+C(z)=\frac{z^3}{(1-z)(1-z-z^2)^2}.
+}
+\]
+
+因此
+
+\[
+\boxed{
+\sum_{n\ge0}(c_n-h_n)z^n
+=
+\frac{z^5}{(1-z)^2(1-z-z^2)^2}.
+}
+\]
+
+若 \(\varphi=(1+\sqrt5)/2\)，则
+
+\[
+h_n\sim
+\frac{\varphi^3}{\varphi^2+1}\,\varphi^n,
+\]
+
+\[
+c_n\sim
+\frac{\varphi^3}{(\varphi^2+1)^2}\,(n+1)\varphi^n,
+\]
+
+从而
+
+\[
+\boxed{
+\frac{c_n}{h_n}
+\sim
+\frac{n}{\varphi^2+1}.
+}
+\]
+
+#### 证明
+
+每个合法支持的最大位置是否被占据给出 Fibonacci 递推
+
+\[
+P_n(u)=P_{n-1}(u)+uP_{n-2}(u)
+\qquad(n\ge2),
+\]
+
+初值为
+
+\[
+P_0(u)=1,\qquad P_1(u)=1+u.
+\]
+
+对递推求生成函数得到
+
+\[
+\sum_{n\ge0}P_n(u)z^n
+=
+\frac{1+uz}{1-z-uz^2}.
+\]
+
+取 \(u=1\) 得
+
+\[
+V(z):=\sum_{n\ge0}V_nz^n
+=
+\frac{1+z}{1-z-z^2}.
+\]
+
+对 \(u\) 求导后在 \(u=1\) 处取值，得到
+
+\[
+E(z):=\sum_{n\ge0}E_nz^n
+=
+\left.
+\frac{\partial}{\partial u}
+\frac{1+uz}{1-z-uz^2}
+\right|_{u=1}
+=
+\frac{z}{(1-z-z^2)^2}.
+\]
+
+由
+
+\[
+h_n=V_n-n-1,
+\qquad
+c_n=E_n-V_n+1,
+\]
+
+以及
+
+\[
+\sum_{n\ge0}(n+1)z^n=\frac1{(1-z)^2},
+\qquad
+\sum_{n\ge0}z^n=\frac1{1-z},
+\]
+
+直接化简得到
+
+\[
+H(z)
+=
+\frac{1+z}{1-z-z^2}
+-\frac1{(1-z)^2}
+=
+\frac{z^3}{(1-z)^2(1-z-z^2)},
+\]
+
+以及
+
+\[
+C(z)
+=
+\frac{z}{(1-z-z^2)^2}
+-\frac{1+z}{1-z-z^2}
++\frac1{1-z}
+=
+\frac{z^3}{(1-z)(1-z-z^2)^2}.
+\]
+
+两者相减给出
+
+\[
+C(z)-H(z)
+=
+\frac{z^5}{(1-z)^2(1-z-z^2)^2}.
+\]
+
+为得到渐近式，分解
+
+\[
+1-z-z^2
+=
+(1-\varphi z)(1+\varphi^{-1}z).
+\]
+
+对于 \(H\)，在 \(z=\varphi^{-1}\) 处是单极点，且其主部系数为
+
+\[
+\frac{(\varphi^{-1})^3}
+{(1-\varphi^{-1})^2(1+\varphi^{-2})}
+=
+\frac{\varphi^3}{\varphi^2+1}.
+\]
+
+因此
+
+\[
+h_n\sim
+\frac{\varphi^3}{\varphi^2+1}\varphi^n.
+\]
+
+对于 \(C\)，在同一点是二阶极点，二阶主部系数为
+
+\[
+\frac{(\varphi^{-1})^3}
+{(1-\varphi^{-1})(1+\varphi^{-2})^2}
+=
+\frac{\varphi^3}{(\varphi^2+1)^2}.
+\]
+
+二阶极点的系数为该主部系数乘以 \(n+1\)，故
+
+\[
+c_n\sim
+\frac{\varphi^3}{(\varphi^2+1)^2}(n+1)\varphi^n.
+\]
+
+两式相除即得
+
+\[
+\frac{c_n}{h_n}
+\sim
+\frac{n}{\varphi^2+1}.
+\]
+
+证毕。
+
+### 推论 22.12（细化层的循环过剩）
+
+令
+
+\[
+\rho=\frac1{\varphi^2+1}.
+\]
+
+则
+
+\[
+c_n=\rho n\,h_n+O(h_n),
+\]
+
+并且
+
+\[
+c_n-h_n
+=
+\rho n\,h_n+O(h_n).
+\]
+
+因此存在 \(n_0\)，使得对所有 \(n\ge n_0\)，
+
+\[
+c_n>h_n,
+\]
+
+且
+
+\[
+\frac{c_n-h_n}{c_n}\longrightarrow1.
+\]
+
+这意味着在 Fibonacci 细化中，大部分零一步可见边链自由度来自循环的非唯一性，而不是来自新的静态 seam 方向。
+
+#### 证明
+
+由定理 22.11 的渐近式，
+
+\[
+c_n=\rho(n+1)h_n(1+o(1)).
+\]
+
+于是
+
+\[
+c_n=\rho n\,h_n+O(h_n).
+\]
+
+因为 \(h_n\) 的增长量级为 \(\varphi^n\)，而 \(c_n/h_n\) 线性发散，所以 \(c_n>h_n\) 对充分大的 \(n\) 成立。再由
+
+\[
+\frac{c_n-h_n}{c_n}=1-\frac{h_n}{c_n}
+\]
+
+及 \(h_n/c_n\to0\)，得到极限为一。证毕。
+
+该推论只涉及 Fibonacci cube 的有限计数和图循环空间。它不表示循环自由度都是概率上可执行的正流；参考定向下的非负可执行性还需另行检查。
+
+
