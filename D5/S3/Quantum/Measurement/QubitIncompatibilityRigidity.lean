@@ -656,8 +656,9 @@ private lemma boundary_branches (a b : V) (hk : K a b < 0) :
     unfold curve K; field_simp
     dsimp only [delta, K] at hs
     linear_combination (1 + x ^ 2) * hs
+  have hs' : (-Real.sqrt (delta a b x)) ^ 2 = delta a b x := by simpa using hs
   refine ⟨hd, (by simpa [branch.eq_1] using hz _ hs),
-    (by simpa [branch.eq_1] using hz _ (show (-Real.sqrt (delta a b x)) ^ 2 = _ by simpa using hs)), ?_⟩
+    (by simpa [branch.eq_1] using hz _ hs'), ?_⟩
   intro he
   have he' := (div_left_inj' hH).mp he
   have hpos := Real.sqrt_pos.mpr hd
@@ -807,10 +808,11 @@ private def flip (s : Fin 2) : Fin 2 := if s = 0 then 1 else 0
 private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → V) :
     SCompatible S a → SCompatible S (fun i => if i = 0 then -a i else a i) := by
   rintro ⟨G, hG, h⟩
+  rw [IsPOVM.eq_1] at hG
   refine ⟨(fun q => G (flip q.1, q.2)), ?_, ?_⟩
   · constructor
     · intro q; exact hG.1 (flip q.1, q.2)
-    · simpa [IsPOVM.eq_1, flip.eq_1, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc]
+    · simpa [flip.eq_1, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc]
         using hG.2
   · intro ρ hρ i s; fin_cases i <;> fin_cases s
     · simpa [marginal.eq_1, flip.eq_1, effect_neg] using h ρ hρ 0 1
