@@ -53,6 +53,33 @@ def reflog_oids(path):
         yield from (field.decode("ascii") for field in fields[:2])
 
 
+REMOVAL_RECORD = "worktree-removal"
+
+
+def record_removal(metadata, commit, recovery_branch):
+    """Record the verified snapshot in Git metadata, which native removal deletes last."""
+    staged = metadata / (REMOVAL_RECORD + ".tmp")
+    staged.write_text(json.dumps(dict(commit=commit, recovery_branch=recovery_branch)))
+    os.replace(staged, metadata / REMOVAL_RECORD)
+
+
+def interrupted_removal(target, metadata):
+    """Return the record of an earlier removal whose native deletion stopped part way."""
+    record = metadata / REMOVAL_RECORD
+    if not record.exists():
+        return None
+    removal = json.loads(record.read_text())
+    commit = removal["commit"]
+    if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
+            or value(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}") != commit):
+        raise Refused("interrupted_removal_snapshot_moved")
+    # Native deletion only deletes files; other differences may be later changes.
+    status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
+    if any(not line.startswith(b" D ") for line in status):
+        raise Refused("interrupted_removal_tree_changed")
+    return removal
+
+
 LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
@@ -127,27 +154,39 @@ def remove(options):
                 if qualify(source, target) != qualified[target]:
                     raise Refused("observed_identity_changed")
                 _, metadata = identity(source, target)
-                from worktree_publication import commit_snapshot
-                checkpoint = commit_snapshot(target, metadata, branch,
-                    b"Checkpoint working tree before recycling\n")
-                if branch.startswith("refs/heads/"):
-                    recovery_branch = branch
+                resumed = interrupted_removal(target, metadata)
+                if resumed:
+                    # The earlier removal verified this snapshot clean before native
+                    # deletion began; missing files are its effects, not changes.
+                    checkpoint = dict(event="worktree_checkpoint", status="resumed",
+                                      commit=resumed["commit"], branch=branch)
+                    recovery_branch = resumed["recovery_branch"]
+                    if recovery_branch != branch:
+                        acquire(stack, source, "ref:" + recovery_branch, True)
+                    refreshed = qualified[target]
                 else:
-                    # Keep detached HEAD/index coordination until removal. Native
-                    # branch creation never replaces an existing ref, even on collision.
-                    recovery_branch_candidate = "refs/heads/lane/governance/recovery-" + uuid.uuid4().hex
-                    acquire(stack, source, "ref:" + recovery_branch_candidate, True)
-                    git(target, "branch", "--", recovery_branch_candidate.removeprefix("refs/heads/"),
-                        checkpoint["commit"])
-                    recovery_branch = recovery_branch_candidate
-                refreshed = qualify(source, target)
-                expected = dict(qualified[target], HEAD=checkpoint["commit"])
-                if refreshed != expected:
-                    raise Refused("observed_identity_changed_after_checkpoint")
-                # Concurrent edits or hook changes after staging need another
-                # snapshot; do not silently discard ordinary outstanding files.
-                if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
-                    raise Refused("working_tree_changed_after_checkpoint")
+                    from worktree_publication import commit_snapshot
+                    checkpoint = commit_snapshot(target, metadata, branch,
+                        b"Checkpoint working tree before recycling\n")
+                    if branch.startswith("refs/heads/"):
+                        recovery_branch = branch
+                    else:
+                        # Keep detached HEAD/index coordination until removal. Native
+                        # branch creation never replaces an existing ref, even on collision.
+                        recovery_branch_candidate = "refs/heads/lane/governance/recovery-" + uuid.uuid4().hex
+                        acquire(stack, source, "ref:" + recovery_branch_candidate, True)
+                        git(target, "branch", "--", recovery_branch_candidate.removeprefix("refs/heads/"),
+                            checkpoint["commit"])
+                        recovery_branch = recovery_branch_candidate
+                    refreshed = qualify(source, target)
+                    expected = dict(qualified[target], HEAD=checkpoint["commit"])
+                    if refreshed != expected:
+                        raise Refused("observed_identity_changed_after_checkpoint")
+                    # Concurrent edits or hook changes after staging need another
+                    # snapshot; do not silently discard ordinary outstanding files.
+                    if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
+                        raise Refused("working_tree_changed_after_checkpoint")
+                    record_removal(metadata, checkpoint["commit"], recovery_branch)
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
                 removing = True
                 git(source, "worktree", "remove", *flags, "--", target,

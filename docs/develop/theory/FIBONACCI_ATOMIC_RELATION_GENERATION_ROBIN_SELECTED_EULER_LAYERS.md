@@ -375,3 +375,170 @@ This rules out the global monotone-test shortcut for the actual weight.
  \le\frac{\varepsilon_X}{M_X}=o(1),
 \]
 与 \(\mathcal C_X\ge0\) 及固定正差矛盾。\(\square\)
+
+## 6. 来源相对的首钟符号与固定余量输运
+
+本节保留定义 1.1–1.2 的全部来源条件，并要求
+\(243\le\ell\le\mathcal R<\infty\)。原 \(N_p\) 仍是各
+\(5040p\) 类的最小最大化整数；所有原边、闭边上的字面严格核心及
+\(p,r>2\mathcal R\) 不变。始终积分于全部原边的完整并集 \(S_X\)，
+重叠只计一次，\(M_X=|S_X|>0\)，不另选来源、不删边或截短区间。
+首钟符号和误差定理不使用 PNT、假设 1.3、（EL.0.5）、
+共尾见证存在性或任何有利的有符号下界。
+
+省略单个见证的下标，记 \(\tau_q=\tau_{q,1}\)、\(h_q=\log q\)，并置
+\[
+ K_1(x)=\sum_{\tau_q<x}h_q,\qquad
+ \delta_1(x)=\theta(x)-K_1(x),\qquad
+ P_1(X)=\sum_qh_q[\mathcal W_X(\tau_q)-\mathcal W_X(q)],
+ \qquad E(u)=u^{-3/10}\log(2u).
+\]
+实际端点仍严格为 \(\tau_q<x\)，参考端点仍弱为 \(q\le x\)；
+单核的实际初始权重是 \(k_t^{\rm str}(t)=b(t)\)，参考初始权重
+及两种终端权重均为零。所有价格只在 \(x>1\) 求值，
+密度在其余位置延拓为零。
+
+**定理 6.1（闭排除与有符号首钟误差）。** 对每个合格原见证，
+\[
+ S_X\cap[q,\tau_q]=\varnothing\quad(q\text{ 为素数}),\qquad
+ -E(\ell_X)M_X\le P_1(X)\le0.
+\tag{EL.10}
+\]
+误差函数 \(E\) 在 \([243,\infty)\) 严格递减并趋于零；
+此界对全部原见证显式一致，不依赖 \(\mathcal R\)、边数或并集的分量数。
+
+**证明。** （EL.1）给出 \(q<\tau_q<q+1\)。若
+\(t\in S\cap[q,\tau_q]\)，取一条包含 \(t\) 的原边
+\(N_p=pU,N_r=rU\)，其上端时钟为 \(C\ge t\)。
+首层价格 \(r_{q,1}=\lambda(\tau_q)\le\lambda(t)\)，
+而同素数的后续层价格严格下降，所以字面严格核心给出 \(q\nmid U\)；
+在 \(t=\tau_q\) 的价格相等处也如此。又 \(q\le t\le\mathcal R\)，
+故 \(q\ne p,r\)。插入 \(N_r=rU\to rUq\) 是原 \(5040r\) 类中的
+合法整数比较。由原 \(N_r\) 的最大性、乘法性和 \(\lambda\) 的递减性，
+对 \(h=\log q\) 有
+\[
+ \beta_{q,1}\le f(C+h)-f(C)\le f(t+h)-f(t),\qquad
+ r_{q,1}\le\frac1h\int_0^h\lambda(t+u)\,du.
+\]
+这正是（EL.7）的上端来源插入，不是假定实数中心的新最大性。
+这里 \(q>t-1\ge242\)，故 \(h>3\)；且
+\(h\le\log t\le t/10\)。最后一式在 \(t=243\) 成立，
+\(t/10-\log t\) 此后递增。复用（EL.7）的精确密度比较
+\(w(t+h)/w(t)\ge(10/11)^4>2/3\) 及 \(w\) 的递减性，得到
+\[
+ \lambda(t)-r_{q,1}
+ \ge\frac1h\int_0^h(h-u)w(t+u)\,du
+ \ge\frac h2w(t+h)>\frac h3w(t)
+ \ge\int_0^{h/3}w(t+u)\,du.
+\]
+因此 \(\tau_q>t+h/3>t+1\ge q+1\)，与（EL.1）矛盾。
+这排除整个闭区间，包括 \(t=q\) 和 \(t=\tau_q\)。
+全证明只用了原上端来源的最大性；原下端来源、最小取得性及其他
+定义 1.1 条件仍保留在完整原族中。
+
+现在复用 [Nicolas 既有 MS2 及其紧邻的首层端点证明](../../../Library/ArithSums/nicolas2025comparison.md)：
+\[
+ \delta_1(x)=\sum_q h_q\mathbf1_{q\le x\le\tau_q},
+ \qquad 0\le\delta_1(x)\le\log x\quad(x>1).
+\tag{EL.11}
+\]
+确切端点来自弱参考与严格实际库存；任一贡献素数满足
+\(x-1<q\le x\)，此半开区间至多含一个整数，其权重不超过 \(\log x\)。
+这也核对了两端相等情形。由闭排除，\(\delta_1(t)=0\) 对每个
+\(t\in S\) 成立。MS2 已给出一般首层校正
+\[
+ E_1(a,H)=\int_0^H[\delta_1(a)-\delta_1(a+u)]
+                     \frac{w(a+u)}{w(a)}\,du,\qquad
+ -H\log(a+H)\le E_1(a,H)\le H\log a\quad(a>2,\ H>0).
+\]
+下述因子 \(1\) 的误差尺度是这一既有供应结果的应用，
+不是新的误差发现，也不另行证明较弱的因子 \(2\) 区间计数界。
+
+\(\mathcal W\) 及（EL.0.3）的导数支撑在
+\([\ell,2\mathcal R]\)。因 \(\tau_q>q\)，\(q>2\mathcal R\) 的
+两种首层权重均为零，所以一个固定有限素数集覆盖全部贡献。
+（EL.0.3）两项密度的积分都等于有限的 \(\int_S b(t)\,dt\)；
+绝对连续性与有限脉冲积分遂给出精确恒等式
+\[
+ \begin{aligned}
+ P_1
+ &=\sum_qh_q\int_q^{\tau_q}\mathcal W'(x)\,dx
+   =\int_1^\infty\delta_1(x)\mathcal W'(x)\,dx\\
+ &=-\int_1^\infty\delta_1(x)w(x)A_S(x)\,dx .
+ \end{aligned}
+\tag{EL.12}
+\]
+闭脉冲端点的零测度不改变（EL.11）的精确库存约定。
+最后一步用的是 \(\delta_1=0\) 于 \(S\)，没有假设紧支撑所选核
+在全局单调。实际初始修正也不产生差额，因为 \(\tau_q\notin S\)；
+终端零权重及越过 \(B_t\) 的情形由绝对连续积分一并覆盖。
+
+对（EL.12）的非负被积函数用 Tonelli，再用（EL.11），得
+\[
+ \begin{aligned}
+ 0\le-P_1
+ &=\int_S\frac1{w(t)t^{11/10}}
+             \int_t^{B_t}\delta_1(x)w(x)\,dx\,dt\\
+ &\le\int_S b(t)\log B_t\,dt
+ \le\int_S t^{-3/10}\log B_t\,dt
+ \le E(\ell)M.
+ \end{aligned}
+\]
+因 \(\delta_1(t)=0\)，其 \(t\)-被积函数恰为
+\(-t^{-11/10}E_1(t,H_t)\)，即 MS2 的同一首层校正。
+这里 \(w\) 递减，故
+\(b(t)=\int_t^{B_t}w(x)\,dx/[w(t)t^{11/10}]
+ \le H_t/t^{11/10}=t^{-3/10}\)，且 \(B_t\le2t\)。
+所有内部价格区间均在 \(x>1\)。
+最后
+\[
+ E'(u)=u^{-13/10}\left[1-\tfrac3{10}\log(2u)\right]<0
+ \quad(u\ge243),
+ \qquad
+ \lim_{u\to\infty}\frac{\log(2u)}{u^{3/10}}
+ =\lim_{u\to\infty}\tfrac{10}{3}u^{-3/10}=0
+\]
+（末式用 L'Hôpital）；因 \(\log486>10/3\)，递减断言成立。
+故最后一个积分界显式一致，证明完成。\(\square\)
+
+**推论 6.2（实际与参考首钟的固定余量等价）。** 置
+\[
+ J_{\rm act,prime}(X)=\sum_qh_q\mathcal W_X(\tau_q)-\mathcal D_X,
+ \qquad J_{\rm ref,prime}(X)=J_{\rm prime}(X).
+\]
+于是对同一完整原见证，
+\[
+ J_{\rm act,prime}\le J_{\rm ref,prime}
+ \le J_{\rm act,prime}+E(\ell_X)M_X.
+\tag{EL.13}
+\]
+在同一完整原族及相同量词下，（EL.9）等价于
+\[
+ \exists\kappa<\sqrt2/4\quad\forall T<\infty\quad
+ \exists\text{合格原见证 }X\text{ 且 }\ell_X\ge T:
+ \quad J_{\rm act,prime}(X)\ge-\kappa M_X.
+\tag{EL.14}
+\]
+\(T\) 可包含任意给定的有限共同起点，包括 \(\ell\ge243\)；
+这种扩大不改变原族或所选集合。
+
+**证明。** 精确等式 \(J_{\rm act,prime}=J_{\rm ref,prime}+P_1\)
+与（EL.10）给出（EL.13）。实际到参考用其左侧不等式，
+保留同一 \(\kappa\) 和见证。参考到实际先固定（EL.9）的系数
+\(\kappa<\sqrt2/4\)，再选
+\(\kappa<\kappa'<\sqrt2/4\)。对每个给定 \(T\)，仅将其扩大至
+一个同时满足原共同前提、\(\ell\ge243\) 和
+\(E(\ell)<\kappa'-\kappa\) 的有限起点；（EL.9）在该起点给出的
+同一完整见证满足 \(J_{\rm act,prime}\ge-\kappa'M_X\)。
+这保持一个固定系数以及全部共尾量词。\(\square\)
+
+若再讨论假设 1.3 与定理 5.2，原先输入比较的全部来源常数始终固定，
+共同起点仍可依赖那些常数；新 \(E(\ell)\) 本身是上述显式一致界。
+（EL.10）–（EL.14）不证明任一有利下界或共尾见证存在性，
+也不证明 RH 或不受限 Robin。尚欠的仍是（EL.9）的完整固定余量
+下界义务；首钟误差的 \(o(M_X)\) 输运没有支付任何固定有利系数。
+
+本节新推理仅置于拥有理论。误差供应归于既有 Nicolas MS2，
+来源合法插入归于本理论 §4 的原整数比较；不重复 Library 的
+A1–A19 接口。已有对应来源的有界检索未找到显式相同的完整族
+来源相对符号结论；这不构成文献或全仓库的新颖性主张。

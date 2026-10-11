@@ -14,6 +14,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 
 from native_fixture import NativeFixture
 from mirror_fixture import MirrorCases
@@ -413,6 +414,46 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertFalse(self.tree.exists())
         self.assertFalse(second.exists())
         self.assertEqual(self.base, self.g(self.main, "rev-parse", "refs/heads/" + self.branch).strip())
+
+    def interrupted_removal(self):
+        """Stop native removal after it deleted tracked files, as a timeout or kill does."""
+        native_git = preservation.git
+        def interrupt(root, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                for name in ("owned", "other"):
+                    (self.tree / name).unlink()
+                raise subprocess.TimeoutExpired(["git", *map(str, args)], 300)
+            return native_git(root, *args, **kwargs)
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        with patch.object(preservation, "git", side_effect=interrupt):
+            result = preservation.remove(options)["items"][0]
+        self.assertEqual("partial_or_indeterminate", result["outcome"])
+        self.assertEqual(" D other\n D owned\n", self.g(self.tree, "status", "--porcelain"))
+        return result
+
+    def test_interrupted_removal_resumes_without_committing_its_deletions(self):
+        (self.tree / "owned").write_text("snapshot before removal\n")
+        snapshot = self.interrupted_removal()["checkpoint"]["commit"]
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual(("removed", "resumed"), (result["outcome"], result["checkpoint"]["status"]))
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual("snapshot before removal\n", self.g(self.main, "show", self.branch + ":owned"))
+
+    def test_interrupted_removal_after_later_changes_is_retained_uncommitted(self):
+        self.interrupted_removal()
+        (self.tree / "later").write_text("later bytes\n")
+        result = json.loads(self.remove(74).stdout)["items"][0]
+        self.assertIn("interrupted_removal_tree_changed", result["error"])
+        (self.tree / "later").unlink()
+        self.g(self.tree, "commit", "--allow-empty", "-m", "later history")
+        head = self.g(self.tree, "rev-parse", "HEAD").strip()
+        result = json.loads(self.remove(74).stdout)["items"][0]
+        self.assertIn("interrupted_removal_snapshot_moved", result["error"])
+        self.assertTrue(self.tree.exists())
+        self.assertEqual(head, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual(" D other\n D owned\n", self.g(self.tree, "status", "--porcelain"))
 
     def test_true_ignored_and_unmerged_material(self):
         exclude = self.main / ".git/info/exclude"
