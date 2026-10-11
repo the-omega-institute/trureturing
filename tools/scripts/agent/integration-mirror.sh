@@ -255,12 +255,15 @@ while IFS= read -r merge; do
   fi
   original_subject=$(git show -s --format=%s "$merge")
   # Association and subject numbers are candidates; only the PR record is
-  # authoritative about this repository's merged dev landing.
+  # authoritative about this repository's merged dev landing. The merge prefix
+  # and squash suffix label PRs; other subject numbers can refer to issues.
   run associated-prs gh api "repos/$repo/commits/$merge/pulls" --paginate \
     || die 64 "cannot discover original PR for commit $merge"
   candidates=$(jq -sr --arg subject "$original_subject" '
     if all(.[]; type == "array") then
-      ([.[][] | .number] + [$subject | scan("#([1-9][0-9]*)") | .[0] | tonumber]) | unique |
+      ([.[][] | .number] + [$subject |
+        (capture("^Merge pull request #(?<n>[1-9][0-9]*)(?: |$)"),
+         capture("\\(#(?<n>[1-9][0-9]*)\\)$")) | .n | tonumber]) | unique |
       if all(.[]; type == "number" and . > 0 and floor == .) then .[]
       else error("invalid PR candidates") end
     else error("invalid PR association") end
