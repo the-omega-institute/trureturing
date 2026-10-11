@@ -490,7 +490,7 @@ project 恢复在 current 与 Lean build 单元中优先请求读者基线分支
 
 **现行入口。** 现行 ensure 尚未执行本节目标契约；现行行为的唯一真源是 `LeanCacheEnsureCommand.EnsureLocked` 及其测试。
 
-- **整份 clonefile。** linked worktree 在 `.lake` 缺失、stamp 不匹配或损坏，或缺失 stamp 未满足项目层 `Cold ∧ Clear` 时，会从符合 pin、温热、锁和空闲检查的主检出 donor 自动整份播种；非 linked 检出在新建或移除后重建 `.lake` 路径选到登记 donor 时也会整份播种。linked 只使用主检出 donor，非 linked 使用 Git 登记 donor，后者不要求项目层温热。
+- **整份 clonefile。** linked worktree 在 `.lake` 缺失、stamp 不匹配或损坏，或缺失 stamp 未满足项目层 `Cold ∧ Clear` 时，选到符合 pin、温热、锁和空闲检查的主检出 donor 才会自动整份播种；非 linked 检出在新建或移除后重建 `.lake` 路径选到登记 donor 时也会整份播种。linked 只使用主检出 donor，非 linked 使用 Git 登记 donor，后者不要求项目层温热。
 - **build 层 clonefile。** 私有 `.lake` 缺失 stamp、项目层为 `Cold` 且 `.lake/build` 为 `Clear` 时，linked worktree 可从符合条件的主检出 donor 只播种 `.lake/build`，非 linked 检出可从温热登记 donor 只播种该层；linked 要求主 donor，非 linked 未选到 donor、枚举失败或尝试无结果时转原地重产。
 - **拒绝且不自动播种。** 无效 writer guard、symlink 或非目录 `.lake`、linked 所需主 donor 不可用，以及 linked 播种的复核、发布或收尾失败，都会拒绝且不自动播种；stamp 匹配但项目层为 `Cold` 的 linked worktree 即使主 donor 可用也拒绝，要求删除本 `.lake` 后重播。
 - **原地重产。** 已有非 linked `.lake` 的缺失或损坏 stamp 在未走成 build 层播种时，直接在原地尝试运行当前 pin 的 cache-get，成功后写回 stamp，包括主检出；非 linked build 层候选未选到 donor、donor 枚举失败或尝试返回空结果时也走这条路径。
