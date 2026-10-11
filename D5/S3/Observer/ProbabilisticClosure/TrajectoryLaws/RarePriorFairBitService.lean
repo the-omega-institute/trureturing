@@ -233,7 +233,7 @@ noncomputable def packetLaw : Measure Packet :=
 
 instance : IsProbabilityMeasure packetLaw := by unfold packetLaw; infer_instance
 
-private theorem packet_law_singleton (p : Packet) : packetLaw {p} = (1/128 : ℝ≥0∞) := by
+theorem packet_law_singleton (p : Packet) : packetLaw {p} = (1/128 : ℝ≥0∞) := by
   rw [← fair_packet_mass p]
   rcases p with ⟨a,b,c,d,e,f,g⟩
   simp only [packetLaw, ← singleton_prod_singleton, Measure.prod_prod,
@@ -520,7 +520,7 @@ def alphaOutputEvent (t : Threshold) : Set (ℕ → Packet) :=
 private def acceptedService (t : Threshold) (p : Packet) : Service :=
   ⟨t,.returned,6,packetEquiv p,if (packetEquiv p).val < (threshold t).val then 0 else 1⟩
 
-private theorem prefix_reset (t : Threshold) (ω : ℕ → Packet) (m : ℕ)
+theorem prefix_reset (t : Threshold) (ω : ℕ → Packet) (m : ℕ)
     (h : ∀ j < m, 100 ≤ (packetEquiv (ω j)).val) :
     trialRun (entry t) ω m = entry t := by
   induction m with
