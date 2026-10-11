@@ -7149,3 +7149,136 @@ neither a least-counterexample bound nor an all-integer verification
 below the interval; Polak's separate huge finite sweep is not used.
 The full signed all-integer target beyond this finite interval, its
 formal analytic suppliers and RH remain unproved.
+
+## Project application: a seven-eighths ceiling lowers the actual-sample cut
+
+The original full coefficient (M1), estimate (H5) and
+“A smaller moving cut from joint density and zero-free support” can be
+consumed on the actual first-prime event samples. With the additional
+seven-eighths ceiling recorded in the
+[OpenAI source interface](../Analytic/openai2026quasirh.md), this gives a
+smaller complete remainder at the detector's sample-moment scale. It is a
+conditional ordinary application of existing sources, with no new
+zero-free theorem or Lean certification.
+
+The extra premise is precisely
+
+$$
+\beta\le\frac78\quad\text{for every actual nontrivial zeta zero}.
+\tag{ASC1}
+$$
+
+Equality remains allowed. The pinned upstream declaration is
+[`OAI.riemannZeta_ne_zero_of_seven_eighths_lt_re`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean).
+Its conclusion is used as an external analytic input; its complete
+transitive proof closure has not been compiled or independently certified
+here. Project Lean 4.33.0 and upstream Lean 4.34.1 remain distinct. The
+stronger conditional completed-probe ceiling in the linked project note
+is not used.
+
+### Every event retains its own clock and complete response
+
+Let $\mathcal P_X$ consist of the first-prime events $p$ with
+$X\le b_p<3X$, using the largest inclusive optimizer $C_{b_p}$.
+Put $A_p=\log C_{b_p}$, $L=\log X$ and $T(x)=\sqrt x\log x$.
+The original full-layer and PNT suppliers, as used in the
+[event-state construction](../Analytic/mantovanelli2026primeworkload.md),
+give, for sufficiently large $X$,
+
+$$
+A_p\in[X/2,4X],\qquad m=|\mathcal P_X|\ll X/L.
+\tag{ASC2}
+$$
+
+All higher and simultaneous layers remain in $C_{b_p}$; $A_p$ is not
+identified with the event price $b_p$. Keep the original complete formula
+$U_p=-T(A_p)I_\psi(A_p)$ and its elementary correction $r_{A_p}$.
+For $H=X^{3/10}$ use the exact split
+
+$$
+U_p=V_p(H)+e_p(H),\quad
+V_p(H)=T(A_p)\sum_{|\gamma|\le H}m_\rho F_{A_p}(\rho)+r_{A_p},\quad
+e_p(H)=T(A_p)\sum_{|\gamma|>H}m_\rho F_{A_p}(\rho).
+\tag{ASC3}
+$$
+
+These sums range over distinct actual zeros with multiplicity $m_\rho$
+exactly once. Both ordinate signs and all actual real parts are retained.
+Every zero exactly at $H$ stays in the head. The full pole and trivial-zero
+correction stays in $r_{A_p}$.
+
+### Consume the existing density layer at its new endpoint
+
+For $5/8\le\sigma\le7/8$, reuse the existing
+Chourasiya–Simonič density supplier with
+$d(\sigma)=3(1-\sigma)/(2-\sigma)$. Its inclusive count and exclusive
+suffix give
+
+$$
+\sum_{\gamma>H,\,\beta\ge\sigma}\frac{m_\rho}{\gamma^2}
+\ll H^{d(\sigma)-2}(\log H)^3,
+\quad H\ge3\cdot10^{12}.
+$$
+
+Under (ASC1), the original layer decomposition, including the full-count
+base layer, therefore gives, uniformly for $x\in[X/2,4X]$,
+
+$$
+\sum_{|\gamma|>H}\frac{m_\rho x^{\beta-1/2}}{\gamma^2}
+\ll \frac{x^{1/8}\log H}{H}
++\log x(\log H)^3\int_{5/8}^{7/8}
+ x^{\sigma-1/2}H^{d(\sigma)-2}\,d\sigma.
+\tag{ASC4}
+$$
+
+Set $f(\sigma)=(\sigma-1/2)\log x+(d(\sigma)-2)\log H$.
+Since $d'(\sigma)=-3/(2-\sigma)^2$, $H=X^{3/10}$ gives
+$f'(\sigma)\ge(13/45)L+O(1)$ throughout this interval.
+For sufficiently large $X$ it is at least $(13/90)L$.
+The integral in (ASC4) is thus at most
+$90e^{f(7/8)}/(13L)$. Here $d(7/8)=1/3$, so
+$e^{f(7/8)}\ll X^{3/8}H^{-5/3}=X^{-1/8}$.
+This cancels the displayed outer logarithm. The original complete
+coefficient bound (H5), with its remainder retained, yields
+
+$$
+|e_p(H)|\ll X^{-7/40}L+X^{-1/8}L^3
+\quad\text{for every actual sample }p\in\mathcal P_X.
+\tag{ASC5}
+$$
+
+### The full sample remainder pays the detector scale
+
+Using (ASC2) and $(a+b)^2\le2a^2+2b^2$ gives
+
+$$
+\sum_{p\in\mathcal P_X}|e_p(H)|^2
+\ll X^{13/20}L+X^{3/4}L^5
+=o\!\left(Q(X)\right),\qquad
+Q(X)=\frac{X^{3/4}e^{L^{1/4}/2}}{L^2}.
+\tag{ASC6}
+$$
+
+Indeed, the quotient is bounded by
+$O(X^{-1/10}L^3e^{-L^{1/4}/2}+L^7e^{-L^{1/4}/2})\to0$.
+For this exact split, the $1$-Lipschitz map $z\mapsto(z-1/2)_+$ gives
+
+$$
+\left|\|(U_p-1/2)_+\|_2-\|(V_p(H)-1/2)_+\|_2\right|
+\le\|e(H)\|_2=o(\sqrt{Q(X)}).
+\tag{ASC7}
+$$
+
+Thus all head-tail cross effects are paid at the norm level, without
+decorrelation. Also $\#\{p:|e_p(H)|>\eta\}=o(Q(X))$ for each fixed
+$\eta>0$. The new cut is smaller than $X^{5/16}$ by the factor
+$X^{-1/80}\to0$, under the additional premise (ASC1).
+
+The complete signed head and a sufficient one-sided actual-sample
+occupancy or positive-excess bound remain unpaid. The original signed
+Landau suffix (J4) is retained; its stated errors alone do not furnish
+this sample-square estimate at $H=X^{3/10}$.
+No growing event-dependent selector is inserted into a fixed-parameter
+OpenAI correlation theorem. No numerical common starting $X$, transfer
+of the $4.03\cdot10^{46}$ global-maximizer bound, least-counterexample
+bound, full Robin/RH proof, or official acceptance is supplied.
