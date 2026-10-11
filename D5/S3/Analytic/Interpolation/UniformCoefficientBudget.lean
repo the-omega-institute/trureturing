@@ -8,6 +8,7 @@
 
 import D5.S3.Analytic.SincSquareDerivativeBudget
 import Mathlib.Data.Finsupp.Basic
+import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.Analysis.Calculus.LocalExtr.Rolle
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
@@ -341,7 +342,8 @@ theorem atomic_endpoint_certificate (α β : ℝ →₀ ℝ) (η b y : ℝ)
         mul_le_mul_of_nonneg_left hb (pow_nonneg (inv_nonneg.mpr hδ.le) j)
       _ = (j.factorial : ℝ) * B j := by
         dsimp [B]
-        rw [show 8 / (η * δ) = δ⁻¹ * (8 / η) by ring, mul_pow]
+        rw [show 8 / (η * δ) = δ⁻¹ * (8 / η) by
+          simp [div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc], mul_pow]
         ring
   have hbudget : coeffL1 I ≤ ∑ j ∈ range s.card, (16 / (η * δ))^j / (2*j).factorial := by
     refine (interpolate_coeffL1_le s 0 y f B hs (fun x hx => ?_)
@@ -401,5 +403,269 @@ theorem atomic_endpoint_certificate (α β : ℝ →₀ ℝ) (η b y : ℝ)
       _ ≤ _ := mul_le_mul_of_nonneg_left (by linarith) (by positivity)
   · rw [coeffL1_C_mul, abs_of_pos (by positivity : (0 : ℝ) < 2 / η)]
     exact mul_le_mul_of_nonneg_left hbudget (by positivity)
+
+/-- The even factorial denominator supplies a square in the truncation order. -/
+private theorem factorial_series_le (z : ℝ) (hz : 0 ≤ z) (q : ℕ) (hq : 0 < q) :
+    (∑ j ∈ range (q + 1), z ^ j / (2 * j).factorial) ≤
+      (Real.exp 1 * max 1 (z / (q : ℝ)^2)) ^ q := by
+  let B := max 1 (z / (q : ℝ)^2)
+  have hB : 1 ≤ B := le_max_left _ _
+  have hqR : (0 : ℝ) < q := Nat.cast_pos.mpr hq
+  have hzB : z ≤ B * (q : ℝ)^2 := by
+    exact (div_le_iff₀ (sq_pos_of_pos hqR)).mp (le_max_right _ _)
+  calc
+    (∑ j ∈ range (q + 1), z ^ j / (2 * j).factorial) ≤
+        ∑ j ∈ range (q + 1), B^q * ((q : ℝ)^(2*j) / (2*j).factorial) := by
+      apply sum_le_sum
+      intro j hj
+      have hjq : j ≤ q := Nat.le_of_lt_succ (mem_range.mp hj)
+      have hp := (pow_le_pow_left₀ hz hzB j).trans
+        (show (B * (q : ℝ)^2)^j ≤ B^q * (q : ℝ)^(2*j) by
+          rw [mul_pow, ← pow_mul]
+          exact mul_le_mul_of_nonneg_right (pow_le_pow_right₀ hB hjq) (by positivity))
+      simpa only [mul_div_assoc] using
+        div_le_div_of_nonneg_right hp (by positivity : (0 : ℝ) ≤ (2*j).factorial)
+    _ = B^q * ∑ j ∈ range (q + 1), (q : ℝ)^(2*j) / (2*j).factorial :=
+      (mul_sum ..).symm
+    _ ≤ B^q * Real.cosh q := mul_le_mul_of_nonneg_left
+      (sum_le_hasSum (range (q + 1)) (fun j _ => by positivity) (Real.hasSum_cosh (q : ℝ)))
+      (by positivity)
+    _ ≤ B^q * Real.exp q := by
+      apply mul_le_mul_of_nonneg_left _ (by positivity)
+      rw [Real.cosh_eq]
+      have he := Real.exp_le_exp.mpr (show -(q : ℝ) ≤ q by linarith [hqR])
+      linarith
+    _ = (Real.exp 1 * B)^q := by
+      rw [show (q : ℝ) = q * 1 by ring, Real.exp_nat_mul, mul_pow]
+      ring
+
+/-- The sparse endpoint certificate with a square-order coefficient budget. -/
+theorem sparse_endpoint_coefficient_certificate (α β : ℝ →₀ ℝ) (η b y : ℝ)
+    (q : ℕ) (hq : 0 < q) (hN : (α.support ∪ β.support).card ≤ q + 1)
+    (hη : 0 < η) (hby : b < y) (hy : y ≤ 1)
+    (hα : ∀ x, 0 ≤ α x) (hβ : ∀ x, 0 ≤ β x)
+    (hβtotal : β.sum (fun _ w => w) = 1)
+    (hαsupport : ∀ x ∈ α.support, x ∈ Icc 0 y)
+    (hβsupport : ∀ x ∈ β.support, x ∈ Icc 0 b)
+    (hmass : η ≤ α y) :
+    ∃ P : ℝ[X], P.natDegree ≤ q ∧
+      1 ≤ α.sum (fun x w => w * P.eval x) - β.sum (fun x w => w * P.eval x) ∧
+      coeffL1 P ≤ (2 / η) *
+        (Real.exp 1 * max 1 ((16 / (η * (y - b))) / (q : ℝ)^2)) ^ q := by
+  obtain ⟨P, hPdeg, hPsep, hPnorm⟩ := atomic_endpoint_certificate α β η b y
+    hη hby hy hα hβ hβtotal hαsupport hβsupport hmass
+  refine ⟨P, by omega, hPsep, hPnorm.trans ?_⟩
+  apply mul_le_mul_of_nonneg_left _ (by positivity)
+  apply le_trans (sum_le_sum_of_subset_of_nonneg (range_mono hN) (fun j _ _ => ?_))
+    (factorial_series_le _ (by positivity) q hq)
+  positivity
+
+/-- The Laplace curve of finitely supported real atomic weights. -/
+def atomicLaplace (μ : ℝ →₀ ℝ) (t : ℝ) : ℝ :=
+  μ.sum (fun E w => w * Real.exp (-t * E))
+
+/-- A sparse Laplace certificate on one fixed sampling grid.
+No assumption separates atoms, and only the lower endpoint of μ needs a mass bound. -/
+theorem sparse_laplace_grid_certificate (μ ν : ℝ →₀ ℝ) (η gμ gν h : ℝ)
+    (q : ℕ) (hq : 0 < q) (hN : μ.support.card + ν.support.card ≤ q + 1)
+    (hη : 0 < η) (hh : 0 < h) (hg : gμ < gν) (hgμ : 0 ≤ gμ)
+    (hμ : ∀ E, 0 ≤ μ E) (hν : ∀ E, 0 ≤ ν E)
+    (hνtotal : ν.sum (fun _ w => w) = 1)
+    (hμsupport : ∀ E ∈ μ.support, gμ ≤ E)
+    (hνsupport : ∀ E ∈ ν.support, gν ≤ E)
+    (hmass : η ≤ μ gμ) :
+    ∃ a : ℕ → ℝ,
+      1 ≤ ∑ k ∈ range (q + 1), a k *
+        (atomicLaplace μ ((k : ℝ) * h) - atomicLaplace ν ((k : ℝ) * h)) ∧
+      (∑ k ∈ range (q + 1), |a k|) ≤ (2 / η) *
+        (Real.exp 1 * max 1
+          ((16 / (η * (Real.exp (-h * gμ) - Real.exp (-h * gν)))) / (q : ℝ)^2))^q := by
+  classical
+  let x : ℝ ↪ ℝ := ⟨fun E => Real.exp (-h * E), by
+    intro a b hab
+    have he := Real.exp_injective hab
+    exact (mul_right_inj' (neg_ne_zero.mpr hh.ne')).mp he⟩
+  let α := Finsupp.mapDomain x μ
+  let β := Finsupp.mapDomain x ν
+  have hpush (σ : ℝ →₀ ℝ) (F : ℝ → ℝ) :
+      (Finsupp.mapDomain x σ).sum (fun t w => w * F t) =
+        σ.sum (fun E w => w * F (x E)) :=
+    Finsupp.sum_mapDomain_index (fun _ => zero_mul _) (fun _ _ _ => add_mul ..)
+  have hpos (σ : ℝ →₀ ℝ) (hσ : ∀ E, 0 ≤ σ E) (t : ℝ) :
+      0 ≤ (Finsupp.mapDomain x σ) t := by
+    by_cases ht : (Finsupp.mapDomain x σ) t = 0
+    · rw [ht]
+    · obtain ⟨E, rfl⟩ := Finsupp.mem_range_of_mapDomain_ne_zero ht
+      simpa only [Finsupp.mapDomain_apply x.injective] using hσ E
+  have hsupp (σ : ℝ →₀ ℝ) (g : ℝ) (hσ : ∀ E ∈ σ.support, g ≤ E) :
+      ∀ t ∈ (Finsupp.mapDomain x σ).support, t ∈ Icc 0 (x g) := by
+    intro t ht
+    rw [Finsupp.support_mapDomain_embedding] at ht
+    obtain ⟨E, hE, rfl⟩ := mem_map.mp ht
+    refine ⟨(Real.exp_pos _).le, Real.exp_le_exp.mpr ?_⟩
+    exact mul_le_mul_of_nonpos_left (hσ E hE) (neg_nonpos.mpr hh.le)
+  have htotal : β.sum (fun _ w => w) = 1 := by
+    simpa only [mul_one] using (hpush ν (fun _ => 1)).trans (by simpa using hνtotal)
+  have hcard : (α.support ∪ β.support).card ≤ q + 1 := by
+    apply (Finset.card_union_le _ _).trans
+    simpa only [α, β, Finsupp.support_mapDomain_embedding, card_map] using hN
+  obtain ⟨P, hdeg, hsep, hnorm⟩ := sparse_endpoint_coefficient_certificate α β η (x gν) (x gμ)
+    q hq hcard hη (Real.exp_lt_exp.mpr (by nlinarith))
+    (by exact Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (by linarith) hgμ))
+    (hpos μ hμ) (hpos ν hν) htotal (hsupp μ gμ hμsupport) (hsupp ν gν hνsupport)
+    (by simpa only [α, Finsupp.mapDomain_apply x.injective] using hmass)
+  have hpoly (σ : ℝ →₀ ℝ) :
+      (Finsupp.mapDomain x σ).sum (fun t w => w * P.eval t) =
+        ∑ k ∈ range (q + 1), P.coeff k * atomicLaplace σ ((k : ℝ) * h) := by
+    rw [hpush]
+    change (∑ E ∈ σ.support, σ E * P.eval (x E)) = _
+    calc
+      _ = ∑ E ∈ σ.support, ∑ k ∈ range (q + 1),
+          P.coeff k * (σ E * Real.exp (-((k : ℝ) * h) * E)) := by
+        apply sum_congr rfl
+        intro E hE
+        rw [eval_eq_sum_range' (Nat.lt_succ_of_le hdeg), mul_sum]
+        apply sum_congr rfl
+        intro k hk
+        change σ E * (P.coeff k * Real.exp (-h * E)^k) = _
+        rw [← Real.exp_nat_mul]
+        rw [show (k : ℝ) * (-h * E) = -((k : ℝ) * h) * E by ring]
+        ring
+      _ = ∑ k ∈ range (q + 1), ∑ E ∈ σ.support,
+          P.coeff k * (σ E * Real.exp (-((k : ℝ) * h) * E)) := sum_comm
+      _ = _ := by simp only [atomicLaplace, Finsupp.sum, mul_sum]
+  refine ⟨P.coeff, ?_, ?_⟩
+  · rw [hpoly, hpoly] at hsep
+    simpa only [mul_sub, sum_sub_distrib] using hsep
+  · rw [← coeffL1_eq_sum_range_of_natDegree_lt P (Nat.lt_succ_of_le hdeg)]
+    exact hnorm
+
+/-- Sparse Laplace separation with one jointly chosen degree and legal time grid.
+The scale condition is satisfied by the sparse branch of the uniform order selection. -/
+theorem sparse_laplace_window_certificate (μ ν : ℝ →₀ ℝ) (η E gμ gν U : ℝ)
+    (m : ℕ) (hm : 0 < m) (hU : 0 < U) (hE : 0 < E)
+    (hη : 0 < η) (hη1 : η ≤ 1) (hgμ : 0 ≤ gμ) (hg : gμ < gν) (hgν : gν ≤ E)
+    (hμ : ∀ t, 0 ≤ μ t) (hν : ∀ t, 0 ≤ ν t)
+    (hνtotal : ν.sum (fun _ w => w) = 1)
+    (hμsupport : ∀ t ∈ μ.support, gμ ≤ t)
+    (hνsupport : ∀ t ∈ ν.support, gν ≤ t)
+    (hmass : η ≤ μ gμ) (hμcard : μ.support.card ≤ m) (hνcard : ν.support.card ≤ m)
+    (hmcap : m ≤ ⌈3 / Real.sqrt (η * ((gν - gμ) / E))⌉₊) :
+    let q := 2 * m - 1
+    let M := max 1 ((q : ℝ) / U)
+    let h := 1 / (M * E)
+    ∃ a : ℕ → ℝ,
+      (∀ k ≤ q, (k : ℝ) * h ∈ Icc 0 (U / E)) ∧
+      1 ≤ ∑ k ∈ range (q + 1), a k *
+        (atomicLaplace μ ((k : ℝ) * h) - atomicLaplace ν ((k : ℝ) * h)) ∧
+      (∑ k ∈ range (q + 1), |a k|) ≤
+        (288 * M / (η^2 * (m : ℝ)^2 * ((gν - gμ) / E)))^q := by
+  classical
+  dsimp only
+  let q := 2 * m - 1
+  let M := max 1 ((q : ℝ) / U)
+  let h := 1 / (M * E)
+  let Δ := (gν - gμ) / E
+  let δ := Real.exp (-h * gμ) - Real.exp (-h * gν)
+  let t := M / ((m : ℝ)^2 * Δ)
+  have hq : 0 < q := by dsimp [q]; omega
+  have hmq : m ≤ q := by dsimp [q]; omega
+  have hqR : (0 : ℝ) < q := Nat.cast_pos.mpr hq
+  have hmR : (0 : ℝ) < m := Nat.cast_pos.mpr hm
+  have hM1 : 1 ≤ M := le_max_left _ _
+  have hM : 0 < M := zero_lt_one.trans_le hM1
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hΔ : 0 < Δ := div_pos (sub_pos.mpr hg) hE
+  have hδ : 0 < δ := sub_pos.mpr (Real.exp_lt_exp.mpr (by nlinarith))
+  have ht : 0 < t := by dsimp [t]; positivity
+  have hscale : (m : ℝ)^2 * Δ ≤ 16 / η := by
+    have hΔ1 : Δ ≤ 1 := (div_le_one hE).mpr (by linarith)
+    have hηΔ : 0 < η * Δ := mul_pos hη hΔ
+    have hsqrt : 0 < Real.sqrt (η * Δ) := Real.sqrt_pos.mpr hηΔ
+    have hsqrt1 : Real.sqrt (η * Δ) ≤ 1 := by
+      apply (Real.sqrt_le_one).mpr
+      exact (mul_le_mul_of_nonneg_left hΔ1 hη.le).trans (by simpa using hη1)
+    have hceil := Nat.ceil_lt_add_one (by positivity : 0 ≤ 3 / Real.sqrt (η * Δ))
+    have hmr : (m : ℝ) ≤ (⌈3 / Real.sqrt (η * Δ)⌉₊ : ℕ) := by exact_mod_cast hmcap
+    have hmul := mul_le_mul_of_nonneg_right (hmr.trans hceil.le) hsqrt.le
+    rw [add_mul, div_mul_cancel₀ _ hsqrt.ne', one_mul] at hmul
+    have hprod : (m : ℝ) * Real.sqrt (η * Δ) ≤ 4 := by linarith
+    have hprod0 : 0 ≤ (m : ℝ) * Real.sqrt (η * Δ) := by positivity
+    have hsquare := sq_le_sq₀ hprod0 (by norm_num : (0 : ℝ) ≤ 4) |>.mpr hprod
+    rw [mul_pow, Real.sq_sqrt hηΔ.le] at hsquare
+    apply (le_div_iff₀ hη).mpr
+    nlinarith
+  have htlow : η / 16 ≤ t := by
+    apply (le_div_iff₀ (by positivity : 0 < (m : ℝ)^2 * Δ)).mpr
+    have hs : (m : ℝ)^2 * Δ * η ≤ 16 := (le_div_iff₀ hη).mp hscale
+    nlinarith
+  have hhE : h * E ≤ 1 := by
+    dsimp [h]
+    field_simp
+    exact hM1
+  have hbase : (Real.exp 1)⁻¹ ≤ Real.exp (-h * gν) := by
+    rw [← Real.exp_neg]
+    apply Real.exp_le_exp.mpr
+    have hu := mul_le_mul_of_nonneg_left hgν hh.le
+    linarith
+  have hgap : h * (gν - gμ) * Real.exp (-h * gν) ≤ δ := by
+    have he := mul_le_mul_of_nonneg_right (Real.add_one_le_exp (h * (gν - gμ)))
+      (Real.exp_pos (-h * gν)).le
+    rw [← Real.exp_add, show h * (gν - gμ) + (-h * gν) = -h * gμ by ring] at he
+    dsimp [δ]
+    nlinarith
+  have hδlower : Δ ≤ 3 * M * δ := by
+    have hfirst := (mul_le_mul_of_nonneg_left hbase
+      (mul_nonneg hh.le (sub_nonneg.mpr hg.le))).trans hgap
+    have hid : h * (gν - gμ) * (Real.exp 1)⁻¹ = Δ / (Real.exp 1 * M) := by
+      dsimp [h, Δ]
+      ring
+    rw [hid] at hfirst
+    have hb := (div_le_iff₀ (mul_pos (Real.exp_pos 1) hM)).mp hfirst
+    have he := mul_le_mul_of_nonneg_right Real.exp_one_lt_three.le (mul_nonneg hM.le hδ.le)
+    nlinarith
+  have hmqsq : (m : ℝ)^2 ≤ (q : ℝ)^2 := by exact_mod_cast Nat.pow_le_pow_left hmq 2
+  have hz : (16 / (η * δ)) / (q : ℝ)^2 ≤ 48 * t / η := by
+    rw [div_div, show 48 * t / η = (48 * M) / (η * (m : ℝ)^2 * Δ) by dsimp [t]; ring]
+    apply (div_le_div_iff₀ (by positivity) (by positivity)).mpr
+    have ha := mul_le_mul_of_nonneg_left hδlower (sq_nonneg (m : ℝ))
+    have hb := mul_le_mul_of_nonneg_left hmqsq (by positivity : 0 ≤ 3 * M * δ)
+    have hc : (m : ℝ)^2 * Δ ≤ 3 * M * δ * (q : ℝ)^2 := by nlinarith
+    have hd := mul_le_mul_of_nonneg_left hc hη.le
+    nlinarith
+  have hmax : max 1 ((16 / (η * δ)) / (q : ℝ)^2) ≤ 48 * t / η := by
+    apply max_le _ hz
+    apply (le_div_iff₀ hη).mpr
+    linarith
+  have hcoeff : (2 / η) *
+      (Real.exp 1 * max 1 ((16 / (η * δ)) / (q : ℝ)^2))^q ≤
+        (288 * M / (η^2 * (m : ℝ)^2 * Δ))^q := by
+    have ha : 1 ≤ 2 / η := (le_div_iff₀ hη).mpr (by linarith)
+    have hb : Real.exp 1 * max 1 ((16 / (η * δ)) / (q : ℝ)^2) ≤ 144 * t / η := by
+      calc
+        _ ≤ 3 * (48 * t / η) := mul_le_mul Real.exp_one_lt_three.le hmax
+          (by positivity) (by norm_num)
+        _ = _ := by ring
+    calc
+      _ ≤ (2 / η)^q * (144 * t / η)^q := mul_le_mul
+        (by simpa using pow_le_pow_right₀ ha (show 1 ≤ q by omega))
+        (pow_le_pow_left₀ (by positivity) hb q) (by positivity) (by positivity)
+      _ = _ := by
+        rw [← mul_pow]
+        congr 1
+        dsimp [t]
+        ring
+  obtain ⟨a, hsep, hnorm⟩ := sparse_laplace_grid_certificate μ ν η gμ gν h q hq
+    (by dsimp [q]; omega) hη hh hg hgμ hμ hν hνtotal hμsupport hνsupport hmass
+  refine ⟨a, ?_, hsep, hnorm.trans hcoeff⟩
+  intro k hk
+  refine ⟨mul_nonneg (Nat.cast_nonneg _) hh.le, ?_⟩
+  have hkR : (k : ℝ) ≤ q := Nat.cast_le.mpr hk
+  have hwin : (q : ℝ) ≤ M * U := (div_le_iff₀ hU).mp (le_max_right _ _)
+  change (k : ℝ) * (1 / (M * E)) ≤ U / E
+  rw [mul_one_div]
+  apply (div_le_div_iff₀ (mul_pos hM hE) hE).mpr
+  nlinarith [mul_le_mul_of_nonneg_right (hkR.trans hwin) hE.le]
+
 
 end D5.S3.Analytic.Interpolation.UniformCoefficientBudget
