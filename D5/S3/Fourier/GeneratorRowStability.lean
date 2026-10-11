@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Cyclic generator-row correction and equal-amplitude source-energy stability. -/
+   digest: Complete cyclic correction and two-row source-energy stability. -/
 
 import D5.S3.Fourier.FullBispectrumStability
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
@@ -613,6 +613,330 @@ theorem equal_amplitude_signal_energy_stability
     _ = _ := by
       dsimp [sourceEnergy, F]
       field_simp [hN0.ne', hm.ne']
+
+open private phase phase_norm phase_reconstruct radial_identity
+  from D5.S3.Fourier.FullBispectrumStability
+
+private lemma zero_row_amplitudes (a₀ a b m ε : ℝ)
+    (hm : 0 < m) (ha₀ : m ≤ a₀) (ha : m ≤ a) (hb : 0 ≤ b)
+    (hε : 0 ≤ ε) (hsmall : ε ≤ m ^ 3 / 4)
+    (hrow : a₀ * |b ^ 2 - a ^ 2| ≤ ε) :
+    0 < b ∧ 3 * a / 4 ≤ b ∧ b ≤ 5 * a / 4 ∧
+      (b - a) ^ 2 ≤ ε ^ 2 / (3 * a₀ ^ 2 * a ^ 2) := by
+  have ha0 : 0 < a := hm.trans_le ha
+  have h00 : 0 < a₀ := hm.trans_le ha₀
+  have hfloor : m ^ 3 ≤ a₀ * a ^ 2 := by
+    calc
+      m ^ 3 = m * m ^ 2 := by ring
+      _ ≤ a₀ * a ^ 2 := mul_le_mul ha₀ (pow_le_pow_left₀ hm.le ha 2)
+        (sq_nonneg m) h00.le
+  have hs : |b ^ 2 - a ^ 2| ≤ a ^ 2 / 4 := by
+    apply (mul_le_mul_iff_right₀ h00).mp
+    nlinarith [hfloor]
+  have hlo : 3 * a / 4 ≤ b := by
+    nlinarith [neg_abs_le (b ^ 2 - a ^ 2)]
+  have hhi : b ≤ 5 * a / 4 := by
+    nlinarith [le_abs_self (b ^ 2 - a ^ 2)]
+  have hid : |b ^ 2 - a ^ 2| = |b - a| * (b + a) := by
+    rw [show b ^ 2 - a ^ 2 = (b - a) * (b + a) by ring,
+      abs_mul, abs_of_nonneg (add_nonneg hb ha0.le)]
+  have hd : (7 / 4 * a₀ * a) * |b - a| ≤ ε := by
+    rw [hid] at hrow
+    have hh := mul_le_mul_of_nonneg_left (show 7 * a / 4 ≤ b + a by linarith)
+      (mul_nonneg h00.le (abs_nonneg (b - a)))
+    nlinarith
+  have hd2 := (sq_le_sq₀ (by positivity : 0 ≤ (7 / 4 * a₀ * a) * |b - a|) hε).2 hd
+  rw [mul_pow, sq_abs] at hd2
+  refine ⟨by linarith, hlo, hhi, ?_⟩
+  apply (le_div_iff₀ (by positivity : 0 < 3 * a₀ ^ 2 * a ^ 2)).2
+  nlinarith [sq_nonneg (b - a)]
+
+private lemma radial_angle_bound (r : ℂ) (P Q ε δ : ℝ)
+    (hr : ‖r‖ = 1) (hP : 0 < P) (hQ : 0 < Q)
+    (hε : 0 ≤ ε) (hδ : 0 ≤ δ) (hδsmall : δ ≤ 1 / 4)
+    (hscale : ε ≤ P * δ) (hres : ‖(P : ℂ) - (Q : ℂ) * r‖ ≤ ε) :
+    15 * (Complex.arg r) ^ 2 ≤ 16 * δ ^ 2 := by
+  have hunit : r.re ^ 2 + r.im ^ 2 = 1 := by
+    have hh := Complex.normSq_eq_norm_sq r
+    rw [hr] at hh
+    simpa [Complex.normSq_apply, pow_two] using hh
+  have hnorm : ‖(P : ℂ) - (Q : ℂ) * r‖ ^ 2 =
+      P ^ 2 + Q ^ 2 - 2 * P * Q * r.re := by
+    rw [← Complex.normSq_eq_norm_sq]
+    simp only [Complex.normSq_apply, Complex.sub_re, Complex.sub_im,
+      Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im]
+    nlinarith [hunit]
+  have hs := (sq_le_sq₀ (norm_nonneg _) hε).2 hres
+  rw [hnorm] at hs
+  have hε2 : ε ^ 2 ≤ P ^ 2 * δ ^ 2 := by
+    simpa [mul_pow] using (sq_le_sq₀ hε (mul_nonneg hP.le hδ)).2 hscale
+  have hδ2 : δ ^ 2 ≤ (1 / 16 : ℝ) := by nlinarith
+  have hsmall := mul_le_mul_of_nonneg_left hδ2 (sq_nonneg P)
+  have hre : 0 < r.re := by
+    by_contra hn
+    have hh := mul_nonpos_of_nonneg_of_nonpos (by positivity : 0 ≤ P * Q)
+      (le_of_not_gt hn)
+    nlinarith [sq_pos_of_pos hP, sq_nonneg Q]
+  have hproj : P ^ 2 * r.im ^ 2 ≤ ε ^ 2 := by
+    nlinarith [sq_nonneg (Q - P * r.re), hunit]
+  have him : r.im ^ 2 ≤ δ ^ 2 := by
+    apply (mul_le_mul_iff_right₀ (sq_pos_of_pos hP)).mp
+    exact hproj.trans hε2
+  let x := |Complex.arg r|
+  have hx : 0 ≤ x := abs_nonneg _
+  have hxlt : x < Real.pi / 2 :=
+    Complex.abs_arg_lt_pi_div_two_iff.mpr (Or.inl hre)
+  have hcos : Real.cos x = r.re := by
+    dsimp [x]
+    rw [Real.cos_abs, Complex.cos_arg (norm_ne_zero_iff.mp (by rw [hr]; norm_num)), hr,
+      div_one]
+  have hsin : (Real.sin x) ^ 2 = r.im ^ 2 := by
+    nlinarith [Real.sin_sq_add_cos_sq x, hunit]
+  have hsin0 : 0 ≤ Real.sin x := Real.sin_nonneg_of_mem_Icc
+    ⟨hx, hxlt.le.trans (by nlinarith [Real.pi_pos])⟩
+  have htan := Real.le_tan hx hxlt
+  rw [Real.tan_eq_sin_div_cos, hcos] at htan
+  have hmul : x * r.re ≤ Real.sin x := (le_div_iff₀ hre).mp htan
+  have hsquare := (sq_le_sq₀ (mul_nonneg hx hre.le) hsin0).2 hmul
+  rw [mul_pow, hsin] at hsquare
+  have hcoslower : 15 / 16 ≤ r.re ^ 2 := by nlinarith [him]
+  have hh := mul_le_mul_of_nonneg_left hcoslower (sq_nonneg x)
+  have hx2 : x ^ 2 = (Complex.arg r) ^ 2 := by dsimp [x]; rw [sq_abs]
+  rw [hx2] at hh hsquare
+  nlinarith
+
+/-- Two complete rows control arbitrary complex signals using only source energy. -/
+theorem unequal_amplitude_signal_energy_stability
+    {N : ℕ} [NeZero N] (f g : ZMod N → ℂ) (m ε : ℝ)
+    (hm : 0 < m) (hε : 0 ≤ ε) (hεsmall : ε ≤ m ^ 3 / 4)
+    (hdc : ZMod.dft f 0 = ZMod.dft g 0)
+    (hF : ∀ k, m ≤ ‖ZMod.dft f k‖)
+    (hzero : ∀ k,
+      ‖ZMod.dft g 0 * ZMod.dft g k * conj (ZMod.dft g k) -
+        ZMod.dft f 0 * ZMod.dft f k * conj (ZMod.dft f k)‖ ≤ ε)
+    (hgen : ∀ k,
+      ‖ZMod.dft g k * ZMod.dft g 1 * conj (ZMod.dft g (k + 1)) -
+        ZMod.dft f k * ZMod.dft f 1 * conj (ZMod.dft f (k + 1))‖ ≤ ε) :
+    ∃ t : ZMod N,
+      ∑ x, ‖g x - f (x - t)‖ ^ 2 ≤
+        ε ^ 2 * sourceEnergy f * (1 + (N - 1 : ℝ) ^ 2) / (3 * m ^ 6) := by
+  classical
+  by_cases hN : N = 1
+  · subst N
+    have hdft (u : ZMod 1 → ℂ) : ZMod.dft u 0 = u 0 := by
+      rw [ZMod.dft_apply_zero]
+      exact Fintype.sum_eq_single 0 (fun x hx => (hx (Subsingleton.elim _ _)).elim)
+    have hfg0 : f 0 = g 0 := (hdft f).symm.trans (hdc.trans (hdft g))
+    have hfg : f = g := by
+      funext x
+      have hx : x = 0 := Subsingleton.elim _ _
+      simpa only [hx] using hfg0
+    have he : (Finset.univ : Finset (ZMod 1)).erase 0 = ∅ := by
+      ext k
+      have hk : k = 0 := Subsingleton.elim _ _
+      simp [hk]
+    have henergy : sourceEnergy f = 0 := by
+      unfold sourceEnergy
+      rw [he, Finset.sum_empty, mul_zero]
+    exact ⟨0, by simp [← hfg, henergy]⟩
+  let F : ZMod N → ℂ := ZMod.dft f
+  let J : ZMod N → ℂ := ZMod.dft g
+  have hFn (k : ZMod N) : F k ≠ 0 :=
+    norm_ne_zero_iff.mp (hm.trans_le (hF k)).ne'
+  have hFp (k : ZMod N) : 0 < ‖F k‖ := hm.trans_le (hF k)
+  have ha (k : ZMod N) :
+      0 < ‖J k‖ ∧ 3 * ‖F k‖ / 4 ≤ ‖J k‖ ∧ ‖J k‖ ≤ 5 * ‖F k‖ / 4 ∧
+        (‖J k‖ - ‖F k‖) ^ 2 ≤ ε ^ 2 / (3 * ‖F 0‖ ^ 2 * ‖F k‖ ^ 2) := by
+    apply zero_row_amplitudes ‖F 0‖ ‖F k‖ ‖J k‖ m ε hm (hF 0) (hF k)
+      (norm_nonneg _) hε hεsmall
+    have hh := hzero k
+    change ‖J 0 * J k * conj (J k) - F 0 * F k * conj (F k)‖ ≤ ε at hh
+    have hdc' : F 0 = J 0 := hdc
+    rw [← hdc'] at hh
+    have hid : F 0 * J k * conj (J k) - F 0 * F k * conj (F k) =
+        F 0 * ((‖J k‖ ^ 2 - ‖F k‖ ^ 2 : ℝ) : ℂ) := by
+      rw [Complex.ofReal_sub, ← Complex.normSq_eq_norm_sq,
+        ← Complex.normSq_eq_norm_sq, Complex.normSq_eq_conj_mul_self,
+        Complex.normSq_eq_conj_mul_self]
+      ring
+    simpa only [hid, norm_mul, Complex.norm_real, Real.norm_eq_abs] using hh
+  have hJn (k : ZMod N) : J k ≠ 0 := norm_ne_zero_iff.mp (ha k).1.ne'
+  let z : ZMod N → ℂ := fun k => phase (J k) * conj (phase (F k))
+  have hz (k : ZMod N) : ‖z k‖ = 1 := by
+    simp only [z, norm_mul, Complex.norm_conj, phase_norm _ (hFn k),
+      phase_norm _ (hJn k), mul_one]
+  have hz0 : z 0 = 1 := by
+    have hdc' : F 0 = J 0 := hdc
+    dsimp [z]
+    rw [← hdc', unit_mul_conj _ (phase_norm _ (hFn 0))]
+  let r : ZMod N → ℂ := fun k => z k * z 1 * conj (z (k + 1))
+  have hr (k : ZMod N) : ‖r k‖ = 1 := by
+    simp only [r, norm_mul, Complex.norm_conj, hz, mul_one]
+  have hr0 : r 0 = 1 := by
+    dsimp [r]
+    rw [hz0, zero_add, one_mul, unit_mul_conj _ (hz 1)]
+  let δ : ℝ := ε / m ^ 3
+  have hm3 : 0 < m ^ 3 := by positivity
+  have hδ : 0 ≤ δ := div_nonneg hε hm3.le
+  have hδsmall : δ ≤ 1 / 4 := by
+    apply (div_le_iff₀ hm3).2
+    nlinarith
+  have hang (k : ZMod N) : 15 * (Complex.arg (r k)) ^ 2 ≤ 16 * δ ^ 2 := by
+    let U := phase (F k) * phase (F 1) * conj (phase (F (k + 1)))
+    let V := phase (J k) * phase (J 1) * conj (phase (J (k + 1)))
+    let P := ‖F k‖ * ‖F 1‖ * ‖F (k + 1)‖
+    let Q := ‖J k‖ * ‖J 1‖ * ‖J (k + 1)‖
+    have hU : ‖U‖ = 1 := by
+      simp only [U, norm_mul, Complex.norm_conj, phase_norm _ (hFn _), mul_one]
+    have hrr : r k = V * conj U := by
+      dsimp [r, z, U, V]
+      simp only [map_mul, Complex.conj_conj]
+      ring
+    have hrec (H : ZMod N → ℂ) (hn : ∀ x, H x ≠ 0) :
+        ((‖H k‖ * ‖H 1‖ * ‖H (k + 1)‖ : ℝ) : ℂ) *
+          (phase (H k) * phase (H 1) * conj (phase (H (k + 1)))) =
+            H k * H 1 * conj (H (k + 1)) := by
+      push_cast
+      have h₁ := phase_reconstruct (H k) (hn k)
+      have h₂ := phase_reconstruct (H 1) (hn 1)
+      have h₃ := congrArg conj (phase_reconstruct (H (k + 1)) (hn (k + 1)))
+      simp only [map_mul, Complex.conj_ofReal] at h₃
+      rw [show (‖H k‖ : ℂ) * ‖H 1‖ * ‖H (k + 1)‖ *
+          (phase (H k) * phase (H 1) * conj (phase (H (k + 1)))) =
+          ((‖H k‖ : ℂ) * phase (H k)) * ((‖H 1‖ : ℂ) * phase (H 1)) *
+            ((‖H (k + 1)‖ : ℂ) * conj (phase (H (k + 1)))) by ring, h₁, h₂, h₃]
+    have hrad : (P : ℂ) - (Q : ℂ) * r k =
+        ((P : ℂ) * U - (Q : ℂ) * V) * conj U := by
+      rw [hrr]
+      have hu := unit_mul_conj U hU
+      linear_combination -(P : ℂ) * hu
+    have hres : ‖(P : ℂ) - (Q : ℂ) * r k‖ ≤ ε := by
+      rw [hrad, norm_mul, Complex.norm_conj, hU, mul_one]
+      change ‖((‖F k‖ * ‖F 1‖ * ‖F (k + 1)‖ : ℝ) : ℂ) * U -
+        ((‖J k‖ * ‖J 1‖ * ‖J (k + 1)‖ : ℝ) : ℂ) * V‖ ≤ ε
+      rw [hrec F hFn, hrec J hJn, norm_sub_rev]
+      exact hgen k
+    have hPfloor : m ^ 3 ≤ P := by
+      dsimp [P]
+      calc
+        m ^ 3 = m * m * m := by ring
+        _ ≤ ‖F k‖ * ‖F 1‖ * ‖F (k + 1)‖ := by
+          gcongr
+          · exact hF k
+          · exact hF 1
+          · exact hF (k + 1)
+    apply radial_angle_bound (r k) P Q ε δ (hr k) (hm3.trans_le hPfloor)
+      (mul_pos (mul_pos (ha k).1 (ha 1).1) (ha (k + 1)).1)
+      hε hδ hδsmall _ hres
+    calc
+      ε = m ^ 3 * δ := by dsimp [δ]; field_simp
+      _ ≤ P * δ := mul_le_mul_of_nonneg_right hPfloor hδ
+  let θ : ZMod N → ℝ := fun k => Complex.arg (r k)
+  obtain ⟨kmax, _, hmax⟩ := Finset.exists_max_image
+    (Finset.univ : Finset (ZMod N)) (fun k => |θ k|) Finset.univ_nonempty
+  let ω := |θ kmax|
+  have hω : 0 ≤ ω := abs_nonneg _
+  have hω2 : 15 * ω ^ 2 ≤ 16 * δ ^ 2 := by
+    simpa only [ω, θ, sq_abs] using hang kmax
+  have hθ0 : θ 0 = 0 := by simp [θ, hr0]
+  have hθexp (k : ZMod N) : Complex.exp (↑(θ k) * Complex.I) = r k := by
+    have hh := Complex.norm_mul_exp_arg_mul_I (r k)
+    simpa only [hr k, Complex.ofReal_one, one_mul] using hh
+  obtain ⟨t, ht⟩ := complete_cycle_phase_correction z θ ω hz0 hz hθ0 hθexp hω
+    (fun k => hmax k (Finset.mem_univ k))
+  let C : ZMod N → ℂ := fun k => ZMod.stdAddChar (-(k * t))
+  have hN1 : (1 : ℝ) ≤ N := by
+    exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne N)
+  have hNpos : 0 < (N : ℝ) := by linarith
+  have hphase (k : ZMod N) :
+      ‖z k - C k‖ ^ 2 ≤ 4 * (N - 1 : ℝ) ^ 2 * δ ^ 2 / 15 := by
+    have hh := (sq_le_sq₀ (norm_nonneg _) (by positivity : 0 ≤ (N - 1 : ℝ) * ω / 2)).2
+      (ht k)
+    have hωsq : ω ^ 2 ≤ 16 * δ ^ 2 / 15 := by linarith
+    calc
+      ‖z k - C k‖ ^ 2 ≤ ((N - 1 : ℝ) * ω / 2) ^ 2 := hh
+      _ = (N - 1 : ℝ) ^ 2 * ω ^ 2 / 4 := by ring
+      _ ≤ (N - 1 : ℝ) ^ 2 * (16 * δ ^ 2 / 15) / 4 := by gcongr
+      _ = _ := by ring
+  have hamp (k : ZMod N) :
+      (‖J k‖ - ‖F k‖) ^ 2 ≤ ε ^ 2 * ‖F k‖ ^ 2 / (3 * m ^ 6) := by
+    have hden : m ^ 6 ≤ ‖F 0‖ ^ 2 * ‖F k‖ ^ 4 := by
+      calc
+        m ^ 6 = m ^ 2 * m ^ 4 := by ring
+        _ ≤ ‖F 0‖ ^ 2 * ‖F k‖ ^ 4 := by
+          gcongr
+          · exact hF 0
+          · exact hF k
+    apply (ha k).2.2.2.trans
+    apply (div_le_div_iff₀ (mul_pos (mul_pos (by norm_num) (sq_pos_of_pos (hFp 0)))
+        (sq_pos_of_pos (hFp k)))
+      (by positivity : 0 < 3 * m ^ 6)).2
+    have hh := mul_le_mul_of_nonneg_left hden (sq_nonneg ε)
+    nlinarith
+  have hres (k : ZMod N) :
+      ‖J k - C k * F k‖ ^ 2 ≤
+        (ε ^ 2 * (1 + (N - 1 : ℝ) ^ 2) / (3 * m ^ 6)) * ‖F k‖ ^ 2 := by
+    have hcancel : ‖phase (J k) - C k * phase (F k)‖ = ‖z k - C k‖ := by
+      have hid : phase (J k) - C k * phase (F k) = (z k - C k) * phase (F k) := by
+        dsimp [z]
+        have hu := unit_mul_conj (phase (F k)) (phase_norm _ (hFn k))
+        linear_combination -(phase (J k)) * hu
+      rw [hid, norm_mul, phase_norm _ (hFn k), mul_one]
+    have hC : ‖C k‖ = 1 := by
+      dsimp [C]
+      exact (ZMod.stdAddChar : AddChar (ZMod N) ℂ).norm_apply _
+    have hi := radial_identity ‖J k‖ ‖F k‖ (phase (J k)) (C k * phase (F k))
+      (phase_norm _ (hJn k)) (by rw [norm_mul, hC, phase_norm _ (hFn k), mul_one])
+    have hrec : (‖F k‖ : ℂ) * (C k * phase (F k)) = C k * F k := by
+      rw [mul_left_comm, phase_reconstruct _ (hFn k)]
+    rw [phase_reconstruct _ (hJn k), hrec, hcancel] at hi
+    rw [hi]
+    have hp : ‖J k‖ * ‖F k‖ ≤ 5 * ‖F k‖ ^ 2 / 4 := by
+      have hh := mul_le_mul_of_nonneg_right (ha k).2.2.1 (norm_nonneg (F k))
+      nlinarith
+    have hprod := mul_le_mul hp (hphase k) (sq_nonneg _)
+      (by positivity : 0 ≤ 5 * ‖F k‖ ^ 2 / 4)
+    have hphasebound : ‖J k‖ * ‖F k‖ * ‖z k - C k‖ ^ 2 ≤
+        ε ^ 2 * (N - 1 : ℝ) ^ 2 * ‖F k‖ ^ 2 / (3 * m ^ 6) := by
+      have hcoef : (5 * ‖F k‖ ^ 2 / 4) *
+          (4 * (N - 1 : ℝ) ^ 2 * δ ^ 2 / 15) =
+            ε ^ 2 * (N - 1 : ℝ) ^ 2 * ‖F k‖ ^ 2 / (3 * m ^ 6) := by
+        dsimp only [δ]
+        ring
+      exact hprod.trans_eq hcoef
+    have hadd := add_le_add (hamp k) hphasebound
+    calc
+      _ ≤ ε ^ 2 * ‖F k‖ ^ 2 / (3 * m ^ 6) +
+          ε ^ 2 * (N - 1 : ℝ) ^ 2 * ‖F k‖ ^ 2 / (3 * m ^ 6) := hadd
+      _ = _ := by ring
+  have hres0 : ‖J 0 - C 0 * F 0‖ ^ 2 = 0 := by
+    have hdc' : F 0 = J 0 := hdc
+    simp [C, ← hdc']
+  have hsum :
+      ∑ k ∈ (Finset.univ : Finset (ZMod N)).erase 0, ‖J k - C k * F k‖ ^ 2 ≤
+        (ε ^ 2 * (1 + (N - 1 : ℝ) ^ 2) / (3 * m ^ 6)) *
+          ∑ k ∈ (Finset.univ : Finset (ZMod N)).erase 0, ‖F k‖ ^ 2 := by
+    rw [Finset.mul_sum]
+    exact Finset.sum_le_sum (fun k _ => hres k)
+  have hdftres (k : ZMod N) :
+      ZMod.dft (fun x => g x - f (x - t)) k = J k - C k * F k := by
+    dsimp [J, F, C]
+    rw [show (fun x => g x - f (x - t)) = g - (fun x => f (x - t)) by rfl, map_sub]
+    change ZMod.dft g k - ZMod.dft (fun x => f (x - t)) k = _
+    rw [dft_translation]
+  refine ⟨t, ?_⟩
+  rw [cyclic_parseval, Fintype.expect_eq_sum_div_card, ZMod.card]
+  rw [show (∑ x : ZMod N, ‖ZMod.dft (fun x => g x - f (x - t)) x‖ ^ 2) =
+      ‖J 0 - C 0 * F 0‖ ^ 2 +
+        ∑ k ∈ (Finset.univ : Finset (ZMod N)).erase 0, ‖J k - C k * F k‖ ^ 2 by
+    simp_rw [hdftres]
+    rw [← Finset.sum_erase_add _ _ (Finset.mem_univ 0)]
+    ring, hres0, zero_add]
+  calc
+    _ ≤ ((ε ^ 2 * (1 + (N - 1 : ℝ) ^ 2) / (3 * m ^ 6)) *
+        ∑ k ∈ (Finset.univ : Finset (ZMod N)).erase 0, ‖F k‖ ^ 2) / N :=
+      div_le_div_of_nonneg_right hsum hNpos.le
+    _ = _ := by dsimp [sourceEnergy, F]; ring
 
 end
 end D5.S3.Fourier.GeneratorRowStability
