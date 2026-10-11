@@ -6261,3 +6261,47 @@ Wang 等人的 *Experimental genuine quantum nonlocality in the triangle network
 \text{量子 triangle-network 律}.
 \]
 
+
+
+### 锚点 36.4（自旋网络中的纠缠与曲率）
+
+*Curvature from multipartite entanglement in quantum gravity states*（Physical Review D 108, 046010, 2023）研究以图、自旋网络和非平凡 \(SU(2)\) holonomy 表示的量子几何，并分析多体纠缠与有界区域内禀曲率之间的关系。
+
+它与本卷的关系是结构性的：
+
+\[
+\text{图连接}
++
+\text{边 holonomy}
++
+\text{量子态纠缠}
+\longrightarrow
+\text{曲率候选量}.
+\]
+
+本卷目前只使用一般有限 CPTP holonomy 缺陷
+
+\[
+\Omega_\gamma=\mathcal E_\gamma-\operatorname{id}
+\]
+
+和有效电阻度量。自旋网络论文并不证明这两个量等于其几何曲率；因此它只能支持后续构造的方向，不能升级当前的定理。
+
+### 锚点 36.5（可叠加网络拓扑）
+
+Arrighi、Durbec 和 Wilson 的 *Quantum networks theory*（Quantum 8, 1508, 2024）研究网络连接本身处于量子叠加的过程模型，包括连接、分裂和重连的相干演化。
+
+这提示一个严格的后续扩展：把当前固定图 \(G=(V,E)\) 替换为有限图标签空间
+
+\[
+\mathcal G=\{G_1,\ldots,G_m\},
+\]
+
+并在
+
+\[
+\mathbb C^{\mathcal G}\otimes H_{\mathrm{field}}
+\]
+
+上定义 CPTP 映射。当前 PR 只处理固定图和固定层间 bonding，因此不包含量子叠加拓扑。该扩展必须先定义图标签的状态空间、重连信道和逆极限相容性，不能从现有 holonomy 定义直接推导。
+
