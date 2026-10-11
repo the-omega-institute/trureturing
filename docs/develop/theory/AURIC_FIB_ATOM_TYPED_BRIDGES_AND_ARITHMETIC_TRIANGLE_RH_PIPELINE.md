@@ -6822,7 +6822,7 @@ QCD(K)
 
 ### 外部数学锚点
 
-离散熵曲率与 Markov 链的研究已经给出另一条成熟的几何路线：有限 Markov 链可用熵沿离散运输度量的凸性定义 Ricci 型下界，并证明曲率界的张量化。该路线可作为本节 \(CD_G\) 证书之后的后续桥接，但不能把两种曲率定义视为同一对象。参考 Erbar--Maas, *Ricci curvature of finite Markov chains via convexity of the entropy*, arXiv:1111.2687。genui{"citation":{"ref":"turn22academia0"}}
+离散熵曲率与 Markov 链的研究已经给出另一条成熟的几何路线：有限 Markov 链可用熵沿离散运输度量的凸性定义 Ricci 型下界，并证明曲率界的张量化。该路线可作为本节 \(CD_G\) 证书之后的后续桥接，但不能把两种曲率定义视为同一对象。参考 Erbar--Maas, *Ricci curvature of finite Markov chains via convexity of the entropy*, [arXiv:1111.2687](https://arxiv.org/abs/1111.2687)。
 
 因此，当前文件同时保留两条可检验路线：
 
@@ -6840,11 +6840,11 @@ QCD(K)
 两条路线的共同输入是有限 Markov/Dirichlet 数据。它们的极限识别、相互等价及其与物理引力的关系，都必须另行证明。
 
 
-## 39. FIB Fisher 结构作为量子 Fisher 几何的精确对角限制
+## 40. FIB Fisher 结构作为量子 Fisher 几何的精确对角限制
 
 前文已经把五态概率律嵌入对角密度矩阵。本节证明一个可以直接形式化的精确桥接：在可交换的对角扇区，量子 SLD Fisher 信息恰好等于 FIB 的经典 Fisher 信息。因此这里的“量子几何”不是类比，而是同一有限矩阵计算在两个记号系统中的相等。
 
-### 定义 39.1（SLD 与量子 Fisher 型）
+### 定义 40.1（SLD 与量子 Fisher 型）
 
 令 \(\rho_\theta\) 是有限维严格正定密度矩阵族，令
 
@@ -6877,7 +6877,7 @@ F_Q(\rho_\theta)
 
 在本节中只处理严格正定有限维状态，避免支撑变化带来的额外伪逆条件。
 
-### 定理 39.2（对角量子 Fisher 等于 FIB Fisher）
+### 定理 40.2（对角量子 Fisher 等于 FIB Fisher）
 
 令
 
@@ -6971,7 +6971,7 @@ Bures 线元的公式直接给出第二项。证毕。
 
 该定理说明：FIB 的隐藏 seam 并不是一个凭空增加的“量子变量”。它在对角量子态流形中对应一个严格定义的 Hermitian 切向扰动。若要研究真正的量子相干，还必须允许非对角密度矩阵并给出额外的非交换动力学。
 
-### 定理 39.3（节点乘积场的 Fisher 可加性）
+### 定理 40.3（节点乘积场的 Fisher 可加性）
 
 令 \(V\) 为有限图顶点集。每个顶点有严格正定 FIB 对角态
 
@@ -7057,7 +7057,7 @@ I\otimes\cdots\otimes L_v\otimes\cdots\otimes I.
 
 证毕。
 
-### 推论 39.4（层级 FIB Fisher 能量的量子解释）
+### 推论 40.4（层级 FIB Fisher 能量的量子解释）
 
 如果第 \(j\) 层场在每个节点使用独立乘积态，并将节点权重吸收到参数速度中，则
 
