@@ -33,8 +33,12 @@ internal interface IWorktreeProcessRunner
 }
 
 internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancellationToken = default,
-    LeanCacheCommandObservation? observation = null) : IWorktreeProcessRunner
+    LeanCacheCommandObservation? observation = null,
+    IReadOnlyDictionary<string, string>? environment = null) : IWorktreeProcessRunner
 {
+    internal ProductionWorktreeProcessRunner WithEnvironment(IReadOnlyDictionary<string, string> variables) =>
+        new(cancellationToken, observation, variables);
+
     public ProcessOutput Run(
         string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,
         Stream? standardOutput, Stream? standardError)
@@ -43,7 +47,8 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
         try
         {
             var result = BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
-                64 * 1024 * 1024, standardOutput: observation?.Output(standardOutput) ?? standardOutput,
+                64 * 1024 * 1024, environment: environment,
+                standardOutput: observation?.Output(standardOutput) ?? standardOutput,
                 standardError: observation?.Error(standardError) ?? standardError, cancellationToken: cancellationToken);
             observation?.Boundary("cache-child", "finish", fileName, arguments, workingDirectory, result.ExitCode);
             return result;
@@ -63,7 +68,7 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
         TimeSpan timeout,
         Func<Stream, CancellationToken, Task<T>> readStandardOutput) =>
         BoundedProcessRunner.RunStreaming(fileName, arguments, workingDirectory, timeout,
-            64 * 1024 * 1024, readStandardOutput, cancellationToken: cancellationToken);
+            64 * 1024 * 1024, readStandardOutput, environment: environment, cancellationToken: cancellationToken);
 
     public ProcessOutput Run(
         string fileName,

@@ -7,6 +7,7 @@
    digest: Forbidden-neighbour configurations have a Gram determinant and quantum readout. -/
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import Mathlib
 
 namespace D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
