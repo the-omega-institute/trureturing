@@ -316,4 +316,66 @@ private lemma quartic_identity (a b n : V) (hn : ‖n‖ = 1) :
   simp only [K, quartic, project_sq n a hn, project_sq n b hn, project_inner n a b hn]
   ring
 
+private lemma central_criterion (n : V) (hn : ‖n‖ = 1) (a : Fin 2 → V) :
+    SCompatible (central n) a ↔
+      ‖project n (a 0) + project n (a 1)‖ + ‖project n (a 0) - project n (a 1)‖ ≤ 2 := by
+  constructor
+  · rintro ⟨G, hG, h⟩
+    let u : Fin 2 → V := fun i => bloch (marginal G i 0)
+    have he (i : Fin 2) (r : V) (hr : ‖r‖ ≤ 1) (hnr : ⟪n, r⟫_ℝ = 0) :
+        (Matrix.trace (marginal G i 0)).re + ⟪r, u i⟫_ℝ = 1 + ⟪r, a i⟫_ℝ := by
+      have hz := h (state r hr) ⟨r, hr, hnr, rfl⟩ i 0
+      dsimp only [state] at hz
+      rw [B_rep _ (marginal_psd hG i 0).isHermitian, effect_B] at hz
+      simp only [ite_true, one_smul] at hz
+      rw [B_born, B_born] at hz
+      have hz' := congrArg Complex.re hz
+      simp only [Complex.ofReal_re, one_mul] at hz'
+      dsimp only [u]
+      linarith
+    have ht (i : Fin 2) : (Matrix.trace (marginal G i 0)).re = 1 := by
+      simpa using he i 0 (by simp) (by simp)
+    have hm (i : Fin 2) : marginal G i 0 = B 1 (u i) := by
+      rw [B_rep _ (marginal_psd hG i 0).isHermitian, ht]
+    have hp (i : Fin 2) : project n (u i) = project n (a i) := by
+      apply plane_separation n (u i) (a i) hn
+      intro r hr hnr
+      have hi := he i r hr hnr
+      rw [ht] at hi
+      linarith
+    have hj := (joint_criterion (u 0) (u 1)).mp ⟨G, hG, hm 0, hm 1⟩
+    have h1 := project_norm n (u 0 + u 1) hn
+    have h2 := project_norm n (u 0 - u 1) hn
+    rw [project_add, hp 0, hp 1] at h1
+    rw [project_sub, hp 0, hp 1] at h2
+    linarith
+  · intro h
+    obtain ⟨G, hG, hm⟩ := (compatible_univ (fun i => project n (a i))).mpr
+      ((joint_criterion _ _).mpr h)
+    refine ⟨G, hG, fun ρ hρ i s => ?_⟩
+    obtain ⟨r, hr, hnr, rfl⟩ := hρ
+    rw [hm _ (Set.mem_univ _) i s]
+    dsimp only [state]
+    rw [effect_B, effect_B, B_born, B_born]
+    fin_cases s <;>
+      simp [project, inner_smul_right, inner_sub_right, real_inner_comm n r, hnr]
+
+private lemma central_quartic (n : V) (hn : ‖n‖ = 1) (a : Fin 2 → V)
+    (ha : ∀ i, ‖a i‖ ≤ 1) : SCompatible (central n) a ↔ 0 ≤ quartic (a 0) (a 1) n := by
+  rw [central_criterion n hn a,
+    criterion_K _ _ ((project_norm n (a 0) hn).trans (ha 0))
+      ((project_norm n (a 1) hn).trans (ha 1)), quartic_identity _ _ _ hn]
+
+private lemma incompatible_parameters (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
+    (hi : Incompatible a) : K (a 0) (a 1) < 0 ∧ ⟪a 0, a 1⟫_ℝ ^ 2 < 1 ∧
+      0 < ‖a 0‖ ^ 2 * ‖a 1‖ ^ 2 - ⟪a 0, a 1⟫_ℝ ^ 2 := by
+  change ¬ SCompatible Set.univ a at hi
+  rw [compatible_univ, joint_criterion, criterion_K _ _ (ha 0) (ha 1)] at hi
+  have hk := lt_of_not_ge hi
+  have hA : ‖a 0‖ ^ 2 ≤ 1 := by nlinarith [ha 0, norm_nonneg (a 0)]
+  have hB : ‖a 1‖ ^ 2 ≤ 1 := by nlinarith [ha 1, norm_nonneg (a 1)]
+  refine ⟨hk, ?_, ?_⟩ <;> dsimp only [K] at hk
+  · linarith
+  · nlinarith [mul_nonneg (sub_nonneg.mpr hA) (sub_nonneg.mpr hB)]
+
 end D5.S3.Quantum.ToriiTakakuraImamuraRigidity
