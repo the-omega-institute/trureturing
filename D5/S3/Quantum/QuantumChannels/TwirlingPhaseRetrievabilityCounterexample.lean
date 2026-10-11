@@ -306,9 +306,16 @@ private theorem scale_normSq : Complex.normSq ((Real.sqrt 2 : ℂ)⁻¹) = (1/2 
 private theorem encoding_energy (x : Fin 3 → ℂ) :
     ∑ a : (Σ _ : Fin 3, Fin 2 × Fin 1), Complex.normSq (encoding x a) = ∑ i : Fin 3,
         Complex.normSq (x i) := by
-  simp [encoding, map_mul, scale_normSq, Fintype.sum_sigma,
-    Fintype.sum_prod_type, Fin.sum_univ_succ, coord]
-  ring
+  calc
+    _ = ∑ a : (Σ _ : Fin 3, Fin 2 × Fin 1),
+        (1 / 2 : ℝ) * Complex.normSq (x (coord a.1 a.2.1)) := by
+      apply Finset.sum_congr rfl
+      intro a _
+      change Complex.normSq (((Real.sqrt 2 : ℂ)⁻¹) * x (coord a.1 a.2.1)) = _
+      rw [map_mul, scale_normSq]
+    _ = _ := by
+      simp [Fintype.sum_sigma, Fintype.sum_prod_type, Fin.sum_univ_succ, coord]
+      ring
 
 private theorem encoding_norm (x : Fin 3 → ℂ) :
     ‖WithLp.toLp 2 (encoding x)‖ = ‖WithLp.toLp 2 x‖ := by
