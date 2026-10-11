@@ -305,15 +305,18 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law R := ∀ {A Y : Type} [Fintype A] [Fintype Y]
-    {I : Type u} {Ω : I → Type v} [∀ i, MeasurableSpace (Ω i)]
+    {I : Type u}
     (κ : ∀ i : I, ∀ n, Record A Y n → A → PMF Y)
     (σ : ∀ i : I, ∀ n, Record A Y n → PMF (Option A)) (a₀ : A)
     (c : ∀ i : I, ∀ n, Record A Y n → A → Y → ℝ)
     {μ C s : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C) (hs : 0 < s)
     (hc : ∀ i n h a y, 0 ≤ c i n h a y ∧ c i n h a y ≤ C)
-    (hd : ∀ i n h a, μ ≤ ∑ y, (κ i n h a y).toReal * c i n h a y)
-    (E : ∀ i, StoppedExecution (κ i) (σ i) (Ω i)),
+    (hd : ∀ i n h a, μ ≤ ∑ y, (κ i n h a y).toReal * c i n h a y) ,
     R.readout () s (tailRate μ C) < ⊤ ∧
+    (∀ i, ∃ (Ξ : Type) (m : MeasurableSpace Ξ),
+      Nonempty (@StoppedExecution A Y _ _ (κ i) (σ i) Ξ m)) ∧
+    (∀ (Ω : I → Type v) [∀ i, MeasurableSpace (Ω i)]
+      (E : ∀ i, StoppedExecution (κ i) (σ i) (Ω i)),
     (∀ i,
       (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) ≤
         ENNReal.ofReal C ^ s * ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law ∧
@@ -321,18 +324,16 @@ def arena : Arena where
         ENNReal.ofReal (slope μ C) ^ (-s) *
           (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) + momentError s (tailRate μ C)) ∧
     ((⨆ i, ∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) < ⊤ ↔
-      (⨆ i, ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) < ⊤)
+      (⨆ i, ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) < ⊤))
 
-theorem actual_law : arena.Law actual := @stopped_clock_moment_comparison
+theorem actual_law : arena.{u,v}.Law actual := @stopped_clock_moment_comparison
 
-theorem rejected_law : ¬ arena.Law rejected := by
+theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro law
-  letI : ∀ i : PEmpty.{u+1}, MeasurableSpace (PEmpty.{v+1}) := fun i => nomatch i
   have h := law (A := Unit) (Y := Unit) (I := PEmpty.{u+1})
-    (Ω := fun _ => PEmpty.{v+1})
     (fun i => nomatch i) (fun i => nomatch i) () (fun i => nomatch i)
     (μ := 1) (C := 1) (s := 1) (by norm_num) (by norm_num) (by norm_num)
-    (fun i => nomatch i) (fun i => nomatch i) (fun i => nomatch i)
+    (fun i => nomatch i) (fun i => nomatch i)
   exact (lt_irrefl (⊤ : ℝ≥0∞)) h.1
 
 def record : Registration arena (type_of% (@stopped_clock_moment_comparison)) where
@@ -348,7 +349,7 @@ def record : Registration arena (type_of% (@stopped_clock_moment_comparison)) wh
     · intro i; exact nomatch i
   dependence := by
     intro i
-    refine ⟨1, 0, 1, ?_⟩
+    refine ⟨(1 : ℝ), (0 : ℝ), (1 : ℝ), ?_⟩
     change momentError 1 0 ≠ momentError 1 1
     simp [momentError, momentWeight, ENNReal.rpow_one, ENNReal.tsum_const_eq_top_of_ne_zero]
 
@@ -373,10 +374,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison
     definition := none
-    coordinates := #[13]
+    coordinates := #[11]
     readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"],
-        stateBinder := 12, functionOperand := false,
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"],
+        stateBinder := 10, functionOperand := false,
         stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

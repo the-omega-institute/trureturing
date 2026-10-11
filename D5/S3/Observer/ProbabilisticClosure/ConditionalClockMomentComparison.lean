@@ -587,55 +587,6 @@ private theorem execution_moment_bounds
           ENNReal.inv_rpow, mul_comm, ← ENNReal.rpow_neg]
         rw [lintegral_const_mul _ (hT.pow_const s)]
 
-/-- Arbitrary families of actual worlds and requests obey the same two moment
-bounds and the same uniform-finiteness equivalence, for every positive real order. -/
-theorem stopped_clock_moment_comparison
-    {I : Type*} {Ω : I → Type*} [∀ i, MeasurableSpace (Ω i)]
-    (κ : ∀ i : I, ∀ n, Record A Y n → A → PMF Y)
-    (σ : ∀ i : I, ∀ n, Record A Y n → PMF (Option A)) (a₀ : A)
-    (c : ∀ i : I, ∀ n, Record A Y n → A → Y → ℝ)
-    {μ C s : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C) (hs : 0 < s)
-    (hc : ∀ i n h a y, 0 ≤ c i n h a y ∧ c i n h a y ≤ C)
-    (hd : ∀ i n h a, μ ≤ ∑ y, (κ i n h a y).toReal * c i n h a y)
-    (E : ∀ i, StoppedExecution (κ i) (σ i) (Ω i)) :
-    momentError s (tailRate μ C) < ⊤ ∧
-    (∀ i,
-      (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) ≤
-        ENNReal.ofReal C ^ s * ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law ∧
-      (∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) ≤
-        ENNReal.ofReal (slope μ C) ^ (-s) *
-          (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) + momentError s (tailRate μ C)) ∧
-    ((⨆ i, ∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) < ⊤ ↔
-      (⨆ i, ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) < ⊤) := by
-  have hC := lt_of_lt_of_le hμ hμC
-  have hr := rate_bounds hμ hμC
-  have ha : 0 < slope μ C := by
-    dsimp [slope]
-    exact mul_pos_of_neg_of_neg (by linarith) (Real.log_neg hr.1 hr.2)
-  have hρ0 : 0 ≤ tailRate μ C := Real.sqrt_nonneg _
-  have hρ1 : tailRate μ C < 1 := by
-    simpa [tailRate] using Real.sqrt_lt_sqrt hr.1.le hr.2
-  have herr := moment_error_finite hs hρ0 hρ1
-  have hb (i : I) := execution_moment_bounds (κ i) (σ i) a₀ (c i)
-    hμ hμC hs (hc i) (hd i) (E i)
-  refine ⟨herr, fun i => ⟨(hb i).1, (hb i).2.1⟩, ?_⟩
-  have hCf : ENNReal.ofReal C ^ s < ⊤ :=
-    ENNReal.rpow_lt_top_of_nonneg hs.le ENNReal.ofReal_ne_top
-  have haf : ENNReal.ofReal (slope μ C) ^ (-s) < ⊤ := by
-    rw [ENNReal.ofReal_rpow_of_pos ha]
-    exact ENNReal.ofReal_lt_top
-  constructor
-  · intro ht
-    apply lt_of_le_of_lt (iSup_le fun i => (hb i).2.1.trans ?_)
-      (ENNReal.add_lt_top.mpr ⟨ENNReal.mul_lt_top haf ht, herr⟩)
-    gcongr
-    exact le_iSup (fun i => ∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) i
-  · intro hm
-    apply lt_of_le_of_lt (iSup_le fun i => (hb i).1.trans ?_)
-      (ENNReal.mul_lt_top hCf hm)
-    gcongr
-    exact le_iSup (fun i => ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) i
-
 private def stoppedStep (κ : ∀ n, Record A Y n → A → PMF Y)
     (σ : ∀ n, Record A Y n → PMF (Option A)) (n : ℕ) :
     Option (Record A Y n) → PMF (Option (Record A Y (n + 1)))
@@ -670,23 +621,211 @@ private theorem stopped_law_some (κ : ∀ n, Record A Y n → A → PMF Y)
 private theorem trajectory_step_integral
     {X : ℕ → Type*} [∀ n, MeasurableSpace (X n)] [∀ n, Finite (X n)]
     [∀ n, MeasurableSingletonClass (X n)]
-    (ν : Measure (X 0)) [IsProbabilityMeasure ν]
     (K : (n : ℕ) → Kernel ((i : ↥(Finset.Iic n)) → X i) (X (n + 1)))
-    [∀ n, IsMarkovKernel (K n)] (n : ℕ) (f : X n → X (n + 1) → ℝ≥0∞) :
-    (∫⁻ ω, f (ω n) (ω (n + 1)) ∂Kernel.trajMeasure ν K) =
-      ∫⁻ ω, ∫⁻ z, f (ω n) z ∂K n (MeasureTheory.frestrictLe n ω)
-        ∂Kernel.trajMeasure ν K := by
+    [∀ n, IsMarkovKernel (K n)] (x₀ : (i : ↥(Finset.Iic 0)) → X i)
+    (n : ℕ) (f : X n → X (n + 1) → ℝ≥0∞) :
+    (∫⁻ ω, f (ω n) (ω (n + 1)) ∂Kernel.traj K 0 x₀) =
+      ∫⁻ ω, ∫⁻ z, f (ω n) z ∂K n (Preorder.frestrictLe n ω)
+        ∂Kernel.traj K 0 x₀ := by
   let g := fun z : ((i : ↥(Finset.Iic n)) → X i) × X (n + 1) =>
     f (z.1 ⟨n, Finset.mem_Iic.mpr le_rfl⟩) z.2
   have hg : Measurable g := measurable_of_countable _
   calc
-    _ = ∫⁻ z, g z ∂(Kernel.trajMeasure ν K).map
-        (fun ω => (MeasureTheory.frestrictLe n ω, ω (n + 1))) :=
+    _ = ∫⁻ z, g z ∂(Kernel.traj K 0 x₀).map
+        (fun ω => (Preorder.frestrictLe n ω, ω (n + 1))) :=
       (lintegral_map hg (by fun_prop)).symm
-    _ = ∫⁻ z, g z ∂((Kernel.trajMeasure ν K).map (MeasureTheory.frestrictLe n) ⊗ₘ K n) := by
-      rw [Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure]
-    _ = ∫⁻ u, ∫⁻ z, g (u, z) ∂K n u ∂(Kernel.trajMeasure ν K).map
-        (MeasureTheory.frestrictLe n) := Measure.lintegral_compProd hg
+    _ = ∫⁻ z, g z ∂((Kernel.traj K 0 x₀).map (Preorder.frestrictLe n) ⊗ₘ K n) := by
+      rw [Kernel.traj_map_frestrictLe_apply,
+        Kernel.partialTraj_compProd_eq_map_traj (Nat.zero_le n)]
+    _ = ∫⁻ u, ∫⁻ z, g (u, z) ∂K n u ∂(Kernel.traj K 0 x₀).map
+        (Preorder.frestrictLe n) := Measure.lintegral_compProd hg
     _ = _ := lintegral_map (measurable_of_countable _) (by fun_prop)
+
+set_option maxHeartbeats 1200000 in
+-- The finite marginal induction and almost-sure path restriction share the same trajectory law.
+private theorem exists_stopped_execution
+    (κ : ∀ n, Record A Y n → A → PMF Y)
+    (σ : ∀ n, Record A Y n → PMF (Option A)) (a₀ : A) :
+    ∃ (Ω : Type) (m : MeasurableSpace Ω),
+      Nonempty (@StoppedExecution A Y _ _ κ σ Ω m) := by
+  classical
+  letI : (n : ℕ) → MeasurableSpace (Option (Record A Y n)) := fun _ => ⊤
+  letI : (n : ℕ) → DiscreteMeasurableSpace (Option (Record A Y n)) := fun _ => inferInstance
+  let K : (n : ℕ) → Kernel
+      ((i : ↥(Finset.Iic n)) → Option (Record A Y i)) (Option (Record A Y (n + 1))) :=
+    fun n => ⟨fun u => (stoppedStep κ σ n (u ⟨n, Finset.mem_Iic.mpr le_rfl⟩)).toMeasure,
+      measurable_of_countable _⟩
+  letI : ∀ n, IsMarkovKernel (K n) := fun n => ⟨fun _ => inferInstanceAs
+    (IsProbabilityMeasure (PMF.toMeasure _))⟩
+  let x₀ : (i : ↥(Finset.Iic 0)) → Option (Record A Y i) := fun i => by
+    obtain ⟨i, hi⟩ := i
+    have he : i = 0 := Nat.eq_zero_of_le_zero (Finset.mem_Iic.mp hi)
+    subst i
+    exact some ()
+  let ν : Measure ((n : ℕ) → Option (Record A Y n)) :=
+    Kernel.traj (X := fun n => Option (Record A Y n)) K 0 x₀
+  have h0 : ν.map (Preorder.frestrictLe 0) = Measure.dirac x₀ := by
+    simpa [ν, Kernel.partialTraj_self, Kernel.id_apply] using Kernel.traj_map_frestrictLe_apply (X := fun n => Option (Record A Y n)) (κ := K) 0 0 x₀
+  have hint (n : ℕ) (f : Option (Record A Y n) → ℝ≥0∞) :
+      (∫⁻ ω, f (ω n) ∂ν) = ∑ z, f z * stoppedLaw κ σ n z := by
+    induction n with
+    | zero =>
+      calc
+        _ = ∫⁻ u, f (u ⟨0, Finset.mem_Iic.mpr le_rfl⟩) ∂ν.map (Preorder.frestrictLe 0) :=
+          (lintegral_map (measurable_of_countable _) (by fun_prop)).symm
+        _ = f (some ()) := by rw [h0, lintegral_dirac' _ (measurable_of_countable _)]
+        _ = _ := by simp [stoppedLaw, PMF.pure_apply]
+    | succ n ih =>
+      rw [trajectory_step_integral (X := fun n => Option (Record A Y n)) K x₀ n (fun _ z => f z)]
+      change (∫⁻ ω, (∫⁻ z, f z ∂(stoppedStep κ σ n (ω n)).toMeasure) ∂ν) = _
+      rw [ih (fun x => ∫⁻ z, f z ∂(stoppedStep κ σ n x).toMeasure)]
+      simp only [lintegral_fintype, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
+        stoppedLaw, PMF.bind_apply, tsum_fintype, Finset.sum_mul, Finset.mul_sum]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro z _
+      apply Finset.sum_congr rfl
+      intro x _
+      ac_rfl
+  have hprob (n : ℕ) (P : Option (Record A Y n) → Prop) :
+      ν {ω | P (ω n)} = ∑ z, if P z then stoppedLaw κ σ n z else 0 := by
+    have hm : MeasurableSet {ω : (n : ℕ) → Option (Record A Y n) | P (ω n)} :=
+      (MeasurableSet.of_discrete : MeasurableSet {z | P z}).preimage (measurable_pi_apply n)
+    rw [← lintegral_indicator_one hm]
+    change (∫⁻ ω, if P (ω n) then 1 else 0 ∂ν) = _
+    rw [hint n (fun z => if P z then 1 else 0)]
+    apply Finset.sum_congr rfl
+    intro z _
+    split_ifs <;> simp
+  let V : Set ((n : ℕ) → Option (Record A Y n)) :=
+    {ω | ω 0 = some () ∧ ∀ n (h : Record A Y n) a y,
+      ω (n + 1) = some (h, a, y) → ω n = some h}
+  have hVm : MeasurableSet V := by
+    simp only [V, Set.ofPred_and, Set.ofPred_forall, imp_iff_not_or, Set.ofPred_or]
+    refine (measurableSet_eq_fun (measurable_pi_apply 0) measurable_const).inter ?_
+    refine MeasurableSet.iInter fun n => MeasurableSet.iInter fun h =>
+      MeasurableSet.iInter fun a => MeasurableSet.iInter fun y => ?_
+    exact (measurableSet_eq_fun (measurable_pi_apply (n + 1)) measurable_const).compl.union
+      (measurableSet_eq_fun (measurable_pi_apply n) measurable_const)
+  have hroot : ∀ᵐ ω ∂ν, ω 0 = some () := by
+    rw [ae_iff]
+    simpa [stoppedLaw, PMF.pure_apply] using hprob 0 (fun z => z ≠ some ())
+  have hparent (n : ℕ) (h : Record A Y n) (a : A) (y : Y) :
+      ∀ᵐ ω ∂ν, ω (n + 1) = some (h, a, y) → ω n = some h := by
+    rw [ae_iff]
+    have hm : MeasurableSet {ω : (n : ℕ) → Option (Record A Y n) |
+        ω (n + 1) = some (h, a, y) ∧ ω n ≠ some h} :=
+      (measurableSet_eq_fun (measurable_pi_apply (n + 1)) measurable_const).inter
+        (measurableSet_eq_fun (measurable_pi_apply n) measurable_const).compl
+    change ν {ω | ¬ (ω (n + 1) = some (h, a, y) → ω n = some h)} = 0
+    simp only [Classical.not_imp]
+    rw [← lintegral_indicator_one hm]
+    simp only [Set.indicator_apply, Set.mem_ofPred_eq, Pi.one_apply]
+    rw [trajectory_step_integral (X := fun n => Option (Record A Y n)) K x₀ n
+      (fun x z => if z = some (h, a, y) ∧ x ≠ some h then 1 else 0)]
+    apply lintegral_eq_zero_of_ae
+    filter_upwards with ω
+    change (∫⁻ z, (if z = some (h, a, y) ∧ ω n ≠ some h then 1 else 0)
+      ∂(stoppedStep κ σ n (ω n)).toMeasure) = 0
+    rw [lintegral_fintype]
+    cases hx : ω n with
+    | none => simp [stoppedStep, PMF.pure_apply, PMF.toMeasure_apply_singleton]
+    | some q =>
+      by_cases hq : q = h
+      · subst q; simp
+      · simp [stoppedStep, PMF.bind_apply, PMF.map_apply, PMF.pure_apply,
+          PMF.toMeasure_apply_singleton, tsum_fintype, Fintype.sum_option,
+          hq, Prod.mk.injEq, ite_and, Finset.sum_ite_irrel, mul_ite]
+  have hV : ∀ᵐ ω ∂ν, ω ∈ V := by
+    apply hroot.and
+    simp only [ae_all_iff]
+    exact hparent
+  refine ⟨V, inferInstance, ⟨{
+    law := ν.comap Subtype.val
+    path := fun ω => ⟨ω.1, ω.2.1, ω.2.2⟩
+    measurable_cylinder := ?_
+    cylinder_mass := ?_ }⟩⟩
+  · intro n P
+    have hm : MeasurableSet {ω : (n : ℕ) → Option (Record A Y n) |
+        ∃ h, ω n = some h ∧ P h} :=
+      (MeasurableSet.of_discrete : MeasurableSet {z | ∃ h, z = some h ∧ P h}).preimage
+        (measurable_pi_apply n)
+    exact hm.preimage measurable_subtype_coe
+  · intro n P
+    rw [comap_subtype_coe_apply hVm]
+    have himage : Subtype.val '' {ω : V | ∃ h, ω.1 n = some h ∧ P h} =
+        {ω | ∃ h, ω n = some h ∧ P h} ∩ V := by
+      ext ω
+      simp only [Set.mem_image, Set.mem_ofPred_eq, Set.mem_inter_iff]
+      constructor
+      · rintro ⟨z, hz, rfl⟩; exact ⟨hz, z.2⟩
+      · rintro ⟨hp, hv⟩; exact ⟨⟨ω, hv⟩, hp, rfl⟩
+    rw [himage, Set.inter_comm _ V, Measure.measure_inter_eq_of_ae hV,
+      hprob n (fun z => ∃ h, z = some h ∧ P h)]
+    simp only [Fintype.sum_option]
+    simp only [Option.some.injEq, exists_eq_right, reduceCtorEq, false_and,
+      exists_false, if_false, zero_add]
+    rw [ENNReal.ofReal_sum_of_nonneg (fun h _ => by
+      split_ifs
+      · exact (acquired_mass_bounds κ σ a₀ n h).1
+      · exact le_rfl)]
+    apply Finset.sum_congr rfl
+    intro h _
+    split_ifs <;> simp [stopped_law_some κ σ a₀]
+
+/-- Arbitrary families of actual worlds and requests obey the same two moment
+bounds and the same uniform-finiteness equivalence, for every positive real order. -/
+theorem stopped_clock_moment_comparison
+    {I : Type*}
+    (κ : ∀ i : I, ∀ n, Record A Y n → A → PMF Y)
+    (σ : ∀ i : I, ∀ n, Record A Y n → PMF (Option A)) (a₀ : A)
+    (c : ∀ i : I, ∀ n, Record A Y n → A → Y → ℝ)
+    {μ C s : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C) (hs : 0 < s)
+    (hc : ∀ i n h a y, 0 ≤ c i n h a y ∧ c i n h a y ≤ C)
+    (hd : ∀ i n h a, μ ≤ ∑ y, (κ i n h a y).toReal * c i n h a y)
+    :
+    momentError s (tailRate μ C) < ⊤ ∧
+    (∀ i, ∃ (Ξ : Type) (m : MeasurableSpace Ξ),
+      Nonempty (@StoppedExecution A Y _ _ (κ i) (σ i) Ξ m)) ∧
+    (∀ (Ω : I → Type*) [∀ i, MeasurableSpace (Ω i)]
+      (E : ∀ i, StoppedExecution (κ i) (σ i) (Ω i)),
+    (∀ i,
+      (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) ≤
+        ENNReal.ofReal C ^ s * ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law ∧
+      (∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) ≤
+        ENNReal.ofReal (slope μ C) ^ (-s) *
+          (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) + momentError s (tailRate μ C)) ∧
+    ((⨆ i, ∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) < ⊤ ↔
+      (⨆ i, ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) < ⊤)) := by
+  have hC := lt_of_lt_of_le hμ hμC
+  have hr := rate_bounds hμ hμC
+  have ha : 0 < slope μ C := by
+    dsimp [slope]
+    exact mul_pos_of_neg_of_neg (by linarith) (Real.log_neg hr.1 hr.2)
+  have hρ0 : 0 ≤ tailRate μ C := Real.sqrt_nonneg _
+  have hρ1 : tailRate μ C < 1 := by
+    simpa [tailRate] using Real.sqrt_lt_sqrt hr.1.le hr.2
+  have herr := moment_error_finite hs hρ0 hρ1
+  refine ⟨herr, fun i => exists_stopped_execution (κ i) (σ i) a₀, ?_⟩
+  intro Ω m E
+  have hb (i : I) := execution_moment_bounds (κ i) (σ i) a₀ (c i)
+    hμ hμC hs (hc i) (hd i) (E i)
+  refine ⟨fun i => ⟨(hb i).1, (hb i).2.1⟩, ?_⟩
+  have hCf : ENNReal.ofReal C ^ s < ⊤ :=
+    ENNReal.rpow_lt_top_of_nonneg hs.le ENNReal.ofReal_ne_top
+  have haf : ENNReal.ofReal (slope μ C) ^ (-s) < ⊤ := by
+    rw [ENNReal.ofReal_rpow_of_pos ha]
+    exact ENNReal.ofReal_lt_top
+  constructor
+  · intro ht
+    apply lt_of_le_of_lt (iSup_le fun i => (hb i).2.1.trans ?_)
+      (ENNReal.add_lt_top.mpr ⟨ENNReal.mul_lt_top haf ht, herr⟩)
+    gcongr
+    exact le_iSup (fun i => ∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) i
+  · intro hm
+    apply lt_of_le_of_lt (iSup_le fun i => (hb i).1.trans ?_)
+      (ENNReal.mul_lt_top hCf hm)
+    gcongr
+    exact le_iSup (fun i => ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) i
 
 end D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison
