@@ -90,7 +90,7 @@ def WordFamily : ActivePhase → Letter → List Letter → Prop
 theorem prefix_length (ω : Stream) (n : ℕ) : (readPrefix ω n).length = n := by
   simp [readPrefix]
 
-private theorem prefix_succ (ω : Stream) (n : ℕ) :
+theorem prefix_succ (ω : Stream) (n : ℕ) :
     readPrefix ω (n + 1) = ω 0 :: readPrefix (fun i => ω (i + 1)) n := by
   simp [readPrefix, List.ofFn_succ]
 
@@ -398,7 +398,7 @@ private theorem nonstop_p_return (ω : Stream)
       simp [trace, totalRead, legalRead, pendingColor, hx] at hh
   exact ⟨h0, hβ, by simpa [totalRead, legalRead, hβ, Nat.add_assoc] using h2.2⟩
 
-private theorem nonstop_p_prefix (ω : Stream)
+theorem nonstop_p_prefix (ω : Stream)
     (h : Nonstop totalRead pendingColor (.active .p) ω) (j : ℕ) :
     Prefix ω (loopWord j) := by
   induction j generalizing ω with
@@ -411,7 +411,7 @@ private theorem nonstop_p_prefix (ω : Stream)
       simp only [List.length_cons, prefix_succ]
       simpa [h0, h1, Nat.add_assoc] using congrArg (fun w => (1 : Letter) :: 0 :: w) hp
 
-private theorem nonstop_beta_return (ω : Stream)
+theorem nonstop_beta_return (ω : Stream)
     (h : Nonstop totalRead pendingColor (.active .beta) ω) :
     ω 0 = 0 ∧ Nonstop totalRead pendingColor (.active .p) (fun i => ω (i + 1)) := by
   have ht := (nonstop_head _ _).mp h
@@ -445,7 +445,7 @@ theorem loop_as_prefix (j : ℕ) :
     simp [Fin.repeat, Fin.modNat, infiniteTail, a]
   exact hn.symm.trans he
 
-private theorem infinite_tail_nonstop (s : ActivePhase) :
+theorem infinite_tail_nonstop (s : ActivePhase) :
     Nonstop totalRead pendingColor (.active s) (infiniteTail s) := by
   have ht : ∀ n, trace totalRead (.active s) (infiniteTail s) n =
       .active (if n % 2 = 0 then s else match s with | .p => .beta | .beta => .p) := by
