@@ -34,15 +34,19 @@ internal sealed class MaximalCoherenceAncillaNonmonotoneDocument : IScribeDocume
                 "claim", DescribeRole.Definition),
             Node("result", "General monotonicity fails", Disp(new Formula.Not(F.Id("claim"))),
                 "Take d = 2, e = 4, n = 4, alpha = 1 and q_x = 1/4. The effects are A_i = (I + n_i dot sigma)/4, with tetrahedral vectors (1,1,1), (1,-1,-1), (-1,1,-1), (-1,-1,1) divided by sqrt(3). The identification of C^2 tensor C^2 with Fin 4 is finProdFinEquiv: (i,j) maps to 2*i+j, ordered |00>, |01>, |10>, |11>. The discarding dual J(X) = X tensor I_2 has two Kraus matrices and is unital. For every qubit unitary, dephasing is an incoherent POVM and the four squared off-diagonal moduli sum to 1/6. Cauchy-Schwarz gives cmax A <= sqrt(2/3)/2. In the Bell basis, every diagonal competitor has scalar normalized partial trace. Applying the Rayleigh bound to a difference and its negative, using eigenvalues 1/2 and 0 of each SIC effect, gives a norm lower bound 1/4 per effect and hence cmax(J(A)) >= 1/2. Since sqrt(2/3)/2 < 1/2, claim is false. This settles the dimension-changing spectral-distance case. The source's dichotomic, mixed-unitary and covariant conclusions retain their hypotheses. Diamond distance and dimension-preserving monotonicity remain open.",
-                "result", DescribeRole.Theorem, true)),
+                "result", DescribeRole.Theorem, true,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("baek-jo-nha-2026-maximal-coherence-monotonicity"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
-        string prose, string declaration, DescribeRole role, bool repositoryResult = false) =>
+        string prose, string declaration, DescribeRole role, bool repositoryResult = false,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("mcancilla-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula),
             repositoryResult ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static DocumentBlock Node(string id, string title, Formula formula,
         BlockSequence prose, string declaration, DescribeRole role) =>

@@ -84,6 +84,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/MaximalCoherenceAncillaNonmonotone.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/baek-jo-nha-2026-maximal-coherence-monotonicity` (refuted) by `D5/S3/Quantum/Measurement/MaximalCoherenceAncillaNonmonotone.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"baek-jo-nha-2026-maximal-coherence-monotonicity","declaration_gid":"D5/S3/Quantum/Measurement/MaximalCoherenceAncillaNonmonotone.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Baek; Y. Jo; H. Nha (2026). *Maximal coherence of quantum measurement and the resource theory of sharpness*. URL: <https://arxiv.org/abs/2607.05847v1>.
