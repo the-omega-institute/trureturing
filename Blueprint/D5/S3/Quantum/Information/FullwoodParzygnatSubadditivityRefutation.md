@@ -64,7 +64,6 @@ Let rho be the identity divided by five and use the ten Kraus operators (E_ij - 
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.jamio`
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.pdm`
 - Truth anchor: `D5/S3/Quantum/Information/FullwoodParzygnatSubadditivityRefutation.result`
-- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation](ChenKatoBrandaoCMIRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum](../QuantumChannels/ProductUnitaryChoiSpectrum.md)
 - Dependency: [D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation](../../QuantumChannels/CumulantRenyiDataProcessingRefutation.md)
