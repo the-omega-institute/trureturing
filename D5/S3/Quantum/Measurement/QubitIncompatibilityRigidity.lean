@@ -793,4 +793,160 @@ private lemma plane_coordinates (a b m c : V) (hm : ‖m‖ = 1)
   have hz' : ‖r‖ = 0 := by nlinarith [hrnorm, norm_nonneg r]
   have hz : r = 0 := norm_eq_zero.mp hz'
   exact ⟨u, v, sub_eq_zero.mp hz⟩
+private lemma incompatible_nonzero (a : Fin 2 → V) (ha : ∀ i, ‖a i‖ ≤ 1)
+    (hi : Incompatible a) (i : Fin 2) : a i ≠ 0 := by
+  intro hzero
+  have hD := (incompatible_parameters a ha hi).2.2
+  fin_cases i
+  · change a 0 = 0 at hzero
+    simpa [hzero] using hD
+  · change a 1 = 0 at hzero
+    simpa [hzero] using hD
+private lemma effect_neg (v : V) (s : Fin 2) : effect (-v) s = effect v (if s = 0 then 1 else 0) := by
+  fin_cases s <;> simp [effect, pauli, neg_smul]
+private def flip (s : Fin 2) : Fin 2 := if s = 0 then 1 else 0
+private lemma compat_flip_first_mp (S : Set Density) (a : Fin 2 → V) :
+    SCompatible S a → SCompatible S (fun i => if i = 0 then -a i else a i) := by
+  rintro ⟨G, hG, h⟩
+  refine ⟨(fun q => G (flip q.1, q.2)), ?_, ?_⟩
+  · constructor
+    · intro q; exact hG.1 (flip q.1, q.2)
+    · simpa [IsPOVM, flip, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc] using hG.2
+  · intro ρ hρ i s; fin_cases i <;> fin_cases s
+    · simpa [marginal, flip, effect_neg] using h ρ hρ 0 1
+    · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 0
+    · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 0
+    · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 1
+private lemma compat_flip_first (S : Set Density) (a : Fin 2 → V) :
+    SCompatible S a ↔ SCompatible S (fun i => if i = 0 then -a i else a i) := by
+  constructor
+  · exact compat_flip_first_mp S a
+  · intro h
+    have h' := compat_flip_first_mp S (fun i => if i = 0 then -a i else a i) h
+    convert h' using 1
+    funext i; fin_cases i <;> simp
+private lemma compat_flip_second_mp (S : Set Density) (a : Fin 2 → V) :
+    SCompatible S a → SCompatible S (fun i => if i = 1 then -a i else a i) := by
+  rintro ⟨G, hG, h⟩
+  refine ⟨(fun q => G (q.1, flip q.2)), ?_, ?_⟩
+  · constructor
+    · intro q; exact hG.1 (q.1, flip q.2)
+    · simpa [IsPOVM, flip, Fin.sum_univ_two, add_comm, add_left_comm, add_assoc] using hG.2
+  · intro ρ hρ i s; fin_cases i <;> fin_cases s
+    · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 0
+    · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 0 1
+    · simpa [marginal, flip, effect_neg, add_comm, add_left_comm, add_assoc] using h ρ hρ 1 1
+    · simpa [marginal, flip, effect_neg] using h ρ hρ 1 0
+private lemma compat_flip_second (S : Set Density) (a : Fin 2 → V) :
+    SCompatible S a ↔ SCompatible S (fun i => if i = 1 then -a i else a i) := by
+  constructor
+  · exact compat_flip_second_mp S a
+  · intro h
+    have h' := compat_flip_second_mp S (fun i => if i = 1 then -a i else a i) h
+    convert h' using 1
+    funext i; fin_cases i <;> simp
+private lemma compat_exchange_mp (S : Set Density) (a : Fin 2 → V) :
+    SCompatible S a → SCompatible S (fun i => a (if i = 0 then 1 else 0)) := by
+  rintro ⟨G, hG, h⟩
+  refine ⟨(fun q => G (q.2, q.1)), ?_, ?_⟩
+  · constructor
+    · intro q; exact hG.1 (q.2, q.1)
+    · simpa [Fin.sum_univ_two, add_comm, add_left_comm, add_assoc] using hG.2
+  · intro ρ hρ i s; fin_cases i <;> fin_cases s
+    · simpa [marginal] using h ρ hρ 1 0
+    · simpa [marginal] using h ρ hρ 1 1
+    · simpa [marginal] using h ρ hρ 0 0
+    · simpa [marginal] using h ρ hρ 0 1
+private lemma compat_exchange (S : Set Density) (a : Fin 2 → V) :
+    SCompatible S a ↔ SCompatible S (fun i => a (if i = 0 then 1 else 0)) := by
+  constructor
+  · exact compat_exchange_mp S a
+  · intro h
+    have h' := compat_exchange_mp S (fun i => a (if i = 0 then 1 else 0)) h
+    convert h' using 1
+    funext i; fin_cases i <;> simp
+private lemma compat_signs (S : Set Density) (a : Fin 2 → V) (ε : Fin 2 → ℝ)
+    (hε : ∀ i, ε i = 1 ∨ ε i = -1) :
+    SCompatible S a ↔ SCompatible S (fun i => ε i • a i) := by
+  rcases hε 0 with h0 | h0 <;> rcases hε 1 with h1 | h1
+  · convert (Iff.rfl : SCompatible S a ↔ SCompatible S a) using 2
+    funext i; fin_cases i <;> simp [h0, h1]
+  · convert compat_flip_second S a using 2
+    funext i; fin_cases i <;> simp [h0, h1]
+  · convert compat_flip_first S a using 2
+    funext i; fin_cases i <;> simp [h0, h1]
+  · convert (compat_flip_first S a).trans
+      (compat_flip_second S (fun i => if i = 0 then -a i else a i)) using 2
+    funext i; fin_cases i <;> simp [h0, h1]
+theorem result : claim := by
+  intro a b ha hb hia hib
+  constructor
+  · intro hS
+    have heq (n : V) (hn : ‖n‖ = 1) :
+        0 ≤ quartic (a 0) (a 1) n ↔ 0 ≤ quartic (b 0) (b 1) n := by
+      rw [← central_quartic n hn a ha, ← central_quartic n hn b hb]
+      exact hS (central n)
+    obtain ⟨m, hm, hma, hmb⟩ := coplanarity a b ha hb hia hib heq
+    obtain ⟨hk, _, hD⟩ := incompatible_parameters a ha hia
+    obtain ⟨u, v, hc⟩ := plane_coordinates (a 0) (a 1) m (b 0) hm (hma 0) (hma 1) (hmb 0) hD
+    obtain ⟨w, z, hd⟩ := plane_coordinates (a 0) (a 1) m (b 1) hm (hma 0) (hma 1) (hmb 1) hD
+    have hg (x y : ℝ) (hz : curve (K (a 0) (a 1)) ⟪a 0, a 1⟫_ℝ x y = 0) :
+        curve (K (b 0) (b 1)) ⟪b 0, b 1⟫_ℝ (u*x+v*y) (w*x+z*y) = 0 := by
+      obtain ⟨n, _, hx, hy, hn⟩ := common_boundary_zero (a 0) (a 1) (b 0) (b 1) m hm
+        (ha 0) (ha 1) (hma 0) (hma 1) hk hD heq x y hz
+      have hx' : ⟪n, b 0⟫_ℝ = u*x+v*y := by rw [hc]; simp [inner_add_right, inner_smul_right, hx, hy]
+      have hy' : ⟪n, b 1⟫_ℝ = w*x+z*y := by rw [hd]; simp [inner_add_right, inner_smul_right, hx, hy]
+      dsimp only [quartic] at hn
+      rw [hx', hy'] at hn
+      dsimp only [curve]; linear_combination hn
+    have hK : K (a 1) (a 0) = K (a 0) (a 1) := by
+      unfold K; rw [real_inner_comm (a 0) (a 1)]; ring
+    have hswap (x y : ℝ) : curve (K (a 1) (a 0)) ⟪a 1, a 0⟫_ℝ x y =
+        curve (K (a 0) (a 1)) ⟪a 0, a 1⟫_ℝ y x := by
+      unfold curve; rw [hK, real_inner_comm (a 0) (a 1)]; ring
+    have huw := two_root_elimination (a 0) (a 1) hk u v w z ⟪b 0, b 1⟫_ℝ (K (b 0) (b 1)) hg
+    have hvz := two_root_elimination (a 1) (a 0) (hK ▸ hk) v u z w
+      ⟪b 0, b 1⟫_ℝ (K (b 0) (b 1)) (by
+        intro x y hz
+        simpa [mul_comm, add_comm] using hg y x ((hswap x y) ▸ hz))
+    have hb0 := incompatible_nonzero b hb hib 0
+    have hb1 := incompatible_nonzero b hb hib 1
+    by_cases hu : u = 0
+    · have hv : v ≠ 0 := by intro hv; apply hb0; simp [hc, hu, hv]
+      have hz : z = 0 := (mul_eq_zero.mp hvz).resolve_left hv
+      have hw : w ≠ 0 := by intro hw; apply hb1; simp [hd, hw, hz]
+      have hc' : b 0 = v • a 1 := by simpa [hu] using hc
+      have hd' : b 1 = w • a 0 := by simpa [hz] using hd
+      obtain ⟨hv1, hw1⟩ := scale_signs (a 1) (a 0) (hK ▸ hk) v w hv hw (by
+        intro x y hz'
+        have h := hg y x ((hswap x y) ▸ hz')
+        simpa [hu, hz, ← hc', ← hd'] using h)
+      refine ⟨Equiv.swap 0 1, (fun i => if i = 0 then v else w), ?_, ?_⟩
+      · intro i; fin_cases i <;> simp [hv1, hw1]
+      · intro i; fin_cases i <;> simpa using (by assumption)
+    · have hw : w = 0 := (mul_eq_zero.mp huw).resolve_left hu
+      have hz : z ≠ 0 := by intro hz; apply hb1; simp [hd, hw, hz]
+      have hv : v = 0 := (mul_eq_zero.mp hvz).resolve_right hz
+      have hc' : b 0 = u • a 0 := by simpa [hv] using hc
+      have hd' : b 1 = z • a 1 := by simpa [hw] using hd
+      obtain ⟨hu1, hz1⟩ := scale_signs (a 0) (a 1) hk u z hu hz (by
+        intro x y hz'
+        have h := hg x y hz'
+        simpa [hw, hv, ← hc', ← hd'] using h)
+      refine ⟨Equiv.refl _, (fun i => if i = 0 then u else z), ?_, ?_⟩
+      · intro i; fin_cases i <;> simp [hu1, hz1]
+      · intro i; fin_cases i <;> simpa using (by assumption)
+  · rintro ⟨π, ε, hε, hb'⟩ S
+    have hbfun : b = (fun i => ε i • a (π i)) := funext hb'
+    rw [hbfun]
+    apply Iff.trans ?_ (compat_signs S (fun i => a (π i)) ε hε)
+    have hne : π 1 ≠ π 0 := fun h => (by norm_num : (1 : Fin 2) ≠ 0) (π.injective h)
+    have hcases (i : Fin 2) : i = 0 ∨ i = 1 := by fin_cases i <;> simp
+    rcases hcases (π 0) with hp | hp
+    · have hp' : π 1 = 1 := (hcases (π 1)).resolve_left (by intro h; apply hne; rw [h, hp])
+      convert (Iff.rfl : SCompatible S a ↔ SCompatible S a) using 2
+      funext i; fin_cases i <;> simp [hp, hp']
+    · have hp' : π 1 = 0 := (hcases (π 1)).resolve_right (by intro h; apply hne; rw [h, hp])
+      convert compat_exchange S a using 2
+      funext i; fin_cases i <;> simp [hp, hp']
 end D5.S3.Quantum.ToriiTakakuraImamuraRigidity
