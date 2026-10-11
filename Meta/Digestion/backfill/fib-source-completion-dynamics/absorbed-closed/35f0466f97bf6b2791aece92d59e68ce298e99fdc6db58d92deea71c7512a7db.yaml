@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:35f0466f97bf6b2791aece92d59e68ce298e99fdc6db58d92deea71c7512a7db
   normalized_sha256: sha256:35f0466f97bf6b2791aece92d59e68ce298e99fdc6db58d92deea71c7512a7db
 cas_ref: sha256:35f0466f97bf6b2791aece92d59e68ce298e99fdc6db58d92deea71c7512a7db
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/NestedPressureLimit.original_upper_root_limit
+    target_statement_id: sha256:2f3f334871b0dbb0c1812c77380d8b364c6739fa365565f09ca55e135c3a0e7c
 receipts:
   unresolved_subitems: []
