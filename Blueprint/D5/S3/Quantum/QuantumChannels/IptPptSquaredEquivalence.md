@@ -138,9 +138,9 @@ Section 9.2, after Proposition 9.9, PDF p. 25: "We do not know if these conjectu
 
 **Remark 1.12 (A composition-compatible flag).**
 
-Lean statement: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`
-
-*Formalization.* `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result` (`✓ std3`).
+$$
+(PPT2C \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{C}\right))) \land (\operatorname{IPT2}\left(\mathbb{C}\right) \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{R}\right)))
+$$
 
 *Source.* Repository-derived.
 
@@ -181,6 +181,5 @@ IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.choi`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.ptFirst`
-- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
