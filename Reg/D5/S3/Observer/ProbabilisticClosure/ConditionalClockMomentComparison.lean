@@ -285,5 +285,104 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 
 end Stopping
 
+namespace Moments
+universe u v
+abbrev signature : Signature where
+  Params := ℝ
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ≥0∞
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ s ρ => momentError s ρ) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ⊤) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {A Y : Type} [Fintype A] [Fintype Y]
+    {I : Type u} {Ω : I → Type v} [∀ i, MeasurableSpace (Ω i)]
+    (κ : ∀ i : I, ∀ n, Record A Y n → A → PMF Y)
+    (σ : ∀ i : I, ∀ n, Record A Y n → PMF (Option A)) (a₀ : A)
+    (c : ∀ i : I, ∀ n, Record A Y n → A → Y → ℝ)
+    {μ C s : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C) (hs : 0 < s)
+    (hc : ∀ i n h a y, 0 ≤ c i n h a y ∧ c i n h a y ≤ C)
+    (hd : ∀ i n h a, μ ≤ ∑ y, (κ i n h a y).toReal * c i n h a y)
+    (E : ∀ i, StoppedExecution (κ i) (σ i) (Ω i)),
+    R.readout () s (tailRate μ C) < ⊤ ∧
+    (∀ i,
+      (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) ≤
+        ENNReal.ofReal C ^ s * ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law ∧
+      (∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) ≤
+        ENNReal.ofReal (slope μ C) ^ (-s) *
+          (∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) + momentError s (tailRate μ C)) ∧
+    ((⨆ i, ∫⁻ ω, totalClock (c i) ((E i).path ω) ^ s ∂(E i).law) < ⊤ ↔
+      (⨆ i, ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) < ⊤)
+
+theorem actual_law : arena.Law actual := @stopped_clock_moment_comparison
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  letI : ∀ i : PEmpty.{u+1}, MeasurableSpace (PEmpty.{v+1}) := fun i => nomatch i
+  have h := law (A := Unit) (Y := Unit) (I := PEmpty.{u+1})
+    (Ω := fun _ => PEmpty.{v+1})
+    (fun i => nomatch i) (fun i => nomatch i) () (fun i => nomatch i)
+    (μ := 1) (C := 1) (s := 1) (by norm_num) (by norm_num) (by norm_num)
+    (fun i => nomatch i) (fun i => nomatch i) (fun i => nomatch i)
+  exact (lt_irrefl (⊤ : ℝ≥0∞)) h.1
+
+def record : Registration arena (type_of% (@stopped_clock_moment_comparison)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (@Subsingleton.elim Unit _ j i)).elim
+    · intro i; exact nomatch i
+  dependence := by
+    intro i
+    refine ⟨1, 0, 1, ?_⟩
+    change momentError 1 0 ≠ momentError 1 1
+    simp [momentError, momentWeight, ENNReal.rpow_one, ENNReal.tsum_const_eq_top_of_ne_zero]
+
+def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@stopped_clock_moment_comparison) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison.Moments.registration
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison.Moments.record
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨record⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ s ρ => momentError s ρ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison
+    definition := none
+    coordinates := #[13]
+    readouts := #[
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"],
+        stateBinder := 12, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end Moments
+
 end
 end Reg.D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison
