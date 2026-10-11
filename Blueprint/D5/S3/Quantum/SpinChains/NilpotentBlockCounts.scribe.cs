@@ -11,6 +11,20 @@ internal sealed class NilpotentBlockCountsDocument : IScribeDocumentDefinition
         H("Intrinsic nilpotent block counts"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("nilpotent-block-counts-chain-basis"),
+                DeclarationHandle.Create("D5/S3/Quantum/SpinChains/NilpotentBlockCounts.ChainBasis"),
+                H("Finite nilpotent chain bases"),
+                StatementSource.FromAuthor(Disp(ChainBasisDefinition())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a field K, a vector space V, and an endomorphism N, ChainBasis N "
+                        + "stores a finite index type ι, a length function len : ι to the natural numbers with "
+                        + "1 <= len i, and a basis v of V indexed by the dependent sum of "
+                        + "Fin (len i). Its shift field sends each nonterminal basis vector "
+                        + "to the next position in the same chain, and its terminal field "
+                        + "sends the position len i minus one to zero."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("nilpotent-block-counts-c"),
                 DeclarationHandle.Create("D5/S3/Quantum/SpinChains/NilpotentBlockCounts.C"),
                 H("Kernel intersections with preceding power ranges"),
@@ -74,6 +88,16 @@ internal sealed class NilpotentBlockCountsDocument : IScribeDocumentDefinition
     private static Formula BlockAt(Formula n, Formula j) => Call("blockCount", n, j);
     private static Formula Range(Formula n, Formula r) => Call("range", Power(n, r));
     private static Formula Rho(Formula n, Formula r) => Call("finrank", F.Id("K"), Range(n, r));
+
+    private static Formula ChainBasisDefinition()
+    {
+        var k = F.Id("K"); var v = F.Id("V"); var n = F.Id("N");
+        var body = All("K", Type(), All("V", Type(),
+            Assumption(Call("Field", k), Assumption(Call("AddCommGroup", v),
+                Assumption(Call("Module", k, v),
+                    All("N", End(k, v), Call("ChainBasis", n)))))));
+        return body;
+    }
 
     private static Formula CDefinition()
     {
