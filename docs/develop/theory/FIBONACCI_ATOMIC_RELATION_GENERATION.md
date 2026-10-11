@@ -68824,3 +68824,105 @@ $$
 \(e_q\) 的上界，便可直接估计 \(M_{\rm sh}(t)\)，无需重新分析 Euler
 约数和。当前没有这样的统一上界；命题 446.4 仍是联合必要条件，不改变
 Robin/RH 的开放状态。
+
+## 447. 严格 Euler 库存最终不可能恰为 Fibonacci 数
+
+§445--§446 都把 \(U=F_m\) 作为附加来源假设。本节给出一个更早的排除：
+在高尺度上，严格 Euler 库存的素数支撑已经被 Euler 边际价格截在
+\(t\) 以下，而 Fibonacci 数的本原素因子会把支撑推到其指标附近。因此，
+该附加假设不可能沿无穷高的 \(t\) 序列成立。这个结论不使用 WSS 密度，
+也不改变严格库存本身的 Robin 估计。
+
+沿用 §111.2 的严格库存
+
+$$
+N^-(t)=\prod_p p^{a_p(t)},\qquad
+a_p(t)=\#\{k\ge1:r_{p,k}>\lambda(t)\},\qquad
+\lambda(t)=\frac1{t\log t},
+$$
+
+并令 \(P^+(n)\) 表示正整数 \(n>1\) 的最大素因子。
+
+### 命题 447.1（支撑截止）
+
+对 \(t\ge243\)，有
+
+$$
+\boxed{P^+(N^-(t))<t.}
+\tag{447.1}
+$$
+
+**证明。** 对每个素数 \(p\)，首层边际价格满足
+
+$$
+r_{p,1}
+=\frac{\log(1+1/p)}{\log p}
+<\frac1{p\log p}.
+$$
+
+当 \(p\ge t\) 时，\(x\mapsto x\log x\) 在 \([243,\infty)\) 上严格递增，故
+
+$$
+r_{p,1}<\frac1{p\log p}
+\le\frac1{t\log t}=\lambda(t).
+$$
+
+同一素数的后续边际价格严格小于首层价格，所以 \(a_p(t)=0\)。因此
+\(N^-(t)\) 不含任何 \(p\ge t\)，得到（447.1）。\(\square\)
+
+### 定理 447.2（Fibonacci 来源的最终排除）
+
+存在 \(T\ge243\)，使得对所有 \(t\ge T\)，严格库存都不可能是 Fibonacci 数：
+
+$$
+\boxed{
+\forall t\ge T\ \forall m\ge1,\qquad N^-(t)\ne F_m.
+}
+\tag{447.2}
+$$
+
+**证明。** 反设存在趋于无穷的 \(t\) 以及 \(m\) 使
+\(N^-(t)=F_m\)。§111.2 已给出的尺度式为
+
+$$
+\log N^-(t)
+=\psi(t)+(\sqrt2-1)\sqrt t+o(\sqrt t)
+=t+o(t).
+\tag{447.3}
+$$
+
+另一方面，Binet 公式给出
+
+$$
+\log F_m=m\log\varphi-\tfrac12\log5+o(1),
+\qquad
+\frac mt\longrightarrow\frac1{\log\varphi}>1.
+\tag{447.4}
+$$
+
+故充分大时 \(m>t+1\)，且特别有 \(m>12\)。Carmichael 的 Fibonacci
+本原素因子定理（仓内已引用 Yabuta, *Fibonacci Quarterly* 39(5),
+Theorem 3）给出一个素数 \(p\mid F_m\)，它不整除任何较早的正 Fibonacci
+项。于是其首次零秩满足 \(z(p)=m\)。该 \(p\) 不可能是 \(2,3,5\)，因为这三个
+素数已经分别出现在更早的 \(F_3,F_4,F_5\) 中；所以可以使用仓内
+FibonacciRank.fibonacci_rank_dvd_prime_bound 所对应的经典秩界
+
+$$
+z(p)\mid p-\left(\frac5p\right),
+$$
+
+其中 Legendre 符号为 \(\pm1\)。因此 \(m=z(p)\le p+1\)，从而
+
+$$
+p\ge m-1>t.
+$$
+
+但 \(p\mid F_m=N^-(t)\) 与命题 447.1 冲突，因为（447.1）要求每个库存素因子
+严格小于 \(t\)。矛盾证明（447.2）。\(\square\)
+
+这个排除只针对精确来源 \(U=F_m\)。它不排除仿射或乘积型来源，例如
+\(U=1+F_r g\)，也不说明这些来源满足 Robin 不等式。它的作用是把 §445--§446
+的下一步从“继续加强 \(U=F_m\) 的必要条件”移到真正尚未覆盖的来源保持问题：
+需要给出一个仍保留完整素数幂赋值、同时能与 FIB 地址相容的仿射或乘积构造，
+再对其 \(Z(U)=\sigma(U)/U\) 作统一估计。因而（447.2）是来源识别的反例，
+不是 Robin 不等式或 RH 的证明，也不重复 §445 的秩账本或 §446 的 WSS 二择一。
