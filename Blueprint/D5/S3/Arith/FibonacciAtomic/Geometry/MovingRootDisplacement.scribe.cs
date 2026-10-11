@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Geometry;
 
 internal sealed class MovingRootDisplacementDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/MovingRootDisplacement.";
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Geometry/MovingRootDisplacement.";
     private static Formula V(string name) => F.Id(name);
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula Call(string name, params Formula[] xs) =>

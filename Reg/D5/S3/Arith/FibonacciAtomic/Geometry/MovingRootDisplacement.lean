@@ -1,13 +1,13 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement
+import D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement
 import Reg.Support.SingleDependentReadout
 
 open _root_.D5.S3.Arith.FibonacciAtomic.SourceDensityMonotonicity
-open _root_.D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement
+open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace Reg.D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement
 noncomputable section
 
 abbrev signature : Signature :=
@@ -73,11 +73,11 @@ def rootProof : Registration rootArena (rootArena.Law rootActual) where
 
 noncomputable def expansionRegistration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.quantitative_expansion)
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement.quantitative_expansion)
       (type_of% (realize.{0,0,0,0,0} signature
         (fun _ p t => H p.1 p.2 t) (fun e => nomatch e))) Unit Unit := {
-  unitName := `D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.quantitative_expansion.informationUnit,
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.expansionProof,
+  unitName := `D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement.quantitative_expansion.informationUnit,
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement.expansionProof,
   realizationSource := none,
   generated := false,
   arena := .source ⟨expansionArena⟩,
@@ -94,11 +94,12 @@ noncomputable def expansionRegistration :
   partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement,
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement,
     definition := none,
     coordinates := #[0, 2],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "arg", "fn", "arg"],
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg",
+        "fn", "arg", "arg", "fn", "arg"],
       stateBinder := 0, functionOperand := false,
       stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
@@ -112,11 +113,11 @@ noncomputable def expansionRegistration :
 
 noncomputable def rootRegistration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.root_displacement)
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement.root_displacement)
       (type_of% (realize.{0,0,0,0,0} signature
         (fun _ p t => q p.2 p.1 t) (fun e => nomatch e))) Unit Unit := {
-  unitName := `D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.root_displacement.informationUnit,
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.rootProof,
+  unitName := `D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement.root_displacement.informationUnit,
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement.rootProof,
   realizationSource := none,
   generated := false,
   arena := .source ⟨rootArena⟩,
@@ -133,11 +134,12 @@ noncomputable def rootRegistration :
   partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement,
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement,
     definition := none,
     coordinates := #[0, 3],
     readouts := #[{
-      path := #["body", "arg", "body", "arg", "arg", "body", "arg", "body", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg"],
+      path := #["body", "arg", "body", "arg", "arg", "body", "arg", "body",
+        "body", "arg", "body", "arg", "fn", "arg", "fn", "arg"],
       stateBinder := 0, functionOperand := false,
       stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
@@ -149,8 +151,6 @@ noncomputable def rootRegistration :
     { name := `maxSynthPendingDepth, value := .nat 3 },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
-#print axioms expansionProof
-#print axioms rootProof
 
 end
-end Reg.D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement
+end Reg.D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement

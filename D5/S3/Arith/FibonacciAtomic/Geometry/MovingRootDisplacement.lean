@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/MovingRootDisplacement
+/- GID: D5/S3/Arith/FibonacciAtomic/Geometry/MovingRootDisplacement
    generality: I
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/MovingRootDisplacement
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Geometry/MovingRootDisplacement
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -13,7 +13,7 @@ import Mathlib.Analysis.SpecificLimits.Normed
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement
+namespace D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement
 
 open scoped BigOperators Topology
 open Filter Set SourceDensityMonotonicity
@@ -342,7 +342,7 @@ private theorem moving_log_control (k : ℕ) (hk : 1 ≤ k) (j : ℕ) (s : ℝ)
       _ ≤ 2 * (D k : ℝ) * ((j : ℝ) + 1) ^ 2 / (M / 2) ^ 2 :=
         div_le_div_of_nonneg_left (by positivity) (by positivity)
           (sq_le_sq₀ (by positivity) ht0.le |>.mpr htM)
-      _ = _ := by field_simp <;> ring
+      _ = _ := by field_simp; ring
   have hdiff : |M - t| ≤ (j : ℝ) + b + 1 := by
     apply abs_le.mpr
     dsimp [t, b] at *
@@ -357,7 +357,7 @@ private theorem moving_log_control (k : ℕ) (hk : 1 ≤ k) (j : ℕ) (s : ℝ)
       _ ≤ b * (j + b + 1) / ((M / 2) * M) :=
         div_le_div_of_nonneg_left (by positivity) (by positivity)
           (mul_le_mul_of_nonneg_right htM hM.le)
-      _ = _ := by field_simp <;> ring
+      _ = _ := by field_simp
   have hq := ((SourceDensityCrossing.result k hk j).2.1 t (by linarith)).1
   have hH : 0 < H k j t := by
     have hmul : 0 < (t - j) * H k j t := (div_pos_iff_of_pos_right hJ).mp hq
@@ -509,7 +509,4 @@ theorem root_displacement (j : ℕ) :
   rw [hlog] at h
   simpa only [sub_eq_add_neg, ← neg_add, abs_neg] using h
 
-end D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement
-
-#print axioms D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.quantitative_expansion
-#print axioms D5.S3.Arith.FibonacciAtomic.MovingRootDisplacement.root_displacement
+end D5.S3.Arith.FibonacciAtomic.Geometry.MovingRootDisplacement
