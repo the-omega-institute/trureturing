@@ -8390,3 +8390,81 @@ The coarse error is sufficient: relative to (ASC6)'s unchanged
 $Q(X)$, its quotient is
 $O(L^5e^{-L^{1/4}/2})\to0$. No refinement of the generic quadrature
 theorem or new tail calculation is needed for this rate.
+
+### The original fixed-exponent consumer and its remaining signed input
+
+The proposed sufficient analytic input is still
+
+$$
+\int_{J_X}(V_X(A)-1/2)_+^2\,dA=o(LQ(X)).
+\tag{OCQ10}
+$$
+
+It is not established by (OCQ7), the zero ceiling, finite zero
+verification, PNT or quadrature. Indeed, the unsigned bound (OCQ7)
+only gives $O(X^{7/4})$ for this integral, which does not pay
+(OCQ10). This route still lacks a sufficient directed estimate of the same
+actual zero response; no independent phase or modified arithmetic source is
+introduced.
+
+If (OCQ10) were supplied, (OCQ9) and the already paid head-tail
+norm transfer (ASC7) would give
+
+$$
+\sum_{p\in\mathcal P_X}(U_p-1/2)_+^2=o(Q(X)).
+\tag{OCQ11}
+$$
+
+To identify its actual-source consumer, keep the original particular
+fixed $0<\eta<1/2$ and power surplus supplied by the
+[Caveney persistence application](../Arith/caveney2012sacaga.md#a-wider-actual-price-interval-for-the-same-supplied-power-excess),
+where that exponent is denoted $\eta'$. Reuse the actual first-prime
+count (R6) in the
+[Stadlmann interface](../Analytic/stadlmann2022meansquaregaps.md#the-existing-uniform-prime-count-gives-a-stronger-source-specific-count).
+On every scale carrying the same selected source, there are
+
+$$
+\gg\frac{X^{1-\eta/2}e^{L^{1/4}/2}}{L}
+\tag{OCQ12}
+$$
+
+samples in $\mathcal P_X$ whose same actual $N_p=C_{b_p}$ satisfies
+$\log G(N_p)-\gamma>\delta X^{-\eta}$, for the fixed positive
+$\delta$ in that persistence application. The original exponent is
+not decreased or reselected.
+
+The argument does not transfer the original selected integer's
+event-free, own-price, zero-defect properties to these post-event
+integers. Instead consume
+the already preserved unrestricted integer identity
+
+$$
+\Delta(n)=I_\psi(\log n)+R(\log n)+d_n,
+\qquad d_n\ge0,
+\qquad \Delta(n)=\gamma-\log G(n).
+\tag{OCQ13}
+$$
+
+At $n=N_p$, its own clock and the unrestricted sufficiently large
+reserve $R(A_p)>0$ give
+
+$$
+U_p=T(A_p)\bigl(\log G(N_p)-\gamma+R(A_p)+d_{N_p}\bigr)
+\ge T(A_p)\bigl(\log G(N_p)-\gamma\bigr).
+\tag{OCQ14}
+$$
+
+Keep $d_{N_p}$; it is not set to zero. By (ASC2), each sample in
+(OCQ12) has $U_p\gg X^{1/2-\eta}L\to\infty$ and hence $U_p\ge1$
+eventually. Each contributes at least $1/4$ to (OCQ11). The ratio of
+the lower count (OCQ12) to $Q(X)$ is
+$\gg X^{1/4-\eta/2}L\to\infty$, contradicting (OCQ11) on the
+same unbounded source scales.
+
+Thus the displayed implication retains the original fixed-exponent
+source and all post-event layers. It does not obtain (OCQ10), the
+original one-sided $I_\psi$ estimate or RH. Standard quadrature and
+the existing persistence count supply interfaces, not the missing
+continuous signed-head bound. No new generic theorem, repeated
+prime-count proof, parameter optimization or numerical replay is
+claimed as mathematical progress.
