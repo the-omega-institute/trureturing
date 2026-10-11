@@ -4,10 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Derivative budgets bound exact interpolation without node separation. -/
+   digest: Exact interpolation controls joint Laplace certificates without node separation. -/
 
 import D5.S3.Analytic.SincSquareDerivativeBudget
+import D5.S3.Analytic.ChebyshevEndpointCertificate
 import Mathlib.Data.Finsupp.Basic
+import Mathlib.Data.Finsupp.Order
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.Analysis.Calculus.LocalExtr.Rolle
@@ -31,6 +33,9 @@ Mathlib supplies equivalent coefficient one-norm declarations.
 Newton interpolation and its derivative mean-value formula are classical results.
 The analytic statement concerns a smooth function near a closed real interval;
 no lower bound on distances between distinct interpolation nodes is imposed.
+Finite atomic laws are represented by combined weights on their actual support.
+A common order supplies both an all-time Laplace certificate and legal finite-window
+certificates, with a square-order gain in the endpoint gap budget.
 -/
 
 noncomputable section
@@ -38,6 +43,8 @@ noncomputable section
 open Finset Set Polynomial
 
 namespace D5.S3.Analytic.Interpolation.UniformCoefficientBudget
+
+open D5.S3.Analytic.GoldenTomography.FinitePronyHankelReconstruction
 
 /-- Sum of absolute monomial coefficients of a real polynomial. -/
 noncomputable def coeffL1 (p : Polynomial ℝ) : ℝ :=
@@ -492,11 +499,7 @@ theorem sparse_laplace_grid_certificate (μ ν : ℝ →₀ ℝ) (η gμ gν h :
         σ.sum (fun E w => w * F (x E)) :=
     Finsupp.sum_mapDomain_index (fun _ => zero_mul _) (fun _ _ _ => add_mul ..)
   have hpos (σ : ℝ →₀ ℝ) (hσ : ∀ E, 0 ≤ σ E) (t : ℝ) :
-      0 ≤ (Finsupp.mapDomain x σ) t := by
-    by_cases ht : (Finsupp.mapDomain x σ) t = 0
-    · rw [ht]
-    · obtain ⟨E, rfl⟩ := Finsupp.mem_range_of_mapDomain_ne_zero ht
-      simpa only [Finsupp.mapDomain_apply x.injective] using hσ E
+      0 ≤ (Finsupp.mapDomain x σ) t := Finsupp.mapDomain_nonneg (f := x) hσ t
   have hsupp (σ : ℝ →₀ ℝ) (g : ℝ) (hσ : ∀ E ∈ σ.support, g ≤ E) :
       ∀ t ∈ (Finsupp.mapDomain x σ).support, t ∈ Icc 0 (x g) := by
     intro t ht
@@ -540,6 +543,62 @@ theorem sparse_laplace_grid_certificate (μ ν : ℝ →₀ ℝ) (η gμ gν h :
   · rw [← coeffL1_eq_sum_range_of_natDegree_lt P (Nat.lt_succ_of_le hdeg)]
     exact hnorm
 
+private theorem order_scale (η Δ : ℝ) (m : ℕ) (hη : 0 < η) (hη1 : η ≤ 1)
+    (hΔ : 0 < Δ) (hΔ1 : Δ ≤ 1) (hmcap : m ≤ ⌈3 / Real.sqrt (η * Δ)⌉₊) :
+    (m : ℝ)^2 * Δ ≤ 16 / η := by
+  have hηΔ : 0 < η * Δ := mul_pos hη hΔ
+  have hsqrt : 0 < Real.sqrt (η * Δ) := Real.sqrt_pos.mpr hηΔ
+  have hsqrt1 : Real.sqrt (η * Δ) ≤ 1 := by
+    apply (Real.sqrt_le_one).mpr
+    exact (mul_le_mul_of_nonneg_left hΔ1 hη.le).trans (by simpa using hη1)
+  have hceil := Nat.ceil_lt_add_one (by positivity : 0 ≤ 3 / Real.sqrt (η * Δ))
+  have hmr : (m : ℝ) ≤ (⌈3 / Real.sqrt (η * Δ)⌉₊ : ℕ) := by exact_mod_cast hmcap
+  have hmul := mul_le_mul_of_nonneg_right (hmr.trans hceil.le) hsqrt.le
+  rw [add_mul, div_mul_cancel₀ _ hsqrt.ne', one_mul] at hmul
+  have hprod : (m : ℝ) * Real.sqrt (η * Δ) ≤ 4 := by linarith
+  have hprod0 : 0 ≤ (m : ℝ) * Real.sqrt (η * Δ) := by positivity
+  have hsquare := sq_le_sq₀ hprod0 (by norm_num : (0 : ℝ) ≤ 4) |>.mpr hprod
+  rw [mul_pow, Real.sq_sqrt hηΔ.le] at hsquare
+  apply (le_div_iff₀ hη).mpr
+  nlinarith
+
+private theorem exponential_gap_lower (M E gμ gν : ℝ) (hM1 : 1 ≤ M) (hE : 0 < E)
+    (hg : gμ < gν) (hgν : gν ≤ E) :
+    (gν - gμ) / E ≤ 3 * M *
+      (Real.exp (-(1 / (M * E)) * gμ) - Real.exp (-(1 / (M * E)) * gν)) := by
+  let h := 1 / (M * E)
+  let Δ := (gν - gμ) / E
+  let δ := Real.exp (-h * gμ) - Real.exp (-h * gν)
+  have hM : 0 < M := zero_lt_one.trans_le hM1
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hδ : 0 < δ := sub_pos.mpr (Real.exp_lt_exp.mpr (by nlinarith))
+  have hhE : h * E ≤ 1 := by
+    dsimp [h]
+    field_simp
+    exact hM1
+  have hbase : (Real.exp 1)⁻¹ ≤ Real.exp (-h * gν) := by
+    rw [← Real.exp_neg]
+    apply Real.exp_le_exp.mpr
+    have hu := mul_le_mul_of_nonneg_left hgν hh.le
+    linarith
+  have hgap : h * (gν - gμ) * Real.exp (-h * gν) ≤ δ := by
+    have he := mul_le_mul_of_nonneg_right (Real.add_one_le_exp (h * (gν - gμ)))
+      (Real.exp_pos (-h * gν)).le
+    rw [← Real.exp_add, show h * (gν - gμ) + (-h * gν) = -h * gμ by ring] at he
+    dsimp [δ]
+    nlinarith
+  have hδlower : Δ ≤ 3 * M * δ := by
+    have hfirst := (mul_le_mul_of_nonneg_left hbase
+      (mul_nonneg hh.le (sub_nonneg.mpr hg.le))).trans hgap
+    have hid : h * (gν - gμ) * (Real.exp 1)⁻¹ = Δ / (Real.exp 1 * M) := by
+      dsimp [h, Δ]
+      ring
+    rw [hid] at hfirst
+    have hb := (div_le_iff₀ (mul_pos (Real.exp_pos 1) hM)).mp hfirst
+    have he := mul_le_mul_of_nonneg_right Real.exp_one_lt_three.le (mul_nonneg hM.le hδ.le)
+    nlinarith
+  exact hδlower
+
 /-- Sparse Laplace separation with one jointly chosen degree and legal time grid.
 The scale condition is satisfied by the sparse branch of the uniform order selection. -/
 theorem sparse_laplace_window_certificate (μ ν : ℝ →₀ ℝ) (η E gμ gν U : ℝ)
@@ -578,52 +637,13 @@ theorem sparse_laplace_window_certificate (μ ν : ℝ →₀ ℝ) (η E gμ gν
   have hΔ : 0 < Δ := div_pos (sub_pos.mpr hg) hE
   have hδ : 0 < δ := sub_pos.mpr (Real.exp_lt_exp.mpr (by nlinarith))
   have ht : 0 < t := by dsimp [t]; positivity
-  have hscale : (m : ℝ)^2 * Δ ≤ 16 / η := by
-    have hΔ1 : Δ ≤ 1 := (div_le_one hE).mpr (by linarith)
-    have hηΔ : 0 < η * Δ := mul_pos hη hΔ
-    have hsqrt : 0 < Real.sqrt (η * Δ) := Real.sqrt_pos.mpr hηΔ
-    have hsqrt1 : Real.sqrt (η * Δ) ≤ 1 := by
-      apply (Real.sqrt_le_one).mpr
-      exact (mul_le_mul_of_nonneg_left hΔ1 hη.le).trans (by simpa using hη1)
-    have hceil := Nat.ceil_lt_add_one (by positivity : 0 ≤ 3 / Real.sqrt (η * Δ))
-    have hmr : (m : ℝ) ≤ (⌈3 / Real.sqrt (η * Δ)⌉₊ : ℕ) := by exact_mod_cast hmcap
-    have hmul := mul_le_mul_of_nonneg_right (hmr.trans hceil.le) hsqrt.le
-    rw [add_mul, div_mul_cancel₀ _ hsqrt.ne', one_mul] at hmul
-    have hprod : (m : ℝ) * Real.sqrt (η * Δ) ≤ 4 := by linarith
-    have hprod0 : 0 ≤ (m : ℝ) * Real.sqrt (η * Δ) := by positivity
-    have hsquare := sq_le_sq₀ hprod0 (by norm_num : (0 : ℝ) ≤ 4) |>.mpr hprod
-    rw [mul_pow, Real.sq_sqrt hηΔ.le] at hsquare
-    apply (le_div_iff₀ hη).mpr
-    nlinarith
+  have hscale := order_scale η Δ m hη hη1 hΔ
+    ((div_le_one hE).mpr (by linarith)) hmcap
   have htlow : η / 16 ≤ t := by
     apply (le_div_iff₀ (by positivity : 0 < (m : ℝ)^2 * Δ)).mpr
     have hs : (m : ℝ)^2 * Δ * η ≤ 16 := (le_div_iff₀ hη).mp hscale
     nlinarith
-  have hhE : h * E ≤ 1 := by
-    dsimp [h]
-    field_simp
-    exact hM1
-  have hbase : (Real.exp 1)⁻¹ ≤ Real.exp (-h * gν) := by
-    rw [← Real.exp_neg]
-    apply Real.exp_le_exp.mpr
-    have hu := mul_le_mul_of_nonneg_left hgν hh.le
-    linarith
-  have hgap : h * (gν - gμ) * Real.exp (-h * gν) ≤ δ := by
-    have he := mul_le_mul_of_nonneg_right (Real.add_one_le_exp (h * (gν - gμ)))
-      (Real.exp_pos (-h * gν)).le
-    rw [← Real.exp_add, show h * (gν - gμ) + (-h * gν) = -h * gμ by ring] at he
-    dsimp [δ]
-    nlinarith
-  have hδlower : Δ ≤ 3 * M * δ := by
-    have hfirst := (mul_le_mul_of_nonneg_left hbase
-      (mul_nonneg hh.le (sub_nonneg.mpr hg.le))).trans hgap
-    have hid : h * (gν - gμ) * (Real.exp 1)⁻¹ = Δ / (Real.exp 1 * M) := by
-      dsimp [h, Δ]
-      ring
-    rw [hid] at hfirst
-    have hb := (div_le_iff₀ (mul_pos (Real.exp_pos 1) hM)).mp hfirst
-    have he := mul_le_mul_of_nonneg_right Real.exp_one_lt_three.le (mul_nonneg hM.le hδ.le)
-    nlinarith
+  have hδlower : Δ ≤ 3 * M * δ := exponential_gap_lower M E gμ gν hM1 hE hg hgν
   have hmqsq : (m : ℝ)^2 ≤ (q : ℝ)^2 := by exact_mod_cast Nat.pow_le_pow_left hmq 2
   have hz : (16 / (η * δ)) / (q : ℝ)^2 ≤ 48 * t / η := by
     rw [div_div, show 48 * t / η = (48 * M) / (η * (m : ℝ)^2 * Δ) by dsimp [t]; ring]
@@ -667,5 +687,292 @@ theorem sparse_laplace_window_certificate (μ ν : ℝ →₀ ℝ) (η E gμ gν
   apply (div_le_div_iff₀ (mul_pos hM hE) hE).mpr
   nlinarith [mul_le_mul_of_nonneg_right (hkR.trans hwin) hE.le]
 
+/-- A quantitative endpoint gap forces a raw moment to separate the laws.
+The resulting coefficient certificate has only one nonzero coefficient. -/
+private theorem dense_moment_certificate {r s : ℕ} (x u : Fin r → ℝ) (y v : Fin s → ℝ)
+    (i₀ : Fin r) (a b η : ℝ) (n : ℕ) (ha : 0 ≤ a) (hab : a < b)
+    (hx : ∀ i, a ≤ x i) (hy : ∀ j, a ≤ y j ∧ y j ≤ b)
+    (hu : ∀ i, 0 ≤ u i) (hv : ∀ j, 0 ≤ v j)
+    (hmu : (∑ i, u i) = 1) (hnu : (∑ j, v j) = 1) (hη : 0 < η)
+    (hweight : η ≤ ∑ i ∈ univ.filter (fun i => x i = x i₀), u i)
+    (hout : b ≤ x i₀) (hamp : 2 * (b - a) ≤ η * (n : ℝ)^2 * (x i₀ - b)) :
+    ∃ c : ℕ → ℝ,
+      1 ≤ ∑ k ∈ range (n + 1), c k *
+        (pronyMoment x u k - pronyMoment y v k) ∧
+      (∑ k ∈ range (n + 1), |c k|) ≤ (2 * ((2 + a + b) / (b - a)) + 1)^n := by
+  let Q := 2 * ((2 + a + b) / (b - a)) + 1
+  let D := fun k => pronyMoment x u k - pronyMoment y v k
+  have hw : 0 < b - a := sub_pos.mpr hab
+  have hb : 0 ≤ b := ha.trans hab.le
+  have hQ : 0 < Q := by dsimp [Q]; positivity
+  have hpow : 0 < Q^n := pow_pos hQ n
+  have hex : ¬ ∀ k ≤ n, |D k| ≤ 1 / Q^n := by
+    intro hnoise
+    have hc := D5.S3.Analytic.ChebyshevEndpointCertificate.noisy_moment_endpoint_certificate
+      x u y v i₀ a b η (1 / Q^n) n ha hab hx hy hu hv hmu hnu hη hweight hout
+      (by positivity) hnoise
+    change 2 * η * (n : ℝ)^2 * (x i₀ - b) ≤
+      (b - a) * (2 * (1 - η) + (1 / Q^n) * Q^n) at hc
+    rw [one_div_mul_cancel hpow.ne'] at hc
+    nlinarith [mul_pos hη hw]
+  push Not at hex
+  obtain ⟨k, hk, hkval⟩ := hex
+  have hkD : 0 < |D k| := (one_div_pos.mpr hpow).trans hkval
+  have hk0 : D k ≠ 0 := abs_pos.mp hkD
+  have hkMem : k ∈ range (n + 1) := mem_range.mpr (by omega)
+  refine ⟨fun j => if j = k then (D k)⁻¹ else 0, ?_, ?_⟩
+  · change 1 ≤ ∑ j ∈ range (n + 1), (if j = k then (D k)⁻¹ else 0) * D j
+    simp [ite_mul, hkMem, hk0]
+  · simp only [apply_ite abs, abs_inv, abs_zero]
+    simp only [sum_ite_eq', hkMem, if_true]
+    rw [← one_div]
+    apply (div_le_iff₀ hkD).mpr
+    have hv := (div_lt_iff₀ hpow).mp hkval
+    dsimp [Q] at *
+    nlinarith
+
+set_option maxHeartbeats 800000 in
+/-- Uniform ordered Laplace separation. The order is chosen before the single sampling grid. -/
+theorem ordered_laplace_joint_certificate (μ ν : ℝ →₀ ℝ) (η E gμ gν U : ℝ)
+    (d : ℕ) (hd : 0 < d) (hU : 0 < U) (hE : 0 < E)
+    (hη : 0 < η) (hη1 : η ≤ 1) (hgμ : 0 ≤ gμ) (hg : gμ < gν) (hgν : gν ≤ E)
+    (hμ : ∀ t, 0 ≤ μ t) (hν : ∀ t, 0 ≤ ν t)
+    (hμtotal : μ.sum (fun _ w => w) = 1) (hνtotal : ν.sum (fun _ w => w) = 1)
+    (hμsupport : ∀ t ∈ μ.support, t ∈ Icc gμ E)
+    (hνsupport : ∀ t ∈ ν.support, t ∈ Icc gν E)
+    (hmass : η ≤ μ gμ) (hμcard : μ.support.card ≤ d) (hνcard : ν.support.card ≤ d) :
+    let Δ := (gν - gμ) / E
+    let m := min d ⌈3 / Real.sqrt (η * Δ)⌉₊
+    let q := 2 * m - 1
+    let M := max 1 ((q : ℝ) / U)
+    let h := 1 / (M * E)
+    0 < m ∧ m ≤ d ∧ (m : ℝ)^2 * Δ ≤ 16 / η ∧
+      ∃ c : ℕ → ℝ, (∀ k ≤ q, (k : ℝ) * h ∈ Icc 0 (U / E)) ∧
+        1 ≤ ∑ k ∈ range (q + 1), c k *
+          (atomicLaplace μ ((k : ℝ) * h) - atomicLaplace ν ((k : ℝ) * h)) ∧
+        (∑ k ∈ range (q + 1), |c k|) ≤ (1024 * M / (η^2 * (m : ℝ)^2 * Δ))^q := by
+  classical
+  dsimp only
+  let Δ := (gν - gμ) / E
+  let m₀ := ⌈3 / Real.sqrt (η * Δ)⌉₊
+  let m := min d m₀
+  let q := 2 * m - 1
+  let M := max 1 ((q : ℝ) / U)
+  let h := 1 / (M * E)
+  have hΔ : 0 < Δ := div_pos (sub_pos.mpr hg) hE
+  have hΔ1 : Δ ≤ 1 := (div_le_one hE).mpr (by linarith)
+  have hm₀ : 0 < m₀ := Nat.ceil_pos.mpr (by positivity)
+  have hm : 0 < m := lt_min hd hm₀
+  have hcap : m ≤ m₀ := min_le_right _ _
+  have hscale := order_scale η Δ m hη hη1 hΔ hΔ1 hcap
+  refine ⟨hm, min_le_left _ _, hscale, ?_⟩
+  by_cases hsmall : d ≤ m₀
+  · have hmd : m = d := min_eq_left hsmall
+    obtain ⟨c, htime, hsep, hnorm⟩ := sparse_laplace_window_certificate μ ν η E gμ gν U m
+      hm hU hE hη hη1 hgμ hg hgν hμ hν hνtotal
+      (fun t ht => (hμsupport t ht).1) (fun t ht => (hνsupport t ht).1)
+      hmass (by simpa only [hmd] using hμcard) (by simpa only [hmd] using hνcard) hcap
+    refine ⟨c, htime, hsep, hnorm.trans ?_⟩
+    apply pow_le_pow_left₀ (by positivity)
+    exact div_le_div_of_nonneg_right (by have : 0 ≤ M := le_trans zero_le_one (le_max_left _ _); nlinarith)
+      (by positivity)
+  have hmm : m = m₀ := min_eq_right (le_of_not_ge hsmall)
+  have hq : 0 < q := by dsimp [q]; omega
+  have hmq : m ≤ q := by dsimp [q]; omega
+  have hM1 : 1 ≤ M := le_max_left _ _
+  have hM : 0 < M := zero_lt_one.trans_le hM1
+  have hh : 0 < h := by dsimp [h]; positivity
+  have hhE : h * E = 1 / M := by dsimp [h]; field_simp
+  let a := Real.exp (-(1 / M))
+  let a₀ := (3 * a - 1) / 2
+  let b := Real.exp (-h * gν)
+  let y := Real.exp (-h * gμ)
+  let w := b - a₀
+  let Q := 2 * ((2 + a₀ + b) / w) + 1
+  have ha1 : a < 1 := Real.exp_lt_one_iff.mpr (neg_lt_zero.mpr (one_div_pos.mpr hM))
+  have ha3 : 1 / 3 < a := by
+    have he : (1 / 3 : ℝ) < Real.exp (-1) := by
+      rw [Real.exp_neg, ← one_div]
+      apply (lt_div_iff₀ (Real.exp_pos 1)).mpr
+      linarith [Real.exp_one_lt_three]
+    apply he.trans_le
+    apply Real.exp_le_exp.mpr
+    have hu : 1 / M ≤ 1 := (div_le_one hM).mpr hM1
+    linarith
+  have ha₀ : 0 ≤ a₀ := by dsimp [a₀]; linarith
+  have ha₀a : a₀ < a := by dsimp [a₀]; linarith
+  have hab : a ≤ b := by
+    apply Real.exp_le_exp.mpr
+    have hu := mul_le_mul_of_nonneg_left hgν hh.le
+    rw [hhE] at hu
+    linarith
+  have hb1 : b ≤ 1 := Real.exp_le_one_iff.mpr (by nlinarith)
+  have hby : b < y := Real.exp_lt_exp.mpr (by nlinarith)
+  have hw : 0 < w := sub_pos.mpr (ha₀a.trans_le hab)
+  have hwupper : 2 * M * w ≤ 3 := by
+    have he := Real.add_one_le_exp (-(1 / M))
+    have he' := mul_le_mul_of_nonneg_left he hM.le
+    have hi : M * (-(1 / M) + 1) = M - 1 := by field_simp <;> ring
+    rw [hi] at he'
+    change M - 1 ≤ M * a at he'
+    have hbw := mul_le_mul_of_nonneg_left hb1 hM.le
+    dsimp [w, a₀]
+    nlinarith
+  have hwlower : 1 ≤ 6 * M * w := by
+    have he := exponential_gap_lower M E 0 E hM1 hE hE le_rfl
+    simp only [sub_zero, div_self hE.ne', mul_zero, Real.exp_zero] at he
+    have hex : Real.exp (-(1 / (M * E)) * E) = a := by
+      change Real.exp (-(1 / (M * E)) * E) = Real.exp (-(1 / M))
+      congr 1
+      field_simp
+    rw [hex] at he
+    have hwmin : (1 - a) / 2 ≤ w := by dsimp [w, a₀]; linarith
+    have hp := mul_le_mul_of_nonneg_left hwmin hM.le
+    nlinarith
+  have hQ : Q ≤ 64 * M := by
+    have hw1 : w ≤ 1 := by dsimp [w]; linarith
+    have ha₀1 : a₀ ≤ 1 := ha₀a.le.trans ha1.le
+    have heq : Q * w = 2 * (2 + a₀ + b) + w := by dsimp [Q]; field_simp <;> ring
+    apply (mul_le_mul_iff_left₀ hw).mp
+    rw [heq]
+    nlinarith
+  have hamp : 2 * w ≤ η * (q : ℝ)^2 * (y - b) := by
+    have hsqrt : 0 < Real.sqrt (η * Δ) := Real.sqrt_pos.mpr (mul_pos hη hΔ)
+    have hceil : 3 / Real.sqrt (η * Δ) ≤ (m : ℝ) := by
+      rw [hmm]
+      exact Nat.le_ceil _
+    have hmul := (div_le_iff₀ hsqrt).mp (hceil.trans (Nat.cast_le.mpr hmq))
+    have hsquare : 9 ≤ η * (q : ℝ)^2 * Δ := by
+      have hp : 0 ≤ (q : ℝ) * Real.sqrt (η * Δ) := by positivity
+      have he := (sq_le_sq₀ (by norm_num : (0 : ℝ) ≤ 3) hp).mpr hmul
+      rw [mul_pow, Real.sq_sqrt (mul_pos hη hΔ).le] at he
+      nlinarith
+    have hgap := exponential_gap_lower M E gμ gν hM1 hE hg hgν
+    change Δ ≤ 3 * M * (y - b) at hgap
+    have hp := mul_le_mul_of_nonneg_left hgap (by positivity : 0 ≤ η * (q : ℝ)^2)
+    have hprod : M * (2 * w) ≤ M * (η * (q : ℝ)^2 * (y - b)) := by nlinarith
+    exact (mul_le_mul_iff_right₀ hM).mp hprod
+  let e (σ : ℝ →₀ ℝ) : Fin σ.support.card ≃ σ.support := σ.support.equivFin.symm
+  let energy (σ : ℝ →₀ ℝ) (i : Fin σ.support.card) : ℝ := (e σ i).val
+  let nodes (σ : ℝ →₀ ℝ) (i : Fin σ.support.card) := Real.exp (-h * energy σ i)
+  let weights (σ : ℝ →₀ ℝ) (i : Fin σ.support.card) := σ (energy σ i)
+  have hsum (σ : ℝ →₀ ℝ) (F : ℝ → ℝ) :
+      (∑ i : Fin σ.support.card, σ (energy σ i) * F (energy σ i)) = σ.sum (fun E w => w * F E) := by
+    change (∑ i, (fun t : σ.support => σ t * F t) (e σ i)) = _
+    exact ((e σ).sum_comp (fun t : σ.support => σ t * F t)).trans
+      (by simpa only [Finsupp.sum] using Finset.sum_coe_sort σ.support (fun t => σ t * F t))
+  have hmoment (σ : ℝ →₀ ℝ) (k : ℕ) :
+      pronyMoment (nodes σ) (weights σ) k = atomicLaplace σ ((k : ℝ) * h) := by
+    simp only [pronyMoment, nodes, weights, ← Real.exp_nat_mul]
+    simp_rw [show ∀ t : ℝ, (k : ℝ) * (-h * t) = -((k : ℝ) * h) * t by intro t; ring]
+    exact hsum σ (fun t => Real.exp (-((k : ℝ) * h) * t))
+  have hgmem : gμ ∈ μ.support := Finsupp.mem_support_iff.mpr (ne_of_gt (hη.trans_le hmass))
+  let i₀ := (e μ).symm ⟨gμ, hgmem⟩
+  have hi₀ : energy μ i₀ = gμ := by simp [energy, i₀]
+  have hnode (σ : ℝ →₀ ℝ) (g : ℝ) (hσ : ∀ t ∈ σ.support, t ∈ Icc g E)
+      (i : Fin σ.support.card) : a₀ ≤ nodes σ i ∧ nodes σ i ≤ Real.exp (-h * g) := by
+    have hi := hσ (energy σ i) (e σ i).property
+    constructor
+    · apply ha₀a.le.trans
+      apply Real.exp_le_exp.mpr
+      have he := mul_le_mul_of_nonneg_left hi.2 hh.le
+      rw [hhE] at he
+      linarith
+    · apply Real.exp_le_exp.mpr
+      exact mul_le_mul_of_nonpos_left hi.1 (by linarith)
+  obtain ⟨c, hsep, hnorm⟩ := dense_moment_certificate (nodes μ) (weights μ) (nodes ν) (weights ν)
+    i₀ a₀ b η q ha₀ (ha₀a.trans_le hab) (fun i => (hnode μ gμ hμsupport i).1)
+    (hnode ν gν hνsupport) (fun i => hμ _) (fun i => hν _)
+    (by simpa [weights] using (hsum μ (fun _ => 1)).trans (by simpa using hμtotal))
+    (by simpa [weights] using (hsum ν (fun _ => 1)).trans (by simpa using hνtotal))
+    hη (by
+      apply le_trans (show η ≤ weights μ i₀ by simpa only [weights, hi₀] using hmass)
+      exact single_le_sum (fun i _ => hμ _)
+        (show i₀ ∈ univ.filter (fun i => nodes μ i = nodes μ i₀) by simp))
+    (by simpa [nodes, hi₀, y] using hby.le) (by simpa [w, nodes, hi₀, y] using hamp)
+  refine ⟨c, ?_, ?_, ?_⟩
+  · intro k hk
+    refine ⟨by positivity, ?_⟩
+    have hwin : (q : ℝ) ≤ M * U := (div_le_iff₀ hU).mp (le_max_right _ _)
+    have hkR : (k : ℝ) ≤ q := Nat.cast_le.mpr hk
+    change (k : ℝ) * (1 / (M * E)) ≤ U / E
+    rw [mul_one_div]
+    apply (div_le_div_iff₀ (mul_pos hM hE) hE).mpr
+    nlinarith [mul_le_mul_of_nonneg_right (hkR.trans hwin) hE.le]
+  · simpa only [hmoment] using hsep
+  · apply hnorm.trans
+    apply pow_le_pow_left₀ (by positivity)
+    apply hQ.trans
+    have hden : 0 < η^2 * (m : ℝ)^2 * Δ := by positivity
+    apply (le_div_iff₀ hden).mpr
+    have hs := (le_div_iff₀ hη).mp hscale
+    have hs' := mul_le_mul_of_nonneg_left hs hη.le
+    have hb : η^2 * (m : ℝ)^2 * Δ ≤ 16 := by nlinarith
+    have hc := mul_le_mul_of_nonneg_left hb (by positivity : 0 ≤ 64 * M)
+    nlinarith
+
+/-- Joint all-time and finite-window certificates for two atomic probability laws.
+Both orientations use the absolute endpoint gap; changing orientation changes only coefficient signs.
+The order is shared by all windows, and every window uses its prescribed scale. -/
+theorem laplace_joint_certificates (μ ν : ℝ →₀ ℝ) (η E gμ gν : ℝ)
+    (d : ℕ) (hd : 0 < d) (hE : 0 < E) (hη : 0 < η) (hη1 : η ≤ 1)
+    (hgμ : gμ ∈ Icc 0 E) (hgν : gν ∈ Icc 0 E) (hne : gμ ≠ gν)
+    (hμ : ∀ t, 0 ≤ μ t) (hν : ∀ t, 0 ≤ ν t)
+    (hμtotal : μ.sum (fun _ w => w) = 1) (hνtotal : ν.sum (fun _ w => w) = 1)
+    (hμsupport : ∀ t ∈ μ.support, t ∈ Icc gμ E)
+    (hνsupport : ∀ t ∈ ν.support, t ∈ Icc gν E)
+    (hμmass : η ≤ μ gμ) (hνmass : η ≤ ν gν)
+    (hμcard : μ.support.card ≤ d) (hνcard : ν.support.card ≤ d) :
+    let Δ := |gμ - gν| / E
+    let m := min d ⌈3 / Real.sqrt (η * Δ)⌉₊
+    let q := 2 * m - 1
+    0 < m ∧ m ≤ d ∧ (m : ℝ)^2 * Δ ≤ 16 / η ∧
+      (∃ c : ℕ → ℝ,
+        1 ≤ ∑ k ∈ range (q + 1), c k * (atomicLaplace μ ((k : ℝ) / E) -
+          atomicLaplace ν ((k : ℝ) / E)) ∧
+        (∑ k ∈ range (q + 1), |c k|) ≤ (1024 / (η^2 * (m : ℝ)^2 * Δ))^q) ∧
+      (∀ U : ℝ, 0 < U →
+        let M := max 1 ((q : ℝ) / U)
+        let h := 1 / (M * E)
+        ∃ c : ℕ → ℝ, (∀ k ≤ q, (k : ℝ) * h ∈ Icc 0 (U / E)) ∧
+          1 ≤ ∑ k ∈ range (q + 1), c k *
+            (atomicLaplace μ ((k : ℝ) * h) - atomicLaplace ν ((k : ℝ) * h)) ∧
+          (∑ k ∈ range (q + 1), |c k|) ≤ (1024 * M / (η^2 * (m : ℝ)^2 * Δ))^q) := by
+  classical
+  dsimp only
+  let Δ := |gμ - gν| / E
+  let m := min d ⌈3 / Real.sqrt (η * Δ)⌉₊
+  let q := 2 * m - 1
+  have hw (U : ℝ) (hU : 0 < U) :
+      0 < m ∧ m ≤ d ∧ (m : ℝ)^2 * Δ ≤ 16 / η ∧
+        ∃ c : ℕ → ℝ,
+          (∀ k ≤ q, (k : ℝ) * (1 / (max 1 ((q : ℝ) / U) * E)) ∈ Icc 0 (U / E)) ∧
+          1 ≤ ∑ k ∈ range (q + 1), c k *
+            (atomicLaplace μ ((k : ℝ) * (1 / (max 1 ((q : ℝ) / U) * E))) -
+              atomicLaplace ν ((k : ℝ) * (1 / (max 1 ((q : ℝ) / U) * E)))) ∧
+          (∑ k ∈ range (q + 1), |c k|) ≤
+            (1024 * max 1 ((q : ℝ) / U) / (η^2 * (m : ℝ)^2 * Δ))^q := by
+    rcases lt_or_gt_of_ne hne with hlt | hgt
+    · have habs : |gμ - gν| = gν - gμ := by rw [abs_of_neg (sub_neg.mpr hlt)]; ring
+      simpa only [m, q, Δ, habs] using
+        ordered_laplace_joint_certificate μ ν η E gμ gν U d hd hU hE hη hη1 hgμ.1 hlt hgν.2
+          hμ hν hμtotal hνtotal hμsupport hνsupport hμmass hμcard hνcard
+    · have habs : |gμ - gν| = gμ - gν := abs_of_pos (sub_pos.mpr hgt)
+      have hc := ordered_laplace_joint_certificate ν μ η E gν gμ U d hd hU hE hη hη1 hgν.1 hgt hgμ.2
+        hν hμ hνtotal hμtotal hνsupport hμsupport hνmass hνcard hμcard
+      simp only [m, q, Δ, habs]
+      obtain ⟨hm, hmd, hs, c, htime, hsep, hnorm⟩ := hc
+      refine ⟨hm, hmd, hs, (fun k => -c k), htime, ?_, ?_⟩
+      · convert hsep using 1
+        congr 1
+        funext k
+        ring
+      · simpa only [abs_neg] using hnorm
+  have hm : 0 < m := (hw 1 zero_lt_one).1
+  have hq : 0 < q := by dsimp [q]; omega
+  have hqR : (0 : ℝ) < q := Nat.cast_pos.mpr hq
+  obtain ⟨_, hmd, hs, c, _, hsep, hnorm⟩ := hw (q : ℝ) hqR
+  simp only [div_self hqR.ne', max_self, one_mul, mul_one, mul_one_div] at hsep hnorm
+  exact ⟨hm, hmd, hs, ⟨c, hsep, hnorm⟩, fun U hU => (hw U hU).2.2.2⟩
 
 end D5.S3.Analytic.Interpolation.UniformCoefficientBudget
