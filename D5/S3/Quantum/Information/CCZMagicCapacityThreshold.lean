@@ -10,7 +10,7 @@
 result: proof_shape: bind-only
 escape_witness: none
 admission_basis: open-problem-resolution (#15085; Refuted)
-Direct frozen dependencies: none (pinned Mathlib only).
+Direct frozen dependencies: D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.depolarized (declaration statement_id sha256:24b644702cdd55fca7f15864e69044d03389fbf696780b679efb0e0478b51b69), used by depol and this module. Settling Freeze owner prerequisite: sha256:7e0df82ab5d6a661e6e797ade5a23cfbc0c3258e8c2ca14f7dcce4c3d2b0ed5b.
 Private auxiliary theorems (all proof_shape: bind-only; consumers):
   q_upper_sound: diag_quadratic
   q_upper_as_full: IsQuad.exists_full

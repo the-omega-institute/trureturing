@@ -66,7 +66,7 @@ Printed page 2, Section II: "Let STABₙ denote the set of all n-qubit stabilize
 
 **Definition 1.6 (Single-qubit depolarizing noise).**
 
-$$\forall lam \in \mathbb{R},\; \forall rho \in \operatorname{Matrix}\left(Bool, Bool, \mathbb{C}\right),\; \operatorname{depol}\left(lam, rho\right) = \operatorname{Matrix}.\operatorname{reindex}\left(finTwoEquiv, finTwoEquiv, \operatorname{D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized}\left(\operatorname{LinearMap}.\operatorname{id}, lam, \operatorname{Matrix}.\operatorname{reindex}\left(\operatorname{Equiv}.\operatorname{symm}\left(finTwoEquiv\right), \operatorname{Equiv}.\operatorname{symm}\left(finTwoEquiv\right), rho\right)\right)\right)$$
+$$\forall lam \in \mathbb{R},\; \forall rho \in \operatorname{Matrix}\left(Bool, Bool, \mathbb{C}\right),\; \operatorname{depol}\left(lam, rho\right) = \left(1 - lam\right) \cdot rho + \frac{lam}{2} \cdot \operatorname{Matrix}.\operatorname{trace}\left(rho\right) \cdot \operatorname{Matrix}.\operatorname{one}$$
 
 *Formalization.* `D5/S3/Quantum/Information/CCZMagicCapacityThreshold.depol` (`✓ std3`).
 
@@ -74,7 +74,7 @@ $$\forall lam \in \mathbb{R},\; \forall rho \in \operatorname{Matrix}\left(Bool,
 
 *Commentary.*
 
-Printed page 2: "As a standard noise model, we primarily consider the independent depolarizing noise 𝓔_λ^{⊗n} acting on the n-body quantum system, which leaves the qubits it acts on unchanged with probability 1−λ, and replaces them with 𝕀₂/2 with probability λ." The trace factor extends the channel to all matrices. Coordinates 0, 1 and 2 form A; coordinates 3, 4 and 5 form its reference B.
+Printed page 2: "As a standard noise model, we primarily consider the independent depolarizing noise 𝓔_λ^{⊗n} acting on the n-body quantum system, which leaves the qubits it acts on unchanged with probability 1−λ, and replaces them with 𝕀₂/2 with probability λ." The trace factor extends the channel to all matrices. Coordinates 0, 1 and 2 form A; coordinates 3, 4 and 5 form its reference B. The Lean body is the frozen owner's D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized at d = 2, reindexed along finTwoEquiv; the private lemma D5.S3.Quantum.Information.CCZMagicCapacityThreshold.depol_formula proves that this body agrees with the displayed source expression.
 
 **Definition 1.7 (Depolarization at one coordinate).**
 

@@ -20,7 +20,7 @@ internal sealed class CCZMagicCapacityThresholdDocument : IScribeDocumentDefinit
             Node("stabVec", "Stabilizer normal-form amplitudes", StabilizerVectorFormula(), NormalFormQuote + " The affine support has cardinality (K : Set (Fin n -> ZMod 2)).toFinset.card. Its zero-support expression is defined, while pure stabilizer membership requires nonempty support."),
             Node("IsPureStab", "Pure stabilizer density matrices", PureFormula(), NormalFormQuote + " Density matrices are Matrix.vecMulVec v (star v); a nonempty affine support and a quadratic phase are required."),
             Node("STAB", "Stabilizer mixtures", MixtureFormula(), "Printed page 2, Section II: \"Let STABₙ denote the set of all n-qubit stabilizer states, namely the convex hull of all pure stabilizer states.\" The convex hull is over the real scalar field."),
-            Node("depol", "Single-qubit depolarizing noise", DepolarizingFormula(), NoiseQuote),
+            Node("depol", "Single-qubit depolarizing noise", DepolarizingFormula(), NoiseQuote + " The Lean body is the frozen owner's D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized at d = 2, reindexed along finTwoEquiv; the private lemma D5.S3.Quantum.Information.CCZMagicCapacityThreshold.depol_formula proves that this body agrees with the displayed source expression."),
             Node("depolAt", "Depolarization at one coordinate", DepolarizingAtFormula(), NoiseQuote + " For each fixed pair of outside labels, apply depol to the two-by-two block obtained with Function.update."),
             Node("depolA", "Noise on the three system qubits", DepolarizingAFormula(), NoiseQuote),
             Node("CCZ", "The controlled-controlled-Z gate", GateFormula(), "Printed page 2: \"Let Cⁿ⁻¹Z = diag(1, · · · , 1, −1) denote the multi-controlled-Z gate on n-qubits, with C⁰Z = Z.\" At n = 3, the computational-basis diagonal is -1 at 111 and 1 at every other label; Bool.and is the Boolean conjunction used by the diagonal entries."),
@@ -42,13 +42,6 @@ internal sealed class CCZMagicCapacityThresholdDocument : IScribeDocumentDefinit
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
-    private static Formula Qualified(params string[] parts)
-    {
-        Formula value = F.Id(parts[0]);
-        for (int i = 1; i < parts.Length; i++)
-            value = Seq(value, Dot, F.Id(parts[i]));
-        return Seq(Operatorname, Grp(value));
-    }
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
     private static Formula App(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
@@ -125,12 +118,9 @@ internal sealed class CCZMagicCapacityThresholdDocument : IScribeDocumentDefinit
     {
         Formula lam = F.Id("lam"), rho = F.Id("rho");
         Formula matrix = Call("Matrix", F.Id("Bool"), F.Id("Bool"), ComplexType());
-        Formula e = F.Id("finTwoEquiv");
-        Formula es = App(Q("Equiv", "symm"), e);
-        Formula source = App(Qualified("D5", "S3", "Quantum", "QuantumChannels", "TracePreservingEigenvalueBound", "depolarized"),
-            Q("LinearMap", "id"), lam, App(Q("Matrix", "reindex"), es, es, rho));
-        Formula body = App(Q("Matrix", "reindex"), e, e, source);
-        return All("lam", RealType(), All("rho", matrix, Equal(Call("depol", lam, rho), body)));
+        Formula source = Add(Multiply(Subtract(D(1), lam), rho),
+            Multiply(new Formula.Fraction(lam, D(2)), Multiply(App(Q("Matrix", "trace"), rho), Q("Matrix", "one"))));
+        return All("lam", RealType(), All("rho", matrix, Equal(Call("depol", lam, rho), source)));
     }
 
     private static Formula DepolarizingAtFormula()
