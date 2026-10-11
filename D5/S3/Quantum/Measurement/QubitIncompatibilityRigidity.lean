@@ -59,7 +59,7 @@ private lemma B_formula (t : ℝ) (v : V) :
 
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
   (scalarB_hermitian scalarB_det half_scalarB_posSemidef_iff
-    hermitian_decomposition half_scalarB_double trace_B_mul)
+    hermitian_decomposition half_scalarB_double half_scalarB_complement trace_B_mul)
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch blochMatrix)
 
 private lemma B_hermitian (t : ℝ) (v : V) : (B t v).IsHermitian :=
@@ -123,14 +123,17 @@ private lemma tomography (M N : QubitMatrix) (hM : M.IsHermitian)
   rw [B_rep M hM, B_rep N hN, ht, hv]
 
 private lemma B_sub (s t : ℝ) (v w : V) : B (s - t) (v - w) = B s v - B t w := by
-  rw [B_formula, B_formula, B_formula]
-  ext i j
-  fin_cases i <;> fin_cases j <;> simp [blochMatrix] <;> ring
+  have h : D5.S3.Quantum.Measurement.FourQubitParentConstruction.B (v - w) =
+      D5.S3.Quantum.Measurement.FourQubitParentConstruction.B v -
+        D5.S3.Quantum.Measurement.FourQubitParentConstruction.B w := by
+    simp [sub_eq_add_neg]
+  simp only [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
+    h, Complex.ofReal_sub, sub_smul, smul_add, smul_sub]
+  abel
 
-private lemma B_complement (t : ℝ) (v : V) : B (2 - t) (-v) = 1 - B t v := by
-  rw [B_formula, B_formula]
-  ext i j
-  fin_cases i <;> fin_cases j <;> simp [blochMatrix] <;> ring
+private lemma B_complement (t : ℝ) (v : V) : B (2 - t) (-v) = 1 - B t v :=
+  half_scalarB_complement t v
+
 
 private lemma marginal_psd {G : Fin 2 × Fin 2 → QubitMatrix} (hG : IsPOVM G)
     (i s : Fin 2) : (marginal G i s).PosSemidef := by

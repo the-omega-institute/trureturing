@@ -190,7 +190,7 @@ theorem half_scalarB_double (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [scalarB, B_formula, Complex.mul_re, Complex.mul_im,
       Complex.div_re, Complex.div_im] <;> ring
-private theorem half_scalarB_complement (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
+theorem half_scalarB_complement (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
     (1 / 2 : ℂ) • scalarB (2 - t) (-a) =
       (1 : (Matrix (Fin 2) (Fin 2) ℂ)) - (1 / 2 : ℂ) • scalarB t a := by
   ext i j
