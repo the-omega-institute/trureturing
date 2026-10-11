@@ -657,8 +657,9 @@ open Reg.Support.BridgeGraphOriginalLaws
 
 noncomputable def kernelEmbedding_injectiveRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective)
-    (type_of% (realize kernelFunctionSignature (fun _ _ f => @Decidable.decide (Function.Injective f)
-      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize kernelFunctionSignature
+      (fun _ p x => kernelEmbedding p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 x)
+      (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
     "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injectiveArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injectiveEvidence,
@@ -669,15 +670,16 @@ noncomputable def kernelEmbedding_injectiveRegistration : Contract.Registration.
   realization := .source kernelEmbedding_injectiveArena ⟨kernelEmbedding_injectiveEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize kernelFunctionSignature (fun _ _ f => @Decidable.decide (Function.Injective f)
-      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)),
+  readout := some (realize kernelFunctionSignature
+    (fun _ p x => kernelEmbedding p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 x)
+    (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur, definition := none,
     coordinates := #[0, 1, 2, 3, 4], readouts := #[{
-      path := #["body", "body", "body", "body", "body"],
-      stateBinder := 0, functionOperand := false,
-      stateOperand := some #["arg"], booleanPredicate := true }] },
+      path := #["body", "body", "body", "body", "body", "arg"],
+      stateBinder := 0, functionOperand := true,
+      stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
