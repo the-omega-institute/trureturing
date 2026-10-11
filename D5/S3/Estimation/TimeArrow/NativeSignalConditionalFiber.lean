@@ -215,7 +215,7 @@ private theorem native_conditional_site_sizes {M q s : ℕ} (S : Support M q)
 
 /-- The exact native conditional probability of every site cylinder factors.
 In particular, consecutive erased path vertices remain separate coordinates. -/
-theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
+private theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)

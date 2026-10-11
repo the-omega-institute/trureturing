@@ -197,7 +197,7 @@ open scoped Classical in
 /-- A uniform feedback hypothesis for the same shared calibration yields a
 small-ball bound for its compensated group mean. The native conditional mass,
 posterior approximation, and uniform feedback bounds are explicit inputs. -/
-theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+private theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U q bg : ℝ) (θ : ℝ → ℝ) (p f : ℤ → ℝ)
     (T : Finset ℤ) (a b : ℤ) (s K τ err A tail : ℝ)
     (hab : a ≤ b) (hs : 0 < s) (hK : 0 ≤ K)

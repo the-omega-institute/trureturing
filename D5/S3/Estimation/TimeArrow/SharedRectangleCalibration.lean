@@ -7,6 +7,7 @@
    digest: Four adjacent score cells share one moving logistic calibration. -/
 
 import D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
+import D5.S3.Estimation.SequentialDecisionRisk.UniformPosteriorOdds
 
 open scoped BigOperators Topology
 open Finset Filter
@@ -341,7 +342,7 @@ theorem shared_calibration_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ
 positive on one neighborhood of the same shared root curve. The neighborhood
 and constants may depend on the finite histogram; no asymptotic uniformity is
 asserted. -/
-theorem positive_feedback_germ {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+private theorem positive_feedback_germ {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r N R U q bg a b t : ℝ) (hr : 0 < r) (hr1 : r < 1) (hN : 0 < N) (hq : 0 < q)
     (hqM : q < (Fintype.card ι : ℝ) + N) (ht : t ∈ Set.Ioo a b)
     (hc : ∀ u ∈ Set.Ioo a b, ∀ j, 0 ≤ cellCounts N R U u j)
@@ -516,7 +517,7 @@ private theorem native_calibrated_row_parameter {M q s : ℕ} (r : ℝ)
 
 /-- The original calibrated Bernoulli parameters, with their original common
 multiplicative parameter, use exactly the same full-row four-cell equation. -/
-theorem native_original_calibration_identification {M q s : ℕ} (S : Support M q) (r : ℝ)
+private theorem native_original_calibration_identification {M q s : ℕ} (S : Support M q) (r : ℝ)
     (e : Experiment) (o : Obs M s e) (k l : ℕ)
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
@@ -587,7 +588,7 @@ theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
 
 /-- The full group-zero size is a fixed background count plus the native
 rectangle A count on the same complete collapsed-history fiber. -/
-theorem native_group_zero_count_bridge {M q s : ℕ} (S : Support M q)
+private theorem native_group_zero_count_bridge {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (k l : ℕ) (y : NativeSignalConditionalFiber.Fiber S e o) :
     let All : Support M M := ⟨univ, by simp⟩
     let G := nativeCalibrationCells All e y.val k l 0
@@ -622,6 +623,182 @@ theorem native_group_zero_count_bridge {M q s : ℕ} (S : Support M q)
   simp only [filter_mem_eq_inter] at hs
   rw [hs] at hsig
   exact hc.symm.trans (congrArg (fun n => BG.card + n) hsig)
+
+
+private theorem sigmoid_lipschitz_certificate :
+    LipschitzWith (1 / 4 : NNReal) Real.sigmoid := by
+  apply lipschitzWith_of_nnnorm_deriv_le differentiable_sigmoid
+  intro x
+  rw [Real.deriv_sigmoid]
+  change ‖Real.sigmoid x * (1 - Real.sigmoid x)‖ ≤ (1 / 4 : ℝ)
+  rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (Real.sigmoid_nonneg x)
+    (sub_nonneg.mpr (Real.sigmoid_le_one x)))]
+  nlinarith [sq_nonneg (Real.sigmoid x - 1 / 2)]
+
+private theorem sigmoid_log_odds {p : ℝ} (hp : 0 < p) (hp1 : p < 1) :
+    Real.sigmoid (Real.log (p / (1 - p))) = p := by
+  rw [sigmoid_log (div_pos hp (sub_pos.mpr hp1))]
+  field_simp [ne_of_gt (sub_pos.mpr hp1)]
+  <;> ring
+
+/-- The full original group posterior is compared with its common calibrated
+center. The mean and variance premises are exactly those of the frozen
+posterior-odds theorem; no auxiliary posterior replaces the original one. -/
+private theorem native_group_zero_posterior_approximation :
+    ∃ C : ℝ, 0 < C ∧ ∃ V0 : ℝ, 0 < V0 ∧
+      ∀ (M q s : ℕ) (r : ℝ), 1 ≤ q → q < M → 0 < r → r < 1 →
+        compensation M q r < 1 → ∀ (e : Experiment) (o : Obs M s e) (t : ℝ),
+          0 < t → ∀ k l : ℕ,
+          let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+          let p := fun i : Fin M => t * weight q r e o i / (B0 + t * weight q r e o i)
+          let V := ∑ i, p i * (1 - p i)
+          let All : Support M M := ⟨univ, by simp⟩
+          let G := nativeCalibrationCells All e o k l 0
+          let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+            (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+          (∑ i, p i) = (q : ℝ) → V0 ≤ V →
+            |(∑ i ∈ G, inclusion q r e o i) -
+              (G.card : ℝ) * Real.sigmoid (z0 - Real.log B0 + Real.log t)| ≤
+                C * (G.card : ℝ) / V := by
+  classical
+  obtain ⟨C, hC, V0, hV0, hpost⟩ :=
+    D5.S3.Estimation.SequentialDecisionRisk.UniformPosteriorOdds.result
+  refine ⟨C / 4, by positivity, V0, hV0, ?_⟩
+  intro M q s r hq hqm hr hr1 ha1 e o t ht k l
+  dsimp only
+  let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+  let p := fun i : Fin M => t * weight q r e o i / (B0 + t * weight q r e o i)
+  let V := ∑ i, p i * (1 - p i)
+  let All : Support M M := ⟨univ, by simp⟩
+  let G := nativeCalibrationCells All e o k l 0
+  let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+    (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+  change (∑ i, p i) = (q : ℝ) → V0 ≤ V → _
+  intro hmean hvar
+  change |(∑ i ∈ G, inclusion q r e o i) -
+    (G.card : ℝ) * Real.sigmoid (z0 - Real.log B0 + Real.log t)| ≤
+      C / 4 * (G.card : ℝ) / V
+  have hVp : 0 < V := hV0.trans_le hvar
+  have ha : 0 ≤ compensation M q r := by unfold compensation; positivity
+  by_cases hG : G.Nonempty
+  · obtain ⟨i, hi⟩ := hG
+    have hi0 : count e o i 1 = k ∧ count e o i (-1) = l := by
+      have hi' := (native_row_cell_iff All e o k l i 0).mp (mem_filter.mp hi).2
+      simpa using hi'.2
+    have hcenters := native_group_zero_centers r e o k l hq hqm hr hr1 ha ha1 t ht i hi0
+    change (∑ j ∈ G, inclusion q r e o j) =
+      (G.card : ℝ) * inclusion q r e o i ∧ _ at hcenters
+    rw [hcenters.1, ← mul_sub, abs_mul, abs_of_nonneg (Nat.cast_nonneg G.card)]
+    have ho := hpost M q s r hq hqm hr hr1 ha1 e o t ht hmean hvar i
+    have hlog : score q r e o i - Real.log B0 + Real.log t =
+        z0 - Real.log B0 + Real.log t := by
+      simp only [score, hi0.1, hi0.2, z0]
+    have hlip := sigmoid_lipschitz_certificate.dist_le_mul
+      (Real.log (inclusion q r e o i / (1 - inclusion q r e o i)))
+      (z0 - Real.log B0 + Real.log t)
+    rw [Real.dist_eq, Real.dist_eq, sigmoid_log_odds ho.1 ho.2.1] at hlip
+    have herrLog : |Real.log (inclusion q r e o i / (1 - inclusion q r e o i)) -
+        (score q r e o i - Real.log B0 + Real.log t)| ≤ C / V := ho.2.2
+    rw [hlog] at herrLog
+    have herr : |inclusion q r e o i - Real.sigmoid (z0 - Real.log B0 + Real.log t)| ≤
+        (1 / 4 : ℝ) * (C / V) := by
+      exact hlip.trans (mul_le_mul_of_nonneg_left herrLog (by norm_num))
+    calc
+      _ ≤ (G.card : ℝ) * ((1 / 4 : ℝ) * (C / V)) :=
+        mul_le_mul_of_nonneg_left herr (Nat.cast_nonneg G.card)
+      _ = _ := by ring
+  · have he : G = ∅ := not_nonempty_iff_eq_empty.mp hG
+    simp [he]
+
+
+/-- Every row outside the signal rectangle retains both native counts on
+one coarse environment fiber. Background rows are included. -/
+private theorem native_environment_outside_counts {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (y z : NativeSignalConditionalFiber.Fiber S e o)
+    (henv : RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l y =
+      RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l z)
+    (i : Fin M) (hi : nativeRowCell S e z.val k l i = none) :
+    count e y.val i 1 = count e z.val i 1 ∧
+      count e y.val i (-1) = count e z.val i (-1) ∧
+      nativeRowCell S e y.val k l i = none := by
+  classical
+  by_cases hs : i ∈ S.val
+  · let j : {i : Fin M // i ∈ S.val} := ⟨i, hs⟩
+    have hn (v : NativeSignalConditionalFiber.Fiber S e o) :
+        nativeRowCell S e v.val k l i = none ↔
+          j ∉ RectangleHypergeometricKernel.nativeRectangleRows S e o k l v := by
+      simp only [RectangleHypergeometricKernel.nativeRectangleRows, mem_filter,
+        mem_univ, true_and, j]
+      simp only [nativeRowCell, hs, ↓reduceIte]
+      split_ifs <;> aesop
+    have hz := (hn z).mp hi
+    have hV := congrArg Prod.fst henv
+    change RectangleHypergeometricKernel.nativeRectangleRows S e o k l y =
+      RectangleHypergeometricKernel.nativeRectangleRows S e o k l z at hV
+    have hy : j ∉ RectangleHypergeometricKernel.nativeRectangleRows S e o k l y := by
+      rwa [hV]
+    have he := congrArg (fun v => v.2.1 j) henv
+    change (if j ∈ RectangleHypergeometricKernel.nativeRectangleRows S e o k l y then none
+      else some (count e y.val j.val 1, count e y.val j.val (-1))) =
+      (if j ∈ RectangleHypergeometricKernel.nativeRectangleRows S e o k l z then none
+      else some (count e z.val j.val 1, count e z.val j.val (-1))) at he
+    simp only [if_neg hy, if_neg hz, Option.some.injEq, Prod.mk.injEq, j] at he
+    exact ⟨he.1, he.2, (hn y).mpr hy⟩
+  · rw [NativeSignalConditionalFiber.native_background_row_counts S e o y i hs 1,
+      NativeSignalConditionalFiber.native_background_row_counts S e o z i hs 1,
+      NativeSignalConditionalFiber.native_background_row_counts S e o y i hs (-1),
+      NativeSignalConditionalFiber.native_background_row_counts S e o z i hs (-1)]
+    exact ⟨rfl, rfl, by simp [nativeRowCell, hs]⟩
+
+/-- The original outside logits are fixed by the same numerical-margin
+readout as the native hypergeometric law. -/
+private theorem native_environment_outside_score {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (y z : NativeSignalConditionalFiber.Fiber S e o)
+    (henv : RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l y =
+      RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l z)
+    (i : Fin M) (hi : nativeRowCell S e z.val k l i = none) :
+    score q r e y.val i = score q r e z.val i ∧
+      nativeRowCell S e y.val k l i = none := by
+  have h := native_environment_outside_counts S e o k l y z henv i hi
+  exact ⟨by simp only [score, h.1, h.2.1], h.2.2⟩
+
+
+/-- The all-row calibration on a native rectangle environment uses one
+fixed outside function. Only the four cell multiplicities change. -/
+private theorem native_environment_calibration_identification {M q s : ℕ}
+    (S : Support M q) (r : ℝ) (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (y z : NativeSignalConditionalFiber.Fiber S e o)
+    (henv : RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l y =
+      RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l z)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (t : ℝ) (ht : 0 < t) :
+    let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+    let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+    let x := z0 - Real.log B0 + Real.log t
+    let C : Fin 4 → ℝ := fun j => (nativeCalibrationCells S e y.val k l j).card
+    let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
+      fun i => score q r e z.val i.val - z0
+    (∑ i : Fin M, t * weight q r e y.val i / (B0 + t * weight q r e y.val i)) =
+      calibratedMean outside r (compensation M q r)
+        (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) x := by
+  classical
+  dsimp only
+  rw [native_original_calibration_identification S r e y.val k l hq hqm hr hr1 ha ha1 t ht]
+  unfold calibratedMean
+  congr 1
+  have hn (i : Fin M) : nativeRowCell S e y.val k l i = none ↔
+      nativeRowCell S e z.val k l i = none :=
+    ⟨fun hi => (native_environment_outside_score S r e o k l z y henv.symm i hi).2,
+      fun hi => (native_environment_outside_score S r e o k l y z henv i hi).2⟩
+  let E := Equiv.subtypeEquivRight hn
+  apply Fintype.sum_equiv E
+  intro i
+  have hi := native_environment_outside_score S r e o k l z y henv.symm i.val i.property
+  simp only [E, Equiv.subtypeEquivRight_apply, hi.1]
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration

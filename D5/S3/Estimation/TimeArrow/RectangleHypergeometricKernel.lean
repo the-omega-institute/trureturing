@@ -502,7 +502,7 @@ private theorem native_a_event_eq {M q s : ℕ} (S : Support M q)
 
 /-- The exact native A-cell law on the explicit complete rectangle environment
 for both the pair and continuous path experiments. -/
-theorem native_conditioned_four_cell_law {M q s : ℕ} (S : Support M q)
+private theorem native_conditioned_four_cell_law {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
@@ -821,7 +821,7 @@ private theorem native_margin_a_event_eq {M q s : ℕ} (S : Support M q)
 /-- The A-cell count has the exact native hypergeometric law conditioned
 only on rectangle membership, complete outside-row count pairs, and the two
 numerical margins. This includes the full continuous-path experiment. -/
-theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
+private theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
@@ -831,7 +831,7 @@ theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
       (signedDepartureBlocks S e o 0).card)
     (hneg : (∑ i ∈ univ \ V, outsideM i) + U * l + (V.card - U) * (l + 1) =
       (signedDepartureBlocks S e o 1).card)
-    (hR : R ≤ V.card) (hU : U ≤ V.card) (ht : t ≤ U)
+    (hR : R ≤ V.card) (hU : U ≤ V.card)
     (hout : ∀ i ∉ V, ¬ ((outsideP i = k ∨ outsideP i = k + 1) ∧
       (outsideM i = l ∨ outsideM i = l + 1))) :
     letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
@@ -839,8 +839,9 @@ theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
       (V, (fun i => if i ∈ V then none else some (outsideP i, outsideM i)), R, U)
     conditionalFiberMass S r e o (Env.filter fun y => nativeRectangleACount S e o k l y = t) /
       conditionalFiberMass S r e o Env =
-      ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) /
-        (V.card.choose U : ℝ) ∧
+      (if t ≤ U then
+        ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) /
+          (V.card.choose U : ℝ) else 0) ∧
     (∀ A : Set (Fiber S e o), @MeasurableSet (Fiber S e o)
       (nativeMarginRectangleSigma S e o k l) A ↔
         ∃ B, (nativeMarginRectangleReadout S e o k l) ⁻¹' B = A) := by
@@ -848,10 +849,37 @@ theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
   letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
   dsimp only
   constructor
-  · rw [← native_margin_rectangle_readout_fiber S e o V outsideP outsideM k l R U hout,
-      native_margin_a_event_eq S e o V outsideP outsideM k l R U t hout]
-    exact native_margin_rectangle_hypergeometric_law S r e o hq hqm hr hr1 ha ha1
-      V outsideP outsideM k l R U t hpos hneg hR hU ht
+  · by_cases ht : t ≤ U
+    · rw [if_pos ht, ← native_margin_rectangle_readout_fiber S e o V outsideP outsideM k l R U hout,
+        native_margin_a_event_eq S e o V outsideP outsideM k l R U t hout]
+      exact native_margin_rectangle_hypergeometric_law S r e o hq hqm hr hr1 ha ha1
+        V outsideP outsideM k l R U t hpos hneg hR hU ht
+    · rw [if_neg ht]
+      have hz : (univ.filter fun y : Fiber S e o =>
+          nativeMarginRectangleReadout S e o k l y =
+            (V, (fun i => if i ∈ V then none else some (outsideP i, outsideM i)), R, U)).filter
+          (fun y => nativeRectangleACount S e o k l y = t) = ∅ := by
+        apply eq_empty_iff_forall_notMem.mpr
+        intro y hy
+        obtain ⟨hyenv, hyt⟩ := mem_filter.mp hy
+        have he := (mem_filter.mp hyenv).2
+        have hm := congrArg (fun v => v.2.2.2) he
+        change ((nativeRectangleRows S e o k l y).filter
+          fun i => count e y.val i.val (-1) = l).card = U at hm
+        have hs : (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
+            count e y.val i.val 1 = k ∧ count e y.val i.val (-1) = l) ⊆
+            (nativeRectangleRows S e o k l y).filter
+              (fun i => count e y.val i.val (-1) = l) := by
+          intro i hi
+          obtain ⟨_, hp, hn⟩ := mem_filter.mp hi
+          apply mem_filter.mpr
+          refine ⟨mem_filter.mpr ⟨mem_univ _, Or.inl hp, Or.inl hn⟩, hn⟩
+        have hc := card_le_card hs
+        change nativeRectangleACount S e o k l y ≤ _ at hc
+        rw [hyt, hm] at hc
+        exact ht hc
+      rw [hz]
+      simp [conditionalFiberMass]
   · intro A
     exact ⟨fun ⟨B, _, hB⟩ => ⟨B, hB⟩,
       fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top, hB⟩⟩
