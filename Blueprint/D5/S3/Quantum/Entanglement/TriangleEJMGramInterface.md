@@ -2,83 +2,103 @@
 
 ## Abstract
 
-The finite exact interface for the triangle-network theory supplement defines the regular-tetrahedron Gram expression for the EJM distribution and the independent-source visibility map. It proves the exact output classes (25/256), (1/256), and (5/256), normalization of the finite table, and the eight-term multi-affine source-noise expansion. These are probability identities and typed finite interfaces. They do not prove EJM triangle locality or nonlocality and do not provide an inflation certificate.
+The finite exact bridge for PR #15164 has been formalized over rational weights. The regular tetrahedron Gram entries produce the three EJM probability classes 25/256, 1/256 and 5/256, and the three independent source visibilities produce an explicit eight-term multi-affine mixture. These declarations are probability identities only. They do not assert that the EJM table is triangle-local, and they do not provide an inflation certificate.
 
 **Definition 1.1 (Regular tetrahedron Gram entry).**
 
-[
-operatorname{tetrahedralGram}(i,j)=
-egin{cases}
-1&i=j,\\
--1/3&i\ne j.
-end{cases}
-]
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.tetrahedralGram`
 
 *Formalization.* `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.tetrahedralGram` (`✓ std3`).
 
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv.2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+
 *Commentary.*
 
-The four outcomes are represented by the vertices of a regular tetrahedron. The off-diagonal inner product is (-1/3).
+The exact rational inner product is 1 for equal tetrahedral vertices and -1/3 for distinct vertices.
 
 **Definition 1.2 (EJM Gram probability).**
 
-[
-P(a,b,c)=rac{4+S+6R}{256},
-]
-where (S=d_{ab}+d_{bc}+d_{ca}) and (R=d_{ab}d_{bc}+d_{bc}d_{ca}+d_{ca}d_{ab}).
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmGramProbability`
 
 *Formalization.* `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmGramProbability` (`✓ std3`).
 
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv.2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+
+*Commentary.*
+
+P(a,b,c) is defined as (4 + S + 6R)/256, where S is the pairwise Gram sum and R is the symmetric quadratic cycle term in the three pairwise Gram entries.
+
 **Theorem 1.3 (Exact EJM probability table).**
 
-[
-P(a,b,c)=
-egin{cases}
-25/256& a=b=c,\\
-1/256& 	ext{exactly two of }a,b,c	ext{ are equal},\\
-5/256& a,b,c	ext{ are all distinct}.
-end{cases}
-]
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmGramProbability_table`
 
-*Proof.* Machine-checked by finite case analysis in Lean as `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmGramProbability_table` (`✓ std3`). The accompanying `ejmGramProbability_nonnegative` and `ejmGramProbability_mass` prove nonnegativity and total mass one. ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmGramProbability_table` (`✓ std3`). ∎
 
-**Definition 1.4 (Finite EJM law).**
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
-The exact table is packaged as a rational finite probability law over the three-party outcome type.
+*Commentary.*
+
+All equal outputs have probability 25/256, exactly two equal outputs have probability 1/256, and all distinct outputs have probability 5/256. The accompanying mass theorem proves that the 64 entries sum to one and nonnegativity is proved separately.
+
+**Definition 1.4 (Finite probability carrier).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmFiniteLaw`
 
 *Formalization.* `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.ejmFiniteLaw` (`✓ std3`).
 
-**Definition 1.5 (Independent-source visibility weights).**
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
-For ((w_\alpha,w_\beta,w_\gamma)), the eight coefficients are
-[
-(1-w_\alpha)^{1-s_\alpha}w_\alpha^{s_\alpha}
-(1-w_\beta)^{1-s_\beta}w_\beta^{s_\beta}
-(1-w_\gamma)^{1-s_\gamma}w_\gamma^{s_\gamma},
-]
-enumerated as (000,100,010,110,001,101,011,111).
+*Commentary.*
+
+The EJM table is packaged as Erdos7.FiniteLaw over the three-party output type. This reuses the repository finite rational probability structure.
+
+**Definition 1.5 (Independent-source noise weights).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.sourceNoiseWeight`
 
 *Formalization.* `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.sourceNoiseWeight` (`✓ std3`).
 
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+
+*Commentary.*
+
+The eight weights correspond to the eight choices of ideal or maximally mixed state on the alpha, beta and gamma source edges.
+
 **Definition 1.6 (Independent-source noise map).**
 
-Given eight component tables (P_i), the noisy table is
-[
-P_{\mathbf w}(a,b,c)=
-sum_{i=0}^{7} q_i(w_\alpha,w_\beta,w_\gamma)P_i(a,b,c).
-]
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.independentSourceNoise`
 
 *Formalization.* `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.independentSourceNoise` (`✓ std3`).
 
-**Theorem 1.7 (Eight-term expansion and coefficient normalization).**
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv:2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
 
-The finite map expands to the eight terms in equation (6.2) of the theory supplement. The eight coefficients sum to one, and the map is affine in each edge visibility.
+*Commentary.*
 
-*Proof.* Machine-checked as `independentSourceNoise_eight_terms`, `sourceNoiseWeight_mass`, and `independentSourceNoise_affine_alpha` (`✓ std3`). ∎
+The noisy table is the exact weighted sum of eight component tables. The theorem independentSourceNoise_eight_terms expands this definition into the eight-term multi-affine polynomial from the theory supplement.
 
-## Scope boundary
+**Theorem 1.7 (Noise coefficient normalization).**
 
-The component tables in this finite interface are typed placeholders for the eight ideal or maximally mixed source choices. The file does not formalize the Born-rule construction of those tables. It also does not prove (P_{\mathrm{EJM}}\in\mathcal L_\triangle), prove (P_{\mathrm{EJM}}\notin\mathcal L_\triangle), or instantiate an inflation certificate. The imported `IsTriangleLocal` definition remains the classical source-product anchor for the later soundness theorem.
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.sourceNoiseWeight_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.sourceNoiseWeight_mass` (`✓ std3`). ∎
+
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv/2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+
+*Commentary.*
+
+The eight source weights sum to one for arbitrary rational visibilities. This is the normalization identity for the source-typed mixture.
+
+**Theorem 1.8 (Edge-wise affinity).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.independentSourceNoise_affine_alpha`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.independentSourceNoise_affine_alpha` (`✓ std3`). ∎
+
+*Citation.* Elisa Bäumer; Victor Gitton; Tamás Kriváchy; Nicolas Gisin; Renato Renner (2024). *Exploring the local landscape in the triangle network*. DOI: [10.48550/arXiv/2405.08939](https://doi.org/10.48550/arXiv/2405.08939). URL: <https://arxiv.org/abs/2405.08939v1>.
+
+*Commentary.*
+
+The source-specific map is affine in each edge visibility. This is a polynomial identity and is not a locality or nonlocality result.
 
 ## References
 
