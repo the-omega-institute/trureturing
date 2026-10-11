@@ -1,0 +1,11 @@
+**Theorem 15.2 (whole periodic-class sign and exact equality).** Every table
+in Definition 15.1 satisfies $D\le0$. Equality holds if and only if
+
+$$
+u_1=u_2=v_1=v_2=r,\qquad u_3=v_3=r',
+\qquad r,r'\in\{a,b\}.
+\tag{15.3}
+$$
+
+The sign and equality assertions are independent of the installed prior.
+

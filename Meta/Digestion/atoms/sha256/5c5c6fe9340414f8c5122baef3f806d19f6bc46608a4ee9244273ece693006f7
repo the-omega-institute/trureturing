@@ -1,0 +1,12 @@
+**引用 1.1（既有结果的精确复用）。** 下表固定本卷使用的仓内来源。短名在全文保持同义；本卷的接口重述服务于同一生成器的相容性分析，不作为新的独立 minimax 结论。
+
+| 短名 | 来源及复用位置 | 本卷使用的内容 |
+| --- | --- | --- |
+| ST | [随机有限保持：可数深度终局价格与两深度完整停止尾律](RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md)，§§2.1–2.2，式（2.2）–（2.6）；定理2.1、§2.4 | 完整端点尾律、原记录转录桥、两个端点 TV 距离及其半径；仅两深度时的既有达到机器 |
+| CLIP | [Risk-controlled emission clipping and finite moment feasibility](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md)，定义1.1–1.4、定义2.1、式（2.2）–（2.4）、命题2.3、式（3.6）、定理6.2及式（6.3）–（6.4） | 原来源与 COMPLETE 合同、同一更新的词律、实际无权流、全历史风险解释、完整端点盒及中点事件常数 |
+| PAID | [Effective paid-history certificates](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)，定义1.1–1.3、定义2.1、引理2.1.1、引理2.2、推论2.3 | 全原域的共同实现接口；保留完整配置律的风险平稳化，以及它不保持硬缺陷和资源预算的边界 |
+| INTERIOR | [Suspended-emission interiority](RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_INTERIORITY.md)，引用3.2、定义3.3、引理3.4、开放问题8.4 | 已有端点盒与短词条件迫使的区别；真正内部发射率的共同实现缺口 |
+| HET | [Common complete-tail calibration requires suspended emission heterogeneity](RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_HETEROGENEITY.md)，定理3.1、推论6.3 | 悬置发射率恒定这一受限类的既有排除；不把它扩成全部有限形状的结论 |
+
+INTERIOR 引理3.4在悬置发射率只取两个端点时约束两个残余词坐标。本卷定理5.1的前提与结论不同：从一行的**完整端点律**出发，在 $A=I$ 和共同可逆支撑中推出整个分量的**两相完整端点律**。它不重证上述短词估计，也不把几何盒、中点常数或两深度达到重新命名为新成果。
+

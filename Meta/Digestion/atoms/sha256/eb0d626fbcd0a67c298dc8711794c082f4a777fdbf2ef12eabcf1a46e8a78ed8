@@ -1,0 +1,283 @@
+**Theorem 16.2 (stationary four-rate inequality and exact equality).**
+Every pair in $\mathfrak C_{\rm det}$ satisfying (16.6) has $D\le0$.
+Equality holds exactly for
+
+$$
+\begin{aligned}
+\Gamma_B&=(1-\theta)\delta_{(P_{p,a},P_{\beta,a})}
+             +\theta\delta_{(P_{p,b},P_{\beta,b})},\\
+\Gamma_A&=(1-\theta)\delta_{(P_{\beta,a},P_{p,a})}
+             +\theta\delta_{(P_{\beta,b},P_{p,b})},
+\qquad 0\le\theta\le1.
+\end{aligned}
+\tag{16.9}
+$$
+
+Either original endpoint-event midpoint mean, in addition to $D=0$, forces
+$\theta=1/2$. The sign and equality classification do not require a
+supported nonendpoint.
+
+More precisely, there is a stationary forward orbit of these same full laws
+$W_t,Q_t$, $t\ge0$, with
+
+$$
+Q_t=\mathcal R_A(W_t),\quad W_{t+1}=\mathcal R_B(Q_t),\quad
+u_t=u(Q_t),\quad v_t=v(W_t),\quad
+g_t=Q_t(w_{0,1}),\quad x_t=\frac{v_tg_t}{1-v_t}.
+\tag{16.10}
+$$
+
+Here $u_t$ denotes the emission; $\nu_p,\nu_\beta$ remain probability
+measures. Put
+
+$$
+\ell=\frac29,\quad L=\frac6{25},\quad G=\frac9{25},\quad
+T=\frac{16}{729},\quad q=\frac{1944}{390625},\quad
+h=\frac qT=\frac{177147}{781250},\quad
+d_0=\frac{2341664383}{41527474875}.
+\tag{16.11}
+$$
+
+For $X=(x_0,x_1,x_2,x_3)\in[\ell,L]^4$ define
+
+$$
+\begin{aligned}
+\overline G(X)&=\min\left\{\frac T{x_1x_2},\frac q{x_1x_2x_3}\right\},\\
+F(X)&=\overline G(X)(1+x_1+x_1x_2)
+ -\kappa\frac{\overline G(X)(1+x_0)}{\overline G(X)+x_0}-\zeta,\\
+\psi(t)&=F(t,t,t,t).
+\end{aligned}
+\tag{16.12}
+$$
+
+On the orbit (16.10), $X\in[\ell,L]^4$ almost surely and
+
+$$
+D\le\mathbb E\psi(x_0)
+ -\frac12\mathbb E[(x_1-x_0)^2]
+ -d_0\mathbb E[\overline G(X)-g_0]\le0.
+\tag{16.13}
+$$
+
+**Proof.** Vanishing of the nonnegative integrals in (16.5) gives
+$Q=\mathcal R_A(W)$ on $\Gamma_A$ and $W=\mathcal R_B(Q)$ on $\Gamma_B$
+almost surely. Thus these are graph measures, and their common marginals give
+
+$$
+(\mathcal R_A)_*\nu_\beta=\nu_p,\qquad
+(\mathcal R_B)_*\nu_p=\nu_\beta.
+\tag{16.14}
+$$
+
+The residuals lie in the opposite spaces on full-measure Borel sets.
+Extend them by fixed native descriptors off those sets if necessary.
+The resulting Borel composition $\mathcal T=\mathcal R_B\circ\mathcal R_A$
+preserves $\nu_\beta$. Starting $W_0\sim\nu_\beta$ and iterating gives
+(16.10); $(W_t,Q_t)$ has law $\Gamma_A$ and $(Q_t,W_{t+1})$ has law
+$\Gamma_B$ for each $t$. Intersect the countably many full-measure
+preimages needed for the graph identities and every atom of (16.6).
+All assertions then hold at every forward time on one full-measure set.
+The process is stationary; an inverse map or a reversible flow is unnecessary.
+
+The full residual recursions, before taking event projections, are
+
+$$
+W_t=(1-v_t)\delta_\beta+v_t\alpha Q_t,\qquad
+Q_t=u_t\delta_\alpha+(1-u_t)\beta W_{t+1}.
+\tag{16.15}
+$$
+
+They give $g_t=(1-u_t)(1-v_{t+1})>0$. Deleting one beta-alpha pair gives
+$Q_t(w_{n,1})=(1-u_t)v_{t+1}Q_{t+1}(w_{n-1,1})$ for $n\ge1$.
+Since
+
+$$
+(1-u_t)v_{t+1}g_{t+1}=g_tx_{t+1},
+$$
+
+induction proves the full-coordinate product identity
+
+$$
+Q_t(w_{n,1})=g_t\prod_{j=1}^n x_{t+j},\qquad
+W_t(\alpha w_{n,1})=v_tg_t\prod_{j=1}^n x_{t+j}.
+\tag{16.16}
+$$
+
+Both sides describe the same complete generated laws, not averages over a
+separately sampled successor path.
+
+Put $m_t=v_tg_t$. The two suspended boxes at
+$\alpha w_{0,1},\alpha w_{1,1}$ give
+
+$$
+\frac{18}{125}\le m_t\le\frac4{27},\qquad
+\frac8{243}\le m_tx_{t+1}\le\frac{108}{3125}.
+$$
+
+Their ratios imply $\ell\le x_{t+1}\le L$. Stationarity supplies the
+same bound for $x_0$, and hence simultaneously for every $x_t$.
+The p boxes at $w_{0,1},w_{2,1},w_{3,1}$ give
+
+$$
+g_t\ge G,\qquad
+g_tx_{t+1}x_{t+2}\le T,\qquad
+g_tx_{t+1}x_{t+2}x_{t+3}\le q.
+\tag{16.17}
+$$
+
+In particular $g_0\le\overline G(X)$. Also
+
+$$
+Q_0(E_p)=g_0(1+x_1+x_1x_2),\qquad
+W_0(E_\beta)=1-v_0+v_0g_0=\frac{g_0(1+x_0)}{g_0+x_0}.
+\tag{16.18}
+$$
+
+For fixed $X$, the derivative in $g$ of the difference in (16.18), with
+coefficient $\kappa$ and intercept $\zeta$, is
+
+$$
+1+x_1+x_1x_2-\kappa\frac{x_0(1+x_0)}{(g+x_0)^2}
+\ge1+\ell+\ell^2-\kappa\frac{L(1+L)}{(G+\ell)^2}=d_0>0
+\tag{16.19}
+$$
+
+when $g\ge G$. This reuses precisely the bound (15.10), now with four
+possibly different rates. Integrating on the actual segment
+$[g_0,\overline G(X)]$ and taking expectations gives
+
+$$
+D\le\mathbb EF(X)-d_0\mathbb E[\overline G(X)-g_0].
+\tag{16.20}
+$$
+
+We next prove the source-specific global supermodularity needed to compare
+$\mathbb EF$ with its diagonal. Let $H(X)=F(X)-x_0x_1$.
+Since $\ell<h<L$, the cube has two branches, separated by $x_3=h$.
+On the lower branch put $M=T$, $Z=x_1x_2$ and
+$P=T/(x_1x_2)+T/x_2+T$. On the upper branch put $M=q$,
+$Z=x_1x_2x_3$ and $P=q/(x_1x_2x_3)+q/(x_2x_3)+q/x_3$.
+In either branch,
+
+$$
+F=P-\kappa\frac{M(1+x_0)}{M+x_0Z}-\zeta,
+\qquad s:=Z/M=1/\overline G(X).
+\tag{16.21}
+$$
+
+Call coordinates $1,2$ active in the lower branch, and $1,2,3$ active in
+the upper branch. The bounds
+
+$$
+G\le\overline G(X)\le4/9,\qquad
+9/4\le s\le25/9,\qquad x_0s\le2/3
+\tag{16.22}
+$$
+
+hold on the entire cube: $T/L^2\ge G$, $q/L^3=G$ and
+$T/\ell^2=4/9$. For an active $j$, differentiation of
+$R=-\kappa(1+x_0)/(1+x_0s)$ first gives
+$R_j=\kappa(1+x_0)x_0s/[x_j(1+x_0s)^2]$, and then
+
+$$
+F_{0j}=\kappa\frac{s}{x_j}
+ \frac{1+2x_0-x_0s}{(1+x_0s)^3}
+\ge\kappa\frac{75}{8}\frac{7/9}{125/27}
+=\frac{63\kappa}{40}>1.
+\tag{16.23}
+$$
+
+Here $s/x_j\ge75/8$ and $1+2x_0-x_0s\ge7/9$.
+For distinct active $i,j$, the rational term contributes
+
+$$
+R_{ij}=\kappa(1+x_0)x_0
+ \frac{s(1-x_0s)}{x_ix_j(1+x_0s)^3}\ge0.
+\tag{16.24}
+$$
+
+Every mixed partial $P_{ij}$ is nonnegative: each term of $P$ is a
+positive constant times reciprocals of a subset of the active coordinates.
+All derivatives involving the inactive coordinate 3 are zero in the lower
+branch. Consequently every mixed partial of $H$ is nonnegative inside each
+branch; the only subtracted one is $H_{01}=F_{01}-1$.
+
+At $x_3=h$ the two formulas for $F$ agree as functions of $x_0,x_1,x_2$,
+because $q/h=T$. Their partial derivatives in those three tangential
+coordinates therefore agree as well. Fix a pair of varying coordinates.
+If neither is 3, its rectangle lies in one branch at fixed $x_3$ and
+nonnegative mixed partials give increasing differences. For the pair
+$(i,3)$, $i=0,1,2$, the tangential derivative $H_i$ is nondecreasing as a
+function of $x_3$ on each branch and is continuous at the seam. It is
+therefore nondecreasing across the seam. Integrating $H_i$ over an interval
+in coordinate $i$ proves increasing differences also for a rectangle crossing
+the seam. Continuity includes closed edges. These pairwise rectangle
+inequalities, telescoped over coordinates, give
+
+$$
+H(X\wedge Y)+H(X\vee Y)\ge H(X)+H(Y)
+\quad(X,Y\in[\ell,L]^4).
+\tag{16.25}
+$$
+
+Thus $H$ is globally supermodular, not merely supermodular on each open cell.
+
+Extend $H$ to $\mathbb R^4$ by clipping each coordinate to $[\ell,L]$.
+Clipping commutes with coordinatewise minimum and maximum, so the extension
+is bounded continuous and supermodular. All four actual $x_t$ have the same
+marginal distribution by stationarity. The comonotonic maximization theorem
+of [Puccetti and Wang, *Extremal Dependence Concepts*, Theorem 2.1(d)](https://arxiv.org/html/1512.03232v3)
+therefore applies to this function and the diagonal coupling
+$(x_0,x_0,x_0,x_0)$. Its mean-compatibility hypothesis holds by boundedness;
+no integrability assumption on an unbounded supermodular test is inferred.
+Equivalently, the bounded right-continuous comparison in
+[Côté and Wang, *On convex order and supermodular order without finite mean*,
+Proposition 6](https://arxiv.org/html/2502.17803v3) applies. It follows that
+
+$$
+\mathbb EF(X)-\mathbb E[x_0x_1]
+ \le\mathbb E\psi(x_0)-\mathbb E[x_0^2],
+$$
+
+and equality of the second moments of $x_0,x_1$ yields
+
+$$
+\mathbb EF(X)\le\mathbb E\psi(x_0)
+ -\frac12\mathbb E[(x_1-x_0)^2].
+\tag{16.26}
+$$
+
+The function $\psi(t)$ is exactly $\overline F(t,t)$ from (15.11): both
+of that formula's g arguments equal $\min\{T/t^2,q/t^3\}$.
+The rational certificate (15.13)--(15.20) supplies
+$\psi\le0$ on $[\ell,L]$, with zeros exactly $\ell,L$.
+Only that diagonal algebra is reused; the periodic table hypothesis of
+Theorem 15.2 is not imposed on this orbit. Combining it with
+(16.20) and (16.26) proves (16.13).
+
+If $D=0$, every nonnegative slack in (16.13) vanishes. Hence
+$x_0\in\{\ell,L\}$, $x_1=x_0$ and $g_0=\overline G(X)$ almost surely.
+Stationarity extends these facts simultaneously to every forward time.
+On an $\ell$ orbit, $g_t=T/\ell^2=4/9$ and
+$v_t=x_t/(g_t+x_t)=a$; on an $L$ orbit, $g_t=q/L^3=9/25$ and $v_t=b$.
+The identity $g_t=(1-u_t)(1-v_{t+1})$ then gives $u_t=v_t=r$ at that
+same endpoint. Iterating (16.15) gives every finite coordinate
+
+$$
+Q_t(w_{n,0})=r[r(1-r)]^n,\quad
+Q_t(w_{n,1})=(1-r)^2[r(1-r)]^n,\quad
+W_t=(1-r)\delta_\beta+r\alpha Q_t.
+\tag{16.27}
+$$
+
+The sum of the p finite masses is
+$[r+(1-r)^2]/[1-r(1-r)]=1$, so the retained infinite coordinates have
+zero mass as well. These are exactly the native complete laws.
+Both graph flows must match the same endpoint on each orbit, proving
+(16.9). Conversely each flow pair (16.9) satisfies the boxes, both full
+residual equations and $D=0$ by the endpoint chord identity (11.10).
+The suspended endpoint event masses are $22/27$ and $93/125$; the p ones
+are $412/729$ and $7299/15625$. Each pair has distinct values, so either
+midpoint equation forces $\theta=1/2$. $\square$
+
+

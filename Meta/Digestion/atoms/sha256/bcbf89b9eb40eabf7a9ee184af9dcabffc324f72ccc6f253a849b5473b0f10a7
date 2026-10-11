@@ -1,0 +1,98 @@
+**Corollary 17.3 (small-branching exclusion on the unrestricted compatible domain).**
+Suppose the fixed installed prior also has a supported $k\ge3$.
+For every $(\Gamma_B,\Gamma_A)\in\mathfrak C$,
+
+$$
+\mathcal J+c_*\ge j_{\rm det}>0.
+\tag{17.13}
+$$
+
+Thus the subdomain $c_*\le\delta<j_{\rm det}$ has
+$\mathcal J\ge j_{\rm det}-\delta>0$. Every zero-level compatible pair
+must satisfy
+
+$$
+\max\{10d_B+4d_A,\ 4d_B+6d_A\}\ge11j_{\rm det},
+\qquad d_A+d_B\ge\frac{11}{10}j_{\rm det}.
+\tag{17.14}
+$$
+
+For every compatible sequence with $\mathcal J_n\to0$,
+$\liminf_n(d_{A,n}+d_{B,n})\ge11j_{\rm det}/10$.
+In particular no such sequence has vanishing complete-law branching.
+
+**Proof.** Corollary 16.3 supplies $j_{\rm det}>0$ on *all* residual
+graphs, including those outside the endpoint boxes. Theorem 17.2 supplies
+one such graph pair with $j_{\rm det}\le\widehat{\mathcal J}
+\le\mathcal J+c_*$. This proves (17.13) without placing the comparison
+inside the boxes. Setting $\mathcal J=0$ gives the first inequality in
+(17.14). Since $c_*\le10(d_A+d_B)/11$, (17.13) also gives
+$d_A+d_B\ge(11/10)(j_{\rm det}-\mathcal J)$, proving the remaining
+claims and the sequence assertion.
+
+For the original-source consumer, a finite regular stationary observer
+pushes forward to exactly $\mathfrak C$ by PAIRED (11.24); its two
+configuration risks are the supported-target suprema in $\mathcal J$.
+Thus (17.13) applies to all such original observers, without a label bound.
+For any original positive paid history at either active fourth-phase cut,
+its raw target is the normalized posterior mixture from the same
+once-sampled $K$. Equation (17.4) applies to this target as well.
+Pushing all laws through that history's common
+$I_c$ preserves TV and the original full records, completion and matching
+Stop. Both seeds, paid rejections, partial parses and every finite return
+remain in the history domain, as in PAIRED Section 11.4.
+For arbitrary finite COMPLETE observers, the extraction and clipping
+suppliers remain necessary before applying this regular-domain inequality;
+no bound on their unclipped branching is inferred.
+$\square$
+
+**Mathematical citation 17.4 (reused suppliers and the additional implication).**
+PAIRED Lemma 11.1 and Definition 11.2 supply the compact TV spaces,
+disintegration interface and full conditional residual identities.
+[Return-survival dispersion, Theorem 3.1](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md)
+already uses this stationary descriptor path and its averaged finite-word
+products. [PAID, Theorem 13.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+already solves the same two-phase contraction inequalities for a different
+comparison: it replaces one acquired kernel by a row-independent kernel,
+and its $b_p,b_\beta$ measure variation of residual barycentres across
+inputs. Those quantities are not the individual-law branching
+$d_B,d_A$ in (16.5). Neither the contraction arithmetic nor the existence
+of a stationary kernel path is a new theorem here.
+
+The additional joint statement is that the complete laws generated along
+one such path give a residual-graph pair with (17.3), and that its
+configuration losses satisfy the target-uniform (17.4). Corollary 16.3's
+already supplied graph minimum then gives the quantitative necessity
+(17.13) on arbitrary stochastic compatible pairs. The comparison can
+change both phase distributions while preserving their conditional
+complete-law barycentres. PAIRED Chapters 12--14's endpoint-chord and
+one-sided finite-marginal comparisons, and Chapter 19's native endpoint
+excision, impose different hypotheses and supply no substitute for this
+joint statement. No endpoint excision is used in its proof.
+
+[Abate, Redig and Tkachev, *On the effect of perturbation of conditional
+probabilities in total variation*, Proposition 2](https://arxiv.org/html/1311.3066v1)
+states the countable kernel-extension theorem used above: an initial
+probability measure and a sequence of measurable probability kernels on
+the successive finite products determine one trajectory law. Here the
+spaces alternate between $\mathcal K_p$ and $\mathcal K_\beta$, the
+initial law is $\nu_p$, and the history kernels are $B,A$ composed with
+the last-coordinate maps. All are measurable probability kernels.
+Their Theorems 1--2 bound finite-product perturbations by uniform
+kernel-TV errors; $d_B,d_A$ here are instead stationary expectations of
+complete *output-law* deviations. Their estimates are not invoked as
+bounds for these two numbers.
+
+[Attal, *Markov Chains and Dynamical Systems: The Open System Point of
+View*, Section 2.3, Theorem 2.5](https://arxiv.org/html/1010.2894v1)
+supplies the mature deterministic-dilation perspective: given a measurable
+one-step dilation, independent environment copies and their shift recover
+every iterate of its Markov operator after averaging the environment.
+The phase-tagged disjoint union of the two descriptor spaces is a standard
+Borel state space for the alternating kernel. In (17.8) the whole analysis
+trajectory supplies the enlarged deterministic coordinate; the synthetic
+stopping law is then generated from its emissions. No independent-emission
+assumption, original finite apparatus or preservation of nonlinear
+configuration losses follows from the dilation perspective. The direct
+proof (17.6)--(17.12) supplies the needed complete-law and loss statements.
+

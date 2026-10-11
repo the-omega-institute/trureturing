@@ -1,0 +1,62 @@
+**Theorem 14.1 (periodic full-box criterion).**  Let
+\[
+ B=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},
+ \qquad A=I_3,\qquad \pi=(w,w,1-2w),\quad 0<w<\frac12,
+\]
+and let \(u,v\in[a,b]^3\).  Write \(c_i=1-u_i\) and
+\[
+ \alpha=c_1v_2,\qquad \beta=c_2v_1,\qquad
+ \eta=\alpha\beta,\qquad t_3=c_3v_3.
+\]
+All p and suspended endpoint coordinate boxes on the complete carriers hold if
+and only if
+\[
+ \lambda_a^2\le\eta\le\lambda_b^2,
+ \qquad \lambda_a\le t_3\le\lambda_b,
+\tag{14.6}
+\]
+\(1-v_i\in[1-b,1-a]\), and every coordinate in (14.2) with \(0\le n\le4\)
+is in its corresponding endpoint interval.
+
+**Proof.** On the swap component,
+\[
+ H_* =\begin{pmatrix}0&\alpha\\ \beta&0\end{pmatrix},
+ \qquad H_*^2=\eta I_2.
+\]
+Consequently, for either \(z=u_*\) or \(z=g_*\),
+\[
+ H_*^{2j}z=\eta^jz,
+ \qquad H_*^{2j+1}z=\eta^jH_*z.                 
+\tag{14.7}
+\]
+On the fixed label, multiplication is by \(t_3\).  Since all entries of \(u_*\),
+\(g_*\), and their positive endpoint coordinates are positive, comparison of
+the even subsequence in (14.7) with the two endpoint geometric rates forces
+\(\lambda_a^2\le\eta\le\lambda_b^2\); otherwise the quotient by one of the
+endpoint rates tends to zero or infinity.  The same comparison on the fixed
+label forces \(\lambda_a\le t_3\le\lambda_b\).  The coordinate
+\(W_i(\beta)\) gives the displayed interval for \(1-v_i\).  This proves
+necessity, including the negative eigenvalue of the swap block.
+
+For sufficiency, multiplication by \(\eta\) preserves both endpoint bounds
+when the index is increased by two.  For type 0, the seeds are the two parity
+values at \(n=0,1\).  For p type 1, direct substitution in (14.1) shows that
+the a endpoint is the upper bound at \(n=0,1,2\) and the lower bound for
+\(n\ge3\), with the reverse order for b; the finite tests through \(n=4\)
+seed both remaining parities.  For the suspended continuing type 1, a is the
+upper bound only at \(n=0\), and is the lower bound at every \(n\ge1\); the
+finite tests at \(n=1,2\) seed the two parities.  The fixed label uses the same
+argument with one-step multiplication by \(t_3\).  Hence all finite
+coordinates lie in their boxes.
+
+Finally, rowwise \(H\mathbf1\le(4/15)\mathbf1\) and
+\(u+g+H\mathbf1=\mathbf1\) give
+\[
+ \sum_{n=0}^{L-1}H^n(u+g)=\mathbf1-H^L\mathbf1,
+ \qquad 0\le H^L\mathbf1\le(4/15)^L\mathbf1.       
+\tag{14.8}
+\]
+Both Q and W therefore normalize on the complete carriers, and their infinite
+outcomes have mass zero.  The infinite coordinates are the zero endpoint
+coordinates and satisfy their boxes.  This proves the equivalence. \(\square\)
+
