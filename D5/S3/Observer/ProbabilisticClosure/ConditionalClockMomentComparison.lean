@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Convex.SpecificFunctions.Basic]
    utility: none
-   digest: Conditional positive clock drift controls adaptive acquisition tails. -/
+   digest: Conditional positive clock drift compares complete stopped-clock and call moments. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SharpChallengeInstrument
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
@@ -665,7 +665,8 @@ private theorem exists_stopped_execution
   let ν : Measure ((n : ℕ) → Option (Record A Y n)) :=
     Kernel.traj (X := fun n => Option (Record A Y n)) K 0 x₀
   have h0 : ν.map (Preorder.frestrictLe 0) = Measure.dirac x₀ := by
-    simpa [ν, Kernel.partialTraj_self, Kernel.id_apply] using Kernel.traj_map_frestrictLe_apply (X := fun n => Option (Record A Y n)) (κ := K) 0 0 x₀
+    simpa [ν, Kernel.partialTraj_self, Kernel.id_apply] using
+      Kernel.traj_map_frestrictLe_apply (X := fun n => Option (Record A Y n)) (κ := K) 0 0 x₀
   have hint (n : ℕ) (f : Option (Record A Y n) → ℝ≥0∞) :
       (∫⁻ ω, f (ω n) ∂ν) = ∑ z, f z * stoppedLaw κ σ n z := by
     induction n with
@@ -755,11 +756,8 @@ private theorem exists_stopped_execution
     rw [comap_subtype_coe_apply hVm]
     have himage : Subtype.val '' {ω : V | ∃ h, ω.1 n = some h ∧ P h} =
         {ω | ∃ h, ω n = some h ∧ P h} ∩ V := by
-      ext ω
-      simp only [Set.mem_image, Set.mem_ofPred_eq, Set.mem_inter_iff]
-      constructor
-      · rintro ⟨z, hz, rfl⟩; exact ⟨hz, z.2⟩
-      · rintro ⟨hp, hv⟩; exact ⟨⟨ω, hv⟩, hp, rfl⟩
+      simpa only [Set.inter_comm, Set.preimage_ofPred_eq] using
+        Subtype.image_preimage_val V {ω | ∃ h, ω n = some h ∧ P h}
     rw [himage, Set.inter_comm _ V, Measure.measure_inter_eq_of_ae hV,
       hprob n (fun z => ∃ h, z = some h ∧ P h)]
     simp only [Fintype.sum_option]
@@ -771,11 +769,7 @@ private theorem exists_stopped_execution
       · exact le_rfl)]
     apply Finset.sum_congr rfl
     intro h _
-    have he : (∃ q, h = q ∧ P q) ↔ P h := by
-      constructor
-      · rintro ⟨q, rfl, hp⟩; exact hp
-      · intro hp; exact ⟨h, rfl, hp⟩
-    simp only [he]
+    simp only [exists_eq_left']
     split_ifs <;> simp [stopped_law_some κ σ a₀]
 
 /-- Arbitrary families of actual worlds and requests obey the same two moment
@@ -789,6 +783,8 @@ theorem stopped_clock_moment_comparison
     (hc : ∀ i n h a y, 0 ≤ c i n h a y ∧ c i n h a y ≤ C)
     (hd : ∀ i n h a, μ ≤ ∑ y, (κ i n h a y).toReal * c i n h a y)
     :
+    (0 < rate μ C ∧ rate μ C < 1 ∧ 0 < slope μ C ∧
+      0 < tailRate μ C ∧ tailRate μ C < 1) ∧
     momentError s (tailRate μ C) < ⊤ ∧
     (∀ i, ∃ (Ξ : Type) (m : MeasurableSpace Ξ),
       Nonempty (@StoppedExecution A Y _ _ (κ i) (σ i) Ξ m)) ∧
@@ -807,11 +803,12 @@ theorem stopped_clock_moment_comparison
   have ha : 0 < slope μ C := by
     dsimp [slope]
     exact mul_pos_of_neg_of_neg (by linarith) (Real.log_neg hr.1 hr.2)
-  have hρ0 : 0 ≤ tailRate μ C := Real.sqrt_nonneg _
+  have hρ0 : 0 < tailRate μ C := Real.sqrt_pos.mpr hr.1
   have hρ1 : tailRate μ C < 1 := by
     simpa [tailRate] using Real.sqrt_lt_sqrt hr.1.le hr.2
-  have herr := moment_error_finite hs hρ0 hρ1
-  refine ⟨herr, fun i => exists_stopped_execution (κ i) (σ i) a₀, ?_⟩
+  have herr := moment_error_finite hs hρ0.le hρ1
+  refine ⟨⟨hr.1, hr.2, ha, hρ0, hρ1⟩, herr,
+    fun i => exists_stopped_execution (κ i) (σ i) a₀, ?_⟩
   intro Ω m E
   have hb (i : I) := execution_moment_bounds (κ i) (σ i) a₀ (c i)
     hμ hμC hs (hc i) (hd i) (E i)
@@ -832,5 +829,6 @@ theorem stopped_clock_moment_comparison
       (ENNReal.mul_lt_top hCf hm)
     gcongr
     exact le_iSup (fun i => ∫⁻ ω, totalCalls ((E i).path ω) ^ s ∂(E i).law) i
+
 
 end D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison

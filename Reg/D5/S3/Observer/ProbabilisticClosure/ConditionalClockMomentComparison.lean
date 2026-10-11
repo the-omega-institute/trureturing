@@ -90,7 +90,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     coordinates := #[]
     readouts := #[
       { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "arg"],
-        stateBinder := 14, functionOperand := false,
+        stateBinder := 0, functionOperand := false,
         stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -179,7 +179,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     coordinates := #[]
     readouts := #[
       { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "body", "fn", "arg"],
-        stateBinder := 13, functionOperand := false,
+        stateBinder := 0, functionOperand := false,
         stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -274,10 +274,10 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     coordinates := #[8, 9]
     readouts := #[
       { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"],
-        stateBinder := 14, functionOperand := false,
+        stateBinder := 0, functionOperand := false,
         stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"],
-        stateBinder := 14, functionOperand := false,
+        stateBinder := 0, functionOperand := false,
         stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -312,6 +312,8 @@ def arena : Arena where
     {μ C s : ℝ} (hμ : 0 < μ) (hμC : μ ≤ C) (hs : 0 < s)
     (hc : ∀ i n h a y, 0 ≤ c i n h a y ∧ c i n h a y ≤ C)
     (hd : ∀ i n h a, μ ≤ ∑ y, (κ i n h a y).toReal * c i n h a y) ,
+    (0 < rate μ C ∧ rate μ C < 1 ∧ 0 < slope μ C ∧
+      0 < tailRate μ C ∧ tailRate μ C < 1) ∧
     R.readout () s (tailRate μ C) < ⊤ ∧
     (∀ i, ∃ (Ξ : Type) (m : MeasurableSpace Ξ),
       Nonempty (@StoppedExecution A Y _ _ (κ i) (σ i) Ξ m)) ∧
@@ -334,7 +336,7 @@ theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
     (fun i => nomatch i) (fun i => nomatch i) () (fun i => nomatch i)
     (μ := 1) (C := 1) (s := 1) (by norm_num) (by norm_num) (by norm_num)
     (fun i => nomatch i) (fun i => nomatch i)
-  exact (lt_irrefl (⊤ : ℝ≥0∞)) h.1
+  exact (lt_irrefl (⊤ : ℝ≥0∞)) h.2.1
 
 def record : Registration arena (type_of% (@stopped_clock_moment_comparison)) where
   actual := actual
@@ -376,8 +378,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[11]
     readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"],
-        stateBinder := 10, functionOperand := false,
+      { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"],
+        stateBinder := 0, functionOperand := false,
         stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -386,4 +388,5 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 end Moments
 
 end
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.ConditionalClockMomentComparison

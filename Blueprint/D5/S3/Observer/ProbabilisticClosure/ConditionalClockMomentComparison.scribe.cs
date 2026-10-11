@@ -9,7 +9,7 @@ internal sealed class ConditionalClockMomentComparisonDocument : IScribeDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive conditional clock drift gives geometric tails and real-order moment comparisons for stopped executions.",
-        H("Conditional clock drift and adaptive acquisition tails"),
+        H("Conditional clock drift and stopped-execution moments"),
         Blocks(
             Paragraph(Text("Actions A and answers Y are arbitrary finite types. A depth-n record is the complete chronological sequence of action and answer pairs, using SharpChallengeInstrument.Record. A source row is a probability mass function on answers for every depth, complete record, and next action. A fixed actual world and request are parameters of these rows. No topology or compactness on the set of worlds is required. The forced policy is any randomized complete-history table, using SharpChallengeInstrument.Policy; it has no world parameter.")),
             Paragraph(Text("historyLaw starts at the unique empty record. At each step it samples the policy action, samples the corresponding history-dependent source row, and appends both draws. The fixed calibration c is a real function of depth, record, action and answer. clock adds these increments along the acquired record. Fix real constants with 0 < mu <= C. Every increment lies in [0,C], and every conditional source row has mean increment at least mu, including rows at unreachable formal histories. Set r = 1 - (mu/C)(1-exp(-1)), a = -(C/2) log r, and rho = sqrt r. These are rate, slope and tailRate, respectively.")),
