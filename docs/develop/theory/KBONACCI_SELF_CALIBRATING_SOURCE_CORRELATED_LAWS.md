@@ -227,3 +227,182 @@ The source-relative bound and minimum are deductions here from the arithmetic pe
 **Proof.** Substitute the indicated parameters or simplex faces into (41.2)--(41.3). At $\delta=0$, (41.5) becomes $\gamma=(0,d+h,z)$; at $\delta=1$ it becomes $\gamma=\alpha$. For $\eta=1$, use $t\le h\le1$. For $h=0$, (41.2) gives $t=0$, and (41.8) gives zero error also at every marker source. On $d=0$ the defining inequality has the stated form; division is used only when $1-\delta>0$. On $z=0$, substitute $d=1-h$ to obtain $h\le\delta+\eta$. All attainments follow from the all-source family of Theorem 41.1, so no endpoint is obtained only as a limit. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 42. Constant zero advice and the carrier-size boundary
+
+Retain exactly the labeled source $X$, the numerical map $N$, and the target $\Omega$ of (36.1), and put
+
+$$
+\beta_0(y)=0\qquad(y\in X).
+\tag{42.1}
+$$
+
+Thus every source is in the same supplied-advice cell. The prime queries, the literal-divergence convention, and the event notation $(H_y,F_y,D_y,R_y,h_y,e_y,d_y,z_y)$ are those of Definition 40.1. The anchor is
+
+$$
+x_*=(7,2),\qquad N(x_*)=27,\qquad \Omega(x_*)=1,
+\tag{42.2}
+$$
+
+as supplied by Proposition 35.5 and Proposition 39.3. For a row $(h,d,z)$ in the simplex
+
+$$
+\mathscr S=\{(h,d,z)\in[0,1]^3:h+d+z=1\},
+\tag{42.3}
+$$
+
+consider all common measurable tape spaces, deterministic rule families, and source-indexed laws of Definition 40.1 having this row at $x_*$ and satisfying $e_y\le\delta h_y$ for every $y\in X$. The diameter is always the event-supremum quantity
+
+$$
+\Delta=\sup_{u,v\in X}\operatorname{TV}(\mu_u,\mu_v).
+\tag{42.4}
+$$
+
+**Theorem 42.1 (Universal invariant at constant advice).** Every such family, on every measurable common carrier, satisfies
+
+$$
+(1-\delta)\sup_{y\in X}h_y\le\Delta.
+\tag{42.5}
+$$
+
+In particular, at the anchor,
+
+$$
+\Delta\ge(1-\delta)h.
+\tag{42.6}
+$$
+
+**Proof.** Write $H=\sup_y h_y$. For a fixed source $x$ use the increasing finite-record events $A_m$ of (40.6): a tape belongs to $A_m$ when its run at $x$ is a finite proposal, has length at most $m$, queries only the first $m$ primes, and outputs at most $m$. Their union is $H_x$. Since $\beta_0$ is constant, Theorem 37.2 supplies, for each $m$, one source $y_m\in B_{\beta_0}$ whose answers on those first $m$ primes agree with $x$ and whose target is greater than $m$. Finite-execution transport gives
+
+$$
+A_m\subseteq F_{y_m}.
+\tag{42.7}
+$$
+
+Consequently, using the event-TV inequality and then the conditional error bound at $y_m$,
+
+$$
+\mu_x(A_m)
+\le \mu_{y_m}(A_m)+\Delta
+\le e_{y_m}+\Delta
+\le \delta h_{y_m}+\Delta
+\le \delta H+\Delta.
+\tag{42.8}
+$$
+
+Continuity from below under $\mu_x$ gives $h_x\le\delta H+\Delta$. Taking the supremum over $x$ yields $H\le\delta H+\Delta$, which is (42.5). This is a universal necessity for the changed law contract; it does not use the anchor construction and does not assert that a law can be acquired from the observed integer. At $\delta=1$ the invariant is the tautology $0\le\Delta$. $\square$
+
+**Theorem 42.2 (Attained arbitrary-measurable minimum).** Let $0\le\delta\le1$ and $(h,d,z)\in\mathscr S$. Among all measurable common carriers, the minimum diameter at $x_*$ is attained and equals
+
+$$
+\Delta_{\mathrm{meas}}^{\min}(\delta;h,d,z)=(1-\delta)h.
+\tag{42.9}
+$$
+
+With a diameter cap $\Delta\le\eta$, the exact anchor region is
+
+$$
+\mathcal R_{\mathrm{meas}}(\delta,\eta)
+ =\{(h,d,z)\in\mathscr S:(1-\delta)h\le\eta\}.
+\tag{42.10}
+$$
+
+**Proof.** Put $t=(1-\delta)h$. The set $W=N[X]$ is countably infinite by the arithmetic supplier in Section 35. Let
+
+$$
+\Theta_\infty=\{a,b,c\}\mathbin{\sqcup}\{p_n:n\in W,\ n\ne27\}
+\tag{42.11}
+$$
+
+with the full power-set sigma algebra. The deterministic rule on $a$ immediately proposes $1$; the rule on $b$ queries an infinite fixed prime sequence and therefore diverges literally; the rule on $c$ terminates with an unknown nonproposal; and the rule on $p_n$ immediately proposes the finite real number $\omega(n)$. No rule receives a source label or an integer: $p_n$ is a tape parameter, and the source dependence below is solely a stipulated law relation.
+
+At every labeled source with $N(y)=27$, put mass $(h,d,z)$ on $(a,b,c)$. At a source with $N(y)=n\ne27$, put the following masses:
+
+$$
+\mu_y(a)=\delta h,\qquad
+\mu_y(p_n)=t,\qquad
+\mu_y(b)=d,\qquad
+\mu_y(c)=z,
+\tag{42.12}
+$$
+
+and zero mass on the other $p_m$. This depends only on the numerical value $N(y)$, so labels from distinct windows that generate the same integer receive the same law and the same deterministic outcomes.
+
+At $x_*$ the $a$ proposal is correct and the other two atoms give literal divergence and nonproposal mass, hence the row is $(h,d,z)$. For $N(y)=n\ne27$, the $p_n$ proposal is correct, while the $a$ proposal is false only when $\omega(n)>1$. Therefore
+
+$$
+h_y=h,\qquad e_y\le\delta h,\qquad d_y=d,\qquad z_y=z
+\tag{42.13}
+$$
+
+for every such source, including all zero-proposal cases when $h=0$. The law at $27$ and each law in (42.12) differ by moving mass $t$ from $a$ to $p_n$; two different laws in (42.12) differ by moving mass $t$ from one $p_n$ to another. The event-supremum definition therefore gives
+
+$$
+\operatorname{TV}(\mu_u,\mu_v)\le t,
+\qquad
+\operatorname{TV}(\mu_{x_*},\mu_y)=t\quad(N(y)\ne27),
+\tag{42.14}
+$$
+
+so the attained diameter is exactly $t$. Equations (42.6) and (42.14) prove (42.9), and (42.10) follows by imposing the cap. The construction uses a countably infinite carrier; each individual law has finite support, but that sourcewise finite support does not make the common carrier finite. The stipulated real probability masses need not have an effective exact sampler. $\square$
+
+**Theorem 42.3 (Finite common carriers have a different minimum).** Suppose the common tape carrier $\Theta$ is finite. If $0\le\delta<1$, every admissible family satisfies
+
+$$
+\Delta\ge\sup_{y\in X}h_y,
+\tag{42.15}
+$$
+
+and hence the minimum at the anchor is
+
+$$
+\Delta_{\mathrm{fin}}^{\min}(\delta;h,d,z)=h.
+\tag{42.16}
+$$
+
+If $\delta=1$, the minimum is $0$. Thus the exact finite-carrier cap region is
+
+$$
+\mathcal R_{\mathrm{fin}}(\delta,\eta)=
+\begin{cases}
+\{(h,d,z)\in\mathscr S:h\le\eta\},&0\le\delta<1,\\
+\mathscr S,&\delta=1.
+\end{cases}
+\tag{42.17}
+$$
+
+**Proof.** It is enough to prove (42.15) for one fixed $x$ with $h_x>0$. Let $E=H_x\subseteq\Theta$ be the finite set of tapes that produce finite proposals at $x$. For each tape in $E$, collect its finite queried-prime set and its finite output; let $S$ be the union of those query sets and choose $K$ larger than every collected output. Enumerate the finite carrier. For a source $u$, let $\gamma(u)$ be the least index of a tape that produces a correct finite proposal at $u$, and let $\gamma(u)=0$ when no tape does so. For this contradiction only, regard $\gamma$ as a finite-valued supplied relation; it is not supplied to the original constant-advice procedure. On advice $j>0$, simulate tape $j$ with the original constant input $0$; on advice $0$, return unknown. By the definition of $\gamma$, every finite output of this advice procedure is sound on its entire advice cell. Corollary 37.3 and Theorem 37.2 therefore give a source
+
+$$
+y\in C(S,d_S(N(x)))\cap B_\gamma,
+\qquad \Omega(y)>K,
+\tag{42.18}
+$$
+
+with $\gamma(y)=0$; otherwise the advice procedure would make a sound finite halt on a member of $B_\gamma$. Hence no tape in the finite carrier gives a correct finite proposal at $y$, so $F_y=H_y$ as events.
+
+The matching answers in (42.18) replay every finite run from $E$ at $y$, and the common target bound makes each of those proposals false. Thus $E\subseteq F_y$. Since $e_y=h_y$ and $e_y\le\delta h_y$ with $\delta<1$, one has $\mu_y(H_y)=0$, in particular $\mu_y(E)=0$. At $x$, $\mu_x(E)=h_x$, and therefore
+
+$$
+\Delta\ge\operatorname{TV}(\mu_x,\mu_y)\ge|\mu_x(E)-\mu_y(E)|=h_x.
+\tag{42.19}
+$$
+
+Taking the supremum proves (42.15). This finite-color step uses the persistent-source theorem already established in Section 37; it does not assert a new generic transport theorem.
+
+For attainment when $\delta<1$, use the three-point carrier $(a,b,c)$ with the same rules as in Theorem 42.2. Give every source with $N(y)=27$ the law $(h,d,z)$ on $(a,b,c)$, and every source with $N(y)\ne27$ the law
+
+$$
+(0,d+h,z).
+\tag{42.20}
+$$
+
+At the anchor this is the required row. Elsewhere there is no finite proposal, so $h_y=e_y=0$ and the conditional error constraint is vacuous. The two laws have TV distance $h$, so (42.16) is attained. When $\delta=1$, use the same deterministic three-point rules and the common law $(h,d,z)$ at every source. The only possible false mass is the $a$ atom, and it is at most $h_y$, so $e_y\le h_y=\delta h_y$; the diameter is zero. The cap region (42.17) follows from these attainments and the lower bounds. $\square$
+
+The carrier distinction is therefore exact. A larger finite carrier never improves (42.16), because the finite-color argument applies to every finite cardinality. A countably infinite common carrier already attains (42.9), even though every law in (42.12) has finite support. Sourcewise finite supports and a finite common carrier are different requirements. Pure source-independent randomness has $\Delta=0$; by (42.6), it cannot support $h>0$ when $\delta<1$. The positive construction instead uses the explicitly permitted source-correlated law relation, without an observation-based operation for selecting that law or an effective sampler for arbitrary real masses.
+
+At the endpoints, $\delta=0$ gives the common formulas $\Delta_{\mathrm{meas}}^{\min}=\Delta_{\mathrm{fin}}^{\min}=h$, while $\delta=1$ gives zero in both carrier classes. If $h=0$, every $(0,d,z)$ row is attained with diameter zero and no conditional probability is assigned. With $\eta=0$ and $\delta<1$, both exact cap regions force $h=0$; with $\eta=1$, every simplex row is admitted. For the requested row $(\delta,h,d,z)=(1/2,1/2,1/2,0)$, the constant-zero arbitrary-measurable minimum is $1/4$, the finite-carrier minimum is $1/2$, and the earlier supplied $\beta_*$ construction has minimum $[(1-\delta)h-\delta d]_+=0$ by Theorem 41.1. The change is caused by the advice gate and the carrier class, not by a change to $X$, $N$, $\Omega$, the prime-only probes, or the literal-divergence convention.
+
+The arithmetic inputs are exactly the every-pattern unboundedness of Section 35, the labeled source of (36.1), the persistence and finite-color results of Section 37, and the anchor facts and finite-execution marker supplier of Proposition 39.3. The event-TV and finite-record transport facts are reused from Theorem 40.2, with the normalization cited in Definition 40.1. These are ordinary theory deductions under the stipulated source-relative law contract; they make no claim about physical realization, efficiency, uniform execution horizons, literature priority, Lean, or kernel verification.
+
+## 追加锚（本行以下为增补区）
