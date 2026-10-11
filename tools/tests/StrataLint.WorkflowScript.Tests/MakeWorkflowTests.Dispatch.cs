@@ -219,8 +219,9 @@ public sealed partial class MakeWorkflowTests
         var makefile = File.ReadAllText(Path.Combine(root, ToolsMakefilePath));
 
         Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
+        Assert.Contains("""tools_makefile_hash := \#""", makefile, StringComparison.Ordinal);
         Assert.Contains(
-            """HERE := $(shell tools_makefile="$(MAKEFILE_LIST)"; cd "$$(dirname "$${tools_makefile\# }")" && pwd -P)""",
+            """HERE := $(shell tools_makefile="$(MAKEFILE_LIST)"; cd "$$(dirname "$${tools_makefile$(tools_makefile_hash) }")" && pwd -P)""",
             makefile,
             StringComparison.Ordinal);
         var phony = Assert.Single(
