@@ -247,7 +247,9 @@ private theorem bandDerivative_continuous {a b c : ℝ} (hc : 0 < c) (ha : 0 < a
     hl.comp' (f := fun s : ℝ => s / c) (x := t) (continuousAt_id.div_const c)
   exact ((hlog.add_const 1).div
     ((continuousAt_id.pow 2).mul (hlog.pow 2))
-    (by have := hz t ht; positivity)).continuousWithinAt
+    (by
+      change t ^ 2 * (Real.log (t / c)) ^ 2 ≠ 0
+      exact mul_ne_zero (pow_ne_zero 2 ht0.ne') (pow_ne_zero 2 (hz t ht).ne'))).continuousWithinAt
 
 private theorem bandDerivative_cap {A c t : ℝ} (hA : Real.exp 78 ≤ A)
     (hc : (99 / 100 : ℝ) ≤ c) (hc' : c ≤ (101 / 100 : ℝ))
@@ -651,7 +653,10 @@ private theorem forward_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
   have hi : IntervalIntegrable (fun t => bandDerivative c t * (Chebyshev.psi t - Chebyshev.psi A))
       volume A (c * A) := by
     have hs := hip.sub (hk.integrableOn_Icc (μ := volume).mul_const (Chebyshev.psi A))
-    simpa only [mul_sub, Pi.sub_apply] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
+    change IntegrableOn
+      (fun t => bandDerivative c t * Chebyshev.psi t - bandDerivative c t * Chebyshev.psi A)
+      (Icc A (c * A)) volume at hs
+    simpa only [mul_sub] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
   have hicoord : IntervalIntegrable
       (fun r => bandDerivative c (A + r) * (Chebyshev.psi (A + r) - Chebyshev.psi A)) volume 0 h := by
     simpa [h] using hi.comp_add_left A
@@ -709,7 +714,10 @@ private theorem reverse_compensation {A c H ε : ℝ} (hA : Real.exp 78 ≤ A)
   have hi : IntervalIntegrable (fun t => bandDerivative c t * (Chebyshev.psi A - Chebyshev.psi t))
       volume (c * A) A := by
     have hs := (hk.integrableOn_Icc (μ := volume).mul_const (Chebyshev.psi A)).sub hip
-    simpa only [mul_sub, Pi.sub_apply] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
+    change IntegrableOn
+      (fun t => bandDerivative c t * Chebyshev.psi A - bandDerivative c t * Chebyshev.psi t)
+      (Icc (c * A) A) volume at hs
+    simpa only [mul_sub] using (intervalIntegrable_iff_integrableOn_Icc_of_le hab).mpr hs
   have hicoord : IntervalIntegrable
       (fun r => bandDerivative c (A - r) * (Chebyshev.psi A - Chebyshev.psi (A - r))) volume 0 h := by
     simpa [h] using (hi.comp_sub_left A).symm
