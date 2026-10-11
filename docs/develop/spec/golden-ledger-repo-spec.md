@@ -83,6 +83,8 @@ golden-ledger/
 ## 2.3 生长律
 目录内计容量文件 >96 或 SL-003 登记材料(`Meta/ci-checks.json`,含根目录与 `D5/` 下的 Lean 源及 `Reg/`)中的文件 >1000 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 深度无上限:满桶在任一层皆可就地裂出子疆域,SL-003 只数目录内文件、不数子目录,故裂的代价恒为一层而非一次全局重排。阈值常量唯一住在 `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`:文件 >800 行为 Observe 软提示,>1000 行 Block;目录准入上限 96,改动触及的目录超限且含受保护基线没有的计容量路径即 Block,否则 Observe;全树另以 192 为容忍上限,超出即 Block。 容量只约束骨骼:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 数据文件豁免 SL-003 文件行数软硬上限,扩展名不区分大小写,目录容量仍按既有规则计算。Blueprint Markdown 是 FILEMAP `kind=generated` 的人读投影,不另计容量——同一文档的结构名额已由其 `.scribe.cs` 定义支付;文档 GID 须指向既存 Lean 模块,且真实树上的 `.scribe.cs` 定义、反射发现项与同 stem `.md` 路径保持双射,若把源与投影重复计数,满额 Lean 桶的 Blueprint 镜像在半数模块蓝图化后即超限。该排除与双射只守结构槽及镜像存在性,不校验 `.md` 内容,也不赋予其内容或历史权威。
 
+**文献笔记容量(added-only)。** SL-003 对 `Library/**` 下新增的 Markdown 文件检查候选全文，硬上限为 3,000 行；扩展名不区分大小写，空行计入，末尾换行符不额外计一行。超过上限即 Block，诊断包含路径、实测行数和上限。改名或复制的目标路径视为新增；已有文件的修改、删除及未触及的历史长文不在本项检查范围，判官实现变更也不扩大选集。Library Markdown 不适用通用文件行数软硬上限，check-current 及 repository capacity-audit 不检查其行数，目录容量照常计算。超出单篇篇幅的新内容拆为独立笔记并以引用衔接。
+
 **理论文档容量(delta-only)。** SL-003 对 `docs/develop/theory/**` 中新增或修改的 Markdown 检查候选全文,硬上限为 5,000 行;扩展名不区分大小写,空行计入,末尾换行符不额外计一行。超过上限即 Block,诊断包含路径、实测行数和上限。删除路径不读正文;未触及的历史长卷、check-current 及 repository capacity-audit 不进行这项检查,判官实现变更也不扩大理论文档选集。新内容超出单卷篇幅时写入同主题续卷并通过引用衔接,保留既有条目、编号与引用。此谓词只约束文档大小,不校验理论数学内容,也不建立 Lean 对理论正文的依赖。
 
 ## 2.4 第五坐标:通用性(理论自分类之工程兑现)

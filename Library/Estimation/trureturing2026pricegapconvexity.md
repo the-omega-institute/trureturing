@@ -1451,3 +1451,469 @@ for separate pointwise applications, and do not prove CR21/CR23,
 PG15/J or RH. This is a supplier-relative application of the cited
 truncation theorem and existing J4, without a literature-originality
 claim, a repeated generic tail theorem or Lean verification.
+
+## The existing full-real normal form pays the stock term
+
+Keep all original fixed $b,d$, qualifying witnesses, full windows,
+positive weights, final boundary labels and maximizing ties from
+CR17--CR36. The [archived workload supplier's full-real normal form
+and strict-endpoint transfer](../Analytic/mantovanelli2026primeworkload.md#the-full-real-normal-form-also-controls-strict-inventory-at-events)
+apply to the identical actual inventory $K$, weak $\psi$ and price.
+Reuse that statement directly:
+
+$$
+Q(x)=K(x)-\psi(x)=(\sqrt2-1)\sqrt x+o(\sqrt x).
+$$
+
+This holds through activation events; no regular-return membership is
+asserted for the original $A_i$ or $B_i$. CR17 and uniform source escape
+therefore give, for every original label and tie,
+
+$$
+\frac{Q(A_i)}{\sqrt{B_i}}
+=\frac{Q(A_i)}{\sqrt{A_i}}\sqrt{\frac{A_i}{B_i}}
+=\sqrt2-1+o_X(1).
+\tag{CR37}
+$$
+
+The real start in the supplier and the original source start are both
+existential. Uniformity here follows from a full-real asymptotic and
+uniform $A_i/B_i\to1$; no distribution of the selected clocks or
+exceptional-center exclusion is needed.
+
+The [existing elementary bound](../ArithSums/nicolas2025comparison.md#paying-the-thresholds-and-retaining-the-signed-obligation)
+gives $0<r_{B_i}\le\log(2\pi)/\sqrt{B_i}=o_X(1)$.
+CR34 retains $\mu_{B_i}(\tau_i)\ge0$ and its uniform $o_X(1)$
+bound at the CR32-selected individual cutoffs. Thus for every fixed
+$0\le\kappa<1$, the full deterministic term in CR36 is paid:
+
+$$
+\boxed{
+\sum_{i<m}\delta_i
+\left[r_{B_i}+\frac{\kappa Q(A_i)}{\sqrt{B_i}}
+-\mu_{B_i}(\tau_i)\right]
+=\left[\kappa(\sqrt2-1)+o_X(1)\right]L_X.}
+\tag{CR38}
+$$
+
+This includes the actual signed stock, all higher layers and endpoint
+ties; it does not replace them by separately attainable optimizers.
+The positive weights sum to $L_X$, so there is no cost proportional to
+the number of labels.
+
+Together with CR36's complete suffix contract, this supplies the
+one-sided enclosure
+
+$$
+\boxed{
+\sum_{i<m}\delta_i\left[-s_{B_i}I_\psi(B_i)
+-\frac{\kappa t_i}{\sqrt{B_i}}\right]
+\le\mathcal H_{X,\kappa}(\boldsymbol\tau)
++\left[\kappa(79.24+\sqrt2-1)+o_X(1)\right]L_X.}
+\tag{CR39}
+$$
+
+Each suffix error is paid once and the favorable $-\mu$ is retained.
+Exact coefficients create no numerical enclosure error; if the head
+is numerically enclosed, every such error must be added separately.
+CR39 pays the deterministic term that was still retained in CR36;
+it supplies no favorable sign of the head.
+
+For the same fixed $\kappa$, an eventual cofinal-full-window upper
+bound $\mathcal H_{X,\kappa}(\boldsymbol\tau)\le M_H L_X$,
+with one fixed finite $M_H$, every allowed tie assignment and cutoffs
+satisfying the complete CR32--CR34 contracts, would now pay CR23
+with a fixed enlarged constant. This is only the unpaid consumer of
+CR39, not a new RH criterion or an established head estimate.
+The head and tail must use the same individually selected cutoff for
+each label, with every maximizing tie retained; independently favorable
+choices do not supply those contracts.
+
+The full-real normal form is existing arithmetic, directly credited
+to the archived primary and its historical references. This addition
+only pays its actual CR36 consumer after the explicit strict-endpoint
+and same-clock correspondence; it does not reprove that normal form,
+claim literature originality or supply Lean verification. The
+complete signed head upper estimate, CR21/CR23, PG15/J and RH remain
+unproved.
+
+
+## The prime interval supplier and both competitor costs control actual stock
+
+Keep every original source, label and maximizing tie from CR17--CR27,
+$N=pu$, $A=B+t$, $B=\log u$, $t=\log p$, $u=N_A^{\rm str}$,
+$K(A)=B$. In particular $t/B\to0$ uniformly. Write
+
+$$
+C=N_B^{\rm str},\qquad k=K(B),\qquad D=B-k=K(A)-K(B)\ge0,
+\qquad Y=t+k=A-D.
+$$
+
+Here $D$ is actual added layer mass on $[B,A)$, distinct from the
+own-price defect $d_B(u)$, CR25's integer loss $L_{p,u}$ and the
+original source-window ceiling. All its simultaneous activations retain
+their individual $\log p$ masses.
+
+### Reuse a uniform prime interval bound and the complete frontier mass
+
+The [Ramaré--Schlage-Puchta interval supplier](../Scale/ramare2008bruntitchmarsh.md),
+Theorem 1.1, is used directly. The existing first-frontier inequalities
+$1/(q+1)<\log(1+1/q)<1/q$ place each first-layer activation clock
+$a_{q,1}$ strictly between $q$ and $q+1$. Thus activations in
+$[B,B+z)$ come from actual primes in $(B-1,B+z)$.
+
+For $\sqrt B\le z\le B/2$, round that prime interval outward to
+integer endpoints. Its length is $z+O(1)$, its primes have
+$\log q\le\log(2B)$, and the uniform cited theorem gives a
+first-layer mass at most
+
+$$
+\frac{2[z+O(1)]\log(2B)}{\log[z+O(1)]+3.53}\le cz
+$$
+
+beyond one common real start, for each fixed $c>4$. Uniformity follows
+from $\log z\ge\tfrac12\log B$. For $0\le z<\sqrt B$,
+monotonicity bounds this mass by $c\sqrt B$.
+
+The [existing full-real frontier normal form](../Analytic/mantovanelli2026primeworkload.md#the-full-real-normal-form-also-controls-strict-inventory-at-events)
+and the [ordinary prime-square decomposition](../ArithSums/nicolas2025comparison.md#what-remains-after-the-prime-square-contribution)
+already pay the entire higher actual layer mass as $O(\sqrt x)$,
+including the strict endpoints and all growing indices. Indeed the
+strict full-real inventory is $K(x)=\psi(x)+(\sqrt2-1)\sqrt x+o(\sqrt x)$,
+its first layer is $\vartheta(x)+O(\log x)$, and
+$\psi(x)-\vartheta(x)=\sqrt x+o(\sqrt x)$. The higher actual mass
+is consequently $(\sqrt2+o(1))\sqrt x$. This reuses the complete
+frontier estimates; no fixed-layer expansion is summed over infinitely
+many indices. At $x=B+z\le3B/2$ their full increment is therefore
+$O(\sqrt B)$. We obtain a finite $H_c$ and common real start with
+
+$$
+\boxed{
+K(B+z)-K(B)\le cz+H_c\sqrt B
+\quad(B\text{ beyond the start},\ 0\le z\le B/2).}
+\tag{CR40}
+$$
+
+The same normal form gives $|Q(x)|\le C_Q\sqrt x$ eventually.
+That bound is an existing supplier consequence, not new arithmetic.
+No numerical values for $H_c,C_Q$ or the common start are certified.
+
+### Keep the layer work and the legal competitor's concavity cost
+
+The original CR25 account is
+
+$$
+d_B(u)+L_{p,u}+C_B(Y)=E_t,
+\qquad E_t=t\lambda(B)-D_t(B),\qquad L_{p,u}\ge0.
+$$
+
+Reuse $\lambda(x)=1/(x\log x)$ and its decreasing positive curvature
+$w=-\lambda'$. The actual finite layer account, including layers tied
+at $B$ and excluding those tied at $A$, reads
+
+$$
+d_B(u)=\int_{[B,A)}[\lambda(B)-\lambda(v)]\,dK(v).
+$$
+
+Define $J=\int_{[B,A)}(v-B)\,dK(v)$. The complete event measure is
+used in both integrals. Then
+
+$$
+d_B(u)\ge w(A)J,\qquad
+C_B(Y)\ge\frac{w(A)}2(t-D)^2,\qquad
+E_t\le\frac{w(B)t^2}2.
+$$
+
+The concavity estimate is in its original domain: CR25 gives
+$B,Y>1$ and $B,Y\le A$. Hence
+
+$$
+\boxed{2J+(t-D)^2\le\mathfrak r t^2,
+\qquad \mathfrak r=\frac{w(B)}{w(A)}\longrightarrow1.}
+\tag{CR41}
+$$
+
+The convergence is uniform in every original label and tie by CR17.
+The source height and prime-power reserve have not been spent here.
+
+Translate the actual layer measure on $[B,A)$ to $\mu$ on $[0,t)$,
+with total mass $D$, and set $h=H_c\sqrt B$. Eventually $t\le B/2$,
+so CR40 gives $\mu([0,z))\le cz+h$ for $0\le z\le t$.
+Finite integration gives
+
+$$
+J=\int_0^t[D-\mu([0,z))]\,dz
+\ge\frac{(D-h)_+^2}{2c}.
+$$
+
+The last step integrates the positive lower envelope
+$[D-h-cz]_+$; its support lies in $[0,t]$ since $D\le ct+h$.
+Endpoint atoms do not alter this ordinary integral. Thus
+
+$$
+\frac{(D-h)_+^2}{c}+(t-D)^2\le\mathfrak r t^2.
+$$
+
+Using $(D-h)_+^2\ge D^2-2Dh$ and solving the resulting quadratic,
+
+$$
+\begin{aligned}
+D&\le\frac c{c+1}\left[
+ t+\frac hc+\sqrt{\left(t+\frac hc\right)^2
+ +\frac{c+1}c(\mathfrak r-1)t^2}\right]\\
+&\le\left[\frac{2c}{c+1}+\frac{\mathfrak r-1}2\right]t
+ +\frac{2H_c}{c+1}\sqrt B.
+\end{aligned}
+\tag{CR42}
+$$
+
+Here $\mathfrak r\ge1$, and the second line uses
+$\sqrt{v^2+s}\le v+s/(2v)$ with $v\ge t>0$.
+For each fixed $\eta>0$, choose $c>4$ sufficiently close to $4$
+and then one common source start. Since $2c/(c+1)\to8/5$,
+
+$$
+\boxed{
+B-K(B)\le(8/5+\eta)t+C_\eta\sqrt B.}
+\tag{CR43}
+$$
+
+This uses both retained costs in CR41. A bound on the price defect
+alone does not supply the displayed coefficient by this argument.
+The $\sqrt B$ allowance is essential; no divergence of $t/\sqrt B$
+is assumed.
+
+### The actual prime-error interaction is paid on the full window
+
+The exact same-source identities are
+
+$$
+B-\psi(B)=D+Q(B),\qquad
+\psi(A)-\psi(B)-t=D-t+Q(B)-Q(A).
+$$
+
+Since $A/B\to1$ and $|Q(x)|\le C_Q\sqrt x$ eventually, CR43 gives
+
+$$
+\begin{aligned}
+B-\psi(B)&\le(8/5+\eta)t+C'_\eta\sqrt B,\\
+\psi(A)-\psi(B)-t&\le(3/5+\eta)t+C''_\eta\sqrt B,\\
+\sum_{i<m}\delta_i\frac{\psi(A_i)-\psi(B_i)-t_i}{\sqrt{B_i}}
+&\le(3/5+\eta)V_X^{\rm lag}+C''_\eta L_X.
+\end{aligned}
+\tag{CR44}
+$$
+
+One common sufficiently large start covers every original label,
+full window and maximizing-tie assignment. All fixed constants may
+depend on $\eta$ and the suppliers; they do not depend on a selected
+label or tie. No favorable sampling, new source or thinning is used.
+This is a supplier-relative actual arithmetic estimate, without a
+literature-originality or Lean-verification claim. CR44 controls one
+signed prime-error interaction, not the full original integral or its
+finite head; CR21/CR23, PG15/J and RH remain unproved.
+
+
+## A single core-selected height pays the complete compensation change
+
+Keep CR40--44's actual sources and all original window conventions.
+Fix $0<\kappa<1$ and $0<a<5\kappa/8$ once. Choose a fixed
+$\eta>0$ with $a(8/5+\eta)\le\kappa$. Define, retaining every
+actual zero's real part and multiplicity,
+
+$$
+Z_x(T)=2\operatorname{Re}\sum_{0<\operatorname{Im}\rho\le T}
+m_\rho\frac{x^\rho}{\rho}.
+$$
+
+Apply the [existing CHJ selected-height supplier](../Analytic/cullyhugilljohnston2026truncation.md)
+directly at the same actual core clock $B$, with
+$Y_B=(\sqrt B-4)/4$. Beyond one common unknown source start,
+$B\ge\exp(10^{13})$ and the strict supplier domain holds. It gives
+one individual height $\tau_B\in[Y_B,2Y_B]$ such that
+
+$$
+\psi(B)=B-Z_B(\tau_B)+e_B,
+\qquad |e_B|\le\frac{79.24B}{\sqrt B-4}\le80\sqrt B.
+$$
+
+Combining this actual error contract with CR44, rather than choosing
+an independently favorable head, yields
+
+$$
+\boxed{
+\frac{aZ_B(\tau_B)-\kappa t}{\sqrt B}
+\le a(C'_\eta+80).}
+\tag{CR45}
+$$
+
+No $A$-selected height is imposed in this route. In particular these
+$B$-selected heights are not asserted to satisfy CR34's separate
+$A$-tail contracts.
+
+### Pay the original compensation, its change and all deterministic terms jointly
+
+For one label define the actual finite heads at one common *individual*
+height $T$ by
+
+$$
+\begin{aligned}
+H_{A,\kappa}(T)&=2\operatorname{Re}
+\sum_{0<\operatorname{Im}\rho\le T}m_\rho
+\left[s_BF_B(\rho)-\frac{\kappa A^\rho}{\sqrt B\rho}\right],\\
+H_{B,a}(T)&=2\operatorname{Re}
+\sum_{0<\operatorname{Im}\rho\le T}m_\rho
+\left[s_BF_B(\rho)-\frac{aB^\rho}{\sqrt B\rho}\right].
+\end{aligned}
+$$
+
+The first is the original CR28 compensation; the second is a comparison
+head whose entire change is retained below. Let $S_{A,\kappa}(T)$ be
+the original compensated suffix in CR29's real symmetric-height ordering.
+It asserts no ordinary complex positive-ordinate limit. Put
+
+$$
+\mathcal D_{A,\kappa}=r_B+\frac\kappa{\sqrt B}
+\left[Q(A)-q(A)+\tfrac12\Lambda_{\mathbb R}(A)\right].
+$$
+
+The complete original account is
+
+$$
+H_{A,\kappa}(T)+S_{A,\kappa}(T)+\mathcal D_{A,\kappa}
+=-s_BI_\psi(B)-\kappa t/\sqrt B.
+$$
+
+Subtract the comparison head at that same height. With the *original*
+full degree-two suffix
+$T_F(B,T)=2s_B\operatorname{Re}\sum_{\operatorname{Im}\rho>T}m_\rho F_B(\rho)$,
+the exact result is
+
+$$
+\begin{aligned}
+S_{A,\kappa}(T)+H_{A,\kappa}(T)-H_{B,a}(T)
++\mathcal D_{A,\kappa}
+=T_F(B,T)+r_B+\frac{aZ_B(T)-\kappa t}{\sqrt B}.
+\end{aligned}
+$$
+
+The actual stock, pole/trivial-zero and half-prime-power terms cancel
+only within this joint equality; none is dropped separately.
+Reuse CR34's complete original J4 account
+$T_F(B,T)=-\mu_B(T)+e_F(B,T)$ with
+$\mu_B\ge0$ and $|e_F|\le\varepsilon_F$.
+At $T=\tau_B\asymp\sqrt B$, its full allowance is $o_X(1)$
+uniformly, as is $r_B$. CR45 therefore pays, with a fixed finite
+constant $C_{\eta,a}$,
+
+$$
+\boxed{
+\sum_{i<m}\delta_i\left[
+ S_{A_i,\kappa}(\tau_i)+H_{A_i,\kappa}(\tau_i)
+ -H_{B_i,a}(\tau_i)+\mathcal D_{A_i,\kappa}\right]
+\le C_{\eta,a}L_X.}
+\tag{CR46}
+$$
+
+This jointly pays the original $A$-compensated suffix, its complete
+finite-head change to $B$-compensation and every deterministic term.
+It does not assert favorable signs or separate small bounds for those
+three pieces. It requires no intersection of favorable height sets.
+Every sufficiently large qualifying original full window and every
+tie assignment admit individual $B$-selected heights; there is no
+common-height assertion across different cores.
+
+### Retain a complete original-coefficient upper enclosure
+
+At these heights use the complete original $F_B$ enclosure
+
+$$
+U(B,\tau_B)=2s_B\operatorname{Re}
+\sum_{0<\operatorname{Im}\rho\le\tau_B}m_\rho F_B(\rho)
++r_B-\mu_B(\tau_B)+\varepsilon_F(B,\tau_B)
+\ge-s_BI_\psi(B).
+$$
+
+Exact coefficients introduce no coefficient approximation error.
+CR45 and the same signed suffix contract give
+
+$$
+\boxed{
+\sum_{i<m}\delta_iU(B_i,\tau_i)
+\le\kappa V_X^{\rm lag}+C_{\eta,a}L_X
++\sum_{i<m}\delta_iH_{B_i,a}(\tau_i).}
+\tag{CR47}
+$$
+
+The final same-clock compensated head remains unpaid. A sufficient
+cofinal-full-window upper bound for it must retain every maximizing
+tie, these actual height contracts, all real parts and multiplicities,
+and any numerical enclosure errors. None is supplied here.
+
+CR43's actual arithmetic bound permits the fixed comparison coefficient
+$a<5\kappa/8$ and makes the joint payment without presuming a favorable
+head or a separate $A$-tail estimate. It does not replace the original
+coefficient, count the source height twice, expend the reserve or
+assume self-tangency of the cores. The named prime interval theorem,
+CHJ supplier and original J4 are directly reused. This is a
+supplier-relative paper application with no originality or Lean claim;
+the complete CR21/CR23 upper estimate, PG15/J and RH remain unproved.
+
+### A sharper zero-free strip still cannot pay the same-cutoff head
+
+The recent [Liu zero-free supplier](../Analytic/liu2026quasirh.md) reports
+the boundary
+
+$$
+\beta_0=\frac{1507-2\sqrt{921}}{1653}=0.874957\ldots
+$$
+
+for the real parts of the nontrivial zeros of the zeta function. Treat
+this as a supplier premise only; its external proof and reported Lean
+formalization have not been independently built here. Even granting this
+stronger boundary, a direct absolute estimate does not close CR47.
+
+Indeed, the existing coefficient estimate (U2) gives, for
+$\rho=\beta+i\gamma$ with $\gamma\ge4$,
+
+$$
+|F_B(\rho)|
+\le \frac{2w(B)B^{\beta-1}}{\gamma^2}
+\le \frac{2w(B)B^{\beta_0-1}}{\gamma^2}.
+$$
+
+The classical zero count makes
+$\sum_{4\le\gamma\le T}m_\rho/\gamma^2=O(1)$ uniformly in $T$;
+the finitely many zeros below $4$ obey the same $B^{\beta_0-1}$ scale
+with a supplier-dependent constant. Since
+$s_B=\sqrt B\log B$ and
+$w(B)=(1+\log B)/(\log B)^2$,
+
+$$
+s_B\sum_{0<\gamma\le T}m_\rho|F_B(\rho)|
+\ll B^{\beta_0-1/2}.
+$$
+
+For the comparison term in $H_{B,a}$, the zero-count estimate
+$\sum_{0<\gamma\le T}m_\rho/\gamma=O((\log T)^2)$ gives
+
+$$
+\frac{a}{\sqrt B}
+\sum_{0<\gamma\le T}m_\rho\left|\frac{B^\rho}{\rho}\right|
+\ll aB^{\beta_0-1/2}(\log T)^2.
+$$
+
+Thus at the actual $T=\tau_B\asymp\sqrt B$,
+
+$$
+|H_{B,a}(\tau_B)|
+\ll (1+a(\log B)^2)B^{\beta_0-1/2}
+=O\!\left(B^{0.374957\ldots}(\log B)^2\right).
+$$
+
+This is an upper envelope, not a claim that the signed head has this
+size. It proves only that a zero-free half-plane, even with the reported
+improvement, cannot replace the missing signed cancellation. The required
+input remains a same-height upper bound retaining the actual phases,
+real parts and multiplicities; improving a fixed strip exponent above
+$1/2$ does not supply that bound.
