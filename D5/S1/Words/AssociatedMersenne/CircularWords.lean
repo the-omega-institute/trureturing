@@ -529,7 +529,7 @@ instance instFintypeDegreeRunWords (n ell k : Nat) : Fintype (DegreeRunWords n e
 instance instFintypeMarkedDegreeRunWords (n ell k : Nat) : Fintype (MarkedDegreeRunWords n ell k) := inferInstanceAs
   (Fintype ((w : DegreeRunWords n ell k) × {i : Fin n // IsMarkedStart w.val i}))
 
-private lemma card_marks {n : Nat} (w : Fin n → Bool) :
+lemma card_marks {n : Nat} (w : Fin n → Bool) :
     Fintype.card {i : Fin n // IsMarkedStart w i} = runCount w := by
   simp [runCount, Fintype.card_subtype]
 
