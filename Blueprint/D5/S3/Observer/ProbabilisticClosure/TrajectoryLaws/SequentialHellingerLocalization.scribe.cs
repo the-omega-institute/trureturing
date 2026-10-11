@@ -86,5 +86,34 @@ internal sealed class SequentialHellingerLocalizationDocument : IScribeDocumentD
                         + "The initial-letter factor is included explicitly after applying the "
                         + "conditional argument to successor coordinates. Squaring the positive "
                         + "root-product limit gives the stated likelihood limit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("trajectory-finite-energy-equivalent"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.trajectory_finite_energy_equivalent"),
+                H("Equivalence on the finite-energy event"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "For a finite discrete alphabet with at least two letters, let p and q be "
+                        + "strictly positive normalized rows at every finite history. Define C by "
+                        + "finiteness of the extended nonnegative sum of 1-rho(H(n,x)). The restrictions "
+                        + "of trajectoryLaw(p) and trajectoryLaw(q) to C are mutually absolutely "
+                        + "continuous. There is no common positive lower bound assumption.")),
+                    Paragraph(Text(
+                        "Write P and Q for the two laws. Under P+Q, the conditional expectations "
+                        + "of the global Q-density at finite prefixes equal L/(1+L). Cylinder masses "
+                        + "are obtained from the public frozen full-history trajectory theorem. "
+                        + "The prefix filtration generates the full path sigma-algebra, so the "
+                        + "conditional expectations converge to the global density. The positive "
+                        + "finite likelihood limit on C makes that density positive P-almost "
+                        + "everywhere on C, giving P restricted to C absolutely continuous with "
+                        + "respect to Q restricted to C. Swapping the two rows repeats the argument "
+                        + "under Q independently. No finite-prefix measurability is assumed of C.")),
+                    Paragraph(Text(
+                        "This result establishes the finite-energy branch. The singularity of "
+                        + "the restrictions to the complement and the divergence criterion for "
+                        + "the sum of negative log affinities are not asserted here."))),
                 DescribeRole.Theorem))));
 }

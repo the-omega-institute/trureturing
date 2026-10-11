@@ -14,6 +14,8 @@ import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HistoricalDepthBudgetJointExtremum
 import D5.S3.TotalVariation.Bhattacharyya
 import Mathlib.Probability.ProbabilityMassFunction.Integrals
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.RadonNikodym
+import Mathlib.Data.Fin.Tuple.Take
 import Mathlib.Tactic
 
 noncomputable section
@@ -513,5 +515,194 @@ theorem trajectory_finite_energy_positive_likelihood
   rw [← prod_pow]
   exact prod_congr rfl fun i _ =>
     (Real.sq_sqrt (div_pos (hq0 _ _) (hp0 _ _)).le).symm
+
+private lemma trajectory_prefix_mass {A : Type*} [Fintype A] [Nonempty A]
+    [MeasurableSpace A] [MeasurableSingletonClass A] (hd : 2 ≤ Fintype.card A)
+    (p : List A → A → ℝ) (hp : NormalizedRows p) (n : ℕ) (x : ℕ → A) :
+    ((trajectoryLaw p hp).map (frestrictLe n)) {frestrictLe n x} =
+      ENNReal.ofReal (∏ i ∈ range (n + 1), p (List.ofFn (fun j : Fin i => x j)) (x i)) := by
+  classical
+  have hcard : (0 : ℝ) < Fintype.card A := by exact_mod_cast Fintype.card_pos
+  have laws := (historical_depth_budget_joint_extremum (Classical.arbitrary A)
+    (1 / (Fintype.card A : ℝ)) (by positivity) hd le_rfl (fun _ => 0)
+    (fun _ => linearOrderOfSTO (@WellOrderingRel (List A)))).2.1 p hp
+  let w := List.ofFn (fun i : Fin (n + 1) => x i)
+  have hc : (fun y : ℕ → A => frestrictLe n y) ⁻¹' {frestrictLe n x} = wordCylinder w := by
+    ext y
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, wordCylinder, Set.mem_setOf_eq]
+    constructor
+    · intro hy i
+      have hval := congrFun hy ⟨i, mem_Iic.mpr (by have hi := i.2; simpa [w] using hi)⟩
+      change y i = x i at hval
+      simpa only [w, List.get_ofFn, Fin.val_cast] using hval
+    · intro hy
+      funext i
+      have hval := hy ⟨i, by simpa [w] using Nat.lt_succ_of_le (mem_Iic.mp i.2)⟩
+      change y i = x i
+      simpa only [w, List.get_ofFn, Fin.val_cast] using hval
+  rw [Measure.map_apply (measurable_frestrictLe n) (measurableSet_singleton _), hc, laws.2]
+  congr 1
+  calc
+    (∏ i : Fin w.length, p (w.take i) (w.get i)) =
+        ∏ i : Fin w.length, p (List.ofFn (fun j : Fin i => x j)) (x i) := by
+      apply prod_congr rfl
+      intro i _
+      have ht : w.take i = List.ofFn (fun j : Fin i => x j) :=
+        (Fin.ofFn_take_eq_take_ofFn (by simpa only [w, List.length_ofFn] using i.isLt.le)
+          (fun j : Fin (n + 1) => x j)).symm
+      rw [ht]
+      congr 1
+      simp only [w, List.get_ofFn, Fin.val_cast]
+    _ = _ := by rw [← Finset.prod_range]; simp only [w, List.length_ofFn]
+
+private lemma finite_observation_density {W B : Type*} [MeasurableSpace W]
+    [MeasurableSpace B] [MeasurableSingletonClass B]
+    (P Q : Measure W) [IsFiniteMeasure P] [IsFiniteMeasure Q]
+    (z : W → B) (hz : Measurable z)
+    (hpos : ∀ x, 0 < ((P.map z) {z x}).toReal) :
+    (P + Q)[fun x => (Q.rnDeriv (P + Q) x).toReal | MeasurableSpace.comap z inferInstance]
+      =ᵐ[P + Q] fun x => ((Q.map z) {z x}).toReal /
+        (((P.map z) {z x}).toReal + ((Q.map z) {z x}).toReal) := by
+  have hQ : Q ≪ P + Q := (Measure.le_add_left le_rfl).absolutelyContinuous
+  filter_upwards [toReal_rnDeriv_map hQ hz] with x hx
+  rw [← hx]
+  have h := Measure.setLIntegral_rnDeriv (hQ.map hz) {z x}
+  rw [lintegral_singleton] at h
+  have ht := congrArg ENNReal.toReal h
+  rw [ENNReal.toReal_mul] at ht
+  have hm : (((P + Q).map z) {z x}).toReal =
+      ((P.map z) {z x}).toReal + ((Q.map z) {z x}).toReal := by
+    rw [Measure.map_add _ _ hz, Measure.add_apply,
+      ENNReal.toReal_add (measure_ne_top _ _) (measure_ne_top _ _)]
+  rw [hm] at ht
+  apply (eq_div_iff (by linarith [hpos x, (ENNReal.toReal_nonneg (a := (Q.map z) {z x}))])).2
+  exact ht
+
+private lemma full_prefix_filtration {A : Type*} [MeasurableSpace A] :
+    (⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n) =
+      (inferInstance : MeasurableSpace (ℕ → A)) := by
+  apply le_antisymm (iSup_le (fun n => Filtration.piLE.le n))
+  have hi : @Measurable (ℕ → A) (ℕ → A)
+      (⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n) inferInstance id := by
+    letI : MeasurableSpace (ℕ → A) :=
+      ⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n
+    apply measurable_pi_lambda
+    intro n
+    have hc : Measurable[Filtration.piLE (X := fun _ : ℕ => A) n]
+        (fun x : ℕ → A => x n) := by
+      rw [Filtration.piLE_eq_comap_frestrictLe]
+      exact (measurable_pi_apply (X := fun _ : Iic n => A) ⟨n, mem_Iic.mpr le_rfl⟩).comp (Measurable.of_comap_le le_rfl)
+    exact hc.mono (le_iSup (fun n => (Filtration.piLE (X := fun _ : ℕ => A)) n) n) le_rfl
+  simpa only [MeasurableSpace.comap_id] using hi.comap_le
+
+private lemma restrict_ac_of_density_positive {W : Type*} [MeasurableSpace W]
+    (P Q : Measure W) [IsFiniteMeasure P] [IsFiniteMeasure Q] {C : Set W}
+    (hC : MeasurableSet C)
+    (hpos : ∀ᵐ x ∂P, x ∈ C → Q.rnDeriv (P + Q) x ≠ 0) :
+    P.restrict C ≪ Q.restrict C := by
+  have hP : P ≪ P + Q := (Measure.le_add_right le_rfl).absolutelyContinuous
+  have hQ : Q ≪ P + Q := (Measure.le_add_left le_rfl).absolutelyContinuous
+  apply Measure.ae_le_iff_absolutelyContinuous.mp
+  intro s hs
+  change (∀ᵐ x ∂Q.restrict C, x ∈ s) at hs
+  change ∀ᵐ x ∂P.restrict C, x ∈ s
+  rw [ae_restrict_iff' hC] at hs ⊢
+  have hs' : ∀ᵐ x ∂(P + Q).withDensity (Q.rnDeriv (P + Q)), x ∈ C → x ∈ s := by
+    rw [Measure.withDensity_rnDeriv_eq Q (P + Q) hQ]
+    exact hs
+  have hμ := (ae_withDensity_iff (Measure.measurable_rnDeriv Q (P + Q))).mp hs'
+  filter_upwards [hP.ae_le hμ, hpos] with x hx hp hc
+  exact hx (hp hc) hc
+
+private lemma trajectory_restrict_ac_of_positive_limit
+    {A : Type*} [Fintype A] [Nonempty A]
+    [MeasurableSpace A] [MeasurableSingletonClass A] (hd : 2 ≤ Fintype.card A)
+    (p q : List A → A → ℝ) (hp : NormalizedRows p) (hq : NormalizedRows q)
+    (hp0 : ∀ h a, 0 < p h a) {C : Set (ℕ → A)} (hC : MeasurableSet C)
+    (hlim : ∀ᵐ x ∂trajectoryLaw p hp, x ∈ C → ∃ l : ℝ, 0 < l ∧
+      Tendsto (fun n => ∏ i ∈ range n,
+        q (List.ofFn (fun j : Fin i => x j)) (x i) /
+        p (List.ofFn (fun j : Fin i => x j)) (x i)) atTop (𝓝 l)) :
+    (trajectoryLaw p hp).restrict C ≪ (trajectoryLaw q hq).restrict C := by
+  classical
+  let P := trajectoryLaw p hp
+  let Q := trajectoryLaw q hq
+  letI : IsProbabilityMeasure P := by dsimp [P, trajectoryLaw]; infer_instance
+  letI : IsProbabilityMeasure Q := by dsimp [Q, trajectoryLaw]; infer_instance
+  let L (n : ℕ) (x : ℕ → A) := ∏ i ∈ range n,
+    q (List.ofFn (fun j : Fin i => x j)) (x i) /
+    p (List.ofFn (fun j : Fin i => x j)) (x i)
+  let f (x : ℕ → A) := (Q.rnDeriv (P + Q) x).toReal
+  have hP : P ≪ P + Q := (Measure.le_add_right le_rfl).absolutelyContinuous
+  have hfinite n : (P + Q)[f | Filtration.piLE n] =ᵐ[P + Q]
+      fun x => L (n + 1) x / (1 + L (n + 1) x) := by
+    have hpref (x : ℕ → A) : 0 < ((P.map (frestrictLe n)) {frestrictLe n x}).toReal := by
+      rw [trajectory_prefix_mass hd p hp]
+      rw [ENNReal.toReal_ofReal (prod_nonneg (fun i _ => hp.1 _ _))]
+      exact prod_pos (fun i _ => hp0 _ _)
+    have hobs := finite_observation_density P Q (frestrictLe n)
+      (measurable_frestrictLe n) hpref
+    rw [Filtration.piLE_eq_comap_frestrictLe]
+    filter_upwards [hobs] with x hx
+    rw [hx, trajectory_prefix_mass hd p hp, trajectory_prefix_mass hd q hq,
+      ENNReal.toReal_ofReal (prod_nonneg (fun i _ => hp.1 _ _)),
+      ENNReal.toReal_ofReal (prod_nonneg (fun i _ => hq.1 _ _))]
+    dsimp [L]
+    rw [prod_div_distrib]
+    have hpp : (∏ i ∈ range (n + 1), p (List.ofFn (fun j : Fin i => x j)) (x i)) ≠ 0 :=
+      (prod_pos (fun i _ => hp0 _ _)).ne'
+    field_simp
+  have hsm : StronglyMeasurable[⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n] f := by
+    rw [full_prefix_filtration]
+    exact (Measure.measurable_rnDeriv Q (P + Q)).ennreal_toReal.stronglyMeasurable
+  have hconv := (Measure.integrable_toReal_rnDeriv (μ := Q) (ν := P + Q)).tendsto_ae_condExp hsm
+  apply restrict_ac_of_density_positive P Q hC
+  filter_upwards [hP.ae_le hconv, hP.ae_le (ae_all_iff.mpr hfinite), hlim] with x hx he hl hc
+  obtain ⟨l, hlpos, hlt⟩ := hl hc
+  have hshift : Tendsto (fun n => L (n + 1) x) atTop (𝓝 l) :=
+    (tendsto_add_atTop_iff_nat 1).mpr hlt
+  have ht : Tendsto (fun n => L (n + 1) x / (1 + L (n + 1) x)) atTop (𝓝 (l / (1 + l))) :=
+    hshift.div (tendsto_const_nhds.add hshift) (by linarith)
+  change Tendsto (fun n => ((P + Q)[f | Filtration.piLE n]) x) atTop (𝓝 (f x)) at hx
+  have heq : f x = l / (1 + l) := tendsto_nhds_unique (by simpa only [he] using hx) ht
+  intro hz
+  have hfzero : f x = 0 := by simp [f, hz]
+  have : 0 < f x := heq ▸ div_pos hlpos (by linarith)
+  linarith
+
+/-- On the finite Hellinger-energy event the two full-history trajectory laws are mutually
+absolutely continuous. Each direction uses its own almost-sure localization. -/
+theorem trajectory_finite_energy_equivalent
+    {A : Type*} [Fintype A] [Nonempty A]
+    [MeasurableSpace A] [MeasurableSingletonClass A] (hd : 2 ≤ Fintype.card A)
+    (p q : List A → A → ℝ) (hp : NormalizedRows p) (hq : NormalizedRows q)
+    (hp0 : ∀ h a, 0 < p h a) (hq0 : ∀ h a, 0 < q h a) :
+    let H := fun (n : ℕ) (x : ℕ → A) => List.ofFn (fun i : Fin n => x i)
+    let C := {x : ℕ → A | (∑' n, ENNReal.ofReal
+      (1 - bhattacharyya (p (H n x)) (q (H n x)))) < ∞}
+    (trajectoryLaw p hp).restrict C ≪ (trajectoryLaw q hq).restrict C ∧
+      (trajectoryLaw q hq).restrict C ≪ (trajectoryLaw p hp).restrict C := by
+  classical
+  intro H C
+  have hm n : Measurable (fun x : ℕ → A =>
+      1 - bhattacharyya (p (H n x)) (q (H n x))) :=
+    (measurable_of_countable (fun u : Fin n → A =>
+      1 - bhattacharyya (p (List.ofFn u)) (q (List.ofFn u)))).comp
+        (measurable_pi_lambda _ (fun i => measurable_pi_apply (i : ℕ)))
+  have hC : MeasurableSet C :=
+    measurableSet_lt (Measurable.ennreal_tsum (fun n => (hm n).ennreal_ofReal)) measurable_const
+  have hsum x (hx : x ∈ C) : Summable (fun n =>
+      1 - bhattacharyya (p (H n x)) (q (H n x))) := by
+    have h := ENNReal.summable_toReal hx.ne
+    simpa only [ENNReal.toReal_ofReal (sub_nonneg.mpr
+      (bhattacharyya_le_one _ _ ⟨hp.1 _, hp.2 _⟩ ⟨hq.1 _, hq.2 _⟩))] using h
+  constructor
+  · apply trajectory_restrict_ac_of_positive_limit hd p q hp hq hp0 hC
+    filter_upwards [trajectory_finite_energy_positive_likelihood p q hp hq hp0 hq0] with x hx hc
+    exact hx (hsum x hc)
+  · apply trajectory_restrict_ac_of_positive_limit hd q p hq hp hq0 hC
+    filter_upwards [trajectory_finite_energy_positive_likelihood q p hq hp hq0 hp0] with x hx hc
+    apply hx
+    simpa only [bhattacharyya, mul_comm] using hsum x hc
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SequentialHellingerLocalization
