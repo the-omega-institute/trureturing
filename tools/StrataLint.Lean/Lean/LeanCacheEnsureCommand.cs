@@ -325,6 +325,25 @@ internal static partial class LeanCacheEnsureCommand
                     }
                     else
                     {
+                        if (projectWarmth.IsWarm
+                            && LeanMissingPackagesProvisioner.PackagesAreAbsent(lake))
+                        {
+                            var location = GitWorktreeInventory.Locate(root, runner);
+                            if (location.IsLinked)
+                            {
+                                return ProvisionLinkedPackagesFromMain(
+                                    root,
+                                    pins,
+                                    runner,
+                                    cloner,
+                                    writerGuard,
+                                    stateProbe,
+                                    location,
+                                    projectWarmth,
+                                    stampMiss,
+                                    out cacheState);
+                            }
+                        }
                         archive = LeanArchiveAttempt.Skipped(
                             $"project olean state is {ReceiptWarmth(projectWarmth.State)}");
                     }
@@ -790,6 +809,7 @@ internal static partial class LeanCacheEnsureCommand
         if (selection.Donor is null)
             return LinkedFailure(root, pins, location, selection.Notice, stampMiss);
 
+        var clonefile = ClonefileReceipt.NotRun;
         try
         {
             var attempt = LeanMissingBuildProvisioner.TryProvision(
@@ -800,6 +820,7 @@ internal static partial class LeanCacheEnsureCommand
                 writerGuard,
                 cloner,
                 stateProbe);
+            clonefile = attempt.Clonefile;
             if (attempt.Result is null)
             {
                 return LinkedLaneReseedFailure(
@@ -809,6 +830,22 @@ internal static partial class LeanCacheEnsureCommand
                     stampMiss,
                     attempt.Clonefile,
                     attempt.Warning ?? "main-checkout build overlay failed");
+            }
+
+            if (LeanMissingPackagesProvisioner.PackagesAreAbsent(Path.Combine(root, ".lake")))
+            {
+                return ProvisionLinkedPackagesFromMain(
+                    root,
+                    pins,
+                    runner,
+                    cloner,
+                    writerGuard,
+                    stateProbe,
+                    location,
+                    new OleanWarmthInspection(OleanWarmth.Warm, null),
+                    stampMiss,
+                    out cacheState,
+                    attempt.Clonefile);
             }
 
             return SuccessWithState(
@@ -839,7 +876,7 @@ internal static partial class LeanCacheEnsureCommand
                 stampMiss,
                 exception is LeanCacheProvisionException provisionException
                     ? provisionException.Clonefile
-                    : null,
+                    : clonefile,
                 exception.Message);
         }
     }

@@ -28,7 +28,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MissingColdClearCacheClonesOnlyWarmDonorBuildWithoutOverwritingLake()
+    public void MissingColdClearCacheClonesWarmDonorBuildAndPackagesWithoutOverwritingLake()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -56,7 +56,8 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.False(concurrentWriterAcquired);
-        var clone = Assert.Single(cloner.Invocations);
+        Assert.Equal(2, cloner.Invocations.Count);
+        var clone = cloner.Invocations[0];
         Assert.Equal(fixture.DonorBuild, clone.Source);
         Assert.StartsWith(
             fixture.BuildStagePrefix,
@@ -64,11 +65,13 @@ public sealed partial class LeanCacheEnsureCommandTests
             StringComparison.Ordinal);
         Assert.Equal("preserve me\n", fixture.TargetOwnedText);
         Assert.True(fixture.HasClonedDonorOlean(donorOlean));
-        Assert.False(fixture.TargetPackagesExist);
+        Assert.True(fixture.TargetPackagesExist);
         Assert.True(fixture.StampMatches);
         using var receipt = ParseReceipt(result.Output);
         Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
         Assert.Equal("missing", receipt.RootElement.GetProperty("stamp_miss").GetString());
+        Assert.Equal(2, receipt.RootElement.GetProperty("clonefile_attempts").GetInt32());
+        Assert.Equal("warm", receipt.RootElement.GetProperty("mathlib_olean_state").GetString());
         Assert.Equal(
             LeanCacheGuard.PhysicalPath(repository.Path),
             receipt.RootElement.GetProperty("donor").GetString());
