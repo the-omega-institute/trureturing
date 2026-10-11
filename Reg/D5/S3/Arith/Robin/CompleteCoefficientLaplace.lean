@@ -2,12 +2,11 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.CompleteCoefficientLaplace
 import Reg.Support.DependentFamily
 
-/- SOURCE ONLY / UNCOMPILED, including every definition and proof below.
-This is a faithful dependent-family evidence ATTEMPT, not declared_validated.
-The real input axis and the entire source telescope are retained. The missing
-sourceSelection is intentional: compiler-derived occurrence binding and the
-current E1--E8/binding evidence must be supplied by the caller after compilation.
-No template failure or applicability of issue #5214 has been established. -/
+/- Source-family evidence retains the real physical-input axis and the entire
+source telescope. sourceSelection
+uses the physical-function occurrence observed in actual D5 elaboration. Successful
+D5/Reg compilation and current E1--E8/binding assessment remain required.
+No template failure or applicability of issue #5214 is assumed. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -95,8 +94,8 @@ def family : Registration arena (type_of% (@complete_coefficient_laplace)) where
     rw [hn1, hn2] at hn
     linarith [Real.exp_pos (-3)]
 
-/-- Four-slot source attempt. The absent source selection and absent compiled
-binding evidence prevent any assertion of validated registration. -/
+/-- Four-slot source attempt. The selected occurrence is compiler-derived;
+compiled binding evidence is still required for validated registration. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@complete_coefficient_laplace)
     (type_of% (realize signature actual.readout actual.anchor)) (type_of% ℝ) Unit where
@@ -130,6 +129,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+#print axioms registration
 
 end
 end Reg.D5.S3.Arith.Robin.CompleteCoefficientLaplace

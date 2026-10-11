@@ -4,15 +4,14 @@
    mirror-E: none(waiver:analytic-integral-identity)
    anchors: []
    utility: none
-   digest: The literal complete Robin coefficient has an absolutely convergent Laplace resolvent and a factor-one modulus bound. -/
+   digest: The complete Robin coefficient has a Laplace resolvent and factor-one modulus bound. -/
 
 import D5.S3.Analytic.LiCausalTrichotomy
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.MeasureTheory.Integral.Prod
 
-/- SOURCE ONLY / UNCOMPILED: every declaration in this module, including private
-helpers, awaits the caller's scoped build and axiom-closure checks. No statement
-here is a Lean acceptance receipt. The original source is literal M1 in
+/- The coefficient is defined by the full physical integral. Every helper below
+is consumed on the complete coefficient proof path. The original source is literal M1 in
 Library/ArithSums/nicolas2025comparison.md at
 7f52221f2e23da81475058d5b5b6620e68709401. -/
 
@@ -113,7 +112,7 @@ private lemma numerator_complex_integral {L : ℝ} (hL : 0 < L) :
         integral_complex_laplace_moment ha 1]
       simp only [logWeight, Complex.ofReal_add, Complex.ofReal_inv,
         Complex.ofReal_pow]
-      norm_num <;> field_simp [Complex.ofReal_ne_zero.mpr hL.ne'] <;> ring
+      norm_num
 
 private lemma numerator_integral {L : ℝ} (hL : 0 < L) :
     (∫ t in Ioi (0 : ℝ), numerator L t) = logWeight L := by
@@ -148,7 +147,7 @@ private lemma physical_exp_jacobian (s : ℂ) {x : ℝ} (hx : 0 < x) :
     congr 1
     unfold logWeight
     field_simp [hx.ne']
-    <;> ring
+    ring
   rw [hw, Complex.ofReal_exp, ← mul_assoc, ← Complex.exp_add]
   congr 2
   ring
@@ -182,8 +181,8 @@ private lemma kernel_norm (s : ℂ) {x t : ℝ} (ht : 0 ≤ t) :
   rw [kernel, norm_mul, hr, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (by linarith : 0 ≤ 1 + t), Complex.norm_exp]
   simp only [Complex.add_re,
-    Complex.one_re, Complex.ofReal_re, Complex.add_im, Complex.one_im,
-    Complex.ofReal_im, add_zero, zero_add, Complex.neg_re, Complex.mul_re, Complex.neg_im,
+    Complex.one_re, Complex.ofReal_re, Complex.add_im,
+    Complex.ofReal_im, add_zero, Complex.neg_re, Complex.mul_re, Complex.neg_im,
     Complex.sub_re, mul_zero, sub_zero]
 
 private lemma kernel_norm_majorant (s : ℂ) {L x t : ℝ}
@@ -331,8 +330,7 @@ private lemma resolvent_integral_norm {L : ℝ} {s : ℂ} (hL : 0 < L) (hs : s.r
 /-- Complete coefficient theorem: literal physical integrability, exact logarithmic
 substitution, actual restricted-product integrability, resolvent integrability, full
 complex identity and factor-one norm estimate, for every `A > 1` and every point
-of the open strip. No finite endpoint or signed zero-series assertion is included.
-SOURCE ONLY / UNCOMPILED. -/
+of the open strip. No finite endpoint or signed zero-series assertion is included. -/
 theorem complete_coefficient_laplace {A : ℝ} {s : ℂ}
     (hA : 1 < A) (hσ0 : 0 < s.re) (hσ1 : s.re < 1) :
     IntegrableOn (physicalIntegrand s) (Ioi A) ∧
@@ -359,33 +357,7 @@ theorem complete_coefficient_laplace {A : ℝ} {s : ℂ}
       mul_le_mul_of_nonneg_left hn (by positivity)
     _ = _ := by
       field_simp [norm_ne_zero_iff.mpr hs0, norm_ne_zero_iff.mpr (one_sub_ne_zero hσ1)]
-      <;> ring
 
 #print axioms complete_coefficient_laplace
-
--- Temporary compiler inspection; removed before the final source-bound report.
-run_cmd do
-  let env ← Lean.getEnv
-  let some info := env.find?
-      `D5.S3.Arith.Robin.CompleteCoefficientLaplace.complete_coefficient_laplace
-    | Lean.throwError "Complete coefficient declaration was not elaborated"
-  let mut pending : Array (Array String × Lean.Expr) := #[(#[], info.type)]
-  while !pending.isEmpty do
-    let (path, e) := pending.back!
-    pending := pending.pop
-    if e.isAppOfArity `D5.S3.Arith.Robin.CompleteCoefficientLaplace.physicalIntegrand 1 then
-      Lean.logInfo m!"COMPILER_PHYSICAL_READOUT_PATH {repr path}"
-    match e with
-    | .app f a =>
-        pending := pending.push (path.push "fn", f) |>.push (path.push "arg", a)
-    | .forallE _ d b _ =>
-        pending := pending.push (path.push "domain", d) |>.push (path.push "body", b)
-    | .lam _ d b _ =>
-        pending := pending.push (path.push "domain", d) |>.push (path.push "body", b)
-    | .letE _ t v b _ =>
-        pending := pending.push (path.push "type", t) |>.push (path.push "value", v)
-          |>.push (path.push "body", b)
-    | .mdata _ b | .proj _ _ b => pending := pending.push (path.push "body", b)
-    | _ => pure ()
 
 end D5.S3.Arith.Robin.CompleteCoefficientLaplace

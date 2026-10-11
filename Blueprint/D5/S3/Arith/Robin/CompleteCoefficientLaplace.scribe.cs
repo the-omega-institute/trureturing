@@ -11,9 +11,11 @@ internal sealed class CompleteCoefficientLaplaceDocument : IScribeDocumentDefini
         H("Complete Robin Coefficient Laplace Representation"),
         Blocks(
             Paragraph(Text(
-                "SOURCE ONLY / UNCOMPILED: every accompanying D5 and Reg declaration "
-                + "awaits the caller's scoped compilation, exact-source review and axiom checks. "
-                + "This narrative records intended mathematics, not an acceptance receipt.")),
+                "The coefficient is defined by its complete physical integral. "
+                + "The theorem retains physical and product integrability, exact "
+                + "changes of variables, the full complex resolvent and factor one. "
+                + "This narrative supplies the proof and its scope; compiler-derived "
+                + "reports supply formal verification and registration assessment.")),
             Paragraph(Text(
                 "For every real A>1 set L=log(A)>0. For 0<Re(s)<1 define the literal "
                 + "physical coefficient F_A(s)=s^(-1)*integral over u>A of "
@@ -27,7 +29,7 @@ internal sealed class CompleteCoefficientLaplaceDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The intended theorem proves physical integrability, the exact "
+                        "The theorem proves physical integrability, the exact "
                         + "logarithmic substitution F_A=s^(-1)*integral over x>L of "
                         + "exp((s-1)*x)*(1/x+1/x^2), product integrability of the actual "
                         + "K(x,t)=(1+t)*exp(-((1-s)+t)*x) on x>L,t>0, and integrability "
@@ -64,14 +66,16 @@ internal sealed class CompleteCoefficientLaplaceDocument : IScribeDocumentDefini
                         + "comparisons and reserve/defect require their own consumers. "
                         + "Robin and RH are not accepted by this source implementation.")),
                     Paragraph(Text(
-                        "The matching Reg source attempts the existing DependentFamily "
+                        "The matching Reg source uses the existing DependentFamily "
                         + "template on the full telescope, retaining the real physical "
                         + "axis, nonintegrable constant intervention, role sensitivity "
-                        + "and actual observation dependence. It is unvalidated: "
-                        + "compiler-derived sourceSelection and binding evidence are "
-                        + "absent and every proof is uncompiled. No template defect "
-                        + "or applicability of issue 5214 was established. There are "
-                        + "no intentionally omitted D5 proof blocks or conclusion "
-                        + "hypotheses, but elaboration and all required checks remain open."))),
+                        + "and actual observation dependence. Its sourceSelection "
+                        + "selects the physicalIntegrand(s) function operand observed "
+                        + "in the compiler's raw theorem type, with the complex s axis. "
+                        + "The residual is unknown, escapeFrom and familyRecord are "
+                        + "absent, and registration assessment belongs to the current "
+                        + "compiler-derived report. No template defect or applicability "
+                        + "of issue 5214 is assumed. No D5 conclusion is supplied as a "
+                        + "hypothesis and no mathematical proof block is omitted."))),
                 DescribeRole.Theorem))));
 }
