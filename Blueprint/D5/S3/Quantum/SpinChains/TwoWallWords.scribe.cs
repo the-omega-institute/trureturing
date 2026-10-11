@@ -43,9 +43,9 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             Node("swapWord", "Swapping a cyclic bond", AB(All("p", Sites, Eq(Call("swapWord", F.Id("p")),
                 Call("permute", Call("swap", F.Id("p"), PlusOf(F.Id("p"), D(1))))))), true,
                 "The same permutation exchanges both cyclically adjacent sites and fixes all other sites."),
-            Node("inputPair", "Oriented allowed inputs", Eq(Call("inputPair"), Call("vector3",
-                Pair(Call("wall"), Call("two")), Pair(Call("one"), Call("wall")),
-                Pair(Call("two"), Call("one")))), true,
+            Node("inputPair", "Oriented allowed inputs", And(Eq(Call("inputPair", D(0)), Pair(Call("wall"), Call("two"))),
+                And(Eq(Call("inputPair", D(1)), Pair(Call("one"), Call("wall"))),
+                    Eq(Call("inputPair", D(2)), Pair(Call("two"), Call("one"))))), true,
                 "In arXiv:2112.04506v1, Section 2.1, Eq. (2.3), the three transitions are 32 to 23, 13 to 31, and 21 to 12. Every other input pair is annihilated.", true),
             Node("Allowed", "The input-pair predicate", AllowedFormula(), true,
                 "The test reads the ordered pair at p and p+1 before exchanging the sites.", true),
@@ -57,7 +57,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
                 Assumption(Call("Zero", K), Eq(Vectors, Call("Finsupp", Words, K))))), true,
                 "Finsupp consists of functions with finite support. Since the word type is finite, every coefficient function has finite support."),
             Node("basis", "The canonical word basis", FieldAB(Eq(Call("basis", K, A, B),
-                Call("FinsuppBasisSingleOne", K, Words))), true,
+                Call("Finsupp.basisSingleOne", K, Words))), true,
                 "The standard finitely supported function basis is indexed by all counted words. Its coordinates give unique expansions into delta vectors."),
             Node("delta", "Delta vectors", FieldAB(All("w", Words,
                 Eq(Delta(F.Id("w")), At(Call("basis", K, A, B), F.Id("w"))))), true,
@@ -92,8 +92,12 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
-    private static Formula Call(string name, params Formula[] args) => args.Length == 0
-        ? Seq(Operatorname, Grp(F.Id(name))) : new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var symbol = Seq(Operatorname, Grp(name.Split('.').SelectMany((part, i) =>
+            i == 0 ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) }).ToArray()));
+        return args.Length == 0 ? symbol : new Formula.Apply(symbol, [.. args]);
+    }
     private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula All(string name, Formula type, Formula body) =>
@@ -144,8 +148,8 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     {
         var i = F.Id("i"); var w = F.Id("w"); var p = F.Id("p");
         return AB(All("i", Call("Fin", D(3)), All("w", Words, All("p", Sites,
-            Iff(Call("Allowed", i, w, p), And(Eq(At(Coe(w), p), Call("first", Call("inputPair", i))),
-                Eq(At(Coe(w), PlusOf(p, D(1))), Call("second", Call("inputPair", i)))))))));
+            Iff(Call("Allowed", i, w, p), And(Eq(At(Coe(w), p), Call("Prod.fst", Call("inputPair", i))),
+                Eq(At(Coe(w), PlusOf(p, D(1))), Call("Prod.snd", Call("inputPair", i)))))))));
     }
     private static Formula BondFormula()
     {
@@ -211,7 +215,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             MarkedNode("MarkedWord", "Distinguishing one wall", MarkedMarkedFormula(), true,
                 "The subtype retains the counted literal word and a position occupied by a wall."),
             MarkedNode("otherWall", "The unique other wall", MarkedOtherFormula(), true,
-                "There are exactly two wall positions. Given the distinguished position, exactly one other wall remains. Choose denotes classical choice from the displayed unique specification."),
+                "There are exactly two wall positions. Given the distinguished position, exactly one other wall remains. Classical.choose denotes classical choice from the displayed unique specification."),
             MarkedNode("J", "Exchanging the distinguished wall", MarkedAB(MarkedAll("x", MarkedMarked,
                 MarkedEq(MarkedCall("J", MarkedX), MarkedPair(MarkedWord(MarkedX), MarkedCall("otherWall", MarkedX))))), true,
                 "The underlying literal word is retained and its other wall becomes the distinguished wall."),
@@ -267,8 +271,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
-    private static Formula MarkedCall(string name, params Formula[] args) => args.Length == 0
-        ? Seq(Operatorname, Grp(F.Id(name))) : new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+    private static Formula MarkedCall(string name, params Formula[] args) => Call(name, args);
     private static Formula MarkedAt(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula MarkedParenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula MarkedAll(string name, Formula type, Formula body) => new Formula.Bind(
@@ -287,8 +290,10 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     private static Formula MarkedPair(Formula x, Formula y) => MarkedTuple(x, y);
     private static Formula MarkedTuple(params Formula[] items) => MarkedParenthesized(Seq(
         items.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x }).ToArray()));
-    private static Formula MarkedCast(Formula x) => MarkedCall("natCast", MarkedParenthesized(x));
+    private static Formula MarkedCast(Formula x) => MarkedCall("cast", MarkedParenthesized(x), MarkedSites);
     private static Formula MarkedFin(Formula x) => MarkedCall("Fin", x);
+    private static Formula MarkedIndex(Formula value, Formula length) =>
+        MarkedParenthesized(Seq(MarkedCall("Fin.mk", value), Sp, Colon, Sp, MarkedFin(length)));
     private static Formula MarkedBin(Formula x) => new Formula.TypeArrow(MarkedFin(x), MarkedBool);
     private static Formula MarkedAssumption(Formula x, Formula body) => Seq(OpenBracket, x, CloseBracket, Sp, body);
     private static Formula MarkedAB(Formula body) => MarkedAll("a", MarkedNats, MarkedAll("b", MarkedNats, body));
@@ -297,8 +302,8 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
         MarkedParenthesized(Seq(MarkedParenthesized(Seq(F.Id(name), Sp, Colon, Sp, type)), Sp, Mapsto, Sp, body));
     private static Formula MarkedSum(string name, Formula type, Formula body) =>
         Seq(new Formula.Subscript(F.Sum, Seq(F.Id(name), InMacro, type)), Sp, MarkedParenthesized(body));
-    private static Formula MarkedWord(Formula x) => MarkedCall("word", x);
-    private static Formula MarkedMark(Formula x) => MarkedCall("mark", x);
+    private static Formula MarkedWord(Formula x) => MarkedCall("Prod.fst", MarkedCall("val", x));
+    private static Formula MarkedMark(Formula x) => MarkedCall("Prod.snd", MarkedCall("val", x));
     private static Formula MarkedLetterAt(Formula w, Formula p) => MarkedAt(MarkedCall("coe", w), p);
     private static Formula MarkedEnc(Formula c) => MarkedCall("encode", c);
     private static Formula MarkedSwap(Formula c) => MarkedCall("coordinateSwap", c);
@@ -313,7 +318,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     private static Formula MarkedBoth(params Formula[] clauses) => clauses.Aggregate((x, y) => MarkedAnd(x, y));
 
     private static Formula MarkedMarkedFormula() => MarkedAB(MarkedEq(MarkedMarked, MarkedCall("Subtype",
-        MarkedLambda("x", MarkedCall("Prod", MarkedWords, MarkedSites), MarkedEq(MarkedLetterAt(MarkedCall("first", MarkedX), MarkedCall("second", MarkedX)), MarkedWall)))));
+        MarkedLambda("x", MarkedCall("Prod", MarkedWords, MarkedSites), MarkedEq(MarkedLetterAt(MarkedCall("Prod.fst", MarkedX), MarkedCall("Prod.snd", MarkedX)), MarkedWall)))));
 
     private static Formula MarkedOtherFormula()
     {
@@ -321,7 +326,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
         var spec = MarkedLambda("q", MarkedSites, MarkedAnd(MarkedNe(q, MarkedMark(MarkedX)),
             MarkedAnd(MarkedEq(MarkedLetterAt(MarkedWord(MarkedX), q), MarkedWall), MarkedAll("r", MarkedSites,
                 MarkedImp(MarkedEq(MarkedLetterAt(MarkedWord(MarkedX), r), MarkedWall), MarkedOr(MarkedEq(r, MarkedMark(MarkedX)), MarkedEq(r, q)))))));
-        return MarkedAB(MarkedAll("x", MarkedMarked, MarkedEq(MarkedCall("otherWall", MarkedX), MarkedCall("Choose", spec))));
+        return MarkedAB(MarkedAll("x", MarkedMarked, MarkedEq(MarkedCall("otherWall", MarkedX), MarkedCall("Classical.choose", spec))));
     }
     private static Formula MarkedMarkedRotateFormula() => MarkedAB(MarkedAll("t", MarkedSites, MarkedAll("x", MarkedMarked,
         MarkedAnd(MarkedEq(MarkedAt(MarkedCall("markedRotate", MarkedT), MarkedX), MarkedPair(MarkedAt(MarkedCall("rotate", MarkedT), MarkedWord(MarkedX)), MarkedAdd(MarkedMark(MarkedX), MarkedT))),
@@ -340,7 +345,7 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
         var free = MarkedAll("x", MarkedMarked, MarkedNe(MarkedCall("J", MarkedX), MarkedX));
         var equivariant = MarkedAll("t", MarkedSites, MarkedAll("x", MarkedMarked,
             MarkedEq(MarkedAt(MarkedCall("markedRotate", MarkedT), MarkedCall("J", MarkedX)), MarkedCall("J", MarkedAt(MarkedCall("markedRotate", MarkedT), MarkedX)))));
-        var qs = MarkedEq(MarkedComp(MarkedOp("Q"), MarkedOp("S")), MarkedSmul(MarkedCall("scalar", MarkedK, D(2)), MarkedIdentity));
+        var qs = MarkedEq(MarkedComp(MarkedOp("Q"), MarkedOp("S")), MarkedSmul(MarkedCall("cast", D(2), MarkedK), MarkedIdentity));
         var sq = MarkedEq(MarkedComp(MarkedOp("S"), MarkedOp("Q")), MarkedAdd(MarkedIdentity, MarkedOp("Jstar")));
         var rs = MarkedAll("t", MarkedSites, MarkedEq(MarkedComp(MarkedCall("markedTranslation", MarkedK, MarkedT), MarkedOp("S")),
             MarkedComp(MarkedOp("S"), MarkedCall("translation", MarkedK, MarkedT))));
@@ -353,9 +358,9 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
     private static Formula MarkedCoordinatesFormula()
     {
         var m = F.Id("m"); var n = F.Id("n");
-        var fields = MarkedCall("Sigma", MarkedSites, MarkedLambda("p", MarkedSites,
+        var fields = MarkedCall("Prod", MarkedSites,
             MarkedCall("Sigma", MarkedNats, MarkedLambda("m", MarkedNats,
-                MarkedCall("Sigma", MarkedNats, MarkedLambda("n", MarkedNats, MarkedCall("Prod", MarkedBin(m), MarkedBin(n))))))));
+                MarkedCall("Sigma", MarkedNats, MarkedLambda("n", MarkedNats, MarkedCall("Prod", MarkedBin(m), MarkedBin(n)))))));
         return MarkedAB(MarkedEq(MarkedCoords, MarkedCall("Subtype", MarkedLambda("c", fields,
             MarkedAnd(MarkedEq(MarkedAdd(MarkedCM, MarkedCN), MarkedAdd(MarkedA, MarkedB)), MarkedEq(MarkedAdd(MarkedCall("ones", MarkedCU), MarkedCall("ones", MarkedCV)), MarkedB))))));
     }
@@ -365,8 +370,8 @@ internal sealed class TwoWallWordsDocument : IScribeDocumentDefinition
         var dDef = MarkedCall("val", MarkedSub(q, MarkedCP));
         var body = MarkedCall("ite", MarkedOr(MarkedEq(d, D(0)), MarkedEq(d, MarkedAdd(MarkedCM, D(1)))), MarkedWall,
             MarkedCall("ite", new Formula.Relation(d, FormulaRelationOperator.LessThanOrEqual, MarkedCM),
-                MarkedBinaryLetter(MarkedAt(MarkedCU, MarkedCall("finIndex", MarkedSub(d, D(1))))),
-                MarkedBinaryLetter(MarkedAt(MarkedCV, MarkedCall("finIndex", MarkedSub(MarkedSub(d, MarkedCM), D(2)))))));
+                MarkedBinaryLetter(MarkedAt(MarkedCU, MarkedIndex(MarkedSub(d, D(1)), MarkedCM))),
+                MarkedBinaryLetter(MarkedAt(MarkedCV, MarkedIndex(MarkedSub(MarkedSub(d, MarkedCM), D(2)), MarkedCN)))));
         return MarkedAB(MarkedAll("c", MarkedCoords, MarkedAnd(MarkedEq(MarkedMark(MarkedEnc(MarkedC)), MarkedCP),
             MarkedAll("q", MarkedSites, MarkedAll("d", MarkedNats, MarkedImp(MarkedEq(d, dDef), MarkedEq(MarkedEncAt(q), body)))))));
     }

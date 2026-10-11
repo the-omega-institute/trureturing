@@ -24,7 +24,7 @@ internal sealed class TwoWallSl2Document : IScribeDocumentDefinition
     private static Formula JVal => Call("val", J);
     private static Formula Next => Add(JVal, D(1));
     private static Formula Enc(Formula c) => Call("encode", c);
-    private static Formula Word(Formula x) => Call("word", x);
+    private static Formula Word(Formula x) => Call("Prod.fst", Call("val", x));
     private static Formula LitDelta(Formula c) => Call("delta", K, Word(Enc(c)));
     private static Formula MarkDelta(Formula c) => Call("markedDelta", K, Enc(c));
     private static Formula Op(string name) => Call(name, K, A, B);
@@ -65,9 +65,12 @@ internal sealed class TwoWallSl2Document : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
 
-    private static Formula Call(string name, params Formula[] args) => args.Length == 0
-        ? Seq(Operatorname, Grp(F.Id(name)))
-        : new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var symbol = Seq(Operatorname, Grp(name.Split('.').SelectMany((part, i) =>
+            i == 0 ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) }).ToArray()));
+        return args.Length == 0 ? symbol : new Formula.Apply(symbol, [.. args]);
+    }
     private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(
@@ -92,6 +95,8 @@ internal sealed class TwoWallSl2Document : IScribeDocumentDefinition
     private static Formula Sum(string name, Formula type, Formula body) =>
         Seq(new Formula.Subscript(F.Sum, Seq(F.Id(name), InMacro, type)), Sp, Parenthesized(body));
     private static Formula Fin(Formula n) => Call("Fin", n);
+    private static Formula Index(Formula value, Formula length) =>
+        Parenthesized(Seq(Call("Fin.mk", value), Sp, Colon, Sp, Fin(length)));
     private static Formula Cast(Formula x, Formula type) => Call("cast", x, type);
     private static Formula Assumption(Formula x, Formula body) =>
         Seq(OpenBracket, x, CloseBracket, Sp, body);
@@ -103,7 +108,7 @@ internal sealed class TwoWallSl2Document : IScribeDocumentDefinition
     private static Formula Tuple(params Formula[] items) => Parenthesized(Seq(
         items.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x }).ToArray()));
     private static Formula If(Formula condition, Formula yes, Formula no) =>
-        Call("ifThenElse", Parenthesized(condition), yes, no);
+        Call("ite", Parenthesized(condition), yes, no);
     private static Formula Move(bool second, Formula c) => Call(second ? "rightMove" : "leftMove", c, J);
 
     private static Formula MoveDefinition(bool second)
@@ -111,8 +116,8 @@ internal sealed class TwoWallSl2Document : IScribeDocumentDefinition
         var length = second ? CN : CM;
         var bin = second ? CV : CU;
         var i = F.Id("i");
-        var swapped = Lambda("i", Fin(length), At(bin, At(Call("EquivSwap",
-            Call("finMk", JVal, length), Call("finMk", Next, length)), i)));
+        var swapped = Lambda("i", Fin(length), At(bin, At(Call("Equiv.swap",
+            Index(JVal, length), Index(Next, length)), i)));
         return AB(All("c", Coords, All("j", Fin(Sub(length, D(1))),
             Eq(Move(second, C), Tuple(CP, CM, CN, second ? CU : swapped, second ? swapped : CV)))));
     }
@@ -121,8 +126,8 @@ internal sealed class TwoWallSl2Document : IScribeDocumentDefinition
     {
         var bin = second ? CV : CU;
         var length = second ? CN : CM;
-        return And(Eq(At(bin, Call("finMk", JVal, length)), Call(raising ? "false" : "true")),
-            Eq(At(bin, Call("finMk", Next, length)), Call(raising ? "true" : "false")));
+        return And(Eq(At(bin, Index(JVal, length)), Call(raising ? "false" : "true")),
+            Eq(At(bin, Index(Next, length)), Call(raising ? "true" : "false")));
     }
 
     private static Formula Moves(bool second, bool raising, bool marked)

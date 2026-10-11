@@ -23,7 +23,7 @@ internal sealed class TwoWallWeightsDocument : IScribeDocumentDefinition
     private static Formula FinThree => Call("Fin", D(3));
     private static Formula Couplings => new Formula.TypeArrow(FinThree, K);
     private static Formula Weight(Formula w) => Call("wordWeight", w);
-    private static Formula Encoded(Formula c) => Call("word", Call("encode", c));
+    private static Formula Encoded(Formula c) => Call("Prod.fst", Call("val", Call("encode", c)));
     private static Formula Delta(Formula w) => Call("delta", K, w);
     private static Formula Op(string name) => Call(name, K, A, B);
     private static Formula BondSum => Call("F", K, A, B, I);
@@ -41,7 +41,7 @@ internal sealed class TwoWallWeightsDocument : IScribeDocumentDefinition
             Node("weight_structure", "Integral weights and their bounds", StructureFormula(), false,
                 "The coordinate delta formula identifies the chosen integer weight with the eigenvalue of h, independently of the chosen wall. For an arc of length m with r twos, its inversion count lies between zero and r(m−r); hence its weight lies between −r(m−r) and r(m−r). Adding the two arc bounds and the nonnegative cross terms gives the interval [−ab,ab]. The finite image of wordWeight on all literal words supplies an integral weight set whose eigenspaces span the whole space."),
             Node("weight_control", "Exact bond drops, filtration descent and nilpotence", ControlFormula(), false,
-                "Write the contribution of a binary arc B as chi(B)=2 level(B)−ones(B)(length(B)−ones(B)). Prepending a two adds the number of ones in B, and appending a two subtracts it. Prepending a one subtracts the number of twos, and appending a one adds it. For 32 to 23, mark the wall in the source and move the initial two from the first arc to the end of the second arc; the two changes add to −a. The reverse wall move with a one yields the 13 to 31 change −b. Inside either arc, 21 to 12 removes one inversion and gives −2; equivalently the same drop follows from the h,F3 commutator and the positive delta coefficient of an enabled bond. When a,b are at least two, every term in every bond sum drops weight by at least two. The delta basis description of weightLE extends this to all vectors and every linear combination T. After ab+1 steps the top possible weight ab is sent strictly below −ab, where the filtration is zero. The F3 conclusion holds for every a,b, including zero and one.")),
+                "A binary arc B of length m contributes 2 level(B) - ones(B)(m - ones(B)) to the integer weight. Prepending a two adds the number of ones in B, and appending a two subtracts it. Prepending a one subtracts the number of twos, and appending a one adds it. For 32 to 23, mark the wall in the source and move the initial two from the first arc to the end of the second arc; the two changes add to −a. The reverse wall move with a one yields the 13 to 31 change −b. Inside either arc, 21 to 12 removes one inversion and gives −2; equivalently the same drop follows from the h,F3 commutator and the positive delta coefficient of an enabled bond. When a,b are at least two, every term in every bond sum drops weight by at least two. The delta basis description of weightLE extends this to all vectors and every linear combination T. After ab+1 steps the top possible weight ab is sent strictly below −ab, where the filtration is zero. The F3 conclusion holds for every a,b, including zero and one.")),
         []));
 
     private static DocumentBlock.Describe Node(string name, string title, Formula formula,
@@ -54,7 +54,8 @@ internal sealed class TwoWallWeightsDocument : IScribeDocumentDefinition
     private static Formula Call(string name, params Formula[] args)
     {
         var symbol = name == "F3" ? Seq(Operatorname, Grp(F.Id("F"), D(3)))
-            : Seq(Operatorname, Grp(F.Id(name)));
+            : Seq(Operatorname, Grp(name.Split('.').SelectMany((part, i) =>
+                i == 0 ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) }).ToArray()));
         return args.Length == 0 ? symbol : new Formula.Apply(symbol, [.. args]);
     }
     private static Formula At(Formula f, Formula x) => new Formula.Apply(f, [x]);
@@ -101,8 +102,8 @@ internal sealed class TwoWallWeightsDocument : IScribeDocumentDefinition
         All("w", Words, Eq(At(Op("h"), Delta(W)),
             Mul(Call("cast", Weight(W), K), Delta(W)))),
         Call("IntegralWeights", Op("h")),
-        All("w", Words, And(Le(Seq(Minus, Parenthesized(Mul(A, B))), Weight(W)),
-            Le(Weight(W), Mul(A, B))))));
+        All("w", Words, And(Le(Seq(Minus, Parenthesized(Mul(Call("cast", A, Ints), Call("cast", B, Ints)))), Weight(W)),
+            Le(Weight(W), Mul(Call("cast", A, Ints), Call("cast", B, Ints)))))));
 
     private static Formula Drop(byte i, Formula amount) => All("w", Words, All("p", Sites,
         Implies(Call("Allowed", D(i), W, P),
@@ -112,7 +113,7 @@ internal sealed class TwoWallWeightsDocument : IScribeDocumentDefinition
         Le(Call("map", Filter(S), op), Filter(Sub(S, D(2))));
 
     private static Formula ControlFormula() => Environment(Conjunction(
-        Drop(0, A), Drop(1, B), Drop(2, D(2)),
+        Drop(0, Call("cast", A, Ints)), Drop(1, Call("cast", B, Ints)), Drop(2, D(2)),
         Implies(Le(D(2), A), Implies(Le(D(2), B), Conjunction(
             All("i", FinThree, All("s", Ints, Lowers(BondSum))),
             All("x", Couplings, All("s", Ints, Lowers(Coupled))),
