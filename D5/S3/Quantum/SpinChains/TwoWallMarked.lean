@@ -497,7 +497,134 @@ noncomputable def coordinateEquiv (a b : ℕ) : Coordinates a b ≃ MarkedWord a
   left_inv := decode_encode
   right_inv := encode_decode
 
+
+/-- Exchange the two arcs and move the mark to the second wall. -/
+def coordinateSwap {a b : ℕ} (c : Coordinates a b) : Coordinates a b :=
+  ⟨c.p + ((c.m + 1 : ℕ) : Pos a b), c.n, c.m, c.v, c.u,
+    (Nat.add_comm _ _).trans c.length, (Nat.add_comm _ _).trans c.filling⟩
+
+/-- Translation changes the starting position and retains both binary arcs. -/
+def coordinateRotate {a b : ℕ} (t : Pos a b) (c : Coordinates a b) : Coordinates a b :=
+  { c with p := c.p + t }
+
+private theorem raw_swap {a b : ℕ} (c : Coordinates a b) :
+    rawEncode (coordinateSwap c).p (coordinateSwap c).m (coordinateSwap c).n
+      (coordinateSwap c).length (coordinateSwap c).u (coordinateSwap c).v =
+      rawEncode c.p c.m c.n c.length c.u c.v := by
+  have hwrap : ((c.m + 1 : ℕ) : Pos a b) + ((c.n + 1 : ℕ) : Pos a b) = 0 := by
+    rw [← Nat.cast_add, show c.m + 1 + (c.n + 1) = a + b + 2 by have := c.length; omega]
+    exact ZMod.natCast_self _
+  funext r
+  obtain ⟨i, rfl⟩ := (siteEquiv (coordinateSwap c).p (coordinateSwap c).m
+    (coordinateSwap c).n (coordinateSwap c).length).surjective r
+  rw [siteEquiv_apply, raw_at]
+  change Fin ((c.n + 1) + (c.m + 1)) at i
+  change arcVector c.n c.m c.v c.u i =
+    rawEncode c.p c.m c.n c.length c.u c.v
+      (c.p + ((c.m + 1 : ℕ) : Pos a b) + (i.val : Pos a b))
+  cases i using Fin.addCases with
+  | left i =>
+    cases i using Fin.cases with
+    | zero =>
+      have ht := raw_at c.p c.m c.n c.length c.u c.v
+        ((0 : Fin (c.n + 1)).natAdd (c.m + 1))
+      simpa [arcVector, Fin.append_left, Fin.append_right] using ht.symm
+    | succ i =>
+      have ht := raw_at c.p c.m c.n c.length c.u c.v (i.succ.natAdd (c.m + 1))
+      simpa [arcVector, Fin.append_left, Fin.append_right, Nat.cast_add, add_assoc] using ht.symm
+  | right i =>
+    cases i using Fin.cases with
+    | zero =>
+      have ht := raw_at c.p c.m c.n c.length c.u c.v
+        ((0 : Fin (c.m + 1)).castAdd (c.n + 1))
+      simpa only [arcVector, Fin.append_left, Fin.append_right, Fin.cons_zero,
+        Fin.val_natAdd, Fin.val_zero, Nat.add_zero, add_assoc, hwrap, add_zero,
+        Fin.val_castAdd, Nat.cast_zero] using ht.symm
+    | succ i =>
+      have ht := raw_at c.p c.m c.n c.length c.u c.v (i.succ.castAdd (c.n + 1))
+      have hp : c.p + ((c.m + 1 : ℕ) : Pos a b) +
+          (((c.n + 1) + (i.val + 1) : ℕ) : Pos a b) =
+          c.p + ((i.val + 1 : ℕ) : Pos a b) := by
+        calc
+          _ = c.p + (((c.m + 1 : ℕ) : Pos a b) + ((c.n + 1 : ℕ) : Pos a b)) +
+              ((i.val + 1 : ℕ) : Pos a b) := by push_cast; abel
+          _ = _ := by rw [hwrap, add_zero]
+      simpa only [arcVector, Fin.append_right, Fin.cons_succ, Fin.val_natAdd,
+        Fin.val_succ, hp, Fin.append_left, Fin.val_castAdd] using ht.symm
+
+private theorem encode_swap {a b : ℕ} (c : Coordinates a b) :
+    encode (coordinateSwap c) = J (encode c) := by
+  apply Subtype.ext
+  refine Prod.ext ?_ ?_
+  · apply Subtype.ext
+    exact raw_swap c
+  · exact (encode_other c).symm
+
+private theorem encode_rotate {a b : ℕ} (t : Pos a b) (c : Coordinates a b) :
+    encode (coordinateRotate t c) = markedRotate t (encode c) := by
+  apply Subtype.ext
+  refine Prod.ext ?_ rfl
+  apply Subtype.ext
+  funext r
+  obtain ⟨i, rfl⟩ := (siteEquiv (c.p + t) c.m c.n c.length).surjective r
+  rw [siteEquiv_apply]
+  change rawEncode (c.p + t) c.m c.n c.length c.u c.v (c.p + t + (i.val : Pos a b)) =
+    rawEncode c.p c.m c.n c.length c.u c.v (c.p + t + (i.val : Pos a b) + -t)
+  rw [raw_at, show c.p + t + (i.val : Pos a b) + -t = c.p + (i.val : Pos a b) by abel,
+    raw_at]
+
+/-- Encoding, decoding, mark exchange and rotation agree on every arc, including empty arcs. -/
+theorem marked_coordinates (a b : ℕ) :
+    (∀ c : Coordinates a b, decode (encode c) = c) ∧
+    (∀ x : MarkedWord a b, encode (decode x) = x) ∧
+    (∀ c : Coordinates a b, c.m < a + b + 1 ∧ c.n = a + b - c.m) ∧
+    (∀ c : Coordinates a b,
+      (encode c).1.1.1 c.p = wall ∧
+      (encode c).1.1.1 (c.p + ((c.m + 1 : ℕ) : Pos a b)) = wall ∧
+      (∀ i : Fin c.m, (encode c).1.1.1 (c.p + ((i.val + 1 : ℕ) : Pos a b)) =
+        if c.u i then two else one) ∧
+      (∀ i : Fin c.n, (encode c).1.1.1 (c.p + ((c.m + 2 + i.val : ℕ) : Pos a b)) =
+        if c.v i then two else one)) ∧
+    (∀ c : Coordinates a b, encode (coordinateSwap c) = J (encode c)) ∧
+    Function.Involutive (@coordinateSwap a b) ∧
+    (∀ c : Coordinates a b, coordinateSwap c ≠ c) ∧
+    (∀ (t : Pos a b) (c : Coordinates a b),
+      encode (coordinateRotate t c) = markedRotate t (encode c)) ∧
+    (∀ (t : Pos a b) (c : Coordinates a b),
+      coordinateRotate t (coordinateSwap c) = coordinateSwap (coordinateRotate t c)) := by
+  refine ⟨decode_encode, encode_decode, ?_, ?_, encode_swap, ?_, ?_, encode_rotate, ?_⟩
+  · intro c
+    have := c.length
+    omega
+  · intro c
+    refine ⟨(encode c).2, ?_, ?_, ?_⟩
+    · exact (encode_other c) ▸ (other_spec (encode c)).2.1
+    · intro i
+      have ht := raw_at c.p c.m c.n c.length c.u c.v (i.succ.castAdd (c.n + 1))
+      simpa only [arcVector, Fin.append_left, Fin.cons_succ, Fin.val_castAdd,
+        Fin.val_succ, arcLetter, encode] using ht
+    · intro i
+      have ht := raw_at c.p c.m c.n c.length c.u c.v (i.succ.natAdd (c.m + 1))
+      have he : c.m + 1 + (i.val + 1) = c.m + 2 + i.val := by omega
+      simpa only [arcVector, Fin.append_right, Fin.cons_succ, Fin.val_natAdd,
+        Fin.val_succ, he, arcLetter, encode] using ht
+  · intro c
+    apply (coordinateEquiv a b).injective
+    change encode (coordinateSwap (coordinateSwap c)) = encode c
+    rw [encode_swap, encode_swap, (marked_descent ℚ a b).1]
+  · intro c h
+    have he := congrArg encode h
+    rw [encode_swap] at he
+    exact (marked_descent ℚ a b).2.1 _ he
+  · intro t c
+    apply (coordinateEquiv a b).injective
+    change encode (coordinateRotate t (coordinateSwap c)) =
+      encode (coordinateSwap (coordinateRotate t c))
+    rw [encode_rotate, encode_swap, encode_swap, encode_rotate,
+      (marked_descent ℚ a b).2.2.1]
+
 #print axioms coordinateEquiv
+#print axioms marked_coordinates
 #print axioms marked_descent
 
 end D5.S3.Quantum.SpinChains.TwoWallMarked
