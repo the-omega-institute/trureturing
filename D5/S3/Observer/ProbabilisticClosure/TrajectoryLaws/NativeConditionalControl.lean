@@ -43,7 +43,7 @@ theorem erase_reads (w : List Letter) (v : List Operation) :
 @[simp] private theorem erase_reads_only (w : List Letter) : readLetters (reads w) = w := by
   simpa only [List.append_nil, readLetters] using erase_reads w []
 
-private theorem word_counts (r : unitInterval) (w : List Letter) :
+theorem word_counts (r : unitInterval) (w : List Letter) :
     wordMass r w = alphaMass r ^ w.count 0 * betaMass r ^ w.count 1 := by
   have hm (x : Letter) : (bernoulliMeasure (0 : Letter) 1 r) {x} =
       (if x = 0 then alphaMass r else 1) * (if x = 1 then betaMass r else 1) := by
@@ -126,7 +126,7 @@ theorem history_mass (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeSt
   rw [Measure.map_apply (by fun_prop) ((measurable_cylinder _).preimage measurable_snd)]
   exact congrArg (μ k * ·) (cylinder_mass (rate k) (readLetters h))
 
-private theorem likelihood_pos (h : List Operation) (k : Depth) : 0 < likelihood h k := by
+theorem likelihood_pos (h : List Operation) (k : Depth) : 0 < likelihood h k := by
   rw [likelihood, word_counts]
   rw [ENNReal.mul_pos_iff]
   constructor <;> apply ENNReal.pow_pos

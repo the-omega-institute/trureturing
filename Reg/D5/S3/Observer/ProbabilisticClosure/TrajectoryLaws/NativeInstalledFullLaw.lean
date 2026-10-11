@@ -124,7 +124,7 @@ private def emitted (f : FiniteFields) : Option Operation :=
   | .fourth .delivered => none
   | _ => some (.read 0)
 
-private def baseEmitter : InstalledEmitter base.observer where
+def baseEmitter : InstalledEmitter base.observer where
   emit z := PMF.pure (emitted z.down)
   lawful := by
     intro z a ha
