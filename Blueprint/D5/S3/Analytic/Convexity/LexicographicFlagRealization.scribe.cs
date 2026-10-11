@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Convexity;
 internal sealed class LexicographicFlagRealizationDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Analytic/moore1973semispaces");
+        LibraryNoteRef.Create("D5/L/Geometry/moore1973semispaces");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A bounded orthonormal list realizes arbitrary finitely feasible strict observations.",
