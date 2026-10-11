@@ -71,7 +71,10 @@ internal sealed class PositiveFourierApproximationRefutationDocument : IScribeDo
                         "The witness is f(x)=x/(1+x) at c=1. Positive Fourier structure gives a cubic defect-dilation bound, and the three-point comparison forces every admissible approximant to have cost at least 1153/2304, while f(1)=1/2. The function is nonnegative and operator monotone by the resolvent formula.")),
                     Paragraph(Text(
                         "The source's bound C<1.01975 remains an upper bound for this function. The optimal constant is open between 1153/1152 and 1.01975; the paper's commutator Conjectures 1 and 3 remain open because the implication from Conjecture 2 is not reversible."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("herrera-2023-function-approximation-conjecture"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Id(string name) => F.Id(name);
     private static Formula Real() => Seq(Mathbb, Grp(Id("R")));

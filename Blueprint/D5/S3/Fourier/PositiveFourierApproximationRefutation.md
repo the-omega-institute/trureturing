@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/PositiveFourierApproximationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/herrera-2023-function-approximation-conjecture` (refuted) by `D5/S3/Fourier/PositiveFourierApproximationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"herrera-2023-function-approximation-conjecture","declaration_gid":"D5/S3/Fourier/PositiveFourierApproximationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Herrera (2023). *On the commutator modulus of continuity for operator monotone functions*. URL: <https://arxiv.org/abs/2311.17448v1>.
