@@ -12461,7 +12461,8 @@ The first identity is finite Abel summation. The second uses (A1) and
 \(b(t)=\int_t^{B_t}w(x)\,dx/[w(t)t^{11/10}]\); it cancels the
 same initial prefix, without changing any integer endpoint.
 
-In particular, if a supplied ordinary prefix estimate is
+In particular, if \(C\ge0\), \(c\ge0\), and a supplied ordinary
+prefix estimate is
 \(|A_a(x)|\le Cx/(\log x)^c\) for every real \(x\ge3\), then
 \[
  \left|\sum_n a_n\mathcal W(n)\right|
