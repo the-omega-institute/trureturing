@@ -64,7 +64,7 @@ CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式
 `REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
 主 checkout 的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。
 CI required checks use `fetch-or-fail`; a missing or incompatible native seed exits nonzero with the
-manual `lean-cache-publish.yml` producer route. The scheduled Release publisher continues to use
+independent `lean-cache-publish.yml` producer route. The scheduled Release publisher continues to use
 `reuse-or-build`. Environment variables do not select local or CI policy. Direct `inspect.sh` defaults to `reuse-or-build`,
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
@@ -75,6 +75,19 @@ manual `lean-cache-publish.yml` producer route. The scheduled Release publisher 
 gh workflow run lean-cache-publish.yml --ref dev \
   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 ```
+
+尚未合并的升级 PR 可以手动加 `lean-cache-produce` label：
+
+```sh
+gh pr edit <PR> --add-label lean-cache-produce
+```
+
+独立 producer 用 `pull_request:labeled` 的 merge SHA 构建，token 只读仓库和 Actions；
+缓存只写该 PR 的 `refs/pull/<PR>/merge` 空间。producer 成功后重试该 PR 的 required CI；
+再次启动时先移除再添加 label。普通 PR required job 不发布 project 种子。
+PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
+这些私有种子不能给其它 PR 或合并后的 dev push 使用。新 pin 合并后，为受保护 dev 手动运行上述
+producer，再重试首次 dev push 中因缺种子失败的检查。
 
 `source_ref` 必须等于 dispatch ref，且分支受保护；`source_sha` 必须是该分支可达的 40 位提交。
 手动作业使用 GitHub-hosted 的 360 分钟上限；定时的受保护 `dev` Release publisher 仍为 120 分钟。
