@@ -503,11 +503,12 @@ private theorem regularized_derivative (ε : ℝ) (ν w : Finset V → ℝ)
     apply sum_congr rfl
     intro S hS
     rw [add_comm (ν (S ∆ {j}))]
-  convert hφ.add (hR.const_mul ε) using 1
-  · ext t
-    simp only [regularizedDual, harmonicDual, Pi.add_apply, Finset.sum_apply]
-  · simp only [zero_mul, add_zero]
-    have hsplit (S : Finset V) (j : V) :
+  have htotal := hφ.add (hR.const_mul ε)
+  simp only [Finset.sum_apply] at htotal
+  change HasDerivAt (fun t : ℝ => regularizedDual H ε (fun S => ν S + t*w S)) _ 0 at htotal
+  apply htotal.congr_deriv
+  simp only [zero_mul, add_zero]
+  have hsplit (S : Finset V) (j : V) :
         (if H.IsIndepSet (↑(S ∆ {j}) : Set V) then
           w S * (ν (S ∆ {j}) / (ν S + ν (S ∆ {j})))^2 +
           w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) =
@@ -516,11 +517,12 @@ private theorem regularized_derivative (ε : ℝ) (ν w : Finset V → ℝ)
             w (S ∆ {j}) * (ν S / (ν S + ν (S ∆ {j})))^2 else 0) := by
       unfold flipTerm
       split <;> simp_all
-    simp_rw [hsplit, sum_add_distrib]
-    rw [hsflip]
-    simp_rw [coordinateLoad, mul_add, mul_div_assoc, mul_sum]
-    rw [← mul_sum]
-    ring
+  simp_rw [hsplit, sum_add_distrib]
+  rw [hsflip]
+  simp only [coordinateLoad, mul_add, mul_sum, sum_add_distrib]
+  rw [← mul_sum]
+  ring_nf
+  simp only [mul_sum, mul_assoc]
 
 private theorem regularized_stationary (ε : ℝ) (ν : Finset V → ℝ)
     (hν : ν ∈ probabilities H)
@@ -571,6 +573,7 @@ theorem regularized_maximum (ε : ℝ) (hε : 0 < ε) :
   have hp := regularized_maximum_positive H ε hε ν hν hmax
   obtain ⟨τ, hs⟩ := regularized_stationary H ε ν hν hp hmax
   exact ⟨ν, hν, hmax, hp, fun i S hi hS => stationary_ratio_bounds H ν hε.le hp hs i S hi hS⟩
+
 
 #print axioms stationary_ratio_bounds
 #print axioms regularized_maximum
