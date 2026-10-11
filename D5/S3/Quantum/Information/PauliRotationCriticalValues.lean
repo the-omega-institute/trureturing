@@ -605,4 +605,40 @@ private def witnessP : Fin 15 → NonIdentityPauli := fun j =>
 private noncomputable def point : Param := fun i =>
   if i ∈ ({5,6,7,10} : Finset (Fin 15)) then Real.pi / 4 else 0
 
+set_option maxHeartbeats 2000000 in
+-- Each column uses at most four sparse double-angle conjugations.
+private theorem witness_columns (j : Fin 15) :
+    colScale j • H witnessP point j = E (fun i => rowScale i * (certA i j : ℝ)) := by
+  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hc : Real.sqrt 2 ^ 3 = 2 * Real.sqrt 2 := by simp [pow_succ, hs]
+  rw [H, prefixOp, list_conjugation]
+  fin_cases j <;>
+    simp [List.finRange, List.take, List.foldr, witnessP, gateOrder, point,
+      conjStep_add, conjStep_sub, conjStep_smul, conjStep_word,
+      sgn, anticomm, pauliProd, pauliPhase, labels, Fin.prod_univ_two,
+      Real.sin_pi_div_four, Real.cos_pi_div_four, E, rowScale, colScale, certA,
+      Fin.sum_univ_succ] <;> match_scalars
+  all_goals
+    apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im, Complex.div_re,
+      Complex.div_im, Complex.normSq, Complex.inv_re, Complex.inv_im]
+    all_goals ring_nf <;> simp only [hs, hc] <;> ring
+private theorem J_witness : (J_H witnessP point : Matrix (Fin 15) (Fin 15) ℝ) =
+    R * ratReal certA * Si := by
+  have hs : ∀ j, colScale j ≠ 0 := by
+    intro j; simp only [colScale]; split_ifs <;> positivity
+  ext i j
+  have hh := congrArg (fun M => rho M i) (witness_columns j)
+  simp only [map_smul, rho_E] at hh
+  change colScale j * J_H witnessP point i j = rowScale i * (certA i j : ℝ) at hh
+  simp only [R, Si, diagonal_mul, mul_diagonal, ratReal, RingHom.mapMatrix_apply,
+    map_apply, Rat.coe_castHom]
+  change J_H witnessP point i j = rowScale i * (certA i j : ℝ) * (colScale j)⁻¹
+  exact (eq_div_iff (hs j)).mpr (by simpa [mul_comm] using hh)
+private theorem normalized_witness : B * Matrix.of (J_H witnessP point) * U = D := by
+  rw [show Matrix.of (J_H witnessP point) = R * ratReal certA * Si from J_witness]
+  calc _ = ratReal certK * (Ri * R) * ratReal certA * (Si * S) * ratReal certN := by
+             simp only [B, U, mul_assoc]
+       _ = D := by rw [scaling_inverse.1, scaling_inverse.2]
+                   simp only [mul_one, ← map_mul, rational_certificate.2.2.2.2, D]
+
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
