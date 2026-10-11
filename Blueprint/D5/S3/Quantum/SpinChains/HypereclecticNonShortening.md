@@ -30,7 +30,7 @@ A Boolean word records the letters before the fixed wall 3: false denotes 1 and 
 
 **Definition 1.3 (The static sector).**
 
-$$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; \operatorname{sector}\left(L, M\right) = \left\{w \mid w \in (\operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool}) \land \operatorname{ones}\left(w\right) = M - 1\right\}$$
+$$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; \operatorname{sector}\left(L, M\right) = \left\{w \mid w \in ((\operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool})) \land \operatorname{ones}\left(w\right) = M - 1\right\}$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.sector` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The K = 1 static sector has L−1 Boolean letters and M−1 twos, with the wall 
 
 **Definition 1.4 (The elementary-state level space).**
 
-$$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; \forall S \in \mathbb{N},\; \operatorname{W}\left(L, M, S\right) = \operatorname{span}\left(\mathbb{Q}, \left\{\operatorname{basisFun}\left(\mathbb{Q}, \operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool}\right)\left(w\right) \mid w \in \operatorname{sector}\left(L, M\right) \land \operatorname{level}\left(w\right) = S\right\}\right)$$
+$$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; \forall S \in \mathbb{N},\; \operatorname{W}\left(L, M, S\right) = \operatorname{span}\left(\mathbb{Q}, \left\{\operatorname{basisFun}\left(\mathbb{Q}, (\operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool})\right)\left(w\right) \mid w \in \operatorname{sector}\left(L, M\right) \land \operatorname{level}\left(w\right) = S\right\}\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.W` (`✓ std3`).
 
@@ -54,7 +54,7 @@ Section 3.2, printed p. 10: “As before we define W_S^{L,M} to be spanned by el
 
 **Definition 1.5 (A local lowering move).**
 
-$$\forall N \in \mathbb{N},\; \forall a \in \operatorname{Fin}\left(N\right),\; \forall b \in \operatorname{Fin}\left(N\right),\; \forall v \in (\left(\operatorname{Fin}\left(N\right) \to \operatorname{Bool}\right) \to \mathbb{Q}),\; \forall w \in (\operatorname{Fin}\left(N\right) \to \operatorname{Bool}),\; \operatorname{localH}\left(a, b\right)\left(v\right)\left(w\right) = \operatorname{ite}\left((w\left(a\right) = \operatorname{false} \land w\left(b\right) = \operatorname{true}), v\left((w \circ \operatorname{swap}\left(a, b\right))\right), 0\right)$$
+$$\forall N \in \mathbb{N},\; \forall a \in \operatorname{Fin}\left(N\right),\; \forall b \in \operatorname{Fin}\left(N\right),\; \forall v \in ((\operatorname{Fin}\left(N\right) \to \operatorname{Bool}) \to \mathbb{Q}),\; \forall w \in (\operatorname{Fin}\left(N\right) \to \operatorname{Bool}),\; \operatorname{localH}\left(a, b\right)\left(v\right)\left(w\right) = \operatorname{ite}\left((w\left(a\right) = \operatorname{false} \land w\left(b\right) = \operatorname{true}), v\left((w \circ \operatorname{swap}\left(a, b\right))\right), 0\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.localH` (`✓ std3`).
 
@@ -126,7 +126,7 @@ The diagonal weight equals twice the inversion level minus the product of the nu
 
 **Theorem 1.11 (The one-bin sl₂ triple).**
 
-$$\forall N \in \mathbb{N},\; (2 \leq N \Rightarrow \operatorname{IsSl2Triple}\left(\operatorname{mulLeft}\left(\mathbb{Q}, ((w : (\operatorname{Fin}\left(N\right) \to \operatorname{Bool})) \mapsto \operatorname{weight}\left(w\right))\right), \operatorname{Rbin}\left(N\right), \operatorname{Hbin}\left(N\right)\right))$$
+$$\forall N \in \mathbb{N},\; (2 \leq N \Rightarrow \operatorname{IsSl2Triple}\left(\operatorname{mulLeft}\left(\mathbb{Q}, ((w : ((\operatorname{Fin}\left(N\right) \to \operatorname{Bool}))) \mapsto \operatorname{weight}\left(w\right))\right), \operatorname{Rbin}\left(N\right), \operatorname{Hbin}\left(N\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.binSl2Triple` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ For every bin of length at least two, multiplication by the word weight, the rai
 
 **Definition 1.12 (The adjacent-move Hamiltonian).**
 
-$$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; \forall v \in (\left(\operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool}\right) \to \mathbb{Q}),\; \forall w \in (\operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool}),\; \operatorname{H}\left(L, M\right)\left(v\right)\left(w\right) = \sum_{p\in\operatorname{Fin}\left(L - 1 - 1\right)} \operatorname{ite}\left((w\left(\operatorname{val}\left(p\right)\right) = \operatorname{false} \land w\left(\operatorname{val}\left(p\right) + 1\right) = \operatorname{true}), v\left((w \circ \operatorname{swap}\left(\operatorname{val}\left(p\right), \operatorname{val}\left(p\right) + 1\right))\right), 0\right)$$
+$$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; \forall v \in ((\operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool}) \to \mathbb{Q}),\; \forall w \in (\operatorname{Fin}\left(L - 1\right) \to \operatorname{Bool}),\; \operatorname{H}\left(L, M\right)\left(v\right)\left(w\right) = \sum_{p\in\operatorname{Fin}\left(L - 1 - 1\right)} \operatorname{ite}\left((w\left(\operatorname{val}\left(p\right)\right) = \operatorname{false} \land w\left(\operatorname{val}\left(p\right) + 1\right) = \operatorname{true}), v\left((w \circ \operatorname{swap}\left(\operatorname{val}\left(p\right), \operatorname{val}\left(p\right) + 1\right))\right), 0\right)$$
 
 *Formalization.* `D5/S3/Quantum/SpinChains/HypereclecticNonShortening.H` (`✓ std3`).
 
@@ -183,6 +183,8 @@ $$\forall L \in \mathbb{N},\; \forall M \in \mathbb{N},\; (1 \leq M \Rightarrow 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"ahn-corcoran-staudacher-2021-hypereclectic-non-shortening","declaration_gid":"D5/S3/Quantum/SpinChains/HypereclecticNonShortening.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* C. Ahn; L. Corcoran; M. Staudacher (2022). *Combinatorial Solution of the Eclectic Spin Chain*. DOI: [10.1007/JHEP03(2022)028](https://doi.org/10.1007/JHEP03(2022)028). URL: <https://arxiv.org/abs/2112.04506v1>.
 
 *Commentary.*
 
