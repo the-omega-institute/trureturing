@@ -134,7 +134,7 @@ private theorem core_has_identity (a : M) (hd : DenseRange fun n : ℕ => n • 
 
 /-- The internal group has the inherited addition, a continuous inverse, and a dense
 orbit of the image of the original generator under an additive retraction. -/
-theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
+private theorem core_group_retraction (a : M) (hd : DenseRange fun n : ℕ => n • a) :
     ∃ group : AddCommGroup (core a),
       let := group
       (∀ x y : core a, ((x + y : core a) : M) = (x : M) + (y : M)) ∧
@@ -228,17 +228,9 @@ private theorem outside_isolated_orbit (a : M) (hd : DenseRange fun n : ℕ => n
   refine ⟨?_, ?_⟩
   · obtain ⟨n, _, hn⟩ := hxP
     exact ⟨n, hn.symm⟩
-  · have heq : ({x} : Set M) = (tail a N ∪ (P \ {x}))ᶜ := by
-      ext y
-      simp only [mem_singleton_iff, mem_compl_iff, mem_union, mem_sdiff,
-        not_or, not_and, not_not]
-      constructor
-      · rintro rfl
-        exact ⟨hN, fun _ => rfl⟩
-      · rintro ⟨hyN, hy⟩
-        exact hy ((prefix_or_tail a hd N y).resolve_right hyN)
-    rw [heq]
-    exact (isClosed_closure.union hP.sdiff.isClosed).isOpen_compl
+  · apply isOpen_singleton_of_finite_mem_nhds x
+      (isClosed_closure.isOpen_compl.mem_nhds hN)
+    exact hP.subset fun y hy => (prefix_or_tail a hd N y).resolve_right hy
 
 omit [ContinuousAdd M] [CompactSpace M] [T2Space M] in
 private theorem collision_mem_core (a : M) {n m : ℕ}
@@ -299,7 +291,7 @@ private theorem core_threshold (a : M) (hd : DenseRange fun n : ℕ => n • a) 
 
 /-- The tail is the least nonempty additive ideal. Its complement is a uniquely
 indexed finite or infinite initial segment of isolated, pairwise distinct orbit points. -/
-theorem core_ideal_and_threshold (a : M) (hd : DenseRange fun n : ℕ => n • a) :
+private theorem core_ideal_and_threshold (a : M) (hd : DenseRange fun n : ℕ => n • a) :
     (core a).Nonempty ∧ IsCompact (core a) ∧
     (∀ x : M, (fun z => x + z) '' core a = core a) ∧
     (∀ I : Set M, I.Nonempty → (∀ x : M, ∀ y ∈ I, x + y ∈ I) → core a ⊆ I) ∧
@@ -342,6 +334,30 @@ theorem core_ideal_and_threshold (a : M) (hd : DenseRange fun n : ℕ => n • a
       exact (outside_isolated_orbit a hd ((ht n).mpr hn)).2
 
 #print axioms core_ideal_and_threshold
+
+/-- The complete tail structure: internal topological group, additive retraction,
+least nonempty ideal, and the unique finite or infinite isolated initial segment. -/
+theorem core_structure (a : M) (hd : DenseRange fun n : ℕ => n • a) :
+  (∃ group : AddCommGroup (core a),
+      let := group
+      (∀ x y : core a, ((x + y : core a) : M) = (x : M) + (y : M)) ∧
+      IsTopologicalAddGroup (core a) ∧
+      ∃ r : M →+ core a, Continuous r ∧
+        (∀ x : M, (r x : M) = x + ((0 : core a) : M)) ∧
+        (∀ x : core a, r (x : M) = x) ∧
+        DenseRange (fun n : ℕ => n • r a)) ∧
+  ((core a).Nonempty ∧ IsCompact (core a) ∧
+    (∀ x : M, (fun z => x + z) '' core a = core a) ∧
+    (∀ I : Set M, I.Nonempty → (∀ x : M, ∀ y ∈ I, x + y ∈ I) → core a ⊆ I) ∧
+    (0 ∈ core a ↔ core a = univ) ∧
+    ∃! t : ℕ∞,
+      (∀ n : ℕ, n • a ∉ core a ↔ (n : ℕ∞) < t) ∧
+      (core a)ᶜ = (fun n : ℕ => n • a) '' {n | (n : ℕ∞) < t} ∧
+      Set.InjOn (fun n : ℕ => n • a) {n | (n : ℕ∞) < t} ∧
+      (∀ n : ℕ, (n : ℕ∞) < t → IsOpen ({n • a} : Set M))) := by
+  exact ⟨core_group_retraction a hd, core_ideal_and_threshold a hd⟩
+
+#print axioms core_structure
 
 section Semiring
 

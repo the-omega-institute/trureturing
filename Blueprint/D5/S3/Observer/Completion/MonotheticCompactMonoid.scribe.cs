@@ -83,14 +83,10 @@ internal sealed class MonotheticCompactMonoidDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The core consists of the points in every closed tail."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("monothetic-group-retraction"),
-                DeclarationHandle.Create(Prefix + "core_group_retraction"),
-                H("Internal topological group and additive retraction"),
-                StatementSource.FromAuthor(Disp(Base(Ex(G, Call("AddCommGroup", CoreSet), And(
-                    Inherited("add", CoreSet), Call("IsTopologicalAddGroup", CoreSet),
-                    Ex(R, Call("AddMonoidHom", M, CoreSet), And(Retraction(CoreSet),
-                        Call("DenseRange", Fn(N, Nat,
-                            Call("nsmul", G, N, Call("r", A))))))))))),
+            Describe.Lean(DescribeId.Create("monothetic-core-structure"),
+                DeclarationHandle.Create(Prefix + "core_structure"),
+                H("Complete tail group and isolated initial segment"),
+                StatementSource.FromAuthor(Disp(Base(And(GroupFormula(), IdealFormula())))),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text("Translation by any ambient point maps the core onto itself. "
@@ -99,14 +95,7 @@ internal sealed class MonotheticCompactMonoidDocument : IScribeDocumentDefinitio
                         + "Compactness makes its projections closed, which proves continuity of inversion.")),
                     Paragraph(Text("The additive homomorphism r sends x to x+e and fixes the core. "
                         + "It is therefore onto. Its image of a is a+e, and its internal natural "
-                        + "multiples are dense by continuity and density of the original orbit."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("monothetic-ideal-threshold"),
-                DeclarationHandle.Create(Prefix + "core_ideal_and_threshold"),
-                H("Least ideal and unique threshold"),
-                StatementSource.FromAuthor(Disp(Base(IdealFormula()))),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
+                        + "multiples are dense by continuity and density of the original orbit.")),
                     Paragraph(Text("Every nonempty additive ideal contains a point x and hence contains "
                         + "x+H=H. Thus H is the unique least nonempty additive ideal. It contains the "
                         + "ambient zero exactly when it is the whole monoid.")),
@@ -138,6 +127,11 @@ internal sealed class MonotheticCompactMonoidDocument : IScribeDocumentDefinitio
                         + "resulting continuous ring-valued semiring homomorphism preserves zero "
                         + "and one, is surjective, fixes H, and has dense natural unit multiples."))),
                 DescribeRole.Theorem))));
+
+    private static Formula GroupFormula() => Ex(G, Call("AddCommGroup", CoreSet), And(
+        Inherited("add", CoreSet), Call("IsTopologicalAddGroup", CoreSet),
+        Ex(R, Call("AddMonoidHom", M, CoreSet), And(Retraction(CoreSet),
+            Call("DenseRange", Fn(N, Nat, Call("nsmul", G, N, Call("r", A))))))));
 
     private static Formula IdealFormula()
     {
