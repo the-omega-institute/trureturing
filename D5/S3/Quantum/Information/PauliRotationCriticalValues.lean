@@ -206,19 +206,34 @@ private theorem rotation_unitary (p : NonIdentityPauli) (a : ℝ) :
           all_goals ring
          _ = 1 := by rw [hc, one_smul]
 
+private noncomputable def listCircuit (P : Fin 15 → NonIdentityPauli)
+    (l : List (Fin 15)) (α : Param) : Mat :=
+  (l.map (fun j => rotation (P j) (α j))).prod
+
+private theorem list_unitary (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15)) (α : Param) :
+    listCircuit P l α ∈ unitary Mat := by
+  apply (unitary Mat).list_prod_mem
+  intro M hM
+  obtain ⟨j, _, rfl⟩ := List.mem_map.mp hM
+  exact rotation_unitary (P j) (α j)
+
 private noncomputable def prefixOp (P : Fin 15 → NonIdentityPauli) (α : Param) (n : ℕ) : Mat :=
-  ((List.ofFn (fun j => rotation (P j) (α j))).take n).prod
+  listCircuit P ((List.finRange 15).take n) α
 
 private theorem prefix_unitary (P : Fin 15 → NonIdentityPauli) (α : Param) (n : ℕ) :
     prefixOp P α n ∈ unitary Mat := by
-  apply (unitary Mat).list_prod_mem
-  intro M hM
-  obtain ⟨j, rfl⟩ := List.mem_ofFn.mp (List.mem_of_mem_take hM)
-  exact rotation_unitary (P j) (α j)
+  exact list_unitary P ((List.finRange 15).take n) α
+
+private theorem circuit_eq_list (P : Fin 15 → NonIdentityPauli) :
+    circuit P = listCircuit P (List.finRange 15) := by
+  funext α
+  unfold circuit listCircuit
+  rw [List.ofFn_eq_map]
 
 private theorem circuit_unitary (P : Fin 15 → NonIdentityPauli) (α : Param) :
     circuit P α ∈ unitary Mat := by
-  simpa [prefixOp, circuit] using prefix_unitary P α 15
+  rw [circuit_eq_list]
+  exact list_unitary P (List.finRange 15) α
 
 private noncomputable def gateD (P : Fin 15 → NonIdentityPauli) (α : Param) (j : Fin 15) :
     Param →L[ℝ] Mat :=
@@ -243,5 +258,42 @@ private theorem gate_deriv (P : Fin 15 → NonIdentityPauli) (α : Param) (j : F
   ring_nf
   all_goals simp [Complex.I_sq]
   all_goals ring
+
+private theorem list_split (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15))
+    (α : Param) (i : Fin l.length) :
+    listCircuit P (l.take i) α * rotation (P l[i]) (α l[i]) *
+      listCircuit P (l.drop (i.val + 1)) α = listCircuit P l α := by
+  have hi : i.val < (l.map (fun j => rotation (P j) (α j))).length := by simp
+  have hh := List.prod_take_mul_prod_drop (l.map (fun j => rotation (P j) (α j))) (i.val + 1)
+  rw [List.prod_take_succ _ _ hi] at hh
+  simpa [listCircuit, List.map_take, List.map_drop] using hh
+
+private noncomputable def listD (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15))
+    (α : Param) : Param →L[ℝ] Mat :=
+  ∑ i : Fin l.length, (ContinuousLinearMap.proj l[i] : Param →L[ℝ] ℝ).smulRight
+    ((-Complex.I / 2) • (listCircuit P (l.take i) α * wordOp (P l[i]).val *
+      star (listCircuit P (l.take i) α) * listCircuit P l α))
+
+private theorem list_deriv (P : Fin 15 → NonIdentityPauli) (l : List (Fin 15)) (α : Param) :
+    HasStrictFDerivAt (listCircuit P l) (listD P l α) α := by
+  apply (HasStrictFDerivAt.list_prod' (l := l) (fun j _ => gate_deriv P α j)).congr_fderiv
+  ext1 h
+  simp only [listD, _root_.sum_apply, ContinuousLinearMap.smulRight_apply]
+  apply Finset.sum_congr rfl
+  intro i _
+  simp only [_root_.smul_apply, op_smul_eq_mul, smul_eq_mul, gateD,
+    ContinuousLinearMap.smulRight_apply, ContinuousLinearMap.proj_apply]
+  change listCircuit P (l.take i) α *
+      ((h l[i] • ((-Complex.I / 2) • (wordOp (P l[i]).val * rotation (P l[i]) (α l[i])))) *
+      listCircuit P (l.drop (i.val + 1)) α) = _
+  rw [← list_split P l α i]
+  simp only [Matrix.mul_smul, Matrix.smul_mul, mul_assoc]
+  rw [← mul_assoc (star (listCircuit P (l.take i) α)) (listCircuit P (l.take i) α),
+    Unitary.star_mul_self_of_mem (list_unitary P (l.take i) α), one_mul]
+
+private theorem circuit_strict (P : Fin 15 → NonIdentityPauli) (α : Param) :
+    HasStrictFDerivAt (circuit P) (listD P (List.finRange 15) α) α := by
+  rw [circuit_eq_list]
+  exact list_deriv P (List.finRange 15) α
 
 end D5.S3.Quantum.Information.PauliRotationCriticalValues
