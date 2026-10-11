@@ -23,6 +23,27 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
             Node("W", "The elementary-state level space", WFormula(),
                 "Section 3.2, printed p. 10: “As before we define W_S^{L,M} to be spanned by elementary states with this level S.” Here basisFun(ℚ, Fin(L−1) → Bool)(w) is the delta function at w. The span retains these elementary states as independently specified generators over ℚ.",
                 DescribeRole.Definition),
+            Node("localH", "A local lowering move", LocalHFormula(),
+                "On output coordinates, the local move tests false at a and true at b, and reads the coefficient of the word with those sites exchanged. Otherwise its value is zero.",
+                DescribeRole.Definition),
+            Node("localR", "A local reverse move", LocalRFormula(),
+                "The reverse move exchanges the two site arguments of the local lowering operator.",
+                DescribeRole.Definition),
+            Node("Hbin", "The one-bin lowering operator", HbinFormula(),
+                "The bin operator sums all adjacent lowering moves. Here val(p) and val(p)+1 are regarded as sites of Fin(N); the sum is empty for bins of length zero or one.",
+                DescribeRole.Definition),
+            Node("Rbin", "The one-bin raising operator", RbinFormula(),
+                "Each reverse adjacent move has coefficient (val(p)+1)(N−(val(p)+1)), interpreted in the rational numbers; asRat is the natural-number cast to the rationals. These coefficients give the raising operator paired with Hbin.",
+                DescribeRole.Definition),
+            Node("weight", "The diagonal word weight", WeightFormula(),
+                "Each true letter at site i contributes N−1−2 val(i), interpreted in the rational numbers. False letters contribute zero.",
+                DescribeRole.Definition),
+            Node("weight_eq_level", "Weight from the inversion level", WeightLevelFormula(),
+                "The diagonal weight equals twice the inversion level minus the product of the numbers of true and false letters. Natural counts are cast to the rational numbers before the displayed arithmetic.",
+                DescribeRole.Theorem),
+            Node("binSl2Triple", "The one-bin sl₂ triple", BinSl2Formula(),
+                "For every bin of length at least two, multiplication by the word weight, the raising operator and the lowering operator form an sl₂ triple. In particular the diagonal operator is nonzero and the three commutator relations hold. Empty and one-site bins are outside this triple statement.",
+                DescribeRole.Theorem),
             Node("H", "The adjacent-move Hamiltonian", HFormula(),
                 "Section 3.2, printed p. 10: “The Hamiltonian acts on (3.16) as” Eq. (3.19), summing the states with n_{j−1} increased by one and n_j decreased by one. A term with n_j = 0 vanishes. Equivalently, each adjacent input 21 becomes 12 with coefficient one. The displayed formula is on output coordinates, so it tests 12 and reads the swapped input. The notation val(p) regards p : Fin((L−1)−1) as a site of Fin(L−1), and val(p)+1 as its adjacent successor; swap exchanges those sites. Composition acts on word coordinates, not on coefficient vectors. M labels the sector and does not affect this operator.",
                 DescribeRole.Definition),
@@ -39,7 +60,7 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role) => Describe.Lean(
-        DescribeId.Create("hypereclectic-" + (name == "W" ? "w" : name == "H" ? "h" : name)), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("hypereclectic-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula),
         role == DescribeRole.Theorem ? AssessedProvenance.FromRepo() : AssessedProvenance.FromLiterature(Source),
         Blocks(Paragraph(Text(prose))), role,
@@ -92,6 +113,74 @@ internal sealed class HypereclecticNonShorteningDocument : IScribeDocumentDefini
             Equal(Call("level", w), s)));
         return Disp(All("L", Nats(), All("M", Nats(), All("S", Nats(),
             Equal(Call("W", l, m, s), Call("span", Rats(), generators))))));
+    }
+
+    private static Formula Mul(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+
+    private static Formula LocalHFormula()
+    {
+        var n = F.Id("N"); var a = F.Id("a"); var b = F.Id("b");
+        var v = F.Id("v"); var w = F.Id("w");
+        var condition = Parenthesized(Seq(At(w, a), Sp, Eq, Sp, Call("false"), Sp, Land, Sp,
+            At(w, b), Sp, Eq, Sp, Call("true")));
+        var input = Parenthesized(Seq(w, Sp, Circ, Sp, Call("swap", a, b)));
+        var body = Equal(At(Apply(Call("localH", a, b), v), w),
+            Call("ite", condition, Apply(v, input), D(0)));
+        return Disp(All("N", Nats(), All("a", Fin(n), All("b", Fin(n),
+            All("v", Vectors(n), All("w", Word(n), body))))));
+    }
+
+    private static Formula LocalRFormula()
+    {
+        var n = F.Id("N"); var a = F.Id("a"); var b = F.Id("b");
+        return Disp(All("N", Nats(), All("a", Fin(n), All("b", Fin(n),
+            Equal(Call("localR", a, b), Call("localH", b, a))))));
+    }
+
+    private static Formula HbinFormula()
+    {
+        var n = F.Id("N"); var p = F.Id("p"); var a = Call("val", p);
+        return Disp(All("N", Nats(), Equal(Call("Hbin", n),
+            Sum(Sub(n, D(1)), p, Call("localH", a, Add(a, D(1)))))));
+    }
+
+    private static Formula RbinFormula()
+    {
+        var n = F.Id("N"); var p = F.Id("p"); var a = Call("val", p);
+        var b = Add(a, D(1));
+        var coefficient = Mul(Call("asRat", b), Parenthesized(Sub(Call("asRat", n), Call("asRat", b))));
+        return Disp(All("N", Nats(), Equal(Call("Rbin", n), Sum(Sub(n, D(1)), p,
+            Call("smul", coefficient, Call("localR", a, b))))));
+    }
+
+    private static Formula WeightFormula()
+    {
+        var n = F.Id("N"); var w = F.Id("w"); var i = F.Id("i");
+        var coefficient = Sub(Sub(Call("asRat", n), D(1)), Mul(D(2), Call("asRat", Call("val", i))));
+        return Disp(All("N", Nats(), All("w", Word(n), Equal(Call("weight", w),
+            Sum(n, i, Call("ite", Equal(At(w, i), Call("true")), coefficient, D(0)))))));
+    }
+
+    private static Formula WeightLevelFormula()
+    {
+        var n = F.Id("N"); var w = F.Id("w");
+        var count = Call("asRat", Call("ones", w));
+        var rhs = Sub(Mul(D(2), Call("asRat", Call("level", w))),
+            Mul(count, Parenthesized(Sub(Call("asRat", n), count))));
+        return Disp(All("N", Nats(), All("w", Word(n), Equal(Call("weight", w), rhs))));
+    }
+
+    private static Formula BinSl2Formula()
+    {
+        var n = F.Id("N"); var w = F.Id("w");
+        var weightFunction = Parenthesized(Seq(Parenthesized(Seq(w, Sp, Colon, Sp,
+            Parenthesized(Word(n)))), Sp, Mapsto, Sp, Call("weight", w)));
+        var tripleName = Seq(Operatorname, Grp(Seq(F.Id("IsSl"), D(2), F.Id("Triple"))));
+        var triple = new Formula.Apply(tripleName,
+            [Call("mulLeft", Rats(), weightFunction), Call("Rbin", n), Call("Hbin", n)]);
+        return Disp(All("N", Nats(), Parenthesized(Seq(D(2), Sp, Leq, Sp, n,
+            Sp, Rightarrow, Sp, triple))));
     }
 
     private static Formula HFormula()
