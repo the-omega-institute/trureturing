@@ -107,6 +107,269 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@robin_eleven_smoot
   familyRecord := none
   options := #[]
 
+/-- `e^γ > 89/50`: the exponential of Euler's constant is the varied readout. -/
+abbrev expArena : Arena where
+  signature := signature
+  Law R := (89 / 50 : Real) < R.readout () () Real.eulerMascheroniConstant
+
+def expActual : Realization signature :=
+  realize signature (fun _ _ x => Real.exp x) (fun e => nomatch e)
+
+theorem rejected_exp_law : ¬ expArena.Law rejected := by
+  intro h
+  change (89 / 50 : Real) < 0 at h
+  norm_num at h
+
+private theorem exp_dependence : ObservationalDependence signature expActual := by
+  intro i
+  cases i
+  refine ⟨(), 0, 1, ?_⟩
+  change Real.exp 0 ≠ Real.exp 1
+  rw [Real.exp_zero]
+  exact (Real.one_lt_exp_iff.mpr one_pos).ne
+
+def expRegistration : Registration expArena
+    ((89 / 50 : Real) < Real.exp Real.eulerMascheroniConstant) where
+  actual := expActual
+  bridge := Iff.rfl
+  variation := ⟨exp_gamma_lower, rejected, rejected_exp_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    funext (fun e => nomatch e), rejected_exp_law⟩, fun i => nomatch i⟩
+  dependence := exp_dependence
+
+/-- `log (log 5040) > 1071/500`: the outer logarithm is the varied readout. -/
+abbrev loglog5040Arena : Arena where
+  signature := signature
+  Law R := (1071 / 500 : Real) < R.readout () () (Real.log 5040)
+
+theorem rejected_loglog5040_law : ¬ loglog5040Arena.Law rejected := by
+  intro h
+  change (1071 / 500 : Real) < 0 at h
+  norm_num at h
+
+def loglog5040Registration : Registration loglog5040Arena
+    ((1071 / 500 : Real) < Real.log (Real.log 5040)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨loglog_5040, rejected, rejected_loglog5040_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    funext (fun e => nomatch e), rejected_loglog5040_law⟩, fun i => nomatch i⟩
+  dependence := actual_dependence
+
+/-- The two-bracket lower bound: the outer logarithm of the conclusion is the varied readout. -/
+abbrev loglogOfArena : Arena where
+  signature := signature
+  Law R := ∀ (t mid lo y₁ y₂ : Real) (k₁ k₂ : Nat),
+    t = (2 : Real) ^ k₁ * y₁ → 1 <= k₁ → 1 <= y₁ → y₁ < 2 →
+    mid < (k₁ : Real) * (6931471803 / 10000000000 : Real) +
+      D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhPartial ((y₁ - 1) / (y₁ + 1)) 4 →
+    mid = (2 : Real) ^ k₂ * y₂ → 1 <= k₂ → 1 <= y₂ → y₂ < 2 →
+    lo < (k₂ : Real) * (6931471803 / 10000000000 : Real) +
+      D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhPartial ((y₂ - 1) / (y₂ + 1)) 4 →
+    0 < mid → lo < R.readout () () (Real.log t)
+
+theorem rejected_loglogOf_law : ¬ loglogOfArena.Law rejected := by
+  intro h
+  have hbad := h 5040 (341 / 40) (1071 / 500) (315 / 256) (341 / 320) 12 3 (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num [D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhPartial,
+      Finset.sum_range_succ])
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num [D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhPartial,
+      Finset.sum_range_succ])
+    (by norm_num)
+  change (1071 / 500 : Real) < 0 at hbad
+  norm_num at hbad
+
+def loglogOfRegistration : Registration loglogOfArena
+    (∀ (t mid lo y₁ y₂ : Real) (k₁ k₂ : Nat),
+      t = (2 : Real) ^ k₁ * y₁ → 1 <= k₁ → 1 <= y₁ → y₁ < 2 →
+      mid < (k₁ : Real) * (6931471803 / 10000000000 : Real) +
+        D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhPartial ((y₁ - 1) / (y₁ + 1)) 4 →
+      mid = (2 : Real) ^ k₂ * y₂ → 1 <= k₂ → 1 <= y₂ → y₂ < 2 →
+      lo < (k₂ : Real) * (6931471803 / 10000000000 : Real) +
+        D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhPartial ((y₂ - 1) / (y₂ + 1)) 4 →
+      0 < mid → lo < Real.log (Real.log t)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨loglog_of, rejected, rejected_loglogOf_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    funext (fun e => nomatch e), rejected_loglogOf_law⟩, fun i => nomatch i⟩
+  dependence := actual_dependence
+
+/-- One interval of the table: the outer logarithm of the conclusion is the varied readout. -/
+abbrev finishArena : Arena where
+  signature := signature
+  Law R := ∀ {n t K : Nat} {l : Real}, 1 < t → t ≤ n → 0 < l →
+    l < Real.log (Real.log (t : Real)) → (K : Real) / 100 ≤ 89 / 50 * l →
+    100 * ArithmeticFunction.sigma 1 n ≤ K * n →
+    (ArithmeticFunction.sigma 1 n : Real) / n <
+      Real.exp Real.eulerMascheroniConstant * R.readout () () (Real.log (n : Real))
+
+theorem rejected_finish_law : ¬ finishArena.Law rejected := by
+  intro h
+  have hs : ArithmeticFunction.sigma 1 8192 = 16383 := by decide +kernel
+  have hbad := h (n := 8192) (t := 5040) (K := 381) (l := 1071 / 500) (by norm_num)
+    (by norm_num) (by norm_num) (by exact_mod_cast loglog_5040) (by norm_num)
+    (by rw [hs]; norm_num)
+  change (ArithmeticFunction.sigma 1 8192 : Real) / (8192 : Nat) <
+    Real.exp Real.eulerMascheroniConstant * 0 at hbad
+  rw [mul_zero, hs] at hbad
+  norm_num at hbad
+
+def finishRegistration : Registration finishArena
+    (∀ {n t K : Nat} {l : Real}, 1 < t → t ≤ n → 0 < l →
+      l < Real.log (Real.log (t : Real)) → (K : Real) / 100 ≤ 89 / 50 * l →
+      100 * ArithmeticFunction.sigma 1 n ≤ K * n →
+      (ArithmeticFunction.sigma 1 n : Real) / n <
+        Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : Real))) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨finish, rejected, rejected_finish_law⟩
+  sensitivity := ⟨fun i => ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    funext (fun e => nomatch e), rejected_finish_law⟩, fun i => nomatch i⟩
+  dependence := actual_dependence
+
+/-- The four helper records bind the varied readout through its raw source path. -/
+def expAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@exp_gamma_lower)
+    (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.exp x)
+      (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Arith.Robin.ElevenSmooth.exp_gamma_lower.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ElevenSmooth.expRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨expArena⟩
+  objectArena := .source ⟨expArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source expArena ⟨expRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.exp x)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ElevenSmooth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def loglog5040Audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@loglog_5040)
+    (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.log x)
+      (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Arith.Robin.ElevenSmooth.loglog_5040.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ElevenSmooth.loglog5040Registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨loglog5040Arena⟩
+  objectArena := .source ⟨loglog5040Arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source loglog5040Arena ⟨loglog5040Registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.log x)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ElevenSmooth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def loglogOfAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@loglog_of)
+    (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.log x)
+      (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Arith.Robin.ElevenSmooth.loglog_of.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ElevenSmooth.loglogOfRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨loglogOfArena⟩
+  objectArena := .source ⟨loglogOfArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source loglogOfArena ⟨loglogOfRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.log x)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ElevenSmooth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def finishAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@finish)
+    (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.log x)
+      (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Arith.Robin.ElevenSmooth.finish.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ElevenSmooth.finishRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨finishArena⟩
+  objectArena := .source ⟨finishArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source finishArena ⟨finishRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ x => Real.log x)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ElevenSmooth
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 #print axioms registration
 
 end
