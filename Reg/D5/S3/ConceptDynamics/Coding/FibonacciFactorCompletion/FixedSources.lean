@@ -346,3 +346,110 @@ def address_prefix_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.Injection
+noncomputable section
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+
+abbrev syncSignature : Signature.{0,0,0,0,0} where
+  Params := Σ _ : List Label, Σ _ : Bool → List Label, Σ _ : List Label, ℕ
+  State p := Fin p.2.2.2 → Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ → Label
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def syncActual : Realization syncSignature :=
+  realize syncSignature
+    (fun _ p z => address (synchronousPrefix p.1 p.2.1 z ++ p.2.2.1))
+    (fun e => nomatch e)
+
+def syncRejected : Realization syncSignature :=
+  realize syncSignature (fun _ _ _ _ => Label.L0) (fun e => nomatch e)
+
+abbrev syncArena : Arena.{0,0,0,0,0} where
+  signature := syncSignature
+  Law r := ∀ (P : List Label) (R : Bool → List Label)
+    (L : ℕ) (hlen : ∀ i, (R i).length = L) (hne : R false ≠ R true)
+    (w : List Label) (n : ℕ),
+    Function.Injective (r.readout () ⟨P, ⟨R, ⟨w, n⟩⟩⟩)
+
+private def twoBlocks : Bool → List Label
+  | false => [Label.L0]
+  | true => [Label.L2]
+
+private theorem sync_bad : ¬ syncArena.Law syncRejected := by
+  intro h
+  have inj := h [] twoBlocks 1 (by intro i; cases i <;> rfl)
+    (by simp [twoBlocks]) [] 1
+  have eq : (fun _ : Fin 1 => false) = (fun _ : Fin 1 => true) := inj rfl
+  have impossible := congrFun eq (0 : Fin 1)
+  cases impossible
+
+def syncRegistration : Registration syncArena (type_of% @synchronous_address_injective) where
+  actual := syncActual
+  bridge := Iff.rfl
+  variation := ⟨@synchronous_address_injective, syncRejected, sync_bad⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨syncRejected, ?_, rfl, sync_bad⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨[], ⟨twoBlocks, ⟨[], 1⟩⟩⟩,
+      (fun _ : Fin 1 => false), (fun _ : Fin 1 => true), ?_⟩
+    intro h
+    have impossible := congrFun h 0
+    change Label.L0 = Label.L2 at impossible
+    cases impossible
+
+def synchronous_address_injective_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.synchronous_address_injective)
+      (type_of% (realize.{0,0,0,0,0} syncSignature
+        (fun _ p z => address (synchronousPrefix p.1 p.2.1 z ++ p.2.2.1)) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.Injection.sync_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.Injection.syncRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨syncArena⟩
+  objectArena := .source ⟨syncArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source syncArena ⟨syncRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} syncSignature
+        (fun _ p z => address (synchronousPrefix p.1 p.2.1 z ++ p.2.2.1)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+    definition := none
+    coordinates := #[0, 1, 5, 6]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+#print axioms syncRegistration
+#print axioms synchronous_address_injective_registration
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.Injection

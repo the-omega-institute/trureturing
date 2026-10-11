@@ -302,3 +302,109 @@ def partition_shift_bounds_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.Injection
+noncomputable section
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+
+abbrev splitSignature : Signature.{0,0,0,0,0} where
+  Params := Σ _ : Set (ℤ → CuLetter), Σ _ : ℕ, ℕ
+  State p := LengthDictionary p.1 (p.2.1 + p.2.2)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := LengthDictionary p.1 p.2.1 × LengthDictionary p.1 p.2.2
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def splitActual : Realization splitSignature :=
+  realize splitSignature (fun _ p => splitWord p.1 p.2.1 p.2.2)
+    (fun e => nomatch e)
+
+-- Choice only constructs a hypothetical rejected family. It neither substitutes
+-- the actual source readout nor evaluates a proposition to encode the Law.
+-- A source input supplies an output inhabitant; empty state fibers need no choice.
+-- Proof irrelevance makes the chosen output constant within each inhabited fiber.
+def splitRejected : Realization splitSignature :=
+  realize splitSignature
+    (fun _ p x => Classical.choice (show Nonempty (LengthDictionary p.1 p.2.1 ×
+        LengthDictionary p.1 p.2.2) from ⟨splitWord p.1 p.2.1 p.2.2 x⟩))
+    (fun e => nomatch e)
+
+abbrev splitArena : Arena.{0,0,0,0,0} where
+  signature := splitSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (k j : ℕ),
+    Function.Injective (r.readout () ⟨X, ⟨k, j⟩⟩)
+
+private def oneLetter (a : CuLetter) : LengthDictionary Set.univ 1 :=
+  ⟨[a], ⟨⟨(fun _ => a), Set.mem_univ _, 0, by intro k; simp⟩, rfl⟩⟩
+
+private theorem split_bad : ¬ splitArena.Law splitRejected := by
+  intro h
+  have eq : oneLetter .c = oneLetter .u := h Set.univ 1 0 rfl
+  have impossible := congrArg Subtype.val eq
+  simpa [oneLetter] using impossible
+
+def splitRegistration : Registration splitArena (type_of% @split_word_injective) where
+  actual := splitActual
+  bridge := Iff.rfl
+  variation := ⟨@split_word_injective, splitRejected, split_bad⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨splitRejected, ?_, rfl, split_bad⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨Set.univ, ⟨1, 0⟩⟩, oneLetter .c, oneLetter .u, ?_⟩
+    intro h
+    have impossible := congrArg (fun y => y.1.val) h
+    simpa [splitActual, realize, splitWord, oneLetter] using impossible
+
+def split_word_injective_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.split_word_injective)
+      (type_of% (realize.{0,0,0,0,0} splitSignature
+        (fun _ p => splitWord p.1 p.2.1 p.2.2) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.Injection.split_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.Injection.splitRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨splitArena⟩
+  objectArena := .source ⟨splitArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source splitArena ⟨splitRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} splitSignature
+        (fun _ p => splitWord p.1 p.2.1 p.2.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+#print axioms splitRegistration
+#print axioms split_word_injective_registration
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.Injection
