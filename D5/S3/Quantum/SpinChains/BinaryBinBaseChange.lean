@@ -78,6 +78,84 @@ theorem bin_action (m : ℕ) :
   · intro w u
     refine ⟨?_, extend_basis K (Rbin m) w u, extend_basis K (Hbin m) w u⟩
     rw [binWeight, extend_basis]
-    by_cases hu : u = w <;> simp [LinearMap.mulLeft_apply, Pi.single_apply, hu, eq_comm]
+    simp only [LinearMap.mulLeft_apply, Pi.mul_apply, Rat.cast_mul]
+    by_cases hu : u = w <;> simp_all
+
+/-- The sum of the two weight actions on a tensor product. -/
+noncomputable def twoWeight (m n : ℕ) :
+    Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) :=
+  (binWeight K m).rTensor ((Fin n → Bool) → K) +
+    (binWeight K n).lTensor ((Fin m → Bool) → K)
+
+/-- The sum of the two raising actions on a tensor product. -/
+noncomputable def twoRaising (m n : ℕ) :
+    Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) :=
+  (binRaising K m).rTensor ((Fin n → Bool) → K) +
+    (binRaising K n).lTensor ((Fin m → Bool) → K)
+
+/-- The sum of the two lowering actions on a tensor product. -/
+noncomputable def twoLowering (m n : ℕ) :
+    Module.End K (((Fin m → Bool) → K) ⊗[K] ((Fin n → Bool) → K)) :=
+  (binLowering K m).rTensor ((Fin n → Bool) → K) +
+    (binLowering K n).lTensor ((Fin m → Bool) → K)
+
+private theorem tensor_commutator {V W : Type*}
+    [AddCommGroup V] [Module K V] [AddCommGroup W] [Module K W]
+    (a c : Module.End K V) (b d : Module.End K W) :
+    (a.rTensor W + b.lTensor V) * (c.rTensor W + d.lTensor V) -
+      (c.rTensor W + d.lTensor V) * (a.rTensor W + b.lTensor V) =
+      (a * c - c * a).rTensor W + (b * d - d * b).lTensor V := by
+  have cross (x : Module.End K V) (y : Module.End K W) :
+      x.rTensor W * y.lTensor V = y.lTensor V * x.rTensor W := by
+    change (x.rTensor W).comp (y.lTensor V) = (y.lTensor V).comp (x.rTensor W)
+    rw [LinearMap.rTensor_comp_lTensor, LinearMap.lTensor_comp_rTensor]
+  simp only [LinearMap.rTensor_sub, LinearMap.lTensor_sub,
+    LinearMap.rTensor_mul, LinearMap.lTensor_mul, add_mul, mul_add]
+  rw [cross a d, cross c b]
+  abel
+
+private theorem tensor_relations {V W : Type*}
+    [AddCommGroup V] [Module K V] [AddCommGroup W] [Module K W]
+    {h e f : Module.End K V} {h' e' f' : Module.End K W}
+    (a : Sl2Relations h e f) (b : Sl2Relations h' e' f') :
+    Sl2Relations (h.rTensor W + h'.lTensor V) (e.rTensor W + e'.lTensor V)
+      (f.rTensor W + f'.lTensor V) := by
+  constructor
+  · rw [tensor_commutator, a.ef, b.ef]
+  · rw [tensor_commutator, a.he, b.he]
+    simp only [LinearMap.rTensor_smul, LinearMap.lTensor_smul, smul_add]
+  · rw [tensor_commutator, a.hf, b.hf]
+    simp only [LinearMap.rTensor_smul, LinearMap.lTensor_smul, smul_add]
+
+/-- The two-bin relations and their action on the tensor delta basis. -/
+theorem two_bin_action (m n : ℕ) :
+    Sl2Relations (twoWeight K m n) (twoRaising K m n) (twoLowering K m n) ∧
+    ∀ (w : Fin m → Bool) (v : Fin n → Bool),
+      twoWeight K m n (Pi.single w 1 ⊗ₜ[K] Pi.single v 1) =
+        ((weight w : K) + (weight v : K)) • (Pi.single w 1 ⊗ₜ[K] Pi.single v 1) ∧
+      twoRaising K m n (Pi.single w 1 ⊗ₜ[K] Pi.single v 1) =
+        (fun u => (Rbin m (Pi.single w 1) u : K)) ⊗ₜ[K] Pi.single v 1 +
+        Pi.single w 1 ⊗ₜ[K] (fun u => (Rbin n (Pi.single v 1) u : K)) ∧
+      twoLowering K m n (Pi.single w 1 ⊗ₜ[K] Pi.single v 1) =
+        (fun u => (Hbin m (Pi.single w 1) u : K)) ⊗ₜ[K] Pi.single v 1 +
+        Pi.single w 1 ⊗ₜ[K] (fun u => (Hbin n (Pi.single v 1) u : K)) := by
+  have a := bin_action K m
+  have b := bin_action K n
+  refine ⟨tensor_relations K a.1 b.1, ?_⟩
+  intro w v
+  have hw (r : ℕ) (x : Fin r → Bool) :
+      binWeight K r (Pi.single x 1) = (weight x : K) • Pi.single x 1 := by
+    ext u
+    rw [(bin_action K r).2 x u |>.1]
+    by_cases hu : u = x <;> simp_all
+  have he (r : ℕ) (x : Fin r → Bool) :
+      binRaising K r (Pi.single x 1) = fun u => (Rbin r (Pi.single x 1) u : K) :=
+    funext fun u => ((bin_action K r).2 x u).2.1
+  have hf (r : ℕ) (x : Fin r → Bool) :
+      binLowering K r (Pi.single x 1) = fun u => (Hbin r (Pi.single x 1) u : K) :=
+    funext fun u => ((bin_action K r).2 x u).2.2
+  simp only [twoWeight, twoRaising, twoLowering, LinearMap.add_apply,
+    LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, hw, he, hf,
+    TensorProduct.smul_tmul, TensorProduct.tmul_smul, add_smul, and_self]
 
 end D5.S3.Quantum.SpinChains.BinaryBinBaseChange
