@@ -1253,3 +1253,69 @@ $$
 with the complete inner range and its sixth-power-free support included. A proof using de Faveri must therefore keep the whole compatible $d$-family (or pay and record the reduction to it); it cannot silently replace the fixed-$d$ input in the existing row estimate.
 
 Finally, the frozen carrier sums must be performed on the same actual realization. Independent optimization of the five carrier boxes would not establish a bound for the jointly constrained source. Until these reciprocity, sixth-power-free, profile, restoration, and joint-count steps are supplied, the $19/36$ figure is only a conditional interface calculation. It does not prove the native Robin estimate, Robin's inequality, or the Riemann hypothesis.
+
+### A joint contour target above the sixth-power pole
+
+The pure-power and complementary pieces should not be treated as two
+independent positive terms when their only singularity is the extracted
+$\zeta_F(6z)$ pole. For a fixed physical label and actual-order-six class,
+write the unsplit finite kernel as
+
+$$
+\mathscr F_{j,a}(z)=
+\sum_{(h,k)\in\Omega^a_{6,j}}
+c_j(h)\overline{c_j(k)}B_{hk}(z)L(z,\overline{\xi_{hk}}).
+$$
+
+On the initial absolute-convergence line this is the same finite
+Poisson expression as the sum of the pure sixth-power and complementary
+parts. The latter has the opposite residue at $z=1/6$, so the combined
+expression has no residue there. A contour stopped at
+
+$$
+\Re z=\frac16+\delta,\qquad \delta>0,
+$$
+
+would therefore avoid an artificial pole payment. This is an exact
+rearrangement of the meromorphic expression, not a positivity argument.
+
+The corresponding sufficient analytic input is a bound for the complete
+kernel, with the original convolution coefficients and all masks retained:
+
+$$
+\boxed{
+\int_{\mathbb R}|H_W(\tfrac16+\delta+it)|
+\,|\mathscr F_{j,a}(\tfrac16+\delta+it)|\,dt
+\ll_{\mathcal A,\delta,\varepsilon}
+(U_jK)^\varepsilon U_j^{\delta+1/6}K.
+}
+\tag{J}
+$$
+
+Indeed, the outside factor is $U_j^{1-z}$, so (J) pays the joint
+contour at the target scale $U_jK$ whenever the remaining length powers
+are compatible with the detector's actual $(D,N)$ pair. At the balanced
+case $U_j\asymp K$, the kernel target is of order
+$K^{7/6+\delta}$.
+
+This route has two precise boundaries. The absolute Rankin estimate in
+this card uses the weight
+$q_x^{-(1/2-\sigma)}$ and is proved only on
+$0<\sigma<1/6$; it cannot be continued across the pole by simply
+reusing its Euler-product convergence argument. Conversely, de Faveri's
+large sieve at $n=6$ gives the right $K^{7/6+\varepsilon}$ scale for a
+positive character moment at balanced lengths, but its stated theorem
+does not directly estimate $\mathscr F_{j,a}$: after the finite theta
+transform, a complementary dual prime leaves a moving quadratic twist
+coupled to the cubic Gauss factor. In a local finite-field model the
+resulting kernel changes from a Ramanujan distribution to a quadratic
+Gauss distribution; its total squared energy is unchanged, but the
+pointwise supplier is different.
+
+Thus (J) is the smallest joint target for the contour-above-pole route.
+It is not supplied by the existing positive-moment estimate, the
+pure-power consumer, or the absolute shifted-integral estimate. A proof
+of (J) would still need the detector's actual length coverage and the
+final signed Robin restoration; neither follows from residue cancellation
+alone. Until those steps are proved, the Robin and Riemann-hypothesis
+conclusions remain open.
