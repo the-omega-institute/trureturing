@@ -864,3 +864,127 @@ have a diverging lower bound.
 
 These are paper applications of the named suppliers, without Lean
 verification or a claim of literature originality.
+
+## The complete original-window head may carry the removal allowance
+
+Keep the entire improper integral in CR16 and all its original zero
+coefficients, actual real parts, multiplicities, elementary correction
+and endpoint conventions. For an admissible moving-clock cutoff write
+a complete finite-head upper enclosure as
+
+$$
+\begin{aligned}
+U(B,T)={}&s_B\left[
+2\operatorname{Re}\sum_{0<\operatorname{Im}\rho\le T}
+ m_\rho F_B(\rho)+R_{\rm elem}(B)\right]
++E_{\rm full}(B,T),\\
+-s_BI_\psi(B)&\le U(B,T).
+\end{aligned}
+$$
+
+Here $F_B$ is the [supplier's original coefficient (M1)](../ArithSums/nicolas2025comparison.md#a-fixed-positive-scale-mixture-cannot-remove-the-functional-equation-weight)
+with its variable $A$ set to this same $B$, and $R_{\rm elem}(B)$ is
+that supplier's pole-and-trivial-zero correction, with its positive
+normalized sign retained. The [existing signed suffix contract
+(J1)--(J6)](../ArithSums/nicolas2025comparison.md#a-signed-infinite-height-allowance-from-the-existing-landau-formula)
+applies for $B\ge e^2$ and $T\ge8$. Its signed prime-power main term
+keeps its displayed sign. The [moving cut $T=B^{1/4}\log B$](../ArithSums/nicolas2025comparison.md#a-moving-cut-makes-this-signed-suffix-allowance-tend-to-zero)
+pays an asymptotically vanishing suffix allowance; it does not bound
+the remaining head. The complete $E_{\rm full}$ must pay every omitted suffix, coefficient
+approximation and enclosure error exactly once in the supplier's actual
+domain. Exact coefficients introduce no coefficient-approximation
+error. A symbolic remainder or a finite verified zero range does not
+establish this upper-enclosure contract at arbitrary moving clocks.
+
+CR20 now allows the still-unproved pointwise upper target
+
+$$
+U(B,T)\le M+\kappa\frac{\log p}{\sqrt B}
+\tag{CR21}
+$$
+
+with one fixed finite $M\ge0$ and $0\le\kappa<1$. It is also sufficient to
+control one complete original window jointly. Keep $p_0<\cdots<p_m$,
+$\delta_i=\log p_{i+1}-\log p_i>0$ for $0\le i<m$, and
+$L_X=\sum_{i=0}^{m-1}\delta_i$. The final label $p_m$ remains the
+original window boundary. For each allowed assignment of maximizing
+ties define
+
+$$
+V_X^{\rm lag}=\sum_{i=0}^{m-1}\delta_i
+\frac{\log p_i}{\sqrt{B_i}},\qquad B_i=\log u_i.
+$$
+
+The same positive weights applied to CR20 give
+
+$$
+\sum_{i=0}^{m-1}\delta_i[-s_{B_i}I_\psi(B_i)]
+\ge\kappa V_X^{\rm lag}
++\frac{d(1-\kappa)}{16}X^{1/2-b}\log X\,L_X.
+\tag{CR22}
+$$
+
+A sufficient obligation is: for fixed finite $M\ge0$ and
+$0\le\kappa<1$, beyond every common
+analytic/source start, some original qualifying **full** window has the
+following property. Every allowed assignment of maximizing ties admits
+admissible cutoffs $T_i$, with complete remainder contracts at those same
+cores, satisfying
+
+$$
+\boxed{
+\sum_{i=0}^{m-1}\delta_iU(B_i,T_i)
+\le ML_X+\kappa V_X^{\rm lag}.}
+\tag{CR23}
+$$
+
+The quantifier order is
+
+$$
+\begin{gathered}
+\exists\,M\ge0,\ \kappa\in[0,1)\quad
+\forall\,\text{common finite starts}\quad
+\exists\,\text{qualifying original full window}\quad\\
+\forall\,\text{allowed maximizing-tie assignments}\quad
+\exists\,\text{admissible cutoffs and complete contracts}.
+\end{gathered}
+$$
+
+The starts do not depend on individual labels or
+ties. CR22--CR23 would imply
+
+$$
+\left[\frac{d(1-\kappa)}{16}X^{1/2-b}\log X-M\right]L_X\le0,
+$$
+
+contradicting the original $X\to\infty$ and $L_X>0$. No thinning,
+free-center mean or favorable tie selection enters the comparison.
+CR21 and CR23 are sufficient conditions, not necessary ones; neither
+has been proved.
+
+### Any fixed quadratic lag is already absorbed by this height gain
+
+For the same original sources put $z_{p,u}=t^2/B^{3/2}$. The exact
+relation
+
+$$
+z_{p,u}=\frac tBv_{p,u}
+\tag{CR24}
+$$
+
+and CR17 show that, for every fixed finite $C\ge0$ and fixed
+$0<\kappa<1$, one common eventual start makes
+$Cz_{p,u}\le\kappa v_{p,u}$ for every original label and tie. The same
+comparison holds after applying the original positive window weights.
+Thus the original full-height gain already permits any fixed quadratic
+coefficient in the head upper target, including $1/2$ and larger
+constants. No estimate of the own-price defect is needed for that
+consumer. This is a relative comparison; it asserts no divergence of
+either lag allowance.
+
+The linear allowance is a supplier-relative application of the original
+removal height and actual stock/PNT correspondence. The complete moving
+finite-head upper condition, cofinal joint upper condition, original
+PG15 exterior sign, boundary $\kappa=1$ and RH remain unproved. No
+literature originality, new pressure decomposition or Lean verification
+is claimed.
