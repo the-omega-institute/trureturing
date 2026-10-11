@@ -553,7 +553,9 @@ private lemma trajectory_prefix_mass {A : Type*} [Fintype A] [Nonempty A]
       rw [ht]
       congr 1
       simp only [w, List.get_ofFn, Fin.val_cast]
-    _ = _ := by rw [← Finset.prod_range]; simp only [w, List.length_ofFn]
+    _ = _ := by
+      rw [← Finset.prod_range (fun i : ℕ => p (List.ofFn (fun j : Fin i => x j)) (x i))]
+      simp only [w, List.length_ofFn]
 
 private lemma finite_observation_density {W B : Type*} [MeasurableSpace W]
     [MeasurableSpace B] [MeasurableSingletonClass B]
