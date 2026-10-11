@@ -447,5 +447,101 @@ theorem native_departure_label_count {M q s : ℕ} (S : Support M q) (e : Experi
       exact hjsite
   simpa only [Fintype.card_coe] using Fintype.card_congr (Equiv.ofBijective f hf)
 
+
+/-- An erased site contributes to the positive or negative departure block
+according to its successor in the complete collapsed history. -/
+def isSignedDeparture {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
+    (z : ℝ) (k : SignalSites S e o) : Prop :=
+  ∃ j : Fin s, departureSite s e j = k.val ∧
+    chi (siteEquiv M s e o (successorSite s e j)) = z
+
+private theorem signed_departure_disjoint {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (k : SignalSites S e o) :
+    ¬ (isSignedDeparture S e o 1 k ∧ isSignedDeparture S e o (-1) k) := by
+  rintro ⟨⟨j, hj, hpos⟩, ⟨l, hl, hneg⟩⟩
+  have h : j = l := departureSite_injective s e (hj.trans hl.symm)
+  subst l
+  linarith
+
+/-- The three blocks are actual positive departures, actual negative
+ departures, and all remaining erased sites. -/
+def signedDepartureBlocks {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) [Fintype (Sites s e)] : Fin 3 → Finset (SignalSites S e o) := by
+  classical
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  exact ![univ.filter (isSignedDeparture S e o 1),
+    univ.filter (isSignedDeparture S e o (-1)),
+    univ.filter fun k => ¬ isSignedDeparture S e o 1 k ∧
+      ¬ isSignedDeparture S e o (-1) k]
+
+private def signedBlockSiteEquiv {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) [Fintype (Sites s e)] :
+    (({k // k ∈ signedDepartureBlocks S e o 0} ⊕
+      {k // k ∈ signedDepartureBlocks S e o 1}) ⊕
+      {k // k ∈ signedDepartureBlocks S e o 2}) ≃ SignalSites S e o := by
+  classical
+  refine
+    { toFun := Sum.elim (Sum.elim Subtype.val Subtype.val) Subtype.val
+      invFun := fun k => if hp : isSignedDeparture S e o 1 k then
+        Sum.inl (Sum.inl ⟨k, by simp [signedDepartureBlocks, hp]⟩)
+        else if hn : isSignedDeparture S e o (-1) k then
+          Sum.inl (Sum.inr ⟨k, by simp [signedDepartureBlocks, hn]⟩)
+        else Sum.inr ⟨k, by simp [signedDepartureBlocks, hp, hn]⟩
+      left_inv := ?_
+      right_inv := ?_ }
+  · rintro ((k | k) | k)
+    · have hk : isSignedDeparture S e o 1 k.val := by
+        simpa [signedDepartureBlocks] using k.property
+      simp [hk]
+    · have hk : isSignedDeparture S e o (-1) k.val := by
+        simpa [signedDepartureBlocks] using k.property
+      have hp : ¬ isSignedDeparture S e o 1 k.val :=
+        fun hp => signed_departure_disjoint S e o k.val ⟨hp, hk⟩
+      simp [hp, hk]
+    · have hk : ¬ isSignedDeparture S e o 1 k.val ∧
+          ¬ isSignedDeparture S e o (-1) k.val := by
+        simpa [signedDepartureBlocks] using k.property
+      simp [hk.1, hk.2]
+  · intro k
+    split_ifs <;> rfl
+
+/-- A canonical finite enumeration of the actual two departure blocks and
+remaining coordinates. No externally chosen partition is assumed. -/
+def nativeDepartureEnumeration {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) [Fintype (Sites s e)] :
+    SignalSites S e o ≃
+      ((Fin (signedDepartureBlocks S e o 0).card ⊕
+        Fin (signedDepartureBlocks S e o 1).card) ⊕
+        Fin (signedDepartureBlocks S e o 2).card) := by
+  classical
+  exact (signedBlockSiteEquiv S e o).symm.trans
+    (Equiv.sumCongr
+      (Equiv.sumCongr (Fintype.equivFinOfCardEq (Fintype.card_coe _))
+        (Fintype.equivFinOfCardEq (Fintype.card_coe _)))
+      (Fintype.equivFinOfCardEq (Fintype.card_coe _)))
+
+/-- The two occupation words are obtained from the actual positive and
+negative departure sites of the native history. -/
+theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (ap am : Multiset {i : Fin M // i ∈ S.val})
+    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
+    (ham : am.card = (signedDepartureBlocks S e o 1).card) :
+    let kp := (signedDepartureBlocks S e o 0).card
+    let km := (signedDepartureBlocks S e o 1).card
+    let kr := (signedDepartureBlocks S e o 2).card
+    let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
+        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
+    conditionalFiberMass S r e o
+      ((A.map (labelBlockEquiv S e o kp km kr (nativeDepartureEnumeration S e o)).symm.toEmbedding).map
+        (fiberLabelEquiv S e o).symm.toEmbedding) =
+      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
+        (q : ℝ) ^ (kp + km) := by
+  exact native_multinomial_label_blocks S r e o hq hqm hr hr1 ha ha1 _ _ _
+    (nativeDepartureEnumeration S e o) ap am hap ham
+
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
