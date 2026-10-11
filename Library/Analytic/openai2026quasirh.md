@@ -2159,3 +2159,250 @@ $$
 同一所引 Hecke-to-Dirichlet transfer 给出对应全部有限阶 Hecke／Dirichlet targets 及 $\zeta$ 在严格半平面 $\Re s>\theta$ 的条件无零结论，覆盖全部模数和高度；不包含边界。这里的新增内容是完整改尺度消费，源 theta、Gram、moments、detector、certificate 和 continuation 均为复用输入，不主张历史原创性。
 
 隐常数、最终校准和足够大的起始阈值可依赖目标特征；没有认证显式数值阈值或共同起始阈值、整篇源证明或新增 Lean 核验。该条件半平面仍远于 $1/2$，不证明 RH；原选定 Robin 极值整数的完整有符号响应、实际零点及完整系数、正 $r_A$ 和严格核心仍未证明。
+
+## 正素槽四阶矩的固定参数范围扩展
+
+本节为仓内推导，复用固定[主稿快照](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex)的完整有限 Gauss 公式、smooth calculus、logarithmic control、natural reflection、两次变换的共同系数关系及 centered lattice cancellation。它们作为解析前提；不以待扩展的 `lem:plain` 本身作新范围的前提。下面通过替换其反射比较余量，接续原有限归纳。完整解析推导尚无本仓 Lean 认证。
+
+[Liu 的来源卡](liu2026quasirh.md)所引 [arXiv:2610.12234v1](https://arxiv.org/html/2610.12234v1)在引言明确提到越过 $[3/4,1]$ 可能进一步改善其结果，并说不研究该方向；其 Lemma 9.3 与 §18 仍使用原范围。本节不重算其已有无零边界或固定参数计数。所查来源未供应下述扩展，不据此主张全球原创性。
+
+### 保留原正槽合同
+
+固定
+$$
+\frac12<\kappa_0\le1,\qquad \kappa\in[\kappa_0,1].
+$$
+沿用源文 `lem:plain` 前的实际字符 $\psi_k$、有效行宽 $M=m+q$、自然及冗余零延拓、固定素集 $\mathcal S$、有限 ray 字符群 $\Theta$ 和行集 $\mathcal R_z$。正槽时 $\mathcal R_z$ 排除诱导字符属于 $\Theta$ 的行；排除针对诱导字符，而不是零延拓表示之间的相等。
+
+保留两个原 centrally normalized plain 因子及全部正素槽
+$$
+Q=\prod_{i\in\mathcal I}Q_{\psi_k,i},\qquad
+z=\sum_{i\in\mathcal I}z_i>0,
+\qquad A=n_1+n_2+z.
+$$
+$n_1,n_2,z_i\ge0$。槽的底层素支持在施加共同掩码与行零延拓之前两两不交；它们与 plain 变量的重叠仍保留。每槽系数仍为固定有限 $\Theta$ 字符线性组合，与 $Z$ 和行无关。所有原 moving twists、moduli、固定外标签及 polynomial-size 掩码均保留，不改为一个目标字符或选出的子族。
+
+在上述源估计成立且
+$$
+n_1+n_2+6\kappa z=A+(6\kappa-1)z\le M
+$$
+时，下面的归纳给出原形式的条件估计
+$$
+\boxed{
+\sum_{k\in\mathcal R_z}
+\left|S_{\psi_k}(n_1;W_1)S_{\psi_k}(n_2;W_2)Q\right|^2
+\ll Z^{M+\varepsilon}.}
+$$
+$\kappa<1$ 时仍要求源定义 $\beta_*$ 所涵盖的 $F=\mathbb Q(\sqrt{-3})$ 上全部本原有限阶 Hecke 字符族的
+$$
+\beta_*\le s_\kappa=\frac{1+\kappa}{2};
+$$
+$\kappa=1$ 使用原绝对素计数，不要求无零前提。长度参数处在预先指定的有界集。对每个 $\varepsilon>0$，先选择一个在 $[\kappa_0,1]$ 上一致的槽 mesh $\eta>0$，再允许任意固定有限槽数及满足 $z_i\le\eta$ 的槽系；mesh 不依赖槽数。有限 seminorm、poly-height 阶、常数和充分大阈值可依赖固定算术数据与槽数，但在原 moving labels、moduli、masks 和实际 heights 上一致。新增允许依赖的是固定 $\kappa_0$；不要求当 $\kappa_0\downarrow1/2$ 时一致。
+
+零槽估计直接复用原供应，不作为新增范围成果。每次归纳变成零槽时，预先规定有界范围内的非负 plain 长度不受 affine 容量限制，也没有导子下界；不声称长度趋于无穷时常数仍一致。
+
+### 替换反射比较的正余量
+
+令
+$$
+d_0=6\kappa_0-1>2,\qquad d=6\kappa-1\ge d_0,
+\qquad g_0=\frac{d_0-2}{6d_0}>0.
+$$
+按原归纳顺序，在扩展参数范围内，每个正槽 band 先由两次变换、严格较小宽度的扩展归纳假设及例外行体积界完成 $A\le5M/6$ 的未中心化范围。对于 $A>5M/6$，容量给出
+$$
+d_0z\le dz\le M-A<\frac M6,
+\qquad z<\frac{M}{6d_0}<\frac M{12}.
+$$
+因此 $A-z>3M/4>2L$，其中仍取 $L=M/4$；比较矩形的两个 plain 长度均至少为 $L$。
+
+若一个原 plain 因子长 $b<L$，反射另一因子；否则引入 plain 长度 $L,A-z-L$ 的同乘积比较，并在单独估计比较时反射长因子。原 `centered-reflection-length` 包含实际 clipped 尺度、unit-box multiplier 及全部 discarded tails，给出
+$$
+A_{\rm comp}\le\frac32M-A+2z+\xi.
+$$
+于是两条所需边界分别满足
+$$
+\begin{aligned}
+A_{\rm comp}
+&<\frac23M+\frac{M}{3d_0}+\xi
+=\frac56M-g_0M+\xi,\\
+A_{\rm comp}+dz
+&\le\frac52M-2A+2z+\xi
+<\frac56M+\frac{M}{3d_0}+\xi
+=M-g_0M+\xi.
+\end{aligned}
+$$
+这替换原 `comparison-uncentered-margin` 中的粗界 $M/15$，而不改变反射、共同 mask 或比较矩形本身。对原宽度 floor $\rho>0$，取
+$$
+0<\xi<\frac{g_0\rho}{2}.
+$$
+每个 $M>\rho$ 的 retained 比较便有两份至少 $g_0M/2$ 的余量，能调用同宽度已经完成的未中心化范围。所需 reflection／support 阈值在固定槽数后选取，不把逐槽误差累加成 $N\eta$。
+
+### 原有限归纳的其余支付
+
+素槽估计使用的是 `logarithmic-control` 的 global 部分，其实际前提允许 $a\in[1/2,1]$；固定 $s_\kappa\ge\beta_*$ 后，global 常数只依赖规定 contour displacement 和幂损失，并无 $s_\kappa\ge7/8$ 条件。对有限 $\Theta$ 展开，本原诱导字符 $\psi\notin\Theta$ 保证每个 $\psi\vartheta_{ij}$ 非主。原 Mellin 移动、全部素幂补偿和 annular twist 估计因此仍给出
+$$
+|Q_{\boldsymbol\omega}|^2
+\ll Z^{\kappa z+\varepsilon_1}
+p_j(\boldsymbol W)^b(1+|\boldsymbol\omega|)^h,
+$$
+且 contour 位移的平方指数成本仍是 $2ez$，与槽数无关。有限阶及高度成本留在 Fourier 估计中，不塞入 $Z$ 的 leading 指数。$\kappa=1$ 仍以绝对计数接入。
+
+固定额外 mask 的 simultaneous erasure 沿用原 `2.1a` 与 `prime-mask-erasure`：提取 plain divisor 和冻结完整槽后，$A+dz$ 不增；诱导字符不变、所有原自然零支持保留。实际非空 subunit 尺度先按原规则 rescale，再调用矩估计。若没有 live 槽，改用原零槽供应。deleted Euler-factor 质量及冻结槽质量按原固定数据、固定槽数分配任意小幂。
+
+宽度 $M\le\rho$ 的终端只需要
+$$
+6\kappa z\le M,\qquad \kappa z\le M/6.
+$$
+原辅助界 $z\le2M/9$ 无需使用；正槽增加的终端损失仍至多 $\rho/6$。零槽 padded core、先完成零槽 bands 再完成正槽 bands 的顺序不变。
+
+对两次完整有限变换所产生的非例外 child，保留原 actual normalization、common mask、全部 sixth-power 行及 `centered-clipped-rectangle`。容量 deficit 为
+$$
+F_{\rm act}
+=\bigl(A_{\rm act}-M'_{\rm act}+dz_{\rm act}\bigr)_+.
+$$
+按完整槽依次移除，取第一个达到 $F_{\rm act}/(6\kappa)$ 的前缀；若不足则移除全部。总移除长 $d_z$ 满足
+$$
+d_z\le\min\left\{z_{\rm act},
+\frac{F_{\rm act}}{6\kappa}+\eta\right\},
+\qquad \kappa d_z\le F_{\rm act}/6+\kappa\eta.
+$$
+原 actual child 的共同支持预算仍给出
+$$
+F_{\rm act}\le6(w+\ell)+\delta_{{\rm fr},1}+2\theta_N,
+\qquad \Delta_{\rm child}\ge w+\ell.
+$$
+于是整槽价格至多 $\Delta_{\rm child}+\delta_{{\rm fr},1}/6+\theta_N/3+\eta$；与 `centered-clipped-shell` 合并，原严格边的额外成本仍至多
+$$
+\delta_{{\rm fr},2}+\delta_{{\rm fr},1}/6+\eta+7\theta_N/3.
+$$
+这里 $\theta_N=H_N/\log Z$ 是先聚合再比较的一份 support 误差，最终阈值使它落入 $C_*\xi$。分母 $6\kappa$ 与素槽指数价格 $\kappa$ 在同一实际 child 上抵消；这一支付只需 $\kappa>0$，无需旧 $3/4$ 下界。仍有 live 槽且修复容量后，调用严格较小宽度已完成的扩展正槽归纳假设；槽全部消失则调用原零槽供应。不向负完成长度外推矩定理。原归纳的宽度严格下降、两项 common-support savings 和 inverse amplification slope $5/6$ 不改变。
+
+对诱导字符属于 $\Theta$ 的例外 child，继续在取绝对值之前使用同一行、同一 mask、同一 norm power 的等乘积矩形主项消去。原 `2.18h` 与 `2.19` 给出
+$$
+A-\frac56M-\frac23v-(L-v)_+\le(A-M)_+.
+$$
+正槽容量仍保证 $A\le M$；零槽 padded core 仍有 $A-M\le\delta$。所以例外分支损失仍分别由 $3\sigma$ 或 $\delta+3\sigma$ 支付，不删除例外行或 moving radical。
+
+原有限归纳的 aggregate support perturbations 只使用 $0\le d\le5$，在 $[\kappa_0,1]$ 上保留。先固定宽度 floor、step 及
+$$
+D=2+\left\lceil2M_{\max}/\sigma\right\rceil,
+$$
+再让 $\eta,\xi,\varepsilon_0$ 同时满足原有限深度误差包络与新增 $\xi<g_0\rho/2$。各 surviving 槽子集用同一 mesh；仅局部 divisor／冻结槽的小幂 shares、有限 kernel／height 阶、常数和最终阈值允许依赖原固定槽数 $N$。按原证明向后选择有限 seminorm 阶后，再选外部 Fourier-tail 阶，不以增大外部阶改变已定内部高度阶。如此接续原 `Completion of the finite induction`，得到上述条件正槽估计的完整量词，而不重证原零槽估计。
+
+固定 $\kappa_0>1/2$ 是这里获得统一反射正余量的条件。$\kappa=1/2$ 时 $g_0=0$，当前论证不给出所需 uniform comparison margin；这不反驳端点矩估计。没有供应端点、$\kappa_0\downarrow1/2$ 的统一 mesh、完整解析 Lean 证明、新无零半平面或 Robin／RH 结论。
+
+### 对已知无零输入的容量接口
+
+若一份完整来源已供应上述源定义所含全部 Hecke 字符族的 $\beta_*\le B$，其中 $3/4<B<1$，可固定
+$$
+\kappa_B=2B-1>1/2.
+$$
+选任意固定 $\kappa_0\in(1/2,\kappa_B]$，便有上述正槽合同所需的 $\beta_*\le(1+\kappa_B)/2$。在原联合 witness 计数中，两个同长 plain 因子取长 $m$、有效行宽取 $1$，连续 affine 容量上限为
+$$
+z_P(m;B)=\frac{1-2m}{6(2B-1)},\qquad 0\le m\le1/2.
+$$
+当 $B<7/8$ 时，对每个 $m<1/2$，它严格大于固定 $\kappa=3/4$ 的原容量；在 $m=1/2$ 时两者均为零。容量比为
+$$
+\frac{z_P(m;B)}{z_P(m;7/8)}
+=\frac{3/4}{2B-1},\qquad m<1/2.
+$$
+这不保证该上限可由某份实际槽系达到；整槽选择仍需符合新 mesh、可用总槽长、rounding 及严格误差预留。这是扩展供应的参数消费，不是新增无零结论。特别地，若采用 Liu 预印本所述的完整族界
+$$
+B=B_{\rm Liu}=\frac{1507-2\sqrt{921}}{1653},
+$$
+则使用 $\kappa_B=(1361-4\sqrt{921})/1653$；不把本仓较弱的条件半平面当作当前最佳文献界，也不把 Liu 已有改进重新计作项目成果。
+
+更大的容量仍须在同一实际探针的全部 high／low 行、主信号、profile、共同掩码和 finite-height accounting 中一起消费，才可能改变无零边界。单独优化容量或重算已知平衡方程不能承担这份解析回接；原 inverse slope $5/6$ 及其支付并未改善。这里既未完成该 high／low 再比较，也未证明仓内既定 Robin 路线针对原极值族的有符号目标
+$$
+[-I_\psi(A)]_+=o(A^{-\eta_{\rm R}}),
+\qquad 0<\eta_{\rm R}<1/2.
+$$
+$\eta_{\rm R}$ 为该路线已经固定的原指数，不随本节的槽 mesh 重选；$A$ 与 $I_\psi$ 使用 [Nicolas／Robin 对应条目](../ArithSums/nicolas2025comparison.md)的原定义。后者仍要求同一实际对象的完整带符号系数、素幂、端点与 collisions；非负四阶矩上界不自动控制它的符号。五模式 FIB 地址、四相运输及收缩区间仍可复用为来源与观察语言，但它们不替代这一解析桥梁。
+
+### 同字符计数的消费与比较余量
+
+下面复用 Liu v1 的 Proposition 18.1、Proposition 18.2、§23 和 Proposition 3.1，核对扩展容量的下游用途。这里只推导这些既有公式在扩展参数下的条件性包络诊断，不重新优化其预印本所述边界，也不将公式应用计为新增数学定理。解析前提及实际类的可实现性没有由以下代数核对认证。
+
+在同一原 sixth-power-free 元行集合 $\mathcal B$、同一字符、presentation、共同掩码和零延拓上，两矩给出的上界仍为
+$$
+\#\mathcal B\ll
+U^{1-\delta r-2\bar g z+\varepsilon}(1+T_1)^A,
+\qquad
+\#\mathcal B\ll
+U^{1-2\delta m-2\bar g z+\varepsilon}(1+T_1)^A.
+$$
+这里 $\delta=2a-1$、$\bar g=x\delta$，短检测参数满足 $1\le t\le3/2$、$t-1/2\le r\le1$、$m=t-r$。两个估计可以在同一行集合上分别选择合格素槽；扩展普通矩只把其容量改为
+$$
+z_S\le c_\kappa(1-2m),\qquad c_\kappa=\frac1{6\kappa}<\frac13.
+$$
+逆矩的 $z_M\le(1-r)/2$ 不变。两侧仍各自支付 $z_{\rm sup}=\ell/d$ 的实际可用长度、严格 moment reserve、单槽 rounding 和 height costs；实际 $\kappa$ 还须满足前节的完整族无零前提，不能仅凭所需容量自行选取。
+
+为诊断公式的最佳可能消费，暂时免除可用素长上限，并把 $c_\kappa$ 放宽到 $1/3$。这只是最乐观的比较，不调用未供应的 $\kappa=1/2$ 端点矩。固定声明矩形中的形式类
+$$
+\alpha=\frac56,\qquad \delta=\frac38,
+\qquad x=\frac12,
+\qquad a=\frac{11}{16},\quad \bar g=\frac3{16}.
+$$
+没有证明这个零类和幅度类在某个实际行尺度上出现。原 §23 的两份节省函数为
+$$
+F_I(r)=r+2x\min\{(1-r)/2,z_{\rm sup}\},
+$$
+$$
+F_S(r)=2m+2x\min\{c_\kappa(1-2m),z_{\rm sup}\}.
+$$
+在上述乐观比较中，交点
+$$
+r(t)=\frac{8t-1}{11},\qquad m(t)=\frac{3t+1}{11}
+$$
+在整个 $t\in[1,3/2]$ 上合法，且 $F_I=F_S=(5+4t)/11$。因此这套短、长检测公式的理想包络分别为
+$$
+R_s(t)=\frac{73-12t}{88},\qquad
+R_l(t)=1-\delta+(\alpha-\delta)(t-1)=\frac{4+11t}{24}.
+$$
+它们在 $t=175/157$ 相交。正权重 $121/157$、$36/157$ 消去 $t$，得到
+$$
+\inf_{1\le t\le3/2}\max\{R_s(t),R_l(t)\}
+=\frac{851}{1256}>\frac23.
+$$
+交点的 $r=113/157$、$m=62/157$ 位于短检测参数域内部，理想容量 $z_M=22/157$、$z_S=11/157$ 均为正；实际调用仍须从这些上限扣除严格预留。比较没有把零槽备用估计当成正槽端点供应。恢复较小 $c_\kappa$ 或有限素长 cap 只会减少节省，使该均匀包络的指数不减；零槽替代也不优于这个放宽。这里的下限约束的是这些公式能供应的均匀指数 $R_{\rm env}$，不是实际 $\#\mathcal B$ 的下界，也不排除别的计数估计供应较小指数。
+
+比较余量必须使用原归一化。由 Proposition 18.2，任意尺度的非主行上界是
+$$
+Z^{C(B)+E_B(d)+\varepsilon}
+=Z^{C(\beta_*)+E_B(d)-(\beta_*-B)+\varepsilon},
+$$
+$$
+E_B(d)=a-B+h(z_0-1/6)-al_y-\ell/2+\bar g\ell
++d(R_{\rm env}+\delta/2-z_0),\qquad h=1-l_x+\ell>0.
+$$
+本比较另外规定：在 $d=h$ 用这份公式对整个声明矩形提供相对 $C(\beta_*)$ 的正 saving，故要求 $E_B(h)<\beta_*-B$。这份均匀合同不由实际类必然出现推得，也不声明每个合法尺度选择都需要它。在上述形式类，仅用 $R_{\rm env}\ge2/3$ 就有
+$$
+E_B(h)\ge H_{\rm env}-B,\qquad
+H_{\rm env}=\frac{11}{8}-\frac{11}{16}M+\frac38\ell,
+\qquad M=l_x+l_y.
+$$
+因此这一均匀高行设计要求 $H_{\rm env}<\beta_*$，不能径直替换为 $H_{\rm env}\le B$。
+
+同样，Proposition 3.1 的 low 条件允许 $C(B)+\omega_0$，其中 $0<\omega_0<\beta_*-B$。§22 完整直接 majorant 中的两项
+$$
+L_0=\frac56+\frac{M}{12}-\frac{\ell}{6},\qquad
+L_K=\frac13+\frac{7M}{12}+\frac{\ell}{3}
+$$
+在使用这份余量时，比较要求为 $L_0,L_K\le B+\omega_0$；它们只是完整 majorant 的两个子约束，不足以独立供应 low。正权重 $43/63$、$8/63$、$12/63$ 给出恒等式
+$$
+\frac{43}{63}L_0+\frac8{63}L_K+\frac{12}{63}H_{\rm env}
+=\frac{55}{63}.
+$$
+在这三个明列的均匀包络约束下，得到
+$$
+\frac{55}{63}
+\le\frac{17(B+\omega_0)+4\beta_*}{21}
+<\beta_*.
+$$
+这限制的是此套设计可消费的输入 $\beta_*$。若另外采用较强设计 $L_0,L_K\le B$，则中间式为 $55/63\le(17B+4\beta_*)/21$；只有再要求 $E_B(h)\le0$，使三项都不超过 $B$，才得到 $B\ge55/63$。不能省略这些附加条件，把后者报告为所有 continuation 比较的目标边界下限。若要从任意小反设间隙推到目标边界下限，还须证明相同均匀域及相应设计在那些间隙下继续成立，不能把量词当成新的供应。
+
+这些是指定充分估计公式的范围核对，不是 $\beta_*$ 的实际下界，不证明形式最坏类可实现，也不构成 RH 或其他证明方法的障碍。仅删掉某个形式端点亦不自动改善计数；所需是实际类关系可消费的增益，或不经逐类绝对值的总和控制。
+
+实际再比较还要保留最低零类、小行、中间行、$d>h$ 延伸、大行和主项提取。Liu 的 Lemma 17.1／(17.1) 供应主 Euler 域的 $B$ 范围为 $[437/500,7/8]$，下面没有把它延伸；更低目标需要新的域供应，不能把现有供应范围称为域不可能扩大的定理。当前公式中的直接 majorant、逆矩及长检测的 $5/6$ 价格也未改进。
+
+因此，固定参数矩扩展已提供一个可调用的条件容量接口；继续仅调这个容量，不能替代上述联合预算核对。能回接原目标的未证输入仍是同一实际对象上的新联合估计、可消费的实际类约束，或保留完整符号与系数的总和控制。任何这些输入都须连同余量、全部行和主项一起支付；这里没有证明某个单独 $R<2/3$ 是原目标的必要条件，也未供应原固定 $\eta_{\rm R}$ 的 signed Robin 界。
