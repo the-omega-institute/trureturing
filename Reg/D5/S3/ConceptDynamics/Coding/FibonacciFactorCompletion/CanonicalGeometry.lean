@@ -286,3 +286,214 @@ def return_slope_control_registration :
 #print axioms return_slope_control_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal43
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal44
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature ℝ (fun _ => Bool → ℝ) (fun _ => ℝ)
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ a A => canonicalAffineLo A a) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (A : Bool → ℝ) (a : ℝ) (ha : -1 < a) (ha1 : a < 1),
+    let lo := r.readout () a A
+    let hi := canonicalAffineHi A a
+    lo ≤ hi ∧
+    (A false ≠ A true → lo < hi) ∧
+    (hi-lo = (max (A false) (A true)-min (A false) (A true)) /
+      (if 0 < a then 1-a else 1+a)) ∧
+    (if 0 < a then
+      lo = min (A false) (A true)+a*lo ∧ hi = max (A false) (A true)+a*hi
+     else
+      lo = min (A false) (A true)+a*hi ∧ hi = max (A false) (A true)+a*lo) ∧
+    (∀ i z, lo ≤ z → z ≤ hi → lo ≤ A i+a*z ∧ A i+a*z ≤ hi) ∧
+    (∀ l u : ℝ, l ≤ u →
+      (∀ i z, l ≤ z → z ≤ u → l ≤ A i+a*z ∧ A i+a*z ≤ u) →
+      l ≤ lo ∧ hi ≤ u)
+
+theorem source_bridge : (type_of% @canonical_affine_hull) ↔ sourceArena.Law actual :=
+  Iff.rfl
+
+theorem positive_law : sourceArena.Law actual := @canonical_affine_hull
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h (fun _ => 0) 0 (by norm_num) (by norm_num)).1
+  norm_num [rejected, realize, canonicalAffineHi] at impossible
+
+theorem sensitivity : Sensitivity sourceArena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+
+theorem actual_dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨0, (fun _ => 0), (fun _ => 1), ?_⟩
+  norm_num [actual, realize, canonicalAffineLo]
+
+def evidence : Registration sourceArena (type_of% @canonical_affine_hull) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := actual_dependence
+
+def canonical_affine_hull_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@canonical_affine_hull)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ a A => canonicalAffineLo A a) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal44.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal44.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ a A => canonicalAffineLo A a) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
+    definition := none
+    coordinates := #[1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "value"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms canonical_affine_hull_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal44
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun _ => Bool → List Label) (fun _ => ℝ)
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (s : Guard) (U : Bool → List Label) (L : ℕ) (hL : 0 < L)
+      (hlen : ∀ i, (U i).length=L) (hlegal : ∀ i, LegalWord s s (U i)),
+    let lo := r.readout () L U
+    let hi := canonicalReturnHi U L
+    lo ≤ hi ∧
+    (U false ≠ U true → lo < hi) ∧
+    (∀ z ∈ Set.Icc lo hi, InSupport s z) ∧
+    (∀ i z, lo ≤ z → z ≤ hi → lo ≤ compose (U i) z ∧ compose (U i) z ≤ hi) ∧
+    (∀ l u : ℝ, l ≤ u →
+      (∀ i z, l ≤ z → z ≤ u → l ≤ compose (U i) z ∧ compose (U i) z ≤ u) →
+      l ≤ lo ∧ hi ≤ u) ∧
+    (lo = hi ↔ U false = U true) ∧
+    (lo ∈ coefficientField ∧ hi ∈ coefficientField)
+
+theorem source_bridge : (type_of% @canonical_legal_return_hull) ↔ sourceArena.Law actual :=
+  Iff.rfl
+
+theorem positive_law : sourceArena.Law actual := @canonical_legal_return_hull
+
+/-- Both dependence states are genuine positive-length returns at the same guard. -/
+theorem witness_returns_legal :
+    LegalWord .G0 .G0 [Label.L0] ∧ LegalWord .G0 .G0 [Label.L2] := ⟨rfl, rfl⟩
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h .G0 (fun _ => [Label.L0]) 1 (by decide)
+    (by intro i; rfl) (fun _ => witness_returns_legal.1)).1
+  norm_num [rejected, realize, canonicalReturnHi, canonicalAffineHi, compose, branch, shift]
+    at impossible
+
+theorem sensitivity : Sensitivity sourceArena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+
+theorem actual_dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨1, (fun _ => [Label.L0]), (fun _ => [Label.L2]), ?_⟩
+  change canonicalReturnLo (fun _ => [Label.L0]) 1 ≠
+    canonicalReturnLo (fun _ => [Label.L2]) 1
+  have hgp : 0 < g := tail_arithmetic.2.2.2.1
+  have hg1 : g < 1 := tail_arithmetic.2.2.2.2.1
+  have hneg : ¬ (0 : ℝ) < -g := by linarith
+  have numerator : 0 < 1 - g := by linarith
+  have denominator : 0 < 1 - g ^ 2 := by nlinarith
+  have atZero : canonicalReturnLo (fun _ => [Label.L0]) 1 = 0 := by
+    norm_num [canonicalReturnLo, canonicalAffineLo, compose, branch, shift]
+  have atTwo : 0 < canonicalReturnLo (fun _ => [Label.L2]) 1 := by
+    simpa [canonicalReturnLo, canonicalAffineLo, compose, branch, shift, hneg,
+      sub_eq_add_neg] using div_pos numerator denominator
+  rw [atZero]
+  exact ne_of_lt atTwo
+
+def evidence : Registration sourceArena (type_of% @canonical_legal_return_hull) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := actual_dependence
+
+def canonical_legal_return_hull_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@canonical_legal_return_hull)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "value"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms canonical_legal_return_hull_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47
