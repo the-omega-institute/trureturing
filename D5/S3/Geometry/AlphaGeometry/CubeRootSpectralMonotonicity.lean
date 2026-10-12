@@ -10,6 +10,7 @@
 admission_basis: escape-witness
 escape_witness: strict_t_transform_any_pair
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
+DTR reading: DTR-Unregistered. No Reg mirror is delivered. The source-family registration lacks a law-violating variation, whole-family slot sensitivity, and actual observational-dependence proofs.
 The positive derivative and the interval transfer argument give strict T-transform increase. The polynomial certificates, including Q_pos_moments, are consumed bind-only helpers and are not admission witnesses.
 Direct frozen dependencies: the declaration identities below.
 F1: D5/S3/Geometry/AlphaGeometry/PairCurvatureInequality.P; declaration statement_id=sha256:a10d641664aaff2022a38c921d56a39f9764079f2823390614fec9abe97aa86d

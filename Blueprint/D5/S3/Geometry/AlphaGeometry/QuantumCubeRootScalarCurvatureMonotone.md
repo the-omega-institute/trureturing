@@ -82,6 +82,10 @@ $$\forall n : \mathbb{N} , 2 \leq n \to \forall A B : \operatorname{Matrix} (\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gibilisco-isola-2004-quantum-cube-root-scalar-curvature` (proved) by `D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gibilisco-isola-2004-quantum-cube-root-scalar-curvature","declaration_gid":"D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paolo Gibilisco; Tommaso Isola (2005). *On the monotonicity of scalar curvature in classical and quantum information geometry*. DOI: [10.1063/1.1834693](https://doi.org/10.1063/1.1834693). URL: <https://arxiv.org/abs/math-ph/0407007v2>.

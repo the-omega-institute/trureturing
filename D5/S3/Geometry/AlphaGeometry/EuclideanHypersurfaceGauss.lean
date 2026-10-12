@@ -10,6 +10,7 @@
 admission_basis: escape-witness
 escape_witness: ricci_of_structure
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
+DTR reading: DTR-Unregistered. No Reg mirror is delivered. The source-family registration lacks a law-violating variation, whole-family slot sensitivity, and actual observational-dependence proofs.
 Mixed partial symmetry and differentiated frame structure produce the Ricci contraction. The frozen PositiveSimplexGeometryAndMixing coordinate formulas are specific to its simplex metric; christoffel, ricci and scalarCurvature here accept a general metric. Specializing this metric to that frozen metric gives the same three formulas definitionally.
 Direct frozen dependencies: none.
 Per-declaration classification; non-proposition definitions carry no content claim.

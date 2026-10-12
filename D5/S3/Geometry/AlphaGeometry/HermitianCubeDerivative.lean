@@ -10,6 +10,7 @@
 admission_basis: escape-witness
 escape_witness: positive_hermitian_cube_derivative_equiv
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
+DTR reading: DTR-Unregistered. No Reg mirror is delivered. The source-family registration lacks a law-violating variation, whole-family slot sensitivity, and actual observational-dependence proofs.
 Spectral conjugation reduces the cubic derivative kernel to positive two-eigenvalue coefficients. Inverse smoothness uses the inverse function theorem and CFC identities. The normalized normal derivative is a consumed bind-only calculation from product and chain rules. Jordan traces and rank-one contractions are consumed bind-only helpers.
 Direct frozen dependencies: the declaration identities below.
 F1: D5/S3/Weil/ZetaLinear/PosIndex.rtrace; declaration statement_id=sha256:355bea6db8a05c6ea83567c442e2673342fec1402e04cd71a61594040520ce82

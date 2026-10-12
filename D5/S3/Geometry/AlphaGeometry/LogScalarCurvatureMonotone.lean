@@ -13,6 +13,7 @@ escape_witness: none (settling result uses open-problem-resolution)
 Direct frozen dependencies: none; all prerequisites are pinned Mathlib or this delivery.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15483
 Published owner escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
+Published owner DTR reading: DTR-Unregistered; the typed family bridge, law-violating variation, slot sensitivity and observational-dependence evidence remain missing.
 Per-declaration judgement form (definitions carry no new-content claim):
 proof_shape: antitoneSortPerm: bind-only; consumer=LogScalarCurvatureMonotone.sorted; witness=none
 proof_shape: antitone_comp_antitoneSortPerm: bind-only; consumer=LogScalarCurvatureMonotone.sorted_antitone; witness=none

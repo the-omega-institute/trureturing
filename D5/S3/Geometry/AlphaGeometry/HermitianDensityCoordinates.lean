@@ -10,6 +10,7 @@
 admission_basis: escape-witness
 escape_witness: hermitian_trace_one_chart_equiv
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
+DTR reading: DTR-Unregistered. No Reg mirror is delivered. The source-family registration lacks a law-violating variation, whole-family slot sensitivity, and actual observational-dependence proofs.
 The grid readout reconstructs all Hermitian entries; the trace equation recovers the final diagonal.
 Direct frozen dependencies: none.
 Per-declaration classification; non-proposition definitions carry no content claim.

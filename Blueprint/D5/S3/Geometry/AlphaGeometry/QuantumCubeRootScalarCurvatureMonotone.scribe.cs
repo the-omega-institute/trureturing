@@ -29,13 +29,14 @@ internal sealed class QuantumCubeRootScalarCurvatureMonotoneDocument : IScribeDo
                 "The intrinsic coordinate curvature equals the ratio of cube-root eigenvalue power sums. The normal derivative, Gauss contraction, and real Hermitian Jordan traces give this identity.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("D5/S3/Geometry/AlphaGeometry/QuantumCubeRootScalarCurvatureMonotone.result",
                 Seq(Forall, Sp, F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Sp, Comma, Sp, D(2), Sp, Leq, Sp, F.Id("n"), Sp, To, Sp, Forall, Sp, F.Id("A"), Sp, F.Id("B"), Sp, Colon, Sp, Op("Matrix"), Sp, Parenthesized(Seq(Op("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(Op("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Comma, Sp, F.Id("A"), Sp, InMacro, Sp, Op("densityStates"), Sp, F.Id("n"), Sp, To, Sp, F.Id("B"), Sp, InMacro, Sp, Op("densityStates"), Sp, F.Id("n"), Sp, To, Sp, Op("PositiveSimplexGeometryAndMixing"), Sp, Dot, Sp, Op("moreMixed"), Sp, Parenthesized(Seq(Op("eig"), Sp, F.Id("A"))), Sp, Parenthesized(Seq(Op("eig"), Sp, F.Id("B"))), Sp, To, Sp, Op("scal3"), Sp, F.Id("B"), Sp, Leq, Sp, Op("scal3"), Sp, F.Id("A"), Sp, Land, Sp, Parenthesized(Seq(Parenthesized(Seq(Neg, Sp, Exists, Sp, Op("pi"), Sp, Colon, Sp, Op("Equiv"), Sp, Dot, Sp, Op("Perm"), Sp, Parenthesized(Seq(Op("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, Op("eig"), Sp, F.Id("A"), Sp, F.Eq, Sp, Op("eig"), Sp, F.Id("B"), Sp, Circ, Sp, Op("pi"))), Sp, To, Sp, Op("scal3"), Sp, F.Id("B"), Sp, Lt, Sp, Op("scal3"), Sp, F.Id("A")))),
-                "The quantum cube-root pull-back curvature increases under the source majorization order, strictly unless the eigenvalue vectors differ by a permutation.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Note))
+                "The quantum cube-root pull-back curvature increases under the source majorization order, strictly unless the eigenvalue vectors differ by a permutation.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Note),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("gibilisco-isola-2004-quantum-cube-root-scalar-curvature"), ResolutionKind.Proved))
         )));
     private static DocumentBlock Node(string declaration, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(declaration.Replace('/', '-').Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(declaration), H(declaration.Split('.')[^1]),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Op(string value) => Seq(Operatorname, Grp(F.Id(value)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

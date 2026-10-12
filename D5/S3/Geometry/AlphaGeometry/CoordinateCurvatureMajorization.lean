@@ -10,9 +10,10 @@
 admission_basis: escape-witness
 escape_witness: spectral_moreMixed_strict
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
+DTR reading: DTR-Unregistered. No Reg mirror is delivered. The source-family registration lacks a law-violating variation, whole-family slot sensitivity, and actual observational-dependence proofs.
 The positive chain is the frozen LogScalarCurvatureMonotone.moreMixed_positive_chain. The permutation-or-strict-step invariant and its strict curvature consumer are the retained content.
 Direct frozen dependencies: the declaration identities below.
-F1: D5/S3/Geometry/AlphaGeometry/LogScalarCurvatureMonotone.moreMixed_positive_chain; declaration statement_id=sha256:85261b7dbef90edc1dfeaa04d502d356cfabef95c054273164db033282b48594
+F1: D5/S3/Geometry/AlphaGeometry/LogScalarCurvatureMonotone.moreMixed_positive_chain; declaration statement_id=sha256:f19ea714dc2955a566704efc00c1ce31eb52e2401a946d90a2c48a02479565f6
 F2: D5/S3/Geometry/AlphaGeometry/MajorizationTransfer.IsTTransform; declaration statement_id=sha256:42e55cff12a5c9f54284d516691bb017d9d7182af2419124015df29f459afefc
 F3: D5/S3/Geometry/AlphaGeometry/PairCurvatureInequality.P; declaration statement_id=sha256:a10d641664aaff2022a38c921d56a39f9764079f2823390614fec9abe97aa86d
 F4: D5/S3/Geometry/AlphaGeometry/PairCurvatureInequality.P_evalSum; declaration statement_id=sha256:7754691acf8f98426f2359983e218acaea91f977130664f3d71b32bc3cdf3e47
