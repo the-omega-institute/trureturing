@@ -5,13 +5,11 @@
    anchors: [mathlib/module/Mathlib.Logic.Relation]
    utility: none
    digest: Strict affine sectors parametrize the actual ordered-corner neighborhood. -/
-
 import D5.S3.Geometry.Gluing.ActualCornerPointPeriods
 import D5.S3.Geometry.Gluing.CyclicTriangleDisk
 import Mathlib.Algebra.Group.Fin.Basic
 import Mathlib.Topology.Homeomorph.Quotient
 import Mathlib.Topology.ContinuousMap.Basic
-
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators Fin.NatCast
@@ -20,25 +18,20 @@ open D5.S3.Geometry.Hyperideal.ActualCornerTransport
 open D5.S3.Geometry.Hyperideal.NoncommutativeCornerOrbits
 open D5.S3.Geometry.Gluing.ActualLinkCornerChains
 open D5.S3.Geometry.Gluing.ActualCornerPointPeriods
-
 variable {G Ω : Type*} [Group G] [MulAction Gᵐᵒᵖ Ω]
-
 /-- The radial cutoff is strict; the cutoff boundary remains in the ambient carrier. -/
 abbrev Sector := {p : ℝ × ℝ // 0 ≤ p.1 ∧ 0 ≤ p.2 ∧ p.1 + p.2 < 1}
-
 /-- Incoming and outgoing face coordinates retain their source ordering. -/
 def beta (c : Fin 4) (s : Fin 3) (p : ℝ × ℝ) (l : Fin 4) : ℝ :=
   if l = tip c s then 1 - (p.1 + p.2) / 2
   else if l = incoming c s then p.1 / 2
   else if l = outgoing c s then p.2 / 2 else 0
-
 private theorem beta_values (c : Fin 4) (s : Fin 3) (p : ℝ × ℝ) :
     beta c s p (corner c s) = 0 ∧
     beta c s p (tip c s) = 1 - (p.1 + p.2) / 2 ∧
     beta c s p (incoming c s) = p.1 / 2 ∧
     beta c s p (outgoing c s) = p.2 / 2 := by
   fin_cases c <;> fin_cases s <;> simp [beta,corner,tip,incoming,outgoing]
-
 private theorem beta_simplex (c : Fin 4) (s : Fin 3) (p : Sector) :
     (∀ l, 0 ≤ beta c s p.val l) ∧
     (∑ l, beta c s p.val l) = 1 ∧ 1 / 2 < beta c s p.val (tip c s) := by
@@ -50,7 +43,6 @@ private theorem beta_simplex (c : Fin 4) (s : Fin 3) (p : Sector) :
     split_ifs <;> linarith
   · fin_cases c <;> fin_cases s <;>
       simp [Fin.sum_univ_succ,beta,tip,incoming,outgoing] <;> ring
-
 private theorem dart_label (u v : G) {d e : Dart Ω} (h : DartRelated u v d e) :
     label (pairing u v) d.1 = label (pairing u v) e.1 := by
   induction h with
@@ -69,17 +61,14 @@ private theorem dart_label (u v : G) {d e : Dart Ω} (h : DartRelated u v d e) :
   | refl d => rfl
   | symm d e _ ih => exact ih.symm
   | trans d e f _ _ ih₁ ih₂ => exact ih₁.trans ih₂
-
 /-- The same actual corner class as the phase-zero seed. -/
 def vertex (u v : G) (c : Fin 4) (x : Ω) : Vertex (pairing (Ω := Ω) u v) :=
   label (pairing u v) (encode u v c (x,0)).1
-
 /-- The actual finite occurrence, with affine coordinates on its original face array. -/
 def rawPhi (u v : G) (c : Fin 4) (x : Ω)
     (z : Fin (3 * pointPeriod u v c x) × Sector) : Raw Ω :=
   ((occurrence u v c x z.1).1,
     beta c ((tour u v c)^[z.1.val] (x,0)).2 z.2.val)
-
 private theorem rawPhi_mem (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     (z : Fin (3 * pointPeriod u v c x) × Sector) :
     rawPhi u v c x z ∈ Carrier u v (vertex u v c x) := by
@@ -88,7 +77,6 @@ private theorem rawPhi_mem (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
   refine ⟨hv.1,hs.1,hs.2.1,?_⟩
   exact (dart_label u v (((actual_component_enumeration u v c x).2.2.1 _).mpr
     ⟨z.1,rfl⟩)).symm
-
 /-- The constructed strict-sector map into the genuine source neighborhood. -/
 def Phi (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     (z : Fin (3 * pointPeriod u v c x) × Sector) :
@@ -97,7 +85,6 @@ def Phi (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     (occurrence u v c x z.1).2,
     (beta_simplex c ((tour u v c)^[z.1.val] (x,0)).2 z.2).2.2,
     ((actual_component_enumeration u v c x).2.2.1 _).mpr ⟨z.1,rfl⟩⟩
-
 private theorem dominant_unique (b : Fin 4 → ℝ) (hn : ∀ l, 0 ≤ b l)
     (hs : (∑ l, b l) = 1) {k l : Fin 4} (hk : 1 / 2 < b k) (hl : 1 / 2 < b l) :
     k = l := by
@@ -108,7 +95,6 @@ private theorem dominant_unique (b : Fin 4 → ℝ) (hn : ∀ l, 0 ≤ b l)
     (by intro i _ _; exact hn i)
   simp [hne,hs] at hp
   linarith
-
 private theorem inverse_sector (c : Fin 4) (s : Fin 3) (b : Fin 4 → ℝ)
     (hj : b (corner c s) = 0) (hn : ∀ l, 0 ≤ b l)
     (hs : (∑ l, b l) = 1) (hk : 1 / 2 < b (tip c s)) :
@@ -123,7 +109,6 @@ private theorem inverse_sector (c : Fin 4) (s : Fin 3) (b : Fin 4 → ℝ)
   · funext l
     fin_cases c <;> fin_cases s <;> fin_cases l <;>
       simp [beta,corner,tip,incoming,outgoing,Fin.sum_univ_succ] at * <;> linarith
-
 /-- Every strict original representative has unique actual occurrence and affine coordinates. -/
 theorem actual_strict_coordinates (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
     Function.Bijective (Phi u v c x) := by
@@ -175,22 +160,16 @@ theorem actual_strict_coordinates (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
     apply Prod.ext
     · exact congrArg (fun d : Dart Ω => d.1) hi
     · exact hbeta
-
-
-
 /-- Strict sectors use the same positive cyclic indexing as the closed fan. -/
 instance sector_count_neZero (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
     NeZero (3 * pointPeriod u v c x) :=
   ⟨by have h := (actual_component_enumeration u v c x).1; omega⟩
-
 def swap (p : Sector) : Sector :=
   ⟨(p.val.2,p.val.1),p.property.2.1,p.property.1,
     by simpa only [add_comm] using p.property.2.2⟩
-
 /-- Only the positive cyclic seam generates the fan equivalence. -/
 def seam {n : ℕ} [NeZero n] (z w : Fin n × Sector) : Prop :=
   z.2.val.2 = 0 ∧ w = (z.1 + 1, swap z.2)
-
 private theorem phase_next (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     (i : Fin (3 * pointPeriod u v c x)) :
     (tour u v c)^[(i+1).val] (x,0) =
@@ -202,7 +181,6 @@ private theorem phase_next (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
   have he := Function.iterate_mod_minimalPeriod_eq (f := tour u v c) (x := (x,0))
     (n := i.val+1)
   simpa only [hp, Function.iterate_succ_apply'] using he
-
 private theorem phase_prev (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     (i : Fin (3 * pointPeriod u v c x)) :
     (tour u v c)^[(i-1).val] (x,0) =
@@ -210,7 +188,6 @@ private theorem phase_prev (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
   apply (tour u v c).injective
   rw [Equiv.apply_symm_apply, ← phase_next]
   simp only [sub_add_cancel]
-
 private theorem affine_forward (u v : G) (c : Fin 4) (z : Ω × Fin 3) (p : Sector) [Finite Ω]
     (hb : p.val.2 = 0) :
     move u v (outgoing c z.2) ((encode u v c z).1,beta c z.2 p.val) =
@@ -232,7 +209,6 @@ private theorem affine_forward (u v : G) (c : Fin 4) (z : Ω × Fin 3) (p : Sect
     funext l
     fin_cases c <;> fin_cases s <;> fin_cases l <;>
       simp [move,beta,swap,tip,incoming,outgoing,facePerm,tour,hb]
-
 private theorem affine_backward (u v : G) (c : Fin 4) (z : Ω × Fin 3) (p : Sector) [Finite Ω]
     (ha : p.val.1 = 0) :
     move u v (incoming c z.2) ((encode u v c z).1,beta c z.2 p.val) =
@@ -255,7 +231,6 @@ private theorem affine_backward (u v : G) (c : Fin 4) (z : Ω × Fin 3) (p : Sec
     funext l
     fin_cases c <;> fin_cases s <;> fin_cases l <;>
       simp [move,beta,swap,tip,incoming,outgoing,facePerm,tour,ha]
-
 /-- The full guarded source generator is exactly a positive seam or its reverse.
 The period is the point period, including its wrap, and the corner remains ordered. -/
 theorem actual_step_iff (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
@@ -333,7 +308,6 @@ theorem actual_step_iff (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
         fin_cases c <;> fin_cases s <;> decide
       · change beta c t.2 p.val (incoming c t.2) = 0
         rw [(beta_values c t.2 p.val).2.2.1,ha]; norm_num
-
 /-- Full original chains, including all intermediate representatives, correspond
 exactly to chains generated by the positive strict fan seams. -/
 theorem actual_eqvgen_iff (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
@@ -369,11 +343,9 @@ theorem actual_eqvgen_iff (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     | refl a => exact Relation.EqvGen.refl _
     | symm a b _ ih => exact ih.symm
     | trans a b d _ _ ih₁ ih₂ => exact Relation.EqvGen.trans _ _ _ ih₁ ih₂
-
 /-- The inverse uses the unique actual occurrence, not a chosen abstract cycle. -/
 def coordinateEquiv (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :=
   Equiv.ofBijective (Phi u v c x) (actual_strict_coordinates u v c x)
-
 private theorem inverse_index_fiber (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     (y : ↥(Neighborhood u v (ν := vertex u v c x) (encode u v c (x,0))))
     (i : Fin (3 * pointPeriod u v c x)) :
@@ -392,14 +364,11 @@ private theorem inverse_index_fiber (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
     have hk : (occurrence u v c x j).2 = (occurrence u v c x i).2 :=
       dominant_unique _ hb.1 hb.2.1 hb.2.2 ht
     exact (actual_component_enumeration u v c x).2.1 (Prod.ext hc hk)
-
 def closedInput {n : ℕ} (z : Fin n × Sector) : CyclicTriangleDisk.Point n :=
   (z.1,⟨z.2.val,z.2.property.1,z.2.property.2.1,z.2.property.2.2.le⟩)
-
 private def strictInput {n : ℕ} (z : CyclicTriangleDisk.Point n)
     (h : CyclicTriangleDisk.radius z < 1) : Fin n × Sector :=
   (z.1,⟨z.2.val,z.2.property.1,z.2.property.2.1,h⟩)
-
 private theorem closed_radius_invariant {n : ℕ} [NeZero n]
     {a b : CyclicTriangleDisk.Point n} (h : CyclicTriangleDisk.Related a b) :
     CyclicTriangleDisk.radius a = CyclicTriangleDisk.radius b := by
@@ -410,7 +379,6 @@ private theorem closed_radius_invariant {n : ℕ} [NeZero n]
   | refl a => rfl
   | symm a b _ ih => exact ih.symm
   | trans a b d _ _ ih₁ ih₂ => exact ih₁.trans ih₂
-
 private theorem closed_chain_restriction {n : ℕ} [NeZero n]
     (z w : Fin n × Sector) :
     CyclicTriangleDisk.Related (closedInput z) (closedInput w) ↔
@@ -443,7 +411,6 @@ private theorem closed_chain_restriction {n : ℕ} [NeZero n]
     | refl a => exact Relation.EqvGen.refl _
     | symm a b _ ih => exact ih.symm
     | trans a b d _ _ ih₁ ih₂ => exact Relation.EqvGen.trans _ _ _ ih₁ ih₂
-
 /-- The full original affine relation agrees with the original closed fan
 relation on strict inputs; intermediate fan representatives retain the cutoff. -/
 theorem actual_full_fan_correspondence (u v : G) (c : Fin 4) (x : Ω) [Finite Ω]
@@ -451,12 +418,10 @@ theorem actual_full_fan_correspondence (u v : G) (c : Fin 4) (x : Ω) [Finite Ω
     Related u v (Phi u v c x z).val (Phi u v c x w).val ↔
       CyclicTriangleDisk.Related (closedInput z) (closedInput w) := by
   rw [actual_eqvgen_iff, closed_chain_restriction]
-
 /-- The original retained tetrahedron: all four cap bounds are retained. -/
 abbrev TruncatedTetrahedron := {a : Fin 4 → ℝ //
   (∀ i, 0 ≤ a i ∧ a i ≤ 3/4) ∧ (∑ i, a i) = 1}
 abbrev TruncatedPoint (Ω : Type*) := Ω × TruncatedTetrahedron
-
 /-- The actual zero-face gluing on complete retained tetrahedra. -/
 def truncatedMove (u v : G) (f : Fin 4) (a : TruncatedPoint Ω) : TruncatedPoint Ω :=
   (act a.1 (faceWord u v f), ⟨fun i => a.2.val ((facePerm f).symm i),
@@ -464,20 +429,16 @@ def truncatedMove (u v : G) (f : Fin 4) (a : TruncatedPoint Ω) : TruncatedPoint
       a.2.property.2⟩)
 def TruncatedStep (u v : G) (a b : TruncatedPoint Ω) : Prop :=
   ∃ f : Fin 4, a.2.val f = 0 ∧ b = truncatedMove u v f a
-
 /-- The original cap component is selected by the actual corner label. -/
 def Slice (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) : Set (TruncatedPoint Ω) :=
   {a | ∃ j : Fin 4, a.2.val j = 3/4 ∧ label (pairing u v) (a.1,j) = ν}
-
 def alpha (j : Fin 4) (b : Fin 4 → ℝ) (i : Fin 4) : ℝ :=
   (if i = j then 3/4 else 0) + b i / 4
-
 private theorem coordinate_le_one {b : Fin 4 → ℝ} (hn : ∀ i, 0 ≤ b i)
     (hs : (∑ i, b i) = 1) (i : Fin 4) : b i ≤ 1 := by
   have h := Finset.single_le_sum (fun j (_ : j ∈ Finset.univ) => hn j)
     (Finset.mem_univ i)
   simpa only [hs] using h
-
 private theorem alpha_mem (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
     (p : Point u v ν) :
     (∀ i, 0 ≤ alpha p.val.1.2 p.val.2 i ∧ alpha p.val.1.2 p.val.2 i ≤ 3/4) ∧
@@ -493,21 +454,17 @@ private theorem alpha_mem (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
   · simp only [alpha,Finset.sum_add_distrib]
     rw [← Finset.sum_div,hs]
     norm_num
-
 /-- Literal affine map from the entire original corner triangle into its cap. -/
 def toTruncation (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
     (p : Point u v ν) : TruncatedPoint Ω :=
   (p.val.1.1,⟨alpha p.val.1.2 p.val.2,alpha_mem u v p⟩)
-
 private theorem toTruncation_mem (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
     (p : Point u v ν) : toTruncation u v p ∈ Slice u v ν :=
   ⟨p.val.1.2,by simp [toTruncation,alpha,p.property.1],p.property.2.2.2⟩
-
 private theorem cap_unique (a : TruncatedPoint Ω) {j k : Fin 4}
     (hj : a.2.val j = 3/4) (hk : a.2.val k = 3/4) : j = k :=
   dominant_unique a.2.val (fun i => (a.2.property.1 i).1) a.2.property.2
     (by rw [hj]; norm_num) (by rw [hk]; norm_num)
-
 private theorem toTruncation_injective (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)} :
     Function.Injective (toTruncation u v (ν := ν)) := by
   intro p q h
@@ -526,7 +483,6 @@ private theorem toTruncation_injective (u v : G) {ν : Vertex (pairing (Ω := Ω
   change alpha p.val.1.2 p.val.2 i = alpha q.val.1.2 q.val.2 i at hh
   simp only [alpha,hj] at hh
   linarith
-
 private theorem cap_preimage (u v : G) (a : TruncatedPoint Ω) (j : Fin 4)
     (hj : a.2.val j = 3/4) :
     ∃ p : Point u v (label (pairing u v) (a.1,j)), toTruncation u v p = a := by
@@ -548,7 +504,6 @@ private theorem cap_preimage (u v : G) (a : TruncatedPoint Ω) (j : Fin 4)
   by_cases hi : i = j
   · subst i; simp [alpha,b,hj]
   · simp [alpha,b,hi]
-
 /-- Both full carriers, including every boundary tie, correspond under alpha. -/
 theorem actual_slice_carriers (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) :
     Function.Bijective (fun p : Point u v ν =>
@@ -560,7 +515,6 @@ theorem actual_slice_carriers (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) :
     obtain ⟨p,hp⟩ := cap_preimage u v a j hj
     subst ν
     exact ⟨p,Subtype.ext hp⟩
-
 private theorem alpha_paired (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
     (p : Point u v ν) (f : Fin 4) (hf : f ≠ p.val.1.2) :
     toTruncation u v (pairedPoint u v p f hf) = truncatedMove u v f (toTruncation u v p) := by
@@ -571,7 +525,6 @@ private theorem alpha_paired (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
   change alpha (facePerm f p.val.1.2) (fun k => p.val.2 ((facePerm f).symm k)) i =
     alpha p.val.1.2 p.val.2 ((facePerm f).symm i)
   simp only [alpha, Equiv.symm_apply_eq]
-
 private theorem truncated_step_lift (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
     (p : Point u v ν) {a : TruncatedPoint Ω} (h : TruncatedStep u v (toTruncation u v p) a) :
     ∃ q : Point u v ν, Step u v p q ∧ toTruncation u v q = a := by
@@ -585,7 +538,6 @@ private theorem truncated_step_lift (u v : G) {ν : Vertex (pairing (Ω := Ω) u
     simp only [alpha,if_neg hfj,zero_add] at hf
     linarith
   exact ⟨pairedPoint u v p f hfj,⟨f,hfj,hz,rfl⟩,alpha_paired u v p f hfj⟩
-
 /-- The exact guarded original face generators correspond in both directions. -/
 theorem actual_slice_step_iff (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
     (p q : Point u v ν) :
@@ -600,7 +552,6 @@ theorem actual_slice_step_iff (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
   · intro h
     obtain ⟨z,hz,he⟩ := truncated_step_lift u v p h
     exact (toTruncation_injective u v he) ▸ hz
-
 private theorem slice_labels_unique (u v : G) {a : TruncatedPoint Ω}
     {ν μ : Vertex (pairing (Ω := Ω) u v)} (hν : a ∈ Slice u v ν) (hμ : a ∈ Slice u v μ) :
     ν = μ := by
@@ -609,7 +560,6 @@ private theorem slice_labels_unique (u v : G) {a : TruncatedPoint Ω}
   have he := cap_unique a hj hk
   subst k
   exact hν.symm.trans hμ
-
 private theorem slice_step_invariant (u v : G) (ν : Vertex (pairing (Ω := Ω) u v))
     {a b : TruncatedPoint Ω} (h : TruncatedStep u v a b) :
     a ∈ Slice u v ν ↔ b ∈ Slice u v ν := by
@@ -635,7 +585,6 @@ private theorem slice_step_invariant (u v : G) (ν : Vertex (pairing (Ω := Ω) 
     rw [hq] at hb'
     have he := slice_labels_unique u v hb' ⟨j,hj,hν⟩
     exact ⟨(facePerm f).symm j,hc,he⟩
-
 private theorem slice_chain_invariant (u v : G) (ν : Vertex (pairing (Ω := Ω) u v))
     {a b : TruncatedPoint Ω} (h : Relation.EqvGen (TruncatedStep u v) a b) :
     a ∈ Slice u v ν ↔ b ∈ Slice u v ν := by
@@ -644,7 +593,6 @@ private theorem slice_chain_invariant (u v : G) (ν : Vertex (pairing (Ω := Ω)
   | refl a => rfl
   | symm a b _ ih => exact ih.symm
   | trans a b c _ _ ih₁ ih₂ => exact ih₁.trans ih₂
-
 /-- Reflection uses the complete ambient face closure: every intermediate
 representative remains in the same original cap component. -/
 theorem actual_slice_eqvgen_iff (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
@@ -685,10 +633,8 @@ theorem actual_slice_eqvgen_iff (u v : G) {ν : Vertex (pairing (Ω := Ω) u v)}
     have hh := lift h (toTruncation_mem u v p) (toTruncation_mem u v q)
     change Related u v (e.symm (e p)) (e.symm (e q)) at hh
     simpa only [e.symm_apply_apply] using hh
-
 section Topology
 variable [TopologicalSpace Ω] [DiscreteTopology Ω]
-
 omit [DiscreteTopology Ω] in
 private theorem continuous_phi (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
     Continuous (Phi u v c x) := by
@@ -705,7 +651,6 @@ private theorem continuous_phi (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
     split_ifs <;> fun_prop
   exact (continuous_const : Continuous (fun _ : Sector =>
     (occurrence u v c x i).1)).prodMk hb
-
 private theorem continuous_inverse_index (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
     Continuous (fun y => ((coordinateEquiv u v c x).symm y).1) := by
   apply continuous_discrete_rng.mpr
@@ -722,7 +667,6 @@ private theorem continuous_inverse_index (u v : G) (c : Fin 4) (x : Ω) [Finite 
   · exact isOpen_lt continuous_const
       ((continuous_apply _).comp
         (continuous_snd.comp (continuous_subtype_val.comp continuous_subtype_val)))
-
 /-- The constructed coordinates and their inverse are continuous for the original
 induced topology on the strict carrier neighborhood. -/
 def coordinateHomeomorph (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
@@ -773,15 +717,12 @@ def coordinateHomeomorph (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
       rw [hv.2.2.1]; ring
     · change p.val.2 = 2 * beta c _ p.val _
       rw [hv.2.2.2]; ring
-
 abbrev ActualQuotient (u v : G) (c : Fin 4) (x : Ω) :=
   Quotient (Relation.EqvGen.setoid (Step u v (ν := vertex u v c x)))
-
 /-- The image carries the subspace topology of the original full quotient. -/
 def quotientNeighborhood (u v : G) (c : Fin 4) (x : Ω) :
     Set (ActualQuotient u v c x) :=
   (@Quotient.mk' _ (Relation.EqvGen.setoid (Step u v (ν := vertex u v c x)))) '' Neighborhood u v (ν := vertex u v c x) (encode u v c (x,0))
-
 private theorem neighborhood_open (u v : G) (c : Fin 4) (x : Ω) :
     IsOpen (Neighborhood u v (ν := vertex u v c x) (encode u v c (x,0))) := by
   have he : Neighborhood u v (ν := vertex u v c x) (encode u v c (x,0)) =
@@ -797,7 +738,6 @@ private theorem neighborhood_open (u v : G) (c : Fin 4) (x : Ω) :
       ((continuous_apply k).comp (continuous_snd.comp continuous_subtype_val))
   · exact (isOpen_discrete {d | DartRelated u v (encode u v c (x,0)) (d,k)}).preimage
       (continuous_fst.comp continuous_subtype_val)
-
 /-- Saturation is with respect to the full original EqvGen; openness then follows
 from the quotient topology, without global openness of its projection. -/
 theorem actual_open_quotient_neighborhood (u v : G) (c : Fin 4) (x : Ω) :
@@ -820,7 +760,6 @@ theorem actual_open_quotient_neighborhood (u v : G) (c : Fin 4) (x : Ω) :
     rw [hs]
     exact neighborhood_open u v c x
   exact ⟨hs,ho,isQuotientMap_quotient_mk'.restrictPreimage_isOpen ho⟩
-
 /-- The strict seam quotient is homeomorphic to the open neighborhood in the
 full original quotient, with its original subspace topology. -/
 def actualSeamQuotientHomeomorph (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
@@ -849,10 +788,8 @@ def actualSeamQuotientHomeomorph (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
   let fC : C(Fin (3 * pointPeriod u v c x) × Sector, ↥U) := ⟨f,hf.continuous⟩
   exact (Homeomorph.Quotient.congrRight hk).trans
     (Topology.IsQuotientMap.homeomorph (f := fC) hf)
-
 /-- The actual chart target is the open unit disk in the complex plane. -/
 abbrev OpenDisk := {z : ℂ // ‖z‖ < 1}
-
 private def strictFanDiskHomeomorph {n : ℕ} [NeZero n] :
     Quotient (Relation.EqvGen.setoid (@seam n _)) ≃ₜ OpenDisk := by
   let D : Set CyclicTriangleDisk.Disk := {z | ‖z.val‖ < 1}
@@ -899,14 +836,12 @@ private def strictFanDiskHomeomorph {n : ℕ} [NeZero n] :
   let gC : C(Fin n × Sector, OpenDisk) := ⟨g,hg.continuous⟩
   exact (Homeomorph.Quotient.congrRight hk).trans
     (Topology.IsQuotientMap.homeomorph (f := gC) hg)
-
 /-- A disk chart on the open image inside the full original quotient, with its
 inherited topology. The closed fan is restricted using its original radial norm
 identity; no replacement relation or topology is assumed. -/
 def actualOpenDiskChart (u v : G) (c : Fin 4) (x : Ω) [Finite Ω] :
     ↥(quotientNeighborhood u v c x) ≃ₜ OpenDisk :=
   (actualSeamQuotientHomeomorph u v c x).symm.trans strictFanDiskHomeomorph
-
 private theorem continuous_toTruncation (u v : G)
     {ν : Vertex (pairing (Ω := Ω) u v)} : Continuous (toTruncation u v (ν := ν)) := by
   apply Continuous.prodMk (continuous_fst.comp (continuous_fst.comp continuous_subtype_val))
@@ -917,7 +852,6 @@ private theorem continuous_toTruncation (u v : G)
     (fun j : Fin 4 => if i = j then (3/4 : ℝ) else 0)).comp
       (continuous_snd.comp (continuous_fst.comp continuous_subtype_val))).add
     (((continuous_apply i).comp (continuous_snd.comp continuous_subtype_val)).div_const 4)
-
 private theorem compact_original_carrier (u v : G)
     (ν : Vertex (pairing (Ω := Ω) u v)) [Finite Ω] : IsCompact (Carrier u v ν) := by
   have heval : Continuous (fun x : Raw Ω => x.2 x.1.2) := by
@@ -941,7 +875,6 @@ private theorem compact_original_carrier (u v : G)
     IsCompact (Set.Icc (fun _ : Fin 4 => (0 : ℝ)) (fun _ => 1)))).of_isClosed_subset hclosed
   intro p hp
   exact ⟨Set.mem_univ _,hp.2.1,fun i => coordinate_le_one hp.2.1 hp.2.2.1 i⟩
-
 /-- The affine carrier equivalence uses the actual subspace topology of the
 original cap inside the original retained tetrahedra. -/
 def actualSliceHomeomorph (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) [Finite Ω] :
@@ -953,15 +886,12 @@ def actualSliceHomeomorph (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) [Fini
   have hf : IsHomeomorph f := isHomeomorph_iff_continuous_bijective.mpr
     ⟨(continuous_toTruncation u v).subtype_mk _,actual_slice_carriers u v ν⟩
   exact hf.homeomorph f
-
 abbrev TruncatedQuotient (u v : G) (Ω : Type*) [MulAction Gᵐᵒᵖ Ω] :=
   Quotient (Relation.EqvGen.setoid (TruncatedStep (Ω := Ω) u v))
-
 /-- Image of the actual labeled cap in the full original truncated quotient. -/
 def quotientSlice (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) :
     Set (TruncatedQuotient u v Ω) :=
   (@Quotient.mk' _ (Relation.EqvGen.setoid (TruncatedStep u v))) '' Slice u v ν
-
 private theorem slice_closed (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) :
     IsClosed (Slice u v ν) := by
   have he : Slice u v ν = ⋃ j : Fin 4,
@@ -975,7 +905,6 @@ private theorem slice_closed (u v : G) (ν : Vertex (pairing (Ω := Ω) u v)) :
   exact (isClosed_eq ((continuous_apply j).comp (continuous_subtype_val.comp continuous_snd))
     continuous_const).inter
       ((isClosed_discrete {t : Ω | label (pairing u v) (t,j) = ν}).preimage continuous_fst)
-
 private theorem slice_quotient_restriction (u v : G)
     (ν : Vertex (pairing (Ω := Ω) u v)) :
     ((@Quotient.mk' _ (Relation.EqvGen.setoid (TruncatedStep u v))) ⁻¹' quotientSlice u v ν =
@@ -1002,7 +931,6 @@ private theorem slice_quotient_restriction (u v : G)
     ← hq.isClosed_preimage,
     (hU.preimage hq.continuous).isClosedEmbedding_subtypeVal.isClosed_iff_image_isClosed,
     Set.image_val_preimage_restrictPreimage]
-
 /-- The original full corner quotient equals the cap image in the full original
 truncated quotient, equipped with the inherited topology. No correspondence,
 slice-invariance, or quotient-topology hypothesis is supplied by the caller. -/
@@ -1028,7 +956,5 @@ def actualSliceQuotientHomeomorph (u v : G)
   let fC : C(Point u v ν, ↥U) := ⟨f,hf.continuous⟩
   exact (Homeomorph.Quotient.congrRight hk).trans
     (Topology.IsQuotientMap.homeomorph (f := fC) hf)
-
 end Topology
-
 end D5.S3.Geometry.Gluing.ActualLinkAffineFan
