@@ -376,7 +376,23 @@ private lemma scalar_weighted_resolvent (k : ℝ) (hk : |k| < 1) :
       ∫ v in (0 : ℝ)..1, (1 - v) * (k ^ 2 / (1 + v * k) ^ 2) := by
     unfold D5.S3.Resource.LogDet.PathSpectralClassical.logDetPathEnergy
     apply intervalIntegral.integral_congr
-    intro v _
+    intro v hv
+    rw [uIcc_of_le zero_le_one] at hv
+    have hden : 1 + v * k ≠ 0 := by
+      have hm : |v * k| < 1 := by
+        rw [abs_mul]
+        exact (mul_le_of_le_one_left (abs_nonneg k)
+          (by simpa only [abs_of_nonneg hv.1] using hv.2)).trans_lt hk
+      linarith [(abs_lt.mp hm).1]
+    let U : (Fin 1 → ℂ)ˣ :=
+      ⟨(fun _ => ((1 + v * k : ℝ) : ℂ)), (fun _ => ((1 + v * k : ℝ) : ℂ)⁻¹),
+        by ext i; exact mul_inv_cancel₀ (Complex.ofReal_ne_zero.mpr hden),
+        by ext i; exact inv_mul_cancel₀ (Complex.ofReal_ne_zero.mpr hden)⟩
+    have hfi : Ring.inverse (fun _ : Fin 1 => ((1 + v * k : ℝ) : ℂ)) =
+        (fun _ : Fin 1 => ((1 + v * k : ℝ) : ℂ)⁻¹) := by
+      change Ring.inverse (U : Fin 1 → ℂ) = _
+      rw [Ring.inverse_unit]
+      rfl
     have hs : D5.S3.Resource.LogDet.PathSpectralClassical.affineSegment ρ σ v =
         Matrix.diagonal (fun _ : Fin 1 => ((1 + v * k : ℝ) : ℂ)) := by
       ext i j
@@ -388,14 +404,17 @@ private lemma scalar_weighted_resolvent (k : ℝ) (hk : |k| < 1) :
       ext i j
       fin_cases i; fin_cases j
       simp [ρ, σ, p, q₀]
+    dsimp only
     rw [hs, hΔ, Matrix.inv_diagonal, Matrix.diagonal_mul_diagonal,
-      Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal]
+      Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal, hfi]
     simp only [Fin.sum_univ_one, Pi.inv_apply, ← Complex.ofReal_inv,
       ← Complex.ofReal_mul, Complex.ofReal_re]
     congr 1
-    ring
+    field_simp [hden]
   rw [hpath] at he
-  simpa [D5.S3.Resource.LogDet.PathSpectralClassical.itakuraSaito, p, q₀] using he
+  simp only [D5.S3.Resource.LogDet.PathSpectralClassical.itakuraSaito, p, q₀,
+    Fin.sum_univ_one, div_one] at he
+  linarith
 
 private lemma scalar_even_resolvent (k : ℝ) (hk : |k| < 1) :
     (∫ v in (0 : ℝ)..1, (1 - v) *
@@ -433,6 +452,59 @@ private lemma scalar_even_resolvent (k : ℝ) (hk : |k| < 1) :
   rw [show 1 - k ^ 2 = (1 + k) * (1 - k) by ring, Real.log_mul hkp hkm]
   ring
 
+private lemma trace_log_even (Z : M) (hZ : IsSelfAdjoint Z) :
+    (CFC.log (1 - Z ^ 2)).trace.re =
+      ∑ i, Real.log (1 - hZ.isHermitian.eigenvalues i ^ 2) := by
+  have hc : cfc (fun x : ℝ => Real.log (1 - x ^ 2)) Z = CFC.log (1 - Z ^ 2) := by
+    rw [cfc_comp' Real.log (fun x : ℝ => 1 - x ^ 2) Z
+      ((Z.finite_real_spectrum.image _).continuousOn Real.log) (by fun_prop) hZ,
+      cfc_sub (fun _ : ℝ => 1) (fun x : ℝ => x ^ 2) Z,
+      cfc_const 1 Z hZ, cfc_pow_id Z 2 hZ, map_one]
+    rfl
+  rw [← hc, D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum Z hZ.isHermitian]
+
+private lemma even_kernel_integral (A H : S) (hA : A.val.PosDef)
+    (hr : ‖K A H 0‖ < 1) (u : ℝ) (hu : 0 ≤ u) :
+    (∫ v in (0 : ℝ)..1, (1 - v) * (q A H v u + q A H (-v) u)) =
+      -(CFC.log (1 - (K A H u) ^ 2)).trace.re := by
+  let Z := K A H u
+  have hsa : IsSelfAdjoint Z := (normalized_kernel_bounds A H hA u hu).1
+  let k : n → ℝ := hsa.isHermitian.eigenvalues
+  have hk (i : n) : |k i| < 1 := by
+    have hb := norm_apply_le_norm_cfc (id : ℝ → ℝ) Z
+      (hsa.isHermitian.eigenvalues_mem_spectrum_real i) continuousOn_id hsa
+    rw [cfc_id ℝ Z hsa, Real.norm_eq_abs] at hb
+    exact hb.trans_lt ((normalized_kernel_bounds A H hA u hu).2.trans_lt hr)
+  have heq (v : ℝ) (hv : v ∈ uIcc (0 : ℝ) 1) :
+      (1 - v) * (q A H v u + q A H (-v) u) =
+        ∑ i, (1 - v) * (k i ^ 2 / (1 + v * k i) ^ 2 +
+          k i ^ 2 / (1 - v * k i) ^ 2) := by
+    rw [uIcc_of_le zero_le_one] at hv
+    have hp := resolvent_trace_eq_normalized A H hA hr v u
+      ⟨by linarith [hv.1], hv.2⟩ hu
+    have hm := resolvent_trace_eq_normalized A H hA hr (-v) u
+      ⟨by linarith [hv.2], by linarith [hv.1]⟩ hu
+    dsimp only at hp hm ⊢
+    rw [hp, hm, D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum
+      Z hsa.isHermitian, D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum
+      Z hsa.isHermitian, ← Finset.sum_add_distrib, Finset.mul_sum]
+    simp only [k, neg_mul, ← sub_eq_add_neg]
+  have hi : ∀ i ∈ (Finset.univ : Finset n), IntervalIntegrable
+      (fun v : ℝ => (1 - v) * (k i ^ 2 / (1 + v * k i) ^ 2 +
+        k i ^ 2 / (1 - v * k i) ^ 2)) volume 0 1 :=
+    fun i _ => (scalar_even_resolvent (k i) (hk i)).2
+  calc
+    _ = ∫ v in (0 : ℝ)..1, ∑ i, (1 - v) *
+        (k i ^ 2 / (1 + v * k i) ^ 2 + k i ^ 2 / (1 - v * k i) ^ 2) :=
+      intervalIntegral.integral_congr heq
+    _ = ∑ i, -Real.log (1 - k i ^ 2) := by
+      rw [intervalIntegral.integral_finsetSum hi]
+      exact Finset.sum_congr rfl (fun i _ => (scalar_even_resolvent (k i) (hk i)).1)
+    _ = -(CFC.log (1 - Z ^ 2)).trace.re := by
+      rw [trace_log_even Z hsa, Finset.sum_neg_distrib]
+    _ = -(CFC.log (1 - (K A H u) ^ 2)).trace.re := by simp only [Z]
+  all_goals rfl
+
 /-- The symmetric entropy gap is the second-order integral of the two actual BKM
 curvatures. No commutativity of the base and direction is assumed. -/
 theorem symmetric_entropy_gap_eq_integral_bkm (A H : S)
@@ -465,5 +537,161 @@ theorem symmetric_entropy_gap_eq_integral_bkm (A H : S)
   rw [heq]
   simp only [map_neg, ← sub_eq_add_neg] at em
   linarith
+
+private lemma weighted_resolvent_intervalIntegrable (A H : S) (hA : A.val.PosDef)
+    (hr : ‖K A H 0‖ < 1) (u : ℝ) (hu : 0 ≤ u) :
+    IntervalIntegrable (fun v => (1 - v) * q A H v u) volume 0 1 := by
+  apply ContinuousOn.intervalIntegrable
+  have hi : ContinuousOn (fun v : ℝ => Ring.inverse (R (P A H v) u))
+      (uIcc (0 : ℝ) 1) := by
+    intro v hv
+    rw [uIcc_of_le zero_le_one] at hv
+    have hp := finite_amplitude_path_posdef A H hA hr v ⟨by linarith [hv.1], hv.2⟩
+    have hunit := (hp.add_posSemidef (Matrix.PosSemidef.one.smul hu)).isUnit
+    have hinv : ContinuousAt Ring.inverse (R (P A H v) u) := by
+      simpa only [IsUnit.unit_spec] using NormedRing.inverse_continuousAt hunit.unit
+    apply ContinuousAt.comp_continuousWithinAt (f := fun v : ℝ => R (P A H v) u) hinv
+    fun_prop
+  exact (by fun_prop : ContinuousOn (fun v : ℝ => 1 - v) (uIcc (0 : ℝ) 1)).mul
+    (Complex.continuous_re.comp_continuousOn <|
+      (Matrix.traceLinearMap n ℝ ℂ).toContinuousLinearMap.continuous.comp_continuousOn <|
+        ((continuousOn_const.mul hi).mul continuousOn_const).mul hi)
+
+/-- The actual symmetric entropy gap is the integrable even resolvent-logarithm
+remainder, for arbitrary positive Hermitian bases and Hermitian directions. -/
+theorem symmetric_entropy_gap_eq_integral_log (A H : S)
+    (hA : A.val.PosDef) (hr : ‖K A H 0‖ < 1) :
+    (entropy (A + H) / 2 + entropy (A - H) / 2 - entropy A =
+      -(∫ u in Ioi (0 : ℝ), (CFC.log (1 - (K A H u) ^ 2)).trace.re) / 2) ∧
+      IntegrableOn (fun u => (CFC.log (1 - (K A H u) ^ 2)).trace.re) (Ioi (0 : ℝ)) := by
+  have hneg : ‖K A (-H) 0‖ = ‖K A H 0‖ := by
+    dsimp only
+    rw [NegMemClass.coe_neg, map_neg, norm_neg]
+  have hrn : ‖K A (-H) 0‖ < 1 := hneg.trans_lt hr
+  obtain ⟨ep, ip⟩ := weighted_resolvent_swap A H hA hr
+  obtain ⟨em, im⟩ := weighted_resolvent_swap A (-H) hA hrn
+  have hsign (v : ℝ) : BKM (P A (-H) v) (-H) = BKM (P A (-H) v) H := by
+    simp only [NegMemClass.coe_neg, D5.S3.Divergence.LogDerivTrace.logDeriv,
+      Matrix.mul_neg, Matrix.neg_mul, integral_neg, neg_neg]
+  have hp : ∀ v ∈ Icc (0 : ℝ) 1, (P A H v).val.PosDef :=
+    fun v hv => finite_amplitude_path_posdef A H hA hr v ⟨by linarith [hv.1], hv.2⟩
+  have hm : ∀ v ∈ Icc (0 : ℝ) 1, (P A (-H) v).val.PosDef :=
+    fun v hv => finite_amplitude_path_posdef A (-H) hA hrn v ⟨by linarith [hv.1], hv.2⟩
+  have wcont : ContinuousOn (fun v : ℝ => 1 - v) (uIcc (0 : ℝ) 1) := by fun_prop
+  have hsum := intervalIntegral.integral_add
+    ((entropy_remainder A H hp).2.continuousOn_mul wcont)
+    ((entropy_remainder A (-H) hm).2.continuousOn_mul wcont)
+  simp_rw [hsign] at hsum em
+  have hgap := symmetric_entropy_gap_eq_integral_bkm A H hA hr
+  have hsplit : (∫ v in (0 : ℝ)..1, (1 - v) *
+      (BKM (P A H v) H + BKM (P A (-H) v) H)) =
+      (∫ v in (0 : ℝ)..1, (1 - v) * BKM (P A H v) H) +
+      (∫ v in (0 : ℝ)..1, (1 - v) * BKM (P A (-H) v) H) := by
+    simpa only [mul_add] using hsum
+  rw [hsplit, ep, em, ← integral_add ip im] at hgap
+  have hs (v u : ℝ) : q A (-H) v u = q A H (-v) u := by
+    simp only [NegMemClass.coe_neg, smul_neg, neg_smul, Matrix.neg_mul,
+      Matrix.mul_neg, neg_neg]
+  have hpoint : (fun u => (∫ v in (0 : ℝ)..1, (1 - v) * q A H v u) +
+      (∫ v in (0 : ℝ)..1, (1 - v) * q A (-H) v u)) =ᵐ[volume.restrict (Ioi (0 : ℝ))]
+      (fun u => -(CFC.log (1 - (K A H u) ^ 2)).trace.re) := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+    have ipv := weighted_resolvent_intervalIntegrable A H hA hr u hu.le
+    have imv := weighted_resolvent_intervalIntegrable A (-H) hA hrn u hu.le
+    rw [← intervalIntegral.integral_add ipv imv]
+    simpa only [← mul_add, hs] using even_kernel_integral A H hA hr u hu.le
+  have heq := integral_congr_ae hpoint
+  rw [heq, integral_neg] at hgap
+  refine ⟨hgap, ?_⟩
+  have h := ((ip.add im).congr hpoint).neg
+  apply h.congr
+  filter_upwards [] with u
+  simp only [Pi.neg_apply, neg_neg]
+
+private lemma scalar_log_bounds (r z : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1)
+    (hz0 : 0 ≤ z) (hzr : z ≤ r ^ 2) :
+    z ≤ -Real.log (1 - z) ∧ -Real.log (1 - z) ≤
+      (if r = 0 then 1 else -Real.log (1 - r ^ 2) / r ^ 2) * z := by
+  have hr2 : r ^ 2 < 1 := by nlinarith
+  have hz1 : z < 1 := hzr.trans_lt hr2
+  have hlo := Real.log_le_sub_one_of_pos (by linarith : 0 < 1 - z)
+  refine ⟨by linarith, ?_⟩
+  by_cases hr : r = 0
+  · have hz : z = 0 := by rw [hr] at hzr; norm_num at hzr; exact le_antisymm hzr hz0
+    simp only [hr, hz, sub_zero, Real.log_one, neg_zero, mul_zero, le_refl]
+  have hrp : 0 < r ^ 2 := sq_pos_of_ne_zero hr
+  have ha : 0 ≤ 1 - z / r ^ 2 := sub_nonneg.mpr ((div_le_one hrp).mpr hzr)
+  have hb : 0 ≤ z / r ^ 2 := div_nonneg hz0 hrp.le
+  have hconc : ConcaveOn ℝ (Ioi (0 : ℝ)) Real.log :=
+    StrictConcaveOn.concaveOn strictConcaveOn_log_Ioi
+  have hc : (1 - z / r ^ 2) * Real.log 1 + (z / r ^ 2) * Real.log (1 - r ^ 2) ≤
+      Real.log ((1 - z / r ^ 2) * 1 + (z / r ^ 2) * (1 - r ^ 2)) :=
+    hconc.2 (by norm_num : (1 : ℝ) ∈ Ioi (0 : ℝ))
+      (by change 0 < 1 - r ^ 2; linarith) ha hb (by ring)
+  have he : (1 - z / r ^ 2) * 1 + (z / r ^ 2) * (1 - r ^ 2) = 1 - z := by
+    field_simp
+    ring
+  simp only [smul_eq_mul, Real.log_one, mul_zero, zero_add, he] at hc
+  rw [if_neg hr]
+  have hc' : z / r ^ 2 * Real.log (1 - r ^ 2) =
+      -(-Real.log (1 - r ^ 2) / r ^ 2 * z) := by ring
+  rw [hc'] at hc
+  linarith
+
+private lemma kernel_log_bounds (Z : M) (hZ : IsSelfAdjoint Z) (r : ℝ)
+    (hr0 : 0 ≤ r) (hr1 : r < 1) (hZr : ‖Z‖ ≤ r) :
+    (Z ^ 2).trace.re ≤ -(CFC.log (1 - Z ^ 2)).trace.re ∧
+      -(CFC.log (1 - Z ^ 2)).trace.re ≤
+        (if r = 0 then 1 else -Real.log (1 - r ^ 2) / r ^ 2) * (Z ^ 2).trace.re := by
+  let k : n → ℝ := hZ.isHermitian.eigenvalues
+  have hk (i : n) : k i ^ 2 ≤ r ^ 2 := by
+    have hb := norm_apply_le_norm_cfc (id : ℝ → ℝ) Z
+      (hZ.isHermitian.eigenvalues_mem_spectrum_real i) continuousOn_id hZ
+    rw [cfc_id ℝ Z hZ, Real.norm_eq_abs] at hb
+    have hab : |k i| ≤ r := hb.trans hZr
+    nlinarith [sq_abs (k i), abs_nonneg (k i)]
+  have ht : (Z ^ 2).trace.re = ∑ i, k i ^ 2 := by
+    have hc : cfc (fun x : ℝ => x ^ 2) Z = Z ^ 2 := cfc_pow_id Z 2 hZ
+    rw [← hc, D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum Z hZ.isHermitian]
+  rw [ht, trace_log_even Z hZ, ← Finset.sum_neg_distrib, Finset.mul_sum]
+  exact ⟨Finset.sum_le_sum (fun i _ => (scalar_log_bounds r (k i ^ 2) hr0 hr1
+    (sq_nonneg _) (hk i)).1), Finset.sum_le_sum (fun i _ =>
+      (scalar_log_bounds r (k i ^ 2) hr0 hr1 (sq_nonneg _) (hk i)).2)⟩
+
+/-- The finite-amplitude symmetric entropy gap is bounded by the BKM quadratic
+form with the exact scalar logarithmic envelope, including the zero direction. -/
+theorem symmetric_entropy_gap_bkm_bounds (A H : S)
+    (hA : A.val.PosDef) (hr : ‖K A H 0‖ < 1) :
+    BKM A H / 2 ≤ entropy (A + H) / 2 + entropy (A - H) / 2 - entropy A ∧
+      entropy (A + H) / 2 + entropy (A - H) / 2 - entropy A ≤
+        (if ‖K A H 0‖ = 0 then 1 else
+          -Real.log (1 - ‖K A H 0‖ ^ 2) / ‖K A H 0‖ ^ 2) * BKM A H / 2 := by
+  obtain ⟨he, hi⟩ := symmetric_entropy_gap_eq_integral_log A H hA hr
+  obtain ⟨ib, eb⟩ := bkm_eq_integral_trace A H hA
+  let c := if ‖K A H 0‖ = 0 then 1 else
+    -Real.log (1 - ‖K A H 0‖ ^ 2) / ‖K A H 0‖ ^ 2
+  have hb (u : ℝ) (hu : 0 < u) :
+      q A H 0 u ≤ -(CFC.log (1 - (K A H u) ^ 2)).trace.re ∧
+        -(CFC.log (1 - (K A H u) ^ 2)).trace.re ≤ c * q A H 0 u := by
+    have hn := normalized_kernel_bounds A H hA u hu.le
+    have hq := resolvent_trace_eq_normalized A H hA hr 0 u (by norm_num) hu.le
+    dsimp only at hq ⊢
+    simp only [zero_mul, add_zero, one_pow, div_one] at hq
+    rw [cfc_pow_id (K A H u) 2 hn.1] at hq
+    rw [hq]
+    exact kernel_log_bounds (K A H u) hn.1 ‖K A H 0‖ (norm_nonneg _) hr hn.2
+  have hl := integral_mono_ae ib hi.neg (by
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu using (hb u hu).1)
+  have hu := integral_mono_ae hi.neg (ib.const_mul c) (by
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu using (hb u hu).2)
+  dsimp only [Pi.neg_apply] at hl hu
+  rw [integral_neg, ← eb] at hl
+  rw [integral_neg, integral_const_mul, ← eb] at hu
+  rw [he]
+  constructor <;> linarith
+
+#print axioms symmetric_entropy_gap_eq_integral_bkm
+#print axioms symmetric_entropy_gap_eq_integral_log
+#print axioms symmetric_entropy_gap_bkm_bounds
 
 end D5.S3.Quantum.Divergence.FiniteAmplitudeBKMRemainder
