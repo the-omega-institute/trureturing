@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/HyperbolicNormalizedDensity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Measure.Hausdorff, D5/S3/Geometry/HyperbolicHausdorffComparison]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Measure.Hausdorff]
    utility: none
    digest: Raw native Hausdorff density from local distortion, countable additivity and squeeze. -/
 
