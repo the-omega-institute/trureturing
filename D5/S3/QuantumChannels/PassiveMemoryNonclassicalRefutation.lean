@@ -125,11 +125,21 @@ private def controls : Fin 3 → Mat (Fin 2) := fun i =>
 private def controlled : Mat (Fin 3 × Fin 2) := fun p q =>
   if p.1 = q.1 then controls p.1 p.2 q.2 else 0
 
+private theorem controls_apply (i : Fin 3) (a b : Fin 2) :
+    controls i a b = if i = 0 then (if a = b then 1 else 0)
+      else if i = 1 then qubitX a b else qubitZ a b := by
+  unfold controls
+  split_ifs <;> rfl
+
+private theorem controlled_apply (p q : Fin 3 × Fin 2) :
+    controlled p q = if p.1 = q.1 then controls p.1 p.2 q.2 else 0 := by
+  rfl
+
 private theorem controlled_unitary :
     controlled.conjTranspose * controlled = 1 := by
   ext ⟨i, a⟩ ⟨j, b⟩
   fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases b <;>
-    simp [controlled, controls, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    simp [controlled_apply, controls_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three, qubitX, qubitZ]
 
 private def witnessChannel : KrausChannel (Fin 3 × Fin 2) :=
@@ -151,7 +161,10 @@ private theorem witnessC_gram : Gram witnessC := by
   · intro p
     rcases p with ⟨p1, p2⟩
     fin_cases p1 <;> fin_cases p2 <;>
-      simp [witnessC, gramFactor, Matrix.mul_apply, Fin.sum_univ_four]
+      dsimp only [witnessC] <;>
+      simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_four] <;>
+      dsimp only [gramFactor] <;>
+      simp [Matrix.mul_apply, Fin.sum_univ_four]
 
 private theorem witnessC_formula (p q : Fin 3 × Fin 3) :
     witnessC p q = (1 / 2 : ℂ) * Matrix.trace
@@ -160,7 +173,11 @@ private theorem witnessC_formula (p q : Fin 3 × Fin 3) :
   rcases p with ⟨p1, p2⟩
   rcases q with ⟨q1, q2⟩
   fin_cases p1 <;> fin_cases p2 <;> fin_cases q1 <;> fin_cases q2 <;>
-    norm_num +decide [witnessC, gramFactor, controls, Matrix.mul_apply,
+    dsimp only [witnessC] <;>
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.trace,
+      Fin.sum_univ_four, Fin.sum_univ_two] <;>
+    dsimp only [gramFactor, controls] <;>
+    norm_num +decide [Matrix.mul_apply,
       Matrix.conjTranspose_apply, Matrix.trace, Fin.sum_univ_four,
       Fin.sum_univ_two, dotProduct, Matrix.mulVec, Matrix.vecMul,
       Matrix.mulVec_eq_sum, Matrix.vecMul_eq_sum, Matrix.cons_val_zero,
@@ -173,7 +190,10 @@ private theorem witnessC_dephasing : DephasingGram witnessC := by
   · exact witnessC_gram
   · intro i k j l
     fin_cases i <;> fin_cases k <;> fin_cases j <;> fin_cases l <;>
-      simp [witnessC, gramFactor, Matrix.mul_apply, Fin.sum_univ_four]
+      dsimp only [witnessC] <;>
+      simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_four] <;>
+      dsimp only [gramFactor] <;>
+      simp [Matrix.mul_apply, Fin.sum_univ_four]
 
 private theorem witness_memory_marginal (ρ : DensityState (Fin 3)) :
     partialTraceLeft (act witnessChannel
@@ -182,16 +202,21 @@ private theorem witness_memory_marginal (ρ : DensityState (Fin 3)) :
   have htr' : ∑ i : Fin 3, stateMatrix ρ i i = 1 := by
     simpa [Matrix.trace] using htr
   have htr'' : ∑ i : Fin 3, (ρ.1 : Mat (Fin 3)) i i = 1 := by
-    simpa [stateMatrix] using htr'
+    dsimp only [stateMatrix] at htr'
+    simpa using htr'
   change partialTraceLeft
     (MatrixMap.of_kraus (fun _ : Fin 1 => controlled) (fun _ : Fin 1 => controlled)
       (Matrix.kronecker (stateMatrix ρ) (stateMatrix tau0))) = stateMatrix tau0
   ext b d
   have hcard1 : (Finset.univ : Finset (Fin 1)).card = 1 := Finset.card_fin 1
   fin_cases b <;> fin_cases d <;>
-    simp [act, witnessChannel, MatrixMap.of_kraus,
+    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk,
+      AddHom.coe_mk, Matrix.mul_apply, Matrix.conjTranspose_apply, partialTraceLeft,
+      Fintype.sum_prod_type, Fin.sum_univ_one, Fin.sum_univ_two, Fin.sum_univ_three,
+      Matrix.kronecker_apply] at htr ⊢ <;>
+    dsimp only [stateMatrix, tau0] at htr ⊢ <;>
+    simp [controlled_apply, controls_apply, MatrixMap.of_kraus,
       LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
-      controlled, controls, stateMatrix, tau0,
       Matrix.mul_apply, Matrix.conjTranspose_apply, partialTraceLeft,
       Fintype.sum_prod_type, Fin.sum_univ_one, Fin.sum_univ_two, Fin.sum_univ_three,
       qubitX, qubitZ, Matrix.kronecker_apply] at htr ⊢
@@ -218,8 +243,8 @@ private theorem controlled_tensor (A : Mat (Fin 3)) (B : Mat (Fin 2))
   change MatrixMap.of_kraus (fun _ : Fin 1 => controlled)
     (fun _ : Fin 1 => controlled) (Matrix.kronecker A B) (i,a) (k,b) = _
   fin_cases i <;> fin_cases k <;> fin_cases a <;> fin_cases b <;>
-    simp [act, witnessChannel, MatrixMap.of_kraus, Matrix.kronecker_apply,
-      Matrix.mul_apply, Matrix.conjTranspose_apply, controlled, controls,
+    simp [controlled_apply, controls_apply, MatrixMap.of_kraus, Matrix.kronecker_apply,
+      Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fintype.sum_prod_type, Fin.sum_univ_one, Fin.sum_univ_two,
       Fin.sum_univ_three]
   all_goals norm_num [Finset.card_fin]
@@ -277,7 +302,8 @@ private theorem witness_choi_identity (E : KrausChannel (Fin 3)) :
     ((3 : ℂ)⁻¹ * act E (Matrix.single j l 1) i k)
   have ht : stateMatrix tau0 = (1 / 2 : ℂ) • (1 : Mat (Fin 2)) := by
     ext a b
-    simp [stateMatrix, tau0, Matrix.smul_apply, smul_eq_mul]
+    dsimp only [stateMatrix, tau0]
+    simp [Matrix.smul_apply, smul_eq_mul]
   rw [ht]
   simp only [Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, Matrix.trace_smul,
     smul_eq_mul, Matrix.mul_assoc]
@@ -308,8 +334,13 @@ private theorem witness_not_ppt : ¬ (partialTransposeB witnessC).PosSemidef := 
   have hb : (partialTransposeB witnessC).submatrix (fun i : Fin 3 => (i,i))
       (fun i : Fin 3 => (i,i)) = !![(1 : ℂ),1,1; 1,1,-1; 1,-1,1] := by
     ext i j
+    change witnessC (i,j) (j,i) = _
+    rw [witnessC_formula]
     fin_cases i <;> fin_cases j <;>
-      simp [partialTransposeB, witnessC_formula, controls, Matrix.trace,
+      simp only [Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        Fin.sum_univ_two] <;>
+      dsimp only [controls] <;>
+      simp [Matrix.trace,
         Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
         Matrix.vecMul, Matrix.vecMul_eq_sum, Matrix.cons_val_zero,
         Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons,
@@ -324,7 +355,8 @@ private theorem witness_not_ppt : ¬ (partialTransposeB witnessC).PosSemidef := 
       Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons,
       Matrix.vecHead, Matrix.vecTail]
   rw [hv] at hn
-  norm_num [Complex.nonneg_iff] at hn
+  rw [Complex.nonneg_iff] at hn
+  norm_num at hn
 
 theorem result : ¬ claim := by
   intro h
