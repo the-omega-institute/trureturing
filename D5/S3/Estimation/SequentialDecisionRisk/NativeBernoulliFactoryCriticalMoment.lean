@@ -442,6 +442,8 @@ theorem native_source_conditional_kernel (π : Seed → Bool → History → Act
   rw [hp, hn]
   simp only [mul_assoc]
 
+/-- A reached word changes the private-seed posterior only through its seed
+section; its nonzero source likelihood cancels exactly. -/
 private lemma private_seed_posterior (π : Seed → Bool → History → Action)
     (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool)
     (ν : Measure Seed) [IsProbabilityMeasure ν] (p q : unitInterval)
@@ -621,6 +623,18 @@ private lemma finite_return_cell_law (π : Seed → Bool → History → Action)
       exact hout.trans (Sum.inr.inj (hy.trans ha))
     · intro hc
       exact ⟨n, ht, hy.symm.trans (congrArg Sum.inr (hout.symm.trans hc))⟩
+
+omit [MeasurableSpace Seed] in
+private lemma raw_cost_eq_total_calls (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (a : ℝ) (ω : Seed × (ℕ → ℝ)) :
+    RawCost π S p q a ω =
+      if Calls π S p q ω = ⊤ then (⊤ : ℝ≥0∞) else
+        ENNReal.ofReal (((Calls π S p q ω).untopD 0 : ℕ) ^ a : ℝ) := by
+  cases ht : Calls π S p q ω with
+  | top => simp [ht]
+  | coe n =>
+    have hlen := acquired_history_length_at_return π S (Read p q) ω n ht
+    simp [ht, hlen]
 
 /-- The fixed known parameters of the two-source factory. -/
 structure FactoryParameters where
@@ -840,7 +854,9 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
         (Target P w S) ≤ δ) →
       ENNReal.ofReal (k * Real.log δ⁻¹) ≤
         ⨆ S : Bool, ⨆ w : World P,
-          ∫⁻ ω, RawCost TablePolicy S (Rate P w false) (Rate P w true) (P.β / 2) ω
+          ∫⁻ ω, (if Calls TablePolicy S (Rate P w false) (Rate P w true) ω = ⊤ then ⊤ else
+            ENNReal.ofReal (((Calls TablePolicy S (Rate P w false) (Rate P w true) ω).untopD 0
+              : ℕ) ^ (P.β / 2) : ℝ))
             ∂(RawLaw (RowLaw table)) := by
   obtain ⟨k, hk, δ₀, hδ₀, hbound⟩ := native_factory_logarithmic_total_call_cost
     (Seed := (Bool × History) → Action) P m hm
@@ -861,6 +877,7 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
   · exact trace_return_call_count TablePolicy
   · exact fun hi => native_policy_table_identity table hi
   intro δ hδ hfinite htv
+  simp_rw [← raw_cost_eq_total_calls TablePolicy]
   apply hbound (RowLaw table) inferInstance TablePolicy
     (fun S h => measurable_pi_apply (S, h)) δ hδ
   intro w S
