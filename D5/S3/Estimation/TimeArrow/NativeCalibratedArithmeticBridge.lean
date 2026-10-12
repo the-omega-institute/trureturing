@@ -210,85 +210,100 @@ private theorem native_environment_posterior_approximation :
   simpa only [Nat.cast_add] using hh
 
 
-/-- A native original-posterior phase event is dominated by an event of
-the exact conditional A-count kernel. The posterior error is derived here,
-while the native variance threshold remains an explicit unfinished input. -/
-private theorem native_posterior_phase_kernel_bound :
+/-- The original posterior phase is covered centrally by a lattice band.
+Outside the central interval the original count tail is retained unchanged. -/
+private theorem native_posterior_central_kernel_bound :
     ∃ C : ℝ, 0 < C ∧ ∃ V0 : ℝ, 0 < V0 ∧
       ∀ (M q s : ℕ) (S : Support M q) (r : ℝ) (e : Experiment) (o : Obs M s e),
         ∀ [Fintype (Sites s e)], 1 ≤ q → q < M → 0 < r → r < 1 →
           0 ≤ compensation M q r → compensation M q r < 1 →
-          ∀ (k l : ℕ) (z : Fiber S e o) (θ : ℕ → ℝ) (ell : ℤ) (τ : ℝ),
+          ∀ (k l : ℕ) (z : Fiber S e o) (θ : ℝ → ℝ) (ell : ℤ) (τ w D : ℝ),
             letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
             let All : Support M M := ⟨univ, by simp⟩
             let BG := nativeCalibrationCells All e o k l 0 \ S.val
-            let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
-              (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+            let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r)) +
+              (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
             let V := nativeRectangleRows S e o k l z
             let R := (V.filter fun i => count e z.val i.val 1 = k).card
             let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+            let ν : ℝ := (U : ℝ)*R/V.card
             let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
-              fun i => score q r e z.val i.val - z0
+              fun i => score q r e z.val i.val-z0
             let Env := univ.filter fun y : Fiber S e o =>
               nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
             let Q := fun y : Fiber S e o => ∃ a : ℤ,
-              |(ell : ℝ) * (1 / 2 -
-                (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i)) - a| ≤ τ
-            let P := fun t : ℕ => ∃ a : ℤ,
-              |2 * (ell : ℝ) * (((BG.card : ℝ) + t) * Real.sigmoid (θ t) - (t : ℝ) / 2) - a| ≤
-                2 * τ + 2 * |(ell : ℝ)| * (C * ((BG.card : ℝ) + t) /
-                  calibratedVariance outside r (compensation M q r) V.card R U t (θ t))
+              |(ell : ℝ)*(1/2-
+                (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i))-a| ≤ τ
+            let P := fun t : ℕ => w < |(t : ℝ)-ν| ∨ ∃ a : ℤ,
+              |2*(ell : ℝ)*(((BG.card : ℝ)+t)*Real.sigmoid (θ t)-(t : ℝ)/2)-a| ≤
+                2*τ+2 * |(ell : ℝ)| * (C*((BG.card : ℝ)+ν+w)/D)
             letI : DecidablePred Q := Classical.decPred Q
             letI : DecidablePred P := Classical.decPred P
-            (∀ y ∈ Env, calibratedMean outside r (compensation M q r) V.card R U
-              (nativeRectangleACount S e o k l y) (θ (nativeRectangleACount S e o k l y)) = q) →
-            (∀ y ∈ Env, V0 ≤ calibratedVariance outside r (compensation M q r) V.card R U
-              (nativeRectangleACount S e o k l y) (θ (nativeRectangleACount S e o k l y))) →
+            V0 ≤ D →
+            (∀ y ∈ Env, |(nativeRectangleACount S e o k l y : ℝ)-ν| ≤ w →
+              calibratedMean outside r (compensation M q r) V.card R U
+                (nativeRectangleACount S e o k l y) (θ (nativeRectangleACount S e o k l y)) = q) →
+            (∀ y ∈ Env, |(nativeRectangleACount S e o k l y : ℝ)-ν| ≤ w →
+              D ≤ calibratedVariance outside r (compensation M q r) V.card R U
+                (nativeRectangleACount S e o k l y) (θ (nativeRectangleACount S e o k l y))) →
             conditionalFiberMass S r e o (Env.filter Q) / conditionalFiberMass S r e o Env ≤
-              ∑ t ∈ (range (U + 1)).filter P,
-                (if t ≤ U then ((R.choose t : ℝ) * ((V.card - R).choose (U - t) : ℝ)) /
+              ∑ t ∈ (range (U+1)).filter P,
+                (if t ≤ U then ((R.choose t : ℝ)*((V.card-R).choose (U-t) : ℝ)) /
                   (V.card.choose U : ℝ) else 0) := by
   classical
-  obtain ⟨C, hC, V0, hV0, hpost⟩ := native_environment_posterior_approximation
-  refine ⟨C, hC, V0, hV0, ?_⟩
-  intro M q s S r e o _ hq hqm hr hr1 ha ha1 k l z θ ell τ
+  obtain ⟨C,hC,V0,hV0,hpost⟩ := native_environment_posterior_approximation
+  refine ⟨C,hC,V0,hV0,?_⟩
+  intro M q s S r e o _ hq hqm hr hr1 ha ha1 k l z θ ell τ w D
   letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
   dsimp only
   let All : Support M M := ⟨univ, by simp⟩
   let BG := nativeCalibrationCells All e o k l 0 \ S.val
-  let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
-    (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r)) +
+    (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
   let V := nativeRectangleRows S e o k l z
   let R := (V.filter fun i => count e z.val i.val 1 = k).card
   let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+  let ν : ℝ := (U : ℝ)*R/V.card
   let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
-    fun i => score q r e z.val i.val - z0
+    fun i => score q r e z.val i.val-z0
   let Env := univ.filter fun y : Fiber S e o =>
     nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
-  intro hmean hvar
-  have hh := native_event_mass_le_kernel S r e o hq hqm hr hr1 ha ha1 k l z
-    (fun y => ∃ a : ℤ, |(ell : ℝ) * (1 / 2 -
-      (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i)) - a| ≤ τ)
-    (fun t : ℕ => ∃ a : ℤ,
-      |2 * (ell : ℝ) * (((BG.card : ℝ) + t) * Real.sigmoid (θ t) - (t : ℝ) / 2) - a| ≤
-        2 * τ + 2 * |(ell : ℝ)| * (C * ((BG.card : ℝ) + t) /
-          calibratedVariance outside r (compensation M q r) V.card R U t (θ t)))
-    (by
-      intro y henv hphase
+  intro hD hmean hvar
+  let Q' : Fiber S e o → Prop := fun y => ∃ a : ℤ,
+    |(ell : ℝ) * (1 / 2 -
+      (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i)) - a| ≤ τ
+  let P' : ℕ → Prop := fun t => w < |(t : ℝ)-ν| ∨ ∃ a : ℤ,
+    |2 * (ell : ℝ) * (((BG.card : ℝ)+t)*Real.sigmoid (θ t)-(t : ℝ)/2)-a| ≤
+      2*τ + 2 * |(ell : ℝ)| * (C*((BG.card : ℝ)+ν+w)/D)
+  letI : DecidablePred Q' := Classical.decPred Q'
+  letI : DecidablePred P' := Classical.decPred P'
+  have hpush : ∀ y, nativeMinimalRectangleReadout S e o k l y =
+      nativeMinimalRectangleReadout S e o k l z → Q' y → P' (nativeRectangleACount S e o k l y) := by
+    intro y henv hphase
+    by_cases hc : |(nativeRectangleACount S e o k l y : ℝ)-ν| ≤ w
+    · right
+      have hy : y ∈ Env := by simp only [Env,mem_filter,mem_univ,true_and]; exact henv
+      have hv := hvar y hy hc
       have happrox := hpost M q s S r e o hq hqm hr hr1 ha ha1 k l y z henv
-        (θ (nativeRectangleACount S e o k l y)) (hmean y (by simpa only [mem_filter, mem_univ, true_and] using henv))
-        (hvar y (by simpa only [mem_filter, mem_univ, true_and] using henv))
-      have he := posterior_phase_lattice_reduction ell (nativeRectangleACount S e o k l y)
+        (θ (nativeRectangleACount S e o k l y)) (hmean y hy hc) (hD.trans hv)
+      have hnum : (BG.card : ℝ)+nativeRectangleACount S e o k l y ≤ (BG.card : ℝ)+ν+w := by
+        linarith [(abs_le.mp hc).2]
+      have hnum0 : 0 ≤ (BG.card : ℝ)+ν+w :=
+        (by positivity : 0 ≤ (BG.card : ℝ)+nativeRectangleACount S e o k l y).trans hnum
+      have herr : |(∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i) -
+          ((BG.card : ℝ)+nativeRectangleACount S e o k l y)*
+            Real.sigmoid (θ (nativeRectangleACount S e o k l y))| ≤ C*((BG.card : ℝ)+ν+w)/D := by
+        exact happrox.trans (div_le_div₀ (mul_nonneg hC.le hnum0)
+          (mul_le_mul_of_nonneg_left hnum hC.le) (hV0.trans_le hD) hv)
+      simpa only [Int.cast_natCast] using posterior_phase_lattice_reduction ell
+        (nativeRectangleACount S e o k l y)
         (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i)
-        BG.card (θ (nativeRectangleACount S e o k l y)) τ
-        (C * ((BG.card : ℝ) + nativeRectangleACount S e o k l y) /
-          calibratedVariance outside r (compensation M q r) V.card R U
-            (nativeRectangleACount S e o k l y) (θ (nativeRectangleACount S e o k l y)))
-        (by simpa only [Int.cast_natCast] using happrox) hphase
-      simpa only [Int.cast_natCast] using he
-    
-    )
-  simpa only using hh
+        BG.card (θ (nativeRectangleACount S e o k l y)) τ (C*((BG.card : ℝ)+ν+w)/D)
+        (by simpa only [Int.cast_natCast] using herr) hphase
+    · exact Or.inl (lt_of_not_ge hc)
+
+  have hp := native_event_mass_le_kernel S r e o hq hqm hr hr1 ha ha1 k l z Q' P' hpush
+  simpa only [Q',P'] using hp
 
 /-- Coarse Stirling envelopes used only inside the four-cell atom estimate. -/
 private theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
@@ -634,15 +649,14 @@ open private
 from D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
 
 open scoped Classical in
-/-- The atom and tail inputs are discharged for the exact count kernel.
-Uniform compensated feedback is derived from one base root and its variance;
-only the quantitative base budgets remain to be supplied by native environments. -/
+/-- One base root and its full variance control compensated feedback
+uniformly on the balanced central count interval. -/
 private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
     (outside : ι → ℝ) (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
     ∃ d η : ℝ, 0 < d ∧ 0 < η ∧
-    ∀ (N R U : ℕ) (q bg δ L s K h ε X m : ℝ),
+    ∀ (N R U : ℕ) (q bg δ L s K ε X m : ℝ),
       1 < N → R ≤ N → U ≤ N → 0 < q → q < (Fintype.card ι : ℝ)+N →
-      0 < δ → 0 < L → 0 < s → 0 ≤ K → 0 ≤ h → 0 < m →
+      0 < δ → 0 < L → 0 < s → 0 ≤ K → 0 < m →
       δ*N ≤ R → (R : ℝ) ≤ (1-δ)*N →
       δ*N ≤ U → (U : ℝ) ≤ (1-δ)*N →
       1 ≤ L*Real.sqrt N → L*Real.sqrt N ≤ δ^2*N/2 →
@@ -660,14 +674,16 @@ private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
        |θ ν|+4*w/(V-w) ≤ X → X < η → 0 ≤ bg+ν-w →
        s ≤ (bg+ν-w)*d/(16*(V+w))-X/4 →
        X/4+(bg+ν+w)/(V-w) ≤ K*s →
-       (∑ t ∈ (range (U+1)).filter (fun t : ℕ => ∃ z : ℤ,
+       (∀ t : ℝ, |t-ν| ≤ w → (V-w)/2 ≤
+         calibratedVariance outside r ε N R U t (θ t)) ∧
+       ∀ h : ℝ, 0 ≤ h → (∑ t ∈ (range (U+1)).filter (fun t : ℕ => ∃ z : ℤ,
          |m*((bg+t)*Real.sigmoid (θ t)-(t : ℝ)/2)-z| ≤ h), H N R U t) ≤
        Real.exp 4 / ((δ^2/2)^2*Real.sqrt N) *
          (K*(m*s)*(2*L*Real.sqrt N)+2*h+1)*(2*h/(m*s)+1)+1/(4*L^2)) := by
   obtain ⟨d,η,hd,hη,huniform⟩ :=
     D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.shared_root_uniform_feedback outside r hr hr1
   refine ⟨d,η,hd,hη,?_⟩
-  intro N R U q bg δ L s K h ε X m hN hR hU hq hqM hδ hL hs hK hh hm
+  intro N R U q bg δ L s K ε X m hN hR hU hq hqM hδ hL hs hK hm
     hRlo hRhi hUlo hUhi hwide hsmall
   have hN0 : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
   obtain ⟨θ,hθ⟩ := balanced_shared_curve outside r ε N R U q δ (L*Real.sqrt N)
@@ -715,6 +731,15 @@ private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
     have hhigh : (bg+t)/(V-w) ≤ (bg+ν+w)/(V-w) :=
       div_le_div_of_nonneg_right hthi (sub_pos.mpr hvar).le
     constructor <;> linarith [he.1,he.2]
+  refine ⟨?_,?_⟩
+  · intro t ht
+    have hc (j : Fin 4) : 0 ≤ cellCounts N R U t j := by
+      have he := central_four_cells_lower N R U δ t w hN0 hδ.le
+        hRlo hRhi hUlo hUhi ht j
+      linarith
+    exact (RectangleCalibrationBounds.shared_root_central_bootstrap outside r ε N R U q
+      t ν (θ ν) (θ t) w hN0 hc ht hbase (hθ t ht).1 hvar hbudget).2.2.1
+  intro h hh
   obtain ⟨hl,hu⟩ := shared_calibration_increment_bounds outside r ε N R U q bg θ a b s K
     hcurve hfeedback
   apply hypergeometric_arithmetic_bound hN hR hU δ L (m*s) K h hδ hL
@@ -726,6 +751,125 @@ private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
   · intro x hx y hy hxy
     have he := mul_le_mul_of_nonneg_left (hu x hx y hy hxy) hm.le
     nlinarith only [he]
+
+/-- A finite native conditional estimate is controlled by the shared base
+root, its full variance, and the central calibration budgets. -/
+private theorem native_base_calibrated_small_ball :
+    ∃ C : ℝ, 0 < C ∧ ∃ V0 : ℝ, 0 < V0 ∧
+    ∀ (M q s : ℕ) (S : Support M q) (r : ℝ) (e : Experiment) (o : Obs M s e),
+    ∀ [Fintype (Sites s e)], 1 ≤ q → q < M → 0 < r → r < 1 →
+      0 ≤ compensation M q r → compensation M q r < 1 →
+    ∀ (k l : ℕ) (z : Fiber S e o),
+      letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+      let All : Support M M := ⟨univ, by simp⟩
+      let bg : ℝ := (nativeCalibrationCells All e o k l 0 \ S.val).card
+      let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r)) +
+        (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+      let V := nativeRectangleRows S e o k l z
+      let R := (V.filter fun i => count e z.val i.val 1 = k).card
+      let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+      let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
+        fun i => score q r e z.val i.val-z0
+      let Env := univ.filter fun y : Fiber S e o =>
+        nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+      ∃ d η : ℝ, 0 < d ∧ 0 < η ∧
+      ∀ (δ L s0 K X τ : ℝ) (ell : ℤ),
+        1 < V.card → (q : ℝ) < (Fintype.card {i : Fin M //
+          nativeRowCell S e z.val k l i = none} : ℝ)+V.card →
+        0 < δ → 0 < L → 0 < s0 → 0 ≤ K → 0 ≤ τ → ell ≠ 0 →
+        δ*V.card ≤ R → (R : ℝ) ≤ (1-δ)*V.card →
+        δ*V.card ≤ U → (U : ℝ) ≤ (1-δ)*V.card →
+        1 ≤ L*Real.sqrt V.card → L*Real.sqrt V.card ≤ δ^2*V.card/2 →
+        ∃ θ : ℝ → ℝ,
+        let ν : ℝ := (U : ℝ)*R/V.card
+        let w : ℝ := L*Real.sqrt V.card
+        let Vb := calibratedVariance outside r (compensation M q r) V.card R U ν (θ ν)
+        let D := (Vb-w)/2
+        let E := C*(bg+ν+w)/D
+        let m := 2 * |(ell : ℝ)|
+        let h := 2*τ+m*E
+        let Q := fun y : Fiber S e o => ∃ a : ℤ,
+          |(ell : ℝ)*(1/2-
+            (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i))-a| ≤ τ
+        letI : DecidablePred Q := Classical.decPred Q
+        w < Vb → 2*w ≤ (Vb-w)/2*Real.log 2 → |compensation M q r| < η →
+        |θ ν|+4*w/(Vb-w) ≤ X → X < η → 0 ≤ bg+ν-w →
+        s0 ≤ (bg+ν-w)*d/(16*(Vb+w))-X/4 →
+        X/4+(bg+ν+w)/(Vb-w) ≤ K*s0 → V0 ≤ D →
+        conditionalFiberMass S r e o (Env.filter Q)/conditionalFiberMass S r e o Env ≤
+          Real.exp 4/((δ^2/2)^2*Real.sqrt V.card)*
+            (K*(m*s0)*(2*L*Real.sqrt V.card)+2*h+1)*(2*h/(m*s0)+1)+1/(2*L^2) := by
+  classical
+  obtain ⟨C,hC,V0,hV0,hpost⟩ := native_posterior_central_kernel_bound
+  refine ⟨C,hC,V0,hV0,?_⟩
+  intro M q s S r e o _ hq hqm hr hr1 ha ha1 k l z
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  dsimp only
+  let All : Support M M := ⟨univ, by simp⟩
+  let bg : ℝ := (nativeCalibrationCells All e o k l 0 \ S.val).card
+  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r)) +
+    (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+  let V := nativeRectangleRows S e o k l z
+  let R := (V.filter fun i => count e z.val i.val 1 = k).card
+  let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+  let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
+    fun i => score q r e z.val i.val-z0
+  let Env := univ.filter fun y : Fiber S e o =>
+    nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+  obtain ⟨d,η,hd,hη,hengine⟩ := central_calibration_kernel_estimate outside r hr hr1
+  refine ⟨d,η,hd,hη,?_⟩
+  intro δ L s0 K X τ ell hN hqM hδ hL hs hK hτ hell hRlo hRhi hUlo hUhi hwide hsmall
+  have hR : R ≤ V.card := card_filter_le _ _
+  have hU : U ≤ V.card := card_filter_le _ _
+  have hm : 0 < 2*|(ell : ℝ)| := by
+    have he : (ell : ℝ) ≠ 0 := by exact_mod_cast hell
+    positivity
+  obtain ⟨θ,hθ,hbound⟩ := hengine V.card R U q bg δ L s0 K (compensation M q r) X
+    (2*|(ell : ℝ)|) hN hR hU (by exact_mod_cast (by omega : 0 < q)) hqM hδ hL hs hK hm
+    hRlo hRhi hUlo hUhi hwide hsmall
+  refine ⟨θ,?_⟩
+  let ν : ℝ := (U : ℝ)*R/V.card
+  let w : ℝ := L*Real.sqrt V.card
+  let Vb := calibratedVariance outside r (compensation M q r) V.card R U ν (θ ν)
+  let D := (Vb-w)/2
+  let E := C*(bg+ν+w)/D
+  let m := 2 * |(ell : ℝ)|
+  let h := 2*τ+m*E
+  let g : ℤ → ℝ := fun t => m*((bg+t)*Real.sigmoid (θ t)-(t : ℝ)/2)
+  let P : ℕ → Prop := fun t => w < |(t : ℝ)-ν| ∨ ∃ a : ℤ,
+    |2*(ell : ℝ)*((bg+t)*Real.sigmoid (θ t)-(t : ℝ)/2)-a| ≤ h
+  intro hvar hbudget hε hX hXη hB hslow hfast hD
+  obtain ⟨hv,hscalar⟩ := hbound hvar hbudget hε hX hXη hB hslow hfast
+  have hh : 0 ≤ h := by
+    have hw : 0 ≤ w := by dsimp [w]; positivity
+    have hbg : 0 ≤ bg+ν+w := by linarith
+    dsimp [h,E,D]
+    positivity
+  have hp := hpost M q s S r e o hq hqm hr hr1 ha ha1 k l z θ ell τ w D hD
+    (fun y _ hc => (hθ (nativeRectangleACount S e o k l y) hc).1)
+    (fun y _ hc => hv (nativeRectangleACount S e o k l y) hc)
+  have hp' : conditionalFiberMass S r e o
+      (Env.filter fun y => ∃ a : ℤ, |(ell : ℝ)*(1/2-
+        (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i))-a| ≤ τ) /
+      conditionalFiberMass S r e o Env ≤ ∑ t ∈ (range (U+1)).filter P, H V.card R U t := by
+    convert hp using 1 <;> congr 1
+  apply hp'.trans
+  convert hypergeometric_predicate_bound hR hU hN L hL P g h _ ?_ (hscalar h hh) using 1
+  · congr 1
+  · congr 1
+  intro t _ hc hP
+  rcases hP with ht | ⟨a,ha⟩
+  · exact False.elim ((not_lt.mpr hc) ht)
+  by_cases he : 0 ≤ (ell : ℝ)
+  · refine ⟨a,?_⟩
+    simpa only [g,m,Int.cast_natCast,abs_of_nonneg he] using ha
+  · refine ⟨-a,?_⟩
+    have heq : g t-((-a : ℤ) : ℝ) =
+        -(2*(ell : ℝ)*((bg+t)*Real.sigmoid (θ t)-(t : ℝ)/2)-a) := by
+      simp only [g,m,Int.cast_natCast,Int.cast_neg,abs_of_neg (lt_of_not_ge he)]
+      ring
+    rw [heq,abs_neg]
+    exact ha
 
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
