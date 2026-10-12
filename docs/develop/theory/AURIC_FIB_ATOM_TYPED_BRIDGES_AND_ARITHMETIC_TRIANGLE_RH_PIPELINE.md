@@ -8986,3 +8986,266 @@ B^*B&0\\
    只检查反射奇偶、实谱、正定性和截断收敛。除非之后证明 (51.1) 的完成函数恒等式，否则不得把这些 toy 零点称为 zeta 零点。
 
 这四项计算可以把“场产生能量、能量产生轨迹、观察产生三维投影、算术局部场产生尺度缺陷”转化为可审计的有限数学对象；它们仍然保留从有限结构到 RH 的行列式与显式公式门槛。
+
+
+## 51. 可见压缩缺陷与隐藏场记忆
+
+前述三维读出和统一场候选必须先通过有限状态可观测性检验。有限读出若没有满足 lumpability，不能被当作闭合 Markov 场变量。
+
+### 定义 51.1（可观测子空间与压缩半群）
+
+令 \(S\) 为有限状态集，令 \(\pi\) 为满支撑平稳分布，令 \(L\) 为满足
+\[
+\langle f,Lg\rangle_\pi=\langle Lf,g\rangle_\pi,\qquad
+\sum_x\pi(x)Lg(x)=0
+\]
+的可逆 Markov 生成元。给定读出 \(q:S\to Y\)，定义
+\[
+\mathcal H_q=\{f:S\to\mathbb R:f=\bar f\circ q\},
+\]
+令 \(P:L^2(\pi)\to\mathcal H_q\) 为条件期望正交投影，\(S_t=e^{tL}\)，并令
+\[
+T_t=P S_t\big|_{\mathcal H_q}.
+\]
+称 \(q\) 强 lumpable，当且仅当
+\[
+L\mathcal H_q\subseteq\mathcal H_q,
+\]
+等价于 \((I-P)LP=0\)。
+
+### 定理 51.2（可逆压缩的精确记忆缺陷）
+
+对 \(f\in\mathcal H_q\) 和 \(t\ge0\)，
+\[
+\boxed{
+\langle f,(T_{2t}-T_t^2)f\rangle_\pi
+=
+\|(I-P)S_t f\|_\pi^2.
+}
+\]
+并且
+\[
+\lim_{t\downarrow0}
+\frac{\langle f,(T_{2t}-T_t^2)f\rangle_\pi}{t^2}
+=
+\|(I-P)Lf\|_\pi^2.
+\]
+因此 \(q\) 强 lumpable 当且仅当所有 \(f\in\mathcal H_q\) 满足 \((I-P)Lf=0\)。
+
+#### 证明
+
+利用 \(f=Pf\)、\(P=P^\ast=P^2\) 和 \(S_t=S_t^\ast\)，
+\[
+\begin{aligned}
+\langle f,T_{2t}f-T_t^2f\rangle_\pi
+&=\langle f,PS_t(I-P)S_tf\rangle_\pi\\
+&=\langle S_tf,(I-P)S_tf\rangle_\pi\\
+&=\|(I-P)S_tf\|_\pi^2.
+\end{aligned}
+\]
+有限维矩阵指数给出 \(S_tf=f+tLf+o(t)\)，而 \((I-P)f=0\)，故
+\[
+(I-P)S_tf=t(I-P)Lf+o(t).
+\]
+除以 \(t^2\) 取极限即得。证毕。
+
+### 推论 51.3（dev 有限素因子盒反例）
+
+在 dev 的有限素因子盒 \(s=(a,b,c,k)\) 上，读出
+\[
+q(s)=(u,v,w)=(a+k,b,c+k)
+\]
+忘掉隐藏坐标 \(k\)。对 dev 的 7-move 生成元，取
+\[
+s=(0,0,C-1,1),\qquad t=(1,0,C,0),
+\]
+则 \(q(s)=q(t)=(1,0,C)\)，但对 \(g=\mathbf 1_{\{(1,0,C+1)\}}\) 有
+\[
+L(g\circ q)(s)=1/5,\qquad L(g\circ q)(t)=0.
+\]
+因此不存在只依赖 \(q\) 的生成元 \(G\) 使 \(L(g\circ q)=G(g)\circ q\) 在整个盒上成立。若 \(\pi(s)\propto1/(2^a3^b5^c7^k)\)，则对 \(f=\mathbf1_{\{q=(1,0,2)\}}\) 的隐藏纤维，二阶缺陷中含严格正项
+\[
+\frac1{425Z}=\frac{21}{34255}>0.
+\]
+这说明三维 \(q\) 的观察路径存在不可消去的 hidden-field memory。来源：[dev DivisorAssociationFiber](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/Arith/GoldenResource/DivisorAssociationFiber.md)，commit 41a47f1c3d，merge #15832。
+
+### 场桥接边界
+
+若要把 \(q\) 作为静态场的闭合坐标，必须额外证明 \((I-P)LP=0\)，或显式保留隐藏状态并使用记忆核
+\[
+K_t=P L(I-P)e^{t(I-P)L}(I-P)L P.
+\]
+没有该条件，\(q\)-层只能是观测量，不是闭合场本身。
+
+## 52. 有限可见 Markov 层的密度完备性
+
+### 定义 52.1（Fibonacci 开路径图与调和边泛函）
+
+令
+\[
+B_n=\{b\in\{0,1\}^n:b_jb_{j+1}=0\},
+\]
+令 \(\Gamma_n\) 的边为合法 Hamming 距离一的词对。定义
+\[
+h(s,t)=
+\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}
+\]
+以及
+\[
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu(b),\mu(c)),\quad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\quad
+c_\ast=\lim_{n\to\infty}\kappa_n/n.
+\]
+
+### 定义 52.2（有限可见阶密度）
+
+令 \(Q\) 是
+\[
+X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\}
+\]
+上的平稳律，且可见 Markov 阶数不超过 \(m\)。令 \(Q_n\) 为长度 \(n\) cylinder 分布，定义
+\[
+D_m(Q)=
+\sum_{\substack{a,v\in B_m\\a_m=v_1=0}}
+h\!\left(Q_{2m+1}(a0v),Q_{2m+1}(a1v)\right).
+\]
+
+### 定理 52.3（内部坐标的共同因子分组）
+
+对 \(n\ge2m+1\)，
+\[
+\Phi_n(Q_n)=(n-2m)D_m(Q)+E_n,\qquad0\le E_n\le m/2.
+\]
+对所有 \(n\ge1\)，
+\[
+|\Phi_n(Q_n)-nD_m(Q)|\le m/2.
+\]
+因此 \(d(Q)=\lim_n\Phi_n(Q_n)/n\) 存在且 \(d(Q)=D_m(Q)\)。
+
+#### 证明
+
+对内部坐标 \(i=m+1,\ldots,n-m\)，成对完整词只在长度 \(m+1\) 的中心窗口改变，其余转移因子给共同非负因子 \(C_\omega\)。由 \(h\) 的正齐次性，
+\[
+\sum_\omega h(C_\omega A_0,C_\omega A_1)
+=h\!\left(\sum_\omega C_\omega A_0,\sum_\omega C_\omega A_1\right),
+\]
+而两个和正是 \(Q_{2m+1}(a0v)\) 和 \(Q_{2m+1}(a1v)\)。内部坐标共有 \(n-2m\) 个，端点边贡献由 \(0\le h\le1/4\) 控制，得到余项界。零 cylinder 质量也可直接在非负质量上分组。证毕。
+
+### 定理 52.4（有限可见记忆回收全局密度）
+
+\[
+\boxed{
+c_\ast=\sup\{d(Q):m<\infty,\ Q\text{ 为允许的有限可见 Markov 阶平稳律}\}.
+}
+\]
+
+#### 证明边界
+
+上界来自 \(\Phi_n(Q_n)\le\kappa_n\)。下界使用 dev 的 guarded-payload 构造：给定有限层近极值 \(\mu\) 和 \(\varepsilon>0\)，构造固定有限可见阶数且 full-support 的平稳 \(Q\)，使 \(d(Q)>c_\ast-\varepsilon\)。因此全局密度近极值可以由某个有限可见记忆层回收。该步骤是有限概率和有限图论，不是量子、连续时空或 RH 定理。来源：[FIB LEGAL EDGE LOAD FINITE VISIBLE MEMORY COMPLETENESS](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md)，dev commit 93f4ac5279，merge #15837。
+
+## 53. 三维读出、隐藏源纤维与两种不相容的尺度
+
+### 定义 53.1（有限源族与三维观测）
+
+令 \(L_h=\{L,R\}^h\)，\(m=2^h\)，令 \(\omega:L_h\to\{0,1\}\)。按 dev 的 CE/source contract 构造
+\[
+\mathcal F_h=\{\nu_{h,\omega}:\omega\in\{0,1\}^{L_h}\},\qquad
+|\mathcal F_h|=2^{2^h}.
+\]
+每个源具有相同 retained input、相同 native \(Q\)-row，并且三分量读出相同，例如 \(q(\nu_{h,\omega})=(0,0,0)\)，但 complete subtree valuation 两两不同。
+
+### 定理 53.2（地址深度的固定维度排除）
+
+设地址超度量 \(d_h^A\) 对首个不同原始叶地址深度赋值，且同一深度最小非零距离为 \(s_h>0\)。若存在固定 \(k\)、\(0<c\le C<\infty\) 及 \(\Psi_h:\mathcal F_h\to\mathbb R^k\) 使
+\[
+c\,d_h^A(u,v)\le\|\Psi_h(u)-\Psi_h(v)\|\le C\,d_h^A(u,v)
+\]
+对全部 \(h,u,v\) 成立，则
+\[
+2^{2^h}=|\mathcal F_h|\le(1+2C/c)^k,
+\]
+矛盾于 \(h\to\infty\)。
+
+#### 证明
+
+固定一个源后，所有像点位于半径 \(Cs_h\) 的球内，且任意两点距离至少 \(cs_h\)。以半径 \(cs_h/2\) 的球围绕各像点，这些球两两不交且包含于半径 \(Cs_h+cs_h/2\) 的球内。比较 \(k\)-维体积得到所示界。证毕。
+
+### 定义 53.3（完整事件时钟与一维代码）
+
+按 full-event trace 对叶按字典序编号 \(p_1,\ldots,p_m\)，定义
+\[
+e_0(1)=1,\quad
+e_{r+1}(j)=
+\begin{cases}1+e_r(j),&j\le2^r,\\
+4\cdot2^r-1+e_r(j-2^r),&j>2^r,\end{cases}
+\quad n_h(j)=2+e_h(j).
+\]
+对 \(\omega\ne\omega'\)，令 \(j(\omega,\omega')\) 为最小不同叶索引，定义
+\[
+d_h^E(\omega,\omega')=3^{-n_h(j)},\qquad
+Z_h^E(\omega)=\sum_{j=1}^m2\omega(p_j)3^{-n_h(j)}.
+\]
+则
+\[
+d_h^E(\omega,\omega')\le|Z_h^E(\omega)-Z_h^E(\omega')|\le3d_h^E(\omega,\omega'),
+\]
+并且 \(n_h(1)=h+3\)、\(n_h(m)=4m-h-1\)。
+
+### 定理 53.4（地址尺度与事件尺度不可对应）
+
+端点事件距离与地址尺度的比值为 \(3^{4m-2h-4}\)。故不存在统一常数 \(c,C\) 与正的层内重标定 \(a_h,b_h\)，使
+\[
+c\,a_hd_h^A\le b_hd_h^E\le C\,a_hd_h^A
+\]
+对全部 \(h\) 和全部源对成立。故一维事件编码不等于三维地址几何的 faithful representation。
+
+#### 证明边界
+
+若统一双 Lipschitz 常数存在，端点距离比值必须在 \(h\) 上有界，但 \(m=2^h\) 时上式无界。证毕。
+
+这些命题只证明给定 finite source family 上 \(q\) 是高度非注入的 readout，且 hidden fiber 随 \(h\) 指数增长。它们不推出物理空间维数下界，也不否定另一个与物理度量相容的三维表示。若要把 \(q\) 或 \(Z^E\) 解释成场的几何坐标，仍必须另给 metric、measure、operator domain、clock 和 source-to-geometry correspondence。来源：[FIB ATOM RECURSIVE HOLOGRAPHIC BOUNDARY GEOMETRY CONTINUATION III §90](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)，dev commits 205ab4d1ce/3779de5fbb，merge #15838。
+
+## 54. 有界语法层上的统一残差观测反射
+
+### 定义 54.1（有限残差语法与统一分离元）
+
+令 \(\operatorname{MixedExpr}(\mathrm{Fin}\ m)\) 由有限 native ground、带 decoration 的共享 residual 名称及有序 pair 生成。令 weight 为 ground/pair 的 native constructor mass，decoration 为最大 residual exponent。对给定 \(m,M,d\)，令
+\[
+\operatorname{separator}(m,M,d):\mathrm{Fin}\ m\to\mathrm{Source}
+\]
+为按 native substitution iterates 构造的有限 tuple。
+
+### 定理 54.2（bounded identity reflection，Lean）
+
+若 \(A,B\) 的 weight 不超过 \(M\)，decoration 不超过 \(d\)，则
+\[
+\operatorname{eval}(\operatorname{separator}(m,M,d),A)
+=
+\operatorname{eval}(\operatorname{separator}(m,M,d),B)
+\]
+当且仅当
+\[
+\forall z:\mathrm{Fin}\ m\to\mathrm{Source},\quad
+\operatorname{eval}(z,A)=\operatorname{eval}(z,B).
+\]
+Lean 真源为 NativeUniformResidualRealization.bounded_identity_reflection，dev commit cdb23e4374，状态 std3。
+
+### 定理 54.3（rank instantiation 与统一有限分离）
+
+对 RankedExpr(k,m)，instantiation 保持 native evaluation。对任意有限 pair-list \(L\)，同一个 uniformSeparator(L) 对所有无界 rank vectors \(n\) 同时满足：每个 pair 在 separator 下相等，当且仅当该 pair 在全部 residual valuations \(z\) 下相等。若列表中每个 pair 各自存在 residual valuation 使其不等，则同一个 separator 同时使所有 pair 不等。
+
+对应 Lean anchors 为 instantiate_eval、uniform_residual_reflection、simultaneous_completion。该机器检查结果限于有界语法类，不能外推到所有 source、无限 rank、物理读权限、资源最优性或 RH。来源：[Native Uniform Residual Realization](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.md)，dev commit cdb23e4374。
+
+## 55. 最新外部研究锚点与管线位置
+
+本节只记录外部研究对接口设计的支持，不把其模型假设转写为 Auric FIB 内部定理。
+
+1. Zhang、Yamagata、Suzuki 的 2026 工作将 Petz 单调度量用于多参数 Bayesian 量子估计，支持把 §49 的 SLD 特例扩展为一族单调量子度量，但不替代 §49 的有限维证明，也不证明 FIB 参数是物理参数。参见 [arXiv:2607.01685](https://arxiv.org/abs/2607.01685)。
+
+2. Movilla Miangolarra、Sabbagh、Kolchinsky 的 2026 工作把详细平衡 Markov 链和耗散 Lindblad 动力学放入 Wasserstein-2 自由能梯度流框架，并讨论含 Hamiltonian 项的广义度量。它为 §50 的 metric-measure 数据提供候选构造，但必须先给出状态空间、mobility、参考态和极限识别，不能从 \(QCD(K)\) 自动推出 Wasserstein 几何。参见 [arXiv:2606.00698](https://arxiv.org/abs/2606.00698)。
+
+3. Inagaki 的 2025 结果在 Ricci 下界、体积下界、直径上界和非塌缩条件下建立随机图 Laplacian 的谱收敛，支持 §50 中 (G)、(K) 和非塌缩条件分开记录。参见 [arXiv:2506.07427](https://arxiv.org/abs/2506.07427)。
+
+4. Chen 关于 pointed Gromov-Hausdorff 收敛下热核界稳定性的工作构造极限 Dirichlet 形式并沿子列得到 Mosco 收敛，支持 §50 的“空间紧性先于形式极限”顺序，但其假设不能被有限 FIB 数据默认满足。参见 [arXiv:2411.19047](https://arxiv.org/abs/2411.19047)。
+
+因此，最新研究支持接口选择和假设分层，不能替代 Auric FIB 自己的有限层证明或 RH 谱识别定理。
