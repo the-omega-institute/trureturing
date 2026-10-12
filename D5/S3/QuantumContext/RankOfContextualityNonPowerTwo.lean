@@ -7,15 +7,14 @@
    digest: A quantum behavior has rank of contextuality three. -/
 
 /-
-proof_shape: result: bind-only
-escape_witness: none
+proof_shape: result: content; escape_witness: result
 admission_basis: open-problem-resolution (#15370; Proved)
-Direct frozen dependencies: the references F0--F4 below are declaration identities.
+Direct frozen dependencies: the references F0--F4 below are declaration identities; S0 is the same-delivery owner re-pin.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15745; DTR-Unregistered.
 The typed Reg metadata does not decode: contract.cannot_decode:metadata:computation_required; source-bound E1–E8 evidence is missing.
 The finite distributions and marginal diagonal argument establish rank three.
 The support definitions and consumed helpers reside in this settling module.
-All theorem proofs are classified bind-only after inlining the helpers.
+The content theorems introduce the generic lower bound, finite parity/cardinality certificates, the marginal obstruction and its cover consequences, and the reindexed Born calculation; the remaining helpers are bind-only with the consumers listed below.
 The definitions give the scenario, distributions and matrix construction expressions.
 F0: D5/S3/Entropy/Forgetting/CapacityMonotone.pushforward
     sha256:cad2df6e983d5d173955b5b13a616de5ba6ba0334e17112c93d7f2ed629ffbca
@@ -27,8 +26,10 @@ F3: D5/S3/Quantum/FiniteDimensional.qubitX
     sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7
 F4: D5/S3/Quantum/FiniteDimensional.qubitZ
     sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
+S0 (same-delivery owner re-pin): D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square
+    sha256:754c699a224cabc64d19c5ea4f68f316677444ee3b0036e8b2ede03a3f62d0d2
 Rows: name | proof_shape | direct frozen dependencies | consumer(s).
-Each row has escape_witness none and the module admission basis stated above.
+Content rows name their own escape witness; bind-only rows have a live consumer.
 Behavior | bind-only | none | IsQuantum
 restrict | bind-only | none | NonContextual
 NonContextual | bind-only | none | Product.chosen
@@ -40,7 +41,7 @@ push_filter | bind-only | F0 | Product.chosen_spec
 push_mass | bind-only | F0 | Product.marginal1_nc
 sum_joint_first | bind-only | none | Product.marginal1_sum
 dist_nc | bind-only | F0 | Product.marginal1_nc
-Lower.no_two_cover | bind-only | none | Product.cover_lower
+Lower.no_two_cover | content; escape_witness=Lower.no_two_cover | none | Product.cover_lower
 Square.idx | bind-only | none | Square.C
 Square.C | bind-only | none | Matrices.born
 Square.parity3 | bind-only | none | Matrices.born_probability
@@ -48,20 +49,20 @@ Square.target | bind-only | none | Matrices.born_probability
 Square.P | bind-only | none | Matrices.born_probability
 Square.bv_xor | bind-only | none | Square.bv_parity
 Square.bv_parity | bind-only | none | Square.parity_miss
-Square.parity_miss | bind-only | none | Square.contextual
-Square.contextual | bind-only | none | Product.marginal1_bad
+Square.parity_miss | content; escape_witness=Square.parity_miss | none | Square.contextual
+Square.contextual | content; escape_witness=Square.parity_miss | none | Product.marginal1_bad, Product.marginal2_bad
 Square.defTarget | bind-only | none | Square.defect_agrees
 Square.goodB | bind-only | none | Square.fiber_sum
 Square.support | bind-only | none | Square.support_card
-Square.support_card | bind-only | none | Square.mu
+Square.support_card | content; escape_witness=Square.support_card | none | Square.mu
 Square.mu | bind-only | none | Product.law_agrees
-Square.muTable | bind-only | none | Square.fiber_sum
+Square.muTable | content; escape_witness=Square.support_card | none | Square.fiber_sum
 Square.Ndef | bind-only | F0 | Square.defect_agrees
 Square.mu_nonneg | bind-only | none | Product.model_nc
-Square.mu_mass | bind-only | none | Product.model_nc
-Square.fiber_sum | bind-only | none | Square.defect_agrees
-Square.fiber_card | bind-only | none | Square.defect_agrees
-Square.defect_agrees | bind-only | F0 | Product.law_agrees
+Square.mu_mass | content; escape_witness=Square.support_card | none | Product.model_nc
+Square.fiber_sum | content; escape_witness=Square.muTable | none | Square.defect_agrees
+Square.fiber_card | content; escape_witness=Square.fiber_card | none | Square.defect_agrees
+Square.defect_agrees | content; escape_witness=Square.fiber_card | F0 | Product.law_agrees
 Product.C | bind-only | none | Product.O_commute
 Product.length_C | bind-only | none | Product.context_get1
 Product.decode_encode | bind-only | none | Product.cover_lower
@@ -74,10 +75,10 @@ Product.leftG_join | bind-only | none | Product.productDist_factor
 Product.rightG_join | bind-only | none | Product.productDist_factor
 Product.productDist_mass | bind-only | none | Product.model_nc
 Product.productDist_factor | bind-only | F0 | Product.model_agrees
-Product.law_agrees | bind-only | F0 | Product.model_agrees
+Product.law_agrees | content; escape_witness=Square.defect_agrees | F0 | Product.model_agrees
 Product.model | bind-only | F0 | Product.cover
-Product.model_nc | bind-only | F0 | Product.cover_nc
-Product.model_agrees | bind-only | F0 | Product.cover_agrees
+Product.model_nc | content; escape_witness=Square.mu_mass | F0 | Product.cover_nc
+Product.model_agrees | content; escape_witness=Product.law_agrees | F0 | Product.cover_agrees
 Product.marginal1 | bind-only | F0 | Product.cover_lower
 Product.marginal2 | bind-only | F0 | Product.cover_lower
 Product.marginal1_nc | bind-only | F0 | Product.marginal1_bad
@@ -88,40 +89,31 @@ Product.marginal1_agrees | bind-only | F0,F1 | Product.cover_lower
 Product.marginal2_agrees | bind-only | F0,F1 | Product.cover_lower
 Product.chosen | bind-only | none | Product.chosen_spec
 Product.chosen_spec | bind-only | F0 | Product.cover_lower
-Product.marginal1_bad | bind-only | F0 | Product.cover_lower
-Product.marginal2_bad | bind-only | F0 | Product.cover_lower
-Product.cover_lower | bind-only | F0,F1 | Product.cover_card
+Product.marginal1_bad | content; escape_witness=Square.contextual | F0 | Product.cover_lower
+Product.marginal2_bad | content; escape_witness=Square.contextual | F0 | Product.cover_lower
+Product.cover_lower | content; escape_witness=Lower.no_two_cover | F0,F1 | Product.cover_card
 Product.third_row | bind-only | none | Product.cover_agrees
 Product.cover | bind-only | F0 | Product.cover_agrees
-Product.cover_nc | bind-only | F0 | Product.cover_card
-Product.cover_agrees | bind-only | F0 | Product.cover_card
-Product.cover_card | bind-only | F0,F1 | Product.rank_three
-Product.rank_three | bind-only | F0,F1 | result
-Matrices.ZI | bind-only | F4 | Matrices.ZITable
-Matrices.IZ | bind-only | F4 | Matrices.IZTable
-Matrices.ZZ | bind-only | F4 | Matrices.ZZTable
-Matrices.IX | bind-only | F3 | Matrices.IXTable
-Matrices.XI | bind-only | F3 | Matrices.XITable
-Matrices.XX | bind-only | F3 | Matrices.XXTable
-Matrices.ZX | bind-only | F3,F4 | Matrices.ZXTable
-Matrices.XZ | bind-only | F3,F4 | Matrices.XZTable
-Matrices.YY | bind-only | F2,F3,F4 | Matrices.YYTable
-Matrices.ZITable | bind-only | F4 | Matrices.born_probability
-Matrices.IZTable | bind-only | F4 | Matrices.born_probability
-Matrices.ZZTable | bind-only | F4 | Matrices.born_probability
-Matrices.IXTable | bind-only | F3 | Matrices.born_probability
-Matrices.XITable | bind-only | F3 | Matrices.born_probability
-Matrices.XXTable | bind-only | F3 | Matrices.born_probability
-Matrices.ZXTable | bind-only | F3,F4 | Matrices.born_probability
-Matrices.XZTable | bind-only | F3,F4 | Matrices.born_probability
-Matrices.YYTable | bind-only | F2,F3,F4 | Matrices.born_probability
-Matrices.obs | bind-only | F2,F3,F4 | Matrices.born
-Matrices.mat_herm_sq | bind-only | F2,F3,F4 | Matrices.obs_herm_sq
-Matrices.obs_herm_sq | bind-only | F2,F3,F4 | Product.O_hermitian_square
+Product.cover_nc | content; escape_witness=Product.model_nc | F0 | Product.cover_card, Product.rank_three
+Product.cover_agrees | content; escape_witness=Product.model_agrees | F0 | Product.cover_card, Product.rank_three
+Product.cover_card | content; escape_witness=Product.cover_lower | F0,F1 | Product.rank_three
+Product.rank_three | content; escape_witness=Product.cover_lower | F0,F1 | result
+Matrices.ZITable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.IZTable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.ZZTable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.IXTable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.XITable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.XXTable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.ZXTable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.XZTable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.YYTable | bind-only | S0,F2,F3,F4 | Matrices.mat_herm_sq
+Matrices.obs | bind-only | S0 | Matrices.born
+Matrices.mat_herm_sq | bind-only | none | Matrices.obs_herm_sq
+Matrices.obs_herm_sq | bind-only | none | Product.O_hermitian_square
 Matrices.rho | bind-only | none | Matrices.born
-Matrices.born | bind-only | F2,F3,F4 | Matrices.born_probability
-Matrices.born_probability | bind-only | F2,F3,F4 | Product.quantum
-Matrices.obs_commute | bind-only | F2,F3,F4 | Product.O_commute
+Matrices.born | bind-only | none | Matrices.born_probability
+Matrices.born_probability | content; escape_witness=Matrices.born_probability | none | Product.quantum
+Matrices.obs_commute | bind-only | none | Product.O_commute
 Tensor.tensor | bind-only | none | Product.O
 Tensor.tensor_mul | bind-only | none | Product.O_commute
 Tensor.tensor_one | bind-only | none | Product.O_hermitian_square
@@ -137,23 +129,24 @@ Tensor.rho | bind-only | none | Product.quantum
 Tensor.rho_pos | bind-only | none | Product.quantum
 Tensor.rho_trace | bind-only | none | Product.quantum
 Tensor.rho_tensor | bind-only | none | Product.quantum
-Product.O | bind-only | F2,F3,F4 | Product.O_commute
-Product.O_copy1 | bind-only | F2,F3,F4 | Product.O_commute
-Product.O_copy2 | bind-only | F2,F3,F4 | Product.O_commute
-Product.O_hermitian_square | bind-only | F2,F3,F4 | Product.quantum
+Product.O | bind-only | none | Product.O_commute
+Product.O_copy1 | bind-only | none | Product.O_commute
+Product.O_copy2 | bind-only | none | Product.O_commute
+Product.O_hermitian_square | bind-only | none | Product.quantum
 Product.context_get1 | bind-only | none | Product.O_commute
 Product.context_get2 | bind-only | none | Product.O_commute
 Product.pm_get_idx | bind-only | none | Product.O_commute
-Product.O_commute | bind-only | F2,F3,F4 | Product.quantum
-Product.effect | bind-only | F2,F3,F4 | Product.effect_factor
-Product.productEffect | bind-only | F2,F3,F4 | Product.effect_factor
-Product.effect_factor | bind-only | F2,F3,F4 | Product.quantum
-Product.quantum | bind-only | F2,F3,F4 | result
-result | bind-only | F0,F1,F2,F3,F4 | terminal result
+Product.O_commute | bind-only | none | Product.quantum
+Product.effect | bind-only | none | Product.effect_factor
+Product.productEffect | bind-only | none | Product.effect_factor
+Product.effect_factor | bind-only | none | Product.quantum
+Product.quantum | content; escape_witness=Matrices.born_probability | none | result
+result | content; escape_witness=result | F0,F1 | terminal result
 -/
 
 import D5.S3.Entropy.Forgetting.PushforwardComposition
 import D5.S3.Quantum.FiniteDimensional
+import D5.S3.QuantumBounds.StatisticalStrengthMagicSquare
 
 set_option maxHeartbeats 20000000
 
@@ -696,94 +689,110 @@ end D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Product
 set_option maxHeartbeats 10000000
 namespace D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices
 
-private def ZI : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker D5.S3.Quantum.FiniteDimensional.qubitZ (1 : Matrix (Fin 2) (Fin 2) ℂ)).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def IZ : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ) D5.S3.Quantum.FiniteDimensional.qubitZ).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def ZZ : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker D5.S3.Quantum.FiniteDimensional.qubitZ D5.S3.Quantum.FiniteDimensional.qubitZ).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def IX : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ) D5.S3.Quantum.FiniteDimensional.qubitX).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def XI : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker D5.S3.Quantum.FiniteDimensional.qubitX (1 : Matrix (Fin 2) (Fin 2) ℂ)).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def XX : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker D5.S3.Quantum.FiniteDimensional.qubitX D5.S3.Quantum.FiniteDimensional.qubitX).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def ZX : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker D5.S3.Quantum.FiniteDimensional.qubitZ D5.S3.Quantum.FiniteDimensional.qubitX).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def XZ : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker D5.S3.Quantum.FiniteDimensional.qubitX D5.S3.Quantum.FiniteDimensional.qubitZ).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private def YY : Matrix (Fin 4) (Fin 4) ℂ := (Matrix.kronecker (Complex.I • (D5.S3.Quantum.FiniteDimensional.qubitX * D5.S3.Quantum.FiniteDimensional.qubitZ)) (Complex.I • (D5.S3.Quantum.FiniteDimensional.qubitX * D5.S3.Quantum.FiniteDimensional.qubitZ))).submatrix (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).symm
-private lemma ZITable : ZI = !![1,0,0,0; 0,1,0,0; 0,0,-1,0; 0,0,0,-1] := by
+private noncomputable def obs : Fin 9 → Matrix (Fin 4) (Fin 4) ℂ := fun v =>
+  let rc := ((finProdFinEquiv : Fin 3 × Fin 3 ≃ Fin (3 * 3)).symm) v
+  (D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square rc.1 rc.2).submatrix
+    ((finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin (2 * 2)).symm)
+    ((finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin (2 * 2)).symm)
+
+private lemma ZITable : obs 0 = !![1,0,0,0; 0,1,0,0; 0,0,-1,0; 0,0,0,-1] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [ZI, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma IZTable : IZ = !![1,0,0,0; 0,-1,0,0; 0,0,1,0; 0,0,0,-1] := by
+private lemma IZTable : obs 1 = !![1,0,0,0; 0,-1,0,0; 0,0,1,0; 0,0,0,-1] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [IZ, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma ZZTable : ZZ = !![1,0,0,0; 0,-1,0,0; 0,0,-1,0; 0,0,0,1] := by
+private lemma ZZTable : obs 2 = !![1,0,0,0; 0,-1,0,0; 0,0,-1,0; 0,0,0,1] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [ZZ, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma IXTable : IX = !![0,1,0,0; 1,0,0,0; 0,0,0,1; 0,0,1,0] := by
+private lemma IXTable : obs 3 = !![0,1,0,0; 1,0,0,0; 0,0,0,1; 0,0,1,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [IX, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma XITable : XI = !![0,0,1,0; 0,0,0,1; 1,0,0,0; 0,1,0,0] := by
+private lemma XITable : obs 4 = !![0,0,1,0; 0,0,0,1; 1,0,0,0; 0,1,0,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [XI, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma XXTable : XX = !![0,0,0,1; 0,0,1,0; 0,1,0,0; 1,0,0,0] := by
+private lemma XXTable : obs 5 = !![0,0,0,1; 0,0,1,0; 0,1,0,0; 1,0,0,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [XX, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma ZXTable : ZX = !![0,1,0,0; 1,0,0,0; 0,0,0,-1; 0,0,-1,0] := by
+private lemma ZXTable : obs 6 = !![0,1,0,0; 1,0,0,0; 0,0,0,-1; 0,0,-1,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [ZX, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma XZTable : XZ = !![0,0,1,0; 0,0,0,-1; 1,0,0,0; 0,-1,0,0] := by
+private lemma XZTable : obs 7 = !![0,0,1,0; 0,0,0,-1; 1,0,0,0; 0,-1,0,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [XZ, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private lemma YYTable : YY = !![0,0,0,-1; 0,0,1,0; 0,1,0,0; -1,0,0,0] := by
+private lemma YYTable : obs 8 = !![0,0,0,-1; 0,0,1,0; 0,1,0,0; -1,0,0,0] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [YY, Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
+    norm_num [obs, D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.square,
+      Matrix.kronecker, Matrix.kroneckerMap, Matrix.submatrix, finProdFinEquiv,
       Matrix.one_apply, Fin.divNat, Fin.modNat, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mul_apply, Fin.sum_univ_succ]
+      D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix, Matrix.mul_apply, Fin.sum_univ_succ]
 
-private def obs : Fin 9 → Matrix (Fin 4) (Fin 4) ℂ
- | ⟨0,_⟩ => ZI | ⟨1,_⟩ => IZ | ⟨2,_⟩ => ZZ
- | ⟨3,_⟩ => IX | ⟨4,_⟩ => XI | ⟨5,_⟩ => XX
- | ⟨6,_⟩ => ZX | ⟨7,_⟩ => XZ | ⟨8,_⟩ => YY
-
-private lemma mat_herm_sq (A : Matrix (Fin 4) (Fin 4) ℂ) (h : A = ZI ∨ A = IZ ∨ A = ZZ ∨ A = IX ∨ A = XI ∨ A = XX ∨ A = ZX ∨ A = XZ ∨ A = YY) : A.IsHermitian ∧ A * A = 1 := by
+private lemma mat_herm_sq (A : Matrix (Fin 4) (Fin 4) ℂ)
+    (h : A = obs 0 ∨ A = obs 1 ∨ A = obs 2 ∨ A = obs 3 ∨ A = obs 4 ∨
+      A = obs 5 ∨ A = obs 6 ∨ A = obs 7 ∨ A = obs 8) :
+    A.IsHermitian ∧ A * A = 1 := by
   rcases h with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     constructor
   all_goals
     first
-    | (rw [Matrix.IsHermitian]; ext i j; fin_cases i <;> fin_cases j <;> simp [ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable])
-    | (ext i j; fin_cases i <;> fin_cases j <;> simp [ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable, Matrix.mul_apply, Fin.sum_univ_succ])
+    | (rw [Matrix.IsHermitian]; ext i j; fin_cases i <;> fin_cases j <;>
+        simp [ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable])
+    | (ext i j; fin_cases i <;> fin_cases j <;>
+        simp [ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable,
+          Matrix.mul_apply, Fin.sum_univ_succ])
 
 private lemma obs_herm_sq : ∀ v, (obs v).IsHermitian ∧ obs v * obs v = 1 := by
   intro v
-  fin_cases v <;> apply mat_herm_sq <;> simp [obs]
+  fin_cases v <;> apply mat_herm_sq <;> simp
 
 private noncomputable def rho : Matrix (Fin 4) (Fin 4) ℂ := (1/4 : ℂ) • (1 : Matrix (Fin 4) (Fin 4) ℂ)
 
@@ -797,7 +806,8 @@ private lemma born_probability : ∀ x a, (Square.P x a : ℂ) = born x a := by
   generalize h1 : a 1 = b1
   generalize h2 : a 2 = b2
   cases b0 <;> cases b1 <;> cases b2 <;> fin_cases x <;>
-    simp [Square.P, Square.parity3, Square.target, born, rho, Square.C, Square.idx, obs, ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable,
+    simp [Square.P, Square.parity3, Square.target, born, rho, Square.C, Square.idx,
+      ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable,
       Matrix.mul_apply, Matrix.trace, Fin.sum_univ_succ, Fin.foldr_succ, Fin.foldr_zero,
       List.ofFn, List.prod_cons, List.prod_nil, h0, h1, h2] <;>
     norm_num
@@ -808,7 +818,9 @@ private lemma obs_commute : ∀ x i j, Commute (obs ((Square.C x).get i)) (obs (
   fin_cases x <;> fin_cases i <;> fin_cases j
   all_goals
     (rw [commute_iff_eq] <;> ext a b <;> fin_cases a <;> fin_cases b <;>
-      simp [Square.C, Square.idx, obs, ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable, Matrix.mul_apply, Fin.sum_univ_succ])
+      simp [Square.C, Square.idx,
+        ZITable, IZTable, ZZTable, IXTable, XITable, XXTable, ZXTable, XZTable, YYTable,
+        Matrix.mul_apply, Fin.sum_univ_succ])
 
 
 end D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices
@@ -868,7 +880,7 @@ namespace D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Product
 open Tensor
 open scoped ComplexOrder
 
-private def O : Fin 18 → (Matrix (Fin 16) (Fin 16) ℂ) := Fin.append (fun v => tensor (Matrices.obs v) 1) (fun v => tensor 1 (Matrices.obs v))
+private noncomputable def O : Fin 18 → (Matrix (Fin 16) (Fin 16) ℂ) := Fin.append (fun v => tensor (Matrices.obs v) 1) (fun v => tensor 1 (Matrices.obs v))
 private lemma O_copy1 (v : Fin 9) : O ((Fin.castAdd 9) v) = tensor (Matrices.obs v) 1 := by
   exact Fin.append_left _ _ v
 private lemma O_copy2 (v : Fin 9) : O ((Fin.natAdd 9) v) = tensor 1 (Matrices.obs v) := by

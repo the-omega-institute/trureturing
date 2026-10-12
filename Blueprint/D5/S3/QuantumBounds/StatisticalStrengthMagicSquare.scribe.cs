@@ -42,6 +42,11 @@ internal sealed class StatisticalStrengthMagicSquareDocument : IScribeDocumentDe
                 "Under the four-nonzero-outcome measurement convention, each setting has four nonzero projectors. Each projector is self-adjoint and idempotent; distinct outcomes are orthogonal; their sum is the identity. star on matrices is conjugate transpose. The anonymous Fintype and DecidableEq brackets are Lean instance arguments, not new mathematical variables."),
             Definition("Experiment", "Two parties, four settings, four outcomes", ExperimentFormula(),
                 "The structure has exactly the fields alice and bob, both with type Fin 4 → Fin 4 → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) C. The first argument indexes a local setting and the second an outcome. Each party's operator acts jointly on its two qubits. Together with Valid, this is the source's 2×4×4 experiment type."),
+            Describe.Lean(DescribeId.Create("vdgg-square"), DeclarationHandle.Create(Prefix + "square"),
+                H("Peres–Mermin observable grid"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "The nine entries are the Peres–Mermin square: Z⊗I, I⊗Z, Z⊗Z; I⊗X, X⊗I, X⊗X; Z⊗X, X⊗Z, Y⊗Y. Matrix.kronecker uses the two-qubit product indexing. The grid is reused by the rank-three contextuality construction."))),
+                DescribeRole.Definition),
             Definition("Valid", "Validity of all eight settings", ValidFormula(),
                 "Every Alice setting and every Bob setting satisfies IsPVM. In particular the four outcomes of every setting are nonzero."),
             Definition("ProductOperator", "Products of single-qubit operators", ProductOperatorFormula(),

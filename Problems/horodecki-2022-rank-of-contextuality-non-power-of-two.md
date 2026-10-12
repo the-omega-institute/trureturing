@@ -110,8 +110,18 @@ The kernel-checked statements, all under namespace
 
 The axiom closure of every public declaration is contained in
 $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
-The proof shape is bind-only; admission is the external open-problem resolution
-of #15370 (Proved), with no atom and no cover operation.
+The content declarations are `Lower.no_two_cover`, `Square.parity_miss`,
+`Square.support_card`, `Square.muTable`, `Square.mu_mass`, `Square.fiber_sum`,
+`Square.fiber_card`, `Square.defect_agrees`, `Square.contextual`,
+`Product.law_agrees`, `Product.model_nc`, `Product.model_agrees`,
+`Product.marginal1_bad`, `Product.marginal2_bad`, `Product.cover_lower`,
+`Product.cover_nc`, `Product.cover_agrees`, `Product.cover_card`,
+`Product.rank_three`, `Matrices.born_probability`, `Product.quantum` and
+`result`. Their witnesses are the generic cover obstruction, the parity and
+cardinality results, the Born calculation and their stated consequences.
+The remaining helpers are bind-only with consumers named in the module.
+Admission is the external open-problem resolution of #15370 (Proved), with
+no atom and no cover operation.
 
 ### Experiment
 
@@ -130,14 +140,11 @@ minimum cardinality for arbitrary distributions.
 
 ## Triage
 
-| Item | Status and evidence kind | Evidence |
+| Target item | Status and evidence kind | Evidence |
 | --- | --- | --- |
-| Explicit quantum behavior and noncontextual cover of size $3$ | Proved, kernel-checked | Private `Product.quantum`, `Product.cover_nc`, `Product.cover_agrees`, `Product.cover_card` |
-| No cover of size $2$ (or fewer) | Proved, kernel-checked | Private `Lower.no_two_cover`, `Product.cover_lower`, `Product.rank_three` |
-| A quantum rank different from a power of two | Proved, kernel-checked | Public `result : claim` |
-| Exact finite readings | Computed | The pinned experiment above, exit $0$, `bad= 0`, with precisely its stated scope |
-| Ranks of quantum behaviors in general | Open | No classification is established here |
-| The source's other questions | Open | The relation between rank and memory of contextuality, and database-noise detection and repair |
+| The mechanism | Proved, kernel-checked | `Product.quantum` gives the explicit quantum behavior and `Product.cover_nc`, `Product.cover_agrees`, `Product.cover_card` give its noncontextual cover of size $3$; `Lower.no_two_cover`, `Product.cover_lower` and `Product.rank_three` prove that no cover of size $2$ exists. |
+| Readings | Computed | The pinned experiment entry above runs its exact finite checks and reports `bad= 0`; its tested scope is the six Peres–Mermin contexts, $2^9$ assignments, all $36\times64$ product Born probabilities and the three-model cover, plus tensor-product covers for $k=2,3,4,5$ over $36,216,1296,7776$ contexts. |
+| Open | Open | Which ranks occur for quantum behaviors in general, ranks for $k\geq6$, single-system non-power-of-two constructions, and the source's other questions remain open. |
 
 ### What the settlement shows
 
