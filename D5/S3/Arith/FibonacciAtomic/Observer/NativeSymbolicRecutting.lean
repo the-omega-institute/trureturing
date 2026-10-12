@@ -50,7 +50,7 @@ private theorem termAt_fill {X : Type} (d : Nat) (a p : Address) (t : Term X)
           · exact ih (a ++ [false]) l deep.1 bd
           · exact ih (a ++ [true]) r deep.2 bd
 
-private theorem original_fill_reply {X : Type} (d : Nat) (a p : Address) (t : Term X)
+theorem original_fill_reply {X : Type} (d : Nat) (a p : Address) (t : Term X)
     (deep : DeepAt d a t) (bound : a.length + p.length < d) (v w : X → Source) :
     readout p (evaluate v t) = readout p (evaluate w t) := by
   induction p generalizing a t with

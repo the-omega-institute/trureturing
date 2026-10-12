@@ -1,1 +1,1 @@
-{"statement_id":"sha256:022d6a67a7389513a46d81793adf4b7c469457e8cfde16b41132cebc2e4e8a9d"}
+{"statement_id":"sha256:022d6a67a7389513a46d81793adf4b7c469457e8cfde16b41132cebc2e4e8a9d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Zeros),30:FiniteOrderNegativeCertificate),25:two_term_zero_sum_witness)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Zeros),30:FiniteOrderNegativeCertificate),40:exists_finite_order_negative_certificate)","kind":"theorem"}]}

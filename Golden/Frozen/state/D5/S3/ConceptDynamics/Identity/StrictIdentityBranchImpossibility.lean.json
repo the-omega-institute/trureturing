@@ -1,1 +1,1 @@
-{"statement_id":"sha256:fc1864d9d0f2716067d77ec0cf6e204ac500c39ce20c5ee7dec9acc12479bac9"}
+{"statement_id":"sha256:fc1864d9d0f2716067d77ec0cf6e204ac500c39ce20c5ee7dec9acc12479bac9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),8:Identity),33:StrictIdentityBranchImpossibility),33:strict_identity_branch_impossible)","kind":"theorem"}]}

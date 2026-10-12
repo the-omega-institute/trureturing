@@ -4,8 +4,8 @@ authors: Ahmad Sabihi
 year: 2026
 title: Robin inequality, Lagarias criterion, and Riemann hypothesis
 doi: 10.33774/coe-2026-4mf39
-url: https://arxiv.org/abs/1605.08273v14
-claim: The v14 preprint claims an RH proof by combining Robin and Lagarias criteria with odd integer class-number sets; its key derivative-transfer proposition is false, so the claimed proof is not established.
+url: https://arxiv.org/abs/1605.08273v15
+claim: The v15 preprint claims an RH proof by combining Robin and Lagarias criteria with odd integer class-number sets; its key derivative-transfer proposition is false, so the claimed proof is not established.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Robin/Lagarias proof claim and its derivative-transfer gap
 
-The source is [arXiv:1605.08273v14](https://arxiv.org/abs/1605.08273v14), submitted 9 February 2026, and is also deposited as [10.33774/coe-2026-4mf39](https://doi.org/10.33774/coe-2026-4mf39). The Cambridge record states that the manuscript is not peer reviewed. It partitions the integers into a finite computer-checked range and odd integer class-number sets, then claims Robin and Lagarias inequalities on every remaining class.
+The source is [arXiv:1605.08273v15](https://arxiv.org/abs/1605.08273v15), updated 12 July 2026, and is also deposited as [10.33774/coe-2026-4mf39](https://doi.org/10.33774/coe-2026-4mf39). The Cambridge record states that the manuscript is not peer reviewed. It partitions the integers into a finite computer-checked range and odd integer class-number sets, then claims Robin and Lagarias inequalities on every remaining class. The v15 statement of Proposition 1 retains the derivative-transfer premise audited below.
 
 ## The key proposition is false as stated
 

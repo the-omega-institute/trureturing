@@ -69,7 +69,7 @@ private theorem compound_mass_ne {X : Type} (v : X → Source) (M : Nat)
     · have two : 2 ≤ (counts (.mul l r)).1 := by omega
       nlinarith
 
-private theorem bounded_eval_injective {X : Type} (v : X → Source) (M : Nat)
+theorem bounded_eval_injective {X : Type} (v : X → Source) (M : Nat)
     (hm : 2 ≤ M) (mass : ∀ x, (v x).length = M) (inj : Function.Injective v)
     (s : Term X) : ∀ t : Term X, s.length < M → t.length < M →
     evaluate v s = evaluate v t → s = t := by
@@ -128,12 +128,12 @@ private theorem bounded_eval_injective {X : Type} (v : X → Source) (M : Nat)
 def code (n : Nat) (i : Fin n) : Source :=
   comb n (fun j => .of (decide (j = i))) (.of false)
 
-private theorem code_mass (n : Nat) (i : Fin n) : (code n i).length = n + 1 := by
+theorem code_mass (n : Nat) (i : Fin n) : (code n i).length = n + 1 := by
   rw [code, (comb_foundation n (fun j => .of (decide (j = i)))
     (fun j => .of (decide (j = i))) (.of false) (.of false)).2.1]
   simp
 
-private theorem code_injective (n : Nat) : Function.Injective (code n) := by
+theorem code_injective (n : Nat) : Function.Injective (code n) := by
   intro i j eq
   have heads := (comb_foundation n (fun k => .of (decide (k = i)))
     (fun k => .of (decide (k = j))) (.of false) (.of false)).2.2.1.mp eq

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:64cb9719246794c1d9e6788bc711bdd86662041ce01dc2d17645409ff32e50c7"}
+{"statement_id":"sha256:64cb9719246794c1d9e6788bc711bdd86662041ce01dc2d17645409ff32e50c7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Asymptotics),19:WeightedProbability),26:UniformLowerQuantileSeries),41:ae_tsum_eq_top_of_uniform_lower_quantiles)","kind":"theorem"}]}

@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.TestSupport;
@@ -19,50 +18,37 @@ internal static class FrozenStatementReceiptTestData
 
     internal static string Id(char digit) => "sha256:" + new string(digit, 64);
 
-    internal static void AddLedger(
-        IDictionary<string, string> files,
-        params Module[] modules)
+    internal static LeanAxiomReport AddLedger(IDictionary<string, string> files, params Module[] modules)
     {
-        foreach (var module in modules.OrderBy(static item => item.Path, StringComparer.Ordinal))
+        var report = Report(modules);
+        foreach (var module in modules)
         {
-            var freeze = FrozenLedgerCanonicalWriter.WriteDagEvent(
-                "Freeze",
-                JsonSerializer.SerializeToElement(new
-                {
-                    declaration_statement_ids = module.Declarations
-                        .OrderBy(
-                            static declaration => declaration.EncodedNameKey
-                                ?? NameKey(declaration.Selector),
-                            StringComparer.Ordinal)
-                        .Select(static declaration => new
-                        {
-                            declaration_name_key = declaration.EncodedNameKey
-                                ?? NameKey(declaration.Selector),
-                            kind = "theorem",
-                            statement_id = declaration.StatementId,
-                        }),
-                    descriptor_selector = module.Path,
-                    prerequisite_frozen_node_ids = Array.Empty<string>(),
-                    statement_id = module.StatementId,
-                }));
-            AddEvent(files, freeze);
+            var inventory = FrozenStateRecord.Project(report.Files[RepoPath.CreateKnown(module.Path)])
+                .Where(static declaration => CanonicalLeanNameDecoder.IsRepositoryNameKey(declaration.DeclarationNameKey))
+                .ToImmutableArray();
             files[FrozenStatePath.FromModulePath(RepoPath.CreateKnown(module.Path)).Value] =
-                Encoding.UTF8.GetString(
-                    FrozenStateRecord.Encode(StatementId.Create(module.StatementId)).AsSpan());
+                Encoding.UTF8.GetString(FrozenStateRecord.Encode(StatementId.Create(module.StatementId), inventory).AsSpan());
         }
+        return report;
     }
 
-    internal static (string Path, byte[] Bytes)[] LedgerFiles(params Module[] modules)
+    internal static LeanAxiomReport Report(params Module[] modules) => LeanAxiomReport.Create(
+        modules.ToDictionary(static module => module.Path, static module => new LeanFileReport([], module.Declarations.Select(
+            static declaration => new LeanDeclaration(declaration.Selector, "theorem", "True", [])
+            { NameKey = declaration.EncodedNameKey ?? NameKey(declaration.Selector), PrecomputedStatementId = declaration.StatementId })
+            .ToImmutableArray()), StringComparer.Ordinal));
+
+    internal static (string Path, byte[] Bytes)[] LedgerFiles(out LeanAxiomReport report, params Module[] modules)
     {
         var files = new Dictionary<string, string>(StringComparer.Ordinal);
-        AddLedger(files, modules);
+        report = AddLedger(files, modules);
         return files
             .OrderBy(static item => item.Key, StringComparer.Ordinal)
             .Select(static item => (item.Key, Encoding.UTF8.GetBytes(item.Value)))
             .ToArray();
     }
 
-    internal static string Resolve(IDictionary<string, string> files, string gidText)
+    internal static string Resolve(IDictionary<string, string> files, string gidText, LeanAxiomReport report)
     {
         var raw = RawRepositorySnapshot.Create(files.Select(static item =>
             RawRepositoryEntry.FromText(item.Key, item.Value)));
@@ -72,7 +58,7 @@ internal static class FrozenStatementReceiptTestData
             throw new InvalidOperationException($"invalid fixture GID: {gidText}");
         }
 
-        if (!Index(snapshot).TryResolve(
+        if (!Index(snapshot, report).TryResolve(
                 gid,
                 out var statementId,
                 out var message))
@@ -83,35 +69,8 @@ internal static class FrozenStatementReceiptTestData
         return statementId!.Value;
     }
 
-    internal static FrozenStatementIndex Index(RepositorySnapshot snapshot)
-    {
-        var reports = FrozenLedgerBaseViewReader.Read(snapshot).ActiveByPath
-            .ToDictionary(
-                static item => item.Key.Value,
-                static item => new LeanFileReport(
-                    [],
-                    item.Value.Material.DeclarationStatementIds.Select(static declaration =>
-                        new LeanDeclaration(
-                            declaration.DeclarationNameKey,
-                            declaration.Kind,
-                            declaration.StatementId.Value,
-                            declaration.StatementId.Value,
-                            [],
-                            static () => "True")
-                        {
-                            NameKey = declaration.DeclarationNameKey,
-                        }).ToImmutableArray()),
-                StringComparer.Ordinal);
-        return FrozenStatementIndex.Create(
-            FrozenStateCatalog.Load(snapshot),
-            LeanAxiomReport.Create(reports));
-    }
-
-    private static void AddEvent(
-        IDictionary<string, string> files,
-        (ImmutableArray<byte> Bytes, string Hash) encoded) =>
-        files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{encoded.Hash["sha256:".Length..]}.json"] =
-            Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+    internal static FrozenStatementIndex Index(RepositorySnapshot snapshot, LeanAxiomReport report) =>
+        FrozenStatementIndex.Create(FrozenStateCatalog.Load(snapshot), report);
 
     private static string NameKey(string selector)
     {

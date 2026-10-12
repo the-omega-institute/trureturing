@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ee8ce277a81a69b829b86c87d309ebdae82ece62ae807c23c71126e9545c4a7a"}
+{"statement_id":"sha256:ee8ce277a81a69b829b86c87d309ebdae82ece62ae807c23c71126e9545c4a7a","declarations":[{"declaration_name_key":"ns(ns(ns(n0,13:ContinuousMap),11:IccExtendCM),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Solenoid),31:IntervalStreamlineDecomposition),40:exists_interval_streamline_decomposition)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f9e383947fcb10e505b90b3bb50d09bc4077318b91f90a6e5c6e519964a2d86f"}
+{"statement_id":"sha256:f9e383947fcb10e505b90b3bb50d09bc4077318b91f90a6e5c6e519964a2d86f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),35:PolynomialFockChargedIrreducibility),11:chargedMode)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),35:PolynomialFockChargedIrreducibility),25:charged_modes_irreducible)","kind":"theorem"}]}
