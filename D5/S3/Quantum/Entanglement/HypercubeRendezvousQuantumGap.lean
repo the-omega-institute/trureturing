@@ -7,9 +7,12 @@
    digest: Balanced hypercube rendezvous has a dimension-independent quantum gap. -/
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowSeamCodes
 import D5.S3.Arith.Congruence.ConditionalComparison.CommonTreeUnion
+import D5.S3.Weil.ZetaLinear.RankTrace
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.PosDef
 noncomputable section
-open scoped BigOperators symmDiff ComplexOrder
+open scoped BigOperators symmDiff ComplexOrder Kronecker
 namespace D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
 abbrev Vertex (d : ℕ) :=
   D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowSeamCodes.Word d
