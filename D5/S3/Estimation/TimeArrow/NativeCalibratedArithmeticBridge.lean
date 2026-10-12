@@ -211,7 +211,7 @@ private theorem native_environment_posterior_approximation :
 
 /-- The original posterior phase is covered centrally by a lattice band.
 Outside the central interval the original count tail is retained unchanged. -/
-private theorem native_posterior_central_kernel_bound :
+theorem native_posterior_central_kernel_bound :
     ∃ C : ℝ, 0 < C ∧ ∃ V0 : ℝ, 0 < V0 ∧
       ∀ (M q s : ℕ) (S : Support M q) (r : ℝ) (e : Experiment) (o : Obs M s e),
         ∀ [Fintype (Sites s e)], 1 ≤ q → q < M → 0 < r → r < 1 →
@@ -490,7 +490,7 @@ local notation "H" => fun N R U t : ℕ => if t ≤ U then
 open scoped Classical in
 /-- The integer count kernel retains both support guards. Its atom and tail
 inputs to the moving-center engine are proved here from the original kernel. -/
-private theorem hypergeometric_arithmetic_bound {N R U : ℕ}
+theorem hypergeometric_arithmetic_bound {N R U : ℕ}
     (hN : 1 < N) (hR : R ≤ N) (hU : U ≤ N)
     (δ L s K h : ℝ) (hδ : 0 < δ) (hL : 0 < L) (hs : 0 < s) (hK : 0 ≤ K) (hh : 0 ≤ h)
     (hRlo : δ * N ≤ R) (hRhi : (R : ℝ) ≤ (1-δ)*N)
@@ -578,7 +578,7 @@ private theorem hypergeometric_arithmetic_bound {N R U : ℕ}
 open scoped Classical in
 /-- An arbitrary native predicate only needs lattice containment centrally.
 The remaining count values are paid by the original kernel tail. -/
-private theorem hypergeometric_predicate_bound {N R U : ℕ}
+theorem hypergeometric_predicate_bound {N R U : ℕ}
     (hR : R ≤ N) (hU : U ≤ N) (hN : 1 < N) (L : ℝ) (hL : 0 < L)
     (P : ℕ → Prop) (g : ℤ → ℝ) (h B : ℝ)
     (hpush : ∀ t ∈ range (U+1), |(t : ℝ)-(U : ℝ)*R/N| ≤ L*Real.sqrt N →
