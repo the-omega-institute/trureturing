@@ -1062,6 +1062,201 @@ originality claim.
 
 
 
+## Multiple real source zeros on a fixed band
+
+The arbitrary-center Poisson–Charlier bound in
+[Zacharovas, Theorem 2.8](zacharovas2025depoissonization.md)
+provides a local application beyond the simple-source-zero premise in
+(LC18). The source, coefficients and actual nodes in (LC16) are unchanged.
+The following is a parameter application of that bound, classical
+Charlier–Hermite convergence and compact Jensen convergence; none of
+those general results is reproved or claimed as new.
+
+For the same $n,t>0$, put $\alpha=t/n$ and
+$g_s(z)=f^{(s)}(\alpha z)$, $s=0,1$. The existing coefficient
+normalization gives
+
+$$
+\begin{aligned}
+n![z^n]e^zg_0(z)&=\mathcal J_n(t),\\
+n![z^n]e^zg_1(z)&=\mathcal G_n(t),\\
+(n-1)![z^{n-1}]e^zg_1(z)&=\mathcal J_n'(t).
+\end{aligned} \tag{LC23}
+$$
+
+The real coefficients and entire exponential generating functions meet
+the supplier's assumptions. Their absolute Poisson averages satisfy
+$\mathscr E(g_s^{(j)};\rho)\le
+\alpha^j f_+^{(s+j)}(\alpha\rho)$.
+The auxiliary functions only extract the original coefficients; they do
+not replace the original measure or impose a Laguerre–Polya/RH premise.
+
+Fix a positive real source zero $\tau$ of finite multiplicity $r\ge1$,
+and let $A_\tau=f^{(r)}(\tau)/r!\ne0$. Set
+
+$$
+t=\tau(1+x/\sqrt n),\qquad u=1+x/\sqrt n>0,\qquad
+\rho=n/u,\qquad
+Q_\tau=\frac{\tau f_+^{(r+1)}(\tau)}{|A_\tau|},
+\quad
+W_\ell(\rho)=\frac{\ell!e^\rho}{\rho^\ell\sqrt\ell}.
+$$
+
+Thus $\alpha\rho=\tau$. For $n\ge3$, apply the supplier with
+$(\ell,N,s)=(n,r,0),(n,r-1,1),(n-1,r-1,1)$. The lower derivatives
+vanish at the same source zero, giving
+
+$$
+\begin{aligned}
+\mathcal J_n(t)&=A_\tau\tau^r\mathsf C_r(\rho,n)+e_0,\\
+\mathcal G_n(t)&=rA_\tau\tau^{r-1}\mathsf C_{r-1}(\rho,n)+e_V,\\
+\mathcal J_n'(t)&=rA_\tau\tau^{r-1}\mathsf C_{r-1}(\rho,n-1)+e_D,
+\end{aligned} \tag{LC24}
+$$
+
+with the supplier's finite-degree remainder bounds
+
+$$
+\begin{aligned}
+\left|\frac{n^{r/2}e_0}{A_\tau\tau^r}\right|
+&\le \frac{12Q_\tau}{\sqrt n}W_n(\rho)u^{r+1},\\
+\left|\frac{n^{(r-1)/2}e_V}{A_\tau\tau^{r-1}}\right|
+&\le \frac{12Q_\tau}{\sqrt n}W_n(\rho)u^r,\\
+\left|\frac{n^{(r-1)/2}e_D}{A_\tau\tau^{r-1}}\right|
+&\le \frac{12Q_\tau}{\sqrt n}W_{n-1}(\rho)
+                 (1-1/n)^{r/2}u^r.
+\end{aligned} \tag{LC25}
+$$
+
+The source's Stirling bound gives
+$W_\ell(\rho)\le e\exp(\rho-\ell-\ell\log(\rho/\ell))$.
+For fixed $\tau,r,L$ and $|x|\le L$, these errors are
+$O_{\tau,r,L}(n^{-1/2})$.
+
+Use $\operatorname{He}_r(x)=2^{-r/2}H_r(x/\sqrt2)$. In the supplier's
+normalization, [DLMF 18.21.9](https://dlmf.nist.gov/18.21.E9)
+and its fixed-degree finite-sum formula give, uniformly for $|x|\le L$,
+
+$$
+\begin{aligned}
+F_n(x)&=\frac{n^{r/2}\mathcal J_n(t)}{A_\tau\tau^r}
+          =\operatorname{He}_r(x)+O_{\tau,r,L}(n^{-1/2}),\\
+D_n(x)&=\frac{n^{(r-1)/2}\mathcal J_n'(t)}{A_\tau\tau^{r-1}}
+          =F_n'(x)=\operatorname{He}_r'(x)+O_{\tau,r,L}(n^{-1/2}),\\
+V_n(x)&=\frac{n^{(r-1)/2}\mathcal G_n(t)}{A_\tau\tau^{r-1}}
+          =\operatorname{He}_r'(x)+O_{\tau,r,L}(n^{-1/2}).
+\end{aligned} \tag{LC26}
+$$
+
+The derivative convention also uses
+[DLMF 18.9.25](https://dlmf.nist.gov/18.9.E25).
+For finite-degree use, each error in (LC26) is bounded by the
+corresponding explicit normalized Charlier polynomial's error on
+$[-L,L]$, plus (LC25); the asymptotic notation is not a numerical
+certificate.
+
+Let $h_1<\cdots<h_r$ be the real simple Hermite zeros. Choose disjoint
+closed intervals $I_j$ around them, contained in $[-L,L]$, with
+
+$$
+m_*=\min_{\cup_jI_j}|\operatorname{He}_r'|>0,\qquad
+q_*=\min_{\cup_j\partial I_j}|\operatorname{He}_r|>0.
+$$
+
+Write $\delta_0,\delta_D,\delta_V$ for the suprema of the three errors
+in (LC26) on $[-L,L]$. Also choose a fixed complex disk
+$B(\tau,d)$, $0<d<\tau$, containing no other source zero, and
+$\gamma_\tau=\min_{|z-\tau|=d}|f(z)|>0$.
+The joint sufficient conditions are
+
+$$
+\delta_0<q_*,\quad
+\delta_D<m_*/2,\quad \delta_V<m_*/2,\quad
+\tau L/\sqrt n<d,\quad
+E_0(\tau+d)/n<\gamma_\tau. \tag{LC27}
+$$
+
+The last condition applies (LC17) on the complex circle; classical
+Rouché counting gives exactly $r$ polynomial zeros in the disk, counted
+with multiplicity. The first three conditions give a unique real simple
+zero in each $I_j$: the endpoint signs persist and $D_n$ has a fixed
+nonzero sign there. The fourth places those roots inside the disk, so
+they account for its entire zero count. At each of these actual
+$\mathcal J_n$ nodes,
+
+$$
+\mathcal J_n'(t)\mathcal G_n(t)
+\ge A_\tau^2\tau^{2r-2}n^{-(r-1)}m_*^2/4>0. \tag{LC28}
+$$
+
+All conditions in (LC27) hold eventually for fixed $\tau,r,L,d$.
+No simplicity of the source zero is assumed. This count and sign concern
+the exact polynomial nodes, not merely values at the limiting Hermite
+zeros. The existing lowering and adjacent-row identities then exclude
+the two relevant common zeros at the same original $v$:
+
+$$
+\mathcal J_{n-1}((1-1/n)t)=-t\mathcal J_n'(t)/n\ne0,\qquad
+\mathcal J_{n+1}((1+1/n)t)=t\mathcal G_n(t)/n\ne0.
+$$
+
+Thus (LC16) gives $\beta a^2-ab>0$ and $a\ne0$ on these clusters.
+
+The relative correlation also keeps the local cancellation. The existing
+coefficients in (LC19) give
+$h_n=-t\mathcal G_n'-\mathcal G_n/2$ and
+$\mathcal J_n'=\mathcal G_n-(t/n)\mathcal G_n'$. Hence at these nodes
+
+$$
+\frac b{\beta a}
+=1-\left(1+\frac1{2n}\right)\frac{\mathcal G_n}{\mathcal J_n'},\qquad
+\left|\frac b{\beta a}\right|
+\le\frac1{2n}
++\left(1+\frac1{2n}\right)
+\frac{\delta_D+\delta_V}{m_*-\delta_D}
+=:\epsilon_{\tau,n}
+=O_{\tau,r,L}(n^{-1/2}). \tag{LC29}
+$$
+
+The original splice therefore still satisfies
+$aD_N+a\mathcal R_N\le(\eta+\epsilon_{\tau,n}\beta)a^2$ in both residual
+orientations, with its nonzero approximating-node residual retained.
+This uses the correlated three-row estimate instead of dividing the
+absolute $B_R$ budget by a vanishing source derivative.
+
+For every fixed $R>0$, the source has finitely many real zeros in a
+slightly larger fixed interval, each of finite multiplicity since
+$f(0)=1$. Apply the cluster construction at each one. Away from their
+neighborhoods, compact Jensen convergence and a positive $|f|$ floor
+exclude additional real nodes. If $R$ itself is a source zero, retain
+its whole cluster using the larger interval. Consequently there are
+source-dependent $N_R,C_R$ such that
+
+$$
+n\ge N_R,\quad 0<t\le R,\quad\mathcal J_n(t)=0
+\ \Longrightarrow\
+\mathcal J_n'(t)\mathcal G_n(t)>0,\quad a\ne0,\quad
+|b/(\beta a)|\le C_R/\sqrt n. \tag{LC30}
+$$
+
+Source zeros off the real axis are allowed throughout. This does not
+establish real-rootedness of the whole polynomial. Fixed-band
+large-degree collisions are excluded by (LC30); low-degree or unbounded
+height collisions still need the original vanishing and multiplicity
+propagation arguments.
+
+The quantifiers remain $\forall R\,\exists N_R$, with no numerical
+threshold supplied. A moving-height use must jointly control (LC25),
+the finite Charlier errors and Hermite margins, isolation radii and
+circle floors in (LC27), and a source floor outside all captured
+clusters. It must additionally cover every actual positive node by
+$R_n$ or supply an estimate beyond it. A slowly growing chosen band
+does not by itself establish that coverage; (LC21) already requires
+$R_n\ge n/a_1$ in degrees with all $n$ roots positive.
+No uniform high-height estimate, new Lean declaration, originality
+claim, RH or all-integer Robin proof is supplied by this application.
+
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
