@@ -178,6 +178,10 @@ $$\neg (\operatorname{D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation.
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/salazar-shahbeigi-2025-passive-memory-refutation` (refuted) by `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"salazar-shahbeigi-2025-passive-memory-refutation","declaration_gid":"D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. Salazar; F. Shahbeigi (2025). *Dephasing noise simulation for coherence-generating devices*. DOI: [10.1088/1402-4896/adda94](https://doi.org/10.1088/1402-4896/adda94). URL: <https://arxiv.org/abs/2403.19247v1>.

@@ -46,7 +46,10 @@ internal sealed class PassiveMemoryNonclassicalRefutationDocument : IScribeDocum
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "For a system of dimension 3 and a memory of dimension 2, take the memory state to be one half of the identity. Use the same block diagonal unitary for encoding and decoding, with diagonal blocks the identity, D5.S3.Quantum.FiniteDimensional.qubitX and D5.S3.Quantum.FiniteDimensional.qubitZ. The memory marginal remains equal to its initial state for every density input. The resulting Gram matrix has equal diagonal blocks and gives the required Choi identity for every Kraus channel. Every classical Gram matrix has a positive semidefinite partial transpose in the second coordinate. Here its principal block on (0,0), (1,1), (2,2) has rows (1,1,1), (1,1,−1), (1,−1,1). Its quadratic form at (−1,1,1) equals −3, so the Gram matrix is not classical. This gives a negative answer to Salazar and Shahbeigi's question in §V.C."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("salazar-shahbeigi-2025-passive-memory-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(
