@@ -166,20 +166,20 @@ def family : Registration arena (type_of% (@weighted_path_artin_markov_invariant
 
 #print axioms family
 
-def registration_1 : Contract.Registration
-    (@weighted_path_artin_markov_invariant.{u}) (Realization signature) Unit Unit where
+def registration_1.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@weighted_path_artin_markov_invariant.{u_1}) (Realization signature.{u_1}) Unit Unit where
   unitName := `D5.S3.Quantum.Algebra.Knot.WeightedPathArtinRepresentation.weighted_path_artin_markov_invariant.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Algebra.Knot.WeightedPathArtinRepresentation.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u_1}⟩
+  objectArena := .source ⟨arena.{u_1}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u_1} ⟨family.{u_1}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
+  readout := some (realize signature.{u_1}
     (fun _ p b => by
       letI := p.finite
       letI := p.eq

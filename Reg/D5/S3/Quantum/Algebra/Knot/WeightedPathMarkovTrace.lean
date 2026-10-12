@@ -200,20 +200,20 @@ def scalarFamily : Registration scalarArena (type_of% (@tau_smul.{u})) where
 
 #print axioms scalarFamily
 
-def scalarRegistration_1 : Contract.Registration
-    (@tau_smul.{u}) (Realization scalarSignature) Unit Unit where
+def scalarRegistration_1.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@tau_smul.{u_1}) (Realization scalarSignature.{u_1}) Unit Unit where
   unitName := `D5.S3.Quantum.Algebra.Knot.WeightedPathMarkovTrace.tau_smul.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Algebra.Knot.WeightedPathMarkovTrace.scalarFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨scalarArena⟩
-  objectArena := .source ⟨scalarArena⟩
+  arena := .source ⟨scalarArena.{u_1}⟩
+  objectArena := .source ⟨scalarArena.{u_1}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source scalarArena ⟨scalarFamily⟩
+  realization := .source scalarArena.{u_1} ⟨scalarFamily.{u_1}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize scalarSignature
+  readout := some (realize scalarSignature.{u_1}
     (fun _ p X => by
       letI := p.finite
       letI := p.eq
