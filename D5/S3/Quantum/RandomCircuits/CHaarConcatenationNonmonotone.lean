@@ -84,6 +84,8 @@ F13: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryMeasurableSpace
   sha256:abb9c185cb4644ae2b034b61c7aa2a837e9832ef73855984512122acadf02844
 F14: D5/S3/Weil/ZetaLinear/PosIndex.frobSq
   sha256:a1114d4731d26d6c5ef81acb0a254cdc6e0ed6e629ccb2dcf75d7faa00f4ccce
+F15: D5/S3/Quantum/GNSMatrix.frobenius_norm_sq_eq_trace
+  sha256:470140292aee89705512206af514f5a42fdc3948e5c9195d302613a47b859917
 Direct frozen dependencies: cHaarChannel: F1.
 Direct frozen dependencies: momentOp: F13, F11, F12, F1.
 Direct frozen dependencies: claim: F13, F11, F12, F1.
@@ -123,11 +125,12 @@ Direct frozen dependencies: rMulQ: none.
 Direct frozen dependencies: rMulR: none.
 Direct frozen dependencies: aMulNormal: none.
 Direct frozen dependencies: aPow: none.
-Direct frozen dependencies: normReindex: F14.
-Direct frozen dependencies: normNormal: F14.
-Direct frozen dependencies: instanceN4: F14, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
-Direct frozen dependencies: instanceN5: F14, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
-Direct frozen dependencies: result: F14, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
+Direct frozen dependencies: hsNormSqCorrespondence: F14, F15.
+Direct frozen dependencies: normReindex: F14, F15.
+Direct frozen dependencies: normNormal: F14, F15.
+Direct frozen dependencies: instanceN4: F14, F15, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
+Direct frozen dependencies: instanceN5: F14, F15, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
+Direct frozen dependencies: result: F14, F15, F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
 The public result is the designated refutation result (`basis=refutes`) and is exempt
 from four-slot escape registration (CLAUDE.md §3.9).
 Every other newly authored public theorem would be an escape-audit target;
@@ -137,14 +140,16 @@ partial trace over the environment. Its ancilla is Matrix.single 0 0 1.
 The two-copy average is expressed through haarAverage acting on Matrix.vec;
 Matrix.of with Function.curry and Prod.swap performs the inverse vectorization.
 No separate twirl, swap matrix, identity vector or coordinate equivalence is defined.
-The claim inlines #15553's hsNormSq body, while RHLinalg.frobSq is the frozen
-owner used in the proofs. Expanding Re tr(MᴴM) gives exactly that double sum;
-Mathlib's Frobenius norm is only a local instance.
+The claim inlines #15553's hsNormSq body. The frozen
+`GNSMatrix.frobenius_norm_sq_eq_trace` identity supplies the trace form; taking
+real parts and using Mathlib's Frobenius norm and `Complex.normSq_eq_norm_sq`
+gives exactly the double sum.
 -/
 
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Weil.ZetaLinear.PosIndex
+import D5.S3.Quantum.GNSMatrix
 
 open Matrix MeasureTheory TopologicalSpace
 open scoped Kronecker
@@ -442,8 +447,17 @@ private theorem aPow (k : ℕ) (hk : 1 ≤ k) :
 private theorem hsNormSqCorrespondence {ι : Type*} [Fintype ι] [DecidableEq ι]
     (M : Matrix ι ι ℂ) :
     RHLinalg.frobSq M = ∑ r, ∑ c, Complex.normSq (M r c) := by
-  rw [Finset.sum_comm]
-  simp [RHLinalg.frobSq, Matrix.trace, Matrix.mul_apply, Complex.normSq_apply]
+  have h := congrArg Complex.re
+    (D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace M)
+  rw [Complex.ofReal_re] at h
+  unfold RHLinalg.frobSq
+  change (Mᴴ * M).trace.re = _
+  rw [← h, Matrix.frobenius_norm_def]
+  simp_rw [Real.rpow_two]
+  simp_rw [Complex.normSq_eq_norm_sq]
+  rw [← Real.sqrt_eq_rpow]
+  rw [Real.sq_sqrt]
+  positivity
 
 private theorem normReindex {ι κ : Type*} [Fintype ι] [Fintype κ] [DecidableEq ι] [DecidableEq κ] (f : ι ≃ κ) (M : Matrix ι ι ℂ) :
     RHLinalg.frobSq (Matrix.reindex f f M) = RHLinalg.frobSq M := by

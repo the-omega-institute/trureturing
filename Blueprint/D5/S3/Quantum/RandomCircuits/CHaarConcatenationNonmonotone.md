@@ -64,5 +64,6 @@ At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fift
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.claim`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.momentOp`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result`
+- Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](HaarTwoCopyTwirl.md)

@@ -34,7 +34,7 @@ The verbal source clause is: “Further, it is conjectured that the cHaar norm i
 
 ## Gap
 
-The source and literature screen in #15553 leave the finite-dimensional concatenation clause unsettled in the searched scope. This is not an exhaustive-literature or originality claim. Theorem “cHaar explicit”, part 3, has a large-dimension limit scope and does not assert this finite-dimensional monotonicity.
+The source and literature screen leave the finite-dimensional concatenation clause unsettled in the searched scope. M. Duschenes, *Effects of Noise on Optimization, Statistics, and Simulation of Quantum Systems*, University of Waterloo thesis (2026-06-23; [hdl:10012/23660](https://hdl.handle.net/10012/23660)), restates the hierarchy as a conjecture for all $t,k,d,s$ and gives no settlement of the concatenation clause. Its numerical check at $k=1,3$ does not reach the increase, which at $d=e=2$ first appears from $k=4$ to $k=5$ ([comment on #15553](https://github.com/the-omega-institute/trureturing/issues/15553#issuecomment-6111775899)). This is not an exhaustive-literature or originality claim. Theorem “cHaar explicit”, part 3, has a large-dimension limit scope and does not assert this finite-dimensional monotonicity.
 
 ## Route
 
@@ -94,4 +94,4 @@ Since $\lambda^k\to0$, every sufficiently large $k$ satisfies $\lambda^k<2c/[(1+
 
 ## ASSUMED-UNVERIFIED
 
-Literature completeness and originality are unverified beyond the recorded screen. The environment-dimension clause remains open. The all-$d,e$ eventual-increase derivation is not a uniform kernel-checked theorem. The author's thesis full text was not read in the preregistration screen; this delivery makes no claim based on it.
+Literature completeness and originality are unverified beyond the recorded screen. The environment-dimension clause remains open. The all-$d,e$ eventual-increase derivation is not a uniform kernel-checked theorem.
