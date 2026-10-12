@@ -570,6 +570,19 @@ theorem native_margin_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M 
     exact_mod_cast (powersetCard_nonempty.mpr hR).card_ne_zero
   rw [mul_div_mul_left _ _ hcardR, card_powersetCard]
 
+/-- The rectangle conditioning records its members, both labelled outside
+count arrays, and the two numerical margins, without retaining an interior
+labelled margin. -/
+def nativeMarginRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (k l : ℕ) (y : Fiber S e o) :
+    Finset {i : Fin M // i ∈ S.val} × ({i : Fin M // i ∈ S.val} → Option (ℕ × ℕ)) × ℕ × ℕ := by
+  classical
+  let V := nativeRectangleRows S e o k l y
+  exact (V, (fun i => if i ∈ V then none
+    else some (count e y.val i.val 1, count e y.val i.val (-1))),
+    (V.filter fun i => count e y.val i.val 1 = k).card,
+    (V.filter fun i => count e y.val i.val (-1) = l).card)
+
 private theorem rectangle_low_rows {α : Type*} [Fintype α] [DecidableEq α]
     (V A : Finset α) (outside : α → ℕ) (k : ℕ) (hA : A ⊆ V) :
     (V.filter fun i => rectangleNegativeCounts V A outside k i = k) = A := by

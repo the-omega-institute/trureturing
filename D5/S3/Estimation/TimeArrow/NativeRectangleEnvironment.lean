@@ -8,6 +8,7 @@
 
 import D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 import Mathlib.Data.Nat.Choose.Vandermonde
 
 open scoped BigOperators
@@ -624,31 +625,23 @@ theorem kernel_central_tail {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 
       (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|), H N K n k) ≤
         1 / (4 * L ^ 2) := by
   classical
-  let T := (range (n + 1)).filter
-    (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|)
   have hNpos : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
-  have hw (k : ℕ) : 0 ≤ H N K n k := by
-    dsimp only
-    split_ifs <;> positivity
-  have ht : L ^ 2 * (N : ℝ) * (∑ k ∈ T, H N K n k) ≤
-      ∑ k ∈ T, H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2 := by
-    rw [mul_sum]
-    apply sum_le_sum
-    intro k hk
-    have hb := (mem_filter.mp hk).2
-    have hs : (L * Real.sqrt (N : ℝ)) ^ 2 ≤
-        ((k : ℝ) - (n : ℝ) * K / N) ^ 2 := by
-      nlinarith [sq_abs ((k : ℝ) - (n : ℝ) * K / N),
-        mul_nonneg hL.le (Real.sqrt_nonneg (N : ℝ))]
-    rw [mul_pow, Real.sq_sqrt hNpos.le] at hs
-    nlinarith [mul_nonneg (hw k) (sub_nonneg.mpr hs)]
-  have hsub : (∑ k ∈ T, H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) ≤
-      ∑ k ∈ range (n + 1), H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2 :=
-    sum_le_sum_of_subset_of_nonneg (filter_subset _ _) (fun k _ _ => mul_nonneg (hw k) (sq_nonneg _))
-  have hb := ht.trans (hsub.trans (kernel_variance_le hK hn hN))
-  apply (le_div_iff₀ (by positivity : (0 : ℝ) < 4 * L ^ 2)).mpr
-  have hc : (0 : ℝ) < N := hNpos
-  nlinarith
+  have hm := D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.finite_square_markov
+    (fun j : Fin (n + 1) => H N K n j.val) (fun j : Fin (n + 1) => (j.val : ℝ))
+    ((n : ℝ) * K / N) (L * Real.sqrt N) ((N : ℝ) / 4)
+    (fun j => by dsimp only; split_ifs <;> positivity)
+    (mul_pos hL (Real.sqrt_pos.mpr hNpos))
+    (by simpa only [Fin.sum_univ_eq_sum_range] using kernel_variance_le hK hn hN)
+  have he : (∑ k ∈ (range (n + 1)).filter
+      (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|), H N K n k) ≤
+      ((N : ℝ) / 4) / (L * Real.sqrt N) ^ 2 := by
+    simpa only [Fin.sum_univ_eq_sum_range, ← sum_filter] using hm
+  calc
+    _ ≤ ((N : ℝ) / 4) / (L * Real.sqrt N) ^ 2 := he
+    _ = 1 / (4 * L ^ 2) := by
+      rw [mul_pow, Real.sq_sqrt hNpos.le]
+      field_simp
+      <;> ring
 
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
