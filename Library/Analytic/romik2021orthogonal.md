@@ -5958,3 +5958,108 @@ Jensen roots or close the first-birth height/resolution obligation.
 The existing fixed-band, angular-capture and defect results remain
 valid independently. Full RH and strict Robin for every integer
 $H>5040$ remain unresolved.
+
+
+### A sharper degree payment in the actual chart resolution
+
+The polynomial threshold in (LC218) is a sufficient coarse bound.
+Keeping the same source floor, derivative product and exact angular
+weights during normalization gives a smaller resolution cost.
+No new general convolution, multiplier or special-function supplier
+is required for this refinement. Put
+$\nu=n\rho^2/T^2$, so $\sigma=T\rho/\sqrt\nu$.
+All source/model definitions and the local real-source premise remain
+those of (LC209)--(LC218).
+
+The factorial in the already used derivative product gives the weaker,
+but useful, uniform floor
+$D_i\ge e^{-Cr}\sigma^{r-1}$.
+Indeed $\delta\ge c\sigma/\sqrt r$ and
+$(i-1)!(r-i)!\ge e^{-Cr}r^{r-1}$.
+Thus (LC212) and $q\ge c\sigma/r^{3/2}$ give
+$E_T/(|a_i|D_iq)\le e^{Cr+CL(1+\log(1/\rho))}\nu^{r/2}$,
+with the polynomial $r$ factor absorbed in $e^{Cr}$.
+For the derivative and adjacent errors, the corresponding normalization
+is $E_T/(|a_i|D_i\sigma)$ and has the same bound.
+This uses $T\rho/\sigma=\sqrt\nu$; it does not pay a separate
+$r\log n$ term after that ratio has already been accounted for.
+
+For the remote model, keep (LC215) on the entire circle instead of its
+coarse maximum. Exactly,
+$|\mathcal K_n|e^{b_i(t\cos\theta-c_i)}
+=c_ne^{b_i(t-c_i)}e^{-(n+b_it)(1-\cos\theta)}$
+with $c_n\asymp\sqrt n$.
+For $u=\sqrt n\theta$, the kernel prefactor cancels with $d\theta$;
+$n+b_it\ge n/2$ and the model product costs at most
+$e^{Cr+C\sqrt r|u|}$ times its stated polynomial factors.
+Take $\theta_0=c\rho/T$, with the same fixed small chart constant.
+The model tail consequently costs $e^{Cr-c\nu}$ after completing the
+square. For the actual source, the angular envelope (LC188) costs
+$C\rho L|u|/\sqrt\nu$; completing its square adds only
+$C\rho^2L^2/\nu$, and the Gaussian tail again costs $e^{-c\nu}$.
+The original exact $\omega_D,\omega_G$ weights supply only the finite
+polynomial factors $(1+|u|)/\sigma$.
+Both remote functions are still included.
+
+Together with (LC216), this sharpens (LC217) to
+
+$$
+\begin{aligned}
+\max\left\{
+\frac{\|\mathcal J_n-M_i\|_{I_i}}{|a_i|D_iq},
+\frac{\|\mathcal J_n'-M_i'\|_{I_i}}{|a_i|D_i},
+\frac{\|\mathcal G_n-U_i\|_{I_i}}{|a_i|D_i}
+\right\}
+\le{}&\frac{CL}{\nu}e^{Cr}\\
+&+C\exp\!\left[-c\nu+
+C\left\{r+L(1+\log(1/\rho))
++r\log(2+\nu)+\frac{\rho^2L^2}{\nu}\right\}\right].
+\end{aligned}
+\tag{LC219}
+$$
+
+For the separate pointwise-centered exclusion the nearest-root floor
+is $|H(y(t))|\ge e^{-Cr}\sigma^r/r^{3/2}$ whenever its nearest distance
+is at least $q$. Its extra polynomial factors are treated in precisely
+the same factorial comparison, so its relative error obeys the right
+side of (LC219) with a larger fixed constant.
+For $r=0$ use the nonzero constant-root model and the same relative
+source-floor calculation; for $r=1$ use its single-root derivative
+product. Neither case requires a mesh denominator.
+
+There is a fixed source constant $C_2$ such that the earlier central
+actual-node conclusion, including $r=0,1$, holds whenever
+
+$$
+n\ge25\max(1,r),\qquad
+\nu\ge C_2\left[
+L e^{C_2r}+L^2+L(1+\log(1/\rho))\right].
+\tag{LC220}
+$$
+
+The first term pays the local source curvature against the endpoint
+and two response margins. The $L^2$ term pays $B\sigma$ and the tilt
+normalization. It also pays the logarithmic root-normalization term:
+for every fixed small $\eta>0$,
+$r\log(2+\nu)\le\eta\nu+C_\eta r\log(2+r)$, while
+$r\log(2+r)\le C(1+L^2)$ by $r\le C_0L$.
+The last term pays the independent reciprocal-factor floor for
+shrinking $\rho$. Increasing $C_2$ makes (LC219) smaller than every
+fixed fraction used in the node and exclusion arguments, and pays
+chart clearance. All inequalities remain valid for every larger
+$\nu$, not only at its lower endpoint.
+Unlike the coarser remote payment, completing the source's angular
+square requires no separate absorption threshold (LC189).
+
+One may replace $r$ in (LC220) by its independent count bound $C_0L$.
+The resulting sufficient degree is a fixed power of height times
+$\rho^{-2}$ and logarithmic resolution terms; it is more informative
+than using $\rho^{-A_1}$ for all costs.
+With $r$ replaced by $C_0L$ in (LC220), an actual bad node at $t=T^2$
+still forces an actual
+off-line source zero in the closed radius-$4\rho$ source disc by
+contraposition. The sign application remains conditional on source
+realness when stated forward. Neither the smaller resolution cost nor
+this inverse statement gives an off-line-distance lower bound, the full
+unpaid moving band, a numerical degree, RH or strict Robin for every
+integer $H>5040$. The earlier thresholds remain valid independently.
