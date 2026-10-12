@@ -763,7 +763,7 @@ boundedness measure on its established all-depth witness sequence.
 The pruning of Definition 2.4 avoids this error.
 
 Proof. Use the complete input and exact rows $r_0,r_1$ of
-[SPC, Definitions 3.1 and 8.1; Theorems 3.2–3.3][SPC], with
+[SPC, Definitions 3.1 and 8.1; Theorems 3.2–3.3][SPCEXT], with
 its positive epoch-one record, finite negative, whole exterior,
 reached set and full partitions. Those existing results give
 $y_n=F^n(\beta)$ and the actual original tuples
@@ -1018,7 +1018,7 @@ positive images, original-native signed pullbacks and exact
 complete row strata. They are not new decision or image-cover
 claims here. NLC's minimum leaf-depth statistic supplies the
 minimum-versus-maximum depth distinction used in §2 and the
-perfect-tree calculation in §4. SPC's entire productive family,
+perfect-tree calculation in §4. [SPC][SPCEXT]'s entire productive family,
 its finite witnesses, closed comparison results and §§7–10
 representation and lifting boundaries retain their separate
 scope. In particular no rational-contact, closed-value or
@@ -1090,7 +1090,8 @@ sequence do not discharge that obligation, by Theorems 4.1,
 [NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
 [NLC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md
 [SPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
-[READOUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualTreeReadoutAcquisition.lean
+[SPCEXT]: https://github.com/the-omega-institute/trureturing/blob/db23810980530aea4b6fc2a056615460c8cbecb9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[READOUT]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
 [ROWS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
 [FIBERS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
 [DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
