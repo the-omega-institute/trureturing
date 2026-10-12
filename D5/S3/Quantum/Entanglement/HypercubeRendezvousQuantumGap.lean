@@ -5,14 +5,17 @@
    anchors: []
    utility: none
    digest: Balanced hypercube rendezvous has a dimension-independent quantum gap. -/
+import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowSeamCodes
+import D5.S3.Arith.Congruence.ConditionalComparison.CommonTreeUnion
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Analysis.Complex.Order
 import Mathlib.Analysis.InnerProductSpace.Defs
 noncomputable section
 open scoped BigOperators symmDiff ComplexOrder
 namespace D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
-abbrev Vertex (d : ℕ) := Finset (Fin d)
-abbrev Output (d t : ℕ) := {A : Vertex d // A.card = t}
+abbrev Vertex (d : ℕ) :=
+  D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowSeamCodes.Word d
+abbrev Output (d t : ℕ) := Erdos7.CommonTreeUnion.Choice d t
 abbrev Correlation (d t : ℕ) := Vertex d → Vertex d → Output d t → Output d t → ℝ
 def Promised (d t : ℕ) (σ τ : Vertex d) : Prop := (σ ∆ τ).card = 2 * t
 def Inputs (d t : ℕ) : Finset (Vertex d × Vertex d) := by
