@@ -24,7 +24,10 @@ internal sealed class PartialNegativityConcavityRefutationDocument : IScribeDocu
             Node("result", "The reduced function of the partial negativity is not concave", "result",
                 Disp(new Formula.Not(V("claim"))),
                 "Take d = 3, t = 1/2, ρ = diag(1/2, 1/3, 1/6) and σ = diag(1/2, 1/6, 1/3). Both are positive semidefinite with trace one. The characteristic polynomial of a diagonal matrix is the product of the factors X − dᵢ, so its characteristic roots, sorted decreasingly, are the sorted diagonal entries: (1/2, 1/3, 1/6) for ρ and for σ, and (1/2, 1/4, 1/4) for the midpoint diag(1/2, 1/4, 1/4). Hence ĥ(ρ) = ĥ(σ) = √(1/6), while ĥ of the midpoint is √(1/8) < √(1/6). The second-largest eigenvalue 1/3 belongs to different eigenvectors of ρ and σ, and mixing lowers it to 1/4 while the largest eigenvalue stays 1/2.",
-                DescribeRole.Theorem, Repo()))));
+                DescribeRole.Theorem, Repo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("guo-2023-partial-negativity-concavity"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula HhatFormula()
     {

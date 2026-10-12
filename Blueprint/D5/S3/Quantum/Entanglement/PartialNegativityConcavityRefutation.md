@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/PartialNegativityConcavityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guo-2023-partial-negativity-concavity` (refuted) by `D5/S3/Quantum/Entanglement/PartialNegativityConcavityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guo-2023-partial-negativity-concavity","declaration_gid":"D5/S3/Quantum/Entanglement/PartialNegativityConcavityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Y. Guo (2023). *Partial-Norm of Entanglement: Entanglement Monotones That are not Monogamous*. DOI: [10.1088/1367-2630/acf152](https://doi.org/10.1088/1367-2630/acf152). URL: <https://arxiv.org/abs/2212.06521v6>.
