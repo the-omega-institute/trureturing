@@ -1,0 +1,33 @@
+**Theorem 101.2 (capacity endpoints and the source-inherited
+branch relation).**
+Under the sequence hypotheses of Theorem 100.2,
+
+$$
+G_{\lambda_n}(T_n)\longrightarrow U(\tau),\qquad
+Y_n(\lambda_n)\longrightarrow Y(\tau),
+\tag{101.2}
+$$
+
+with the first limit extended-valued when $\tau=0$.
+For every $0\le\tau\le\infty$,
+
+$$
+Y(\tau)=\frac{Y(a\tau)}{1+Y(a\tau)}
+       +\frac{Y(b\tau)}{1+Y(b\tau)},
+\tag{101.3}
+$$
+
+where $a\infty=b\infty=\infty$.
+For finite $\tau$ it also has the boundary variational expression
+
+$$
+Y(\tau)=
+ \inf_{z\in\mathscr H}
+ \left\{\|z\|^2+\tau\|\mathbf1-Jz\|_{L^2(M)}^2\right\}.
+\tag{101.4}
+$$
+
+In particular $H(0)=\sqrt5/2$ is a centered finite part, whereas
+the uncentered endpoint is $+\infty$ and its capacity is zero.
+For $0<\tau<\infty$, $0<Y(\tau)<1$.
+
