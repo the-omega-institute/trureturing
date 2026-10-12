@@ -562,7 +562,7 @@ private lemma vacuum_psd (n : ℕ) : (vacuum n).PosSemidef := by
   exact Matrix.posSemidef_vecMulVec_self_star _
 
 private lemma vacuum_trace (n : ℕ) : (vacuum n).trace = 1 := by
-  simp [vacuum, Matrix.trace, Matrix.single_apply]
+  simp [vacuum, Matrix.trace]
 
 private lemma pure_state {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
     IsState (U * vacuum n * Uᴴ) := by
@@ -586,6 +586,42 @@ private lemma stab_state {n : ℕ} {η : Op n} (hη : η ∈ STAB n) : IsState �
     rcases hA with ⟨hA, hAt⟩
     rcases hB with ⟨hB, hBt⟩
     refine ⟨(hA.smul ha).add (hB.smul hb), ?_⟩
-    simp only [Matrix.trace_add, Matrix.trace_smul, hAt, hBt, smul_eq_mul]
+    simp only [Matrix.trace_add, Matrix.trace_smul, hAt, hBt]
     simpa [Algebra.smul_def] using congrArg (fun x : ℝ => (x : ℂ)) hab
+
+private def gateX : Matrix (Fin 2) (Fin 2) ℂ := gateH * gateS * gateS * gateH
+private def prep : Pauli → Fin 2 → Matrix (Fin 2) (Fin 2) ℂ
+  | .I, 0 => 1 | .I, 1 => gateX
+  | .X, 0 => gateH | .X, 1 => gateH * gateX
+  | .Y, 0 => gateS * gateH | .Y, 1 => gateS * gateH * gateX
+  | .Z, 0 => 1 | .Z, 1 => gateX
+private def prepUnit (w : Fin 3 → Pauli) (b : Bits 3) : Op 3 :=
+  localOp 0 (prep (w 0) (b 0)) * localOp 1 (prep (w 1) (b 1)) *
+    localOp 2 (prep (w 2) (b 2))
+
+private lemma local_gate_mem {n : ℕ} (i : Fin n) :
+    localOp i gateH ∈ Clifford n ∧ localOp i gateS ∈ Clifford n ∧
+      localOp i gateX ∈ Clifford n := by
+  have hH : localOp i gateH ∈ Clifford n :=
+    Submonoid.subset_closure (Or.inl (Or.inl ⟨i, rfl⟩))
+  have hS : localOp i gateS ∈ Clifford n :=
+    Submonoid.subset_closure (Or.inl (Or.inr (Or.inl ⟨i, rfl⟩)))
+  refine ⟨hH, hS, ?_⟩
+  rw [gateX, ← local_product, ← local_product, ← local_product]
+  exact (Clifford n).mul_mem ((Clifford n).mul_mem ((Clifford n).mul_mem hH hS) hS) hH
+
+private lemma prepUnit_mem (w : Fin 3 → Pauli) (b : Bits 3) : prepUnit w b ∈ Clifford 3 := by
+  have h (i : Fin 3) (p : Pauli) (q : Fin 2) : localOp i (prep p q) ∈ Clifford 3 := by
+    cases p <;> fin_cases q
+    all_goals simp only [prep]
+    case I.«0» => rw [local_identity]; exact (Clifford 3).one_mem
+    case I.«1» => exact (local_gate_mem i).2.2
+    case X.«0» => exact (local_gate_mem i).1
+    case X.«1» => rw [← local_product]; exact (Clifford 3).mul_mem (local_gate_mem i).1 (local_gate_mem i).2.2
+    case Y.«0» => rw [← local_product]; exact (Clifford 3).mul_mem (local_gate_mem i).2.1 (local_gate_mem i).1
+    case Y.«1» => rw [← local_product, ← local_product]; exact (Clifford 3).mul_mem ((Clifford 3).mul_mem (local_gate_mem i).2.1 (local_gate_mem i).1) (local_gate_mem i).2.2
+    case Z.«0» => rw [local_identity]; exact (Clifford 3).one_mem
+    case Z.«1» => exact (local_gate_mem i).2.2
+  exact (Clifford 3).mul_mem ((Clifford 3).mul_mem (h 0 (w 0) (b 0)) (h 1 (w 1) (b 1)))
+    (h 2 (w 2) (b 2))
 end D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
