@@ -133,6 +133,25 @@ private lemma C_square : C * C = (1 / 4356 : ℝ) •
   rw [two_coeff_mul]
   module
 
+private lemma actual_consumption : C * C = Q • W (119 / 316 : ℝ) := by
+  unfold Q W
+  rw [C_square]
+  module
+
+private lemma polar_consumption (η : Op 3) (hη : η ∈ STAB 3) :
+    tr (η * W (119 / 316 : ℝ)) ≤ 1 := by
+  have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
+  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, hp, _, _⟩
+  exact (hp η hη).1
+
+private lemma rho_C_trace : tr (rho * C) = Q := by
+  unfold rho C
+  rw [two_coeff_mul]
+  unfold tr Q
+  simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
+    source_certificate.2.2.2.2.1]
+  norm_num
+
 private lemma completed_square_nonnegative (η E : Op 3) (hη : η.PosDef) :
     0 ≤ tr (Eᴴ * η⁻¹ * E) := by
   have hi : η⁻¹.PosDef := hη.inv
@@ -140,6 +159,48 @@ private lemma completed_square_nonnegative (η E : Op 3) (hη : η.PosDef) :
     hi.posSemidef.conjTranspose_mul_mul_same E
   change 0 ≤ (Eᴴ * η⁻¹ * E).trace.re
   exact (Complex.nonneg_iff.mp hp.trace_nonneg).1
+
+set_option linter.style.haveILetI false in
+private lemma completed_square_identity (η : Op 3) (hη : η.PosDef)
+    (hηh : ηᴴ = η) :
+    tr ((rho - η * C)ᴴ * η⁻¹ * (rho - η * C)) =
+      tr (rho * rho * η⁻¹) - 2 * Q + tr (η * (C * C)) := by
+  letI := hη.isUnit.invertible
+  have hi : η⁻¹ * η = (1 : Op 3) := Matrix.inv_mul_of_invertible η
+  have hj : η * η⁻¹ = (1 : Op 3) := Matrix.mul_inv_of_invertible η
+  have hr : rhoᴴ = rho := by
+    unfold rho
+    simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]
+  have hc : Cᴴ = C := by
+    unfold C
+    simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]
+  unfold tr
+  rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_mul, hr, hηh, hc,
+    Matrix.sub_mul, Matrix.mul_sub]
+  simp only [Matrix.mul_assoc, hj, Matrix.mul_one]
+  rw [Matrix.sub_mul]
+  simp only [Matrix.mul_assoc, Matrix.trace_sub]
+  rw [Matrix.sub_mul]
+  simp only [Matrix.mul_assoc]
+  have hrc : (rho * C).trace.re = Q := rho_C_trace
+  have hcr : (C * rho).trace.re = Q := by
+    rw [Matrix.trace_mul_comm]
+    exact hrc
+  rw [← Matrix.mul_assoc η⁻¹ η C, hi, Matrix.one_mul]
+  rw [Matrix.trace_sub]
+  simp only [Complex.sub_re]
+  rw [hrc, hcr]
+  have hcycle : (rho * (η⁻¹ * rho)).trace.re =
+      (rho * (rho * η⁻¹)).trace.re := by
+    rw [← Matrix.mul_assoc rho η⁻¹ rho, Matrix.trace_mul_cycle,
+      Matrix.mul_assoc]
+  have hCcycle : (C * (η * C)).trace.re = (η * (C * C)).trace.re := by
+    rw [← Matrix.mul_assoc C η C, ← Matrix.trace_mul_cycle η C C,
+      Matrix.mul_assoc]
+  rw [hcycle, hCcycle]
+  ring
 
 private lemma Daz_two_one_supported {n : ℕ} (ρ σ : Op n)
     (h : SupportLE ρ σ) :
@@ -152,26 +213,20 @@ private lemma Daz_two_one_outside {n : ℕ} (ρ σ : Op n)
 
 private lemma C_square_expectation_bound (η : Op 3) (hη : η ∈ STAB 3) :
     tr (η * (C * C)) ≤ Q := by
-  have hs := source_certificate.1 3 η hη
-  have htr : tr η = 1 := by
-    exact congrArg Complex.re hs.2
-  have hS := (source_certificate.2.2.2.2.2 η hη).1
-  change η.trace.re = 1 at htr
-  change (η * S).trace.re ≤ 1 at hS
-  rw [C_square]
-  unfold tr Q
-  simp only [Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul,
-    Matrix.trace_add, Complex.smul_re]
-  norm_num at htr hS ⊢
+  rw [actual_consumption]
+  have hp := polar_consumption η hη
+  have hQ : (0 : ℝ) < Q := by norm_num [Q]
+  unfold tr at hp ⊢
+  simp only [Matrix.mul_smul]
+  norm_num at hp ⊢
   nlinarith
 
-private lemma rho_C_trace : tr (rho * C) = Q := by
-  unfold rho C
-  rw [two_coeff_mul]
-  unfold tr Q
-  simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
-    source_certificate.2.2.2.2.1]
-  norm_num
+private lemma marginal_lower_bound (η : Op 3) (hη : η ∈ STAB 3)
+    (hηp : η.PosDef) : Q ≤ tr (rho * rho * η⁻¹) := by
+  have hsq := completed_square_nonnegative η (rho - η * C) hηp
+  have hid := completed_square_identity η hηp hηp.isHermitian
+  have hC := C_square_expectation_bound η hη
+  linarith
 
 private lemma sigma_C_square_trace : tr (sigma * (C * C)) = Q := by
   have hs := source_certificate.2.1
@@ -218,5 +273,32 @@ private lemma rho_pos : rho.PosDef := by
 
 private lemma rho_state : IsState rho := by
   exact ⟨rho_pos.posSemidef, rho_trace⟩
+
+private lemma magic_two_one_lower :
+    ((log2 Q : ℝ) : EReal) ≤ magic 2 1 rho := by
+  apply le_sInf
+  intro d hd
+  rcases hd with ⟨η, hη, rfl⟩
+  by_cases hu : IsUnit η
+  · have hps := (source_certificate.1 3 η hη).1
+    have hηp : η.PosDef :=
+      (Matrix.PosSemidef.posDef_iff_isUnit hps).mpr hu
+    have hi : Function.Injective η.mulVec :=
+      Matrix.mulVec_injective_iff_isUnit.mpr hu
+    have hs : SupportLE rho η := by
+      intro v hv
+      have hv0 : v = 0 := hi (by simpa [Matrix.mulVec_zero] using hv)
+      simp [hv0]
+    change ((log2 Q : ℝ) : EReal) ≤ Daz 2 1 rho η
+    rw [Daz_two_one_supported rho η hs]
+    apply (EReal.coe_le_coe_iff).2
+    have ht := marginal_lower_bound η hη hηp
+    have hQ : (0 : ℝ) < Q := by norm_num [Q]
+    unfold log2
+    apply (div_le_div_iff_of_pos_right (Real.log_pos (by norm_num))).2
+    exact Real.log_le_log hQ ht
+  · change ((log2 Q : ℝ) : EReal) ≤ Daz 2 1 rho η
+    rw [Daz_two_one_outside rho η (full_rank_support_guard rho η rho_pos hu)]
+    exact le_top
 
 end D5.S3.Quantum.Magic.RenyiBoundaryMagicAdditivityRefutation
