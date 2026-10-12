@@ -31,22 +31,12 @@ abbrev arena : Arena where
   Law r := ∀ (k : ℕ) (hk : 2 ≤ k) (w : List ℕ)
     (hw : r.readout () k w) (hd : descents w = extremalValue k),
     (∃ t : ℕ, 1 ≤ t ∧ k = 2 * t ∧ w = evenWord t) ∨
-    (∃ t : ℕ, 1 ≤ t ∧ k = 2 * t + 1 ∧
-      ((∃ q : Fin (2*t), w = oddOneWord t q) ∨
-       (∃ j : ℕ, j ≤ 3*t ∧
-         w = [1] ++ (pairBlocks 2 1 t ++ pairBlocks 3 1 t ++
-           pairBlocks 3 2 t).take (2*j) ++ [2] ++
-           (pairBlocks 2 1 t ++ pairBlocks 3 1 t ++ pairBlocks 3 2 t).drop (2*j) ++ [3]) ∨
-       (∃ j : ℕ, j ≤ 3*t ∧
-         w = [1] ++ (pairBlocks 2 1 (t+1) ++ pairBlocks 3 1 (t-1) ++
-           pairBlocks 3 2 t).take (2*j) ++ [3] ++
-           (pairBlocks 2 1 (t+1) ++ pairBlocks 3 1 (t-1) ++
-           pairBlocks 3 2 t).drop (2*j) ++ [3])))
+    (∃ t : ℕ, 1 ≤ t ∧ k = 2 * t + 1 ∧ ∃ i : OddIndex t, w = oddWord t i)
 
 def registration : Registration arena (arena.Law actual) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@extremal_word_cut_reconstruction, rejected, by
+  variation := ⟨@extremal_word_reconstruction, rejected, by
     intro h
     have hh := h 2 (by decide) [3,2,1] trivial (by decide)
     rcases hh with ⟨t,ht,_,he⟩ | ⟨t,ht,hk,_⟩
@@ -80,12 +70,12 @@ def registration : Registration arena (arena.Law actual) where
     exact (by decide : ¬ (0 : ℕ) = 6) hn.2.1
 
 def registration_contract : Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
-    (@extremal_word_cut_reconstruction)
+    (@extremal_word_reconstruction)
     (type_of% (realize signature (fun _ k w => w ∈ actualWords k)
       (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str
     (Lean.Name.str
-      `D5.S3.Combinatorics.ShankarWords.ExtremalWordReconstruction.extremal_word_cut_reconstruction
+      `D5.S3.Combinatorics.ShankarWords.ExtremalWordReconstruction.extremal_word_reconstruction
       "Reg.D5.S3.Combinatorics.ShankarWords.ExtremalWordReconstruction/arena")
     "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.ShankarWords.ExtremalWordReconstruction.registration

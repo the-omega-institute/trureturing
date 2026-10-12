@@ -2,9 +2,10 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ShankarWords/ExtremalWordReconstruction
    mirror-E: none(waiver:structural-word-reconstruction)
-   anchors: [mathlib/module/Mathlib.Data.List.Triplewise, mathlib/module/Mathlib.Data.List.Induction]
+   anchors: [mathlib/module/Mathlib.Data.List.Triplewise,
+     mathlib/module/Mathlib.Data.List.Induction]
    utility: none
-   digest: Actual extremal-word reconstruction through a whole-pair cut. -/
+   digest: Exact literal reconstruction of every actual extremal word. -/
 
 import D5.S3.Combinatorics.ShankarWords.OddWordConstruction
 import Mathlib.Data.List.Triplewise
@@ -17,22 +18,12 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.ShankarWords.ExtremalWordReconstruction
 open D5.S3.Combinatorics.ShankarWords.ActualWordExtremal
 
-/-- Original-word reconstruction through the whole-pair cut, with the legal
-singleton-two cuts and reverse-complement identification left outside the conclusion. -/
-theorem extremal_word_cut_reconstruction (k : ℕ) (hk : 2 ≤ k) (w : List ℕ)
+/-- Every actual extremal word is literally one of the even or odd constructors. -/
+theorem extremal_word_reconstruction (k : ℕ) (hk : 2 ≤ k) (w : List ℕ)
     (hw : w ∈ actualWords k) (hd : descents w = extremalValue k) :
     (∃ t : ℕ, 1 ≤ t ∧ k = 2 * t ∧ w = evenWord t) ∨
     (∃ t : ℕ, 1 ≤ t ∧ k = 2 * t + 1 ∧
-      ((∃ q : Fin (2*t), w = oddOneWord t q) ∨
-       (∃ j : ℕ, j ≤ 3*t ∧
-         w = [1] ++ (pairBlocks 2 1 t ++ pairBlocks 3 1 t ++
-           pairBlocks 3 2 t).take (2*j) ++ [2] ++
-           (pairBlocks 2 1 t ++ pairBlocks 3 1 t ++ pairBlocks 3 2 t).drop (2*j) ++ [3]) ∨
-       (∃ j : ℕ, j ≤ 3*t ∧
-         w = [1] ++ (pairBlocks 2 1 (t+1) ++ pairBlocks 3 1 (t-1) ++
-           pairBlocks 3 2 t).take (2*j) ++ [3] ++
-           (pairBlocks 2 1 (t+1) ++ pairBlocks 3 1 (t-1) ++
-           pairBlocks 3 2 t).drop (2*j) ++ [3]))) := by
+      ∃ i : OddIndex t, w = oddWord t i) := by
   classical
   have hrec (a b : ℕ) (x : List ℕ) :
       descents (a :: b :: x) = (if b < a then 1 else 0) + descents (b :: x) := by
@@ -439,21 +430,151 @@ theorem extremal_word_cut_reconstruction (k : ℕ) (hk : 2 ≤ k) (w : List ℕ)
         exact (List.pairwise_cons.mp hpC).1 2 (by simp) ⟨rfl,rfl,rfl⟩
       have hjlt : U.length < 2*t := by omega
       right
-      refine ⟨t,ht,hkt,Or.inl ⟨⟨U.length,hjlt⟩,?_⟩⟩
-      simpa only [oddOneWord] using hone
+      refine ⟨t,ht,hkt,Sum.inl (Sum.inl ⟨U.length,hjlt⟩),?_⟩
+      simpa only [oddWord, oddOneWord] using hone
     · have hA : A = t := by simp at hc1n hc2n hc3n; omega
       have hB : B = t := by simp at hc1n hc2n hc3n; omega
       have hC : C = t := by simp at hc1n hc2n hc3n; omega
       rw [hA,hB,hC] at hword hbase hQ
-      right
-      exact ⟨t,ht,hkt,Or.inr (Or.inl ⟨U.length,hj,hword⟩)⟩
+      have hlatpre (p z : List ℕ) (hp : 1 :: (x ++ [3]) = p ++ z) :
+          p.count 2 ≤ p.count 1 ∧ p.count 3 ≤ p.count 2 := by
+        have hh := hlat ⟨p.length, by rw [hp]; simp only [List.length_append]; omega⟩
+        simpa only [hp, List.take_append, List.take_length, Nat.sub_self,
+          List.take_zero, List.append_nil] using hh
+      have hAv : Av = 0 := by
+        by_contra hn
+        obtain ⟨d,hd⟩ := Nat.exists_eq_succ_of_ne_zero hn
+        have hno3 : ¬ 3 ∈ U.flatten := by
+          intro h3
+          have hp := (List.triplewise_append.mp (by
+            simpa only [List.flatten_append] using hqs)).2.2.1 3 h3
+          rw [hVFflat, hd, pair_succ] at hp
+          simp only [List.cons_append] at hp
+          exact (List.pairwise_cons.mp hp).1 1 (by simp) (by simp)
+        have hBu : Bu = 0 := by
+          by_contra h
+          apply hno3
+          simp [hUFflat, pairBlocks, h]
+        have hCu : Cu = 0 := by
+          by_contra h
+          apply hno3
+          simp [hUFflat, pairBlocks, h]
+        have hp := hlatpre ([1] ++ U.flatten ++ [2,2])
+          ([1] ++ pairBlocks 2 1 d ++ pairBlocks 3 1 Bv ++
+            pairBlocks 3 2 Cv ++ [3]) (by
+          rw [he, hVFflat, hd, pair_succ]
+          simp only [List.cons_append, List.singleton_append, List.append_assoc,
+            List.nil_append])
+        rw [hUFflat, hBu, hCu] at hp
+        simp only [List.count_append, pair_count] at hp
+        norm_num at hp
+        omega
+      have hCu : Cu = 0 := by
+        by_contra hn
+        obtain ⟨d,hd⟩ := Nat.exists_eq_succ_of_ne_zero hn
+        have hno1 : ¬ 1 ∈ V.flatten := by
+          intro h1
+          have hp := (List.triplewise_append.mp (by
+            simpa only [List.flatten_append] using hqs)).2.2.2 1 h1
+          rw [hUFflat] at hp
+          have hpC := (List.pairwise_append.mp hp).2.1
+          rw [hd, pair_succ] at hpC
+          exact (List.pairwise_cons.mp hpC).1 2 (by simp) (by simp)
+        have hBv : Bv = 0 := by
+          by_contra h
+          apply hno1
+          simp [hVFflat, pairBlocks, h]
+        have hAu : Au = t := by omega
+        have hBu : Bu = t := by omega
+        have hp := hlatpre ([1] ++ pairBlocks 2 1 Au ++ pairBlocks 3 1 Bu ++ [3])
+          ([2] ++ pairBlocks 3 2 d ++ [2] ++ V.flatten ++ [3]) (by
+          rw [he, hUFflat, hd, pair_succ]
+          simp only [List.cons_append, List.singleton_append, List.append_assoc,
+            List.nil_append])
+        simp only [List.count_append, pair_count] at hp
+        norm_num at hp
+        omega
+      have hsplit : Bu = 0 ∨ Bv = 0 := by
+        by_contra hn
+        have hBu : Bu ≠ 0 := by tauto
+        have hBv : Bv ≠ 0 := by tauto
+        have hx := hs
+        rw [he, List.append_assoc] at hx
+        have hp := (List.triplewise_append.mp hx).2.2.1 3 (by
+          simp [hUFflat, pairBlocks, hBu])
+        simp only [List.singleton_append] at hp
+        exact (List.pairwise_cons.mp hp).1 1 (by
+          simp [hVFflat, pairBlocks, hBv]) (by simp)
+      have hAu : Au = t := by omega
+      have hCv : Cv = t := by omega
+      rcases hsplit with hBu | hBv
+      · have hBv' : Bv = t := by omega
+        right
+        refine ⟨t,ht,hkt,Sum.inr false,?_⟩
+        change 1 :: (x ++ [3]) = oddTwoWord t false
+        rw [he, hUFflat, hVFflat, hAv, hCu, hAu, hCv, hBu, hBv']
+        simp [oddTwoWord, pairBlocks, List.append_assoc]
+      · have hBu : Bu = t := by omega
+        right
+        refine ⟨t,ht,hkt,Sum.inr true,?_⟩
+        change 1 :: (x ++ [3]) = oddTwoWord t true
+        rw [he, hUFflat, hVFflat, hAv, hCu, hAu, hCv, hBu, hBv]
+        simp [oddTwoWord, pairBlocks, List.append_assoc]
     · have hA : A = t+1 := by simp at hc1n hc2n hc3n; omega
       have hB : B = t-1 := by simp at hc1n hc2n hc3n; omega
       have hC : C = t := by simp at hc1n hc2n hc3n; omega
       rw [hA,hB,hC] at hword hbase hQ
+      have hAv : Av = 0 := by
+        have hx := hs
+        rw [he, List.append_assoc] at hx
+        have hp := (List.triplewise_append.mp hx).2.1
+        simp only [List.singleton_append] at hp
+        have hp3 := (List.triplewise_cons.mp hp).1
+        by_contra h
+        obtain ⟨d,hd⟩ := Nat.exists_eq_succ_of_ne_zero h
+        rw [hVFflat, hd, pair_succ] at hp3
+        simp only [List.cons_append] at hp3
+        exact (List.pairwise_cons.mp hp3).1 1 (by simp) (by simp)
+      have hjlow : t+1 ≤ U.length := by omega
+      let q : Fin (2*t) := ⟨3*t-U.length, by omega⟩
+      have rc_append (u v : List ℕ) :
+          reverseComplement (u ++ v) = reverseComplement v ++ reverseComplement u := by
+        simp [reverseComplement]
+      have rc_pair (a b n : ℕ) :
+          reverseComplement (pairBlocks a b n) = pairBlocks (4-b) (4-a) n := by
+        induction n with
+        | zero => simp [reverseComplement, pairBlocks]
+        | succ n ih =>
+          rw [pair_end, rc_append, ih, pair_succ]
+          simp [reverseComplement]
+      have rc_take (v : List ℕ) (n : ℕ) :
+          reverseComplement (v.take n) =
+            (reverseComplement v).drop (v.length-n) := by
+        simp only [reverseComplement, List.reverse_take, List.map_drop]
+      have rc_drop (v : List ℕ) (n : ℕ) :
+          reverseComplement (v.drop n) =
+            (reverseComplement v).take (v.length-n) := by
+        simp only [reverseComplement, List.reverse_drop, List.map_take]
+      have hrcbase : reverseComplement (oddOneBase t) =
+          pairBlocks 2 1 (t+1) ++ pairBlocks 3 1 (t-1) ++ pairBlocks 3 2 t := by
+        simp only [oddOneBase, rc_append, rc_pair]
+        norm_num [List.append_assoc]
+      have hbaselen : (oddOneBase t).length = 6*t := by
+        simp only [oddOneBase, List.length_append, pair_len]
+        omega
+      have hcut : (oddOneBase t).length-2*q.val = 2*U.length := by
+        dsimp [q]
+        rw [hbaselen]
+        omega
       right
-      exact ⟨t,ht,hkt,Or.inr (Or.inr ⟨U.length,hj,hword⟩)⟩
+      refine ⟨t,ht,hkt,Sum.inl (Sum.inr q),?_⟩
+      change 1 :: (x ++ [3]) = reverseComplement (oddOneWord t q)
+      rw [oddOneWord, rc_append, rc_append, rc_append, rc_append,
+        rc_drop, rc_take, hcut, hrcbase]
+      simpa only [reverseComplement, List.reverse_cons, List.reverse_nil,
+        List.nil_append, List.map_cons, List.map_nil,
+        show 4-3=1 from rfl, show 4-1=3 from rfl, List.append_assoc] using hword
 
-#print axioms extremal_word_cut_reconstruction
+#print axioms extremal_word_reconstruction
 
 end D5.S3.Combinatorics.ShankarWords.ExtremalWordReconstruction
