@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/PrefixReversalWalkEdgeSlicing
+/- GID: D5/S3/Combinatorics/Graph/Walks/EdgeSlicing
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversalWalkEdgeSlicing
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/EdgeSlicing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Hamiltonian, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph]
    utility: none
@@ -10,7 +10,7 @@ import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.PrefixReversalWalkEdgeSlicing
+namespace D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 
 universe u
 variable {V : Type u} [DecidableEq V] {G : SimpleGraph V}
@@ -229,4 +229,4 @@ theorem exists_cycle_edge_slicing [Fintype V] (E : Finset (Sym2 V)) {a : V}
 #print axioms exists_path_edge_slicing
 #print axioms exists_cycle_edge_slicing
 
-end D5.S3.Combinatorics.Graph.PrefixReversalWalkEdgeSlicing
+end D5.S3.Combinatorics.Graph.Walks.EdgeSlicing

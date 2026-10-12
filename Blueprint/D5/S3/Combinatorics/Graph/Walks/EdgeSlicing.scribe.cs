@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
 
-internal sealed class PrefixReversalWalkEdgeSlicingDocument : IScribeDocumentDefinition
+internal sealed class EdgeSlicingDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/PrefixReversalWalkEdgeSlicing.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/EdgeSlicing.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Deleting a nonempty collection of actual Hamilton cycle edges yields exactly one path per deleted edge, with every vertex occurring once.",
