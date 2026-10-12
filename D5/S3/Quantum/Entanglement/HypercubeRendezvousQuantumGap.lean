@@ -16,7 +16,7 @@ abbrev Correlation (d t : ℕ) := Vertex d → Vertex d → Output d t → Outpu
 def Promised (d t : ℕ) (σ τ : Vertex d) : Prop := (σ ∆ τ).card = 2 * t
 def Inputs (d t : ℕ) : Finset (Vertex d × Vertex d) := by
   classical
-  exact Finset.univ.filter (fun p : Vertex d × Vertex d => Promised d t p.1 p.2)
+  exact Finset.univ.filter (fun p => Promised d t p.1 p.2)
 def value {d t : ℕ} (P : Correlation d t) : ℝ := by
   classical
   exact (∑ p ∈ Inputs d t, ∑ A, ∑ B, if Wins p.1 p.2 A B then P p.1 p.2 A B else 0) /
@@ -222,11 +222,12 @@ private def rightMul {d : ℕ} (h g : G d) : G d :=
 private def rightMul_equiv {d : ℕ} (h : G d) : G d ≃ G d := by
   refine ⟨rightMul h, fun g =>
     (g.1 ∆ pmap (g.2 * h.2⁻¹) h.1, g.2 * h.2⁻¹), ?_, ?_⟩
-  · intro g; apply Prod.ext <;> simp [rightMul, mul_assoc]
-  · intro g; apply Prod.ext <;> simp [rightMul, mul_assoc]
+  · intro g; apply Prod.ext <;> (dsimp only [rightMul]; simp [mul_assoc])
+  · intro g; apply Prod.ext <;> (dsimp only [rightMul]; simp [mul_assoc])
 private lemma actV_rightMul {d : ℕ} (h g : G d) (σ : Vertex d) :
     actV (rightMul h g) σ = actV g (actV h σ) := by
-  simp only [actV, rightMul, pmap_symmDiff, pmap_comp, symmDiff_assoc]
+  dsimp only [actV, rightMul]
+  rw [pmap_symmDiff, pmap_comp, symmDiff_assoc]
 private lemma actO_rightMul {d t : ℕ} (h g : G d) (A : Output d t) :
     actO (rightMul h g) A = actO g (actO h A) := by
   apply Subtype.ext
@@ -418,8 +419,10 @@ private lemma inner_hu {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     exact orbit_sum_constant (fun σ A => pairTrace S.ρ 1 (S.E σ A ⊗ₖ 1)) σ σ A' A
   have hs := core_sum (weightedCore S) Finset.univ (uvec S σ) hvec
   rw [sum_uvec, inner_hh] at hs
-  simp_rw [heq] at hs
-  simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hs
+  have hsum : (∑ A', (weightedCore S).inner hvec (uvec S σ A')) =
+      ∑ _ : Output d t, (weightedCore S).inner hvec (uvec S σ A) :=
+    Finset.sum_congr rfl (fun A' _ => heq A')
+  rw [hsum, Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hs
   have hc : (Fintype.card (Output d t) : ℝ) = n d t := by
     dsimp only [Output, n]
     rw [Fintype.card_finset_len, Fintype.card_fin]
@@ -428,7 +431,8 @@ private lemma inner_hu {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     dsimp only [n]
     exact_mod_cast (Nat.choose_pos htd).ne'
   apply mul_left_cancel₀ hn
-  simpa only [mul_one] using hs.symm
+  rw [mul_one]
+  exact hs.symm
 private lemma inner_qu {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (htd : t ≤ d)
     (σ : Vertex d) (A : Output d t) :
@@ -500,8 +504,10 @@ private lemma inner_hv {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     exact orbit_sum_constant (fun τ B => pairTrace S.ρ 1 (1 ⊗ₖ S.F τ B)) τ τ B' B
   have hs := core_sum (weightedCore S) Finset.univ (vvec S τ) hvec
   rw [sum_vvec, inner_hh] at hs
-  simp_rw [heq] at hs
-  simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hs
+  have hsum : (∑ B', (weightedCore S).inner hvec (vvec S τ B')) =
+      ∑ _ : Output d t, (weightedCore S).inner hvec (vvec S τ B) :=
+    Finset.sum_congr rfl (fun B' _ => heq B')
+  rw [hsum, Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hs
   have hc : (Fintype.card (Output d t) : ℝ) = n d t := by
     dsimp only [Output, n]
     rw [Fintype.card_finset_len, Fintype.card_fin]
@@ -510,7 +516,8 @@ private lemma inner_hv {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     dsimp only [n]
     exact_mod_cast (Nat.choose_pos htd).ne'
   apply mul_left_cancel₀ hn
-  simpa only [mul_one] using hs.symm
+  rw [mul_one]
+  exact hs.symm
 private lemma inner_qv {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (htd : t ≤ d)
     (τ : Vertex d) (B : Output d t) :
@@ -757,7 +764,7 @@ private lemma winning_cross {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β
       let _ : Nonempty (Vertex d) := ⟨∅⟩
       let _ : Nonempty (Equiv.Perm (Fin d)) := ⟨Equiv.refl _⟩
       exact_mod_cast (Fintype.card_ne_zero : Fintype.card (G d) ≠ 0)
-    field_simp
+    rw [← mul_assoc, div_mul_cancel₀ _ hc]
   have hc : (Nat.choose (2 * t) t : ℝ) ≠ 0 := by
     exact_mod_cast (Nat.choose_pos (show t ≤ 2 * t by omega)).ne'
   apply (eq_div_iff hc).mpr
@@ -816,5 +823,98 @@ private lemma quantum_bound {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β
   have hh := (div_le_iff₀ hc).mp (show n d t * value S.prob /
     (Nat.choose (2 * t) t : ℝ) ≤ 1 - kappa d t by linarith)
   convert hh using 1 <;> ring
+private def nsP (d t : ℕ) : Correlation d t := by
+  classical
+  exact fun σ τ A B => if B = flip (σ ∆ τ) A then 1 / n d t else 0
+private lemma nsP_isNS {d t : ℕ} (htd : t ≤ d) : IsNS (nsP d t) := by
+  classical
+  have hn : n d t ≠ 0 := by dsimp only [n]; exact_mod_cast (Nat.choose_pos htd).ne'
+  have hc : (Fintype.card (Output d t) : ℝ) = n d t := by
+    dsimp only [Output, n]; rw [Fintype.card_finset_len, Fintype.card_fin]
+  have row : ∀ σ τ A, (∑ B, nsP d t σ τ A B) = 1 / n d t := by
+    intro σ τ A; dsimp only [nsP]; simp
+  have col : ∀ σ τ B, (∑ A, nsP d t σ τ A B) = 1 / n d t := by
+    intro σ τ B; dsimp only [nsP]
+    have he := Fintype.sum_equiv (flipEquiv (σ ∆ τ))
+      (fun A => if B = flip (σ ∆ τ) A then 1 / n d t else 0)
+      (fun A => if B = A then 1 / n d t else 0) (fun _ => rfl)
+    rw [he]; simp
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro σ τ A B; dsimp only [nsP]; split_ifs
+    · dsimp only [n]; positivity
+    · exact le_rfl
+  · intro σ τ; simp_rw [row]
+    rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, hc]
+    exact mul_one_div_cancel hn
+  · intro σ τ τ' A; rw [row, row]
+  · intro σ σ' τ B; rw [col, col]
+private lemma nsP_value {d t : ℕ} (hd : 2 * t ≤ d) :
+    value (nsP d t) = (Nat.choose (2 * t) t : ℝ) / n d t := by
+  classical
+  have h : ∀ σ τ A B, Wins σ τ A B → nsP d t σ τ A B = 1 / n d t := by
+    intro σ τ A B hw
+    have hp : Promised d t σ τ := by
+      change (σ ∆ τ).card = 2 * t
+      rw [← hw.2, Finset.card_union_of_disjoint hw.1, A.property, B.property]; omega
+    dsimp only [nsP]; rw [if_pos ((wins_iff σ τ A B hp).mp hw).2]
+  exact (value_constant hd (nsP d t) (1 / n d t) h).trans (by ring)
+private lemma ns_bound {d t : ℕ} (hd : 2 * t ≤ d) (P : Correlation d t) (hp : IsNS P) :
+    value P ≤ 1 := by
+  classical
+  have hc : 0 < ((Inputs d t).card : ℝ) := by exact_mod_cast inputs_pos hd
+  dsimp only [value]
+  apply (div_le_iff₀ hc).mpr
+  have hr : ∀ p ∈ Inputs d t,
+      (∑ A, ∑ B, if Wins p.1 p.2 A B then P p.1 p.2 A B else 0) ≤ 1 := by
+    intro p hpr
+    rw [← hp.2.1 p.1 p.2]
+    apply Finset.sum_le_sum; intro A hA
+    apply Finset.sum_le_sum; intro B hB
+    split_ifs
+    · exact le_rfl
+    · exact hp.1 _ _ _ _
+  convert Finset.sum_le_sum hr using 1; simp
+private def deterministic {d t : ℕ} (A : Output d t) : QStrategy d t Unit Unit := by
+  classical
+  exact {
+    ρ := 1
+    rho_psd := Matrix.PosSemidef.one
+    rho_trace := by rw [Matrix.trace_one]; simp
+    E := fun _ B => if B = A then 1 else 0
+    F := fun _ B => if B = A then 1 else 0
+    E_psd := fun _ B => by
+      by_cases h : B = A
+      · rw [if_pos h]; exact Matrix.PosSemidef.one
+      · rw [if_neg h]; exact Matrix.PosSemidef.zero
+    F_psd := fun _ B => by
+      by_cases h : B = A
+      · rw [if_pos h]; exact Matrix.PosSemidef.one
+      · rw [if_neg h]; exact Matrix.PosSemidef.zero
+    E_sum := fun _ => by simp
+    F_sum := fun _ => by simp }
+private lemma q_nonempty {d t : ℕ} (htd : t ≤ d) : (QValues d t).Nonempty := by
+  classical
+  obtain ⟨T, _, hT⟩ := Finset.exists_subset_card_eq
+    (show t ≤ (Finset.univ : Vertex d).card by rw [Finset.card_univ, Fintype.card_fin]; exact htd)
+  let S := deterministic (⟨T, hT⟩ : Output d t)
+  refine ⟨value S.prob, S.prob, ?_, rfl⟩
+  exact ⟨Unit, Unit, inferInstance, inferInstance, inferInstance, inferInstance, S, rfl⟩
+theorem result : claim := by
+  intro t d ht hd
+  have hn : 0 < n d t := by dsimp only [n]; exact_mod_cast Nat.choose_pos (by omega : t ≤ d)
+  have hc : 0 < (Nat.choose (2 * t) t : ℝ) := by
+    exact_mod_cast Nat.choose_pos (show t ≤ 2 * t by omega)
+  have hk : 0 < kappa d t := by dsimp only [kappa]; positivity
+  have hq : omegaQ d t ≤ ((Nat.choose (2 * t) t : ℝ) / n d t) * (1 - kappa d t) := by
+    apply csSup_le (q_nonempty (by omega))
+    rintro r ⟨P, ⟨α, β, fα, fβ, dα, dβ, S, hS⟩, hr⟩
+    subst P; subst r
+    exact quantum_bound S ht hd
+  have hns : (Nat.choose (2 * t) t : ℝ) / n d t ≤ omegaNS d t := by
+    apply le_csSup
+    · refine ⟨1, ?_⟩
+      rintro r ⟨P, hp, rfl⟩; exact ns_bound hd.le P hp
+    · exact ⟨nsP d t, nsP_isNS (by omega), nsP_value hd.le⟩
+  exact (hq.trans_lt (mul_lt_of_lt_one_right (div_pos hc hn) (by linarith))).trans_le hns
 end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
