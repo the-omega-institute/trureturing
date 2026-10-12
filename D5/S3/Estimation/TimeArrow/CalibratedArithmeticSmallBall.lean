@@ -4,10 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A monotone moving center has a finite arithmetic small-ball bound. -/
+   digest: Native common-root feedback and arithmetic small-ball bounds use the same full environment. -/
 
+import D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
 import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-import D5.S3.Estimation.TimeArrow.ActualMarkedPathPgfPoissonEnvelope
 import D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 import Mathlib.Analysis.SpecialFunctions.Stirling
 import D5.S3.DivergenceSupport.LogSumInequality
@@ -186,270 +186,6 @@ theorem moving_center_small_ball (p f g : ℤ → ℝ) (T : Finset ℤ) (a b : �
   exact hm.trans (add_le_add (hc.trans hzbound) htail)
 end
 end D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
-open scoped BigOperators
-open Finset
-open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-open D5.S3.Estimation.TimeArrow.ActualMarkedPathPgfPoissonEnvelope
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-namespace D5.S3.Estimation.TimeArrow.NativeRowCountTail
-noncomputable section
-private theorem path_fourth_moment {M q L : ℕ} (r : ℝ) (S : Support M q)
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (hc1 : compensation M q r < 1) (hM6 : 6 ≤ M)
-    (hLM : (L : ℝ) / M ≤ 1 / 45) (i : Fin M) :
-    (∑ o : Obs M (2 * M * L) .path, probability r .path S o *
-      (4 : ℝ) ^ (count .path o i 1 + count .path o i (-1))) ≤
-        3 * Real.exp (3 * (L : ℝ)) := by
-  classical
-  have hM : (0 : ℝ) < M := by exact_mod_cast (show 0 < M by omega)
-  have hMc : (M : ℂ) ≠ 0 := by exact_mod_cast hM.ne'
-  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
-  have hb : |b r S (.inl i)| ≤ 1 := by
-    rw [abs_le]
-    simp only [b]
-    split_ifs <;> constructor <;> linarith
-  let η : ℝ := 3 / (2 * M)
-  have hη : 0 ≤ η := by dsimp [η]; positivity
-  have hη1 : η ≤ 1 / 4 := by
-    dsimp [η]
-    apply (div_le_iff₀ (by positivity : (0 : ℝ) < 2 * M)).mpr
-    have hh : (6 : ℝ) ≤ M := by exact_mod_cast hM6
-    linarith
-  have hA : driftA r S (fun _ : Fin 1 => i) (fun _ => 4) (fun _ => 4) =
-      (3 : ℂ) / (2 * M) := by norm_num [driftA, tiltU, tiltV]
-  have hB : driftB r S (fun _ : Fin 1 => i) (fun _ => 4) (fun _ => 4) =
-      ((b r S (.inl i) : ℂ) * 3) / (2 * M) := by norm_num [driftB, tiltU, tiltV]
-  have hAn : ‖driftA r S (fun _ : Fin 1 => i) (fun _ => 4) (fun _ => 4)‖ ≤ η := by
-    rw [hA, norm_div, norm_mul, Complex.norm_natCast]
-    norm_num [η, abs_of_pos hM]
-  have hBn : ‖driftB r S (fun _ : Fin 1 => i) (fun _ => 4) (fun _ => 4)‖ ≤ η := by
-    rw [hB, norm_div, norm_mul, norm_mul, Complex.norm_real, Real.norm_eq_abs,
-      Complex.norm_natCast]
-    norm_num
-    exact div_le_div_of_nonneg_right (by nlinarith) (by positivity)
-  have hTη : ((2 * M * L : ℕ) : ℝ) * η ^ 2 = (9 / 2) * ((L : ℝ) / M) := by
-    dsimp [η]
-    push_cast
-    field_simp
-    <;> ring
-  have hT : ((2 * M * L : ℕ) : ℝ) * η ^ 2 ≤ 1 / 10 := by
-    rw [hTη]
-    nlinarith
-  have hh := actual_marked_path_pgf_poisson_envelope hq hqm hr hr1 hc1 S
-    (Or.inl rfl) (fun _ : Fin 1 => i) (fun a b _ => Subsingleton.elim a b)
-    (fun _ => 4) (fun _ => 4) hη hη1 hAn hBn hT
-  let Z : ℝ := ∑ o : Obs M (2 * M * L) .path, probability r .path S o *
-      (4 : ℝ) ^ (count .path o i 1 + count .path o i (-1))
-  have hZ : actualPGF r S (fun _ : Fin 1 => i) (fun _ => 4) (fun _ => 4)
-      (2 * M * L) = (Z : ℂ) := by
-    simp [actualPGF, Z, pow_add]
-  have htA : ((2 * M * L : ℕ) : ℂ) *
-      driftA r S (fun _ : Fin 1 => i) (fun _ => 4) (fun _ => 4) = (3 * (L : ℝ) : ℝ) := by
-    rw [hA]
-    push_cast
-    field_simp
-    <;> ring
-  have htre : ((2 * M * L : ℕ) : ℝ) *
-      (driftA r S (fun _ : Fin 1 => i) (fun _ => 4) (fun _ => 4)).re = 3 * (L : ℝ) := by
-    have he := congrArg Complex.re htA
-    simpa using he
-  rw [hZ, htA, ← Complex.ofReal_exp, ← Complex.ofReal_sub, Complex.norm_real,
-    Real.norm_eq_abs, htre] at hh
-  have hcoef : 20 * ((2 * M * L : ℕ) : ℝ) * η ^ 2 ≤ 2 := by
-    nlinarith
-  have he := hh.trans (mul_le_mul_of_nonneg_right hcoef (Real.exp_pos _).le)
-  have hu := (abs_le.mp he).2
-  change Z ≤ _
-  linarith
-private theorem pair_fourth_moment {M q L : ℕ} (r : ℝ) (S : Support M q)
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (hc1 : compensation M q r < 1) (i : Fin M) :
-    (∑ o : Obs M (2 * M * L) .pair, probability r .pair S o *
-      (4 : ℝ) ^ (count .pair o i 1 + count .pair o i (-1))) ≤
-        Real.exp (3 * (L : ℝ)) := by
-  classical
-  have hM : (0 : ℝ) < M := by exact_mod_cast (show 0 < M by omega)
-  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
-  have hlaw := finite_support_bayes (s := 2 * M * L) hq hqm hr hr1 hc hc1 Experiment.pair
-  have hrow := (hlaw.1 S).1.2
-  let g := fun p : Vertex M × Vertex M => if p.1 = .inl i then (4 : ℝ) else 1
-  have hedge (x y : Vertex M) :
-      (if x = .inl i ∧ chi y = 1 then (4 : ℝ) else 1) *
-        (if x = .inl i ∧ chi y = -1 then (4 : ℝ) else 1) = g (x, y) := by
-    cases y <;> by_cases hx : x = .inl i <;> norm_num [g, chi, hx]
-  have hcount (o : Obs M (2 * M * L) .pair) :
-      (4 : ℝ) ^ (count .pair o i 1 + count .pair o i (-1)) =
-        ∏ k : Fin (2 * M * L), g (o k) := by
-    rw [pow_add]
-    have hp : (4 : ℝ) ^ count .pair o i 1 =
-        ∏ k : Fin (2 * M * L), if (o k).1 = .inl i ∧ chi (o k).2 = 1 then 4 else 1 := by
-      simp [prod_ite, prod_const, count, edges]
-    have hm : (4 : ℝ) ^ count .pair o i (-1) =
-        ∏ k : Fin (2 * M * L), if (o k).1 = .inl i ∧ chi (o k).2 = -1 then 4 else 1 := by
-      simp [prod_ite, prod_const, count, edges]
-    rw [hp, hm, ← prod_mul_distrib]
-    exact prod_congr rfl fun k _ => hedge _ _
-  let K := fun p : Vertex M × Vertex M =>
-    (2 * (M : ℝ))⁻¹ * transition r S p.1 p.2 * g p
-  have hsum : (∑ p : Vertex M × Vertex M, K p) = 1 + 3 / (2 * M) := by
-    rw [Fintype.sum_prod_type]
-    have hx (x : Vertex M) : (∑ y : Vertex M, K (x, y)) =
-        (2 * (M : ℝ))⁻¹ * (if x = .inl i then 4 else 1) := by
-      dsimp [K, g]
-      calc
-        _ = ((2 * (M : ℝ))⁻¹ * (if x = .inl i then 4 else 1)) *
-            ∑ y : Vertex M, transition r S x y := by
-          rw [mul_sum]
-          apply sum_congr rfl
-          intro y _
-          ring
-        _ = _ := by rw [hrow x, mul_one]
-    simp_rw [hx]
-    rw [← mul_sum]
-    have he : (∑ x : Vertex M, if x = .inl i then (4 : ℝ) else 1) = 2 * M + 3 := by
-      have hh (x : Vertex M) : (if x = .inl i then (4 : ℝ) else 1) =
-          1 + if x = .inl i then 3 else 0 := by split_ifs <;> norm_num
-      simp_rw [hh]
-      simp [sum_add_distrib, Fintype.card_sum, Fintype.card_fin]
-      ring
-    rw [he]
-    field_simp
-    <;> ring
-  have hmass (o : Obs M (2 * M * L) .pair) :
-      probability r .pair S o * (4 : ℝ) ^ (count .pair o i 1 + count .pair o i (-1)) =
-        ∏ k : Fin (2 * M * L), K (o k) := by
-    rw [hcount]
-    simp [probability, K, prod_mul_distrib]
-  simp_rw [hmass]
-  change (∑ o : Fin (2 * M * L) → Vertex M × Vertex M, ∏ k, K (o k)) ≤ _
-  rw [← Fintype.prod_sum (fun (_ : Fin (2 * M * L)) p => K p)]
-  simp_rw [hsum]
-  simp only [prod_const, card_univ, Fintype.card_fin]
-  calc
-    (1 + 3 / (2 * (M : ℝ))) ^ (2 * M * L) ≤
-        (Real.exp (3 / (2 * M))) ^ (2 * M * L) :=
-      pow_le_pow_left₀ (by positivity)
-        (by simpa only [add_comm] using Real.add_one_le_exp (3 / (2 * (M : ℝ)))) _
-    _ = Real.exp (3 * (L : ℝ)) := by
-      rw [← Real.exp_nat_mul]
-      congr 1
-      push_cast
-      field_simp
-      <;> ring
-/-- An exponential budget holds under each original complete-history law.
-The path estimate retains adjacent visits and all terminal coordinates. -/
-theorem native_row_count_tail {M q L : ℕ} (r : ℝ) (S : Support M q)
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (hc1 : compensation M q r < 1) (hM6 : 6 ≤ M)
-    (hL : 1 ≤ L) (hLM : (L : ℝ) / M ≤ 1 / 45)
-    (e : Experiment) (i : Fin M) :
-    (∑ o : Obs M (2 * M * L) e,
-      if 8 * L < count e o i 1 + count e o i (-1) then probability r e S o else 0) ≤
-        Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) := by
-  classical
-  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
-  have hp := (finite_support_bayes (s := 2 * M * L) hq hqm hr hr1 hc hc1 e).2.1.1 S
-  have hmgf : (∑ o : Obs M (2 * M * L) e, probability r e S o *
-      (4 : ℝ) ^ (count e o i 1 + count e o i (-1))) ≤ 3 * Real.exp (3 * (L : ℝ)) := by
-    cases e
-    · exact (pair_fourth_moment r S hq hqm hr hr1 hc1 i).trans
-        (by nlinarith [Real.exp_pos (3 * (L : ℝ))])
-    · exact path_fourth_moment r S hq hqm hr hr1 hc1 hM6 hLM i
-  have hmarkov : (4 : ℝ) ^ (8 * L) *
-      (∑ o : Obs M (2 * M * L) e,
-        if 8 * L < count e o i 1 + count e o i (-1) then probability r e S o else 0) ≤
-      ∑ o : Obs M (2 * M * L) e, probability r e S o *
-        (4 : ℝ) ^ (count e o i 1 + count e o i (-1)) := by
-    rw [mul_sum]
-    apply sum_le_sum
-    intro o _
-    split_ifs with ho
-    · have hh : (4 : ℝ) ^ (8 * L) ≤
-          (4 : ℝ) ^ (count e o i 1 + count e o i (-1)) :=
-        pow_le_pow_right₀ (by norm_num) (by omega)
-      simpa only [mul_comm] using mul_le_mul_of_nonneg_left hh (hp o)
-    · simp only [mul_zero]
-      exact mul_nonneg (hp o) (pow_nonneg (by norm_num) _)
-  have h3 : 3 ≤ Real.exp (3 * (L : ℝ)) := by
-    have hl : (1 : ℝ) ≤ L := by exact_mod_cast hL
-    have hh := Real.add_one_le_exp (3 * (L : ℝ))
-    linarith
-  have hb : 3 * Real.exp (3 * (L : ℝ)) ≤ Real.exp (6 * (L : ℝ)) := by
-    rw [show 6 * (L : ℝ) = 3 * L + 3 * L by ring, Real.exp_add]
-    exact mul_le_mul_of_nonneg_right h3 (Real.exp_pos _).le
-  have hpow : (4 : ℝ) ^ (8 * L) = Real.exp (8 * (L : ℝ) * Real.log 4) := by
-    conv_lhs => rw [show (4 : ℝ) = Real.exp (Real.log 4) from (Real.exp_log (by norm_num)).symm]
-    rw [← Real.exp_nat_mul]
-    push_cast
-    congr 1
-  have htotal := hmarkov.trans (hmgf.trans hb)
-  rw [hpow] at htotal
-  calc
-    _ ≤ Real.exp (6 * (L : ℝ)) / Real.exp (8 * (L : ℝ) * Real.log 4) :=
-      (le_div_iff₀ (Real.exp_pos _)).mpr (by simpa only [mul_comm] using htotal)
-    _ = _ := by rw [← Real.exp_sub]; congr 1; ring
-/-- A single all-row cutoff preserves all original rows and pays the union
-budget, uniformly in the true support and in the experiment. -/
-theorem native_all_row_count_cut {M q L : ℕ} (r : ℝ) (S : Support M q)
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (hc1 : compensation M q r < 1) (hM6 : 6 ≤ M)
-    (hL : 1 ≤ L) (hLM : (L : ℝ) / M ≤ 1 / 45) (e : Experiment) :
-    (∑ o : Obs M (2 * M * L) e,
-      if ∀ i : Fin M, count e o i 1 + count e o i (-1) ≤ 8 * L
-      then probability r e S o else 0) ≥
-        1 - (M : ℝ) * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) := by
-  classical
-  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
-  have law := (finite_support_bayes (s := 2 * M * L) hq hqm hr hr1 hc hc1 e).2.1
-  have hp := law.1 S
-  have hsum := law.2 S
-  have hpoint (o : Obs M (2 * M * L) e) :
-      (if ¬∀ i : Fin M, count e o i 1 + count e o i (-1) ≤ 8 * L
-       then probability r e S o else 0) ≤
-        ∑ i : Fin M, if 8 * L < count e o i 1 + count e o i (-1)
-          then probability r e S o else 0 := by
-    by_cases ho : ∀ i : Fin M, count e o i 1 + count e o i (-1) ≤ 8 * L
-    · rw [if_neg (not_not.mpr ho)]
-      apply sum_nonneg
-      intro i _
-      split_ifs <;> [exact hp o; exact le_rfl]
-    · rw [if_pos ho]
-      push_neg at ho
-      obtain ⟨i, hi⟩ := ho
-      have hh := single_le_sum (f := fun j : Fin M =>
-        if 8 * L < count e o j 1 + count e o j (-1) then probability r e S o else 0)
-        (fun j _ => by split_ifs <;> [exact hp o; exact le_rfl]) (mem_univ i)
-      simpa only [if_pos hi] using hh
-  have hbad : (∑ o : Obs M (2 * M * L) e,
-      if ¬∀ i : Fin M, count e o i 1 + count e o i (-1) ≤ 8 * L
-      then probability r e S o else 0) ≤
-        (M : ℝ) * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) := by
-    calc
-      _ ≤ ∑ o : Obs M (2 * M * L) e, ∑ i : Fin M,
-          if 8 * L < count e o i 1 + count e o i (-1)
-          then probability r e S o else 0 := sum_le_sum fun o _ => hpoint o
-      _ = ∑ i : Fin M, ∑ o : Obs M (2 * M * L) e,
-          if 8 * L < count e o i 1 + count e o i (-1)
-          then probability r e S o else 0 := sum_comm
-      _ ≤ ∑ _i : Fin M, Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) :=
-        sum_le_sum fun i _ => native_row_count_tail r S hq hqm hr hr1 hc1 hM6 hL hLM e i
-      _ = _ := by simp
-  have hpartition :
-      (∑ o : Obs M (2 * M * L) e,
-        if ∀ i : Fin M, count e o i 1 + count e o i (-1) ≤ 8 * L
-        then probability r e S o else 0) +
-      (∑ o : Obs M (2 * M * L) e,
-        if ¬∀ i : Fin M, count e o i 1 + count e o i (-1) ≤ 8 * L
-        then probability r e S o else 0) = 1 := by
-    rw [← sum_add_distrib, ← hsum]
-    apply sum_congr rfl
-    intro o _
-    split_ifs <;> simp_all only [not_true_eq_false, not_false_eq_true,
-      add_zero, zero_add]
-  linarith
-end
-end D5.S3.Estimation.TimeArrow.NativeRowCountTail
 open scoped BigOperators Topology
 open Finset Filter
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
@@ -465,24 +201,6 @@ set_option maxHeartbeats 800000
 namespace D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
 noncomputable section
 /-- Coarse Stirling envelopes used only inside the four-cell atom estimate. -/
-theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
-    (n : ℝ) * Real.log n - n + Real.log n / 2 ≤ Real.log (n.factorial : ℝ) ∧
-      Real.log (n.factorial : ℝ) ≤ (n : ℝ) * Real.log n - n + Real.log n / 2 + 1 := by
-  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
-  constructor
-  · have hl := Stirling.le_log_factorial_stirling hn.ne'
-    have hc : 0 ≤ Real.log (2 * Real.pi) := Real.log_nonneg (by linarith [Real.pi_gt_three])
-    linarith
-  · have hs := Stirling.log_stirlingSeq'_antitone (show 0 ≤ n - 1 by omega)
-    have hi : n - 1 + 1 = n := by omega
-    change Real.log (Stirling.stirlingSeq (n - 1 + 1)) ≤
-      Real.log (Stirling.stirlingSeq (0 + 1)) at hs
-    rw [hi, Stirling.log_stirlingSeq_formula, Stirling.stirlingSeq_one] at hs
-    simp (disch := positivity) only [Real.log_div, Real.log_exp,
-      Real.log_sqrt, Real.log_mul] at hs
-    linarith
-/-- The four positive cells and their row and column margins are one table.
-The entropy term in its factorial ratio is nonpositive. -/
 private theorem four_cell_entropy (a b c d : ℝ)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hd : 0 < d) :
     (a+b) * Real.log (a+b) + (c+d) * Real.log (c+d) +
@@ -957,3 +675,183 @@ theorem hypergeometric_balanced_max_atom (ρ : ℝ) (hρ : 0 < ρ) (hρhi : ρ �
     exact (kernel_le_one hR hU).trans hc
 end
 end D5.S3.Estimation.TimeArrow.RectangleHypergeometricMaxAtom
+
+open scoped BigOperators Topology
+open Finset Filter
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+open D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
+open D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+open D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
+open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
+open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
+
+namespace D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
+noncomputable section
+set_option maxHeartbeats 800000 in
+private theorem anchor_scale_budget (N q v a γ xStar : ℝ)
+    (hN : 0 < N) (hq : 0 < q) (hv : 0 < v) (ha : 0 < a)
+    (hγ1 : γ ≤ 1/2) (hγa : γ ≤ a*v/32)
+    (hlarge : max 4 (32/(a*v)) ≤ Real.sqrt N)
+    (hsize : N/q ≤ v/2) (hsize' : N/q ≤ v*Real.log 2/8)
+    (hx : |xStar| ≤ a*N/(4*q)) :
+    γ*N+2*Real.sqrt N ≤ v*q/2 ∧
+      2*(γ*N+2*Real.sqrt N) ≤ v*q/4*Real.log 2 ∧
+      |xStar|+8*(γ*N+2*Real.sqrt N)/(v*q) ≤ a*N/q := by
+  have hs := Real.sq_sqrt hN.le
+  have hs0 := Real.sqrt_nonneg N
+  have hs4 : 4 ≤ Real.sqrt N := (le_max_left _ _).trans hlarge
+  have hsav : 32/(a*v) ≤ Real.sqrt N := (le_max_right _ _).trans hlarge
+  have hw : γ*N+2*Real.sqrt N ≤ N := by nlinarith only [hs,hs4,hγ1,hN]
+  have hqsize := (div_le_iff₀ hq).mp hsize
+  have hqsize' := (div_le_iff₀ hq).mp hsize'
+  have hroot : 8*(γ*N+2*Real.sqrt N)/(v*q) ≤ 3*a*N/(4*q) := by
+    apply (div_le_div_iff₀ (mul_pos hv hq) (by positivity : (0 : ℝ) < 4*q)).mpr
+    have hg := mul_le_mul_of_nonneg_right hγa hN.le
+    have hs' := (div_le_iff₀ (mul_pos ha hv)).mp hsav
+    have hs'' := mul_le_mul_of_nonneg_right hs' hs0
+    have hsbound : 32*Real.sqrt N ≤ N*a*v := by
+      calc
+        _ ≤ Real.sqrt N*a*v*Real.sqrt N := by simpa only [mul_assoc] using hs''
+        _ = N*a*v := by
+          rw [show Real.sqrt N*a*v*Real.sqrt N = (Real.sqrt N)^2*a*v by ring,hs]
+    have hh : 8*(γ*N+2*Real.sqrt N) ≤ 3*a*N*v/4 := by
+      nlinarith only [hg,hsbound]
+    have hh' := mul_le_mul_of_nonneg_right hh hq.le
+    nlinarith only [hh']
+  refine ⟨?_,?_,?_⟩
+  · linarith only [hw,hqsize]
+  · linarith only [hw,hqsize']
+  · have he : a*N/(4*q)+3*a*N/(4*q) = a*N/q := by field_simp; ring
+    linarith only [hx,hroot,he]
+set_option maxHeartbeats 800000 in
+/-- The native outside function and anchor are taken from one actual
+collapsed fiber. The same full calibration curve is used at every real
+central histogram, in either experiment; no posterior is reconditioned. -/
+theorem native_anchored_central_feedback (r : ℝ) (hr : 0 < r) (hr1 : r < 1)
+    (v : ℝ) (hv : 0 < v) :
+    ∃ a γ η c C : ℝ, 0 < a ∧ 0 < γ ∧ 0 < η ∧ 0 < c ∧ 0 < C ∧
+    ∀ (M q s : ℕ) (S : Support M q) (e : Experiment) (o : Obs M s e),
+    ∀ [Fintype (Sites s e)], ∀ (k l : ℕ) (z : Fiber S e o),
+      1 ≤ q → q < M → 0 ≤ compensation M q r → compensation M q r < 1 →
+      let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+        (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+      let V := nativeRectangleRows S e o k l z
+      let N : ℝ := V.card
+      let R : ℝ := (V.filter fun i => count e z.val i.val 1 = k).card
+      let U : ℝ := (V.filter fun i => count e z.val i.val (-1) = l).card
+      let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
+        fun i => score q r e z.val i.val-z0
+      0 < N → N/4 ≤ R → R ≤ 3*N/4 → N/4 ≤ U → U ≤ 3*N/4 →
+      max 4 (32/(a*v)) ≤ Real.sqrt N →
+      N/q ≤ v/2 → N/q ≤ v*Real.log 2/8 → a*N/q < η →
+      |compensation M q r| < η →
+      ∀ bg : ℝ, 0 ≤ bg → bg ≤ N →
+      ∀ (anchor : Fiber S e o) (xStar : ℝ),
+        nativeMinimalRectangleReadout S e o k l anchor =
+          nativeMinimalRectangleReadout S e o k l z →
+        (∑ i : Fin M, Real.sigmoid (xStar+(score q r e anchor.val i-z0))) = q →
+        v*q ≤ ∑ i : Fin M, Real.sigmoid (xStar+(score q r e anchor.val i-z0))*
+          (1-Real.sigmoid (xStar+(score q r e anchor.val i-z0))) →
+        |xStar| ≤ a*N/(4*q) →
+        |(nativeRectangleACount S e o k l anchor : ℝ)-U*R/N| ≤ 2*Real.sqrt N →
+        ∃ θ : ℝ → ℝ, (∀ t : ℝ, |t-U*R/N| ≤ γ*N →
+          calibratedMean outside r (compensation M q r) N R U t (θ t) = q ∧
+          |θ t| ≤ a*N/q ∧
+          v*q/4 ≤ calibratedVariance outside r (compensation M q r) N R U t (θ t) ∧
+          calibratedVariance outside r (compensation M q r) N R U t (θ t) ≤ q ∧
+          HasDerivAt θ (-checkerboard r (compensation M q r) (θ t)/
+            calibratedVariance outside r (compensation M q r) N R U t (θ t)) t ∧
+          (∀ᶠ u in 𝓝 t, calibratedMean outside r (compensation M q r) N R U u (θ u) = q) ∧
+          ∃ slope : ℝ, c*(N/q) ≤ slope ∧ slope ≤ C*(N/q) ∧
+            HasDerivAt (fun u => (bg+u)*Real.sigmoid (θ u)-u/2) slope t) ∧
+          ∀ y : Fiber S e o,
+            nativeMinimalRectangleReadout S e o k l y =
+              nativeMinimalRectangleReadout S e o k l z →
+            |(nativeRectangleACount S e o k l y : ℝ)-U*R/N| ≤ γ*N →
+            let x := θ (nativeRectangleACount S e o k l y)
+            (∑ i : Fin M, Real.sigmoid (x+(score q r e y.val i-z0))) = q ∧
+            v*q/4 ≤ ∑ i : Fin M, Real.sigmoid (x+(score q r e y.val i-z0))*
+              (1-Real.sigmoid (x+(score q r e y.val i-z0))) ∧
+            (∑ i : Fin M, Real.sigmoid (x+(score q r e y.val i-z0))*
+              (1-Real.sigmoid (x+(score q r e y.val i-z0)))) ≤ q ∧
+            ∀ u : ℝ, (∑ i : Fin M, Real.sigmoid (u+(score q r e y.val i-z0))) = q → u = x := by
+  obtain ⟨d,η,hd,hη,hcal⟩ := anchored_central_shared_calibration r hr hr1
+  let a := min 1 (d/128)
+  let γ := min (1/64) (a*v/32)
+  have ha : 0 < a := lt_min (by norm_num) (by positivity)
+  have hγ : 0 < γ := lt_min (by norm_num) (by positivity)
+  refine ⟨a,γ,η,d/512,a/4+4/v,ha,hγ,hη,by positivity,by positivity,?_⟩
+  intro M q s S e o _ k l z hq hqm he he1
+  dsimp only
+  intro hN hR hR' hU hU' hlarge hsize hsize' hηscale hε bg hbg hbgN
+    anchor xStar henv hroot hvar hprecision hstar
+  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+    (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+  let V := nativeRectangleRows S e o k l z
+  let N : ℝ := V.card
+  let R : ℝ := (V.filter fun i => count e z.val i.val 1 = k).card
+  let U : ℝ := (V.filter fun i => count e z.val i.val (-1) = l).card
+  let outside : {i : Fin M // nativeRowCell S e z.val k l i = none} → ℝ :=
+    fun i => score q r e z.val i.val-z0
+  have hqR : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
+  have hi := native_environment_mean_variance S r e o k l anchor z henv hq hqm hr hr1 he he1 xStar
+  dsimp only at hi
+  have hanchor : calibratedMean outside r (compensation M q r) N R U
+      (nativeRectangleACount S e o k l anchor) xStar = q := by
+    rw [←hi.1]
+    exact hroot
+  have hV : v*q ≤ calibratedVariance outside r (compensation M q r) N R U
+      (nativeRectangleACount S e o k l anchor) xStar := by
+    rw [←hi.2]
+    exact hvar
+  have hpartition := native_outside_rectangle_card S e o k l z
+  have hqM : (q : ℝ) <
+      (Fintype.card {i : Fin M // nativeRowCell S e z.val k l i = none} : ℝ)+N := by
+    have hh : q < Fintype.card {i : Fin M // nativeRowCell S e z.val k l i = none}+V.card := by
+      rwa [hpartition]
+    dsimp only [N]
+    exact_mod_cast hh
+  have hb := anchor_scale_budget N q v a γ xStar hN hqR hv ha
+    ((min_le_left _ _).trans (by norm_num)) (min_le_right _ _) hlarge hsize hsize' hprecision
+  obtain ⟨θ,hθ⟩ := hcal _ outside (compensation M q r) N R U q bg (1/4) γ a v 1
+    (nativeRectangleACount S e o k l anchor) xStar hN hqR hqM (by norm_num)
+    hγ.le (by have hh := min_le_left (1/64 : ℝ) (a*v/32); dsimp only [γ]; linarith only [hh])
+    hv hbg (by simpa using hbgN)
+    (by linarith only [hR]) (by linarith only [hR'])
+    (by linarith only [hU]) (by linarith only [hU']) hanchor hV hstar
+    hb.1 hb.2.1 hb.2.2 (by have hh := min_le_right (1 : ℝ) (d/128); dsimp only [a]; linarith only [hh])
+    hηscale hε
+  refine ⟨θ,?_,?_⟩
+  · intro t ht
+    have ht' := hθ t ht
+    rcases ht'.2.2.2.2.2.2.2 with ⟨slope,hlo,hhi,hder⟩
+    refine ⟨ht'.1,ht'.2.1,ht'.2.2.2.1,ht'.2.2.2.2.1,ht'.2.2.2.2.2.1,
+      ht'.2.2.2.2.2.2.1,slope,?_,?_,hder⟩
+    · convert hlo using 1 <;> ring
+    · convert hhi using 1 <;> ring
+  · intro y hy ht
+    have hi := native_environment_mean_variance S r e o k l y z hy hq hqm hr hr1 he he1
+      (θ (nativeRectangleACount S e o k l y))
+    dsimp only at hi
+    have ht' := hθ (nativeRectangleACount S e o k l y) ht
+    refine ⟨hi.1.trans ht'.1,?_,?_,?_⟩
+    · rw [hi.2]
+      exact ht'.2.2.2.1
+    · rw [hi.2]
+      exact ht'.2.2.2.2.1
+    · intro u hu
+      have hiu := native_environment_mean_variance S r e o k l y z hy hq hqm hr hr1 he he1 u
+      dsimp only at hiu
+      have hc (j : Fin 4) : 0 ≤ cellCounts N R U (nativeRectangleACount S e o k l y) j := by
+        have hh := central_four_cells_lower N R U (1/4) (nativeRectangleACount S e o k l y)
+          (γ*N) hN (by norm_num) (by linarith only [hR]) (by linarith only [hR'])
+          (by linarith only [hU]) (by linarith only [hU']) ht j
+        have hg : γ ≤ 1/64 := min_le_left _ _
+        nlinarith only [hh,hg,hN]
+      exact (unique_shared_root outside r (compensation M q r) N R U q
+        (nativeRectangleACount S e o k l y) hN hqR hqM hc).unique
+          (hiu.1.symm.trans hu) ht'.1
+end
+end D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback

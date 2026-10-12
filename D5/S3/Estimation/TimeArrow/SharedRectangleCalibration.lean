@@ -6,6 +6,7 @@
    utility: none
    digest: Four adjacent score cells share one moving logistic calibration. -/
 
+import Mathlib.Analysis.SpecialFunctions.Stirling
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
@@ -920,3 +921,27 @@ theorem information_rate_bounds (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
   constructor <;> nlinarith
 end
 end D5.S3.Estimation.TimeArrow.NativeGrowthRounding
+
+namespace D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+noncomputable section
+theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
+    (n : ℝ) * Real.log n - n + Real.log n / 2 ≤ Real.log (n.factorial : ℝ) ∧
+      Real.log (n.factorial : ℝ) ≤ (n : ℝ) * Real.log n - n + Real.log n / 2 + 1 := by
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  constructor
+  · have hl := Stirling.le_log_factorial_stirling hn.ne'
+    have hc : 0 ≤ Real.log (2 * Real.pi) := Real.log_nonneg (by linarith [Real.pi_gt_three])
+    linarith
+  · have hs := Stirling.log_stirlingSeq'_antitone (show 0 ≤ n - 1 by omega)
+    have hi : n - 1 + 1 = n := by omega
+    change Real.log (Stirling.stirlingSeq (n - 1 + 1)) ≤
+      Real.log (Stirling.stirlingSeq (0 + 1)) at hs
+    rw [hi, Stirling.log_stirlingSeq_formula, Stirling.stirlingSeq_one] at hs
+    simp (disch := positivity) only [Real.log_div, Real.log_exp,
+      Real.log_sqrt, Real.log_mul] at hs
+    linarith
+/-- The four positive cells and their row and column margins are one table.
+The entropy term in its factorial ratio is nonpositive. -/
+
+end
+end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge

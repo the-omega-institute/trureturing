@@ -10,7 +10,6 @@ import D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
 import D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 import D5.S3.Estimation.SequentialDecisionRisk.UniformPosteriorOdds
 import D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
-import D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
 import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 import Mathlib.Analysis.SpecialFunctions.Stirling
 import D5.S3.DivergenceSupport.LogSumInequality

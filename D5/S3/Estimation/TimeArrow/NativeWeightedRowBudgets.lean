@@ -7,7 +7,7 @@
    digest: Finite native row transfer restores both actual and reference tails. -/
 
 import D5.S3.Estimation.TimeArrow.ActualMarkedCountPoissonRelative
-import D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
+import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 
 open scoped BigOperators
 open Finset

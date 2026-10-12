@@ -6,6 +6,7 @@
    utility: none
    digest: The actual full-root anchor drives the original posterior phase through the native conditional kernel. -/
 
+import D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
 import D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
 
 open scoped BigOperators Topology
