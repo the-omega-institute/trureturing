@@ -5,6 +5,7 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
 
+[Collection("Lean cold production integration")]
 public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
     // Publication, coordinates and verification use this class's private compiler stage.
@@ -24,9 +25,13 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     public void LocalRestoredSeedKeepsNativeIncrementalExtraction() => InspectorNativeTestRunner.Run(compiler,
         "test_native.NativeLocalReportTests");
 
-    [Fact]
-    public void ReportConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
-        "test_native.NativeReportTests");
+    // Each consumer owns a private cold project and the complete 300-second guard.
+    [Theory]
+    [InlineData("test_impl_resource_preserves_production_reg_on_warm_report")]
+    [InlineData("test_reg_dependency_closure_reassessment")]
+    [InlineData("test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs")]
+    public void ReportConsumersStartWithPrivateColdProjects(string behavior) => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeReportTests." + behavior);
 }
 
 internal static class InspectorNativeTestRunner

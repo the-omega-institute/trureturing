@@ -3,6 +3,7 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
 
+[Collection("Lean cold production integration")]
 public sealed class CompiledFibIntegrationTests
 {
     [Theory]
