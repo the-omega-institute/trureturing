@@ -1,0 +1,1 @@
+| [NativeSerialEffective](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean) | OriginalState、OriginalRun、四值续延及 original_service_simulation / original_code_service_simulation 的有限 evaluator；原外部 read list 等式限于其既有模拟，不涵盖新增付费宏 
