@@ -409,7 +409,7 @@ private lemma actV_transP {d : ℕ} (h g : G d) (s : Vertex d) :
   simp [actV, transP, pmap_comp, pmap_symmDiff]
 private abbrev VG (d : ℕ) (α β : Type*) [Fintype α] [Fintype β] [DecidableEq α]
     [DecidableEq β] := G d → Matrix (α × β) (α × β) ℂ
-private def hvec {d _t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+private def hvec {d : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] : VG d α β := fun _ => 1
 private def uvec {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d) (A : Output d t) :
@@ -461,6 +461,43 @@ private def pairTrace {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α]
     [DecidableEq β] (ρ : Matrix (α × β) (α × β) ℂ)
     (x y : Matrix (α × β) (α × β) ℂ) : ℝ :=
   (Matrix.trace (star x * y * ρ)).re
+private lemma trace_budget {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (ρ X : Matrix (α × β) (α × β) ℂ)
+    (hρ : ρ.PosSemidef) (hX : X.PosSemidef) (hsq : X * X ≤ X) :
+    pairTrace ρ X X ≤ pairTrace ρ 1 X := by
+  have hp := RHLinalg.trace_mul_nonneg_of_posSemidef (Matrix.le_iff.mp hsq) hρ
+  rw [Matrix.sub_mul, Matrix.trace_sub] at hp
+  change 0 ≤ ((X * ρ).trace - (X * X * ρ).trace).re at hp
+  rw [Complex.sub_re] at hp
+  dsimp only [pairTrace]
+  rw [Matrix.star_eq_conjTranspose, hX.isHermitian.eq,
+    Matrix.star_eq_conjTranspose, Matrix.conjTranspose_one, one_mul]
+  linarith
+private lemma kron_sq_le {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (X : Matrix α α ℂ) (hsq : X * X ≤ X) :
+    (X ⊗ₖ (1 : Matrix β β ℂ)) * (X ⊗ₖ (1 : Matrix β β ℂ)) ≤ X ⊗ₖ 1 ∧
+      ((1 : Matrix β β ℂ) ⊗ₖ X) * ((1 : Matrix β β ℂ) ⊗ₖ X) ≤ 1 ⊗ₖ X := by
+  have hp := Matrix.le_iff.mp hsq
+  constructor
+  · apply Matrix.le_iff.mpr
+    rw [← Matrix.mul_kronecker_mul, one_mul]
+    convert hp.kronecker (Matrix.PosSemidef.one (n := β) (R := ℂ)) using 1
+    ext i j
+    simp only [Matrix.sub_apply, Matrix.kroneckerMap_apply]
+    ring
+  · apply Matrix.le_iff.mpr
+    rw [← Matrix.mul_kronecker_mul, one_mul]
+    convert (Matrix.PosSemidef.one (n := β) (R := ℂ)).kronecker hp using 1
+    ext i j
+    simp only [Matrix.sub_apply, Matrix.kroneckerMap_apply]
+    ring
+private lemma effect_budget {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d)
+    (T : Finset (Output d t)) :
+    pairTrace S.ρ (effect S σ T ⊗ₖ (1 : Matrix β β ℂ)) (effect S σ T ⊗ₖ 1) ≤
+      pairTrace S.ρ 1 (effect S σ T ⊗ₖ 1) :=
+  trace_budget S.ρ _ S.rho_psd ((effect_nonneg S σ T).kronecker Matrix.PosSemidef.one)
+    (kron_sq_le (effect S σ T) (effect_sq_le S σ T)).1
 private lemma kron_trace_uv {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (ρ : Matrix (α × β) (α × β) ℂ)
     (E : Matrix α α ℂ) (F : Matrix β β ℂ) (hE : E.IsHermitian) :
@@ -617,5 +654,34 @@ private lemma inner_uv_eq {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
   dsimp only [uvec, vvec]
   rw [kron_trace_uv _ _ _ (S.E_psd _ _).isHermitian]
   rfl
+private lemma inner_hh {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) :
+    (weightedCore S).inner hvec hvec = n d t := by
+  classical
+  let _ : Nonempty (Vertex d) := ⟨∅⟩
+  let _ : Nonempty (Equiv.Perm (Fin d)) := ⟨Equiv.refl _⟩
+  have hc : (Fintype.card (G d) : ℝ) ≠ 0 := by
+    exact_mod_cast (Fintype.card_ne_zero : Fintype.card (G d) ≠ 0)
+  change n d t / (Fintype.card (G d) : ℝ) * ∑ g : G d, pairTrace S.ρ 1 1 = _
+  dsimp only [pairTrace]
+  rw [star_one, one_mul, one_mul, S.rho_trace]
+  simp only [Complex.one_re, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, mul_one]
+  exact div_mul_cancel₀ _ hc
+private lemma inner_u_budget {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β)
+    (σ : Vertex d) (A : Output d t) :
+    (weightedCore S).inner (uvec S σ A) (uvec S σ A) ≤
+      (weightedCore S).inner hvec (uvec S σ A) := by
+  classical
+  change n d t / (Fintype.card (G d) : ℝ) *
+    ∑ g, pairTrace S.ρ (uvec S σ A g) (uvec S σ A g) ≤
+      n d t / (Fintype.card (G d) : ℝ) * ∑ g, pairTrace S.ρ 1 (uvec S σ A g)
+  apply mul_le_mul_of_nonneg_left _ (by dsimp only [n]; positivity)
+  apply Finset.sum_le_sum
+  intro g hg
+  have hb := effect_budget S (actV g σ) {actO g A}
+  dsimp only [effect] at hb
+  rw [Finset.sum_singleton] at hb
+  exact hb
 end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
