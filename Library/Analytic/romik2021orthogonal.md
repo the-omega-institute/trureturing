@@ -2226,7 +2226,7 @@ or uniformity as $\varepsilon\downarrow0$ is supplied. The
 limiting collision at $y=1/4$ remains outside this single-saddle
 range; the finite fold is retained separately below. Together with
 (LC57), the remaining full-criterion obligations include the
-shrinking soft-edge neighborhood,
+soft-edge arguments escaping every bounded window,
 $t/r_n\to0$ through heights growing with degree, plus
 initial degrees, complex-root control and common-zero/multiplicity
 propagation outside the established ranges. The fixed real height bands already have
@@ -2430,10 +2430,220 @@ Thus this closed reference locates the exact fold more accurately
 than a cubic-scale window, unlike a truncation at the displayed
 $w_n^{-1}$ shift. This controls a center coordinate only. It does
 not permit replacing the exact source phase or common amplitude:
-$n(\mathcal L_n-\Lambda_n)=O(\log n)$ need not vanish. The
-Airy contour, uniform remainder and actual-node sign remain unpaid.
+$n(\mathcal L_n-\Lambda_n)=O(\log n)$ need not vanish. The following bounded-window application supplies the Airy contour,
+uniform errors and actual-node sign only for fixed finite Airy arguments.
 
-This computes a phase parameter and its displacement only. It
-supplies no uniform Airy remainder, adjacent-row sign, real-root
-existence, complex-root exclusion, starting degree or RH/Robin
-conclusion. Those obligations retain their original quantifiers.
+The parameter calculation alone supplies no uniform Airy remainder,
+adjacent-row sign, real-root existence, complex-root exclusion,
+starting degree or RH/Robin conclusion.
+
+## Actual-node signs in bounded finite soft-edge windows
+
+Reuse (LC46)–(LC50), the original-source local
+analytic estimates, and the exact finite fold in (LC65)–(LC77).
+It reuses the classical Airy contour and derivative representations;
+the canonical integral also follows from [Olde Daalhuis–Temme,
+(3.1)–(3.4)](https://doi.org/10.1137/S0036141090187685), with constant and linear amplitudes. Their generic
+uniform expansion theorem is not proved again, and no global cubic
+coordinate for this source is assumed. This source-specific bounded
+window application has no Lean or originality certification.
+
+Write $\rho_n=\rho_n^{\mathrm e}$, $y_n=y_n^{\mathrm e}$ and use
+$H_{n,y}$ from the finite-fold section. Set
+
+$$
+\mathfrak a_n=-\rho_n^3\partial_\rho^3H_{n,y_n}(\rho_n)>0,
+\qquad \gamma_n=(2/\mathfrak a_n)^{1/3},
+\qquad x_n(y)=-\rho_n\gamma_n n^{2/3}(y-y_n). \tag{LC78}
+$$
+
+Then $\mathfrak a_n\to1/2$ and $\gamma_n\to4^{1/3}$; these are exact finite
+parameters. Fix $0<M<\infty$ and restrict to real $|x_n(y)|\le M$.
+Thus $\delta=y-y_n=O_M(n^{-2/3})$ and $y>0$ for large $n$.
+Define $c_{n,y}=\exp(nH_{n,y}(\rho_n))>0$ and, locally,
+
+$$
+P_{n,y}(\theta)=H_{n,y}(\rho_ne^{i\theta})-H_{n,y}(\rho_n).
+$$
+
+The source logarithm is used only in one fixed complex disk around
+$\theta=0$. On the whole circle define the common integrand by
+
+$$
+Q_{n,y}(\theta)=
+\exp[-ny\rho_n(e^{i\theta}-1)-in\theta]
+\frac{F(-r_n\rho_ne^{i\theta})}{F(-r_n\rho_n)}. \tag{LC79}
+$$
+
+The denominator is positive. This agrees with $e^{nP_{n,y}}$
+locally and makes no global source logarithm assumption.
+The coefficient contour gives,
+simultaneously for $d=-1,0,1$,
+
+$$
+I_{n,d}(y)=(-1)^{n+d}c_{n,y}\rho_n^{-d}J_{n,d}(y),
+\qquad
+J_{n,d}(y)=\frac1{2\pi}\int_{-\pi}^{\pi}
+ Q_{n,y}(\theta)e^{-id\theta}\,d\theta. \tag{LC80}
+$$
+
+On the entire bounded window, subtract the whole common integral:
+
+$$
+J_{n,d}(y)-J_{n,0}(y)=\frac1{2\pi}\int_{-\pi}^{\pi}
+ Q_{n,y}(\theta)(e^{-id\theta}-1)\,d\theta,
+\qquad d=-1,1. \tag{LC81}
+$$
+
+At an actual $I_{n,0}(y)=0$, the normalization gives exactly
+$J_{n,0}=0$. No approximate node or Airy zero replaces that condition.
+
+### The original arc has the Airy contour orientation
+
+The source derivatives give, at $\delta=0$,
+
+$$
+P'(0)=P''(0)=0,\qquad P'''(0)=i\mathfrak a_n,\qquad
+P''''(0)\longrightarrow-3/4.
+$$
+
+The fourth derivative is real. Uniform analyticity gives
+
+$$
+P_{n,y}(\theta)=-i\rho_n\delta\theta+
+ \frac{i\mathfrak a_n}6\theta^3+\mathfrak b_n\theta^4+
+ O(|\theta|^5+|\delta||\theta|^2),
+\qquad \mathfrak b_n=P_{n,y_n}''''(0)/24\longrightarrow-1/32. \tag{LC82}
+$$
+
+Choose a small fixed $\eta>0$ inside this disk. The normalized full
+theta bound (LC50), at $\rho_n\to4,y\to1/4$, has limiting real
+envelope $-2(1-\cos(\theta/2))^2$. Outside $(-\eta,\eta)$ this
+has a fixed negative upper bound. The annular source estimate
+includes its auxiliary zero endpoint; hence the normalized original
+exterior integral is $O_M(e^{-cn})$.
+
+Deform the short interval to the two rays of arguments $5\pi/6$
+and $\pi/6$, directed toward and away from zero, of radius $\eta$.
+Join their endpoints to $-\eta$ and $\eta$ on circular arcs
+inside the same analytic disk. For the right connector,
+$0\le\phi\le\pi/6$,
+
+$$
+\Re\frac{i\mathfrak a_n}6\eta^3e^{3i\phi}
+=-\frac{\mathfrak a_n}6\eta^3\sin3\phi.
+$$
+
+At $\delta=0$, on $0\le\phi\le\pi/12$ the quartic has
+$\cos4\phi\ge1/2$ and the cubic is nonpositive; on
+$\pi/12\le\phi\le\pi/6$ the cubic has
+$\sin3\phi\ge\sin(\pi/4)>0$ and dominates the bounded quartic.
+The fifth-order remainder is absorbed by fixing $\eta$ small.
+The exact perturbation is $-\rho_n\delta(e^{i\theta}-1)$;
+on these fixed arcs its modulus is at most $C_Mn^{-2/3}\eta$.
+Increasing $N_M$ makes it smaller than half the fixed negative
+quartic bound. The real source branch gives
+$P(-\overline\theta)=\overline{P(\theta)}$, so the left connector
+has the same estimate. Thus both connectors have
+$\Re P\le-c\eta^4$ uniformly for large $n$ in the window. Holomorphy permits this
+deformation; connector errors are exponentially small.
+The main integral runs into zero on the upper-left Airy ray and
+out on the upper-right ray. Under $s=-it$ it is the standard Airy
+contour, accounting for variable and contour reversal together.
+There is one Airy cycle and no factor two.
+
+### Source-specific absolute errors after scaling
+
+On these rays set $\theta=\gamma_n n^{-1/3}t$. The exact finite
+cubic coefficient gives
+
+$$
+nP_{n,y}(\theta)=i(t^3/3+x_n(y)t)+R_{n,y}(t),
+\qquad
+|R_{n,y}(t)|\le C_Mn^{-1/3}(|t|^4+|t|^2). \tag{LC83}
+$$
+
+The rays end at $|t|=\eta n^{1/3}/\gamma_n$.
+Their canonical cubic has real part $-|t|^3/3$, and the bounded
+linear argument contributes at most $M|t|$. Choose $\eta$ small,
+then $n$ large, so
+
+$$
+\max(\Re R_{n,y}(t),0)\le |t|^3/6+C_M.
+$$
+
+Indeed $n^{-1/3}|t|^4\le C\eta|t|^3$ on the truncated rays,
+and the quadratic term is absorbed into a small cubic multiple
+plus a constant. Bound
+$|e^R-1|\le |R|e^{\max(\Re R,0)}$ and use the finite moments
+of $e^{-|t|^3/6+M|t|}$: the scaled integral error is
+$O_M(n^{-1/3})$. Extending the canonical rays to infinity costs
+an exponentially small error. Reusing [DLMF (9.5.4)](https://dlmf.nist.gov/9.5.E4), whose
+constant and linear amplitude forms also appear in
+Olde Daalhuis–Temme (3.1)–(3.4), yields
+
+$$
+J_{n,0}(y)=\gamma_n n^{-1/3}\mathrm{Ai}(x_n(y))
+ +O_M(n^{-2/3}). \tag{LC84}
+$$
+
+For the canceled neighboring amplitude,
+
+$$
+e^{-id\gamma_n n^{-1/3}t}-1
+=-id\gamma_n n^{-1/3}t+O(n^{-2/3}|t|^2),
+\qquad d=-1,1.
+$$
+
+Its Taylor remainder constant is uniform because $|\theta|\le\eta$.
+Multiplying the linear term by $e^R-1$ costs another
+$O_M(n^{-2/3})$ in the bracket, with the same cubic weight.
+The outer factor $\gamma_n n^{-1/3}$ makes both this error
+and the amplitude remainder $O_M(n^{-1})$. The classical Airy
+derivative representation therefore gives throughout the window,
+
+$$
+J_{n,d}(y)-J_{n,0}(y)=-d\gamma_n^2n^{-2/3}\mathrm{Ai}'(x_n(y))
+ +O_M(n^{-1}),\qquad d=-1,1. \tag{LC85}
+$$
+
+The finite prefactor and the shared constants for all nodes and
+three offsets are retained.
+
+### The actual-node product
+
+The middle expansion at these nodes gives
+$\mathrm{Ai}(x_n)=O_M(n^{-1/3})$. The classical Airy function
+and its derivative have no common zero, by the nonzero
+[DLMF (9.2.7) Wronskian](https://dlmf.nist.gov/9.2.E7); their squared sum has
+a positive minimum on $[-M,M]$. Thus
+$|\mathrm{Ai}'(x_n)|\ge c_M>0$ for sufficiently large $n$
+at all the actual nodes under consideration. Consequently,
+
+$$
+I_{n,-1}(y)I_{n,1}(y)=
+-c_{n,y}^2\gamma_n^4n^{-4/3}\mathrm{Ai}'(x_n(y))^2
++O_M(c_{n,y}^2n^{-5/3})<0. \tag{LC86}
+$$
+
+The integer signs multiply to $+1$ and the $\rho_n$ powers cancel.
+The positive factorial correspondence and (LC47) then give the
+original strictly positive derivative comparison at every actual
+positive Jensen node in this bounded finite soft-edge window.
+Both adjacent values are nonzero there; existence of nodes is
+not asserted or required as a premise.
+
+The exact quantifiers in the original node coordinate are
+
+$$
+\forall M>0\ \exists N_M\ \forall n\ge N_M\ \forall t>0:
+\quad
+\bigl(\mathcal J_n(t)=0,\ |x_n(r_n/t)|\le M\bigr)
+\Longrightarrow \mathcal J_n'(t)\mathcal G_n(t)>0. \tag{LC87}
+$$
+
+No numerical $N_M$ is supplied.
+Unbounded Airy arguments and a uniform overlap with bulk ranges
+approaching the fold remain unpaid, as do the growing hard-edge
+band, complex roots, initial degrees and global collision propagation.
+RH and strict Robin for all integers greater than 5040 remain unresolved.
