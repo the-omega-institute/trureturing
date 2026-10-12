@@ -2,8 +2,7 @@
    generality: I
    mirror-B: none
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Arith/Robin/FiveModePrimeWindowBridge,
-     D5/S3/Arith/GoldenResource/GoldenDivisorLanguage]
+   anchors: [D5/S3/Arith/Robin/FiveModePrimeWindowBridge, D5/S3/Arith/GoldenResource/GoldenDivisorLanguage]
    utility: none
    digest: Exact normalized five-mode vectors on the finite six-cell at 5040. -/
 

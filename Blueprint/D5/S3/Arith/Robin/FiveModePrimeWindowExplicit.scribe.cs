@@ -23,7 +23,13 @@ internal sealed class FiveModePrimeWindowExplicitDocument : IScribeDocumentDefin
                     + "60480, the theorem supplies u in {0,1,2} and v in {0,1} with "
                     + "n = 5040 * 2^u * 3^v.  Writing d = 13 + u + v, the coordinates "
                     + "in the order (2,3,5,7,83) are (5+u, 3+v, 2, 2, 1)/d, and "
-                    + "the visible projection is (4+v, 3, 2)/d."))),
+                    + "the visible projection is (4+v, 3, 2)/d.")),
+                Paragraph(Text(
+                    "The six rows are 5040:(u,v,d)=(0,0,13), 10080=(1,0,14), "
+                    + "15120=(0,1,14), 20160=(2,0,15), 30240=(1,1,15), "
+                    + "and 60480=(2,1,16).  Their five-coordinate numerators are "
+                    + "(5,3,2,2,1), (6,3,2,2,1), (5,4,2,2,1), (7,3,2,2,1), "
+                    + "(6,4,2,2,1), and (7,4,2,2,1), respectively."))),
                 DescribeRole.Theorem))));
 
     private static Formula ExplicitFormula()
