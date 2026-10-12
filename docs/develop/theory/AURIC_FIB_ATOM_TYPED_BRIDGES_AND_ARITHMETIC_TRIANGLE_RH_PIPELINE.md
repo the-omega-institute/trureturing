@@ -9519,3 +9519,343 @@ K_j^{(3)}=V_{j+1}^{(3)}-2V_j^{(3)}+V_{j-1}^{(3)}.
 固定 \(N,Q,H\) 后，\(\mu_{H,q}^N\)、\(D_{H,q}^2\)、\(\Theta_{q'\to q}\)、\(V_j\) 和 \(K_j\) 只依赖有限区间内的素数指示值及有限剩余类坐标。任何在该截断之外修改的二值序列都保持这些量不变。因此它们是候选算术不变量和可复核数值证据，不能单独蕴含一个关于所有整数的 RH 命题。
 
 要跨过这个边界，至少需要对所有模式、所有尺度建立统一控制，或者构造 prime-weighted 自伴算子并证明包含 Archimedean 因子的全局正规化行列式/迹公式。不可约三体能量提供了新的局部接口，但没有替代这个全局门槛。
+
+
+---
+
+## 63. RH 与四维概率场的严格接口
+
+“RH 和 4 很接近”可以被拆成四个不同的数学事实。它们共享概率、正定性、对称和谱结构，但逻辑强度不同。
+
+### 63.1 四维概率场与三维固定子流形
+
+五态概率单纯形内点
+
+\[
+\Delta^\circ_5
+=
+\left\{
+p_s>0:\sum_{s\in\Sigma}p_s=1
+\right\}
+\]
+
+的仿射维数是 \(4\)。Fisher 度量平方根嵌入
+
+\[
+h(p)=(2\sqrt{p_s})_{s\in\Sigma}
+\]
+
+把它等距嵌入半径 \(2\) 的正球面片 \(S^4_+(2)\)，因为
+
+\[
+\sum_sh_s^2=4,
+\qquad
+\langle dh_p(a),dh_p(b)\rangle
+=
+\sum_s\frac{a_sb_s}{p_s}
+=
+g_p^F(a,b).
+\tag{63.1}
+\]
+
+令 \(\tau\) 交换 \(2\) 与 \(5\)，固定 \(0,3,25\)。则
+
+\[
+\operatorname{Fix}(\tau)
+=
+\{p\in\Delta^\circ_5:p_2=p_5\}
+\]
+
+是三维子流形。反对称法向坐标可以取
+
+\[
+\eta(p)=\frac12\log\frac{p_2}{p_5},
+\qquad
+\eta(\tau p)=-\eta(p).
+\tag{63.2}
+\]
+
+所以这里存在一个严格的
+
+\[
+4\text{ 维场}
+\longrightarrow
+3\text{ 维固定/可见流形}
++
+1\text{ 维镜像法向缺陷}
+\]
+
+分解。当前 FIB 投影核 \(d\) 是镜像偶的隐藏纤维，不能直接当作这里的奇法向 \(\eta\)。后者是一个新的功能方程候选坐标。
+
+### 63.2 RH 的 Poisson 概率场与 \(1/4\)
+
+令
+
+\[
+\mathbb H_{1/2}=\{s:\operatorname{Re}s>1/2\},
+\qquad
+B=\{1/2+it:t\in\mathbb R\},
+\]
+
+并在半平面内取点 \(s_0=1\)。其边界 Poisson 概率测度为
+
+\[
+\mu_C(dt)
+=
+\frac{dt}{2\pi(t^2+1/4)}.
+\tag{63.3}
+\]
+
+这里的 \(1/4\) 是点 \(s_0\) 到临界边界的距离平方 \((1/2)^2\)。令
+
+\[
+X(t)=\log|\zeta(1/2+it)|.
+\]
+
+Balazard–Saias–Yor 等价式可写成一个 Cauchy 概率场的缺陷能量：
+
+\[
+\mathcal D_{\rm RH}
+=
+\int_{\mathbb R}X(t)\,\mu_C(dt)
+=
+\sum_{\rho:\operatorname{Re}\rho>1/2}
+\log\left|\frac{\rho}{1-\rho}\right|.
+\tag{63.4}
+\]
+
+对 \(\rho=\frac12+\delta+i\gamma\)，
+
+\[
+\log\left|\frac{\rho}{1-\rho}\right|
+=
+\frac12\log
+\frac{\gamma^2+\delta^2+\frac14+\delta}
+{\gamma^2+\delta^2+\frac14-\delta}
+=
+\operatorname{artanh}
+\frac{\delta}{\gamma^2+\delta^2+\frac14}
+\ge0.
+\tag{63.5}
+\]
+
+因此
+
+\[
+\mathcal D_{\rm RH}=0
+\quad\Longleftrightarrow\quad
+\delta=0\ \text{for every nontrivial zero}
+\quad\Longleftrightarrow\quad
+\mathrm{RH}.
+\tag{63.6}
+\]
+
+这是真正的概率空间关系：RH 是 Poisson/Cauchy 加权零点法向缺陷的完全消失。Bui、Lester 和 Milinovich 对这一等价式及截断积分进行了研究，参见 [arXiv:1306.0856](https://arxiv.org/abs/1306.0856)。
+
+### 63.3 RH 零点的单位圆坐标
+
+对零点 \(\rho\) 定义
+
+\[
+z_\rho=1-\frac1\rho.
+\]
+
+功能方程反射 \(\rho\mapsto1-\overline\rho\) 对应
+
+\[
+z_\rho\mapsto\frac1{\overline{z_\rho}},
+\]
+
+而共轭对应 \(z_\rho\mapsto\overline{z_\rho}\)。写
+
+\[
+z_\rho=e^{u_\rho+i\theta_\rho},
+\qquad
+u_\rho=\log|z_\rho|.
+\]
+
+则
+
+\[
+\operatorname{Re}\rho=\frac12
+\quad\Longleftrightarrow\quad
+|z_\rho|=1
+\quad\Longleftrightarrow\quad
+u_\rho=0.
+\tag{63.7}
+\]
+
+因此 RH 的几何意义是：所有零点的像都落在反射固定的单位圆上，\(u_\rho\) 是法向偏离量。这个结构与 (63.2) 同型：
+
+\[
+\eta\longleftrightarrow u_\rho,
+\qquad
+\tau:\eta\mapsto-\eta
+\longleftrightarrow
+u_\rho\mapsto-u_\rho.
+\]
+
+### 定理 63.4（条件性的场到 RH 固定子桥）
+
+设 \(\mathcal Z\) 是非平凡零点多重集，存在映射
+
+\[
+\Phi:\mathcal Z\to\Delta^\circ_5
+\]
+
+满足：
+
+\[
+\Phi(1-\overline\rho)=\tau\Phi(\rho),
+\tag{63.8}
+\]
+
+以及
+
+\[
+\eta(\Phi(\rho))
+=
+\log\left|1-\frac1\rho\right|.
+\tag{63.9}
+\]
+
+则
+
+\[
+\mathrm{RH}
+\quad\Longleftrightarrow\quad
+\Phi(\mathcal Z)\subseteq\operatorname{Fix}(\tau).
+\tag{63.10}
+\]
+
+证明：由 (63.7)，RH 等价于所有右端项为零；由 (63.2)，\(\eta=0\) 等价于 \(p_2=p_5\)，即属于 \(\operatorname{Fix}(\tau)\)。证毕。
+
+这个定理本身是可形式化的。真正未解决的问题是从已有的 FIB、prime local field 或 Weil 二次型自然构造 \(\Phi\)，不能事先任意指定它。
+
+### 63.5 四阶矩是同一个场的另一种读出
+
+令
+
+\[
+M_4(T)
+=
+\frac1T\int_0^T
+|\zeta(1/2+it)|^4\,dt.
+\]
+
+Ingham 的经典结果给出
+
+\[
+M_4(T)
+=
+\frac{1}{2\pi^2}(\log T)^4
++
+O((\log T)^3).
+\tag{63.11}
+\]
+
+对固定 \(\sigma>1/2\)，长平均满足
+
+\[
+\lim_{T\to\infty}
+\frac1T\int_0^T|\zeta(\sigma+it)|^4dt
+=
+\frac{\zeta(2\sigma)^4}{\zeta(4\sigma)}.
+\tag{63.12}
+\]
+
+这里的四来自四腿乘法约束 \(mk=n\ell\)，本质是一个四阶相关或乘法能量。它与 (63.4) 共享随机场
+
+\[
+X(t)=\log|\zeta(1/2+it)|,
+\]
+
+但读出不同：
+
+\[
+\mathcal D_{\rm RH}
+=
+\mathbb E_{\mu_C}[X],
+\qquad
+M_4(T)
+=
+\mathbb E_{\lambda_T}[e^{4X}],
+\]
+
+其中 \(\lambda_T\) 是区间上的均匀概率测度。前者是 RH 等价的零缺陷泛函，后者是四阶统计量，不能单独推出 RH。
+
+### 63.6 完成 zeta 的概率特征函数接口
+
+Nakamura 定义
+
+\[
+\Xi_\sigma(t)
+=
+\frac{\xi(\sigma-it)}{\xi(\sigma)}.
+\]
+
+他证明 \(\Xi_\sigma\) 对任意实 \(\sigma\) 都是某个概率分布的特征函数，并证明 RH 等价于对所有 \(1/2<\sigma<1\)，这些特征函数具有其定义的 pretended-infinitely-divisible 结构。参见 [arXiv:1504.03438](https://arxiv.org/abs/1504.03438)。
+
+这给出了比“观察到概率相似”更强的目标：
+
+\[
+\text{FIB 场}
+\longrightarrow
+\text{正定特征函数}
+\longrightarrow
+\text{无限可分性}
+\longrightarrow
+\mathrm{RH}.
+\]
+
+当前理论卷已经有有限 Fisher 场、正定二次型、粗粒化和局部素数场。下一步应尝试定义有限截断的 characteristic-function field，并证明其 Toeplitz moment matrix 半正定。然后才研究截断到全局 \(\Xi_\sigma\) 的极限。
+
+### 63.7 与 Hilbert–Pólya 的 Cayley 连接
+
+如果 \(D=D^*\) 是候选自伴算子，定义
+
+\[
+U=(D-iI)(D+iI)^{-1}.
+\]
+
+则 \(U\) 是 unitary。若 \(D\phi_\gamma=\gamma\phi_\gamma\)，则
+
+\[
+U\phi_\gamma
+=
+\frac{\gamma-i}{\gamma+i}\phi_\gamma.
+\]
+
+当 \(\rho=\frac12+i\gamma/2\) 时，
+
+\[
+z_\rho=1-\frac1\rho
+=
+\frac{2\gamma+i}{2\gamma-i},
+\]
+
+它与上述 Cayley 谱互为倒数，仍位于单位圆。于是 RH 的“零点在临界线”可以被转译成“Cayley 谱位于单位圆”，而 Li/Weil 正性可以转译成 unitary 谱的 Toeplitz/Gram 正性。
+
+这仍然需要一个全局 \(D\)、正则化迹和完成 zeta 行列式。四维 Fisher 切空间只提供有限场的载体，不能自动产生这个 \(D\)。
+
+### 63.8 外部研究锚点与本项目接口
+
+本节的外部锚点是：
+
+- Bui、Lester、Milinovich，Balazard–Saias–Yor 等价式；
+- Nakamura，完整 Riemann zeta 概率分布与 RH；
+- Connes 2026 年 RH 综述，其中把 Weil 二次型、信息论和从有限 Euler 乘积到零点极限的收敛问题放在同一框架中，参见 [arXiv:2602.04022](https://arxiv.org/abs/2602.04022)；
+- 四阶矩的谱展开与 Motohashi 型 reciprocity，用来说明四阶读出具有真实谱结构，但其本身不是 RH 等价式。
+
+本节不把任何外部工作转写成 Auric FIB 内部定理。当前真正的 bridge obligation 是：
+
+\[
+\text{FIB probability field}
+\longrightarrow
+\text{Weil/Poisson positive form}
+\longrightarrow
+\Xi_\sigma\text{ characteristic-function family}
+\longrightarrow
+\text{regularized global spectrum}.
+\]
+
