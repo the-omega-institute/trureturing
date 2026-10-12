@@ -1,3 +1,4 @@
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.LowerRateLimit
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
 import Reg.Support.SingleDependentReadout
@@ -944,3 +945,213 @@ def actual_fixed_shift_rate_registration :
 #print axioms actual_fixed_shift_rate_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal36
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ResetBudgetReadout
+noncomputable section
+
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150
+  (observationSignature actual)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+  (budgetLower)
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
+
+/-- A whole-family intervention in the one selected lexical budget occurrence. -/
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => budgetLower) (fun e => nomatch e)
+
+/-- The selected threshold reaches H, above every possible reset floor.
+The original budget premises are kept separately in each complete law. -/
+theorem reset_floor_rejected (R : Return) :
+    ¬ max (max (xSide .high) (ySide .high))
+        ((lam - budgetLower) / g ^ 2 / chi ^ 2) <
+      hSide .high - rho ^ R.m * (hSide .high - chi * aSide .high) := by
+  have gp : 0 < g := tail_arithmetic.2.2.2.1
+  have cp : 0 < chi := pow_pos gp 20
+  have rp : 0 < rho := pow_pos gp 6
+  have cancel : (lam - budgetLower) / g ^ 2 / chi ^ 2 = hSide .high := by
+    dsimp [budgetLower]
+    field_simp [ne_of_gt gp, ne_of_gt cp]
+    <;> ring
+  have geometry := actual_complete_boundary_geometry .original []
+  have lower := (geometry.1 .high 0).1
+  have upper := (geometry.2.2.1 .high 0 1 R.m).2.1
+  simp only [List.take_nil, execute, initial, pow_one] at lower upper
+  have compare := mul_le_mul_of_nonneg_left
+    (mul_le_mul_of_nonneg_left lower.le cp.le) (pow_pos rp R.m).le
+  have floor_upper : hSide .high - rho ^ R.m * (hSide .high - chi * aSide .high) <
+      hSide .high := by nlinarith only [compare, upper]
+  have ceiling := le_max_right (max (xSide .high) (ySide .high))
+    ((lam - budgetLower) / g ^ 2 / chi ^ 2)
+  rw [cancel] at ceiling ⊢
+  exact not_lt_of_ge (floor_upper.le.trans ceiling)
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ResetBudgetReadout
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal32
+noncomputable section
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150
+  (observationSignature actual)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ResetBudgetReadout
+  (rejected reset_floor_rejected)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+  (budget budget_interval)
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Completion
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
+
+/-- The complete original law observes only b in the mandatory reset threshold. -/
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K))),
+    ∃ R : Return, R.r = 1 ∧
+      max (max (xSide .high) (ySide .high)) ((lam - r.readout () () b) / g ^ 2 / chi ^ K) <
+        hSide .high - rho ^ R.m * (hSide .high - chi * aSide .high) ∧
+      (∀ (src dst : Model) (xs : List Return),
+        GuardTrace K ((lam - b) / g ^ 2 / chi ^ K) false .high xs (initial .high src) →
+        ActualPairSupply dst o b .strict (R :: xs)) ∧
+      (∀ (model : Model) (w : List CuLetter),
+        AuxiliaryFactor K ((lam - b) / g ^ 2 / chi ^ K) w → CuLetter.c ∈ w →
+        ∃ (a : ℕ) (first : Return) (rest : List Return),
+          (if w.getLast? = some CuLetter.c then w ++ [CuLetter.u] else w) =
+            List.replicate a CuLetter.u ++ executionWord (first :: rest) ∧
+          ActualPairSupply model o b .strict (completedList R a first rest) ∧
+          listWeight (completedList R a first rest) = wordWeight w + (20 + 6 * R.m) +
+            (if w.getLast? = some CuLetter.c then 12 else 6))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨R, _, floor, _⟩ :=
+    h (fun _ => false) budget 2 le_rfl budget_interval.1 budget_interval.2
+  exact reset_floor_rejected R floor
+
+def evidence : Registration sourceArena (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.same_reset_completion) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.same_reset_completion, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence
+
+def same_reset_completion_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.same_reset_completion)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal32.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal32.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms same_reset_completion_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal32
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal34
+noncomputable section
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150
+  (observationSignature actual)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ResetBudgetReadout
+  (rejected reset_floor_rejected)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+  (budget budget_interval)
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Completion
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
+
+/-- The complete original law observes only b in the mandatory reset threshold. -/
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K))),
+    ∃ R : Return, R.r = 1 ∧
+      max (max (xSide .high) (ySide .high)) ((lam - r.readout () () b) / g ^ 2 / chi ^ K) <
+        hSide .high - rho ^ R.m * (hSide .high - chi * aSide .high) ∧
+      (∀ (src dst : Model) (N : ℕ),
+        actualCount src K ((lam - b) / g ^ 2 / chi ^ K) false N ≤
+          actualCount dst K ((lam - b) / g ^ 2 / chi ^ K) true (N + (20 + 6 * R.m))) ∧
+      (∀ (model : Model) (N : ℕ),
+        factorCount (AuxiliaryLanguage K ((lam - b) / g ^ 2 / chi ^ K)) N ≤
+          actualCount model K ((lam - b) / g ^ 2 / chi ^ K) true (N + (20 + 6 * R.m) + 6) +
+          actualCount model K ((lam - b) / g ^ 2 / chi ^ K) true (N + (20 + 6 * R.m) + 12) + 1)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨R, _, floor, _⟩ :=
+    h (fun _ => false) budget 2 le_rfl budget_interval.1 budget_interval.2
+  exact reset_floor_rejected R floor
+
+def evidence : Registration sourceArena (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.same_reset_count_comparison) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.same_reset_count_comparison, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence
+
+def same_reset_count_comparison_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.same_reset_count_comparison)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal34.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal34.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms same_reset_count_comparison_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ExactOriginal34
