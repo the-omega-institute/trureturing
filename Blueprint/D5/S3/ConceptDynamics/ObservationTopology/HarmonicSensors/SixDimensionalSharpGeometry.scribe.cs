@@ -73,10 +73,22 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                         + "1+epsilon(q-1)<=1+2epsilon give P<=9+20epsilon. Thus every physical "
                         + "chord gain is at most one. Differentiating each cosine-sine pair gives "
                         + "squared speed sum_i a_i^2 k_i^2=(4epsilon+9+16epsilon)/Z=1 "
-                        + "at every phase. The physical circle also has unit speed. The quotient "
-                        + "of their short-chord lengths tends to one, proving that the supremum "
-                        + "upperGain equals one. This derivative and supremum calculation is an "
-                        + "application of the coordinate derivative and one-sided slope-limit laws."))),
+                        + "at every phase. This derivative normalization requires only epsilon>0, "
+                        + "so it holds on the entire positive parameter range. The global upper "
+                        + "chord bound here uses epsilon<=1/2. The physical circle also has unit "
+                        + "speed. The quotient "
+                        + "of their short-chord lengths tends to one as d tends to zero from above. "
+                        + "More explicitly, coordinate differentiation followed by the linear toLp "
+                        + "map gives the derivative in the six-dimensional Euclidean space; "
+                        + "sin^2+cos^2=1 reduces its norm square to the displayed budget at every phi. "
+                        + "The one-sided slope-limit law at phase zero applies separately to sensor "
+                        + "and circleState, and the denominator limit is one, so "
+                        + "chordGain(epsilon,d,0) tends to one. These short physical states are "
+                        + "eventually distinct. The gainValues set is nonempty and bounded above "
+                        + "by one, while each short-chord gain lies below its supremum. Passing to "
+                        + "the limit gives one<=upperGain; the uniform bound gives upperGain<=1. "
+                        + "Thus for every 0<epsilon<=1/2, every phase has unit derivative norm "
+                        + "and the actual sSup of all physical chord gains equals one."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sixdimensionalsharpgeometry-rank-defect-lower-gain-limit"),
