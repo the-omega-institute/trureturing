@@ -64,6 +64,15 @@ theorem normal_displacement_eq_arsinh (rho : ℂ) :
     WithLp.prod_dist_eq_of_L2]
   exact Real.sqrt_sq_eq_abs _
 
+/-- Zero hyperbolic displacement is exactly zero imaginary central coordinate. -/
+theorem normal_displacement_eq_zero_iff_central_coord_im_zero (rho : ℂ) :
+    normalDisplacement rho = 0 ↔ (centralCoord rho).im = 0 := by
+  calc
+    normalDisplacement rho = 0 ↔ rho.re = criticalAbscissa :=
+      normal_displacement_eq_zero_iff rho
+    _ ↔ rho.re = (1 : ℝ) / 2 := by rfl
+    _ ↔ (centralCoord rho).im = 0 := critical_line_iff_central_coord_im_zero rho
+
 /-- A nontrivial zero lies on the critical line exactly when its normal
 translation has zero hyperbolic displacement. This is an interface theorem;
 it does not assert that all zeros have zero displacement. -/
@@ -84,6 +93,19 @@ theorem rh_iff_all_normal_displacements_zero :
   · intro h rho hzero
     exact (normal_displacement_eq_zero_iff rho).1 (h rho hzero)
 
+/-- RH is equivalent to vanishing central-coordinate imaginary parts of all zeros. -/
+theorem rh_iff_all_central_coord_im_zero :
+    RiemannHypothesis ↔
+      ∀ rho : ℂ, Zeta23.IsNontrivialZero rho → (centralCoord rho).im = 0 := by
+  constructor
+  · intro h rho hzero
+    exact (normal_displacement_eq_zero_iff_central_coord_im_zero rho).1
+      ((rh_iff_all_normal_displacements_zero.mp h) rho hzero)
+  · intro h
+    apply rh_iff_all_normal_displacements_zero.mpr
+    intro rho hzero
+    exact (normal_displacement_eq_zero_iff_central_coord_im_zero rho).2 (h rho hzero)
+
 /-- The same statement in fixed-point form for the horizontal isometry. -/
 theorem rh_iff_all_normal_translations_fix_basepoint :
     RiemannHypothesis ↔
@@ -100,7 +122,9 @@ theorem rh_iff_all_normal_translations_fix_basepoint :
 #print axioms normal_translation_fixed_iff
 #print axioms normal_displacement_eq_zero_iff
 #print axioms normal_displacement_eq_arsinh
+#print axioms normal_displacement_eq_zero_iff_central_coord_im_zero
 #print axioms rh_iff_all_normal_displacements_zero
+#print axioms rh_iff_all_central_coord_im_zero
 #print axioms rh_iff_all_normal_translations_fix_basepoint
 
 end D5.S3.Zeros.RiemannianCriticalLineInterface

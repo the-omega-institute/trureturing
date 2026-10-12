@@ -28,7 +28,31 @@ Lean statement: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement
 
 The displacement equals 2 arsinh(|Re(rho)-1/2|/2), giving a faithful nonnegative gauge of the off-line abscissa.
 
-**Theorem 1.3 (RH is equivalent to zero hyperbolic normal displacement of every actual zero).**
+**Theorem 1.3 (Zero displacement is equivalent to zero central-coordinate imaginary part).**
+
+Lean statement: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_zero_iff_central_coord_im_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_zero_iff_central_coord_im_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This bridges the hyperbolic metric interface to the existing critical-center coordinate, whose imaginary part is the signed off-line coordinate.
+
+**Theorem 1.4 (RH is equivalent to zero central-coordinate imaginary parts for every zero).**
+
+Lean statement: `D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_central_coord_im_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_central_coord_im_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Using the repository's actual nontrivial-zero predicate, this is the coordinate form of the existing RH-to-critical-line equivalence.
+
+**Theorem 1.5 (RH is equivalent to zero hyperbolic normal displacement of every actual zero).**
 
 Lean statement: `D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_normal_displacements_zero`
 
@@ -43,7 +67,9 @@ The equivalence quantifies over the repository's actual Zeta23.IsNontrivialZero 
 ## References
 
 - Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_arsinh`
+- Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_zero_iff_central_coord_im_zero`
 - Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_translation_fixed_iff`
+- Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_central_coord_im_zero`
 - Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_normal_displacements_zero`
 - Dependency: [D5/S3/Geometry/HyperbolicUpperHalfSpace](../Geometry/HyperbolicUpperHalfSpace.md)
 - Dependency: [D5/S3/Zeros/ActualZeroGeometry](ActualZeroGeometry.md)

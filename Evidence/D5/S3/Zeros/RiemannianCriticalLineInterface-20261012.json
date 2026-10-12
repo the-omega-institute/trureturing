@@ -2,32 +2,23 @@
   "schema": 1,
   "module": "D5.S3.Zeros.RiemannianCriticalLineInterface",
   "source": "D5/S3/Zeros/RiemannianCriticalLineInterface.lean",
-  "source_sha256": "sha256:d33e8637a6c2093dfc60825622007ad732f6dbf9e3a832254aabad2fabeca687",
+  "source_sha256": "sha256:3f507b952fb2553823d24892f7d0ccb13154709f4274027e7ab0bc3e96431fff",
   "scoped_report": ".lake/build/stratalint/scoped-lean-report.json",
-  "scoped_report_sha256": "sha256:2ca00710c148366412f2b2a15228204478a021fd5054a2218b35622350c07af9",
-  "checked_utc": "2026-10-12T13:41:30+08:00",
+  "scoped_report_sha256": "sha256:d8ac01da36f36f6a2a3041c39ab5196744731216b87f3124117ab861fc116268",
+  "checked_utc": "2026-10-12T05:52:23.394877+00:00",
   "commands": [
     {
-      "command": "make lean LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
+      "command": "UseAppHost=false SCRIBE_DOTNET=/usr/local/share/dotnet/dotnet make lean LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
       "exit": 0,
-      "note": "warm linked-worktree cache; omega-gate admitted build"
-    },
-    {
-      "command": "lake env lean D5/S3/Zeros/RiemannianCriticalLineInterface.lean",
-      "exit": 0
-    },
-    {
-      "command": "make lean-report-scoped LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
-      "exit": 0,
-      "note": "scoped report generated at .lake/build/stratalint/scoped-lean-report.json"
+      "note": "warm linked-worktree cache; exact displacement and critical-center bridge verified"
     },
     {
       "command": "UseAppHost=false SCRIBE_DOTNET=/usr/local/share/dotnet/dotnet make emit PATHS=/tmp/riemann-scribe-paths",
       "exit": 0,
-      "note": "canonical scoped Scribe emission; Markdown blueprint regenerated"
+      "note": "canonical scoped Lean report and Scribe emission; Markdown blueprint regenerated"
     }
   ],
-  "declarations": 19,
+  "declarations": 21,
   "axioms": [
     "Classical.choice",
     "Quot.sound",
