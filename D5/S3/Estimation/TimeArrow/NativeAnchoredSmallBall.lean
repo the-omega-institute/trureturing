@@ -273,7 +273,7 @@ private theorem native_event_ratio_le_one {M q s : ℕ} (S : Support M q) (r : �
 
 set_option maxHeartbeats 3000000 in
 /-- A single actual full-root anchor proves the registered three-term
-arithmetic estimate on every admissible central scale. All posterior,
+arithmetic estimate for every positive L and nonnegative tolerance. All posterior,
 variance, feedback, atom and tail inputs are derived on the same fiber. -/
 theorem native_anchored_posterior_small_ball :
     ∃ Cpost V0 : ℝ, 0 < Cpost ∧ 0 < V0 ∧
