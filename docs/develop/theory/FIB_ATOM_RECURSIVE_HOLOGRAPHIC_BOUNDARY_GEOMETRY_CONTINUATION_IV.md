@@ -2185,3 +2185,598 @@ obstruction is therefore a joint source–parameter boundary, not a failure of
 the finite-dimensional spectral algebra.
 
 ## 107.99 追加锚（本行以下为增补区）
+
+## 108. An all-source occupation clock for literal rho renewal
+
+**Definition 108.1 (the closed successor and its old-set clock).**
+Retain the free finite ordered sources, actual occurrence addresses and
+closed unit-edge counting Laplacians of Definitions 92.1–92.2. For every
+original $`t\in\mathcal T`$ and $`n\ge0`$, write
+
+```math
+s(t,n)=\rho^nt,\quad V(t,n)=V_{s(t,n)},\quad
+N(t,n)=|V(t,n)|,\quad L(t,n)=L_{s(t,n)},\quad
+r(t,n)=\frac{N(t,n+1)}{N(t,n)}.
+\tag{108.1}
+```
+
+The old vertices keep their addresses. Exactly two new degree-one children
+are attached to each actual old beta leaf; no other vertex or edge is born.
+Let $`X_b`$ be the continuous-time comparison chain on $`V(t,n+1)`$ with
+generator $`-L(t,n+1)`$, initially at any old vertex $`x\in V(t,n)`$. Its
+rates are one on existing edges, rather than a degree-normalized walk.
+Define old-set occupation time and its right-continuous inverse by
+
+```math
+B(b)=\int_0^b\mathbf1_{V(t,n)}(X_v)\,dv,\qquad
+A(t,n)(a)=\inf\{b\ge0:B(b)>a\},\qquad
+Y_a=X_{A(t,n)(a)}.
+\tag{108.2}
+```
+
+The infimum equals $`\sup\{b:B(b)\le a\}`$. Finite recurrence gives
+$`B(b)\to\infty`$ almost surely, so this inverse is finite at every finite
+$`a`$. At a plateau value it selects the return endpoint of the entire
+new-child excursion. At zero it equals zero almost surely because the
+initial old holding time is strictly positive. The trace $`Y`$ has generator
+$`-L(t,n)`$; the singleton trace is the constant chain. All these laws are
+conditional mathematical comparisons on the specified finite sources.
+The variable $`a`$ is old-set trace time, and $`b`$ is successor comparison
+time. Neither is a duration assigned to a native substitution.
+
+**Theorem 108.2 (uniform source-size clock fidelity and the uniform golden ratio).**
+Put $`\varphi=(1+\sqrt5)/2`$, $`c=\varphi^{-1}`$ and
+$`D_n=2F_{n+1}-1`$. Then
+
+```math
+\sup_{t\in\mathcal T}|r(t,n)-\varphi|
+\le e_n:=\frac{c+2c^{n+1}}{D_n}\longrightarrow0.
+\tag{108.3}
+```
+
+For every finite $`S\ge0`$ and every $`\varepsilon>0`$,
+
+```math
+\lim_{n\to\infty}\sup_{t\in\mathcal T}\sup_{x\in V(t,n)}
+\mathbb P_x\!\left\{
+\sup_{0\le u\le S}\left|
+\frac{A(t,n)(N(t,n)u)}{N(t,n)}-r(t,n)u
+\right|>\varepsilon\right\}=0.
+\tag{108.4}
+```
+
+The same conclusion holds for every initial probability on the old set,
+including probabilities depending on $`t,n`$. More explicitly, for $`n\ge2`$
+and $`\eta>0`$, set
+
+```math
+d_n(S)=\frac{c+4(n+1)}{D_n}+2Sc^{n+1}+Se_n,
+\qquad m_n=\lfloor n/2\rfloor.
+\tag{108.5}
+```
+
+The probability in (108.4), with threshold $`d_n(S)+2\eta`$, is at most
+
+```math
+\frac{128S}{\eta^2D_n}
++\frac{c}{\eta}\left(\frac1{D_n}+S2^{-m_n}\right).
+\tag{108.6}
+```
+
+Replacing the inverse in (108.2) by $`\inf\{b:B(b)\ge a\}`$, with value
+zero at zero, preserves (108.4). The two conventions differ only by
+complete excursion lengths at their corresponding plateau values.
+
+**Proof.**
+The literal birth identity is the same source identity used in
+[Continuation I, §58.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+Its grounded Hamiltonian and missing-child diagonals are not used here.
+In the present closed operator, if $`\mathcal B`$ is the old beta-leaf set,
+$`H_{\mathcal B}`$ its coordinate projection and $`C`$ has one column
+$`\delta_p`$ for each of the two children born at each $`p\in\mathcal B`$,
+the actual old/new blocks are
+
+```math
+L(t,n+1)=
+\begin{pmatrix}L(t,n)+2H_{\mathcal B}&-C\\-C^*&I\end{pmatrix},
+\qquad CC^*=2H_{\mathcal B}.
+\tag{108.7}
+```
+
+The zero-parameter Schur complement is exactly $`L(t,n)`$. Equivalently,
+every deleted excursion returns to its very own beta parent, so deletion
+adds no old-to-old transition. This is the standard reversible trace
+construction: Beltrán–Landim,
+[*Tunneling and Metastability of Continuous Time Markov Chains*,
+§6.1, Propositions 6.1 and 6.3](https://arxiv.org/abs/0910.4088).
+Their nonempty-support, irreducibility and recurrence hypotheses hold
+on each finite successor, with time-change weight $`\mathbf1_{V(t,n)}`$.
+The inverse convention is theirs. A singleton old set has no off-diagonal
+trace rate and is included directly. Counting measure on the successor
+restricts to counting measure on the trace. The use of conductance rates
+with counting mass is also precisely the fluid model in
+[Aldous–Fill, Chapter 3, §2, (3.16)](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch3.S2.html).
+
+In trace time, each beta parent has two excursion clocks of rate one.
+Their independent marks $`E_i`$ are the new-child holding times, each with
+law $`\operatorname{Exp}(1)`$, mean one and second moment two. Old-edge
+clocks and the excursion clocks can be constructed independently while
+the chain is at each old vertex. Consequently, with $`\theta_i`$ the
+excursion times on the trace clock,
+
+```math
+\begin{aligned}
+A(t,n)(a)&=a+\sum_{\theta_i\le a}E_i,\\ {}
+M^{\rm exc}_a
+&=\sum_{\theta_i\le a}E_i
+  -\int_0^a2\mathbf1_{\mathcal B}(Y_v)\,dv,\\ {}
+\langle M^{\rm exc}\rangle_a
+&=\int_0^a4\mathbf1_{\mathcal B}(Y_v)\,dv\le4a.
+\end{aligned}
+\tag{108.8}
+```
+
+The formula includes the entire terminal excursion when $`a`$ is a
+plateau value. It is a marked-clock representation of this exact
+successor chain, not an additional law imposed on a source action.
+
+It remains to control the beta occupation uniformly without assuming
+uniform mixing of arbitrary source skeletons. Let $`a_0,b_0`$ be the
+numbers of original alpha and beta leaves and $`\ell=a_0+b_0\ge1`$.
+The original skeleton has $`\ell-1`$ internal vertices. Each original alpha
+leaf carries its literal $`T_n`$ block after expansion, and each original
+beta leaf its literal $`T_{n+1}`$ block. The source recurrence of
+Definition 92.2 therefore gives
+
+```math
+\begin{aligned}
+N:=N(t,n)&=2(a_0F_{n+1}+b_0F_{n+2})-1\ge D_n\ell,\\ {}
+|\mathcal B|&=a_0F_n+b_0F_{n+1}.
+\end{aligned}
+\tag{108.9}
+```
+
+These formulas include $`n=0`$ and both singleton labels. On $`T_k`$, set
+$`f_k=2\mathbf1_{\{\text{beta leaf}\}}-c`$. Its total charge is
+
+```math
+q_k:=\sum_{T_k}f_k
+=2F_k-c(2F_{k+1}-1)
+=c-2c(-c)^k=:c+\delta_k,
+\qquad |q_k|\le2,\quad |\delta_k|=2c^{k+1}.
+\tag{108.10}
+```
+
+The last equality is the exact Fibonacci identity
+$`F_k-cF_{k+1}=-c(-c)^k`$, obtained from (92.12).
+Summing $`f=2\mathbf1_{\mathcal B}-c`$ on the whole old source, including
+its internal original skeleton, yields
+
+```math
+\sum_{V(t,n)}f=c+a_0\delta_n+b_0\delta_{n+1},\qquad
+r(t,n)-\varphi=\frac{c+a_0\delta_n+b_0\delta_{n+1}}N.
+\tag{108.11}
+```
+
+Equations (108.9)–(108.11) prove (108.3) for the whole source domain,
+not only for the orbit $`T_n`$.
+
+Construct a corrector $`h`$ on this same old tree. At each original
+skeleton vertex $`p`$, including its original leaves, set $`h(p)=c|p|`$.
+Within a block rooted at an original leaf, set its root value by this
+rule and give each downward edge increment the total $`f`$-charge of
+its actual below-edge subtree. That subtree is some $`T_k`$, so the
+increment is exactly $`q_k`$ from (108.10). The elementary tree Poisson
+flux calculation already used in (92.9) then gives, on a block rooted
+at $`p`$, $`L_{\rm block}h=f-q_k\delta_p`$.
+An original nonroot block root receives the additional parent-edge
+contribution $`c`$; an original internal nonroot skeleton vertex has
+$`Lh=-c=f`$; the original root, when internal, has $`Lh=-2c=f-c`$.
+For a singleton original skeleton the block root has no parent edge.
+Thus all cases give the single identity
+
+```math
+f=L(t,n)h+c\delta_r+e,\qquad
+e=\sum_{p\text{ original alpha leaf}}\delta_n\delta_p
+  +\sum_{p\text{ original beta leaf}}\delta_{n+1}\delta_p,
+\quad \|e\|_\infty\le2c^{n+1}.
+\tag{108.12}
+```
+
+Every edge increment of $`h`$ has modulus at most two. Every block has
+height at most $`n+1`$, while the maximum original depth is at most
+$`\ell-1`$. Therefore
+
+```math
+\frac{\operatorname{osc}h}{N}
+\le\frac{c(\ell-1)+4(n+1)}N
+\le\frac{c+4(n+1)}{D_n},\qquad
+\sum_{y\sim x}|h(y)-h(x)|^2\le12.
+\tag{108.13}
+```
+
+Large or highly unbalanced original skeletons are retained in these
+bounds. Their depth is divided by their actual expanded size, rather
+than bounded by the orbit depth.
+
+For the trace generator $`Q=-L(t,n)`$, the finite-chain Dynkin martingale is
+
+```math
+M^h_a=h(Y_a)-h(x)+\int_0^a L(t,n)h(Y_v)\,dv,
+\qquad \langle M^h\rangle_a\le12a.
+\tag{108.14}
+```
+
+The bracket follows by summing rate times squared jump increment.
+The usual $`L^2`$ maximal inequality gives
+$`\mathbb E_x\sup_{v\le a}|M^h_v|^2\le48a`$ and, from (108.8),
+$`\mathbb E_x\sup_{v\le a}|M^{\rm exc}_v|^2\le16a`$.
+For reference, the discrete-time inequality is Durrett,
+[*Probability: Theory and Examples*, fifth edition, Theorem 4.4.4](https://sites.math.duke.edu/~rtd/PTE/PTE5_011119.pdf).
+Apply it on successively finer deterministic time grids to these
+square-integrable càdlàg martingales and use monotone convergence to
+obtain the stated continuous-time bounds. No stationary initial law
+is needed.
+
+The root term in (108.12) also admits a source-uniform bound.
+The minimum leaf depth of $`T_k`$ is $`\lfloor k/2\rfloor`$, directly by
+the literal recursion. Every old source therefore contains the entire
+binary tree through depth $`m=m_n`$. Put
+$`b_m(p)=2^{-\min(|p|,m)}`$. At the actual root, internal vertices and
+depth-$`m`$ vertices, respectively, direct application of the closed
+Laplacian gives
+
+```math
+L(t,n)b_m=\delta_r-2^{-m}\mathbf1_{\{|p|=m\}}.
+\tag{108.15}
+```
+
+Below depth $`m`$ it is zero. Since $`0\le b_m\le1`$, Dynkin's identity,
+from every starting vertex, implies
+
+```math
+\mathbb E_x\int_0^{NS}\mathbf1_{\{r\}}(Y_v)\,dv
+\le1+NS2^{-m}.
+\tag{108.16}
+```
+
+Combine (108.8), (108.12) and (108.14), and use $`\varphi=1+c`$:
+
+```math
+\begin{aligned}
+\sup_{0\le a\le NS}\frac{|A(t,n)(a)-\varphi a|}{N}
+\le {}&\frac{\operatorname{osc}h}{N}+2Sc^{n+1}
+ +\frac{\sup_{a\le NS}|M^h_a+M^{\rm exc}_a|}{N}\\ {}
+&+\frac cN\int_0^{NS}\mathbf1_{\{r\}}(Y_v)\,dv.
+\end{aligned}
+\tag{108.17}
+```
+
+The two separate maximal bounds and $`|u+v|^2\le2|u|^2+2|v|^2`$
+give expectation at most $`128NS`$ for the squared martingale supremum.
+Chebyshev's inequality, (108.16), Markov's inequality and $`N\ge D_n`$
+give (108.6), after adding $`S|r(t,n)-\varphi|\le Se_n`$.
+Every displayed bound is independent of $`t,x`$. For $`S>0`$, choose
+$`\eta=\varepsilon/3`$ and then $`n`$ with $`d_n(S)\le\varepsilon/3`$;
+the right side of (108.6) tends to zero. For $`S=0`$ the claim is immediate.
+Mixtures over starting vertices preserve the same bounds.
+
+Finally, the two inverse conventions differ by at most the largest
+excursion mark with $`\theta_i\le NS`$. The compensator in (108.8) is
+continuous, so each mark is a jump of $`M^{\rm exc}`$ and is at most
+$`2\sup_{a\le NS}|M^{\rm exc}_a|`$. Its size divided by $`N`$ tends to zero
+uniformly in probability by the same maximal bound. This proves the
+endpoint assertion. $`\square`$
+
+## 109. A persistent centered defect for actual ancestry transport
+
+**Definition 109.1 (ancestry in the original counting spaces).**
+On the orbit $`T_n=\rho^n\alpha`$ only, let $`\pi_n:V_{T_{n+1}}\to V_{T_n}`$
+fix every old vertex and send each new child to its actual old beta
+parent. In this section $`J_n`$ denotes its ancestry pullback,
+$`(J_nf)(y)=f(\pi_n(y))`$, rather than the path-summation map in §103.
+Keep the same counting spaces $`\mathcal V_n`$, closed $`L_n`$ and centered
+projections $`P_n=I-N_n^{-1}\mathbf1\mathbf1^*`$ as in Definition 103.1.
+Put
+
+```math
+\begin{aligned}
+\mathcal A_n&=\sqrt{\frac{N_n}{N_{n+1}}}\,P_{n+1}J_nP_n,\\ {}
+\Delta_n(s)&=\left\|
+e^{-N_{n+1}sL_{n+1}}\mathcal A_n
+-\mathcal A_ne^{-N_nsL_n}\right\|_{\mathcal V_n\to\mathcal V_{n+1}}
+\qquad(s>0).
+\end{aligned}
+\tag{109.1}
+```
+
+The notation $`\mathcal A_n`$ distinguishes this comparison map from the
+scalar $`A_n`$ of Definition 92.2 and the random inverse in §108.
+The constant mode is removed on both sides. The norms are the original
+counting norms; no leaf-only or degree-weighted space is substituted.
+An old beta fibre has size three and every other fibre size one, so
+$`J_n^*J_n=I+2H_{\mathcal B_n}`$ and
+$`\|\mathcal A_n\|\le\sqrt{3N_n/N_{n+1}}`$.
+
+**Theorem 109.2 (a fixed-positive-time full-state obstruction).**
+With $`c=\varphi^{-1}`$ and $`\kappa=c(2-c)`$, for every fixed $`s>0`$,
+
+```math
+\liminf_{n\to\infty}\Delta_n(s)
+\ge c\sqrt{\kappa}
+-\sqrt{s\sqrt5\,c(3-c)}.
+\tag{109.2}
+```
+
+In particular this is a strictly positive lower bound whenever
+
+```math
+0<s<\frac{c^2(2-c)}{\sqrt5(3-c)}.
+\tag{109.3}
+```
+
+It also proves the nominated, weaker bound
+
+```math
+\liminf_{n\to\infty}\Delta_n(s)
+\ge\varphi^{-3/2}
+-\sqrt{\frac{2s\sqrt5}{\varphi}}>0,
+\qquad 0<s<\frac1{2\sqrt5\varphi^2}.
+\tag{109.4}
+```
+
+At the $`n`$-independent time $`s=1/100`$, the exact bound in (109.2)
+is greater than $`0.389`$. Thus full-state ancestry transport fails at
+a strictly positive source-size-scaled comparison time, despite the
+all-source occupation-clock theorem.
+
+**Proof.**
+The witness will be centered before transport and detected by a centered
+unit successor test. It uses the actual beta mask, rather than a
+constant-mode mismatch. For $`n\ge3`$, the old left and right root
+subtrees are $`T_{n-1}`$ and $`T_{n-2}`$. Write their sizes as
+$`M_L=N_{n-1}`$ and $`M_R=N_{n-2}`$, and $`N=N_n=1+M_L+M_R`$.
+Define a real root contrast $`z_n`$ to be zero at the root and constant
+on these two entire subtrees, with values
+
+```math
+\alpha_n=\sqrt{\frac{NM_R}{M_L(N-1)}},\qquad
+\beta_n=-\sqrt{\frac{NM_L}{M_R(N-1)}}.
+\tag{109.5}
+```
+
+Then $`\sum z_n=0`$, $`\|z_n\|^2=N`$ and its two constants stay bounded.
+Define $`w_{n+1}`$ by the identical prescription on the successor's
+actual subtrees $`T_n,T_{n-1}`$, and put
+$`g_{n+1}=w_{n+1}/\sqrt{N_{n+1}}`$. This is a centered unit vector.
+Only the two root edges contribute to its energy; hence, with
+$`N'=N_{n+1}`$,
+
+```math
+N'\langle g_{n+1},L_{n+1}g_{n+1}\rangle
+=\alpha_{n+1}^2+\beta_{n+1}^2
+\longrightarrow\varphi+\varphi^{-1}=\sqrt5.
+\tag{109.6}
+```
+
+Here and below the values of $`w_{n+1}`$ on old vertices are its actual
+successor values. Every ancestry fibre stays in its own root subtree,
+and the root fibre is just the root for $`n\ge3`$.
+
+On the old vertices set
+
+```math
+f_n=2\mathbf1_{\mathcal B_n}-c,\qquad
+d_n=\|P_n(z_nf_n)\|,\qquad
+v_n=d_n^{-1}P_n(z_nf_n).
+\tag{109.7}
+```
+
+Products in this proof are pointwise. On each actual $`T_k`$ block the
+sum of $`f_n`$ is $`q_k=c+\delta_k`$ from (108.10). In particular,
+$`\sum z_nf_n=\alpha_nq_{n-1}+\beta_nq_{n-2}`$ is bounded independently
+of $`n`$. The fraction of beta leaves in either large subtree tends to
+$`c/2`$. The two possible values of $`f_n`$ are $`2-c`$ and $`-c`$, so
+
+```math
+\begin{aligned}
+\kappa&=\frac c2(2-c)^2+\left(1-\frac c2\right)c^2=c(2-c)>0,\\ {}
+\frac{d_n^2}{N}&\longrightarrow\kappa.
+\end{aligned}
+\tag{109.8}
+```
+
+The centering subtraction has squared norm
+$`N^{-1}(\sum z_nf_n)^2=O(N^{-1})`$ and does not affect this limit.
+Consequently $`d_n>0`$ for all sufficiently large $`n`$, and $`v_n`$ is a
+centered unit vector on the original counting space.
+
+Its old heat state vanishes at every fixed scaled positive time. To
+prove this rather than assume local equilibrium, on each of the two
+root subtrees take the block corrector from the proof of (108.12),
+with value zero at that subtree's root. Multiply it by its corresponding
+constant $`\alpha_n`$ or $`\beta_n`$, and extend by zero at the global root.
+Call the resulting vector $`H_n`$. The zero values at the two subtree
+roots make the exterior root seams contribute zero. The exact identity
+is therefore
+
+```math
+z_nf_n=L_nH_n+R_n,\qquad
+R_n=\alpha_nq_{n-1}\delta_L+\beta_nq_{n-2}\delta_R,
+\qquad \|R_n\|=O(1),\quad \|H_n\|=O(n\sqrt N).
+\tag{109.9}
+```
+
+The corrector bounds use $`|q_k|\le2`$ and block height at most $`n`$.
+Since $`P_nL_n=L_n`$ and positive spectral calculus gives
+$`\|e^{-tL_n}L_n\|\le1/(et)`$, for fixed $`s>0`$,
+
+```math
+\|e^{-NsL_n}v_n\|
+\le\frac{\|H_n\|}{eNs\,d_n}+\frac{\|R_n\|}{d_n}
+=O\!\left(\frac n{Ns}+\frac1{\sqrt N}\right)
+\longrightarrow0.
+\tag{109.10}
+```
+
+This uses the finite spectral calculus already supplied in §103; it
+requires no uniform gap over arbitrary sources.
+
+Now compute how the same state couples through authentic ancestry
+to the successor's low-energy root contrast. Write
+$`m_n=1+2\mathbf1_{\mathcal B_n}=\varphi+f_n`$ for its actual fibre
+multiplicity. Within either root subtree $`T_k`$, direct summation gives
+
+```math
+\begin{aligned}
+\sum_{T_k}m_nf_n&=\kappa N_k+(3-c)q_k,\\ {}
+\frac1{N_k}\sum_{T_k}m_nf_n^2
+&\longrightarrow\kappa(3-c).
+\end{aligned}
+\tag{109.11}
+```
+
+For the first identity use $`2|\mathcal B(T_k)|=cN_k+q_k`$.
+For the second, its two values and their actual limiting fractions give
+
+```math
+3\frac c2(2-c)^2+\left(1-\frac c2\right)c^2
+=\kappa+c(2-c)^2=\kappa(3-c).
+\tag{109.12}
+```
+
+The successor contrast is centered, so
+$`\sum_{V_{T_n}}m_nw_{n+1}=\sum_{V_{T_{n+1}}}w_{n+1}=0`$ exactly.
+Thus both centering projections disappear from the pairing, including
+the mean subtraction in (109.7), and
+
+```math
+\langle g_{n+1},\mathcal A_nv_n\rangle
+=\frac{\sqrt{N/N'}}{\sqrt{N'}d_n}
+ \sum_{V_{T_n}}w_{n+1}z_nm_nf_n
+\longrightarrow c\sqrt{\kappa}.
+\tag{109.13}
+```
+
+Indeed both pairs of root-contrast constants tend to the same limits:
+their left squared value tends to $`\varphi^{-1}`$ and their right
+squared value to $`\varphi`$. Therefore
+$`N^{-1}\sum w_{n+1}z_n\to1`$, and (109.11) makes the numerator sum
+$`\kappa N+o(N)`$. Equations (109.8), $`N'/N\to\varphi`$ and the displayed
+normalization yield (109.13), including its positive sign.
+
+The norm of this actual transported state has the limit
+
+```math
+\|\mathcal A_nv_n\|^2\longrightarrow c(3-c).
+\tag{109.14}
+```
+
+To verify all mass and projection terms, set
+$`b_n=N^{-1}\sum z_nf_n=O(N^{-1})`$, so
+$`v_n=(z_nf_n-b_n)/d_n`$. Then
+$`\|J_nv_n\|^2=d_n^{-2}\sum m_n(z_nf_n-b_n)^2\to3-c`$
+by (109.11)–(109.12), bounded multiplicities and
+$`\sum z_n^2=N`$. Moreover
+
+```math
+\sum J_nv_n
+=\frac{(3-c-r(T_0,n))\sum z_nf_n}{d_n}=O(N^{-1/2}).
+\tag{109.15}
+```
+
+Here (109.11) and $`\sum z_n=0`$ give
+$`\sum m_nz_nf_n=(3-c)\sum z_nf_n`$, while $`\sum m_n=N'`$.
+The successor projection subtracts squared norm
+$`N'^{-1}(\sum J_nv_n)^2`$, which tends to zero. Multiplication by
+$`N/N'\to c`$ proves (109.14). No counting mass has been discarded.
+
+For a positive self-adjoint finite $`L`$, the ordinary spectral inequality
+$`(1-e^{-u})^2\le u`$ for $`u\ge0`$ gives
+
+```math
+\|(e^{-tL}-I)g\|^2\le t\langle g,Lg\rangle.
+\tag{109.16}
+```
+
+Apply it to the centered unit $`g_{n+1}`$ and use self-adjointness of
+the successor heat operator. Evaluation of the operator difference
+on $`v_n`$ and pairing with $`g_{n+1}`$ yields
+
+```math
+\begin{aligned}
+\Delta_n(s)\ge{}&\langle g_{n+1},\mathcal A_nv_n\rangle
+-\sqrt{N's\langle g_{n+1},L_{n+1}g_{n+1}\rangle}
+  \|\mathcal A_nv_n\|\\ {}
+&-\sqrt{3N/N'}\,\|e^{-NsL_n}v_n\|.
+\end{aligned}
+\tag{109.17}
+```
+
+Taking the lower limit in (109.6), (109.10), (109.13) and (109.14)
+proves (109.2). Squaring its two positive terms gives (109.3).
+For (109.4), let $`s_0=c^2/(2\sqrt5)`$. Since $`0<c<1`$,
+
+```math
+\sqrt{2-c}>\sqrt{(3-c)/2}>1.
+\tag{109.18}
+```
+
+For $`0<s\le s_0`$, the excess of the bound in (109.2) over
+$`c^{3/2}-\sqrt{2s\sqrt5c}`$ is at least
+
+```math
+c^{3/2}\left(\sqrt{2-c}-\sqrt{(3-c)/2}\right)>0.
+\tag{109.19}
+```
+
+This proves the nominated constants, rather than replacing that
+conjecture by a derivative or a sequence of shrinking times.
+For the stated decimal lower bound at $`s=1/100`$, elementary squared
+rational comparisons give
+$`0.61803398<c<0.61803399`$ and $`2.23606797<\sqrt5<2.23606798`$.
+They imply $`c\sqrt{c(2-c)}>0.571`$ and
+$`\sqrt{\sqrt5c(3-c)/100}<0.182`$; hence the exact difference exceeds
+$`0.389`$. Its rounded value is $`0.3897393\ldots`$.
+
+The state $`v_n`$ has rapidly alternating beta-multiplicity charge
+within each entire root subtree. Old scaled heat erases it by
+(109.9)–(109.10), while ancestry's three-versus-one fibres give it
+the nonzero successor contrast (109.13). Successor heat cannot erase
+that contrast on these fixed positive windows, by (109.6) and (109.16).
+Both state and test have mean zero. This explains why the obstruction
+coexists with (108.4): an inverse occupation clock compares time along
+the old trace, whereas $`J_n`$ copies a function to every ancestry fibre.
+They are different state comparisons. The norm-convergent transport
+of §103 uses the gradient/polar maps $`U_n`$, and is consistent with
+this failure of the expressly different ancestry maps. $`\square`$
+
+**Assumption 109.3 (the separate operation-and-readout correspondence).**
+To interpret either comparison as native propagation, one would additionally
+need the same original source and actual accepted update, an available
+occurrence-state preparation, an allowed actuator with generator $`-L`$,
+the stated readouts and state-transfer map, and a verified conversion
+from actual supplied durations to the respective comparison times.
+An execution subject to a cap or refusal retains its original guard,
+history and absorbing Stop; it is not enlarged by the mathematical
+family $`\rho^nt`$. Source sizes in (108.1) and (109.1) are mathematical
+parameters, not acquired size or index advice. These additional
+correspondences are not premises proved by Theorems 108.2 and 109.2.
+
+The original-source and permission conditions remain those of
+[Continuation I, Definition 58.1 and §62](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md),
+Assumptions 97.1, 102.3 and 106.3, and
+[native leaf-depth/contact, Assumptions 1.2 and Definition 1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md).
+A joint stochastic interpretation must keep one common realization,
+as in [common-source positivity, Definition C-30.1](AURIC_FIB_ATOM_COMMON_SOURCE_POSITIVITY_AND_HISTORICAL_PREFIXES.md),
+[local-clock seam, Assumption 18 and Theorem 22](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md)
+and [pyramid correlation, Definition 21.10](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md).
+The marked-output acquisition laws of
+[Kbonacci acquisition, §§77–82](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md)
+retain their own target and consumer; by their Theorem 82.1 they do not
+recover the unchanged original target, and supply none of the occurrence
+actuators here. A physical clock, physical spatial realization or a claim
+of three spatial dimensions would require its own correspondence beyond
+these assumptions.
+
+## 109.99 追加锚（本行以下为增补区）
