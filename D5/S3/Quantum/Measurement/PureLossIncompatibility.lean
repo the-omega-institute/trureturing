@@ -12,6 +12,7 @@ import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 
 noncomputable section
 open scoped BigOperators InnerProductSpace ENNReal NNReal ComplexOrder MatrixOrder
+open Matrix
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.Attenuator
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
@@ -273,5 +274,77 @@ private theorem dualLoss_binary (τ : Loss) (M : Fin 2 → Op)
   refine ⟨fun b => dualLoss_pos τ (M b) (hM.1 b), ?_⟩
   change dualLoss τ (M 0) + dualLoss τ (M 1) = 1
   rw [← dualLoss_add, hM.2, dualLoss_one]
+
+
+private def compress (X : Op) : Matrix (Fin 2) (Fin 2) ℂ :=
+  fun i j => inner ℂ (e i.val) (X (e j.val))
+
+private def embed (v : Fin 2 → ℂ) : H := ∑ i, v i • e i.val
+
+private theorem compress_pos (X : Op) (hX : X.IsPositive) : (compress X).PosSemidef := by
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+  · rw [Matrix.IsHermitian]
+    ext i j
+    simp only [Matrix.conjTranspose_apply, compress]
+    change (starRingEnd ℂ) (inner ℂ (e j.val) (X (e i.val))) = _
+    rw [inner_conj_symm]
+    exact hX.isSymmetric (e i.val) (e j.val)
+  · intro v
+    have hq := hX.inner_nonneg_right (embed v)
+    rw [show star v ⬝ᵥ (compress X) *ᵥ v = inner ℂ (embed v) (X (embed v)) by
+      simp [dotProduct, Matrix.mulVec, compress, embed, Fin.sum_univ_two,
+        inner_smul_left, inner_smul_right]
+      ring]
+    exact hq
+
+private theorem compress_one : compress (1 : Op) = (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  ext i j
+  by_cases h : i = j
+  · subst j
+    simp [compress, e, lp.inner_single_left, lp.inner_single_right, Pi.single_apply,
+      Matrix.one_apply]
+  · have hv : (j : ℕ) ≠ i := by
+      intro hj
+      apply h
+      exact Fin.ext hj.symm
+    simp [compress, e, lp.inner_single_left, lp.inner_single_right, Pi.single_apply,
+      Matrix.one_apply, h, hv]
+
+private theorem compress_add (X Y : Op) : compress (X + Y) = compress X + compress Y := by
+  ext i j
+  simp [compress]
+
+private theorem compress_sum {ι : Type} [Fintype ι] (X : ι → Op) :
+    compress (∑ i, X i) = ∑ i, compress (X i) := by
+  ext i j
+  simp [compress, Matrix.sum_apply]
+
+private theorem compress_finset_sum {ι : Type} (s : Finset ι) (X : ι → Op) :
+    compress (s.sum X) = s.sum (fun i => compress (X i)) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty =>
+      ext i j
+      simp [compress]
+  | @insert a s ha ih =>
+      simp only [Finset.sum_insert ha, compress_add, ih]
+
+private theorem compressed_parent {m : ℕ} (F : Fin m → Fin 2 → Op)
+    (hF : HasParent F) :
+    ∃ G : (Fin m → Fin 2) → Matrix (Fin 2) (Fin 2) ℂ,
+      IsPOVM G ∧ ∀ j b,
+        (∑ a ∈ Finset.univ.filter (fun a : Fin m → Fin 2 => a j = b), G a) =
+          compress (F j b) := by
+  obtain ⟨G, hGpos, hGsum, hGmarg⟩ := hF
+  let GC : (Fin m → Fin 2) → Matrix (Fin 2) (Fin 2) ℂ := fun a => compress (G a)
+  refine ⟨GC, ?_, ?_⟩
+  · refine ⟨fun a => compress_pos (G a) (hGpos a), ?_⟩
+    rw [← compress_one, ← hGsum, compress_sum]
+  · intro j b
+    dsimp only [GC]
+    let s := Finset.univ.filter (fun a : Fin m → Fin 2 => a j = b)
+    change s.sum (fun a => compress (G a)) = compress (F j b)
+    rw [← compress_finset_sum s G]
+    exact congrArg compress (hGmarg j b)
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
