@@ -1,0 +1,46 @@
+**定理 32.9（全部等待的原始商与逐来源动作精确律）。** 对任意成功控制器，写 $t=\lfloor r/2\rfloor$，以 $\operatorname{wt}(t)$ 表示 $t$ 的二进一位数；令 $\mathcal P(t)$ 为到达包含 $2t,2t+1$ 的最后查询区间的节点路径，包含根和末节点。令
+
+$$
+E(t)=P-1-2t+P\operatorname{wt}(t),\qquad
+\tau(t)=\sum_{v\in\mathcal P(t)}t_v.
+$$
+
+两兄弟来源的共同字面末查询为 $N(t)=E(t)+P\tau(t)$，实际末原始比特及总动作数分别为
+
+$$
+\boxed{
+\begin{aligned}
+Y_b(r,N(t))&=\bigl(b+\operatorname{wt}(t)+\tau(t)+(r\bmod2)\bigr)\bmod2,\\
+A(r)&=E(t)+P\tau(t)+h_r+d+2.
+\end{aligned}
+}
+$$
+
+所以完整最坏动作期限为
+
+$$
+\boxed{D_{\mathrm{act}}=
+\max_{0\le r<P}\bigl(E(\lfloor r/2\rfloor)+P\tau(\lfloor r/2\rfloor)+h_r+d+2\bigr).}
+$$
+
+证明。令 $e_1,\ldots,e_d$ 为 $t$ 的高到低二进位；$d=0$ 时没有这些位。从根到末节点的最小等待和为
+
+$$
+\begin{aligned}
+\frac P2+\sum_{j=1}^d
+\left(\frac P{2^{j+1}}+e_j\left(P-\frac P{2^j}\right)\right)
+&=P-1+P\sum_{j=1}^de_j-\sum_{j=1}^de_j\frac P{2^j}\\
+&=P-1+P\operatorname{wt}(t)-2t.
+\end{aligned}
+$$
+
+每条节点等待额外加入 $Pt_v$，故末查询为 $E(t)+P\tau(t)$。$0\le P-1-2t<P$，所以其商为 $\operatorname{wt}(t)+\tau(t)$，余数为 $P-1-2t$。这正是原 `actual_final_time_normal_form` 和 `actual_raw_clock_quotient` 的逐节点细化；原 `acquiredPrefix` 仍在实际预末历史上得到 $t$。代入原传感器等式得到所述原始末比特。末查询后另有 $h_r$ 次 Advance，总 Read 数为 $d+1$，最后 Stop 为一次，因此 $A(r)=N(t)+h_r+(d+1)+1$。取有限最大值得到期限式。∎
+
+此处 $P$ 是来源分割的相位周期，而字面传感器的周期是 $2P$：
+
+$$
+Y_b(r,N+P)=1-Y_b(r,N),\qquad Y_b(r,N+2P)=Y_b(r,N).
+$$
+
+增加一个 $P$ 保留中点分割，但交换字面响应。固定单个控制器可把真实 $\nu_v$ 编入其表行；跨全部策略共用且看不到时钟的标签 receiver 必须遵守原 `actualParitySupport` 和 `actualLabelSupport` 的联合支持，不能把延迟奇偶 $\tau\bmod2$ 当作真实商奇偶。原截止参数 $D$ 约束的是 $N$；本节 $D_{\mathrm{act}}$ 还计 Read、报告前进和 Stop，两者不等同。
+
