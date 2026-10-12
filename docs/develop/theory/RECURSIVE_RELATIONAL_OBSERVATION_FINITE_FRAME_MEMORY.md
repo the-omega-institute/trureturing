@@ -1121,3 +1121,202 @@ same carrier's measure, operator, Green estimates and clock. No native or
 physical three-dimensional conclusion follows from \(M_*\) alone.
 
 ## 9.99 追加锚（本行以下为增补区）
+
+## 10. Presence-only consumption of the unchanged full-image theorem
+
+### 10.1 The exact optimum survives a presence restriction
+
+Fix an admitted input $I=(P,R,H_0,H_{\rm rel},Q,N)$ satisfying all premises of
+Definitions 1.1--1.3, Theorem 5.4 and the paid complete-field/access-factor contract.
+Assume the authentic current epoch is $N=2k\ge2$, the attained full-row image
+$A=f(D)$ is finite and nonempty, and let $H_A$ be its existing minimizing depth and
+$M_*=m_{H_A}$. Let $M_{\rm pres}(D,Q)$ be the least additional complete-field
+alphabet among the same legal services when every post-cut current read is retained only
+through its presence bit.
+
+**Theorem 10.1 (presence-only equality for the full-image field).** Under exactly those
+existing hypotheses,
+
+$$
+\boxed{M_{\rm pres}(D,Q)=M(D,Q)=M_*.}
+\tag{FFM.36}
+$$
+
+The equality also holds for the existing adaptive serial-forward service class. There is a
+presence-only consumer with
+
+$$
+\boxed{
+q\le2(2^{H_A+1}-1),\qquad
+\max |p|\le H_A+k+1,\qquad a=0,
+}
+\tag{FFM.37}
+$$
+
+where $q$ counts every submitted occurrence, including repeated and absent replies, the
+word bound is the maximum literal address length, and $a$ is the number of post-entry
+forward updates.
+
+**Proof.** Use the existing ABT Proposition 12.4 and its decoder (ABT.36)--(ABT.37) as a
+supplier. For every original address $p$ with $|p|\le H_A$, query the two current
+addresses $pR^{k-1}LL$ and $pR^{k-1}RL$, and issue child queries only after the decoded
+ancestor is a branch. The decoded inclusive table is $p_{H_A}(u)$; the attained list of
+full rows and the existing rank encoder $E^*$ then return $f(u)$. There are at most
+$2^{H_A+1}-1$ original addresses in the complete binary prefix, so (FFM.37) follows,
+including $a=0$ and the address length $H_A+k+1$. Every call is a paid current-register
+call; no original-read, equality, selector, reset, reroot, clone or clock port is added.
+
+This gives $M_{\rm pres}\le M_*$. The reverse inequality is exactly the lower-bound half
+of the existing whole-image theorem (Theorem 5.4, supplied by [SJM, Theorem 2.2]) applied
+to the smaller presence-only policy class: every such policy is a legal four-reply policy,
+so its complete field cannot use fewer values than $M(D,Q)=M_*$. No new lower-bound
+repackaging is being asserted here. The same inclusion of policy classes proves the serial
+statement. The bound is uniform for this fixed finite-image input; original acquisition,
+field installation, working control, archives, local computation, retention and physical
+time remain separate charges. $\square$
+
+The decoder is sourcewise finite even when the admitted source domain has unbounded tree
+size. Thus the displayed $q$ is a fixed task-depth bound, not a claim of uniformly bounded
+source traversal or total memory. The operation $a=0$ concerns only post-entry updates and
+does not erase any preparation or complete-state cost.
+
+## 11. An incidence refinement of the complete six-hole fiber
+
+### 11.1 The additional native relation
+
+Return to the exact Definition 6.1 input and its entire source fiber (FFM.24), authentic
+$N=2$, and complete target row $f(u)=R_Q(u)$. Let
+$\operatorname{coordinates}(u)$ be the existing ordered ancestor-area interval list,
+indexed from 1, with one coordinate for each consecutive pair of leaves. Define
+
+$$
+ b(u)=1\quad\Longleftrightarrow\quad
+ \operatorname{coordinates}(u)_2=1.
+\tag{FFM.38}
+$$
+
+For this six-hole skeleton, leaf occurrence 1 is the fixed $a$, and occurrences 2 and 3
+are the first two leaves inside the old coordinate $x=u|_{RL}$. The existing ancestor-area
+interval theorem therefore gives the equivalent incidence definition
+
+$$
+ b(u)=1\quad\Longleftrightarrow\quad
+ \operatorname{CompleteSubtree}(u,2,3),
+\tag{FFM.39}
+$$
+
+namely, the two original leaf occurrences 2 and 3 are exactly a complete two-leaf subtree.
+This is an ordered support-incidence predicate derived from the source; it is not a metric,
+Euclidean placement, free geometry read or dimension assumption. Put
+$f_{\rm joint}(u)=(f(u),b(u))$, and let $M_{\rm joint}$ be the least complete-field
+alphabet for this joint target under the same static and arbitrary adaptive serial-forward
+paid-field premises as Definition 5.3, including one common uniformly finite post-cut read
+bound for the consumer.
+
+**Theorem 11.1 (exact eight-label joint image and field threshold).** On the entire unchanged
+FFM §6 source fiber, the row-only theorem has $M_*=4$ on this same fiber,
+
+$$
+\boxed{f_{\rm joint}(D)=A\times\{0,1\},\qquad
+M_{\rm joint}=8.}
+\tag{FFM.40}
+$$
+
+The minimum is the same for static and serial-forward consumers. For every $h\ge0$, one
+attained inclusive $p_h$-fiber contains all eight joint labels, so the result is not a
+cardinality assertion on a restricted witness domain.
+
+**Proof: all-depth attained construction.** Define the two pure-$\alpha$ base trees
+
+$$
+\begin{aligned}
+S_1&=\langle\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+                 \langle\alpha,\alpha\rangle\rangle,
+ &\operatorname{coordinates}(S_1)&=[1,2,6,1],\\
+S_0&=\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,
+                 \langle\alpha,\alpha\rangle\rangle,
+ &\operatorname{coordinates}(S_0)&=[2,1,6,1].
+\end{aligned}
+\tag{FFM.41}
+$$
+
+Thus $S_1$ has its first two leaves as a complete cherry and $S_0$ does not. Let
+$B_0(t)=t$, $B_{j+1}(t)=\langle B_j(t),B_j(t)\rangle$, and set
+
+$$
+ x_c=B_{h+1}(S_c),\qquad c\in\{0,1\}.
+\tag{FFM.42}
+$$
+
+Doubling preserves the first ancestor-area coordinate. Both $x_c$ are pure-$\alpha$ branches,
+so neither is an atomic orbit tree $\rho^n\alpha$; their common initial branch depth grows
+with $h$. For each $c$, use the four entire-fiber sources
+
+$$
+\begin{aligned}
+ u_{c,x}&=U(\alpha,x_c,x_c),&
+ u_{c,F}&=U(\alpha,x_c,\rho^2x_c),\\
+ u_{c,G}&=U(\alpha,x_c,\langle\rho x_c,x_c\rangle),&
+ u_{c,o}&=U(\alpha,x_c,\rho^3x_c).
+\end{aligned}
+\tag{FFM.43}
+$$
+
+They all lie in the exact D of (FFM.24): the old literals and guarded signed records are
+those of Lemma 6.2, $x_c$ is outside the atomic orbit, and the fourth tail is distinct
+from $\alpha,x_c,\rho^2x_c,\langle\rho x_c,x_c\rangle$ by the existing right-spine
+clock and the $F\ne G$ guard. Lemma 6.3 assigns them respectively the four rows
+$r_x,r_F,r_G,r_o$. Equation (FFM.39) and (FFM.41)--(FFM.42) give
+$b(u_{c,*})=c$, so the eight labels are all attained.
+
+For the chosen $h$, both base copies agree as branches through the required prefix; all
+four tails in (FFM.43) retain that agreement because native substitution preserves reached
+branches. The fixed $a=\alpha$, the same six-hole skeleton, and the tail addresses occur
+below that common branch prefix. Hence all eight $u_{c,*}$ have one identical inclusive
+$p_h$, while their $f_{\rm joint}$-values are the eight distinct pairs in
+$A\times\{0,1\}$. This construction uses the full actual fiber, not a relaxed marginal
+projection, and works for every $h$. It also exhibits the concrete failed direction:
+$u_{0,x}$ and $u_{1,x}$ have the same $I$, the same row $r_x$, and the same
+arbitrarily deep $p_h$, but opposite $b$.
+
+**Proof: lower and upper field bounds.** Suppose a finite field $E$ and a uniformly finite
+post-cut legal consumer recover $f_{\rm joint}$. The existing whole-image lower-bound
+argument behind Theorem 5.4 supplies a finite original prefix depth $H$ for this field and
+consumer: equal $E$-values together with equal $p_H$ force identical reachable current
+read transcripts. Apply the all-depth construction above at $h=H$. The eight distinct joint
+outputs must then have eight distinct field values, so $|E(D)|\ge8$. This invokes the
+existing finite-read locality and complete-field lower bound; it does not replace that result
+by a new counting lemma.
+
+For the matching upper bound, the existing paid ARH producer already acquires the complete
+original source before the cut. During that paid acquisition compute the complete row $f(u)$
+and the finite coordinate test (FFM.38), then retain
+
+$$
+ E(u)=(f(u),b(u))\in A\times\{0,1\}.
+$$
+
+The accessible state factors through $(I,E)$, and a post-cut consumer returns the pair and
+halts with zero new reads and zero updates. Thus $|E(D)|=8$, proving (FFM.40) for both
+static and serial services. The producer remains source-total on the unchanged D and retains
+all old inequalities, reached conditions, repeated names and exterior partitions. $\square$
+
+The eight values are an additional complete-field alphabet, not total memory, bit cost,
+physical capacity, preparation price or a dimension statement. Sourcewise traversal remains
+possible: the presence compiler of §10 reconstructs each finite source and then evaluates
+(FFM.38), but its calls and workspace are unbounded over the whole D. Conversely, $b$ alone
+cannot recover the row, since (FFM.43) realizes all four row values at either $b$-value; and
+row-only memory plus any fixed finite original prefix cannot recover $b$, by the paired
+construction above. A physical support/scale recovery would still require a separately paid
+carrier, calibration, separation and saturation bridge.
+
+The ancestor-area coordinate is supplied by the existing AncestorAreaInterval geometry and
+its complete-subtree theorem. The four-row optimum and its zero-error field semantics are
+supplied by FFM §§5--6 and [SJM, Theorem 2.2]. Zero-error source coding with decoder side
+information, as in Koulgi--Tuncel--Regunathan--Rose, *On Zero-Error Source Coding With
+Decoder Side Information* (IEEE TIT 49, 2003), is a classical analogy only; it does not
+supply (FFM.40). Loday's ordered leaf-gap coordinates in *Realization of the Stasheff
+polytope* (arXiv:math/0212126) are likewise background for the coordinate interpretation,
+not a replacement for the native six-hole proof.
+
+## 追加锚（本行以下为增补区）
