@@ -1,0 +1,47 @@
+**定义 31.1（完整来源与所用数学接口）。** 固定偶数 $m\ge2$、整数 $r\ge3$ 和任意公开函数 $f:\mathbb Z_m\to\mathbb Z_2$。本节的来源、观察与更新取自 [CyclicSelectorModel](https://github.com/the-omega-institute/trureturing/blob/0a9a82d6e7ffa54a2795c5207f21d8b3fc702748/D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorModel.lean) 的 `Source`、`observe`、`advance`、`trace`，不对来源坐标取商。写
+
+$$
+\begin{gathered}
+G=\mathbb Z_2\times\mathbb Z_m,\qquad H=\{0\}\times\mathbb Z_m,
+\qquad k=m/2,\qquad \Delta=(0,k),\\
+\tau_0=(1,0),\quad \tau_1=(1,k),\quad
+\chi(b,z)=b,\quad \zeta(b,z)=z,\\
+s=(a,(x_2,\ldots,x_r),h),\qquad a,x_i\in G,\quad h\in H,\\
+t(s)=a+\sum_{i=2}^r x_i+h,\qquad c(s)=\tau_{f(\zeta(a))},\\
+p_c(x)=x-\chi(x)c,\qquad
+O(s)=\bigl(a,t(s),(p_{c(s)}(x_i))_{i=2}^r\bigr),\\
+T^j s=\bigl(a+(0,j),(x_2-(0,j),x_3,\ldots,x_r),h\bigr)
+\quad(j\in\mathbb N),\qquad T=T^1.
+\end{gathered}
+$$
+
+二进制系数按整数代表 $0,1$ 解释。这里 $h=(0,h_z)$ 是源类型中保存的偏移坐标，$x_2,\ldots,x_r$ 始终具有原来的标签。$T^j$ 的群坐标按模 $m$ 计算，而执行 $j$ 次单位命令的次数是自然数 $j$。证明中记 $T^{-j}P$ 为把接收者减去 $(0,j)$、发送者 $2$ 加上 $(0,j)$、其余坐标不变的逆映射；这不把逆更新加入允许动作。
+
+完整快照的实际像为
+
+$$
+\mathcal O=G\times G\times H^{r-1}.
+$$
+
+直接复用 Model 的 `cyclic_selector_source_geometry` 与 [CyclicSelectorRecovery](https://github.com/the-omega-institute/trureturing/blob/0a9a82d6e7ffa54a2795c5207f21d8b3fc702748/D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorRecovery.lean) 的 `cyclic_selector_recovery`：每个 $A\in\mathcal O$ 均有实际来源，每个快照纤维含
+
+$$
+Q=2^{r-2}
+$$
+
+个来源，整个原来源集含
+
+$$
+N=2^r m^{r+1}
+$$
+
+个元素。纤维中的发送者二进制坐标 $e_i$ 满足 $\sum_{i=2}^r e_i=\chi(t)-\chi(a)$；给定这些坐标，`fiberSource` 重建全部发送者与偏移。
+
+当 $f$ 非恒定时，$\delta(z)$ 是原模型的最小正向变色距离，$L=\max_z\delta(z)$ 是最长实际循环游程的长度。复用其循环游程几何：$1\le L\le m-1$，距离的实际值域为 $\{1,\ldots,L\}$。存在一个最长游程的终点 $w$，使
+
+$$
+\delta(w-d)=d\qquad(1\le d\le L).
+$$
+
+所有相位加减均在原来的 $\mathbb Z_m$ 上进行。两张来自同一原来源、已知自然时刻 $p,q$ 的完整快照，若选择器值不同，则原 `recover` 返回该原来源。完整迹的纤维判据使用 $0,\ldots,n$ 的所有快照；同初始快照的不同来源保持同迹，当且仅当整个相位窗口保持原选择器值。本节引用这些结果，不把快照数、完整迹类数或解码算术账目解释为取得接口。
+
