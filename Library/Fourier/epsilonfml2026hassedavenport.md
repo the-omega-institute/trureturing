@@ -17,6 +17,12 @@ triage: anchor
 
 This source card records the attributed upstream supplier used by the finite-field character-sums port.
 
+## Verified locator
+
+https://github.com/fukubillueda-web/epsilon_FML/tree/b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed
+
+The pinned source locator is `LanglandsFirstMainLemma/FiniteField/HasseDavenportLift.lean`, declaration `LanglandsFirstMainLemma.hasseDavenportLift` (source line 461). The retained source bytes have SHA-256 `2f205c2d7c9720f870934bd332215032d23ab044e36db0baac999a655b4a65fd`. The source manifest and retained proof closure below bind the imported prerequisites. This locator attributes the exact code supplier; no manuscript theorem number or original mathematical priority is claimed.
+
 ## Provenance
 
 - Repository: <https://github.com/fukubillueda-web/epsilon_FML>
