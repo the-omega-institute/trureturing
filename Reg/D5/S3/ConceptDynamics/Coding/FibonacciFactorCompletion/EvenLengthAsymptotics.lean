@@ -696,3 +696,215 @@ def even_actual_positivity_registration :
 #print axioms even_actual_positivity_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal63
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal61
+noncomputable section
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+  (resetConcatenation)
+
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150
+  (observationSignature actual)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ResetBudgetReadout
+  (rejected reset_floor_rejected)
+
+/-- The complete source law observes the one budget occurrence in the reset threshold. -/
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K))),
+    ∃ R : Return, R.r = 1 ∧
+    max (max (xSide .high) (ySide .high)) ((lam - r.readout () () b) / g ^ 2 / chi ^ K) <
+      hSide .high - rho ^ R.m * (hSide .high - chi * aSide .high) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+      1 ≤ actualCount sourceModel K ((lam - b) / g ^ 2 / chi ^ K) false N →
+    let d := (lam - b) / g ^ 2 / chi ^ K
+    let delta := hSide .high - rho ^ R.m * (hSide .high - chi * aSide .high) -
+      initial .high sourceModel
+    let gamma := delta * g ^ N
+    let eps := min (b - actualAutomaticCost K) (g ^ 2 * chi ^ K * gamma) / 2
+    let V := {xs : List Return //
+      GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs = N}
+    let L := N + 20 + 6 * R.m
+    Even N ∧ Even L ∧ 0 < L ∧ 0 < delta ∧ 0 < gamma ∧ 0 < eps ∧
+    ∀ (targetModel : Model) (T : ℕ), 78 ≤ T → Even T →
+    let k := paddingCopies L T
+    let F := paddingWeight L T
+    Even F ∧ 78 ≤ F ∧ F < 78 + L ∧ k * L + F = T ∧
+    Function.Injective (fun z : Fin k → V =>
+      paddedExecution R (List.ofFn (fun i => (z i).val)) F) ∧
+    (∀ z : Fin k → V,
+      let execution := paddedExecution R (List.ofFn (fun i => (z i).val)) F
+      listWeight execution = T ∧
+      GuardTrace K (d + gamma) false .high execution (initial .high targetModel) ∧
+      ActualPairSupply targetModel o (b - eps) .strict execution ∧
+      (∀ contract : Contract, ActualPairSupply targetModel o b contract execution) ∧
+      (∀ (before : List Return) (a : Return) (after : List Return),
+        execution = before ++ a :: after → a.r = K →
+        ∃ rest, resetConcatenation R (List.ofFn (fun i => (z i).val)) =
+          before ++ a :: rest) ∧
+      (∀ side : Side, externalWord side execution =
+        externalWord side (lowFiller F) ++
+          externalWord side (resetConcatenation R (List.ofFn (fun i => (z i).val))))) ∧
+    (∀ strict : Bool,
+      actualCount sourceModel K d false N ^ k ≤ actualCount targetModel K d strict T) ∧
+    (∀ contract : Contract,
+      actualCount sourceModel K d false N ^ k ≤ contractCount targetModel o b contract T) ∧
+    Function.Injective (fun z : Fin k → V =>
+      history targetModel (paddedExecution R (List.ofFn (fun i => (z i).val)) F)) ∧
+    (∀ side : Side, Function.Injective (fun z : Fin k → V =>
+      source side targetModel (paddedExecution R (List.ofFn (fun i => (z i).val)) F)))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨R, _, floor, _⟩ :=
+    h (fun _ => false) budget 2 le_rfl budget_interval.1 budget_interval.2
+  exact reset_floor_rejected R floor
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.same_reset_all_even_counts) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.same_reset_all_even_counts, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence
+
+def same_reset_all_even_counts_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.same_reset_all_even_counts)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal61.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal61.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms same_reset_all_even_counts_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal61
+
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal65
+noncomputable section
+
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150
+  (observationSignature actual)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ResetBudgetReadout
+  (rejected reset_floor_rejected)
+
+/-- The complete source law observes the one budget occurrence in the reset threshold. -/
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K))),
+    (∀ (T : ℕ), Odd T →
+      (∀ (model : Model) (strict : Bool),
+        actualCount model K ((lam - b) / g ^ 2 / chi ^ K) strict T = 0) ∧
+      (∀ (model : Model) (contract : Contract), contractCount model o b contract T = 0)) ∧
+    (∀ (T : ℕ), Even T → 78 ≤ T →
+      listWeight (lowFiller T) = T ∧
+      (∀ (model : Model) (contract : Contract),
+        ActualPairSupply model o b contract (lowFiller T) ∧
+        0 < contractCount model o b contract T) ∧
+      (∀ (model : Model) (strict : Bool),
+        0 < actualCount model K ((lam - b) / g ^ 2 / chi ^ K) strict T ∧
+        actualLogRate model K ((lam - b) / g ^ 2 / chi ^ K) strict T =
+          Real.logb 2 (actualCount model K ((lam - b) / g ^ 2 / chi ^ K) strict T : ℝ) / (T : ℝ))) ∧
+    ∃ R : Return, R.r = 1 ∧
+    max (max (xSide .high) (ySide .high)) ((lam - r.readout () () b) / g ^ 2 / chi ^ K) <
+      hSide .high - rho ^ R.m * (hSide .high - chi * aSide .high) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+      1 ≤ actualCount sourceModel K ((lam - b) / g ^ 2 / chi ^ K) false N →
+    let d := (lam - b) / g ^ 2 / chi ^ K
+    let a := actualCount sourceModel K d false N
+    let L := N + 20 + 6 * R.m
+    Even N ∧ Even L ∧ 0 < L ∧
+    (∀ (targetModel : Model) (T : ℕ), 78 ≤ T → Even T →
+      (∀ strict : Bool, a ^ paddingCopies L T ≤ actualCount targetModel K d strict T) ∧
+      ∀ contract : Contract, a ^ paddingCopies L T ≤ contractCount targetModel o b contract T) ∧
+    (∀ (targetModel : Model) (strict : Bool), Real.logb 2 (a : ℝ) / (L : ℝ) ≤
+      liminf (fun v : ℕ => actualLogRate targetModel K d strict (2 * v)) atTop)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨R, _, floor, _⟩ :=
+    (h (fun _ => false) budget 2 le_rfl budget_interval.1 budget_interval.2).2.2
+  exact reset_floor_rejected R floor
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.original_finite_even_bridge) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.original_finite_even_bridge, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence
+
+def original_finite_even_bridge_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.original_finite_even_bridge)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal65.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal65.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "body", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_finite_even_bridge_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ExactOriginal65
