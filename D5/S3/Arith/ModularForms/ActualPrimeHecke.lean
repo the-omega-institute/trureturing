@@ -1,6 +1,6 @@
-/- GID: D5/S1/NumberTheory/ModularForms/ActualPrimeHecke
+/- GID: D5/S3/Arith/ModularForms/ActualPrimeHecke
    generality: G
-   mirror-B: D5/B/S1/NumberTheory/ModularForms/ActualPrimeHecke
+   mirror-B: D5/B/S3/Arith/ModularForms/ActualPrimeHecke
    mirror-E: none(waiver:registration-audit-pending)
    anchors: []
    utility: none
@@ -17,7 +17,7 @@ open UpperHalfPlane ModularForm ModularFormClass MatrixGroups
 open Matrix Matrix.SpecialLinearGroup
 open scoped BigOperators ModularForm MatrixGroups CongruenceSubgroup Pointwise
 
-namespace D5.S1.NumberTheory.ModularForms
+namespace D5.S3.Arith.ModularForms
 
 noncomputable section
 
@@ -656,12 +656,12 @@ theorem primeHecke_qExpansion_coeff (p : ℕ) [Fact p.Prime] (k : ℤ)
 
 end
 
-end D5.S1.NumberTheory.ModularForms
+end D5.S3.Arith.ModularForms
 
-#print axioms D5.S1.NumberTheory.ModularForms.primeHecke
-#print axioms D5.S1.NumberTheory.ModularForms.primeHecke_apply
-#print axioms D5.S1.NumberTheory.ModularForms.primeHecke_action
-#print axioms D5.S1.NumberTheory.ModularForms.primeHecke_qExpansion_coeff
+#print axioms D5.S3.Arith.ModularForms.primeHecke
+#print axioms D5.S3.Arith.ModularForms.primeHecke_apply
+#print axioms D5.S3.Arith.ModularForms.primeHecke_action
+#print axioms D5.S3.Arith.ModularForms.primeHecke_qExpansion_coeff
 
-#print axioms D5.S1.NumberTheory.ModularForms.primeHeckeSubgroup_mem
-#print axioms D5.S1.NumberTheory.ModularForms.primeTraceEquiv
+#print axioms D5.S3.Arith.ModularForms.primeHeckeSubgroup_mem
+#print axioms D5.S3.Arith.ModularForms.primeTraceEquiv

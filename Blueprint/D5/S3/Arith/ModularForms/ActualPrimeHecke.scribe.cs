@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.NumberTheory.ModularForms;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.ModularForms;
 
 internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("prime-hecke-endomorphism"),
                 DeclarationHandle.Create(
-                    "D5/S1/NumberTheory/ModularForms/ActualPrimeHecke.primeHecke"),
+                    "D5/S3/Arith/ModularForms/ActualPrimeHecke.primeHecke"),
                 H("Actual prime Hecke endomorphism"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("primeHecke")), Sp,
@@ -26,7 +26,7 @@ internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("prime-hecke-literal-action"),
                 DeclarationHandle.Create(
-                    "D5/S1/NumberTheory/ModularForms/ActualPrimeHecke.primeHecke_action"),
+                    "D5/S3/Arith/ModularForms/ActualPrimeHecke.primeHecke_action"),
                 H("The full p+1 action"),
                 StatementSource.FromAuthor(ActionFormula()),
                 AssessedProvenance.FromRepo(),
@@ -38,7 +38,7 @@ internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("prime-hecke-congruence-intersection"),
                 DeclarationHandle.Create(
-                    "D5/S1/NumberTheory/ModularForms/ActualPrimeHecke.primeHeckeSubgroup_mem"),
+                    "D5/S3/Arith/ModularForms/ActualPrimeHecke.primeHeckeSubgroup_mem"),
                 H("The actual congruence intersection"),
                 StatementSource.FromAuthor(IntersectionFormula()),
                 AssessedProvenance.FromRepo(),
@@ -48,7 +48,7 @@ internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("prime-hecke-analytic-coefficients"),
                 DeclarationHandle.Create(
-                    "D5/S1/NumberTheory/ModularForms/ActualPrimeHecke.primeHecke_qExpansion_coeff"),
+                    "D5/S3/Arith/ModularForms/ActualPrimeHecke.primeHecke_qExpansion_coeff"),
                 H("The analytic coefficient law"),
                 StatementSource.FromAuthor(CoefficientFormula()),
                 AssessedProvenance.FromRepo(),
@@ -57,7 +57,13 @@ internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                     "The proof uses Mathlib's HasSum theorem for the actual function at pz and at each (z+a)/p. The finite root-of-unity filter removes the nonmultiples of p. Finite sums of HasSum and injective integer-multiple reindexing preserve convergence; analytic coefficient uniqueness identifies the resulting coefficients. No formal-series recurrence or coefficient formula is a premise.")),
                     Paragraph(Text(
-                    "The classical normalization is the one in Ribet and Stein, Lectures on Modular Forms and Hecke Operators, section 3.5.2 and Proposition 3.5.2. This is a reusable analytic library construction. It does not resolve Lehmer's conjecture; the coefficient relation allows a vanishing prime coefficient. A complete four-slot source registration is not asserted."))),
+                    "The classical normalization is the one in Ribet and Stein, Lectures on Modular Forms and Hecke Operators, section 3.5.2 and Proposition 3.5.2. This is a reusable analytic library construction. It does not resolve Lehmer's conjecture; the coefficient relation allows a vanishing prime coefficient.")),
+                    Paragraph(Text(
+                    "The four-slot escape audit is unfinished under the existing owner issue https://github.com/the-omega-institute/trureturing/issues/5214 (escape registration current interfaces). No declared_validated registration is claimed. Reg.Support.DependentFamily.enrollment_1 supplies a generic enrolled template, not a source registration of these Hecke statements.")),
+                    Paragraph(Text(
+                    "For primeHecke_action, the missing evidence is whole-family role sensitivity, nonconstant actual analytic observation in each role, and a typed Contract.Registration with checked source-selection reconstruction. For primeHecke_qExpansion_coeff, it is whole-family role sensitivity, nonconstant actual coefficient observation in each role, and the same typed source-selection bridge. For primeHeckeSubgroup_mem, whole-family law variation, role sensitivity, actual observational dependence, and the typed Contract.Registration source-selection bridge remain unfinished.")),
+                    Paragraph(Text(
+                    "The audit must retain every prime including 2, every integer weight, all level-one cusp forms and upper-half-plane points, and every natural coefficient index including 0. Weight and coefficient-index degeneracies remain in scope; no sensitivity at each fixed weight or index is asserted. The missing evidence establishes neither absence of a suitable template nor a mathematical failure of the Hecke laws."))),
                 DescribeRole.Theorem))));
 
     private static Formula ActionFormula()
