@@ -33,7 +33,7 @@ Z(n)^\kappa=\sum_{d\mid n}b_\kappa(d).
 $$
 
 This is the same increment source identified in the
-[Fan--Kobayashi--Molnar note](fankobayashimolnar2025family.md).
+[Fan--Kobayashi--Molnar note](../ArithSums/fankobayashimolnar2025family.md).
 Its local factor is $Z(p^a)^\kappa-Z(p^{a-1})^\kappa$.
 For integral $k$, equation (8), printed p.2, already supplies
 

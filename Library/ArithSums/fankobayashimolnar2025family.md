@@ -243,7 +243,7 @@ Fibonacci residue class. No such theorem is attributed to this paper.
 
 ## A direct supplier for the reciprocal family
 
-[Molnar's reciprocal-family preprint](molnar2026reciprocalrobin.md),
+[Molnar's reciprocal-family preprint](../Factorization/molnar2026reciprocalrobin.md),
 arXiv:2610.12816v1, studies this same $b_\kappa$ and supplies the
 fixed-parameter expansions, a normalized unbounded-parameter RH
 criterion, and an unconditional normalized inequality for all
