@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/LeafNonbacktrackingComponent
+/- GID: D5/S3/Combinatorics/Graph/Walks/LeafNonbacktrackingComponent
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/LeafNonbacktrackingComponent
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/LeafNonbacktrackingComponent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Hamiltonian, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph]
    utility: none
@@ -10,7 +10,7 @@ import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 
 /-! A finite degree-two graph turns an actual nonbacktracking leaf-to-leaf
 walk into the entire path component. No path or coverage is assumed. -/
-namespace D5.S3.Combinatorics.Graph.LeafNonbacktrackingComponent
+namespace D5.S3.Combinatorics.Graph.Walks.LeafNonbacktrackingComponent
 
 open SimpleGraph
 
@@ -175,4 +175,4 @@ theorem nonbacktracking_leaf_full_component {a b : V} (p : G.Walk a b)
 #print axioms nonbacktracking_leaf_isPath
 #print axioms nonbacktracking_leaf_full_component
 
-end D5.S3.Combinatorics.Graph.LeafNonbacktrackingComponent
+end D5.S3.Combinatorics.Graph.Walks.LeafNonbacktrackingComponent

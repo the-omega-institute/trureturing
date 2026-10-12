@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
 
 internal sealed class LeafNonbacktrackingComponentDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/LeafNonbacktrackingComponent.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/LeafNonbacktrackingComponent.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An actual nonempty walk between leaves in a finite graph of degree at most two, with no immediate backtracking, is the entire simple path component.",
