@@ -448,4 +448,79 @@ private theorem M_step (x : H) :
     (EuclideanSpace.basisFun Index ℂ).toBasis
     (EuclideanSpace.basisFun Index ℂ).toBasis x
 
+private def flat (A : Matrix Index Index ℂ) : K :=
+  WithLp.toLp 2 (fun i => A i.1 i.2)
+private def mat (A : K) : Matrix Index Index ℂ := fun i j => A (i, j)
+
+private theorem hs_inner (A B : K) : inner ℂ A B = ((mat A)ᴴ * mat B).trace := by
+  rw [PiLp.inner_apply, Fintype.sum_prod_type]
+  simp only [RCLike.inner_apply', Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
+    Matrix.conjTranspose_apply, mat, starRingEnd_apply]
+  rw [Finset.sum_comm]
+
+private def conjugateLin : K →ₗ[ℂ] K where
+  toFun A := flat (M * mat A * Mᴴ)
+  map_add' A B := by
+    change flat (M * (mat A + mat B) * Mᴴ) = flat (M * mat A * Mᴴ) + flat (M * mat B * Mᴴ)
+    rw [Matrix.mul_add, Matrix.add_mul]
+    rfl
+  map_smul' r A := by
+    change flat (M * (r • mat A) * Mᴴ) = r • flat (M * mat A * Mᴴ)
+    rw [Matrix.mul_smul, Matrix.smul_mul]
+    rfl
+
+private def F : K →ₗᵢ[ℂ] K := conjugateLin.isometryOfInner (by
+  intro A B
+  rw [hs_inner, hs_inner]
+  change ((M * mat A * Mᴴ)ᴴ * (M * mat B * Mᴴ)).trace = _
+  rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose]
+  simp only [Matrix.mul_assoc]
+  rw [← Matrix.mul_assoc Mᴴ M, M_unitary.1, Matrix.one_mul]
+  rw [Matrix.trace_mul_comm M]
+  simp only [Matrix.mul_assoc, M_unitary.1, Matrix.mul_one])
+
+private def E : Submodule ℂ K := F.toContinuousLinearMap.eqLocus 1
+private def Q : K →L[ℂ] K := E.starProjection
+
+private theorem QF (A : K) : Q (F A) = Q A := by
+  apply E.eq_starProjection_of_mem_of_inner_eq_zero (E.starProjection_apply_mem A)
+  intro Z hZ
+  have hz : F Z = Z := hZ
+  have hi : inner ℂ (F A) Z = inner ℂ A Z := by
+    calc
+      _ = inner ℂ (F A) (F Z) := congrArg (inner ℂ (F A)) hz.symm
+      _ = _ := F.inner_map_map A Z
+  rw [inner_sub_left, hi]
+  have h := E.starProjection_inner_eq_zero A Z hZ
+  rw [inner_sub_left] at h
+  exact h
+
+private def identity : K := flat 1
+private def P : K := flat (Matrix.diagonal (fun i : Index => if i.1 = 0 then 1 else 0))
+private def outer (x y : H) : K :=
+  flat (Matrix.vecMulVec (fun i => x i) (fun i => starRingEnd ℂ (y i)))
+
+private theorem F_identity : F identity = identity := by
+  change flat (M * 1 * Mᴴ) = flat 1
+  rw [Matrix.mul_one, M_unitary.2]
+
+private theorem identity_inner (A : K) : inner ℂ identity A = (mat A).trace := by
+  rw [hs_inner]
+  change ((1 : Matrix Index Index ℂ)ᴴ * mat A).trace = _
+  rw [Matrix.conjTranspose_one, Matrix.one_mul]
+
+private theorem F_outer (x y : H) : F (outer x y) = outer (walkIso x) (walkIso y) := by
+  change flat (M * Matrix.vecMulVec (fun i => x i) (fun i => starRingEnd ℂ (y i)) * Mᴴ) = _
+  rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+  have hy : (fun i => starRingEnd ℂ (y i)) ᵥ* Mᴴ =
+      fun j => starRingEnd ℂ ((M *ᵥ (fun i => y i)) j) := by
+    funext j
+    simp only [Matrix.vecMul, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
+      map_sum, map_mul, starRingEnd_apply]
+    apply Finset.sum_congr rfl
+    intro k _
+    ring
+  rw [hy, M_step x, M_step y]
+  rfl
+
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
