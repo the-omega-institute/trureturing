@@ -631,11 +631,17 @@ theorem kernel_central_tail {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 
     ((n : ℝ) * K / N) (L * Real.sqrt N) ((N : ℝ) / 4)
     (fun j => by dsimp only; split_ifs <;> positivity)
     (mul_pos hL (Real.sqrt_pos.mpr hNpos))
-    (by simpa only [Fin.sum_univ_eq_sum_range] using kernel_variance_le hK hn hN)
+    (by
+      rw [Fin.sum_univ_eq_sum_range
+        (fun k : ℕ => H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) (n + 1)]
+      exact kernel_variance_le hK hn hN)
   have he : (∑ k ∈ (range (n + 1)).filter
       (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|), H N K n k) ≤
       ((N : ℝ) / 4) / (L * Real.sqrt N) ^ 2 := by
-    simpa only [Fin.sum_univ_eq_sum_range, ← sum_filter] using hm
+    rw [Fin.sum_univ_eq_sum_range
+      (fun k : ℕ => if L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|
+        then H N K n k else 0) (n + 1)] at hm
+    simpa only [← sum_filter] using hm
   calc
     _ ≤ ((N : ℝ) / 4) / (L * Real.sqrt N) ^ 2 := he
     _ = 1 / (4 * L ^ 2) := by
