@@ -1,0 +1,51 @@
+**引理 13.1（原 absence 的双零扩充）。** 对每个上述 $u,k,p$，
+若 $r_u(p)=\mathsf{absent}$，则 $b=c=0$，无论 $p$ 在 $v$ 中是否存在。
+
+证明。复用 ActualLeafHistoryRigidity.actual_address_geometry 的原叶分解：
+存在一个原叶地址 $z$ 和非空余词 $w$，使 $p=zw$；$z$ 处的原叶为
+$\alpha$ 或 $\beta$。配对分配律将其当前子树分别运输为
+$T_{2k}$ 或 $T_{2k+1}$，其中 $T_j=\rho^j\alpha$。
+若 $w$ 在该子树上失败，则 $p$ 和它的全部延伸都 absent，结论立即成立。
+
+否则，按 Atomic Block Conjugacy §3 的守卫导航，成功路径上的每一步都从
+一个分支 $T_i$、$i\ge2$ 出发，$L$ 减一、$R$ 减二。
+于是 $p$ 处为某个 $T_j$，且
+
+$$
+0\le j=2k+\epsilon-\bigl(\#_L(w)+2\#_R(w)\bigr)\le2k,
+\qquad\epsilon\in\{0,1\}.
+\tag{ABT.41}
+$$
+
+在 $T_j$ 内执行 $R^{k-1}LL$：若右脊已失败，探针 absent；若右脊成功，
+余下的原子等级不超过二。$T_0,T_1$ 是叶，不能走首个 $L$；$T_2$ 的
+$L$ 孩子是叶 $T_1$，不能再走第二个 $L$。故 $b=0$。
+执行 $R^kL$ 时，若 $R^k$ 成功，其余等级不超过零，只能为叶 $T_0$，
+最后的 $L$ 仍失败，故 $c=0$。
+
+这个证明逐步检查分支条件，不以末端等级非负代替可达性；也没有从
+address_clock_bounds 的新生右时钟上界推断任意左支 absence。
+$\square$
+
+非根守卫直接复用 DelayedOriginalReadout.original_presence_guard：在偶数
+$N=2k$ 时，guardAccept 恰是原付费 Read 的非 absence 位。因此该声明
+在本章参数上的确切结论为
+
+$$
+g=1\quad\Longleftrightarrow\quad r_u(p)\ne\mathsf{absent}.
+\tag{ABT.42}
+$$
+
+它不要求 $a$ 原来存在；整个证明中的原叶、子树和原树都只是证明参数，
+不是运行时 advice。该守卫连同引理 13.1 和已有标签表给出完整的同源表：
+
+| 原四值回复 $r_u(p)$ | $g$（非根） | $b$ | $c$ |
+| --- | --- | --- | --- |
+| $\mathsf{absent}$ | $0$ | $0$ | $0$ |
+| $\alpha$ | $1$ | $0$ | $0$ |
+| $\beta$ | $1$ | $1$ | $0$ |
+| $\mathsf{branch}$ | $1$ | $1$ | $1$ |
+
+根没有 absence 一行。这里三个位同属一个实际 $\rho^{2k}u$，不使用独立块、
+各自最优来源或可以重置的多个样本。
+

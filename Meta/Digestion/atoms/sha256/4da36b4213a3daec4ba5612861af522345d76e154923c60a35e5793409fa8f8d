@@ -1,0 +1,15 @@
+### 16.1 复用遍历而接上新的动作
+
+复用 NativeFullSourceProducer.native_source_producer 的来源无关栈程序。
+它从根遍历每个实际原节点一次，以已取得的回复构造原有序树 $U$；每个原分支
+有两个真实 localStep，寄存器保持不变。对应的数字 workspace 和部分有效
+selector 由 NativeEffectiveSourceProducer.effective_source_producer 供应。
+这里不重新发表遍历、有效性或全树恢复为新定理。
+
+取一个具体消费者：生产器到达 $\mathsf{deliver}(U,[])$ 时，将原 stop
+改接一个来源无关 localStep。由已经取得的 $U$ 计算其左端原叶地址 $\ell(U)$，
+令 $p=\ell(U)L$。随后执行原逻辑 Read $p$：若回复 absent，则执行一次
+applyRho，再执行一次根 Read，最后输出 $(U,p,\mathsf{absent},y)$，其中
+$y$ 是这次根回复。其余 Read 回复接固定错误输出，使程序在非实际分支也有
+定义。左端叶和地址只从已取得的 $U$ 构造，不读潜在原树；具体构造费用另计。
+

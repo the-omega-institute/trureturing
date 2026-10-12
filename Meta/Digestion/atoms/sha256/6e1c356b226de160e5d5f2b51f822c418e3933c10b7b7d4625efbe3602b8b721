@@ -1,0 +1,1 @@
+| [DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean) | original_decoder_correct / original_decoder_service 供应任意纪元至多两次四值 Read；original_presence_guard 在偶滞后提供一个非 absence 守卫；address_clock_bounds 的新生上界为 $\le N$，不供应左支 absence 
