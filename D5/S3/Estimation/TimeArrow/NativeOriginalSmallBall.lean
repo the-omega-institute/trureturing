@@ -729,9 +729,55 @@ theorem original_cube_environment_small_ball (r β : ℝ)
   apply le_of_eq_of_le _ hnative
   apply Fintype.sum_equiv E
   intro X
-  dsimp only
   rw [original_cube_probability_eq_native]
-  simp_rw [original_cube_group_eq_native,original_cube_conditional_mass_eq]
+  congr 1
+  congr 1
+  congr 1
+  congr 1
+  congr 1
+  apply propext
+  constructor
+  · intro h L τ hL hτ
+    have hb := h L τ hL hτ
+    let Pred := fun y : Obs M s e => ∃ b : ℤ,
+      |(ell : ℝ)*(1/2-originalGroupPosteriorMean q r (Real.log ((M : ℝ)/q))
+        (Real.sqrt ((lam : ℝ)/q))
+        ((k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+          l*Real.log ((1-r)/(1+compensation M q r))) e y)-b| ≤ τ
+    have heq := original_cube_conditional_mass_eq r e S X k l Pred
+    conv at hb =>
+      lhs
+      simp only [original_cube_group_eq_native]
+    calc
+      _ = _ := by
+        convert heq.symm using 1
+        all_goals first
+          | rfl
+          | (congr 1 <;> apply sum_congr rfl <;> intro y _ <;> split_ifs <;> rfl)
+      _ ≤ _ := by
+        convert hb using 1
+        all_goals first
+          | rfl
+          | (congr 1 <;> apply sum_congr rfl <;> intro y _ <;> split_ifs <;> rfl)
+  · intro h L τ hL hτ
+    let Pred := fun y : Obs M s e => ∃ b : ℤ,
+      |(ell : ℝ)*(1/2-originalGroupPosteriorMean q r (Real.log ((M : ℝ)/q))
+        (Real.sqrt ((lam : ℝ)/q))
+        ((k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+          l*Real.log ((1-r)/(1+compensation M q r))) e y)-b| ≤ τ
+    have heq := original_cube_conditional_mass_eq r e S X k l Pred
+    conv_lhs => simp only [original_cube_group_eq_native]
+    calc
+      _ = _ := by
+        convert heq using 1
+        all_goals first
+          | rfl
+          | (congr 1 <;> apply sum_congr rfl <;> intro y _ <;> split_ifs <;> rfl)
+      _ ≤ _ := by
+        convert h L τ hL hτ using 1
+        all_goals first
+          | rfl
+          | (congr 1 <;> apply sum_congr rfl <;> intro y _ <;> split_ifs <;> rfl)
 
 end
 end D5.S3.Estimation.TimeArrow.NativeOriginalSmallBall
