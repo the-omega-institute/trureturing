@@ -305,6 +305,163 @@ They retain the full graph and provide deliberately coarse constants;
 useful bandwidth and matrix certificates require further quantitative
 work.
 
+## Fixed theta truncation in signed Laguerre projections
+
+The prescribed-node comparison uses the complete kernel, not its first theta
+summands. Write, in the normalization $\Phi(x)=2K(x/2)$,
+
+$$
+k_m(u)=\pi m^2(2\pi m^2e^{4u}-3)e^{5u-\pi m^2e^{4u}},\qquad
+K_N(u)=\sum_{m=1}^N k_m(u),\qquad K(u)=\sum_{m\ge1}k_m(u).
+$$
+
+Keep $\xi_0=\xi(1/2)>0$ and the original receiving measure
+
+$$
+d\mu(T)=\frac{4K(\sqrt T)}{\xi_0\sqrt T}\,dT,\qquad
+d\mu_N(T)=\frac{4K_N(\sqrt T)}{\xi_0\sqrt T}\,dT.
+$$
+
+The latter is not renormalized. For fixed $v>0$ and fixed integer $N\ge1$,
+define $J_n(v)=\int L_n^{-1/2}(T/v)\,d\mu(T)$ and $J_{n,N}(v)$ with
+$\mu_N$ in place of $\mu$. The standard endpoint-coefficient calculation
+below gives the actual-source application
+
+$$
+\begin{aligned}
+\kappa_N:=K_N'(0)&>0,\\
+J_{n,N}(v)&=-\frac{2v\kappa_N}{\xi_0\sqrt\pi}\,n^{-3/2}
+                  +O_{N,v}(n^{-9/4}),\\
+J_n(v)&=O_{A,v}(n^{-A})\qquad\text{for every }A>0.
+\end{aligned} \tag{LC1}
+$$
+
+This is an application of classical Laguerre facts and the original source
+series. It is neither a theorem attributed to Romik nor a new Lean result or
+an originality claim. The reusable suppliers are the Laguerre weight and
+norm in [DLMF 18.3, Table 1](https://dlmf.nist.gov/18.3), its differential
+equation in [18.8, Table 1](https://dlmf.nist.gov/18.8), its finite series in
+[18.5.12](https://dlmf.nist.gov/18.5.E12), the terminating
+Chu–Vandermonde evaluation [15.4.24](https://dlmf.nist.gov/15.4.E24), and the
+gamma-ratio asymptotic [5.11.12](https://dlmf.nist.gov/5.11.E12).
+
+First, termwise differentiation of the normally convergent theta series gives
+
+$$
+k_m'(0)=\pi m^2e^{-\pi m^2}
+       \bigl[-8(\pi m^2)^2+30\pi m^2-15\bigr].
+$$
+
+For $m\ge2$ the bracket is negative. Complete-source evenness gives
+$K'(0)=0$, so $\kappa_N=-\sum_{m>N}k_m'(0)>0$.
+
+For the coefficient correspondence set $x=T/v$,
+$w(x)=x^{-1/2}e^{-x}$ and $g_v(x)=e^xK(\sqrt{vx})$. Then
+
+$$
+J_n(v)=\frac{4\sqrt v}{\xi_0}\langle g_v,L_n^{-1/2}\rangle_w,\qquad
+\mathcal D=-x\partial_x^2-(\tfrac12-x)\partial_x
+          =-w^{-1}\partial_x(xw\partial_x),\qquad
+\mathcal D L_n^{-1/2}=nL_n^{-1/2}.
+$$
+
+The full kernel is even analytic at zero. For every integer $j\ge0$, the
+normally convergent differentiated source series gives a finite $B_j$ with
+
+$$
+|K^{(j)}(u)|\le B_j\exp\bigl((4j+9)u-(\pi/2)e^{4u}\bigr)
+\qquad(u\ge0).
+$$
+
+Indeed, $k_m^{(j)}(u)=\pi m^2e^{5u-\pi m^2e^{4u}}
+P_j(\pi m^2e^{4u})$ for a polynomial of degree $j+1$; splitting the
+exponential leaves a summable polynomially weighted theta tail.
+Consequently $\mathcal D^rg_v\in L^2(w)$ for each integer $r\ge0$.
+At zero these iterates and their first derivatives are bounded; at infinity
+they decay. The Green boundary term
+
+$$
+\left[x^{1/2}e^{-x}
+ \bigl(f'L_n^{-1/2}-f(L_n^{-1/2})'\bigr)\right]_0^\infty
+$$
+
+vanishes for $f=\mathcal D^jg_v$ at every integration by parts, and for
+$f=h,\mathcal Dh$ in the finite-source argument below. For $n\ge1$,
+
+$$
+|\langle g_v,L_n^{-1/2}\rangle_w|
+\le n^{-r}\|\mathcal D^rg_v\|_w\|L_n^{-1/2}\|_w,
+\qquad
+\|L_n^{-1/2}\|_w^2=\frac{\Gamma(n+1/2)}{n!}=O(n^{-1/2}).
+$$
+
+Taking $r$ arbitrarily large yields the complete-source statement in (LC1).
+
+For the finite sum, $g_{N,v}(x)=e^xK_N(\sqrt{vx})$ has a convergent
+Puiseux expansion at zero. Subtract its $x^{1/2}$ and $x^{3/2}$ terms,
+whose coefficients are $a=\sqrt v\,\kappa_N$ and some $c$, respectively.
+The remaining function has the local form
+
+$$
+h(x)=a_0+a_1x+x^2A(x)+x^{5/2}B(x),
+$$
+
+with $A,B$ analytic near zero. Consequently $h'$ and $(\mathcal Dh)'$
+are bounded there, and $\mathcal D^2h$ is locally in $L^2(w)$. At infinity,
+$h$ and its iterates are a finite combination of half-integer powers and
+rapidly decaying differentiated source terms. They belong to the required
+weighted spaces, and both Green boundary terms vanish. Two integrations
+by parts thus give
+$\langle h,L_n^{-1/2}\rangle_w=O_{N,v}(n^{-9/4})$.
+The convergent expansion, rather than differentiation of an $O(x^2)$
+remainder, supplies these endpoint derivative bounds.
+
+Integrating the standard finite Laguerre series and applying
+Chu–Vandermonde gives, for real $s>-1/2$,
+
+$$
+\int_0^\infty x^{s-1/2}e^{-x}L_n^{-1/2}(x)\,dx
+=\Gamma(s+1/2)\frac{(-s)_n}{n!}.
+$$
+
+The $x^{1/2}$ coefficient is therefore
+$-n^{-3/2}/(2\sqrt\pi)+O(n^{-5/2})$; the $x^{3/2}$ coefficient is
+$O(n^{-5/2})$. The prefactor $4\sqrt v/\xi_0$ produces (LC1).
+In particular, the omitted infinite theta tail cancels the displayed
+$n^{-3/2}$ leading term of the fixed finite sum.
+
+This is a fixed-$v$, fixed-$N$ asymptotic. It is not a counterexample at
+the moving full-source nodes $v=n\lambda$ with
+$\operatorname{sourceQ}_n(\lambda)=0$, and it does not exclude
+degree-dependent truncations. Small absolute kernel tails alone do not
+give a small relative error in these signed projections. The required
+all-node comparison remains
+$\beta a^2-ab\ge0$, where $a=C_{n-1,0}(v)$,
+$b=h_1C_{n,1}(v)$ and $\beta=n(n-1/2)v^2$. Neither (LC1) nor the
+classical coefficient suppliers control its margin near $a=0$;
+common-zero vanishing and multiplicity propagation also remain separate.
+
+## Global scope of finite evenization
+
+Finite evenization is valid for local derivative calculations with a
+retained analytic tail bound, but does not furnish a globally positive
+substitute for the receiving measure. For fixed $N\ge1$, put
+$E_N(u)=K_N(u)+K_N(-u)$. Directly from the finite source series,
+
+$$
+\lim_{u\to+\infty}e^{5u}E_N(u)
+=-3\pi\sum_{m=1}^Nm^2<0.
+$$
+
+Indeed, $e^{5u}K_N(u)\to0$, whereas each summand of
+$e^{5u}K_N(-u)$ tends to $-3\pi m^2$. Thus $E_N$ is eventually
+negative and has an exponential tail, while the full even source $2K$
+is positive with super-exponential tails. A positive approximation usable
+for the complete signed projections must address both endpoint evenness
+and the full tail behavior. This application places no additional
+restriction on the separate local derivative certificate linked from the
+second-level source note.
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
