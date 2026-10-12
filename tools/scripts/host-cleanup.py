@@ -3,6 +3,7 @@
 
 import argparse
 from collections import Counter
+from contextlib import ExitStack
 import fcntl
 import hashlib
 import json
@@ -22,6 +23,147 @@ REPOSITORY = Path(__file__).resolve().parents[2]
 # BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
 PROTECTED_FLAGS = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
                    stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
+
+
+def worktree_modules():
+    """Load the canonical Git preservation and physical cache-lock owners on demand."""
+    directory = str(Path(__file__).resolve().parent / "worktree")
+    if directory not in sys.path:
+        sys.path.insert(0, directory)
+    import worktree_preservation
+    import lean_cache_release
+    return worktree_preservation, lean_cache_release
+
+
+def directory_skeleton(path):
+    """Only directories, including every descendant, do not establish a Git boundary."""
+    pending = [path]
+    while pending:
+        entry = pending.pop()
+        if not stat.S_ISDIR(entry.lstat().st_mode):
+            return False
+        pending.extend(entry.iterdir())
+    return True
+
+
+def repository_snapshot(path, source):
+    """Certify all local recovery history against the main checkout's retained refs."""
+    preservation, _ = worktree_modules()
+    git = preservation.git
+    metadata = path / ".git"
+    if not metadata.is_dir() or metadata.is_symlink():
+        raise preservation.Refused("repository_unverifiable:external_gitdir")
+    registrations = registered_worktrees(source)
+    if any(path == tree or path in tree.parents or tree in path.parents for tree in registrations):
+        raise preservation.Refused("protected")
+    attachments = registered_worktrees(path)
+    if (attachments != [path.resolve()] or (metadata / "worktrees").exists()
+            and any((metadata / "worktrees").iterdir())):
+        raise preservation.Refused("repository_unverifiable:external_worktree")
+    if (Path(preservation.value(path, "rev-parse", "--absolute-git-dir")).resolve() != metadata.resolve()
+            or preservation.common(path) != metadata.resolve()
+            or Path(preservation.value(path, "rev-parse", "--show-toplevel")).resolve() != path.resolve()):
+        raise preservation.Refused("repository_unverifiable:external_gitdir")
+    config = git(path, "config", "--get-regexp", r"extensions\.partialclone|remote\..*\.promisor",
+                 check=False)
+    if config.returncode not in (0, 1) or config.stdout or (metadata / "shallow").exists():
+        raise preservation.Refused("repository_unverifiable:incomplete_objects")
+    object_directories, visited = [metadata / "objects"], set()
+    while object_directories:
+        objects = object_directories.pop().resolve()
+        if objects in visited:
+            continue
+        visited.add(objects)
+        if metadata.resolve() not in objects.parents or not objects.is_dir():
+            raise preservation.Refused("repository_unverifiable:external_alternates")
+        alternates = objects / "info/alternates"
+        if alternates.exists():
+            for raw in alternates.read_text().splitlines():
+                if not raw or raw.startswith('"'):
+                    raise preservation.Refused("repository_unverifiable:alternate_path")
+                object_directories.append(objects / raw)
+    for name in ("MERGE_HEAD", "rebase-apply", "rebase-merge", "CHERRY_PICK_HEAD",
+                 "REVERT_HEAD", "sequencer", "BISECT_LOG"):
+        if (metadata / name).exists():
+            raise preservation.Refused("repository_operation")
+    if any(metadata.rglob("*.lock")):
+        raise preservation.Refused("repository_lock")
+    refs = git(path, "for-each-ref", "--format=%(objectname) %(refname)").stdout
+    if any(row.endswith(b" refs/stash") for row in refs.splitlines()):
+        raise preservation.Refused("repository_stash")
+    if git(path, "-c", "core.fsmonitor=false", "status", "--porcelain", "--untracked-files=all",
+           env={"GIT_OPTIONAL_LOCKS": "0"}).stdout:
+        raise preservation.Refused("repository_dirty")
+    oids = {row.split(b" ", 1)[0].decode("ascii") for row in refs.splitlines()}
+    head = preservation.value(path, "rev-parse", "--verify", "HEAD")
+    oids.add(head)
+    logs = metadata / "logs"
+    if logs.exists():
+        for log in logs.rglob("*"):
+            if log.is_file():
+                oids.update(preservation.reflog_oids(log))
+    fsck = git(path, "fsck", "--full", "--unreachable", "--no-reflogs")
+    for row in fsck.stdout.splitlines():
+        fields = row.split()
+        if len(fields) == 3 and fields[0] in (b"unreachable", b"dangling") and fields[1] == b"commit":
+            oids.add(fields[2].decode("ascii"))
+    roots = git(source, "for-each-ref", "--format=%(objectname)",
+                "refs/heads/", "refs/remotes/", "refs/tags/").stdout.decode("ascii").splitlines()
+    root_set = set(roots)
+    reachable_objects = None
+    required = sorted(oid for oid in oids if set(oid) != {"0"})
+    kinds = git(source, "cat-file", "--batch-check=%(objectname) %(objecttype)",
+                input=("\n".join(required) + "\n").encode("ascii")).stdout.splitlines()
+    if len(kinds) != len(required):
+        raise preservation.Refused("repository_unverifiable:object_inventory")
+    for oid, row in zip(required, kinds):
+        fields = row.decode("ascii").split()
+        if len(fields) != 2 or fields[0] != oid:
+            raise preservation.Refused("repository_unverifiable:object_inventory")
+        if fields[1] == "missing":
+            raise preservation.Refused("repository_unique_commits:" + oid)
+        # Every retained ref tip is itself a preservation root.
+        if oid in root_set:
+            continue
+        if fields[1] == "commit":
+            try:
+                containing = [oid] if oid in root_set else sorted(root_set.intersection(
+                    git(source, "for-each-ref", "--contains", oid, "--format=%(objectname)",
+                        "refs/heads/", "refs/remotes/", "refs/tags/").stdout.decode("ascii").splitlines()))
+                preservation.retained(source, oid, containing[:1])
+            except preservation.Refused as error:
+                raise preservation.Refused("repository_unique_commits:" + oid) from error
+        else:
+            if reachable_objects is None:
+                reachable_objects = set(git(source, "rev-list", "--objects", "--no-object-names",
+                                            *roots, "--").stdout.decode("ascii").splitlines()) if roots else set()
+            if oid not in reachable_objects:
+                raise preservation.Refused("repository_unique_commits:" + oid)
+    return dict(path=str(path), head=head, refs=os.fsdecode(refs), roots=sorted(roots), oids=sorted(oids),
+                registrations=sorted(map(str, registrations)), attachments=list(map(str, attachments)))
+
+
+def ipc_paths():
+    """Observe named IPC endpoints without opening or connecting to them."""
+    if sys.platform != "darwin":
+        raise OSError("ipc_activity_unobservable")
+    try:
+        result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
+                                capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise OSError("ipc_activity_unobservable") from error
+    if result.returncode == 0 and result.stdout and not result.stderr:
+        observed, parents = set(), {}
+        for row in result.stdout.splitlines():
+            if row.startswith("n/"):
+                endpoint = Path(row[1:].removesuffix(" (deleted)"))
+                if endpoint.parent not in parents:
+                    parents[endpoint.parent] = endpoint.parent.resolve()
+                observed.add(parents[endpoint.parent] / endpoint.name)
+        return observed
+    if result.returncode == 1 and not result.stdout and not result.stderr:
+        return set()
+    raise OSError("ipc_activity_unobservable")
 
 
 class LowDiskSpace(RuntimeError):
@@ -66,20 +208,33 @@ class ProtectedPaths:
         return path in self.prefixes
 
 
-def inspect_candidate(path, cutoff, protected):
+def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ipc_observed=False):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
-    if path.name == ".git":
+    if path.name == ".git" and (not reclaim or not directory_skeleton(path)):
         return dict(reason="repository")
     if not isinstance(protected, ProtectedPaths):
         protected = ProtectedPaths(protected)
     if path in protected:
         return dict(reason="protected")
+    if repository is not None:
+        try:
+            governing = containing_repository(path)
+        except OSError as error:
+            return dict(reason="repository_unverifiable", detail=str(error))
+        if governing is not None and governing != path:
+            return dict(reason="repository_unverifiable", detail="partial_repository")
     root_stat = path.lstat()
     if stat.S_ISLNK(root_stat.st_mode):
         return dict(reason="symlink")
+    if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
+        return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
+    repositories = []
+    ipc_observation = None
+    has_ipc = False
+    lakes = []
     pending = [path]
     while pending:
         entry = pending.pop()
@@ -92,10 +247,20 @@ def inspect_candidate(path, cutoff, protected):
             return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
-        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)):
+        ipc = reclaim and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))
+        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode) or ipc):
             return dict(reason="special_file")
-        if info.st_mtime > cutoff:
+        if info.st_mtime > (min(cutoff, time.time() - 24 * 3600) if ipc else cutoff):
             return dict(reason="recent")
+        if ipc and not ipc_observed:
+            try:
+                if ipc_observation is None:
+                    ipc_observation = ipc_paths()
+                if entry.parent.resolve() / entry.name in ipc_observation:
+                    return dict(reason="protected")
+            except OSError:
+                return dict(reason="ipc_activity_unobservable")
+        has_ipc = has_ipc or ipc
         digest.update(os.fsencode(str(entry.relative_to(path))))
         digest.update(str((info.st_dev, info.st_ino, info.st_mode, info.st_size,
                            info.st_mtime_ns, info.st_ctime_ns)).encode())
@@ -104,10 +269,29 @@ def inspect_candidate(path, cutoff, protected):
         elif stat.S_ISDIR(info.st_mode):
             with os.scandir(entry) as children:
                 names = sorted(child.name for child in children)
+            if reclaim and entry.name != ".git" and {"HEAD", "objects", "refs"}.issubset(names):
+                return dict(reason="repository_unverifiable", detail="bare_repository")
             if ".git" in names:
-                return dict(reason="repository")
+                if not reclaim or not directory_skeleton(entry / ".git"):
+                    if repository is None:
+                        return dict(reason="repository")
+                    repositories.append(entry)
+            if reclaim and entry.name == ".lake":
+                lakes.append(str(entry))
             pending.extend(entry / name for name in names)
-    return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes)
+    minimum_cutoff = time.time() - 24 * 3600
+    if repositories and cutoff > minimum_cutoff:
+        return inspect_candidate(path, minimum_cutoff, protected, repository=repository, reclaim=reclaim)
+    try:
+        repositories = [repository_snapshot(entry, repository) for entry in repositories]
+    except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
+        reason = str(error).split(":", 1)[0]
+        if reason not in ("protected", "repository_dirty", "repository_stash", "repository_operation",
+                          "repository_lock", "repository_unique_commits"):
+            reason = "repository_unverifiable"
+        return dict(reason=reason, detail=str(error))
+    return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes,
+                repositories=repositories, lakes=lakes, has_ipc=has_ipc)
 
 
 def remove_tree(path):
@@ -120,29 +304,52 @@ def remove_tree(path):
     shutil.rmtree(path)
 
 
-def clean_candidate(path, cutoff, protected, delete=False):
+def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
+                    reclaim=True, refresh_activity=False, qualification=None, ipc_observed=False,
+                    initial=None):
+    path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
     try:
-        before = inspect_candidate(path, cutoff, protected)
-        result.update({key: value for key, value in before.items() if key != "fingerprint"})
+        kwargs = {} if repository is None else dict(repository=repository)
+        if not reclaim:
+            kwargs["reclaim"] = False
+        if ipc_observed:
+            kwargs["ipc_observed"] = True
+        def observe(protection):
+            snapshot = inspect_candidate(path, cutoff, protection, **kwargs)
+            if snapshot["reason"] is None and qualification:
+                qualified = qualification()
+                if qualified["reason"] is not None:
+                    return qualified
+                snapshot["qualification"] = qualified
+            return snapshot
+        before = observe(protected) if initial is None else initial
+        result.update({key: before[key] for key in ("reason", "detail", "apparent_bytes") if key in before})
         if before["reason"] is not None:
             return result
         if not delete:
             result["action"] = "would_remove"
             return result
-        after = inspect_candidate(path, cutoff, protected)
-        if after != before:
-            result["reason"] = "changed"
-            return result
-        removal_started = True
-        if path.is_dir():
-            remove_tree(path)
-        else:
-            path.unlink()
-        result["action"] = "removed"
-    except FileNotFoundError:
-        result["reason"] = "vanished"
+        with ExitStack() as stack:
+            for lake in before.get("lakes", []):
+                _, release = worktree_modules()
+                stack.enter_context(release.cache_guard(Path(lake).parent))
+            refreshed = ProtectedPaths(activity()) if activity and (before.get("repositories") or before.get("has_ipc") or refresh_activity) else protected
+            after = observe(refreshed)
+            if after != before:
+                result["reason"] = "changed"
+                return result
+            removal_started = True
+            if path.is_dir():
+                remove_tree(path)
+            else:
+                path.unlink()
+            result["action"] = "removed"
+    except BlockingIOError:
+        result["reason"] = "cache_busy"
+    except FileNotFoundError as error:
+        result.update(action="failed" if removal_started else "kept", reason="vanished", detail=str(error))
     except PermissionError as error:
         if removal_started:
             result.update(action="failed", reason=str(error))
@@ -151,6 +358,33 @@ def clean_candidate(path, cutoff, protected, delete=False):
     except OSError as error:
         result.update(action="failed", reason=str(error))
     return result
+
+
+def clean_ipc_batch(paths, cutoff, protected, delete, activity, repository=None):
+    """Share complete IPC observations across a batch, then recheck each endpoint's identity."""
+    base = protected if isinstance(protected, ProtectedPaths) else ProtectedPaths(protected)
+    def protection():
+        observed = ProtectedPaths(activity())
+        observed.prefixes.update(base.prefixes)
+        return observed
+    snapshots = []
+    try:
+        observed = protection()
+        for path in paths:
+            try:
+                snapshots.append((path, inspect_candidate(path, cutoff, observed,
+                                                         repository=repository, ipc_observed=True)))
+            except OSError as error:
+                snapshots.append((path, dict(reason="unreadable", detail=str(error))))
+    except OSError as error:
+        for path in paths:
+            yield dict(path=str(path), action="kept", reason="ipc_activity_unobservable",
+                       detail=str(error), apparent_bytes=0)
+        return
+    for path, before in snapshots:
+        yield clean_candidate(path, cutoff, observed, delete=delete, initial=before, ipc_observed=True,
+                              repository=repository,
+                              activity=lambda: protection().prefixes, refresh_activity=True)
 
 
 def children(root):
@@ -233,7 +467,7 @@ def linux_observation_unavailable(process, boundary, error):
         process=str(process), boundary=boundary, status=status, error=str(error)))) from error
 
 
-def active_paths(codex, scopes=()):
+def active_paths(codex, scopes=(), strict_ipc=False):
     """Read open files/cwds and process arguments for the current user only."""
     protected = {Path.cwd().resolve(), Path(__file__).resolve()}
     scopes = tuple(str(Path(scope).resolve()) for scope in scopes)
@@ -283,7 +517,7 @@ def active_paths(codex, scopes=()):
     elif sys.platform == "darwin":
         result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
                                 capture_output=True, text=True, timeout=120)
-        if result.returncode != 0:
+        if result.returncode != 0 or strict_ipc and result.stderr:
             raise OSError("cannot inspect active files with lsof: " + result.stderr.strip())
         for line in result.stdout.splitlines():
             if line.startswith("n/"):
@@ -331,11 +565,86 @@ def active_paths(codex, scopes=()):
 
 
 def registered_worktrees(repository):
-    result = subprocess.run(["git", "-C", str(repository), "worktree", "list", "--porcelain", "-z"],
-                            capture_output=True, check=True, timeout=60)
+    preservation, _ = worktree_modules()
+    result = preservation.git(repository, "worktree", "list", "--porcelain", "-z", timeout=60)
     # Git lists the main worktree first; it survives registered-tree cleanup.
     return [Path(os.fsdecode(field[len(b"worktree "):])).resolve()
             for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")]
+
+
+def containing_repository(path):
+    """Find the governing Git boundary, including nested project directories."""
+    for parent in (path, *path.parents):
+        marker = parent / ".git"
+        if os.path.lexists(marker) and not directory_skeleton(marker):
+            return parent
+        if all((parent / name).exists() for name in ("HEAD", "objects", "refs")):
+            raise OSError("repository_unverifiable:bare_repository")
+    return None
+
+
+def artifact_lakes(path, protected, worktrees):
+    """Find private cache roots without splitting ordinary siblings or entering Git metadata."""
+    device, pending = path.lstat().st_dev, [path]
+    while pending:
+        entry = pending.pop()
+        info = entry.lstat()
+        if (not stat.S_ISDIR(info.st_mode) or info.st_dev != device or info.st_uid != os.getuid()
+                or getattr(info, "st_flags", 0) & PROTECTED_FLAGS
+                or entry in protected or any(tree == entry or tree in entry.parents for tree in worktrees)):
+            continue
+        if entry.name == ".lake":
+            yield entry, containing_repository(entry.parent) is not None
+        else:
+            pending.extend(child for child in entry.iterdir() if child.name != ".git")
+
+
+def clean_generated_build(lake, cutoff, protected, source, delete, activity):
+    """Reclaim only build output under its physical cache guard, retaining registered trees."""
+    path = lake / "build"
+    result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
+    try:
+        _, release = worktree_modules()
+        with release.cache_guard(lake.parent):
+            def qualify():
+                registrations = registered_worktrees(source)
+                if any(tree == path or tree in path.parents for tree in registrations):
+                    return dict(reason="protected")
+                info = lake.lstat()
+                if stat.S_ISLNK(info.st_mode):
+                    return dict(reason="symlink")
+                if info.st_uid != os.getuid():
+                    return dict(reason="not_owned")
+                if info.st_dev != lake.parent.stat().st_dev:
+                    return dict(reason="mount")
+                if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
+                    return dict(reason="protected_flag")
+                governing = containing_repository(lake.parent)
+                attachments = []
+                if governing is not None:
+                    preservation, _ = worktree_modules()
+                    attachments = registered_worktrees(governing)
+                    if (not (governing / ".git").is_dir()
+                            or attachments != [governing.resolve()]):
+                        return dict(reason="protected")
+                    top = Path(preservation.value(governing, "rev-parse", "--show-toplevel")).resolve()
+                    if top != governing.resolve():
+                        return dict(reason="repository_unverifiable")
+                    if preservation.git(top, "ls-files", "--", str(path.relative_to(top))).stdout:
+                        return dict(reason="protected")
+                return dict(reason=None, registrations=sorted(map(str, registrations)),
+                            attachments=list(map(str, attachments)),
+                            lake=(info.st_dev, info.st_ino, info.st_mode, info.st_ctime_ns),
+                            repository=str(governing) if governing is not None else None)
+            if delete:
+                protected = ProtectedPaths(activity())
+            return clean_candidate(path, min(cutoff, time.time() - 24 * 3600), protected, delete=delete,
+                                   activity=activity, refresh_activity=True, qualification=qualify)
+    except BlockingIOError:
+        result["reason"] = "cache_busy"
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        result.update(reason="unreadable", detail=str(error))
+    return result
 
 
 def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
@@ -385,6 +694,8 @@ def clean_from_anchor(options, caller, disk_descriptor):
         if root.exists() and not root.is_dir():
             raise OSError("artifact root must be a directory: " + str(root))
     roots = {path for path in roots if not any(parent in roots for parent in path.parents)}
+    # Registered-tree disposal can remove this program's source checkout.
+    worktree_modules()
     inventory = registered_worktrees(options.repository)
     worktrees = set(inventory)
     lanes_exit = clean_worktrees(options.repository, options.base, options.delete,
@@ -404,22 +715,87 @@ def clean_from_anchor(options, caller, disk_descriptor):
     apparent_bytes = 0
     seen = set()
     inventory_error = None
+    main_checkout = next(iter(inventory), options.repository)
+    seen_lakes = set()
+    ipc_candidates = []
+    def record(category, result):
+        nonlocal apparent_bytes
+        counts[category + ":" + result["action"]] += 1
+        if result["action"] in ("would_remove", "removed"):
+            apparent_bytes += result["apparent_bytes"]
+        elif result["action"] == "kept":
+            skipped[result["reason"]] += 1
+        if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
+            emit("host_cleanup_item", category=category, **result)
+
+    def fresh_protection():
+        return active_paths(codex) | set(registered_worktrees(main_checkout)) | {caller}
+
+    def clean_staging(lake):
+        if lake in seen_lakes:
+            return
+        seen_lakes.add(lake)
+        _, release = worktree_modules()
+        def inspect(path):
+            protection = ProtectedPaths(active_paths(codex) | {caller}) if options.delete else ProtectedPaths(active | {caller})
+            return inspect_candidate(path, cutoff, protection)
+        for result in release.clean_staging(lake, delete=options.delete, inspect=inspect):
+            record("lean_staging", result)
     try:
+        for tree in inventory:
+            lake = tree / ".lake"
+            if lake.is_dir() and not lake.is_symlink():
+                clean_staging(lake)
         for category, path in candidates(codex, sshx, roots):
             if path in seen:
                 continue
             seen.add(path)
             if any(parent in worktrees for parent in path.parents):
                 result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
+            elif category != "codex" and any(parent.name == ".lake" for parent in path.parents):
+                lake = next(parent for parent in path.parents if parent.name == ".lake")
+                clean_staging(lake)
+                if path == lake / "build":
+                    result = clean_generated_build(lake, cutoff, protections[category],
+                                                   main_checkout, options.delete, fresh_protection)
+                else:
+                    result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
             else:
-                result = clean_candidate(path, cutoff, protections[category], options.delete)
-            counts[category + ":" + result["action"]] += 1
-            if result["action"] in ("would_remove", "removed"):
-                apparent_bytes += result["apparent_bytes"]
-            elif result["action"] == "kept":
-                skipped[result["reason"]] += 1
-            if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
-                emit("host_cleanup_item", category=category, **result)
+                if category != "codex" and sys.platform == "darwin":
+                    try:
+                        mode = path.lstat().st_mode
+                    except FileNotFoundError:
+                        record(category, dict(path=str(path), action="kept", reason="vanished", apparent_bytes=0))
+                        continue
+                    except PermissionError as error:
+                        record(category, dict(path=str(path), action="kept", reason="unreadable",
+                                              detail=str(error), apparent_bytes=0))
+                        continue
+                    if stat.S_ISFIFO(mode) or stat.S_ISSOCK(mode):
+                        ipc_candidates.append((category, path))
+                        continue
+                result = clean_candidate(path, cutoff, protections[category], options.delete,
+                                         repository=None if category == "codex" else main_checkout,
+                                         activity=fresh_protection, reclaim=category != "codex")
+            record(category, result)
+            if category != "codex" and result["action"] == "kept" and (
+                    result["reason"] == "recent" or result["reason"].startswith("repository")):
+                for lake, repository in artifact_lakes(path, protections[category], worktrees):
+                    if repository:
+                        clean_staging(lake)
+                    if (lake / "build").exists():
+                        record(category, clean_generated_build(lake, cutoff, protections[category],
+                                                              main_checkout, options.delete, fresh_protection))
+        if ipc_candidates:
+            categories = dict((path, category) for category, path in ipc_candidates)
+            def ipc_activity():
+                registrations = set(registered_worktrees(main_checkout))
+                active = active_paths(codex, strict_ipc=True) | {caller, codex, sshx}
+                active.update(path for path in categories if any(parent in registrations for parent in path.parents))
+                return active
+            for result in clean_ipc_batch(list(categories), cutoff, protections["tmp"], options.delete,
+                                         ipc_activity, repository=main_checkout):
+                record(categories[Path(result["path"])], result)
     except OSError as error:
         inventory_error = str(error)
     failed = inventory_error is not None or lanes_exit != 0 or any(key.endswith(":failed") for key in counts)
