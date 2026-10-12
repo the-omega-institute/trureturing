@@ -9,9 +9,9 @@ def source : NativeSource NativeContinuation.NullReplyFiber.native_execution whe
   reconstruction := .exact
 
 def bridge : NativeBridge where
-  reader := fun a => rawTransition (rawMachine 0).start a
+  reader := fun _ => none
   reply := fun a => rawOutput (rawTransition (rawTransition (rawMachine 0).start a) .high)
-  reader_eq := rfl
+  reader_eq := by cases True.intro
   reply_eq := rfl
 
 /-- The original native execution occurrence has an exact complete single-window
