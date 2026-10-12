@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cope-2021-binary-detection-threshold` (refuted) by `D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cope-2021-binary-detection-threshold","declaration_gid":"D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Cope (2021). *The Binary-Outcome Detection Loophole*. DOI: [10.1088/1367-2630/ac10a5](https://doi.org/10.1088/1367-2630/ac10a5). URL: <https://arxiv.org/abs/2005.03344v3>.

@@ -11,6 +11,7 @@ escape_witness: none
 admission_basis: open-problem-resolution (#15572; Refuted)
 Direct frozen dependencies: none (pinned Mathlib only).
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
+There are no other authored public theorems; additional public theorem audits without four-slot evidence are unfinished under https://github.com/the-omega-institute/trureturing/issues/15774.
 RelaxedHardyNoSignallingOptimum.IsNSBox has binary inputs and d outcomes for N parties; here there are m inputs and binary outcomes for two parties.
 Declaration judgements (all helpers are consumed; no supporting module is frozen separately):
 proof_shape: IsNSBox: bind-only; definition; consumers: etaStar, marginalA_eq, marginalB_eq.
