@@ -4081,3 +4081,229 @@ does not prove RH or strict Robin for all $H>5040$, settle the
 uniform actual-node comparison in $0<t<T_n^{\rm mov}$, close initial
 degrees or global common-zero propagation, or localize every nonreal
 root. These are still full-criterion obligations.
+
+## Nonreal-root defect and the actual critical-value word
+
+Reuse the unchanged coefficient source, its positive coefficients,
+(LC46)–(LC47), the actual normalized reflection $q_n$ and the exact
+primitive/constant identity in
+[SourceJensenIntegralExtension](../../Blueprint/D5/S3/Zeros/Jensen/SourceJensenIntegralExtension.md).
+Classical Rolle counting with multiplicity and root counting between
+real critical points are used as suppliers; no new generic Sturm,
+Rolle or polynomial-root theorem is asserted. The application below
+tracks the actual source row, even when that row is not entirely real.
+It has no Lean certificate or literature originality claim.
+
+[Craven–Csordas, *Jensen polynomials and the Turán and Laguerre
+inequalities*](https://doi.org/10.2140/pjm.1989.136.241), Theorem 2.5
+(iii)–(v), printed pp.248–249, already provides the finite-tower strict
+neighboring-node criterion. It requires the comparisons at all preceding
+rows; it does not make one isolated comparison a full-root-count proof.
+[Craven–Csordas, *Complex zero decreasing sequences*](https://doi.org/10.4310/maa.1995.v2.n4.a4),
+Corollary 3.2 in the [author archive](https://math.hawaii.edu/~tom/mathfiles/zds.pdf),
+PDF p.15, with the identity sequence, multiplication by $n!$ and
+positive variable rescaling, supplies the unchanged finite Jensen
+multipliers $(n)_{\underline k}/n^k$ for $k\le n$ and zero afterward.
+These are reused published suppliers. The ledger below only connects
+classical critical-value counting to the actual mixed rows and the
+already obtained $o(n)$ count; it introduces no new Jensen criterion or
+complex-zero-decreasing theorem.
+
+### A monotone integer that a weak root law cannot eliminate
+
+For $n\ge1$ put
+
+$$
+\alpha_n=\frac{n}{n+1},\qquad
+q_n(x)=x^n\mathcal J_n(1/x),\qquad
+q_{n+1}'(x)=(n+1)\alpha_n^n q_n(x/\alpha_n).
+\tag{LC159}
+$$
+
+The expression at zero is its polynomial continuation, not division
+by zero. Source normalization $a_0=1$ makes $q_n$ monic of degree $n$;
+$q_n(0)=\beta_n=(-1)^n n!a_n/n^n\ne0$. Coefficient positivity
+excludes nonpositive real roots. The reflection identifies positive
+roots and multiplicities with those of $\mathcal J_n$.
+
+Write $N_n^+$ for the number of real positive roots with multiplicity
+and $\Delta_n=n-N_n^+$ for the number of nonreal roots. Rolle's theorem
+with multiplicity gives at least $N_{n+1}^+-1$ real roots of
+$q_{n+1}'$ whenever $N_{n+1}^+\ge1$. The exact positive scaling in
+(LC159) identifies its real-root count with $N_n^+$. If
+$N_{n+1}^+=0$ the resulting bound is automatic. Hence
+
+$$
+N_{n+1}^+\le N_n^++1,\qquad
+0\le\Delta_n\le\Delta_{n+1},\qquad
+\Delta_n\in2\mathbb Z_{\ge0}.
+\tag{LC160}
+$$
+
+Evenness follows from complex conjugate pairing, counted with
+multiplicity. Thus a nonreal-root defect cannot disappear at a later
+degree of this exact derivative tower. This is a count, not a claim
+that individual nonreal roots follow specified trajectories.
+
+By (LC157), $\Delta_n=o(n)$ nonetheless. A nondecreasing even integer
+sequence can remain positive while its ratio to $n$ vanishes, so these
+two conclusions do not force $\Delta_n=0$.
+
+### The exact ledger includes multiple critical points and zero values
+
+List all distinct positive real roots of $q_n$ as
+$\lambda_1<\cdots<\lambda_k$, with multiplicities $m_i\ge1$.
+The list may be empty. Then $\sum_i m_i=N_n^+$ and, by (LC159),
+all real critical points of $q_{n+1}$ are
+$c_i=\alpha_n\lambda_i$, with the same derivative multiplicities $m_i$.
+Set
+
+$$
+v_i=q_{n+1}(c_i),\qquad
+s_i=\operatorname{sign}(v_i),\qquad
+s_0=(-1)^{n+1},\qquad s_{k+1}=1.
+$$
+
+The two end signs are the actual constant's sign at zero and the
+monic polynomial's sign at positive infinity. Define
+$C_n=\#\{0\le i\le k:s_i s_{i+1}<0\}$, and
+$Z_n=\{i:1\le i\le k,\ v_i=0\}$.
+
+Between consecutive real critical points the derivative is nonzero,
+so the polynomial is strictly monotone. Such an open interval has
+exactly one root when its two nonzero end signs are opposite and
+none otherwise. A zero critical value instead gives a root exactly
+at $c_i$, with multiplicity $m_i+1$, by the local order relation
+between a polynomial and its derivative. These roots are not counted
+again in the open intervals. Consequently the actual-source ledger is
+
+$$
+N_{n+1}^+
+=C_n+\sum_{i\in Z_n}(m_i+1),\qquad
+\Delta_{n+1}-\Delta_n
+=1+\sum_{i=1}^k m_i-C_n-\sum_{i\in Z_n}(m_i+1).
+\tag{LC161}
+$$
+
+This includes stationary inflections, repeated previous-row real roots
+and common zeros. When $k=0$, the derivative has no real zero; the end
+signs give exactly one real root, since then $n$ is even, and the defect
+is unchanged. Adjacent critical points cannot both have zero values,
+because the polynomial is strictly monotone between them. No assertion
+that such degeneracies occur for the actual source is made.
+
+The quantities on the right are previous-row real critical nodes,
+source critical values and multiplicities, independently of any
+assumed root count of the target row. They still require certification;
+the formula is not a uniform estimate or an efficient root algorithm.
+
+### Simple nonzero critical values: wrong actual nodes are isolated
+
+Suppose for this degree that all real roots of $q_n$ are simple and
+all $v_i$ are nonzero. No assumption is imposed on its nonreal roots.
+Now $k=N_n^+$ and $n-k$ is even. The desired alternating critical
+sign is $(-1)^{n+1-i}$. Define a bit $\varepsilon_i$ by
+
+$$
+\varepsilon_i=0\ \Longleftrightarrow\
+\operatorname{sign}(v_i)=(-1)^{n+1-i},\qquad
+\varepsilon_0=\varepsilon_{k+1}=0.
+$$
+
+Consecutive actual end signs differ exactly when the consecutive bits
+are equal. Each maximal run of $1$ bits has two transitions, because
+the two endpoint bits are zero. If $b_n$ counts these maximal runs,
+(LC161) therefore becomes
+
+$$
+\Delta_{n+1}-\Delta_n
+=\#\{0\le i\le k:\varepsilon_i\ne\varepsilon_{i+1}\}
+=2b_n.
+\tag{LC162}
+$$
+
+The binary-word identity alone allows longer runs, but actual critical
+values forbid adjacent wrong bits. Put
+$\tau_i=\operatorname{sign}q_n'(\lambda_i)=(-1)^{k-i}$.
+On $(c_i,c_{i+1})$ the derivative of $q_{n+1}$ has this sign, so
+$\tau_i(v_{i+1}-v_i)>0$. Two wrong bits would instead give
+$\operatorname{sign}v_i=\tau_i$ and
+$\operatorname{sign}v_{i+1}=-\tau_i$, a contradiction.
+Every realizable wrong run is therefore a singleton:
+$b_n=\#\{i:\varepsilon_i=1\}$.
+Under the displayed simple/nonzero assumptions, each wrong actual
+critical node contributes one conjugate pair to the defect increase.
+This assigns no trajectories or locations to those roots. Zero critical
+values and multiplicities use (LC161), rather than being silently
+assigned bits in (LC162).
+
+At the original actual node $t_i=1/\lambda_i$, reuse the same source's
+adjacent identity. The exact quantities are
+
+$$
+q_n'(\lambda_i)=-\lambda_i^{n-2}\mathcal J_n'(t_i),\qquad
+v_i=\frac{\alpha_n^{n+1}}n\lambda_i^n\mathcal G_n(t_i),\qquad
+q_n'(\lambda_i)v_i
+=-\frac{\alpha_n^{n+1}}n\lambda_i^{2n-2}
+       \mathcal J_n'(t_i)\mathcal G_n(t_i).
+\tag{LC163}
+$$
+
+The sign of $q_n'(\lambda_i)$ is $(-1)^{k-i}$; the nonreal conjugate
+factors are positive on the real axis. Because $k\equiv n\pmod2$,
+$\varepsilon_i=0$ is exactly the already prescribed strict principal
+comparison $\mathcal J_n'(t_i)\mathcal G_n(t_i)>0$.
+This correspondence uses every actual real root, not a complete
+$n$-node arrow matrix. That full arrow representation's original
+complete-real-critical-node hypothesis is not supplied by this ledger.
+
+### Defect births are sparse, and their witnesses are in the unpaid range
+
+The unconditional count (LC160), evenness and (LC157) give
+
+$$
+\#\{1\le n\le M:\Delta_{n+1}>\Delta_n\}
+\le\frac{\Delta_{M+1}-\Delta_1}{2}
+=o(M).
+\tag{LC164}
+$$
+
+This conclusion needs no simplicity or nonzero-critical-value
+assumption. It bounds the number of degrees at which the count
+increases; it neither proves that their number is finite nor rules
+out a single increase.
+
+If the strict original principal comparison holds at every actual
+positive $\mathcal J_n$ node in one degree, (LC163) makes all the real
+critical nodes simple with nonzero values and every bit zero.
+Equation (LC162) then gives $\Delta_{n+1}=\Delta_n$.
+
+For each fixed $R>0$, (LC30) pays this strict comparison at
+$0<t\le R$ for all sufficiently large $n$; (LC151) pays it at
+$t\ge T_n^{\rm mov}$. Thus, for all sufficiently large $n$ depending
+on $R$, an increase in the defect requires an actual positive node
+in the uncovered interval
+
+$$
+R<t<T_n^{\rm mov}=\frac{r_n\log n}{\kappa n}
+\quad\text{at which}\quad
+\mathcal J_n'(t)\mathcal G_n(t)\le0.
+\tag{LC165}
+$$
+
+The non-strict failure includes repeated real nodes or a zero adjacent
+value; neither is assumed absent. A failure of the strict comparison
+does not by itself imply a defect increase in a degenerate step;
+(LC161) gives that step's exact count.
+
+The literature's existing finite-degree coverage supplies
+$\Delta_n=0$ for $n\le9\cdot10^{24}$ under the actual coefficient
+correspondence in
+[the Jensen supplier](osullivan2021modifiedjensen.md#known-finite-degree-coverage-from-verified-zero-height).
+Eliminating every later increase would preserve zero defect at every
+degree and pay the classical Jensen/RH criterion. The sparse-degree
+bound and the localization of a possible witness do not eliminate
+those increases. No degree threshold for the new comparisons has
+been placed inside that finite verified range. RH, strict Robin for
+all $H>5040$, the uniform lower-range comparison and individual
+complex-root exclusion remain unresolved.
