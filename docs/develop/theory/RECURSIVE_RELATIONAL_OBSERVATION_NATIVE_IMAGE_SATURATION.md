@@ -994,100 +994,71 @@ missing in Open problem 7.3.
 
 ## 追加锚（本行以下为增补区）
 
+## 9. Fixed-shift completed coding and the free-state boundary
 
-## 9. Completed fixed-power saturation with arbitrary retained definitions
+The fixed-power normalization has a sound finite part, but its completion must
+keep a distinction between a syntactic terminal-free graph state and a chosen
+leafless value. The distinction is needed before any claim about all solutions,
+all retained definitions, or effective joint support is made.
 
-The finite functional presentation in Definition 3.1 is sufficient for its
-recognized class, but it imposes a one-head orientation before the completed
-comparison is made. The following construction removes that orientation. Every
-retained definition is conjunctive, repeated names are shared, and no
-semantic equation is discarded when a convenient representative is chosen.
-It therefore extends the recognized functional/image class of NIS Definition
-5.2 rather than selecting another orientation inside that class.
+**Definition 9.1 (reduced completed code).** Let $\widehat{\mathcal T}$ be the
+finite-prefix completion of the native finite ordered trees. Let
+$\mathscr C_{\mathbb Z}$ consist of coinductive ordered binary trees with finite
+leaves $[n]$, $n\in\mathbb Z$, and the unique leafless tree $\Omega$. The raw
+constructor is $F(U,V)$, with $F(\Omega,\Omega)=\Omega$ extensionally. Thus
+$\Omega$ is determined by all of its replies; it is not a leaf label and not an
+infinity token.
 
-**Definition 9.1 (signed completed code).** Let $\mathscr C_{\mathbb Z}$ be the
-coinductive carrier of full ordered binary trees whose finite leaves have labels
-$[n]$ with $n\in\mathbb Z$. A tree with no finite leaf is the unique leafless
-full tree $\Omega$. It is an element of the carrier determined by its replies,
-not an additional leaf label or an infinity token. The raw ordered constructor
-is written $F(U,V)$; if both children are leafless then
-$F(\Omega,\Omega)=\Omega$ extensionally.
-
-For $d\in\mathbb Z$, $\sigma^d$ adds $d$ to every finite leaf label and fixes
-$\Omega$. A code is **native** when all its finite labels are nonnegative. A
-code is **reduced** when it is $\Omega$, a leaf $[n]$, or
-$F(U,V)$ with reduced children and with neither of the following occurring at
-that constructor root:
+For $d\in\mathbb Z$, write $\sigma^d$ for the shift of every finite label by
+$d$, fixing $\Omega$. A code is reduced when it is $\Omega$, a leaf $[n]$, or
+$F(U,V)$ with reduced children and neither
 
 $$
-(U,V)=([n+1],[n])\quad(n\in\mathbb Z),\qquad
-(U,V)=(\Omega,\Omega).
+(U,V)=([n+1],[n])\quad(n\in\mathbb Z),
+\qquad (U,V)=(\Omega,\Omega).
 \tag{NIS.30}
 $$
 
-The second condition is the global liveness condition in local form: every
-retained constructor subtree has a finite leaf descendant. A leafless subtree
-is already $\Omega$ and is never represented again by a constructor node.
-Write $\mathscr C_{\mathbb Z}^{\rm red}$ for the reduced codes and use the
-superscript $\mathbb N$ for the native subcarrier.
+The first forbidden pair is the native atomic collapse. The second is the
+local representation of the leafless completion. A constructor node with no
+finite leaf below it is therefore represented by $\Omega$ only after a value
+has been chosen, not merely because the current syntax has no displayed
+terminal.
 
-For a native reduced code put
-$\llbracket[n]\rrbracket=T_n$,
-$\llbracket\Omega\rrbracket=\Omega$, and
-$\llbracket F(U,V)\rrbracket=\langle\llbracket U\rrbracket,\llbracket V\rrbracket\rangle$.
-The same brackets with signed labels are only an algebraic notation; a branch
-is admitted as a native value only after all its labels have passed the
-nonnegativity guards below.
-
-**Theorem 9.2 (completed canonical coding).** The map
+**Theorem 9.2 (canonical coding).** Collapsing every maximal finite atomic
+subtree and retaining every other ordered pair gives a bijection
 
 $$
-B:\widehat{\mathcal T}\longrightarrow\mathscr C_{\mathbb N}^{\rm red}
+B:\widehat{\mathcal T}\longrightarrow \mathscr C_{\mathbb N}^{\rm red}
 $$
 
-obtained by taking maximal finite atomic subtrees and retaining every other
-ordered pair is a bijection, with
+such that
 
 $$
-\llbracket B(u)\rrbracket=u,\qquad
-B(\rho^k u)=\sigma^kB(u)\quad(k\in\mathbb N).
+\llbracket B(u)\rrbracket=u,
+\qquad B(\rho^k u)=\sigma^kB(u)\quad(k\in\mathbb N).
 \tag{NIS.31}
 $$
 
-In particular, the only code for the leafless completion is $\Omega$. The
-finite part of the assertion is [ABC, Theorems 2.2--2.3][ABC].
+In particular, the only code for the leafless completion is $\Omega$.
 
-**Proof.** On a finite tree, the atomic recurrence
-$T_{n+2}=\langle T_{n+1},T_n\rangle$ says exactly that the first forbidden
-pattern in (NIS.30) must be collapsed to $[n+2]$. The finite normal-code
-induction of [ABC, Theorem 2.2][ABC] gives both inverse identities and preserves
-ordered addresses.
+**Proof.** On finite trees, the recurrence
+$T_{n+2}=\langle T_{n+1},T_n\rangle$ gives exactly the first collapse in
+(NIS.30), and the finite normal-code induction of [ABC, Theorems 2.2--2.3][ABC]
+gives both inverse identities. For a completed tree, apply that collapse at
+every finite atomic subtree. A subtree with no finite leaf is the unique
+leafless full tree and is represented by $\Omega$; every other root has the
+same two possible collisions as in (NIS.30). Every finite requested prefix
+meets finitely many such steps, so induction on prefix depth proves the inverse
+identities and the shift identity. If a reduced leaf and a reduced pair had
+the same value, atomic injectivity forces the forbidden pair $([n+1],[n])$.
+If $\Omega$ and a pair had the same value, both children of the pair would be
+leafless, forcing the second forbidden pair. Pair injectivity handles the
+remaining cases. \square$
 
-For a completed tree, perform the same collapse on each finite atomic
-subtree. If a constructor subtree has no finite leaf below it, it is the unique
-leafless full tree and is replaced by $\Omega$; this is the liveness clause,
-not a new symbol. Otherwise its two children are recursively coded and the
-only possible collision at the root is the first pattern in (NIS.30). Thus the
-result is reduced. Conversely, expansion of a reduced code has the displayed
-native value. A finite requested prefix meets only finitely many constructors
-and finite leaves, so induction on prefix depth proves that expansion and
-coding are inverse on every finite prefix. Equality of all prefixes gives the
-completed inverse identity. The same induction, using distribution of $\rho$
-over ordered pairs and $\rho^kT_n=T_{n+k}$, proves the second identity.
-
-If one reduced code has a leaf root $[n]$ and the other has a pair root
-$F(U,V)$, the expanded value of the former is the atomic tree $T_n$. The
-atomic recurrence and the finite subtree theorem force
-$U=[n-1]$ and $V=[n-2]$, which is precisely the first forbidden pattern in
-(NIS.30). If one code is $\Omega$ and the other has a pair root, both children
-of the latter must be leafless, which is the second forbidden pattern. In all
-remaining cases the roots agree in kind; pair roots have equal children by
-native pair injectivity and induction. Thus no two reduced codes expand
-equally, and coding is injective. $\square$
-
-**Definition 9.3 (arbitrary fixed-power presentation).** A positive
-presentation consists of finitely many named values and finitely many retained
-conjuncts. Its terms are generated by
+**Definition 9.3 (arbitrary fixed-power presentation).** A presentation has
+finitely many named values and finitely many retained positive conjuncts. Its
+terms are generated by
 
 $$
 E::=g\mid T_{a(\mathbf p)}\mid\Omega\mid X_i\mid
@@ -1096,463 +1067,308 @@ E::=g\mid T_{a(\mathbf p)}\mid\Omega\mid X_i\mid
 $$
 
 where $g$ is a finite native ground, $e$ is a supplied nonnegative numeral,
-and $a(\mathbf p)$ is an affine integer expression with the explicit guard
-$a(\mathbf p)\ge0$. The presentation may contain any finite family
-$X_i=E_{i,\ell}$, not merely one equation for each $X_i$, together with
-positive equalities and image constraints $E\in L_k$. Every occurrence of a
-name, including repeated occurrences in one definition, is retained.
+and $a(\mathbf p)\ge0$ is an explicit affine guard. It may contain any finite
+family $X_i=E_{i,\ell}$, repeated occurrences, positive equalities, and image
+constraints $E\in L_k$. A signed presentation has in addition a finite list
+$\Delta^-$ of native disequalities. Every positive equality, including an old
+equality-partition bit that asserts equality, is promoted into the positive
+presentation before saturation. No equality is silently treated as a
+disequality or passed to a supplier whose hypotheses mention only
+ disequalities.
 
-A signed presentation additionally has a finite list $\Delta$ of native
-equalities or disequalities between terms of (NIS.32). The positive saturation
-below never replaces $\Delta$ by a completed inequality. In particular, every
-power $\rho^e$ on a residual name remains the displayed numeral $e$.
-
-**Definition 9.4 (root split and weighted congruence saturation).** Flatten the
-finite syntax of a presentation by naming each displayed subterm. Make a finite
-case split on the root sort of every named value: a finite atom, $\Omega$, or a
-constructor root. In a constructor case introduce one shared pair of children
-for that named value; all definitions of the name use those same children.
-Distribute every fixed numeral power through a displayed pair, through a
-finite atom, or through $\Omega$. Each surviving branch has equations of the
-following four forms, with $d,d_1,d_2\in\mathbb Z$ bookkeeping offsets:
+**Definition 9.4 (finite graph saturation with free states).** Flatten the
+syntax of a presentation by naming displayed subterms. Split the root sort of
+each named value into a finite atom, $\Omega$, or a constructor root. A
+constructor case introduces one shared ordered pair of children, so all
+retained definitions of that name use the same children. Fixed numeral powers
+are distributed through displayed pairs, finite atoms, and $\Omega$. The
+resulting facts have the forms
 
 $$
-U=[a],\qquad U=\Omega,\qquad
-U=\sigma^dV,\qquad
+U=[a],\qquad U=\Omega,\qquad U=\sigma^dV,\qquad
 U=F(\sigma^{d_1}V,\sigma^{d_2}W).
 \tag{NIS.33}
 $$
 
-The integer offsets are code shifts created by cancellation; they are not new
-native exponents. Saturate all branches by these rules.
+Weighted congruence saturation keeps every parallel edge and propagates both
+child relations whenever two pair roots have been equated. A nonzero shift
+cycle is incompatible with a finite leaf and hence forces that component to
+be leafless. A constructor cycle is retained as a guarded graph; it is never
+converted into an occurs-check failure. A component with no reachable finite
+terminal is recorded as a **free-state node**. The node may later be assigned
+$\Omega$, but it may also be assigned any completed tree satisfying its guarded
+cycle. Components with finite terminals retain all such terminals. Atomic
+collapses and native nonnegativity, image lower bounds, rank guards, and
+noncollapse guards are imposed on every branch.
 
-1. A relation $U=\sigma^dV$ is an edge of a weighted congruence component.
-   Equal components retain the difference of every parallel edge. Pair roots
-   with equal parents impose the corresponding two child relations with the
-   difference of their displayed offsets. Atom roots impose the corresponding
-   affine equality on their labels.
-2. If a component contains a shift cycle of nonzero total weight, mark the
-   entire component $\Omega$. Propagate $\Omega$ through every retained pair
-   definition. An atom in that component, or a pair equation whose other
-   child cannot be $\Omega$, is a failed branch.
-3. In a component with no nonzero shift cycle, choose a potential $s_U\in\mathbb Z$
-   for every named value, unique up to one additive constant per component,
-   satisfying all retained edge differences. A path from a component to a
-   finite terminal has the terminal label equal to its affine label plus the
-   accumulated edge weight and the potential difference.
-4. Retain every pair definition after saturation. A component may use one
-   definition as its displayed representative only after all child relations
-   from the other definitions have been imposed. A directed constructor cycle
-   is kept as a guarded coinductive graph; it is never unfolded into a finite
-   occurs check.
-5. A component with no reachable finite terminal is assigned $\Omega$ in the
-   canonical representative. A component with a reachable finite terminal keeps
-   every such terminal and assigns $\Omega$ only to genuinely unconstrained
-   terminal-free components. At a constructor matching
-   $([n+1],[n])$, collapse the pair and merge its parent with $[n+2]$; at a
-   constructor matching $(\Omega,\Omega)$, collapse it to $\Omega$. Only the
-   remaining constructor roots are retained, and their two noncollapse clauses
-   in (NIS.30) are recorded as guards.
+Before saturation, form a finite universe $\mathcal F$ of all root-sort cases
+and all pair-slot congruence obligations between displayed syntax slots. A
+work item in $\mathcal F$ is processed once. Weighted union-find stores a
+component potential and all parallel edge differences; it does not create a
+new name or enumerate repeated path sums. The measure
+$(|\mathcal F\setminus\mathcal A|,r)$, ordered lexicographically, decreases
+when an obligation is added to the processed set $\mathcal A$ or when one of
+the $r$ unresolved root splits is fixed. A constructor cycle therefore adds
+no work item by unfolding. Since $\mathcal F$ and $r$ are finite, graph
+saturation terminates and produces finitely many guarded finite graphs. This
+is only syntactic closure: it does not say that each free-state node has a
+finite list of values, a finite terminal set, or an arithmetic decision
+procedure.
 
-Finally impose the native guards. Every finite label in every original
-coordinate, reconstructed name, and image term is required to be nonnegative;
-for an image $E\in L_k$, every finite terminal reached in its weighted graph
-must have label at least $k$, while a leafless graph passes that image test by
-$\Omega\in L_k$. The two finite image terminals $T_k$ and $T_{k+1}$ are
-retained as explicit terminal cases before this lower-bound test. A reachable
-negative-weight cycle that can reach a finite
-terminal is rejected, since its repetitions produce arbitrarily negative
-labels. If no such cycle exists, the least terminal weight is attained on a
-simple path. The resulting finite conjunction, together with all affine and
-noncollapse tests, is denoted $\Gamma_\tau(\mathbf p,\mathbf a)$ for the
-branch $\tau$.
+**Proposition 9.5 (sound finite saturation statement).** Every native completed
+solution of a presentation determines one root branch and one assignment of
+completed trees to its free-state nodes satisfying the saturated graph,
+including every repeated definition, image constraint, and native guard. The
+induction follows root equality, ordered-pair injectivity, shift congruence and
+the two collapses in (NIS.30). Conversely, an assignment of completed trees to
+the free-state nodes that satisfies every guarded graph equation expands to a
+solution of the retained positive presentation.
 
-The branch construction is finite: root sorts and smart-pair equalities give
-finitely many cases, weighted union-find saturation strictly decreases the
-number of unmerged components, and shortest paths use simple paths after
-negative cycles have been rejected. No recursive unfolding creates a new
-name. The construction therefore produces a finite list of guards, even when
-its integer parameters are unbounded.
+This proposition is a graph-equation statement. It does not assert that free
+states can be eliminated, that the branches are a countable partition by
+integer parameters, or that the remaining conditions are Presburger.
 
-**Theorem 9.5 (exact multiple-definition solution cases).** For every finite
-positive presentation of Definition 9.3 there is an effective finite family
-of branches $\tau$ with integer parameters $\mathbf a$, Presburger guards
-$\Gamma_\tau(\mathbf p,\mathbf a)$, and canonical completed code assignments
-$K_\tau(\mathbf p,\mathbf a)$ such that:
-
-1. every native completed solution belongs to at least one passing branch,
-   with the same value for every repeated name and every retained definition;
-2. a branch guard passes if and only if its canonical assignment satisfies all
-   positive equations and all image constraints of that branch;
-3. every designated original coordinate has a finite graph reconstruction.
-   It is canonically finite exactly when all its reachable paths end in finite
-   terminals with no live component or $\Omega$; in that case its value is the
-   same finite native expression in every solution of the branch. Otherwise it
-   has an effective completed-prefix procedure;
-4. after a finite tie-breaking comparison of the root cases, the branches form
-   a disjoint effective partition of the positive solution relation.
-
-The statement allows arbitrary retained definitions, sharing and parallel
-occurrences. It has no one-head, orientability, or functional-subclass
-hypothesis.
-
-**Proof.** For soundness, expand a passing branch by $\llbracket\cdot\rrbracket.
-The weighted relations give equal whole values, and the child relations give
-equal ordered pair components for every retained definition. A shift component
-marked $\Omega$ is sound because $\sigma^d\Omega=\Omega$; the image and rank
-guards ensure that every remaining finite label is native and lies in the
-required $L_k$. The two clauses in (NIS.30) ensure that the displayed code is
-canonical, so no constructor has silently been used as an extra infinity
-value or as an uncollapsed atomic cherry. Thus every equation and image
-constraint holds.
-
-For completeness, start with any native completed solution and code all named
-values by Theorem 9.2. Its root sorts choose one of the finite root branches.
-Native pair injectivity imposes every child relation generated by every pair
-definition, so weighted saturation never removes this solution. A nonzero
-shift loop in its component would give $U=\sigma^dU$ with $d\ne0$; a finite leaf
-$[n]$ would then have to equal $[n+d]$, impossible. Hence the component is
-leafless and is exactly $\Omega$, as the saturation rule records. A constructor
-cycle with a finite terminal is retained as a guarded graph, and a cycle with
-no finite terminal is the leafless completion recorded by the liveness rule.
-Every terminal path in a native solution has a nonnegative label. If a
-terminal-reachable negative cycle existed, repetitions would contradict this,
-so the shortest-path guard is necessary. All image constraints are precisely
-the same terminal lower-bound tests by Lemma 2.2. The actual finite labels and
-all affine parameters therefore satisfy $\Gamma_\tau$.
-
-Conversely, the canonical guarded extension is obtained by coinduction on
-finite prefixes. A pair root contributes one new reply level, while a fixed
-$\rho^e$ is prefix-nonexpanding; hence every requested finite prefix depends on
-only finitely many graph edges. Terminal-free strongly connected regions are
-filled by $\Omega$, and regions with terminals retain those terminals. The
-negative-cycle guard makes every retained terminal label bounded below, so the
-extension is native. Induction over the saturated graph proves every original
-definition, including all parallel definitions, and Lemma 2.2 proves every
-image constraint. This gives the reverse solution direction.
-
-For a designated coordinate, reachability in the finite graph decides whether
-it reaches a live component, $\Omega$, or only finite terminals. In the last
-case all paths reduce to a finite normal code with affine labels, so the value
-is rigid throughout the branch. Otherwise finite-prefix unfolding of the graph,
-followed by the prescribed original inverse filters, computes its replies at
-any requested depth. The same finite graph and a fixed comparison order
-perform the branch tie-break, proving termination and the final assertion.
-$\square$
-
-**Proposition 9.6 (whole-value loops, constructor cycles, and the native
-boundary).** A nonzero whole-value shift loop forces $\Omega$, but a guarded
-constructor-occurrence cycle does not. In particular,
+**Proposition 9.6 (native obstruction to an all-solution finite partition).**
+The presentation
 
 $$
-X=\rho^dX\ (d>0)\quad\Longrightarrow\quad X=\Omega,
+X=X
 \tag{NIS.34}
 $$
 
-whereas
+is an allowed retained definition. Every native completed tree is a solution.
+There are continuum many pairwise distinct such solutions: for each
+$s=(s_0,s_1,\ldots)\in\{0,1\}^{\mathbb N}$ define coinductively
 
 $$
-X=\langle\rho Y,\alpha\rangle,\qquad
-Y=\langle\rho X,\beta\rangle
+U_s=\langle U_{\operatorname{shift}(s)},T_{s_0}\rangle.
 \tag{NIS.35}
 $$
 
-has a unique completed solution with finite $\alpha$ and $\beta$ leaves and is
-not $\Omega$. The system $X=\langle X,X\rangle$ has the solution $\Omega$,
-which is obtained by liveness rather than by a shift contradiction.
+The right child at the first position where two sequences differ proves
+$U_s\ne U_t$. Each $U_s$ is native, has finite leaves, and satisfies (NIS.34).
 
-**Proof.** The first assertion follows from Theorem 9.2: a finite leaf in the
-code would require its integer label to equal its translate by $d$. Hence a
-solution has no leaf and is $\Omega$. For (NIS.35), the map on pairs of
-completed trees is prefix-contracting by one level because both right children
-are displayed finite leaves and both left children occur below a pair. Its
-successive finite-prefix approximants therefore stabilize at a unique
-completed pair of equations. The right-hand leaves persist at finite
-addresses, so the solution is leafful and cannot be $\Omega$. In
-$X=\langle X,X\rangle$ there is no finite terminal; the unique leafless
-completion is $\Omega$. These three cases are distinct in the saturation graph.
-$\square$
+Consequently, no finite family whose branch data consist only of integer
+parameters and canonical terminal/$\Omega$ assignments can be an exact
+all-solution partition for Definition 9.3. Such data are countable, while
+(NIS.34) has continuum many solutions. In particular, syntactic absence of a
+finite terminal does not imply that the represented value is $\Omega$.
 
-**Theorem 9.7 (original-coordinate rigidity and effective prefixes).** Let a
-passing branch of Theorem 9.5 reconstruct an original native coordinate $U_i$
-from a saturated component by fixed integer offsets and the original image
-filters. If the reachable terminal graph of $U_i$ contains only finitely many
-finite terminals and no live component, then there is a finite Presburger
-partition of the parameter space on which
+**Proof.** The coinductive equations in (NIS.35) define a full ordered tree;
+its right child at depth $j$ is $T_{s_j}$, so distinct sequences give distinct
+finite prefixes. The equation $X=X$ imposes no further condition. The
+cardinality comparison proves the final assertion. \square$
+
+The obstruction also applies to a free component attached to a nontrivial
+presentation. A canonical choice $\Omega$ is legitimate for a theorem about
+one selected witness, or after a separate cofinal-normalization theorem. It
+cannot be used in a completeness direction that quantifies over arbitrary
+completed values.
+
+**Proposition 9.7 (guarded cycles are finite graphs, not finite terminal
+lists).** The native equation
 
 $$
-U_i=f_{i,\tau}(\mathbf p,\mathbf a)\in\mathcal T.
+X=\langle T_0,X\rangle
 \tag{NIS.36}
 $$
 
-in every solution of that branch. If the graph reaches $\Omega$ or a live
-component, the same reconstruction computes $U_i\equiv_h$ for every supplied
-$h$ by a finite guarded unfolding.
+has the guarded solution $U=\langle T_0,U\rangle$. Its graph has one named
+constructor node and one self-edge, but it has infinitely many constructor
+occurrences in its expansion. A requested depth can be computed by finite
+unfolding, while a procedure that enumerates only finite terminal paths does
+not reconstruct the value. The same issue occurs for
+$X=\langle\alpha,X\rangle$ with any finite native ground $\alpha$.
 
-**Proof.** The finite case has only finitely many simple terminal paths after
-negative cycles are removed. Smart pairing compares their affine labels and
-collapses exactly the first pattern in (NIS.30); this gives the stated finite
-Presburger partition and one normal code on each cell. Image inversion is
-performed only under the exact filters $U\in L_s$ from Lemma 2.2. Subtraction
-of a native shift is represented by $q+s=n$ with $q\ge0$, never by truncated
-subtraction, so every inverse remains a genuine native value.
+Thus a terminating saturation needs a separate finite-prefix evaluator for
+free-state graphs and a proved interface from that evaluator to the native
+image and rank guards. A finite graph, by itself, is not a finite arithmetic
+elimination of guarded recursive trees. The whole-value equation
+$X=\rho^dX$ with $d>0$ remains different: by (NIS.31), a finite leaf would
+have to equal its nonzero translate, so its only completed solution is
+$\Omega$.
 
-For the other case, unfold the guarded graph until every requested original
-address either reaches a finite terminal, a known $\Omega$ reply, or the
-fringe of a pair. Pairing has supplied one level of lookahead; the fixed
-numeral powers preserve the already computed prefix. Applying the finite image
-inverse to the resulting image prefix gives the original prefix. This is an
-offline finite construction on a passing completed presentation and does not
-introduce an inverse or source-reading operation. $\square$
+## 10. Complete acquired charts and joint signed support
 
-## 10. Exact signed support and the unrestricted joint-prefix alternative
-
-The preceding theorem applies to the positive completed equations generated by
-an exact source chart. The signed constraints remain finite-source conditions.
-This separation is what permits arbitrary complete acquired inputs without
-passing a disequality to a leafless contact.
-
-**Definition 10.1 (exact chart tuple for complete acquired rows).** For each
-attained row $r$ of Definition 1.3, let a chart list have the form
+**Definition 10.1 (exact complete-row chart).** For each attained complete row
+$r$ of an acquired input $I=(P,R,H_0,H_{\rm rel},Q,N)$, use a finite chart list
 
 $$
 D_r=\bigcup_{b\in\mathcal C_r}
- \left\{
- \Theta_{r,b}(\mathbf n,\mathbf z):
- P_{r,b}(\mathbf n)\land\Delta_{r,b}(\mathbf n,\mathbf z)
- \right\},
+\left\{\Theta_{r,b}(\mathbf n,\mathbf z):
+ P_{r,b}(\mathbf n)\land E^+_{r,b}(\mathbf n,\mathbf z)
+ \land\Delta^-_{r,b}(\mathbf n,\mathbf z)\right\},
 \tag{NIS.37}
 $$
 
 where $\mathbf n\in\mathbb N^{k_{r,b}}$ and
-$\mathbf z\in\mathcal T^{m_{r,b}}$ is the full Cartesian residual product before
-$\Delta_{r,b}$. Terms in $\Theta$ and in every member of $\Delta$ use finite
-grounds, affine atoms $T_{n_j+c}$, ordered pairing, and fixed numeral powers
-$\rho^e z_i$. Every endpoint-reached condition, old equality or disequality,
-off-task condition, complete exterior, reached subset, partition bit and
-whole signed record from $I$ is included in $P_{r,b}$ or $\Delta_{r,b}$.
-Both directions are required: every chart point is the same original source in
-$D_r$, and every $u\in D_r$ is reconstructed by some chart point.
+$\mathbf z\in\mathcal T^{m_{r,b}}$ is the full Cartesian residual product
+before the signed list. $E^+$ contains every retained positive equality,
+partition equality, image constraint, endpoint condition, complete old and new
+exterior, reached-hole condition, and off-task condition. $\Delta^-$ contains
+only disequalities. Terms use finite grounds, affine atoms $T_{n_j+c}$,
+ordered pairing, and fixed numeral powers $\rho^e z_i$. Both directions are
+part of the chart: every chart point is the same original source in $D_r$,
+and every source in $D_r$ has a chart point.
 
-The exact chart tuple is supplied by [NIC, Theorems 3.2--3.3 and 4.3][NIC]
-and [SFS, Proposition 3.2][SFS]. Those results permit overlapping charts and
-nonnormal ambient fillings; they do not impose a functional positive system.
-Apply Theorem 9.5 after naming every repeated subexpression in each chart.
-All image constraints introduced by the chart remain in the positive part.
+The exact-source results [NIC, Theorems 3.2--3.3 and 4.3][NIC] and [SFS,
+Proposition 3.2][SFS] provide this two-way chart shape under their stated
+complete-row hypotheses. The chart statement does not solve the positive
+multiple-definition system created by $E^+$.
 
-**Definition 10.2 (completed contact and joint signed support).** Choose one
-saturated branch $\tau_r$ for each $r\in B$. Split each chart's scalar ranks
-and residual coordinates into finite and divergent modes. Let $\mathbf p$ be
-the tuple of all finite scalar values and all finite terminal labels produced by
-Theorem 9.5, and let $\boldsymbol\eta_r$ record the completed values of the
-divergent residual coordinates and the symbol $\infty$ for each divergent scalar
-rank. The symbol $\infty$ here is only a quantifier value in
-$\overline{\mathbb N}=\mathbb N\cup\{\infty\}$; it is not a code leaf and is
-never inserted into $\mathscr C_{\mathbb Z}$.
-
-The completed residual tuple is chosen in the canonical mode of Theorem 9.5:
-rigid finite coordinates retain their finite terminal expressions, and every
-nonrigid terminal-free component is represented by $\Omega$. Thus no arbitrary
-finite tree is hidden inside the finite parameter tuple; finite signed
-exceptions are restored by the support condition below.
-
-Let $\widehat\Theta_{r,\tau_r}(\mathbf p,\boldsymbol\eta_r)$ be the completed
-source obtained from the saturated code graph, with $\Omega$ used for a
-coordinate whose scalar rank tends to infinity. A tuple
-$(\boldsymbol\tau,\mathbf p,(\boldsymbol\eta_r)_{r\in B},W)$ has **joint signed
-support** when
+**Definition 10.2 (joint support with a common completed contact).** Let $B$
+be any finite set of at least two distinct attained complete rows. Select one
+saturated graph branch $\tau_r$ for every $r\in B$. A branch datum contains
+finite scalar parameters, explicit free-state trees $\boldsymbol\xi_r$, and
+one completed tree $W$. It has joint signed support when
 
 $$
 \begin{aligned}
-&\forall h,M\in\mathbb N\ \exists\,(\mathbf n_r,\mathbf z_r)_{r\in B}
-\quad\text{such that for every }r\in B,\\
-&\quad P_{r,b_r}(\mathbf n_r)\land
-\Delta_{r,b_r}(\mathbf n_r,\mathbf z_r),\\
-&\quad\text{each finite coordinate equals its fixed value in }\mathbf p,\\
-&\quad\text{each divergent scalar coordinate is at least }M,\\
-&\quad\mathbf z_r\text{ agrees with }\boldsymbol\eta_r\text{ through depth }h,\\
-&\quad\Theta_{r,b_r}(\mathbf n_r,\mathbf z_r)\equiv_h W.
+\forall h,M\in\mathbb N\ \exists\,(\mathbf n_r,\mathbf z_r)_{r\in B}
+\quad &\text{such that for every }r\in B,\\
+&P_{r,b_r}(\mathbf n_r)\land E^+_{r,b_r}(\mathbf n_r,\mathbf z_r)
+ \land\Delta^-_{r,b_r}(\mathbf n_r,\mathbf z_r),\\
+&\text{the fixed finite coordinates equal the branch parameters, every
+ divergent scalar is at least }M,\\
+&\mathbf z_r\text{ agrees with }\boldsymbol\xi_r\text{ through depth }h,\\
+&\Theta_{r,b_r}(\mathbf n_r,\mathbf z_r)\equiv_h W.
 \end{aligned}
 \tag{NIS.38}
 $$
 
-The tuple $(\boldsymbol\tau,\mathbf p,(\boldsymbol\eta_r),W)$ is fixed before the
-quantifiers $\forall h,M$. The witnesses in (NIS.38) are one simultaneous tuple
-of source copies, not unrelated pairwise witnesses. The finite inequalities in
-$\Delta$ are evaluated on these finite witnesses; no inequality is evaluated at
-$W$.
+The branch datum and $W$ are fixed before $\forall h,M$. The witnesses are one
+simultaneous tuple, and they use the same producer contract and the same
+original/register/root premise. Disequalities are evaluated only on the finite
+witnesses. No completed disequality is imposed on $W$.
 
-Equivalently, fix the finite residual coordinates
-$f_r=(\boldsymbol\eta_r)_{\rm finite}$ and let
-$S_{r,\tau_r}(f_r)$ be the scalar support obtained by existentially retaining
-all remaining finite residuals and the entire $\Delta_{r,b_r}$. Then (NIS.38)
-is the product closure condition
+The common-source quantifier is essential: replacing each row independently
+by a different canonical representative does not produce a common $W$ or a
+single producer contract. Coordinatewise closure of the separate row supports
+is therefore weaker than (NIS.38).
+
+**Proposition 10.3 (the proved direction of joint support).** Assume the
+charts in Definition 10.1 are exact, every fixed-power graph branch has the
+finite-prefix continuity supplied by Theorem 9.2, and the divergent scalar
+coordinates have the native finite-rank prefix property of [PAC, Lemma 2.1][PAC]
+and [SFS, Lemma 2.1][SFS]. Joint signed support implies
 
 $$
-\mathbf n_r\in\overline{S_{r,\tau_r}(f_r)}
-\quad\text{for every }r,
+\forall h\in\mathbb N\;J_B(h),
 \tag{NIS.39}
 $$
 
-with one common completed value $W$ and with the same fixed finite parameters.
-The closure is simultaneous in all divergent coordinates; coordinatewise
-cofinal marginals are insufficient.
+where $J_B(h)$ asks for one simultaneous tuple of finite actual sources in all
+complete rows, satisfying all signed records and sharing the displayed prefix
+of $W$.
 
-**Theorem 10.3 (unrestricted exclusion or all-depth finite realization).**
-For every complete acquired input $I$ and every finite set $B$ of at least two
-distinct attained complete rows,
+**Proof.** Given $h$, use (NIS.38) with $M$ large enough that each divergent
+finite atomic terminal has the same inclusive $h$-prefix as $\Omega$. Fixed
+finite coordinates, ordered pairing, and fixed numeral powers preserve the
+specified prefixes. Exactness of each chart supplies the same original source,
+all endpoint and exterior fields, every reached hole and partition bit, and the
+whole signed record. Since the witnesses are simultaneous, they witness
+$J_B(h)$ under one common producer contract. \square$
+
+**Proposition 10.4 (why the reverse and effective directions remain open).**
+The converse from $\forall h\,J_B(h)$ to a datum satisfying (NIS.38) is not
+established by Theorem 9.2 or by a rowwise saturation. A proof must supply all
+of the following in one combined construction:
+
+1. a finite positive presentation containing every row's $E^+$, the shared
+   contact variable $W$, and every cross-row contact equation;
+2. a simultaneous completion theorem that keeps every free-state assignment,
+   every repeated name, every image/rank guard, and every finite signed
+   support neighborhood while producing one common $W$;
+3. a terminating finite-prefix and arithmetic interface for guarded constructor
+   cycles such as (NIS.36), rather than a semantic existential over arbitrary
+   completed trees followed by the word Presburger; and
+4. a proof that the finite witnesses remain actual members of the complete
+   charts on the same paid acquisition cut at the authentic epoch.
+
+In particular, replacing terminal-free components by $\Omega$ before proving
+these four items is unsound. The replacement can change a positive equation or
+a shared contact, and [SLP, Lemma 2.1 and Theorem 3.1][SLP] applies to finite
+disequality fillings under its fixed-coordinate hypotheses; it does not prove
+this positive free-state normalization or a mixed-equality lifting theorem.
+
+The supplier
+`D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.lean`
+at commit `c0d24fb522192e79c921df5bfed53306f7207903` supplies, through
+`uniform_residual_reflection` and `simultaneous_completion`, one finite
+residual tuple uniform over rank parameters for a finite list. Those results
+are usable after a combined positive system has been constructed. They do not
+cover arbitrary positive constrained systems, do not eliminate free-state
+values, and do not by themselves prove the shared-$W$ bridge.
+
+**Example 10.5 (finite disequality is a witness condition).** Under the
+finite-rank prefix relation of [PAC, Lemma 2.1][PAC], set
 
 $$
-\begin{aligned}
-&\forall h\in\mathbb N\;J_B(h)\\
-&\quad\Longleftrightarrow\quad
-\bigvee_{\boldsymbol\tau}\ \exists\mathbf p\ \exists(\boldsymbol\eta_r)_{r\in B}\ \exists W\;
-\left[
-\begin{array}{l}
-\text{the completed contacts }\\
-\widehat\Theta_{r,\tau_r}(\mathbf p,\boldsymbol\eta_r)=W
-\text{ hold for all }r,\\
-\text{and }(\boldsymbol\tau,\mathbf p,(\boldsymbol\eta_r),W)
-\text{ has joint signed support.}
-\end{array}
-\right]
-\end{aligned}
+ u_h^{=} = \langle T_{2h+2},T_{2h+2}\rangle,
+\qquad
+ u_h^{\ne} = \langle T_{2h+3},T_{2h+2}\rangle.
 \tag{NIS.40}
 $$
 
-The disjunction and all guards are effective. Consequently exactly one of the
-following two outcomes is obtained by a terminating procedure:
+The two trees have the same inclusive $h$-prefix, while their two child values
+are respectively equal and unequal. Their leafless prefix limit is
+$\langle\Omega,\Omega\rangle=\Omega$. Hence a row disequality can hold at every
+finite witness while failing at the completed contact. This is why
+$\Delta^-$ remains in (NIS.38) and is never evaluated at $W$.
 
-1. a finite $H$ with $\neg J_B(H)$; or
-2. a fixed finite branch tuple, fixed finite parameters and completed contacts
-   for which finite witnesses satisfying every complete row and every signed
-   guard can be produced for each requested depth $h$.
-
-No restriction to one-definition or orientable functional systems occurs in
-this statement.
-
-**Proof.** For the forward implication, fix a tuple in the right-hand side.
-Given $h$, take the witnesses in (NIS.38) with the same fixed finite parameters
-and with $M$ large enough that every divergent atomic terminal has rank at
-least $2h+2$. By (PAC.8) and [SFS, Lemma 2.1][SFS], those terminals have the
-same inclusive $h$-prefix as $\Omega$. The residual prefixes in (NIS.38), the
-finite coordinate equalities, and continuity of ordered pairing and fixed
-numeral powers then give
-$\Theta_{r,b_r}(\mathbf n_r,\mathbf z_r)\equiv_h W$ for all $r$. Each
-witness lies in its exact $D_r$, hence the tuple witnesses $J_B(h)$.
-
-For the reverse implication, suppose $J_B(h)$ holds for every $h$. Choose one
-joint finite source tuple for each $h$, with all complete rows and all records
-satisfied. There are finitely many chart choices and finitely many saturation
-root modes, so one tuple of branch choices occurs on an infinite subsequence.
-Compactness of $\overline{\mathbb N}$ in the one-point order topology and of
-$\widehat{\mathcal T}$ in the finite-prefix topology gives a further subsequence
-with limits $\boldsymbol\eta_r$ and $W$. A finite native tree is isolated by its
-full finite prefix; hence every coordinate whose limit is finite is eventually
-constant and supplies the fixed tuple $\mathbf p$ before any depth quantifier.
-Before taking the support, replace every terminal-free live component in the
-limit by $\Omega$, as in the canonical representative of Theorem 9.5. This
-preserves all positive definitions and image constraints, and [SLP, Lemma
-2.1][SLP] restores the whole finite signed list in every prescribed
-neighborhood. Theorem 9.5 then supplies the limiting completed contact and
-every native image and rank guard. Taking neighborhoods of the limits in the
-original finite chart points gives (NIS.38), including the same lower bound for
-all divergent coordinates. The signed predicates are used only at those finite
-chart points; none is passed to $W$.
-
-For effectivity, Theorem 9.5 gives finitely many weighted graphs and
-Presburger guards. For fixed finite coordinates, [SLP, Lemma 2.1 and
-Theorem 3.1][SLP] turn the whole finite disequality list into one exact
-simultaneous finite filling and identify its closure with the support in
-(NIS.39). [NSF, Lemma 5.1 and Theorems 5.2 and 6.1][NSF] decide the required
-finite-source formulas and return finite witnesses. Presburger elimination
-and the Ginsburg--Spanier decision procedure decide the remaining
-$\forall M\,\exists\mathbf n$ cofinal conditions. If the resulting finite
-disjunction is false, (NIS.40) shows that some finite depth fails; enumerate
-$h=0,1,\ldots$ and use the exact supplied-depth decision until the first
-failure. This search terminates. If it is true, the same finite witness
-procedures, with the requested $h$ inserted, produce the second outcome.
-No uniform bound on the search, source size, traversal length, or memory is
-asserted.
-
-The completed equality in (NIS.40) is a contact statement. The finite sources
-chosen for a given $h$ need not solve any cross-source completed equation
-exactly; they only share the required prefix. Each source remains an actual
-member of the same $D$ and is therefore an alternative original for one common
-producer contract. Under [ARH, Assumption 1.3 and Proposition 2.1][ARH], the
-paid producer acquires the old row, all literals and both reached endpoints on
-the same original-root register, reaches the authentic $N$, and factors its
-accessible state through the complete cut. Every source-dependent description,
-cache, address, count, length, control field, timing field, permission,
-archive, and handle is included in that factorization. At service entry the actual register
-is $\rho^N u_r$ and the only source operations are the paid four-valued
-$\mathsf{Read}$, serial forward $\mathsf{ApplyRho}$, and absorbing $\mathsf{Halt}$.
-The mathematical witnesses introduce no selector, reset, reroot, equality port,
-limit-tree port, or resource guarantee. $\square$
-
-**Example 10.4 (finite disequality cannot be checked at the contact).** Let
-$P=\{\varepsilon\}$ have the one-hole attained row, let $H_0$ and
-$H_{\rm rel}$ be empty, let $N=0$, and let $Q=\{L,R\}$. Let $B$ contain the
-complete rows with the same pair exterior and both reached children, one row
-requiring equality of the two child subtrees and the other requiring their
-disequality. For $h\ge0$ put
+**Conditional theorem 10.6 (the unrestricted alternative once the bridge is
+proved).** Suppose a future combined saturation satisfies items 1--4 of
+Proposition 10.4 and, for each finite graph branch, decides its finite
+parameter guards and returns a finite-prefix witness for each requested depth.
+Then the exact chart equivalence
 
 $$
- u_h^{=}= \langle T_{2h+2},T_{2h+2}\rangle,\qquad
- u_h^{\ne}= \langle T_{2h+3},T_{2h+2}\rangle.
+\forall h\;J_B(h)
+\quad\Longleftrightarrow\quad
+\bigvee_{\boldsymbol\tau}\exists\text{ branch datum }\mathfrak d\;
+\bigl(\mathfrak d\text{ has joint signed support}\bigr)
 \tag{NIS.41}
 $$
 
-The two sources satisfy their respective complete rows and
-$u_h^{=}\equiv_hu_h^{\ne}$ by (PAC.8). Both completed contacts are $\Omega$,
-because $\langle\Omega,\Omega\rangle=\Omega$. The completed disequality is
-therefore false even though every finite witness satisfies it. Thus the
-negative list must remain in (NIS.38), and a completed contact is not a
-certificate for a finite row partition.
+holds. If the resulting finite branch test is false, the first failed supplied
+depth is a finite exclusion. If it is true, the same witness interface produces
+finite actual sources at every requested depth. This is a conditional result:
+items 1--4 are obligations, not consequences of the current finite graph
+closure, and (NIS.41) is not asserted for the unrestricted language until
+they are proved.
 
-**Proof.** The child atoms have the same replies through depth $h$ as
-$\Omega$, while $T_{2h+3}\ne T_{2h+2}$ by the injective atomic recurrence. Their
-complete pair rows consequently have equal and unequal partitions as claimed.
-The contact computation uses only the unique leafless completion. $\square$
+**Proof.** The forward implication is Proposition 10.3. Under the assumed
+simultaneous completion theorem, compactness of the finite-prefix completion
+and eventual constancy of isolated finite coordinates give one branch datum
+for the reverse implication; the assumed arithmetic interface decides its
+finite guards and cofinal scalar conditions. The two outcomes then follow by
+the first failed supplied depth or by the returned depth-indexed witnesses.
+The proof uses the shared contact and the complete chart in the hypotheses;
+rowwise canonicalization cannot substitute for them. \square$
 
-## 11. Supplier limits and the remaining exact boundary
+## 11. Exact scope and remaining boundary
 
-The finite normal-code correspondence used in Theorem 9.2 is [ABC,
-Theorems 2.2--2.3][ABC]; it supplies finite atomic collapse, ordered
-injectivity and fixed-rank translation. [SFS, Lemma 2.1][SFS] supplies
-completed injectivity, prefix continuity and the finite-rank approach to
-$\Omega$. [NIC, Theorems 3.2--3.3 and 4.3][NIC] supply exact whole-source
-charts with full Cartesian residual products before the finite signed list;
-they do not solve arbitrary completed multiple definitions. [SLP, Lemma 2.1
-and Theorem 3.1][SLP] supply simultaneous finite disequality lifting and its
-support-closure equivalence; they do not extend a disequality to a completed
-contact. [NSF, Lemma 5.1 and Theorems 5.2 and 6.1][NSF] supply exact
-fixed-depth feasibility and complete-row witnesses, not an all-depth
-alternative without the contact argument. [ARH, Assumption 1.3 and
-Proposition 2.1][ARH] supply the same-original paid acquisition and complete
-accessible-state factoring; they are premises about the acquired input, not
-consequences of code saturation. [FFM, Definitions 3.2--3.4 and Theorem
-4.2][FFM] supply finite-frame contacts and their paid conditional-field
-boundary, not the arbitrary multiple-definition graph or the present
-unrestricted row theorem.
+The ordinary theory established here is the canonical fixed-shift code
+(Theorem 9.2), sound finite graph saturation with explicit free states
+(Proposition 9.5), the native all-solution obstruction (Proposition 9.6), the
+guarded-cycle boundary (Proposition 9.7), exact complete-row chart obligations
+(Definition 10.1), and the one-way joint-support implication (Proposition
+10.3). The unrestricted all-depth equivalence and its effective
+finite-exclusion alternative remain open pending Proposition 10.4's combined
+bridge. No restricted recognized class is substituted for that target.
 
-Guarded recursive-tree existence is classical in the metric treatment of
-Milius and Moss, *The Category Theoretic Solution of Recursive Program
-Schemes*, [arXiv:0904.2385v2, Theorems 7.5 and 7.15][MM]. Here the needed
-contraction is the explicit pair-prefix gain; fixed powers are only
-nonexpanding. Their abstract theorem does not supply the native leaf laws,
-image filters, rank guards, complete rows, or paid source correspondence.
-Presburger decidability is the classical result of Ginsburg and Spanier,
-*Semigroups, Presburger Formulas, and Languages*, Theorems 1.2--1.3[GS]; it
-is applied only after the native graph has supplied the finite guards.
+The fixed-power supplier [URR, Theorem 4.1][URR] and the newer
+`uniform_residual_reflection`/`simultaneous_completion` result at [URR2] are
+finite-list residual suppliers. They do not prove arbitrary positive
+multiple-definition completeness. The variable-exponent syntax $\rho^pZ$ with
+quantified $p$ is outside (NIS.32), and its source-faithful chart, rank
+admissibility, and support interface remain separate obligations. The paid
+same-register complete-access cut in NIS Assumption 1.4 is a premise of the
+consumer and supplies no empirical resource theorem.
 
-The exact remaining boundary is a variable exponent on an unknown residual,
-for example $\rho^{p}Z$ with $p$ quantified by the support. Such a term is not
-in (NIS.32), and the weighted finite graph does not establish its source-faithful
-coverage, rank admissibility, or rigidity. A separate automatic chart theorem
-for that syntax is required before it can be included. Likewise, the
-mathematical alternative assumes the complete paid-access cut in NIS
-Assumption 1.4; it supplies no empirical proof of that premise and no uniform
-resource optimum.
+These are manuscript-level mathematical claims. They are not Lean truth
+claims, and the open bridges above are not converted into completion claims.
+
+[URR2]: https://github.com/the-omega-institute/trureturing/blob/c0d24fb522192e79c921df5bfed53306f7207903/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.lean
 
 ## 追加锚（本行以下为增补区）
