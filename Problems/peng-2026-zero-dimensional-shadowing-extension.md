@@ -46,7 +46,7 @@ one-face refinement therefore does not settle the all-face construction.
 A join-tree gluing theorem also requires its actual running-intersection
 hypotheses and cannot be applied to cyclic proper-face scopes.
 
-## Source feasibility criterion
+### Source feasibility criterion
 
 For a once-fixed finite-face stage, suppose the vertical source relations
 R_G are closed and symmetric. For a column v define its closed source cell
