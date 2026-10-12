@@ -60,6 +60,13 @@ def gradientLinear : M →L[ℝ] (S →L[ℝ] ℝ) :=
     (Complex.reCLM.comp (Matrix.traceLinearMap n ℝ ℂ).toContinuousLinearMap)).comp
       ((ContinuousLinearMap.mul ℝ M).precompL S ι)
 
+/-- The entropy function's real trace readout varies; its proposed differential stays fixed. -/
+def gradientArena : Arena where
+  signature := traceSignature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (A : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ))) (_hA : A.val.PosDef),
+    HasFDerivAt (traceEntropy R) (gradientLinear (CFC.log A.val + 1)) A
+
 /-- The first inverse's affine weight varies; the second inverse remains source-fixed. -/
 def pathArena : Arena where
   signature := weightSignature
@@ -93,6 +100,9 @@ def hessianArena : Arena where
           (J.val * _root_.D5.S3.Divergence.LogDerivTrace.logDeriv A.val H.val).trace) ∧
     ∀ H : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)),
       0 ≤ (fderiv ℝ (fderiv ℝ (traceEntropy traceActual)) A) H H
+
+theorem actual_gradient_law : gradientArena.{u}.Law traceActual :=
+  @trace_entropy_hasFDerivAt.{u}
 
 theorem actual_path_law : pathArena.{u}.Law weightActual := @matrix_log_hasFDerivAt_path.{u}
 theorem actual_resolvent_law : resolventArena.{u}.Law domainActual :=
@@ -152,6 +162,20 @@ theorem rejected_hessian_law : ¬ hessianArena.{u}.Law traceRejected := by
   have hh := (h A Matrix.PosDef.one).2.1 0 0
   simp [traceRejected, realize] at hh
 
+theorem rejected_gradient_law : ¬ gradientArena.{u}.Law traceRejected := by
+  intro h
+  let n := ULift.{u} (Fin 1)
+  let A : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)) := ⟨1, IsSelfAdjoint.one _⟩
+  have hh := h A Matrix.PosDef.one
+  have hz : HasFDerivAt (traceEntropy traceRejected)
+      (0 : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)) →L[ℝ] ℝ) A := by
+    exact hasFDerivAt_const (𝕜 := ℝ) (-1 : ℝ) A
+  have he := hh.unique hz
+  have hv := congrArg (fun f => f A) he
+  norm_num [gradientLinear, A, CFC.log_one, ContinuousLinearMap.comp_apply,
+    ContinuousLinearMap.compL_apply, ContinuousLinearMap.precompL_apply,
+    ContinuousLinearMap.mul_apply', Submodule.subtypeL_apply] at hv
+
 theorem weight_dependence : ObservationalDependence weightSignature weightActual := by
   intro role
   refine ⟨(), 0, 1, ?_⟩
@@ -170,6 +194,15 @@ theorem trace_dependence : ObservationalDependence traceSignature traceActual :=
   intro role
   refine ⟨(), 0, 1, ?_⟩
   norm_num [traceActual, realize]
+
+def gradientEvidence : Registration gradientArena.{u}
+    (type_of% @trace_entropy_hasFDerivAt.{u}) where
+  actual := traceActual
+  bridge := Iff.rfl
+  variation := ⟨actual_gradient_law, traceRejected, rejected_gradient_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    gradientArena.Law traceActual traceRejected rejected_gradient_law
+  dependence := trace_dependence
 
 def pathEvidence : Registration pathArena.{u} (type_of% @matrix_log_hasFDerivAt_path.{u}) where
   actual := weightActual
@@ -300,6 +333,43 @@ def hessianRegistration :
     readouts := #[
     { path := #["body", "body", "body", "body", "body", "arg", "fn", "arg",
         "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+/-- Four-slot source evidence with the original theorem telescope. -/
+def gradientRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.trace_entropy_hasFDerivAt.{u})
+      (type_of% (realize traceSignature (fun _ _ z => z.re) (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.trace_entropy_hasFDerivAt.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.gradientEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨gradientArena.{u}⟩
+  objectArena := .source ⟨gradientArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source gradientArena.{u} ⟨gradientEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize traceSignature (fun _ _ z => z.re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #[
+        "body", "body", "body", "body", "body", "fn", "fn", "arg",
+        "body"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
