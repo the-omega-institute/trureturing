@@ -86,21 +86,21 @@ F14: D5/S3/Weil/ZetaLinear/PosIndex.frobSq
 Direct frozen dependencies: cHaarChannel: F1.
 Direct frozen dependencies: momentOp: F13, F11, F12, F1.
 Direct frozen dependencies: claim: F14, F13, F11, F12, F1.
-Direct frozen dependencies: swapHermitian: F2.
+Direct frozen dependencies: swapHermitian: none.
 Direct frozen dependencies: swapSquare: none.
-Direct frozen dependencies: traceSwap: F2.
+Direct frozen dependencies: traceSwap: none.
 Direct frozen dependencies: twirlTrace: F3, F8, F4, F5.
-Direct frozen dependencies: twirlSwapTrace: F3, F8, F4, F7, F2.
-Direct frozen dependencies: twirlFormula: F3, F6, F8, F4, F5, F7, F2.
-Direct frozen dependencies: haarAverageEntry: F3, F6, F8, F4, F5, F7, F2.
+Direct frozen dependencies: twirlSwapTrace: F3, F8, F4, F7.
+Direct frozen dependencies: twirlFormula: F3, F6, F8, F4, F5, F7.
+Direct frozen dependencies: haarAverageEntry: F3, F6, F8, F4, F5, F7.
 Direct frozen dependencies: cHaarSingle: F1.
 Direct frozen dependencies: jointIndex: none.
 Direct frozen dependencies: twoCopyIntegrand: F1, F9.
 Direct frozen dependencies: momentOp2HaarEntries: F13, F11, F12, F1, F3, F9, F10.
 Direct frozen dependencies: jointId: none.
-Direct frozen dependencies: jointSwap: F2.
-Direct frozen dependencies: jointSwapRev: F2.
-Direct frozen dependencies: momentOp2Formula: F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7, F2.
+Direct frozen dependencies: jointSwap: none.
+Direct frozen dependencies: jointSwapRev: none.
+Direct frozen dependencies: momentOp2Formula: F13, F11, F12, F1, F3, F9, F10, F6, F8, F4, F5, F7.
 Direct frozen dependencies: w: none.
 Direct frozen dependencies: P: none.
 Direct frozen dependencies: Q: none.

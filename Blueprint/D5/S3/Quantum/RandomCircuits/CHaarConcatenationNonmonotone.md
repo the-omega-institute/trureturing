@@ -46,6 +46,10 @@ $$\neg \operatorname{claim}\left(\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/duschenes-garciamartin-holmes-cerezo-2026-chaar-concatenation` (refuted) by `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"duschenes-garciamartin-holmes-cerezo-2026-chaar-concatenation","declaration_gid":"D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.

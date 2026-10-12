@@ -14,10 +14,11 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
     private const string ClaimQuote = "Appendix B, Conjecture 1, page 32: \"it is conjectured that such a hierarchy holds for all concatenations k, orders t, and dimensions d,d_E. Further, it is conjectured that the cHaar norm is monotonically non-increasing with environment dimension and concatenations,\" followed by the displayed concatenation inequality for every k′ ≥ k. Here d,d_E are d,e; the order is t; k and j are positive concatenation counts with k ≤ j. Page 3: \"The choice of norm ∥·∥ is task-dependent, and unless noted, we use the Hilbert-Schmidt norm as it is overall the simplest to compute.\" The squared Hilbert-Schmidt norm of the Liouville matrix is the existing RHLinalg.frobSq, equal to the double sum of Complex.normSq. The environment-dimension clause is a separate assertion.";
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("chaar-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(DefinitionDsl.Text(prose))), role);
+            Blocks(Paragraph(DefinitionDsl.Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The second cHaar moment at system and environment dimension two has larger squared Hilbert-Schmidt norm after five concatenations than after four.",
@@ -31,7 +32,9 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The concatenation assertion is false", new Formula.Not(Call("claim")),
                 "At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fifth has squared norm 30362908/29296875. Their difference is 5536/9765625, which is positive. In the rational identity/swap basis, the decaying eigenmode coexists with a growing coefficient towards a non-orthogonal limiting projection.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create(
+                    "duschenes-garciamartin-holmes-cerezo-2026-chaar-concatenation"), ResolutionKind.Refuted))
         ), []));
 
     private static Formula Channel()
