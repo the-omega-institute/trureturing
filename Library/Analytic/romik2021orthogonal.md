@@ -6063,3 +6063,422 @@ realness when stated forward. Neither the smaller resolution cost nor
 this inverse statement gives an off-line-distance lower bound, the full
 unpaid moving band, a numerical degree, RH or strict Robin for every
 integer $H>5040$. The earlier thresholds remain valid independently.
+
+
+## Signed finite extraction pays the growing-cluster Taylor budget
+
+The exact tilt (LC202), root order and residues (LC209)--(LC211),
+source-factor bounds (LC212), and the original circle and weights
+(LC206)--(LC207) are reused. The local all-critical-source premise,
+selection of every multiplicity in its closed disc, source count
+$r\le C_0L$, original coefficient shift zero, and original $F$,
+$\mathcal J_n$, $\mathcal G_n$ are exactly those of (LC212)--(LC220).
+The arbitrary-center Poisson--Charlier supplier already cited in
+[Zacharovas, Theorem 2.8](zacharovas2025depoissonization.md) supplies
+the truncation-error context; its absolute coefficient remainder alone
+is not a node-relative budget. Exact finite Taylor extraction here
+comes from the previously established finite tilt. Only a high-order
+remainder is bounded on the original circle.
+The application below is repository-derived ordinary analysis; it has
+no Lean, numerical-constant or originality certification. None of the
+published root-order, mesh or general asymptotic results is reproved.
+
+### The harmonic root sum sets a larger certified neighborhood
+
+Put
+
+$$
+P=(r+1)[1+\log(r+2)]^2,\qquad
+\sigma=T^2/\sqrt n,\qquad \nu=n\rho^2/T^2.
+\tag{LC221}
+$$
+
+For $r\ge2$, the mesh (LC210) gives
+
+$$
+S_i:=\sum_{k\ne i}|\beta_i-\beta_k|^{-1}
+\le C\sqrt P/\sigma.
+\tag{LC222}
+$$
+
+Indeed sum $1/(|i-k|\delta)$, keeping its harmonic rather than
+linear count. Replace the old neighborhood width only in this
+application by $q=c_*\sigma/\sqrt P$, with a sufficiently small fixed
+$c_*>0$, and $I_i=[c_i-4q,c_i+4q]$. The centers and frozen tangents
+remain those of (LC213). Since $qS_i\le Cc_*$ and
+$q\le c\delta$, the intervals remain disjoint. For
+$|w-\beta_i|\le8q$, their other-root product lies between
+$e^{-CqS_i}$ and $e^{CqS_i}$ times its value at $\beta_i$.
+Also $\sum_{k\ne i}|w-\beta_k|^{-1}\le2S_i$.
+The off-node residue sum in (LC211) and the extra $b_iH$ and
+$E_i'H$ terms therefore have the same strictly smaller-than-one
+relative losses as before. Thus (LC214) holds with this new $q$.
+For $r=1$ take $S_1=0$, $D_1=1$ and the same formula for $q$;
+its constant factor is immaterial. The empty-cluster case needs only
+value exclusion. The smallness conditions imposed below pay
+$B\sigma$, $K\sigma^2$ and chart clearance throughout.
+
+### A flat analytic factor and its exact signed Taylor moments
+
+Choose a sufficiently small fixed $a>0$ and set
+
+$$
+R_A=aT\rho/\sqrt L,\qquad
+U=R_A/\sigma=a\sqrt{\nu/L},\qquad
+N=\lceil D(r+1)\rceil,
+\tag{LC223}
+$$
+
+where $D\ge4$ is a fixed absolute constant. Every closed
+radius-$R_A$ disc around a selected $c_i$ lies inside the original
+source disc. Write
+
+$$
+g_i(z)=\frac{A(z)}{a_i e^{b_i(z-c_i)}}
+=1+\sum_{m\ge2}d_{m,i}(z-c_i)^m,
+\qquad
+P_{N,i}(z)=1+\sum_{m=2}^Nd_{m,i}(z-c_i)^m.
+\tag{LC224}
+$$
+
+The source logarithm satisfies
+$|\log g_i(z)|\le K|z-c_i|^2/2$ on that disc.
+Since $KR_A^2\le Ca^2$, Cauchy's inequality applied to
+$(g_i-1)/(z-c_i)^2$ gives
+
+$$
+|d_{m,i}|\le CKR_A^{2-m}\quad(m\ge2),\qquad
+|g_i-P_{N,i}|\le CK|z-c_i|^2
+\frac{(|z-c_i|/R_A)^{N-1}}{1-|z-c_i|/R_A}
+\quad(|z-c_i|<R_A).
+\tag{LC225}
+$$
+
+This is a factor expansion, not an expansion of $F$ about a zero
+with a presumed derivative floor. Keep $a_i,b_i,c_i$ fixed and define
+
+$$
+\begin{aligned}
+\mathscr M_i(s,t)
+&=\mathscr T_n[e^{s(z-c_i)}f_i](t)\\
+&=a_ie^{-(b_i+s)c_i}
+ (1+(b_i+s)t/n)^n
+ H\!\left(\frac{t}{1+(b_i+s)t/n}\right),\\
+\mathscr U_i(s,t)
+&=\mathscr T_n[(e^{s(z-c_i)}f_i)'](t)\\
+&=a_ie^{-(b_i+s)c_i}
+ (1+(b_i+s)t/n)^n
+ \left[(b_i+s)H(y_s)+V(y_s)\right],
+\quad y_s=\frac{t}{1+(b_i+s)t/n}.
+\end{aligned}
+\tag{LC226}
+$$
+
+The apparent rational expressions are polynomial identities after
+cancellation, since $n\ge r$; the bounds use only discs where their
+written denominator is separated from zero. Differentiating in $s$
+at zero gives exactly $\mathscr T_n[(z-c_i)^mf_i]$ and
+$\mathscr T_n[((z-c_i)^mf_i)']$, respectively. The latter includes
+both product-rule terms. Differentiating $\mathscr M_i$ in $t$
+gives the actual derivative of the extraction with all tangent
+parameters still frozen. No moving tangent is differentiated.
+
+For $2\le m\le N$, put $p_m=\sqrt m+\sqrt P$ and use the complex
+$s$ circle of radius $\eta_m=m/(C\sigma p_m)$.
+Assume $n\ge C N$, $B\sigma\le c$ and $U\ge C p_N$.
+Then $|s|t/n\le C\sqrt{m/n}$ is small,
+$|y_s-\beta_i|\le C(q+\sigma^2\eta_m)$, and
+
+$$
+\begin{aligned}
+|H(w)|&\le D_i|w-\beta_i|e^{S_i|w-\beta_i|},\\
+|H'(w)|&\le D_i(1+S_i|w-\beta_i|)e^{S_i|w-\beta_i|},\\
+|V(w)|&\le CD_i(1+S_i|w-\beta_i|)e^{S_i|w-\beta_i|}.
+\end{aligned}
+\tag{LC227}
+$$
+
+The first two inequalities follow by expanding the other-root
+product about $\beta_i$. For the last one expand
+$V=\sum_k w_k\kappa\prod_{\ell\ne k}(w-\beta_\ell)$ and apply
+(LC211); it stays valid at roots and introduces no division by a
+vanishing factor. At $w=y_s$ the exponent and polynomial factors
+are bounded by $e^{Cm}$, since
+$S_i\sigma^2\eta_m\le Cm$.
+The prefactor in (LC226), divided by $|a_i|$, is bounded by
+
+$$
+C\exp C\{\eta_m(q+B\sigma^2)+\sigma^2\eta_m^2\}
+\le e^{Cm}.
+$$
+
+To see the linear term, its logarithmic $s$ derivative at zero is
+$y_i(t)-c_i=O(q+B\sigma^2)$; the second derivative is
+$O(\sigma^2)$ on the whole $s$ disc. Its value at zero is bounded
+by the already paid $B^2\sigma^2+Bq$.
+In the $t$ derivative the new factors are
+$(b_i+s)/(1+(b_i+s)t/n)$ and
+$(1+(b_i+s)t/n)^{-2}$; their multiplication with (LC227) adds
+only $e^{Cm}$. Cauchy's inequality and $m!\le m^m$ consequently give
+
+$$
+\begin{aligned}
+|\mathscr T_n[(z-c_i)^mf_i](t)|
+&\le C|a_i|D_i\sigma^{m+1}(Cp_m)^{m-1},\\
+|\partial_t\mathscr T_n[(z-c_i)^mf_i](t)|,
+\quad |\mathscr T_n[((z-c_i)^mf_i)'](t)|
+&\le C|a_i|D_i(C\sigma p_m)^m,
+\qquad t\in I_i.
+\end{aligned}
+\tag{LC228}
+$$
+
+For the first bound, the factor
+$q+\sigma^2\eta_m\le C\sigma m/p_m$ removes one power of $p_m$;
+its remaining $m$ is absorbed into $C^m$. This factor matters at
+endpoint normalization. Since $N\le C_D(r+1)$, $p_m\le C_D\sqrt P$.
+Summing the Taylor terms with (LC225), and taking
+$C_D\sigma\sqrt P/R_A<1/2$, yields
+
+$$
+\max\left\{
+\frac{\|\mathscr T_n[f_i(P_{N,i}-1)]\|_{I_i}}{|a_i|D_iq},
+\frac{\|\partial_t\mathscr T_n[f_i(P_{N,i}-1)]\|_{I_i}}{|a_i|D_i},
+\frac{\|\mathscr T_n[(f_i(P_{N,i}-1))']\|_{I_i}}{|a_i|D_i}
+\right\}
+\le CK\sigma^2P.
+\tag{LC229}
+$$
+
+These are signed complete-circle contributions, evaluated exactly
+before bounding. No absolute contour cost $e^{Cr}$ has been paid
+for the low Taylor terms.
+
+### The high remainder and both remote functions are paid together
+
+Choose $\theta_0=cR_A/\tau$, with $c>0$ sufficiently small.
+On $|\theta|\le\theta_0$, $t\in I_i$, we have
+$|te^{i\theta}-c_i|\le R_A/2$ and
+$|te^{i\theta}-c_i|\le C\sigma(1+u)$, where
+$u=\sqrt n|\theta|$. The former follows from $q/R_A\ll1$.
+The root envelope (LC215) still holds: its proof requires only
+$|t-c_i|\le C\sigma$, which the larger neighborhoods satisfy.
+Apply it and the exact weights $1,\omega_D,\omega_G$ to the one
+remainder $F-f_iP_{N,i}$. The local logarithmic tilt and source
+curvature are absorbed into the same Gaussian as in (LC216).
+Using (LC225), the three normalized local remainder errors are at most
+
+$$
+CK\sigma^2P\,
+ e^{C(r+N)}
+ \left[\frac{C\sqrt{r+N+1}}{U}\right]^{N-1}.
+\tag{LC230}
+$$
+
+Here is the growth accounting. Before integration the value bound
+contains $\sqrt P(\sqrt r+u)$ from $\sigma/q$ and (LC215),
+$(1+u)^2$ from the quadratic factor, and
+$[C(1+u)/U]^{N-1}$ from the Taylor remainder.
+The derivative and adjacent weights add at most $C(1+u)/\sigma$.
+Complete the square in $-cu^2+Cu\sqrt r$ and use its Gaussian
+moment bound of degree at most $N+3$. The moment is bounded by
+$e^{C(r+N)}[C\sqrt{r+N+1}]^{N-1}$ times a fixed polynomial in
+$r+N+1$ and $\sqrt P$; that polynomial is absorbed into the
+exponential and the displayed $P$. Thus no factorial or tail-order
+cost is omitted. With $N=\lceil D(r+1)\rceil$, a sufficiently large
+fixed constant in $U^2\ge CP$ makes the extra factor in (LC230)
+at most one, uniformly including $r=1$.
+
+Keep two angular cutoffs: $\theta_0=cR_A/\tau$ as above and
+$\theta_R=c'R/\tau$, where $c'$ is fixed small enough for the
+original source disc to contain every point with
+$|\theta|\le\theta_R$, $t\in I_i$.
+On $\theta_0<|\theta|\le\theta_R$ the original source satisfies
+$|F(z)|\le|f_i(z)|e^{K|z-c_i|^2/2}$.
+The curvature factor is absorbed into the Gaussian when
+$K\sigma^2\ll1$. After (LC215) and endpoint or response normalization,
+this intermediate-arc contribution is bounded by
+$C\exp[-cU^2+Cr]$. Thus the independent source-factor floor need
+only be paid outside the original source arc, rather than already
+outside the smaller Taylor disc.
+
+The complete model $f_iP_{N,i}$ is retained for all
+$|\theta|>\theta_0$. On the entire original circle,
+$|te^{i\theta}-c_i|/R_A\le C(1+u)/U$. The coefficient bound
+in (LC225), without its local remainder inequality, gives
+
+$$
+|P_{N,i}(te^{i\theta})|
+\le 1+CKR_A^2\sum_{m=2}^N
+       (|te^{i\theta}-c_i|/R_A)^m
+\le C(N+1)[1+C(1+u)/U]^N.
+\tag{LC231}
+$$
+
+Use (LC215) and the full model tilt to bound this complete model.
+For $u\ge cU$, the polynomial cost
+$N\log[1+C(1+u)/U]$ is absorbed into a fixed fraction of $u^2$
+when $U^2\ge C N$; its remaining finite constants cost $CN$.
+The factors $e^{Cr+Cu\sqrt r}$ and $(1+u)$ are also absorbed,
+leaving normalized model tails bounded by
+$C\exp[-cU^2+C(r+N)]$ (enlarging the latter constant covers
+$q^{-1}\sigma$). There is no global payment of
+$(\tau/R_A)^N$: the polynomial is bounded along its Gaussian arc.
+
+For the original source on $|\theta|>\theta_R$, use (LC188), the independent factor
+floor (LC212), and the actual derivative product. The factorial in
+that product gives $D_i\ge e^{-Cr}\sigma^{r-1}$, after reducing
+an absolute constant. Hence
+$D_iq\ge e^{-Cr}\sigma^r/\sqrt P$ up to a fixed factor.
+The normalization ratio is bounded by
+$\exp C\{r+L(1+\log(1/\rho))+r\log(2+\nu)\}$,
+since $T\rho/\sigma=\sqrt\nu$ and $\log P\le C(r+1)$.
+The source's angular term completes the Gaussian square at cost
+$C(T+2)^2L^2/n\le C\rho^2L^2/\nu$.
+The exact derivative weights add $(1+u)/\sigma$; their Gaussian
+moments on $u\ge c\sqrt\nu$ retain $-c\nu$ after reducing $c$.
+Combining (LC229)--(LC231), and $N\le C_D(r+1)$, gives
+
+$$
+\begin{aligned}
+\max\left\{
+\frac{\|\mathcal J_n-M_i\|_{I_i}}{|a_i|D_iq},
+\frac{\|\mathcal J_n'-M_i'\|_{I_i}}{|a_i|D_i},
+\frac{\|\mathcal G_n-U_i\|_{I_i}}{|a_i|D_i}
+\right\}
+\le{}&\frac{CLP}{\nu}\\
+&+C\exp[-c\nu/L+Cr]\\
+&+C\exp\!\left[-c\nu+
+ C\left\{r+L(1+\log(1/\rho))+r\log(2+\nu)
+       +\rho^2L^2/\nu\right\}\right].
+\end{aligned}
+\tag{LC232}
+$$
+
+This estimate requires $n\ge CN$, $B\sigma\le c$ and
+$U^2\ge CP$; constants absorb the fixed $a,D,c_*$.
+The Taylor and high-remainder terms are bounded on the same source
+chart. The complete remote source and model remain in this bound.
+
+### The query-centered exclusion still covers every central real node
+
+At each real query $|t-\tau|\le R/16$, freeze the tangent at that
+very $t$, not at a moving parameter inside a derivative.
+Suppose $\operatorname{dist}(y(t),\{\beta_i\})\ge q$.
+For a nearest root the other distances are at least
+$|\beta_i-\beta_k|/2$, so
+
+$$
+\sum_k|y(t)-\beta_k|^{-1}\le C\sqrt P/\sigma.
+\tag{LC233}
+$$
+
+With this $y=y(t)$, the polynomial product directly gives
+$|H(w)/H(y)|\le\exp(C\sqrt P|w-y|/\sigma)$.
+The exact generating family (LC226), now with $c=t$, therefore
+bounds its signed value moments relative to $|A(t)H(y)|$ by
+$[C\sigma p_m]^m$. The factor Taylor coefficients and their sum
+again cost $CK\sigma^2P$.
+For the high remainder a direct query-centered product estimate
+is needed; the node-local envelope (LC215) is not applied outside
+$I_i$. At $z=te^{i\theta}$, $u=\sqrt n|\theta|$, the paired
+root displacement (LC210) gives
+$|z-\alpha_k|\le|y-\beta_k|+C\sigma(\sqrt r+1+u)$,
+because $|z-y|\le C\sigma(1+u)$.
+Consequently, for $r\ge1$,
+
+$$
+\frac{|Q(z)|}{|H(y)|}
+\le\kappa^{-1}\prod_k
+ \left(1+\frac{C\sigma(\sqrt r+1+u)}{|y-\beta_k|}\right)
+\le C[1+\sqrt P(\sqrt r+1+u)]e^{Cr+Cu\sqrt r}.
+$$
+
+For the nearest factor use $|y-\beta_i|\ge q$.
+For $k\ne i$ use $|y-\beta_k|\ge|\beta_i-\beta_k|/2$
+and the mesh, retaining $(i-1)!(r-i)!$ in the denominator.
+The same factorial calculation bounds that other-root product by
+$e^{Cr+Cu\sqrt r}$; $\kappa^{-1}\le e^{Cr}$ is included.
+This does not require proximity of $t$ to any $c_i$.
+The nearest factor's full $\sqrt r+1+u$ is retained; its fixed-degree
+polynomial cost is absorbed by the $P$ and $e^{C(r+N)}$ terms in
+the high-remainder calculation.
+The Gaussian calculation (LC230) and the intermediate-source-arc
+bound now apply to relative value error. For the complete model
+tail use this same product estimate and the coefficient-based
+polynomial bound (LC231) with the query's frozen center $c=t$.
+Finally
+$|H(y)|\ge e^{-Cr}\sigma^r/\sqrt P$ from the same nearest-root
+factorial floor, so the complete remote normalization is the one
+in (LC232). Its right-hand side bounds this relative error too.
+
+Once that bound is below $1/2$, these queries cannot be actual nodes.
+Every remaining actual central real node has
+$|y(t)-\beta_i|<q$, so (LC213) places it within $2q$ of its
+certified $c_i$. That root lies in the selected central chart.
+On $I_i$, making (LC232) smaller than the fixed fractions in
+(LC214) preserves both endpoint signs and both response signs.
+There is exactly one actual simple real node there, and its
+$\mathcal J_n'\mathcal G_n$ product is strictly positive.
+For $r=1$ the same estimates use the empty other-root product.
+For $r=0$, $H=1$, the query model is nonzero, its signed moments
+are bounded using only the prefactor in (LC226), and the root-free
+remainder and remote bounds exclude all actual central nodes.
+There is no empty-mesh argument and no asserted complex-root matching.
+
+### A polylogarithmic sufficient degree, conditional on the same source premise
+
+A fixed source constant $C_3$ suffices for all those requirements when
+
+$$
+n\ge C_3(r+1),\qquad
+\nu\ge C_3\left[ L^2[1+\log(L+2)]^2
+                       +L(1+\log(1/\rho))\right].
+\tag{LC234}
+$$
+
+Indeed $r\le C_0L$ gives $LP\le CL^2[1+\log(L+2)]^2$.
+This pays the first term of (LC232), $U^2\ge CP$,
+$B\sigma=O(L/\sqrt\nu)$, and chart clearance.
+For each fixed small $\eta>0$,
+
+$$
+r\log(2+\nu)\le\eta\nu+C_\eta r\log(2+r).
+$$
+
+The second term on the right is $O(L\log(L+2))$.
+The threshold pays it, $L(1+\log(1/\rho))$ and the tilt-square
+cost against $\nu$ on the actual remote source arc.
+Separately, its $L^2[1+\log(L+2)]^2$ term pays $Cr$ against
+$\nu/L$ on the intermediate source arc and the complete model tail.
+Increasing $C_3$ makes every term of the budget sufficiently small,
+for every larger degree as well.
+Consequently, under the explicitly unchanged premise that all source
+zeros in the closed $4\rho$ disc around $1/2+iT$ are critical,
+
+$$
+\left[\ |t-T^2|\le T\rho/64,\quad\mathcal J_n(t)=0\ \right]
+\quad\Longrightarrow\quad
+\mathcal J_n'(t)\mathcal G_n(t)>0
+\qquad\text{whenever (LC234) holds}.
+\tag{LC235}
+$$
+
+With fixed $\rho$, this sufficient degree has order
+$T^2\log^2T[1+\log\log T]^2$ up to unevaluated source constants,
+rather than the fixed height power needed by the absolute-value
+low-order envelope. The signed Taylor moments are what remove its
+$e^{Cr}$ local loss; no improvement to the published mesh theorem
+or root-order theorem is needed. This pays a larger conditional
+height range but still falls short of the complete moving band
+$t\asymp n/\log n$.
+
+Replace $r$ in the initial degree condition by $C_0L$ before testing
+an actual bad node. Then (LC234), $t=T^2$,
+$\mathcal J_n(t)=0$ and $\mathcal J_n'(t)\mathcal G_n(t)\le0$
+force an actual off-line source zero in that closed $4\rho$ disc
+by contraposition. This is an existence conclusion, not a positive
+lower bound on off-line distance or a complex-root trajectory.
+The source-realness premises, all-height coverage, first-defect
+closure, full RH and strict Robin for every integer $H>5040$ remain
+unresolved. No unconditional height-uniform RH margin is claimed.
