@@ -48,6 +48,7 @@ proof_shape: rMulQ: bind-only; consumers: aMulNormal.
 proof_shape: rMulR: bind-only; consumers: aMulNormal.
 proof_shape: aMulNormal: bind-only; consumers: aPow.
 proof_shape: aPow: content; consumers: instanceN4, instanceN5.
+proof_shape: hsNormSqCorrespondence: bind-only; consumer: normReindex, normNormal, result.
 proof_shape: normReindex: bind-only; consumers: instanceN4, instanceN5.
 proof_shape: normNormal: bind-only; consumers: instanceN4, instanceN5.
 proof_shape: instanceN4: bind-only; consumers: result.
@@ -85,7 +86,7 @@ F14: D5/S3/Weil/ZetaLinear/PosIndex.frobSq
   sha256:a1114d4731d26d6c5ef81acb0a254cdc6e0ed6e629ccb2dcf75d7faa00f4ccce
 Direct frozen dependencies: cHaarChannel: F1.
 Direct frozen dependencies: momentOp: F13, F11, F12, F1.
-Direct frozen dependencies: claim: F14, F13, F11, F12, F1.
+Direct frozen dependencies: claim: F13, F11, F12, F1.
 Direct frozen dependencies: swapHermitian: none.
 Direct frozen dependencies: swapSquare: none.
 Direct frozen dependencies: traceSwap: none.
