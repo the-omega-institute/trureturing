@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/CovariantPureProgramDimensionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gschwendtner-bluhm-winter-2021-pure-program-states` (refuted) by `D5/S3/Quantum/QuantumChannels/CovariantPureProgramDimensionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gschwendtner-bluhm-winter-2021-pure-program-states","declaration_gid":"D5/S3/Quantum/QuantumChannels/CovariantPureProgramDimensionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Martina Gschwendtner, Andreas Bluhm, Andreas Winter (2021). *Programmability of covariant quantum channels*. DOI: [10.22331/q-2021-06-29-488](https://doi.org/10.22331/q-2021-06-29-488). URL: <https://arxiv.org/abs/2012.00717v2>.
