@@ -47,6 +47,22 @@ internal sealed class LeafNonbacktrackingComponentDocument : IScribeDocumentDefi
                     + "Induction along any actual reachable walk proves full component coverage."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
+                "Literal group-product traces give a sufficient condition for this theorem's "
+                + "nonbacktracking input. Let H be a group, val : V -> H any map, and word a list "
+                + "of group elements. Suppose p.support.map val equals the literal scanl trace "
+                + "starting at val(a), with the step (x,r) -> x*r. Equality of list lengths gives "
+                + "p.length = word.length. Indexing the scanl trace gives "
+                + "val(p.getVert(i+1)) = val(p.getVert(i))*word[i]. Assume every letter r in word "
+                + "satisfies r*r = 1, and consecutive letters differ. If p.getVert(i) equals "
+                + "p.getVert(i+2), the two indexed steps and left cancellation give "
+                + "word[i]*word[i+1] = 1. Multiplying on the right by word[i+1] and using its "
+                + "involution law yields word[i] = word[i+1], a contradiction. Thus p has no "
+                + "immediate backtracking. This argument requires neither injectivity of val "
+                + "nor a Cayley-graph hypothesis. It uses List.getElem_succ_scanl and group "
+                + "cancellation; it is an application of existing results, not a separate new "
+                + "library theorem. The graph degree and leaf hypotheses remain necessary "
+                + "inputs to the two content theorems above.")),
+            Paragraph(Text(
                 "For the prefix-reversal construction, this bridge turns a proved legal native "
                 + "word with different consecutive involutive generators and actual leaf endpoints "
                 + "into a complete path component after the cuts. One must still earn its degree "
