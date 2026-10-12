@@ -38,7 +38,7 @@ internal sealed class CalibratedArithmeticSmallBallDocument : IScribeDocumentDef
                 H("Central arithmetic mass bound"),
                 StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A monotone integer-valued calibration and a pointwise mass cap bound the central event by the number of targets times the lattice width."))),
+                Blocks(Paragraph(Text("A real-valued calibration on the integers and a pointwise mass cap bound the central event by the number of targets times the lattice width."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("integer-targets"),
