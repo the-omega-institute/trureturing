@@ -62,7 +62,7 @@ public sealed class HostCleanupScriptTests
 
     [Theory]
     [MemberData(nameof(HostReclamationCases))]
-    public void HostReclamationPreservesHistoryAndCoordinatesCacheWriters(string probe)
+    public void HostReclamationProtectsDependenciesAndCoordinatesCacheWriters(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();

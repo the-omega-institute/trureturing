@@ -1,4 +1,4 @@
-"""Real Git and filesystem contracts for conservative host artifact reclamation."""
+"""Git, filesystem and cache-guard contracts for host artifact reclamation."""
 
 import contextlib
 import importlib.util
@@ -92,20 +92,104 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual(expected, json.loads(result.stdout))
         self.assertEqual("", result.stderr)
 
-    def test_empty_git_skeleton_is_an_ordinary_artifact(self):
-        target = self.root / "skeleton"
-        (target / ".git/objects/pack").mkdir(parents=True)
-        self.age(target)
-        result = cleanup.clean_candidate(target, self.cutoff, [], delete=True)
-        self.assertEqual("removed", result["action"], result)
-        self.assertFalse(target.exists())
+    def test_old_git_directory_and_gitdir_file_are_ordinary_candidates(self):
+        for marker in ("skeleton", "directory", "gitdir-file", "bare"):
+            with self.subTest(marker=marker):
+                if marker == "skeleton":
+                    target = self.root / "artifacts/skeleton"
+                    (target / ".git/objects/pack").mkdir(parents=True)
+                    self.age(target)
+                    self.assertEqual("removed", self.clean(target)["action"])
+                    continue
+                if marker == "bare":
+                    target = self.root / "artifacts/bare"
+                    self.git(self.main, "clone", "--bare", self.main, target)
+                    self.age(target)
+                    self.assertEqual("removed", self.clean(target)["action"])
+                    continue
+                target = self.clone(marker)
+                (target / "source").write_text("temporary unique content")
+                self.git(target, "commit", "-am", "Temporary commit")
+                if marker == "gitdir-file":
+                    metadata = self.root / "external.git"
+                    (target / ".git").rename(metadata)
+                    (target / ".git").write_text("gitdir: " + str(metadata) + "\n")
+                self.age(target)
+                result = self.clean(target)
+                self.assertEqual("removed", result["action"], "[FAIL] old_repository_is_ordinary: " + str(result))
+                self.assertFalse(target.exists())
+                if marker == "gitdir-file":
+                    self.assertTrue(metadata.exists())
 
-    def test_retained_repository_is_removed_and_main_survives(self):
+    def test_repository_with_git_activity_inside_24_hours_is_retained(self):
         target = self.clone()
         self.age(target)
-        self.assertEqual("would_remove", self.clean(target, False)["action"])
-        self.assertEqual("removed", self.clean(target)["action"])
-        self.assertTrue((self.main / "source").exists())
+        os.utime(target / ".git/logs/HEAD", (self.cutoff + 1, self.cutoff + 1))
+        result = self.clean(target)
+        self.assertEqual(("kept", "recent"), (result["action"], result["reason"]))
+        self.assertTrue(target.exists())
+
+    def test_registered_worktree_is_retained_as_an_artifact(self):
+        target = self.root / "artifacts/registered"
+        self.git(self.main, "worktree", "add", "-b", "registered", target)
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual(("kept", "protected"), (result["action"], result["reason"]))
+        self.assertTrue((target / ".git").is_file())
+
+    def test_main_alternate_dependency_protects_an_ordinary_directory(self):
+        target = self.root / "artifacts/object storage"
+        shutil.copytree(self.main / ".git/objects", target)
+        (self.main / ".git/objects/info/alternates").write_text(str(target) + "\n")
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual(("kept", "repository_source_dependency"),
+                         (result["action"], result["reason"]), "[FAIL] ordinary_source_dependency: " + str(result))
+        self.assertTrue(target.exists())
+
+    def test_main_alternate_dependency_protects_generated_build(self):
+        target = self.clone()
+        objects = target / ".lake/build/objects"
+        shutil.copytree(self.main / ".git/objects", objects)
+        (self.main / ".git/objects/info/alternates").write_text(str(objects) + "\n")
+        self.age(target)
+        result = cleanup.clean_generated_build(target / ".lake", self.cutoff, [],
+                                               self.main, True, lambda: set())
+        self.assertEqual(("kept", "repository_source_dependency"),
+                         (result["action"], result["reason"]), "[FAIL] build_source_dependency: " + str(result))
+        self.assertTrue(objects.exists())
+
+    def test_main_alternate_dependency_protects_staging(self):
+        target = self.clone()
+        objects = target / ".lake/.release-token/build/objects"
+        shutil.copytree(self.main / ".git/objects", objects)
+        (self.main / ".git/objects/info/alternates").write_text(str(objects) + "\n")
+        self.age(target)
+        rows = self.run_sweep()
+        items = {row.get("path"): row for row in rows}
+        result = items[str(objects.parent.parent)]
+        self.assertEqual(("kept", "repository_source_dependency"),
+                         (result["action"], result["reason"]), "[FAIL] staging_source_dependency: " + str(result))
+        self.assertTrue(objects.exists())
+
+    def test_staging_on_another_device_is_retained(self):
+        lake = self.main / ".lake"
+        stage = lake / ".release-token/build"
+        stage.mkdir(parents=True)
+        (stage / "generated").write_text("cache")
+        self.age(lake)
+        lstat = Path.lstat
+        def mounted(path):
+            info = lstat(path)
+            if path != lake and lake not in path.parents:
+                return info
+            fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
+            return types.SimpleNamespace(**dict(fields, st_dev=info.st_dev + 1))
+        with patch.object(Path, "lstat", mounted):
+            rows = release.clean_staging(lake, now=self.now)
+            self.assertEqual(("kept", "mount"), (rows[0]["action"], rows[0]["reason"]),
+                             "[FAIL] cross_device_staging: " + str(rows))
+        self.assertTrue(stage.exists())
 
     def test_main_direct_alternate_dependency_retains_candidate(self):
         self.check_main_alternate_dependency(False)
@@ -148,6 +232,32 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("repository_source_dependency", result["reason"], result)
         self.assertTrue(target.exists())
 
+    def test_main_alternate_chain_of_aliases_retains_candidate(self):
+        target = self.clone()
+        backing = self.clone("backing")
+        inside = target / ".git/object-alias"
+        inside.symlink_to(backing / ".git/objects", target_is_directory=True)
+        outside = self.root / "outside-alias"
+        outside.symlink_to(inside, target_is_directory=True)
+        (self.main / ".git/objects/info/alternates").write_text(str(outside) + "\n")
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual(("kept", "repository_source_dependency"),
+                         (result["action"], result["reason"]), "[FAIL] alternate_alias_chain: " + str(result))
+        self.assertTrue(inside.is_symlink())
+
+    def test_main_alternate_lexical_path_inside_candidate_retains_candidate(self):
+        target = self.clone()
+        objects = target / ".git/objects"
+        # Git resolves a relative alternate before applying its parent traversal.
+        relative = os.path.relpath(objects, self.main / ".git/objects")
+        (self.main / ".git/objects/info/alternates").write_text(relative + "\n")
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual(("kept", "repository_source_dependency"),
+                         (result["action"], result["reason"]))
+        self.assertTrue(objects.exists())
+
     def test_main_alternate_created_before_deletion_retains_candidate(self):
         target = self.clone()
         self.age(target)
@@ -186,132 +296,6 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue(target.exists())
         self.git(self.main, "cat-file", "-e", "HEAD")
 
-    def test_main_shallow_tip_does_not_certify_missing_ancestors(self):
-        target = self.clone()
-        (target / "source").write_text("next commit")
-        self.git(target, "commit", "-am", "Advance candidate")
-        ancestor = self.git(target, "rev-parse", "HEAD^")
-        self.git(target, "remote", "remove", "origin")
-        shutil.rmtree(self.main)
-        self.git(target, "clone", "--depth=1", target.as_uri(), self.main)
-        self.git(target, "reflog", "expire", "--expire=all", "--all")
-        missing = subprocess.run(["git", "-C", str(self.main), "cat-file", "-e", ancestor],
-                                 capture_output=True)
-        self.assertNotEqual(0, missing.returncode)
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("repository_unverifiable", result["reason"], result)
-        self.assertTrue(target.exists())
-        self.git(target, "cat-file", "-e", ancestor)
-
-    def test_main_partial_clone_retains_independent_repository(self):
-        self.check_incomplete_main("extensions.partialclone", "origin")
-
-    def test_main_promisor_remote_retains_independent_repository(self):
-        self.check_incomplete_main("remote.origin.promisor", "true")
-
-    def check_incomplete_main(self, key, value):
-        target = self.clone()
-        self.git(self.main, "config", key, value)
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("repository_unverifiable", result["reason"], result)
-        self.assertTrue(target.exists())
-
-    def test_main_promisor_pack_retains_independent_repository(self):
-        target = self.clone()
-        self.git(self.main, "repack", "-ad")
-        pack = next((self.main / ".git/objects/pack").glob("*.pack"))
-        pack.with_suffix(".promisor").touch()
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("repository_unverifiable", result["reason"], result)
-        self.assertTrue(target.exists())
-
-    def test_unique_dirty_stash_dangling_and_unfinished_repositories_are_retained(self):
-        for kind, expected in (("unique", "repository_unique_commits"),
-                               ("dirty", "repository_dirty"), ("stash", "repository_stash"),
-                               ("dangling", "repository_unique_commits"),
-                               ("reflog", "repository_unique_commits"),
-                               ("operation", "repository_operation"), ("lock", "repository_lock")):
-            with self.subTest(kind=kind):
-                target = self.clone(kind)
-                baseline = self.git(target, "rev-parse", "HEAD")
-                if kind in ("unique", "dangling", "reflog"):
-                    (target / "source").write_text(kind)
-                    self.git(target, "commit", "-am", kind)
-                    if kind != "unique":
-                        self.git(target, "reset", "--hard", baseline)
-                    if kind == "dangling":
-                        self.git(target, "reflog", "expire", "--expire=all", "--all")
-                elif kind in ("dirty", "stash"):
-                    (target / "untracked").write_text("private")
-                    if kind == "stash":
-                        self.git(target, "stash", "push", "-u")
-                else:
-                    (target / ".git" / ("MERGE_HEAD" if kind == "operation" else "index.lock")).write_text(baseline)
-                self.age(target)
-                result = self.clean(target)
-                self.assertEqual(expected, result["reason"], result)
-                self.assertTrue(target.exists())
-
-    def test_external_shallow_partial_and_alternate_repositories_are_retained(self):
-        for kind in ("external", "shallow", "partial", "alternates"):
-            with self.subTest(kind=kind):
-                target = self.clone(kind)
-                if kind == "external":
-                    metadata = self.root / "external.git"
-                    (target / ".git").rename(metadata)
-                    (target / ".git").write_text("gitdir: " + str(metadata) + "\n")
-                elif kind == "shallow":
-                    (target / ".git/shallow").write_text(self.git(target, "rev-parse", "HEAD") + "\n")
-                elif kind == "partial":
-                    self.git(target, "config", "remote.origin.promisor", "true")
-                else:
-                    (target / ".git/objects/info/alternates").write_text(str(self.main / ".git/objects") + "\n")
-                self.age(target)
-                result = self.clean(target)
-                self.assertEqual("repository_unverifiable", result["reason"], result)
-                self.assertTrue(target.exists())
-
-    def test_repository_with_its_own_external_worktree_is_retained(self):
-        target = self.clone()
-        external = self.root / "external worktree"
-        self.git(target, "worktree", "add", "-b", "attached", external)
-        (external / "source").write_text("staged version")
-        self.git(external, "add", "source")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("repository_unverifiable", result["reason"], result)
-        self.assertTrue(self.git(external, "ls-files", "--stage", "source"))
-
-    def test_indirect_external_alternates_are_retained(self):
-        target = self.clone()
-        internal = target / ".git/objects/internal"
-        (internal / "info").mkdir(parents=True)
-        (internal / "pack").mkdir()
-        (target / ".git/objects/info/alternates").write_text(str(internal) + "\n")
-        (internal / "info/alternates").write_text(str(self.main / ".git/objects") + "\n")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("repository_unverifiable", result["reason"], result)
-        self.assertTrue(target.exists())
-
-    def test_candidates_inside_repository_preserve_tracked_and_private_files(self):
-        target = self.clone()
-        private = target / "private"
-        private.write_text("uncommitted content")
-        self.age(target)
-        for path in (target / "source", private):
-            result = self.clean(path)
-            self.assertEqual("repository_unverifiable", result["reason"], result)
-            self.assertTrue(path.exists())
-        (target / "source").write_text("modified tracked content")
-        self.age(target)
-        self.run_sweep(artifact_root=target)
-        self.assertEqual("modified tracked content", (target / "source").read_text())
-        self.assertTrue(private.exists())
-
     def test_external_registered_worktree_build_is_preserved(self):
         target = self.clone()
         external = target / "external worktree"
@@ -336,54 +320,12 @@ class HostReclaimTests(unittest.TestCase):
         self.git(target, "commit", "-m", "Track nested source")
         source.write_text("private local edits")
         self.age(target)
+        os.utime(target / "source", (self.now, self.now))
         self.run_sweep()
         self.assertTrue(source.exists())
         self.assertEqual("private local edits", source.read_text())
 
-    def test_retained_tip_scale_uses_bounded_git_object_and_ancestry_queries(self):
-        count = 13692
-        records = []
-        for index in range(count):
-            name = "tip-" + str(index)
-            records.append("commit refs/heads/scale\nmark :" + str(index + 1) + "\ncommitter Test <test@example.invalid> "
-                           "1700000000 +0000\ndata " + str(len(name)) + "\n" + name + "\n\n")
-        marks = self.root / "marks"
-        subprocess.run(["git", "-C", str(self.main), "fast-import", "--quiet", "--export-marks=" + str(marks)],
-                       input="".join(records), text=True, capture_output=True, check=True)
-        tips = sorted(("refs/heads/tip-" + row.split()[0][1:], row.split()[1])
-                      for row in marks.read_text().splitlines())
-        (self.main / ".git/packed-refs").write_text("# pack-refs with: peeled fully-peeled sorted\n" +
-            "".join(oid + " " + name + "\n" for name, oid in tips))
-        target = self.clone()
-        self.age(target)
-        run = cleanup.subprocess.run
-        commands = []
-        def observed(*args, **kwargs):
-            commands.append(args[0])
-            if (sum("cat-file" in command for command in commands) > 2
-                    or sum("merge-base" in command for command in commands) > 2):
-                raise AssertionError("retained tip certification exceeds the bounded Git command budget")
-            return run(*args, **kwargs)
-        with patch.object(cleanup.subprocess, "run", side_effect=observed):
-            result = self.clean(target, False)
-        self.assertEqual("would_remove", result["action"], result)
-        self.assertLessEqual(sum("cat-file" in command for command in commands), 2)
-        self.assertLessEqual(sum("merge-base" in command for command in commands), 2)
-
-    def test_corrupt_reflog_and_main_dangling_objects_do_not_certify_retention(self):
-        target = self.clone()
-        (target / ".git/logs/HEAD").write_text("corrupt\n")
-        self.age(target)
-        self.assertEqual("repository_unverifiable", self.clean(target)["reason"])
-        target = self.clone("main-dangling")
-        (target / "source").write_text("unique")
-        self.git(target, "commit", "-am", "Unretained")
-        oid = self.git(target, "rev-parse", "HEAD")
-        self.git(self.main, "fetch", target, oid)
-        self.age(target)
-        self.assertEqual("repository_unique_commits", self.clean(target)["reason"])
-
-    def test_nested_repository_requires_its_own_retention_proof(self):
+    def test_nested_repositories_are_ordinary_candidates(self):
         parent = self.root / "parent"
         parent.mkdir()
         safe = self.clone("safe")
@@ -393,8 +335,8 @@ class HostReclaimTests(unittest.TestCase):
         self.git(unsafe, "commit", "-am", "Unique nested history")
         unsafe.rename(parent / "unsafe")
         self.age(parent)
-        self.assertEqual("repository_unique_commits", self.clean(parent)["reason"])
-        self.assertTrue((parent / "safe").exists())
+        self.assertEqual("removed", self.clean(parent)["action"])
+        self.assertFalse(parent.exists())
 
     def test_repository_changed_before_delete_is_retained(self):
         target = self.clone()
@@ -412,12 +354,6 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("changed", result["reason"])
         self.assertTrue(target.exists())
 
-    def test_bare_repository_is_preserved(self):
-        bare = self.root / "bare"
-        self.git(self.main, "clone", "--bare", self.main, bare)
-        self.age(bare)
-        self.assertEqual("repository_unverifiable", self.clean(bare)["reason"])
-
     def test_tracked_build_is_preserved(self):
         target = self.clone()
         build = target / ".lake/build"
@@ -426,6 +362,7 @@ class HostReclaimTests(unittest.TestCase):
         self.git(target, "add", "-f", ".lake/build/source")
         self.git(target, "commit", "-m", "Track source in build")
         self.age(target)
+        os.utime(target / "source", (self.now, self.now))
         self.run_sweep()
         self.assertTrue(build.exists())
 
@@ -471,22 +408,12 @@ class HostReclaimTests(unittest.TestCase):
                 close()
             self.assertEqual("removed", cleanup.clean_candidate(endpoint, self.cutoff, [], True)["action"])
 
-    def test_tag_objects_and_safe_nested_repositories_are_reclaimable(self):
-        self.git(self.main, "tag", "-a", "retained", "-m", "Retained tag")
-        first = self.clone("first")
-        second = self.clone("second")
-        parent = self.root / "artifacts"
-        self.age(parent)
-        self.assertEqual("removed", self.clean(parent)["action"])
-        self.assertFalse(first.exists())
-        self.assertFalse(second.exists())
-
     def test_registration_and_activity_changes_before_delete_are_retained(self):
         for change in ("registration", "activity"):
             target = self.clone(change)
             self.age(target)
             if change == "registration":
-                with patch.object(cleanup, "registered_worktrees", side_effect=[[self.main], [target], [self.main, target]]):
+                with patch.object(cleanup, "registered_worktrees", side_effect=[[self.main], [self.main, target]]):
                     result = self.clean(target)
             else:
                 result = cleanup.clean_candidate(target, self.cutoff, [], delete=True, repository=self.main,
@@ -525,7 +452,7 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue((lake / "packages/source").exists())
         self.assertFalse((lake / "build").exists())
 
-    def test_ipc_candidates_inside_repository_are_preserved(self):
+    def test_ipc_candidates_inside_temporary_repository_are_ordinary_candidates(self):
         target = self.clone()
         endpoints = [target / kind for kind in ("fifo", "socket")]
         for endpoint in endpoints:
@@ -535,8 +462,8 @@ class HostReclaimTests(unittest.TestCase):
             rows = self.run_sweep(artifact_root=target)
         reasons = {row.get("path"): row.get("reason") for row in rows}
         for endpoint in endpoints:
-            self.assertTrue(endpoint.exists())
-            self.assertEqual("repository_unverifiable", reasons.get(str(endpoint)))
+            self.assertFalse(endpoint.exists())
+            self.assertIsNone(reasons.get(str(endpoint)))
 
     def test_host_sweep_ipc_activity_protects_fifo_and_socket_endpoints(self):
         artifacts = self.root / "artifacts"
@@ -593,7 +520,7 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("failed", rows[-1]["status"], rows)
 
     def test_retained_or_recent_repository_reclaims_only_old_build(self):
-        for kind in ("dirty", "recent"):
+        for kind in ("dependency", "recent"):
             target = self.clone(kind)
             build = target / ".lake/build"
             build.mkdir(parents=True)
@@ -602,9 +529,8 @@ class HostReclaimTests(unittest.TestCase):
             packages.mkdir()
             (packages / "dependency").write_text("keep")
             self.age(target)
-            if kind == "dirty":
-                (target / "source").write_text("private")
-                self.age(target)
+            if kind == "dependency":
+                (self.main / ".git/objects/info/alternates").write_text(str(target / ".git/objects") + "\n")
             else:
                 os.utime(target / "source", (self.now, self.now))
             self.run_sweep()
@@ -746,13 +672,8 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue(any(row["reason"] == "vanished" for row in rows), rows)
         self.assertFalse(retained.exists())
 
-    def test_repository_ipc_and_staging_keep_a_full_day_minimum(self):
-        target = self.clone()
+    def test_ipc_keeps_a_full_day_minimum(self):
         recent = self.now - 3600
-        self.age(target)
-        os.utime(target / "source", (recent, recent))
-        result = cleanup.clean_candidate(target, self.now, [], delete=True, repository=self.main)
-        self.assertEqual("recent", result["reason"])
         fifo = self.root / "fifo"
         os.mkfifo(fifo)
         os.utime(fifo, (recent, recent))

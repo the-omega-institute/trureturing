@@ -417,6 +417,8 @@ def staging_snapshot(path, cutoff):
         return dict(reason="staging_shape")
     parent = path.parent.lstat()
     device = parent.st_dev
+    if device != path.parent.parent.stat().st_dev:
+        return dict(reason="mount")
     flags = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
              stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
     if parent.st_uid != os.getuid():

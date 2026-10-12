@@ -35,40 +35,35 @@ def worktree_modules():
     return worktree_preservation, lean_cache_release
 
 
-def directory_skeleton(path):
-    """Only directories, including every descendant, do not establish a Git boundary."""
-    pending = [path]
-    while pending:
-        entry = pending.pop()
-        if not stat.S_ISDIR(entry.lstat().st_mode):
-            return False
-        pending.extend(entry.iterdir())
-    return True
-
-
 def source_object_directories(source, removal_root, preservation):
-    """Require complete source history whose object storage survives this removal."""
-    config = preservation.git(source, "config", "--get-regexp",
-                              r"extensions\.partialclone|remote\..*\.promisor", check=False)
-    if (config.returncode not in (0, 1) or config.stdout
-            or preservation.value(source, "rev-parse", "--is-shallow-repository") != "false"):
-        raise preservation.Refused("repository_unverifiable:source_incomplete_objects")
-    pending = [preservation.common(source) / "objects"]
+    """Find source object storage and reject dependencies inside the removal tree."""
+    common = Path(preservation.value(source, "rev-parse", "--path-format=absolute", "--git-common-dir"))
+    pending = [common / "objects"]
     visited = set()
     removal_root = removal_root.resolve()
     def surviving_path(path):
         physical = path.resolve(strict=True)
-        for dependency in (path.absolute(), physical):
-            if dependency == removal_root or removal_root in dependency.parents:
-                raise preservation.Refused("repository_source_dependency:" + str(dependency))
+        aliases, inspected = [path.absolute()], set()
+        while aliases:
+            alias = aliases.pop()
+            if alias in inspected:
+                continue
+            inspected.add(alias)
+            for dependency in (alias, alias.resolve(strict=True)):
+                if dependency == removal_root or removal_root in dependency.parents:
+                    raise preservation.Refused("repository_source_dependency:" + str(dependency))
+            if alias.is_symlink():
+                target = Path(os.readlink(alias))
+                aliases.append(target if target.is_absolute() else alias.parent / target)
+            aliases.extend(alias.parents)
         return physical
     while pending:
         objects = surviving_path(pending.pop())
         if objects in visited:
             continue
         visited.add(objects)
-        if not objects.is_dir() or any((objects / "pack").glob("*.promisor")):
-            raise preservation.Refused("repository_unverifiable:source_incomplete_objects")
+        if not objects.is_dir():
+            raise preservation.Refused("repository_unverifiable:source_object_directory")
         alternates = objects / "info/alternates"
         if os.path.lexists(alternates):
             surviving_path(alternates)
@@ -79,103 +74,16 @@ def source_object_directories(source, removal_root, preservation):
     return sorted(map(str, visited))
 
 
-def repository_snapshot(path, source, removal_root=None):
-    """Certify all local recovery history against the main checkout's retained refs."""
-    preservation, _ = worktree_modules()
-    git = preservation.git
-    source_objects = source_object_directories(source, removal_root or path, preservation)
-    metadata = path / ".git"
-    if not metadata.is_dir() or metadata.is_symlink():
-        raise preservation.Refused("repository_unverifiable:external_gitdir")
-    registrations = registered_worktrees(source)
-    if any(path == tree or path in tree.parents or tree in path.parents for tree in registrations):
-        raise preservation.Refused("protected")
-    attachments = registered_worktrees(path)
-    if (attachments != [path.resolve()] or (metadata / "worktrees").exists()
-            and any((metadata / "worktrees").iterdir())):
-        raise preservation.Refused("repository_unverifiable:external_worktree")
-    if (Path(preservation.value(path, "rev-parse", "--absolute-git-dir")).resolve() != metadata.resolve()
-            or preservation.common(path) != metadata.resolve()
-            or Path(preservation.value(path, "rev-parse", "--show-toplevel")).resolve() != path.resolve()):
-        raise preservation.Refused("repository_unverifiable:external_gitdir")
-    config = git(path, "config", "--get-regexp", r"extensions\.partialclone|remote\..*\.promisor",
-                 check=False)
-    if config.returncode not in (0, 1) or config.stdout or (metadata / "shallow").exists():
-        raise preservation.Refused("repository_unverifiable:incomplete_objects")
-    object_directories, visited = [metadata / "objects"], set()
-    while object_directories:
-        objects = object_directories.pop().resolve()
-        if objects in visited:
-            continue
-        visited.add(objects)
-        if metadata.resolve() not in objects.parents or not objects.is_dir():
-            raise preservation.Refused("repository_unverifiable:external_alternates")
-        alternates = objects / "info/alternates"
-        if alternates.exists():
-            for raw in alternates.read_text().splitlines():
-                if not raw or raw.startswith('"'):
-                    raise preservation.Refused("repository_unverifiable:alternate_path")
-                object_directories.append(objects / raw)
-    for name in ("MERGE_HEAD", "rebase-apply", "rebase-merge", "CHERRY_PICK_HEAD",
-                 "REVERT_HEAD", "sequencer", "BISECT_LOG"):
-        if (metadata / name).exists():
-            raise preservation.Refused("repository_operation")
-    if any(metadata.rglob("*.lock")):
-        raise preservation.Refused("repository_lock")
-    refs = git(path, "for-each-ref", "--format=%(objectname) %(refname)").stdout
-    if any(row.endswith(b" refs/stash") for row in refs.splitlines()):
-        raise preservation.Refused("repository_stash")
-    if git(path, "-c", "core.fsmonitor=false", "status", "--porcelain", "--untracked-files=all",
-           env={"GIT_OPTIONAL_LOCKS": "0"}).stdout:
-        raise preservation.Refused("repository_dirty")
-    oids = {row.split(b" ", 1)[0].decode("ascii") for row in refs.splitlines()}
-    head = preservation.value(path, "rev-parse", "--verify", "HEAD")
-    oids.add(head)
-    logs = metadata / "logs"
-    if logs.exists():
-        for log in logs.rglob("*"):
-            if log.is_file():
-                oids.update(preservation.reflog_oids(log))
-    fsck = git(path, "fsck", "--full", "--unreachable", "--no-reflogs")
-    for row in fsck.stdout.splitlines():
-        fields = row.split()
-        if len(fields) == 3 and fields[0] in (b"unreachable", b"dangling") and fields[1] == b"commit":
-            oids.add(fields[2].decode("ascii"))
-    roots = git(source, "for-each-ref", "--format=%(objectname)",
-                "refs/heads/", "refs/remotes/", "refs/tags/").stdout.decode("ascii").splitlines()
-    root_set = set(roots)
-    reachable_objects = None
-    required = sorted(oid for oid in oids if set(oid) != {"0"})
-    kinds = git(source, "cat-file", "--batch-check=%(objectname) %(objecttype)",
-                input=("\n".join(required) + "\n").encode("ascii")).stdout.splitlines()
-    if len(kinds) != len(required):
-        raise preservation.Refused("repository_unverifiable:object_inventory")
-    for oid, row in zip(required, kinds):
-        fields = row.decode("ascii").split()
-        if len(fields) != 2 or fields[0] != oid:
-            raise preservation.Refused("repository_unverifiable:object_inventory")
-        if fields[1] == "missing":
-            raise preservation.Refused("repository_unique_commits:" + oid)
-        # Every retained ref tip is itself a preservation root.
-        if oid in root_set:
-            continue
-        if fields[1] == "commit":
-            try:
-                containing = [oid] if oid in root_set else sorted(root_set.intersection(
-                    git(source, "for-each-ref", "--contains", oid, "--format=%(objectname)",
-                        "refs/heads/", "refs/remotes/", "refs/tags/").stdout.decode("ascii").splitlines()))
-                preservation.retained(source, oid, containing[:1])
-            except preservation.Refused as error:
-                raise preservation.Refused("repository_unique_commits:" + oid) from error
-        else:
-            if reachable_objects is None:
-                reachable_objects = set(git(source, "rev-list", "--objects", "--no-object-names",
-                                            *roots, "--").stdout.decode("ascii").splitlines()) if roots else set()
-            if oid not in reachable_objects:
-                raise preservation.Refused("repository_unique_commits:" + oid)
-    return dict(path=str(path), head=head, refs=os.fsdecode(refs), roots=sorted(roots), oids=sorted(oids),
-                registrations=sorted(map(str, registrations)), attachments=list(map(str, attachments)),
-                source_objects=source_objects)
+def source_dependency_snapshot(source, removal_root):
+    """Protect storage needed by the main repository, including alternate-list aliases."""
+    try:
+        preservation, _ = worktree_modules()
+        return dict(reason=None, source_objects=source_object_directories(source, removal_root, preservation))
+    except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
+        reason = str(error).split(":", 1)[0]
+        if reason != "repository_source_dependency":
+            reason = "repository_unverifiable"
+        return dict(reason=reason, detail=str(error))
 
 
 def macos_active_paths(strict_ipc=False):
@@ -265,19 +173,24 @@ class ProtectedPaths:
 def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ipc_observed=False):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
-    if path.name == ".git" and (not reclaim or not directory_skeleton(path)):
+    if path.name == ".git" and not reclaim:
         return dict(reason="repository")
     if not isinstance(protected, ProtectedPaths):
         protected = ProtectedPaths(protected)
     if path in protected:
         return dict(reason="protected")
+    source_objects, registrations = [], []
     if repository is not None:
         try:
-            governing = containing_repository(path)
-        except OSError as error:
+            registrations = registered_worktrees(repository)
+            if any(path == tree or path in tree.parents or tree in path.parents for tree in registrations):
+                return dict(reason="protected")
+        except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
             return dict(reason="repository_unverifiable", detail=str(error))
-        if governing is not None and governing != path:
-            return dict(reason="repository_unverifiable", detail="partial_repository")
+        dependency = source_dependency_snapshot(repository, path)
+        if dependency["reason"] is not None:
+            return dependency
+        source_objects = dependency["source_objects"]
     root_stat = path.lstat()
     if stat.S_ISLNK(root_stat.st_mode):
         return dict(reason="symlink")
@@ -285,7 +198,6 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
         return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
-    repositories = []
     ipc_observation = None
     has_ipc = False
     lakes = []
@@ -323,29 +235,14 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
         elif stat.S_ISDIR(info.st_mode):
             with os.scandir(entry) as children:
                 names = sorted(child.name for child in children)
-            if reclaim and entry.name != ".git" and {"HEAD", "objects", "refs"}.issubset(names):
-                return dict(reason="repository_unverifiable", detail="bare_repository")
-            if ".git" in names:
-                if not reclaim or not directory_skeleton(entry / ".git"):
-                    if repository is None:
-                        return dict(reason="repository")
-                    repositories.append(entry)
+            if not reclaim and ".git" in names:
+                return dict(reason="repository")
             if reclaim and entry.name == ".lake":
                 lakes.append(str(entry))
             pending.extend(entry / name for name in names)
-    minimum_cutoff = time.time() - 24 * 3600
-    if repositories and cutoff > minimum_cutoff:
-        return inspect_candidate(path, minimum_cutoff, protected, repository=repository, reclaim=reclaim)
-    try:
-        repositories = [repository_snapshot(entry, repository, path) for entry in repositories]
-    except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
-        reason = str(error).split(":", 1)[0]
-        if reason not in ("protected", "repository_dirty", "repository_stash", "repository_operation",
-                          "repository_lock", "repository_unique_commits", "repository_source_dependency"):
-            reason = "repository_unverifiable"
-        return dict(reason=reason, detail=str(error))
     return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes,
-                repositories=repositories, lakes=lakes, has_ipc=has_ipc)
+                source_objects=source_objects, registrations=sorted(map(str, registrations)),
+                lakes=lakes, has_ipc=has_ipc)
 
 
 def remove_tree(path):
@@ -389,7 +286,7 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             for lake in before.get("lakes", []):
                 _, release = worktree_modules()
                 stack.enter_context(release.cache_guard(Path(lake).parent))
-            refreshed = ProtectedPaths(activity()) if activity and (before.get("repositories") or before.get("has_ipc") or refresh_activity) else protected
+            refreshed = ProtectedPaths(activity()) if activity and (repository is not None or before.get("has_ipc") or refresh_activity) else protected
             after = observe(refreshed)
             if after != before:
                 result["reason"] = "changed"
@@ -632,10 +529,10 @@ def containing_repository(path):
     """Find the governing Git boundary, including nested project directories."""
     for parent in (path, *path.parents):
         marker = parent / ".git"
-        if os.path.lexists(marker) and not directory_skeleton(marker):
+        if os.path.lexists(marker):
             return parent
         if all((parent / name).exists() for name in ("HEAD", "objects", "refs")):
-            raise OSError("repository_unverifiable:bare_repository")
+            return parent
     return None
 
 
@@ -666,6 +563,9 @@ def clean_generated_build(lake, cutoff, protected, source, delete, activity):
                 registrations = registered_worktrees(source)
                 if any(tree == path or tree in path.parents for tree in registrations):
                     return dict(reason="protected")
+                dependency = source_dependency_snapshot(source, path)
+                if dependency["reason"] is not None:
+                    return dependency
                 info = lake.lstat()
                 if stat.S_ISLNK(info.st_mode):
                     return dict(reason="symlink")
@@ -689,6 +589,7 @@ def clean_generated_build(lake, cutoff, protected, source, delete, activity):
                     if preservation.git(top, "ls-files", "--", str(path.relative_to(top))).stdout:
                         return dict(reason="protected")
                 return dict(reason=None, registrations=sorted(map(str, registrations)),
+                            source_objects=dependency["source_objects"],
                             attachments=list(map(str, attachments)),
                             lake=(info.st_dev, info.st_ino, info.st_mode, info.st_ctime_ns),
                             repository=str(governing) if governing is not None else None)
@@ -794,6 +695,9 @@ def clean_from_anchor(options, caller, disk_descriptor):
         seen_lakes.add(lake)
         _, release = worktree_modules()
         def inspect(path):
+            dependency = source_dependency_snapshot(main_checkout, path)
+            if dependency["reason"] is not None:
+                return dependency
             protection = ProtectedPaths(active_paths(codex) | {caller}) if options.delete else ProtectedPaths(active | {caller})
             return inspect_candidate(path, cutoff, protection)
         for result in release.clean_staging(lake, cutoff=cutoff, now=now,
