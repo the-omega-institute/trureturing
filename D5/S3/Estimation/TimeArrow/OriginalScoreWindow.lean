@@ -8,6 +8,7 @@
 
 import D5.S3.Estimation.TimeArrow.NativeAnchoredSmallBall
 import D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment
+import D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
 
 open scoped BigOperators Topology
 open Finset Filter
@@ -384,6 +385,254 @@ theorem original_full_env_small_ball :
       | (apply sum_congr rfl; intro x _; split_ifs <;> rfl)
       | (congr 1; ext y; simp only [Env,z,mem_filter,mem_univ,true_and])
   simpa only [N,B,z] using heqEnv.le.trans hf
+
+/-- A complete cube coordinate is numbered by its remaining coordinates and
+its product sign. This preserves state identity and parity simultaneously. -/
+def cubeParityEquiv (d : ℕ) : (Fin (d+1) → ℤˣ) ≃ Vertex (2^d) := by
+  classical
+  let number : (Fin d → ℤˣ) ≃ Fin (2^d) := Fintype.equivFinOfCardEq (by simp)
+  let split : (Fin (d+1) → ℤˣ) ≃ ((Fin d → ℤˣ) × ℤˣ) :=
+    (Fin.consEquiv (fun _ : Fin (d+1) => ℤˣ)).symm.trans
+      { toFun := fun u => (u.2,u.1*∏ j,u.2 j)
+        invFun := fun u => (u.2*(∏ j,u.1 j)⁻¹,u.1)
+        left_inv := by
+          intro u
+          change (u.1 * (∏ j, u.2 j) * (∏ j, u.2 j)⁻¹, u.2) = u
+          rw [mul_inv_cancel_right]
+        right_inv := by
+          intro u
+          change (u.1, u.2 * (∏ j, u.1 j)⁻¹ * (∏ j, u.1 j)) = u
+          rw [inv_mul_cancel_right] }
+  exact split.trans
+    { toFun := fun u => if u.2 = 1 then Sum.inl (number u.1) else Sum.inr (number u.1)
+      invFun := fun u => match u with
+        | .inl i => (number.symm i,1)
+        | .inr i => (number.symm i,-1)
+      left_inv := by
+        intro ⟨f,z⟩
+        rcases Int.units_eq_one_or z with h | h <;> subst z <;> simp
+      right_inv := by
+        intro u
+        cases u <;> simp }
+
+/-- The native sign agrees exactly with the frozen original cube parity. -/
+private theorem cube_parity_preserved (d : ℕ) (x : Fin (d+1) → ℤˣ) :
+    chi (cubeParityEquiv d x) = D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parity x := by
+  rcases Int.units_eq_one_or (∏ j,x j) with h | h
+  · have hs : x 0*(∏ j : Fin d,x j.succ) = 1 := by simpa only [Fin.prod_univ_succ] using h
+    simp [cubeParityEquiv,Fin.consEquiv,chi,
+      D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parity,Fin.prod_univ_succ,Fin.tail,hs]
+  · have hs : x 0*(∏ j : Fin d,x j.succ) = -1 := by simpa only [Fin.prod_univ_succ] using h
+    simp [cubeParityEquiv,Fin.consEquiv,chi,
+      D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parity,Fin.prod_univ_succ,Fin.tail,hs]
+
+/-- Every site is preserved, so path adjacency is preserved along with pair
+endpoints. The original path is not replaced by a product of independent edges. -/
+def cubeObservationEquiv (d s : ℕ) (e : Experiment) :
+    (Sites s e → Fin (d+1) → ℤˣ) ≃ Obs (2^d) s e :=
+  (Equiv.piCongrRight fun _ : Sites s e => cubeParityEquiv d).trans (siteEquiv (2^d) s e).symm
+
+private theorem cube_transition_eq {d q : ℕ} (S : Support (2^d) q) (r : ℝ)
+    (x y : Fin (d+1) → ℤˣ) :
+    D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parityKernel
+      (fun u => b r S (cubeParityEquiv d u)) x y =
+        transition r S (cubeParityEquiv d x) (cubeParityEquiv d y) := by
+  unfold D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parityKernel transition
+  rw [←cube_parity_preserved d y]
+  congr 1
+  push_cast
+  rw [pow_succ]
+  ring
+
+/-- Original pair and path masses use the frozen cube transition kernel
+with its original uniform initial law and actual compensation coefficient. -/
+def originalCubeProbability {d q s : ℕ} (r : ℝ) (e : Experiment)
+    (S : Support (2^d) q) (X : Sites s e → Fin (d+1) → ℤˣ) : ℝ :=
+  match e with
+  | .pair => ∏ k : Fin s,(2*(2^d : ℕ) : ℝ)⁻¹ *
+      D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parityKernel
+        (fun u => b r S (cubeParityEquiv d u)) (X (k,false)) (X (k,true))
+  | .path => (2*(2^d : ℕ) : ℝ)⁻¹ * ∏ k : Fin s,
+      D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parityKernel
+        (fun u => b r S (cubeParityEquiv d u)) (X k.castSucc) (X k.succ)
+
+private theorem original_cube_probability_eq_native {d q s : ℕ} (r : ℝ) (e : Experiment)
+    (S : Support (2^d) q) (X : Sites s e → Fin (d+1) → ℤˣ) :
+    originalCubeProbability r e S X = probability r e S (cubeObservationEquiv d s e X) := by
+  cases e <;> dsimp [originalCubeProbability,probability,cubeObservationEquiv,siteEquiv]
+  · simp only [cube_transition_eq,Equiv.piCongrRight_apply] <;> rfl
+  · simp only [cube_transition_eq,Equiv.piCongrRight_apply,Equiv.refl_apply] <;> rfl
+
+open scoped Classical in
+private theorem original_cube_conditional_mass_eq {d q s : ℕ} (r : ℝ) (e : Experiment)
+    [Fintype (Sites s e)] (S : Support (2^d) q) (X : Sites s e → Fin (d+1) → ℤˣ)
+    (k l : ℕ) (P : Obs (2^d) s e → Prop) :
+    (∑ Y : Sites s e → Fin (d+1) → ℤˣ,
+      if fullRectangleReadout S e k l (cubeObservationEquiv d s e Y) =
+          fullRectangleReadout S e k l (cubeObservationEquiv d s e X) ∧ P (cubeObservationEquiv d s e Y)
+        then originalCubeProbability r e S Y else 0)/
+      (∑ Y : Sites s e → Fin (d+1) → ℤˣ,
+        if fullRectangleReadout S e k l (cubeObservationEquiv d s e Y) =
+            fullRectangleReadout S e k l (cubeObservationEquiv d s e X)
+          then originalCubeProbability r e S Y else 0) =
+    (∑ y : Obs (2^d) s e,if fullRectangleReadout S e k l y =
+        fullRectangleReadout S e k l (cubeObservationEquiv d s e X) ∧ P y
+      then probability r e S y else 0)/
+      (∑ y : Obs (2^d) s e,if fullRectangleReadout S e k l y =
+          fullRectangleReadout S e k l (cubeObservationEquiv d s e X)
+        then probability r e S y else 0) := by
+  classical
+  simp_rw [original_cube_probability_eq_native]
+  rw [(cubeObservationEquiv d s e).sum_comp (fun y =>
+    if fullRectangleReadout S e k l y = fullRectangleReadout S e k l (cubeObservationEquiv d s e X) ∧ P y
+      then probability r e S y else 0)]
+  rw [(cubeObservationEquiv d s e).sum_comp (fun y =>
+    if fullRectangleReadout S e k l y = fullRectangleReadout S e k l (cubeObservationEquiv d s e X)
+      then probability r e S y else 0)]
+
+/-- Exact departure counts use the same source site and successor sign in
+both experiments, including the path endpoint convention. -/
+private theorem original_cube_departure_counts {d s : ℕ}
+    (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ) (i : Fin (2^d)) (sign : ℝ) :
+    count e (cubeObservationEquiv d s e X) i sign =
+      (univ.filter fun j : Fin s => cubeParityEquiv d (X (departureSite s e j)) = Sum.inl i ∧
+        D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parity (X (successorSite s e j)) = sign).card := by
+  classical
+  simp_rw [←cube_parity_preserved]
+  cases e <;> rfl
+
+
+/-- Original cube scores use actual departure sites and successor parity. -/
+def originalCubeScore {d s : ℕ} (q : ℕ) (r : ℝ) (e : Experiment)
+    (X : Sites s e → Fin (d+1) → ℤˣ) (i : Fin (2^d)) : ℝ := by
+  classical
+  let C := fun sign : ℝ => (univ.filter fun j : Fin s =>
+    cubeParityEquiv d (X (departureSite s e j)) = Sum.inl i ∧
+      D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parity (X (successorSite s e j)) = sign).card
+  exact C 1*Real.log ((1+r)/(1-compensation (2^d) q r))+
+    C (-1)*Real.log ((1-r)/(1+compensation (2^d) q r))
+
+private theorem original_cube_score_eq_native {d s : ℕ} (q : ℕ) (r : ℝ)
+    (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ) (i : Fin (2^d)) :
+    originalCubeScore q r e X i = score q r e (cubeObservationEquiv d s e X) i := by
+  unfold originalCubeScore score
+  rw [original_cube_departure_counts e X i 1,
+    original_cube_departure_counts e X i (-1)]
+
+/-- Uniform-size support posterior inclusion from the original full cube
+likelihood, with all size-q supports retained in its denominator. -/
+def originalCubeInclusion {d s : ℕ} (q : ℕ) (r : ℝ) (e : Experiment)
+    (X : Sites s e → Fin (d+1) → ℤˣ) (i : Fin (2^d)) : ℝ := by
+  classical
+  exact ∑ S : Support (2^d) q, if i ∈ S.val then
+    originalCubeProbability r e S X /
+      (∑ T : Support (2^d) q, originalCubeProbability r e T X) else 0
+
+private theorem original_cube_inclusion_eq_native {d s : ℕ} (q : ℕ) (r : ℝ)
+    (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ) (i : Fin (2^d)) :
+    originalCubeInclusion q r e X i = inclusion q r e (cubeObservationEquiv d s e X) i := by
+  classical
+  unfold originalCubeInclusion inclusion posterior
+  simp_rw [original_cube_probability_eq_native]
+
+/-- The complete original cube group keeps the original window and exact
+score; inclusion uses the complete size-q posterior under its full-data law. -/
+def originalCubeGroupPosteriorMean {d s : ℕ} (q : ℕ) (r center width value : ℝ)
+    (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ) : ℝ := by
+  classical
+  exact ∑ i ∈ univ.filter (fun i => center-width < originalCubeScore q r e X i ∧
+    originalCubeScore q r e X i ≤ center+width ∧ originalCubeScore q r e X i = value),
+    originalCubeInclusion q r e X i
+
+private theorem original_cube_group_eq_native {d s : ℕ} (q : ℕ) (r center width value : ℝ)
+    (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ) :
+    originalCubeGroupPosteriorMean q r center width value e X =
+      originalGroupPosteriorMean q r center width value e (cubeObservationEquiv d s e X) := by
+  classical
+  unfold originalCubeGroupPosteriorMean originalGroupPosteriorMean originalScoreGroup originalWindow
+  simp_rw [original_cube_score_eq_native,original_cube_inclusion_eq_native]
+  rw [filter_filter]
+  congr 1
+  ext i
+  simp only [mem_filter,mem_univ,true_and]
+  tauto
+
+
+open scoped Classical in
+set_option maxHeartbeats 1600000 in
+/-- The complete original cube experiment inherits the same conditional
+window-posterior bound through a bijection preserving parity and path sites. -/
+theorem original_cube_env_small_ball :
+    ∃ Cpost V0 : ℝ, 0 < Cpost ∧ 0 < V0 ∧
+    ∀ (r v : ℝ), 0 < r → r < 1 → 0 < v →
+    ∃ a γ η c Cfb : ℝ, 0 < a ∧ 0 < γ ∧ γ ≤ 1/32 ∧ 0 < η ∧ 0 < c ∧ 0 < Cfb ∧
+    ∀ ell : ℤ, ell ≠ 0 → ∃ Cell : ℝ, 0 < Cell ∧
+    ∀ (d q s : ℕ) (S : Support (2^d) q) (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ),
+    let M := 2^d
+    let o := cubeObservationEquiv d s e X
+    ∀ [Fintype (Sites s e)], ∀ (k l H Q P : ℕ) (center width ζ : ℝ),
+      1 ≤ q → q < M → 0 ≤ compensation M q r → compensation M q r ≤ 1/2 →
+      letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+      let z : Fiber S e o := ⟨o,rfl⟩
+      let All : Support M M := ⟨univ,by simp⟩
+      let bg : ℝ := (nativeCalibrationCells All e o k l 0 \ S.val).card
+      let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+        (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+      let V := nativeRectangleRows S e o k l z
+      let N : ℝ := V.card
+      let R : ℝ := (V.filter fun i => count e o i.val 1 = k).card
+      let U : ℝ := (V.filter fun i => count e o i.val (-1) = l).card
+      let s0 := c*(N/q)
+      1 < V.card → N/4 ≤ R → R ≤ 3*N/4 → N/4 ≤ U → U ≤ 3*N/4 →
+      max 4 (32/(a*v)) ≤ Real.sqrt N →
+      N/q ≤ v/2 → N/q ≤ v*Real.log 2/8 → a*N/q < η →
+      |compensation M q r| < η → bg ≤ N → s0 ≤ 1 → V0 ≤ v*q/4 →
+      1 ≤ γ*s0*Real.sqrt N →
+      k+l+2 ≤ H → P < Q → 0 < width → 0 < ζ →
+      Real.log (1+r) = (-Real.log (1-r))*((P : ℝ)/Q+ζ) →
+      (-Real.log (1-r))*ζ*(H+k+l)+2*compensation M q r*H+
+        |(k : ℝ)*Real.log (1+r)+l*Real.log (1-r)-center| ≤ width/2 →
+      (Q : ℝ)*width ≤ (-Real.log (1-r))/4 →
+      ∀ (anchor : Fiber S e o) (xStar : ℝ),
+        nativeMinimalRectangleReadout S e o k l anchor = nativeMinimalRectangleReadout S e o k l z →
+        originalCountCut H e anchor.val →
+        (∑ i : Fin M,Real.sigmoid (xStar+(score q r e anchor.val i-z0))) = q →
+        v*q ≤ ∑ i : Fin M,Real.sigmoid (xStar+(score q r e anchor.val i-z0))*
+          (1-Real.sigmoid (xStar+(score q r e anchor.val i-z0))) →
+        |xStar| ≤ a*N/(4*q) →
+        |(nativeRectangleACount S e o k l anchor : ℝ)-U*R/N| ≤ 2*Real.sqrt N →
+        ∀ L τ : ℝ,0 < L → 0 ≤ τ →
+          (∑ Y : Sites s e → Fin (d+1) → ℤˣ,if fullRectangleReadout S e k l (cubeObservationEquiv d s e Y) = fullRectangleReadout S e k l o ∧
+            (∃ b : ℤ,|(ell : ℝ)*(1/2-originalCubeGroupPosteriorMean q r center width z0 e Y)-b| ≤ τ)
+            then originalCubeProbability r e S Y else 0)/
+            (∑ Y : Sites s e → Fin (d+1) → ℤˣ,if fullRectangleReadout S e k l (cubeObservationEquiv d s e Y) = fullRectangleReadout S e k l o
+              then originalCubeProbability r e S Y else 0) ≤
+            Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)) := by
+  classical
+  obtain ⟨Cpost,V0,hCpost,hV0,hmain⟩ := original_full_env_small_ball
+  refine ⟨Cpost,V0,hCpost,hV0,?_⟩
+  intro r v hr hr1 hv
+  obtain ⟨a,γ,η,c,Cfb,ha,hγ,hγsmall,hη,hc,hCfb,hmain⟩ := hmain r v hr hr1 hv
+  refine ⟨a,γ,η,c,Cfb,ha,hγ,hγsmall,hη,hc,hCfb,?_⟩
+  intro ell hell
+  obtain ⟨Cell,hCell,hmain⟩ := hmain ell hell
+  refine ⟨Cell,hCell,?_⟩
+  intro d q s S e X
+  dsimp only
+  intro _ k l H Q P center width ζ hq hqm hε hεhalf
+  letI : Fintype (Fiber S e (cubeObservationEquiv d s e X)) := by unfold Fiber; infer_instance
+  intro hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
+    hH hPQ hwidth hζ hlog herror hgrid anchor xStar henv hcut hroot hvar hx hstar L τ hL hτ
+  have hnative := hmain (2^d) q s S e (cubeObservationEquiv d s e X) k l H Q P center width ζ
+    hq hqm hε hεhalf hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
+    hH hPQ hwidth hζ hlog herror hgrid anchor xStar henv hcut hroot hvar hx hstar L τ hL hτ
+  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation (2^d) q r))+
+    (l : ℝ)*Real.log ((1-r)/(1+compensation (2^d) q r))
+  let Pred := fun y : Obs (2^d) s e => ∃ b : ℤ,
+    |(ell : ℝ)*(1/2-originalGroupPosteriorMean q r center width z0 e y)-b| ≤ τ
+  simp_rw [original_cube_group_eq_native]
+  rw [original_cube_conditional_mass_eq r e S X k l Pred]
+  exact hnative
 
 end
 end D5.S3.Estimation.TimeArrow.OriginalScoreWindow
