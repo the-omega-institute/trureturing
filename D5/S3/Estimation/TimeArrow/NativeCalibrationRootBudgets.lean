@@ -6,7 +6,7 @@
    utility: none
    digest: Native complete reference deviations control the same all-row calibration root. -/
 
-import D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
+import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 import D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
 import D5.S3.Estimation.TimeArrow.NativeReferenceVarianceBounds
 

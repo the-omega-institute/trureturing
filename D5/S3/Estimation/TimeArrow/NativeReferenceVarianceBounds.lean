@@ -6,7 +6,7 @@
    utility: none
    digest: Complete reference calibration variance is bounded below by actual count-window mass. -/
 
-import D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
+import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 import D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
 import Mathlib.Probability.Distributions.Poisson.Basic
 
@@ -86,7 +86,7 @@ open private
   D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_weighted_tail
 from D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 open private D5.S3.Estimation.TimeArrow.NativeReferenceCalibration.all_row_reference_sum
-from D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
+from D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 
 /-- Any finite signal count window below the calibration threshold gives a
 lower bound for the complete reference variance; all other rows remain in it. -/

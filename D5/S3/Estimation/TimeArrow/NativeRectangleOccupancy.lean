@@ -8,7 +8,6 @@
 
 import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-import D5.S3.Estimation.TimeArrow.NativeRectangleReferenceRatios
 
 open scoped BigOperators
 open Finset

@@ -7,7 +7,7 @@
    digest: Original floored signal-cell mass has explicit reciprocal-scale bounds. -/
 
 import D5.S3.Estimation.TimeArrow.NativeReferenceVarianceBounds
-import D5.S3.Estimation.TimeArrow.NativeRectangleReferenceRatios
+import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 
 open scoped BigOperators
 open Finset
