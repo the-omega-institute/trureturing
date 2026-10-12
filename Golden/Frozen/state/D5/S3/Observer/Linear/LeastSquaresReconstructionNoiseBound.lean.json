@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b98c3c23084b1b40892902a416ae721078b654e1aaf10c29f30d249e237a26ea"}
+{"statement_id":"sha256:b98c3c23084b1b40892902a416ae721078b654e1aaf10c29f30d249e237a26ea","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),6:Linear),36:LeastSquaresReconstructionNoiseBound),40:least_squares_reconstruction_noise_bound)","kind":"theorem"}]}

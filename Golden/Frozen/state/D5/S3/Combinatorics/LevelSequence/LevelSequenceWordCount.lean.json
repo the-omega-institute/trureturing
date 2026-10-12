@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ad0e9fd174c8f0e6e00ce27223aa7379dacfa1c623e269a0e78910af587e8e50"}
+{"statement_id":"sha256:ad0e9fd174c8f0e6e00ce27223aa7379dacfa1c623e269a0e78910af587e8e50","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),13:LevelSequence),22:LevelSequenceWordCount),19:alphabet_recurrence)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),13:LevelSequence),22:LevelSequenceWordCount),5:words)","kind":"def"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:62de8d8f634ed88a03a13f56d2b056105baa848d0db2d6e30d5aedb29400d0f2"}
+{"statement_id":"sha256:62de8d8f634ed88a03a13f56d2b056105baa848d0db2d6e30d5aedb29400d0f2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Zeros),18:MirrorPairEnvelope),32:mirror_pair_envelope_eq_two_cosh)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4d1f78ef38f6bf177fae44ca21a46b2c319cec1db67c03c94370906a5ebe533a"}
+{"statement_id":"sha256:4d1f78ef38f6bf177fae44ca21a46b2c319cec1db67c03c94370906a5ebe533a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:RotationAvoidance),28:RotationAvoidanceConsecutive),30:positive_middle_endpoint_count)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:RotationAvoidance),28:RotationAvoidanceConsecutive),34:consecutive_shuffle_endpoint_count)","kind":"theorem"}]}

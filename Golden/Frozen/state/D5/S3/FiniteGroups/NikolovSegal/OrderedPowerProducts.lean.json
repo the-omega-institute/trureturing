@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5113462fad4388beaed4291d5bf1bc28ce29cae39aacabca5004928e7f100e55"}
+{"statement_id":"sha256:5113462fad4388beaed4291d5bf1bc28ce29cae39aacabca5004928e7f100e55","declarations":[{"declaration_name_key":"ns(ns(n0,12:NikolovSegal),20:orderedPowerProducts)","kind":"def"},{"declaration_name_key":"ns(ns(n0,12:NikolovSegal),25:lift_orderedPowerProducts)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,12:NikolovSegal),28:one_mem_orderedPowerProducts)","kind":"theorem"}]}

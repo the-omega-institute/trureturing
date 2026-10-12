@@ -1,1 +1,1 @@
-{"statement_id":"sha256:14ba892638222a9bb9da9cfb4c17a31e7ab517e936410a7a42fc2a23a0e1aba3"}
+{"statement_id":"sha256:14ba892638222a9bb9da9cfb4c17a31e7ab517e936410a7a42fc2a23a0e1aba3","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),21:InterventionsExchange),23:CommutingTargetExchange),17:commutationDefect)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),21:InterventionsExchange),23:CommutingTargetExchange),29:commuting_target_defect_empty)","kind":"theorem"}]}
