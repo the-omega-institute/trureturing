@@ -37,7 +37,10 @@ internal sealed class IsolatedQubitEnsembleDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("kb-isolation-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(prose.Select(p => Paragraph(Text(p))).ToArray()), role);
+            Blocks(prose.Select(p => Paragraph(Text(p))).ToArray()), role,
+            declaration == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("kechrimparis-bae-2020-isolated-qubit-ensembles"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

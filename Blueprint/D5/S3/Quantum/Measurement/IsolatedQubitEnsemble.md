@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/IsolatedQubitEnsemble.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kechrimparis-bae-2020-isolated-qubit-ensembles` (refuted) by `D5/S3/Quantum/Measurement/IsolatedQubitEnsemble.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kechrimparis-bae-2020-isolated-qubit-ensembles","declaration_gid":"D5/S3/Quantum/Measurement/IsolatedQubitEnsemble.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Spiros Kechrimparis; Joonwoo Bae (2020). *Optimal measurement preserving qubit channels*. DOI: [10.1088/1367-2630/abcc9b](https://doi.org/10.1088/1367-2630/abcc9b). URL: <https://arxiv.org/abs/2006.16366>.
