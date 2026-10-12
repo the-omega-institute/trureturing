@@ -920,3 +920,119 @@ def canonical_synchronous_common_stem_registration :
 #print axioms rejected_law_of_operational_premises
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal22
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal28
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  StrictSupply.ExactOriginal150.observationSignature
+
+abbrev actual : Realization observationSignature :=
+  StrictSupply.ExactOriginal150.actual
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ =>
+    _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost 2 - 1)
+    (fun e => nomatch e)
+
+/-- The single observed budget occurs in the original shared margin definition.
+The hypotheses and supply budget retain their original budget occurrences. -/
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (model : Model) (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (family : Set (List Return))
+    (hcap : ∀ execution ∈ family, ∀ a ∈ execution, a.r ≤ K)
+    (hdelta : 0 < actualFamilyDelta model b K family),
+    let eps := actualExactFamilyMargin model (r.readout () () b) K family
+    0 < eps ∧ ∀ execution ∈ family,
+      ActualPairSupply model o (b - eps) .strict execution
+
+theorem source_bridge :
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_exact_uniform_family_margin) ↔
+      sourceArena.Law actual := Iff.rfl
+
+theorem positive_law : sourceArena.Law actual :=
+  @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_exact_uniform_family_margin
+
+/-- The original empty family satisfies every premise and has gap infimum top.
+The rejected readout makes the shared margin negative on that inhabited tuple. -/
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro law
+  have result := law .original (fun _ => false)
+    (lam - g ^ 2 * chi ^ 2 * hSide .high + 1) 2 (by decide)
+    (lt_add_one _) ∅ (by simp) (by simp [actualFamilyDelta, actualFamilyHighGaps])
+  have positive := result.1
+  change 0 < actualExactFamilyMargin .original
+    (_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost 2 - 1)
+    2 ∅ at positive
+  have margin : actualExactFamilyMargin .original
+      (_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost 2 - 1)
+      2 ∅ = -(1 / 2 : ℝ) := by
+    simp [actualExactFamilyMargin, actualFamilyHighGaps]
+    <;> ring
+  rw [margin] at positive
+  norm_num at positive
+
+theorem sensitivity : Sensitivity sourceArena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+
+/-- Dependence is on the complete Real state carrier, with states zero and one.
+These states assert no additional legal-budget or premise-fiber property. -/
+theorem actual_dependence : ObservationalDependence observationSignature actual :=
+  StrictSupply.ExactOriginal150.evidence.dependence
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_exact_uniform_family_margin) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := actual_dependence
+
+def actual_exact_uniform_family_margin_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actual_exact_uniform_family_margin)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal28.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal28.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "fn", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms source_bridge
+#print axioms positive_law
+#print axioms rejected_law
+#print axioms sensitivity
+#print axioms actual_dependence
+#print axioms evidence
+#print axioms actual_exact_uniform_family_margin_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal28
