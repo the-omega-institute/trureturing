@@ -115,7 +115,7 @@ private theorem relative_activation {b A A' x : ℝ}
   intro k _
   rw [← mul_sub, clipped_difference (g_antitone hA' horder)]
 
-private theorem g_has_deriv_at {t : ℝ} (ht : 1 < t) :
+theorem g_has_deriv_at {t : ℝ} (ht : 1 < t) :
     HasDerivAt g (-activationDensity t) t := by
   have ht0 : t ≠ 0 := ne_of_gt (by linarith)
   have hl0 : Real.log t ≠ 0 := ne_of_gt (Real.log_pos ht)
@@ -138,7 +138,7 @@ private theorem density_integrable {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
       mul_ne_zero (pow_ne_zero 2 (h0 u hu))
         (pow_ne_zero 2 (ne_of_gt (Real.log_pos (hp u hu)))))
 
-private theorem density_integral {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
+theorem density_integral {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
     (∫ u in s..t, activationDensity u) = g s - g t := by
   have h := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (f := fun u => -g u) (f' := activationDensity)
