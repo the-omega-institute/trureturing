@@ -86,6 +86,18 @@ Under strict dominance the first weight is positive. Keep precisely the positive
 
 For necessity in the open star, a relative-interior point admits a short extension away from p(0) that remains in its chain hull. If any other parent coordinate were tied with coordinate 0, this extension would make that coordinate larger than coordinate 0, contradicting the closed-star implication. Thus all three comparisons are strict.
 
+**Definition 1.7 (Complete original parent flags).**
+
+$$\forall pi \in Perm\left(Fin\left(4\right)\right),\; \forall k \in Fin\left(4\right),\; prefixFace\left(pi, k\right) = image\left(pi, Iic\left(k\right)\right)$$
+
+*Formalization.* `D5/S3/Geometry/Gluing/BarycentricSubdivisionStar.prefixFace` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Iic(k) consists of positions from 0 through k. Its image under pi is an original face with k+1 vertices. Write parentVertices(E,p,pi)(k)=barycenter(E,p,prefixFace(pi,k)). These are actual first-level barycenters in E; in particular the zeroth is p(pi(0)).
+
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Gluing/BarycentricSubdivisionStar.FaceChain`
@@ -94,3 +106,4 @@ For necessity in the open star, a relative-interior point admits a short extensi
 - Truth anchor: `D5/S3/Geometry/Gluing/BarycentricSubdivisionStar.chainHull`
 - Truth anchor: `D5/S3/Geometry/Gluing/BarycentricSubdivisionStar.closedStar`
 - Truth anchor: `D5/S3/Geometry/Gluing/BarycentricSubdivisionStar.openStar`
+- Truth anchor: `D5/S3/Geometry/Gluing/BarycentricSubdivisionStar.prefixFace`
