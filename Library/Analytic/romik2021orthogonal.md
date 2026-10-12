@@ -1257,6 +1257,82 @@ No uniform high-height estimate, new Lean declaration, originality
 claim, RH or all-integer Robin proof is supplied by this application.
 
 
+## A mandatory node scale from the existing xi coefficient asymptotic
+
+The original normalized source has $a_k=\Gamma_k/(\xi_0 k!)$,
+with the unchanged positive $\Gamma_k$ of O'Sullivan's (1.2).
+Write $w_n=W(2n/\pi)$ and $r_n=a_{n-1}/a_n$.
+[O'Sullivan, Theorem 1.4](https://arxiv.org/html/2007.13582v2#S1.Thmtheorem4)
+with $K=1$, applied at $n,n-1$, gives
+
+$$
+r_n=\frac{n\Gamma_{n-1}}{\Gamma_n}
+=\frac{16n^2}{w_n^2}
+  \left(1+O\!\left(\frac{\log n}{n}\right)\right). \tag{LC31}
+$$
+
+This directly reuses the published coefficient asymptotic, with no
+new saddle-point theorem or numerical coefficient computation.
+For the normalization check, let
+
+$$
+D(x)=4\pi^2e^{7w(x)/4}\sqrt{\frac{w(x)}{w(x)+1}}
+\left(\frac{e\,w(x)^2}{16x e^{2/w(x)}}\right)^x,
+\qquad w(x)=W(2x/\pi).
+$$
+
+The supplier says $\Gamma_n=D(n)(1+O(\log n/n))$.
+Differentiating its explicit leading term with
+$w'(x)=w(x)/(x(1+w(x)))$ yields
+
+$$
+\frac{d}{dx}\log D(x)=
+\log\frac{w(x)^2}{16x}+O(1/x).
+$$
+
+Thus $D(n-1)/D(n)=(16n/w_n^2)(1+O(1/n))$;
+the published relative errors supply (LC31). The estimate is asymptotic,
+not an explicit finite-degree threshold.
+
+Now suppose $\mathcal J_n$ has $n$ positive real roots $t_i$, counted
+with multiplicity. Its last two coefficients are
+$(-1)^n(n!/n^n)a_n$ and
+$(-1)^{n-1}(n!/n^{n-1})a_{n-1}$.
+The classical root–coefficient identity gives
+
+$$
+\sum_{i=1}^nt_i=nr_n,\qquad
+r_n\le t_{\max}\le nr_n. \tag{LC32}
+$$
+
+Consequently, along any unbounded set of such complete positive-root
+degrees, a single all-node band must satisfy
+
+$$
+R_n\ge r_n\sim\frac{16n^2}{W(2n/\pi)^2}.
+$$
+
+For the original node parameters $v_i=n/t_i$ and $\lambda_i=1/t_i$,
+
+$$
+\frac1{r_n}\le \min_i v_i\le\frac n{r_n},
+\qquad
+\frac1{nr_n}\le\min_i\lambda_i\le\frac1{r_n}. \tag{LC33}
+$$
+
+In particular, along those degrees $\min_i v_i\to0$ and
+$\min_i\lambda_i\to0$; the upper bounds are asymptotic to
+$W(2n/\pi)^2/(16n)$ and $W(2n/\pi)^2/(16n^2)$, respectively.
+This identifies a compulsory small-$v$ range absent from fixed-$v$
+asymptotics and from fixed positive $v/n$ cutoff bands.
+
+The complete positive-root premise is explicit. These are bounds on the
+actual node heights, not proof that every degree has those roots, not a
+sign estimate at the nodes and not RH/Robin. Only the existing supplier
+and Viète are used; the parameter application is ordinary analysis,
+with no new Lean declaration or originality claim.
+
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
