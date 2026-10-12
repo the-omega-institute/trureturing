@@ -128,7 +128,7 @@ If an upper bound fails, select the largest upward ratio over the entire origina
 
 After all upper bounds hold, select the smallest upward ratio in a violating direction i. The paired terms now favor the upper endpoint. Every leftover lower neighbor is a legal insertion at a neighboring position j, and its square share is at most 1/4. Their number is at most d_i. Thus g_upper-g_lower is at least (p_lower-p_upper)/(p_lower+p_upper)-d_i/4, strictly positive below q_i. Transfer from lower to upper. In both branches the donor has strict slack even if the receiver equals epsilon. The verified real derivative gives an actual positive feasible radius and strict objective increase.
 
-The complete-word and path-independent-set domain is the classical Fibonacci cube of Hsu and Codara--D'Antona. The exact two-extremal-ratio argument is the proof in docs/develop/theory/FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md at revision f91692a387e9ba7e836dd3c1a75a890e9218485b. Finite compactness and scalar calculus are standard tools.
+The complete-word and path-independent-set domain is the classical Fibonacci cube of Hsu and Codara--D'Antona. The formal theorem proves both extremal-ratio branches on the complete native edge set. Finite compactness and scalar calculus are standard tools.
 
 **Theorem 1.11 (The constrained maximum satisfies every insertion bound).**
 
