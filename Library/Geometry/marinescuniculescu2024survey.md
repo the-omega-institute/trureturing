@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2407.03278v1
 claim: "Section 6 derives the scalar multiplicative Hornich–Hlawka inequality from Theorem 8 and states that no extension to inner product spaces is known."
 strata_touched:
   - D5/S3/Geometry/MultiplicativeHornichHlawka
+  - D5/S3/Geometry/VariableExponentHornichHlawka
 license: citation-only
 triage: anchor
 ---
@@ -16,6 +17,7 @@ triage: anchor
 
 Author text: <https://arxiv.org/abs/2407.03278v1>.
 D.-Ş. Marinescu, C. P. Niculescu, *A survey of the Hornich-Hlawka inequality*, arXiv:2407.03278v1, §6, the paragraph applying Theorem 8 to $f(x)=\ln(1+x)$.
+The same survey, §3, Problem 3, asks whether every $L^{p(\cdot)}(0,1)$ space with a variable exponent $p(\cdot):(0,1)\to[1,2]$ is a Hornich–Hlawka space; the Luxemburg norm convention follows the monograph of Diening, Harjulehto, Hästö and Růžička cited there.
 
 ## Multiplicative inequality
 

@@ -61,7 +61,7 @@ private theorem evaluate_congr (C : LiteralRow) (f g : Nat → Source)
       exact congrArg₂ FreeMagma.mul (ihl (fun n hn => same n (Finset.mem_union_left _ hn)))
         (ihr (fun n hn => same n (Finset.mem_union_right _ hn)))
 
-private theorem rowAt_evaluate (C : LiteralRow) (f : Nat → Source)
+theorem rowAt_evaluate (C : LiteralRow) (f : Nat → Source)
     (p : Address) (t : LiteralRow) (ht : rowAt p C = some t) :
     subtree p (evaluateRow f C) = some (evaluateRow f t) := by
   induction p generalizing C with
