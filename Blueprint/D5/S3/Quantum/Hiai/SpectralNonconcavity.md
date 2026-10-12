@@ -165,4 +165,5 @@ The all-parameter constructive theorem contradicts joint concavity along the lit
 - Truth anchor: `D5/S3/Quantum/Hiai/SpectralNonconcavity.result`
 - Truth anchor: `D5/S3/Quantum/Hiai/SpectralNonconcavity.spectralTrace`
 - Dependency: [D5/S3/Quantum/Hiai/InverseGeometricIdentification](InverseGeometricIdentification.md)
+- Dependency: [D5/S3/Quantum/Matrix/AlternativeMeanLinearization](../Matrix/AlternativeMeanLinearization.md)
 - Dependency: [D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation](../../QuantumChannels/CumulantRenyiDataProcessingRefutation.md)

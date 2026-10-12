@@ -11,11 +11,6 @@ open scoped MatrixOrder Matrix.Norms.L2Operator ComplexOrder
 
 namespace Reg.D5.S3.Quantum.Hiai.SpectralNonconcavity
 
--- The original legacy private name has a numeric component, so access it by its exact Name.
-local macro "hiai_mean_strict%" : term =>
-  pure (Lean.mkIdent ((Lean.Name.num `_private.D5.S3.Quantum.Hiai.PsiMeanTraceConcavity 0) ++
-    `D5.S3.Quantum.Hiai.PsiMeanTraceConcavity.mean_strict))
-
 abbrev signature : Signature where
   Params := Unit
   State _ := ℝ
@@ -46,7 +41,7 @@ abbrev arena : Arena where
 private lemma zero_order (A B : Mat) (hA : Density A) (hB : Density B) :
     spectralTrace 0 1 A B = 1 := by
   have hL : IsStrictlyPositive (nativeMean 1 A B) := by
-    exact hiai_mean_strict%
+    exact _root_.D5.S3.Quantum.Hiai.PsiMeanTraceConcavity.mean_strict
       (hB.1.isStrictlyPositive.rpow B 1).posDef
       (hA.1.isStrictlyPositive.rpow A (-1)).posDef (1 / 2)
   unfold spectralTrace

@@ -7,6 +7,7 @@
    digest: Every off-midpoint untilde spectral trace has a strict affine faithful-qubit Jensen violation. -/
 
 import D5.S3.Quantum.Hiai.InverseGeometricIdentification
+import D5.S3.Quantum.Matrix.AlternativeMeanLinearization
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Isometric
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
@@ -17,14 +18,10 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Quantum.Hiai.SpectralNonconcavity
 
--- The original legacy private name has a numeric component, so access it by its exact Name.
-local macro "hiai_mean_strict%" : term =>
-  pure (Lean.mkIdent ((Lean.Name.num `_private.D5.S3.Quantum.Hiai.PsiMeanTraceConcavity 0) ++
-    `D5.S3.Quantum.Hiai.PsiMeanTraceConcavity.mean_strict))
-
-open Matrix Filter Topology
+open _root_.Matrix Filter Topology
 open scoped MatrixOrder Matrix.Norms.L2Operator ComplexOrder
 open PsiMeanTraceConcavity InverseGeometricIdentification
+  D5.S3.Quantum.Matrix.AlternativeMeanLinearization
 local instance : Pow (Matrix (Fin 2) (Fin 2) ℂ) ℝ := ⟨CFC.rpow⟩
 
 abbrev Mat := Matrix (Fin 2) (Fin 2) ℂ
@@ -55,50 +52,21 @@ private lemma mean_inverse_base (X Y : Mat) (hX : X.PosDef) :
     CFC.sqrt_eq_rpow]
   norm_num
 
-private lemma riccati (X Y : Mat) (hX : X.PosDef) (hY : Y.PosDef) :
-    let L := geometricMean (1 / 2) (X ^ (-1 : ℝ)) Y
-    IsStrictlyPositive L ∧ L * X * L = Y := by
-  dsimp
-  rw [mean_inverse_base X Y hX]
-  have hL : IsStrictlyPositive
-      (CFC.conjSqrt (Ring.inverse X) (CFC.sqrt (CFC.conjSqrt X Y))) := by
-    rw [← mean_inverse_base X Y hX]
-    exact hiai_mean_strict%
-      hY (hX.isStrictlyPositive.rpow X (-1)).posDef (1 / 2)
-  have hC := (CFC.isStrictlyPositive_conjSqrt_iff X Y hX.isStrictlyPositive).2
-    hY.isStrictlyPositive
-  refine ⟨hL, ?_⟩
-  let I := CFC.sqrt (Ring.inverse X)
-  let S := CFC.sqrt X
-  let R := CFC.sqrt (CFC.conjSqrt X Y)
-  have hIS : I * S = 1 := by
-    dsimp [I, S]
-    rw [CFC.sqrt_ringInverse, Ring.inverse_mul_cancel _ (hX.isStrictlyPositive.sqrt X).isUnit]
-  have hSI : S * I = 1 := by
-    dsimp [I, S]
-    rw [CFC.sqrt_ringInverse, Ring.mul_inverse_cancel _ (hX.isStrictlyPositive.sqrt X).isUnit]
-  have hSS : S * S = X := CFC.sqrt_mul_sqrt_self X hX.posSemidef.nonneg
-  have hRR : R * R = S * Y * S := CFC.sqrt_mul_sqrt_self _ hC.nonneg
-  change (I * R * I) * X * (I * R * I) = Y
-  calc
-    _ = I * R * (I * (S * S) * I) * R * I := by rw [hSS]; simp only [mul_assoc]
-    _ = I * (R * R) * I := by simp only [← mul_assoc, hIS, hSI, one_mul, mul_one]
-    _ = (I * S) * Y * (S * I) := by rw [hRR]; simp only [mul_assoc]
-    _ = Y := by rw [hIS, hSI, one_mul, mul_one]
-
-private lemma riccati_unique (X Y T : Mat) (hX : X.PosDef)
-    (hT : IsStrictlyPositive T) (h : T * X * T = Y) :
-    T = geometricMean (1 / 2) (X ^ (-1 : ℝ)) Y := by
-  rw [mean_inverse_base X Y hX]
-  have hST := (CFC.isStrictlyPositive_conjSqrt_iff X T hX.isStrictlyPositive).2 hT
-  have he : CFC.conjSqrt X T * CFC.conjSqrt X T = CFC.conjSqrt X Y := by
-    simp only [CFC.conjSqrt_apply]
-    calc
-      _ = CFC.sqrt X * (T * (CFC.sqrt X * CFC.sqrt X) * T) * CFC.sqrt X := by
-        simp only [mul_assoc]
-      _ = _ := by rw [CFC.sqrt_mul_sqrt_self X hX.posSemidef.nonneg, h]
-  rw [CFC.sqrt_unique he hST.nonneg,
-    CFC.conjSqrt_ringInverse_conjSqrt X T hX.isStrictlyPositive]
+private lemma geometricMean_eq_gmInv (X Y : Mat) (hX : X.PosDef) (hY : Y.PosDef) :
+    geometricMean (1 / 2) (X ^ (-1 : ℝ)) Y =
+      _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.gmInv X Y := by
+  have hS : (X ^ (1 / 2 : ℝ)).PosDef := hX.isStrictlyPositive.rpow X (1 / 2) |>.posDef
+  have hM : (X ^ (1 / 2 : ℝ) * Y * X ^ (1 / 2 : ℝ)).PosDef := by
+    simpa only [star_eq_conjTranspose, hS.isHermitian.eq] using
+      hS.isUnit.posDef_star_right_conjugate_iff.mpr hY
+  unfold geometricMean _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.gmInv
+  rw [CFC.rpow_rpow X (-1) (1 / 2) (by norm_num) hX.isStrictlyPositive,
+    CFC.rpow_rpow X (-1) (-1 / 2) (by norm_num) hX.isStrictlyPositive]
+  norm_num only [neg_mul, one_mul, neg_neg]
+  rw [CFC.rpow_eq_cfc_real hX.posSemidef.nonneg,
+    CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
+  simp only [← CFC.rpow_eq_cfc_real hX.posSemidef.nonneg]
+  rw [← CFC.rpow_eq_cfc_real hM.posSemidef.nonneg]
 
 private lemma native_riccati (p : ℝ) (A B : Mat) (hA : A.PosDef) (hB : B.PosDef) :
     IsStrictlyPositive (nativeMean p A B) ∧ nativeMean p A B * A ^ p * nativeMean p A B = B ^ p := by
@@ -111,8 +79,13 @@ private lemma native_riccati (p : ℝ) (A B : Mat) (hA : A.PosDef) (hB : B.PosDe
       ring
   unfold nativeMean
   rw [he]
-  exact riccati _ _ (hA.isStrictlyPositive.rpow A p).posDef
-    (hB.isStrictlyPositive.rpow B p).posDef
+  have hAp : (A ^ p).PosDef := (hA.isStrictlyPositive.rpow A p).posDef
+  have hBp : (B ^ p).PosDef := (hB.isStrictlyPositive.rpow B p).posDef
+  rw [geometricMean_eq_gmInv (A ^ p) (B ^ p) hAp hBp]
+  exact ⟨(_root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.riccati
+      hAp hBp).1.isStrictlyPositive,
+    (_root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.riccati
+      hAp hBp).2⟩
 
 private lemma native_reverse (p : ℝ) (A B : Mat) (hA : A.PosDef) (hB : B.PosDef) :
     nativeMean p B A = Ring.inverse (nativeMean p A B) := by
@@ -124,8 +97,9 @@ private lemma native_reverse (p : ℝ) (A B : Mat) (hA : A.PosDef) (hB : B.PosDe
           (nativeMean p A B * Ring.inverse (nativeMean p A B)) := by simp only [mul_assoc]
       _ = _ := by rw [Ring.inverse_mul_cancel _ hL.isUnit,
         Ring.mul_inverse_cancel _ hL.isUnit, one_mul, mul_one]
-  have hu := riccati_unique (B ^ p) (A ^ p) (Ring.inverse (nativeMean p A B))
-    (hB.isStrictlyPositive.rpow B p).posDef hL.ringInverse he
+  have hu := _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.riccati_unique
+    (A := B ^ p) (B := A ^ p) (Y := Ring.inverse (nativeMean p A B))
+    (hB.isStrictlyPositive.rpow B p).posDef hL.ringInverse.posDef he
   have hb : B ^ (-p) = (B ^ p) ^ (-1 : ℝ) := by
     by_cases hp : p = 0
     · subst p
@@ -133,7 +107,9 @@ private lemma native_reverse (p : ℝ) (A B : Mat) (hA : A.PosDef) (hB : B.PosDe
     · rw [CFC.rpow_rpow B p (-1) hp hB.isStrictlyPositive]
       congr 1
       ring
-  simpa only [nativeMean, hb] using hu.symm
+  rw [← geometricMean_eq_gmInv (B ^ p) (A ^ p)
+    (hB.isStrictlyPositive.rpow B p).posDef (hA.isStrictlyPositive.rpow A p).posDef] at hu
+  simpa only [nativeMean, hb] using hu
 
 private lemma complement (α p : ℝ) (A B : Mat) (hA : A.PosDef) (hB : B.PosDef) :
     spectralTrace (1 - α) p B A = spectralTrace α p A B := by
@@ -187,9 +163,11 @@ private lemma unitary_native (p : ℝ) (U : unitary Mat) (A B : Mat)
         simp only [mul_assoc, ← mul_assoc (star (U : Mat)), Unitary.coe_star_mul_self,
           one_mul]
       _ = _ := by rw [h]
-  have hu := riccati_unique (((U : Mat) * A * star (U : Mat)) ^ p)
-    (((U : Mat) * B * star (U : Mat)) ^ p)
-    ((U : Mat) * nativeMean p A B * star (U : Mat)) (hAu.rpow _ p).posDef hLu he
+  have hu := _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.riccati_unique
+    (A := ((U : Mat) * A * star (U : Mat)) ^ p)
+    (B := ((U : Mat) * B * star (U : Mat)) ^ p)
+    (Y := (U : Mat) * nativeMean p A B * star (U : Mat))
+    (hAu.rpow _ p).posDef hLu.posDef he
   have hx : (((U : Mat) * A * star (U : Mat)) ^ p) ^ (-1 : ℝ) =
       ((U : Mat) * A * star (U : Mat)) ^ (-p) := by
     by_cases hp : p = 0
@@ -198,7 +176,9 @@ private lemma unitary_native (p : ℝ) (U : unitary Mat) (A B : Mat)
     · rw [CFC.rpow_rpow _ p (-1) hp hAu]
       congr 1
       ring
-  simpa only [nativeMean, hx] using hu.symm
+  rw [← geometricMean_eq_gmInv (((U : Mat) * A * star (U : Mat)) ^ p)
+    (((U : Mat) * B * star (U : Mat)) ^ p) (hAu.rpow _ p).posDef (hBu.rpow _ p).posDef] at hu
+  simpa only [nativeMean, hx] using hu
 
 private lemma unitary_trace (α p : ℝ) (U : unitary Mat) (A B : Mat)
     (hA : A.PosDef) (hB : B.PosDef) :
@@ -399,7 +379,11 @@ private lemma diagonal_mean_formula (x y a b d c : ℝ)
     · linear_combination -b * hc2
     · linear_combination -b * hc2
     · linear_combination hd2 - a * y * hc2
-  exact (riccati_unique X (sym a b a) R hX hR heq).symm
+  calc
+    geometricMean (1 / 2) (X ^ (-1 : ℝ)) (sym a b a) =
+        _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.gmInv X (sym a b a) :=
+      geometricMean_eq_gmInv X (sym a b a) hX hY
+    _ = R := _root_.D5.S3.Quantum.Matrix.AlternativeMeanLinearization.riccati_unique hX hR.posDef heq
 
 private def radius (u v w : ℝ) : ℝ := Real.sqrt (((u - w) / 2) ^ (2 : ℕ) + v ^ (2 : ℕ))
 private def lowerRoot (u v w : ℝ) : ℝ := (u + w) / 2 - radius u v w
