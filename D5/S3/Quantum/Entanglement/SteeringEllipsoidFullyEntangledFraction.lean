@@ -80,6 +80,7 @@ clause for every parameter, not a finite certificate, enumeration, checker or nu
 reduction.
 -/
 
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
@@ -209,20 +210,15 @@ private lemma blochVec_scalar (c : ℂ) : blochVec (c • (1 : Matrix (Fin 2) (F
 private lemma rad_le_trace {Z : Matrix (Fin 2) (Fin 2) ℂ} (hZ : Z.PosSemidef) :
     vlen (blochVec Z) ≤ (trace Z).re := by
   have h10 : Z 1 0 = star (Z 0 1) := (hZ.isHermitian.apply 1 0).symm
-  have d0 := Complex.le_def.mp (hZ.diag_nonneg (i := 0))
-  have d1 := Complex.le_def.mp (hZ.diag_nonneg (i := 1))
-  have hdet := Complex.le_def.mp hZ.det_nonneg
-  rw [det_fin_two, h10] at hdet
-  simp only [Complex.zero_re, Complex.zero_im, Complex.sub_re, Complex.mul_re, Complex.star_def,
-    Complex.conj_re, Complex.conj_im] at d0 d1 hdet
-  have htr : 0 ≤ (trace Z).re := by rw [trace_fin_two, Complex.add_re]; linarith [d0.1, d1.1]
-  have key : ∑ i, blochVec Z i ^ 2 ≤ (trace Z).re ^ 2 := by
-    rw [Fin.sum_univ_three, blochVec_zero, blochVec_one, blochVec_two, trace_fin_two, h10]
-    simp only [Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.I_re, Complex.I_im,
-      Complex.star_def, Complex.conj_re, Complex.conj_im]
-    nlinarith [hdet.1, d0.2, d1.2]
-  calc vlen (blochVec Z) ≤ Real.sqrt ((trace Z).re ^ 2) := Real.sqrt_le_sqrt key
-    _ = (trace Z).re := Real.sqrt_sq htr
+  have he : (WithLp.toLp 2 (blochVec Z) : EuclideanSpace ℝ (Fin 3)) =
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch Z := by
+    ext i
+    fin_cases i <;>
+      simp [blochVec_zero, blochVec_one, blochVec_two, h10,
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+        Complex.mul_re] <;> ring
+  rw [vlen_eq_norm, he]
+  exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef Z hZ
 
 private lemma rad_rank_one (w : Fin 2 × Fin 2 → ℂ) :
     vlen (blochVec (partialTraceRight (vecMulVec w (star w)))) =
@@ -488,9 +484,17 @@ private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace 
       | linear_combination (p : ℂ) * hprC
   have hbloch : (1 : Matrix (Fin 2) (Fin 2) ℂ) - P =
       (1 / 2 : ℂ) • (1 - ∑ j, ((blochVec P j : ℝ) : ℂ) • pauli j) := by
-    rw [Fin.sum_univ_three, blochVec_zero, blochVec_one, blochVec_two, pauli_zero, pauli_one,
-      pauli_two, hP10, hP00, hP11, ← hqdef, hPmat]
-    ext i j; fin_cases i <;> fin_cases j <;> simp <;> apply Complex.ext <;> simp <;> linarith
+    have he := (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+      P hP.isHermitian).1
+    rw [htrP, Complex.one_re] at he
+    conv_lhs => rw [he]
+    rw [Fin.sum_univ_three, blochVec_zero, blochVec_one, blochVec_two,
+      pauli_zero, pauli_one, pauli_two]
+    ext i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      simp [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+        hP10, hP00, hP11, ← hqdef] <;> linarith
   have hp2 : 0 < 2 * p * d := by positivity
   set c : ℝ := 1 / (2 * p * d) with hcdef
   set X : TwoQubit := (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ H with hXdef
