@@ -462,6 +462,75 @@ and the full tail behavior. This application places no additional
 restriction on the separate local derivative certificate linked from the
 second-level source note.
 
+## A positive smooth splice and its absolute error interface
+
+A standard smooth cutoff repairs these two representation defects without
+altering the full-source target. Choose an even $C^\infty$ function $\chi$
+with $0\le\chi\le1$, equal to one for $|u|\le1/16$ and zero for
+$|u|\ge1/8$. For $N\ge1$ define
+
+$$
+H_N(u)=(1-\chi(u))K_N(|u|)
+       +\frac{\chi(u)}2\bigl(K_N(u)+K_N(-u)\bigr).
+\tag{LC2}
+$$
+
+Near zero the first term vanishes identically and the remaining expression
+is even analytic. Away from zero both terms are smooth, including the
+cutoff transition, so $H_N$ is even and $C^\infty$ on the whole line.
+For $|u|\le1/8$, every summand of both $K_N(u)$ and $K_N(-u)$ is positive:
+$2\pi m^2e^{\pm4u}\ge2\pi e^{-1/2}>3$.
+In the cutoff transition (LC2) is a convex combination of positive
+expressions; outside it $H_N=K_N(|u|)>0$. Thus $H_N$ is strictly positive
+and retains the super-exponential far tail and its differentiated bounds.
+
+Set $R_N=K-K_N$. Complete-source evenness gives, for $u\ge0$,
+
+$$
+K(u)-H_N(u)
+ =\bigl(1-\chi(u)/2\bigr)R_N(u)
+   +\frac{\chi(u)}2R_N(-u)\ge0. \tag{LC3}
+$$
+
+Here $R_N(u)>0$ for all $u\ge0$. Nonnegativity of $R_N(-u)$ is used
+only on the cutoff support $0\le u\le1/8$, where its individual
+summands are positive; it is not asserted on the entire positive half-line.
+
+Keep the same $\xi_0$ and put
+$d\mu_{H_N}=4H_N(\sqrt T)/(\xi_0\sqrt T)\,dT$, without renormalization.
+Let $J_{n,H_N}(v)=\int L_n^{-1/2}(T/v)\,d\mu_{H_N}(T)$ and
+$G_{N,v}(x)=e^x(K-H_N)(\sqrt{vx})$. For fixed $v>0,N\ge1$,
+$G_{N,v}$ is analytic at zero and has the required rapid derivative
+decay at infinity. Every $\mathcal D^rG_{N,v}$ belongs to $L^2(w)$,
+and all its Green boundary terms vanish. The same classical Laguerre
+calculation therefore supplies, for integers $n\ge1,r\ge0$,
+
+$$
+|J_n(v)-J_{n,H_N}(v)|
+\le\frac{4\sqrt v}{\xi_0}n^{-r}
+ \left(\frac{\Gamma(n+1/2)}{n!}\right)^{1/2}
+ \|\mathcal D^rG_{N,v}\|_w. \tag{LC4}
+$$
+
+For fixed $v,r$, the final norm tends to zero as $N\to\infty$.
+On compact intervals this follows from differentiated theta-tail
+convergence, with evenness handling zero; on the remaining half-line the
+original-series derivative bounds provide an integrable majorant.
+Thus (LC4) removes the artificial algebraic endpoint term of the bare
+finite sum. It is a standard cutoff application and an absolute error
+interface, not a new approximation theorem attributed to the source or a
+literature novelty claim.
+
+Pointwise nonnegative density error does not determine the sign of a
+Laguerre projection. The norm in (LC4) depends on $v,r$ and the cutoff;
+no uniform moving-node bound or useful numerical constant is supplied.
+Passing to monic Laguerre projections also introduces their degree-dependent
+normalization factors. In particular, neither (LC3) nor (LC4) compares the
+correlated error with the signed margin $\beta a^2-ab$ at the original
+nodes, especially near $a=0$. The original all-node inequality,
+common-zero vanishing and multiplicity propagation remain unproved.
+This source-specific analytic interface has not been checked in Lean.
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
