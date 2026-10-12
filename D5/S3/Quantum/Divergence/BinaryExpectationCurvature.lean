@@ -4,199 +4,106 @@
    mirror-E: none(waiver:analytic-operator-derivative)
    anchors: [mathlib/module/Mathlib/Analysis/Calculus/Deriv/Basic]
    utility: none
-   digest: Monotone binary curvature yields the exact quadratic contraction profile. -/
+   digest: Actual binary conditional-expectation entropy contracts by the squared scale. -/
 
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
-import D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
+import D5.S3.Quantum.Divergence.FiniteAmplitudeBKMRemainder
 
 set_option quotPrecheck false
 
 noncomputable section
 
-open MeasureTheory Set
-open scoped Interval ComplexOrder MatrixOrder Matrix.Norms.L2Operator
+open MeasureTheory Filter Set
+open scoped Topology ComplexOrder MatrixOrder Matrix.Norms.L2Operator
+
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace
 
 namespace D5.S3.Quantum.Divergence.BinaryExpectationCurvature
 
-open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
-open D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
+variable {n : Type*} [Fintype n] [DecidableEq n]
+local notation "M" => Matrix n n ℂ
+local notation "S" => ↥(selfAdjoint.submodule ℝ M)
+local notation "entropy" => fun Y : S => (Y.val * CFC.log Y.val).trace.re
+local notation "D" => fun (B A : S) => (B.val * (CFC.log B.val - CFC.log A.val)).trace.re
 
-variable {m : Type*} [Fintype m] [DecidableEq m]
-local notation "M" => Matrix m m ℂ
-local notation "HSpace" => ↥(selfAdjoint.submodule ℝ M)
-local notation "traceEntropy" =>
-  fun Y : HSpace => (Y.val * CFC.log Y.val).trace.re
+private lemma log_conjugation (V : unitary M) (A : S) :
+    CFC.log ((V : M) * A.val * (star V : M)) =
+      (V : M) * CFC.log A.val * (star V : M) := by
+  let e := Unitary.conjStarAlgAut ℂ M V
+  have hsa : IsSelfAdjoint (e A.val) := A.property.map e
+  simpa only [e, Unitary.conjStarAlgAut_apply, CFC.log] using
+    (StarAlgHomClass.map_cfc e Real.log A.val
+      (A.val.finite_real_spectrum.continuousOn _) (by fun_prop) A.property hsa).symm
 
-/-! The operator part of the binary conditional-expectation argument is supplied by
-`MatrixLogResolventDerivative.trace_entropy_hessian_resolvent`.  The declarations
-below isolate the remaining one-dimensional curvature calculation.  This keeps the
-order argument independent of a choice of eigenbasis and makes the endpoint
-regularisation explicit in the data passed by the matrix layer. -/
+private lemma trace_conjugation (V : unitary M) (B : M) :
+    ((V : M) * B * (star V : M)).trace = B.trace := by
+  rw [Matrix.trace_mul_cycle, Unitary.coe_star_mul_self, Matrix.one_mul]
 
-structure CurvatureKernel where
-  q : ℝ → ℝ
-  continuous_q : Continuous q
-  monotone_q : MonotoneOn q (Icc (0 : ℝ) 1)
-  nonnegative_q : ∀ x ∈ Icc (0 : ℝ) 1, 0 ≤ q x
+private lemma binary_entropy_even (V : unitary M) (A H : S)
+    (hA : (V : M) * A.val * (star V : M) = A.val)
+    (hH : (V : M) * H.val * (star V : M) = -H.val) (s : ℝ) :
+    entropy (A - s • H) = entropy (A + s • H) := by
+  have he : (V : M) * (A + s • H).val * (star V : M) = (A - s • H).val := by
+    simp only [Submodule.coe_add, Submodule.coe_sub, Submodule.coe_smul,
+      Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, hA, hH,
+      smul_neg, sub_eq_add_neg]
+  have hl := log_conjugation V (A + s • H)
+  rw [he] at hl
+  have hp : (A - s • H).val * CFC.log (A - s • H).val =
+      (V : M) * ((A + s • H).val * CFC.log (A + s • H).val) * (star V : M) := by
+    rw [← he, hl]
+    calc
+      _ = (V : M) * (A + s • H).val * ((star V : M) * V) *
+          CFC.log (A + s • H).val * (star V : M) := by noncomm_ring
+      _ = _ := by rw [Unitary.coe_star_mul_self]; noncomm_ring
+  change (_).trace.re = (_).trace.re
+  rw [hp, trace_conjugation]
 
-def weightedCurvature (K : CurvatureKernel) (v : ℝ) : ℝ :=
-  ∫ r in (0 : ℝ)..1, (1 - r) * K.q (v * r)
+private lemma binary_trace_log_zero (V : unitary M) (A H : S)
+    (hA : (V : M) * A.val * (star V : M) = A.val)
+    (hH : (V : M) * H.val * (star V : M) = -H.val) :
+    (H.val * CFC.log A.val).trace.re = 0 := by
+  have hl := log_conjugation V A
+  rw [hA] at hl
+  have he : (V : M) * (H.val * CFC.log A.val) * (star V : M) =
+      -(H.val * CFC.log A.val) := by
+    calc
+      _ = ((V : M) * H.val * (star V : M)) *
+          ((V : M) * CFC.log A.val * (star V : M)) := by
+        rw [Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_assoc (star V : M),
+          Unitary.coe_star_mul_self]
+        noncomm_ring
+      _ = _ := by rw [hH, ← hl, Matrix.neg_mul]
+  have ht := congrArg Complex.re (trace_conjugation V (H.val * CFC.log A.val))
+  rw [he, Matrix.trace_neg, Complex.neg_re] at ht
+  linarith
 
-def quadraticProfile (K : CurvatureKernel) (v : ℝ) : ℝ :=
-  v ^ 2 * weightedCurvature K v
+private lemma binary_defect_eq_entropy_difference (V : unitary M) (A H : S)
+    (hA : (V : M) * A.val * (star V : M) = A.val)
+    (hH : (V : M) * H.val * (star V : M) = -H.val) (s : ℝ) :
+    D (A + s • H) A = entropy (A + s • H) - entropy A := by
+  have hz := binary_trace_log_zero V A H hA hH
+  simp only [Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re]
+  congr 1
+  simp only [Submodule.coe_add, Submodule.coe_smul, Matrix.add_mul,
+    Matrix.smul_mul, Matrix.trace_add, Matrix.trace_smul,
+    Complex.add_re, Complex.real_smul, hz, mul_zero, add_zero]
 
-private lemma weightedCurvature_intervalIntegrable (K : CurvatureKernel) (v : ℝ) :
-    IntervalIntegrable (fun r : ℝ => (1 - r) * K.q (v * r)) volume 0 1 := by
-  have hcont : Continuous (fun r : ℝ => (1 - r) * K.q (v * r)) := by
-    exact (continuous_const.sub continuous_id).mul
-      (K.continuous_q.comp (continuous_const.mul continuous_id))
-  exact hcont.intervalIntegrable 0 1
-
-private lemma curvature_kernel_argument_mem (v r : ℝ)
-    (hv : v ∈ Icc (0 : ℝ) 1) (hr : r ∈ Icc (0 : ℝ) 1) :
-    v * r ∈ Icc (0 : ℝ) 1 := by
-  constructor
-  · exact mul_nonneg hv.1 hr.1
-  · calc
-      v * r ≤ v * 1 := mul_le_mul_of_nonneg_left hr.2 hv.1
-      _ = v := mul_one v
-      _ ≤ 1 := hv.2
-
-/- The weighted resolvent curvature is monotone in its scale parameter.  The
-factor `1-r` is nonnegative, while the kernel is monotone on the full range
-visited by `v*r`. -/
-private theorem weighted_curvature_mono (K : CurvatureKernel) {v w : ℝ}
-    (hv : v ∈ Icc (0 : ℝ) 1) (hw : w ∈ Icc (0 : ℝ) 1) (hvw : v ≤ w) :
-    weightedCurvature K v ≤ weightedCurvature K w := by
-  unfold weightedCurvature
-  apply intervalIntegral.integral_mono_on zero_le_one
-    (weightedCurvature_intervalIntegrable K v)
-    (weightedCurvature_intervalIntegrable K w)
-  intro r hr
-  have hr0 : 0 ≤ r := hr.1
-  have hvr := curvature_kernel_argument_mem v r hv hr
-  have hwr := curvature_kernel_argument_mem w r hw hr
-  have harg : v * r ≤ w * r := mul_le_mul_of_nonneg_right hvw hr0
-  have hq := K.monotone_q hvr hwr harg
-  exact mul_le_mul_of_nonneg_left hq (sub_nonneg.mpr hr.2)
-
-private theorem weighted_curvature_nonnegative (K : CurvatureKernel) {v : ℝ}
-    (hv : v ∈ Icc (0 : ℝ) 1) : 0 ≤ weightedCurvature K v := by
-  unfold weightedCurvature
-  apply intervalIntegral.integral_nonneg zero_le_one
-  intro r hr
-  exact mul_nonneg (sub_nonneg.mpr hr.2)
-    (K.nonnegative_q _ (curvature_kernel_argument_mem v r hv hr))
-
-/- This is the exact `s²` step.  The only input from the matrix problem is that
-its relative-entropy defect has this curvature representation. -/
-private theorem quadratic_profile_square_contraction (K : CurvatureKernel)
-    {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
-    quadraticProfile K s ≤ s ^ 2 * quadraticProfile K 1 := by
-  have hmono := weighted_curvature_mono K hs ⟨zero_le_one, le_rfl⟩ hs.2
-  unfold quadraticProfile
-  simpa using mul_le_mul_of_nonneg_left hmono (sq_nonneg s)
-
-private theorem quadratic_profile_nonnegative (K : CurvatureKernel) {v : ℝ}
-    (hv : v ∈ Icc (0 : ℝ) 1) : 0 ≤ quadraticProfile K v := by
-  unfold quadraticProfile
-  exact mul_nonneg (sq_nonneg v) (weighted_curvature_nonnegative K hv)
-
-/- A path supplied by the matrix layer consists of the relative-entropy defect
-and its first derivative together with the resolvent curvature representation.
-The representation is deliberately an explicit field: it is the bridge that
-must be discharged by the noncommutative matrix proof, rather than hidden in a
-definition or silently treated as a bind-only specialization. -/
-structure BinaryDefectPath where
-  defect : ℝ → ℝ
-  slope : ℝ → ℝ
-  kernel : CurvatureKernel
-  endpointRemainder : ℝ
-  origin_defect : defect 0 = 0
-  origin_slope : slope 0 = 0
-  defect_eq_profile : ∀ v ∈ Icc (0 : ℝ) 1,
-    defect v = quadraticProfile kernel v
-  endpoint_slope_eq : slope 1 = 2 * defect 1 + endpointRemainder
-  endpointRemainder_nonnegative : 0 ≤ endpointRemainder
-
-private theorem binary_defect_square_contraction (P : BinaryDefectPath)
-    {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
-    P.defect s ≤ s ^ 2 * P.defect 1 := by
-  rw [P.defect_eq_profile s hs, P.defect_eq_profile 1 ⟨zero_le_one, le_rfl⟩]
-  exact quadratic_profile_square_contraction P.kernel hs
-
-private theorem binary_endpoint_slope_lower_bound (P : BinaryDefectPath) :
-    2 * P.defect 1 ≤ P.slope 1 := by
-  rw [P.endpoint_slope_eq]
-  linarith [P.endpointRemainder_nonnegative]
-
-private theorem binary_origin_values (P : BinaryDefectPath) :
-    P.defect 0 = 0 ∧ P.slope 0 = 0 :=
-  ⟨P.origin_defect, P.origin_slope⟩
-
-theorem binary_curvature_summary (P : BinaryDefectPath) {s : ℝ}
-    (hs : s ∈ Icc (0 : ℝ) 1) :
-    P.defect s ≤ s ^ 2 * P.defect 1 ∧
-      0 ≤ P.defect s ∧
-      2 * P.defect 1 ≤ P.slope 1 ∧
-      P.defect 0 = 0 ∧ P.slope 0 = 0 := by
-  have hnonneg : 0 ≤ P.defect s := by
-    rw [P.defect_eq_profile s hs]
-    exact quadratic_profile_nonnegative P.kernel hs
-  exact ⟨binary_defect_square_contraction P hs, hnonneg,
-    binary_endpoint_slope_lower_bound P, binary_origin_values P |>.1,
-    binary_origin_values P |>.2⟩
-
-/- The same estimate with the defect written in the repository's finite
-dimensional relative-entropy type.  A matrix-specific producer supplies the
-path and its resolvent representation; no scalar alias is introduced for the
-frozen `quantumRelativeEntropy` declaration. -/
-structure QuantumBinaryDefectPath
-    (n : Type*) [Fintype n] [DecidableEq n] where
-  path : ℝ → DensityState n
-  reference : DensityState n
-  defect : ℝ → ℝ
-  kernel : CurvatureKernel
-  defect_eq_profile : ∀ v ∈ Icc (0 : ℝ) 1,
-    defect v = quadraticProfile kernel v
-  defect_eq_relative_entropy : ∀ v : ℝ,
-    defect v = quantumRelativeEntropy (path v) reference
-
-private theorem quantum_relative_entropy_square_contraction
-    {n : Type*} [Fintype n] [DecidableEq n]
-    (P : QuantumBinaryDefectPath n) {s : ℝ}
-    (hs : s ∈ Icc (0 : ℝ) 1) :
-    quantumRelativeEntropy (P.path s) P.reference ≤
-      s ^ 2 * quantumRelativeEntropy (P.path 1) P.reference := by
-  rw [← P.defect_eq_relative_entropy s, ← P.defect_eq_relative_entropy 1]
-  rw [P.defect_eq_profile s hs, P.defect_eq_profile 1 ⟨zero_le_one, le_rfl⟩]
-  exact quadratic_profile_square_contraction P.kernel hs
-
-/- The matrix resolvent certificate is consumed here on the same live path as
-the curvature estimate.  The second conjunct is the nonnegative BKM quadratic
-form supplied by `trace_entropy_hessian_resolvent`; the first conjunct is the
-new scale estimate above. -/
-theorem matrix_hessian_with_binary_profile_contraction
-    (A : HSpace) (hA : A.val.PosDef) (K : CurvatureKernel)
-    {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
-    (∀ H : HSpace, 0 ≤
-      (fderiv ℝ (fderiv ℝ traceEntropy) A) H H) ∧
-      quadraticProfile K s ≤ s ^ 2 * quadraticProfile K 1 := by
-  refine ⟨?_, quadratic_profile_square_contraction K hs⟩
-  exact trace_entropy_hessian_resolvent A hA |>.2.2
-
-theorem quantum_relative_entropy_square_contraction_with_hessian
-    (A : HSpace) (hA : A.val.PosDef)
-    (P : QuantumBinaryDefectPath m) {s : ℝ}
-    (hs : s ∈ Icc (0 : ℝ) 1) :
-    (∀ H : HSpace, 0 ≤
-      (fderiv ℝ (fderiv ℝ traceEntropy) A) H H) ∧
-      quantumRelativeEntropy (P.path s) P.reference ≤
-        s ^ 2 * quantumRelativeEntropy (P.path 1) P.reference := by
-  refine ⟨(trace_entropy_hessian_resolvent A hA).2.2, ?_⟩
-  exact quantum_relative_entropy_square_contraction P hs
+/-- The binary entropy defect contracts by `s²` for every finite dimension,
+including singular positive semidefinite endpoints. -/
+theorem binary_entropy_square_contraction (V : unitary M) (A H : S)
+    (hfixed : (V : M) * A.val * (star V : M) = A.val)
+    (hflip : (V : M) * H.val * (star V : M) = -H.val)
+    (hA : 0 ≤ A.val) (hp : 0 ≤ (A + H).val) (hm : 0 ≤ (A - H).val)
+    (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
+    D (A + s • H) A ≤ s ^ 2 * D (A + H) A := by
+  have h := FiniteAmplitudeBKMRemainder.symmetric_entropy_gap_square_contraction_psd
+    A H hA hp hm s hs
+  rw [binary_entropy_even V A H hfixed hflip s,
+    show entropy (A - H) = entropy (A + H) by
+      simpa only [one_smul] using binary_entropy_even V A H hfixed hflip 1] at h
+  rw [binary_defect_eq_entropy_difference V A H hfixed hflip s,
+    show D (A + H) A = entropy (A + H) - entropy A by
+      simpa only [one_smul] using binary_defect_eq_entropy_difference V A H hfixed hflip 1]
+  linarith
 
 end D5.S3.Quantum.Divergence.BinaryExpectationCurvature
-

@@ -12,6 +12,8 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Continuity
+import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 
 set_option quotPrecheck false
 
@@ -688,5 +690,159 @@ theorem symmetric_entropy_gap_bkm_bounds (A H : S)
   rw [integral_neg, integral_const_mul, ← eb] at hu
   rw [he]
   constructor <;> linarith
+
+private lemma normalized_norm_lt_one_of_posdef (A H : S)
+    (hA : A.val.PosDef) (hp : (A + H).val.PosDef) (hm : (A - H).val.PosDef) :
+    ‖K A H 0‖ < 1 := by
+  let : CStarAlgebra M := {}
+  let Z := K A H 0
+  have hZ : IsSelfAdjoint Z := (normalized_kernel_bounds A H hA 0 le_rfl).1
+  have hi : IsStrictlyPositive (Ring.inverse A.val) := by
+    simpa only [Matrix.nonsing_inv_eq_ringInverse] using hA.inv.isStrictlyPositive
+  have he (B : S) : CFC.conjSqrt (Ring.inverse A.val) (A + B).val = 1 + K A B 0 := by
+    simp only [Submodule.coe_add, map_add,
+      CFC.conjSqrt_ringInverse_self A.val hA.isStrictlyPositive, zero_smul, add_zero]
+  have hep : IsStrictlyPositive (1 + Z) := by
+    rw [← he H]
+    exact (CFC.isStrictlyPositive_conjSqrt_iff _ _ hi).mpr hp.isStrictlyPositive
+  have hem : IsStrictlyPositive (1 - Z) := by
+    have h := (CFC.isStrictlyPositive_conjSqrt_iff (Ring.inverse A.val) (A - H).val hi).mpr
+      hm.isStrictlyPositive
+    simpa only [Submodule.coe_sub, map_sub,
+      CFC.conjSqrt_ringInverse_self A.val hA.isStrictlyPositive, zero_smul, add_zero, Z] using h
+  have ep : cfc (fun x : ℝ => 1 + x) Z = 1 + Z := by
+    rw [cfc_const_add 1 (id : ℝ → ℝ) Z continuousOn_id hZ, cfc_id ℝ Z hZ, map_one]
+  have em : cfc (fun x : ℝ => 1 - x) Z = 1 - Z := by
+    rw [cfc_sub (fun _ : ℝ => 1) (id : ℝ → ℝ) Z,
+      cfc_const 1 Z hZ, cfc_id ℝ Z hZ, map_one]
+  rw [← cfc_id ℝ Z hZ]
+  apply norm_cfc_lt zero_lt_one
+  intro x hx
+  have hxp : 0 < 1 + x := by
+    apply hep.spectrum_pos
+    rw [← ep, cfc_map_spectrum (fun x : ℝ => 1 + x) Z hZ (by fun_prop)]
+    exact mem_image_of_mem _ hx
+  have hxm : 0 < 1 - x := by
+    apply hem.spectrum_pos
+    rw [← em, cfc_map_spectrum (fun x : ℝ => 1 - x) Z hZ (by fun_prop)]
+    exact mem_image_of_mem _ hx
+  rw [Real.norm_eq_abs]
+  exact abs_lt.mpr ⟨by linarith, by linarith⟩
+
+private lemma scalar_log_square_contraction (s z : ℝ)
+    (hs : s ∈ Icc (0 : ℝ) 1) (hz0 : 0 ≤ z) (hz1 : z < 1) :
+    -Real.log (1 - s ^ 2 * z) ≤ s ^ 2 * -Real.log (1 - z) := by
+  have hs2 : s ^ 2 ≤ 1 := by nlinarith [hs.1, hs.2]
+  have hc : ConcaveOn ℝ (Ioi (0 : ℝ)) Real.log :=
+    StrictConcaveOn.concaveOn strictConcaveOn_log_Ioi
+  have h := hc.2 (by norm_num : (1 : ℝ) ∈ Ioi (0 : ℝ))
+    (by change 0 < 1 - z; linarith) (sub_nonneg.mpr hs2) (sq_nonneg s)
+    (by ring : (1 - s ^ 2) + s ^ 2 = 1)
+  have he : (1 - s ^ 2) * 1 + s ^ 2 * (1 - z) = 1 - s ^ 2 * z := by ring
+  simp only [Real.log_one, mul_zero, zero_add, he] at h
+  linarith
+
+private lemma kernel_log_square_contraction (Z : M) (hZ : IsSelfAdjoint Z)
+    (hZ1 : ‖Z‖ < 1) (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
+    -(CFC.log (1 - (s • Z) ^ 2)).trace.re ≤
+      s ^ 2 * -(CFC.log (1 - Z ^ 2)).trace.re := by
+  have hc : cfc (fun x : ℝ => Real.log (1 - (s * x) ^ 2)) Z =
+      CFC.log (1 - (s • Z) ^ 2) := by
+    rw [cfc_comp' Real.log (fun x : ℝ => 1 - (s * x) ^ 2) Z
+      ((Z.finite_real_spectrum.image _).continuousOn Real.log) (by fun_prop) hZ,
+      cfc_sub (fun _ : ℝ => 1) (fun x : ℝ => (s * x) ^ 2) Z,
+      cfc_const 1 Z hZ, map_one,
+      cfc_pow (fun x : ℝ => s * x) 2 Z (by fun_prop) hZ,
+      cfc_const_mul_id s Z hZ]
+    rfl
+  rw [← hc, D5.S3.Resource.LogDet.PathSpectralClassical.trace_cfc_eq_sum Z hZ.isHermitian,
+    trace_log_even Z hZ, ← Finset.sum_neg_distrib, ← Finset.sum_neg_distrib,
+    Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro i _
+  have hb := norm_apply_le_norm_cfc (id : ℝ → ℝ) Z
+    (hZ.isHermitian.eigenvalues_mem_spectrum_real i) continuousOn_id hZ
+  rw [cfc_id ℝ Z hZ, Real.norm_eq_abs] at hb
+  have hk : hZ.isHermitian.eigenvalues i ^ 2 < 1 := by
+    have ha := hb.trans_lt hZ1
+    nlinarith [(abs_lt.mp ha).1, (abs_lt.mp ha).2]
+  simpa only [mul_pow] using scalar_log_square_contraction s
+    (hZ.isHermitian.eigenvalues i ^ 2) hs (sq_nonneg _) hk
+
+/-- Scaling a Hermitian direction contracts its actual symmetric entropy gap by
+at most the square of the scale, independently of the matrix dimension. -/
+theorem symmetric_entropy_gap_square_contraction (A H : S)
+    (hA : A.val.PosDef) (hp : (A + H).val.PosDef) (hm : (A - H).val.PosDef)
+    (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
+    entropy (A + s • H) / 2 + entropy (A - s • H) / 2 - entropy A ≤
+      s ^ 2 * (entropy (A + H) / 2 + entropy (A - H) / 2 - entropy A) := by
+  have hr := normalized_norm_lt_one_of_posdef A H hA hp hm
+  have hscale (u : ℝ) : K A (s • H) u = s • K A H u := by
+    simp only [Submodule.coe_smul, map_smul]
+  have hrs : ‖K A (s • H) 0‖ < 1 := by
+    rw [hscale, norm_smul, Real.norm_eq_abs, abs_of_nonneg hs.1]
+    exact (mul_le_of_le_one_left (norm_nonneg _) hs.2).trans_lt hr
+  obtain ⟨es, is⟩ := symmetric_entropy_gap_eq_integral_log A (s • H) hA hrs
+  obtain ⟨e1, i1⟩ := symmetric_entropy_gap_eq_integral_log A H hA hr
+  have hle := integral_mono_ae is.neg (i1.neg.const_mul (s ^ 2)) (by
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+    have hb := normalized_kernel_bounds A H hA u hu.le
+    simpa only [Pi.neg_apply, hscale] using
+      kernel_log_square_contraction (K A H u) hb.1 (hb.2.trans_lt hr) s hs)
+  simp only [Pi.neg_apply, integral_neg, integral_const_mul] at hle
+  rw [es, e1]
+  linarith
+
+private lemma trace_entropy_continuous : Continuous entropy := by
+  let : CStarAlgebra M := {}
+  have hc : Continuous (fun Y : S => cfc (fun x : ℝ => x * Real.log x) Y.val) := by
+    rw [← continuousOn_univ]
+    exact ContinuousOn.cfc_of_mem_nhdsSet (s := univ) _ (by simp)
+      (ι).continuous.continuousOn (fun Y _ => Y.property) continuous_mul_log.continuousOn
+  have he (Y : S) : cfc (fun x : ℝ => x * Real.log x) Y.val =
+      Y.val * CFC.log Y.val := by
+    rw [cfc_mul (id : ℝ → ℝ) Real.log Y.val continuousOn_id
+      (Y.val.finite_real_spectrum.continuousOn _) Y.property, cfc_id ℝ Y.val Y.property]
+    rfl
+  simpa only [he] using (Tr).continuous.comp hc
+
+private lemma positive_regularization (A : S) (hA : 0 ≤ A.val) (e : ℝ) (he : 0 < e) :
+    (A.val + e • (1 : M)).PosDef := by
+  apply Matrix.isStrictlyPositive_iff_posDef.mp
+  simpa only [Algebra.algebraMap_eq_smul_one] using
+    (isStrictlyPositive_algebraMap (A := M) he).nonneg_add hA
+
+/-- Entropy continuity extends the square contraction to semidefinite endpoints;
+no lower spectral gap is imposed on the original matrices. -/
+theorem symmetric_entropy_gap_square_contraction_psd (A H : S)
+    (hA : 0 ≤ A.val) (hp : 0 ≤ (A + H).val) (hm : 0 ≤ (A - H).val)
+    (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
+    entropy (A + s • H) / 2 + entropy (A - s • H) / 2 - entropy A ≤
+      s ^ 2 * (entropy (A + H) / 2 + entropy (A - H) / 2 - entropy A) := by
+  let I : S := ⟨1, IsSelfAdjoint.one⟩
+  have hi (e : ℝ) (he : 0 < e) :
+      entropy ((A + e • I) + s • H) / 2 + entropy ((A + e • I) - s • H) / 2 -
+        entropy (A + e • I) ≤
+      s ^ 2 * (entropy ((A + e • I) + H) / 2 + entropy ((A + e • I) - H) / 2 -
+        entropy (A + e • I)) := by
+    apply symmetric_entropy_gap_square_contraction (A + e • I) H
+      (positive_regularization A hA e he)
+    · simpa only [Submodule.coe_add, Submodule.coe_smul, I, add_assoc, add_comm,
+        add_left_comm] using positive_regularization (A + H) hp e he
+    · simpa only [Submodule.coe_sub, Submodule.coe_add, Submodule.coe_smul, I,
+        sub_eq_add_neg, add_assoc, add_comm, add_left_comm] using
+        positive_regularization (A - H) hm e he
+    · exact hs
+  have hc := trace_entropy_continuous (n := n)
+  have hl : Continuous (fun e : ℝ =>
+      entropy ((A + e • I) + s • H) / 2 + entropy ((A + e • I) - s • H) / 2 -
+        entropy (A + e • I)) := by fun_prop
+  have hr : Continuous (fun e : ℝ => s ^ 2 *
+      (entropy ((A + e • I) + H) / 2 + entropy ((A + e • I) - H) / 2 -
+        entropy (A + e • I))) := by fun_prop
+  have hh := le_of_tendsto_of_tendsto ((hl.tendsto 0).mono_left inf_le_left)
+    ((hr.tendsto 0).mono_left inf_le_left) (show ∀ᶠ e in 𝓝[Ioi (0 : ℝ)] 0, _ from by
+      filter_upwards [self_mem_nhdsWithin] with e he using hi e he)
+  simpa only [zero_smul, add_zero] using hh
 
 end D5.S3.Quantum.Divergence.FiniteAmplitudeBKMRemainder
