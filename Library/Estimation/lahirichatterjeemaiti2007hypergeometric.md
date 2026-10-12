@@ -33,9 +33,12 @@ For a hypergeometric count with population $N$, marked population $R$,
 sample size $U$, put $p=R/N$, $f=U/N$ and
 $\sigma^2=Np(1-p)f(1-f)$. The exact variance is
 $N\sigma^2/(N-1)$, so $\sigma$ is not literally the exact standard
-deviation. Theorem 2.1 characterizes normal convergence by
-$\sigma^2\to\infty$; Theorem 2.2 supplies the uniform order
-$\Delta\le C/\sigma$ for the normal distribution-function error.
+deviation. For a sequence of these counts, Theorem 2.1 characterizes
+normal convergence by $\sigma^2\to\infty$; under that condition,
+Theorem 2.2 supplies $\Delta\le C/\sigma$ uniformly along the
+sequence for the normal distribution-function error. The universal
+nonuniform bound in Theorem 2.3 also gives a constant $C_\rho$
+uniform over balanced margins once $\sigma\ge25$.
 
 Comparing consecutive distribution-function values yields
 
@@ -50,6 +53,9 @@ For fixed $0<\rho\le1/2$ and both $p,f\in[\rho,1-\rho]$,
 $\sigma\ge\rho(1-\rho)\sqrt N$. Thus the classical theorem
 supplies the balanced order $\sup_t\mathbb P(T=t)\le C_\rho/\sqrt N$;
 bounded small populations can be included by enlarging the constant.
+For this family, the $C$ in the displayed CDF bound can be chosen
+uniformly in terms of $\rho$, by Theorem 2.3; the remaining small
+populations are bounded in terms of $\rho$.
 This is a consequence of the published approximation mechanism,
 not a new maximum-atom principle. No numerical optimal $C_\rho$ is asserted.
 

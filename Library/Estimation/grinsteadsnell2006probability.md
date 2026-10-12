@@ -27,7 +27,8 @@ Section 4.1, “Discrete Conditional Probability,” including its
 
 For $\mathbb P(E)>0$,
 $\mathbb P(H\mid E)=\mathbb P(H\cap E)/\mathbb P(E)$.
-For a finite partition $H_1,\ldots,H_m$, Bayes' formula is
+For a finite partition $H_1,\ldots,H_m$ with positive prior masses,
+Bayes' formula is
 
 $$
 \mathbb P(H_i\mid E)
