@@ -16,7 +16,19 @@ Lean statement: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_translation_
 
 The signed offset Re(rho)-1/2 acts as a horizontal isometry of the real hyperbolic upper-half-space model. Its canonical basepoint is fixed exactly when the offset vanishes. This is a geometric interface and adds no zero-free hypothesis.
 
-**Theorem 1.2 (RH is equivalent to zero hyperbolic normal displacement of every actual zero).**
+**Theorem 1.2 (Exact hyperbolic displacement formula).**
+
+Lean statement: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_arsinh`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_arsinh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The displacement equals 2 arsinh(|Re(rho)-1/2|/2), giving a faithful nonnegative gauge of the off-line abscissa.
+
+**Theorem 1.3 (RH is equivalent to zero hyperbolic normal displacement of every actual zero).**
 
 Lean statement: `D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_normal_displacements_zero`
 
@@ -30,6 +42,7 @@ The equivalence quantifies over the repository's actual Zeta23.IsNontrivialZero 
 
 ## References
 
+- Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_arsinh`
 - Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.normal_translation_fixed_iff`
 - Truth anchor: `D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_normal_displacements_zero`
 - Dependency: [D5/S3/Geometry/HyperbolicUpperHalfSpace](../Geometry/HyperbolicUpperHalfSpace.md)
