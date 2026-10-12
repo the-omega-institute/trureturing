@@ -32,8 +32,6 @@ $$\forall u: \operatorname{Level},\ H: \operatorname{Type}(u),\ [\operatorname{N
 
 The exact Physlib supplier at original line 89 has alpha in [1,2] and beta in [0,1], including all endpoints, on every complete nontrivial complex Hilbert space. Both inputs are strictly positive; no commutation or finite dimension is assumed. The source proof is retained, with its uniform power condition supplied by the consumed PowerConvexity adapter. LiebAndoTrace consumes this endpoint at beta=1. This is attributed reuse, not new mathematics.
 
-Native escape audit remains unfinished under issue #5214; no declared_validated status is claimed.
-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Lieb/OperatorGeometricMean.operatorPowerMean_jointlyConcaveOn_pdSet`

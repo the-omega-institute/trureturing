@@ -25,9 +25,7 @@ internal sealed class LiebConcavityDocument : IScribeDocumentDefinition
                     + "complex Hilbert space, and both inputs have strictly "
                     + "positive spectra. Neither K invertibility nor A/B "
                     + "commutation is assumed. Its operator-power and perspective "
-                    + "suppliers come from the same immutable pin.")),
-                    Paragraph(Text("Native escape audit remains unfinished under "
-                        + "issue #5214; no declared_validated status is claimed."))),
+                    + "suppliers come from the same immutable pin."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("lieb-strict-pd-concavity"),
