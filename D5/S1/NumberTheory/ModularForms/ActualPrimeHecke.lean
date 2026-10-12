@@ -4,13 +4,14 @@
    mirror-E: none(waiver:registration-audit-pending)
    anchors: []
    utility: none
-   digest: Actual trace-and-translate prime Hecke endomorphism on level-one cusp forms. -/
+   digest: Actual prime Hecke trace, complete finite representatives and analytic coefficients. -/
 
 import Mathlib.NumberTheory.ModularForms.NormTrace
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Algebra.Field.ZMod
+import Mathlib.NumberTheory.ModularForms.QExpansion
+import Mathlib.RingTheory.RootsOfUnity.Complex
 
 open UpperHalfPlane ModularForm ModularFormClass MatrixGroups
 open Matrix Matrix.SpecialLinearGroup
@@ -58,10 +59,6 @@ private lemma primeHeckeReal_coe (p : ℕ) [Fact p.Prime] :
     simp [primeHeckeReal, primeHeckeRat, primeDiagRat,
       Matrix.GeneralLinearGroup.map, Matrix.GeneralLinearGroup.mkOfDetNeZero]
 
-private lemma primeHeckeReal_00 (p : ℕ) [Fact p.Prime] :
-    primeHeckeReal p 0 0 = (p : ℝ) := by
-  simpa using congrFun₂ (primeHeckeReal_coe p) 0 0
-
 private lemma primeHeckeReal_10 (p : ℕ) [Fact p.Prime] :
     primeHeckeReal p 1 0 = (0 : ℝ) := by
   simpa using congrFun₂ (primeHeckeReal_coe p) 1 0
@@ -96,7 +93,8 @@ def primeHeckeUpper (p : ℕ) [Fact p.Prime] (a : ℤ) : GL (Fin 2) ℝ :=
 
 private lemma primeHecke_upper_matrix (p : ℕ) [Fact p.Prime] (a : ℤ) :
     Matrix.SpecialLinearGroup.mapGL ℝ ModularGroup.S * primeHeckeUpper p a =
-      primeHeckeReal p * Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.S * ModularGroup.T ^ a) := by
+      primeHeckeReal p *
+        Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.S * ModularGroup.T ^ a) := by
   apply Units.ext
   change
     (Matrix.SpecialLinearGroup.mapGL ℝ ModularGroup.S : Matrix (Fin 2) (Fin 2) ℝ) *
@@ -108,15 +106,6 @@ private lemma primeHecke_upper_matrix (p : ℕ) [Fact p.Prime] (a : ℤ) :
   have hST :
       (Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.S * ModularGroup.T ^ a) :
         Matrix (Fin 2) (Fin 2) ℝ) = !![(0 : ℝ), -1; 1, (a : ℝ)] := by
-    have hT :
-        (Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.T ^ a) :
-          Matrix (Fin 2) (Fin 2) ℝ) = !![(1 : ℝ), (a : ℝ); 0, 1] := by
-      rw [Matrix.SpecialLinearGroup.mapGL_coe_matrix]
-      change ((((ModularGroup.T ^ a : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ).map
-        (Int.castRingHom ℝ))) = _
-      rw [ModularGroup.coe_T_zpow]
-      ext i j
-      fin_cases i <;> fin_cases j <;> norm_num
     rw [Matrix.SpecialLinearGroup.mapGL_coe_matrix]
     change
       ((((ModularGroup.S * ModularGroup.T ^ a : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ).map
@@ -125,7 +114,7 @@ private lemma primeHecke_upper_matrix (p : ℕ) [Fact p.Prime] (a : ℤ) :
       (ModularGroup.S : Matrix (Fin 2) (Fin 2) ℤ) *
         ((ModularGroup.T ^ a : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) by rfl]
     rw [ModularGroup.coe_T_zpow]
-    simp only [Matrix.map_mul, Matrix.map_apply]
+    simp only [Matrix.map_mul]
     ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [Matrix.mul_apply, Fin.sum_univ_succ]
@@ -387,7 +376,7 @@ private lemma quotientFunc_add
       SlashInvariantForm.quotientFunc f q + SlashInvariantForm.quotientFunc h q := by
   induction q using Quotient.inductionOn with
   | h r =>
-    simp [SlashInvariantForm.quotientFunc]
+    simp
 
 private lemma translate_add
     {k : ℤ} (f h : CuspForm 𝒮ℒ k) (g : GL (Fin 2) ℝ) :
@@ -506,7 +495,7 @@ theorem primeHecke_action (p : ℕ) [Fact p.Prime] (k : ℤ)
     primeHecke p k f z = (p : ℂ) ^ (k - 1) * f (primeHeckeDiagPoint p z) +
       (p : ℂ)⁻¹ * ∑ a : Fin p, f (primeHeckeUpperPoint p (a.val : ℤ) z) := by
   rw [primeHecke_apply]
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     ((𝒮ℒ : Subgroup (GL (Fin 2) ℝ)) ⧸ (primeHeckeSubgroup p).subgroupOf 𝒮ℒ)
   change (∑ q, SlashInvariantForm.quotientFunc
     (CuspForm.translate f (primeHeckeReal p)) q) z = _
@@ -528,6 +517,143 @@ theorem primeHecke_action (p : ℕ) [Fact p.Prime] (k : ℤ)
   rw [SlashInvariantFormClass.slash_action_eq (Γ := 𝒮ℒ) (k := k) f _ hS]
   exact primeHecke_upper_apply p (a.val : ℤ) k f z
 
+local notation "𝕢" => Function.Periodic.qParam
+
+private lemma prime_root_filter (p : ℕ) [Fact p.Prime] (n : ℕ) :
+    ∑ a : Fin p, Complex.exp
+      (2 * (Real.pi : ℂ) * Complex.I * ((n : ℂ) * (a.val : ℂ) / (p : ℂ))) =
+      if p ∣ n then (p : ℂ) else 0 := by
+  let ζ : ℂ := Complex.exp (2 * (Real.pi : ℂ) * Complex.I / (p : ℂ))
+  have hζ : IsPrimitiveRoot ζ p :=
+    Complex.isPrimitiveRoot_exp p (Fact.out : Nat.Prime p).ne_zero
+  have he (a : Fin p) : Complex.exp
+      (2 * (Real.pi : ℂ) * Complex.I * ((n : ℂ) * (a.val : ℂ) / (p : ℂ))) =
+      (ζ ^ n) ^ a.val := by
+    rw [← Complex.exp_nat_mul, ← Complex.exp_nat_mul]
+    congr 1
+    ring
+  simp_rw [he]
+  by_cases hn : p ∣ n
+  · rw [if_pos hn, hζ.pow_eq_one_iff_dvd n |>.mpr hn]
+    simp
+  · rw [if_neg hn, Fin.sum_univ_eq_sum_range]
+    have hz : ζ ^ n ≠ 1 := fun h => hn ((hζ.pow_eq_one_iff_dvd n).mp h)
+    have hpow : (ζ ^ n) ^ p = 1 := by
+      rw [← pow_mul, mul_comm n p, pow_mul, hζ.pow_eq_one, one_pow]
+    have h := geom_sum_mul (ζ ^ n) p
+    rw [hpow, sub_self] at h
+    exact (mul_eq_zero.mp h).resolve_right (sub_ne_zero.mpr hz)
+
+private lemma prime_q_diag (p : ℕ) [Fact p.Prime] (z : ℍ) :
+    𝕢 1 (primeHeckeDiagPoint p z) = (𝕢 1 z) ^ p := by
+  simp only [Function.Periodic.qParam, Complex.ofReal_one, div_one]
+  rw [← Complex.exp_nat_mul]
+  congr 1
+  simp only [primeHeckeDiagPoint]
+  ring
+
+private lemma prime_q_step (p : ℕ) [Fact p.Prime] (z : ℍ) :
+    (𝕢 (p : ℝ) z) ^ p = 𝕢 1 z := by
+  simp only [Function.Periodic.qParam, Complex.ofReal_natCast,
+    Complex.ofReal_one, div_one]
+  rw [← Complex.exp_nat_mul]
+  congr 1
+  have hp : (p : ℂ) ≠ 0 := by
+    exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
+  field_simp
+
+private lemma prime_q_upper_power (p : ℕ) [Fact p.Prime] (a : ℤ) (z : ℍ) (n : ℕ) :
+    𝕢 1 (primeHeckeUpperPoint p a z) ^ n = (𝕢 (p : ℝ) z) ^ n *
+      Complex.exp (2 * (Real.pi : ℂ) * Complex.I * ((n : ℂ) * (a : ℂ) / (p : ℂ))) := by
+  simp only [Function.Periodic.qParam, Complex.ofReal_natCast,
+    Complex.ofReal_one, div_one]
+  rw [← Complex.exp_nat_mul, ← Complex.exp_nat_mul, ← Complex.exp_add]
+  congr 1
+  simp only [primeHeckeUpperPoint]
+  ring
+
+private lemma prime_q_upper_sum (p : ℕ) [Fact p.Prime] (z : ℍ) (n : ℕ) :
+    ∑ a : Fin p, 𝕢 1 (primeHeckeUpperPoint p (a.val : ℤ) z) ^ n =
+      if p ∣ n then (p : ℂ) * 𝕢 1 z ^ (n / p) else 0 := by
+  simp_rw [prime_q_upper_power, Int.cast_natCast]
+  rw [← Finset.mul_sum, prime_root_filter]
+  by_cases hn : p ∣ n
+  · rw [if_pos hn, if_pos hn]
+    have hpow : (𝕢 (p : ℝ) z) ^ n = 𝕢 1 z ^ (n / p) := by
+      nth_rw 1 [← Nat.mul_div_cancel' hn]
+      rw [pow_mul, prime_q_step]
+    rw [hpow, mul_comm]
+  · simp [hn]
+
+private lemma prime_hasSum_dilate (p : ℕ) (hp : p ≠ 0)
+    (c : ℕ → ℂ) (q v : ℂ) (h : HasSum (fun m => c m * (q ^ p) ^ m) v) :
+    HasSum (fun n => (if p ∣ n then c (n / p) else 0) * q ^ n) v := by
+  have hi : Function.Injective (fun m : ℕ => p * m) :=
+    fun _ _ h => mul_left_cancel₀ hp h
+  apply (hi.hasSum_iff ?_).mp
+  · apply h.congr_fun
+    intro m
+    simp [Nat.mul_div_cancel_left _ (Nat.pos_of_ne_zero hp), pow_mul]
+  · intro n hn
+    have hnd : ¬ p ∣ n := by
+      rintro ⟨m, rfl⟩
+      exact hn ⟨m, rfl⟩
+    simp [hnd]
+
+private lemma prime_hasSum_upper (p : ℕ) [Fact p.Prime] (k : ℤ)
+    (f : CuspForm 𝒮ℒ k) (z : ℍ) :
+    HasSum (fun n => (qExpansion 1 f).coeff (p * n) * 𝕢 1 z ^ n)
+      ((p : ℂ)⁻¹ * ∑ a : Fin p, f (primeHeckeUpperPoint p (a.val : ℤ) z)) := by
+  have hp : p ≠ 0 := (Fact.out : Nat.Prime p).ne_zero
+  have hpC : (p : ℂ) ≠ 0 := by exact_mod_cast hp
+  have hi : Function.Injective (fun m : ℕ => p * m) :=
+    fun _ _ h => mul_left_cancel₀ hp h
+  have hsum := hasSum_sum (s := (Finset.univ : Finset (Fin p)))
+    (fun a _ => ModularForm.hasSum_qExpansion f one_pos one_mem_strictPeriods_SL
+      (primeHeckeUpperPoint p (a.val : ℤ) z))
+  let d : ℕ → ℂ := fun m => (qExpansion 1 f).coeff m *
+    (if p ∣ m then (p : ℂ) * 𝕢 1 z ^ (m / p) else 0)
+  have hd : HasSum d (∑ a : Fin p, f (primeHeckeUpperPoint p (a.val : ℤ) z)) :=
+    hsum.congr_fun (by
+      intro m
+      rw [← Finset.mul_sum, prime_q_upper_sum])
+  have hz (m : ℕ) (hm : m ∉ Set.range (fun n : ℕ => p * n)) : d m = 0 := by
+    have hnd : ¬ p ∣ m := by
+      rintro ⟨n, rfl⟩
+      exact hm ⟨n, rfl⟩
+    simp [d, hnd]
+  have hcomp := (hi.hasSum_iff hz).mpr hd
+  apply (hcomp.mul_left (p : ℂ)⁻¹).congr_fun
+  intro n
+  simp only [Function.comp_def, d, dvd_mul_right, if_true,
+    Nat.mul_div_cancel_left _ (Nat.pos_of_ne_zero hp)]
+  field_simp
+
+/-- The coefficient law of the actual analytic Hecke operator, including the constant term. -/
+theorem primeHecke_qExpansion_coeff (p : ℕ) [Fact p.Prime] (k : ℤ)
+    (f : CuspForm 𝒮ℒ k) (n : ℕ) :
+    (qExpansion 1 (primeHecke p k f)).coeff n = (qExpansion 1 f).coeff (p * n) +
+      (p : ℂ) ^ (k - 1) * (if p ∣ n then (qExpansion 1 f).coeff (n / p) else 0) := by
+  let c : ℕ → ℂ := fun m => (qExpansion 1 f).coeff (p * m) +
+    (p : ℂ) ^ (k - 1) * (if p ∣ m then (qExpansion 1 f).coeff (m / p) else 0)
+  suffices h : ∀ z : ℍ, HasSum (fun m => c m • 𝕢 1 z ^ m) (primeHecke p k f z) from
+    (ModularFormClass.qExpansion_coeff_unique one_pos one_mem_strictPeriods_SL h n).symm
+  intro z
+  have hdiag := ModularForm.hasSum_qExpansion f one_pos one_mem_strictPeriods_SL
+    (primeHeckeDiagPoint p z)
+  simp_rw [prime_q_diag] at hdiag
+  have hd := prime_hasSum_dilate p (Fact.out : Nat.Prime p).ne_zero
+    (fun m => (qExpansion 1 f).coeff m) (𝕢 1 z) (f (primeHeckeDiagPoint p z)) hdiag
+  have hu := prime_hasSum_upper p k f z
+  have h := (hu.add (hd.mul_left ((p : ℂ) ^ (k - 1)))).congr_fun
+    (g := fun m => c m • 𝕢 1 z ^ m) (by
+      intro m
+      simp only [c, smul_eq_mul]
+      ring)
+  convert h using 1
+  rw [primeHecke_action]
+  ring
+
 end
 
 end D5.S1.NumberTheory.ModularForms
@@ -535,3 +661,7 @@ end D5.S1.NumberTheory.ModularForms
 #print axioms D5.S1.NumberTheory.ModularForms.primeHecke
 #print axioms D5.S1.NumberTheory.ModularForms.primeHecke_apply
 #print axioms D5.S1.NumberTheory.ModularForms.primeHecke_action
+#print axioms D5.S1.NumberTheory.ModularForms.primeHecke_qExpansion_coeff
+
+#print axioms D5.S1.NumberTheory.ModularForms.primeHeckeSubgroup_mem
+#print axioms D5.S1.NumberTheory.ModularForms.primeTraceEquiv
