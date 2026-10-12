@@ -737,5 +737,84 @@ private lemma inner_winning_constant {d t : ℕ} {α β : Type*} [Fintype α] [F
   congr 1
   simp_rw [← actV_rightMul, ← actO_rightMul]
   exact (sum_rightMul h (fun g => S.prob (actV g σ) (actV g τ) (actO g A) (actO g B))).symm
+private lemma winning_cross {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (hd : 2 * t ≤ d)
+    (σ τ : Vertex d) (A B : Output d t) (hw : Wins σ τ A B) :
+    (weightedCore S).inner (uvec S σ A) (vvec S τ B) =
+      n d t * value S.prob / (Nat.choose (2 * t) t : ℝ) := by
+  classical
+  let P : Correlation d t := fun σ τ A B => (weightedCore S).inner (uvec S σ A) (vvec S τ B)
+  have hconst := value_constant hd P (P σ τ A B)
+    (fun σ' τ' A' B' hw' => inner_winning_constant S σ' τ' σ τ A' B' A B hw' hw)
+  have havg : value P = n d t * value S.prob := by
+    have he : P = fun σ τ A B => n d t / (Fintype.card (G d) : ℝ) *
+        ∑ g, S.prob (actV g σ) (actV g τ) (actO g A) (actO g B) := by
+      funext σ τ A B; exact inner_uv_eq S σ τ A B
+    rw [he, value_sum]
+    simp_rw [value_transport]
+    rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    have hc : (Fintype.card (G d) : ℝ) ≠ 0 := by
+      let _ : Nonempty (Vertex d) := ⟨∅⟩
+      let _ : Nonempty (Equiv.Perm (Fin d)) := ⟨Equiv.refl _⟩
+      exact_mod_cast (Fintype.card_ne_zero : Fintype.card (G d) ≠ 0)
+    field_simp
+  have hc : (Nat.choose (2 * t) t : ℝ) ≠ 0 := by
+    exact_mod_cast (Nat.choose_pos (show t ≤ 2 * t by omega)).ne'
+  apply (eq_div_iff hc).mpr
+  rw [havg] at hconst
+  exact (mul_comm _ _).trans hconst.symm
+private lemma exists_win {d t : ℕ} (hd : 2 * t ≤ d) :
+    ∃ σ τ : Vertex d, ∃ A B : Output d t, Wins σ τ A B := by
+  classical
+  obtain ⟨p, hp⟩ := Finset.card_pos.mp (inputs_pos hd)
+  have hpr : Promised d t p.1 p.2 := (Finset.mem_filter.mp hp).2
+  obtain ⟨T, hT, hc⟩ := Finset.exists_subset_card_eq
+    (show t ≤ (p.1 ∆ p.2).card by change _ = 2 * t at hpr; omega)
+  exact ⟨p.1, p.2, ⟨T, hc⟩, flip (p.1 ∆ p.2) ⟨T, hc⟩,
+    (wins_iff _ _ _ _ hpr).mpr ⟨hT, rfl⟩⟩
+private lemma quantum_bound {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β)
+    (ht : 2 ≤ t) (hd : 2 * t < d) :
+    value S.prob ≤ ((Nat.choose (2 * t) t : ℝ) / n d t) * (1 - kappa d t) := by
+  classical
+  let δ := 1 - n d t * value S.prob / (Nat.choose (2 * t) t : ℝ)
+  obtain ⟨σ, τ, A, B, hw⟩ := exists_win hd.le
+  have hcross := winning_cross S hd.le σ τ A B hw
+  have hnonneg : 0 ≤ (weightedCore S).inner (uvec S σ A) (vvec S τ B) := by
+    rw [inner_uv_eq]
+    apply mul_nonneg (by dsimp only [n]; positivity)
+    apply Finset.sum_nonneg; intro g hg
+    exact RHLinalg.trace_mul_nonneg_of_posSemidef S.rho_psd
+      ((S.E_psd _ _).kronecker (S.F_psd _ _))
+  have hcs := @InnerProductSpace.Core.inner_mul_inner_self_le ℝ _ _ _ _
+    (weightedCore S) (uvec S σ A) (vvec S τ B)
+  have hsym := (weightedCore S).conj_inner_symm (vvec S τ B) (uvec S σ A)
+  simp only [RCLike.conj_to_real] at hsym
+  rw [← hsym] at hcs
+  have hcs' : ((weightedCore S).inner (uvec S σ A) (vvec S τ B)) ^ 2 ≤
+      (weightedCore S).inner (uvec S σ A) (uvec S σ A) *
+        (weightedCore S).inner (vvec S τ B) (vvec S τ B) := by
+    simpa only [Real.norm_eq_abs, ← sq, sq_abs, RCLike.re_to_real] using hcs
+  have hqu := inner_qu S (by omega) σ A
+  have hqv := inner_qv S (by omega) τ B
+  have hq0 := (weightedCore S).re_inner_nonneg (uvec S σ A)
+  change 0 ≤ (weightedCore S).inner (uvec S σ A) (uvec S σ A) at hq0
+  have hδ0 : 0 ≤ δ := by
+    dsimp only [δ]; rw [← hcross]
+    nlinarith [mul_nonneg hq0 (sub_nonneg.mpr hqv)]
+  have hδ1 : δ ≤ 1 := by dsimp only [δ]; rw [← hcross]; linarith
+  have hg := vector_system_gap (weightedCore S) ht hd hvec (uvec S) (vvec S) δ hδ0 hδ1
+    (inner_hh S) (inner_hu S (by omega)) (inner_hv S (by omega))
+    (inner_qu S (by omega)) (inner_qv S (by omega)) (inner_pair_budget S (by omega))
+    (fun σ τ A B hw => by rw [winning_cross S hd.le σ τ A B hw]; dsimp only [δ]; ring)
+  have hn : 0 < n d t := by dsimp only [n]; exact_mod_cast Nat.choose_pos (by omega : t ≤ d)
+  have hc : 0 < (Nat.choose (2 * t) t : ℝ) := by
+    exact_mod_cast Nat.choose_pos (show t ≤ 2 * t by omega)
+  dsimp only [δ] at hg
+  rw [div_mul_eq_mul_div]
+  apply (le_div_iff₀ hn).mpr
+  have hh := (div_le_iff₀ hc).mp (show n d t * value S.prob /
+    (Nat.choose (2 * t) t : ℝ) ≤ 1 - kappa d t by linarith)
+  convert hh using 1 <;> ring
 end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
