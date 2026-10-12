@@ -409,7 +409,8 @@ theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
         intro i hi
         exact le_antisymm ((ho i i0).mpr (le_of_eq (hw i hi))) ((ho i0 i).mpr (le_of_eq (hw i hi).symm))
       _ = _ := by simp only [sum_const, nsmul_eq_mul]; rfl
-  · calc _ = ∑ _i ∈ G, Real.sigmoid ((k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+  · calc
+      _ = ∑ _i ∈ G, Real.sigmoid ((k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
             (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r)) -
               Real.log (((M - q : ℕ) : ℝ) / (q : ℝ)) + Real.log t) := by
         apply sum_congr rfl

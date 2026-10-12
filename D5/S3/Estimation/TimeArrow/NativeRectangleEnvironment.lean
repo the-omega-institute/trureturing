@@ -482,7 +482,8 @@ private theorem second_factorial_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤
         rw [hKpred]
         field_simp [hNm1]
         linear_combination (K : ℝ) * ((K : ℝ) - 1) * hcR
-  · have hnle : n ≤ 1 := by omega interval_cases n <;> norm_num [Finset.sum_range_succ]
+  · have hnle : n ≤ 1 := by omega
+    interval_cases n <;> norm_num [Finset.sum_range_succ]
 /-- Exact second central moment of the same finite rectangle kernel. -/
 theorem kernel_second_central_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 < N) :
     (∑ k ∈ range (n + 1), H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) =
@@ -800,6 +801,7 @@ def fullRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment)
       (Finset {i : Fin M // i ∈ S.val} × ({i : Fin M // i ∈ S.val} → Option (ℕ × ℕ))) :=
   (collapsedObs S e o,
     nativeMinimalRectangleReadout S e o k l (⟨o,rfl⟩ : Fiber S e o))
+open scoped Classical in
 private theorem full_environment_sum {M q s : ℕ} (S : Support M q) (r : ℝ)
     (e : Experiment) (k l : ℕ) (o : Obs M s e) (P : Obs M s e → Prop) :
     letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance

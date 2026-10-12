@@ -109,7 +109,9 @@ theorem shared_root_central_bootstrap {ι : Type*} [Fintype ι] (outside : ι �
     · calc
         1 / 2 = Real.exp (-d) := by simp [d, Real.exp_neg, Real.exp_log]
         _ ≤ Real.exp (-h) := Real.exp_le_exp.mpr (by linarith)
-    · calc Real.exp (-h) ≤ Real.exp d := Real.exp_le_exp.mpr (by linarith) _ = 2 := Real.exp_log (by norm_num)
+    · calc
+        Real.exp (-h) ≤ Real.exp d := Real.exp_le_exp.mpr (by linarith)
+        _ = 2 := Real.exp_log (by norm_num)
   have hlower (u : ℝ) (hu : u ∈ Set.Icc (x0 - d) (x0 + d)) :
       a ≤ calibratedVariance outside r ε N R U t u := by
     have hh : |u - x0| ≤ d := abs_le.mpr ⟨by linarith [hu.1], by linarith [hu.2]⟩
@@ -159,7 +161,9 @@ theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
     · calc
         1 / 2 = Real.exp (-Real.log (2 : ℝ)) := by simp [Real.exp_neg, Real.exp_log]
         _ ≤ Real.exp (-x) := Real.exp_le_exp.mpr (by linarith)
-    · calc Real.exp (-x) ≤ Real.exp (Real.log (2 : ℝ)) := Real.exp_le_exp.mpr (by linarith) _ = 2 := Real.exp_log (by norm_num)
+    · calc
+        Real.exp (-x) ≤ Real.exp (Real.log (2 : ℝ)) := Real.exp_le_exp.mpr (by linarith)
+        _ = 2 := Real.exp_log (by norm_num)
   have hv : 1 / 8 ≤ Real.sigmoid x * (1 - Real.sigmoid x) := by
     have hh := (sigmoid_variance_tilt 0 x ht.1 ht.2).1
     norm_num [Real.sigmoid_def] at hh
@@ -627,7 +631,9 @@ private theorem all_row_root_from_residual {M : ℕ} (a : Fin M → ℝ)
     · calc
         1 / 2 = Real.exp (-d) := by simp [d, Real.exp_neg, Real.exp_log]
         _ ≤ Real.exp (-u) := Real.exp_le_exp.mpr (by linarith only [hh.2])
-    · calc Real.exp (-u) ≤ Real.exp d := Real.exp_le_exp.mpr (by linarith only [hh.1]) _ = 2 := Real.exp_log (by norm_num)
+    · calc
+        Real.exp (-u) ≤ Real.exp d := Real.exp_le_exp.mpr (by linarith only [hh.1])
+        _ = 2 := Real.exp_log (by norm_num)
   have hlower (u : ℝ) (hu : |u| ≤ d) : v / 2 ≤ V u := by
     have ht := htilt u hu
     have hh := sum_le_sum (fun i (_ : i ∈ (univ : Finset (Fin M))) =>
@@ -696,7 +702,8 @@ theorem native_calibration_root_budget (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1)
   have hc1 : compensation M q r < 1 := by linarith only [hcκ, hκ]
   have hp := (finite_support_bayes (s := 2 * M * L) hq hqm hr hr1 hc hc1 e).2.1.1 S o
   by_cases hbad : b < |P o - q| ∨ v / 2 < |D0 o - V|
-  · simp only [hbad, if_true] split_ifs <;> linarith only [hp]
+  · simp only [hbad, if_true]
+    split_ifs <;> linarith only [hp]
   · have hgood := not_or.mp hbad
     have hmean : |P o - q| ≤ b := le_of_not_gt hgood.1
     have hvar : v / 2 ≤ D0 o := by

@@ -6,7 +6,6 @@
    utility: none
    digest: Uniform labelled four-cell tables have the exact hypergeometric intersection kernel. -/
 import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
-import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 open scoped BigOperators
 open Finset
 set_option autoImplicit false
@@ -38,7 +37,8 @@ private theorem signed_block_count {M q s : ℕ} (S : Support M q) (e : Experime
   rw [word_occupation_count]
   let C := univ.filter fun k : SignalSites S e o => (g k).val = i.val ∧ isSignedDeparture S e o z k
   let D := univ.filter fun k : Fin B.card => i = g (E k).val
-  have hc : {k // k ∈ D} ≃ {k // k ∈ C} := { toFun := fun k => ⟨(E k.val).val, mem_filter.mpr ⟨mem_univ _,
+  have hc : {k // k ∈ D} ≃ {k // k ∈ C} :=
+    { toFun := fun k => ⟨(E k.val).val, mem_filter.mpr ⟨mem_univ _,
         congrArg Subtype.val ((mem_filter.mp k.property).2.symm),
         (hB _).mp (E k.val).property⟩⟩
       invFun := fun k => ⟨E.symm ⟨k.val, (hB _).mpr (mem_filter.mp k.property).2.2⟩,
@@ -49,28 +49,6 @@ private theorem signed_block_count {M q s : ℕ} (S : Support M q) (e : Experime
       left_inv := by intro k; apply Subtype.ext; simp
       right_inv := by intro k; apply Subtype.ext; simp }
   simpa only [Fintype.card_coe, D, C, departureLabelCount, isSignedDeparture] using Fintype.card_congr hc
-/-- The two occupation words are obtained from the actual positive and
-negative departure sites of the native history. -/
-private theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Support M q)
-    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
-    (ap am : Multiset {i : Fin M // i ∈ S.val})
-    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
-    (ham : am.card = (signedDepartureBlocks S e o 1).card) :
-    let kp := (signedDepartureBlocks S e o 0).card
-    let km := (signedDepartureBlocks S e o 1).card
-    let kr := (signedDepartureBlocks S e o 2).card
-    let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
-      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
-        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
-    conditionalFiberMass S r e o
-      ((A.map (labelBlockEquiv S e o kp km kr (nativeDepartureEnumeration S e o)).symm.toEmbedding).map
-        (fiberLabelEquiv S e o).symm.toEmbedding) =
-      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
-        (q : ℝ) ^ (kp + km) := by
-  exact D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks S r e o hq hqm hr hr1 ha ha1 _ _ _
-    (nativeDepartureEnumeration S e o) ap am hap ham
 /-- Both occupation words retain the exact native positive and negative row
 counts, including adjacent path departures. -/
 private theorem native_departure_word_counts {M q s : ℕ} (S : Support M q)
@@ -141,7 +119,9 @@ theorem native_joint_row_histogram_law {M q s : ℕ} (S : Support M q)
     · rintro ⟨⟨hp, hm⟩, _⟩ i
       exact ⟨(native_departure_word_counts S e o y i).1.trans (congrArg (Multiset.count i) hp),
         (native_departure_word_counts S e o y i).2.trans (congrArg (Multiset.count i) hm)⟩
-  rw [he]; exact native_signed_departure_occupation_law S r e o hq hqm hr hr1 ha ha1 ap am hap ham
+  rw [he]
+  exact D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks
+    S r e o hq hqm hr hr1 ha ha1 _ _ _ (nativeDepartureEnumeration S e o) ap am hap ham
 end
 end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 namespace D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
@@ -225,9 +205,6 @@ theorem rectangle_intersection_card {α : Type*} [DecidableEq α]
     (intersectionEvent V R U t).card = R.card.choose t * (V.card - R.card).choose (U - t) := by
   have hc := Fintype.card_congr (intersectionSplit V R U t hR ht)
   simpa only [Fintype.card_coe, Fintype.card_prod, card_powersetCard, card_sdiff_of_subset hR] using hc
-/-- The mass of the A-cell count, under the uniform second-margin law. -/
-def rectangleMass {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ) : ℝ :=
-  (intersectionEvent V R U t).card / (V.powersetCard U).card
 /-- The negative counts in the rectangle take the two adjacent values.
 Outside rows retain their full labelled count array. -/
 def rectangleNegativeCounts {α : Type*} [DecidableEq α]
@@ -332,16 +309,6 @@ private theorem rectangle_histogram_disjoint {M q s : ℕ} (S : Support M q)
     by_cases hiB : i ∈ B <;> by_cases hiC : i ∈ C <;>
       simp only [hiB, hiC, if_true, if_false] at hi ⊢ <;> omega
   · exact ⟨fun hi => False.elim (hiV (hBval hi)), fun hi => False.elim (hiV (hCval hi))⟩
-/-- Conditional mass on the original native histories after fixing the
-complete outside-row array and both rectangle margins. -/
-def nativeRectangleConditionalMass {M q s : ℕ} (S : Support M q) (r : ℝ)
-    (e : Experiment) (o : Obs M s e) (ap : Multiset {i : Fin M // i ∈ S.val})
-    (V R : Finset {i : Fin M // i ∈ S.val})
-    (outside : {i : Fin M // i ∈ S.val} → ℕ) (l U t : ℕ) : ℝ :=
-  conditionalFiberMass S r e o
-      (nativeRectangleEvent S e o ap V outside l (intersectionEvent V R U t)) /
-    conditionalFiberMass S r e o
-      (nativeRectangleEvent S e o ap V outside l (V.powersetCard U))
 private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)

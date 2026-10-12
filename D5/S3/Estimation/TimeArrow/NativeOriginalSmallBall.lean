@@ -127,7 +127,8 @@ def cubeParityEquiv (d : ℕ) : (Fin (d+1) → ℤˣ) ≃ Vertex (2^d) := by
           intro u
           change (u.1, u.2 * (∏ j, u.1 j)⁻¹ * (∏ j, u.1 j)) = u
           rw [inv_mul_cancel_right] }
-  exact split.trans { toFun := fun u => if u.2 = 1 then Sum.inl (number u.1) else Sum.inr (number u.1)
+  exact split.trans
+    { toFun := fun u => if u.2 = 1 then Sum.inl (number u.1) else Sum.inr (number u.1)
       invFun := fun u => match u with
         | .inl i => (number.symm i,1)
         | .inr i => (number.symm i,-1)
@@ -825,7 +826,8 @@ theorem original_native_environment_small_ball (r β : ℝ)
          all_goals first
            | rfl
            | (congr 1 <;> apply sum_congr rfl <;> intro y _ <;> split_ifs <;> rfl))
-  · try simp only [hz,not_false_eq_true,if_true] split_ifs <;> first | exact le_rfl | exact hp o
+  · try simp only [hz,not_false_eq_true,if_true]
+    split_ifs <;> first | exact le_rfl | exact hp o
 open scoped Classical in
 set_option maxHeartbeats 1600000 in
 /-- The original cube pair and path experiments satisfy the complete-window
