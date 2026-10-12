@@ -8694,14 +8694,18 @@ c^{(j)}_{xy}=c^{(j)}_{yx}\ge0,\qquad c^{(j)}_{xx}=0.
 \operatorname{diam}(X_j,d_j)\le D,
 \]
 
-且对所有 \(x\in X_j\) 和 \(0<r\le D\) 有
-
+令
+\[
+\rho_j=\min\{d_j(x,y):x\ne y\},
+\]
+并且只在有效离散尺度 \(\rho_j\le r\le D\) 上要求
 \[
 c_-r^Q
 \le m_j(B_{d_j}(x,r))
 \le c_+r^Q,
 \tag{54.1}
 \]
+其中 \(\rho_j\) 是该层的最小非零网格尺度。不能把 (54.1) 要求到 \(r<\rho_j\)，因为有限原子球的质量不会随 \(r\downarrow0\) 消失。若 \(\rho_j\) 不适合统一控制，则改用统一 covering-number 界。
 
 \[
 m_j(B_{d_j}(x,2r))
