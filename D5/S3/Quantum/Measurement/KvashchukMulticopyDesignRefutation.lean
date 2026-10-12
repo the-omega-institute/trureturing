@@ -132,4 +132,60 @@ private theorem piSym23 : PiSym 2 3 = P8 := by
 private theorem trace_P8 : trace P8 = 4 := by
   norm_num [trace, P8, weight, Fin.sum_univ_succ]
 
+
+private def octVec : Fin 6 → Fin 2 → ℂ :=
+  ![![1,0],![0,1],![1,1],![1,-1],![1,Complex.I],![1,-Complex.I]]
+
+private def octScale : Fin 6 → ℝ := ![1,1,1/2,1/2,1/2,1/2]
+
+private def octMat (i : Fin 6) : Matrix (Fin 2) (Fin 2) ℂ :=
+  octScale i • vecMulVec (octVec i) (star (octVec i))
+
+private theorem octScale_nonneg (i : Fin 6) : 0 ≤ octScale i := by
+  fin_cases i <;> norm_num [octScale]
+
+private theorem octMat_psd (i : Fin 6) : (octMat i).PosSemidef :=
+  (posSemidef_vecMulVec_self_star (octVec i)).smul (octScale_nonneg i)
+
+private theorem octMat_trace (i : Fin 6) : trace (octMat i) = 1 := by
+  dsimp only [octMat]
+  rw [trace_smul, trace_vecMulVec]
+  fin_cases i <;> norm_num [octVec, octScale, dotProduct, Fin.sum_univ_succ,
+    Pi.star_apply, Complex.real_smul]
+
+private def octStates (i : Fin 6) : DensityState (Fin 2) :=
+  ⟨CStarMatrix.ofMatrix (octMat i),
+    map_nonneg CStarMatrix.ofMatrixStarAlgEquiv (octMat_psd i).nonneg, octMat_trace i⟩
+
+private theorem octStates_pure (i : Fin 6) : IsPure (octStates i) := by
+  refine ⟨Real.sqrt (octScale i) • octVec i, ?_⟩
+  change octMat i = vecMulVec (Real.sqrt (octScale i) • octVec i)
+    (star (Real.sqrt (octScale i) • octVec i))
+  rw [star_smul, star_trivial, smul_vecMulVec, vecMulVec_smul, smul_smul,
+    ← pow_two, Real.sq_sqrt (octScale_nonneg i)]
+  rfl
+
+set_option maxHeartbeats 2000000 in
+-- The octahedron moment certificate checks all 64 tensor entries.
+private theorem octMoment :
+    ∑ i : Fin 6, (1/6 : ℂ) • tensorPow 3 (octMat i) = (1/4 : ℂ) • P8 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Matrix.sum_apply, Matrix.smul_apply, Fin.sum_univ_succ, tensor23,
+      bit_table, octMat, octVec, octScale, vecMulVec_apply, P8, weight, Matrix.cons_val_two]
+  all_goals apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im]
+
+private theorem octDesign : IsWeightedDesign 3 octStates (fun _ => 1/6) := by
+  refine ⟨fun _ => by norm_num, by norm_num [Fin.sum_univ_succ],
+    fun i _ => octStates_pure i, ?_⟩
+  dsimp only [octStates]
+  push_cast
+  change ∑ i : Fin 6, (1/6 : ℂ) • tensorPow 3 (octMat i) =
+    (trace (PiSym 2 3))⁻¹ • PiSym 2 3
+  rw [piSym23, trace_P8]
+  convert octMoment using 1; norm_num
+
+private theorem nprime_le_six : Nprime 2 3 ≤ 6 :=
+  Nat.sInf_le (show DesignExists 2 3 6 from ⟨octStates, fun _ => 1/6, octDesign⟩)
+
 end D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
