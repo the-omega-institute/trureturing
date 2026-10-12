@@ -1,1 +1,1 @@
-{"statement_id":"sha256:516b5fdeedb8c08c3240a359cfdfda7647c13f23f2f9a607ad93fa96deb56ae8"}
+{"statement_id":"sha256:516b5fdeedb8c08c3240a359cfdfda7647c13f23f2f9a607ad93fa96deb56ae8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),31:tight_path_at_most_one_even_cut)","kind":"theorem"}]}

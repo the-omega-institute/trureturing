@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b98ef63a9d986250911e7fe2dfacbf7b5f1499d2283857aae07b3ecad27a8317"}
+{"statement_id":"sha256:b98ef63a9d986250911e7fe2dfacbf7b5f1499d2283857aae07b3ecad27a8317","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Fourier),11:Asymptotics),25:CosineNormalizedRemainder),22:positive_normalization)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Fourier),11:Asymptotics),25:CosineNormalizedRemainder),6:result)","kind":"theorem"}]}
