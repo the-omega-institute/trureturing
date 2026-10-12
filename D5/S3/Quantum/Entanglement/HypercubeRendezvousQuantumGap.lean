@@ -364,4 +364,92 @@ private theorem abstract_gap {d t : ℕ} (ht : 2 ≤ t) (hd : 2 * t < d) (h : V)
     nlinarith [htotal]
   exact scalar_gap hn δ hδ0 hδ1 hg
 end AbstractGap
+
+section QuantumBridge
+private abbrev G (d : ℕ) := Vertex d × Equiv.Perm (Fin d)
+private def pmap {d : ℕ} (p : Equiv.Perm (Fin d)) (s : Finset (Fin d)) : Finset (Fin d) :=
+  s.map p.toEmbedding
+private def actV {d : ℕ} (g : G d) (s : Vertex d) : Vertex d :=
+  g.1 ∆ pmap g.2 s
+private def actO {d t : ℕ} (g : G d) (A : Output d t) : Output d t :=
+  ⟨pmap g.2 A.val, by dsimp only [pmap]; rw [Finset.card_map]; exact A.property⟩
+private abbrev VG (d : ℕ) (α β : Type*) [Fintype α] [Fintype β] [DecidableEq α]
+    [DecidableEq β] := G d → Matrix (α × β) (α × β) ℂ
+private def pairTrace {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α]
+    [DecidableEq β] (ρ : Matrix (α × β) (α × β) ℂ)
+    (x y : Matrix (α × β) (α × β) ℂ) : ℝ :=
+  (Matrix.trace (star x * y * ρ)).re
+private abbrev weightedCore {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) :
+    PreInnerProductSpace.Core ℝ (VG d α β) := by
+  classical
+  letI : Nonempty (Vertex d) := ⟨∅⟩
+  letI : Nonempty (Equiv.Perm (Fin d)) := ⟨Equiv.refl _⟩
+  let k : ℝ := (n d t) / (Fintype.card (G d) : ℝ)
+  let I : VG d α β → VG d α β → ℝ := fun x y =>
+    k * ∑ g, pairTrace S.ρ (x g) (y g)
+  refine { inner := I, conj_inner_symm := ?_, re_inner_nonneg := ?_, add_left := ?_, smul_left := ?_ }
+  · intro x y; dsimp only [I, pairTrace]
+    simp only [RCLike.conj_to_real]
+    congr 1; apply Fintype.sum_congr
+    intro g
+    have hρ : S.ρ.conjTranspose = S.ρ := S.rho_psd.isHermitian.eq
+    have h := Matrix.trace_conjTranspose (star (y g) * x g * S.ρ)
+    rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, hρ] at h
+    have h' := congrArg Complex.re h
+    change _ = ((starRingEnd ℂ) (star (y g) * x g * S.ρ).trace).re at h'
+    rw [Complex.conj_re] at h'
+    have h'' : (Matrix.trace (S.ρ * ((x g).conjTranspose * y g))).re =
+        (Matrix.trace ((y g).conjTranspose * x g * S.ρ)).re := by
+      simpa only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_conjTranspose] using h'
+    have hxy := Matrix.trace_mul_cycle S.ρ (x g).conjTranspose (y g)
+    have hyx := Matrix.trace_mul_cycle (y g) S.ρ (x g).conjTranspose
+    have hxy' : (Matrix.trace (S.ρ * ((x g).conjTranspose * y g))).re =
+        (Matrix.trace (y g * S.ρ * (x g).conjTranspose)).re := by
+      simpa only [mul_assoc] using congrArg Complex.re hxy
+    have hyx' : (Matrix.trace (y g * S.ρ * (x g).conjTranspose)).re =
+        (Matrix.trace ((x g).conjTranspose * y g * S.ρ)).re := by
+      simpa only using congrArg Complex.re hyx
+    calc
+      (Matrix.trace (star (y g) * x g * S.ρ)).re =
+          (Matrix.trace (S.ρ * ((x g).conjTranspose * y g))).re := h''.symm
+      _ = (Matrix.trace (y g * S.ρ * (x g).conjTranspose)).re := hxy'
+      _ = (Matrix.trace ((x g).conjTranspose * y g * S.ρ)).re := hyx'
+  · intro x; dsimp only [I, pairTrace]
+    have hcard : 0 < (Fintype.card (G d) : ℝ) := by
+      exact_mod_cast (Fintype.card_pos : 0 < Fintype.card (G d))
+    have hk : 0 ≤ k := by dsimp only [k, n]; positivity
+    apply mul_nonneg hk
+    apply Finset.sum_nonneg
+    intro g hg
+    exact RHLinalg.trace_mul_nonneg_of_posSemidef
+      (Matrix.posSemidef_conjTranspose_mul_self (x g)) S.rho_psd
+  · intro x y z; dsimp only [I]
+    rw [← mul_add, ← Finset.sum_add_distrib]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro g hg
+    dsimp only [pairTrace]
+    rw [Matrix.star_eq_conjTranspose, Pi.add_apply, Matrix.conjTranspose_add, Matrix.add_mul,
+      Matrix.add_mul, Matrix.trace_add, Matrix.star_eq_conjTranspose]
+    rfl
+  · intro x y r; dsimp only [I]
+    have hr : (starRingEnd ℝ) r = r := RCLike.conj_to_real
+    rw [hr]
+    calc
+      k * ∑ g, pairTrace S.ρ ((r • x) g) (y g) =
+          k * ∑ g, r * pairTrace S.ρ (x g) (y g) := by
+            congr 1
+            apply Finset.sum_congr rfl
+            intro g hg
+            dsimp only [pairTrace, Pi.smul_apply]
+            rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_smul,
+              Matrix.smul_mul, Matrix.smul_mul, Matrix.trace_smul]
+            simp only [Complex.smul_re, smul_eq_mul]
+            change r * _ = r * _
+            rfl
+      _ = r * (k * ∑ g, pairTrace S.ρ (x g) (y g)) := by
+        rw [← Finset.mul_sum]
+        ring
+end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
