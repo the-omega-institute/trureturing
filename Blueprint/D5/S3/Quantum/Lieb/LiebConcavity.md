@@ -4,13 +4,27 @@
 
 Attributed Lieb joint trace concavity for positive-definite inputs and interior exponents.
 
-**Theorem 1.1 (Joint trace concavity on positive-definite pairs).**
+**Theorem 1.1 (Joint trace convexity on positive-definite pairs).**
+
+$$\forall u: \operatorname{Level},\ H: \operatorname{Type}(u),\ [\operatorname{NormedAddCommGroup}(H)], [\operatorname{InnerProductSpace}(\mathbb{C}, H)], [\operatorname{CompleteSpace}(H)], [\operatorname{Nontrivial}(H)], [\operatorname{FiniteDimensional}(\mathbb{C}, H)], s: \mathbb{R}, K: \operatorname{L}(H),\ 1 \le s \land s \le 2 \implies \operatorname{JointlyConvexOn}(\operatorname{pdSet}(H), \operatorname{pdSet}(H), \operatorname{liebTraceMap}(H, s, K)).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Lieb/LiebConcavity.liebTrace_jointlyConvexOn_pdSet` (`✓ std3`). ∎
+
+*Citation.* Kei Tsukamoto, Kento Mori, Hayata Yamasaki (2026). *Lieb-Ando trace curvature and operator power convexity in Physlib*. URL: <https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HayataGroup/TraceInequality/LiebAndoTrace.lean>.
+
+*Commentary.*
+
+This is the exact Physlib endpoint from original line 1118, with unchanged proof text, arbitrary K and 1 <= s <= 2. TracePerspectiveConvexity consumes this interface. The carrier is a complete nontrivial finite complex Hilbert space, and both inputs have strictly positive spectra. Neither K invertibility nor A/B commutation is assumed. Its operator-power and perspective suppliers come from the same immutable pin.
+
+Native escape audit remains unfinished under issue #5214; no declared_validated status is claimed.
+
+**Theorem 1.2 (Joint trace concavity on positive-definite pairs).**
 
 $$\forall u: \operatorname{Level},\ H: \operatorname{Type}(u),\ [\operatorname{NormedAddCommGroup}(H)], [\operatorname{InnerProductSpace}(\mathbb{C}, H)], [\operatorname{CompleteSpace}(H)], [\operatorname{Nontrivial}(H)], [\operatorname{FiniteDimensional}(\mathbb{C}, H)], s: \mathbb{R}, K: \operatorname{L}(H),\ 0 < s \land s < 1 \implies \operatorname{JointlyConcaveOn}(\operatorname{pdSet}(H), \operatorname{pdSet}(H), \operatorname{liebTraceMap}(H, s, K)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Lieb/LiebConcavity.liebTrace_jointlyConcaveOn_pdSet` (`✓ std3`). ∎
 
-*Citation.* Kei Tsukamoto, Kento Mori, Hayata Yamasaki (2026). *Lieb joint trace concavity in Physlib*. URL: <https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HayataGroup/TraceInequality/LiebAndoTrace.lean>.
+*Citation.* Kei Tsukamoto, Kento Mori, Hayata Yamasaki (2026). *Lieb-Ando trace curvature and operator power convexity in Physlib*. URL: <https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HayataGroup/TraceInequality/LiebAndoTrace.lean>.
 
 *Commentary.*
 
@@ -29,4 +43,5 @@ This is reuse of the Apache-2.0 Physlib source at revision b9043cc548ef6d63a2845
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Lieb/LiebConcavity.liebTrace_jointlyConcaveOn_pdSet`
+- Truth anchor: `D5/S3/Quantum/Lieb/LiebConcavity.liebTrace_jointlyConvexOn_pdSet`
 - Dependency: [D5/S3/Quantum/Lieb/LiebBridge](LiebBridge.md)

@@ -2,10 +2,10 @@
 bibkey: tsukamotomoriyamasaki2026lieb
 authors: Kei Tsukamoto, Kento Mori, Hayata Yamasaki
 year: 2026
-title: Lieb joint trace concavity in Physlib
+title: Lieb-Ando trace curvature and operator power convexity in Physlib
 doi: null
 url: https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HayataGroup/TraceInequality/LiebAndoTrace.lean
-claim: For arbitrary K, the real trace of A to exponent s times the adjoint of K times B to exponent one minus s times K is jointly concave on positive-definite pairs for zero less than s less than one.
+claim: Exact Physlib suppliers give general C-star power convexity on [1,2], all-Hilbert perspective convexity, and arbitrary-K joint trace convexity on positive-definite pairs, alongside Lieb concavity.
 strata_touched:
   - D5/S3/Quantum/Lieb
 license: Apache-2.0
@@ -40,15 +40,54 @@ A and B; their perspective evaluated against the vector represented by the
 adjoint of K equals the real trace functional. The source proof applies joint
 operator-perspective concavity and this positive evaluation.
 
-The intake retains only the strict-PD concavity endpoint and its supporting
-local modules. The pinned Mathlib rpow concavity theorem supplies the consumed
-power-function concavity step directly; the superseded upstream reciprocal,
-integral and convex-power proofs are not copied. Generic full-line Jensen,
-Ando convexity and the extension trace endpoint are outside this intake.
-The source is split between LiebBridge and LiebConcavity solely to satisfy
-ordinary artifact capacity. The consumed original private bridge declarations
-are made visible; their mathematical statements and proof text are retained.
-All source headers retain the immutable revision and attribution.
+The consumed source includes the strict-PD concavity and convexity endpoints.
+The pinned Mathlib rpow concavity theorem directly supplies the concavity
+step. The convexity step uses these exact declarations at the same pin:
+
+- `LownerHeinzCore.lean:1427`: `convexOn_nnrpow_Ioo_one_add`, for q in (0,1),
+  in ordered complex C-star algebras with Nontrivial and NonnegSpectrumClass.
+  One common measure represents the entire integrable kernel
+  x times rpowIntegrand01(q,t,x); constant left multiplication proves its
+  integrability and identifies its integral with the power 1+q.
+- `LownerHeinzCore.lean:1785`: `power_Icc_one_two_operatorConvexOn_Ici`,
+  for the closed exponent interval [1,2] and nonnegative spectra, including
+  zero and singular inputs. The endpoints are affinity and the square gap;
+  mixed products retain their order.
+- `LownerHeinzTheorem.lean:263`: `power_Icc_one_two_operatorConvexOn_Ici`,
+  the direct Core specialization to every complete nontrivial complex
+  Hilbert space, with no finite-dimensionality restriction. The local
+  consumed PowerConvexity adapter applies the general Core supplier and
+  retains the broader ConvexOn interface, including the trivial algebra.
+  No additional unused Hilbert specialization is introduced.
+- `OperatorGeometricMean.lean:89`: `operatorPowerMean_jointlyConvexOn_pdSet`,
+  for alpha in [1,2], beta in [0,1], on every complete nontrivial complex
+  Hilbert space. Its local proof consumes the equivalent all-Hilbert
+  CondIciAll adapter; both inputs remain strictly positive.
+- `LiebAndoTrace.lean:1118`: `liebTrace_jointlyConvexOn_pdSet`, for arbitrary
+  K, 1 <= s <= 2 and strictly positive A,B on complete nontrivial finite
+  complex Hilbert spaces. Its proof text is retained in LiebConcavity,
+  consuming the existing unrestricted-real-exponent phiK trace bridge.
+
+The exact paths above are relative to
+`QuantumInfo/ForMathlib/HayataGroup/TraceInequality/`.
+Physlib and the local source share Lean 4.33.0 and Mathlib revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`. The minimal Core slice uses
+Mathlib's `CStarAlgebra.convexOn_ringInverse_algebraMap_add` directly in
+place of upstream's omitted reciprocal-convexity chain, with the CFC
+rewrite of 1/(x+t). Its positivity input uses the existing
+`IsSelfAdjoint.conjugate_nonneg` API. No independent power or trace
+convexity proof is authored. PowerConvexity uses the module/public-import
+interface required by its source-owning OperatorGeometricMean consumer,
+with the same public theorem statements. Generic full-line Jensen and the extension
+trace endpoint remain outside the consumed slice.
+
+The baseline sixteen D5 dependencies at the implementation's input commit
+are byte-unchanged and currently kernel-checked by the 22-module report;
+matching Frozen records are not established in this checkout. The consumed
+supplier extensions are source changes and require fresh scoped kernel
+materials. This status creates no extra freeze or research prerequisite;
+canonical admission belongs to the controller. Native escape audit remains
+unfinished under issue #5214; no declared_validated status is asserted.
 
 Effros's 2009 PNAS perspective theorem assumes commuting operator pairs.
 The arbitrary noncommuting sandwich perspective extension is recorded by

@@ -24,6 +24,7 @@ Authors: Kei Tsukamoto, Kento Mori, Hayata Yamasaki
 module
 
 public import D5.S3.Quantum.Lieb.GeneralizedPerspectiveFunction
+public import D5.S3.Quantum.Lieb.PowerConvexity
 
 @[expose] public section
 
@@ -100,5 +101,34 @@ theorem operatorPowerMean_jointlyConcaveOn_pdSet
       (pdSet_subset_psdSet (ℋ := ℋ) hA₁) (pdSet_subset_psdSet (ℋ := ℋ) hA₂)
       hB₁ hB₂ hθ0 hθ1
 
+
+/--
+Theorem 1.1, convex range: the operator `(α, β)`-power mean is jointly convex on
+strictly positive operators for `1 ≤ α ≤ 2` and `0 ≤ β ≤ 1`.
+-/
+theorem operatorPowerMean_jointlyConvexOn_pdSet
+    {α β : ℝ}
+    (hα : α ∈ Set.Icc (1 : ℝ) 2)
+    (hβ : β ∈ Set.Icc (0 : ℝ) 1) :
+    JointlyConvexOn (pdSet (ℋ := ℋ)) (pdSet (ℋ := ℋ))
+      (operatorPowerMean (ℋ := ℋ) α β) := by
+  intro A₁ A₂ B₁ B₂ θ hA₁ hA₂ hB₁ hB₂ hθ0 hθ1
+  have hconv :=
+    theorem_2_5_forward_jointlyConvexOn_psd_pd_Ici
+      (ℋ := ℋ)
+      (f := fun x : ℝ ↦ x ^ α)
+      (h := fun x : ℝ ↦ x ^ β)
+      (hf := D5.S3.Quantum.Lieb.PowerConvexity.condIciAll_rpow hα)
+      (hconc := by
+        exact operatorConcaveOn_Ioi_of_Ici (ℋ := ℋ)
+          (power_Icc_zero_one_operatorConcaveOn_Ici (ℋ := ℋ) β hβ))
+      (hcont := by
+        intro x hx
+        exact (Real.continuousAt_rpow_const x β (Or.inl (ne_of_gt hx))).continuousWithinAt)
+      (hpos := rpow_pos_on_Ioi β)
+  simpa [operatorPowerMean] using
+    hconv (A₁ := A₁) (A₂ := A₂) (B₁ := B₁) (B₂ := B₂) (θ := θ)
+      (pdSet_subset_psdSet (ℋ := ℋ) hA₁) (pdSet_subset_psdSet (ℋ := ℋ) hA₂)
+      hB₁ hB₂ hθ0 hθ1
 
 end OperatorGeometricMean

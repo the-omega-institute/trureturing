@@ -11,6 +11,25 @@ internal sealed class LiebConcavityDocument : IScribeDocumentDefinition
         H("LiebConcavity"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("ando-strict-pd-convexity"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Lieb/LiebConcavity.liebTrace_jointlyConvexOn_pdSet"),
+                H("Joint trace convexity on positive-definite pairs"),
+                StatementSource.FromAuthor(ConvexEndpointFormula()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Divergence/tsukamotomoriyamasaki2026lieb")),
+                Blocks(Paragraph(Text("This is the exact Physlib endpoint from original "
+                    + "line 1118, with unchanged proof text, arbitrary K and "
+                    + "1 <= s <= 2. TracePerspectiveConvexity consumes this "
+                    + "interface. The carrier is a complete nontrivial finite "
+                    + "complex Hilbert space, and both inputs have strictly "
+                    + "positive spectra. Neither K invertibility nor A/B "
+                    + "commutation is assumed. Its operator-power and perspective "
+                    + "suppliers come from the same immutable pin.")),
+                    Paragraph(Text("Native escape audit remains unfinished under "
+                        + "issue #5214; no declared_validated status is claimed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("lieb-strict-pd-concavity"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Lieb/LiebConcavity.liebTrace_jointlyConcaveOn_pdSet"),
@@ -100,6 +119,14 @@ internal sealed class LiebConcavityDocument : IScribeDocumentDefinition
         }
         return Seq([.. items]);
     }
+
+    private static Formula ConvexEndpointFormula() => Disp(Seq(
+        HilbertPrefix(finite: true), F.Id("s"), Colon, Sp, RealType, Comma, Sp,
+        F.Id("K"), Colon, Sp, Operators, Comma, Esc,
+        Conjunction(Seq(D(1), Sp, Le, Sp, F.Id("s")),
+            Seq(F.Id("s"), Sp, Le, Sp, D(2))), Sp, Implies, Sp,
+        Call("JointlyConvexOn", Call("pdSet", Carrier), Call("pdSet", Carrier),
+            Call("liebTraceMap", Carrier, F.Id("s"), F.Id("K"))), Dot));
 
     private static Formula EndpointFormula() => Disp(Seq(
         HilbertPrefix(finite: true), F.Id("s"), Colon, Sp, RealType, Comma, Sp,

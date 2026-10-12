@@ -10,7 +10,7 @@ $$\forall u: \operatorname{Level}(), d: \operatorname{Type}(u), [\operatorname{F
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Lieb/MatrixTracePerspective.trace_perspective_jointly_convex` (`✓ std3`). ∎
 
-*Citation.* Kei Tsukamoto, Kento Mori, Hayata Yamasaki (2026). *Lieb joint trace concavity in Physlib*. URL: <https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HayataGroup/TraceInequality/LiebAndoTrace.lean>.
+*Citation.* Kei Tsukamoto, Kento Mori, Hayata Yamasaki (2026). *Lieb-Ando trace curvature and operator power convexity in Physlib*. URL: <https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HayataGroup/TraceInequality/LiebAndoTrace.lean>.
 
 *Commentary.*
 

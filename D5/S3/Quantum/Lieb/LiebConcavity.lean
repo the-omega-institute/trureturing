@@ -187,4 +187,69 @@ theorem liebTrace_jointlyConcaveOn_pdSet
 
 #print axioms liebTrace_jointlyConcaveOn_pdSet
 
+theorem liebTrace_jointlyConvexOn_pdSet
+    {s : ℝ} (hs1 : 1 ≤ s) (hs2 : s ≤ 2) (K : L ℋ) :
+    JointlyConvexOn (pdSet (ℋ := ℋ)) (pdSet (ℋ := ℋ))
+      (liebTraceMap (ℋ := ℋ) s K) := by
+  intro A₁ A₂ B₁ B₂ θ hA₁ hA₂ hB₁ hB₂ hθ0 hθ1
+  have hleft_combo :
+      (1 - θ) • leftMulHS (ℋ := ℋ) A₁ + θ • leftMulHS (ℋ := ℋ) A₂ =
+        leftMulHS (ℋ := ℋ) ((1 - θ) • A₁ + θ • A₂) := by
+    ext T
+    show ((1 - θ) • (A₁ * toOp T) + θ • (A₂ * toOp T) : L ℋ) =
+      ((1 - θ) • A₁ + θ • A₂) * toOp T
+    rw [add_mul, smul_mul_assoc, smul_mul_assoc]
+  have hright_combo :
+      (1 - θ) • rightMulHS (ℋ := ℋ) B₁ + θ • rightMulHS (ℋ := ℋ) B₂ =
+        rightMulHS (ℋ := ℋ) ((1 - θ) • B₁ + θ • B₂) := by
+    ext T
+    show ((1 - θ) • (toOp T * B₁) + θ • (toOp T * B₂) : L ℋ) =
+      toOp T * ((1 - θ) • B₁ + θ • B₂)
+    rw [mul_add, mul_smul_comm, mul_smul_comm]
+  have hA_combo :
+      ((1 - θ) • A₁ + θ • A₂) ∈ pdSet (ℋ := ℋ) := by
+    exact pdSet_convexCombo (ℋ := ℋ) hA₁ hA₂ hθ0 hθ1
+  have hB_combo :
+      ((1 - θ) • B₁ + θ • B₂) ∈ pdSet (ℋ := ℋ) := by
+    exact pdSet_convexCombo (ℋ := ℋ) hB₁ hB₂ hθ0 hθ1
+  let : Nontrivial (HSOp ℋ) := by
+    delta HSOp
+    infer_instance
+  let : Nontrivial (L (HSOp ℋ)) := inferInstance
+  have hconv_hs :=
+    operatorPowerMean_jointlyConvexOn_pdSet
+      (ℋ := HSOp ℋ) (α := s) (β := 1)
+      ⟨hs1, hs2⟩ ⟨by norm_num, by norm_num⟩
+      (A₁ := leftMulHS (ℋ := ℋ) A₁) (A₂ := leftMulHS (ℋ := ℋ) A₂)
+      (B₁ := rightMulHS (ℋ := ℋ) B₁) (B₂ := rightMulHS (ℋ := ℋ) B₂)
+      (θ := θ)
+      (leftMulHS_pdSet (ℋ := ℋ) hA₁) (leftMulHS_pdSet (ℋ := ℋ) hA₂)
+      (rightMulHS_pdSet (ℋ := ℋ) hB₁) (rightMulHS_pdSet (ℋ := ℋ) hB₂)
+      hθ0 hθ1
+  have hconv :
+      operatorPowerMean (ℋ := HSOp ℋ) s 1
+          (leftMulHS (ℋ := ℋ) ((1 - θ) • A₁ + θ • A₂))
+          (rightMulHS (ℋ := ℋ) ((1 - θ) • B₁ + θ • B₂)) ≤
+        (1 - θ) • operatorPowerMean (ℋ := HSOp ℋ) s 1
+            (leftMulHS (ℋ := ℋ) A₁) (rightMulHS (ℋ := ℋ) B₁) +
+          θ • operatorPowerMean (ℋ := HSOp ℋ) s 1
+            (leftMulHS (ℋ := ℋ) A₂) (rightMulHS (ℋ := ℋ) B₂) := by
+    simpa [hleft_combo, hright_combo] using hconv_hs
+  have hphi_mono :
+      phiK (ℋ := ℋ) K
+          (operatorPowerMean (ℋ := HSOp ℋ) s 1
+            (leftMulHS (ℋ := ℋ) ((1 - θ) • A₁ + θ • A₂))
+            (rightMulHS (ℋ := ℋ) ((1 - θ) • B₁ + θ • B₂))) ≤
+        phiK (ℋ := ℋ) K
+          ((1 - θ) • operatorPowerMean (ℋ := HSOp ℋ) s 1
+              (leftMulHS (ℋ := ℋ) A₁) (rightMulHS (ℋ := ℋ) B₁) +
+            θ • operatorPowerMean (ℋ := HSOp ℋ) s 1
+              (leftMulHS (ℋ := ℋ) A₂) (rightMulHS (ℋ := ℋ) B₂)) := by
+    exact phiK_mono (ℋ := ℋ) K hconv
+  rw [phiK_operatorPowerMean_eq_liebTraceMap (ℋ := ℋ) (s := s) K
+      ((1 - θ) • A₁ + θ • A₂) ((1 - θ) • B₁ + θ • B₂) hA_combo hB_combo] at hphi_mono
+  rw [phiK_weightedSum_operatorPowerMean_eq (ℋ := ℋ) (s := s) (θ := θ) K A₁ A₂ B₁ B₂
+      hA₁ hA₂ hB₁ hB₂] at hphi_mono
+  simpa [add_comm, add_left_comm, add_assoc] using hphi_mono
+
 end LiebAndoTrace

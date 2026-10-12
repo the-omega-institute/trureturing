@@ -30,6 +30,25 @@ internal sealed class OperatorGeometricMeanDocument : IScribeDocumentDefinition
                         + "concave under a common mixture coefficient, with no A/B commutation and no "
                         + "finite-dimensionality requirement. This endpoint has PD inputs in both positions; "
                         + "PSD-first/PD-second belongs to the consumed generalized-perspective theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("positive-operator-power-mean-convexity"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Lieb/OperatorGeometricMean.operatorPowerMean_jointlyConvexOn_pdSet"),
+                H("Joint convexity of the operator power mean"),
+                StatementSource.FromAuthor(ConvexEndpointFormula()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Divergence/tsukamotomoriyamasaki2026lieb")),
+                Blocks(Paragraph(Text("The exact Physlib supplier at original line 89 "
+                    + "has alpha in [1,2] and beta in [0,1], including all endpoints, "
+                    + "on every complete nontrivial complex Hilbert space. Both "
+                    + "inputs are strictly positive; no commutation or finite "
+                    + "dimension is assumed. The source proof is retained, with "
+                    + "its uniform power condition supplied by the consumed "
+                    + "PowerConvexity adapter. LiebAndoTrace consumes this endpoint "
+                    + "at beta=1. This is attributed reuse, not new mathematics.")),
+                    Paragraph(Text("Native escape audit remains unfinished under "
+                        + "issue #5214; no declared_validated status is claimed."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -75,6 +94,13 @@ internal sealed class OperatorGeometricMeanDocument : IScribeDocumentDefinition
         }
         return Seq([.. items]);
     }
+
+    private static Formula ConvexEndpointFormula() => Disp(Seq(
+        HilbertPrefix(), Alpha, Comma, Sp, Beta, Colon, Sp, RealType, Comma, Esc,
+        Conjunction(Seq(Alpha, Sp, InMacro, Sp, Call("Icc", D(1), D(2))),
+            Seq(Beta, Sp, InMacro, Sp, UnitInterval)), Sp, Implies, Sp,
+        Call("JointlyConvexOn", Call("pdSet", Carrier), Call("pdSet", Carrier),
+            Call("operatorPowerMean", Carrier, Alpha, Beta)), Dot));
 
     private static Formula EndpointFormula() => Disp(Seq(
         HilbertPrefix(), Alpha, Comma, Sp, Beta, Colon, Sp, RealType, Comma, Esc,

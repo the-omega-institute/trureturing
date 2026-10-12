@@ -20,7 +20,8 @@ both adjoints in the positive definite congruence are retained.
 The empty finite matrix dimension gives the zero trace functional.
 
 The connected proof uses operator power convexity on the whole positive
-cone in arbitrary complete ordered complex C-star algebras. Its actual
+cone in arbitrary complete ordered complex C-star algebras. The exact Physlib general power and trace-perspective suppliers are
+consumed at revision `b9043cc548ef6d63a28454cf3a57fb12a0c2e142`; their
 all-Hilbert Jensen condition feeds the public generalized perspective
 theorem. The existing Hilbert-Schmidt bridge at arbitrary real exponent
 identifies the resulting trace perspective with

@@ -23,15 +23,19 @@ ring-inverse term, and a constant. The existing
 `CStarAlgebra.convexOn_ringInverse_algebraMap_add` supplies the only curved
 term. The three summands are not integrated separately.
 
-The new connected convexity proof integrates the compensated kernel using
-`MeasureTheory.integral_convexOn_of_integrand_ae` and the representation
-`CFC.exists_measure_nnrpow_eq_integral_cfcₙ_rpowIntegrand₁₂`.
-The pinned Mathlib Order module lists operator power convexity on [1,2]
-as a TODO; its existing operator concavity proof on [0,1] is the analogous
-integral method, not the missing convexity theorem.
-The endpoints are affinity and the noncommuting square identity. The result
-applies to arbitrary complete ordered complex C-star algebras, and therefore
-supplies Jensen's uniform condition on every complete complex Hilbert space.
+Pinned Mathlib Order lists operator power convexity on [1,2] as a TODO.
+This is a Mathlib scope boundary, not a missing third-party supplier:
+Physlib revision `b9043cc548ef6d63a28454cf3a57fb12a0c2e142` already supplies
+`LownerHeinzCore.power_Icc_one_two_operatorConvexOn_Ici` and its integral
+proof. The local consumed proof uses that attributed source, with
+`CStarAlgebra.convexOn_ringInverse_algebraMap_add` as its shifted-inverse
+input. Its upstream integral uses the entire kernel x times
+rpowIntegrand01(q,t,x), q=p-1, rather than the alternative compensated
+rpowIntegrand12 representation described above. The exact source mapping
+and assumptions are in `tsukamotomoriyamasaki2026lieb.md`.
+The closed endpoints, arbitrary complete ordered C-star scope and uniform
+all-Hilbert Jensen condition are retained; no independent general power
+convexity proof is claimed.
 
 The referenced Mathlib source credits Frédéric Dupuis and is Apache-2.0;
 the shifted inverse proof is in the same pinned Rpow/RingInverseOrder module.

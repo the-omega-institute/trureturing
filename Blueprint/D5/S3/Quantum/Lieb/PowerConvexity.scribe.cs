@@ -7,28 +7,24 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Lieb;
 internal sealed class PowerConvexityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Dimension-independent operator power convexity through a compensated integral.",
+        "Consumed general C-star power convexity and its all-Hilbert Jensen adapter.",
         H("PowerConvexity"), Blocks(
-            Describe.Lean(DescribeId.Create("compensated-kernel"),
-                DeclarationHandle.Create("D5/S3/Quantum/Lieb/PowerConvexity.convexOn_cfc_rpowIntegrand_one_two"),
-                H("Convex compensated resolvent kernel"), StatementSource.FromAuthor(Kernel()),
-                Provenance(), Blocks(Paragraph(Text("For t > 0 and every real p, the CFC of "
-                    + "the compensated kernel t to exponent p-1 times [t inverse X "
-                    + "+ t Ring.inverse(t I + X) - I] is convex on the full nonnegative "
-                    + "cone of any complete ordered complex C-star algebra. Shifted "
-                    + "inverse convexity is consumed directly from pinned Mathlib. "
-                    + "This kernel is the real live supplier for the integral proof."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("power-convexity"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/PowerConvexity.convexOn_rpow"),
                 H("Full operator power interval"), StatementSource.FromAuthor(Power()),
                 Provenance(), Blocks(Paragraph(Text("For every 1 <= p <= 2, spectral CFC "
                     + "power is convex on the full nonnegative cone of every complete "
-                    + "ordered complex C-star algebra. For 1 < p < 2 use the existing "
-                    + "one-measure representation and norm integrability of the whole "
-                    + "compensated kernel, transfer its nonunital CFC to unital CFC, "
-                    + "then integrate the convexity inequality. No separate integral "
-                    + "of the linear, inverse, or constant summands is asserted.")),
+                    + "ordered complex C-star algebra, including the trivial algebra. "
+                    + "The nontrivial case directly consumes the attributed Physlib "
+                    + "LownerHeinzCore.power_Icc_one_two_operatorConvexOn_Ici; the "
+                    + "trivial case is automatic. NonnegSpectrumClass follows from "
+                    + "the existing ordered C-star structure. The original upstream "
+                    + "integral proof and its consumed helpers live in LownerHeinzCore. "
+                    + "They use one common measure for exponent q=p-1 and integrate "
+                    + "the entire kernel x times rpowIntegrand01(q,t,x), with norm "
+                    + "integrability obtained by constant left multiplication. "
+                    + "The polynomial, inverse and constant summands are never "
+                    + "integrated separately.")),
                     Paragraph(Text("At p=1 the map is affine. At p=2 the convexity gap "
                     + "is s t times (X-Y)* (X-Y), where s+t=1. Cross products retain "
                     + "their order, so the square identity includes noncommuting "
@@ -43,9 +39,12 @@ internal sealed class PowerConvexityDocument : IScribeDocumentDefinition
                     + "CondIciAll required by the public Jensen perspective theorem. "
                     + "Finite Hilbert-Schmidt convexity is not substituted for this "
                     + "uniform condition.")),
-                    Paragraph(Text("The method is classical and consumes pinned Mathlib "
-                    + "sources by Frederic Dupuis, Apache-2.0; it makes no novelty claim. "
-                    + "TracePerspectiveConvexity consumes the uniform condition via the "
+                    Paragraph(Text("The supplier is Physlib revision "
+                    + "b9043cc548ef6d63a28454cf3a57fb12a0c2e142, credited to Kei Tsukamoto, "
+                    + "Kento Mori and Hayata Yamasaki, Apache-2.0. Pinned Mathlib by "
+                    + "Frederic Dupuis supplies shifted-inverse convexity directly. "
+                    + "OperatorGeometricMean consumes the uniform condition and "
+                    + "LiebAndoTrace consumes its joint-convexity endpoint via the "
                     + "existing public unrestricted-real-exponent phiK bridge. Its matrix "
                     + "transport and reverse Young endpoint optimizer interpolation "
                     + "supply CarlenLiebConvexity. The "
@@ -57,7 +56,7 @@ internal sealed class PowerConvexityDocument : IScribeDocumentDefinition
                     + "No declared_validated status is claimed."))), DescribeRole.Theorem))));
 
     private static AssessedProvenance Provenance() => AssessedProvenance.FromLiterature(
-        LibraryNoteRef.Create("D5/L/Divergence/dupuis2025cfcpowerintegrals"));
+        LibraryNoteRef.Create("D5/L/Divergence/tsukamotomoriyamasaki2026lieb"));
     private static Formula Call(string name, params Formula[] args)
     {
         var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
@@ -75,10 +74,6 @@ internal sealed class PowerConvexityDocument : IScribeDocumentDefinition
         OpenBracket, Call("PartialOrder", F.Id("A")), CloseBracket, Comma, Sp,
         OpenBracket, Call("StarOrderedRing", F.Id("A")), CloseBracket, Comma, Esc);
     private static Formula Cone() => Call("Ici", Seq(D(0), Colon, Sp, F.Id("A")));
-    private static Formula Kernel() => Seq(Domain(), F.Id("p"), Comma, Sp, F.Id("t"), Colon, Sp,
-        Seq(Mathbb, Grp(F.Id("R"))), Comma, Sp, D(0), Lt, F.Id("t"), Implies, Esc,
-        Call("ConvexOn", Seq(Mathbb, Grp(F.Id("R"))), Cone(),
-            Call("cfc", Call("rpowIntegrand12", F.Id("p"), F.Id("t")))));
     private static Formula Power() => Seq(Domain(), F.Id("p"), Colon, Sp,
         Seq(Mathbb, Grp(F.Id("R"))), Comma, Sp, D(1), Le, Sp, F.Id("p"), Le, Sp, D(2),
         Implies, Esc, Call("ConvexOn", Seq(Mathbb, Grp(F.Id("R"))), Cone(),
