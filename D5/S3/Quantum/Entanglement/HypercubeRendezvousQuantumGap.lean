@@ -533,5 +533,63 @@ private lemma inner_qv {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
         (fun b _ _ => (S.F_psd _ b).nonneg)
   exact trace_budget _ _ S.rho_psd (Matrix.PosSemidef.one.kronecker hf)
     (kron_sq_le _ (contraction_sq _ hf hle)).2
+private lemma pair_perm {d t : ℕ} (A B A' B' : Output d t)
+    (hAB : Disjoint A.val B.val) (hAB' : Disjoint A'.val B'.val) :
+    ∃ p : Equiv.Perm (Fin d), pmap p A.val = A'.val ∧ pmap p B.val = B'.val := by
+  classical
+  let ea : A.val ≃ A'.val := Fintype.equivOfCardEq (by simp [A.property, A'.property])
+  let eb : B.val ≃ B'.val := Fintype.equivOfCardEq (by simp [B.property, B'.property])
+  let e := (Equiv.Finset.union A.val B.val hAB).symm |>.trans
+    (Equiv.sumCongr ea eb) |>.trans (Equiv.Finset.union A'.val B'.val hAB')
+  let f : Fin d → Fin d := fun x =>
+    if hx : x ∈ A.val ∪ B.val then (e ⟨x, hx⟩).val else x
+  have hi : Set.InjOn f (↑(A.val ∪ B.val)) := by
+    intro x hx y hy he
+    change x ∈ A.val ∪ B.val at hx
+    change y ∈ A.val ∪ B.val at hy
+    dsimp only [f] at he; rw [dif_pos hx, dif_pos hy] at he
+    exact congrArg Subtype.val (e.injective (Subtype.ext he))
+  obtain ⟨p, hp⟩ := Finset.exists_equiv_extend_of_card_eq
+    (show Fintype.card (Fin d) = (Finset.univ : Vertex d).card by simp)
+    (s := A.val ∪ B.val) (f := f) (Finset.subset_univ _) hi
+  let q := p.trans (Equiv.subtypeUnivEquiv (fun _ => Finset.mem_univ _))
+  have hq : ∀ x (hx : x ∈ A.val ∪ B.val), q x = (e ⟨x, hx⟩).val := by
+    intro x hx; change (p x).val = _; rw [hp x hx]; dsimp only [f]; rw [dif_pos hx]
+  refine ⟨q, Finset.eq_of_subset_of_card_le ?_ (by rw [pmap_card, A.property, A'.property]),
+    Finset.eq_of_subset_of_card_le ?_ (by rw [pmap_card, B.property, B'.property])⟩
+  · intro x hx; obtain ⟨y, hy, rfl⟩ := Finset.mem_map.mp hx
+    change q y ∈ A'.val
+    rw [hq y (Finset.mem_union_left _ hy)]
+    dsimp only [e, Equiv.trans_apply]
+    rw [Equiv.Finset.union_symm_left hAB hy]
+    exact (ea ⟨y, hy⟩).property
+  · intro x hx; obtain ⟨y, hy, rfl⟩ := Finset.mem_map.mp hx
+    change q y ∈ B'.val
+    rw [hq y (Finset.mem_union_right _ hy)]
+    dsimp only [e, Equiv.trans_apply]
+    rw [Equiv.Finset.union_symm_right hAB hy]
+    exact (eb ⟨y, hy⟩).property
+private lemma wins_act {d t : ℕ} (g : G d) (σ τ : Vertex d) (A B : Output d t) :
+    Wins (actV g σ) (actV g τ) (actO g A) (actO g B) ↔ Wins σ τ A B := by
+  dsimp only [Wins, actV, actO]
+  rw [symmDiff_symmDiff_symmDiff_comm, symmDiff_self, bot_symmDiff,
+    ← pmap_symmDiff g.2 σ τ]
+  dsimp only [pmap]
+  rw [Finset.disjoint_map, ← Finset.map_union, Finset.map_inj]
+private lemma winning_transitive {d t : ℕ} (σ τ σ' τ' : Vertex d)
+    (A B A' B' : Output d t) (hw : Wins σ τ A B) (hw' : Wins σ' τ' A' B') :
+    ∃ g : G d, actV g σ = σ' ∧ actV g τ = τ' ∧ actO g A = A' ∧ actO g B = B' := by
+  obtain ⟨p, hpA, hpB⟩ := pair_perm A B A' B' hw.1 hw'.1
+  let g : G d := (σ' ∆ pmap p σ, p)
+  have hs : actV g σ = σ' := symmDiff_symmDiff_cancel_right _ _
+  have ha : actO g A = A' := Subtype.ext hpA
+  have hb : actO g B = B' := Subtype.ext hpB
+  have hx := (wins_act g σ τ A B).mpr hw
+  rw [hs, ha, hb] at hx
+  have hxx := hx.2
+  rw [hw'.2] at hxx
+  have ht := congrArg (fun s => σ' ∆ s) hxx
+  rw [symmDiff_symmDiff_cancel_left, symmDiff_symmDiff_cancel_left] at ht
+  exact ⟨g, hs, ht.symm, ha, hb⟩
 end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
