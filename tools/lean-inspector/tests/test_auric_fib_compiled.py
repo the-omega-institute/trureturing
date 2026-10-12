@@ -268,8 +268,11 @@ def run_with_report_snapshot(args, env, phases, sequence):
 
 
 class CompiledFibIntegration(unittest.TestCase):
+    module = MODULE
+    source_module = SOURCE_MODULE
+
     def setUp(self):
-        self.paths = [ROOT / (x.replace('.', '/') + '.lean') for x in (MODULE, SOURCE_MODULE)]
+        self.paths = [ROOT / (x.replace('.', '/') + '.lean') for x in (self.module, self.source_module)]
         if any(p.exists() for p in self.paths):
             raise RuntimeError('FIB compiler fixture source is already owned by another invocation')
         self.addCleanup(self.cleanup)
@@ -285,7 +288,7 @@ class CompiledFibIntegration(unittest.TestCase):
         first = first.replace('private def acquiredNullMass : Nat := 1\n', '')
         first = first.replace('nullMass := acquiredNullMass', 'nullMass := acquiredSourceNullMass')
         first = first.replace('denominator := 5', 'denominator := acquiredSourceDenominator', 1)
-        self.application = 'import ' + SOURCE_MODULE + '\n' + first + 'def declared :' + rest
+        self.application = 'import ' + self.source_module + '\n' + first + 'def declared :' + rest
         self.write_sources()
         self.env = dict(os.environ, GIT_OPTIONAL_LOCKS='0',
             STRATALINT_LEAN_PRODUCER_DLL=str(ROOT / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'))
@@ -297,7 +300,7 @@ class CompiledFibIntegration(unittest.TestCase):
         for name, variable in [('phases', 'STRATALINT_INSPECTOR_PHASES'),
                 ('stdout', 'STRATALINT_INSPECTOR_CHILD_STDOUT'), ('stderr', 'STRATALINT_INSPECTOR_CHILD_STDERR')]:
             self.env[variable] = str((DIAGNOSTICS or Path(self.work.name)) / name)
-        self.first = self.build()
+        self.first = self.build(full=getattr(self, 'initial_full', False))
 
     def cleanup(self):
         for path in self.paths:
@@ -352,12 +355,12 @@ class CompiledFibIntegration(unittest.TestCase):
         return result
 
     def build(self, full=False):
-        artifact = STATE / 'modules' / (MODULE + '.zip')
+        artifact = STATE / 'modules' / (self.module + '.zip')
         if full:
             artifact.unlink(missing_ok=True)
             Path(str(artifact) + ".trace").unlink(missing_ok=True)
         result = self.command(['bash', 'tools/scripts/worktree/lean-cache-run.sh',
-            'lake', '-d', 'tools/lean-inspector-reg', 'build', MODULE + ':report'], full=full)
+            'lake', '-d', 'tools/lean-inspector-reg', 'build', self.module + ':report'], full=full)
         observe_fib('FIB_COMPILED_STAGE', dict(stage='artifact-consumer', boundary='start',
             sequence=self.command_sequence, artifact=str(artifact)))
         self.artifact = artifact
@@ -533,12 +536,24 @@ class CompiledFibProgramTests(unittest.TestCase):
         metadata = config.stat()
         self.assertEqual(before.count(b'name = "auricFibAnalysis"'), 1)
         fixture = CompiledFibIntegration()
+        fixture.module = 'Reg.Support.AuricFibProgramFixture'
+        fixture.source_module = 'Reg.Support.AuricFibProgramSource'
+        artifact = STATE / 'modules' / (fixture.module + '.zip')
+        for suffix in ('', '.trace', '.hash', '.pending', '.fib-previous'):
+            self.assertFalse(Path(str(artifact) + suffix).exists(), 'program fixture artifact already owned')
+        self.addCleanup(lambda: [Path(str(artifact) + suffix).unlink(missing_ok=True)
+            for suffix in ('', '.trace', '.hash', '.pending', '.fib-previous')])
+        native_directory = tempfile.TemporaryDirectory(prefix='fib-no-native.', dir=DIAGNOSTICS)
+        self.addCleanup(native_directory.cleanup)
+        native_bin = Path(native_directory.name) / 'bin'
+        self.assertFalse(native_bin.exists())
+        fixture.initial_full = True
         fixture.observe_processes = True
         try:
-            # Remove the executable target, retaining the actual analyzer module
+            # A fresh report and private bin retain the actual analyzer module
             # and every source/contract dependency in the production workspace.
-            config.write_bytes(before.replace(b'name = "auricFibAnalysis"',
-                b'name = "unrequestedNativeFibAnalysis"'))
+            config.write_bytes(('binDir = ' + json.dumps(str(native_bin)) + '\n').encode()
+                + before.replace(b'name = "auricFibAnalysis"', b'name = "unrequestedNativeFibAnalysis"'))
             fixture.setUp()
             report = fixture.first['declared']['reading']
             self.assertEqual(report['arena']['cardinality'], 5)
@@ -547,6 +562,21 @@ class CompiledFibProgramTests(unittest.TestCase):
                 Path(fixture.work.name) / 'raw-lean-report.json',
                 Path(fixture.work.name) / 'raw-lean-report.json.materials.zip')[0]
                 ['fib_analysis']['applications'] if x['request'] is not None]
+            self.assertGreater(len(requests), 0)
+            self.assertEqual(fixture.work_counts.get('extract'), 1)
+            self.assertEqual(fixture.work_counts.get('fib-generated'), len(requests))
+            self.assertEqual(fixture.work_counts.get('fib-reused'), 0)
+            self.assertFalse((native_bin / 'auricFibAnalysis').exists())
+            self.assertFalse((native_bin / 'unrequestedNativeFibAnalysis').exists())
+            observe_fib('FIB_NO_NATIVE_GENERATION', dict(module=fixture.module,
+                artifact=str(artifact), native_bin=str(native_bin), requests=len(requests),
+                actual_work=fixture.work_counts, original_executable_present=False,
+                renamed_executable_present=False))
+            missing = fixture.command(['bash', 'tools/scripts/worktree/lean-cache-run.sh',
+                'lake', '-d', 'tools/lean-inspector-reg', 'build', 'auricFibAnalysis'], expected=1)
+            self.assertIn('unknown target', missing.stdout + missing.stderr)
+            observe_fib('FIB_NO_NATIVE_TARGET_REJECTION', dict(exit=missing.returncode,
+                diagnostic=missing.stdout + missing.stderr))
             standalone = subprocess.run(['bash', 'tools/scripts/auric-fib-analysis.sh', '--batch'],
                 cwd=ROOT, env=fixture.env, input=json.dumps(requests),
                 text=True, capture_output=True, check=False)
@@ -560,6 +590,11 @@ class CompiledFibProgramTests(unittest.TestCase):
             for record, reading in zip(records, raw):
                 with self.subTest(application=record['application']):
                     assert_native_replay(self, record['request'], reading, record['reading'])
+            self.assertFalse((native_bin / 'auricFibAnalysis').exists())
+            self.assertFalse((native_bin / 'unrequestedNativeFibAnalysis').exists())
+            observe_fib('FIB_NO_NATIVE_REPLAY', dict(exit=standalone.returncode,
+                applications=[record['application'] for record in records], replayed=len(raw),
+                original_executable_present=False, renamed_executable_present=False))
         finally:
             fixture.doCleanups()
             config.write_bytes(before)
