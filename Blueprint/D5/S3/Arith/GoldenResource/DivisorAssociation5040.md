@@ -8,7 +8,7 @@ The general association theorem counts sources and observed positions for every 
 
 **Theorem 1.1 (Finite source-box cardinality).**
 
-Lean statement: `D5/S3/Arith/GoldenResource/DivisorAssociation5040.box_card`
+$$\forall A \in \mathbb{N}, B \in \mathbb{N}, C \in \mathbb{N}, D \in \mathbb{N},\; \operatorname{card}\left(\operatorname{box}\left(A, B, C, D\right)\right) = \left(A + 1\right) \cdot \left(B + 1\right) \cdot \left(C + 1\right) \cdot \left(D + 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DivisorAssociation5040.box_card` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ The box (A,B,C,D) has (A+1)(B+1)(C+1)(D+1) sources.
 
 **Theorem 1.2 (The 5040 source count).**
 
-Lean statement: `D5/S3/Arith/GoldenResource/DivisorAssociation5040.box_card_5040`
+$$\operatorname{card}\left(\operatorname{box}\left(4, 2, 1, 1\right)\right) = 60$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DivisorAssociation5040.box_card_5040` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ The (4,2,1,1) exponent box has exactly 60 sources.
 
 **Theorem 1.3 (The 5040 observed-position count).**
 
-Lean statement: `D5/S3/Arith/GoldenResource/DivisorAssociation5040.image_card_5040`
+$$\operatorname{card}\left(\operatorname{image}\left(q, \operatorname{box}\left(4, 2, 1, 1\right)\right)\right) = 48$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DivisorAssociation5040.image_card_5040` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ The association image of the (4,2,1,1) box has exactly 48 positions, by the gene
 
 **Theorem 1.4 (Divisor/source count interface).**
 
-Lean statement: `D5/S3/Arith/GoldenResource/DivisorAssociation5040.divisor_5040_card_eq_box_card`
+$$\operatorname{NatCard}\left(\operatorname{Div}\left(5040\right)\right) = \operatorname{card}\left(\operatorname{box}\left(4, 2, 1, 1\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DivisorAssociation5040.divisor_5040_card_eq_box_card` (`✓ std3`). ∎
 
