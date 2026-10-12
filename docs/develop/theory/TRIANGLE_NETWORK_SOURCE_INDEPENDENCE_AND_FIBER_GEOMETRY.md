@@ -100,7 +100,7 @@ It does not imply \(A\), \(B\), and \(C\) are independent. Alice and Bob share \
 
 **Proof.** The first assertion is the defining product condition. The second follows because, for example, \(A\) and \(B\) are both functions of \(\gamma\), in addition to their other inputs. A common edge is enough to create output correlation. No common tripartite source is required. ∎
 
-### Proposition 1.2: why the triangle-local set is non-convex
+### Proposition 1.2: why source-product mixtures need a separate lift
 
 Let \(P\) and \(P'\) be triangle-local with source products \(\mu_\alpha\mu_\beta\mu_\gamma\) and \(\mu'_\alpha\mu'_\beta\mu'_\gamma\). The mixture
 
@@ -178,7 +178,7 @@ These formulas are inherited from AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_
 
 ### Proposition 2.1: the FIB conditional-independence surface
 
-On the event \(z=0\), the two features \(x\) and \(y\) are conditionally independent exactly when
+Assume \(Z<1\), so that the event \(z=0\) has positive probability. On that event, the two features \(x\) and \(y\) are conditionally independent exactly when
 
 \[
 \Delta_{\mathrm{FIB}}
@@ -196,7 +196,7 @@ P(y=1\mid z=0)=\frac{Y}{1-Z},\quad
 P(x=y=1\mid z=0)=\frac{\kappa}{1-Z}.
 \]
 
-The equality of the last expression with the product of the first two is exactly (2.5). ∎
+The equality of the last expression with the product of the first two is exactly (2.5). If \(Z=1\), the conditioning event has probability zero: the polynomial equation still vanishes, but does not define a conditional-independence claim. ∎
 
 The equation \(\Delta_{\mathrm{FIB}}=0\) is a local two-feature conditional-independence relation. It is not the triangle source condition
 
@@ -231,7 +231,7 @@ Consequently, \(\mathbb E_p[f]\) is constant on every non-degenerate \(\kappa\)-
 
 **Proof.** Substitute (2.2) into \(\sum_s p_s f_s\). The coefficient of \(\kappa\) is exactly (2.7). ∎
 
-This is the first rigorous information-escape statement for the triangle interface. Any statistic with \(J_f=0\) factors through the three-coordinate quotient. It cannot see the hidden joint coupling \(\kappa\), even though two laws with the same \((X,Y,Z)\) can have different full distributions and different continuation behavior. A witness for source independence must therefore be sensitive either to a nonzero fiber coordinate or to a higher lift carrying the edge-incidence constraints.
+This is a fiber-blindness statement for the five-mode FIB carrier. Any statistic with \(J_f=0\) factors through the three-coordinate quotient. It cannot see the hidden joint coupling \(\kappa\), even though two laws with the same \((X,Y,Z)\) can have different full distributions and different continuation behavior. Applying this statement to a triangle distribution requires a specified readout \(\Phi\) relating its events to the FIB carrier. A triangle-locality test must retain sufficient data for the edge-incidence constraints; the FIB fiber identity alone supplies no source-independence criterion.
 
 
 ### Proposition 2.3: the product completion and the information action
@@ -389,17 +389,16 @@ The lifted feasible event vectors form a convex relaxation. The original triangl
 - the original local set is non-convex;
 - an inflation relaxation is a convex polytope or cone;
 - an infeasibility certificate is a linear separating cochain for the lifted relaxation;
-- proving that the certificate is positive on every lifted deterministic event proves the original distribution is not triangle-local.
+- a certificate must separate the required target from every lifted deterministic image, not merely be positive on those images.
 
-For a rational target \(P=N/D\), the certificate can be checked by clearing denominators. If \(K\) is the inflation map and \(f\) is an integer vector, it is enough to verify
+More precisely, let \(K\) map a lifted law to the coordinates constrained by inflation, and let \(T(P)\) be the target coordinates required by the observed distribution. Soundness must first establish that a triangle-local \(P\) admits a lifted probability law \(q\) with \(K(q)=T(P)\). A linear functional \(f\) certifies infeasibility when
 
 \[
-\left\langle f,\,
-D^2|G_P|K(\delta_\omega)
-\right\rangle>0
+\left\langle f,K(\delta_\omega)-T(P)\right\rangle>0
+\quad\text{for every lifted deterministic event }\omega.
 \]
 
-for every lifted deterministic event \(\omega\), where \(G_P\) is the relevant symmetry group. This is an exact integer certificate, not a floating-point numerical distance.
+Indeed, taking the convex combination with coefficients \(q(\omega)\) would give \(0>0\). Positivity of \(\langle f,K(\delta_\omega)\rangle\) alone is insufficient: the target value must also be compared. For rational maps and targets, clear their denominators by a common positive integer and verify the resulting strict integer inequalities. This is an exact separation certificate, not a floating-point numerical distance.
 
 The 2025 Gitton–Renner EJM result is the canonical example. The EJM distribution has four outcomes per party,
 
@@ -463,7 +462,7 @@ a,b,c\text{ all distinct}&-1&1/3&5/256.
 
 This identity is an exact finite calculation. It is a genuine three-dimensional representation of the output symmetry because the four outcomes are encoded by a regular tetrahedron in \(\mathbb R^3\). It is not a proof that the causal sources are spatial axes.
 
-The term \(S\) is a sum of pairwise Gram interactions. The term \(R\) is the symmetric product of the three edge-pair Gram entries, so it is a cycle-sensitive invariant that still respects the full permutation symmetry of \(a,b,c\). Equivalently,
+The term \(S\) is a sum of pairwise Gram interactions. The term \(R\) is the symmetric sum of pairwise products among the three edge-pair Gram entries, so it is a cycle-sensitive invariant that still respects the full permutation symmetry of \(a,b,c\). Equivalently,
 
 \[
 256P_{\mathrm{EJM}}
@@ -662,7 +661,7 @@ Do not encode an arbitrary inflation graph as an untyped table. Define a finite 
 - a symmetry action;
 - factorization constraints.
 
-Then define an InflationCertificate as an integer linear functional whose value is strictly positive on every deterministic lifted event. Prove the soundness implication
+Then define an InflationCertificate with the required target \(T(P)\), an integer linear functional, and a strictly positive target-centered gap on every deterministic lifted event. Prove that every triangle-local law supplies the required lift before deriving the soundness implication
 
 \[
 \text{certificate exists}
