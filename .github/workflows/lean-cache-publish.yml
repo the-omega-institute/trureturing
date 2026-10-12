@@ -78,13 +78,38 @@ jobs:
             echo "CACHE_SOURCE_ERROR source_sha must be a nonzero 40-hex SHA" >&2
             exit 2
           }
+          api_json() {
+            local endpoint="$1"
+            if command -v gh >/dev/null 2>&1; then
+              gh api "$endpoint"
+              return
+            fi
+            python3 - "$endpoint" <<'PY_API'
+import json
+import os
+import sys
+import urllib.request
+
+endpoint = sys.argv[1]
+request = urllib.request.Request(
+    "https://api.github.com/" + endpoint,
+    headers={
+        "Authorization": "Bearer " + os.environ["GH_TOKEN"],
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    },
+)
+with urllib.request.urlopen(request, timeout=20) as response:
+    sys.stdout.write(response.read().decode("utf-8"))
+PY_API
+          }
           branch="${SOURCE_REF#refs/heads/}"
-          protected="$(gh api "repos/$REPOSITORY/branches/$branch" --jq '.protected')"
+          protected="$(api_json "repos/$REPOSITORY/branches/$branch" | python3 -c 'import json,sys; print(str(json.load(sys.stdin)["protected"]).lower())')"
           [[ "$protected" == true ]] || {
             echo "CACHE_SOURCE_ERROR source branch is not protected" >&2
             exit 2
           }
-          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" --jq '.merge_base_commit.sha')"
+          merge_base="$(api_json "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" | python3 -c 'import json,sys; print(json.load(sys.stdin)["merge_base_commit"]["sha"])')"
           [[ "$merge_base" == "$SOURCE_SHA" ]] || {
             echo "CACHE_SOURCE_ERROR source_sha is not an ancestor of the protected branch" >&2
             exit 2
