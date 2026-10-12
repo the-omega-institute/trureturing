@@ -1,0 +1,56 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+
+internal sealed class OriginalFirstClockTransportDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/Robin/OriginalFirstClockTransport.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The source-faithful signed first-clock transport",
+        H("OriginalFirstClockTransport"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("original-upper-first-clock-exclusion"),
+                DeclarationHandle.Create(Prefix + "original_upper_first_clock_exclusion"),
+                H("Closed first-clock exclusion from the actual upper integer"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For primes r and q and U>0, suppose N=r*U maximizes F(n)=log(sigma(n)/n)-log(log(log(n))) over all positive integers divisible by 5040*r. Let 243<=t<=R, r>2*R, t<=log(N), and U have exactly the strict layer counts at lambda(t)=1/(t*log(t)). Then t lies outside [q,firstClock(q)].")),
+                    Paragraph(Text("The actual first clock lies strictly between q and q+1 and solves lambda(firstClock(q))=log(1+1/q)/log(q). At contact, the strict inventory excludes q from U, including a price tie. Since q<=t<=R, q is not r, so q does not divide N. N*q is a legal integer in the same original class. The existing single-layer delta gives its exact log-abundancy gain log(1+1/q). Original maximality bounds this gain by f(C+log(q))-f(C), with C=log(N) and f(x)=log(log(x)); fundamental calculus gives the exact original price integral.")),
+                    Paragraph(Text("Contact implies q>t-1>=242, log(q)>3, and log(q)<=log(t)<=t/10. The literal weight w(x)=(1+log(x))/(x^2*log(x)^2) satisfies w(t+log(q))>(2/3)*w(t), giving log(q)*w(t+log(q))>2*w(t). The consumed delayed-atom theorem therefore excludes both contact endpoints. No fixed-price optimality or maximizer at real center t is used."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("complete-original-first-clock-exclusion"),
+                DeclarationHandle.Create(Prefix + "complete_original_first_clock_exclusion"),
+                H("Every prime is excluded on the complete original edge union"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("OriginalWindow requires its labels to be exactly all primes in [exp(labelStart),exp(2*labelStart)], with attainment on each complete positive 5040*p class; an arbitrary subsample is not an OriginalWindow. canonicalSource(p) is the least maximizing integer. windowOfGA2 uses exactly all primes in [exp(ell),exp(2*ell)], and supplies attainment from an actual GA2 integer divisible by every forced 5040*p via GA2ForcedPrimeSource. This conditional constructor proves no such common witness or cofinal existence.")),
+                    Paragraph(Text("goodEdges includes every consecutive-label pair satisfying the original source conditions: N_p=p*U, N_r=r*U, U>0, 5040 divides U, A<C, and the literal strict inventory throughout the closed edge [A,C]. This finite set and selectedDomain, its full interval union, are independent of ell and R. OriginalBounds requires ell<=A<C<=R and p,r>2*R for every edge in that fixed complete set; bounds never select or remove an edge. The theorem excludes [q,firstClock(q)] for every prime q on this entire domain. It selects the actual edge containing a contact and applies the actual upper integer theorem. No favorable subset is chosen; the lower canonical endpoint and least attainment remain in the source data."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("first-error-decay"),
+                DeclarationHandle.Create(Prefix + "first_error_decay"),
+                H("The literal uniform error decreases to zero"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("E(t)=t^(-3/10)*log(2*t) is strictly decreasing on [243,infinity) and tends to zero at infinity.")),
+                    Paragraph(Text("Its derivative is t^(-13/10)*(1-(3/10)*log(2*t)), strictly negative on the stated range. The logarithm grows more slowly than t^(3/10). This error supplier is consumed by the uniform complete-domain bound."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("complete-original-first-clock-transport"),
+                DeclarationHandle.Create(Prefix + "complete_original_first_clock_transport"),
+                H("The source-faithful signed first-clock transport"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every OriginalWindow with OriginalBounds(X,ell,R) and ell>=243, on S=selectedDomain(X), every prime closed first pulse is excluded and -E(ell)*M<=P1<=0, where M is the real Lebesgue measure of S. P1=sum over primes q<=2*R of log(q)*(W(firstClock(q))-W(q)). W(z) is the integral on the entire S of the reference kernel (lambda(z)-lambda(B(t)))/D(t) on t<z<=B(t). The literal B(t)=t+t^(4/5) and D(t)=w(t)*t^(11/10) are retained.")),
+                    Paragraph(Text("One finite prime set q<=floor(2*R) covers every nonzero contribution: the theorem also proves both weights vanish for every prime q>2*R. All prime exclusions remain unrestricted by that cutoff. The finite closed-pulse envelope is bounded by log(x), since a contributing integer lies in (x-1,x]. After source-derived exclusion, exact accounting bounds the local response by -b(t)*log(B(t)) and zero, with b(t)=(lambda(t)-lambda(B(t)))/D(t). Monotonicity of w gives b(t)<=t^(-3/10), B(t)<=2*t, and hence b(t)*log(B(t))<=E(t).")),
+                    Paragraph(Text("The complete domain is a finite union of compact closed intervals. The literal moving-window kernel is integrable there. Source exclusion removes actual initial ties, so its integral agrees with the reference integral at first clocks. Finite summation and integration give the uniform estimate without dependence on edge count, component count, or R. Set measure counts overlaps once. The statement also covers the empty domain; the original positive-mass witnesses are included unchanged.")),
+                    Paragraph(Text("No PNT, GM, H_ref asymptotic, cofinal witness or favorable signed lower coefficient is a premise or a conclusion. This proves the EL.10 transport obligation. The signed kappa<c_Q lower bound on the cofinal complete original family, the other response layers, full Robin on n>5040, and RH remain separate unresolved obligations. Fixed-slack EL.13/14 applications are not retained as new declarations."))
+                ), DescribeRole.Theorem))));
+}

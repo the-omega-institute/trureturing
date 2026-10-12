@@ -1,4 +1,4 @@
-# trureturing / D5 —— 仓库规范全卷 v7.38(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
+# trureturing / D5 —— 仓库规范全卷 v7.40(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
 
 > ⚑ **铭牌**。组织:**trureturing**(收据三张:27.99 真理为攀登而不可达之 ν、27.90 理论过自家分类器返回原点、仪文"账本的最后一行永远是下一轮的第一行")。仓库名:**trureturing**——**仓库即模空间,单库承全族**(v7.4 裁决,撤姊妹分库):`Metallic/`(G 层参数化机器)+ `D5/ D8/ …`(实例层,按需生长)+ `Moduli/`(跨理论比较定理之家);分库仅当已证实压力(治理/许可/规模),**裂由压力,不预裂**。
 > README 首行:*trureturing — the last line of the ledger is always the first line of the next round.*
@@ -272,7 +272,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14 版本码与冻结状态表** 版辑 tag `E<n>`+Zenodo DOI;工具链钉版。环境升级的政策要求是同一 PR 原子更新 `lean-toolchain`/`lakefile.{toml,lean}`/`lake-manifest.json`,并通过 `make lean` 执行全量 clean 构建;强制无缓存 clean build 不是现役机器谓词。
 
-**A14.1 冻结成员。** 冻结成员是显式登记的 Closed 模块子集。`Golden/Frozen/state/<模块路径>.lean.json` 存在即冻结;Closed 而没有状态片是合法的未冻结状态。deposit 登记所请求的新 Closed 模块,不把全部 Closed 模块自动登记为冻结成员。状态表是冻结成员资格与陈述 pin 的唯一真源;数学真值仍只由 Lean 声明、证明项及其 axiom 闭包承载。冻结真值永不解冻;状态片删除遵守现行删除判定,不提供新增或放宽的取消冻结途径。
+**A14.1 冻结成员。** 冻结成员是显式登记的 Closed 模块子集。`Golden/Frozen/state/<模块路径>.lean.json` 存在即冻结;Closed 而没有状态片是合法的未冻结状态。deposit 登记所请求的新 Closed 模块,不把全部 Closed 模块自动登记为冻结成员。状态表是冻结成员资格与陈述 pin 的唯一真源;数学真值仍只由 Lean 声明、证明项及其 axiom 闭包承载。删除状态片与改 pin 同为合法的成员变更:该模块退出冻结成员,其已验证陈述的数学真值不变,历史由 git 查证;删除不产生判词,合法性与模块源码是否仍在无关。此后 SL-008 不再检查该模块,重新登记按首次冻结判定。
 
 **A14.2 状态片记录。** 每个冻结模块恰有一个文件。对 canonical 模块路径 `M.lean`,状态片路径恰为 `Golden/Frozen/state/M.lean.json`,移除固定前缀和 `.json` 后缀即可反解模块路径,两者双射。文件为单行规范 JSON 加恰一个 LF;对象闭键恰为 `{declarations,statement_id}`。`declarations` 包含当前 report 中该模块全部 `include_in_statement` 声明,每项闭键恰为 `{declaration_name_key,kind}`,按名称键、种类的 Ordinal 顺序排列且唯一,不得省略、增加或重复声明。
 
@@ -286,11 +286,11 @@ writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede
 
 **A14.5 准入。** `Golden/Frozen/accepted/` 不是 FILEMAP 登记路径;任何被跟踪文件出现在该目录下,均由 required 检查中的现有 FILEMAP 未分类路径判词拒绝,不另设路径禁令规则。严格状态 loader 只接受 A14.2 的闭键形,拒绝只含 `statement_id` 的记录及其他非闭键形;旧工具写出的不合规形不得与当前状态片并存。事件与状态片配对、改动事件 pin 核对两项过渡检查不存在。
 
-SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块存在且为 Closed,pin 等于当前 report 重算的模块陈述摘要,声明清单与当前 report 一致。该检查范围不因 writer 的模块写集合缩小。状态片 pin 相对受保护基线变化时,以 Observe 点名模块及旧、新 pin;状态片删除仍按现行判定处理。
+SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块存在且为 Closed,pin 等于当前 report 重算的模块陈述摘要,声明清单与当前 report 一致。该检查范围不因 writer 的模块写集合缩小。状态片 pin 相对受保护基线变化时,以 Observe 点名模块及旧、新 pin;状态片删除不产生判词(A14.1)。
 
 **A14.6 并发合并。** 同一模块的两份不同规范记录位于同一路径的同一行,Git 三方合并报冲突;内容相同的并发写入正常合流。不同模块的记录更新写集合不相交,一个模块的重新钉定不写其他模块的记录。路径双射与严格 schema 保证每个冻结模块只有一份记录;记录不含前置记录地址,不存在悬空的前置记录引用。这些性质只约束冻结状态片,不承诺 PR 中其他源码改动之间无冲突。
 
-**A14.7 对外投影与发布。** `Generated/truth-export.v1.json` 与 `Generated/truth-graph.v1.json` 的现有字段及含义保留,由状态表、当前 report 与源码 import 现算,不合成虚拟事件。truth-release 的发布方言及拒绝签发边界见 A22;已发布的 release 不改动。
+**A14.7 对外投影与发布。** `Generated/truth-export.v1.json` 与 `Generated/truth-graph.v1.json` 的现有字段及含义保留,由状态表、当前 report 与源码 import 现算,不合成虚拟事件。truth-release 的发布方言见 A22;已发布的 release 不改动。
 
 **A14.8 TOWER 引导边界。** TOWER 不保存或验证 `genesis_event` 的事件存在性见证。bootstrap 保留其 commit/PR 外部信任根边界及 `ASSUMED-UNVERIFIED` 状态,不以状态摘要替代事件见证。
 
@@ -438,9 +438,9 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 离线 truth release bundle 接口验证完整性及调用者声明的成功 check 名称；来源真实性、保护策略完整性及发布授权须独立核验。该接口不查询 CI，也不选择可发布 dev 提交或下载 push 报告。
 
-truth release bundle 的既有 `truth-release.v2` manifest 契约恰含六个 SHA256SUMS 绑定工件：source snapshot、truth graph、raw Lean report、truth export、Blueprint index 和 `frozen-ledger-head`。`source-snapshot.v2` 绑定相应来源与摘要，不承载消化账目或残余工件。manifest 与 source snapshot 的 transport 文件名为 `release-manifest.v1.json` 和 `source-snapshot.v1.json`；既有 v2 reader 闭集与 v1 publication 坐标保持。
+truth release bundle 的 manifest 以 schema 标签 `truth-release` 标识，恰含五个 SHA256SUMS 绑定工件：source snapshot、truth graph、raw Lean report、truth export 和 Blueprint index。source snapshot 以 schema 标签 `source-snapshot` 标识，闭键恰为来源仓库、commit、tree、Lean toolchain、mathlib rev、producer package commit，以及 truth graph、raw Lean report、DAG Markdown、truth export 四个摘要；它不承载消化账目、残余工件或冻结事件字段。冻结成员资格由 `source_tree` 绑定的 `Golden/Frozen/state/**` 状态片决定，bundle 不另设账本头、事件计数或状态表摘要。manifest、source snapshot 与 publication 坐标的 transport 文件名为 `release-manifest.v1.json`、`source-snapshot.v1.json` 与 `truth-release-publication.v1.json`。reader 只接受上述标签与闭键：其他 manifest 或 source snapshot 标签、manifest 的 `frozen_ledger_head` 槽位及 source snapshot 的账本字段均被拒绝。已发布的 release 不改动。
 
-`frozen-ledger-head` 的事件集合根、事件计数与 source-snapshot 的 `frozen_ledger_sequence` 在冻结状态表下没有同义来源。在 owner 定义新的发布方言之前，发布命令以具名诊断拒绝签发，不得以状态摘要冒充事件集合根，也不得合成虚拟事件或改写这些字段的含义。已发布的 release 不改动；可由状态表、当前 report 与源码 import 现算的 truth-export/truth-graph 现有对外字段按 A14.7 保留。新发布方言的授权不替代 Lean、Scribe、冻结来源或工件完整性的验证义务。
+发布命令签发前对每个状态片执行与 SL-008 相同的当前树核对(A14.5)：对应模块存在且为 Closed，pin 等于当前 report 重算的模块陈述摘要，声明清单与当前 report 一致；任一不符即以 `TRUTH_RELEASE_REJECTED` 具名诊断拒绝签发，且不写出 bundle。truth export 的冻结字段按 A14.7 由状态表、当前 report 与源码 import 现算。签发不替代 Lean、Scribe、冻结来源或工件完整性的验证义务。
 
 **缓存与增量。** Lean 的 dependency/project/elan keys、restore 与 snapshot 可独立使用。显式 `Meta/ci-cache-paths.json` 限定 dependency 为 `.lake/packages`、project 为 `.lake/build`；project 同时保留 Lean 编译、Inspector 与原生报告材料，不建立独立 report 层。远端兼容分区取 resolved mathlib revision，二进制另按 OS/arch 隔离。project Actions key 使用唯一的 `lean-project-push-` 前缀，不恢复其它 project 前缀；所有读者使用同一生成规则。种子恢复步骤调用 `lean_actions.py restore`，只消费 Actions 恢复材料；未恢复有效 project 种子时令 `STRATALINT_ACTIONS_CACHE_SEEDED=0`，后续由规范构建入口处理。project 种子由 dev/integration push 或已校验受保护 ref/SHA 的手动 producer 发布；独立 pull_request:labeled producer 也可在该 PR 的 merge-ref 私有空间发布，不供 base 分支或其它 PR 使用。普通 pull request required job 只恢复、不发布 project 种子并具名报告跳过。发布须报告生产成功且本次报告与程序目标的构建工作已知为正；push 在报告生产成功后、判卷开始前只尝试一次。生产者在恢复树之外记录本次 run/attempt 与报告、程序两类工作；缺失、畸形、陈旧或无法判定的记录禁写 project，并具名报告 unknown，不视为零工作；零工作另报跳过原因。project 的成功前置称为 `STRATALINT_REPORT_SUCCEEDED`，不预报检查成功。dependency 与 elan 仍在全部检查成功后按各自条件保存，PR 的这些缓存只供同一 PR 使用。缓存步骤不承载业务判词；缓存缺失、损坏或保存失败不撤销业务判词，正常生产失败仍阻断。缓存命中不等于当前检查通过。elan Actions key 使用唯一的 `elan-pinned-` 生成，不恢复其它 elan 前缀；miss 只由 `install-lean-toolchain.sh` 安装钉版工具链。保存点列出已安装工具链作为轻量收据，不删除恢复目录中的工具链。
 

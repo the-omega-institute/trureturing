@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -22,6 +23,16 @@ internal static class RawLeanReportArtifact
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);
         return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials, scope: null);
+    }
+
+    /// Reads the report once and returns the exact bytes that were validated.
+    internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot, out ImmutableArray<byte> bytes)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        var fullPath = Path.GetFullPath(path);
+        var read = File.ReadAllBytes(fullPath);
+        bytes = ImmutableCollectionsMarshal.AsImmutableArray(read);
+        return Read(read, snapshot, MaterialsPath(fullPath), validateMaterials: false, scope: null);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
