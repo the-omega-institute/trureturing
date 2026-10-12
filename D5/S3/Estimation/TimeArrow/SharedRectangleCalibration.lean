@@ -712,7 +712,7 @@ private theorem native_group_zero_posterior_approximation :
 
 /-- Every row outside the signal rectangle retains both native counts on
 one coarse environment fiber. Background rows are included. -/
-private theorem native_environment_outside_counts {M q s : ℕ} (S : Support M q)
+theorem native_environment_outside_counts {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (k l : ℕ)
     (y z : NativeSignalConditionalFiber.Fiber S e o)
     (henv : RectangleHypergeometricKernel.nativeMarginRectangleReadout S e o k l y =

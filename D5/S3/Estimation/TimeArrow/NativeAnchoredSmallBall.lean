@@ -247,7 +247,31 @@ private theorem registered_shape_bound (A K e m s τ L u E : ℝ)
       · simpa only [one_mul] using mul_le_mul_of_nonneg_right hC3 (by positivity)
     _ = _ := by ring
 
-set_option maxHeartbeats 1000000 in
+private theorem native_event_ratio_le_one {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (o : Obs M s e)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (hε : 0 ≤ compensation M q r) (hε1 : compensation M q r < 1)
+    (F : Finset (Fiber S e o)) (Q : Fiber S e o → Prop) [DecidablePred Q] :
+    conditionalFiberMass S r e o (F.filter Q)/conditionalFiberMass S r e o F ≤ 1 := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  have hprob (y : Fiber S e o) : 0 ≤ probability r e S y.val :=
+    ((finite_support_bayes (s := s) hq hqm hr hr1 hε hε1 e).2.2.1 S y.val).1.le
+  have htotal : 0 ≤ ∑ y : Fiber S e o,probability r e S y.val :=
+    sum_nonneg fun y _ => hprob y
+  have hden : 0 ≤ conditionalFiberMass S r e o F := by
+    unfold conditionalFiberMass
+    exact div_nonneg (sum_nonneg fun y _ => hprob y) htotal
+  have hmono : conditionalFiberMass S r e o (F.filter Q) ≤ conditionalFiberMass S r e o F := by
+    unfold conditionalFiberMass
+    apply div_le_div_of_nonneg_right _ htotal
+    exact sum_le_sum_of_subset_of_nonneg (filter_subset _ _) (fun y _ _ => hprob y)
+  by_cases hz : conditionalFiberMass S r e o F = 0
+  · rw [hz,div_zero]
+    norm_num
+  · exact (div_le_one₀ (lt_of_le_of_ne hden (Ne.symm hz))).mpr hmono
+
+set_option maxHeartbeats 3000000 in
 /-- A single actual full-root anchor proves the registered three-term
 arithmetic estimate on every admissible central scale. All posterior,
 variance, feedback, atom and tail inputs are derived on the same fiber. -/
@@ -274,7 +298,7 @@ theorem native_anchored_posterior_small_ball :
       1 < V.card → N/4 ≤ R → R ≤ 3*N/4 → N/4 ≤ U → U ≤ 3*N/4 →
       max 4 (32/(a*v)) ≤ Real.sqrt N →
       N/q ≤ v/2 → N/q ≤ v*Real.log 2/8 → a*N/q < η →
-      |compensation M q r| < η → bg ≤ N → s0 ≤ 1 → V0 ≤ v*q/4 →
+      |compensation M q r| < η → bg ≤ N → s0 ≤ 1 → V0 ≤ v*q/4 → 1 ≤ γ*s0*Real.sqrt N →
       ∀ (anchor : Fiber S e o) (xStar : ℝ),
         nativeMinimalRectangleReadout S e o k l anchor = nativeMinimalRectangleReadout S e o k l z →
         (∑ i : Fin M,Real.sigmoid (xStar+(score q r e anchor.val i-z0))) = q →
@@ -282,8 +306,7 @@ theorem native_anchored_posterior_small_ball :
           (1-Real.sigmoid (xStar+(score q r e anchor.val i-z0))) →
         |xStar| ≤ a*N/(4*q) →
         |(nativeRectangleACount S e o k l anchor : ℝ)-U*R/N| ≤ 2*Real.sqrt N →
-        ∀ L τ : ℝ, 0 < L → 0 ≤ τ → τ ≤ 1/2 →
-          1 ≤ L*Real.sqrt N → L*Real.sqrt N ≤ γ*N →
+        ∀ L τ : ℝ, 0 < L → 0 ≤ τ →
           let Q := fun y : Fiber S e o => ∃ b : ℤ, |(ell : ℝ)*(1/2-
             (∑ i ∈ nativeCalibrationCells All e y.val k l 0,inclusion q r e y.val i))-b| ≤ τ
           letI : DecidablePred Q := Classical.decPred Q
@@ -302,7 +325,7 @@ theorem native_anchored_posterior_small_ball :
   let A := Real.exp 4/((1/4 : ℝ)^2/2)^2
   let K := Cfb/c
   let errRatio := 12*Cpost/(v*c)
-  let Cell := 1+A*(8*K+2*K*m*(2*errRatio+1)+(3+2*m*errRatio)*(3+2*errRatio))
+  let Cell := 4+A*(8*K+2*K*m*(2*errRatio+1)+(3+2*m*errRatio)*(3+2*errRatio))
   have hm : 2 ≤ m := by
     have hh : (1 : ℝ) ≤ |(ell : ℝ)| := by exact_mod_cast Int.one_le_abs hell
     dsimp only [m]
@@ -323,8 +346,8 @@ theorem native_anchored_posterior_small_ball :
   let U : ℝ := (V.filter fun i => count e z.val i.val (-1) = l).card
   let ν := U*R/N
   let s0 := c*(N/q)
-  intro hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV
-    anchor xStar henv hroot hvar hx hstar L τ hL hτ hτ1 hwide hcentral
+  intro hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
+    anchor xStar henv hroot hvar hx hstar L τ hL hτ
   have hNnat : 0 < V.card := by
     change 1 < V.card at hN
     omega
@@ -332,6 +355,57 @@ theorem native_anchored_posterior_small_ball :
   have hq0 : (0 : ℝ) < q := by exact_mod_cast (by omega : 0 < q)
   have hs0 : 0 < s0 := by dsimp [s0]; positivity
   have hbg : 0 ≤ bg := by dsimp [bg]; positivity
+  let Env := univ.filter fun y : Fiber S e o =>
+    nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+  let Q := fun y : Fiber S e o => ∃ b : ℤ, |(ell : ℝ)*(1/2-
+    (∑ i ∈ nativeCalibrationCells All e y.val k l 0,inclusion q r e y.val i))-b| ≤ τ
+  have hmass1 := native_event_ratio_le_one S r e o hq hqm hr hr1 hε hε1 Env Q
+  have hC4 : 4 ≤ Cell := by
+    dsimp [Cell]
+    have hh : 0 ≤ A*(8*K+2*K*m*(2*errRatio+1)+(3+2*m*errRatio)*(3+2*errRatio)) := by positivity
+    linarith only [hh]
+  have hC1 : 1 ≤ Cell := (by norm_num : (1 : ℝ) ≤ 4).trans hC4
+  have hsum0 : 0 ≤ L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ) := by positivity
+  have htrivial (hx : 1 ≤ Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ))) :
+      conditionalFiberMass S r e o (Env.filter Q)/conditionalFiberMass S r e o Env ≤
+        Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)) := hmass1.trans hx
+  by_cases hLsmall : L ≤ 2
+  · apply htrivial
+    have htail : 1 ≤ 4*L^(-2 : ℤ) := by
+      rw [zpow_neg,zpow_ofNat]
+      simp only [inv_eq_one_div]
+      rw [mul_one_div]
+      apply (le_div_iff₀ (sq_pos_of_pos hL)).mpr
+      nlinarith only [hL,hLsmall]
+    have hbound := mul_le_mul_of_nonneg_right hC4 (by positivity : 0 ≤ L^(-2 : ℤ))
+    have hrest : 0 ≤ Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N) := by positivity
+    nlinarith only [htail,hbound,hrest]
+  have hL2 : 2 < L := lt_of_not_ge hLsmall
+  by_cases hτlarge : 1/2 < τ
+  · apply htrivial
+    have hmain : 1 ≤ L*(s0+τ) := by nlinarith only [hL2,hτlarge,hs0]
+    have hh := mul_le_mul_of_nonneg_right hC1 (by positivity : 0 ≤ L*(s0+τ))
+    have hrest : 0 ≤ Cell*((1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)) := by positivity
+    nlinarith only [hmain,hh,hrest]
+  have hτ1 : τ ≤ 1/2 := le_of_not_gt hτlarge
+  have hsqrt : 0 < Real.sqrt N := Real.sqrt_pos.mpr hN0
+  have hsqrt4 : 4 ≤ Real.sqrt N := (le_max_left _ _).trans hlarge
+  have hsqrt_eq : (Real.sqrt N)^2 = N := Real.sq_sqrt hN0.le
+  by_cases hLlarge : γ*Real.sqrt N < L
+  · apply htrivial
+    have hh := mul_le_mul_of_nonneg_right hLlarge.le hs0.le
+    have hmain : 1 ≤ L*(s0+τ) := by
+      have hLτ : 0 ≤ L*τ := mul_nonneg hL.le hτ
+      nlinarith only [hscale,hh,hLτ]
+    have hh' := mul_le_mul_of_nonneg_right hC1 (by positivity : 0 ≤ L*(s0+τ))
+    have hrest : 0 ≤ Cell*((1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)) := by positivity
+    nlinarith only [hmain,hh',hrest]
+  have hwide : 1 ≤ L*Real.sqrt N := by nlinarith only [hL2,hsqrt4]
+  have hcentral : L*Real.sqrt N ≤ γ*N := by
+    have hh := mul_le_mul_of_nonneg_right (le_of_not_gt hLlarge) hsqrt.le
+    calc
+      _ ≤ γ*Real.sqrt N*Real.sqrt N := hh
+      _ = γ*N := by rw [mul_assoc,←sq,hsqrt_eq]
   have hγle : γ ≤ γ0 := min_le_left _ _
   have hγsmall : γ ≤ 1/32 := min_le_right _ _
   obtain ⟨θ,hθ,_⟩ := hfeedback M q s S e o k l z hq hqm hε hε1 hN0
@@ -369,7 +443,15 @@ theorem native_anchored_posterior_small_ball :
   have hnormalize := registered_shape_bound A K errRatio m s0 τ L (Real.sqrt N) E
     hA.le hK.le herrRatio.le hm hs0 hs1 hτ hτ1 hL (Real.sqrt_pos.mpr hN0) hE0 hE
   apply hraw.trans
-  simpa only [A,Cell,E,w,m,ν,N,R,U,bg,s0,V,All,div_mul_eq_div_div] using hnormalize
+  have hnorm :
+      A/Real.sqrt N*(K*(m*s0)*(2*L*Real.sqrt N)+2*(2*τ+m*E)+1)*
+        (2*(2*τ+m*E)/(m*s0)+1)+1/(2*L^2) ≤
+      Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)) := by
+    apply hnormalize.trans
+    apply mul_le_mul_of_nonneg_right _ hsum0
+    dsimp [Cell]
+    linarith only
+  simpa only [A,E,w,m,ν,N,R,U,bg,s0,V,All,div_mul_eq_div_div] using hnorm
 
 end
 end D5.S3.Estimation.TimeArrow.NativeAnchoredSmallBall

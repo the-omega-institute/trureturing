@@ -197,5 +197,36 @@ theorem full_native_environment_anchor_budget {M q s : ℕ} (S : Support M q)
   convert hbound using 1
   all_goals congr 3 <;> first | exact Subsingleton.elim _ _ | (ext y <;> simp)
 
+open scoped Classical in
+/-- A predicate of complete observations is conditioned on the original
+full minimal readout. The collapsed-fiber normalization cancels exactly. -/
+theorem full_native_conditional_mass_eq {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (o : Obs M s e)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (hε : 0 ≤ compensation M q r) (hε1 : compensation M q r < 1)
+    (k l : ℕ) (P : Obs M s e → Prop) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let Env := univ.filter fun y : Fiber S e o =>
+      nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l (⟨o,rfl⟩ : Fiber S e o)
+    letI : DecidablePred (fun y : Fiber S e o => P y.val) := Classical.decPred _
+    (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧ P x
+      then probability r e S x else 0)/
+      (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+        then probability r e S x else 0) =
+      conditionalFiberMass S r e o (Env.filter fun y => P y.val)/conditionalFiberMass S r e o Env := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  letI : Nonempty (Fiber S e o) := ⟨⟨o,rfl⟩⟩
+  dsimp only
+  have htotal : 0 < ∑ y : Fiber S e o,probability r e S y.val :=
+    sum_pos (fun y _ => ((finite_support_bayes (s := s) hq hqm hr hr1 hε hε1 e).2.2.1 S y.val).1) univ_nonempty
+  rw [full_environment_sum S r e k l o P]
+  have hd := full_environment_sum S r e k l o (fun _ => True)
+  simp only [and_true] at hd
+  rw [hd]
+  unfold conditionalFiberMass
+  rw [div_div_div_cancel_right₀ htotal.ne']
+  simp only [sum_filter,ite_and]
+
 end
 end D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment
