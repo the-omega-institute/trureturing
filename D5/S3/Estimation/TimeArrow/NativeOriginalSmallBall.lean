@@ -667,5 +667,69 @@ theorem original_native_environment_small_ball (r β : ℝ)
   · try simp only [hz,not_false_eq_true,if_true]
     split_ifs <;> first | exact le_rfl | exact hp o
 
+attribute [local reducible] D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.Fiber
+attribute [local reducible] D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.Sites
+
+open scoped Classical in
+set_option maxHeartbeats 2000000 in
+/-- The same original-window bound holds in the original cube pair and path
+laws, uniformly over supports and with no success event added to the environment. -/
+theorem original_cube_environment_small_ball (r β : ℝ)
+    (hr : 0 < r) (hr1 : r < 1) (hβ : 1/2 < β) (hβ1 : β < 1)
+    (hα : Real.log (1+r)/(-Real.log (1-r)) = decimalAlpha) :
+    ∃ cN CN c : ℝ, 0 < cN ∧ 0 < CN ∧ 0 < c ∧
+    ∀ ell : ℤ, ell ≠ 0 → ∃ (Cell : ℝ) (budget : ℕ → ℝ), 0 < Cell ∧
+      Tendsto budget atTop (𝓝 0) ∧ ∀ᶠ n in atTop,
+      let lam := scale n
+      let d := ⌊phi r*(lam : ℝ)/(β*Real.log 2)⌋₊
+      let M := 2^d
+      let q := signalSize r β lam
+      let k := centralPositive r lam
+      let l := centralNegative r lam
+      ∀ (S : Support M q) (e : Experiment),
+      ∀ [Fintype (Sites (2*M*lam) e)],
+      (∑ X : Sites (2*M*lam) e → Fin (d+1) → ℤˣ,
+        let o := cubeObservationEquiv d (2*M*lam) e X
+        let N : ℝ := (nativeRectangleRows S e o k l (⟨o,rfl⟩ : Fiber S e o)).card
+        let s0 := c*(N/q)
+        if ¬(cN*(q : ℝ)/lam ≤ N ∧ N ≤ CN*(q : ℝ)/lam ∧
+            ∀ L τ : ℝ, 0 < L → 0 ≤ τ →
+            (∑ Y : Sites (2*M*lam) e → Fin (d+1) → ℤˣ,
+              if fullRectangleReadout S e k l (cubeObservationEquiv d (2*M*lam) e Y) =
+                  fullRectangleReadout S e k l o ∧
+                (∃ b : ℤ, |(ell : ℝ)*(1/2-
+                  originalCubeGroupPosteriorMean q r (Real.log ((M : ℝ)/q)) (Real.sqrt ((lam : ℝ)/q))
+                    ((k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+                      l*Real.log ((1-r)/(1+compensation M q r))) e Y)-b| ≤ τ)
+              then originalCubeProbability r e S Y else 0)/
+              (∑ Y : Sites (2*M*lam) e → Fin (d+1) → ℤˣ,
+                if fullRectangleReadout S e k l (cubeObservationEquiv d (2*M*lam) e Y) =
+                    fullRectangleReadout S e k l o
+                then originalCubeProbability r e S Y else 0) ≤
+              Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)))
+        then originalCubeProbability r e S X else 0) ≤ budget n := by
+  classical
+  obtain ⟨cN,CN,c,hcN,hCN,hc,hmain⟩ := original_native_environment_small_ball r β hr hr1 hβ hβ1 hα
+  refine ⟨cN,CN,c,hcN,hCN,hc,?_⟩
+  intro ell hell
+  obtain ⟨Cell,budget,hCell,hbudget,hmain⟩ := hmain ell hell
+  refine ⟨Cell,budget,hCell,hbudget,?_⟩
+  filter_upwards [hmain] with n hn
+  dsimp only
+  let lam := scale n
+  let d := ⌊phi r*(lam : ℝ)/(β*Real.log 2)⌋₊
+  let M := 2^d
+  let q := signalSize r β lam
+  let k := centralPositive r lam
+  let l := centralNegative r lam
+  intro S e _
+  have hnative := hn S e
+  simp_rw (config := { zeta := false, zetaDelta := false }) [original_cube_group_eq_native,original_cube_conditional_mass_eq,
+    original_cube_probability_eq_native]
+  convert hnative using 1 <;> first
+    | rfl
+    | (symm; apply (cubeObservationEquiv d (2*M*lam) e).sum_comp)
+
 end
 end D5.S3.Estimation.TimeArrow.NativeOriginalSmallBall
+
