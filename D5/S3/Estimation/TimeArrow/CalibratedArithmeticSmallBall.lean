@@ -256,5 +256,67 @@ private theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside
   · exact happrox
   · exact htail
 
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+open private
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_shift_deriv
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibrated_row_parameter
+from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+
+/-- The full native calibrated Bernoulli variance is the variance of the
+same four-cell equation, including all rows outside the signal rectangle. -/
+private theorem native_full_calibration_variance {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) (k l : ℕ)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (t : ℝ) (ht : 0 < t) :
+    let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+    let p := fun i : Fin M => t * weight q r e o i / (B0 + t * weight q r e o i)
+    let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+    let x := z0 - Real.log B0 + Real.log t
+    let C : Fin 4 → ℝ := fun j => (nativeCalibrationCells S e o k l j).card
+    let outside : {i : Fin M // nativeRowCell S e o k l i = none} → ℝ :=
+      fun i => score q r e o i.val - z0
+    (∑ i, p i * (1 - p i)) = calibratedVariance outside r (compensation M q r)
+      (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) x := by
+  classical
+  dsimp only
+  let B0 : ℝ := ((M - q : ℕ) : ℝ) / (q : ℝ)
+  let z0 := (k : ℝ) * Real.log ((1 + r) / (1 - compensation M q r)) +
+      (l : ℝ) * Real.log ((1 - r) / (1 + compensation M q r))
+  let x := z0 - Real.log B0 + Real.log t
+  let C : Fin 4 → ℝ := fun j => (nativeCalibrationCells S e o k l j).card
+  let outside : {i : Fin M // nativeRowCell S e o k l i = none} → ℝ :=
+    fun i => score q r e o i.val - z0
+  have hf : (fun u : ℝ => ∑ i : Fin M, Real.sigmoid (u + (score q r e o i - z0))) =
+      calibratedMean outside r (compensation M q r)
+        (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) := by
+    funext u
+    exact native_full_calibration_sum S r e o k l u
+  have hd := HasDerivAt.sum (fun i (_ : i ∈ (univ : Finset (Fin M))) =>
+    D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_shift_deriv (score q r e o i - z0) x)
+  have hf' : (∑ i : Fin M, fun u : ℝ => Real.sigmoid (u + (score q r e o i - z0))) =
+      calibratedMean outside r (compensation M q r)
+        (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) := by
+    ext u
+    simp only [Finset.sum_apply]
+    exact congrFun hf u
+  rw [hf'] at hd
+  have hc := D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv outside r (compensation M q r)
+    (C 0 + C 1 + C 2 + C 3) (C 0 + C 2) (C 0 + C 1) (C 0) x
+  have hh := hd.unique hc
+  calc
+    _ = ∑ i : Fin M, Real.sigmoid (x + (score q r e o i - z0)) *
+        (1 - Real.sigmoid (x + (score q r e o i - z0))) := by
+      apply sum_congr rfl
+      intro i _
+      have hx : x + (score q r e o i - z0) = score q r e o i - Real.log B0 + Real.log t := by
+        dsimp [x]
+        ring
+      rw [hx, D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibrated_row_parameter r e o hq hqm hr hr1 ha ha1 t ht i]
+    _ = _ := hh
+
 end
 end D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall

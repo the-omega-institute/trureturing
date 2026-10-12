@@ -910,10 +910,13 @@ private theorem native_environment_full_calibration {M q s : ℕ} (S : Support M
   change ((RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
     fun i => count e y.val i.val (-1) = l).card = _ at hU
   congr 1
-  · exact_mod_cast hc.1.symm.trans hV
-  · exact_mod_cast hc.2.1.symm.trans hR
-  · exact_mod_cast hc.2.2.1.symm.trans hU
-  · exact_mod_cast hc.2.2.2.symm
+  · simpa only [Nat.cast_add] using
+      congrArg (fun n : ℕ => (n : ℝ)) (hc.1.symm.trans hV)
+  · simpa only [Nat.cast_add, RectangleHypergeometricKernel.nativeMarginRectangleReadout] using
+      congrArg (fun n : ℕ => (n : ℝ)) (hc.2.1.symm.trans hR)
+  · simpa only [Nat.cast_add, RectangleHypergeometricKernel.nativeMarginRectangleReadout] using
+      congrArg (fun n : ℕ => (n : ℝ)) (hc.2.2.1.symm.trans hU)
+  · exact congrArg (fun n : ℕ => (n : ℝ)) hc.2.2.2.symm
 
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
