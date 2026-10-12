@@ -695,4 +695,94 @@ private lemma bell_trace (A B : Op 3) :
   unfold tr
   rw [ht]
   simp [Complex.mul_re, div_eq_mul_inv, mul_comm]
+private lemma conjugate_linear {n : ℕ} (a b : ℝ) (T : Op n) :
+    conjugate (a • 1 + b • T) = a • 1 + b • conjugate T := by
+  ext x y
+  by_cases h : x = y <;> simp [conjugate, h]
+private lemma linear_square {n : ℕ} (T : Op n)
+    (hT : T * T = (7 : ℝ) • 1) (s : ℝ) :
+    (1 + s • T) * (1 + s • T) = (1 + 7 * s ^ 2 : ℝ) • 1 + (2 * s) • T := by
+  simp only [Matrix.add_mul, Matrix.mul_add, Matrix.one_mul, Matrix.mul_one,
+    Matrix.smul_mul, Matrix.mul_smul, smul_smul, hT]
+  module
+private lemma linear_posDef {n : ℕ} (T : Op n) (hA : Tᴴ = T)
+    (hT : T * T = (7 : ℝ) • 1) (s : ℝ) (hs : 7 * s ^ 2 < 1) :
+    (1 + s • T).PosDef := by
+  let X : Op n := 1 + s • T
+  have hx : Xᴴ = X := by
+    simp only [X, Matrix.conjTranspose_add, Matrix.conjTranspose_one,
+      Matrix.conjTranspose_smul, star_trivial, hA]
+  have he : X = (1 / 2 : ℝ) • (X * X + (1 - 7 * s ^ 2 : ℝ) • 1) := by
+    dsimp only [X]
+    rw [linear_square T hT s]
+    module
+  change X.PosDef
+  have hp : (X * X).PosSemidef := by
+    simpa only [hx] using Matrix.posSemidef_self_mul_conjTranspose X
+  rw [he]
+  exact (Matrix.PosDef.posSemidef_add hp
+    (Matrix.PosDef.one.smul (show 0 < 1 - 7 * s ^ 2 by linarith))).smul (by norm_num)
+private lemma polar_support (T : Op 3) (s : ℝ) (hs : 0 ≤ s)
+    (hT : ∀ η ∈ STAB 3, tr (η * T) ≤ 1) {η : Op 3} (hη : η ∈ STAB 3) :
+    tr (η * ((1 / (1 + s) : ℝ) • (1 + s • T))) ≤ 1 := by
+  have ht := (stab_state hη).2
+  have he : tr (η * ((1 / (1 + s) : ℝ) • (1 + s • T))) =
+      (1 + s * tr (η * T)) / (1 + s) := by
+    simp only [tr, Matrix.mul_smul, Matrix.mul_add, Matrix.mul_one, Matrix.trace_smul,
+      Matrix.trace_add, ht, Complex.smul_re, Complex.add_re, Complex.one_re, smul_eq_mul]
+    ring
+  rw [he, div_le_iff₀ (by linarith : 0 < 1 + s)]
+  nlinarith [hT η hη]
+private lemma S_square_real : S * S = (7 : ℝ) • (1 : Op 3) := by
+  rw [S_square]
+  ext x y
+  simp [Algebra.smul_def]
+private lemma conjugate_S_square : conjugate S * conjugate S = (7 : ℝ) • (1 : Op 3) := by
+  rw [← conjugate_product, S_square_real]
+  have he := conjugate_linear (7 : ℝ) 0 S
+  simpa using he
+private lemma W_bell (s : ℝ) :
+    tr (bell * tensor (W s) (conjugate (W s))) = (1 + 7 * s ^ 2) / (1 + s) ^ 2 := by
+  have ha : (W s)ᴴ = W s := by
+    simp only [W, Matrix.conjTranspose_smul, Matrix.conjTranspose_add,
+      Matrix.conjTranspose_one, star_trivial, S_adjoint]
+  rw [bell_trace, ha]
+  have he : W s * W s = ((1 / (1 + s) : ℝ) ^ 2) •
+      ((1 + 7 * s ^ 2 : ℝ) • 1 + (2 * s) • S) := by
+    unfold W
+    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+      linear_square S S_square_real s, ← sq (1 / (1 + s) : ℝ)]
+  rw [he]
+  have ht : (1 : Op 3).trace = (8 : ℂ) := by
+    simp [Matrix.trace_one]
+  simp only [tr, Matrix.trace_smul, Matrix.trace_add, S_trace, ht, smul_zero, add_zero,
+    Complex.smul_re, smul_eq_mul]
+  change (1 / (1 + s)) ^ 2 * ((1 + 7 * s ^ 2) * 8) / 8 = _
+  simp only [div_pow, one_pow]
+  ring
+theorem stabilizer_polar_tensor_escape (s : ℝ) (hl : 1 / 3 < s) (hu : 7 * s ^ 2 < 1) :
+    (∀ (n : ℕ) (η : Op n), η ∈ STAB n → IsState η) ∧
+    Sᴴ = S ∧ S * S = (7 : ℂ) • (1 : Op 3) ∧ S.trace = 0 ∧
+    (∀ η ∈ STAB 3, tr (η * S) ≤ 1 ∧ tr (η * conjugate S) ≤ 1) ∧
+    (∀ A B : Op 3, tr (bell * tensor A (conjugate B)) = tr (A * Bᴴ) / 8) ∧
+    bell ∈ STAB 6 ∧ (W s).PosDef ∧ (conjugate (W s)).PosDef ∧
+    (∀ η ∈ STAB 3, tr (η * W s) ≤ 1 ∧ tr (η * conjugate (W s)) ≤ 1) ∧
+    tr (bell * tensor (W s) (conjugate (W s))) = (1 + 7 * s ^ 2) / (1 + s) ^ 2 ∧
+    1 < tr (bell * tensor (W s) (conjugate (W s))) := by
+  have hs : 0 < s := by linarith
+  have hc : conjugate (W s) = (1 / (1 + s) : ℝ) • (1 + s • conjugate S) := by
+    have he := conjugate_linear (1 / (1 + s)) ((1 / (1 + s)) * s) S
+    simpa only [W, smul_add, smul_smul] using he
+  refine ⟨fun n η hη => stab_state hη, S_adjoint, S_square, S_trace,
+    fun η hη => ⟨S_support hη, conjugate_S_support hη⟩, bell_trace, bell_mem,
+    (linear_posDef S S_adjoint S_square_real s hu).smul (by positivity), ?_, ?_, W_bell s, ?_⟩
+  · rw [hc]
+    exact (linear_posDef (conjugate S) (by rw [conjugate_adjoint, S_adjoint])
+      conjugate_S_square s hu).smul (by positivity)
+  · intro η hη
+    rw [hc]
+    exact ⟨polar_support S s hs.le (fun _ h => S_support h) hη,
+      polar_support (conjugate S) s hs.le (fun _ h => conjugate_S_support h) hη⟩
+  · rw [W_bell, lt_div_iff₀ (sq_pos_of_pos (by linarith : 0 < 1 + s))]
+    nlinarith
 end D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
