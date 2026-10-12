@@ -8,6 +8,9 @@
 
 import Mathlib.NumberTheory.ModularForms.NormTrace
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Algebra.Field.ZMod
 
 open UpperHalfPlane ModularForm ModularFormClass MatrixGroups
 open Matrix Matrix.SpecialLinearGroup
@@ -25,8 +28,8 @@ def primeDiagRat (p : ℕ) [Fact p.Prime] : GL (Fin 2) ℚ :=
       norm_num
       exact_mod_cast (Nat.Prime.ne_zero Fact.out))
 
-/-- We use the inverse rational diagonal in order that translation by its real image
-has target subgroup `g⁻¹ • 𝒮ℒ`, exactly the subgroup recognized by the arithmetic API. -/
+/-- The same rational diagonal used in the classical prime Hecke correspondence; its
+real image translates level-one forms and has target subgroup `g⁻¹ • 𝒮ℒ`. -/
 def primeHeckeRat (p : ℕ) [Fact p.Prime] : GL (Fin 2) ℚ :=
   primeDiagRat p
 
@@ -47,6 +50,290 @@ private lemma primeHeckeReal_det_pos (p : ℕ) [Fact p.Prime] :
   have hp : 0 < p := (show Nat.Prime p from Fact.out).pos
   norm_num [primeHeckeReal, primeHeckeRat, primeDiagRat,
     Matrix.det_fin_two, hp]
+
+private lemma primeHeckeReal_coe (p : ℕ) [Fact p.Prime] :
+    (primeHeckeReal p : Matrix (Fin 2) (Fin 2) ℝ) = !![(p : ℝ), 0; 0, 1] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [primeHeckeReal, primeHeckeRat, primeDiagRat,
+      Matrix.GeneralLinearGroup.map, Matrix.GeneralLinearGroup.mkOfDetNeZero]
+
+private lemma primeHeckeReal_00 (p : ℕ) [Fact p.Prime] :
+    primeHeckeReal p 0 0 = (p : ℝ) := by
+  simpa using congrFun₂ (primeHeckeReal_coe p) 0 0
+
+private lemma primeHeckeReal_10 (p : ℕ) [Fact p.Prime] :
+    primeHeckeReal p 1 0 = (0 : ℝ) := by
+  simpa using congrFun₂ (primeHeckeReal_coe p) 1 0
+
+private lemma primeHeckeReal_11 (p : ℕ) [Fact p.Prime] :
+    primeHeckeReal p 1 1 = (1 : ℝ) := by
+  simpa using congrFun₂ (primeHeckeReal_coe p) 1 1
+
+private lemma primeHecke_diag_apply (p : ℕ) [Fact p.Prime] (f : CuspForm 𝒮ℒ k) (z : ℍ) :
+    ((f : ℍ → ℂ) ∣[k] primeHeckeReal p) z =
+      (p : ℂ) ^ (k - 1) * f (primeHeckeReal p • z) := by
+  rw [ModularForm.slash_apply]
+  simp [UpperHalfPlane.denom, primeHeckeReal_10, primeHeckeReal_11]
+  have hdet : (primeHeckeReal p : Matrix (Fin 2) (Fin 2) ℝ).det = (p : ℝ) := by
+    rw [primeHeckeReal_coe]
+    simp [Matrix.det_fin_two]
+  have hdet' : (primeHeckeReal p).det.val = (p : ℝ) := by
+    simpa only [Matrix.GeneralLinearGroup.val_det_apply] using hdet
+  rw [hdet]
+  simp only [σ]
+  rw [hdet']
+  simp [show (0 : ℝ) < p by exact_mod_cast (show 0 < p from (Fact.out : Nat.Prime p).pos)]
+  ring
+
+/-- The upper-triangular representative of the non-infinite cosets. -/
+def primeHeckeUpper (p : ℕ) [Fact p.Prime] (a : ℤ) : GL (Fin 2) ℝ :=
+  Matrix.GeneralLinearGroup.mkOfDetNeZero
+    (!![(1 : ℝ), (a : ℝ); 0, (p : ℝ)]) (by
+      rw [Matrix.det_fin_two]
+      norm_num
+      exact_mod_cast (Nat.Prime.ne_zero Fact.out))
+
+private lemma primeHecke_upper_matrix (p : ℕ) [Fact p.Prime] (a : ℤ) :
+    Matrix.SpecialLinearGroup.mapGL ℝ ModularGroup.S * primeHeckeUpper p a =
+      primeHeckeReal p * Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.S * ModularGroup.T ^ a) := by
+  apply Units.ext
+  change
+    (Matrix.SpecialLinearGroup.mapGL ℝ ModularGroup.S : Matrix (Fin 2) (Fin 2) ℝ) *
+        (primeHeckeUpper p a : Matrix (Fin 2) (Fin 2) ℝ) =
+      (primeHeckeReal p : Matrix (Fin 2) (Fin 2) ℝ) *
+        (Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.S * ModularGroup.T ^ a) :
+          Matrix (Fin 2) (Fin 2) ℝ)
+  rw [primeHeckeReal_coe]
+  have hST :
+      (Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.S * ModularGroup.T ^ a) :
+        Matrix (Fin 2) (Fin 2) ℝ) = !![(0 : ℝ), -1; 1, (a : ℝ)] := by
+    have hT :
+        (Matrix.SpecialLinearGroup.mapGL ℝ (ModularGroup.T ^ a) :
+          Matrix (Fin 2) (Fin 2) ℝ) = !![(1 : ℝ), (a : ℝ); 0, 1] := by
+      rw [Matrix.SpecialLinearGroup.mapGL_coe_matrix]
+      change ((((ModularGroup.T ^ a : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ).map
+        (Int.castRingHom ℝ))) = _
+      rw [ModularGroup.coe_T_zpow]
+      ext i j
+      fin_cases i <;> fin_cases j <;> norm_num
+    rw [Matrix.SpecialLinearGroup.mapGL_coe_matrix]
+    change
+      ((((ModularGroup.S * ModularGroup.T ^ a : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ).map
+        (Int.castRingHom ℝ))) = _
+    rw [show ((ModularGroup.S * ModularGroup.T ^ a : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) =
+      (ModularGroup.S : Matrix (Fin 2) (Fin 2) ℤ) *
+        ((ModularGroup.T ^ a : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) by rfl]
+    rw [ModularGroup.coe_T_zpow]
+    simp only [Matrix.map_mul, Matrix.map_apply]
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [Matrix.mul_apply, Fin.sum_univ_succ]
+  rw [hST]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [primeHeckeUpper, ModularGroup.coe_S, Matrix.mul_apply, Fin.sum_univ_succ]
+
+/-- The actual upper-half-plane point `(z+a)/p`, with its positivity proof retained. -/
+def primeHeckeUpperPoint (p : ℕ) [Fact p.Prime] (a : ℤ) (z : ℍ) : ℍ :=
+  ⟨((z : ℂ) + (a : ℂ)) / (p : ℂ), by
+    have hp : (0 : ℝ) < p := by
+      exact_mod_cast (show 0 < p from (Fact.out : Nat.Prime p).pos)
+    simp [Complex.div_im, hp, z.im_pos]
+  ⟩
+
+private lemma primeHeckeUpper_coe (p : ℕ) [Fact p.Prime] (a : ℤ) :
+    (primeHeckeUpper p a : Matrix (Fin 2) (Fin 2) ℝ) =
+      !![(1 : ℝ), (a : ℝ); 0, (p : ℝ)] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [primeHeckeUpper]
+
+private lemma primeHecke_upper_apply (p : ℕ) [Fact p.Prime] (a : ℤ)
+    (k : ℤ) (f : CuspForm 𝒮ℒ k) (z : ℍ) :
+    ((f : ℍ → ℂ) ∣[k] primeHeckeUpper p a) z =
+      (p : ℂ)⁻¹ * f (primeHeckeUpperPoint p a z) := by
+  rw [ModularForm.slash_apply]
+  have hdet : (primeHeckeUpper p a : Matrix (Fin 2) (Fin 2) ℝ).det = (p : ℝ) := by
+    rw [primeHeckeUpper_coe]
+    simp [Matrix.det_fin_two]
+  have hdet' : (primeHeckeUpper p a).det.val = (p : ℝ) := by
+    simpa only [Matrix.GeneralLinearGroup.val_det_apply] using hdet
+  have hp : (0 : ℝ) < p := by
+    exact_mod_cast (show 0 < p from (Fact.out : Nat.Prime p).pos)
+  have hpoint : primeHeckeUpper p a • z = primeHeckeUpperPoint p a z := by
+    apply UpperHalfPlane.ext
+    rw [UpperHalfPlane.coe_smul_of_det_pos (by simpa [hdet'] using hp)]
+    simp [UpperHalfPlane.num, UpperHalfPlane.denom, primeHeckeUpper_coe,
+      primeHeckeUpperPoint, div_eq_mul_inv]
+  rw [hpoint]
+  simp only [σ]
+  rw [hdet']
+  simp only [if_pos hp]
+  have hdenom : UpperHalfPlane.denom (primeHeckeUpper p a) (z : ℂ) = (p : ℂ) := by
+    simp [UpperHalfPlane.denom, primeHeckeUpper_coe]
+  rw [hdenom]
+  simp only [abs_of_pos hp, Complex.ofReal_natCast, ContinuousAlgEquiv.refl_apply]
+  have hpC : (p : ℂ) ≠ 0 := by exact_mod_cast (show p ≠ 0 from (Fact.out : Nat.Prime p).ne_zero)
+  calc
+    f (primeHeckeUpperPoint p a z) * (p : ℂ) ^ (k - 1) * (p : ℂ) ^ (-k) =
+        f (primeHeckeUpperPoint p a z) *
+          ((p : ℂ) ^ (k - 1) * (p : ℂ) ^ (-k)) := by ring
+    _ = f (primeHeckeUpperPoint p a z) * (p : ℂ) ^ ((-1 : ℤ)) := by
+      rw [← zpow_add₀ hpC]
+      congr 2
+      omega
+    _ = (p : ℂ)⁻¹ * f (primeHeckeUpperPoint p a z) := by
+      rw [zpow_neg_one]
+      ring
+
+/-- Representatives are inverted because `CuspForm.trace` uses their inverses. -/
+def primeCosetRep (p : ℕ) : Fin p ⊕ Unit → SL(2, ℤ)
+  | .inl a => (ModularGroup.S * ModularGroup.T ^ (a.val : ℤ))⁻¹
+  | .inr _ => 1
+
+private lemma primeCosetRep_inl_coe (p : ℕ) (a : Fin p) :
+    (primeCosetRep p (.inl a) : Matrix (Fin 2) (Fin 2) ℤ) =
+      !![(a.val : ℤ), 1; -1, 0] := by
+  simp only [primeCosetRep, Matrix.SpecialLinearGroup.coe_inv,
+    Matrix.SpecialLinearGroup.coe_mul, ModularGroup.coe_S,
+    ModularGroup.coe_T_zpow]
+  norm_num [Matrix.mul_fin_two, Matrix.adjugate_fin_two]
+
+private lemma primeCosetRep_inv_inl_coe (p : ℕ) (a : Fin p) :
+    (((primeCosetRep p (.inl a))⁻¹ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) =
+      !![0, -1; 1, (a.val : ℤ)] := by
+  simp only [primeCosetRep, inv_inv, Matrix.SpecialLinearGroup.coe_mul, ModularGroup.coe_S,
+    ModularGroup.coe_T_zpow]
+  norm_num [Matrix.mul_fin_two]
+
+private lemma primeCosetRep_pair_mem (p : ℕ) [Fact p.Prime] (a b : Fin p) :
+    (primeCosetRep p (.inl a))⁻¹ * primeCosetRep p (.inl b) ∈
+      CongruenceSubgroup.Gamma0 p ↔ a = b := by
+  rw [CongruenceSubgroup.Gamma0_mem]
+  change ((((((primeCosetRep p (.inl a))⁻¹ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) *
+    (primeCosetRep p (.inl b) : Matrix (Fin 2) (Fin 2) ℤ)) 1 0 : ℤ) : ZMod p) = 0 ↔ _
+  rw [primeCosetRep_inv_inl_coe, primeCosetRep_inl_coe]
+  norm_num [Matrix.mul_apply, Fin.sum_univ_succ]
+  rw [← sub_eq_add_neg, sub_eq_zero]
+  constructor
+  · intro h
+    apply Fin.ext
+    have h' := (ZMod.natCast_eq_natCast_iff' b.val a.val p).mp h
+    simpa only [Nat.mod_eq_of_lt a.isLt, Nat.mod_eq_of_lt b.isLt] using h'.symm
+  · rintro rfl
+    rfl
+
+private lemma primeCosetRep_cover (p : ℕ) [Fact p.Prime] (s : SL(2, ℤ)) :
+    ∃ i : Fin p ⊕ Unit, (primeCosetRep p i)⁻¹ * s ∈ CongruenceSubgroup.Gamma0 p := by
+  by_cases hc : (s 1 0 : ZMod p) = 0
+  · exact ⟨.inr (), by simpa [primeCosetRep] using hc⟩
+  · let x : ZMod p := -(s 0 0 : ZMod p) / (s 1 0 : ZMod p)
+    let a : Fin p := ⟨x.val, ZMod.val_lt x⟩
+    refine ⟨.inl a, ?_⟩
+    rw [CongruenceSubgroup.Gamma0_mem]
+    change ((((((primeCosetRep p (.inl a))⁻¹ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) *
+      (s : Matrix (Fin 2) (Fin 2) ℤ)) 1 0 : ℤ) : ZMod p) = 0
+    rw [primeCosetRep_inv_inl_coe]
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ]
+    change (s 0 0 : ZMod p) + (x.val : ZMod p) * (s 1 0 : ZMod p) = 0
+    rw [ZMod.natCast_zmod_val]
+    dsimp [x]
+    simp [div_mul_cancel₀ _ hc]
+
+private def primeCosetClass (p : ℕ) (i : Fin p ⊕ Unit) :
+    SL(2, ℤ) ⧸ CongruenceSubgroup.Gamma0 p := ⟦primeCosetRep p i⟧
+
+private lemma primeCosetClass_bijective (p : ℕ) [Fact p.Prime] :
+    Function.Bijective (primeCosetClass p) := by
+  constructor
+  · intro i j hij
+    have hm : (primeCosetRep p i)⁻¹ * primeCosetRep p j ∈
+        CongruenceSubgroup.Gamma0 p :=
+      QuotientGroup.leftRel_apply.mp (Quotient.exact hij)
+    cases i with
+    | inl a =>
+      cases j with
+      | inl b => exact congrArg Sum.inl ((primeCosetRep_pair_mem p a b).mp hm)
+      | inr u =>
+        exfalso
+        rw [show primeCosetRep p (.inr u) = 1 by rfl, mul_one] at hm
+        rw [CongruenceSubgroup.Gamma0_mem] at hm
+        have he := congrFun₂ (primeCosetRep_inv_inl_coe p a) 1 0
+        rw [he] at hm
+        norm_num at hm
+    | inr u =>
+      cases j with
+      | inl b =>
+        exfalso
+        rw [CongruenceSubgroup.Gamma0_mem] at hm
+        simp only [primeCosetRep, inv_one, one_mul] at hm
+        have he := congrFun₂ (primeCosetRep_inl_coe p b) 1 0
+        change ((primeCosetRep p (.inl b) 1 0 : ℤ) : ZMod p) = 0 at hm
+        rw [he] at hm
+        norm_num at hm
+      | inr v => congr
+  · intro q
+    induction q using Quotient.inductionOn with
+    | h s =>
+      obtain ⟨i, hi⟩ := primeCosetRep_cover p s
+      exact ⟨i, Quotient.sound (QuotientGroup.leftRel_apply.mpr hi)⟩
+
+/-- All the prime-index cosets, including `p = 2`, have exactly these representatives. -/
+def primeCosetEquiv (p : ℕ) [Fact p.Prime] :
+    (Fin p ⊕ Unit) ≃ (SL(2, ℤ) ⧸ CongruenceSubgroup.Gamma0 p) :=
+  Equiv.ofBijective (primeCosetClass p) (primeCosetClass_bijective p)
+
+private lemma primeHeckeSubgroup_mem_iff (p : ℕ) [Fact p.Prime] (s : SL(2, ℤ)) :
+    Matrix.SpecialLinearGroup.mapGL ℝ s ∈ primeHeckeSubgroup p ↔
+      ∃ t : SL(2, ℤ), Matrix.SpecialLinearGroup.mapGL ℝ t * primeHeckeReal p =
+        primeHeckeReal p * Matrix.SpecialLinearGroup.mapGL ℝ s := by
+  change Matrix.SpecialLinearGroup.mapGL ℝ s ∈
+    (ConjAct.toConjAct (primeHeckeReal p))⁻¹ •
+      (Matrix.SpecialLinearGroup.mapGL ℝ).range ↔ _
+  rw [Subgroup.mem_inv_pointwise_smul_iff]
+  simp only [ConjAct.toConjAct_smul, MonoidHom.mem_range]
+  constructor
+  · rintro ⟨t, ht⟩
+    exact ⟨t, (eq_mul_inv_iff_mul_eq).mp ht⟩
+  · rintro ⟨t, ht⟩
+    exact ⟨t, (eq_mul_inv_iff_mul_eq).mpr ht⟩
+
+/-- The actual conjugate intersection is exactly the lower-left congruence subgroup. -/
+theorem primeHeckeSubgroup_mem (p : ℕ) [Fact p.Prime] (s : SL(2, ℤ)) :
+    Matrix.SpecialLinearGroup.mapGL ℝ s ∈ primeHeckeSubgroup p ↔
+      s ∈ CongruenceSubgroup.Gamma0 p := by
+  rw [primeHeckeSubgroup_mem_iff, CongruenceSubgroup.Gamma0_mem,
+    ZMod.intCast_zmod_eq_zero_iff_dvd]
+  constructor
+  · rintro ⟨t, ht⟩
+    have he := congrArg (fun x : GL (Fin 2) ℝ => x 1 0) ht
+    have he' : (t 1 0 : ℝ) * (p : ℝ) = (s 1 0 : ℝ) := by
+      simpa [Matrix.mul_apply, Fin.sum_univ_succ, primeHeckeReal_coe] using he
+    have heZ : t 1 0 * (p : ℤ) = s 1 0 := by exact_mod_cast he'
+    exact ⟨t 1 0, by simpa [mul_comm] using heZ.symm⟩
+  · rintro ⟨m, hm⟩
+    let t : SL(2, ℤ) := ⟨!![s 0 0, (p : ℤ) * s 0 1; m, s 1 1], by
+      have hs := s.property
+      rw [Matrix.det_fin_two] at hs
+      norm_num [Matrix.det_fin_two]
+      rw [hm] at hs
+      nlinarith⟩
+    refine ⟨t, ?_⟩
+    apply Units.ext
+    change (Matrix.SpecialLinearGroup.mapGL ℝ t : Matrix (Fin 2) (Fin 2) ℝ) *
+      (primeHeckeReal p : Matrix (Fin 2) (Fin 2) ℝ) =
+        (primeHeckeReal p : Matrix (Fin 2) (Fin 2) ℝ) *
+          (Matrix.SpecialLinearGroup.mapGL ℝ s : Matrix (Fin 2) (Fin 2) ℝ)
+    rw [primeHeckeReal_coe]
+    simp only [Matrix.SpecialLinearGroup.mapGL_coe_matrix]
+    change ((t : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℝ)) *
+      !![(p : ℝ), 0; 0, 1] =
+        !![(p : ℝ), 0; 0, 1] *
+          ((s : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℝ))
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [t, Matrix.mul_apply, Fin.sum_univ_succ, hm] <;> ring
 
 private instance primeHeckeSubgroup_isArithmetic (p : ℕ) [Fact p.Prime] :
     (primeHeckeSubgroup p).IsArithmetic := primeHeckeSubgroup_arithmetic p
