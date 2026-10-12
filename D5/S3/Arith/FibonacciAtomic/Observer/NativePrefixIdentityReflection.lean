@@ -53,7 +53,7 @@ private theorem atomicRank_substitution (t : Source) :
       simp only [Nat.succ_eq_add_one, h]
       split <;> simp <;> omega
 
-private def gamma : Source → Nat
+def gamma : Source → Nat
   | .of _ => 0
   | .mul s t =>
       if (atomicRank (.mul s t)).isSome then 0 else 1 + gamma s + gamma t
@@ -74,13 +74,13 @@ private theorem gamma_substitution (t : Source) : gamma (substitution t) = gamma
       rw [hc]
       cases atomicRank (.mul s t) <;> simp [ihs, iht]
 
-private theorem gamma_iterate (a : Nat) (t : Source) :
+theorem gamma_iterate (a : Nat) (t : Source) :
     gamma (substitution^[a] t) = gamma t := by
   induction a with
   | zero => rfl
   | succ a ih => rw [Function.iterate_succ_apply', gamma_substitution, ih]
 
-private theorem gamma_pair (s t : Source) (h : 0 < gamma s ∨ 0 < gamma t) :
+theorem gamma_pair (s t : Source) (h : 0 < gamma s ∨ 0 < gamma t) :
     gamma (.mul s t) = 1 + gamma s + gamma t := by
   rcases h with h | h
   · have hs := (gamma_positive s).mp h
@@ -88,7 +88,7 @@ private theorem gamma_pair (s t : Source) (h : 0 < gamma s ∨ 0 < gamma t) :
   · have ht := (gamma_positive t).mp h
     cases hs : atomicRank s <;> simp [gamma, atomicRank, ht, hs]
 
-private theorem gamma_parent (s t : Source) :
+theorem gamma_parent (s t : Source) :
     gamma s ≤ gamma (.mul s t) ∧ gamma t ≤ gamma (.mul s t) := by
   by_cases h : 0 < gamma s ∨ 0 < gamma t
   · rw [gamma_pair s t h]; constructor <;> omega
@@ -96,7 +96,7 @@ private theorem gamma_parent (s t : Source) :
     have ht : gamma t = 0 := by omega
     rw [hs,ht]; exact ⟨Nat.zero_le _,Nat.zero_le _⟩
 
-private def kappa : Source → Nat
+def kappa : Source → Nat
   | .of true => 0
   | .of false => 1
   | .mul _ t => 2 + kappa t
@@ -108,17 +108,17 @@ private theorem kappa_substitution (t : Source) : kappa (substitution t) = kappa
       change 2 + kappa (substitution t) = (2 + kappa t) + 1
       rw [iht]; omega
 
-private theorem kappa_iterate (a : Nat) (t : Source) :
+theorem kappa_iterate (a : Nat) (t : Source) :
     kappa (substitution^[a] t) = kappa t + a := by
   induction a with
   | zero => simp
   | succ a ih => rw [Function.iterate_succ_apply', kappa_substitution, ih]; omega
 
-private def comb : Nat → Source
+def comb : Nat → Source
   | 0 => .of true
   | r + 1 => .mul (comb r) (.of true)
 
-private theorem gamma_comb (r : Nat) : gamma (comb r) = r := by
+theorem gamma_comb (r : Nat) : gamma (comb r) = r := by
   induction r with
   | zero => rfl
   | succ r ih =>
@@ -219,12 +219,12 @@ private def occurs {m : Nat} : MixedExpr (Fin m) → Fin m → Nat
   | .residual _ i, j => if i = j then 1 else 0
   | .pair A B, j => occurs A j + occurs B j
 
-private def active {ι : Type} : MixedExpr ι → Bool
+def active {ι : Type} : MixedExpr ι → Bool
   | .ground _ => false
   | .residual _ _ => true
   | .pair A B => active A || active B
 
-private theorem eval_closed {ι : Type} (E : MixedExpr ι) (h : active E = false)
+theorem eval_closed {ι : Type} (E : MixedExpr ι) (h : active E = false)
     (z v : ι → Source) : eval z E = eval v E := by
   induction E with
   | ground g => rfl
