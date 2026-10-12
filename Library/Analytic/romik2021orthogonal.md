@@ -40,6 +40,18 @@ compact convergence estimates are separate obligations; the theta transform
 alone does not establish those expansions or Cardon's equivalence involving
 simple zeros and its specific measure and orthogonal polynomials.
 
+## Derivative suppliers and their variable scopes
+
+The [second-level concavity source](planatsole2026secondlevel.md)
+states a finite-order inequality for $K(\sqrt T)$ in Csordas'
+normalization $\Phi(x)=2K(x/2)$, so its receiving coordinate is
+$T=x^2/4$. The [original-variable derivative counterexample](sra2026thetakernelcounterexample.md)
+reports failure of a different all-order inequality for $K(u)$.
+The signed neighboring-row comparison at every prescribed Jensen node
+and the extra common-zero vanishing remain unpaid interfaces to these
+source results. The kernel representation and the derivative reports retain their own source
+provenance and cannot be counted as new RH estimates.
+
 ## Reusable theta tail and its local scale
 
 Lemma 2.3, printed p.10, equations (2.8)–(2.9), directly supplies
