@@ -2934,7 +2934,8 @@ $f_n$ for all three offsets. It reuses (LC65)–(LC87), the classical
 cubic-coordinate method and the Airy integral and real-axis envelopes.
 It does not prove a new generic normal-form or Airy theorem, claim
 originality, or provide Lean certification. The fixed-band argument first states its exact common-domain
-interface (U); the final subsection supplies it by applying a published
+interface (U); “Supplying the common cubic domain by an existing analytic implicit theorem”
+supplies it by applying a published
 analytic implicit-function theorem to the actual source family. All new
 conclusions concern sufficiently large degrees and actual positive real
 Jensen nodes.
@@ -2990,7 +2991,8 @@ source disk about $\rho_e$, the maps and inverses must have uniformly
 bounded analytic norms, and $|R_{n,s}|$ must have a uniform positive
 lower bound. Uniform analytic convergence in (LC66) supplies source
 bounds; invoking the local theorem independently for each $n$ does
-not by itself establish these different quantifiers. The final subsection supplies this common-domain interface through an
+not by itself establish these different quantifiers. “Supplying the common cubic domain by an existing analytic implicit theorem”
+supplies this common-domain interface through an
 existing complex Banach-space analytic implicit-function theorem.
 
 ### Exact normalization and the shared adjacent coefficients
@@ -3356,7 +3358,7 @@ $$
 
 It therefore overlaps the all-actual-positive-root exterior
 exclusion (LC64). This is a fixed original-coordinate overlap,
-not merely a shrinking-window comparison. The final subsection
+not merely a shrinking-window comparison. “Supplying the common cubic domain by an existing analytic implicit theorem”
 supplies (U). This application does not settle growing hard-edge
 heights, initial degrees, complex roots,
 the total real-root count, global collision propagation, RH, or
@@ -3561,3 +3563,351 @@ real-root count, complex-root exclusion, growing hard-edge
 control, RH, or strict Robin for every $H>5040$ follows.
 The newly supplied interface and its application remain without
 Lean certification.
+
+## A growing-height comparison from the unchanged Gamma–zeta source
+
+Keep the original $F(z)=\Xi(\sqrt z)/\xi_0$, $r_n$, $\omega_n$ and
+same-source $I_{n,d}$ of (LC49)–(LC51), for $d=-1,0,1$. The existing
+compact bulk, fixed fold and outer exclusion are reused. The application
+below isolates the exact Gamma factor as the phase and treats the zeta
+factor on the original circle. It uses sectorial Stirling and the fixed
+Gaussian remainder supplier already used in (LC53)–(LC55); neither generic
+result is reproved. It is an ordinary-analysis source application,
+without a Lean certificate, numerical starting degree or originality claim.
+
+### A coarse strip bound and the source factor
+
+The additional published supplier is the Euler–Maclaurin representation
+[DLMF 25.2.8](https://dlmf.nist.gov/25.2.E8), with $\Re s>0$, $s\ne1$:
+
+$$
+\zeta(s)=\sum_{k=1}^N k^{-s}+\frac{N^{1-s}}{s-1}
+-s\int_N^\infty\{x\}x^{-s-1}\,dx. \tag{LC134}
+$$
+
+On a lower semicircle write $u=\rho e^{-i\vartheta}$,
+$0\le\vartheta\le\pi$, $A=\omega_n\sqrt\rho$ and
+
+$$
+s=1/2+i\omega_n\sqrt u
+=1/2+A\sin(\vartheta/2)+iA\cos(\vartheta/2),
+\qquad \sigma=\Re s\ge1/2.
+$$
+
+For $A\ge4$ and $\sigma\le2$, one has $|\Im s|\ge A/2$ and
+$|s|\le2A$. Take $N=\lceil A\rceil$ in (LC134). The three terms are
+bounded by $2\sqrt N$, $2\sqrt N/A$ and $4A N^{-1/2}$, respectively.
+For $\sigma\ge2$, the Dirichlet series gives
+$|\zeta(s)|\le\zeta(2)<2$. Thus, on this entire original semicircle,
+
+$$
+|\zeta(s)|\le C\sqrt A,
+\qquad |\zeta(s)-1|\le3\,2^{-\sigma}\quad(\sigma\ge2).
+\tag{LC135}
+$$
+
+The second bound is the sum–integral bound for the same Dirichlet series.
+Neither bound is a reciprocal-zeta estimate, source-zero exclusion in the
+critical strip, or RH premise.
+
+Define the unchanged exact factorization
+
+$$
+G_n(u)=\frac{s(s-1)}{2\xi_0}\pi^{-s/2}\Gamma(s/2),
+\qquad F(r_nu)=G_n(u)\zeta(s),\qquad
+h^G_{n,y}(u)=yu+\frac1n\log G_n(u)-\operatorname{Log}u.
+\tag{LC136}
+$$
+
+A branch for the logarithm is used only on the local saddle neighborhood.
+The Gamma-only phase is an estimating interface to the same source;
+$F$, the coefficient window and the actual row nodes are not changed.
+On the upper semicircle use the conjugate of the lower original-source
+integrand, since $F$ has real coefficients. It is unnecessary to assert
+that the same right-half-plane Gamma approximation holds on both halves.
+
+### Uniform finite saddles on an expanding parameter interval
+
+There are fixed $Y_0>1$, $\kappa>0$ and $N$ for the parameter interval
+
+$$
+Y_0\le y\le Y_n:=\kappa n/\log n,\qquad n\ge N.
+\tag{LC137}
+$$
+
+The constants may be reduced or increased in the order indicated below.
+Put
+
+$$
+T_n(y)=\omega_n/\sqrt y,\qquad
+\ell_n(y)=\log(T_n(y)/(2\pi)),\qquad
+\eta_n(y)=T_n(y)/(4n).
+$$
+
+Uniformly on (LC137), (LC49) gives $T_n\ge c\sqrt{n/\log n}$,
+$c\log n\le\ell_n\le C\log n$ and
+$c/\sqrt y\le\eta_n\ell_n\le C/\sqrt y$. In a fixed disk about
+$v=yu=1$, the sectorial Stirling expansion and its analytic derivatives
+therefore give the exact saddle equation in the form
+
+$$
+u\partial_u h^G_{n,y}=0
+\iff
+v-1+i\eta_n\sqrt v\bigl(\ell_n+i\pi/2+\tfrac12\operatorname{Log}v\bigr)
++O(1/n)=0. \tag{LC138}
+$$
+
+The error and every fixed number of its $v$ derivatives are uniformly
+$O(1/n)$ on a smaller fixed disk. Indeed,
+$u\partial_u\log G_n=(s-1/2)\log(s/(2\pi))/4+O(1)$ there.
+The sector remains separated from the negative real axis, and
+$|s|\ge cT_n\to\infty$. The Gamma and elementary factors have no zero
+or pole on that disk.
+
+Choose $Y_0$ sufficiently large so that $\eta_n\ell_n$ is uniformly
+small. The holomorphic inverse/implicit theorem at $v=1$ supplies a
+unique finite lower saddle $u^G_n(y)=v_n(y)/y$ in that fixed disk, with
+
+$$
+v_n=1+(\pi/2)\eta_n-i\eta_n\ell_n
++O((\eta_n\ell_n)^2+1/n).
+\tag{LC139}
+$$
+
+This uses a single uniformly small perturbation of the equation $v-1=0$,
+not independent local existence without common bounds. Its derivatives
+are bounded on the same disk, so the inverse is obtained on a common
+neighborhood, for instance by Rouché and a derivative bound away from zero.
+The error is smaller than a fixed fraction of $\eta_n\ell_n$ after
+increasing $Y_0,N$. Therefore, with
+
+$$
+u^G_n=\rho_n e^{-i\theta_n},\qquad
+\rho_n=|u^G_n|,
+\qquad
+c/y\le\rho_n\le C/y,\qquad
+c/\sqrt y\le\theta_n\le C/\sqrt y,
+\tag{LC140}
+$$
+
+one has $\theta_n>0$. Also $y\rho_n=1+O(y^{-1/2})$.
+The actual Gamma-only angular curvature
+
+$$
+a^G_n=(u^G_n)^2\partial_u^2 h^G_{n,y}(u^G_n)
+=1+O(y^{-1/2}),\qquad \Re a^G_n\ge1/2
+\tag{LC141}
+$$
+
+is uniformly nondegenerate. These statements concern exact finite saddles;
+no limiting-phase saddle is inserted into the original integral.
+
+### Paying the full circle and the local substitution error
+
+Fix a small angular $\beta>0$, then enlarge $Y_0$ so
+$\theta_n<\beta/4$. On a fixed complex angular neighborhood of
+$|\theta|\le2\beta$, the arguments of $s/2$ stay in a fixed Stirling
+sector, including where $\Re s$ becomes negative after crossing the
+positive $u$ axis. The Gamma factor has no pole there. With the angular
+local phase $\phi^G(\theta)=h^G_{n,y}(\rho_n e^{i\theta})$, every fixed
+positive-order derivative of $n^{-1}\log G_n$ is $O(y^{-1/2}+1/n)$.
+Consequently, uniformly on this neighborhood, the Gaussian construction
+(LC53) has a common disk and analytic inverse with bounded norms.
+On the real angular interval the curvature satisfies
+
+$$
+\partial_\theta^2\Re\phi^G(\theta)\le-c_0<0
+\quad(|\theta|\le2\beta),\qquad
+\Re\phi^G(\theta)\le\Re\phi^G(-\theta_n)
+-c_1(\theta+\theta_n)^2.
+\tag{LC142}
+$$
+
+Here $\phi^{G\prime}(-\theta_n)=0$ exactly. The bound follows from
+$-y\rho_n\cos\theta$ and the uniform small Gamma derivative correction.
+The fixed-angle inverse and its maps need not preserve source zeta
+nonvanishing across the axis: they are used only for the Gamma integrand.
+
+On the rest of the lower semicircle, sectorial Stirling gives
+$|n^{-1}\log|G_n||\le C y^{-1/2}+C\log n/n$.
+The fixed decrease of $y\rho_n\cos\theta$ outside $|\theta|<\beta$
+therefore yields a $c_2n$ exponent gap after increasing $Y_0$.
+This uses the modulus of the Gamma factor itself, including its
+real-frequency exponential attenuation, rather than the positive-kernel
+triangle envelope.
+
+For the original-source lower local arc
+
+$$
+-\theta_n-\beta\le\theta\le-\theta_n/2,
+\tag{LC143}
+$$
+
+one has
+
+$$
+\Re s=1/2+\omega_n\sqrt{\rho_n}\,|\sin(\theta/2)|
+\ge c_3\frac{n}{y\log n}.
+\tag{LC144}
+$$
+
+The Dirichlet series and its first derivative are uniformly bounded
+on this arc after choosing $\kappa$ small enough that (LC144) is at
+least four. The polynomial bound (LC135) remains available on its
+complement, where no source zeta nonvanishing is required.
+
+The omitted original-source central arc $[-\theta_n/2,0]$ has an
+exponent gap $c_5n\theta_n^2\ge c_6n/y$ by (LC142). Its zeta factor
+has the polynomial bound (LC135). All other omitted lower arcs have
+either this gap or the fixed $c_2n$ gap. Their normalized error is
+$O(n^M e^{-c_7n/y})$, including the polynomial zeta bound and
+$\sqrt n$ saddle normalization. The normalized $u^{-d}$ amplitudes
+$\rho_n^du^{-d}$ have modulus one on the original circle.
+Choose the fixed $\kappa$ sufficiently small, then $N$ sufficiently
+large, so this relative error is at most $Cn^{-3}$ throughout (LC137).
+This is possible because $n/y\ge\kappa^{-1}\log n$.
+
+For the Gamma-only comparison integral, extend (LC143) to the fixed
+centered arc $[-\theta_n-\beta,-\theta_n+\beta]$. The added part has
+the same $c_6n/y$ gap by (LC142). No zeta approximation is asserted
+on that added estimating arc, including its positive-axis crossing.
+The fixed Gaussian chart converts the centered Gamma-only arc into
+one fixed Gaussian segment and exponentially small connecting arcs
+in uniformly interior descent sectors, as in (LC53). This pays the
+Gamma comparison integral without applying a fixed-phase theorem
+verbatim to an $n$-dependent source phase.
+
+### Keep the exact source half-amplitude at the actual node
+
+Choose $\sqrt{a^G_n}$ with positive real part and set the exact
+Gamma Gaussian scale
+
+$$
+B^G_n(y)=\frac{\exp(nh^G_{n,y}(u^G_n))}{\sqrt{2\pi n a^G_n}}
+\ne0.
+\tag{LC145}
+$$
+
+The fixed-phase Gaussian supplier, with uniformly bounded normalized
+analytic amplitudes and $M=1$, estimates the complete centered
+Gamma-only arc by $B^G_n(1+O(1/n))$.
+Instead of deleting the local zeta factor, retain the common exact
+original-source half-amplitude
+
+$$
+\mathscr B_n(y)=\frac1{2\pi}
+\int_{-\theta_n-\beta}^{-\theta_n/2}
+ e^{n\phi^G(\theta)}
+ \zeta(1/2+i\omega_n\sqrt{\rho_n e^{i\theta}})\,d\theta.
+\tag{LC146}
+$$
+
+It is independently defined from the same source and contour for all
+three offsets. Its nonvanishing on the saddle scale is the next
+proof obligation; it is not assumed merely because it is named.
+
+Let $Q_n(y)=n/(y\log n)$. Along the source arc (LC143), the
+Dirichlet series gives
+$|\zeta'(s)|\le C e^{-cQ_n}$, and $|\partial_\theta s|\le C A$.
+For example, for $\sigma\ge4$, bound the derivative series by
+$2^{-\sigma/2}\sum_{m\ge2}(\log m)m^{-2}$.
+Every intermediate point along the real angular segment from the
+saddle to the given point retains the same positive real-part floor.
+Hence
+$|\zeta(s(\theta))-\zeta(s(-\theta_n))|
+\le C A e^{-cQ_n}|\theta+\theta_n|$.
+The Gaussian first absolute moment from (LC142) is $O(1/n)$, so
+
+$$
+\frac{\mathscr B_n}{B^G_n}
+=\zeta(s_n^G)+O\!\left(\frac1n+
+\frac{A}{\sqrt n}e^{-cQ_n}+n^M e^{-c_7n/y}\right)
+=\zeta(s_n^G)+O((\log n)^{-1/2}),
+\quad s_n^G=1/2+i\omega_n\sqrt{u_n^G}.
+\tag{LC147}
+$$
+
+Here $A/\sqrt n\asymp\sqrt{Q_n}/\sqrt{\log n}$ and
+$\sqrt{Q_n}e^{-cQ_n}$ is bounded uniformly for $Q_n\ge c/\kappa$.
+The final term includes the missing Gamma-only estimating arc.
+At the exact saddle the same Dirichlet bound gives
+$|\zeta(s_n^G)-1|\le3\,2^{-\Re s_n^G}\le1/4$ after reducing
+$\kappa$. Therefore (LC147), for large $n$, supplies
+$c|B^G_n|\le|\mathscr B_n|\le C|B^G_n|$. This nonzero lower bound
+uses the Euler half-plane, not a critical-line zeta lower bound.
+
+For $d=\pm1$, the lower original-source amplitude is $e^{-id\theta}$
+after normalization by $\rho_n^d$. On the real arc,
+$|e^{-id(\theta+\theta_n)}-1|\le|\theta+\theta_n|$.
+Using (LC142), the bounded zeta series on the same source arc, and
+its absolute first Gaussian moment gives the simultaneous exact-source
+comparison
+
+$$
+\rho_n^d I_{n,d}(y)=2\Re(e^{id\theta_n}\mathscr B_n)+E_{n,d},
+\qquad
+|E_{n,0}|\le Cn^{-3}|B^G_n|,\qquad
+|E_{n,\pm1}|\le Cn^{-1/2}|B^G_n|.
+\tag{LC148}
+$$
+
+The $d=0$ error is only the complete original-circle complement;
+there is no local approximation error for it. The $d=\pm1$ bounds
+include both the local amplitude difference and that complement.
+The upper contribution is the conjugate of the lower original-source
+contribution. No extra zeta branch or unrelated neighboring phase is used.
+
+At every actual positive middle-row node $I_{n,0}(y)=0$, (LC148)
+and the independently established lower bound imply
+
+$$
+|\Re\mathscr B_n|\le Cn^{-3}|\mathscr B_n|,
+\qquad |\Im\mathscr B_n|\ge\tfrac12|\mathscr B_n|.
+\tag{LC149}
+$$
+
+The opposite neighboring leading terms now have size
+$2|\Im\mathscr B_n|\sin\theta_n\asymp|\mathscr B_n|/\sqrt y$.
+The two errors are $O(|\mathscr B_n|/\sqrt n)$, smaller by
+$O(\sqrt{y/n})=O((\log n)^{-1/2})$ uniformly on (LC137).
+Equivalently the same-row exact product identity gives
+
+$$
+\frac{I_{n,-1}(y)I_{n,1}(y)}{|\mathscr B_n(y)|^2}
+=-4\sin^2\theta_n
++O\!\left(\frac{\sin\theta_n}{\sqrt n}+\frac1n\right)<0.
+\tag{LC150}
+$$
+
+The powers $\rho_n^{-1}$ and $\rho_n$ cancel. The error divided by
+the leading $\sin^2\theta_n\ge c/y$ is
+$O(\sqrt{y/n}+y/n)$, which tends to zero uniformly.
+Through (LC47) this is the original strict principal comparison
+$\mathcal J_n'(t)\mathcal G_n(t)>0$ at every actual positive node
+in the growing range. Both neighbors are nonzero; these nodes are
+simple and have no indicated adjacent collision.
+
+### Remaining growing source-height range
+
+The moving lower height boundary is
+
+$$
+t\ge T_n^{\rm mov}:=\frac{r_n\log n}{\kappa n}
+\sim\frac{16n}{\kappa\log n}.
+\tag{LC151}
+$$
+
+The range joins (LC57) at fixed $y$ and, through the established fixed
+fold and outer exclusion, controls every actual positive node with
+$t\ge T_n^{\rm mov}$ for sufficiently large degrees. It does not
+supply $0<t<T_n^{\rm mov}$ as this boundary tends to infinity.
+The fixed-band result (LC30) retains its $\forall R\,\exists N_R$
+quantifiers; it cannot cover a moving boundary by relabeling $R$.
+At smaller heights the Gamma saddle's real-part displacement need
+not stay in the above Euler half-plane, so its local nonzero amplitude
+bound is a genuine remaining source obligation.
+
+This application does not count all real roots, exclude complex
+roots, supply a numerical starting degree, settle initial degrees or
+global common-zero propagation, or prove RH or all-integer strict Robin.
+It remains without Lean certification or a mathematical originality claim.
