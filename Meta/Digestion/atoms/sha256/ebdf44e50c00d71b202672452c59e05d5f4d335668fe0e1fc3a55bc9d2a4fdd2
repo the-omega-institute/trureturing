@@ -1,0 +1,49 @@
+**Proof.**
+The exact decomposition (92.2), followed by Theorem 100.2, gives
+(101.2) at positive finite and infinite parameters. At zero,
+$\tau_n^{-1}\to+\infty$ and $R_{\lambda_n}\ge0$, proving the
+extended uncentered limit and hence the zero capacity endpoint.
+
+The finite root-pinned energy minimum equals reciprocal root
+Green response by completing the same positive quadratic form
+with the constraint $f(r)=1$. Writing $f=\mathbf1-J_nz$ gives
+
+$$
+Y_n(\lambda)
+ =\inf_z\{\|z\|^2+N_n\lambda\|\mathbf1-J_nz\|_{L^2(\mu_n)}^2\}.
+\tag{101.5}
+$$
+
+For $\lambda=\tau/N_n$, completion of the square makes this
+$\tau-\tau^2\langle v_n,(I+\tau B_n)^{-1}v_n\rangle$.
+By (98.6), it converges to
+$\tau-\tau^2\langle v,(I+\tau B)^{-1}v\rangle$,
+the infimum in (101.4); (101.2) identifies it with $Y(\tau)$.
+At $\tau=0$ both the infimum and $Y(0)$ are zero.
+For positive finite $\tau$ it is positive by (101.1).
+Testing (101.4) with $z=tq$ gives
+$t^2+\tau(1-t)^2$, whose minimum is $\tau/(1+\tau)<1$.
+This proves the strict upper bound without imposing a new
+boundary law on the finite matrices.
+
+The finite Schur complement (93.3) says exactly
+
+$$
+Y_n(\lambda)=\lambda+
+ \frac{Y_{n-1}(\lambda)}{1+Y_{n-1}(\lambda)}
+ +\frac{Y_{n-2}(\lambda)}{1+Y_{n-2}(\lambda)}
+ \quad(n\ge2),\qquad Y_0(\lambda)=Y_1(\lambda)=\lambda.
+\tag{101.6}
+$$
+
+Fix $0<\tau<\infty$ and take $\lambda_n=\tau/N_n$.
+The two child joint parameters tend to $a\tau$ and $b\tau$,
+since $N_{n-1}/N_n\to a$ and $N_{n-2}/N_n\to b$.
+Theorem 100.2 and (101.2) apply to each child sequence.
+Letting $n\to\infty$ in (101.6) proves (101.3).
+At zero the relation is $0=0+0$; at infinity it is
+$1=1/2+1/2$, using the separately proved endpoint limits.
+Thus the relation is inherited from the actual finite source
+after convergence; no uniqueness assertion for its solutions
+is needed. $\square$
+

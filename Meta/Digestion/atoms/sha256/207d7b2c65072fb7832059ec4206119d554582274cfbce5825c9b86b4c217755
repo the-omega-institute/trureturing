@@ -1,0 +1,18 @@
+**Corollary 107.5 (the spectral boundary response is not by itself a
+future memory state).**
+
+For the occurrence carriers of §§103–106, the root scalar response and the
+root spectral weights are passive-port data. The root-invisible directions in
+Theorem 103.2 therefore belong to a static hidden fiber whenever they are
+annihilated by that port. If a separately declared intervention or another
+port acts nontrivially on such a direction, the correct memory quotient is
+$K_{\mathrm{fut}}$, not $K_{\mathrm{stat}}$; the scalar quantity
+$p_n(t)$, $R_\lambda(T_n)$, or their limiting analogues cannot serve as the
+complete future state.
+
+This is a statement about the declared linear comparison contract. It does
+not install an actuator, identify an original-root query with $T_a$, or
+provide a physical time, reset, or cost. A native FIB realization must still
+prove that the proposed action and port are available on the same immutable
+source and that their response-successor-cost kernel descends.
+

@@ -1,0 +1,43 @@
+**Theorem 99.1 (zero-variance constraints and the retained component).**
+For the source-derived $J,v,\Sigma$ of §98, define
+
+$$
+q_p=2^{-|p|},\qquad w=v-q.
+\tag{99.1}
+$$
+
+Then
+
+$$
+Jq=\mathbf1,\qquad \|q\|^2=1,\qquad
+P_{\ker\Sigma}v=q,\qquad
+\|w\|^2=\frac{\sqrt5}{2}-1>0.
+\tag{99.2}
+$$
+
+More precisely, for $z\in\mathscr H$ let
+$S_p=\sum_{\varnothing\ne u\preceq p}z_u$.
+For a prefix $p$, let $z^p$ be its strict-descendant increment
+vector, reindexed by nonempty suffixes. If $Jz=c$ $M$-almost
+everywhere, then for every finite prefix $p$,
+
+$$
+Jz^p=c-S_p\quad M\text{-almost everywhere},\qquad
+\langle v,z^p\rangle=c-S_p,\qquad
+\langle z^p,\Sigma z^p\rangle=0.
+\tag{99.3}
+$$
+
+All such $z$ obey
+
+$$
+\sum_{|p|=k}|c-S_p|^2
+ \le\|J\|^2\sum_{|u|>k}|z_u|^2\longrightarrow0.
+\tag{99.4}
+$$
+
+Conversely, (99.4)'s convergence to zero for some $c$ implies
+$Jz=c$ $M$-almost everywhere. In particular,
+$z\in\ker\Sigma$ exactly when this condition holds for some $c$,
+and then $\langle q,z\rangle=\langle v,z\rangle=c$.
+
