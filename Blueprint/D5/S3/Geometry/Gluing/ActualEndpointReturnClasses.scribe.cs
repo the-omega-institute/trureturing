@@ -6,7 +6,7 @@ internal sealed class ActualEndpointReturnClassesDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Geometry/Gluing/ActualEndpointReturnClasses.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal pure endpoints of the original corner link are exactly its four fiber return-cycle quotients.",
+        "The classes of literal pure endpoints in the original point quotient correspond to the four actual fiber return-cycle quotients.",
         H("Original pure endpoints and actual return classes"),
         Blocks(
             Def("Flag", "The original label fiber",
@@ -72,7 +72,7 @@ internal sealed class ActualEndpointReturnClassesDocument : IScribeDocumentDefin
                 H("Full endpoint restriction and actual return classes"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For every group G, arbitrary right action on a finite Omega, u,v in G and original corner class nu, two literal pure endpoints are Related if and only if their flags are DartRelated. The full original dart chain is equivalent to its nu-restricted flag chain, and the endpoint locus is saturated under every full original point chain.")),
+                    Paragraph(Text("For every group G, arbitrary right action on a finite Omega, u,v in G and original corner class nu, two literal pure endpoints are Related if and only if their flags are DartRelated. The full original dart chain is equivalent to its nu-restricted flag chain, and the endpoint locus is saturated under every full original point chain. For any two points of the pure endpoint locus, the full original Related relation holds exactly when those points are connected by EqvGen of the original Step restricted to that locus.")),
                     Paragraph(Text("The return-class equivalences above identify the actual endpoint classes with the four actual root-fiber cycle quotients and commute with the original point quotient. The theorem retains the existing positive point period and exact tour period three times that period, and proves the slot-zero conjugacy and both directions of same-cycle transport.")),
                     Paragraph(Text("Point-relation reflection consumes actual_guarded_point_analysis through the strict neighborhood of the source endpoint. Restriction and saturation keep all transitive intermediates. The cycle correspondence consumes the exhaustion, unique ordered-pair classification and indexed occurrence formula of actual_component_enumeration. No component enumeration or minimal-period theorem is reproved.")),
                     Paragraph(Text("Repeated quotient classes, period one, nonregular and nonfaithful actions are allowed. If Omega is empty, the statement quantified over its original nu is vacuous. The two low rows share a return word but have different root fibers; they are identified with slot zero only by the proved corner normalization equivalences.")),
