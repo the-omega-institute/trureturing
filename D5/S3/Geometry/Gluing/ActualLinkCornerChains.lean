@@ -41,7 +41,7 @@ private theorem reverse_word (u v : G) (f : Fin 4) :
   fin_cases f <;> simp [faceWord, reverseFace]
 
 /-- Whole-face extension of the frozen pairing's actual slot map. -/
-private theorem frozen_face_data (u v : G) (t : Ω) (f : Fin 4) (r : Fin 3) :
+theorem frozen_face_data (u v : G) (t : Ω) (f : Fin 4) (r : Fin 3) :
     facePair u v (t,f) = (act t (faceWord u v f), reverseFace f) ∧
     facePerm f (faceVertex f r) = faceVertex (reverseFace f) (slotMap f r) := by
   fin_cases f <;> fin_cases r <;> simp [facePair, faceWord, reverseFace, facePerm,
