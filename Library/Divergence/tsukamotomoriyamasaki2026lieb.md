@@ -85,9 +85,12 @@ At the implementation's input commit, all sixteen baseline D5 dependencies
 were byte-unchanged and kernel-checked by the input report. The current port
 extends LownerHeinzCore, OperatorGeometricMean and LiebConcavity and leaves
 thirteen baseline dependencies byte-unchanged; all current versions are
-covered by the fresh 22-module report. Matching Frozen records are not
-established in this checkout. This status creates no extra freeze or research prerequisite;
-canonical admission belongs to the controller. Native escape audit remains
+covered by the fresh 22-module report. At the independent pre-admission
+review checkpoint `0054c8727c7360debeadb019d54eeaa5d67506a2`, matching
+Frozen records had not been established. After replaying the same reviewed
+mathematical source on current dev, canonical `deposit-uncovered` admission
+at `30efa46ad2633b096ebe7fbd17b36f7e3feca90b` established matching
+state records for all 22 delivered modules. Native escape audit remains
 unfinished under issue #5214; no declared_validated status is asserted.
 
 Effros's 2009 PNAS perspective theorem assumes commuting operator pairs.
