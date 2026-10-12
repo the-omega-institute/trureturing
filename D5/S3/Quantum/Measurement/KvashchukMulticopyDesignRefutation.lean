@@ -326,8 +326,151 @@ private theorem six_design_pure (ρ : Fin 6 → DensityState (Fin 2)) (p : Fin 6
     exact (Finset.mem_filter.mp hi).2
   exact ⟨hp, fun i => h.2.2.1 i (hp i)⟩
 
-#print axioms nprime23
-#print axioms six_design_pure
-#print prefix D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
+private def tensorVec (v : Fin 2 → ℂ) (i : Fin 8) : ℂ :=
+  v (bit i 2) * v (bit i 1) * v (bit i 0)
+
+private theorem pure_tensor (v : Fin 2 → ℂ) :
+    tensorPow 3 (vecMulVec v (star v)) = vecMulVec (tensorVec v) (star (tensorVec v)) := by
+  ext i j
+  simp only [tensor23, tensorVec, vecMulVec_apply, Pi.star_apply, star_mul]
+  ring
+
+private theorem tensor_trace (A : Matrix (Fin 2) (Fin 2) ℂ) :
+    trace (tensorPow 3 A) = (trace A) ^ 3 := by
+  change (∑ i : Fin 8, tensorPow 3 A i i) = (trace A) ^ 3
+  simp only [trace, Fin.sum_univ_succ, tensor23, bit_table]
+  norm_num [Matrix.cons_val_two]
+  ring
+
+private theorem P8_hermitian : P8.IsHermitian := by
+  change P8ᴴ = P8
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [P8, weight, conjTranspose_apply]
+
+private theorem P8_idem : P8 * P8 = P8 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [mul_apply, Fin.sum_univ_succ, P8, weight]
+
+private theorem P8_psd : P8.PosSemidef := by
+  have h := posSemidef_conjTranspose_mul_self P8
+  rwa [P8_hermitian.eq, P8_idem] at h
+
+private theorem P8_complement : (1 - P8).PosSemidef := by
+  have h := posSemidef_conjTranspose_mul_self (1 - P8)
+  rw [(isHermitian_one.sub P8_hermitian).eq] at h
+  have hi : (1 - P8) * (1 - P8) = 1 - P8 :=
+    (show IsIdempotentElem P8 from P8_idem).one_sub
+  rwa [hi] at h
+
+private theorem tensorVec_fixed (v : Fin 2 → ℂ) : P8 *ᵥ tensorVec v = tensorVec v := by
+  ext i
+  fin_cases i <;> norm_num [mulVec, dotProduct, Fin.sum_univ_succ, tensorVec,
+    bit_table, P8, weight, Matrix.cons_val_two] <;> ring
+
+private theorem pure_tensor_le_sym (ρ : DensityState (Fin 2)) (hρ : IsPure ρ) :
+    (P8 - tensorPow 3 ρ.1).PosSemidef := by
+  obtain ⟨v, hv⟩ := hρ
+  change ρ.1 = vecMulVec v (star v) at hv
+  rw [hv, pure_tensor]
+  let T := vecMulVec (tensorVec v) (star (tensorVec v))
+  have ht0 : trace (tensorPow 3 (CStarMatrix.ofMatrix.symm ρ.1)) = 1 := by
+    rw [tensor_trace]
+    have htr := ρ.trace_eq_one
+    change trace (CStarMatrix.ofMatrix.symm ρ.1) = 1 at htr
+    rw [htr]
+    norm_num
+  have ht : trace T = 1 := by
+    change trace (vecMulVec (tensorVec v) (star (tensorVec v))) = 1
+    rw [← pure_tensor]
+    rw [hv] at ht0
+    exact ht0
+  have hn : star (tensorVec v) ⬝ᵥ tensorVec v = 1 := by
+    rw [dotProduct_comm]
+    exact ht
+  have hT : T.IsHermitian := (posSemidef_vecMulVec_self_star (tensorVec v)).isHermitian
+  have hi : T * T = T := by
+    dsimp only [T]
+    rw [vecMulVec_mul_vecMulVec, hn]
+    simp
+  have hl : P8 * T = T := by rw [mul_vecMulVec, tensorVec_fixed]
+  have hr : T * P8 = T := by
+    have h := congrArg conjTranspose hl
+    simpa only [conjTranspose_mul, P8_hermitian.eq, hT.eq] using h
+  have hs : (P8 - T) * (P8 - T) = P8 - T := by
+    rw [sub_mul, mul_sub, mul_sub, P8_idem, hl, hr, hi, sub_self, sub_zero]
+  have h := posSemidef_conjTranspose_mul_self (P8 - T)
+  rwa [(P8_hermitian.sub hT).eq, hs] at h
+
+private def Y : Matrix (Fin 8) (Fin 8) ℂ := P8 + (1/8 : ℝ) • (1 - P8)
+
+private theorem dual_pure (ρ : DensityState (Fin 2)) (hρ : IsPure ρ) :
+    (Y - tensorPow 3 ρ.1).PosSemidef := by
+  have h := (pure_tensor_le_sym ρ hρ).add (P8_complement.smul (by norm_num : (0:ℝ) ≤ 1/8))
+  convert h using 1
+  dsimp only [Y]
+  abel
+
+private theorem mixed_tensor : tensorPow 3 (maxMixed 2 (by norm_num)).1 =
+    (1/8 : ℝ) • (1 : Matrix (Fin 8) (Fin 8) ℂ) := by
+  change tensorPow 3 ((2 : ℝ)⁻¹ • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = _
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [tensor23, bit_table, Matrix.smul_apply, Complex.real_smul,
+      Matrix.one_apply, Matrix.cons_val_two]
+
+private theorem dual_mixed : (Y - tensorPow 3 (maxMixed 2 (by norm_num)).1).PosSemidef := by
+  rw [mixed_tensor]
+  have he : Y - (1/8 : ℝ) • (1 : Matrix (Fin 8) (Fin 8) ℂ) = (7/8 : ℝ) • P8 := by
+    dsimp only [Y]
+    module
+  rw [he]
+  exact P8_psd.smul (by norm_num : (0:ℝ) ≤ 7/8)
+
+private theorem trace_Y : (trace Y).re = 9/2 := by
+  simp only [Y, trace_add, trace_smul, trace_sub, trace_P8, trace_one,
+    Fintype.card_fin, Complex.real_smul, Complex.add_re, Complex.mul_re,
+    Complex.ofReal_re, Complex.ofReal_im]
+  norm_num
+
+private theorem weak_dual (R E : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ)
+    (Z : Matrix (Fin 8) (Fin 8) ℂ) (hE : IsPOVM E)
+    (hZ : ∀ i, (Z - R i).PosSemidef) : success R E ≤ (trace Z).re / 7 := by
+  have h := Finset.sum_nonneg (fun i (_ : i ∈ Finset.univ) =>
+    RHLinalg.trace_mul_nonneg_of_posSemidef (hZ i) (hE.1 i))
+  have hz : ∑ i, (trace (Z * E i)).re = (trace Z).re := by
+    rw [← Complex.re_sum, ← trace_sum, ← Finset.mul_sum, hE.2, mul_one]
+  change 0 ≤ ∑ i, (trace ((Z - R i) * E i)).re at h
+  simp only [sub_mul, trace_sub, Complex.sub_re, Finset.sum_sub_distrib, hz] at h
+  have he : success R E = (∑ i, (trace (R i * E i)).re) / 7 := by
+    simp only [success, smul_mul_assoc, trace_smul, smul_eq_mul, Complex.mul_re]
+    norm_num
+    rw [← Finset.mul_sum]
+    ring
+  rw [he]
+  linarith
+
+private theorem discr_pure_le (ρ : Fin 6 → DensityState (Fin 2))
+    (hρ : ∀ i, IsPure (ρ i)) : Discr 3 (adjoin ρ (by norm_num)) ≤ 9/14 := by
+  apply csSup_le
+  · let E : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ := ![1,0,0,0,0,0,0]
+    refine ⟨success (fun i => tensorPow 3 (adjoin ρ (by norm_num) i).1) E, E, ?_, rfl⟩
+    refine ⟨fun i => ?_, ?_⟩
+    · fin_cases i <;> first | exact PosSemidef.one | exact PosSemidef.zero
+    · norm_num [E, Fin.sum_univ_succ]
+  · rintro r ⟨E, hE, rfl⟩
+    have hz : ∀ i : Fin 7, (Y - tensorPow 3 (adjoin ρ (by norm_num) i).1).PosSemidef := by
+      intro i
+      refine Fin.lastCases ?_ (fun j => ?_) i
+      · dsimp only [adjoin]
+        rw [Fin.lastCases_last]
+        exact dual_mixed
+      · dsimp only [adjoin]
+        rw [Fin.lastCases_castSucc]
+        exact dual_pure (ρ j) (hρ j)
+    have hh := weak_dual _ E Y hE hz
+    rw [trace_Y] at hh
+    norm_num at hh ⊢
+    exact hh
 
 end D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
