@@ -1435,3 +1435,550 @@ realization satisfying this assumption remain unresolved
 additional mathematical obligations.
 
 ## 102.99 追加锚（本行以下为增补区）
+
+## 103. Complete finite occurrence states on the common edge carrier
+
+**Definition 103.1 (the finite gradient transport).**
+Retain exactly the ordered sources, all occurrences, counts and closed
+unit-edge counting operators of Definitions 92.1–92.2. Let
+$\mathcal V_n=\ell^2(V_{T_n})$ with counting inner product, let
+$\mathscr E_n\subset\mathscr H$ consist of the actual edge coordinates,
+and write $Q_n$ for the orthogonal projection onto $\mathscr E_n$.
+Orient every edge away from the root and put
+
+$$
+(D_nf)_p=f(p)-f(p^-),\qquad L_n=D_n^*D_n,
+\qquad K_n=D_nD_n^*\big|_{\mathscr E_n}.
+\tag{103.1}
+$$
+
+Let $P_n=I-N_n^{-1}\mathbf1\otimes\mathbf1$ on $\mathcal V_n$,
+$e_{n,0}=N_n^{-1/2}\mathbf1$, and $g_n=P_n\delta_r$. Define
+
+$$
+U_n=-D_nL_n^{+1/2}:P_n\mathcal V_n\longrightarrow\mathscr E_n,
+\tag{103.2}
+$$
+
+where $L_n^{+1/2}$ is the positive square root of its pseudoinverse.
+Extend $U_n$ by zero on constants and its adjoint by zero on
+$\mathscr E_n^\perp$. Inverses of $\Sigma_n$ below mean inverses
+on $\mathscr E_n$, extended by zero elsewhere. For $n=0,1$ these
+are the unique maps on the zero-dimensional edge space.
+
+**Theorem 103.2 (the complete finite operator and root weights).**
+For $n\ge2$, $U_n$ is unitary between the displayed mean-zero node
+and actual edge spaces, and
+
+$$
+\Sigma_n\big|_{\mathscr E_n}=\frac1{N_n}K_n^{-1},\qquad
+U_nL_nU_n^*=K_n=\frac1{N_n}\Sigma_n^{-1}.
+\tag{103.3}
+$$
+
+Every positive eigenvalue $x$ of $\Sigma_n$ corresponds to the
+positive eigenvalue $(N_nx)^{-1}$ of $L_n$ with the same entire
+eigenspace dimension. The complete state correspondence is
+
+$$
+f=c e_{n,0}+U_n^*z
+\longleftrightarrow(c,z)\in\mathbb R\oplus\mathscr E_n,
+\qquad L_n\longleftrightarrow0\oplus K_n.
+\tag{103.4}
+$$
+
+Let $E_{n,\lambda}$ be the full projection onto the $\lambda$-eigenspace
+of $L_n$, $d_{n,\lambda}=\operatorname{rank}E_{n,\lambda}$, and
+$\rho_{n,\lambda}=\|E_{n,\lambda}\delta_r\|^2$. For every $t\ge0$
+and every $f\in\mathcal V_n$,
+
+$$
+\begin{aligned}
+e^{-tL_n}f
+ &=\langle e_{n,0},f\rangle e_{n,0}
+   +\sum_{\lambda>0}e^{-t\lambda}E_{n,\lambda}f,\\
+(e^{-tL_n}f)(r)
+ &=\frac1{N_n}\sum_xf(x)
+   +\sum_{\lambda>0}e^{-t\lambda}
+       \langle E_{n,\lambda}\delta_r,f\rangle,\\
+p_n(t):=\langle\delta_r,e^{-tL_n}\delta_r\rangle
+ &=\frac1{N_n}+\sum_{\lambda>0}\rho_{n,\lambda}e^{-t\lambda}.
+\end{aligned}
+\tag{103.5}
+$$
+
+The root-invisible subspace in the $\lambda$-eigenspace has dimension
+$d_{n,\lambda}-\mathbf1_{\{\rho_{n,\lambda}>0\}}$. These directions
+remain in the full operator, including when absent from the scalar
+root spectral measure. For $n=0,1$, $L_n=0$, $p_n(t)=1$ and all
+positive sums are empty; the labels remain respectively alpha and beta.
+
+**Proof.**
+Connectedness gives $\ker L_n=\mathbb R\mathbf1$. On actual edges
+$D_nJ_nz=z$. With counting inner products on both spaces, set
+$C_n^{\rm path}=P_nJ_n:\mathscr E_n\to P_n\mathcal V_n$.
+Subtracting a constant changes no gradient, and
+$P_nJ_nD_nu=u$ for mean-zero $u$. Thus $C_n^{\rm path}=D_n^{-1}$
+between spaces of dimension $N_n-1$, and
+
+$$
+(C_n^{\rm path})^*C_n^{\rm path}
+=K_n^{-1}=N_n\Sigma_n\big|_{\mathscr E_n}.
+\tag{103.6}
+$$
+
+The last factor comes from the node inner product in §98 being
+$N_n^{-1}$ times the counting inner product.
+Also $U_n^*U_n=L_n^{+1/2}L_nL_n^{+1/2}=P_n$.
+Equal dimensions give unitarity; $D_nL_n=K_nD_n$ gives (103.3).
+Finite spectral calculus gives (103.4)–(103.5).
+On one eigenspace the root functional has rank one precisely when
+$E_{n,\lambda}\delta_r\ne0$, proving its invisible dimension.
+
+Spectral and polar calculus are mature intermediate supplies; see
+[Teschl, *Mathematical Methods in Quantum Mechanics*, §3.1,
+Theorem 3.7 and Problem 3.11, and §6.2, Theorem 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The scalar-versus-complete-spectrum distinction is retained in
+[the boundary geometry, §52.4](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md).
+Equation (103.6) connects those supplies to the closed counting
+operator and source covariance of §98. $\square$
+
+**Theorem 103.3 (relaxation scale and all transported positive states).**
+Let $\mathscr K=(\ker\Sigma)^\perp$. For $s>0$ put
+$F_s(x)=e^{-s/x}$ for $x>0$, $F_s(0)=0$, and
+$\mathcal T(s)=F_s(\Sigma)$. Then, as operators on $\mathscr H$,
+
+$$
+\mathcal T_n(s):=U_ne^{-N_nsL_n}U_n^*
+=F_s(\Sigma_n)\longrightarrow\mathcal T(s)
+\quad\text{in operator norm}.
+\tag{103.7}
+$$
+
+Convergence is uniform on compact subintervals of $(0,\infty)$.
+If $c_n\to c$ and $z_n\in\mathscr E_n$ converge in $\mathscr H$ to $z$,
+the complete states initialized at $c_ne_{n,0}+U_n^*z_n$ have
+transported states at scaled time $s>0$ converging to
+$(c,\mathcal T(s)z)$ in $\mathbb R\oplus\mathscr H$.
+This includes arbitrary root-invisible modes.
+
+For the smallest positive eigenvalue $\gamma_n$ of $L_n$,
+
+$$
+\gamma_n^{-1}=N_n\|\Sigma_n\|,\qquad
+\frac{\gamma_n^{-1}}{N_n}\longrightarrow\|\Sigma\|>0.
+\tag{103.8}
+$$
+
+The full comparison relaxation time is therefore asymptotic to a
+positive constant times the actual source size.
+On $\mathscr K$, $\mathcal T(s)=e^{-sA}$ is a strongly continuous
+contraction semigroup, where $A=(\Sigma|_{\mathscr K})^{-1}$ is
+positive self-adjoint on the dense domain
+$\operatorname{ran}(\Sigma|_{\mathscr K})$; its generator is $-A$.
+On the entire common space,
+
+$$
+\operatorname*{s-lim}_{s\downarrow0}\mathcal T(s)=P_{\mathscr K},
+\qquad
+\operatorname*{s-lim}_{n\to\infty}\mathcal T_n(0)
+=\operatorname*{s-lim}_{n\to\infty}Q_n=I.
+\tag{103.9}
+$$
+
+The two limits differ, since $q\ne0$ belongs to $\ker\Sigma$.
+An identity-at-zero extension on all of $\mathscr H$ is false.
+
+**Proof.**
+Equation (103.3) gives the exact identity in (103.7).
+By (98.6), choose $M_*>0$ bounding $\|\Sigma_n\|$ and $\|\Sigma\|$
+for every $n$. For fixed $s>0$, $F_s$ is continuous on $[0,M_*]$;
+polynomial approximation and covariance norm convergence prove
+(103.7). Uniformity on $[\epsilon,S]$ follows from a finite parameter
+net and $|\partial_sF_s(x)|\le(e\epsilon)^{-1}$.
+Apply this operator limit to the convergent initial vectors.
+Reciprocal extreme eigenvalues give (103.8).
+The covariance is nonzero because the increment at $L$ has
+variance $a(1-a)>0$.
+
+Spectral calculus gives the inverse generator on $\mathscr K$.
+Dominated convergence of its multipliers proves the first limit
+in (103.9). Every fixed address is an actual edge for all sufficiently
+large $n$ by (98.4), proving $Q_n\to I$ strongly.
+Theorem 99.1 supplies the nonzero kernel vector $q$.
+Changing node spaces have been transported only by the finite maps
+specified in Definition 103.1. $\square$
+
+**Corollary 103.4 (the root initial carrier and its positive-time state).**
+Set
+
+$$
+\xi_n=\sqrt{N_n}\,U_ng_n=\Sigma_n^{-1/2}v_n,\qquad
+h_n(s)=\sqrt{N_n}\,U_ne^{-N_nsL_n}g_n.
+\tag{103.10}
+$$
+
+For $s>0$, define $f_s(x)=x^{-1/2}e^{-s/x}$ on $x>0$ and $f_s(0)=0$.
+Then
+
+$$
+h_n(s)=f_s(\Sigma_n)v_n\longrightarrow
+h(s)=f_s(\Sigma)v=f_s(\Sigma)w
+\quad\text{in }\mathscr H,
+\tag{103.11}
+$$
+
+and the exact root return obeys
+
+$$
+N_n[p_n(N_ns)-N_n^{-1}]=\|h_n(s/2)\|^2.
+\tag{103.12}
+$$
+
+The root initial data are $g_n\in P_n\mathcal V_n$.
+Their normalized transports satisfy $\|\xi_n\|^2=N_n-1\to\infty$,
+so they have no vector limit in $\mathscr H$. The positive-time root
+limit cannot be extended to zero by declaring an initial vector $v$
+or by applying the identity to a limiting $\xi_n$.
+
+**Proof.**
+For $u=L_n^+\delta_r$, the flux calculation (92.9) gives $D_nu=-v_n$.
+Since $U_n=-D_nL_n^{+1/2}$ and
+$U_nL_n^{+1/2}=K_n^{-1/2}U_n$,
+$K_n^{-1/2}U_ng_n=v_n$, giving (103.10) with its sign.
+Continuity of $f_s$ on $[0,M_*]$ and (98.6) prove (103.11).
+The semigroup identity and unitarity give
+$\|h_n(s/2)\|^2=N_n\langle g_n,e^{-N_nsL_n}g_n\rangle$.
+Finally $\|g_n\|^2=1-N_n^{-1}$. $\square$
+
+## 104. Time measures, densities and simultaneous limits
+
+**Definition 104.1 (scaled centered return and spectral mixtures).**
+For $s\ge0$ define
+
+$$
+k_n(s)=N_n[p_n(N_ns)-N_n^{-1}],\qquad \nu_n(ds)=k_n(s)\,ds.
+\tag{104.1}
+$$
+
+Let $\eta_n$ be the spectral measure of $\Sigma_n$ generated by $v_n$
+and $\eta_w$ that of $\Sigma$ generated by $w$. Then
+$\eta_n(\{0\})=0$, including the zero measure for the singletons.
+By Theorem 99.1 the spectral measure generated by $v=q+w$ is
+$\delta_0+\eta_w$, where $\eta_w(\{0\})=0$.
+With the uniform spectral bound $M_*$ of Theorem 103.3, define
+
+$$
+k(s)=\int_{(0,M_*]}x^{-1}e^{-s/x}\,d\eta_w(x)\quad(s>0).
+\tag{104.2}
+$$
+
+**Theorem 104.2 (the complete scaled time measure).**
+The complete finite spectral projections of Theorem 103.2 give
+
+$$
+\begin{aligned}
+k_n(s)
+ &=\sum_{\lambda>0}N_n\rho_{n,\lambda}e^{-N_n\lambda s}
+ =\int x^{-1}e^{-s/x}\,d\eta_n(x)\quad(s>0),\\
+\nu_n([0,\infty))&=C_n=\|v_n\|^2,\\
+\int_0^\infty e^{-\tau s}\,d\nu_n(s)
+ &=R_{\tau/N_n}(T_n)\quad(\tau>0).
+\end{aligned}
+\tag{104.3}
+$$
+
+As finite Borel measures on $[0,\infty)$,
+
+$$
+\nu_n\Longrightarrow\nu:=\delta_0+k(s)\,ds.
+\tag{104.4}
+$$
+
+The slow density is finite and strictly positive for every $s>0$, and
+
+$$
+\int_0^\infty k(s)\,ds=\frac{\sqrt5}{2}-1,\qquad
+\nu(\{0\})=1,\qquad \nu([0,\infty))=\frac{\sqrt5}{2}.
+\tag{104.5}
+$$
+
+No mass escapes to infinite scaled time. More precisely, for
+$V_*=\sup_n\|v_n\|^2<\infty$,
+
+$$
+\nu_n([S,\infty))\le V_*e^{-S/M_*}\quad(S>0).
+\tag{104.6}
+$$
+
+**Proof.**
+Equations (103.5) and (103.10)–(103.12) give the first identity
+in (104.3); integrate its nonnegative terms for the other identities.
+For $n=0,1$ all centered terms vanish.
+The heat interpretation uses exactly $-L_n$: off-diagonal
+conductance rates are one on existing edges, diagonal rates are
+minus the degree, and the stationary distribution is uniform.
+This is the fluid model, not the degree-normalized continuization,
+of [Aldous–Fill, *Reversible Markov Chains and Random Walks on Graphs*,
+Chapter 3, §2, equation (3.16)](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch3.S2.html).
+It provides mathematical comparison time, not a native clock.
+
+For a bounded continuous function $\phi$ on $[0,\infty)$ put
+
+$$
+\Psi_\phi(x)=\int_0^\infty e^{-u}\phi(xu)\,du
+\quad(0\le x\le M_*).
+\tag{104.7}
+$$
+
+Dominated convergence makes $\Psi_\phi$ continuous, with
+$\Psi_\phi(0)=\phi(0)$. Changing variables $s=xu$ in the positive
+mixtures and using continuous functional calculus yields
+
+$$
+\begin{aligned}
+\int\phi\,d\nu_n
+ &=\langle v_n,\Psi_\phi(\Sigma_n)v_n\rangle\\
+ &\longrightarrow\langle v,\Psi_\phi(\Sigma)v\rangle
+ =\phi(0)+\int_0^\infty\phi(s)k(s)\,ds.
+\end{aligned}
+\tag{104.8}
+$$
+
+This proves weak convergence against all bounded continuous tests,
+including the constant one. Tonelli gives
+$\int k=\eta_w((0,M_*])=\|w\|^2$.
+The bound $x^{-1}e^{-s/x}\le(es)^{-1}$ proves finiteness at positive
+time; $w\ne0$ and $\eta_w(\{0\})=0$ prove strict positivity.
+The mass-one atom comes precisely from $q$, by (99.2).
+Finally integrating the mixtures over $[S,\infty)$ gives
+$\int e^{-S/x}\,d\eta_n(x)\le\|v_n\|^2e^{-S/M_*}$,
+proving the uniform no-escape bound. Spectral calculus and the
+positive exponential-mixture construction are intermediate supplies
+in this source-specific limit. $\square$
+
+**Theorem 104.3 (density convergence and all three time regimes).**
+For every $0<\epsilon<S<\infty$,
+
+$$
+\sup_{\epsilon\le s\le S}|k_n(s)-k(s)|\longrightarrow0.
+\tag{104.9}
+$$
+
+For any sequence $s_n\ge0$ tending to a positive finite $s$,
+$k_n(s_n)\to k(s)$. If $s_n\to\infty$, then $k_n(s_n)\to0$.
+If $s_n\to0$, then $k_n(s_n)\to+\infty$, using the biased-source
+endpoint of Theorem 105.1; this includes $k_n(0)=N_n-1$.
+Weak measure convergence (104.4) and density convergence (104.9)
+are different statements. There is no finite density at zero
+representing the mass-one limiting atom.
+
+**Proof.**
+Put $G_s(x)=x^{-1}e^{-s/x}$ for $x>0$ and $G_s(0)=0$.
+It is continuous on $[0,M_*]$, and
+$k_n(s)=\langle v_n,G_s(\Sigma_n)v_n\rangle$.
+A finite net and the bound
+$|\partial_sG_s(x)|=x^{-2}e^{-s/x}\le4/(e^2\epsilon^2)$
+give (104.9). Its limit is (104.2), since the kernel part contributes
+zero. This also proves the positive finite sequence statement.
+For unbounded times use $k_n(s)\le V_*/(es)$.
+For zero times, $k_n$ is nonincreasing on $[0,\infty)$.
+For every fixed $\epsilon>0$, eventually
+$k_n(s_n)\ge k_n(\epsilon)$. Take the lower limit and then
+$\epsilon\downarrow0$ in Theorem 105.1. This proves divergence
+without asserting an endpoint rate. $\square$
+
+**Corollary 104.4 (screening parameters remain distinct from times).**
+If $\tau_n\ge0$, $\tau_n/N_n\to0$ and
+$\tau_n\to\tau\in[0,\infty]$, then
+
+$$
+\int e^{-\tau_ns}\,d\nu_n(s)\longrightarrow
+\begin{cases}
+\sqrt5/2,&\tau=0,\\
+H(\tau),&0<\tau<\infty,\\
+1,&\tau=\infty.
+\end{cases}
+\tag{104.10}
+$$
+
+Here $\tau_n$ is a Laplace parameter, not the time $s_n$
+of Theorem 104.3. The finite-source value at zero is $C_n$.
+
+**Proof.**
+For positive $\tau_n$ use (104.3) and Theorem 100.2 with
+$\lambda_n=\tau_n/N_n$. At zero or on zero subsequences use
+(92.5) and the uniform bounded-parameter assertion (100.3).
+The simultaneous condition $\tau_n/N_n\to0$ is retained at the
+unbounded Laplace endpoint; it is not needed for the density
+statements. $\square$
+
+## 105. The biased source forces an infinite slow-density endpoint
+
+**Theorem 105.1 (the integrable singularity for the actual source law).**
+For precisely $m(p)=a^{\#_L(p)}b^{\#_R(p)}$ with
+$a=\varphi^{-1}$ and $b=\varphi^{-2}$, the density (104.2) satisfies
+
+$$
+\lim_{s\downarrow0}k(s)=+\infty,\qquad
+\int_0^\infty k(s)\,ds=\frac{\sqrt5}{2}-1<\infty.
+\tag{105.1}
+$$
+
+The endpoint conclusion imposes no power law or exponent and does
+not identify a spatial or spectral dimension.
+
+**Proof.**
+Monotone convergence gives
+
+$$
+\lim_{s\downarrow0}k(s)=\int_{(0,M_*]}x^{-1}\,d\eta_w(x).
+\tag{105.2}
+$$
+
+Let $A=(I-\mathbf1\otimes\mathbf1)J:\mathscr H\to L^2_0(M)$,
+so $A^*A=\Sigma$. If (105.2) were finite, spectral calculus would
+define $z=\Sigma^{-1/2}w\in\mathscr K$.
+In the polar decomposition $A=V\Sigma^{1/2}$, set $h=Vz$.
+Then $h\in L^2_0(M)$ and
+$A^*h=\Sigma^{1/2}V^*Vz=w$.
+Since $h$ has mean zero, $A^*h=J^*h$.
+On each nonempty cylinder the adjoint relation and (99.1) give
+
+$$
+\int_{[p]}h\,dM=m(p)-2^{-|p|},\qquad
+\mathbb E_M[h\mid[p]]=1-\frac{2^{-|p|}}{m(p)}.
+\tag{105.3}
+$$
+
+For the depth-$d$ cylinder partition $\mathcal F_d$, conditional
+expectation is an $L^2(M)$ contraction, but (105.3) would imply
+
+$$
+\begin{aligned}
+\|\mathbb E_M[h\mid\mathcal F_d]\|_2^2
+ &=\sum_{|p|=d}m(p)
+       \left(1-\frac{2^{-d}}{m(p)}\right)^2\\
+ &=4^{-d}\sum_{|p|=d}\frac1{m(p)}-1
+ =\left(\frac1{4a}+\frac1{4b}\right)^d-1
+ =\left(\frac1{4ab}\right)^d-1.
+\end{aligned}
+\tag{105.4}
+$$
+
+Because $a+b=1$ and $a\ne b$, $ab<1/4$, so this expression
+diverges. It cannot be bounded by the fixed $\|h\|_2^2$.
+This contradiction proves the infinite endpoint.
+Integrability was proved separately in (104.5). In particular,
+$\|h(s)\|^2=k(2s)\to\infty$ as $s\downarrow0$, by (103.11)
+and (104.2), so the limiting root orbit itself has no strong
+initial vector in $\mathscr H$.
+The polar decomposition is the mature supply cited in Theorem 103.2;
+the cylinder adjoint is the tree Hardy relation in
+[Arcozzi et al., *Potential theory on trees, graphs and Ahlfors-regular
+metric spaces*, §5.1, equation (41)](https://arxiv.org/html/1010.4788v3),
+already instantiated in (98.11).
+The divergence (105.4) uses the actual biased all-occurrence law.
+Replacing it by the fair dyadic law changes its base to one and
+removes this contradiction. $\square$
+
+## 106. A comparison boundary-response consumer and its acquisition boundary
+
+**Assumption 106.1 (forcing, centered readout and initial data).**
+Let $f\in C_c([0,\infty))$ be a supplied scalar forcing.
+On the declared scaled comparison clock initialize
+$u_n(0)=0\in P_n\mathcal V_n$ and solve
+
+$$
+\frac{d}{dt}u_n(t)=-N_nL_nu_n(t)+N_nf(t)g_n,\qquad
+y_n(t)=\langle g_n,u_n(t)\rangle=u_n(t)(r).
+\tag{106.1}
+$$
+
+The input is the centered comparison root port $g_n$ and the
+output its conjugate root readout. This specifies a mathematical
+input-output experiment on the retained occurrence operator.
+A native actuator, physical positions or physical clock require
+the additional realization of Assumptions 97.3 and 102.3.
+No such realization is assumed.
+
+**Theorem 106.2 (the zero-initial limiting boundary response).**
+Under Assumption 106.1, for every $t\ge0$,
+
+$$
+y_n(t)=\int_0^t k_n(s)f(t-s)\,ds.
+\tag{106.2}
+$$
+
+At every fixed $t>0$,
+
+$$
+y_n(t)\longrightarrow y(t)
+=f(t)+\int_0^t k(s)f(t-s)\,ds.
+\tag{106.3}
+$$
+
+If $f(0)=0$, define $y(0)=0$; convergence is then uniform on
+every compact interval $[0,T]$. In general convergence is uniform
+on each $[\epsilon,T]\subset(0,\infty)$ and $y(0+)=f(0)$.
+A continuous zero initial readout is compatible with the limiting
+contract exactly when $f(0)=0$.
+If $f(0)\ne0$, the limiting response has initial feedthrough $f(0)$,
+while every finite zero-initial response has $y_n(0)=0$.
+A nonzero prescribed initial state requires a separately retained
+homogeneous root term.
+
+**Proof.**
+Variation of constants gives
+$u_n(t)=N_n\int_0^te^{-N_nsL_n}g_nf(t-s)\,ds$.
+Taking the readout and using (103.12) proves (106.2).
+For fixed $t>0$, the bounded test
+$\phi_t(s)=f(t-s)\mathbf1_{[0,t]}(s)$ has at most a discontinuity
+at $s=t$, where $\nu$ has no atom.
+Weak convergence (104.4) gives (106.3), with $f(t)$ supplied by
+the mass-one atom at zero.
+
+When $f(0)=0$, extend $f$ by zero to negative times.
+The tests $s\mapsto f(t-s)$ for $t\in[0,T]$ form a uniformly
+bounded equicontinuous family supported in $[0,T]$.
+A finite time net, weak convergence and bounded measure masses
+give uniform convergence of their integrals.
+Otherwise split $f(u)=f(0)+(f(u)-f(0))$ on $[0,T]$.
+The second part satisfies the preceding argument.
+For the first use convergence of the distribution functions
+$\nu_n([0,t])$ to $\nu([0,t])$ on $[\epsilon,T]$:
+monotonicity and continuity of the limiting distribution there
+give uniform convergence by a finite partition.
+The slow convolution tends to zero as $t\downarrow0$ by
+integrability of $k$, while $f(t)\to f(0)$.
+A nonzero initial state adds
+$\langle g_n,e^{-N_ntL_n}u_n(0)\rangle$ to (106.2);
+the zero-initial assumption is precisely what omits it. $\square$
+
+**Assumption 106.3 (original-reply acquisition and distinct times).**
+When a native execution supplies an original reply or exact index
+to this consumer, retain the existing authenticated stationary epoch,
+original-presence guard, chronological original-address reads and
+absorbing Stop conditions of Assumption 97.1 and
+[Continuation III, Assumption 91.6](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md).
+The existing guarded original-reply/index suppliers are used only
+under their own original-source, guard and resource contracts:
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean),
+[Atomic Boundary Trichotomy, §§12–17](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
+[Acquired Intrinsic Depth Calibration, §6](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_INTRINSIC_DEPTH_CALIBRATION.md)
+and [Finite Frame Memory](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md),
+together with
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+Actual address length, distinct-address fees, retained full control
+memory, installed data, preparation, arithmetic and output remain
+separate resources. Defining (104.1) grants no observation of $N_n$.
+
+Comparison time in (106.1), source-substitution epoch, acquisition
+chronology and physical time remain distinct.
+Neither a duplicate search or decoder, a pointer walk nor an added
+Poisson clock supplies a native occurrence-transport correspondence.
+An optional acquired-query sampling law is an additional unverified
+premise. The native occurrence actuator and physical-time realization
+remain outside Assumption 106.1.
+
+## 106.99 追加锚（本行以下为增补区）
