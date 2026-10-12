@@ -1,0 +1,27 @@
+## 推论 33.3（有限前缀不是全 epoch descriptor）
+
+若只证明每个给定有限深度 $h$ 存在一个前缀图表，则不能推出存在同一 descriptor
+在所有 epoch 上满足 `Reply`、`Same` 和 successor transport。
+
+### 证明
+
+不同的 $h$ 可以使用不同的来源参数、descriptor 数值或控制表。有限深度
+存在性是
+
+$$
+\forall h\;\exists\delta_h,
+$$
+
+而全 epoch descriptor 需要
+
+$$
+\exists\delta\;\forall h.
+$$
+
+量词不能交换。∎
+
+这三个失败模式正是 general signed-fiber 缺口的结构，而不是 FIB 字母表大小
+可以自动消除的编码问题。
+
+---
+
