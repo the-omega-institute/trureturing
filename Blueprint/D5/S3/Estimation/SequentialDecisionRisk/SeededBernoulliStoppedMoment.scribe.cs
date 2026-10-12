@@ -12,7 +12,7 @@ internal sealed class SeededBernoulliStoppedMomentDocument : IScribeDocumentDefi
         Blocks(
             Paragraph(Text("For an arbitrary measurable seed space Seed and a seed probability measure nu, P(p)=nu times the iid Bernoulli(p) stream law on Seed times (Nat -> Bool). The seed law is independent of the parameter. Write X_i=1_{bit_i=true}-p, L(p0,p,k)=product_{i<k}[p/p0 if bit_i=true, else (1-p)/(1-p0)], and A(m)=((2^(2m+1)*(2m)^2)^m)*2^(2m). For t in WithTop Nat define T_n(t)=min(t,n), regarded as a natural number, and C_a(t)=t^a when finite and infinity at top. Put w(a,m,j)=(2^(a-m))^j and H(a,m)=2^a/(2^a-1)+(1-2^(a-m))^(-1). Expectations without a superscript are real Bochner integrals; nonnegative extended expectations allow infinite values.")),
             Describe.Lean(
-                DescribeId.Create("seededbernoullistoppedmoment-seededFiltration"),
+                DescribeId.Create("seededbernoullistoppedmoment-seededfiltration"),
                 DeclarationHandle.Create(Prefix + "seededFiltration"),
                 H("The seed and acquired prefix"),
                 StatementSource.WithoutFormula(),

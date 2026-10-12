@@ -16,7 +16,7 @@ triage: anchor
 The pinned source is `roos-j/lean-spherical`, revision
 `2b0e2bbf35cdf45ab99d1d77b2dea37b214fe236`, file
 `LeanSpherical/Auto/Spherical/BRSRadial/PlanarResolution.lean`.
-Its header identifies Joris Roos's copyright, Codex authorship and the
+The source declaration is `iteratedDeriv_rpow_eqOn`. Its header identifies Joris Roos's copyright, Codex authorship and the
 Apache 2.0 license. The source supplies the real-power derivative formula
 used by `NonintegerForwardDifferenceSignal.iterated_deriv_rpow_pos`.
 
