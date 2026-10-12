@@ -9,7 +9,9 @@
 import D5.S3.Estimation.SequentialDecisionRisk.StoppedLikelihoodAbsorption
 import Mathlib.Probability.Distributions.Bernoulli
 import Mathlib.Probability.ProductMeasure
-import Mathlib.Probability.Martingale.OptionalSampling
+import Mathlib.Data.Nat.Log
+import Mathlib.Algebra.Order.Field.GeomSum
+import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 
 noncomputable section
@@ -116,10 +118,8 @@ private lemma map_density_pullback {α γ : Type*} [MeasurableSpace α]
     (d : γ → ℝ≥0∞) (hd : Measurable d) :
     (μ.withDensity (d ∘ f)).map f = (μ.map f).withDensity d := by
   ext s hs
-  rw [Measure.map_apply hf hs, withDensity_apply _ (hf hs),
-    withDensity_apply _ hs, ← lintegral_indicator (hf hs),
-    ← lintegral_indicator hs, lintegral_map (hd.indicator hs) hf]
-  rfl
+  simpa only [Function.comp_apply, Measure.map_apply hf hs, withDensity_apply _ (hf hs),
+    withDensity_apply _ hs] using (setLIntegral_map (μ := μ) hs hd hf).symm
 
 private lemma prefix_density_law (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1) (n : ℕ) :
@@ -277,5 +277,238 @@ theorem bernoulli_stopped_moment_bound (ν : Measure Seed) [IsProbabilityMeasure
     exact p₀.2.2
   · rw [abs_of_nonneg (sub_nonneg.mpr p₀.2.2)]
     linarith [p₀.2.1]
+
+local notation "Weight" => fun (a : ℝ) (m j : ℕ) => ((2 : ℝ) ^ (a - (m : ℝ))) ^ j
+local notation "GeoBudget" => fun (a : ℝ) (m : ℕ) =>
+  (2 : ℝ) ^ a / ((2 : ℝ) ^ a - 1) + (1 - (2 : ℝ) ^ (a - (m : ℝ)))⁻¹
+
+omit [MeasurableSpace Seed] in
+private lemma dyadic_truncation_kernel (a : ℝ) (m : ℕ) (ha : 0 < a)
+    (ham : a < (m : ℝ)) (t K : ℕ) :
+    (∑ j ∈ range K, Weight a m j * ((min t (2 ^ j) : ℕ) : ℝ) ^ m) ≤
+      GeoBudget a m * (t : ℝ) ^ a := by
+  have hm : m ≠ 0 := by intro h; simp only [h, Nat.cast_zero] at ham; linarith
+  by_cases ht : t = 0
+  · subst t
+    simp [zero_pow hm, Real.zero_rpow ha.ne']
+  let r : ℝ := (2 : ℝ) ^ a
+  let q : ℝ := (2 : ℝ) ^ (a - (m : ℝ))
+  let k := Nat.log 2 t
+  let N := max K (k + 1)
+  let f : ℕ → ℝ := fun j => q ^ j * ((min t (2 ^ j) : ℕ) : ℝ) ^ m
+  have hr : 1 < r := Real.one_lt_rpow (by norm_num) ha
+  have hq0 : 0 < q := Real.rpow_pos_of_pos (by norm_num) _
+  have hq1 : q < 1 := Real.rpow_lt_one_of_one_lt_of_neg (by norm_num) (by linarith)
+  have ht0 : 0 < (t : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero ht
+  have hf0 : ∀ j, 0 ≤ f j := by intro j; dsimp [f]; positivity
+  have hqr : q * (2 : ℝ) ^ m = r := by
+    dsimp [q, r]
+    rw [Real.rpow_sub_natCast (by norm_num), div_mul_cancel₀ _ (by positivity)]
+  have hlowterm : ∀ j, f j ≤ r ^ j := by
+    intro j
+    calc
+      _ ≤ q ^ j * ((2 : ℝ) ^ j) ^ m := by
+        dsimp [f]
+        apply mul_le_mul_of_nonneg_left _ (pow_nonneg hq0.le j)
+        apply pow_le_pow_left₀ (by positivity)
+        exact_mod_cast min_le_right t (2 ^ j)
+      _ = r ^ j := by rw [← pow_mul, Nat.mul_comm j m, pow_mul, ← mul_pow, hqr]
+  have hrk : r ^ k = ((2 : ℝ) ^ k) ^ a := by
+    dsimp [r]
+    rw [← Real.rpow_mul_natCast (by norm_num), mul_comm a,
+      Real.rpow_natCast_mul (by norm_num)]
+  have hrk_le : r ^ k ≤ (t : ℝ) ^ a := by
+    rw [hrk]
+    exact Real.rpow_le_rpow (by positivity) (by exact_mod_cast Nat.pow_log_le_self 2 ht) ha.le
+  have hlo : (∑ j ∈ range (k + 1), f j) ≤ (t : ℝ) ^ a * (r / (r - 1)) := by
+    calc
+      _ ≤ ∑ j ∈ range (k + 1), r ^ j := sum_le_sum (fun j _ => hlowterm j)
+      _ = (r ^ (k + 1) - 1) / (r - 1) := geom_sum_eq (ne_of_gt hr) _
+      _ ≤ r ^ k * (r / (r - 1)) := by
+        rw [pow_succ, ← mul_div_assoc]
+        exact div_le_div_of_nonneg_right (by linarith) (by linarith)
+      _ ≤ _ := mul_le_mul_of_nonneg_right hrk_le (div_nonneg (by linarith) (by linarith))
+  have hqk : q ^ (k + 1) = ((2 : ℝ) ^ (k + 1)) ^ (a - (m : ℝ)) := by
+    dsimp [q]
+    rw [← Real.rpow_mul_natCast (by norm_num), mul_comm (a - (m : ℝ)),
+      Real.rpow_natCast_mul (by norm_num)]
+  have htailcoefficient : (t : ℝ) ^ m * q ^ (k + 1) ≤ (t : ℝ) ^ a := by
+    rw [hqk]
+    calc
+      _ ≤ (t : ℝ) ^ m * (t : ℝ) ^ (a - (m : ℝ)) := by
+        apply mul_le_mul_of_nonneg_left _ (by positivity)
+        apply Real.rpow_le_rpow_of_nonpos ht0 _ (by linarith)
+        exact_mod_cast (Nat.lt_pow_succ_log_self (by norm_num : 1 < 2) t).le
+      _ = (t : ℝ) ^ a := by
+        rw [← Real.rpow_natCast, ← Real.rpow_add ht0]
+        congr 1
+        ring
+  have hhi : (∑ j ∈ Ico (k + 1) N, f j) ≤ (t : ℝ) ^ a / (1 - q) := by
+    calc
+      _ ≤ ∑ j ∈ Ico (k + 1) N, (t : ℝ) ^ m * q ^ j := by
+        apply sum_le_sum
+        intro j _
+        dsimp [f]
+        rw [mul_comm ((t : ℝ) ^ m)]
+        apply mul_le_mul_of_nonneg_left _ (pow_nonneg hq0.le j)
+        apply pow_le_pow_left₀ (by positivity)
+        exact_mod_cast min_le_left t (2 ^ j)
+      _ = (t : ℝ) ^ m * ∑ j ∈ Ico (k + 1) N, q ^ j := by rw [mul_sum]
+      _ ≤ (t : ℝ) ^ m * (q ^ (k + 1) / (1 - q)) :=
+        mul_le_mul_of_nonneg_left (geom_sum_Ico_le_of_lt_one hq0.le hq1) (by positivity)
+      _ = ((t : ℝ) ^ m * q ^ (k + 1)) / (1 - q) := by ring
+      _ ≤ _ := div_le_div_of_nonneg_right htailcoefficient (by linarith)
+  have hsum : (∑ j ∈ range K, f j) ≤ ∑ j ∈ range N, f j :=
+    sum_le_sum_of_subset_of_nonneg (range_mono (le_max_left K (k + 1)))
+      (fun j _ _ => hf0 j)
+  rw [← sum_range_add_sum_Ico f (le_max_right K (k + 1))] at hsum
+  have h := hsum.trans (add_le_add hlo hhi)
+  change (∑ j ∈ range K, f j) ≤ (r / (r - 1) + (1 - q)⁻¹) * (t : ℝ) ^ a
+  calc
+    _ ≤ (t : ℝ) ^ a * (r / (r - 1)) + (t : ℝ) ^ a / (1 - q) := h
+    _ = _ := by ring
+
+local notation "Trunc" => fun (t : WithTop ℕ) (n : ℕ) => (min t (n : WithTop ℕ)).untopD 0
+local notation "EndpointCost" => fun (a : ℝ) (t : WithTop ℕ) =>
+  if t = ⊤ then (⊤ : ℝ≥0∞) else ENNReal.ofReal (((t.untopD 0 : ℕ) : ℝ) ^ a)
+
+private lemma truncation_stopping {M : Seed × (ℕ → Bool) → WithTop ℕ}
+    (hM : IsStoppingTime seededFiltration M) (n : ℕ) :
+    IsStoppingTime seededFiltration (fun ω => (Trunc (M ω) n : WithTop ℕ)) := by
+  have heq : (fun ω => (Trunc (M ω) n : WithTop ℕ)) =
+      (fun ω => min (M ω) (n : WithTop ℕ)) := by
+    funext ω
+    cases M ω with
+    | top => simp
+    | coe t => rfl
+  rw [heq]
+  exact hM.min_const n
+
+private lemma truncation_le (t : WithTop ℕ) (n : ℕ) : Trunc t n ≤ n := by
+  cases t with
+  | top => simp
+  | coe t =>
+    change min t n ≤ n
+    exact min_le_right t n
+
+private lemma truncated_moment_integrable {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsFiniteMeasure μ] (M : Ω → WithTop ℕ) (hM : Measurable M)
+    (n m : ℕ) : Integrable (fun ω => (Trunc (M ω) n : ℝ) ^ m) μ := by
+  have ht : Measurable (fun ω => Trunc (M ω) n) := (hM.min measurable_const).untopD 0
+  have hf : Measurable (fun ω => (Trunc (M ω) n : ℝ) ^ m) :=
+    ((measurable_from_nat (f := fun k : ℕ => (k : ℝ))).comp ht).pow_const m
+  refine ⟨hf.aestronglyMeasurable, HasFiniteIntegral.of_bounded
+    (C := (n : ℝ) ^ m) (ae_of_all _ (fun ω => ?_))⟩
+  rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+  apply pow_le_pow_left₀ (by positivity)
+  exact_mod_cast truncation_le (M ω) n
+
+private lemma truncation_tail_bound {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (M : Ω → WithTop ℕ) (hM : Measurable M) (n m : ℕ) :
+    ENNReal.ofReal ((n : ℝ) ^ m) * μ {ω | (n : WithTop ℕ) < M ω} ≤
+      ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ m) ∂μ := by
+  have ht : Measurable (fun ω => Trunc (M ω) n) := (hM.min measurable_const).untopD 0
+  have hf : Measurable (fun ω => ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ m)) :=
+    (((measurable_from_nat (f := fun k : ℕ => (k : ℝ))).comp ht).pow_const m).ennreal_ofReal
+  have hsub : {ω | (n : WithTop ℕ) < M ω} ⊆
+      {ω | ENNReal.ofReal ((n : ℝ) ^ m) ≤
+        ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ m)} := by
+    intro ω hω
+    change ENNReal.ofReal ((n : ℝ) ^ m) ≤
+      ENNReal.ofReal ((((min (M ω) (n : WithTop ℕ)).untopD 0 : ℕ) : ℝ) ^ m)
+    rw [min_eq_right hω.le]
+    simp
+  calc
+    _ ≤ ENNReal.ofReal ((n : ℝ) ^ m) * μ
+        {ω | ENNReal.ofReal ((n : ℝ) ^ m) ≤
+          ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ m)} := by
+      gcongr
+    _ ≤ _ := mul_meas_ge_le_lintegral (μ := μ) hf (ENNReal.ofReal ((n : ℝ) ^ m))
+
+private lemma endpoint_budget_finite {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+    (M : Ω → WithTop ℕ) (hM : Measurable M) (a : ℝ) (m : ℕ)
+    (ha : 0 < a) (ham : a < (m : ℝ)) (K : ℕ) :
+    (∑ j ∈ range K, ENNReal.ofReal (Weight a m j) *
+      ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂μ) ≤
+    ENNReal.ofReal (GeoBudget a m) * ∫⁻ ω, EndpointCost a (M ω) ∂μ := by
+  have htrunc : ∀ j, Measurable (fun ω =>
+      ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m)) := by
+    intro j
+    have ht : Measurable (fun ω => Trunc (M ω) (2 ^ j)) :=
+      (hM.min measurable_const).untopD 0
+    exact (((measurable_from_nat (f := fun k : ℕ => (k : ℝ))).comp ht).pow_const m).ennreal_ofReal
+  have hG : 0 < GeoBudget a m := by
+    have hr := Real.one_lt_rpow (by norm_num : (1 : ℝ) < 2) ha
+    have hq := Real.rpow_lt_one_of_one_lt_of_neg (by norm_num : (1 : ℝ) < 2)
+      (show a - (m : ℝ) < 0 by linarith)
+    positivity
+  simp_rw [← lintegral_const_mul _ (htrunc _)]
+  rw [← lintegral_finsetSum _ (fun j _ => (htrunc j).const_mul _),
+    ← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
+  apply lintegral_mono
+  intro ω
+  cases hMt : M ω with
+  | top =>
+    change _ ≤ ENNReal.ofReal (GeoBudget a m) *
+      (if M ω = ⊤ then ⊤ else ENNReal.ofReal ((((M ω).untopD 0 : ℕ) : ℝ) ^ a))
+    rw [hMt, if_pos rfl]
+    rw [ENNReal.mul_top (ne_of_gt (ENNReal.ofReal_pos.mpr hG))]
+    exact le_top
+  | coe t =>
+    simp only [hMt, WithTop.untopD_coe, WithTop.coe_ne_top,
+      if_false]
+    have hw : ∀ j, 0 ≤ Weight a m j := fun j =>
+      pow_nonneg (Real.rpow_nonneg (by norm_num : (0 : ℝ) ≤ 2) _) j
+    simp_rw [← ENNReal.ofReal_mul (hw _)]
+    rw [← ENNReal.ofReal_sum_of_nonneg (fun j _ => by positivity),
+      ← ENNReal.ofReal_mul hG.le]
+    exact ENNReal.ofReal_le_ofReal (dyadic_truncation_kernel a m ha ham t K)
+
+/-- All dyadic truncated moments are charged to one endpoint law of the same
+stopping rule. The endpoint cost is allowed to be infinite; every perturbed
+law retains the independent private seed and the same acquired-bit rule. -/
+theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (p : ℕ → unitInterval) (M : Seed × (ℕ → Bool) → WithTop ℕ)
+    (hM : IsStoppingTime seededFiltration M) (a : ℝ) (m : ℕ)
+    (ha : 0 < a) (ham : a < (m : ℝ))
+    (hwindow : ∀ j, |((p j : ℝ) - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ)))| *
+      Real.sqrt ((2 ^ j : ℕ) : ℝ) ≤
+      (2 * (((2 : ℝ) ^ (2 * m + 1) * (2 * m : ℝ) ^ 2) ^ m *
+        (2 : ℝ) ^ (2 * m)) + 1)⁻¹) :
+    (∀ j, (∫ ω, (Trunc (M ω) (2 ^ j) : ℝ) ^ m ∂Law ν (p j)) ≤
+      2 * ∫ ω, (Trunc (M ω) (2 ^ j) : ℝ) ^ m ∂Law ν p₀) ∧
+    (∀ j, ENNReal.ofReal (((2 ^ j : ℕ) : ℝ) ^ m) *
+      Law ν (p j) {ω | ((2 ^ j : ℕ) : WithTop ℕ) < M ω} ≤
+      2 * ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀) ∧
+    ((∑' j, ENNReal.ofReal (Weight a m j) *
+      ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀) ≤
+      ENNReal.ofReal (GeoBudget a m) * ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) := by
+  have hm : 0 < m := by
+    by_contra h
+    have hz : m = 0 := by omega
+    simp only [hz, Nat.cast_zero] at ham
+    linarith
+  have hmoment : ∀ j, (∫ ω, (Trunc (M ω) (2 ^ j) : ℝ) ^ m ∂Law ν (p j)) ≤
+      2 * ∫ ω, (Trunc (M ω) (2 ^ j) : ℝ) ^ m ∂Law ν p₀ := by
+    intro j
+    exact (bernoulli_stopped_moment_bound ν p₀ (p j) h₀ h₁
+      (fun ω => Trunc (M ω) (2 ^ j)) (truncation_stopping hM (2 ^ j))
+      (2 ^ j) (fun ω => truncation_le (M ω) (2 ^ j)) hm (hwindow j)).2
+  have hmeas := hM.measurable.mono hM.measurableSpace_le le_rfl
+  refine ⟨hmoment, fun j => ?_, ?_⟩
+  · apply (truncation_tail_bound (Law ν (p j)) M hmeas (2 ^ j) m).trans
+    rw [← ofReal_integral_eq_lintegral_ofReal
+      (truncated_moment_integrable (Law ν (p j)) M hmeas (2 ^ j) m)
+      (ae_of_all _ (fun ω => by positivity)),
+      ← ofReal_integral_eq_lintegral_ofReal
+      (truncated_moment_integrable (Law ν p₀) M hmeas (2 ^ j) m)
+      (ae_of_all _ (fun ω => by positivity))]
+    simpa only [ENNReal.ofReal_mul (by norm_num : (0 : ℝ) ≤ 2), ENNReal.ofReal_ofNat]
+      using ENNReal.ofReal_le_ofReal (hmoment j)
+  · apply ENNReal.tsum_le_of_sum_range_le
+    intro K
+    exact endpoint_budget_finite (Law ν p₀) M
+      (hM.measurable.mono hM.measurableSpace_le le_rfl) a m ha ham K
 
 end D5.S3.Estimation.SequentialDecisionRisk.SeededBernoulliStoppedMoment
