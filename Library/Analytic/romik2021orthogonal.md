@@ -4498,3 +4498,315 @@ actual-node comparison in $0<t<T_n^{\rm mov}$, individual nonreal-root
 exclusion, RH and strict Robin for every integer $H>5040$. The new
 application remains ordinary analysis without Lean certification or
 an originality assertion.
+
+## Local source-relative error and polynomial conditional capture
+
+Keep the original $F$, $\mathcal J_n$, positive $a_k$ and zero
+coefficient shift. Reuse the exact Cauchy/Appell interface, the fixed
+Gaussian estimates and sectorial Stirling already used in this note.
+The Euler–Maclaurin supplier (LC134), the checked functional equation
+[DLMF 25.4.2](https://dlmf.nist.gov/25.4.E2), Buck's Lemmas 2.1 and 2.4
+and disc-merging rule, Titchmarsh's Theorem 9.6(A), and the
+[DLMF digamma expansion 5.11.2](https://dlmf.nist.gov/5.11.E2) are
+the published inputs. No generic saddle, Gaussian, Cartan or
+zero-count theorem is reproved. This is an ordinary
+source application, without Lean certification or an originality claim.
+
+The global error in (LC167) ignores the original source's Gamma
+attenuation near a high real frequency. The local estimate below keeps
+that attenuation and a contour-specific relative source bound, with a
+separate payment for the remote circle. It improves a conditional detection bound, not the all-node strict sign
+criterion or a numerical zero verification.
+
+### Two exact contour moments before any estimate
+
+For $n\ge1$ and complex $t$, put
+
+$$
+\mathcal K_n(\theta)=\frac{n!}{2\pi n^n}
+             e^{ne^{i\theta}-in\theta},\qquad
+\mathcal J_n(t)=\int_{-\pi}^{\pi}
+             \mathcal K_n(\theta)F(te^{i\theta})\,d\theta,
+\qquad
+\int_{-\pi}^{\pi}\mathcal K_n=1,
+\qquad
+\int_{-\pi}^{\pi}\mathcal K_n(e^{i\theta}-1)=0.
+\tag{LC176}
+$$
+
+The first formula is the existing coefficient integral on $|v|=n$.
+The last two identities take the constant and linear coefficient
+moments of that same integral. They are exact, including the finite
+Jensen truncation; no shifted source or approximate Gaussian measure
+is substituted.
+
+For $t\ne0$, $0<r\le|t|$, set
+$M_t(r)=\max_{|z-t|\le r}|F(z)|$. Subtract
+$F(t)+tF'(t)(e^{i\theta}-1)$ using both exact moments.
+On $|\theta|\le r/(2|t|)$, the ordinary Cauchy Taylor bound gives
+remainder at most $2M_t(r)|t|^2\theta^2/r^2$.
+The already used fixed Gaussian norm bounds for this phase give
+$\int|\mathcal K_n|\theta^2\le C/n$ and remote mass at most
+$C\sqrt n\exp(-cnr^2/|t|^2)$. These follow with the same Stirling
+normalization and fixed real-circle decrease; no moving source phase
+is used. On the remote arc retain the exact source maximum (LC166)
+and the Cauchy first-derivative bound. Thus the actual source has
+
+$$
+|\mathcal J_n(t)-F(t)|
+\le \frac{CM_t(r)|t|^2}{nr^2}
++C\sqrt n e^{-cnr^2/|t|^2}
+       \left[G(|t|)+M_t(r)\left(1+\frac{|t|}r\right)\right].
+\tag{LC177}
+$$
+
+Here and below positive constants are universal for the fixed source
+and fixed windows, independent of degree, height, off-line distance,
+source multiplicities and source-zero spacings. Their numerical
+values are not certified in this application.
+
+### Uniform fixed-window bounds from existing source suppliers
+
+Let $T\ge32$, $Q=T+2$ and $E_T=e^{-\pi T/4}$.
+For $\Re s\ge1/2$ with a bounded real part and $|\Im s|\ge16$,
+the calculation from (LC134), now with $N=\lceil|\Im s|\rceil$,
+gives $|\zeta(s)|\le C\sqrt{1+|\Im s|}$; for $\Re s\ge2$ the
+Dirichlet series gives the stronger constant bound. For $\Re s<1/2$
+use the checked functional equation and sectorial Stirling to obtain
+$|\chi(s)|\le C(1+|\Im s|)^{1/2-\Re s}$. Applying the same
+positive-half-plane estimate to $1-s$ gives the coarse uniform result
+
+$$
+|\zeta(s)|\le C Q^{15}
+\quad\left(-14\le\Re s\le18,\quad |\Im s-T|\le16\right).
+\tag{LC178}
+$$
+
+This is a parameter application of (LC134) and the functional equation,
+not an interpolation of pointwise fixed-$\sigma$ asymptotics. In
+particular, DLMF 25.9.1's fixed-$\sigma$ convention is not used as a
+uniform-strip theorem.
+
+Write the exact Gamma factor as
+
+$$
+\mathcal A(s)=\frac{s(s-1)}{2\xi_0}\pi^{-s/2}\Gamma(s/2),
+\qquad
+\Phi(s)=-(s-1/2)^2,
+\qquad F(\Phi(s))=\mathcal A(s)\zeta(s)=\xi(s)/\xi_0.
+\tag{LC179}
+$$
+
+The last equality is the even entire power-series identity, requiring
+no global square-root branch. The existing Stirling supplier on the
+fixed window $|s-(1/2+iT)|\le2$ gives
+$|\mathcal A(s)|\asymp E_TQ^{\Re s/2+3/2}$.
+In particular its upper bound is $CE_TQ^3$, and its lower bound on
+$|s-(1/2+iT)|\le1$ is $cE_T$. It has neither a zero nor a pole
+in these high windows.
+
+### Euler-anchored floor, zero count and chosen contour clearance
+
+Suppose conditionally that
+$\rho=1/2-\eta+iT$ is a zeta zero, with
+$T\ge32$ and $0<|\eta|<1/2$. Set $L=\log Q$ and
+$B_\eta=1+\log(1/|\eta|)$.
+Normalize the auxiliary observation
+$p_T(w)=\zeta(2+iT+w)/\zeta(2+iT)$.
+The Euler product gives
+$1/\zeta(2)\le|\zeta(2+iT)|\le\zeta(2)<2$.
+This normalization does not replace $F$ in $\mathcal J_n$.
+The disk $|w|\le16$ avoids the zeta pole, $p_T(0)=1$, and
+(LC178) provides a universal $C_Z\ge1$ such that, with
+$V_T=C_ZQ^{15}$,
+
+$$
+T(16,1/p_T)=T(16,p_T)\le\log V_T,
+\qquad
+1\le m_T\le n(4,1/p_T)\le\frac{\log V_T}{\log4}=O(L).
+\tag{LC180}
+$$
+
+Here $T(r,\cdot)$ is the Nevanlinna characteristic, and
+$m_T$ counts all nontrivial zeros with $|\Im\rho'-T|\le2$,
+with multiplicity. They lie in $|w|<4$ since $0<\Re\rho'<1$.
+The count bound is the existing Jensen inequality, also given in
+Buck's Lemma 2.1 applied to $1/p_T$ with outer radius $16$,
+inner radius $4$ and $p_T(0)=1$. Here $n(r,u)$ counts poles
+of $u$ with multiplicity, so the reciprocal counts the source zeros. The lower count follows from the conditional target zero.
+No new Riemann--von Mangoldt estimate is proved.
+
+Apply Buck's Lemma 2.4 to $1/p_T$ at scale $2$, with $m=0$ and
+$\epsilon=|\eta|/3072$. Put
+
+$$
+K_\eta=6+\frac{\log(3072/|\eta|)}{\log2},\qquad
+ d=\frac{|\eta|}{64m_T}.
+\tag{LC181}
+$$
+
+Its exceptional open discs have total radius at most $|\eta|/64$.
+Outside them, for $|w|\le4$, one has
+$|\zeta(2+iT+w)|\ge cV_T^{-K_\eta}$.
+Add a disc of radius $d$ about each distinct zero counted by $m_T$.
+Their total radii are at most $|\eta|/64$ even with multiplicities.
+Merge the complete finite union by Buck's rule, without increasing
+its total radius. Its complement retains both the lower floor and
+clearance at least $d$ from every counted zero.
+
+Let $D$ be the resulting open disc containing the target $\rho$.
+Its radius is at most $|\eta|/32$, so its closure is within
+$|\eta|/16$ of $\rho$, inside $|s-(1/2+iT)|<1$, and away from
+the critical line. Its boundary lies outside the enlarged union.
+Consequently
+
+$$
+|F(\Phi(s))|\ge cE_TV_T^{-K_\eta},\qquad
+\operatorname{dist}\bigl(s,\{\rho':|\Im\rho'-T|\le2\}\bigr)\ge d,
+\quad s\in\partial D.
+\tag{LC182}
+$$
+
+The distance is created by the chosen contour. It is not a minimum
+spacing between source zeros. Close zeros and their multiplicities
+may remain together inside $D$.
+
+### Reuse the published local logarithmic derivative
+
+The additional classical supplier is E. C. Titchmarsh,
+[*The Theory of the Riemann Zeta-Function*, second edition, revised
+by D. R. Heath-Brown](https://sites.math.rutgers.edu/~zeilberg/EM18/TitchmarshZeta.pdf),
+Theorem 9.6(A), equation (9.6.1), printed p.217 (PDF page 113).
+It gives, uniformly for $-1\le\Re s\le2$ away from the zeros,
+
+$$
+\frac{\zeta'}{\zeta}(s)
+=\sum_{|\Im\rho'-\Im s|\le1}\frac1{s-\rho'}+O(\log\Im s).
+\tag{LC183}
+$$
+
+This is an unconditional local formula, with actual multiplicities;
+no RH premise or replacement logarithmic-derivative proof is used.
+The inspected second-edition PDF has SHA-256
+`ee495ba7e6b7af4722317baa79087881c16f648cb8af72843eb869c7497a03d0`.
+The strict versus non-strict ordinate cutoff makes no difference
+here: its endpoint terms are bounded and there are $O(L)$ of them.
+
+For $s\in\partial D$, the disc $|u-s|\le d/4$ has clearance
+at least $3d/4$ from each counted zero. It stays in the stated strip
+and near height $T$; every zero in the local sum belongs to the count
+$m_T$. Equations (LC180)--(LC183) therefore give
+$|\zeta'/\zeta(u)|\le C L^2/|\eta|$ on that disc.
+The sectorial digamma expansion DLMF 5.11.2, together with the
+explicit factors in (LC179), gives
+$|\mathcal A'/\mathcal A(u)|\le CL$ there; its sector stays
+a fixed distance from the negative real axis.
+
+Choose a universal $a>0$ sufficiently small. The radius
+$a|\eta|/L^2$ is at most $d/4$, by (LC180).
+Integrate the logarithmic derivative of the nonzero function
+$F(\Phi(u))=\mathcal A(u)\zeta(u)$ along segments in this disc.
+Its modulus is at most $2|F(\Phi(s))|$ on the smaller chosen disc.
+For $t=\Phi(s)$, $|t|\asymp Q^2$; the local square-root inverse
+of $\Phi$ sends a $t$-disc of radius
+$r_t=a_0T|\eta|/L^2$, with another fixed sufficiently small
+$a_0>0$, into that chosen $s$-disc. Thus
+
+$$
+r_t=\frac{a_0T|\eta|}{L^2},\qquad
+M_t(r_t)\le2|F(t)|,\qquad s\in\partial D.
+\tag{LC184}
+$$
+
+This is a boundary-relative bound on the unchanged source. It is
+not obtained by dividing an absolute Taylor error by an unproved
+zero-free-strip lower bound.
+
+### Pay every remote arc and dominate uniformly in height and distance
+
+Insert (LC184) into the exact contour estimate (LC177).
+Retain $G(|t|)\le\exp(CQL)$ from the previously used source-growth
+supplier on the remote arc, and divide by the independent floor
+(LC182). The factor $E_T^{-1}$ and the remote subtraction budget
+$1+|t|/r_t$ are absorbed into the displayed exponent. Uniformly on
+$\partial D$ this gives
+
+$$
+\frac{|\mathcal J_n(t)-F(t)|}{|F(t)|}
+\le\frac{CQ^2L^4}{n|\eta|^2}
++C\sqrt n\exp\!\left[
+-\frac{cn|\eta|^2}{Q^2L^4}+CQL+CK_\eta\log V_T\right].
+\tag{LC185}
+$$
+
+Take one sufficiently large universal $C_*$ and set
+
+$$
+\mathcal N_*(T,\eta)
+=\left\lceil C_*Q^3|\eta|^{-2}L^5B_\eta\right\rceil.
+\tag{LC186}
+$$
+
+For $n\ge\mathcal N_*$ the first term of (LC185) is at most
+$C/(C_*QLB_\eta)$. The remote factor
+$\sqrt n\exp[-cn|\eta|^2/(Q^2L^4)]$ is decreasing once
+$n\ge Q^2L^4/(2c|\eta|^2)$, which this same threshold meets.
+At the threshold its negative exponent has size at least
+$cC_*QLB_\eta$.
+Its remaining logarithmic cost is at most
+
+$$
+CQL+CK_\eta\log V_T+\tfrac12\log(2C_*)
++\tfrac32L+\log(1/|\eta|)
++\tfrac52\log L+\tfrac12\log B_\eta+O(1).
+$$
+
+Since $K_\eta\log V_T=O(LB_\eta)$,
+$\log B_\eta\le B_\eta$, and $Q\ge34$, one fixed increase of
+$C_*$ dominates this cost for every allowed height and every distance,
+including arbitrarily small $|\eta|$. Increasing it once more makes
+the right side of (LC185) strictly below one for every integer
+$n\ge\mathcal N_*$. No arc is deleted and no fixed-distance
+asymptotic is substituted for this joint estimate.
+
+### Same-source capture and its remaining obstruction
+
+Apply Rouché on $D$ in the $s$ plane to
+$\mathcal J_n(\Phi(s))$ and $F(\Phi(s))=\xi(s)/\xi_0$.
+Their multiplicity counts there agree and are positive.
+The map $\Phi$ is injective on this high disc and has nonzero
+derivative, so these are actual zeros of the unchanged
+$\mathcal J_n$, with multiplicity. Every $s\in D$ satisfies
+$|\Re(s-1/2)|\ge15|\eta|/16$ and $\Im s>0$; hence
+$\Im\Phi(s)=-2\Re(s-1/2)\Im s\ne0$.
+Conjugation gives $\Delta_n\ge2$ for every $n\ge\mathcal N_*$.
+The accepted exact defect ledger then yields
+
+$$
+b_\Delta\le\mathcal N_*(T,\eta)-1,
+\qquad
+\mathcal N_*(T,\eta)
+=O\!\left((T+2)^3|\eta|^{-2}
+          [\log(T+2)]^5[1+\log(1/|\eta|)]\right).
+\tag{LC187}
+$$
+
+For $|\eta|\ge\eta_0>0$ this is a polynomial height bound.
+For each fixed $A>0$ and $|\eta|\ge T^{-A}$ in the allowed
+range it is $O_A(T^{3+2A}(\log T)^6)$.
+The global bound (LC172) remains usable independently; the present
+application pays a smaller joint degree by controlling the original
+source locally relative to itself on a contour with chosen clearance.
+Its classical source suppliers are reused; no originality assurance
+is made for this quantitative application.
+
+No source-zero spacing or simplicity hypothesis is required.
+No numerical values of $C_Z,a_0,C_*$, new verified zero height or
+finite-degree certificate are supplied. This is conditional source-zero
+detection, not a reverse location theorem for all Jensen roots, a source
+zero exclusion, or a root trajectory from the captured zero to the first
+failed actual node. It asserts neither an integer collision nor
+$t\asymp T^2$ for that real witness. Uniform actual-node strict
+comparison below $T_n^{\rm mov}$, RH and strict Robin for every
+$H>5040$ remain open. This is ordinary analysis without Lean
+certification.
