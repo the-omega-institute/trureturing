@@ -21,7 +21,7 @@ open D5.S3.ConceptDynamics.Coding.ResetFiniteIntegralDefect
 open D5.S3.ConceptDynamics.Coding.InertGroupBlockConjugacy
   (VertexModule transition stationaryTransition StationaryModule DimensionGroup induced)
 
-private theorem flip_twice (x : MonoidAlgebra ℤ Sign) : resetFlip (resetFlip x) = x := by
+theorem flip_twice (x : MonoidAlgebra ℤ Sign) : resetFlip (resetFlip x) = x := by
   change (x * MonoidAlgebra.single (ofAdd true : Sign) 1) *
     MonoidAlgebra.single (ofAdd true : Sign) 1 = x
   rw [mul_assoc, MonoidAlgebra.single_mul_single]

@@ -1,0 +1,15 @@
+**证明。** 由原子替换律
+
+$$
+\rho^2\alpha=\langle\beta,\alpha\rangle,\qquad
+\rho^2\beta=\langle\rho\beta,\rho\alpha\rangle
+=\langle\langle\beta,\alpha\rangle,\beta\rangle
+$$
+
+得到 $C(\alpha)=A$、$C(\beta)=B$；配对处的分配律给出
+$C(\langle s,t\rangle)=\langle C(s),C(t)\rangle$。三种产生式互斥：$A$ 的两个
+孩子都是叶，$B$ 的左孩子是分支而右孩子是叶，$\langle g_1,g_2\rangle$ 的两个
+孩子都是分支，因为每个 $g\in\mathcal G$ 的根都是分支。故根类型给出唯一解析选择。
+对树和语法同时作结构归纳，得到 $D(C(t))=t$ 和 $C(D(g))=g$。归纳还给出
+算法终止性；这里的逆只在实际像 $\mathcal G$ 上声明。证毕。$\square$
+
