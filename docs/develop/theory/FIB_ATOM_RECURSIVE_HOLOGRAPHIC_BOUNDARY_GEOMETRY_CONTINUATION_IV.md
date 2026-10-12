@@ -721,3 +721,717 @@ admissibility of the additional realization remain a separate
 mathematical bridge.
 
 ## 97.99 追加锚（本行以下为增补区）
+
+## 98. The all-occurrence measure and its addressed boundary trace
+
+**Definition 98.1 (one address-edge space and the source measures).**
+Retain precisely $T_n$, $N_n$, $L_n$ and $R_\lambda(T_n)$ of
+Definitions 92.1–92.2. Each $T_n$ is a separately supplied original
+finite source. Let $\mathcal E=\{L,R\}^{+}$: a nonempty word $p$
+indexes the edge from $p^{-}$ to $p$, when that edge occurs.
+All edge Hilbert spaces below are subspaces of the single real
+$\mathscr H=\ell^2(\mathcal E)$, by extension by zero. Put
+
+$$
+s(p)=\#_L(p)+2\#_R(p),\qquad
+a=\varphi^{-1},\quad b=\varphi^{-2},\quad a+b=1,
+\qquad s(\varnothing)=0.
+\tag{98.1}
+$$
+
+Let $\mu_n$ assign mass $1/N_n$ to every occurrence address in
+$V_{T_n}$, including the root, every internal node and every terminal.
+For a nonempty address $p$ define its reached-descendant mass by
+$m_n(p)=\mu_n\{x:p\preceq x\}$; set $m_n(\varnothing)=1$.
+Define the root-path increment map, with missing edges ignored, by
+
+$$
+J_n:\mathscr H\longrightarrow L^2(V_{T_n},\mu_n),\qquad
+(J_nz)(x)=\sum_{\varnothing\ne p\preceq x}z_p.
+\tag{98.2}
+$$
+
+The sum uses only actual edges of $T_n$. In particular $J_nz$ is
+zero at the root. Set
+$v_n=J_n^*\mathbf1$, $B_n=J_n^*J_n$ and
+$\Sigma_n=B_n-v_n\otimes v_n$, where
+$(u\otimes u)z=\langle u,z\rangle u$.
+These operators act on $\mathscr H$; their node-space codomains
+in (98.2) are not identified with one another.
+
+Let $\Omega=\{L,R\}^{\mathbb N}$ and let $M$ be the Bernoulli
+probability law with probabilities $(a,b)$, so its cylinders satisfy
+
+$$
+M([p])=a^{\#_L(p)}b^{\#_R(p)}=\varphi^{-s(p)}=:m(p).
+\tag{98.3}
+$$
+
+For finitely supported $z\in\mathscr H$, define
+$(Jz)(\omega)=\sum_{p\preceq\omega}z_p$.
+Whenever this map has a bounded extension into $L^2(\Omega,M)$,
+use $v=J^*\mathbf1$, $B=J^*J$ and
+$\Sigma=B-v\otimes v$.
+
+**Theorem 98.2 (source masses, compact trace and covariance convergence).**
+For a nonempty $p$, put $d=n-s(p)$. The address is reached exactly
+when $d\ge0$ and $n-s(p^{-})\ge2$. In that case its entire descendant
+source is $T_d$, and
+
+$$
+m_n(p)=\frac{N_d}{N_n}.
+\tag{98.4}
+$$
+
+Otherwise $m_n(p)=0$. A reached $d=0$ is an alpha terminal, a reached
+$d=1$ is a beta terminal, and a reached $d\ge2$ is a branch.
+Each reached node has point mass $1/N_n$; a terminal has no strict
+descendant addresses. At the root the same label classification uses
+$d=n$, including the singletons $n=0,1$.
+
+For every fixed $p$, $m_n(p)\to m(p)$. There is a uniform bound
+$m_n(p)\le K a^{|p|}$ with $K=2\varphi$, and $m(p)\le a^{|p|}$.
+If $P_h$ is the coordinate projection onto $1\le |p|\le h$, then
+
+$$
+\begin{aligned}
+\|J_n(I-P_h)\|&\le
+ \left(\frac{K a^{h+1}}{1-a}\right)^{1/2},\\
+\|J(I-P_h)\|&\le
+ \left(\frac{a^{h+1}}{1-a}\right)^{1/2}.
+\end{aligned}
+\tag{98.5}
+$$
+
+Consequently $J$ has a unique bounded compact extension,
+and, on the specified common edge space,
+
+$$
+v_n\longrightarrow v\text{ in }\ell^2,\qquad
+B_n\longrightarrow B,\quad \Sigma_n\longrightarrow\Sigma
+       \text{ in operator norm}.
+\tag{98.6}
+$$
+
+For the actual counting-measure screening, including $n=0,1$,
+
+$$
+R_\lambda(T_n)
+ =\left\langle v_n,(I+N_n\lambda\Sigma_n)^{-1}v_n\right\rangle
+ \qquad(\lambda>0).
+\tag{98.7}
+$$
+
+**Proof.**
+Every left descent subtracts one from the residual source index;
+every right descent subtracts two. A descent is permitted only from
+an index at least two. The last parent has the smallest residual
+index among the proper prefixes, so its branch condition, together
+with nonnegative final index, is necessary and sufficient for the
+whole path. This proves the reached-address criterion and (98.4).
+Equivalently, a last left edge requires $d\ge1$, while a last right
+edge permits $d=0$. This distinction accounts for early alpha
+terminals and their absent extensions.
+
+By (92.12), for fixed $s(p)$ the ratio in (98.4) tends to
+$\varphi^{-s(p)}$; the address is eventually reached and is then
+a branch. Its point mass tends to zero. For every integer $h\ge1$,
+
+$$
+\mu_n\{x:|x|<h\}\le\frac{2^h-1}{N_n}\longrightarrow0.
+\tag{98.8}
+$$
+
+This bound includes any terminals at these depths. The first terminal
+depth is $\lfloor n/2\rfloor$, as in Theorem 97.2, so fixed-depth
+terminals eventually disappear. Thus (98.3) is the limiting law of
+all-node descendant cylinders, not an assertion that $\mu_n$ was a
+leaf measure or that it already lived on $\Omega$.
+
+The elementary count bounds
+$N_j\ge\varphi^{j-1}$ and $N_j\le2\varphi^j$ hold for $j=0,1$ and
+then by the count recurrence and $F_{j+1}\le\varphi^j$.
+For a reached address, they give
+$N_{n-s(p)}/N_n\le2\varphi\,\varphi^{-s(p)}
+ \le K a^{|p|}$; an absent address satisfies the same inequality.
+
+The path-sum operator and its descendant-mass adjoint are the
+classical tree Hardy operators; see
+[*Potential theory on trees, graphs and Ahlfors-regular metric
+spaces*, §5.1, (41)](https://arxiv.org/html/1010.4788v3),
+with the root coordinate omitted here because the variables are
+edge increments. Theorem 32 there supplies the general weighted
+trace framework. The fair dyadic-law trace criterion in
+[Bernicot–Maury–Salort, *A 2-adic approach of the human respiratory
+tree*, Proposition 1](https://arxiv.org/html/1005.0445v1)
+uses Haar cylinder masses $2^{-|p|}$; it does not identify that law
+with the biased $M$ in (98.3).
+For the present source law the required estimate follows directly.
+
+At depth $k$, descendant sets of distinct reached addresses are
+disjoint. For $z^{(k)}$ supported at that depth,
+
+$$
+\|J_n z^{(k)}\|_{L^2(\mu_n)}^2
+ =\sum_{|p|=k}m_n(p)|z_p|^2
+ \le K a^k\|z^{(k)}\|^2.
+\tag{98.9}
+$$
+
+The analogous bound for $J$ has $K=1$, because its depth-$k$
+cylinders partition $\Omega$. The triangle inequality followed
+by Cauchy–Schwarz gives
+
+$$
+\left\|\sum_{k>h}J_nz^{(k)}\right\|
+ \le\sum_{k>h}(K a^k)^{1/2}\|z^{(k)}\|
+ \le\left(\sum_{k>h}K a^k\right)^{1/2}\|z\|.
+\tag{98.10}
+$$
+
+This proves (98.5), including $h=0$ and the corresponding bound
+for $J$. It establishes the bounded extension by completion.
+Since $JP_h$ has finite rank and its norm distance to $J$ tends
+to zero, $J$ is compact. This is an $L^2(M)$ trace; pointwise
+continuity of arbitrary finite-energy traces has not been used.
+
+Taking adjoints on individual coordinates gives
+
+$$
+(v_n)_p=m_n(p),\quad v_p=m(p),\qquad
+(B_n)_{pq}=
+ \begin{cases}
+ m_n(q),&p\preceq q,\\
+ m_n(p),&q\preceq p,\\
+ 0,&p,q\text{ incomparable}.
+ \end{cases}
+\tag{98.11}
+$$
+
+The formula for $B$ replaces $m_n$ by $m$.
+It also holds when one address is absent, since its descendant
+set is empty. Every fixed finite block therefore converges.
+Uniform boundedness of $J_n$ and (98.5) imply
+
+$$
+\|B_n-P_hB_nP_h\|
+ \le2\|J_n\|\|J_n(I-P_h)\|,\qquad
+\|(I-P_h)v_n\|\le\|J_n(I-P_h)\|.
+\tag{98.12}
+$$
+
+The same estimates hold for $B,v$.
+First choose $h$ to make the uniform tails small, then use the
+finite-block convergence. This proves the first two limits in
+(98.6). The third follows from convergence of the rank-one
+operators $v_n\otimes v_n$. No identification of changing node
+$L^2$ spaces is required. Positivity follows from
+
+$$
+\langle z,\Sigma_n z\rangle
+ =\operatorname{Var}_{\mu_n}(J_nz),\qquad
+\langle z,\Sigma z\rangle
+ =\operatorname{Var}_{M}(Jz).
+\tag{98.13}
+$$
+
+Finally the finite quadratic variational identity for a
+positive definite matrix $A$:
+$\langle e,A^{-1}e\rangle
+ =\sup_f(2\langle e,f\rangle-\langle f,Af\rangle)$,
+obtained by completing the square at $f=A^{-1}e$.
+On a finite tree every function is uniquely $f=c\mathbf1-J_nz$
+on its actual edges, and its unit-edge energy is $\|z\|^2$.
+Write $\tau=N_n\lambda$. The root resolvent is thus the supremum of
+
+$$
+2c-\|z\|^2-\tau
+ \left(c^2-2c\langle v_n,z\rangle+\langle z,B_nz\rangle\right).
+\tag{98.14}
+$$
+
+Maximizing over $c$ gives
+$\tau^{-1}+2\langle v_n,z\rangle
+ -\|z\|^2-\tau\langle z,\Sigma_nz\rangle$.
+A second completion of the square proves (98.7), with the exact
+constant-mode subtraction $\tau^{-1}$ of (92.2).
+Coordinates of absent edges contribute only $-\|z\|^2$, so the
+same maximization is valid on $\mathscr H$. For $n=0,1$ there
+are no edges: $J_n=v_n=B_n=\Sigma_n=0$,
+$G_\lambda=1/\lambda$ and $R_\lambda=0$.
+The multiplier $N_n$ in (98.7) restores counting screening from
+the uniform all-node normalization. $\square$
+
+## 99. The constant-trace projection for the biased source law
+
+**Theorem 99.1 (zero-variance constraints and the retained component).**
+For the source-derived $J,v,\Sigma$ of §98, define
+
+$$
+q_p=2^{-|p|},\qquad w=v-q.
+\tag{99.1}
+$$
+
+Then
+
+$$
+Jq=\mathbf1,\qquad \|q\|^2=1,\qquad
+P_{\ker\Sigma}v=q,\qquad
+\|w\|^2=\frac{\sqrt5}{2}-1>0.
+\tag{99.2}
+$$
+
+More precisely, for $z\in\mathscr H$ let
+$S_p=\sum_{\varnothing\ne u\preceq p}z_u$.
+For a prefix $p$, let $z^p$ be its strict-descendant increment
+vector, reindexed by nonempty suffixes. If $Jz=c$ $M$-almost
+everywhere, then for every finite prefix $p$,
+
+$$
+Jz^p=c-S_p\quad M\text{-almost everywhere},\qquad
+\langle v,z^p\rangle=c-S_p,\qquad
+\langle z^p,\Sigma z^p\rangle=0.
+\tag{99.3}
+$$
+
+All such $z$ obey
+
+$$
+\sum_{|p|=k}|c-S_p|^2
+ \le\|J\|^2\sum_{|u|>k}|z_u|^2\longrightarrow0.
+\tag{99.4}
+$$
+
+Conversely, (99.4)'s convergence to zero for some $c$ implies
+$Jz=c$ $M$-almost everywhere. In particular,
+$z\in\ker\Sigma$ exactly when this condition holds for some $c$,
+and then $\langle q,z\rangle=\langle v,z\rangle=c$.
+
+**Proof.**
+The covariance identity (98.13) says that $z\in\ker\Sigma$ if
+and only if $Jz$ is almost everywhere constant. Indeed
+$\Sigma=J^*(I-\mathbf1\otimes\mathbf1)J$, with the middle factor
+the orthogonal projection in the probability space $L^2(M)$.
+Every cylinder has positive $M$ mass. Conditional on $[p]$,
+the suffix law is again $M$, and the trace restricted to that
+cylinder is $S_p+Jz^p$. This equality first holds for finite
+partial sums and then in conditional $L^2$, by boundedness of
+restriction to each fixed positive-mass cylinder. It proves
+(99.3), rather than inferring trace continuity from full support.
+
+Since $\|Jz^p\|=|c-S_p|$, boundedness of $J$ bounds its square
+by $\|J\|^2\|z^p\|^2$. The strict-descendant sets of the
+depth-$k$ prefixes partition all edges deeper than $k$,
+so summation proves (99.4).
+Conversely, the depth-$k$ path sum $JP_kz$ takes value $S_p$
+on $[p]$, hence
+
+$$
+\|JP_kz-c\|_{L^2(M)}^2
+ =\sum_{|p|=k}m(p)|S_p-c|^2
+ \le\sum_{|p|=k}|S_p-c|^2\longrightarrow0.
+\tag{99.5}
+$$
+
+As $JP_kz\to Jz$ in $L^2(M)$, the asserted converse follows.
+
+For any such constant trace, the fair averages of the finite
+level values satisfy
+
+$$
+2^{-k}\sum_{|p|=k}S_p
+ =\sum_{j=1}^{k}2^{-j}\sum_{|u|=j}z_u
+ =\langle P_kq,z\rangle.
+\tag{99.6}
+$$
+
+By (99.4), their difference from $c$ is at most
+$2^{-k/2}(\sum_{|p|=k}|S_p-c|^2)^{1/2}$ and tends to zero.
+The vector $q$ lies in $\ell^2$, with
+$\|q\|^2=\sum_{j\ge1}2^j4^{-j}=1$; thus (99.6) gives
+$\langle q,z\rangle=c$. Independently
+$\langle v,z\rangle=\int Jz\,dM=c$.
+This calculation compares finite sums, not almost-everywhere
+traces under two mutually different probability laws.
+
+Along every infinite path,
+$\sum_{j\ge1}2^{-j}=1$, so $Jq=\mathbf1$ and $q\in\ker\Sigma$.
+The preceding equality shows that $v-q$ is orthogonal to the
+entire kernel, proving the projection assertion.
+The source cylinder formula gives, with $s=a^2+b^2=5-2\sqrt5$,
+
+$$
+\|v\|^2
+ =\sum_{j\ge1}\sum_{|p|=j}m(p)^2
+ =\sum_{j\ge1}s^j=\frac{s}{1-s}=\frac{\sqrt5}{2}.
+\tag{99.7}
+$$
+
+Orthogonal decomposition now yields the stated norm of $w$.
+The equal-split vector $q$ is also the classical unit-resistance
+binary-tree flow: its outgoing values add to its incoming value
+and its energy is one. The conditional trace calculation above establishes the projection
+for this particular biased trace law independently of an electrical
+boundary identification.
+$\square$
+
+## 100. The simultaneous source-size and screening crossover
+
+**Definition 100.1 (the joint centered profile).**
+For $0\le\tau<\infty$ set
+
+$$
+H(\tau)=\langle v,(I+\tau\Sigma)^{-1}v\rangle,
+\qquad H(\infty)=1.
+\tag{100.1}
+$$
+
+**Theorem 100.2 (every simultaneous sequence, including the unbounded
+parameter).**
+For every sequence $n\to\infty$, $\lambda_n>0$,
+$\lambda_n\to0$ and $\tau_n=N_n\lambda_n\to\tau\in[0,\infty]$,
+
+$$
+R_{\lambda_n}(T_n)\longrightarrow H(\tau).
+\tag{100.2}
+$$
+
+For every finite $T\ge0$, with the value at zero interpreted as
+$R_0(T_n)=C_n$,
+
+$$
+\sup_{0\le t\le T}
+ \left|R_{t/N_n}(T_n)-H(t)\right|\longrightarrow0.
+\tag{100.3}
+$$
+
+The profile has the source-specific decomposition
+
+$$
+H(\tau)=1+\langle w,(I+\tau\Sigma)^{-1}w\rangle,\qquad
+H(0)=\frac{\sqrt5}{2},\qquad
+\lim_{\tau\to\infty}H(\tau)=1.
+\tag{100.4}
+$$
+
+It is continuous, strictly decreasing, and $H(\tau)>1$ for every
+finite $\tau\ge0$. The retained amount at zero joint parameter is
+$\|w\|^2=\sqrt5/2-1$, and the nonconstant term in (100.4) is
+strictly positive at every finite joint parameter.
+
+**Proof.**
+All the covariance operators are positive, so their resolvent
+norms are at most one. For finite $t$, the resolvent identity gives
+
+$$
+\|(I+t\Sigma_n)^{-1}-(I+t\Sigma)^{-1}\|
+ \le t\|\Sigma_n-\Sigma\|.
+\tag{100.5}
+$$
+
+Together with (98.6), this proves uniform convergence on every
+bounded $t$ interval. At $t=0$, (92.9) and (98.11) give
+$C_n=\|v_n\|^2$, including the singletons. This proves (100.3)
+and (100.2) when the joint parameter has a finite limit.
+
+The orthogonal decomposition in Theorem 99.1 is invariant under
+$\Sigma$, which vanishes on its kernel. It yields (100.4)'s
+decomposition and its value at zero. Since $w\perp\ker\Sigma$,
+$w$ is in the closure of the range of $\Sigma$:
+the orthogonal complement of that range is exactly its kernel.
+For a vector $\Sigma x$,
+
+$$
+\|(I+t\Sigma)^{-1}\Sigma x\|
+ \le\frac{2}{t}\|x\|\quad(t>0),
+\tag{100.6}
+$$
+
+by $t(I+t\Sigma)^{-1}\Sigma=I-(I+t\Sigma)^{-1}$.
+Approximation by range vectors and the contraction bound prove
+$(I+t\Sigma)^{-1}w\to0$. This establishes the endpoint of $H$.
+
+For finite $t$ the inverse is positive definite and satisfies
+$(I+t\Sigma)^{-1}\ge(1+t\|\Sigma\|)^{-1}I$.
+Consequently the nonconstant term is positive because $w\ne0$.
+Differentiating the bounded-operator inverse gives
+
+$$
+H'(t)=-\langle u_t,\Sigma u_t\rangle<0,\qquad
+u_t=(I+t\Sigma)^{-1}w.
+\tag{100.7}
+$$
+
+The inequality is strict: if its quadratic form vanished,
+(98.13) would imply $u_t\in\ker\Sigma$, and then
+$w=(I+t\Sigma)u_t=u_t$ would lie in that kernel, a contradiction.
+This also gives continuity at finite parameters.
+
+It remains to prove (100.2) for actual sequences
+$\tau_n\to\infty$; (100.5) alone does not control them.
+For any fixed $T>0$, monotonicity of the quadratic variational
+supremum in (98.14), after subtracting $\tau_n^{-1}$, gives
+eventually
+
+$$
+R_{\lambda_n}(T_n)
+ \le\langle v_n,(I+T\Sigma_n)^{-1}v_n\rangle.
+\tag{100.8}
+$$
+
+Its upper limit is at most $H(T)$, hence at most one after
+$T\to\infty$.
+
+For the lower bound fix a positive integer $d$ and use
+$q^{[d]}=P_dq$ in that same variational supremum.
+On every actual node $x$,
+
+$$
+(J_nq^{[d]})(x)=1-2^{-\min(|x|,d)},\qquad
+\|q^{[d]}\|^2=1-2^{-d}.
+\tag{100.9}
+$$
+
+All nodes of depth at least $d$ have the same displayed value;
+this statement also respects terminals before depth $d$.
+There are at most $2^d-1$ earlier nodes, each of mass $1/N_n$.
+Using $1-2^{-d}$ as a comparison constant therefore gives
+
+$$
+\operatorname{Var}_{\mu_n}(J_nq^{[d]})
+ \le\frac{2^d-1}{N_n},\qquad
+\tau_n\operatorname{Var}_{\mu_n}(J_nq^{[d]})
+ \le(2^d-1)\lambda_n\longrightarrow0.
+\tag{100.10}
+$$
+
+Moreover (98.6) and the cylinder partition at each depth give
+
+$$
+\langle v_n,q^{[d]}\rangle
+ \longrightarrow\sum_{j=1}^{d}2^{-j}\sum_{|p|=j}m(p)
+ =1-2^{-d}.
+\tag{100.11}
+$$
+
+The variational formula now yields
+$\liminf_n R_{\lambda_n}(T_n)\ge1-2^{-d}$.
+Letting $d\to\infty$ proves the lower bound one, completing
+the unbounded-parameter sequence proof. The condition
+$\lambda_n\to0$ was used in (100.10), separately from
+$\tau_n\to\infty$. No endpoint rate or whole-spectrum
+description is asserted. $\square$
+
+## 101. The inherited capacity profile
+
+**Definition 101.1 (uncentered response and capacity).**
+For $0<\tau<\infty$ define
+
+$$
+U(\tau)=\frac1\tau+H(\tau),\qquad
+Y(\tau)=\frac1{U(\tau)}
+       =\frac{\tau}{1+\tau H(\tau)}.
+\tag{101.1}
+$$
+
+Use the extended endpoints
+$U(0)=+\infty$, $Y(0)=0$, $U(\infty)=Y(\infty)=1$.
+On a finite original source write
+$Y_n(\lambda)=G_\lambda(T_n)^{-1}$.
+
+**Theorem 101.2 (capacity endpoints and the source-inherited
+branch relation).**
+Under the sequence hypotheses of Theorem 100.2,
+
+$$
+G_{\lambda_n}(T_n)\longrightarrow U(\tau),\qquad
+Y_n(\lambda_n)\longrightarrow Y(\tau),
+\tag{101.2}
+$$
+
+with the first limit extended-valued when $\tau=0$.
+For every $0\le\tau\le\infty$,
+
+$$
+Y(\tau)=\frac{Y(a\tau)}{1+Y(a\tau)}
+       +\frac{Y(b\tau)}{1+Y(b\tau)},
+\tag{101.3}
+$$
+
+where $a\infty=b\infty=\infty$.
+For finite $\tau$ it also has the boundary variational expression
+
+$$
+Y(\tau)=
+ \inf_{z\in\mathscr H}
+ \left\{\|z\|^2+\tau\|\mathbf1-Jz\|_{L^2(M)}^2\right\}.
+\tag{101.4}
+$$
+
+In particular $H(0)=\sqrt5/2$ is a centered finite part, whereas
+the uncentered endpoint is $+\infty$ and its capacity is zero.
+For $0<\tau<\infty$, $0<Y(\tau)<1$.
+
+**Proof.**
+The exact decomposition (92.2), followed by Theorem 100.2, gives
+(101.2) at positive finite and infinite parameters. At zero,
+$\tau_n^{-1}\to+\infty$ and $R_{\lambda_n}\ge0$, proving the
+extended uncentered limit and hence the zero capacity endpoint.
+
+The finite root-pinned energy minimum equals reciprocal root
+Green response by completing the same positive quadratic form
+with the constraint $f(r)=1$. Writing $f=\mathbf1-J_nz$ gives
+
+$$
+Y_n(\lambda)
+ =\inf_z\{\|z\|^2+N_n\lambda\|\mathbf1-J_nz\|_{L^2(\mu_n)}^2\}.
+\tag{101.5}
+$$
+
+For $\lambda=\tau/N_n$, completion of the square makes this
+$\tau-\tau^2\langle v_n,(I+\tau B_n)^{-1}v_n\rangle$.
+By (98.6), it converges to
+$\tau-\tau^2\langle v,(I+\tau B)^{-1}v\rangle$,
+the infimum in (101.4); (101.2) identifies it with $Y(\tau)$.
+At $\tau=0$ both the infimum and $Y(0)$ are zero.
+For positive finite $\tau$ it is positive by (101.1).
+Testing (101.4) with $z=tq$ gives
+$t^2+\tau(1-t)^2$, whose minimum is $\tau/(1+\tau)<1$.
+This proves the strict upper bound without imposing a new
+boundary law on the finite matrices.
+
+The finite Schur complement (93.3) says exactly
+
+$$
+Y_n(\lambda)=\lambda+
+ \frac{Y_{n-1}(\lambda)}{1+Y_{n-1}(\lambda)}
+ +\frac{Y_{n-2}(\lambda)}{1+Y_{n-2}(\lambda)}
+ \quad(n\ge2),\qquad Y_0(\lambda)=Y_1(\lambda)=\lambda.
+\tag{101.6}
+$$
+
+Fix $0<\tau<\infty$ and take $\lambda_n=\tau/N_n$.
+The two child joint parameters tend to $a\tau$ and $b\tau$,
+since $N_{n-1}/N_n\to a$ and $N_{n-2}/N_n\to b$.
+Theorem 100.2 and (101.2) apply to each child sequence.
+Letting $n\to\infty$ in (101.6) proves (101.3).
+At zero the relation is $0=0+0$; at infinity it is
+$1=1/2+1/2$, using the separately proved endpoint limits.
+Thus the relation is inherited from the actual finite source
+after convergence; no uniqueness assertion for its solutions
+is needed. $\square$
+
+## 102. Joint screening distinguishes originals with the same local reply
+
+**Assumption 102.1 (the supplied data for response estimation).**
+Fix $h\ge0$. An original source is promised to be some $T_n$,
+and the supplied data are precisely $p_h(T_n)$ of (95.2) and
+a declared positive screening parameter $\lambda$.
+No source index, node count or observation of a prepared
+comparison family is additionally supplied.
+An estimator may be any family of real-valued functions
+$E_{h,\lambda}$ on the Fibonacci prefix image.
+Separate input instances have separate immutable originals;
+they are not substitutions within one execution.
+
+**Theorem 102.2 (a finite-parameter separation and a uniform
+vanishing-screening obstruction on the promised family).**
+For every fixed $h\ge0$, $\tau>0$ and integer $k\ge1$,
+put $\lambda_j=\tau/N_j$. For all sufficiently large $j$,
+
+$$
+p_h(T_j)=p_h(T_{j+k}),\qquad
+R_{\lambda_j}(T_j)-R_{\lambda_j}(T_{j+k})
+ \longrightarrow H(\tau)-H(\varphi^k\tau)>0.
+\tag{102.1}
+$$
+
+Thus even at a common declared $\lambda_j$, the identical local
+table misses a nonzero difference of the global response.
+More strongly, every estimator family of Assumption 102.1 obeys
+
+$$
+\limsup_{\lambda\downarrow0}
+ \sup_{n\ge0}
+ \left|E_{h,\lambda}(p_h(T_n))-R_\lambda(T_n)\right|
+ \ge\frac12\left(\frac{\sqrt5}{2}-1\right).
+\tag{102.2}
+$$
+
+The bound holds for every fixed $h$; it is compatible with
+Theorem 97.2's exact identification when $n\le2h+1$,
+its uniform approximation to $C_n$ as $h\to\infty$, and its
+uniform approximation to $R_\lambda(T_n)$ as $h\to\infty$
+for each fixed $\lambda>0$.
+
+**Proof.**
+For $j\ge2h+2$, both local tables consist entirely of branches,
+by Theorem 97.2. From (92.12),
+$N_{j+k}/N_j\to\varphi^k$.
+The common $\lambda_j$ tends to zero, with joint parameters
+$\tau$ and $\varphi^k\tau$ on the two original sources.
+Theorem 100.2 and strict decrease of $H$ prove (102.1).
+The estimator has the same real value on the two data sets,
+so at least one of its absolute errors is at least half their
+response difference.
+
+For the full bound use instead the actual original pair
+$T_j,T_{2j}$ and the common declared parameter
+
+$$
+\lambda_j=(N_jN_{2j})^{-1/2},\qquad
+N_j\lambda_j=\sqrt{N_j/N_{2j}}\longrightarrow0,\qquad
+N_{2j}\lambda_j=\sqrt{N_{2j}/N_j}\longrightarrow\infty.
+\tag{102.3}
+$$
+
+Binet's formula proves both ratio limits and $\lambda_j\to0$.
+Theorem 100.2 gives response limits $\sqrt5/2$ and one.
+Their tables agree eventually at every fixed $h$.
+Writing $e_j$ for the estimator's common value, the triangle
+inequality gives
+
+$$
+\max\{|e_j-R_{\lambda_j}(T_j)|,\,
+       |e_j-R_{\lambda_j}(T_{2j})|\}
+ \ge\frac12|R_{\lambda_j}(T_j)-R_{\lambda_j}(T_{2j})|.
+\tag{102.4}
+$$
+
+Taking the lower limit along this sequence yields (102.2).
+The counts used to specify the mathematical counterexample
+parameter in (102.3) are not data available to the estimator.
+
+The retained vector $w$ in (100.4), determined by the limiting
+all-node cylinder masses, supplies the positive finite-parameter
+difference in (102.1). It records a global source contribution
+left after removal of the constant trace; it is not obtained by
+postprocessing the common fixed-depth table.
+Neither (102.1) nor (102.2) changes the Fibonacci domain promise
+or the quantifiers in (97.2) and (97.4): a fixed positive
+$\lambda$ and a common range including $\lambda\downarrow0$
+are different approximation problems. $\square$
+
+**Assumption 102.3 (an additional same-source propagation realization).**
+To interpret the comparison carrier as spatial or native
+propagation, assume for each original $t$ the additional maps,
+measure and edge-law compatibility, operator and boundary
+correspondence, permitted source actions and lawful clock of
+Assumption 97.3, all on that same immutable original.
+A physically installed screening law and any source acquisition
+cost must also have their own specified realization and bounds.
+A scalar declared $\lambda$ by itself supplies none of those
+maps, actions, clocks, costs or sensors.
+
+Theorems 98.2–102.2 assume only the closed unit-edge counting
+operator on occurrences and the stated input promises.
+Their boundary is an addressed $L^2(M)$ trace of that comparison
+carrier. They do not furnish a correspondence with complete
+successive source states or observation quotients, a spatial
+metric or dimension, a native transport law, a lawful acquired
+clock, physical screening installation, or a reconstruction of
+the entire spectrum. The existence and admissibility of a
+realization satisfying this assumption remain unresolved
+additional mathematical obligations.
+
+## 102.99 追加锚（本行以下为增补区）
