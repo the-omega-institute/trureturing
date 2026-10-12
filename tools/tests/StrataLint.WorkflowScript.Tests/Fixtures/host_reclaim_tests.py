@@ -31,7 +31,11 @@ class HostReclaimTests(unittest.TestCase):
         self.workspace = tempfile.TemporaryDirectory(prefix="host reclaim with spaces ")
         self.addCleanup(self.workspace.cleanup)
         self.root = Path(self.workspace.name).resolve()
-        self.cutoff = time.time() - 24 * 3600
+        self.now = 1700100000
+        self.cutoff = self.now - 24 * 3600
+        clock = patch.object(time, "time", return_value=self.now)
+        clock.start()
+        self.addCleanup(clock.stop)
         self.main = self.root / "main"
         self.main.mkdir()
         self.git(self.main, "init", "--initial-branch=dev")
@@ -70,6 +74,14 @@ class HostReclaimTests(unittest.TestCase):
                 handle.bind(str(temporary))
             temporary.rename(path)
 
+    def lsof_process(self, pid):
+        run = subprocess.run
+        def observe(command, **kwargs):
+            if command[0] == "lsof":
+                command = [*command, "-p", str(pid)]
+            return run(command, **kwargs)
+        return patch.object(cleanup.subprocess, "run", side_effect=observe)
+
     def test_case_inventory_lists_every_case_without_running_git(self):
         environment = dict(os.environ, PATH="")
         result = subprocess.run([sys.executable, "-B", __file__, str(ROOT), "--list-tests"],
@@ -94,6 +106,127 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("would_remove", self.clean(target, False)["action"])
         self.assertEqual("removed", self.clean(target)["action"])
         self.assertTrue((self.main / "source").exists())
+
+    def test_main_direct_alternate_dependency_retains_candidate(self):
+        self.check_main_alternate_dependency(False)
+
+    def test_main_indirect_alternate_dependency_retains_candidate(self):
+        self.check_main_alternate_dependency(True)
+
+    def check_main_alternate_dependency(self, indirect):
+        target = self.clone()
+        shutil.rmtree(self.main)
+        if indirect:
+            bridge = self.root / "bridge"
+            self.git(target, "clone", "--shared", target, bridge)
+            self.git(bridge, "clone", "--shared", bridge, self.main)
+        else:
+            self.git(target, "clone", "--shared", target, self.main)
+        self.git(self.main, "cat-file", "-e", "HEAD")
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual("kept", result["action"], result)
+        self.assertEqual("repository_source_dependency", result["reason"], result)
+        self.assertTrue(target.exists())
+        self.git(self.main, "cat-file", "-e", "HEAD")
+
+    def test_unrelated_main_alternate_does_not_block_reclamation(self):
+        target = self.clone()
+        backing = self.clone("backing")
+        (self.main / ".git/objects/info/alternates").write_text(str(backing / ".git/objects") + "\n")
+        self.age(target)
+        self.assertEqual("removed", self.clean(target)["action"])
+        self.git(self.main, "cat-file", "-e", "HEAD")
+
+    def test_main_alternate_symlink_dependency_retains_candidate(self):
+        target = self.clone()
+        alias = self.root / "object alias"
+        alias.symlink_to(target / ".git/objects", target_is_directory=True)
+        (self.main / ".git/objects/info/alternates").write_text(str(alias) + "\n")
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual("repository_source_dependency", result["reason"], result)
+        self.assertTrue(target.exists())
+
+    def test_main_alternate_created_before_deletion_retains_candidate(self):
+        target = self.clone()
+        self.age(target)
+        def activity():
+            (self.main / ".git/objects/info/alternates").write_text(str(target / ".git/objects") + "\n")
+            return set()
+        result = cleanup.clean_candidate(target, self.cutoff, [], True, repository=self.main, activity=activity)
+        self.assertEqual("changed", result["reason"], result)
+        self.assertTrue(target.exists())
+
+    def test_main_alternate_alias_inside_candidate_retains_candidate(self):
+        self.check_source_alternate_metadata_dependency(False)
+
+    def test_main_alternates_file_inside_candidate_retains_candidate(self):
+        self.check_source_alternate_metadata_dependency(True)
+
+    def check_source_alternate_metadata_dependency(self, linked_file):
+        target = self.clone()
+        backing = self.clone("backing")
+        shutil.rmtree(self.main)
+        self.git(backing, "clone", "--shared", backing, self.main)
+        alternates = self.main / ".git/objects/info/alternates"
+        if linked_file:
+            listing = target / ".git/alternate-list"
+            listing.write_text(str(backing / ".git/objects") + "\n")
+            alternates.unlink()
+            alternates.symlink_to(listing)
+        else:
+            alias = target / ".git/object-alias"
+            alias.symlink_to(backing / ".git/objects", target_is_directory=True)
+            alternates.write_text(str(alias) + "\n")
+        self.git(self.main, "cat-file", "-e", "HEAD")
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual("repository_source_dependency", result["reason"], result)
+        self.assertTrue(target.exists())
+        self.git(self.main, "cat-file", "-e", "HEAD")
+
+    def test_main_shallow_tip_does_not_certify_missing_ancestors(self):
+        target = self.clone()
+        (target / "source").write_text("next commit")
+        self.git(target, "commit", "-am", "Advance candidate")
+        ancestor = self.git(target, "rev-parse", "HEAD^")
+        self.git(target, "remote", "remove", "origin")
+        shutil.rmtree(self.main)
+        self.git(target, "clone", "--depth=1", target.as_uri(), self.main)
+        self.git(target, "reflog", "expire", "--expire=all", "--all")
+        missing = subprocess.run(["git", "-C", str(self.main), "cat-file", "-e", ancestor],
+                                 capture_output=True)
+        self.assertNotEqual(0, missing.returncode)
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual("repository_unverifiable", result["reason"], result)
+        self.assertTrue(target.exists())
+        self.git(target, "cat-file", "-e", ancestor)
+
+    def test_main_partial_clone_retains_independent_repository(self):
+        self.check_incomplete_main("extensions.partialclone", "origin")
+
+    def test_main_promisor_remote_retains_independent_repository(self):
+        self.check_incomplete_main("remote.origin.promisor", "true")
+
+    def check_incomplete_main(self, key, value):
+        target = self.clone()
+        self.git(self.main, "config", key, value)
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual("repository_unverifiable", result["reason"], result)
+        self.assertTrue(target.exists())
+
+    def test_main_promisor_pack_retains_independent_repository(self):
+        target = self.clone()
+        self.git(self.main, "repack", "-ad")
+        pack = next((self.main / ".git/objects/pack").glob("*.pack"))
+        pack.with_suffix(".promisor").touch()
+        self.age(target)
+        result = self.clean(target)
+        self.assertEqual("repository_unverifiable", result["reason"], result)
+        self.assertTrue(target.exists())
 
     def test_unique_dirty_stash_dangling_and_unfinished_repositories_are_retained(self):
         for kind, expected in (("unique", "repository_unique_commits"),
@@ -317,6 +450,10 @@ class HostReclaimTests(unittest.TestCase):
 
     @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
     def test_real_lsof_observes_live_fifo_and_socket_handles(self):
+        with self.lsof_process(os.getpid()):
+            self.check_live_fifo_and_socket_handles()
+
+    def check_live_fifo_and_socket_handles(self):
         for kind in ("fifo", "socket"):
             endpoint = self.root / kind
             if kind == "fifo":
@@ -364,7 +501,8 @@ class HostReclaimTests(unittest.TestCase):
         output = io.StringIO()
         registrations = cleanup.registered_worktrees
         with patch.object(cleanup, "clean_worktrees", return_value=0), \
-             patch.object(cleanup, "active_paths", return_value=set(active)), \
+             (patch.object(cleanup, "active_paths", wraps=cleanup.active_paths) if active is None
+              else patch.object(cleanup, "active_paths", return_value=set(active))), \
              patch.object(cleanup, "registered_worktrees", side_effect=lambda source:
                  [self.main, *trees] if source.resolve() == self.main else registrations(source)), \
              contextlib.redirect_stdout(output):
@@ -468,7 +606,7 @@ class HostReclaimTests(unittest.TestCase):
                 (target / "source").write_text("private")
                 self.age(target)
             else:
-                os.utime(target / "source", None)
+                os.utime(target / "source", (self.now, self.now))
             self.run_sweep()
             self.assertFalse(build.exists())
             self.assertTrue(packages.exists())
@@ -518,17 +656,37 @@ class HostReclaimTests(unittest.TestCase):
         (lake / ".release-file").write_text("keep")
         self.age(lake)
         with release.cache_guard(self.main):
-            rows = release.clean_staging(lake, self.cutoff, delete=True)
+            rows = release.clean_staging(lake, self.cutoff, now=self.now, delete=True)
         self.assertTrue(stage.exists())
         self.assertTrue(any(row["reason"] == "cache_busy" for row in rows))
-        rows = release.clean_staging(lake, self.cutoff, delete=True)
+        rows = release.clean_staging(lake, self.cutoff, now=self.now, delete=True)
         self.assertFalse(stage.parent.exists())
         self.assertTrue(backup.exists())
         self.assertTrue(malformed.exists())
         self.assertTrue((lake / ".release-file").exists())
         recent = lake / ".release-recent"
         recent.mkdir()
-        release.clean_staging(lake, self.cutoff, delete=True)
+        os.utime(recent, (self.now, self.now))
+        release.clean_staging(lake, self.cutoff, now=self.now, delete=True)
+        self.assertTrue(recent.exists())
+
+    def test_staging_age_uses_caller_time_despite_wall_clock_changes(self):
+        lake = self.main / ".lake"
+        old = lake / ".release-old"
+        recent = lake / ".release-recent"
+        old.mkdir(parents=True)
+        recent.mkdir()
+        self.age(lake)
+        os.utime(recent, (self.cutoff + 1, self.cutoff + 1))
+        with patch.object(release.time, "time", side_effect=AssertionError("unexpected wall clock read")):
+            try:
+                rows = release.clean_staging(lake, now=self.now)
+            except TypeError as error:
+                self.fail("staging cleanup must accept caller time: " + str(error))
+        items = {row["path"]: row for row in rows}
+        self.assertEqual("removed", items[str(old)]["action"])
+        self.assertEqual("recent", items[str(recent)]["reason"])
+        self.assertFalse(old.exists())
         self.assertTrue(recent.exists())
 
     def test_staging_nested_git_and_changed_snapshot_are_retained(self):
@@ -537,7 +695,7 @@ class HostReclaimTests(unittest.TestCase):
         (stage / ".git").mkdir(parents=True)
         (stage / ".git/HEAD").write_text("recovery history")
         self.age(lake)
-        rows = release.clean_staging(lake, self.cutoff)
+        rows = release.clean_staging(lake, self.cutoff, now=self.now)
         self.assertTrue(stage.exists())
         self.assertEqual("repository", rows[0]["reason"])
         shutil.rmtree(stage / ".git")
@@ -551,7 +709,7 @@ class HostReclaimTests(unittest.TestCase):
                 (stage / "new").write_text("concurrent")
             return observe(*args)
         with patch.object(release, "staging_snapshot", side_effect=changed):
-            rows = release.clean_staging(lake, self.cutoff)
+            rows = release.clean_staging(lake, self.cutoff, now=self.now)
         self.assertEqual("changed", rows[0]["reason"])
         self.assertTrue(stage.exists())
 
@@ -568,7 +726,7 @@ class HostReclaimTests(unittest.TestCase):
             fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
             return types.SimpleNamespace(**dict(fields, st_flags=stat.UF_IMMUTABLE))
         with patch.object(Path, "lstat", flagged):
-            rows = release.clean_staging(lake, self.cutoff, delete=False)
+            rows = release.clean_staging(lake, self.cutoff, now=self.now, delete=False)
         self.assertEqual("protected_flag", rows[0]["reason"], rows)
 
     def test_vanished_staging_entry_does_not_abort_other_cleanup(self):
@@ -584,23 +742,23 @@ class HostReclaimTests(unittest.TestCase):
                 raise FileNotFoundError(str(path))
             return lstat(path)
         with patch.object(Path, "lstat", disappear):
-            rows = release.clean_staging(lake, self.cutoff)
+            rows = release.clean_staging(lake, self.cutoff, now=self.now)
         self.assertTrue(any(row["reason"] == "vanished" for row in rows), rows)
         self.assertFalse(retained.exists())
 
     def test_repository_ipc_and_staging_keep_a_full_day_minimum(self):
         target = self.clone()
-        recent = time.time() - 3600
+        recent = self.now - 3600
         self.age(target)
         os.utime(target / "source", (recent, recent))
-        result = cleanup.clean_candidate(target, time.time(), [], delete=True, repository=self.main)
+        result = cleanup.clean_candidate(target, self.now, [], delete=True, repository=self.main)
         self.assertEqual("recent", result["reason"])
         fifo = self.root / "fifo"
         os.mkfifo(fifo)
         os.utime(fifo, (recent, recent))
         with patch.object(cleanup.sys, "platform", "darwin"), \
              patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 1, "", "")):
-            result = cleanup.clean_candidate(fifo, time.time(), [], True)
+            result = cleanup.clean_candidate(fifo, self.now, [], True)
         self.assertEqual("recent", result["reason"])
 
     def test_codex_repository_and_special_file_rules_remain_unchanged(self):
@@ -629,7 +787,7 @@ class HostReclaimTests(unittest.TestCase):
                                      cleanup.clean_candidate(endpoint, self.cutoff, [], True)["reason"])
             with patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 1, "", "")):
                 self.assertEqual("protected", cleanup.clean_candidate(endpoint, self.cutoff, [endpoint], True)["reason"])
-                os.utime(endpoint, None)
+                os.utime(endpoint, (self.now, self.now))
                 self.assertEqual("recent", cleanup.clean_candidate(endpoint, self.cutoff, [], True)["reason"])
 
     def test_ipc_batch_reobserves_activity_and_fingerprints_before_unlink(self):
@@ -642,13 +800,169 @@ class HostReclaimTests(unittest.TestCase):
             nonlocal calls
             calls += 1
             if calls == 2:
-                os.utime(paths[2], None)
+                os.utime(paths[2], (self.now, self.now))
             return {paths[0]} if calls == 1 else {paths[0], paths[1]}
         with patch.object(cleanup.sys, "platform", "darwin"), \
              patch.object(cleanup.subprocess, "run", side_effect=AssertionError("activity is already observed")):
             rows = list(cleanup.clean_ipc_batch(paths, self.cutoff, [], True, activity))
         self.assertEqual(["protected", "changed", "changed", None], [row["reason"] for row in rows])
         self.assertEqual([True, True, True, False], [path.exists() for path in paths])
+
+    def test_ipc_batch_timeout_retains_and_names_every_endpoint(self):
+        paths = [self.root / ("fifo-" + str(index)) for index in range(2)]
+        for path in paths:
+            os.mkfifo(path)
+        self.age(self.root)
+        def activity():
+            raise subprocess.TimeoutExpired(["lsof"], 120)
+        try:
+            rows = list(cleanup.clean_ipc_batch(paths, self.cutoff, [], True, activity))
+        except subprocess.TimeoutExpired as error:
+            self.fail("IPC batch must retain endpoints after observer timeout: " + str(error))
+        self.assertEqual([str(path) for path in paths], [row["path"] for row in rows])
+        self.assertEqual(["ipc_activity_unobservable"] * 2, [row["reason"] for row in rows])
+        self.assertTrue(all(path.exists() for path in paths))
+
+    def test_ipc_batch_recheck_timeout_retains_remaining_endpoints(self):
+        paths = [self.root / ("fifo-" + str(index)) for index in range(2)]
+        for path in paths:
+            os.mkfifo(path)
+        self.age(self.root)
+        calls = 0
+        def activity():
+            nonlocal calls
+            calls += 1
+            if calls > 1:
+                raise subprocess.TimeoutExpired(["lsof"], 120)
+            return set()
+        try:
+            rows = list(cleanup.clean_ipc_batch(paths, self.cutoff, [], True, activity))
+        except subprocess.TimeoutExpired as error:
+            self.fail("IPC recheck must retain endpoints after observer timeout: " + str(error))
+        self.assertEqual(["ipc_activity_unobservable"] * 2, [row["reason"] for row in rows])
+        self.assertTrue(all(path.exists() for path in paths))
+
+    def test_host_sweep_ipc_timeout_retains_each_endpoint_and_continues(self):
+        artifacts = self.root / "artifacts"
+        artifacts.mkdir()
+        endpoints = [artifacts / ("fifo-" + str(index)) for index in range(2)]
+        for endpoint in endpoints:
+            os.mkfifo(endpoint)
+        ordinary = artifacts / "ordinary"
+        ordinary.write_text("old artifact")
+        self.age(artifacts)
+        def observe(*args, **kwargs):
+            if kwargs.get("strict_ipc"):
+                raise subprocess.TimeoutExpired(["lsof"], 120)
+            return set()
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup, "active_paths", side_effect=observe):
+            rows = self.run_sweep(active=None)
+        items = {row.get("path"): row for row in rows}
+        for endpoint in endpoints:
+            self.assertEqual("ipc_activity_unobservable", items[str(endpoint)]["reason"])
+            self.assertTrue(endpoint.exists())
+        self.assertFalse(ordinary.exists())
+        self.assertEqual("succeeded", rows[-1]["status"])
+
+    def test_relative_named_socket_observation_cannot_certify_inactivity(self):
+        endpoint = self.root / "endpoint"
+        self.make_endpoint(endpoint, "socket")
+        self.age(self.root)
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess(
+                 [], 0, "p123\nf4\ntunix\nnendpoint\n", "")):
+            result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
+        self.assertEqual("ipc_activity_unobservable", result["reason"], result)
+        self.assertTrue(endpoint.exists())
+
+    def test_nonipc_lsof_observation_preserves_warning_handling(self):
+        endpoint = self.root / "observed"
+        observed = subprocess.CompletedProcess([], 0, "p123\nf4\ntREG\nn" + str(endpoint) + "\n", "warning")
+        with patch.object(cleanup.subprocess, "run", return_value=observed):
+            try:
+                paths = cleanup.macos_active_paths()
+            except OSError as error:
+                self.fail("ordinary activity observations retain their warning policy: " + str(error))
+        self.assertIn(endpoint, paths)
+        with patch.object(cleanup.subprocess, "run", return_value=observed):
+            with self.assertRaisesRegex(OSError, "ipc_activity_unobservable"):
+                cleanup.macos_active_paths(strict_ipc=True)
+
+    def test_escaped_absolute_socket_observation_retains_endpoint(self):
+        endpoint = self.root / "endpoint\\name"
+        self.make_endpoint(endpoint, "socket")
+        self.age(self.root)
+        escaped = str(endpoint).replace("\\", "\\\\")
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess(
+                 [], 0, "p123\nf4\ntunix\nn" + escaped + "\n", "")):
+            result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
+        self.assertIn(result["reason"], ("protected", "ipc_activity_unobservable"), result)
+        self.assertTrue(endpoint.exists())
+
+    def test_unnamed_sockets_do_not_block_idle_ipc_reclamation(self):
+        endpoint = self.root / "endpoint"
+        os.mkfifo(endpoint)
+        self.age(self.root)
+        rows = "p123\nf4\ntunix\nn->0xabcdef\nf5\ntunix\nn\nf6\ntIPv4\nn127.0.0.1:8000\n"
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, rows, "")):
+            result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
+        self.assertEqual("removed", result["action"], result)
+
+    @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
+    def test_real_unnamed_sockets_do_not_block_idle_ipc_reclamation(self):
+        endpoint = self.root / "endpoint"
+        os.mkfifo(endpoint)
+        self.age(self.root)
+        first, second = socket.socketpair()
+        try:
+            with self.lsof_process(os.getpid()):
+                result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
+            self.assertEqual("removed", result["action"], result)
+        finally:
+            first.close()
+            second.close()
+
+    @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
+    def test_real_relative_socket_survives_full_host_sweep(self):
+        self.check_live_socket_sweep("endpoint", True)
+
+    @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
+    def test_real_escaped_socket_survives_full_host_sweep(self):
+        self.check_live_socket_sweep("endpoint\\name", False)
+
+    def check_live_socket_sweep(self, name, relative):
+        workspace = tempfile.TemporaryDirectory(prefix="ipc with spaces ", dir="/tmp")
+        self.addCleanup(workspace.cleanup)
+        artifacts = Path(workspace.name).resolve()
+        endpoint = artifacts / name
+        program = '''import json, os, socket, sys
+directory, name, relative = json.loads(sys.stdin.readline())
+os.chdir(directory)
+handle = socket.socket(socket.AF_UNIX)
+handle.bind(name if relative else os.path.join(directory, name))
+handle.listen()
+os.chdir("/")
+print("ready", flush=True)
+sys.stdin.read()
+'''
+        child = subprocess.Popen([sys.executable, "-B", "-c", program],
+                                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            child.stdin.write(json.dumps([str(artifacts), name, relative]) + "\n")
+            child.stdin.flush()
+            self.assertEqual("ready\n", child.stdout.readline())
+            self.age(artifacts)
+            with self.lsof_process(child.pid):
+                rows = self.run_sweep(artifact_root=artifacts, active=None)
+            self.assertEqual("succeeded", rows[-1]["status"], rows)
+            self.assertTrue(endpoint.exists(), rows)
+            with socket.socket(socket.AF_UNIX) as client:
+                client.connect(str(endpoint))
+        finally:
+            child.communicate("", timeout=30)
 
     def test_later_ipc_endpoint_opened_after_an_unlink_is_retained(self):
         paths = [self.root / ("fifo-" + str(index)) for index in range(2)]
@@ -698,9 +1012,10 @@ class HostReclaimTests(unittest.TestCase):
              patch.object(release, "snapshot_candidates", return_value=[]), \
              patch.object(release, "receipt"):
             with release.cache_guard(self.main):
-                release.fetch_locked(self.main, "partition", time.monotonic() + 60)
+                release.fetch_locked(self.main, "partition", 60)
         clean.assert_called_once()
         self.assertEqual(self.main / ".lake", clean.call_args.args[0])
+        self.assertEqual(self.now, clean.call_args.kwargs["now"])
 
     def test_host_sweep_keeps_its_programs_after_source_worktree_disposal(self):
         copied = self.root / "copied/tools"
@@ -745,7 +1060,7 @@ raise SystemExit(cleanup.run_clean(options))
                  patch.object(release, "restore_snapshot"), contextlib.redirect_stdout(output):
                 if entry == "production":
                     with release.cache_guard(self.main):
-                        release.fetch_locked(self.main, "partition", time.monotonic() + 60)
+                        release.fetch_locked(self.main, "partition", 60)
                 else:
                     release.fetch_verification(self.main, "partition", {"workflow_run_id": "1", "workflow_run_attempt": "1"})
             rows = [json.loads(line.split(" ", 1)[1]) for line in output.getvalue().splitlines()]

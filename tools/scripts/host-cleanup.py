@@ -46,10 +46,44 @@ def directory_skeleton(path):
     return True
 
 
-def repository_snapshot(path, source):
+def source_object_directories(source, removal_root, preservation):
+    """Require complete source history whose object storage survives this removal."""
+    config = preservation.git(source, "config", "--get-regexp",
+                              r"extensions\.partialclone|remote\..*\.promisor", check=False)
+    if (config.returncode not in (0, 1) or config.stdout
+            or preservation.value(source, "rev-parse", "--is-shallow-repository") != "false"):
+        raise preservation.Refused("repository_unverifiable:source_incomplete_objects")
+    pending = [preservation.common(source) / "objects"]
+    visited = set()
+    removal_root = removal_root.resolve()
+    def surviving_path(path):
+        physical = path.resolve(strict=True)
+        for dependency in (path.absolute(), physical):
+            if dependency == removal_root or removal_root in dependency.parents:
+                raise preservation.Refused("repository_source_dependency:" + str(dependency))
+        return physical
+    while pending:
+        objects = surviving_path(pending.pop())
+        if objects in visited:
+            continue
+        visited.add(objects)
+        if not objects.is_dir() or any((objects / "pack").glob("*.promisor")):
+            raise preservation.Refused("repository_unverifiable:source_incomplete_objects")
+        alternates = objects / "info/alternates"
+        if os.path.lexists(alternates):
+            surviving_path(alternates)
+            for raw in alternates.read_text().splitlines():
+                if not raw or raw.startswith('"'):
+                    raise preservation.Refused("repository_unverifiable:source_alternate_path")
+                pending.append(objects / raw)
+    return sorted(map(str, visited))
+
+
+def repository_snapshot(path, source, removal_root=None):
     """Certify all local recovery history against the main checkout's retained refs."""
     preservation, _ = worktree_modules()
     git = preservation.git
+    source_objects = source_object_directories(source, removal_root or path, preservation)
     metadata = path / ".git"
     if not metadata.is_dir() or metadata.is_symlink():
         raise preservation.Refused("repository_unverifiable:external_gitdir")
@@ -140,30 +174,48 @@ def repository_snapshot(path, source):
             if oid not in reachable_objects:
                 raise preservation.Refused("repository_unique_commits:" + oid)
     return dict(path=str(path), head=head, refs=os.fsdecode(refs), roots=sorted(roots), oids=sorted(oids),
-                registrations=sorted(map(str, registrations)), attachments=list(map(str, attachments)))
+                registrations=sorted(map(str, registrations)), attachments=list(map(str, attachments)),
+                source_objects=source_objects)
+
+
+def macos_active_paths(strict_ipc=False):
+    """Read typed lsof names; ambiguous named IPC cannot certify inactivity."""
+    try:
+        result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fftn"],
+                                capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise OSError("ipc_activity_unobservable") from error
+    if (result.returncode == 0 and (result.stdout or not strict_ipc)
+            and (not result.stderr or not strict_ipc)):
+        observed, parents, kind = set(), {}, None
+        for row in result.stdout.splitlines():
+            if row.startswith(("p", "f")):
+                kind = None
+            elif row.startswith("t"):
+                kind = row[1:]
+            elif row.startswith("n"):
+                raw = row[1:]
+                if strict_ipc and kind in (None, "unix", "FIFO"):
+                    unnamed = not raw or re.fullmatch(r"->0x[0-9a-fA-F]+", raw)
+                    if not unnamed and (not raw.startswith("/") or "\\" in raw):
+                        raise OSError("ipc_activity_unobservable:ambiguous_lsof_name")
+                if not raw.startswith("/"):
+                    continue
+                endpoint = Path(row[1:].removesuffix(" (deleted)"))
+                if endpoint.parent not in parents:
+                    parents[endpoint.parent] = endpoint.parent.resolve()
+                observed.add(parents[endpoint.parent] / endpoint.name)
+        return observed
+    if strict_ipc and result.returncode == 1 and not result.stdout and not result.stderr:
+        return set()
+    raise OSError("ipc_activity_unobservable")
 
 
 def ipc_paths():
     """Observe named IPC endpoints without opening or connecting to them."""
     if sys.platform != "darwin":
         raise OSError("ipc_activity_unobservable")
-    try:
-        result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
-                                capture_output=True, text=True, timeout=120)
-    except (OSError, subprocess.SubprocessError) as error:
-        raise OSError("ipc_activity_unobservable") from error
-    if result.returncode == 0 and result.stdout and not result.stderr:
-        observed, parents = set(), {}
-        for row in result.stdout.splitlines():
-            if row.startswith("n/"):
-                endpoint = Path(row[1:].removesuffix(" (deleted)"))
-                if endpoint.parent not in parents:
-                    parents[endpoint.parent] = endpoint.parent.resolve()
-                observed.add(parents[endpoint.parent] / endpoint.name)
-        return observed
-    if result.returncode == 1 and not result.stdout and not result.stderr:
-        return set()
-    raise OSError("ipc_activity_unobservable")
+    return macos_active_paths(strict_ipc=True)
 
 
 class LowDiskSpace(RuntimeError):
@@ -283,11 +335,11 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
     if repositories and cutoff > minimum_cutoff:
         return inspect_candidate(path, minimum_cutoff, protected, repository=repository, reclaim=reclaim)
     try:
-        repositories = [repository_snapshot(entry, repository) for entry in repositories]
+        repositories = [repository_snapshot(entry, repository, path) for entry in repositories]
     except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
         reason = str(error).split(":", 1)[0]
         if reason not in ("protected", "repository_dirty", "repository_stash", "repository_operation",
-                          "repository_lock", "repository_unique_commits"):
+                          "repository_lock", "repository_unique_commits", "repository_source_dependency"):
             reason = "repository_unverifiable"
         return dict(reason=reason, detail=str(error))
     return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes,
@@ -356,7 +408,10 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
         else:
             result.update(action="kept", reason="unreadable", detail=str(error))
     except OSError as error:
-        result.update(action="failed", reason=str(error))
+        if ipc_observed and not removal_started:
+            result.update(action="kept", reason="ipc_activity_unobservable", detail=str(error))
+        else:
+            result.update(action="failed", reason=str(error))
     return result
 
 
@@ -376,15 +431,19 @@ def clean_ipc_batch(paths, cutoff, protected, delete, activity, repository=None)
                                                          repository=repository, ipc_observed=True)))
             except OSError as error:
                 snapshots.append((path, dict(reason="unreadable", detail=str(error))))
-    except OSError as error:
+    except (OSError, subprocess.SubprocessError) as error:
         for path in paths:
             yield dict(path=str(path), action="kept", reason="ipc_activity_unobservable",
                        detail=str(error), apparent_bytes=0)
         return
     for path, before in snapshots:
-        yield clean_candidate(path, cutoff, observed, delete=delete, initial=before, ipc_observed=True,
-                              repository=repository,
-                              activity=lambda: protection().prefixes, refresh_activity=True)
+        try:
+            yield clean_candidate(path, cutoff, observed, delete=delete, initial=before, ipc_observed=True,
+                                  repository=repository,
+                                  activity=lambda: protection().prefixes, refresh_activity=True)
+        except (OSError, subprocess.SubprocessError) as error:
+            yield dict(path=str(path), action="kept", reason="ipc_activity_unobservable",
+                       detail=str(error), apparent_bytes=0)
 
 
 def children(root):
@@ -515,13 +574,8 @@ def active_paths(codex, scopes=(), strict_ipc=False):
             if missing_cwd is not None:
                 linux_observation_unavailable(process, "cwd", missing_cwd)
     elif sys.platform == "darwin":
-        result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
-                                capture_output=True, text=True, timeout=120)
-        if result.returncode != 0 or strict_ipc and result.stderr:
-            raise OSError("cannot inspect active files with lsof: " + result.stderr.strip())
-        for line in result.stdout.splitlines():
-            if line.startswith("n/"):
-                open_path(line[1:].removesuffix(" (deleted)"))
+        for path in macos_active_paths(strict_ipc=strict_ipc):
+            open_path(str(path))
     else:
         raise OSError("host cleanup supports macOS and Linux")
     result = subprocess.run(["ps", "-axo", "uid=,pid=,args=" if scopes else "uid=,args="],
@@ -709,7 +763,8 @@ def clean_from_anchor(options, caller, disk_descriptor):
     protected = active | worktrees | {caller}
     protections = {"codex": ProtectedPaths(protected), "sshx": ProtectedPaths(protected),
                    "tmp": ProtectedPaths(protected | {codex, sshx})}
-    cutoff = time.time() - options.min_age_hours * 3600
+    now = time.time()
+    cutoff = now - options.min_age_hours * 3600
     before = shutil.disk_usage(disk_descriptor).free
     counts, skipped = Counter(), Counter()
     apparent_bytes = 0
@@ -739,7 +794,8 @@ def clean_from_anchor(options, caller, disk_descriptor):
         def inspect(path):
             protection = ProtectedPaths(active_paths(codex) | {caller}) if options.delete else ProtectedPaths(active | {caller})
             return inspect_candidate(path, cutoff, protection)
-        for result in release.clean_staging(lake, delete=options.delete, inspect=inspect):
+        for result in release.clean_staging(lake, cutoff=cutoff, now=now,
+                                          delete=options.delete, inspect=inspect):
             record("lean_staging", result)
     try:
         for tree in inventory:

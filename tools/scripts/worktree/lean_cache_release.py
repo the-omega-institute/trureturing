@@ -454,10 +454,10 @@ def staging_snapshot(path, cutoff):
     return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=size)
 
 
-def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=False):
+def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=False, *, now):
     """Check twice and remove extraction residue under the physical lake's exclusive guard."""
     lake = pathlib.Path(lake)
-    cutoff = min(time.time() - 24 * 3600, cutoff) if cutoff is not None else time.time() - 24 * 3600
+    cutoff = min(now - 24 * 3600, cutoff) if cutoff is not None else now - 24 * 3600
     results = []
     try:
         candidates = list(staging_candidates(lake))
@@ -502,9 +502,9 @@ def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=Fals
     return results
 
 
-def fetch_staging_cleanup(root):
+def fetch_staging_cleanup(root, *, now):
     """Report extraction-residue outcomes while the fetch caller owns the cache guard."""
-    results = clean_staging(root / ".lake", guard_owned=True)
+    results = clean_staging(root / ".lake", now=now, guard_owned=True)
     if results:
         receipt("fetch", "staging-cleanup", items=results)
     return results
@@ -764,7 +764,7 @@ def fetch_verification(root, partition, identity):
     try:
         deadline = operation_deadline()
         with cache_guard(root), tempfile.TemporaryDirectory(prefix="lean-fetch-verify-") as temporary:
-            fetch_staging_cleanup(root)
+            fetch_staging_cleanup(root, now=time.time())
             restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline, identity, cache_key=cache_key)
         return 0
     except RollbackFailed as error:
@@ -820,7 +820,7 @@ def snapshot_candidates(root, partition, deadline, cache_key):
 
 
 def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=None, approved_producer=None):
-    fetch_staging_cleanup(root)
+    fetch_staging_cleanup(root, now=time.time())
     reason = "no published snapshot in this partition"
     cache_key = release_key(root)
     try:
