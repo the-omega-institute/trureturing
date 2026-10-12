@@ -12,19 +12,30 @@ public sealed class CompiledFibIntegrationTests
     [InlineData("test_membership_removal_addition_and_eligibility")]
     [InlineData("test_invalid_native_bridge_fails_compilation")]
     [InlineData("test_native_reader_and_target_dependency_updates")]
+    [InlineData("test_report_uses_compiled_module_without_native_executable")]
     public void CompilerArtifactConsumer(string behavior)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         using var diagnostics = new TemporaryDirectory();
-        string[] sources = ["Reg/Support/AuricFibCompiledSource.lean",
-            "Reg/Support/AuricFibCompiledFixture.lean"];
+        var program = behavior == "test_report_uses_compiled_module_without_native_executable";
+        var fixture = program ? "AuricFibProgram" : "AuricFibCompiled";
+        var testClass = program ? "CompiledFibProgramTests" : "CompiledFibIntegration";
+        string[] sources = [$"Reg/Support/{fixture}Source.lean", $"Reg/Support/{fixture}Fixture.lean"];
+        var config = Path.Combine(root, "tools/lean-inspector-reg/lakefile.toml");
+        var configuration = program ? File.ReadAllBytes(config) : null;
+        var configMode = program ? File.GetUnixFileMode(config) : default;
+        var configMtime = program ? File.GetLastWriteTimeUtc(config) : default;
+        var configAtime = program ? File.GetLastAccessTimeUtc(config) : default;
+        var artifact = Path.Combine(root, ".lake/build/lean-inspector/modules/Reg.Support.AuricFibProgramFixture.zip");
+        string[] artifactSuffixes = ["", ".trace", ".hash", ".pending", ".fib-previous"];
+        var ownsArtifact = program && artifactSuffixes.All(suffix => !File.Exists(artifact + suffix));
         var ownsSources = sources.All(path => !File.Exists(Path.Combine(root, path)));
         try
         {
             var result = TestProcessRunner.Run("python3",
                 ["-B", "tools/lean-inspector/tests/test_auric_fib_compiled.py",
-                    "--diagnostics", diagnostics.Path, "CompiledFibIntegration." + behavior, "-v"], root,
+                    "--diagnostics", diagnostics.Path, testClass + "." + behavior, "-v"], root,
                 TestBudgets.ReportSupervisorHangGuard, 1024 * 1024,
                 standardOutput: Console.OpenStandardOutput(), standardError: Console.OpenStandardError());
             Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
@@ -36,7 +47,18 @@ public sealed class CompiledFibIntegrationTests
             // The ordinary supervisor kills the complete child tree on its
             // unchanged guard; remove only sources this invocation could own.
             if (ownsSources)
+            {
                 foreach (var path in sources) File.Delete(Path.Combine(root, path));
+                if (program && !File.ReadAllBytes(config).SequenceEqual(configuration!))
+                {
+                    File.WriteAllBytes(config, configuration!);
+                    File.SetUnixFileMode(config, configMode);
+                    File.SetLastWriteTimeUtc(config, configMtime);
+                    File.SetLastAccessTimeUtc(config, configAtime);
+                }
+                if (ownsArtifact)
+                    foreach (var suffix in artifactSuffixes) File.Delete(artifact + suffix);
+            }
         }
     }
 
