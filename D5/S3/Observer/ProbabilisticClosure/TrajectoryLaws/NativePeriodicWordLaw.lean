@@ -321,7 +321,7 @@ def nativeCoord (T : Parameters) (s : ActivePhase) (n : ℕ) (b : Letter) (i : L
   | .p => coord T n b i
   | .beta => T.v i * coord T n b i
 
-@[simp] private theorem source_coord_eq (T : Parameters) (s : ActivePhase)
+@[simp] theorem source_coord_eq (T : Parameters) (s : ActivePhase)
     (n : ℕ) (b : Letter) (i : Label) : sourceCoord T s n b i = nativeCoord T s n b i := by
   cases s
   · simp [sourceCoord, nativeCoord, ← coord_matrix]
@@ -519,7 +519,7 @@ private theorem coord_even (T : Parameters) (n : ℕ) (b : Letter) (i : Label) :
     rw [show 2*(n+1) = 2*n+2 by omega, coord_two, ih, pow_succ]
     ring
 
-private theorem fixed_coord (T : Parameters) (n : ℕ) (b : Letter) :
+theorem fixed_coord (T : Parameters) (n : ℕ) (b : Letter) :
     coord T n b 2 = fixedRate T ^ n * coord T 0 b 2 := by
   induction n with
   | zero => simp
@@ -590,7 +590,7 @@ private theorem period_bounds (T : Parameters) (hr : Rates T) (i : Label) :
   · constructor <;> nlinarith
   · exact ⟨hlo,hhi⟩
 
-private theorem all_indices (T : Parameters) (hr : Rates T) (hs : Seeds T) :
+theorem all_indices (T : Parameters) (hr : Rates T) (hs : Seeds T) :
     ∀ s n b i, IndexedBox T s n b i := by
   intro s n
   induction n using Nat.strong_induction_on with
