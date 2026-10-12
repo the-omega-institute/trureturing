@@ -70,7 +70,8 @@ private lemma uniform_coin_law (p : unitInterval) :
   cases b
   · have he : (Coin p) ⁻¹' {false} ∩ Icc (0 : ℝ) 1 = Ioc (p : ℝ) 1 := by
       ext u
-      simp only [Set.mem_inter_iff, Set.mem_preimage, Set.mem_singleton_iff, decide_eq_false_iff_not,
+      simp only [Set.mem_inter_iff, Set.mem_preimage, Set.mem_singleton_iff,
+        decide_eq_false_iff_not,
         Set.mem_Icc, Set.mem_Ioc, not_le]
       constructor
       · exact fun h => ⟨h.1, h.2.2⟩
