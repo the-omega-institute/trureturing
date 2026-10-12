@@ -4,7 +4,79 @@
 
 NativePrefixIdentityReflection
 
-**Theorem 1.1 (Equality on a live prefix cylinder reflects globally).**
+**Theorem 1.1 (Native mass is invariant under every iterate).**
+
+$$\forall a: Nat, (\forall t: Source, (\operatorname{gamma}\left(\operatorname{iterate}\left(substitution, a, t\right)\right) = \operatorname{gamma}\left(t\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_iterate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The mass counts non-atomic constructors. Iterating the interpreted native substitution preserves it, including zero-mass atoms of unbounded rank.
+
+**Theorem 1.2 (A positive child prevents atomic collapse).**
+
+$$\forall s, t: Source, (((0 < \operatorname{gamma}\left(s\right)) \lor (0 < \operatorname{gamma}\left(t\right))) \implies (\operatorname{gamma}\left(\operatorname{mul}\left(s, t\right)\right) = 1 + \operatorname{gamma}\left(s\right) + \operatorname{gamma}\left(t\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If either child has positive native mass, the parent has one plus the two child masses. No unrestricted additivity is asserted for pairs of atomic children.
+
+**Theorem 1.3 (Native mass does not decrease toward the root).**
+
+$$\forall s, t: Source, ((\operatorname{gamma}\left(s\right) \leq \operatorname{gamma}\left(\operatorname{mul}\left(s, t\right)\right)) \land (\operatorname{gamma}\left(t\right) \leq \operatorname{gamma}\left(\operatorname{mul}\left(s, t\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_parent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each child mass is at most the parent mass, including pairs whose two children have zero mass.
+
+**Theorem 1.4 (The native clock advances by the iterate exponent).**
+
+$$\forall a: Nat, (\forall t: Source, (\operatorname{kappa}\left(\operatorname{iterate}\left(substitution, a, t\right)\right) = \operatorname{kappa}\left(t\right) + a))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.kappa_iterate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The clock is zero at alpha, one at beta and two plus the right child clock at a pair. Each native substitution advances it by one.
+
+**Theorem 1.5 (Existing finite combs realize every mass).**
+
+$$\forall r: Nat, (\operatorname{gamma}\left(\operatorname{comb}\left(r\right)\right) = r)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_comb` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The comb starts at alpha and repeatedly pairs the preceding comb with alpha on the right. Its native constructor mass is exactly the number of pair steps.
+
+**Theorem 1.6 (Closed expressions ignore residual valuations).**
+
+$$\forall I: Type, (\forall E: \operatorname{MixedExpr}\left(I\right), ((\operatorname{active}\left(E\right) = \operatorname{false}\left(\right)) \implies (\forall z, v: I \to Source, (\operatorname{eval}\left(z, E\right) = \operatorname{eval}\left(v, E\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.eval_closed` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An expression whose active flag is false has no live residual occurrence. Its evaluated native tree is the same under every two source valuations, without imposing any bound on ground size.
+
+**Theorem 1.7 (Equality on a live prefix cylinder reflects globally).**
 
 $$\forall m: Nat, (\forall d: \operatorname{Fin}\left(m\right) \to Nat, (\forall p: (i: \operatorname{Fin}\left(m\right)) \to \operatorname{Pattern}\left(\operatorname{d}\left(i\right)\right), ((\forall i: \operatorname{Fin}\left(m\right), (\operatorname{Nonempty}\left(\operatorname{Frontier}\left(\operatorname{p}\left(i\right)\right)\right))) \implies (\forall A, B: \operatorname{MixedExpr}\left(\operatorname{Fin}\left(m\right)\right), ((\forall w: (i: \operatorname{Fin}\left(m\right)) \to \operatorname{Frontier}\left(\operatorname{p}\left(i\right)\right) \to Source, (\operatorname{eval}\left((\lambda (i: \operatorname{Fin}\left(m\right)), \operatorname{fill}\left(\operatorname{p}\left(i\right), \operatorname{w}\left(i\right)\right)), A\right) = \operatorname{eval}\left((\lambda (i: \operatorname{Fin}\left(m\right)), \operatorname{fill}\left(\operatorname{p}\left(i\right), \operatorname{w}\left(i\right)\right)), B\right))) \implies (\forall z: \operatorname{Fin}\left(m\right) \to Source, (\operatorname{eval}\left(z, A\right) = \operatorname{eval}\left(z, B\right))))))))$$
 
@@ -20,7 +92,7 @@ A mixed expression contains finite ground trees, a fixed nonnegative substitutio
 
 Each original coordinate has its own finite depth and pattern. A zero-depth pattern is one hole. An early observed leaf remains that leaf and contributes no descendant holes; an observed pair retains two ordered child patterns. Frontier names therefore describe exactly the reached positions, with distinct coordinates carrying disjoint private families. Every hole may receive any finite native source, independently of every other hole.
 
-NativeDepthPatterns.depthEquiv reconstructs every finite source from its pattern and reached subtrees. NativeDepthPatterns.frontier_geometry identifies exactly the reached depth positions and recovers every assigned subtree. For a finite valid reply prefix of an infinite completion, a surviving infinite branch reaches the next frontier; hence that frontier is nonempty. Inclusive observation through depth h uses the pattern at depth h+1. A finite reply set can first be refined to such a depth. Early leaves preserve their absent descendants, so the reconstruction does not replace absent regions with variables.
+NativeDepthPatterns.depthEquiv reconstructs every finite source from its pattern and reached subtrees. NativeDepthPatterns.frontier_geometry identifies exactly the reached depth positions and recovers every assigned subtree. Relating the supplied patterns to prescribed inclusive prefixes of actual infinite completion trees requires a separate completion-tree correspondence. Inclusive observation through depth h calls for a pattern at depth h+1. The finite-tree decomposition by itself does not provide that correspondence. Early leaves preserve their absent descendants, so the reconstruction does not replace absent regions with variables.
 
 The implication fixes all patterns and both expressions first. Its premise quantifies over the entire joint dependent product of hole fillings. Its conclusion quantifies over the entire original finite residual product. There is no feasibility assumption, chosen solution, source-size bound, common mass, common clock, or positive restriction on the concluding valuations. Zero residual dimension is included and reduces the comparison to fixed grounds.
 
@@ -40,5 +112,11 @@ These are mathematical coordinates and exact whole-tree equalities. Applying the
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.eval_closed`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_comb`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_iterate`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_pair`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.gamma_parent`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.kappa_iterate`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.prefix_identity_reflection`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns](NativeDepthPatterns.md)
