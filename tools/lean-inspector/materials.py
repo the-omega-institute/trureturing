@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+
 import gzip
 import hashlib
 import codecs
@@ -170,6 +171,17 @@ def stream_spool(spool: pathlib.Path) -> None:
         if header == b"done\n":
             print("done", flush=True)
             return
+        if re.fullmatch(rb"sha256 (?:0|[1-9][0-9]*)\n", header):
+            remaining = int(header[7:])
+            digest = hashlib.sha256()
+            while remaining:
+                block = sys.stdin.buffer.read(min(remaining, BUFFER_BYTES))
+                if not block:
+                    raise ValueError("truncated compiler digest frame")
+                digest.update(block)
+                remaining -= len(block)
+            print(digest.hexdigest(), flush=True)
+            continue
         chunked = header == b"chunks\n"
         if not chunked and not re.fullmatch(rb"[1-9][0-9]*\n", header):
             raise ValueError("invalid or missing material frame length")
@@ -241,6 +253,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 module_keys.add("information_registration_errors")
             if "information_templates" in raw_module:
                 module_keys.add("information_templates")
+            if "fib_analysis" in raw_module:
+                module_keys.add("fib_analysis")
             if "utility_refutation" in raw_module:
                 module_keys.add("utility_refutation")
             module = require_keys(
@@ -267,6 +281,10 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             information_templates = module.get("information_templates")
             if information_templates is not None:
                 validate_template_evidence(information_templates)
+            fib = module.get("fib_analysis")
+            if fib is not None:
+                import fib_analysis
+                fib_analysis.validate(fib)
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -348,6 +366,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 report_module["information_registration_errors"] = registration_errors
             if information_templates is not None:
                 report_module["information_templates"] = information_templates
+            if fib is not None:
+                report_module["fib_analysis"] = fib
             if refutation is not None:
                 report_module["utility_refutation"] = refutation
             modules.append(report_module)
