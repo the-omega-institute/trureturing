@@ -642,6 +642,237 @@ that equality or multiplicity propagation. These source-specific error
 applications are ordinary analysis, with no Lean or originality claim;
 RH and all-integer strict Robin remain unproved.
 
+## A parameter-adapted direction for the correlated residual
+
+The endpoint mechanism is the classical Laplace method,
+[DLMF §2.3(iii), equations 2.3.13–2.3.17](https://dlmf.nist.gov/2.3.iii).
+For each forward theta summand its phase is $p(u)=e^{4u}$, its large
+parameter is $\pi m^2$, and its two factored amplitudes are
+$(1-\chi(u)/2)u^4q(u^2)e^{\ell u}$ for $\ell=5,9$, with $q$ below.
+Here $n,v,\chi$ are fixed as $m\to\infty$; the outside scalar
+coefficients are $-3\pi m^2$ for $\ell=5$ and $2\pi^2m^4$ for
+$\ell=9$.
+The phase has a unique endpoint minimum; the amplitude is analytic near
+zero because $\chi=1$ there, and the integral converges absolutely.
+In the DLMF notation, the endpoint exponents are $\mu=1$ and
+$\lambda=5$, with leading phase coefficient $4$ and leading amplitude
+coefficient $A/2$. This directly supplies the fixed-parameter endpoint
+sign mechanism. It gives no asymptotic for the entire reflected residual;
+that contribution is retained through its favorable support. The following
+explicit comparison quantifies this source application without using an
+uncontrolled asymptotic remainder.
+
+The classical finite Laguerre series and the original theta-tail envelope
+give a direction for (LC7) after a parameter-dependent cutoff. Fix an
+integer $n\ge1$ and $v>0$, and put
+
+$$
+s=(-1)^{n-1},\qquad
+q(T)=s\Pi_{n-1,v}^{(3/2)}(T),\qquad
+A=q(0)=v^{n-1}(5/2)_{n-1}>0,\qquad
+r_0=\sqrt{v/(4n)}.
+$$
+
+The finite-series coefficients already used in (LC7) give
+
+$$
+\left|q(T)/A-1\right|
+\le \exp\!\left(\frac{2(n-1)T}{5v}\right)-1\quad(T\ge0),
+\qquad
+q(T)\ge A/2\quad(0\le T\le r_0^2). \tag{LC8}
+$$
+
+Indeed, the absolute value of its $k$th coefficient after division by
+$A$ is $\binom{n-1}{k}/((5/2)_kv^k)$, at most
+$(2(n-1)/(5v))^k/k!$. On the stated interval the exponential argument
+is at most $(n-1)/(10n)<1/10$, so $2-e^{1/10}>1/2$ suffices.
+For $n=1$ the polynomial is constant. This is an application of the
+[classical finite series, DLMF 18.5.12](https://dlmf.nist.gov/18.5.E12),
+without any hyperbolicity assumption on the source Jensen polynomials.
+
+Take $\delta=\min(1/8,r_0/2)$ and use the same construction (LC2), now
+with an even smooth $\chi$ equal to one on $|u|\le\delta/2$ and zero
+on $|u|\ge\delta$. Denote the resulting splice by $H_{N,\delta}$,
+and use it in $\nu_N$ and $\mathcal R_N$. Its smoothness, positivity
+and unrenormalized measure follow from the preceding construction.
+The reflected part of (LC3) is supported in the favorable region of
+(LC8); for $u\ge r_0$ the residual is exactly $R_N(u)$.
+
+For $M=N+1\ge2$ set $h=\min(r_0,M^{-2})$. On $0\le u\le h$,
+(LC3) gives $K-H_{N,\delta}\ge k_M(u)/2$, and (LC8) gives
+$sF_{n,v}(u^2)\ge Au^4/2$. The remaining exponential factors give
+the following positive contribution, before the common factor $8/\xi_0$:
+
+$$
+L_M=\frac{A\pi M^2(2\pi M^2-3)}{20}
+       h^5\exp\!\left(-\pi M^2e^{4h}\right). \tag{LC9}
+$$
+
+Here the factor $20$ is $2\cdot2\cdot5$: the two preceding halves
+and $\int_0^h u^4\,du=h^5/5$.
+
+To bound the possibly adverse part on $u\ge r_0$, put
+$c=\pi e^{4r_0}$ and $\Lambda_M=4cM^2-9>0$. With $u=r_0+t$,
+the original source summands satisfy
+
+$$
+k_m(r_0+t)\le2\pi^2e^{9r_0}m^4e^{-cm^2}
+                                      e^{-(4cm^2-9)t}\quad(t\ge0).
+$$
+
+Use $U_M(c)$ from (LC5), and write $F_{n,v}(T)=\sum_{j=2}^{n+1}f_jT^j$
+with the coefficient absolute values in (LC7). Expanding
+$(r_0+t)^{2j}$ and integrating each exponential monomial yields
+
+$$
+B_M=2\pi^2e^{9r_0}U_M(c)
+ \sum_{j=2}^{n+1}|f_j|
+ \sum_{\ell=0}^{2j}\binom{2j}{\ell}
+       r_0^{2j-\ell}\frac{\ell!}{\Lambda_M^{\ell+1}},
+\qquad
+s\mathcal R_N\ge\frac8{\xi_0}(L_M-B_M). \tag{LC10}
+$$
+
+All residual contributions on $[0,r_0]$, including the entire reflected
+tail, are favorable; their portion not used in $L_M$ may be omitted from
+this lower bound. No reflected-tail positivity is asserted outside the
+cutoff support.
+
+An explicit sufficient threshold follows by putting
+
+$$
+\begin{aligned}
+d&=c-\pi>0,& D&=1-(3/2)^4e^{-5c}>0,\\
+C_F&=\sum_{j=2}^{n+1}|f_j|
+       \sum_{\ell=0}^{2j}\binom{2j}{\ell}r_0^{2j-\ell}\ell!,&
+C&=\frac{40e^{9r_0+4\pi(e-1)}C_F}{cDA}.
+\end{aligned}
+$$
+
+If $M^2\ge\max(4,1/r_0)$, then $h=M^{-2}$ and
+$M^2(e^{4/M^2}-1)\le4(e-1)$. Also
+$\Lambda_M\ge cM^2\ge1$ and the denominator of $U_M(c)$ is at least
+$D$. Consequently
+
+$$
+L_M\ge\frac{A\pi^2}{20}M^{-6}
+               e^{-\pi M^2-4\pi(e-1)},\qquad
+\frac{B_M}{L_M}\le CM^8e^{-dM^2}. \tag{LC11}
+$$
+
+The last expression is nonincreasing once $M^2\ge4/d$ and tends to
+zero. Thus a single integer $M\ge2$ satisfying
+
+$$
+M^2\ge\max(4,1/r_0,4/d),\qquad CM^8e^{-dM^2}<1 \tag{LC12}
+$$
+
+certifies $s\mathcal R_N>0$ for $N=M-1$ and every larger cutoff,
+with the same $n,v,\delta$. Such a threshold exists for every fixed
+$n,v$. All constants depend on those parameters; this supplies no single
+cutoff uniform over the moving full-source nodes.
+
+At an unchanged actual node, compute $a_H,b_H,c_H,D_N$ using this
+$H_{N,\delta}$ and retain the $(v/2)c_H$ term, which need not vanish, as in (LC6)–(LC7).
+If $sa\le0$, (LC12) makes $-a\mathcal R_N\ge0$, so the separate
+comparison
+
+$$
+aD_N\le(\beta+\eta)a^2
+$$
+
+would suffice without an adverse absolute-tail allowance. This comparison
+is not established here for all those nodes. The opposite orientation
+still requires quantitative control of the adverse residual; no assertion
+that every node has the favorable orientation is made. At $a=0$, the
+scalar inequality still does not supply $D_N+\mathcal R_N=b=0$ or
+multiplicity propagation. This is a source-specific localization
+application of the classical suppliers, with no literature novelty or
+Lean proof claim; RH and all-integer strict Robin remain unproved.
+
+## A single cutoff on a restricted source-parameter band
+
+The same finite-series estimate gives a degree-independent threshold on
+an explicitly restricted parameter range. Fix $\kappa>0$ and require
+$v\ge\kappa n$; set
+
+$$
+r=\sqrt\kappa/2,\qquad \tau=\frac2{5\kappa},\qquad
+\delta=\min(1/8,r/2),\qquad c=\pi e^{4r},\qquad d=c-\pi.
+$$
+
+Choose the same $\kappa$-dependent cutoff for every such $n,v$.
+With $q,A,s$ as in (LC8), the finite series gives
+
+$$
+|q(T)|\le A e^{\tau T}\quad(T\ge0),\qquad
+q(T)\ge A/2\quad(0\le T\le r^2). \tag{LC13}
+$$
+
+Here $2(n-1)/(5v)\le\tau$ and $\tau r^2=1/10$.
+The lower bound (LC9) therefore remains valid with
+$h=\min(r,M^{-2})$. The adverse integral has a bound involving only
+a polynomial of degree four, rather than the degree-$n+1$ coefficient
+sum in (LC10).
+
+Indeed, $e^{4t}\ge1+4t+8t^2$ for $t\ge0$. If $8cM^2\ge\tau$,
+then for every $m\ge M$,
+
+$$
+e^{\tau(r+t)^2}k_m(r+t)
+\le2\pi^2m^4e^{9r+\tau r^2-cm^2}
+                    e^{-(4cm^2-9-2\tau r)t}.
+$$
+
+Set $\widetilde\Lambda_M=4cM^2-9-2\tau r$. For
+$\widetilde\Lambda_M>0$, integration against the remaining factor
+$(r+t)^4$ gives
+
+$$
+\widetilde B_M=2\pi^2A e^{9r+\tau r^2}U_M(c)
+ \sum_{\ell=0}^4\binom4\ell r^{4-\ell}
+                         \frac{\ell!}{\widetilde\Lambda_M^{\ell+1}},
+\qquad
+s\mathcal R_N\ge\frac8{\xi_0}(L_M-\widetilde B_M). \tag{LC14}
+$$
+
+Define
+
+$$
+D=1-(3/2)^4e^{-5c},\qquad
+G_4=\sum_{\ell=0}^4\binom4\ell r^{4-\ell}\ell!,\qquad
+C_\kappa=\frac{40e^{9r+\tau r^2+4\pi(e-1)}G_4}{cD}.
+$$
+
+If
+
+$$
+M^2\ge\max\left(4,1/r,\frac\tau{8c},
+                     \frac{9+2\tau r}{3c},\frac4d\right),
+$$
+
+then $\widetilde\Lambda_M\ge cM^2\ge1$ and the same comparison as
+in (LC11) yields
+
+$$
+\frac{\widetilde B_M}{L_M}\le C_\kappa M^8e^{-dM^2}. \tag{LC15}
+$$
+
+All constants in (LC15) and the sufficient threshold depend only on
+$\kappa$: the factor $A$ cancels from the ratio. A single strict test $C_\kappa M^8e^{-dM^2}<1$ therefore
+certifies $s\mathcal R_N>0$ for every integer $n\ge1$, every
+$v\ge\kappa n$, and every $N\ge M-1$, with this fixed cutoff.
+Such an integer $M$ exists because the last bound decreases to zero.
+
+At the actual nodes $v=n\lambda$, this covers the band
+$\lambda\ge\kappa$; it supplies no uniform threshold as
+$\lambda\downarrow0$. The favorable-orientation principal comparison
+still has to hold for the same actual nodes and same splice, and the
+opposite orientation and collision conditions retain their preceding
+obligations. This restricted uniform error interface does not prove an
+all-node Jensen estimate, RH, or all-integer strict Robin, and has not
+been checked in Lean.
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
