@@ -60,7 +60,7 @@ internal static partial class DagLedgerMathlibReanchorWriter
                 throw new InvalidOperationException($"completed retirement state/event statement_id conflict: {path.Value}");
         }
         var changed = driftPaths.Except(retired).ToImmutableHashSet();
-        var propositionFailures = FindRetainedPropositionFailures(
+        var propositionFailures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(
             protectedBase, current, changed, baseView, currentCatalog);
         var closureFailures = retained.Except(changed).Where(path =>
             !baseView.ActiveByPath[path].Material.DeclarationStatementIds.SequenceEqual(
@@ -78,60 +78,4 @@ internal static partial class DagLedgerMathlibReanchorWriter
             authorized ? string.Empty : "MATHLIB_REANCHOR_FAILED completed publication authorization failed\n");
     }
 
-    private static ImmutableArray<RepoPath> FindRetainedPropositionFailures(
-        RepositorySnapshot protectedBase, RepositorySnapshot current,
-        ImmutableHashSet<RepoPath> changed, FrozenLedgerBaseView baseView,
-        FrozenMaterialCatalog catalog)
-    {
-        var failures = ImmutableArray.CreateBuilder<RepoPath>();
-        var originalSources = SourceClosures(protectedBase);
-        var candidateSources = SourceClosures(current);
-        foreach (var path in changed.OrderBy(static path => path.Value, StringComparer.Ordinal))
-        {
-            try
-            {
-                var original = originalSources(path);
-                var candidate = candidateSources(path);
-                var identicalClosure = original.Files.Count == candidate.Files.Count
-                    && original.Files.All(item => candidate.Files.TryGetValue(item.Key, out var file)
-                        && item.Value.RawBytes.AsSpan().SequenceEqual(file.RawBytes.AsSpan()));
-                if (!identicalClosure && !LeanPropositionSourceComparer.AreEquivalent(
-                    original, candidate, ImmutableHashSet.Create(path), baseView, catalog))
-                    failures.Add(path);
-            }
-            catch (LeanSourceExtractionException)
-            {
-                failures.Add(path);
-            }
-        }
-        return failures.ToImmutable();
-    }
-
-    private static Func<RepoPath, RepositorySnapshot> SourceClosures(RepositorySnapshot snapshot)
-    {
-        var sources = snapshot.Files.Values.Where(file => LeanClosureValidator.IsManagedLean(file.Path.Value))
-            .ToDictionary(file => LeanImportClosure.ModuleName(file.Path), StringComparer.Ordinal);
-        var imports = new Dictionary<RepoPath, ImmutableArray<string>>();
-        return path =>
-        {
-            var selected = new Dictionary<RepoPath, RepositoryFile>();
-            var pending = new Queue<RepoPath>();
-            pending.Enqueue(path);
-            while (pending.TryDequeue(out var next))
-            {
-                if (selected.ContainsKey(next)) continue;
-                if (!snapshot.Files.TryGetValue(next, out var file))
-                    throw new LeanSourceExtractionException($"missing retained proposition source {next.Value}");
-                selected.Add(next, file);
-                if (!imports.TryGetValue(next, out var dependencies))
-                {
-                    dependencies = LeanSourceCatalog.ParseFileImports(file);
-                    imports.Add(next, dependencies);
-                }
-                foreach (var dependency in dependencies)
-                    if (sources.TryGetValue(dependency, out var source)) pending.Enqueue(source.Path);
-            }
-            return RepositorySnapshot.Create(selected.ToImmutableDictionary());
-        };
-    }
 }

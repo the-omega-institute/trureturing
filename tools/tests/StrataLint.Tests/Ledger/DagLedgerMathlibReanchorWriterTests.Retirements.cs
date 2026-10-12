@@ -8,6 +8,34 @@ namespace StrataLint.Tests;
 
 public sealed partial class DagLedgerMathlibReanchorWriterTests
 {
+    [Fact]
+    public void MathlibReanchorDiagnosticRetainsImportedDefinitionWhenOwnerBytesMatch()
+    {
+        var originalModules = new[]
+        {
+            ModuleWithReport("B", "import D5.S0.Carrier.C\ntheorem b : p = p := by rfl\n",
+                "old p equality") with { Imports = ["C"] },
+            ModuleWithReport("C", "def p : Nat := 0\n", "old zero", declarations: ["p"], kind: "def"),
+        };
+        var candidateModules = new[]
+        {
+            originalModules[0] with { StatementMaterial = "new p equality" },
+            originalModules[1] with { Source = "def p : Nat := 1\n", StatementMaterial = "new one" },
+        };
+        var originalCatalog = BuildCatalog(originalModules);
+        var candidateCatalog = BuildCatalog(candidateModules);
+        var original = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            Snapshot(BaseToolchain, Manifest('a'), originalModules, EventFiles(originalCatalog), null))).Snapshot;
+        var candidate = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            Snapshot(CandidateToolchain, Manifest('b'), candidateModules, EventFiles(candidateCatalog), null))).Snapshot;
+
+        var failures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(
+            original, candidate, ImmutableHashSet.Create(RepoPathFor("B")),
+            BaseView(originalCatalog), candidateCatalog);
+
+        Assert.Contains(RepoPathFor("B"), failures);
+    }
+
     [Theory]
     [InlineData("aligned", true)]
     [InlineData("state-remains", false)]
@@ -23,23 +51,32 @@ public sealed partial class DagLedgerMathlibReanchorWriterTests
     [InlineData("remaining-import", false)]
     [InlineData("extra-state", false)]
     [InlineData("invalid-event-hash", false)]
+    [InlineData("imported-definition-weakened", false)]
     public void CompletedUpstreamRetirementRequiresExplicitSelectorsAndPreservedDescendants(
         string variant, bool accepted)
     {
         var originalModules = new[]
         {
             ModuleWithReport("A", ModuleASource, "True"),
-            ModuleWithReport("B", ModuleBSource, "True") with { Imports = ["A"] },
-            ModuleWithReport("C", "theorem c : True := by trivial\n", "True"),
+            ModuleWithReport("B", variant == "imported-definition-weakened"
+                ? "import D5.S0.Carrier.C\ntheorem b : p := by contradiction\n" : ModuleBSource,
+                "True") with { Imports = variant == "imported-definition-weakened" ? ["A", "C"] : ["A"] },
+            variant == "imported-definition-weakened"
+                ? ModuleWithReport("C", "def p : Prop := False\n", "False", declarations: ["p"], kind: "def")
+                : ModuleWithReport("C", "theorem c : True := by trivial\n", "True"),
         };
         var currentB = ModuleWithReport("B",
-            variant == "weakened-descendant" ? "theorem b : True ∧ True := by constructor <;> trivial\n" : ModuleBSource,
+            variant == "weakened-descendant" ? "theorem b : True ∧ True := by constructor <;> trivial\n"
+                : variant == "imported-definition-weakened" ? originalModules[1].Source : ModuleBSource,
             variant == "weakened-descendant" ? "True and True" : "compiler-reanchored B") with
         {
-            Imports = variant == "remaining-import" ? ["A"] : [],
+            Imports = variant == "remaining-import" ? ["A"]
+                : variant == "imported-definition-weakened" ? ["C"] : [],
         };
         var currentModules = new[] { currentB }.Concat(
-            variant == "unrequested-retirement" ? [] : new[] { originalModules[2] }).Concat(
+            variant == "unrequested-retirement" ? [] : new[] { variant == "imported-definition-weakened"
+                ? originalModules[2] with { Source = "def p : Prop := True\n", StatementMaterial = "True" }
+                : originalModules[2] }).Concat(
             variant == "source-remains" ? new[] { originalModules[0] } : []).ToArray();
         var originalCatalog = BuildCatalogWithEnvironment(BaseToolchain,
             "[package]\nname = \"fixture\"\n", Manifest('a'), GitOid('c'), GitOid('d'), originalModules);
