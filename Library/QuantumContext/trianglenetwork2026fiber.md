@@ -1,8 +1,7 @@
 ---
 bibkey: trianglenetwork2026fiber
 title: "Triangle-network source independence and fiber geometry"
-authors:
-  - trureturing contributors
+authors: trureturing contributors
 year: 2026
 doi: null
 claim: "Working note recording a proposed triangle-network source-independence and fiber-geometry interface; no external theorem or formal claim is asserted."
