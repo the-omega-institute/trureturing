@@ -11,7 +11,6 @@ import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.NumberTheory.Real.GoldenRatio
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.MeanErgodic
-import Mathlib.LinearAlgebra.Matrix.Trace
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
