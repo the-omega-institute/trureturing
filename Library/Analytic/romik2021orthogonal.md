@@ -2223,10 +2223,217 @@ fixed upper-edge neighborhood. It assumes neither existence of
 positive nodes nor that all other roots are real; no conclusion
 about complex outliers follows. No numerical $N_\varepsilon$
 or uniformity as $\varepsilon\downarrow0$ is supplied. The
-collision at $y=1/4$ remains outside this single-saddle range.
-Together with (LC57), the remaining all-positive-node sign
-obligations include the shrinking soft-edge neighborhood,
-$t/r_n\to0$ and fixed-height/off-real source clusters, plus
-initial degrees and common-zero/multiplicity propagation outside
-the established ranges. The bound does not assert complete
-hyperbolicity or prove RH or strict Robin for every $H>5040$.
+limiting collision at $y=1/4$ remains outside this single-saddle
+range; the finite fold is retained separately below. Together with
+(LC57), the remaining full-criterion obligations include the
+shrinking soft-edge neighborhood,
+$t/r_n\to0$ through heights growing with degree, plus
+initial degrees, complex-root control and common-zero/multiplicity
+propagation outside the established ranges. The fixed real height bands already have
+the source-dependent eventual sign in (LC30); the missing step
+is uniform control across a growing band. The bound does not assert
+complete hyperbolicity or prove RH or strict Robin for every $H>5040$.
+
+## The finite soft-edge fold and its first displacement
+
+Reuse the actual source and (LC31), the local analytic Gamma–zeta
+logarithm across the negative axis established before (LC59), and
+sectorial Stirling. This source-specific parameter application does
+not claim literature originality or Lean certification. It does
+not assume RH or complete-row hyperbolicity. Its fold is a critical
+point of the exact phase, not an actual polynomial root.
+
+Put $w_n=W(2n/\pi)$ and $\omega_n=\sqrt{r_n}$ as before. On a fixed
+complex disk about $\rho=4$, sufficiently small to have positive real
+part, take $\sqrt\rho>0$ on the positive axis and define
+
+$$
+\mathcal L_n(\rho)=\frac1n\log F(-r_n\rho),\qquad
+H_{n,y}(\rho)=-y\rho+\mathcal L_n(\rho)-\operatorname{Log}\rho.
+$$
+
+The source logarithm is analytic and real on the positive segment;
+its nonvanishing comes from the right-half-plane Gamma–zeta formula.
+The same sectorial expansion gives, uniformly on a slightly larger
+fixed disk lying in the same right-half-plane branch,
+
+$$
+\mathcal L_n(\rho)=\frac{\omega_n\sqrt\rho}{2n}
+\left(\operatorname{Log}\frac{\omega_n\sqrt\rho}{2\pi}-1\right)
++O\left(\frac{\log n}{n}\right). \tag{LC65}
+$$
+
+The defining Lambert identity is $w_ne^{w_n}=2n/\pi$. Hence (LC31)
+implies
+
+$$
+\frac{\omega_n}{2n}=\frac2{w_n}
+\left(1+O\left(\frac{\log n}{n}\right)\right),\qquad
+\log\frac{\omega_n}{2\pi}=w_n+O\left(\frac{\log n}{n}\right).
+$$
+
+Substitution into the published source estimate yields
+
+$$
+\mathcal L_n(\rho)=2\sqrt\rho+
+\frac{\sqrt\rho(\operatorname{Log}\rho-2)}{w_n}
++O\left(\frac{\log n}{n}\right). \tag{LC66}
+$$
+
+Cauchy estimates on the larger disk give the same uniform order
+for every fixed number of derivatives on a smaller disk. This is
+an expansion of the normalized logarithm; the remainder cannot
+be discarded after multiplication by $n$ in the exponent.
+In particular,
+
+$$
+\begin{aligned}
+\mathcal L_n'(\rho)&=\rho^{-1/2}
+ +\frac{\operatorname{Log}\rho}{2w_n\sqrt\rho}
+ +O(\log n/n),\\
+\mathcal L_n''(\rho)&=-\frac1{2\rho^{3/2}}
+ +\frac{2-\operatorname{Log}\rho}{4w_n\rho^{3/2}}
+ +O(\log n/n).
+\end{aligned} \tag{LC67}
+$$
+
+Let $g_n(\rho)=\mathcal L_n''(\rho)+\rho^{-2}$. Its limit has
+$g_*(4)=0$ and $g_*'(4)=-1/128$. Choose one small fixed real
+neighborhood of $4$ on which $g_*'<0$. Uniform derivative convergence
+makes $g_n$ strictly decreasing there, with opposite endpoint signs,
+for sufficiently large $n$. Consequently it has exactly one real
+zero there, denoted $\rho_n^{\mathrm e}$. Define
+
+$$
+y_n^{\mathrm e}=\mathcal L_n'(\rho_n^{\mathrm e})-
+\frac1{\rho_n^{\mathrm e}}. \tag{LC68}
+$$
+
+These exact finite parameters satisfy
+$\partial_\rho H_{n,y_n^{\mathrm e}}(\rho_n^{\mathrm e})=
+\partial_\rho^2 H_{n,y_n^{\mathrm e}}(\rho_n^{\mathrm e})=0$.
+Moreover,
+
+$$
+\partial_\rho^3H_{n,y_n^{\mathrm e}}(\rho_n^{\mathrm e})
+=-\frac1{128}+O(1/w_n),\qquad
+\partial_y\partial_\rho H_{n,y}=-1. \tag{LC69}
+$$
+
+Thus the cubic degeneracy and its parameter unfolding are nonzero;
+no assertion is made that these are the only critical points globally.
+At $4$ the correction is
+
+$$
+g_n(4)=\frac{1-\log2}{16w_n}+O(\log n/n).
+$$
+
+First the fixed derivative bound implies
+$\rho_n^{\mathrm e}-4=O(1/w_n+\log n/n)$.
+Taylor expansion then gives
+
+$$
+\rho_n^{\mathrm e}=4+\frac{8(1-\log2)}{w_n}
+ +O(w_n^{-2}+\log n/n), \tag{LC70}
+$$
+
+$$
+y_n^{\mathrm e}=\frac14+\frac{\log2}{2w_n}
+ +O(w_n^{-2}+\log n/n). \tag{LC71}
+$$
+
+The first-order change of
+$\rho^{-1/2}-\rho^{-1}$ vanishes at $\rho=4$, so the displayed
+$y$ correction comes from the explicit $w_n^{-1}$ term, not from
+a first-order displacement of $\rho$. Equivalently, the inverse
+phase coordinate is
+
+$$
+\frac1{y_n^{\mathrm e}}=4-\frac{8\log2}{w_n}
+ +O(w_n^{-2}+\log n/n). \tag{LC72}
+$$
+
+It is not asserted to be the height of any actual Jensen root.
+Since $w_n\sim\log n$,
+
+$$
+n^{2/3}\left(y_n^{\mathrm e}-\frac14\right)
+\longrightarrow+\infty. \tag{LC73}
+$$
+
+The exact finite cubic scale is therefore not centered at the
+limiting $1/4$. The displayed remainder bound for this first
+corrected approximation is larger than $n^{-2/3}$ and is therefore insufficient to replace
+the exact $y_n^{\mathrm e}$ in a bounded Airy argument. This is a
+limitation of the bound, not a lower bound on the actual error.
+A transition estimate must retain the exact finite fold or prove a stronger remainder.
+
+### A Lambert reference center accurate on the cubic scale
+
+The preceding normalized source expansion has more information than
+its first-order fold displacement: the entire displayed function of
+$\rho$ approximates the exact logarithm with derivative errors
+$O(\log n/n)$. Define its analytic reference
+
+$$
+\Lambda_n(\rho)=2\sqrt\rho+
+\frac{\sqrt\rho(\operatorname{Log}\rho-2)}{w_n}. \tag{LC74}
+$$
+
+Let $v_n=W(4n/(\pi e))$, using the positive real Lambert branch,
+and put
+
+$$
+\widehat\rho_n=\frac{4w_n^2}{v_n^2},\qquad
+\widehat y_n=\frac{v_n(v_n+2)}{4w_n^2}. \tag{LC75}
+$$
+
+They tend to $4$ and $1/4$. These are exact reference parameters,
+not a new source or actual Jensen roots. Indeed, with
+$r=\sqrt\rho$, the reference fold equation
+$\Lambda_n''(\rho)+\rho^{-2}=0$ is exactly
+
+$$
+r(w_n+\log r-1)=2w_n.
+$$
+
+Putting $v=w_n+\log r-1$ gives
+$ve^v=2w_ne^{w_n-1}=4n/(\pi e)$. Reuse the defining Lambert
+inverse, [DLMF (4.13.1) and its principal real branch](https://dlmf.nist.gov/4.13),
+to obtain $v=v_n$, $r=2w_n/v_n$, and thus
+$\rho=\widehat\rho_n$. Direct substitution gives
+$\Lambda_n'(\widehat\rho_n)-\widehat\rho_n^{-1}
+=\widehat y_n$.
+
+On the same fixed neighborhood the difference between
+$g_n=\mathcal L_n''+\rho^{-2}$ and
+$\widehat g_n=\Lambda_n''+\rho^{-2}$ is $O(\log n/n)$,
+and, for all sufficiently large $n$, both centers lie in the same
+fixed real interval $I$ on which $g_n'(\rho)\le-c<0$, with $c$
+independent of $n$. Since
+$\widehat g_n(\widehat\rho_n)=0$, the mean value estimate at the
+unique exact local zero gives
+
+$$
+\rho_n^{\mathrm e}-\widehat\rho_n=O(\log n/n). \tag{LC76}
+$$
+
+The first derivative source error and Taylor expansion of
+$\Lambda_n'(\rho)-\rho^{-1}$ then give
+
+$$
+y_n^{\mathrm e}-\widehat y_n=O(\log n/n),\qquad
+n^{2/3}|y_n^{\mathrm e}-\widehat y_n|\longrightarrow0. \tag{LC77}
+$$
+
+Thus this closed reference locates the exact fold more accurately
+than a cubic-scale window, unlike a truncation at the displayed
+$w_n^{-1}$ shift. This controls a center coordinate only. It does
+not permit replacing the exact source phase or common amplitude:
+$n(\mathcal L_n-\Lambda_n)=O(\log n)$ need not vanish. The
+Airy contour, uniform remainder and actual-node sign remain unpaid.
+
+This computes a phase parameter and its displacement only. It
+supplies no uniform Airy remainder, adjacent-row sign, real-root
+existence, complex-root exclusion, starting degree or RH/Robin
+conclusion. Those obligations retain their original quantifiers.
