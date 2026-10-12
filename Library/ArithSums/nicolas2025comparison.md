@@ -13056,3 +13056,173 @@ allowances. It does not certify the external analytic suppliers or the
 full inference in Lean. For this fixed $H$ and order-nine law,
 $V_*>0$ and the positive transport allowance grows with $\sqrt A$.
 The original unbounded signed estimate and RH remain open.
+
+
+## Complete higher-prime-power transport on an unlimited clock range
+
+This application retains the GAK kernel, actual prime-power counting
+functions and a single whole probability law. The inputs are the existing
+GAK36–GAK39 pressure reserve and identity, and
+[Dusart arXiv:1002.0442v1](https://arxiv.org/pdf/1002.0442v1),
+Lemma 3.3 and Theorem 5.2. The square-root main term, convexity and
+prime-counting estimates are published suppliers. The application below
+pays the complete $k\ge2$ transport for this kernel; the first-power
+prime transport and full smoothed signed response remain unpaid.
+No additional all-integer Robin interval or global RH conclusion follows.
+
+### The same whole law and complete counting function
+
+Write $L=\log A$, $T_A=\sqrt A L$ and retain
+
+$$
+K(u)=\frac{1+\log u}{u^2\log^2u},\qquad
+P_{\ge2}(t)=\psi(t)-\vartheta(t)
+=\sum_{k\ge2}\vartheta(t^{1/k}).
+$$
+
+Let $\mu$ be any whole probability law satisfying
+$99/100\le C\le101/100$ almost surely and $\mathbb EC=1$.
+This includes the original GAK and GAD laws; no conditioning or
+separate choice of law for different components is made. Define
+
+$$
+\begin{aligned}
+J_c^{\ge2}(A)&=-\frac1c\int_A^\infty P_{\ge2}(cu)K(u)\,du,\\
+\mathcal T_{\ge2}(A,\mu)&=J_1^{\ge2}(A)-\mathbb E J_C^{\ge2}(A),\\
+m_\mu&=\mathbb EC^{-1/2},\qquad
+V_\mu=\mathbb E(C-1)^2,\\
+B(A)&=T_A\int_A^\infty\sqrt u K(u)\,du.
+\end{aligned}
+\tag{GPP1}
+$$
+
+The counting function retains every actual atom $p^k$, $k\ge2$, of
+mass $\log p$, with $p^k\le t$ at endpoints. It is not replaced by a
+density in the definition of either response.
+
+### Uniform full-tail comparison
+
+Put
+
+$$
+s=\frac{99A}{100}>(3594641)^2,\qquad
+\epsilon(s)=\frac4{5\log^2s}+\frac{89}{50}s^{-1/6}.
+$$
+
+Dusart Lemma 3.3 gives
+$0\le P_{\ge2}(t)-\vartheta(\sqrt t)<1.777745t^{1/3}$ for every
+$t>0$. Theorem 5.2's row $(k,\eta_k,x_k)=(2,1/5,3594641)$ gives
+$|\vartheta(y)-y|<y/(5\log^2y)$ for $y\ge3594641$.
+Consequently, for $t\ge s$,
+
+$$
+|P_{\ge2}(t)-\sqrt t|
+\le\sqrt t\left[\frac4{5\log^2t}+\frac{89}{50}t^{-1/6}\right]
+\le\epsilon(s)\sqrt t.
+\tag{GPP2}
+$$
+
+These are applications of the fixed primary statements; their underlying
+finite computations and analytic proofs are external inputs.
+Since every $cu\ge s$ for $u\ge A$, the same bound controls all scales
+and the whole infinite tail. Positivity of $K$ and the integrable
+square-root majorant justify exchanging expectation and integration.
+Subtracting the two responses gives
+
+$$
+\mathcal T_{\ge2}
+=\int_A^\infty
+\left[\mathbb E\frac{P_{\ge2}(Cu)}C-P_{\ge2}(u)\right]K(u)\,du.
+$$
+
+The square-root main term is $(m_\mu-1)\sqrt u$; the error is at most
+$(m_\mu+1)\epsilon(s)\sqrt u$. Thus
+
+$$
+\left|T_A\mathcal T_{\ge2}-B(A)(m_\mu-1)\right|
+\le B(A)(m_\mu+1)\epsilon(s).
+\tag{GPP3}
+$$
+
+Integration by parts, with the upper boundary zero, gives
+
+$$
+B(A)=2-T_A\int_A^\infty\frac{du}{u^{3/2}\log^2u},\qquad
+2-\frac2L\le B(A)<2.
+\tag{GPP4}
+$$
+
+For $f(c)=c^{-1/2}$, $0<f''(c)=3c^{-5/2}/4<1$ throughout the support.
+Convexity and Taylor's bound, using the exact whole-law mean, imply
+
+$$
+0\le m_\mu-1\le\frac{V_\mu}{2}\le\frac1{20000}.
+$$
+
+If $A>e^{107}$, then $s>e^{106}$, so
+$4/(5\log^2s)<1/14000$ and $(89/50)s^{-1/6}<1/70000$.
+The second comparison follows from $e>2$ and $106/6>17$.
+Hence $\epsilon(s)<3/35000<1/10000$ and $m_\mu+1<201/100$.
+Combining these bounds with GPP3–GPP4 proves
+
+$$
+\left|T_A\mathcal T_{\ge2}(A,\mu)\right|
+<2\left[\frac1{20000}+\frac{201}{100}\frac1{10000}\right]
+=\frac{251}{500000}<\frac1{1000}
+\qquad(A>e^{107}).
+\tag{GPP5}
+$$
+
+This is uniform for all such real clocks, with no upper endpoint,
+and allows the whole law to vary with $A$ within the stated conditions.
+
+### Fixed-law sign and the original reserve consumer
+
+For a fixed law, GPP3–GPP4 and $\epsilon(.99A)\to0$ give
+
+$$
+T_A\mathcal T_{\ge2}(A,\mu)\longrightarrow2(m_\mu-1).
+\tag{GPP6}
+$$
+
+For a fixed nondegenerate mean-one law, strict convexity makes this
+limit strictly positive. This is eventual positivity; GPP5 does not
+assert positivity for every $A>e^{107}$, or for a varying law.
+In particular, the negative local square atoms from GAK21 cannot
+be recorded as extra reserve without their regular companions:
+the complete higher-power contribution eventually has the opposite sign.
+
+Let $J_c^\vartheta$ retain the GAK definition with
+$\vartheta(cu)-cu$ in place of $\psi(cu)-cu$, and set
+$\mathcal T_\vartheta=J_1^\vartheta-\mathbb E J_C^\vartheta$.
+Then $J_c^\psi-J_c^\vartheta=J_c^{\ge2}$ exactly.
+For each integer's own clock $A=\log n>e^{107}$, GAK39 therefore gives
+
+$$
+\Delta(n)=R(A)+d_A(n)-J_\mu^\psi(A)
+-\mathcal T_\vartheta(A,\mu)-\mathcal T_{\ge2}(A,\mu).
+$$
+
+Retain every analytic premise and event convention of GAK36–GAK39.
+The original unrestricted reserve bound GAK37 requires only its lower
+clock, so it still applies on this unlimited range. Using GPP5 yields
+
+$$
+\begin{aligned}
+T_A\Delta(n)>&\ Q_R-\frac1{1000}
++\frac{L}{(L+2)^3}+T_A d_A(n)\\
+&-T_AJ_\mu^\psi(A)-T_A\mathcal T_\vartheta(A,\mu),\\
+Q_R={}&\frac{67838284064811}{83593750000000}.
+\end{aligned}
+\tag{GPP7}
+$$
+
+The actual nonnegative defect of this same integer is retained; it is
+not replaced by zero or by the defect of a selected optimizer.
+GPP7 pays the complete higher-prime-power transport with an explicit
+small budget on an unlimited range. It supplies no upper bound for
+the remaining combined $J_\mu^\psi+\mathcal T_\vartheta$ at the same
+source. The full signed response still includes all actual zeros,
+real parts, coefficients and elementary terms. These ordinary
+applications are not new prime-counting theorems or Lean-certified
+results; the all-integer Robin inequality and RH remain open.
