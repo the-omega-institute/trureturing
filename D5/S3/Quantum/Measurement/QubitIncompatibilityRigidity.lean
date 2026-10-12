@@ -52,10 +52,15 @@ private lemma B_hermitian (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : (B t v).I
   (scalarB_hermitian t v).smul (by simp [IsSelfAdjoint])
 
 private lemma B_trace (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : Matrix.trace (B t v) = (t : ℂ) := by
-  simp [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
-    D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
-    Matrix.trace, Fin.sum_univ_two]
-  ring
+  have he : B t v =
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix t v := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [B, D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
+        D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
+  rw [he]
+  exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace t v
 
 private lemma B_psd (t : ℝ) (v : EuclideanSpace ℝ (Fin 3)) : (B t v).PosSemidef ↔ ‖v‖ ≤ t :=
   half_scalarB_posSemidef_iff t v
