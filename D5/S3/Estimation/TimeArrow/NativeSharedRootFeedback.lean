@@ -22,11 +22,11 @@ open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 800000
 
 namespace D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
 noncomputable section
 
+set_option maxHeartbeats 800000 in
 /-- Constants depend on the original amplitude alone. A single complete
 anchor supplies the root and variance budgets for every central histogram;
 the compensated derivative is then bounded by positive multiples of N/q. -/
@@ -159,6 +159,7 @@ theorem anchored_central_shared_calibration (r : ℝ) (hr : 0 < r) (hr1 : r < 1)
   exact compensated_group_deriv outside r ε N R U q bg t (θ t) _ θ
     he.2.1 rfl he.2.2.1 (ne_of_gt he.2.2.2)
 
+set_option maxHeartbeats 800000 in
 private theorem anchor_scale_budget (N q v a γ xStar : ℝ)
     (hN : 0 < N) (hq : 0 < q) (hv : 0 < v) (ha : 0 < a)
     (hγ1 : γ ≤ 1/2) (hγa : γ ≤ a*v/32)
@@ -195,6 +196,7 @@ private theorem anchor_scale_budget (N q v a γ xStar : ℝ)
   · have he : a*N/(4*q)+3*a*N/(4*q) = a*N/q := by field_simp; ring
     linarith only [hx,hroot,he]
 
+set_option maxHeartbeats 800000 in
 /-- The native outside function and anchor are taken from one actual
 collapsed fiber. The same full calibration curve is used at every real
 central histogram, in either experiment; no posterior is reconditioned. -/
