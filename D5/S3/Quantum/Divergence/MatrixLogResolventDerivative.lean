@@ -290,7 +290,7 @@ local notation "G" => (ContinuousLinearMap.compL ℝ S M ℝ Tr).comp
   ((ContinuousLinearMap.mul ℝ M).precompL S ι)
 local notation "entropy" => fun Y : S => (Y.val * CFC.log Y.val).trace.re
 
-private lemma trace_entropy_hasFDerivAt (A : S) (hA : A.val.PosDef) :
+lemma trace_entropy_hasFDerivAt (A : S) (hA : A.val.PosDef) :
     HasFDerivAt entropy (G (CFC.log A.val + 1)) A := by
   obtain ⟨hlog, _, haction⟩ := matrix_log_hasFDerivAt_resolvent A hA
   have hp := (ι).hasFDerivAt.mul' hlog
