@@ -18,7 +18,10 @@ The five bins are empty support, singleton support, two through eight distinct p
 
 The two-through-eight bin reuses the existing formal Robin theorem above 5040. The remaining bins stay explicit interfaces for the Euler-layer and clock arguments; a strict failure above 5040 is therefore forced into the nine-through-eleven or twelve-plus bin. This document does not claim the full Robin theorem.
 
+For the 5040 congruence shape, a residual with at most five distinct primes gives at most nine total support primes. The theorem modEq_2241_card_le_nine_of_residual_card_le_five records this support bound; combined with robin_failure_mode, robin_failure_residual_card_eq_five forces every failing five-prime residual to use all five residual primes and total support exactly nine.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PrimeSupportModes.primeSupportMode_cases`
+- Dependency: [D5/S3/Arith/GoldenResource/GoldenCell5040Shape](../GoldenResource/GoldenCell5040Shape.md)
 - Dependency: [D5/S3/Arith/Robin/FewDistinctPrimes](FewDistinctPrimes.md)

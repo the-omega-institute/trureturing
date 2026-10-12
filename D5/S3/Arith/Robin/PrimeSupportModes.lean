@@ -7,6 +7,7 @@
    digest: A five-way prime-support stratification isolates the 5040 Robin regime.
    -/
 
+import D5.S3.Arith.GoldenResource.GoldenCell5040Shape
 import D5.S3.Arith.Robin.FewDistinctPrimes
 
 /-! A small classification layer for the actual Robin family.
@@ -122,5 +123,76 @@ theorem robin_failure_mode {n : ℕ} (hn : 5040 < n)
     have h1 : ¬ n.primeFactors.card = 1 := by omega
     right
     simp [primeSupportMode, h0, h1, h8, h11, h12]
+
+private theorem support_card_le_four_add {a b r : ℕ}
+    (ha : 0 < a) (hb : 0 < b) (hr : r ≠ 0) :
+    (2 ^ a * 3 ^ b * 5 * 7 * r).primeFactors.card ≤ 4 + r.primeFactors.card := by
+  have hsub : (2 ^ a * 3 ^ b * 5 * 7 * r).primeFactors ⊆
+      ({2, 3, 5, 7} : Finset ℕ) ∪ r.primeFactors := by
+    rw [Nat.primeFactors_mul (by positivity) hr]
+    rw [Nat.primeFactors_mul (by positivity) (by norm_num)]
+    rw [Nat.primeFactors_mul (by positivity) (by norm_num)]
+    rw [Nat.primeFactors_mul (by positivity) (by norm_num)]
+    rw [Nat.primeFactors_prime_pow ha.ne' Nat.prime_two]
+    rw [Nat.primeFactors_prime_pow hb.ne' Nat.prime_three]
+    rw [(by decide : Nat.Prime 5).primeFactors]
+    rw [(by decide : Nat.Prime 7).primeFactors]
+    simp
+  have hc := Finset.card_le_card hsub
+  have hu := Finset.card_union_le ({2, 3, 5, 7} : Finset ℕ) r.primeFactors
+  calc
+    _ ≤ ({2, 3, 5, 7} : Finset ℕ).card + r.primeFactors.card := hc.trans hu
+    _ ≤ 4 + r.primeFactors.card := by simp
+
+/-- In the `5040` shape, a residual with at most five distinct primes gives at most
+nine distinct primes in total.  This is the support-count interface for the next
+residual branch; it does not estimate the divisor ratio. -/
+theorem modEq_2241_card_le_nine_of_residual_card_le_five {n : ℕ}
+    (hshape : ∃ a b r : ℕ, n = 2 ^ a * 3 ^ b * 5 * 7 * r ∧
+      4 ≤ a ∧ a ≤ 6 ∧ 2 ≤ b ∧ b ≤ 3 ∧
+      Nat.Coprime r (2 * 3 * 5 * 7 * 83) ∧ r.primeFactors.card ≤ 5) :
+    n.primeFactors.card ≤ 9 := by
+  obtain ⟨a, b, r, hn, ha, _, hb, _, _, hcard⟩ := hshape
+  subst n
+  by_cases hr : r = 0
+  · subst r
+    norm_num
+  · have hs := support_card_le_four_add (a := a) (b := b) (r := r) (by omega) (by omega) hr
+    omega
+
+/-- A Robin failure in the five-prime residual branch must use all five residual
+primes and has exactly nine distinct primes in total. -/
+theorem robin_failure_residual_card_eq_five {n : ℕ} (hn : 5040 < n)
+    (hshape : ∃ a b r : ℕ, n = 2 ^ a * 3 ^ b * 5 * 7 * r ∧
+      4 ≤ a ∧ a ≤ 6 ∧ 2 ≤ b ∧ b ≤ 3 ∧
+      Nat.Coprime r (2 * 3 * 5 * 7 * 83) ∧ r.primeFactors.card ≤ 5)
+    (hfail : ¬ ((ArithmeticFunction.sigma 1 n : ℝ) / n <
+      Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : ℝ)))) :
+    ∃ a b r : ℕ, n = 2 ^ a * 3 ^ b * 5 * 7 * r ∧
+      4 ≤ a ∧ a ≤ 6 ∧ 2 ≤ b ∧ b ≤ 3 ∧
+      Nat.Coprime r (2 * 3 * 5 * 7 * 83) ∧
+      r.primeFactors.card = 5 ∧ n.primeFactors.card = 9 := by
+  obtain ⟨a, b, r, hnshape, ha, hahi, hb, hbhi, hcop, hcard⟩ := hshape
+  have htotal_le : n.primeFactors.card ≤ 9 :=
+    modEq_2241_card_le_nine_of_residual_card_le_five
+      ⟨a, b, r, hnshape, ha, hahi, hb, hbhi, hcop, hcard⟩
+  have hmode := robin_failure_mode hn hfail
+  have htotal_ge : 9 ≤ n.primeFactors.card := by
+    rcases hmode with h9 | h12
+    · have hspec := primeSupportMode_spec n
+      rw [h9] at hspec
+      exact hspec.1
+    · have hspec := primeSupportMode_spec n
+      rw [h12] at hspec
+      omega
+  have htotal : n.primeFactors.card = 9 := by omega
+  have hsum : n.primeFactors.card ≤ 4 + r.primeFactors.card := by
+    rw [hnshape]
+    by_cases hr : r = 0
+    · subst r
+      norm_num
+    · exact support_card_le_four_add (a := a) (b := b) (r := r) (by omega) (by omega) hr
+  have hresidual : r.primeFactors.card = 5 := by omega
+  exact ⟨a, b, r, hnshape, ha, hahi, hb, hbhi, hcop, hresidual, htotal⟩
 
 end D5.S3.Arith.Robin.PrimeSupportModes
