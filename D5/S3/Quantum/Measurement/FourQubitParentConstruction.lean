@@ -104,7 +104,7 @@ theorem trace_B_mul (a b : (EuclideanSpace ℝ (Fin 3))) : Matrix.trace (B a * B
     simp [B_formula, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two,
       PiLp.inner_apply, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
 def scalarB (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (Matrix (Fin 2) (Fin 2) ℂ) := (t : ℂ) • (1 : (Matrix (Fin 2) (Fin 2) ℂ)) + B a
-private theorem scalarB_hermitian (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (scalarB t a).IsHermitian := by
+theorem scalarB_hermitian (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (scalarB t a).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
@@ -170,7 +170,7 @@ theorem half_scalarB_posSemidef_iff (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3)))
     exact ((scalarB_posSemidef_iff t a).mpr h).smul
       (by apply Complex.nonneg_iff.mpr; norm_num [Complex.div_re, Complex.div_im] :
         (0 : ℂ) ≤ 1 / 2)
-private theorem hermitian_decomposition (A : (Matrix (Fin 2) (Fin 2) ℂ)) (h : A.IsHermitian) :
+theorem hermitian_decomposition (A : (Matrix (Fin 2) (Fin 2) ℂ)) (h : A.IsHermitian) :
     A = scalarB ((Matrix.trace A).re / 2) (((1 / 2 : ℝ) • bloch A)) := by
   have hd0 := congrArg Complex.im (h.apply 0 0)
   have hd1 := congrArg Complex.im (h.apply 1 1)
@@ -184,13 +184,13 @@ private theorem hermitian_decomposition (A : (Matrix (Fin 2) (Fin 2) ℂ)) (h : 
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [scalarB, B_formula, bloch, Matrix.trace, Fin.sum_univ_two,
       Complex.mul_re, Complex.mul_im] <;> linarith
-private theorem half_scalarB_double (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
+theorem half_scalarB_double (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
     (1 / 2 : ℂ) • scalarB (2 * t) ((2 : ℝ) • a) = scalarB t a := by
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [scalarB, B_formula, Complex.mul_re, Complex.mul_im,
       Complex.div_re, Complex.div_im] <;> ring
-private theorem half_scalarB_complement (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
+theorem half_scalarB_complement (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
     (1 / 2 : ℂ) • scalarB (2 - t) (-a) =
       (1 : (Matrix (Fin 2) (Fin 2) ℂ)) - (1 / 2 : ℂ) • scalarB t a := by
   ext i j
