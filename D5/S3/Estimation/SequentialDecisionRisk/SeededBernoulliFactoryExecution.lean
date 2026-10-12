@@ -186,7 +186,7 @@ lemma cost_eq_record_cost (π : Seed → Bool → History → Action) (S : Bool)
     rw [acquired_history_length_at_return π S (fun _ i bits => bits i) ω n hM]
 
 /-- The four-cell noninteger perturbation is normalized. -/
-private lemma target_mass (u h β : ℝ) :
+lemma target_mass (u h β : ℝ) :
     (∑ cell : Bool × Bool,
       ((if cell.1 then u else 1 - u) / 2 +
         (h ^ β / 16) * (if cell.1 = cell.2 then 1 else -1))) = 1 := by

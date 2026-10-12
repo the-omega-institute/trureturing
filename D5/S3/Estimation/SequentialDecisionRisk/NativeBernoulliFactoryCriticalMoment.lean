@@ -332,6 +332,94 @@ local notation "RowLaw" => fun table : (Bool × History) → PMF Action =>
   Measure.infinitePi (fun row => (table row).toMeasure)
 local notation "TablePolicy" => fun (seed : (Bool × History) → Action) S h => seed (S, h)
 
+omit [MeasurableSpace Seed] in
+private lemma trace_action_seed_event (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action) :
+    (TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = a} =
+      (TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' {seed | π seed S (Prefix t n) = a} := by
+  ext ω
+  simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage]
+  constructor <;> rintro ⟨ht, ha⟩ <;> refine ⟨ht, ?_⟩
+  · change π ω.1 S (Prefix t n) = a
+    change π ω.1 S (acquiredHistory π S (Read p q) n ω) = a at ha
+    rwa [history_of_trace π S p q t n ω ht] at ha
+  · change π ω.1 S (acquiredHistory π S (Read p q) n ω) = a
+    rwa [history_of_trace π S p q t n ω ht]
+
+/-- On each reached labelled history, an actual next call has the declared
+Bernoulli answer kernel even when its source is chosen adaptively from the
+complete private seed and acquired record. The equality also covers null nodes. -/
+theorem native_source_conditional_kernel (π : Seed → Bool → History → Action)
+    (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool)
+    (ν : Measure Seed) [IsProbabilityMeasure ν] (p q : unitInterval)
+    (t : ℕ → Bool × Bool) (n : ℕ) (source b : Bool) :
+    (RawLaw ν) (((TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = .inl source}) ∩
+      {ω | Read p q source n ω.2 = b}) =
+      (RawLaw ν) ((TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = .inl source}) *
+        (bernoulliMeasure true false (if source then q else p)) {b} := by
+  have := uniform_probability
+  let D : Set Seed := {seed | π seed S (Prefix t n) = .inl source}
+  have hD : MeasurableSet D := by
+    change MeasurableSet ((fun seed : Seed => π seed S (Prefix t n)) ⁻¹' {(.inl source : Action)})
+    exact (hπ S (Prefix t n)) (action_singleton_measurable (.inl source))
+  have hbase := (native_source_trace_law π hπ S ν p q t n D hD).2
+  rw [trace_action_seed_event π S p q t n (.inl source)]
+  change (RawLaw ν) (((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) ∩
+    {ω | Read p q source n ω.2 = b}) =
+      (RawLaw ν) ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) * _
+  rw [hbase]
+  have he : ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) ∩
+      {ω | Read p q source n ω.2 = b} =
+      ((SeedSection π S t n) ∩ D) ×ˢ
+        ((TapeSection p q t n) ∩ {tape | Coin (if source then q else p) (tape n) = b}) := by
+    rw [trace_event_sections]
+    ext ω
+    simp only [Set.mem_inter_iff, Set.mem_prod, Set.mem_preimage, Set.mem_ofPred_eq]
+    tauto
+  change (RawLaw ν) (((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) ∩
+    {ω | Read p q source n ω.2 = b}) = _
+  rw [he, Measure.prod_prod]
+  let regions : ℕ → Set ℝ := fun i =>
+    if i = n then (Coin (if source then q else p)) ⁻¹' {b}
+      else (Coin (if (t i).1 then q else p)) ⁻¹' {(t i).2}
+  have hregions : (TapeSection p q t n) ∩
+      {tape | Coin (if source then q else p) (tape n) = b} =
+        Set.pi (Finset.range (n + 1)) regions := by
+    ext tape
+    simp only [Set.mem_inter_iff, Set.mem_pi, Finset.mem_coe, Finset.mem_range,
+      Set.mem_ofPred_eq]
+    constructor
+    · rintro ⟨ht, hb⟩ i hi
+      by_cases hin : i = n
+      · subst i; simpa [regions] using hb
+      · have hii : i < n := by omega
+        simpa [regions, hin] using ht i hii
+    · intro ht
+      constructor
+      · intro i hi
+        have hin : i ≠ n := by omega
+        simpa [regions, hin] using ht i (Nat.lt_succ_of_lt hi)
+      · simpa [regions] using ht n (Nat.lt_succ_self n)
+  rw [hregions, Measure.infinitePi_pi _ (fun i hi => by
+    dsimp [regions]
+    split <;> exact (coin_measurable _) (measurableSet_singleton _)), Finset.prod_range_succ]
+  have hp : (∏ i ∈ Finset.range n, Uniform (regions i)) =
+      ∏ i ∈ Finset.range n,
+        (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2} := by
+    apply Finset.prod_congr rfl
+    intro i hi
+    have hin : i ≠ n := by have := Finset.mem_range.mp hi; omega
+    simp only [regions, if_neg hin]
+    rw [← uniform_coin_law, Measure.map_apply (coin_measurable _)
+      (measurableSet_singleton _)]
+  have hn : Uniform (regions n) =
+      (bernoulliMeasure true false (if source then q else p)) {b} := by
+    simp only [regions, if_pos rfl]
+    rw [← uniform_coin_law, Measure.map_apply (coin_measurable _)
+      (measurableSet_singleton _)]
+  rw [hp, hn]
+  simp only [mul_assoc]
+
 private lemma table_seed_section_law (table : (Bool × History) → PMF Action)
     (S : Bool) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action) :
     (RowLaw table) ((SeedSection TablePolicy S t n) ∩
@@ -388,18 +476,6 @@ theorem native_policy_table_leaf_law (table : (Bool × History) → PMF Action)
         table (S, Prefix t n) a) *
       ∏ i ∈ Finset.range n,
         (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2} := by
-  have he : (TraceEvent TablePolicy S p q t n) ∩
-      {ω | Act TablePolicy S p q n ω = a} =
-      (TraceEvent TablePolicy S p q t n) ∩
-        Prod.fst ⁻¹' {seed | seed (S, Prefix t n) = a} := by
-    ext ω
-    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage]
-    constructor <;> rintro ⟨ht, ha⟩ <;> refine ⟨ht, ?_⟩
-    · change ω.1 (S, Prefix t n) = a
-      change ω.1 (S, acquiredHistory TablePolicy S (Read p q) n ω) = a at ha
-      rwa [history_of_trace TablePolicy S p q t n ω ht] at ha
-    · change ω.1 (S, acquiredHistory TablePolicy S (Read p q) n ω) = a
-      rwa [history_of_trace TablePolicy S p q t n ω ht]
   have hD : MeasurableSet {seed : (Bool × History) → Action | seed (S, Prefix t n) = a} := by
     change MeasurableSet ((fun seed : (Bool × History) → Action => seed (S, Prefix t n)) ⁻¹' {a})
     exact (measurable_pi_apply (S, Prefix t n)) (action_singleton_measurable a)
@@ -407,7 +483,7 @@ theorem native_policy_table_leaf_law (table : (Bool × History) → PMF Action)
     S (RowLaw table) p q t n
       {seed : (Bool × History) → Action | seed (S, Prefix t n) = a}
       hD).2
-  rw [he]
+  rw [trace_action_seed_event TablePolicy S p q t n a]
   rw [table_seed_section_law] at hb
   exact hb
 
@@ -494,7 +570,23 @@ private lemma finite_return_cell_law (π : Seed → Bool → History → Action)
         (hittingAfter_mem_set_of_ne_top (u := Act π S p q) (s := Returns) (n := 0) hω)
     obtain ⟨y, hy⟩ := hm
     apply propext
-    simp [ht, stoppedValue, ← hy]
+    change (∃ j : ℕ, Calls π S p q ω = (j : WithTop ℕ) ∧
+      Act π S p q j ω = .inr cell) ↔
+        stoppedValue (CellAt π S p q) (Calls π S p q) ω = cell
+    have hout : stoppedValue (CellAt π S p q) (Calls π S p q) ω = y := by
+      change (match Act π S p q ((Calls π S p q ω).untopA) ω with
+        | .inr cell => cell | _ => (false, false)) = y
+      simp only [ht]
+      change (match Act π S p q n ω with
+        | .inr cell => cell | _ => (false, false)) = y
+      rw [← hy]
+    constructor
+    · rintro ⟨j, hj, ha⟩
+      have hjn : j = n := WithTop.coe_injective (hj.symm.trans ht)
+      subst j
+      exact hout.trans (Sum.inr.inj (hy.trans ha))
+    · intro hc
+      exact ⟨n, ht, hy.symm.trans (congrArg Sum.inr (hout.symm.trans hc))⟩
 
 /-- The fixed known parameters of the two-source factory. -/
 structure FactoryParameters where
@@ -526,7 +618,9 @@ local notation "Target" => fun (P : FactoryParameters) (w : World P) (S : Bool)
   (if cell.1 then (Rate P w S : ℝ) else 1 - (Rate P w S : ℝ)) / 2 +
     (w.h ^ P.β / 16) * (if cell.1 = cell.2 then 1 else -1)
 
-private lemma source_rate_value (P : FactoryParameters) (w : World P) (source : Bool) :
+private lemma source_rate_bounds_and_value (P : FactoryParameters) (w : World P)
+    (source : Bool) :
+    (Rate P w source : ℝ) ∈ Icc (3 / (4 * P.B)) (1 / P.B) ∧
     (Rate P w source : ℝ) =
       (1 - w.h * (if source then 1 else Real.exp (-P.κ) ^ (w.j : ℕ) * w.r) / P.C) / P.B := by
   let c := if source then 1 else Real.exp (-P.κ) ^ (w.j : ℕ) * w.r
@@ -551,14 +645,40 @@ private lemma source_rate_value (P : FactoryParameters) (w : World P) (source : 
   have hB : 1 ≤ P.B := by
     rcases P.allowed_B with hB | hB <;> rw [hB] <;> norm_num
   have hBp : 0 < P.B := lt_of_lt_of_le (by norm_num) hB
-  apply congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one) ?_)
-  exact ⟨div_nonneg (by linarith) hBp.le,
-    (div_le_one hBp).mpr (by linarith)⟩
+  have hv : (Rate P w source : ℝ) = (1 - w.h * c / P.C) / P.B := by
+    apply congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one) ?_)
+    exact ⟨div_nonneg (by linarith) hBp.le,
+      (div_le_one hBp).mpr (by linarith)⟩
+  refine ⟨?_, hv⟩
+  rw [hv]
+  constructor
+  · have hl := div_le_div_of_nonneg_right (show (3 / 4 : ℝ) ≤ 1 - w.h * c / P.C by
+      linarith) hBp.le
+    convert hl using 1
+    ring
+  · exact div_le_div_of_nonneg_right (by linarith) hBp.le
 
 private lemma coefficient_lower_le_one (P : FactoryParameters) :
     Real.exp (-P.κ) ^ 2 + P.g ≤ 1 := by
   have he : Real.exp (-P.κ) < 1 := Real.exp_lt_one_iff.mpr (by linarith [P.κ_bounds.1])
   linarith [P.g_bounds.2]
+
+private lemma factory_target_probability (P : FactoryParameters) (w : World P) (S : Bool) :
+    (∀ cell : Bool × Bool, (1 / 32 : ℝ) ≤ Target P w S cell) ∧
+      (∑ cell : Bool × Bool, Target P w S cell) = 1 := by
+  have hu := (source_rate_bounds_and_value P w S).1
+  have hl : (3 / 16 : ℝ) ≤ 3 / (4 * P.B) := by
+    rcases P.allowed_B with hb | hb <;> norm_num [hb]
+  have hr : 1 / P.B ≤ (1 / 2 : ℝ) := by
+    rcases P.allowed_B with hb | hb <;> norm_num [hb]
+  have he0 : 0 ≤ w.h ^ P.β := Real.rpow_nonneg w.h_bounds.1.le _
+  have he1 : w.h ^ P.β ≤ 1 :=
+    Real.rpow_le_one w.h_bounds.1.le (by linarith [w.h_bounds.2]) P.β_pos.le
+  refine ⟨?_, target_mass _ _ _⟩
+  intro cell
+  rcases cell with ⟨x, z⟩
+  cases x <;> cases z <;> simp only [Bool.false_eq_true, Bool.true_eq_false, ↓reduceIte]
+    <;> linarith [hl.trans hu.1, hu.2.trans hr]
 
 local notation "CommonWorld" => fun (P : FactoryParameters)
   (h : {h : ℝ // h ∈ Ioc 0 (1 / 4 : ℝ)}) =>
@@ -613,7 +733,7 @@ theorem native_factory_logarithmic_total_call_cost (P : FactoryParameters) (m : 
     rw [hout] at ht
     have hrate : (Set.projIcc 0 1 zero_le_one ((1 - h / P.C) / P.B) : ℝ) =
         (1 - h / P.C) / P.B := by
-      simpa [w] using (source_rate_value P w S)
+      simpa [w] using (source_rate_bounds_and_value P w S).2
     simpa only [hrate] using ht
   have hb := hbound ν hν π hπ δ hδ hflat
   apply hb.trans
@@ -636,6 +756,9 @@ finite-return TV accuracy forces the logarithmic total-call cost bound. -/
 theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) (m : ℕ)
     (hm : P.β / 2 < (m : ℝ)) :
     ∃ k : ℝ, 0 < k ∧ ∃ δ₀ : ℝ, δ₀ ∈ Ioo 0 1 ∧
+      (∀ (w : World P) (S : Bool),
+        (∀ cell : Bool × Bool, (1 / 32 : ℝ) ≤ Target P w S cell) ∧
+          (∑ cell : Bool × Bool, Target P w S cell) = 1) ∧
       ∀ table : (Bool × History) → PMF Action,
       (∀ (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action),
         (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S p q t n) ∩
@@ -644,6 +767,18 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
             table (S, Prefix t n) a) *
           ∏ i ∈ Finset.range n,
             (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2}) ∧
+      (∀ (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool)
+        (n : ℕ) (source b : Bool),
+        (RawLaw (RowLaw table)) (((TraceEvent TablePolicy S p q t n) ∩
+          {ω | Act TablePolicy S p q n ω = .inl source}) ∩
+            {ω | Read p q source n ω.2 = b}) =
+          (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S p q t n) ∩
+            {ω | Act TablePolicy S p q n ω = .inl source}) *
+            (bernoulliMeasure true false (if source then q else p)) {b}) ∧
+      (∀ (S : Bool) (p q : unitInterval) (ω) (n : ℕ),
+        (n : WithTop ℕ) ≤ Calls TablePolicy S p q ω →
+        ((acquiredHistory TablePolicy S (Read p q) n ω).filter (fun v => v.1)).length +
+          ((acquiredHistory TablePolicy S (Read p q) n ω).filter (fun v => !v.1)).length = n) ∧
       (IdentityRows table → ∀ (S : Bool) (p q : unitInterval),
         ∀ᵐ ω ∂(RawLaw (RowLaw table)),
           Act TablePolicy S p q 0 ω = .inl S ∧
@@ -663,9 +798,17 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
             ∂(RawLaw (RowLaw table)) := by
   obtain ⟨k, hk, δ₀, hδ₀, hbound⟩ := native_factory_logarithmic_total_call_cost
     (Seed := (Bool × History) → Action) P m hm
-  refine ⟨k, hk, δ₀, hδ₀, ?_⟩
+  refine ⟨k, hk, δ₀, hδ₀, factory_target_probability P, ?_⟩
   intro table
-  refine ⟨native_policy_table_leaf_law table, ?_, ?_⟩
+  refine ⟨native_policy_table_leaf_law table, ?_, ?_, ?_, ?_⟩
+  · intro S
+    exact native_source_conditional_kernel TablePolicy
+      (fun S h => measurable_pi_apply (S, h)) S (RowLaw table)
+  · intro S p q ω n hn
+    have he := List.length_eq_length_filter_add
+      (l := acquiredHistory TablePolicy S (Read p q) n ω) (fun v => v.1)
+    rw [acquired_history_length_before_return TablePolicy S (Read p q) ω n hn] at he
+    exact he.symm
   · exact fun hi => native_policy_table_identity table hi
   intro δ hδ hfinite htv
   apply hbound (RowLaw table) inferInstance TablePolicy
@@ -682,5 +825,6 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
       (Rate P w false) (Rate P w true) (hfinite w S) cell
   have ht := htv w S
   rwa [he] at ht
+
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernoulliFactoryCriticalMoment
