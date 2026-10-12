@@ -45,7 +45,7 @@ def evolve (lam : ℝ) (R : (n : ℕ) → (Fin n → Bool) → ℝ)
 /-- The full cylinder hierarchy from the fair Bernoulli law, without periodic indexing. -/
 def P (lam : ℝ) : ℕ → (n : ℕ) → (Fin n → Bool) → ℝ :=
   Nat.rec (motive := fun _ : ℕ => (n : ℕ) → (Fin n → Bool) → ℝ)
-    (fun n _ => (1 / 2 : ℝ) ^ n) (fun _ R => evolve lam R)
+    (fun n _ => (1 / ((2 : ℕ) : ℝ)) ^ n) (fun _ R => evolve lam R)
 
 def d (lam : ℝ) (t : ℕ) : ℝ := P lam t 1 (fun _ => true)
 
@@ -63,8 +63,9 @@ no separate infinite-product probability space is asserted here. -/
 def claim : Prop :=
   ∀ lam ∈ Set.Icc (0 : ℝ) 1,
     CylinderLaw lam ∧
-    (∀ t : ℕ, 1 ≤ t → d lam t = 1 / 4 + lam / 2) ∧
-    Tendsto (fun t : ℕ => d lam t) atTop (𝓝 (1 / 4 + lam / 2))
+    (∀ t : ℕ, 1 ≤ t → d lam t = 1 / ((4 : ℕ) : ℝ) + lam / ((2 : ℕ) : ℝ)) ∧
+    Tendsto (fun t : ℕ => d lam t) atTop
+      (𝓝 (1 / ((4 : ℕ) : ℝ) + lam / ((2 : ℕ) : ℝ)))
 
 /-- Indicator of a zero followed by a one at distance two. -/
 private def A (x z : Bool) : ℝ := (1 - bit x) * bit z
