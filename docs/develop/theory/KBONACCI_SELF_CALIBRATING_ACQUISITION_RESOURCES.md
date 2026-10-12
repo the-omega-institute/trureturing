@@ -1545,3 +1545,967 @@ centers, shared-allowance resource formulas and robust-tail bounds are
 claim.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 83. A complete finite query-tree criterion for positive-error hard counts
+
+**Definition 83.1 (Hard request-count optimum and the active cube).** Retain
+Definitions 71.1, 73.1 and 77.1, including the original labeled $X$, static
+prime answers, zero advice, original tapes and consumer, and one
+source-independent seed with a common deterministic rule after it is fixed.
+The amplitudes satisfy (73.3). Define the extended integer
+
+$$
+\kappa_\varepsilon=
+\inf\{k\in\mathbb N_0:\exists A\in\mathcal A_\varepsilon(a),\quad
+       \mathsf P_A\{K_{A,x}\le k\}=1\text{ for every }x\in X\},
+\qquad\inf\varnothing=\infty.
+\tag{83.1}
+$$
+
+This bounds the number of actual requests, counting repetitions, and uses
+the nonhandoff convention of Definition 71.2. It does not bound an address
+index or an expectation. For $0<\varepsilon\le1$, put
+
+$$
+L=\max(\{i\ge1:a_i>\varepsilon\}\cup\{0\}),\qquad
+Q=\{0,1\}^L,\qquad J=\{0,1,\ldots,L\}.
+\tag{83.2}
+$$
+
+The integer $L$ is finite. For $b\in Q$ having a zero, let $n_L(b)$ be
+its first zero and set
+
+$$
+\eta_b=(1-a_{n_L(b)})\delta_{\theta_0}
+                +a_{n_L(b)}\delta_{\theta_{n_L(b)}}.
+\qquad
+\eta_{1^L}=\delta_{\theta_0}.
+\tag{83.3}
+$$
+
+When $L=0$, the empty word is $1^L$ and is the only member of $Q$.
+These are finite target vectors on the original marked points. In
+particular $1^L$ is a finite answer pattern, not an additional infinite
+all-positive source. Every pattern in $Q$, including every pattern with
+several zeros, is retained.
+
+**Definition 83.2 (One common distribution of executable finite trees).**
+For $R\subseteq\{1,\ldots,L\}$ and $d\in\mathbb N_0$, let
+$\mathcal T(R,0)$ consist of the leaves labeled by $J$. For $d>0$, let
+$\mathcal T(R,d)$ consist of these leaves and all binary nodes
+
+$$
+(i,T_0,T_1),\qquad i\in R,\quad
+T_0,T_1\in\mathcal T(R\setminus\{i\},d-1).
+\tag{83.4}
+$$
+
+Thus $\mathcal T(\varnothing,d)$ contains only leaves. Write
+$\mathcal T_{L,k}=\mathcal T(\{1,\ldots,L\},k)$. A tree asks coordinate
+$i$ at its node and follows the edge labeled by the answer. Its leaf label
+on $b$ is $T(b)\in J$, and that label means the original tape
+$\theta_{T(b)}$. No index is repeated along a path, whose number of query
+nodes is at most $k$. A finite scheme is a single probability vector
+$(w_T)_{T\in\mathcal T_{L,k}}$, common to all $b$, with laws
+
+$$
+p_b(j)=\sum_{T\in\mathcal T_{L,k}}w_T\mathbf1_{\{T(b)=j\}},
+\qquad
+\nu_b=\sum_{j=0}^Lp_b(j)\delta_{\theta_j}.
+\tag{83.5}
+$$
+
+It is feasible at cap $\varepsilon$ when
+$\operatorname{TV}(\nu_b,\eta_b)\le\varepsilon$ for every $b\in Q$.
+Separate choices of a distribution for each input are not finite schemes.
+
+**Theorem 83.3 (Exact-cap equivalence with arbitrary-address acquisitions).**
+For every $0<\varepsilon\le1$ and $k\in\mathbb N_0$, an acquisition in
+$\mathcal A_\varepsilon(a)$ has $K_{A,x}\le k$ almost surely at every
+actual source if and only if a feasible scheme on $\mathcal T_{L,k}$
+exists. Necessity allows arbitrary adaptive addresses, repeated requests
+and full-carrier output laws. Sufficiency gives an acquisition handing off
+at every source and every seed, with
+
+$$
+K_{A,x}\le k,\qquad M_{A,x}\le L.
+\tag{83.6}
+$$
+
+Consequently $\kappa_\varepsilon$ is the least feasible integer in
+$\{0,\ldots,L\}$, and this least value is attained under the original
+contract.
+
+**Proof.** Define the finite marked projection on the original carrier by
+
+$$
+\pi_L(\theta)=
+\begin{cases}
+\theta_j,&\theta=\theta_j\text{ for some }1\le j\le L,\\
+\theta_0,&\text{otherwise}.
+\end{cases}
+\tag{83.7}
+$$
+
+Its retained singleton fibers and their complement are Borel, so it is
+measurable. For any two original-tape probabilities, pulling back events
+gives
+
+$$
+\operatorname{TV}((\pi_L)_*\nu,(\pi_L)_*\lambda)
+\le\operatorname{TV}(\nu,\lambda).
+\tag{83.8}
+$$
+
+This is the finite coarsening of the projection method in Theorem 82.1.
+It fixes $\lambda_n$ when $n\le L$ and sends $\lambda_n$ to
+$\delta_{\theta_0}$ when $n>L$. If a probability $p$ is supported on
+$\theta_0,\ldots,\theta_L$ and $n>L$, the already supplied overlap
+identity (77.7) gives
+
+$$
+\operatorname{TV}(p,\lambda_n)=\max\{1-p(\{\theta_0\}),a_n\}.
+\tag{83.9}
+$$
+
+Indeed its mass at $\theta_n$ is zero. This identity will transport the
+finite all-one constraint back to the original tail targets.
+
+Suppose first that $A$ is an original hard-$k$ competitor. All its
+probabilities below use its unchanged seed law. Countability of $X$ and
+the measurable finite-handoff sublevel events give a common event
+
+$$
+G=\bigcap_{x\in X}\{K_{A,x}\le k\},\qquad\mathsf P_A(G)=1.
+\tag{83.10}
+$$
+
+No source-dependent seed conditioning is involved. For the common
+high-address event $J_{A,k,m}$ of (74.4), the exactness-independent
+finite-forest supplier (70.3)--(70.4) gives
+
+$$
+\gamma_m=\mathsf P_A(J_{A,k,m})\longrightarrow0.
+\tag{83.11}
+$$
+
+To recall its applicable content, at a fixed seed the first $k$ requests
+over all actual sources occupy at most $2^k-1$ binary query nodes.
+Processing with no further request adds no node. Their maximum address
+is finite; the countable union of measurable request-index events makes
+$J_{A,k,m}$ measurable. This uses neither exact output laws nor a uniform
+transition bound.
+
+For each integer $m\ge L+1$ and each $b\in Q$, fix an actual source
+$x_{b,m}$ whose answers are $b$ through $L$ and zero at every index
+$L<i\le m$. Boundaries, Theorem 35.2 supplies these finite patterns.
+The entire countable family is chosen independently of the seed. If $b$
+has first zero $n\le L$, then $n(x_{b,m})=n$. If $b=1^L$, then
+$n(x_{b,m})=L+1$. Hence in both cases
+
+$$
+(\pi_L)_*\lambda^a_{x_{b,m}}=\eta_b.
+\tag{83.12}
+$$
+
+Let $T_{A,x}$ denote the number of transitions to handoff, with value
+$\infty$ on nonhandoff. For each fixed $m$, the finite family
+$(T_{A,x_{b,m}})_{b\in Q}$ is finite almost surely. Therefore a deterministic
+integer $t_m$ can be chosen so that
+
+$$
+\max_{b\in Q}\mathsf P_A\{T_{A,x_{b,m}}>t_m\}\le1/m.
+\tag{83.13}
+$$
+
+This choice is for that finite family only and asserts no uniform bound
+on transition counts over $X$.
+
+Construct a finite mathematical truncation of the common rule. For input
+$b$, simulate at most $t_m$ transitions of $A$ with its original seed.
+At a requested index $i\le L$ supply $b_i$; at $L<i\le m$ supply zero.
+Stop with $\theta_0$ before an attempted address above $m$ or an attempted
+$(k+1)$st simulated request, or if handoff has not occurred by $t_m$.
+A simulated request is counted even if it repeats an index. At an original
+handoff apply $\pi_L$ to its tape. This construction specifies a bounded
+finite reply table and a truncation, not an execution at a postulated
+infinite source. The fixed high-coordinate replies are used to extract a
+finite tree; the acquisition constructed from that tree will issue only
+its actual low-coordinate requests.
+
+For completeness the finite output label $f_{s,m}(b)\in J$ of this
+truncation is measurable in the seed $s$. For every consistent finite
+request/answer word choose once an actual witness realizing its finite
+pattern, using Theorem 35.2 and a fixed enumeration of $X$. Such words
+form a countable set, and all these witnesses are chosen before seeds.
+On the whole event of following a word, the original rule at its witness
+has the same finite processing and answers, by Lemma 45.3. The record,
+cutoff and retained singleton-output events are consequently measurable
+finite-record events or countable unions of them. For $j\ge1$, the event
+$f_{s,m}(b)=j$ is such a union of original handoff events with output
+$\theta_j$; every remaining truncated outcome has label zero. Thus each
+label event is measurable, including cutoffs. Since $Q$ is finite, the
+joint map $s\mapsto(f_{s,m}(b))_{b\in Q}$ is measurable into the finite
+set $J^Q$. No measurable equality diagonal on the unprojected tape carrier
+is needed.
+
+After freezing $s$, the truncation is one deterministic decision rule on
+the complete cube $Q$. Between low-coordinate questions it has a unique
+continuation: all high replies and all previously requested replies are
+fixed. Contract these fixed-answer and repeated-query nodes. What remains
+is a binary query tree with fresh labels in $\{1,\ldots,L\}$ and path
+depth at most $k$, since there were at most $k$ simulated requests before
+contraction. Every branch of this finite tree is covered by some $b\in Q$.
+Thus $f_{s,m}$ is represented by a member of $\mathcal T_{L,k}$.
+Choose one representing tree for each representable function in the
+finite set $J^Q$. The preceding measurable function-valued map then
+induces a measurable tree-valued map and a probability vector
+$w^{(m)}$ on $\mathcal T_{L,k}$.
+
+For each fixed $b$, couple the truncation with $A$ at the fixed actual
+$x_{b,m}$ on the original seed space. On the whole measurable event
+
+$$
+G\cap\{T_{A,x_{b,m}}\le t_m\}\setminus J_{A,k,m}
+\tag{83.14}
+$$
+
+the original execution makes at most $k$ requests, all at indices at most
+$m$, and hands off by $t_m$. Its answers agree with the finite reply
+table, so induction over its complete finite execution identifies the
+truncated output with its projected original output. The complement of
+(83.14) has probability at most $\gamma_m+1/m$. Event indicators for the
+two projected outputs therefore differ in expectation by at most this
+number. Using (83.8), (83.12), the original cap and the triangle inequality,
+the law $\nu_b^{(m)}$ induced by $w^{(m)}$ satisfies
+
+$$
+\begin{aligned}
+\operatorname{TV}\bigl(\nu_b^{(m)},
+     (\pi_L)_*\widehat\lambda_{A,x_{b,m}}\bigr)
+ &\le\gamma_m+1/m,\\
+\operatorname{TV}(\nu_b^{(m)},\eta_b)
+ &\le\varepsilon+\gamma_m+1/m.
+\end{aligned}
+\tag{83.15}
+$$
+
+All seed mass, including every cutoff outcome, is included in these laws.
+The comparison sources are fixed actual sources, never functions of an
+individual seed.
+
+There are finitely many trees. Their probability simplex is compact:
+successive subsequence selection for its finitely many coordinates gives
+a subsequence of $w^{(m)}$ converging to a nonnegative vector $w$ of total
+mass one. Each $p_b(j)$ in (83.5) is linear in this vector, and TV on the
+finite marked carrier is a continuous finite sum. Letting $m$ tend to
+infinity along that subsequence in (83.15) gives
+$\operatorname{TV}(\nu_b,\eta_b)\le\varepsilon$ for every $b$.
+The limit uses a single vector of weights for all inputs. In particular
+it yields the exact cap, rather than only every larger cap. This proves
+necessity for full-carrier, arbitrary-address competitors.
+
+Conversely, sample a tree from the fixed weights $w_T$ with one
+source-independent uniform seed, using half-open categorical intervals.
+Run its node questions as actual requests to the primes $p_i$, and hand
+the original tape at its leaf to the unchanged consumer. This is one
+common seeded deterministic rule, with zero advice and no further source
+observation. Every path is finite and satisfies (83.6). Records and outputs
+are measurable finite unions of categorical seed intervals. At $x$ with
+$n(x)\le L$, its actual low word has that first zero, and the finite cap
+is precisely its selected-law cap. At $n(x)>L$, the word is $1^L$ and its
+constraint is $1-p_{1^L}(0)\le\varepsilon$. Since $a_{n(x)}\le\varepsilon$,
+(83.9) gives the original tail-target error at most $\varepsilon$.
+Thus this is an original member of $\mathcal A_\varepsilon(a)$.
+
+Finally a feasible scheme exists at $k=L$: query the low coordinates in
+order until the first zero $n\le L$ and sample $\lambda_n$ there;
+otherwise emit $\theta_0$. One common uniform coordinate can decide the
+two-point sample for every possible $n$. Freezing that coordinate gives
+a labeled depth-$L$ tree, so these samplers form a finite tree mixture.
+At a tail source its error is $a_{n(x)}\le\varepsilon$. For $L=0$ the
+rule is simply immediate $\theta_0$. The nonempty finite set of feasible
+integers has a least member, attained by the preceding converse. $\square$
+
+**Mathematical citation 83.4 (Decision trees and the actual-source bridge).**
+Deterministic adaptive query trees, depth as worst path query count, and
+randomized trees as distributions over deterministic trees are established
+ingredients in Buhrman and de Wolf, [*Complexity Measures and Decision Tree
+Complexity: A Survey*, Sections 3.1--3.2](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf).
+The finite input model is obtained here from actual-pattern realization
+and the finite-request-forest and whole-event suppliers, not assumed for
+$X$. The bidirectional full-carrier transport and exact positive-cap
+attainment in Theorem 83.3 are `repo-derived` compositions of those
+suppliers. The theorem preserves feasibility at $(k,\varepsilon)$; it does
+not preserve an arbitrary competitor's output laws, mean resources or
+address usage.
+
+## 84. Explicit TV rows and a complete finite obstruction recurrence
+
+**Theorem 84.1 (The finite row criterion for the original hard count).** Use
+(83.2)--(83.5). For every $k\in\mathbb N_0$, $\kappa_\varepsilon\le k$
+is equivalent to the following finite linear feasibility system:
+
+$$
+\begin{gathered}
+w_T\ge0\quad(T\in\mathcal T_{L,k}),\qquad \sum_Tw_T=1,\\
+p_b(0)\ge1-a_n-\varepsilon,\qquad
+p_b(n)\ge a_n-\varepsilon,\qquad
+p_b(0)+p_b(n)\ge1-\varepsilon
+\quad\bigl(b\ne1^L,\ n=n_L(b)\bigr),\\
+p_{1^L}(0)\ge1-\varepsilon.
+\end{gathered}
+\tag{84.1}
+$$
+
+All $2^L$ inputs occur in these rows. There are $3(2^L-1)+1$ TV rows;
+a negative right side is permitted and requires no change of convention.
+
+**Proof.** For a probability $p$ on $J$ and $n\le L$, the target's only
+possible negative discrepancies occur at $0$ and $n$. The TV mass
+calculation already used in (77.7) therefore gives
+
+$$
+\begin{aligned}
+\operatorname{TV}\left(\sum_jp(j)\delta_{\theta_j},\lambda_n\right)
+ &=(1-a_n-p(0))_++(a_n-p(n))_+\\
+ &=\max\{0,\ 1-a_n-p(0),\ a_n-p(n),\ 1-p(0)-p(n)\}.
+\end{aligned}
+\tag{84.2}
+$$
+
+The second equality follows by considering whether neither, one, or both
+of the two untruncated deficits are positive. Thus its cap is exactly the
+three corresponding rows of (84.1). The distance to $\delta_{\theta_0}$
+is $1-p(0)$, giving the last row. Definition 83.2 and Theorem 83.3 now
+prove both implications. The whole-carrier necessity is furnished by
+Theorem 83.3, not by assuming that the original competitor had finite
+support. $\square$
+
+**Definition 84.2 (Nonnegative row weights and depth values).** Let
+$\mathcal R$ index the TV rows of (84.1). Write each row as
+$p_{b_r}(H_r)\ge d_r$, where $H_r\subseteq J$ is respectively
+$\{0\}$, $\{n\}$ or $\{0,n\}$ at a non-all-one input, and $\{0\}$
+at the all-one input. For $\alpha=(\alpha_r)_{r\in\mathcal R}\ge0$ set
+
+$$
+c_{b,j}=\sum_{r:b_r=b}\alpha_r\mathbf1_{\{j\in H_r\}}.
+\tag{84.3}
+$$
+
+A partial assignment $\tau$ fixes some subset of the $L$ coordinates;
+let $Q(\tau)$ be its consistent inputs. Define
+
+$$
+V_0(\tau)=\max_{j\in J}\sum_{b\in Q(\tau)}c_{b,j},
+\tag{84.4}
+$$
+
+and, for $d\ge1$, define
+
+$$
+V_d(\tau)=\max\left\{
+V_0(\tau),\quad
+\max_{i\notin\operatorname{dom}\tau}
+ \left[V_{d-1}(\tau\cup\{i=0\})+
+       V_{d-1}(\tau\cup\{i=1\})\right]\right\}.
+\tag{84.5}
+$$
+
+When every coordinate is assigned the query maximum is omitted. In
+particular all these quantities are obtained by a finite recurrence.
+
+**Theorem 84.3 (Complete nonnegative obstructions to hard-count feasibility).**
+For $0<\varepsilon\le1$ and $k\in\mathbb N_0$,
+
+$$
+\kappa_\varepsilon\le k
+\quad\Longleftrightarrow\quad
+\sum_{r\in\mathcal R}\alpha_rd_r\le V_k(\varnothing)
+\quad\text{for every }\alpha\in[0,\infty)^{\mathcal R}.
+\tag{84.6}
+$$
+
+If hard-$k$ feasibility fails, one finite nonnegative vector $\alpha$
+satisfies the strict reverse inequality. Its value on the right is evaluated
+by (84.4)--(84.5), and it obstructs every original arbitrary-address,
+full-carrier hard-$k$ competitor.
+
+**Proof.** For a tree $T$, let its row vector be
+$v_T(r)=\mathbf1_{\{T(b_r)\in H_r\}}$. Its weighted row value is
+
+$$
+\alpha\cdot v_T=\sum_{b\in Q}c_{b,T(b)}.
+\tag{84.7}
+$$
+
+On inputs consistent with $\tau$, a depth-zero tree must select a single
+leaf label, whose optimum value is (84.4). A deeper tree either selects
+such a leaf or requests an unassigned coordinate $i$. Its inputs then
+split into the disjoint zero and one extensions of $\tau$, and either
+child has remaining depth $d-1$. The two optimal child trees can be
+chosen independently and attached to that root. Induction on $d$ proves
+
+$$
+V_k(\varnothing)=\max_{T\in\mathcal T_{L,k}}\alpha\cdot v_T.
+\tag{84.8}
+$$
+
+Both children receive depth $d-1$. The recurrence bounds the number of
+requests on a path, rather than the sum of the numbers of nodes in the
+children, a prefix depth, or the greatest coordinate queried.
+
+Let $C=\operatorname{conv}\{v_T:T\in\mathcal T_{L,k}\}$ and
+$U=C-\mathbb R_+^{\mathcal R}$. A mixture satisfying all rows exists
+exactly when $d=(d_r)_r\in U$. The convex hull $C$ is compact and $U$
+is closed: if $v_m-z_m\to u$ with $v_m\in C$ and $z_m\ge0$, a
+subsequence has $v_m\to v\in C$, and then $z_m\to v-u\ge0$.
+If $d\in U$, every nonnegative $\alpha$ has
+$\alpha\cdot d\le\max_T\alpha\cdot v_T$, proving the forward
+implication using (84.8).
+
+If $d\notin U$, choose a nearest point $u\in U$. It exists since a
+minimizing sequence for distance to $d$ can be restricted to a closed
+bounded ball in a finite-dimensional space, and $U$ is closed. Set
+$\alpha=d-u\ne0$. For every $z\in U$, the segment from $u$ to $z$
+is in $U$. Minimality of $u$ applied to
+$\|d-u-t(z-u)\|^2$ for $t\downarrow0$ gives
+
+$$
+\alpha\cdot(z-u)\le0.
+\tag{84.9}
+$$
+
+Since $u-te_r\in U$ for every $t\ge0$, (84.9) implies
+$\alpha_r\ge0$ for every row. For such a vector subtraction of a
+nonnegative vector cannot increase the scalar product, so
+$\sup_{z\in U}\alpha\cdot z=\max_{v\in C}\alpha\cdot v$.
+Equation (84.9) says this supremum is $\alpha\cdot u$, and hence
+
+$$
+\alpha\cdot d
+=\alpha\cdot u+\|\alpha\|^2
+>\max_T\alpha\cdot v_T
+=V_k(\varnothing).
+\tag{84.10}
+$$
+
+This gives the strict obstruction and proves the reverse implication of
+(84.6), including equality cases in every row. Theorem 83.3 transfers
+this exact finite alternative to the original class. $\square$
+
+**Mathematical citation 84.4 (TV and convex ingredients).** The finite
+partition and overlap identity in (84.2) uses the TV ingredients credited
+in (77.7): Levin and Peres, with Wilmer, [*Markov Chains and Mixing Times*,
+second edition, Chapter 4, Proposition 4.2, Remark 4.3 and equation
+(4.13)](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf).
+Finite convex hulls and separating hyperplanes are mature ingredients;
+see Boyd and Vandenberghe, [*Convex Optimization*, Section
+2.5.1](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The nearest-point argument above proves the needed separation directly.
+The rows, tree recurrence and their exact applicability to the original
+marked-source hard-count problem form a `repo-derived` composition;
+these citations carry no literature-priority claim for that composition.
+
+## 85. An output-conditioned obstruction using actual comparison sources
+
+**Theorem 85.1 (Hard count bounds the mass of a late correct mark).** Fix
+$0\le\varepsilon\le1$ and $k\in\mathbb N_0$. If
+$A\in\mathcal A_\varepsilon(a)$ and $K_{A,x}\le k$ almost surely at
+every actual $x$, then for every integer $n>k$,
+
+$$
+(n-k)(a_n-\varepsilon)_+\le n\varepsilon.
+\tag{85.1}
+$$
+
+The acquisition may use arbitrary adaptive addresses and may output on
+the entire original carrier.
+
+**Proof.** Fix an actual $x\in D_n$. For each integer $m\ge n$, choose
+actual sources $y_{i,m}$, $1\le i\le n$, whose answers through $m$
+match those of $x$ except that coordinate $i$ is flipped. These finite
+patterns are realized by Theorem 35.2, and the sources are fixed before
+using any seed. For $i<n$ their first absence is $i$. For $i=n$, all
+coordinates through $n$ are positive, so their first absence is greater
+than $n$, and is finite by finite prime support. In every case
+
+$$
+\lambda^a_{y_{i,m}}(\{\theta_n\})=0,\qquad
+\mathsf P_A\{\text{finite output at }y_{i,m}\text{ is }\theta_n\}
+\le\varepsilon.
+\tag{85.2}
+$$
+
+Let $E_m$ be the measurable event of finite output $\theta_n$ at $x$
+with at most $k$ requests, outside $J_{A,k,m}$. The cap at $x$ on that
+singleton, together with the hard bound, gives
+
+$$
+\mathsf P_A(E_m)\ge(a_n-\varepsilon)_+
+                         -\mathsf P_A(J_{A,k,m}).
+\tag{85.3}
+$$
+
+On $E_m$ all requested indices are at most $m$, and at least $n-k$ of
+the first $n$ coordinates have not been requested. Write $U_i$ for the
+measurable event that index $i$ is unrequested in this finite execution.
+On the whole event $E_m\cap U_i$, every requested answer agrees at
+$y_{i,m}$. Finite execution transport, with the same seed and zero
+advice, therefore hands the same $\theta_n$ there. In particular
+$E_m\cap U_i$ is contained in the corresponding output event of
+(85.2). Counting the unrequested coordinates on each seed and summing
+these event inclusions yields
+
+$$
+(n-k)\mathsf P_A(E_m)
+\le\sum_{i=1}^n\mathsf P_A(E_m\cap U_i)
+\le\sum_{i=1}^n\mathsf P_A\{\text{output at }y_{i,m}\text{ is }\theta_n\}
+\le n\varepsilon.
+\tag{85.4}
+$$
+
+The common finite-forest probability tends to zero as $m\to\infty$.
+Combining (85.3)--(85.4) proves (85.1). This comparison concerns one
+fixed actual $x$ and, at each $m$, a fixed finite actual comparison family.
+It counts whole seed events on which a correct output was made; it never
+selects a comparison source depending on an individual seed. $\square$
+
+## 86. Exact hard counts with two active amplitudes
+
+**Theorem 86.1 (Unequal two-amplitude classification and lawful attainers).**
+Suppose
+
+$$
+a_3\le\varepsilon<a_2\le a_1\le1.
+\tag{86.1}
+$$
+
+Thus $L=2$, with the positive monotone vanishing tail retained. Then
+
+$$
+\kappa_\varepsilon=
+\begin{cases}
+0,&a_1+a_2\le3\varepsilon,\\
+1,&a_1+a_2>3\varepsilon\text{ and }a_2\le3\varepsilon,\\
+2,&a_2>3\varepsilon.
+\end{cases}
+\tag{86.2}
+$$
+
+Every case has an everywhere-finite common-seed attainer on the original
+tapes. The supplied maximum-address optimum (78.1) specializes to
+
+$$
+h_\varepsilon=
+\begin{cases}
+0,&a_1+a_2\le3\varepsilon,\\
+1,&a_1+a_2>3\varepsilon\text{ and }a_2\le2\varepsilon,\\
+2,&a_2>2\varepsilon.
+\end{cases}
+\tag{86.3}
+$$
+
+In particular $2\varepsilon<a_2\le3\varepsilon$ gives
+$\kappa_\varepsilon=1<h_\varepsilon=2$.
+
+**Proof.** A zero-request acquisition produces one common output law at
+all sources. The existing full-carrier center criterion, Theorem 77.2
+with $m=0$, makes it feasible exactly when
+
+$$
+S_0(\varepsilon)=(a_1-\varepsilon)+(a_2-\varepsilon)
+\le\varepsilon,
+\tag{86.4}
+$$
+
+which is the first condition in (86.2). In that case an explicit immediate
+sampler uses masses $a_1-\varepsilon$ and $a_2-\varepsilon$ on
+$\theta_1$ and $\theta_2$, and the remaining mass on $\theta_0$.
+Its coefficients are nonnegative, since their marked sum is at most
+$\varepsilon<1$; Theorem 77.2 supplies its cap for every original source.
+
+Theorem 85.1 at $n=2,k=1$ makes
+$a_2-\varepsilon\le2\varepsilon$ necessary for hard one-request
+feasibility, because $a_2>\varepsilon$. Thus $a_2\le3\varepsilon$
+is necessary, with no address or output-support restriction on the
+competitor. The finite obstruction can also be read directly from
+Theorem 84.3. Give unit multipliers to the rows $p_{10}(2)\ge
+ a_2-\varepsilon$, $p_{00}(\{0,1\})\ge1-\varepsilon$, and
+$p_{11}(0)\ge1-\varepsilon$, and zero to every other row. Their right
+sides sum to $a_2+2-3\varepsilon$. A depth-one tree has weighted value
+at most two: a query to coordinate $1$ gives the same output at $10$ and
+$11$, so their first and third row indicators cannot both be one;
+a query to coordinate $2$ gives the same output at $00$ and $10$, so
+their first and second indicators cannot both be one. Constant trees
+satisfy the same bound, and constant output zero attains two. Thus
+$V_1(\varnothing)=2$, with strict obstruction exactly when
+$a_2>3\varepsilon$.
+
+For sufficiency at this threshold, use one source-independent categorical
+seed to mix the following four deterministic trees. A pair of entries
+in the output column gives the zero-answer output followed by the
+one-answer output.
+
+| Tree | Requested index | Output labels | Weight |
+| --- | --- | --- | --- |
+| $T_1$ | $1$ | $(1,2)$ | $a_2/3$ |
+| $T_2$ | $1$ | $(1,0)$ | $a_1-2a_2/3$ |
+| $T_3$ | $2$ | $(2,0)$ | $a_2/3$ |
+| $T_0$ | none | $0$ | $1-a_1$ |
+
+All weights are nonnegative and sum to one, using $a_1\ge a_2$.
+Each queried branch hands off after one actual request; the constant
+branch hands off immediately. With columns ordered as
+$(\theta_0,\theta_1,\theta_2)$, the resulting complete law table is
+
+$$
+\begin{array}{c|ccc}
+b&p_b(0)&p_b(1)&p_b(2)\\\hline
+00&1-a_1&a_1-a_2/3&a_2/3\\
+01&1-a_1+a_2/3&a_1-a_2/3&0\\
+10&1-2a_2/3&0&2a_2/3\\
+11&1-a_2/3&0&a_2/3
+\end{array}
+\tag{86.5}
+$$
+
+At $00$, the mass $a_2/3$ missing from the correct mark $\theta_1$
+is placed at $\theta_2$, while the base mass is exact. The TV error is
+$a_2/3$. At $01$ the same deficit is instead placed at the base, again
+with error $a_2/3$. At $10$, the correct mark $\theta_2$ has mass
+$2a_2/3$ against target mass $a_2$, so the error is $a_2/3$.
+For every actual source with low word $11$, its first absence exceeds
+$2$ and its output law has error
+$\max\{a_2/3,a_{n(x)}\}$ by (83.9). This is at most $\varepsilon$
+when $a_2\le3\varepsilon$ and $a_3\le\varepsilon$. Thus the same
+common scheme meets the original cap on every source.
+
+Finally two requests suffice at all parameters in (86.1): query $p_1$,
+and on a positive answer query $p_2$; at the first zero sample the exact
+$\lambda_n$, and on two positives emit $\theta_0$. Use another
+coordinate of the same source-independent seed for the two-point sample.
+The tail error is at most $a_3\le\varepsilon$, and every branch hands
+off. Combining this upper bound, the one-request obstruction, and the
+reused zero-request criterion proves all cases of (86.2).
+
+For (86.3), directly apply the existing address criterion (78.1) to
+$S_0(\varepsilon)=a_1+a_2-2\varepsilon$,
+$S_1(\varepsilon)=a_2-\varepsilon$, and $S_2(\varepsilon)=0$.
+If $a_2>2\varepsilon$, monotonicity also gives
+$a_1+a_2\ge2a_2>3\varepsilon$, so the listed cases are exhaustive.
+In the stated strict separation interval the same observation excludes
+the zero-request case of (86.2). $\square$
+
+**Corollary 86.2 (Equal leading amplitudes and strict resource separations).**
+If $a_1=a_2=s\in(0,1]$ and $a_3\le\varepsilon$, then
+
+$$
+\begin{aligned}
+\kappa_\varepsilon&=
+\begin{cases}
+0,&\varepsilon\ge2s/3,\\
+1,&s/3\le\varepsilon<2s/3,\\
+2,&0<\varepsilon<s/3,
+\end{cases}\\
+h_\varepsilon&=
+\begin{cases}
+0,&\varepsilon\ge2s/3,\\
+1,&s/2\le\varepsilon<2s/3,\\
+2,&0<\varepsilon<s/2.
+\end{cases}
+\end{aligned}
+\tag{86.6}
+$$
+
+An unequal-amplitude example is
+
+$$
+a_1=1,\quad a_2=3/4,\quad
+ a_n=\frac1{4(n-2)}\ (n\ge3),\quad\varepsilon=1/4:
+\qquad\kappa_\varepsilon=1<h_\varepsilon=2.
+\tag{86.7}
+$$
+
+A separate example distinguishes the hard count from the ceiling of the
+optimal uniform mean:
+
+$$
+a_1=a_2=3/4,\quad
+ a_n=\frac1{5(n-2)}\ (n\ge3),\quad\varepsilon=1/5:
+\qquad D=9/10,\quad\lceil D\rceil=1<\kappa_\varepsilon=2.
+\tag{86.8}
+$$
+
+**Proof.** If $\varepsilon<s$, (86.1) holds and (86.6) is the
+specialization of Theorem 86.1. If $\varepsilon\ge s$, immediate
+$\theta_0$ has error at most $s$, so both hard optima are zero as in
+the displayed formulas. In (86.7), $L=2$, $a_2=3\varepsilon$ and
+$a_2>2\varepsilon$, while $a_1+a_2>3\varepsilon$, proving its two
+values. In (86.8), $L=2$ and $a_2>3\varepsilon$, so Theorem 86.1
+forces hard count two. The mean formula is exactly the supplier (79.3):
+its only positive residuals are $a_1-\varepsilon=a_2-\varepsilon=11/20$,
+whence $D=2(11/20)-1/5=9/10$. Thus neither the supplied address optimum
+nor integer rounding of the supplied mean optimum identifies the hard
+request count. $\square$
+
+## 87. Unit leading plateaus and unbounded address-to-count ratios
+
+**Theorem 87.1 (Exact hard count on a unit plateau).** Suppose $\ell\ge1$,
+
+$$
+a_1=\cdots=a_\ell=1,\qquad
+ a_{\ell+1}\le\varepsilon<1.
+\tag{87.1}
+$$
+
+The tail continues to satisfy (73.3); in particular $\varepsilon>0$.
+Then
+
+$$
+\kappa_\varepsilon=
+\max\{0,\lceil\ell-(\ell+1)\varepsilon\rceil\}.
+\tag{87.2}
+$$
+
+For each $k\in\{0,\ldots,\ell\}$, an original common-seed acquisition
+with $K\le k$ everywhere has error
+
+$$
+e_k=\frac{\ell-k}{\ell+1}
+\tag{87.3}
+$$
+
+at every source in $D_1\cup\cdots\cup D_\ell$, and error
+$\max\{e_k,a_{n(x)}\}$ at every source in $H_\ell$.
+Its count is exactly $k$ on $H_\ell$ for every seed.
+
+**Proof.** The supplied mean theorem (79.3) gives
+
+$$
+D=\bigl(\ell(1-\varepsilon)-\varepsilon\bigr)_+
+  =\bigl(\ell-(\ell+1)\varepsilon\bigr)_+,
+\tag{87.4}
+$$
+
+since every tail residual is zero. Any sourcewise almost-sure hard-$k$
+competitor has $\sup_x\mathsf E_AK_{A,x}\le k$, and thus $k\ge D$.
+Its integer count must be at least the right side of (87.2).
+
+For the matching upper bound, order the finite label set as
+$1<\cdots<\ell<\ast$, where label $\ast$ means tape $\theta_0$.
+Use one source-independent categorical seed to choose uniformly a subset
+$C$ of $k+1$ labels. Query its first $k$ labels in increasing order,
+stopping at the first zero and emitting the tape of that queried label.
+If all $k$ answers are positive, emit the tape of the maximum label in
+$C$, without querying that last label. The label $\ast$ is always last
+when it is present, so it is never queried. This includes $k=0$, when
+the sole chosen label is emitted without a request. Every branch is finite,
+uses at most $k$ actual prime requests, and has indices at most $\ell$.
+The records are measurable categorical seed events.
+
+At an actual source with first absence $n\le\ell$, the output is
+$\theta_n$ exactly when $n\in C$. To prove the forward assertion, if
+$n$ is among the queried labels, every preceding selected label is less
+than $n$ and has positive answer, and the query at $n$ stops with its
+tape. If $n$ is the final unqueried label, all queried labels are less
+than $n$ and positive, and the final emission is again $\theta_n$.
+For the converse, if $n\notin C$, every possible emitted label belongs
+to $C$ and therefore cannot be $n$, regardless of all suffix answers.
+Uniform subsets of size $k+1$ include each particular label with
+probability
+
+$$
+\frac{\binom{\ell}{k}}{\binom{\ell+1}{k+1}}
+=\frac{k+1}{\ell+1}.
+\tag{87.5}
+$$
+
+Here the target is $\lambda_n=\delta_{\theta_n}$, so its TV error is
+one minus this probability, exactly $e_k$.
+
+At any actual source in $H_\ell$, all queried numerical labels have
+positive answers and all $k$ requests are made. The output is
+$\theta_0$ exactly when $\ast\in C$, also with probability
+$(k+1)/(\ell+1)$. No tail mark can be emitted. Equation (83.9) thus
+gives error $\max\{e_k,a_{n(x)}\}$. This calculation concerns every
+actual tail source, not an added source representing the label $\ast$.
+
+Choose the least integer $k\ge0$ with $e_k\le\varepsilon$; it is at
+most $\ell$ and equals the right side of (87.2). Since every tail
+amplitude is at most $\varepsilon$, the constructed acquisition belongs
+to $\mathcal A_\varepsilon(a)$ and attains this hard count. $\square$
+
+**Corollary 87.2 (Unbounded separation of the optimal hard resources).**
+Under (87.1), the supplied address formula is
+
+$$
+h_\varepsilon=
+\max\left\{0,\left\lceil\ell-
+              \frac{\varepsilon}{1-\varepsilon}\right\rceil\right\}.
+\tag{87.6}
+$$
+
+For every $\ell\ge2$, take
+
+$$
+\varepsilon=\frac{\ell-1}{\ell+1},\qquad
+ a_1=\cdots=a_\ell=1,\qquad
+ a_{\ell+j}=\frac{\varepsilon}{j}\quad(j\ge1).
+\tag{87.7}
+$$
+
+These are actual-source marked families with
+
+$$
+\kappa_\varepsilon=1,\qquad
+ h_\varepsilon=\left\lceil\frac{\ell+1}{2}\right\rceil.
+\tag{87.8}
+$$
+
+In particular $h_\varepsilon/\kappa_\varepsilon$ is unbounded over
+this family.
+
+**Proof.** For $0\le m\le\ell$,
+$S_m(\varepsilon)=(\ell-m)(1-\varepsilon)$. Its inequality
+$S_m(\varepsilon)\le\varepsilon$ is equivalent to
+$m\ge\ell-\varepsilon/(1-\varepsilon)$. Apply (78.1), restricting
+to nonnegative integer $m$; $m=\ell$ is feasible. This proves (87.6)
+as a specialization of the existing address theorem. The sequence in
+(87.7) is positive, nonincreasing and vanishes along its tail, so (73.3)
+holds. Equation (87.2) gives count one because
+$\ell-(\ell+1)\varepsilon=1$. In (87.6) the ratio
+$\varepsilon/(1-\varepsilon)=(\ell-1)/2$, giving (87.8).
+Its address value tends to infinity while its count value stays one.
+The comparison is between two separately optimized hard resources;
+it does not identify a query count with the address of that query.
+$\square$
+
+## 88. A multiple-zero source defeats a restricted pattern criterion
+
+**Proposition 88.1 (Single-zero and all-one tests are insufficient).** Use
+the sequence and cap in (86.8). There is a lawful hard-one-request rule
+whose error is at most $1/5$ at every actual source with low word $01$,
+$10$ or $11$, but whose error is $1/2$ at an actual source with low
+word $00$. Consequently these three pattern classes cannot replace the
+complete cube in Theorems 83.3 and 84.1.
+
+**Proof.** Choose $p_1$ or $p_2$ with equal probabilities under a single
+source-independent seed. A zero answer emits the corresponding mark
+$\theta_i$. A one answer emits the other mark with conditional
+probability $1/10$ and otherwise emits $\theta_0$. These choices can
+be coordinates of one product seed, or four fixed categorical intervals
+of lengths $1/20,9/20,1/20,9/20$ specifying the requested index and the
+positive-answer output. No seed is reset or conditioned away.
+Every branch makes exactly one actual request and hands off an original
+tape, and all its records are measurable finite categorical events.
+
+The complete output table, with the same column order as (86.5), is
+
+$$
+\begin{array}{c|ccc}
+b&p_b(0)&p_b(1)&p_b(2)\\\hline
+00&0&1/2&1/2\\
+01&9/20&11/20&0\\
+10&9/20&0&11/20\\
+11&9/10&1/20&1/20
+\end{array}
+\tag{88.1}
+$$
+
+At $01$ the selected target is
+$(1/4)\delta_{\theta_0}+(3/4)\delta_{\theta_1}$, and the missing
+$1/5$ at the correct mark is added at the base. Thus TV is $1/5$.
+At $10$ the same calculation with $\theta_2$ gives $1/5$.
+At every actual source with word $11$, its first absence is $n>2$;
+(83.9) gives error $\max\{1/10,a_n\}\le1/5$ for the last row.
+The last calculation covers all actual tail targets in that pattern
+class, rather than just the abstract target $\delta_{\theta_0}$.
+At $00$ the target is again $\lambda_1$, while the first row has deficits
+$1/4$ at the base and $1/4$ at $\theta_1$. The sum of these deficits
+is $1/2$, which is its TV error by (84.2).
+
+The missing pattern is actually occupied, with a small explicit label.
+The prime index $r=11$ has $F_{11}=89$ and permitted window
+$9\le g\le17$. For $x=(11,12)$,
+
+$$
+N(x)=1+89\cdot12=1069,
+\qquad 2\nmid1069,\quad3\nmid1069.
+\tag{88.2}
+$$
+
+Hence $q_1=q_2=0$ and $n(x)=1$, proving the claimed actual-source
+failure. The other words are actual too: $(7,2)$ is allowed since
+$F_7=13$ and its window is $\{2\}$, and its value $27$ has word $01$;
+$(11,9)$ has value $802$ and word $10$; $(11,13)$ has value $1158$
+and word $11$. The source labels are fixed, with static prime answers,
+zero advice and the same seed law in all four comparisons. The failure
+therefore comes from omitting a joint answer pattern, not from adding an
+unrealizable source or an observation outside the contract. $\square$
+
+## 89. Endpoints and the precise range of the finite characterization
+
+**Proposition 89.1 (Zero error and original-target boundaries).** For the
+strictly positive sequence (73.3), $\kappa_0=\infty$, although exact
+lawful acquisitions exist. At $\varepsilon=1$, and more generally whenever
+$L=0$ in (83.2), $\kappa_\varepsilon=0$. Every finite marked acquisition
+constructed in Sections 83, 86 and 87 has TV distance one from each
+unchanged original nonatomic target $\mu_x$ of Theorem 67.5, and the
+unchanged consumer returns unknown on its handed tapes.
+
+**Proof.** If an exact acquisition had a finite hard bound $k$, choose
+any actual $x\in D_{k+1}$. The exact certificate (73.7), Theorem 73.3,
+would give
+$\mathsf P_A\{K_{A,x}\ge k+1\}\ge a_{k+1}>0$, a contradiction.
+Theorem 73.2 already supplies exact lawful acquisitions with sourcewise
+finite handoff, so this is an obstruction to a uniform hard count, not to
+exact acquisition. If $L=0$, every $a_n\le\varepsilon$ and immediate
+$\theta_0$ has error $a_{n(x)}\le\varepsilon$ at each source. This
+includes $\varepsilon=1$.
+
+Every constructed finite scheme outputs only the original marked points
+in $B_1$. The countable Borel set $H=\{\theta_j:j\ge0\}$ has full
+mass under each of these output laws and zero mass under every nonatomic
+$\mu_x$. The same event argument as Theorems 76.1 and 82.1 gives TV
+one. The consumer's definition on $B_1$ gives its unknown output.
+Thus these selected-law attainers supply no cap below one for the original
+nonatomic targets and do not supply their positive-proposal row.
+$\square$
+
+**Definition 89.2 (Quantifiers, suppliers and remaining classification).**
+The criterion (84.1), equivalently (84.6), characterizes the existence of
+an original acquisition at every prescribed positive cap and finite hard
+count. The error is a uniform supremum over all actual sources. The hard
+bound is sourcewise almost sure; countability permits its common full-measure
+seed event. The finite attainers satisfy the stronger bound at every source
+and every seed. No probability distribution on $X$ is introduced.
+The full cube records low answers of actual sources; it does not restrict
+their high prime support or supply those low answers without requests.
+Finite trees encode adaptive pathwise counts and common seeded outputs,
+rather than independent marginal decisions or unrestricted leaf covers.
+
+The centers (77.4)--(77.6), address ceiling (78.1), and mean optimum
+$D$ in (79.3) retain their original statements and roles. Theorem 86.1
+and Theorem 87.1 use them as suppliers and add hard-count conclusions;
+(86.7)--(86.8) separate the three resources. Actual finite-pattern
+realization remains Boundaries, Theorem 35.2; common whole-event transport
+remains Source-Correlated Laws, Lemma 45.3; the common high-address
+probability remains (70.3)--(70.4) and (74.4). The mature finite decision-tree,
+TV and convex ingredients are credited in 83.4 and 84.4. The source-specific
+compositions and restricted count regimes are `repo-derived` deductions,
+with no literature-priority assertion.
+
+The finite characterization is exact for real amplitudes and real
+probability weights. It asserts no effective discovery of $L$, finite
+arithmetic precision for the weights, efficient optimization, transition-time
+bound, or physical-time bound. The truncation times in the necessity proof
+are mathematical comparison bounds for finite families, not a common
+stopping-time promise on the original competitor. A general analytic
+closed expression for $\kappa_\varepsilon$ at arbitrary monotone amplitudes
+remains a further classification problem; the complete finite criterion
+and the two restricted scalar regimes do not assert such an expression.
+The original nonatomic-target problem of Theorem 67.5 is unchanged.
+
+## 追加锚（本行以下为增补区）
