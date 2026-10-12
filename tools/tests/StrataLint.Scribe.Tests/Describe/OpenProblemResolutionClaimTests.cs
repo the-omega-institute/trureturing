@@ -803,7 +803,7 @@ public sealed partial class OpenProblemResolutionClaimTests
         var encoding = new UTF8Encoding(false, true);
         Write(root, OtherModuleGid + ".lean", "-- other resolution fixture\n", encoding);
         Write(root, "Golden/Frozen/state/" + OtherModuleGid + ".lean.json",
-            "{\"statement_id\":\"sha256:" + new string('e', 64) + "\"}\n", encoding);
+            "{\"statement_id\":\"sha256:" + new string('e', 64) + "\",\"declarations\":[]}\n", encoding);
     }
 
     private static void WithRepository(Action<string> assertion)
@@ -818,7 +818,7 @@ public sealed partial class OpenProblemResolutionClaimTests
             Write(
                 root,
                 "Golden/Frozen/state/" + FormalPath + ".json",
-                "{\"statement_id\":\"sha256:" + new string('d', 64) + "\"}\n",
+                "{\"statement_id\":\"sha256:" + new string('d', 64) + "\",\"declarations\":[]}\n",
                 encoding);
             Write(root, "Problems/" + ProblemSlug + ".md", Candidate(), encoding);
             Write(root, "Library/notes/sos1957threegap.md", Note(), encoding);

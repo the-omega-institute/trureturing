@@ -1,1 +1,1 @@
-{"statement_id":"sha256:265de8268675edda2ecea0899ac7cac31e81349f54466f529ce15458f88dfc05"}
+{"statement_id":"sha256:265de8268675edda2ecea0899ac7cac31e81349f54466f529ce15458f88dfc05","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),11:log_cube_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),15:log_le_six_rpow)","kind":"theorem"}]}

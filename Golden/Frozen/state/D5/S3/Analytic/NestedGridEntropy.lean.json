@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b80e099a0471da0d6a62f97c85f2bb8ffdc0949f8c5829a1202b267255fc82e6"}
+{"statement_id":"sha256:b80e099a0471da0d6a62f97c85f2bb8ffdc0949f8c5829a1202b267255fc82e6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),17:NestedGridEntropy),32:binary_refinement_entropy_budget)","kind":"theorem"}]}

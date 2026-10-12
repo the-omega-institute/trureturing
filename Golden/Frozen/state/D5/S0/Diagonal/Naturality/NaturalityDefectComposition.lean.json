@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7a06d187db1a7e8e2a3cd2fd7822fad56926e42766c4ce0dcf65935e56960dc0"}
+{"statement_id":"sha256:7a06d187db1a7e8e2a3cd2fd7822fad56926e42766c4ce0dcf65935e56960dc0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),8:Diagonal),10:Naturality),27:NaturalityDefectComposition),16:naturalityDefect)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),8:Diagonal),10:Naturality),27:NaturalityDefectComposition),25:naturality_defect_comp_le)","kind":"theorem"}]}
