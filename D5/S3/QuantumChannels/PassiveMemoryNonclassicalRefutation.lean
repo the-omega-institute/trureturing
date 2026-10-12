@@ -166,4 +166,118 @@ private theorem witnessC_formula (p q : Fin 3 × Fin 3) :
       Matrix.cons_val_one, Matrix.cons_val_two, Fin.reduceFinMk, Fin.reduceEq,
       qubitX, qubitZ]
 
+private theorem witnessC_dephasing : DephasingGram witnessC := by
+  constructor
+  · exact witnessC_gram
+  · intro i k j l
+    fin_cases i <;> fin_cases k <;> fin_cases j <;> fin_cases l <;>
+      simp [witnessC, gramFactor, Matrix.mul_apply, Fin.sum_univ_four]
+
+private theorem witness_memory_marginal (ρ : DensityState (Fin 3)) :
+    partialTraceLeft (act witnessChannel
+      (Matrix.kronecker (stateMatrix ρ) (stateMatrix tau0))) = stateMatrix tau0 := by
+  have htr : Matrix.trace (stateMatrix ρ) = 1 := DensityState.trace_eq_one ρ
+  have htr' : ∑ i : Fin 3, stateMatrix ρ i i = 1 := by
+    simpa [Matrix.trace] using htr
+  have htr'' : ∑ i : Fin 3, (ρ.1 : Mat (Fin 3)) i i = 1 := by
+    simpa [stateMatrix] using htr'
+  change partialTraceLeft
+    (MatrixMap.of_kraus (fun _ : Fin 1 => controlled) (fun _ : Fin 1 => controlled)
+      (Matrix.kronecker (stateMatrix ρ) (stateMatrix tau0))) = stateMatrix tau0
+  ext b d
+  have hcard1 : (Finset.univ : Finset (Fin 1)).card = 1 := Finset.card_fin 1
+  fin_cases b <;> fin_cases d <;>
+    simp [act, witnessChannel, MatrixMap.of_kraus,
+      LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk,
+      controlled, controls, stateMatrix, tau0,
+      Matrix.mul_apply, Matrix.conjTranspose_apply, partialTraceLeft,
+      Fintype.sum_prod_type, Fin.sum_univ_one, Fin.sum_univ_two, Fin.sum_univ_three,
+      qubitX, qubitZ, Matrix.kronecker_apply] at htr ⊢
+  all_goals norm_num [Finset.card_univ, Fintype.card_fin, Finset.card_fin]
+  · have htr''' : (ρ.1 : Mat (Fin 3)) 0 0 + (ρ.1 : Mat (Fin 3)) 1 1 +
+        (ρ.1 : Mat (Fin 3)) 2 2 = 1 := by
+      simpa only [Fin.sum_univ_three] using htr''
+    linear_combination (1 / 2 : ℂ) * htr'''
+  · have htr''' : (ρ.1 : Mat (Fin 3)) 0 0 + (ρ.1 : Mat (Fin 3)) 1 1 +
+        (ρ.1 : Mat (Fin 3)) 2 2 = 1 := by
+      simpa only [Fin.sum_univ_three] using htr''
+    linear_combination (1 / 2 : ℂ) * htr'''
+
+private theorem witness_passive : Passive tau0 witnessChannel := by
+  intro ρ σ
+  rw [witness_memory_marginal ρ, witness_memory_marginal σ]
+
+set_option maxHeartbeats 2000000 in
+private theorem controlled_tensor (A : Mat (Fin 3)) (B : Mat (Fin 2))
+    (i k : Fin 3) (a b : Fin 2) :
+    act witnessChannel (Matrix.kronecker A B) (i,a) (k,b) =
+      A i k * (controls i * B * (controls k).conjTranspose) a b := by
+  change MatrixMap.of_kraus (fun _ : Fin 1 => controlled)
+    (fun _ : Fin 1 => controlled) (Matrix.kronecker A B) (i,a) (k,b) = _
+  fin_cases i <;> fin_cases k <;> fin_cases a <;> fin_cases b <;>
+    simp [act, witnessChannel, MatrixMap.of_kraus, Matrix.kronecker_apply,
+      Matrix.mul_apply, Matrix.conjTranspose_apply, controlled, controls,
+      Fintype.sum_prod_type, Fin.sum_univ_one, Fin.sum_univ_two,
+      Fin.sum_univ_three]
+  all_goals norm_num [Finset.card_fin]
+  all_goals ring
+
+private theorem encoded_unit (j l : Fin 3) :
+    act witnessChannel
+      (Matrix.kronecker (Matrix.single j l 1) (stateMatrix tau0)) =
+    Matrix.kronecker (Matrix.single j l 1)
+      (controls j * stateMatrix tau0 * (controls l).conjTranspose) := by
+  change act witnessChannel (Matrix.kronecker (Matrix.single j l 1)
+      (stateMatrix tau0)) = _
+  ext ⟨i,a⟩ ⟨k,b⟩
+  rw [controlled_tensor]
+  by_cases hi : i = j <;> by_cases hk : k = l
+  all_goals simp_all [Matrix.kronecker_apply, Matrix.single, eq_comm]
+  all_goals aesop
+
+private theorem append_unit (j l : Fin 3) :
+    appendMemory (d := 3) tau0 (Matrix.single j l 1) =
+      Matrix.kronecker (Matrix.single j l 1) (stateMatrix tau0) := by
+  rfl
+
+set_option maxHeartbeats 2000000 in
+private theorem tensor_unit (E : MatrixMap (Fin 3) (Fin 3) ℂ)
+    (B : Mat (Fin 2)) (j l : Fin 3) :
+    MatrixMap.kron E (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ)
+      (Matrix.kronecker (Matrix.single j l 1) B) =
+      Matrix.kronecker (E (Matrix.single j l 1)) B := by
+  ext ⟨i,a⟩ ⟨k,b⟩
+  rw [MatrixMap.kron_def]
+  fin_cases i <;> fin_cases k <;> fin_cases a <;> fin_cases b <;>
+    fin_cases j <;> fin_cases l <;>
+    simp [Matrix.kronecker_apply, Matrix.single, Fin.sum_univ_three,
+      Fin.sum_univ_two]
+
+private theorem witness_choi_identity (E : KrausChannel (Fin 3)) :
+    choi 3 (implemented tau0 witnessChannel witnessChannel E) =
+      Matrix.hadamard witnessC (choi 3 (act E)) := by
+  ext ⟨i,j⟩ ⟨k,l⟩
+  dsimp only [choi, implemented]
+  simp only [LinearMap.comp_apply, LinearMap.coe_mk, AddHom.coe_mk]
+  rw [append_unit, encoded_unit, tensor_unit]
+  simp only [Matrix.hadamard_apply]
+  change (3 : ℂ)⁻¹ * (∑ a : Fin 2, act witnessChannel
+    (Matrix.kronecker (act E (Matrix.single j l 1))
+      (controls j * stateMatrix tau0 * (controls l).conjTranspose)) (i,a) (k,a)) = _
+  simp only [controlled_tensor, ← Finset.mul_sum]
+  rw [witnessC_formula]
+  change (3 : ℂ)⁻¹ * (act E (Matrix.single j l 1) i k *
+    Matrix.trace (controls i * (controls j * stateMatrix tau0 *
+      (controls l).conjTranspose) * (controls k).conjTranspose)) =
+    ((1 / 2 : ℂ) * Matrix.trace (controls i * controls j *
+      (controls l).conjTranspose * (controls k).conjTranspose)) *
+    ((3 : ℂ)⁻¹ * act E (Matrix.single j l 1) i k)
+  have ht : stateMatrix tau0 = (1 / 2 : ℂ) • (1 : Mat (Fin 2)) := by
+    ext a b
+    simp [stateMatrix, tau0, Matrix.smul_apply, smul_eq_mul]
+  rw [ht]
+  simp only [Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, Matrix.trace_smul,
+    smul_eq_mul, Matrix.mul_assoc]
+  ring
+
 end D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
