@@ -38,7 +38,8 @@ internal sealed class SupplierFiniteProductsDocument : IScribeDocumentDefinition
                         + "the factorization of X^p - X; ρ = 0 is included separately."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "CharacterAPI imports this module, and HasseDavenportLift imports CharacterAPI. "
+                "This module imports Mathlib directly. CharacterAPI imports this module, "
+                    + "and HasseDavenportLift imports CharacterAPI. "
                     + "This is a retained import dependency. Neither displayed prime-field identity "
                     + "is invoked by the selected Hasse–Davenport proof; the lifting argument uses "
                     + "general finite-field characters and monic-polynomial weights.")),

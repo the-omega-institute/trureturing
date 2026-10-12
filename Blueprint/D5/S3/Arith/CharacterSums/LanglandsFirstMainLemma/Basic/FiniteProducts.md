@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/Basic/FiniteP
 
 For a field K of characteristic p and any ρ in K, the product over j in ZMod p of 1 + cast(j)ρ equals 1 - ρ^(p - 1). The proof rescales the factorization of X^p - X; ρ = 0 is included separately.
 
-CharacterAPI imports this module, and HasseDavenportLift imports CharacterAPI. This is a retained import dependency. Neither displayed prime-field identity is invoked by the selected Hasse–Davenport proof; the lifting argument uses general finite-field characters and monic-polynomial weights.
+This module imports Mathlib directly. CharacterAPI imports this module, and HasseDavenportLift imports CharacterAPI. This is a retained import dependency. Neither displayed prime-field identity is invoked by the selected Hasse–Davenport proof; the lifting argument uses general finite-field characters and monic-polynomial weights.
 
 Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/Basic/FiniteProducts.lean; Apache-2.0. The exact license and original source hashes are in Library/Arith/epsilonfml2026hassedavenport.md. These are attributed upstream results, with no new theorem or open-problem resolution claimed.
 
@@ -38,4 +38,3 @@ Supplier escape registration remains unfinished under https://github.com/the-ome
 
 - Truth anchor: `D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/Basic/FiniteProducts.prod_one_add_primeField`
 - Truth anchor: `D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/Basic/FiniteProducts.sum_primeField`
-- Dependency: [D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/Prelude](../Prelude.md)

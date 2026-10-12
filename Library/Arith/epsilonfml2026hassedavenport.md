@@ -29,7 +29,7 @@ This source card records the attributed upstream supplier used by the finite-fie
 
 ## Exact source manifest
 
-The manifest has 14 files and 225458 total bytes. The ten non-target Lean dependencies plus the target are all retained; hashes below are the original downloaded bytes.
+The original source manifest has 14 files and 225458 total bytes. The retained proof closure has nine non-target Lean modules plus the target. The original downloaded bytes, including the omitted metadata-only Prelude, remain identified by the hashes below.
 
 | Path | Bytes | SHA-256 |
 | --- | ---: | --- |
@@ -47,6 +47,25 @@ The manifest has 14 files and 225458 total bytes. The ten non-target Lean depend
 | `LanglandsFirstMainLemma/LocalField/UnitFiltration.lean` | 27606 | `9421870db84fc04026fa9e90fbdb4c3c94385c14f78c25b9e655ed2ebc79f019` |
 | `LanglandsFirstMainLemma/LocalField/Lattices.lean` | 22972 | `ff37ebdfbdf904bbcf7d1b0fc0156abe7ca53bc14a63234f23052baf4e063e70` |
 | `LanglandsFirstMainLemma/LocalField/Valuation.lean` | 18665 | `d1d40703fde462c5e1023e8aff759ab1956b8111ce1272e8f5c994511a857522` |
+
+## Retained proof closure
+
+The ten retained modules, in import-compatible order, are:
+
+1. `Basic/FiniteProducts.lean`
+2. `LocalField/Valuation.lean`
+3. `LocalField/Lattices.lean`
+4. `LocalField/UnitFiltration.lean`
+5. `LocalField/ResidueField.lean`
+6. `FiniteField/CharacterAPI.lean`
+7. `FiniteField/PolynomialWeights.lean`
+8. `FiniteField/EulerProduct.lean`
+9. `LocalField/Extension.lean`
+10. `FiniteField/HasseDavenportLift.lean`
+
+Paths are relative to the preserved `LanglandsFirstMainLemma` namespace and port location. FiniteProducts and Valuation import Mathlib directly. The upstream `Prelude.lean` contains only `blueprintScaffoldVersion`, `plannedModuleCount`, `authoritativeManuscript`, and `PendingTask := True`; none has a proof consumer in these ten modules. These four metadata definitions and their Blueprint descriptor are omitted from the live port. The Prelude row in the original source manifest records attribution, not a retained mathematical module.
+
+Every mathematical definition, theorem statement, proof body and namespace in the ten modules is retained, including the degree-zero quotient compatibility proofs and explicit normal-subgroup instances required by the target Mathlib revision. Import and attribution normalization introduces no replacement declaration.
 
 ## Ported theorem
 

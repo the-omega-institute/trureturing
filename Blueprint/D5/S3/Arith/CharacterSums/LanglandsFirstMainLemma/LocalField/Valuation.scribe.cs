@@ -28,7 +28,8 @@ internal sealed class SupplierValuationDocument : IScribeDocumentDefinition
                         + "its nonnegative cone with Mathlib's existing valuation ring."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "Lattices uses this theorem to prove scalar closure of lattice F n and "
+                "This module imports Mathlib directly. Lattices uses this theorem to prove "
+                    + "scalar closure of lattice F n and "
                     + "mem_lattice_zero_iff. UnitFiltration also uses it for integral units. "
                     + "The import path to the lift is Valuation → Lattices → UnitFiltration → "
                     + "ResidueField → CharacterAPI → HasseDavenportLift. The local-field "
