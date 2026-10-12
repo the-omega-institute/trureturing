@@ -471,6 +471,25 @@ unsafe def main : IO Unit := do
   Lean.initSearchPath (← Lean.findSysroot)
   let fixturePath ← LeanInformationAudit.Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   Lean.searchPathRef.modify (fixturePath :: ·)
+  let probeReport ← LeanInformationAudit.Repository.source ".lake/build/stratalint/raw-lean-report.json"
+  let probeConsumer ← LeanInformationAudit.Repository.source "tools/lean-inspector/fib_analysis.py"
+  let probeOutput ← IO.Process.output {
+    cmd := "python3"
+    args := #[probeConsumer.toString, probeReport.toString, "--target",
+      "D5.S0.Diagonal.PigeonholeFiber.finite_reading_has_fiber", "--target",
+      "D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution"] }
+  unless probeOutput.exitCode == 0 do
+    throw <| IO.userError s!"R3_QUALIFICATION_CONSUMER_FAILED {probeOutput.stderr}"
+  IO.println s!"R3_QUALIFICATION_FIB {probeOutput.stdout.trimAscii.toString}"
+  for relative in [
+      ".lake/build/stratalint/raw-lean-report.json",
+      ".lake/build/stratalint/raw-lean-report.json.materials.zip",
+      ".lake/build/stratalint/raw-lean-report.json.provenance.json",
+      ".lake/build/lean-inspector/modules/Reg.D5.S0.Diagonal.PigeonholeFiber.zip",
+      ".lake/build/lean-inspector/modules/Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.zip"] do
+    let artifact ← LeanInformationAudit.Repository.source relative
+    let identity := LeanInformationAudit.Sha256.hex (← IO.FS.readBinFile artifact)
+    IO.println s!"R3_QUALIFICATION_ARTIFACT {relative} sha256:{identity}"
   LeanInformationAuditRegTests.CompiledDiscovery.checkTargetRelease
   LeanInformationAuditRegTests.CompiledDiscovery.checkTargetIndexIsolation
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport

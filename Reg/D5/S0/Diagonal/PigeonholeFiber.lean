@@ -38,7 +38,7 @@ abbrev source : Source (@finite_reading_has_fiber.{u}) where
   rebuild := fullLaw
   reconstruction := .exact
   selection := {
-    owner := `D5.S0.Diagonal.PigeonholeFiber
+    owner := `D5.S0.Diagonal.PigeonholeFiber.R3WrongOwner
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
