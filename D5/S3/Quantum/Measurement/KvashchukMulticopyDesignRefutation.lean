@@ -130,7 +130,8 @@ private theorem piSym23 : PiSym 2 3 = P8 := by
       h01, h02, h12, hb, Ne.symm h01, Ne.symm h02, Ne.symm h12, Ne.symm hb]
 
 private theorem trace_P8 : trace P8 = 4 := by
-  norm_num [trace, P8, weight, Fin.sum_univ_succ]
+  change ∑ i, P8 i i = 4
+  norm_num [P8, weight, Fin.sum_univ_succ]
 
 
 private def octVec : Fin 6 → Fin 2 → ℂ :=
@@ -150,7 +151,8 @@ private theorem octMat_psd (i : Fin 6) : (octMat i).PosSemidef :=
 private theorem octMat_trace (i : Fin 6) : trace (octMat i) = 1 := by
   dsimp only [octMat]
   rw [trace_smul, trace_vecMulVec]
-  fin_cases i <;> norm_num [octVec, octScale, dotProduct, Fin.sum_univ_succ,
+  change octScale i • (∑ j, octVec i j * star (octVec i j)) = 1
+  fin_cases i <;> norm_num [octVec, octScale, Fin.sum_univ_succ,
     Pi.star_apply, Complex.real_smul]
 
 private def octStates (i : Fin 6) : DensityState (Fin 2) :=
@@ -187,5 +189,61 @@ private theorem octDesign : IsWeightedDesign 3 octStates (fun _ => 1/6) := by
 
 private theorem nprime_le_six : Nprime 2 3 ≤ 6 :=
   Nat.sInf_le (show DesignExists 2 3 6 from ⟨octStates, fun _ => 1/6, octDesign⟩)
+
+
+private def pt (A : Matrix (Fin 8) (Fin 8) ℂ) : Matrix (Fin 8) (Fin 8) ℂ :=
+  let e : Fin 4 × Fin 2 ≃ Fin 8 := finProdFinEquiv
+  (partialTranspose (A.submatrix e e)).submatrix e.symm e.symm
+
+private def Q : Matrix (Fin 8) (Fin 8) ℂ := pt ((1/4 : ℂ) • P8)
+
+private def minorIndices : Fin 6 → Fin 8 := ![0,1,2,3,6,7]
+
+private theorem minor_table : Q.submatrix minorIndices minorIndices =
+    (!![1/4,0,0,1/12,0,0; 0,1/12,0,0,0,0; 0,0,1/12,0,0,1/12;
+        1/12,0,0,1/12,0,0; 0,0,0,0,1/12,0; 0,0,1/12,0,0,1/4] :
+      Matrix (Fin 6) (Fin 6) ℂ) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Q, pt, partialTranspose, finProdFinEquiv, minorIndices, P8, weight]
+
+private theorem minor_det : (Q.submatrix minorIndices minorIndices).det = 1/746496 := by
+  let π : Fin 6 ≃ Fin 6 := Equiv.ofBijective ![0,2,1,3,5,4] (by decide)
+  let e : Fin 2 × Fin 3 ≃ Fin 6 := finProdFinEquiv.trans π
+  let blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
+    ![!![1/4,1/12;1/12,1/12], !![1/12,1/12;1/12,1/4], !![1/12,0;0,1/12]]
+  have h01 : (0 : Fin 3) ≠ 1 := by decide
+  have h02 : (0 : Fin 3) ≠ 2 := by decide
+  have h12 : (1 : Fin 3) ≠ 2 := by decide
+  have hb : (Q.submatrix minorIndices minorIndices).submatrix e e = blockDiagonal blocks := by
+    rw [minor_table]
+    ext x y
+    rcases x with ⟨a,b⟩
+    rcases y with ⟨c,d⟩
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      norm_num [e, π, blocks, blockDiagonal_apply, finProdFinEquiv,
+        Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_four,
+        h01, h02, h12, Ne.symm h01, Ne.symm h02, Ne.symm h12]
+    all_goals rfl
+  rw [← det_submatrix_equiv_self e, hb, det_blockDiagonal]
+  norm_num [blocks, Fin.prod_univ_succ, det_fin_two, Matrix.cons_val_two]
+
+private theorem rank_Q : Q.rank = 6 := by
+  have hl := rank_submatrix_le Q minorIndices minorIndices
+  have hm : (Q.submatrix minorIndices minorIndices).rank = 6 :=
+    rank_of_det_ne_zero (by rw [minor_det]; norm_num)
+  let collapse : Fin 8 → Fin 6 := ![0,1,2,3,2,3,4,5]
+  let B : Matrix (Fin 8) (Fin 6) ℂ := fun i j => if (collapse i : ℕ) = (j : ℕ) then 1 else 0
+  have hf : Q = B * Q.submatrix minorIndices id := by
+    ext i j
+    rw [Matrix.mul_apply]
+    fin_cases i <;> fin_cases j <;>
+      norm_num [B, collapse, Matrix.mul_apply, Fin.sum_univ_succ, Q, pt,
+        partialTranspose, finProdFinEquiv, minorIndices, P8, weight]
+  have hu := (rank_mul_le_left B (Q.submatrix minorIndices id)).trans (rank_le_card_width B)
+  rw [← hf] at hu
+  rw [hm] at hl
+  simpa only [Fintype.card_fin] using le_antisymm hu hl
+
 
 end D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
