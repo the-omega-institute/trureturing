@@ -66,8 +66,10 @@ def claim : Prop :=
     (∀ t : ℕ, 1 ≤ t → d lam t = 1 / 4 + lam / 2) ∧
     Tendsto (fun t : ℕ => d lam t) atTop (𝓝 (1 / 4 + lam / 2))
 
+/-- Indicator of a zero followed by a one at distance two. -/
 private def A (x z : Bool) : ℝ := (1 - bit x) * bit z
 
+/-- The probability of the two specified endpoints, summing over the middle spin. -/
 private def q (lam : ℝ) (t : ℕ) : ℝ :=
   ∑ c : Bool, P lam t 3 (Fin.cons false (Fin.cons c (Fin.cons true Fin.elim0)))
 
@@ -80,7 +82,8 @@ private theorem P_succ (lam : ℝ) (t n : ℕ) (b : Fin n → Bool) :
 private theorem p_affine (lam : ℝ) (x y z : Bool) :
     p lam x y z = lam + (1 - 2 * lam) * A x z := by
   cases x <;> cases z
-  all_goals simp [p, rule10, rule245, bit, A]
+  all_goals dsimp only [p, rule10, rule245, bit, A]
+  all_goals simp
   all_goals ring
 
 private theorem w_sum (lam : ℝ) (x y z : Bool) :
@@ -92,8 +95,10 @@ private theorem w_sum (lam : ℝ) (x y z : Bool) :
 private theorem w_nonneg (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1)
     (b x y z : Bool) : 0 ≤ w lam b x y z := by
   obtain ⟨h0, h1⟩ := hlam
-  cases b <;> cases x <;> cases z <;>
-    simp [w, p, rule10, rule245, bit] <;> linarith
+  cases b <;> cases x <;> cases z
+  all_goals dsimp only [w, p, rule10, rule245, bit]
+  all_goals simp
+  all_goals linarith
 
 private theorem sum_cons (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
     (∑ a, F a) = ∑ c : Bool, ∑ b : Fin n → Bool, F (Fin.cons c b) := by
@@ -105,6 +110,7 @@ private theorem sum_snoc (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
   rw [← (Fin.snocEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp F]
   exact Fintype.sum_prod_type _
 
+/-- Conditional probability of an output block given its entire parent block. -/
 private def K (lam : ℝ) (n : ℕ) (b : Fin n → Bool) (a : Fin (n + 2) → Bool) : ℝ :=
   ∏ j : Fin n, w lam (b j) (a j.castSucc.castSucc)
     (a j.succ.castSucc) (a j.succ.succ)
@@ -216,8 +222,8 @@ private theorem q_sum (lam : ℝ) (t : ℕ) :
   rw [sum_cons 2]
   simp_rw [sum_cons 1, sum_cons 0]
   have h2 : (2 : Fin 3) = (0 : Fin 1).succ.succ := rfl
-  simp only [q, Fintype.sum_unique, Fintype.sum_bool, A, bit, h2,
-    Fin.cons_zero, Fin.cons_succ]
+  dsimp only [q, A, bit]
+  simp only [Fintype.sum_unique, Fintype.sum_bool, h2, Fin.cons_zero, Fin.cons_succ]
   norm_num
   congr 5
 
@@ -278,7 +284,9 @@ private theorem q_update (lam : ℝ) (t : ℕ) :
   rfl
 
 private theorem A_overlap_zero (x y z : Bool) : A x y * A y z = 0 := by
-  cases y <;> simp [A, bit]
+  cases y
+  all_goals dsimp only [A, bit]
+  all_goals simp
 
 private theorem p_pair (lam : ℝ) (x y z u v : Bool) :
     (1 - p lam x y z) * p lam z u v = lam * (1 - lam) +
@@ -291,6 +299,7 @@ private theorem p_pair (lam : ℝ) (x y z u v : Bool) :
       ring
     _ = _ := by rw [A_overlap_zero, mul_zero, sub_zero]
 
+/-- Overlap closes the moment recursion without independence of the time-t spins. -/
 private theorem q_succ (lam : ℝ) (t : ℕ) :
     q lam (t + 1) = lam * (1 - lam) + (1 - 2 * lam) ^ 2 * q lam t := by
   calc
