@@ -62,7 +62,7 @@ theorem trace_addresses (U : Source) (u : Address) :
       List.append_nil]
 
 
-private theorem nodes_nodup (U : Source) : (nodes U).Nodup := by
+theorem nodes_nodup (U : Source) : (nodes U).Nodup := by
   induction U with
   | of b => simp [nodes]
   | mul s t ihs iht =>
