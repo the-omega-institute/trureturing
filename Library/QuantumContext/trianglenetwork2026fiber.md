@@ -1,11 +1,16 @@
 ---
 bibkey: trianglenetwork2026fiber
-title: "Triangle-network source independence and fiber geometry"
-authors:
-  - trureturing contributors
+authors: trureturing contributors
 year: 2026
-type: theory-interface
-status: working-note
+title: "Triangle-network source independence and fiber geometry"
+doi: null
+claim: "A concrete event-to-FIB readout and its compatibility theorem remain open."
+strata_touched:
+  - D5/S3/Quantum/Entanglement/TriangleSymmetricLocalRefutation
+  - D5/S3/Quantum/Entanglement/TriangleInequalityL1Refutation
+  - D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction
+license: citation-only
+triage: anchor
 ---
 
 # Triangle-network source independence and fiber geometry
