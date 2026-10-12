@@ -34,6 +34,12 @@ of Akbary, Friggstad and Juricevic; the finite range uses Briggs and Robin's
 interpolation between colossally abundant numbers. These published analytic
 and computational inputs have not been re-executed or formalized here.
 
+## Verified locator
+
+- URL: https://arxiv.org/pdf/1612.05186v2
+- Version and location: author version v2, Lemmas 1–3, pp. 2–4; published as
+  *Integers* 18 (2018), A71, https://math.colgate.edu/~integers/s71/s71.pdf
+
 ## Joint use of the local factors
 
 Choose a finite set $P$ of primes that actually divide $n>5040$ and upper

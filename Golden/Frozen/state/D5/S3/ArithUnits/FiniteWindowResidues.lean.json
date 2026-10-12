@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b9d34a2d499c8f1f32408f9de1f2d8275860c4e02b3d43f952f23c309760c27c"}
+{"statement_id":"sha256:b9d34a2d499c8f1f32408f9de1f2d8275860c4e02b3d43f952f23c309760c27c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:ArithUnits),20:FiniteWindowResidues),33:finite_window_residues_realizable)","kind":"theorem"}]}

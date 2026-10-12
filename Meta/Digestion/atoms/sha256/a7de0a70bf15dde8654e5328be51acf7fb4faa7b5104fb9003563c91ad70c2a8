@@ -1,0 +1,61 @@
+## 14.4. Exact costs and the five passing inequalities
+
+Write \(x_n=H^nu\) and \(y_n=H^ng\).  The positive parts in (14.4) are
+exactly exhausted by \(0\le n\le11\).  More explicitly,
+\[
+\begin{aligned}
+ E_{p,12}=\sum_i\pi_i\sum_{n=0}^{11}\big[ &(x_{n,i}-rt_r^n)_+\\
+ &+\begin{cases}((1-r)^2t_r^n-y_{n,i})_+,&n<3,\\
+ (y_{n,i}-(1-r)^2t_r^n)_+,&n\ge3,
+ \end{cases}\big],
+\end{aligned}
+\tag{14.16}
+\]
+\[
+\begin{aligned}
+ E_{\beta,12}=\sum_i\pi_i\bigg[(v_i-r)_+ +\sum_{n=0}^{11}\big[ &(v_ix_{n,i}-r^2t_r^n)_+\\
+ &+\begin{cases}(r(1-r)^2-y_{0,i}v_i)_+,&n=0,\\
+ (v_iy_{n,i}-r(1-r)^2t_r^n)_+,&n\ge1
+ \end{cases}\big]\bigg].
+\end{aligned}
+\tag{14.17}
+\]
+For each of the four pair-coordinate families, the exact rational comparison at
+\(n=10,11\) puts the coordinate-to-target ratio below \(99/100\).  Increasing
+n by two multiplies the ratio by \(\eta/t_r^2<1\).  Thus no complementary
+positive part occurs after n=11.  The fixed label has the corresponding native
+signs, and its rate \(\lambda_a<t_r\) preserves them.  Equations (14.16)--
+(14.17) are therefore the complete costs, including all tails:
+\[
+ \mathcal E_p=
+ \frac{643087291979262596633580067568261899483610983055994806187133240733035867}
+ {57741108294575000000000000000000000000000000000000000000000000000000000000}
+ <\frac{149501569}{4096000000},
+\tag{14.18}
+\]
+\[
+ \mathcal E_\beta=
+ \frac{2327930565007271205997910717674300465068401622538466558333161}
+ {577411082945750000000000000000000000000000000000000000000000000}
+ <\frac{1759}{64000}.
+\tag{14.19}
+\]
+Using the actual event mass in (14.5), the two interior risks are
+\[
+ F_p(r)=P-\frac{132025}{262144}+\mathcal E_p<\rho_p,
+ \qquad
+ F_\beta(r)=M_\beta-\frac{395}{512}+\mathcal E_\beta<\rho_\beta.
+\tag{14.20}
+\]
+Each strict inequality is a rational positive-denominator comparison.  The
+full-box identity of REV, §4, gives the endpoint values
+\[
+ F_p(a)=\rho_p+(M_p-P),\qquad
+ F_p(b)=\rho_p-(M_p-P),\qquad
+ F_\beta(a)=F_\beta(b)=\rho_\beta.                 
+\tag{14.21}
+\]
+Thus the p-a inequality fails, while p-b, both suspended endpoint inequalities,
+and both interior inequalities pass.  The p midpoint is explicitly absent; the
+cost bounds do not repair it.
+

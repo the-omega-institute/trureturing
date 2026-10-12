@@ -1,1 +1,1 @@
-{"statement_id":"sha256:da5f1674d016b1ebb03d937180ac6ba228ff11fa9412a306daabd07e23647393"}
+{"statement_id":"sha256:da5f1674d016b1ebb03d937180ac6ba228ff11fa9412a306daabd07e23647393","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),15:GoldenPartition),26:fibonacci_golden_partition)","kind":"theorem"}]}

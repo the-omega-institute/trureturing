@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79fdb7ca3be7abf5cc41dc1d8e9e1bc1b8305ebc72d91b8f7619b97d63a4c7a5
+  normalized_sha256: sha256:79fdb7ca3be7abf5cc41dc1d8e9e1bc1b8305ebc72d91b8f7619b97d63a4c7a5
+cas_ref: sha256:79fdb7ca3be7abf5cc41dc1d8e9e1bc1b8305ebc72d91b8f7619b97d63a4c7a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'All propositional clauses of FDS3 are supplied by pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d: for k,a,b : Nat with k >= 3, Nat.dvd_gcd_mul_gcd_iff_dvd_mul and Nat.fib_gcd reduce fib k | fib a * fib b to fib k | fib(gcd k a) * fib(gcd k b). If neither index is divisible by k, Nat.eq_of_dvd_of_lt_two_mul and gcd_dvd_left/right bound both positive gcds by k/2. Nat.fib_add, Nat.fib_pos, Nat.fib_le_fib_succ and Nat.fib_mono give fib(k/2)^2 < fib k (k=3 by normalization); Nat.mul_le_mul and Nat.le_of_dvd contradict this bound. The reverse direction is Nat.fib_dvd with dvd_mul_of_dvd_left/right. No coprimality or positive-index assumption is added. No existing project GID supplies this complete relation. The original probe R819.fib_two_factor_nonmixing was rebuilt through make lean on the current pinned toolchain; exit 0, axiom closure propext/Classical.choice/Quot.sound. This is upstream reuse under CLAUDE.md 3.2, not a new Lean theorem and not a claim that the source is nonpropositional.'
+    previous_atom_id: 487c460b2ecc7aeaafcab31713c4794577568da2ad2eebf13aaf386a768b1fb2
+    next_atom_id: 25d9e98145aaf347a2b4e880b7d545da83e6c7df58c28b27936ef42b5110d099

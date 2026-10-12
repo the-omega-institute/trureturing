@@ -1,1 +1,1 @@
-{"statement_id":"sha256:cd59dd6fb6e2763298cbd1db60096afef9f9b057068de2d6d20bdf4af0779dfa"}
+{"statement_id":"sha256:cd59dd6fb6e2763298cbd1db60096afef9f9b057068de2d6d20bdf4af0779dfa","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:History),23:EmptyLedgerConservation),16:LedgerDiscipline)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:History),23:EmptyLedgerConservation),41:empty_ledger_excludes_detectable_residual)","kind":"theorem"}]}

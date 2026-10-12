@@ -1,0 +1,12 @@
+**Corollary 35.4 (A matched observation with an arbitrarily larger prime support).** For every finite $S\subset\mathbb P$, every $n_0\in W$ and every integer $H\ge1$, there exists $n_1\in W$ with
+
+$$
+d_S(n_1)=d_S(n_0),\qquad
+\omega(n_1)-\omega(n_0)\ge H.
+\tag{35.12}
+$$
+
+Moreover, $n_1$ can be chosen in every sufficiently large prime-index window, with $n_0$ fixed.
+
+**Proof.** Put $b=d_S(n_0)$ and $K=\rho_S(n_0)+H\ge1$. Theorem 35.2 gives, for every prime $r\ge R(S,K)$, an $n_1\in W_r$ with these same bits and $\rho_S(n_1)\ge\rho_S(n_0)+H$. Subtract (35.11) for the two integers: the observed contribution cancels, giving (35.12). The same conclusion for a real $H\ge1$ follows by applying the integer case to $\lceil H\rceil$. This is a comparison across the family of windows; it does not place a low-$\omega$ companion in the same window as $n_1$.
+

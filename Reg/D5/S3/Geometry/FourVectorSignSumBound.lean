@@ -67,72 +67,6 @@ def evidence : Registration arena
     fun i => nomatch i⟩
   dependence := dependence
 
-/-- The source space and both dictionaries are retained, including trivial spaces. -/
-structure Space where
-  Carrier : Type u
-  normed : NormedAddCommGroup Carrier
-  inner : @InnerProductSpace ℝ Carrier _ normed.toSeminormedAddCommGroup
-
-abbrev signedSignature : Signature where
-  Params := Space.{u}
-  State p := Fin 4 → p.Carrier
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def signedActual : Realization signedSignature.{u} :=
-  realize signedSignature (fun _ p x =>
-    letI := p.normed
-    letI := p.inner
-    maxNorm x) (fun e => nomatch e)
-def signedRejected : Realization signedSignature.{u} :=
-  realize signedSignature (fun _ _ _ => -1) (fun e => nomatch e)
-@[reducible] def signedArena : Arena where
-  signature := signedSignature.{u}
-  Law R := ∀ {E : Type u} [n : NormedAddCommGroup E] [h : InnerProductSpace ℝ E]
-    (x : Fin 4 → E) (ε : Fin 4 → Bool), ‖signedSum x ε‖ ≤ R.readout () ⟨E,n,h⟩ x
-
-theorem signedPositive : signedArena.{u}.Law signedActual := @signedSum_le_max
-
-theorem signedNegative : ¬ signedArena.{u}.Law signedRejected := by
-  intro h
-  have hh := h (E := EuclideanSpace ℝ (ULift.{u} Unit)) (fun _ => 0) (fun _ => true)
-  norm_num [signedRejected, realize, signedSum] at hh
-
-theorem signedDependence : ObservationalDependence signedSignature.{u} signedActual := by
-  intro i
-  let E := EuclideanSpace ℝ (ULift.{u} Unit)
-  let v : E := WithLp.toLp 2 (fun _ => (1 : ℝ))
-  let p : Space.{u} := ⟨E, inferInstance, inferInstance⟩
-  refine ⟨p, (fun _ => 0), (fun _ => v), ?_⟩
-  have hz : maxNorm (fun _ : Fin 4 => (0 : E)) = 0 := by simp [maxNorm, signedSum]
-  have hp := signedSum_le_max (fun _ : Fin 4 => v) (fun _ => true)
-  intro he
-  have hm : maxNorm (fun _ : Fin 4 => v) = 0 := by
-    simpa [signedActual, realize, p, hz] using he.symm
-  rw [hm] at hp
-  have hn := norm_eq_zero.mp (le_antisymm hp (norm_nonneg _))
-  have hc := congrArg (fun a : E => a ⟨()⟩) hn
-  simp only [signedSum, sgn, ite_true, one_smul, Finset.sum_const,
-    Finset.card_univ, Fintype.card_fin, PiLp.zero_apply] at hc
-  change ((4 : ℕ) • v) ⟨()⟩ = 0 at hc
-  rw [← Nat.cast_smul_eq_nsmul ℝ 4 v] at hc
-  change (4 : ℝ) * 1 = 0 at hc
-  norm_num at hc
-
-def signedEvidence : Registration signedArena.{u}
-    (type_of% (@_root_.D5.S3.Geometry.FourVectorSignSumBound.signedSum_le_max.{u})) where
-  actual := signedActual
-  bridge := Iff.rfl
-  variation := ⟨signedPositive, signedRejected, signedNegative⟩
-  sensitivity := ⟨fun i => ⟨signedRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, signedNegative⟩,
-    fun i => nomatch i⟩
-  dependence := signedDependence
-
 abbrev orderSignature : Signature where
   Params := Unit
   State _ := ℝ
@@ -215,9 +149,33 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 #print axioms registration
 
+/-- The comparison observation retains the complete source law, including trivial spaces. -/
+@[reducible] def signedArena : Arena where
+  signature := orderSignature
+  Law R := ∀ {E : Type u} [n : NormedAddCommGroup E] [h : InnerProductSpace ℝ E]
+    (x : Fin 4 → E) (ε : Fin 4 → Bool),
+    R.readout () () (‖signedSum x ε‖) (maxNorm x)
+
+theorem signedPositive : signedArena.{u}.Law orderActual := @signedSum_le_max.{u}
+
+theorem signedNegative : ¬ signedArena.{u}.Law orderRejected := by
+  intro h
+  exact h (E := EuclideanSpace ℝ (ULift.{u} Unit)) (fun _ => 0) (fun _ => true)
+
+/-- Dependence concerns the comparison function on real states, not each source space. -/
+def signedEvidence : Registration signedArena.{u}
+    (type_of% (@_root_.D5.S3.Geometry.FourVectorSignSumBound.signedSum_le_max.{u})) where
+  actual := orderActual
+  bridge := Iff.rfl
+  variation := ⟨signedPositive, orderRejected, signedNegative⟩
+  sensitivity := ⟨fun i => ⟨orderRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, signedNegative⟩,
+    fun i => nomatch i⟩
+  dependence := orderDependence
+
 noncomputable def signedRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.FourVectorSignSumBound.signedSum_le_max.{u})
-    (type_of% (realize signedSignature.{u} (fun _ p x => letI := p.normed; letI := p.inner; maxNorm x) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize orderSignature (fun _ _ a b => a ≤ b) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Geometry.FourVectorSignSumBound.signedSum_le_max
     "Reg.D5.S3.Geometry.FourVectorSignSumBound/Reg.D5.S3.Geometry.FourVectorSignSumBound.signedArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Geometry.FourVectorSignSumBound.signedEvidence,
@@ -230,16 +188,16 @@ noncomputable def signedRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,
   realization := .source signedArena.{u} ⟨signedEvidence.{u}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signedSignature.{u} (fun _ p x => letI := p.normed; letI := p.inner; maxNorm x) (fun e => nomatch e)),
+  readout := some (realize orderSignature (fun _ _ a b => a ≤ b) (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Geometry.FourVectorSignSumBound, definition := none,
-    coordinates := #[0, 1, 2], readouts := #[{
-      path := #["body", "body", "body", "body", "body", "arg"],
-      stateBinder := 3, functionOperand := false, stateOperand := none,
+    coordinates := #[], readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0, functionOperand := true, stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,

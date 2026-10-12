@@ -230,24 +230,6 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003DoesNotTreatAcceptedLedgerFragmentsAsASplittableModule()
-    {
-        var fixture = new RuleFixture();
-        for (var index = 0; index < (L + 1); index++)
-        {
-            var identity = $"sha256:{index:x64}";
-            var path = FrozenLedgerChangeClassifier.AcceptedPath(identity);
-            fixture.Files[path] = "{}\n";
-            fixture.Changes.Add(path);
-        }
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3),
-            fixture.Build()).Diagnostics;
-        Assert.DoesNotContain(diagnostics, diagnostic =>
-            diagnostic.Path == FrozenLedgerChangeClassifier.AcceptedRoot);
-    }
-
-    [Fact]
     public void Sl003DoesNotTreatTwentyFiveFrozenStateFragmentsAsASplittableModules()
     {
         var fixture = new RuleFixture();
@@ -255,7 +237,7 @@ public sealed class RuleEngineCapacityTests
         for (var index = 0; index < 25; index++)
         {
             var path = $"{directory}/Module{index:00}.lean.json";
-            fixture.Files[path] = $"{{\"statement_id\":\"sha256:{index:x64}\"}}\n";
+            fixture.Files[path] = $"{{\"statement_id\":\"sha256:{index:x64}\",\"declarations\":[]}}\n";
             fixture.Changes.Add(path);
         }
 

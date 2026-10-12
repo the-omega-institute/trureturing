@@ -404,7 +404,7 @@ def finalSelector {m : ℕ} {Y : Type u} (start : ℕ) (words : List (Fin m → 
     | some B => .inr B
     | none => .inl (decode (archive.drop start))
 
-private theorem script_length {k m : ℕ} (words : List (Fin m → Bool))
+theorem script_length {k m : ℕ} (words : List (Fin m → Bool))
     (q : Option (LiveRecord k)) : (scriptArchive words q).length = words.length := by
   induction words generalizing q with
   | nil => rfl

@@ -1,0 +1,33 @@
+**定理 2.2（五边转移的静态／动态短正合列）。** 令 $\mathbf c=(1,1,1,1,0)\in\mathbb R^E$。在实向量空间上有
+
+$$
+\ker B=\mathbb R\mathbf c,\qquad
+\ker(AB)=\{(a,b,a,b,0):a,b\in\mathbb R\},
+$$
+
+及短正合列
+
+$$
+0\longrightarrow\mathbb R\mathbf c
+\xrightarrow{\ \iota\ }\ker(AB)
+\xrightarrow{\ B\ }\mathbb R\mathbf d\longrightarrow0,
+$$
+
+其中 $\iota$ 是包含映射。因此 $\dim\ker(AB)=2$，状态层和边层两个一维核位于不同空间。
+
+证明。用 $f=(a,b,c,d,e)$ 表示边链的坐标，则
+
+$$
+Bf=(-a+d-e,a-b,e,c-d,b-c),\qquad
+AB=\begin{pmatrix}1&0&-1&0&0\\0&0&0&0&1\\0&1&0&-1&0\end{pmatrix},
+\qquad ABf=(a-c,e,b-d).
+$$
+
+方程 $Bf=0$ 强制 $e=0$ 及 $a=b=c=d$，反向代入也成立。方程 $ABf=0$ 则恰为 $c=a,d=b,e=0$，而
+
+$$
+B(a,b,a,b,0)=(b-a)\mathbf d.
+$$
+
+任意 $t\mathbf d$ 有原像 $(0,t,0,t,0)$，故限制映射满射；其核由 $a=b$ 给出，正好为 $\mathbb R\mathbf c$。这证明每一处正合性。该机制是将线性同构定理用于 $B|_{\ker(AB)}$：一般像为 $\ker A\cap\operatorname{im}B$，此处正好等于 $\mathbb R\mathbf d$。所用一般工具见 Axler，[《Linear Algebra Done Right》第四版 §3E，3.105–3.107](https://linear.axler.net/LADR4e.pdf)；这里计算的是指定五边矩阵与指定观察 $A$ 的对应。∎
+

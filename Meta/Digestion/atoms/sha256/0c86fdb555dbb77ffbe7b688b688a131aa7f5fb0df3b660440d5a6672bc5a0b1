@@ -1,0 +1,7 @@
+**定义 27.5（支持序、细化序与划分动作）。** 支持按集合包含排序；
+划分按细化排序，即较细 $\le$ 较粗。取
+$J(\pi)=\pi\vee(12\mid3)$，其中 $\vee$ 是划分格中的最小共同粗化，
+并令 $\widehat J=f^{-1}\circ J\circ f$。所用格、交与并的定义见
+[Stanley，Example 3.10.4，p.318，Figure 3.20](../../../Library/ConceptDynamics/stanley2011enumerative.md)。
+这里的 $J$ 是另行选择的划分动作；其能否作为单次切换，须按假设 27.3 检查。
+

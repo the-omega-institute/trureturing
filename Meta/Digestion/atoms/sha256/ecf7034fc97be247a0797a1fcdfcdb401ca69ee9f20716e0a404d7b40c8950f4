@@ -1,0 +1,123 @@
+**Definition 16.1 (complete residual graphs and the two different domains).**
+Retain the original source and COMPLETE observer convention of Section 2 and
+[PAIRED, Section 2 and Section 11.1](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md).
+The installed prior $\mu$ is fixed, finite or countable, with
+$\mu(1),\mu(2)>0$. One $K$ is sampled before all paid Reads, and
+$r_k=F_{k+1}/F_{k+3}$. Both seeds, every paid rejection and partial parse,
+every finite return, the full records, permissions, third write before its
+latch, fourth completion and matching Stop remain in the history domain.
+Initialization is source-independent; acquired and synthetic letter updates
+are the same. Configuration losses take TV before averaging.
+
+Put $a=1/3$, $b=2/5$, $\lambda=4/15$ and retain the complete carriers
+$\Omega_p,\Omega_\beta$ of Definition 2.2, including $\infty_p,\infty_\beta$.
+Use exactly PAIRED's normalized descriptor spaces
+
+$$
+\begin{aligned}
+T_p(j)&=\{w_{n,c}:n\ge j,\ c=0,1\}\cup\{\infty_p\},\\
+T_\beta(j)&=\{\alpha w_{n,c}:n\ge j,\ c=0,1\}\cup\{\infty_\beta\},\\
+\mathcal K_p&=\{Q\in\mathcal P(\Omega_p):
+ a\le Q(\alpha)\le b,\ Q(T_p(j))\le\lambda^j\ (j\ge0)\},\\
+\mathcal K_\beta&=\{W\in\mathcal P(\Omega_\beta):
+ a\le1-W(\beta)\le b,\ W(T_\beta(j))\le b\lambda^j\ (j\ge0)\}.
+\end{aligned}
+\tag{16.1}
+$$
+
+These spaces carry complete-law TV. Write $u(Q)=Q(\alpha)$,
+$v(W)=1-W(\beta)$ and
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{1-u(Q)},\qquad
+\mathcal R_A(W)(E)=\frac{W(\alpha E)}{v(W)}.
+\tag{16.2}
+$$
+
+Prefixing includes the infinite outcomes and, under the full-record renderer,
+exactly the next original operation block. The denominators are at least
+$3/5$ and $1/3$. Residuals are full probability laws; for an arbitrary input
+they need not lie in the opposite descriptor space.
+
+Let $\mathfrak C$ be exactly PAIRED Definition 11.2: Borel probability flows
+$\Gamma_B$ on $\mathcal K_p\times\mathcal K_\beta$ and $\Gamma_A$ on the
+reversed product, with
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta,
+\tag{16.3}
+$$
+
+and, for every bounded Borel input test $\phi,\chi$ and every complete atom
+$\eta\in\Omega_\beta$, $\omega\in\Omega_p$,
+
+$$
+\begin{aligned}
+\int\phi(Q)[\mathcal R_B(Q)(\eta)-W(\eta)]\,d\Gamma_B&=0,\\
+\int\chi(W)[\mathcal R_A(W)(\omega)-Q(\omega)]\,d\Gamma_A&=0.
+\end{aligned}
+\tag{16.4}
+$$
+
+The Borel-test formulation is equivalent to PAIRED's continuous-test
+formulation by the signed-measure argument following that definition.
+Both marginals are unweighted acquired marginals. Define
+
+$$
+\begin{aligned}
+d_B&=\int\operatorname{TV}(W,\mathcal R_B(Q))\,d\Gamma_B(Q,W),\\
+d_A&=\int\operatorname{TV}(Q,\mathcal R_A(W))\,d\Gamma_A(W,Q),\\
+\mathfrak C_{\rm det}&=\{(\Gamma_B,\Gamma_A)\in\mathfrak C:d_A=d_B=0\}.
+\end{aligned}
+\tag{16.5}
+$$
+
+This is determinism of successor complete laws. It allows random transitions
+among private labels with identical successor laws, and imposes no finite
+support, reversibility, common rate, equality of directional flows or zero
+return variation. In particular it is not a fixed-size table class.
+
+The complete endpoint-box condition means, simultaneously for every atom,
+
+$$
+\begin{aligned}
+P_{p,a}(\omega)\wedge P_{p,b}(\omega)
+ &\le Q(\omega)\le P_{p,a}(\omega)\vee P_{p,b}(\omega)
+ &&(\nu_p\text{-a.s.}),\\
+P_{\beta,a}(\eta)\wedge P_{\beta,b}(\eta)
+ &\le W(\eta)\le P_{\beta,a}(\eta)\vee P_{\beta,b}(\eta)
+ &&(\nu_\beta\text{-a.s.}).
+\end{aligned}
+\tag{16.6}
+$$
+
+This is an additional hypothesis for Theorem 16.2, not part of (16.5).
+Use $E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$ and
+$E_\beta=\{\beta,\alpha w_{0,1}\}$, the events called $C_p,C_\beta$ in
+(4.4). With the constants of (15.2), rename its intercept $C$ as $\zeta$:
+
+$$
+\kappa=\frac{1116529}{806625},\qquad
+\zeta=-\frac{151298}{268875},\qquad
+D=\int Q(E_p)\,d\nu_p-\kappa\int W(E_\beta)\,d\nu_\beta-\zeta.
+\tag{16.7}
+$$
+
+Keep the original supported-target objective, without a box restriction:
+
+$$
+\begin{aligned}
+\mathcal J&=\max\left\{
+ \sup_{k:\mu(k)>0}\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p-\rho_p,
+ \sup_{k:\mu(k)>0}\int\operatorname{TV}(W,P_{\beta,r_k})\,d\nu_\beta-\rho_\beta
+ \right\},\\
+\rho_p&=\frac{1116529}{22781250},\qquad \rho_\beta=\frac{239}{6750},
+\qquad j_{\rm det}=\inf_{\mathfrak C_{\rm det}}\mathcal J.
+\end{aligned}
+\tag{16.8}
+$$
+
+Thus $j_{\rm det}$ ranges over all of $\mathfrak C_{\rm det}$, including
+points outside (16.6). Corollary 16.3 proves that this infimum is a minimum.
+

@@ -4,6 +4,8 @@
 
 Dictionaries for actual xi zeros and standard Mathlib RiemannHypothesis; no assertion of RH.
 
+Application to HyperbolicUpperHalfSpace: at the height-one base point (0,1), horizontal translation by Re(rho)-1/2 has displacement 2*arsinh(abs(Re(rho)-1/2)/2). The existing fixed-point criterion and metric separation make zero displacement equivalent to Re(rho)=1/2. CriticalCenterCoordinate gives Re(rho)-1/2=-Im(centralCoord(rho)). Combining these substitutions with the nontrivial-zero dictionary below rewrites RH as vanishing of all such displacements. This supplies a coordinate interpretation; it supplies no estimate forcing the displacements to vanish and no curvature or spectral theorem.
+
 **Theorem 1.1 (A001: the nontrivial-zero dictionary).**
 
 $$\mathit{RiemannHypothesis} \Leftrightarrow \left(\forall rho \in \mathbb{C},\; \operatorname{IsNontrivialZero}\left(\mathit{rho}\right) \Rightarrow \operatorname{Re}\left(\mathit{rho}\right) = \frac{1}{2}\right)$$

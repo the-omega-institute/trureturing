@@ -4064,3 +4064,209 @@ N≥1 的完整共同记录条件，在此指定支撑与单位对角下，恰�
 [C28-L3]: https://arxiv.org/abs/2111.12759v1
 
 ## 追加锚（本行以下为增补区）
+
+## 29. 同一五模式的全输入保真、方形记录与稳定子块
+
+**假设 C-29.1（标签、全律量词与另供的比较）。** 沿用 C-1.2、C-2.1–C-2.3 的同一单窗来源，写
+
+$$
+\begin{array}{c|ccccc}
+s&O&L&T&R&J\\\hline
+\text{原标签}&0&1&2&3&13\\
+v(s)=(x(s),y(s),z(s))&(0,0,0)&(1,0,0)&(0,0,1)&(0,1,0)&(1,1,0)
+\end{array}
+$$
+
+其中 $xz=yz=0$。经典更新是从这个五元素集到它自身的一个固定列随机矩阵 $P$；全输入保持指对每个概率律 $p$ 同时有 $\mathbb E_{Pp}f=\mathbb E_pf$，$f=x,y,z$。它比指定两个律有相同均值多一个对更新及全部输入的量词。具体地，既有纤维的
+
+$$
+p_+=(\delta_O+\delta_J)/2,\qquad p_-=(\delta_L+\delta_R)/2
+$$
+
+均有 $(X,Y,Z)=(1/2,1/2,0)$，而 $\kappa=\mathbb E[xy]$ 分别为 $1/2,0$。这就是 C-2.2 的底面方向；完整五律反解复用 [LocalChoice §3](FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md)，全律随机核的期望条件复用 C-28.11.5。
+
+量子部分另供 $\mathcal H_\Sigma=\mathbb C^5$、正交标签基、$\widehat f=\sum_s f(s)|s\rangle\langle s|$ 及同域 CPTP 通道 $\mathcal N$。全输入保持在此指对每个密度态 $\rho$ 有 $\operatorname{tr}(\widehat f\mathcal N(\rho))=\operatorname{tr}(\widehat f\rho)$。三个占位算子彼此交换。另供的合法翻转比较图为
+
+$$
+E=\{OL,LJ,JR,RO,OT\}.
+$$
+
+只有明确供给共同相位参照、成对输入 $|+_{st}\rangle=(|s\rangle+|t\rangle)/\sqrt2$ 和读出 $X_{st}=|s\rangle\langle t|+|t\rangle\langle s|$ 时，才允许下面的相干检查。图的邻接本身不供给这些仪器；[LocalChoice 定义 9.3](FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md) 的来源探针与实际守卫亦按它自己的校准和菜单使用。
+
+本章保持相同五个输入、输出标签。泄漏、拒绝、额外终止标签或环境再接入须另立联合合同，不能隐去后继续套用同域结论。共同记录内积共轭线性于第一槽，使用 SecondOrder 定义 109.1 的通道约定 $\Gamma_{st}=\langle e_t|e_s\rangle$；故 $\Gamma=\overline{G_{\mathrm{rec}}}$，区别见 C-27.1.2。环境记录是数学实现，不是已授予的可读端口。
+
+**定理 C-29.2（全输入三占位保持的两种分类与锐经典误差）。** 在 C-29.1 的同域合同下，经典全输入保持当且仅当 $P=I_5$。若改为对每个确定输入 $s$、每个 $f=x,y,z$ 满足
+
+$$
+\left|\sum_tP_{ts}f(t)-f(s)\right|\le\varepsilon,
+\qquad\varepsilon\ge0,
+$$
+
+则
+
+$$
+\sup_p\operatorname{TV}(Pp,p)\le\min\{1,3\varepsilon\}.
+\tag{29.1}
+$$
+
+对每个 $\varepsilon\ge0$ 这个上界均可达到。量子全输入保持当且仅当存在一个相关矩阵 $\Gamma\succeq0$、$\Gamma_{ss}=1$，使
+
+$$
+\mathcal N(\rho)=\mathcal N_\Gamma(\rho)=\Gamma\circ\rho.
+\tag{29.2}
+$$
+
+因此它保持全部五个标签概率及 $\kappa$，但不强制恒等量子通道。
+
+**证明。** 确定输入 $s$ 的每个坐标是零或一，故
+
+$$
+\begin{aligned}
+1-P_{ss}
+&\le\sum_tP_{ts}\|v(t)-v(s)\|_1\\
+&=\sum_{f\in\{x,y,z\}}\left|\sum_tP_{ts}f(t)-f(s)\right|
+\le3\varepsilon.
+\end{aligned}
+$$
+
+第一步用不同标签至少有一个坐标不同，第二步用每个坐标差的符号由 $s$ 固定。由 $\operatorname{TV}(P\delta_s,\delta_s)=1-P_{ss}$、凸性及距离至多一得 (29.1)。取 $a=\min\{\varepsilon,1/3\}$，让 $O$ 分别以概率 $a$ 送到 $L,T,R$，以概率 $1-3a$ 留在 $O$，其余列固定。三个坐标误差均为 $a$，输入 $O$ 的距离为 $3a$。这同时说明 $3\varepsilon$ 构造的合法范围和截顶后一的锐性。令 $\varepsilon=0$ 得所有列固定；恒等更新的反向保持直接成立。
+
+对量子确定输入 $|s\rangle\langle s|$，输出对角线是概率律，其极端零一均值只能支撑在 $s$。正半定矩阵满足 $|\rho_{ij}|^2\le\rho_{ii}\rho_{jj}$，故其他行列也全零，输出恰为 $|s\rangle\langle s|$。写有限 Kraus 分解 $\mathcal N(\rho)=\sum_\mu A_\mu\rho A_\mu^\dagger$。对任何 $u\perp|s\rangle$，
+
+$$
+0=\sum_\mu|\langle u|A_\mu|s\rangle|^2,
+$$
+
+所以每个 $A_\mu|s\rangle=a_{\mu,s}|s\rangle$；所有 Kraus 算子对角。因此 (29.2) 中 $\Gamma_{st}=\sum_\mu a_{\mu,s}\overline{a_{\mu,t}}$，正性和单位对角由此得到。反向直接消费 [SecondOrder 定理 109.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#109-联合记录的正性与最小环境秩) 的 Schur CPTP 判据；其固定对角线即保持三占位。共同纯记录实现及最小环境维数 $\operatorname{rank}\Gamma$ 也由该定理供应，不另设通道实现定理。
+
+量子差异可在同一五标签内看见：取 $\Gamma=I_5$ 及 $|\Omega\rangle=\sum_s|s\rangle/\sqrt5$。输出是 $I_5/5$，与输入纯态的差具有特征值 $4/5,-1/5,-1/5,-1/5,-1/5$，迹距离为 $4/5$，而全部占位概率不变。这是 SecondOrder 命题 109.3 在本五态任务的直接消费。
+
+已知一个固定纤维时，所有列相同且等于该纤维内固定律的重置核，可以保持该纤维的均值；它不保持全部纤维。非线性最大熵补全也不自动成为一个作用于未知单样本的固定随机核。量子部分并未把占位算子当作 Pauli 方向：在真正的二级接口中，全态保持两条互补 Pauli 期望已由 [SecondOrder 定理 75.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#75-两个锐观测的共同-cptp-保持刚性) 强制整个通道恒等；这里的三个交换占位没有该前提。证毕。
+
+**定理 C-29.3（四边校准树的完整通道证书）。** 已知 C-29.2 的精确 Schur 分类成立，并使用 C-29.1 另供的成对检查。精确报告 $\operatorname{Re}\Gamma_{st}=1$ 在一个连通比较图的所有边上成立，当且仅当 $\mathcal N_\Gamma=\mathrm{id}$。在这种逐对边检查合同中，五标签至少需要四条边，树
+
+$$
+E_{\mathrm{tree}}=\{OL,LJ,OR,OT\}
+\tag{29.3}
+$$
+
+即已足够，根 $O$ 的最大深度为二。更一般地，若一棵根深度为 $D$ 的五标签生成树在同一校准中满足 $\operatorname{Re}\Gamma_{st}\ge1-\varepsilon$，$\varepsilon\ge0$，则对每个未触及的有限维参考 $A$，
+
+$$
+\sup_{\rho_{\Sigma A}}\frac12
+\| (\mathcal N_\Gamma\otimes\mathrm{id}_A)(\rho_{\Sigma A})-\rho_{\Sigma A}\|_1
+\le\min\{1,D\sqrt{2\varepsilon}\}.
+\tag{29.4}
+$$
+
+本图给 $\min\{1,2\sqrt{2\varepsilon}\}$。只测模长一的连通边则只保证一个对角酉通道；使它成为已校准恒等目标仍须已知且可执行的补偿。
+
+**证明。** 指定输入与读出的期望为 $\operatorname{Re}\Gamma_{st}$。共同单位记录给
+
+$$
+\|e_s-e_t\|^2=2-2\operatorname{Re}\Gamma_{st}.
+$$
+
+精确等于一时，两记录相同，连通性把这个等式传到全部标签，故 $\Gamma_{st}=1$ 对所有标签对成立。少于四条边不连通；给每个连通分量一个互相正交的记录，分量内的全部检查都通过而跨分量相干被消去。此下界仅属于声明的逐对检查，不约束另供的集合式仪器。若只给 $|\Gamma_{st}|=1$，Cauchy–Schwarz 的等号只给记录共线；路径传播得到 $e_s=e^{i\phi_s}e_O$ 和 $\mathcal N_\Gamma=\operatorname{Ad}_U$，$U=\operatorname{diag}(e^{i\phi_s})$。
+
+近似时，每条树边的记录距离至多 $\sqrt{2\varepsilon}$；沿根路径三角求和，得 $\max_s\|e_s-e_O\|\le D\sqrt{2\varepsilon}$。在同一环境中置
+
+$$
+V|s\rangle=|s\rangle e_s,\qquad W|s\rangle=|s\rangle e_O.
+$$
+
+系统标签正交给 $\|V-W\|=\max_s\|e_s-e_O\|$。对任意与参考关联的单位输入，两个输出向量之差范数不超过这个算子范数；单位向量 $a,b$ 的纯态迹距离满足 $\sqrt{1-|\langle a,b\rangle|^2}\le\|a-b\|$。取环境迹的收缩、密度态的凸分解和距离至多一给 (29.4)。这里用的是固定共同等距的直接估计，其一般连续性背景为 [Kretschmann–Schlingemann–Werner](../../../Library/Quantum/kretschmann2008continuity.md) 定理 1；没有对未知膨胀取最优值的步骤。
+
+本证明要求已知精确 Schur 家族和同一相位校准。仅有近似占位保持，或分别给每条边选一个相位参照，均不满足这些前提。长链局部误差也必须与深度一起读：下述文献注中的半圆记录有邻边误差 $1-\cos(\pi/m)$，路径深度随 $m$ 增长，不能从邻边趋近一推出整体误差趋零。证毕。
+
+**定理 C-29.4（原生方形的相位所迫恢复障碍）。** 在 C-29.1–C-29.2 的共同记录模型中，设 $OL,LJ,JR,RO$ 的四个重叠非零，并令
+
+$$
+B_\square=\Gamma_{OL}\Gamma_{LJ}\Gamma_{JR}\Gamma_{RO},\quad
+\Theta=|\operatorname{Arg}B_\square|\in[0,\pi],\quad
+v=(|\Gamma_{OL}|,|\Gamma_{LJ}|,|\Gamma_{JR}|,|\Gamma_{RO}|).
+$$
+
+恢复 $\mathcal R$ 仅为输出系统上的固定确定 CPTP 映射，无输入副本、环境、错误档案或旁路，定义 $\epsilon(\mathcal R)=\sup_\rho\frac12\|\mathcal R\mathcal N_\Gamma(\rho)-\rho\|_1$。则
+
+$$
+\min_i v_i\le\frac14\sum_i v_i
+\le\eta_4(\Theta)=\frac1{\cos(\Theta/4)+\sin(\Theta/4)},
+\qquad
+\epsilon(\mathcal R)\ge\frac{1-\eta_4(\Theta)}2.
+\tag{29.5}
+$$
+
+因而在 $\Theta=\pi$ 时，每个这种恢复都满足 $\epsilon(\mathcal R)\ge(1-1/\sqrt2)/2$。这是由四条边保证的必要下界，不是五维恢复任务的最优误差公式。
+
+**证明。** 消费 [Pratapsi–Gouveia–Novo–Galvão v3](../../../Library/QuantumBounds/pratapsi2025bargmann.md) 定理 1、定理 5 式 (20)–(27) 的共同记录多边形界。其 $\Delta=\prod_i\langle e_i|e_{i+1}\rangle$ 与本章同向 $B$ 共轭，但绝对主辐角相同。该平均界为
+
+$$
+\frac1m\sum_i v_i\le
+\eta_m(\Theta)=\frac{\cos(\pi/m)}{\cos((\pi-\Theta)/m)},\qquad m\ge3;
+$$
+
+取 $m=4$ 给 (29.5) 的可见度式。具体的相位均分、循环平均正 Gram 及正多边形支持线，是该文已经给出的算术平均构造，不只从乘积界反推平均界。等模记录可达到该平均界；一般多边形的范围、低秩实现和 $m=3,4,5,6$ 的数值见所引注记，均只作为这里的供应步骤。
+
+对任意不同 $s,t$，取正交输入 $|\pm_{st}\rangle=(|s\rangle\pm|t\rangle)/\sqrt2$。输入迹距离为一，Schur 输出差限制在两维块中有特征值 $\pm|\Gamma_{st}|$，距离为 $|\Gamma_{st}|$。复用 [SecondOrder 定理 113.2 的收缩及三角不等式步骤](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#113-无错误档案时的最优恢复误差)，得到
+
+$$
+1\le2\epsilon(\mathcal R)+|\Gamma_{st}|,
+\qquad
+\epsilon(\mathcal R)\ge\frac{1-|\Gamma_{st}|}{2}.
+\tag{29.6}
+$$
+
+取可见度最小的方形边即得结论；没有沿用该二级各向同性模型的可达上界。
+
+方形积与 $\kappa$ 各属不同类型：前者来自共同复记录，后者来自经典占位概率。它也不等于任意指定门 $U,V$ 的动力学回路相位。数学上重标相使 $\Gamma_{st}\mapsto e^{i(\alpha_s-\alpha_t)}\Gamma_{st}$，环积不变；若要改变实际通道，需相应的实际对角校准操作。图 $E$ 有五条边、五个顶点且连通，四个独立顶点相位留下一个环相位，悬挂边 $OT$ 不另成环；这直接应用 C-27.5.2。若某方形边为零，$B_\square$ 的辐角不定义，但 (29.6) 仍给下界 $1/2$。本图不是五环，文献中的五记录多边形需要另供的比较合同。
+
+边数也不能替代远距检查：所引 Pratapsi 注记中 $e_j=(\cos(j\pi/m),\sin(j\pi/m))$ 的偶数 $m$ 实例，邻边模长趋一而 $e_0\perp e_{m/2}$；在那个另供的 $m$ 标签系统应用 (29.6)，恢复误差仍至少 $1/2$。这是变化标签数的对照，非固定五标签中的极限。证毕。
+
+**定理 C-29.5（同一方形中的部分持久性及校准块）。** 每轮另用新准备、与输入及此前环境独立的纯记录环境，约化通道固定为 C-29.2 的 $\mathcal N_\Gamma$。在五个标签上定义 $s\sim t\iff|\Gamma_{st}|=1$，等价类记 $C_a$，投影记 $P_a$。由模长一的矩阵单位张成的可逆关系代数为
+
+$$
+\mathcal A_{\mathrm{rev}}=\bigoplus_a\mathcal B(P_a\mathcal H_\Sigma)
+\cong\bigoplus_aM_{|C_a|}(\mathbb C).
+\tag{29.7}
+$$
+
+各类可选 $e_s=e^{i\phi_s}e_{C_a}$。若这个校准已知且相应 $U=\operatorname{diag}(e^{i\phi_s})$ 可实际执行，则
+
+$$
+\mathcal N_\Gamma^n(\rho)=\Gamma^{\circ n}\circ\rho,
+\qquad
+U^{-n}\mathcal N_\Gamma^n(\rho)U^n
+\longrightarrow\sum_aP_a\rho P_a.
+\tag{29.8}
+$$
+
+特别取本方形同一组记录
+
+$$
+e_O=(1,0),\quad e_L=(1,1)/\sqrt2,\quad e_J=(0,1),\quad
+ e_R=(-1,1)/\sqrt2,\quad e_T=e_O.
+\tag{29.9}
+$$
+
+则 $B_\square=-1/4$，四条边的模长均为 $1/\sqrt2$，达到 (29.5) 的可见度界；类为 $\{O,T\},\{L\},\{J\},\{R\}$，实际稳定代数是 $M_2(\mathbb C)\oplus\mathbb C^3$。它精确保留 $\{O,T\}$ 块的全部相干，却对每个确定系统恢复有 $\epsilon(\mathcal R)\ge1/2$。两次独立新环境后方形相位为零，仍没有恢复失去的类间信息。
+
+**证明。** 单位记录的 Cauchy–Schwarz 等号给“模长一当且仅当共线”，因此 $\sim$ 是等价关系。对本 Schur 通道，既保迹又 unital。调用 [Johnston–Kribs v1 定理 3](../../../Library/QuantumChannels/johnston2010generalized.md) 的乘法域平方等号判据：对矩阵 $A$，正缺陷 $\mathcal N_\Gamma(A^\dagger A)-\mathcal N_\Gamma(A)^\dagger\mathcal N_\Gamma(A)$ 的迹为
+
+$$
+\sum_{s,t}(1-|\Gamma_{st}|^2)|A_{st}|^2.
+$$
+
+另一个平方缺陷同样如此。迹为零的正矩阵为零，故乘法域恰是只在同一类内有条目的矩阵，即 (29.7)。这一步消费经典 unital 通道判据，不把文献的一般纠错定理当作重复通道的极限定理。在此代数上 $\mathcal N_\Gamma(A)=UAU^\dagger$，已供的逆校准使它精确可逆。
+
+新环境的独立性使各次约化映射可复合，逐元即第一式。类内 $\Gamma_{st}=e^{i(\phi_s-\phi_t)}$，校准后因子恒为一；类间模长严格小于一，幂趋零。只有有限个条目，所以逐元极限给任一矩阵范数的极限，证明 (29.8)。未经补偿的通道未必收敛：模长一但非一的因子可以一直旋转。原始固定点只允许 $\Gamma_{st}=1$ 的条目，其块可能比模长一的可逆类更小。
+
+在 (29.9) 中直接取内积，$OL,LJ,JR,RO$ 的因子依次为 $1/\sqrt2,1/\sqrt2,1/\sqrt2,-1/\sqrt2$。所有记录张成二维，共同 Gram 实现由 SecondOrder 定理 109.2 保证。唯一非平凡共线类是 $\{O,T\}$，其中相位本就一致，故该例可取 $U=I$，(29.8) 是原始通道的极限。与此同时 $e_O\perp e_J$、$e_L\perp e_R$；取其中任意一对用 (29.6) 得 $1/2$，说明达到边可见度极值并不达到边所给的弱恢复下界。
+
+平方通道的四条方形边均变为 $1/2$，所以环积变为 $1/16$，相位从 $\pi$ 变为零而幅度继续缩小。正交对仍为零，全部标签概率及 $\kappa$ 仍固定，$\{O,T\}$ 块仍无损。故这一模型同时满足全占位保持、有稳定二级块及不可恢复类间相干，三个结论互不抵消。
+
+对一般输入，必须保留类权重 $w_a=\operatorname{tr}(P_a\rho)$，$\sum_aw_a=1$；只有 $w_a>0$ 才定义 $\rho_a=P_a\rho P_a/w_a$。零质量类没有条件态。大小为二的类的条件态有三个 Bloch 坐标，大小三和五的类分别有八和二十四个实无迹 Hermitian 坐标；这些坐标还受正性约束，且不包含类权重。二级块的正质量归一化及零质量跨块消失直接复用 [SecondOrder 命题 76.3](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#76-五模式中的局部-qubit质量与跨块相干)。本例三条局部 Pauli 作用于 $\operatorname{span}\{|O\rangle,|T\rangle\}$，没有把全局三个交换占位变成互补 Pauli，也没有由原生标签自动得到制备或读出权限。
+
+最后，(29.8) 要求每轮新环境。若旧环境返回，则应调用 [SecondOrder 命题 110.4](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#110-相干历史块递归与可复用环境) 的同环境双 CNOT 比较及其共同联合载体，而不能使用通道平方。一次抽样并保留参数 $\lambda$、条件于它作无记忆调用的过程，仍是 [LocalClock 假设 25](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md) 的另一份合同；本式不把其 $\int\lambda^n\,d\nu$ 换成独立重采样的 $c_1^n$。空标签在本章只是五个实际标签之一，其持久性由具体记录关系决定。上述是给定有限载体和操作的普通数学结论，不赋予物理空间方向、场、引力或统一无界执行资源。证毕。
+
+## 追加锚（本行以下为增补区）

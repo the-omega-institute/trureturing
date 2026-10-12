@@ -1,1 +1,1 @@
-{"statement_id":"sha256:26a4460b02ea46358b4b0d030ac8b90d55683d299d3892f14b2aebc43e099931"}
+{"statement_id":"sha256:26a4460b02ea46358b4b0d030ac8b90d55683d299d3892f14b2aebc43e099931","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),14:CayleyLaguerre),32:ChebyshevSignedDistanceSeparator),55:first_chebyshev_slack_separates_signed_squared_distance)","kind":"theorem"}]}

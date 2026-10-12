@@ -68,7 +68,7 @@ private theorem charge_support {Y : Type u} (k m : ℕ) (hk : 3 ≤ k)
           ring
       · rfl
 
-private theorem charge_separates {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
+theorem charge_separates {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
     (π : NarrowWindowCost.Selector m Y) (b : ℕ) :
     ∀ (z : ZMod 2) (p q : ZMod (k + 1)) (s : ℕ), s < k →
     ∀ (free : Option (ZMod 2)) (archive : NarrowWindowCost.Archive m)
@@ -119,7 +119,7 @@ private theorem charge_separates {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
         have same := ex.symm.trans ey
         exact (Prod.mk.inj (Option.some.inj same)).1
 
-private theorem native_fiber {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
+theorem native_fiber {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
     (alphabet : Bool) (f : Option (LiveRecord k) → Y) (v : ZMod 2) (d : ℕ)
     (π : NarrowWindowCost.Selector m Y)
     (correct : ∀ history : List (AllowedBlock k m alphabet),
@@ -158,7 +158,7 @@ def phaseCharges {Y : Type u} {m : ℕ} (table : ZMod (2 * m - 2 + 1) → Y)
   classical
   exact if ∃ y, ∀ j, table j = y then 0 else ownCharge π d 0 (-j) 0 (some 0) [] t
 
-private theorem root_zero {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
+theorem root_zero {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (hm : 1 ≤ m)
     (table : ZMod (k + 1) → Y) (π : NarrowWindowCost.Selector m Y) (d : ℕ)
     (native : ∀ j s, s < k → ∃ c,
       NativeExecute π d (some ⟨0, -j, s⟩) (some 0) [] = some (table j, c))
@@ -268,4 +268,5 @@ theorem original_adaptive_charge_array {Y : Type u}
           simpa only [phaseCharges, if_neg constant] using codes t ht)
 
 #print axioms original_adaptive_charge_array
+#print axioms charge_separates
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OwnPathCharges

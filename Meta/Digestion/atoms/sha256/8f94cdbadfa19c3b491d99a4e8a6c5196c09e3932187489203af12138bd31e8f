@@ -1,0 +1,10 @@
+# Chapter 14. Periodic full-box characterization and a rational failed bridge
+
+This chapter fixes the complete stopped carriers, the endpoint coordinates, and
+all conventions of Chapters 1--13.  It gives an exact result for one periodic
+reversible subclass and one rational table in that subclass.  Every law below
+is a complete law, so the infinite outcomes of the carriers are retained.
+The statements concern ordinary probability and finite arithmetic.  They do not
+assert a conclusion for a different update kernel, a different prior, or the
+unrestricted common-model problem.
+

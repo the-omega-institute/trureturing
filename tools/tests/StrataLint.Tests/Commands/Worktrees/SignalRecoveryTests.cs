@@ -9,7 +9,56 @@ namespace StrataLint.Tests;
 public sealed partial class WorktreeCommandTests
 {
     [Fact]
-    public void HalfBuiltWorktreeIsRecoveredBeforeRetryingSameName()
+    public void NativeInitializerRetainsScopeAfterCliParentIsKilled()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "--initializer", typeof(StrataLint.Cli.Program).Assembly.Location],
+            root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void InitializationUsesCanonicalRepositoryDespiteAmbientGitOverrides()
+    {
+        using var repository = new TemporaryDirectory();
+        using var foreign = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        InitializeRepository(foreign.Path);
+        var target = Path.Combine(repository.Path, "canonical-environment");
+        var variables = new Dictionary<string, string>
+        {
+            ["GIT_DIR"] = Path.Combine(foreign.Path, ".git"),
+            ["GIT_WORK_TREE"] = foreign.Path,
+            ["GIT_INDEX_FILE"] = Path.Combine(foreign.Path, ".git", "index"),
+            ["GIT_NAMESPACE"] = "redirected",
+        };
+        var previous = variables.Keys.ToDictionary(name => name, Environment.GetEnvironmentVariable);
+        CommandResult result;
+        try
+        {
+            foreach (var (name, value) in variables) Environment.SetEnvironmentVariable(name, value);
+            result = WorktreeCommand.Run(repository.Path,
+                ["--kind", "governance", "--name", "canonical-environment", "--path", target,
+                    "--base", "HEAD", "--source", repository.Path, "--skip-restore"]);
+        }
+        finally
+        {
+            foreach (var (name, value) in previous) Environment.SetEnvironmentVariable(name, value);
+        }
+        Assert.True(result.Success, result.Error);
+        AssertRegisteredAndUsable(repository.Path, target, "lane/governance/canonical-environment");
+        Assert.DoesNotContain("canonical-environment", TestGit.Run(foreign.Path, "worktree", "list"), StringComparison.Ordinal);
+        Assert.Equal(string.Empty, TestGit.Run(foreign.Path, "status", "--porcelain"));
+    }
+
+    [Fact]
+    public void HalfBuiltWorktreeIsPreservedForAlternateContinuation()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -34,9 +83,10 @@ public sealed partial class WorktreeCommandTests
                 "--skip-restore",
             ]);
 
-        Assert.True(result.Success, result.Error);
-        WorktreeFixtureFile.AssertContent(Path.Combine(target, "README.md"), "# worktree fixture\n");
-        AssertRegisteredAndUsable(repository.Path, target, branch);
+        Assert.False(result.Success);
+        Assert.Contains("repository_identity", result.Error, StringComparison.Ordinal);
+        WorktreeFixtureFile.AssertContent(Path.Combine(target, "README.md"), "partial checkout\n");
+        Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
     }
 
     [Fact]
@@ -65,8 +115,8 @@ public sealed partial class WorktreeCommandTests
 
         Assert.False(result.Success);
         Assert.Contains("not registered", result.Error, StringComparison.OrdinalIgnoreCase);
-        Assert.False(Directory.Exists(target));
-        Assert.Equal(1, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
+        Assert.True(Directory.Exists(target));
+        Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
     }
 
     [Fact]
@@ -107,26 +157,24 @@ public sealed partial class WorktreeCommandTests
 
         Assert.False(result.Success);
         Assert.Contains("not a git repository", result.Error, StringComparison.OrdinalIgnoreCase);
-        Assert.False(Directory.Exists(target));
+        Assert.True(Directory.Exists(target));
         Assert.NotNull(ownedMetadata);
         Assert.NotEqual(otherMetadata, ownedMetadata);
-        Assert.False(Directory.Exists(ownedMetadata));
+        Assert.True(Directory.Exists(ownedMetadata));
         using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
-        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("cleanup_error").ValueKind);
+        Assert.Contains("retained", receipt.RootElement.GetProperty("cleanup_error").GetString(), StringComparison.Ordinal);
         var inventory = WorktreeHookFixture.RunGit(repository.Path, "worktree", "list", "--porcelain");
-        Assert.DoesNotContain($"worktree {LeanCacheGuard.PhysicalPath(target)}\n", inventory, StringComparison.Ordinal);
-        Assert.DoesNotContain($"branch refs/heads/{branch}\n", inventory, StringComparison.Ordinal);
-        Assert.Equal(1, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
+        Assert.Contains($"worktree {LeanCacheGuard.PhysicalPath(target)}\n", inventory, StringComparison.Ordinal);
+        Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
         WorktreeFixtureFile.AssertContent(Path.Combine(otherMetadata, "locked"), "keep\n");
         WorktreeFixtureFile.AssertContent(Path.Combine(other, "README.md"), "# worktree fixture\n");
         Assert.True(Directory.Exists(staleMetadata));
 
         var retry = WorktreeCommand.Run(repository.Path,
             ["--kind", "math", "--name", "unusable-postcondition", "--path", target, "--base", "HEAD", "--skip-restore"]);
+        Assert.False(retry.Success);
+        Assert.True(Directory.Exists(ownedMetadata));
 
-        Assert.True(retry.Success, retry.Error);
-        AssertRegisteredAndUsable(repository.Path, target, branch);
-        Assert.False(File.Exists(Path.Combine(GitWorktreeDirectory.Read(target)!, "locked")));
     }
 
     [Fact]
@@ -176,7 +224,7 @@ public sealed partial class WorktreeCommandTests
             ]);
 
         Assert.False(result.Success);
-        Assert.Contains("path already exists", result.Error, StringComparison.Ordinal);
+        Assert.Contains("repository_identity", result.Error, StringComparison.Ordinal);
         WorktreeFixtureFile.AssertContent(marker, "keep\n");
     }
 

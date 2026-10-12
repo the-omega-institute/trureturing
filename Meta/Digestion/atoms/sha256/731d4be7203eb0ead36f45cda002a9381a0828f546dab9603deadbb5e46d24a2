@@ -1,0 +1,17 @@
+**Proof (literal middle-image construction).** Assume $M\le H<N$, so $M=H$ and $N=H+1$. For each $v$, choose an injection
+
+$$
+\eta_v:\lambda_v[J]\hookrightarrow\mathbb F_2^{d-1}.
+\tag{34.13}
+$$
+
+Use the parity-donor supports (34.10) with $\eta_v$ in place of $\gamma_v$, at the even indices $0,2,\ldots,2d-4$. Use the two already legal exterior flags from (33.12)–(33.15):
+
+$$
+E_1=A,qquad E_{2d-3}=B,
+$$
+
+where $A\cup B=O$, both supports are even, $A\subseteq W_1$ and $B\subseteq W_{2d-3}$. All other odd supports are empty. The same ordered-path inverse realizes every support as a literal block. The first flag has leading run one, the root has at most $m-1$ terminal ones, and their seam is below $k$; every later coding block starts with zero, and the last flag starts with zero. Hence the complete $2d-2$-block prefix is safe on every actual source and inherited tail.
+
+On an interior phase both flags vanish, and the even differences recover $\eta_v(\lambda_v(j))$. On an exterior phase one of the two flag differences is one, so their OR is one; the decoder returns $a_v$. This construction is selected after reading $v$ and uses no hidden phase or unexecuted branch. It proves $C_{\rm ad}\le2d-2$, completing (34.4). Theorem 33.2 supplies (34.5).
+
