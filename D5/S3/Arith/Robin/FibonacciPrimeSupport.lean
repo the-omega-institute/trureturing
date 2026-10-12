@@ -37,7 +37,7 @@ private theorem sigma_mul_le (n : ℕ) (hn : n ≠ 0) :
   exact hle
 
 /-- `σ(n)/n ≤ ∏ p/(p-1)` over the prime factors of `n`. -/
-private theorem ratio_le_prod (n : ℕ) (hn : n ≠ 0) :
+theorem ratio_le_prod (n : ℕ) (hn : n ≠ 0) :
     (ArithmeticFunction.sigma 1 n : ℝ) / n ≤
       ∏ p ∈ n.primeFactors, (p : ℝ) / ((p : ℝ) - 1) := by
   have hpos : ∀ p ∈ n.primeFactors, (0 : ℝ) < (p : ℝ) - 1 := fun p hp => by
