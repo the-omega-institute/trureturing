@@ -226,7 +226,8 @@ private theorem native_group_zero_count_bridge {M q s : ℕ} (S : Support M q)
 
 private theorem sigmoid_log_odds {p : ℝ} (hp : 0 < p) (hp1 : p < 1) :
     Real.sigmoid (Real.log (p / (1 - p))) = p := by
-  rw [sigmoid_log (div_pos hp (sub_pos.mpr hp1))]
+  rw [D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_log
+    (div_pos hp (sub_pos.mpr hp1))]
   field_simp [ne_of_gt (sub_pos.mpr hp1)]
   <;> ring
 
@@ -281,7 +282,8 @@ private theorem native_group_zero_posterior_approximation :
     have hlog : score q r e o i - Real.log B0 + Real.log t =
         z0 - Real.log B0 + Real.log t := by
       simp only [score, hi0.1, hi0.2, z0]
-    have hlip := sigmoid_lipschitz_certificate.dist_le_mul
+    have hlip :=
+      D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_lipschitz_certificate.dist_le_mul
       (Real.log (inclusion q r e o i / (1 - inclusion q r e o i)))
       (z0 - Real.log B0 + Real.log t)
     rw [Real.dist_eq, Real.dist_eq, sigmoid_log_odds ho.1 ho.2.1] at hlip
