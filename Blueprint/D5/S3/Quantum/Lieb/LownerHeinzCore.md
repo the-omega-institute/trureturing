@@ -18,7 +18,7 @@ $$\forall u: \operatorname{Level}(), A: \operatorname{Type}(u),\ [\operatorname{
 
 The source-owning power_Icc_one_two_operatorConvexOn_Ici is the exact Physlib endpoint at original line 1785. Its convexOn_nnrpow_Ioo_one_add supplier is at line 1427. The consumed slice preserves arbitrary ordered C-star algebras, Nontrivial and NonnegSpectrumClass, the entire positive cone including singular inputs, both exponent endpoints and noncommuting products. The shifted-inverse input calls pinned Mathlib convexOn_ringInverse_algebraMap_add; its CFC rewrite is the only compatibility adapter. The positivity helper calls the existing IsSelfAdjoint.conjugate_nonneg API.
 
-PowerConvexity consumes this theorem to preserve the general ConvexOn interface, including the trivial algebra, and the uniform Jensen condition. No new general power proof or originality is claimed. Native escape audit remains unfinished under issue #5214; no declared_validated status is claimed. Canonical admission is a controller operation.
+PowerConvexity consumes this theorem to preserve the general ConvexOn interface, including the trivial algebra, and the uniform Jensen condition. No new general power proof or originality is claimed.
 
 ## References
 

@@ -16,8 +16,6 @@ $$\forall u: \operatorname{Level},\ H: \operatorname{Type}(u),\ [\operatorname{N
 
 This is the exact Physlib endpoint from original line 1118, with unchanged proof text, arbitrary K and 1 <= s <= 2. TracePerspectiveConvexity consumes this interface. The carrier is a complete nontrivial finite complex Hilbert space, and both inputs have strictly positive spectra. Neither K invertibility nor A/B commutation is assumed. Its operator-power and perspective suppliers come from the same immutable pin.
 
-Native escape audit remains unfinished under issue #5214; no declared_validated status is claimed.
-
 **Theorem 1.2 (Joint trace concavity on positive-definite pairs).**
 
 $$\forall u: \operatorname{Level},\ H: \operatorname{Type}(u),\ [\operatorname{NormedAddCommGroup}(H)], [\operatorname{InnerProductSpace}(\mathbb{C}, H)], [\operatorname{CompleteSpace}(H)], [\operatorname{Nontrivial}(H)], [\operatorname{FiniteDimensional}(\mathbb{C}, H)], s: \mathbb{R}, K: \operatorname{L}(H),\ 0 < s \land s < 1 \implies \operatorname{JointlyConcaveOn}(\operatorname{pdSet}(H), \operatorname{pdSet}(H), \operatorname{liebTraceMap}(H, s, K)).$$

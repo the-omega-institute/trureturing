@@ -29,10 +29,7 @@ internal sealed class ReverseTraceYoungDocument : IScribeDocumentDefinition
                     Paragraph(Text("This is a classical tracial Young derivation using the "
                     + "attributed physlib Schatten Holder supplier, Apache-2.0. It supplies "
                     + "the variational step in the Carlen-Lieb path; it does not establish "
-                    + "operator convexity or solve Hiai Problem 5.18. The native four-slot "
-                    + "audit remains unfinished under issue #5214: a faithful enrolled "
-                    + "template with the complete universe-polymorphic matrix telescope, "
-                    + "source reconstruction, variation and sensitivity is unavailable."))),
+                    + "operator convexity or solve Hiai Problem 5.18."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("minimum-attainment"),
                 DeclarationHandle.Create("D5/S3/Quantum/Hiai/ReverseTraceYoung.minimum_and_attainment"),
@@ -51,8 +48,7 @@ internal sealed class ReverseTraceYoungDocument : IScribeDocumentDefinition
                     + "endpoint optimizers supplies the convexity comparison. "
                     + "Hiai still needs mean-trace concavity, inverse-mean "
                     + "identification, full parameter assembly and its support-constrained "
-                    + "semidefinite extension. Audit exception: #5214; no declared_validated "
-                    + "registration is claimed."))), DescribeRole.Theorem))));
+                    + "semidefinite extension."))), DescribeRole.Theorem))));
 
     private static Formula Frac(Formula x, Formula y) => new Formula.Fraction(x, y);
     private static Formula Call(string name, params Formula[] args)

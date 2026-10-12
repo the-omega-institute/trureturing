@@ -46,9 +46,7 @@ internal sealed class OperatorGeometricMeanDocument : IScribeDocumentDefinition
                     + "dimension is assumed. The source proof is retained, with "
                     + "its uniform power condition supplied by the consumed "
                     + "PowerConvexity adapter. LiebAndoTrace consumes this endpoint "
-                    + "at beta=1. This is attributed reuse, not new mathematics.")),
-                    Paragraph(Text("Native escape audit remains unfinished under "
-                        + "issue #5214; no declared_validated status is claimed."))),
+                    + "at beta=1. This is attributed reuse, not new mathematics."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)

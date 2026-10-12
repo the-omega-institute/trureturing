@@ -38,9 +38,7 @@ internal sealed class LownerHeinzCoreDocument : IScribeDocumentDefinition
             Paragraph(Text("PowerConvexity consumes this theorem to preserve the "
                 + "general ConvexOn interface, including the trivial algebra, "
                 + "and the uniform Jensen condition. No new general power proof "
-                + "or originality is claimed. Native escape audit remains "
-                + "unfinished under issue #5214; no declared_validated status "
-                + "is claimed. Canonical admission is a controller operation."))),
+                + "or originality is claimed."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
