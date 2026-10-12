@@ -52,9 +52,23 @@ jobs:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: Select Python with TOML support
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper_dir="$GITHUB_WORKSPACE/.ci-python"
+          rm -rf "$helper_dir"
+          mkdir -p "$helper_dir"
+          for candidate in python3.13 python3.12 python3.11 python3; do
+            if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c 'import tomllib' >/dev/null 2>&1; then
+              ln -s "$(command -v "$candidate")" "$helper_dir/python3"
+              echo "$helper_dir" >> "$GITHUB_PATH"
+              "$candidate" --version
+              exit 0
+            fi
+          done
+          echo 'CACHE_PRODUCER_ERROR no Python interpreter with tomllib support' >&2
+          exit 1
       - name: Validate the manual source ref and immutable pin
         if: github.event_name == 'workflow_dispatch'
         env:
