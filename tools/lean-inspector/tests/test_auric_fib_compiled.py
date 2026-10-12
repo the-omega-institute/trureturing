@@ -262,8 +262,9 @@ def run_with_report_snapshot(args, env, phases, sequence):
         finally:
             stopped.set()
             if observer is not None and observer.ident is not None:
-                # A stuck ps cannot delay the original result or send signals.
-                observer.join(timeout=0.1)
+                # The bounded snapshot read cleans up its own child; join
+                # its observer before command or fixture cleanup can proceed.
+                observer.join()
         return subprocess.CompletedProcess(args, process.returncode, stdout, stderr)
 
 
@@ -942,6 +943,97 @@ sys.exit(int(sys.argv[2]))
                         self.assertEqual(snapshot['status'], 'observed' if exit_code == 0 else 'unavailable')
                         if exit_code != 0:
                             self.assertEqual(snapshot['reason'], 'FileNotFoundError')
+
+        # The command exits while the observer owns a real snapshot child.
+        # The snapshot's existing timeout supplies its cleanup; FIFO ordering
+        # puts command exit inside that read without an elapsed-time verdict.
+        for exit_code in (0, 19):
+            with self.subTest(schedule='independent-exit', exit_code=exit_code), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                phases, ready = (root / name for name in ('phases', 'ready'))
+                os.mkfifo(ready)
+                script = """import sys
+from pathlib import Path
+Path(sys.argv[1]).write_text(sys.argv[3])
+assert Path(sys.argv[4]).read_text() == 'snapshot-started'
+print('original out')
+print('original err', file=sys.stderr)
+sys.exit(int(sys.argv[2]))
+"""
+                snapshot_script = """import signal, sys
+from pathlib import Path
+Path(sys.argv[1]).write_text('snapshot-started')
+signal.pause()
+"""
+                identities, observers, children, snapshot_children = {}, [], [], []
+                command_exited, observer_finished = threading.Event(), threading.Event()
+                original_observer = observe_report_process
+                original_run = subprocess.run
+                original_init = subprocess.Popen.__init__
+                original_communicate = subprocess.Popen.communicate
+                def process_tree(pid, args):
+                    identities.update({pid: (1, 'a'), pid + 1: (pid, 'b')})
+                    return identities, pid + 1
+                def started(process, args, *positional, **kwargs):
+                    original_init(process, args, *positional, **kwargs)
+                    (snapshot_children if args[2] == snapshot_script else children).append(process)
+                def communicate(process, *args, **kwargs):
+                    result = original_communicate(process, *args, **kwargs)
+                    if process in children:
+                        command_exited.set()
+                    return result
+                def snapshot(*args, **kwargs):
+                    self.assertEqual(args[0][0], 'ps')
+                    self.assertEqual(kwargs['timeout'], 1)
+                    return original_run([sys.executable, '-c', snapshot_script, str(ready)], **kwargs)
+                def observer(*args):
+                    observers.append(threading.current_thread())
+                    try:
+                        original_observer(*args)
+                    finally:
+                        observer_finished.set()
+                try:
+                    with (patch.object(sys.modules[__name__], 'DIAGNOSTICS', root),
+                          patch.object(sys, 'platform', 'linux'),
+                          patch(__name__ + '.linux_report_processes', side_effect=process_tree),
+                          patch(__name__ + '.linux_process_identity', side_effect=identities.__getitem__),
+                          patch.object(subprocess, 'run', side_effect=snapshot) as ps,
+                          patch.object(subprocess.Popen, '__init__', started),
+                          patch.object(subprocess.Popen, 'communicate', communicate),
+                          patch(__name__ + '.observe_report_process', side_effect=observer)):
+                        result = run_with_report_snapshot([sys.executable, '-c', script,
+                            str(phases), str(exit_code), self.await_start, str(ready)],
+                            dict(os.environ), phases, 1)
+                        # Check at helper return, before fallback joins or context cleanup.
+                        self.assertTrue(command_exited.is_set())
+                        self.assertTrue(observer_finished.is_set())
+                        self.assertEqual(len(observers), 1)
+                        self.assertFalse(observers[0].is_alive())
+                        self.assertEqual(len(snapshot_children), 1)
+                        self.assertIsNotNone(snapshot_children[0].poll())
+                        self.assertEqual(len(children), 1)
+                        self.assertEqual(children[0].poll(), exit_code)
+                        self.assertEqual((result.returncode, result.stdout, result.stderr),
+                            (exit_code, 'original out\n', 'original err\n'))
+                        self.assertEqual(ps.call_count, 1)
+                        payload = json.loads(phases.read_text().splitlines()[-1])
+                        self.assertEqual(payload['status'], 'inconclusive')
+                        self.assertEqual(payload['reason'], 'TimeoutExpired')
+                        self.assertNotIn('rows', payload)
+                finally:
+                    for thread in observers:
+                        thread.join()
+                    for child in children + snapshot_children:
+                        if child.poll() is None:
+                            child.kill()
+                        child.wait()
+                observe_fib('FIB_COMPILED_OBSERVER_OWNERSHIP', dict(
+                    schedule='independent-exit', raw_exit=result.returncode,
+                    stdout=result.stdout, stderr=result.stderr,
+                    observer_alive_at_return=False, snapshot_child_active_at_return=False,
+                    command_pid=children[0].pid, snapshot_pid=snapshot_children[0].pid,
+                    snapshot_exit=snapshot_children[0].returncode,
+                    all_owned_children_joined=True, observer_joined=True))
 
     def test_live_native_output_precedes_exit_and_preserves_raw_failure(self):
         import native
