@@ -42,7 +42,85 @@ $$
 
 Let N take the native coordinates of a point in H3 to the real triple (horizontal real, horizontal imaginary, height). Then F(D)=N(range(f)) for the same f. Packing a real triple back into (Complex,Real) is injective; the original injectivity of f and the inverse affine chart therefore give injectivity of F on D. The projection P sends the compact C onto D, so D is compact and measurable. The original coordinate homeomorphism makes N continuous, and N(range(f)) is compact and measurable in Real3. Thus the image correspondence and the domain conditions needed by measurable-set change of variables apply to the original body including its entire boundary.
 
-These identities give the actual change-of-variables Jacobian with the original frame equations. To identify the normalized native Hausdorff mass of the same range(f), the remaining step is measurable-set change of variables on the actual image, followed by HyperbolicNormalizedDensity.raw_native_density and its existing exact L2 orthonormal-cube Haar calibration. Native mass equality, positive finite native mass and witness independence are not conclusions of the Jacobian calculation alone. The flat-boundary limit, face and angle identification, Schlaefli variation and co-volume conclusions remain separate; zero lengths are excluded.
+These identities give the actual change-of-variables Jacobian with the original frame equations. The mass application below combines measurable-set change of variables on the actual image with HyperbolicNormalizedDensity.raw_native_density and its existing exact L2 orthonormal-cube Haar calibration. Native mass equality, positive finite native mass and witness independence are not conclusions of the Jacobian calculation alone. The flat-boundary limit, face and angle identification, Schlaefli variation and co-volume conclusions remain separate; zero lengths are excluded.
+
+For this mass application, keep all six original positive lengths in the order (01,02,03,23,13,12) and both strict inequalities for each of the six original source cosines. Let M be any original frame with B(row_i(M),row_j(M))=G_ij and det(M)>0, and let f be any original continuous injective map from the same C into native H3 satisfying, at every v in C, Y=r(v) times M, B(Y,Y)=-1, Y3>0 and coordinates(f(v))=Psi(Y). Retain the same f, native hyperbolic metric and full closed cut body. In the affine chart A and domain D above, define rho_l and I_l by the following formulas; integralOn denotes the real set integral against the canonical L2 three-dimensional volume volume3.
+
+$$
+\left(rho_{l}\right)\left(u\right) = \frac{sqrt\left(-det\left(G\right)\right)}{\left(0 - q\left(A\left(u\right)\right)\right)^{2}}
+$$
+
+$$
+I_{l} = integralOn\left(rho_{l}, D, volume3\right)
+$$
+
+The density is integrable and I_l is strictly positive. LengthGramBody.shared_radial_body gives q(A(u))<0 throughout D, including its boundary. The checked original Gram-frame determinant identity gives det(G)=-det(M)^2<0 from det(M)>0. Compactness follows from D=P(C), and the strictly cut barycenter has an open affine neighborhood in D, giving nonempty three-dimensional interior. Thus rho_l is continuous and strictly positive on the compact D. Compact-domain integrability and the positive volume of its positive support give the assertions below; no determinant-sign or integral-positivity conclusion is added as a hypothesis.
+
+$$
+IntegrableOn\left(rho_{l}, D, volume3\right) \land 0 < I_{l}
+$$
+
+Use the existing HyperbolicNormalizedDensity normalization convention. In Amb=WithLp 2 (Complex times Real), Q is the parallelepiped of the standard real orthonormal basis, and c3 is its raw ambient Hausdorff three-mass. The product orthonormal basis proves real dimension three. Haar uniqueness and the unit canonical volume of an orthonormal parallelepiped identify ambient Hausdorff measure with c3 times ambient volume. The compact Q has nonempty interior, so c3 is strictly positive and finite; these facts are derived.
+
+$$
+Amb = WithLp\left(2, Product\left(Complex, Real\right)\right)
+$$
+
+$$
+Q = parallelepiped\left(toBasis\left(stdOrthonormalBasis\left(Real, Amb\right)\right)\right)
+$$
+
+$$
+c3 = mass\left(hausdorffMeasure\left(3, Amb\right), Q\right)
+$$
+
+$$
+0 < c3 \land \left(c3 < \infty \land hausdorffMeasure\left(3, Amb\right) = smul\left(c3, volume\left(Amb\right)\right)\right)
+$$
+
+The literal packing z maps to WithLp.toLp 2 (Complex.mk(z0,z1),z2). It is exactly the real linear isometry obtained from the product orthonormal basis in that coordinate order, preserving canonical volume and Hausdorff measure. On the positive-height coordinate subtype its inverse unpack has unpack(x)2=height(x), and unpack(coordinatesEquiv(p))=N(p). Applying the existing raw_native_density to the same set range(f), then transporting its withDensity lower integral through this measurable isometric unpack, gives the raw mass formula below. The restriction to range(unpack) disappears on the actual image contained in that range. Here weight(z)=ofReal(z2^(-3)), lowerIntegral denotes the extended nonnegative set integral, and rawNativeMeasure is Hausdorff three-measure for the original native H3 metric.
+
+$$
+mass\left(rawNativeMeasure, range\left(f\right)\right) = c3 \cdot lowerIntegral\left(weight, image\left(F, D\right), volume3\right)
+$$
+
+The sets D and F(D)=N(range(f)) are Borel because they are compact; range(f) itself is compact and Borel by continuity of the same original f. The previously checked literal map F is injective on D, has its ambient derivative at every point of D, and satisfies F2(u)^(-3)*abs(det(DF(u)))=rho_l(u). Its within-derivative therefore instantiates measurable-set change of variables on the full closed D, with no cut-equality or inactive-boundary point removed. Define ofRealDensity(u)=ofReal(rho_l(u)) and lowerGramIntegral_l as its lower integral over D. The weighted Jacobian equates the image lower integral with lowerGramIntegral_l; real integrability and nonnegativity identify it with ofReal(I_l).
+
+$$
+lowerGramIntegral_{l} = lowerIntegral\left(ofRealDensity, D, volume3\right)
+$$
+
+$$
+lowerIntegral\left(weight, image\left(F, D\right), volume3\right) = lowerGramIntegral_{l}
+$$
+
+$$
+lowerGramIntegral_{l} = ofReal\left(I_{l}\right)
+$$
+
+Set muNorm=c3 inverse smul rawNativeMeasure, exactly as in the existing normalization. Cancellation of the nonzero finite c3 yields the exact same-witness mass identities below. The toReal identity uses I_l>0. Consequently both normalized and raw native masses are strictly positive and finite.
+
+$$
+muNorm = smul\left(inv\left(c3\right), rawNativeMeasure\right)
+$$
+
+$$
+mass\left(muNorm, range\left(f\right)\right) = lowerGramIntegral_{l} = ofReal\left(I_{l}\right)
+$$
+
+$$
+toReal\left(mass\left(muNorm, range\left(f\right)\right)\right) = I_{l}
+$$
+
+$$
+mass\left(rawNativeMeasure, range\left(f\right)\right) = c3 \cdot ofReal\left(I_{l}\right)
+$$
+
+$$
+0 < mass\left(muNorm, range\left(f\right)\right) \land \left(mass\left(muNorm, range\left(f\right)\right) < \infty \land \left(0 < mass\left(rawNativeMeasure, range\left(f\right)\right) \land mass\left(rawNativeMeasure, range\left(f\right)\right) < \infty\right)\right)
+$$
+
+For any two admissible original witness pairs (M,f) and (Mprime,fprime) with the same length vector l, the normalized masses agree because each equals ofReal(I_l); the raw masses agree because each equals c3*ofReal(I_l). The conclusion is equality of masses and asserts no equality of the two ranges. This application uses the original literal Jacobian and image identities, raw_native_density, Hausdorff-Haar calibration, measurable-set change of variables and real/lower-integral conversion. It closes the native mass application, while flat-boundary limits, actual face and angle identification, Schlaefli variation, co-volume and full CFMP completion remain separate.
 
 ## References
 
