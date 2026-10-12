@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums.LanglandsFirstMa
 internal sealed class SupplierFiniteProductsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/epsilonfml2026hassedavenport");
+        LibraryNoteRef.Create("D5/L/Fourier/epsilonfml2026hassedavenport");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Prime-field power sums and products in the retained character-sum supplier.",
@@ -48,7 +48,7 @@ internal sealed class SupplierFiniteProductsDocument : IScribeDocumentDefinition
                     + "b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, "
                     + "LanglandsFirstMainLemma/Basic/FiniteProducts.lean; Apache-2.0. "
                     + "The exact license and original source hashes are in "
-                    + "Library/Arith/epsilonfml2026hassedavenport.md. These are attributed "
+                    + "Library/Fourier/epsilonfml2026hassedavenport.md. These are attributed "
                     + "upstream results, with no new theorem or open-problem resolution claimed.")),
             Paragraph(Text(
                 "Supplier escape registration remains unfinished under "

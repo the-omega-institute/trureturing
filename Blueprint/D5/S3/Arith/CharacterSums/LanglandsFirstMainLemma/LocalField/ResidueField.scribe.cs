@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums.LanglandsFirstMa
 internal sealed class SupplierResidueFieldDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/epsilonfml2026hassedavenport");
+        LibraryNoteRef.Create("D5/L/Fourier/epsilonfml2026hassedavenport");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Canonical residue fields and the actual algebraic norm and trace used by character pullback.",
@@ -49,7 +49,7 @@ internal sealed class SupplierResidueFieldDocument : IScribeDocumentDefinition
                     + "b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, "
                     + "LanglandsFirstMainLemma/LocalField/ResidueField.lean; Apache-2.0. "
                     + "The exact license and original source hashes are in "
-                    + "Library/Arith/epsilonfml2026hassedavenport.md. These are attributed "
+                    + "Library/Fourier/epsilonfml2026hassedavenport.md. These are attributed "
                     + "upstream definitions and results, not an open-problem resolution.")),
             Paragraph(Text(
                 "Supplier escape registration remains unfinished under "

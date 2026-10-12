@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums.LanglandsFirstMa
 internal sealed class SupplierPolynomialWeightsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/epsilonfml2026hassedavenport");
+        LibraryNoteRef.Create("D5/L/Fourier/epsilonfml2026hassedavenport");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The multiplicative monic-polynomial weight connecting Gauss sums with closed points.",
@@ -41,7 +41,7 @@ internal sealed class SupplierPolynomialWeightsDocument : IScribeDocumentDefinit
                     + "b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, "
                     + "LanglandsFirstMainLemma/FiniteField/PolynomialWeights.lean; Apache-2.0. "
                     + "The exact license and original source hashes are in "
-                    + "Library/Arith/epsilonfml2026hassedavenport.md. This is attributed "
+                    + "Library/Fourier/epsilonfml2026hassedavenport.md. This is attributed "
                     + "upstream reuse, with no new theorem or open-problem resolution claimed.")),
             Paragraph(Text(
                 "Supplier escape registration remains unfinished under "

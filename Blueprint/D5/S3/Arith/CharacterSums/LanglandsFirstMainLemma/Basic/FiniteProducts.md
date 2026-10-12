@@ -30,7 +30,7 @@ For a field K of characteristic p and any ρ in K, the product over j in ZMod p 
 
 This module imports Mathlib directly. CharacterAPI imports this module, and HasseDavenportLift imports CharacterAPI. This is a retained import dependency. Neither displayed prime-field identity is invoked by the selected Hasse–Davenport proof; the lifting argument uses general finite-field characters and monic-polynomial weights.
 
-Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/Basic/FiniteProducts.lean; Apache-2.0. The exact license and original source hashes are in Library/Arith/epsilonfml2026hassedavenport.md. These are attributed upstream results, with no new theorem or open-problem resolution claimed.
+Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/Basic/FiniteProducts.lean; Apache-2.0. The exact license and original source hashes are in Library/Fourier/epsilonfml2026hassedavenport.md. These are attributed upstream results, with no new theorem or open-problem resolution claimed.
 
 Supplier escape registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/5214: the original finite-field character/norm/trace telescope has no supplied faithful enrolled template with compiled audit evidence. This narrative does not complete that audit.
 

@@ -18,7 +18,7 @@ For a nonarchimedean local field F with its valuative relation and topology, rin
 
 UnitFiltration consumes this equivalence to identify depth-one units with principal units. ResidueField consumes it in residueMap_eq_zero_iff, identifying reduction modulo the maximal ideal with reduction modulo lattice F 1. ResidueField is imported by CharacterAPI, which is imported by HasseDavenportLift. This local-field reduction interface is retained in the supplier's import closure.
 
-Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/Lattices.lean; Apache-2.0. The exact license and original source hashes are in Library/Arith/epsilonfml2026hassedavenport.md. This is attributed upstream support, not a new theorem or open-problem resolution.
+Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/Lattices.lean; Apache-2.0. The exact license and original source hashes are in Library/Fourier/epsilonfml2026hassedavenport.md. This is attributed upstream support, not a new theorem or open-problem resolution.
 
 Supplier escape registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/5214: the original finite-field character/norm/trace telescope has no supplied faithful enrolled template with compiled audit evidence. This narrative does not complete that audit.
 

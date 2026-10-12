@@ -30,7 +30,7 @@ Under the same hypotheses, residueTrace k K is the k-linear map Algebra.trace k 
 
 CharacterAPI uses residueNorm in normMulChar and residueTrace in traceAddChar. HasseDavenportLift then evaluates these pullbacks in gaussPolynomialWeight_minpoly_power and in the final lift. The local-field part of this module separately defines ResidueField F as the canonical valuation-ring quotient and reduction as congruence modulo lattice F 1; Extension imports that interface as well.
 
-Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/ResidueField.lean; Apache-2.0. The exact license and original source hashes are in Library/Arith/epsilonfml2026hassedavenport.md. These are attributed upstream definitions and results, not an open-problem resolution.
+Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/ResidueField.lean; Apache-2.0. The exact license and original source hashes are in Library/Fourier/epsilonfml2026hassedavenport.md. These are attributed upstream definitions and results, not an open-problem resolution.
 
 Supplier escape registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/5214: the original finite-field character/norm/trace telescope has no supplied faithful enrolled template with compiled audit evidence. This narrative does not complete that audit.
 

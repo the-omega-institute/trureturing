@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums.LanglandsFirstMa
 internal sealed class SupplierValuationDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/epsilonfml2026hassedavenport");
+        LibraryNoteRef.Create("D5/L/Fourier/epsilonfml2026hassedavenport");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Normalized additive order and the canonical valuation ring of a nonarchimedean local field.",
@@ -40,7 +40,7 @@ internal sealed class SupplierValuationDocument : IScribeDocumentDefinition
                     + "b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, "
                     + "LanglandsFirstMainLemma/LocalField/Valuation.lean; Apache-2.0. "
                     + "The exact license and original source hashes are in "
-                    + "Library/Arith/epsilonfml2026hassedavenport.md. This is attributed "
+                    + "Library/Fourier/epsilonfml2026hassedavenport.md. This is attributed "
                     + "upstream support, not a new theorem or open-problem resolution.")),
             Paragraph(Text(
                 "Supplier escape registration remains unfinished under "

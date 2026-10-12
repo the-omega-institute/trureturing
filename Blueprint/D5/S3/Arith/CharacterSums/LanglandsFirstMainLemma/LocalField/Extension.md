@@ -18,7 +18,7 @@ For fields F and K with Algebra F K, FiniteDimensional F K and IsGalois F K, gal
 
 HasseDavenportLift directly imports Extension, which imports ResidueField. This is a retained import dependency: the selected lifting proof uses Mathlib's Algebra.norm and Algebra.trace through CharacterAPI and minimal-polynomial identities, without invoking galoisConjugates_prod. The local-field ramification and norm-order results elsewhere in Extension impose no extra hypotheses on the lift.
 
-Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/Extension.lean; Apache-2.0. The exact license and original source hashes are in Library/Arith/epsilonfml2026hassedavenport.md. This is attributed upstream support, not a new theorem or open-problem resolution.
+Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/Extension.lean; Apache-2.0. The exact license and original source hashes are in Library/Fourier/epsilonfml2026hassedavenport.md. This is attributed upstream support, not a new theorem or open-problem resolution.
 
 Supplier escape registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/5214: the original finite-field character/norm/trace telescope has no supplied faithful enrolled template with compiled audit evidence. This narrative does not complete that audit.
 

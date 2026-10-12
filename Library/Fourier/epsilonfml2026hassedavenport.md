@@ -12,7 +12,7 @@ license: Apache-2.0
 triage: anchor
 ---
 
-<!-- GID: D5/L/Arith/epsilonfml2026hassedavenport -->
+<!-- GID: D5/L/Fourier/epsilonfml2026hassedavenport -->
 # Exact Hasse–Davenport supplier from epsilon_FML
 
 This source card records the attributed upstream supplier used by the finite-field character-sums port.

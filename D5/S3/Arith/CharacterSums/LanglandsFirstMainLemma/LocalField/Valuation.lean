@@ -10,7 +10,7 @@
 Attributed source: https://github.com/fukubillueda-web/epsilon_FML/blob/
 b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed/LanglandsFirstMainLemma/LocalField/Valuation.lean
 License: Apache-2.0; the verbatim upstream LICENSE and original source hashes are in
-Library/Arith/epsilonfml2026hassedavenport.md.
+Library/Fourier/epsilonfml2026hassedavenport.md.
 Modifications: repository import paths; direct Mathlib import omits unused upstream metadata.
 The upstream namespace, theorem statements, normalization, and proof structure are
 retained. The pinned upstream distribution contains no NOTICE file.

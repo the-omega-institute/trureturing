@@ -30,7 +30,7 @@ For fields k and K, Finite K, Algebra k K, and any χ in FiniteMulChar k, normMu
 
 PolynomialWeights consumes FiniteMulChar and FiniteAddChar to construct gaussPolynomialWeight. HasseDavenportLift consumes the Gauss-sum normalization and both pullbacks; its final proof explicitly rewrites by normMulChar_inv. The inverse character and leading minus are required for the power identity in every extension degree. Only the additive character must be nontrivial in the lifting theorem.
 
-Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/FiniteField/CharacterAPI.lean; Apache-2.0. The exact license and original source hashes are in Library/Arith/epsilonfml2026hassedavenport.md. This is attributed upstream reuse, with no new theorem or open-problem resolution claimed.
+Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/FiniteField/CharacterAPI.lean; Apache-2.0. The exact license and original source hashes are in Library/Fourier/epsilonfml2026hassedavenport.md. This is attributed upstream reuse, with no new theorem or open-problem resolution claimed.
 
 Supplier escape registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/5214: the original finite-field character/norm/trace telescope has no supplied faithful enrolled template with compiled audit evidence. This narrative does not complete that audit.
 

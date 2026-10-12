@@ -18,7 +18,7 @@ For a nonarchimedean local field F with its valuative relation and topology, uni
 
 ResidueField uses this equality in residueUnits_ker: the kernel of unit reduction is the depth-one layer viewed inside the depth-zero group. Its residueUnits_coe also uses unitGroupMulEquivRingOfIntegers. ResidueField → CharacterAPI → HasseDavenportLift is the remaining import path. The retained local-unit quotient infrastructure does not add a local-field hypothesis to the finite-field lifting theorem.
 
-Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/UnitFiltration.lean; Apache-2.0. The exact license and original source hashes are in Library/Arith/epsilonfml2026hassedavenport.md. This is attributed upstream support, not a new theorem or open-problem resolution.
+Source: epsilon_FML at immutable commit b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed, LanglandsFirstMainLemma/LocalField/UnitFiltration.lean; Apache-2.0. The exact license and original source hashes are in Library/Fourier/epsilonfml2026hassedavenport.md. This is attributed upstream support, not a new theorem or open-problem resolution.
 
 Supplier escape registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/5214: the original finite-field character/norm/trace telescope has no supplied faithful enrolled template with compiled audit evidence. This narrative does not complete that audit.
 

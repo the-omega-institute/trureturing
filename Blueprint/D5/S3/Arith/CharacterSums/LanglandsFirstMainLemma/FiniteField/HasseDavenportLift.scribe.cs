@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums.LanglandsFirstMa
 internal sealed class LanglandsFirstMainLemmaDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/epsilonfml2026hassedavenport");
+        LibraryNoteRef.Create("D5/L/Fourier/epsilonfml2026hassedavenport");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact Langlands-normalized Hasse–Davenport lift for finite-field Gauss sums.",
