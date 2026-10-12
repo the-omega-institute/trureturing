@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/Gluing/ActualLinkCornerChains
    mirror-E: none(waiver:actual-affine-link-chain-analysis)
-   anchors: [mathlib/module/Mathlib.Logic.Relation]
+   anchors: [mathlib/module/Mathlib.Topology.Constructions]
    utility: none
    digest: Original affine corner chains preserve strict ordered-corner neighborhoods. -/
 
