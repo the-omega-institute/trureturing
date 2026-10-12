@@ -102,35 +102,51 @@ theorem native_environment_mean_variance {M q s : ℕ} (S : Support M q)
   exact hd.unique (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
     outside r (compensation M q r) V.card R U A x)
 
+/-- The integer target keeps the parity forced by the original harmonic
+and count. Half-integer shifts are preserved before any set enlargement. -/
+theorem posterior_phase_iff_parity_band (ell t : ℤ) (mu τ : ℝ) :
+    (∃ a : ℤ, |(ell : ℝ)*(1/2-mu)-a| ≤ τ) ↔
+      ∃ z : ℤ, Int.ModEq 2 z (ell*(1-t)) ∧
+        |2*(ell : ℝ)*(mu-(t : ℝ)/2)-z| ≤ 2*τ := by
+  constructor
+  · rintro ⟨a,ha⟩
+    refine ⟨ell-2*a-ell*t,Int.modEq_iff_dvd.mpr ⟨a,by ring⟩,?_⟩
+    have he : 2*(ell : ℝ)*(mu-(t : ℝ)/2)-((ell-2*a-ell*t : ℤ) : ℝ) =
+        -2*((ell : ℝ)*(1/2-mu)-a) := by push_cast; ring
+    rw [he,abs_mul]
+    norm_num
+    linarith only [ha]
+  · rintro ⟨z,hmod,hz⟩
+    obtain ⟨a,ha⟩ := Int.modEq_iff_dvd.mp hmod
+    refine ⟨a,?_⟩
+    have hez : z = ell-2*a-ell*t := by linear_combination -ha
+    rw [hez] at hz
+    have he : 2*(ell : ℝ)*(mu-(t : ℝ)/2)-((ell-2*a-ell*t : ℤ) : ℝ) =
+        -2*((ell : ℝ)*(1/2-mu)-a) := by push_cast; ring
+    rw [he,abs_mul] at hz
+    norm_num at hz
+    linarith only [hz]
+
 /-- A half-lattice enlargement removes the parity split uniformly for
 positive and negative harmonics. The approximation is for the original mu. -/
 private theorem posterior_phase_lattice_reduction (ell t : ℤ) (mu bg x τ err : ℝ)
-    (happrox : |mu - (bg + (t : ℝ)) * Real.sigmoid x| ≤ err)
-    (hphase : ∃ z : ℤ, |(ell : ℝ) * (1 / 2 - mu) - z| ≤ τ) :
-    ∃ z : ℤ, |2 * (ell : ℝ) * ((bg + (t : ℝ)) * Real.sigmoid x - (t : ℝ) / 2) - z| ≤
-      2 * τ + 2 * |(ell : ℝ)| * err := by
-  obtain ⟨z, hz⟩ := hphase
-  refine ⟨ell - 2 * z - ell * t, ?_⟩
-  have he : 2 * (ell : ℝ) * ((bg + (t : ℝ)) * Real.sigmoid x - (t : ℝ) / 2) -
-      ((ell - 2 * z - ell * t : ℤ) : ℝ) =
-        -2 * ((ell : ℝ) * (1 / 2 - mu) - z) -
-          2 * (ell : ℝ) * (mu - (bg + (t : ℝ)) * Real.sigmoid x) := by
-    push_cast
-    ring
+    (happrox : |mu-(bg+(t : ℝ))*Real.sigmoid x| ≤ err)
+    (hphase : ∃ z : ℤ, |(ell : ℝ)*(1/2-mu)-z| ≤ τ) :
+    ∃ z : ℤ, |2*(ell : ℝ)*((bg+(t : ℝ))*Real.sigmoid x-(t : ℝ)/2)-z| ≤
+      2*τ+2*|(ell : ℝ)| *err := by
+  obtain ⟨z,_,hz⟩ := (posterior_phase_iff_parity_band ell t mu τ).mp hphase
+  refine ⟨z,?_⟩
+  have he : 2*(ell : ℝ)*((bg+(t : ℝ))*Real.sigmoid x-(t : ℝ)/2)-z =
+      (2*(ell : ℝ)*(mu-(t : ℝ)/2)-z)+
+        2*(ell : ℝ)*((bg+(t : ℝ))*Real.sigmoid x-mu) := by ring
   rw [he]
   calc
-    _ ≤ |-2 * ((ell : ℝ) * (1 / 2 - mu) - z)| +
-        |2 * (ell : ℝ) * (mu - (bg + (t : ℝ)) * Real.sigmoid x)| := by
-      simpa only [sub_zero, zero_sub, abs_neg] using
-        (abs_sub_le (-2 * ((ell : ℝ) * (1 / 2 - mu) - z)) 0
-          (2 * (ell : ℝ) * (mu - (bg + (t : ℝ)) * Real.sigmoid x)))
-    _ = 2 * |(ell : ℝ) * (1 / 2 - mu) - z| +
-        2 * |(ell : ℝ)| * |mu - (bg + (t : ℝ)) * Real.sigmoid x| := by
-      rw [abs_mul, abs_mul, abs_mul]
+    _ ≤ |2*(ell : ℝ)*(mu-(t : ℝ)/2)-z|+
+        |2*(ell : ℝ)*((bg+(t : ℝ))*Real.sigmoid x-mu)| := abs_add_le _ _
+    _ ≤ 2*τ+2*|(ell : ℝ)| *err := by
+      rw [abs_mul,abs_mul,abs_sub_comm ((bg+(t : ℝ))*Real.sigmoid x) mu]
       norm_num
-    _ ≤ _ := by
-      have hh := mul_le_mul_of_nonneg_left happrox (by positivity : 0 ≤ 2 * |(ell : ℝ)|)
-      linarith
+      exact add_le_add hz (mul_le_mul_of_nonneg_left happrox (by positivity))
 
 /-- The full original posterior is approximated by the same native shared
 root. Its error is proved from frozen posterior odds and the exact all-row
