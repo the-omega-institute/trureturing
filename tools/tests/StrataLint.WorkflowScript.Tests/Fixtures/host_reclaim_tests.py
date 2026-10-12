@@ -61,6 +61,25 @@ class HostReclaimTests(unittest.TestCase):
     def clean(self, target, delete=True):
         return cleanup.clean_candidate(target, self.cutoff, [], delete=delete, repository=self.main)
 
+    def make_endpoint(self, path, kind):
+        if kind == "fifo":
+            os.mkfifo(path)
+        else:
+            temporary = self.root / "socket"
+            with socket.socket(socket.AF_UNIX) as handle:
+                handle.bind(str(temporary))
+            temporary.rename(path)
+
+    def test_case_inventory_lists_every_case_without_running_git(self):
+        environment = dict(os.environ, PATH="")
+        result = subprocess.run([sys.executable, "-B", __file__, str(ROOT), "--list-tests"],
+                                capture_output=True, text=True, env=environment)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        expected = ["HostReclaimTests." + name
+                    for name in unittest.defaultTestLoader.getTestCaseNames(type(self))]
+        self.assertEqual(expected, json.loads(result.stdout))
+        self.assertEqual("", result.stderr)
+
     def test_empty_git_skeleton_is_an_ordinary_artifact(self):
         target = self.root / "skeleton"
         (target / ".git/objects/pack").mkdir(parents=True)
@@ -338,14 +357,14 @@ class HostReclaimTests(unittest.TestCase):
             self.assertEqual("changed", result["reason"], result)
             self.assertTrue(target.exists())
 
-    def run_sweep(self, trees=(), artifact_root=None, expected_exit=0):
+    def run_sweep(self, trees=(), artifact_root=None, expected_exit=0, active=()):
         options = cleanup.argparse.Namespace(repository=self.main, base="dev",
             codex_home=self.root / "codex", sshx_home=self.root / "sshx",
             tmp_root=[artifact_root or self.root / "artifacts"], min_age_hours=24, delete=True, verbose=True)
         output = io.StringIO()
         registrations = cleanup.registered_worktrees
         with patch.object(cleanup, "clean_worktrees", return_value=0), \
-             patch.object(cleanup, "active_paths", return_value=set()), \
+             patch.object(cleanup, "active_paths", return_value=set(active)), \
              patch.object(cleanup, "registered_worktrees", side_effect=lambda source:
                  [self.main, *trees] if source.resolve() == self.main else registrations(source)), \
              contextlib.redirect_stdout(output):
@@ -370,12 +389,52 @@ class HostReclaimTests(unittest.TestCase):
 
     def test_ipc_candidates_inside_repository_are_preserved(self):
         target = self.clone()
-        endpoint = target / "fifo"
-        os.mkfifo(endpoint)
+        endpoints = [target / kind for kind in ("fifo", "socket")]
+        for endpoint in endpoints:
+            self.make_endpoint(endpoint, endpoint.name)
         self.age(target)
         with patch.object(cleanup.sys, "platform", "darwin"):
-            self.run_sweep(artifact_root=target)
-        self.assertTrue(endpoint.exists())
+            rows = self.run_sweep(artifact_root=target)
+        reasons = {row.get("path"): row.get("reason") for row in rows}
+        for endpoint in endpoints:
+            self.assertTrue(endpoint.exists())
+            self.assertEqual("repository_unverifiable", reasons.get(str(endpoint)))
+
+    def test_host_sweep_ipc_activity_protects_fifo_and_socket_endpoints(self):
+        artifacts = self.root / "artifacts"
+        artifacts.mkdir()
+        endpoints, active = [], []
+        for kind in ("fifo", "socket"):
+            for state in ("idle", "active"):
+                endpoint = artifacts / (kind + "-" + state)
+                self.make_endpoint(endpoint, kind)
+                endpoints.append(endpoint)
+                if state == "active":
+                    active.append(endpoint)
+        self.age(artifacts)
+        with patch.object(cleanup.sys, "platform", "darwin"):
+            rows = self.run_sweep(active=active)
+        items = {row.get("path"): row for row in rows}
+        for endpoint in endpoints:
+            self.assertEqual(endpoint in active, endpoint.exists())
+            self.assertEqual("kept" if endpoint in active else "removed", items[str(endpoint)]["action"])
+            self.assertEqual("protected" if endpoint in active else None, items[str(endpoint)]["reason"])
+
+    def test_ipc_candidates_inside_registered_worktree_are_preserved(self):
+        target = self.root / "registered worktree"
+        self.git(self.main, "worktree", "add", "-b", "registered", target)
+        self.assertTrue((target / ".git").is_file())
+        endpoints = [target / kind for kind in ("fifo", "socket")]
+        for endpoint in endpoints:
+            self.make_endpoint(endpoint, endpoint.name)
+        self.age(target)
+        with patch.object(cleanup.sys, "platform", "darwin"):
+            rows = self.run_sweep([target], artifact_root=target)
+        reasons = {row.get("path"): row.get("reason") for row in rows}
+        for endpoint in endpoints:
+            self.assertTrue(endpoint.exists())
+            self.assertEqual("protected", reasons.get(str(endpoint)))
+        self.assertTrue((target / "source").exists())
 
     def test_partial_removal_reports_failed_summary(self):
         target = self.root / "artifacts/ordinary"
@@ -705,4 +764,8 @@ raise SystemExit(cleanup.run_clean(options))
 
 
 if __name__ == "__main__":
-    unittest.main()
+    if sys.argv[1:] == ["--list-tests"]:
+        print(json.dumps(["HostReclaimTests." + name
+                          for name in unittest.defaultTestLoader.getTestCaseNames(HostReclaimTests)]))
+    else:
+        unittest.main()
