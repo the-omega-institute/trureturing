@@ -4479,7 +4479,7 @@ is inferred; the §52/§55 propagation contracts retain their own premises.
 ### 91.1. The original table and the owned scalar
 
 For a nonempty finite ordered native tree $t$, retain every actual occurrence, its
-left/right address and its \(\alpha/\beta\) leaf label. For $h\geq0$, define the
+left/right address and its $\alpha/\beta$ leaf label. For $h\geq0$, define the
 inclusive four-reply table
 
 $$
@@ -4505,15 +4505,15 @@ q_\lambda=\frac3{3+\lambda}\quad(\lambda>0).
 \tag{91.2}
 $$
 
-The native source and the immutable \(\mathrm{INITIAL}\) are the same object in
-\(p_h(t)\) and \(G_\lambda(t)\); a later current register is not substituted for either.
-The native substitution \(\rho\) is unchanged; \(P_t\) is only the declared comparison
+The native source and the immutable $\mathrm{INITIAL}$ are the same object in
+$p_h(t)$ and $G_\lambda(t)$; a later current register is not substituted for either.
+The native substitution $\rho$ is unchanged; $P_t$ is only the declared comparison
 law on the retained actual occurrences.
 Because $L_t=3(I-P_t)$,
 
 $$
 G_\lambda(t)=\frac1{3+\lambda}
- \sum_{n\geq0}q_\lambda^n\mu_n(t),qquad
+ \sum_{n\geq0}q_\lambda^n\mu_n(t),\qquad
 \mu_n(t):=\langle\delta_r,P_t^n\delta_r\rangle .
 \tag{91.3}
 $$
@@ -4547,7 +4547,7 @@ turning point at this length, so its hold weight and its children are not used. 
 each walk has the same weight in any two trees with the same table. This includes a
 singleton, an early terminal leaf and every absent address. The sum is therefore
 independent of the realizing tree, proving (91.5). This is the finite-tree instance of
-the sparse-matrix locality viewpoint of Benzi–Boito–Razouk, [BBR](https://arxiv.org/abs/1203.3953); no general decay theorem is invoked. \(\square\)
+the sparse-matrix locality viewpoint of Benzi–Boito–Razouk, [BBR](https://arxiv.org/abs/1203.3953); no general decay theorem is invoked. $\square$
 
 **Theorem 91.2 (same-operator prefix approximation).** For every finite native ordered
 tree $t$, every $h\geq0$ and every $\lambda>0$,
@@ -4580,7 +4580,7 @@ $$
 
 If the two tables agree, both responses lie in the same interval
 $[S_h,S_h+\lambda^{-1}q_\lambda^{2h+3}]$, which proves (91.7). The identity at
-$\lambda=1$ is $L_t+I=\mathcal H_t^{(0)}+2I$ by §52.21. \(\square\)
+$\lambda=1$ is $L_t+I=\mathcal H_t^{(0)}+2I$ by §52.21. $\square$
 
 ### 91.3. All-depth native witnesses and sharpness
 
@@ -4610,14 +4610,14 @@ p_h(W_h(t_{\mathrm{bal}}))=p_h(W_h(t_{\mathrm{comb}})).
 $$
 
 **Proof.** The first three assertions follow by appending one $\alpha$ leaf and its
-parent at each step. §52.20 gives the common word, composition and \(q_0=0\) at
-\(h=0\); the parent rule \(q\langle x,y\rangle=q(x)\times q(y)\) preserves zero.
+parent at each step. §52.20 gives the common word, composition and $q_0=0$ at
+$h=0$; the parent rule $q\langle x,y\rangle=q(x)\times q(y)$ preserves zero.
 If a fixed leaf cap $H$ is imposed, the source has $8+h$ leaves and therefore
 requires $H\geq8+h$; this is a per-source cap condition, not free cap growth.
 At depth at most $h$, a table address either meets the added left spine or the
 right $\alpha$ leaf, or reaches the root of the original fifteen-node tree exactly
 at depth $h$. That root is a branch in both sources; the first differing descendants
-are below the observed depth. Thus all four replies, including absence, agree. \(\square\)
+are below the observed depth. Thus all four replies, including absence, agree. $\square$
 
 Put $g_h(t)=G_1(W_h(t))$ and
 
@@ -4656,7 +4656,7 @@ $$
 The initial values are exactly §52.21–§52.22. Since
 $f'(g)=4/(5+3g)^2>0$, strict inequality persists under every iterate. Any common
 $p_h$-based estimate has the same output on the pair in (91.9); the elementary
-two-point midpoint bound gives (91.12). \(\square\)
+two-point midpoint bound gives (91.12). $\square$
 
 **Theorem 91.5 (sharp moment horizon, not a rate claim).** With
 $\mu_n^{\mathrm{bal}}=\mu_n(W_h(t_{\mathrm{bal}}))$ and
@@ -4680,7 +4680,7 @@ weight $3^{-(2h+2)}$, so the difference is
 $3^{-(2h+2)}(2/3)=2/3^{2h+3}$. Every other walk of this length either stays within
 the common table or reaches the new level without a hold and has equal weight. This
 proves (91.13). It identifies the first missing moment; it does not assert an optimal
-resolvent constant or approximation rate. \square
+resolvent constant or approximation rate. $\square$
 
 ### 91.4. Lawful prefix supply and limits
 
@@ -4688,11 +4688,10 @@ resolvent constant or approximation rate. \square
 may supply $p_h(t)$ through the original-root, same-source ordered support/address
 service of [ABT §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
 with its source/version authentication, epoch certification, refusal and absorbing
-Stop rules. Under the paid presence-only service of [FFM §§10–11]
-(RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md), the supplied prefix has
+Stop rules. Under the paid presence-only service of [FFM §§10–11](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md), the supplied prefix has
 
 $$
-q\leq2(2^{h+1}-1),\qquad \max|a|\leq h+k+1,qquad a_{\mathrm{post}}=0.
+q\leq2(2^{h+1}-1),\qquad \max|a|\leq h+k+1,\qquad a_{\mathrm{post}}=0.
 \tag{91.14}
 $$
 
