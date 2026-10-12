@@ -30,26 +30,12 @@ internal static class TruthExportCommand
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevisionProjection(identity.Revision, IsTruthInput)));
             var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
-            var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
-            var states = LeanTruthStates.Resolve(snapshot, truth.Lean);
-            var frozen = FrozenStateCatalog.Load(snapshot);
-            foreach (var (path, record) in frozen.Records)
-                if (!snapshot.Files.ContainsKey(path) || !states.TryGetValue(path, out var state) || state is not TruthState.Closed
-                    || !report.Files.TryGetValue(path, out var module)
-                    || record.StatementId != FrozenContentAddress.ComputeModuleStatementId(path, module)
-                    || !record.Declarations.SequenceEqual(FrozenStateRecord.Project(module)))
-                    return new(2, string.Empty, $"TRUTH_EXPORT_REJECTED frozen state does not match current report: {path.Value}\n");
-            var catalog = FrozenContentAddress.Build(snapshot, truth.Lean, states,
-                LeanImportAdjacency.BuildFromSources(snapshot)) switch
-            {
-                FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
-                FrozenMaterialOutcome.Rejected rejected => throw new FormatException(rejected.Message),
-                _ => throw new InvalidOperationException("unknown frozen material outcome"),
-            };
+            if (!TryPrepareFrozenTruth(snapshot, report, out var prepared, out var rejection))
+                return new(2, string.Empty, $"TRUTH_EXPORT_REJECTED {rejection}\n");
 
             var model = TruthExportProjection.Project(
-                catalog.ClosedNodes,
-                frozen.Selectors.ToImmutableHashSet(),
+                prepared.Catalog.ClosedNodes,
+                prepared.Frozen.Selectors.ToImmutableHashSet(),
                 identity.Revision,
                 Bare(identity.TreeOid));
             var finalPath = WriteAtomically(options.OutDirectory, model);
@@ -73,6 +59,40 @@ internal static class TruthExportCommand
                 string.Empty,
                 $"TRUTH_EXPORT_INVALID {exception.Message}\n");
         }
+    }
+
+    /// Checks every frozen state record against the current report and builds the content-addressed
+    /// catalog of Closed modules shared by truth-export and truth-release.
+    internal static bool TryPrepareFrozenTruth(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        out FrozenTruth prepared,
+        out string rejection)
+    {
+        prepared = null!;
+        rejection = string.Empty;
+        var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
+        var states = LeanTruthStates.Resolve(snapshot, truth.Lean);
+        var frozen = FrozenStateCatalog.Load(snapshot);
+        foreach (var (path, record) in frozen.Records)
+            if (!snapshot.Files.ContainsKey(path) || !states.TryGetValue(path, out var state) || state is not TruthState.Closed
+                || !report.Files.TryGetValue(path, out var module)
+                || record.StatementId != FrozenContentAddress.ComputeModuleStatementId(path, module)
+                || !record.Declarations.SequenceEqual(FrozenStateRecord.Project(module)))
+            {
+                rejection = $"frozen state does not match current report: {path.Value}";
+                return false;
+            }
+
+        var catalog = FrozenContentAddress.Build(snapshot, truth.Lean, states,
+            LeanImportAdjacency.BuildFromSources(snapshot)) switch
+        {
+            FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
+            FrozenMaterialOutcome.Rejected rejected => throw new FormatException(rejected.Message),
+            _ => throw new InvalidOperationException("unknown frozen material outcome"),
+        };
+        prepared = new FrozenTruth(truth, states, frozen, catalog);
+        return true;
     }
 
     internal static bool IsTruthInput(string path) => LeanClosureValidator.IsReportLean(path)
@@ -176,4 +196,10 @@ internal static class TruthExportCommand
     private readonly record struct TruthExportArguments(
         string OutDirectory,
         string CandidateLeanReport);
+
+    internal sealed record FrozenTruth(
+        TruthContext Truth,
+        ImmutableDictionary<RepoPath, TruthState> States,
+        FrozenStateCatalog Frozen,
+        FrozenMaterialCatalog Catalog);
 }
