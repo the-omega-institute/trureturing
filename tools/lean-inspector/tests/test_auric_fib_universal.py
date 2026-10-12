@@ -42,8 +42,7 @@ class UniversalProductionTests(unittest.TestCase):
         if any(path.exists() for path in cls.sources + owned_outputs):
             raise RuntimeError('universal fixture is already owned; refusing takeover')
         cls.addClassCleanup(cls.cleanup)
-        cls.environment = dict(os.environ, GIT_OPTIONAL_LOCKS='0',
-            STRATALINT_LEAN_PRODUCER_DLL=str(ROOT / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'))
+        cls.environment = dict(os.environ, GIT_OPTIONAL_LOCKS='0')
         cls.diagnostics = Path(os.environ.get('FIB_UNIVERSAL_DIAGNOSTICS', cls.directory))
         cls.diagnostics.mkdir(parents=True, exist_ok=True)
         cls.sequence = 0
