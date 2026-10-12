@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/Hyperideal/LengthGramMetricSegments
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Convex.Segment]
+   anchors: [mathlib/module/Mathlib.Analysis.Convex.StdSimplex]
    utility: none
    digest: Actual isometric intervals, original affine-segment coverage and full ambient-between rigidity for the same frozen radial body. -/
 
