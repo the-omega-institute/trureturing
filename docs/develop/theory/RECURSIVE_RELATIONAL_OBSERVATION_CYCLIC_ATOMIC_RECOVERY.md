@@ -1239,3 +1239,786 @@ no physical realization or global novelty assertion is included.
 [MMN]: https://arxiv.org/html/1503.06687v2
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Complete native control on the entire acquired fiber
+
+**Definition 11.1 (the native instance of complete observable control).**
+Keep Assumption 1.1, the entire nonempty domain (CAR.3), its common
+authenticated entry at epoch $N$, and the complete original target
+$R_Q(u)$. Instantiate [Continuation II, Definitions 26.1–26.2][MEM-CII]
+as follows. A table $C$ has a finite nonempty set $E$, one common initial
+state $e_0$, and one instruction at each state:
+
+$$
+\mathsf{Read}(p_e),\qquad \mathsf{ApplyRho},\qquad
+\mathsf{Halt}(Y_e).
+\tag{CAR.45}
+$$
+
+A read instruction contains a fixed finite physical word and has one
+successor for each of the four literal replies. An update instruction
+has one successor, since the update supplies no source-dependent reply.
+A halt contains one concrete complete row and is absorbing. At a read
+the register is unchanged; an update really replaces the same register
+by its $\rho$ image. All addresses, including absent addresses, remain
+legal. A successful table halts with $R_Q(u)$ on every $u\in D$.
+
+The cardinality $|E|$ counts all installed states, including unreachable
+ones. Program position, retained replies, running/halting distinctions,
+mutable selectors and retained output choices are part of this same
+state. There is no other readable epoch, chart, rank, history, cache,
+address generator or output decoder. An instruction and its response
+successors are identical on every visit, even when visits arise from
+different sources, histories or actual epochs. The physical register is
+the plant; its unobserved contents are not controller state. In proofs a
+configuration can be indexed by $(u,j,e)$, with register $\rho^j u$ and
+original target $R_Q(u)$; neither $u$ nor $j$ is an extra observation.
+
+This is the native synchronous whole-word request and whole-row halt
+contract. A response is consumed in selecting the next state, without a
+separately accessible response buffer. Every actual read, including a
+repetition or absence, contributes to (CAR.4). Halt contributes no read
+or update. Bitwise address emission, waiting states, output serialization
+and a serial physical realization require their own state and cost
+accounting. The state cardinality here does not price those mechanisms.
+
+Fixed instructions, literal words, complete output rows and the common
+retained input have a separate installation charge. In particular a
+small $|E|$ does not bound the sizes of $p_e$ or $Y_e$. Definition 12.3
+gives one explicit complete literal encoding. Acquisition, retention,
+authentication and the complete access cut keep their original ARH
+contracts; installation does not erase or pay those obligations.
+
+**Theorem 11.2 (a uniform action bound for each installed table).**
+For a table with $s=|E|$, put
+
+$$
+\begin{aligned}
+w(p)&=\#_L(p)+2\#_R(p),\\
+W_C&=\max(\{0\}\cup\{w(p_e):e\text{ is a read state}\}),\\
+b_C&=\max(0,W_C+2-N),\qquad T_C=s(b_C+1).
+\end{aligned}
+\tag{CAR.46}
+$$
+
+On any finite original source, every halting execution of this table
+uses at most $T_C$ nonhalt actions. Consequently, if it terminates on
+every source in $D$, this is a uniform bound on $q_C(u)+a_C(u)$ over
+the entire $D$. It does not require cycle coverage or a bound on source
+size. If $A_C$ is the largest installed word length, with maximum zero
+when there are no read states, then also $\ell_C(u)\le A_CT_C$.
+
+Proof. Reuse the all-finite-source identity [JRF, (2.4)][JRF]:
+
+$$
+j\ge w(p)+2\quad\Longrightarrow\quad
+r_{\rho^j u}(p)=\mathsf{branch}
+\quad\text{for every finite }u.
+\tag{CAR.47}
+$$
+
+Fix a halting execution and let $J=N+b_C$. Before epoch $J$, revisiting
+the same pair $(j,e)$ repeats the same physical register and complete
+controller state. Determinism would repeat the entire subsequent
+execution forever. Thus no such pair repeats before halt. There are
+at most $s b_C$ pairs with $N\le j<J$, so at most that many actions
+start before $J$, including any update that first reaches $J$.
+
+At and after $J$, every installed read returns branch, by (CAR.47),
+and it continues doing so after any number of further updates. The
+successor of a nonhalt state is now a fixed function of that state:
+its branch successor or its update successor. A repeated nonhalt state
+would follow a cycle of this function forever. A halting execution
+therefore takes at most $s$ further actions. This proves (CAR.46),
+including early halts and $b_C=0$. Each read has length at most $A_C$,
+which gives the length bound. The argument analyzes the actual table;
+it neither changes instructions nor equips the controller with a clock.
+$\square$
+
+**Corollary 11.3 (finite native control and CAR boundedness).**
+On a nonempty cycle-covered fiber the following are equivalent:
+
+1. a successful table of Definition 11.1 exists, with some finite number
+   of states and some finite installation;
+2. the sentences (CAR.16) hold;
+3. a successful entry-static table of Definition 11.1 exists, with some
+   finite number of states and some finite installation.
+
+Proof. Theorem 11.2 makes a table in item 1 a legal bounded-read service
+on the same $D$, so Theorem 5.2 gives item 2. In the other direction,
+Theorem 5.2 constructs a finite actual decoder/read tree and finitely
+many concrete whole-row outputs. Give each actual read vertex a state,
+and give the terminal outputs halt states; use their prescribed response
+edges and the common root as initial state. The construction is finite,
+entry-static and correct on all of $D$, proving item 3. Item 3 implies
+item 1. This is an existence equivalence with unrestricted finite
+installation and state cardinality, not a preservation result for a
+specified state budget. $\square$
+
+**Proposition 11.4 (two entire-fiber consumers).** On the fiber of
+Proposition 9.1 no successful finite native table exists, despite its
+finite complete target image. On the entire restricted fiber of
+Proposition 9.2, the least complete state cardinality is exactly three.
+Three states attain the sourcewise cost $(1,0,7)$, with their fixed
+literal installation paid separately.
+
+Proof. Proposition 9.1 gives negative (CAR.16), so Corollary 11.3
+excludes every finite table, regardless of the lengths of its finitely
+many installed words. This uses its whole coupled fiber and its original
+finite same-fiber witnesses, not a finite subset as a replacement domain.
+
+For Proposition 9.2 install one state reading $R^7$, one halt carrying
+its complete row with the specified cross-sector equalities, and one
+halt carrying its complete row without them. The absent and $\alpha$
+successors go to the former halt; $\beta$ and branch go to the latter.
+That proposition proves correctness and the stated costs on its whole
+infinite fiber. The two distinct rows require two distinct halt states.
+The common initial state cannot already be a halt because both rows
+occur, so at least one additional running state is necessary. This
+proves the minimum three without identifying an output partition label
+with the complete row installed at its halt. $\square$
+
+## 12. Exact feasibility with shared instructions and outputs
+
+**Theorem 12.1 (specified native state, read and update budgets).**
+For a nonempty cycle-covered input and specified integers $K,k,d\ge0$,
+existence of a successful native table satisfying
+
+$$
+|E|\le K,\qquad
+q_C(u)\le k,\qquad a_C(u)\le d\quad(u\in D)
+\tag{CAR.48}
+$$
+
+is decidable. An additional bound $\ell_C(u)\le L$ for a specified
+integer $L\ge0$ is also decidable. A positive answer constructs a
+literal table satisfying all the requested bounds. With no $L$ bound,
+the read words may have arbitrary finite lengths. Installation is finite
+but has no prescribed upper bound in this theorem.
+
+Proof. If $K=0$ the answer is false. Otherwise enumerate the finitely
+many state sets $E=\{0,\ldots,s-1\}$ with $1\le s\le K$, initial
+states, instruction types and successor tables. A read state has four
+successors, an update state one, and a halt is absorbing. At this stage
+leave literal read words and halt outputs unspecified.
+
+Assign to each read state $e$ exactly one descriptor $\delta_e$ of
+Definition 6.1. There are finitely many descriptor types: short words,
+or a fixed pair $(z,e')$ for a long descriptor. Its long numeric
+parameters satisfy (CAR.19). They are common existential design
+variables, selected before all source quantifiers. Every visit to the
+same state uses the same descriptor. This invokes the existing
+all-chart, all-epoch correspondence of Theorem 6.2, rather than giving
+separate addresses to unfolded visits.
+
+Let $B=k+d$. For each chosen graph enumerate its formal paths from the
+initial state through at most $B$ nonhalt actions. Stop a path at its
+first halt. Read edges are labeled by literal replies; update edges are
+the unique update successors. Cycles are allowed in the graph and a
+path can visit a state repeatedly. This finite expansion is used only
+to describe the graph's executions, not as its implemented state set.
+
+For a path $\pi$, let $a_{\pi,i}$ count updates strictly before its
+$i$th action. In chart $\eta$, define
+
+$$
+\operatorname{Path}_{\eta,\pi}(\mathbf n;\boldsymbol\delta)
+=\bigwedge_{i:\,\text{action }i\text{ is a read at }e_i}
+\operatorname{Reply}_{\eta,c_i}
+ (\mathbf n,N+a_{\pi,i},\delta_{e_i}).
+\tag{CAR.49}
+$$
+
+The same tuple $\mathbf n$ supplies every conjunct. Thus update counts
+are actual elapsed updates on the path; there is no virtual epoch cap.
+Let $q_\pi,a_\pi$ count its reads and updates, and let $v_{\pi,e}$
+count visits to read state $e$. Its length cost is
+
+$$
+\ell_\pi=\sum_{e\text{ read}}v_{\pi,e}|\delta_e|.
+\tag{CAR.50}
+$$
+
+All multiplicities here are fixed integers of a finite path. Repeated
+reads and absent replies are included. For a halt state $h$, put
+
+$$
+H_{\eta,h}(\mathbf n;\boldsymbol\delta)
+=\bigvee_{\pi:\,\pi\text{ ends at }h,\ |\pi|\le B}
+\operatorname{Path}_{\eta,\pi}(\mathbf n;\boldsymbol\delta).
+\tag{CAR.51}
+$$
+
+Impose the following finite collection of conditions. First, every
+admitted source reaches a halt within the horizon:
+
+$$
+\forall\mathbf n\quad
+\operatorname{Adm}_\eta(\mathbf n)
+\Longrightarrow\bigvee_h H_{\eta,h}(\mathbf n;\boldsymbol\delta)
+\quad\text{for every }\eta.
+\tag{CAR.52}
+$$
+
+Second, on every reachable terminal path require $q_\pi\le k$,
+$a_\pi\le d$, and, when requested, $\ell_\pi\le L$. Reachability
+means $\exists\mathbf n\,(\operatorname{Adm}_\eta\land
+\operatorname{Path}_{\eta,\pi})$ for some chart. Third, for each
+halt state impose the cross-history condition
+
+$$
+\begin{aligned}
+\forall\mathbf n\,\forall\mathbf m\quad
+&\operatorname{Adm}_\eta(\mathbf n)\land
+ \operatorname{Adm}_\theta(\mathbf m)\land
+ H_{\eta,h}(\mathbf n;\boldsymbol\delta)\land
+ H_{\theta,h}(\mathbf m;\boldsymbol\delta)\\
+&\hspace{25mm}\Longrightarrow
+ \operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)
+ \quad\text{for every }\eta,\theta,h.
+\end{aligned}
+\tag{CAR.53}
+$$
+
+This compares all histories ending at one installed halt, including
+different terminal epochs and different charts. Constancy separately
+at each leaf of an unfolded tree would not imply (CAR.53).
+
+These are Presburger conditions by Lemma 4.1 and Theorem 6.2. Formula
+(CAR.50) is linear because its visit counts are fixed, even when
+descriptor lengths are unbounded variables. Existentially quantify all
+descriptor parameters outside these conditions and decide the finite
+disjunction over graphs and descriptor types using Definition 4.2.
+Empty path sets have disjunction false; a root halt has the empty path
+with all three costs zero. Thus zero budgets, ground charts, absent
+reads and immediate halts need no additional assumptions.
+
+For necessity, take any successful table satisfying (CAR.48). Each run
+has at most $B$ actions. Replace each read word by its descriptor, once
+per state. Theorem 6.2 preserves all its replies and its exact length on
+each same source at every actual epoch, so induction preserves its
+control-state sequence and costs. By Theorem 3.2 every original source
+has one admitted chart tuple, and every admitted tuple is such a source.
+Thus (CAR.52) and the reachable-path budgets hold. Two sources reaching
+the same halt must have its one installed complete row, giving (CAR.53).
+No record or cross-class inequality has been omitted from $\operatorname{Adm}$.
+
+For sufficiency, extract the common descriptor parameters after a true
+decision and realize each state descriptor once as a fixed literal word
+by Theorem 6.2. For every halt whose support in (CAR.51) is nonempty,
+extract one admitted tuple, expand its finite source by (CAR.12), and
+compute that source's entire original row. Install this concrete row at
+the halt. Condition (CAR.53) makes it correct for every other source
+reaching the same halt. At an unreachable halt install any concrete row,
+for example the row of one witness to nonempty $D$.
+
+On any actual source, the unique tuple of Theorem 3.2 and the literal
+reply equivalence (CAR.21) inductively identify its unique execution
+with the compatible paths (CAR.49). Condition (CAR.52) forces that
+execution to halt by $B$; the path inequalities give its actual paid
+costs; (CAR.53) gives its actual full output. The implementation uses
+the chosen $s$ states themselves. Neither path position, descriptor
+parameters under quantification, witness source nor proof tuple is a
+runtime input. This proves both operational directions on exactly $D$.
+
+To connect this particular implementation to Continuation II Theorem
+27.2, at state $e$ take the support of all actually reachable pairs
+$(R_Q(u),\rho^j u)$. All its selected operations are legal, including
+absent reads, and their actual responses preserve that support. The
+remaining number of actions is a natural-valued decreasing rank, at
+most $B$ initially. It is well defined from the plant and control state:
+equal such configurations have the same deterministic continuation,
+even when reached from different histories. At a halt the support has
+the installed complete output by (CAR.53). These are proof supports and
+ranks, with no additional observable register or supplied finite plant.
+$\square$
+
+**Corollary 12.2 (one finite action budget suffices).** Keep the finite
+state bound $K$. Theorem 12.1 still decides feasibility if only the
+read bound or only the update bound is specified, with an optional
+finite length bound.
+
+Proof. In a terminating execution, a consecutive update-only block
+cannot revisit an update state: its source-independent successors would
+then repeat updates forever. Each such block has at most $K$ actions.
+If $q\le k$, there are at most $k+1$ such blocks, including any block
+before the first read or after the last. Hence $a\le(k+1)K$.
+
+At a fixed actual epoch, a read-only block cannot revisit a read state,
+since the register and control state would repeat and prevent halt.
+It has at most $K$ reads. If $a\le d$, there are at most $d+1$ such
+blocks, so $q\le(d+1)K$. Apply Theorem 12.1 with the derived bound.
+This preserves the candidate table and uses no resource normalization.
+$\square$
+
+**Definition 12.3 (a complete finite literal installation budget).**
+Fix the following injective binary serialization. Encode a natural
+number $t$ as $1^t0$. Encode a finite word by its encoded length followed
+by its bits, with $L=0,R=1$. Encode finite lists by their encoded length
+followed by their entries. Encode a finite marked exterior recursively
+with two-bit tags for $\alpha$, $\beta$, ordered pair, and numbered
+hole; a pair is followed by its two subtrees, and a hole by its encoded
+number. A complete row consists of its list of reached addresses in
+lexicographic order, its marked exterior, and the restricted-growth
+class-label list for its full hole partition. Hole numbering and class
+labels are canonical. This encodes the entire concrete exterior and
+partition, including zero holes; it is not a compressed output name.
+
+The common input has a fixed literal encoding of $P,Q,R,H_0,H_{\rm rel},N$
+and the stipulated finite permission and entry-description data. Use
+the preceding list, word, integer and row encodings, finite tags for
+replies and signs, and length-prefixed bits for any other fixed field.
+Let its length together with the fixed format description be $I_0$.
+This charges the retained description, not the act of acquisition,
+authentication or erasure. No additional source-bearing input is allowed.
+
+Index a table's $s$ states by $0,\ldots,s-1$. Append the encodings of
+$s$ and $e_0$, followed in state order by a two-bit instruction tag and:
+for a read, its word and four successor indices in a fixed reply order;
+for an update, its one successor index; for a halt, its complete row.
+Halt absorption is part of the fixed format. Invalid indices, tags or
+row encodings are rejected. Call the total bit length $I(C)$, including
+$I_0$ and every installed state. No table, word, row or common datum is
+stored outside this charge. This is a mathematical installation size
+for the specified atomic interface, not a claim about physical peak
+storage or serialization time. The online state count remains $s$.
+
+**Theorem 12.4 (exact complete-installation-budget feasibility).**
+For a nonempty cycle-covered input, specified integers $K,S\ge0$, and
+any upper bounds $k,d,L\in\mathbb N\cup\{\infty\}$, existence of a
+successful native table with
+
+$$
+|E|\le K,\quad I(C)\le S,\quad
+(q_C(u),a_C(u),\ell_C(u))\le(k,d,L)\quad(u\in D)
+\tag{CAR.54}
+$$
+
+is decidable. Every positive decision supplies the actual finite literal
+table. Both action budgets may be infinite.
+
+Proof. There are finitely many binary strings of length at most $S$.
+Parse them with the fixed input prefix of Definition 12.3 and retain
+the valid tables with at most $K$ states. This includes every table
+admissible under that encoding and budget, with arbitrary literal
+addresses and concrete output rows that fit the budget.
+
+For each candidate compute $T_C$ from its actual read words by (CAR.46).
+Enumerate its formal paths through that many nonhalt actions. Use
+(CAR.49) with these literal words and their actual preceding update
+counts, and use horizon $B=T_C$ in (CAR.51)–(CAR.52). Require (CAR.52),
+all finite requested cost inequalities on
+reachable terminal paths, and, for every terminal path to $h$,
+
+$$
+\forall\mathbf n\quad
+\operatorname{Adm}_\eta(\mathbf n)\land
+\operatorname{Path}_{\eta,\pi}(\mathbf n)
+\Longrightarrow R_Q(\Theta_\eta(\mathbf n))=Y_h.
+\tag{CAR.55}
+$$
+
+Lemma 4.1(4) supplies precisely this last comparison with the candidate's
+already installed row. Pairwise support constancy without (CAR.55)
+would allow a uniformly wrong installed output, and is insufficient.
+All tests are Presburger sentences. Infinite budget coordinates simply
+contribute no inequality.
+
+If a candidate succeeds on every source, every run halts by $T_C$ by
+Theorem 11.2, so all tests hold. Conversely (CAR.52) makes every actual
+source halt within that horizon, and (CAR.55) and the path inequalities
+give its correct complete row and costs. The same-source correspondence
+is the induction in Theorem 12.1, using the bijection (CAR.13).
+The finite enumeration and each arithmetic test terminate, giving both
+directions of (CAR.54). The source domain is never enumerated or cut off;
+only installed tables and their uniformly bounded path descriptions are
+finite. $\square$
+
+## 13. An infinite acquired fiber separating updates from complete state
+
+**Definition 13.1 (the retained family).** Fix an integer $m\ge6$ and
+put
+
+$$
+B_m=m(2m+2),\qquad D_m=B_m+1,\qquad N_m=2m+1.
+\tag{CAR.56}
+$$
+
+For $v\in\mathcal T$ set $G_0(v)=v$ and
+$G_{j+1}(v)=\langle\alpha,G_j(v)\rangle$. For $D\ge1$ write
+
+$$
+U_D(x,z,w)=\langle x,G_{D-1}(\langle z,w\rangle)\rangle,
+\qquad a=L,\quad b=R^{D_m}L,\quad c=R^{D_m}R.
+\tag{CAR.57}
+$$
+
+Take the old cut $P_m=\{a,b,c\}$ with this concrete outside and three
+distinct old classes $x,z,w$. Retain exactly the following literals:
+
+$$
+\begin{gathered}
+(0,a,\mathsf{branch}),\quad
+(0,aR^mL,\mathsf{absent}),\quad
+(0,bL,\mathsf{absent}),\\
+(0,c,\mathsf{branch}),\quad
+(0,cR^m,\mathsf{branch}).
+\end{gathered}
+\tag{CAR.58}
+$$
+
+Retain the positive relations
+
+$$
+(2,aR,0,a,=),\qquad(2,cR,0,c,=),
+\tag{CAR.59}
+$$
+
+and, for each odd $j\in\{1,3,\ldots,2m+1\}$, the negative relation
+
+$$
+(0,a,j,b,\ne).
+\tag{CAR.60}
+$$
+
+Every relation has the endpoint guards of (CAR.2). Entry is at authentic
+epoch $N_m$, which is at least every recorded epoch. The original target
+cut is $Q_m=\{a,c\}$. The full old row and these records, with the
+complete access cut of Assumption 1.1, define the domain; no additional
+atomic, parity or size promise is imposed.
+
+**Proposition 13.2 (recognition and both domain directions).**
+The entire fiber in Definition 13.1 is exactly
+
+$$
+\mathcal D_m=
+\left\{U_{D_m}(T_n,T_{n\bmod2},T_h):
+2\le n\le2m+1,\quad h\ge2m+2\right\}.
+\tag{CAR.61}
+$$
+
+It is nonempty, infinite and cycle-covered. Its complete original
+$Q_m$ row has exactly two values $Y_0,Y_1$, indexed by $n\bmod2$.
+Each $Y_e$ has the full marked outside of (CAR.57), the concrete leaf
+$T_e$ at $b$, and the two reached, unequal holes at $a,c$.
+
+Proof. The exact old-row correspondence gives $u=U_{D_m}(x,z,w)$ with
+three pairwise distinct nonempty finite trees. The branch literal at
+$a$ gives $x=\langle s,t\rangle$. Its positive record (CAR.59) reads
+
+$$
+\rho^2(t)=\langle s,t\rangle.
+\tag{CAR.62}
+$$
+
+This has a strict self-edge at $t$ and a strict edge from $t$ to $s$.
+Theorem 2.2 forces both to be atomic. If $t=T_i$, free constructor
+equality and (CAR.7) give $s=T_{i+1}$ and $x=T_{i+2}$. Conversely
+every $x=T_n$, $n\ge2$, satisfies this record at reached endpoints.
+The same argument at $c$ gives $w=T_h$ for $h\ge2$.
+
+The absence at $bL$ makes $z$ a leaf, hence $z=T_e$ for exactly one
+$e\in\{0,1\}$. Indeed a branch would have a reached left child.
+By the guarded atomic formula (CAR.23), $R^mL$ is reached in $T_n$
+exactly when $n\ge2m+2$. Thus its absence gives $n\le2m+1$.
+The reply at $R^m$ in $T_h$ is branch exactly when $h\ge2m+2$.
+
+Every endpoint in (CAR.60) is reached: $a,b$ are reached original
+holes, and forward substitution preserves them. The relations say
+$T_n\ne T_{e+j}$, hence $n\ne e+j$, for every indicated odd $j$.
+If $e=0$, these exclusions remove precisely the odd members of
+$[2,2m+1]$. If $e=1$, they remove precisely the even members. Thus
+$e=n\bmod2$. The inequalities $e<2\le n<2m+2\le h$ imply all
+three old class inequalities. This proves the inclusion of the whole
+acquired fiber in (CAR.61), with every literal, sign and old class used.
+
+Conversely choose any two integers in the displayed ranges and set
+$e=n\bmod2$. The three subtrees are distinct, the old marked outside
+is exactly the specified one, and the preceding guard calculations
+verify all five literals. Identity $\rho^2(T_{r-2})=T_r$ verifies
+both positive records for $r=n,h$. Every negative record has reached
+endpoints and unequal ranks by parity. Therefore this actual finite
+source has exactly the retained input. There are no other sources, and
+letting $h$ increase gives infinitely many distinct ones.
+
+For recognition, use as a core the old row, the branch literals at
+$a,c$, the absence at $bL$, and the two positive records. Choose the
+navigation cover of ARH Definition 19.3, with empty auxiliary cut as
+in Definition 3.1. Its literal processing first splits $x$ into its
+two children, excludes the branch case for $z$ by the absence at $bL$,
+and splits $w$ into its two children. Thus $z$ has two concrete leaf
+charts. Each subsequent relation endpoint stops at a whole template:
+$\rho^2(t)$ and $\langle s,t\rangle$, or their $w$ counterparts.
+It requires no further split. In each surviving chart the four remaining
+variables are exactly these two pairs of children. Equation (CAR.62)
+and its counterpart cover them all by strict cycles and their forward
+closure. The old inequalities remain mandatory chart constraints;
+no disequality is used to create a cycle. This proves membership in
+Definition 3.1 using one of its actual cover procedures, with the
+remaining records imposed jointly by Theorem 3.2.
+
+The fixed public lists of (CAR.58)–(CAR.60), the old cut and the final
+epoch are inputs to the supplied ARH Proposition 2.1 producer. It
+acquires every literal and signed comparison using finite paid work on
+each source. Under its complete-cut hypothesis, the successful retained
+outcome has exactly the two-direction fiber just proved. This does not
+give a uniform acquisition cost or a physical erasure procedure.
+
+The target replaces exactly $x$ and $w$ by holes. Their indices are
+unequal for every source, so their entire partition consists of two
+singleton classes. Everything else in the outside is fixed except
+the concrete leaf $z=T_e$ at $b$. Thus the full row is precisely $Y_e$.
+Both values occur, at $n=2$ and $n=3$, for any allowed $h$. The hidden
+unbounded $T_h$ remains an actual target hole and retains its inequality
+with the other hole. $\square$
+
+**Theorem 13.3 (five complete states with paid updates).**
+On the entire $\mathcal D_m$ at entry $N_m$ there is a successful native
+table with five states and exact worst costs
+
+$$
+b(C_m)=(m,2m-2,B_m).
+\tag{CAR.63}
+$$
+
+It has one read state $r$, two update states $v_1,v_2$, and two halt
+states $h_0,h_1$. Its initial state is $r$. The read word is
+$p=LLR^{2m}$. Its absent successor is $v_1$, its $\alpha$ successor
+is $h_0$, and its $\beta$ successor is $h_1$; choose $h_0$ for its
+branch successor. The update successors are $v_1\to v_2\to r$.
+State $h_e$ carries the complete row $Y_e$.
+
+Proof. The first $L$ of $p$ enters $x=T_n$. Its remaining suffix
+$LR^{2m}$ has weight $4m+1$ and last edge $R$. After $t$ actual
+post-entry updates, the residual in (CAR.23) is
+
+$$
+n+N_m+t-(4m+1)=n-2m+t.
+\tag{CAR.64}
+$$
+
+Since the last edge is $R$, a negative residual gives absence, zero
+gives $\alpha$, one gives $\beta$, and a value at least two gives
+branch. The first residual is at most one. Each return to $r$ adds
+exactly two through two real updates, so the first nonnegative
+residual is zero for even $n$ and one for odd $n$. Branch is never
+returned on an admitted execution. The controller halts at the correct
+full row, without a retained count or parity variable.
+
+Writing $n=2j$ or $2j+1$, where $1\le j\le m$, the number of
+two-update loops is $m-j$. Hence the sourcewise costs are
+
+$$
+q=m-j+1,\qquad a=2(m-j),\qquad
+\ell=(2m+2)(m-j+1).
+\tag{CAR.65}
+$$
+
+They are independent of $h$, but correctness still applies to every
+allowed $h$. At $n=2$ or $3$ all three maxima in (CAR.63) are
+attained by the same actual source. Every state is reached on the
+whole fiber. All literal words and both complete rows are installed
+in the five-state table; their sizes are not bounded by five.
+$\square$
+
+**Theorem 13.4 (a static state lower bound on the same infinite fiber).**
+Every successful native table on all of $\mathcal D_m$ with zero
+actual post-entry updates and $\sup\ell\le B_m$ has
+
+$$
+|E|\ge 2+\left\lceil\frac{2m-1}{3}\right\rceil.
+\tag{CAR.66}
+$$
+
+No read-count or installation bound is assumed for this lower bound.
+
+Proof. Let $r$ be the number of read states reachable from some source
+in the whole $\mathcal D_m$. Each of their literal words has length
+at most $B_m$, because an actual visit pays that nonnegative length
+as part of its run's total. Fix $h=2m+2$ only for the lower-bound
+witnesses, and consider the actual same-fiber sources
+
+$$
+u_n=U_{D_m}(T_n,T_{n\bmod2},T_{2m+2}),
+\qquad n=2,3,\ldots,2m+1.
+\tag{CAR.67}
+$$
+
+A word of length at most $B_m<D_m$ cannot enter either deep original
+hole at $b$ or $c$, whose lengths are $D_m+1$. Forward substitution
+preserves every original pairing node and its address, so entry at
+$N_m$ does not shorten those paths. A word not entering $x$ consequently
+has a reply independent of $n$: it encounters a fixed part of the comb
+or an image of one of its fixed $\alpha$ leaves.
+
+A word entering $x$ starts with $L$. At the empty suffix the reply is
+branch for every indicated $n$. At a nonempty suffix $s$ ending in
+$e$, (CAR.23) says that its reply at epoch $N_m$ is determined by
+$n+N_m-w(s)$, with the endpoint threshold $2-\omega(e)$. As $n$
+increases, the four possible replies occur in the order
+
+$$
+\mathsf{absent},\quad\alpha,\quad\beta,\quad\mathsf{branch},
+\tag{CAR.68}
+$$
+
+with some values possibly skipped. A word ending in $L$ skips
+$\alpha$, because its reachability threshold is one. In particular
+each installed read word changes its reply at no more than three of
+the $2m-1$ adjacent positions in the sequence (CAR.67).
+
+Take the vector of replies to all $r$ reachable read-state words at
+the fixed entry epoch. It changes at at most $3r$ adjacent positions.
+If two of these sources have equal vectors, their entire executions
+are identical: start in the common initial state; every encountered
+read is among these $r$ words and returns the same reply; their next
+states therefore coincide. No update is encountered on an admitted
+execution, by the hypothesis of zero actual updates. Induction gives
+the same halt and the same complete output. This argument permits
+adaptive choices, arbitrarily many read calls and unused update states.
+
+The correct rows on consecutive $u_n$ are $Y_{n\bmod2}$ and
+$Y_{(n+1)\bmod2}$, which differ. Each of the $2m-1$ adjacent positions
+must therefore be a vector change. Thus $3r\ge2m-1$. Both complete
+rows occur, requiring two distinct halt states in addition to the
+read states. This proves (CAR.66). The witness list (CAR.67) is used
+to refute a controller required to work on the whole infinite domain;
+it does not redefine that domain or remove the unbounded $h$ coordinate.
+$\square$
+
+**Proposition 13.5 (a paid static upper comparison).** There is also a
+successful static table on $\mathcal D_m$ with $m$ read states and the
+two halt states. Its exact worst costs are
+
+$$
+\left(m,0,B_m-\frac{m(m-1)}2\right).
+\tag{CAR.69}
+$$
+
+Proof. At stage $i=0,\ldots,m-1$ read the literal word
+$p_i=LLR^{2m-i}$. On absence go to stage $i+1$, and on $\alpha$ or
+$\beta$ go to the corresponding full-row halt. At the last read send
+absence to either halt, and send branch to either halt at every stage;
+these responses are unreachable. The residual at stage $i$ is
+$n-2m+2i$, the same as (CAR.64) after $i$ two-update loops. Thus the
+first non-absent response is the same and occurs no later than stage
+$m-1$. All sources halt correctly without updates. The word lengths
+are $2m+2-i$, so the longest path, attained at $n=2,3$, pays
+$\sum_{i=0}^{m-1}(2m+2-i)$, yielding (CAR.69). This uses a distinct
+installed read state for each stage; it has no free stage counter.
+Its installation size need not equal that of $C_m$. $\square$
+
+**Corollary 13.6 (the resource cap cannot also preserve specified state).**
+The sourcewise update cap (CAR.29) cannot in general be strengthened to
+preserve a specified complete native state budget, even if one allows
+the replacement to decrease its number of reads. For $m=6$, a five-state
+table has exact worst costs $(6,10,84)$, but no five-state zero-update
+table with worst length at most $84$ recovers the same whole target on
+the same entire fiber.
+
+Proof. Here $N_m=2m+1\ge5$, so (CAR.29)'s capped actual update count
+is zero. Theorem 13.3 supplies the five-state table. At $m=6$, (CAR.66)
+requires $2+\lceil11/3\rceil=6$ states for every static replacement
+with the stated length bound, independently of its read count. Any
+sourcewise length-nonincreasing replacement would satisfy that bound,
+so cannot also have at most five states. The lower bound grows with
+$m$ whereas the dynamic table always has five states. The positive
+static comparison in Proposition 13.5 exhibits recovery with reduced
+update and address costs and additional control states. This does not
+contradict (CAR.29), which prices those three physical coordinates and
+makes no complete-state guarantee. $\square$
+
+**Proposition 13.7 (consumed feasibility with full installation charged).**
+Let $I_m=I(C_m)$ under Definition 12.3. For every $m\ge6$, the exact
+question (CAR.54) is true at
+
+$$
+(K,S,k,d,L)=(5,I_m,m,2m-2,B_m)
+\tag{CAR.70}
+$$
+
+and false at $(5,S,\infty,0,B_m)$ for every finite $S$, in particular
+for $S=I_m$. The question of Theorem 12.1 is true at
+$(K,k,d,L)=(m+2,m,0,B_m-m(m-1)/2)$.
+
+Proof. $I_m$ is finite and effectively obtained by serializing exactly
+the common retained data and five literal rows in Definition 13.1 and
+Theorem 13.3. This includes the long read word and both deep concrete
+output exteriors; none is a five-state storage allowance. Theorem 13.3
+is the positive witness to (CAR.70), and Theorem 12.4 checks precisely
+its entire acquired domain, not just the representatives attaining its
+maxima. Theorem 13.4 gives at least six states when $m\ge6$ under
+the second question's zero-update and length bounds, even without an
+installation cap, proving its negative answer. Proposition 13.5 gives
+the last witness. These are mathematical answers to the exact finite
+decision problems, not reports of executing a solver. $\square$
+
+## 14. Suppliers and the remaining memory questions
+
+**Definition 14.1 (provenance and hypothesis correspondence).** The
+following identifications specify the suppliers of §§11–13.
+
+| Source | Exact use and retained boundary |
+| --- | --- |
+| [Continuation II §§26–30][MEM-CII] | Complete observable state, one instruction and response update per state, halt outputs, and proof-only support/rank. Its finite-plant enumeration is not applied directly to the infinite register/source domain. |
+| [Continuation II §38][MEM-CII] | The fixed literal instruction and full-state discipline already have this owner. That section's stationary third-image target, retained cache law and leaf-bounded source family differ from the evolving acquired fiber and full row here; neither its size cutoff nor its lower bound is imported. |
+| [Effective Resolution Continuation §13][MEM-ERC] | Synchronous whole-command control and separately counted output states are reused conventions. Its finite affine device and phase target do not supply the native separation. |
+| CAR §§3–6 | The whole-fiber bijection, exact joint predicates, full-row equality and one descriptor realized uniformly on every chart and epoch. The same source tuple supplies every response in (CAR.49). |
+| [JRF (2.4), Theorem 3.1][JRF] | Eventual branch replies on all finite sources supply the new per-table stopping bound. The actual resource cap is used as the specification refuted by Corollary 13.6 when augmented with a state guarantee, not as a state-preserving synthesis step. |
+| [SRF §§1–3][MEM-SRF] and [ARH §§27–32][MEM-ARH] | Exact resources on the entire recognized synchronous family, and whole acquired two-hole-graph arbitrary-cut boundedness with finite negative witnesses, respectively. Their source and decision suppliers retain those hypotheses; they do not establish transfer of a specified complete controller budget to CAR. |
+| [Ginsburg–Spanier, Theorem 1.2][GS] | Decidability of first-order Presburger sentences over nonnegative integers, after the explicit whole-source and action interpretation. Its Theorem 1.3 gives the separate effective semilinear description; no general native-tree solver is inferred from it. |
+| [Reissig–Weber–Rungger, §III][MEM-RWR] | Mature system, Moore-output and feedback-composition framework. It supplies background for the observation/control distinction, not the native stopping bound, state lower bound or arithmetic feasibility theorem. |
+
+The external logical and control-framework results are
+`literature-attested` at these stated scopes. The per-table native
+stopping bridge, shared-state use of the CAR predicates, entire acquired
+family (CAR.61) and its update/state separation are `repo-derived`
+ordinary mathematical deductions. No global novelty assertion is made.
+The [finite-simplicial cell induction supplier][MEM-CELL] concerns finite
+simplicial sets and boundary attachments. It supplies no correspondence
+for this acquired register or its response successors, and no memory
+implication is taken from it.
+
+**Definition 14.2 (limits of the decisions and of realization).**
+Theorem 12.1 fixes finite read and update bounds; Corollary 12.2 can
+derive one from the other for a fixed state budget. Theorem 12.4 instead
+fixes a complete finite literal installation bound and therefore can
+leave both execution bounds unspecified. A per-table bound such as
+(CAR.46) depends on the installed words. It is not a bound in $K$
+alone over unbounded installations.
+
+The prescribed-$K$ question with no read bound, no update bound, no
+length bound and no installation bound remains open here. A phase or
+cycle summary would need an exact correspondence for every actual
+execution, including zero-update loops, shared instructions and shared
+complete outputs. Moreover, the product of an unbounded visit count
+and an unbounded symbolic word length is not covered by the linear
+argument (CAR.50). No unrestricted phase-synthesis theorem, least-$K$
+procedure in that regime, or undecidability conclusion follows from
+the finite decisions above. The exact static state minimum for
+$\mathcal D_m$ is likewise not asserted: the proved bounds are
+(CAR.66) and $m+2$.
+
+Outside cycle coverage, Theorem 11.2 still bounds each installed native
+table, but Lemma 4.1 and Theorem 6.2 have not supplied the general
+signed-fiber predicates and global address interface. The non-atomic
+obligations of Definition 10.2 remain, beyond the separately covered
+SRF and ARH graph families. The proofs here do not import an ambient
+normal-domain or canonicalization solver.
+
+All full-row, joint-source and endpoint-guard statements concern the
+original mathematical finite-tree model. Paid acquisition and a
+complete authenticated access cut are hypotheses, not consequences of
+five online states. Literal installation, atomic read/output semantics,
+serial physical actions and complete future-law recovery are different
+contracts. No physical implementation, asymptotic complexity bound,
+kernel verification or broader full-law attainment is claimed.
+
+[MEM-CII]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+[MEM-ERC]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION_CONTINUATION.md
+[MEM-SRF]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SYNCHRONOUS_RESOURCE_FRONTIER.md
+[MEM-ARH]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[MEM-RWR]: https://arxiv.org/html/1503.03715v3
+[MEM-CELL]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/Blueprint/D5/S3/Geometry/FiniteSimplicialCellInduction.md
+
+## 追加锚（本行以下为增补区）

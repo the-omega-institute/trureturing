@@ -1428,3 +1428,432 @@ atomic minimality or physical spacetime/dimension conclusion.
 [FIBERS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Pairwise persistence with least triple failure at depth three
+
+**Definition 11.1 (one entire acquired four-hole input).** In the native
+algebra of Definition 1.1 put
+
+$$
+\begin{aligned}
+F(y)&=\langle\alpha,\rho y\rangle,\\
+G(y)&=\langle\alpha,\rho^2y\rangle,\\
+U_*(x,y)&=\langle x,\langle y,\langle F(y),G(y)\rangle\rangle\rangle.
+\end{aligned}
+\tag{SPC.11.1}
+$$
+
+Here $F$ is the proper-context map of Definition 8.1, and $G$ has
+the same context with shift two. All occurrences of $y$ within
+one source denote that same whole native value.
+
+Take $P=\{\varepsilon\}$ with its complete one-hole old row,
+authentic final epoch $N=2$, and the target cut
+
+$$
+Q=\{L,RL,RRL,RRR\},
+\tag{SPC.11.2}
+$$
+
+numbered in that order. Retain exactly
+
+$$
+\begin{aligned}
+H_0=\{&(0,\varepsilon,\mathsf{branch}),
+       (0,R,\mathsf{branch}),
+       (0,RR,\mathsf{branch}),\\
+      &(0,RRL,\mathsf{branch}),
+       (0,RRR,\mathsf{branch}),\\
+      &(0,RRLL,\alpha),(0,RRRL,\alpha)\},\\
+H_{\rm rel}=\{&
+ (1,RL,0,RRLR,=),\
+ (2,RL,0,RRRR,=),\\
+ &(0,RL,0,RRL,\ne),\
+ (0,RL,0,RRR,\ne),\
+ (0,RRL,0,RRR,\ne)\}.
+\end{aligned}
+\tag{SPC.11.3}
+$$
+
+There are no other constraints in this instance. The entire old
+row, all listed literal and signed records, both reached guards
+for every relation, and Definition 1.2's supplied paid-source
+complete-state contract are retained. Epochs zero, one and two
+refer to the same original register.
+
+**Theorem 11.2 (entire fiber, exact reconstruction and every row).**
+The input of Definition 11.1 has exactly the entire original fiber
+
+$$
+D_*=\{U_*(x,y):x,y\in\mathcal T\}.
+\tag{SPC.11.4}
+$$
+
+Its complete target-row image consists of exactly four attained
+labels. All have reached set $Q$ and the entire exterior
+
+$$
+\langle\square_1,
+ \langle\square_2,\langle\square_3,\square_4\rangle\rangle\rangle.
+\tag{SPC.11.5}
+$$
+
+Their partitions and entire strata are
+
+$$
+\begin{aligned}
+r_0&:\{\{1,2\},\{3\},\{4\}\},&
+D_0&=\{U_*(y,y):y\in\mathcal T\},\\
+r_1&:\{\{1,3\},\{2\},\{4\}\},&
+D_1&=\{U_*(F(y),y):y\in\mathcal T\},\\
+r_2&:\{\{1,4\},\{2\},\{3\}\},&
+D_2&=\{U_*(G(y),y):y\in\mathcal T\},\\
+r_3&:\{\{1\},\{2\},\{3\},\{4\}\},&
+D_3&=\{U_*(x,y):x,y\in\mathcal T,\
+                    x\ne y,\ x\ne F(y),\ x\ne G(y)\}.
+\end{aligned}
+\tag{SPC.11.6}
+$$
+
+Every source in each right-hand set satisfies the complete original
+input and its stated row. Conversely every source satisfying that
+input and row is reconstructed as the same original source in that
+set, with its original whole values.
+
+Proof. The seven epoch-zero literals force precisely a decomposition
+
+$$
+u=\langle x,\langle y,
+        \langle\langle\alpha,z\rangle,
+               \langle\alpha,w\rangle\rangle\rangle\rangle
+\tag{SPC.11.7}
+$$
+
+with $x,y,z,w\in\mathcal T$. To see the entire direction, the branch
+literals at $\varepsilon,R,RR$ force the first three pairings.
+Those at $RRL,RRR$ force their two child pairings, and the literals
+at $RRLL,RRRL$ fix the displayed alpha leaves. Their other children
+are exactly $z,w$, without any extra restrictions. These values
+are the actual subtrees of the original $u$.
+
+All the strict original ancestors of $RL$ are branches.
+They survive every update, so
+
+$$
+(\rho u)|_{RL}=\rho y,\qquad
+(\rho^2u)|_{RL}=\rho^2y.
+\tag{SPC.11.8}
+$$
+
+The original addresses $RRLR,RRRR$ are reached by the displayed
+branch skeleton. Thus the two positive records, including their
+guards, force $z=\rho y$ and $w=\rho^2y$. The relation endpoint
+values after this substitution are exactly:
+
+| Retained record | First reached whole value | Second reached whole value |
+| --- | --- | --- |
+| $(1,RL,0,RRLR,=)$ | $\rho y$ | $\rho y$ |
+| $(2,RL,0,RRRR,=)$ | $\rho^2y$ | $\rho^2y$ |
+| $(0,RL,0,RRL,\ne)$ | $y$ | $F(y)$ |
+| $(0,RL,0,RRR,\ne)$ | $y$ | $G(y)$ |
+| $(0,RRL,0,RRR,\ne)$ | $F(y)$ | $G(y)$ |
+
+Every listed original endpoint is reached in (SPC.11.7), and the
+two nonzero-epoch endpoints remain reached by (SPC.11.8). Both
+guards are therefore established for every record on the whole
+displayed domain, before its sign is checked.
+
+The proper-context leaf-count argument (SPC.16), applied to
+$C[z]=\langle\alpha,z\rangle$ with shifts one and two, gives
+
+$$
+\ell(F(y))=1+\ell(\rho y)>\ell(y),\qquad
+\ell(G(y))=1+\ell(\rho^2y)>\ell(y).
+\tag{SPC.11.9}
+$$
+
+Thus the first two negatives hold for every finite $y$.
+For the third, use the existing finite right clock (SPC.43):
+
+$$
+c(\rho y)=c(y)+1,\qquad c(\rho^2y)=c(y)+2.
+$$
+
+These whole values differ. Free ordered pairing then gives
+$F(y)\ne G(y)$. The clock transport is the supplied
+[DelayedOriginalReadout, right_clock_iterate][CLOCK], equivalently
+[NativePrefixIdentityReflection, kappa_iterate][KAPPA];
+no new clock law is required.
+
+Consequently every $U_*(x,y)$ has the old root row, every literal
+in (SPC.11.3), both positive records, and all three finite negatives
+with their guards. Conversely (SPC.11.7)–(SPC.11.8) recover that
+very original source as $U_*(x,y)$. This proves (SPC.11.4) in both
+directions; no witness subset replaces its entire fiber.
+
+All four target holes are reached. Their values are
+$x,y,F(y),G(y)$, of which the last three are pairwise distinct.
+The first value can equal exactly one of those three or none.
+These are all and only the partitions in (SPC.11.6), with precisely
+the displayed conditions. The first three rows are attained for
+every finite $y$. For the all-singleton row take $x=\alpha,y=\beta$:
+the last two values are branches and the second is beta, all
+different from alpha. This proves attainment and exhausts the
+complete row image, including its concrete exterior.
+
+For actual acquisition the finite public schedule in
+[ARH, Proposition 2.1][ARH] uses precisely the coordinates of
+(SPC.11.3), the old root cut, and final epoch two. It acquires
+the epoch-zero literals and endpoint descriptions, then the
+epoch-one $RL$ description, then the epoch-two $RL$ description
+on the same register. The two later descriptions are compared
+with their previously acquired original counterparts before the
+stipulated complete cut. Every source in (SPC.11.4) gives the
+stated signs and replies, hence the same retained input under
+ARH Assumption 1.3. The converse source correspondence is that
+supplier's complete-state premise, instantiated with these
+coordinates. Paid acquisition is sourcewise finite; this
+argument supplies no uniform cost or free comparison port.
+$\square$
+
+**Theorem 11.3 (persistence of every selected pair).** For each
+two-element $A\subseteq\{r_0,r_1,r_2\}$ and every $h\in\mathbb N$,
+
+$$
+J_A(h).
+\tag{SPC.11.10}
+$$
+
+Here $J_A$ is (SPC.39) on the entire strata (SPC.11.6).
+All witnesses are finite originals satisfying the entire input
+of Definition 11.1.
+
+Proof. For $r_0,r_1$, put $y_t=F^t(\beta)$.
+The native prefix estimate (SPC.9), followed by the proper
+context's one-edge guard, gives
+
+$$
+\delta(F(s),F(t))\ge\delta(s,t)+1.
+$$
+
+This is the guarded-prefix supplier used in Theorem 3.3 with
+$C[z]=\langle\alpha,z\rangle$ and $a=1$.
+Since $\delta(\beta,F(\beta))=0$, its iteration gives
+$\delta(y_t,y_{t+1})\ge t$. The two sources
+
+$$
+U_*(y_t,y_t)\in D_0,\qquad
+U_*(y_{t+1},y_t)\in D_1
+\tag{SPC.11.11}
+$$
+
+share their entire right subtree. Their only differences occur
+below the original $L$ hole, so their first discrepancy has depth
+at least $t+1$. Taking $t=h+1$ proves $J_{\{r_0,r_1\}}(h)$.
+
+For $r_0,r_2$, put $z_t=G^t(\beta)$.
+The same supplier with shift two gives
+
+$$
+\delta(G(s),G(t))\ge\delta(s,t)+2,
+\qquad
+\delta(z_t,z_{t+1})\ge2t.
+$$
+
+The finite sources $U_*(z_t,z_t)\in D_0$ and
+$U_*(z_{t+1},z_t)\in D_2$ again have an identical complete
+right part. Their discrepancy depth is at least $1+2t$.
+The choice $t=h+1$ proves $J_{\{r_0,r_2\}}(h)$.
+
+For $r_1,r_2$, take $y=T_{2h+2}$, where $T_n=\rho^n\alpha$.
+The existing atomic-depth formula [NLC, Lemma 3.1][NLC] gives
+
+$$
+\mu(\rho y)=\mu(T_{2h+3})=h+1,\qquad
+\mu(\rho^2y)=\mu(T_{2h+4})=h+2.
+\tag{SPC.11.12}
+$$
+
+Both trees therefore reply branch at every relative address of
+length at most $h$, and so $\rho y\equiv_h\rho^2y$.
+The sources
+
+$$
+U_*(F(y),y)\in D_1,\qquad
+U_*(G(y),y)\in D_2
+\tag{SPC.11.13}
+$$
+
+share their entire right subtree. Inside their left subtree they
+share the alpha child; only the right children $\rho y,\rho^2y$
+can differ. Those children are at original address $LR$, so the
+sources agree at least through depth $h+2$, and hence through $h$.
+Every membership assertion here is Theorem 11.2 on actual finite
+whole values. In particular its three retained negatives continue
+to hold for every iterate and every atomic choice; no negative
+is inferred from a completed limit. $\square$
+
+**Theorem 11.4 (least triple failure is exactly three).** For
+$B=\{r_0,r_1,r_2\}$ in Definition 11.1,
+
+$$
+J_B(2),\qquad \neg J_B(3).
+\tag{SPC.11.14}
+$$
+
+Consequently the least inclusive failed depth is $H=3$.
+
+Proof. To witness depth two, set
+$y=\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ and take
+
+$$
+\bigl(U_*(y,y),\ U_*(F(y),y),\ U_*(G(y),y)\bigr)
+ \in D_0\times D_1\times D_2.
+\tag{SPC.11.15}
+$$
+
+Theorem 11.2 checks their entire retained histories and exact
+partitions. Their complete original reply tables through depth
+two are identical:
+
+| Original address | Common reply |
+| --- | --- |
+| $\varepsilon$ | $\mathsf{branch}$ |
+| $L$ | $\mathsf{branch}$ |
+| $R$ | $\mathsf{branch}$ |
+| $LL$ | $\alpha$ |
+| $LR$ | $\mathsf{branch}$ |
+| $RL$ | $\mathsf{branch}$ |
+| $RR$ | $\mathsf{branch}$ |
+
+For $LR$, the first source has the right child of $y$, a branch;
+the other two have $\rho y$ and $\rho^2y$, branches because $y$
+is a branch. The other six replies follow from the displayed
+skeleton and fixed alpha children. These seven addresses are
+all words of length at most two. Thus (SPC.11.15) is an actual
+simultaneous witness of $J_B(2)$.
+
+For the negative assertion, suppose an arbitrary tuple in the
+entire product agreed through depth three. By the converse
+direction of Theorem 11.2 it has the form
+
+$$
+u_0=U_*(y_0,y_0),\qquad
+u_1=U_*(F(y_1),y_1),\qquad
+u_2=U_*(G(y_2),y_2)
+\tag{SPC.11.16}
+$$
+
+for independent finite $y_0,y_1,y_2$. No equality between these
+parameters is assumed.
+
+The original $L$ and $LL$ replies of $u_1$ are respectively
+branch and alpha. Agreement forces $y_0$ to be a branch with
+left child alpha, because the entire $L$ subtree of $u_0$ is
+$y_0$. Hence the $RL$ and $RLL$ replies of $u_0$ are branch
+and alpha. Agreement at those two original addresses now forces
+$y_1,y_2$ to be branches, each with left child alpha.
+Write $y_i=\langle\alpha,b_i\rangle$ for $i=1,2$.
+
+The address $LRL$ is reached in both $u_1,u_2$: their $L$
+subtrees are branches, and their $LR$ subtrees are respectively
+$\rho y_1,\rho^2y_2$, also branches. Native distribution and
+the two alpha updates give
+
+$$
+\begin{aligned}
+u_1|_{LRL}&=\rho\alpha=\beta,
+&
+r_{u_1}(LRL)&=\beta,\\
+u_2|_{LRL}&=\rho^2\alpha=\langle\beta,\alpha\rangle,
+&
+r_{u_2}(LRL)&=\mathsf{branch}.
+\end{aligned}
+\tag{SPC.11.17}
+$$
+
+These different replies occur at an original address of length
+three, contradicting the assumed agreement. All subtree uses
+in this contradiction have their required branch ancestors;
+absence is never treated as a reached negative or omitted from
+the prefix table. The argument applies to every tuple
+(SPC.11.16), so $J_B(3)$ fails on the entire product.
+
+Inclusive-prefix agreement is monotone downward in depth.
+The depth-two witness therefore supplies depths zero and one.
+Failure at three excludes every greater depth. This proves
+the claimed least $H$. $\square$
+
+## 12. The obstruction to a pairwise replacement
+
+**Corollary 12.1 (pairwise contacts do not imply a multiway contact).**
+Let $C_i=\overline{D_i}^{\,\widehat{\mathcal T}}$, for $i=0,1,2$,
+where $\widehat{\mathcal T}$ is the original four-reply completion
+of Definition 4.1. For the entire strata of Definition 11.1,
+
+$$
+C_i\cap C_j\ne\varnothing\quad(i\ne j),\qquad
+C_0\cap C_1\cap C_2=\varnothing.
+\tag{SPC.12.1}
+$$
+
+Thus the criterion requiring all selected two-row subfamilies to
+be persistent cannot replace the finite-family predicate (SPC.39).
+
+Proof. The compact-cylinder equivalence (SPC.41), already supplied
+in Theorem 9.2, applies to closures of entire finite row strata.
+Theorem 11.3 gives its pairwise nonempty intersections. If there
+were a point in the triple intersection, its inclusive depth-three
+cylinder would meet every $D_i$. Choosing one finite original from
+each intersection with that same cylinder would give $J_B(3)$,
+contrary to Theorem 11.4. This proves the empty triple intersection.
+
+Every one of the three pair predicates is true at every depth on
+this fixed full native input, whereas the required triple predicate
+already fails at depth three. Independently chosen pair tuples,
+or separate pairwise contact points, therefore do not supply the
+one simultaneous tuple required by (SPC.39). $\square$
+
+**Definition 12.2 (supplier correspondence and unresolved scope).**
+The whole old row and actual signed-epoch meanings remain
+[ARH, Definitions 1.1–1.2 and Assumption 1.3][ARH]; its Proposition
+2.1 supplies the paid producer correspondence for the fixed schedule.
+[NIC, Theorems 3.2 and 4.3][NIC] already provide entire positive
+and complete signed-row image covers. Theorem 11.2 gives both
+original-source directions explicitly for this four-hole input;
+it does not replace any source stratum by a sample.
+
+The proper-context prefix growth in (SPC.9) and Theorem 3.3,
+the right-clock transport (SPC.43), and
+[NLC, Lemma 3.1][NLC] supply respectively the guarded pair
+iterations, the finite third negative, and the atomic pair
+witnesses. The new deduction is their full native four-row
+reconstruction together with pairwise persistence and the
+all-tuple least triple failure. Standard compactness is used
+only as the intermediate equivalence (SPC.41).
+No external-priority assertion is attached to this deduction.
+
+[SLP, Lemma 2.1 and Theorem 3.1][SPC-SLP] lift whole signed
+conjunctions at the fixed scalar and finite-residual data of
+their normalized Cartesian scope; they do not identify
+different alternative originals or turn separate pair
+witnesses into a common triple. Its Open problem 7.1 and
+Open problem 10.1 of this volume retain the unknown coupled
+contact and finite-barrier obligations. Exact positive normalization
+is already supplied by NIC; the remaining question is simultaneous
+common original-prefix depth of the coupled whole source outputs,
+including whether some finite barrier exists.
+
+Theorem 11.4 is a finite native obstruction to a multiway
+criterion, with an exact failed depth. It is not native
+undecidability and does not decide Open problem 10.1 on
+arbitrary inputs. In this same example the persistent pairs
+still prevent any finite original prefix from determining
+the entire target row, by (ARH.2.2); triple exclusion alone
+does not assert such row recovery. All source parameters are
+mathematical values, and actual acquisition and complete-state
+factoring remain supplied premises.
+
+[SPC-SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
+
+## 追加锚（本行以下为增补区）
