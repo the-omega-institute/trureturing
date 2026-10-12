@@ -14,7 +14,7 @@ triage: anchor
 
 # The moving-point Lagrange interpolation sequence
 
-## Source locator
+## Locator
 
 https://oeis.org/A394578/internal, revision 36, Jun 30 2026 07:20:52.
 The NAME line is:
