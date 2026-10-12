@@ -1,3 +1,0 @@
-Finalize merged worktree three-hour reclaim policy
-
-Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
