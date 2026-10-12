@@ -10,11 +10,6 @@ import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Dimension.LinearMap
-import Mathlib.Tactic.FinCases
 
 set_option linter.style.longLine false
 set_option maxRecDepth 4096
@@ -89,13 +84,6 @@ private def P8 : Matrix (Fin 8) (Fin 8) ℂ :=
   fun i j => if weight i = weight j then
     if weight i = 0 ∨ weight i = 3 then 1 else 1 / 3 else 0
 
-set_option maxHeartbeats 4000000 in
--- Kernel reduction enumerates all permutations of the three-element type.
-private theorem perms3 : (Finset.univ : Finset (Equiv.Perm (Fin 3))) =
-    {1, Equiv.swap 0 1, Equiv.swap 0 2, Equiv.swap 1 2,
-      Equiv.swap 0 1 * Equiv.swap 1 2, Equiv.swap 1 2 * Equiv.swap 0 1} := by
-  decide
-
 private theorem bit_table (i : Fin 8) (t : Fin 3) : bit i t =
     (![![0,0,0],![1,0,0],![0,1,0],![1,1,0],![0,0,1],![1,0,1],![0,1,1],![1,1,1]] :
       Fin 8 → Fin 3 → Fin 2) i t := by
@@ -105,13 +93,11 @@ private theorem bit_table (i : Fin 8) (t : Fin 3) : bit i t =
 private theorem permOp23 (σ : Equiv.Perm (Fin 3)) (i j : Fin 8) :
     permOp 2 3 σ i j = if (fun t => bit i t) = (fun t => bit j (σ t)) then 1 else 0 := rfl
 
-private theorem sum_perms3 (f : Equiv.Perm (Fin 3) → ℂ) :
-    ∑ σ, f σ = f 1 + f (Equiv.swap 0 1) + f (Equiv.swap 0 2) +
-      f (Equiv.swap 1 2) + f (Equiv.swap 0 1 * Equiv.swap 1 2) +
-      f (Equiv.swap 1 2 * Equiv.swap 0 1) := by
-  rw [perms3]
-  simp (disch := decide) only [Finset.sum_insert, Finset.sum_singleton]
-  ring
+private theorem sum_perms_succ {n : ℕ} (f : Equiv.Perm (Fin (n + 1)) → ℂ) :
+    ∑ σ, f σ = ∑ p : Fin (n + 1), ∑ σ : Equiv.Perm (Fin n),
+      f (Equiv.Perm.decomposeFin.symm (p, σ)) := by
+  rw [Finset.univ_perm_fin_succ, Finset.sum_map, Fintype.sum_prod_type]
+  rfl
 
 set_option maxHeartbeats 2000000 in
 -- The symmetriser certificate checks all 64 entries.
@@ -126,7 +112,9 @@ private theorem piSym23 : PiSym 2 3 = P8 := by
     apply Finset.sum_congr rfl
     intro σ _
     exact permOp23 σ i j
-  rw [hp, sum_perms3]
+  rw [hp, sum_perms_succ]
+  simp_rw [sum_perms_succ (n := 1), Fintype.sum_unique]
+  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
   have h01 : (0 : Fin 3) ≠ 1 := by decide
   have h02 : (0 : Fin 3) ≠ 2 := by decide
   have h12 : (1 : Fin 3) ≠ 2 := by decide
@@ -134,7 +122,8 @@ private theorem piSym23 : PiSym 2 3 = P8 := by
   fin_cases i <;> fin_cases j <;>
     norm_num [bit_table, P8, weight, Matrix.smul_apply, Matrix.sum_apply,
       Function.comp_def, Matrix.cons_val_two,
-      funext_iff, Fin.forall_fin_succ, Equiv.swap_apply_def, Equiv.Perm.mul_apply, Fin.reduceSucc,
+      funext_iff, Fin.forall_fin_succ, Equiv.Perm.decomposeFin_symm_apply_zero,
+      Equiv.Perm.decomposeFin_symm_apply_succ, Equiv.swap_apply_def, Fin.reduceSucc,
       h01, h02, h12, hb, Ne.symm h01, Ne.symm h02, Ne.symm h12, Ne.symm hb]
 
 private theorem trace_P8 : trace P8 = 4 := by
