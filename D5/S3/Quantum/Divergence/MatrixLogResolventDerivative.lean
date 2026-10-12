@@ -121,7 +121,7 @@ private lemma inverse_path_continuousOn (A : M)
     simpa only [IsUnit.unit_spec] using NormedRing.inverse_continuousAt (hu u hmem).unit
   have hb : ContinuousWithinAt (fun v : ℝ => B A v) (Icc (0 : ℝ) 1) u := by
     fun_prop
-  exact hc.comp_continuousWithinAt hb
+  exact ContinuousAt.comp_continuousWithinAt (f := fun v : ℝ => B A v) hc hb
 
 private lemma derivative_path_continuousOn (A : S)
     (hu : ∀ u ∈ Icc (0 : ℝ) 1, IsUnit (B A.val u)) :
@@ -129,9 +129,7 @@ private lemma derivative_path_continuousOn (A : S)
   have hc := inverse_path_continuousOn A.val hu
   exact (((ContinuousLinearMap.mulLeftRight ℝ M).continuous.comp_continuousOn hc).clm_apply hc).clm_comp continuousOn_const
 
-set_option diagnostics true in
-set_option trace.profiler true in
-set_option maxHeartbeats 3200000 in
+set_option maxHeartbeats 800000 in
 -- Differentiating the parameter integral elaborates several operator-norm instances.
 /-- The logarithm of a positive matrix has a real Fréchet derivative on the Hermitian space.
 The derivative is the integral of the inverse affine-path sandwiches. -/
@@ -163,21 +161,93 @@ theorem matrix_log_hasFDerivAt_path (A : S) (hA : A.val.PosDef) :
       ‖L Y u‖ ≤ ‖ContinuousLinearMap.mulLeftRight ℝ M (pathInv Y.val u)
           (pathInv Y.val u)‖ * ‖ι‖ := ContinuousLinearMap.opNorm_comp_le _ _
       _ ≤ (‖pathInv Y.val u‖ * ‖pathInv Y.val u‖) * 1 :=
-        mul_le_mul (ContinuousLinearMap.opNorm_mulLeftRight_apply_apply_le _ _ _ _)
+        mul_le_mul (ContinuousLinearMap.opNorm_mulLeftRight_apply_apply_le ℝ M (pathInv Y.val u) (pathInv Y.val u))
           (Submodule.norm_subtypeL_le _) (norm_nonneg _) (by positivity)
       _ ≤ ((min 1 d)⁻¹)^2 := by nlinarith [norm_nonneg (pathInv Y.val u)]
   have hint : IntervalIntegrable (fun u => K A u) volume 0 1 := by
     simpa only [Matrix.nonsing_inv_eq_ringInverse] using
       D5.S3.Divergence.MeanKernels.BelavkinStaszewskiPath.matrixLogPath_intervalIntegrable A.val hA
-  have hderiv := intervalIntegral.hasFDerivAt_integral_of_dominated_of_fderiv_le hs hmeas hint
-    ((hcA.mono Ioc_subset_Icc_self).aestronglyMeasurable measurableSet_Ioc)
-    hbound (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ => ((min 1 d)⁻¹)^2)
-      volume 0 1) (by
+  have hderiv := intervalIntegral.hasFDerivAt_integral_of_dominated_of_fderiv_le
+    (F := fun Y : S => fun u : ℝ => K Y u) (F' := L) (x₀ := A)
+    (s := s) (a := (0 : ℝ)) (b := 1) (μ := volume)
+    (bound := fun _ : ℝ => ((min 1 d)⁻¹)^2) hs
+    (by simpa only [uIoc_of_le zero_le_one] using hmeas) hint
+    (by simpa only [uIoc_of_le zero_le_one] using
+      (hcA.mono Ioc_subset_Icc_self).aestronglyMeasurable (μ := volume) measurableSet_Ioc)
+    (by simpa only [uIoc_of_le zero_le_one] using hbound)
+    (intervalIntegrable_const : IntervalIntegrable (fun _ : ℝ => ((min 1 d)⁻¹)^2) volume 0 1)
+    (by
+      simp only [uIoc_of_le zero_le_one]
       filter_upwards [] with u hu Y hY
       exact path_hasFDerivAt Y u (hpath Y hY u ⟨hu.1.le, hu.2⟩).isUnit)
   apply hderiv.congr_of_eventuallyEq
   filter_upwards [hs] with Y hY
   simpa only [Matrix.nonsing_inv_eq_ringInverse] using
     D5.S3.Divergence.MeanKernels.BelavkinStaszewskiPath.matrix_log_eq_integral_path Y.val (hp Y hY)
+
+local notation "TInv" => fun (A : M) (t : ℝ) => Ring.inverse (A + t • (1 : M))
+local notation "LT" => fun (A : S) (t : ℝ) =>
+  (ContinuousLinearMap.mulLeftRight ℝ M (TInv A.val t) (TInv A.val t)).comp ι
+
+private lemma inverse_real_smul (C : M) (c : ℝ) (hc : c ≠ 0) (hC : IsUnit C) :
+    Ring.inverse (c • C) = c⁻¹ • Ring.inverse C := by
+  rcases hC with ⟨a, rfl⟩
+  have h := Ring.inverse_unit ((Units.mk0 c hc) • a)
+  simpa only [Units.val_smul, Units.smul_inv, Units.smul_def,
+    Units.val_mk0, Units.val_inv_eq_inv_val, Ring.inverse_unit] using h
+
+private lemma reciprocal_parameter_image :
+    (fun u : ℝ => u⁻¹ - 1) '' Ioo (0 : ℝ) 1 = Ioi (0 : ℝ) := by
+  ext t
+  constructor
+  · rintro ⟨u, hu, rfl⟩
+    exact sub_pos.mpr ((one_lt_inv₀ hu.1).mpr hu.2)
+  · intro ht
+    have ht' : 0 < t + 1 := by linarith [show 0 < t from ht]
+    refine ⟨(t + 1)⁻¹, ⟨inv_pos.mpr ht', (inv_lt_one₀ ht').mpr (by linarith [show 0 < t from ht])⟩, ?_⟩
+    simp
+
+private lemma path_resolvent_change (A : S) (hA : A.val.PosDef) :
+    (∫ u in (0 : ℝ)..1, L A u) = ∫ t in Ioi (0 : ℝ), LT A t := by
+  have hinj : InjOn (fun u : ℝ => u⁻¹ - 1) (Ioo (0 : ℝ) 1) := by
+    intro u _ v _ h
+    apply inv_injective
+    dsimp only at h
+    linarith
+  have hdiff : ∀ u ∈ Ioo (0 : ℝ) 1,
+      HasDerivWithinAt (fun v : ℝ => v⁻¹ - 1) (-(u ^ 2)⁻¹) (Ioo (0 : ℝ) 1) u := by
+    intro u hu
+    exact ((hasDerivAt_inv hu.1.ne').sub_const 1).hasDerivWithinAt
+  have heq := integral_image_eq_integral_abs_deriv_smul measurableSet_Ioo hdiff hinj (LT A)
+  rw [reciprocal_parameter_image] at heq
+  rw [intervalIntegral.integral_of_le zero_le_one, integral_Ioc_eq_integral_Ioo, heq]
+  apply setIntegral_congr_fun measurableSet_Ioo
+  intro u hu
+  have ht : 0 < u⁻¹ - 1 := sub_pos.mpr ((one_lt_inv₀ hu.1).mpr hu.2)
+  have hC : (A.val + (u⁻¹ - 1) • (1 : M)).PosDef :=
+    hA.add_posSemidef (Matrix.PosSemidef.one.smul ht.le)
+  have hB : B A.val u = u • (A.val + (u⁻¹ - 1) • (1 : M)) := by
+    simp only [smul_add, smul_smul]
+    have hscalar : u * (u⁻¹ - 1) = 1 - u := by
+      rw [mul_sub, mul_inv_cancel₀ hu.1.ne', mul_one]
+    rw [hscalar]
+    exact add_comm _ _
+  have hi : pathInv A.val u = u⁻¹ • TInv A.val (u⁻¹ - 1) := by
+    dsimp only at hB ⊢
+    rw [hB, inverse_real_smul _ u hu.1.ne' hC.isUnit]
+  have hweight : |-(u ^ 2)⁻¹| = u⁻¹ * u⁻¹ := by
+    rw [abs_neg, abs_of_nonneg (inv_nonneg.mpr (sq_nonneg u)), ← inv_pow, pow_two]
+  apply ContinuousLinearMap.ext
+  intro H
+  simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.mulLeftRight_apply,
+    smul_apply, Submodule.subtypeL_apply, hi, Matrix.smul_mul, Matrix.mul_smul,
+    smul_smul, hweight]
+
+/-- On the real Hermitian space, the derivative of the actual matrix logarithm is the
+Bochner integral of the positive-half-line resolvent sandwiches. -/
+theorem matrix_log_hasFDerivAt_resolvent (A : S) (hA : A.val.PosDef) :
+    HasFDerivAt (fun Y : S => CFC.log Y.val) (∫ t in Ioi (0 : ℝ), LT A t) A := by
+  rw [← path_resolvent_change A hA]
+  exact matrix_log_hasFDerivAt_path A hA
 
 end D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
