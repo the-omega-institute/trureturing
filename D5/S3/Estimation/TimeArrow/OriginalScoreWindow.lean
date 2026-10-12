@@ -456,7 +456,7 @@ def originalCubeProbability {d q s : ℕ} (r : ℝ) (e : Experiment)
       D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parityKernel
         (fun u => b r S (cubeParityEquiv d u)) (X k.castSucc) (X k.succ)
 
-private theorem original_cube_probability_eq_native {d q s : ℕ} (r : ℝ) (e : Experiment)
+theorem original_cube_probability_eq_native {d q s : ℕ} (r : ℝ) (e : Experiment)
     (S : Support (2^d) q) (X : Sites s e → Fin (d+1) → ℤˣ) :
     originalCubeProbability r e S X = probability r e S (cubeObservationEquiv d s e X) := by
   cases e <;> dsimp [originalCubeProbability,probability,cubeObservationEquiv,siteEquiv]
@@ -464,7 +464,7 @@ private theorem original_cube_probability_eq_native {d q s : ℕ} (r : ℝ) (e :
   · simp only [cube_transition_eq,Equiv.piCongrRight_apply,Equiv.refl_apply] <;> rfl
 
 open scoped Classical in
-private theorem original_cube_conditional_mass_eq {d q s : ℕ} (r : ℝ) (e : Experiment)
+theorem original_cube_conditional_mass_eq {d q s : ℕ} (r : ℝ) (e : Experiment)
     [Fintype (Sites s e)] (S : Support (2^d) q) (X : Sites s e → Fin (d+1) → ℤˣ)
     (k l : ℕ) (P : Obs (2^d) s e → Prop) :
     (∑ Y : Sites s e → Fin (d+1) → ℤˣ,
@@ -544,7 +544,7 @@ def originalCubeGroupPosteriorMean {d s : ℕ} (q : ℕ) (r center width value :
     originalCubeScore q r e X i ≤ center+width ∧ originalCubeScore q r e X i = value),
     originalCubeInclusion q r e X i
 
-private theorem original_cube_group_eq_native {d s : ℕ} (q : ℕ) (r center width value : ℝ)
+theorem original_cube_group_eq_native {d s : ℕ} (q : ℕ) (r center width value : ℝ)
     (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ) :
     originalCubeGroupPosteriorMean q r center width value e X =
       originalGroupPosteriorMean q r center width value e (cubeObservationEquiv d s e X) := by
@@ -557,82 +557,6 @@ private theorem original_cube_group_eq_native {d s : ℕ} (q : ℕ) (r center wi
   simp only [mem_filter,mem_univ,true_and]
   tauto
 
-
-open scoped Classical in
-set_option maxHeartbeats 1600000 in
-/-- The complete original cube experiment inherits the same conditional
-window-posterior bound through a bijection preserving parity and path sites. -/
-theorem original_cube_env_small_ball :
-    ∃ Cpost V0 : ℝ, 0 < Cpost ∧ 0 < V0 ∧
-    ∀ (r v : ℝ), 0 < r → r < 1 → 0 < v →
-    ∃ a γ η c Cfb : ℝ, 0 < a ∧ 0 < γ ∧ γ ≤ 1/32 ∧ 0 < η ∧ 0 < c ∧ 0 < Cfb ∧
-    ∀ ell : ℤ, ell ≠ 0 → ∃ Cell : ℝ, 0 < Cell ∧
-    ∀ (d q s : ℕ) (S : Support (2^d) q) (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ),
-    let M := 2^d
-    let o := cubeObservationEquiv d s e X
-    ∀ [Fintype (Sites s e)], ∀ (k l H Q P : ℕ) (center width ζ : ℝ),
-      1 ≤ q → q < M → 0 ≤ compensation M q r → compensation M q r ≤ 1/2 →
-      letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
-      let z : Fiber S e o := ⟨o,rfl⟩
-      let All : Support M M := ⟨univ,by simp⟩
-      let bg : ℝ := (nativeCalibrationCells All e o k l 0 \ S.val).card
-      let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
-        (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
-      let V := nativeRectangleRows S e o k l z
-      let N : ℝ := V.card
-      let R : ℝ := (V.filter fun i => count e o i.val 1 = k).card
-      let U : ℝ := (V.filter fun i => count e o i.val (-1) = l).card
-      let s0 := c*(N/q)
-      1 < V.card → N/4 ≤ R → R ≤ 3*N/4 → N/4 ≤ U → U ≤ 3*N/4 →
-      max 4 (32/(a*v)) ≤ Real.sqrt N →
-      N/q ≤ v/2 → N/q ≤ v*Real.log 2/8 → a*N/q < η →
-      |compensation M q r| < η → bg ≤ N → s0 ≤ 1 → V0 ≤ v*q/4 →
-      1 ≤ γ*s0*Real.sqrt N →
-      k+l+2 ≤ H → P < Q → 0 < width → 0 < ζ →
-      Real.log (1+r) = (-Real.log (1-r))*((P : ℝ)/Q+ζ) →
-      (-Real.log (1-r))*ζ*(H+k+l)+2*compensation M q r*H+
-        |(k : ℝ)*Real.log (1+r)+l*Real.log (1-r)-center| ≤ width/2 →
-      (Q : ℝ)*width ≤ (-Real.log (1-r))/4 →
-      ∀ (anchor : Fiber S e o) (xStar : ℝ),
-        nativeMinimalRectangleReadout S e o k l anchor = nativeMinimalRectangleReadout S e o k l z →
-        originalCountCut H e anchor.val →
-        (∑ i : Fin M,Real.sigmoid (xStar+(score q r e anchor.val i-z0))) = q →
-        v*q ≤ ∑ i : Fin M,Real.sigmoid (xStar+(score q r e anchor.val i-z0))*
-          (1-Real.sigmoid (xStar+(score q r e anchor.val i-z0))) →
-        |xStar| ≤ a*N/(4*q) →
-        |(nativeRectangleACount S e o k l anchor : ℝ)-U*R/N| ≤ 2*Real.sqrt N →
-        ∀ L τ : ℝ,0 < L → 0 ≤ τ →
-          (∑ Y : Sites s e → Fin (d+1) → ℤˣ,if fullRectangleReadout S e k l (cubeObservationEquiv d s e Y) = fullRectangleReadout S e k l o ∧
-            (∃ b : ℤ,|(ell : ℝ)*(1/2-originalCubeGroupPosteriorMean q r center width z0 e Y)-b| ≤ τ)
-            then originalCubeProbability r e S Y else 0)/
-            (∑ Y : Sites s e → Fin (d+1) → ℤˣ,if fullRectangleReadout S e k l (cubeObservationEquiv d s e Y) = fullRectangleReadout S e k l o
-              then originalCubeProbability r e S Y else 0) ≤
-            Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)) := by
-  classical
-  obtain ⟨Cpost,V0,hCpost,hV0,hmain⟩ := original_full_env_small_ball
-  refine ⟨Cpost,V0,hCpost,hV0,?_⟩
-  intro r v hr hr1 hv
-  obtain ⟨a,γ,η,c,Cfb,ha,hγ,hγsmall,hη,hc,hCfb,hmain⟩ := hmain r v hr hr1 hv
-  refine ⟨a,γ,η,c,Cfb,ha,hγ,hγsmall,hη,hc,hCfb,?_⟩
-  intro ell hell
-  obtain ⟨Cell,hCell,hmain⟩ := hmain ell hell
-  refine ⟨Cell,hCell,?_⟩
-  intro d q s S e X
-  dsimp only
-  intro _ k l H Q P center width ζ hq hqm hε hεhalf
-  letI : Fintype (Fiber S e (cubeObservationEquiv d s e X)) := by unfold Fiber; infer_instance
-  intro hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
-    hH hPQ hwidth hζ hlog herror hgrid anchor xStar henv hcut hroot hvar hx hstar L τ hL hτ
-  have hnative := hmain (2^d) q s S e (cubeObservationEquiv d s e X) k l H Q P center width ζ
-    hq hqm hε hεhalf hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
-    hH hPQ hwidth hζ hlog herror hgrid anchor xStar henv hcut hroot hvar hx hstar L τ hL hτ
-  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation (2^d) q r))+
-    (l : ℝ)*Real.log ((1-r)/(1+compensation (2^d) q r))
-  let Pred := fun y : Obs (2^d) s e => ∃ b : ℤ,
-    |(ell : ℝ)*(1/2-originalGroupPosteriorMean q r center width z0 e y)-b| ≤ τ
-  simp_rw [original_cube_group_eq_native]
-  rw [original_cube_conditional_mass_eq r e S X k l Pred]
-  exact hnative
 
 end
 end D5.S3.Estimation.TimeArrow.OriginalScoreWindow
