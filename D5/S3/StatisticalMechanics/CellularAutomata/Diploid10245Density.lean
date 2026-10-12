@@ -312,4 +312,27 @@ private theorem q_succ (lam : ℝ) (t : ℕ) :
       rw [normalized, prefix_q, suffix_q]
       ring
 
+private theorem q_zero (lam : ℝ) : q lam 0 = 1 / 4 := by
+  dsimp only [q]
+  simp_rw [P_zero]
+  norm_num
+
+private theorem q_constant (lam : ℝ) (t : ℕ) : q lam t = 1 / 4 := by
+  induction t with
+  | zero => exact q_zero lam
+  | succ t ih => rw [q_succ, ih]; ring
+
+private theorem density_from_one (lam : ℝ) :
+    ∀ t : ℕ, 1 ≤ t → d lam t = 1 / 4 + lam / 2 := by
+  intro t ht
+  cases t with
+  | zero => norm_num at ht
+  | succ t => rw [density_succ, q_constant]; ring
+
+theorem result : claim := by
+  dsimp only [claim]
+  intro lam hlam
+  have h := density_from_one lam
+  exact ⟨cylinder_law lam hlam, h, tendsto_atTop_of_eventually_const h⟩
+
 end D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
