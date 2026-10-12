@@ -10,6 +10,8 @@ import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.Quantum.Measurement.EquiprobablePgmActiveSetRefutation
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Quantum.Divergence.GibbsVariationalIdentity
 
 set_option linter.style.longLine false
 set_option maxRecDepth 4096
@@ -48,11 +50,9 @@ def DesignExists (d k N : ℕ) : Prop :=
 def Nprime (d k : ℕ) : ℕ := sInf {N : ℕ | DesignExists d k N}
 
 def maxMixed (d : ℕ) (hd : 0 < d) : DensityState (Fin d) := by
-  refine ⟨CStarMatrix.ofMatrix ((d : ℝ)⁻¹ • (1 : Matrix (Fin d) (Fin d) ℂ)), ?_, ?_⟩
-  · exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
-      ((Matrix.PosSemidef.one.smul (inv_nonneg.mpr (Nat.cast_nonneg d))).nonneg)
-  · change trace ((d : ℝ)⁻¹ • (1 : Matrix (Fin d) (Fin d) ℂ)) = 1
-    simp [trace_smul, hd.ne', Complex.real_smul]
+  letI : Nonempty (Fin d) := ⟨⟨0, hd⟩⟩
+  exact D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbsState
+    (0 : CStarMatrix (Fin d) (Fin d) ℂ) (IsSelfAdjoint.zero _)
 
 def adjoin {d N : ℕ} (ρ : Fin N → DensityState (Fin d)) (hd : 0 < d) :
     Fin (N + 1) → DensityState (Fin d) :=
@@ -342,10 +342,19 @@ private theorem pure_tensor (v : Fin 2 → ℂ) :
 
 private theorem tensor_trace (A : Matrix (Fin 2) (Fin 2) ℂ) :
     trace (tensorPow 3 A) = (trace A) ^ 3 := by
-  change (∑ i : Fin 8, tensorPow 3 A i i) = (trace A) ^ 3
-  simp only [trace, Fin.sum_univ_succ, tensor23, bit_table]
-  norm_num [Matrix.cons_val_two]
-  ring
+  classical
+  have h := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.tensor_trace
+    (fun _ : Fin 3 => A)
+  have hreindex : trace (tensorPow 3 A) =
+      trace (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.tensorOp
+        (fun _ : Fin 3 => A)) := by
+    unfold trace diag tensorPow
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.tensorOp
+    exact (Equiv.sum_comp (finFunctionFinEquiv : (Fin 3 → Fin 2) ≃ Fin 8)
+      (fun i : Fin 8 => ∏ t : Fin 3,
+        A (finFunctionFinEquiv.symm i t) (finFunctionFinEquiv.symm i t))).symm
+  rw [hreindex, h]
+  simp
 
 private theorem P8_hermitian : P8.IsHermitian := by
   change P8ᴴ = P8
@@ -401,13 +410,10 @@ private theorem pure_tensor_le_sym (ρ : DensityState (Fin 2)) (hρ : IsPure ρ)
     rw [vecMulVec_mul_vecMulVec, hn]
     simp
   have hl : P8 * T = T := by rw [mul_vecMulVec, tensorVec_fixed]
-  have hr : T * P8 = T := by
-    have h := congrArg conjTranspose hl
-    simpa only [conjTranspose_mul, P8_hermitian.eq, hT.eq] using h
-  have hs : (P8 - T) * (P8 - T) = P8 - T := by
-    rw [sub_mul, mul_sub, mul_sub, P8_idem, hl, hr, hi, sub_self, sub_zero]
-  have h := posSemidef_conjTranspose_mul_self (P8 - T)
-  rwa [(P8_hermitian.sub hT).eq, hs] at h
+  have hTP : IsStarProjection T := ⟨hi, hT⟩
+  have hP : IsStarProjection P8 := ⟨P8_idem, P8_hermitian⟩
+  exact Matrix.nonneg_iff_posSemidef.mp
+    (sub_nonneg.mpr (hTP.le_of_mul_eq_right hP hl))
 
 private def Y : Matrix (Fin 8) (Fin 8) ℂ := P8 + (1/8 : ℝ) • (1 - P8)
 
@@ -420,6 +426,11 @@ private theorem dual_pure (ρ : DensityState (Fin 2)) (hρ : IsPure ρ) :
 
 private theorem mixed_tensor : tensorPow 3 (maxMixed 2 (by norm_num)).1 =
     (1/8 : ℝ) • (1 : Matrix (Fin 8) (Fin 8) ℂ) := by
+  change tensorPow 3 (CStarMatrix.ofMatrix.symm
+    (@D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbsState (Fin 2)
+      inferInstance inferInstance ⟨0⟩ (0 : CStarMatrix (Fin 2) (Fin 2) ℂ) (IsSelfAdjoint.zero _)).1) = _
+  rw [@D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbs_state_zero
+    (Fin 2) inferInstance inferInstance ⟨0⟩]
   change tensorPow 3 ((2 : ℝ)⁻¹ • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = _
   ext i j
   fin_cases i <;> fin_cases j <;>

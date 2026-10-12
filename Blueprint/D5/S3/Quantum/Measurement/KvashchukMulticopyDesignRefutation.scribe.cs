@@ -31,9 +31,11 @@ internal sealed class KvashchukMulticopyDesignRefutationDocument : IScribeDocume
             Node("n-prime", "The least design size", "Nprime", NprimeFormula(),
                 "Section 3.3 defines N′(d,k) as the smallest size admitting a weighted state k-design. Here sInf is taken in the natural numbers. Nat.sInf_def identifies it with the least member of a nonempty set, and Nat.sInf_empty gives zero for the empty set.",
                 AssessedProvenance.FromLiterature(Source)),
-            Node("max-mixed", "The maximally mixed density state", "maxMixed", MaxMixedFormula(),
-                "For positive dimension d, the underlying CStarMatrix value is obtained by applying CStarMatrix.ofMatrix to the identity matrix scaled by the inverse of the real cast of d. Positivity and trace one make this a D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState. The formula specifies its underlying value, which uniquely determines the density state.",
-                AssessedProvenance.FromRepo()),
+            Describe.Lean(DescribeId.Create("max-mixed"), DeclarationHandle.Create(Prefix + "maxMixed"),
+                H("The maximally mixed density state"), StatementSource.FromAuthor(Disp(MaxMixedFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For positive dimension d, maxMixed is D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbsState at the zero Hamiltonian, with self-adjointness supplied by IsSelfAdjoint.zero. The index ⟨0,hd⟩ supplies the Nonempty (Fin d) instance. D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbs_state_zero identifies its underlying value with the identity scaled by the inverse of the real cast of d, as displayed below.")),
+                    new DocumentBlock.DisplayFormula(MaxMixedValueFormula())), DescribeRole.Definition),
             Node("adjoin", "Append the maximally mixed state", "adjoin", AdjoinFormula(),
                 "Fin.lastCases retains the original states at the first N indices and places the maximally mixed state at the last index of Fin (N+1). The positive-dimension argument supplies the appended density state.",
                 AssessedProvenance.FromRepo()),
@@ -109,6 +111,13 @@ internal sealed class KvashchukMulticopyDesignRefutationDocument : IScribeDocume
                 At(Qualified("Set"), Naturals())))));
 
     private static Formula MaxMixedFormula() => All("d", Naturals(), All("hd", LT(Num(0), X("d")),
+        Equal(LocalCall("maxMixed", X("d"), X("hd")),
+            At(Qualified("D5", "S3", "Quantum", "Divergence", "GibbsVariationalIdentity", "gibbsState"),
+                Typed(Num(0), At(Qualified("CStarMatrix"), Fin(X("d")), Fin(X("d")), Complexes())),
+                At(Qualified("IsSelfAdjoint", "zero"),
+                    At(Qualified("CStarMatrix"), Fin(X("d")), Fin(X("d")), Complexes()))))));
+
+    private static Formula MaxMixedValueFormula() => All("d", Naturals(), All("hd", LT(Num(0), X("d")),
         Equal(Projection(LocalCall("maxMixed", X("d"), X("hd")), 1),
             At(Qualified("CStarMatrix", "ofMatrix"), Smul(
                 Inverse(Typed(At(Qualified("Nat", "cast"), X("d")), Reals())),
