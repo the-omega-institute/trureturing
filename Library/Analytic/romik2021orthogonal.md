@@ -1529,6 +1529,211 @@ floor, adjacent-row signed margin or collision propagation on this band.
 The all-height signed comparison and RH/all-integer Robin remain unresolved.
 
 
+## A conditional full-row zero law from the finite S-transform
+
+Reuse (LC31) and the unchanged actual coefficients. Arizmendi, Fujie,
+Perales and Ueda, [*S-transform in finite free probability*,
+arXiv:2408.09337v2](https://arxiv.org/html/2408.09337v2),
+Definition 6.1 and Theorem 1.1, characterize weak empirical-root
+convergence for polynomials with all roots nonnegative by diagonal
+limits of their finite $S$-transforms. Proposition 7.9 allows a
+sequence of degrees tending to infinity rather than every degree.
+Example 10.10 identifies $S_{\mathrm{MP}_1}(-u)=1/(1-u)$.
+The general theorem is reused, not proved again.
+
+For the actual row define its monic normalization
+
+$$
+p_n(x)=\frac{(-1)^nn^n}{n!\,a_nr_n^n}\mathcal J_n(r_nx)
+=\sum_{k=0}^n(-1)^k\binom nk\widetilde e_k(p_n)x^{n-k}.
+$$
+
+Matching the original coefficients gives
+
+$$
+\widetilde e_k(p_n)
+=\frac{n^k}{n^{\underline k}r_n^k}\frac{a_{n-k}}{a_n},
+\qquad
+\frac{\widetilde e_{k-1}(p_n)}{\widetilde e_k(p_n)}
+=\frac{n-k+1}{n}\frac{r_n}{r_{n-k+1}}. \tag{LC43}
+$$
+
+The coefficient identity requires no root assumption. To apply the
+supplier, suppose $n_j\to\infty$ and each actual $\mathcal J_{n_j}$
+has all $n_j$ roots positive real, counted with multiplicity.
+No premise about an adjacent row or the whole source is added.
+For every sequence $1\le k_j\le n_j$ with $k_j/n_j\to u\in(0,1)$
+on these same complete actual positive-root rows, (LC31) gives
+$r_{n_j-k_j+1}/r_{n_j}\to(1-u)^2$: the Lambert $W$ ratio tends
+to one when its arguments have a fixed positive limiting ratio.
+Consequently (LC43) is the finite $S$-transform under this premise,
+and tends to $1/(1-u)$. The supplier yields
+
+$$
+\frac1{n_j}\sum_{\mathcal J_{n_j}(t_i)=0}
+ \delta_{t_i/r_{n_j}}\ \Longrightarrow\ \mathrm{MP}_1,
+\qquad
+d\mathrm{MP}_1(x)=\frac1{2\pi}\sqrt{\frac{4-x}{x}}\,
+                    \mathbf1_{(0,4)}(x)\,dx. \tag{LC44}
+$$
+
+This does not establish the existence of an unbounded sequence of
+complete positive-root rows. It is a conditional application of a
+published general theorem, not a new generic zero-distribution theorem.
+
+The limiting measure has no atoms. Its distribution function on $[0,4]$ is
+
+$$
+C(x)=\frac2\pi\arcsin\sqrt{x/4}
+       +\frac1{2\pi}\sqrt{x(4-x)}.
+$$
+
+Thus, along the same complete positive-root subsequence, the fraction
+in the band of (LC41) actually has the conditional limit
+
+$$
+\frac{\#\{i:r_{n_j}/2\le t_i\le8r_{n_j}\}}{n_j}
+\longrightarrow
+1-\frac2\pi\arcsin\frac1{\sqrt8}-\frac{\sqrt7}{4\pi}. \tag{LC45}
+$$
+
+For these actual nodes the original $v,\lambda$ intervals remain
+exactly (LC42). No node has been replaced by a model root.
+The sharper proportion uses the full diagonal coefficient profile,
+rather than repeating the two-moment calculation.
+More generally, along this same complete actual positive-root
+subsequence and counting multiplicities, the normalized root fractions
+in every fixed interval converge to the corresponding
+$\mathrm{MP}_1$ mass. This is weak
+convergence with no supplied rate. The limit's support $[0,4]$ does
+not put every finite-row root in $[0,4+o(1)]$, exclude $o(n)$ outliers,
+or prove $t_{\max}/r_n\to4$. Neither simplicity, separation nor the
+same-node adjacent-row sign follows from it.
+
+
+## The complete Appell supplier and the unchanged adjacent node
+
+Campbell and Jalowy, [*Pólya–Schur problems and free probability*,
+arXiv:2605.31356v1](https://arxiv.org/html/2605.31356v1),
+Theorem 4.4, give complete Appell asymptotics with any fixed integer
+degree offset $d$, uniformly on compact bulk sets. Theorem 2.7
+states a local cosine phase for fixed nonnegative offsets, uniformly
+for bounded microscopic displacement. These concern large degree,
+including adjacent degrees, rather than a fixed degree with a large
+coefficient shift.
+
+Their (1.4) and (1.6) use
+$A_{m,f}(y)=f(\partial_y)y^m$ and $A_{m,f}'=mA_{m-1,f}$.
+The finite coefficient formula makes sense for any entire $f$;
+using it alone does not assert membership in their source class.
+Let
+
+$$
+F(z)=\frac{\Xi(\sqrt z)}{\xi_0}
+     =\sum_{k\ge0}(-1)^ka_kz^k,\qquad
+f_n(z)=F((r_n/n)z),\qquad y=r_n/t>0.
+$$
+
+The square root denotes the even entire power series. Directly
+matching the finite operator coefficients, for fixed integer $d$
+and $n+d\ge1$, gives
+
+$$
+A_{n+d,f_n}(y)
+=y^{n+d}\mathcal J_{n+d}
+       \left(\frac{n+d}{n}\frac{r_n}{y}\right). \tag{LC46}
+$$
+
+Here every offset uses the same source $f_n$, not $f_{n+d}$.
+For $d=0,1$, at the same $y=r_n/t$, the two arguments are exactly
+$t$ and $(1+1/n)t$. On the actual node $\mathcal J_n(t)=0$,
+the already established adjacent identity and Appell differentiation give
+
+$$
+A_{n-1,f_n}(y)=-\frac{r_ny^{n-2}}n\mathcal J_n'(t),
+\qquad
+A_{n+1,f_n}(y)=\frac{r_ny^n}n\mathcal G_n(t).
+$$
+
+Consequently the unpaid comparison has the exact same-node form
+
+$$
+\mathcal J_n'(t)\mathcal G_n(t)
+=-\frac{n^2}{r_n^2y^{2n-2}}
+       A_{n-1,f_n}(y)A_{n+1,f_n}(y),
+\qquad
+\mathcal J_n'(t)\mathcal G_n(t)\ge0
+\iff A_{n-1,f_n}(y)A_{n+1,f_n}(y)\le0. \tag{LC47}
+$$
+
+This identity requires no simplicity assumption. It does not prove
+the sign, rule out common zeros or propagate their multiplicities.
+For fixed $0<a\le t/r_n\le b<\infty$, the corresponding $y$ is in
+the fixed compact interval $[1/b,1/a]$. This establishes only the
+parameter correspondence. It does not establish membership in
+Theorem 4.4's real bulk set
+$-\infty<\operatorname{Im}G_{\mu_{c,\Sigma}}(y+i0)<0$,
+Theorem 2.7's bounded-density condition, or the squared-source
+$\mathcal{LP}_{M_n}$ and Assumption A hypotheses.
+
+The applicability obligation is different. Their (1.1) defines
+$\mathcal{LP}_M$ by a real entire canonical product whose every zero
+lies in the horizontal strip $|\operatorname{Im}z|\le M$.
+Assumption A requires $f_n\in\mathcal{LP}_{M_n}$ with $M_n=o(n)$,
+the weighted reciprocal-root measure convergence in (2.2), and the
+drift convergence in (2.3).
+Those source conditions have not been established here for the
+actual $f_n=F((r_n/n)z)$.
+
+The known $\Xi$ strip does not discharge the first condition.
+If $u+iv$ is a $\Xi$ zero, $|v|\le1/2$, its squared-source zero is
+$z=(u+iv)^2$. The strip implies only the parabolic enclosure
+
+$$
+(\operatorname{Im}z)^2=4u^2v^2
+\le u^2=\operatorname{Re}z+v^2
+\le\operatorname{Re}z+\tfrac14. \tag{LC48}
+$$
+
+It supplies no finite global horizontal width for $F$.
+This is a limit of the known enclosure, not an assertion that
+nonreal $\Xi$ zeros exist, nor that a weaker source-specific
+extension of the supplier is impossible. A single positive-root
+row cannot be substituted for the entire-source hypotheses.
+
+The paper's Corollary 2.4 does give an unconditional Cauchy zero law
+for the classical $\Xi(2z/\log n)$ Appell/Jensen rows. It is not a
+zero law for (LC46). Before that scalar rescaling, the even
+classical Jensen row has coefficients
+$(-1)^k(2n)^{\underline{2k}}a_kz^{2k}$.
+After squaring the variable its weights still differ from the
+actual $\mathcal J_n$ weights:
+
+$$
+(2n)^{\underline{2k}}
+=4^k n^{\underline k}(n-\tfrac12)^{\underline k}.
+$$
+
+The last falling-factorial factor depends on $k$ and cannot be
+removed by a constant variable scaling. Therefore the Cauchy
+corollary cannot be transferred to (LC44) by squaring zeros.
+
+Even if Assumption A were paid, a signed use at actual zeros must
+control the simultaneous offset errors relative to a nonzero
+adjacent-product margin. The printed real-bulk formula (4.14)
+places a $(1+o(1))$ after twice a real part; it cannot be used as
+a relative-error certificate at a cancellation of that real part.
+The proof treats two conjugate saddle contributions separately.
+An application must justify the required common-envelope absolute
+error there, and retain edge and common-zero obligations, rather
+than infer them from the displayed cosine or a weak zero law.
+
+These are existing-source parameter correspondences and conditional
+applications, with no new Lean declaration or originality claim.
+No complete squared-source asymptotic, all-node signed comparison,
+RH proof or strict all-integer Robin proof is supplied here.
+
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
