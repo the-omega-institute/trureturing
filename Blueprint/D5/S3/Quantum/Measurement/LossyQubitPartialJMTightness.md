@@ -70,6 +70,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/LossyQubitPartialJMTightness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lobo-balanzo-juando-pironio-2026-eq36-tightness` (proved) by `D5/S3/Quantum/Measurement/LossyQubitPartialJMTightness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lobo-balanzo-juando-pironio-2026-eq36-tightness","declaration_gid":"D5/S3/Quantum/Measurement/LossyQubitPartialJMTightness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* E. P. Lobo; M. Balanzó-Juandó; S. Pironio (2026). *Generalized measurement incompatibility*. DOI: [10.48550/arXiv.2605.16151](https://doi.org/10.48550/arXiv.2605.16151). URL: <https://arxiv.org/abs/2605.16151v1>.

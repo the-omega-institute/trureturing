@@ -85,7 +85,10 @@ internal sealed class LossyQubitPartialJMTightnessDocument : IScribeDocumentDefi
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role,
         Formula formula, AssessedProvenance provenance) => Describe.Lean(
         DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+        name == "result" ? new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("lobo-balanzo-juando-pironio-2026-eq36-tightness"),
+            ResolutionKind.Proved) : null);
     private static Formula X(string name) => F.Id(name);
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(X(owner), Dot, X(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
