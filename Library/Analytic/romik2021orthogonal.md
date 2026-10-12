@@ -1753,3 +1753,301 @@ https://www.math.ucdavis.edu/~romik/data/uploads/papers/riemannxi-acta-online-fi
 Its SHA-256 is `a28edcf341776bf801e9d0c2de4631639b2c46c579a67a38cc2788d255e2ae87`.
 The page references above use that 72-page PDF's internal pagination; they are
 not converted to the final Acta Arithmetica 200(3), 259–329 pagination.
+
+
+## A Gamma–zeta contour for the actual square-variable source
+
+Keep the original coefficients, $r_n$, $F$, $f_n$, and $A_{m,f_n}$
+of (LC31) and (LC46). In particular, $F(z)=\Xi(\sqrt z)/\xi_0$
+is the square-variable source; it is not the square of $\Xi$.
+Let $\omega_n=\sqrt{r_n}$. The existing coefficient asymptotic gives
+
+$$
+\omega_n\sim\frac{4n}{W(2n/\pi)},\qquad
+\frac{\omega_n}{n}\longrightarrow0,\qquad
+\frac{\omega_n\log\omega_n}{2n}\longrightarrow2. \tag{LC49}
+$$
+
+The suppliers used below are classical and are reused directly:
+[DLMF (25.4.3)–(25.4.4)](https://dlmf.nist.gov/25.4) for the
+reflection and Gamma–zeta formula for $\xi$, its
+[Dirichlet series (25.2.1)](https://dlmf.nist.gov/25.2), and the
+uniform sectorial Stirling expansion
+[(5.11.1)](https://dlmf.nist.gov/5.11).
+For the integral remainder use O'Sullivan,
+[*Revisiting the saddle-point method of Perron*,
+arXiv:1702.03777v2](https://arxiv.org/abs/1702.03777v2),
+Corollary 5.1, printed p.15, with $\mu=2,M=1$.
+The paper explicitly makes the error constant independent of
+its holomorphic amplitude, bounded by $K_q$ on the fixed
+neighborhood and contour. Assumptions 1.1 require a fixed phase.
+After the exact local change of variable below, the application
+uses the fixed phase $-\tau^2/2$, on a fixed segment $[-\beta,\beta]$,
+with a uniformly bounded family of analytic amplitudes. The
+supplier yields
+
+$$
+\int_{-\beta}^{\beta}e^{-n\tau^2/2}q(\tau)\,d\tau
+=\sqrt{\frac{2\pi}{n}}q(0)+O(K_q n^{-3/2}).
+$$
+
+The general remainder theorem is not proved again or applied
+verbatim to the varying $h_{n,y}$. The work here is an application
+to the actual source and a joint same-node sign, not a claim of
+literature originality. It has no new Lean certification.
+
+### The source bounds required by the contour
+
+On every fixed compact subset
+$D$ of the open lower half-plane, choose the principal square root
+and put $s_n(u)=1/2+i\omega_n\sqrt u$. Then
+$\Re s_n(u)\ge c_D\omega_n$. The Dirichlet series gives
+$\zeta(s_n(u))=1+O_D(2^{-c_D\omega_n})$, after decreasing the
+positive constant if needed. There is consequently a holomorphic
+logarithm of $F(r_nu)$ on a neighborhood of $D$, obtained from
+
+$$
+\log F(r_nu)=
+\log\frac1{2\xi_0}+\operatorname{Log}s_n(u)
++\operatorname{Log}(s_n(u)-1)
++\log\Gamma(s_n(u)/2)-\frac{s_n(u)}2\log\pi
++\log\zeta(s_n(u)).
+$$
+
+Here the logarithm of Gamma is the analytic branch on the right
+half-plane, and the last logarithm is its branch near one. Stirling
+in its stated sector gives
+
+$$
+L_n(u):=\frac1n\log F(r_nu)\longrightarrow2i\sqrt u
+$$
+
+locally uniformly there. The same convergence holds for every fixed
+number of analytic derivatives on smaller compact sets, by Cauchy
+estimates on a fixed larger neighborhood. No logarithm is asserted
+on the whole circle or at source zeros.
+
+For the whole circle, reuse the complete original positive even
+kernel and all-complex Fourier representation already identified
+in this note. For real $v,w$, the triangle inequality and evenness
+supply the exact estimate
+
+$$
+|\Xi(v+iw)|\le\int_{\mathbb R}\Phi(x)e^{-wx}\,dx
+=\xi(1/2+|w|).
+$$
+
+Consequently, for $u=\rho e^{i\theta}$, $-\pi\le\theta\le\pi$,
+
+$$
+|F(r_n\rho e^{i\theta})|
+\le F\bigl(-r_n\rho\sin^2(\theta/2)\bigr)
+=\frac{\xi(1/2+\omega_n\sqrt\rho\,|\sin(\theta/2)|)}{\xi_0}. \tag{LC50}
+$$
+
+At the positive-axis crossing the bound is exactly one; no
+logarithm or nonvanishing assertion is needed there. Along the
+positive real argument, the Gamma formula and Stirling give
+
+$$
+\log\frac{\xi(1/2+x)}{\xi_0}
+=\frac x2\log\frac{x}{2\pi}-\frac x2+O(\log(2+x)),
+\qquad x\ge0,
+$$
+
+where $x\log x$ is continuously extended at zero. The compact
+range is absorbed into the error using positivity and continuity
+of the original kernel transform. Set
+$x=\omega_n\sqrt\rho\,q$, $q=|\sin(\theta/2)|$.
+On each fixed positive compact interval of $\rho$, the function
+$\sqrt\rho\,q\log(\sqrt\rho\,q)$ is uniformly bounded including
+$q=0$. Thus the exact theta bound yields
+
+$$
+\log|F(r_n\rho e^{i\theta})|
+\le \frac{\omega_n\log\omega_n}{2}
+       \sqrt\rho\,|\sin(\theta/2)|+O(\omega_n+\log\omega_n),
+$$
+
+uniformly on this annulus, with $\log0=-\infty$ at source zeros.
+In particular,
+
+$$
+\frac1n\log|F(r_n\rho e^{i\theta})|
+\le2\sqrt\rho\,|\sin(\theta/2)|+o(1).
+$$
+
+This uses the full original kernel rather than an approximating
+measure. It pays the whole-circle upper envelope without a
+horizontal zero-strip hypothesis, a zeta lower bound on the
+critical line, or an RH premise.
+
+### Finite saddles and one common complex amplitude
+
+Fix $Y=[a,b]\subset(1/4,\infty)$. The exact Cauchy coefficient
+formula for every fixed $d\in\{-1,0,1\}$ is
+
+$$
+A_{n+d,f_n}(y)
+=\frac{(n+d)!}{n^{n+d}} I_{n,d}(y),\qquad
+I_{n,d}(y)=\frac1{2\pi i}
+ \oint e^{nyu}F(r_nu)u^{-n-d-1}\,du,
+\qquad y\in Y. \tag{LC51}
+$$
+
+Define only on the lower local neighborhood
+
+$$
+h_{n,y}(u)=yu+L_n(u)-\operatorname{Log}u,
+\qquad h_y(u)=yu+2i\sqrt u-\operatorname{Log}u.
+$$
+
+The limiting lower saddle is
+
+$$
+\sqrt{u_*(y)}=\frac{\sqrt{4y-1}-i}{2y},\qquad
+|u_*(y)|=\frac1y,
+$$
+
+and its angular Gaussian coefficient is
+
+$$
+a_*(y)=u_*(y)^2h_y''(u_*(y))
+=1-\frac{i\sqrt{u_*(y)}}2,
+\qquad \Re a_*(y)=1-\frac1{4y}>0. \tag{LC52}
+$$
+
+The source's local analytic derivative convergence and this simple
+saddle give a lower finite saddle $u_n(y)$ of $h_{n,y}$, uniformly
+for $y\in Y$, with $u_n(y)\to u_*(y)$. Set
+
+$$
+\rho_n(y)=|u_n(y)|,
+\qquad a_n(y)=u_n(y)^2h_{n,y}''(u_n(y)).
+$$
+
+Use the circle $|u|=\rho_n(y)$ in the exact contour. It passes
+through both the finite saddle and its conjugate; no approximate
+node or leading-phase saddle is substituted into the integrand.
+Its angular second derivative at the lower saddle is $-a_n(y)$,
+and $\Re a_n(y)$ has a uniform positive lower bound.
+
+To check dominance, the limiting real envelope on $|u|=1/y$ is
+
+$$
+H_y(\theta)=\cos\theta+\frac2{\sqrt y}|\sin(\theta/2)|+\log y.
+$$
+
+Writing $q=|\sin(\theta/2)|$ gives
+$H_y=1-2q^2+2q/\sqrt y+\log y$. Its only maxima are the two
+conjugate angles of $u_*(y)$, where $q=1/(2\sqrt y)$.
+Since $Y$ is compact and excludes $1/4$ and infinity, these angles
+are uniformly separated from each other and from $0,\pm\pi$.
+Outside fixed small neighborhoods the envelope has a uniform
+positive gap. The full-circle upper bound, $\rho_n\to1/y$, and
+the exact local phase convergence transfer that gap to the finite
+contour relative to $\Re h_{n,y}(u_n(y))$.
+Inside either neighborhood, the local analytic derivatives are
+uniformly bounded and the real quadratic decay has a uniform
+positive coefficient. To apply the fixed-phase supplier, write
+
+$$
+\phi_{n,y}(v)=h_{n,y}(u_n(y)e^{iv}),\qquad
+\tau=v\sqrt{\frac{2(\phi_{n,y}(0)-\phi_{n,y}(v))}{v^2}}. \tag{LC53}
+$$
+
+The quotient extends analytically to $a_n(y)$ at zero. Choose
+the square root with positive real part; then
+$\tau'(0)=\sqrt{a_n(y)}$ and exactly
+$\phi_{n,y}(v)=\phi_{n,y}(0)-\tau^2/2$.
+Uniform nondegeneracy and analytic derivative bounds give an
+inverse $v=\chi_{n,y}(\tau)$ on one fixed disk, with uniform
+bounds. The image of the local real $v$ arc enters and leaves
+through opposite Gaussian descent sectors, uniformly separated
+from their boundaries, since $\Re a_n$ has a positive lower bound
+and $a_n$ has a finite upper bound. Choose a fixed $\beta>0$ inside
+this disk and smaller than the endpoint radii. Holomorphy permits
+replacement by $[-\beta,\beta]$ and connecting paths in these sectors.
+The connecting paths can stay at radius at least $\beta$ and have
+$\Re(\tau^2)\ge c b^2$ for a uniform $c>0$, so their errors are
+uniformly exponentially small.
+
+Since $du/(iu)=dv$, the transformed amplitude is
+
+$$
+q_{n,d,y}(\tau)
+=\bigl(u_n(y)e^{i\chi_{n,y}(\tau)}\bigr)^{-d}
+     \chi_{n,y}'(\tau),\qquad
+q_{n,d,y}(0)=\frac{u_n(y)^{-d}}{\sqrt{a_n(y)}}.
+$$
+
+It is uniformly bounded on the fixed analytic disk and contour
+for $y\in Y$ and $d=-1,0,1$. These are the fixed phase, contour,
+neighborhood and uniform $K_q$ conditions needed to reuse
+Corollary 5.1. The varying exact phase has been absorbed into the
+amplitude by an analytic coordinate, not discarded from the
+exponent.
+
+Choose the square root of $a_n$ with positive real part and define
+
+$$
+B_n(y)=\frac{\exp(nh_{n,y}(u_n(y)))}{\sqrt{2\pi n a_n(y)}}\ne0. \tag{LC54}
+$$
+
+The fixed-phase supplier with the verified uniform conditions gives
+
+$$
+I_{n,d}(y)=2\Re\bigl(B_n(y)u_n(y)^{-d}\bigr)
+               +O_Y(|B_n(y)|/n),\qquad d=-1,0,1, \tag{LC55}
+$$
+
+uniformly for $y\in Y$, with the same $B_n,u_n$ for all three
+offsets. The upper contribution is the conjugate of the lower one.
+Neither $h_{n,y}$ nor its exponential is replaced by its limit;
+a normalized $o(1)$ phase error can still have an unbounded
+$n$-multiple.
+
+### The actual-node product on each compact bulk interval
+
+At any actual positive $\mathcal J_n(t)$ zero with
+$y=r_n/t\in Y$, (LC46) gives $I_{n,0}(y)=0$, hence
+$\Re B_n(y)=O_Y(|B_n(y)|/n)$. For every complex $B\ne0,u\ne0$,
+
+$$
+4\Re(Bu)\Re(B/u)
+=-4|B|^2\frac{(\Im u)^2}{|u|^2}+4(\Re B)^2.
+$$
+
+Applying this identity and the simultaneous absolute errors yields,
+uniformly over these actual nodes,
+
+$$
+\frac{I_{n,-1}(y)I_{n,1}(y)}{|B_n(y)|^2}
+=-4\frac{(\Im u_n(y))^2}{|u_n(y)|^2}+O_Y(1/n)
+\longrightarrow-\frac{4y-1}{y^2}<0. \tag{LC56}
+$$
+
+The right side is uniformly bounded away from zero on $Y$.
+Consequently, for some finite $N_Y$ and all $n\ge N_Y$, every
+actual positive node with $t/r_n\in[1/b,1/a]\subset(0,4)$ satisfies
+
+$$
+A_{n-1,f_n}(y)A_{n+1,f_n}(y)<0,
+\qquad \mathcal J_n'(t)\mathcal G_n(t)>0. \tag{LC57}
+$$
+
+The second assertion is exactly (LC47). The first also makes both
+adjacent Appell values nonzero, so these nodes are simple and have
+no indicated adjacent collision. It assumes neither complete
+row positivity nor an unbounded positive-root subsequence.
+It asserts a sign only for actual positive nodes in the displayed
+compact bulk interval, without asserting that such nodes exist.
+
+No numerical value of $N_Y$ is supplied. The argument excludes both
+$y\downarrow1/4$ and $y\to\infty$, thus the $t/r_n=4$ edge and
+the $t/r_n\to0$ regime, as well as nodes beyond the upper edge.
+In particular fixed source-height clusters lie outside this
+compact bulk statement. A compact-bulk sign, even without RH
+as a premise, does not pay the original all-node sign or its
+low-degree and edge collision duties. RH and strict Robin for
+every integer greater than 5040 remain unresolved.
