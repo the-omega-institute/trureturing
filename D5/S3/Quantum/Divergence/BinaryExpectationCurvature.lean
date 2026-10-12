@@ -43,7 +43,7 @@ private lemma log_conjugation (V : unitary M) (A : S) :
 
 private lemma trace_conjugation (V : unitary M) (B : M) :
     ((V : M) * B * (star V : M)).trace = B.trace := by
-  rw [Matrix.trace_mul_cycle, Unitary.coe_star_mul_self, Matrix.one_mul]
+  exact Matrix.trace_units_conj (Unitary.toUnits V) B
 
 private lemma binary_entropy_even (V : unitary M) (A H : S)
     (hA : (V : M) * A.val * (star V : M) = A.val)
