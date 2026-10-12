@@ -16,7 +16,7 @@ abbrev Correlation (d t : ℕ) := Vertex d → Vertex d → Output d t → Outpu
 def Promised (d t : ℕ) (σ τ : Vertex d) : Prop := (σ ∆ τ).card = 2 * t
 def Inputs (d t : ℕ) : Finset (Vertex d × Vertex d) := by
   classical
-  exact Finset.univ.filter (fun p => Promised d t p.1 p.2)
+  exact Finset.univ.filter (fun p : Vertex d × Vertex d => Promised d t p.1 p.2)
 def value {d t : ℕ} (P : Correlation d t) : ℝ := by
   classical
   exact (∑ p ∈ Inputs d t, ∑ A, ∑ B, if Wins p.1 p.2 A B then P p.1 p.2 A B else 0) /
@@ -591,5 +591,71 @@ private lemma winning_transitive {d t : ℕ} (σ τ σ' τ' : Vertex d)
   have ht := congrArg (fun s => σ' ∆ s) hxx
   rw [symmDiff_symmDiff_cancel_left, symmDiff_symmDiff_cancel_left] at ht
   exact ⟨g, hs, ht.symm, ha, hb⟩
+private def flip {d t : ℕ} (η : Vertex d) (A : Output d t) : Output d t := by
+  classical
+  exact if h : η.card = 2 * t ∧ A.val ⊆ η then
+    ⟨η \ A.val, by rw [Finset.card_sdiff_of_subset h.2, h.1, A.property]; omega⟩ else A
+private lemma flip_involutive {d t : ℕ} (η : Vertex d) :
+    Function.Involutive (flip (t := t) η) := by
+  classical
+  intro A
+  by_cases h : η.card = 2 * t ∧ A.val ⊆ η
+  · dsimp only [flip]; rw [dif_pos h, dif_pos ⟨h.1, Finset.sdiff_subset⟩]
+    apply Subtype.ext
+    change η \ (η \ A.val) = A.val
+    rw [Finset.sdiff_sdiff_self_left, Finset.inter_eq_right.mpr h.2]
+  · dsimp only [flip]; rw [dif_neg h, dif_neg h]
+private def flipEquiv {d t : ℕ} (η : Vertex d) : Output d t ≃ Output d t :=
+  ⟨flip η, flip η, flip_involutive η, flip_involutive η⟩
+private lemma wins_iff {d t : ℕ} (σ τ : Vertex d) (A B : Output d t)
+    (hp : Promised d t σ τ) :
+    Wins σ τ A B ↔ A.val ⊆ σ ∆ τ ∧ B = flip (σ ∆ τ) A := by
+  classical
+  constructor
+  · intro h
+    have hs : A.val ⊆ σ ∆ τ := h.2 ▸ Finset.subset_union_left
+    refine ⟨hs, ?_⟩
+    dsimp only [flip]; rw [dif_pos ⟨hp, hs⟩]; apply Subtype.ext
+    change B.val = (σ ∆ τ) \ A.val
+    rw [← h.2, Finset.union_sdiff_left, Finset.sdiff_eq_self_iff_disjoint.mpr h.1.symm]
+  · rintro ⟨hs, rfl⟩
+    dsimp only [flip]; rw [dif_pos ⟨hp, hs⟩]
+    exact ⟨Finset.disjoint_sdiff, Finset.union_sdiff_of_subset hs⟩
+open scoped Classical in
+private lemma winning_sum {d t : ℕ} (σ τ : Vertex d) (hp : Promised d t σ τ) (r : ℝ) :
+    (∑ A : Output d t, ∑ B : Output d t, if Wins σ τ A B then r else 0) =
+      (Nat.choose (2 * t) t : ℝ) * r := by
+  classical
+  have hr : ∀ A : Output d t, (∑ B : Output d t, if Wins σ τ A B then r else 0) =
+      if A.val ⊆ σ ∆ τ then r else 0 := by
+    intro A; simp_rw [wins_iff σ τ A _ hp]
+    by_cases hs : A.val ⊆ σ ∆ τ <;> simp [hs]
+  simp_rw [hr]
+  rw [← Finset.sum_filter]
+  have he : (∑ A ∈ Finset.univ.filter (fun A : Output d t => A.val ⊆ σ ∆ τ), r) =
+      ∑ T ∈ (σ ∆ τ).powersetCard t, r := by
+    apply Finset.sum_bij (fun A _ => A.val)
+    · intro A hA
+      exact Finset.mem_powersetCard.mpr ⟨(Finset.mem_filter.mp hA).2, A.property⟩
+    · intro A _ A' _ he; exact Subtype.ext he
+    · intro T hT
+      refine ⟨⟨T, (Finset.mem_powersetCard.mp hT).2⟩, ?_, rfl⟩
+      exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, (Finset.mem_powersetCard.mp hT).1⟩
+    · intro A hA; rfl
+  rw [he, Finset.sum_const, nsmul_eq_mul, Finset.card_powersetCard]
+  exact congrArg (fun k : ℕ => (k : ℝ) * r) (congrArg (fun k => Nat.choose k t) hp)
+private lemma inputs_pos {d t : ℕ} (hd : 2 * t ≤ d) : 0 < (Inputs d t).card := by
+  classical
+  obtain ⟨η, _, hη⟩ := Finset.exists_subset_card_eq
+    (show 2 * t ≤ (Finset.univ : Vertex d).card by
+      rw [Finset.card_univ, Fintype.card_fin]; exact hd)
+  apply Finset.card_pos.mpr
+  refine ⟨(∅, η), ?_⟩
+  change (∅, η) ∈ Finset.univ.filter (fun p : Vertex d × Vertex d => Promised d t p.1 p.2)
+  apply Finset.mem_filter.mpr
+  refine ⟨Finset.mem_univ _, ?_⟩
+  change (∅ ∆ η).card = 2 * t
+  simpa only [Finset.symmDiff_def, Finset.empty_sdiff, Finset.sdiff_empty,
+    Finset.empty_union] using hη
 end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
