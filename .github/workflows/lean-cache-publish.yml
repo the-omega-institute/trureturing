@@ -23,6 +23,14 @@ on:
         description: '40-hex commit reachable from source_ref; the producer checks this pin'
         required: true
         type: string
+      runner:
+        description: 'Manual producer runner architecture; x64 is diagnostic only'
+        required: false
+        type: choice
+        options:
+          - arm64
+          - x64
+        default: arm64
 
 permissions: {}
 
@@ -33,10 +41,10 @@ jobs:
       contents: write
       actions: write
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.ref == 'refs/heads/dev')
-    runs-on: ubuntu-24.04-arm
+    runs-on: ${{ github.event_name == 'workflow_dispatch' && inputs.runner == 'x64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
     timeout-minutes: ${{ github.event_name == 'workflow_dispatch' && 360 || 120 }}
     env:
-      STRATALINT_CACHE_WRITES: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+      STRATALINT_CACHE_WRITES: ${{ github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -166,13 +174,13 @@ jobs:
           make compiled-judge-test
       - id: project_snapshot
         name: Prepare the manual project seed
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64'
         env:
           STRATALINT_CACHE_WRITES: 'true'
           STRATALINT_REPORT_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
       - name: Require a usable manual project seed
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64'
         env:
           READY: ${{ steps.project_snapshot.outputs.project_ready }}
           SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
@@ -182,20 +190,20 @@ jobs:
             exit 1
           fi
       - name: Publish the manual project seed
-        if: github.event_name == 'workflow_dispatch' && steps.project_snapshot.outputs.project_ready == 'true'
+        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && steps.project_snapshot.outputs.project_ready == 'true'
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - id: dependency_snapshot
         name: Prepare the manual dependency seed
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64'
         env:
           STRATALINT_CACHE_WRITES: 'true'
           STRATALINT_CHECK_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
       - name: Verify the manual project cache was published
-        if: github.event_name == 'workflow_dispatch' && steps.project_snapshot.outputs.project_ready == 'true'
+        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && steps.project_snapshot.outputs.project_ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           CACHE_KEY: ${{ steps.keys.outputs.project_key }}
@@ -208,13 +216,13 @@ jobs:
               exit 1
             }
       - name: Publish the manual dependency seed
-        if: github.event_name == 'workflow_dispatch' && steps.dependency_snapshot.outputs.dependency_ready == 'true'
+        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && steps.dependency_snapshot.outputs.dependency_ready == 'true'
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
       - name: Publish the manual toolchain seed
-        if: github.event_name == 'workflow_dispatch' && steps.elan.outputs.cache-hit != 'true'
+        if: github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && steps.elan.outputs.cache-hit != 'true'
         uses: actions/cache/save@v5
         with:
           path: ~/.elan
