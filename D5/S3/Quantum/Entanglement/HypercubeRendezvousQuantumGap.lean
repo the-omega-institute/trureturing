@@ -392,24 +392,24 @@ private def transZ {d : ℕ} (h : G d) : G d → G d := fun g => (h.1 ∆ g.1, g
 private def transP {d : ℕ} (h : G d) : G d → G d := fun g => (pmap h.2 g.1, h.2 * g.2)
 private def transZ_equiv {d : ℕ} (h : G d) : G d ≃ G d := {
   toFun := transZ h, invFun := transZ h,
-  left_inv := by intro g; ext <;> simp [transZ, symmDiff_assoc],
-  right_inv := by intro g; ext <;> simp [transZ, symmDiff_assoc] }
+  left_inv := by intro g; ext <;> simp [transZ],
+  right_inv := by intro g; ext <;> simp [transZ] }
 private def transP_equiv {d : ℕ} (h : G d) : G d ≃ G d := by
   let p := h.2
   refine ⟨transP h, transP (pmap p.symm h.1, p.symm), ?_, ?_⟩
   · intro g; ext <;> dsimp [transP, p] <;>
-      simp [pmap_comp, pmap_refl, pmap_one, Equiv.Perm.mul_def, mul_assoc]
+      simp [pmap_comp, pmap_refl, Equiv.Perm.mul_def]
   · intro g; ext <;> dsimp [transP, p] <;>
-      simp [pmap_comp, pmap_refl, pmap_one, Equiv.Perm.mul_def, mul_assoc]
+      simp [pmap_comp, pmap_refl, Equiv.Perm.mul_def]
 private lemma actV_transZ {d : ℕ} (h g : G d) (s : Vertex d) :
     actV (transZ h g) s = h.1 ∆ actV g s := by
-  simp [actV, transZ, symmDiff_assoc, pmap_symmDiff]
+  simp [actV, transZ, symmDiff_assoc]
 private lemma actV_transP {d : ℕ} (h g : G d) (s : Vertex d) :
     actV (transP h g) s = pmap h.2 (actV g s) := by
   simp [actV, transP, pmap_comp, pmap_symmDiff]
 private abbrev VG (d : ℕ) (α β : Type*) [Fintype α] [Fintype β] [DecidableEq α]
     [DecidableEq β] := G d → Matrix (α × β) (α × β) ℂ
-private def hvec {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+private def hvec {d _t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] : VG d α β := fun _ => 1
 private def uvec {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d) (A : Output d t) :
@@ -461,12 +461,79 @@ private def pairTrace {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α]
     [DecidableEq β] (ρ : Matrix (α × β) (α × β) ℂ)
     (x y : Matrix (α × β) (α × β) ℂ) : ℝ :=
   (Matrix.trace (star x * y * ρ)).re
+private lemma kron_trace_uv {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (ρ : Matrix (α × β) (α × β) ℂ)
+    (E : Matrix α α ℂ) (F : Matrix β β ℂ) (hE : E.IsHermitian) :
+    pairTrace ρ (Matrix.kronecker E 1) (Matrix.kronecker 1 F) =
+      (Matrix.trace (ρ * Matrix.kronecker E F)).re := by
+  dsimp only [pairTrace]
+  change (((Matrix.kroneckerMap (fun x y : ℂ => x * y) E 1).conjTranspose *
+      Matrix.kroneckerMap (fun x y : ℂ => x * y) 1 F * ρ).trace.re) = _
+  rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul]
+  simp only [Matrix.conjTranspose_one, hE.eq, Matrix.mul_one, Matrix.one_mul]
+  rw [Matrix.trace_mul_comm]
+  rfl
+private lemma sum_transZ {d : ℕ} {R : Type*} [AddCommMonoid R] (h : G d) (f : G d → R) :
+    ∑ g, f (transZ h g) = ∑ g, f g := by
+  exact Fintype.sum_equiv (transZ_equiv h) (fun g => f (transZ h g)) f (fun g => rfl)
+private lemma sum_transP {d : ℕ} {R : Type*} [AddCommMonoid R] (h : G d) (f : G d → R) :
+    ∑ g, f (transP h g) = ∑ g, f g := by
+  exact Fintype.sum_equiv (transP_equiv h) (fun g => f (transP h g)) f (fun g => rfl)
+private lemma actO_transZ {d t : ℕ} (h g : G d) (A : Output d t) :
+    actO (transZ h g) A = actO g A := by rfl
+private lemma actO_transP {d t : ℕ} (h g : G d) (A : Output d t) :
+    actO (transP h g) A = actO h (actO g A) := by
+  apply Subtype.ext
+  dsimp only [actO, transP]
+  rw [pmap_comp]
+private def leftMul {d : ℕ} (h : G d) (g : G d) : G d :=
+  transZ (h.1, 1) (transP (∅, h.2) g)
+private def leftMul_equiv {d : ℕ} (h : G d) : G d ≃ G d :=
+  (transP_equiv (∅, h.2)).trans (transZ_equiv (h.1, 1))
+private lemma actV_leftMul {d : ℕ} (h g : G d) (s : Vertex d) :
+    actV (leftMul h g) s = h.1 ∆ pmap h.2 (actV g s) := by
+  rw [leftMul, actV_transZ, actV_transP]
+private lemma actO_leftMul {d t : ℕ} (h g : G d) (A : Output d t) :
+    actO (leftMul h g) A = actO h (actO g A) := by
+  rw [leftMul, actO_transZ, actO_transP]
+  rfl
+private lemma sum_leftMul {d : ℕ} {R : Type*} [AddCommMonoid R] (h : G d) (f : G d → R) :
+    ∑ g, f (leftMul h g) = ∑ g, f g := by
+  exact Fintype.sum_equiv (leftMul_equiv h) (fun g => f (leftMul h g)) f (fun g => rfl)
+private lemma finset_perm_map_exists {d t : ℕ} (A A' : Output d t) :
+    ∃ p : Equiv.Perm (Fin d), pmap p A.val = A'.val := by
+  classical
+  let e : A.val ≃ A'.val := (Fintype.equivOfCardEq (by simp [A.property, A'.property]))
+  let f : Fin d → Fin d := fun x => if hx : x ∈ A.val then (e ⟨x, hx⟩).val else x
+  have hfs : Set.InjOn f (A.val : Set (Fin d)) := by
+    intro x hx y hy hxy
+    change x ∈ A.val at hx
+    change y ∈ A.val at hy
+    dsimp only [f] at hxy
+    rw [dif_pos hx, dif_pos hy] at hxy
+    exact congrArg Subtype.val (e.injective (Subtype.ext hxy))
+  obtain ⟨p, hp⟩ := Finset.exists_equiv_extend_of_card_eq
+    (show Fintype.card (Fin d) = (Finset.univ : Finset (Fin d)).card by simp)
+    (s := A.val) (f := f) (Finset.subset_univ _) hfs
+  let q : Equiv.Perm (Fin d) := p.trans (Equiv.subtypeUnivEquiv (fun _ => Finset.mem_univ _))
+  refine ⟨q, Finset.eq_of_subset_of_card_le ?_ ?_⟩
+  · intro x hx
+    obtain ⟨y, hy, rfl⟩ := Finset.mem_map.mp hx
+    have hq : q y = (e ⟨y, hy⟩).val := by
+      change (p y).val = _
+      rw [hp y hy]
+      dsimp only [f]
+      rw [dif_pos hy]
+    change q y ∈ A'.val
+    rw [hq]
+    exact (e ⟨y, hy⟩).property
+  · rw [pmap_card, A.property, A'.property]
 private abbrev weightedCore {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) :
     PreInnerProductSpace.Core ℝ (VG d α β) := by
   classical
-  letI : Nonempty (Vertex d) := ⟨∅⟩
-  letI : Nonempty (Equiv.Perm (Fin d)) := ⟨Equiv.refl _⟩
+  let _ : Nonempty (Vertex d) := ⟨∅⟩
+  let _ : Nonempty (Equiv.Perm (Fin d)) := ⟨Equiv.refl _⟩
   let k : ℝ := (n d t) / (Fintype.card (G d) : ℝ)
   let I : VG d α β → VG d α β → ℝ := fun x y =>
     k * ∑ g, pairTrace S.ρ (x g) (y g)
@@ -533,5 +600,22 @@ private abbrev weightedCore {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β
       _ = r * (k * ∑ g, pairTrace S.ρ (x g) (y g)) := by
         rw [← Finset.mul_sum]
         ring
+private lemma inner_uv_eq {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β)
+    (σ : Vertex d) (τ : Vertex d) (A : Output d t) (B : Output d t) :
+    (weightedCore S).inner (uvec S σ A) (vvec S τ B) =
+      (n d t / (Fintype.card (G d) : ℝ)) *
+        ∑ g, S.prob (actV g σ) (actV g τ) (actO g A) (actO g B) := by
+  classical
+  let _ : Nonempty (Vertex d) := ⟨∅⟩
+  let _ : Nonempty (Equiv.Perm (Fin d)) := ⟨Equiv.refl _⟩
+  change (n d t / (Fintype.card (G d) : ℝ)) *
+      ∑ g, pairTrace S.ρ (uvec S σ A g) (vvec S τ B g) = _
+  congr 1
+  apply Finset.sum_congr rfl
+  intro g hg
+  dsimp only [uvec, vvec]
+  rw [kron_trace_uv _ _ _ (S.E_psd _ _).isHermitian]
+  rfl
 end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
