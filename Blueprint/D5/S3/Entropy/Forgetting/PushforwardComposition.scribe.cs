@@ -14,7 +14,7 @@ internal sealed class PushforwardCompositionDocument : IScribeDocumentDefinition
         H("Pushforward Composition"),
         Blocks(
             Paragraph(Text(
-                "The frozen module Entropy/Forgetting/CapacityMonotone defines pushforward f p "
+                "The module Entropy/Forgetting/CapacityMonotone defines pushforward f p "
                     + "as fun y => sum x, if f x = y then p x else 0, for "
                     + "[Fintype X], and it is imported here. Only the source type is finite; "
                     + "the target carries no finiteness.")),
@@ -26,25 +26,30 @@ internal sealed class PushforwardCompositionDocument : IScribeDocumentDefinition
                     + "form and the indicator-weighted idiom used throughout this development, "
                     + "and the named consequence for pushforward.")),
             Paragraph(Text(
-                "Four modules each carry a private copy of the real-valued statement: "
-                    + "Entropy/Forgetting/CompletionEntropyMinimality, "
-                    + "Entropy/Observation/CompletionInformationChainDecomposition, "
-                    + "Entropy/Observation/MultiTargetInformationChain, and "
-                    + "Entropy/Submodularity/RefinementInformationDecomposition. They state the "
-                    + "same proposition up to the names of the type variables and the functions, "
-                    + "and their proofs follow the same route with small differences in the simp "
-                    + "set: the same statement, proved four times.")),
+                "For a finite source type Omega, a real nonnegative normalized mass q and an actual "
+                    + "window map a:Omega->Window, p=pushforward(a,q) is the five-mode atom law. "
+                    + "CompletionEntropyMinimality.pushforward_is_law proves its normalization. "
+                    + "For each source outcome the initialized high-to-low reader performs the literal "
+                    + "word [a(outcome)]; all five first letters are legal. This literal one-window "
+                    + "history retains its atom and carries the derived actual reader state. Its atom "
+                    + "projection pushes q to p, while native_execution identifies the carried state "
+                    + "with the natural singleton history.")),
             Paragraph(Text(
-                "All four modules are frozen, and so is CapacityMonotone. Being frozen, none of "
-                    + "them can import this module, and this change removes none of the four "
-                    + "copies.")),
+                "Composition with the low-bit, high-bit or middle indicator yields the source event "
+                    + "masses X=p(low)+p(ends), Y=p(high)+p(ends) and Z=p(middle). "
+                    + "The same pushforward_comp identity applies to the parity of the first actual reply "
+                    + "and to the pair consisting of that parity and the next total Option reply. "
+                    + "For the fixed same-state high suffix, summing this joint table on the odd-reply "
+                    + "event and dividing by its positive mass gives the continuation distribution. "
+                    + "The intermediate alphabet is finite, while the integer Option output may be infinite; "
+                    + "the theorem requires only the finite intermediate alphabet and finite original source.")),
             Paragraph(Text(
-                "This module has zero consumers today. It does not promise to prevent a future "
-                    + "copy.")),
-            Paragraph(Text(
-                "The value is API, not mathematical novelty. pushforward_comp unfolds the "
-                    + "definition and applies sum_indicator_comp, which in turn applies "
-                    + "Mathlib's fiberwise summation lemma.")),
+                "The source map, mass and reply are parts of one declared realization. A marginal atom "
+                    + "law cannot reconstruct distinctions lost by its pushforward, and it supplies no "
+                    + "multiwindow joint law. A normalized empirical mass from a nonempty finite archive is a law of "
+                    + "that archive; neither normalization nor compositional pushforward certifies the "
+                    + "unknown physical law or independent sampling. The fiberwise identities are "
+                    + "applications of the existing summation theorem, with no acquisition or copying claim.")),
             Paragraph(Text(
                 "Prior art in pinned Mathlib: Finset.sum_fiberwise_eq_sum_filter, in "
                     + "Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean, states the fiberwise "
