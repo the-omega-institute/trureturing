@@ -14,6 +14,7 @@ internal sealed class PeritoUnitCircleSumDocument : IScribeDocumentDefinition
                 "Let d be an integer at least two and let omega be exp(2 pi i / d). " +
                 "For a complex number z of modulus one, consider the sum of |1 + omega^y z| " +
                 "over y from zero to d minus one.")),
+            Describe.Lean(DescribeId.Create("the-absolute-cosine-sum-bound"), DeclarationHandle.Create("D5/S3/QuantumBounds/PeritoUnitCircleSum.abs_cos_sum_le"), H("The absolute cosine sum"), StatementSource.FromAuthor(Disp(All("d",NatType(),All("s",RealType(),Imp(Leq(new Formula.Number(2),F.Id("d")),Leq(Call("Finset.sum" ,Call("Finset.range" ,F.Id("d")),Lam("y",NatType(),Call("abs" ,Call("Real.cos" ,Add(F.Id("s"),Mul(new Formula.Fraction(Call("Real.pi"),Call("Nat.cast" ,F.Id("d"))),Call("Nat.cast" ,F.Id("y")))))))),new Formula.Fraction(new Formula.Number(1),Call("Real.sin" ,new Formula.Fraction(Call("Real.pi"),Mul(new Formula.Number(2),Call("Nat.cast" ,F.Id("d")))))))))))), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every natural d at least two and every real phase s, the sum over y in Finset.range d of the absolute value of Real.cos (s + Real.pi / d * y) is bounded by the half-angle cosecant."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("the-regular-unit-circle-distance-sum-bound"),
                 DeclarationHandle.Create("D5/S3/QuantumBounds/PeritoUnitCircleSum.unit_circle_sum_le"),
@@ -45,4 +46,14 @@ internal sealed class PeritoUnitCircleSumDocument : IScribeDocumentDefinition
                         "the stated uniform bound. The same reduction applies to both " +
                         "odd and even values of d."))),
                 DescribeRole.Theorem))));
+    private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
+    private static Formula Q(string name) => Seq(Operatorname, Grp(Seq([.. System.Linq.Enumerable.SelectMany(name.Split('.'), (part, i) => i == 0 ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) })])));
+    private static Formula Call(string name, params Formula[] args) => args.Length == 0 ? Q(name) : new Formula.Apply(Q(name), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Leq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Lam(string name, Formula type, Formula body) => Seq(LambdaLower, Sp, Parenthesized(Seq(F.Id(name), Colon, type)), Sp, Mapsto, Sp, body);
+    private static Formula NatType() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula RealType() => Seq(Mathbb, Grp(F.Id("R")));
 }
