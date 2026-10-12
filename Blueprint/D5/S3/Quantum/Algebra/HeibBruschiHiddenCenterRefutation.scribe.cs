@@ -23,14 +23,18 @@ internal sealed class HeibBruschiHiddenCenterRefutationDocument : IScribeDocumen
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Conjecture 80 is refuted", "result", ResultFormula(),
                 "For any field K, give K⁴ the bracket [u,v]=(b(r+s)−(c+d)q, (c+d)p−a(r+s), aq−bp, 0), where u=(a,b,c,d) and v=(p,q,r,s). The map u↦((a,b,c+d),d) identifies this with the cross-product Lie algebra K³ together with a central copy of K. Its standard basis satisfies [e₁,e₂]=e₃, [e₂,e₃]=e₁, [e₃,e₁]=e₂, [e₁,e₄]=−e₂, [e₂,e₄]=e₁ and [e₃,e₄]=0, so it is admissible, while e₄−e₃ is central and nonzero. Every nonempty vertex subset with the ideal-graph-property contains e₁,e₂,e₃; the only proper one is {e₁,e₂,e₃}. Its span I satisfies [I,I]=I≠0 and is therefore not solvable. These identities hold in every characteristic. Taking K to be the rational numbers contradicts the assertion over every field.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("heib-bruschi-2026-conjecture-80-hidden-center-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(
         string id, string title, string declaration, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));

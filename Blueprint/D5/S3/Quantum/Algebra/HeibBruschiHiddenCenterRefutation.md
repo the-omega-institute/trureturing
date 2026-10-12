@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/HeibBruschiHiddenCenterRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/heib-bruschi-2026-conjecture-80-hidden-center-refutation` (refuted) by `D5/S3/Quantum/Algebra/HeibBruschiHiddenCenterRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"heib-bruschi-2026-conjecture-80-hidden-center-refutation","declaration_gid":"D5/S3/Quantum/Algebra/HeibBruschiHiddenCenterRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Heib; D. E. Bruschi (2026). *On the structural properties of Lie algebras via associated labeled directed graphs*. DOI: [10.48550/arXiv.2601.16161](https://doi.org/10.48550/arXiv.2601.16161). URL: <https://arxiv.org/abs/2601.16161v1>.
