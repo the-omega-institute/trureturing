@@ -456,7 +456,7 @@ def originalCubeProbability {d q s : ℕ} (r : ℝ) (e : Experiment)
       D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates.parityKernel
         (fun u => b r S (cubeParityEquiv d u)) (X k.castSucc) (X k.succ)
 
-theorem original_cube_probability_eq_native {d q s : ℕ} (r : ℝ) (e : Experiment)
+private theorem original_cube_probability_eq_native {d q s : ℕ} (r : ℝ) (e : Experiment)
     (S : Support (2^d) q) (X : Sites s e → Fin (d+1) → ℤˣ) :
     originalCubeProbability r e S X = probability r e S (cubeObservationEquiv d s e X) := by
   cases e <;> dsimp [originalCubeProbability,probability,cubeObservationEquiv,siteEquiv]
@@ -464,7 +464,7 @@ theorem original_cube_probability_eq_native {d q s : ℕ} (r : ℝ) (e : Experim
   · simp only [cube_transition_eq,Equiv.piCongrRight_apply,Equiv.refl_apply] <;> rfl
 
 open scoped Classical in
-theorem original_cube_conditional_mass_eq {d q s : ℕ} (r : ℝ) (e : Experiment)
+private theorem original_cube_conditional_mass_eq {d q s : ℕ} (r : ℝ) (e : Experiment)
     [Fintype (Sites s e)] (S : Support (2^d) q) (X : Sites s e → Fin (d+1) → ℤˣ)
     (k l : ℕ) (P : Obs (2^d) s e → Prop) :
     (∑ Y : Sites s e → Fin (d+1) → ℤˣ,
@@ -544,7 +544,7 @@ def originalCubeGroupPosteriorMean {d s : ℕ} (q : ℕ) (r center width value :
     originalCubeScore q r e X i ≤ center+width ∧ originalCubeScore q r e X i = value),
     originalCubeInclusion q r e X i
 
-theorem original_cube_group_eq_native {d s : ℕ} (q : ℕ) (r center width value : ℝ)
+private theorem original_cube_group_eq_native {d s : ℕ} (q : ℕ) (r center width value : ℝ)
     (e : Experiment) (X : Sites s e → Fin (d+1) → ℤˣ) :
     originalCubeGroupPosteriorMean q r center width value e X =
       originalGroupPosteriorMean q r center width value e (cubeObservationEquiv d s e X) := by
