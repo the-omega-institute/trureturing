@@ -153,7 +153,8 @@ private theorem chi_norm (n : ZMod 12) : ‖chi n‖ = 1 := by
 private theorem z_exp : z = Complex.exp (((Real.pi / 3 : ℝ) : ℂ) * Complex.I) := by
   change ZMod.stdAddChar (2 : ZMod 12) = _
   have h := ZMod.stdAddChar_coe (N := 12) (2 : ℤ)
-  norm_num only [Int.cast_ofNat, Nat.cast_ofNat] at h
+  change ZMod.stdAddChar (2 : ZMod 12) =
+    Complex.exp (2 * Real.pi * Complex.I * 2 / 12) at h
   rw [h]
   congr 1
   push_cast
@@ -316,7 +317,8 @@ private theorem eigenvectors : B 1 *ᵥ v = lam • v ∧ B z *ᵥ w = lam • w
     rw [B_apply]
     fin_cases i <;> fin_cases j
     all_goals
-      simp only [v, Pi.smul_apply, smul_eq_mul, Fin.ext_iff, Fin.val_zero,
+      unfold v
+      simp only [Pi.smul_apply, smul_eq_mul, Fin.ext_iff, Fin.val_zero,
         one_ne_zero, ite_true, ite_false, map_one, mul_one, one_mul]
     · ring
     · linear_combination -resonance.2.1 - hs
@@ -326,7 +328,8 @@ private theorem eigenvectors : B 1 *ᵥ v = lam • v ∧ B z *ᵥ w = lam • w
     rw [B_apply]
     fin_cases i <;> fin_cases j
     all_goals
-      simp only [w, Pi.smul_apply, smul_eq_mul, Fin.ext_iff, Fin.val_zero,
+      unfold w
+      simp only [Pi.smul_apply, smul_eq_mul, Fin.ext_iff, Fin.val_zero,
         one_ne_zero, ite_true, ite_false, z_conj]
       unfold lam
     · linear_combination (a : ℂ) * (c : ℂ) * z_poly
@@ -428,7 +431,8 @@ private def walkLin : H →ₗ[ℂ] H where
 
 private def walkIso : H →ₗᵢ[ℂ] H := walkLin.isometryOfInner (by
   intro x y
-  simp only [PiLp.inner_apply, RCLike.inner_apply', walkLin, LinearMap.coe_mk,
+  unfold walkLin
+  simp only [PiLp.inner_apply, RCLike.inner_apply', LinearMap.coe_mk,
     AddHom.coe_mk, Fintype.sum_prod_type]
   simpa only [Fintype.sum_prod_type] using walk_inner (fun n j => x (n, j)) (fun n j => y (n, j)))
 
@@ -456,9 +460,10 @@ private def mat (A : K) : Matrix Index Index ℂ := fun i j => A (i, j)
 
 private theorem hs_inner (A B : K) : inner ℂ A B = ((mat A)ᴴ * mat B).trace := by
   rw [PiLp.inner_apply, Fintype.sum_prod_type]
-  simp only [RCLike.inner_apply', Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
-    Matrix.conjTranspose_apply, mat, starRingEnd_apply]
+  change (∑ i : Index, ∑ j : Index, B (i, j) * starRingEnd ℂ (A (i, j))) =
+    ∑ i : Index, ∑ j : Index, starRingEnd ℂ (A (j, i)) * B (j, i)
   rw [Finset.sum_comm]
+  simp only [mul_comm]
 
 private def conjugateLin : K →ₗ[ℂ] K where
   toFun A := flat (M * mat A * Mᴴ)
@@ -671,6 +676,13 @@ private theorem walk_iterate (α : Fin 2 × Fin 2 → ℂ) (t : ℕ) :
     rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih]
     rfl
 
+private theorem probability_norm (α : Fin 2 × Fin 2 → ℂ) (n : ZMod 12) (t : ℕ) :
+    p phiStar α n t = ‖WithLp.toLp 2 (fun j : Fin 2 × Fin 2 =>
+      ((walkIso : H → H)^[t]) (WithLp.toLp 2 (fun i => initial α i.1 i.2)) (n, j))‖ ^ 2 := by
+  rw [walk_iterate, PiLp.norm_sq_eq_of_L2]
+  unfold p
+  simp only [Complex.normSq_eq_norm_sq]
+
 private theorem density_iterate (x : H) (t : ℕ) :
     ((F : K → K)^[t]) (outer x x) =
       outer (((walkIso : H → H)^[t]) x) (((walkIso : H → H)^[t]) x) := by
@@ -682,12 +694,12 @@ private theorem density_iterate (x : H) (t : ℕ) :
 private theorem density_probability (j : Fin 2 × Fin 2) (t : ℕ) :
     (inner ℂ P (((F : K → K)^[t]) (outer (b j) (b j)))).re =
       p phiStar (basisCoin j) (0 : ZMod 12) t := by
-  rw [density_iterate, b, walk_iterate, P_inner]
+  rw [density_iterate, P_inner, probability_norm, PiLp.norm_sq_eq_of_L2]
   change (∑ i : Fin 2 × Fin 2,
-    ((U phiStar)^[t]) (initial (basisCoin j)) 0 i *
-      starRingEnd ℂ (((U phiStar)^[t]) (initial (basisCoin j)) 0 i)).re = _
-  simp only [Complex.mul_conj, Complex.re_sum, Complex.ofReal_re]
-  rfl
+    (((walkIso : H → H)^[t]) (b j)) (0, i) *
+      starRingEnd ℂ ((((walkIso : H → H)^[t]) (b j)) (0, i))).re =
+    ∑ i : Fin 2 × Fin 2, ‖(((walkIso : H → H)^[t]) (b j)) (0, i)‖ ^ 2
+  simp only [Complex.mul_conj, Complex.re_sum, Complex.ofReal_re, Complex.normSq_eq_norm_sq]
 
 private theorem avg_observable (j : Fin 2 × Fin 2) (T : ℕ) :
     avg phiStar (basisCoin j) (0 : ZMod 12) T =
@@ -698,8 +710,12 @@ private theorem avg_observable (j : Fin 2 × Fin 2) (T : ℕ) :
     simp only [Complex.ofReal_inv, Complex.ofReal_natCast]
   rw [hinv]
   simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
-    Complex.re_sum, id_eq, ← Function.iterate_succ_apply, density_probability]
-  ring
+    Complex.re_sum, id_eq]
+  rw [div_eq_inv_mul]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro t _
+  rw [← Function.iterate_succ_apply, density_probability]
 
 private def limit (j : Fin 2 × Fin 2) : ℝ :=
   (inner ℂ P (Q (outer (b j) (b j)))).re
