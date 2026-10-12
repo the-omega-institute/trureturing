@@ -10,6 +10,8 @@ import D5.S3.Quantum.Divergence.FiniteAmplitudeBKMRemainder
 import Mathlib.Analysis.Calculus.Deriv.Slope
 
 set_option quotPrecheck false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 noncomputable section
 
@@ -29,12 +31,15 @@ local notation "D" => fun (B A : S) => (B.val * (CFC.log B.val - CFC.log A.val))
 private lemma log_conjugation (V : unitary M) (A : S) :
     CFC.log ((V : M) * A.val * (star V : M)) =
       (V : M) * CFC.log A.val * (star V : M) := by
+  let : CStarAlgebra M := {}
   let e := Unitary.conjStarAlgAut ℂ M V
   have hsa : IsSelfAdjoint (e A.val) := A.property.map e
-  simpa only [e, Unitary.conjStarAlgAut_apply, CFC.log] using
-    (StarAlgHomClass.map_cfc e Real.log A.val
-      (A.val.finite_real_spectrum.continuousOn _)
-      e.toAlgEquiv.toLinearMap.continuous_of_finiteDimensional A.property hsa).symm
+  change CFC.log (e A.val) = e (CFC.log A.val)
+  unfold CFC.log
+  symm
+  apply StarAlgHomClass.map_cfc e Real.log A.val
+    (A.val.finite_real_spectrum.continuousOn _)
+    e.toAlgEquiv.toLinearMap.continuous_of_finiteDimensional A.property hsa
 
 private lemma trace_conjugation (V : unitary M) (B : M) :
     ((V : M) * B * (star V : M)).trace = B.trace := by
@@ -45,19 +50,20 @@ private lemma binary_entropy_even (V : unitary M) (A H : S)
     (hH : (V : M) * H.val * (star V : M) = -H.val) (s : ℝ) :
     entropy (A - s • H) = entropy (A + s • H) := by
   have he : (V : M) * (A + s • H).val * (star V : M) = (A - s • H).val := by
-    simp only [Submodule.coe_add, Submodule.coe_sub, Submodule.coe_smul,
+    simp only [Submodule.coe_add, Submodule.coe_smul,
       Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, hA, hH,
-      smul_neg, sub_eq_add_neg]
+      smul_neg, sub_eq_add_neg, Submodule.coe_neg]
   have hl := log_conjugation V (A + s • H)
   rw [he] at hl
   have hp : (A - s • H).val * CFC.log (A - s • H).val =
       (V : M) * ((A + s • H).val * CFC.log (A + s • H).val) * (star V : M) := by
-    rw [← he, hl]
+    rw [hl, ← he]
     calc
       _ = (V : M) * (A + s • H).val * ((star V : M) * V) *
           CFC.log (A + s • H).val * (star V : M) := by noncomm_ring
       _ = _ := by rw [Unitary.coe_star_mul_self]; noncomm_ring
-  change (_).trace.re = (_).trace.re
+  change ((A - s • H).val * CFC.log (A - s • H).val).trace.re =
+    ((A + s • H).val * CFC.log (A + s • H).val).trace.re
   rw [hp, trace_conjugation]
 
 private lemma binary_trace_log_zero (V : unitary M) (A H : S)
@@ -114,17 +120,18 @@ private lemma endpoint_slope_of_square_contraction (f : ℝ → ℝ) (d : ℝ)
     (hd : HasDerivAt f d 1) (hs : ∀ s ∈ Icc (0 : ℝ) 1, f s ≤ s ^ 2 * f 1) :
     2 * f 1 ≤ d := by
   let g : ℝ → ℝ := fun s => f s - s ^ 2 * f 1
-  have hg : HasDerivAt g (d - 2 * f 1) 1 := by
-    simpa only [g, one_pow, mul_one, Nat.cast_ofNat] using
-      hd.sub (((hasDerivAt_id 1).pow 2).mul_const (f 1))
+  have hg := hd.sub (((hasDerivAt_id (1 : ℝ)).pow 2).mul_const (f 1))
+  simp only [id_eq, one_pow, mul_one, Nat.cast_ofNat] at hg
   have hg1 : g 1 = 0 := by simp only [g, one_pow, one_mul, sub_self]
   have hn : 0 ≤ d - 2 * f 1 := by
     apply ge_of_tendsto (hg.tendsto_slope.mono_left (nhdsLT_le_nhdsNE 1))
     filter_upwards [self_mem_nhdsWithin,
       (eventually_gt_nhds zero_lt_one).filter_mono inf_le_left] with s hs1 hs0
     have hsg : g s ≤ 0 := sub_nonpos.mpr (hs s ⟨hs0.le, hs1.le⟩)
-    simpa only [slope_def_field, hg1, sub_zero] using
-      div_nonneg_of_nonpos hsg (sub_nonpos.mpr hs1.le)
+    rw [slope_def_field]
+    change 0 ≤ (g s - g 1) / (s - 1)
+    rw [hg1, sub_zero]
+    exact div_nonneg_of_nonpos hsg (sub_nonpos.mpr hs1.le)
   linarith
 
 private lemma binary_trace_zero (V : unitary M) (H : S)
@@ -145,16 +152,21 @@ theorem binary_endpoint_derivative_lower_bound (V : unitary M) (A H : S)
   have hpath : HasDerivAt (fun v : ℝ => A + v • H) H 1 := by
     simpa only [one_smul, id_eq] using ((hasDerivAt_id (1 : ℝ)).smul_const H).const_add A
   have hd' : HasDerivAt f (H.val * CFC.log (A + H).val).trace.re 1 := by
-    have h := (hd.comp_hasDerivAt 1 (by simpa only [one_smul] using hpath)).sub_const
+    have hd1 : HasFDerivAt (𝕜 := ℝ) entropy (fderiv ℝ entropy (A + H))
+        (A + (1 : ℝ) • H) := by
+      simpa only [one_smul] using hd.differentiableAt.hasFDerivAt
+    have h := (hd1.comp_hasDerivAt (1 : ℝ) hpath).sub_const
       (entropy A)
-    simpa only [f, ContinuousLinearMap.comp_apply, ContinuousLinearMap.compL_apply,
-      ContinuousLinearMap.precompL_apply,
-      ContinuousLinearMap.mul_apply', Submodule.subtypeL_apply, Matrix.mul_add,
-      Matrix.mul_one, Matrix.trace_add, Complex.add_re, binary_trace_zero V H hflip,
-      add_zero] using h
+    rw [hd.fderiv] at h
+    change HasDerivAt f (H.val * (CFC.log (A + H).val + 1)).trace.re 1 at h
+    simpa only [Matrix.mul_add, Matrix.mul_one, Matrix.trace_add, Complex.add_re,
+      binary_trace_zero V H hflip, add_zero] using h
   have hc (v : ℝ) (hv : v ∈ Icc (0 : ℝ) 1) : f v ≤ v ^ 2 * f 1 := by
     have h := binary_entropy_square_contraction V A H hfixed hflip hA hp.posSemidef.nonneg hm v hv
-    simp only [binary_defect_eq_entropy_difference V A H hfixed hflip, one_smul] at h
+    rw [binary_defect_eq_entropy_difference V A H hfixed hflip v,
+      show D (A + H) A = entropy (A + H) - entropy A by
+        simpa only [one_smul] using
+          binary_defect_eq_entropy_difference V A H hfixed hflip 1] at h
     simpa only [f, one_smul] using h
   have h := endpoint_slope_of_square_contraction f _ hd' hc
   rw [show D (A + H) A = f 1 by
@@ -190,7 +202,7 @@ theorem binary_expectation_entropy_bounds (V : unitary M)
     change (1 / 2 : ℝ) • (C.val + rho.val) = (1 / 2 : ℝ) • (rho.val + C.val)
     rw [add_comm]
   have hflip : (V : M) * H.val * (star V : M) = -H.val := by
-    dsimp only [H, Submodule.coe_sub]
+    change (V : M) * (rho.val - A.val) * (star V : M) = -(rho.val - A.val)
     rw [Matrix.mul_sub, Matrix.sub_mul, hfixed]
     change C.val - A.val = -(rho.val - A.val)
     dsimp only [A, Submodule.coe_smul, Submodule.coe_add]
@@ -198,26 +210,38 @@ theorem binary_expectation_entropy_bounds (V : unitary M)
   have hC0 : 0 ≤ C.val := by
     apply Matrix.PosSemidef.nonneg
     change ((V : M) * rho.val * (star V : M)).PosSemidef
-    exact (Unitary.isUnit_coe (U := V)).posSemidef_star_right_conjugate_iff.mpr
-      (Matrix.nonneg_iff_posSemidef.mp hrho)
+    simpa only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_conjTranspose] using
+      (Matrix.nonneg_iff_posSemidef.mp hrho).conjTranspose_mul_mul_same (star V : M)
   have hA0 : 0 ≤ A.val := by
     exact smul_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2) (add_nonneg hrho hC0)
-  have hp : (A + H).val = rho.val := by simp only [H, add_sub_cancel_left]
+  have hp : (A + H).val = rho.val := by
+    change (A + (rho - A)).val = rho.val
+    congr 1
+    abel
   have hm : (A - H).val = C.val := by
-    dsimp only [H, A, Submodule.coe_sub, Submodule.coe_smul, Submodule.coe_add]
+    change (A - (rho - A)).val = C.val
+    congr 1
+    dsimp only [A]
     module
   have hc := binary_entropy_square_contraction V A H hfixed hflip hA0
     (hp.symm ▸ hrho) (hm.symm ▸ hC0) s hs
   have houtput : (A + s • H).val = s • rho.val + (1 - s) • A.val := by
-    dsimp only [H, Submodule.coe_add, Submodule.coe_smul, Submodule.coe_sub]
+    change (A + s • (rho - A)).val = (s • rho + (1 - s) • A).val
+    congr 1
     module
+  change ((A + s • H).val * (CFC.log (A + s • H).val - CFC.log A.val)).trace.re ≤
+    s ^ 2 * ((A + H).val * (CFC.log (A + H).val - CFC.log A.val)).trace.re at hc
+  rw [hp, houtput] at hc
   constructor
   · simpa only [hp, houtput, A, C, e, Submodule.coe_smul, Submodule.coe_add,
       Unitary.conjStarAlgAut_apply] using hc
   · intro hpos
     have hd := binary_endpoint_derivative_lower_bound V A H hfixed hflip hA0
       (hp.symm ▸ hpos) (hm.symm ▸ hC0)
-    simpa only [hp, H, A, C, e, Submodule.coe_sub, Submodule.coe_smul, Submodule.coe_add,
+    change 2 * ((A + H).val * (CFC.log (A + H).val - CFC.log A.val)).trace.re ≤
+      (H.val * CFC.log (A + H).val).trace.re at hd
+    rw [hp] at hd
+    simpa only [H, A, C, e, Submodule.coe_sub, Submodule.coe_smul, Submodule.coe_add,
       Unitary.conjStarAlgAut_apply] using hd
 
 
