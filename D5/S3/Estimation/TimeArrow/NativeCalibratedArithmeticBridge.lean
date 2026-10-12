@@ -16,6 +16,7 @@ import D5.S3.DivergenceSupport.LogSumInequality
 
 open scoped BigOperators Topology
 open Finset Filter
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -23,6 +24,11 @@ set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 noncomputable section
+
+open private
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_log
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_lipschitz_certificate
+from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 
 private theorem native_row_score_offset {M q s : ℕ} (S : Support M q) (r : ℝ)
     (e : Experiment) (o : Obs M s e) (k l : ℕ) (i : Fin M) (j : Fin 4)

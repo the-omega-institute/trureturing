@@ -184,14 +184,6 @@ theorem moving_center_small_ball (p f g : ℤ → ℝ) (T : Finset ℤ) (a b : �
       A * (K * s * ((b - a : ℤ) : ℝ) + 2 * h + 1) * (2 * h / s + 1) := by
     gcongr
   exact hm.trans (add_le_add (hc.trans hzbound) htail)
-open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-open private
-  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
-from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-open private
-  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibrated_row_parameter
-from D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
 end
 end D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
 open scoped BigOperators
@@ -293,11 +285,9 @@ private theorem pair_fourth_moment {M q L : ℕ} (r : ℝ) (S : Support M q)
     have hp : (4 : ℝ) ^ count .pair o i 1 =
         ∏ k : Fin (2 * M * L), if (o k).1 = .inl i ∧ chi (o k).2 = 1 then 4 else 1 := by
       simp [prod_ite, prod_const, count, edges]
-      rfl
     have hm : (4 : ℝ) ^ count .pair o i (-1) =
         ∏ k : Fin (2 * M * L), if (o k).1 = .inl i ∧ chi (o k).2 = -1 then 4 else 1 := by
       simp [prod_ite, prod_const, count, edges]
-      rfl
     rw [hp, hm, ← prod_mul_distrib]
     exact prod_congr rfl fun k _ => hedge _ _
   let K := fun p : Vertex M × Vertex M =>
