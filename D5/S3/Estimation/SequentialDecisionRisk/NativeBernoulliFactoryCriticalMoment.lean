@@ -366,31 +366,39 @@ complete private seed and acquired record. The equality also covers null nodes. 
 theorem native_source_conditional_kernel (π : Seed → Bool → History → Action)
     (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool)
     (ν : Measure Seed) [IsProbabilityMeasure ν] (p q : unitInterval)
-    (t : ℕ → Bool × Bool) (n : ℕ) (source b : Bool) :
-    (RawLaw ν) (((TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = .inl source}) ∩
-      {ω | Read p q source n ω.2 = b}) =
-      (RawLaw ν) ((TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = .inl source}) *
+    (t : ℕ → Bool × Bool) (n : ℕ) (source b : Bool)
+    (D : Set Seed) (hD : MeasurableSet D) :
+    (RawLaw ν) ((((TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = .inl source}) ∩
+      Prod.fst ⁻¹' D) ∩ {ω | Read p q source n ω.2 = b}) =
+      (RawLaw ν) (((TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = .inl source}) ∩
+        Prod.fst ⁻¹' D) *
         (bernoulliMeasure true false (if source then q else p)) {b} := by
   have := uniform_probability
-  let D : Set Seed := {seed | π seed S (Prefix t n) = .inl source}
-  have hD : MeasurableSet D := by
-    change MeasurableSet ((fun seed : Seed => π seed S (Prefix t n)) ⁻¹' {(.inl source : Action)})
-    exact (hπ S (Prefix t n)) (action_singleton_measurable (.inl source))
-  have hbase := (native_source_trace_law π hπ S ν p q t n D hD).2
+  let E : Set Seed := {seed | π seed S (Prefix t n) = .inl source} ∩ D
+  have hE : MeasurableSet E :=
+    ((hπ S (Prefix t n)) (action_singleton_measurable (.inl source))).inter hD
+  have hbase := (native_source_trace_law π hπ S ν p q t n E hE).2
   rw [trace_action_seed_event π S p q t n (.inl source)]
-  change (RawLaw ν) (((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) ∩
+  have hseed : ((TraceEvent π S p q t n) ∩
+      Prod.fst ⁻¹' {seed | π seed S (Prefix t n) = .inl source}) ∩ Prod.fst ⁻¹' D =
+      (TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' E := by
+    ext ω
+    simp only [Set.mem_inter_iff, Set.mem_preimage, E]
+    tauto
+  rw [hseed]
+  change (RawLaw ν) (((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' E) ∩
     {ω | Read p q source n ω.2 = b}) =
-      (RawLaw ν) ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) * _
+      (RawLaw ν) ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' E) * _
   rw [hbase]
-  have he : ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) ∩
+  have he : ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' E) ∩
       {ω | Read p q source n ω.2 = b} =
-      ((SeedSection π S t n) ∩ D) ×ˢ
+      ((SeedSection π S t n) ∩ E) ×ˢ
         ((TapeSection p q t n) ∩ {tape | Coin (if source then q else p) (tape n) = b}) := by
     rw [trace_event_sections]
     ext ω
     simp only [Set.mem_inter_iff, Set.mem_prod, Set.mem_preimage, Set.mem_ofPred_eq]
     tauto
-  change (RawLaw ν) (((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) ∩
+  change (RawLaw ν) (((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' E) ∩
     {ω | Read p q source n ω.2 = b}) = _
   rw [he, Measure.prod_prod]
   let regions : ℕ → Set ℝ := fun i =>
@@ -777,12 +785,12 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
           ∏ i ∈ Finset.range n,
             (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2}) ∧
       (∀ (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool)
-        (n : ℕ) (source b : Bool),
-        (RawLaw (RowLaw table)) (((TraceEvent TablePolicy S p q t n) ∩
-          {ω | Act TablePolicy S p q n ω = .inl source}) ∩
+        (n : ℕ) (source b : Bool) (D : Set ((Bool × History) → Action)), MeasurableSet D →
+        (RawLaw (RowLaw table)) ((((TraceEvent TablePolicy S p q t n) ∩
+          {ω | Act TablePolicy S p q n ω = .inl source}) ∩ Prod.fst ⁻¹' D) ∩
             {ω | Read p q source n ω.2 = b}) =
-          (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S p q t n) ∩
-            {ω | Act TablePolicy S p q n ω = .inl source}) *
+          (RawLaw (RowLaw table)) (((TraceEvent TablePolicy S p q t n) ∩
+            {ω | Act TablePolicy S p q n ω = .inl source}) ∩ Prod.fst ⁻¹' D) *
             (bernoulliMeasure true false (if source then q else p)) {b}) ∧
       (∀ (S : Bool) (p q : unitInterval) (ω) (n : ℕ),
         (n : WithTop ℕ) ≤ Calls TablePolicy S p q ω →
