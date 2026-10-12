@@ -167,11 +167,34 @@ theorem full_native_environment_anchor_budget {M q s : ℕ} (S : Support M q)
   have hn := full_environment_sum S r e k l z (fun y => ¬C y)
   have hd := full_environment_sum S r e k l z (fun _ => True)
   simp only [and_true] at hd
-  dsimp only [env]
-  simp only [C,nativeRectangleRows,nativeRectangleACount] at hn ⊢
-  simp only [Fiber] at hn hd ht ⊢
-  erw [hn,hd]
-  convert ht using 1 <;> try simp only [C,nativeRectangleRows,nativeRectangleACount]
+  have hl : (∑ y : Fiber S e z,
+      if nativeMinimalRectangleReadout S e z k l y =
+          nativeMinimalRectangleReadout S e z k l (⟨z,rfl⟩ : Fiber S e z) ∧ ¬C y.val
+      then probability r e S y.val else 0) ≤
+        1/16 * ∑ y : Fiber S e z,
+          if nativeMinimalRectangleReadout S e z k l y =
+              nativeMinimalRectangleReadout S e z k l (⟨z,rfl⟩ : Fiber S e z)
+          then probability r e S y.val else 0 := by
+    convert ht using 1 <;> try simp only [C,nativeRectangleRows,nativeRectangleACount]
+    all_goals congr 3 <;> first | exact Subsingleton.elim _ _ | (ext y <;> simp)
+  have hn' : (∑ y : Obs M s e, if env y = env z ∧ ¬C y
+      then probability r e S y else 0) =
+      (∑ y : Fiber S e z,
+        if nativeMinimalRectangleReadout S e z k l y =
+            nativeMinimalRectangleReadout S e z k l (⟨z,rfl⟩ : Fiber S e z) ∧ ¬C y.val
+        then probability r e S y.val else 0) := by
+    convert hn using 1 <;> try dsimp only [env]
+    all_goals congr 3 <;> first | exact Subsingleton.elim _ _ | (ext y <;> simp)
+  have hd' : (∑ y : Obs M s e, if env y = env z
+      then probability r e S y else 0) =
+      (∑ y : Fiber S e z,
+        if nativeMinimalRectangleReadout S e z k l y =
+            nativeMinimalRectangleReadout S e z k l (⟨z,rfl⟩ : Fiber S e z)
+        then probability r e S y.val else 0) := by
+    convert hd using 1 <;> try dsimp only [env]
+    all_goals congr 3 <;> first | exact Subsingleton.elim _ _ | (ext y <;> simp)
+  have hbound := le_of_eq_of_le hn' (le_of_le_of_eq hl (congrArg (fun a : ℝ => 1/16*a) hd'.symm))
+  convert hbound using 1
   all_goals congr 3 <;> first | exact Subsingleton.elim _ _ | (ext y <;> simp)
 
 end

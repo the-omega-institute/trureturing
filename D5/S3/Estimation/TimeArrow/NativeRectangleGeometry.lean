@@ -55,6 +55,7 @@ private theorem native_occupancy_geometry {M q s : ℕ} (S : Support M q)
   have h3 := hcell 3
   refine ⟨?_,?_,?_,?_,?_,?_,?_⟩ <;> linarith only [h0.1,h0.2,h1.1,h1.2,h2.1,h2.2,h3.1,h3.2,hbg]
 
+open scoped Classical in
 /-- The actual native good event has N comparable to q/lambda, balanced
 margins, and background A no larger than N. All five occupancies are
 proved under the original pair or path law with one shared failure budget. -/
@@ -110,10 +111,10 @@ theorem native_signal_geometry_budget (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1) 
   dsimp only at hm
   have hml : c*(q : ℝ)/L ≤ m := by
     have hh := mul_le_mul_of_nonneg_left hm.1 (by positivity : (0 : ℝ) ≤ q)
-    simpa only [c,m,mul_div_assoc,div_mul_eq_mul_div,mul_comm,mul_left_comm,mul_assoc] using hh
+    simpa only [c,m,k,l,div_div,mul_div_assoc,div_mul_eq_mul_div,mul_comm,mul_left_comm,mul_assoc] using hh
   have hmu : m ≤ C*(q : ℝ)/L := by
     have hh := mul_le_mul_of_nonneg_left hm.2 (by positivity : (0 : ℝ) ≤ q)
-    simpa only [C,m,mul_div_assoc,div_mul_eq_mul_div,mul_comm,mul_left_comm,mul_assoc] using hh
+    simpa only [C,m,k,l,div_div,mul_div_assoc,div_mul_eq_mul_div,mul_comm,mul_left_comm,mul_assoc] using hh
   have hb := h M q L r hMM hq hqm hr hrκ hcκ hL hLη hsmall S e i j hi hj
     k l rfl rfl hplus hminus hdlo hdhi
   apply le_trans _ hb
@@ -144,22 +145,46 @@ theorem native_signal_geometry_budget (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1) 
         (by linarith only [hrκ,hκ]) (by unfold compensation; positivity)
         (by linarith only [hcκ,hκ]) k l t
       have hb := hK V.card R U t hN (card_filter_le V _) (card_filter_le V _)
-        hn.2.2.1 (by simpa using hn.2.2.2.1)
-        hn.2.2.2.2.1 (by simpa using hn.2.2.2.2.2.1)
+        hn.2.2.1 (by norm_num; exact hn.2.2.2.1)
+        hn.2.2.2.2.1 (by norm_num; exact hn.2.2.2.2.2.1)
       dsimp only at he
       rw [he]
       exact hb
-    have hgood := And.intro (by simpa [mul_div_assoc] using hlo)
-      (And.intro (by simpa [mul_div_assoc] using hhi)
-        ⟨hn.2.2.1,hn.2.2.2.1,hn.2.2.2.2.1,hn.2.2.2.2.2.1,hn.2.2.2.2.2.2,hatom⟩)
+    have hgood : 3*c*q/L ≤ V.card ∧ (V.card : ℝ) ≤ 5*C*q/L ∧
+        3/8*(V.card : ℝ) ≤ R ∧ (R : ℝ) ≤ 5/8*(V.card : ℝ) ∧
+        3/8*(V.card : ℝ) ≤ U ∧ (U : ℝ) ≤ 5/8*(V.card : ℝ) ∧
+        ((nativeCalibrationCells (⟨univ, by simp⟩ : Support M M) e o k l 0 \ S.val).card : ℝ)
+          ≤ 5/12*(V.card : ℝ) ∧
+        (∀ t : ℕ, 2 ≤ V.card →
+          (∑ x : Obs M (2*M*L) e,
+            if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧
+                nativeRectangleACount S e x k l (⟨x,rfl⟩ : Fiber S e x) = t
+            then probability r e S x else 0) /
+            (∑ x : Obs M (2*M*L) e,
+              if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+              then probability r e S x else 0) ≤ K/Real.sqrt V.card) := by
+      refine ⟨?_,?_,hn.2.2.1,hn.2.2.2.1,hn.2.2.2.2.1,hn.2.2.2.2.2.1,
+        hn.2.2.2.2.2.2,hatom⟩
+      · simpa only [mul_div_assoc,mul_assoc,V] using hlo
+      · simpa only [mul_div_assoc,mul_assoc,V] using hhi
     change (if ¬_ then _ else _) ≤ (if ¬_ then _ else _)
-    rw [if_neg hgood,if_neg hg]
+    simp only [k,l,c,C,V,R,U,m,nativeRectangleRows,nativeRectangleACount] at hgood hg ⊢
+    simp only [hgood,hg,true_and,and_self,forall_const,not_true_eq_false,if_false]
+    split_ifs with hbad
+    · exact le_rfl
+    · exfalso
+      apply hbad
+      intro t hN
+      convert hatom t hN using 1 <;>
+        try simp only [k,l,V,nativeRectangleRows,nativeRectangleACount]
+      all_goals congr 3 <;> first | exact Subsingleton.elim _ _ | (ext y <;> simp)
   · have hp := (finite_support_bayes (s := 2*M*L) hq hqm hr
       (by linarith only [hrκ,hκ]) (by
         unfold compensation
         positivity) (by linarith only [hcκ,hκ]) e).2.2.1 S o
     change (if ¬_ then _ else _) ≤ (if ¬_ then _ else _)
-    rw [if_pos hg]
+    simp only [k,l,c,C,m,nativeRectangleRows,nativeRectangleACount] at hg ⊢
+    simp only [hg,not_false_eq_true,if_true]
     split_ifs <;> first | exact le_rfl | exact hp.1.le
 
 end
