@@ -869,218 +869,263 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 十二、原生整数分裂、接缝图商与非负余量
+## 12. 原事件整数格的分裂、分母与确定样本总数
 
-本章固定五个实际事件 $(O,L,T,R,J)$，其位串为
-$000,100,010,001,101$。$O$ 是空窗事件，不是常数 $1$、没有观测、零源或
-停止指令；$J$ 是两个端点同时占位。计数、概率、实向量和原生程序状态保持
-不同类型。
+**定义 12.1（五个实际事件与计数纤维）。**
 
-**定义 12.1（整数事件纤维）。** 对非负整数计数 $w$，置
+Use $\Sigma=(O,L,T,R,J)$, with printed low/middle/high bits $000,100,010,001,101$; $x$ is low, $y$ high, $z$ middle. Then $xz=yz=0$, and $1,x,y,z,xy$ is a basis of all event functions: the five atomic indicators are $1-x-y-z+xy,x-xy,z,y-xy,xy$. In particular $O$ is an actual empty-window event, whereas 1 is the constant function. Empty event, empty word, no observation, zero source, End and Stop are different objects.
 
+For nonnegative integer event counts $w$, define
 $$
-N=\sum_sw_s,\quad A=w_L+w_J,\quad B=w_R+w_J,\quad C=w_T,\quad K=w_J.
+N=\sum_s w_s,\quad A=w_L+w_J,\quad B=w_R+w_J,
+\quad C=w_T,\quad K=w_J.
 $$
-
-则
-
+The inverse integer transformation is
 $$
- w=(N-A-B-C+K,\ A-K,\ C,\ B-K,\ K).
+w=(N-A-B-C+K,A-K,C,B-K,K).
 $$
-
-固定 $(N,A,B,C)$ 的非负纤维恰为
-
+Both maps have integer coefficients and compose to the identity, proving unimodularity. At fixed visible $(N,A,B,C)$, the exact nonnegative fiber is
 $$
 \max(0,A+B+C-N)\le K\le\min(A,B),
 $$
+with integer $K$ for counts and real $K$ for the relaxed counting polytope. Equivalently $0\le C\le N$ and $0\le A,B\le N-C$. All five coordinates, including $K$, specify a single table; fixing $K$ as well leaves no hidden fiber. At $N=0$ all counts vanish and $w/N$ is undefined.
 
-其中计数问题取整数 $K$，松弛多面体取实数 $K$。$N=0$ 时五个计数全为零，
-$w/N$ 不定义。概率律的对应坐标是
-$(X,Y,Z,\kappa)=(A,B,C,K)/N$，但任意实概率律未必是指定总数的经验律。
+For $N>0$, the empirical probability is $p=w/N$, and $(X,Y,Z,\kappa)=(A,B,C,K)/N$. General real probability laws have the analogous real interval and need not be empirical laws for a preassigned $N$. The mass-zero tangent $T_0=\{u:\sum u_s=0\}$ has dimension four. The kernel of visible counts including mass is one-dimensional; if mass is omitted, the empty-event direction is an extra kernel direction.
 
-**定义 12.2（原生复位的抽象字符）。** 设 $E$ 是有限自由
-$\mathbb Z$-模，$\ell:E\to\mathbb Z$ 满射，$c\in E$ 且
-$\ell(c)=m>0$。写 $c=g c_0$，其中 $c_0$ 是 primitive，$g$ 是坐标最大公因子，
-于是 $m=g m_0$。若 $x\in E$，则
 
+
+**命题 12.2（五事件隐藏方向的模四障碍）。**
+
+In the standard event Euclidean metric, set
 $$
- x-\frac{\ell(x)}m c\in\ker\ell_{\mathbb R},
-\qquad
-\frac{\ell(x)}m c\in\mathbb Rc.
+d=(1,-1,0,-1,1),\quad \|d\|^2=4,\quad H_{\mathbb R}=\mathbb Rd,
+\quad V_{\mathbb R}=d^\perp.
 $$
+The coordinate $d_J=1$ makes $d$ primitive; the integer character $d^{\mathsf T}$ is onto. Thus $H_{\mathbb Z}=\mathbb Zd$, $V_{\mathbb Z}=V_{\mathbb R}\cap\mathbb Z^5$, and
+$$
+P_Hw=\frac{d^{\mathsf T}w}{4}d,\quad P_Vw=w-P_Hw,
+\quad \mathbb Z^5/(H_{\mathbb Z}+V_{\mathbb Z})\cong\mathbb Z/4.
+$$
+Both projections are integral exactly when $4\mid d^{\mathsf T}w$. On the fixed visible fiber,
+$$
+d^{\mathsf T}w=N-C-2A-2B+4K,
+$$
+so the residue is determined by those visible counts. These are an ambient orthogonal line and complement; the hidden fiber direction lies in the mass-zero tangent, but the ambient complement is not itself the probability tangent. Positivity of the projected terms requires a separate check.
 
-**定理 12.3（primitive 假设的精确位置）。** 始终有
+证明中所用字符商是下述经典中间接口，并不另作理论编号。
 
+Let $E$ be free over $\mathbb Z$, $\ell:E\to\mathbb Z$ surjective, and $\ell(c)=m>0$. Reduction of $\ell$ modulo $m$ is onto. Its kernel is exactly $\ker\ell+\mathbb Zc$: if $\ell(x)=km$, then $x-kc\in\ker\ell$, and the reverse implication is immediate. Therefore
 $$
 E/(\ker\ell+\mathbb Zc)\cong\mathbb Z/m.
 $$
-
-若要求上述实分裂的两个项都属于声明的
-$\ker\ell$ 与 $\mathbb Zc$，充要条件是 $m\mid\ell(x)$。若只要求两个项
-属于环境模 $E$，正确条件是
-
+In $E_{\mathbb R}$, write
 $$
- m_0=m/g\mid\ell(x).
+x=\left(x-\frac{\ell(x)}m c\right)+\frac{\ell(x)}m c.
 $$
+This is a direct algebraic splitting into $\ker\ell_{\mathbb R}$ and $\mathbb Rc$; no metric is assumed, so it need not be orthogonal.
 
-因此一般形式的整数环境分裂不能把 $m\mid\ell(x)$ 当作充分必要条件，除非
-$c$ primitive。
+Membership of these terms in the *declared* modules $\ker\ell$ and $\mathbb Zc$ is equivalent to $m\mid\ell(x)$, without a primitive assumption. Membership of both terms merely in ambient $E$ is a different assertion. Write $c=g c_0$, where $c_0$ is primitive and $g>0$ is the gcd of the finitely many nonzero coordinates of $c$. Then $m=g m_0$, $m_0=\ell(c_0)>0$, and ambient integrality is equivalent to $m_0\mid\ell(x)$. Indeed the second term is $\ell(x)c_0/m_0$, and primitivity supplies an integer coordinate functional taking $c_0$ to 1.
 
-**证明。** 模 $m$ 的约化字符满射，其核为
-$\ker\ell+\mathbb Zc$：若 $\ell(x)=km$，则 $x-kc\in\ker\ell$，反向显然。
-这给商同构。写 $c=g c_0$ 后，第二项等于
-$\ell(x)c_0/m_0$。primitive 性质给出一个整数坐标泛函取 $c_0$ 值一，
-故它属于 $E$ 当且仅当 $m_0\mid\ell(x)$。例如
-$E=\mathbb Z^2$、$\ell(a,b)=a$、$c=(2,0)$ 时，$m=2$ 而
-$x=(1,0)$ 的实分裂仍在 $E$，说明未注明 primitive 时强条件错误。
+Concrete counterexample: $E=\mathbb Z^2$, $\ell(a,b)=a$, $c=(2,0)$, $m=2$, $x=(1,0)$. The two terms are $(0,0)$ and $(1,0)$, both integral, although $2\nmid1$; the latter is outside $\mathbb Zc$. Since $\ell$ is onto, ambient integrality agrees with $m\mid\ell(x)$ for every integer $x$ exactly when $g=1$, equivalently the line $\mathbb Zc$ is saturated. The quotient theorem and the ambient integrality criterion therefore have distinct hypotheses.
 
-在原生奇数复位的实际模块中，复位核生成元 $c_q$ 是 primitive，且
-$\ell(c_q)=q+1$，所以组合商为 $\mathbb Z/(q+1)$；这一步不把有符号模的
-等价分裂解释成非负历史的可执行更新。
+**命题 12.3（八记录的实最优与整数最优）。**
 
-**定义 12.4（合法二十一格接缝）。** 原生高到低方向的接缝条件为
-$x(i)y(j)=0$，故禁格是 $(L,R),(L,J),(J,R),(J,J)$，合法格共 $21$ 个。
-把合法格视作左右五个顶点之间的二部图边，取左到右方向
-$\partial E_{ij}=e_{j_r}-e_{i_\ell}$，删除 $J_r$ 行，得
-$D\in\mathbb Z^{9\times21}$。九条边
-$OO,OL,OT,OR,OJ,LO,TO,RO,JO$ 构成生成树，故 $D$ 满射且秩为 $9$。
-
-对 $i,j\ne O$ 的十二个合法内部格，令
-
+For $(N,A,B,C)=(8,3,3,1)$,
 $$
-Z_{ij}=E_{ij}-E_{iO}-E_{Oj}+E_{OO}.
+w(K)=(1+K,3-K,1,3-K,K),\quad 0\le K\le3,
+\qquad \|w(K)\|^2=4(K-5/4)^2+55/4.
 $$
+The real minimum is attained uniquely at $`w^*=(9/4,7/4,1,7/4,5/4)`$, with value $55/4$. The integer minimum is $w(1)=(2,2,1,2,1)$, with value 14; its gap is $1/4$. Comparing the distance of each feasible integer to $5/4$ proves the minimum. Also $d^{\mathsf T}w=4K-5\equiv3\pmod4$ on this fiber.
 
-它们构成 $\ker D$ 的整数基。固定边缘的全支撑纤维维数为 $12$；若边缘为零或
-落在 $r+s=1$ 的退化面，必须改用实际可进入子图重算。
+The law $`w^*/8=(9,7,4,7,5)/32`$ is a valid real probability law. It is not an empirical law of eight records; it is an empirical law of thirty-two records, with correspondingly scaled visible counts. Thus the gap depends on the declared sample total.
 
-**定理 12.5（原生 seam 商及最小投影分母）。** 令
-$H_{\mathbb Z}=\ker D$、$V_{\mathbb Z}=D^{\mathsf T}\mathbb Z^9$、
-$L=DD^{\mathsf T}$。则
+**定义 12.4（高到低双窗的原二十一格与树坐标）。**
 
+The first window $i$ precedes the second $j$ in the native high-to-low order. Its guard is $x(i)y(j)=0$, so precisely
+$(L,R),(L,J),(J,R),(J,J)$ are forbidden. Regard each legal joint outcome as an edge between a left copy of $\Sigma$ and a right copy; these incidence edges are not temporal transitions or toggle edges.
+
+Here is the complete coordinate convention. Vertices are
+$O_\ell,L_\ell,T_\ell,R_\ell,J_\ell,O_r,L_r,T_r,R_r,J_r$.
+Edges are in the following row order:
 $$
-\mathbb Z^{21}/(H_{\mathbb Z}+V_{\mathbb Z})
-\cong\mathbb Z/5\oplus\mathbb Z/15\oplus\mathbb Z/15\oplus\mathbb Z/45.
+OO,OL,OT,OR,OJ;\quad LO,LL,LT;\quad TO,TL,TT,TR,TJ;
+\quad RO,RL,RT,RR,RJ;\quad JO,JL,JT.
 $$
+Orient left to right, with conventional boundary
+$\partial E_{ij}=e_{j_r}-e_{i_\ell}$. Delete the $J_r$ row to obtain $D\in\mathbb Z^{9\times21}$. A nonnegative count table has boundary $(-\text{five row margins},\text{first four column margins})$; the missing positive $J_r$ margin is minus the sum of these nine signed coordinates. In particular mass is $-\sum_{\text{left rows}}(Dw)_v$. Opposite sign conventions change coordinates, not the integer quotient.
 
-因此群的指数为 $45$。欧氏 cut projection
-$P_V=D^{\mathsf T}L^{-1}D$ 的所有条目以 $45$ 清除，且不能用更小的正整数统一清除。
+The nine edges $OO,OL,OT,OR,OJ,LO,TO,RO,JO$ form a spanning tree. Its reduced incidence determinant is $\pm1$, by deleting leaves successively, proving $D:\mathbb Z^{21}\to\mathbb Z^9$ onto and real rank 9.
 
-**证明。** 生成树给出
-$V_{\mathbb R}\cap\mathbb Z^{21}=D^{\mathsf T}\mathbb Z^9$；若
-$D^{\mathsf T}t$ 为整数，沿树积分势即可使全部顶点势为整数。于是
+For each legal $i,j\ne O$, let $Z_{ij}=E_{ij}-E_{iO}-E_{Oj}+E_{OO}$. There are $4\cdot4-4=12$. These are an integer basis of $\ker D$: the coefficient at internal $ij$ is unique, after which zero row and column margins force the anchor entries. Hence the real kernel has dimension 12 as well.
 
+For a nonempty fixed-margin positive fiber, its actual affine dimension uses the union $E_{\rm adm}$ of supports of all its feasible points: it is $|E_{\rm adm}|-|V_{\rm adm}|+k_{\rm adm}$, by the incidence rank on each component. Averaging one feasible witness for each usable edge gives a relative interior point on that union. A single sparse point's support is not a substitute. For positive probability margins, put $a=\mu_L+\mu_J$, $b=\nu_R+\nu_J$. Feasibility is $a+b\le1$, with full-support interior when $a+b<1$; at equality the graph reduces to $K_{2,3}\sqcup K_{3,2}$, with fiber dimension four. Zero margins require deletion of their forced-zero edges. Integer fibers additionally require actual integer counts and all nonnegative constraints.
+
+此合法图与 Hidden C-16–C-17 同域：模式 $0,1,2,3,13$ 对应 $O,L,T,R,J$，行是先读的高窗，列是后读的低窗；其已有运输核不重复另立定理。
+
+**命题 12.5（原生接缝的整数商、阶数与Smith因子）。**
+
+以下完整割格、Cauchy–Binet与Smith消元是计算该具体图的中间步骤。
+
+Set $H_{\mathbb Z}=\ker D$, $V_{\mathbb Z}=D^{\mathsf T}\mathbb Z^9$, and $L=DD^{\mathsf T}$. The real cut space $V_{\mathbb R}=\operatorname{im}D^{\mathsf T}$ is orthogonal to the real flow space $\ker D$. Crucially,
 $$
-\mathbb Z^{21}/(H_{\mathbb Z}+V_{\mathbb Z})
-\cong\mathbb Z^9/L\mathbb Z^9.
+V_{\mathbb R}\cap\mathbb Z^{21}=D^{\mathsf T}\mathbb Z^9.
 $$
+To prove this full primitive-lattice equality, give the omitted vertex potential zero. If $D^{\mathsf T}t$ is integral, every oriented edge difference of potentials is integral. Following the spanning tree from the zero potential makes each remaining vertex potential integral. The flow lattice also equals its real span intersected with $\mathbb Z^{21}$, directly from its integer equations.
 
-按通用顶点 $(O,T,R)$、部分顶点 $(L,J)$ 分组，$L$ 的特征多项式为
-
+The positive definite matrix $L$ satisfies $t^{\mathsf T}Lt=\|D^{\mathsf T}t\|^2>0$ for nonzero $t$. The map $w\mapsto Dw\bmod L\mathbb Z^9$ is onto, and its kernel is $H_{\mathbb Z}+V_{\mathbb Z}$: if $Dw=La$, then $w-D^{\mathsf T}a\in\ker D$. Therefore
 $$
-\lambda(\lambda-2)(\lambda-3)^2(\lambda-5)^5(\lambda-9),
+\mathbb Z^{21}/(H_{\mathbb Z}+V_{\mathbb Z})\cong\mathbb Z^9/L\mathbb Z^9.
 $$
+Cauchy–Binet gives $\det L=\sum_{|S|=9}\det(D_S)^2$. A selected set with a cycle or a disconnection has determinant zero; a spanning tree has determinant $\pm1$ by the leaf argument. Thus the determinant counts spanning trees. This is the classical critical group construction in the specified seam coordinates.
 
-故 $\det L=3^4 5^4=50625$。模 $3$ 的核维为 $3$，模 $5$ 的核维为 $4$；
-Smith 不变因子于是为
-$(1,1,1,1,1,5,15,15,45)$。这一步使用显式有限域关系，而非从群阶猜因子。
-
-对任意整数 $w$，$P_Vw$ 为整数当且仅当 $w$ 在
-$H_{\mathbb Z}+V_{\mathbb Z}$ 中，故统一清除分母的最小值是群指数。为见到
-$45$ 确实不可再降，固定 $O_r$ 势为零，对 $O_\ell$ 单位注入解势方程，得到
-$O_\ell$ 势 $17/45$。于是
-
+Write universal left vertices $U=(O,T,R)$, partial left $A=(L,J)$, universal right $V=(O,L,T)$, partial right $B=(R,J)$. Universal degrees are 5, partial degrees 3. Internal zero-sum vectors in the two size-three groups give four eigenvalues 5; those in the two size-two groups give two eigenvalues 3. For vectors constant on each group, the full Laplacian acts by
 $$
-(P_V)_{OO,OO}=\frac{17}{45},
+Q=\begin{pmatrix}5&0&-3&-2\\0&3&-3&0\\-3&-2&5&0\\-3&0&0&3\end{pmatrix}.
+$$
+The equal-left-right sector has matrix $\begin{pmatrix}2&-2\\-3&3\end{pmatrix}$, with eigenvalues 0,5. The opposite sector has $\begin{pmatrix}8&2\\3&3\end{pmatrix}$, whose trace 11 and determinant 18 give eigenvalues 2,9. Thus
+$$
+\chi(\lambda)=\lambda(\lambda-2)(\lambda-3)^2(\lambda-5)^5(\lambda-9).
+$$
+For a connected ten-vertex Laplacian, its adjugate is $\tau\mathbf1\mathbf1^{\mathsf T}$: both nullspaces are spanned by $\mathbf1$, and each diagonal cofactor is the reduced determinant. The coefficient of $t$ in $\det(tI+\partial\partial^{\mathsf T})$ is its adjugate trace $10\tau$, and also the product of nonzero eigenvalues. Hence
+$$
+\det L=\tau=\frac{2\cdot3^2\cdot5^5\cdot9}{10}
+=3^4 5^4=50625.
 $$
 
-且 $17$ 与 $45$ 互素。
-
-**命题 12.6（二十二记录的连续—整数缺口）。** 在同一合法支持上取行边缘
-$r=(6,3,5,5,3)$、列边缘 $s=(6,5,5,3,3)$，总数为 $22$。非负实域的唯一
-最小范数表为
-
+Order and spectrum alone do not determine Smith factors. Here is an additional, independent relation reduction. Set the sink potential $J_r=0$, let $u_1,u_2,u_3$ be universal left potentials, $a_1,a_2$ partial left, $v_1,v_2,v_3$ universal right, and $t$ the $R_r$ potential. Write $U=\sum u_i$, $A=a_1+a_2$, $V=\sum v_j$. The complete nine homogeneous relations for $L$ are
 $$
-W^*=\frac1{45}
-\begin{pmatrix}
-62&53&53&51&51\\51&42&42&0&0\\53&44&44&42&42\\
-53&44&44&42&42\\51&42&42&0&0
-\end{pmatrix},
+5u_i-V-t=0;\qquad3a_i-V=0;\qquad
+5v_j-U-A=0;\qquad3t-U=0. \tag{12.A}
 $$
+Over $\mathbb F_3$, they say $V=0$, $u_i=2t$, $U=0$, and $v_j=2A$. The quantities $a_1,a_2,t$ are arbitrary and determine every potential; conversely these assignments satisfy every relation. Thus $\dim\ker(L\bmod3)=3$.
 
-而非负整数域的最小范数由一个值为 $2$、其余二十个合法格为 $1$ 的表取得。
-令 $F(W)=45\lVert W\rVert^2-1066$，则
+Over $\mathbb F_5$, they say $V+t=0$, $a_i=2V$, $U+A=0$, $t=2U$. Hence $A=4V=-V$, $U=V$, and $0=V+t=3V$, giving $V=U=t=a_i=0$. The three $u_i$ have sum zero and so do the three $v_j$; both have two free parameters. Thus $\dim\ker(L\bmod5)=4$. These field reductions apply to the displayed integer relations.
 
+Recall why the classical Smith argument applies. Integer row and column swaps, additions and Bezout steps are unimodular. A least positive attainable pivot divides its row and column, which can be cleared; if it fails to divide a remaining entry, adding that row into the pivot row and applying a Euclidean column step produces a smaller positive pivot. Thus the pivot divides the remaining block, and induction gives $s_1\mid\cdots\mid s_9$. The product is $|\det L|$, and the number divisible by a prime $p$ is the nullity modulo $p$, since unimodular matrices stay invertible modulo $p$.
+
+There are three positive 3-adic valuations totaling four, so they are 1,1,2. There are four positive 5-adic valuations totaling four, so all are 1. There are no other prime factors. Divisibility puts these at the end of the nine-term sequence, necessarily
+$$
+(s_1,\ldots,s_9)=(1,1,1,1,1,5,15,15,45),
+\quad \mathbb Z^9/L\mathbb Z^9\cong
+\mathbb Z/5\oplus\mathbb Z/15\oplus\mathbb Z/15\oplus\mathbb Z/45.
+$$
+Its order is 50625 and its exponent is 45. Neither is a number of independent real directions; the hidden real dimension remains twelve.
+
+**命题 12.6（Euclidean投影的最小分母四十五）。**
+
+The Euclidean cut projection is $P_V=D^{\mathsf T}L^{-1}D$; indeed it is symmetric, its square is itself, its image is the cut space and $DP_V=D$. For integer $w$, the primitive-lattice equalities in 命题12.5的格接口 give
+$$
+P_Vw\in\mathbb Z^{21}\iff w\in H_{\mathbb Z}+V_{\mathbb Z}.
+$$
+The forward implication puts $P_Vw$ in the full integer cut lattice and $w-P_Vw$ in the integer flow lattice; the reverse follows by projecting their sum. Consequently, for every positive integer $n$,
+$$
+nP_V\text{ has integer entries}\iff
+n\text{ annihilates }\mathbb Z^{21}/(H_{\mathbb Z}+V_{\mathbb Z}).
+$$
+Thus the least clearing denominator is the group exponent, 45. This proves that all entries clear with 45, without assuming any computed projection matrix.
+
+To calculate the $OO,OO$ diagonal entry, solve a unit injection at $O_\ell$ and extraction at $O_r$, fixing $O_r$ potential zero. By permutation symmetry, let the $O_\ell$ potential be $a$, other universal left potentials $b$, partial left $c$, other universal right $d$, and both partial right $e$. The equations are
+$$
+5a-2d-2e=1,\quad5b-2d-2e=0,\quad3c-2d=0,
+\quad5d-(a+2b+2c)=0,\quad3e-(a+2b)=0,
+\quad a+2b+2c=1.
+$$
+They give $d=1/5$, $c=2/15$, $a+2b=11/15$, $e=11/45$, $a-b=1/5$, and therefore $b=8/45$, $a=17/45$. Substitution also verifies the first equation. Potential uniqueness follows from connectedness modulo an additive constant.
+
+The injection is $-\partial E_{OO}$, consistent with our conventional left-to-right boundary. In the actual deleted-$J_r$ coordinates, subtract $11/45$ from all these potentials. In the vertex order of 定义12.4 this gives
+$h=(6,-5,-3,-3,-5,-11,-2,-2,0)/45$.
+Then $Lh=-DE_{OO}$, so
+$(P_V)_{OO,OO}=(DE_{OO})^{\mathsf T}(-h)=17/45$.
+Since 17 is coprime to 45, this entry separately proves the denominator cannot be smaller. Changing the deleted row changes the potential coordinates; reversing an edge changes the corresponding signs of off-diagonal projection entries. The quotient and denominator for the same graph and metric are invariant. The number 45 is an arithmetic modulus of this projection, not an energy unit or a universal constant.
+
+**定理 12.7（二十二记录同一目标的正负与精确整数间隙）。**
+
+Use exactly the legal support and row/column order of 定义12.4. Fix margins $r=(6,3,5,5,3)$, $s=(6,5,5,3,3)$, with common total 22. The integer table and real candidate are
+$$
+W_0=\begin{pmatrix}2&1&1&1&1\\1&1&1&0&0\\1&1&1&1&1\\1&1&1&1&1\\1&1&1&0&0\end{pmatrix},
+\qquad
+W^*=\frac1{45}\begin{pmatrix}62&53&53&51&51\\51&42&42&0&0\\53&44&44&42&42\\53&44&44&42&42\\51&42&42&0&0\end{pmatrix}.
+$$
+The numerator row sums of $`W^*`$ are $(270,135,225,225,135)$; its column sums are $(270,225,225,135,135)$, proving the fixed margins. Every legal entry is strictly positive and exactly the four illegal entries are zero.
+
+On legal entries, $`45W^*_{ij}=a_i+b_j`$ with
+$a=(62,51,53,53,51)$, $b=(0,-9,-9,-11,-11)$.
+Thus $`\langle W^*,Z\rangle=0`$ for every zero-margin legal signed array $Z$, and
+$$
+\|W^*+Z\|^2=\frac{1052}{45}+\|Z\|^2. \tag{12.B}
+$$
+Here
+$`45\|W^*\|^2=a\cdot r+b\cdot s=1208-156=1052`$.
+The norm is the sum of squared legal event coordinates, without an unannounced weight. Since $`W^*`$ is feasible, (12.B) proves the unique real nonnegative optimum and its value, without relying on numerical minimization.
+
+Any twenty-one nonnegative integer entries totaling 22 have an entry at least 2. For each such integer $k$, $k^2=k+k(k-1)$, and $k(k-1)\ge0$, with at least one contribution at least 2. Hence $\|W\|^2\ge24$. The table $W_0$ has one entry 2 and twenty entries 1 on the legal support, so $\|W_0\|^2=24$ and it meets the required margins. It proves attainment of the integer minimum.
+
+For the common objective $F(W)=45\|W\|^2-1066$ on these fixed-margin domains,
 $$
 \min_{\mathbb R_{\ge0}}F=-14,\qquad
-\min_{\mathbb Z_{\ge0}}F=14,
-\qquad \text{gap}=28.
+\min_{\mathbb Z_{\ge0}}F=14,\qquad
+\text{gap}=28.
 $$
+Equation (12.B) also shows that the closest feasible integer table has squared distance $24-1052/45=28/45$ from $`W^*`$. This is an exact lattice distance in this fixed fiber, not a gap inferred merely from discreteness.
 
-**证明。** 在合法格上 $45W^*_{ij}=a_i+b_j$，其中
-$a=(62,51,53,53,51)$、$b=(0,-9,-9,-11,-11)$。任意零边缘扰动 $Z$ 满足
+The continuous negative value therefore does not imply an integer negative value for this twenty-two-record task. The probability $`W^*/22`$ remains perfectly legal. The empirical requirement is $22p\in\mathbb Z^{21}$, with the specified scaled margins; after changing the total, the objective and margins must be restated. For example $`45W^*`$ is an integer table of 990 records. Neither the integer bound nor the values $-14,14$ quantify over all probability laws, arbitrary marginals, physical sources or other metrics.
 
+此应用也说明带余项的距离下界必须保留同一目标、度量和可行域；作为该应用的中间估计，
+
+For an actual specified feasible integer domain $\mathcal I$, suppose an ordinary proof supplies
 $$
-\lVert W^*+Z\rVert^2=\frac{1052}{45}+\lVert Z\rVert^2.
+F(w)\ge F_{\rm cont}+\mu\|w-w^*\|^2-\varepsilon,
+\quad \mu>0,
 $$
+with the same objective and metric, a justified remainder upper bound $\varepsilon$, and an independently proved $`\operatorname{dist}(w^*,\mathcal I)\ge\delta\ge0`$. Only then does $F(w)\ge F_{\rm cont}+\mu\delta^2-\varepsilon$ follow. Strict positivity requires this last lower bound to be positive. Discreteness alone gives no uniform $\delta$ across targets or totals: some targets are integer, and others approach the lattice arbitrarily closely. The twenty-two-record example has $F_{\rm cont}=-14$, $\mu=45$, $\delta^2=28/45$, $\varepsilon=0$, giving $-14+28=14$.
 
-故 $W^*$ 是唯一实最优。二十二个非负整数总和为 $22$，且有二十一个允许格，
-至少一个格取值至少 $2$；$k^2=k+k(k-1)$ 给范数至少 $24$，并由上述表达到。
-这只对这组总数、边缘和无权欧氏目标成立；改变总数必须重述全部条件。
 
-**定理 12.7（Fisher 分母依赖权重）。** 在全正合法支持上，Fisher 投影为
 
+**命题 12.8（原二十一格的Fisher分母随权重变化）。**
+
+下述投影公式是此有理／无理权重应用的中间接口；正支撑与满秩均为必要前提。
+
+Let $p_e>0$ on all twenty-one legal cells, with $\sum p_e=1$, and $M=\operatorname{diag}(p_e)$. The Fisher metric on probability tangent vectors is
+$g_p(u,v)=u^{\mathsf T}M^{-1}v=\sum_eu_ev_e/p_e$; the same form is an ambient positive definite extension. Since $D$ has full row rank,
+$t^{\mathsf T}DMD^{\mathsf T}t=\sum_ep_e(D^{\mathsf T}t)_e^2>0$ for nonzero $t$. Thus
 $$
-P_F=M D^{\mathsf T}(DMD^{\mathsf T})^{-1}D,
-\qquad M=\operatorname{diag}(p_e).
+P_F=MD^{\mathsf T}(DMD^{\mathsf T})^{-1}D
 $$
+is defined, $DP_F=D$, and $g_p(z,P_Fu)=z^{\mathsf T}D^{\mathsf T}(DMD^{\mathsf T})^{-1}Du=0$ for $z\in\ker D$. Its complement is the Fisher-orthogonal hidden component. At uniform $p_e=1/21$, the metric is 21 times Euclidean and $P_F=P_V$.
 
-它在均匀律时等于欧氏投影，但不存在对所有正权重统一的分母 $45$。若 $OO$
-边权为 $t>0$、其他边权为 $1$，则指定对角元为
+For a normalized tangent $\sum u_e=0$, both components have mass zero: mass equals minus the sum of left boundary coordinates, and $DP_Fu=Du$. This does not make either component a nonnegative source. Zero probabilities require a restricted support and an independent rank check; the displayed ambient metric and inverse cannot be used at such a boundary without modification.
 
+There is no common denominator 45 for arbitrary positive Fisher weights. Give $OO$ conductance $t>0$, all other edges conductance 1, and normalize these weights to a probability law; common scaling cancels from $P_F$. Removing $OO$ leaves a connected alternative network. Define its conductance $C>0$ as the current required for unit potential difference between the two endpoints; positive definiteness and connectedness give positivity. Linearity makes its current at potential difference $v$ equal to $Cv$, while the added edge carries $tv$. For a unit injection, $(t+C)v=1$. The $OO$ diagonal of $P_F$ is the current on that edge, hence $t/(t+C)$. At $t=1$, 命题12.6 gives $1/(1+C)=17/45$, so $C=28/17$ and that diagonal is
 $$
 \frac{17t}{17t+28}.
 $$
+Taking the positive rational $t=28k/17$ gives $k/(k+1)$, whose reduced denominators are unbounded. Irrational $t$ gives an irrational value, since the displayed expression has a rational inverse on $(0,1)$. Rational positive $p$ gives a rational matrix for each fixed law, but with law-dependent denominators; irrational inputs need not have any integer clearing denominator. This is a metric dependence, not a change in the underlying integer event lattice.
 
-取 $t=28k/17$ 得 $k/(k+1)$，其约化分母无界；取无理 $t$ 则该元可为无理数。
+**命题 12.10（整数树截面与原生奇reset的时序限制）。**
 
-**证明。** 其余网络的单位电势差电导记为 $C>0$。$t=1$ 时
-$1/(1+C)=17/45$，故 $C=28/17$；并联电流给出显示式。归一化权重的共同
-缩放在 $P_F$ 中抵消。零概率边界不能使用全正逆矩阵，须按实际支持重算。
+奇reset的原有结果采用《RECURSIVE_RELATIONAL_OBSERVATION_RESET_PARITY_DIMENSION_ACTION》定义1与定理10–13，不新增同义结论。参数对应为 $M_q=(\mathbb Z[C_2])^q$、原右行转移 $T_q$、原前向colimit $G_q$、真正时间 $\Theta_q$、$D_q=I+\Theta_q$、字符 $\Lambda_q$ 与原核生成元 $c_q$。定理11通过 $F_q(\operatorname{of}_n(v))=P_q^nv$ 保留全部整数坐标并把真正时间输运为 $T_q$；补集乘 $[\tau]$ 是另一作用。正奇数 $q$ 的定理12给 $\ker D_q=\mathbb Zc_q$、$\operatorname{im}D_q=\ker\Lambda_q$、$\Lambda_q(c_q)=q+1$、普通余核 $\mathbb Z$ 和合并商 $\mathbb Z/(q+1)$，同时给全部可解纤维。原始stage的非负锥输运为 $\bigcup_{n\ge0}P_q^n(M_q^+)$，不自动是坐标非负锥；例如 $P_2(0,[1])=([1],-[1])$。这些是该原有有序域的应用边界。
 
-**命题 12.8（分裂、正性和时间互不等价）。** 选九条树边的整数右逆 $R$，则
-
+Let $D_T$ be the reduced incidence on the nine chosen tree edges. Its integer inverse exists. Embed $D_T^{-1}$ in the full edge space to obtain an integer right inverse $R$, so $DR=I$. For every integer signed chain,
 $$
- w=R(Dw)+(I-RD)w,
+w=R(Dw)+(I-RD)w,
+\qquad D(I-RD)w=0.
 $$
+This is an integral direct splitting, generally nonorthogonal. It is not a nonnegative native update. For a concrete illustration, the integral zero-margin rectangle $Z_{LL}=E_{LL}-E_{LO}-E_{OL}+E_{OO}$ has both signs, and it is precisely the hidden term $(I-RD)E_{LL}$ for the chosen tree. The tree term is also signed. Neither algebraic term automatically defines a separately realizable source.
 
-是整数的非正交分裂；矩形
-$E_{LL}-E_{LO}-E_{OL}+E_{OO}$ 显示隐藏项可含正负号。对于奇数 $q$，
-有理时间等变截面 $s_{\mathbb Q}(n)=nc_q/(q+1)$ 存在，但整数线性且时间等变
-截面会迫使 $(q+1)k=1$，不可能。$q=1$ 时的非负集合截面
-$(\max(n,0),\max(-n,0))$ 仍然存在；被排除的是指定的整数线性时间等变性质，
-不是所有正历史。
+For native odd reset, $s_{\mathbb Q}(n)=nc_q/(q+1)$ is a rational section of $\Lambda_q$ and intertwines genuine time with negation. If an integer-linear section had these properties, then $(I+\Theta_q)s(1)=0$, hence $s(1)=kc_q$, and its section equation would force $(q+1)k=1$, impossible. Surjectivity still supplies a nonequivariant integer-linear section $n\mapsto ne$ for $\Lambda_q(e)=1$.
 
-**推论 12.9（非负距离是缺口推理的必要条件）。** 若在同一目标和度量下已有
+Additivity matters: at $q=1$, the set section $n\mapsto(\max(n,0),\max(-n,0))$ is nonnegative and equivariant under coordinate swap. The theorem excludes the specified integer-linear, time-equivariant section; it does not exclude set sections or a positively lawful acquisition process supplied under another explicit contract. Integrality, orthogonality, positivity and dynamical equivariance are four distinct requirements.
 
-$$
-F(w)\ge F_{\rm cont}+\mu\lVert w-w^*\rVert^2-\varepsilon,
-\qquad\mu>0,
-$$
+Fibonacci接口的参数对应。局部钟卷定理15.4的单位介入活动为 $A=B^3$、$B=\begin{pmatrix}1&1\\1&0\end{pmatrix}$，于是 $A^n=\begin{pmatrix}F_{3n+1}&F_{3n}\\F_{3n}&F_{3n-1}\end{pmatrix}$、$\det A^n=(-1)^n$，并给比值间隔 $1/(F_{3n}F_{3n+1})$。该所有者的八窗口应用同时保留同一有序合法历史、实际共享接缝、开放端或单端任务、单位介入活动、允许外端权重与正归一化质量。共享位置计重一次；相关历史须实际满足相应乘积合同。八窗口不是八记录，也不从整数可逆性取得正逆操作或恢复来源历史。单独通道 $`(-U)\rho(-U)^*=U\rho U^*`$ 的相等不建立模四／四十五与量子相位的映射；受控比较还需另供相干控制与参考。
 
-且已证明可行整数域到 $w^*$ 的距离至少为 $\delta\ge0$，则
+For a legal integral event increment $\delta w=e_s$, the single-window residue obeys $r'\equiv r+d_s\pmod4$, where $d_s$ is the $s$-coordinate of $d=(1,-1,0,-1,1)$; a removal uses the opposite sign and must preserve nonnegativity. General integer increments give $r'\equiv r+d^{\mathsf T}\delta w$. The two-window quotient class obeys $[Dw']=[Dw]+[D\delta w]$ in $\mathbb Z^9/L\mathbb Z^9$. These are additive count bookkeeping identities, not native dynamical update laws. The residue is already determined by the complete boundary; after a compression, its recoverability must be proved on fibers of that compression before it is called retained information.
 
-$$
-\min_{\mathcal I}F\ge F_{\rm cont}+\mu\delta^2-\varepsilon.
-$$
 
-严格正性还需右侧严格为正；离散性本身不给统一正的 $\delta$。二十二记录例中
-$F_{\rm cont}=-14$、$\mu=45$、$\delta^2=28/45$、$\varepsilon=0$，正好得到
-$14$。Fibonacci 矩阵的整数幂和 Cassini 比值收敛只说明整数无幺模变换与实比值
-极限，不能推出正逆作用、原生历史恢复或量子相位。
 
-本章只涉及指定原生整数模、二十一格合法图、明确边缘和明确度量。它没有把
-$45$ 解释为普遍量子化单位，也没有把一个固定整数缺口推广为所有概率律、物理源
-或 Robin 目标；任何这样的迁移都必须重新给出共同实现、非负域、距离和目标函数。
+算术来源对应。《AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS》§18.6的对象是同一普通整数 $n>5040$，其余项接口为 $\log(e^\gamma\log\log n/(\sigma(n)/n))=I_\psi(\log n)+R(\log n)+d_n$、$d_n\ge0$，含有符号无限尾。`RoughPrimeSuffixBellman` 的 `rough_prime_suffix_complete` 则保留截点以上连续素数、正反单调指数、整数乘积预算和有限最大 $\sigma(n)/n$；它没有给上述二次距离估计。要将定理12.7的方法用于Robin目标，尚须实际指数编码、同目标比较、度量、可行格距离与解析余项上界；有限模数没有替代这些义务。
+
+在非空嵌套实／整数域、同一目标且两侧有限最小值均取得时，间隙定义为 $\min_{\mathcal I}F-\min_{\mathcal R}F\ge0$。固定总数计数多面体紧，整数纤维非空时有限；空纤维、无界目标及未取得下确界另需定义。正整数间隙不量化所有实概率律；正总源的线性分裂也不保证各项非负或可分别执行。
+
+数学引文。R. Bacher、P. de la Harpe、T. Nagnibeda，*The lattice of integral flows and the lattice of integral cuts on a finite graph*，Bull. Soc. Math. France125(2)，167–198，DOI [10.24033/bsmf.2303](https://doi.org/10.24033/bsmf.2303)，提供流格、割格与有限图整数商的经典背景；这里仅采用其书目归属，所需饱和性、树计数、Smith因子与分母证明均在具体接缝应用内给出。
 
 ## 追加锚（本行以下为增补区）
