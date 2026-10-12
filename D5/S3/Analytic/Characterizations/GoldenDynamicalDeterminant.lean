@@ -8,7 +8,6 @@
 
 import D5.S3.Analytic.Characterizations.GoldenTraceLog
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
-import Mathlib
 import Mathlib.Analysis.Meromorphic.Order
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 

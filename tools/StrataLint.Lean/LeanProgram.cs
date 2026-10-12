@@ -54,19 +54,14 @@ internal static class LeanProgram
         using var interrupt = OperatingSystem.IsWindows() ? null : PosixSignalRegistration.Create(PosixSignal.SIGINT, Cancel);
         using var stdout = Console.OpenStandardOutput();
         using var stderr = Console.OpenStandardError();
-        var observation = LeanCacheCommandObservation.FromEnvironment();
-        observation?.Boundary("cache-reader", "start");
         try
         {
             var result = LeanCacheEnsureCommand.RunWithWriter(root, arguments,
-                new ProductionWorktreeProcessRunner(cancellation.Token, observation), new ApfsDirectoryCloner(),
-                standardOutput: observation?.Output(stdout) ?? stdout,
-                standardError: observation?.Error(stderr) ?? stderr);
+                new ProductionWorktreeProcessRunner(cancellation.Token), new ApfsDirectoryCloner(),
+                standardOutput: stdout, standardError: stderr);
             Console.Out.Write(result.Output);
             Console.Error.Write(result.Error);
-            var exit = signalExit != 0 ? signalExit : result.ExitCode ?? (result.Success ? 0 : 2);
-            observation?.Boundary("cache-reader", "finish", rawExit: exit);
-            return exit;
+            return signalExit != 0 ? signalExit : result.ExitCode ?? (result.Success ? 0 : 2);
         }
         catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
         {
