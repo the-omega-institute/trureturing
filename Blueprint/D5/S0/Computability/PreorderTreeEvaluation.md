@@ -8,7 +8,7 @@ Constructor words use the existing finite-list coding of Option tokens. A concre
 
 The matching Reg mirror proves whole-family reconstruction, variation, sensitivity and observational dependence for preorder_codec over every leaf carrier, including empty ones. The evaluator and fold still require audit parameterization of every primitive codable carrier and constructor operation. Contract source-selection coordinates and raw source-occurrence binding remain unregistered for all four theorems. No validated four-slot audit status is claimed.
 
-Duplicate elimination follows the pinned rightmost-occurrence convention; insertion sort uses the supplied decidable relation. The primitive recursive list interface reuses the pinned finite-list equations and recursors. Its full polymorphic theorem is consumed by the native class-name and structural variable-key factories; it is a bind-only auxiliary interface, not an independent mathematical-content claim. Its four-slot audit still requires the full carrier, coding, equality and relation parameters.
+Duplicate elimination follows the pinned rightmost-occurrence convention; insertion sort uses the supplied decidable relation. The primitive recursive list interface reuses the pinned finite-list equations and recursors. Its full polymorphic theorem is consumed by the native class-name and structural variable-key factories. Its four-slot audit still requires the full carrier, coding, equality and relation parameters.
 
 **Theorem 1.1 (primitive list algorithms).**
 
