@@ -220,27 +220,5 @@ theorem binary_expectation_entropy_bounds (V : unitary M)
     simpa only [hp, H, A, C, e, Submodule.coe_sub, Submodule.coe_smul, Submodule.coe_add,
       Unitary.conjStarAlgAut_apply] using hd
 
-/-- The binary conditional-expectation inequalities hold for every finite passive
-memory, with `V = U ⊗ I`. The input may contain arbitrary quantum correlations. -/
-theorem binary_expectation_finite_memory
-    {a r : Type*} [Fintype a] [DecidableEq a] [Fintype r] [DecidableEq r]
-    (U : unitary (Matrix a a ℂ)) (hU : IsSelfAdjoint (U : Matrix a a ℂ))
-    (rho : ↥(selfAdjoint.submodule ℝ (Matrix (a × r) (a × r) ℂ)))
-    (hrho : 0 ≤ rho.val) (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
-    let V : Matrix (a × r) (a × r) ℂ := Matrix.kronecker (U : Matrix a a ℂ) 1
-    let sigma := (1 / 2 : ℝ) • (rho.val + V * rho.val * star V)
-    let output := s • rho.val + (1 - s) • sigma
-    (output * (CFC.log output - CFC.log sigma)).trace.re ≤
-      s ^ 2 * (rho.val * (CFC.log rho.val - CFC.log sigma)).trace.re ∧
-    (rho.val.PosDef → 2 * (rho.val * (CFC.log rho.val - CFC.log sigma)).trace.re ≤
-      ((rho.val - sigma) * CFC.log rho.val).trace.re) := by
-  let V : unitary (Matrix (a × r) (a × r) ℂ) :=
-    ⟨Matrix.kronecker (U : Matrix a a ℂ) 1,
-      Matrix.kronecker_mem_unitary U.property (Matrix.unitaryGroup r ℂ).one_mem⟩
-  have hV : IsSelfAdjoint (V : Matrix (a × r) (a × r) ℂ) := by
-    change star (Matrix.kronecker (U : Matrix a a ℂ) (1 : Matrix r r ℂ)) = _
-    change (Matrix.kronecker (U : Matrix a a ℂ) (1 : Matrix r r ℂ)).conjTranspose = _
-    rw [Matrix.conjTranspose_kronecker, hU.isHermitian.eq, Matrix.conjTranspose_one]
-  exact binary_expectation_entropy_bounds V hV rho hrho s hs
 
 end D5.S3.Quantum.Divergence.BinaryExpectationCurvature

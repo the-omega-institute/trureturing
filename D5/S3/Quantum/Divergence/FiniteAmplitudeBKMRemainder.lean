@@ -217,10 +217,7 @@ private lemma bkm_eq_integral_trace (A H : S) (hA : A.val.PosDef) :
 
 private lemma entropy_differentiableAt (A : S) (hA : A.val.PosDef) :
     DifferentiableAt ℝ entropy A := by
-  have hlog :=
-    (MatrixLogResolventDerivative.matrix_log_hasFDerivAt_resolvent A hA).1
-  exact (Tr).differentiableAt.comp A
-    ((ι).differentiableAt.mul hlog.differentiableAt)
+  exact (MatrixLogResolventDerivative.trace_entropy_hasFDerivAt A hA).differentiableAt
 
 private lemma path_hasDerivAt (A H : S) (v : ℝ) :
     HasDerivAt (P A H) H v := by
@@ -805,7 +802,8 @@ private lemma trace_entropy_continuous : Continuous entropy := by
   have hc : Continuous (fun Y : S => cfc (fun x : ℝ => x * Real.log x) Y.val) := by
     rw [← continuousOn_univ]
     exact ContinuousOn.cfc_of_mem_nhdsSet (s := univ) _ (by simp)
-      (ι).continuous.continuousOn (fun Y _ => Y.property) continuous_mul_log.continuousOn
+      (ι).continuous.continuousOn (fun Y _ => Y.property)
+      Real.continuous_mul_log.continuousOn
   have he (Y : S) : cfc (fun x : ℝ => x * Real.log x) Y.val =
       Y.val * CFC.log Y.val := by
     rw [cfc_mul (id : ℝ → ℝ) Real.log Y.val continuousOn_id
