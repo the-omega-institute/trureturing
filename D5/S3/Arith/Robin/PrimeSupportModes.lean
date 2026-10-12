@@ -195,4 +195,20 @@ theorem robin_failure_residual_card_eq_five {n : ℕ} (hn : 5040 < n)
   have hresidual : r.primeFactors.card = 5 := by omega
   exact ⟨a, b, r, hnshape, ha, hahi, hb, hbhi, hcop, hresidual, htotal⟩
 
+/-- The literal `5040` congruence shape feeds the five-prime residual reduction. -/
+theorem robin_failure_modEq_2241_residual_card_le_five {n : ℕ} (hn : 5040 < n)
+    (h5040 : 5040 ∣ n) (hmod : Nat.ModEq n (3 ^ n) 2241)
+    (hcard : ∀ a b r : ℕ, n = 2 ^ a * 3 ^ b * 5 * 7 * r →
+      r.primeFactors.card ≤ 5)
+    (hfail : ¬ ((ArithmeticFunction.sigma 1 n : ℝ) / n <
+      Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : ℝ)))) :
+    ∃ a b r : ℕ, n = 2 ^ a * 3 ^ b * 5 * 7 * r ∧
+      4 ≤ a ∧ a ≤ 6 ∧ 2 ≤ b ∧ b ≤ 3 ∧
+      Nat.Coprime r (2 * 3 * 5 * 7 * 83) ∧
+      r.primeFactors.card = 5 ∧ n.primeFactors.card = 9 := by
+  obtain ⟨a, b, r, hnshape, ha, hahi, hb, hbhi, hcop⟩ :=
+    D5.S3.Arith.GoldenResource.GoldenCell5040Shape.modEq_2241_shape h5040 hmod
+  exact robin_failure_residual_card_eq_five hn
+    ⟨a, b, r, hnshape, ha, hahi, hb, hbhi, hcop, hcard a b r hnshape⟩ hfail
+
 end D5.S3.Arith.Robin.PrimeSupportModes

@@ -30,7 +30,9 @@ internal sealed class PrimeSupportModesDocument : IScribeDocumentDefinition
                         + "modEq_2241_card_le_nine_of_residual_card_le_five records this support "
                         + "bound; combined with robin_failure_mode, "
                         + "robin_failure_residual_card_eq_five forces every failing five-prime "
-                        + "residual to use all five residual primes and total support exactly nine."))),
+                        + "residual to use all five residual primes and total support exactly nine. "
+                        + "The bridge robin_failure_modEq_2241_residual_card_le_five consumes "
+                        + "the literal 5040 divisibility and congruence premises."))),
             DescribeRole.Theorem))));
 
     private static Formula ClassificationFormula()
