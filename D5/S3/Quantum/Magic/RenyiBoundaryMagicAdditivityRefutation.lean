@@ -42,11 +42,7 @@ def Qaz {n : ℕ} (α z : ℝ) (ρ σ : Op n) : ℝ :=
 
 def Daz {n : ℕ} (α z : ℝ) (ρ σ : Op n) : EReal := by
   classical
-  exact if α = 2 ∧ z = 1 then
-      if SupportLE ρ σ then
-        ((log2 (tr (ρ * ρ * σ⁻¹)) : ℝ) : EReal)
-      else ⊤
-    else if α = 1 then
+  exact if α = 1 then
       if SupportLE ρ σ then
         ((tr (ρ * (spectralLog ρ - spectralLog σ)) / Real.log 2 : ℝ) : EReal)
       else ⊤
@@ -202,14 +198,63 @@ private lemma completed_square_identity (η : Op 3) (hη : η.PosDef)
   rw [hcycle, hCcycle]
   ring
 
-private lemma Daz_two_one_supported {n : ℕ} (ρ σ : Op n)
-    (h : SupportLE ρ σ) :
-    Daz 2 1 ρ σ = ((log2 (tr (ρ * ρ * σ⁻¹)) : ℝ) : EReal) := by
-  simp [Daz, h, log2]
+private lemma spectralPow_one {n : ℕ} (A : Op n) (hA : A.IsHermitian) :
+    spectralPow A 1 = A := by
+  unfold spectralPow
+  rw [dif_pos hA]
+  unfold Matrix.IsHermitian.cfc
+  simpa only [Real.rpow_one, Function.comp_def] using hA.spectral_theorem.symm
+
+private lemma spectralPow_inv {n : ℕ} (A : Op n) (hA : A.PosDef) :
+    spectralPow A (-1) = A⁻¹ := by
+  unfold spectralPow
+  rw [dif_pos hA.isHermitian]
+  apply Eq.symm
+  apply Matrix.inv_eq_left_inv
+  conv_lhs => rhs; rw [hA.isHermitian.spectral_theorem]
+  unfold Matrix.IsHermitian.cfc
+  rw [← map_mul]
+  have hd : Matrix.diagonal (RCLike.ofReal ∘ (fun t : ℝ => t ^ (-1 : ℝ)) ∘
+      hA.isHermitian.eigenvalues) *
+      Matrix.diagonal (RCLike.ofReal ∘ hA.isHermitian.eigenvalues) = (1 : Op n) := by
+    rw [Matrix.diagonal_mul_diagonal]
+    ext i j
+    by_cases hij : i = j
+    · subst j
+      simp only [Matrix.diagonal_apply_eq, Matrix.one_apply_eq, Function.comp_apply]
+      rw [Real.rpow_neg_one]
+      norm_cast
+      rw [inv_mul_cancel₀ (ne_of_gt (hA.eigenvalues_pos i))]
+      rfl
+    · simp only [Matrix.diagonal_apply_ne _ hij, Matrix.one_apply_ne hij]
+  rw [hd, map_one]
+
+private lemma Daz_two_one_supported {n : ℕ} (ρ η : Op n)
+    (hρ : IsState ρ) (hη : η.PosDef) :
+    Daz 2 1 ρ η = ((log2 (tr (ρ * ρ * η⁻¹)) : ℝ) : EReal) := by
+  have hi := Matrix.mulVec_injective_iff_isUnit.mpr hη.isUnit
+  have hs : SupportLE ρ η := by
+    intro v hv
+    have hv0 : v = 0 := hi (by simpa only [Matrix.mulVec_zero] using hv)
+    rw [hv0, Matrix.mulVec_zero]
+  have hh : (ρ * η⁻¹ * ρ).IsHermitian := by
+    have hp := hη.inv.posSemidef.conjTranspose_mul_mul_same ρ
+    rw [hρ.1.isHermitian] at hp
+    exact hp.isHermitian
+  unfold Daz Qaz
+  norm_num only
+  rw [if_neg (by norm_num), if_pos (Or.inr hs)]
+  norm_num
+  rw [spectralPow_one ρ hρ.1.isHermitian, spectralPow_inv η hη,
+    spectralPow_one _ hh]
+  apply congrArg log2
+  unfold tr
+  rw [Matrix.trace_mul_cycle, Matrix.trace_mul_comm]
 
 private lemma Daz_two_one_outside {n : ℕ} (ρ σ : Op n)
     (h : ¬ SupportLE ρ σ) : Daz 2 1 ρ σ = ⊤ := by
-  simp [Daz, h]
+  unfold Daz
+  norm_num [h]
 
 private lemma C_square_expectation_bound (η : Op 3) (hη : η ∈ STAB 3) :
     tr (η * (C * C)) ≤ Q := by
@@ -283,14 +328,8 @@ private lemma magic_two_one_lower :
   · have hps := (source_certificate.1 3 η hη).1
     have hηp : η.PosDef :=
       (Matrix.PosSemidef.posDef_iff_isUnit hps).mpr hu
-    have hi : Function.Injective η.mulVec :=
-      Matrix.mulVec_injective_iff_isUnit.mpr hu
-    have hs : SupportLE rho η := by
-      intro v hv
-      have hv0 : v = 0 := hi (by simpa [Matrix.mulVec_zero] using hv)
-      simp [hv0]
     change ((log2 Q : ℝ) : EReal) ≤ Daz 2 1 rho η
-    rw [Daz_two_one_supported rho η hs]
+    rw [Daz_two_one_supported rho η rho_state hηp]
     apply (EReal.coe_le_coe_iff).2
     have ht := marginal_lower_bound η hη hηp
     have hQ : (0 : ℝ) < Q := by norm_num [Q]
