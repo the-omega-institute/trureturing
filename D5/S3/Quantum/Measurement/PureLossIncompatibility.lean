@@ -148,4 +148,130 @@ private theorem coherent_norm (μ : ℂ) : ‖coherent μ‖ = 1 := by
   have hs : ‖coherent μ‖ ^ 2 = 1 := hn.trans (h_FockAttProbe_coherent_hasSum μ).tsum_eq
   nlinarith [norm_nonneg (coherent μ)]
 
+
+private theorem rankOne_complement_pos (v : H) (hv : ‖v‖ = 1) :
+    (1 - InnerProductSpace.rankOne ℂ v v).IsPositive := by
+  rw [ContinuousLinearMap.isPositive_iff]
+  constructor
+  · exact LinearMap.IsSymmetric.one.sub (InnerProductSpace.isSymmetric_rankOne_self v)
+  · intro x
+    simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.one_apply,
+      InnerProductSpace.rankOne_apply, inner_sub_left, inner_smul_left]
+    have hi := (norm_inner_le_norm (𝕜 := ℂ) (E := H) v x)
+    have hi0 : ‖inner ℂ v x‖ ≤ ‖x‖ := by simpa [hv] using hi
+    have hi' : ‖inner ℂ v x‖ ^ 2 ≤ ‖x‖ ^ 2 :=
+      (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mpr hi0
+    rw [RCLike.conj_mul, inner_self_eq_norm_sq_to_K]
+    have hreal : 0 ≤ ‖x‖ ^ 2 - ‖inner ℂ v x‖ ^ 2 := by linarith
+    have hc := Complex.zero_le_real.mpr hreal
+    rw [Complex.ofReal_sub, Complex.ofReal_pow, Complex.ofReal_pow] at hc
+    exact hc
+
+private theorem onOff_binary (μ : ℂ) : IsBinaryPOVM (onOff μ) := by
+  have hv := coherent_norm μ
+  constructor
+  · intro b
+    by_cases hb : b = 0
+    · subst b
+      change (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)).IsPositive
+      exact InnerProductSpace.isPositive_rankOne_self (coherent μ)
+    · have hb1 : b = 1 := by fin_cases b <;> simp_all
+      subst b
+      simp only [onOff]
+      norm_num
+      exact rankOne_complement_pos _ hv
+  · ext v
+    simp [onOff]
+
+private theorem amplify_add (M N : Op) : amplify (M + N) = amplify M + amplify N := by
+  apply ContinuousLinearMap.ext
+  intro w
+  apply lp.ext
+  funext k
+  change (amplify (M + N) w) k = ((amplify M + amplify N) w) k
+  rw [amplify_apply, ContinuousLinearMap.add_apply]
+  rw [ContinuousLinearMap.add_apply]
+  rw [show ((amplify M) w + (amplify N) w).1 k =
+      (amplify M w) k + (amplify N w) k by rfl]
+  rw [amplify_apply, amplify_apply]
+
+private theorem amplify_one : amplify (1 : Op) = 1 := by
+  apply ContinuousLinearMap.ext
+  intro w
+  apply lp.ext
+  funext k
+  rw [amplify_apply]
+  rfl
+
+private theorem vacuum_norm (v : H) : ‖vacuumEmbedding v‖ = ‖v‖ := by
+  change ‖lp.single (E := fun _ : ℕ => H) (2 : ℝ≥0∞) 0 v‖ = ‖v‖
+  rw [lp.norm_single (by norm_num : (0 : ℝ≥0∞) < 2)]
+
+private def vacuumIso : H →ₗᵢ[ℂ] K :=
+  LinearIsometry.mk vacuumEmbedding.toLinearMap vacuum_norm
+
+private def stinespringIso (τ : Loss) : H →ₗᵢ[ℂ] K :=
+  (beamSplitter τ.1 τ.2).toLinearIsometry.comp vacuumIso
+
+private theorem stinespring_eq_iso (τ : Loss) :
+    stinespring τ = (stinespringIso τ).toContinuousLinearMap := by
+  ext v k
+  rfl
+
+
+private theorem amplify_pos (M : Op) (hM : M.IsPositive) : (amplify M).IsPositive := by
+  rw [ContinuousLinearMap.isPositive_iff]
+  constructor
+  · intro x y
+    rw [lp.inner_eq_tsum, lp.inner_eq_tsum]
+    apply tsum_congr
+    intro k
+    change inner ℂ (amplify M x k) (y k) = inner ℂ (x k) (amplify M y k)
+    rw [amplify_apply, amplify_apply]
+    exact hM.isSymmetric (x k) (y k)
+  · intro x
+    rw [lp.inner_eq_tsum]
+    apply tsum_nonneg
+    intro k
+    change inner ℂ (amplify M x k) (x k) ≥ 0
+    rw [amplify_apply]
+    exact hM.inner_nonneg_left _
+
+private theorem dualLoss_pos (τ : Loss) (M : Op) (hM : M.IsPositive) :
+    (dualLoss τ M).IsPositive := by
+  unfold dualLoss
+  exact (by
+    rw [show amplify M = amplify M from rfl]
+    exact (by
+      have h := amplify_pos M hM
+      exact h.adjoint_conj (stinespring τ)))
+
+private theorem dualLoss_add (τ : Loss) (M N : Op) :
+    dualLoss τ (M + N) = dualLoss τ M + dualLoss τ N := by
+  unfold dualLoss
+  rw [amplify_add]
+  apply ContinuousLinearMap.ext
+  intro x
+  change (stinespring τ).adjoint ((amplify M + amplify N) (stinespring τ x)) =
+    (stinespring τ).adjoint (amplify M (stinespring τ x)) +
+      (stinespring τ).adjoint (amplify N (stinespring τ x))
+  rw [ContinuousLinearMap.add_apply]
+  exact (stinespring τ).adjoint.map_add _ _
+
+private theorem dualLoss_one (τ : Loss) : dualLoss τ 1 = 1 := by
+  unfold dualLoss
+  rw [stinespring_eq_iso, amplify_one]
+  have hcomp : (1 : K →L[ℂ] K) ∘L (stinespringIso τ).toContinuousLinearMap =
+      (stinespringIso τ).toContinuousLinearMap := by
+    ext x
+    rfl
+  rw [hcomp]
+  exact LinearIsometry.adjoint_comp_self (stinespringIso τ)
+
+private theorem dualLoss_binary (τ : Loss) (M : Fin 2 → Op)
+    (hM : IsBinaryPOVM M) : IsBinaryPOVM (fun b => dualLoss τ (M b)) := by
+  refine ⟨fun b => dualLoss_pos τ (M b) (hM.1 b), ?_⟩
+  change dualLoss τ (M 0) + dualLoss τ (M 1) = 1
+  rw [← dualLoss_add, hM.2, dualLoss_one]
+
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
