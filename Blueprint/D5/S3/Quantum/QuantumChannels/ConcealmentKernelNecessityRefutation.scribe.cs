@@ -23,6 +23,13 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let d be any natural dimension and Omega a finite outcome type. Suppose the real weights p(a,i) are nonnegative for every outcome a and coordinate i in Fin d, and sum to one over a at each coordinate. The matrices M(a)=diagonal(i maps to the complex embedding of p(a,i)) form a POVM: each effect is positive semidefinite and their sum is the identity. Empty index types and zero effects are included whenever the hypotheses hold."))),
                 DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("concealment-kernel-dual-kraus"),
+                DeclarationHandle.Create(Prefix + "dual_kraus"),
+                H("The trace dual of a finite Kraus map"),
+                StatementSource.FromAuthor(Disp(DualKrausFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary input and output dimensions and a finite Kraus index type kappa, the trace dual of MatrixMap.of_kraus K K sends A to the sum of K(j) adjoint A K(j). No normalization of K or positivity of A is required. The concealment counterexample uses this identity to compare its two adjoint kernels."))),
+                DescribeRole.Lemma),
             Node("compatible", "Joint measurements", CompatibleFormula(), "Compatible",
                 "Two POVMs with outcome types Omega and Lambda are compatible if a positive normalized family on Omega times Lambda has the two given marginal sums."),
             Node("concealed", "Operational concealment", ConcealedFormula(), "Concealed",
@@ -122,6 +129,16 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
         return All("d", Field("N"), Finite("Omega",
             All("p", Fun(omega, Fun(Fin(d), Field("R"))),
                 Imp(And(nonnegative, normalized), Call("IsPOVM", effects)))));
+    }
+
+    private static Formula DualKrausFormula()
+    {
+        Formula din = V("din"), dout = V("dout"), kappa = V("kappa"), k = V("K"), a = V("A");
+        Formula sum = SumOver("j", kappa,
+            Mul(Mul(Adjoint(At(k, V("j"))), a), At(k, V("j"))));
+        Formula identity = Eq(Call("dual", Kraus(k), a), sum);
+        Formula operators = All("K", Fun(kappa, Rect(dout, din)), All("A", Mat(dout), identity));
+        return All("din", Field("N"), All("dout", Field("N"), Finite("kappa", operators)));
     }
 
     private static Formula CompatibleFormula()
