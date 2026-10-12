@@ -15,7 +15,10 @@ Conventions: IsObservable is the frozen IsPOVM specialized to Fin m;
 IsState is the frozen IsDensity. Kraus action uses MatrixMap.of_kraus K K.
 IsPOVM and IsDensity have generality I. The output carrier is Fin d × Fin d.
 The third orthogonal output is e0 tensor e1. K uses the frozen rowReset;
-the six pure-state tests use the frozen rankOneDensity.
+the balanced zero-two state is ActualQubitChordObstruction.signalProbe 1;
+the other pure-state tests use the frozen rankOneDensity.
+ConcealmentKernelNecessityRefutation.dual_kraus identifies the dual Kraus sum;
+FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero supplies zero-pairing support.
 The spectral, positivity, trace and finite-coordinate steps are classified
 conservatively as bind-only; every private helper has a live consumer.
 Definitions carry no independent theorem or escape-witness claim.
@@ -27,12 +30,12 @@ density_le_one: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest.
   Direct frozen dependencies: none.
 IsChannel: proof_shape: bind-only; escape_witness: none;
-  consumers: Broadcasts, Nondisturbing, channel_a, broadcast_a, channel_trace_preserving, nondisturbing_state_P, nondisturbing_fix_P, channel_posSemidef, comp_fix, no_highest.
+  consumers: Broadcasts, Nondisturbing, broadcast_a, channel_trace_preserving, nondisturbing_state_P, nondisturbing_fix_P, channel_posSemidef, comp_fix, no_highest.
   Direct frozen dependencies:
     D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
     D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
 Broadcasts: proof_shape: bind-only; escape_witness: none;
-  consumers: HasHighest, HasLowest, broadcast_a, no_lowest, no_highest, claim, result.
+  consumers: HasHighest, HasLowest, no_lowest, no_highest, claim, result.
   Direct frozen dependencies:
     D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
     D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
@@ -121,27 +124,24 @@ channel_trace_preserving: proof_shape: bind-only; escape_witness: none;
     D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
     D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
 rhoPlus: proof_shape: bind-only; escape_witness: none;
-  consumers: rhoPlus_state, nondisturbing_fix_P.
+  consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
     D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
-rhoPlus02: proof_shape: bind-only; escape_witness: none;
-  consumers: rhoPlus02_state, nondisturbing_fix_P.
-  Direct frozen dependencies:
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+
 rhoPlus12: proof_shape: bind-only; escape_witness: none;
-  consumers: rhoPlus12_state, nondisturbing_fix_P.
+  consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
     D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
 rhoImag01: proof_shape: bind-only; escape_witness: none;
-  consumers: rhoImag01_state, nondisturbing_fix_P.
+  consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
     D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
 rhoImag02: proof_shape: bind-only; escape_witness: none;
-  consumers: rhoImag02_state, nondisturbing_fix_P.
+  consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
     D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
 rhoImag12: proof_shape: bind-only; escape_witness: none;
-  consumers: rhoImag12_state, nondisturbing_fix_P.
+  consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
     D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
 scaled_pure_state: proof_shape: bind-only; escape_witness: none;
@@ -156,6 +156,7 @@ rhoPlus_state: proof_shape: bind-only; escape_witness: none;
 rhoPlus02_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
+    D5/S3/Quantum/Information/ActualQubitChordObstruction.signalProbe [sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0].
     D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
     D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
 rhoPlus12_state: proof_shape: bind-only; escape_witness: none;
@@ -195,6 +196,9 @@ basis_state: proof_shape: bind-only; escape_witness: none;
 nondisturbing_fix_P: proof_shape: bind-only; escape_witness: none;
   consumers: comp_fix.
   Direct frozen dependencies:
+    D5/S3/Quantum/Information/ActualQubitChordObstruction.signalProbe [sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0].
+    D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.dual_kraus [sha256:dd9f5f1ce4725296d08145a6066f3ee325b93def4f274543427b5520e5234de5].
+    D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation.trace_eq [sha256:4b9d5299e7cc9ef1ebad4b43e8fff47d1c203797359d108299c3be4eea0bec33].
     D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
     D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
     D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
@@ -206,6 +210,7 @@ nondisturbing_fix_P: proof_shape: bind-only; escape_witness: none;
 state_support_P: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest.
   Direct frozen dependencies:
+    D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero [sha256:72e5d3b134abd653c9f2e4dd9d86b9a04e2ae4da3f759abcbc26215c6f57cf67].
     D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
 channel_posSemidef: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest.
@@ -272,7 +277,7 @@ claim: proof_shape: bind-only; escape_witness: none;
     D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
     D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM [sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1].
 result: proof_shape: bind-only; escape_witness: none;
-  consumers: designated settling result.
+  consumers: none.
   Direct frozen dependencies:
     D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
     D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
@@ -291,6 +296,8 @@ import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Recovery.KrausCompletion
+import D5.S3.Quantum.Information.ActualQubitChordObstruction
+import D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
 
 namespace D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
 
@@ -298,6 +305,7 @@ open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
 open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.Information.ActualQubitChordObstruction (signalProbe)
 
 open scoped BigOperators Matrix Kronecker ComplexOrder MatrixOrder
 open Matrix
@@ -466,7 +474,6 @@ private theorem channel_trace_preserving {Φ : (Matrix (Fin 3) (Fin 3) ℂ) → 
   exact channel.trace_preserving (CStarMatrix.ofMatrix X)
 
 private def rhoPlus : (Matrix (Fin 3) (Fin 3) ℂ) := (1/2 : ℂ) • (rankOneDensity (![1,1,0] : Fin 3 → ℂ))
-private def rhoPlus02 : (Matrix (Fin 3) (Fin 3) ℂ) := (1/2 : ℂ) • (rankOneDensity (![1,0,1] : Fin 3 → ℂ))
 private def rhoPlus12 : (Matrix (Fin 3) (Fin 3) ℂ) := (1/2 : ℂ) • (rankOneDensity (![0,1,1] : Fin 3 → ℂ))
 private def rhoImag01 : (Matrix (Fin 3) (Fin 3) ℂ) := (1/2 : ℂ) • (rankOneDensity (![1, Complex.I, 0] : Fin 3 → ℂ))
 private def rhoImag02 : (Matrix (Fin 3) (Fin 3) ℂ) := (1/2 : ℂ) • (rankOneDensity (![1,0, Complex.I] : Fin 3 → ℂ))
@@ -485,9 +492,9 @@ private theorem scaled_pure_state (v : (Fin 3) → ℂ) (hv : star v ⬝ᵥ v = 
 private theorem rhoPlus_state : IsDensity rhoPlus := by
   apply scaled_pure_state
   simp [rhoPlus, rankOneDensity, Matrix.vecMulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
-private theorem rhoPlus02_state : IsDensity rhoPlus02 := by
+private theorem rhoPlus02_state : IsDensity (signalProbe 1) := by
   apply scaled_pure_state
-  simp [rhoPlus02, rankOneDensity, Matrix.vecMulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
+  simp [signalProbe, rankOneDensity, Matrix.vecMulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
 private theorem rhoPlus12_state : IsDensity rhoPlus12 := by
   apply scaled_pure_state
   simp [rhoPlus12, rankOneDensity, Matrix.vecMulVec, dotProduct, Fin.sum_univ_succ] <;> norm_num
@@ -529,15 +536,9 @@ private theorem nondisturbing_fix_P
   rcases hΘ.1 with ⟨k, Kθ, hKθ, hactθ⟩
   let D : (Matrix (Fin 3) (Fin 3) ℂ) := ∑ j, (Kθ j)ᴴ * P * Kθ j
   have htraceD (X : (Matrix (Fin 3) (Fin 3) ℂ)) : Matrix.trace (Θ X * P) = Matrix.trace (X * D) := by
-    simp only [MatrixMap.of_kraus, LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk] at hactθ
-    rw [hactθ, Matrix.sum_mul, Matrix.trace_sum]
-    dsimp [D]
-    rw [Matrix.mul_sum, Matrix.trace_sum]
-    apply Finset.sum_congr rfl
-    intro j hj
-    rw [Matrix.mul_assoc]
-    rw [Matrix.trace_mul_cycle]
-    rw [Matrix.trace_mul_comm]
+    rw [hactθ, MatrixMap.Dual.trace_eq,
+      D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.dual_kraus
+        (din := 3) (dout := 3) Kθ P]
   have heq (ρ : (Matrix (Fin 3) (Fin 3) ℂ)) (hρ : IsDensity ρ) : Matrix.trace (ρ * D) = Matrix.trace (ρ * P) := by
     rw [← htraceD ρ]
     exact nondisturbing_state_P Θ hΘ ρ hρ
@@ -546,7 +547,7 @@ private theorem nondisturbing_fix_P
   have h2 := heq (Matrix.single (2 : Fin 3) (2 : Fin 3) (1 : ℂ)) (basis_state 2)
   simp [Matrix.trace, Matrix.mul_apply, Matrix.single, Fin.ext_iff, -Fin.val_eq_zero_iff, Fin.sum_univ_succ] at h0 h1 h2
   have hp01 := heq rhoPlus rhoPlus_state
-  have hp02 := heq rhoPlus02 rhoPlus02_state
+  have hp02 := heq (signalProbe 1) rhoPlus02_state
   have hp12 := heq rhoPlus12 rhoPlus12_state
   have hi01 := heq rhoImag01 rhoImag01_state
   have hi02 := heq rhoImag02 rhoImag02_state
@@ -570,7 +571,7 @@ private theorem nondisturbing_fix_P
       simp [rhoPlus, rankOneDensity, Matrix.vecMulVec, Matrix.vecMulVec_apply, Pi.star_apply]
   rw [hrp] at hp01
   simp [Matrix.trace, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_succ] at hp01
-  simp [rhoPlus02, rankOneDensity, rhoPlus12, rhoImag01, rhoImag02, rhoImag12, Matrix.vecMulVec, hs02, hs12, hsi01, hsi02, hsi12, Matrix.trace, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_succ] at hp02 hp12 hi01 hi02 hi12
+  simp [signalProbe, rankOneDensity, rhoPlus12, rhoImag01, rhoImag02, rhoImag12, Matrix.vecMulVec, hs02, hs12, hsi01, hsi02, hsi12, Matrix.trace, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_succ] at hp02 hp12 hi01 hi02 hi12
   have hs01 : D 1 0 + D 0 1 = P 1 0 + P 0 1 := by
     linear_combination (2 : ℂ) * hp01 - h0 - h1
   have hd01i : Complex.I * (D 0 1 - D 1 0) = Complex.I * (P 0 1 - P 1 0) := by
@@ -615,28 +616,29 @@ private theorem nondisturbing_fix_P
 
 private theorem state_support_P (T : (Matrix (Fin 3) (Fin 3) ℂ)) (hT : IsDensity T)
     (hTP : Matrix.trace (T * P) = 1) : T = P * T * P := by
-  have htr : Matrix.trace T = 1 := hT.2
-  have hdiag : T 0 0 + T 1 1 + T 2 2 = 1 := by
-    simpa [Matrix.trace, Fin.sum_univ_succ, add_assoc] using htr
-  have hblock : T 0 0 + T 1 1 = 1 := by
-    simpa [P, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ] using hTP
-  have h22 : T 2 2 = 0 := by
-    linear_combination hdiag - hblock
-  have hquad : star (Pi.single (2 : (Fin 3)) (1 : ℂ)) ⬝ᵥ
-      (T *ᵥ Pi.single (2 : (Fin 3)) (1 : ℂ)) = 0 := by
-    simpa [Matrix.mulVec, dotProduct, Pi.single, Fin.sum_univ_succ] using h22
-  have hcol : T *ᵥ Pi.single (2 : (Fin 3)) (1 : ℂ) = 0 :=
-    (hT.1.dotProduct_mulVec_zero_iff _).mp hquad
-  have hcol' (i : (Fin 3)) : T i 2 = 0 := by
-    have := congrFun hcol i
-    simpa [Matrix.mulVec, dotProduct, Pi.single, Fin.sum_univ_succ] using this
-  have hrow' (j : (Fin 3)) : T 2 j = 0 := by
-    have hherm := hT.1.1.eq
-    have hj := congrArg (fun M : (Matrix (Fin 3) (Fin 3) ℂ) => M 2 j) hherm
-    simpa [Matrix.conjTranspose_apply, hcol'] using hj.symm
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [P, Matrix.diagonal, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_succ, hcol', hrow']
+  have hQ : (1 - P).PosSemidef := by
+    have hdiag : 1 - P = Matrix.diagonal ![(0 : ℂ), 0, 1] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [P, Matrix.diagonal, Matrix.one_apply]
+    rw [hdiag]
+    apply Matrix.PosSemidef.diagonal
+    intro i
+    fin_cases i <;> norm_num
+  have hzero : Matrix.trace ((1 - P) * T) = 0 := by
+    rw [sub_mul, one_mul, Matrix.trace_sub, hT.2, Matrix.trace_mul_comm P T, hTP,
+      sub_self]
+  have hprod :=
+    D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero
+      (1 - P) T hQ hT.1 hzero
+  have hleft : P * T = T :=
+    (sub_eq_zero.mp (by simpa only [sub_mul, one_mul] using hprod)).symm
+  have hPherm : Pᴴ = P := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [P, Matrix.diagonal, Matrix.conjTranspose_apply]
+  have hright : T * P = T := by
+    have h := congrArg Matrix.conjTranspose hleft
+    simpa only [Matrix.conjTranspose_mul, hT.1.isHermitian.eq, hPherm] using h
+  rw [hleft, hright]
 
 private theorem channel_posSemidef {Φ : (Matrix (Fin 3) (Fin 3) ℂ) → (Matrix (Fin 3) (Fin 3) ℂ)} (hΦ : IsChannel Φ)
     {X : (Matrix (Fin 3) (Fin 3) ℂ)} (hX : X.PosSemidef) : (Φ X).PosSemidef := by

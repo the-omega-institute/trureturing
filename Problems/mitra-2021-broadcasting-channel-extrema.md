@@ -38,9 +38,13 @@ A highest or lowest element for this displayed observable, satisfying the defini
 
 ## Evidence
 
-The kernel-checked evidence is the declaration `D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation.result`; its public type is `¬ claim`. The module reuses the frozen `IsPOVM`, `IsDensity`, `MatrixMap.of_kraus`, `rowReset`, and `rankOneDensity` declarations. The designated result is the only public theorem, carries `utility: kind=certified-instance; basis=refutes=…`, and is exempt from four-slot escape registration under CLAUDE.md §3.9.
+The kernel-checked evidence is the declaration `D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation.result`; its public type is `¬ claim`. The module reuses the frozen `IsPOVM`, `IsDensity`, `MatrixMap.of_kraus`, `rowReset`, `rankOneDensity`, `ActualQubitChordObstruction.signalProbe`, `ConcealmentKernelNecessityRefutation.dual_kraus`, and `FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero` declarations. The designated result is the only public theorem, carries `utility: kind=certified-instance; basis=refutes=…`, and is exempt from four-slot escape registration under CLAUDE.md §3.9.
 
-The numerical reading is published in [`trureturing-experiments`](https://github.com/the-omega-institute/trureturing-experiments/tree/4c6e4c505346b3370b9fa974cb87697ff55511de/docs/reports/mitra-2021-broadcasting-channel-extrema) at commit `4c6e4c505346b3370b9fa974cb87697ff55511de`. The checked command is `python3 check.py`, exit 0, with `bad= 0`; `check.py` has SHA-256 `f9fdd8b3b0d2191bcd42ca25e1eff2c967a5c3a8785f3f464520071b9dae6aef`.
+The experiment entry is [`docs/reports/mitra-2021-broadcasting-channel-extrema/check.py`](https://github.com/the-omega-institute/trureturing-experiments/tree/4c6e4c505346b3370b9fa974cb87697ff55511de/docs/reports/mitra-2021-broadcasting-channel-extrema) at commit `4c6e4c505346b3370b9fa974cb87697ff55511de`. Command: `python3 check.py`; exit 0; reading: `bad= 0`; script SHA-256: `f9fdd8b3b0d2191bcd42ca25e1eff2c967a5c3a8785f3f464520071b9dae6aef`.
+
+Its construction uses $d=r+1$, $m=2$, $P=\operatorname{diag}(1,\ldots,1,0)$, $Q=I-P$, $A(0)=\alpha P+\beta Q$, $A(1)=I-A(0)$, output vectors $e_j\otimes e_j$ for $j<r$ and $(e_0\otimes e_1+e_1\otimes e_0)/\sqrt{2}$, and $w=e_r\otimes e_r$. For $r=2,3,4,5$ at $\alpha=3/4$, $\beta=1/4$, it checks output orthogonality and projector identities, Kraus completeness, both broadcasting marginals on 20 random states per channel, precomposition invariance under 10 random nondisturbing channels with five states each, pairwise channel differences, and $\tau\le P$ on 20 randomly generated supported states. At $r=2$ it also checks only the affine identity $A(0)=\beta I+(\alpha-\beta)P$ for $(\alpha,\beta)=(0.6,0.3),(0.2,0.9),(0.75,0.25)$. The random seed is `20261011`.
+
+This is a sibling family: its third output at $r=2$ is the symmetric vector above, whereas the delivered Lean witness uses the projector onto $e_0\otimes e_1$. The delivered witness is certified by the kernel-checked `result`; no numerical certificate is claimed for it. These finite numerical readings establish no uniform rank-family theorem.
 
 ## Triage
 
@@ -48,8 +52,8 @@ The named Section III.A questions are refuted under `admission_basis: open-probl
 
 | Item | Status | Evidence kind and boundary |
 | --- | --- | --- |
-| Mechanism excluding both extrema | proved | Kernel-checked by `result` and its consumed declarations: nondisturbing channels fix $P$, two fixed distinct broadcasting channels rule out a lowest element, and the trace contradiction rules out a highest element. |
-| Numerical certificate for the displayed witness | computed | The experiment entry checks the finite matrix construction and reports `bad= 0`; it is a computation for the stated $d=3,m=2$ instance, not a general theorem. |
+| Mechanism excluding both extrema | proved | Kernel-checked: `nondisturbing_fix_P` gives preservation of the $P$ trace pairing on every matrix; `comp_fix` gives fixed precomposition; `no_lowest` excludes a lowest element; `no_highest` excludes a highest element by the trace contradiction; `result` combines these for the same observable. These declarations belong to `D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation`. |
+| Sibling-family experiment readings | computed | The pinned experiment entry above reports `bad= 0` for the listed tests at $r=2,3,4,5$ and the three $r=2$ affine-identity checks. Its symmetric third output differs from the delivered witness; the witness is kernel-checked by `result`, with no numerical certificate claimed for it. |
 | Sharp observables of full rank | open | No declaration in this delivery settles whether the same extremum questions have an answer for sharp full-rank observables. |
 | Qubit observables | open | The module does not settle the corresponding $d=2$ questions. |
 | General rank-$r$ family | open | The trace argument is used only in the delivered qutrit instance; no uniform rank-family theorem is claimed. |
@@ -62,4 +66,4 @@ The named Section III.A questions are refuted under `admission_basis: open-probl
 
 ## ASSUMED-UNVERIFIED
 
-The literature citation identifies the published questions and their location; it does not establish a worldwide priority claim. The correspondence between the source's operator notation and the finite-matrix predicates is recorded in the module and Library note. The experimental reading is computational evidence for the fixed instance and does not extend the formal scope.
+The literature citation identifies the published questions and their location; it does not establish a worldwide priority claim. The correspondence between the source's operator notation and the finite-matrix predicates is recorded in the module and Library note. The experiment supplies finite computational readings for the sibling family described above and does not extend the formal scope.

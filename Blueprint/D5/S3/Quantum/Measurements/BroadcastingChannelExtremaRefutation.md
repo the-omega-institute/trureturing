@@ -104,7 +104,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-Take d = 3, m = 2, P = diag(1,1,0), Q = I − P, A(0) = (3/4)P + (1/4)Q, and A(1) = I − A(0). Three broadcasting channels prepare the matrix units at (0,0), (1,1), and (0,1) on the P sector and at (2,2) on the Q sector. Preservation of A(0) and trace forces preservation of P. Normalized real and imaginary pure states determine the dual effect on all matrices, so nondisturbing precomposition fixes each of the three channels. Their inequality excludes a lowest element. A highest element would have three input states supported by P that produce three orthogonal pure outputs. Positivity and the dual Kraus completeness identity bound their total trace by trace(P) = 2, although each output contributes at least one. Thus 3 ≤ 2, a contradiction. Only this three-dimensional, two-outcome instance is asserted; the rank-r family and the qubit and sharp-observable questions remain open here.
+Take d = 3, m = 2, P = diag(1,1,0), Q = I − P, A(0) = (3/4)P + (1/4)Q, and A(1) = I − A(0). Three broadcasting channels prepare the matrix units at (0,0), (1,1), and (0,1) on the P sector and at (2,2) on the Q sector. Preservation of A(0) and trace forces preservation of P. ConcealmentKernelNecessityRefutation.dual_kraus identifies the dual effect. The balanced state on coordinates zero and two is ActualQubitChordObstruction.signalProbe 1. Together with the other normalized real and imaginary pure states it determines the dual effect on all matrices, so nondisturbing precomposition fixes each of the three channels. Their inequality excludes a lowest element. FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero applied to I − P places the three input states of a highest element in the P sector. They would produce three orthogonal pure outputs. Positivity and the dual Kraus completeness identity bound their total trace by trace(P) = 2, although each output contributes at least one. Thus 3 ≤ 2, a contradiction. Only this three-dimensional, two-outcome instance is asserted; the rank-r family and the qubit and sharp-observable questions remain open here.
 
 ## References
 
@@ -117,6 +117,8 @@ Take d = 3, m = 2, P = diag(1,1,0), Q = I − P, A(0) = (3/4)P + (1/4)Q, and A(1
 - Truth anchor: `D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation.result`
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../Entanglement/GHZMeasureBiseparableBound.md)
+- Dependency: [D5/S3/Quantum/Information/ActualQubitChordObstruction](../Information/ActualQubitChordObstruction.md)
+- Dependency: [D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity](FiniteMemoryHistoryCapacity.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation](../QuantumChannels/ConcealmentKernelNecessityRefutation.md)
 - Dependency: [D5/S3/Quantum/Recovery/KrausCompletion](../Recovery/KrausCompletion.md)
