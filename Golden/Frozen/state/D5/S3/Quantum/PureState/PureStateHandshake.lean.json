@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d0b30bfdc4f51dc80a7b7acc6ecc28c8aca99f8eaa4a9d48683e3e57908a6639"}
+{"statement_id":"sha256:d0b30bfdc4f51dc80a7b7acc6ecc28c8aca99f8eaa4a9d48683e3e57908a6639","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:PureState),18:PureStateHandshake),14:rankOneDensity)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:PureState),18:PureStateHandshake),20:pure_state_handshake)","kind":"theorem"}]}

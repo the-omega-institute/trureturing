@@ -1,1 +1,1 @@
-{"statement_id":"sha256:25f5456957ac2f4f2108693ccafce591065be73252cf6d39e997769b60d166b9"}
+{"statement_id":"sha256:25f5456957ac2f4f2108693ccafce591065be73252cf6d39e997769b60d166b9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),9:Rewriting),24:GuardedBoxPathAttainment),20:exists_shortest_word)","kind":"theorem"}]}
