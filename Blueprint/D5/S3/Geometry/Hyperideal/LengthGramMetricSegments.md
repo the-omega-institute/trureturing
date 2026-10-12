@@ -30,7 +30,174 @@ This is a geometric prerequisite to original section 66, using unchanged shared_
 
 The acknowledged source supplies the classical unique-geodesic, Klein/hyperboloid projective, and Lorentz-distance ingredients (Theorem 9.3 and the discussion through page 80; Section 10, Theorem 10.1 on page 82 and the distance lemma on page 83). The exact application to the frozen cutBody and radial definitions, with the same m and f and both displayed range identities, is a repository derivation rather than a theorem stated verbatim in that source. No mathematical novelty claim is made. Eight actual geodesic halfspaces and three-dimensional interior, four triangle and four hexagon face incidence, prescribed original edge lengths, actual dihedral angles and orthogonal truncation, permutation isometries, inverse source realization and rigidity, volume, Schlaefli theory and global CFMP gluing remain separate obligations.
 
+The following original APIs are used by the full plane realization. Their statements and proof bodies remain the metric-segment owner's originals. Phi denotes lift; Psi(Y)=((Y0+i*Y1)/(Y3-Y2),1/(Y3-Y2)). Project is defined on B(Y,Y)=-1 and Y3>0 using the two displayed proof arguments. R4 is the real four-coordinate space; H3 retains its hyperbolic metric. The formula operators add, sub, mul, div, sq, neg and scale have their ordinary real or vector meanings; tuple4 forms an ordered four-vector.
+
+**Definition 1.2 (The original Lorentz lift).**
+
+$$\forall p \in H3,\; Phi\left(p\right) = tuple4\left(div\left(horizontalReal\left(p\right), height\left(p\right)\right), div\left(horizontalImag\left(p\right), height\left(p\right)\right), div\left(sub\left(add\left(add\left(sq\left(horizontalReal\left(p\right)\right), sq\left(horizontalImag\left(p\right)\right)\right), sq\left(height\left(p\right)\right)\right), 1\right), mul\left(2, height\left(p\right)\right)\right), div\left(add\left(add\left(add\left(sq\left(horizontalReal\left(p\right)\right), sq\left(horizontalImag\left(p\right)\right)\right), sq\left(height\left(p\right)\right)\right), 1\right), mul\left(2, height\left(p\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.3 (Unit negative Lorentz norm).**
+
+$$\forall p \in H3,\; B\left(Phi\left(p\right), Phi\left(p\right)\right) = neg\left(1\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_unit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.4 (The original actual-distance pairing).**
+
+$$\forall p \in H3,\; \forall q \in H3,\; B\left(Phi\left(p\right), Phi\left(q\right)\right) = neg\left(cosh\left(dist\left(p, q\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_cosh` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.5 (Injectivity of the original lift).**
+
+$$Injective\left(Phi\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.6 (The inverse-coordinate identity).**
+
+$$\forall p \in H3,\; \forall Y \in R4,\; \left(\left(B\left(Y, Y\right) = neg\left(1\right) \land 0 < coord\left(Y, 3\right)\right) \land coordinates\left(p\right) = Psi\left(Y\right)\right) \Rightarrow Phi\left(p\right) = Y$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_of_coordinates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.7 (Four-term bilinear expansion).**
+
+$$\forall X \in R4,\; \forall Y \in R4,\; \forall Z \in R4,\; \forall W \in R4,\; \forall a \in R,\; \forall b \in R,\; \forall c \in R,\; \forall d \in R,\; B\left(add\left(scale\left(a, X\right), scale\left(b, Y\right)\right), add\left(scale\left(c, Z\right), scale\left(d, W\right)\right)\right) = add\left(add\left(add\left(mul\left(mul\left(a, c\right), B\left(X, Z\right)\right), mul\left(mul\left(a, d\right), B\left(X, W\right)\right)\right), mul\left(mul\left(b, c\right), B\left(Y, Z\right)\right)\right), mul\left(mul\left(b, d\right), B\left(Y, W\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_linear` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.8 (Symmetry of the original Lorentz form).**
+
+$$\forall X \in R4,\; \forall Y \in R4,\; B\left(X, Y\right) = B\left(Y, X\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_symm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.9 (Linearity in the second argument).**
+
+$$\forall X \in R4,\; \forall Y \in R4,\; \forall Z \in R4,\; \forall a \in R,\; \forall b \in R,\; B\left(X, add\left(scale\left(a, Y\right), scale\left(b, Z\right)\right)\right) = add\left(mul\left(a, B\left(X, Y\right)\right), mul\left(b, B\left(X, Z\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_right` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.10 (Positive inverse-coordinate denominator).**
+
+$$\forall Y \in R4,\; \left(B\left(Y, Y\right) = neg\left(1\right) \land 0 < coord\left(Y, 3\right)\right) \Rightarrow 0 < sub\left(coord\left(Y, 3\right), coord\left(Y, 2\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.future_den` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Definition 1.11 (Projection from the future unit sheet).**
+
+$$\forall Y \in R4,\; \left(B\left(Y, Y\right) = neg\left(1\right) \land 0 < coord\left(Y, 3\right)\right) \Rightarrow coordinates\left(project\left(Y\right)\right) = Psi\left(Y\right)$$
+
+*Formalization.* `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.project` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
+**Theorem 1.12 (Future sheet of every original lift).**
+
+$$\forall p \in H3,\; 0 < coord\left(Phi\left(p\right), 3\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_time` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James W. Cannon, William J. Floyd, Richard Kenyon, and Walter R. Parry (1997). *Hyperbolic Geometry*. URL: <https://library.slmath.org/books/Book31/files/cannon.pdf>.
+
+*Commentary.*
+
+This is an original consumed API of the metric-segment construction, used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric are unchanged.
+
 ## References
 
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.future_den`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_cosh`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_injective`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_of_coordinates`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_time`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_unit`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_linear`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_right`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_symm`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.project`
 - Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.same_body_metric_segments`
 - Dependency: [D5/S3/Geometry/Hyperideal/LengthGramPolytope](LengthGramPolytope.md)

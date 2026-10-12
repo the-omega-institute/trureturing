@@ -273,3 +273,114 @@ pp. 3–5 (Proposition 2.1), and Section 3, pp. 6–7 (Theorem 3.3,
 Remark 3.5). These published beam and entropy results are used with their
 stated hypotheses; the reset-specific parity calculation is the deduction
 above.
+
+## Proposition 9. Finite additive companion elimination
+
+Let \(A\) be an additive commutative group, \(J:A\to A\) an additive
+endomorphism, and \(q>0\). Define \(L_J:A^q\to A^q\) by
+\[
+(L_Jv)_0=v_0+J\left(\sum_{i=0}^{q-1}v_i\right),
+\qquad (L_Jv)_j=v_j+v_{j-1}\quad(1\le j<q).
+\]
+Set
+\[
+K_q=\{j:1\le j<q,\ q-j\text{ odd}\},\qquad
+s_q=\begin{cases}0&q\text{ even},\\1&q\text{ odd}.\end{cases}
+\]
+There are separate additive domain and codomain equivalences
+\(D,C:A^q\longrightarrow A\times A^{q-1}\), given by
+\[
+D(v)=\bigl(v_0,(v_j+v_{j-1})_{1\le j<q}\bigr),\qquad
+C(y)=\left(y_0-J\left(\sum_{j\in K_q}y_j\right),
+                  (y_j)_{1\le j<q}\right),
+\]
+such that
+\[
+C L_J D^{-1}(a,t)=\bigl(a+J(s_q a),t\bigr).
+\]
+No involutivity of \(J\) is required.
+
+Proof. The inverse of \(D\) is the recurrence
+\(v_0=a\), \(v_j=t_j-v_{j-1}\). The inverse of \(C\) adds
+\(J(\sum_{j\in K_q}t_j)\) to the initial coordinate and retains every
+tail coordinate. The adjacent pairs indexed by \(K_q\) partition all
+coordinates when \(q\) is even, and all except coordinate zero when
+\(q\) is odd. Hence
+\[
+\sum_{i=0}^{q-1}v_i=s_q v_0+
+       \sum_{j\in K_q}(v_j+v_{j-1}).
+\]
+Apply additivity of \(J\) and cancel the tail sum in the codomain shear.
+The tail equations are unchanged. These are separately defined domain and
+codomain equivalences, so this calculation asserts equivalence of an operator's
+domain and codomain, without a conjugacy conclusion.
+
+## Theorem 10. Complete finite integral reset defect
+
+On the original lattice \(M_q=(\mathbb Z[C_2])^q\), let
+\(L_q=\mathrm{id}+T_q\), with \(T_q\) the original right-row reset
+transition. Write \([1]\) and \([\tau]\) for the two integral group
+basis elements. For a row \(y\), define the integer character
+\[
+\ell_q(y)=\sum_{\substack{0\le i<q\\i\text{ even}}}
+       \bigl(\operatorname{coeff}_1(y_i)-
+             \operatorname{coeff}_\tau(y_i)\bigr).
+\]
+For every positive even \(q\), \(L_q\) is an integral bijection.
+Its kernel and cokernel vanish. For every positive odd \(q\),
+\[
+\ker L_q=\mathbb Z w,\qquad
+\operatorname{im}L_q=\ker\ell_q,\qquad
+M_q/\operatorname{im}L_q\cong\mathbb Z,
+\]
+where \(w_i=(-1)^i([1]-[\tau])\) is the row of Proposition 4.
+Its kernel coefficient is unique, and \(\ell_q\) is surjective.
+Every solvable equation \(L_qv=y\) has the complete solution family
+\(v=v^*(y)+kw\), with unique \(k\in\mathbb Z\) and an explicit
+integral particular solution \(v^*(y)\).
+
+Proof. The actual right multiplication \(J(x)=x[\tau]\) swaps both
+integer coefficients. Proposition 9 therefore applies to the unchanged
+\(M_q\) and \(T_q\). At even length the residual map is identity;
+apply \(C\) to \(y\) and solve the tail recurrence with initial value
+\((C y)_0\). Both equivalences are invertible, giving uniqueness and
+vanishing kernel and cokernel.
+
+At odd length the residual map is
+\[
+a[1]+b[\tau]\longmapsto(a+b)([1]+[\tau]).
+\]
+Its kernel is exactly the primitive anti-diagonal
+\(\mathbb Z([1]-[\tau])\), and its image is exactly the primitive
+diagonal \(\mathbb Z([1]+[\tau])\). Zero tails force
+\(v_i=(-1)^iv_0\), so the original kernel is precisely \(\mathbb Zw\).
+The identity coefficient of \(v_0\) determines the generator coefficient.
+
+Put \(z=(C y)_0\). Multiplication by \([\tau]\) negates coefficient
+difference. Since \(q\) is odd, \(K_q\) consists of the positive even
+suffix indices, and consequently
+\[
+\operatorname{coeff}_1(z)-\operatorname{coeff}_\tau(z)=\ell_q(y).
+\]
+When \(\ell_q(y)=0\), both coefficients of \(z\) equal an integer
+\(d\). Choose \(v_0=d[1]\); then \((\mathrm{id}+J)v_0=z\).
+The recurrence \(v_j=y_j-v_{j-1}\) constructs the particular solution.
+Conversely, a residual in the image has equal coefficients, so
+\(\ell_q\) vanishes on every image row. Subtracting a particular
+solution reduces all solutions to the already classified kernel.
+
+The row with coordinate zero \(k[1]\) and every other coordinate zero
+has character \(k\), so \(\ell_q\) is onto \(\mathbb Z\).
+The first isomorphism theorem gives the displayed cokernel equivalence.
+The quotient is therefore torsion-free, not merely nonzero.
+
+For \(q=1\), the transition is \(T_1(a,b)=(b,a)\), and
+\(L_1(a,b)=(a+b,a+b)\). The image contains the primitive diagonal
+vector \((1,1)\), since \(L_1(1,0)=(1,1)\); it is not restricted to
+even diagonal vectors. The vectors \((1,1),(1,-1)\) have determinant
+\(-2\), so diagonalizing in that eigenframe would replace the original
+lattice by an index-two sublattice. By contrast, Proposition 9 with
+\(A=\mathbb Z\), \(J=\mathrm{id}\) and \(q=1\) really leaves
+\(2\mathrm{id}\), with cokernel \(\mathbb Z/2\mathbb Z\).
+The absence of order-two torsion in the reset case follows from the
+actual swap on the original lattice, not from involutivity alone.
