@@ -760,3 +760,82 @@ theorem native_full_weighted_deviation (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1)
 
 end
 end D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
+
+namespace D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
+noncomputable section
+
+open scoped Classical in
+theorem finite_environment_anchor_budget {Ω E : Type*} [Fintype Ω] [DecidableEq E]
+    (env : Ω → E) (p : Ω → ℝ) (G C : Ω → Prop) [DecidablePred G] [DecidablePred C]
+    (hp : ∀ o, 0 ≤ p o)
+    (htail : ∀ z, G z →
+      (∑ y : Ω, if env y = env z ∧ ¬C y then p y else 0) ≤
+        1/16 * ∑ y : Ω, if env y = env z then p y else 0) :
+    (∑ y : Ω, if ¬∃ z, env z = env y ∧ G z ∧ C z then p y else 0) ≤
+      16/15 * ∑ y : Ω, if ¬G y then p y else 0 := by
+  classical
+  let A := fun η : E => ∃ z, env z = η ∧ G z ∧ C z
+  let F := (univ : Finset Ω).image env
+  have hη (η : E) :
+      (∑ y ∈ univ.filter (fun y => env y = η), if ¬A η then p y else 0) ≤
+      16/15 * ∑ y ∈ univ.filter (fun y => env y = η), if ¬G y then p y else 0 := by
+    let T := univ.filter fun y => env y = η
+    have hbad0 : 0 ≤ ∑ y ∈ T, if ¬G y then p y else 0 :=
+      sum_nonneg fun y _ => by split_ifs <;> first | exact hp y | positivity
+    by_cases hA : A η
+    · simp only [hA, not_true_eq_false, if_false, sum_const_zero]
+      exact mul_nonneg (by norm_num) hbad0
+    · by_cases hG : ∃ z, env z = η ∧ G z
+      · obtain ⟨z,hz,hGz⟩ := hG
+        have ht := htail z hGz
+        rw [hz] at ht
+        have hgoodtail : (∑ y ∈ T, if G y then p y else 0) ≤
+            ∑ y : Ω, if env y = η ∧ ¬C y then p y else 0 := by
+          rw [sum_filter]
+          apply sum_le_sum
+          intro y _
+          by_cases he : env y = η <;> by_cases hg : G y
+          · have hc : ¬C y := fun hy => hA ⟨y,he,hg,hy⟩
+            simp [he,hg,hc]
+          · by_cases hc : C y <;> simp [he,hg,hc,hp y]
+          · simp [he,hg]
+          · simp [he,hg]
+        have hpart : (∑ y ∈ T, if G y then p y else 0) +
+            (∑ y ∈ T, if ¬G y then p y else 0) = ∑ y ∈ T, p y := by
+          rw [← sum_add_distrib]
+          apply sum_congr rfl
+          intro y _
+          by_cases hg : G y <;> simp [hg]
+        have htot : (∑ y : Ω, if env y = η then p y else 0) = ∑ y ∈ T, p y :=
+          (sum_filter _ _).symm
+        rw [htot] at ht
+        simp only [hA, not_false_eq_true, if_true]
+        dsimp only [T] at hpart hgoodtail ht
+        linarith only [hpart, hgoodtail, ht]
+      · have hn (y : Ω) (hy : y ∈ T) : ¬G y := by
+          intro hg
+          exact hG ⟨y,(mem_filter.mp hy).2,hg⟩
+        simp only [hA, not_false_eq_true, if_true]
+        have he : (∑ y ∈ T, if ¬G y then p y else 0) = ∑ y ∈ T, p y :=
+          sum_congr rfl fun y hy => if_pos (hn y hy)
+        change (∑ y ∈ T, p y) ≤ 16/15 * ∑ y ∈ T, if ¬G y then p y else 0
+        rw [he]
+        have hh := sum_nonneg (s := T) fun y _ => hp y
+        linarith only [hh]
+  calc
+    _ = ∑ η ∈ F, ∑ y ∈ univ.filter (fun y => env y = η), if ¬A η then p y else 0 := by
+      rw [← sum_fiberwise_of_maps_to (fun y (_ : y ∈ (univ : Finset Ω)) =>
+        mem_image_of_mem env (mem_univ y)) (fun y => if ¬A (env y) then p y else 0)]
+      apply sum_congr rfl
+      intro η _
+      apply sum_congr rfl
+      intro y hy
+      rw [(mem_filter.mp hy).2]
+    _ ≤ ∑ η ∈ F, 16/15 * ∑ y ∈ univ.filter (fun y => env y = η), if ¬G y then p y else 0 :=
+      sum_le_sum fun η _ => hη η
+    _ = _ := by
+      rw [← mul_sum, sum_fiberwise_of_maps_to (fun y (_ : y ∈ (univ : Finset Ω)) =>
+        mem_image_of_mem env (mem_univ y))]
+
+end
+end D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors

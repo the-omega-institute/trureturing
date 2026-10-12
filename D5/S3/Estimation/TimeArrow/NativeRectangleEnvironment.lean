@@ -53,11 +53,6 @@ def nativeMinimalRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experimen
   ((nativeMarginRectangleReadout S e o k l y).1,
     (nativeMarginRectangleReadout S e o k l y).2.1)
 
-/-- Exact information sigma-algebra of the minimal finite readout. -/
-def nativeMinimalRectangleSigma {M q s : ℕ} (S : Support M q) (e : Experiment)
-    (o : Obs M s e) (k l : ℕ) : MeasurableSpace (Fiber S e o) :=
-  MeasurableSpace.comap (nativeMinimalRectangleReadout S e o k l) ⊤
-
 private theorem two_level_count_sum {α : Type*} [Fintype α] [DecidableEq α]
     (V : Finset α) (f : α → ℕ) (k : ℕ)
     (hf : ∀ i ∈ V, f i = k ∨ f i = k + 1) :
@@ -140,42 +135,6 @@ theorem native_minimal_readout_eq_iff {M q s : ℕ} (S : Support M q)
     exact Prod.ext hV (Prod.ext hout (Prod.ext hR hU))
   · intro h
     exact congrArg (fun v => (v.1, v.2.1)) h
-
-/-- Omitting numerical margins leaves the native conditioning sigma-algebra
-unchanged, because both margins are recoverable on every collapsed fiber. -/
-theorem native_rectangle_sigma_eq {M q s : ℕ} (S : Support M q)
-    (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (k l : ℕ) :
-    nativeMinimalRectangleSigma S e o k l = nativeMarginRectangleSigma S e o k l := by
-  classical
-  apply MeasurableSpace.ext
-  intro A
-  change (∃ B, @MeasurableSet _ ⊤ B ∧
-      (nativeMinimalRectangleReadout S e o k l) ⁻¹' B = A) ↔
-    (∃ B, @MeasurableSet _ ⊤ B ∧
-      (nativeMarginRectangleReadout S e o k l) ⁻¹' B = A)
-  constructor
-  · rintro ⟨B, _, rfl⟩
-    refine ⟨nativeMarginRectangleReadout S e o k l ''
-      ((nativeMinimalRectangleReadout S e o k l) ⁻¹' B), MeasurableSpace.measurableSet_top, ?_⟩
-    ext y
-    constructor
-    · rintro ⟨z, hz, hzy⟩
-      have he := (native_minimal_readout_eq_iff S e o k l z y).mpr hzy
-      change nativeMinimalRectangleReadout S e o k l y ∈ B
-      rwa [← he]
-    · intro hy
-      exact ⟨y, hy, rfl⟩
-  · rintro ⟨B, _, rfl⟩
-    refine ⟨nativeMinimalRectangleReadout S e o k l ''
-      ((nativeMarginRectangleReadout S e o k l) ⁻¹' B), MeasurableSpace.measurableSet_top, ?_⟩
-    ext y
-    constructor
-    · rintro ⟨z, hz, hzy⟩
-      have he := (native_minimal_readout_eq_iff S e o k l z y).mp hzy
-      change nativeMarginRectangleReadout S e o k l y ∈ B
-      rwa [← he]
-    · intro hy
-      exact ⟨y, hy, rfl⟩
 
 open private
   D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.native_four_cell_conditional_law
@@ -770,21 +729,18 @@ theorem native_minimal_central_tail {M q s : ℕ} (S : Support M q)
       nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
     conditionalFiberMass S r e o (Env.filter fun y => L * Real.sqrt V.card <
       |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ) * R / V.card|) /
-        conditionalFiberMass S r e o Env ≤ 1 / (4 * L ^ 2) ∧
-      nativeMinimalRectangleSigma S e o k l = nativeMarginRectangleSigma S e o k l := by
+        conditionalFiberMass S r e o Env ≤ 1 / (4 * L ^ 2) := by
   classical
   letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
   dsimp only
-  constructor
-  · have he := native_kernel_event_mass S r e o hq hqm hr hr1 ha ha1 k l z
-      (fun t : ℕ => L * Real.sqrt (nativeRectangleRows S e o k l z).card <
-        |(t : ℝ) -
-          (((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val (-1) = l).card : ℝ) *
-          ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val 1 = k).card /
-          (nativeRectangleRows S e o k l z).card|)
-    dsimp only at he
-    exact he.trans_le (kernel_central_tail (card_filter_le _ _) (card_filter_le _ _) hN L hL)
-  · exact native_rectangle_sigma_eq S e o k l
+  have he := native_kernel_event_mass S r e o hq hqm hr hr1 ha ha1 k l z
+    (fun t : ℕ => L * Real.sqrt (nativeRectangleRows S e o k l z).card <
+      |(t : ℝ) -
+        (((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val (-1) = l).card : ℝ) *
+        ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val 1 = k).card /
+        (nativeRectangleRows S e o k l z).card|)
+  dsimp only at he
+  exact he.trans_le (kernel_central_tail (card_filter_le _ _) (card_filter_le _ _) hN L hL)
 
 open private
   D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass_eq_card
