@@ -43,7 +43,9 @@ private def gates (n : ℕ) : Set (Op n) :=
     (∃ c t : Fin n, c ≠ t ∧ U = gateCNOT c t)}
 private def Clifford (n : ℕ) : Submonoid (Op n) :=
   Submonoid.closure (gates n ∪ (fun U : Op n => Uᴴ) '' gates n)
-private def vacuum (n : ℕ) : Op n := Matrix.single (0 : Bits n) 0 1
+private def vacuum (n : ℕ) : Op n :=
+  Matrix.single (fun _ : Fin n => Fin.castSucc (Fin.last 0))
+    (fun _ : Fin n => Fin.castSucc (Fin.last 0)) 1
 private def PureStabilizer (n : ℕ) : Set (Op n) :=
   {ρ | ∃ U : Op n, U ∈ Clifford n ∧ ρ = U * vacuum n * Uᴴ}
 def STAB (n : ℕ) : Set (Op n) := convexHull ℝ (PureStabilizer n)
@@ -55,16 +57,14 @@ def sigma : Op 3 := (1 / 56 : ℝ) • ((7 : ℝ) • 1 + S)
 def bell : Op 6 := Matrix.of fun x y =>
   if (splitBits 3 3 x).1 = (splitBits 3 3 x).2 ∧
       (splitBits 3 3 y).1 = (splitBits 3 3 y).2 then (1 / 8 : ℂ) else 0
-private def splitEquiv (n m : ℕ) : Bits (n + m) ≃ Bits n × Bits m where
-  toFun := splitBits n m
-  invFun := fun p => Fin.append p.1 p.2
-  left_inv := fun x => Fin.append_castAdd_natAdd
-  right_inv := by intro p; ext i <;> simp [splitBits]
 private lemma tensor_product {n m : ℕ} (A C : Op n) (B D : Op m) :
     tensor A B * tensor C D = tensor (A * C) (B * D) := by
+  let e : Bits (n + m) ≃ Bits n × Bits m :=
+    { toFun := splitBits n m, invFun := fun p => Fin.append p.1 p.2
+      left_inv := fun x => Fin.append_castAdd_natAdd
+      right_inv := by intro p; ext i <;> dsimp only [splitBits] <;> simp }
   unfold tensor
-  change (A.kronecker B).submatrix (splitEquiv n m) (splitEquiv n m) *
-    (C.kronecker D).submatrix (splitEquiv n m) (splitEquiv n m) = _
+  change (A.kronecker B).submatrix e e * (C.kronecker D).submatrix e e = _
   rw [Matrix.submatrix_mul_equiv]
   change (A.kronecker B * C.kronecker D).submatrix (splitBits n m) (splitBits n m) = _
   congr 1
@@ -93,9 +93,9 @@ private lemma S_square : S * S = (7 : ℂ) • (1 : Op 3) := by
     dsimp only [T]
     conv_lhs => rw [Finset.sum_comm]
     rw [← Finset.sum_neg_distrib]
-    simp_rw [← Finset.sum_neg_distrib]
     apply Finset.sum_congr rfl
     intro i _
+    rw [← Finset.sum_neg_distrib]
     apply Finset.sum_congr rfl
     intro j _
     by_cases h : i = j
@@ -125,7 +125,10 @@ private lemma S_square : S * S = (7 : ℂ) • (1 : Op 3) := by
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro j _
-    by_cases h : j = i <;> simp [h, Ne.symm]
+    by_cases h : j = i
+    · subst j; simp
+    · simp only [h, Ne.symm h, ite_false, ite_true, ne_eq, not_false_eq_true,
+        zero_add]
   rw [hd, hz, add_zero]
   simp only [G, word_square, Finset.sum_const, Finset.card_univ, Fintype.card_fin]
   ext x y
@@ -366,7 +369,7 @@ private lemma pauli_real {n : ℕ} {P : Op n} (hp : P ∈ PauliGroup n) (hh : P�
   rcases hc with h | h | h | h
   · exact Or.inl h
   · exact Or.inr h
-  all_goals subst c; norm_num [Complex.ext_iff] at hr
+  all_goals subst c; have hi := congrArg Complex.im hr; norm_num at hi
 private lemma vacuum_word {n : ℕ} (w : Fin n → Pauli) : wordOp w 0 0 = 0 ∨
     (wordOp w * vacuum n = vacuum n ∧ wordOp w 0 0 = 1) := by
   by_cases hd : ∀ i, w i = .I ∨ w i = .Z
@@ -381,11 +384,13 @@ private lemma vacuum_word {n : ℕ} (w : Fin n → Pauli) : wordOp w 0 0 = 0 ∨
         _ = _ := congrArg (fun M : Op n => M x 0) tensor_one
     refine Or.inr ⟨?_, by simpa using he 0⟩
     ext x y
-    unfold vacuum
+    change (wordOp w * (Matrix.single (0 : Bits n) 0 (1 : ℂ) : Op n)) x y =
+      (Matrix.single (0 : Bits n) 0 (1 : ℂ) : Op n) x y
     by_cases hy : y = 0
     · subst y
       rw [Matrix.mul_single_apply_same, mul_one, he, Matrix.one_apply]
-      simp only [Matrix.single_apply, and_true, eq_comm]
+      simp only [Matrix.single_apply, and_true]
+      exact if_congr (show x = 0 ↔ (0 : Bits n) = x from eq_comm) rfl rfl
     · rw [Matrix.mul_single_apply_of_ne _ _ _ _ _ hy,
         Matrix.single_apply_of_col_ne _ _ (Ne.symm hy)]
   · push Not at hd
@@ -408,8 +413,10 @@ private lemma pure_expectation {n : ℕ} {U P : Op n} (hu : U ∈ Clifford n)
     calc
       _ = (Uᴴ * P * U * vacuum n).trace := by
         simpa only [mul_assoc] using Matrix.trace_mul_cycle (P * U) (vacuum n) Uᴴ
-      _ = _ := by rw [hw, Matrix.smul_mul, Matrix.trace_smul]; simp [vacuum,
-          Matrix.trace_mul_single]
+      _ = _ := by
+        rw [hw, Matrix.smul_mul, Matrix.trace_smul]
+        change c • (wordOp w * (Matrix.single (0 : Bits n) 0 (1 : ℂ) : Op n)).trace = _
+        rw [Matrix.trace_mul_single]; simp only [MulOpposite.op_one, one_smul, smul_eq_mul]
   rcases vacuum_word w with hz | ⟨he, hv⟩
   · exact Or.inl (by rw [ht, hz, mul_zero])
   · have htc : (P * (U * vacuum n * Uᴴ)).trace = c := by rw [ht, hv, mul_one]
@@ -420,7 +427,8 @@ private lemma pure_expectation {n : ℕ} {U P : Op n} (hu : U ∈ Clifford n)
     rw [htc]
     calc
       _ = U * ((Uᴴ * P * U) * vacuum n) * Uᴴ := by
-        simp only [← mul_assoc, huR, one_mul]
+        simp only [mul_assoc]
+        rw [← mul_assoc U Uᴴ, huR, one_mul]
       _ = _ := by rw [hw, Matrix.smul_mul, he, Matrix.mul_smul, Matrix.smul_mul]
 private lemma pure_eigenvector {n : ℕ} {U P : Op n} (hu : U ∈ Clifford n)
     (hp : P ∈ PauliGroup n) (hh : Pᴴ = P)
@@ -435,8 +443,12 @@ private lemma pure_eigenvector {n : ℕ} {U P : Op n} (hu : U ∈ Clifford n)
   rw [Matrix.mulVec_mulVec]
   simp only [Matrix.mulVec_single_one]
   ext x
-  have hx := congrArg (fun A : Op n => A x 0) h
-  simpa only [vacuum, ← mul_assoc, Matrix.mul_single_apply_same, mul_one,
+  have h' : P * U * vacuum n = (P * (U * vacuum n * Uᴴ)).trace • (U * vacuum n) := by
+    simpa only [mul_assoc] using h
+  have hx := congrArg (fun A : Op n => A x 0) h'
+  change (P * U * (Matrix.single (0 : Bits n) 0 (1 : ℂ) : Op n)) x 0 =
+    (P * (U * vacuum n * Uᴴ)).trace • (U * (Matrix.single (0 : Bits n) 0 (1 : ℂ) : Op n)) x 0 at hx
+  simpa only [Matrix.mul_single_apply_same, mul_one,
     Matrix.smul_apply, smul_eq_mul, Matrix.col_apply, Pi.smul_apply] using hx
 private lemma anticommuting_support {n k : ℕ} (G : Fin k → Op n)
     (hg : ∀ i, G i ∈ PauliGroup n ∧ (G i)ᴴ = G i)
@@ -532,8 +544,4 @@ private lemma conjugate_S_support {ρ : Op 3} (hρ : ρ ∈ STAB 3) :
   · intro i j h
     have he := congrArg conjugate (gamma_anticommute i j h)
     simpa only [conjugate_product, conjugate_neg] using he
-#print axioms clifford_data
-#print axioms S_square
-#print axioms S_support
-#print axioms conjugate_S_support
 end D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
