@@ -207,46 +207,67 @@ private lemma stopping_nat_measurable {τ : Seed × (ℕ → Bool) → ℕ}
     (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ))) : Measurable τ := by
   simpa using (hτ.measurable.mono hτ.measurableSpace_le le_rfl).untopD 0
 
-private lemma stopped_law_map (ν : Measure Seed) [IsProbabilityMeasure ν]
+private lemma stopped_event_density (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
     (τ : Seed × (ℕ → Bool) → ℕ)
-    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ))) :
-    ((Law ν p₀).withDensity (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω))).map τ =
-      (Law ν p).map τ := by
-  apply Measure.ext_of_singleton
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ)))
+    (s : Set (Seed × (ℕ → Bool))) (hs : MeasurableSet[hτ.measurableSpace] s) :
+    (Law ν p₀).withDensity (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω)) s =
+      Law ν p s := by
+  let E := fun k : ℕ => s ∩ {ω | τ ω = k}
+  have hE : ∀ k, MeasurableSet[seededFiltration k] (E k) := by
+    intro k
+    simpa only [E, WithTop.coe_eq_coe] using
+      (hτ.measurableSet_inter_eq_iff s hs k).mp
+        (hs.inter (hτ.measurableSet_eq' k))
+  have hu : s = ⋃ k, E k := by ext ω; simp [E]
+  have hd : Pairwise (fun i j => Disjoint (E i) (E j)) := by
+    intro i j hij
+    apply Set.disjoint_left.mpr
+    intro ω hωi hωj
+    exact hij (hωi.2.symm.trans hωj.2)
+  rw [hu, measure_iUnion hd (fun k => seededFiltration.le k _ (hE k)),
+    measure_iUnion hd (fun k => seededFiltration.le k _ (hE k))]
+  apply tsum_congr
   intro k
-  have hmeas := stopping_nat_measurable hτ
-  have hk : MeasurableSet[seededFiltration k]
-      {ω | (τ ω : WithTop ℕ) = (k : WithTop ℕ)} := hτ.measurableSet_eq k
-  have heq : {ω : Seed × (ℕ → Bool) | (τ ω : WithTop ℕ) = k} = τ ⁻¹' {k} := by
-    ext ω
-    simp
-  rw [heq] at hk
-  rw [Measure.map_apply hmeas (measurableSet_singleton k),
-    Measure.map_apply hmeas (measurableSet_singleton k),
-    withDensity_apply _ (hmeas (measurableSet_singleton k))]
+  rw [withDensity_apply _ (seededFiltration.le k _ (hE k))]
   calc
-    _ = ∫⁻ ω in τ ⁻¹' {k}, ENNReal.ofReal (Like p₀ p k ω) ∂Law ν p₀ := by
-      apply setLIntegral_congr_fun (hmeas (measurableSet_singleton k))
+    _ = ∫⁻ ω in E k, ENNReal.ofReal (Like p₀ p k ω) ∂Law ν p₀ := by
+      apply setLIntegral_congr_fun (seededFiltration.le k _ (hE k))
       intro ω hω
-      change ENNReal.ofReal (Like p₀ p (τ ω) ω) = ENNReal.ofReal (Like p₀ p k ω)
-      rw [show τ ω = k from hω]
+      rw [hω.2]
     _ = _ := by
-      rw [← withDensity_apply _ (hmeas (measurableSet_singleton k))]
-      exact density_on_past ν p₀ p h₀ h₁ k hk
+      rw [← withDensity_apply _ (seededFiltration.le k _ (hE k))]
+      exact density_on_past ν p₀ p h₀ h₁ k (hE k)
+
+/-- Changing the Bernoulli parameter changes every stopped observation by
+its stopped likelihood. This identifies only the stopped sigma algebra. -/
+theorem bernoulli_stopped_output_identity (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (τ : Seed × (ℕ → Bool) → ℕ)
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ)))
+    (f : Seed × (ℕ → Bool) → ℝ) (hf : StronglyMeasurable[hτ.measurableSpace] f) :
+    (∫ ω, f ω ∂Law ν p) = ∫ ω, f ω ∂(Law ν p₀).withDensity
+      (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω)) := by
+  have ht : ((Law ν p₀).withDensity
+      (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω))).trim hτ.measurableSpace_le =
+      (Law ν p).trim hτ.measurableSpace_le := by
+    apply Measure.ext
+    intro s hs
+    rw [trim_measurableSet_eq _ hs, trim_measurableSet_eq _ hs]
+    exact stopped_event_density ν p₀ p h₀ h₁ τ hτ s hs
+  rw [integral_trim hτ.measurableSpace_le hf,
+    integral_trim hτ.measurableSpace_le hf, ht]
 
 private lemma stopped_statistic_identity (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
     (τ : Seed × (ℕ → Bool) → ℕ)
     (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ))) (F : ℕ → ℝ) :
-    (∫ ω, F (τ ω) ∂Law ν p) =
-      ∫ ω, F (τ ω) ∂(Law ν p₀).withDensity
-        (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω)) := by
-  have hmeas := stopping_nat_measurable hτ
-  have hmap := stopped_law_map ν p₀ p h₀ h₁ τ hτ
-  have hm : StronglyMeasurable F := (measurable_from_nat (f := F)).stronglyMeasurable
-  rw [← integral_map hmeas.aemeasurable hm.aestronglyMeasurable,
-    ← integral_map hmeas.aemeasurable hm.aestronglyMeasurable, hmap]
+    (∫ ω, F (τ ω) ∂Law ν p) = ∫ ω, F (τ ω) ∂(Law ν p₀).withDensity
+      (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω)) := by
+  apply bernoulli_stopped_output_identity ν p₀ p h₀ h₁ τ hτ
+  apply Measurable.stronglyMeasurable
+  exact (measurable_from_nat (f := F)).comp (by simpa using hτ.measurable.untopD 0)
 
 
 private lemma stopped_moment_identity (ν : Measure Seed) [IsProbabilityMeasure ν]
