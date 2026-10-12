@@ -102,6 +102,8 @@ $$\forall A \in Type, inst \in \operatorname{AddCommGroup}\left(A\right), J \in 
 
 The carrier length is (4m+1)+2=4m+3. Its homogeneous row has total sum b and prefix sum a+b, proved by a four-step recurrence and induction on m. If J(J(x))=x for every x, the boundary is ((id+J)(a+b),(id+J)(b)). The integral shear (a,b)->(a+b,b) is invertible, so these are two independent copies of id+J. This includes m=0, carrier length three.
 
+Escape audit status. The original generic theorems eliminate and boundary_three_mod_four and their mirrored Reg proofs compile. Their source bindings remain declared_unresolved: IE-C050 ClosedTruthReadout, reason=unclassified_form, rule=source.params for eliminate and rule=source.state_binder for boundary_three_mod_four. The missing classified source bindings and certificates are tracked at https://github.com/the-omega-institute/trureturing/issues/15897. Their escape audits are unfinished; this issue supplies neither proof nor declared_validated status.
+
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/QuadraticCompanionDefect.boundary`
