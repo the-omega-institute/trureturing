@@ -29,7 +29,7 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
                 "Section 8, PDF p. 18: \"For p = 1, we just call the map Φ 𝕂-entanglement breaking.\" Its preceding condition is (Φ ⊗ idᵣ)(P) ∈ SEPₚ(𝕂ᵐ ⊗ 𝕂ʳ) for all positive P and r ≥ 1. The display specializes p to one and adds only the vacuous empty amplification. No trace-preserving or unital condition is imposed.",
                 DescribeRole.Definition, Lit()),
             OwnerNode("choi", "D5/S3/Quantum/Foundation/FiniteKrausRepresentation.choi_matrix", "Input-first Choi matrix", Choi(),
-                "The display uses choiMatrix for MatrixMap.choi_matrix, which supplies the Choi matrix, with submatrix Prod.swap Prod.swap giving its input-first order in the display. Applying Phi to the matrix unit Matrix.single a.1 b.1 1 gives its entry at output indices a.2 and b.2. The canonical Kraus Choi matrix places output first; Prod.swap relates the two tensor orders.",
+                "MatrixMap.choi_matrix supplies the displayed output-first coordinate expression; submatrix Prod.swap Prod.swap puts the input factor first. Applying Phi to the matrix unit Matrix.single a.1 b.1 1 gives its entry at output indices a.2 and b.2. The canonical Kraus Choi matrix places output first; Prod.swap relates the two tensor orders.",
                 DescribeRole.Definition, Lit()),
             Node("ptFirst", "Partial transpose on the first factor", PartialTranspose(),
                 "The first coordinates are exchanged and the second coordinates retained. This is τₙ tensor idₘ in Section 9.1, PDF p. 21; it is an ordinary transpose without complex conjugation.",
@@ -69,8 +69,16 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
     private static Formula Amplified(Formula phi, Formula r, Formula matrix) => App(
         App(Qualified("MatrixMap", "kron"), phi,
             Seq(Qualified("LinearMap", "id"), Colon, Call("MatrixMap", FinOf(r), FinOf(r), V("K")))), matrix);
-    private static Formula SourceChoi(Formula phi) => App(Qualified("Matrix", "submatrix"),
-        App(Qualified("MatrixMap", "choiMatrix"), phi), Qualified("Prod", "swap"), Qualified("Prod", "swap"));
+    private static Formula SourceChoi(Formula phi)
+    {
+        Formula indices = ProdOf(FinOf(V("m")), FinOf(V("n")));
+        Formula unit = App(Qualified("Matrix", "single"),
+            Component("j", 2), Component("k", 2), D(1));
+        Formula ownedBody = Fun("j", indices, Fun("k", indices,
+            App(App(phi, unit), Component("j", 1), Component("k", 1))));
+        return App(Qualified("Matrix", "submatrix"), Parenthesized(ownedBody),
+            Qualified("Prod", "swap"), Qualified("Prod", "swap"));
+    }
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));

@@ -15,10 +15,11 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 Direct frozen dependencies (declaration statement_id):
 D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
 D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive; sha256:39e2682fd93035c705a08181bb7fdfb77067eba43afcc98c200c30543b913ed4
-D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus_isCompletelyPositive; sha256:522daaecff9970808def6ecdd938d4b89107d2820c79bafbf378ab083767f57f
+D5/S3/Quantum/Foundation/FiniteKrausChannel.add; sha256:ab035bd1524f24a389efcb6ae4d325d587be61770c5c649215e47141d0e193c5
 D5/S3/Quantum/Foundation/FiniteKrausChannel.kron; sha256:6bbbe42180d7cde8ee171b8a1aeeb16449194862345f2042d95ec7c0b2055471
 D5/S3/Quantum/Foundation/FiniteKrausChannel.kron_def; sha256:0a066df1b1de64e4fda175d1ac776d744674a6465abc8a7f13b12f185ce29405
 D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus; sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
+D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus_isCompletelyPositive; sha256:522daaecff9970808def6ecdd938d4b89107d2820c79bafbf378ab083767f57f
 D5/S3/Weil/Probability/FiniteGaussianSchoenberg.ofReal_posSemidef; sha256:e43b63bc2ba962082673f10ac6003f58de8e5074d7a6467d794c4842e8856cd3
 The auxiliary theorems have proof_shape: bind-only and escape_witness: none.
 Each auxiliary theorem is consumed by another declaration in the elaborated proof terms.
@@ -684,20 +685,11 @@ private theorem gamma_cp {Phi : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (F
       rfl
     rw [← he]
     exact cp_double_tau hIn
-  have addCP {Phi Psi : Matrix (Fin (2*n)) (Fin (2*n)) ℂ →ₗ[ℂ] Matrix (Fin (2*m)) (Fin (2*m)) ℂ}
-      (hPhi : MatrixMap.IsCompletelyPositive Phi) (hPsi : MatrixMap.IsCompletelyPositive Psi) : MatrixMap.IsCompletelyPositive (Phi + Psi) := by
-    intro r P hP
-    have he : MatrixMap.kron (Phi + Psi) (LinearMap.id : MatrixMap (Fin r) (Fin r) ℂ) P =
-        MatrixMap.kron Phi LinearMap.id P + MatrixMap.kron Psi LinearMap.id P := by
-      ext a b
-      simp only [kron_id_apply, LinearMap.add_apply, Matrix.add_apply]
-    rw [he]
-    exact (hPhi r hP).add (hPsi r hP)
   rw [gamma_four]
   apply cp_half
-  apply addCP
-  · apply addCP
-    · apply addCP
+  apply MatrixMap.IsCompletelyPositive.add
+  · apply MatrixMap.IsCompletelyPositive.add
+    · apply MatrixMap.IsCompletelyPositive.add
       · exact cp_comp put_pp_cp (cp_comp hPhi.1 bp_cp)
       · exact cp_comp put_pp_cp (cp_comp hIn bm_cp)
     · exact cp_comp put_pm_cp (cp_comp hOut bp_cp)
