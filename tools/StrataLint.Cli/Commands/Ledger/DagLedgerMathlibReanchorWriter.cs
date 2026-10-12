@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class DagLedgerMathlibReanchorWriter
+internal static partial class DagLedgerMathlibReanchorWriter
 {
     internal static CommandResult Reanchor(
         string repositoryRoot,
@@ -14,7 +14,8 @@ internal static class DagLedgerMathlibReanchorWriter
     {
         try
         {
-            var protectedBaseName = ParseArguments(arguments);
+            var options = ParseArguments(arguments);
+            var protectedBaseName = options.Base;
             var protectedBase = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevisionProjection(protectedBaseName, TruthExportCommand.IsTruthInput)));
             var truth = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource);
@@ -45,6 +46,13 @@ internal static class DagLedgerMathlibReanchorWriter
                 .Select(static item => item.Key)
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .ToImmutableArray();
+            if (!options.RetiredUpstreamPorts.IsEmpty)
+            {
+                return ValidateCompletedUpstreamRetirements(
+                    protectedBase, truth.Snapshot, truth.Lean, baseView,
+                    completeCatalog, states, adjacency, currentLedgerFiles,
+                    options.RetiredUpstreamPorts, driftPaths);
+            }
             if (driftPaths.IsEmpty)
             {
                 return new CommandResult(
@@ -186,17 +194,27 @@ internal static class DagLedgerMathlibReanchorWriter
         }
     }
 
-    private static string ParseArguments(IReadOnlyList<string> arguments)
+    private sealed record ReanchorOptions(string Base, ImmutableHashSet<RepoPath> RetiredUpstreamPorts);
+
+    private static ReanchorOptions ParseArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 2
+        if (arguments.Count < 2 || arguments.Count % 2 != 0
             || arguments[0] != "--base"
             || string.IsNullOrWhiteSpace(arguments[1]))
         {
             throw new InvalidOperationException(
-                "USAGE: StrataLint ledger-reanchor-mathlib --base REV");
+                "USAGE: StrataLint ledger-reanchor-mathlib --base REV [--retired-upstream-port D5/.../Missing.lean]...");
         }
-
-        return arguments[1];
+        var retired = ImmutableHashSet.CreateBuilder<RepoPath>();
+        for (var index = 2; index < arguments.Count; index += 2)
+        {
+            if (arguments[index] != "--retired-upstream-port"
+                || !RepoPath.TryCreate(arguments[index + 1], out var path)
+                || !FrozenStatePath.IsCanonicalModulePath(path)
+                || !retired.Add(path))
+                throw new InvalidOperationException("invalid or duplicate already-retired upstream port selector");
+        }
+        return new ReanchorOptions(arguments[1], retired.ToImmutable());
     }
 
     private static ImmutableArray<RepositoryFile> BuildReanchoredEventFiles(

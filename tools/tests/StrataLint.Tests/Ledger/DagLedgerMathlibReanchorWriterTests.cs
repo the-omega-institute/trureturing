@@ -7,7 +7,7 @@ using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 
-public sealed class DagLedgerMathlibReanchorWriterTests
+public sealed partial class DagLedgerMathlibReanchorWriterTests
 {
     private const string BaseRevision = "base";
     private const string BaseToolchain = "leanprover/lean4:v4.32.0\n";
