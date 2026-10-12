@@ -469,13 +469,7 @@ private theorem qubit_density_convex : Convex ℝ {τ : Matrix (Fin 2) (Fin 2) �
   have hp : ((1/2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)).PosSemidef :=
     hpone.smul (by norm_num [Complex.le_def])
   have ht : (((1/2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ))).trace = 1 := by
-    have he : (1 / 2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) =
-        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1 0 := by
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        simp [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix]
-    rw [he]
-    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 0
+    norm_num [Matrix.trace_smul, Matrix.trace_one]
   simpa only [physicalFiber, LinearMap.zero_apply, eq_self, true_and, IsDensity] using
     (finite_dimensional_physical_fiber (0 : Matrix (Fin 2) (Fin 2) ℂ →ₗ[ℂ] (Empty → ℂ))
       _ hp ht).2.2

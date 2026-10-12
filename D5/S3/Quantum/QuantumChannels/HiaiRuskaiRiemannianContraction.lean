@@ -501,17 +501,13 @@ private lemma center_density : (blochMatrix 1 (WithLp.toLp 2 ![0,0,0])).PosDef �
   constructor
   · apply Pauli.rho_posDef
     norm_num [Matrix.cons_dotProduct_cons, Matrix.dotProduct_of_isEmpty, add_zero, ← pow_two]
-  · exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
+  · norm_num [blochMatrix,Matrix.trace,Matrix.diag_apply,Fin.sum_univ_two] <;> ring
 private def centerDensity : {rho : Matrix (Fin 2) (Fin 2) ℂ // rho.PosDef ∧ Matrix.trace rho = 1} := ⟨(blochMatrix 1 (WithLp.toLp 2 ![0,0,0])),center_density⟩
 private lemma sigma1_tangent : (fun A : Matrix (Fin 2) (Fin 2) ℂ => A.IsHermitian ∧ Matrix.trace A = 0) qubitX ∧ qubitX ≠ 0 := by
   constructor
   · constructor
     · simpa only [Matrix.IsHermitian, Matrix.star_eq_conjTranspose] using qubit_weyl_star.2.1
-    · have he : qubitX = blochMatrix 0 (WithLp.toLp 2 ![2, 0, 0]) := by
-        ext i j
-        fin_cases i <;> fin_cases j <;> simp [qubitX, blochMatrix]
-      rw [he]
-      exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 0 _
+    · norm_num [qubitX,Matrix.trace,Matrix.diag_apply,Fin.sum_univ_two]
   · intro hz
     have h01 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 1) hz
     norm_num [qubitX] at h01
