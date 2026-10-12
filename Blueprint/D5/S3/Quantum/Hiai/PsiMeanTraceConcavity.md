@@ -98,7 +98,7 @@ $$\forall u: \operatorname{Level}(),\ \forall d: \operatorname{Type}(u),\ [\oper
 
 *Commentary.*
 
-The positive definite optimizer is exactly W0=M^(1/p), and the objective equals p Re Tr(M^(1/p)) there and dominates its value at every positive definite W. The equality uses same-matrix spectral power arithmetic. No positive definite optimizer is asserted for singular M. The mean-trace concavity proof interpolates the two actual endpoint optimizers; it needs joint concavity in the auxiliary variable, not a supremum of separately concave functions.
+An explicit positive definite maximizer is W0=M^(1/p), and the objective equals p Re Tr(M^(1/p)) there and dominates its value at every positive definite W. At p=1 the objective is independent of W, so uniqueness is not asserted. The equality uses same-matrix spectral power arithmetic. No positive definite optimizer is asserted for singular M. The mean-trace concavity proof interpolates the two actual endpoint optimizers; it needs joint concavity in the auxiliary variable, not a supremum of separately concave functions.
 
 **Theorem 1.9 (Joint concavity in three matrix inputs).**
 
