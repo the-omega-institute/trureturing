@@ -157,6 +157,72 @@ def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 end radialAudit
 
+namespace normAudit
+abbrev signature : Signature where
+  Params := Params
+  State p := Point p.val
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+def actual : Realization signature :=
+  realize signature (fun _ p x => @radial p.val _ x) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} [NeZero n] (x : Point n), ‖R.readout () ⟨n, NeZero.ne n⟩ x‖ = radius x
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h boundary
+  norm_num [rejected,realize,boundary,radius] at hh
+def registration : Registration arena (type_of% (@radial_norm)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@radial_norm, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (show j = i from @Subsingleton.elim Unit _ j i)).elim, rfl, rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    exact ⟨⟨1, by decide⟩, origin, boundary, radial_distinct⟩
+def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@radial_norm)
+    (type_of% (realize signature (fun _ p x => @radial p.val _ x) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Geometry.Gluing.CyclicTriangleDisk.radial_norm.information_unit,
+  realizationName := `Reg.D5.S3.Geometry.Gluing.CyclicTriangleDisk.normAudit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ p x => @radial p.val _ x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Geometry.Gluing.CyclicTriangleDisk,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+#print axioms registration
+end normAudit
+
 namespace homeomorphAudit
 abbrev signature : Signature where
   Params := Params

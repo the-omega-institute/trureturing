@@ -273,3 +273,256 @@ pp. 3–5 (Proposition 2.1), and Section 3, pp. 6–7 (Theorem 3.3,
 Remark 3.5). These published beam and entropy results are used with their
 stated hypotheses; the reset-specific parity calculation is the deduction
 above.
+
+## Proposition 9. Finite additive companion elimination
+
+Let \(A\) be an additive commutative group, \(J:A\to A\) an additive
+endomorphism, and \(q>0\). Define \(L_J:A^q\to A^q\) by
+\[
+(L_Jv)_0=v_0+J\left(\sum_{i=0}^{q-1}v_i\right),
+\qquad (L_Jv)_j=v_j+v_{j-1}\quad(1\le j<q).
+\]
+Set
+\[
+K_q=\{j:1\le j<q,\ q-j\text{ odd}\},\qquad
+s_q=\begin{cases}0&q\text{ even},\\1&q\text{ odd}.\end{cases}
+\]
+There are separate additive domain and codomain equivalences
+\(D,C:A^q\longrightarrow A\times A^{q-1}\), given by
+\[
+D(v)=\bigl(v_0,(v_j+v_{j-1})_{1\le j<q}\bigr),\qquad
+C(y)=\left(y_0-J\left(\sum_{j\in K_q}y_j\right),
+                  (y_j)_{1\le j<q}\right),
+\]
+such that
+\[
+C L_J D^{-1}(a,t)=\bigl(a+J(s_q a),t\bigr).
+\]
+No involutivity of \(J\) is required.
+
+Proof. The inverse of \(D\) is the recurrence
+\(v_0=a\), \(v_j=t_j-v_{j-1}\). The inverse of \(C\) adds
+\(J(\sum_{j\in K_q}t_j)\) to the initial coordinate and retains every
+tail coordinate. The adjacent pairs indexed by \(K_q\) partition all
+coordinates when \(q\) is even, and all except coordinate zero when
+\(q\) is odd. Hence
+\[
+\sum_{i=0}^{q-1}v_i=s_q v_0+
+       \sum_{j\in K_q}(v_j+v_{j-1}).
+\]
+Apply additivity of \(J\) and cancel the tail sum in the codomain shear.
+The tail equations are unchanged. These are separately defined domain and
+codomain equivalences, so this calculation asserts equivalence of an operator's
+domain and codomain, without a conjugacy conclusion.
+
+## Theorem 10. Complete finite integral reset defect
+
+On the original lattice \(M_q=(\mathbb Z[C_2])^q\), let
+\(L_q=\mathrm{id}+T_q\), with \(T_q\) the original right-row reset
+transition. Write \([1]\) and \([\tau]\) for the two integral group
+basis elements. For a row \(y\), define the integer character
+\[
+\ell_q(y)=\sum_{\substack{0\le i<q\\i\text{ even}}}
+       \bigl(\operatorname{coeff}_1(y_i)-
+             \operatorname{coeff}_\tau(y_i)\bigr).
+\]
+For every positive even \(q\), \(L_q\) is an integral bijection.
+Its kernel and cokernel vanish. For every positive odd \(q\),
+\[
+\ker L_q=\mathbb Z w,\qquad
+\operatorname{im}L_q=\ker\ell_q,\qquad
+M_q/\operatorname{im}L_q\cong\mathbb Z,
+\]
+where \(w_i=(-1)^i([1]-[\tau])\) is the row of Proposition 4.
+Its kernel coefficient is unique, and \(\ell_q\) is surjective.
+Every solvable equation \(L_qv=y\) has the complete solution family
+\(v=v^*(y)+kw\), with unique \(k\in\mathbb Z\) and an explicit
+integral particular solution \(v^*(y)\).
+
+Proof. The actual right multiplication \(J(x)=x[\tau]\) swaps both
+integer coefficients. Proposition 9 therefore applies to the unchanged
+\(M_q\) and \(T_q\). At even length the residual map is identity;
+apply \(C\) to \(y\) and solve the tail recurrence with initial value
+\((C y)_0\). Both equivalences are invertible, giving uniqueness and
+vanishing kernel and cokernel.
+
+At odd length the residual map is
+\[
+a[1]+b[\tau]\longmapsto(a+b)([1]+[\tau]).
+\]
+Its kernel is exactly the primitive anti-diagonal
+\(\mathbb Z([1]-[\tau])\), and its image is exactly the primitive
+diagonal \(\mathbb Z([1]+[\tau])\). Zero tails force
+\(v_i=(-1)^iv_0\), so the original kernel is precisely \(\mathbb Zw\).
+The identity coefficient of \(v_0\) determines the generator coefficient.
+
+Put \(z=(C y)_0\). Multiplication by \([\tau]\) negates coefficient
+difference. Since \(q\) is odd, \(K_q\) consists of the positive even
+suffix indices, and consequently
+\[
+\operatorname{coeff}_1(z)-\operatorname{coeff}_\tau(z)=\ell_q(y).
+\]
+When \(\ell_q(y)=0\), both coefficients of \(z\) equal an integer
+\(d\). Choose \(v_0=d[1]\); then \((\mathrm{id}+J)v_0=z\).
+The recurrence \(v_j=y_j-v_{j-1}\) constructs the particular solution.
+Conversely, a residual in the image has equal coefficients, so
+\(\ell_q\) vanishes on every image row. Subtracting a particular
+solution reduces all solutions to the already classified kernel.
+
+The row with coordinate zero \(k[1]\) and every other coordinate zero
+has character \(k\), so \(\ell_q\) is onto \(\mathbb Z\).
+The first isomorphism theorem gives the displayed cokernel equivalence.
+The quotient is therefore torsion-free, not merely nonzero.
+
+For \(q=1\), the transition is \(T_1(a,b)=(b,a)\), and
+\(L_1(a,b)=(a+b,a+b)\). The image contains the primitive diagonal
+vector \((1,1)\), since \(L_1(1,0)=(1,1)\); it is not restricted to
+even diagonal vectors. The vectors \((1,1),(1,-1)\) have determinant
+\(-2\), so diagonalizing in that eigenframe would replace the original
+lattice by an index-two sublattice. By contrast, Proposition 9 with
+\(A=\mathbb Z\), \(J=\mathrm{id}\) and \(q=1\) really leaves
+\(2\mathrm{id}\), with cokernel \(\mathbb Z/2\mathbb Z\).
+The absence of order-two torsion in the reset case follows from the
+actual swap on the original lattice, not from involutivity alone.
+
+## Theorem 11. Native integral coordinates and signed time character
+
+Let \(q>0\), \(M_q=(\mathbb Z[C_2])^q\), and retain the original
+right-row transition \(T_q\) and stationary group \(G_q\) of Definition 1.
+For \(q=n+1\), define
+\[
+ P_q(y)=\bigl(y_1,\ldots,y_n,
+              y_0[\tau]-\sum_{j=1}^{n}y_j\bigr).
+\]
+Then \(P_qT_q=T_qP_q=\mathrm{id}\), and there is an integer-linear
+equivalence \(F_q:G_q\to M_q\) whose inverse is the original stage-zero
+map and which satisfies
+\[
+ F_q(\operatorname{of}_m(v))=P_q^m v,
+ \qquad F_q\Theta_q=T_qF_q.
+\]
+For odd \(q\), put \(\Lambda_q=\ell_qF_q\), with the primitive
+character \(\ell_q\) of Theorem 10. Then
+\[
+ \Lambda_q(\operatorname{of}_m(v))=(-1)^m\ell_q(v),\qquad
+ \Lambda_q\Theta_q=-\Lambda_q,
+\]
+and \(\Lambda_q:G_q\to\mathbb Z\) is surjective.
+
+Proof. Right multiplication by \([\tau]\) is involutive. The sum of the
+coordinates of \(P_qy\) is \(y_0[\tau]\), so the head of \(T_qP_qy\)
+is \(y_0\), and its remaining coordinates are \(y_1,\ldots,y_n\).
+Conversely, the first \(n\) coordinates of \(P_qT_qv\) recover the
+first \(n\) coordinates of \(v\); its last coordinate is the total sum
+minus that recovered prefix, hence \(v_n\). These statements also apply
+to the empty prefix at \(q=1\).
+
+The endomorphism identity
+\(P_q^jT_q^{j-i}=P_q^i\), for \(i\le j\), makes \(P_q^m\) a
+compatible family on the original forward stationary system. Its induced
+map is \(F_q\). It is inverse to stage zero because
+\[
+ \operatorname{of}_0(P_q^m v)
+   =\operatorname{of}_m(T_q^mP_q^m v)=\operatorname{of}_m(v).
+\]
+Since the two inverses commute, the same stage calculation proves the time
+intertwining. By Theorem 10,
+\(\ell_q(v+T_qv)=0\), so \(\ell_qT_q=-\ell_q\).
+Substitute \(P_qv\) to get \(\ell_qP_q=-\ell_q\), and iterate.
+Surjectivity follows from the surjectivity of \(\ell_q\) and \(F_q\).
+The universal property of the module direct limit and the first isomorphism
+theorem used here are the standard module constructions; the inverse and
+character formulas concern this specific original reset transition.
+
+This is an equivalence of integer modules, without a coordinatewise cone
+claim. For \(q=2\), the nonnegative row \((0,[1])\) is sent by \(P_2\)
+to \(([1],-[1])\). Moreover, an unsigned stage prescription cannot replace
+\(\Lambda_q\). At \(q=1\), \(T_1([1])=[\tau]\) and
+\(\operatorname{of}_0([1])=\operatorname{of}_1([\tau])\), whereas their
+unsigned finite characters are \(1\) and \(-1\).
+
+## Theorem 12. Complete native integral defect and arithmetic index
+
+Write \(D_q=\mathrm{id}+\Theta_q\) and
+\(c_q=\operatorname{of}_0(w)\), retaining the original class of
+Proposition 4. For positive even \(q\), \(D_q\) is an integer-linear
+bijection. For positive odd \(q\),
+\[
+ \ker D_q=\mathbb Zc_q,\qquad
+ \operatorname{im}D_q=\ker\Lambda_q,\qquad
+ G_q/\operatorname{im}D_q\cong\mathbb Z.
+\]
+The coefficient of \(c_q\) in the kernel is unique. If
+\(\Lambda_q(y)=0\), all solutions of \(D_qx=y\) are exactly
+\[
+ x=F_q^{-1}\bigl(v^*(F_qy)\bigr)+kc_q,\qquad k\in\mathbb Z,
+\]
+with unique \(k\), where \(v^*\) is the particular finite solution of
+Theorem 10. The exact kernel-character pairing and combined quotient are
+\[
+ \Lambda_q(c_q)=q+1,\qquad
+ \ker D_q\cap\operatorname{im}D_q=\{0\},\qquad
+ G_q/(\operatorname{im}D_q+\ker D_q)
+    \cong\mathbb Z/(q+1)\mathbb Z.
+\]
+In particular,
+\[
+ x\in\operatorname{im}D_q+\ker D_q
+ \quad\Longleftrightarrow\quad
+ (q+1)\mid\Lambda_q(x).
+\]
+
+Proof. The equivalence of Theorem 11 gives
+\(F_qD_q=(\mathrm{id}+T_q)F_q\) and \(F_qc_q=w\).
+Transport the whole finite classification of Theorem 10, including its
+constructive solver, unique kernel coefficient and surjective character.
+This yields the native kernel, image, fibres and ordinary cokernel; no
+second finite elimination is needed.
+
+For the pairing, the contribution of suffix \(i\) in \(w\) is two
+when \(i\) is even and zero when it is odd. Equivalently it is
+\(1+(-1)^i\). Therefore
+\[
+ \ell_q(w)=\sum_{i<q}\bigl(1+(-1)^i\bigr)=q+1
+\]
+for odd \(q\). If \(kc_q\) belongs to the image, its character is zero,
+so \(k(q+1)=0\), forcing \(k=0\). If
+\(x=a+kc_q\), with \(a\) in the image, then
+\(\Lambda_q(x)=k(q+1)\). Conversely, if
+\(\Lambda_q(x)=k(q+1)\), the difference \(x-kc_q\) has zero
+character and lies in the image. Thus reduction of \(\Lambda_q\)
+modulo \(q+1\) has kernel exactly the actual sum of the two submodules.
+It is onto, and the first isomorphism theorem gives the combined quotient.
+
+At \(q=1\), the native coordinates are \(\mathbb Z^2\), genuine time
+swaps the coordinates, \(c_1=(1,-1)\), and
+\(\Lambda_1(a,b)=a-b\). The ordinary cokernel is \(\mathbb Z\);
+the combined quotient has order two. Thus a zero intersection does not make
+the image and kernel a decomposition of the entire integer lattice.
+The obstruction is the exact index \(q+1\), not torsion in the ordinary
+cokernel and not a rational spectral obstruction.
+
+## Theorem 13. Integral equivariant nonsplitting
+
+For positive odd \(q\), there is no integer-linear section
+\(s:\mathbb Z\to G_q\) satisfying
+\[
+ \Lambda_qs=\mathrm{id}_{\mathbb Z},\qquad
+ \Theta_qs(n)=s(-n)\quad(n\in\mathbb Z).
+\]
+Here the action on \(\mathbb Z\) is negation and the action on \(G_q\)
+is the original genuine time action.
+
+Proof. Equivariance and additivity imply
+\(D_qs(1)=s(1)+s(-1)=0\). The full kernel classification gives
+\(s(1)=kc_q\). Applying the section equation and the pairing yields
+\(1=k(q+1)\), impossible for \(q>0\).
+
+The underlying integer-linear surjection does split after forgetting time:
+choose \(e\in G_q\) with \(\Lambda_q(e)=1\) and send \(n\) to
+\(ne\). The assertion also requires additivity. At \(q=1\), the
+nonadditive set map
+\(n\mapsto(\max(n,0),\max(-n,0))\) is a section of \(a-b\) and
+intertwines negation with coordinate swap. The arithmetic index therefore
+obstructs a linear dynamic splitting, without forbidding equivariant set
+sections or a nonequivariant linear section.
