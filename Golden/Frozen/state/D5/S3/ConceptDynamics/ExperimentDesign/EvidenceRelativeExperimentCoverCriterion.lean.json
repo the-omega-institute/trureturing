@@ -1,1 +1,1 @@
-{"statement_id":"sha256:08f259e943087dc9f288b6f5944dbca22212fae0d35bd0f0e32caf0f870610a6"}
+{"statement_id":"sha256:08f259e943087dc9f288b6f5944dbca22212fae0d35bd0f0e32caf0f870610a6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),16:ExperimentDesign),40:EvidenceRelativeExperimentCoverCriterion),44:evidence_relative_experiment_cover_criterion)","kind":"theorem"}]}

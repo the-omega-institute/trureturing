@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d39e59521ba412e62218ed51195fc5d14a837f507e0c7d4ebbe8dc17ca7ed03e"}
+{"statement_id":"sha256:d39e59521ba412e62218ed51195fc5d14a837f507e0c7d4ebbe8dc17ca7ed03e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:Mechanical),22:GoldenFiberPrefixBound),26:golden_fiber_prefix_sum_le)","kind":"theorem"}]}

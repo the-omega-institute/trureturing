@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f99ddd9fd53decb56ce53fb31bf4ff6a09f032d4f356a3f118d4feb95e3a99d3"}
+{"statement_id":"sha256:f99ddd9fd53decb56ce53fb31bf4ff6a09f032d4f356a3f118d4feb95e3a99d3","declarations":[{"declaration_name_key":"ns(ns(n0,12:NikolovSegal),26:exists_supplement_alpha_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,12:NikolovSegal),33:sylow_normalizer_section_transfer)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,12:NikolovSegal),49:exists_supplement_preserving_alternating_sections)","kind":"theorem"}]}

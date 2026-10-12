@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0b19f8ab619c66a8b429d29f6f87a2e6528c1a5713bd35e6a10b5faa6957d6db"}
+{"statement_id":"sha256:0b19f8ab619c66a8b429d29f6f87a2e6528c1a5713bd35e6a10b5faa6957d6db","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),12:Trajectories),28:CompletionKernelIntersection),51:completion_kernel_eq_iterated_pullback_intersection)","kind":"theorem"}]}

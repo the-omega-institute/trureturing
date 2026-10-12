@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d814e7c070b068f62fed0fbccc21e7fd2bebb26915607ece6df5071a6c0bafde"}
+{"statement_id":"sha256:d814e7c070b068f62fed0fbccc21e7fd2bebb26915607ece6df5071a6c0bafde","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),28:PolicyCapabilityMonotonicity),16:policyCapability)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),28:PolicyCapabilityMonotonicity),26:policy_capability_monotone)","kind":"theorem"}]}

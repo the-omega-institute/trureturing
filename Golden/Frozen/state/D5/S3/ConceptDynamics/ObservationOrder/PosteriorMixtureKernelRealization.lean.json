@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2255e1afbc228b5b5ca15fecea75dd6395bb97601e0557ab3295b12773ea7f48"}
+{"statement_id":"sha256:2255e1afbc228b5b5ca15fecea75dd6395bb97601e0557ab3295b12773ea7f48","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),16:ObservationOrder),33:PosteriorMixtureKernelRealization),36:posterior_mixture_kernel_realization)","kind":"theorem"}]}

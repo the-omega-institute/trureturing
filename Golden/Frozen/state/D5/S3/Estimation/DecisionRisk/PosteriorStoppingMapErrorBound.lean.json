@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2df9a54af069ebca76869a9e26fc070411b80c70e7c311e49606146232851ad1"}
+{"statement_id":"sha256:2df9a54af069ebca76869a9e26fc070411b80c70e7c311e49606146232851ad1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Estimation),12:DecisionRisk),30:PosteriorStoppingMapErrorBound),34:posterior_stopping_map_error_bound)","kind":"theorem"}]}

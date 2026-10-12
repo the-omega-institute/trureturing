@@ -1,1 +1,1 @@
-{"statement_id":"sha256:93d1ce110714ff719420821b2cab816e83f2a794d57fdd9f597234dda577af83"}
+{"statement_id":"sha256:93d1ce110714ff719420821b2cab816e83f2a794d57fdd9f597234dda577af83","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),34:triple_digits_value_and_minimality)","kind":"theorem"}]}

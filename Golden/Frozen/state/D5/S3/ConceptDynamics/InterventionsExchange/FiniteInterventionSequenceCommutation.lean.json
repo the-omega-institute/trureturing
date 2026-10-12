@@ -1,1 +1,1 @@
-{"statement_id":"sha256:53cc87f8844279c22c571f11cb764468abcf4a135b6e8d9b441ae2832cb287cd"}
+{"statement_id":"sha256:53cc87f8844279c22c571f11cb764468abcf4a135b6e8d9b441ae2832cb287cd","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),21:InterventionsExchange),37:FiniteInterventionSequenceCommutation),37:finite_intervention_sequences_commute)","kind":"theorem"}]}

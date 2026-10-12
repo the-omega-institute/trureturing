@@ -1,1 +1,1 @@
-{"statement_id":"sha256:bf55c8bd048a51901d6e0210eacaa23f285eda469dbd147775527bd5b7cbe4f9"}
+{"statement_id":"sha256:bf55c8bd048a51901d6e0210eacaa23f285eda469dbd147775527bd5b7cbe4f9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:WeakAscent),28:WeakAscent215WeightedRenewal),16:weighted_renewal)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:WeakAscent),28:WeakAscent215WeightedRenewal),16:weighted_renewal),9:match_1_9)","kind":"def"}]}

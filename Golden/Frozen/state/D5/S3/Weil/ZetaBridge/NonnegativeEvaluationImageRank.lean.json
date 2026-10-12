@@ -1,1 +1,1 @@
-{"statement_id":"sha256:964c7ebfb34484ecd134ee34f79ea4d085458c8d72524c98ba25716ff66afd04"}
+{"statement_id":"sha256:964c7ebfb34484ecd134ee34f79ea4d085458c8d72524c98ba25716ff66afd04","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),10:ZetaBridge),30:NonnegativeEvaluationImageRank),43:nonnegative_evaluation_image_finrank_le_one)","kind":"theorem"}]}

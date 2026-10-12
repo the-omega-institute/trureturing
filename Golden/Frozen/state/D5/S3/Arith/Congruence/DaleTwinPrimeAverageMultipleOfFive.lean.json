@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9264c57bec85f950af494d31212fdcc1d5b023eb69197193c211edbeaa691d14"}
+{"statement_id":"sha256:9264c57bec85f950af494d31212fdcc1d5b023eb69197193c211edbeaa691d14","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),10:Congruence),34:DaleTwinPrimeAverageMultipleOfFive),12:dale_a177680)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),10:Congruence),34:DaleTwinPrimeAverageMultipleOfFive),8:IsMember)","kind":"def"}]}

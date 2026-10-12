@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c5b9dcadb283f18d45dc38848c61222007672bca83fdbe8687145220ab289b37"}
+{"statement_id":"sha256:c5b9dcadb283f18d45dc38848c61222007672bca83fdbe8687145220ab289b37","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),8:Solenoid),29:AllPrimeRegisterExactSequence),30:all_prime_register_short_exact)","kind":"theorem"}]}

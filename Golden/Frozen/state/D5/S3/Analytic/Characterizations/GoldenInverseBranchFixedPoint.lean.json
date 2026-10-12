@@ -1,1 +1,1 @@
-{"statement_id":"sha256:296a160c79b372e304965c1323d0f3edec3d3b7e1da8a9c15bfff38182e5cc23"}
+{"statement_id":"sha256:296a160c79b372e304965c1323d0f3edec3d3b7e1da8a9c15bfff38182e5cc23","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),17:Characterizations),29:GoldenInverseBranchFixedPoint),46:golden_inverse_branch_positive_fixed_point_iff)","kind":"theorem"}]}

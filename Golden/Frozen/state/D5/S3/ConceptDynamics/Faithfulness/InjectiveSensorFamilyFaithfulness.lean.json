@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7172194d569fdcebd183a2fdbcd5d23bdbad8466f9a09b43c0225489177d15be"}
+{"statement_id":"sha256:7172194d569fdcebd183a2fdbcd5d23bdbad8466f9a09b43c0225489177d15be","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),12:Faithfulness),33:InjectiveSensorFamilyFaithfulness),46:injective_member_makes_joint_readout_injective)","kind":"theorem"}]}

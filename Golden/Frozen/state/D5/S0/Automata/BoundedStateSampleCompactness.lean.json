@@ -1,1 +1,1 @@
-{"statement_id":"sha256:baddf66afccfbb5d506565eefff988516f1ba164cf140b53b4b8997b03372e82"}
+{"statement_id":"sha256:baddf66afccfbb5d506565eefff988516f1ba164cf140b53b4b8997b03372e82","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),8:Automata),29:BoundedStateSampleCompactness),32:bounded_state_sample_compactness)","kind":"theorem"}]}

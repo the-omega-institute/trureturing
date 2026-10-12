@@ -1,1 +1,1 @@
-{"statement_id":"sha256:29c1b74d5165a39906faea99992f19948a9dd51168eced455b962a52a7fc4f01"}
+{"statement_id":"sha256:29c1b74d5165a39906faea99992f19948a9dd51168eced455b962a52a7fc4f01","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),9:Residuals),24:InfiniteCompletionDefect),24:infiniteCompletionDefect)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),9:Residuals),24:InfiniteCompletionDefect),38:infinite_completion_defect_eq_zero_iff)","kind":"theorem"}]}

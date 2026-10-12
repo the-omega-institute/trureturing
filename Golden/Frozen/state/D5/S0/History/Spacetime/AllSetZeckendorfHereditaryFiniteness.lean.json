@@ -1,1 +1,1 @@
-{"statement_id":"sha256:765bc6c7baf75fb8a9af857d746fe139d3e41762cce8c80d2a9f5c82b8b5aa46"}
+{"statement_id":"sha256:765bc6c7baf75fb8a9af857d746fe139d3e41762cce8c80d2a9f5c82b8b5aa46","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:History),9:Spacetime),36:AllSetZeckendorfHereditaryFiniteness),12:enc_isHF_iff)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:History),9:Spacetime),36:AllSetZeckendorfHereditaryFiniteness),4:IsHF)","kind":"def"}]}

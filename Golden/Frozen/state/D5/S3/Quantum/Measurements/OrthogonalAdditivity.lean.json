@@ -1,1 +1,1 @@
-{"statement_id":"sha256:699b96312066e8049aaf9e5af1e8b49f1e8abeb448588b3a8721e83616d0dec2"}
+{"statement_id":"sha256:699b96312066e8049aaf9e5af1e8b49f1e8abeb448588b3a8721e83616d0dec2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),12:Measurements),20:OrthogonalAdditivity),18:SequentiallyNormal)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),12:Measurements),20:OrthogonalAdditivity),21:orthogonal_additivity)","kind":"theorem"}]}

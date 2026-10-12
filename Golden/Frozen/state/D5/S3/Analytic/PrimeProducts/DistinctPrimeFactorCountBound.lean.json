@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5f1675326eadcd6939bec12f21cf47affe5d64fed368ab9d08826f25523e023b"}
+{"statement_id":"sha256:5f1675326eadcd6939bec12f21cf47affe5d64fed368ab9d08826f25523e023b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),13:PrimeProducts),29:DistinctPrimeFactorCountBound),33:distinct_prime_factor_count_bound)","kind":"theorem"}]}

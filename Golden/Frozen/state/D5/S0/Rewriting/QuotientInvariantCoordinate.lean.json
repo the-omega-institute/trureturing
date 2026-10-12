@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e4d16e4cf36332d570cff790d67c0e39c6df0a019880e488ad362faf01b7bdc5"}
+{"statement_id":"sha256:e4d16e4cf36332d570cff790d67c0e39c6df0a019880e488ad362faf01b7bdc5","declarations":[{"declaration_name_key":"ns(ns(n0,27:QuotientInvariantCoordinate),39:quotient_invariant_coordinate_injective)","kind":"theorem"}]}

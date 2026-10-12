@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4213f93df48520b26c48ce67cd11e10214aa4ef435ef9c81a51fd5fbaee547a6"}
+{"statement_id":"sha256:4213f93df48520b26c48ce67cd11e10214aa4ef435ef9c81a51fd5fbaee547a6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),18:optimal_suffix_cut)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),22:suffix_cut_lower_bound)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8069d7cdadd33dd47dc48e1b56de8d361fd422b74e661c6cbe975881327a47be"}
+{"statement_id":"sha256:8069d7cdadd33dd47dc48e1b56de8d361fd422b74e661c6cbe975881327a47be","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),9:Transport),29:AdmissionValidityPreservation),35:validity_preserved_by_admission_map)","kind":"theorem"}]}

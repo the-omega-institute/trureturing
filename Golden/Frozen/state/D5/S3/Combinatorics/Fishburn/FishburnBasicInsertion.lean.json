@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9f2cc41bc66a2e81c5a185bb27bfd4e2928e2d20ebe795feab1ec33b12f7c24c"}
+{"statement_id":"sha256:9f2cc41bc66a2e81c5a185bb27bfd4e2928e2d20ebe795feab1ec33b12f7c24c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Fishburn),22:FishburnBasicInsertion),28:isFishburn_insertIdx_max_iff)","kind":"theorem"}]}

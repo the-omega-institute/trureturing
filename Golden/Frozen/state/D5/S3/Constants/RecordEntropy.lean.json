@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d18de800021a1e5480c4753b47710ba09cb3615158a811ae45027421d00b426c"}
+{"statement_id":"sha256:d18de800021a1e5480c4753b47710ba09cb3615158a811ae45027421d00b426c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),13:RecordEntropy),20:neg_mul_log_integral)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),13:RecordEntropy),24:haar_record_entropy_bits)","kind":"theorem"}]}

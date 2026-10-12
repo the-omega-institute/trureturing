@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d293cd212c84e5260d3404e91be6f87de76769b5d4b6570a3f22a5cac18317d7"}
+{"statement_id":"sha256:d293cd212c84e5260d3404e91be6f87de76769b5d4b6570a3f22a5cac18317d7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),12:ZetaAnalytic),18:ParityWeylInterval),20:parity_weyl_interval)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),12:ZetaAnalytic),18:ParityWeylInterval),20:parity_weyl_interval),9:match_1_3)","kind":"def"}]}

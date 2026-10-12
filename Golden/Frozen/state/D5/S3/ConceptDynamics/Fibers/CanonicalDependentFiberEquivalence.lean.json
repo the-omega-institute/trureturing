@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ac9f13f4f741c179902f655f2e0cdde324ce9c146f55fc8151274c8991d6edee"}
+{"statement_id":"sha256:ac9f13f4f741c179902f655f2e0cdde324ce9c146f55fc8151274c8991d6edee","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),6:Fibers),34:CanonicalDependentFiberEquivalence),26:whole_dependent_fiber_form)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),6:Fibers),34:CanonicalDependentFiberEquivalence),28:canonicalDependentFiberEquiv)","kind":"def"}]}

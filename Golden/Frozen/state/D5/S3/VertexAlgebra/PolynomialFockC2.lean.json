@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ea51febd5f608405f83afdb5d8dac0250d6f1e64b7b4fd5d5dc7076f27a241f7"}
+{"statement_id":"sha256:ea51febd5f608405f83afdb5d8dac0250d6f1e64b7b4fd5d5dc7076f27a241f7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),16:PolynomialFockC2),15:actual_c2_modes)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),16:PolynomialFockC2),2:C2)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),16:PolynomialFockC2),2:pi)","kind":"def"}]}

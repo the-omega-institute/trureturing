@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5fe391f82b5f4185b45ccf4f1eada11730943511aa11792605aee310a2561607"}
+{"statement_id":"sha256:5fe391f82b5f4185b45ccf4f1eada11730943511aa11792605aee310a2561607","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Estimation),14:DataProcessing),34:UniversalBeliefDecisionSufficiency),35:task_independent_belief_sufficiency)","kind":"theorem"}]}

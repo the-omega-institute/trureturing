@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6d553b45999a4a97b9a320e00593efa4c4ebe86b5fc874b1fda5756d3b502dbb"}
+{"statement_id":"sha256:6d553b45999a4a97b9a320e00593efa4c4ebe86b5fc874b1fda5756d3b502dbb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Fourier),15:ReductionKernel),16:reduction_kernel)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Fourier),15:ReductionKernel),23:reduction_kernel_golden)","kind":"theorem"}]}

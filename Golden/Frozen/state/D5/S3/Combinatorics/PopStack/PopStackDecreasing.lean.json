@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0837b4db1c08f98777aa926b5d12fc2264a4b3c7d01945f152ae4f406b302672"}
+{"statement_id":"sha256:0837b4db1c08f98777aa926b5d12fc2264a4b3c7d01945f152ae4f406b302672","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),18:PopStackDecreasing),26:decreasing_early_inflation)","kind":"theorem"}]}

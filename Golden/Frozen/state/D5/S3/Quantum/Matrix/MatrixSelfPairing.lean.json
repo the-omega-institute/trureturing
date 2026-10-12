@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2bf9e5e08e9959976ad30f1c9ad5c9e581bd25b2a14359e905b9c3708d0662c2"}
+{"statement_id":"sha256:2bf9e5e08e9959976ad30f1c9ad5c9e581bd25b2a14359e905b9c3708d0662c2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),6:Matrix),17:MatrixSelfPairing),35:matrix_self_pairing_and_nonnegative)","kind":"theorem"}]}

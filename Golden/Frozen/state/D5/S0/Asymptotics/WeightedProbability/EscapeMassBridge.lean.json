@@ -1,1 +1,1 @@
-{"statement_id":"sha256:70187d877512e588db1b838483cb6b1eba4e0a7457729ce4a6b427b801edf6a5"}
+{"statement_id":"sha256:70187d877512e588db1b838483cb6b1eba4e0a7457729ce4a6b427b801edf6a5","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Asymptotics),19:WeightedProbability),16:EscapeMassBridge),50:escapeMass_toReal_eq_one_address_escapeProbability)","kind":"theorem"}]}

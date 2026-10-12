@@ -1,1 +1,1 @@
-{"statement_id":"sha256:20ee362cd95c2127d36f5c1c035defadb2a39f7cf9d4a8221418e9702d7ebde8"}
+{"statement_id":"sha256:20ee362cd95c2127d36f5c1c035defadb2a39f7cf9d4a8221418e9702d7ebde8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S3),15:RenyiDivergence),54:renyi_divergence_product_additive_one_half_consistency)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:TotalVariation),13:Bhattacharyya),36:bhattacharyya_product_multiplicative)","kind":"theorem"}]}
