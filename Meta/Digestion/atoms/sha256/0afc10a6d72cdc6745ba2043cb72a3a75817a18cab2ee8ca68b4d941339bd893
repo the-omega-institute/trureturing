@@ -1,0 +1,13 @@
+**数学引文 27.9（额外统计动力学的适用条件）。**
+[热力学作用量卷 §§3–4、§9 及 §11.2.7](https://github.com/the-omega-institute/trureturing/blob/9622561ab8abd128c4fcd573e5224f809437d233/docs/develop/theory/AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md)
+承担关联质量作用流、熵与径向捕获的结论。有限 Gibbs 对数坐标要求
+严格正支撑，是无量纲统计参数；物理能量还须温度、单位及加性规范。
+关联 ODE 是供应的确定性均场质量作用合同，不能直接作为固定单系统
+Markov 生成元。零反应率、$r=1-Z=0$、四格零质量及熵导数各保留原域。
+径向归一化要求 $r_0>0$，实际速率 $\mu,\gamma\ge0$ 局部可积，
+解及微分方程分别按绝对连续与几乎处处理解；径向累计量为
+$M(t)=\int_0^t\mu(s)\,ds$，热化累计量为
+$G(t)=\int_0^t\gamma(s)r(s)\,ds$。径向消失与归一化关联趋于平衡
+使用各自的累计量；后者需要无限 $G$ 的必要性只用于初始关联非零的情形，
+初始平衡与 $r_0=0$ 顶点另列。Bell 重编码没有供应这些速率或时间参数。
+

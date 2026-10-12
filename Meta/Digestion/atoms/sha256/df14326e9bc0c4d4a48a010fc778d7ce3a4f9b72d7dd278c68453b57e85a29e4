@@ -1,0 +1,55 @@
+**定理 15.2（五边图的加权最小能量提升及钟比障碍）。** 在定义 2.1 的五边图上取 $M_V=I$，令
+
+$$
+r_i=1/w_i,\qquad P=r_1+r_3,\quad Q=r_2+r_4,\quad R=P+Q.
+$$
+
+固定边界概率曲线的一个可行导数为 $\dot p=v\mathbf d$，其中 $v=\dot\kappa\in\mathbb R$。则全部有符号提升为
+
+$$
+Bj=v\mathbf d\quad\Longleftrightarrow\quad
+j=j_0+\gamma\mathbf c,\qquad
+j_0=\frac vR(-Q,P,-Q,P,0),\quad \gamma\in\mathbb R.
+$$
+
+其规范循环系数、能量及非负条件为
+
+$$
+\begin{aligned}
+\gamma&=\frac{\mathbf c^{\mathsf T}W_E^{-1}j}{R},\qquad
+\mathbf c^{\mathsf T}W_E^{-1}j_0=0,\\
+\|j\|_{W_E^{-1}}^2&=v^2\frac{PQ}{R}+\gamma^2R,\\
+j\ge0&\quad\Longleftrightarrow\quad
+\gamma\ge\max\left(\frac{vQ}{R},-\frac{vP}{R}\right).
+\end{aligned}
+$$
+
+因此 $j_0$ 是唯一的最小能量有符号提升；非负提升的最小能量在 $v\ge0$ 时为 $v^2Q$，在 $v\le0$ 时为 $v^2P$。若 $v\ne0$，每个非负提升的循环系数严格为正。单位电导下
+
+$$
+j_0=\frac v2(-1,1,-1,1,0),\qquad
+\psi=v(1/5,-3/10,1/5,-3/10,1/5),\qquad j_0=B^{\mathsf T}\psi,
+$$
+
+且有符号与非负最小能量分别是 $v^2$、$2v^2$。
+
+一般正电导下存在势 $\psi$ 使 $j_0=W_EB^{\mathsf T}\psi$，唯一到加常数。取 $\varphi=-\psi$、$\alpha,N_{\rm ref}>0$，并声明节点钟率 $N_s=N_{\rm ref}e^{-\alpha\varphi_s}$，则
+
+$$
+-BW_EB^{\mathsf T}\varphi=v\mathbf d,\qquad
+\log\frac{N_{\operatorname{head}(e)}}{N_{\operatorname{tail}(e)}}
+=\alpha(W_E^{-1}j_0)_e.
+$$
+
+完整电流的电阻加权余链 $a=W_E^{-1}j$ 则满足
+
+$$
+\langle a,\mathbf c\rangle=\gamma R.
+$$
+
+当 $v\ne0$ 且 $j\ge0$ 时，它不能表示成任何标量节点函数的增量，特别不能表示成同校准节点钟率的对数比。这里的余链—循环配对是标量，$\gamma$ 是所选加权截面的循环系数；二者均不等同于状态坐标 $\kappa$。
+
+证明。定理 2.2 已给 $Bj=v\mathbf d$ 的全部解 $(a,a+v,a,a+v,0)$。电阻加权循环正交条件为 $aP+(a+v)Q=0$，所以 $a=-vQ/R$，得 $j_0$。余下解与它相差 $\gamma\mathbf c$；内积展开给能量式，其中 $\|j_0\|_{W_E^{-1}}^2=v^2PQ/R$、$\|\mathbf c\|_{W_E^{-1}}^2=R$。严格凸二次式给唯一最小值。四个坐标的非负性恰给所列下界；该下界非负，代入能量即得两种符号下的尖锐最小值。单位电导的势逐边差为 $j_0$ 且均值零。
+
+一般情形下 $W_E^{-1}j_0$ 湮灭 $\mathbf c$，故由数学引文 3.4 取得 $\psi$。取对数得到钟比，沿循环和为零；完整余链的循环配对是 $\gamma R$，用同一恰当性判据得到障碍。若导数被另解释为密度源，这是新指定的对应 $\sigma_{\rm in}=v\mathbf d$。上述提升首先是瞬时向量；若概率曲线为 $C^1$、四个方形起点质量在紧区间上严格正，且所选非负交通连续有界，则定理 2.4 的有限率构造适用，叶边率取零；零质量起点仍受定理 8.2 限制。它不恢复单条路径或赋予概率纤维外的导数可行性。∎
+
