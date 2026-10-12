@@ -73,4 +73,63 @@ def claim : Prop :=
       IsWeightedDesign k ρ p → ∀ E : Fin (Nprime d k + 1) → DensityState (Fin d),
         Discr k E ≤ Discr k (adjoin ρ hd)
 
+-- In the ordered three-qubit basis, the rightmost tensor factor is the low bit.
+private def bit (i : Fin 8) (t : Fin 3) : Fin 2 := finFunctionFinEquiv.symm i t
+
+private theorem tensor23 (A : Matrix (Fin 2) (Fin 2) ℂ) (i j : Fin 8) :
+    tensorPow 3 A i j = A (bit i 2) (bit j 2) * A (bit i 1) (bit j 1) *
+      A (bit i 0) (bit j 0) := by
+  simp only [tensorPow, bit, Fin.prod_univ_succ, Fin.prod_univ_zero, mul_one, Fin.succ_zero_eq_one, Fin.reduceSucc]
+  ring
+
+private def weight : Fin 8 → ℕ := ![0,1,1,2,1,2,2,3]
+
+private def P8 : Matrix (Fin 8) (Fin 8) ℂ :=
+  fun i j => if weight i = weight j then
+    if weight i = 0 ∨ weight i = 3 then 1 else 1 / 3 else 0
+
+set_option maxHeartbeats 4000000 in
+-- Kernel reduction enumerates all permutations of the three-element type.
+private theorem perms3 : (Finset.univ : Finset (Equiv.Perm (Fin 3))) =
+    {1, Equiv.swap 0 1, Equiv.swap 0 2, Equiv.swap 1 2,
+      Equiv.swap 0 1 * Equiv.swap 1 2, Equiv.swap 1 2 * Equiv.swap 0 1} := by
+  decide
+
+private theorem bit_table (i : Fin 8) (t : Fin 3) : bit i t =
+    (![![0,0,0],![1,0,0],![0,1,0],![1,1,0],![0,0,1],![1,0,1],![0,1,1],![1,1,1]] :
+      Fin 8 → Fin 3 → Fin 2) i t := by
+  fin_cases i <;> fin_cases t <;> rfl
+
+private theorem permOp23 (σ : Equiv.Perm (Fin 3)) (i j : Fin 8) :
+    permOp 2 3 σ i j = if (fun t => bit i t) = (fun t => bit j (σ t)) then 1 else 0 := rfl
+
+private theorem sum_perms3 (f : Equiv.Perm (Fin 3) → ℂ) :
+    ∑ σ, f σ = f 1 + f (Equiv.swap 0 1) + f (Equiv.swap 0 2) +
+      f (Equiv.swap 1 2) + f (Equiv.swap 0 1 * Equiv.swap 1 2) +
+      f (Equiv.swap 1 2 * Equiv.swap 0 1) := by
+  rw [perms3]
+  simp (disch := decide) only [Finset.sum_insert, Finset.sum_singleton]
+  ring
+
+set_option maxHeartbeats 2000000 in
+-- The symmetriser certificate checks all 64 entries.
+private theorem piSym23 : PiSym 2 3 = P8 := by
+  classical
+  unfold PiSym
+  ext i j
+  simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sum_apply]
+  rw [sum_perms3]
+  have h01 : (0 : Fin 3) ≠ 1 := by decide
+  have h02 : (0 : Fin 3) ≠ 2 := by decide
+  have h12 : (1 : Fin 3) ≠ 2 := by decide
+  have hb : (0 : Fin 2) ≠ 1 := by decide
+  fin_cases i <;> fin_cases j <;>
+    norm_num [permOp23, bit_table, P8, weight, Matrix.smul_apply, Matrix.sum_apply,
+      Function.comp_def, Matrix.cons_val_two,
+      funext_iff, Fin.forall_fin_succ, Equiv.swap_apply_def, Equiv.Perm.mul_apply, Fin.reduceSucc,
+      h01, h02, h12, hb, Ne.symm h01, Ne.symm h02, Ne.symm h12, Ne.symm hb]
+
+private theorem trace_P8 : trace P8 = 4 := by
+  norm_num [trace, P8, weight, Fin.sum_univ_succ]
+
 end D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
