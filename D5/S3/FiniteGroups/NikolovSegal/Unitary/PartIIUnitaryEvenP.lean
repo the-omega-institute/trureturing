@@ -27,8 +27,6 @@ private theorem left_val (i : Fin d) : (left i).val=i.val := rfl
 private theorem right_val (i : Fin d) : (right i).val=d+(d-(i.val+1)) := rfl
 private theorem left_inj : Function.Injective (left : Fin d → Fin (2*d)) :=
   (evenLabel d).injective.comp Sum.inl_injective
-private theorem right_inj : Function.Injective (right : Fin d → Fin (2*d)) :=
-  (evenLabel d).injective.comp Sum.inr_injective
 private theorem right_ne_left (i j : Fin d) : right i≠left j := by
   intro he
   have hh := (evenLabel d).injective he

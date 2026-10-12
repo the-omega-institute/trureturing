@@ -9,13 +9,6 @@ internal sealed class PartIIUnitaryIntrinsicGraphProductDocument : IScribeDocume
         H("Part IIUnitary Intrinsic Graph Product"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("unitary-partiiunitaryintrinsicgraphproduct-finite-field-automorphism-commutes"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicGraphProduct.finite_field_automorphism_commutes"),
-                H("finite field automorphism commutes"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized finite field automorphism commutes statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("unitary-partiiunitaryintrinsicgraphproduct-actual-raw-graph-is-field"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicGraphProduct.actual_raw_graph_is_field"),
                 H("actual raw graph is field"), StatementSource.WithoutFormula(),
@@ -35,20 +28,6 @@ internal sealed class PartIIUnitaryIntrinsicGraphProductDocument : IScribeDocume
                 H("actual graph action"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The parameterized actual graph action statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("unitary-partiiunitaryintrinsicgraphproduct-actual-uniform-intrinsic-graph-positive-q-over-e-product"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicGraphProduct.actual_uniform_intrinsic_graph_positive_q_over_e_product"),
-                H("actual uniform intrinsic graph positive q over e product"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized actual uniform intrinsic graph positive q over e product statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("unitary-partiiunitaryintrinsicgraphproduct-actual-uniform-intrinsic-graph-negative-q-over-e-product"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicGraphProduct.actual_uniform_intrinsic_graph_negative_q_over_e_product"),
-                H("actual uniform intrinsic graph negative q over e product"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized actual uniform intrinsic graph negative q over e product statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Paragraph(Text("The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.")))));
 }

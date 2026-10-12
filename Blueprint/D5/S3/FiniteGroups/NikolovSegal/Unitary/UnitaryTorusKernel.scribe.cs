@@ -22,12 +22,5 @@ internal sealed class UnitaryTorusKernelDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The parameterized regular odd unitary torus statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("unitary-unitarytoruskernel-prescribed-norm-even-torus"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryTorusKernel.prescribed_norm_even_torus"),
-                H("prescribed norm even torus"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized prescribed norm even torus statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
             Paragraph(Text("The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.")))));
 }

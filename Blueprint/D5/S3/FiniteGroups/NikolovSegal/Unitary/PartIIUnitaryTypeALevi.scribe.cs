@@ -23,13 +23,6 @@ internal sealed class PartIIUnitaryTypeALeviDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The parameterized actual typeA levi entry statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("unitary-partiiunitarytypealevi-actual-typea-levi-injective"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_injective"),
-                H("actual typeA levi injective"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized actual typeA levi injective statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("unitary-partiiunitarytypealevi-actual-typea-levi-unitary"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_unitary"),
                 H("actual typeA levi unitary"), StatementSource.WithoutFormula(),

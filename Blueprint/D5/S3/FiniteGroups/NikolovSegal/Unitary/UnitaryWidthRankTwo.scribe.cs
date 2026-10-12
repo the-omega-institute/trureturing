@@ -29,12 +29,5 @@ internal sealed class UnitaryWidthRankTwoDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Degenerate ranks remain literal actual SU groups."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("unitary-unitarywidthranktwo-ranktwo-alternating-25"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.rankTwo_alternating_25"),
-                H("rankTwo alternating 25"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The desired literal ordered Fin25 endpoint, fully closed on the rank-two base."))),
-                DescribeRole.Theorem),
             Paragraph(Text("The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.")))));
 }

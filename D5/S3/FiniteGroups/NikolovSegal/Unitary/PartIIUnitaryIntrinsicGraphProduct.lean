@@ -20,11 +20,6 @@ open UnitaryField UnitarySylow PartIIUnitaryIntrinsicPrescribedProduct
 universe u
 variable {F : Type u} [Field F] [Finite F] {n : ℕ}
 
-theorem finite_field_automorphism_commutes (ι phi : RingAut F)
-    (hinv : Function.Involutive ι) (hne : ι≠RingEquiv.refl F) (x : F) :
-    ι (phi x)=phi (ι x) := by
-  rw [involution_eq_pow ι hinv hne,involution_eq_pow ι hinv hne,map_pow]
-
 theorem actual_raw_graph_is_field (ι : RingAut F) (hinv : Function.Involutive ι)
     (g : specialUnitary n ι) : (unitAction% rawGraph) g.val=fieldAut ι g.val := by
   apply SpecialLinearGroup.ext
@@ -58,41 +53,5 @@ theorem actual_graph_action (ι phi : RingAut F) (hinv : Function.Involutive ι)
     intro i j
     rw [unitOdd% diagonal_entry]
     exact actual_action_entry ι (ι.trans phi) hinv hne a c ha g i j
-
-theorem actual_uniform_intrinsic_graph_positive_q_over_e_product (q : ℕ) (hq : 0<q) :
-    ∃ N C : ℕ, 0<N ∧ ∀ (F : Type u) [Field F] [Fintype F] [DecidableEq F],
-      C<Fintype.card F → ∀ (ι : RingAut F) (hinv : Function.Involutive ι) (hne : ι≠RingEquiv.refl F),
-      ∀ n : ℕ, 6≤n → ∀ (a : Fin N → Fin n → Fˣ) (c : Fin N → (fixedField ι)ˣ),
-      ∀ ha : ∀ j i, ι (a j i:F)*(a j i.rev:F)=((c j:fixedField ι):F),
-      ∀ (phi : Fin N → RingAut F) (eps : Fin N → Bool) (e : Fin N → ℕ), (∀ j, 0<e j ∧ e j∣q) →
-      ∃ y : Fin N → specialUnitary n ι,
-        ∀ b : specialUnitary n ι, LayerDepth 1 (b.val.val-1) →
-          ∃ x : Fin N → specialUnitary n ι,
-            (∀ j, LayerDepth 1 ((x j).val.val-1)) ∧
-            orderedProduct (fun j => (x j)⁻¹*
-              ((graphAction ι (phi j) hinv hne (a j) (c j) (ha j) (eps j)*MulAut.conj (y j)⁻¹)^(q/e j)) (x j))=b := by
-  obtain ⟨N,C,hN,hcover⟩ := actual_uniform_intrinsic_positive_q_over_e_product q hq
-  refine ⟨N,C,hN,?_⟩
-  intro F _ _ _ hF ι hinv hne n hn a c ha phi eps e he
-  exact hcover F hF ι hinv hne n hn a c ha
-    (fun j => if eps j then ι.trans (phi j) else phi j) e he
-
-theorem actual_uniform_intrinsic_graph_negative_q_over_e_product (q : ℕ) (hq : 0<q) :
-    ∃ N C : ℕ, 0<N ∧ ∀ (F : Type u) [Field F] [Fintype F] [DecidableEq F],
-      C<Fintype.card F → ∀ (ι : RingAut F) (hinv : Function.Involutive ι) (hne : ι≠RingEquiv.refl F),
-      ∀ n : ℕ, 6≤n → ∀ (a : Fin N → Fin n → Fˣ) (c : Fin N → (fixedField ι)ˣ),
-      ∀ ha : ∀ j i, ι (a j i:F)*(a j i.rev:F)=((c j:fixedField ι):F),
-      ∀ (phi : Fin N → RingAut F) (eps : Fin N → Bool) (e : Fin N → ℕ), (∀ j, 0<e j ∧ e j∣q) →
-      ∃ y : Fin N → specialUnitary n ι,
-        ∀ b : specialUnitary n ι, SLnUnipotentWidth.Lower b.val →
-          ∃ x : Fin N → specialUnitary n ι,
-            (∀ j, SLnUnipotentWidth.Lower (x j).val) ∧
-            orderedProduct (fun j => (x j)⁻¹*
-              ((graphAction ι (phi j) hinv hne (a j) (c j) (ha j) (eps j)*MulAut.conj (y j)⁻¹)^(q/e j)) (x j))=b := by
-  obtain ⟨N,C,hN,hcover⟩ := actual_uniform_intrinsic_negative_q_over_e_product q hq
-  refine ⟨N,C,hN,?_⟩
-  intro F _ _ _ hF ι hinv hne n hn a c ha phi eps e he
-  exact hcover F hF ι hinv hne n hn a c ha
-    (fun j => if eps j then ι.trans (phi j) else phi j) e he
 
 end NikolovSegal.PartIIUnitaryIntrinsicGraphProduct

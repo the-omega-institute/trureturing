@@ -74,22 +74,4 @@ theorem trivial_four_factor {n : ℕ} [Subsingleton (Fin n)]
       Positive a ∧ Negative b ∧ Positive c ∧ Negative d ∧ a*b*c*d=g := by
   exact ⟨1,1,1,1,positive_one,negative_one,positive_one,negative_one,Subsingleton.elim _ _⟩
 
-/-- The desired literal ordered Fin25 endpoint, fully closed on the rank-two base. -/
-theorem rankTwo_alternating_25 (hinv : Function.Involutive ι)
-    (hne : ι≠RingEquiv.refl F) (g : specialUnitary 2 ι) :
-    ∃ a : Fin 25 → specialUnitary 2 ι,
-      (∀ j, if j.val % 2 = 0 then
-        ∀ r c : Fin 2, c.val < r.val+1 → ((a j).val.val-1) r c=0
-      else ∀ r c : Fin 2, r.val < c.val+1 → ((a j).val.val-1) r c=0) ∧
-      (List.ofFn a).prod=g := by
-  obtain ⟨a,b,c,d,ha,hb,hc,hd,hprod⟩ := rankTwo_four_factor hinv hne g
-  let f : Fin 25 → specialUnitary 2 ι :=
-    ![a,b,c,d,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-  refine ⟨f,?_,?_⟩
-  · intro j
-    fin_cases j
-    all_goals first | exact ha | exact hb | exact hc | exact hd |
-      exact (positive_one (F:=F) (n:=2) (ι:=ι)) | exact (negative_one (F:=F) (n:=2) (ι:=ι))
-  · simpa [f,List.ofFn_succ,mul_assoc] using hprod
-
 end NikolovSegal.UnitaryWholeGroupWidth

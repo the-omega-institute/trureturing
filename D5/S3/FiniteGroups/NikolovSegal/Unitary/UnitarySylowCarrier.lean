@@ -65,15 +65,6 @@ theorem mem_positiveU_iff (g : specialUnitary n ι) :
     g ∈ positiveU n ι ↔ LayerDepth 1 (g.val.val-1) :=
   unitriangular_iff_depth g.val
 
-theorem positiveU_map_subtype :
-    (positiveU n ι).map (specialUnitary n ι).subtype = unitaryUpper ι := by
-  ext g
-  constructor
-  · rintro ⟨h,hh,rfl⟩
-    exact ⟨(unitriangular_iff_depth h.val).mp hh,h.prop⟩
-  · rintro ⟨hg,hs⟩
-    exact ⟨⟨g,hs⟩,(unitriangular_iff_depth g).mpr hg,rfl⟩
-
 /-- P-group recognition reuses the accepted actual SLn theorem by injection. -/
 theorem positiveU_isPGroup [Fintype F] (p : ℕ) [Fact p.Prime] [CharP F p]
     (n : ℕ) (ι : RingAut F) : IsPGroup p (positiveU n ι) :=

@@ -43,19 +43,5 @@ internal sealed class UnitaryPositiveSylowDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Genuine native Sylow with exactly the actual positive-unitriangular SU carrier."))),
                 DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("unitary-unitarypositivesylow-positiveusylow-tosubgroup"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.positiveUSylow_toSubgroup"),
-                H("positiveUSylow toSubgroup"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized positiveUSylow toSubgroup statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("unitary-unitarypositivesylow-exists-positiveu-sylow"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.exists_positiveU_sylow"),
-                H("exists positiveU sylow"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized exists positiveU sylow statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
             Paragraph(Text("The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.")))));
 }

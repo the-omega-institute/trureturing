@@ -65,13 +65,6 @@ internal sealed class UnitaryWidthRadicalNormalizationDocument : IScribeDocument
                 Blocks(Paragraph(Text("The parameterized upRadical inv statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("unitary-unitarywidthradicalnormalization-downradical-inv"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.downRadical_inv"),
-                H("downRadical inv"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized downRadical inv statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("unitary-unitarywidthradicalnormalization-positive-levi-radical"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.positive_levi_radical"),
                 H("positive levi radical"), StatementSource.WithoutFormula(),

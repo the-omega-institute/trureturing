@@ -55,19 +55,4 @@ theorem regular_odd_unitary_torus (ι : F ≃+* F)
   exact ⟨u, oddDiagonal ι (positiveWeight d) u, rfl, hU, hnorm, hsep,
     actual_powered_conjugation _ _ s⟩
 
-/- Surjectivity of the actual norm coordinate of the four-dimensional torus.
-The supplied norm is realized in an honest determinant-one Hermitian diagonal. -/
-theorem prescribed_norm_even_torus (ι : F ≃+* F)
-    (hinv : Function.Involutive ι) (hne : ι ≠ RingEquiv.refl F)
-    (t : (fixedField ι)ˣ) :
-    ∃ u : Fˣ, ∃ D : SpecialLinearGroup (Fin 2 ⊕ Fin 2) F,
-      D.val = diagonal (fun i => (pairedEntries ι (evenWeight 0) u i : F)) ∧
-      adjoint ι D.val * hermitianForm (pairSwap 2) * D.val = hermitianForm (pairSwap 2) ∧
-      D.val (.inl 0) (.inl 0) * ι (D.val (.inl 0) (.inl 0)) = (t : fixedField ι) := by
-  obtain ⟨u, hu⟩ := norm_units_surjective ι hinv hne t
-  refine ⟨u, evenDiagonal ι (evenWeight 0) (evenWeight_sum 0) u,
-    rfl, evenDiagonal_unitary ι hinv _ _ u, ?_⟩
-  have he : evenWeight 0 (0 : Fin 2) = 1 := rfl
-  simpa only [evenDiagonal, diagonalSL, diagonal_apply_eq, pairedEntries, he, zpow_one] using hu
-
 end NikolovSegal.UnitaryField

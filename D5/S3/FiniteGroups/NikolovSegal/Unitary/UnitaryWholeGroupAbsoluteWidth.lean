@@ -8,7 +8,6 @@
 
 import D5.S3.FiniteGroups.NikolovSegal.Unitary.UnitaryWidthFiveAbsorption
 import D5.S3.FiniteGroups.NikolovSegal.Unitary.UnitaryWidthRankThree
-import D5.S3.FiniteGroups.NikolovSegal.Unitary.UnitaryWidthTrivialRanks
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

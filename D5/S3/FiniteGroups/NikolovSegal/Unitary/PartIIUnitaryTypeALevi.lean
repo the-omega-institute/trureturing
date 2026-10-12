@@ -54,14 +54,6 @@ theorem actual_typeA_levi_entry (ι : RingAut F) (g : SpecialLinearGroup (Fin d)
       fromBlocks g.val 0 0 (lower ι g).val i j := by
   simp [embed,SLnUnipotentWidth.reindexSL,pairEmbed,Matrix.reindex_apply,Matrix.submatrix_apply]
 
-theorem actual_typeA_levi_injective (ι : RingAut F) : Function.Injective (embed (d:=d) ι) := by
-  intro g h he
-  apply SpecialLinearGroup.ext
-  intro i j
-  have hh := congrArg (fun a : SpecialLinearGroup (Fin (2*d)) F =>
-    a (evenLabel d (.inl i)) (evenLabel d (.inl j))) he
-  simpa only [actual_typeA_levi_entry,fromBlocks_apply₁₁] using hh
-
 theorem actual_typeA_levi_unitary (ι : RingAut F) (hinv : Function.Involutive ι)
     (g : SpecialLinearGroup (Fin d) F) : steinberg ι (embed ι g)=embed ι g := by
   have he : ∀ i j : Fin d⊕Fin d,

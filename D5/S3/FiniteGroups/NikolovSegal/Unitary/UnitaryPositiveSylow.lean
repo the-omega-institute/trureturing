@@ -81,13 +81,4 @@ noncomputable def positiveUSylow (p : ℕ) [Fact p.Prime] [CharP F p]
          isPGroup' := positiveU_isPGroup p n ι
          is_maximal' := fun {Q} hQ hU => positiveU_maximal p n ι hinv hne Q hQ hU}
 
-theorem positiveUSylow_toSubgroup (p : ℕ) [Fact p.Prime] [CharP F p]
-    (n : ℕ) (ι : RingAut F) (hinv : Function.Involutive ι) (hne : ι ≠ RingEquiv.refl F) :
-    (positiveUSylow p n ι hinv hne).toSubgroup = positiveU n ι := rfl
-
-theorem exists_positiveU_sylow (p : ℕ) [Fact p.Prime] [CharP F p]
-    (n : ℕ) (ι : RingAut F) (hinv : Function.Involutive ι) (hne : ι ≠ RingEquiv.refl F) :
-    ∃ P : Sylow p (specialUnitary n ι), P.toSubgroup = positiveU n ι :=
-  ⟨positiveUSylow p n ι hinv hne,rfl⟩
-
 end NikolovSegal.UnitarySylow

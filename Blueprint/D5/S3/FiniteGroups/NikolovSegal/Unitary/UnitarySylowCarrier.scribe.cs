@@ -37,13 +37,6 @@ internal sealed class UnitarySylowCarrierDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The parameterized mem positiveU iff statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("unitary-unitarysylowcarrier-positiveu-map-subtype"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU_map_subtype"),
-                H("positiveU map subtype"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized positiveU map subtype statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("unitary-unitarysylowcarrier-positiveu-ispgroup"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU_isPGroup"),
                 H("positiveU isPGroup"), StatementSource.WithoutFormula(),
