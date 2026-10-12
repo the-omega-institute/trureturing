@@ -2,6 +2,7 @@ import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
 
 open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
@@ -497,3 +498,114 @@ def actual_uniform_family_margin_iff_registration :
 #print axioms actual_uniform_family_margin_iff_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal29
+
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal21
+noncomputable section
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature (Bool → List Label)
+    (fun _ => ℕ) (fun _ => ℝ)
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ U L => canonicalReturnLo U L) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => phi + 1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀
+    (o : Ownership) (s1 s2 : Guard) (P Q : List Label) (h : List Color)
+    (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
+    (hPlen : P.length = h.length)
+    (U V : Bool → List Label) (W : Bool → List Color)
+    (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
+    (hVlen : ∀ i, (V i).length = L)
+    (hlegal : ∀ i, LegalWord s1 s1 (U i)) (hV : ∀ i, LegalWord s2 s2 (V i))
+    (hdifferent : U false ≠ U true) (hcolors : ∀ i, (U i).length = (W i).length),
+    let θ := familyEndpointBudget P Q h U V W L
+    0 ≤ θ ∧ (familyEndpointCosts P Q h U V W L).length = 2*h.length+4*L ∧
+    EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) Q h ∧
+    (∀ i, EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) (V i) (W i)) ∧
+    ∃ (e : Guard) (w : List Label), LegalWord s1 e w ∧
+      r.readout () U L < coordinate w 0 ∧ coordinate w 0 < canonicalReturnHi U L ∧
+      ∀ zs : List Bool,
+        OperationRecord o θ .closed (address ((P ++ choiceBlocks U zs) ++ w))
+          (recordWithTail o (h ++ choiceBlocks W zs) w) ∧
+        OperationFiniteSource (address ((P ++ choiceBlocks U zs) ++ w)) ∧
+        ∀ p, recordWithTail o (h ++ choiceBlocks W zs) w
+          ((h ++ choiceBlocks W zs).length+p) = observe o (coordinate w p) 0
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  let U : Bool → List Label := fun i => if i then [.L2] else [.L0]
+  have result := h (fun _ => false) .G0 .G0 [] [] [] rfl rfl rfl
+    U (fun _ => [.L0]) (fun _ => [(0 : Color)]) 1 (by decide)
+    (by intro i; cases i <;> rfl) (by intro i; rfl)
+    (by intro i; cases i <;> rfl) (by intro i; rfl)
+    (by decide) (by intro i; cases i <;> rfl)
+  obtain ⟨e, w, hw, lower, _⟩ := result.2.2.2.2
+  obtain ⟨path, h0, _, support, _⟩ := literal_address_path .G0 e w hw
+  have upper := (support 0).2
+  rw [h0] at upper
+  change coordinate w 0 ≤ phi at upper
+  change phi + 1 < coordinate w 0 at lower
+  linarith
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_high_fixed_finite_tail) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_high_fixed_finite_tail,
+    rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence :=
+    Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal46.evidence.dependence
+
+def canonical_high_fixed_finite_tail_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_high_fixed_finite_tail)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ U L => canonicalReturnLo U L) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal21.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal21.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ U L => canonicalReturnLo U L) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    definition := none
+    coordinates := #[9]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms canonical_high_fixed_finite_tail_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal21
