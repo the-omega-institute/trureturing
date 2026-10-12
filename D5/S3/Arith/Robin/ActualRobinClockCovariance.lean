@@ -115,7 +115,7 @@ private theorem relative_activation {b A A' x : ℝ}
   intro k _
   rw [← mul_sub, clipped_difference (g_antitone hA' horder)]
 
-private theorem g_has_deriv_at {t : ℝ} (ht : 1 < t) :
+theorem g_has_deriv_at {t : ℝ} (ht : 1 < t) :
     HasDerivAt g (-activationDensity t) t := by
   have ht0 : t ≠ 0 := ne_of_gt (by linarith)
   have hl0 : Real.log t ≠ 0 := ne_of_gt (Real.log_pos ht)
