@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Upstream finite-extension support for norm and trace. -/
-
 /-
 Attributed source: https://github.com/fukubillueda-web/epsilon_FML/blob/
 b91ad93900a5e6d9207a4e6166ac94bb3bbcf3ed/LanglandsFirstMainLemma/LocalField/Extension.lean
@@ -15,7 +14,6 @@ Modifications: repository import paths.
 The upstream namespace, theorem statements, normalization, and proof structure are
 retained. The pinned upstream distribution contains no NOTICE file.
 -/
-
 import D5.S3.Arith.CharacterSums.LanglandsFirstMainLemma.LocalField.ResidueField
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Algebra.Module.Compact
@@ -23,7 +21,6 @@ import Mathlib.RingTheory.Finiteness.Finsupp
 
 /-!
 # Finite extensions of nonarchimedean local fields
-
 This file exposes Mathlib's trace and norm, their continuous forms, conjugate multisets, and the
 elementary symmetric coefficients used in the manuscript's exact norm expansion.  It also proves
 that the upper valuation ring is finite over the lower valuation ring and derives the normalized
@@ -31,49 +28,40 @@ ramification, residue-degree, norm, and Galois-conjugation laws.
 -/
 
 noncomputable section
-
 namespace LanglandsFirstMainLemma
 
 open scoped BigOperators
 open scoped Topology
 open Polynomial
 open Filter
-
 section Trace
 
 variable (F K : Type*) [CommRing F] [CommRing K] [Algebra F K]
-
 /-- The field trace of a finite extension. -/
 noncomputable abbrev trace : K →ₗ[F] F := Algebra.trace F K
 
 @[simp]
 theorem trace_apply (x : K) : trace F K x = Algebra.trace F K x := rfl
-
 end Trace
 
 section Norm
-
 variable (F K : Type*) [CommRing F] [Ring K] [Algebra F K]
 
 /-- The field norm of a finite extension. -/
 noncomputable abbrev norm : K →* F := Algebra.norm F
-
 /-- The field norm restricted to unit groups. -/
 noncomputable abbrev normUnits : Kˣ →* Fˣ := Units.map (norm F K)
 
 @[simp]
 theorem norm_apply (x : K) : norm F K x = Algebra.norm F x := rfl
-
 @[simp]
 theorem coe_normUnits (u : Kˣ) : (normUnits F K u : F) = norm F K (u : K) := rfl
 
 end Norm
-
 section TraceNorm
 
 variable (F K : Type*) [Field F] [Field K] [Algebra F K]
   [Module.Free F K] [Module.Finite F K]
-
 omit [Module.Finite F K] in
 @[simp]
 theorem trace_algebraMap (x : F) :
@@ -85,11 +73,9 @@ omit [Module.Finite F K] in
 theorem norm_algebraMap (x : F) :
     norm F K (algebraMap F K x) = x ^ Module.finrank F K :=
   Algebra.norm_algebraMap x
-
 end TraceNorm
 
 section TraceNormTower
-
 variable (F K L : Type*) [Field F] [Field K] [Field L]
   [Algebra F K] [Algebra F L] [Algebra K L] [IsScalarTower F K L]
   [Module.Free F K] [Module.Finite F K]
@@ -98,20 +84,17 @@ variable (F K L : Type*) [Field F] [Field K] [Field L]
 /-- Field traces compose in a finite tower. -/
 theorem trace_trans (x : L) : trace F K (trace K L x) = trace F L x :=
   Algebra.trace_trace x
-
 omit [Module.Finite F K] [Module.Finite K L] in
 /-- Field norms compose in a finite tower. -/
 theorem norm_trans (x : L) : norm F K (norm K L x) = norm F L x :=
   Algebra.norm_norm
 
 end TraceNormTower
-
 section Conjugates
 
 /-- The conjugate of `x` selected by an embedding into an overfield. -/
 def conjugate {F K E : Type*} [Field F] [Field K] [Field E]
     [Algebra F K] [Algebra F E] (σ : K →ₐ[F] E) (x : K) : E := σ x
-
 /-- The multiset of all conjugates of `x` in an overfield, counted by embeddings. -/
 noncomputable def embeddingConjugates (F K E : Type*)
     [Field F] [Field K] [Field E] [Algebra F K] [Algebra F E]
@@ -121,7 +104,6 @@ noncomputable def embeddingConjugates (F K E : Type*)
 variable (F K E : Type*) [Field F] [Field K] [Field E]
   [Algebra F K] [Algebra F E] [FiniteDimensional F K]
   [Algebra.IsSeparable F K] [IsAlgClosed E]
-
 /-- A finite separable extension has one conjugate for each degree. -/
 @[simp]
 theorem embeddingConjugates_card (x : K) :
@@ -133,7 +115,6 @@ theorem embeddingConjugates_sum (x : K) :
     (embeddingConjugates F K E x).sum = algebraMap F E (trace F K x) := by
   rw [embeddingConjugates, ← Finset.sum_eq_multiset_sum]
   exact (trace_eq_sum_embeddings E (x := x)).symm
-
 /-- The norm is the product of all conjugates in an algebraically closed overfield. -/
 theorem embeddingConjugates_prod (x : K) :
     (embeddingConjugates F K E x).prod = algebraMap F E (norm F K x) := by
@@ -141,13 +122,11 @@ theorem embeddingConjugates_prod (x : K) :
   exact (Algebra.norm_eq_prod_embeddings F E x).symm
 
 end Conjugates
-
 section GaloisConjugates
 
 /-- The conjugate of `x` selected by an element of the Galois group. -/
 def galoisConjugate {F K : Type*} [Field F] [Field K] [Algebra F K]
     (σ : Gal(K/F)) (x : K) : K := σ x
-
 /-- The multiset of Galois conjugates, counted by automorphisms. -/
 noncomputable def galoisConjugates (F K : Type*) [Field F] [Field K] [Algebra F K]
     [FiniteDimensional F K] (x : K) : Multiset K :=
@@ -155,7 +134,6 @@ noncomputable def galoisConjugates (F K : Type*) [Field F] [Field K] [Algebra F 
 
 variable (F K : Type*) [Field F] [Field K] [Algebra F K]
   [FiniteDimensional F K] [IsGalois F K]
-
 /-- The cardinality of the Galois group is the extension degree. -/
 @[simp]
 theorem galoisConjugates_card (x : K) :
@@ -168,7 +146,6 @@ theorem galoisConjugates_sum (x : K) :
     (galoisConjugates F K x).sum = algebraMap F K (trace F K x) := by
   rw [galoisConjugates, ← Finset.sum_eq_multiset_sum]
   exact (trace_eq_sum_automorphisms x).symm
-
 /-- In a finite Galois extension, the norm is the product of the Galois conjugates. -/
 theorem galoisConjugates_prod (x : K) :
     (galoisConjugates F K x).prod = algebraMap F K (norm F K x) := by
@@ -198,7 +175,6 @@ theorem map_lmul_charpoly_eq_prod_galois [Infinite F] (x : K) :
       (∏ σ ∈ (Finset.univ : Finset Gal(K/F)), (X - C (σ x)))
   rw [Polynomial.eval_prod]
   simp
-
 omit [FiniteDimensional F K] [IsGalois F K] in
 /-- Trace is invariant under Galois conjugation. -/
 @[simp]
@@ -212,11 +188,9 @@ omit [FiniteDimensional F K] [IsGalois F K] in
 theorem norm_galoisConjugate (σ : Gal(K/F)) (x : K) :
     norm F K (σ x) = norm F K x :=
   Algebra.norm_eq_of_algEquiv σ x
-
 end GaloisConjugates
 
 section ElementarySymmetric
-
 variable (F K : Type*) [Field F] [Field K] [Algebra F K]
   [Module.Free F K] [Module.Finite F K]
 
@@ -227,7 +201,6 @@ noncomputable def elementarySymmetric (j : ℕ) (x : K) : F :=
   if j ≤ Module.finrank F K then
     (-1 : F) ^ j * ((Algebra.lmul F K x).charpoly.coeff (Module.finrank F K - j))
   else 0
-
 @[simp]
 theorem elementarySymmetric_of_finrank_lt {j : ℕ} (hj : Module.finrank F K < j) (x : K) :
     elementarySymmetric F K j x = 0 := by
@@ -238,7 +211,6 @@ theorem elementarySymmetric_zero (x : K) : elementarySymmetric F K 0 x = 1 := by
   rw [elementarySymmetric, if_pos (Nat.zero_le _), pow_zero, one_mul,
     Nat.sub_zero, ← LinearMap.charpoly_natDegree]
   exact (LinearMap.charpoly_monic (Algebra.lmul F K x)).coeff_natDegree
-
 @[simp]
 theorem elementarySymmetric_finrank (x : K) :
     elementarySymmetric F K (Module.finrank F K) x = norm F K x := by
@@ -258,7 +230,6 @@ private theorem trace_eq_neg_charpoly_coeff (x : K) :
     (Module.finrank_eq_card_basis b).symm
   rw [trace_apply, Algebra.trace_apply, LinearMap.trace_eq_matrix_trace F b,
     Matrix.trace_eq_neg_charpoly_coeff, LinearMap.charpoly_toMatrix, hcard]
-
 @[simp]
 theorem elementarySymmetric_one (x : K) :
     elementarySymmetric F K 1 x = trace F K x := by
@@ -283,7 +254,6 @@ private theorem elementarySymmetric_eq_sum_minors
     ← Algebra.leftMulMatrix_apply, Matrix.charpoly_coeff_eq_sum_minors _ j hjcard]
   rw [← mul_assoc, ← pow_add]
   simp [← two_mul]
-
 /-- The exact polynomial norm expansion, including the constant coefficient. -/
 theorem norm_one_add_eq_sum_elementarySymmetric (x : K) :
     norm F K (1 + x) =
@@ -323,7 +293,6 @@ theorem norm_one_add_eq_one_add_sum_elementarySymmetric (x : K) :
   rw [norm_one_add_eq_sum_elementarySymmetric, Finset.sum_range_succ',
     elementarySymmetric_zero]
   exact add_comm _ _
-
 /-- Every elementary symmetric coefficient is invariant under an `F`-automorphism of `K`. -/
 @[simp]
 theorem elementarySymmetric_galoisConjugate
@@ -363,7 +332,6 @@ private theorem algebraMap_elementarySymmetric_eq_esymm_galois_of_le
   change algebraMap F K (elementarySymmetric F K j x) = s.esymm j
   rw [elementarySymmetric, if_pos hj, map_mul, map_pow, map_neg, map_one,
     hcoeff, ← mul_assoc, ← pow_add, (Even.add_self j).neg_one_pow, one_mul]
-
 /-- For a finite Galois extension over an infinite field, the signed characteristic-polynomial
 coefficient `elementarySymmetric F K j x`, mapped to `K`, is the `j`th elementary symmetric
 function of the multiset of Galois conjugates of `x`. -/
@@ -380,14 +348,12 @@ theorem algebraMap_elementarySymmetric_eq_esymm_galois
     rfl
 
 end ElementarySymmetric
-
 section Topology
 
 variable (R S : Type*) [CommRing R] [CommRing S] [Algebra R S]
   [Module.Free R S] [Module.Finite R S]
   [TopologicalSpace R] [IsTopologicalRing R]
   [TopologicalSpace S] [IsModuleTopology R S]
-
 /-- The trace as a continuous additive homomorphism. -/
 noncomputable def continuousTrace : ContinuousAddMonoidHom S R :=
   ⟨(trace R S).toAddMonoidHom,
@@ -401,7 +367,6 @@ theorem continuous_norm : Continuous (norm R S : S → R) := by
     exact Algebra.norm_eq_matrix_det b x]
   exact (IsModuleTopology.continuous_of_linearMap
     (Algebra.leftMulMatrix b).toLinearMap).matrix_det
-
 /-- The norm as a continuous multiplicative homomorphism. -/
 noncomputable def continuousNorm : ContinuousMonoidHom S R :=
   ⟨norm R S, continuous_norm R S⟩
@@ -409,25 +374,21 @@ noncomputable def continuousNorm : ContinuousMonoidHom S R :=
 /-- The norm on unit groups as a continuous multiplicative homomorphism. -/
 noncomputable def continuousNormUnits : ContinuousMonoidHom Sˣ Rˣ :=
   ⟨normUnits R S, (continuous_norm R S).units_map (norm R S)⟩
-
 omit [Module.Free R S] [Module.Finite R S] in
 @[simp]
 theorem continuousTrace_apply (x : S) : continuousTrace R S x = trace R S x := rfl
 
 @[simp]
 theorem continuousNorm_apply (x : S) : continuousNorm R S x = norm R S x := rfl
-
 @[simp]
 theorem coe_continuousNormUnits (u : Sˣ) :
     (continuousNormUnits R S u : R) = norm R S (u : S) := rfl
 
 end Topology
-
 section ValuativeExtension
 
 variable (F K : Type*) [CommRing F] [Ring K] [ValuativeRel F] [ValuativeRel K]
   [Algebra F K] [ValuativeExtension F K]
-
 /-- A Mathlib valuative extension makes the canonical valuation on `K` an extension of the
 canonical valuation on `F`. -/
 instance valuativeExtensionHasExtension :
@@ -442,14 +403,12 @@ instance valuativeExtensionHasExtension :
     exact (ValuativeExtension.vle_iff_vle (A := F) (B := K) x y).symm
 
 end ValuativeExtension
-
 section ValuationRingFiniteness
 
 variable (F K : Type*) [Field F] [Field K]
   [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   [Algebra F K] [ValuativeExtension F K]
-
 /-- The algebra map of a valuative extension of nonarchimedean local fields is continuous. -/
 theorem continuous_algebraMap : Continuous (algebraMap F K) := by
   apply continuous_of_continuousAt_zero (algebraMap F K)
@@ -483,7 +442,6 @@ theorem continuous_algebraMap : Continuous (algebraMap F K) := by
   exact hlt.trans hn
 
 variable [Module.Finite F K]
-
 /-- A finite valuative extension of local fields carries its canonical finite-dimensional module
 topology. -/
 noncomputable instance localFieldExtensionIsModuleTopology : IsModuleTopology F K := by
@@ -512,7 +470,6 @@ theorem ringOfIntegers_moduleFinite :
   have hRange : (Set.range fun i => b i).Finite := Set.finite_range _
   letI : Module.Finite (ringOfIntegers F) L :=
     Module.Finite.span_of_finite (ringOfIntegers F) hRange
-
   have hcoord (i : Module.Free.ChooseBasisIndex F K) : Continuous (b.coord i) := by
     exact IsModuleTopology.continuous_of_linearMap (b.coord i)
   let S : Set K := ⋂ i, (b.coord i) ⁻¹' (ringOfIntegers F : Set F)
@@ -561,7 +518,6 @@ theorem ringOfIntegers_moduleFinite :
     apply Submodule.fg_of_fg_map_injective f hf
     exact IsNoetherian.noetherian _
   letI : Module.Finite (ringOfIntegers F) N := ⟨hNfg⟩
-
   have hNopen : IsOpen (N : Set (ringOfIntegers K)) := by
     change IsOpen (Subtype.val ⁻¹' (L : Set K))
     exact hLopen.preimage continuous_subtype_val
@@ -583,11 +539,9 @@ theorem ringOfIntegers_isIntegralClosure :
   letI : Module.Finite (ringOfIntegers F) (ringOfIntegers K) :=
     ringOfIntegers_moduleFinite F K
   infer_instance
-
 end ValuationRingFiniteness
 
 section IntegralOrder
-
 variable (K : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
@@ -604,7 +558,6 @@ private theorem ord_coe_unit_eq_zero (u : (ringOfIntegers K)ˣ) :
   · rw [← ord_one K, ord_le_ord_iff]
     rw [Valuation.Compatible.vle_iff_le (v := ValuativeRel.valuation K)]
     simp [huval]
-
 private theorem ord_coe_irreducible_eq_one
     {ϖ : ringOfIntegers K} (hϖ : Irreducible ϖ) :
     ord K (algebraMap (ringOfIntegers K) K ϖ) = 1 := by
@@ -635,11 +588,9 @@ private theorem ord_coe_eq_addVal_of_eq_nat
   rw [map_mul, map_pow, ord_mul, ord_pow, ord_coe_unit_eq_zero,
     ord_coe_irreducible_eq_one K hϖ, zero_add]
   simp
-
 end IntegralOrder
 
 section GaloisOrder
-
 variable (F K : Type*) [Field F] [Field K]
   [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
@@ -670,7 +621,6 @@ theorem galoisConjugate_mem_ringOfIntegers_iff (σ : Gal(K/F)) (x : K) :
     have := hmap σ.symm (σ x) hsx
     simpa using this
   · exact hmap σ x
-
 /-- Restriction of an `F`-automorphism to the canonical valuation ring. -/
 noncomputable def galoisIntegerEquiv (σ : Gal(K/F)) :
     ringOfIntegers K ≃+* ringOfIntegers K where
@@ -685,7 +635,6 @@ noncomputable def galoisIntegerEquiv (σ : Gal(K/F)) :
 @[simp]
 theorem coe_galoisIntegerEquiv (σ : Gal(K/F)) (y : ringOfIntegers K) :
     ((galoisIntegerEquiv F K σ y : ringOfIntegers K) : K) = σ (y : K) := rfl
-
 /-- Every `F`-automorphism of a finite local-field extension preserves normalized order. -/
 @[simp]
 theorem ord_galoisConjugate (σ : Gal(K/F)) (x : K) :
@@ -725,14 +674,12 @@ theorem ord_galoisConjugate (σ : Gal(K/F)) (x : K) :
       rw [hx', ord_mul, ord_zpow, hcoePi]
 
 end GaloisOrder
-
 section RamificationInvariants
 
 variable (F K : Type*) [Field F] [Field K]
   [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   [Algebra F K] [ValuativeExtension F K]
-
 /-- The residue-field map induced by a valuative extension of local fields. -/
 noncomputable abbrev extensionResidueMap : ResidueField F →+* ResidueField K :=
   algebraMap (ResidueField F) (ResidueField K)
@@ -741,7 +688,6 @@ noncomputable abbrev extensionResidueMap : ResidueField F →+* ResidueField K :
 noncomputable abbrev residueFieldAlgebraOfValuativeExtension :
     Algebra (ResidueField F) (ResidueField K) :=
   inferInstance
-
 /-- The canonical ideal-theoretic ramification index of `K/F`. -/
 noncomputable def ramificationIndex : ℕ :=
   (IsLocalRing.maximalIdeal (ringOfIntegers K)).ramificationIdx (ringOfIntegers F)
@@ -749,7 +695,6 @@ noncomputable def ramificationIndex : ℕ :=
 /-- The canonical ideal-theoretic residue (inertia) degree of `K/F`. -/
 noncomputable def residueDegree : ℕ :=
   (IsLocalRing.maximalIdeal (ringOfIntegers K)).inertiaDeg (ringOfIntegers F)
-
 private theorem ramificationIdx'_eq_factor_exponent
     (ϖF : ringOfIntegers F) (hϖF : Irreducible ϖF)
     (ϖK : ringOfIntegers K) (hϖK : Irreducible ϖK)
@@ -796,7 +741,6 @@ private theorem ramificationIndex_eq_factor_exponent
   have hOld := ramificationIdx'_eq_factor_exponent F K ϖF hϖF ϖK hϖK m u hy
   have hNew := Ideal.ramificationIdx'_eq_ramificationIdx p q hp0
   exact hNew.symm.trans hOld
-
 private theorem ord_algebraMap_irreducible
     (ϖF : ringOfIntegers F) (hϖF : Irreducible ϖF) :
     ord K (algebraMap F K (ϖF : F)) =
@@ -828,7 +772,6 @@ theorem residueDegree_eq_finrank_residueField :
   exact Ideal.inertiaDeg_eq_of_isMaximal
     (IsLocalRing.maximalIdeal (ringOfIntegers F))
     (IsLocalRing.maximalIdeal (ringOfIntegers K))
-
 /-- The residue degree of a valuative extension of local fields is positive. -/
 theorem residueDegree_pos : 0 < residueDegree F K := by
   rw [residueDegree_eq_finrank_residueField]
@@ -844,7 +787,6 @@ theorem ramificationIndex_pos : 0 < ramificationIndex F K := by
   have heq : Ideal.ramificationIdx' p q = ramificationIndex F K := by
     exact Ideal.ramificationIdx'_eq_ramificationIdx p q hp0
   exact Nat.pos_iff_ne_zero.mpr (heq ▸ hold)
-
 /-- The degree of a finite local-field extension is the product of its ramification index and
 residue degree. -/
 theorem finrank_eq_ramificationIndex_mul_residueDegree
@@ -869,7 +811,6 @@ comparisons of normalized orders. -/
 theorem ord_algebraMap_le_iff (x y : F) :
     ord K (algebraMap F K x) ≤ ord K (algebraMap F K y) ↔ ord F x ≤ ord F y := by
   rw [ord_le_ord_iff, ValuativeExtension.vle_iff_vle, ← ord_le_ord_iff]
-
 /-- Strict comparisons of normalized orders are also preserved by the algebra map. -/
 theorem ord_algebraMap_lt_iff (x y : F) :
     ord K (algebraMap F K x) < ord K (algebraMap F K y) ↔ ord F x < ord F y := by
@@ -882,7 +823,6 @@ private theorem ord_algebraMap_eq_zero_of_ord_eq_zero
     simpa only [map_one, ord_one] using (ord_algebraMap_le_iff F K a 1).2 h
   · have h : ord F 1 ≤ ord F a := by simp [ha]
     simpa only [map_one, ord_one] using (ord_algebraMap_le_iff F K 1 a).2 h
-
 private theorem zsmul_natCast_comm (n : ℤ) (e : ℕ) :
     n • (e : WithTop ℤ) = e • (n : WithTop ℤ) := by
   cases n with
@@ -943,11 +883,9 @@ theorem ord_algebraMap (x : F) :
   rw [ord_algebraMap_eq_zero_of_ord_eq_zero F K _ huF,
     ord_algebraMap_irreducible F K ϖF hϖF, zero_add]
   exact zsmul_natCast_comm n (ramificationIndex F K)
-
 end RamificationInvariants
 
 section NormOrder
-
 variable (F K : Type*) [Field F] [Field K]
   [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
   [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
@@ -974,7 +912,6 @@ private theorem ord_norm_coe_unit (u : (ringOfIntegers K)ˣ) :
       (B := ringOfIntegers K) (u : ringOfIntegers K)
   rw [← hv]
   exact ord_coe_unit_eq_zero F v
-
 private theorem ord_norm_irreducible (piK : ringOfIntegers K)
     (hpiK : Irreducible piK) :
     ord F (Algebra.norm F (piK : K)) =
@@ -1058,7 +995,6 @@ theorem ord_norm (x : K) :
   rw [hx', map_mul, Algebra.norm_zpow, ord_mul, ord_zpow,
     ord_norm_coe_unit F K u, ord_norm_irreducible F K piK hpiK, zero_add]
   exact zsmul_natCast_comm n (residueDegree F K)
-
 end NormOrder
 
 end LanglandsFirstMainLemma
