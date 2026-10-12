@@ -40,3 +40,15 @@ a removable-slope extension of sinh at zero. The supplement's Theorem 6
 does not state that two-parameter limit or the repository's precise
 projection contract. This attribution concerns the classical geodesic
 formula, with no novelty claim for the underlying hyperbolic geometry.
+
+## Verified locator
+
+- Declared URL: https://proceedings.mlr.press/v80/ganea18a.html
+- Primary supplementary PDF:
+  https://proceedings.mlr.press/v80/ganea18a/ganea18a-supp.pdf
+- Verified passage: Appendix A, Theorem 6, equation (38), PDF page 1.
+  The unit-speed geodesic is stated on [0,1] and attributed there to
+  Robbin and Salamon (2011), equation (6.4.10).
+- Locator scope: the classical unit tangent geodesic formula. The global
+  metric-ray construction and unrestricted joint comparison-angle limit
+  are repository derivations within the exact application boundary above.
