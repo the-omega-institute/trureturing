@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Original affine link chains: exact interior and positive-side classes, strict-region saturation and restriction.
+Original affine link chains: exact point classes and strict-region restriction; compact Hausdorff quotient by ambient closed-relation reuse.
 
 **Definition 1.1 (The original whole-face permutations).**
 
@@ -232,8 +232,31 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 For every group, arbitrary right action, u and v, actual corner class nu, and original representatives x and y: an interior x has singleton class; an EdgePoint has exactly x and its distinct original paired image as its class; every strict component neighborhood is invariant under the full EqvGen; and restriction to that neighborhood reflects the full relation. The positive-side proof constructs a two-point invariant from the unique active guard and inverse pairing. It then inducts through all four EqvGen constructors. Saturation is established before the restriction proof, whose transitive case explicitly transports membership to the intermediate representative. These are new original-carrier deductions, not applications of an assumed cycle or assumed relation correspondence. The helpers are consumed on these live proof paths. The remaining local obligations are the four minimal point-period Fin(3r) enumerations, the exact origin-cycle and fan-seam correspondence, openness with the actual quotient-subspace topology, the supplied fan radial chart at the same actual vertex, and the geometric truncation-slice chain and topology comparison. Global orientability, genus, marked-manifold realization and metric statements remain outside this result. No external novelty is claimed.
 
+Application: compactness and Hausdorff separation of the full original link quotient. Let G be any group, let Omega be a finite set with the discrete topology, and let G act on the right on Omega, represented in Lean by MulAction Gᵐᵒᵖ Omega. Fix arbitrary u,v in G and nu in Vertex(pairing u v). Use `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Carrier` and `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Point` exactly as defined above: x=((omega,j),beta) has beta(j)=0, beta(i)>=0 for every i, sum beta=1, and label(pairing u v,(omega,j))=nu. The real coordinate space has its product topology, Point has the inherited subtype topology, and Q=Point/Related has the topology induced by its quotient projection. This Q is compact and Hausdorff.
+
+For the ambient application put I=Fin 4, T=Omega times Fin 4, Delta=stdSimplex R I, and X=T times Delta. Write raw((omega,j),beta)=((omega,j),beta) for forgetting the simplex proof, and embed:Point -> X for keeping the same tag and coordinates with their simplex membership. Set p_f=facePerm(f) and w_f=faceWord(u,v,f). For f different from j take next((omega,j),f)=(act(omega,w_f),p_f(j)) and sigma((omega,j),f)=p_f. For f=j take next((omega,j),f)=(omega,j) and sigma((omega,j),f)=id. If permute(rho,beta)(i)=beta(rho inverse(i)), define seam(a,b) by the existence of f with beta_a(f)=0 and b=(next(tag_a,f),permute(sigma(tag_a,f),beta_a)). Coordinate reindexing preserves Delta by nonnegativity and permutation invariance of the sum.
+
+The whole-face maps and words have the original source correspondence: frozen_face_data compares facePerm and faceWord with facePair and slotMap at every actual face slot. Thus a seam at f different from j is precisely the raw image in `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Step` with its original zero guard. A seam at f=j is the identity; it adds only reflexivity to the ambient equivalence closure, not another side identification. No change of action convention, endpoint order, or corner label enters this correspondence.
+
+Let C(a) mean raw(a) belongs to Carrier(u,v,nu). Every seam preserves C in both directions. Forward membership is the carrier property of pairedPoint. For a permitted move through f, the original perm_face identity gives reverseFace(f)=p_f(f), so reverseFace(f) differs from the target omitted corner p_f(j). Applying pairedPoint at that reverse face preserves the target carrier; the original move_inverse identity recovers raw(a). These are the private source facts already used by the original guarded-chain analysis. Identity seams preserve C immediately.
+
+To restrict whole ambient chains, define E(a,b) as the conjunction of C(a) iff C(b) and the assertion that, for every ha:C(a) and hb:C(b), Related(u,v,(raw(a),ha),(raw(b),hb)) holds. E is an equivalence relation: reflexivity and symmetry use the corresponding Related laws; transitivity composes the membership equivalences and the Related proofs. In the transitive case E(a,b), E(b,c), membership ha:C(a) supplies hb:C(b) through the first equivalence before the two subtype relations are composed. This does not assume that arbitrary ambient intermediate points already lie in Carrier.
+
+Each seam lies in E by the preceding membership fact and either Related reflexivity or the original Step constructor. Apply the pinned Relation.EqvGen.eqvGen_le from Mathlib.Logic.Relation with r=seam and r'=E: minimality of equivalence closure gives EqvGen(seam) <= E. Conversely the pullback R(x,y)=EqvGen(seam)(embed(x),embed(y)) is an equivalence relation by IsEquiv.comap, and every original Step lies in R by its displayed affine formula. The same eqvGen_le, now with r=Step and r'=R, gives Related <= R. Projecting the first application onto points of Carrier gives R <= Related. Hence Related(x,y) iff EqvGen(seam)(embed(x),embed(y)) for every pair in the entire original closed carrier.
+
+Apply `D5/S3/Geometry/Gluing/FiniteZeroGuardedClosure.uniform_transport_and_closed_relation` to these exact T,I,Delta,next,sigma. Its closed-relation component says that EqvGen(seam) is closed in X times X. The indexing states consist of two finite tags, a coordinate permutation and a finite zero footprint; finiteness concerns the family of closed pieces, not the set of related pairs. The continuous embed times embed pulls this closed relation back to the original Related set in Point times Point by the equivalence just established.
+
+Point is compact Hausdorff. Carrier is a closed subset of T times Delta: the omitted coordinate equation beta(j)=0 is closed because the finite discrete tag makes j locally constant, and the fixed label condition is closed in the discrete corner tags. The simplex supplies the nonnegative coordinates and sum equation. Finite T and the closed real standard simplex are compact, so their closed subset is compact by isCompact_stdSimplex and the closed-subset API. The ambient discrete tag and real product spaces are Hausdorff, and so is the subtype Point.
+
+Let q:Point -> Q be the original quotient map. For a closed subset A of Point, its saturation q inverse(q(A)) is the second projection of Related intersect (A times Point). This intersection is closed in the compact product Point times Point; its image is compact and therefore closed in Hausdorff Point. The quotient-topology criterion then makes q a closed map. Each fiber of q is the closed Related class of a representative and is compact. The pinned isProperMap_iff_isClosedMap_and_compact_fibers therefore makes q proper without presupposing that Q is Hausdorff.
+
+IsProperMap.prodMap makes q times q proper and hence closed. It is continuous and surjective, so IsClosedMap.isQuotientMap makes it a quotient map. Its inverse image of the diagonal of Q is exactly Related, already closed; the quotient-map closed-preimage criterion and t2_iff_isClosed_diagonal give T2Space Q. Independently, the continuous surjection q carries compact Point onto Q, giving CompactSpace Q. These steps use the original subtype and quotient topologies throughout.
+
+The application includes all four omitted corners, boundary ties, every actual corner class and degenerate action fibers. The group may be noncommutative; the action need not be faithful, regular, free, transitive or generated by u and v. It supplies compactness and Hausdorffness of this exact quotient. Connectedness, local disk charts, orientability, Euler characteristic, genus and the comparison with a geometric truncation slice require their respective additional arguments.
+
 ## References
 
+- Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Carrier`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Carrier`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Dart`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.DartRelated`
@@ -242,8 +265,10 @@ For every group, arbitrary right action, u and v, actual corner class nu, and or
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Interior`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Neighborhood`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Point`
+- Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Point`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Raw`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Related`
+- Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Step`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.Step`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.actual_guarded_point_analysis`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.dartMove`
@@ -253,4 +278,5 @@ For every group, arbitrary right action, u and v, actual corner class nu, and or
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.move`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.pairedPoint`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.reverseFace`
+- Truth anchor: `D5/S3/Geometry/Gluing/FiniteZeroGuardedClosure.uniform_transport_and_closed_relation`
 - Dependency: [D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits](../Hyperideal/NoncommutativeCornerOrbits.md)
