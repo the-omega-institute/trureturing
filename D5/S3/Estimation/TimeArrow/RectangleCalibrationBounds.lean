@@ -49,7 +49,7 @@ private theorem sigmoid_variance_tilt (x h : ℝ)
     have hp : 0 ≤ z * (2 - z) * w ^ 2 :=
       mul_nonneg (mul_nonneg hz.le (by linarith)) (sq_nonneg w)
     nlinarith
-  · rw [← mul_div_assoc, ← mul_div_assoc, div_le_div_iff₀ he hd]
+  · rw [← mul_div_assoc, div_le_div_iff₀ he hd]
     have hp : 0 ≤ z * (2 * z - 1) * w ^ 2 :=
       mul_nonneg (mul_nonneg hz.le (by linarith)) (sq_nonneg w)
     nlinarith
@@ -181,6 +181,7 @@ theorem shared_root_central_bootstrap {ι : Type*} [Fintype ι] (outside : ι �
   let d := Real.log (2 : ℝ)
   let a := (calibratedVariance outside r ε N R U t0 x0 - w) / 2
   let F := calibratedMean outside r ε N R U t
+  change F x = q at hroot
   have hd : 0 < d := Real.log_pos (by norm_num)
   have ha : 0 < a := by dsimp [a]; linarith
   have htilt (h : ℝ) (hh : |h| ≤ d) :
