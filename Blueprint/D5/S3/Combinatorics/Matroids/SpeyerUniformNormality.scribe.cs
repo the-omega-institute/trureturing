@@ -25,7 +25,8 @@ internal sealed class SpeyerUniformNormalityDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(V("claim"))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Asymptotics/zhangzhao2024speyer")),
                 Blocks(Paragraph(Text("Every eventually admissible rank sequence tending to infinity satisfies both limits. The normalized coefficient law is a shifted Bernoulli sum, and the lower bound (d-1)/8 forces its variance to diverge. The general Bernoulli limit theorem then gives CLT and LLT. Bounded rank lies outside this claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("zhang-zhao-2024-speyer-g-uniform-normality"), ResolutionKind.Proved)))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));

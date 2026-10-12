@@ -22,6 +22,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-zhao-2024-speyer-g-uniform-normality` (proved) by `D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-zhao-2024-speyer-g-uniform-normality","declaration_gid":"D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Rong Zhang, James Jing Yu Zhao (2024). *Analytic properties of Speyer’s g-polynomial of uniform matroids*. DOI: [10.1007/s10114-026-4502-5](https://doi.org/10.1007/s10114-026-4502-5). URL: <https://arxiv.org/abs/2408.15506v1>.
