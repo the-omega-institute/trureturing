@@ -10,6 +10,7 @@ import D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.Logic.Function.Iterate
+import Mathlib.NumberTheory.Real.GoldenRatio
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Linarith
@@ -67,5 +68,83 @@ def claim : Prop :=
         ∀ n : ZMod d,
           Filter.Tendsto (avg φ α n) Filter.atTop
             (nhds (1 / (d : ℝ)))
+
+private def a : ℝ := Real.sqrt 2 / 2
+private def kappa : ℝ := (Real.sqrt 5 - 1) / 2
+private def c : ℝ := a * kappa
+private def theta : ℝ := Real.arccos c
+private def s : ℝ := Real.sin theta
+private def phiStar : ℝ :=
+  4 * Real.arccos ((Real.sqrt 2 / 2) * ((Real.sqrt 5 - 1) / 2)) / Real.pi - 1
+
+private theorem a_facts : 2 * a ^ 2 = 1 ∧ 0 < a ∧ a < 1 := by
+  unfold a
+  have hsq := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hpos := Real.sqrt_pos.mpr (show (0 : ℝ) < 2 by norm_num)
+  constructor
+  · nlinarith only [hsq]
+  constructor <;> nlinarith only [hsq, hpos]
+
+private theorem kappa_facts : 0 < kappa ∧ kappa < 1 ∧ kappa ^ 2 + kappa = 1 := by
+  have hk : kappa = -Real.goldenConj := by unfold kappa Real.goldenConj; ring
+  rw [hk]
+  refine ⟨neg_pos.mpr Real.goldenConj_neg, ?_, ?_⟩
+  · linarith only [Real.neg_one_lt_goldenConj]
+  · nlinarith only [Real.goldenConj_sq]
+
+private theorem c_bounds : 0 < c ∧ c < a := by
+  unfold c
+  exact ⟨mul_pos a_facts.2.1 kappa_facts.1,
+    mul_lt_of_lt_one_right a_facts.2.1 kappa_facts.2.1⟩
+
+private theorem theta_facts : Real.pi / 4 < theta ∧ theta < Real.pi / 2 ∧
+    Real.cos theta = c := by
+  have ha : Real.arccos a = Real.pi / 4 := by
+    unfold a
+    rw [← Real.cos_pi_div_four]
+    exact Real.arccos_cos (by linarith [Real.pi_pos]) (by linarith [Real.pi_pos])
+  have hc1 : c ≤ 1 := le_trans c_bounds.2.le a_facts.2.2.le
+  have hlo := Real.arccos_lt_arccos (by linarith [c_bounds.1]) c_bounds.2 a_facts.2.2.le
+  have hhi := Real.arccos_lt_arccos (by norm_num : (-1 : ℝ) ≤ 0) c_bounds.1 hc1
+  rw [ha] at hlo
+  rw [Real.arccos_zero] at hhi
+  exact ⟨hlo, hhi, Real.cos_arccos (by linarith [c_bounds.1]) hc1⟩
+
+private theorem phi_facts : 0 < phiStar ∧ phiStar < 1 ∧
+    Real.pi * (1 + phiStar) / 4 = theta := by
+  change 0 < 4 * theta / Real.pi - 1 ∧ 4 * theta / Real.pi - 1 < 1 ∧
+    Real.pi * (1 + (4 * theta / Real.pi - 1)) / 4 = theta
+  have hlo : 1 < 4 * theta / Real.pi :=
+    (lt_div_iff₀ Real.pi_pos).mpr (by linarith [theta_facts.1])
+  have hhi : 4 * theta / Real.pi < 2 :=
+    (div_lt_iff₀ Real.pi_pos).mpr (by linarith [theta_facts.2.1])
+  refine ⟨by linarith only [hlo], by linarith only [hhi], ?_⟩
+  field_simp [ne_of_gt Real.pi_pos]
+  ring
+
+private theorem phi_nonexceptional : phiStar ∉ exceptional 12 := by
+  unfold exceptional
+  rw [if_pos (dvd_refl 12)]
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
+  intro h
+  rcases h with h | h | h | h | h | h <;> linarith [phi_facts.1, phi_facts.2.1]
+
+private theorem scalar_resonance : c ^ 2 + a * c = 1 / 2 := by
+  calc
+    c ^ 2 + a * c = a ^ 2 * (kappa ^ 2 + kappa) := by unfold c; ring
+    _ = 1 / 2 := by rw [kappa_facts.2.2]; nlinarith only [a_facts.1]
+
+private theorem sin_sq : s ^ 2 + c ^ 2 = 1 := by
+  have h := Real.sin_sq_add_cos_sq theta
+  rw [theta_facts.2.2] at h
+  exact h
+
+private theorem scalar_reductions : c * (a + c) = a ^ 2 ∧ kappa * s ^ 2 = a ^ 2 := by
+  constructor
+  · nlinarith only [scalar_resonance, a_facts.1]
+  · have hkc : kappa * c ^ 2 = kappa - a ^ 2 := by
+      unfold c
+      linear_combination a ^ 2 * (kappa - 1) * kappa_facts.2.2 + kappa * a_facts.1
+    linear_combination kappa * sin_sq - hkc
 
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
