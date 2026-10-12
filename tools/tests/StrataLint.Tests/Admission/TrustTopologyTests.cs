@@ -81,10 +81,9 @@ public sealed class TrustTopologyTests
     }
 
     [Fact]
-    public void AddedAcceptedFragmentDoesNotProduceSl022Diagnostics()
+    public void AddedStateFragmentDoesNotProduceSl022Diagnostics()
     {
-        var path = FrozenLedgerChangeClassifier.AcceptedPath(
-            "sha256:" + new string('a', 64));
+        var path = FrozenStatePath.FromModulePath(RepoPath.CreateKnown("D5/S0/Carrier/Probe.lean")).Value;
 
         var clear = Assert.IsType<BootstrapOutcome.Clear>(
             BootstrapGate.Evaluate(RawChangeSet.Create([path])));
@@ -148,8 +147,8 @@ public sealed class TrustTopologyTests
     {
         var descriptors = RuleCatalog.Default.Descriptors;
 
-        Assert.Equal(29, descriptors.Length);
-        Assert.Equal(29, descriptors.Select(item => item.Id).Distinct().Count());
+        Assert.Equal(28, descriptors.Length);
+        Assert.Equal(28, descriptors.Select(item => item.Id).Distinct().Count());
         Assert.Equal(
             Enumerable.Range(1, 23).Except([5, 16]).Select(RuleId.CreateKnown)
                 .Append(RuleId.CreateKnown(25))
@@ -158,7 +157,6 @@ public sealed class TrustTopologyTests
                 .Append(RuleId.CreateKnown(30))
                 .Append(RuleId.CreateKnown(31))
                 .Append(RuleId.CreateKnown(32))
-                .Append(RuleId.CreateKnown(33))
                 .Append(RuleId.CreateKnown(34)),
             descriptors.Select(item => item.Id));
         Assert.Equal(

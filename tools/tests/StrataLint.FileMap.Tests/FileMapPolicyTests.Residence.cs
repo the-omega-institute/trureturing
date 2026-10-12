@@ -5,26 +5,25 @@ namespace StrataLint.FileMap.Tests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
+    public void AcceptedPathIsRejectedByCanonicalFileMapCoverage()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.Parse(
+            System.IO.File.ReadAllBytes(System.IO.Path.Combine(root, "Meta/FILEMAP.toml")),
+            "Meta/FILEMAP.toml",
+            relative => System.IO.File.ReadAllBytes(System.IO.Path.Combine(root, relative)));
+        const string retired = "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json";
+        var finding = Assert.Single(FileMapPolicy.InspectCoverage(manifest, [retired]));
+        Assert.Equal("FILEMAP-UNCLASSIFIED", finding.Code);
+        Assert.Equal(retired, finding.Path);
+    }
+
+    [Fact]
     public void DeltaDirectoryInspectionUsesCompleteResidenceIndexWithoutRecheckingOtherPaths()
     {
         const string historical = "tools/FixtureData/known.toml";
         var manifest = Parse(1, Entry("changed.json", "data", "none", "reader", "SnapshotDecoder"), ResidenceEntry(historical));
         Assert.Empty(FileMapPolicy.InspectDirectoryKinds(manifest, ["changed.json"], [historical, "changed.json"]));
-    }
-
-    [Theory]
-    [InlineData("ledger", false)]
-    [InlineData("data", true)]
-    public void AcceptedLedgerDirectoryRequiresLedgerEntries(string kind, bool hasFinding)
-    {
-        var path = FrozenLedgerChangeClassifier.AcceptedPath(
-            "sha256:" + new string('a', 64));
-        var manifest = Parse(Entry(path, kind, "FrozenLedgerCanonicalWriter", "FrozenLedger", "SL-008"));
-
-        var findings = FileMapPolicy.InspectDirectoryKinds(manifest, [path]);
-
-        Assert.Equal(hasFinding, findings.Any(
-            static finding => finding.Code == "FILEMAP-DIRECTORY-KIND"));
     }
 
     [Theory]

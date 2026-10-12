@@ -26,21 +26,4 @@ public sealed class RetiredLedgerSurfaceTests(
             graph.ExecutableEntryPointDescriptions);
     }
 
-    [Fact]
-    public void HistoricalFreezeMatcherHasOneProductionOwnerAndAllSemanticConsumersUseIt()
-    {
-        var definitions = graph.MethodDefinitionsNamed("HistoricalActiveFreezeMatches");
-
-        var definition = Assert.Single(definitions);
-        Assert.StartsWith(
-            "StrataLint.Engine.FrozenLedgerHistoricalFreezeMatcher.HistoricalActiveFreezeMatches(",
-            definition,
-            StringComparison.Ordinal);
-        Assert.Equal(
-            [
-                "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerCandidateValidation.cs",
-                "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerHistoryValidation.cs",
-            ],
-            graph.ProductionReferencePaths(definition));
-    }
 }

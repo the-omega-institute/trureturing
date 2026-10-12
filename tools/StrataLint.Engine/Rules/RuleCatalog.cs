@@ -57,8 +57,6 @@ public sealed class RuleCatalog
         RuleId.CreateKnown(30),
         // SL-032 has no timing measurement: scan Scribe text in the delta last.
         RuleId.CreateKnown(32),
-        // SL-033 checks only selectors reached by the frozen pair delta.
-        RuleId.CreateKnown(33),
         // SL-034 checks only newly added D5 Lean modules.
         RuleId.CreateKnown(34),
     ];
@@ -195,7 +193,6 @@ public sealed class RuleCatalog
                 .Append(30)
                 .Append(31)
                 .Append(32)
-                .Append(33)
                 .Append(34)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();

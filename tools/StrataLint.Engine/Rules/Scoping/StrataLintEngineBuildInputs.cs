@@ -7,10 +7,6 @@ internal static class StrataLintEngineBuildInputs
     private const string RulesDirectory = ProjectDirectory + "/Rules";
     private const string HeartsAuthorizationLedgerPath =
         ProjectDirectory + "/Authorization/HeartsAuthorizationLedger.cs";
-    private const string FrozenAcceptedEventLoaderPath =
-        ProjectDirectory + "/Ledger/FrozenAcceptedEventLoader.cs";
-    private const string TrustedRevocationReceiptsPath =
-        ProjectDirectory + "/Revocation/TrustedRevocationReceipts.cs";
     private const string RepositoryPathPolicyPath =
         ProjectDirectory + "/Coordinates/RepositoryPathPolicy.cs";
     private const string RepositoryPathPolicyPathsPath =
@@ -35,8 +31,6 @@ internal static class StrataLintEngineBuildInputs
         }
 
         if (path == HeartsAuthorizationLedgerPath
-            || path == FrozenAcceptedEventLoaderPath
-            || path == TrustedRevocationReceiptsPath
             || path == RepositoryPathPolicyPath
             || path == RepositoryPathPolicyPathsPath)
         {

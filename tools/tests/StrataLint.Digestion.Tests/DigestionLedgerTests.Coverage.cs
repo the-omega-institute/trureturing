@@ -321,7 +321,7 @@ public sealed partial class DigestionLedgerTests
     private static (string Path, byte[] Bytes)[] FrozenLedgerFiles(
         string modulePath,
         params string[] declarationSelectors) =>
-        FrozenStatementReceiptTestData.LedgerFiles(
+        FrozenStatementReceiptTestData.LedgerFiles(out _,
             new FrozenStatementReceiptTestData.Module(
                 modulePath,
                 TestModuleStatementId,

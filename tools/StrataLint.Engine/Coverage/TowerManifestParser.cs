@@ -60,7 +60,6 @@ public static class TowerManifestParser
             "id",
             "judge",
             "reason",
-            "genesis_event",
             "commit",
             "pull_request",
             "verification");
@@ -68,7 +67,6 @@ public static class TowerManifestParser
             String(mapping, "id", label),
             String(mapping, "judge", label),
             String(mapping, "reason", label),
-            String(mapping, "genesis_event", label),
             String(mapping, "commit", label),
             Integer(mapping, "pull_request", label),
             String(mapping, "verification", label));

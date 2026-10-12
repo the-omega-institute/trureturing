@@ -47,8 +47,8 @@ internal static class CapabilityPolicy
             || type.Name.StartsWith("Validated", StringComparison.Ordinal)
             || type.Name is "CanonicalFixedPoint"
                 or "CompletedRuleSet"
-                or "FrozenLedgerConsistent"
+
                 or "FrozenMaterialCatalog"
-                or "RevocationPlan"
-                or "TrustedRevocationReceiptStore");
+
+);
 }

@@ -3,60 +3,16 @@ using System.Text.Json;
 
 namespace StrataLint.Engine;
 
-internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization
-    : IFrozenLedgerReplacementAuthorization
+internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization(
+    RepositorySnapshot protectedBase, RepositorySnapshot candidate)
 {
-    private readonly RepositorySnapshot protectedBase;
-    private readonly RepositorySnapshot candidate;
-
-    internal MathlibUpgradeFrozenLedgerReplacementAuthorization(
-        RepositorySnapshot protectedBase,
-        RepositorySnapshot candidate)
-    {
-        this.protectedBase = protectedBase ?? throw new ArgumentNullException(nameof(protectedBase));
-        this.candidate = candidate ?? throw new ArgumentNullException(nameof(candidate));
-    }
-
-    public bool IsAuthorized(FrozenLedgerReplacementAuthorizationContext context)
-    {
-        ArgumentNullException.ThrowIfNull(context);
-        return context.Recognition is FrozenLedgerIncrementalReplacementRecognition incremental
-            && EffectiveLeanPinsChanged(protectedBase, candidate)
-            && LeanPropositionSourceComparer.AreEquivalent(
-                protectedBase,
-                candidate,
-                incremental.ChangedStatementModulePaths,
-                context.BaseView,
-                context.CandidateCatalog)
-            && FindChangedClosureOnlyStatements(context, incremental).IsEmpty
-            && incremental.ReanchoredModulePaths.All(path =>
-                context.CandidateCatalog.ByPath.TryGetValue(path, out var material)
-                && material.AxiomClosure.All(LeanAxiomFacts.IsStandard));
-    }
-
-    internal static ImmutableArray<RepoPath> FindChangedClosureOnlyStatements(
-        FrozenLedgerReplacementAuthorizationContext context,
-        FrozenLedgerIncrementalReplacementRecognition recognition)
-    {
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(recognition);
-        return recognition.ReanchoredModulePaths
-            .Except(recognition.ChangedStatementModulePaths)
-            .Where(path => !context.BaseView.ActiveByPath.TryGetValue(path, out var recorded)
-                || !context.CandidateCatalog.ByPath.TryGetValue(path, out var current)
-                || recorded.Material.StatementId != current.StatementId
-                || !recorded.Material.DeclarationStatementIds.SequenceEqual(
-                    current.DeclarationStatementIds))
-            .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
-
-    private static bool EffectiveLeanPinsChanged(
-        RepositorySnapshot protectedBase,
-        RepositorySnapshot candidate) =>
+    internal bool IsAuthorized(ImmutableHashSet<RepoPath> changedPaths, FrozenStateCatalog baseState,
+        LeanAxiomReport candidateReport) =>
         EffectiveLeanPins.TryRead(protectedBase, out var basePins)
-        && EffectiveLeanPins.TryRead(candidate, out var candidatePins)
-        && basePins != candidatePins;
+        && EffectiveLeanPins.TryRead(candidate, out var candidatePins) && basePins != candidatePins
+        && LeanPropositionSourceComparer.AreEquivalent(protectedBase, candidate, changedPaths, baseState, candidateReport)
+        && baseState.Records.Keys.All(path => candidateReport.Files.TryGetValue(path, out var module)
+            && module.Declarations.All(static declaration => declaration.Axioms.All(LeanAxiomFacts.IsStandard)));
 }
 
 internal sealed record EffectiveLeanPins(string Toolchain, string MathlibRevision)

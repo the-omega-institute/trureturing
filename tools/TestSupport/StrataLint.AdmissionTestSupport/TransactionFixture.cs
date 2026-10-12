@@ -30,7 +30,7 @@ internal sealed partial class TransactionFixture : IDisposable
     internal const string NewEmissionPath = "Blueprint/D5/S2/NewModule.md";
     internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
     internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
-    internal const string LedgerPath = FrozenLedgerChangeClassifier.AcceptedRoot;
+    internal const string LedgerPath = FrozenStatePath.Root;
     private const string StatePinPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
     internal const string BackfillPath = "Meta/BACKFILL.yaml";
     private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
@@ -115,35 +115,11 @@ internal sealed partial class TransactionFixture : IDisposable
         WriteFile(".ledger-frozen-diagnostic", "MSBUILD: synthetic launcher failure\n");
     }
 
-    internal void WriteRevokedSnapshot()
-    {
-        WriteLedger(Array.Empty<string>());
-    }
-
     internal void WriteActiveFreeze()
     {
-        var freeze = JsonSerializer.Serialize(new
-        {
-            event_hash =
-                "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-            event_type = "Freeze",
-            payload = new
-            {
-                declaration_statement_ids = Array.Empty<object>(),
-                descriptor_selector = LeanPath,
-                prerequisite_frozen_node_ids = Array.Empty<string>(),
-                statement_id =
-                    "sha256:3333333333333333333333333333333333333333333333333333333333333333",
-            },
-            schema_version = 5,
-        });
-        WriteLedger(freeze);
-        WriteFile(StatePinPath,
-            "{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n");
+        WriteFile(StatePinPath, "{\"statement_id\":\"sha256:" + new string('3', 64) + "\",\"declarations\":[]}\n");
         WriteFile(".ledger-frozen-status", "0\n");
     }
-
-    internal void RevokeStatePin() => Git("rm", StatePinPath);
 
     internal bool StatePinExists() => TemporaryFileSystem.File.Exists(Path.Combine(Root, StatePinPath));
 
@@ -152,43 +128,7 @@ internal sealed partial class TransactionFixture : IDisposable
     internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
 
     internal int FreezeCount(string leanPath = LeanPath) =>
-        Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
-        .Count(path =>
-        {
-            using var document = JsonDocument.Parse(File.ReadAllText(path));
-            var root = document.RootElement;
-            if (!root.TryGetProperty("event_type", out var eventType)
-                || eventType.GetString() != "Freeze")
-            {
-                return false;
-            }
-
-            var payload = root.GetProperty("payload");
-            var selector = payload.TryGetProperty(
-                "descriptor_selector",
-                out var descriptorSelector)
-                ? descriptorSelector.GetString()
-                : null;
-            return selector == leanPath;
-        });
-
-    private void WriteLedger(params string[] events)
-    {
-        WriteLedger(events.Select(static (json, index) => ($"fixture-{index}.json", json)).ToArray());
-    }
-
-    private void WriteLedger(params (string FileName, string Json)[] events)
-    {
-        var directory = Path.Combine(Root, LedgerPath);
-        foreach (var path in Directory.EnumerateFiles(directory, "*.json")) File.Delete(path);
-        foreach (var (fileName, json) in events)
-        {
-            File.WriteAllText(
-                Path.Combine(directory, fileName),
-                json + "\n",
-                new UTF8Encoding(false));
-        }
-    }
+        File.Exists(Path.Combine(Root, FrozenStatePath.Root, leanPath + ".json")) ? 1 : 0;
 
     internal string[] Status() => Git("status", "--porcelain=v1")
         .Split('\n', StringSplitOptions.RemoveEmptyEntries);
@@ -197,7 +137,7 @@ internal sealed partial class TransactionFixture : IDisposable
         .Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
     internal string[] LedgerState() =>
-        Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
+        Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json", SearchOption.AllDirectories)
             .Order(StringComparer.Ordinal)
             .Select(path => Path.GetRelativePath(Root, path) + "\n" + File.ReadAllText(path))
             .ToArray();
@@ -422,25 +362,13 @@ internal sealed partial class TransactionFixture
             fi
             target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
             if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
-              event_id=2222222222222222222222222222222222222222222222222222222222222222
+              statement_pin=2222222222222222222222222222222222222222222222222222222222222222
             else
-              event_id=3333333333333333333333333333333333333333333333333333333333333333
+              statement_pin=3333333333333333333333333333333333333333333333333333333333333333
             fi
-            if [[ ${PLAYBOOK_USE_CANONICAL_FROZEN_QUERY:-0} == 1 ]]; then
-              for accepted in Golden/Frozen/accepted/*.json; do
-                [[ -f "$accepted" ]] || continue
-                if jq -e --arg target "$target_module" \
-                    '.payload.descriptor_selector == $target' "$accepted" >/dev/null; then
-                  rm "$accepted"
-                fi
-              done
-            fi
-            printf '{"event_hash":"sha256:%s","event_type":"Freeze","payload":{"declaration_statement_ids":[],"descriptor_selector":"%s","prerequisite_frozen_node_ids":[],"statement_id":"sha256:%s"},"schema_version":5}\n' \
-              "$event_id" "$target_module" "$event_id" \
-              > "Golden/Frozen/accepted/${event_id}.json"
             state_pin="Golden/Frozen/state/${target_module}.json"
             mkdir -p "$(dirname "$state_pin")"
-            printf '{"statement_id":"sha256:%s"}\n' "$event_id" > "$state_pin"
+            printf '{"statement_id":"sha256:%s","declarations":[]}\n' "$statement_pin" > "$state_pin"
             printf '0\n' > .ledger-frozen-status
             if [[ -f fail-ledger-once ]]; then
               rm fail-ledger-once
@@ -544,38 +472,7 @@ internal sealed partial class TransactionFixture
         return HeadRevision();
     }
 
-    internal string WriteAcceptedFreezeV5()
-    {
-        var identity = new string('4', 64);
-        var relativePath = $"{LedgerPath}/{identity}.json";
-        WriteFile(relativePath, JsonSerializer.Serialize(new
-        {
-            event_hash = "sha256:" + identity,
-            event_type = "Freeze",
-            payload = new
-            {
-                declaration_statement_ids = Array.Empty<object>(),
-                descriptor_selector = LeanPath,
-                prerequisite_frozen_node_ids = Array.Empty<string>(),
-                statement_id = "sha256:" + identity,
-            },
-            schema_version = 5,
-        }) + "\n");
-        return relativePath;
-    }
 
-    internal string WriteLegacyFreeze()
-    {
-        var identity = new string('5', 64);
-        var relativePath = $"{LedgerPath}/{identity}.json";
-        WriteFile(relativePath, JsonSerializer.Serialize(new
-        {
-            event_type = "Freeze",
-            payload = new { descriptor_selector = LeanPath },
-            schema_version = 4,
-        }) + "\n");
-        return relativePath;
-    }
 }
 
 internal sealed partial class TransactionFixture
@@ -671,8 +568,8 @@ internal sealed partial class TransactionFixture
     internal void WriteActiveFreezeForCurrentModule() => WriteActiveFreeze();
 
     internal void AddUnrelatedMalformedLedgerShard() => WriteFile(
-        LedgerPath + "/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
-        "{\"event_type\":\"Freeze\",\"payload\":{\"node_path\":\"D5/S4/Unrelated.lean\"\n");
+        LedgerPath + "/D5/S4/Unrelated.lean.json",
+        "malformed state\n");
 
     internal static string SevenLineWrappedDigest(string documentGid, string declaration) =>
         $"/- GID: {documentGid}\n"

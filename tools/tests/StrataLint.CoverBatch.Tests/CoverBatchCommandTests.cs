@@ -342,33 +342,26 @@ public sealed partial class CoverBatchCommandTests
     }
 
     [Fact]
-    public void ExistingCoverageUsesCurrentModulePinWithoutAcceptedRecords()
+    public void ExistingCoverageUsesCurrentModulePinFromScopedReport()
     {
         using var world = new BatchWorld();
         Assert.True(world.Run(Row(First, Gid)).Success);
-        Directory.Delete(Path.Combine(world.Root, "Golden/Frozen/accepted"), recursive: true);
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
 
         Assert.True(result.Success, result.Error + result.Output);
-        Assert.DoesNotContain(world.Repository.ScopedCurrentReads.SelectMany(static paths => paths),
-            static path => path == "Golden/Frozen/accepted");
     }
 
     [Fact]
-    public void ExistingCoverageRejectsStaleModulePinEvenWhenAcceptedAgrees()
+    public void ExistingCoverageRejectsStaleModulePin()
     {
         using var world = new BatchWorld();
         Assert.True(world.Run(Row(First, Gid)).Success);
         var stale = "sha256:" + new string('f', 64);
-        File.WriteAllText(Path.Combine(world.Root, "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json"),
-            "{\"statement_id\":\"" + stale + "\"}\n");
-        foreach (var path in Directory.GetFiles(Path.Combine(world.Root, "Golden/Frozen/accepted"), "*.json"))
-        {
-            var value = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(path))!;
-            value["payload"]!["statement_id"] = stale;
-            File.WriteAllText(path, value.ToJsonString() + "\n");
-        }
+        var statePath = Path.Combine(world.Root, "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json");
+        var record = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(statePath))!;
+        record["statement_id"] = stale;
+        File.WriteAllText(statePath, record.ToJsonString(new System.Text.Json.JsonSerializerOptions { WriteIndented = false }) + "\n");
         var before = world.LedgerImage();
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
@@ -540,23 +533,11 @@ public sealed partial class CoverBatchCommandTests
             {
                 var result = files.ToDictionary(static item => item.Key, item => identities.Aggregate(item.Value,
                     static (text, identity) => text.Replace(identity.Key, identity.Value, StringComparison.Ordinal)), StringComparer.Ordinal);
-                foreach (var path in result.Keys.Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath).ToArray())
-                {
-                    using var document = JsonDocument.Parse(result[path]);
-                    var payload = System.Text.Json.Nodes.JsonNode.Parse(document.RootElement.GetProperty("payload").GetRawText())!;
-                    var selector = payload["descriptor_selector"]!.GetValue<string>();
-                    payload["statement_id"] = FrozenContentAddress.ComputeModuleStatementId(
-                        RepoPath.CreateKnown(selector), reports[selector]).Value;
-                    var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", JsonSerializer.SerializeToElement(payload));
-                    result.Remove(path);
-                    result[FrozenLedgerChangeClassifier.AcceptedRoot + "/" + encoded.Hash["sha256:".Length..] + ".json"] =
-                        Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
-                }
                 foreach (var path in result.Keys.Where(FrozenStatePath.IsUnderRoot).ToArray())
                 {
                     Assert.True(FrozenStatePath.TryToModulePath(path, out var selector));
                     result[path] = Encoding.UTF8.GetString(FrozenStateRecord.Encode(
-                        FrozenContentAddress.ComputeModuleStatementId(selector, reports[selector.Value])).AsSpan());
+                        FrozenContentAddress.ComputeModuleStatementId(selector, reports[selector.Value]), FrozenStateRecord.Project(reports[selector.Value])).AsSpan());
                 }
                 return result;
             }

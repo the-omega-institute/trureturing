@@ -324,7 +324,7 @@ public sealed class UtilityAdmissionObservationTests
         var statePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
         fixture.Files[statePath] =
-            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\",\"declarations\":[]}\n";
 
         var outcome = RuleCatalog.Default.Execute(fixture.Build(
             RawChangeSet.CreateWithKinds([(statePath, RawChangeKind.Added)])));
@@ -359,7 +359,7 @@ public sealed class UtilityAdmissionObservationTests
         var valuesStatePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(RuleFixture.ValuesBindingPath)).Value;
         const string state =
-            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\",\"declarations\":[]}\n";
         fixture.Files[ringStatePath] = state;
         fixture.Files[valuesStatePath] = state;
 

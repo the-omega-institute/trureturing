@@ -664,7 +664,15 @@ internal sealed partial class RuleFixture
         IEnumerable<LeanDeclaration>? declarations = null) =>
         new(
             (imports ?? Array.Empty<string>()).ToImmutableArray(),
-            (declarations ?? Array.Empty<LeanDeclaration>()).ToImmutableArray());
+            (declarations ?? Array.Empty<LeanDeclaration>()).Select(declaration => declaration.NameKey == declaration.Name
+                ? declaration with { NameKey = NameKey(declaration.Name) } : declaration).ToImmutableArray());
+
+    private static string NameKey(string name)
+    {
+        var key = "n0";
+        foreach (var component in name.Split('.')) key = $"ns({key},{Encoding.UTF8.GetByteCount(component)}:{component})";
+        return key;
+    }
 
     private static string HeaderFor(string gid, string generality) => $"""
         /- GID: {gid}

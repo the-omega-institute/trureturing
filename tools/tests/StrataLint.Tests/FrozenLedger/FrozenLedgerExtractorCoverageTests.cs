@@ -33,7 +33,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -63,7 +62,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
     }
 
@@ -99,7 +97,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -132,7 +129,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -168,7 +164,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -194,7 +189,7 @@ public sealed partial class FrozenLedgerTests
                     baseSource,
                     statementMaterial: "old A",
                     declarations: ["A"],
-                    kind: "structure"),
+                    kind: "inductive"),
                 Module("B"),
             ],
             candidateModules:
@@ -204,13 +199,12 @@ public sealed partial class FrozenLedgerTests
                     candidateSource,
                     statementMaterial: "new A",
                     declarations: ["A"],
-                    kind: "structure"),
+                    kind: "inductive"),
                 Module("B"),
             ],
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -226,7 +220,7 @@ public sealed partial class FrozenLedgerTests
             "namespace D5.S0.Carrier\nstructure GoldenInt where\n  a : Int\nend D5.S0.Carrier\n",
             statementMaterial: "GoldenInt source",
             declarations: ["D5.S0.Carrier.GoldenInt"],
-            kind: "structure");
+            kind: "inductive");
 
         var result = ValidateMathlibReanchor(
             baseModules: [root, dependency],
@@ -242,7 +236,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -266,7 +259,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
     }
 
@@ -297,7 +289,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -322,7 +313,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
     }
 
@@ -346,7 +336,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -372,7 +361,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -395,7 +383,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -418,7 +405,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
     }
 
@@ -466,7 +452,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -491,7 +476,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
     }
 
@@ -517,7 +501,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -543,7 +526,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -568,7 +550,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -593,7 +574,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
     }
 }
