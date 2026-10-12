@@ -5,7 +5,7 @@
    anchors: [D5/S3/Arith/Robin/FiveModePrimeWindowBridge,
      D5/S3/Arith/GoldenResource/GoldenDivisorLanguage]
    utility: none
-   digest: Exact normalized five-mode vectors on the finite six-cell above 5040. -/
+   digest: Exact normalized five-mode vectors on the finite six-cell at 5040. -/
 
 import D5.S3.Arith.GoldenResource.GoldenDivisorLanguage
 import D5.S3.Arith.Robin.FiveModePrimeWindowBridge
