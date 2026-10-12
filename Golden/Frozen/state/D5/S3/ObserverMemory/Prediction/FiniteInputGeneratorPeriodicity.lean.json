@@ -1,1 +1,1 @@
-{"statement_id":"sha256:abc6046c79b8a7bca6c9361945c46abc65f5dd80eef867403a7840b9e246d8ce"}
+{"statement_id":"sha256:abc6046c79b8a7bca6c9361945c46abc65f5dd80eef867403a7840b9e246d8ce","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Prediction),31:FiniteInputGeneratorPeriodicity),42:finite_input_generator_eventually_periodic)","kind":"theorem"}]}

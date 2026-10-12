@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d59e206ab5377955478c4e223d4ee95daf0fb5008ee0c85b0b42e6f8656d7b2b"}
+{"statement_id":"sha256:d59e206ab5377955478c4e223d4ee95daf0fb5008ee0c85b0b42e6f8656d7b2b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Mersenne),30:KrizekSigmaPrimeFermatMersenne),29:sigma_one_prime_imp_prime_pow)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Mersenne),30:KrizekSigmaPrimeFermatMersenne),6:result)","kind":"theorem"}]}

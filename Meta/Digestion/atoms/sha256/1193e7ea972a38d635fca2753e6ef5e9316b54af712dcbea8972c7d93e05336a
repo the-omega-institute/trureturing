@@ -1,0 +1,41 @@
+**数学引文 4.2（未来识别在本纤维上的应用）。** 采用[《局部源分裂与读出几何》假设 9.1、定义 9.2–9.3、定理 10.2 与约定 10.3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)的共同初始质量合同，定义线性全记录映射
+
+$$
+R_w(q)=\sum_{s\in\Sigma}q_s\Gamma_{w,s},\qquad
+K_m=T\cap\bigcap_{w\in\mathcal W,\ |w|\le m}\ker R_w,\qquad
+K_\infty=T\cap\bigcap_{w\in\mathcal W}\ker R_w.
+$$
+
+这里 $R_w$ 作用于未作后选择归一化的初始有符号质量。对概率输入它给出完整的精确记录律，且 $K_{m+1}\subseteq K_m$。既有受限域判据在此为
+
+$$
+\{R_w\}_{w\in\mathcal W}\text{ 在 }\mathcal C_b\text{ 上单射}
+\quad\Longleftrightarrow\quad
+(\mathcal C_b-\mathcal C_b)\cap K_\infty=\{0\}.
+$$
+
+具体地，若 $\mathcal C_b$ 含两个不同 $\kappa$，则
+
+$$
+\{R_w\}_{w\in\mathcal W}\text{ 在 }\mathcal C_b\text{ 上单射}
+\quad\Longleftrightarrow\quad
+\exists w\in\mathcal W:\ R_w(\mathbf d)\ne0.
+$$
+
+该应用的全部推导是
+
+$$
+R_w(p_\kappa)-R_w(p_{\kappa'})
+=(\kappa-\kappa')R_w(\mathbf d).
+$$
+
+若有一个非零响应，每一对实际不同参数在该记录律上不同；非零有符号测度还意味着存在可测事件，其两概率不同。若全部响应为零，选取假设保证的实际不同参数对，所有记录律均相同，故不单射。一般差异集判据同样由 $R_w(p)-R_w(q)=R_w(p-q)$ 得出。当 $\mathcal C_b$ 为单点时，它已经被确定，即使所有 $R_w(\mathbf d)$ 都为零；当 $\mathcal C_b$ 为空时，前提无可达实现。
+
+若只保留某成功事件 $D$ 条件下的记录，则在成功概率正时得到
+
+$$
+\frac{R_w(p)(\,\cdot\cap D)}{R_w(p)(D)}.
+$$
+
+参数相关的分母使该映射一般不线性，故须保留成功概率才能使用上述线性记录判据。精确记录律的区分不等于从单次随机历史或任意预定有限样本量精确恢复 $\kappa$。
+

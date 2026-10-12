@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6191498dafe0ec745be0f27db3c96a01ea4c7999255ea5cb16512e3905e2fb4f"}
+{"statement_id":"sha256:6191498dafe0ec745be0f27db3c96a01ea4c7999255ea5cb16512e3905e2fb4f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S3),15:RenyiDivergence),36:renyi_divergence_one_half_channel_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S3),15:RenyiDivergence),37:renyi_divergence_channel_le_of_lt_one)","kind":"theorem"}]}

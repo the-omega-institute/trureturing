@@ -1,0 +1,54 @@
+- 若 $J_f=0$，则 $E[f]$ 在整条 $\kappa$-纤维上恒定，无法恢复完整分布。
+
+##### 4.1 证明（I 原定理 2）
+
+将
+
+$$
+p_{\mathrm{null}}=1-X-Y-Z+\kappa,
+\quad
+p_1=X-\kappa,
+\quad
+p_2=Z,
+\quad
+p_3=Y-\kappa,
+\quad
+p_{13}=\kappa
+$$
+
+代入
+
+$$
+E[f]=\sum_I p_I f_I
+$$
+
+得到
+
+$$
+\begin{aligned}
+E[f]
+={}&f_{\mathrm{null}}(1-X-Y-Z+\kappa)
++f_1(X-\kappa)\\
+&+f_2Z+f_3(Y-\kappa)+f_{13}\kappa.
+\end{aligned}
+$$
+
+整理 $\kappa$ 的系数，正好得到
+
+$$
+f_{\mathrm{null}}-f_1-f_3+f_{13}
+=J_f.
+$$
+
+因此
+
+$$
+E[f]=\text{已知的可见项}+J_f\kappa.
+$$
+
+若 $J_f\neq0$，直接解出 $\kappa$；若 $J_f=0$，则 $E[f]$ 不依赖 $\kappa$。证毕。
+
+从线性代数看，给 $(X,Y,Z)$ 再加一行 $E[f]$，消去前三个可见方向后，最后一行只剩 $J_f$ 乘以隐藏坐标；所以增广矩阵满秩当且仅当 $J_f\neq0$。
+
+---
+

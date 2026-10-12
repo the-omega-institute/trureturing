@@ -1,0 +1,1 @@
+| [NullReplyFiber.lean，3a56aa4](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean)：`null_reply_zero_iff` | 既有 Lean 声明归属：初始化任务追加 null 后 reply 为零当且仅当来源全 null；不扩为未知仪器的零读数判定。 

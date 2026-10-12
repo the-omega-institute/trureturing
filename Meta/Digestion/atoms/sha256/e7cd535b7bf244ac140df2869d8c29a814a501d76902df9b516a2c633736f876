@@ -1,0 +1,10 @@
+**证明。** 令 $R_{ij}=B_{ij}/\sqrt{\nu_i\nu_j}$。矩阵 $R$ 正半定、对角元为一，故 $\operatorname{tr}R=d$；定理 2.1 给出 $\operatorname{rank}R\le m-1$。对非零特征值使用 Cauchy–Schwarz，得 $\operatorname{tr}(R^2)\ge d^2/(m-1)$。扣除对角平方并代入 $S_{ij}=-B_{ij}$ 即得。证毕。
+
+当 $d=m=2$ 时还精确满足
+
+$$
+\boxed{|\mathbb E[\operatorname{Cov}(b_1,b_2\mid O)]|=\sqrt{\nu_1\nu_2}.}
+$$
+
+记录空间不足以容纳全部正交方向时，一部分关系必然转移到后验耦合中；这仍是经典条件化，不是量子纠缠。
+

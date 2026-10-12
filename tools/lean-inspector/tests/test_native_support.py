@@ -225,6 +225,7 @@ defaultFacets = ["static"]
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
                      'tools/scripts/worktree/cache_material.py',
+                     'tools/scripts/worktree/lean_cache_release.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
@@ -236,7 +237,9 @@ defaultFacets = ["static"]
             + 'operation = next((word for word in sys.argv if word in ("ensure-cache", "with-cache-writer", "with-cache-reader")), None)\n'
             + 'if operation: os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index(operation):]])\n'
             + 'if sys.argv[1] == "build": print(cli); raise SystemExit(0)  # later calls route by operation\n'
-            + 'if sys.argv[-1] != "lean-utility-input": raise SystemExit("unexpected fixture dotnet command")\n'
+            + 'if "--scope" in sys.argv:\n'
+            + '    print(Path("scope-inputs.json").read_text() if Path("scope-inputs.json").exists() else "[]"); raise SystemExit(0)\n'
+            + 'if "lean-utility-input" not in sys.argv: raise SystemExit("unexpected fixture dotnet command")\n'
             + 'with Path("utility-calls").open("a") as out: out.write("call\\n")\n'
             + 'print(Path("utility.json").read_text())\n')
         (self.root / 'bin/dotnet').chmod(0o755)
@@ -256,7 +259,9 @@ defaultFacets = ["static"]
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
-        self.env = dict(os.environ, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'], LAKE_BIN=self.lake,
+        # Make's cache wrapper and direct fixture calls use the same resolved Lake.
+        self.env = dict(os.environ, PATH=os.pathsep.join([
+            str(self.root / 'bin'), str(Path(self.lake).parent), os.environ['PATH']]), LAKE_BIN=self.lake,
             STRATALINT_LEAN_BUILD_TARGETS='[]',
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),

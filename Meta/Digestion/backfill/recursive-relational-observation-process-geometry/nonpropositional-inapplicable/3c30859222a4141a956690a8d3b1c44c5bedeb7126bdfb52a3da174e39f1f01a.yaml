@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c30859222a4141a956690a8d3b1c44c5bedeb7126bdfb52a3da174e39f1f01a
+  normalized_sha256: sha256:3c30859222a4141a956690a8d3b1c44c5bedeb7126bdfb52a3da174e39f1f01a
+cas_ref: sha256:3c30859222a4141a956690a8d3b1c44c5bedeb7126bdfb52a3da174e39f1f01a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The root-and-compatible-subgraph bijection and its counterexample are closed by pinned Mathlib Equiv, Subtype.ext, Prod.ext, funext, and Nat.casesOn; no repository frozen GID supplies this exact statement.
+    previous_atom_id: 1fc19e1f0ce126a9ef671e1352d084cf6487f6bdaeab5e5f26a572d58c43da7c
+    next_atom_id: ce603ddcd5cb9f87d4051e1d1c908ef3a38762aebc6fe1ad08204d5474fe9189

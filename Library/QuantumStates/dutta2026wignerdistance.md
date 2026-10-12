@@ -5,9 +5,10 @@ year: 2026
 title: "A Phase-Space Geometric Measure of Magic in Qubit Systems"
 doi: 10.48550/arXiv.2603.20792
 url: https://arxiv.org/abs/2603.20792v3
-claim: "Conjecture 5.6 asks for equatorial multiplicativity of the qubit Wigner distance; Conjecture 5.7 asks for self-tensor superadditivity on the nonpositive Bloch-product branch."
+claim: "Conjecture 5.5 asks that for equatorial magic ρ and qubit σ with s(σ) > 0 the tensor deficit factor as C(ρ)·f(σ) for a universal f; Conjecture 5.6 asks for equatorial multiplicativity of the qubit Wigner distance; Conjecture 5.7 asks for self-tensor superadditivity on the nonpositive Bloch-product branch."
 strata_touched:
   - D5/S3/Quantum/Magic/QubitWignerDistanceTensorRules
+  - D5/S3/Quantum/Magic/QubitWignerDeficitFactorRefutation
 license: citation-only
 triage: anchor
 ---
@@ -47,6 +48,15 @@ Page 7, Observation 5.1:
 > For a single-qubit state $\rho$ with Bloch vector $\vec r$, write
 > $s(\rho) := \operatorname{sgn}(r_x r_y r_z)$.
 
+Version 4 (arXiv:2603.20792v4, revised 6 October 2026), Section 5.2, Figure 1 caption and Section 5.4
+(`main.tex` lines 1009, 1093 and 1146–1155); Conjecture 5.5 has the same wording in v3:
+
+> Let $\rho_T$ denote any equatorial single-qubit magic state;
+
+> Deficit $(1+C(\rho))(1+C(\sigma))-1-C(\rho\otimes\sigma)$ against $C(\rho)C(\sigma)$ for Haar-random pure single-qubit pairs
+
+> \begin{conjecture}[Factored deficit] For equatorial magic states $\rho$ and qubit states $\sigma$ with $s(\sigma) > 0$: $\mathrm{deficit}(\rho,\sigma) = C(\rho)\cdot f(\sigma)$ for a universal function $f\geq0$ of the Pauli invariants $(|r_x|,|r_y|,|r_z|)$ of $\sigma$, vanishing iff $s(\sigma)\leq0$. \end{conjecture}
+
 Page 8, Conjecture 5.6 (Equatorial multiplicativity):
 
 > For $\langle Z\rangle_\rho = \langle Z\rangle_\sigma = 0$:
@@ -73,3 +83,4 @@ $r_xr_yr_z\leq0$, including the zero branch.
 
 - DOI: https://doi.org/10.48550/arXiv.2603.20792
 - URL: https://arxiv.org/abs/2603.20792v3
+- URL: https://arxiv.org/abs/2603.20792v4 (latest version; Conjecture 5.5 and Conjectures 5.6, 5.7 unchanged)

@@ -1,0 +1,9 @@
+### 定义 4：图上的乘积活动权来源
+
+有限简单图 $G=(V,E)$ 的边表示不能共同占位，合法配置为独立集 $\Sigma_G$。定义
+
+$$
+P_w(I)=\frac1{Z(w)}\prod_{i\in I}w_i,\quad w_i>0,
+\qquad \ell(I)=\Pr(O=1\mid I),\quad0<\ell(I)<1.
+$$
+

@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-common-ancestry-and-observation-boundary"
+path = "docs/develop/theory/AURIC_FIB_ATOM_COMMON_ANCESTRY_AND_OBSERVATION_BOUNDARY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

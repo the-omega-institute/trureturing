@@ -1,0 +1,49 @@
+**Claim status: open.**
+
+令有限状态空间为 $\Omega$，动作集为 $\mathcal A$，转移为 $\delta(s,a)$，观测为 $o(s)$，安全集合为 $K\subseteq\Omega$。对 belief $B\subseteq K$，定义
+$$
+\delta_a(B)=\{\delta(s,a):s\in B\},
+$$
+$$
+B_{a,y}=\delta_a(B)\cap o^{-1}(y),
+$$
+以及
+$$
+\mathcal F(S)=
+\left\{
+B\subseteq K:
+\exists a,\
+\delta_a(B)\subseteq K,\
+B_{a,y}\in S\text{ 对所有非空后继成立}
+\right\}.
+$$
+令
+$$
+V^\ast=\nu S.\mathcal F(S).
+$$
+则
+$$
+B\in V^\ast
+$$
+当且仅当存在基于观测和当前 belief 的策略，使系统从 $B$ 出发永久保持在 $K$ 中。
+
+证明方向是标准最大不动点归纳：不动点定义提供共同安全动作和所有观测后继的不动点闭合；反向令 $S$ 为策略可达 belief 集合，则 $S\subseteq\mathcal F(S)$，由最大不动点性质得到 $S\subseteq V^\ast$。
+
+抽象 FIB 控制反例取
+$$
+A=F[1],\qquad D=F[1,3],
+$$
+只观测 $x$，令安全集合 $K=\{A,D\}$，并设
+$$
+\delta(A,L)=A,\quad
+\delta(A,R)=F[\mathrm{null}],\quad
+\delta(D,R)=D,\quad
+\delta(D,L)=F[\mathrm{null}].
+$$
+完整状态观测时分别使用 $L$、$R$ 可保持安全；合并 belief $B=\{A,D\}$ 后
+$$
+\operatorname{Safe}(A)=\{L\},\qquad
+\operatorname{Safe}(D)=\{R\},
+$$
+交集为空，因此没有共同安全动作。该模型仅说明控制逻辑差异，不是 native FIB 动力学。
+

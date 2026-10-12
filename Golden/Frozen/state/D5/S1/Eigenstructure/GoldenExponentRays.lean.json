@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7ad6afed963ac97f0d3369ec5cae0612eb3c5c71439a922b2abfcc6dc2d4a2db"}
+{"statement_id":"sha256:7ad6afed963ac97f0d3369ec5cae0612eb3c5c71439a922b2abfcc6dc2d4a2db","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),14:Eigenstructure),18:GoldenExponentRays),19:goldenExponentValue)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),14:Eigenstructure),18:GoldenExponentRays),32:golden_exponent_rational_ray_iff)","kind":"theorem"}]}

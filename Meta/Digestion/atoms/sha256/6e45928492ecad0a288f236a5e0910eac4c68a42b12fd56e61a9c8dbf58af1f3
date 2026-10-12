@@ -1,0 +1,14 @@
+### 定义 3（两个线性读口的剩余配对）
+
+取：
+
+$$
+\ell=ax+by+cz,\qquad m=a'x+b'y+c'z.
+$$
+
+定义：
+
+$$
+\boxed{\mathcal B(\ell,m)=J_{\ell m}.}
+$$
+

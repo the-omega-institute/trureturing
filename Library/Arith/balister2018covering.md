@@ -26,7 +26,7 @@ normalized cylinder costs. This proposed extension is not a quoted theorem
 of these papers and has no local Lean proof.
 
 The primary v1 text was also read for the labelled-modulus application in
-[report 348](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md).
+[report 348](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md).
 Lemma 3.6 (pages 11–12) bounds moments by sums over congruence tuples;
 Lemma 3.7 bounds their divisor sums. Section 6 (pages 17–19) explicitly
 indexes all primes and accepts any constant kappa satisfying its
@@ -68,7 +68,7 @@ classes preserves distinctness and the prime restriction.
 Taking M above any prescribed cutoff greater than2 gives actual distinct
 odd near-covers supported entirely on larger primes. This specialization
 uses the construction, not an inference from large numerical moduli.
-[Report 347, Section 8](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/347-original-overlap-leakage-gives-a-uniform-reciprocal-gap.md#8-retaining-a-large-prime-near-cover-forces-internal-completion-cost)
+[Report 347, Section 8](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/347-original-overlap-leakage-gives-a-uniform-reciprocal-gap.md#8-retaining-a-large-prime-near-cover-forces-internal-completion-cost)
 combines it with an original-Haar overlap bound to constrain any
 hypothetical completion retaining every seed class. That completion
 constraint is a joint application, not a theorem stated in this paper.

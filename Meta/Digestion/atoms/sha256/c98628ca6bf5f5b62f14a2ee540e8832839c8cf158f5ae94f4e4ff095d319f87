@@ -1,0 +1,24 @@
+\[
+p(\kappa)
+=
+\left(
+1-X-Y-Z+\kappa,\,
+X-\kappa,\,
+Z,\,
+Y-\kappa,\,
+\kappa
+\right)
+\]
+
+合法性要求：
+
+\[
+\max(0,X+Y+Z-1)
+\le
+\kappa
+\le
+\min(X,Y)
+\]
+
+两个具有相同 \(X,Y,Z\) 但不同 \(\kappa\) 的分布，其差为：
+

@@ -1,0 +1,4 @@
+**Proposition 34.4 (Exterior membership is part of the calibration data).** The two numbers $r_v$ and $n_v$ are not interchangeable. If $a_v\in\lambda_v[J]$, then $n_v=r_v$ and the exterior class shares an interior scalar label; if $a_v\notin\lambda_v[J]$, then $n_v=r_v+1$ and the exterior class is new. The middle construction and the small-image construction treat these cases differently at decoding time: the former uses two explicit exterior flags, while the latter assigns $a_v$ the zero code and flags only the two actual donor phases.
+
+Thus a claimed adaptive formula that counts only internal labels, or only joined pairs, discards a source distinction that can change the fee. The relevant full-family invariant is the maximum scalar image $N$ together with the actual exterior-membership relation, while the strict joined-image condition is retained only to guarantee the global boundary $N\ge3$.
+

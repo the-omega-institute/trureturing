@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7754a24fd29a687462e545c0ad0c7615b2b42366e95c11f7c1eb843df4473815
+  normalized_sha256: sha256:7754a24fd29a687462e545c0ad0c7615b2b42366e95c11f7c1eb843df4473815
+cas_ref: sha256:7754a24fd29a687462e545c0ad0c7615b2b42366e95c11f7c1eb843df4473815
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅由钉版 Mathlib（mathlib@db584cd6d46c92f209a44c0f1c829460d327499d）闭合，仓内无可直接供应定义320.1的固定来源、任意完整历史共享权重全部子句的冻结 GID；OrderedCoordinateFlowRealization 的有限 read-once/cap 模型不被冒用。参数为原有限非空 A、Z、Y_a、请求 S、任意世界 θ、同一固定来源核 κ_θ 和世界无关行表。前向用 List.prod_nil、List.prod_append、List.prod_cons、Finset.mul_sum 和乘法结合交换：r_h 为同一历史的策略概率乘积，f_h(b)=r_hπ_h(b)，空乘积为1，行和为r_h，每个回答孩子均复制 f_h(a)，且 mul_nonneg、Finset.prod_le_one 给0≤r,f≤1。后向当r_h>0取 π_h(b)=f_h(b)/r_h，div_nonneg、Finset.sum_div、div_self 给非负且行和1；当r_h=0，Finset.sum_eq_zero_iff_of_nonneg 给全部f_h(b)=0，取任意固定概率行，所有孩子控制权重仍为0。mul_div_cancel₀ 和 mul_comm 给每一步 r_hπ_h(a)=f_h(a)=r_h(a,y)，故在相同的历史乘积递推上恢复全部给定 r,f；正权重行由 eq_div_iff 唯一确定，仅零权重行可任取。π 的构造只读共享 r,f，不读 θ。源与策略的概率因子由 Finset.prod_mul_distrib 分离；停止再乘同一 π_h(z)，给全部 θ,S,h 的到达概率 L_θ(h)r_h 和立即返回概率 L_θ(h)f_h(z)。概率解释使用 PMF.ofFintype、PMF.ofFintype_apply、ENNReal.ofReal_sum_of_nonneg 把有限非负归一化行变成离散核；停止后吸收，ProbabilityTheory.Kernel.traj 及 traj_map_frestrictLe、partialTraj_succ_of_le 给同一过程的全部有限柱概率。有限/可数离散历史使各核可测，每个固定 θ 单独实例化，不要求 Θ 的拓扑或可数性，也不添加几乎必终止假设。全条只使用行代数、既定同一乘积递推和标准轨迹合同，不把上游状态写成新 Lean 真值。
+    previous_atom_id: 4f9a65be3ffed6fea68bccd72e485129b3b82b63515f8f4b947ac987c7f739df
+    next_atom_id: 1a42a9a2dd0fc49cc061e3ac1d52af0f610988973325f1b0fbf419150738fa57

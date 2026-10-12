@@ -87,10 +87,10 @@ def WordFamily : ActivePhase → Letter → List Letter → Prop
   | .p, b, w => ∃ j, w = pWord j b
   | .beta, b, w => (b = 1 ∧ w = [1]) ∨ ∃ j, w = 0 :: pWord j b
 
-private theorem prefix_length (ω : Stream) (n : ℕ) : (readPrefix ω n).length = n := by
+theorem prefix_length (ω : Stream) (n : ℕ) : (readPrefix ω n).length = n := by
   simp [readPrefix]
 
-private theorem prefix_succ (ω : Stream) (n : ℕ) :
+theorem prefix_succ (ω : Stream) (n : ℕ) :
     readPrefix ω (n + 1) = ω 0 :: readPrefix (fun i => ω (i + 1)) n := by
   simp [readPrefix, List.ofFn_succ]
 
@@ -124,10 +124,10 @@ private theorem first_stop_parses (c : FourthControl) (ω : Stream) (b : Letter)
   | zero => simp [FirstStop, trace, readPrefix, Parses]
   | succ n ih => rw [first_stop_head, prefix_succ]; exact and_congr_right (fun _ => ih _ _)
 
-private theorem loop_succ (j : ℕ) : loopWord (j + 1) = 1 :: 0 :: loopWord j := by
+theorem loop_succ (j : ℕ) : loopWord (j + 1) = 1 :: 0 :: loopWord j := by
   simp [loopWord, List.replicate_succ]
 
-private theorem p_word_succ (j : ℕ) (b : Letter) :
+theorem p_word_succ (j : ℕ) (b : Letter) :
     pWord (j + 1) b = 1 :: 0 :: pWord j b := by
   simp [pWord, loop_succ]
 
@@ -255,7 +255,7 @@ private theorem measurable_prefix (n : ℕ) : Measurable (fun ω : Stream => rea
   exact (measurable_of_countable (fun v : Fin n → Letter => List.ofFn v)).comp
     (measurable_pi_lambda _ (fun i => measurable_pi_apply i.val))
 
-private theorem measurable_cylinder (w : List Letter) : MeasurableSet (prefixCylinder w) :=
+theorem measurable_cylinder (w : List Letter) : MeasurableSet (prefixCylinder w) :=
   (measurable_prefix w.length) (measurableSet_singleton w)
 
 /-- Measurability uses countably many measurable fibers, not a countable stream domain. -/
@@ -315,7 +315,7 @@ def explicitStoppedWordLaw (s : ActivePhase) (r : unitInterval) : Measure RawTai
       (R ^ 2 * A ^ j) • Measure.dirac (some (0 :: pWord j 0)) +
       (R * S ^ 2 * A ^ j) • Measure.dirac (some (0 :: pWord j 1)))
 
-private theorem cylinder_mass (r : unitInterval) (w : List Letter) :
+theorem cylinder_mass (r : unitInterval) (w : List Letter) :
     rawReadLaw r (prefixCylinder w) = wordMass r w := by
   classical
   cases w with
@@ -340,7 +340,7 @@ private theorem cylinder_mass (r : unitInterval) (w : List Letter) :
       rw [hm, Fin.prod_univ_succ]
       simpa only [rawReadLaw, Kernel.const_apply] using h
 
-private theorem bernoulli_alpha (r : unitInterval) :
+theorem bernoulli_alpha (r : unitInterval) :
     (bernoulliMeasure (0 : Letter) 1 r) {0} = alphaMass r := by
   simp [bernoulliMeasure, alphaMass]
 
@@ -353,7 +353,7 @@ private theorem loop_mass (r : unitInterval) (j : ℕ) :
   simp [wordMass, loopWord, List.map_flatten, List.prod_flatten,
     bernoulli_alpha, alphaMass, betaMass, mul_comm]
 
-private theorem p_word_mass (r : unitInterval) (j : ℕ) (b : Letter) :
+theorem p_word_mass (r : unitInterval) (j : ℕ) (b : Letter) :
     wordMass r (pWord j b) =
       (if b = 0 then alphaMass r else betaMass r ^ 2) *
         (alphaMass r * betaMass r) ^ j := by
@@ -398,7 +398,7 @@ private theorem nonstop_p_return (ω : Stream)
       simp [trace, totalRead, legalRead, pendingColor, hx] at hh
   exact ⟨h0, hβ, by simpa [totalRead, legalRead, hβ, Nat.add_assoc] using h2.2⟩
 
-private theorem nonstop_p_prefix (ω : Stream)
+theorem nonstop_p_prefix (ω : Stream)
     (h : Nonstop totalRead pendingColor (.active .p) ω) (j : ℕ) :
     Prefix ω (loopWord j) := by
   induction j generalizing ω with
@@ -411,7 +411,7 @@ private theorem nonstop_p_prefix (ω : Stream)
       simp only [List.length_cons, prefix_succ]
       simpa [h0, h1, Nat.add_assoc] using congrArg (fun w => (1 : Letter) :: 0 :: w) hp
 
-private theorem nonstop_beta_return (ω : Stream)
+theorem nonstop_beta_return (ω : Stream)
     (h : Nonstop totalRead pendingColor (.active .beta) ω) :
     ω 0 = 0 ∧ Nonstop totalRead pendingColor (.active .p) (fun i => ω (i + 1)) := by
   have ht := (nonstop_head _ _).mp h
@@ -431,7 +431,7 @@ def infiniteTail (s : ActivePhase) (n : ℕ) : Letter :=
   | .p => if n % 2 = 0 then 1 else 0
   | .beta => if n % 2 = 0 then 0 else 1
 
-private theorem loop_as_prefix (j : ℕ) :
+theorem loop_as_prefix (j : ℕ) :
     loopWord j = readPrefix (infiniteTail .p) (2 * j) := by
   let a : Fin 2 → Letter := fun i => if i.val = 0 then 1 else 0
   have ha : List.ofFn a = [1, 0] := rfl
@@ -445,7 +445,7 @@ private theorem loop_as_prefix (j : ℕ) :
     simp [Fin.repeat, Fin.modNat, infiniteTail, a]
   exact hn.symm.trans he
 
-private theorem infinite_tail_nonstop (s : ActivePhase) :
+theorem infinite_tail_nonstop (s : ActivePhase) :
     Nonstop totalRead pendingColor (.active s) (infiniteTail s) := by
   have ht : ∀ n, trace totalRead (.active s) (infiniteTail s) n =
       .active (if n % 2 = 0 then s else match s with | .p => .beta | .beta => .p) := by
@@ -554,14 +554,14 @@ theorem actual_noncompletion_mass_zero (r : unitInterval) (s : ActivePhase) :
             (show (unitInterval.toNNReal r : ℝ≥0∞) ≤ 1 from by
               exact_mod_cast r.property.2))
 
-private theorem p_word_length (j : ℕ) (b : Letter) :
+theorem p_word_length (j : ℕ) (b : Letter) :
     (pWord j b).length = 2 * j + if b = 0 then 1 else 2 := by
   have hl : (loopWord j).length = 2 * j := by
     rw [loop_as_prefix, prefix_length]
   simp [pWord, hl]
   split_ifs <;> simp
 
-private theorem p_word_injective (i j : ℕ) (a b : Letter) :
+theorem p_word_injective (i j : ℕ) (a b : Letter) :
     pWord i a = pWord j b ↔ i = j ∧ a = b := by
   constructor
   · intro h
@@ -570,7 +570,7 @@ private theorem p_word_injective (i j : ℕ) (a b : Letter) :
     fin_cases a <;> fin_cases b <;> simp at hl ⊢ <;> omega
   · rintro ⟨rfl, rfl⟩; rfl
 
-private theorem explicit_finite_mass (s : ActivePhase) (r : unitInterval) (w : List Letter) :
+theorem explicit_finite_mass (s : ActivePhase) (r : unitInterval) (w : List Letter) :
     explicitStoppedWordLaw s r {some w} =
       if ∃ b, WordFamily s b w then wordMass r w else 0 := by
   classical

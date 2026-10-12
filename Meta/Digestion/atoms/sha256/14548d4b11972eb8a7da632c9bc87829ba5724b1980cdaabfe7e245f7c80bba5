@@ -1,0 +1,16 @@
+## 9. 同概率量子仪器的不同后继
+
+另行供应两个量子比特和相干操作，只研究底面四模式，不把权限视为裸 FIB 语法自带。令 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$，输入 $|+\rangle|+\rangle$。
+
+定义 $E_{\mathrm{same}}=|00\rangle\langle00|+|11\rangle\langle11|$，$P_{ij}=|ij\rangle\langle ij|$。比较
+
+$$
+\mathcal J_{\mathrm{same}}(\varrho)=E_{\mathrm{same}}\varrho E_{\mathrm{same}}
+$$
+
+与先分别读取再只报告相同的
+
+$$
+\mathcal I_{\mathrm{same}}(\varrho)=P_{00}\varrho P_{00}+P_{11}\varrho P_{11}.
+$$
+

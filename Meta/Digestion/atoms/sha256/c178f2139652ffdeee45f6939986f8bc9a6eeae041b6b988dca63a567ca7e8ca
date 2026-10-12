@@ -1,0 +1,26 @@
+## theorem 3.2: 动态未来商的 Fibonacci 条件
+
+**Claim status: open.**
+
+在指定的非单例 Fibonacci 深度先验、活动历史域和共享 continuation kernel 下，令
+$$
+r_k=\frac{\operatorname{Fib}_{k+1}}{\operatorname{Fib}_{k+3}},
+\qquad
+s_k=\frac{\operatorname{Fib}_{k+2}}{\operatorname{Fib}_{k+3}},
+$$
+并令历史计数与 phase 为
+$$
+\sigma(h)=(a(h),A_h,B_h).
+$$
+深度后验满足
+$$
+\nu_h(k)\propto\mu(k)r_k^{A_h}s_k^{B_h}.
+$$
+在该声明域内，完整 future-law 等价关系为
+$$
+h\sim_{\mathrm{Fut}}h'
+\Longleftrightarrow
+\sigma(h)=\sigma(h').
+$$
+因为 $A_h,B_h\in\mathbb N$ 无界，未来等价类通常无限；有限维坐标不等于有限状态，也不等于有限比特。这个动态商不能与静态 $\kappa$ 轴无条件相乘，除非指定共同来源、联合律、response kernel、取得记录和未来操作合同。
+

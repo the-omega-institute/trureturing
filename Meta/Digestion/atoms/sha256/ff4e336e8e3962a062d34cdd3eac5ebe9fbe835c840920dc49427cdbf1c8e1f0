@@ -1,0 +1,8 @@
+**定理 4.1（子图单调、边并次可加与不交并）。** 设 $G,H$ 为有限图。
+
+(i) 若 $H$ 同构于 $G$ 的一个子图（顶点子集连同其间的部分边），则 $\kappa(H)\le\kappa(G)$。
+
+(ii) 若 $E_1\cap E_2=\varnothing$，则 $\kappa\bigl((V,E_1\cup E_2)\bigr)\le\kappa\bigl((V,E_1)\bigr)+\kappa\bigl((V,E_2)\bigr)$。
+
+(iii) $\kappa(G\sqcup H)=\max\{\kappa(G),\kappa(H)\}$。
+

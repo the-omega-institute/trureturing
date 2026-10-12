@@ -1,0 +1,24 @@
+### theorem 8.1: 二次响应的顺序无关消元
+
+**Claim status: open.** 对内部、边界分块
+
+$$
+L=\begin{pmatrix}L_{BB}&L_{BI}\\L_{IB}&L_{II}\end{pmatrix},
+$$
+
+若每个内部连通分量连接边界，则
+
+$$
+\boxed{\Lambda=L_{BB}-L_{BI}L_{II}^{-1}L_{IB}}
+$$
+
+且
+
+$$
+\boxed{\min_{u_I}\mathcal E(u_B,u_I)=\tfrac12u_B^{\mathsf T}\Lambda u_B.}
+$$
+
+**证明。** 固定边界后内部二次型严格凸，驻点满足 $L_{II}u_I+L_{IB}u_B=0$；解出并代回。对多个内部块，逐次最小化与联合最小化相同。证毕。
+
+前提是没有复制仍需共同满足的接缝变量，也没有删掉后续仍会读取的关系。最小化加法与概率求和不是同一种数值语义，不能只因都能写成矩阵就互换。
+

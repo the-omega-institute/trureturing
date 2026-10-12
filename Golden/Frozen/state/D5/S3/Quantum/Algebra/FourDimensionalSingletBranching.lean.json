@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ae04295c1edb9a4aa3e8b3136402e9f8ff55715be1f4038b38db381863abcc29"}
+{"statement_id":"sha256:ae04295c1edb9a4aa3e8b3136402e9f8ff55715be1f4038b38db381863abcc29","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),7:Algebra),31:FourDimensionalSingletBranching),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),7:Algebra),31:FourDimensionalSingletBranching),6:result)","kind":"theorem"}]}

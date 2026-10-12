@@ -1,0 +1,23 @@
+**Corollary 17.3 (small-branching exclusion on the unrestricted compatible domain).**
+Suppose the fixed installed prior also has a supported $k\ge3$.
+For every $(\Gamma_B,\Gamma_A)\in\mathfrak C$,
+
+$$
+\mathcal J+c_*\ge j_{\rm det}>0.
+\tag{17.13}
+$$
+
+Thus the subdomain $c_*\le\delta<j_{\rm det}$ has
+$\mathcal J\ge j_{\rm det}-\delta>0$. Every zero-level compatible pair
+must satisfy
+
+$$
+\max\{10d_B+4d_A,\ 4d_B+6d_A\}\ge11j_{\rm det},
+\qquad d_A+d_B\ge\frac{11}{10}j_{\rm det}.
+\tag{17.14}
+$$
+
+For every compatible sequence with $\mathcal J_n\to0$,
+$\liminf_n(d_{A,n}+d_{B,n})\ge11j_{\rm det}/10$.
+In particular no such sequence has vanishing complete-law branching.
+

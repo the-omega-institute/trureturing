@@ -1,0 +1,33 @@
+## 定义 5：未来安全遗忘
+
+称 \(T\) 是 future-safe 的，如果
+
+\[
+T(h)=T(h')
+\Longrightarrow
+\mathscr L_h=\mathscr L_{h'}.
+\]
+
+也就是说，\(T\) 可以忘记历史细节，但不能忘记任何会改变未来律的信息。
+
+由定理 1：
+
+\[
+T(h)=T(h')
+\Longrightarrow
+\sigma(h)=\sigma(h')
+\]
+
+在活动域上必须成立。
+
+所以：
+
+- chronology 如果不影响 future law，可以遗忘；
+- 某些过去记录如果不再影响任何合法未来，也可以遗忘；
+- 不同 \((a,A,B)\) 不能遗忘；
+- pending0 与 pending1 不能合并；
+- active 与 delivered 不能合并；
+- 若 \(J_{\mathscr L}\neq0\)，不同 \(\kappa\) 不能合并。
+
+这给出一个精确的方向性：
+

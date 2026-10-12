@@ -1,0 +1,56 @@
+# 六、单例先验是尖锐例外
+
+如果先验只支持一个深度：
+
+\[
+\operatorname{supp}\mu=\{k\},
+\]
+
+则 posterior 永远是
+
+\[
+\delta_k.
+\]
+
+这时，在固定 phase 内，计数 \((A,B)\) 不再改变隐藏深度后验，因此可能出现：
+
+\[
+\mathscr L_h=\mathscr L_{h'}
+\]
+
+即使
+
+\[
+(A_h,B_h)\neq(A_{h'},B_{h'}).
+\]
+
+所以“无限 future-law 商”需要至少两个正支持深度。
+
+但即使在单例先验下，终端标签仍不能删除：
+
+\[
+\mathrm{pending}_0,
+\qquad
+\mathrm{pending}_1,
+\qquad
+\mathrm{delivered}
+\]
+
+虽然它们的剩余 Read 数都可能是零，但未来义务不同：
+
+\[
+\mathrm{pending}_0\to\mathrm{Stop}_0,
+\]
+
+\[
+\mathrm{pending}_1\to\mathrm{Stop}_1,
+\]
+
+\[
+\mathrm{delivered}\to\varepsilon.
+\]
+
+因此，终端边界是另一类不可压缩信息。
+
+---
+

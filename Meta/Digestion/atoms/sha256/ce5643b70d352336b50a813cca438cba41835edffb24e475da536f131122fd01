@@ -1,0 +1,18 @@
+### theorem 3.1: 保持每个后验独立时的结果数下界
+
+**Claim status: open.** 若观察前 $b_1,\ldots,b_d$ 相互独立，每个正概率结果下它们仍相互独立，并且所有 $\nu_i>0$，则
+
+$$
+\boxed{m\ge d+1.}
+$$
+
+**证明。** 总协方差公式给出，对 $i\ne j$，
+
+$$
+\operatorname{Cov}(b_i,b_j)=\mathbb E[\operatorname{Cov}(b_i,b_j\mid O)]+\operatorname{Cov}(u_i(O),u_j(O)).
+$$
+
+前后独立使前两项中的总协方差和条件协方差都为零，故记录均值变化两两正交。于是 $B=\operatorname{diag}(\nu_1,\ldots,\nu_d)$ 的秩为 $d$，再用定理 2.1 即得。证毕。
+
+这里的“正交”来自同一份实际结果概率下的内积，而不是预先放置的坐标轴。在 FIB 链上，把偶数位固定为零、只让 $1,3,\ldots,2d-1$ 变化，就得到一份合法的 $d$ 位独立子来源；$d=2$ 时正是单窗金字塔底面。
+

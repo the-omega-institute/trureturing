@@ -23,10 +23,18 @@ __pycache__/
 /Generated/scribe-release/
 /Generated/scribe-resources/
 /tools/Generated/scribe-emissions.v1.json
-/Golden/Frozen/accepted/.ledger-stage-*/
-/Golden/Frozen/accepted/.ledger-write.lock
 /tools/lean-inspector/.lake/
 /tools/lean-inspector-interface/.lake/
 /tools/lean-inspector-reg/.lake/
 
 /Reg/.lake/
+
+/experiments/
+/docs/reports/**/*.json
+/docs/reports/**/*.b64
+/docs/reports/**/*.py
+/docs/reports/**/*.cpp
+/docs/reports/**/*.c
+/docs/reports/**/*.h
+/docs/reports/**/*.mjs
+/docs/reports/**/*.lean

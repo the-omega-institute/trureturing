@@ -1,0 +1,8 @@
+**Claim status: open.** 在概率内积 $\langle f,g\rangle=\mathbb E[fg]$ 下，$E_i$ 两两正交，并且
+
+$$
+\mathbb E[E_1^2]=u_1(1-u_1),
+\qquad
+\mathbb E[E_{i+1}^2]=\frac{u_{i+1}r_i}{1-u_i}.
+$$
+

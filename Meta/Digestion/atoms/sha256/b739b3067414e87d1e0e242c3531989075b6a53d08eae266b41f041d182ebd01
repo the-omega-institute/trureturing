@@ -1,0 +1,11 @@
+## 22. Dyadic-width exact INITIAL phase fees
+
+Retain the matched original reader (15.1)–(15.4), the full jointly attainable INITIAL records of Lemma 15.1, and every observation, action, stopping and fee condition of Definition 18.1. Fix integers
+
+$$
+r\ge4,\qquad m=2^r,\qquad k=2m-2,\qquad T=2m-1.
+\tag{22.1}
+$$
+
+Here $\gcd(m,T)=1$, so $P=\mathbb Z/T\mathbb Z$ and every phase, both values and every tail $0\le s<k$ occur jointly in actual complete-block histories. The history length is unknown. Since $m<k$, both original action alphabets equal $\{0,1\}^m$; crossing a seam can still cause absorbing rejection. Initial value or bottom is free, subsequent observations are only complete-block endpoints, and every emitted block is paid, including its bits after any rejection. There is no external clock, reset, copy, interior observation or observation of an unexecuted branch. The controller may retain its own emitted inputs and observed endpoints. GLOBAL means one preset literal stream at each emitted block number across all live archives and both free-value fibres; archive-dependent stopping is allowed.
+

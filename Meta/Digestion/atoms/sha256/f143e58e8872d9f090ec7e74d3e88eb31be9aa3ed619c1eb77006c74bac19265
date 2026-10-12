@@ -1,0 +1,28 @@
+**证明。** (i) 均匀测度 $\mu_b=1/|V|$ 给出 $\Phi_G(\mu)=|E|\cdot h(1/|V|,1/|V|)=|E|/(2|V|)$，由定理 3.2(iii) 得下界。全部份额取 $1/2$ 的分配给出 $L_b^G=d_b/4$，得上界。
+
+(ii) 对每个分配，每条边任选一个方向并记该向份额为 $x_e$，由 $x^2+(1-x)^2=\tfrac12+2(x-\tfrac12)^2$ 得
+
+$$
+\sum_bL_b^G(a)=\frac{|E|}{2}+2\sum_{e\in E}\Bigl(x_e-\frac12\Bigr)^2.
+\tag{4.2}
+$$
+
+若 $\kappa(G)=C(G)$，取最小点 $a^\star$，则 $|V|\kappa(G)\ge\sum_bL_b^G(a^\star)\ge|E|/2=|V|C(G)$，故 (4.2) 中每个平方为零，全部份额为 $1/2$，$L_b^G(a^\star)=d_b/4$。于是每个 $d_b/4\le\kappa(G)=|V|^{-1}\sum_cd_c/4$，即每个度数不超过平均度数，所有度数相等。反之，$d$ 正则时 $C(G)=d/4=\Delta(G)/4$，由 (i) 得等号。这一平均负载论证与母卷 §3.1 对 $\Gamma_n$ 的论证相同，此处推广到一般图。
+
+(iii) 若某连通分支 $H$ 是 $\Delta$ 正则的，由 (ii) 与定理 4.1(i)，$\kappa(G)\ge\kappa(H)=\Delta/4$，结合 (i) 得等号。反之，设没有连通分支是 $\Delta$ 正则的，$\Delta=\Delta(G)$。若 $\Delta=0$，每个分支是 $0$ 正则的单点，与假设矛盾，故 $\Delta\ge1$。对每个分支 $D$ 构造分配如下。若 $D$ 中没有度数为 $\Delta$ 的顶点，全部份额取 $1/2$，$D$ 中负载至多 $(\Delta-1)/4$。否则 $D$ 连通且不是 $\Delta$ 正则，含度数小于 $\Delta$ 的顶点；令 $\ell(b)$ 为 $b$ 到 $D$ 中度数小于 $\Delta$ 的顶点集的图距离，它有限，且相邻顶点的 $\ell$ 值至多相差一。取 $\varepsilon_1=1/(16\Delta)$，$\varepsilon_{j+1}=\varepsilon_j/(8\Delta)$。对 $\ell(c)=\ell(b)-1=j-1$ 的边令
+
+$$
+a_{c\leftarrow b}=\frac12-\varepsilon_j,\qquad a_{b\leftarrow c}=\frac12+\varepsilon_j,
+$$
+
+两端 $\ell$ 值相等的边两向都取 $1/2$。设 $\ell(b)=j\ge1$。$b$ 至少有一个 $\ell$ 值为 $j-1$ 的邻点，每个这样的邻点贡献 $\tfrac14-\varepsilon_j+\varepsilon_j^2\le\tfrac14-\varepsilon_j/2$；$\ell$ 值为 $j+1$ 的邻点至多 $\Delta-1$ 个，每个贡献 $\tfrac14+\varepsilon_{j+1}+\varepsilon_{j+1}^2\le\tfrac14+2\varepsilon_{j+1}$；其余邻点贡献 $\tfrac14$。故
+
+$$
+L_b^G(a)\le\frac{d_b}{4}-\frac{\varepsilon_j}{2}+2(\Delta-1)\varepsilon_{j+1}
+\le\frac{\Delta}{4}-\frac{\varepsilon_j}{2}+\frac{\varepsilon_j}{4}<\frac{\Delta}{4}.
+$$
+
+若 $\ell(b)=0$，则 $d_b\le\Delta-1$，各邻点至多贡献 $\tfrac14+2\varepsilon_1$，所以 $L_b^G(a)\le(\Delta-1)(\tfrac14+2\varepsilon_1)\le\tfrac{\Delta-1}{4}+\tfrac18<\tfrac\Delta4$。所有顶点负载严格小于 $\Delta/4$，顶点有限，故 $\kappa(G)<\Delta/4$。
+
+(iv) $d$ 正则时由 (ii) 得 $\kappa=C(G)=d/4$。$K_2$ 是 $1$ 正则的，$Q_d$ 是 $d$ 正则的；后者也可由定理 4.2 对 $\kappa(K_2)=1/4$ 归纳得到。
+

@@ -11,7 +11,8 @@ class NativeLocalReportConsumerTests:
         for name in ('lean_cache_release.py', 'cache_material.py'):
             self.copy('tools/scripts/worktree/' + name)
         # Make owns the real native report build; only Release transport is replaced.
-        first = self.guarded_command(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], env=self.env)
+        first = self.guarded_command(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'],
+            env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
         saved = self.root / 'saved-seed'
@@ -62,12 +63,13 @@ class NativeReportConsumerTests:
         self.env['STRATALINT_INSPECTOR_MODULE_WORK'] = str(work)
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
-        def entry(phase):
+        def entry(phase, *, env=None):
             work.write_text('')
             before = self.stamps()
             oleans = {path: (path.stat().st_mtime_ns, publication.digest(path))
                       for path in (self.root / '.lake/build/reg').rglob('*.olean')}
-            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], env=self.env)
+            result = self.guarded_command(['make', 'lean-report', 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'],
+                env=self.env if env is None else env)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             records = [json.loads(line) for line in work.read_text().splitlines()]
             data = dict(exit_code=result.returncode, modules=len(self.stamps()),
@@ -81,7 +83,7 @@ class NativeReportConsumerTests:
             self.record_result(phase, data, [work])
             return data
 
-        initial = entry('initial')
+        initial = entry('initial', env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(initial['assessed'], ['Reg.Leaf', 'Reg.Parent'])
         driver = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
         driver.write_text('def fixtureDriver : Nat := 2\n')
@@ -198,6 +200,7 @@ class NativeReportConsumerTests:
 
         # A malformed registered implementation still blocks the program build;
         # cached report data cannot conceal that failed obligation.
+        receipt_before_failure = publication.member(output, '.reuse.json').read_bytes()
         self.write('tools/lean-inspector/LeanInformationAudit/ArtifactAssessment.lean',
                    implementation('ArtifactAssessment', 'true'))
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
@@ -206,15 +209,16 @@ class NativeReportConsumerTests:
         errors = (logs / 'programs.stdout.log').read_text() + (logs / 'programs.stderr.log').read_text()
         self.assertIn('LeanInformationAudit/ArtifactAssessment.lean', errors)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stdout + failed.stderr)
-        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        self.assertEqual(receipt_before_failure, publication.member(output, '.reuse.json').read_bytes(),
+                         '[FAIL] program_failure_preserves_successful_report_receipt')
         self.assertEqual(expected, output.read_bytes())
         self.assertEqual(report_stamps, self.stamps())
 
-    def inspect(self, *, success=True, phase='report-entry'):
+    def inspect(self, *, success=True, phase='report-entry', env=None):
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
         started = time.monotonic()
         result = self.guarded_command(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
-            '--repository', str(self.root), '--output', str(output)], env=self.env)
+            '--repository', str(self.root), '--output', str(output)], env=self.env if env is None else env)
         phases = [dict(field.split('=', 1) for field in line.split()[1:])
                   for line in result.stderr.splitlines() if line.startswith('LEAN_INSPECTOR_PHASE ')]
         logs = []
@@ -323,7 +327,7 @@ class NativeReportConsumerTests:
                     restored = self.guarded_command([self.lake, 'cache', 'unstage', compiler_seed, 'leanInspector'])
                     self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
                 clear_calls()
-                recovered = self.inspect(phase=damage)
+                recovered = self.inspect(phase=damage, env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
                 self.assertEqual(builds(), [[*workspace, 'build', ':report']])
                 self.assertIn('phase=ensure status=started', recovered.stderr)
                 self.assertIn('phase=report status=completed', recovered.stderr,
@@ -348,6 +352,7 @@ class NativeReportConsumerTests:
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
         # A successful planning probe never exempts the normal entry from the
         # default-only input obligation. A changed audit must reach Lake/fail.
+        receipt_before_failure = publication.member(output, '.reuse.json').read_bytes()
         self.write('Audit.lean', 'def audit : False := True.intro\n')
         probe(phase='invalid-audit-probe')
         clear_calls()
@@ -355,7 +360,8 @@ class NativeReportConsumerTests:
         self.assertFalse(fact.exists(), '[FAIL] failed_build_has_no_successful_work_fact')
         self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
-        self.assertFalse(publication.member(output, '.reuse.json').exists())
+        self.assertEqual(receipt_before_failure, publication.member(output, '.reuse.json').read_bytes(),
+                         '[FAIL] program_failure_preserves_successful_report_receipt')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         publication.member(seed, '.reuse.json').unlink()
         clear_calls()

@@ -1,4 +1,5 @@
 import Lean.Declaration
+import Lean.Data.PersistentHashMap
 import Lean.LocalContext
 import Lean.Util.InstantiateLevelParams
 
@@ -28,12 +29,14 @@ structure Result (α : Type) where
   height : Nat
   deriving Inhabited
 
+/-- Hash-trie insertion retains the original key equality and updates only the
+selected branch; shared and lexical tables keep completed results and heights. -/
 structure Memo where
-  heads : Std.HashMap (ExprStructEq × Bool × Bool × Array ExprStructEq) (Result Expr) := {}
-  types : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Expr) := {}
-  propositions : Std.HashMap (ExprStructEq × Array ExprStructEq) (Result Bool) := {}
-  erased : Std.HashMap (USize × Array USize) (Expr × Array Expr × Result Expr) := {}
-  comparisons : Std.HashMap (ExprStructEq × ExprStructEq × Array ExprStructEq) (Result Bool) := {}
+  heads : PersistentHashMap (ExprStructEq × Bool × Bool × Array ExprStructEq) (Result Expr) := {}
+  types : PersistentHashMap (ExprStructEq × Array ExprStructEq) (Result Expr) := {}
+  propositions : PersistentHashMap (ExprStructEq × Array ExprStructEq) (Result Bool) := {}
+  erased : PersistentHashMap (USize × Array USize) (Expr × Array Expr × Result Expr) := {}
+  comparisons : PersistentHashMap (ExprStructEq × ExprStructEq × Array ExprStructEq) (Result Bool) := {}
 
   deriving Inhabited
 
@@ -74,10 +77,10 @@ partial def head (e : Expr) (depth : Nat := 0) (zeta : Bool := true)
   step depth
   let binders := if e.hasLooseBVars then binders else #[]
   let key := (ExprStructEq.mk e, zeta, preserveDecisions, binders.map ExprStructEq.mk)
-  if let some value := (← get).heads[key]? then return ← reuse value depth
+  if let some value := (← get).heads.find? key then return ← reuse value depth
   let closed := !e.hasFVar && !binders.any (·.hasFVar)
   if closed then
-    if let some value := (← get).shared.heads[key]? then return ← reuse value depth
+    if let some value := (← get).shared.heads.find? key then return ← reuse value depth
   let enclosingDepth := (← get).maxDepth
   modify fun state => { state with maxDepth := depth }
   let value ← headCore e depth zeta preserveDecisions binders
@@ -184,10 +187,10 @@ partial def typeShape (e : Expr) (binders : Array Expr := #[])
   step depth
   let binders := if e.hasLooseBVars then binders else #[]
   let key := (ExprStructEq.mk e, binders.map ExprStructEq.mk)
-  if let some value := (← get).types[key]? then return ← reuse value depth
+  if let some value := (← get).types.find? key then return ← reuse value depth
   let closed := !e.hasFVar && !binders.any (·.hasFVar)
   if closed then
-    if let some value := (← get).shared.types[key]? then return ← reuse value depth
+    if let some value := (← get).shared.types.find? key then return ← reuse value depth
   let enclosingDepth := (← get).maxDepth
   modify fun state => { state with maxDepth := depth }
   let value ← typeShapeCore e binders depth
@@ -274,10 +277,10 @@ partial def propositionShape (type : Expr) (binders : Array Expr := #[])
   step depth
   let binders := if type.hasLooseBVars then binders else #[]
   let key := (ExprStructEq.mk type, binders.map ExprStructEq.mk)
-  if let some value := (← get).propositions[key]? then return ← reuse value depth
+  if let some value := (← get).propositions.find? key then return ← reuse value depth
   let closed := !type.hasFVar && !binders.any (·.hasFVar)
   if closed then
-    if let some value := (← get).shared.propositions[key]? then return ← reuse value depth
+    if let some value := (← get).shared.propositions.find? key then return ← reuse value depth
   let enclosingDepth := (← get).maxDepth
   modify fun state => { state with maxDepth := depth }
   let value ← match type with
@@ -327,10 +330,10 @@ partial def sameShape (left right : Expr) (depth : Nat := 0)
   if left == right then return true
   let binders := if left.hasLooseBVars || right.hasLooseBVars then binders else #[]
   let key := (ExprStructEq.mk left, ExprStructEq.mk right, binders.map ExprStructEq.mk)
-  if let some value := (← get).comparisons[key]? then return ← reuse value depth
+  if let some value := (← get).comparisons.find? key then return ← reuse value depth
   let closed := !left.hasFVar && !right.hasFVar && !binders.any (·.hasFVar)
   if closed then
-    if let some value := (← get).shared.comparisons[key]? then return ← reuse value depth
+    if let some value := (← get).shared.comparisons.find? key then return ← reuse value depth
   let enclosingDepth := (← get).maxDepth
   modify fun state => { state with maxDepth := depth }
   let value ← sameShapeCore left right depth binders
@@ -457,10 +460,10 @@ partial def erase (e : Expr) (binders : Array Expr := #[])
   -- Erasure retains raw metadata, whose source bytes Expr.equal can ignore.
   -- Keep the live inputs as well as their exact pointer keys.
   let key := (unsafe ptrAddrUnsafe e, binders.map fun (type : Expr) => unsafe ptrAddrUnsafe type)
-  if let some (_, _, value) := (← get).erased[key]? then return ← reuse value depth
+  if let some (_, _, value) := (← get).erased.find? key then return ← reuse value depth
   let closed := !e.hasFVar && !binders.any (·.hasFVar)
   if closed then
-    if let some (_, _, value) := (← get).shared.erased[key]? then return ← reuse value depth
+    if let some (_, _, value) := (← get).shared.erased.find? key then return ← reuse value depth
   let enclosingDepth := (← get).maxDepth
   modify fun state => { state with maxDepth := depth }
   let value ← eraseCore e binders depth

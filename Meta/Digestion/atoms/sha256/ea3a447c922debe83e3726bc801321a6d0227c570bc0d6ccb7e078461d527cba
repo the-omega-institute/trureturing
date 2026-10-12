@@ -1,0 +1,27 @@
+**命题 21.3（固定律的不可逆收缩回路）。** 对同一个 $\pi$，置 $R=\pi\mathbf1^{\mathsf T}$，并取 $0<\lambda<1$，定义
+
+$$
+T_\lambda=\lambda I+(1-\lambda)R.
+$$
+
+此输运严格正且列随机，满足
+
+$$
+T_\lambda\pi=\pi,\qquad T_\lambda h=\lambda h,\qquad
+T_\lambda^n=\lambda^nI+(1-\lambda^n)R\quad(n\ge0),\qquad T_\lambda\ne I.
+$$
+
+一节点自环采用它时，共同节点律唯一为 $\pi$，每个回路都固定这个选定律，但每个非空回路的算子非恒等。同一占据纤维中的两律之差收缩为 $\lambda^n$ 倍，未条件化占据保持闭合；完整态的逆却不保持概率：
+
+$$
+T_\lambda^{-1}=\lambda^{-1}I-\frac{1-\lambda}{\lambda}R,
+\qquad
+(T_\lambda^{-1})_{ij}=-\frac{1-\lambda}{5\lambda}<0\quad(i\ne j).
+$$
+
+因此它没有全单纯形上的随机逆。令 $S_t=e^{-t}I+(1-e^{-t})R$，则 $t\ge0$ 给前向随机半群；没有以相同 $S_t$ 为正参数部分的、全单纯形随机映射组成的双向群延拓。
+
+证明。$R^2=R$、$R\pi=\pi$、$Rh=0$，故 $T_\lambda=\lambda(I-R)+R$ 在两个互补投影上分别乘 $\lambda,1$，得到幂和唯一线性逆。非对角元 $(1-\lambda)/5$ 为正，对角元再加 $\lambda$，列和为一。若概率律满足 $T_\lambda p=p$，则 $(1-\lambda)(p-\pi)=0$，故唯一为 $\pi$；$T_\lambda h=\lambda h\ne h$ 则说明算子不恒等。可见下降具体为 $q\mapsto\lambda q+(1-\lambda)q_*$。
+
+逆的任一列都有负分量，故把相应纯态送出单纯形。任何全单纯形上的逆映射都必须取这个唯一线性原像，因此即使不预设逆的线性也不能获得全域概率逆。用 $e^{-s}e^{-t}=e^{-(s+t)}$ 和两个互补投影得 $S_sS_t=S_{s+t}$；若延拓为群，负参数必为正参数的逆，仍有上述负分量。限制到可达像 $T_\lambda(\Delta_4)$ 可以作集合逆，但这不等于全单纯形双向随机输运，也未赋予逆动作权限。选定固定律、可见闭合、隐藏差收缩、线性可逆和概率可逆在此有明确不同的结论；参数 $t$ 没有由该构造获得物理时间意义。∎
+

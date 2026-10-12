@@ -88,6 +88,20 @@ internal interface IRepositoryGateway
 internal interface ILeanReportSource
 {
     LeanAxiomReport Load(RepositorySnapshot snapshot);
+    LeanAxiomReport Load(LeanReportScope scope);
+}
+
+internal static class LeanReportSourceScope
+{
+    internal static LeanAxiomReport Load(
+        ILeanReportSource source,
+        RepositorySnapshot snapshot,
+        IEnumerable<RepoPath> requestedTargets)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        var scope = LeanReportScope.Create(snapshot, requestedTargets);
+        return source.Load(scope);
+    }
 }
 
 internal sealed partial class ProductionCliEnvironment : ICliEnvironment
@@ -319,12 +333,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult AlignLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAlignWriter.Align(repositoryRoot, repository, arguments);
-
-    public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
-
-    public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
 
     public CommandResult ReanchorMathlibLedger(IReadOnlyList<string> arguments) =>
         DagLedgerMathlibReanchorWriter.Reanchor(

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0e45b3b245acf0d1e2bb276b741ef071238c6b054e7bf6c97a5a956f1940c16f"}
+{"statement_id":"sha256:0e45b3b245acf0d1e2bb276b741ef071238c6b054e7bf6c97a5a956f1940c16f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:RotationAvoidance),31:RotationAvoidanceAscendingSplit),35:ascending_nonextreme_endpoint_count)","kind":"theorem"}]}

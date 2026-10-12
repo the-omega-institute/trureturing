@@ -1,0 +1,15 @@
+**实际前缀与剩余取得（Claim status: open）。** 固定源 §54.1–54.2 的前缀 $h_0$ 必须是同一读者从共同的空缓存初态在 $T_n$ 上实际执行得到的前缀。令
+
+$$
+J_0=\operatorname{paid}(h_0),\qquad
+R_n(h_0)=\{p\in P_n:S_p\cap J_0=\varnothing\}.
+$$
+
+其中 $\operatorname{paid}$ 只去重实际请求的字面地址。对在整个 $W_n$ 上正确、满足该同源合同的读者及其指定证据消费者，任何在 $T_n$ 上的有限终止续行 $t$ 必须满足
+
+$$
+\forall p\in R_n(h_0),\quad S_p\cap\operatorname{paid}(t)\ne\varnothing,
+\qquad
+\bigl|\operatorname{paid}(h_0t)\setminus J_0\bigr|\ge |R_n(h_0)|.
+$$
+

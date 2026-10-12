@@ -9,8 +9,8 @@ internal static class MathlibUpgradePropositionSourceDiagnostics
         RepositorySnapshot protectedBase,
         RepositorySnapshot candidate,
         ImmutableHashSet<RepoPath> reanchoredPaths,
-        FrozenLedgerBaseView baseView,
-        FrozenMaterialCatalog candidateCatalog)
+        FrozenStateCatalog baseState,
+        LeanAxiomReport candidateReport)
     {
         var failures = ImmutableArray.CreateBuilder<RepoPath>();
         var baseSources = LeanSourceCatalog.Parse(protectedBase);
@@ -21,15 +21,15 @@ internal static class MathlibUpgradePropositionSourceDiagnostics
         {
             try
             {
-                if (!baseView.ActiveByPath.TryGetValue(path, out var recorded)
-                    || !candidateCatalog.ByPath.TryGetValue(path, out var current)
+                if (!baseState.Records.TryGetValue(path, out var recorded)
+                    || !candidateReport.Files.TryGetValue(path, out var current)
                     || !SourceBytesMatch(protectedBase, candidate, path)
                         && !baseSources.ExtractPropositionSource(
                                 path,
-                                recorded.Material.DeclarationStatementIds)
+                                recorded.Declarations)
                             .AsSpan().SequenceEqual(candidateSources.ExtractPropositionSource(
                                 path,
-                                current.DeclarationStatementIds).AsSpan()))
+                                FrozenStateRecord.Project(current)).AsSpan()))
                 {
                     failures.Add(path);
                 }

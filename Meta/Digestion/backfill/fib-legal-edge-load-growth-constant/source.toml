@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-growth-constant"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

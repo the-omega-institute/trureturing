@@ -1,0 +1,25 @@
+### 定义 1（线性读出边界）
+
+设有限来源域为 $\Omega$，大小为 $N$，系数域为 $K$。
+
+已经保留的函数张成：
+
+$$
+\mathcal R\subseteq K^\Omega.
+$$
+
+对来源权重向量 $a=(a_s)_{s\in\Omega}$，读数为：
+
+$$
+\langle r,a\rangle=\sum_sr(s)a_s,\qquad r\in\mathcal R.
+$$
+
+未被这些读数区分的线性变化为：
+
+$$
+\boxed{\mathcal N(\mathcal R)=\{d:\langle r,d\rangle=0\quad\forall r\in\mathcal R\}.}
+$$
+
+在实概率模型中，$d$ 是两份概率律的差；实际扰动还须满足非负性。
+在有限域模型中，$a$ 是代数坐标或计数余数，**不将有限域元素直接当作非负概率。**
+

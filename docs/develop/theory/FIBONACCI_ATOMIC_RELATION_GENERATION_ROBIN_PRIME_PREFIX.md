@@ -4182,8 +4182,8 @@ C_{\rm pair}=\int_2^4\int_u^{2u}
 本次读取的源快照 SHA-256：
 
 * `docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md`：`eb0bcb3fad6aaded820f8e6d3c8cb07008068c694a7747ac369cd1f5ad96acda`。
-* `docs/reports/fib-robin-boundary/robin-kernel-diagonal.json`：`29834f084f6b7be486efd5c1516093e4b6c2a12e690c46d01e94e31c472e963d`。
-* `docs/reports/fib-robin-boundary/robin-kernel-diagonal.md`：`1f8347eda47d65d874dbda10c053fc1ee743ac040b99470350b3b279c33f45c7`。
+* `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/robin-kernel-diagonal.json`：`29834f084f6b7be486efd5c1516093e4b6c2a12e690c46d01e94e31c472e963d`。
+* `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/robin-kernel-diagonal.md`：`1f8347eda47d65d874dbda10c053fc1ee743ac040b99470350b3b279c33f45c7`。
 * `Library/Weil/johnstonyang2022pnt.md`：`adb7c7bc038556fe195dc977121a4fe9a34d804e0578c81964b4e8c3a2a779d8`。
 
 这些源与经典供给的归属保持原记录。本节是纸面证明；原临界有符号估计、其常数和全范围仍未解决。

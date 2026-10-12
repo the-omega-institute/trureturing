@@ -1,0 +1,16 @@
+### 定义 1.1：不改变模式的经典条件读口
+
+固定严格正来源律 $p$。读口返回有限结果 $O$，条件似然为
+
+$$
+L(o\mid s)=\Pr(O=o\mid s),\qquad \sum_oL(o\mid s)=1.
+$$
+
+结果概率和后验为
+
+$$
+q_o=\sum_sp_sL(o\mid s),\qquad p_s^o=\frac{p_sL(o\mid s)}{q_o},
+$$
+
+只讨论 $q_o>0$ 的实际结果。
+

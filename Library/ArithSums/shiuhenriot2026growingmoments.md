@@ -57,7 +57,7 @@ Thus (R1) gives a sound uniform estimate on a restricted range but does not reac
 
 P. Shiu, *A Brun-Titchmarsh theorem for multiplicative functions*, J. reine angew. Math. **313** (1980), 161–170, DOI [10.1515/crll.1980.313.161](https://doi.org/10.1515/crll.1980.313.161). The bibliographic title is sometimes transcribed as “Titschmarsh”.
 
-Original scanned paper: [Göttingen article PDF](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0313/LOG_0015.pdf). The function class on printed p.162 and Theorem 1 on printed p.163 were read from the page images, not inferred from OCR. The original has $0<\alpha,\beta<1/2$, and coprime positive residue/modulus $(a,q)=1$. In the original's variables,
+Original scanned paper: [Göttingen article PDF](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0313/LOG_0015.pdf). The function class on printed p.162 and Theorem 1 on printed p.163 were read from the page images, not inferred from OCR. The original has $0<\alpha,\beta<1/2$ and refers to printed p.161, equation (1.1): $0<a<q$, $(a,q)=1$. Thus the literal substitution $a=q=1$ is outside this statement. In the original's variables,
 
 $$
 \sum_{\substack{x-h<n\le x\\n\equiv a\pmod q}}f(n)

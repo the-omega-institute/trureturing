@@ -1,0 +1,12 @@
+- `D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean`
+
+仓库主页已经把 Fibonacci 权重、Zeckendorf 表示、观察丢失和恢复判据放进同一个“逻辑真值几何”的研究框架里；其中明确指出，若两个状态在给定观察下读数相同，而目标不同，则该目标不能由这些读数恢复，必须增加新的观察或关系。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com)
+
+这正好给 Auric FIB ATOM 一个严格的解释：
+
+> FIB ATOM 不是一套直接描述“物理本体”的坐标，而是一套逐层压缩、逐层恢复关系的读出系统。
+
+因此，我们必须始终区分：
+
+| 层 | 保存的对象 | 可能遗忘的关系 |
+|---|---|---|

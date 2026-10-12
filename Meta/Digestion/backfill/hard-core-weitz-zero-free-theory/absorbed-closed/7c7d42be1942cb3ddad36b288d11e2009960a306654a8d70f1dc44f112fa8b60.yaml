@@ -1,0 +1,35 @@
+fingerprints:
+  raw_sha256: sha256:7c7d42be1942cb3ddad36b288d11e2009960a306654a8d70f1dc44f112fa8b60
+  normalized_sha256: sha256:7c7d42be1942cb3ddad36b288d11e2009960a306654a8d70f1dc44f112fa8b60
+cas_ref: sha256:7c7d42be1942cb3ddad36b288d11e2009960a306654a8d70f1dc44f112fa8b60
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.gibbs_expected_card
+    target_statement_id: sha256:fa0f8d696bcacd46661672999572d6be3bb77433cd5d0214882bc742e0a8d30c
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.gibbs_mass_nonneg
+    target_statement_id: sha256:62bfa235a06771e24a938e3aa2d78c4551379abf0ae5b0c41a234c3a0ebc8c22
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.gibbs_mass_sum
+    target_statement_id: sha256:5e3020a057be5540bc9306088633e9e15066b345858e90e6f50af5e8fff19416
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.gibbs_pmf_toReal
+    target_statement_id: sha256:c30348da3dfe403d8227037568eeb3efeb3bf414f374bb45b072441770d41f78
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.gibbs_variance
+    target_statement_id: sha256:9a6fa89c9e7a2e334656b4b8b3964dda04c12555c2c69b27d7ca9842417c0548
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.gibbs_vertex_occupied
+    target_statement_id: sha256:7d3a57bb1057df15ab290148177c9f23d3077d1a58339c504506f9d52fb71734
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.mass_moment_eq
+    target_statement_id: sha256:4646a78e9ffff4b617f108a8b5b08615d146e07890c022117d76d57921e58102
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.mean_eq_sum_vacancies
+    target_statement_id: sha256:db84e420cab459671e21aafc57b5bed0850cb09fcfbd962b3f5ba2ac5a1637a5
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.mean_occupation_bounds
+    target_statement_id: sha256:42b2c5c060ae12eff25e908b3a4f33ecb1334d151c5a0d99527c4fd2d8f3c1d1
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.mean_occupation_deriv_nonneg
+    target_statement_id: sha256:925da0dcd4d48732046e12aedd46ab0980e45b9cd1ec36120f37265a41d93ecc
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.mean_occupation_fluctuation_response
+    target_statement_id: sha256:676353d096ccd11bc56dbba251ae78ec67ae2521a1ba0e707568761a59c5d659
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.occupation_variance_nonneg
+    target_statement_id: sha256:cd120c36020c43b81e0542dd9935d4cc56e259911313ac5af04644c49c33070b
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.variance_eq_moments
+    target_statement_id: sha256:e3d49514da19e0de42de2e4c3fd1b89415c270004de880b1d6e27538a595e43f
+  - gid: D5/S3/StatisticalMechanics/HardCore/GibbsOccupation.zero_activity_moments
+    target_statement_id: sha256:c0902acaa5ae6ce7c232ab9a5ffedf885908bae46d498e6c32dc2ea0c9b99d9d
+receipts:
+  unresolved_subitems: []

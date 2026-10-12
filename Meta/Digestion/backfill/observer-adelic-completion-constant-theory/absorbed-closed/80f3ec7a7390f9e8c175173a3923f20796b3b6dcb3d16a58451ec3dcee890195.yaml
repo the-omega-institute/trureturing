@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:80f3ec7a7390f9e8c175173a3923f20796b3b6dcb3d16a58451ec3dcee890195
+  normalized_sha256: sha256:80f3ec7a7390f9e8c175173a3923f20796b3b6dcb3d16a58451ec3dcee890195
+cas_ref: sha256:80f3ec7a7390f9e8c175173a3923f20796b3b6dcb3d16a58451ec3dcee890195
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockSugawaraCommutators.L_mode_commutator
+    target_statement_id: sha256:1c0b26a8c886a8617a9f5e940f55c0130aa9d3242d7e34ebc8a9d482b963fc9d
+  - gid: D5/S3/VertexAlgebra/PolynomialFockSugawaraSupport.L_interval_sum
+    target_statement_id: sha256:9c599eb34c5e9a2c214b9d7ff0ad112ceba72c600b623a509b94ba40dbfbd47d
+  - gid: D5/S3/VertexAlgebra/PolynomialFockSugawaraSupport.normalPair_support_interval
+    target_statement_id: sha256:4965c0130d0dbcb3bc99ea25c46d318f4523b7b32c7450986791b3fb99994f7c
+  - gid: D5/S3/VertexAlgebra/PolynomialFockVirasoroCentral.L_commutator
+    target_statement_id: sha256:ef66005a249bbf6c435a839119acacfa743f2989ef4bee3f01093cfe64144903
+receipts:
+  unresolved_subitems: []

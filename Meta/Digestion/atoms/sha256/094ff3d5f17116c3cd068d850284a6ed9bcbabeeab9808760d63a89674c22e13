@@ -1,0 +1,88 @@
+**定理 26.9（五边图控制的共同基准读口）。** 在定义 26.2 的四维
+共同坐标、Lebesgue 测度、单位和 $\vartheta$ 下，令
+$K_0=K_{\varnothing}$、$a=\sqrt\lambda e_L$、$b=\sqrt\mu e_R$。
+四个成员 $K_{\varnothing},K_1,K_3,K_{13}$ 均取 $q_s=0,c_s=0$。
+取一个共同基准场 $\xi_0\sim\mathcal N(0,\vartheta K_0^{-1})$，并令
+$$
+Y_1=a^{\mathsf T}\xi_0+\epsilon_1,\qquad
+Y_3=b^{\mathsf T}\xi_0+\epsilon_3,
+$$
+其中噪声独立、各为 $\mathcal N(0,\vartheta)$，与 $\xi_0$ 独立。令
+$\alpha=a^{\mathsf T}K_0^{-1}a$、$\beta=b^{\mathsf T}K_0^{-1}b$、
+$\chi=a^{\mathsf T}K_0^{-1}b$，则
+$$
+r^2=\frac{\chi^2}{(1+\alpha)(1+\beta)},\qquad
+I(Y_1;Y_3)=-\tfrac12\log(1-r^2).
+$$
+本应用恰有 $K_1=K_0+aa^{\mathsf T}$、$K_3=K_0+bb^{\mathsf T}$、
+$K_{13}=K_0+aa^{\mathsf T}+bb^{\mathsf T}$，故其四角自由能满足
+$$
+\mathcal J_{\mathcal F}
+=\mathcal F_{13}-\mathcal F_1-\mathcal F_3+\mathcal F_{\varnothing}
+=-\vartheta I(Y_1;Y_3).
+$$
+在定理 26.6 的单位图中，$1-r^2=48/49$，所以
+$I(Y_1;Y_3)=\tfrac12\log(49/48)$，并且定理 26.8 的平均自由能差为
+$-\vartheta I(Y_1;Y_3)/2$。这里的 $I$ 只指这个单一基准高斯的互信息；
+模式混合读口的互信息未被此等式计算。若允许定义 26.1 的任意模式源或常数，
+还须保留 $c_s-\tfrac12q_s^{\mathsf T}K_s^{-1}q_s$ 的四角差，不能沿用裸等式。
+
+**证明。** 读口协方差除以 $\vartheta$ 是
+$\left(\begin{smallmatrix}1+\alpha&\chi\\
+\chi&1+\beta\end{smallmatrix}\right)$。有限正高斯的熵—行列式恒等式
+给第一式；秩一行列式引理给
+$\det K_{13}\det K_0/(\det K_1\det K_3)=1-r^2$。
+四个零源、零常数成员的共同归一化项抵消，定义 26.7 给第二式；
+定理 26.6 的行列式和定理 26.8 给单位消费者。该信息恒等式的
+经典范围见 [Lami--Hirche--Adesso--Winter，式 (1)--(3)、(8)--(10)]
+(../../../Library/StatisticalMechanics/lamihircheadessowinter2017logdet.md)。
+一般的模式混合律不必是高斯律，不能只把混合协方差代入该高斯熵公式。
+
+对于任意有限多端口情形，
+取任意有限 $n,r_A,r_B$ 和实矩阵
+$A\in\mathbb R^{n\times r_A}$、$B\in\mathbb R^{n\times r_B}$，取 $K_0\succ0$、
+$G_0=K_0^{-1}$ 及 $\theta=\vartheta>0$。四个成员使用同一坐标测度和单位，
+并都取 $q=c=0$；令
+$$
+K_A=K_0+AA^{\mathsf T},\qquad K_B=K_0+BB^{\mathsf T},\qquad
+K_{AB}=K_0+AA^{\mathsf T}+BB^{\mathsf T}.
+$$
+在共同基准下取相互独立的
+$\xi\sim\mathcal N(0,\theta G_0)$、
+$\epsilon_A\sim\mathcal N(0,\theta I_{r_A})$ 和
+$\epsilon_B\sim\mathcal N(0,\theta I_{r_B})$，并令
+$$
+Y_A=A^{\mathsf T}\xi+\epsilon_A,\qquad
+Y_B=B^{\mathsf T}\xi+\epsilon_B.
+$$
+于是完整协方差除以 $\theta$ 为
+$$
+\begin{pmatrix}S_A&C\\ C^{\mathsf T}&S_B\end{pmatrix},\qquad
+S_A=I_{r_A}+A^{\mathsf T}G_0A,\quad
+S_B=I_{r_B}+B^{\mathsf T}G_0B,\quad
+C=A^{\mathsf T}G_0B,
+$$
+其白化交叉块为 $R=S_A^{-1/2}CS_B^{-1/2}$。所引用的块行列式与 Schur
+恒等式给出
+$$
+\frac{\det K_{AB}\det K_0}{\det K_A\det K_B}
+=\det(I_{r_A}-RR^{\mathsf T})
+=\prod_j(1-\sigma_j^2),
+$$
+其中 $\sigma_j$ 枚举 $R$ 的全部奇异值。独立正噪声使
+$0\le\sigma_j<1$；零奇异值、秩亏方向以及两端口维数不同时的多余纯噪声方向
+都被计入（后者给单位因子）。因此在共享零源／零偏置约定下，
+$$
+\mathcal J_{\mathcal F}
+=\frac{\theta}{2}\sum_j\log(1-\sigma_j^2)
+=-\theta I(Y_A;Y_B).
+$$
+若恢复非零源或常数，则仍须保留现有的
+$\{c_s-\tfrac12q_s^{\mathsf T}K_s^{-1}q_s\}_s$ 四角修正。两个具体代入给出：
+$K_0=I_2$、$A=B=I_2$ 时 $R=I_2/2$，两项平方奇异值均为 $1/4$，行列式比为
+$9/16$ 且 $\mathcal J_{\mathcal F}/\theta=\log(3/4)$；五边图基端口
+$A=[e_L,e_T]$、$B=[e_R,e_T]$ 时 $R=\operatorname{diag}(1/7,1/2)$，行列式比为
+$36/49$；这里五边图取定理 26.6 的单位基准，即五条边和三个控制均为 $1$。
+一般块恒等式承担上述量词域。标量 logdet 读数本身不恢复符号、取向或相位，
+完整带符号协方差仍是另一对象。证毕。
+

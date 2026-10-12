@@ -1,0 +1,25 @@
+### theorem 3（$J_f$ 是新增关系的完整坐标）
+
+Claim status: open
+
+在任意域 $K$ 上：
+
+$$
+\boxed{\begin{aligned}
+f={}&f_{\varnothing}+(f_1-f_{\varnothing})x+(f_3-f_{\varnothing})y\\
+&+(f_2-f_{\varnothing})z+J_fxy.
+\end{aligned}}
+$$
+
+因此：
+
+$$
+\boxed{f\in\mathcal R_0\iff J_f=0.}
+$$
+
+若 $J_f\ne0$，则：
+
+$$
+\boxed{\operatorname{span}\{1,x,y,z,f\}=K^\Sigma.}
+$$
+

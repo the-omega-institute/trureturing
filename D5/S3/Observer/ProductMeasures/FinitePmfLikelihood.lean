@@ -99,7 +99,7 @@ lemma pmfRealMass_nonneg (p : PMF (Output i)) (o : Output i) :
 
 omit [∀ i, MeasurableSpace (Output i)]
     [∀ i, MeasurableSingletonClass (Output i)] [∀ i, Fintype (Output i)] in
-private lemma pmfRealMass_sum [Fintype (Output i)] (p : PMF (Output i)) :
+lemma pmfRealMass_sum [Fintype (Output i)] (p : PMF (Output i)) :
     ∑ o, pmfRealMass p o = 1 := by
   have h := congrArg ENNReal.toReal p.tsum_coe
   rw [tsum_fintype] at h

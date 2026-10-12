@@ -1,0 +1,56 @@
+### III.3 — 未来响应记号
+
+
+若 $f$ 是五模式上的函数，记：
+
+$$
+f_{\mathrm{null}}=f(F[\mathrm{null}]),
+$$
+
+
+$$
+f_1=f(F[1]),
+\qquad
+f_2=f(F[2]),
+\qquad
+f_3=f(F[3]),
+\qquad
+f_{13}=f(F[1,3]).
+$$
+
+
+则：
+
+$$
+\mathbb E[f]
+=
+f_{\mathrm{null}}
++
+(f_1-f_{\mathrm{null}})X
++
+(f_3-f_{\mathrm{null}})Y
++
+(f_2-f_{\mathrm{null}})Z
++
+J_f\kappa,
+$$
+
+
+其中：
+
+$$
+J_f
+=
+f_{\mathrm{null}}
+-
+f_1
+-
+f_3
++
+f_{13}.
+$$
+
+
+因此：
+
+- 若 $J_f=0$，该未来动作看不到隐藏的 $\kappa$；

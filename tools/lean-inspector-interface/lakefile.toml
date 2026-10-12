@@ -3,6 +3,7 @@ version = "0.1.0"
 defaultTargets = ["LeanInformationAuditInterface"]
 packagesDir = "../../.lake/packages"
 buildDir = "../../.lake/build/lean-inspector/interface"
+weakLeanArgs = ["-j1"]
 
 [[require]]
 name = "trureturing"

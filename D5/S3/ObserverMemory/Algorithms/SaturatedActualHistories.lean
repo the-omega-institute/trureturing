@@ -50,7 +50,7 @@ def TerminatesIn : Nat → Slot → Source → Prop
       C.output (C.readNext u.1.val u.2) = x
   | n + 1, u, x => ∃ v, C.Edge I u v ∧ TerminatesIn n v x
 
-private theorem terminal_no_edge {u v : Slot}
+theorem terminal_no_edge {u v : Slot}
     (halt : C.action (C.readNext u.1.val u.2) = .halt) : ¬ C.Edge I u v := by
   rintro ⟨x, i, j, hi, hj, hij, waits⟩
   obtain ⟨_, _, _, _, _, read, _⟩ := u.1.property
@@ -247,7 +247,7 @@ private theorem saturated_tree {n : Nat} {u : Slot} {S : Finset Source}
     obtain ⟨R⟩ := ihr rs
     exact ⟨.fork (different sn tn) separate L R parent ln rn⟩
 
-private theorem next_event {x : Source} {t : Nat} {u : Slot}
+theorem next_event {x : Source} {t : Nat} {u : Slot}
     (h : C.Occurs I x t u) (active : C.action (C.readNext u.1.val u.2) ≠ .halt) :
     ∃ k v, C.Occurs I x k v ∧ t < k ∧
       (∀ i, t < i → i < k → C.action (C.run hp hP x i).2 = .wait) ∧
@@ -445,7 +445,7 @@ private theorem saturated_support [Finite Q] {n : Nat} {u : Slot} {S : Finset So
   obtain ⟨tree⟩ := tree_exists hp hP C I realized budget
   exact saturated_tree hp hP C I tree full
 
-private theorem later_read_step {x : Source} {t k : Nat} {u v : Slot}
+theorem later_read_step {x : Source} {t k : Nat} {u v : Slot}
     (_ht : C.Occurs I x t u) (hk : C.Occurs I x k v) (tk : t < k)
     (waits : ∀ i, t < i → i < k → C.action (C.run hp hP x i).2 = .wait) :
     (laterReads hp hP C I x t).card = (laterReads hp hP C I x k).card + 1 := by

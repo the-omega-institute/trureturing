@@ -187,3 +187,190 @@ Eligible lower tables with more than two labels, arbitrary other acquired suppor
 [S15]: https://raw.githubusercontent.com/the-omega-institute/trureturing/3541b57c0d31a89f11fb8b86c75b7b1555e49e6f/docs/develop/theory/KBONACCI_JOINT_RESPONSE_AND_SEAM_COST.md
 
 ## 追加锚（本行以下为增补区）
+
+## 5. The exact stationary control memory of the five-label fee-four family
+
+The consumer is exactly Example 3.2 extended by Corollary 3.1, with five pairwise distinct labels and initial bottom labelled $R$. The paid four-block fee is reused. The additional resource here is the complete stationary controller of [Continuation II, Definitions 26.1–26.2 and Theorem 27.2][CM]: its program positions, remembered endpoint values and stopping outputs are counted together. A proof's issued index or hidden apparatus coordinate is not an input to that controller.
+
+**定义 5.1（The counted INITIAL contract）。** Fix $m\ge6$, $k=2m-2$, $T=2m-1$, $h=m-2$, and $r=m-3$. All residues below are modulo $T$. Since $\gcd(m,T)=1$, the source set is
+
+$$
+Q=\{\bot\}\sqcup\{(v,-j,s):v\in\mathbb F_2,\ j\in\mathbb Z/T\mathbb Z,\ 0\le s<k\}.
+$$
+
+Each successful record is a jointly realizable INITIAL source by [the canonical joint-history construction, (1.3)][IF]. Choose pairwise distinct $A,B,M,R,C$, put $j_B=2m-2$ and $J=(\mathbb Z/T\mathbb Z)\setminus\{0,m\}$, and fix the immutable target
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s\ge h,\\
+C,&s<h,\ j\in\{0,m\},\\
+M,&1\le s<h,\ j\in J,\\
+B,&s=0,\ j=j_B,\\
+A,&s=0,\ j\in J\setminus\{j_B\},
+\end{cases}
+\qquad f(\bot)=R.
+\tag{5.1}
+$$
+
+The free observation is $v$ or $\bot$. A controller consists of a finite nonempty set $K$ and stationary tables
+
+$$
+c:\{0,1,\bot\}\to K,\qquad
+u:K\to\{0,1\}^m\sqcup\operatorname{Halt}(\{A,B,M,R,C\}),\qquad
+V:K\times\{0,1,\bot\}\to K.
+\tag{5.2}
+$$
+
+An emitting state performs its literal word with the original bit updates [IF, (1.2)], pays one complete block even on rejection, and applies $V$ to the actual endpoint observation. A stopping state returns its installed label. There is no separately readable issued index, endpoint archive, hidden phase/tail, reset, copy or output latch. Every usable runtime distinction belongs to $K$. Let $K_{\min}(4;m)$ be the minimum cardinality of a controller correct on every source in $Q$ and stopping after at most four emitted blocks. Its tables and word descriptions may be compiled separately for known $m$.
+
+**引理 5.2（Two forced roots and the complete cut entries）。** For every correct controller in Definition 5.1, the two scalar initial states $a_v=c(v)$ are distinct emitting states with $u(a_v)=1^m$. Their zero-difference successors
+
+$$
+d_v=V(a_v,v)
+\tag{5.3}
+$$
+
+are emitting states distinct from both roots. For some $b_v,c_v\in\{0,1\}$ their words are exactly
+
+$$
+u(d_v)=1^r0b_vc_v.
+\tag{5.4}
+$$
+
+If $d_0=d_1$, the two words, hence their two final bits, coincide. On the mandatory root occurrence, each of a root's scalar response entries is realized by a source with target different from $B$. On the mandatory cut occurrence, each scalar response entry is realized by an $A$ source. Consequently none of these scalar entries can lead directly to a state with instruction $\operatorname{Halt}(B)$.
+
+Proof. At either free value, choose $j\in J$ and initial tails $0,h$. Their labels differ. A root containing a zero after $\ell<m$ leading ones lets both reach that zero, because $h+\ell\le2m-3=k-1$. Their values and phases agree and the zero clears both tails. They then have the same physical record and the same observed archive, so no later deterministic continuation recovers the unequal INITIAL labels. Stopping initially is also impossible. Thus the root word is $1^m$, as in Corollary 3.1.
+
+Suppose its two initial control states coincide. After this common root, condition on either scalar endpoint $y$. That one control state must contain the zero-difference sources with initial value $y$, and the positive-difference sources with initial value $1-y$. It cannot stop. If its next word begins zero, at any fixed $j\in J\setminus\{j_B\}$ the former sources with initial tails $0,1$ merge, losing labels $A,M$. If it begins one, take initial tail $h-1$ from both a zero-difference phase in $J$ and a positive-difference phase in $\{0,m\}$. Both current tails are $k-1$ and both current values are $y$; the first bit rejects them into the same bottom record and endpoint, losing labels $M,C$. These two first-bit cases exhaust every literal next word. Hence $a_0\ne a_1$.
+
+The root-zero archive at either value contains $A,B,M$ and cannot stop. Another $1^m$ rejects every member and loses unequal labels, so its next state is neither root. Theorem 2.1 and Example 3.2 force the unique eligible first zero at $r=m-3$. Directly, a first zero after $\ell<r$ leading ones lets the initial tails $0,1$ at a fixed $A$ phase survive and merge, losing $A,M$; after $\ell>r$, one has $\ell\ge h$ and even the initial tail-zero $A,B$ sources reject together. Only $\ell=r$ remains. There are then exactly two unconstrained final bits, giving all four words (5.4) without selecting a preferred final tail. The low-tail phase set $H=\{2,\ldots,m-1\}$ has cut charge zero and label $A$. The cut turn $2m-3$ has charge one and also label $A$, regardless of $b_v,c_v$. Thus both successful scalar entries at each cut are occupied by $A$ sources. At root $a_v$, response $v$ includes $A$ sources and response $1-v$ includes $C$ sources. Correctness prohibits a direct $B$ stop at all these entries. ∎
+
+**引理 5.3（A required fourth-block state and the universal ten-state lower evidence）。** Define $\beta_v=v\oplus b_v$. On the $B$ source with free value $v$, let $e_v$ and $p_v$ be its control states after two and three emitted blocks. Then
+
+$$
+e_v=V(d_v,\beta_v),\qquad p_v=V(e_v,\beta_v).
+\tag{5.5}
+$$
+
+Both are emitting states. The state $p_v$ is distinct from every root and every cut entry. Its two scalar successors are stopping states with labels $A$ and $B$, in some order. If $\beta_0\ne\beta_1$, then $p_0\ne p_1$. Every correct depth-four controller therefore has at least ten complete control states.
+
+Proof. For each $v$, pair its $B$ source at $j_B$ and tail zero with the tail-zero $A$ source at
+
+$$
+j_A(v)=
+\begin{cases}
+2m-4,&b_v=0,\\
+2m-3,&b_v=1.
+\end{cases}
+\tag{5.6}
+$$
+
+They are actual sources, including at $m=6$. Both have zero root difference. The cut charges at $j_B,j_A(v)$ are both $b_v$, by [IF, (1.4)]. Thus after the cut their observed values are both $\beta_v$, their current tails are the same trailing run $\tau_v\le2$, and they occupy the same state $e_v$.
+
+For the third block the full physical charge window is $W_2=[1,m+1]$. All of $j_B,2m-4,2m-3$ lie outside it: $2m-4>m+1$ for $m\ge6$. Every legal third word therefore has charge zero on the pair. Every such word is also safe from their common tail, since $\tau_v+m\le m+2<2m-2=k$. Its actual endpoint is again $\beta_v$ on both sources, and its final tail is again common. The pair cannot have stopped after the root, cut or third word. This proves (5.5) and that $e_v,p_v$ emit.
+
+At the fourth block, rejection is common to the pair: rejection depends on their equal incoming tails and the literal word, not on phase. Common rejection cannot recover their unequal labels. Thus the final word must succeed on both and give different scalar endpoints. With the four-block deadline, those two scalar successors must already be $\operatorname{Halt}(A)$ and $\operatorname{Halt}(B)$. Lemma 5.2 excludes $p_v$ from all root and cut states.
+
+If the two $p_v$ were one state and $\beta_0\ne\beta_1$, its one fourth-block literal word would give the same charge $q_3(j_B)$ to both $B$ sources. Their endpoints $\beta_v\oplus q_3(j_B)$ would be opposite, forcing both scalar successors to output $B$. This contradicts the paired $A$ source. Hence unequal $\beta_v$ require distinct fourth-block states.
+
+All five labels occur, so at least five distinct stopping states are required. If the cut entries differ, two roots, two cuts and at least one fourth-block state require five additional emitting states. If the cuts coincide, their $b_v$ coincide, so $\beta_0\ne\beta_1$; two roots, one cut and two fourth-block states again require five emitting states. This proves $K_{\min}(4;m)\ge10$ for all controllers. It uses no normal form for delayed homogeneous stops or third/fourth words. ∎
+
+**定理 5.4（The exact all-controller minimum is eleven）。** Under Definition 5.1, for every $m\ge6$,
+
+$$
+\boxed{K_{\min}(4;m)=11.}
+\tag{5.7}
+$$
+
+In particular the complete five-emitting-state competitor class has no correct depth-four controller. An attaining stationary controller has six emitting states and five stopping states. Its literal description and offline compilation resources are separate from this cardinality and from its four paid blocks.
+
+Proof, constructive upper bound. Use the already priced four words
+
+$$
+L=1^m,\qquad D=1^r0^3,\qquad Z=0^m,\qquad P=0^r1\,0^2.
+\tag{5.8}
+$$
+
+Take states $a_0,a_1,d,w,p_0,p_1$ and $H_A,H_B,H_M,H_R,H_C$. Initialize $c(0)=a_0$, $c(1)=a_1$, $c(\bot)=H_R$. The entire emitting table is
+
+| State | Installed word | Endpoint $0$ | Endpoint $1$ | Endpoint $\bot$ |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $L$ | $d$ | $H_C$ | $H_R$ |
+| $a_1$ | $L$ | $H_C$ | $d$ | $H_R$ |
+| $d$ | $D$ | $w$ | $w$ | $H_M$ |
+| $w$ | $Z$ | $p_0$ | $p_1$ | $H_R$ |
+| $p_0$ | $P$ | $H_A$ | $H_B$ | $H_R$ |
+| $p_1$ | $P$ | $H_B$ | $H_A$ | $H_R$ |
+
+For each label $X$, set $u(H_X)=\operatorname{Halt}(X)$ and $V(H_X,y)=H_X$ for every $y$. The bottom entries at $w,p_0,p_1$ complete the table and are unreachable from the allowed sources. There is no free clock: each row has one word and one endpoint update at every possible occurrence.
+
+Here is a full support–rank certificate. Put $\lambda(j)=B$ when $j=j_B$ and $A$ otherwise, and put $\epsilon(j)=\mathbf1_{\{j=2m-3\}}$ for $j\in J$. Let $F(j,s)$ be the restriction of (5.1) to $j\in J,\ 0\le s<h$. Supports contain immutable target/current-record pairs; $v,j,s$ below are proof coordinates, not runtime inputs:
+
+$$
+\begin{aligned}
+\Gamma_{a_b}
+ &=\{(f(b,-j,s),(b,-j,s)):j\in\mathbb Z/T\mathbb Z,\ 0\le s<k\},\\
+\Gamma_d
+ &=\{(F(j,s),(v,-j+m,m+s)):v\in\mathbb F_2,\ j\in J,\ 0\le s<h\},\\
+\Gamma_w
+ &=\{(\lambda(j),(v\oplus\epsilon(j),-j+2m,0)):v\in\mathbb F_2,\ j\in J\},\\
+\Gamma_{p_b}
+ &=\{(\lambda(j),(b,-j+3m,0)):j\in J\},\\
+\Gamma_{H_X}&=\{X\}\times Q.
+\end{aligned}
+\tag{5.9}
+$$
+
+Assign ranks $4,3,2,1,0$ to $a_b,d,w,p_b,H_X$, respectively. Initial coverage follows directly from $c$. The root rejects exactly $s\ge h$ with label $R$. On success its charge is $\mathbf1_{\{0,m\}}(j)$, so the positive branch has label $C$, and the zero branch is exactly $\Gamma_d$. On that support, $D$ rejects exactly $s\ge1$ into label $M$. At $s=0$, its first zero is safe because $m+r=k-1$, its endpoint tail is zero, and its charge restricted to $J$ is $\epsilon(j)$. This gives $\Gamma_w$. The paid $Z$ preserves the value, clears the tail, advances phase and enters exactly $\Gamma_{p_b}$ according to its actual scalar endpoint. Finally $P$ is safe from tail zero and at issued index three has charge support $\{j_B,0\}$. Phase zero was excluded from these supports, so its difference is exactly $\mathbf1_{\{j=j_B\}}$. The final comparison in the table therefore returns $\lambda(j)$.
+
+These statements give legal literal actions, successor closure and strict rank descent on every emitting support. Each stopping support contains only its installed target. The terminal supports are permitted overapproximations; no action is executed after stopping. By the reused support–rank criterion [CM, Theorem 27.2], every allowed source stops correctly within four paid blocks. The proof of the certificate is ordinary and makes no current kernel claim. Actual $A,B$ sources use four blocks, $M$ sources two, successful $C$ and rejected $R$ sources one, and initial bottom zero.
+
+Proof, exclusion of every ten-state competitor. Suppose a correct controller has at most ten states. Lemma 5.3 already excludes fewer than ten. All five stopping labels and the forced emitting roles must therefore fit into precisely five emitting states. Every fourth-block state $p_v$ has both scalar successors stopping with labels in $\{A,B\}$. In particular neither $e_v$ can be any fourth-block state: the actual third endpoint is scalar $\beta_v$, whereas $p_v=V(e_v,\beta_v)$ must still emit. No early stopping convention removes this requirement, because the paired unequal labels have not been separated.
+
+Case one: $d_0=d_1=d$. The cut has a single word and $\beta_0\ne\beta_1$. By Lemma 5.3, the five emitting states are exactly
+
+$$
+\{a_0,a_1,d,p_0,p_1\}.
+\tag{5.10}
+$$
+
+The third-block state $e_v$ is neither fourth-block state. It is not $d$ either: if $e_v=d$, then (5.5) gives $p_v=V(d,\beta_v)=e_v=d$, a contradiction. Thus $e_v=a_i$ for some $i$. If $i=\beta_v$, its mandatory zero-response entry is $V(a_i,i)=d$, again contradicting $p_v$ being a fourth-block state. Necessarily
+
+$$
+e_v=a_{1-\beta_v},\qquad V(a_{1-\beta_v},\beta_v)=p_v.
+\tag{5.11}
+$$
+
+Case two: $d_0\ne d_1$. The five emitting states can contain only one fourth-block state, so $p_0=p_1=p$. Lemma 5.3 requires $\beta_0=\beta_1=\beta$. The emitting set is exactly $\{a_0,a_1,d_0,d_1,p\}$. Again neither $e_v$ is $p$. If $e_v=d_i$, stationarity and (5.5) imply
+
+$$
+p=V(e_v,\beta)=V(d_i,\beta)=e_i.
+\tag{5.12}
+$$
+
+But $e_i$ cannot be a fourth-block state, a contradiction. Hence $e_v$ is a root. The zero-response root entry excludes $a_\beta$, leaving
+
+$$
+e_0=e_1=a_{1-\beta},\qquad V(a_{1-\beta},\beta)=p.
+\tag{5.13}
+$$
+
+The same all-word contradiction closes both cases. Fix a value $v$ and write $p=p_v$, $\beta=\beta_v$, and $a=a_{1-\beta}$. Equations (5.11) or (5.13) say that a positive-difference root source with initial value $1-\beta$ enters $p$ after its first block. In particular take an actual $C$ source at $j=0$, initial tail zero. Its current value is $\beta$ and its current tail is $m$. If $u(p)$ succeeded on this source, its scalar endpoint would immediately enter one of the installed $A,B$ stops, mislabelling $C$. Therefore this literal word must reject the $C$ source.
+
+For any length-$m$ literal word, rejection from tail $m$ requires at least $h=k-m=m-2$ leading ones. Indeed, if its first zero is after $\ell<h$ ones, it reaches that zero safely, and every later internal run has length at most $m<k$, so no later rejection is possible. The all-one word also has at least $h$ leading ones. This covers every possible $u(p)$, without a selected action summary.
+
+On the actual $B$ execution, however, the third-block state is $a$, whose word is $1^m$. It is safe from the cut tail $\tau_v\le2$ and leaves current tail $m+\tau_v\ge m$. The same $h$ leading ones of $u(p)$ therefore reject this $B$ source as well. They also reject its paired $A$ source, whose tail is identical. Their shared bottom endpoint cannot yield both labels, contrary to Lemma 5.3. Both five-emitting-state cases are impossible. Thus every correct controller has at least eleven states, matching (5.8)–(5.9). ∎
+
+**计量与范围 5.5（What is counted and what the conclusion closes）。** The eleven states include the six runtime program/value roles and all five stopping outputs. A separate immutable dictionary contains four expanded words of total length $4m$ bits; the routing and initialization tables have constant size. Descriptions of the five fixed labels, the target predicates and the binary parameter $m$ are separately metered. Generating expanded words has an output cost proportional to $m$; offline computation and compiler workspace are not charged by either $|K|$ or the emitted-block fee. The result is a uniform cardinal bound for controllers compiled for known $m$, not a constant-total-storage, physical-memory or optimal-compilation claim.
+
+The lower proof retains every literal third/fourth word, both arbitrary final cut bits, delayed homogeneous stops and cross-depth state reuse. Its exhaustive split is equality or inequality of the two actually mandatory cut entries. The incompatibility of a shared fourth-block state with an early $C$ occurrence is proved from the actual union support, rather than imposed as a policy normalization. The specific $K=10$ completeness obligation is therefore closed by the ordinary proof. Different targets, label coincidences, horizons, hidden observation permissions, parameter ranges and the original guarded-tree or all-target objectives are outside (5.7).
+
+**来源与证据边界 5.6（Mature premises and new ordinary content）。** The original bit reader, joint realization, charge inverse and first-zero loss come from [IF, Definitions 1.1–1.3 and Interface 1.4]. Root forcing, the complete cut entry and the four paid words reuse this companion's Theorem 2.1, Corollary 3.1 and Example 3.2. Complete Moore-style accounting and support–rank verification reuse [CM, Sections 26–27]. Reissig, Weber and Rungger, *Feedback Refinement Relations for the Synthesis of Symbolic Controllers*, [arXiv:1503.03715v3, Sections III-A–III-B](https://arxiv.org/html/1503.03715v3#S3), supplies the mature stateful-controller and closed-loop framework; van den Bos and Vaandrager's completed-observation identification framework is cited in Mathematical citation 4.1. Neither source supplies the numeric minimum (5.7).
+
+The new family-specific content is the mandatory fourth-block support argument and the exhaustive five-emitting-state incompatibility proof. These are `repo-derived` ordinary deductions. Any `suspected-novel` priority assessment remains unverified; the cited comparison is not an exhaustive literature search. No Lean/kernel verification, ingestion, frozen-state acceptance, CI outcome or whole-project completion follows from this ordinary theorem.
+
+[IF]: https://github.com/the-omega-institute/trureturing/blob/f41910858bd5ad5592fae12340cfb62c79a8c673/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md
+[CM]: https://github.com/the-omega-institute/trureturing/blob/f41910858bd5ad5592fae12340cfb62c79a8c673/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+
+## 追加锚（本行以下为增补区）

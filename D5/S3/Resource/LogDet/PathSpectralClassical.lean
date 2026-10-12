@@ -131,7 +131,7 @@ private lemma barrierPathKernel_intervalIntegrable (x : ℝ) (hx : 0 < x) :
       (sub_pos.mpr (lt_of_le_of_ne hu.2 huOne)) (mul_nonneg hu.1 hx.le)
     exact ne_of_gt (by nlinarith)
 
-private lemma trace_cfc_eq_sum {n : Type*} [Fintype n] [DecidableEq n]
+lemma trace_cfc_eq_sum {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.IsHermitian) (f : ℝ → ℝ) :
     (cfc f A).trace.re = ∑ i, f (hA.eigenvalues i) := by
   rw [hA.cfc_eq, Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply]

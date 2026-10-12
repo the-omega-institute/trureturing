@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a3a167c18f03b2d952ac36131008558cda78c154aceee1894bfdcc7ceca09716
+  normalized_sha256: sha256:a3a167c18f03b2d952ac36131008558cda78c154aceee1894bfdcc7ceca09716
+cas_ref: sha256:a3a167c18f03b2d952ac36131008558cda78c154aceee1894bfdcc7ceca09716
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeProducts/GlobalPrimeExponentRealizability.global_prime_exponent_realizable_iff
+    target_statement_id: sha256:f36886eec0cbe64db5e24e59d8c5b31021820db981c8fdabd4b84e1d9b7c9bfa
+  - gid: D5/S3/Analytic/PrimeProducts/GlobalPrimeExponentRealizability.prime_exponent_realization_unique
+    target_statement_id: sha256:d8cffa31b8296958afcd5d53a033350feced8e9993977db475537a9847cc9f37
+  - gid: D5/S3/Analytic/PrimeProducts/GlobalPrimeExponentRealizability.zeta_realizes_prime_exponent_law
+    target_statement_id: sha256:79c4dbda08ca4487dd0ec6bd37babe743738bb0f43f9e925b8005e6b31fdf485
+receipts:
+  unresolved_subitems: []

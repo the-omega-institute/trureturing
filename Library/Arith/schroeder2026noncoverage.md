@@ -64,7 +64,7 @@ exited zero. These checks rely on the pinned official toolchain and dependencies
 and preserve `hThree`. The source transplant below does not include that
 arithmetic noncoverage endpoint.
 
-The [bridge program](../../docs/reports/erdos7-odd-covering/bridge_checks.py)
+The [bridge program](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/bridge_checks.py)
 is an original repository experiment that binds selected formulas to this
 exact archive and calculates two finite
 counterexamples to proposed extensions. Substring checks are evidence binding

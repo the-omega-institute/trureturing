@@ -1,0 +1,87 @@
+**Proof.** By (14.29), $D=P-M_p$ on $S_{\rm evt}=M_\beta$.
+Theorem 15.2 gives the sign and restricts equality to (15.3).
+The distinct native suspended event masses are $22/27$ and $93/125$,
+whose midpoint is $M_\beta$. Their a-endpoint total weight must therefore
+be exactly $1/2$. If both components use the same endpoint this is
+impossible; if they use opposite endpoints it forces $2w=1/2$. This gives
+exactly the two stated tables.
+
+For the first assertion, reuse $S_{\rm evt}(N)=M_\beta$ and
+$q_-=M_p-P(N)>1/1000$ from (14.26), together with N's complete boxes and
+cost enclosures in Section 12.6 and (14.27). If the mixture puts mass
+$\theta\in(0,1)$ on E, its suspended midpoint forces
+$S_{\rm evt}(E)=M_\beta$. Its p event mean is then
+
+$$
+(1-\theta)(M_p-q_-)+\theta P(E)
+\le M_p-(1-\theta)q_-<M_p.
+\tag{15.24}
+$$
+
+These means and the complete configuration losses are linear in the
+mixture weights when the table selector is part of the configuration.
+Thus the positive side of (14.28) cannot be supplied by any such E,
+including either equality table. The obstruction precedes the interior
+cost comparisons; N's passing interior costs do not supply the missing
+event balance.
+
+For the second assertion, the four endpoint risk budgets imply both full
+coordinate boxes and both event midpoints by Interface 4.1. The preceding
+classification leaves only the two equality tables. At either table the
+distribution of p configuration laws is
+$\tfrac12\delta_{P_{p,a}}+\tfrac12\delta_{P_{p,b}}$.
+The supplied complete-coordinate triangle identity gives, for every
+normalized complete p target R,
+
+$$
+\begin{aligned}
+&\frac{\operatorname{TV}(P_{p,a},R)+\operatorname{TV}(P_{p,b},R)}2-\rho_p\\
+&\quad=\frac12\sum_{z\in\Omega_p}\operatorname{dist}
+\left(R(z),[\min\{P_{p,a}(z),P_{p,b}(z)\},
+             \max\{P_{p,a}(z),P_{p,b}(z)\}]\right).
+\end{aligned}
+\tag{15.25}
+$$
+
+This includes the infinite coordinate. For $z=w_{3,1}$ its upper endpoint
+is $q=1944/390625$. Every supported $k\ge3$ has
+$r_k\in[3/8,5/13]$ by (2.1), and the supplied native-word gap is
+
+$$
+P_{p,r_k}(w_{3,1})=r_k^3(1-r_k)^5
+\ge\frac{4096000}{815730721}
+=q+\eta_{\rm nat},\qquad
+\eta_{\rm nat}=\frac{14219478376}{318644812890625}.
+\tag{15.26}
+$$
+
+Here the derivative is $r^2(1-r)^4(3-8r)\le0$ on that interval, so its
+minimum is at $5/13$. Equations (15.25)--(15.26) are the existing native
+gap used in [Acquired-return variation, (5.3)](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md)
+and [PAIRED, Corollary 12.3 and the proof of Corollary 14.4](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md).
+Their application after the equality classification proves (15.23).
+If depth 3 itself is supported, its particular coordinate gives the stronger
+excess $(84375/16777216-q)/2=344076471/13107200000000$.
+
+Interface 3.2, supplied by [PAID, Lemma 2.1.1 and (2.3)](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md)
+and [CLIP, Proposition 2.3](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md),
+identifies these supported-target suprema with the original all-positive-history
+configuration risks whenever the table is represented on the original source.
+For countable priors the paid-history concentration uses the summable
+domination in [PAID, Lemma 14.1], as in [PAIRED, Section 11.4]. The actual
+source retains one sampled K, both seeds, every marker triple, all paid
+rejections and partial parses, every finite return, original records and
+permissions, the third write before its latch, fourth completion and matching
+Stop. Source-independent initialization samples the same row $\pi$ in the
+original latch update; the actual and synthetic acquired-letter kernels are
+the same B and I. Their unweighted invariant row is $\pi$ at every positive
+fourth-segment history. The full-record renderer $I_c$ preserves TV and
+noncompletion, with TV taken separately at each configuration before its
+average. Thus each supported k in (15.23) supplies a violated original
+phase supremum, without inserting an unsupported pure target or conditioning
+on completion. The sign already holds for real tables, so this exclusion
+does not assume that arbitrary real entries admit effective exact sampling.
+For support only at depths 1 and 2, the supplied fair native endpoint
+construction attains the two budgets; the nonendpoint hypothesis is essential.
+$\square$
+
