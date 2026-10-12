@@ -79,7 +79,8 @@ private def bit (i : Fin 8) (t : Fin 3) : Fin 2 := finFunctionFinEquiv.symm i t
 private theorem tensor23 (A : Matrix (Fin 2) (Fin 2) ℂ) (i j : Fin 8) :
     tensorPow 3 A i j = A (bit i 2) (bit j 2) * A (bit i 1) (bit j 1) *
       A (bit i 0) (bit j 0) := by
-  simp only [tensorPow, bit, Fin.prod_univ_succ, Fin.prod_univ_zero, mul_one, Fin.succ_zero_eq_one, Fin.reduceSucc]
+  rw [tensorPow.eq_1]
+  simp only [bit, Fin.prod_univ_succ, Fin.prod_univ_zero, mul_one, Fin.succ_zero_eq_one, Fin.reduceSucc]
   ring
 
 private def weight : Fin 8 → ℕ := ![0,1,1,2,1,2,2,3]
@@ -98,6 +99,7 @@ private theorem perms3 : (Finset.univ : Finset (Equiv.Perm (Fin 3))) =
 private theorem bit_table (i : Fin 8) (t : Fin 3) : bit i t =
     (![![0,0,0],![1,0,0],![0,1,0],![1,1,0],![0,0,1],![1,0,1],![0,1,1],![1,1,1]] :
       Fin 8 → Fin 3 → Fin 2) i t := by
+  rw [bit.eq_1]
   fin_cases i <;> fin_cases t <;> rfl
 
 private theorem permOp23 (σ : Equiv.Perm (Fin 3)) (i j : Fin 8) :
@@ -118,13 +120,19 @@ private theorem piSym23 : PiSym 2 3 = P8 := by
   unfold PiSym
   ext i j
   simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sum_apply]
-  rw [sum_perms3]
+  have hp : (∑ σ, permOp 2 3 σ i j) =
+      ∑ σ : Equiv.Perm (Fin 3),
+        (if (fun t => bit i t) = (fun t => bit j (σ t)) then 1 else 0) := by
+    apply Finset.sum_congr rfl
+    intro σ _
+    exact permOp23 σ i j
+  rw [hp, sum_perms3]
   have h01 : (0 : Fin 3) ≠ 1 := by decide
   have h02 : (0 : Fin 3) ≠ 2 := by decide
   have h12 : (1 : Fin 3) ≠ 2 := by decide
   have hb : (0 : Fin 2) ≠ 1 := by decide
   fin_cases i <;> fin_cases j <;>
-    norm_num [permOp23, bit_table, P8, weight, Matrix.smul_apply, Matrix.sum_apply,
+    norm_num [bit_table, P8, weight, Matrix.smul_apply, Matrix.sum_apply,
       Function.comp_def, Matrix.cons_val_two,
       funext_iff, Fin.forall_fin_succ, Equiv.swap_apply_def, Equiv.Perm.mul_apply, Fin.reduceSucc,
       h01, h02, h12, hb, Ne.symm h01, Ne.symm h02, Ne.symm h12, Ne.symm hb]
@@ -142,16 +150,19 @@ private def octMat (i : Fin 6) : Matrix (Fin 2) (Fin 2) ℂ :=
   octScale i • vecMulVec (octVec i) (star (octVec i))
 
 private theorem octScale_nonneg (i : Fin 6) : 0 ≤ octScale i := by
-  fin_cases i <;> norm_num [octScale]
+  rw [octScale.eq_1]
+  fin_cases i <;> norm_num
 
-private theorem octMat_psd (i : Fin 6) : (octMat i).PosSemidef :=
-  (posSemidef_vecMulVec_self_star (octVec i)).smul (octScale_nonneg i)
+private theorem octMat_psd (i : Fin 6) : (octMat i).PosSemidef := by
+  rw [octMat.eq_1]
+  exact (posSemidef_vecMulVec_self_star (octVec i)).smul (octScale_nonneg i)
 
 private theorem octMat_trace (i : Fin 6) : trace (octMat i) = 1 := by
   dsimp only [octMat]
   rw [trace_smul, trace_vecMulVec]
   change octScale i • (∑ j, octVec i j * star (octVec i j)) = 1
-  fin_cases i <;> norm_num [octVec, octScale, Fin.sum_univ_succ,
+  rw [octVec.eq_1]
+  fin_cases i <;> norm_num [octScale, Fin.sum_univ_succ,
     Pi.star_apply, Complex.real_smul]
 
 private def octStates (i : Fin 6) : DensityState (Fin 2) :=
@@ -201,9 +212,11 @@ private theorem minor_table : Q.submatrix minorIndices minorIndices =
     (!![1/4,0,0,1/12,0,0; 0,1/12,0,0,0,0; 0,0,1/12,0,0,1/12;
         1/12,0,0,1/12,0,0; 0,0,0,0,1/12,0; 0,0,1/12,0,0,1/4] :
       Matrix (Fin 6) (Fin 6) ℂ) := by
+  rw [Q.eq_1, pt.eq_1, minorIndices.eq_1]
   ext i j
+  simp only [Matrix.submatrix_apply]
   fin_cases i <;> fin_cases j <;>
-    norm_num [Q, pt, partialTranspose, finProdFinEquiv, minorIndices, P8, weight]
+    norm_num [partialTranspose, finProdFinEquiv, P8, weight]
 
 private theorem minor_det : (Q.submatrix minorIndices minorIndices).det = 1/746496 := by
   let π : Fin 6 ≃ Fin 6 := Equiv.ofBijective ![0,2,1,3,5,4] (by decide)
@@ -261,8 +274,9 @@ set_option maxHeartbeats 2000000 in
 private theorem pure_pt (v : Fin 2 → ℂ) :
     pt (tensorPow 3 (vecMulVec v (star v))) = vecMulVec (ptVector v) (star (ptVector v)) := by
   ext i j
+  rw [vecMulVec_apply, Pi.star_apply, ptVector.eq_1 v i, ptVector.eq_1 v j]
   fin_cases i <;> fin_cases j <;>
-    simp only [pt, partialTranspose, Matrix.submatrix_apply, tensor23, ptVector,
+    simp only [pt, partialTranspose, Matrix.submatrix_apply, tensor23,
       vecMulVec_apply, Pi.star_apply, star_mul, star_star]
     <;> norm_num [finProdFinEquiv, bit_table, Matrix.cons_val_two] <;> ring
 
@@ -286,7 +300,9 @@ private theorem design_rank {N : ℕ} (ρ : Fin N → DensityState (Fin 2)) (p :
     change pt (∑ i, (p i : ℂ) • tensorPow 3 (ρ i).1) = Q at hh
     rw [← hh]
     ext a b
-    simp only [pt, partialTranspose, Matrix.submatrix_apply, Matrix.sum_apply,
+    simp only [pt, Matrix.submatrix_apply]
+    rw [D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation.partialTranspose.eq_1]
+    simp only [partialTranspose, Matrix.submatrix_apply, Matrix.sum_apply,
       Matrix.smul_apply, smul_eq_mul]
     symm
     apply Finset.sum_subset (Finset.filter_subset _ _)
@@ -345,7 +361,8 @@ private theorem tensor_trace (A : Matrix (Fin 2) (Fin 2) ℂ) :
 private theorem P8_hermitian : P8.IsHermitian := by
   change P8ᴴ = P8
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [P8, weight, conjTranspose_apply]
+  rw [conjTranspose_apply, P8.eq_1 j i, P8.eq_1 i j, weight.eq_1]
+  fin_cases i <;> fin_cases j <;> norm_num
 
 private theorem P8_idem : P8 * P8 = P8 := by
   ext i j
@@ -365,6 +382,7 @@ private theorem P8_complement : (1 - P8).PosSemidef := by
 
 private theorem tensorVec_fixed (v : Fin 2 → ℂ) : P8 *ᵥ tensorVec v = tensorVec v := by
   ext i
+  rw [tensorVec.eq_1 v i]
   fin_cases i <;> norm_num [mulVec, dotProduct, Fin.sum_univ_succ, tensorVec,
     bit_table, P8, weight, Matrix.cons_val_two] <;> ring
 
@@ -428,7 +446,8 @@ private theorem dual_mixed : (Y - tensorPow 3 (maxMixed 2 (by norm_num)).1).PosS
   exact P8_psd.smul (by norm_num : (0:ℝ) ≤ 7/8)
 
 private theorem trace_Y : (trace Y).re = 9/2 := by
-  simp only [Y, trace_add, trace_smul, trace_sub, trace_P8, trace_one,
+  rw [Y.eq_1]
+  simp only [trace_add, trace_smul, trace_sub, trace_P8, trace_one,
     Fintype.card_fin, Complex.real_smul, Complex.add_re, Complex.mul_re,
     Complex.ofReal_re, Complex.ofReal_im]
   norm_num
@@ -472,7 +491,8 @@ private theorem discr_pure_le (ρ : Fin 6 → DensityState (Fin 2))
         exact dual_pure (ρ j) (hρ j)
     have hh := weak_dual _ E Y hE hz
     rw [trace_Y] at hh
-    norm_num at hh ⊢
+    have hn : (9/2 : ℝ) / 7 = 9/14 := by norm_num
+    rw [hn] at hh
     exact hh
 
 private theorem tensor_psd (A : Matrix (Fin 2) (Fin 2) ℂ) (hA : A.PosSemidef) :
@@ -508,8 +528,9 @@ private theorem discr_bdd (ρ : Fin 7 → DensityState (Fin 2)) :
 private def omega3 : ℂ := (-1 + (Real.sqrt 3 : ℂ) * Complex.I) / 2
 
 private theorem omega_unit : star omega3 * omega3 = 1 := by
+  rw [omega3.eq_1]
   have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  apply Complex.ext <;> norm_num [omega3, Complex.mul_re, Complex.mul_im] <;> nlinarith
+  apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im] <;> nlinarith
 
 private theorem omega_sq : omega3 ^ 2 = star omega3 := by
   have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
@@ -536,7 +557,7 @@ private theorem trine_psd (j : Fin 3) : (trineMat j).PosSemidef :=
   (posSemidef_vecMulVec_self_star ![1, phase j]).smul (by norm_num : (0:ℝ) ≤ 1/2)
 
 private theorem trine_trace (j : Fin 3) : trace (trineMat j) = 1 := by
-  dsimp only [trineMat]
+  rw [trineMat.eq_1]
   rw [trace_smul, trace_vecMulVec]
   norm_num [dotProduct, Fin.sum_univ_succ, Pi.star_apply, Complex.real_smul]
   simp only [starRingEnd_apply]
@@ -547,6 +568,7 @@ private def witnessMat : Fin 7 → Matrix (Fin 2) (Fin 2) ℂ :=
     diagonal ![2/3,1/3], diagonal ![1/3,2/3]]
 
 private theorem witness_psd (i : Fin 7) : (witnessMat i).PosSemidef := by
+  rw [witnessMat.eq_1]
   fin_cases i
   · exact octMat_psd 0
   · exact octMat_psd 1
@@ -592,6 +614,7 @@ private def witnessPOVM : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ :=
       (1/6 : ℝ) • vecMulVec ![0,0,0,1,0,1,-2,0] (star ![0,0,0,1,0,1,-2,0])]
 
 private theorem witnessPOVM_psd (i : Fin 7) : (witnessPOVM i).PosSemidef := by
+  rw [witnessPOVM.eq_1]
   fin_cases i
   · exact ((posSemidef_vecMulVec_self_star _).add
       ((posSemidef_vecMulVec_self_star _).smul (by norm_num : (0:ℝ) ≤ 15))).smul
@@ -628,8 +651,9 @@ private theorem witnessPOVM_valid : IsPOVM witnessPOVM :=
 
 private theorem phase_cube (j : Fin 3) : phase j ^ 3 = 1 := by
   have h : omega3 ^ 3 = 1 := by rw [pow_succ, omega_sq, omega_unit]
+  rw [phase.eq_1]
   fin_cases j
-  · norm_num [phase]
+  · norm_num
   · exact h
   · change (star omega3) ^ 3 = 1
     rw [← star_pow, h, star_one]
@@ -644,7 +668,8 @@ private theorem trine_tensor (j : Fin 3) : tensorPow 3 (trineMat j) =
 
 private theorem trine_overlap (j : Fin 3) :
     star (trineEffectVec j) ⬝ᵥ tensorVec ![1,phase j] = 5/2 := by
-  norm_num [dotProduct, Fin.sum_univ_succ, trineEffectVec, tensorVec,
+  rw [trineEffectVec.eq_1]
+  norm_num [dotProduct, Fin.sum_univ_succ, tensorVec,
     bit_table, Pi.star_apply, Matrix.cons_val_two, map_ofNat]
   simp only [starRingEnd_apply]
   ring_nf
@@ -711,6 +736,7 @@ theorem result : ¬ claim := by
   have hu := discr_design_le octStates (fun _ => 1/6) octDesign
   have hl := discr_witness_ge
   have hc := hs octStates (fun _ => 1/6) octDesign witness
-  linarith
+  have hb : (1957/3024 : ℝ) ≤ 9/14 := hl.trans (hc.trans hu)
+  norm_num at hb
 
 end D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
