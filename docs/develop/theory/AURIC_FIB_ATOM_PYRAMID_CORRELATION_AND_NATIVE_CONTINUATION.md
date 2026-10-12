@@ -1469,3 +1469,5 @@ $\Psi(\operatorname{Cl}(S_0))=\operatorname{Cl}'(\Psi(S_0))$。重新着色不�
 不能改写为精确可逆或精确恢复。完整的 $n>5040$ 全局覆盖仍是原证书的独立义务。
 
 ## 追加锚（本行以下为增补区）
+
+<!-- Temporary R3 qualification payload. -->
