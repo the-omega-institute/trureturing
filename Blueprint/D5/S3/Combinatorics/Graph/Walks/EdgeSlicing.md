@@ -10,7 +10,7 @@ Let G be a simple graph on a type V with decidable equality. A Piece(G) records 
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; \forall E \in \mathrm{Finset}\left(\mathrm{Sym2}\left(V\right)\right),\; \forall start \in V,\; \forall finish \in V,\; \forall p \in \mathrm{Walk}\left(G, start, finish\right),\; (\mathrm{IsPath}\left(p\right)) \Rightarrow (\exists L \in \mathrm{List}\left(\mathrm{Piece}\left(G\right)\right),\; (\forall z \in \mathrm{Piece}\left(G\right),\; (z \in L) \Rightarrow (\mathrm{IsPath}\left(\mathrm{walk}\left(z\right)\right))) \land ((\mathrm{flatMapSupport}\left(L\right) = \mathrm{support}\left(p\right)) \land ((\mathrm{flatMapEdges}\left(L\right) = \mathrm{filterOut}\left(E, \mathrm{edges}\left(p\right)\right)) \land (\mathrm{length}\left(L\right) = \mathrm{length}\left(\mathrm{filterIn}\left(E, \mathrm{edges}\left(p\right)\right)\right) + 1))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalWalkEdgeSlicing.exists_path_edge_slicing` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/EdgeSlicing.exists_path_edge_slicing` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,7 +24,7 @@ The construction follows the actual walk from its first edge. A selected next ed
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(V\right)] [\mathrm{Fintype}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; \forall E \in \mathrm{Finset}\left(\mathrm{Sym2}\left(V\right)\right),\; \forall a \in V,\; \forall p \in \mathrm{Walk}\left(G, a, a\right),\; ((\mathrm{IsHamiltonianCycle}\left(p\right)) \land ((\mathrm{Nonempty}\left(E\right)) \land (\forall e \in \mathrm{Sym2}\left(V\right),\; (e \in E) \Rightarrow (e \in \mathrm{edgeSet}\left(p\right))))) \Rightarrow (\exists L \in \mathrm{List}\left(\mathrm{Piece}\left(G\right)\right),\; (\forall z \in \mathrm{Piece}\left(G\right),\; (z \in L) \Rightarrow (\mathrm{IsPath}\left(\mathrm{walk}\left(z\right)\right))) \land ((\forall v \in V,\; \mathrm{count}\left(v, \mathrm{flatMapSupport}\left(L\right)\right) = 1) \land ((\forall e \in \mathrm{Sym2}\left(V\right),\; (e \in \mathrm{flatMapEdges}\left(L\right)) \Leftrightarrow ((e \in \mathrm{edgeSet}\left(p\right)) \land (\mathrm{Not}\left(e \in E\right)))) \land (\mathrm{length}\left(L\right) = \mathrm{card}\left(E\right)))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalWalkEdgeSlicing.exists_cycle_edge_slicing` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/EdgeSlicing.exists_cycle_edge_slicing` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -38,5 +38,5 @@ These results concern a supplied actual path or Hamilton cycle and actual select
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalWalkEdgeSlicing.exists_cycle_edge_slicing`
-- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalWalkEdgeSlicing.exists_path_edge_slicing`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/EdgeSlicing.exists_cycle_edge_slicing`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/EdgeSlicing.exists_path_edge_slicing`
