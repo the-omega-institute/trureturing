@@ -7,6 +7,7 @@
    digest: Symmetric finite differences of trace entropy along Hermitian matrix paths. -/
 
 import D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
+import D5.S3.Resource.LogDet.PathSpectralClassical
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
@@ -181,6 +182,38 @@ private lemma resolvent_trace_eq_normalized (A H : S) (hA : A.val.PosDef)
     noncomm_ring
   exact htr.trans (congrArg (fun C : M => C.trace.re) heq).symm
 
+private lemma resolvent_trace_nonneg (A H : S) (hA : A.val.PosDef)
+    (hr : ‖K A H 0‖ < 1) (v u : ℝ) (hv : v ∈ Icc (-1 : ℝ) 1) (hu : 0 ≤ u) :
+    0 ≤ q A H v u := by
+  rw [resolvent_trace_eq_normalized A H hA hr v u hv hu]
+  have hn : (0 : M) ≤ cfc (fun k : ℝ => k ^ 2 / (1 + v * k) ^ 2) (K A H u) :=
+    cfc_nonneg (fun _ _ => div_nonneg (sq_nonneg _) (sq_nonneg _))
+  exact (RCLike.nonneg_iff.mp (Matrix.nonneg_iff_posSemidef.mp hn).trace_nonneg).1
+
+private lemma bkm_eq_integral_trace (A H : S) (hA : A.val.PosDef) :
+    IntegrableOn (fun u => q A H 0 u) (Ioi (0 : ℝ)) ∧
+      BKM A H = ∫ u in Ioi (0 : ℝ), q A H 0 u := by
+  let L : ℝ → S →L[ℝ] M := fun u =>
+    (ContinuousLinearMap.mulLeftRight ℝ M (Ring.inverse (R A u))
+      (Ring.inverse (R A u))).comp ι
+  obtain ⟨_, hi, he⟩ := MatrixLogResolventDerivative.matrix_log_hasFDerivAt_resolvent A hA
+  have hint : Integrable (fun u => L u H) (volume.restrict (Ioi (0 : ℝ))) :=
+    (ContinuousLinearMap.apply ℝ M H).integrable_comp hi
+  let TL : M →L[ℝ] ℝ := (Tr).comp ((ContinuousLinearMap.mul ℝ M) H.val)
+  have ht := TL.integrable_comp hint
+  have hc := TL.integral_comp_comm hint
+  change Integrable (fun u =>
+    (H.val * (Ring.inverse (R A u) * H.val * Ring.inverse (R A u))).trace.re)
+    (volume.restrict (Ioi (0 : ℝ))) at ht
+  change (∫ u in Ioi (0 : ℝ),
+    (H.val * (Ring.inverse (R A u) * H.val * Ring.inverse (R A u))).trace.re) =
+    (H.val * ∫ u in Ioi (0 : ℝ), L u H).trace.re at hc
+  refine ⟨?_, ?_⟩
+  · simpa only [IntegrableOn, zero_smul, add_zero, Matrix.mul_assoc] using ht
+  · dsimp only
+    rw [← he H, ContinuousLinearMap.integral_apply hi H]
+    simpa only [zero_smul, add_zero, Matrix.mul_assoc] using hc.symm
+
 private lemma entropy_differentiableAt (A : S) (hA : A.val.PosDef) :
     DifferentiableAt ℝ entropy A := by
   have hlog :=
@@ -254,6 +287,151 @@ private lemma entropy_remainder (A H : S)
   simp only [f, g, sub_self, sub_zero, zero_mul, one_mul, zero_smul,
     one_smul, add_zero, zero_sub, neg_one_mul] at hb
   linarith
+
+private lemma weighted_resolvent_swap (A H : S) (hA : A.val.PosDef)
+    (hr : ‖K A H 0‖ < 1) :
+    ((∫ v in (0 : ℝ)..1, (1 - v) * BKM (P A H v) H) =
+      ∫ u in Ioi (0 : ℝ), ∫ v in (0 : ℝ)..1, (1 - v) * q A H v u) ∧
+      IntegrableOn (fun u => ∫ v in (0 : ℝ)..1, (1 - v) * q A H v u) (Ioi (0 : ℝ)) := by
+  let μ := volume.restrict (Ioc (0 : ℝ) 1)
+  let ν := volume.restrict (Ioi (0 : ℝ))
+  let F : ℝ × ℝ → ℝ := fun p => (1 - p.1) * q A H p.1 p.2
+  have hp (v : ℝ) (hv : v ∈ Icc (0 : ℝ) 1) : (P A H v).val.PosDef :=
+    finite_amplitude_path_posdef A H hA hr v ⟨by linarith [hv.1], hv.2⟩
+  have hdata (v : ℝ) (hv : v ∈ Icc (0 : ℝ) 1) :
+      Integrable (fun u => q A H v u) ν ∧ BKM (P A H v) H = ∫ u, q A H v u ∂ν := by
+    simpa only [ν, IntegrableOn, zero_smul, add_zero] using
+      bkm_eq_integral_trace (P A H v) H (hp v hv)
+  have hc : ContinuousOn F (Icc (0 : ℝ) 1 ×ˢ Ioi (0 : ℝ)) := by
+    have hi : ContinuousOn (fun p : ℝ × ℝ => Ring.inverse (R (P A H p.1) p.2))
+        (Icc (0 : ℝ) 1 ×ˢ Ioi (0 : ℝ)) := by
+      intro p hp'
+      have hunit := ((hp p.1 hp'.1).add_posSemidef
+        (Matrix.PosSemidef.one.smul (show 0 < p.2 from hp'.2).le)).isUnit
+      have hinv : ContinuousAt Ring.inverse (R (P A H p.1) p.2) := by
+        simpa only [IsUnit.unit_spec] using NormedRing.inverse_continuousAt hunit.unit
+      apply ContinuousAt.comp_continuousWithinAt
+        (f := fun p : ℝ × ℝ => R (P A H p.1) p.2) hinv
+      fun_prop
+    exact (continuousOn_const.sub continuous_fst.continuousOn).mul
+      (Complex.continuous_re.comp_continuousOn <|
+        (Matrix.traceLinearMap n ℝ ℂ).toContinuousLinearMap.continuous.comp_continuousOn <|
+          ((continuousOn_const.mul hi).mul continuousOn_const).mul hi)
+  have hmeas : AEStronglyMeasurable F (μ.prod ν) := by
+    dsimp only [μ, ν]
+    rw [Measure.prod_restrict]
+    exact (hc.mono (prod_mono Ioc_subset_Icc_self Subset.rfl)).aestronglyMeasurable
+      (measurableSet_Ioc.prod measurableSet_Ioi)
+  have hfiber : ∀ᵐ v ∂μ, Integrable (fun u => F (v, u)) ν := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioc] with v hv
+    exact (hdata v ⟨hv.1.le, hv.2⟩).1.const_mul (1 - v)
+  have hnorm : ∀ᵐ v ∂μ, (∫ u, ‖F (v, u)‖ ∂ν) = (1 - v) * BKM (P A H v) H := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioc] with v hv
+    have hd := (hdata v ⟨hv.1.le, hv.2⟩).2
+    dsimp only at hd ⊢
+    rw [hd, ← integral_const_mul]
+    apply integral_congr_ae
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+    apply Real.norm_of_nonneg
+    exact mul_nonneg (sub_nonneg.mpr hv.2)
+      (resolvent_trace_nonneg A H hA hr v u ⟨by linarith [hv.1], hv.2⟩ hu.le)
+  have hw : Integrable (fun v => (1 - v) * BKM (P A H v) H) μ := by
+    have hq := (entropy_remainder A H hp).2
+    exact (hq.continuousOn_mul (by fun_prop)).1
+  have hprod : Integrable F (μ.prod ν) :=
+    (integrable_prod_iff hmeas).mpr ⟨hfiber, hw.congr (by
+      filter_upwards [hnorm] with v hv using hv.symm)⟩
+  have heq : (∫ v in (0 : ℝ)..1, (1 - v) * BKM (P A H v) H) =
+      ∫ v, ∫ u, F (v, u) ∂ν ∂μ := by
+    rw [intervalIntegral.integral_of_le zero_le_one]
+    apply integral_congr_ae
+    filter_upwards [ae_restrict_mem measurableSet_Ioc] with v hv
+    have hd := (hdata v ⟨hv.1.le, hv.2⟩).2
+    dsimp only at hd ⊢
+    rw [hd]
+    exact (integral_const_mul (1 - v) _).symm
+  have hswap := integral_integral_swap (f := fun v u => F (v, u)) hprod
+  have hout := hprod.integral_prod_right
+  constructor
+  · calc
+      _ = ∫ v, ∫ u, F (v, u) ∂ν ∂μ := heq
+      _ = _ := by simpa only [F, μ, ν, intervalIntegral.integral_of_le zero_le_one] using hswap
+  · simpa only [F, μ, ν, intervalIntegral.integral_of_le zero_le_one, IntegrableOn] using hout
+
+private lemma scalar_weighted_resolvent (k : ℝ) (hk : |k| < 1) :
+    (∫ v in (0 : ℝ)..1, (1 - v) * (k ^ 2 / (1 + v * k) ^ 2)) = k - Real.log (1 + k) := by
+  let p : Fin 1 → ℝ := fun _ => 1 + k
+  let q₀ : Fin 1 → ℝ := fun _ => 1
+  let ρ : Matrix (Fin 1) (Fin 1) ℂ := Matrix.diagonal fun i => (p i : ℂ)
+  let σ : Matrix (Fin 1) (Fin 1) ℂ := Matrix.diagonal fun i => (q₀ i : ℂ)
+  have hp : ∀ i, 0 < p i := fun _ => by dsimp only [p]; linarith [(abs_lt.mp hk).1]
+  have hq₀ : ∀ i, 0 < q₀ i := fun _ => zero_lt_one
+  have hρ : ρ.PosDef := Matrix.PosDef.diagonal (fun i => by exact_mod_cast hp i)
+  have hσ : σ.PosDef := Matrix.PosDef.diagonal (fun i => by exact_mod_cast hq₀ i)
+  have he := (D5.S3.Resource.LogDet.PathSpectralClassical.log_det_path_spectral_classical
+    ρ σ hρ hσ).1.symm
+  rw [D5.S3.Resource.LogDet.PathSpectralClassical.diagonal_logDet_eq_itakuraSaito
+    p q₀ hp hq₀] at he
+  have hpath : D5.S3.Resource.LogDet.PathSpectralClassical.logDetPathEnergy ρ σ =
+      ∫ v in (0 : ℝ)..1, (1 - v) * (k ^ 2 / (1 + v * k) ^ 2) := by
+    unfold D5.S3.Resource.LogDet.PathSpectralClassical.logDetPathEnergy
+    apply intervalIntegral.integral_congr
+    intro v _
+    have hs : D5.S3.Resource.LogDet.PathSpectralClassical.affineSegment ρ σ v =
+        Matrix.diagonal (fun _ : Fin 1 => ((1 + v * k : ℝ) : ℂ)) := by
+      ext i j
+      fin_cases i; fin_cases j
+      simp [D5.S3.Resource.LogDet.PathSpectralClassical.affineSegment, ρ, σ, p, q₀,
+        Matrix.smul_apply, smul_eq_mul]
+      ring
+    have hΔ : ρ - σ = Matrix.diagonal (fun _ : Fin 1 => (k : ℂ)) := by
+      ext i j
+      fin_cases i; fin_cases j
+      simp [ρ, σ, p, q₀]
+    rw [hs, hΔ, Matrix.inv_diagonal, Matrix.diagonal_mul_diagonal,
+      Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal]
+    simp only [Fin.sum_univ_one, Pi.inv_apply, ← Complex.ofReal_inv,
+      ← Complex.ofReal_mul, Complex.ofReal_re]
+    congr 1
+    ring
+  rw [hpath] at he
+  simpa [D5.S3.Resource.LogDet.PathSpectralClassical.itakuraSaito, p, q₀] using he
+
+private lemma scalar_even_resolvent (k : ℝ) (hk : |k| < 1) :
+    (∫ v in (0 : ℝ)..1, (1 - v) *
+      (k ^ 2 / (1 + v * k) ^ 2 + k ^ 2 / (1 - v * k) ^ 2)) =
+      -Real.log (1 - k ^ 2) ∧
+      IntervalIntegrable (fun v : ℝ => (1 - v) *
+        (k ^ 2 / (1 + v * k) ^ 2 + k ^ 2 / (1 - v * k) ^ 2)) volume 0 1 := by
+  have hd (v : ℝ) (hv : v ∈ uIcc (0 : ℝ) 1) : 1 + v * k ≠ 0 ∧ 1 - v * k ≠ 0 := by
+    rw [uIcc_of_le zero_le_one] at hv
+    have hm : |v * k| < 1 := by
+      rw [abs_mul]
+      exact (mul_le_of_le_one_left (abs_nonneg k)
+        (by simpa only [abs_of_nonneg hv.1] using hv.2)).trans_lt hk
+    constructor <;> linarith [(abs_lt.mp hm).1, (abs_lt.mp hm).2]
+  have hp : IntervalIntegrable (fun v : ℝ => (1 - v) * (k ^ 2 / (1 + v * k) ^ 2))
+      volume 0 1 := by
+    apply ContinuousOn.intervalIntegrable
+    exact (by fun_prop : ContinuousOn (fun v : ℝ => 1 - v) (uIcc (0 : ℝ) 1)).mul
+      ((continuousOn_const.div (by fun_prop) (fun v hv => pow_ne_zero 2 (hd v hv).1)))
+  have hm : IntervalIntegrable (fun v : ℝ => (1 - v) * (k ^ 2 / (1 - v * k) ^ 2))
+      volume 0 1 := by
+    apply ContinuousOn.intervalIntegrable
+    exact (by fun_prop : ContinuousOn (fun v : ℝ => 1 - v) (uIcc (0 : ℝ) 1)).mul
+      ((continuousOn_const.div (by fun_prop) (fun v hv => pow_ne_zero 2 (hd v hv).2)))
+  constructor
+  swap
+  · simpa only [mul_add] using hp.add hm
+  have ep := scalar_weighted_resolvent k hk
+  have em := scalar_weighted_resolvent (-k) (by simpa only [abs_neg] using hk)
+  simp only [neg_sq, mul_neg, ← sub_eq_add_neg] at em
+  simp_rw [mul_add]
+  rw [intervalIntegral.integral_add hp hm, ep, em]
+  have hkp : 1 + k ≠ 0 := (by linarith [(abs_lt.mp hk).1] : 0 < 1 + k).ne'
+  have hkm : 1 - k ≠ 0 := (by linarith [(abs_lt.mp hk).2] : 0 < 1 - k).ne'
+  rw [show 1 - k ^ 2 = (1 + k) * (1 - k) by ring, Real.log_mul hkp hkm]
+  ring
 
 /-- The symmetric entropy gap is the second-order integral of the two actual BKM
 curvatures. No commutativity of the base and direction is assumed. -/
