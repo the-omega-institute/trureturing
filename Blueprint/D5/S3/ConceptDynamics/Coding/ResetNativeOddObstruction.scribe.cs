@@ -73,6 +73,17 @@ internal sealed class ResetNativeOddObstructionDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text("resetOddVector q belongs to VertexModule Sign q, with Sign=Multiplicative Bool and tau=ofAdd true. antiUnit means single (1:Sign) (1:Int) - single tau (1:Int) in MonoidAlgebra Int Sign. integerScale is the Int module action and finValue(j)=j.val. Thus w_i=(-1)^i(1-tau) retains both coefficients. No positivity or odd premise is needed to define the row."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-odd-row-identity-coefficient"),
+                DeclarationHandle.Create(Prefix + "resetOddVector_coeff_one"),
+                H("The original alternating identity coefficient"),
+                StatementSource.FromAuthor(Disp(Forall(Equal(
+                    Call("coeff", Apply(Call("resetOddVector", I("q")), I("i")), Num(1)),
+                    Call("power", new Formula.Negate(Num(1)), Call("finValue", I("i")))),
+                    B("q", I("Nat")), B("i", Call("Fin", I("q")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The identity coefficient of the original row w_i is (-1)^i. "
+                    + "It gives both the surviving iterate coefficient and the native character pairing."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("true-original-native-stationary-transition"),
                 DeclarationHandle.Create(Prefix + "resetTheta"),
                 H("Theta is induced by the original row transition"),
@@ -87,6 +98,23 @@ internal sealed class ResetNativeOddObstructionDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text("resetTheta q=induced (transition(resetMatrix q)) (transition(resetMatrix q)) (Commute.refl _), on the existing DimensionGroup(resetMatrix q). hasType displays the definition's type. The integerMatrix casts the original natural group matrix into Int[C2], and transition is the original row toLinearMapRight'. The reset label multiplies each input coordinate on the RIGHT. groupAction(resetMatrix q) tau is the separate complement action; it is not the definition of Theta."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("original-native-transition-stage-identity"),
+                DeclarationHandle.Create(Prefix + "resetTheta_apply_of"),
+                H("Theta acts on each original stage by its row transition"),
+                StatementSource.FromAuthor(Disp(Forall(
+                    Equal(
+                        Apply(Call("resetTheta", I("q")), Call("nativeStage", I("q"), I("n"), I("v"))),
+                        Call("nativeStage", I("q"), I("n"),
+                            Apply(Call("transition", Call("resetMatrix", I("q"))), I("v")))),
+                    B("q", I("Nat")), B("n", I("Nat")),
+                    B("v", Call("VertexModule", I("Sign"), I("q")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("nativeStage(q,n,v) is Module.DirectLimit.of Int Nat "
+                    + "(fun _ => VertexModule Sign q) (stationaryTransition (transition (resetMatrix q))) n v. "
+                    + "The identity follows from Module.DirectLimit.map_apply_of for the stationary transition. "
+                    + "It holds for every natural q and n, without positivity or parity assumptions. "
+                    + "The native stage-zero identification uses this identity in resetNativeEquiv_theta to intertwine Theta with the original right-row transition."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("all-odd-iterates-nonzero-integer-coefficient"),
                 DeclarationHandle.Create(Prefix + "reset_odd_transition_pow_coeff_one"),
                 H("A nonzero coefficient survives every transition iterate"),
