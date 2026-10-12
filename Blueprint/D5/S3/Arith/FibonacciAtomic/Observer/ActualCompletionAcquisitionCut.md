@@ -1,0 +1,109 @@
+# Actual Completion Acquisition Cut
+
+## Abstract
+
+Actual acquisition prefixes retain their complete raw route, first failed leaf test and persistent ordered cache.
+
+Fix a finite prototype family F indexed by Fin m, an arbitrary coarse-history decoder, a passive route p and one all-source Strategy whose policy is the normalized compileRaw policy. The prototypes may repeat and m may be zero. For a source U, the complete route is runPassiveProtocol with leafLabel U replies, with each recorded address paired again with its actual four-response readout from U. This raw route is not encodeHistory of the coarse route: absent reports, repeated addresses and their original order remain.
+
+**Definition 1.1 (Actual ordered reports).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.actualReports`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.actualReports` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Pair every literal request with its actual raw reply from the same source, preserving repetitions.
+
+**Definition 1.2 (Complete actual passive route).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.actualRoute`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.actualRoute` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Run the original passive route on coarse actual replies and retain the actual raw readout at each requested address.
+
+**Definition 1.3 (First failed verifier report).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.FirstMismatch`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.FirstMismatch` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a prototype V, an ordered request list qs, a source U and a raw verifier segment v, there exist request lists pre and rest and an address q such that qs is pre followed by q and rest. Every address r in pre satisfies readout r U = readout r V. At q the raw readouts differ, and kappa of the source readout differs from leafLabel V q. The segment v is exactly actualReports U pre followed by the actual report at q.
+
+**Definition 1.4 (Exact decoder selection).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.RouteExit`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.RouteExit` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For F, decode, a coarse history seen, U and v, either decode seen is none and v is empty, or there exists the exact selected index i with decode seen = some i and FirstMismatch (F i) (leaves (F i)) U v. Equal prototypes do not identify their indices.
+
+**Definition 1.5 (Fresh acquisition prefix after the route and verifier).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.AcquisitionCut`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.AcquisitionCut` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For F, decode, p, U, h, g, v and a, h = actualRoute p U ++ v ++ a, and a is a prefix of the same-source acquisitionTrace [] U from the root. Thus a is a suffix of h and a prefix of the fresh acquisition trace. The parser's acquisition-local coarse history g equals kappa_hist a. RouteExit holds with decode evaluated at kappa_hist (actualRoute p U).
+
+**Definition 1.6 (Local subtree and parent provenance).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.AcquisitionGeometry`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.AcquisitionGeometry` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For U and a, every address q with acquisitionPolicy a = inl q has an existing subtree: subtree q U = some T for some source T. If kappa (readout q U) is none, there exist sources X and Y with subtree q U = some (mul X Y). If q is nonroot, there exist an address w and direction d with q = w ++ [d], and the actual branch report at w belongs to a itself.
+
+**Theorem 1.7 (Actual raw acquisition provenance and native cache continuation).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.acquisition_provenance_contract`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.acquisition_provenance_contract` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m, every F indexed by Fin m, every decode and passive route p, and every Strategy pi whose policy at every raw history h is controllerPolicy (compileRaw F decode p []) evaluated at encodeHistory (kappa_hist h), the following two clauses hold. For every source U and raw history h that is a prefix of the trace component of terminal pi U, routePhase F decode p [] (kappa_hist h) has a nonmalformed label. For every coarse history g, if that label is acquisition g, there exist raw histories v and a satisfying AcquisitionCut. The parser pair is exactly acquisition g together with acquisitionPolicy a, pi's policy at h is acquisitionPolicy a, and AcquisitionGeometry U a holds. When decode selects a prototype, v ends at its first mismatch report and a starts immediately afterward. This raw clause requires no source budget, positivity of U or the prototypes, distinctness of prototypes, or address bound.
+
+The verifier induction allows any remaining request list consisting only of the selected prototype's leaves, and arbitrary already-consumed coarse history. An actual nonempty prefix fixes its head to the source readout. A match extends the successful segment; a mismatch consumes its report before the remaining prefix enters acquisition. The passive-route induction similarly consumes actual reports and carries the exact decoder argument. The terminal/outcome equality comes from actual_completion_horizon, while phase_replay_contract supplies the original route and first-mismatch resets. acquisition_prefix_representative identifies the normalized acquisition suffix with the same raw suffix. The universal acquisition geometry is the source-only component of completion_contract; its extraction uses an empty prototype family and does not change the fixed Strategy.
+
+The second clause ranges over every natural budget N, every proof positive of 1 <= N, every source U satisfying Allowed N U, every state e in ExactState (strategyPrefixes N pi), and every raw history h satisfying ActualPrefix (strategyObserver N pi positive) U e h. The installed observerPhase F decode p N pi e equals the label of routePhase F decode p [] (kappa_hist h) and is nonmalformed. For every coarse history g, if this installed phase is acquisition g, there exist raw histories v and a satisfying AcquisitionCut, the parser pair is exactly (acquisition g, acquisitionPolicy a), the observer's action at e is acquisitionPolicy a, and AcquisitionGeometry U a holds. The observer's decoder at e is firstRaw h. This cache also equals the ordered fold of cacheUpdate over a starting at firstRaw (actualRoute p U ++ v); it is never reset to firstRaw a. strategy_actual_prefix_replay, strategy_prefix_action and actualPrefix_semantics supply the original native-prefix and ordered-cache semantics.
+
+These conclusions require actual prefixes; an acquisition label on an arbitrary malformed or counterfactual history does not certify source provenance. Empty routes, empty families, terminal prefixes, arbitrarily late mismatches, repeated addresses and branch versus absent replies remain within the statement. The native observer's full nominal carrier and all-history coarse action law are those of the original compiler. This result supplies the acquisition provenance in sections 38.11 and 38.41 of FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II. The complete phase-marked finite-table minimum and fixed-trace price assertions of section 38.70 remain separate results.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.AcquisitionCut`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.AcquisitionGeometry`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.FirstMismatch`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.RouteExit`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.acquisition_provenance_contract`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.actualReports`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionAcquisitionCut.actualRoute`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionHorizon](ActualCompletionHorizon.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionPhaseReplay](ActualCompletionPhaseReplay.md)

@@ -1,0 +1,10 @@
+**证明。** 结果后的分子是 $\mathbb E_p[K_o^{\mathsf T}f]$，正向直接计算；反向若某项不在空间，按有限维分离构造当前读数相同而后继结果不同的两份严格正来源。证毕。
+
+逐轮闭包为
+
+$$
+\mathcal V_{n+1}=\operatorname{span}\left(\mathcal V_n\cup\{K_o^{\mathsf T}f:f\in\mathcal V_n\}\right).
+$$
+
+五模式的五维函数闭包不能自动成为共享深度、无限历史过程的有限实现。
+

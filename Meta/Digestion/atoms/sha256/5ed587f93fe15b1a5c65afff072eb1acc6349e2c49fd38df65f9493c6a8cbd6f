@@ -1,0 +1,4 @@
+**命题 9.1（式（5.1）的两个平移都不可去）。** $\kappa_2<\kappa_1+\kappa_1$ 且 $\kappa_3>\kappa_1+\kappa_1$。因此「$\kappa_{n+m}\ge\kappa_n+\kappa_m$ 对一切 $n,m$ 成立」与「$\kappa_{n+m+1}\le\kappa_n+\kappa_m$ 对一切 $n,m$ 成立」都为假，(5.1) 不能改成等式，也不能互换两侧的指标平移。
+
+**证明。** $\kappa_2=2(3-2\sqrt2)=0.343\ldots<\tfrac12=2\kappa_1$（推论 5.3(ii)）。由命题 9.3(iii)，$\kappa_3\ge\tfrac{13}{25}>\tfrac12=2\kappa_1$；这与母卷定理 2.1(E) 的 $\kappa_3=\tau^2>\tfrac12$ 一致。
+

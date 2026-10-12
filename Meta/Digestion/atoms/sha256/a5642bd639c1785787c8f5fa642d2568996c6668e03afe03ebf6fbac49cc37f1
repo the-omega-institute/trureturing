@@ -1,0 +1,16 @@
+**Proposition 29.5 (Boundary labels remove the even-width interior obstruction).** Let $m\ge6$ be even and let $S\subset U$ have even size with $2\le|S|\le m-4$. Put
+
+$$
+ H_0=S\cup\{1,m\},\qquad H_1=U\setminus S.
+\tag{29.28}
+$$
+
+Then $(C_{\rm ad},C_{\rm pre})=(1,2)$, with one common stream
+
+$$
+ \mathcal I_0(H_0)\mid(10)^{m/2}.
+\tag{29.29}
+$$
+
+Proof. Both nonempty supports are even. The joined labels are $10,01,o$, the internal image is $\{10,01\}$, and both boundaries have label $10$, so $\Pi_3$ holds despite even $m$. The two charge supports are $H_0$ and $R\cup\{m\}$. Codes $10,11$ mean $10$, code $00$ means $01$, and code $01$ means $o$. The root starts zero; its tail at most $m-1$ joins just one leading one of the second alternating word, giving a run at most $m<k$. Thus the actual complete prefix is safe and its own-archive decoder is exact on every joint source. Three joined labels exclude a one-block GLOBAL solution. For example $m=6$, $S=\{2,3\}$ gives $010111\mid101010$, with supports $\{1,2,3,6\}$ and $\{0,6,7,8,9,10\}$. $\square$
+

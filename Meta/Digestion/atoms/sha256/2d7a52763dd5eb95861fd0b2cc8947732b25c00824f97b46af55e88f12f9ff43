@@ -1,0 +1,16 @@
+### corollary 6.1（有限 $p$ 进精度下，补充读口的损失由 $e$ 控制）
+
+Claim status: open
+
+在模 $p^k$ 下，方程 $J_ft=r$ 对每个可达 $r$ 有：
+
+$$
+\boxed{p^{\min(e,k)}}
+$$
+
+个解。若 $k>e$，它只能确定：
+
+$$
+\boxed{t\bmod p^{k-e}.}
+$$
+

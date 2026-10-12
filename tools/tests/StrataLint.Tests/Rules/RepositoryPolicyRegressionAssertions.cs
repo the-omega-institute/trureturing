@@ -49,14 +49,14 @@ internal static class RepositoryPolicyRegressionAssertions
         foreach (var (kind, coordinate, selector, allowed) in new (string, string, string, bool)[]
         {
             ("csv", "experiments/D5-X0001", "result", false),
-            ("json", "experiments/D5-X0001", "run", true),
+            ("json", "experiments/D5-X0001", "run", false),
             ("json", "kernels/Demo", "check", true),
             ("json", "X_Frontier/Demo", "quote", true),
             ("md", "X_Frontier/Demo", "result", true),
             ("py", "kernels/Demo", "source", true),
             ("txt", "kernels/Demo", "result", false),
-            ("yaml", "experiments/D5-X0001", "spec", true),
-            ("yml", "experiments/D5-X0001", "run", true),
+            ("yaml", "experiments/D5-X0001", "spec", false),
+            ("yml", "experiments/D5-X0001", "run", false),
             ("json", "S0/Carrier/Demo", "source", false),
             ("json", "S1/Carrier/Demo", "result", false),
             ("json", "S0/Unknown/Demo", "result", false),

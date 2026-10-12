@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:086104a8d78308b751e651b335e09ec45ec8f3090ad293e3a89c758d40430dab
+  normalized_sha256: sha256:086104a8d78308b751e651b335e09ec45ec8f3090ad293e3a89c758d40430dab
+cas_ref: sha256:086104a8d78308b751e651b335e09ec45ec8f3090ad293e3a89c758d40430dab
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DependencyTopology/AxiomClosureMonotonicity.label_mono_of_edge_mono
+    target_statement_id: sha256:8ccfe972a83bec6b0e9d2e60ae363348fc34710872c367ca81e8303b16ed1ecb
+  - gid: D5/S3/ConceptDynamics/DependencyTopology/AxiomClosureMonotonicity.value_mono_of_edge_mono
+    target_statement_id: sha256:f7304811941a665dd731f195d40da83e40a0a36269d7d4d41f8f1d67bd2e2240
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:524cc0104efc8559311dcb80db5e01f238bc5a4c0cb180d59d804c180766d4c1
+  normalized_sha256: sha256:524cc0104efc8559311dcb80db5e01f238bc5a4c0cb180d59d804c180766d4c1
+cas_ref: sha256:524cc0104efc8559311dcb80db5e01f238bc5a4c0cb180d59d804c180766d4c1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The environmental inverse and fourfold iteration calculation are closed by pinned Mathlib LinearEquiv.apply_symm_apply, LinearEquiv.symm_apply_apply, map_neg, and neg_neg; no repository frozen GID supplies this exact statement.
+    previous_atom_id: 4f835dc99fe7abc31f99eb214fa62fdd0bc789a7442d10fca8c89404557acb55
+    next_atom_id: d5f42b01ad543e220a484dd0fcab9ba4cf7b5b8d2e695af9b74ddbf2c731cdeb

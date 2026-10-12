@@ -1,0 +1,40 @@
+### theorem 9: 构造上下文中的叶词加深度闭合
+
+**Claim status: open.** 在实际来源上，由叶词可取得组成 $c(t)=(n_\alpha,n_\beta)^{\mathsf T}$。令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+因为 $c(t)=M^{\nu(t)}c(p(t))$，有
+
+$$
+e(t)=1\iff M^{-\nu(t)}c(t)=\binom10.
+$$
+
+证明。右侧表示原始前像恰好只有一片 $\alpha$ 叶。非空配对至少有两叶，所以该组成唯一对应原始叶 $\alpha$。证毕。
+
+知道 $(w,\nu)$ 后可以恢复 $e$，再使用定理 1 计算配对深度：
+
+$$
+w(\langle s,t\rangle)=w(s)w(t),
+\qquad Q(\langle s,t\rangle)=B(Q(s),Q(t)).
+$$
+
+同步替换给
+
+$$
+w(\rho t)=\sigma(w(t)),\qquad \nu(\rho t)=\nu(t)+1.
+$$
+
+这与共同矩纤维卷的 $(G,\nu)$ 同源构造闭合结论一致；其中 $G$ 的组成坐标已经足以恢复射线标志。但它仍然不决定任意地址读数。例如
+
+$$
+s=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+\qquad t=\langle\alpha,\langle\alpha,\alpha\rangle\rangle
+$$
+
+具有相同叶词和深度零；查询左孩子时，一个是配对节点，一个是 $\alpha$ 叶。一种摘要可以对最终深度充分，却对结构地址不充分。
+
+按全部后续上下文定义任务等价的思想具有[树自动机与 Myhill–Nerode 理论背景](https://www.cs.cornell.edu/~kozen/Papers/mn.pdf)。项目供应的是当前 FIB 替换下的具体合成律与分离上下文。
+

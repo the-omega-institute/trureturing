@@ -14,7 +14,9 @@ internal static class LeanImportAdjacency
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
 
-        var managedPaths = snapshot.Files.Keys
+        var managedPaths = (lean.Report.IsScoped
+                ? lean.Report.Files.Keys
+                : snapshot.Files.Keys.Where(static path => LeanClosureValidator.IsManagedLean(path.Value)))
             .Where(static path => LeanClosureValidator.IsManagedLean(path.Value))
             .ToImmutableHashSet();
         var pathsByModule = managedPaths

@@ -1,0 +1,10 @@
+**定义 26.1（Even-budget witness set on the full INITIAL source）。** Retain Definition 25.1, including every actually jointly attainable $(v,-j,s)$, unknown history, inherited tail $0\le s<k$, independently observed absorbing bottom, and arbitrary bottom label. Thus $m\ge3$, $k=2m-2$, $T=2m-1$ and $P=\mathbb Z/T\mathbb Z$. The immutable target is the arbitrary full table $f(v,-j,s)=\lambda_v(j)$ of (25.2). For an integer $1\le q\le m-2$ put
+
+$$
+E_q=\{0\}\cup\{m+q,m+q+1,\ldots,2m-2\},
+\qquad A_{v,q}=\lambda_v[E_q].
+\tag{26.1}
+$$
+
+The set $E_q$ has $m-q$ phases; its target image can be smaller. Both original alphabets separately are $\{0,1\}^m$ because $m<k$. Their common internal legality does not remove cross-block rejection. Fees count every actually emitted complete block, including waits and the remainder of a block after rejection. Only its endpoint is observed. GLOBAL requires the same preset literal word at the same emitted block number on all live archives and both free-value fibres, with actual archive-dependent stopping. The controller knows its own emitted-block count, but no INITIAL length or phase clock; it has no reset, source copy, interior reading or unexecuted-branch observation.
+

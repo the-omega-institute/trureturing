@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4d32c374c18623950b5166c04b5e72707070125f95e5839dae64c621c682d13c
+  normalized_sha256: sha256:4d32c374c18623950b5166c04b5e72707070125f95e5839dae64c621c682d13c
+cas_ref: sha256:4d32c374c18623950b5166c04b5e72707070125f95e5839dae64c621c682d13c
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenChronology/BinaryParikhStepTwoBridge.binary_step_two_signature_entries
+    target_statement_id: sha256:51bfbb594e089dc6fe83617ace55ae438dda4b7a20613127d27c2338390ab088
+receipts:
+  unresolved_subitems: []

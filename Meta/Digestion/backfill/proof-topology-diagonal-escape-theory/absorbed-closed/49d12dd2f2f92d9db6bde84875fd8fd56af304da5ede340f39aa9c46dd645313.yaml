@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:49d12dd2f2f92d9db6bde84875fd8fd56af304da5ede340f39aa9c46dd645313
+  normalized_sha256: sha256:49d12dd2f2f92d9db6bde84875fd8fd56af304da5ede340f39aa9c46dd645313
+cas_ref: sha256:49d12dd2f2f92d9db6bde84875fd8fd56af304da5ede340f39aa9c46dd645313
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.descended_fixed_iff_orbit_collapsed
+    target_statement_id: sha256:1bb61b6529d1f02a2fae3114b7c7027aeea187d248137e7ecbb76351d9ee7b5c
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.descended_unique
+    target_statement_id: sha256:67720afb15124186e9874af6c4521191b17db6f84e9ed1b25ade128cf05a9d20
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.fixedPointFree_descends_through_bijection
+    target_statement_id: sha256:9e500536170c117f9f21515882cbeb47986a4f09e9091dba435bce511f73fe15
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.involutive_descends
+    target_statement_id: sha256:cfacffd10cecc5696506e4f447121ebd4ca7ec4c0f1471e9698d3801969ea566
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.kernelStable_iff_exists_descended
+    target_statement_id: sha256:def5fd8ef19b39c10c253370d8f269664d775ecaa67c14b9f8dd17ee38506c3f
+receipts:
+  unresolved_subitems: []

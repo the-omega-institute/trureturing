@@ -1,1 +1,1 @@
-{"statement_id":"sha256:76871169e80d4c3eddbd769f086ec98d6543065479c381278c111a1dc25c5c82"}
+{"statement_id":"sha256:76871169e80d4c3eddbd769f086ec98d6543065479c381278c111a1dc25c5c82","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),17:RefinementClosure),44:PredictiveCompletionMaximalInvariantQuotient),48:predictive_completion_maximal_invariant_quotient)","kind":"theorem"}]}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d54f904a6e315896269b2f1638146844ad4ca4fbef724999dc98d976ab0e2aa
+  normalized_sha256: sha256:3d54f904a6e315896269b2f1638146844ad4ca4fbef724999dc98d976ab0e2aa
+cas_ref: sha256:3d54f904a6e315896269b2f1638146844ad4ca4fbef724999dc98d976ab0e2aa
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/ResidualSeparationTopology.defectRelation_eq_separationDeficit
+    target_statement_id: sha256:81a8950b7ae030a13c9357798b8126d0fe2e1925260b19eba4da304eb5e2d0e4
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/ResidualSeparationTopology.defectRelation_iff_topological_separation_deficit
+    target_statement_id: sha256:a6ddbca88e00a9399a51588f47090bdc85b8e898e5cffa90e842adcaa8ab2381
+receipts:
+  unresolved_subitems: []

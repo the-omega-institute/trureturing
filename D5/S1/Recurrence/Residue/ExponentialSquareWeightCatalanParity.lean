@@ -218,7 +218,7 @@ private theorem even_pair (m : ℕ) (hm : 1 ≤ m) :
       simp [h, show (2 : ZMod 2) = 0 by decide]
   rw [hs, add_zero]
 
-private theorem sum_pairs {R : Type*} [AddCommMonoid R] (f : ℕ → R) (m : ℕ) :
+theorem sum_pairs {R : Type*} [AddCommMonoid R] (f : ℕ → R) (m : ℕ) :
     ∑ j ∈ range (2 * m), f j = ∑ r ∈ range m, (f (2 * r) + f (2 * r + 1)) := by
   induction m with
   | zero => simp

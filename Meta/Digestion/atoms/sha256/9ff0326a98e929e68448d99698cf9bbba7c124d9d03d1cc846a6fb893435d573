@@ -1,0 +1,2 @@
+**命题 9.2（可加性只属于 Cartesian 积）。** (i) $K_{1,2}$ 是两个不交边集的生成子图之并，每个生成子图同构于 $K_2\sqcup K_1$，其 $\kappa$ 为 $\tfrac14$；但 $\kappa(K_{1,2})=2(3-2\sqrt2)<\tfrac12$，故定理 4.1(ii) 的不等号可以严格。(ii) $\kappa(K_2\sqcup K_2)=\tfrac14\ne\kappa(K_2)+\kappa(K_2)$，故不交并不可加。
+

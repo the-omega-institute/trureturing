@@ -1,0 +1,58 @@
+#### 3.1 节内标题：核空间解释
+
+原始投影
+
+$$
+p\mapsto(X,Y,Z)
+$$
+
+的核由
+
+$$
+d=(1,-1,0,-1,1)
+$$
+
+生成，因为
+
+$$
+\sum d_I=0,
+\qquad
+\Delta X=\Delta Y=\Delta Z=0.
+$$
+
+闭包投影
+
+$$
+p\mapsto(X,Y,W)
+$$
+
+的核由
+
+$$
+e=(2,-1,-1,-1,1)
+$$
+
+生成，因为
+
+$$
+\sum e_I=0,
+\qquad
+\Delta X=\Delta Y=\Delta W=0.
+$$
+
+而
+
+$$
+\operatorname{span}(d)\cap \operatorname{span}(e)=\{0\}.
+$$
+
+所以原始占用投影与闭包投影是横截的：
+
+$$
+\ker(P)\cap\ker(Q)=\{0\}.
+$$
+
+这就是“原始 FIB 金字塔”和“partition closure”之间最关键的线性关系：两者各自丢失一个方向，但丢失的方向不同；把它们的共享端点坐标合在一起，信息恰好完整。
+
+---
+

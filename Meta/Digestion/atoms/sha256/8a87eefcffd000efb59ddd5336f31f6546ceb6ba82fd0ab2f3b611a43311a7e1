@@ -1,0 +1,19 @@
+**Claim status: open.** 约定 $u_0=u_{N+1}=0$，$r_i=1-u_i-u_{i+1}$。在严格内部条件下，
+
+$$
+\boxed{
+w_i=\frac{u_i(1-u_i)}{r_{i-1}r_i}
+}
+$$
+
+并且
+
+$$
+\boxed{
+\mathcal Z_N=
+\frac{\prod_{i=2}^{N-1}(1-u_i)}{\prod_{i=1}^{N-1}r_i}.
+}
+$$
+
+因此各位置均值唯一确定这份已声明的乘积权模型。
+

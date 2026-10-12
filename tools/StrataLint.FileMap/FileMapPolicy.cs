@@ -449,6 +449,13 @@ internal static partial class FileMapPolicy
         var findings = new List<FileMapFinding>();
         foreach (var path in paths.Order(StringComparer.Ordinal))
         {
+            if (RepositoryPathPolicy.IsExperimentalMaterialPath(path))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-EXPERIMENT-EXTERNAL", path,
+                    RepositoryPathPolicy.ExperimentalMaterialsMessage));
+                continue;
+            }
             var matches = manifest.Match(path);
             if (matches.Length == 0)
             {
@@ -572,8 +579,6 @@ internal static partial class FileMapPolicy
                 && kind is not FileMapKind.Generated
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
-                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-                    && kind is not FileMapKind.Ledger
                 || FrozenStatePath.IsUnderRoot(path)
                     && kind is not FileMapKind.Data)
             {

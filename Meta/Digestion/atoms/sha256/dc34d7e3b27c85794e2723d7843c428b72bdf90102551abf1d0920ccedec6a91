@@ -1,0 +1,9 @@
+**命题 7.1（硬核测度的对偶值）。** 对 $n\ge1$ 与 $\lambda>0$，
+
+$$
+\Phi_{\Gamma_n}\bigl(\mu^{(n)}_\lambda\bigr)=\frac{\lambda}{1+\lambda}\,\mathbb E^{(n)}_\lambda[u],
+\qquad\text{因而}\qquad
+\kappa_n\ge\frac{\lambda}{1+\lambda}\,\mathbb E^{(n)}_\lambda[u].
+\tag{7.1}
+$$
+

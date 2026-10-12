@@ -1,0 +1,8 @@
+## 10. 关系语义与来源
+
+一条排斥边对应三角合法事件域；两个可共同占用的端点对应四角行列式关系；二结果提供一维中心化记录空间；三结果首次容纳两项正交非零变化。金字塔把中间排斥和底面共同选择放进同一来源。记录粗化把细区别转成粗条件关联；相干后继还需分类内部非对角关系。
+
+真正内生的边界须在实际观察与记录处理后，仍足以支持下一次更新。它不由参数最少或外形最简单自动保证。
+
+引用的经典工具为概率图模型与条件独立（[Wainwright–Jordan 技术报告](https://statistics.berkeley.edu/tech-reports/649)），以及量子仪器的结果概率和后测量态区分（[IBM Quantum Learning](https://learning.quantum.ibm.com/course/general-formulation-of-quantum-information/general-measurements)）。这些既有理论不被声明为本卷原创。
+

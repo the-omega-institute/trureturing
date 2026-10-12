@@ -1,0 +1,14 @@
+**Claim status: open.** 令 $r_i=1/c_i$。则
+
+$$
+\boxed{R_{ij}=r_i+r_j.}
+$$
+
+三端点在端点 $i$ 的余弦分子为
+
+$$
+\boxed{\frac{d_{ij}^2+d_{ik}^2-d_{jk}^2}{2}=r_i>0,}
+$$
+
+故响应三角形三个角均锐。
+

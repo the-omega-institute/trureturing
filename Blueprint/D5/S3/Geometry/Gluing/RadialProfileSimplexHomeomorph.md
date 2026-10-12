@@ -1,0 +1,46 @@
+# Radial profiles on the closed tetrahedron
+
+## Abstract
+
+Explicit radial interpolation on the actual closed tetrahedron and its original face-generated quotient.
+
+Let I=Fin 4, and let K be the standard real simplex: nonnegative coordinate functions whose sum is one. The vertex e(i) is the coordinate unit vector. O(i) is the actual opposite face, consisting of u in K with coordinate i equal to zero. The radius type is the closed interval [0,1/2], and A is [1/4,23/48]. A profile family alpha gives a map O(i) to A for each i. No differentiability or Lipschitz condition on these profiles is assumed.
+
+Write R(i,u,r)=(1-r)e(i)+ru. The central region consists of x in K with every coordinate at most 1/2. For a in A, f(a,r) equals 4ar for r at most 1/4, a+4(1/2-a)(r-1/4) for r between 1/4 and 1/2, and r above 1/2. The inverse g(a,s) equals s/(4a) for s at most a, 1/4+(s-a)/(4(1/2-a)) between a and 1/2, and s above 1/2. Both formulas are continuous jointly in the parameter and scalar, including the moving inverse interface s=a. The proof establishes both inverse identities on the real line; their restrictions preserve [0,1/2].
+
+Phi(alpha) sends R(i,u,r) to R(i,u,f(alpha(i,u),r)); Psi(alpha) uses g on the same ray. Both fix the central region. The chart construction uses the disjoint union of all O(i) times [0,1/2] and the entire central region. Its projection onto K is a continuous surjection from a compact space. Equality of projections implies equality of the transformed projections: zero radius collapses to the same old vertex, equal nonzero rays recover their directions, distinct corners overlap only at radius 1/2, and a corner meets the central region in the entire triangle with coordinate i equal to 1/2. Thus no continuous corner selection is used. Continuity descends through that compact quotient map, including all directions at each apex. This does not replace the original face generator used below.
+
+**Theorem 1.1 (Constructed homeomorphism, faces, naturality and apex estimates).**
+
+$$\forall alpha \in Profiles,\; \forall h \in ContinuousProfiles\left(alpha\right),\; \left(\forall i \in I,\; H\left(alpha, h, e\left(i\right)\right) = e\left(i\right)\right) \land \left(\left(\forall i \in I,\; \forall u \in O\left(i\right),\; \forall r \in Radius,\; H\left(alpha, h, R\left(i, u, r\right)\right) = R\left(i, u, f\left(profile\left(alpha, i, u\right), r\right)\right)\right) \land \left(\left(\forall i \in I,\; \forall u \in O\left(i\right),\; \forall r \in Radius,\; Hinverse\left(alpha, h, R\left(i, u, r\right)\right) = R\left(i, u, g\left(profile\left(alpha, i, u\right), r\right)\right)\right) \land \left(\left(\forall x \in Central,\; H\left(alpha, h, x\right) = x \land Hinverse\left(alpha, h, x\right) = x\right) \land \left(\left(\forall x \in K,\; \forall j \in I,\; coord\left(H\left(alpha, h, x\right), j\right) = 0 \Leftrightarrow coord\left(x, j\right) = 0\right) \land \left(\left(\forall x \in K,\; \forall j \in I,\; coord\left(Hinverse\left(alpha, h, x\right), j\right) = 0 \Leftrightarrow coord\left(x, j\right) = 0\right) \land \left(\left(\forall J \in Sets\left(I\right),\; \forall x \in K,\; \left(\forall j \in I,\; j \in J \Rightarrow coord\left(H\left(alpha, h, x\right), j\right) = 0\right) \Leftrightarrow \left(\forall j \in I,\; j \in J \Rightarrow coord\left(x, j\right) = 0\right)\right) \land \left(\left(\forall beta \in Profiles,\; \forall rho \in Perm\left(I\right),\; \left(\forall i \in I,\; \forall u \in O\left(i\right),\; profile\left(beta, apply\left(rho, i\right), U\left(rho, i, u\right)\right) = profile\left(alpha, i, u\right)\right) \Rightarrow \left(\forall x \in K,\; Phi\left(beta, P\left(rho, x\right)\right) = P\left(rho, Phi\left(alpha, x\right)\right)\right)\right) \land \left(\left(\forall beta \in Profiles,\; \forall rho \in Perm\left(I\right),\; \left(\forall i \in I,\; \forall u \in O\left(i\right),\; profile\left(beta, apply\left(rho, i\right), U\left(rho, i, u\right)\right) = profile\left(alpha, i, u\right)\right) \Rightarrow \left(\forall x \in K,\; Psi\left(beta, P\left(rho, x\right)\right) = P\left(rho, Psi\left(alpha, x\right)\right)\right)\right) \land \left(\left(\forall i \in I,\; \forall u \in O\left(i\right),\; \forall r \in Radius,\; r \le rational\left(1, 4\right) \Rightarrow \left(\forall j \in I,\; abs\left(coord\left(Phi\left(alpha, R\left(i, u, r\right)\right), j\right) - coord\left(e\left(i\right), j\right)\right) \le rational\left(23, 12\right) \cdot r \land abs\left(coord\left(Psi\left(alpha, R\left(i, u, r\right)\right), j\right) - coord\left(e\left(i\right), j\right)\right) \le r\right)\right) \land \left(\forall i \in I,\; \forall u \in O\left(i\right),\; H\left(alpha, h, R\left(i, u, rational\left(1, 4\right)\right)\right) = R\left(i, u, profile\left(alpha, i, u\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.radial_homeomorph_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+H(alpha,h) is the constructed homeomorphism for a continuous profile family; its forward function is Phi and inverse is Psi. P(rho) acts by coordinate j equal to the old coordinate rho inverse(j). U(rho,i,u) is this action on the opposite face. The displayed covariance condition transports an arbitrary profile family alpha to beta; equivariance is proved from the actual ray formulas. Zero preservation applies to every coordinate and every set J of zero coordinates, including the empty and full sets. The coordinate estimates near each vertex are uniform in direction and remain valid while directions oscillate. There is no global Lipschitz assertion for continuous profiles.
+
+The concrete source profile uses only the three non-i coordinates, enumerated by Fin.succAbove. Let M be their maximum, m their minimum, w=1-M-m, and B=max(2(M-w),max(3(w-m),4m)). Then a(i,u)=1/(1+M+B). Weak inequalities and tied or zero coordinates are retained. From the sum-one and nonnegativity conditions the proof derives 0<=m<=w<=M<=1, then B<=3-M and 48/23<=1+M+B; hence 1/4<=a<=23/48. Finite maxima and minima are continuous. Their order characterizations show that a is covariant under every vertex permutation. The source homeomorphism is H instantiated with this derived continuous bounded profile.
+
+**Theorem 1.2 (Exact original face generator and its complete equivalence closure).**
+
+$$\forall T \in Types,\; TopologicalSpace\left(T\right) \Rightarrow \left(\forall next \in (T) \times (I) \to T,\; \forall sigma \in (T) \times (I) \to Perm\left(I\right),\; \left(\forall rho \in Perm\left(I\right),\; \forall i \in I,\; \forall u \in O\left(i\right),\; sourceProfile\left(apply\left(rho, i\right), U\left(rho, i, u\right)\right) = sourceProfile\left(i, u\right)\right) \land \left(\left(\forall a \in (T) \times (K),\; \forall b \in (T) \times (K),\; seam\left(next, sigma, TaggedH\left(a\right), TaggedH\left(b\right)\right) \Leftrightarrow seam\left(next, sigma, a, b\right)\right) \land \left(\forall a \in (T) \times (K),\; \forall b \in (T) \times (K),\; EqvGen\left(seam\left(next, sigma\right), TaggedH\left(a\right), TaggedH\left(b\right)\right) \Leftrightarrow EqvGen\left(seam\left(next, sigma\right), a, b\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.source_original_relation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any topological tag type T, next:T times I to T and sigma:T times I to Perm(I), seam(a,b) means that some original face f has a's coordinate f equal to zero and b=(next(a.tag,f),P(sigma(a.tag,f),a.point)). No adjacency, inverse-pairing, freeness or distinctness assumption is imposed. TaggedH(t,x)=(t,Hsource(x)). The same source homeomorphism preserves the exact generator in both directions. Induction on Relation.EqvGen proves both directions for arbitrary finite generating chains, using the actual inverse for the reverse implication. Face witnesses, labels, self-pairings and repeated occurrences are preserved.
+
+originalQuotientHomeomorph is the direct application of Homeomorph.Quotient.congr to TaggedH and the proved equivalence-closure biconditional. It is not a theorem assuming an arbitrary homeomorphism or relation compatibility. The tagged type need not be finite for this topological quotient construction, so in particular it covers every finite tagged family.
+
+The source method is classical and no novelty is claimed. This result concerns the standard simplex formulas and the unmarked original face-generated quotient. It does not prove the literal second-subdivision star descriptions of source 70.3–70.4, identify those stars with the radial sublevel sets in 70.9, or supply the marked identification with the specified source (N,boundary N). Restricted star quotients require those geometric inputs and a saturation proof before restricting EqvGen. No completion of section 70 or of CFMP sections 1–125 is asserted.
+
+## References
+
+- Truth anchor: `D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.radial_homeomorph_spec`
+- Truth anchor: `D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.source_original_relation`

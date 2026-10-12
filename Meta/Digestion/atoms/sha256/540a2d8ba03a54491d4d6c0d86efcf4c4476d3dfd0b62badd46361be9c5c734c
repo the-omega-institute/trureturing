@@ -1,0 +1,11 @@
+### 定义 5：有限坐标的特征读口
+
+对 $A=\prod_{s=1}^d\mathbb Z/n_s\mathbb Z$，定义
+
+$$
+\chi_k(a)=\exp\left(2\pi i\sum_s\frac{k_sa_s}{n_s}\right),
+\qquad \widehat\mu(k)=\mathbb E_\mu[\chi_k].
+$$
+
+特征将一组坐标的共同关系读成单位圆上的相位。
+

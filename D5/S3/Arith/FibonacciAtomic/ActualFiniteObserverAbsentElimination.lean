@@ -114,7 +114,7 @@ structure Admissible (N : Nat) (M : Observer E) : Prop where
       Run M U M.e0 t f b ∧ (b = true ↔ Positive U)
   coarse : Function.FactorsThrough (historyAction M) kappa_hist
 
-private theorem queryReply_eq_readout (cache : RawHistory) (U : Source)
+theorem queryReply_eq_readout (cache : RawHistory) (U : Source)
     (truth : CacheTruth cache U) (q : Address) :
     queryReply cache q U = readout q U := by
   unfold queryReply

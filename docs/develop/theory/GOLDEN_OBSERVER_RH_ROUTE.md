@@ -2888,3 +2888,74 @@ RH 命题之间的逻辑等价只传递真值，不自动给出候选见证的�
 §87.3 中有符号无限尾项的下界。连续价格带
 $10^{-6}\le\lambda\le1/25$、$\delta=123/500000$ 与到 $10^{30000}$ 的整数覆盖
 保留它们原来的范围；有限覆盖不能替代所有 $n>5040$ 的量词。
+
+# 增订三十九　两份 2026 年 10 月预印本的 Robin/FIB 接口
+
+本节补入截至 2026 年 10 月 10 日检索到、且尚未在本卷或 `Library/` 建卡的两份
+Riemann 假设预印本。Musin 的高阶 CA 接触、Mishra--Sarkar 的 $\omega(n)$ 截断、
+Fan--Kobayashi--Molnar 的高阶 $\sigma^{[k]}$ 判据、Zimov 的最小 CA 反例带宽、
+Fabbian 的显式 Mertens 筛以及 Broadbent--Fiori--Kadiri--Ng--Wilk 的 Mertens
+矩估计已有独立来源卡和 FIB 接口审计；本节不重述它们的证明。
+
+## 一　有限半径 Jensen 与相对熵重述
+
+[Wunderlich, arXiv:2610.10584v1](../../../Library/Weil/wunderlich2026bsyentropy.md)
+把已知的 Balazard--Saias--Yor 边界判据写成有限半径 Jensen 公式，并在
+$s=-1/2$ 的归一化下将平凡零点的贡献化为望远镜乘积。剩余项是映射后的非临界线
+零点的非负计数积分。其 Theorem 8.2 对
+
+$$
+Z=|\Xi(T)/\Xi(0)|^2
+$$
+
+给出以下恒等式；这里 $T$ 按原文 (8.4) 的密度
+$6/[\pi(1+t^2)(4+t^2)]$ 取样，$\mu$ 是 $Z$ 的分布，
+$M=\int z\,\mu(dz)$，$\nu(dz)=z\mu(dz)/M$。常数 $D$ 与 $G$
+分别取原文 (8.12) 与 (7.9) 的定义；界仅适用于这对指定分布。
+
+$$
+D-D_{\rm KL}(\mu\|\nu)=4G\ge0,
+$$
+
+并以饱和该上界刻画 RH。这里的非负量属于零侧边界积分；它没有把
+$D_{\rm KL}$ 识别为 $\sigma(n)/n$ 的点值，也没有给出 FIB 候选上
+$e^\gamma\log\log n-\sigma(n)/n$ 的同源有符号下界。
+
+因此它不能替代当前 §250 的 Robin 尾项。若要消费这条路线，必须新增一条保持同一实际来源的
+算术投影，使 Robin 点值缺陷与该零侧缺陷处于同一个测试对象、同一截断和同一误差预算中；该预印本未提供这条桥。
+
+## 二　无条件无限对数凹性不是 RH
+
+[Liu--Mao, arXiv:2610.04972v1](../../../Library/Analytic/liu2026xilogconcavity.md)
+对
+
+$$
+F(x)=\xi\!\left(\tfrac12+\sqrt{x}\right)=\sum_{n\ge0}\lambda_nx^n
+$$
+
+其 Theorem 1.1 声称标准对数凹性算子 $L$（约定 $\lambda_{-1}=0$）满足
+
+$$
+(L^m\lambda)_n>0\qquad(m,n\ge0).
+$$
+
+作者给出的结论不以 RH 为前提；本节仅引用其陈述，未独立审查证明。
+文中的 $\lambda_n$ 是中心 Taylor 系数，不是 Li 系数。所述结果没有提供到
+Laguerre--Pólya 性、零点全在临界线、Li 系数全正或 Robin 逐整数估计的推导。
+该来源与五窗 FIB 定义没有给出 $N_g$ 到 $\lambda_n$ 的系数保持映射；连接两者仍需证明对象与量词的对应。
+
+## 三　对当前 Robin/FIB 缺口的影响
+
+这两份来源中的边界恒等式与系数性质可以按原条件复用，无需重新推导。
+它们未供应当前 Robin/FIB 路线所需的联合估计
+
+$$
+\text{同一实际 FIB 整数}
+\longrightarrow
+\text{同一 Robin 价格源}
+\longrightarrow
+\text{完整带符号尾项的严格下界}.
+$$
+
+后续新增工作应处理来源保持、共同价格和有符号尾项的未证接口。仅重复已有判据或正性结论，
+不能替代这条接口；新的正性工具若能经已证映射供应所需估计，仍可使用。

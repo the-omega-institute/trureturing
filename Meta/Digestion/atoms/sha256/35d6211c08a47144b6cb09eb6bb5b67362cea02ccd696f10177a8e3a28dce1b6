@@ -1,0 +1,7 @@
+Here a scattered pair need not be adjacent. The standard ordered Parikh product is
+
+```text
+T(w) = product over letters of (I + E01) or (I + E12)
+     = [[1, r(w), P(w)], [0, 1, z(w)], [0, 0, 1]].
+```
+

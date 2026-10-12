@@ -203,7 +203,7 @@ private theorem local_unique_max {p : ℕ} (hp : p.Prime) (a : ℕ) :
   · have hs := down (by simp) h.le h
     exact ⟨hs.le, ⟨fun heq => (hs.ne heq).elim, fun heq => by rw [heq]⟩⟩
 
-private theorem reciprocal_divisor_sum {n : ℕ} (hn : 1 ≤ n) :
+theorem reciprocal_divisor_sum {n : ℕ} (hn : 1 ≤ n) :
     (∑ d ∈ n.divisors, (d : ℝ)⁻¹) = (ArithmeticFunction.sigma 1 n : ℝ) / n := by
   have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
   rw [ArithmeticFunction.sigma_one_apply, Nat.cast_sum, ← Nat.sum_div_divisors n

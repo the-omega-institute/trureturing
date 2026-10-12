@@ -1,0 +1,6 @@
+**Claim status: open.** 若观察前 $b_1,\ldots,b_d$ 相互独立，每个正概率结果下它们仍相互独立，并且所有 $\nu_i>0$，则
+
+$$
+\boxed{m\ge d+1.}
+$$
+

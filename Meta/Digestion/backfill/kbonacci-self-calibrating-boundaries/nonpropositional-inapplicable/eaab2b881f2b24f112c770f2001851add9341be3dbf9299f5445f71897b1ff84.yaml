@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eaab2b881f2b24f112c770f2001851add9341be3dbf9299f5445f71897b1ff84
+  normalized_sha256: sha256:eaab2b881f2b24f112c770f2001851add9341be3dbf9299f5445f71897b1ff84
+cas_ref: sha256:eaab2b881f2b24f112c770f2001851add9341be3dbf9299f5445f71897b1ff84
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'All propositional clauses are supplied by pinned mathlib v4.33.0 (db584cd6d46c92f209a44c0f1c829460d327499d): Ideal.add_eq_sup, Submodule.mem_sup, Submodule.mem_iInf, Ideal.add_mem_iff_left, Submodule.sub_mem_iff_left and additive normalization. There is no available frozen project GID for this complete relation. Take R=Polynomial A for arbitrary CommRing A, r>=2, old ideals I_i (i<r), their intersection J, and one common old representative P0. mem_iInf and subtraction membership identify all old representatives as P0+J. add_eq_sup and mem_sup give u-P0 in I_new+J iff there are a in I_new and b in J with a+b=u-P0. The same x=P0+b satisfies every old coordinate and x-u=-a in I_new. Conversely a=u-x and b=x-P0 give that decomposition from a common extension x. Any other old representative P0prime differs from P0 by an element of J, hence of I_new+J; add_mem_iff_left/sub_mem_iff_left give representative independence. No comaximality, field, principal ideal, or pairwise CRT assumption is added. The final paragraph states the boundary against replacing the intersection by pairwise sums and refers to the separate Chapter 8 counterexample; that counterexample is not settled here. No new Lean.'
+    previous_atom_id: 3ead4a4dba24cb86836e7fb7983a397352974fd30a5ffd313496c7f058f0e7b1
+    next_atom_id: c0adeb09ca0f541439c6045d64ed1cc11c72b13a0909458a3557c3ddfb8ac85e

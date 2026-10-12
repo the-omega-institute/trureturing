@@ -1,0 +1,13 @@
+**Claim status: open.** 设返回前后的完整未来律为 $T_h,T_{hw}$，实际配置解码律为 $D_z,D_{z'}$。令
+
+$$
+\mathcal V_h=\mathbb E[\operatorname{TV}(D_z,D_{z'})\mid h,w].
+$$
+
+则
+
+$$
+\boxed{\mathcal V_h\ge
+\operatorname{TV}(T_h,T_{hw})-e_{\mathrm{conf}}(h)-e_{\mathrm{conf}}(hw).}
+$$
+

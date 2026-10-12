@@ -1,0 +1,6 @@
+### lemma 1 一个左孩子为 $\alpha$ 的节点，是“不属于一次 FIB 像”的证据
+
+Claim status: open.
+
+任何属于 $\rho[\mathbb T]$ 的实际树，都不会出现“某个配对节点的左孩子恰好是单叶 $\alpha$”的情况。
+

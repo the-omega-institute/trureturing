@@ -1,1 +1,1 @@
-{"statement_id":"sha256:eb5456fead13460dedc7a9b323bfca88192a4b3902069dadc3e9184bdc7a74f7"}
+{"statement_id":"sha256:eb5456fead13460dedc7a9b323bfca88192a4b3902069dadc3e9184bdc7a74f7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:QuantumBounds),14:LandauIdentity),15:landau_identity)","kind":"theorem"}]}

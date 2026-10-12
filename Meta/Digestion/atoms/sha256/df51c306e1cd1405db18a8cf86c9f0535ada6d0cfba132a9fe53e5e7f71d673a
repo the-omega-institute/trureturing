@@ -1,0 +1,57 @@
+#### theorem 1.6: 定理 6：未来二项数量读口恢复局部原子模式
+
+**Claim status: open.**
+
+
+在五态模式域中，映射：
+
+$$
+\sigma
+\longmapsto
+\bigl(V_j(\sigma),V_{j+1}(\sigma)\bigr)
+$$
+
+
+是单射。
+
+证明：$S$ 可逆，因为
+
+$$
+\det S=-1.
+$$
+
+
+若两模式有相同的两项未来回复，则：
+
+$$
+qS^jd_{\sigma}=qS^jd_{\tau},
+$$
+
+
+$$
+qS^{j+1}d_{\sigma}=qS^{j+1}d_{\tau}.
+$$
+
+
+这等价于一个行列式为非零的观测矩阵作用在 $d_\sigma-d_\tau$ 上为零，因此：
+
+$$
+d_\sigma=d_\tau.
+$$
+
+
+五个模式的组成向量互异，所以：
+
+$$
+\sigma=\tau.
+$$
+
+
+但是这里必须保留一个重要边界：
+
+> 未来数量回复可以恢复原子模式，却不能自动恢复原树的叶序、括号和历史来源。
+
+这正是当前 `ActualCoarseReadoutHistory`、`ActualCoarseReadoutCompletion` 等模块继续强调的地方：未来读数的注入性不能被误读成原树本体的可逆性。
+
+---
+

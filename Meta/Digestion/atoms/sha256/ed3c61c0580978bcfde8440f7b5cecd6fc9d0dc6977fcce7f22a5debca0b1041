@@ -1,0 +1,68 @@
+#### theorem 30.1: 定理 2：模式—深度独立性的刚性
+
+Claim status: open.（供文 III 原第 6 节「定理 2」；保留纸面论证及其边界。）
+
+> 编者限定（III.6，原定理 2）：这里已写“正概率模式”，交叉比仍只对 $p_I,p_J,\mu_i,\mu_j,c_I,c_J>0$ 的单元定义；两个深度是不同正整数，Read 计数是非负整数，指数差在 $\mathbb Z$ 中。固定先验、深度无关正因子、同一个 $K$ 和所示乘积似然共同构成条件模型；任意零模式、未知先验或非整数指数不由 FR.34.3 覆盖。
+
+
+假设深度先验在两个不同深度 $i\neq j$ 上都有正质量。
+
+则模式 $I$ 和深度 $K$ 的后验独立，当且仅当所有正概率模式都具有相同的计数对：
+
+$$
+(A_I,B_I)=(A_J,B_J)
+$$
+
+对任意正概率模式 $I,J$ 成立。
+
+##### 30.1 证明（III 原定理 2）
+
+定义交叉赔率
+
+$$
+\Xi_{I,J;i,j} =
+\frac{
+\pi_H(I,i)\pi_H(J,j)
+}{
+\pi_H(I,j)\pi_H(J,i)
+}.
+$$
+
+代入联合后验，所有先验因子 $p_I,p_J,\mu_i,\mu_j,c_I,c_J$ 消去，得到
+
+$$
+\Xi_{I,J;i,j} =
+\left(\frac{r_i}{r_j}\right)^{A_I-A_J}
+\left(\frac{s_i}{s_j}\right)^{B_I-B_J}.
+$$
+
+若模式与深度独立，则交叉赔率必须等于 $1$，所以
+
+$$
+\left(\frac{r_i}{r_j}\right)^{A_I-A_J}
+\left(\frac{s_i}{s_j}\right)^{B_I-B_J}
+=1.
+$$
+
+当前 HEAD §§34–35 使用 Fibonacci 行列式恒等式和 Carmichael 原始素因子定理，证明了：
+
+$$
+\left(\frac{r_i}{r_j}\right)^u
+\left(\frac{s_i}{s_j}\right)^v
+=1
+\quad\Longrightarrow\quad
+u=v=0.
+$$
+
+因此
+
+$$
+A_I-A_J=0,
+\qquad
+B_I-B_J=0.
+$$
+
+反方向显然成立：若所有模式的 $(A_I,B_I)$ 相同，则后验可以分解成模式因子与深度因子的乘积。证毕。
+
+---
+

@@ -1,0 +1,46 @@
+### 33. 九、递归闭包的下一层猜想
+
+Claim status: open.（供文 III 原第 9 节全文。）
+
+> 编者限定（III.9）：本节标题和观察链仍是供文猜想式组织。表中的静态维数不能转用作无限动态历史的信息维数；一个已知非零核变化判据也不自动授予取得仪器、混合模型或任意观察者合同的充分性。$\mathcal O_3$–$\mathcal O_5$ 的能力须在指定的共同来源、先验、权限和边界上逐项证明。
+
+
+根据上述结构，可以定义一个逐级读出链：
+
+$$
+\mathcal O_0=E[q],
+$$
+
+$$
+\mathcal O_1=(X,Y,Z),
+$$
+
+$$
+\mathcal O_2=(X,Y,Z,W),
+$$
+
+$$
+\mathcal O_3=(X,Y,Z,W,\overline{\mathscr L}),
+$$
+
+$$
+\mathcal O_4=
+(X,Y,Z,W,\overline{\mathscr L},
+\text{phase},
+\text{boundary}),
+$$
+
+$$
+\mathcal O_5=
+\mathcal O_4+
+\text{chronology}
++
+\text{selected bank}
++
+\text{native history}.
+$$
+
+对应的信息逃逸维数大致为：
+
+| 观测层 | 能恢复的对象 | 仍可能逸出的信息 |
+|---|---|---|

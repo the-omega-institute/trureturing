@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ef80a9e91e94362c28fe301418e8b8d7af37b7545a83fa1bf5fbde9213b742b0"}
+{"statement_id":"sha256:ef80a9e91e94362c28fe301418e8b8d7af37b7545a83fa1bf5fbde9213b742b0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Coding),28:FullCRTBlindCountAndDistance),49:full_crt_blind_count_distance_and_detection_limit)","kind":"theorem"}]}

@@ -1,0 +1,16 @@
+### 定义 2.1：明确的条件读口
+
+真实模式 $s\in\Sigma$ 暂不被动作改变。读口结果 $o$ 的似然为
+
+$$
+\ell_o(s)=\Pr(o\mid s),\qquad\sum_o\ell_o(s)=1.
+$$
+
+结果概率与后验分别为
+
+$$
+q_o=\sum_sp_s\ell_o(s),
+\qquad
+p_s^{\,o}=\frac{p_s\ell_o(s)}{q_o}\quad(q_o>0).
+$$
+

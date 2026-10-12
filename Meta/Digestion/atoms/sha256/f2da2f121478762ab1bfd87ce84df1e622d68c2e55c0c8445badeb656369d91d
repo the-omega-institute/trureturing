@@ -1,0 +1,20 @@
+**推论 22.2（Paid qualified-common-cut consumer）。** Under (22.1) and the entire original contract, let $f:Q\to Y$ have one common qualified integer cut $0\le a=qm+\rho<k$, $q\ge0$, $0\le\rho<m$, satisfying every condition (19.2)–(19.4) for both values and all archives. Then
+
+$$
+C_{\rm ad}(f)\le C_{\rm pre}(f)\le q+1+2r\le2r+2.
+\tag{22.13}
+$$
+
+For a history target $F$, the additional condition $F(w)=f(q_{\rm INITIAL}(w))$ is required. The cut is chosen before the value and archive quantifiers; $f(\bot)$ is one fixed free-stop label. This is an upper bound, without asserting optimality or equality of the two prices.
+
+Proof. This consumes the common-cut construction of the [INITIAL target-cost volume, Theorem 24.2 and Corollary 24.3](KBONACCI_INITIAL_TARGET_COST_THEORY.md), as restated in Definition 19.1 and Theorem 19.2. Issue the one literal prefix
+
+$$
+(1^m)^q\mid1^\rho0^{m-\rho},
+\tag{22.14}
+$$
+
+and then the one stream (22.5), with its newly observed endpoint value as baseline. For each fixed $v$, (19.2) makes every earlier all-one rejection band constant on its actual $S_t(\alpha)$ archive; (19.3) makes the parent rejection band constant on $S_q(\alpha)$; and (19.4) makes the surviving INITIAL tails constant separately at each phase. Thus rejected archives return their unique original labels, and surviving archives lose no target distinction when their tails become zero. These conditions include empty bands and all phase fibres, not just the reached representatives. They hold for the same $a$ across both values.
+
+The suffix recovers its own start phase by Theorem 22.1. Subtract the known displacement $(q+1)m$ to recover INITIAL phase, then use the stored free INITIAL value and (19.4) to return $f$'s surviving label. All live archives follow the same prefix and suffix. The prefix's internal runs are shorter than $k$ and its survivor ends in zero; the suffix is safe. Every emitted prefix, padding and suffix block, including any rejection block, is paid. The total is at most $q+1+2r$, and $a<k=2m-2$ gives $q\le1$. Initial bottom and already constant archives may stop earlier. This proves the bound with every inherited source, observation and stopping condition retained. $\square$
+

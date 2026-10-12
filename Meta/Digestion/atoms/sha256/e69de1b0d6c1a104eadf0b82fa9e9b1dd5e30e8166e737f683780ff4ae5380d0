@@ -1,0 +1,14 @@
+**Proposition 35.5 (Two exact numerical anchors and their pattern restrictions).** The family contains
+
+$$
+\begin{aligned}
+27&=1+F_7\cdot2=1+13\cdot2=3^3,
+& I_7&=[2,2]\cap\mathbb Z,\\
+6059&=1+F_{13}\cdot26=1+233\cdot26=73\cdot83,
+& I_{13}&=[24,46]\cap\mathbb Z.
+\end{aligned}
+\tag{35.13}
+$$
+
+Thus $\omega(27)=1$ and $\omega(6059)=2$, with $6059>5040$. They have the same zero pattern for $S=\{2,5\}$, but they do not have the same pattern for every finite $S$.
+

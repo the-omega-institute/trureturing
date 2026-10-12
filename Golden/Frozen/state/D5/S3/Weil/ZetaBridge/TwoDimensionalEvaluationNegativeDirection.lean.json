@@ -1,1 +1,1 @@
-{"statement_id":"sha256:318987f9b45c367884c1afbe5d7b7d34d55faadf327c1866415c80e3df2e2d35"}
+{"statement_id":"sha256:318987f9b45c367884c1afbe5d7b7d34d55faadf327c1866415c80e3df2e2d35","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),10:ZetaBridge),41:TwoDimensionalEvaluationNegativeDirection),10:crossValue)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),10:ZetaBridge),41:TwoDimensionalEvaluationNegativeDirection),49:two_dimensional_evaluation_has_negative_direction)","kind":"theorem"}]}

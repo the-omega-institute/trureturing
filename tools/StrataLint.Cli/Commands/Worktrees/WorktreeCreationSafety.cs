@@ -8,66 +8,6 @@ internal static class WorktreeCreationSafety
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static void CleanupCreatedBranch(
-        WorktreeOptions options,
-        string creationLock,
-        string branchOid,
-        bool branchCreated,
-        IWorktreeProcessRunner runner)
-    {
-        var reference = $"refs/heads/{options.Branch}";
-        var lookup = RunGit(options.Source,
-            ["for-each-ref", "--format=%(refname)%09%(objectname)%09%(symref)", "--", reference],
-            runner, "could not inspect initialization branch");
-        var branch = StrictUtf8.GetString(lookup.StandardOutput)
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-            .Select(line => line.TrimEnd('\r').Split('\t'))
-            .SingleOrDefault(fields => string.Equals(fields[0], reference, StringComparison.Ordinal));
-        if (branch is null) return;
-
-        if (branch.Length != 3 || branch[2].Length != 0
-            || !string.Equals(branch[1], branchOid, StringComparison.Ordinal))
-            throw new InvalidOperationException("initialization branch changed; refusing cleanup");
-
-        // Creation acknowledgements become stale if the ref is deleted and recreated.
-        var receipt = RunGit(options.Source,
-            ["reflog", "show", "-1", "--format=%H%x09%gs", "--fixed-strings",
-                $"--grep-reflog={creationLock}", reference, "--"],
-            runner, "could not inspect initialization branch receipt");
-        if (!string.Equals(StrictUtf8.GetString(receipt.StandardOutput).TrimEnd('\r', '\n'),
-            $"{branchOid}\t{creationLock}", StringComparison.Ordinal))
-        {
-            if (branchCreated)
-                throw new InvalidOperationException("initialization branch ownership changed; refusing cleanup");
-            return;
-        }
-
-        ValidateBranchIsUnused(options, runner);
-        _ = RunGit(options.Source, ["update-ref", "--no-deref", "-d", reference, branchOid],
-            runner, "git branch cleanup failed");
-    }
-
-    private static void ValidateBranchIsUnused(WorktreeOptions options, IWorktreeProcessRunner runner)
-    {
-        var inventory = RunGit(options.Source, ["worktree", "list", "--porcelain", "-z"],
-            runner, "could not inspect registered worktrees before branch cleanup");
-        var expectedPath = PhysicalPathAllowMissing(options.Path);
-        foreach (var record in StrictUtf8.GetString(inventory.StandardOutput)
-            .Split("\0\0", StringSplitOptions.RemoveEmptyEntries))
-        {
-            var fields = record.Split('\0', StringSplitOptions.RemoveEmptyEntries);
-            var path = fields.FirstOrDefault(field => field.StartsWith("worktree ", StringComparison.Ordinal));
-            var branch = fields.FirstOrDefault(field => field.StartsWith("branch ", StringComparison.Ordinal));
-            var head = fields.FirstOrDefault(field => field.StartsWith("HEAD ", StringComparison.Ordinal));
-            // A partial registration can have neither a branch nor a usable HEAD yet.
-            var partial = !fields.Contains("bare", StringComparer.Ordinal) && branch is null
-                && (head is null || head["HEAD ".Length..].All(character => character == '0'));
-            if (partial || string.Equals(branch, $"branch refs/heads/{options.Branch}", StringComparison.Ordinal)
-                || (path is not null && PathsEqual(expectedPath, PhysicalPathAllowMissing(path["worktree ".Length..]))))
-                throw new InvalidOperationException("initialization branch may be in use by a registered worktree; refusing cleanup");
-        }
-    }
-
     internal static string? FindCreationMetadata(
         WorktreeOptions options,
         string creationLock,
@@ -164,37 +104,8 @@ internal static class WorktreeCreationSafety
             return false;
         }
 
-        var branchLookup = runner.Run(
-            "git",
-            ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"],
-            options.Source,
-            BoundedProcessRunner.HangDetectionBudget);
-        if (branchLookup.ExitCode == 0)
-        {
-            _ = RunGit(
-                options.Source,
-                ["branch", "-D", options.Branch],
-                runner,
-                "half-built worktree branch cleanup failed");
-        }
-        else if (branchLookup.ExitCode != 1)
-        {
-            throw new InvalidOperationException(
-                ProcessError(branchLookup, "could not inspect half-built worktree branch"));
-        }
-
-        try
-        {
-            Directory.Delete(options.Path, recursive: true);
-        }
-        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
-        {
-            throw new InvalidOperationException(
-                $"half-built worktree cleanup failed: {exception.Message}",
-                exception);
-        }
-
-        return true;
+        // A dangling registration does not certify the contents of its directory.
+        throw new InvalidOperationException("unregistered worktree material retained; use an alternate destination");
     }
 
     internal static void ValidateCreatedWorktree(

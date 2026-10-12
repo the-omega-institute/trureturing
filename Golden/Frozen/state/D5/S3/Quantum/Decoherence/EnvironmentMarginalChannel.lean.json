@@ -1,1 +1,1 @@
-{"statement_id":"sha256:db9e9bb4430d3e35135dc296dee377f026345059326d011ef77987478f8eeea8"}
+{"statement_id":"sha256:db9e9bb4430d3e35135dc296dee377f026345059326d011ef77987478f8eeea8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Decoherence),26:EnvironmentMarginalChannel),28:environment_marginal_channel)","kind":"theorem"}]}

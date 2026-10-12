@@ -1,0 +1,1 @@
+{"statement_id":"sha256:8cc42b11bd7eb28a672124a108ec798d6cd29b6dc45bec9a8d475f03b1b12a04","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),4:Lieb),14:PowerConvexity),13:convexOn_rpow)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),4:Lieb),14:PowerConvexity),15:condIciAll_rpow)","kind":"theorem"}]}

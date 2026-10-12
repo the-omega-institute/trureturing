@@ -47,26 +47,24 @@ public sealed class HeartsAuthorizationLedgerTests
     }
 
     [Fact]
-    public void Sl008DeltaSkipsStoredAuthorizationSyntaxAndRejectsAddedMalformedEvent()
+    public void Sl008CurrentRejectsAddedMalformedState()
     {
         var fixture = new RuleFixture();
-        var malformed = HeartsAuthorizationLedger.Header + "not a ledger row\n";
+        var malformed = HeartsAuthorizationLedger.Header;
         fixture.Files[HeartsAuthorizationLedger.Path] = malformed;
         fixture.Baseline[HeartsAuthorizationLedger.Path] = malformed;
-        var acceptedPath = FrozenLedgerChangeClassifier.AcceptedPath(
-            "sha256:" + new string('a', 64));
-        fixture.Files[acceptedPath] = "candidate accepted event\n";
+        var acceptedPath = FrozenStatePath.FromModulePath(RepoPath.CreateKnown("D5/S0/Carrier/Probe.lean")).Value;
+        fixture.Files[acceptedPath] = "candidate malformed state\n";
 
-        var evaluation = RuleCatalog.Default.EvaluateDeltaSingle(
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(8),
             fixture.Build(RawChangeSet.CreateWithKinds(
                 [(acceptedPath, RawChangeKind.Added)])));
 
-        Assert.DoesNotContain(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Path == HeartsAuthorizationLedger.Path);
-        var diagnostic = Assert.Single(evaluation.Diagnostics);
+        Assert.DoesNotContain(evaluation.Diagnostics, diagnostic => diagnostic.Path == HeartsAuthorizationLedger.Path);
+        var diagnostic = Assert.Single(evaluation.Diagnostics, diagnostic => diagnostic.Path.StartsWith("frozen state ", StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(acceptedPath, diagnostic.Path);
-        Assert.Contains("accepted event could not be loaded", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal("frozen state " + acceptedPath, diagnostic.Path);
+        Assert.Contains("invalid start", diagnostic.Message, StringComparison.Ordinal);
     }
 }

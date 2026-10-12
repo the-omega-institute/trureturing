@@ -1,0 +1,38 @@
+## theorem 7.1: FIB 输出仪器的隐藏 seam 判据
+
+**Claim status: open.**
+
+设初始分布属于
+$$
+p_\kappa=p_\ast+\kappa d,
+$$
+instrument 为
+$$
+\mathcal M=\{M_{a,o}\},
+$$
+末端测试空间为 $G$，并定义
+$$
+V_\infty=
+\operatorname{span}\{M_\omega g:\omega\text{ 为任意有限输出词},g\in G\}.
+$$
+若
+$$
+df=0\qquad\forall f\in V_\infty,
+$$
+则所有未来输出记录都与 $\kappa$ 无关。特别地，若
+$$
+G\subseteq\mathcal B,\qquad
+M_{a,o}\mathcal B\subseteq\mathcal B\quad\forall(a,o),
+$$
+则 seam 永久隐藏。
+
+若存在有限 $\omega,g$ 使
+$$
+dM_\omega g\ne0,
+$$
+则相应记录对 $\kappa$ 可识别，最小词长为 $\rho_{\mathcal M}(d)$。由于
+$$
+\mathbb R^S/\mathcal B\cong\mathbb R[xy]
+$$
+是一维，局部五态模型至多需要一个额外标量 $\kappa$；是否实际需要取决于 instrument 是否将 $xy$ 拉回未来闭包。
+

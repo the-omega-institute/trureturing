@@ -1,0 +1,12 @@
+**Claim status: open.**
+
+$$
+\boxed{\mathbb E[\delta_n\mid\mathcal H_n]=0}
+$$
+
+且对固定有限 $T$，
+
+$$
+\boxed{\mathbb E[(m_T-m_0)(m_T-m_0)^{\mathsf T}]=\sum_{n=0}^{T-1}\mathbb E[\delta_n\delta_n^{\mathsf T}].}
+$$
+

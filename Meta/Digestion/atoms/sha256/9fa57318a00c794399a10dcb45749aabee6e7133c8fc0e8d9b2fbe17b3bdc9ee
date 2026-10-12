@@ -1,0 +1,15 @@
+#### theorem 34.2: 定理 B：模式—深度交叉赔率定理
+
+Claim status: open.（供文 III 原第 10 节「定理 B」；形式化建议。）
+
+
+在现有 `NativeConditionalControl.lean` 的 likelihood 结构基础上，形式化
+
+$$
+\Xi_{I,J;i,j} =
+\left(\frac{r_i}{r_j}\right)^{A_I-A_J}
+\left(\frac{s_i}{s_j}\right)^{B_I-B_J}.
+$$
+
+再接入 FR.34.2 的 Fibonacci 整数核定理。
+

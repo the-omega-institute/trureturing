@@ -1,0 +1,10 @@
+## 5. 协方差的逆显露局部骨架
+
+令 $C_{ij}=\operatorname{Cov}(b_i,b_j)$，$\theta_i=\log w_i$。配分函数给出
+
+$$
+u_i=\frac{\partial\log\mathcal Z_N}{\partial\theta_i},
+\qquad
+C_{ij}=\frac{\partial^2\log\mathcal Z_N}{\partial\theta_i\partial\theta_j}.
+$$
+

@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:a88d569949375e3dda131166949bc4d63c79a126c6933c2c218b7e564be6cc17
+  normalized_sha256: sha256:a88d569949375e3dda131166949bc4d63c79a126c6933c2c218b7e564be6cc17
+cas_ref: sha256:a88d569949375e3dda131166949bc4d63c79a126c6933c2c218b7e564be6cc17
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.configurations_erase_eq_filter
+    target_statement_id: sha256:353074a50e27ee1ae761c20baf75a7c01c5f36768487827053ce87a3b750500e
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.euler_moment
+    target_statement_id: sha256:3fd10f70f5a8e09f1b3995dc4bb8950eacfbe89cc14b3c17f128a8d054e16bdf
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.moment_hasDerivAt
+    target_statement_id: sha256:cab7b03c924e2067ab930fbff711e885851a5b6a6663bbf9d8d8c3cbb4d446e1
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.moment_zero_order
+    target_statement_id: sha256:c3f9daa23053f0875d892145c194140c9e01aeae392c887e487e0b952f811d07
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.normalized_moment_response
+    target_statement_id: sha256:95eef9ed2e6a51a773a5f2580d7e301518a24e8cb5e46e8851ef5e8390506df2
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.occupied_weight_add_erased
+    target_statement_id: sha256:53ddc6f3877c2fae14e79cb82a518276f8421136658509720fd53486521bd967
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.partition_euler_occupation
+    target_statement_id: sha256:0f3daff8726037355ff735e24cee5dfcacf259b6e0c1c0709b6001143b1087ec
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.weighted_cardinality_eq_marked_sum
+    target_statement_id: sha256:60af6fe2029422c80e75df20440e352b8d9113d359ce5da0dcae2fdc911bbfbb
+  - gid: D5/S3/StatisticalMechanics/HardCore/OccupationMoments.weighted_cardinality_eq_partition_differences
+    target_statement_id: sha256:a38db07582c4fe90ad0339975cb835572d3b6122e6428f52893ce4ddfc77a621
+receipts:
+  unresolved_subitems: []

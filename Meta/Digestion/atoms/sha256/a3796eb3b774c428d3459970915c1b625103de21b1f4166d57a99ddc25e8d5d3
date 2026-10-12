@@ -1,0 +1,44 @@
+### 第四层：动态 future quotient
+
+PR #14999 引入了递归未来闭包。其核心思想可以写为
+
+$$
+V^{(0)}=\mathcal B,
+$$
+
+$$
+V^{(r+1)}=
+\operatorname{span}
+\left(
+V^{(r)}
+\cup
+\bigcup_a U_aV^{(r)}
+\right).
+$$
+
+这里的关键修正是：
+
+> 对完整输出记录，$U_a$ 还必须细分为每个输出标签对应的 $M_{a,o}$。
+
+因此严格的动态闭包应当是
+
+$$
+\boxed{
+V^{(r+1)}=
+\operatorname{span}
+\left(
+V^{(r)}
+\cup
+\bigcup_{a,o}M_{a,o}V^{(r)}
+\right).
+}
+$$
+
+只检查
+
+$$
+\sum_o M_{a,o}
+$$
+
+的闭合，会把不同输出支路中符号相反的隐藏泄漏抵消掉。
+

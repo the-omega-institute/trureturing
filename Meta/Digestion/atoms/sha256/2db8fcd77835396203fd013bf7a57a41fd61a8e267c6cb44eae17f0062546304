@@ -1,0 +1,4 @@
+## 9. 动态预测变化的正交分解
+
+设 $\mathcal H_n$ 是第 $n$ 次实际操作后保留的完整记录，令 $m_n=\mathbb E[F\mid\mathcal H_n]$，并记 $\delta_n=m_{n+1}-m_n$。
+

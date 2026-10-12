@@ -1,0 +1,8 @@
+**Claim status: open.** 对任意合法五模式概率律，令 $\kappa=\mathbb E[b_1b_3]$。则
+
+$$
+\max(0,X+Y+Z-1)\le \kappa\le\min(X,Y).
+$$
+
+这些不等式精确给出三个均值的全部合法补全范围。
+

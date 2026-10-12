@@ -24,6 +24,26 @@ The strict condition on phi01 makes the final square root in the explicit four-v
 
 This closes the shared compact coordinate-body and frame step of the original six-length construction. It does not yet assert three-dimensional interior, complete triangular/hexagonal incidence, geodesic intervals, prescribed edge distances, dihedral angles or relabeling isometries. Those obligations retain the original all-six strict source cosine domain; one strict condition suffices for this frame step.
 
+For the original volume calculation, retain all six positive lengths and all six strict source cosines, and fix any original witnesses M and f satisfying the displayed frame and radial-coordinate equations. Use EuclideanSpace Real (Fin 3) with its L2 norm and canonical three-dimensional Haar volume. Set A(u)=(1-u0-u1-u2,u0,u1,u2), D=A inverse-image C, X=A(u) times M, s=sqrt(-q(A(u))) and d=X3-X2. The sum-one condition on C proves A(D)=C: the inverse chart is P(v)=(v1,v2,v3). The same future unit timelike radial vector is Y=X/s, so s>0 and d=s*(Y3-Y2)>0 on all of D. Consequently the actual coordinates of f(A(u)) are (F0+i*F1,F2), where F(u)=(X0/d,X1/d,s/d). This identifies the literal original map, including all cut-boundary points; no alternate frame or body is selected.
+
+The Frechet derivative rules give the ambient derivative of this F where q(A(u))<0 and d is nonzero. For h in Real3, put v=(-h0-h1-h2,h0,h1,h2), w=v times M and delta=w3-w2. Then Ds[h]=-B(X,w)/s, and the derivative is DF[h]=(w0/d-X0*delta/d^2, w1/d-X1*delta/d^2, -B(X,w)/(s*d)-s*delta/d^2). This is an actual derivative of the coordinate function. Its restriction supplies a derivative within D even where a cut equality is active; boundary smoothness is unnecessary.
+
+The signed determinant follows by homogeneous coordinates. Let H(X)=(X0,X1,s,X3-X2). Its four-dimensional derivative has determinant d/s and sends X to H(X). The matrix with rows A and the three coordinate derivatives of A has determinant one, so the matrix with rows X and the three derivatives of X has determinant det(M). Applying DH gives a determinant det(M)*d/s. Subtract delta/d times the first row from each derivative row. The last column becomes (d,0,0,0), while each remaining derivative row is d times the corresponding derivative row of F. Expansion in the last column gives -d^4*det(DF). Thus det(DF)=-det(M)/(s*d^3), with the sign fixed by row-vector action and output order (horizontal real, horizontal imaginary, height).
+
+$$
+det\left(DF\left(u\right)\right) = \frac{-det\left(M\right)}{s \cdot d^{3}}
+$$
+
+The same frame congruence G=M*diag(1,1,1,-1)*transpose(M) gives det(G)=-det(M)^2 and sqrt(-det(G))=abs(det(M)). Since F2=s/d and s,d are positive, cancellation yields the exact weighted Jacobian below. The three-dimensional determinant uses the standard L2 orthonormal coordinates; there is no induced four-dimensional simplex measure or extra hyperplane factor.
+
+$$
+\left(F_{2}\right)^{-3} \cdot abs\left(det\left(DF\left(u\right)\right)\right) = \frac{sqrt\left(-det\left(G\right)\right)}{\left(0 - q\left(A\left(u\right)\right)\right)^{2}}
+$$
+
+Let N take the native coordinates of a point in H3 to the real triple (horizontal real, horizontal imaginary, height). Then F(D)=N(range(f)) for the same f. Packing a real triple back into (Complex,Real) is injective; the original injectivity of f and the inverse affine chart therefore give injectivity of F on D. The projection P sends the compact C onto D, so D is compact and measurable. The original coordinate homeomorphism makes N continuous, and N(range(f)) is compact and measurable in Real3. Thus the image correspondence and the domain conditions needed by measurable-set change of variables apply to the original body including its entire boundary.
+
+These identities give the actual change-of-variables Jacobian with the original frame equations. To identify the normalized native Hausdorff mass of the same range(f), the remaining step is measurable-set change of variables on the actual image, followed by HyperbolicNormalizedDensity.raw_native_density and its existing exact L2 orthonormal-cube Haar calibration. Native mass equality, positive finite native mass and witness independence are not conclusions of the Jacobian calculation alone. The flat-boundary limit, face and angle identification, Schlaefli variation and co-volume conclusions remain separate; zero lengths are excluded.
+
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Hyperideal/LengthGramBody.shared_radial_body`

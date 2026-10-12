@@ -1,0 +1,31 @@
+### 定义5　同一组三来源的似然三角形
+
+对：
+
+```math
+a<b<c,
+```
+
+再画三个点：
+
+```math
+(\log a,\log(1-a)),
+\quad
+(\log b,\log(1-b)),
+\quad
+(\log c,\log(1-c)).
+```
+
+其有向双倍面积为：
+
+```math
+L(a,b,c)
+=
+\det
+\begin{pmatrix}
+1&1&1\\
+\log a&\log b&\log c\\
+\log(1-a)&\log(1-b)&\log(1-c)
+\end{pmatrix}.
+```
+

@@ -14,7 +14,7 @@ internal static partial class CoverBatchCommand
 
     private static BatchArguments Parse(string root, IReadOnlyList<string> arguments)
     {
-        const string usage = "USAGE: StrataLint cover-batch --atoms FILE";
+        const string usage = "USAGE: StrataLint cover-batch [--lean-inputs] --atoms FILE";
         string? file = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {

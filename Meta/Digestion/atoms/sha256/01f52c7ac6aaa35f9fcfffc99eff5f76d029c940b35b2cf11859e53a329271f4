@@ -1,0 +1,12 @@
+## 12. 原生风险背景与文献来源
+
+本卷供应文本报告：#14802 在原共享深度、停止协议和有限 COMPLETE 观察者合同下给出
+
+$$
+240e(M)+30\mathcal A(M)>\delta_*>0.
+$$
+
+其中 $e$ 是两项完整未来配置风险的超额，$\mathcal A$ 是同一次实际 suspended-$\alpha$ 更新前后，下一次 $\alpha$ 发射概率的平均绝对变化。这里的 $\delta_*$ 不同于五模式共同参数 $\kappa$。该背景结论不声称共同最优者存在，也不把一般误差下界与禁止更新子类的下界混为一谈；本卷没有重新验证其整卷风险证明，也没有把它的资源下界转移到新增随机读口。
+
+有限后验重心条件的经典来源是 [Kamenica–Gentzkow, Bayesian Persuasion](https://web.stanford.edu/~gentzkow/research/BayesianPersuasion.pdf)。两能级四面体效果属于既有对称信息完备测量，见 [Renes–Blume-Kohout–Scott–Caves, Symmetric Informationally Complete Quantum Measurements](https://arxiv.org/abs/quant-ph/0310075)。本卷不重新宣称这些结果为原创。
+

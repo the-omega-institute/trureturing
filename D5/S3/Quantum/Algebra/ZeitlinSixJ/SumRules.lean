@@ -37,112 +37,157 @@ open D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse
 open D5.S3.Quantum.Algebra.ZeitlinSixJ.Parity
 open D5.S3.Quantum.Algebra.ZeitlinSixJ.Alternating
 
+theorem sixJ_cycle_columns (a b c d e f : ℕ) :
+    sixJ a b c d e f = sixJ c a b f d e := by
+  have triangle_cycle (a b c : ℕ) : triangle a b c ↔ triangle c a b := by
+    unfold triangle
+    omega
+  have deltaSq_cycle (a b c : ℕ) : deltaSq a b c = deltaSq c a b := by
+    unfold deltaSq
+    rw [show c+a-b=a+c-b by omega, show c+b-a=b+c-a by omega,
+      show a+b-c=a+b-c by rfl, show c+a+b=a+b+c by omega]
+    ring
+  have ha : admissible a b c d e f ↔ admissible c a b f d e := by
+    unfold admissible
+    rw [← triangle_cycle a b c, ← triangle_cycle d e c,
+      ← triangle_cycle a e f, ← triangle_cycle d b f]
+    tauto
+  have hlo : lower a b c d e f = lower c a b f d e := by
+    unfold lower
+    rw [show c+a+b=a+b+c by omega, show c+d+e=d+e+c by omega,
+      show f+a+e=a+e+f by omega, show f+d+b=d+b+f by omega]
+    ac_rfl
+  have hup : upper a b c d e f = upper c a b f d e := by
+    unfold upper
+    rw [show c+a+f+d=c+a+f+d by rfl, show a+b+d+e=a+b+d+e by rfl,
+      show b+c+e+f=b+c+e+f by rfl]
+    ac_rfl
+  have ht (z : ℕ) : racahTerm a b c d e f z = racahTerm c a b f d e z := by
+    unfold racahTerm
+    rw [show c+a+b=a+b+c by omega, show c+d+e=d+e+c by omega,
+      show f+a+e=a+e+f by omega, show f+d+b=d+b+f by omega]
+    congr 1
+    ring
+  have hr : racahSum a b c d e f = racahSum c a b f d e := by
+    simp only [racahSum, ← hlo, ← hup, ← ht]
+  have hd : deltaSq a b c*deltaSq a e f*deltaSq d b f*deltaSq d e c =
+      deltaSq c a b*deltaSq c d e*deltaSq f a e*deltaSq f d b := by
+    rw [← deltaSq_cycle a b c, ← deltaSq_cycle d e c,
+      ← deltaSq_cycle a e f, ← deltaSq_cycle d b f]
+    ring
+  simp only [sixJ, ← ha, ← hd, ← hr]
+
+theorem sixJ_swap_columns (a b c d e f : ℕ) :
+    sixJ a b c d e f = sixJ b a c e d f := by
+  have deltaSq_swap (a b c : ℕ) : deltaSq a b c = deltaSq b a c := by
+    unfold deltaSq
+    rw [show b+a-c=a+b-c by omega, show b+a+c=a+b+c by omega]
+    ring
+  have triangle_swap (a b c : ℕ) : triangle a b c ↔ triangle b a c := by
+    unfold triangle
+    omega
+  have ha : admissible a b c d e f ↔ admissible b a c e d f := by
+    unfold admissible
+    rw [← triangle_swap b a c, ← triangle_swap b d f,
+      ← triangle_swap e a f, ← triangle_swap e d c]
+    tauto
+  have hlo : lower a b c d e f = lower b a c e d f := by
+    unfold lower
+    rw [show b+a+c=a+b+c by omega, show e+a+f=a+e+f by omega,
+      show e+d+c=d+e+c by omega, show b+d+f=d+b+f by omega]
+    ac_rfl
+  have hup : upper a b c d e f = upper b a c e d f := by
+    unfold upper
+    rw [show b+a+e+d=a+b+d+e by omega, show a+c+d+f=c+a+f+d by omega,
+      show c+b+f+e=b+c+e+f by omega]
+    ac_rfl
+  have ht (z : ℕ) : racahTerm a b c d e f z = racahTerm b a c e d f z := by
+    unfold racahTerm
+    rw [show b+a+c=a+b+c by omega, show e+a+f=a+e+f by omega,
+      show e+d+c=d+e+c by omega, show b+d+f=d+b+f by omega,
+      show b+a+e+d=a+b+d+e by omega, show a+c+d+f=c+a+f+d by omega,
+      show c+b+f+e=b+c+e+f by omega]
+    congr 1
+    ring
+  have hr : racahSum a b c d e f = racahSum b a c e d f := by
+    simp only [racahSum, ← hlo, ← hup, ← ht]
+  have hd : deltaSq a b c*deltaSq a e f*deltaSq d b f*deltaSq d e c =
+      deltaSq b a c*deltaSq b d f*deltaSq e a f*deltaSq e d c := by
+    rw [← deltaSq_swap b a c, ← deltaSq_swap b d f,
+      ← deltaSq_swap e a f, ← deltaSq_swap e d c]
+    ring
+  simp only [sixJ, ← ha, ← hd, ← hr]
+
+theorem sixJ_flip_pair (a b c d e f : ℕ) :
+    sixJ a b c d e f = sixJ d e c a b f := by
+  have ha : admissible a b c d e f ↔ admissible d e c a b f := by
+    unfold admissible
+    tauto
+  have hlo : lower a b c d e f = lower d e c a b f := by
+    unfold lower
+    ac_rfl
+  have hup : upper a b c d e f = upper d e c a b f := by
+    unfold upper
+    rw [show d+e+a+b=a+b+d+e by omega, show e+c+b+f=b+c+e+f by omega,
+      show c+d+f+a=c+a+f+d by omega]
+  have ht (z : ℕ) : racahTerm a b c d e f z = racahTerm d e c a b f z := by
+    unfold racahTerm
+    rw [show d+e+a+b=a+b+d+e by omega, show e+c+b+f=b+c+e+f by omega,
+      show c+d+f+a=c+a+f+d by omega]
+    congr 1
+    ring
+  have hr : racahSum a b c d e f = racahSum d e c a b f := by
+    simp only [racahSum, ← hlo, ← hup, ← ht]
+  have hd : deltaSq a b c*deltaSq a e f*deltaSq d b f*deltaSq d e c =
+      deltaSq d e c*deltaSq d b f*deltaSq a e f*deltaSq a b c := by ring
+  simp only [sixJ, ← ha, ← hd, ← hr]
+
+theorem sum_shifted_support (f : ℕ → ℝ) (n r d : ℕ) (hd : d≤r) (hr : r≤n)
+    (hz : ∀ i, i < d ∨ r < i → f i=0) :
+    (∑ t ∈ range (r-d+1),f (d+t))=∑ i ∈ range (n+1),f i := by
+  have htrim : (∑ i ∈ range (r+1),f i)=∑ i ∈ range (n+1),f i := by
+    apply sum_subset (range_mono (by omega))
+    intro i _ hi
+    apply hz
+    have hi' : ¬i < r+1 := by simpa only [mem_range] using hi
+    right
+    omega
+  have hlow : (∑ i ∈ range d,f i)=0 := by
+    apply sum_eq_zero
+    intro i hi
+    exact hz i (Or.inl (mem_range.mp hi))
+  rw [show r+1=d+(r-d+1) by omega,sum_range_add,hlow,zero_add] at htrim
+  exact htrim
+
+theorem central_symbol_is_W (N i j l : ℕ) :
+    sixJ (N-1) (N-1) (2*i) (2*j) (2*l) (N-1) = W N i j l := by
+  unfold W
+  calc
+    _ = sixJ (2*j) (2*l) (2*i) (N-1) (N-1) (N-1) := sixJ_flip_pair (N-1) (N-1) (2*i) (2*j) (2*l) (N-1)
+    _ = sixJ (2*i) (2*j) (2*l) (N-1) (N-1) (N-1) := sixJ_cycle_columns (2*j) (2*l) (2*i) (N-1) (N-1) (N-1)
+
+theorem channel_center_label (n j l : ℕ) (hj : j ≤ n) (hl : l ≤ n)
+    (hjl : j ≤ l) :
+    ∃ t ≤ channelWidth n j l, channelLabel n j l t = n := by
+  have hm : max n (j+l)+min n (j+l)=n+(j+l) := max_add_min _ _
+  refine ⟨(n-channelBase n j l)/2, ?_, ?_⟩
+  · unfold channelWidth channelBase
+    omega
+  · unfold channelLabel channelBase
+    omega
+
+theorem W_swap (N i j l : ℕ) : W N i j l=W N i l j := by
+  unfold W
+  calc
+    _ = sixJ (2*l) (2*i) (2*j) (N-1) (N-1) (N-1) := sixJ_cycle_columns _ _ _ _ _ _
+    _ = _ := sixJ_swap_columns _ _ _ _ _ _
+
 private theorem unsigned_moment_open (N j l : ℕ) (hN : 2 ≤ N)
     (hj : 1 ≤ j ∧ j < N) (hl : 1 ≤ l ∧ l < N) :
     (∑ i ∈ range (N-1), casimir (i+1)*(2*((i+1 : ℕ) : ℝ)+1)*
       W N (i+1) j l ^ 2) =
       (((N : ℝ)^2-1)*(casimir j+casimir l)-2*casimir j*casimir l)/
         ((N : ℝ)*((N : ℝ)^2-1)) := by
-  have sum_shifted_support (f : ℕ → ℝ) (n r d : ℕ) (hd : d≤r) (hr : r≤n)
-      (hz : ∀ i, i < d ∨ r < i → f i=0) :
-      (∑ t ∈ range (r-d+1),f (d+t))=∑ i ∈ range (n+1),f i := by
-    have htrim : (∑ i ∈ range (r+1),f i)=∑ i ∈ range (n+1),f i := by
-      apply sum_subset (range_mono (by omega))
-      intro i _ hi
-      apply hz
-      have hi' : ¬i < r+1 := by simpa only [mem_range] using hi
-      right
-      omega
-    have hlow : (∑ i ∈ range d,f i)=0 := by
-      apply sum_eq_zero
-      intro i hi
-      exact hz i (Or.inl (mem_range.mp hi))
-    rw [show r+1=d+(r-d+1) by omega,sum_range_add,hlow,zero_add] at htrim
-    exact htrim
-  have sixJ_cycle_columns (a b c d e f : ℕ) :
-      sixJ a b c d e f = sixJ c a b f d e := by
-    have triangle_cycle (a b c : ℕ) : triangle a b c ↔ triangle c a b := by
-      unfold triangle
-      omega
-    have deltaSq_cycle (a b c : ℕ) : deltaSq a b c = deltaSq c a b := by
-      unfold deltaSq
-      rw [show c+a-b=a+c-b by omega, show c+b-a=b+c-a by omega,
-        show a+b-c=a+b-c by rfl, show c+a+b=a+b+c by omega]
-      ring
-    have ha : admissible a b c d e f ↔ admissible c a b f d e := by
-      unfold admissible
-      rw [← triangle_cycle a b c, ← triangle_cycle d e c,
-        ← triangle_cycle a e f, ← triangle_cycle d b f]
-      tauto
-    have hlo : lower a b c d e f = lower c a b f d e := by
-      unfold lower
-      rw [show c+a+b=a+b+c by omega, show c+d+e=d+e+c by omega,
-        show f+a+e=a+e+f by omega, show f+d+b=d+b+f by omega]
-      ac_rfl
-    have hup : upper a b c d e f = upper c a b f d e := by
-      unfold upper
-      rw [show c+a+f+d=c+a+f+d by rfl, show a+b+d+e=a+b+d+e by rfl,
-        show b+c+e+f=b+c+e+f by rfl]
-      ac_rfl
-    have ht (z : ℕ) : racahTerm a b c d e f z = racahTerm c a b f d e z := by
-      unfold racahTerm
-      rw [show c+a+b=a+b+c by omega, show c+d+e=d+e+c by omega,
-        show f+a+e=a+e+f by omega, show f+d+b=d+b+f by omega]
-      congr 1
-      ring
-    have hr : racahSum a b c d e f = racahSum c a b f d e := by
-      simp only [racahSum, ← hlo, ← hup, ← ht]
-    have hd : deltaSq a b c*deltaSq a e f*deltaSq d b f*deltaSq d e c =
-        deltaSq c a b*deltaSq c d e*deltaSq f a e*deltaSq f d b := by
-      rw [← deltaSq_cycle a b c, ← deltaSq_cycle d e c,
-        ← deltaSq_cycle a e f, ← deltaSq_cycle d b f]
-      ring
-    simp only [sixJ, ← ha, ← hd, ← hr]
-  have W_swap (N i j l : ℕ) : W N i j l=W N i l j := by
-    have sixJ_swap_columns (a b c d e f : ℕ) :
-        sixJ a b c d e f = sixJ b a c e d f := by
-      have deltaSq_swap (a b c : ℕ) : deltaSq a b c = deltaSq b a c := by
-        unfold deltaSq
-        rw [show b+a-c=a+b-c by omega, show b+a+c=a+b+c by omega]
-        ring
-      have triangle_swap (a b c : ℕ) : triangle a b c ↔ triangle b a c := by
-        unfold triangle
-        omega
-      have ha : admissible a b c d e f ↔ admissible b a c e d f := by
-        unfold admissible
-        rw [← triangle_swap b a c, ← triangle_swap b d f,
-          ← triangle_swap e a f, ← triangle_swap e d c]
-        tauto
-      have hlo : lower a b c d e f = lower b a c e d f := by
-        unfold lower
-        rw [show b+a+c=a+b+c by omega, show e+a+f=a+e+f by omega,
-          show e+d+c=d+e+c by omega, show b+d+f=d+b+f by omega]
-        ac_rfl
-      have hup : upper a b c d e f = upper b a c e d f := by
-        unfold upper
-        rw [show b+a+e+d=a+b+d+e by omega, show a+c+d+f=c+a+f+d by omega,
-          show c+b+f+e=b+c+e+f by omega]
-        ac_rfl
-      have ht (z : ℕ) : racahTerm a b c d e f z = racahTerm b a c e d f z := by
-        unfold racahTerm
-        rw [show b+a+c=a+b+c by omega, show e+a+f=a+e+f by omega,
-          show e+d+c=d+e+c by omega, show b+d+f=d+b+f by omega,
-          show b+a+e+d=a+b+d+e by omega, show a+c+d+f=c+a+f+d by omega,
-          show c+b+f+e=b+c+e+f by omega]
-        congr 1
-        ring
-      have hr : racahSum a b c d e f = racahSum b a c e d f := by
-        simp only [racahSum, ← hlo, ← hup, ← ht]
-      have hd : deltaSq a b c*deltaSq a e f*deltaSq d b f*deltaSq d e c =
-          deltaSq b a c*deltaSq b d f*deltaSq e a f*deltaSq e d c := by
-        rw [← deltaSq_swap b a c, ← deltaSq_swap b d f,
-          ← deltaSq_swap e a f, ← deltaSq_swap e d c]
-        ring
-      simp only [sixJ, ← ha, ← hd, ← hr]
-    unfold W
-    calc
-      _ = sixJ (2*l) (2*i) (2*j) (N-1) (N-1) (N-1) := sixJ_cycle_columns _ _ _ _ _ _
-      _ = _ := sixJ_swap_columns _ _ _ _ _ _
   have unsigned_moment_ordered (N j l : ℕ) (hN : 2≤N)
       (hj : 1≤j ∧ j<N) (hl : 1≤l ∧ l<N) (hjl : j≤l) :
       (∑ i ∈ range (N-1),casimir (i+1)*(2*((i+1 : ℕ) : ℝ)+1)*W N (i+1) j l^2) =
@@ -159,44 +204,6 @@ private theorem unsigned_moment_open (N j l : ℕ) (hN : 2 ≤ N)
         ((n+1 : ℕ) : ℝ)*(∑ i ∈ range n,casimir (i+1)*(2*((i+1 : ℕ) : ℝ)+1)*
           W (n+1) (i+1) j l^2) =
             (rawDiagonal ((n : ℚ)/2) ((n : ℚ)/2) j l ((n : ℚ)/2) : ℝ) := by
-      have central_symbol_is_W (N i j l : ℕ) :
-          sixJ (N-1) (N-1) (2*i) (2*j) (2*l) (N-1) = W N i j l := by
-        have sixJ_flip_pair (a b c d e f : ℕ) :
-            sixJ a b c d e f = sixJ d e c a b f := by
-          have ha : admissible a b c d e f ↔ admissible d e c a b f := by
-            unfold admissible
-            tauto
-          have hlo : lower a b c d e f = lower d e c a b f := by
-            unfold lower
-            ac_rfl
-          have hup : upper a b c d e f = upper d e c a b f := by
-            unfold upper
-            rw [show d+e+a+b=a+b+d+e by omega, show e+c+b+f=b+c+e+f by omega,
-              show c+d+f+a=c+a+f+d by omega]
-          have ht (z : ℕ) : racahTerm a b c d e f z = racahTerm d e c a b f z := by
-            unfold racahTerm
-            rw [show d+e+a+b=a+b+d+e by omega, show e+c+b+f=b+c+e+f by omega,
-              show c+d+f+a=c+a+f+d by omega]
-            congr 1
-            ring
-          have hr : racahSum a b c d e f = racahSum d e c a b f := by
-            simp only [racahSum, ← hlo, ← hup, ← ht]
-          have hd : deltaSq a b c*deltaSq a e f*deltaSq d b f*deltaSq d e c =
-              deltaSq d e c*deltaSq d b f*deltaSq a e f*deltaSq a b c := by ring
-          simp only [sixJ, ← ha, ← hd, ← hr]
-        unfold W
-        calc
-          _ = sixJ (2*j) (2*l) (2*i) (N-1) (N-1) (N-1) := sixJ_flip_pair (N-1) (N-1) (2*i) (2*j) (2*l) (N-1)
-          _ = sixJ (2*i) (2*j) (2*l) (N-1) (N-1) (N-1) := sixJ_cycle_columns (2*j) (2*l) (2*i) (N-1) (N-1) (N-1)
-      have channel_center_label (n j l : ℕ) (hj : j ≤ n) (hl : l ≤ n)
-          (hjl : j ≤ l) :
-          ∃ t ≤ channelWidth n j l, channelLabel n j l t = n := by
-        have hm : max n (j+l)+min n (j+l)=n+(j+l) := max_add_min _ _
-        refine ⟨(n-channelBase n j l)/2, ?_, ?_⟩
-        · unfold channelWidth channelBase
-          omega
-        · unfold channelLabel channelBase
-          omega
       have physicalTU (n j l : ℕ) (hj : j≤n) (hl : l≤n) (hjl : j≤l) :
           physicalT n j l*physicalU n j l=physicalU n j l*
             diagonal (fun i : Fin (channelWidth n j l+1) => casimir (l-j+i.val)) := by

@@ -1,0 +1,10 @@
+### 1. 一、当前仓库进展的准确定位
+
+Claim status: open.（供文 I 原第 1 节全文。）
+
+> 编者限定（I.1）：此节是供文对 912f4990050451866c2bb1cf71e33151a637d4b7 和 PR #14893 的历史归属；该提交的第一父差分为所引 future-response 文档的 237 行新增。所述已有 Lean 源码与该次文档新增分别归属，未把文档证明升级为 Lean 证明。
+
+
+我核对到当前工作树的 HEAD 是：
+
+- commit：[`912f4990050451866c2bb1cf71e33151a637d4b7`](https://github.com/the-omega-institute/trureturing/commit/912f4990050451866c2bb1cf71e33151a637d4b7)

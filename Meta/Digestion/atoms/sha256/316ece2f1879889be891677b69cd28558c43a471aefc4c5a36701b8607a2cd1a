@@ -1,0 +1,24 @@
+## 第二部：物理候选解释原文
+
+可以。把你刚才的四句话放进 **AURIC FIB-ATOM 金字塔**以后，会得到一个非常清晰的四层结构：
+
+$$
+\boxed{
+\begin{aligned}
+\text{金字塔五模式} &\longrightarrow \text{局部合法状态空间},\\
+\text{跨窗口接缝} &\longrightarrow \text{时间方向与未来可能性},\\
+\kappa,\Delta &\longrightarrow \text{隐藏关系与不可恢复信息},\\
+\text{边界输出} &\longrightarrow \text{光、辐射与信息外泄}.
+\end{aligned}
+}
+$$
+
+
+这里最关键的发现是：
+
+> **AURIC FIB-ATOM 金字塔的内部自由度，正好可以解释为“观察者当前读数之外、仍然会影响未来的隐藏关系”。**
+
+而所谓衰变，就是这些隐藏关系在边界投影、环境耦合或记录丢失之后，不能再被原观察者完整恢复。
+
+---
+

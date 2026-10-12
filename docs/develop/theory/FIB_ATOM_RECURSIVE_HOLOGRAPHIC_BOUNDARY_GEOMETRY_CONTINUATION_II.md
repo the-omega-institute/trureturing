@@ -2602,3 +2602,2381 @@ prior or model-diversity certificate, or completion of the sustained
 why-three/source/native/field/acquisition/resource objective.
 
 ## 74.99 追加锚（本行以下为增补区）
+## 75. Chamber-scale exclusion and the complete fixed-source hard-core limit
+
+**Definition 75.1 (fixed source, geometry and literal target).** Fix every item of Definition72.1: one authentic nonempty finite full binary source $D$, its actual occurrence identities and inherited seams, its two distinct unit grounded stubs at each current leaf, commissioned $a>0$, $0<\delta\le1$, one integer $s\ge3$, the positive reference volumes of the distinct ground chambers, and one chosen separated assembly of72.3–72.6. Fix also the original commissioned $g>0$ and $\nu\ge0$. All these data remain fixed as $\varepsilon\downarrow0$. Write
+
+$$
+d=|D|,\qquad r_\varepsilon=\varepsilon^{(s-1)/s},\qquad
+\beta=\frac a\delta,\qquad \lambda=3-2\sqrt2.
+\tag{75.1}
+$$
+
+Let $X_D$ be exactly Definition64.5's compact unit-cable tree, including its distinct ground tips, with path metric $d_X$ and measure $\mu_\delta$. A ground tip has no atomic mass. Put $\mathcal H^{\rm fr}=\mathcal H_2^{\rm fr}$, $\mathcal Q^{\rm fr}=\mathcal Q_2^{\rm fr}$, and let $B$ and $q^{\rm fr}$ be precisely the complete free product operator and form of73.1–73.2. Let $\mathcal K=\mathcal K_{D,2}^{\rm hc}$ and $\mathcal Q^{\rm hc}=\mathcal Q_{D,2}$ be the unchanged literal target. The isometry $E:\mathcal K\to\mathcal H^{\rm fr}$ identifies every slice and cell coordinate and inserts zero at every atomic $(p,p)$; its adjoint deletes those atomic coordinates. The exact domain identification supplied by(73.8) is
+
+$$
+E\mathcal Q^{\rm hc}
+=\{F\in\mathcal Q^{\rm fr}:F_{pp}=0\ (p\in D),\quad
+       \operatorname{Tr}_{x=y}F_{ee}=0\ (e\in\mathcal E_D)\}.
+\tag{75.2}
+$$
+
+This is an equality of complete form domains. The two triangles of a same-cable square glue to an $H^1$ square because their diagonal traces are both zero. Every different-cable rectangle remains. Cell boundary traces equal the appropriate atom/cable slices, whose endpoints equal the atomic pair coordinates. Grounded traces vanish in either coordinate. At a collision port the missing atomic value is zero, so every incident collision slice ends at zero, including approaches along different cables. No point trace at a rectangle corner is imposed.
+
+Before exchange restriction the norm and kinetic form are
+
+$$
+\begin{aligned}
+\|F\|^2={}&\sum_{p\ne q}|F_{pq}|^2
+ +\delta\sum_{p,e}\bigl(\|F_{pe}\|_2^2+\|F_{ep}\|_2^2\bigr)
+ +\delta^2\sum_{e,f}\|F_{ef}\|_2^2,\\
+a k_{\delta,2}[F]={}&a\sum_{e,q}\|\partial_xF_{eq}\|_2^2
+ +a\sum_{p,f}\|\partial_yF_{pf}\|_2^2
+ +a\delta\sum_{e,f}\int\bigl(|\partial_xF_{ef}|^2+|\partial_yF_{ef}|^2\bigr).
+\end{aligned}
+\tag{75.3}
+$$
+
+The same-cable integrals include both triangles. There are $d(d-1)$ ordered distinct atomic coordinates, $4d^2$ mixed slices and $4d^2$ cells, with each of the $2d$ same-cable cells dissected. Symmetry restricts these spaces without an additional factor or ordering sign. Every interval and cell keeps its entire infinite-dimensional space. In particular the singleton source retains a nonzero continuum two-position target even though it has no distinct atomic pair.
+
+The three target operators, considered separately, are
+
+$$
+\begin{aligned}
+C_0&=A_{\delta,D,2},\quad U_0=0,\qquad
+C_\diamond=\mathcal T^\diamond_{\delta,D,2}=C_0+U_\diamond,
+\quad \diamond\in\{\mathrm c,\mathrm k\},\\
+U_\diamond(x,y)&=-g\bigl(\phi_A(x)+\phi_A(y)\bigr)
+-\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q).
+\end{aligned}
+\tag{75.4}
+$$
+
+Here $\phi(p)=2^{-|p|}$ and $\phi_A$ is zero on open cables. For every $D$ the complete original prescriptions are
+
+$$
+G_D^{\rm c}(p,q)=\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)},
+\qquad G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle.
+\tag{75.5}
+$$
+
+In(75.5), $d(p,q)=|p|+|q|-2|p\wedge q|$, with $p\wedge q$ the longest common occurrence prefix. The first expression is the restriction of the same infinite source kernel $L^{-1}$, not a refitted finite kernel. The source matrix is $(L_D)_{pq}=d_p\mathbf1_{p=q}-\mathbf1_{p\sim q}$, where $p\sim q$ is an inherited seam, $d_o=2$ and every other $d_p=3$; these diagonals retain all exterior terms. Equivalently(67.2) gives $G_D^{\rm c}=(L_D-P_{\operatorname{Leaf}(D)})^{-1}$ and $G_D^{\rm k}=L_D^{-1}$. The bounds $\lambda I\le F_D^\diamond\le6I$ and $0<G_D^\diamond(p,q)\le\lambda^{-1}$ are the already supplied source bounds. Killing changes the pair prescription and leaves the original one-body field $\phi$ unchanged.
+
+**Definition 75.2 (physical carriers, exact maps and adjoints).** Use $\Omega_\varepsilon=\Omega_\varepsilon^+$ of72.5 and $\mathcal P_\varepsilon=L^2_{\rm sym}(\Omega_\varepsilon^2)$. Its mixed-ground form domain $\mathcal Q_{{\rm mix},\varepsilon}$ is exactly(73.5): symmetric $H^1$ functions with zero trace on both grounded product faces, with no essential condition on the exterior Neumann walls. The free form is
+
+$$
+q_{0,\varepsilon}[u]=\beta\int_{\Omega_\varepsilon^2}
+                 (|\nabla_xu|^2+|\nabla_yu|^2).
+\tag{75.6}
+$$
+
+Denote its operator by $B_\varepsilon$. Write $J=J_{\varepsilon,2}$ for the actual isometry of73.6, not a harmonic calibration. For a source port let $Z_p^\varepsilon$ be its chamber, and for a cable let $Z_e^\varepsilon(x)$ be its cross-section at longitudinal coordinate $x$. Put $c_\varepsilon=\sqrt\delta\,\varepsilon^{-(s-1)/2}$. On the ordered chamber/chamber, chamber/cylinder, cylinder/chamber and cylinder/cylinder products, respectively, $JF$ equals
+
+$$
+c_\varepsilon^2F_{pq},\qquad c_\varepsilon^2F_{pe}(y),\qquad
+c_\varepsilon^2F_{ep}(x),\qquad c_\varepsilon^2F_{ef}(x,y).
+\tag{75.7}
+$$
+
+It is zero if either coordinate lies in a ground half-chamber. The adjoint on all physical Hilbert data is
+
+$$
+(J^*u)_{\alpha\gamma}
+ =b_\alpha b_\gamma\int_{Z_\alpha^\varepsilon\times Z_\gamma^\varepsilon}u,
+\qquad b_p=c_\varepsilon,\quad b_e=c_\varepsilon/\delta.
+\tag{75.8}
+$$
+
+Cable longitudinal variables are not integrated in this formula. The volumes $|Z_p^\varepsilon|=\varepsilon^{s-1}/\delta$ and $|Z_e^\varepsilon(x)|=\varepsilon^{s-1}$ give $J^*J=I$ with precisely the weights in(73.1). Set $L_\varepsilon=JE$, so $L_\varepsilon^*L_\varepsilon=I$ and $L_\varepsilon^*=E^*J^*$. Both $J$ and $L_\varepsilon$ have proper range in the full physical space: nonconstant chamber and transverse modes and ground half-chamber functions remain there.
+
+For a radius $R_\varepsilon>0$ put, exactly as in74.7,
+
+$$
+\begin{aligned}
+G_{\varepsilon,R}&=\{(x,y)\in\Omega_\varepsilon^2:|x-y|>R_\varepsilon\},
+&\mathcal P_{\varepsilon,R}&=L^2_{\rm sym}(G_{\varepsilon,R}),\\
+\iota_\varepsilon&:\mathcal P_{\varepsilon,R}\to\mathcal P_\varepsilon,
+&\iota_\varepsilon u&=\text{zero extension},\\
+\mathcal Q_{\varepsilon,R}^{\rm D}
+ &=\{u\in\mathcal P_{\varepsilon,R}:\iota_\varepsilon u
+                                  \in\mathcal Q_{{\rm mix},\varepsilon}\}.
+\end{aligned}
+\tag{75.9}
+$$
+
+The adjoint $\iota_\varepsilon^*$ is restriction to the allowed set. The zero extensions in this domain are exactly the mixed-ground $H^1$ functions vanishing almost everywhere on $|x-y|\le R_\varepsilon$. Thus this is Dirichlet exclusion across the inner wall in its trace charts, retaining the original exterior and grounded conditions. Chapter74 supplies its closedness and density on the allowed carrier; no global $H^2$ regularity or alternative boundary-core identification is assumed. The allowed target lift and its adjoint are exactly
+
+$$
+T_\varepsilon=\iota_\varepsilon^*L_\varepsilon,\qquad
+T_\varepsilon^*=L_\varepsilon^*\iota_\varepsilon.
+\tag{75.10}
+$$
+
+This lift is a contraction. Its isometry is neither assumed nor needed.
+
+**Definition 75.3 (explicit additional installation hypotheses).** Install the Dirichlet domain(75.9) and, separately for each prescription, the following real bounded multiplication operator. With $\chi_p^\varepsilon=\mathbf1_{Z_p^\varepsilon}$ set
+
+$$
+\begin{aligned}
+\Phi_\varepsilon(x)&=\sum_{p\in D}2^{-|p|}\chi_p^\varepsilon(x),
+&W_{\varepsilon,0}&=0,\\
+W_{\varepsilon,\diamond}(x,y)
+ &=-g\bigl(\Phi_\varepsilon(x)+\Phi_\varepsilon(y)\bigr)
+ -\nu\sum_{p\ne q}G_D^\diamond(p,q)
+                         \chi_p^\varepsilon(x)\chi_q^\varepsilon(y),
+&M&=2g+\nu/\lambda.
+\end{aligned}
+\tag{75.11}
+$$
+
+The one-body field is zero on every cylinder and ground half-chamber. An ordered distinct chamber pair activates exactly one term of the ordered sum, without a factor two. Hence every $W_{\varepsilon,C}$ is exchange symmetric and has norm at most $M$, independently of $\varepsilon$. Let $H_{\varepsilon,R,C}^{\rm D}$ be the operator on $\mathcal P_{\varepsilon,R}$ of
+
+$$
+h_{\varepsilon,C}[u]=q_{0,\varepsilon}[\iota_\varepsilon u]
+       +\int_{G_{\varepsilon,R}}W_{\varepsilon,C}|u|^2,
+\qquad u\in\mathcal Q_{\varepsilon,R}^{\rm D}.
+\tag{75.12}
+$$
+
+It is self-adjoint and bounded below by $-M$, by the closed form of74.2 and bounded perturbation. To specify the actual operator domains without any corner regularity assumption, polarize the forms and use
+
+$$
+\begin{aligned}
+\operatorname{Dom}H_{\varepsilon,R,C}^{\rm D}
+&=\{u\in\mathcal Q_{\varepsilon,R}^{\rm D}:\exists w\in\mathcal P_{\varepsilon,R},\quad
+h_{\varepsilon,C}(u,v)=\langle w,v\rangle
+\text{ for every }v\in\mathcal Q_{\varepsilon,R}^{\rm D}\},\\
+\operatorname{Dom}C
+&=\{f\in\mathcal Q^{\rm hc}:\exists h\in\mathcal K,\quad
+q_C(f,v)=\langle h,v\rangle
+\text{ for every }v\in\mathcal Q^{\rm hc}\},
+\end{aligned}
+$$
+
+with outputs $w$ and $h$, respectively, where $q_C=a k_{\delta,2}+\langle U_C\,\cdot,\,\cdot\rangle$. Density makes those outputs unique. These are exact weak operator domains, retaining the natural exterior conditions and every stipulated essential trace; no global piecewise-$H^2$ description is substituted. Bounded multiplication leaves the corresponding kinetic operator domains unchanged, since its contribution can be moved to the representing Hilbert vector in these identities. These exact step multipliers and the exclusion are added mathematical installation hypotheses. No native force, acquired switch, local field mediator, source service or physical control follows from declaring them. The common and killed forms are distinct prescriptions on one common source and geometry.
+
+**Theorem 75.4 (the chamber-covering assertion and its fixed-positive-radius strengthening).** Under75.1–75.3, choose any fixed $\kappa>0$ and set
+
+$$
+R_\varepsilon=\kappa r_\varepsilon.
+\tag{75.13}
+$$
+
+For every fixed compact $K\subset\mathbb C\setminus\mathbb R$, define
+
+$$
+\begin{aligned}
+K_{\varepsilon,C}(z)&=L_\varepsilon(C-z)^{-1}L_\varepsilon^*,\\
+D_{\varepsilon,C}^0(z)
+ &=\big\|\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}
+                   \iota_\varepsilon^*-K_{\varepsilon,C}(z)\big\|
+                                     _{\mathcal B(\mathcal P_\varepsilon)},\\
+D_{\varepsilon,C}^{\rm a}(z)
+ &=\big\|(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}
+                   -T_\varepsilon(C-z)^{-1}T_\varepsilon^*\big\|
+                                  _{\mathcal B(\mathcal P_{\varepsilon,R})}.
+\end{aligned}
+\tag{75.14}
+$$
+
+Then
+
+$$
+\max_{C\in\{C_0,C_{\rm c},C_{\rm k}\}}\ \sup_{z\in K}
+D_{\varepsilon,C}^0(z)\longrightarrow0,\qquad
+\max_{C\in\{C_0,C_{\rm c},C_{\rm k}\}}\ \sup_{z\in K}
+D_{\varepsilon,C}^{\rm a}(z)\longrightarrow0.
+\tag{75.15}
+$$
+
+At $z=i$ these are literally both hard-carrier comparisons(74.8), for the full unchanged Definition64.5 target. The first physical term is a zero-extended resolvent, not the resolvent of a densely defined full-product operator. For every tolerance $\eta>0$, one $\varepsilon_0$ works for all three prescriptions, all $z\in K$ and every forcing vector of norm at most one on the corresponding actual carrier.
+
+In particular the original chamber-covering hypothesis suffices. Indeed72.4–72.6 give constants $0<\ell_p\le M_p<\infty$, independent of small $\varepsilon$, such that
+
+$$
+Z_p^\varepsilon=b_p^\varepsilon+r_\varepsilon K_p(\varepsilon^{1/s}),
+\qquad B_{\ell_p}(0)\subset K_p(\varepsilon^{1/s})\subset B_{M_p}(0).
+\tag{75.16}
+$$
+
+Thus $B_D=\max_p2M_p$ bounds every chamber diameter divided by $r_\varepsilon$. Any fixed $\kappa>B_D$ excludes each entire $Z_p^\varepsilon\times Z_p^\varepsilon$. The theorem also holds for every fixed $0<\kappa\le B_D$ on these same uniformly nondegenerate chambers. This does not assert uniformity as $\kappa\downarrow0$ or for growing sources, shrinking $\delta$, increasing dimension or changing reference geometry. The proof is75.5–75.10.
+
+**Lemma 75.5 (full physical compactness and the free lower form bound).** Suppose $\varepsilon_j\downarrow0$ and $u_j\in\mathcal Q_{{\rm mix},\varepsilon_j}$ satisfy
+
+$$
+\sup_j\bigl(q_{0,\varepsilon_j}[u_j]+\|u_j\|^2\bigr)<\infty.
+\tag{75.17}
+$$
+
+There is a subsequence and $F\in\mathcal Q^{\rm fr}$ with
+
+$$
+\|u_j-J_{\varepsilon_j,2}F\|\longrightarrow0,
+\qquad q^{\rm fr}[F]\le\liminf_j q_{0,\varepsilon_j}[u_j].
+\tag{75.18}
+$$
+
+The conclusion concerns the entire physical norm, including the proper-range complement.
+
+**Proof.** Reuse73.2, including the negative resolvent convergence established in its proof:
+
+$$
+\eta_\varepsilon=
+\big\|(B_\varepsilon+1)^{-1}-J(B+1)^{-1}J^*\big\|\longrightarrow0.
+\tag{75.19}
+$$
+
+The complete free $B$ has compact resolvent by73.4; equivalently its finite atomic, interval and rectangle form embedding is compact. Let $P_m$ be finite spectral projections exhausting its eigenbasis, and let $\Lambda_m\to\infty$ bound the omitted eigenvalues from below. Set $Q_{\varepsilon,m}=I-JP_mJ^*$. For $v\in\mathcal Q_{{\rm mix},\varepsilon}$ write $v=(B_\varepsilon+1)^{-1/2}w$, with $\|w\|^2=q_{0,\varepsilon}[v]+\|v\|^2$. Compression of(75.19) gives
+
+$$
+\begin{aligned}
+\|Q_{\varepsilon,m}v\|^2
+&\le \big\|Q_{\varepsilon,m}(B_\varepsilon+1)^{-1}
+                         Q_{\varepsilon,m}\big\|\,\|w\|^2\\
+&\le \bigl(\eta_\varepsilon+(1+\Lambda_m)^{-1}\bigr)
+                       \bigl(q_{0,\varepsilon}[v]+\|v\|^2\bigr).
+\end{aligned}
+\tag{75.20}
+$$
+
+For each fixed $m$, the bounded vectors $P_mJ^*u_j$ have convergent subsequences. Choose one subsequence for all $m$. The tail bound(75.20) makes their limits compatible and gives a vector $F\in\mathcal H^{\rm fr}$ for which $u_j-JF\to0$. In particular $J^*u_j\to F$ and $\|u_j\|\to\|F\|$. This argument retains chamber fluctuations, transverse functions and ground half-chamber data, rather than projecting them out of the hypothesis.
+
+For every $h\in\mathcal H^{\rm fr}$ the positive form inequality is
+
+$$
+q_{0,\varepsilon}[u]+\|u\|^2
+\ge2\operatorname{Re}\langle u,Jh\rangle
+ -\langle Jh,(B_\varepsilon+1)^{-1}Jh\rangle.
+\tag{75.21}
+$$
+
+It follows by completing the square against $(B_\varepsilon+1)^{-1}Jh$ in the form norm. Pass to the limit using(75.19). The supremum over $h$ on the right equals $q^{\rm fr}[F]+\|F\|^2$, with value $+\infty$ outside $\mathcal Q^{\rm fr}$. To see the equality directly, expand in the eigenbasis of $B$ and maximize each finite sum $2\operatorname{Re}\sum F_j\overline{h_j}-\sum|h_j|^2/(1+\lambda_j)$; its supremum is $\sum(1+\lambda_j)|F_j|^2$. Subtract the converging squared norms to obtain(75.18). Selecting a subsequence attaining the energy lower limit, if necessary, proves the stated inequality. At no step are the finite-thickness averages $J^*u_j$ assumed to satisfy the global effective matching conditions. $\square$
+
+**Lemma 75.6 (every collision condition in the hard lower limit).** If the $u_j$ in75.5 are zero extensions of members of $\mathcal Q_{\varepsilon_j,R}^{\rm D}$ for(75.13), then their limit satisfies $F\in E\mathcal Q^{\rm hc}$. Hence
+
+$$
+a k_{\delta,2}[E^*F]\le\liminf_jq_{0,\varepsilon_j}[u_j].
+\tag{75.22}
+$$
+
+**Proof.** For chamber coverage, $u_j=0$ on every entire source chamber pair, so $(J^*u_j)_{pp}=0$ exactly. For the strengthening, fix any $\kappa>0$ and set $h_p=\min\{\ell_p/2,\kappa/4\}>0$. The ball $A_p^\varepsilon=b_p^\varepsilon+h_pr_\varepsilon B_1$ lies in $Z_p^\varepsilon$, and $A_p^\varepsilon\times A_p^\varepsilon$ lies strictly in the forbidden region. Its fraction of the chamber-product volume is
+
+$$
+\theta_p=(\delta\omega_s h_p^s)^2>0,
+\qquad
+\int_{A_p^\varepsilon\times A_p^\varepsilon}|JF|^2
+                         =\theta_p|F_{pp}|^2.
+\tag{75.23}
+$$
+
+Since $u_j$ vanishes there, (75.18) implies $\theta_p|F_{pp}|^2\le\|u_j-JF\|^2\to0$. This forces every $F_{pp}=0$, even when part of a chamber pair remains allowed.
+
+On one straight cylinder the transverse separation is at most $2\rho\varepsilon$, where $\rho=\omega_{s-1}^{-1/(s-1)}$. Since $R_\varepsilon/\varepsilon=\kappa\varepsilon^{-1/s}\to\infty$, for all sufficiently small $\varepsilon$ every transverse pair above $|x-y|<R_\varepsilon/2$ has physical separation less than $R_\varepsilon$. Consequently the averaged same-cable cell $f_\varepsilon=(J^*u_\varepsilon)_{ee}$ vanishes on this entire longitudinal strip. Transverse averaging of the restriction to the cylinder product commutes with its weak longitudinal derivatives. Cauchy–Schwarz, the fiber volumes and(75.8) give
+
+$$
+\delta^2\|f_\varepsilon\|_2^2\le\|u_\varepsilon\|^2,
+\qquad a\delta\int_{(0,1)^2}|\nabla f_\varepsilon|^2
+                                      \le q_{0,\varepsilon}[u_\varepsilon].
+\tag{75.24}
+$$
+
+Thus these functions are bounded in $H^1$ on the full square. Their strong $L^2$ limit is $F_{ee}$, because $J^*u_j\to F$. A weak $H^1$ subsequence has that same limit. Each $f_\varepsilon$ has zero trace from both triangles on the diagonal, since it vanishes in a neighborhood of it; continuity of the triangle trace maps preserves these zero traces in the weak limit. Together with75.5 and all the free matching and grounding identities, (75.2) proves the exact hard-core domain assertion. In particular the shared-port slice endpoint conditions follow from $F_{pp}=0$ and the free endpoint equalities. No cell-corner point value is used. Equation(75.22) is then the free lower bound with its unchanged coefficients. $\square$
+
+**Lemma 75.7 (a compatible form core avoiding the entire collision set).** In $E\mathcal Q^{\rm hc}$ the bounded members which vanish whenever $d_X(x,y)<h$ for some $h>0$ depending on the member are dense in the full form norm $\bigl(q^{\rm fr}[F]+\|F\|^2\bigr)^{1/2}$.
+
+**Proof.** First apply the same scalar clipping to the real and imaginary parts on every stratum, including the atomic coordinates. The map fixes zero, commutes with exchange and with Sobolev traces, and therefore preserves every endpoint and boundary equality, the grounded zeros and the zero diagonal traces. As the clipping bound tends to infinity, the functions and weak derivatives converge in the finite weighted direct-sum form norm. This follows from the Sobolev chain rule: the derivative of a clipped real function is its original derivative on the unclipped set and zero on the clipped set, so the derivative difference tends to zero by dominated convergence. The imaginary part is identical. It suffices to treat a bounded $F\in E\mathcal Q^{\rm hc}$.
+
+For $0<\eta<1/4$, define the single real multiplier on $X_D^2$
+
+$$
+\chi_\eta(t)=
+\begin{cases}
+0,&0\le t\le\eta^2,\\
+\log(t/\eta^2)/\log(1/\eta),&\eta^2<t<\eta,\\
+1,&t\ge\eta,
+\end{cases}
+\qquad F_\eta(x,y)=\chi_\eta(d_X(x,y))F(x,y).
+\tag{75.25}
+$$
+
+On every interval and cell this is a Lipschitz multiplier for each fixed $\eta$. The metric $d_X$ is continuous under all the incidence identifications. Thus the cell multiplier at a port is precisely the corresponding slice multiplier, and its slice endpoint is the atomic multiplier. All matching equalities persist. Zero ground and collision traces persist, and the multiplier is exchange symmetric. Its value is one on distinct atomic pairs, whose graph distances are at least one; the diagonal atomic values remain zero.
+
+The norm difference tends to zero by dominated convergence on all continuous strata. The derivative difference is the sum of $(\chi_\eta-1)\nabla F$, which also tends to zero by dominated convergence, and $F\nabla\chi_\eta$. Only three types of strata can meet the graph collision neighborhood of radius less than $1/4$.
+
+On a mixed slice incident at its equal atomic port, the graph distance is the endpoint coordinate $t$, and that slice has zero endpoint there. For any $v\in H^1(0,L)$ with $v(0)=0$,
+
+$$
+\int_0^L\frac{|v(t)|^2}{t^2}\,dt
+\le4\int_0^L|v'(t)|^2\,dt.
+\tag{75.26}
+$$
+
+For smooth functions vanishing at zero, integration by parts gives an upper bound $2\operatorname{Re}\int v'\overline v/t$, the boundary term at $L$ being nonpositive. Cauchy–Schwarz gives(75.26), and $H^1$ approximation with the zero endpoint proves the general assertion. Since $|\chi_\eta'(t)|\le1/(t\log(1/\eta))$, the additional derivative energy on such a slice is bounded by its fixed Hardy integral times $\log(1/\eta)^{-2}$, and tends to zero.
+
+On each same-cable triangle, $d_X(x,y)=|x-y|$. Apply(75.26) on almost every section $x>y$ starting at $x=y$ and ending at $x=1$, and on the sections $x<y$ with reversed coordinate. The section endpoint is the zero diagonal trace. More explicitly the affine coordinates $(t,y)=(x-y,y)$ flatten the diagonal; on each closed subinterval of $0<y<1$ they give a rectangular collar of that side. Fubini's $H^1$ section identity and continuity of the flat boundary trace identify the section endpoint with the triangle trace there. Exhausting $0<y<1$ proves the identity almost everywhere; no value at either diagonal corner is needed. It yields
+
+$$
+\int_{(0,1)^2}\frac{|F_{ee}(x,y)|^2}{|x-y|^2}\,dx\,dy
+\le4\int_{(0,1)^2}|\partial_xF_{ee}(x,y)|^2\,dx\,dy.
+\tag{75.27}
+$$
+
+The two components of the cutoff gradient give at most twice this Hardy bound times $\log(1/\eta)^{-2}$. Both diagonal sides are included.
+
+Finally, on two distinct cables meeting at a port, use their distances $u,v$ from that port. Near the shared corner $d_X=u+v$. Boundedness of $F$, without a corner point value, gives
+
+$$
+\begin{aligned}
+\int |F|^2|\nabla\chi_\eta(u+v)|^2\,du\,dv
+&\le\frac{2\|F\|_\infty^2}{\log(1/\eta)^2}
+       \int_{\eta^2<u+v<\eta}\frac{du\,dv}{(u+v)^2}\\
+&=\frac{2\|F\|_\infty^2}{\log(1/\eta)}\longrightarrow0.
+\end{aligned}
+\tag{75.28}
+$$
+
+The equality uses $u,v\ge0$ and $\eta<1$: the cross-section at $u+v=t$ contributes $t\,dt$. Distinct atoms, a nonincident atom/cable slice and nonincident cable cells have graph separation at least one and are unaffected. These cases exhaust the finite unit-cable tree. Multiplying the estimates by the exact positive weights in(75.3) and summing proves $F_\eta\to F$ in the complete form norm. Clipping followed by a diagonal choice of $\eta$ proves the assertion for every form vector, with every mixed slice and rectangle retained. $\square$
+
+**Lemma 75.8 (exact form lift and complete recovery in the actual hole).** For every $F\in\mathcal Q^{\rm fr}$,
+
+$$
+JF\in\mathcal Q_{{\rm mix},\varepsilon},\qquad
+\|JF\|=\|F\|,\qquad q_{0,\varepsilon}[JF]=q^{\rm fr}[F].
+\tag{75.29}
+$$
+
+For every $f\in\mathcal Q^{\rm hc}$ there are $v_\varepsilon\in\mathcal Q_{\varepsilon,R}^{\rm D}$ such that
+
+$$
+\|\iota_\varepsilon v_\varepsilon-L_\varepsilon f\|\longrightarrow0,
+\qquad q_{0,\varepsilon}[\iota_\varepsilon v_\varepsilon]
+                                  \longrightarrow a k_{\delta,2}[f].
+\tag{75.30}
+$$
+
+**Proof.** On each product of chamber and cylinder pieces the lift(75.7) is $H^1$. Across a matching plate, a cell trace equals its slice, and a slice endpoint equals its atomic value, so the physical traces agree in the other coordinate's entire piece. At a ground half-chamber the lift is zero and the adjacent cable endpoint trace is zero. These identities also give the required zero traces on both grounded product faces. Piecewise $H^1$ gluing proves global membership: integration of the weak-derivative identity against an interior smooth test function on all pieces cancels the matched interface trace terms; interface rims have boundary measure zero. The resulting piecewise derivatives belong to $L^2$. No derivative transmission or $H^2$ regularity is needed.
+
+For the norm, $c_\varepsilon^4$ times the chamber/chamber, chamber/cylinder and cylinder/cylinder fiber volumes gives exactly $1,\delta,\delta^2$. Chambers contribute no derivative. In a chamber/cylinder piece the derivative coefficient is
+
+$$
+\beta c_\varepsilon^4
+       \frac{\varepsilon^{s-1}}\delta\,\varepsilon^{s-1}=a,
+\qquad
+\beta c_\varepsilon^4\varepsilon^{2(s-1)}=a\delta
+\quad\text{on a cylinder/cylinder piece}.
+\tag{75.31}
+$$
+
+Both coordinate derivatives and both mixed orders are counted. This proves(75.29) on the complete form domain, rather than only on tensor or atomic data. It is a form identity, compatible with72.11's failure of exact finite-thickness operator intertwining.
+
+Let $j_D:X_D\to\mathbb R^s$ be the fixed injective skeleton embedding of72.3, including all distinct ground tips. Collapse a source chamber to its port, a ground half-chamber to its ground tip, and a cylinder to its own unit longitudinal coordinate; call this piecewise map $\pi_\varepsilon$. The actual assembly gives a fixed $C_D<\infty$ with
+
+$$
+|x-j_D(\pi_\varepsilon x)|\le C_Dr_\varepsilon
+\quad\text{on all physical pieces, for small }\varepsilon.
+\tag{75.32}
+$$
+
+Here is the required quantitative geometric reason. Centre distances are $1+h_v+h_w=1+O(r_\varepsilon)$; recursive placement on the finite source moves every source centre by $O_D(r_\varepsilon)$. The ground-centre formula(72.8) is smooth near its fixed strictly positive square root, so it has the same displacement bound. Directions therefore differ by $O_D(r_\varepsilon)$, plate offsets are $O(r_\varepsilon)$, chamber diameters are $O(r_\varepsilon)$ and transverse radii are $O(\varepsilon)=o(r_\varepsilon)$. Comparing each physical longitudinal segment with its fixed unit skeleton segment proves(75.32).
+
+The compact embedded tree has the inverse modulus
+
+$$
+\omega_D(t)=\sup\{d_X(\xi,\zeta):\xi,\zeta\in X_D,
+                             |j_D(\xi)-j_D(\zeta)|\le t\},
+\qquad \omega_D(t)\longrightarrow0\quad(t\downarrow0).
+\tag{75.33}
+$$
+
+The last assertion follows from compactness and injectivity: a sequence violating it would have limiting distinct points with the same embedded position. Thus a forbidden physical pair obeys
+
+$$
+|x-y|\le R_\varepsilon
+\quad\Longrightarrow\quad
+d_X(\pi_\varepsilon x,\pi_\varepsilon y)
+ \le\omega_D(R_\varepsilon+2C_Dr_\varepsilon)\longrightarrow0.
+\tag{75.34}
+$$
+
+Fix any member of the core of75.7, vanishing for $d_X<h$. Its lift is zero on the whole physical forbidden set for all sufficiently small $\varepsilon$, by(75.34). Pieces with a ground half-chamber already have zero lift. Consequently its restriction to $G_{\varepsilon,R}$ belongs to exactly(75.9).
+
+For arbitrary $f\in\mathcal Q^{\rm hc}$ choose core members $F_m\to Ef$ in the full form norm. For each $m$ choose a positive threshold below which $JF_m$ avoids the hole, and replace these thresholds by a decreasing sequence tending to zero. Let $m(\varepsilon)\to\infty$ increase sufficiently slowly that $JF_{m(\varepsilon)}$ avoids the hole. Set $v_\varepsilon=\iota_\varepsilon^*JF_{m(\varepsilon)}$. Its zero extension equals that lift. Equation(75.29) proves both limits in(75.30). The same source, geometry, radius and operators serve all inputs; only the recovery vector depends on $f$. This is mathematical form recovery, not an acquired preparation operation. $\square$
+
+**Lemma 75.9 (the full original potentials and complete form convergence).** For each of the three prescriptions, every bounded shifted-energy hard sequence has a strongly identified subsequence whose limit lies in $\mathcal Q^{\rm hc}$ and satisfies the target form lower bound. Every member of $\mathcal Q^{\rm hc}$ has recovery for the entire corresponding form, with its original one-body field and complete pair coefficients.
+
+**Proof.** Extend $U_\diamond$ to $\mathcal H^{\rm fr}$ by keeping the additive one-body value $-2g\phi(p)$ at $(p,p)$ and putting no pair term there. Denote this bounded multiplier by $\widehat U_\diamond$, and put $\widehat U_0=0$. Then direct comparison on every product piece in(75.7) gives the exact Hilbert-space identities
+
+$$
+W_{\varepsilon,C}J=J\widehat U_C,\qquad
+\widehat U_CE=EU_C,\qquad
+W_{\varepsilon,C}L_\varepsilon=L_\varepsilon U_C.
+\tag{75.35}
+$$
+
+On a mixed stratum this identity retains the one atomic one-body value; on cells both one-body values and the pair term are zero. On a distinct atomic pair it retains both one-body values and exactly that pair coefficient. On a double atom the free extension has its specified additive value, which is immaterial after $E$. On ground half-chamber pieces the lift is zero. These cases verify the identity on all Hilbert data, without assuming that multiplication preserves form trace equalities.
+
+If $u_\varepsilon-JF\to0$ in physical norm and the norms are bounded, boundedness of $W$ and(75.35) imply
+
+$$
+\langle u_\varepsilon,W_{\varepsilon,C}u_\varepsilon\rangle
+ \longrightarrow\langle F,\widehat U_CF\rangle.
+\tag{75.36}
+$$
+
+For example the absolute difference from the quadratic term of $JF$ is at most $M\|u_\varepsilon-JF\|(\|u_\varepsilon\|+\|F\|)$, and the term of $JF$ equals the target extension exactly. Set $b=M+1$. Both the physical and target shifted forms obey
+
+$$
+\begin{aligned}
+h_{\varepsilon,C}[v]+b\|v\|^2
+ &\ge q_{0,\varepsilon}[\iota_\varepsilon v]+\|v\|^2,\\
+q_C[f]+b\|f\|^2&\ge a k_{\delta,2}[f]+\|f\|^2,
+\qquad q_C=a k_{\delta,2}+\langle\,\cdot,U_C\,\cdot\rangle.
+\end{aligned}
+\tag{75.37}
+$$
+
+Thus a bounded shifted-energy sequence has the free compactness of75.5, the exact hard lower domain of75.6 and, by(75.36), the complete lower bound $q_C[f]\le\liminf h_{\varepsilon,C}[v_\varepsilon]$ whenever $\iota_\varepsilon v_\varepsilon-L_\varepsilon f\to0$. If the energy lower limit is finite, select a subsequence attaining it and apply those lemmas; if it is infinite the inequality is automatic. The recovery of75.8 and(75.36) give $h_{\varepsilon,C}[v_\varepsilon]\to q_C[f]$ for every $f\in\mathcal Q^{\rm hc}$. These are the lower and recovery assertions on the entire target domain for each actual law, with no restricted test class. $\square$
+
+**Proposition 75.10 (arbitrary forcing and full operator norm).** The complete form assertions in75.9 imply both conclusions of75.4, uniformly on each fixed nonreal compact spectral set.
+
+**Proof.** First use the common shift $b=M+1$. For an arbitrary sequence of forcings $f_\varepsilon\in\mathcal P_\varepsilon$ with $\|f_\varepsilon\|\le1$, let
+
+$$
+u_\varepsilon=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}+b)^{-1}
+                                      \iota_\varepsilon^*f_\varepsilon.
+\tag{75.38}
+$$
+
+The variational identity and(75.37) give $q_{0,\varepsilon}[u_\varepsilon]+\|u_\varepsilon\|^2\le1$: if $A$ is its shifted energy, then $A\le\|u_\varepsilon\|\le\sqrt A$. Extract a subsequence with $J^*f_\varepsilon\rightharpoonup h$ in the fixed $\mathcal H^{\rm fr}$ and $u_\varepsilon-L_\varepsilon u\to0$ with $u\in\mathcal Q^{\rm hc}$. Lemmas75.5–75.6 provide the latter conclusion, with no restriction on forcing.
+
+The vector(75.38) minimizes, on the zero-extended allowed form domain, the strictly positive functional
+
+$$
+\mathcal F_\varepsilon(v)
+ =h_{\varepsilon,C}[\iota_\varepsilon^*v]+b\|v\|^2
+                     -2\operatorname{Re}\langle f_\varepsilon,v\rangle.
+\tag{75.39}
+$$
+
+Its limiting functional is $\mathcal F(w)=q_C[w]+b\|w\|^2-2\operatorname{Re}\langle E^*h,w\rangle$. The lower bound of75.9 gives $\mathcal F(u)\le\liminf\mathcal F_\varepsilon(u_\varepsilon)$. For every $w\in\mathcal Q^{\rm hc}$ its complete recovery gives $\mathcal F_\varepsilon(v_\varepsilon)\to\mathcal F(w)$, including the forcing term. Indeed any strongly identified $v_\varepsilon=L_\varepsilon w+o(1)$ satisfies $\langle f_\varepsilon,v_\varepsilon\rangle\to\langle h,Ew\rangle$. Minimization therefore gives $\mathcal F(u)\le\mathcal F(w)$ for every $w$. The unique minimizer is
+
+$$
+u=(C+b)^{-1}E^*h.
+\tag{75.40}
+$$
+
+The target resolvent is compact. Its shifted form norm is equivalent to the inherited free form norm on $E\mathcal Q^{\rm hc}$, by boundedness of $U_C$; the free form embedding is compact. Thus $(C+b)^{-1}E^*J^*f_\varepsilon\to u$ strongly. Since $L_\varepsilon$ is an isometry, the difference between(75.38) and $L_\varepsilon(C+b)^{-1}L_\varepsilon^*f_\varepsilon$ tends to zero along this subsequence. If the corresponding operator norm had a positive upper limit, a sequence of unit forcings realizing at least half that discrepancy would have a subsequence just shown to have vanishing discrepancy. This contradiction proves
+
+$$
+\|S_\varepsilon-T_\varepsilon^0\|\longrightarrow0,\qquad
+S_\varepsilon=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}+b)^{-1}
+                      \iota_\varepsilon^*,\quad
+T_\varepsilon^0=L_\varepsilon(C+b)^{-1}L_\varepsilon^*.
+\tag{75.41}
+$$
+
+Both operators are bounded nonnegative operators on the full $\mathcal P_\varepsilon$, with spectra in $[0,1]$. For nonreal $z$ put $c=z+b$ and $h_z(t)=t/(1-ct)$. Its value at zero is zero. Because $\iota_\varepsilon$ and $L_\varepsilon$ are isometries on their respective original carriers, spectral calculus gives
+
+$$
+\begin{aligned}
+h_z(S_\varepsilon)
+ &=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}
+                                                   \iota_\varepsilon^*,\\
+h_z(T_\varepsilon^0)&=K_{\varepsilon,C}(z).
+\end{aligned}
+\tag{75.42}
+$$
+
+This correctly preserves zero action on the two possibly different orthogonal complements. For a fixed nonempty compact $K\subset\mathbb C\setminus\mathbb R$,
+
+$$
+d_K=\min_{z\in K,\ 0\le t\le1}|1-(z+b)t|>0.
+\tag{75.43}
+$$
+
+The expression cannot vanish: at $t=0$ it is one, and at $t>0$ vanishing would force $z$ real. Compactness supplies the positive minimum. The elementary bounded-operator identity
+
+$$
+h_z(S)-h_z(T)
+ =(I-cS)^{-1}(S-T)(I-cT)^{-1}
+\tag{75.44}
+$$
+
+holds by multiplying on the left by $I-cS$ and on the right by $I-cT$: the middle expression becomes $S(I-cT)-(I-cS)T=S-T$, without assuming that $S$ and $T$ commute. It bounds the supremum of(75.14)'s full discrepancies by $d_K^{-2}\|S_\varepsilon-T_\varepsilon^0\|$. This proves full norm convergence uniformly on $K$. Compressing the full difference by $\iota_\varepsilon^*$ and $\iota_\varepsilon$ gives exactly the allowed-carrier difference, hence
+
+$$
+D_{\varepsilon,C}^{\rm a}(z)\le D_{\varepsilon,C}^0(z).
+\tag{75.45}
+$$
+
+No isometry of the restricted target lift was used. The three prescriptions are finite in number and share all geometry and radius choices, so taking their maximum preserves convergence and gives the common tolerance threshold in75.4. $\square$
+
+**Proposition 75.11 (retained complements, both cross blocks and restriction loss).** Let $\mathsf S_{\varepsilon,C}(z)=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}\iota_\varepsilon^*$, and put
+
+$$
+P_\varepsilon=L_\varepsilon L_\varepsilon^*,\quad
+Q_\varepsilon=I-P_\varepsilon,\quad
+A_\varepsilon=\iota_\varepsilon\iota_\varepsilon^*,\quad
+F_\varepsilon^{\rm forb}=I-A_\varepsilon.
+\tag{75.46}
+$$
+
+The entire $Q_\varepsilon$ block and both cross blocks of the actual extended resolvent tend to zero uniformly on $K$:
+
+$$
+\begin{aligned}
+\|Q_\varepsilon\mathsf S_{\varepsilon,C}(z)Q_\varepsilon\|,
+\quad\|Q_\varepsilon\mathsf S_{\varepsilon,C}(z)P_\varepsilon\|,
+\quad\|P_\varepsilon\mathsf S_{\varepsilon,C}(z)Q_\varepsilon\|
+&\le D_{\varepsilon,C}^0(z),\\
+\|K_{\varepsilon,C}(z)F_\varepsilon^{\rm forb}\|,
+\quad\|F_\varepsilon^{\rm forb}K_{\varepsilon,C}(z)\|
+&\le D_{\varepsilon,C}^0(z).
+\end{aligned}
+\tag{75.47}
+$$
+
+Nevertheless, for all sufficiently small $\varepsilon$, the raw restricted lift satisfies
+
+$$
+\|I-T_\varepsilon^*T_\varepsilon\|_{\mathcal B(\mathcal K)}=1.
+\tag{75.48}
+$$
+
+**Proof.** The target resolvent has only a $P_\varepsilon$–$P_\varepsilon$ block. Multiplying the full difference in(75.14) by these orthogonal projections proves the first three bounds. The actual extended resolvent vanishes on the forbidden subspace in both directions, proving the last two. Thus the estimates include nonconstant chamber and transverse functions, ground half-chamber functions, the excluded effective atomic coordinates, arbitrary complementary forcing and both directions of coupling to the retained range.
+
+For(75.48), choose any cable. A nonzero symmetric smooth cell function supported in $[1/4,3/4]^2\cap\{|x-y|<R_\varepsilon/4\}$, with every other stratum zero, defines a target Hilbert vector; normalize it in the actual $\delta^2$ cell norm. Choose an even factor vanishing at $x=y$, so the vector also belongs to the literal target form domain, with all outer cell traces zero. Since $R_\varepsilon/\varepsilon\to\infty$, its entire physical transverse product lies in the forbidden region for small $\varepsilon$, by the same separation estimate as75.6. Its restriction $T_\varepsilon f$ is zero. The positive contraction $T_\varepsilon^*T_\varepsilon$ therefore has a unit kernel vector, while $0\le I-T_\varepsilon^*T_\varepsilon\le I$, proving(75.48). For these normalized vectors, (75.27) and their strip support give $a k_{\delta,2}[f]\ge4a/(\delta R_\varepsilon^2)\to\infty$. This explains why exact raw isometry cannot replace the complete lower, recovery and compact resolvent proof. The allowed comparison(75.15) remains an operator norm on its entire actual carrier. $\square$
+
+**Corollary 75.12 (the mesoscopic alternative and the necessary-range account).** The same full target theorem, exact multipliers, maps and both hard-carrier comparisons hold if(75.13) is replaced by
+
+$$
+R_\varepsilon\longrightarrow0,\qquad
+R_\varepsilon/r_\varepsilon\longrightarrow\infty.
+\tag{75.49}
+$$
+
+For the fixed chamber radius of75.4 the necessary hard-range quotient of74 is
+
+$$
+\frac{R_\varepsilon^{s-2}}{\varepsilon^{s-1}}
+ =\kappa^{s-2}r_\varepsilon^{-2}\longrightarrow\infty.
+\tag{75.50}
+$$
+
+**Proof.** Under(75.49) every chamber pair is eventually fully covered by(75.16), and $R_\varepsilon/\varepsilon\to\infty$ gives the full same-cylinder forbidden strip. The core and exact form lift are unchanged; recovery uses $\omega_D(R_\varepsilon+2C_Dr_\varepsilon)\to0$, which still holds. Thus75.5–75.10 apply verbatim to these stated inequalities, proving the whole conclusion. Equation(75.50) follows from $r_\varepsilon^s=\varepsilon^{s-1}$. It is compatible with74.8's necessary range condition. Its divergence alone is not used as a sufficient criterion for arbitrary interactions of74.2. The selected radius has $R_\varepsilon/\varepsilon\to\infty$ and therefore lies outside that chapter's separate microscopic assumption $h_\varepsilon=o(\varepsilon)$. The mesoscopic route requires a larger asymptotic range than75.4 and supplies the same stated target conclusion; these mathematical statements give no physical cost ordering between installations. $\square$
+
+**Theorem 75.13 (a finite-height alternative on the full carrier).** Keep exactly75.1–75.3's source, geometry and step multipliers, but replace the hard domain by the entire mixed-ground domain. Fix any $\kappa>0$, use $R_\varepsilon=\kappa r_\varepsilon$, and choose finite heights $\Lambda_\varepsilon\ge0$ with
+
+$$
+\Lambda_\varepsilon R_\varepsilon\longrightarrow\infty.
+\tag{75.51}
+$$
+
+Let $H_{\varepsilon,C}^{\Lambda}$ be the densely defined full-product operator of the closed form
+
+$$
+q_{\varepsilon,C}^{\Lambda}[u]
+ =q_{0,\varepsilon}[u]
+ +\Lambda_\varepsilon\int_{|x-y|\le R_\varepsilon}|u|^2
+ +\langle u,W_{\varepsilon,C}u\rangle,
+\qquad u\in\mathcal Q_{{\rm mix},\varepsilon}.
+\tag{75.52}
+$$
+
+For every fixed compact $K\subset\mathbb C\setminus\mathbb R$,
+
+$$
+\max_{C\in\{C_0,C_{\rm c},C_{\rm k}\}}\ \sup_{z\in K}
+\big\|(H_{\varepsilon,C}^{\Lambda}-z)^{-1}-K_{\varepsilon,C}(z)\big\|
+                         _{\mathcal B(\mathcal P_\varepsilon)}\longrightarrow0.
+\tag{75.53}
+$$
+
+This is a sufficient height schedule on the full unchanged target, not a sharp height threshold or a physical price assertion.
+
+**Proof.** Each finite height is a bounded nonnegative perturbation for its individual $\varepsilon$, so the form is closed and dense on the full carrier, with lower bound $-M$. A bounded shifted-energy sequence satisfies both the free bound(75.17) and
+
+$$
+\Lambda_\varepsilon\int_{|x-y|\le R_\varepsilon}|u_\varepsilon|^2\le A
+\tag{75.54}
+$$
+
+for a fixed $A$. Obtain $u_\varepsilon-JF\to0$ and $F\in\mathcal Q^{\rm fr}$ from75.5. Since $R_\varepsilon\to0$, (75.51) implies $\Lambda_\varepsilon\to\infty$. On the positive-fraction ball products of(75.23),
+
+$$
+\theta_p|F_{pp}|^2
+\le2\|u_\varepsilon-JF\|^2
+       +2\int_{|x-y|\le R_\varepsilon}|u_\varepsilon|^2\longrightarrow0.
+\tag{75.55}
+$$
+
+Thus the atomic collisions vanish for every fixed positive $\kappa$.
+
+For a same-cable average $f_\varepsilon=(J^*u_\varepsilon)_{ee}$, (75.24) still holds. The complete transverse strip is inside the physical penalty region, so Jensen gives
+
+$$
+\delta^2\int_{|x-y|<R_\varepsilon/2}|f_\varepsilon(x,y)|^2\,dx\,dy
+                                  \le A/\Lambda_\varepsilon.
+\tag{75.56}
+$$
+
+For every $f\in H^1((0,1)^2)$ and $0<h<1/2$ the diagonal trace satisfies
+
+$$
+\|\operatorname{Tr}_{x=y}f\|_{L^2(0,1)}^2
+\le \frac{2}{h}\int_{|x-y|<h}|f(x,y)|^2\,dx\,dy
+       +2h\int_{(0,1)^2}|\partial_xf|^2\,dx\,dy.
+\tag{75.57}
+$$
+
+Indeed for $y\le1/2$ use the section $v(t)=f(y+t,y)$, $0<t<h$, and for $y>1/2$ use $v(t)=f(y-t,y)$. The fundamental theorem and Cauchy–Schwarz give $|v(0)|^2\le2|v(t)|^2+2t\int_0^t|v'|^2$. Average in $t$, then integrate in $y$; both section regions are in the indicated strip and their union has no multiplicity. Smooth approximation and continuity of the diagonal trace prove the general $H^1$ assertion.
+
+Apply(75.57) with $h=R_\varepsilon/2$. Equations(75.24), (75.56) and(75.51) show that these diagonal traces tend to zero. The strong $L^2$ and weak $H^1$ limit is $F_{ee}$, so it has zero diagonal trace. Now(75.2) gives exactly the full hard-core target domain, including all shared-port and ground conditions. The free lower bound, the nonnegative penalty and(75.36) give the complete target lower bound.
+
+For every target form vector use precisely75.8's collision-avoiding recovery. Its lift vanishes in the physical penalty region for sufficiently small $\varepsilon$ at each fixed core stage, so its penalty is exactly zero, regardless of the height. The same slow diagonal choice supplies complete form recovery. These two form directions and the free compactness allow the arbitrary-forcing minimization proof of75.10 with(75.52) in place of the hard form and with identity inclusion on the full carrier. The shifted energy still bounds the entire free energy; its recovery still attains the target functional for every competitor. Compactness and(75.44) therefore prove(75.53), including the same complement and both cross blocks relative to $P_\varepsilon$. The finite-height route adds the diverging height coordinate(75.51), whereas the hard route declares an ideal Dirichlet installation. No price model equating or ordering those controls is assumed. $\square$
+
+**Corollary 75.14 (the unchanged one-particle field on the same assembly).** On the one-particle physical carrier of72.10, the installed multiplier $-g\Phi_\varepsilon$ yields the original complete one-particle operator $\mathcal T^\diamond_{\delta,D,1}=A_{\delta,D,1}-g\phi_A$, identically for both prescriptions, in full norm-resolvent comparison on every fixed nonreal compact set.
+
+**Proof.** This is a bounded-perturbation consumer of72.10, with its exact $J_\varepsilon$ and adjoint(72.30). The same piecewise formulas give $(-g\Phi_\varepsilon)J_\varepsilon=J_\varepsilon(-g\phi_A)$ and both potential norms are at most $g$. Choose $b_1>g$. The free shifted resolvents converge in norm by72.10 and continuous resolvent calculus for nonnegative operators. Expand the perturbed resolvents in their Neumann series at $-b_1$. The $n$th terms are products of $n+1$ free resolvents and $n$ potential factors; covariance gives exactly the lifted target series. If the free discrepancy is $\eta_\varepsilon$, telescoping products bound the difference of the $n$th terms by $(n+1)(g/b_1)^n\eta_\varepsilon$. Summation gives an upper bound $(1-g/b_1)^{-2}\eta_\varepsilon\to0$. The identity(75.44), on the bounded interval containing these positive shifted spectra, transfers it uniformly to every fixed nonreal compact set. This neither changes the one-body field under killing nor re-proves the accepted free one-particle supplier. $\square$
+
+**Definition 75.15 (source coefficients, mature reuse and precise mathematical scope).** On the five-port witness $(o,L,R,LL,LR)$, (75.5) retains all ten source coefficients:
+
+$$
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G_D^{\rm c}&1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16\\
+G_D^{\rm k}&9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78
+\end{array}
+$$
+
+This is the original64.1 witness, not the definition of either law for general $D$. Equations(75.5) and(75.11) use the entire corresponding source kernel. The three comparisons share the original source, all geometry, one radius family, maps, kinetic coefficients and grounding. The two unequal complete pair prescriptions are separate operators; the theorem does not provide a single physical generator equal to both or a free acquired switch between them.
+
+The accepted ordinary suppliers are precisely72's separated exact-length geometry and full free one-particle correspondence,73's complete free product limit and domain equality(73.8), and74's hard carriers, form typing and necessary obstructions. Their source is the [second continuation at its immutable Chapter74 pin](https://github.com/the-omega-institute/trureturing/blob/1e4a194133891dadad9fbdefb4b590eefa49b9cc/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_II.md). The original measure, domain, fields, pair kernels and material boundaries are64.5,62.2–62.4,63.13,66.10,67.11 and68.7 in the [first continuation at its immutable pin](https://github.com/the-omega-institute/trureturing/blob/0916822f1ee0d1f84783170ca062227d9ba9c253/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md). These are scoped ordinary premises; their source publication is not a new kernel or physical verification.
+
+The mature thinning theorem used through72 is Cherednichenko–Ershova–Kiselev, [*Norm-resolvent convergence for Neumann Laplacians on manifolds thinning to graphs*, arXiv:2205.04397v4](https://arxiv.org/html/2205.04397v4), Section2, Section3 and Theorem4.5 with equations(16)–(18). Its straight cylinders, resonant chamber volumes, contact geometry, all-Neumann double and massive-vertex operator are matched in72 before its odd grounding restriction. Chapter75 does not import an interacting conclusion from that donor. Its new bridge is the explicit lower domain, compatible all-stratum core, actual physical recovery and arbitrary-forcing norm proof above.
+
+Seiringer–Yin, [*The Lieb–Liniger Model as a Limit of Dilute Bosons in Three Dimensions*, arXiv:0709.4022v1](https://arxiv.org/abs/0709.4022v1), treats fixed particle number and longitudinal scale, separable confining traps and scattering-length-normalized nonnegative interactions, including hard spheres, under its stated transverse and scattering separation. Its effective coupling may tend to infinity, and its norm-resolvent comparison subtracts transverse energy and uses the transverse ground-state projection. That different carrier supplies neither the massive source atoms, their mixed traces, nor either complete kernel here. No trap error estimate or interacting donor theorem is transferred. The Hardy, cutoff, averaging, variational and resolvent identities needed for this bridge are proved in this chapter.
+
+The [same-carrier observer normalization](https://github.com/the-omega-institute/trureturing/blob/aaaf5bb64e78f915a42ccbba033df7a376979502/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.md), particularly1.6 and1.14–1.15, is source-attributed evidence about a complete nominal observer carrier and its stated execution/address fee. The [promised-risk acquisition result](https://github.com/the-omega-institute/trureturing/blob/aaaf5bb64e78f915a42ccbba033df7a376979502/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROMISED_RISK_HISTORY_LOCALIZATION.md),7.3 and8.1–8.2, distinguishes non-effective acquired-history localization across COMPLETE budgets from fixed-tuple finite existence and a separately scoped coarse certificate. Those different carriers and charges supply no continuum non-effectivity theorem or radius schedule here. In particular the qualitative $\varepsilon_0$ of75.4 is not asserted to be an effective acquired finite-execution certificate.
+
+No rate, sharp exclusion or height threshold, minimum radius, physical control optimum or total-resource optimum is asserted. The fixed-positive-$\kappa$ strengthening uses the uniform interior balls of the supplied chambers; it is not a theorem for arbitrary degenerate chamber families or for $\kappa=\kappa_\varepsilon\to0$. Fixed $D$, positive fixed $\delta$, commissioned positive $a$, fixed reference geometry and fixed $s$ are material quantifiers. All fixed $s\ge3$ are in scope. There is no growing-source, varying-density, dimension-uniform or growing-spectral-window assertion, nor an operator-norm finite-clock evolution assertion.
+
+**Definition 75.16 (retained native, field, acquisition and lifetime obligations).** The sufficient particle correspondence of75.4 reduces the full-domain realization gap left open after73 and the merely necessary range/strength account of74. It leaves the original sustained source/native/full-field/acquisition/resource/why-three programme active, with the following material obligations unchanged.
+
+Every literal $\alpha/\beta$ label and bracket, left/right order and distinct occurrence remains; so do immutable INITIAL, one original fixed cap, source-independent initialization, actual versions and contexts, complete candidates and original guards, every acceptance and refusal, destructive operations, original numerical Read, absorbing Stop and actually acquired chronological records. The original actor's arbitrary, unbounded or possibly zero $a$, untagged radius-$7/25$ $b$ and joint adversarial or history-dependent errors remain distinct from the positive commissioned parameters in75.1. Whole-rho operations, beta-empty accepted label changes and the distinct Left/Right grafts retain their actual root, degree, field and domain/dynamic covariance duties. A whole-rho supplier does not grant either graft law. No candidate Read after refusal or service after Stop is introduced by a fixed-source resolvent.
+
+The complete fixed-cap field bank, all $2^H-1$ oscillator modes, their excitations, unused spectators and auxiliary factors remain, as do every unknown particle/field/auxiliary correlation, the full joint norm, common reference and actual clock. The balanced coordinate/momentum field and complete source inverse of67 retain their on-site self-energy compensation, field-number/moment ingress hypotheses and atom-only displacement/domain boundary. The ordinary particle theorem proves no coupled-field generator comparison and certifies no unknown auxiliary ingress. Actual source-qualified local and isotropic mediation, stiffness/compensation installation, genuine switching, unknown-state ingress and recovery, retained-operation and metric correspondence, Read/Stop covariance and accepted-graft retained-carrier laws still need their own proofs. Particle form recovery is not native state recovery or preparation. There is no hidden trace, vacuum restriction, reset, cloning, independent resampling or calibrated-state re-preparation.
+
+The common $\Pi$ of63.13 keeps its full-vector and spanning assumptions, common zero, whole quadratic-distance/positive-semidefinite Gram relation, at least two independent directions, alternating bilinear exact-area/Jacobi law, actual orthonormal probes, finite binary calibration and hidden-kernel-preserving generator conditions. Neither chamber averaging nor an abstract Hilbert-space identification supplies them, a field port or a clock.
+
+The three acquisition contracts remain separate. The immutable composition-promised endpoint contract of57 retains fixed depth caps, common source-independent initialization, each actual query/reply history, correct finite stopping on every promised positive and negative source and distinct actual-address fees; it supplies no old-source archive. The paid positive-root archive/exact nonadvancing-cut contract retains its exact port, finite stopping and decoding, protected written records after refusal or closure, aligned actual generation, trusted markers, absence of unrecorded source change, closed strong ports and paid write/protect/retain/query rights. All reply-affecting retained source influence belongs in that service price. The phase-coherent full-tail contract retains its own once-sampled-depth actual Read process and paid stopped transcript. None grants copied source, reset, resampling, unknown-state preparation or an exact-limit Read, and none of their state counts, radii, update matrices or clocks is silently transported to this particle theorem.
+
+Actual reference preparation and calibration, finite clock conversion, full error handling and usable finite execution/precision certificates remain unsupplied here. Every construction, acquisition, preparation, field/compensation/stiffness installation, exclusion or repulsion control, switching, source service, production, storage, hold, retention, maintenance and precision charge, including service durations and total lifetime price, remains a priced obligation. The installation of exact $W$, the ideal Dirichlet constraint or the diverging finite-height schedule is an explicit model hypothesis, not a free apparatus capability. Volume ratios, stratum counts, normalized measures and infinite-dimensional interval/cell spaces are not finite digital memory, physical masses or measured cost advantages.
+
+For spatial realization, the original operation/metric bridge, packing, transverse, exterior, leakage and collision controls remain. The planar prescribed-length problem of72.13 still requires every centre distance $1+h_v+h_w$, both distinct grounded stubs ending on one grounding line, and crossing-free clearance with port margins. The existence of the supplied assembly separately in every fixed $s\ge3$ selects no unique three-dimensional ambient space. The ordinary result neither establishes global physical impossibility in another dimension nor settles an actual clock or lifetime price. These boundaries retain the full original goal rather than treating one fixed-source sufficient theorem as its completion.
+
+## 75.99 追加锚（本行以下为增补区）
+
+## 76. Planar grounding width and the minimum universal dimension of the unit skeleton
+
+**Definition 76.1 (the commissioned template and its quantifiers).** Retain an
+authentic nonempty finite ordered full binary source $D$ from
+Definitions55.1,60.1,66.1 and67.1 of the
+[first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+Every label, bracket, left/right address and distinct occurrence remains part
+of the source. Write $o$ for its current root and put
+
+$$
+\ell(D)=\#\operatorname{Leaf}(D),\qquad
+h(D)=\max_{p\in D}|p|.
+\tag{76.1}
+$$
+
+Here $|p|$ counts inherited source seams from the current root; ground stubs
+do not contribute to $h(D)$. The skeleton has precisely those seams and two
+distinct stubs at **every** current leaf. Its total incidence is two at the
+root and three at every nonroot source vertex; each ground tip has incidence
+one. There are no further edges or identifications.
+
+For an integer $s\ge1$, let $E_s(D)$ mean an injective placement of all source
+vertices and ground tips in $\mathbb R^{s-1}\times\mathbb R$, with height
+coordinate $y$, satisfying the following complete spatial contract. Every
+source vertex has $1/4<y_p<3/4$. Every inherited seam and each of the two
+stubs at every leaf is a straight Euclidean segment of length exactly one.
+All ground tips are globally distinct and lie in the height-zero hyperplane
+$\{y=0\}$. Segments intersect only at the images of their prescribed common
+graph endpoints, and no vertex lies on a nonincident segment. The placement
+has positive minimum incident-ray angle and positive clearance between
+nonincident compact segments and vertices, with margins allowed to depend
+on this finite source and placement. Thus the ground locus is a line for
+$s=2$ and a plane for $s=3$.
+
+These are precisely the straight skeleton conditions of Proposition72.3,
+with its finite separation margins. The height band is commissioned spatial
+data, not a consequence of literal substitution or a native necessity.
+Universality means a separate placement for each authentic finite current
+source at its separately legal, predeclared fixed cap. It supplies neither
+one apparatus for all sources and histories nor a source- or cap-uniform
+clearance or angle bound. The new assertion is finite exact geometry; it
+has no thinning parameter, spectral limit, clock or precision regime.
+
+**Theorem 76.2 (all-leaf planar separation and strict width necessity).**
+For every $D$ of76.1 and every placement satisfying $E_2(D)$, put
+
+$$
+b_p=\sqrt{1-y_p^2},\qquad
+I_p=[x_p-b_p,x_p+b_p],\qquad p\in\operatorname{Leaf}(D).
+\tag{76.2}
+$$
+
+The closed grounding intervals $I_p$ are pairwise disjoint. If $W$ is the
+horizontal span of all ground tips, then
+
+$$
+\ell(D)\frac{\sqrt7}{2}
+ <\sum_{p\in\operatorname{Leaf}(D)}|I_p|
+ \le W<2h(D)+2.
+\tag{76.3}
+$$
+
+In particular the strict necessary inequality is
+$\ell(D)\sqrt7/2<2h(D)+2$, and hence also the non-strict bound in the
+original planar question. The proof needs no additional planar angle or
+clearance hypothesis beyond the stated incidence and nonintersection.
+
+**Proof.** A unit segment from $p=(x_p,y_p)$ to $(X,0)$ must satisfy
+$(X-x_p)^2+y_p^2=1$. Since $0<y_p<1$, there are exactly two possible tips,
+$g_p^-=(x_p-b_p,0)$ and $g_p^+=(x_p+b_p,0)$. Distinctness forces the two
+actual stubs to use both. Write
+
+$$
+V_p=[g_p^-,p]\cup[p,g_p^+],\qquad
+\Delta_p=\operatorname{conv}\{g_p^-,p,g_p^+\},\qquad
+F_p(X,Y)=\frac{|X-x_p|}{b_p}+\frac{Y}{y_p}-1.
+\tag{76.4}
+$$
+
+In $Y>0$, $F_p=0$ is exactly $V_p$ with its ground tips removed,
+and $F_p<0$ is the triangle interior. The base $I_p\times\{0\}$ closes
+the triangle only for this proof; it is no installed graph edge or cable.
+
+Suppose $D$ is not a singleton, and let $v$ be the source parent of a leaf
+$p$. Every $z\in\Delta_p$ of positive height has a convex representation
+$z=\theta p+\mu g_p^-+\eta g_p^+$, where the coefficients are nonnegative,
+sum to one, and $\theta=Y(z)/y_p>0$. Therefore
+
+$$
+|z-p|\le\mu|g_p^--p|+\eta|g_p^+-p|
+       =\mu+\eta=1-\theta<1.
+\tag{76.5}
+$$
+
+But $|v-p|=1$ and $Y(v)>0$, so $v\notin\Delta_p$ and $F_p(v)>0$.
+Delete $p$ and its parent seam from the ungrounded source tree as a
+mathematical proof device. The remaining source tree is connected and
+contains $v$ and every other leaf. Its straight segments stay at positive
+height. It avoids $V_p$, since it has no graph endpoint in common with
+either stub of $p$. Consequently $F_p$ never vanishes on that connected
+remainder. Continuity along its paths and $F_p(v)>0$ imply $F_p>0$
+throughout it, including at every other leaf $q$.
+
+If a ground tip $g=(X,0)$ of $q$ lay in the interior of $I_p$, then
+$F_p(g)<0$. On the actual stub from $q$ to $g$, the intermediate value
+theorem would give $F_p=0$ before reaching the ground. That point has
+positive height and belongs to $V_p$, contradicting literal
+nonintersection. A tip of $q$ cannot equal an endpoint of $I_p$ either,
+because all tips are globally distinct. Thus no other leaf's ground tip
+belongs to $I_p$. Apply the same argument with each leaf as $p$. Two
+closed intervals with four distinct endpoints can overlap only if an
+endpoint of one lies in the other's interior, also in the nested case.
+This proves pairwise disjointness. For a singleton there is only one
+interval, so the separation assertion is immediate. Leaf deletion above
+is not a source operation and changes no source or producer carrier.
+
+For every leaf, $y_p<3/4$ gives
+$|I_p|=2\sqrt{1-y_p^2}>\sqrt7/2$. A root-to-leaf path has at most
+$h(D)$ unit seams, whence $|x_p-x_o|\le h(D)$. Each tip differs
+horizontally from its leaf by $b_p<1$. All finitely many tips therefore
+lie strictly between $x_o-h(D)-1$ and $x_o+h(D)+1$, giving
+$W<2h(D)+2$. Disjoint intervals have total length at most their enclosing
+span $W$. Summing their strict width floors proves76.3, including the
+singleton case. $\square$
+
+**Proposition 76.3 (a literal obstruction at one separately fixed cap).**
+Use the substitution family $T_n=\rho^n(\alpha)$ and its existing ordered
+Fibonacci recurrence, supplied by55.1:
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{n+2}=\langle T_{n+1},T_n\rangle.
+\tag{76.6}
+$$
+
+Here $T_n$ denotes this family only, not65.1's balanced all-beta family.
+In particular
+
+$$
+\begin{aligned}
+T_2&=\langle\beta,\alpha\rangle,&
+T_3&=\langle T_2,\beta\rangle,&
+T_4&=\langle T_3,T_2\rangle,\\
+T_5&=\langle T_4,T_3\rangle
+ =\big\langle
+   \langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                \langle\beta,\alpha\rangle\rangle,
+   \langle\langle\beta,\alpha\rangle,\beta\rangle
+   \big\rangle.
+\end{aligned}
+\tag{76.7}
+$$
+
+Every repeated subtree in this expression is a distinct ordered occurrence;
+the recurrence is a syntax identity, not a source-copy operation. Its
+leaf and seam-depth recurrences are
+$\ell_{n+2}=\ell_{n+1}+\ell_n$ and
+$h_{n+2}=1+\max\{h_{n+1},h_n\}$, with
+$\ell_0=\ell_1=1$ and $h_0=h_1=0$. They give
+
+| $n$ | $\ell(T_n)$ | $h(T_n)$ | alpha leaves | beta leaves |
+| --- | --- | --- | --- | --- |
+| $0$ | $1$ | $0$ | $1$ | $0$ |
+| $1$ | $1$ | $0$ | $0$ | $1$ |
+| $2$ | $2$ | $1$ | $1$ | $1$ |
+| $3$ | $3$ | $2$ | $1$ | $2$ |
+| $4$ | $5$ | $3$ | $2$ | $3$ |
+| $5$ | $8$ | $4$ | $3$ | $5$ |
+
+Thus $\operatorname{Pos}(T_5)$ has fifteen source vertices, fourteen
+inherited seams and sixteen distinct grounded stubs. Its eight ordered
+leaf occurrences are
+
+$$
+\begin{array}{c|cccccccc}
+p&LLLL&LLLR&LLR&LRL&LRR&RLL&RLR&RR\\ \hline
+\operatorname{label}(p)&\beta&\alpha&\beta&\beta&\alpha&\beta&\alpha&\beta
+\end{array}.
+\tag{76.8}
+$$
+
+Choose a separate commission with immutable INITIAL $\alpha$ and one cap
+$H=8$ fixed before execution. The five whole-rho candidates have leaf
+counts $1,2,3,5,8$. Each passes the original whole-candidate guard
+$\ell\le H$, including the first label-only acceptance and the final
+equality. Hence the literal current source $T_5=\rho^5(\alpha)$ is
+admitted by the unchanged source semantics at that cap. The same finite
+prefix is legal at any separately predeclared fixed $H\ge8$. At $H=8$ a
+subsequent thirteen-leaf candidate, if attempted, is refused, leaves
+$T_5$ unchanged and supplies no candidate Read; Stop remains absorbing.
+This establishes mathematical source admissibility, not a newly observed
+native execution, acquired source authentication or an installed apparatus.
+
+For this admitted source, Theorem76.2 would require $4\sqrt7<10$. Both sides
+are positive, whereas
+
+$$
+(4\sqrt7)^2=112>100=10^2.
+\tag{76.9}
+$$
+
+Therefore $E_2(\operatorname{Pos}(T_5))$ is impossible. No lower-cap
+classification or assertion of a smallest counterexample follows.
+
+**Corollary 76.4 (conditional minimum universal integer dimension).**
+Relative to the commissioned template76.1 and the accepted ordinary
+Proposition72.3, the minimum universal ambient integer dimension is three.
+The same minimum holds for all legal finite source commissions at each
+one fixed cap $H\ge8$.
+
+**Proof.** In dimension one the height-zero hyperplane is a single point,
+which cannot provide the two distinct ground tips required even by a
+singleton. Dimension two fails for the separately legal source76.3.
+Proposition72.3 supplies $E_s(D)$ for every authentic finite $D$ and
+each fixed integer $s\ge3$, including its positive per-placement angle
+and clearance margins and its prescribed reflected double. Consume that
+construction directly. Its grounding
+plane in three dimensions becomes the height-zero hyperplane in higher
+dimensions. These facts prove the stated minimum, both over all separately
+legal finite commissions and at any one fixed $H\ge8$. The quantifiers
+are, for fixed $s$, every legal finite source followed by existence of its
+own placement. They assert no simultaneous apparatus, no uniform
+source/cap margin and no physical dimension law. $\square$
+
+**Definition 76.5 (the unchanged historical witness and complete target).**
+The separate cap-eight witness does not alter55.6/64.1. Their immutable
+INITIAL is $T_2=\langle\beta,\alpha\rangle$, their original cap is
+$H=3$, and their complete history remains
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}.
+\tag{76.10}
+$$
+
+The initial, accepted and refused-candidate leaf counts are $2,3,5$.
+Only $T_3=\langle\langle\beta,\alpha\rangle,\beta\rangle$ is installed
+after acceptance; $T_4$ is refused without a candidate Read. INITIAL and
+the original tag-one target $(1,(1,1),BA,A+B)$ remain unchanged. The
+accepted five-port domain has ordered basis $(o,L,R,LL,LR)$. Both complete
+ten-pair tables on precisely that source version remain
+
+$$
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&L\,R&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G_D^{\rm c}&1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16\\
+G_D^{\rm k}&9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78
+\end{array}.
+\tag{76.11}
+$$
+
+These tables belong to that stopped cap-three history. They are not pair
+tables for $T_5$, whose separate admissibility neither raises that history's
+cap nor continues it after Stop. The complete prescriptions for arbitrary
+authentic $D$ are still
+
+$$
+\begin{aligned}
+G_D^{\rm c}(p,q)&=\langle e_p,L^{-1}e_q\rangle
+ =\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)},\\
+G_D^{\rm k}(p,q)&=\langle e_p,L_D^{-1}e_q\rangle,\qquad
+\phi(p)=2^{-|p|},\\
+d(p,q)&=|p|+|q|-2|p\wedge q|.
+\end{aligned}
+\tag{76.12}
+$$
+
+Here $L$ is55.2's infinite unit-conductance occurrence Laplacian, and
+$L_D=I_D^*LI_D$ has diagonal two at the root, three elsewhere and
+off-diagonal $-1$ on each inherited seam. Both entire kernels, including
+their diagonals, retain their own boundary law. The common one-body field
+is the same for both; killing the pair prescription does not replace it
+by the newly solved killed one-body field. The two unequal prescriptions
+remain separately commissioned operators, with no free physical switch
+or single generator equal to both.
+
+Definition64.5 remains literal. $X_D$ has every intrinsic unit seam and
+both unit grounded stubs at every current leaf, with mass-one source
+atoms, no ground atoms and fixed cable density $0<\delta\le1$:
+
+$$
+\mu_\delta=\sum_{p\in D}\delta_p+\delta\sum_e dx_e,\qquad
+\mathcal K_{D,1}=L^2(X_D,\mu_\delta),\qquad
+\mathcal K_{D,2}^{\rm hc}
+ =\left[L^2((X_D^2)\setminus\Delta,
+                    \mu_\delta\otimes\mu_\delta)\right]_{\rm sym}.
+\tag{76.13}
+$$
+
+Here $\delta_p$ is a Dirac mass and $\Delta=\{(x,x):x\in X_D\}$ is the
+actual same-position set.
+
+All distinct atomic pairs, both orders of atom/cable slices, every
+different-cable rectangle and both same-cable triangles remain, with
+norm weights $1,\delta,\delta^2$. The form domains retain cable and
+slice $H^1$, piecewise cell $H^1$, exchange symmetry, endpoint-to-atom
+and cell-boundary-to-slice matching, zero ground traces in either
+coordinate and both zero same-cable diagonal traces. Missing atomic
+collision values are zero in slice endpoint conditions, including
+shared-port collisions approached on different cables. No arbitrary
+$H^1$ rectangle-corner value is introduced. The kinetic forms are
+exactly64.7: each one-particle cable derivative and each two-particle
+slice derivative has coefficient one; each cell's sum of the two
+derivative energies has coefficient $\delta$, including both
+same-cable triangles. Their operators carry the same commissioned
+factor $a>0$.
+
+With commissioned $a,g>0$ and $\nu\ge0$, the unchanged potentials are
+$U_{D,1}=-g\phi_A$ and
+
+$$
+U_{D,2}^{\diamond}(x,y)
+ =-g(\phi_A(x)+\phi_A(y))
+  -\nu\mathbf1_{\{x=p,y=q\in D,\ p\ne q\}}G_D^\diamond(p,q),
+\qquad \diamond\in\{\mathrm c,\mathrm k\},
+\tag{76.14}
+$$
+
+where $\phi_A$ is $\phi$ on atoms and zero on open cables. The pair
+term is exchange invariant and zero on every other stratum. Geometry
+here changes none of these spaces, measures, forms, coefficients,
+domains or traces, and supplies no new operator correspondence.
+
+**Scope 76.6 (suppliers and remaining realization obligations).**
+The literal recurrence and fixed-cap semantics are supplied by55.1 and
+the original TM30/PR57 interface retained in60.1/66.1;72.3 supplies
+higher-dimensional sufficiency. The new deduction is76.2's completed
+planar interval proof and its authentic cap-qualified consequence76.3–76.4.
+Euclidean convexity, the intermediate value theorem, connectedness after
+tree-leaf deletion and finite interval packing are mature elementary
+methods, applied explicitly above. No mathematical priority is claimed.
+The analytic suppliers credited in64.9,67.10,72.1 and75.15 retain their
+stated scopes: Bolte–Kerner's Lebesgue metric-graph contact forms,
+Suzuki's qualified vacuum scaling, Cherednichenko–Ershova–Kiselev's
+Neumann thinning theorem and Seiringer–Yin's distinct confined-boson
+limit supply no additional planar necessity or native dimension law.
+
+The band is essential to this numerical width floor. Without an upper
+height gap below one, unit-ground widths can tend to zero. The broader
+prescribed-metric planar problem72.13, with centre distances
+$1+h_v(\varepsilon)+h_w(\varepsilon)$, both grounds at every leaf and
+its clearance/port margins, remains unresolved. Those plate offsets
+are neither source heights nor the seam depth $h(D)$. The analytic
+separated-window logarithmic loss72.12 is a different limitation.
+No perturbed-length theorem is asserted: unequal stubs can admit
+same-side tips, and disjointness or uniform angle control would need
+separate proofs. Satisfying the width inequality (76.3) is only necessary,
+not a planar existence criterion. The intrinsic-length planar incidence
+comparisons66.9/67.9 remain compatible with this Euclidean unit-length
+obstruction.
+
+All material clauses of66.10,67.11,68.7,71.2,72.13 and75.16 persist.
+In particular retain immutable INITIAL, one original fixed cap,
+source-independent actor initialization, all labels/brackets/order and
+occurrences, actual versions and complete supplied contexts/candidates,
+original guards, acceptances/refusals, destructive actions, numerical
+Read, absorbing Stop and every actually acquired chronological record.
+The original actor's arbitrary, unbounded or possibly zero $a$, untagged
+radius-$7/25$ $b$ and jointly adversarial/history-dependent errors remain
+distinct from the positive commissioned Hamiltonian parameters.
+Whole-rho, beta-empty label changes and the separate Left/Right grafts
+keep their root, degree, field, domain and dynamic covariance duties.
+
+The complete field bank of67, all $2^H-1$ oscillator modes, excitations,
+spectators, auxiliary factors and unknown particle/field/auxiliary
+correlations remain in the full joint norm with the common reference
+and actual clock. Retain separately $F_D^{\rm k}=L_D$ and
+$F_D^{\rm c}=L_D-P_{\operatorname{Leaf}(D)}$, their identity extensions
+on unused modes, balanced coordinate/momentum couplings and the on-site
+self-energy compensation using the actual diagonal of the same inverse.
+The field-number/moment ingress hypotheses and atom-only
+displacement/domain boundary of67.3 remain material. Neither this
+skeleton nor75's particle correspondence proves a nonzero coupled-field
+thin-carrier comparison. No partial trace, vacuum restriction, reset,
+cloning or calibrated-state re-preparation is licensed. Actual
+local/isotropic mediation, stiffness and
+compensation installation, unknown-state ingress/recovery/preparation,
+source-owned switching, retained graft laws, native operation/metric
+and Read/Stop correspondence still require their own supplied proofs.
+The separately reported DEV native JointLaw is a source report on its
+own carrier; correspondence with this spatial carrier is not established.
+
+The common $\Pi$ of63.13 retains its full-vector/spanning and common-zero
+hypotheses, whole quadratic-distance/positive-semidefinite Gram relation,
+at least two independent directions, alternating bilinear exact-area/Jacobi
+law, actual orthonormal probes, finite binary calibration and
+hidden-kernel-preserving generators. Reference preparation/calibration,
+actual clock conversion, original joint error handling, complete retained
+complement and cross-block control, and usable finite execution/precision
+certificates remain separate obligations.
+
+All three acquisition contracts retain their distinct scopes. Section57's
+immutable composition-promised endpoint contract keeps fixed depth caps,
+common source-independent initialization, actual query/reply histories,
+correct finite stopping on every promised positive and negative source,
+distinct actual-address fees and no old-source archive. The paid
+positive-root archive/exact nonadvancing-cut contract keeps its exact
+port, finite stopping/decoding, protected records after refusal/closure,
+aligned actual generation, trusted markers, no unrecorded source change,
+closed strong ports and paid write/protect/retain/query rights; every
+reply-affecting retained source influence belongs in its service price.
+The phase-coherent full-tail contract keeps its once-sampled-depth actual
+Read process and paid stopped transcript. None grants source copying,
+reset, independent resampling, unknown-state preparation or an exact-limit
+Read, nor transfers its radii, state counts, updates or clocks here.
+
+The original spatial operation/metric bridge, packing, transverse,
+exterior, leakage and collision controls remain to be supplied. Every
+construction, acquisition, preparation, field/compensation/stiffness
+installation, exclusion/repulsion control, switching, source service,
+production, storage, hold, retention, maintenance and precision charge,
+including service durations and total lifetime price, remains material.
+Stratum counts, normalized measures and infinite-dimensional interval/cell
+spaces supply no finite memory or resource advantage. This finite ordinary
+result supplies no fresh kernel, native or physical validation and does
+not complete the sustained why-three/source/native/field/acquisition/
+resource programme.
+
+## 76.99 追加锚（本行以下为增补区）
+
+## 77. A robust width-or-area obstruction for the unrestricted planar prescribed metric
+
+**Definition 77.1 (the unchanged source, literal carrier and complete laws).**
+Definition64.5 of the
+[first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md)
+is incorporated by reference to its unchanged full body, including all its
+measures, strata, kinetic coefficients, domains, traces and multipliers.
+The following record specifies that same target for use here; it introduces
+no replacement carrier. Definitions55.1,60.1,66.1 and67.1 retain every
+literal label, bracket, left/right address and distinct occurrence, immutable
+INITIAL, the original fixed cap and source-independent actor initialization,
+complete contexts and candidates, their original guards, every actual
+acceptance/refusal, numerical Read, destructive action, absorbing Stop and
+every actually acquired chronological record.
+
+For an authentic nonempty finite full binary occurrence tree $D$, write
+$o$ for the current root, $n=|D|$, and $\mathcal E_D$ for its inherited
+seams together with two distinct grounded stubs at every current leaf.
+$X_D$ has all these intrinsic unit cables and no additional identifications.
+Each source port has atomic mass one; ground ends have no atomic mass and
+have zero trace. Each open cable has density $0<\delta\le1$. Thus
+
+$$
+\mu_\delta=\sum_{p\in D}\delta_p+\delta\sum_{e\in\mathcal E_D}dx_e,
+\qquad \mathcal K_{D,1}=L^2(X_D,\mu_\delta),
+\qquad
+\mathcal K_{D,2}^{\rm hc}
+=\left[L^2(X_D^2\setminus\Delta,
+                 \mu_\delta\otimes\mu_\delta)\right]_{\rm sym},
+\quad \Delta=\{(x,x):x\in X_D\}.
+\tag{77.1}
+$$
+
+Here $\delta_p$ denotes a Dirac mass, distinct from $\delta$.
+Source incidence, including stubs, is two at the root and three at every
+nonroot port. There are $n-1$ inherited seams and $n+1$ stubs, hence $2n$
+cables. The one-position norm is
+
+$$
+\|F\|_{D,1}^2=\sum_{p\in D}|F(p)|^2
+                  +\delta\sum_e\int_0^1|F_e(x)|^2dx.
+\tag{77.2}
+$$
+
+Before exchange restriction, the two-position space retains every ordered
+distinct atomic pair, both orders of every atom/cable slice, every
+different-cable rectangle, and both triangles $x<y$ and $x>y$ of each
+same-cable square. Write $C_{ef}=e\times f$ if $e\ne f$, and let
+$C_{ee}$ be the union of those two open triangles. Its norm is
+
+$$
+\begin{aligned}
+\|F\|_{D,2}^2={}&\sum_{p\ne q}|F(p,q)|^2
+ +\delta\sum_{e,q}\int_0^1|F(e,x;q)|^2dx
+ +\delta\sum_{p,e}\int_0^1|F(p;e,y)|^2dy\\
+ &+\delta^2\sum_{e,f}\int_{C_{ef}}|F|^2dxdy.
+\end{aligned}
+\tag{77.3}
+$$
+
+The counts are $n(n-1)$ atomic coordinates, $4n^2$ slices and $4n^2$
+cells before symmetry; each of the $2n$ same-cable cells is dissected,
+not discarded. Total one-position and two-position measures are
+$n+2n\delta$ and $n(n-1)+4n^2\delta+4n^2\delta^2$ respectively.
+Every interval and cell keeps its entire function space. These measures
+and counts are neither finite mode counts nor physical masses or prices.
+
+$\mathcal Q_{D,1}$ consists of cable $H^1$ functions whose endpoint
+traces match the corresponding atomic values and vanish at grounded
+ends. $\mathcal Q_{D,2}$ consists of symmetric piecewise $H^1$ functions
+on all rectangles and both dissected triangles, and $H^1$ functions on
+all slices, with every cell boundary at a port equal to the corresponding
+slice and every slice endpoint equal to the corresponding atomic pair.
+The missing value $(p,p)$ is zero in these endpoint conditions. Ground
+traces vanish in either coordinate; both same-cable diagonal traces
+vanish. This also imposes the shared-port collision condition on slices
+from different incident cables. No pointwise corner trace for an arbitrary
+rectangle $H^1$ function is assumed. The exact kinetic forms are
+
+$$
+\begin{aligned}
+k_{\delta,1}(F)&=\sum_e\int_0^1|F'_e|^2dx,\\
+k_{\delta,2}(F)&=\sum_{e,q}\int_0^1|\partial_xF(e,x;q)|^2dx
+ +\sum_{p,e}\int_0^1|\partial_yF(p;e,y)|^2dy\\
+ &\quad+\delta\sum_{e,f}\int_{C_{ef}}
+                (|\partial_xF|^2+|\partial_yF|^2)dxdy.
+\end{aligned}
+\tag{77.4}
+$$
+
+These retain derivative coefficient one on cables and slices, coefficient
+$\delta$ on cells, and the commissioned operator factor $a>0$.
+Let $A_{\delta,D,N}$ be the operator associated with $a k_{\delta,N}$
+on exactly these domains. With commissioned $a,g>0$, $\nu\ge0$, and
+$\phi_A(p)=\phi(p)=2^{-|p|}$ on atoms and zero on open cables, both full
+prescriptions remain
+
+$$
+\begin{aligned}
+G_D^{\rm c}(p,q)&=\langle e_p,L^{-1}e_q\rangle
+ =\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)},\\
+G_D^{\rm k}(p,q)&=\langle e_p,L_D^{-1}e_q\rangle,
+\qquad d(p,q)=|p|+|q|-2|p\wedge q|,\\
+U_{D,1}^{\diamond}(x)&=-g\phi_A(x),\\
+U_{D,2}^{\diamond}(x,y)&=-g(\phi_A(x)+\phi_A(y))
+ -\nu\mathbf1_{\{x=p,y=q\in D,\ p\ne q\}}G_D^{\diamond}(p,q),\\
+\mathcal T_{\delta,D,N}^{\diamond}&=A_{\delta,D,N}+U_{D,N}^{\diamond},
+\qquad \diamond\in\{\mathrm c,\mathrm k\}.
+\end{aligned}
+\tag{77.5}
+$$
+
+$L$ is55.2's infinite unit-conductance occurrence Laplacian on
+$\{L,R\}^*$, with diagonal two at its root, three elsewhere and $-1$
+on parent–child seams. $L_D=I_D^*LI_D$ keeps those diagonals and kills
+the missing exterior seams. The common inverse keeps its decay-at-infinity
+law. Both entire kernels, including diagonals, retain their respective
+boundary laws. The common one-body $\phi$ is unchanged for both; the
+killed pair prescription does not replace it by a killed one-body field.
+The pair multiplier has equal values on $(p,q)$ and $(q,p)$ and vanishes
+on every other stratum. The one-body multiplier remains additive on mixed
+strata. These are separately commissioned operators, with no inferred
+physical mediator or free switch between them.
+
+The original cap-three history of55.6/64.1 is retained independently.
+Its immutable INITIAL is $t=\langle\beta,\alpha\rangle$, $H=3$,
+and its Clifford port has $E(\alpha)=A$, $E(\beta)=B$,
+$A^2=1$, $B^2=-1$, $AB+BA=1$. Its complete history is
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}.
+\tag{77.6}
+$$
+
+The initial, accepted and refused-candidate leaf counts are $2,3,5$.
+The installed current tree after acceptance is
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, with ordered source
+vertices $(o,L,R,LL,LR)$ and leaf labels $R:\beta$, $LL:\beta$,
+$LR:\alpha$. The refused candidate is
+$\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\langle\beta,\alpha\rangle\rangle$; it is never installed and gives
+no candidate Read. Refusal leaves the current tree and accepted index
+unchanged. INITIAL and the literal tag-one target $(1,(1,1),BA,A+B)$,
+the original reference, clock and retained records remain unchanged;
+no event follows Stop. The complete historical ten-pair tables are
+
+$$
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&L\,R&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G_D^{\rm c}&1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16\\
+G_D^{\rm k}&9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78
+\end{array}.
+\tag{77.7}
+$$
+
+They belong to that source version and history. All the additional original
+matrix, field and spectral data of55.6 remain on that same source. No
+calculation here creates another Read or replaces an original target.
+
+**Definition 77.2 (one separate symbolic fixed-cap commission).** Use the
+unchanged whole substitution of55.1,
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad\rho\langle t,u\rangle=\langle\rho t,\rho u\rangle.
+\tag{77.8}
+$$
+
+Define finite syntax by
+
+$$
+B_0=\alpha,\quad B_{j+1}=\langle B_j,B_j\rangle,
+\qquad
+S_0=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\quad S_{j+1}=\langle S_j,S_j\rangle.
+\tag{77.9}
+$$
+
+Repeated expressions always denote distinct ordered occurrences. These
+syntax identities add no copy operation. Fix the separate commission's
+immutable INITIAL $B_{15}$ and its one cap $H=98304$ before any command.
+$B_{15}$ belongs to the original ordered-tree prior at that cap.
+Literal substitution gives $\rho^3\alpha=S_0$ and therefore
+$\rho^3 B_{15}=S_{15}$. $B_{15}$ has $2^{15}=32768$ leaves.
+The three whole candidates have respectively $32768$, $65536$ and
+$98304$ leaves: each original leaf becomes successively $\beta$,
+$\langle\beta,\alpha\rangle$ and $S_0$. Every candidate passes the
+same unchanged guard $\ell\le H$. Thus this is a separately legal
+symbolic prefix at the predeclared cap. It is not an executed or
+authenticated acquisition, a continuation of(77.6), or a cap increase.
+All original Read/refusal/Stop rules continue to govern this commission
+if it is actually executed.
+
+For the geometric witness fix $D=\operatorname{Pos}(S_{15})$.
+It has $3\cdot2^{15}=98304$ source leaves, $196607$ source vertices,
+$196606$ inherited seams, $196608$ distinct ground tips and that many
+stubs. Its maximum source-seam depth is $15+2=17$. At each of the
+$2^{15}$ addresses of depth15 there is a distinct pendant $S_0$
+occurrence. These $32768$ subtrees are vertex-disjoint, each has five
+source vertices and six tips, and together their tip sets partition all
+ground tips. All their attachment seams and all upper-tree seams remain
+part of $X_D$.
+
+**Theorem 77.3 (the robust unrestricted-height planar obstruction).**
+For this $D$, assign an independent exact length $\ell_e$ to every
+inherited seam and every stub, with
+
+$$
+\frac{19}{20}\le\ell_e\le\frac{21}{20}.
+\tag{77.10}
+$$
+
+There is no injective straight drawing realizing all these assigned lengths
+on the augmented occurrence tree in $\mathbb R\times[0,\infty)$,
+with all source vertices at strictly
+positive height, all ground tips globally distinct on $y=0$, segments
+meeting only at their prescribed common endpoints, and no vertex on a
+nonincident segment. This holds for every such length assignment and
+every possible order of the tips. It requires no source-height band,
+equal stubs, opposite-side tips, prescribed rotation order, common lower
+angle bound, or convergent family of drawings.
+
+**Supplier 77.4 (the precise simple-polygon minimum-area theorem).**
+Use Böröczky–Kertész–Makai, *The minimum area of a simple polygon with
+given side lengths*, Theorem1, in the Euclidean case. For $m\ge3$ and
+positive $b_1,\ldots,b_m$ satisfying
+$b_i\le\sum_{k\ne i}b_k$, its infimum over simple polygons with these
+sides in any order is the minimum area of the following finite nonempty
+family of possibly degenerate triangles. Partition $\{1,\ldots,m\}$
+into three nonempty classes $N_1,N_2,N_3$, choose each
+$\sigma_i\in\{-1,1\}$, and require
+
+$$
+t_j=\sum_{i\in N_j}\sigma_i b_i\ge0\quad(j=1,2,3),
+\qquad t_j\le t_k+t_l\quad\{j,k,l\}=\{1,2,3\}.
+\tag{77.11}
+$$
+
+There is a further restriction: if the triangle area is positive, no
+class $N_j$ may be partitioned as $N'_j\sqcup N''_j$ so that both
+$\sum_{i\in N'_j}\sigma_i b_i$ and
+$\sum_{i\in N''_j}\sigma_i b_i$ are positive. This is part of the
+supplier, not an optional condition. Its theorem also states nonattainment
+when $m>3$; that assertion is not needed here. We use only the lower
+bound for an actual simple polygon. An infimum allowing every side order
+is a lower bound for any one actual order. We do not use the fixed-order
+refinement of its Proposition1, a converse realization of the infimum,
+or an extension to self-intersecting polygons.
+
+**Lemma 77.5 (five-edge parity, including collinear vertices).**
+Let a simple polygonal arc run from one ground point to another, have
+exactly five positive edge lengths $a_1,\ldots,a_5$ satisfying(77.10),
+and have its entire open arc above the grounding line. Close it by the
+ground segment of length $w>0$. If $w<1/4$, the resulting bounded
+Jordan region has ordinary area $A>1/16$.
+
+**Proof.** The open arc misses the ground segment and is injective, so
+the closure is a Jordan polygon. Initially its six sides satisfy strict
+polygon inequalities: every $a_i\le21/20<4(19/20)+w$, and
+$w<1/4<5(19/20)$. Put
+
+$$
+E=\sum_{i=1}^5|a_i-1|+w\le\frac14+w<\frac12.
+\tag{77.12}
+$$
+
+To avoid any convention about a polygon with straight-through vertices,
+merge all consecutive collinear edges of its boundary. At such a vertex
+the two outward rays must be opposite: coincident rays would overlap on
+a positive segment and contradict the Jordan property. Thus the directed
+edges through that vertex proceed in the same direction, and their
+union is one segment of length the sum of their lengths. Repeating this
+operation preserves the boundary set, its enclosed area and simplicity.
+It leaves at least three sides, since a Jordan polygon cannot be contained
+in a line. The ground side does not merge with either adjacent side:
+each adjacent side has a source endpoint of positive height. Each remaining
+path side is a positive sum of a disjoint consecutive group of the
+original $a_i$; every $a_i$ belongs to exactly one such group.
+
+The merged sides satisfy strict polygon inequalities as well. For any
+one of them, the remainder of the closed boundary is a path between its
+endpoints, so its length is at least that side's length. Equality in the
+Euclidean triangle inequality for this path would force all its directed
+edges along that one segment, contradicting simplicity. Apply77.4 to
+this merged polygon and its actual side list.
+
+Consider any signed-partition triangle satisfying(77.11) for that list,
+even before the no-positive-split restriction. Heron's identity, with
+nonnegative sides $t_1,t_2,t_3$, is
+
+$$
+16 A_\triangle^2
+=(t_1+t_2+t_3)(-t_1+t_2+t_3)
+ (t_1-t_2+t_3)(t_1+t_2-t_3).
+\tag{77.13}
+$$
+
+Expand a merged side back into its original constituents in each factor.
+Every original path side and the unmerged ground side then appears exactly
+once with coefficient $+1$ or $-1$. Consequently each factor $H$ has
+the form
+
+$$
+H=K+\eta,\qquad
+K=\sum_{i=1}^5\tau_i\in\{-5,-3,-1,1,3,5\},
+\qquad
+|\eta|=\left|\sum_{i=1}^5\tau_i(a_i-1)+\tau_0w\right|\le E,
+\quad \tau_i\in\{-1,1\}.
+\tag{77.14}
+$$
+
+Triangle feasibility makes all four factors nonnegative. If their odd
+integer $K$ were negative, $H\le-1+E<0$. Hence every $K\ge1$ and
+every $H\ge1-E>1/2$. In particular no feasible candidate is degenerate.
+Equation(77.13) gives
+
+$$
+A_\triangle\ge\frac{(1-E)^2}{4}>\frac1{16}.
+\tag{77.15}
+$$
+
+This bound holds for the larger feasible family and therefore for the
+supplier's full restricted family. That restricted family is nonempty
+by Theorem1. Taking its minimum and applying its simple-polygon lower
+bound proves the same inequality for the merged polygon, hence for
+the original region. Merging is only an exact change of its side list
+in this proof. No source edge is deleted from the drawing, and no
+perturbation, length-preserving flexibility or new prescribed metric
+is assumed. $\square$
+
+**Lemma 77.6 (cyclic blocks, the infinity exception and actual paths).**
+In any hypothetical drawing of77.3, at least $32767$ vertex-disjoint
+actual five-edge ground-to-ground paths can be selected in different
+pendant $S_0$ occurrences. Closing them by their ground segments gives
+simple polygons with pairwise disjoint boundaries and interiors.
+
+**Proof.** Complete the grounding line through infinity to a boundary
+circle. Its cyclic order concerns only the finite set of distinct tips;
+infinity is not a new graph vertex. The elementary Jordan crosscut
+consequence used here is that two disjoint simple arcs in the closed
+upper half-plane, whose open arcs lie in the open half-plane, cannot
+have alternating boundary endpoints. One can map the compactified
+half-plane to a disk. Close the first arc by one boundary arc between
+its endpoints. Jordan separation puts the two alternating endpoints
+of the second arc on the opposite boundary sides of this crosscut;
+the second open arc would have to cross the first. Equivalently, in
+linear order $u_1<v_1<u_2<v_2$, closing the $u_1$--$u_2$ arc by its
+ground interval gives a Jordan polygon. A small upper neighbourhood
+of $v_1$ is on its interior side, whereas $v_2$ is outside its closure.
+The $v_1$--$v_2$ arc must cross the first arc, since its open arc never
+crosses the grounding line. This proves the crosscut consequence.
+
+For a pendant $S_0$ occurrence with root address $r$, cut its single
+attachment seam to its parent as a mathematical proof device. The
+augmented tree separates into two connected components: the five source
+vertices at $r$ and their six ground tips, and the connected complement.
+If the two tip sets alternated around the boundary circle, the unique
+tree paths joining the two chosen tips in each component would be
+disjoint crosscuts with alternating endpoints. Their open arcs are
+above the line because ground vertices have degree one and all source
+vertices have positive height. This contradicts the crosscut consequence.
+
+A nonempty proper subset of a finite cyclic order that is not one cyclic
+block has at least two membership runs, separated by runs of its complement;
+choosing endpoints from those four runs produces precisely such an
+alternation. Thus each pendant occurrence's six-tip set is one cyclic
+block. These sets are disjoint and partition all tips. A block that is
+not contiguous in the finite left-to-right order must contain both
+extreme tips and wrap through infinity. At most one block can do so,
+because the blocks are disjoint. Retain all the other blocks; their
+number $M$ satisfies
+
+$$
+M\ge32768-1=32767.
+\tag{77.16}
+$$
+
+Within each retained linear six-tip block, the shallow leaf $rR$ supplies
+two tips and the deep leaves $rLL,rLR$ supply four. Both groups occur,
+so the six-entry linear sequence has an adjacent transition between
+the groups. These adjacent entries are also consecutive globally.
+Select one such pair. For a deep leaf $rL\sigma$, $\sigma\in\{L,R\}$,
+their unique actual path, in one of the two orientations, is
+
+$$
+g_R\;--\;rR\;--\;r\;--\;rL\;--\;rL\sigma\;--\;g_{L\sigma}.
+\tag{77.17}
+$$
+
+It consists of its two actual stubs and three actual inherited seams,
+exactly five edges. In particular this is not a same-leaf two-stub path.
+No geometric ordering is identified with the literal left/right syntax,
+and no equal-stub or opposite-side assumption is used. Paths selected
+from different pendant occurrences have disjoint vertex sets and hence
+disjoint images under the required drawing.
+
+Close each selected path by the positive-length interval between its
+distinct ground endpoints. Its open arc lies strictly above the line;
+its closure is a simple six-sided Jordan boundary, possibly with
+straight-through vertices. Ground intervals belonging to different
+retained linear blocks are disjoint closed intervals. Paths cannot meet
+any such interval except at their own endpoints. Thus the selected
+full polygon boundaries are pairwise disjoint.
+
+For completeness, the closed Jordan region of each polygon meets $y=0$
+exactly in its base. Every point below the line connects to infinity
+below the line, so it is exterior. A point on the line outside the base
+is off the compact boundary and has a neighbourhood meeting that
+exterior, hence is exterior too. The bounded interior therefore lies
+strictly above the line. Disjoint Jordan boundaries can have overlapping
+interiors only if one lies inside the other: by Jordan separation each
+connected boundary is wholly in one complementary component of the
+other, which gives this usual disjoint-or-nested alternative. Nesting
+here is impossible, since the proposed inner polygon has ground
+endpoints on a base disjoint from the outer closed region's base. Those
+endpoints are exterior to the outer region, whereas an enclosed polygon
+with disjoint boundary would have its boundary inside that region.
+The interiors are consequently pairwise disjoint. All cuts, closing
+segments and enclosed regions in this argument are proof devices;
+they add no installed cable, native action, control or record. $\square$
+
+**Proof of Theorem77.3 (the retained-root disk and exact packing).**
+Suppose the required drawing exists and apply77.6. Retain the entire
+tree, including the upper seams not used by the selected paths. Every
+source vertex is at most17 seams from the actual root, and every ground
+tip at most18 edges from it. Triangle inequalities along these actual
+root paths and(77.10) place every vertex in the root-centred closed disk
+of radius
+
+$$
+R=18\frac{21}{20}=\frac{189}{10}.
+\tag{77.18}
+$$
+
+All edges and proof bases lie in that convex disk. A polygon's bounded
+interior is contained in the convex hull of its vertices: a point
+outside that hull has a separating half-plane through which it connects
+to infinity without meeting the boundary, so it is exterior. Thus every
+selected closed region lies in the same disk and in its enclosing square
+of area $4R^2$. All tips have horizontal span at most $2R$.
+
+Partition the selected regions according to their base widths. Let
+$N_{\rm wide}$ have $w\ge1/4$ and $N_{\rm small}$ have $w<1/4$.
+Their disjoint bases and the total ground span give
+$N_{\rm wide}/4\le2R$, so $N_{\rm wide}\le8R$.
+Lemma77.5 gives area greater than $1/16$ to each small-base region;
+their disjoint interiors and the enclosing square give
+$N_{\rm small}/16\le4R^2$, so $N_{\rm small}\le64R^2$.
+Hence
+
+$$
+32767\le M=N_{\rm wide}+N_{\rm small}
+ \le8R+64R^2
+ =\frac{756}{5}+\frac{571536}{25}
+ =\frac{575316}{25}.
+\tag{77.19}
+$$
+
+This is impossible because
+
+$$
+32767-\frac{575316}{25}
+=\frac{819175-575316}{25}
+=\frac{243859}{25}>0.
+\tag{77.20}
+$$
+
+The disk bound follows from retained lengths and depth; it imposes no
+height band. The argument concerns ordinary enclosed area, not an
+apparatus area or a resource price. This proves the full exact-length
+statement. $\square$
+
+**Lemma 77.7 (the necessary centre graph of the original supplier).**
+A planar assembly satisfying the72.4–72.5 chamber-and-straight-cylinder
+contract and72.13's grounding, exact metric and crossing-free clearance
+requirements, with positive centre-to-plate offsets, supplies the drawing
+required in77.3 with lengths $L_{vw}=1+h_v+h_w$.
+
+**Proof.** Its source-centre and ground-centre incidences are precisely
+the augmented occurrence tree of64.5. Chambers have distinct centres
+because each radial chamber contains an open neighbourhood of its centre
+and chamber interiors are disjoint. For an edge $vw$, its chamber axes
+are oriented along the centre line. The centre-to-plate axial segment
+lies in the radial chamber closure, with its open part in that chamber.
+The intervening axial segment lies in the straight cylinder and has
+length exactly one. Positive offsets concatenate these three collinear
+segments into the full straight centre edge of length $1+h_v+h_w$.
+
+Nonincident axial intersections would give unprescribed intersections of
+their owning chambers or cylinders, contrary to72.5 and72.13. An
+unrelated centre on an edge is forbidden for the same reason. At a
+common centre disjoint incident angular caps forbid coincident rays;
+distinct rays intersect only at that centre, and prescribed-only piece
+intersections exclude any subsequent edge intersection. This also follows
+from the supplier's explicit crossing-free centre clearance requirement.
+The grounding line contains the distinct ground centres and meets only
+ground chambers. The connected source half has its centres strictly
+on its upper side. Straight source edges have positive height throughout;
+each straight stub has positive height except at its ground centre.
+After choosing that side as $y>0$, these are exactly the required
+half-plane and incidence conditions. The centre graph is a necessary
+projection of this assembly; it is not a newly installed graph or a
+native/physical correspondence. $\square$
+
+**Corollary 77.8 (exact unequal lengths and the pointwise thinning threshold).**
+Fix the single source77.2. For every fixed $0<\delta\le1$, source
+reference volumes $m_p=1/\delta$, positive prescribed reference volume
+$m_g$ for each distinct ground chamber, and every fixed admissible
+aperture and transition-profile choice of72.4, no required planar
+assembly exists for all sufficiently small positive $\varepsilon$.
+More precisely, use the planar scaling $s=2$ in that prescribed metric.
+To distinguish the geometric radius constant from the substitution
+symbol, write $\rho_{\rm geom}=\omega_1^{-1}=1/2$ and denote72.4's
+aperture by $\alpha_{\rm ap}$. Then
+
+$$
+q=\rho_{\rm geom}\tan\alpha_{\rm ap}>0,
+\qquad r=\sqrt\varepsilon,
+\qquad h_v(\varepsilon)=\sqrt\varepsilon\,c_v-q\varepsilon,
+\qquad
+L_{vw}(\varepsilon)=1+\sqrt\varepsilon(c_v+c_w)-2q\varepsilon.
+\tag{77.21}
+$$
+
+The coefficients $c_v>0$ are exactly those of the fixed chamber data,
+for all source and ground centres. Set
+
+$$
+C=\max_v c_v,
+\qquad c_{\min}=\min_v c_v,
+\qquad
+\varepsilon_*=
+\min\left\{1,\left(\frac{c_{\min}}{2q}\right)^2,
+                \left(\frac1{40C}\right)^2\right\}>0.
+\tag{77.22}
+$$
+
+For every $0<\varepsilon<\varepsilon_*$ the necessary centre drawing
+is impossible. In particular no72.13 assembly exists at any such
+$\varepsilon$ where the other chamber construction requirements hold.
+
+**Proof and quantifier order.** For a fixed source,72.4 permits choosing
+$0<\alpha_{\rm ap}<\pi/4$ after the finite proposed skeleton's incident
+angle and clearance margins. Ground caps also respect reflection and
+avoid the equator. We grant every such source-adaptive choice; after
+that choice the aperture, reference volumes and transition profiles
+remain fixed during thinning. Disjoint caps make each chamber's volume
+coefficient, and therefore $c_v$, depend on its degree, reference volume,
+aperture and profile, independently of the actual incident directions.
+The finite fixed list has $0<c_{\min}\le C<\infty$.
+The metric theorem77.3 already applies to any drawing, so defining
+arbitrary finite positive $c_v,q$ in(77.21) does not presuppose that a
+compatible planar skeleton exists.
+
+For $0<\varepsilon<\varepsilon_*$,
+
+$$
+q\sqrt\varepsilon<\frac{c_{\min}}2,
+\qquad
+h_v=\sqrt\varepsilon(c_v-q\sqrt\varepsilon)
+ >\frac{c_v}{2}\sqrt\varepsilon>0,
+\qquad
+1<L_{vw}\le1+2C\sqrt\varepsilon<1+\frac1{20}=\frac{21}{20}.
+\tag{77.23}
+$$
+
+Thus every exact prescribed centre length belongs to the excluded closed
+interval $[19/20,21/20]$, and77.7 followed by77.3 gives the contradiction.
+Arbitrary unequal fixed ground volumes and unequal stubs are included.
+These plate offsets are not source heights or source-seam depths.
+
+The quantifiers are one separately legal fixed source, then every allowed
+fixed $\delta$, ground-volume list and source-adaptive fixed aperture/profile
+choice, then existence of its data-dependent $\varepsilon_*>0$, then
+nonexistence for every $0<\varepsilon<\varepsilon_*$. If a proposed
+fixed-data assembly family supplies its own geometric validity threshold
+$\varepsilon_0$, every $0<\varepsilon<\min\{\varepsilon_0,\varepsilon_*\}$
+contradicts it. There is no common aperture or threshold over all sources
+or profiles. Centre positions, angles and clearances may vary freely
+with $\varepsilon$; no limiting embedding or uniform nondegeneracy is
+used. Allowing the aperture, profiles or volumes to vary with
+$\varepsilon$ is a different fixed-data contract;77.3 still excludes any
+individual length vector in its stated box. $\square$
+
+**Scope 77.9 (the universal spatial question and why-three).**
+Assumption72.13 left open whether the original unrestricted-positive-height
+planar prescribed-metric supplier could work for every authentic finite
+source. Corollary77.8 gives a negative answer, already for one separately
+legal fixed-cap source. Its statement includes the actual unequal
+near-unit centre lengths and permits choosing the aperture after this
+source's margins. The accepted slab/unit theorem76.2–76.4 keeps its
+original scope and conclusion; this result neither corrects nor contradicts
+it. No previously proved one-particle, free two-particle, capacity,
+interaction or retained-memory theorem is reproved here.
+
+Relative to this exact straight-cylinder, one-grounding-hyperplane
+supplier, an affirmative universal planar construction is consequently
+unavailable. In dimension one the grounding hyperplane is a single point,
+already incompatible with the two distinct ground tips of a singleton.
+The accepted72.3–72.5 construction supplies the geometry separately for
+every authentic finite source in every fixed integer $s\ge3$, with its
+own finite margins and fixed-data thinning threshold. Consuming that
+construction, the minimum universal integer ambient dimension for this
+geometric supplier is three. All higher integer dimensions remain
+permitted. This is neither a selection of uniquely physical three
+dimensions nor a classification of individual planar sources or minimum
+caps. It asserts no simultaneous apparatus or common source/cap margin.
+The intrinsic-coordinate planar incidence transports66.9/67.9 remain
+compatible: they do not demand these Euclidean centre lengths and one
+ground line. Alternative spatial, encoded, nonlocal or temporal carriers
+retain their own full correspondence obligations.
+
+**Definition 77.10 (all retained realization, acquisition and lifetime obligations).**
+Every clause of66.10,67.11,68.7,71.2,72.13 and75.16 persists except
+that the prospective universal planar geometry question has the negative
+answer just proved. All original source histories, caps, acquired records,
+contexts, guards, Read/refusal/Stop rules and immutable INITIAL remain.
+The original actor's arbitrary, unbounded or possibly zero $a$, untagged
+radius-$7/25$ $b$, destructive actions and joint adversarial or
+history-dependent errors remain distinct from the positive commissioned
+Hamiltonian parameters. Whole-rho, beta-empty accepted label changes and
+the separate Left/Right grafts keep their actual root, degree, field,
+domain and dynamic covariance duties. Symbolic legality supplies no
+execution, source authentication, new source service or acquired record.
+
+The complete fixed-cap field bank of67, all $2^H-1$ oscillator modes,
+their excitations, unused spectators and auxiliary factors, every unknown
+particle/field/auxiliary correlation and the full joint norm remain, with
+the common reference and actual clock. Keep separately
+$F_D^{\rm k}=L_D$ and
+$F_D^{\rm c}=L_D-P_{\operatorname{Leaf}(D)}$, identity extensions on
+unused modes, balanced coordinate/momentum couplings and the on-site
+self-energy compensation using the actual diagonal of the corresponding
+inverse. Field-number/moment ingress hypotheses, input energy, the
+atom-only displacement/domain boundary and actual installation of
+stiffness, compensation and couplings remain material. This ordinary
+geometry proves no interacting particle/full-field generator comparison,
+no unknown auxiliary ingress and no native/field bridge.
+
+Unknown-state ingress, recovery and preparation, native operation and
+metric correspondence, domain/dynamic correspondence, original Read/Stop
+covariance, genuine source-owned switching and retained graft laws remain
+requirements. The full retained complement and both cross blocks,
+harmonic/projection controls and original joint error handling remain.
+A Hilbert-space isomorphism, source copy, static Green fit, observer
+encoding or calibrated-state re-preparation supplies none of those
+relations. There is no licensed partial trace, vacuum restriction,
+cloning, reset, independent resampling, separate optimum asserted jointly
+or exact-limit Read. Source reports about a native JointLaw on its own
+carrier do not establish correspondence with this spatial carrier.
+
+The common $\Pi$ of63.13 keeps its full-vector and spanning assumptions,
+common zero, whole quadratic-distance/positive-semidefinite Gram law,
+at least two independent directions, alternating bilinear exact-area/Jacobi
+law, actual orthonormal probes, finite binary calibration and
+hidden-kernel-preserving generator conditions. Reference preparation and
+calibration, every actual clock conversion, finite execution and precision
+certificates remain separate obligations; an area inequality supplies
+none of them.
+
+All three acquisition contracts keep their distinct sources and domains.
+The immutable composition-promised endpoint contract of57 keeps its fixed
+depth caps, common source-independent initialization, actual query/reply
+histories, correct finite stopping on every promised positive and negative
+source and distinct actual-address fees, with no old-source archive.
+The separate paid positive-root archive/exact nonadvancing-cut contract
+keeps its exact port, finite stopping/decoding, protected written records
+after refusal or closure, aligned actual generation, trusted markers,
+no unrecorded source change, closed strong ports and actual paid
+write/protect/retain/query rights. All reply-affecting retained source
+influence belongs in that service price. The phase-coherent full-tail
+contract keeps its separate once-sampled-depth actual Read process and
+paid stopped transcript. None supplies copying, reset, independent
+resampling, unknown-state preparation or an exact-limit Read, and none
+transfers its radii, state counts, update matrices or clock here.
+
+Actual local and isotropic physical mediation of both complete pair laws,
+the original spatial operation/metric bridge, packing, transverse,
+exterior, leakage and collision controls remain to be supplied. Every
+construction, acquisition, preparation, field/compensation/stiffness
+installation, exclusion or repulsion control, switching, source service,
+production, storage, hold, retention, maintenance and precision charge
+remains material, including all service durations, reference and clock
+calibration, and total lifetime price. Changing density or increasing
+field frequency between separately legal commissions grants no within-run
+native control or resource saving. Exact geometric lengths, normalized
+measures, stratum counts and infinite-dimensional interval/cell spaces
+give no measured physical prices or finite digital memory advantage.
+This result supplies no fresh kernel, native or physical validation,
+no global physical impossibility and no completion of the sustained
+why-three/source/native/field/acquisition/resource programme.
+
+**References 77.11 (mature suppliers and version boundaries).**
+The primary polygon supplier is K. Böröczky, G. Kertész and E. Makai Jr.,
+[*The minimum area of a simple polygon with given side lengths*,
+Periodica Mathematica Hungarica39(1–3), 33–49 (2000),
+DOI10.1023/A:1004830604712](https://doi.org/10.1023/A:1004830604712).
+The body used is the supplied
+[author-homepage PDF](https://www.renyi.hu/~makai/boke.pdf): Theorem1
+on PDF page2, its Euclidean lower-bound and positive-split arguments in
+Section2 on pages5–7, the collinear inserted vertex on page6, and the
+warning against self-intersecting extensions in Remark4.3 on page16.
+The citation metadata identifies the publication; the author file is not
+asserted byte-identical to the publisher version. Only its stated
+Euclidean simple-polygon theorem is imported.
+
+Jordan separation and its crosscut consequence are mature plane topology;
+the primary paper's proof invokes the polygonal Jordan theorem and cites
+W. Hurewicz and H. Wallman, *Dimension Theory*, Princeton University
+Press, in its reference[8]. The applications required here are written
+in77.6. Heron's classical Euclidean triangle formula, also used in the
+primary paper's proof of Proposition3 on PDF page15, is written explicitly
+in(77.13), followed by the complete parity estimate. Convexity, finite
+interval/area packing and Euclidean triangle inequalities provide the
+remaining ordinary methods. The literal source and target suppliers are
+55.1,55.6,64.1 and the unchanged full Definition64.5; the exact offsets
+and fixed-data quantifiers are72.4 and equations72.7–72.8, with the
+spatial question in72.13. Higher-dimensional geometry is consumed only
+in its accepted72.3–72.5 scope. No mathematical priority claim, publisher
+version verification, native authentication or physical verification is
+inferred from these citations or this proof.
+
+## 77.99 追加锚（本行以下为增补区）
+
+## 78. Common ground lengths, small fixed-cap witnesses and the limits of leaf width
+
+**Definition 78.1 (source-preserving geometric length variants).** Equal ground-stub
+lengths force opposite planar circle intersections; unequal lengths need not. The
+strict height band and unit inherited seams below support a small-source width
+argument. The unrestricted width-or-area obstruction77.3 supplies a different
+witness and weaker hypotheses. Here the common-length range and the unequal
+leaf-width boundary are specified separately.
+
+An admissible source is an authentic nonempty finite ordered full binary
+$\alpha/\beta$ tree under the original source contracts55.1,60.1,66.1 and67.1 in
+the [first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md). Its
+leaves carry their actual labels; an internal node is the ordered bracket of its two
+children. Positions are the actual occurrence addresses $p\in\{L,R\}^*$ relative to
+the current root $o$, not equivalence classes of equal subtrees. Every label,
+bracket, left/right order and occurrence is retained. In particular, repeated
+expressions at different addresses are different source vertices. Put
+
+$$
+n=\#D,\qquad \ell(D)=\#\operatorname{Leaf}(D),\qquad
+h(D)=\max_{p\in D}|p|,
+\tag{78.1}
+$$
+
+where $|p|$ is the number of inherited seams from the current root. The half
+skeleton consists of exactly those parent-child seams and exactly two ground stubs
+at every current leaf. Each stub has its own ground tip; all tips are distinct.
+There are no further edges or identifications. If there are $i$ internal vertices,
+counting parent-child edges gives $2i=n-1$ and $n=i+\ell(D)$, hence $n=2\ell(D)-1$.
+There are $n-1$ inherited seams, $2\ell(D)=n+1$ stubs and $2n$ half-skeleton edges.
+The root has incidence two, including when it is a singleton; every nonroot source
+vertex has incidence three, and every ground tip has incidence one.
+
+For each leaf $p$ prescribe two positive geometric lengths $r_{p,1}$ and $r_{p,2}$.
+Write $E_s(D;r)$ for the following spatial contract in $\mathbb R^{s-1}\times\mathbb
+R$, with last coordinate the height $y$. The placement of all source vertices and
+ground tips is injective. Every source vertex satisfies $1/4<y_p<3/4$. Every
+inherited seam is a straight Euclidean segment of length exactly one. Stub $j$ at
+$p$ is a straight segment of length exactly $r_{p,j}$ from $p$ to its own tip in
+$\{y=0\}$. Segments meet only at images of their prescribed common graph endpoints,
+and no vertex lies on a nonincident segment. There are positive minimum incident-ray
+angles and positive clearances between nonincident compact segments and vertices,
+allowed to depend on this finite source, these lengths and this placement.
+
+The common-length contract $E_s^\lambda(D)$ means $E_s(D;r)$ with
+$r_{p,1}=r_{p,2}=\lambda$ at every leaf. It changes only the declared Euclidean
+ground-stub length in76.1; inherited seams remain unit. Thus $E_s^1(D)=E_s(D)$
+of76.1. An unequal near-unit contract instead prescribes each
+$r_{p,j}\in[1-\delta,1+\delta]$, without requiring equality. Here $\delta$ is a
+geometric tolerance, independent of any cable density parameter appearing in the
+analytic carrier.
+
+Admissibility retains one immutable INITIAL, one predeclared fixed cap $H$,
+source-independent actor initialization, the original complete contexts and
+candidates, their whole-candidate guards, every acceptance or refusal, numerical
+Read, absorbing Stop and actual chronological records. In particular the original
+whole substitution is
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+\tag{78.2}
+$$
+
+A candidate is accepted only under its original guard $\ell\le H$; refusal retains
+the current source and supplies no candidate Read. Reads retain their original
+functions and source version, and there is no event after Stop. A mathematical
+family of separately legal finite commissions raises no cap and continues no stopped
+history. All existence statements below mean that each legal finite current source
+has its own placement, with the source semantics retained. They give no simultaneous
+apparatus or source- or cap-uniform margin.
+
+**Lemma 78.2 (all-leaf separation with unequal bounded stubs).** Suppose $E_2(D;r)$
+holds and every actual stub length is at most $3/2$. For each leaf $p=(x_p,y_p)$ let
+its two actual grounding coordinates, sorted in increasing order, be $a_p<b_p$, and
+put $I_p=[a_p,b_p]$. Then these closed intervals are pairwise disjoint. This
+conclusion requires no equal-length or opposite-side condition.
+
+**Proof.** Fix a leaf $p$, abbreviate its tip coordinates by $a<b$, write
+$g_a=(a,0)$ and $g_b=(b,0)$, and set $\Delta_p=\operatorname{conv}\{g_a,p,g_b\}$ and
+$L_p=\max\{r_{p,1},r_{p,2}\}$. When the source is not a singleton, let $v$ be the
+source parent of $p$. If $v\in\Delta_p$, a convex representation would give
+
+$$
+v=\theta p+\mu g_a+\eta g_b,\qquad
+\theta+\mu+\eta=1,\qquad \theta,\mu,\eta\ge0,
+\qquad \theta=\frac{y_v}{y_p}>\frac13.
+\tag{78.3}
+$$
+
+The last strict inequality uses both $y_v>1/4$ and $y_p<3/4$. Convexity and the
+exact unit parent seam then imply
+
+$$
+1=|v-p|\le\mu|g_a-p|+\eta|g_b-p|
+ \le L_p(1-\theta)<\frac{2L_p}{3}\le1,
+\tag{78.4}
+$$
+
+which is impossible. Thus the parent is outside the closed triangle. This remains a
+strict contradiction when $L_p=3/2$.
+
+To describe the two sides of the actual stubs without imposing symmetry, for $Y\ge0$
+define
+
+$$
+\begin{aligned}
+t&=Y/y_p,\\
+A(Y)&=a+(x_p-a)t,\qquad B(Y)=b+(x_p-b)t,\\
+F(X,Y)&=\max\{A(Y)-X,\ X-B(Y)\}.
+\end{aligned}
+\tag{78.5}
+$$
+
+For $0<Y<y_p$, $A(Y)<B(Y)$; $F=0$ describes exactly the two stub sides, $F<0$ the
+triangle interior and $F>0$ its exterior. At $Y=y_p$ the only zero is $p$. For
+$Y>y_p$, $A(Y)>B(Y)$, so $F>0$ everywhere. Consequently in positive height the zero
+set is exactly the two actual stubs with their ground tips removed, and the parent
+exclusion gives $F(v)>0$. This description applies even when both tips are strictly
+on the same side of $x_p$.
+
+Delete $p$ and its parent seam from the ungrounded source tree, solely as a proof
+device. The remaining source tree is connected, contains $v$ and every other leaf,
+and has strictly positive height along all its segments. It avoids the zero set of
+$F$ by prescribed incidence. The continuous function $F$ therefore has constant sign
+along its paths, and that sign is positive because it is positive at $v$. In
+particular $F(q)>0$ for every other leaf $q$.
+
+If a tip $g=(X,0)$ of $q$ lay strictly inside $I_p$, then $F(g)=\max\{a-X,X-b\}<0$.
+The intermediate value theorem on the actual stub $[q,g]$ would force a zero of $F$
+before its ground end. That zero has positive height and is on an actual stub of
+$p$, an intersection prohibited by incidence. Equality with an endpoint of $I_p$
+violates global tip injectivity. Thus no tip of any other leaf belongs to $I_p$.
+Applying this conclusion with every leaf as $p$ excludes all overlap, including
+nesting: two overlapping closed intervals with four distinct endpoints have an
+endpoint of one strictly inside the other. For a singleton there is only one
+interval. The triangle bases and the deletion used here are mathematical proof
+devices, not installed edges or source actions. $\square$
+
+**Theorem 78.3 (common-length strict width necessity).** Define
+
+$$
+\lambda_*=\frac{4+2\sqrt{823}}{63},\qquad
+I=[\lambda_*,3/2].
+\tag{78.6}
+$$
+
+For every $\lambda\in I$ and every compatible planar placement $E_2^\lambda(D)$, the
+two tips at each leaf are necessarily on opposite sides, and their intervals obey
+
+$$
+\begin{aligned}
+c_p&=\sqrt{\lambda^2-y_p^2},\qquad
+I_p=[x_p-c_p,x_p+c_p],\\
+2\ell(D)\sqrt{\lambda^2-9/16}
+ &<\sum_{p\in\operatorname{Leaf}(D)}|I_p|
+ \le W<2h(D)+2\lambda,
+\end{aligned}
+\tag{78.7}
+$$
+
+where $W$ is the horizontal span of all actual ground tips. Both endpoints of $I$
+are included.
+
+**Proof.** The polynomial $P(\lambda)=63\lambda^2-8\lambda-52$ has positive root
+$\lambda_*$ and negative root $(4-2\sqrt{823})/63$. Since
+
+$$
+P(3/4)=-361/16<0,\qquad P(1)=3>0,
+\tag{78.8}
+$$
+
+we have $3/4<\lambda_*<1$. Hence $\lambda>y_p$ on $I$. An actual tip $(X,0)$ of a
+length-$\lambda$ stub solves $(X-x_p)^2+y_p^2=\lambda^2$, so the only possibilities
+are $x_p-c_p$ and $x_p+c_p$. Distinct tips force both, proving the opposite-side
+assertion. Lemma78.2 applies because $\lambda\le3/2$. The strict upper height bound
+gives $|I_p|=2c_p>2\sqrt{\lambda^2-9/16}$. A root-to-leaf source path has at most
+$h(D)$ unit seams, whence $|x_p-x_o|\le h(D)$. Because $y_p>0$, each $c_p<\lambda$.
+Every tip is therefore strictly between $x_o-h(D)-\lambda$ and $x_o+h(D)+\lambda$,
+so $W<2h(D)+2\lambda$. Pairwise disjoint intervals have total length at most their
+enclosing span. Summing the strict width floors gives (78.7), also for the
+singleton. $\square$
+
+**Proposition 78.4 (the authentic cap-qualified common-length obstruction).** The
+original ordered substitution family $T_n=\rho^n(\alpha)$ obeys
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{n+2}=\langle T_{n+1},T_n\rangle.
+\tag{78.9}
+$$
+
+For its authentic $T_5$, $E_2^\lambda(\operatorname{Pos}(T_5))$ is impossible for
+every $\lambda\in I$. This source is admitted from INITIAL $\alpha$ at a separately
+fixed cap $H=8$, and by the same finite prefix at each separately fixed $H\ge8$.
+
+**Proof.** Apply (78.2) to ordered brackets to obtain (78.9). More explicitly,
+
+$$
+\begin{aligned}
+T_2&=\langle\beta,\alpha\rangle,\qquad
+T_3=\langle T_2,\beta\rangle,\qquad T_4=\langle T_3,T_2\rangle,\\
+T_5&=\langle T_4,T_3\rangle
+ =\big\langle
+ \langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+              \langle\beta,\alpha\rangle\rangle,
+ \langle\langle\beta,\alpha\rangle,\beta\rangle
+ \big\rangle.
+\end{aligned}
+\tag{78.10}
+$$
+
+Every displayed repetition is a distinct ordered occurrence; this syntax identity
+authorizes no copying operation. The recurrences $\ell_{n+2}=\ell_{n+1}+\ell_n$ and
+$h_{n+2}=1+\max\{h_{n+1},h_n\}$ give the following values.
+
+| $n$ | $\ell(T_n)$ | $h(T_n)$ | alpha leaves | beta leaves |
+| --- | --- | --- | --- | --- |
+| $0$ | $1$ | $0$ | $1$ | $0$ |
+| $1$ | $1$ | $0$ | $0$ | $1$ |
+| $2$ | $2$ | $1$ | $1$ | $1$ |
+| $3$ | $3$ | $2$ | $1$ | $2$ |
+| $4$ | $5$ | $3$ | $2$ | $3$ |
+| $5$ | $8$ | $4$ | $3$ | $5$ |
+
+The ordered leaf addresses and labels of $T_5$ are
+
+$$
+\begin{array}{c|cccccccc}
+p&LLLL&LLLR&LLR&LRL&LRR&RLL&RLR&RR\\ \hline
+\operatorname{label}(p)&\beta&\alpha&\beta&\beta&\alpha&\beta&\alpha&\beta
+\end{array}.
+\tag{78.11}
+$$
+
+There are fifteen source vertices, fourteen unit inherited seams and sixteen ground
+stubs of length $\lambda$. With INITIAL $\alpha$ and $H=8$ fixed before execution,
+the five complete rho candidates have $1,2,3,5,8$ leaves and all pass $\ell\le H$.
+The first acceptance changes the label even though INITIAL contains no beta leaf and
+its geometric address domain does not grow. Final equality with the cap is allowed.
+A sixth candidate has thirteen leaves and is refused at $H=8$, retaining $T_5$ with
+no candidate Read. Stop remains absorbing. The five acceptances also pass at any
+separately fixed $H\ge8$. This is mathematical source admissibility, not an acquired
+execution or a change to the distinct stopped INITIAL $T_2$, $H=3$ history of76.5.
+
+For this source, (78.7) would require
+
+$$
+16\sqrt{\lambda^2-9/16}<8+2\lambda.
+\tag{78.12}
+$$
+
+Both sides are positive, but their squared difference is
+
+$$
+\bigl(16\sqrt{\lambda^2-9/16}\bigr)^2-(8+2\lambda)^2
+ =4(63\lambda^2-8\lambda-52)=4P(\lambda)\ge0
+ \quad(\lambda\in I).
+\tag{78.13}
+$$
+
+The last inequality follows from the two roots of $P$. It contradicts the strict
+necessity, including $\lambda=\lambda_*$ where the squared difference is zero. The
+upper endpoint is covered by the strict parent exclusion in78.2. At $\lambda=1$ the
+contradiction is the original $4\sqrt7<10$, whose squared sides are $112>100$. No
+maximal common-length interval, smallest obstruction or lower-cap classification is
+asserted. $\square$
+
+**Proposition 78.5 (finite three-dimensional sufficiency for both variants).** For
+every fixed authentic legal finite source $D$, the contract $E_s^\lambda(D)$ has a
+placement for every $\lambda\in I$ and every integer $s\ge3$. Separately, for every
+$0\le\delta\le1/50$ and every prescribed family $r_{p,j}\in[1-\delta,1+\delta]$, the
+contract $E_s(D;r)$ has a placement for every integer $s\ge3$. Reflection in $y=0$
+yields an embedded connected double with $3n+1$ vertices and $4n$ edges, retaining
+unit inherited edges and the respective prescribed ground-stub lengths. All angle
+and clearance margins belong to this finite placement.
+
+**Proof.** Use the finite direction and azimuth construction of72.3, with the
+endpoint circles now determined by the prescribed lengths. The source-seam part is
+unchanged. In $\mathbb R^3$ put the root at height $1/2$ and attach children
+successively, always using a unit direction whose vertical component has absolute
+value less than $1/[8(n+1)]$. A source path has at most $n-1$ seams, so every source
+vertex has height in $(3/8,5/8)$.
+
+At a current attachment vertex, directions that send the new segment through a
+nonincident old segment are radial projections of that old segment onto the unit
+sphere. Each such set has spherical area zero: it lies in the at most
+one-dimensional intersection of the sphere with the plane spanned by the vertex and
+the old supporting line. Existing vertices, endpoint collisions and repeated
+incident rays exclude further area-zero sets. For an old segment incident at the
+attachment vertex, its prescribed endpoint contact is allowed; any extra overlap
+excludes its ray. There are finitely many exclusions, and the direction band is an
+open set of positive spherical area. A permissible direction therefore exists at
+every step. This gives an injective separated source tree with the exact unit seam
+lengths.
+
+For a stub of prescribed length $r$ from a leaf $p$, either parameter regime gives
+$r>3/4>y_p$. Its possible tips on the grounding plane form the circle
+
+$$
+ g(\varphi)=\bigl(x_p+c\cos\varphi,\ z_p+c\sin\varphi,\ 0\bigr),
+ \qquad c=\sqrt{r^2-y_p^2}>0,
+\tag{78.14}
+$$
+
+where $(x,z)$ are the two horizontal coordinates. The segments from $p$ to this
+circle form a truncated circular cone. Every point of that cone other than $p$
+determines one azimuth. The double cone's quadratic equation is
+
+$$
+ (X-x_p)^2+(Z-z_p)^2
+   =\frac{c^2}{y_p^2}(Y-y_p)^2.
+\tag{78.15}
+$$
+
+Restricting this equation to an old supporting line gives a quadratic, so at most
+two intersection points unless the line is contained in the cone. Such a contained
+line is a generator: after translating $p$ to zero and rescaling the vertical
+coordinate, write its direction and offset as $(u,t)$ and $(v,w)$. Identical
+vanishing of $|v+ku|^2-(w+kt)^2$ gives $|u|^2=t^2$, $|v|^2=w^2$ and $u\cdot v=tw$. A
+nonzero direction has $t\ne0$; equality in Cauchy-Schwarz then forces $v=(w/t)u$.
+The line passes through the apex and excludes only its generator azimuth in the
+truncated cone. An old line through $p$ that is not a generator meets the cone only
+at $p$, which is an allowed contact only when prescribed. Thus old segments exclude
+only finitely many azimuths once prescribed apex contacts are ignored. Old vertices
+and ground tips each exclude at most one more azimuth; repeated rays are excluded as
+well.
+
+Choose a permissible azimuth, install that stub, and repeat for the second stub and
+every remaining leaf. The first stub is among the old segments when the second is
+chosen. This ensures distinct rays and distinct tips even for unequal prescribed
+lengths. All new open stubs have positive height and all intersections are
+prescribed. Finiteness of the disjoint compact nonincident objects gives a positive
+minimum distance; finiteness of the distinct incident rays gives a positive minimum
+angle. These minima depend on the placement.
+
+Reflect the upper half in the grounding plane and identify only the prescribed
+ground tips of the two halves. Upper and lower open edges have opposite strictly
+nonzero heights, so they have no extra intersections. At a ground tip the angle
+between the upper stub and its reflected stub of length $r$ is $2\arcsin(y_p/r)>0$.
+There are two copies of the $n$ source vertices and $n+1$ distinct ground tips,
+giving $3n+1$ vertices; doubling the $2n$ half edges gives $4n$ edges. Every leaf
+connects its source half to the reflected half, so the double is connected and has
+no self-loops. Finiteness again gives its positive margins. Finally, a
+height-preserving isometric inclusion of this three-dimensional space into $\mathbb
+R^{s-1}\times\mathbb R$ preserves all lengths, incidences, angles and clearances.
+This proves both separately quantified sufficiency assertions. $\square$
+
+**Corollary 78.6 (conditional common-length minimum universal dimension).** For each
+fixed $\lambda\in I$, the minimum universal ambient integer dimension under78.1 is
+three. The same minimum holds at each one fixed cap $H\ge8$ for the legal finite
+commission class that includes INITIAL $\alpha$.
+
+**Proof.** In dimension one, the grounding hyperplane $y=0$ has only one point. It
+cannot supply two distinct ground tips even for a singleton. Dimension two fails for
+the cap-qualified source $T_5$ of78.4. Proposition78.5 supplies a placement for
+every legal finite source in every integer dimension at least three. The order of
+quantifiers is, for fixed $\lambda$ and dimension, every legal finite source
+followed by existence of that source's own placement. At a fixed $H\ge8$, the
+INITIAL-$\alpha$ prefix in78.4 belongs to the stated class, while78.5 still applies
+to every source in that class. This proves the conditional minimum, with no
+assertion about other lower-cap classes, a common apparatus or a physical dimension
+law. $\square$
+
+**Proposition 78.7 (surviving separation and a genuine unequal near-unit
+counterexample).** For $0<\delta\le1/2$, every compatible planar placement whose
+prescribed stub lengths lie in $[1-\delta,1+\delta]$ has pairwise disjoint actual
+grounding intervals. Nevertheless, for every relative tolerance $\varepsilon>0$
+there is an authentic legal $T_2$ placement with unequal lengths in
+$[1-\varepsilon,1+\varepsilon]$ whose two tips at each leaf are strictly on the same
+side. Within any one positive tolerance, these examples have leaf widths tending to
+zero, so proximity to unit length alone implies neither opposite-side tips nor a
+uniform positive leaf-width floor.
+
+**Proof.** The separation conclusion follows from78.2 because every actual length is
+at most $1+\delta\le3/2$. For the counterexample choose
+
+$$
+0<t<\min\{\varepsilon,1/50\},\qquad
+c_1=\sqrt3/2,\qquad c_2=\sqrt{3/4+2t+t^2}.
+\tag{78.16}
+$$
+
+Use the authentic ordered source $T_2=\langle\beta,\alpha\rangle$, with root
+$o=(0,1/2)$, left leaf $L=(-1,1/2)$ labelled beta and right leaf $R=(1,1/2)$
+labelled alpha. The inherited seams $[o,L]$ and $[o,R]$ are straight and exactly
+unit. At each leaf $(x,1/2)$ choose the two tips $(x+c_1,0)$ and $(x+c_2,0)$. The
+respective lengths satisfy
+
+$$
+\sqrt{c_1^2+1/4}=1,\qquad
+\sqrt{c_2^2+1/4}=1+t,
+\qquad 0<c_1<c_2<1,
+\tag{78.17}
+$$
+
+where $c_2^2<3/4+2/50+1/2500=494/625<1$. Both tips are strictly right of their own
+leaf. The entire left stubs have horizontal coordinate less than zero; the right
+stubs have horizontal coordinate at least one. Every open stub is below the
+horizontal source seams at height $1/2$. The two rays from one leaf are different
+and meet only at that leaf. The source seams meet only at the root; a stub meets a
+source seam only at its own leaf. The four ground tips are distinct, with the left
+pair in $(-1,0)$ and the right pair in $(1,2)$. Thus all seven vertices are
+distinct, every incidence is prescribed, every nonincident pair of objects is
+disjoint, and all source heights satisfy the strict band. Finiteness supplies
+positive clearances and incident angles for each fixed $t>0$.
+
+This is source-admissible from immutable INITIAL $\alpha$ at a separately
+predeclared $H=2$: the first two whole candidates have one and two leaves and pass
+the unchanged guard. A third candidate has three leaves and is refused if attempted,
+retaining $T_2$ without candidate Read; Stop is absorbing. This separate commission
+alters no other INITIAL, cap or acquired history.
+
+Each actual leaf interval has width
+
+$$
+|I_L|=|I_R|=c_2-c_1
+ =\frac{2t+t^2}{c_2+c_1}\longrightarrow0
+ \quad\text{as }t\downarrow0.
+\tag{78.18}
+$$
+
+All these placements retain disjoint intervals. For any fixed $\varepsilon>0$ and
+any proposed positive floor depending only on that tolerance, sufficiently small
+positive $t$ violates the floor within the same admissible source and tolerance. The
+limiting value $t=0$ merges the two tips at each leaf and is not a legal placement.
+No uniform angle or clearance survives this limit, nor is such a bound part of the
+counterexample. $\square$
+
+**Proposition 78.8 (orientation-conditioned unequal-length obstruction).** Let
+$0\le\delta\le1/50$ and prescribe every $r_{p,j}\in[1-\delta,1+\delta]$. If a planar
+placement $E_2(D;r)$ additionally has one tip strictly left and one tip strictly
+right of every leaf, then its actual intervals satisfy
+
+$$
+2\ell(D)\sqrt{(1-\delta)^2-9/16}
+ <\sum_p|I_p|\le W<2h(D)+2(1+\delta).
+\tag{78.19}
+$$
+
+Consequently the cap-qualified authentic $T_5$ has no such planar placement. This
+side condition is an added hypothesis for unequal lengths, not a consequence of
+their near-unit bounds.
+
+**Proof.** All lengths are at most $51/50<3/2$, so78.2 gives interval disjointness.
+A stub of length $r$ has horizontal offset magnitude $\sqrt{r^2-y_p^2}$. Under the
+opposite-side hypothesis the interval width is the sum of its two offset magnitudes.
+Since $r\ge1-\delta$ and $y_p<3/4$, each magnitude is strictly larger than
+$\sqrt{(1-\delta)^2-9/16}>0$. The root-to-leaf unit-seam bound is still
+$|x_p-x_o|\le h(D)$, and each offset is strictly less than $r\le1+\delta$. The same
+enclosing-span argument as in78.3 proves (78.19).
+
+For $\ell(T_5)=8$ and $h(T_5)=4$, this necessity would give
+$16\sqrt{(1-\delta)^2-9/16}<10+2\delta$. However,
+
+$$
+\begin{aligned}
+\bigl(16\sqrt{(1-\delta)^2-9/16}\bigr)^2-(10+2\delta)^2
+ &=4Q(\delta),\\
+Q(\delta)&=3-138\delta+63\delta^2,\\
+Q(\delta)&\ge Q(1/50)=663/2500>0
+ \qquad(0\le\delta\le1/50).
+\end{aligned}
+\tag{78.20}
+$$
+
+Indeed $Q'(\delta)=-138+126\delta<0$ on this interval. Both compared quantities are
+positive, so the strict opposite inequality holds and gives a contradiction.
+Three-dimensional sufficiency for every prescribed length family in this band is
+separately supplied by78.5; it assumes no planar left/right condition. $\square$
+
+**Proposition 78.9 (the relation to the unrestricted obstruction).** For every
+$0\le\delta\le1/50$, planar universality for the prescribed unequal near-unit
+contract of78.1 fails without an opposite-side hypothesis. The witness is77.2–77.3's
+$S_{15}$ at a separately fixed cap $98304$. This does not decide existence of a
+compatible unoriented planar $T_5$ with genuinely unequal near-unit stubs, and is
+consistent with the vanishing same-leaf widths in78.7.
+
+**Proof.** Unit inherited seams and every prescribed stub in
+$[1-\delta,1+\delta]\subset[49/50,51/50]$ lie in77.3's independent closed length box
+$[19/20,21/20]$. The strict band implies its positive source heights, and the
+grounding and incidence requirements agree. Thus77.3 excludes a planar $S_{15}$ for
+every such stub assignment. Its legal commission has immutable INITIAL $B_{15}$,
+where $B_0=\alpha$ and $B_{j+1}=\langle B_j,B_j\rangle$ with distinct occurrences.
+At the predeclared cap $98304$, the three whole candidates have $32768,65536,98304$
+leaves and $\rho^3B_{15}=S_{15}$. This is 77.2's symbolic admissibility, not an
+alteration of another commission.
+
+The robust proof uses tips of different-depth leaves in pendant
+$S_0=\langle\langle\beta,\alpha\rangle,\beta\rangle$ occurrences. Their actual paths
+have two stubs and three inherited seams; small bases are controlled by enclosed
+area in77.5–77.6. It does not restore a same-leaf width floor, so78.7 cannot refute
+it. Conversely its larger witness supplies no unoriented unequal-$T_5$ or lower-cap
+classification. For common lengths,77.3 applies on $I\cap[19/20,21/20]$, whereas78.4
+gives the cap-eight witness throughout $I$. The two results have these distinct
+parameter and witness scopes. $\square$
+
+**Definition 78.10 (attribution and retained boundaries).** The separation mechanism
+extends76.2's convex triangle, connected remainder and intermediate-value argument;
+the authentic ordered fixed-cap witness reuses76.3. Proposition72.3 supplies the
+finite direction/azimuth construction, with variable endpoint circles justified
+in78.5. The comparison consumes77.3 and77.5–77.6, including77.4's simple-polygon
+supplier, in their stated scopes. Circle/cone geometry, convexity, tree
+connectedness, the intermediate value theorem and finite interval packing are mature
+methods. The parameter-dependent conclusions and unequal example are a repo-derived
+geometric extension; no priority or new generic-mathematics claim is made. The case
+$\lambda=1$ remains76.1–76.4.
+
+The closed common interval $I$ is sufficient; its maximality is not established.
+Width inequalities are necessary, not existence criteria. Unoriented planar $T_5$
+existence for genuinely unequal near-unit lengths remains undetermined here;
+equal-length cases already excluded above remain excluded. Unoriented unequal
+near-unit universality is excluded by78.9 and77.3. Neither a smallest witness nor a
+lower-cap or extremal parameter classification follows. Every placement and its
+positive margins belong to its own finite source and prescribed lengths, without a
+simultaneous apparatus or source/cap-uniform angle, clearance, thickness or hardware
+bound.
+
+Only the declared geometric stub lengths vary. The full unchanged carrier and laws
+of64.5, recorded in77.1, retain intrinsic unit cable intervals and measures, full
+one- and two-particle Hilbert norms, port/ground/collision domains, kinetic
+coefficients, Hamiltonians, and separate common/killed field inverses with their
+boundary laws. No correspondence transfers these to a length-$\lambda$ or unequal
+cable carrier. The analytic suppliers72.1 and75.15 retain their own hypotheses. The
+centre distances $1+h_v(\varepsilon)+h_w(\varepsilon)$ in72.13 are a different
+prescribed metric: those offsets are neither source heights nor seam depth. The
+specific centre-graph implication and fixed-data threshold77.7–77.8 keep their
+scope; this geometric variation supplies no additional thin-limit or operator
+correspondence.
+
+The original source contracts and complete boundaries77.1 and77.10 remain in force:
+immutable INITIAL, one fixed cap, source-independent initialization, whole-rho and
+distinct Left/Right grafts, full contexts and candidates, original guards,
+destructive actions, Read, refusal, absorbing Stop and acquired chronological source
+records are retained. Source admissibility and a placement authenticate no execution
+and supply no copying, reset, cloning, resampling, unknown-state preparation or
+native operation/metric and Read/Stop bridge. Every field mode and spectator,
+unknown particle/field/auxiliary correlation, full joint norm, common reference and
+actual clock remain required; tracing out, vacuum restriction or calibrated-state
+re-preparation cannot replace them. Mediation, stiffness, compensation,
+ingress/recovery, retained complements and cross-block control require their own
+correspondence.
+
+The three acquisition contracts of76.6 and77.10 retain their source services, finite
+stopping/decoding, actual query/reply histories, paid retained influence and stopped
+transcripts. Their radii, state counts, update rules and clocks do not transfer.
+Full-vector calibration and $\Pi$ assumptions remain separate. Acquisition,
+construction, preparation, field/compensation installation, control, production,
+storage, holding, retention, maintenance, precision and total lifetime resource
+obligations persist. Mathematical lengths, measures and space counts supply no free
+observation, archive or service, clock conversion, measured price, finite memory
+advantage or physical dimension selection. The conditional geometric minimum78.6
+leaves the source, native, field, acquisition, memory and resource programme's
+remaining correspondence obligations intact.
+
+## 78.99 追加锚（本行以下为增补区）

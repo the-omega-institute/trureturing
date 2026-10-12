@@ -1,0 +1,32 @@
+## 十一、为什么叶序列不能恢复祖先结构
+
+项目中的 ancestry 结果给出了一个非常接近“衰变不可逆”的例子。
+
+两个树：
+
+\[
+B=\langle\langle\beta,\alpha\rangle,\beta\rangle
+\]
+
+\[
+D=\langle\beta,\langle\alpha,\beta\rangle\rangle
+\]
+
+去掉括号后都有相同的叶序列：
+
+\[
+\beta\alpha\beta
+\]
+
+但其内部祖先结构不同：
+
+\[
+\nu(B)=3
+\]
+
+\[
+\nu(D)=0
+\]
+
+因此叶序列是一个非单射投影：
+

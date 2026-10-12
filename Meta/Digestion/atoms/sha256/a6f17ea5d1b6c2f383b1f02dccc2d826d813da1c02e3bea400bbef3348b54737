@@ -1,0 +1,37 @@
+**定义 29.1（实际输入、模式保持与预测目标）。** 取整数 $n,r\ge1$、实对称
+正定矩阵 $K\in\mathbb R^{n\times n}$、$B\in\mathbb R^{n\times r}$，
+在已校准的局部参数 $t=\tau\ge0$ 上声明
+
+$$
+\dot\xi=-K\xi+Bu,\qquad y=B^{\mathsf T}\xi,\qquad \xi(0)=\xi_0.
+$$
+
+输入是实际可测函数 $u\in L^1_{\rm loc}([0,\infty);\mathbb R^r)$，
+输出取局部绝对连续状态的读数。采用
+[响应三角形卷 §§9.1–9.2](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)
+的初始项与受迫项区分，变参数公式在此给
+
+$$
+\begin{aligned}
+y(t)&=B^{\mathsf T}e^{-Kt}\xi_0+
+ \int_0^t M(t-v)u(v)\,dv,\\
+M(t)&=B^{\mathsf T}e^{-Kt}B,\qquad
+R(s)=\int_0^\infty e^{-st}M(t)\,dt=B^{\mathsf T}(sI+K)^{-1}B,
+\quad s\ge0.
+\end{aligned}
+$$
+
+指数的有界性保证每个有限区间的卷积存在；其积分方程给唯一局部绝对连续解，
+微分方程几乎处处成立。$K$ 的正最小特征值保证核的上述积分收敛；
+这里没有给任意 $L^1_{\rm loc}$ 输入承诺 Laplace 变换。
+零初态预测目标是对全部允许输入重现整个 $y$，不是只重现 $R(0)$。
+$M(0)$ 是瞬时核系数；普通输入下的零初态输出在 $t=0$ 总为零。
+
+有限实 LTI 比较类允许任意实矩阵
+$A\in\mathbb R^{d\times d}$、$G\in\mathbb R^{d\times r}$、
+$C\in\mathbb R^{r\times d}$、$F\in\mathbb R^{r\times r}$，
+以 $\dot z=Az+Gu$、$\widetilde y=Cz+Fu$、$z(0)=0$ 比较。
+允许 $d=0$，不要求竞争者对称。所谓最小记忆指这个类中的最小实状态维数。
+模式随机时，先从一份实际律抽取一次模式，并在整段响应中保持；
+模式切换或每段重新抽取须另给路径律。
+
