@@ -560,5 +560,154 @@ private theorem native_minimal_central_tail {M q s : ℕ} (S : Support M q)
     exact he.trans_le (kernel_central_tail (card_filter_le _ _) (card_filter_le _ _) hN L hL)
   · exact native_rectangle_sigma_eq S e o k l
 
+
+open private
+  D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass_eq_card
+from D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+
+/-- Domination of any native event by a count event retains the exact
+native conditioning mass. -/
+theorem native_event_mass_le_kernel {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (k l : ℕ) (z : Fiber S e o) (Q : Fiber S e o → Prop) [DecidablePred Q]
+    (P : ℕ → Prop) [DecidablePred P]
+    (hpush : ∀ y, nativeMinimalRectangleReadout S e o k l y =
+      nativeMinimalRectangleReadout S e o k l z → Q y → P (nativeRectangleACount S e o k l y)) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let V := nativeRectangleRows S e o k l z
+    let R := (V.filter fun i => count e z.val i.val 1 = k).card
+    let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+    let Env := univ.filter fun y : Fiber S e o =>
+      nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+    conditionalFiberMass S r e o (Env.filter Q) / conditionalFiberMass S r e o Env ≤
+      ∑ t ∈ (range (U + 1)).filter P, H V.card R U t := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  dsimp only
+  let Env := univ.filter fun y : Fiber S e o =>
+    nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+  have hp := ((finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.1 S o).1
+  have hsub : Env.filter Q ⊆ Env.filter (fun y => P (nativeRectangleACount S e o k l y)) := by
+    intro y hy
+    have hh := mem_filter.mp hy
+    exact mem_filter.mpr ⟨hh.1, hpush y (mem_filter.mp hh.1).2 hh.2⟩
+  have hm : conditionalFiberMass S r e o (Env.filter Q) ≤
+      conditionalFiberMass S r e o (Env.filter fun y => P (nativeRectangleACount S e o k l y)) := by
+    rw [D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass_eq_card S r e o hp,
+      D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass_eq_card S r e o hp]
+    exact div_le_div_of_nonneg_right (by exact_mod_cast card_le_card hsub) (by positivity)
+  have hden : 0 ≤ conditionalFiberMass S r e o Env := by
+    rw [D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass_eq_card S r e o hp]
+    positivity
+  exact (div_le_div_of_nonneg_right hm hden).trans_eq
+    (native_kernel_event_mass S r e o hq hqm hr hr1 ha ha1 k l z P)
+
+/-- Balanced margins make all four mean cells large; a single central
+A-count deviation controls all four cells at once. -/
+private theorem central_four_cells_lower (N R U δ t w : ℝ) (hN : 0 < N) (hδ : 0 ≤ δ)
+    (hR : δ * N ≤ R) (hR' : R ≤ (1 - δ) * N)
+    (hU : δ * N ≤ U) (hU' : U ≤ (1 - δ) * N)
+    (ht : |t - U * R / N| ≤ w) :
+    ∀ j, δ ^ 2 * N - w ≤ cellCounts N R U t j := by
+  have hδN : 0 ≤ δ * N := mul_nonneg hδ hN.le
+  have hR0 : 0 ≤ R := hδN.trans hR
+  have hU0 : 0 ≤ U := hδN.trans hU
+  have hRc : δ * N ≤ N - R := by nlinarith
+  have hUc : δ * N ≤ N - U := by nlinarith
+  have hRc0 : 0 ≤ N - R := hδN.trans hRc
+  have hUc0 : 0 ≤ N - U := hδN.trans hUc
+  have hprod (a b : ℝ) (ha : δ * N ≤ a) (hb : δ * N ≤ b) :
+      δ ^ 2 * N ≤ a * b / N := by
+    apply (le_div_iff₀ hN).mpr
+    have hh := mul_le_mul ha hb hδN (hδN.trans ha)
+    nlinarith
+  have h0 := hprod U R hU hR
+  have h1 := hprod U (N - R) hU hRc
+  have h2 := hprod (N - U) R hUc hR
+  have h3 := hprod (N - U) (N - R) hUc hRc
+  have he1 : U * (N - R) / N = U - U * R / N := by field_simp <;> ring
+  have he2 : (N - U) * R / N = R - U * R / N := by field_simp <;> ring
+  have he3 : (N - U) * (N - R) / N = N - R - U + U * R / N := by field_simp <;> ring
+  rw [he1] at h1
+  rw [he2] at h2
+  rw [he3] at h3
+  intro j
+  fin_cases j <;> simp [cellCounts] <;> nlinarith [abs_le.mp ht]
+
+/-- The actual native signal-cell counts agree with the same fixed-margin
+real interpolation on a minimal environment. -/
+private theorem native_cells_on_minimal_environment {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (k l : ℕ) (y z : Fiber S e o)
+    (henv : nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z) :
+    let V := nativeRectangleRows S e o k l z
+    let R := (V.filter fun i => count e z.val i.val 1 = k).card
+    let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+    ∀ j, ((nativeCalibrationCells S e y.val k l j).card : ℝ) =
+      cellCounts V.card R U (nativeRectangleACount S e o k l y) j := by
+  classical
+  dsimp only
+  have he := (native_minimal_readout_eq_iff S e o k l y z).mp henv
+  have hV := congrArg (fun v => v.1.card) he
+  have hR := congrArg (fun v => v.2.2.1) he
+  have hU := congrArg (fun v => v.2.2.2) he
+  have hc := D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins S e o k l y
+  dsimp only at hc
+  change (nativeRectangleRows S e o k l y).card = (nativeRectangleRows S e o k l z).card at hV
+  change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val 1 = k).card =
+    ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val 1 = k).card at hR
+  change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val (-1) = l).card =
+    ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val (-1) = l).card at hU
+  rw [hV, hR, hU] at hc
+  have hNR := congrArg (fun n : ℕ => (n : ℝ)) hc.1
+  have hRR := congrArg (fun n : ℕ => (n : ℝ)) hc.2.1
+  have hUR := congrArg (fun n : ℕ => (n : ℝ)) hc.2.2.1
+  have hAR := congrArg (fun n : ℕ => (n : ℝ)) hc.2.2.2
+  push_cast at hNR hRR hUR
+  intro j
+  fin_cases j <;> simp [cellCounts] <;> linarith
+
+/-- Conditional simultaneous occupancy of all four original signal cells
+follows from the exact native law and its own variance. -/
+private theorem native_four_cell_occupancy_tail {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (k l : ℕ) (z : Fiber S e o) (δ L : ℝ) (hδ : 0 ≤ δ) (hL : 0 < L)
+    (hN : 1 < (nativeRectangleRows S e o k l z).card) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let V := nativeRectangleRows S e o k l z
+    let R : ℝ := (V.filter fun i => count e z.val i.val 1 = k).card
+    let U : ℝ := (V.filter fun i => count e z.val i.val (-1) = l).card
+    let Env := univ.filter fun y : Fiber S e o =>
+      nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+    δ * V.card ≤ R → R ≤ (1 - δ) * V.card →
+    δ * V.card ≤ U → U ≤ (1 - δ) * V.card →
+    L * Real.sqrt V.card ≤ δ ^ 2 * V.card / 2 →
+    conditionalFiberMass S r e o
+      (Env.filter fun y => ∃ j, ((nativeCalibrationCells S e y.val k l j).card : ℝ) <
+        δ ^ 2 * V.card / 2) / conditionalFiberMass S r e o Env ≤ 1 / (4 * L ^ 2) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  dsimp only
+  intro hR hR' hU hU' hwidth
+  let N := (nativeRectangleRows S e o k l z).card
+  let R := ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val 1 = k).card
+  let U := ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val (-1) = l).card
+  apply (native_event_mass_le_kernel S r e o hq hqm hr hr1 ha ha1 k l z
+    (fun y => ∃ j, ((nativeCalibrationCells S e y.val k l j).card : ℝ) < δ ^ 2 * N / 2)
+    (fun t : ℕ => L * Real.sqrt N < |(t : ℝ) - (U : ℝ) * R / N|) ?_).trans
+  · exact kernel_central_tail (card_filter_le _ _) (card_filter_le _ _) hN L hL
+  · intro y hy hbad
+    obtain ⟨j, hj⟩ := hbad
+    by_contra hh
+    have ht : |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ) * R / N| ≤ L * Real.sqrt N :=
+      le_of_not_gt hh
+    have hb := central_four_cells_lower N R U δ (nativeRectangleACount S e o k l y)
+      (L * Real.sqrt N) (by exact_mod_cast (by omega : 0 < N)) hδ hR hR' hU hU' ht j
+    rw [← native_cells_on_minimal_environment S e o k l y z hy j] at hb
+    linarith
+
 end
 end D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
