@@ -82,6 +82,14 @@ private theorem weighted_curvature_mono (K : CurvatureKernel) {v w : ℝ}
   have hq := K.monotone_q hvr hwr harg
   exact mul_le_mul_of_nonneg_left hq (sub_nonneg.mpr hr.2)
 
+private theorem weighted_curvature_nonnegative (K : CurvatureKernel) {v : ℝ}
+    (hv : v ∈ Icc (0 : ℝ) 1) : 0 ≤ weightedCurvature K v := by
+  unfold weightedCurvature
+  apply intervalIntegral.integral_nonneg zero_le_one
+  intro r hr
+  exact mul_nonneg (sub_nonneg.mpr hr.2)
+    (K.nonnegative_q _ (curvature_kernel_argument_mem v r hv hr))
+
 /- This is the exact `s²` step.  The only input from the matrix problem is that
 its relative-entropy defect has this curvature representation. -/
 private theorem quadratic_profile_square_contraction (K : CurvatureKernel)
@@ -90,6 +98,11 @@ private theorem quadratic_profile_square_contraction (K : CurvatureKernel)
   have hmono := weighted_curvature_mono K hs ⟨zero_le_one, le_rfl⟩ hs.2
   unfold quadraticProfile
   simpa using mul_le_mul_of_nonneg_left hmono (sq_nonneg s)
+
+private theorem quadratic_profile_nonnegative (K : CurvatureKernel) {v : ℝ}
+    (hv : v ∈ Icc (0 : ℝ) 1) : 0 ≤ quadraticProfile K v := by
+  unfold quadraticProfile
+  exact mul_nonneg (sq_nonneg v) (weighted_curvature_nonnegative K hv)
 
 /- A path supplied by the matrix layer consists of the relative-entropy defect
 and its first derivative together with the resolvent curvature representation.
@@ -126,9 +139,13 @@ private theorem binary_origin_values (P : BinaryDefectPath) :
 theorem binary_curvature_summary (P : BinaryDefectPath) {s : ℝ}
     (hs : s ∈ Icc (0 : ℝ) 1) :
     P.defect s ≤ s ^ 2 * P.defect 1 ∧
+      0 ≤ P.defect s ∧
       2 * P.defect 1 ≤ P.slope 1 ∧
       P.defect 0 = 0 ∧ P.slope 0 = 0 := by
-  exact ⟨binary_defect_square_contraction P hs,
+  have hnonneg : 0 ≤ P.defect s := by
+    rw [P.defect_eq_profile s hs]
+    exact quadratic_profile_nonnegative P.kernel hs
+  exact ⟨binary_defect_square_contraction P hs, hnonneg,
     binary_endpoint_slope_lower_bound P, binary_origin_values P |>.1,
     binary_origin_values P |>.2⟩
 
