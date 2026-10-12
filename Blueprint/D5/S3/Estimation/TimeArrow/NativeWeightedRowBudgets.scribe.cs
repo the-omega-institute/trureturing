@@ -29,7 +29,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                     + "approximation alone does not supply the relative one-row and two-row native estimates.")),
             Describe.Lean(
                 DescribeId.Create("native-row-count-tail"),
-                DeclarationHandle.Create(Module + "NativeRowCountTail.native_row_count_tail"),
+                DeclarationHandle.Create(Module + "native_row_count_tail"),
                 H("Exponential tail for one native row"),
                 StatementSource.FromAuthor(Formula1()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/lecam1960poissonbinomial"), LibraryNoteRef.Create("D5/L/Estimation/grinsteadsnell2006probability")),
@@ -43,7 +43,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("native-all-row-count-cut"),
-                DeclarationHandle.Create(Module + "NativeRowCountTail.native_all_row_count_cut"),
+                DeclarationHandle.Create(Module + "native_all_row_count_cut"),
                 H("Simultaneous cutoff for all rows"),
                 StatementSource.FromAuthor(Formula2()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/grinsteadsnell2006probability")),
@@ -57,7 +57,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("reference-pos"),
-                DeclarationHandle.Create(Module + "NativeRowMomentTransfer.reference_pos"),
+                DeclarationHandle.Create(Module + "reference_pos"),
                 H("Strict positivity of every reference count mass"),
                 StatementSource.FromAuthor(Formula3()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/lecam1960poissonbinomial")),
@@ -71,7 +71,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("native-truncated-weighted-moments"),
-                DeclarationHandle.Create(Module + "NativeRowMomentTransfer.native_truncated_weighted_moments"),
+                DeclarationHandle.Create(Module + "native_truncated_weighted_moments"),
                 H("Mean and second moment on a finite count set"),
                 StatementSource.FromAuthor(Formula4()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/lecam1960poissonbinomial")),
@@ -92,7 +92,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("native-full-weighted-moments"),
-                DeclarationHandle.Create(Module + "NativeWeightedRowBudgets.native_full_weighted_moments"),
+                DeclarationHandle.Create(Module + "native_full_weighted_moments"),
                 H("Full-row mean and second moment with both tails restored"),
                 StatementSource.FromAuthor(Formula5()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/lecam1960poissonbinomial"), LibraryNoteRef.Create("D5/L/Estimation/grinsteadsnell2006probability")),
@@ -112,7 +112,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-square-markov"),
-                DeclarationHandle.Create(Module + "NativeWeightedRowBudgets.finite_square_markov"),
+                DeclarationHandle.Create(Module + "finite_square_markov"),
                 H("Finite square-moment Markov comparison"),
                 StatementSource.FromAuthor(Formula6()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/grinsteadsnell2006probability")),
@@ -127,7 +127,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("native-full-weighted-deviation"),
-                DeclarationHandle.Create(Module + "NativeWeightedRowBudgets.native_full_weighted_deviation"),
+                DeclarationHandle.Create(Module + "native_full_weighted_deviation"),
                 H("Deviation from the complete reference mean"),
                 StatementSource.FromAuthor(Formula7()),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/grinsteadsnell2006probability")),
@@ -147,7 +147,7 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-environment-anchor-budget"),
-                DeclarationHandle.Create(Module + "NativeEnvironmentAnchors.finite_environment_anchor_budget"),
+                DeclarationHandle.Create(Module + "finite_environment_anchor_budget"),
                 H("An anchor budget when the good event varies inside fibers"),
                 StatementSource.FromAuthor(Formula8()),
                 AssessedProvenance.FromRepo(),
@@ -167,47 +167,48 @@ internal sealed class NativeWeightedRowBudgetsDocument : IScribeDocumentDefiniti
 
     private static Formula Formula1() => Disp(Seq(
             F.Id("P"), OpenBracket, F.Id("nplus"), Open, F.Id("i"), Close, Plus, F.Id("nminus"), Open, F.Id("i"), Close, Gt,
-            D(8), F.Id("L"), CloseBracket, Le, Exp, Open, Minus, Open, D(8), Log, D(4), Minus, D(6), Close, F.Id("L"), Close));
+            D(8), F.Id("L"), CloseBracket, Le, Sp, Exp, Sp, Open, Minus, Open, D(8), Log, Sp, D(4), Minus, D(6), Close,
+            F.Id("L"), Close));
 
     private static Formula Formula2() => Disp(Seq(
-            F.Id("P"), OpenBracket, Forall, F.Id("i"), InMacro, Mathrm, Grp(F.Id("Fin")), Open, F.Id("M"), Close, Comma,
-            F.Id("nplus"), Open, F.Id("i"), Close, Plus, F.Id("nminus"), Open, F.Id("i"), Close, Le, D(8), F.Id("L"),
-            CloseBracket, Ge, D(1), Minus, F.Id("M"), Exp, Open, Minus, Open, D(8), Log, D(4), Minus, D(6), Close, F.Id("L"),
-            Close));
+            F.Id("P"), OpenBracket, Forall, Sp, F.Id("i"), InMacro, Sp, Mathrm, Sp, Grp(F.Id("Fin")), Open, F.Id("M"), Close,
+            Comma, F.Id("nplus"), Open, F.Id("i"), Close, Plus, F.Id("nminus"), Open, F.Id("i"), Close, Le, Sp, D(8),
+            F.Id("L"), CloseBracket, Ge, Sp, D(1), Minus, F.Id("M"), Exp, Sp, Open, Minus, Open, D(8), Log, Sp, D(4), Minus,
+            D(6), Close, F.Id("L"), Close));
 
     private static Formula Formula3() => Disp(Seq(
-            Forall, F.Id("i"), InMacro, Mathrm, Grp(F.Id("Fin")), Open, F.Id("M"), Close, Comma, Forall, Open, F.Id("a"),
-            Comma, F.Id("b"), Close, InMacro, Mathbb, Grp(F.Id("N")), Caret, D(2), Comma, Quad, F.Id("Q"), Underscore,
-            F.Id("i"), Open, F.Id("a"), Comma, F.Id("b"), Close, Gt, D(0)));
+            Forall, Sp, F.Id("i"), InMacro, Sp, Mathrm, Sp, Grp(F.Id("Fin")), Open, F.Id("M"), Close, Comma, Forall, Sp, Open,
+            F.Id("a"), Comma, F.Id("b"), Close, InMacro, Sp, Mathbb, Sp, Grp(F.Id("N")), Caret, D(2), Comma, Quad, Sp,
+            F.Id("Q"), Underscore, F.Id("i"), Open, F.Id("a"), Comma, F.Id("b"), Close, Gt, D(0)));
 
     private static Formula Formula4() => Disp(Seq(
-            Bar, F.Id("E"), OpenBracket, F.Id("Z"), CloseBracket, Minus, F.Id("B"), Bar, Le, Frac,
-            Grp(F.Id("AL"), Caret, D(2)), Grp(F.Id("M")), F.Id("B"), Quad, Land, Quad, F.Id("E"), OpenBracket, Open, F.Id("Z"),
-            Minus, F.Id("B"), Close, Caret, D(2), CloseBracket, Le, Frac, Grp(D(3)), Grp(D(2)), F.Id("B"), Plus, D(3), Frac,
-            Grp(F.Id("AL"), Caret, D(3)), Grp(F.Id("M")), F.Id("B"), Caret, D(2)));
+            Bar, F.Id("E"), OpenBracket, F.Id("Z"), CloseBracket, Minus, F.Id("B"), Bar, Le, Sp, Frac, Sp,
+            Grp(F.Id("AL"), Caret, D(2)), Grp(F.Id("M")), F.Id("B"), Quad, Sp, Land, Sp, Quad, Sp, F.Id("E"), OpenBracket,
+            Open, F.Id("Z"), Minus, F.Id("B"), Close, Caret, D(2), CloseBracket, Le, Sp, Frac, Sp, Grp(D(3)), Grp(D(2)),
+            F.Id("B"), Plus, D(3), Frac, Sp, Grp(F.Id("AL"), Caret, D(3)), Grp(F.Id("M")), F.Id("B"), Caret, D(2)));
 
     private static Formula Formula5() => Disp(Seq(
-            Bar, F.Id("E"), OpenBracket, F.Id("Z"), CloseBracket, Minus, F.Id("B"), Bar, Le, Frac,
-            Grp(F.Id("AL"), Caret, D(2)), Grp(F.Id("M")), F.Id("B"), Plus, D(2), Bar, F.Id("I"), Bar, Zeta, Quad, Land, Quad,
-            F.Id("E"), OpenBracket, Open, F.Id("Z"), Minus, F.Id("B"), Close, Caret, D(2), CloseBracket, Le, D(3), F.Id("B"),
-            Plus, D(8), Frac, Grp(F.Id("AL"), Caret, D(3)), Grp(F.Id("M")), F.Id("B"), Caret, D(2), Plus, D(1, 0), Bar,
-            F.Id("I"), Bar, Caret, D(2), Zeta));
+            Bar, F.Id("E"), OpenBracket, F.Id("Z"), CloseBracket, Minus, F.Id("B"), Bar, Le, Sp, Frac, Sp,
+            Grp(F.Id("AL"), Caret, D(2)), Grp(F.Id("M")), F.Id("B"), Plus, D(2), Bar, F.Id("I"), Bar, Zeta, Sp, Quad, Sp,
+            Land, Sp, Quad, Sp, F.Id("E"), OpenBracket, Open, F.Id("Z"), Minus, F.Id("B"), Close, Caret, D(2), CloseBracket,
+            Le, Sp, D(3), F.Id("B"), Plus, D(8), Frac, Sp, Grp(F.Id("AL"), Caret, D(3)), Grp(F.Id("M")), F.Id("B"), Caret,
+            D(2), Plus, D(1, 0), Bar, F.Id("I"), Bar, Caret, D(2), Zeta, Sp));
 
     private static Formula Formula6() => Disp(Seq(
-            Sum, Underscore,
+            Sum, Sp, Underscore,
             Grp(F.Id("o"), Colon, Bar, F.Id("X"), Open, F.Id("o"), Close, Minus, F.Id("a"), Bar, Gt, F.Id("h")), F.Id("p"),
-            Open, F.Id("o"), Close, Le, Frac, Grp(F.Id("B")), Grp(F.Id("h"), Caret, D(2))));
+            Open, F.Id("o"), Close, Le, Sp, Frac, Sp, Grp(F.Id("B")), Grp(F.Id("h"), Caret, D(2))));
 
     private static Formula Formula7() => Disp(Seq(
-            Forall, F.Id("h"), Gt, D(0), Comma, Quad, F.Id("P"), OpenBracket, Bar, F.Id("Z"), Minus, F.Id("B"), Bar, Gt,
-            F.Id("h"), CloseBracket, Le, Frac,
-            Grp(D(3), F.Id("B"), Plus, D(8), Frac, Grp(F.Id("AL"), Caret, D(3)), Grp(F.Id("M")), F.Id("B"), Caret, D(2), Plus, D(1, 0), Bar, F.Id("I"), Bar, Caret, D(2), Zeta),
+            Forall, Sp, F.Id("h"), Gt, D(0), Comma, Quad, Sp, F.Id("P"), OpenBracket, Bar, F.Id("Z"), Minus, F.Id("B"), Bar,
+            Gt, F.Id("h"), CloseBracket, Le, Sp, Frac, Sp,
+            Grp(D(3), F.Id("B"), Plus, D(8), Frac, Sp, Grp(F.Id("AL"), Caret, D(3)), Grp(F.Id("M")), F.Id("B"), Caret, D(2), Plus, D(1, 0), Bar, F.Id("I"), Bar, Caret, D(2), Zeta, Sp),
             Grp(F.Id("h"), Caret, D(2))));
 
     private static Formula Formula8() => Disp(Seq(
-            Sum, Underscore,
-            Grp(F.Id("y"), Colon, Neg, Exists, F.Id("z"), Comma, F.Id("env"), Open, F.Id("z"), Close, Eq, F.Id("env"), Open, F.Id("y"), Close, Land, F.Id("G"), Open, F.Id("z"), Close, Land, F.Id("C"), Open, F.Id("z"), Close),
-            F.Id("p"), Open, F.Id("y"), Close, Le, Frac, Grp(D(1, 6)), Grp(D(1, 5)), Sum, Underscore,
-            Grp(F.Id("y"), Colon, Neg, F.Id("G"), Open, F.Id("y"), Close), F.Id("p"), Open, F.Id("y"), Close));
+            Sum, Sp, Underscore,
+            Grp(F.Id("y"), Colon, Neg, Sp, Exists, Sp, F.Id("z"), Comma, F.Id("env"), Open, F.Id("z"), Close, Eq, F.Id("env"), Open, F.Id("y"), Close, Land, Sp, F.Id("G"), Open, F.Id("z"), Close, Land, Sp, F.Id("C"), Open, F.Id("z"), Close),
+            F.Id("p"), Open, F.Id("y"), Close, Le, Sp, Frac, Sp, Grp(D(1, 6)), Grp(D(1, 5)), Sum, Sp, Underscore,
+            Grp(F.Id("y"), Colon, Neg, Sp, F.Id("G"), Open, F.Id("y"), Close), F.Id("p"), Open, F.Id("y"), Close));
 
 }
