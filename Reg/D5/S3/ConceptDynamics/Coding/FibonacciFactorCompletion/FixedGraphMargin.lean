@@ -1,3 +1,4 @@
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin
 import Reg.Support.DependentFamily
@@ -316,3 +317,118 @@ def lower_graph_high_gap_registration :
 
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin
+
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin.ExactOriginal72
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.observationSignature
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ b => b) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => actualAutomaticCost 2 - 1) (fun e => nomatch e)
+
+/-- Only the budget operand in the positive-margin conjunct is observed.
+Every other budget occurrence and every clause of the original Law is retained. -/
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (n K : ℕ) (b : ℝ) (hK : 2 ≤ K) (memory : K ≤ n)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K))),
+    ∃ R : Return, R.r = 1 ∧
+      max (max (xSide .high) (ySide .high)) ((lam - b) / g ^ 2 / chi ^ K) < resetFloor R ∧
+      0 < fixedGraphActualMargin n K (r.readout () () b) R ∧
+      ((graphGapValues n K ((lam - b) / g ^ 2 / chi ^ K)).Nonempty →
+        0 < graphMargin n K ((lam - b) / g ^ 2 / chi ^ K) ∧
+        IsLeast (↑(graphGapValues n K ((lam - b) / g ^ 2 / chi ^ K)) : Set ℝ)
+          (graphMargin n K ((lam - b) / g ^ 2 / chi ^ K))) ∧
+      ∀ (model : Model) (o : Ownership) (w : List CuLetter),
+        (∃ ω ∈ MemoryLanguage .lower n K ((lam - b) / g ^ 2 / chi ^ K), Occurs ω w) →
+        ∃! xs : List Return, CanonicalFactorCompletion R w xs ∧
+          ActualPairSupply model o (b - fixedGraphActualMargin n K b R) .strict xs ∧
+          listWeight xs = wordWeight w + (20 + 6 * R.m) +
+            (if CuLetter.c ∈ w then if w.getLast? = some CuLetter.c then 12 else 6 else 0)
+
+/-- The original half minimum cannot exceed its automatic term divided by two. -/
+theorem rejected_margin_nonpositive (R : Return) :
+    fixedGraphActualMargin 2 2 (actualAutomaticCost 2 - 1) R ≤ 0 := by
+  classical
+  dsimp [fixedGraphActualMargin]
+  split_ifs
+  · have bound := (min_le_left
+      (min (actualAutomaticCost 2 - 1 - actualAutomaticCost 2)
+        (g ^ 2 * chi ^ 2 *
+          (resetFloor R - (lam - (actualAutomaticCost 2 - 1)) / g ^ 2 / chi ^ 2)))
+      (g ^ 2 * chi * graphMargin 2 2
+        ((lam - (actualAutomaticCost 2 - 1)) / g ^ 2 / chi ^ 2))).trans
+      (min_le_left _ _)
+    linarith
+  · have bound := min_le_left
+      (actualAutomaticCost 2 - 1 - actualAutomaticCost 2)
+      (g ^ 2 * chi ^ 2 *
+        (resetFloor R - (lam - (actualAutomaticCost 2 - 1)) / g ^ 2 / chi ^ 2))
+    linarith
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨b, hqb, hbp⟩ :=
+    Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.SupplyWitnesses.record_interval_nonempty
+  obtain ⟨R, _, _, positive, _⟩ := h 2 2 b le_rfl le_rfl hqb hbp
+  change 0 < fixedGraphActualMargin 2 2 (actualAutomaticCost 2 - 1) R at positive
+  exact (not_lt_of_ge (rejected_margin_nonpositive R)) positive
+
+def evidence : Registration sourceArena (type_of% @fixed_lower_graph_actual_margin) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@fixed_lower_graph_actual_margin, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence :=
+    Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence
+
+def fixed_lower_graph_actual_margin_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin.fixed_lower_graph_actual_margin)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ b => b) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin.ExactOriginal72.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin.ExactOriginal72.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ b => b) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms rejected_margin_nonpositive
+#print axioms rejected_law
+#print axioms evidence
+#print axioms fixed_lower_graph_actual_margin_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedGraphMargin.ExactOriginal72
