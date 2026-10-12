@@ -728,6 +728,33 @@ private lemma factory_target_probability (P : FactoryParameters) (w : World P) (
   cases x <;> cases z <;> simp only [Bool.false_eq_true, Bool.true_eq_false, ↓reduceIte]
     <;> linarith [hl.trans hu.1, hu.2.trans hr]
 
+private lemma legal_source_word_ne_zero (P : FactoryParameters) (w : World P)
+    (t : ℕ → Bool × Bool) (n : ℕ) :
+    (∏ i ∈ Finset.range n, (bernoulliMeasure true false
+      (if (t i).1 then Rate P w true else Rate P w false)) {(t i).2}) ≠ 0 := by
+  apply Finset.prod_ne_zero_iff.mpr
+  intro i hi
+  let u : unitInterval := if (t i).1 then Rate P w true else Rate P w false
+  have hu : (u : ℝ) ∈ Icc (3 / (4 * P.B)) (1 / P.B) := by
+    cases hb : (t i).1 <;> simpa [u, hb] using
+      (source_rate_bounds_and_value P w (t i).1).1
+  have hB : 0 < P.B := by
+    rcases P.allowed_B with hb | hb <;> norm_num [hb]
+  have hu0 : 0 < (u : ℝ) :=
+    (div_pos (by norm_num : (0 : ℝ) < 3) (mul_pos (by norm_num) hB)).trans_le hu.1
+  have hu1 : (u : ℝ) < 1 := hu.2.trans_lt (by
+    rcases P.allowed_B with hb | hb <;> norm_num [hb])
+  apply (measureReal_ne_zero_iff (measure_ne_top _ _)).mp
+  cases hb : (t i).2
+  · change (bernoulliMeasure true false u).real {false} ≠ 0
+    rw [bernoulliMeasure_real_apply_of_notMem_of_mem u (measurableSet_singleton false)
+      (by simp) (by simp)]
+    exact (sub_pos.mpr hu1).ne'
+  · change (bernoulliMeasure true false u).real {true} ≠ 0
+    rw [bernoulliMeasure_real_apply_of_mem_of_notMem u (measurableSet_singleton true)
+      (by simp) (by simp)]
+    exact hu0.ne'
+
 local notation "CommonWorld" => fun (P : FactoryParameters)
   (h : {h : ℝ // h ∈ Ioc 0 (1 / 4 : ℝ)}) =>
   (⟨0, 1, ⟨coefficient_lower_le_one P, le_rfl⟩, h.1, h.2⟩ : World P)
@@ -823,12 +850,12 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
           (RawLaw (RowLaw table)) (((TraceEvent TablePolicy S p q t n) ∩
             {ω | Act TablePolicy S p q n ω = .inl source}) ∩ Prod.fst ⁻¹' D) *
             (bernoulliMeasure true false (if source then q else p)) {b}) ∧
-      (∀ (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ)
+      (∀ (S : Bool) (w : World P) (t : ℕ → Bool × Bool) (n : ℕ)
         (D : Set ((Bool × History) → Action)), MeasurableSet D →
-        (∏ i ∈ Finset.range n,
-          (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2}) ≠ 0 →
-        (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S p q t n) ∩ Prod.fst ⁻¹' D) /
-          (RawLaw (RowLaw table)) (TraceEvent TablePolicy S p q t n) =
+        (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S
+          (Rate P w false) (Rate P w true) t n) ∩ Prod.fst ⁻¹' D) /
+          (RawLaw (RowLaw table)) (TraceEvent TablePolicy S
+            (Rate P w false) (Rate P w true) t n) =
             (RowLaw table) ((SeedSection TablePolicy S t n) ∩ D) /
               (RowLaw table) (SeedSection TablePolicy S t n)) ∧
       (∀ (S : Bool) (p q : unitInterval) (ω) (n : ℕ),
@@ -866,9 +893,10 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
   · intro S
     exact native_source_conditional_kernel TablePolicy
       (fun S h => measurable_pi_apply (S, h)) S (RowLaw table)
-  · intro S
+  · intro S w t n D hD
     exact private_seed_posterior TablePolicy
       (fun S h => measurable_pi_apply (S, h)) S (RowLaw table)
+      (Rate P w false) (Rate P w true) t n D hD (legal_source_word_ne_zero P w t n)
   · intro S p q ω n hn
     have he := List.length_eq_length_filter_add
       (l := acquiredHistory TablePolicy S (Read p q) n ω) (fun v => v.1)
@@ -892,6 +920,7 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
       (Rate P w false) (Rate P w true) (hfinite w S) cell
   have ht := htv w S
   rwa [he] at ht
+
 
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernoulliFactoryCriticalMoment
