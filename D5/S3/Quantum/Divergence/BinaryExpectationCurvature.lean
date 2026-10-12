@@ -67,7 +67,7 @@ private lemma curvature_kernel_argument_mem (v r : ℝ)
 /- The weighted resolvent curvature is monotone in its scale parameter.  The
 factor `1-r` is nonnegative, while the kernel is monotone on the full range
 visited by `v*r`. -/
-theorem weighted_curvature_mono (K : CurvatureKernel) {v w : ℝ}
+private theorem weighted_curvature_mono (K : CurvatureKernel) {v w : ℝ}
     (hv : v ∈ Icc (0 : ℝ) 1) (hw : w ∈ Icc (0 : ℝ) 1) (hvw : v ≤ w) :
     weightedCurvature K v ≤ weightedCurvature K w := by
   unfold weightedCurvature
@@ -84,7 +84,7 @@ theorem weighted_curvature_mono (K : CurvatureKernel) {v w : ℝ}
 
 /- This is the exact `s²` step.  The only input from the matrix problem is that
 its relative-entropy defect has this curvature representation. -/
-theorem quadratic_profile_square_contraction (K : CurvatureKernel)
+private theorem quadratic_profile_square_contraction (K : CurvatureKernel)
     {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
     quadraticProfile K s ≤ s ^ 2 * quadraticProfile K 1 := by
   have hmono := weighted_curvature_mono K hs ⟨zero_le_one, le_rfl⟩ hs.2
@@ -108,18 +108,18 @@ structure BinaryDefectPath where
   endpoint_slope_eq : slope 1 = 2 * defect 1 + endpointRemainder
   endpointRemainder_nonnegative : 0 ≤ endpointRemainder
 
-theorem binary_defect_square_contraction (P : BinaryDefectPath)
+private theorem binary_defect_square_contraction (P : BinaryDefectPath)
     {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
     P.defect s ≤ s ^ 2 * P.defect 1 := by
   rw [P.defect_eq_profile s hs, P.defect_eq_profile 1 ⟨zero_le_one, le_rfl⟩]
   exact quadratic_profile_square_contraction P.kernel hs
 
-theorem binary_endpoint_slope_lower_bound (P : BinaryDefectPath) :
+private theorem binary_endpoint_slope_lower_bound (P : BinaryDefectPath) :
     2 * P.defect 1 ≤ P.slope 1 := by
   rw [P.endpoint_slope_eq]
   linarith [P.endpointRemainder_nonnegative]
 
-theorem binary_origin_values (P : BinaryDefectPath) :
+private theorem binary_origin_values (P : BinaryDefectPath) :
     P.defect 0 = 0 ∧ P.slope 0 = 0 :=
   ⟨P.origin_defect, P.origin_slope⟩
 
@@ -147,7 +147,7 @@ structure QuantumBinaryDefectPath
   defect_eq_relative_entropy : ∀ v : ℝ,
     defect v = quantumRelativeEntropy (path v) reference
 
-theorem quantum_relative_entropy_square_contraction
+private theorem quantum_relative_entropy_square_contraction
     {n : Type*} [Fintype n] [DecidableEq n]
     (P : QuantumBinaryDefectPath n) {s : ℝ}
     (hs : s ∈ Icc (0 : ℝ) 1) :
