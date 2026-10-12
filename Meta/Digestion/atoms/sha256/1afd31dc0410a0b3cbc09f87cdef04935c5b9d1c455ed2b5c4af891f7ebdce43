@@ -1,0 +1,30 @@
+**Definition 107.1 (multi-port future response).**
+Let $V$ be a finite-dimensional real vector space, let
+$A:V\to V$ be a linear evolution, let ${C_\ell:V\to Y_\ell\}_{\ell\in L}$ be
+a finite family of linear readout ports, and let ${T_a:V\to V\}_{a\in A_0}$
+be a finite family of admissible interventions. For a word
+$w=a_1\cdots a_m$ put
+
+$$
+T_w=T_{a_m}\cdots T_{a_1},
+\qquad T_\varepsilon=I.
+$$
+
+The unacted hidden subspace and the action-closed hidden subspace are
+
+$$
+\begin{aligned}
+K_{\mathrm{stat}}
+  &=\bigcap_{\ell\in L}\bigcap_{j\ge0}
+      \ker(C_\ell A^j),\\
+K_{\mathrm{fut}}
+  &=\bigcap_{w\in A_0^*}\bigcap_{\ell\in L}\bigcap_{j\ge0}
+      \ker(C_\ell A^jT_w).
+\end{aligned}
+\tag{107.1}
+$$
+
+The first space contains perturbations invisible to every declared port under
+the passive evolution. The second contains perturbations invisible after every
+finite intervention word as well.
+

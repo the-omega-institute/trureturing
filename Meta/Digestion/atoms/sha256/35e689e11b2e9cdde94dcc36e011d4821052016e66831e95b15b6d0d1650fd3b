@@ -1,0 +1,8 @@
+## 107. Root readout, action closure and future memory
+
+The preceding sections distinguish the complete finite occurrence state from
+the scalar root response. This section makes the corresponding memory
+boundary explicit. It is an ordinary finite-dimensional linear result. The
+actions below are an abstract contract; they are not claimed to be native
+original-root queries unless a separate realization supplies them.
+

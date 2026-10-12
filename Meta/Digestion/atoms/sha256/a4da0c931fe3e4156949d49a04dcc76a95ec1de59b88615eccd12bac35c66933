@@ -1,0 +1,50 @@
+**定理 32.7（任意合法等待数组的完整有限实现）。** 对任意固定的自然数数组 $(t_v)_v$、$(h_r)_r$，有定义 32.1 的成功控制器，实现定理 32.6 的全部等待，所有声明状态均实际可达。它的状态数恰为该普查式。
+
+证明。令 $w_v=\delta_v+Pt_v$；递归定义查询事件数
+
+$$
+N_{\varnothing}=w_{\varnothing},\qquad
+N_v=N_{\operatorname{parent}(v)}+w_v\quad(v\ne\varnothing),\qquad
+\nu_v=(b+\lfloor N_v/P\rfloor)\bmod2.
+$$
+
+这是在安装固定控制表时计算的公开常量，不是运行时取得的时钟。取不交控制状态
+
+$$
+Q=\{q_{v,s}:0\le s\le w_v\}
+\sqcup\{a_{r,s}:1\le s\le h_r\}
+\sqcup\{H_r:0\le r<P\}.
+$$
+
+初态为 $q_{\varnothing,w_{\varnothing}}$，已经计在根的 Advance 段内，不另加一个免费或重复初态。定义
+
+$$
+\begin{aligned}
+u(q_{v,s})&=\operatorname{Advance},&
+v(q_{v,s},\operatorname{Ack})&=q_{v,s-1}&& (s>0),\\
+u(q_{v,0})&=\operatorname{Read},&&&\\
+u(a_{r,s})&=\operatorname{Advance},&
+v(a_{r,s},\operatorname{Ack})&=
+\begin{cases}a_{r,s-1},&s>1,\\H_r,&s=1,\end{cases}&&\!\\
+u(H_r)&=\operatorname{Halt}(r).&&&
+\end{aligned}
+$$
+
+在 $q_{v,0}$ 取得实际原始比特 $y$ 后，控制表以 $e=(y+\nu_v)\bmod2$ 选择分支。若 $j<d$，进入子节点 $ve$ 的 $q_{ve,w_{ve}}$；若 $j=d$，令 $r=a_v+e$，进入 $a_{r,h_r}$（$h_r>0$）或 $H_r$（$h_r=0$）。这里 $s,\nu_v,a_v$ 均由已计的状态及其固定表行决定；响应更新无需另一个运行时计数器、旧读数或解码工作区。对类型不相容或实际不出现的响应，$v$ 任意补全到已有状态。
+
+由等待定义，$N_v\bmod P=P-M_v$。对任意当前候选 $r\in I_v$，原传感器等式给出 $e=e_v(r)$，于是所走分支正是包含该同一原 $r$ 的子区间。归纳到长度二后，$a_v+e$ 恰为原 $r$，随后只作规定的 $h_r$ 次单位前进并停止。每个来源恰作 $m$ 读，有限终止。
+
+为明确装置与原目标配对，令 $X_r(n)=(bP+r+n)\bmod(2P)$。上述控制状态的精确可达支持为
+
+$$
+\begin{aligned}
+C_{q_{v,s}}&=\{(r,X_r(N_v-s)):r\in I_v\},\\
+C_{a_{r,s}}&=\{(r,X_r(N_{v(r)}+h_r-s))\},\\
+C_{H_r}&=\{(r,X_r(N_{v(r)}+h_r))\},
+\end{aligned}
+$$
+
+其中 $v(r)$ 是含 $r$ 的最后查询区间。Advance 把支持的第二坐标推进一次，Read 保持第二坐标并按实际响应分支，第一坐标始终保留原 $r$。在每个支持对上，取到达相应 $H_r$ 尚需的 Advance 与 Read 总数为自然秩；每个非停止动作使其减一，Halt 处为零。这给出本卷定理 27.2 的支持封闭、输出正确和有限下降证书；末尾 Stop 另计一次动作。
+
+每个 $I_v$ 非空且两子区间非空，故每个节点及其整个等待段由实际来源实现；每个 $r$ 实现自己的末读后段和 $H_r$。所有状态均可达，计数为 $\sum_v(w_v+1)+\sum_r(h_r+1)$，即所述公式。∎
+

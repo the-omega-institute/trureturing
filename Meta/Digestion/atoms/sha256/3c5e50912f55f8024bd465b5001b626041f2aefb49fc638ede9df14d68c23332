@@ -1,0 +1,19 @@
+**Theorem 95.2 (infinite unrestricted error from a single prefix fibre).**
+For every fixed $h\ge0$ there exists one table $p_h^*$ such that
+
+$$
+p_h(W_h(K_m))=p_h^*\quad(m\ge1),\qquad
+\sup_{\{t\in\mathcal T:\ p_h(t)=p_h^*\}}C(t)=+\infty.
+\tag{95.3}
+$$
+
+Consequently every real-valued estimator
+$E:\{p_h(t):t\in\mathcal T\}\to\mathbb R$ has
+
+$$
+\sup_{t\in\mathcal T}|E(p_h(t))-C(t)|=+\infty.
+\tag{95.4}
+$$
+
+The assertion has no common finite source-size bound.
+

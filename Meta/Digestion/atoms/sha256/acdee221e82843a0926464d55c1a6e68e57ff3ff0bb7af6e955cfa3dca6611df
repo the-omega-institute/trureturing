@@ -1,0 +1,8 @@
+**Definition 93.1 (finite perfect comparison sources).**
+Let $B_0=\alpha$ and $B_{k+1}=\langle B_k,B_k\rangle$ for
+$k\in\mathbb N_0$. These are separate finite ordered native sources,
+each of whose repeated subtree copies has its own occurrences.
+They have $N_{B_k}=2^{k+1}-1$. Put
+$g_k(\lambda)=G_\lambda(B_k)$ for $\lambda>0$, with the same
+closed operator and measure as in Definition 92.1.
+
