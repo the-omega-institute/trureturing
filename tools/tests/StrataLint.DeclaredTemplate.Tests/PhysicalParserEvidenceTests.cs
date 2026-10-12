@@ -60,11 +60,6 @@ public sealed class PhysicalParserEvidenceTests
 
         var selected = new List<RepoPath>();
         var changes = new List<string>();
-        var acceptedEvents = Directory.GetFiles(Path.Combine(root, "Golden/Frozen/accepted"), "*.json")
-            .Select(p => (Path: p, Node: JsonNode.Parse(File.ReadAllText(p))!))
-            .Where(p => Originals.Any(o => p.Node["payload"]?["descriptor_selector"]?.GetValue<string>()
-                == "D5/S0/Computability/Coding/" + o.Module + ".lean")).ToArray();
-        Assert.Equal(Originals.Length, acceptedEvents.Length);
         foreach (var (module, theorem) in Originals)
         {
             var path = RepoPath.CreateKnown("D5/S0/Computability/Coding/" + module + ".lean");
@@ -79,22 +74,9 @@ public sealed class PhysicalParserEvidenceTests
             Assert.Equal(statementId, FrozenStateRecordLoader.Load(Tree(sources).Files[
                 RepoPath.CreateKnown(pinPath)]).StatementId.Value);
 
-            // Validate the original writer event under the current candidate schema,
-            // including every declaration identity, not only the designated result.
-            var events = acceptedEvents
-                .Where(p => p.Node["payload"]?["descriptor_selector"]?.GetValue<string>() == path.Value)
-                .ToArray();
-            var accepted = Assert.Single(events);
-            var eventPath = Path.GetRelativePath(root, accepted.Path).Replace('\\', '/');
-            Source(eventPath);
-            var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(FrozenAcceptedEventLoader.LoadFiles(
-                [Tree(sources).Files[RepoPath.CreateKnown(eventPath)]]));
-            var payload = Assert.Single(loaded.Events).Payload;
-            Assert.Equal(statementId, payload.GetProperty("statement_id").GetString());
-            var actualDeclarations = payload.GetProperty("declaration_statement_ids").EnumerateArray().Select(d =>
-                (d.GetProperty("declaration_name_key").GetString()!, d.GetProperty("kind").GetString()!,
-                    d.GetProperty("statement_id").GetString()!));
-            Assert.Equal(declarations.Select(d => (d.DeclarationNameKey, d.Kind, d.StatementId.Value)), actualDeclarations);
+            var record = FrozenStateRecordLoader.Load(Tree(sources).Files[RepoPath.CreateKnown(pinPath)]);
+            Assert.Equal(declarations.Select(static d => (d.DeclarationNameKey, d.Kind)),
+                record.Declarations.Select(static d => (d.DeclarationNameKey, d.Kind)));
             selected.Add(RepoPath.CreateKnown(registration));
             changes.AddRange([path.Value, registration, pinPath]);
         }

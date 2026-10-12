@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ff521a0288ef520e188379ac9c3da89d12f4617330dcc9152cc6985e18f0315e"}
+{"statement_id":"sha256:ff521a0288ef520e188379ac9c3da89d12f4617330dcc9152cc6985e18f0315e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Coding),31:ReciprocityParityErrorDetection),13:flipLocalSign)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Coding),31:ReciprocityParityErrorDetection),34:reciprocity_parity_error_detection)","kind":"theorem"}]}

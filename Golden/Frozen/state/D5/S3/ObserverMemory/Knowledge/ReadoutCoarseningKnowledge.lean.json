@@ -1,1 +1,1 @@
-{"statement_id":"sha256:092c1d6210274b5f3724c1d7a8e5b7b1d8aeffd7f7605ae24be817815f8d3649"}
+{"statement_id":"sha256:092c1d6210274b5f3724c1d7a8e5b7b1d8aeffd7f7605ae24be817815f8d3649","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),9:Knowledge),26:ReadoutCoarseningKnowledge),36:readout_coarsening_shrinks_knowledge)","kind":"theorem"}]}

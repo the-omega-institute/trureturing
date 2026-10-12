@@ -1153,3 +1153,1291 @@ The source-specific profile attainer, saturation/support obstruction, fixed-fami
 All attainments and approximants specify probability laws on one common carrier and one common procedure on the full unchanged source. They supply no operation acquiring a source-dependent law from advice or prime responses, no effective exact sampler for arbitrary real probabilities, no magnitude promise or uniform execution horizon, and no physical, efficiency, literature-priority or Lean/kernel-verification claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 45. Lawful acquisition through one inherited seed
+
+**Definition 45.1 (Preparation, handoff and acquisition error).** Retain the labeled source $X$, the maps $N$ and $\Omega$, the zero supplied advice $\beta_0$, and the prime-only consumer contract of Definition 44.1. A lawful preparation consists of one probability space $(S,\mathcal A,\mathsf P)$, common to every $y\in X$, and one deterministic source procedure. At source $y$, with seed $s$, it may use only $s$, the value $0$, and answers to queries $p\mid N(y)$. Its finite preparation records are measurable, and at every fixed $y$ its preparation terminates after finitely many transitions with probability one. The terminal record declares a consumer tape in the same measurable carrier $(\Theta,\mathcal F)$ used by the consumer. No source label, numerical value, target value, magnitude promise, law on $X$, restart, rejection conditioning or extra probe is supplied.
+
+Write $T_y\subseteq S$ for the measurable full-probability termination event and $\phi_y:T_y\to\Theta$ for the measurable terminal-tape map; output-event measurability is part of the preparation contract. Fix one tape $\theta_0$ and extend $\phi_y$ to $S$ by setting it equal to $\theta _0$ on $S\setminus T_y$. The prepared law and its uniform acquisition error are
+
+$$
+\widehat\mu_y=(\phi_y)_*\mathsf P,
+\qquad
+\varepsilon=\sup_{y\in X}\operatorname {TV}(\widehat\mu_y,\mu_y),
+\qquad
+\operatorname {TV}(\lambda,\kappa)=\sup_{A\in\mathcal F}|\lambda(A)-\kappa(A)|.
+\tag{45.1}
+$$
+
+The extension changes no probability because $\mathsf P(T_y)=1$. After the handoff the original consumer runs on the same read-only source and on the declared tape; the preparation record is not a second consumer input. The profile requirement remains
+
+$$
+ e_y\le b(\Omega(y))h_y,
+\qquad b:\mathbb N_{>0}\to[0,1)\text{ nondecreasing},
+\qquad B=\lim_{k\to\infty}b(k).
+\tag{45.2}
+$$
+
+**Proposition 45.2 (Chronological flattening).** A lawful preparation followed by the consumer is one deterministic seed execution with the preparation transitions preceding the consumer transitions. For every source $y$ and every measurable consumer event $A\subseteq\Theta$,
+
+$$
+\mathsf P\{\text{the handed tape lies in }A\}=\widehat\mu_y(A).
+\tag{45.3}
+$$
+
+In particular the probabilities of the consumer events $H_y,F_y,R_y,D_y$ after preparation are respectively $\widehat\mu_y(H_y),\widehat\mu_y(F_y),\widehat\mu_y(R_y),\widehat\mu_y(D_y)$. Every finite composite record event is measurable, and preparation divergence contributes no mass.
+
+**Proof.** On $T_y$ the handoff is a finite transition followed by the deterministic consumer run, so the handed-tape event is exactly $T_y\cap\phi_y^{-1}(A)$. The finite composite proposal, false-proposal and nonproposal events are respectively $T_y\cap\phi_y^{-1}(H_y)$, $T_y\cap\phi_y^{-1}(F_y)$ and $T_y\cap\phi_y^{-1}(R_y)$. Literal composite divergence is
+
+$$
+(S\setminus T_y)\ \cup\ (T_y\cap\phi_y^{-1}(D_y)).
+$$
+
+The complement of $T_y$ is null. Its dummy output in (45.1) is only a measure extension; the actual execution on that complement still diverges. A finite composite record is the union, over the two finite lengths and the two finite prime menus, of the corresponding cylinder event for the seed and the finite-record event of the consumer pulled back by the measurable map $\phi_y$; this is a countable union of measurable sets. The same argument applies to each of the four terminal classes. No new random variable is introduced at the handoff, and no source is reset. $\square$
+
+**Lemma 45.3 (Finite-record coupling and common submeasures).** Enumerate the primes as $p_1<p_2<\cdots$, write $P_m=\{p_1,\ldots,p_m\}$, and let $C_m(x)$ be the actual sources matching $x$ on $P_m$. Let $E_m(x)$ be the measurable seed event that preparation at $x$ terminates within $m$ transitions and uses only primes in $P_m$. Then $E_m(x)\uparrow T_x$, and, for every $y\in C_m(x)$, the preparation at $y$ has the same record and output as at $x$ on this entire event. In particular,
+
+$$
+\operatorname {TV}(\widehat\mu_x,\widehat\mu_y)
+\le1-\mathsf P(E_m(x)).
+\tag{45.4}
+$$
+
+The finite measure
+
+$$
+\rho_{x,m}(A)=\mathsf P(E_m(x)\cap\phi_x^{-1}(A))\qquad(A\in\mathcal F)
+\tag{45.5}
+$$
+
+is dominated by $\widehat\mu_y$ for every $y\in C_m(x)$. Thus every lawful prepared-law map is TV-continuous in finite prime observations, and two sources with identical complete prime observations have equal prepared laws.
+
+**Proof.** Every finite preparation uses a finite menu, so the stated events exhaust $T_x$. On $E_m(x)$, induction over the actual execution transports each preparation transition to every source matching $P_m$, with the seed fixed. This gives identical records and output tapes, without requiring a measurable diagonal in $\Theta\times\Theta$. For each $A\in\mathcal F$, the two output-event indicators agree on $E_m(x)$, and their expectation difference has absolute value at most $1-\mathsf P(E_m(x))$. Taking the event supremum proves (45.4); restricting to the same event proves (45.5)'s domination. Given $\gamma>0$, choose $m$ with $\mathsf P(E_m(x))>1-\gamma$. The cylinder $C_m(x)$ then gives a TV neighborhood of radius $\gamma$. Identical complete observations permit the same comparison for every $m$, giving equality. All comparisons hold for a whole seed event before any comparison source or individual seed is used. $\square$
+
+**Definition 45.4 (Design and fixed-family optimization).** A lawful design consists of one common consumer of Definition 44.1, a complete family $(\mu_y)_{y\in X}$ satisfying (45.2) and the anchor row $(h,d,z)$, and a lawful preparation on its declared carrier. The global design infimum varies all these objects, including the common seed probability space. For a fixed-family acquisition problem, the consumer, its carrier and the entire family $(\mu_y)$ are fixed; only the lawful preparation varies. Neither optimization introduces a probability law on $X$. Finite support always means a finite point mixture as in Definition 44.1, including on carriers without measurable singleton sets.
+
+## 46. Operational envelopes and a fixed-family criterion
+
+**Theorem 46.1 (Acquisition envelope and the unrestricted lower bound).** Let
+
+$$
+M=\sup_{y\in X}\widehat\mu_y(H_y).
+\tag{46.1}
+$$
+Every lawful preparation and every full target family satisfying (45.2) obey
+
+$$
+(1-B)M\le\varepsilon,
+\qquad
+(1-B)h\le(2-B)\varepsilon,
+\qquad
+h=h_{x_*}.
+\tag{46.2}
+$$
+Thus, when $h>0$ and $B<1$, exact acquisition is impossible and every design has
+
+$$
+\varepsilon\ge R:=\frac{(1-B)h}{2-B}.
+\tag{46.3}
+$$
+
+**Proof.** Fix a source $x$. Let $G_m(x)$ be the seed event on which the preparation and the subsequent consumer proposal both have finite composite length at most $m$, all queried primes lie among the first $m$ primes, and the final proposal is at most $m$. These events increase to the prepared proposal event at $x$ up to a null set. For the whole event $G_m(x)$, before quantifying over seeds, choose by the persistent-source theorem of Section 37 one actual source $y_m$ agreeing with $x$ on those finitely many prime answers and satisfying $k_m=\Omega(y_m)>m$.
+
+Every seed in $G_m(x)$ replays identically at $y_m$ through both the preparation and consumer stages, and its proposal is false there. Hence
+
+$$
+G_m(x)\subseteq\phi_{y_m}^{-1}(F_{y_m}).
+\tag{46.4}
+$$
+
+For $0\le c<1$, the function
+
+$$
+q_{y,c}=\mathbf 1_{F_y}-c\mathbf 1_{H_y}
+$$
+has values among $1-c,-c,0$ and oscillation at most one. The event definition of total variation therefore gives
+
+$$
+\widehat\mu_y(F_y)-c\widehat\mu_y(H_y)
+\le \mu_y(F_y)-c\mu_y(H_y)+\varepsilon.
+\tag{46.5}
+$$
+
+Indeed, $q_{y,c}+c=(1-c)\mathbf1_{F_y}+c\mathbf1_{F_y\cup H_y^c}$, and the two nonnegative event coefficients sum to one. This proves (46.5) directly on every measurable carrier. The finite-space TV dual and coupling conventions are those of Levin and Peres, with Wilmer, *Markov Chains and Mixing Times*, second edition, [Propositions 4.5 and 4.7](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf); no finite-space converse is being imported here.
+
+Putting $c=b(k_m)$ and using (45.2), (46.4) and $b(k_m)\le B$ gives
+
+$$
+\mathsf P(G_m(x))\le B M+\varepsilon.
+\tag{46.6}
+$$
+
+Continuity from below under the one fixed seed law at $x$ yields $\widehat\mu_x(H_x)\le BM+\varepsilon$. Taking the supremum over $x$ proves the first inequality in (46.2). At the anchor, event-TV gives $h\le\widehat\mu_{x_*}(H_{x_*})+\varepsilon\le M+\varepsilon$. Multiplying by $1-B$ and using the first inequality proves the second. No sequence of comparison sources is passed through a limit; only the increasing events under the fixed source $x$ are exhausted. $\square$
+
+**Theorem 46.2 (Finite consumer carriers).** If $\Theta$ is finite, every lawful design satisfies
+
+$$
+\varepsilon\ge\frac h2.
+\tag{46.7}
+$$
+This bound is attained for every profile, every $(h,d,z)\in\mathscr S$, and every $B$, including $B=1$.
+
+**Proof.** Enumerate the finite carrier. The measurable anchor event $E=H_{x_*}$ has a common finite prime menu and a common finite output bound because the carrier is finite. Include in that menu a finite preparation truncation from Lemma 45.3, chosen so that the prepared laws at the anchor and at every source matching the menu differ by at most $\gamma$.
+
+For this argument only, color an actual source by the least carrier index which gives a correct finite proposal there, and color it $0$ when no carrier tape does so. This is a finite-valued auxiliary observation, not advice supplied to the original procedure. A persistent source for this coloring cannot have color $j>0$: the auxiliary procedure that, on color $j$, runs tape $j$ gives only correct finite proposals on that color cell, contradicting Corollary 37.3 at a persistent source. Thus Theorem 37.2 supplies one actual source $y$ matching the combined menu, with color $0$ and with target larger than every anchor output. Thus every tape in $E$ is a false proposal at $y$, and color $0$ says that every finite proposal at $y$ is false. Therefore $F_y=H_y$. Since $b(\Omega(y))<1$, (45.2) forces $h_y=e_y=0$, and hence $\mu_y(E)=0$.
+
+The two preparation laws differ on $E$ by at most $\gamma$, while $\mu_{x_*}(E)=h$. Thus
+
+$$
+ h\le |h-\widehat\mu_{x_*}(E)|+|\widehat\mu_{x_*}(E)-\widehat\mu_y(E)|
+      +|\widehat\mu_y(E)-0|\le 2\varepsilon+\gamma.
+$$
+
+Letting $\gamma\downarrow0$ proves (46.7). For attainment use three tapes $a,v,u$: $a$ immediately proposes $1$, $v$ literally diverges, and $u$ returns unknown. Give the target law $(h,d,z)$ at every source with numerical value $27$, the law $(0,d+h,z)$ at every other source, and prepare the midpoint law $(h/2,d+h/2,z)$ in one finite transition without queries. The target error is zero at every source and the two endpoint distances from the midpoint are $h/2$. The anchor row is exact. This also covers $h=0$ and all simplex faces. $\square$
+
+**Theorem 46.3 (Exact acquisition criterion on a countable discrete carrier).** Let $\Theta$ be a nonempty countable carrier with its power-set sigma algebra, enumerated without repetitions as $\{\theta_j:j\ge1\}$ in the infinite case and with sums stopped at the final index in the finite case, and let $\tau$ be the topology on $X$ generated by the finite prime-answer cylinders
+
+$$
+C(S,b)=\{y\in X:d_S(N(y))=b\},\qquad S\subset\mathbb P\text{ finite}.
+\tag{46.8}
+$$
+
+For a fixed family of probability laws $(\mu_y)_{y\in X}$ on this carrier, there exists a lawful preparation with $\widehat\mu_y=\mu_y$ for every $y$ if and only if the map
+
+$$
+(X,\tau)\longrightarrow(\mathcal P(\Theta),\operatorname {TV}),\qquad y\longmapsto\mu_y,
+$$
+
+is continuous. In particular, equal complete prime observations force equal laws.
+
+**Proof.** Necessity is Lemma 45.3: for every $\gamma>0$, a finite cylinder around $x$ has all prepared laws within $\gamma$ of $\widehat\mu_x=\mu_x$.
+
+For sufficiency, let $U$ be uniform on $(0,1)$ and let $p_1<p_2<\cdots$ enumerate the primes. For each available tape index $j$ put
+
+$$
+F_j(y)=\sum_{i\le j}\mu_y(\{\theta_i\}),\qquad F_0(y)=0.
+\tag{46.9}
+$$
+
+Each $F_j$ is $\operatorname {TV}$-continuous. After reading the first $m$ prime answers, let $C_m(y)$ be the corresponding cylinder. The fixed deterministic rule stores the real constants
+
+$$
+L_{m,j}=\sup_{w\in C_m(y)}F_{j-1}(w),\qquad
+U_{m,j}=\inf_{w\in C_m(y)}F_j(w)\qquad(j\le m),
+\tag{46.10}
+$$
+
+for every possible finite record, testing only available tape indices $j\le m$, and emits $\theta_j$ at the first stage with
+$L_{m,j}<U<U_{m,j}$. If no such stage occurs it may diverge. For a fixed $y$, outside the countable set $\{F_j(y):j\ge0\}$ there is a unique $j$ with $F_{j-1}(y)<U<F_j(y)$. Continuity supplies a finite cylinder on which the two strict inequalities in (46.10) hold, so that seed terminates with $\theta_j$. The exceptional set is null, and the emitted index has distribution $(\mu_y(\{\theta_j\}))_j$.
+
+The intervals used at one stage are disjoint: if $i<j$, then $F_i\le F_{j-1}$ on the same cylinder, and the two strict certificate inequalities cannot hold simultaneously. Each output event is a countable union of Borel intervals in $U$, so all finite-record and output events are measurable. The rule uses only finite observed prime answers and fixed real constants; no effective evaluation of the suprema or exact sampling algorithm for arbitrary real masses is asserted. $\square$
+
+**Theorem 46.4 (Exact acquisition on an arbitrary measurable carrier).** Fix a nonempty measurable carrier $(\Theta,\mathcal F)$ and a family of probability laws $(\mu_y)_{y\in X}$. Since the actual labeled source set $X$ is countable, enumerate it as $x_1,x_2,\ldots$ and define the auxiliary probability measure on tapes
+
+$$
+\sigma=\sum_{i\ge1}2^{-i}\mu_{x_i},\qquad
+f_y=\frac{d\mu_y}{d\sigma}.
+\tag{46.11}
+$$
+
+Choose measurable nonnegative versions of these densities. For each occupied prime-prefix cylinder $C$, put
+
+$$
+\ell_C(A)=\int_A\inf_{y\in C}f_y\,d\sigma,
+\qquad a_C=\ell_C(\Theta).
+\tag{46.12}
+$$
+
+Under the measurable common-rule semantics of Definition 40.1, exact lawful acquisition is possible if and only if
+
+$$
+\lim_{m\to\infty}a_{C_m(x)}=1\qquad\text{for every actual }x\in X.
+\tag{46.13}
+$$
+
+No topology, measurable-singleton, standard-Borel or countable-generation assumption on the consumer or seed carrier is required. The sufficiency uses the stipulated measurable common-rule semantics, with fixed shared tables; it asserts no effective finite-description or real-sampling algorithm. The measure $\sigma$ is a dominating measure on $\Theta$, not a sampled source or a law supplied on $X$.
+
+**Proof.** Every $\mu_y$ is absolutely continuous with respect to the finite measure $\sigma$. The Radon--Nikodym theorem therefore supplies the densities in (46.11). Countability of $X$ makes their pointwise infimum measurable and makes all simultaneous almost-everywhere comparisons legitimate after a single countable union of null sets. The measure $\ell_C$ is the greatest measure dominated by every $\mu_y$, $y\in C$: any such measure $\rho$ is dominated by $\sigma$ up to a finite scalar, has a density, and that density is at most every $f_y$ almost everywhere, hence at most their infimum. In particular (46.12) is independent, as a measure, of the chosen versions and enumeration. If $C'\subseteq C$, then $\ell_{C'}\ge\ell_C$.
+
+If preparation acquires the family exactly, the common submeasure $\rho_{x,m}$ of Lemma 45.3 is dominated by $\ell_{C_m(x)}$. Its mass tends to one, proving necessity of (46.13).
+
+For sufficiency include the depth-zero cylinder $X$, whose fictitious parent has submeasure zero. For each occupied cylinder $C$ with parent $C^-$, put $\Delta_C=\ell_C-\ell_{C^-}$, using $\Delta_X=\ell_X$. These are positive finite measures of masses $a_C-a_{C^-}$. When that mass is positive, give a tape coordinate $W_C$ the law $\Delta_C/(a_C-a_{C^-})$; for zero mass choose a fixed tape. There are countably many nodes. Take one common seed consisting of a uniform variable $U\in(0,1)$ and these tape coordinates, with their product probability measure, independent of $U$.
+
+The deterministic preparation begins at $X$. At a reached node $C$, it emits $W_C$ if $U<a_C$; otherwise it queries the next prime and moves to the child indicated by the answer. At every non-root reached node it already has $U\ge a_{C^-}$. Therefore the unconditional output submeasure at that node, for any measurable tape event $A$, is
+
+$$
+\mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}=\Delta_C(A).
+$$
+
+The accumulated output submeasure along source $x$ through depth $m$ telescopes to $\ell_{C_m(x)}$. Condition (46.13) makes the preparation terminate after a finite actual prefix with probability one, and its complete output law is $\mu_x$: the increasing submeasures are dominated by $\mu_x$ and their masses tend to one. All finite record events are intervals in $U$ intersected with measurable coordinate events; output events are countable unions of these. Nodes with empty source cylinders are unreachable and receive arbitrary fixed rules. Every query precedes the handoff, and the original consumer subsequently runs on the same source. No failure is conditioned away and no restart is used.
+
+The countable product of probability measures on arbitrary measurable spaces is the standard product-measure construction; it is represented, without standard-Borel assumptions, by `Measure.infinitePi` and its cylinder identity in [pinned Mathlib, Probability/ProductMeasure](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/ProductMeasure.lean). This supplies a common seed measure directly rather than realizing arbitrary tape laws from a real uniform variable. Radon--Nikodym domination, as in [pinned Mathlib, Measure/Decomposition/RadonNikodym](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Decomposition/RadonNikodym.lean), and product measures are reused ingredients. Local lower-envelope and range-partition methods occur for countable-alphabet chains in Gallo, Lerasle and Takahashi, [*Markov approximation of chains of infinite order in the $\bar d$-metric*, Section 3, Lemma 3.1](https://arxiv.org/html/1107.4353v2). Their stationary-chain and coalescence assumptions are not imported: the correspondence here uses the actual countable source set and its prime-prefix tree. $\square$
+
+**Proposition 46.5 (TV continuity is not sufficient on arbitrary measurable carriers).** On a general measurable carrier, the continuity condition in Theorem 46.3 is necessary but not sufficient.
+
+**Proof.** Take $\Theta=[0,1]$ with its Borel sigma algebra and let the consumer always return an unknown nonproposal. Thus every target row is $(0,0,1)$. Let $x_*$ denote the anchor and encode the prime observations as bits relative to the anchor: $s_i(y)=1$ when the answer at the $i$-th prime differs from the anchor answer, and $s_i(y)=0$ otherwise. If all bits agree, set $\mu_y$ equal to Lebesgue measure $\lambda$. Otherwise let $n$ be the first index with $s_n(y)=1$, use the next $n$ bits to choose one of the $2^n$ dyadic intervals $I_{n,j}$ of length $2^{-n}$, and set
+
+$$
+\mu_y(A)=\frac{\lambda(A\setminus I_{n,j})}{1-2^{-n}}.
+\tag{46.14}
+$$
+
+Every finite bit pattern used here is realized by an actual source by Theorem 35.2. At a non-anchor source, fixing the first $2n$ bits fixes its law. At the anchor, sources whose first difference is after $m$ have TV distance $2^{-n}\le2^{-m}$ from $\lambda$. Hence $y\mapsto\mu_y$ is $\operatorname {TV}$-continuous.
+
+Suppose a lawful preparation acquired this whole family exactly. Its preparation records at the anchor exhaust a full-measure event, so for some finite record bound $m$ the event $E_m$ has positive seed mass. The pushforward of $\mathsf P|_{E_m}$ under the anchor output map is a nonzero submeasure of $\lambda$. Choose $n>m$ and a level-$n$ interval $I_{n,j}$ having positive mass under this submeasure. By the finite-pattern theorem choose one actual source whose first difference is at $n$ and whose next $n$ bits encode $j$. It matches the anchor on the entire preparation menu, so the same positive submeasure is produced at that source, while (46.14) assigns the interval $I_{n,j}$ mass zero. This contradicts exact acquisition. The obstruction is a common-submeasure failure inside every anchor cylinder, not a failure of TV continuity. $\square$
+
+**Theorem 46.6 (Zero fixed-family infimum and exactness).** For a fixed family on any nonempty measurable carrier, let
+
+$$
+I(\mu)=\inf_{\text{lawful preparations}}
+\sup_{y\in X}\operatorname {TV}(\widehat\mu_y,\mu_y).
+\tag{46.15}
+$$
+
+Then $I(\mu)=0$ if and only if $y\mapsto\mu_y$ is TV-continuous in finite prime observations. On a countable power-set carrier this is also equivalent to exact acquisition. On arbitrary measurable carriers, the family in Proposition 46.5 has zero infimum without exact attainment.
+
+**Proof.** Every prepared family is TV-continuous by Lemma 45.3, and a uniform TV limit of such families is TV-continuous by the triangle inequality. This proves necessity.
+
+Conversely fix $\delta>0$. Call an occupied prefix cylinder $C$ certified if it has a representative $x_C\in C$ with $\sup_{y\in C}\operatorname {TV}(\mu_y,\mu_{x_C})<\delta$. Continuity with radius $\delta/2$ supplies a certified prefix around every actual source. Choose one representative for every certified node and preload, under one source-independent product seed law, tape coordinates $V_C$ of laws $\mu_{x_C}$. Query primes in increasing order and emit $V_C$ at the first certified node. The chosen node depends only on its acquired prefix. Every source reaches such a node after finitely many queries, and the output law there is within $\delta$ of its fixed target law. Finite records and output events are measurable coordinate events. This construction changes only the preparation, with the target family and consumer held fixed. It gives uniform error at most $\delta$ and therefore $I(\mu)=0$. Product-measure existence and the shared-table semantic boundary are exactly those in Theorem 46.4. The countable assertion follows from Theorem 46.3; Proposition 46.5 supplies the failure of general attainment. $\square$
+
+## 47. Sharp global design frontiers
+
+**Theorem 47.1 (Unrestricted and finite-carrier infima).** Let $\mathcal D_{\mathrm{all}}$ be the class of all lawful designs with arbitrary measurable carriers, and let $\mathcal D_{\mathrm{fin}}$ be the subclass with finite consumer carrier. For every profile (45.2) and anchor row $(h,d,z)\in\mathscr S$,
+
+$$
+\inf_{\mathcal D_{\mathrm{all}}}\varepsilon=R=\frac{(1-B)h}{2-B},
+\qquad
+\inf_{\mathcal D_{\mathrm{fin}}}\varepsilon=\frac h2,
+\tag{47.1}
+$$
+
+and both infima are attained.
+
+**Proof.** The lower bounds are Theorems 46.1 and 46.2. For the unrestricted upper bound, use the countable carrier and the tapes $v,u,a_j$ of Theorem 44.2. Put
+
+$$
+q=\frac h{2-B},\qquad r=(1-B)q,
+$$
+
+and give the proposal tapes the law $\lambda$ with tails $T_1=1$ and $T_k=B-b(k)$ for $k\ge2$, so $\lambda(a_j)=T_j-T_{j+1}$. Let
+
+$$
+\nu=q\lambda+(d+r)\delta_v+z\delta_u,
+\qquad
+\alpha=h\lambda+d\delta_v+z\delta_u.
+\tag{47.2}
+$$
+
+The target law at every source with $N=27$ is $\alpha$. At a source of target $k\ge2$ and $B<1$, set $E_k=\{a_1,\ldots,a_{k-1}\}$ and $f_k=\lambda(E_k)=1-B+b(k)$ and prescribe
+
+$$
+\mu_y=\nu-\frac r{f_k}\lambda|_{E_k}+r\delta_{a_k};
+\tag{47.3}
+$$
+
+at every other target-one source use $\nu$. When $B=1$, use $\nu$ at every non-anchor source. The target rows are $(h,d,z)$ at $27$, $(q,d+r,z)$ at other target-one sources, and $(q,b(k)q,d+r,z)$ in the notation $(h_y,e_y,d_y,z_y)$ at target $k\ge2$. The removed mass in (47.3) is available because $r/f_k\le q$; normalization follows from $q+r=h$. The distance from $\nu$ is $r$ at the anchor and at every modified source, and zero elsewhere. All duplicate numerical labels receive the same law.
+
+Take the common seed space $(\Theta,2^\Theta,\nu)$; preparation hands the seed tape to the consumer in one transition without a prime query. It is finite at every source and gives $\widehat\mu_y=\nu$, so its uniform acquisition error is exactly $r=R$. The arbitrary real masses describe a probability measure and are not claimed to have an effective sampler. If $h=0$, use the common two-tape law $d\delta_v+z\delta_u$. The finite-carrier attainer is the midpoint construction in Theorem 46.2. $\square$
+
+**Corollary 47.2 (Endpoint rows).** The two formulas include all endpoints. If $h=0$, both values are zero and the zero-proposal row is attained. If $B=0$, then $b\equiv0$ and $R=h/2$. If $B=1$, the unrestricted value is zero and is attained by the same construction, whereas the finite-carrier value remains $h/2$. Strictness or a plateau does not change either unrestricted infimum. The split $d+z=1-h$ enters only the endpoint laws, not the two radii.
+
+**Proof.** These are the endpoint substitutions and the explicitly normalized seed and target laws in Theorem 47.1. $\square$
+
+## 48. Finite-support profiles and a bounded-band arithmetic bridge
+
+**Lemma 48.1 (Bounded-band matching sources at the anchor).** Let $S\subset\mathbb P$ be finite and let $H\ge1$ be an integer. There is an actual source $y\in X$ with the same answers as $x_*$ on every prime in $S$ and
+
+$$
+H+1\le\Omega(y)\le H+21.
+\tag{48.1}
+$$
+
+No assertion that every target between these endpoints occurs is made.
+
+**Proof.** Choose $H$ distinct primes $T$ outside $S\cup\{3\}$, and put $A_0=T\cup\{3\}$, $J=\prod_{q\in A_0}q$ and
+
+$$
+M=\prod_{q\in A_0}q^2\prod_{p\in S\setminus\{3\}}p.
+$$
+
+For every sufficiently large prime Fibonacci index $r$, the entry-rank identity (363.13) gives $\gcd(F_r,M)=1$: every prime divisor of this fixed $M$ has rank at least three, and a prime $r$ larger than all those ranks is divisible by none of them. For such $r$ impose
+
+$$
+1+F_rg\equiv q\pmod {q^2}\quad(q\in A_0),
+\qquad g\equiv0\pmod p\quad(p\in S\setminus\{3\}).
+\tag{48.2}
+$$
+
+The CRT gives a residue $a$ modulo $M$. All its representatives $g=a+Mt$ have the anchor answers on $S$, and every $q\in A_0$ divides $N=1+F_rg$ exactly once. The actual Fibonacci window contains $L=F_r/(10M)+O(1)$ consecutive values of $t$. For these values write
+
+$$
+1+F_r(a+Mt)=J(At+C),
+\qquad A=F_rM/J,\qquad C=(1+F_ra)/J.
+\tag{48.3}
+$$
+
+Here $A,C$ are integers and $A>0$. This progression is primitive. A prime dividing $F_r$ does not divide $J$, and $C\equiv J^{-1}\pmod p$ at such a prime. For $p\in S\setminus\{3\}$ the same nonzero congruence follows from $N\equiv1\pmod p$. For $q\in A_0$, division of $N\equiv q\pmod {q^2}$ gives $C\equiv(J/q)^{-1}\pmod q$, which is nonzero; also $q\mid A$. These are all prime divisors of $A$, so $\gcd(A,C)=1$ and every $At+C$ is coprime to $J$.
+
+Use the lower linear sieve in Bordignon, Johnston and Starichkova, [*An explicit version of Chen's theorem and the linear sieve*, arXiv:2207.09452v6, Theorem 6, Table 1 and Lemmas 17--19](https://arxiv.org/html/2207.09452v6). Its sequence weight is one at each of the $L$ positive integers $At+C$ and zero elsewhere. Set $\mathcal P=\{p:p\nmid A\}$ and $g(p)=1/p$ on this sieve-prime set. For every squarefree $d$ composed of primes in $\mathcal P$, invertibility of $A$ modulo $d$ gives one residue class of $t$, hence the count is $L/d+r(d)$ with $|r(d)|\le1$, uniformly in $r$ and $d$.
+
+Here is the full product-condition correspondence. Fix $u_0=10^9+1$, put $Q_0=\prod_{p<u_0}p$, and let $\mathcal Q_r=\{p\in\mathcal P:p<u_0\}$ with product $Q_r\mid Q_0$. For $z>\exp(4000)$ and $u\ge u_0$, Lemma 18 bounds the product with factors $(1-1/(p-1))^{-1}$ by $(1+1.452\cdot10^{-7})\log z/\log u$. The product with factors $(1-1/p)^{-1}$ over the smaller prime set $\mathcal P\setminus\mathcal Q_r$ is no larger. For $1<u<u_0$, use the same estimate starting at $u_0$ and $\log u\le\log u_0$. Thus Theorem 6's product condition holds with $\varepsilon_s=1/74$ for every $1<u<z$. The exceptional primes $\mathcal Q_r$ are omitted only from this product condition; they remain in $\mathcal P$ and are still sieved.
+
+Take
+
+$$
+D=\frac{L}{Q_0(\log L)^3},\qquad z=D^{1/10}.
+$$
+
+For large enough $r$, $z>\exp(4000)$ and $D\ge z^2$. The theorem's remainder sum is over squarefree $d\mid\prod_{p\in\mathcal P,\ p<z}p$ with $d<Q_rD$, so it is at most $Q_0D+1=O(L/(\log L)^3)$. Its main mass is $LV(z)$, where
+
+$$
+V(z)=\prod_{p\in\mathcal P,\ p<z}(1-1/p)
+\ge\prod_{p<z}(1-1/p)\ge\frac{c}{\log z}
+$$
+
+for an absolute $c>0$. The final inequality follows directly from Lemma 17's upper bound on $\sum_{p<z}1/p$ and $\log(1-t)\ge-t-t^2$ for $0\le t\le1/2$, since $\sum_p1/p^2<\infty$.
+
+The sieve parameter is $s=\log D/\log z=10$. Its nonnegative delay-equation functions satisfy $10f(10)\ge3f(3)=2e^\gamma\log2$, so $f(10)>1/10$. Table 1 gives $C_2(1/74)=630$ and the theorem gives $h(10)=3e^{-10}/10$. The subtracted coefficient is
+
+$$
+\frac1{74}\,630e^2h(10)=\frac{189}{74}e^{-8}<\frac1{100}.
+$$
+
+The lower-sieve coefficient is therefore positive. Its main term has order at least $L/\log L$, while the remainder is $O(L/(\log L)^3)$, so a sifted quotient exists for every sufficiently large selected $r$. Any prime dividing $A$ divides none of the quotients; every other prime below $z$ has been sieved. Consequently all prime factors of this quotient are at least $z$.
+
+The largest quotient in the actual window is $O(F_r^2)$, and
+
+$$
+\log z=\tfrac1{10}\big(\log F_r-3\log\log F_r+O(1)\big).
+$$
+
+With $S,H$ fixed, the ratio of its logarithm to $\log z$ has upper limit at most $20$, and is strictly below $21$ for all sufficiently large $r$. Thus the sifted quotient has at most $20$ prime factors even counted with multiplicity. It is coprime to $J$, whose $H+1$ primes occur in $N$ exactly once. Hence
+
+$$
+\Omega(y)=H+1+\omega(At+C)\in[H+1,H+21].
+$$
+
+The endpoint width is independent of $S$, although the index threshold depends on $S,H$. This is a new correspondence of the unchanged Fibonacci window with the cited sieve, not a new general sieve theorem or an exact-target realization claim. $\square$
+
+**Theorem 48.2 (Sourcewise finite-support infimum and its attainment).** Let $\mathcal D_{\mathrm{sw}}$ be the class of lawful designs whose every target law $\mu_y$ is finitely supported, with a common countable carrier allowed, and let $\mathcal D_{\mathrm{anch}}$ require only the anchor law $\mu_{x_*}$ to be finitely supported. For both classes,
+
+$$
+\inf\varepsilon=R.
+\tag{48.4}
+$$
+
+If $h=0$, or if the profile reaches its limit at a finite index, the infimum is attained. If $h>0$ and the profile is strict, the following are the exact remaining cases:
+
+1. If $B<1$, neither class attains $R$.
+2. If $B=1$ and $d=0$, neither class attains $R=0$.
+3. If $B=1$ and $d>0$, both classes attain $R=0$.
+
+**Proof.** For the upper infimum, choose $L\ge1$, put $c_L=b(L)$ and $b_L(k)=\min\{b(k),c_L\}$. Apply the complete countable construction (47.2)--(47.3) with $b_L$ in place of $b$ and with $B_L=c_L$. Its prepared law has finite support because its proposal tail vanishes for $k\ge\max\{2,L\}$, and every target law has that finite support together with at most one added tape $a_k$. It satisfies the original profile since $b_L\le b$, and its error is
+
+$$
+R_L=\frac{(1-c_L)h}{2-c_L}\downarrow\frac{(1-B)h}{2-B}=R.
+\tag{48.5}
+$$
+
+If $b(L)=B$, then $R_L=R$ and the construction attains the boundary. This includes $B=0$.
+
+Assume now $h>0$ and a strict profile. Suppose first that $B<1$ and fix any target design in either support class. Its anchor target law is finitely supported, so one consumer cutoff $A=A_m$ of (44.13) carries all anchor proposal mass $\mu_{x_*}(A)=h$. Fix this integer $m\ge1$, bounding the consumer records, prime indices and outputs, independently of the preparation and its tolerance. For any lawful preparation and any $\gamma>0$, Lemma 45.3 gives a finite preparation menu $P$ on whose matching cylinder the prepared laws differ by at most $\gamma$. Apply Lemma 48.1 to $S=P_m\cup P$ and $H=m+1$. This selects one actual source for the whole cutoff event, with $m+2\le k\le m+22$. Every tape in $A$ is false there. The signed test (46.5) gives
+
+$$
+\widehat\mu_y(A)\le b(k)\widehat\mu_y(H_y)+\varepsilon
+\le b(m+22)M+\varepsilon.
+$$
+
+The preparation coupling and the anchor error imply
+
+$$
+ h-\varepsilon-\gamma\le\widehat\mu_y(A).
+$$
+
+Using $(1-B)M\le\varepsilon$ and then letting $\gamma\downarrow0$ yields
+
+$$
+\varepsilon\ge
+\frac{(1-B)h}{2(1-B)+b(m+22)}
+>\frac{(1-B)h}{2-B}=R,
+\tag{48.6}
+$$
+
+because strictness gives $b(m+22)<B$. Thus the boundary is excluded in both support classes.
+
+For $B=1$ and $d=0$, fix any finite anchor target law and any lawful preparation. Because the anchor has no divergent mass, choose measurable finite-record cutoffs $A\subseteq H_{x_*}$ and $R_0\subseteq R_{x_*}$ carrying respectively masses $h$ and $1-h$, and choose an integer $m\ge1$ bounding their records and outputs. Combine the fixed consumer menu with the preparation menu of Lemma 45.3 at tolerance $\gamma$, and apply Lemma 48.1 with the same fixed $H=m+1$ to choose one matching source with $m+2\le k\le m+22$. At the anchor, $\mu_{x_*}(A)=h$ and $\mu_{x_*}(R_0)=1-h$; at the matching source, $A\subseteq F_y$ and $R_0\subseteq R_y$. The test
+
+$$
+\psi=\mathbf1_A-b(k)\mathbf1_{H_y}
+$$
+
+has oscillation at most one. Its anchor expectation is $(1-b(k))h$, because the anchor law gives no mass to divergent tapes and $R_0\cap H_y=\varnothing$; its expectation at $y$ is at most zero, since $A\subseteq F_y$ and $\mu_y(F_y)-b(k)\mu_y(H_y)\le0$. Therefore
+
+$$
+\operatorname {TV}(\mu_{x_*},\mu_y)\ge(1-b(k))h>0.
+$$
+For any acquisition error, the triangle through the two prepared laws and Lemma 45.3 gives
+
+$$
+2\varepsilon+\gamma\ge(1-b(k))h,
+\tag{48.7}
+$$
+
+Letting $\gamma\downarrow0$ gives the fixed-family bound $\varepsilon\ge(1-b(m+22))h/2>0$, so exact attainment is impossible. Positive anchor divergence cannot be included in the finite nonproposal cutoff and does not obey this argument.
+
+It remains to show the positive $B=1,d>0$ case. Enumerate the primes other than $3$ as $q_1,q_2,\ldots$ and set
+
+$$
+ w_3=d,\qquad w_{q_j}=h2^{-(j+1)},\qquad
+ w_0=h/2,\qquad w_u=z.
+\tag{48.8}
+$$
+
+Choose a strictly increasing function $f:\mathbb P\to\mathbb N_{>0}$ with $f(p)\ge p$ and
+
+$$
+1-b(f(p)+1)\le w_p.
+\tag{48.9}
+$$
+
+Choose integer values of $f$ successively in increasing prime order, larger than the preceding value and at least $p$, until (48.9) holds. The limit $b(k)\uparrow1$ makes each such choice possible. The resulting fixed table is common to the entire source family, not advice selected by the source. Use tapes $u,t_0,t_p$ ($p$ prime): $u$ returns unknown; $t_0$ queries primes increasingly until the first divisor and proposes $f(q)$; $t_p$ queries primes strictly larger than $p$ until the first divisor and proposes $f(q)$, diverging if none appears. The preparation uses one query: on the baseline atom of mass $w_0$ it emits $t_0$, on the atom of mass $w_u$ it emits $u$, and on the atom of mass $w_p$ it queries $p\mid N(y)$ and emits $t_p$ on a positive answer and $t_0$ otherwise. It terminates for every seed at every source.
+
+For a source with prime support $P_y$, prescribe the finite law
+
+$$
+\mu_y(t_p)=w_p\ (p\in P_y),\qquad
+\mu_y(t_0)=w_0+\sum_{p\notin P_y}w_p,\qquad
+\mu_y(u)=z.
+\tag{48.10}
+$$
+
+The seed masses sum to $w_0+z+\sum_pw_p=h/2+z+d+h/2=1$. The preparation pushforward is exactly (48.10): each prime atom either remains at its own $t_p$ or is sent to $t_0$. The law has at most $k+2$ support tapes at a source with $k$ divisors. At the anchor $P_{x_*}=\{3\}$, the row is $(h,d,z)$: $t_0$ has mass $h$, $t_3$ diverges with mass $d$, and $u$ is unknown. At an arbitrary source, only the positively weighted tape indexed by its largest divisor $q_{\max}$ diverges. Thus $d_y=w_{q_{\max}}$, $z_y=z$ and $h_y=1-z-w_{q_{\max}}$. If $f(q_{\min})\ge k=\Omega(y)$, every finite proposal is correct. Otherwise choose the largest divisor $p$ with $f(p)<k$; it is not the largest divisor of $N(y)$ because that prime is at least $k$ and $f(p)\ge p$. The next divisor makes $t_p$ a correct finite proposal. By (48.9) and monotonicity,
+
+$$
+ w_p\ge1-b(f(p)+1)\ge1-b(k).
+$$
+
+Tape $t_p$ is present with exactly that mass $w_p$, so the correct proposal mass is at least $w_p\ge1-b(k)\ge(1-b(k))h_y$. Therefore $e_y\le b(k)h_y$. Every law (48.10) is normalized and finite. All finite records and output events are measurable on the countable power-set carriers for both seeds and consumer tapes, preparation terminates at every declared seed, and the uniform acquisition error is exactly zero. Numerical duplicates and even distinct integers with identical prime supports receive identical laws. No effective sampler for the real weights or effective construction of the table from an arbitrary real profile is asserted. This proves attainment in both support classes. The cases $h=0$ and the plateau case were already covered. $\square$
+
+**Corollary 48.3 (Support and record distinctions).** Finite consumer carrier, finitely many possible prepared outputs, finite support of each target law, finite anchor support, finite actual preparation records, a uniform query-count bound and a common finite query menu are different restrictions.
+
+**Proof.** For a constant profile $b\equiv c$ with $0<c<1$ and $h>0$, (47.2)--(47.3) has finitely many possible prepared outputs, while its target laws use the unbounded actual target indices $a_k$ on a countable consumer carrier; it attains $R<h/2$. Thus finitely many prepared outputs cannot imply the finite-consumer lower bound. The one-query construction (48.8)--(48.10) has finite target support at each source and a uniform preparation query count of one, but infinitely many possible query primes and output tapes. Finally, let a seed $J\ge1$ have masses $2^{-J}$, query the first $J$ primes, and always emit one fixed unknown tape. Every actual preparation is finite and the output law has one point, while no common finite menu or uniform horizon bounds the preparation. These are lawful all-source constructions; no record bound is inferred from a consumer support bound. $\square$
+
+## 49. Fixed families and operational separations
+
+**Proposition 49.1 (Acquired laws need not be a constant reference).** For every profile there is a fixed admissible family on a finite consumer carrier with anchor row $(0,0,1)$, exact lawful acquisition error zero, and best constant-reference radius $1/2$.
+
+**Proof.** Take two tapes $u_0,u_1$, both immediately returning unknown. Preparation queries prime $2$ once and emits the corresponding tape, with a unit seed. Prescribe its exact pushforward $\mu_y=\delta_{u_{\mathbf1_{2\mid N(y)}}}$. Every target row is $(0,0,1)$ and every error is zero. Both laws occur at actual sources: $N(7,2)=27$ is odd and $N(5,1)=6$ is even. Their TV distance is one, so the triangle inequality forces every constant reference to have radius at least $1/2$, and the midpoint achieves that value. The acquired family is source dependent through one legal query. Agreement of the global infimum with the static formula in Section 44 therefore requires Theorem 46.1; it does not follow by identifying the two optimization problems. $\square$
+
+**Proposition 49.2 (Strict-profile optimizer support belongs to the correct carrier).** Suppose $h>0$ and $b$ is strict. If $B<1$, an optimizer at error $R$ cannot have a finitely supported prepared anchor law, even without a target-support restriction. For any $B$, a preparation with a finitely supported common seed law cannot attain $R$.
+
+**Proof.** Below limit one, the inequalities in Theorem 46.1 saturate at $\varepsilon=R$: with $q=h/(2-B)$ one has $M=\widehat\mu_{x_*}(H_{x_*})=q$. If the prepared anchor law is a finite point mixture, one consumer cutoff $A_m\subseteq H_{x_*}$ carries all that mass. Combine its menu with an arbitrarily accurate preparation coupling of tolerance $\gamma$. Lemma 48.1 with $H=m+1$ supplies one actual matching source of target $m+2\le k\le K=m+22$, before quantifying over seeds. Transport and (46.5) give
+
+$$
+q-\gamma\le\widehat\mu_y(A_m)\le b(K)M+R=b(K)q+(1-B)q.
+$$
+
+Letting $\gamma\downarrow0$ contradicts $b(K)<B$ and $q>0$. A finite point-mixture seed yields a finite point-mixture output at every source, so this also excludes such seeds below limit one.
+
+At $B=1$, attaining $R$ means exact acquisition. Remove zero-weight seed points from a purported finite seed mixture. Each remaining seed prepares finitely at every actual source, since its weight is positive. Flattening then gives finitely many deterministic composite tape procedures under one common finite seed law, with the exact target outcome probabilities. Collect their finite anchor proposal records and color each source by its first correct composite tape, or zero if none. The auxiliary finite-color argument in Theorem 46.2 selects one actual matching source, above all anchor proposal outputs, with no correct composite tape. Its transported proposal mass is at least $h>0$, all of it false, contradicting $b(k)<1$ at that actual finite target. Infinite seeds are thus essential to the finite-anchor exact attainer (48.8)--(48.10); a uniform one-query preparation is not a finite seed mixture. $\square$
+
+**Corollary 49.3 (Uniform caps and the complete endpoint classification).** For a cap $0\le\eta\le1$, the globally attainable anchor rows under $\varepsilon\le\eta$ on arbitrary measurable carriers, already on countable power-set carriers, are
+
+$$
+\{(h,d,z)\in\mathscr S:(1-B)h\le(2-B)\eta\}.
+\tag{49.1}
+$$
+
+On finite consumer carriers they are $\{(h,d,z)\in\mathscr S:h\le2\eta\}$. In either the sourcewise finite-target-support class or the finite-anchor-target-support class, put $R=(1-B)h/(2-B)$. A row is attainable exactly when
+
+$$
+h=0\quad\text{or}\quad \eta>R\quad\text{or}\quad
+\big[\eta=R\ \text{and}\ (\text{$b$ reaches $B$ at a finite index}\ \text{or}\ (B=1\text{ and }d>0))\big].
+\tag{49.2}
+$$
+
+In particular, for $h>0$, unrestricted exact acquisition exists exactly at $B=1$; finite-consumer exact acquisition never exists; and finite-anchor or sourcewise finite-target exact acquisition exists exactly when $B=1$ and $d>0$. For $h=0$, every split $d+z=1$ is exactly acquired in every class. At $B=0$, $b\equiv0$ and all infima are the attained $h/2$. At $B<1$, the $d/z$ split does not change any infimum or support-attainment condition. At $B=1$, positive finite nonproposal mass cannot replace positive literal divergence in (49.2).
+
+**Proof.** Theorem 47.1 supplies the first two attained minima with complete all-source constructions. Theorem 48.2 gives the two support-class infima, excludes precisely their stated boundary cases, and supplies every larger cap through the normalized clipped-profile constructions (48.5). Its exact positive-divergence construction supplies the additional limit-one boundary. The zero-proposal law and the forced identity $b\equiv0$ at $B=0$ give the endpoints without a conditional ratio or division by $1-B$. These are global design statements. Exact acquisition of any one prescribed family remains governed by Theorem 46.4, or Theorem 46.3 on a countable power-set carrier; Theorem 46.6 concerns the fixed-family zero infimum and does not change its target laws. The arithmetic necessities use only actual matching sources, not occurrence of every integer target. The bounded-band bridge is needed precisely to keep the finite profile gap positive as preparation coupling improves. All conclusions are ordinary mathematical consequences under the measurable-rule contract. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 50. The value of acquisition for one prescribed family
+
+**Definition 50.1 (Actual local probability radii).** Fix the whole labeled source set $X$, the maps $N,\Omega$, the constant zero advice, the common consumer and its nonempty measurable tape carrier $(\Theta,\mathcal F)$ as in Definitions 44.1 and 45.1. Fix every target law $\mu_y$ before varying the preparation. Any profile or anchor-row requirement is a condition on this input family; it does not restrict the prepared laws to satisfy the same row. Write $I(\mu)$ for (46.15). All distances below use event-supremum TV.
+
+Enumerate the primes increasingly and put $C_0(x)=X$. For an occupied finite prime-prefix cylinder $C$, define
+
+$$
+\begin{aligned}
+\rho_\mu(C)&=\inf_{v\in\mathcal P(\Theta,\mathcal F)}
+                   \sup_{y\in C}\operatorname{TV}(v,\mu_y),\\
+r_\mu(x)&=\inf_{m\ge0}\rho_\mu(C_m(x)),\\
+R_\mu&=\sup_{x\in X}r_\mu(x).
+\end{aligned}
+\tag{50.1}
+$$
+
+The centers are probability laws on the original carrier. No local center is assumed to attain its infimum. The targets in a cylinder include every original label, including different labels with identical observations.
+
+For topological bookkeeping only, let
+
+$$
+Q=\left\{\big(\mathbf1_{p_i\mid N(y)}\big)_{i\ge1}:y\in X\right\}
+   \subseteq\{0,1\}^{\mathbb N}.
+\tag{50.2}
+$$
+
+Use its subspace topology. Write $[y]$ for the signature of $y$ and $r_\mu([y])=r_\mu(y)$; the latter is well-defined because all its cylinders depend only on that signature. This is the countable set of actual complete observation signatures, without adjoining any other bit stream. The cylinder topology on $X$ is its pullback. A TV-continuous law family factors through $Q$, since distinct probability measures are separated by TV. A target family need not factor through $Q$.
+
+**Theorem 50.2 (Sharp fixed-family value and the separate endpoint obligation).** Under the measurable common-rule contract of Definition 45.1, on every nonempty measurable consumer carrier,
+
+$$
+I(\mu)=R_\mu.
+\tag{50.3}
+$$
+
+For caps $0\le\eta\le1$, $\eta<R_\mu$ is impossible and $\eta>R_\mu$ is feasible. When $R_\mu=1$, the cap $1$ is attained. Feasibility at $\eta=R_\mu<1$ requires an additional attainment condition; (50.3) alone does not supply it. In particular, the center choices in (50.1) are local to actual observations, rather than one constant reference on $X$ or a redesign of the target family.
+
+**Proof.** Let $\widehat\mu$ be any lawful prepared family and let its uniform error be $\varepsilon$. For a fixed actual $x$ and $\gamma>0$, Lemma 45.3 supplies one $m$ for which
+
+$$
+\operatorname{TV}(\widehat\mu_x,\widehat\mu_y)<\gamma
+\qquad(y\in C_m(x)).
+$$
+
+Thus the single probability law $\widehat\mu_x$ is a center for all target laws in that same cylinder with radius at most $\varepsilon+\gamma$. Let $\gamma$ decrease to zero and then take the supremum over $x$. This proves $R_\mu\le\varepsilon$. The comparison uses a whole cylinder and a whole finite-record seed event, without choosing a comparison source separately for each seed.
+
+Conversely, fix $R_\mu<q<\eta$. Mark each occupied prefix node $C$ with $\rho_\mu(C)<q$, and choose one fixed law $v_C$ with
+
+$$
+\sup_{y\in C}\operatorname{TV}(v_C,\mu_y)<q.
+\tag{50.4}
+$$
+
+There are countably many nodes. Under one source-independent product seed law, preload coordinates $W_C$ with laws $v_C$ for all marked nodes. A common deterministic preparation queries primes in increasing order and hands over $W_C$ at the first marked prefix, also allowing the depth-zero node.
+
+For each actual $x$, the definition of $r_\mu(x)\le R_\mu<q$ guarantees a marked prefix at a finite depth. This preparation therefore terminates at every seed at that source. Its selected node depends only on the acquired prime prefix, so its prepared law there is exactly $v_C$, not a conditioning of $v_C$ on a seed-dependent event. The uniform error is at most $q<\eta$. Finite record events and output-event preimages are measurable coordinate events or countable unions of them. The normalized coordinate laws and their countable product give one inherited seed probability space. The center and marking tables are fixed shared constants of the prescribed problem. They do not supply a source label, a target input, an effective optimizer or an effective sampler. The original consumer subsequently runs on the same static source.
+
+This is the certified-prefix construction of Theorem 46.6 with probability centers in place of representative target laws. The local metric approximation mechanism and the product-measure ingredient are reused; the operational correspondence is the actual finite-prime decoder. Taking the infimum proves (50.3). If $R_\mu=1$, handing any fixed tape over in one transition has error at most $1$, hence exactly $1$ by the lower bound.
+
+For the endpoint, apply the published exact-acquisition criteria to a candidate prepared family $\lambda$, keeping the original $\mu$ fixed. On a countable power-set carrier, attainment is equivalent to existence of a TV-continuous family $\lambda$ such that
+
+$$
+\operatorname{TV}(\lambda_y,\mu_y)\le R_\mu
+\qquad(y\in X).
+\tag{50.5}
+$$
+
+Necessity is Lemma 45.3 and sufficiency is Theorem 46.3. On an arbitrary measurable carrier, enumerate the actual labels as $x_i$ and set
+
+$$
+\sigma_\lambda=\sum_{i\ge1}2^{-i}\lambda_{x_i},
+\qquad
+\ell^\lambda_C(A)=\int_A\inf_{y\in C}
+                   \frac{d\lambda_y}{d\sigma_\lambda}\,d\sigma_\lambda.
+\tag{50.6}
+$$
+
+The necessary and sufficient additional condition, together with (50.5), is
+
+$$
+\ell^\lambda_{C_m(x)}(\Theta)\longrightarrow1
+\qquad(x\in X).
+\tag{50.7}
+$$
+
+This is precisely Theorem 46.4 applied to $\lambda$. Its dominating measure is on tapes, never a sampled law on $X$. Countability makes the density infima measurable and their versions immaterial as measures. Continuity alone cannot replace (50.7). These reused criteria quantify over one jointly compatible law family; independent choices of optimal centers do not discharge them. At $R_\mu=0$, Theorem 46.6 gives the existing continuity characterization, with exactness on countable power-set carriers and the existing general-carrier exception of Proposition 46.5.
+
+The order $\sup_x\inf_m$ in (50.1) is essential. For a concrete comparison on the original source, use the countable power-set carrier $\mathbb N_{>0}$, an always-unknown consumer, and prescribe
+
+$$
+\mu_y=\delta_{j(y)},\qquad
+j(y)=\min\{i:p_i\nmid N(y)\}.
+\tag{50.8}
+$$
+
+Every actual integer $N(y)$ has finite prime support, so $j(y)$ is finite. Query until the first negative answer and hand over that index, using a unit seed. This is exact lawful acquisition; a prefix through $j(y)$ fixes its target law, so $R_\mu=0$. For every fixed $m$, however, the all-positive depth-$m$ cylinder contains laws $\delta_j$ for every $j>m$: Theorem 35.2 realizes the first $j-1$ positive answers and the $j$-th negative answer at an actual source. Any probability on the countable carrier has singleton masses tending to zero along these indices, so that cylinder has radius $1$. Consequently
+
+$$
+\sup_x\inf_m\rho_\mu(C_m(x))=0,
+\qquad
+\inf_m\sup_x\rho_\mu(C_m(x))=1.
+\tag{50.9}
+$$
+
+Sourcewise finite stopping gives no common finite horizon. Likewise $\rho_\mu(X)$ is only a constant-reference upper bound for $I(\mu)$; Proposition 49.1 already separates them. The global design values of Sections 47--49 vary the targets and do not determine (50.3) for a prescribed family. $\square$
+
+## 51. Finite common carriers attain the prescribed-family value
+
+**Theorem 51.1 (Finite-carrier boundary acquisition).** If the fixed consumer carrier is finite, with any sigma algebra, every complete prescribed target family has a lawful preparation with uniform error exactly $R_\mu$. More generally the same conclusion holds when the carrier's sigma algebra is finite. Neither sourcewise finite target support on an infinite carrier nor finite support at the anchor is a substitute for this hypothesis.
+
+**Proof.** Partition the carrier into the $d$ nonempty atoms of its finite sigma algebra. Choose one actual tape representative in each atom. Every law is identified, without loss of measurable-event information, with a vector in the compact simplex $\Delta_d$. Write $v(A)$ for its mass on a union $A$ of atoms; there are only finitely many such events, and
+
+$$
+\operatorname{TV}(v,w)=\max_A|v(A)-w(A)|.
+\tag{51.1}
+$$
+
+For $q\in Q$, let $C_m(q)$ contain all original labels with that prefix, and define
+
+$$
+\begin{aligned}
+u_A(q)&=\inf_m\sup_{y\in C_m(q)}\mu_y(A),\\
+l_A(q)&=\sup_m\inf_{y\in C_m(q)}\mu_y(A),\\
+K(q)&=\{v\in\Delta_d:
+          u_A(q)-R_\mu\le v(A)\le l_A(q)+R_\mu
+          \text{ for every }A\}.
+\end{aligned}
+\tag{51.2}
+$$
+
+At each fixed depth the extrema are constant on prefix cylinders, hence continuous on $Q$. Therefore $u_A$ is upper semicontinuous and $l_A$ is lower semicontinuous. All original labels remain in the extrema, even when their target laws disagree on one complete observation fiber.
+
+Fix $q$ and choose approximate centers $v_m$ for $C_m(q)$ whose errors are at most $\rho_\mu(C_m(q))+1/(m+1)$. Compactness gives a convergent subsequence. Along it the radii decrease to $r_\mu(q)\le R_\mu$, and, for each event $A$, the center inequalities pass to
+
+$$
+u_A(q)-r_\mu(q)\le v(A)\le l_A(q)+r_\mu(q).
+$$
+
+Thus $K(q)$ is nonempty. It is compact and convex.
+
+The nonempty values also vary lower semicontinuously; nonemptiness by itself would not be enough. Write every inequality in (51.2), together with the simplex inequalities and the two inequalities for its total-mass equality, as
+
+$$
+K(q)=\{v\in\mathbb R^d:Mv\le b(q)\}.
+\tag{51.3}
+$$
+
+Here $M$ is one fixed finite matrix. Every nonconstant component of $b(q)$ is either $R_\mu-u_A(q)$ or $R_\mu+l_A(q)$, and hence lower semicontinuous. Hoffman's fixed-matrix error bound gives a finite constant $H_M$, independent of any consistent right-hand side, with
+
+$$
+\operatorname{dist}_2(v,K(q'))
+ \le H_M\left\|(Mv-b(q'))_+\right\|_\infty.
+\tag{51.4}
+$$
+
+For $v\in K(q)$ and any $\delta>0$, lower semicontinuity of the finitely many right-hand sides supplies a neighborhood of $q$ on which $b_i(q')>b_i(q)-\delta$ for every $i$. The residual in (51.4) is at most $\delta$. A point in $K(q')$ is consequently arbitrarily close to $v$ throughout a sufficiently small neighborhood. This is lower semicontinuity of $K$.
+
+The estimate used here is A. J. Hoffman's classical fixed-matrix bound, [*On approximate solutions of systems of linear inequalities*, J. Research NBS 49, 263--265](https://doi.org/10.6028/jres.049.027); its form for arbitrary fixed norms is stated in Peña, Vera and Zuluaga, [*An algorithm to compute the Hoffman constant of a system of linear constraints*, equation (1) and Proposition 1](https://arxiv.org/pdf/1804.08418v1). A constant for finitely many fixed rows is being used, not a constant for infinitely many tape-event constraints.
+
+The actual signature space $Q$ is metrizable, hence Hausdorff and paracompact. Michael's closed-convex-valued selection theorem therefore supplies a continuous $v:Q\to\mathbb R^d$ with $v(q)\in K(q)$. Its hypotheses are now explicit: a paracompact domain, the Banach range $\mathbb R^d$, nonempty closed convex values, and the lower semicontinuity just proved. The supplier is Michael, [*Continuous Selections. I*, Theorem 3.2″](https://doi.org/10.2307/1969615); this formulation is also recalled in the introduction of Gutev, [*Continuous Selections, Function Spaces and Partitions of Unity*](https://arxiv.org/html/2602.21313v1). No compactness or completion of $Q$ is used.
+
+For every original label $y$, its own target lies between the extrema:
+
+$$
+l_A([y])\le\mu_y(A)\le u_A([y]).
+$$
+
+Membership in $K([y])$ therefore gives $\operatorname{TV}(v([y]),\mu_y)\le R_\mu$. To turn the selection into a lawful preparation, first apply Theorem 46.3 on the finite power-set carrier of atom indices. Its one common uniform seed and finite-prime cumulative-probability certificates acquire the continuous vector family exactly. Then hand over the chosen representative tape of that atom. This last map is measurable into the original carrier and induces precisely the desired event law. Sourcewise almost-sure finite stopping, common deterministic rules and all finite-record/output measurability are inherited from that theorem. The same consumer runs after the handoff on the same source.
+
+The resulting error is at most $R_\mu$, and Theorem 50.2 forces equality. The selection and error-bound theorems are reused classical mathematics; the assertion is their finite-prime acquisition consequence for the entire prescribed family. $\square$
+
+**Corollary 51.2 (A common finite target support).** On a countable power-set carrier, if all target laws are supported on one common finite nonempty set of actual tapes, the prescribed-family infimum is attained. This condition concerns a common set, rather than a separate finite support at each source.
+
+**Proof.** Let the common set be $S$ and fix $\theta_0\in S$. The measurable map that fixes $S$ and sends every other tape to $\theta_0$ fixes every target law and cannot increase event-TV. Applying it to a center shows that the local radii computed in the full carrier equal those computed using laws on $S$. Theorem 51.1 on $S$ supplies a lawful attainer with those radii, and its tapes are also tapes of the original consumer.
+
+In a one-transition constant-law preparation with a finite point mixture $\nu=\sum_iw_i\delta_{\theta_i}$, the seed carrier may be exactly the distinct tapes of positive weight, with their induced weights and its power-set sigma algebra. Identity handoff is measurable and has law $\nu$ on the consumer carrier. No zero-weight tape need be a possible prepared output. This realizes the finite reference law in the constant-profile example of Corollary 48.3 using its finite positive-weight seed support, without asserting that the whole consumer carrier is finite. $\square$
+
+## 52. Two-point target laws with an unattained positive optimum
+
+**Theorem 52.1 (Countable-carrier failure at every interior boundary).** For every $r\in(0,1)$ there is one fixed target family on a countable power-set consumer carrier, on the entire original $X$, with
+
+$$
+I(\mu)=r
+\quad\text{and no lawful preparation with error at most }r.
+\tag{52.1}
+$$
+
+Every target law has at most two support points; the anchor target law has one. Each cap $\eta>r$ has an all-source lawful preparation with a finite positive-weight seed carrier and a common finite prime menu. All targets have row $(h_y,e_y,d_y,z_y)=(0,0,0,1)$ and satisfy every allowed profile. Thus sourcewise finite target support does not imply the finite-common-carrier attainment conclusion.
+
+**Proof.** Encode the actual prime answers relative to the anchor as in Proposition 46.5. Let $E$ be the sources with the anchor's entire observation signature, and let $D_n$ be the sources whose first differing answer is at prime index $n$. These sets partition the whole labeled $X$, with each $D_n$ an occupied clopen set. Every occupied prefix subcylinder of $D_n$ contains infinitely many distinct complete observation classes: Theorem 35.2 gives unbounded $\Omega$ there, whereas a fixed finite list of complete prime supports has bounded $\Omega$.
+
+For each $n$, partition the actual observation classes in $D_n$ into $n$ dense colors. To do so, enumerate its occupied prefix subcylinders and, for each subcylinder and each of the $n$ colors, choose a previously unassigned class and assign that color. At every finite stage only finitely many classes have been used, so the preceding infinitude suffices. Give every remaining class any fixed color. Each color meets every occupied subcylinder. This is one fixed specification of target laws on complete observation classes, not a new observation available to a preparation. The same argument with any fixed finite number of colors applies to $Q$ itself.
+
+Choose $0<c<\min\{r,1-r\}$ and put
+
+$$
+\begin{aligned}
+\Theta&=\{0\}\sqcup\{(n,i):n\ge1,\ 1\le i\le n\},\\
+B_n&=\{(n,i):1\le i\le n\},\\
+w_n&=r+\frac cn.
+\end{aligned}
+\tag{52.2}
+$$
+
+Use the power-set sigma algebra and let every tape immediately return unknown. For a source of color $i$ in $D_n$ prescribe, once and for all,
+
+$$
+\mu_y=(1-w_n)\delta_0+w_n\delta_{(n,i)};
+\qquad
+\mu_y=\delta_0\quad(y\in E).
+\tag{52.3}
+$$
+
+Here $0<w_n<1$, so all laws are normalized with the stated support and terminal row. Labels with identical complete observations have identical laws. Neither the color nor the source label is supplied to the preparation.
+
+For lawful approximations define
+
+$$
+v_n=(1-w_n)\delta_0+\frac{w_n}{n}\sum_{i=1}^n\delta_{(n,i)}.
+\tag{52.4}
+$$
+
+Preload independent coordinates $W_n$ of laws $v_n$ under one common countable product seed law. For a fixed $M\ge1$, inspect the first $M$ prime answers. If the first difference is $n\le M$, emit $W_n$; otherwise emit $0$. The selected coordinate depends only on the observed prefix. All sources and all seeds terminate after this finite menu, and their finite-record and output events are measurable. Only coordinates $1,\ldots,M$ are used, so their finite product, on its finite positive-weight point support, is also a sufficient seed space for this same preparation.
+
+At a source in $D_n$ with $n\le M$, event-TV between (52.4) and (52.3) is
+
+$$
+w_n\left(1-\frac1n\right)
+ =r+\frac{c-r}{n}-\frac{c}{n^2}<r.
+\tag{52.5}
+$$
+
+At a source in $D_n$ with $n>M$, the emitted law is $\delta_0$ and the error is $w_n$. On $E$ it is zero. Every $D_n$ is occupied and $w_n$ decreases, so the exact uniform error is
+
+$$
+\varepsilon_M=w_{M+1}=r+\frac{c}{M+1}\downarrow r.
+\tag{52.6}
+$$
+
+The whole target family is unchanged as $M$ varies.
+
+For the lower bound and endpoint obstruction, let $\lambda$ be any TV-continuous probability-valued family with uniform error at most $\varepsilon$. Fix $z\in D_n$. For each color $i$, its density gives actual sources of that color matching successively longer prefixes of $z$. Their target law is the fixed $i$-th law in (52.3), while their $\lambda$ laws converge to $\lambda_z$ in TV. Consequently, for every $i$,
+
+$$
+\lambda_z(\{(n,i)\})\ge w_n-\varepsilon.
+\tag{52.7}
+$$
+
+If $\varepsilon<r$, choose $n$ so large that $n(r-\varepsilon)+c>1$. Summing (52.7) over its $n$ disjoint singletons gives a mass larger than $1$, a contradiction. Thus every continuous approximant, and in particular every lawful prepared family, has error at least $r$.
+
+If $\varepsilon=r$, the same inequalities instead force
+
+$$
+\lambda_z(B_n)\ge c
+\qquad(z\in D_n).
+\tag{52.8}
+$$
+
+The blocks $B_n$ are pairwise disjoint, so the probability law $\lambda_{x_*}$ has $\lambda_{x_*}(B_n)\to0$. By TV continuity at the actual anchor, choose $m$ such that
+
+$$
+\operatorname{TV}(\lambda_y,\lambda_{x_*})<c/4
+\qquad(y\in C_m(x_*)).
+$$
+
+Choose $n>m$ with $\lambda_{x_*}(B_n)<c/4$ and choose an actual $z\in D_n$. It belongs to that same anchor cylinder. The one measurable event $B_n$ gives
+
+$$
+\lambda_z(B_n)<c/2,
+$$
+
+contradicting (52.8). This excludes even a continuous optimum at the boundary. Lemma 45.3 therefore excludes every lawful attainer, regardless of its seed carrier or its sourcewise stopping times.
+
+Together with (52.6), the lower bound proves (52.1). The feasible caps in $[0,1]$ are exactly $(r,1]$. The obstruction is compatibility of probability masses across actual blocks approaching the anchor, rather than an inability to realize a finite target law at one isolated source. No source sampling, source choice during execution, reset, conditioning away failure or color probe is used. $\square$
+
+## 53. A continuous optimum that fails operational attainment
+
+**Theorem 53.1 (Positive nonattainment with a unique continuous best approximant).** For every $r\in(0,1)$ there is one fixed full-source target family on a standard Borel consumer carrier with acquisition infimum $r$ and no lawful attainer, although exactly one TV-continuous family attains uniform approximation error $r$. Every cap $\eta>r$ is lawfully feasible. The consumer always returns unknown, so every target has row $(0,0,0,1)$ and satisfies every prescribed profile.
+
+**Proof.** Let $(\nu_y)$ be the fixed TV-continuous dyadic-hole family of Proposition 46.5 on $Z=[0,1]$ with its Borel sigma algebra. This family is reused, including its actual-source realization; it is not a new zero-infimum example. In every anchor prefix cylinder its greatest common submeasure is zero. Indeed, for any level $n$ beyond the prefix, Theorem 35.2 realizes every level-$n$ dyadic hole by an actual source in that cylinder. A common submeasure gives zero mass to each such interval, hence to $[0,1)$; its possible endpoint mass is also zero because it is dominated by the anchor's Lebesgue law.
+
+Choose an integer $k\ge2$ with $r<1-1/k$ and put
+
+$$
+t=\frac{r}{1-1/k}\in(0,1),\qquad \alpha=1-t>0.
+\tag{53.1}
+$$
+
+Partition the actual observation classes of $Q$ into $k$ dense colors by the occupied-cylinder construction in the proof of Theorem 52.1. Let $c(y)$ be the resulting fixed color, constant on complete observation fibers. On
+
+$$
+\Theta=Z\sqcup\{a_1,\ldots,a_k\}
+\tag{53.2}
+$$
+
+use the disjoint-union Borel sigma algebra and the always-unknown consumer. Prescribe the entire family
+
+$$
+\mu_y=\alpha\nu_y+t\delta_{a_{c(y)}}.
+\tag{53.3}
+$$
+
+All these probability laws, the carrier and the consumer are fixed before optimizing preparation. The color specifies target data only.
+
+The candidate
+
+$$
+\kappa_y=\alpha\nu_y+\frac tk\sum_{i=1}^k\delta_{a_i}
+\tag{53.4}
+$$
+
+is TV-continuous, with $\operatorname{TV}(\kappa_y,\mu_y)=t(1-1/k)=r$ at every source. We show that it is the only continuous family within that cap, and that no continuous family has smaller uniform error.
+
+Let $\lambda$ be continuous with uniform error at most $\varepsilon$. Fix an actual $x$. For each color $i$, choose actual sources of that color matching successively longer prefixes of $x$. Continuity of both $\lambda$ and $\nu$ passes their cap inequalities to
+
+$$
+\operatorname{TV}(\lambda_x,\alpha\nu_x+t\delta_{a_i})
+   \le\varepsilon
+\qquad(1\le i\le k).
+\tag{53.5}
+$$
+
+Put $p_i=\lambda_x(\{a_i\})$ and $L=\sum_i p_i$. Singleton events and the events consisting of all tags except $a_i$ give respectively
+
+$$
+p_i\ge t-\varepsilon,\qquad L-p_i\le\varepsilon.
+$$
+
+Summing the two sets of inequalities yields
+
+$$
+k(t-\varepsilon)\le L,\qquad
+(k-1)L\le k\varepsilon,
+$$
+
+and hence $\varepsilon\ge t(k-1)/k=r$.
+
+At $\varepsilon=r$, equality is forced: $L=t$ and every $p_i=t/k$. For a Borel $A\subseteq Z$, compare the measurable event
+
+$$
+A\sqcup\{a_j:j\ne i\}
+$$
+
+in (53.5). Its signed mass difference is
+
+$$
+r+\lambda_x(A)-\alpha\nu_x(A),
+$$
+
+which must be at most $r$. Therefore $\lambda_x(A)\le\alpha\nu_x(A)$ for every such $A$. The two restrictions have the same total mass $\alpha$, so applying this domination also to complements inside $Z$ proves equality for every Borel set. Thus $\lambda_x=\kappa_x$ for every actual $x$, proving uniqueness. This finite tag-saturation argument uses event-TV directly, without an arbitrary-carrier maximal-coupling claim.
+
+Every lawful prepared family is continuous by Lemma 45.3. An operational attainer at error $r$ would therefore acquire $\kappa$ exactly. For every anchor prefix cylinder, its greatest common submeasure is
+
+$$
+\ell^\kappa_{C_m(x_*)}=\frac tk\sum_{i=1}^k\delta_{a_i},
+\qquad
+\ell^\kappa_{C_m(x_*)}(\Theta)=t<1.
+\tag{53.6}
+$$
+
+The displayed tag measure is dominated by every $\kappa_y$. Conversely, the restriction of any common submeasure to $Z$ is dominated by every $\alpha\nu_y$ in that cylinder and is zero by the dyadic-hole property above; its tag masses are at most $t/k$. This proves (53.6). It violates Theorem 46.4 at the actual anchor. Hence the unique continuous optimum is not exactly acquirable, and no lawful preparation attains the cap $r$.
+
+For upper approximations, Theorem 46.6 supplies a lawful preparation of $\nu$ with law $\widetilde\nu_y$ and uniform error at most any prescribed $\delta>0$. Include its whole seed in one common product seed, together with an independent finite selector. With probability $\alpha$, run that preparation on the unchanged source and hand over its tape in $Z$; with probability $t/k$ for each $i$, hand over $a_i$ immediately. This is an initial seed branch, not a restart or a success-conditioned attempt. Every actual source terminates almost surely, and finite-record/output events are measurable inherited events or finite unions of them. The resulting normalized law is
+
+$$
+\widetilde\kappa_y
+  =\alpha\widetilde\nu_y+\frac tk\sum_i\delta_{a_i}.
+\tag{53.7}
+$$
+
+Its error at source $y$ is exactly
+
+$$
+\operatorname{TV}(\widetilde\kappa_y,\mu_y)
+ =r+\alpha\operatorname{TV}(\widetilde\nu_y,\nu_y).
+\tag{53.8}
+$$
+
+To see the equality on the event-supremum normalization, the signed tag difference has positive mass $r$ on all tags except the actual color and negative mass $r$ at that color. The disjoint base difference has total mass zero. For any event its positive difference is at most $r+\alpha\operatorname{TV}(\widetilde\nu_y,\nu_y)$; taking the positive tags together with base events approaching the positive supremum attains that supremum in the limit. Complements give the same negative supremum. No existence of an event attaining the base supremum is needed.
+
+Choose $\delta<(\eta-r)/\alpha$ for any $\eta>r$. Equations (53.7)--(53.8) give uniform error strictly below $\eta$. The lower bound and the nonacquisition argument now prove $I(\mu)=r$ and the exact feasible-cap split $(r,1]$, even though the continuous relaxation has its unique minimizer (53.4).
+
+For an attained comparison, replace $\nu_y$ by the fixed point law $\delta_0$ on one base tape and retain the same colors and weights. The same tag inequalities give lower bound $r$; the constant law $\alpha\delta_0+(t/k)\sum_i\delta_{a_i}$ is handed over from its finite positive-weight seed support in one transition and attains $r$. Thus the positive value alone does not determine operational attainment.
+
+The common-submeasure and range-partition ingredients are those of Theorem 46.4, with the existing overlap in Gallo, Lerasle and Takahashi, [*Markov approximation of chains of infinite order in the $\bar d$-metric*, Section 3, Lemma 3.1](https://arxiv.org/html/1107.4353v2). No stationary-chain or coalescence conclusion is transferred to the static source. The mathematical increment is the positive-error forced optimum on the actual prime-observation family and its failure of acquisition, together with the different countable two-point obstruction of Theorem 52.1. These are repository-derived operational deductions from the cited suppliers, without a literature-priority claim.
+
+The original general endpoint question remains (50.5)--(50.7): a compatible candidate family is still quantified over. No criterion eliminating that family in favor of the targets alone is established here. Finite common carriers always attain; countable power-set carriers attain at zero but can fail at any interior positive value; general measurable carriers can fail at zero or at positive values, even with a continuous optimum; value $1$ always attains. The two nonattainment constructions use the explicitly stated zero-proposal input subclass and do not classify every prescribed positive-proposal row. All general value and candidate conditions retain every target law, the original consumer and the entire actual $X$. Common measurable tables and product seeds carry no conclusion about effective real sampling, finite descriptions, uniform runtime, physical acquisition or resources. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 54. A target-intrinsic cap criterion on a countable tape carrier
+
+**Definition 54.1 (Target fibers and their local compatibility refinement).** Fix the entire labeled source (44.1), the zero advice, the consumer and every prescribed target law as in Definition 50.1. In this section the tape carrier $\Theta$ is nonempty and countable, with its power-set sigma algebra. Let $P=\mathcal P(\Theta)$ and $d=\operatorname{TV}$, always with the event-supremum normalization. Probability vectors identify $P$ with the closed subset of $\ell^1(\Theta)$ consisting of nonnegative vectors of sum one, and
+
+$$
+d(v,w)=\frac12\sum_{\theta\in\Theta}|v(\{\theta\})-w(\{\theta\})|.
+\tag{54.1}
+$$
+
+Thus $P$ is complete and separable: finitely supported rational probability vectors are dense. Use only the actual signature space $Q$ of (50.2), with no additional limit signatures. Its occupied prefix neighborhoods are
+
+$$
+U_m(q)=\{q'\in Q:q'_i=q_i\ (1\le i\le m)\},
+\qquad C_m(q)=\{y\in X:[y]\in U_m(q)\}.
+\tag{54.2}
+$$
+
+They form a countable clopen basis; $U_0(q)=Q$. Fix a cap $\eta\in[0,1]$. Start with the closed convex sets, possibly empty,
+
+$$
+K_0^\eta(q)=\bigcap_{y\in X:\,[y]=q}
+                 \{v\in P:d(v,\mu_y)\le\eta\}.
+\tag{54.3}
+$$
+
+Every label in the fiber occurs in this intersection, even when equal observations have different target laws. For a closed-valued correspondence $K:Q\to 2^P$, allowing empty values, use $\operatorname{dist}(v,A)=\inf_{w\in A}d(v,w)$ for nonempty $A$, put $\operatorname{dist}(v,\varnothing)=+\infty$, and define
+
+$$
+\mathcal D K(q)=\left\{v\in K(q):
+  \forall\delta>0\ \exists m\ \forall q'\in U_m(q),\quad
+          \operatorname{dist}(v,K(q'))<\delta\right\}.
+\tag{54.4}
+$$
+
+For countable ordinals define the decreasing refinement by
+
+$$
+K_{\alpha+1}^\eta=\mathcal D K_\alpha^\eta,
+\qquad
+K_\lambda^\eta(q)=\bigcap_{\alpha<\lambda}K_\alpha^\eta(q)
+   \quad(\lambda\text{ a nonzero limit ordinal}).
+\tag{54.5}
+$$
+
+The recursion involves only original target balls, actual occupied cylinders, metric distances and intersections. It does not take a proposed prepared-law family as input. Each point in a value is merely a probability center on the original tapes; membership is progressively tested against all neighboring values.
+
+**Theorem 54.2 (Intrinsic necessary-and-sufficient cap feasibility).** The refinement (54.5) stabilizes at some countable ordinal $\beta$: $K_\beta^\eta=K_{\beta+1}^\eta$. Write $K_\infty^\eta$ for its stable value. Then
+
+$$
+\begin{aligned}
+&\text{there exists a lawful preparation with }
+  \sup_{y\in X}d(\widehat\mu_y,\mu_y)\le\eta\\
+&\hspace{25mm}\Longleftrightarrow\quad
+  K_\infty^\eta(q)\ne\varnothing\quad\text{for every }q\in Q.
+\end{aligned}
+\tag{54.6}
+$$
+
+In particular, the original sharp value
+
+$$
+R_\mu=\sup_{x\in X}\inf_{m\ge0}\inf_{v\in P}
+                         \sup_{y\in C_m(x)}d(v,\mu_y)
+\tag{54.7}
+$$
+
+is attained if and only if every $K_\infty^{R_\mu}(q)$ is nonempty. This is a non-effective characterization, without a finite refinement-rank bound or a uniform preparation horizon.
+
+**Proof.** First, all values in the recursion are closed. If $v_j\in\mathcal D K(q)$ and $v_j\to v$, closedness of $K(q)$ puts $v$ in $K(q)$. Given $\delta>0$, choose $j$ with $d(v,v_j)<\delta/2$ and use the neighborhood for $v_j$ at tolerance $\delta/2$. The triangle inequality gives (54.4) for $v$. Convexity also persists: for two surviving centers choose one common cylinder on which both have sufficiently close witnesses in $K(q')$, and take the corresponding convex combination. Limits preserve closedness and convexity. No compactness or nearest-point attainment is used.
+
+Fix a countable basis $\mathcal B$ of the separable metric space $P$. At any strict successor decrease, closedness supplies a pair $(q,V)\in Q\times\mathcal B$ such that $V$ meets $K_\alpha^\eta(q)$ and is disjoint from $K_{\alpha+1}^\eta(q)$. That same pair cannot witness a later decrease, because every later value is contained in $K_{\alpha+1}^\eta(q)$. The set $Q\times\mathcal B$ is countable. If no countable stabilization stage existed, there would be a distinct such pair for every $\alpha<\omega_1$, a contradiction. Equality at one successor stage makes all subsequent successor and limit stages equal. This proves stabilization and makes $K_\infty^\eta$ independent of which stabilization stage is used.
+
+Every continuous selection $v(q)\in K_0^\eta(q)$ survives every stage. Indeed, if it selects $K_\alpha^\eta$, then
+
+$$
+\operatorname{dist}(v(q),K_\alpha^\eta(q'))
+       \le d(v(q),v(q')),
+\tag{54.8}
+$$
+
+and continuity supplies the cylinder in (54.4). Limit stages follow by intersection. Lemma 45.3 says that any lawful prepared family factors through $Q$ as just such a TV-continuous selection. This proves the forward implication of (54.6).
+
+For the converse suppose all stable values are nonempty. Stability implies lower semicontinuity: if $v\in K_\infty^\eta(q)$ belongs to an open set $O\subseteq P$, choose a ball about $v$ contained in $O$. Equation (54.4) supplies a cylinder throughout which the stable values meet that ball. Equivalently, for every open $O$, the set of $q$ with $K_\infty^\eta(q)\cap O\ne\varnothing$ is open.
+
+Here the continuous-selection step can be proved directly with its full hypotheses. Every open cover of $Q$ has a disjoint clopen refinement: enumerate the basis members $V_i$ contained in a member of the cover and replace them by
+
+$$
+W_i=V_i\setminus\bigcup_{j<i}V_j.
+\tag{54.9}
+$$
+
+Discard empty members. These clopen sets cover $Q$ and refine the cover. For any nonempty closed-valued lower-semicontinuous $H:Q\to2^P$, choose $v_q\in H(q)$. Lower semicontinuity gives a neighborhood where $\operatorname{dist}(v_q,H(q'))<1$. Applying (54.9) and using the chosen center of a containing neighborhood produces a locally constant $s_0$ with $\operatorname{dist}(s_0(q),H(q))<1$ everywhere.
+
+Inductively suppose $s_n$ is locally constant and its distance to $H(q)$ is less than $2^{-n}$. At each $q$ choose $v_q\in H(q)$ with $d(v_q,s_n(q))<2^{-n}$. Restrict to a neighborhood where $s_n$ is constant and where $\operatorname{dist}(v_q,H(q'))<2^{-n-1}$. The same disjoint refinement gives a locally constant $s_{n+1}$ satisfying everywhere
+
+$$
+d(s_{n+1}(q),s_n(q))<2^{-n},
+\qquad
+\operatorname{dist}(s_{n+1}(q),H(q))<2^{-n-1}.
+\tag{54.10}
+$$
+
+The summable bounds make $(s_n)$ uniformly Cauchy. Completeness of $P$ gives a continuous uniform limit $s$, and closedness of $H(q)$ puts $s(q)$ in $H(q)$. Apply this construction to $H=K_\infty^\eta$. Neither compactness of $Q$, compactness of the values nor finite-dimensionality is required. Convexity is preserved by the refinement but is unnecessary for this clopen selection argument.
+
+To acquire the resulting selection, enumerate the actual tapes as $\theta_j$, without repetitions, stopping the enumeration in the finite case. Define $F_0=0$ and $F_j(q)=\sum_{i\le j}s(q)(\{\theta_i\})$. Use one common uniform seed $U\in(0,1)$. After reading the first $m$ actual prime answers, test the available indices $j\le m$ and emit $\theta_j$ when
+
+$$
+\sup_{q'\in U_m([y])}F_{j-1}(q')<U<
+\inf_{q'\in U_m([y])}F_j(q').
+\tag{54.11}
+$$
+
+These are fixed shared tables indexed by the acquired record, exactly the construction of Theorem 46.3. For each fixed source, outside its countable set of cumulative-mass endpoints, normalization supplies a unique containing interval and continuity certifies it at a finite prefix. Each stage uses finitely many tests and actual prime queries, so its actual execution is finite on that full-probability seed set. Finite record events are Borel interval combinations; each output event is a countable union of these events. The emitted probability law is $s([y])$, with no conditioning away of divergence. The preparation hands this tape, and no additional record input, to the same consumer on the same static source. Membership in (54.3) proves the cap for every original label. Theorem 50.2 identifies the infimum with (54.7), so at that cap the achieved uniform error equals $R_\mu$.
+
+Lower-semicontinuous selection and derived mappings are mature machinery. Michael, [*Continuous selections and countable sets*, Theorem 1.1](https://doi.org/10.4064/fm-111-1-1-10), gives a selection-extension theorem for a countable regular domain, a first-countable range and a nonempty-valued lower-semicontinuous correspondence. Here $Q$ is countable and metric, and $P$ is metric; taking the initial closed subset empty gives the selection consequence. The complete clopen/completeness argument above also supplies it directly. Brown, [*The Derived Mappings and the Order of a Set-Valued Mapping Between Topological Spaces*](https://doi.org/10.1023/A:1008618528989), supplies the established derived-mapping reference frame; no theorem from its subscription text is required here. Finite-dimensional Glaeser bounds, such as Jiang, Luli and O'Neill, [*Smooth Selection for Infinite Sets*, Theorem 1.5](https://arxiv.org/html/2109.04905v2), require a closed Euclidean domain and finite jet/shape-field hypotheses that are not instantiated here. The countable-ordinal bound above is proved separately. The deduction (54.6) is the target-defined cap criterion for this actual acquisition problem, rather than a new general selection theorem or a literature-priority assertion. $\square$
+
+**Theorem 54.3 (Pointwise laws with the all-source gate retained).** Let $\mathcal L_\eta(q)$ be the set of probability laws at signature $q$ realized by lawful preparations satisfying the cap $\eta$ at every original source. Then
+
+$$
+\mathcal L_\eta(q)=
+\begin{cases}
+K_\infty^\eta(q),& K_\infty^\eta(q')\ne\varnothing\text{ for every }q'\in Q,\\
+\varnothing,& K_\infty^\eta(q')=\varnothing\text{ for some }q'\in Q.
+\end{cases}
+\tag{54.12}
+$$
+
+**Proof.** The necessity argument of Theorem 54.2 puts each lawful law in the stable value. If some other value is empty, no all-source cap preparation exists, so every $\mathcal L_\eta(q)$ is empty. If all values are nonempty, fix $v\in K_\infty^\eta(q_0)$ and replace just the value at $q_0$ by $\{v\}$. This modified correspondence is nonempty and closed-valued. It remains lower semicontinuous: at $q_0$ use lower semicontinuity for the point $v$; at $q\ne q_0$ restrict to an open neighborhood excluding $q_0$, which exists because $Q$ is Hausdorff. The clopen selection construction and (54.11) then give a lawful all-source cap preparation with law $v$ at $q_0$. This asserts arbitrary single-point prescription, not arbitrary simultaneous prescriptions at several signatures. $\square$
+
+## 55. What the intrinsic refinement detects, and what it cannot detect
+
+**Theorem 55.1 (Two distinct diagnostics of the published endpoint failures).** At cap $r$, the unchanged countable example of Theorem 52.1 has nonempty $K_0^r$ and $K_1^r$ at every actual signature, but $K_2^r([x_*])=\varnothing$. Applying the local operator (54.4) to the unchanged measurable example of Theorem 53.1 gives instead a nonempty stable singleton correspondence after the first refinement. For this second calculation interpret $P$ as all probability measures on that declared measurable carrier, and form $K_0^r$ and its successors by (54.3)--(54.4); no general stabilization theorem is imported. That second example is nevertheless unacquirable. These statements concern the two published families, rather than new constructions of their nonattainment.
+
+**Proof.** Use $E,D_n,B_n,w_n=r+c/n$ and the dense colors of Theorem 52.1. On $D_n$, density and closedness of the cap balls give
+
+$$
+K_1^r([z])=\bigcap_{i=1}^n
+ \{v\in P:d(v,(1-w_n)\delta_0+w_n\delta_{(n,i)})\le r\}
+       \qquad(z\in D_n).
+\tag{55.1}
+$$
+
+For necessity, approach $z$ through each color and use centers in its $K_0^r$ values at distances tending to zero from the proposed surviving point. For sufficiency, a member of the displayed intersection belongs to $K_0^r$ throughout the open set $D_n$, so all those distances are zero. The law (52.4) belongs to (55.1). At the anchor, $\delta_0\in K_1^r$: a color-$i$ source in $D_n$ has a cap center $(1-c/n)\delta_0+(c/n)\delta_{(n,i)}$ at distance $c/n$ from $\delta_0$, and the centers on $E$ may equal $\delta_0$. Every sufficiently long anchor cylinder has only $E$ and sufficiently late $D_n$, proving (54.4). Thus all first-refinement values are nonempty.
+
+Every member of (55.1) puts at least $c/n$ on each singleton in $B_n$, hence at least $c$ on $B_n$. For any fixed probability $v$, pairwise disjointness gives $v(B_n)\to0$, and therefore
+
+$$
+\operatorname{dist}(v,K_1^r([z]))\ge c-v(B_n)
+                   \qquad(z\in D_n).
+\tag{55.2}
+$$
+
+Every anchor cylinder contains arbitrarily late occupied $D_n$. Equation (55.2) excludes every $v$ from the second refinement at the anchor. One compatibility pass is therefore insufficient, even though every initial and first-refinement fiber is nonempty.
+
+For Theorem 53.1 use its unchanged $\alpha,t,k,\nu,\kappa$ and $k$ dense colors. A point surviving the first refinement at $q$ belongs to every cap ball centered at $\alpha\nu_q+t\delta_{a_i}$: approach through color $i$, choose nearby centers, and use TV continuity of $\nu$. The tag-saturation argument (53.5) forces that point to be $\kappa_q$. Conversely the continuous map $\kappa$ selects every initial fiber, so the survival induction (54.8) keeps it at every stage. Consequently the first refinement is precisely the stable map $q\mapsto\{\kappa_q\}$.
+
+Its common-submeasure mass in every anchor cylinder remains $t<1$ by (53.6). The necessary condition of Theorem 46.4 therefore prevents acquisition. The elementary selection construction requires a complete range and a clopen basis, but selecting a continuous law is not the operational sufficiency step on an arbitrary measurable carrier. The countable-carrier realization (54.11) is precisely the additional bridge available in Theorem 54.2. On general carriers, even a stable singleton of continuous cap laws cannot replace common-submeasure exhaustion. $\square$
+
+## 56. Positive correct proposals and countable endpoint nonattainment
+
+**Definition 56.1 (A fixed positive-row input subclass).** Fix an arbitrary allowed profile $b$ and numbers
+
+$$
+0<h\le r<1.
+\tag{56.1}
+$$
+
+Use distinct proposal tapes $p_j$ for $j\ge1$: the common consumer immediately proposes the finite integer $j$ on $p_j$, and immediately returns unknown on every other declared tape. Here $p_j$ denotes a tape, not the prime of the same index. It makes no prime queries. All carriers below contain these tapes as a measurable discrete component. The consumer's finite record and Borel real-output events are measurable, since its output on this component is an integer-valued function and its output on the complement is constant unknown. Prescribing mass $h$ at $p_{\Omega(y)}$ and the remaining mass on unknown tapes gives at every source the target row
+
+$$
+(h_y,e_y,d_y,z_y)=(h,0,0,1-h),
+\qquad e_y\le b(\Omega(y))h_y.
+\tag{56.2}
+$$
+
+The index $\Omega(y)$ is part of the fixed target-law specification, never an input to the preparation. The same applies to the color specifications used below. Prepared laws are not required to have row (56.2), as stipulated in Definition 50.1.
+
+**Theorem 56.2 (A positive-row countable failure).** For every (56.1) and every allowed profile, there is a fixed target family on a countable power-set carrier, on the entire actual $X$, with row (56.2), at most three tapes in each target support, and
+
+$$
+I(\mu)=R_\mu=r,
+\qquad
+\{\eta\in[0,1]:\eta\text{ is lawfully feasible}\}=(r,1].
+\tag{56.3}
+$$
+
+There is no TV-continuous family within cap $r$. Every cap above $r$ has a lawful preparation with a common finite prime menu and a finite positive-weight seed support.
+
+**Proof.** First strengthen the actual dense coloring used in Section 52. The arithmetic supplier is [Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows), on the labeled source (36.1); its needed Fibonacci entry-rank identity is [equation (363.13)](FIBONACCI_ATOMIC_RELATION_GENERATION.md), namely $q\mid F_n\Longleftrightarrow z(q)\mid n$. It makes $\Omega$ unbounded in every occupied finite-prime cylinder. Complete observation classes have a fixed finite $\Omega$, so excluding finitely many classes preserves that unboundedness.
+
+On $Q$, or on any occupied clopen subset, and for any fixed number of colors, enumerate triples consisting of an occupied prefix subcylinder, a color and an integer $K$. For each triple choose a previously unassigned class in that cylinder with $\Omega\ge K$, and assign it that color. Only finitely many classes have been used at that stage, so the choice exists. Assign the remaining classes arbitrarily. Thus, for every actual $z$ in the domain and every color $i$, there are actual sources $y_\ell$ of that color with
+
+$$
+[y_\ell]\in U_\ell([z]),\qquad \Omega(y_\ell)\ge\ell.
+\tag{56.4}
+$$
+
+This construction uses only the actual domain and introduces no source probability, source selection during execution or additional observation. No exact realization of every integer $\Omega$ is required.
+
+We will use a moving-event consequence. If $\lambda$ is TV-continuous, $[y_\ell]\to[z]$ and $j_\ell=\Omega(y_\ell)\to\infty$, then
+
+$$
+\lambda_{y_\ell}(\{p_{j_\ell}\})
+ \le d(\lambda_{y_\ell},\lambda_z)
+                   +\lambda_z(\{p_{j_\ell}\})\longrightarrow0.
+\tag{56.5}
+$$
+
+The second term vanishes because the $p_j$ are disjoint atoms of a probability measure. Consequently, for fixed measurable $A$ disjoint from all proposal tapes, the inequalities $d(\lambda_{y_\ell},\mu_{y_\ell})\le\eta$ and $\mu_{y_\ell}(A\cup\{p_{j_\ell}\})\ge a$ for every $\ell$ imply $\lambda_z(A)\ge a-\eta$. The same source sequence controls the entire moving event; no coupling or unattainable joint experiment is assumed.
+
+Let $E$ be the complete anchor-signature fiber and $D_n$ the sources with first differing prime answer at index $n$. These sets partition every labeled source; each $D_n$ is occupied and clopen, and $D_n\subseteq C_{n-1}(x_*)$. The anchor support is $\{3\}$, so every source in $E$ has $\Omega=1$. Color the actual classes of each $D_n$ with $n$ colors using (56.4). Choose $0<c<\min\{r,1-r\}$ and put $w_n=r+c/n$. On the countable power-set carrier
+
+$$
+\Theta^- =\{o\}\sqcup\{a_{n,i}:n\ge1,\ 1\le i\le n\}
+                         \sqcup\{p_j:j\ge1\},
+\tag{56.6}
+$$
+
+use the consumer of Definition 56.1 and prescribe
+
+$$
+\begin{aligned}
+\mu_y^-&=(1-w_n)\delta_o+(w_n-h)\delta_{a_{n,i}}
+                          +h\delta_{p_{\Omega(y)}}
+       &&(y\in D_n\text{ of color }i),\\
+\mu_y^-&=(1-h)\delta_o+h\delta_{p_1}&&(y\in E).
+\end{aligned}
+\tag{56.7}
+$$
+
+All coefficients are nonnegative and sum to one; $h\le r<w_n<1$. The sole proposal is exactly the true target, establishing (56.2). All duplicate labels remain and receive their specified laws.
+
+For a continuous family of uniform error at most $\varepsilon$, fix $z\in D_n$ and approach it through each color as in (56.4). The target mass on $\{a_{n,i},p_{\Omega(y_\ell)}\}$ is $w_n$. Equations (56.5) and the event cap give
+
+$$
+\lambda_z(\{a_{n,i}\})\ge w_n-\varepsilon
+                      =r-\varepsilon+c/n.
+\tag{56.8}
+$$
+
+If $\varepsilon<r$, summing the $n$ disjoint singleton inequalities for sufficiently large $n$ exceeds total mass one. At $\varepsilon=r$, the block $A_n=\{a_{n,i}:i\le n\}$ has mass at least $c$ at every source in $D_n$. But $\lambda_{x_*}(A_n)\to0$ by pairwise disjointness. Continuity at the actual anchor supplies one cylinder where all laws are within $c/4$ of the anchor law. Choose $n$ beyond that prefix with anchor mass on $A_n$ less than $c/4$, and choose any actual source in the occupied $D_n$. Its mass on $A_n$ is less than $c/2$, a contradiction. Lemma 45.3 excludes every lawful cap-$r$ preparation, including those with arbitrary sourcewise finite stopping times.
+
+For the upper bound fix $M\ge1$ and preload independent coordinates $W_n$, $1\le n\le M$, of laws
+
+$$
+v_n=(1-w_n)\delta_o+\frac{w_n}{n}\sum_{i=1}^n\delta_{a_{n,i}}.
+\tag{56.9}
+$$
+
+Query the first $M$ primes. On first difference $n\le M$ emit $W_n$; otherwise emit $o$. The finite product of the finite categorical laws is one source-independent seed law on its finite positive-weight support. The selected coordinate depends only on actual acquired answers. All seeds and all sources terminate after this common finite menu, and record/output events are measurable. On a handled $D_n$, the only common target/output masses are at $o$ and the actual color atom. Thus event-TV equals
+
+$$
+1-\big(1-w_n+\min\{w_n/n,w_n-h\}\big)
+       =\max\{h,w_n(1-1/n)\}\le r,
+\tag{56.10}
+$$
+
+because $w_n(1-1/n)=r+(c-r)/n-c/n^2<r$. On unhandled $D_n$ the error is $w_n$, and on $E$ it is $h$. Since every $D_n$ is occupied, the exact uniform error is
+
+$$
+\varepsilon_M=w_{M+1}=r+\frac{c}{M+1}\downarrow r.
+\tag{56.11}
+$$
+
+The consumer then runs on the same static source and handed tape. The lower bound and these approximants prove $I(\mu^-)=r$, and Theorem 50.2 identifies this with the original sharp expression $R_{\mu^-}$. No mixture weight or terminal row was imposed on an arbitrary prepared family in the lower-bound proof; the moving union event retains the positive target-proposal mass even when preparation reallocates it. $\square$
+
+## 57. The same positive row with a unique continuous, unacquirable optimum
+
+**Theorem 57.1 (Positive-row common-submeasure failure).** For the same parameter range (56.1) and every allowed profile, there is a fixed full-source target family on a standard Borel carrier with row (56.2), sharp value $r$ and feasible caps exactly $(r,1]$. Exactly one TV-continuous family achieves uniform error at most $r$, and that family cannot be lawfully acquired.
+
+**Proof.** Reuse the unchanged dyadic-hole probability family $\nu_y$ of Proposition 46.5 on $Z=[0,1]$ with its Borel sigma algebra. Its map is TV-continuous, and in every anchor prefix cylinder its greatest common submeasure is zero. For any level $n$ beyond the prefix, Theorem 35.2 realizes every level-$n$ hole there; a common submeasure vanishes on each dyadic interval, and domination by the anchor's Lebesgue law also excludes endpoint mass. These are the existing actual-source properties of that family.
+
+Choose an integer $k\ge2$ with $r<1-1/k$ and set
+
+$$
+\beta=\frac{r}{1-1/k}<1,
+\qquad \alpha=1-\beta>0,
+\qquad t=\beta-h\ge\beta/k>0.
+\tag{57.1}
+$$
+
+Color all actual classes of $Q$ with $k$ colors retaining property (56.4). On the disjoint-union standard Borel carrier
+
+$$
+\Theta^+=Z\sqcup\{a_1,\ldots,a_k\}\sqcup\{p_j:j\ge1\},
+\tag{57.2}
+$$
+
+use the consumer of Definition 56.1 and prescribe, before optimizing,
+
+$$
+\mu_y^+=\alpha\nu_y+t\delta_{a_{c(y)}}
+                              +h\delta_{p_{\Omega(y)}}.
+\tag{57.3}
+$$
+
+Normalization follows from $\alpha+t+h=1$. The sole proposal is correct, so every target has exactly row (56.2). The family
+
+$$
+\kappa_y=\alpha\nu_y+\frac\beta k\sum_{i=1}^k\delta_{a_i}
+\tag{57.4}
+$$
+
+is TV-continuous. Its positive signed discrepancy from (57.3) is $r$ on the off-color tags; its negative discrepancies are $r-h$ at the actual-color tag and $h$ at the proposal tape. The base restrictions agree, giving $d(\kappa_y,\mu_y^+)=r$ at every source.
+
+For the lower bound and uniqueness let $\lambda$ be any continuous family of uniform error at most $\varepsilon$, and fix an actual $z$. Write
+
+$$
+\begin{aligned}
+a&=\lambda_z(Z),& P_0&=\lambda_z(\{p_j:j\ge1\}),\\
+p_i&=\lambda_z(\{a_i\}),& L&=\sum_i p_i=1-a-P_0,\\
+s&=\sup_{A\subseteq Z\text{ Borel}}
+                     \big(\lambda_z(A)-\alpha\nu_z(A)\big)
+                         \ge(a-\alpha)_+.
+\end{aligned}
+\tag{57.5}
+$$
+
+For each color $i$, use (56.4) to choose actual $y_\ell\to z$ in the signature topology with that color and $j_\ell=\Omega(y_\ell)\to\infty$. Apply the cap to the single measurable event
+
+$$
+A\sqcup\{a_j:j\ne i\}\sqcup
+          \big(\{p_j:j\ge1\}\setminus\{p_{j_\ell}\}\big).
+\tag{57.6}
+$$
+
+Its target mass is $\alpha\nu_{y_\ell}(A)$. Continuity of $\lambda$ and $\nu$, together with (56.5), passes the upper signed-difference inequality to $\lambda_z(A)-\alpha\nu_z(A)+L-p_i+P_0\le\varepsilon$. Taking the supremum over $A$, then averaging over $i$, gives
+
+$$
+\varepsilon\ge s+(1-1/k)L+P_0
+       =(1-1/k)(1-a)+s+P_0/k\ge r.
+\tag{57.7}
+$$
+
+For completeness, if $a\le\alpha$ the middle expression is at least $r+(1-1/k)(\alpha-a)+P_0/k$; if $a\ge\alpha$ it is at least $r+(a-\alpha)/k+P_0/k$. At $\varepsilon=r$ these inequalities force $a=\alpha$, $P_0=0$ and $s=0$. Then $L=\beta$, and the individual color inequalities force $p_i\ge\beta-r=\beta/k$; summing gives equality for each tag. The assertion $s=0$ means $\lambda_z|_Z\le\alpha\nu_z$ on every Borel event. Equal total mass makes these restrictions equal. Consequently $\lambda_z=\kappa_z$ for every actual $z$. This proves both the continuous lower bound and the uniqueness of its optimum without assuming component-weight preservation.
+
+A lawful attainer would be continuous by Lemma 45.3, hence would acquire (57.4) exactly. In every anchor prefix cylinder, its greatest common submeasure is
+
+$$
+\ell^\kappa_{C_m(x_*)}=\frac\beta k\sum_i\delta_{a_i},
+\qquad
+\ell^\kappa_{C_m(x_*)}(\Theta^+)=\beta<1.
+\tag{57.8}
+$$
+
+Indeed the base restriction of any common submeasure is zero by the dyadic-hole property, its proposal restriction is zero because all $\kappa_y$ give those tapes zero mass, and each tag mass is at most $\beta/k$. The displayed measure is itself dominated by every law. The necessary condition of Theorem 46.4 now excludes exact acquisition, so no lawful cap-$r$ preparation exists.
+
+For every $\delta>0$, Theorem 46.6 supplies a lawful preparation of the unchanged $\nu$ family with laws $\widetilde\nu_y$ and uniform error at most $\delta$. Include its seed and an independent finite selector in one common product seed. On an initial branch of probability $\alpha$, run that preparation on the same source and hand over its base tape; on each branch of probability $\beta/k$, immediately hand over $a_i$. These are initial seed branches, with no restart or success conditioning. They terminate sourcewise almost surely, and their finite records and output events are measurable inherited events and finite unions of them. The resulting normalized law is
+
+$$
+\widetilde\kappa_y=\alpha\widetilde\nu_y
+                             +\frac\beta k\sum_i\delta_{a_i},
+\qquad
+ d(\widetilde\kappa_y,\mu_y^+)
+           =r+\alpha d(\widetilde\nu_y,\nu_y).
+\tag{57.9}
+$$
+
+For the equality, the fixed positive tag mass is $r$, the negative tag/proposal mass is $r$, and the signed base measure has total mass zero. Positive base events approaching its supremum, together with all off-color tags, approach the positive discrepancy $r+\alpha d(\widetilde\nu_y,\nu_y)$; every measurable event has discrepancy bounded by this number. Complements give the same negative supremum. No event attaining the base supremum is assumed. Taking $\delta<(\eta-r)/\alpha$ makes every $\eta>r$ feasible. The lower bound gives $I(\mu^+)=r$, and Theorem 50.2 gives $R_{\mu^+}=r$ with its original order of quantifiers.
+
+The countable product and Radon--Nikodym inputs in Theorems 46.4 and 46.6 have their same hypotheses here: countably many actual labels, probability measures on the declared measurable tape carrier, a finite dominating measure given by a countable mixture on tapes, and countably many measurable coordinate laws. In (50.6), every $\lambda_{x_i}$ is absolutely continuous with respect to the probability measure $\sigma_\lambda=\sum_i2^{-i}\lambda_{x_i}$; countability makes the simultaneous density infima measurable and permits one countable union of exceptional null sets. This mixture is not a law on sources. The countable product is defined on the product sigma algebra, with no standard-Borel sampling representation required. These are the reused interfaces `Measure.infinitePi` in [pinned Mathlib ProductMeasure](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/ProductMeasure.lean) and `withDensity_rnDeriv_eq` under absolute continuity and Lebesgue decomposition in [pinned Mathlib RadonNikodym](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Decomposition/RadonNikodym.lean). Gallo, Lerasle and Takahashi, [*Markov approximation of chains of infinite order in the $\bar d$-metric*, Section 3, Lemma 3.1](https://arxiv.org/html/1107.4353v2), supplies the existing range-partition/lower-envelope reference frame. Its conditional-past, stationary-chain and coalescence assertions are not applied to these static sources. The positive-proposal result is the full-source moving-event deduction above, not a new product-measure or chain theorem. $\square$
+
+**Theorem 57.2 (Attained comparison with the same row, profile and sharp value).** For every (56.1) and every prescribed profile, a fixed full-source family with row (56.2) and sharp value $r$ also exists that attains $r$. It may use the same carrier and consumer as Theorem 57.1, with every target supported on at most three tapes. Thus the all-source row, profile and sharp scalar together do not decide endpoint attainment.
+
+**Proof.** On the same $\Theta^+$ choose $o=0\in Z$ and replace only the base specification in (57.3) by the fixed point law $\delta_o$:
+
+$$
+\mu_y^{\mathrm{att}}=\alpha\delta_o+t\delta_{a_{c(y)}}
+                                      +h\delta_{p_{\Omega(y)}}.
+\tag{57.10}
+$$
+
+This is a separately prescribed optimization problem: its family stays fixed while preparation varies. The calculation (57.5)--(57.7), with $\nu_y=\delta_o$, proves the same lower bound $r$ for every continuous, hence every lawful family, even though preparations may use any tape in the unchanged carrier. The constant law $\alpha\delta_o+(\beta/k)\sum_i\delta_{a_i}$ has exact error $r$ by the same signed-mass calculation. Handing its tape over in one transition from its finite positive-weight categorical seed support acquires it lawfully at every source. This proves attainment and, by Theorem 50.2, the unchanged sharp value formula. The three target families in Theorems 56.2, 57.1 and this theorem exhibit both failure mechanisms and attainment under exactly the same strictly positive row and every allowed profile, including the boundary $h=r$. $\square$
+
+## 58. Scope of the intrinsic criterion and the remaining mathematical boundary
+
+**Question 58.1 (General measurable and positive-profile extensions).** For the fixed original targets, occupied cylinders and measurable carrier, find an intrinsic necessary-and-sufficient condition for lawful attainment of $R_\mu$ on arbitrary measurable carriers, and characterize the remaining prescribed positive-proposal/profile classes. These questions remain unresolved outside the conclusions below.
+
+Theorem 54.2 characterizes cap feasibility for each already prescribed countable power-set problem from its entire target data and actual observation geometry. It neither optimizes over replacement targets nor deduces the criterion from a terminal row or from the profile alone. Its stable values are constructed by (54.3)--(54.5); an arbitrary cap-compatible prepared family is not supplied under another name. Theorem 54.3 retains the global nonemptiness gate, so an individually nonempty fiber cannot certify lawful all-source feasibility when another fiber is empty.
+
+The arbitrary-measurable-carrier target-intrinsic endpoint criterion remains unresolved. There the candidate-family condition (50.5)--(50.7) still requires a jointly compatible choice whose common submeasures exhaust mass one at every actual source. Theorem 55.1 shows why even a stable singleton continuous choice cannot discharge that obligation. The countable-ordinal stabilization proof in Theorem 54.2 also uses the separability of the countable-carrier TV range; that hypothesis is not asserted for the space of all probability measures on an arbitrary measurable carrier. No finite number of refinements, effective ordinal test or finite-description sampling procedure is supplied.
+
+The positive-row constructions settle the input subclass $0<h\le r<1$, $e_y=d_y=0$ and $z_y=1-h$ at all sources, for every allowed prescribed profile. They do not classify $h>r$, other prescribed error/divergence rows, other consumers or all arbitrary measurable carriers. An additional requirement that prepared laws themselves satisfy the target profile or positive row would be a different cap problem; the constructions here do not impose it. Prescribing correlated target laws is distinct from lawfully obtaining them.
+
+Infimum, attained cap and exact acquisition remain separate: a positive $R_\mu$ may be attained by a prepared law different from every target, and each strict cap above $R_\mu$ is feasible by Theorem 50.2 even when the endpoint fails. Countable target supports, a common finite support, continuity and common-submeasure exhaustion are different hypotheses. Sourcewise almost-sure finite execution does not supply a common finite horizon. The special approximants (56.9)--(56.11) and the comparison (57.10) have the expressly proved finite seed supports; the general criterion asserts no such support bound, effectiveness, real-sampling algorithm or resource guarantee.
+
+The mathematical additions are the intrinsic target refinement and its lawful cap/locus consequences, its two distinct endpoint diagnostics, and the positive correct-proposal constructions with their moving-event lower bounds. The local value, continuity necessity, countable inverse-cumulative acquisition, arbitrary-carrier common-submeasure criterion, finite-common-carrier attainment and dyadic-hole family are reused from Sections 45--53. Closed-valued selection and transfinite derived mappings are established mathematics, used with the explicit correspondences and complete proofs above. The event-TV convention and finite-partition mass calculations agree with Levin and Peres, with Wilmer, [*Markov Chains and Mixing Times*, Proposition 4.2 and Remark 4.4](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf). The actual-source coloring uses only Boundaries 35.2 and Fibonacci (363.13). These are ordinary mathematical deductions in the stipulated measurable common-rule model, without a literature-priority assertion.
+
+## 追加锚（本行以下为增补区）

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:45f4590469dfbffe9a99412a4a5fe1f722e5fdc3107a2020ed1d40016b05a224"}
+{"statement_id":"sha256:45f4590469dfbffe9a99412a4a5fe1f722e5fdc3107a2020ed1d40016b05a224","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),9:Separator),31:HeightWindowWeilSquareCriterion),26:rh_iff_forall_heightWindow)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),9:Separator),31:HeightWindowWeilSquareCriterion),49:heightWindow_rh_iff_truncatedWeilSquarePositivity)","kind":"theorem"}]}

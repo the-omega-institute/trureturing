@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9d93cd9f6b99ec7d782e0bbd0fb6c2a87f236d110b37bcd13711e0765044c4bb"}
+{"statement_id":"sha256:9d93cd9f6b99ec7d782e0bbd0fb6c2a87f236d110b37bcd13711e0765044c4bb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),13:Computability),21:DescriptionComplexity),43:BidirectionalTransformationDescriptionBound),47:bidirectional_transformation_description_bounds)","kind":"theorem"}]}
