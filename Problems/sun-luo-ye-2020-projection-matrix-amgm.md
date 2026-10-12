@@ -59,7 +59,7 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 
 Experiment entry: [sun-luo-ye-2020-projection-matrix-amgm](https://github.com/the-omega-institute/trureturing-experiments/tree/38f78a9f7126378ad73d9b496e1c73b6df883bc7/docs/reports/sun-luo-ye-2020-projection-matrix-amgm), script `check.py`. Command: `python3 check.py` from that directory, with NumPy installed. Exit code: 0. Script SHA-256: `5e7643a7ccb84fb77ca498bf6b810c56eb769b401d27b042e55f5e322d3bcfc9`. Final discrepancy count: `bad= 0`.
 
-The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6, 120 and 5040 words, with quadratic forms $-8/243$, $-50624/232058125$ and $-1838265624/3236831537545039$. Direct matrix word multiplication is also checked at $n=3$. The floating-point checks use 400 grid points for each equiangular family at $n=2,3,4,5$. Negative points at $n=3$ range from $-0.49625$ to $-0.20375$; at $n=5$ from $-0.246875$ to $-0.1125$. There are no negative grid points at $n=2,4$. These grid readings do not establish a uniform continuum or even-$n$ result.
+The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6, 120 and 5040 words, with quadratic forms $-8/243$, $-50624/232058125$ and $-1838265624/3236831537545039$. Direct matrix word multiplication is also checked at $n=3$. The floating-point checks use the 399 interior points of a 400-step grid for each equiangular family at $n=2,3,4,5$. Negative points at $n=3$ range from $-0.49625$ to $-0.20375$; at $n=5$ from $-0.246875$ to $-0.1125$. There are no negative grid points at $n=2,4$. These grid readings do not establish a uniform continuum or even-$n$ result.
 
 ## Triage
 
@@ -69,8 +69,8 @@ The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6,
 | Odd-$n$ rational family and its closed form | Proved in prose below | Odd $n\ge3$; no uniform Lean theorem is delivered |
 | Exact rational family readings | Computed by the experiment entry | $n=3,5,7$; quadratic forms and permutation enumeration listed in Evidence |
 | Equiangular failing interval $-1/(n-1)<t<-1/(2n-1)$ for odd $n$ | Proved in prose below | Full-rank equiangular Gram matrices |
-| Odd-$n$ transition grid readings | Computed by the experiment entry | $n=3,5$, 400 points each; agrees with the derived interval on those points |
-| No equiangular failure at $n=2,4$ | Computed by the experiment entry | 400 grid points at each dimension; unrestricted even-$n$ inequality remains open |
+| Odd-$n$ transition grid readings | Computed by the experiment entry | $n=3,5$, 399 interior points of a 400-step grid each; agrees with the derived interval on those points |
+| No equiangular failure at $n=2,4$ | Computed by the experiment entry | 399 interior grid points at each dimension; unrestricted even-$n$ inequality remains open |
 | Structured coordinate-descent class $P_i=I-A_iA_i^\top$ with square invertible $[A_1,\dots,A_n]$ | Open | The rank-one family does not supply a witness in this restricted class |
 | Optimal RP-CD convergence rate | Open | The source's intended application is not settled by this refutation |
 | Unrestricted projection inequality for even $n$ | Open | No universal even-$n$ theorem or counterexample is delivered |
