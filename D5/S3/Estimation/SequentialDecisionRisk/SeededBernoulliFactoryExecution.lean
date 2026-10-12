@@ -26,7 +26,8 @@ variable {Seed : Type} [MeasurableSpace Seed]
 
 local notation "Action" => Bool ⊕ (Bool × Bool)
 local notation "History" => List (Bool × Bool)
-local notation "Law" => fun {Seed : Type} [MeasurableSpace Seed] (ν : Measure Seed) (p : unitInterval) =>
+local notation "Law" => fun {Seed : Type} [MeasurableSpace Seed]
+  (ν : Measure Seed) (p : unitInterval) =>
   ν.prod (Measure.infinitePi (fun _ : ℕ => bernoulliMeasure true false p))
 local notation "Rate" => fun (p₀ : unitInterval) (C h : ℝ) =>
   Set.projIcc 0 1 zero_le_one ((p₀ : ℝ) + h * (-(p₀ : ℝ) / C))
@@ -47,7 +48,8 @@ def acquiredHistory {Tape : Type} (π : Seed → Bool → History → Action) (S
 
 local notation "HistoryAt" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (n : ℕ) (ω : Seed × (ℕ → Bool)) => acquiredHistory π S (fun _ i bits => bits i) n ω
-local notation "TapeAct" => fun {Seed : Type} {Tape : Type} (π : Seed → Bool → History → Action) (S : Bool)
+local notation "TapeAct" => fun {Seed : Type} {Tape : Type}
+  (π : Seed → Bool → History → Action) (S : Bool)
   (answer : Bool → ℕ → Tape → Bool) (n : ℕ) (ω : Seed × Tape) =>
   π ω.1 S (acquiredHistory π S answer n ω)
 local notation "Act" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
@@ -124,59 +126,54 @@ lemma output_stopped_measurable (π : Seed → Bool → History → Action)
     (calls_stopping π hπ S)
 
 omit [MeasurableSpace Seed] in
-private lemma history_terminal (π : Seed → Bool → History → Action) (S : Bool)
-    {Tape : Type} (answer : Bool → ℕ → Tape → Bool)
-    (ω : Seed × Tape) (n : ℕ)
-    (hterminal : ∀ source : Bool, TapeAct π S answer n ω ≠ .inl source) (k : ℕ) :
-    acquiredHistory π S answer (n + k) ω = acquiredHistory π S answer n ω := by
-  induction k with
-  | zero => simp
-  | succ k ih =>
-    rw [Nat.add_succ, acquiredHistory, ih]
-    cases ha : TapeAct π S answer n ω with
-    | inl source => exact False.elim (hterminal source ha)
-    | inr cell => simp only [ha]
-
-omit [MeasurableSpace Seed] in
 private lemma call_before_return (π : Seed → Bool → History → Action) (S : Bool)
     {Tape : Type} (answer : Bool → ℕ → Tape → Bool)
-    (ω : Seed × Tape) (n : ℕ) (hn : (n : WithTop ℕ) < (hittingAfter (TapeAct π S answer) Returns 0 ω))
-    (hfinite : (hittingAfter (TapeAct π S answer) Returns 0 ω) ≠ ⊤) : ∃ source : Bool, TapeAct π S answer n ω = .inl source := by
-  classical
-  by_contra hc
-  have hterminal : ∀ source : Bool, TapeAct π S answer n ω ≠ .inl source := by
-    simpa only [not_exists] using hc
+    (ω : Seed × Tape) (n : ℕ)
+    (hn : (n : WithTop ℕ) < hittingAfter (TapeAct π S answer) Returns 0 ω) :
+    ∃ source : Bool, TapeAct π S answer n ω = .inl source := by
   have hnot : TapeAct π S answer n ω ∉ Returns :=
-    notMem_of_lt_hittingAfter (u := TapeAct π S answer) (s := Returns) (n := 0) hn (Nat.zero_le n)
-  have hret := hittingAfter_mem_set_of_ne_top (u := TapeAct π S answer) (s := Returns) (n := 0) hfinite
-  have hle : n ≤ ((hittingAfter (TapeAct π S answer) Returns 0 ω)).untopA := by
-    lift (hittingAfter (TapeAct π S answer) Returns 0 ω) to ℕ using hfinite with r
-    simpa using hn.le
-  obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le hle
-  have he : TapeAct π S answer ((hittingAfter (TapeAct π S answer) Returns 0 ω)).untopA ω = TapeAct π S answer n ω := by
-    dsimp
-    rw [hk, history_terminal π S answer ω n hterminal k]
-  exact hnot (he ▸ hret)
+    notMem_of_lt_hittingAfter (u := TapeAct π S answer)
+      (s := Returns) (n := 0) (k := n) (ω := ω) hn (Nat.zero_le n)
+  cases ha : TapeAct π S answer n ω with
+  | inl source => exact ⟨source, rfl⟩
+  | inr cell =>
+    apply False.elim
+    apply hnot
+    rw [ha]
+    exact ⟨cell, rfl⟩
 
 omit [MeasurableSpace Seed] in
-/-- At every finite return, the charged number is exactly the length of the
-complete record. Both source labels contribute one call per acquired answer. -/
-theorem acquired_history_length_at_return (π : Seed → Bool → History → Action)
-    (S : Bool) {Tape : Type} (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) (n : ℕ) (hn : (hittingAfter (TapeAct π S answer) Returns 0 ω) = (n : WithTop ℕ)) :
+/-- Every step before the first return acquires one real source answer.
+This includes every finite prefix of an infinite execution. -/
+theorem acquired_history_length_before_return (π : Seed → Bool → History → Action)
+    (S : Bool) {Tape : Type} (answer : Bool → ℕ → Tape → Bool)
+    (ω : Seed × Tape) (n : ℕ)
+    (hn : (n : WithTop ℕ) ≤ hittingAfter (TapeAct π S answer) Returns 0 ω) :
     (acquiredHistory π S answer n ω).length = n := by
-  have hfinite : (hittingAfter (TapeAct π S answer) Returns 0 ω) ≠ ⊤ := by rw [hn]; exact WithTop.coe_ne_top
-  have hlen : ∀ i : ℕ, i ≤ n → (acquiredHistory π S answer i ω).length = i := by
+  have hlen : ∀ i : ℕ, (i : WithTop ℕ) ≤
+      hittingAfter (TapeAct π S answer) Returns 0 ω →
+      (acquiredHistory π S answer i ω).length = i := by
     intro i
     induction i with
     | zero => intro hi; rfl
     | succ i ih =>
       intro hi
-      obtain ⟨source, hs⟩ := call_before_return π S answer ω i
-        (by rw [hn]; exact_mod_cast (by omega : i < n)) hfinite
+      have hil : (i : WithTop ℕ) < hittingAfter (TapeAct π S answer) Returns 0 ω :=
+        (WithTop.coe_lt_coe.mpr (Nat.lt_succ_self i)).trans_le hi
+      obtain ⟨source, hs⟩ := call_before_return π S answer ω i hil
       change π ω.1 S (acquiredHistory π S answer i ω) = .inl source at hs
-      simp only [acquiredHistory, hs, List.length_append, ih (by omega)]
+      simp only [acquiredHistory, hs, List.length_append, ih hil.le]
       simp
-  exact hlen n le_rfl
+  exact hlen n hn
+
+omit [MeasurableSpace Seed] in
+/-- At a finite return, both source labels are included in the charged record. -/
+theorem acquired_history_length_at_return (π : Seed → Bool → History → Action)
+    (S : Bool) {Tape : Type} (answer : Bool → ℕ → Tape → Bool)
+    (ω : Seed × Tape) (n : ℕ)
+    (hn : hittingAfter (TapeAct π S answer) Returns 0 ω = (n : WithTop ℕ)) :
+    (acquiredHistory π S answer n ω).length = n :=
+  acquired_history_length_before_return π S answer ω n hn.ge
 
 omit [MeasurableSpace Seed] in
 lemma cost_eq_record_cost (π : Seed → Bool → History → Action) (S : Bool)

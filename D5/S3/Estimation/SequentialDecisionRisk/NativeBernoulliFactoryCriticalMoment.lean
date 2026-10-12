@@ -76,8 +76,8 @@ private lemma uniform_coin_law (p : unitInterval) :
       · exact fun h => ⟨h.1, h.2.2⟩
       · exact fun h => ⟨h.1, ⟨p.2.1.trans h.1.le, h.2⟩⟩
     rw [he, Real.volume_Ioc]
-    simp [bernoulliMeasure_apply, unitInterval.toNNReal, ENNReal.ofReal,
-      Real.toNNReal_of_nonneg p.2.1, Real.toNNReal_of_nonneg (sub_nonneg.mpr p.2.2)]
+    simp [unitInterval.toNNReal, ENNReal.ofReal,
+      Real.toNNReal_of_nonneg (sub_nonneg.mpr p.2.2)]
     rfl
   · have he : (Coin p) ⁻¹' {true} ∩ Icc (0 : ℝ) 1 = Icc 0 (p : ℝ) := by
       ext u
@@ -87,8 +87,7 @@ private lemma uniform_coin_law (p : unitInterval) :
       · exact fun h => ⟨h.2.1, h.1⟩
       · exact fun h => ⟨h.2, ⟨h.1, h.2.trans p.2.2⟩⟩
     rw [he, Real.volume_Icc]
-    simp [bernoulliMeasure_apply, unitInterval.toNNReal, ENNReal.ofReal,
-      Real.toNNReal_of_nonneg p.2.1, Real.toNNReal_of_nonneg (sub_nonneg.mpr p.2.2)]
+    simp [unitInterval.toNNReal, ENNReal.ofReal, Real.toNNReal_of_nonneg p.2.1]
     rfl
 
 private lemma seeded_uniform_coin_law (ν : Measure Seed) [IsProbabilityMeasure ν]
@@ -98,7 +97,8 @@ private lemma seeded_uniform_coin_law (ν : Measure Seed) [IsProbabilityMeasure 
     measurable_pi_lambda _ (fun n => (coin_measurable p).comp (measurable_pi_apply n))
   have hprod := Measure.map_prod_map ν (Measure.infinitePi (fun _ : ℕ => Uniform))
     measurable_id hm
-  rw [Measure.map_id, Measure.infinitePi_map_pi (fun _ : ℕ => Uniform) (fun _ => coin_measurable p)] at hprod
+  rw [Measure.map_id, Measure.infinitePi_map_pi (fun _ : ℕ => Uniform)
+    (fun _ => coin_measurable p)] at hprod
   simp_rw [uniform_coin_law] at hprod
   exact hprod.symm
 
@@ -250,6 +250,35 @@ local notation "Target" => fun (P : FactoryParameters) (w : World P) (S : Bool)
   (if cell.1 then (Rate P w S : ℝ) else 1 - (Rate P w S : ℝ)) / 2 +
     (w.h ^ P.β / 16) * (if cell.1 = cell.2 then 1 else -1)
 
+private lemma source_rate_value (P : FactoryParameters) (w : World P) (source : Bool) :
+    (Rate P w source : ℝ) =
+      (1 - w.h * (if source then 1 else Real.exp (-P.κ) ^ (w.j : ℕ) * w.r) / P.C) / P.B := by
+  let c := if source then 1 else Real.exp (-P.κ) ^ (w.j : ℕ) * w.r
+  have he0 : 0 ≤ Real.exp (-P.κ) := (Real.exp_pos _).le
+  have he1 : Real.exp (-P.κ) ≤ 1 :=
+    (Real.exp_lt_one_iff.mpr (by linarith [P.κ_bounds.1])).le
+  have hr0 : 0 ≤ w.r := (add_nonneg (sq_nonneg _) P.g_bounds.1.le).trans w.r_bounds.1
+  have hc0 : 0 ≤ c := by
+    cases source with
+    | false => exact mul_nonneg (pow_nonneg he0 _) hr0
+    | true => norm_num [c]
+  have hc1 : c ≤ 1 := by
+    cases source with
+    | false => exact ((mul_le_mul_of_nonneg_right (pow_le_one₀ he0 he1) hr0).trans_eq
+        (one_mul w.r)).trans w.r_bounds.2
+    | true => norm_num [c]
+  have hC : 0 < P.C := lt_of_lt_of_le (by norm_num) P.C_bounds.1
+  have hratio0 : 0 ≤ w.h * c / P.C := div_nonneg (mul_nonneg w.h_bounds.1.le hc0) hC.le
+  have hratio1 : w.h * c / P.C ≤ 1 / 4 :=
+    (div_le_self (mul_nonneg w.h_bounds.1.le hc0) P.C_bounds.1).trans
+      ((mul_le_of_le_one_right w.h_bounds.1.le hc1).trans w.h_bounds.2)
+  have hB : 1 ≤ P.B := by
+    rcases P.allowed_B with hB | hB <;> rw [hB] <;> norm_num
+  have hBp : 0 < P.B := lt_of_lt_of_le (by norm_num) hB
+  apply congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one) ?_)
+  exact ⟨div_nonneg (by linarith) hBp.le,
+    (div_le_one hBp).mpr (by linarith)⟩
+
 private lemma coefficient_lower_le_one (P : FactoryParameters) :
     Real.exp (-P.κ) ^ 2 + P.g ≤ 1 := by
   have he : Real.exp (-P.κ) < 1 := Real.exp_lt_one_iff.mpr (by linarith [P.κ_bounds.1])
@@ -296,8 +325,7 @@ theorem native_factory_logarithmic_total_call_cost (P : FactoryParameters) (m : 
     let w := CommonWorld P (⟨h, hh⟩ : {h : ℝ // h ∈ Ioc 0 (1 / 4 : ℝ)})
     have ht := htv w S
     dsimp [w] at ht
-    simp only [Fin.val_zero, pow_zero, one_mul, mul_one, if_true, Bool.false_eq_true, ite_self,
-      ↓reduceIte] at ht
+    simp only [pow_zero, mul_one, ite_self] at ht
     let q := Set.projIcc 0 1 zero_le_one ((1 - h / P.C) / P.B)
     have hout : (fun cell : Bool × Bool => (RawLaw ν).real
         ((stoppedValue (CellAt π S q q) (Calls π S q q)) ⁻¹' {cell})) =
@@ -309,15 +337,7 @@ theorem native_factory_logarithmic_total_call_cost (P : FactoryParameters) (m : 
     rw [hout] at ht
     have hrate : (Set.projIcc 0 1 zero_le_one ((1 - h / P.C) / P.B) : ℝ) =
         (1 - h / P.C) / P.B := by
-      apply congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one) ?_)
-      have hC : 0 < P.C := lt_of_lt_of_le (by norm_num) P.C_bounds.1
-      have hr0 : 0 ≤ h / P.C := div_nonneg hh.1.le hC.le
-      have hr1 : h / P.C ≤ 1 / 4 := (div_le_self hh.1.le P.C_bounds.1).trans hh.2
-      have hB : 1 ≤ P.B := by
-        rcases P.allowed_B with hB | hB <;> rw [hB] <;> norm_num
-      have hBp : 0 < P.B := lt_of_lt_of_le (by norm_num) hB
-      exact ⟨div_nonneg (by linarith) hBp.le,
-        (div_le_one hBp).mpr (by linarith)⟩
+      simpa [w] using (source_rate_value P w S)
     simpa only [hrate] using ht
   have hb := hbound ν hν π hπ δ hδ hflat
   apply hb.trans
