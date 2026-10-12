@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "module": "D5.S3.Zeros.RiemannianCriticalLineInterface",
+  "source": "D5/S3/Zeros/RiemannianCriticalLineInterface.lean",
+  "source_sha256": "sha256:946af4a299a31b1b6c44542f923bc961f8deda5c87a0a083b7b22b2488fe749b",
+  "scoped_report": ".lake/build/stratalint/riemann-scoped.json",
+  "scoped_report_sha256": "sha256:37d9151e29fa7f99f01a69a847490a4c89d2e61373ff8efa9b5121708286a767",
+  "checked_utc": "2026-10-12T13:10:00+08:00",
+  "commands": [
+    {
+      "command": "make lean LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
+      "exit": 0,
+      "note": "warm clonefile cache; final rerun after source cleanup succeeded; producer DLL used UseAppHost=false because macOS CreateAppHost gid overflow affected make bootstrap"
+    },
+    {
+      "command": "lake env lean D5/S3/Zeros/RiemannianCriticalLineInterface.lean",
+      "exit": 0
+    },
+    {
+      "command": "STRATALINT_LEAN_PRODUCER_DLL=... make lean LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
+      "exit": 0
+    },
+    {
+      "command": "make LEAN_REPORT=.lake/build/stratalint/riemann-scoped.json lean-report-scoped LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
+      "exit": 0
+    },
+    {
+      "command": "SCRIBE_DOTNET=/usr/local/share/dotnet/dotnet STRATALINT_LEAN_REPORT=.lake/build/stratalint/riemann-scoped.json dotnet StrataLint.Scribe.dll emit --paths-from /tmp/riemann-scribe-paths --scoped",
+      "exit": 0,
+      "note": "emitted Markdown blueprint"
+    }
+  ],
+  "declarations": 15,
+  "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "claim_boundary": "Geometric fixed-point/displacement reformulation of the existing RH-to-critical-line equivalence; no proof of RH or new zero-free input."
+}
