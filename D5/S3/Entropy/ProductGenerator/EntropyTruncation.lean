@@ -6,7 +6,7 @@
    utility: none
    digest: Entropy truncation for exact finite product sources of an interior parity law. -/
 
-import D5.S3.Entropy.MaxEntropy
+import D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy
 import D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
 
 set_option autoImplicit false
@@ -20,9 +20,10 @@ open D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments (paritySign)
 
 local notation "σ" b => ((paritySign b : ℤ) : ℝ)
 
-/-- Density of independent binary coordinates with the specified means. -/
-def productChannel {n : ℕ} (m : Fin n → ℝ) (x : Fin n → Fin 2) : ℝ :=
-  ∏ i, (1 + m i * σ (x i)) / 2
+open D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy (windowLaw windowLaw_sum_eq_one)
+local notation "productChannel" =>
+  (fun {n : ℕ} (m : Fin n → ℝ) =>
+    windowLaw (fun (i : Fin n) (b : Fin 2) => (1 + m i * σ b) / 2))
 
 /-- The interior parity law, including its fair normalization. -/
 def parityMass {n : ℕ} (κ : ℝ) (x : Fin n → Fin 2) : ℝ :=
@@ -54,7 +55,7 @@ def smallDefect {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype Z]
 /-- A logarithmic capacity bound and a cutoff force an affine charge bound,
 with one error that also covers the zero-charge endpoint. -/
 private theorem log_cutoff_chord {D L s t d c : ℝ}
-    (hD : 0 ≤ D) (hL : 0 ≤ L) (hLD : L ≤ D)
+    (hD : 0 ≤ D) (hL : 0 ≤ L) (_hLD : L ≤ D)
     (hs : 0 < s) (hs1 : s < 1) (ht : 0 ≤ t) (ht1 : t ≤ 1)
     (hlog : 2 * (L - D) ≤ Real.log s)
     (hcut : L ≤ d + c)
@@ -170,12 +171,69 @@ private theorem component_log_capacity {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype
   simp only [mul_neg] at hlog2
   linarith
 
+
+private theorem channel_parity_moment {n : ℕ} (m : Fin n → ℝ) :
+    (∑ x : Fin n → Fin 2, productChannel m x * ∏ i, σ (x i)) =
+      componentMoment m := by
+  simp only [windowLaw, componentMoment, ← Finset.prod_mul_distrib]
+  rw [← Fintype.prod_sum (fun (i : Fin n) (b : Fin 2) => (1 + m i * σ b) / 2 * σ b)]
+  apply Finset.prod_congr rfl
+  intro i _
+  rw [Fin.sum_univ_two]
+  norm_num [paritySign]
+  ring
+
+private theorem law_parity_moment {n : ℕ} (hn : 0 < n) (κ : ℝ) :
+    (∑ x : Fin n → Fin 2, parityMass κ x * ∏ i, σ (x i)) = κ := by
+  have hzero : (∑ x : Fin n → Fin 2, ∏ i, σ (x i)) = 0 := by
+    rw [← Fintype.prod_sum (fun (_ : Fin n) (b : Fin 2) => σ b)]
+    simp [Fin.sum_univ_two, paritySign, Nat.ne_of_gt hn]
+  have hsquare (x : Fin n → Fin 2) : (∏ i, σ (x i)) ^ 2 = 1 := by
+    rw [← Finset.prod_pow]
+    apply Finset.prod_eq_one
+    intro i _
+    generalize hx : x i = b
+    fin_cases b <;> norm_num [paritySign]
+  calc
+    _ = (2 : ℝ)⁻¹ ^ n *
+        ((∑ x : Fin n → Fin 2, ∏ i, σ (x i)) + κ *
+          ∑ x : Fin n → Fin 2, (∏ i, σ (x i)) ^ 2) := by
+      simp only [Finset.mul_sum, ← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro x _
+      dsimp [parityMass]
+      ring
+    _ = κ := by
+      simp only [hzero, hsquare, Finset.sum_const, Finset.card_univ,
+        Fintype.card_fun, Fintype.card_fin, nsmul_eq_mul, mul_one, Nat.cast_pow,
+        Nat.cast_ofNat, zero_add]
+      have hp : (2 : ℝ)⁻¹ ^ n * 2 ^ n = 1 := by
+        rw [← mul_pow]
+        norm_num
+      calc
+        _ = κ * ((2 : ℝ)⁻¹ ^ n * 2 ^ n) := by ring
+        _ = κ := by rw [hp, mul_one]
+
+private theorem generator_parity_moment {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype Z]
+    (G : ExactGenerator n κ Z) (hn : 0 < n) :
+    (∑ z, G.weight z * componentMoment (G.mean z)) = κ := by
+  calc
+    _ = ∑ z, G.weight z *
+        ∑ x : Fin n → Fin 2, productChannel (G.mean z) x * ∏ i, σ (x i) := by
+      simp_rw [channel_parity_moment]
+    _ = ∑ x : Fin n → Fin 2, (∑ z, G.weight z * productChannel (G.mean z) x) *
+        ∏ i, σ (x i) := by
+      simp_rw [Finset.mul_sum, Finset.sum_mul, mul_assoc]
+      exact Finset.sum_comm
+    _ = κ := by simp_rw [G.exact_mass]; exact law_parity_moment hn κ
+
 /-- Exact generation controls both excess absolute parity charge and the
 small-label defect uniformly in the finite source alphabet. -/
 theorem entropy_truncation_coercivity {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype Z]
     (G : ExactGenerator n κ Z) (hκ : 0 ≤ κ) (L g : ℝ)
     (hL : 0 ≤ L) (hLD : L < (n : ℝ) * Real.log 2)
     (hH : shannonEntropy G.weight ≤ (n : ℝ) * Real.log 2 * κ + g) :
+    κ ≤ absoluteCharge G ∧
     (n : ℝ) * Real.log 2 * (absoluteCharge G - κ) + L * smallDefect G L ≤
       g + Real.log (1 + κ) +
         ((n : ℝ) * Real.log 2) * Real.exp (-2 * ((n : ℝ) * Real.log 2 - L)) /
@@ -251,6 +309,19 @@ theorem entropy_truncation_coercivity {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype 
       ring
     rw [hleft, hright] at hh
     exact hh
+  have hn : 0 < n := by
+    by_contra hh
+    have hn0 : n = 0 := Nat.eq_zero_of_not_pos hh
+    simp only [hn0, Nat.cast_zero, zero_mul] at hLD
+    linarith
+  constructor
+  · calc
+      κ = ∑ z, G.weight z * componentMoment (G.mean z) :=
+        (generator_parity_moment G hn).symm
+      _ ≤ absoluteCharge G := by
+        apply Finset.sum_le_sum
+        intro z _
+        exact mul_le_mul_of_nonneg_left (le_abs_self _) (G.weight_pos z).le
   change D * (absoluteCharge G - κ) + L * smallDefect G L ≤ g + c + ρ
   change shannonEntropy G.weight ≤ D * κ + g at hH
   linarith
