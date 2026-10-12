@@ -6,6 +6,12 @@ internal sealed class NativePrefixIdentityReflectionDocument : IScribeDocumentDe
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "NativePrefixIdentityReflection", H("Native prefix identity reflection"), Blocks(
+            Supplier("gamma_iterate", "Native mass is invariant under every iterate", "The mass counts non-atomic constructors. Iterating the interpreted native substitution preserves it, including zero-mass atoms of unbounded rank."),
+            Supplier("gamma_pair", "A positive child prevents atomic collapse", "If either child has positive native mass, the parent has one plus the two child masses. No unrestricted additivity is asserted for pairs of atomic children."),
+            Supplier("gamma_parent", "Native mass does not decrease toward the root", "Each child mass is at most the parent mass, including pairs whose two children have zero mass."),
+            Supplier("kappa_iterate", "The native clock advances by the iterate exponent", "The clock is zero at alpha, one at beta and two plus the right child clock at a pair. Each native substitution advances it by one."),
+            Supplier("gamma_comb", "Existing finite combs realize every mass", "The comb starts at alpha and repeatedly pairs the preceding comb with alpha on the right. Its native constructor mass is exactly the number of pair steps."),
+            Supplier("eval_closed", "Closed expressions ignore residual valuations", "An expression whose active flag is false has no live residual occurrence. Its evaluated native tree is the same under every two source valuations, without imposing any bound on ground size."),
             Describe.Lean(
                 DescribeId.Create("native-prefix-identity-reflection"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.prefix_identity_reflection"),
@@ -14,7 +20,7 @@ internal sealed class NativePrefixIdentityReflectionDocument : IScribeDocumentDe
                     Paragraph(Text("The native source algebra consists of all nonempty finite ordered binary trees with leaf labels alpha and beta. Native substitution sends alpha to beta, beta to the ordered pair (beta, alpha), and distributes through pairs. It is a fixed interpreted operation; its powers are not extra free constructors.")),
                     Paragraph(Text("A mixed expression contains finite ground trees, a fixed nonnegative substitution power of an original residual name, and ordered pairing. The same name always denotes the same whole source valuation, including when its occurrences carry different fixed powers. Fixed scalar atoms and fixed barrier coordinates are evaluated into grounds before the implication is applied.")),
                     Paragraph(Text("Each original coordinate has its own finite depth and pattern. A zero-depth pattern is one hole. An early observed leaf remains that leaf and contributes no descendant holes; an observed pair retains two ordered child patterns. Frontier names therefore describe exactly the reached positions, with distinct coordinates carrying disjoint private families. Every hole may receive any finite native source, independently of every other hole.")),
-                    Paragraph(Text("NativeDepthPatterns.depthEquiv reconstructs every finite source from its pattern and reached subtrees. NativeDepthPatterns.frontier_geometry identifies exactly the reached depth positions and recovers every assigned subtree. For a finite valid reply prefix of an infinite completion, a surviving infinite branch reaches the next frontier; hence that frontier is nonempty. Inclusive observation through depth h uses the pattern at depth h+1. A finite reply set can first be refined to such a depth. Early leaves preserve their absent descendants, so the reconstruction does not replace absent regions with variables.")),
+                    Paragraph(Text("NativeDepthPatterns.depthEquiv reconstructs every finite source from its pattern and reached subtrees. NativeDepthPatterns.frontier_geometry identifies exactly the reached depth positions and recovers every assigned subtree. Relating the supplied patterns to prescribed inclusive prefixes of actual infinite completion trees requires a separate completion-tree correspondence. Inclusive observation through depth h calls for a pattern at depth h+1. The finite-tree decomposition by itself does not provide that correspondence. Early leaves preserve their absent descendants, so the reconstruction does not replace absent regions with variables.")),
                     Paragraph(Text("The implication fixes all patterns and both expressions first. Its premise quantifies over the entire joint dependent product of hole fillings. Its conclusion quantifies over the entire original finite residual product. There is no feasibility assumption, chosen solution, source-size bound, common mass, common clock, or positive restriction on the concluding valuations. Zero residual dimension is included and reduces the comparison to fixed grounds.")),
                     Paragraph(Text("The proof recognizes the native Fibonacci atomic subtrees by a recursive optional rank. Their constructor mass is zero; an unrecognized pair has mass one plus its child masses. A pair of recognized consecutive atoms can collapse to a single higher atom, so unrestricted constructor additivity would be false. Substitution shifts the recognized rank by one and preserves this mass. Whenever a child has positive mass, atomic collapse is excluded and pair mass is exactly additive. Finite left combs realize every nonnegative mass.")),
                     Paragraph(Text("For positive hole masses, a context has an exact constant offset plus the sum of its hole masses. The offset includes the masses of maximal closed subtrees and every pair ancestor of a hole. Closed child contexts can collapse atomically; live child contexts have a positive descendant and make their ancestors additive. The induction includes pairs with one empty child frontier and patterns with no frontier.")),
@@ -25,6 +31,34 @@ internal sealed class NativePrefixIdentityReflectionDocument : IScribeDocumentDe
                     Paragraph(Text("These are mathematical coordinates and exact whole-tree equalities. Applying the result to an acquired register still requires the common source-total producer, authentic epoch, complete accessible retained-state cut and full signed source fiber. It supplies no source-selection or subtree-equality port. Acquisition, four-valued arbitrary-word reads, legal serial forward updates, literal lengths, local work, memory, retention, preparation, installation and physical time remain separately paid resources. No approximation, probability guarantee or physical cost optimum follows from the implication."))
                 ), DescribeRole.Theorem)
         )));
+
+    private static DocumentBlock Supplier(string n, string title, string prose) => Describe.Lean(
+        DescribeId.Create("native-prefix-supplier-" + n.Replace("_", "-")),
+        DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection." + n),
+        H(title), SupplierStatement(n), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static StatementSource SupplierStatement(string n)
+    {
+        var source = V("Source");
+        var gs = Call("gamma",V("s"));
+        var gt = Call("gamma",V("t"));
+        var gp = Call("gamma",Call("mul",V("s"),V("t")));
+        Formula formula = n switch
+        {
+            "gamma_iterate" => All("a",V("Nat"),All("t",source,
+                EqOf(Call("gamma",Call("iterate",V("substitution"),V("a"),V("t"))),Call("gamma",V("t"))))),
+            "gamma_pair" => All("s,t",source,Imp(Seq(Par(Seq(D(0),Sp,Lt,Sp,gs)),Sp,Lor,Sp,Par(Seq(D(0),Sp,Lt,Sp,gt))),
+                EqOf(gp,Seq(D(1),Sp,Plus,Sp,gs,Sp,Plus,Sp,gt)))),
+            "gamma_parent" => All("s,t",source,Seq(Par(Seq(gs,Sp,Leq,Sp,gp)),Sp,Land,Sp,Par(Seq(gt,Sp,Leq,Sp,gp)))),
+            "kappa_iterate" => All("a",V("Nat"),All("t",source,
+                EqOf(Call("kappa",Call("iterate",V("substitution"),V("a"),V("t"))),Seq(Call("kappa",V("t")),Sp,Plus,Sp,V("a"))))),
+            "gamma_comb" => All("r",V("Nat"),EqOf(Call("gamma",Call("comb",V("r"))),V("r"))),
+            "eval_closed" => All("I",V("Type"),All("E",Call("MixedExpr",V("I")),
+                Imp(EqOf(Call("active",V("E")),Call("false")),All("z,v",Arr(V("I"),source),
+                    EqOf(Call("eval",V("z"),V("E")),Call("eval",V("v"),V("E"))))))),
+            _ => throw new ArgumentException(n)
+        };
+        return StatementSource.FromAuthor(Disp(formula));
+    }
 
     private static StatementSource Statement()
     {
