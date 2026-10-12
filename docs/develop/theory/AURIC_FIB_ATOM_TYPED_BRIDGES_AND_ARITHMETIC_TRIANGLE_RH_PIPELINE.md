@@ -10299,3 +10299,318 @@ p_0p_{25}=p_2p_5,
 \]
 
 因此四维不是额外物理轴的声明，而是让三维观察恢复成自治五态动力所需的最小一维补充。它可以在满足快速松弛和 lumpability 时成为可消去的中间变量，也可以在隐藏方向被持续激发时成为不可省略的记忆状态。
+
+
+## 63. 静态量子网络响应与熵时间账本
+
+本节把“大场是静态量子信息网络，小场是局部节点或边，信息流产生宏观空间响应和时间账本”的直觉压缩为同一组有限网络数据上的两个派生量。空间候选量来自静态 Poisson 响应，时间候选量来自量子 Markov 半群的相对熵下降。两者共享网络拓扑、边参数和局部生成元。
+
+### 定义 63.1（有限静态网络、势和响应度量）
+
+令 \(G=(V,E)\) 为有限连通图，为每条边选定方向并令 \(q_e\in\mathbb R^V\) 为其关联向量。给定边容量 \(c_e>0\)，定义加权拉普拉斯
+\[
+L_c
+=
+\sum_{e\in E}c_e q_eq_e^{\mathsf T}.
+\]
+它满足
+\[
+L_c\mathbf1=0,
+\qquad
+L_c=L_c^{\mathsf T},
+\qquad
+L_c\succeq0,
+\qquad
+\ker L_c=\mathbb R\mathbf1.
+\]
+
+给定零和源 \(b\in\mathbf1^\perp\)，定义静态势
+\[
+\phi=L_c^+b,
+\]
+其中 \(L_c^+\) 是 Moore--Penrose 伪逆。边流和 Dirichlet 能量分别为
+\[
+I_e=c_e q_e^{\mathsf T}\phi,
+\qquad
+\mathcal E_c(b)
+=
+\frac12\sum_{e\in E}c_e(q_e^{\mathsf T}\phi)^2
+=
+\frac12 b^{\mathsf T}L_c^+b.
+\]
+
+对两个零和源 \(b_1,b_2\)，定义响应双线性型
+\[
+g_c(b_1,b_2)
+=
+b_1^{\mathsf T}L_c^+b_2.
+\]
+对节点 \(a,b\in V\)，定义有效响应距离
+\[
+R_c(a,b)
+=
+(\delta_a-\delta_b)^{\mathsf T}
+L_c^+
+(\delta_a-\delta_b).
+\]
+
+这些量完全由有限图和边容量决定。它们是静态网络几何对象，不预设连续流形或物理引力解释。
+
+### 定理 63.2（边容量变化的响应变分公式）
+
+设图保持连通，\(c_e(s)\) 对 \(s\) 可微，令
+\[
+L_s=\sum_ec_e(s)q_eq_e^{\mathsf T},
+\qquad
+\phi_s=L_s^+b.
+\]
+在 \(\mathbf1^\perp\) 上有
+\[
+\frac{d}{ds}L_s^+
+=
+-L_s^+L_s'L_s^+.
+\]
+因此
+\[
+\boxed{
+\frac{d}{ds}R_s(a,b)
+=
+-\sum_{e\in E}
+c_e'(s)
+\bigl(q_e^{\mathsf T}\phi_s^{ab}\bigr)^2,
+}
+\]
+其中
+\[
+\phi_s^{ab}
+=
+L_s^+(\delta_a-\delta_b).
+\]
+更一般地，
+\[
+\frac{d}{ds}g_s(b_1,b_2)
+=
+-b_1^{\mathsf T}L_s^+L_s'L_s^+b_2.
+\]
+
+#### 证明
+
+在 \(\mathbf1^\perp\) 上 \(L_s\) 可逆。对恒等式
+\[
+L_sL_s^+=I_{\mathbf1^\perp}
+\]
+求导得
+\[
+L_s'L_s^++L_s\frac{d}{ds}L_s^+=0.
+\]
+左乘 \(L_s^+\) 即得
+\[
+\frac{d}{ds}L_s^+
+=
+-L_s^+L_s'L_s^+.
+\]
+又有
+\[
+L_s'
+=
+\sum_ec_e'(s)q_eq_e^{\mathsf T},
+\]
+代入 \(R_s=(\delta_a-\delta_b)^{\mathsf T}L_s^+(\delta_a-\delta_b)\) 即得。证毕。
+
+### 定义 63.3（网络响应曲率）
+
+对固定零和源 \(b\ne0\)，令
+\[
+R_s[b]=b^{\mathsf T}L_s^+b.
+\]
+定义响应曲率
+\[
+\kappa_s[b]
+=
+-\frac{d}{ds}\log R_s[b]
+=
+\frac{
+\sum_ec_e'(s)(q_e^{\mathsf T}\phi_s)^2
+}{
+R_s[b]
+}.
+\]
+
+若容量变化服从
+\[
+c_e'(s)=-\alpha_e\sigma_e(s),
+\qquad
+\alpha_e\ge0,\quad \sigma_e(s)\ge0,
+\]
+则
+\[
+\kappa_s[b]\le0,
+\]
+即边容量因局部耗散下降时，响应电阻沿该源方向增加。若 \(c_e'(s)=+\alpha_e\sigma_e(s)\)，则响应电阻沿该源方向收缩。
+
+这里的 \(\kappa_s[b]\) 是有限网络的响应曲率候选。它控制静态源扰动如何改变网络几何响应，但尚未被证明等于 Ricci 曲率、Einstein 张量或任何连续时空曲率。要得到后者，仍需 §54 的 metric-measure/Mosco 极限、局部性和曲率稳定性条件。
+
+### 定义 63.4（有限量子网络与局部生成元）
+
+令
+\[
+\mathcal A=\bigotimes_{v\in V}M_{d_v}(\mathbb C)
+\]
+为有限量子网络代数，令 \(\sigma\succ0\) 为忠实参考态。对每条边给定一个 Schrödinger 表示的量子 Markov 生成元 \(\mathcal L_e\)，满足
+\[
+\mathcal L_e^\ast(I)=0,
+\qquad
+\mathcal L_e(\sigma)=0.
+\]
+令
+\[
+\mathcal L=\sum_{e\in E}\mathcal L_e,
+\qquad
+\rho_t=e^{t\mathcal L}\rho_0.
+\]
+
+每个 \(\mathcal L_e\) 表示一个局部小场对相邻节点的作用。总生成元 \(\mathcal L\) 是静态大场上的局部作用叠加。若进一步要求详细平衡，则可以把 §38、§53 的 GNS Dirichlet 和 SLD Fisher 结构接入同一个量子网络。
+
+### 定理 63.5（熵生产与量子时间账本）
+
+对
+\[
+D(\rho\Vert\sigma)
+=
+\operatorname{tr}\rho(\log\rho-\log\sigma)
+\]
+定义每条边的熵生产率
+\[
+\Sigma_e(\rho)
+=
+-\operatorname{tr}
+\left[
+\mathcal L_e(\rho)
+(\log\rho-\log\sigma)
+\right].
+\]
+在每个边半群保持 \(\sigma\) 且满足量子 Markov 单调性的条件下，
+\[
+\Sigma_e(\rho)\ge0.
+\]
+总熵生产率
+\[
+\Sigma(\rho)=\sum_{e\in E}\Sigma_e(\rho)
+\]
+满足
+\[
+\boxed{
+\frac{d}{dt}D(\rho_t\Vert\sigma)
+=
+-\Sigma(\rho_t).
+}
+\]
+
+定义热时间或熵时间
+\[
+\tau(t)
+=
+D(\rho_0\Vert\sigma)-D(\rho_t\Vert\sigma)
+=
+\int_0^t\Sigma(\rho_s)\,ds.
+\]
+则
+\[
+\tau(t)\ge0,
+\qquad
+\frac{d\tau}{dt}=\Sigma(\rho_t)\ge0.
+\]
+如果 \(\Sigma(\rho_t)>0\) 在几乎处处成立，则 \(\tau\) 严格递增，可以反解 \(t=t(\tau)\)。如果 \(\Sigma\equiv0\)，则热时间不推进，即网络处于相对熵守恒的可逆或平衡轨道。
+
+#### 证明
+
+由 \(\sigma\) 忠实且 \(\mathcal L\) 保持迹，
+\[
+\frac{d}{dt}D(\rho_t\Vert\sigma)
+=
+\operatorname{tr}
+\left[
+\mathcal L(\rho_t)
+(\log\rho_t-\log\sigma)
+\right].
+\]
+对 \(\mathcal L=\sum_e\mathcal L_e\) 分解，得到
+\[
+\frac{d}{dt}D(\rho_t\Vert\sigma)
+=
+-\sum_e\Sigma_e(\rho_t).
+\]
+每个 \(\Sigma_e\ge0\) 来自固定态量子 Markov 半群下相对熵的数据处理单调性。积分即得 \(\tau\) 的公式和单调性。证毕。
+
+### 推论 63.6（离散量子时间的可加性）
+
+若
+\[
+\rho_{n+1}=\Phi_n(\rho_n),
+\qquad
+\Phi_n(\sigma)=\sigma
+\]
+且每个 \(\Phi_n\) 为 CPTP，则
+\[
+\Delta\tau_n
+=
+D(\rho_n\Vert\sigma)
+-
+D(\rho_{n+1}\Vert\sigma)
+\ge0,
+\]
+并且
+\[
+\tau_N
+=
+\sum_{n=0}^{N-1}\Delta\tau_n
+=
+D(\rho_0\Vert\sigma)-D(\rho_N\Vert\sigma).
+\]
+
+因此时间账本在离散网络更新中是严格可加的。每一步不需要预设外部时间变量，只需要记录相对熵下降。
+
+### 推论 63.7（空间响应和时间账本的统一输入）
+
+若边容量 \(c_e\) 由局部量子态或边熵生产率决定，例如
+\[
+c_e'=F_e(\Sigma_e),
+\]
+则定理 63.2 给出
+\[
+\frac{d}{ds}R_s[b]
+=
+-\sum_eF_e(\Sigma_e)
+\bigl(q_e^{\mathsf T}\phi_s\bigr)^2.
+\]
+
+因此同一网络中的局部量子熵流同时产生两类派生量：
+
+\[
+\boxed{
+\begin{aligned}
+\text{静态空间响应}
+&=
+b^{\mathsf T}L_c^+b,\\
+\text{热时间账本}
+&=
+D(\rho_0\Vert\sigma)-D(\rho_t\Vert\sigma).
+\end{aligned}
+}
+\]
+
+空间响应描述源扰动在网络中的几何传播，熵时间描述网络状态沿不可逆方向积累了多少信息损失。两者可以由同一组边局部量 \((c_e,\mathcal L_e,\Sigma_e)\) 联立计算。
+
+### 证据边界
+
+本节证明的是有限网络上的线性代数、伪逆变分公式、CPTP 相对熵单调性和有限量子 Markov 账本。要把
+\[
+R_s[b]
+\]
+识别为引力势或时空距离，需要连续非塌缩极限、局部性、曲率稳定性以及与某个几何张量的识别定理。要把
+\[
+\tau(t)
+\]
+识别为物理时间，需要证明该熵时间与实验时钟、因果序或某个规范不变量相容。当前理论只证明它是一个单调可加的内部账本。
+
+这一结构与近期把量子网络、非局部时钟和曲率敏感读出结合起来的研究方向相容。相关工作提出通过分布式纠缠节点构造对曲率影响敏感的非局部时钟态，但其物理实现仍依赖具体时空模型和实验读出。参见 [Testing quantum theory on curved spacetime with quantum networks](https://journals.aps.org/prresearch/abstract/10.1103/PhysRevResearch.7.023192)。
