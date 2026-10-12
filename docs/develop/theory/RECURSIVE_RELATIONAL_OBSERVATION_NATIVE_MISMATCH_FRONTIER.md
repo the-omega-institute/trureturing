@@ -1505,3 +1505,238 @@ acquisition cost bound, native undecidability or general stopping
 theorem follows from the mass obstruction.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Even substitution is a strict-discount contraction
+
+**Definition 10.1 (the even substitution map).** Put
+
+$$
+E(u)=\rho^2u.
+$$
+
+The native equations give
+
+$$
+E(\alpha)=\langle\beta,\alpha\rangle,
+\qquad
+E(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\qquad
+E(\langle s_0,s_1\rangle)=\langle E(s_0),E(s_1)\rangle.
+\tag{NMF.10.1}
+$$
+
+Thus $E(u)$ is a branch for every finite nonempty native $u$.
+
+**Lemma 10.2 (the complete root cases).** Fix a rational
+$0<q<1/2$. For finite native $s,t$ the following cases exhaust the
+roots.
+
+1. If $s=t$, then $D_q(E(s),E(t))=0$.
+2. If $s,t$ are distinct leaves, then
+   $D_q(E(s),E(t))=2q$.
+3. If exactly one of $s,t$ is a branch, then
+   $D_q(E(s),E(t))\le2q$.
+4. If $s=\langle s_0,s_1\rangle$ and
+   $t=\langle t_0,t_1\rangle$, then
+
+   $$
+   D_q(E(s),E(t))
+   =q\bigl(D_q(E(s_0),E(t_0))
+          +D_q(E(s_1),E(t_1))\bigr).
+   \tag{NMF.10.2}
+   $$
+
+Proof. The first case is substitution of equal terms. In the second,
+the two roots in (NMF.10.1) are both branches. For the pair
+$(\alpha,\beta)$, its left replies are $\beta$ and
+$\langle\beta,\alpha\rangle$, and its right replies are $\alpha$ and
+$\beta$; hence its frontier is exactly $\{L,R\}$ and its mass is
+$2q$. The same calculation with the order of the leaves exchanged is
+identical.
+
+In the third case, (NMF.10.1) makes both transformed roots branches.
+The metric recursion of Theorem 3.3 applies at this common branch root,
+and each of the two child distances is at most one by that theorem.
+Consequently the transformed distance is at most $q(1+1)=2q$.
+The fourth case is the same metric recursion, now with the displayed
+child identities in (NMF.10.1). These cases include every combination
+of leaf and branch roots. $\square$
+
+**Theorem 10.3 (two-step native contraction).** For every finite
+nonempty native $s,t$ and every rational $0<q<1/2$,
+
+$$
+\boxed{
+D_q(\rho^2s,\rho^2t)\le 2q\,D_q(s,t).}
+\tag{NMF.10.3}
+$$
+
+Proof. Use structural induction on the pair $(s,t)$. Equal inputs give
+zero on both sides. If $s,t$ are distinct leaves, their root frontier is
+$\{\varepsilon\}$, so $D_q(s,t)=1$; Lemma 10.2 gives equality with
+$2q$. If exactly one input is a branch, the original root is already a
+first disagreement, hence again $D_q(s,t)=1$, and the third case of the
+lemma proves the bound.
+
+It remains that both inputs are branches. Their original metric
+recursion is
+
+$$
+D_q(s,t)=q\bigl(D_q(s_0,t_0)+D_q(s_1,t_1)\bigr).
+$$
+
+Each child pair is structurally smaller, so the induction hypotheses and
+(NMF.10.2) give
+
+$$
+\begin{aligned}
+D_q(E(s),E(t))
+&\le q\bigl(2qD_q(s_0,t_0)+2qD_q(s_1,t_1)\bigr)\\
+&=2qD_q(s,t).
+\end{aligned}
+$$
+
+This is a map-level Lipschitz estimate for $E$. The recursion in
+Theorem 3.3 is only the equality for a pair whose two displayed roots
+are both branches; it does not by itself cover the leaf--branch case
+or the distinct-leaf case used above. $\square$
+
+**Corollary 10.4 (all iterates, including equality and zero steps).**
+For every finite nonempty native $s,t$, every rational $0<q<1/2$,
+and every $n\in\mathbb N_0$,
+
+$$
+\boxed{
+D_q(\rho^{2n}s,\rho^{2n}t)
+\le (2q)^nD_q(s,t).}
+\tag{NMF.10.4}
+$$
+
+For $n=0$ this is equality. If $s=t$, both sides are zero for every
+$n$. For the induction step apply Theorem 10.3 to
+$\rho^{2n}s,\rho^{2n}t$ and use
+$\rho^{2(n+1)}=\rho^2\!\circ\rho^{2n}$:
+
+$$
+D_q(\rho^{2(n+1)}s,\rho^{2(n+1)}t)
+\le2qD_q(\rho^{2n}s,\rho^{2n}t)
+\le(2q)^{n+1}D_q(s,t).
+$$
+$\square$
+
+**Proposition 10.5 (sharp coefficient at the atomic pair).** For every
+rational $0<q<1/2$,
+
+$$
+D_q(\rho^2\alpha,\rho^2\beta)
+=2q
+=2q\,D_q(\alpha,\beta).
+\tag{NMF.10.5}
+$$
+
+Hence no constant smaller than $2q$ can replace $2q$ in
+(NMF.10.3) uniformly over finite native inputs. This is exact equality
+at $(s,t)=(\alpha,\beta)$, not an asymptotic estimate.
+
+## 11. Atomic trajectory and the critical boundary
+
+**Definition 11.1 (the even atomic pair).** For $n\in\mathbb N_0$ put
+
+$$
+A_n=\rho^{2n}\alpha,\qquad B_n=\rho^{2n}\beta.
+\tag{NMF.11.1}
+$$
+
+The finite-source supplier [SLH, Lemma 55.2 and Theorem 55.3][SLH]
+already establishes, in its own source and readout contract, that the
+first disagreement of $A_n,B_n$ has address depth $n$ and that a current
+read at the right address $R^n$ distinguishes the atomic value. Those
+are reused address-depth and one-read facts. They are not a new theorem
+of this section and do not assert that one read, or the address $R^n$,
+is an optimal physical read strategy.
+This denial concerns physical-strategy optimality and leaves intact any
+combinatorial address/call minima the supplier establishes under its own
+contract.
+
+The metric consequence supplied by Corollary 10.4 is the separate
+inequality
+
+$$
+D_q(A_n,B_n)\le(2q)^nD_q(\alpha,\beta)=(2q)^n.
+\tag{NMF.11.2}
+$$
+
+At the boundary $q=1/2$, for every finite nonempty native $s,t$ and
+every $n\in\mathbb N_0$, the same finite root calculation gives the
+nonexpansive inequality:
+
+$$
+D_{1/2}(\rho^{2n}s,\rho^{2n}t)\le D_{1/2}(s,t).
+\tag{NMF.11.3}
+$$
+
+For the one-step bound, equal inputs have empty frontiers before and
+after $E$. If the original roots disagree, then their frontier is
+$\{\varepsilon\}$, so $D_{1/2}(s,t)=1$. By (NMF.10.1) both
+$E$-images are branches, and each of their two corresponding child
+distances is at most one by the finite prefix-free frontier/Kraft bound.
+Their distance is therefore at most $\tfrac12(1+1)=1$. At a common
+original branch, splitting the frontier into its $L$ and $R$ parts gives
+one half of the sum of the child distances; structural induction on the
+two smaller child pairs proves the one-step inequality there. Iterating
+this inequality proves (NMF.11.3), including equality at $n=0$.
+
+The already established balanced witnesses of Theorem 4.1, and the
+pair restrictions recorded in Theorem 8.5, give the reused critical
+trajectory
+
+$$
+W_{1/2}(\mathbf u_n)=\frac12\qquad(n\ge0).
+\tag{NMF.11.4}
+$$
+
+Here $\mathbf u_n$ denotes the balanced tuple sequence of Theorem 4.1,
+constructed from its recursively doubled perfect trees. This is a
+different family from the even atomic pair $(A_n,B_n)$ in Definition 11.1.
+
+Thus the strict-discount decay in (NMF.10.4) has the correct critical
+boundary. Equation (NMF.11.4) is a reused consequence of those existing
+frontier witnesses; it is not an additional claim about the metric value
+of the atomic pair in (NMF.11.1).
+
+## 12. Scope of substitution, resources, and the finite limit
+
+**Definition 12.1 (scope of the pointwise estimate).** The domain of
+(NMF.10.3) and (NMF.10.4) is the set of finite nonempty native trees.
+No row label, acquired history, or joint original product is a parameter
+of either inequality. Simultaneous substitution by $\rho^{2n}$ therefore
+need not preserve a fixed acquired row/history fiber or carry a joint
+tuple of original sources into the same product. The estimates are
+pointwise statements about the native algebra and the frontier metric.
+
+**Proposition 12.2 (separate depth, calls, cost, and limit statements).**
+For the atomic pair in Definition 11.1, the supplier's depth statement
+is an address-depth statement ($n$), and its one-read statement is a
+call-count statement (one current read at $R^n$). The combinatorial word
+$R^n$ has address length $n$; no physical fee, transport time, source
+acquisition price, or physical-strategy optimality of that call follows
+from either fact. This leaves intact any combinatorial address/call
+minima the supplier establishes under its own contract.
+
+For fixed finite $s,t$ and rational $0<q<1/2$, (NMF.10.4) gives the
+separate scalar limit
+
+$$
+\lim_{n\to\infty}D_q(\rho^{2n}s,\rho^{2n}t)=0,
+\tag{NMF.12.1}
+$$
+
+because $0<2q<1$. This is a limit of metric values for finite trees. It
+does not assert an infinite native tree $\lim_n\rho^{2n}s$, an infinite
+physical execution, a finite or infinite call bound, convergence of row
+labels or histories, or any physical-cost theorem. At $q=1/2$ only
+(NMF.11.3) and the reused critical boundary (NMF.11.4) are available.
+
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+
+## 追加锚（本行以下为增补区）
