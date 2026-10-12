@@ -457,24 +457,105 @@ Corollary 4.2 to these quotient charts. Descended response and operation
 data retain precisely the stated gauge-invariant task. $\square$
 
 **Corollary 4.8 (gluing dynamics through residual routes).** Under Theorem
-4.1, fix a coherent action choice in each chart and common decoded response
-fields. Suppose on every generating edge its full square (3.1) uses those
-choices, the crossing domain covers every point at which that choice is
-compared, and its residual output route is in the atlas. Then this action,
-its legal domain and its decoded responses descend to the union carrier
-$Y$, provided the initial observations have the same compatibility.
-If its residual lift respects a route presentation as in Theorem 3.2, its
-finite continuations also descend with that presentation.
+4.1, choose an action $a_i:i\to j(i)$ in every chart. In this statement
+all domains and squares are the induced data on the quotient charts $Q_i$.
+Let $L_i(q)$ be its complete response decoded into common task fields,
+defined for every $q\in Q_i$: it includes legality and every task-visible
+illegal rejection as well as legal success and failure. Suppose the
+following hold for every named edge $e:i\rightsquigarrow k$ used to
+generate $\sim$ in Definition 4.1 and its declared inverse:
 
-**Proof.** For an edge identification $q\sim H_eq$, the complete square
-gives identical legality and decoded responses. If legal, the two
-successors are joined by the residual route and hence represent the same
-point of $Y$. Repeating these equalities along any finite identification
-chain gives orbit saturation of the legal domain and independence of
-responses and successor from the chosen chart representative. The universal
-property of $Y$ then gives the operation. The final assertion follows from
-Theorem 3.2. A separately chosen action in unrelated charts, without the
-matched squares, is not such a coherent action. $\square$
+1. the matched action is exactly $a_i^e=a_k$, and the crossing domain is
+   the entire actual edge domain, $C_{e,a_i}=U_e$;
+2. the full square (3.1) holds at every $q\in U_e$, including its legality
+   and response equations at illegal inputs, and its response dictionary
+   agrees with the common decoding, so $L_k(H_eq)=L_i(q)$;
+3. the residual output route $e/a_i$ is an actual atlas word, defined at
+   every $T_{a_i}q$ with $q\in U_e\cap D_{a_i}$, and
+   $H_{e/a_i}T_{a_i}q=T_{a_k}H_eq$;
+4. the decoded initial observations agree at every such edge
+   identification, on all of $U_e$.
+
+Then the chosen action has a saturated legal domain and well-defined
+successors, complete decoded responses and initial observations on the
+entire union carrier $Y$. Explicitly, writing $[q]=\iota_i(q)$,
+
+$$
+\begin{aligned}
+\overline D&=\{[q]:q\in D_{a_i},\ i\in I\},\\
+\overline T([q])&=[T_{a_i}q]\quad([q]\in\overline D),\\
+\overline L([q])&=L_i(q)\quad([q]\in Y).
+\end{aligned}
+\tag{4.2}
+$$
+
+Its iterates descend as well. More generally, require these whole-edge
+hypotheses for every action choice in a declared continuation menu to glue
+that menu and all its finite continuations. If the residual lifts also
+satisfy the route-presentation hypotheses of Theorem 3.2, those
+continuations descend with that presentation.
+
+**Proof.** For every generating identification $q\sim H_eq$, hypothesis
+1 puts the point in the full square's crossing domain. Hypothesis 2 gives
+identical legality and complete decoded responses even when the request is
+illegal. If legal, hypothesis 3 joins the two successors by an actual
+residual atlas word, so they have the same class in $Y$. Hypothesis 4 gives
+the initial-observation equality. Each comparison also holds in the reverse
+orientation.
+
+Any two representatives of a point of $Y$ are joined by a finite chain of
+these actual edge identifications and their inverses. Propagating legality
+along that chain makes the disjoint union of the $D_{a_i}$ saturated: either
+every representative is legal or every representative is illegal. In the
+legal case, each link gives equal successor classes, and transitivity gives
+the same class at both ends. In either case, each link gives equal complete
+decoded responses, including any rejection, and equal decoded initial
+observations. This proves every representative-independence assertion in
+(4.2); at an illegal class there is no successor. The universal property of
+$Y$ gives the descended responses and observations, and the saturated
+domain gives the partial operation. Induction on the word length proves
+the continuation assertion, retaining the full response at each legal or
+first illegal prefix and following actual successors after legal failures.
+The presentation assertion is then Theorem 3.2 under its stated hypotheses.
+$\square$
+
+The whole-edge requirement concerns every identification used to form
+$Y$. A task-local square on $C_{e,a_i}\subsetneq U_e$ leaves the links at
+$U_e\setminus C_{e,a_i}$ unconstrained. Flatness and orbit coverage control
+state identifications, but do not supply legality or response comparisons
+at those links. Gluing on a smaller transport-saturated carrier is a
+separate restricted assertion.
+
+**Proposition 4.9 (task-local squares need not glue the full carrier).**
+There is a flat atlas whose every orbit meets every chart, with compatible
+initial observations, equality stable chart cores and complete residual
+squares on all declared task-local crossing domains, but whose chosen
+chart actions do not have a well-defined legal domain on $Y$.
+
+**Proof.** Let $Q_0=\{x_0,z_0\}$ and $Q_1=\{x_1,z_1\}$, with the total
+copy transport $e$ and its inverse. Both charts are actual copies of the
+same two-point source. Include also the copy transport $r$
+restricted to $\{x_0\}$ and its inverse as residual atlas routes. Initial
+observations distinguish $x_i$ from $z_i$ and agree between copies, so the
+stable core in each chart is equality. Choose $a_0$ to be total identity
+and $a_1$ to be identity only on $\{x_1\}$, illegal at $z_1$. Use the same
+complete-response type and identity dictionaries in both charts: legal
+inputs report success, illegal inputs report rejection, and all other
+task fields are constant.
+
+For $e$ declare $C_{e,a_0}=\{x_0\}$ and residual $e/a_0=r$; for its
+inverse use $\{x_1\}$ and $r^{-1}$. For $r,r^{-1}$ use their entire
+singleton domains and the same residual routes. On every declared crossing
+the actions are legal identities, their complete responses agree, and the
+residual route joins their successors. Repeated actions stay at $x_i$, so
+the same squares hold for all finite task-local continuations. Every actual
+transport preserves the letter $x$ or $z$, and a closed word returns to its
+input. Thus the atlas is flat, its chart maps are injective, and its two
+orbits $[x_0,x_1]$ and $[z_0,z_1]$ each meet both charts. Nevertheless
+$[z_0]=[z_1]$ is legal when represented by $z_0$ and illegal when
+represented by $z_1$. Its decoded responses also disagree. The missing
+comparison is precisely the point $z_0\in U_e\setminus C_{e,a_0}$.
+$\square$
 
 ## 5. When action closure commutes with transport compatibility
 
@@ -559,8 +640,12 @@ Use an observation equivalence $\widehat K$ that isolates $\bot$ and records
 the actual complete response of every name, including legal failures and
 task-visible illegal rejections. If these observations have the required
 invertible response covariance, (5.3) on $\widehat X$, restricted to $X$,
-gives the greatest complete-response-preserving relation compatible with
-both partial actions and those transports.
+gives the greatest complete-response-preserving equivalence compatible with
+both partial actions and those transports **among equivalences contained
+in $\widehat K|_{X\times X}$**. Thus its boundary is coarsest subject to
+that ambient restriction. An exact task-observation kernel is an additional
+hypothesis for deriving absolute task minimality by this argument; an
+arbitrarily finer $\widehat K$ does not supply it.
 
 **Proof.** Exact domain conjugacy makes the totalized maps satisfy (5.2)
 on both legal and illegal inputs, and on $\bot$. Apply Theorem 5.1. The
@@ -568,8 +653,23 @@ isolated sink makes legality visible in the word tests; the other observation
 fields retain the complete response at each actual prefix. A legal failure
 has its actual successor in $X$, possibly a stopped state, and is never
 identified with $\bot$. Restricting the greatest stable relation to actual
-states gives the asserted pairwise semantics. The auxiliary sink is an
-interpretation of illegality, not a newly executable state. $\square$
+states gives the asserted pairwise semantics and retains containment in
+$\widehat K|_{X\times X}$, since the empty word is one of the tests.
+Conversely, any complete-response-preserving equivalence $S$ on $X$ inside
+that restriction, invariant under legal successors and transports, extends
+to $\widehat S=S\cup\{(\bot,\bot)\}$. Identical legality makes it invariant
+under the totalized actions, and the transports fix its isolated sink.
+It is contained in $\widehat K$, so Theorem 5.1 puts it inside the joint
+core. This proves exactly the relative maximality claimed.
+
+The restriction cannot be discarded: take two actual points with the same
+initial observation, one total identity action with identical complete
+responses, and only the identity transport. If $\widehat K$ is equality
+on $X\sqcup\{\bot\}$, the joint core restricted to $X$ is equality.
+Yet the universal equivalence on the two actual points preserves this
+entire task and its transports. Thus a finer ambient observation can force
+distinctions beyond the task. The auxiliary sink is an interpretation of
+illegality, not a newly executable state. $\square$
 
 This corollary concerns global transports and exact conjugacy. General
 partial-chart tasks use the residual routes of §3; Proposition 3.3 proves
@@ -659,6 +759,11 @@ $\iota_i(Q_i)$, and covers all of $Y$ only under the appropriate actual
 coverage condition. If only the joint map of the four views has kernel
 $R_\infty$, no individual sufficiency follows.
 
+These chartwise assertions retain the task-local crossing domains of §3.
+For dynamics and complete responses on the entire glued carrier $Y$,
+additionally require the whole-edge hypotheses of Corollary 4.8 for every
+action being glued.
+
 **Proof.** For each view, send $q_v(x)$ to $[x]$. Kernel equality is exactly
 well-definedness and injectivity, and restriction to the actual image gives
 surjectivity and uniqueness. The descended responses and successors
@@ -667,7 +772,9 @@ same factorization chartwise and then Theorem 4.1 or Corollary 4.2. A joint
 kernel is the intersection of the component kernels, which does not force
 any one of them to equal that intersection. For example on $\{0,1\}^2$,
 the two coordinate projections, repeated as four views, jointly separate
-points, while each projection merges a pair. $\square$
+points, while each projection merges a pair. With the additional whole-edge
+hypotheses, Corollary 4.8 supplies the operations and complete responses
+throughout $Y$. $\square$
 
 **Convention 6.4 (interpretation boundary).** A spatial view may encode
 coordinate overlap and adjacency; a temporal view may encode ordered
