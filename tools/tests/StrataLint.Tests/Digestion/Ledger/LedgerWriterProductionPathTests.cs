@@ -41,7 +41,7 @@ public sealed partial class LedgerWriterProductionPathTests
     }
 
     [Theory]
-    [InlineData("missing-freeze")]
+    [InlineData("missing-state")]
     [InlineData("state-mismatch")]
     [InlineData("missing-declaration")]
     public void ScopedCoverRejectsUnverifiableExistingCoverageWithoutWriting(string defect)
@@ -52,17 +52,16 @@ public sealed partial class LedgerWriterProductionPathTests
             BaselineTargetIdentical = true,
         };
         var world = spec.Materialize();
-        var frozen = world.Files.Keys.Single(path => path.StartsWith("Golden/Frozen/accepted/", StringComparison.Ordinal)
-            && world.Files[path].Contains("D5/S0/Carrier/Zeta.lean", StringComparison.Ordinal));
-        if (defect == "missing-freeze") world.Files.Remove(frozen);
+        if (defect == "missing-state") world.Files.Remove("Golden/Frozen/state/D5/S0/Carrier/Zeta.lean.json");
         else if (defect == "state-mismatch")
             world.Files["Golden/Frozen/state/D5/S0/Carrier/Zeta.lean.json"] =
                 "{\"statement_id\":\"sha256:" + new string('d', 64) + "\"}\n";
         else
         {
-            var value = System.Text.Json.Nodes.JsonNode.Parse(world.Files[frozen])!;
-            value["payload"]!["declaration_statement_ids"] = new System.Text.Json.Nodes.JsonArray();
-            world.Files[frozen] = value.ToJsonString();
+            world = world with { Report = LeanAxiomReport.Create(world.Report.Files.ToDictionary(
+                pair => pair.Key.Value,
+                pair => pair.Key.Value == "D5/S0/Carrier/Zeta.lean"
+                    ? pair.Value with { Declarations = [] } : pair.Value)) };
         }
         using var repository = new TemporaryDirectory();
         var environment = Environment(repository, world, world.Document, world.Document);
