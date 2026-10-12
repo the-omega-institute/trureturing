@@ -4,7 +4,7 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.claim; result=D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result; claim=D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.claim
-   digest: A passive qutrit-memory implementation refutes classical Gram simulation. -/
+   digest: A passive qubit memory for a qutrit system refutes classical Gram simulation. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation

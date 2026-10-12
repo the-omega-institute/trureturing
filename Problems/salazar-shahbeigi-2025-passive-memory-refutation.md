@@ -94,7 +94,7 @@ Every other declaration is a definition used by `claim` or a private helper on t
 
 **Argued, not formalized.**
 - W is a monomial unitary and τ is incoherent, so the implementation is maximally incoherent. It is therefore also a counterexample to the §V.D argument, whose step from an incoherent, input-independent memory marginal to a classical simulation does not hold: the marginal condition allows system–memory correlations.
-- For any controls U_i on a memory of dimension r, the same block of the partial transpose has quadratic form −‖U₁U₂ − U₂U₁‖²_HS / r along (−2, 1, 1). Non-commuting controls therefore always give a non-classical C, for every d ≥ 3 (NumPy: d = 4 with controls I, X, Z, XZ gives eigenvalue −2).
+- For unitary controls with U₀ = I on a memory of dimension r with τ = I/r, the same block of the partial transpose has quadratic form −‖U₁U₂ − U₂U₁‖²_HS / r along (−2, 1, 1). Hence non-commuting U₁, U₂ give a non-classical C for every d ≥ 3 (further controls equal to I leave the block unchanged; NumPy: d = 4 with controls I, X, Z, XZ gives eigenvalue −2). The hypothesis U₀ = I is needed: for (U₀, U₁, U₂) = (X, X, Z) the form along (−2, 1, 1) is +4, and C is classical.
 
 **Open.** Whether separability of C together with fixed diagonal entries of its off-diagonal blocks implies a passive realization in higher dimensions, the source's second question, is not addressed.
 
