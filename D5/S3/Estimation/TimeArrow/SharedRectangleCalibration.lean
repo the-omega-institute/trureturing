@@ -346,60 +346,6 @@ theorem shared_calibration_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ
   exact ⟨heq t ht, hφt ▸ hφder.congr_of_eventuallyEq hagree, hv⟩
 
 
-/-- At a centered feasible histogram the compensated feedback is uniformly
-positive on one neighborhood of the same shared root curve. The neighborhood
-and constants may depend on the finite histogram; no asymptotic uniformity is
-asserted. -/
-private theorem positive_feedback_germ {ι : Type*} [Fintype ι] (outside : ι → ℝ)
-    (r N R U q bg a b t : ℝ) (hr : 0 < r) (hr1 : r < 1) (hN : 0 < N) (hq : 0 < q)
-    (hqM : q < (Fintype.card ι : ℝ) + N) (ht : t ∈ Set.Ioo a b)
-    (hc : ∀ u ∈ Set.Ioo a b, ∀ j, 0 ≤ cellCounts N R U u j)
-    (hcenter : calibratedMean outside r 0 N R U t 0 = q) (hgroup : 0 < bg + t) :
-    ∃ θ : ℝ → ℝ, ∃ d D : ℝ, 0 < d ∧ 0 < D ∧ θ t = 0 ∧
-      ∀ᶠ u in 𝓝 t,
-        calibratedMean outside r 0 N R U u (θ u) = q ∧
-        checkerboard r 0 (θ u) < 0 ∧
-        ∃ v, d ≤ v ∧ v ≤ D ∧
-          HasDerivAt (fun x => (bg + x) * Real.sigmoid (θ x) - x / 2) v u := by
-  obtain ⟨θ, hθ⟩ := shared_calibration_curve outside r 0 N R U q a b hN hq hqM hc
-  have hzero : θ t = 0 :=
-    (unique_shared_root outside r 0 N R U q t hN hq hqM (hc t ht)).unique
-      (hθ t ht).1 hcenter
-  let B : ℝ → ℝ := fun u => Real.sigmoid (θ u) - 1 / 2 -
-    (bg + u) * Real.sigmoid (θ u) * (1 - Real.sigmoid (θ u)) * checkerboard r 0 (θ u) /
-      calibratedVariance outside r 0 N R U u (θ u)
-  have hv := (hθ t ht).2.2
-  have hB0 : 0 < B t := by
-    dsimp [B]
-    rw [hzero]
-    simp only [Real.sigmoid_zero]
-    have hn := checkerboard_center_neg hr hr1
-    have hp : 0 < (bg + t) * (2 : ℝ)⁻¹ * (1 - (2 : ℝ)⁻¹) := by
-      positivity
-    have hd := div_neg_of_neg_of_pos (mul_neg_of_pos_of_neg hp hn)
-      (calibratedVariance_pos outside r 0 N R U t 0 hN (hc t ht))
-    linarith
-  have hθcont : ContinuousAt θ t := (hθ t ht).2.1.continuousAt
-  have hBcont : ContinuousAt B t := by
-    dsimp [B, calibratedVariance, cellCounts, checkerboard]
-    fun_prop (disch := exact ne_of_gt hv)
-  obtain ⟨d0, hd0, hnegative⟩ := checkerboard_negative_neighborhood hr hr1
-  have hpair : Tendsto (fun u => ((0 : ℝ), θ u)) (𝓝 t) (𝓝 ((0 : ℝ), 0)) := by
-    have hp : ContinuousAt (fun u => ((0 : ℝ), θ u)) t := continuousAt_const.prodMk hθcont
-    change Tendsto (fun u => ((0 : ℝ), θ u)) (𝓝 t) (𝓝 ((0 : ℝ), θ t)) at hp
-    simpa only [hzero] using hp
-  have hn := hpair.eventually hnegative
-  refine ⟨θ, B t / 2, 2 * B t, by positivity, by positivity, hzero, ?_⟩
-  filter_upwards [isOpen_Ioo.mem_nhds ht, hn,
-    hBcont.eventually_const_lt (by linarith : B t / 2 < B t),
-    hBcont.eventually_lt_const (by linarith : B t < 2 * B t)] with u hu hn hlo hhi
-  have hcal : ∀ᶠ x in 𝓝 u, calibratedMean outside r 0 N R U x (θ x) = q := by
-    filter_upwards [isOpen_Ioo.mem_nhds hu] with x hx
-    exact (hθ x hx).1
-  exact ⟨(hθ u hu).1, by linarith, B u, hlo.le, hhi.le,
-    compensated_group_deriv outside r 0 N R U q bg u (θ u) _ θ (hθ u hu).2.1 rfl
-      hcal (ne_of_gt (hθ u hu).2.2)⟩
-
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 
 /-- Only true signal rows in the four adjacent count cells receive an

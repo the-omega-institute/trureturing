@@ -122,19 +122,6 @@ private theorem collapseVertex_injective_off_signal {M q : ℕ} (S : Support M q
       simp [collapseVertex, hj] at h
     | inr j => simpa [collapseVertex] using h
 
-private theorem vertex_fiber_card {M q : ℕ} (S : Support M q) (y : Vertex M) :
-    Nat.card {x : Vertex M // collapseVertex S x = collapseVertex S y} =
-      if collapseVertex S y = none then q else 1 := by
-  classical
-  by_cases hy : collapseVertex S y = none
-  · simp only [hy, if_true]
-    rw [Nat.card_congr (signalVertexEquiv S)]
-    simpa only [Nat.card_eq_fintype_card, Fintype.card_coe] using S.property
-  · simp only [hy, if_false]
-    apply Nat.card_eq_one_iff_exists.mpr
-    refine ⟨⟨y, rfl⟩, fun x => Subtype.ext ?_⟩
-    exact collapseVertex_injective_off_signal S hy x.property
-
 private theorem same_fiber_probability {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o o' : Obs M s e)
     (h : collapsedObs S e o' = collapsedObs S e o) :
@@ -195,55 +182,6 @@ private theorem conditionalFiberMass_eq_card {M q s : ℕ} (S : Support M q)
   simp only [conditionalFiberMass, hy, sum_const, nsmul_eq_mul, card_univ,
     Nat.card_eq_fintype_card]
   exact mul_div_mul_right _ _ (ne_of_gt hp)
-
-/-- A product of finite allowed sets inside the individual vertex fibers. -/
-def siteCylinder {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
-    [Fintype (Sites s e)]
-    (A : (k : Sites s e) →
-      Finset {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) :
-    Finset (Fiber S e o) := by
-  classical
-  exact (Fintype.piFinset A).map (fiberSiteEquiv S e o).symm.toEmbedding
-
-/-- Every signal position has exactly `q` choices and every un-erased position
-has one choice. This includes the terminal path position. -/
-private theorem native_conditional_site_sizes {M q s : ℕ} (S : Support M q)
-    (e : Experiment) (o : Obs M s e) (k : Sites s e) :
-    Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} =
-      if collapsedObs S e o k = none then q else 1 :=
-  vertex_fiber_card S (siteEquiv M s e o k)
-
-/-- The exact native conditional probability of every site cylinder factors.
-In particular, consecutive erased path vertices remain separate coordinates. -/
-private theorem native_conditional_site_law {M q s : ℕ} (S : Support M q)
-    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
-    (A : (k : Sites s e) →
-      Finset {x : Vertex M // collapseVertex S x = collapsedObs S e o k}) :
-    conditionalFiberMass S r e o (siteCylinder S e o A) =
-      (∏ k, (A k).card : ℝ) /
-      (∏ k, Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} : ℝ) ∧
-    (∀ A : Set (Obs M s e), @MeasurableSet (Obs M s e) (collapsedSigma S e) A ↔
-      ∃ B : Set (Sites s e → Option (Vertex M)), (collapsedObs S e) ⁻¹' B = A) ∧
-    (∀ k : Sites s e,
-      Nat.card {x : Vertex M // collapseVertex S x = collapsedObs S e o k} =
-        if collapsedObs S e o k = none then q else 1) := by
-  classical
-  refine ⟨?_, ?_, native_conditional_site_sizes S e o⟩
-  swap
-  · intro A
-    exact ⟨fun ⟨B, _, hB⟩ => ⟨B, hB⟩,
-      fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top, hB⟩⟩
-  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
-  letI (k : Sites s e) :
-      Fintype {x : Vertex M // collapseVertex S x = collapsedObs S e o k} :=
-    Fintype.ofFinite _
-  have hp := ((finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.1 S o).1
-  rw [conditionalFiberMass_eq_card S r e o hp]
-  have hc := Fintype.card_congr (fiberSiteEquiv S e o)
-  simp only [siteCylinder, card_map, Fintype.card_piFinset, Nat.cast_prod]
-  simp only [Nat.card_eq_fintype_card, hc, Fintype.card_pi, Nat.cast_prod]
 
 def departureSite (s : ℕ) (e : Experiment) (k : Fin s) : Sites s e :=
   match e with

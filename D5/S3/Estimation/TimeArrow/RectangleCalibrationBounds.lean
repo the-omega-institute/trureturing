@@ -270,65 +270,6 @@ theorem shared_root_central_bootstrap {ι : Type*} [Fintype ι] (outside : ι �
   simpa only [add_sub_cancel] using And.intro hbox (And.intro hmove hv)
 
 
-/-- A small full-mean residual at a fixed center moves the same shared root
-by at most twice the residual divided by the complete center variance. -/
-theorem shared_root_from_mean_residual {ι : Type*} [Fintype ι] (outside : ι → ℝ)
-    (r ε N R U q t x0 x b : ℝ) (hN : 0 < N)
-    (hc : ∀ j, 0 ≤ cellCounts N R U t j)
-    (hroot : calibratedMean outside r ε N R U t x = q)
-    (hres : |calibratedMean outside r ε N R U t x0 - q| ≤ b)
-    (hsmall : b ≤ calibratedVariance outside r ε N R U t x0 / 2 * Real.log 2) :
-    |x - x0| ≤ Real.log 2 ∧
-      |x - x0| ≤ 2 * b / calibratedVariance outside r ε N R U t x0 ∧
-      calibratedVariance outside r ε N R U t x0 / 2 ≤
-        calibratedVariance outside r ε N R U t x := by
-  let F := calibratedMean outside r ε N R U t
-  let V := calibratedVariance outside r ε N R U t x0
-  let d := Real.log (2 : ℝ)
-  have hV : 0 < V :=
-    D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance_pos
-      outside r ε N R U t x0 hN hc
-  have hd : 0 < d := Real.log_pos (by norm_num)
-  have htilt (u : ℝ) (hu : u ∈ Set.Icc (-d) d) :
-      1 / 2 ≤ Real.exp (-u) ∧ Real.exp (-u) ≤ 2 := by
-    constructor
-    · calc
-        1 / 2 = Real.exp (-d) := by simp [d, Real.exp_neg, Real.exp_log]
-        _ ≤ Real.exp (-u) := Real.exp_le_exp.mpr (by linarith [hu.2])
-    · calc
-        Real.exp (-u) ≤ Real.exp d := Real.exp_le_exp.mpr (by linarith [hu.1])
-        _ = 2 := Real.exp_log (by norm_num)
-  have hmono : StrictMono F := strictMono_of_deriv_pos fun u => by
-    rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
-      outside r ε N R U t u).deriv]
-    exact D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance_pos
-      outside r ε N R U t u hN hc
-  have hb := root_box_of_residual F q x0 x d (V / 2) b hd (by positivity) hmono
-    (fun u _ => (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
-      outside r ε N R U t u).continuousAt.continuousWithinAt)
-    (fun u _ => (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
-      outside r ε N R U t u).differentiableAt.differentiableWithinAt)
-    (fun u hu => by
-      have hu' : u - x0 ∈ Set.Icc (-d) d := by
-        have hh := interior_subset hu
-        constructor <;> linarith [hh.1, hh.2]
-      have ht := htilt (u - x0) hu'
-      rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
-        outside r ε N R U t u).deriv]
-      simpa only [add_sub_cancel] using
-        (variance_root_tilt outside r ε N R U t x0 (u - x0) hc ht.1 ht.2).1)
-    hroot hres hsmall
-  have hm : |x - x0| ≤ 2 * b / V := by
-    apply (le_div_iff₀ hV).mpr
-    nlinarith only [hb.2]
-  have hu : x - x0 ∈ Set.Icc (-d) d := abs_le.mp hb.1
-  have ht := htilt (x - x0) hu
-  refine ⟨hb.1, hm, ?_⟩
-  simpa only [add_sub_cancel] using
-    (variance_root_tilt outside r ε N R U t x0 (x - x0) hc ht.1 ht.2).1
-
-
-
 open private
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_lipschitz_certificate
 from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration

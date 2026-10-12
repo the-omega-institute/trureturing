@@ -89,15 +89,6 @@ theorem rectangle_intersection_card {α : Type*} [DecidableEq α]
 def rectangleMass {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ) : ℝ :=
   (intersectionEvent V R U t).card / (V.powersetCard U).card
 
-/-- The exact hypergeometric formula for the finite labelled table law. -/
-theorem rectangle_hypergeometric_mass {α : Type*} [DecidableEq α]
-    (V R : Finset α) (U t : ℕ) (hR : R ⊆ V) (ht : t ≤ U) :
-    rectangleMass V R U t =
-      ((R.card.choose t : ℝ) * ((V.card - R.card).choose (U - t) : ℝ)) /
-        (V.card.choose U : ℝ) := by
-  simp only [rectangleMass, rectangle_intersection_card V R U t hR ht,
-    card_powersetCard, Nat.cast_mul]
-
 /-- The negative counts in the rectangle take the two adjacent values.
 Outside rows retain their full labelled count array. -/
 def rectangleNegativeCounts {α : Type*} [DecidableEq α]
@@ -277,45 +268,6 @@ private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
   rw [sum_congr rfl (fun B hB => hmass B (hBs hB))]
   simp only [sum_const, nsmul_eq_mul]
   rfl
-
-/-- Exact pair/path conditional hypergeometric law obtained from the
-native joint-row histogram pushforward. No independent-row assumption is used. -/
-theorem native_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M q)
-    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
-    (ap : Multiset {i : Fin M // i ∈ S.val})
-    (V R : Finset {i : Fin M // i ∈ S.val})
-    (outside : {i : Fin M // i ∈ S.val} → ℕ) (l U t : ℕ)
-    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
-    (hneg : (∑ i ∈ univ \ V, outside i) + U * l + (V.card - U) * (l + 1) =
-      (signedDepartureBlocks S e o 1).card)
-    (hU : U ≤ V.card) (hR : R ⊆ V) (ht : t ≤ U) :
-    nativeRectangleConditionalMass S r e o ap V R outside l U t =
-      ((R.card.choose t : ℝ) * ((V.card - R.card).choose (U - t) : ℝ)) /
-        (V.card.choose U : ℝ) := by
-  classical
-  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
-  obtain ⟨B0, hB0⟩ := powersetCard_nonempty.mpr hU
-  let c : ℝ := ((Nat.multinomial univ ap.count : ℝ) *
-      (Nat.multinomial univ (rectangleNegativeCounts V B0 outside l) : ℝ)) /
-    (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card + (signedDepartureBlocks S e o 1).card)
-  have hc : 0 < c := by
-    dsimp [c]
-    apply div_pos
-    · apply mul_pos <;> exact_mod_cast Nat.multinomial_pos _ _
-    · exact pow_pos (by exact_mod_cast (by omega : 0 < q)) _
-  have hsum (Bs : Finset (Finset {i : Fin M // i ∈ S.val}))
-      (hBs : Bs ⊆ V.powersetCard U) :
-      conditionalFiberMass S r e o (nativeRectangleEvent S e o ap V outside l Bs) =
-        (Bs.card : ℝ) * c :=
-    native_rectangle_event_mass S r e o hq hqm hr hr1 ha ha1 ap V outside l U
-      hap hneg B0 hB0 Bs hBs
-  unfold nativeRectangleConditionalMass
-  rw [hsum (intersectionEvent V R U t) (filter_subset _ _),
-    hsum (V.powersetCard U) (Subset.refl _)]
-  rw [mul_div_mul_right _ _ (ne_of_gt hc)]
-  exact rectangle_hypergeometric_mass V R U t hR ht
 
 /-- The actual signal rows whose count pair lies in the four adjacent cells. -/
 def nativeRectangleRows {M q s : ℕ} (S : Support M q) (e : Experiment)
@@ -499,45 +451,6 @@ private theorem native_a_event_eq {M q s : ℕ} (S : Support M q)
     exact mem_filter.mpr ⟨mem_biUnion.mpr ⟨B, hBc.1, hyB⟩,
       (native_a_count_intersection S e o ap V B outside k l
         (mem_powersetCard.mp hBc.1).1 hout y hyB).trans hBc.2⟩
-
-/-- The exact native A-cell law on the explicit complete rectangle environment
-for both the pair and continuous path experiments. -/
-private theorem native_conditioned_four_cell_law {M q s : ℕ} (S : Support M q)
-    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
-    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
-    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
-    (ap : Multiset {i : Fin M // i ∈ S.val})
-    (V : Finset {i : Fin M // i ∈ S.val})
-    (outside : {i : Fin M // i ∈ S.val} → ℕ) (k l U t : ℕ)
-    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
-    (hneg : (∑ i ∈ univ \ V, outside i) + U * l + (V.card - U) * (l + 1) =
-      (signedDepartureBlocks S e o 1).card)
-    (hU : U ≤ V.card) (ht : t ≤ U)
-    (hin : ∀ i ∈ V, ap.count i = k ∨ ap.count i = k + 1)
-    (hout : ∀ i ∉ V, ¬ ((ap.count i = k ∨ ap.count i = k + 1) ∧
-      (outside i = l ∨ outside i = l + 1))) :
-    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
-    let Env := univ.filter fun y : Fiber S e o =>
-      nativeRectangleReadout S e o k l y = rectangleEnvironmentData ap V outside U
-    let R := V.filter fun i => ap.count i = k
-    conditionalFiberMass S r e o (Env.filter fun y => nativeRectangleACount S e o k l y = t) /
-        conditionalFiberMass S r e o Env =
-      ((R.card.choose t : ℝ) * ((V.card - R.card).choose (U - t) : ℝ)) /
-        (V.card.choose U : ℝ) ∧
-    (∀ A : Set (Fiber S e o), @MeasurableSet (Fiber S e o)
-      (nativeRectangleSigma S e o k l) A ↔
-        ∃ B, (nativeRectangleReadout S e o k l) ⁻¹' B = A) := by
-  classical
-  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
-  dsimp only
-  constructor
-  · rw [← native_rectangle_readout_fiber S e o ap V outside k l U hin hout,
-      native_a_event_eq S e o ap V outside k l U t hout]
-    exact native_rectangle_hypergeometric_law S r e o hq hqm hr hr1 ha ha1 ap V _ outside l U t
-      hap hneg hU (filter_subset _ _) ht
-  · intro A
-    exact ⟨fun ⟨B, _, hB⟩ => ⟨B, hB⟩,
-      fun ⟨B, hB⟩ => ⟨B, MeasurableSpace.measurableSet_top, hB⟩⟩
 
 /-- Both labelled margins are allowed to vary while their sizes and all
 outside-row counts are fixed. This is a union of native history events. -/
