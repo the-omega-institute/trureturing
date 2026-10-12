@@ -33,9 +33,8 @@ internal static class TruthReleaseCommand
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevisionProjection(identity.Revision, IsReleaseInput,
                     (path, hash) => contentHashes.Add(path, hash))));
-            var rawLeanReportBytes = ImmutableArray.CreateRange(
-                File.ReadAllBytes(options.CandidateLeanReport));
-            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
+            var report = RawLeanReportArtifact.ReadFile(
+                options.CandidateLeanReport, snapshot, out var rawLeanReportBytes);
             if (!TruthExportCommand.TryPrepareFrozenTruth(snapshot, report, out var prepared, out var rejection))
                 return new(2, string.Empty, $"TRUTH_RELEASE_REJECTED {rejection}\n");
 
