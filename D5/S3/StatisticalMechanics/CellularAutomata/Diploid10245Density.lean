@@ -197,4 +197,48 @@ private theorem cylinder_law (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1) :
     CylinderLaw lam := by
   exact ⟨P_nonneg lam hlam, normalized lam, marginal_snoc lam, marginal_cons lam⟩
 
+private theorem weighted_init (lam : ℝ) (t n : ℕ) (F : (Fin n → Bool) → ℝ) :
+    (∑ a : Fin (n + 1) → Bool, F (Fin.init a) * P lam t (n + 1) a) =
+      ∑ b : Fin n → Bool, F b * P lam t n b := by
+  rw [sum_snoc n, Finset.sum_comm]
+  simp only [Fin.init_snoc]
+  simp_rw [← Finset.mul_sum, marginal_snoc]
+
+private theorem weighted_tail (lam : ℝ) (t n : ℕ) (F : (Fin n → Bool) → ℝ) :
+    (∑ a : Fin (n + 1) → Bool, F (Fin.tail a) * P lam t (n + 1) a) =
+      ∑ b : Fin n → Bool, F b * P lam t n b := by
+  rw [sum_cons n, Finset.sum_comm]
+  simp only [Fin.tail_cons]
+  simp_rw [← Finset.mul_sum, marginal_cons]
+
+private theorem q_sum (lam : ℝ) (t : ℕ) :
+    q lam t = ∑ a : Fin 3 → Bool, A (a 0) (a 2) * P lam t 3 a := by
+  rw [sum_cons 2]
+  simp_rw [sum_cons 1, sum_cons 0]
+  have h2 : (2 : Fin 3) = (0 : Fin 1).succ.succ := rfl
+  simp only [q, Fintype.sum_unique, Fintype.sum_bool, A, bit, h2,
+    Fin.cons_zero, Fin.cons_succ]
+  norm_num
+  congr 5
+
+private theorem prefix_q (lam : ℝ) (t : ℕ) :
+    (∑ a : Fin 5 → Bool, A (a 0) (a 2) * P lam t 5 a) = q lam t := by
+  have h4 := weighted_init lam t 4 (fun a => A (a 0) (a 2))
+  have h3 := weighted_init lam t 3 (fun a => A (a 0) (a 2))
+  change (∑ a : Fin 5 → Bool, A (a 0) (a 2) * P lam t 5 a) =
+    ∑ a : Fin 4 → Bool, A (a 0) (a 2) * P lam t 4 a at h4
+  change (∑ a : Fin 4 → Bool, A (a 0) (a 2) * P lam t 4 a) =
+    ∑ a : Fin 3 → Bool, A (a 0) (a 2) * P lam t 3 a at h3
+  exact h4.trans (h3.trans (q_sum lam t).symm)
+
+private theorem suffix_q (lam : ℝ) (t : ℕ) :
+    (∑ a : Fin 5 → Bool, A (a 2) (a 4) * P lam t 5 a) = q lam t := by
+  have h4 := weighted_tail lam t 4 (fun a => A (a 1) (a 3))
+  have h3 := weighted_tail lam t 3 (fun a => A (a 0) (a 2))
+  change (∑ a : Fin 5 → Bool, A (a 2) (a 4) * P lam t 5 a) =
+    ∑ a : Fin 4 → Bool, A (a 1) (a 3) * P lam t 4 a at h4
+  change (∑ a : Fin 4 → Bool, A (a 1) (a 3) * P lam t 4 a) =
+    ∑ a : Fin 3 → Bool, A (a 0) (a 2) * P lam t 3 a at h3
+  exact h4.trans (h3.trans (q_sum lam t).symm)
+
 end D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
