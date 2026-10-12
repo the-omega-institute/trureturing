@@ -60,9 +60,6 @@ theorem central_conjugate_downRadical (b : specialUnitary n ι)
     apply Subtype.ext; apply SpecialLinearGroup.ext; intro i j; simp [transpose_entry,Matrix.one_apply,eq_comm]
   rw [hh]; exact upRadical_one
 
-theorem upRadical_inv {g : specialUnitary (n+2) ι} (hg : UpRadical g) : UpRadical g⁻¹ :=
-  PartIIRadicalCoordinates.actual_radical_inverse_mem g.val hg
-
 /-- The accepted actual U=Levi*radical decomposition, in the literal SU carrier. -/
 theorem positive_levi_radical {g : specialUnitary (n+2) ι} (hg : Positive g) :
     ∃ b : specialUnitary n ι, ∃ v : specialUnitary (n+2) ι,

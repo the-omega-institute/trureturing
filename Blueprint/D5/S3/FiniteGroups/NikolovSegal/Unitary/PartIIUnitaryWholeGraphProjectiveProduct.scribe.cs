@@ -9,6 +9,13 @@ internal sealed class PartIIUnitaryWholeGraphProjectiveProductDocument : IScribe
         H("Part IIUnitary Whole Graph Projective Product"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("unitary-partiiunitaryintrinsicgraphproduct-graphaction"),
+                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryWholeGraphProjectiveProduct.graphAction"),
+                H("graphAction"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The raw graph is the anti-diagonal inverse transpose R(g), with entry R(g)(i,j) = g⁻¹(j.rev,i.rev). The defining SU fixed-point relation steinberg(ι)(g) = g gives ι(R(g)(i,j)) = g(i,j); applying the involution gives R(g)(i,j) = ι(g(i,j)). Thus graphAction uses ι.trans phi when eps is true and phi when eps is false. Both whole-group endpoints consume this genuine SU action; the raw graph bit, carrier, correction convention and divisor powers are preserved."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("unitary-partiiunitarywholegraphprojectiveproduct-actual-uniform-intrinsic-whole-graph-q-over-e-product"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryWholeGraphProjectiveProduct.actual_uniform_intrinsic_whole_graph_q_over_e_product"),
                 H("actual uniform intrinsic whole graph q over e product"), StatementSource.WithoutFormula(),

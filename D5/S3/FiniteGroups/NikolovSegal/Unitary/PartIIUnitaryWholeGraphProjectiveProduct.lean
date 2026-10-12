@@ -7,12 +7,25 @@
    digest: Actual unitary matrix geometry and ordered whole-group products, preserving every field and rank hypothesis. -/
 
 import D5.S3.FiniteGroups.NikolovSegal.Unitary.PartIIUnitaryWholePrescribedProduct
-import D5.S3.FiniteGroups.NikolovSegal.Unitary.PartIIUnitaryIntrinsicGraphProduct
+import D5.S3.FiniteGroups.NikolovSegal.Unitary.PartIIUnitaryIntrinsicPrescribedProduct
 import D5.S3.FiniteGroups.NikolovSegal.Unitary.PartIIUnitaryProjectivePrescribedProduct
 
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+namespace NikolovSegal.PartIIUnitaryIntrinsicGraphProduct
+open UnitaryField UnitarySylow PartIIUnitaryIntrinsicPrescribedProduct
+universe u
+variable {F : Type u} [Field F] [Finite F] {n : ℕ}
+
+def graphAction (ι phi : RingAut F) (hinv : Function.Involutive ι)
+    (hne : ι≠RingEquiv.refl F) (a : Fin n → Fˣ) (c : (fixedField ι)ˣ)
+    (ha : ∀ i, ι (a i:F)*(a i.rev:F)=((c:fixedField ι):F))
+    (eps : Bool) : MulAut (specialUnitary n ι) :=
+  action ι (if eps then ι.trans phi else phi) hinv hne a c ha
+
+end NikolovSegal.PartIIUnitaryIntrinsicGraphProduct
+
 namespace NikolovSegal.PartIIUnitaryWholeGraphProjectiveProduct
 open UnitarySylow UnitaryField PartIIUnitriangularLayers
 open PartIIUnitaryIntrinsicPrescribedProduct PartIIUnitaryIntrinsicGraphProduct

@@ -76,15 +76,6 @@ def action (ι phi : RingAut F) (hinv : Function.Involutive ι) (hne : ι≠Ring
   right_inv g := Subtype.ext ((PartIIProposition6_5.diagonalFieldGraph a phi false).right_inv g.val)
   map_mul' g h := Subtype.ext (map_mul _ g.val h.val)
 
-theorem actual_action_entry (ι phi : RingAut F) (hinv : Function.Involutive ι)
-    (hne : ι≠RingEquiv.refl F) (a : Fin n → Fˣ) (c : (fixedField ι)ˣ)
-    (ha : ∀ i, ι (a i:F)*(a i.rev:F)=((c:fixedField ι):F))
-    (g : specialUnitary n ι) (i j : Fin n) :
-    (action ι phi hinv hne a c ha g).val i j=(a i:F)*phi (g.val i j)*(((a j)⁻¹:Fˣ):F) := by
-  change ((unitOdd% diagonalAut) a (fieldAut phi g.val)) i j=_
-  rw [unitOdd% diagonal_entry]
-  rfl
-
 /-- Original scalar supplier correction convention, intrinsically on SU,
 for ALL positive-U targets. N,C precede all fields/ranks/tuples; ONE y
 precedes ALL targets. This is honest U coverage, not full scalar coverage. -/

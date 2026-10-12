@@ -16,13 +16,6 @@ internal sealed class PartIIUnitaryIntrinsicPrescribedProductDocument : IScribeD
                 Blocks(Paragraph(Text("Actual prescribed D/Phi automorphism of the LITERAL SU carrier. Its inverse closure is derived from the actual Steinberg commutation."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("unitary-partiiunitaryintrinsicprescribedproduct-actual-action-entry"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_action_entry"),
-                H("actual action entry"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized actual action entry statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("unitary-partiiunitaryintrinsicprescribedproduct-actual-uniform-intrinsic-positive-q-over-e-product"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_positive_q_over_e_product"),
                 H("actual uniform intrinsic positive q over e product"), StatementSource.WithoutFormula(),
