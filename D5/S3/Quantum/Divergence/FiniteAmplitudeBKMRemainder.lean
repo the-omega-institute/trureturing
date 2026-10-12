@@ -8,6 +8,10 @@
 
 import D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Integral
+import Mathlib.MeasureTheory.Integral.Prod
 
 set_option quotPrecheck false
 
@@ -31,6 +35,151 @@ local notation "entropy" => fun Y : S => (Y.val * CFC.log Y.val).trace.re
 local notation "P" => fun (A H : S) (v : ℝ) => A + v • H
 local notation "BKM" => fun (A H : S) =>
   (H.val * D5.S3.Divergence.LogDerivTrace.logDeriv A.val H.val).trace.re
+local notation "R" => fun (A : S) (u : ℝ) => A.val + u • (1 : M)
+local notation "K" => fun (A H : S) (u : ℝ) => CFC.conjSqrt (Ring.inverse (R A u)) H.val
+local notation "q" => fun (A H : S) (v u : ℝ) =>
+  (H.val * Ring.inverse (R (P A H v) u) * H.val * Ring.inverse (R (P A H v) u)).trace.re
+
+private lemma normalized_order (A H : S) (hA : A.val.PosDef) :
+    -(‖K A H 0‖ • A.val) ≤ H.val ∧ H.val ≤ ‖K A H 0‖ • A.val := by
+  let : CStarAlgebra M := {}
+  have hsa : IsSelfAdjoint (K A H 0) :=
+    H.property.conjugate_self (IsSelfAdjoint.of_nonneg (CFC.sqrt_nonneg _))
+  have hrec : CFC.conjSqrt A.val (K A H 0) = H.val := by
+    simpa only [zero_smul, add_zero] using
+      CFC.conjSqrt_conjSqrt_ringInverse A.val H.val hA.isStrictlyPositive
+  have hc : CFC.conjSqrt A.val (algebraMap ℝ M ‖K A H 0‖) =
+      ‖K A H 0‖ • A.val := by
+    rw [Algebra.algebraMap_eq_smul_one, map_smul, CFC.conjSqrt_one _ hA.posSemidef.nonneg]
+  have hl := CFC.conjSqrt_le_conjSqrt (c := A.val) hsa.neg_algebraMap_norm_le_self
+  have hu := CFC.conjSqrt_le_conjSqrt (c := A.val) hsa.le_algebraMap_norm_self
+  rw [map_neg, hc, hrec] at hl
+  rw [hrec, hc] at hu
+  exact ⟨hl, hu⟩
+
+private lemma normalized_kernel_bounds (A H : S) (hA : A.val.PosDef)
+    (u : ℝ) (hu : 0 ≤ u) :
+    IsSelfAdjoint (K A H u) ∧ ‖K A H u‖ ≤ ‖K A H 0‖ := by
+  let : CStarAlgebra M := {}
+  let r := ‖K A H 0‖
+  have hr : 0 ≤ r := norm_nonneg _
+  have hR : (R A u).PosDef := hA.add_posSemidef (Matrix.PosSemidef.one.smul hu)
+  have hAR : A.val ≤ R A u := le_add_of_nonneg_right
+    ((Matrix.PosSemidef.one.smul hu).nonneg)
+  have hbounds := normalized_order A H hA
+  have hl : -(r • R A u) ≤ H.val :=
+    (neg_le_neg (smul_le_smul_of_nonneg_left hAR hr)).trans hbounds.1
+  have hh : H.val ≤ r • R A u :=
+    hbounds.2.trans (smul_le_smul_of_nonneg_left hAR hr)
+  have hsa : IsSelfAdjoint (K A H u) :=
+    H.property.conjugate_self (IsSelfAdjoint.of_nonneg (CFC.sqrt_nonneg _))
+  have hcl := CFC.conjSqrt_le_conjSqrt (c := Ring.inverse (R A u)) hl
+  have hcu := CFC.conjSqrt_le_conjSqrt (c := Ring.inverse (R A u)) hh
+  rw [map_neg, map_smul, CFC.conjSqrt_ringInverse_self _ hR.isStrictlyPositive] at hcl
+  rw [map_smul, CFC.conjSqrt_ringInverse_self _ hR.isStrictlyPositive] at hcu
+  refine ⟨hsa, ?_⟩
+  rw [← cfc_id ℝ (K A H u) hsa]
+  apply norm_cfc_le hr
+  intro x hx
+  rw [Real.norm_eq_abs]
+  apply abs_le.mpr
+  constructor
+  · have hl' : algebraMap ℝ M (-r) ≤ K A H u := by
+      simpa only [Algebra.algebraMap_eq_smul_one, neg_smul] using hcl
+    exact (algebraMap_le_iff_le_spectrum hsa).mp hl' x hx
+  · have hu' : K A H u ≤ algebraMap ℝ M r := by
+      simpa only [Algebra.algebraMap_eq_smul_one] using hcu
+    exact (le_algebraMap_iff_spectrum_le hsa).mp hu' x hx
+
+private lemma finite_amplitude_path_posdef (A H : S) (hA : A.val.PosDef)
+    (hr : ‖K A H 0‖ < 1) (v : ℝ) (hv : v ∈ Icc (-1 : ℝ) 1) :
+    (P A H v).val.PosDef := by
+  let : CStarAlgebra M := {}
+  have hsa := (normalized_kernel_bounds A H hA 0 le_rfl).1
+  have hn : ‖v • K A H 0‖ < 1 := by
+    rw [norm_smul, Real.norm_eq_abs]
+    exact (mul_le_of_le_one_left (norm_nonneg _) (abs_le.mpr hv)).trans_lt hr
+  have hg : algebraMap ℝ M (1 - ‖v • K A H 0‖) ≤ 1 + v • K A H 0 := by
+    have hl := ((IsSelfAdjoint.all v).smul hsa).neg_algebraMap_norm_le_self
+    have hh := add_le_add_left hl (1 : M)
+    simpa only [map_sub, map_add, map_neg, map_one, sub_eq_add_neg, add_comm] using hh
+  have hp := (isStrictlyPositive_algebraMap (sub_pos.mpr hn)).of_le hg
+  have heq : CFC.conjSqrt A.val (1 + v • K A H 0) = (P A H v).val := by
+    rw [map_add, map_smul, CFC.conjSqrt_one _ hA.posSemidef.nonneg]
+    have hrec : CFC.conjSqrt A.val (K A H 0) = H.val := by
+      simpa only [zero_smul, add_zero] using
+        CFC.conjSqrt_conjSqrt_ringInverse A.val H.val hA.isStrictlyPositive
+    rw [hrec]
+    rfl
+  apply Matrix.isStrictlyPositive_iff_posDef.mp
+  rw [← heq]
+  exact (CFC.isStrictlyPositive_conjSqrt_iff _ _ hA.isStrictlyPositive).mpr hp
+
+private lemma resolvent_trace_eq_normalized (A H : S) (hA : A.val.PosDef)
+    (hr : ‖K A H 0‖ < 1) (v u : ℝ) (hv : v ∈ Icc (-1 : ℝ) 1) (hu : 0 ≤ u) :
+    q A H v u = (cfc (fun k : ℝ => k ^ 2 / (1 + v * k) ^ 2) (K A H u)).trace.re := by
+  let : CStarAlgebra M := {}
+  let C := R A u
+  let T := CFC.sqrt C
+  let W := CFC.sqrt (Ring.inverse C)
+  let Z := K A H u
+  let B := 1 + v • Z
+  have hC : C.PosDef := hA.add_posSemidef (Matrix.PosSemidef.one.smul hu)
+  have hT : IsUnit T := (CFC.isUnit_sqrt_iff _ hC.posSemidef.nonneg).mpr hC.isUnit
+  have hWT : W * T = 1 := by
+    rw [show W = Ring.inverse T by exact CFC.sqrt_ringInverse,
+      Ring.inverse_mul_cancel _ hT]
+  have hTW : T * W = 1 := by
+    rw [show W = Ring.inverse T by exact CFC.sqrt_ringInverse,
+      Ring.mul_inverse_cancel _ hT]
+  have hH : H.val = T * Z * T := by
+    simpa only [T, Z, C, CFC.conjSqrt_apply] using
+      (CFC.conjSqrt_conjSqrt_ringInverse C H.val hC.isStrictlyPositive).symm
+  have hR : R (P A H v) u = CFC.conjSqrt C B := by
+    rw [map_add, map_smul, CFC.conjSqrt_one _ hC.posSemidef.nonneg]
+    have hz : CFC.conjSqrt C Z = H.val :=
+      CFC.conjSqrt_conjSqrt_ringInverse C H.val hC.isStrictlyPositive
+    rw [hz]
+    change (A.val + v • H.val) + u • (1 : M) = (A.val + u • 1) + v • H.val
+    abel
+  have hi : Ring.inverse (R (P A H v) u) = W * Ring.inverse B * W := by
+    rw [hR, CFC.ringInverse_conjSqrt _ _ hC.isStrictlyPositive, CFC.conjSqrt_apply]
+  have htr : q A H v u = (Z * Ring.inverse B * Z * Ring.inverse B).trace.re := by
+    dsimp only
+    rw [hH, hi]
+    have heq : (T * Z * T) * (W * Ring.inverse B * W) * (T * Z * T) *
+        (W * Ring.inverse B * W) = T * (Z * Ring.inverse B * Z * Ring.inverse B) * W := by
+      calc
+        _ = T * Z * (T * W) * Ring.inverse B * (W * T) * Z *
+            (T * W) * Ring.inverse B * W := by noncomm_ring
+        _ = _ := by rw [hTW, hWT]; noncomm_ring
+    rw [heq, Matrix.trace_mul_cycle, hWT, Matrix.one_mul]
+  have hsa : IsSelfAdjoint Z := (normalized_kernel_bounds A H hA u hu).1
+  have hk (k : ℝ) (hk : k ∈ spectrum ℝ Z) : |k| < 1 := by
+    have hb := norm_apply_le_norm_cfc (id : ℝ → ℝ) Z hk continuousOn_id hsa
+    rw [cfc_id ℝ Z hsa, Real.norm_eq_abs] at hb
+    exact hb.trans_lt ((normalized_kernel_bounds A H hA u hu).2.trans_lt hr)
+  have hden (k : ℝ) (hk' : k ∈ spectrum ℝ Z) : 1 + v * k ≠ 0 := by
+    have hm : |v * k| < 1 := by
+      rw [abs_mul]
+      exact (mul_le_of_le_one_left (abs_nonneg k) (abs_le.mpr hv)).trans_lt (hk k hk')
+    have ha := (abs_lt.mp hm).1
+    linarith
+  have hf : ContinuousOn (fun k : ℝ => 1 + v * k) (spectrum ℝ Z) := by fun_prop
+  have hs : cfc (fun k : ℝ => 1 + v * k) Z = B := by
+    rw [cfc_const_add 1 (fun k : ℝ => v * k) Z (by fun_prop) hsa,
+      cfc_const_mul_id v Z hsa, map_one]
+  have heq : cfc (fun k : ℝ => k ^ 2 / (1 + v * k) ^ 2) Z =
+      Z * Ring.inverse B * Z * Ring.inverse B := by
+    have hki : cfc (fun k : ℝ => k / (1 + v * k)) Z = Z * Ring.inverse B := by
+      rw [cfc_map_div (fun k : ℝ => k) (fun k : ℝ => 1 + v * k)
+        Z hden continuousOn_id hf hsa, cfc_id' ℝ Z hsa, hs]
+    rw [show (fun k : ℝ => k ^ 2 / (1 + v * k) ^ 2) =
+      (fun k : ℝ => (k / (1 + v * k)) ^ 2) by funext k; rw [div_pow]]
+    rw [cfc_pow (fun k : ℝ => k / (1 + v * k)) 2 Z
+      (continuousOn_id.div hf hden) hsa, hki, pow_two]
+    noncomm_ring
+  exact htr.trans (congrArg (fun C : M => C.trace.re) heq).symm
 
 private lemma entropy_differentiableAt (A : S) (hA : A.val.PosDef) :
     DifferentiableAt ℝ entropy A := by
@@ -109,10 +258,11 @@ private lemma entropy_remainder (A H : S)
 /-- The symmetric entropy gap is the second-order integral of the two actual BKM
 curvatures. No commutativity of the base and direction is assumed. -/
 theorem symmetric_entropy_gap_eq_integral_bkm (A H : S)
-    (hpos : ∀ v ∈ Icc (-1 : ℝ) 1, (P A H v).val.PosDef) :
+    (hA : A.val.PosDef) (hr : ‖K A H 0‖ < 1) :
     entropy (A + H) / 2 + entropy (A - H) / 2 - entropy A =
       (∫ v in (0 : ℝ)..1, (1 - v) *
         (BKM (P A H v) H + BKM (P A (-H) v) H)) / 2 := by
+  have hpos := finite_amplitude_path_posdef A H hA hr
   have hp : ∀ v ∈ Icc (0 : ℝ) 1, (P A H v).val.PosDef :=
     fun v hv => hpos v ⟨by linarith [hv.1], hv.2⟩
   have hm : ∀ v ∈ Icc (0 : ℝ) 1, (P A (-H) v).val.PosDef := by
