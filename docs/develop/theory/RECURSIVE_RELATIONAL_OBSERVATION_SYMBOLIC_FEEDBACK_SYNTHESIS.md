@@ -8,7 +8,7 @@
 
 **Definition 1.1 (native domain).** Let
 
-$
+$$
 \begin{aligned}
 \mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
 \rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
@@ -885,13 +885,6 @@ fbccdb7e942aecb257cb70761488a7eef54a7374. Links below identify owning sources;
 the pin fixes their mathematical versions. Later integration content supplies
 no additional premise. This volume is ordinary mathematics, not a new Lean
 verification, an executed solver or an external-priority claim.
-
-The workflow uses formal-thinking-and-answer, theory-volume-template and
-consensus-rnd:sshx. One isolated Codex implementation writer authors the
-ordinary proofs and source correspondences. Completed research conclusions
-and caller convergence are fallible proposals, not independent validation.
-This implementation has no independent review verdict; review and publication
-are caller-owned. No caller transcript or opaque log is a premise.
 
 | Source | Exact contribution and boundary |
 | --- | --- |
