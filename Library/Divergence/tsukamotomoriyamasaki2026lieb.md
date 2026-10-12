@@ -81,11 +81,12 @@ interface required by its source-owning OperatorGeometricMean consumer,
 with the same public theorem statements. Generic full-line Jensen and the extension
 trace endpoint remain outside the consumed slice.
 
-The baseline sixteen D5 dependencies at the implementation's input commit
-are byte-unchanged and currently kernel-checked by the 22-module report;
-matching Frozen records are not established in this checkout. The consumed
-supplier extensions are source changes and require fresh scoped kernel
-materials. This status creates no extra freeze or research prerequisite;
+At the implementation's input commit, all sixteen baseline D5 dependencies
+were byte-unchanged and kernel-checked by the input report. The current port
+extends LownerHeinzCore, OperatorGeometricMean and LiebConcavity and leaves
+thirteen baseline dependencies byte-unchanged; all current versions are
+covered by the fresh 22-module report. Matching Frozen records are not
+established in this checkout. This status creates no extra freeze or research prerequisite;
 canonical admission belongs to the controller. Native escape audit remains
 unfinished under issue #5214; no declared_validated status is asserted.
 
