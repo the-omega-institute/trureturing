@@ -13,11 +13,12 @@ import Mathlib.Data.Nat.Log
 import Mathlib.Algebra.Order.Field.GeomSum
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
 noncomputable section
 
 open MeasureTheory ProbabilityTheory Filter Finset
-open scoped BigOperators ENNReal
+open scoped BigOperators ENNReal Topology
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -155,21 +156,31 @@ private lemma density_on_past (ν : Measure Seed) [IsProbabilityMeasure ν]
     (prefix_density_law ν p₀ p h₀ h₁ n)
   simpa only [Measure.map_apply (by fun_prop : Measurable (Past n)) ht] using h
 
+local notation "RatioBound" => fun p₀ : unitInterval =>
+  max (1 : ℝ) (max (1 / (p₀ : ℝ)) (1 / (1 - (p₀ : ℝ))))
+
+omit [MeasurableSpace Seed] in
+private lemma like_uniform_bound (p₀ p : unitInterval) (i : ℕ)
+    (ω : Seed × (ℕ → Bool)) : Like p₀ p i ω ≤ RatioBound p₀ ^ i := by
+  calc
+    _ ≤ ∏ _k ∈ range i, RatioBound p₀ := by
+      apply prod_le_prod (fun k _ => ratio_nonneg p₀ p (ω.2 k))
+      intro k _
+      cases ω.2 k <;> simp only [Bool.false_eq_true, ↓reduceIte]
+      · exact (div_le_div_of_nonneg_right (by linarith [p.2.1])
+          (sub_nonneg.mpr p₀.2.2)).trans
+          ((le_max_right _ _).trans (le_max_right _ _))
+      · exact (div_le_div_of_nonneg_right p.2.2 p₀.2.1).trans
+          ((le_max_left _ _).trans (le_max_right _ _))
+    _ = _ := by simp
+
+
 private lemma like_integrable (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ p : unitInterval) (n : ℕ) : Integrable (Like p₀ p n) (Law ν p₀) := by
-  let R := max ((p : ℝ) / (p₀ : ℝ)) ((1 - (p : ℝ)) / (1 - (p₀ : ℝ)))
-  have hR : 0 ≤ R := (div_nonneg p.2.1 p₀.2.1).trans (le_max_left _ _)
   refine ⟨((like_adapted p₀ p n).mono (seededFiltration.le n)).aestronglyMeasurable,
-    HasFiniteIntegral.of_bounded (C := R ^ n) (ae_of_all _ (fun ω => ?_))⟩
+    HasFiniteIntegral.of_bounded (C := RatioBound p₀ ^ n) (ae_of_all _ (fun ω => ?_))⟩
   rw [Real.norm_eq_abs, abs_of_nonneg (like_nonneg p₀ p n ω)]
-  calc
-    _ ≤ ∏ _i ∈ range n, R := by
-      apply prod_le_prod (fun i _ => ratio_nonneg p₀ p (ω.2 i))
-      intro i _
-      cases ω.2 i <;> simp only [Bool.false_eq_true, ↓reduceIte]
-      · exact le_max_right _ _
-      · exact le_max_left _ _
-    _ = R ^ n := by simp
+  exact like_uniform_bound p₀ p n ω
 
 private lemma setIntegral_like (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1) (n : ℕ)
@@ -222,6 +233,20 @@ private lemma stopped_law_map (ν : Measure Seed) [IsProbabilityMeasure ν]
       rw [← withDensity_apply _ (hmeas (measurableSet_singleton k))]
       exact density_on_past ν p₀ p h₀ h₁ k hk
 
+private lemma stopped_statistic_identity (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (τ : Seed × (ℕ → Bool) → ℕ)
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ))) (F : ℕ → ℝ) :
+    (∫ ω, F (τ ω) ∂Law ν p) =
+      ∫ ω, F (τ ω) ∂(Law ν p₀).withDensity
+        (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω)) := by
+  have hmeas := stopping_nat_measurable hτ
+  have hmap := stopped_law_map ν p₀ p h₀ h₁ τ hτ
+  have hm : StronglyMeasurable F := (measurable_from_nat (f := F)).stronglyMeasurable
+  rw [← integral_map hmeas.aemeasurable hm.aestronglyMeasurable,
+    ← integral_map hmeas.aemeasurable hm.aestronglyMeasurable, hmap]
+
+
 private lemma stopped_moment_identity (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
     (τ : Seed × (ℕ → Bool) → ℕ)
@@ -229,11 +254,7 @@ private lemma stopped_moment_identity (ν : Measure Seed) [IsProbabilityMeasure 
     (∫ ω, (τ ω : ℝ) ^ m ∂Law ν p) =
       ∫ ω, (τ ω : ℝ) ^ m ∂(Law ν p₀).withDensity
         (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω)) := by
-  have hmeas := stopping_nat_measurable hτ
-  have hmap := stopped_law_map ν p₀ p h₀ h₁ τ hτ
-  have hm : StronglyMeasurable (fun k : ℕ => (k : ℝ) ^ m) := by fun_prop
-  rw [← integral_map hmeas.aemeasurable hm.aestronglyMeasurable,
-    ← integral_map hmeas.aemeasurable hm.aestronglyMeasurable, hmap]
+  exact stopped_statistic_identity ν p₀ p h₀ h₁ τ hτ (fun k => (k : ℝ) ^ m)
 
 omit [MeasurableSpace Seed] in
 private lemma likelihood_step (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ))
@@ -464,6 +485,163 @@ private lemma endpoint_budget_finite {Ω : Type*} [MeasurableSpace Ω] (μ : Mea
       ← ENNReal.ofReal_mul hG.le]
     exact ENNReal.ofReal_le_ofReal (dyadic_truncation_kernel a m ha ham t K)
 
+private lemma stopped_statistic_continuous (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (τ : Seed × (ℕ → Bool) → ℕ)
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ)))
+    (n : ℕ) (hτn : ∀ ω, τ ω ≤ n) (F : ℕ → ℝ) :
+    Continuous (fun p : unitInterval => ∫ ω, F (τ ω) ∂Law ν p) := by
+  have ht := stopping_nat_measurable hτ
+  have hL : ∀ p : unitInterval, Measurable (fun ω => Like p₀ p (τ ω) ω) := by
+    intro p
+    have hjoint : Measurable (fun z : ℕ × (Seed × (ℕ → Bool)) => Like p₀ p z.1 z.2) :=
+      measurable_from_prod_countable_right
+        (fun i => ((like_adapted p₀ p i).mono (seededFiltration.le i)).measurable)
+    exact hjoint.comp (ht.prodMk measurable_id)
+  have hF : Measurable (fun ω => F (τ ω)) := (measurable_from_nat (f := F)).comp ht
+  let R : ℝ := ∑ k ∈ range (n + 1), |F k|
+  have hFb : ∀ ω, |F (τ ω)| ≤ R := fun ω =>
+    single_le_sum (fun k _ => abs_nonneg (F k)) (mem_range.mpr (Nat.lt_succ_of_le (hτn ω)))
+  have hRb : 1 ≤ RatioBound p₀ := le_max_left _ _
+  have hbound : ∀ (p : unitInterval) ω,
+      ‖Like p₀ p (τ ω) ω * F (τ ω)‖ ≤ RatioBound p₀ ^ n * R := by
+    intro p ω
+    rw [norm_mul, Real.norm_eq_abs, abs_of_nonneg (like_nonneg p₀ p (τ ω) ω),
+      Real.norm_eq_abs]
+    exact mul_le_mul ((like_uniform_bound p₀ p (τ ω) ω).trans
+      (pow_le_pow_right₀ hRb (hτn ω))) (hFb ω) (abs_nonneg _) (by positivity)
+  have hcont : ∀ ω, Continuous (fun p : unitInterval => Like p₀ p (τ ω) ω * F (τ ω)) := by
+    intro ω
+    apply Continuous.mul _ continuous_const
+    apply continuous_finsetProd
+    intro k _
+    cases ω.2 k <;> simp only [Bool.false_eq_true, ↓reduceIte] <;> fun_prop
+  have hc : Continuous (fun p : unitInterval =>
+      ∫ ω, Like p₀ p (τ ω) ω * F (τ ω) ∂Law ν p₀) :=
+    continuous_of_dominated (fun p => ((hL p).mul hF).aestronglyMeasurable)
+      (fun p => ae_of_all _ (hbound p)) (integrable_const _) (ae_of_all _ hcont)
+  have hid : ∀ p : unitInterval, (∫ ω, F (τ ω) ∂Law ν p) =
+      ∫ ω, Like p₀ p (τ ω) ω * F (τ ω) ∂Law ν p₀ := by
+    intro p
+    rw [stopped_statistic_identity ν p₀ p h₀ h₁ τ hτ F,
+      integral_withDensity_eq_integral_toReal_smul ((hL p).ennreal_ofReal)
+        (ae_of_all _ (fun ω => ENNReal.ofReal_lt_top))]
+    simp only [ENNReal.toReal_ofReal (like_nonneg p₀ p _ _), smul_eq_mul]
+  exact hc.congr (fun p => (hid p).symm)
+
+private lemma endpoint_cost_limit (a : ℝ) (ha : 0 < a) (t : WithTop ℕ) :
+    Tendsto (fun n : ℕ => ENNReal.ofReal ((Trunc t n : ℝ) ^ a)) atTop
+      (𝓝 (EndpointCost a t)) := by
+  cases t with
+  | top =>
+    change Tendsto (fun n : ℕ => ENNReal.ofReal ((n : ℝ) ^ a)) atTop (𝓝 ⊤)
+    simpa only [Function.comp_def] using ENNReal.tendsto_ofReal_atTop.comp
+      ((tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop)
+  | coe t =>
+    apply tendsto_const_nhds.congr'
+    filter_upwards [eventually_ge_atTop t] with n hn
+    simp only [WithTop.coe_ne_top, if_false, WithTop.untopD_coe]
+    change ENNReal.ofReal ((t : ℝ) ^ a) = ENNReal.ofReal (((min t n : ℕ) : ℝ) ^ a)
+    rw [min_eq_left hn]
+
+private lemma endpoint_from_uniform_cost (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
+    (a : ℝ) (ha : 0 < a) (p : ℕ → unitInterval) (hp : Tendsto p atTop (𝓝 p₀))
+    (K : ℝ≥0∞) (hK : ∀ j, (∫⁻ ω, EndpointCost a (M ω) ∂Law ν (p j)) ≤ K) :
+    (∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) ≤ K := by
+  have hmeas := hM.measurable.mono hM.measurableSpace_le le_rfl
+  have htrunc : ∀ n, Measurable (fun ω => ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ a)) := by
+    intro n
+    have ht : Measurable (fun ω => Trunc (M ω) n) := (hmeas.min measurable_const).untopD 0
+    exact (((Real.continuous_rpow_const ha.le).measurable.comp
+      ((measurable_from_nat (f := fun k : ℕ => (k : ℝ))).comp ht))).ennreal_ofReal
+  have htruncint : ∀ (p : unitInterval) n,
+      Integrable (fun ω => (Trunc (M ω) n : ℝ) ^ a) (Law ν p) := by
+    intro p n
+    have ht : Measurable (fun ω => Trunc (M ω) n) := (hmeas.min measurable_const).untopD 0
+    have hf : Measurable (fun ω => (Trunc (M ω) n : ℝ) ^ a) :=
+      (Real.continuous_rpow_const ha.le).measurable.comp
+        ((measurable_from_nat (f := fun k : ℕ => (k : ℝ))).comp ht)
+    refine ⟨hf.aestronglyMeasurable, HasFiniteIntegral.of_bounded
+      (C := (n : ℝ) ^ a) (ae_of_all _ (fun ω => ?_))⟩
+    rw [Real.norm_eq_abs, abs_of_nonneg (Real.rpow_nonneg (by positivity) _)]
+    apply Real.rpow_le_rpow (by positivity) _ ha.le
+    exact_mod_cast truncation_le (M ω) n
+  have hpath : ∀ n ω,
+      ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ a) ≤ EndpointCost a (M ω) := by
+    intro n ω
+    cases hMt : M ω with
+    | top => simp
+    | coe t =>
+      simp only [WithTop.coe_ne_top, if_false, WithTop.untopD_coe]
+      apply ENNReal.ofReal_le_ofReal
+      apply Real.rpow_le_rpow (by positivity) _ ha.le
+      exact_mod_cast min_le_left t n
+  have hfinite : ∀ n, (∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ a) ∂Law ν p₀) ≤ K := by
+    intro n
+    have hc := (stopped_statistic_continuous ν p₀ h₀ h₁
+      (fun ω => Trunc (M ω) n) (truncation_stopping hM n) n
+      (fun ω => truncation_le (M ω) n) (fun k => (k : ℝ) ^ a)).tendsto p₀
+    have ht : Tendsto (fun j => ∫⁻ ω,
+        ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ a) ∂Law ν (p j)) atTop
+        (𝓝 (∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ a) ∂Law ν p₀)) := by
+      have hi : ∀ q : unitInterval,
+          ENNReal.ofReal (∫ ω, (Trunc (M ω) n : ℝ) ^ a ∂Law ν q) =
+            ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ a) ∂Law ν q :=
+        fun q => ofReal_integral_eq_lintegral_ofReal (htruncint q n)
+          (ae_of_all _ (fun ω => Real.rpow_nonneg (by positivity) _))
+      simpa only [Function.comp_def, hi]
+        using (ENNReal.continuous_ofReal.tendsto
+          (∫ ω, (Trunc (M ω) n : ℝ) ^ a ∂Law ν p₀)).comp (hc.comp hp)
+    exact le_of_tendsto' ht (fun j => (lintegral_mono (hpath n)).trans (hK j))
+  have hlim : Tendsto (fun n => ∫⁻ ω,
+      ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ a) ∂Law ν p₀) atTop
+      (𝓝 (∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀)) := by
+    apply lintegral_tendsto_of_tendsto_of_monotone (fun n => (htrunc n).aemeasurable)
+    · apply ae_of_all
+      intro ω n k hnk
+      apply ENNReal.ofReal_le_ofReal
+      apply Real.rpow_le_rpow (by positivity) _ ha.le
+      cases M ω with
+      | top => simpa using (show (n : ℝ) ≤ k by exact_mod_cast hnk)
+      | coe t => exact_mod_cast min_le_min_left t hnk
+    · exact ae_of_all _ (fun ω => endpoint_cost_limit a ha (M ω))
+  exact le_of_tendsto' hlim hfinite
+
+private lemma dyadic_window_tendsto (p₀ : unitInterval) (p : ℕ → unitInterval)
+    (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1) (θ : ℝ)
+    (hw : ∀ j, |((p j : ℝ) - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ)))| *
+      Real.sqrt ((2 ^ j : ℕ) : ℝ) ≤ θ) : Tendsto p atTop (𝓝 p₀) := by
+  let d : ℝ := (p₀ : ℝ) * (1 - (p₀ : ℝ))
+  let lam : ℕ → ℝ := fun j => ((p j : ℝ) - (p₀ : ℝ)) / d
+  let z : ℕ → ℝ := fun j => Real.sqrt ((2 ^ j : ℕ) : ℝ)
+  have hd : d ≠ 0 := ne_of_gt (mul_pos h₀ (sub_pos.mpr h₁))
+  have hz : Tendsto z atTop atTop := by
+    simpa only [z, Nat.cast_pow, Nat.cast_ofNat, Function.comp_def] using
+      Real.tendsto_sqrt_atTop.comp
+        (tendsto_pow_atTop_atTop_of_one_lt (by norm_num : (1 : ℝ) < 2))
+  have hdiv : Tendsto (fun j => (|lam j| * z j) / z j) atTop (𝓝 0) :=
+    tendsto_bdd_div_atTop_nhds_zero
+      (Eventually.of_forall (fun j => mul_nonneg (abs_nonneg (lam j)) (Real.sqrt_nonneg _)))
+      (Eventually.of_forall hw) hz
+  have habs : Tendsto (fun j => |lam j|) atTop (𝓝 0) := by
+    apply hdiv.congr'
+    apply Eventually.of_forall
+    intro j
+    exact mul_div_cancel_right₀ _ (ne_of_gt (Real.sqrt_pos.2 (by positivity)))
+  have hlam : Tendsto lam atTop (𝓝 0) :=
+    tendsto_zero_iff_norm_tendsto_zero.2 (by simpa only [Real.norm_eq_abs] using habs)
+  have hreal : Tendsto (fun j => (p j : ℝ)) atTop (𝓝 (p₀ : ℝ)) := by
+    have ht := (hlam.mul_const d).add_const (p₀ : ℝ)
+    convert ht using 1
+    · funext j
+      dsimp [lam]
+      rw [div_mul_cancel₀ _ hd]
+      ring
+    · simp
+  exact tendsto_subtype_rng.2 hreal
+
 /-- All dyadic truncated moments are charged to one endpoint law of the same
 stopping rule. The endpoint cost is allowed to be infinite; every perturbed
 law retains the independent private seed and the same acquired-bit rule. -/
@@ -483,7 +661,9 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
       2 * ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀) ∧
     ((∑' j, ENNReal.ofReal (Weight a m j) *
       ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀) ≤
-      ENNReal.ofReal (GeoBudget a m) * ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) := by
+      ENNReal.ofReal (GeoBudget a m) * ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) ∧
+    (∀ K : ℝ≥0∞, (∀ j, (∫⁻ ω, EndpointCost a (M ω) ∂Law ν (p j)) ≤ K) →
+      (∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) ≤ K) := by
   have hm : 0 < m := by
     by_contra h
     have hz : m = 0 := by omega
@@ -496,7 +676,9 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
       (fun ω => Trunc (M ω) (2 ^ j)) (truncation_stopping hM (2 ^ j))
       (2 ^ j) (fun ω => truncation_le (M ω) (2 ^ j)) hm (hwindow j)).2
   have hmeas := hM.measurable.mono hM.measurableSpace_le le_rfl
-  refine ⟨hmoment, fun j => ?_, ?_⟩
+  refine ⟨hmoment, fun j => ?_, ?_, fun K hK =>
+    endpoint_from_uniform_cost ν p₀ h₀ h₁ M hM a ha p
+      (dyadic_window_tendsto p₀ p h₀ h₁ _ hwindow) K hK⟩
   · apply (truncation_tail_bound (Law ν (p j)) M hmeas (2 ^ j) m).trans
     rw [← ofReal_integral_eq_lintegral_ofReal
       (truncated_moment_integrable (Law ν (p j)) M hmeas (2 ^ j) m)
@@ -510,5 +692,6 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
     intro K
     exact endpoint_budget_finite (Law ν p₀) M
       (hM.measurable.mono hM.measurableSpace_le le_rfl) a m ha ham K
+
 
 end D5.S3.Estimation.SequentialDecisionRisk.SeededBernoulliStoppedMoment
