@@ -961,3 +961,624 @@ by any statement of this volume.
 [MM]: https://arxiv.org/pdf/0904.2385v2
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Positive-drift cycles with several native residuals
+
+**Definition 9.1 (completed occurrence graph and forward region).** Work in
+$\widehat{\mathcal T}$ of Definition 1.4 with the interpreted operation (SFS.1).
+Fix a scalar mode of Definition 3.3. Finite atomic tokens are
+$T_{p_j+c}$ with natural parameters and fixed nonnegative offsets; divergent
+atomic tokens are $\Omega$. Let $\mathscr E$ be a finite conjunction of
+positive completed equalities in these tokens, finite grounds, decorated
+residuals $\rho^aX$ and ordered pairs. Every repeated name has one value.
+Distribute fixed powers, evaluate grounds, and cancel pair/pair equations by
+native injectivity. Keep all equations exposed by these equivalences.
+
+For each exposed equality admitting the orientation $\rho^aX=A$, put an edge
+$X\longrightarrow Y$ for each occurrence $\rho^bY$ at its syntactic pair
+address $s$ in $A$. Its weight is $a-b$; it is strict exactly when
+$|s|>0$. Include both orientations when both endpoints are decorated variables.
+Use only mandatory positive equalities, never a negative or an equation in
+an unselected disjunct. An occurrence address is initially a syntactic address
+of $A$; original reach in $X$ requires proof.
+
+Choose a directed simple cycle with at least one strict edge and total weight
+$d>0$. Its forward region $V$ contains every vertex reachable from any cycle
+vertex in the entire exposed occurrence graph, including the cycle itself.
+All outgoing occurrences of every exposed definition contribute to this
+closure, even when one head has several definitions. Incoming predecessors
+outside $V$ are not included merely because they depend on a vertex of $V$.
+
+**Theorem 9.2 (exact positive-drift completed region split).** For every fixed
+scalar mode and cycle of Definition 9.1, each solution of $\mathscr E$ lies
+in exactly one of the following alternatives on the full region $V$:
+
+$$
+\begin{aligned}
+\mathrm F:&\quad X=T_{q_X}\quad(X\in V),\qquad q_X\in\mathbb N,\\
+\mathrm I:&\quad X=\Omega\quad(X\in V).
+\end{aligned}
+\tag{SFS.25}
+$$
+
+The finite ranks are unique. Their parameter domain is all natural numbers;
+any restrictions are imposed by the retained equations. Substitute each
+alternative into every original equation, retaining all scalar guards,
+reconstruction expressions and any additional completed-domain predicates.
+The resulting two systems give exactly the original solution set, in both
+directions. Either system can be inconsistent. Equations on untouched
+variables and restrictions involving them remain obligations. Acquired signed
+predicates stay in their original finite-source charts; (SFS.25) imposes no
+negative predicate or finite row partition on a completed point.
+
+Proof. Reuse Lemma 2.1 for completed injectivity, persistence of infinite
+branches, the unique preimage of $\Omega$, preservation of the existence of
+a leaf, and the leaf-depth estimate (SFS.6). Original-present subtree
+transport holds on completed trees by the same induction on a finite address
+as on finite trees: every traversed original branch distributes $\rho$ to
+its two children. If an epoch address crosses an original leaf, any reached
+subtree beyond that leaf lies in its finite replacement tree and is finite.
+This distinction supplies the reach guards below.
+
+If one cycle vertex is finite, its head image is finite. Every residual
+occurrence on its right side must be finite, since a fixed power and
+containment in a pair preserve an infinite branch. Finiteness propagates
+around the cycle and then throughout $V$. Apply the finite mass argument of
+[CAR, Theorem 2.2][CAR-CYCLE] to these finite values. On an occurrence edge,
+$\gamma(X)\ge\gamma(Y)$, strictly when the edge is strict and
+$\gamma(Y)>0$. The masses agree around the cycle, so its strict edge forces
+mass zero there. Every forward mass is then zero. Mass zero is precisely
+the finite atomic orbit, with a unique index by [ABC, Theorems 2.2–2.3][ABC].
+This is alternative F and reuses the finite atomicity theorem.
+
+Otherwise every cycle vertex is infinite. Number the chosen edges by
+$i=0,\ldots,t-1$, with $X_t=X_0$, head powers $a_i$, occurrence powers $b_i$
+and addresses $s_i$. In a solution,
+
+$$
+(\rho^{a_i}X_i)|_{s_i}=\rho^{b_i}X_{i+1}.
+\tag{SFS.26}
+$$
+
+The right side is infinite. Thus $s_i$ cannot cross an original leaf of
+$X_i$: it is originally reached, its subtree is infinite, and transport gives
+$\rho^{a_i}(X_i|_{s_i})=\rho^{b_i}X_{i+1}$. This also covers empty $s_i$.
+
+These relations compose on the same completed trees. For $1\le j\le t$ put
+$S_j=s_0\cdots s_{j-1}$, $A_j=\sum_{i<j}a_i$ and
+$B_j=\sum_{i<j}b_i$. Inductively maintain original reach of $S_j$, infinity
+of $X_0|_{S_j}$, and
+
+$$
+\rho^{A_j}(X_0|_{S_j})=\rho^{B_j}X_j.
+\tag{SFS.27}
+$$
+
+The first edge proves the base case. Apply $\rho^{a_j}$ to (SFS.27) and
+navigate $s_j$. On the right, original transport and (SFS.26) give the
+infinite subtree $\rho^{B_j+b_j}X_{j+1}$. On the left, that infinite endpoint
+cannot be born below an original leaf of $X_0|_{S_j}$. Hence $S_js_j$ is
+originally reached in $X_0$, and transport gives the next identity with
+$A_{j+1},B_{j+1}$. No separately chosen subtree witnesses are combined.
+
+At the cycle end, $S=S_t$ is nonempty because an edge is strict, and
+$A_t=B_t+d$. Completed injectivity cancels $\rho^{B_t}$, giving
+
+$$
+X_0=\rho^d(X_0|_S).
+\tag{SFS.28}
+$$
+
+Write $Y=X_0|_S$, which is infinite. Navigating $S$ in $X_0=\rho^dY$ has
+infinite result $Y$, so $S$ is originally reached in $Y$ as well.
+Transport yields $Y=\rho^d(Y|_S)$. Repeating this argument retains every
+original reach guard and proves
+
+$$
+X_0=\rho^{kd}(X_0|_{S^k})\qquad(k\ge1).
+\tag{SFS.29}
+$$
+
+If $X_0$ had a leaf, each displayed preimage would have a leaf, and (SFS.6)
+would give $\mu(X_0)\ge\lfloor kd/2\rfloor$ for every $k$. This is
+impossible for fixed finite $\mu(X_0)$ and $d>0$. Thus $X_0$ is leafless,
+hence $\Omega$.
+
+Whenever an exposed head is $\Omega$, its right side equals $\Omega$.
+Every syntactic subtree occurrence there therefore evaluates to $\Omega$.
+For an occurrence $\rho^bY$, Lemma 2.1 forces $Y=\Omega$. Propagate around
+the cycle and along every edge in its full forward region. This proves I.
+A finite ground or finite atomic token on a right side with such a head
+makes that branch inconsistent; it is not deleted. Likewise a divergent
+token on a right side whose head is finite makes branch F inconsistent.
+
+The alternatives are disjoint and exhaust all solutions. Conversely, any
+valuation satisfying one substituted system and all retained predicates
+reconstructs a solution of $\mathscr E$ by literal substitution. This proves
+both solution directions, including multiple-head constraints. In branch F,
+comparisons involving only the replaced region, finite grounds and finite
+atomic parameters have the exact Presburger interpretation of
+[CAR, Lemma 4.1][CAR-CYCLE] and PAC Lemma 3.2. Mixed comparisons remain.
+
+Positive drift is essential to the infinite argument. The equation
+$X=\langle X,\alpha\rangle$ has a pair-guarded leafful infinite solution
+and a strict zero-weight cycle. Its finite prefixes are obtained by successive
+pairing and stabilize at each depth; guarded uniqueness follows from the
+one-level agreement gain. Thus a strict cycle without positive total weight
+does not justify alternative I.
+
+**Definition 9.3 (conservative cycle extension).** Keep the exact source
+extraction of Proposition 3.2, the original finite charts and all their
+predicates. Run Definition 3.4 first. At an OUTSIDE completed branch,
+retain its unresolved equations and enumerate the finite occurrence graph's
+simple cycles in a fixed order.
+If a cycle qualifies for Theorem 9.2, perform its two substitutions, keep
+every original-coordinate reconstruction, and resume the existing reducer.
+Recompute the graph after each substitution. An accepted existing functional
+case is retained without further splitting. A branch with no applicable
+reduction remains OUTSIDE.
+
+Let $\mathcal C_{\rm cyc}$ consist of inputs for which every original chart
+tuple, every original scalar mode and every semantic branch terminates as a
+proved clash or an accepted functional case. Every branch must be handled;
+a successful subbranch cannot excuse an OUTSIDE sibling. This is recognition
+by the specified finite procedure, with
+$\mathcal C_{\rm fb}\subseteq\mathcal C_{\rm cyc}$.
+
+**Theorem 9.4 (source-faithful alternative on the extended class).** Recognition
+in Definition 9.3 terminates. For $(I,B)\in\mathcal C_{\rm cyc}$, with the
+entire input and arbitrary finite distinct attained full rows of Definition
+1.2, the equivalence and terminating alternative of Theorem 5.4 hold with
+the additional cycle cases: either actual finite originals witness $J_B(h)$
+for every requested $h$, or a finite $H$ satisfies $\neg J_B(H)$.
+
+Proof. Cycle enumeration, weight sums and forward reachability are finite.
+Each cycle substitution removes at least one remaining tree variable and
+introduces only natural finite parameters. The existing reducer terminates
+between these steps, and recursively defined states are never unfolded
+for recognition. Hence the entire finite branching procedure terminates,
+including on OUTSIDE inputs. Theorem 9.2 supplies an exact completed
+solution equivalence at each new step. Induction as in Lemma 3.5 retains
+both directions and the reconstruction of every original residual.
+
+For an accepted case $\tau$, let $\mathbf p$ contain every finite-mode
+original rank and every fresh finite index from homogeneous and cycle
+splits. Let $\mathbf w$ contain the actual finite values of all divergent
+original ranks, including invisible coordinates. Theorem 4.1 applies to
+the final functional system and all original-coordinate reconstructions.
+Substitute exactly its canonically finite original residuals
+$f_i(\mathbf p)$ into each whole chart negative list. Lemma 5.1 supplies
+its exact simultaneous feasibility formula $\Psi_{r,\tau}$; retain each
+original rank policy $P_{r,b_r}$ and all sharing in its vector
+$\mathbf n_r(\mathbf p,\mathbf w)$. Thus the decision sentence is exactly
+
+$$
+\exists\mathbf p\ \forall M\in\mathbb N\ \exists\mathbf w\quad
+\Gamma_\tau(\mathbf p)\ \land\
+\bigwedge_{r\in B}
+\left(P_{r,b_r}(\mathbf n_r(\mathbf p,\mathbf w))
+\land\Psi_{r,\tau}(\mathbf p,\mathbf w)\right)
+\ \land\ \bigwedge_{j\ {\rm divergent}}w_j\ge M.
+\tag{SFS.30}
+$$
+
+All finite parameters are fixed before the all-depth joint requirement.
+There is one joint tuple, rather than independently cofinal marginals.
+Empty tuples and conjunctions keep the meanings in Definition 5.2.
+Proposition 5.3 decides this Presburger sentence without enumerating an
+unbounded family of finite barriers.
+
+If (SFS.30) is true, choose one fixed $\mathbf p_0$. Exact reconstruction
+and Theorem 4.1 give a common completed whole output. At requested $h$,
+compute every canonical infinite original-coordinate prefix, retain all
+early leaves and absence, and choose one joint $\mathbf w$ with all
+divergent ranks at least $2h+2$. At these same ranks and fixed finite
+values, each $\Psi_{r,\tau}$ asserts feasibility of its entire negative
+list. SLP Lemma 2.1 fills that source's remaining Cartesian coordinates
+simultaneously, with repeated names shared. Native prefix nonexpansion
+makes each evaluated whole source agree with the common output through $h$.
+Exact chart soundness proves every old-row field, literal, endpoint guard,
+signed record and full target row on that actual finite original. The
+finite witnesses need not solve cross-source completed equations exactly.
+
+Conversely, lift all-depth finite witnesses as themselves through the
+exact charts, select one chart tuple at unbounded depths, extract original
+rank coordinates so each is constant or tends to infinity, and take a
+convergent residual subsequence. Continuity gives equal completed whole
+outputs. The exact new splits place this limit in an accepted final case.
+In a finite cycle branch, its fresh indices are the unique ranks of its
+actual finite limit values; an infinite branch uses $\Omega$. They are
+fixed together with the finite-mode original ranks before $M$ is chosen.
+Theorem 4.1 makes every canonically finite original residual rigid in all
+solutions of that case. Finite-tree isolation makes the actual witness
+coordinates eventually equal all $f_i(\mathbf p)$ at one common index.
+For each $M$, a later actual tuple retains all whole chart predicates and
+exceeds every divergent original-rank lower bound. It witnesses the entire
+conjunction in (SFS.30). No signed predicate is passed to a limit.
+
+There are finitely many accepted cases. A true sentence gives the finite
+construction above. If all are false, necessity proves failure at some
+finite depth. Only then enumerate the existing exact NSF queries
+$J_B(0),J_B(1),\ldots$; their supplied-depth decisions terminate at an
+exclusion $H$. This is the same justified final search as Theorem 5.4.
+An OUTSIDE branch licenses neither outcome.
+
+## 10. A complete thirteen-hole acquired source and its full rows
+
+**Definition 10.1 (entire signed input).** Let $C_{13}$ be the ordered right
+comb with $C_1[t]=t$ and
+$C_k[t_1,\ldots,t_k]=\langle t_1,C_{k-1}[t_2,\ldots,t_k]\rangle$.
+Write $C=C_{13}$, and put
+$q_i=R^{i-1}L$ for $1\le i\le12$, $q_{13}=R^{12}$.
+These thirteen original addresses are prefix-free. For finite native values,
+put
+
+$$
+\begin{aligned}
+A(y,z)&=\langle y,z\rangle,& B(x,w)&=\langle x,w\rangle,\\
+H_x(v)&=\langle x,\langle\rho v,\alpha\rangle\rangle,\\
+U(x,y,z,w,s,t,v,c)
+ &=C[x,y,z,w,s,t,\rho x,\rho y,A(y,z),B(x,w),v,c,H_x(v)].
+\end{aligned}
+\tag{SFS.31}
+$$
+
+Let $\Delta(x,y,z,w,v)$ assert all 45 pairwise disequalities between the
+following ten entire values, in the displayed order:
+
+$$
+x,\ y,\ z,\ w,\ \rho x,\ \rho y,\ A(y,z),\ B(x,w),\ v,\ H_x(v).
+\tag{SFS.32}
+$$
+
+Take $P=\{\varepsilon\}$ and its attained complete one-root-hole row $R$:
+reached set $\{\varepsilon\}$, exterior $\square_1$, partition $\{\{1\}\}$.
+Set $Q=\{q_1,\ldots,q_{13}\}$ and $N=1$. The entire literal list $H_0$
+consists of epoch-zero branch replies at $R^j$ for $0\le j\le11$ and at
+$q_9,q_{10},q_{13},q_{13}R$, and the epoch-zero $\alpha$ reply at $q_{13}RR$.
+The positive relation list consists exactly of
+
+$$
+\begin{gathered}
+(0,q_7,1,q_1,=),\qquad (0,q_8,1,q_2,=),\\
+(0,q_9L,0,q_2,=),\qquad (0,q_9R,0,q_3,=),\\
+(0,q_{10}L,0,q_1,=),\qquad (0,q_{10}R,0,q_4,=),\\
+(0,q_{13}L,0,q_1,=),\qquad (0,q_{13}RL,1,q_{11},=).
+\end{gathered}
+\tag{SFS.33}
+$$
+
+The negative relation list has one epoch-zero disequality for every unordered
+pair of distinct endpoints in
+$\{q_1,q_2,q_3,q_4,q_7,q_8,q_9,q_{10},q_{11},q_{13}\}$.
+Both endpoints must be reached for every positive and negative record at
+its stated epoch. There are no further constraints in this specified input.
+In general, additional acquired constraints remain part of Definition 1.2.
+
+**Theorem 10.2 (both entire-source and complete-row directions).** The entire
+acquired fiber of Definition 10.1 is
+
+$$
+D=\{U(x,y,z,w,s,t,v,c):(x,y,z,w,s,t,v,c)\in\mathcal T^8,
+\ \Delta(x,y,z,w,v)\}.
+\tag{SFS.34}
+$$
+
+Let $r_0,r_1$ have the entire numbered exterior
+$C[\square_1,\ldots,\square_{13}]$, reached set all $Q$, and partitions
+
+$$
+\begin{aligned}
+\pi_0={}&\{\{1\},\{2\},\{3\},\{4\},\{5,7\},\{6,8\},
+\{9\},\{10\},\{11,12\},\{13\}\},\\
+\pi_1={}&\{\{1\},\{2\},\{3\},\{4\},\{5,9\},\{6,10\},
+\{7\},\{8\},\{11\},\{12,13\}\}.
+\end{aligned}
+\tag{SFS.35}
+$$
+
+These are distinct attained full rows, and their entire strata are exactly
+
+$$
+\begin{aligned}
+\Theta_0(x,y,z,w,v)&=U(x,y,z,w,\rho x,\rho y,v,v),\\
+\Theta_1(x,y,z,w,v)&=U(x,y,z,w,A(y,z),B(x,w),v,H_x(v)),\\
+D_i&=\{\Theta_i(x,y,z,w,v):(x,y,z,w,v)\in\mathcal T^5,
+\ \Delta(x,y,z,w,v)\}\quad(i=0,1).
+\end{aligned}
+\tag{SFS.36}
+$$
+
+Each pre-negative carrier is the full Cartesian $\mathcal T^5$. Every source
+in these displays satisfies the entire acquired input; extracting its actual
+holes reconstructs that same source. Other attained rows remain in $D$.
+Neither entire stratum has a finite residual-free atomic-output-anchor cover
+of AAB/PAC type.
+
+Proof. The twelve spine branch literals expose exactly the comb's thirteen
+nonempty subtrees. Name the actual values at holes 1–6, 11 and 12 as
+$x,y,z,w,s,t,v,c$. Originally reached comb paths remain reached at epoch
+one. Hence the first two records in (SFS.33) force holes 7 and 8 to be
+$\rho x,\rho y$ by original-present transport. The branch literals at
+$q_9,q_{10}$ and their four child comparisons force holes 9 and 10 to be
+$A(y,z),B(x,w)$. The branch literals at $q_{13},q_{13}R$, the final
+$\alpha$ literal and the last two comparisons force hole 13 to be $H_x(v)$.
+All mixed-epoch endpoints are originally reached; none is obtained by
+navigating a replacement of an old leaf. The 45 negative records are exactly
+(SFS.32). This extracts and reconstructs every member of the original fiber.
+
+Conversely, every finite $U$ in (SFS.34) has the whole old root row, every
+listed branch and leaf reply, and all eight whole-subtree equalities at
+their stated epochs. Its original comb paths and the stated helper branches
+reach both endpoints of every sign. Its $\Delta$ verifies all 45 negatives.
+Thus (SFS.34) holds in both directions on the full original source domain.
+
+The ten base values (SFS.32) are distinct. Partition $\pi_0$ therefore forces
+exactly $s=\rho x,t=\rho y,c=v$; partition $\pi_1$ forces exactly
+$s=A(y,z),t=B(x,w),c=H_x(v)$. These assignments and $\Delta$ make all other
+classes distinct. Conversely, filling (SFS.36) under $\Delta$ gives exactly
+the stated partition. This checks all 78 unordered hole-pair bits, together
+with the complete exterior and all thirteen reached holes. Extracting the
+actual five base holes from any source in $D_i$ yields its valuation and
+reconstructs that same original as $\Theta_i$. No feasible section replaces
+an entire stratum.
+
+For attainment, define $b_0=\alpha$, $b_{m+1}=\langle b_m,\alpha\rangle$.
+Choose
+
+$$
+x=b_1,\qquad y=\rho^3b_1,\qquad z=\rho^6b_1,\qquad
+w=\rho^9b_1,\qquad v=b_m\quad(m\ge4).
+\tag{SFS.37}
+$$
+
+The URR mass and clock formulas give masses $1$ for the first six values
+$x,y,z,w,\rho x,\rho y$ and their respective clocks
+$2,5,8,11,3,6$. The pair values $A,B$ have mass $3$ and clocks $10,13$.
+The last two values $v,H_x(v)$ have masses $m,m+3$. Different mass groups
+and distinct clocks within a group distinguish all ten values. Thus
+$\Delta$ holds simultaneously, and both fillings attain their full rows.
+
+This same family makes source mass unbounded in each entire stratum, since
+$v=b_m$ is an original subtree and $\gamma(b_m)=m$. Every fixed
+residual-free template over finite grounds, atomic tokens and finitely many
+pairs has mass bounded by its ground masses, counted with occurrences, plus
+its pair count. The bound follows from $\gamma(T_n)=0$ and
+$\gamma(\langle a,b\rangle)\le1+\gamma(a)+\gamma(b)$, independently of
+all ranks or their correlations. A finite union has a finite bound and
+cannot cover either entire stratum. This applies the existing mass criterion
+of Theorem 6.3 to these whole strata.
+
+## 11. Exhaustive cycle synthesis and the accepted recognizer boundary
+
+**Theorem 11.1 (completed classification and actual signed realizations).**
+For $B=\{r_0,r_1\}$ of Theorem 10.2, the two completed source maps are equal
+exactly when their copies of $x,y,z,w,v$ agree as $X,Y,Z,W,V$ and
+
+$$
+\rho X=\langle Y,Z\rangle,\qquad
+\rho Y=\langle X,W\rangle,\qquad
+V=\langle X,\langle\rho V,\alpha\rangle\rangle.
+\tag{SFS.38}
+$$
+
+The unique common point of $\overline{D_0}$ and $\overline{D_1}$ is
+
+$$
+\Lambda=C[\Omega,\Omega,\Omega,\Omega,\Omega,\Omega,\Omega,
+\Omega,\Omega,\Omega,K,K,K],\qquad
+K=\langle\Omega,\langle\rho K,\alpha\rangle\rangle,
+\tag{SFS.39}
+$$
+
+where $K$ is the already existing tree of Theorem 6.3. For every inclusive
+$h\in\mathbb N$, a terminating finite construction returns actual
+$u_i(h)\in D_i$ agreeing through $h$ with this single $\Lambda$.
+In particular $J_B(h)$ holds at every depth. Both $K$ and $\Lambda$ are
+non-rational, in the sense of having infinitely many distinct rooted subtrees.
+
+Proof. Comparing holes 1–4 and 11 in equal whole outputs identifies the
+five coordinate copies. Holes 5, 6 and 12 give exactly (SFS.38).
+Every other corresponding hole then agrees by its native definition.
+Conversely these five identifications and three equations make all thirteen
+holes and the entire comb equal, proving the reverse whole-output direction.
+
+The first two equations give strict edges $X\longrightarrow Y$ and
+$Y\longrightarrow X$, each of weight one. Their total drift is two and
+the full forward region is $\{X,Y,Z,W\}$. The incoming head $V$ is outside
+that region. Theorem 9.2 splits the four coordinates into finite atoms or
+all $\Omega$.
+
+In the finite mode write $X=T_j$. Since $\rho X=T_{j+1}$ is a pair,
+$j\ge1$. The actual atomic recurrence
+$T_{j+1}=\langle T_j,T_{j-1}\rangle$ and ordered-pair cancellation force
+$Y=T_j,Z=T_{j-1}$. The second equation forces $W=T_{j-1}$.
+Thus $X=Y$ and $Z=W$. These are finite original coordinates, isolated at
+their actual hole addresses. Any finite source approaching that completed
+output must eventually have $x=y$ and $z=w$ exactly, violating retained
+negatives in $\Delta$. Equivalently, substitution into the whole negative
+support of Lemma 5.1 makes this entire unbounded finite-rank family false.
+No finite barrier list or bound on $j$ is supplied.
+
+In the infinite mode, $X=Y=Z=W=\Omega$. The last equation becomes the
+existing pair-guarded equation for $K$ in Theorem 6.3. Theorem 4.1 supplies
+its unique solution and computable native prefixes. Its two explicit pair
+levels give the prefix agreement gain; bare $\rho$ is only nonexpanding.
+The reconstructed output is (SFS.39).
+
+To realize it, fix any requested $h$. Prescribe depth-$h$ prefixes of
+$\Omega$ for $x,y,z,w$ and of $K$ for $v$. All five prescribed completions
+are infinite. The seed (SFS.37), with $m=4$, proves feasibility of the entire
+45-negative conjunction on the full Cartesian $\mathcal T^5$. Apply SLP
+Lemma 2.1 to obtain one finite tuple $(x_h,y_h,z_h,w_h,v_h)$ with those
+prefixes and every negative simultaneously. Repeated occurrences use these
+same finite values. Evaluate both $\Theta_0$ and $\Theta_1$ on this tuple.
+Theorem 10.2 places each result in its entire exact stratum, with all original
+records and its full row. Prefix nonexpansion of native powers and pairing
+makes both whole outputs agree through $h$ with the one $\Lambda$, including
+the early leaves of $K$ and absence below them. They are different originals
+because their full rows differ. Their cross-source completed feedback need
+not hold as an exact finite equation. Every step terminates for supplied $h$.
+
+Conversely, any common closure point retains the fixed comb and its reached
+holes. Continuous extraction at holes 1–4 and 11 and continuity of the
+helper expressions give (SFS.38). Finite isolation and the actual acquired
+negatives exclude its finite mode. Its infinite mode gives $\Omega$ on the
+region and guarded uniqueness gives $K$. Thus every common closure point is
+$\Lambda$, while the finite construction proves the reverse inclusion.
+The same argument applies to a compact subsequence of any all-depth joint
+finite realizations. No sign or finite partition is asserted on $\Lambda$.
+
+Finally reuse (SFS.23): the guarded tree has
+$K|_{(RL)^jRR}=T_j$ for every $j\ge0$. The transport paths stay on original
+branch nodes. The finite $T_j$ are distinct, so $K$, and therefore its
+containing source $\Lambda$, has infinitely many distinct rooted subtrees.
+This continuation and its non-rationality are suppliers; their role here is
+in the completed multi-residual consumer.
+
+**Theorem 11.2 (strict extension of the fixed SFS procedure and failure of both
+FFM frames).** The input of Definition 10.1 with $B=\{r_0,r_1\}$ belongs to
+$\mathcal C_{\rm cyc}$, while the fixed procedure defining
+$\mathcal C_{\rm fb}$ leaves it OUTSIDE. Neither of the two input-generated
+frames of [FFM, Proposition 2.2][FFM-FRAME] is admitted for this pair.
+These are boundaries of the specified recognizers, not
+presentation-independent impossibility statements.
+
+Proof. Proposition 3.2's direct source reduction exposes only the required
+comb and helper nodes. Whole-subtree requests stop at their reached endpoints
+and do not inspect the roots of $x,y,z,w,v$. The helper definitions are
+acyclic bare-variable substitutions. The two full partitions then substitute
+$s,t,c$, leaving exactly the rank-free Cartesian charts (SFS.36) and their
+entire negatives, with no residual positive filter. Thus the direct route
+succeeds, with no original scalar modes needed.
+
+On their completed common-output equations, Definition 3.4 cancels the comb,
+merges the five coordinate aliases and deletes identities, leaving (SFS.38).
+Neither of the first two equations is variable-free, an $\Omega$ comparison,
+a same-variable period, or homogeneous one-residual syntax of Definition 2.2.
+Neither has a bare-variable endpoint for final orientation. The third can
+be oriented as a guarded definition but does not cover the first two.
+The fixed reducer consequently returns OUTSIDE.
+
+The documented NIC alternative does not discard this obstruction. Choose
+the ordinary-constructor branches of the acyclic positive helper definitions
+and the selector definitions for each row. The five base shapes remain
+independent residual sorts; their original undecorated occurrences give
+minimum offsets zero. The only fixed atomic ground is $\alpha=T_0$.
+Expansion therefore gives the same five-residual native charts, with the
+same whole negative lists. NIC Lemma 3.1 and Theorem 3.2 omit assembled
+normality: an ordinary branch can expand to an atomic value without losing
+soundness. This branch is not restricted to a selected non-atomic section;
+it remains the full Cartesian native image and is nonempty by (SFS.37).
+Other atomic-collapse branches cannot replace the complete cover. Every
+semantic branch must be handled in Definition 3.6, so this surviving
+completed branch still prevents acceptance by the fixed SFS rules. This
+comparison does not quantify over all possible new exact reparameterizations.
+
+After Theorem 9.2's split, both branches reach the existing accepted forms.
+Finite $X,Y,Z,W$ become symbolic atoms, their wholly atomic comparisons give
+exact arithmetic guards, and $V$ has one guarded definition. The whole signed
+support is false for that branch by Theorem 11.1. In the $\Omega$ branch
+only the one guarded $K$ definition remains; the full negative seed and SLP
+make its support true. Hence the extended class accepts and constructs the
+all-depth finite witnesses. The increment is the automatic exhaustive cycle
+split and its consumer, rather than a supplied guess of $\Lambda$ followed
+by existing lifting.
+
+For FFM, every canonical contact of Definition 3.2 is a finite ordinary
+constructor frame filled with fixed finite coordinate values and $\Omega$,
+and is rational. This includes every finite coordinate choice in either
+generated frame, not just the coarse root contact. If one of those frames
+were admitted, the all-depth joint witnesses of Theorem 11.1 and FFM
+Theorem 4.2 would supply one cell and one fixed finite coordinate tuple
+whose selected slices are both infinite. Admission puts that cell's same
+rational canonical contact in both entire strata's closures. Their common
+closure point is uniquely the non-rational $\Lambda$, a contradiction.
+Thus both frame admission tests fail. This applies the rational-contact
+obstruction of FFM Proposition 7.1 to the present entire input. The failure
+is OUTSIDE, while $J_B(h)$ actually holds for every $h$.
+
+## 12. Certified-epoch consequences and the retained general question
+
+**Theorem 12.1 (paid acquisition and selected recovery obstruction).** Under
+Assumption 1.3, the fixed public schedule of Definition 10.1 has exactly
+(SFS.34) as its successful retained fiber at actual $N=1$. On that entire
+fiber, exact whole-$Q$-row recovery has no uniform finite-new-read bound,
+for static service or lawful adaptive serial forward service. Paid sourcewise
+finite recovery still exists. The selected pair gives no exact whole-image
+memory optimum.
+
+Proof. Apply ARH Proposition 2.1 to all the stipulated coordinates and endpoint
+pairs. Paid epoch-zero traversal computes the attained old row and the
+requested endpoint descriptions; paid traversal at epoch one supplies the
+later endpoints. Whole-subtree comparisons use those actually acquired
+finite descriptions before the cut. The same register is advanced lawfully
+to $N=1$. The complete accessible-state cut retains exactly the specified
+row, replies and signs, common parameters and ready state. The two directions
+of Theorem 10.2 and the source-total producer theorem give exactly (SFS.34)
+as the successful outcome fiber. Traversal lengths, caches, addresses,
+control, timing, permissions, archives, descriptions and handles all belong
+to the factoring premise. That premise, same-source continuity and authentic
+epoch are operational assumptions, not a physical realization theorem.
+
+Theorem 11.1 supplies distinct-row legal originals sharing an original prefix
+at every depth. Thus no finite original prefix determines the full row on
+$D$. ARH (ARH.2.3), equivalently Corollary 7.1, rules out a uniform finite
+new-read service under the stated common-state premises. In its serial
+direction, a uniform read bound and four-valued replies give a finite reply
+tree and finitely many submitted physical words. All-epoch native prefix
+locality bounds their original dependency depth. Two legal originals sharing
+that depth would produce the same run but require different full outputs,
+a contradiction. No equality or limit-tree port is added by the proof.
+
+The existing current-register original decoder and branch-guided traversal
+still recover each actual finite original source in finitely many paid calls
+and compute its entire row. The bound can depend on that source. Pre-cut
+acquisition, the update to $N$, comparisons and retention are paid separately
+from new raw reads, literal word lengths, serial updates, local prefix
+calculation, arithmetic, storage, installed tables, preparation and physical
+time. Offline finite witnesses and completed coordinates supply no actual
+source selector, original-version read, reset, reroot, clock, clone or equality
+operation. Corollary 7.1's whole-image positive consumer continues to require
+the exact finite attained image and finite exclusion for every distinct pair.
+The two selected rows do not replace that requirement; any complete-field
+lower bound here is only the selected two-row bound.
+
+**Definition 12.2 (mathematical attribution and scope).** The several-residual
+infinite-cycle composition, its positive-drift rigidity, and the resulting
+exact cycle-elimination interface are repo-derived deductions in Theorem 9.2.
+Theorem 9.4 supplies their conservative use by the existing symbolic-feedback
+consumer, with Theorems 10.2–11.2 as one entire acquired application.
+CAR owns finite cycle atomicity and finite guarded atomic arithmetic; ABC
+and URR own normal coding, mass and clock. Lemma 2.1 owns the completed native
+interfaces, Theorem 2.3 the homogeneous classification, Theorems 4.1 and 6.3
+the guarded construction and $K$, and SLP the simultaneous signed finite
+filling. These supplier statements are not new cycle results. The precise
+source versions for this unit are repository revision
+09c4a550a9434737bc0f9ff08fd4a3e2322c5be3.
+
+Ginsburg–Spanier [Theorems 1.2–1.3][GS] supplies the Presburger and semilinear
+step only after the exact native reduction has produced (SFS.30).
+Milius–Moss [Theorems 7.5 and 7.15][MM] supplies guarded interpreted-recursion
+background under its algebraic and metric hypotheses; the actual native
+prefix construction is the existing Theorem 4.1. Neither reference supplies
+a decision theorem for arbitrary interacting interpreted-$\rho$ equations.
+The leaf-replacement laws and original reach correspondence, rather than a
+free unary constructor theory, support the transfer here. This attribution
+is a bounded supplier comparison, with no external-priority claim.
+
+**Open problem 12.3 (unrestricted mixed completed recovery).** Open problem 7.2
+retains its full source domain, complete signed acquired input, arbitrary
+finite distinct attained full rows, and original joint-prefix quantifiers.
+Systems with no qualifying positive-drift cycle can retain nonfunctional
+mixed comparisons; other systems can retain incompatible definitions,
+image/preimage restrictions or finite original profiles outside the accepted
+rigidity and support interface. The cycle split does not settle such OUTSIDE
+branches or prove undecidability. A presentation change requires both exact
+whole-source directions before it can replace a chart. The wider minimal
+relational mutual-recovery programme and general resource optima remain open.
+
+[CAR-CYCLE]: https://github.com/the-omega-institute/trureturing/blob/09c4a550a9434737bc0f9ff08fd4a3e2322c5be3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[FFM-FRAME]: https://github.com/the-omega-institute/trureturing/blob/09c4a550a9434737bc0f9ff08fd4a3e2322c5be3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md
+
+## 追加锚（本行以下为增补区）
