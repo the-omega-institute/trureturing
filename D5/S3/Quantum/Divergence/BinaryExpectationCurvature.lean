@@ -33,7 +33,8 @@ private lemma log_conjugation (V : unitary M) (A : S) :
   have hsa : IsSelfAdjoint (e A.val) := A.property.map e
   simpa only [e, Unitary.conjStarAlgAut_apply, CFC.log] using
     (StarAlgHomClass.map_cfc e Real.log A.val
-      (A.val.finite_real_spectrum.continuousOn _) (by fun_prop) A.property hsa).symm
+      (A.val.finite_real_spectrum.continuousOn _)
+      e.toAlgEquiv.toLinearMap.continuous_of_finiteDimensional A.property hsa).symm
 
 private lemma trace_conjugation (V : unitary M) (B : M) :
     ((V : M) * B * (star V : M)).trace = B.trace := by
@@ -70,9 +71,11 @@ private lemma binary_trace_log_zero (V : unitary M) (A H : S)
     calc
       _ = ((V : M) * H.val * (star V : M)) *
           ((V : M) * CFC.log A.val * (star V : M)) := by
-        rw [Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_assoc (star V : M),
-          Unitary.coe_star_mul_self]
-        noncomm_ring
+        symm
+        calc
+          _ = (V : M) * H.val * ((star V : M) * V) * CFC.log A.val *
+              (star V : M) := by noncomm_ring
+          _ = _ := by rw [Unitary.coe_star_mul_self]; noncomm_ring
       _ = _ := by rw [hH, ← hl, Matrix.neg_mul]
   have ht := congrArg Complex.re (trace_conjugation V (H.val * CFC.log A.val))
   rw [he, Matrix.trace_neg, Complex.neg_re] at ht
@@ -87,7 +90,7 @@ private lemma binary_defect_eq_entropy_difference (V : unitary M) (A H : S)
   congr 1
   simp only [Submodule.coe_add, Submodule.coe_smul, Matrix.add_mul,
     Matrix.smul_mul, Matrix.trace_add, Matrix.trace_smul,
-    Complex.add_re, Complex.real_smul, hz, mul_zero, add_zero]
+    Complex.add_re, Complex.real_smul, Complex.re_ofReal_mul, hz, mul_zero, add_zero]
 
 /-- The binary entropy defect contracts by `s²` for every finite dimension,
 including singular positive semidefinite endpoints. -/
@@ -144,7 +147,8 @@ theorem binary_endpoint_derivative_lower_bound (V : unitary M) (A H : S)
   have hd' : HasDerivAt f (H.val * CFC.log (A + H).val).trace.re 1 := by
     have h := (hd.comp_hasDerivAt 1 (by simpa only [one_smul] using hpath)).sub_const
       (entropy A)
-    simpa only [f, ContinuousLinearMap.comp_apply, ContinuousLinearMap.precompL_apply,
+    simpa only [f, ContinuousLinearMap.comp_apply, ContinuousLinearMap.compL_apply,
+      ContinuousLinearMap.precompL_apply,
       ContinuousLinearMap.mul_apply', Submodule.subtypeL_apply, Matrix.mul_add,
       Matrix.mul_one, Matrix.trace_add, Complex.add_re, binary_trace_zero V H hflip,
       add_zero] using h
@@ -235,8 +239,8 @@ theorem binary_expectation_finite_memory
       Matrix.kronecker_mem_unitary U.property (Matrix.unitaryGroup r ℂ).one_mem⟩
   have hV : IsSelfAdjoint (V : Matrix (a × r) (a × r) ℂ) := by
     change star (Matrix.kronecker (U : Matrix a a ℂ) (1 : Matrix r r ℂ)) = _
-    simp only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker,
-      Matrix.conjTranspose_one, ← Matrix.star_eq_conjTranspose, hU.star_eq]
+    change (Matrix.kronecker (U : Matrix a a ℂ) (1 : Matrix r r ℂ)).conjTranspose = _
+    rw [Matrix.conjTranspose_kronecker, hU.isHermitian.eq, Matrix.conjTranspose_one]
   exact binary_expectation_entropy_bounds V hV rho hrho s hs
 
 end D5.S3.Quantum.Divergence.BinaryExpectationCurvature

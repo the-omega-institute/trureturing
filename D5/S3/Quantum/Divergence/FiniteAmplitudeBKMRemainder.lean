@@ -732,15 +732,22 @@ private lemma normalized_norm_lt_one_of_posdef (A H : S)
 private lemma scalar_log_square_contraction (s z : ℝ)
     (hs : s ∈ Icc (0 : ℝ) 1) (hz0 : 0 ≤ z) (hz1 : z < 1) :
     -Real.log (1 - s ^ 2 * z) ≤ s ^ 2 * -Real.log (1 - z) := by
+  by_cases hz : z = 0
+  · simp only [hz, mul_zero, sub_zero, Real.log_one, neg_zero, mul_zero, le_refl]
   have hs2 : s ^ 2 ≤ 1 := by nlinarith [hs.1, hs.2]
-  have hc : ConcaveOn ℝ (Ioi (0 : ℝ)) Real.log :=
-    StrictConcaveOn.concaveOn strictConcaveOn_log_Ioi
-  have h := hc.2 (by norm_num : (1 : ℝ) ∈ Ioi (0 : ℝ))
-    (by change 0 < 1 - z; linarith) (sub_nonneg.mpr hs2) (sq_nonneg s)
-    (by ring : (1 - s ^ 2) + s ^ 2 = 1)
-  have he : (1 - s ^ 2) * 1 + s ^ 2 * (1 - z) = 1 - s ^ 2 * z := by ring
-  simp only [Real.log_one, mul_zero, zero_add, he] at h
-  linarith
+  have hr1 : Real.sqrt z < 1 := by
+    simpa only [Real.sqrt_one] using Real.sqrt_lt_sqrt hz0 hz1
+  have hr0 : Real.sqrt z ≠ 0 := by
+    exact (Real.sqrt_pos.mpr (lt_of_le_of_ne hz0 (Ne.symm hz))).ne'
+  have hzle : s ^ 2 * z ≤ (Real.sqrt z) ^ 2 := by
+    rw [Real.sq_sqrt hz0]
+    exact mul_le_of_le_one_left hz0 hs2
+  have h := (scalar_log_bounds (Real.sqrt z) (s ^ 2 * z)
+    (Real.sqrt_nonneg z) hr1 (mul_nonneg (sq_nonneg s) hz0) hzle).2
+  rw [if_neg hr0, Real.sq_sqrt hz0] at h
+  calc
+    _ ≤ -Real.log (1 - z) / z * (s ^ 2 * z) := h
+    _ = _ := by field_simp [hz]; ring
 
 private lemma kernel_log_square_contraction (Z : M) (hZ : IsSelfAdjoint Z)
     (hZ1 : ‖Z‖ < 1) (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
@@ -802,7 +809,7 @@ private lemma trace_entropy_continuous : Continuous entropy := by
   have he (Y : S) : cfc (fun x : ℝ => x * Real.log x) Y.val =
       Y.val * CFC.log Y.val := by
     rw [cfc_mul (id : ℝ → ℝ) Real.log Y.val continuousOn_id
-      (Y.val.finite_real_spectrum.continuousOn _) Y.property, cfc_id ℝ Y.val Y.property]
+      (Y.val.finite_real_spectrum.continuousOn _), cfc_id ℝ Y.val Y.property]
     rfl
   simpa only [he] using (Tr).continuous.comp hc
 
@@ -810,7 +817,8 @@ private lemma positive_regularization (A : S) (hA : 0 ≤ A.val) (e : ℝ) (he :
     (A.val + e • (1 : M)).PosDef := by
   apply Matrix.isStrictlyPositive_iff_posDef.mp
   simpa only [Algebra.algebraMap_eq_smul_one] using
-    (isStrictlyPositive_algebraMap (A := M) he).nonneg_add hA
+    IsStrictlyPositive.nonneg_add hA (show IsStrictlyPositive (algebraMap ℝ M e) from
+      isStrictlyPositive_algebraMap he)
 
 /-- Entropy continuity extends the square contraction to semidefinite endpoints;
 no lower spectral gap is imposed on the original matrices. -/
@@ -819,7 +827,7 @@ theorem symmetric_entropy_gap_square_contraction_psd (A H : S)
     (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
     entropy (A + s • H) / 2 + entropy (A - s • H) / 2 - entropy A ≤
       s ^ 2 * (entropy (A + H) / 2 + entropy (A - H) / 2 - entropy A) := by
-  let I : S := ⟨1, IsSelfAdjoint.one⟩
+  let I : S := ⟨1, IsSelfAdjoint.one M⟩
   have hi (e : ℝ) (he : 0 < e) :
       entropy ((A + e • I) + s • H) / 2 + entropy ((A + e • I) - s • H) / 2 -
         entropy (A + e • I) ≤
