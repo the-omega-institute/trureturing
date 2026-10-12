@@ -12,7 +12,7 @@ result
   escape_witness: none
   admission_basis: open-problem-resolution (#15391; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15525
-Direct frozen dependencies (declaration statement_id):
+Direct frozen dependencies (declaration statement_id, not module pins):
 F0: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
 F1: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.IsCompletelyPositive; sha256:39e2682fd93035c705a08181bb7fdfb77067eba43afcc98c200c30543b913ed4
 F2: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.kron; sha256:6bbbe42180d7cde8ee171b8a1aeeb16449194862345f2042d95ec7c0b2055471
@@ -20,21 +20,21 @@ F3: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.kron_def; 
 F4: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus; sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
 F5: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus_isCompletelyPositive; sha256:522daaecff9970808def6ecdd938d4b89107d2820c79bafbf378ab083767f57f
 F6: D5/S3/Weil/Probability/FiniteGaussianSchoenberg.ofReal_posSemidef; sha256:e43b63bc2ba962082673f10ac6003f58de8e5074d7a6467d794c4842e8856cd3
-Unpinned dependency: D5.S3.Quantum.Foundation.FiniteKrausRepresentation; choi_PSD_iff_CP_map,choi_matrix,choi_matrix_eq_map_proj,choi_matrix_inj,id.
+The frozen-repository owner of Choi's theorem does not exist: FiniteKrausRepresentation is unfrozen and its first Freeze (#13729) had no admission basis; these facts are therefore derived from pinned Mathlib.
 All declaration rows below have proof_shape: bind-only and escape_witness: none.
 Definition rows describe expressions rather than proved propositions.
 Consumers are direct elaborated value references; frozen dependencies include helper expansion.
 ampl -> IsCP,IsEB,ampl_comp,ampl_eq_kron,ampl_kron,ampl_omega,ampl_sum,choi_of_eb,cp_bridge,cp_comp,cp_double_tau,cp_half,cp_pos,cp_twice,eb_post,eb_pre,gamma_cp,prepare_eb,sep_ampl; frozen=none | IsCP -> IsIPT,IsPPT,bm_cp,bp_cp,choi_cp,choi_real_bisymm,complexify_cp,complexify_ipt,complexify_restrict_bisymm,conj_cp,cp_bridge,cp_comp,cp_double_tau,cp_half,cp_pos,cp_twice,eb_post,eb_pre,eb_real_of_complexify,gamma_cp,gamma_ipt,ipt2c_ipt2r,ipt_comp,ipt_input,ipt_ppt,ppt_input_cp,put_pm_cp,put_pp_cp,restrict_cp,restrict_ipt,sep_ampl; frozen=none
 SEP -> CSEP,IsEB,choi_of_eb,complexify_eb,csep_inter_ipt,eb_iff_choi,eb_of_choi,eb_post,eb_pre,eb_real_of_complexify,prepare_eb,sep_ampl,sep_complex_of_real,sep_psd,sep_psd_product,sep_real_ipt,sep_real_of_complex_ipt,sep_sum,sep_swap,separable_choi_prepare; frozen=none | IsEB -> IPT2,PPT2C,choi_of_eb,complexify_eb,eb_iff_choi,eb_post,eb_pre,eb_real_of_complexify,ipt2c_ipt2r,ipt2r_ppt2c,prepare_eb,reflect_eb_square; frozen=none
-choi -> IsIPT,IsPPT,ampl_omega,choi_cp,choi_injective,choi_of_eb,choi_real_bisymm,choi_swap,choi_tmap,complexify_choi,complexify_comp,complexify_cp,complexify_eb,complexify_ipt,complexify_restrict_bisymm,eb_iff_choi,eb_of_choi,eb_real_of_complexify,gamma_cp,gamma_ipt,ipt2c_ipt2r,ipt_comp,ipt_input,ipt_ppt,ppt_input_cp,restrict_choi,restrict_cp,restrict_ipt,separable_choi_prepare; frozen=none | ptFirst -> IPTState,IsIPT,IsPPT,choi_tmap,complexify_ipt,csep_inter_ipt,eb_real_of_complexify,gamma_cp,gamma_ipt,ipt2c_ipt2r,ipt_comp,ipt_input,ipt_ppt,ppt_input_cp,restrict_ipt,sep_real_ipt,sep_real_of_complex_ipt; frozen=none
+choi -> IsIPT,IsPPT,ampl_omega,choi_cp,choi_injective,choi_of_eb,choi_psd_of_cp,choi_real_bisymm,choi_tmap,complexify_choi,complexify_comp,complexify_cp,complexify_eb,complexify_ipt,complexify_restrict_bisymm,eb_iff_choi,eb_of_choi,eb_real_of_complexify,gamma_cp,gamma_ipt,ipt2c_ipt2r,ipt_comp,ipt_input,ipt_ppt,ppt_input_cp,restrict_choi,restrict_cp,restrict_ipt,separable_choi_prepare; frozen=none | ptFirst -> IPTState,IsIPT,IsPPT,choi_tmap,complexify_ipt,csep_inter_ipt,eb_real_of_complexify,gamma_cp,gamma_ipt,ipt2c_ipt2r,ipt_comp,ipt_input,ipt_ppt,ppt_input_cp,restrict_ipt,sep_real_ipt,sep_real_of_complex_ipt; frozen=none
 IsPPT -> PPT2C,gamma_cp,gamma_ipt,gamma_real_complexification,gamma_real_ipt,ipt2c_ppt2c,ipt2r_ppt2c,ppt_input_cp; frozen=none | IsIPT -> IPT2,complexify_ipt,eb_real_of_complexify,ipt2c_ipt2r,ipt_comp,ipt_input,ipt_ppt,ppt2c_ipt2c,restrict_ipt; frozen=none
 PPT2C -> claim,ppt2c_ipt2c,result; frozen=none | IPT2 -> claim,ipt2c_ipt2r,ipt2c_ppt2c,ipt2r_ppt2c,result; frozen=none
 claim -> none; frozen=none | flagEquiv -> bm,bm_conj,bm_dd,bp,bp_conj,bp_dd,bp_tau,embedFlag,embed_compress,embed_put,put,put_pm_conj,put_pp_conj,sum_flag,tau_dd; frozen=none
 map_expand -> ampl_eq_kron,complexify_real,separable_choi_prepare; frozen=none | ampl_eq_kron -> ampl_omega,cp_bridge; frozen=F0,F2,F3
-cp_bridge -> choi_cp,conj_cp; frozen=F0,F1,F2,F3 | choi_swap -> choi_cp; frozen=none
-choi_injective -> complexify_comp,complexify_restrict_bisymm,ipt_input; frozen=none | choi_cp -> choi_real_bisymm,complexify_cp,eb_real_of_complexify,ipt_ppt,ppt_input_cp,restrict_cp; frozen=F0,F1,F2,F3
-sep_swap -> choi_of_eb; frozen=none | ampl_omega -> choi_of_eb; frozen=F0,F2,F3
-choi_of_eb -> eb_iff_choi; frozen=F0,F2,F3 | ampl_comp -> cp_comp,eb_post,eb_pre; frozen=none
+cp_bridge -> choi_cp,conj_cp; frozen=F0,F1,F2,F3 | choi_injective -> choi_cp,complexify_comp,complexify_restrict_bisymm,ipt_input; frozen=none
+choi_cp -> choi_real_bisymm,complexify_cp,eb_real_of_complexify,ipt_ppt,ppt_input_cp,restrict_cp; frozen=F0,F1,F2,F3,F4,F5 | choi_psd_of_cp -> choi_cp,choi_real_bisymm,complexify_cp,eb_real_of_complexify,ipt_ppt,ppt_input_cp,restrict_cp; frozen=none
+sep_swap -> choi_of_eb; frozen=none | ampl_omega -> choi_of_eb,choi_psd_of_cp; frozen=none
+choi_of_eb -> eb_iff_choi; frozen=none | ampl_comp -> cp_comp,eb_post,eb_pre; frozen=none
 cp_comp -> gamma_cp,ipt_comp; frozen=none | eb_pre -> reflect_eb_square; frozen=none
 ipt_ppt -> ppt2c_ipt2c; frozen=F0,F1,F2,F3 | ppt2c_ipt2c -> result; frozen=F0,F1,F2,F3
 psd_rank_sum -> sep_psd_product,weighted_psd; frozen=none | sep_of_family -> sep_psd_product,sep_real_of_complex_ipt,sep_sum; frozen=none
@@ -92,7 +92,7 @@ The zero-dimensional cases are vacuous; positive dimensions are the source domai
 The flag coordinates use (finCongr (Nat.mul_comm 2 n)).trans finProdFinEquiv.symm.
 -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Weil.Probability.FiniteGaussianSchoenberg
 noncomputable section
 open Matrix
@@ -176,23 +176,15 @@ private theorem cp_bridge (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix
   · intro h r P hP
     rw [ampl_eq_kron]
     exact h r hP
-private theorem choi_swap (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) :
-    choi Phi = (MatrixMap.choi_matrix Phi).submatrix Prod.swap Prod.swap := rfl
 private theorem choi_injective : Function.Injective
     (choi : (Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) → _) := by
   intro Phi Psi h
-  apply MatrixMap.choi_matrix_inj
-  ext a b
-  exact congrFun (congrFun h (Prod.swap a)) (Prod.swap b)
-private theorem choi_cp (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) : (choi Phi).PosSemidef ↔ IsCP Phi := by
-  rw [cp_bridge, MatrixMap.choi_PSD_iff_CP_map, choi_swap]
-  constructor
-  · intro h
-    have hs := h.submatrix Prod.swap
-    change (MatrixMap.choi_matrix Phi).PosSemidef at hs
-    exact hs
-  · intro h
-    exact h.submatrix Prod.swap
+  have hs (i j : Fin n) : Phi (Matrix.single i j 1) = Psi (Matrix.single i j 1) := by
+    ext a b
+    exact congrFun (congrFun h (i, a)) (j, b)
+  ext A a b
+  rw [map_expand Phi, map_expand Psi]
+  simp only [hs]
 private theorem sep_swap {X : Matrix (Fin n × Fin m) (Fin n × Fin m) 𝕜}
     (hX : X ∈ SEP 𝕜 n m) :
     X.submatrix Prod.swap Prod.swap ∈ SEP 𝕜 m n := by
@@ -206,13 +198,57 @@ private theorem sep_swap {X : Matrix (Fin n × Fin m) (Fin n × Fin m) 𝕜}
   exact mul_comm _ _
 private theorem ampl_omega (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) :
     ampl Phi n ((fun x => Matrix.vecMulVec x (star x)) ((fun a : Fin n × Fin n => if a.1 = a.2 then (1 : 𝕜) else 0))) = (choi Phi).submatrix Prod.swap Prod.swap := by
-  rw [ampl_eq_kron]
-  exact (MatrixMap.choi_matrix_eq_map_proj Phi).symm
+  ext a b
+  change Phi (fun i j => (if i = a.2 then 1 else 0) *
+    star (if j = b.2 then 1 else 0)) a.1 b.1 = _
+  have h : (fun i j : Fin n => (if i = a.2 then (1 : 𝕜) else 0) *
+      star (if j = b.2 then (1 : 𝕜) else 0)) = Matrix.single a.2 b.2 1 := by
+    ext i j
+    by_cases hi : i = a.2 <;> by_cases hj : j = b.2 <;>
+      simp [Matrix.single, hi, hj, eq_comm]
+  rw [h]
+  rfl
 private theorem choi_of_eb (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (h : IsEB Phi) :
     choi Phi ∈ SEP 𝕜 n m := by
   have hs := h n ((fun x => Matrix.vecMulVec x (star x)) ((fun a : Fin n × Fin n => if a.1 = a.2 then (1 : 𝕜) else 0))) (Matrix.posSemidef_vecMulVec_self_star _)
   rw [ampl_omega] at hs
   exact sep_swap hs
+private theorem choi_psd_of_cp (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜)
+    (h : IsCP Phi) : (choi Phi).PosSemidef := by
+  have hs := h n ((fun x => Matrix.vecMulVec x (star x))
+    ((fun a : Fin n × Fin n => if a.1 = a.2 then (1 : 𝕜) else 0)))
+    (Matrix.posSemidef_vecMulVec_self_star _)
+  rw [ampl_omega] at hs
+  exact hs.submatrix Prod.swap
+private theorem choi_cp (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) :
+    (choi Phi).PosSemidef ↔ IsCP Phi := by
+  constructor
+  · intro h
+    obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_mul_star_self.mp
+      (Matrix.nonneg_iff_posSemidef.mpr h)
+    let x : (Fin n × Fin m) → (Fin n × Fin m) → 𝕜 := fun t a => B a t
+    have hx : choi Phi = ∑ t, Matrix.vecMulVec (x t) (star (x t)) := by
+      rw [hB]
+      ext a b
+      simp [x, Matrix.mul_apply, Matrix.star_eq_conjTranspose,
+        Matrix.conjTranspose_apply, Matrix.sum_apply, Matrix.vecMulVec_apply]
+    let K : (Fin n × Fin m) → Matrix (Fin m) (Fin n) 𝕜 := fun t a i => x t (i, a)
+    have he : Phi = MatrixMap.of_kraus K K := by
+      apply choi_injective
+      ext a b
+      have hh := congrFun (congrFun hx a) b
+      simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply] at hh
+      rw [hh]
+      simp [choi, MatrixMap.of_kraus, Matrix.sum_apply, Matrix.mul_apply, Matrix.single,
+        Matrix.of_apply, Matrix.conjTranspose_apply, K, ite_and, Finset.sum_ite_eq,
+        Finset.sum_ite_eq']
+    rw [he, cp_bridge]
+    exact MatrixMap.of_kraus_isCompletelyPositive K
+  · exact choi_psd_of_cp Phi
+private theorem ipt_ppt {Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜} (h : IsIPT Phi) : IsPPT Phi :=
+  ⟨h.1, h.2.symm ▸ choi_psd_of_cp Phi h.1⟩
+private theorem ppt2c_ipt2c (h : PPT2C) : IPT2 ℂ :=
+  fun n Phi hPhi => h n Phi (ipt_ppt hPhi)
 private theorem ampl_comp (Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (Fin p) (Fin p) 𝕜) (Psi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
     (P : Matrix (Fin n × Fin r) (Fin n × Fin r) 𝕜) :
     ampl (Phi ∘ₗ Psi) r P = ampl Phi r (ampl Psi r P) := rfl
@@ -226,15 +262,12 @@ private theorem eb_pre {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (F
   intro r P hP
   rw [ampl_comp]
   exact hPhi r _ (hPsi r P hP)
-private theorem ipt_ppt {Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜} (h : IsIPT Phi) : IsPPT Phi :=
-  ⟨h.1, h.2.symm ▸ ((choi_cp Phi).mpr h.1)⟩
-private theorem ppt2c_ipt2c (h : PPT2C) : IPT2 ℂ :=
-  fun n Phi hPhi => h n Phi (ipt_ppt hPhi)
 private theorem psd_rank_sum {I : Type} [Fintype I] [DecidableEq I]
     (C : Matrix I I 𝕜) (hC : C.PosSemidef) :
     ∃ x : I → I → 𝕜, C = ∑ j, (fun x => Matrix.vecMulVec x (star x)) (x j) := by
-  obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hC.nonneg
-  refine ⟨fun j i => star (B j i), ?_⟩
+  obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_mul_star_self.mp
+    (Matrix.nonneg_iff_posSemidef.mpr hC)
+  refine ⟨fun j i => B i j, ?_⟩
   rw [hB]
   ext i j
   simp [Matrix.mul_apply, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply,

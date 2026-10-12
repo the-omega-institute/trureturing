@@ -176,5 +176,5 @@ IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.ptFirst`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`
-- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Weil/Probability/FiniteGaussianSchoenberg](../../Weil/Probability/FiniteGaussianSchoenberg.md)
