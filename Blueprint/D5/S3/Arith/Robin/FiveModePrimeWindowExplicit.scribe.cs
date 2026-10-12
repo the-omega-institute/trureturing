@@ -31,19 +31,19 @@ internal sealed class FiveModePrimeWindowExplicitDocument : IScribeDocumentDefin
         Formula n = F.Id("n");
         Formula u = F.Id("u");
         Formula v = F.Id("v");
-        Formula d = Add(Add(D(13), u), v);
+        Formula d = Add(Add(Num(13), u), v);
         Formula body = All(
-            Equal(n, Multiply(Multiply(D(5, 0, 4, 0), Pow(D(2), Call("val", u))), Pow(D(3), Call("val", v)))),
+            Equal(n, Multiply(Multiply(Num(5040), Pow(Num(2), Call("val", u))), Pow(Num(3), Call("val", v)))),
             Equal(Call("windowDenom", n), d),
-            Equal(Call("primeWindow", n, D(0)), Fraction(Add(D(5), Call("val", u)), d)),
-            Equal(Call("primeWindow", n, D(1)), Fraction(Add(D(3), Call("val", v)), d)),
-            Equal(Call("primeWindow", n, D(2)), Fraction(D(2), d)),
-            Equal(Call("primeWindow", n, D(3)), Fraction(D(2), d)),
-            Equal(Call("primeWindow", n, D(4)), Fraction(D(1), d)),
+            Equal(Call("primeWindow", n, Num(0)), Fraction(Add(Num(5), Call("val", u)), d)),
+            Equal(Call("primeWindow", n, Num(1)), Fraction(Add(Num(3), Call("val", v)), d)),
+            Equal(Call("primeWindow", n, Num(2)), Fraction(Num(2), d)),
+            Equal(Call("primeWindow", n, Num(3)), Fraction(Num(2), d)),
+            Equal(Call("primeWindow", n, Num(4)), Fraction(Num(1), d)),
             Equal(Call("visible", Call("primeWindow", n)),
-                Tuple(Fraction(Add(D(4), Call("val", v)), d), Fraction(D(3), d), Fraction(D(2), d))));
+                Tuple(Fraction(Add(Num(4), Call("val", v)), d), Fraction(Num(3), d), Fraction(Num(2), d))));
         Formula witnesses = new Formula.BindMany(FormulaQuantifier.Exists,
-            [Bound("u", Call("Fin", D(3))), Bound("v", Call("Fin", D(2)))], body);
+            [Bound("u", Call("Fin", Num(3))), Bound("v", Call("Fin", Num(2)))], body);
         return Disp(new Formula.Bind(FormulaQuantifier.ForAll,
             FormulaIdentifier.Create("n"), Naturals(),
             Implies(Call("mem", n, Call("sixCell")), witnesses)));
