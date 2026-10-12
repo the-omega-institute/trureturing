@@ -33,7 +33,8 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
             Node("result", "The concatenation assertion is false", new Formula.Not(Call("claim")),
                 "At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fifth has squared norm 30362908/29296875. Their difference is 5536/9765625, which is positive. In the rational identity/swap basis, the decaying eigenmode coexists with a growing coefficient towards a non-orthogonal limiting projection.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
-                null)
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create(
+                    "duschenes-garciamartin-holmes-cerezo-2026-chaar-concatenation"), ResolutionKind.Refuted))
         ), []));
 
     private static Formula Channel()
