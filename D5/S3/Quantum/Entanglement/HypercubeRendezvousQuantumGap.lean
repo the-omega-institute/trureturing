@@ -65,4 +65,99 @@ def claim : Prop := ∀ t d : ℕ, 2 ≤ t → 2 * t < d → omegaQ d t < omegaN
 private def n (d t : ℕ) : ℝ := (Nat.choose d t : ℝ)
 private def kappa (d t : ℕ) : ℝ :=
   1 / ((n d t) ^ 4 * (4 * Real.sqrt 2 * (t : ℝ) + 2) ^ 2)
+
+private lemma disjoint_extension {d t : ℕ} (S : Vertex d) (hc : S.card + t ≤ d) :
+    ∃ B : Output d t, Disjoint S B.val := by
+  obtain ⟨B, hB, hb⟩ := Finset.exists_subset_card_eq
+    (show t ≤ (Finset.univ \ S).card by
+      rw [Finset.card_sdiff_of_subset (Finset.subset_univ S)]
+      simp only [Finset.card_univ, Fintype.card_fin]; omega)
+  exact ⟨⟨B, hb⟩, Finset.disjoint_left.mpr (fun x hx hy => (Finset.mem_sdiff.mp (hB hy)).2 hx)⟩
+private lemma exchange_reduction {d t : ℕ} (A R : Output d t) (h : A ≠ R) :
+    ∃ A' : Output d t, (A'.val \ R.val).card + 1 = (A.val \ R.val).card ∧
+      (A.val ∪ A'.val).card ≤ t + 1 := by
+  have hc := Finset.card_sdiff_comm (A.property.trans R.property.symm)
+  have hp : 0 < (A.val \ R.val).card := by
+    by_contra hn
+    have hs : A.val ⊆ R.val := Finset.sdiff_eq_empty_iff_subset.mp
+      (Finset.card_eq_zero.mp (show (A.val \ R.val).card = 0 by omega))
+    exact h (Subtype.ext (Finset.eq_of_subset_of_card_le hs (by rw [A.property, R.property])))
+  obtain ⟨a, ha⟩ := Finset.card_pos.mp hp
+  obtain ⟨b, hb⟩ := Finset.card_pos.mp (show 0 < (R.val \ A.val).card by omega)
+  have haA := (Finset.mem_sdiff.mp ha).1
+  have hbR := (Finset.mem_sdiff.mp hb).1
+  have hbA := (Finset.mem_sdiff.mp hb).2
+  let T := insert b (A.val.erase a)
+  have hT : T.card = t := by
+    rw [Finset.card_insert_of_notMem (by simp [hbA]), Finset.card_erase_of_mem haA, A.property]
+    have := Finset.card_pos.mpr ⟨a, haA⟩; rw [A.property] at this; omega
+  have he : T \ R.val = (A.val \ R.val).erase a := by
+    ext x; simp only [T, Finset.mem_sdiff, Finset.mem_insert, Finset.mem_erase]
+    constructor
+    · rintro ⟨hx | hx, hr⟩
+      · exact False.elim (hr (hx ▸ hbR))
+      · exact ⟨hx.1, hx.2, hr⟩
+    · rintro ⟨hx, hxA, hr⟩; exact ⟨Or.inr ⟨hx, hxA⟩, hr⟩
+  refine ⟨⟨T, hT⟩, ?_, ?_⟩
+  · change (T \ R.val).card + 1 = _; rw [he]; exact Finset.card_erase_add_one ha
+  · have hs : A.val ∪ T ⊆ insert b A.val := by
+      intro x hx; rcases Finset.mem_union.mp hx with hx | hx
+      · exact Finset.mem_insert_of_mem hx
+      · rcases Finset.mem_insert.mp hx with hx | hx
+        · exact Finset.mem_insert.mpr (Or.inl hx)
+        · exact Finset.mem_insert_of_mem (Finset.mem_erase.mp hx).2
+    exact (Finset.card_le_card hs).trans (by rw [Finset.card_insert_of_notMem hbA, A.property])
+private lemma symmDiff_card {d : ℕ} (S T : Vertex d) :
+    (S ∆ T).card + 2 * (S ∩ T).card = S.card + T.card := by
+  have hd : Disjoint (S \ T) (T \ S) := Finset.disjoint_left.mpr
+    (fun x hx hy => (Finset.mem_sdiff.mp hx).2 (Finset.mem_sdiff.mp hy).1)
+  rw [Finset.symmDiff_def, Finset.card_union_of_disjoint hd]
+  have h1 := Finset.card_sdiff_add_card_inter S T
+  have h2 := Finset.card_sdiff_add_card_inter T S
+  rw [Finset.inter_comm T S] at h2; omega
+private lemma common_sphere {d t : ℕ} (ht : 2 ≤ t) (hd : 2 * t < d)
+    (ζ ζ' : Vertex d) (hz : ζ.card = t ∨ ζ.card = t - 2)
+    (hz' : ζ'.card = t ∨ ζ'.card = t - 2) (hne : ζ ≠ ζ') :
+    ∃ (σ : Vertex d) (A A' : Output d t), A ≠ A' ∧ σ ∆ A.val = ζ ∧ σ ∆ A'.val = ζ' := by
+  let D := ζ ∆ ζ'
+  have hc := symmDiff_card ζ ζ'
+  have he : ∃ s, D.card = 2 * s ∧ s ≤ t := by
+    refine ⟨D.card / 2, ?_, ?_⟩ <;>
+      (change D.card + 2 * (ζ ∩ ζ').card = ζ.card + ζ'.card at hc;
+       rcases hz with hz | hz <;> rcases hz' with hz' | hz' <;> omega)
+  obtain ⟨s, hs, hst⟩ := he
+  obtain ⟨U, hU, hu⟩ := Finset.exists_subset_card_eq (show s ≤ D.card by omega)
+  obtain ⟨W, hW, hw⟩ := Finset.exists_subset_card_eq
+    (show t - s ≤ (Finset.univ \ D).card by
+      rw [Finset.card_sdiff_of_subset (Finset.subset_univ D)]
+      simp only [Finset.card_univ, Fintype.card_fin]; omega)
+  have hUW : Disjoint U W := Finset.disjoint_left.mpr
+    (fun x hx hy => (Finset.mem_sdiff.mp (hW hy)).2 (hU hx))
+  let T := U ∪ W
+  have hT : T.card = t := by rw [Finset.card_union_of_disjoint hUW, hu, hw]; omega
+  have hi : T ∩ D = U := by
+    ext x; constructor
+    · intro hx; rcases Finset.mem_union.mp (Finset.mem_inter.mp hx).1 with hu | hw
+      · exact hu
+      · exact False.elim ((Finset.mem_sdiff.mp (hW hw)).2 (Finset.mem_inter.mp hx).2)
+    · intro hx; exact Finset.mem_inter.mpr ⟨Finset.mem_union_left _ hx, hU hx⟩
+  have hT' : (T ∆ D).card = t := by have := symmDiff_card T D; rw [hi, hu, hT, hs] at this; omega
+  refine ⟨ζ ∆ T, ⟨T, hT⟩, ⟨T ∆ D, hT'⟩, ?_, by simp, ?_⟩
+  · intro ha; have ha' := congrArg Subtype.val ha
+    have hD := congrArg (fun X => T ∆ X) ha'
+    rw [symmDiff_self, symmDiff_symmDiff_cancel_left] at hD
+    exact hne (Finset.symmDiff_eq_empty.mp hD.symm)
+  · simp [← symmDiff_assoc, D]
+private lemma large_family {d t : ℕ} (ht : 2 ≤ t) (hd : 2 * t < d) :
+    ∃ J : Finset (Vertex d), J.card = Nat.choose d t + 1 ∧
+      ∀ ζ ∈ J, ζ.card = t ∨ ζ.card = t - 2 := by
+  obtain ⟨K, _, hk⟩ := Finset.exists_subset_card_eq
+    (show t - 2 ≤ (Finset.univ : Vertex d).card by simp; omega)
+  let S := (Finset.univ : Vertex d).powersetCard t
+  have hn : K ∉ S := by intro h; have := (Finset.mem_powersetCard.mp h).2; omega
+  refine ⟨insert K S, ?_, ?_⟩
+  · rw [Finset.card_insert_of_notMem hn, Finset.card_powersetCard]; simp
+  · intro ζ hz; rcases Finset.mem_insert.mp hz with hz | hz
+    · exact Or.inr (hz ▸ hk)
+    · exact Or.inl (Finset.mem_powersetCard.mp hz).2
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
