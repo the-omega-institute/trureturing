@@ -81,3 +81,7 @@ Retire each transplanted supplier when an equivalent consumed
 result is available in this repository's pinned Mathlib and replace it by a
 direct application; a hypothetical future upstream merge is not the
 retirement criterion.
+
+## Verified locator
+
+https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/QuantumInfo/ForMathlib/HayataGroup/TraceInequality/LiebAndoTrace.lean
