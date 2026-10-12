@@ -848,7 +848,8 @@ private theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Suppor
         (fiberLabelEquiv S e o).symm.toEmbedding) =
       ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
         (q : ℝ) ^ (kp + km) := by
-  exact native_multinomial_label_blocks S r e o hq hqm hr hr1 ha ha1 _ _ _
+  exact D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks
+    S r e o hq hqm hr hr1 ha ha1 _ _ _
     (nativeDepartureEnumeration S e o) ap am hap ham
 /-- Both occupation words retain the exact native positive and negative row
 counts, including adjacent path departures. -/
