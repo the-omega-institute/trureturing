@@ -425,7 +425,7 @@ local notation "Trunc" => fun (t : WithTop ℕ) (n : ℕ) => (min t (n : WithTop
 local notation "EndpointCost" => fun (a : ℝ) (t : WithTop ℕ) =>
   if t = ⊤ then (⊤ : ℝ≥0∞) else ENNReal.ofReal (((t.untopD 0 : ℕ) : ℝ) ^ a)
 
-private lemma truncation_stopping {M : Seed × (ℕ → Bool) → WithTop ℕ}
+lemma truncation_stopping {M : Seed × (ℕ → Bool) → WithTop ℕ}
     (hM : IsStoppingTime seededFiltration M) (n : ℕ) :
     IsStoppingTime seededFiltration (fun ω => (Trunc (M ω) n : WithTop ℕ)) := by
   have heq : (fun ω => (Trunc (M ω) n : WithTop ℕ)) =
@@ -437,14 +437,14 @@ private lemma truncation_stopping {M : Seed × (ℕ → Bool) → WithTop ℕ}
   rw [heq]
   exact hM.min_const n
 
-private lemma truncation_le (t : WithTop ℕ) (n : ℕ) : Trunc t n ≤ n := by
+lemma truncation_le (t : WithTop ℕ) (n : ℕ) : Trunc t n ≤ n := by
   cases t with
   | top => simp
   | coe t =>
     change min t n ≤ n
     exact min_le_right t n
 
-private lemma truncated_moment_integrable {Ω : Type*} [MeasurableSpace Ω]
+lemma truncated_moment_integrable {Ω : Type*} [MeasurableSpace Ω]
     (μ : Measure Ω) [IsFiniteMeasure μ] (M : Ω → WithTop ℕ) (hM : Measurable M)
     (n m : ℕ) : Integrable (fun ω => (Trunc (M ω) n : ℝ) ^ m) μ := by
   have ht : Measurable (fun ω => Trunc (M ω) n) := (hM.min measurable_const).untopD 0
@@ -456,7 +456,7 @@ private lemma truncated_moment_integrable {Ω : Type*} [MeasurableSpace Ω]
   apply pow_le_pow_left₀ (by positivity)
   exact_mod_cast truncation_le (M ω) n
 
-private lemma truncation_tail_bound {Ω : Type*} [MeasurableSpace Ω]
+lemma truncation_tail_bound {Ω : Type*} [MeasurableSpace Ω]
     (μ : Measure Ω) (M : Ω → WithTop ℕ) (hM : Measurable M) (n m : ℕ) :
     ENNReal.ofReal ((n : ℝ) ^ m) * μ {ω | (n : WithTop ℕ) < M ω} ≤
       ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) n : ℝ) ^ m) ∂μ := by
