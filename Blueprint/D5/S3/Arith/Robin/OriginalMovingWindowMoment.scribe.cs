@@ -123,5 +123,36 @@ internal sealed class OriginalMovingWindowMomentDocument : IScribeDocumentDefini
                         + "original witnesses are not conclusions of this "
                         + "theorem. The full signed Robin/RH obligation "
                         + "remains open."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-cut-row-pointwise-budget"),
+                DeclarationHandle.Create(Prefix + "original_cut_row_pointwise_budget"),
+                H("The complete pointwise crossing budget"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For 256<=ell<R and t in [ell,R], sum the actual "
+                        + "signed-row magnitudes over every integer "
+                        + "1<=d<=floor(B(t)^(151/500)). Rows with "
+                        + "d<=floor((t-t^(4/5))^(151/500)) vanish from the "
+                        + "literal strict-left cutoff, including zero-normalizer "
+                        + "and endpoint cases. The remaining interval has at most "
+                        + "2*t^(51/500) integer labels.")),
+                    Paragraph(Text(
+                        "Applying the source-specific row estimate and "
+                        + "|mu(d)|<=1, then b(t)<=t^(-3/10), gives the complete "
+                        + "bound sum_d |mu(d)|*|latticeRowRemainder(ell,R,t,d)| "
+                        + "<= 6*t^(-99/500)*log(2t). The original divisor rows "
+                        + "remain available with their signed Mobius factors for "
+                        + "later aggregation; absolute values pay only this "
+                        + "pointwise budget.")),
+                    Paragraph(Text(
+                        "This is the exact crossing-count bridge before "
+                        + "integration over a measurable complete S. It does not "
+                        + "prove the finite-Fubini identity for C_cut+P_cut, the "
+                        + "arbitrary-S integral estimate, the paired baseline "
+                        + "inequality, early-error decay, cofinal witnesses, or "
+                        + "the full signed Robin/RH conclusion."))),
                 DescribeRole.Theorem))));
 }

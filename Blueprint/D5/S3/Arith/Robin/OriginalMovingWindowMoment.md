@@ -44,9 +44,26 @@ For d<=B(t)^(151/500), the logarithmic price body decreases on [t,B(t)]. Its zer
 
 This row estimate supplies no count of crossing integer rows and no summed bound with exponent -99/500. Integral interchange over an arbitrary complete selected S, the favorable paired term, the early-error estimate and cofinal positive-mass original witnesses are not conclusions of this theorem. The full signed Robin/RH obligation remains open.
 
+**Theorem 1.3 (The complete pointwise crossing budget).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_cut_row_pointwise_budget`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_cut_row_pointwise_budget` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For 256<=ell<R and t in [ell,R], sum the actual signed-row magnitudes over every integer 1<=d<=floor(B(t)^(151/500)). Rows with d<=floor((t-t^(4/5))^(151/500)) vanish from the literal strict-left cutoff, including zero-normalizer and endpoint cases. The remaining interval has at most 2*t^(51/500) integer labels.
+
+Applying the source-specific row estimate and |mu(d)|<=1, then b(t)<=t^(-3/10), gives the complete bound sum_d |mu(d)|*|latticeRowRemainder(ell,R,t,d)| <= 6*t^(-99/500)*log(2t). The original divisor rows remain available with their signed Mobius factors for later aggregation; absolute values pay only this pointwise budget.
+
+This is the exact crossing-count bridge before integration over a measurable complete S. It does not prove the finite-Fubini identity for C_cut+P_cut, the arbitrary-S integral estimate, the paired baseline inequality, early-error decay, cofinal witnesses, or the full signed Robin/RH conclusion.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_cut_row_lattice_estimate`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_cut_row_pointwise_budget`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_window_moment_estimate`
 - Dependency: [D5/S3/Arith/Robin/ActualRobinClockCovariance](ActualRobinClockCovariance.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](MellinWeightedVariation.md)
