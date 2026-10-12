@@ -3246,3 +3246,607 @@ The same-field sharpness, cutoff error, critical-domain transfer, joint exact-bu
 A source application must separately provide maps preserving the original source and immutable INITIAL, same-source chronology, authentic Read/refusal/Stop behavior, the carrier, state, field, Haar measure, horizontal metric, boundary and clock conventions. State and budget acquisition, preparation, observation, copying, retention, permissions, resources and costs remain separate conditions. An analytic derivative or budget premise does not supply those operations or a source-to-state realization, and the reader still needs the actual conditional interaction statistic (82.16). The added kinetic term defines a different mathematical law; a fixed budget restricts the original law; finiteness alone supplies neither change. None of these analytic contracts identifies a native invariant interacting sector or a physical space dimension.
 
 ## 78.99 追加锚（本行以下为增补区）
+
+## 88. Terminal overlap is a source-side persistence certificate
+
+The latest DEV terminal-overlap synthesis gives a terminating result for a
+recognized class of acquired signed inputs. Its cofinality sentence is useful
+for the present geometry question, but it has to be kept at its actual level:
+it certifies persistence of common finite prefixes of source outputs. It does
+not by itself define a metric carrier, a propagation clock, or a spatial
+dimension.
+
+**Definition 88.1 (recognized source-overlap datum).** Let \(I\) be a complete
+acquired input and let \(B\) be a finite set of distinct attained complete
+target rows. Let \(J_B(h)\) be the joint finite-prefix predicate for the same
+source contract at depth \(h\). Call \((I,B)\) terminal-recognized when every
+source-cover chart tuple either has a finite constructor clash or passes the
+terminal comparison test of the DEV synthesis.
+
+For a nonclash tuple and one scalar-divergence face \(K\), write
+\(\mathcal C_K\) for its exact joint cofinal support sentence. The sentence
+holds only after all finite scalar anchors and forced finite residuals have
+been fixed; its lower bounds are then imposed simultaneously on every
+divergent original scalar.
+
+**Theorem 88.2 (source-side persistence certificate).** For a
+terminal-recognized \((I,B)\), exactly one of the following alternatives is
+returned by the finite procedure:
+
+1. Some face has \(\mathcal C_K\) true. The procedure then constructs, for
+   every requested \(h\), actual finite originals in every row of \(B\) whose
+   complete outputs share one prefix of depth \(h\).
+2. Every face has \(\mathcal C_K\) false. The procedure then returns a finite
+   \(H\) with \(\neg J_B(H)\).
+
+This is a source-level theorem. The first alternative says that the acquired
+contract admits fresh finite witnesses at every requested depth; the second
+says that this selected joint set is separated at a finite depth. Neither
+alternative supplies a metric realization or a physical signal law.
+
+**Proof.** The complete mixed covers are finite, and terminal recognition
+reduces each nonclash tuple to finitely many scalar faces. The DEV cofinal
+support theorem is necessary and sufficient for one fixed tuple to have
+witnesses at all depths. If one face is true, its finite-prefix lifting
+constructs the required sources at each requested depth. If all faces are
+false, each chart tuple fails at some finite depth; the maximum of those
+finitely many failures excludes the whole finite cover. The fixed-depth
+source query then finds the first exclusion depth. The construction retains
+the complete old row, all signed endpoint conditions, repeated occurrences,
+and the common-source contract throughout. \(\square\)
+
+The theorem improves the boundary calculation in a precise way. It replaces
+an unproved phrase such as “the two rows remain indistinguishable forever” by
+one of two finite certificates: a uniform construction parameterized by the
+requested depth, or a finite separating depth. It does not turn source rank
+into radius.
+
+**Definition 88.3 (cofinal source rank).** In a true face \(\mathcal C_K\),
+call \(K\) the escaping source set. Its cofinality is the statement
+
+$$
+\forall b\in\mathbb N\ \exists \mathbf v\quad
+\Phi_K(\mathbf t,\mathbf q,\mathbf v)\ \land\
+\bigwedge_{i\in K}v_i\ge b,
+$$
+
+with the finite anchors \(\mathbf t,\mathbf q\) fixed before the lower-bound
+request. Thus all coordinates in \(K\) escape jointly in source-index space.
+
+**Proposition 88.4 (cofinality is not metric escape).** Source cofinality
+does not imply that a corresponding geometric realization escapes to
+infinite distance.
+
+**Proof.** Let \(n\in\mathbb N\) be a cofinal source index. The maps
+
+$$
+\chi_1(n)=(n,0,\ldots,0)\in\mathbb R^d,\qquad
+\chi_2(n)=(2^{-n},0,\ldots,0)\in\mathbb R^d
+$$
+
+are both injective source placements. The first has unbounded distance from
+the origin, while the second has a finite accumulation point. Replacing the
+second by
+\(\chi_3(n)=(\sin(\theta n),\cos(\theta n),0,\ldots,0)\), with
+\(\theta/(2\pi)\) irrational, gives an injective bounded placement as well.
+The source predicate, its cofinality sentence, and every \(J_B(h)\) value are
+unchanged because none of these definitions contains \(\chi_i\) or a metric.
+Therefore cofinal source rank alone cannot establish properness, radial
+escape, or a physical infinite boundary. \(\square\)
+
+The counterexample is deliberately elementary. It identifies the missing
+bridge rather than denying that a useful bridge may exist for FIB. A native
+transport could rule out the bounded placements, but that requires a theorem
+about the transport and its metric compatibility.
+
+**Definition 88.5 (source-to-geometry bridge).** A bridge for a source
+family consists of a carrier \((X,d,\mu)\), a source-state map
+\(\chi:D\to X\), and an explicit response map satisfying all of the following
+where they are needed:
+
+* source actions and same-register forward updates map to declared local
+  transports on \(X\);
+* prefix depth is related to a declared observation scale \(r(h)\), with
+  both directions of the implication needed by the target task;
+* escaping source coordinates are proper in the relevant sector, for example
+  \(v_i\to\infty\Rightarrow d(o,\chi(u_{\mathbf v}))\to\infty\);
+* the carrier has a measure and local operator whose volume, heat, or Green
+  estimates are proved at that scale;
+* the acquired clock, boundary, and interaction readouts are the same
+  objects used in the claimed propagation or energy statement.
+
+A source-cover result supplies none of these clauses unless they are included
+as additional hypotheses or proved from the native operations.
+
+**Theorem 88.6 (conditional composition with the stability window).**
+Suppose a terminal-recognized source family admits a source-to-geometry
+bridge whose coarse carrier has volume exponent \(d\), whose field operator
+has homogeneous order \(\sigma\), and whose localizing operator has order
+\(\tau\). Suppose further that the Green and variational hypotheses of the
+stability analysis hold on that same carrier. Then the scale competition has
+a finite strict minimum only in the window
+
+$$
+\sigma<d<\sigma+\tau.
+$$
+
+For the ordinary second-order field and second-order localization contract,
+\(\sigma=\tau=2\), so the integer window is \(d=3\).
+
+**Proof.** Under the bridge, a point response has homogeneous order
+\(d-\sigma\), while localization has order \(\tau\). At scale \(R\) the
+two terms therefore have the form
+
+$$
+AR^{-\tau}-BR^{-(d-\sigma)},\qquad A,B>0.
+$$
+
+The strict finite-scale minimum criterion is
+\(0<d-\sigma<\tau\), which is exactly the displayed window. The
+terminal-overlap certificate is used only to establish the source family and
+its finite-prefix persistence; the analytic lower bound, attainment, and
+transport compatibility remain separate bridge obligations. \(\square\)
+
+**Proposition 88.7 (no reverse inference from persistent overlap).** A true
+\(\mathcal C_K\), even for every finite target-row set \(B\) considered by the
+acquisition, does not imply \(d=3\), the existence of a second-order field,
+or the existence of a stable negative-energy state.
+
+**Proof.** The same source datum can be placed on a line, a planar lattice,
+or a four-dimensional lattice while leaving all source rows, signed records,
+prefix replies, and cofinal support sentences unchanged. The differing
+carriers have different volume growth and Green kernels. The analytic
+stability conclusion therefore cannot be recovered from the source predicate
+alone. Theorem 88.6 becomes applicable only after one of these placements is
+selected by a proved bridge and its operator estimates are established. \(\square\)
+
+This separates two kinds of persistence that had previously been easy to
+conflate:
+
+| persistence statement | what it certifies | what it does not certify |
+| --- | --- | --- |
+| \(\mathcal C_K\) true | fresh finite source witnesses at every requested prefix depth | metric properness or a dimension |
+| source rank escapes every bound | a necessary unbounded parameter in the chosen source chart | unbounded physical radius |
+| bridge plus Green estimates | a carrier-level propagation and stability model | that the bridge is native to FIB unless proved |
+| \(\sigma<d<\sigma+\tau\) | a conditional scale window in the declared analytic model | a source-to-physics realization |
+
+The next concrete proof obligation is therefore not another list of
+three-dimensional properties. It is to construct, or refute, a native bridge
+from the FIB legal transport and acquired clock to a carrier with a proved
+volume exponent and local operator. Terminal overlap can certify that the
+source family persists through arbitrary finite observation depth; it cannot
+choose the carrier on which that persistence propagates.
+
+## 88.99 追加锚（本行以下为增补区）
+
+## 89. Cubic capacity and recurrent propagation on the complete finite atomic orbit
+
+**Definition 89.1 (one source orbit and its declared comparison geometry).**
+Use the free ordered source and forward substitution of the base volume,
+Definition 1.1, equivalently [Process44, Definition 44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
+Fix INITIAL to be the actual one-leaf tree $\alpha$, and put
+
+$$
+T_n=\rho^n(\alpha),\qquad
+h_n=(\underbrace{\rho,\ldots,\rho}_{n\text{ forward updates}}),\qquad
+s_n=(\mathrm{INITIAL}=\alpha,h_n,\mathrm{current}=T_n),
+\quad n\in\mathbb N_0.
+\tag{89.1}
+$$
+
+Every $h_n$ is a finite legal history in that contract. It has one current
+register, no graft, no Read and no Stop yet. Any chosen finite prefix may be
+stopped under the original contract; no later update is appended to a stopped
+history. Each $T_n$ retains its entire ordered labelled tree, including every
+bracket and occurrence. The collection $\mathcal S=\{s_n:n\in\mathbb N_0\}$
+is a mathematical family of finite snapshots of the same forward lineage,
+not an acquired simultaneous archive and not a source after an infinite
+execution. Retaining, reconstructing or comparing these snapshots as actual
+records would require its own acquisition and retention contract. No such
+operation is needed to define this family.
+
+Take the carrier to be an identical copy $X=\{x_n:n\in\mathbb N_0\}$ of
+these complete states, with $\chi(s_n)=x_n$. Thus $\chi$ has singleton
+fibres and does not identify states with equal direction, composition,
+prefix reply or leaf position. Declare
+
+$$
+d(x_m,x_n)=|m-n|^{1/3},\qquad
+\mu(\{x_n\})=1,\qquad
+F(x_n)=x_{n+1}=\chi(s_{n+1}).
+\tag{89.2}
+$$
+
+The exponent in this metric is a supplied scale choice. It is not inferred
+from a three-component readout. The standard operation $d_0\mapsto d_0^a$,
+$0<a\le1$, is snowflaking; its metric property is stated in
+Naor–Neiman, [*Assouad's theorem with dimension independent of the snowflaking*,
+Introduction, p. 1](https://arxiv.org/pdf/1012.2307v1).
+Only that elementary metric construction is used here, not an embedding
+theorem or an assertion about an ambient Euclidean dimension. The measure in
+(89.2) counts complete source states, not leaves of $T_n$, spatial sites of
+an apparatus or quotient multiplicities. Balls are closed:
+$B_d(x,R)=\{y:d(x,y)\le R\}$. A strict $\varepsilon$-packing consists of
+points with pairwise distance greater than $\varepsilon$.
+
+Supply one comparison operator on $\ell^2(X,\mu)$, with unit conductance
+on each adjacent pair:
+
+$$
+\begin{aligned}
+(Lu)_0&=u_0-u_1,\\
+(Lu)_n&=2u_n-u_{n-1}-u_{n+1}\quad(n\ge1),\\
+\mathcal E(u)&=\langle u,Lu\rangle
+ =\sum_{n\ge0}|u_{n+1}-u_n|^2,\qquad P=I-L/2,\\
+(Pu)_0&=(u_0+u_1)/2,\qquad
+(Pu)_n=(u_{n-1}+u_{n+1})/2\quad(n\ge1).
+\end{aligned}
+\tag{89.3}
+$$
+
+Here $u_n=u(x_n)$. The propagation clock is one unit per application of
+$P$; the normalization $L=2(I-P)$ is fixed throughout. The root boundary
+is reflecting, with holding probability $1/2$ at $x_0$; there is no killing
+at infinity and no screening term. The local energy of a set $A$ is
+$\mathcal E_A(u)=\sum_{x_n,x_{n+1}\in A}|u_{n+1}-u_n|^2$.
+All nonholding transitions have declared metric length one. The reverse
+comparison transition $x_{n+1}\to x_n$ is not a native source action:
+Process44's source contract supplies forward $\rho$, not an inverse update,
+a reset or a copied old current register. Equation (89.3) is an additional
+analytic law on the state carrier; it does not grant those operations.
+
+For $N\in\mathbb N_0$, let $D_N=\{x_0,\ldots,x_N\}$ and define $L_N^D$
+by restricting this same $L$ with zero exterior value at $x_{N+1}$.
+The superscript distinguishes this outer Dirichlet killing from the
+unchanged reflecting root. In particular
+
+$$
+\mathcal E_N^D(u)
+ =\sum_{n=0}^{N-1}|u_{n+1}-u_n|^2+|u_N|^2,
+\qquad P_N^D=I-L_N^D/2.
+\tag{89.4}
+$$
+
+The empty sum applies when $N=0$. This is a killed restriction of the
+declared propagation, not a new finite reflecting propagation. Its field
+Green is $G_N=(L_N^D)^{-1}$, and the nonnegative unscreened occupation
+Green of the infinite comparison law is the extended-valued kernel
+
+$$
+G(x,y)=\frac12\sum_{j=0}^{\infty}P^j(x,y).
+\tag{89.5}
+$$
+
+The factor $1/2$ matches $L=2(I-P)$ and the counting measure. No subtraction
+of a recurrent constant, pseudoinverse, finite-time truncation or screened
+inverse is meant by (89.5).
+
+**Theorem 89.2 (source-matched cubic-capacity counterexample).** For the
+single datum (89.1)–(89.5), the trees $T_n$ are pairwise distinct finite
+actual source terms, $\chi$ is injective, the carrier is proper, and its
+original forward transport $F$ is an isometry with unit displacements.
+The comparison law is reversible for the declared counting measure and
+has uniformly local unit edges. Nevertheless the following capacity,
+energy and Green statements coexist.
+
+For every $k\in\mathbb N_0$, $R\ge0$ and $\varepsilon>0$, set
+$q=\lfloor R^3\rfloor$, $a=\max(0,k-q)$, $b=k+q$ and
+$h=\lfloor\varepsilon^3\rfloor+1$. Then
+
+$$
+\begin{aligned}
+B_d(x_k,R)&=\{x_a,\ldots,x_b\},\\
+\mu(B_d(x_k,R))&=q+\min(k,q)+1,\\
+\operatorname{Pack}_{>\varepsilon}(B_d(x_k,R))
+ &=\left\lfloor\frac{q+\min(k,q)}{h}\right\rfloor+1.
+\end{aligned}
+\tag{89.6}
+$$
+
+In particular the two-sided cubic bounds, uniformly in the centre, are
+
+$$
+\begin{aligned}
+R^3&\le\mu(B_d(x_k,R))\le3R^3&& (R\ge1),\\
+\frac12(R/\varepsilon)^3
+ &\le\operatorname{Pack}_{>\varepsilon}(B_d(x_k,R))
+ \le3(R/\varepsilon)^3&& (R\ge\varepsilon\ge1).
+\end{aligned}
+\tag{89.7}
+$$
+
+For $N\ge1$, put $R_N=N^{1/3}$, so that $D_N=B_d(x_0,R_N)$.
+If $C_N$ is the best reflecting-ball Poincaré constant defined by
+
+$$
+C_N=\sup_{u\text{ nonconstant on }D_N}
+\frac{\sum_{n=0}^N|u_n-\bar u_{D_N}|^2}
+     {\mathcal E_{D_N}(u)},\qquad
+\bar u_{D_N}=\frac1{N+1}\sum_{n=0}^N u_n,
+\tag{89.8}
+$$
+
+then
+
+$$
+\frac{(N+1)(N+2)}{12}\le C_N\le\frac{N^2}{2}.
+\tag{89.9}
+$$
+
+Thus $C_N$ is of order $R_N^6$, not $R_N^2$. More strongly, for every
+fixed $\lambda\ge1$ and every finite $C\ge0$, the quadratic inequality
+
+$$
+\sum_{x\in B_d(x_0,R)}|u(x)-\bar u_{B_d(x_0,R)}|^2
+ \le C R^2\mathcal E_{B_d(x_0,\lambda R)}(u)
+\tag{89.10}
+$$
+
+fails for some $R\ge1$ and finitely supported real $u$.
+The same assertion holds with the larger full energy $\mathcal E(u)$ on
+the right. Quantitatively the witnesses below give a quotient at least
+$R_N^4/24$ for every $N\ge1$, even against that full energy.
+
+For the same operator, measure, clock and specified boundaries, the killed
+root field and the mean exit time are exactly
+
+$$
+\begin{aligned}
+G_N(x_0,x_n)&=N+1-n &&(0\le n\le N),\\
+\mathbb E_{x_n}\tau_N
+ &=(N+1)(N+2)-n(n+1)&& (0\le n\le N),
+\end{aligned}
+\tag{89.11}
+$$
+
+where $\tau_N$ is the first arrival at $x_{N+1}$ in the unit $P$ clock.
+Consequently $\mathbb E_{x_0}\tau_N$ is of order $R_N^6$ and
+
+$$
+G(x_0,x_0)=\infty.
+\tag{89.12}
+$$
+
+The comparison propagation is recurrent, and there is no finite
+nonnegative root-source solution $g$ of $Lg=1_{\{x_0\}}$ on $X$.
+In particular these cubic-capacity and locality hypotheses do not supply
+a finite nonnegative unscreened three-dimensional second-order root
+Green for the same datum.
+
+**Proof.** Finiteness of every $T_n$ follows from the finite tree
+substitution. Distinctness does not use a direction readout. Writing
+$c(t)=(A,B)$, the source formula $c(\rho t)=(B,A+B)$ gives
+
+$$
+(2,3)c(\rho t)-(2,3)c(t)=A+2B>0
+\tag{89.13}
+$$
+
+for every nonempty tree. This is the strict forward source quantity of
+Process44, Theorem 44.6. It separates all $T_n$, while (89.1) also retains
+their original history and INITIAL. The calculation is a proof of source
+distinctness, not a free CountRead. It changes none of the legal source
+actions.
+
+The usual snowflake triangle inequality here follows directly from
+$|i-k|\le|i-j|+|j-k|$ and
+$(v+w)^{1/3}\le v^{1/3}+w^{1/3}$ for $v,w\ge0$. This is the elementary
+metric tool credited in Definition 89.1. Formula (89.2) also gives
+$d(Fx_i,Fx_j)=d(x_i,x_j)$ and $d(x_n,Fx_n)=1$. Its ball condition is
+$|n-k|\le R^3$, giving the first two equalities of (89.6). Every bounded
+set is contained in a finite ball, and every closed bounded set is compact;
+hence the carrier is proper. In particular the source rank escapes every
+bounded metric ball.
+
+For a strict packing, successive ordered indices must differ by at least
+$h$: the condition is $|i-j|>\varepsilon^3$, including when
+$\varepsilon^3$ is an integer. If there are $M$ points in the interval
+$[a,b]$, its span gives $(M-1)h\le b-a$. Conversely
+$a,a+h,\ldots,a+\lfloor(b-a)/h\rfloor h$ attains this bound.
+This proves the packing equality. For $R\ge1$,
+$q+1\ge R^3$ and $2q+1\le3R^3$. For $\varepsilon\ge1$,
+$\varepsilon^3<h\le2\varepsilon^3$, while
+$q+1\le b-a+1\le2R^3+1$. Since
+
+$$
+\left\lfloor\frac{b-a}{h}\right\rfloor+1
+ =\left\lceil\frac{b-a+1}{h}\right\rceil,
+\tag{89.14}
+$$
+
+the lower bound in (89.7) follows from $(b-a+1)/h$; the upper follows
+from $(b-a)/h+1\le2(R/\varepsilon)^3+1$ and $R\ge\varepsilon$.
+For $0<\varepsilon<1$, every distinct carrier point is separated and the
+exact packing is instead the ball cardinality. Thus (89.7) is a coarse
+capacity statement on its displayed scale domain, not a continuum
+three-dimensional small-scale measure law.
+
+The matrix of $P$ in (89.3) is symmetric and stochastic, including the
+root row. Counting measure is therefore reversible. Jensen's inequality
+and its column sums make $P$ a contraction on $\ell^2(X,\mu)$; thus
+$L=2(I-P)$ is bounded self-adjoint and nonnegative on that entire space.
+Its energy identity follows by summing the edge differences, first on
+finite support and then by $\ell^2$ approximation. No metric or measure
+is changed in this calculation.
+
+For the finite ball, the standard path finite-difference estimate is an
+intermediate energy calculation. The variance identity and Cauchy–Schwarz
+along its actual adjacent chain give
+
+$$
+\begin{aligned}
+\sum_{n=0}^N|u_n-\bar u_{D_N}|^2
+ &=\frac1{N+1}\sum_{0\le i<j\le N}|u_j-u_i|^2,\\
+|u_j-u_i|^2
+ &\le(j-i)\sum_{n=i}^{j-1}|u_{n+1}-u_n|^2
+ \le N\mathcal E_{D_N}(u).
+\end{aligned}
+\tag{89.15}
+$$
+
+There are $N(N+1)/2$ pairs, proving the upper bound in (89.9).
+For $u_n=n$ on $D_N$, the mean is $N/2$, the energy is $N$, and
+
+$$
+\sum_{n=0}^N(n-N/2)^2=\frac{N(N+1)(N+2)}{12}.
+\tag{89.16}
+$$
+
+This proves the lower bound. To keep (89.10) inside the common full
+operator domain, use the finitely supported test
+
+$$
+u^{(N)}_n=
+\begin{cases}
+n,&0\le n\le N,\\
+2N-n,&N<n\le2N,\\
+0,&n>2N.
+\end{cases}
+\qquad \mathcal E(u^{(N)})=2N.
+\tag{89.17}
+$$
+
+It has the same ball variance (89.16). For every $\lambda\ge1$,
+$\mathcal E_{B_d(x_0,\lambda R_N)}(u^{(N)})\le2N$, so
+
+$$
+\frac{\sum_{D_N}|u^{(N)}-\bar u^{(N)}_{D_N}|^2}
+     {R_N^2\mathcal E(u^{(N)})}
+ =\frac{(N+1)(N+2)}{24N^{2/3}}
+ \ge\frac{R_N^4}{24}\longrightarrow\infty.
+\tag{89.18}
+$$
+
+This also disproves (89.10) with its local energy and any fixed dilation.
+The finite-difference method and the network interpretation of edge energy
+are standard tools, not additional general theorems claimed here; the latter
+is recorded in Lyons–Peres, [*Probability on Trees and Networks*,
+Chapter 2, §§2.1–2.3](https://rdlyons.pages.iu.edu/prbtree/book_online.pdf).
+
+For the Green calculation, (89.4) is strictly positive on every nonzero
+finite vector: zero energy forces all entries equal and $u_N=0$.
+The candidate $g^{(N)}_n=N+1-n$, with $g^{(N)}_{N+1}=0$, satisfies
+
+$$
+(L_N^Dg^{(N)})_0=1,\qquad
+(L_N^Dg^{(N)})_n=0\quad(1\le n\le N).
+\tag{89.19}
+$$
+
+It is the unique killed root field. This is the unit-resistance path
+calculation; the classical Green-as-voltage relation and series law are
+credited to Lyons–Peres, Proposition 2.1 and §2.3. The direct equation
+(89.19) fixes the reflecting-root and counting-measure normalization
+needed for this source datum.
+
+From any state of $D_N$, taking forward steps reaches $x_{N+1}$ within
+$N+1$ steps with probability at least $2^{-(N+1)}$. Applying this bound
+in successive blocks shows that $P_N^D$ is absorbed almost surely, has
+finite mean absorption time, and its matrix powers tend to zero
+geometrically. Therefore
+
+$$
+G_N=\frac12\sum_{j\ge0}(P_N^D)^j.
+\tag{89.20}
+$$
+
+Each killed path is an allowed comparison path of $P$, so its return
+probability is bounded by the corresponding infinite-chain probability.
+The nonnegative sum (89.5) hence dominates $G_N(x_0,x_0)=N+1$ for
+every $N$, proving (89.12). Infinite expected return occupation is the
+standard recurrence criterion for this irreducible chain. Equivalently,
+for an excursion from $x_1$, the probability of reaching $x_{N+1}$ before
+$x_0$ is $1/(N+1)$, by the harmonic function $n/(N+1)$ on that finite
+interval. A path that avoids $x_0$ cannot stay in a fixed finite interval
+forever, by the same block argument. Letting $N\to\infty$ makes its
+escape probability zero, giving recurrence directly. Holding at the root
+does not alter this conclusion.
+
+The first-step equations for the finite mean exit time $v_n$ are
+$v_0-v_1=2$ and $2v_n-v_{n-1}-v_{n+1}=2$ for $1\le n\le N$, with
+$v_{N+1}=0$. The unique solution is
+$v_n=(N+1)(N+2)-n(n+1)$, proving the second line of (89.11) in exactly
+the declared unit clock. Finally, if a finite nonnegative root field on
+the infinite carrier solved $Lg=1_{\{x_0\}}$, its root equation would
+give $g_1=g_0-1$ and every subsequent second difference would vanish.
+Thus $g_n=g_0-n$, contradicting nonnegativity for $n>g_0$.
+All three tests use the same $L$, $P$, $d$, $\mu$ and root boundary.
+$\square$
+
+**Definition 89.3 (scale and operator tests for a proposed source bridge).**
+For a declared source-to-carrier map, specify the legal forward relation,
+the carrier metric and measure, the propagation $P$, its energy operator
+$L$ and normalization, the propagation clock, and both root and exterior
+boundaries before taking any scale limit. Two distinct calibration tests
+for a quadratic propagation claim are a radius-independent Poincaré bound
+of the form (89.10), on the claimed centres and scale range, and a
+radius-independent mean-exit bound
+
+$$
+\mathbb E_x\tau_{B_d(x,R)}\le C_{\mathrm{exit}}R^2.
+\tag{89.21}
+$$
+
+The exit time in (89.21) is measured in that declared propagation clock.
+If the proposed claim includes a nonnegative unscreened root response,
+its Green test concerns (89.5) for that same operator, measure and
+boundary. These tests specify particular mathematical obligations; their
+sufficiency for a three-dimensional Green estimate is not assumed.
+They are distinct from the acquisition of any metric or energy readout
+and from the native or physical implementation of the propagation.
+
+**Proposition 89.4 (the diagnosed calibration defect and its scope).**
+On the complete finite orbit of Definition 89.1, the shortest adjacent
+comparison-chain length and the number of forward native updates from
+$s_m$ to $s_n$, for $m\le n$, both equal
+
+$$
+\ell(x_m,x_n)=n-m=d(x_m,x_n)^3.
+\tag{89.22}
+$$
+
+The ratio of this length to $d$ is unbounded. Properness, forward metric
+escape, isometric unit transport, reversible unit conductances and the
+two-sided cubic capacity (89.7) therefore do not imply either calibration
+test of Definition 89.3 or finiteness of its unscreened root response.
+The defect occurs without forgetting any source state in a quotient.
+The conditional assertions in the base §9 and in §§81, 82 and 88 retain
+their original hypotheses.
+
+**Proof.** An adjacent chain must change its index by one at every
+nonholding step, so the monotone chain attains the shortest length
+$|n-m|$. Each native $\rho$ advances the index by exactly one, and
+distinctness in (89.13) prevents any shorter forward word from reaching
+$T_n$. This proves (89.22), and for $m=0$ the ratio is $n^{2/3}$.
+Although the two distances agree on every unit edge, their long-range
+scales differ. The path's energy and unit-clock exit scale are quadratic
+in $\ell$ and hence sixth order in this supplied $d$. Equations
+(89.18), (89.11) and (89.12) prove the three failures directly; naming a
+missing condition does not prove its repair.
+
+The base §9 uses smooth three-dimensional comparison surfaces, an induced
+Euclidean metric and a calibration form. None is supplied by (89.2).
+Section 81's whole-rho occurrence tree and its separate §52 common
+spine carrier are different from the present carrier of complete
+successive source states; no factor map or replacement of their
+operators is asserted. Section 82 assumes a stratified transport group
+and its horizontal field, not (89.3). The carrier and analytic hypotheses
+of Theorem 88.6 include an operator order and Green estimates on that
+same carrier. The present choice proves that cubic packing and proper
+source escape do not discharge those additional hypotheses; it does not
+refute their conditional consequence or turn source rank into physical
+radius.
+
+The source identity in (89.1) is exact, but a native bridge to the
+comparison operator would additionally have to realize its reverse
+transitions and its clock under the actual permission contract. Neither
+the metric nor the counting measure grants that realization. A physical
+interpretation would further need a map from complete source states to
+spatial positions, with its joint field, measure, acquisition, boundary
+and clock correspondences. A different metric, rate law, measure,
+screening or boundary would be a different datum requiring its own
+analysis. The counterexample excludes the stated inference within this
+comparison class; it proves neither impossibility of a native bridge nor
+a physical dimension assignment. $\square$
+
+## 89.99 追加锚（本行以下为增补区）
