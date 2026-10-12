@@ -9249,3 +9249,41 @@ Lean 真源为 NativeUniformResidualRealization.bounded_identity_reflection，de
 4. Chen 关于 pointed Gromov-Hausdorff 收敛下热核界稳定性的工作构造极限 Dirichlet 形式并沿子列得到 Mosco 收敛，支持 §50 的“空间紧性先于形式极限”顺序，但其假设不能被有限 FIB 数据默认满足。参见 [arXiv:2411.19047](https://arxiv.org/abs/2411.19047)。
 
 因此，最新研究支持接口选择和假设分层，不能替代 Auric FIB 自己的有限层证明或 RH 谱识别定理。
+
+
+## 60. 线性观察的自治闭合充要条件
+
+### 定理 60.1（有限维线性观察的自治闭合）
+
+令 \(V,W\) 为有限维实向量空间，令 \(P:V\to W\) 为满射，令 \(L:V\to V\) 为线性生成元。存在 \(G:W\to W\) 使
+\[
+P e^{tL}=e^{tG}P\qquad\text{对所有 }t\ge0
+\]
+当且仅当
+\[
+L(\ker P)\subseteq\ker P.
+\]
+
+#### 证明
+
+若半群恒等式成立，取 \(v\in\ker P\)，则 \(P e^{tL}v=0\)。在 \(t=0\) 求导得到 \(PLv=0\)，即 \(Lv\in\ker P\)。
+
+反之，若 \(L(\ker P)\subseteq\ker P\)，定义
+\[
+G(Pv)=PLv.
+\]
+若 \(Pv=Pv'\)，则 \(v-v'\in\ker P\)，故 \(P L(v-v')=0\)，所以 \(G\) 良定义。于是 \(PL=GP\)，逐项比较指数幂级数得到
+\[
+P e^{tL}=e^{tG}P.
+\]
+证毕。
+
+### 推论 60.2（FIB 隐藏核与静态场）
+
+离散更新族 \(F_a:V\to V\) 的观察商 \(P\) 具有自治闭合，当且仅当每个 \(F_a\) 保持 \(\ker P\) 所定义的等价关系；线性生成元版本是
+\[
+L(\ker P)\subseteq\ker P.
+\]
+因此 FIB 或三维 \(q\) 只有在 hidden kernel 对全部 transport、CPTP 或 Hamiltonian 更新不变时，才形成自治静态场。否则精确约化动力学必含记忆项。定理 51.2 的 \(t^2\) 压缩缺陷是这一充要条件失败的有限可计算证书。
+
+该定理只涉及有限维线性代数和矩阵指数。它不把 \(P\) 解释为物理测量，也不推出引力或 RH。相关行为商的最大不动点版本见 dev 的 [COMPUTATIONAL BEHAVIOR REPRESENTATION THEORY](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md)。
