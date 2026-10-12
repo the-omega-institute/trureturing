@@ -313,10 +313,12 @@ class CompiledFibIntegration(unittest.TestCase):
             if not path.exists() or path.read_bytes() != data:
                 path.write_bytes(data)
 
-    def command(self, args, expected=0, *, full=False):
+    def command(self, args, expected=0, *, full=False, env=None):
         started = time.monotonic()
         self.activity.unlink(missing_ok=True)
-        env = dict(self.env, LAKE_ARTIFACT_CACHE="false") if full else self.env
+        env = dict(self.env if env is None else env)
+        if full:
+            env["LAKE_ARTIFACT_CACHE"] = "false"
         paths = {name: Path(env[variable]) for name, variable in
             [('phases', 'STRATALINT_INSPECTOR_PHASES'), ('stdout', 'STRATALINT_INSPECTOR_CHILD_STDOUT'),
              ('stderr', 'STRATALINT_INSPECTOR_CHILD_STDERR')] if env.get(variable)}
@@ -360,8 +362,12 @@ class CompiledFibIntegration(unittest.TestCase):
         if full:
             artifact.unlink(missing_ok=True)
             Path(str(artifact) + ".trace").unlink(missing_ok=True)
+        # This generated fixture explicitly builds only its report and import
+        # closure, including on toolchain-only CI with a cold project cache.
+        # Consent belongs to this invocation, not subsequent consumer commands.
         result = self.command(['bash', 'tools/scripts/worktree/lean-cache-run.sh',
-            'lake', '-d', 'tools/lean-inspector-reg', 'build', self.module + ':report'], full=full)
+            'lake', '-d', 'tools/lean-inspector-reg', 'build', self.module + ':report'], full=full,
+            env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         observe_fib('FIB_COMPILED_STAGE', dict(stage='artifact-consumer', boundary='start',
             sequence=self.command_sequence, artifact=str(artifact)))
         self.artifact = artifact
