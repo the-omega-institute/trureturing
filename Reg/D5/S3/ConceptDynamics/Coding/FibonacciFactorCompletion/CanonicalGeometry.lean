@@ -497,3 +497,111 @@ def canonical_legal_return_hull_registration :
 #print axioms canonical_legal_return_hull_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal48
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ x => x) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (a b lo hi : ℝ) (w : List Label) (cs : List Color)
+    (hab : a ≤ b) (cert : EndpointCertificate a lo hi w cs),
+    EndpointCertificate (r.readout () () b) lo hi w cs
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have bounds := cut_bounds (0 : Color)
+  norm_num only [Fin.val_zero, zero_add] at bounds
+  have supported : InSupport .G0 (cut 0) :=
+    ⟨bounds.1, bounds.2.1.le.trans bounds.2.2⟩
+  have cost : max (cut 0 - cut 0) (max 0 (cut 0 - cut 1)) ≤ (0 : ℝ) := by
+    rw [sub_self, max_eq_left (sub_nonpos.mpr bounds.2.1.le)]
+    norm_num
+  have cert : EndpointCertificate 0 (cut 0) (cut 0) [] [(0 : Color)] := by
+    intro p hp
+    have hp0 : p = 0 := by simpa only [List.length_singleton, Nat.lt_one_iff] using hp
+    subst p
+    simpa [compose] using And.intro (And.intro supported cost) (And.intro supported cost)
+  have bad := h 0 0 (cut 0) (cut 0) [] [(0 : Color)] le_rfl cert
+  have impossible := (bad 0 (by simp)).1.2
+  change max (cut 0 - cut 0) (max 0 (cut 0 - cut 1)) ≤ (-1 : ℝ) at impossible
+  have nonnegative : 0 ≤ max (cut 0 - cut 0) (max 0 (cut 0 - cut 1)) := by
+    rw [sub_self]
+    exact le_max_left _ _
+  linarith
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.endpoint_certificate_mono) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.endpoint_certificate_mono, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j hj
+        exact (hj (Subsingleton.elim j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def endpoint_certificate_mono_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.endpoint_certificate_mono)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ x => x) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal48.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal48.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms endpoint_certificate_mono_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal48

@@ -1017,3 +1017,324 @@ def prepend_legal_tail_registration :
 #print axioms prepend_legal_tail_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal160
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal168
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ x => x) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-2 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (θ : ℝ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color)
+    (hQ : LegalWord .G0 s Q) (hV : LegalWord s s V) (z : ℝ),
+    z ∈ CompetingT o θ s Q V h W ↔ InSupport s (r.readout () () z) ∧
+      BlockSupply o θ false Q h z ∧ ∀ i, BlockSupply o θ false V (W i) z
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have supported : InSupport .G0 (0 : ℝ) :=
+    ⟨by norm_num, (by norm_num : (0 : ℝ) ≤ 1).trans tail_arithmetic.2.2.2.2.2.le⟩
+  have member : (0 : ℝ) ∈ CompetingT (fun _ => false) 0 .G0 [] [] [] (fun _ => []) := by
+    refine ⟨supported, ?_, ?_⟩
+    · intro p hp
+      simp at hp
+    · intro i p hp
+      simp at hp
+  have impossible := ((h (fun _ => false) 0 .G0 [] [] [] (fun _ => [])
+    rfl rfl 0).mp member).1.1
+  norm_num [rejected, realize] at impossible
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingT_mem_actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingT_mem_actual, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j hj
+        exact (hj (Subsingleton.elim j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def competingT_mem_actual_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingT_mem_actual)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ x => x) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal168.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal168.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms competingT_mem_actual_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal168
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal171
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ x => x) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ)
+    (lo hi : ℝ) (w : List Label) (cs : List Color)
+    (cert : EndpointCertificate θ lo hi w cs)
+    (x : ℝ) (hxlo : lo < x) (hxhi : x < hi),
+    BlockSupply o (r.readout () () θ) false w cs x
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have bounds := cut_bounds (0 : Color)
+  norm_num only [Fin.val_zero, zero_add] at bounds
+  have supportedLo : InSupport .G0 (cut 0) :=
+    ⟨bounds.1, bounds.2.1.le.trans bounds.2.2⟩
+  have supportedHi : InSupport .G0 (cut 1) :=
+    ⟨bounds.1.trans bounds.2.1.le, bounds.2.2⟩
+  have costLo : max (cut 0 - cut 0) (max 0 (cut 0 - cut 1)) ≤ (0 : ℝ) := by
+    rw [sub_self, max_eq_left (sub_nonpos.mpr bounds.2.1.le)]
+    norm_num
+  have costHi : max (cut 0 - cut 1) (max 0 (cut 1 - cut 1)) ≤ (0 : ℝ) := by
+    rw [sub_self]
+    norm_num only [max_self]
+    rw [max_eq_right (sub_nonpos.mpr bounds.2.1.le)]
+  have cert : EndpointCertificate 0 (cut 0) (cut 1) [] [(0 : Color)] := by
+    intro p hp
+    have hp0 : p = 0 := by simpa only [List.length_singleton, Nat.lt_one_iff] using hp
+    subst p
+    simpa [compose] using And.intro (And.intro supportedLo costLo) (And.intro supportedHi costHi)
+  have bad := h (fun _ => false) 0 le_rfl (cut 0) (cut 1) [] [(0 : Color)] cert
+    ((cut 0 + cut 1) / 2) (by linarith [bounds.2.1]) (by linarith [bounds.2.1])
+  obtain ⟨error, impossible, _⟩ := bad 0 (by simp)
+  change |error| ≤ (-1 : ℝ) at impossible
+  linarith [abs_nonneg error]
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.certificate_actual_slots) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.certificate_actual_slots, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j hj
+        exact (hj (Subsingleton.elim j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def certificate_actual_slots_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.certificate_actual_slots)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ x => x) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal171.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal171.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms certificate_actual_slots_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal171
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal172
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ x => x) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (θ : ℝ)
+    (u v : List Label) (cu cv : List Color) (hlen : u.length = cu.length) (z : ℝ)
+    (hu : BlockSupply o θ false u cu (compose v z))
+    (hv : BlockSupply o θ false v cv z),
+    BlockSupply o (r.readout () () θ) false (u ++ v) (cu ++ cv) z
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have hu : BlockSupply (fun _ => false) 0 false [] [] (compose [] (-1)) := by
+    intro p hp
+    simp at hp
+  have hv : BlockSupply (fun _ => false) 0 false [] [observe (fun _ => false) (-1) 0] (-1) := by
+    intro p hp
+    have hp0 : p = 0 := by simpa only [List.length_singleton, Nat.lt_one_iff] using hp
+    subst p
+    refine ⟨0, by norm_num, ?_⟩
+    simp [compose]
+  have bad := h (fun _ => false) 0 [] [] [] [observe (fun _ => false) (-1) 0]
+    rfl (-1) hu hv
+  obtain ⟨error, impossible, _⟩ := bad 0 (by simp)
+  change |error| ≤ (-1 : ℝ) at impossible
+  linarith [abs_nonneg error]
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.block_supply_append) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.block_supply_append, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j hj
+        exact (hj (Subsingleton.elim j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def block_supply_append_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.block_supply_append)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ x => x) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal172.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal172.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms block_supply_append_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal172

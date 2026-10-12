@@ -633,3 +633,112 @@ def choices_legal_registration :
 #print axioms choices_legal_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal75
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal79
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ x => x) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-2 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (θ : ℝ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color)
+    (hQ : LegalWord .G0 s Q) (hV : LegalWord s s V)
+    (hQlen : Q.length = h.length) (hlen : ∀ i, V.length = (W i).length) (z : ℝ),
+    (∀ n, (compose V)^[n] z ∈ CompetingT o θ s Q V h W) ↔
+      InSupport s (r.readout () () z) ∧ ∀ zs : List Bool,
+        BlockSupply o θ false (Q++choiceBlocks (fun _ => V) zs) (h++choiceBlocks W zs) z
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have supported : InSupport .G0 (0 : ℝ) :=
+    ⟨by norm_num, (by norm_num : (0 : ℝ) ≤ 1).trans tail_arithmetic.2.2.2.2.2.le⟩
+  have member : (0 : ℝ) ∈ CompetingT (fun _ => false) 0 .G0 [] [] [] (fun _ => []) := by
+    refine ⟨supported, ?_, ?_⟩
+    · intro p hp
+      simp at hp
+    · intro i p hp
+      simp at hp
+  have orbit : ∀ n, (compose ([] : List Label))^[n] (0 : ℝ) ∈
+      CompetingT (fun _ => false) 0 .G0 [] [] [] (fun _ => []) := by
+    intro n
+    change ((id : ℝ → ℝ)^[n] (0 : ℝ)) ∈ _
+    simpa only [Function.iterate_id, id_eq] using member
+  have impossible := ((h (fun _ => false) 0 .G0 [] [] [] (fun _ => [])
+    rfl rfl rfl (fun _ => rfl) 0).mp orbit).1.1
+  norm_num [rejected, realize] at impossible
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.competingT_orbit_iff_all_histories) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.competingT_orbit_iff_all_histories, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j hj
+        exact (hj (Subsingleton.elim j i)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    norm_num [actual, realize]
+
+def competingT_orbit_iff_all_histories_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.competingT_orbit_iff_all_histories)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ x => x) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal79.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal79.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "arg"]
+      stateBinder := 11
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms competingT_orbit_iff_all_histories_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal79
