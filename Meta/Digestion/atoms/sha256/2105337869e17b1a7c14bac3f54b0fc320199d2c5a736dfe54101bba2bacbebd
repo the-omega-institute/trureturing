@@ -1,0 +1,20 @@
+**假设 23.2（内生提取和保留旧读口的细化）。** 静态对象、内嵌观察者、局部概率提取与允许更新均采用定义 9.1；观察状态应包含使用的记忆和策略。若额外写 $K_\infty=\lim_n\mathscr D^nK_0$，须给 $\mathscr D$ 的定义域、承载该极限的拓扑或序及收敛条件；若写 $\mathscr D K_\infty=K_\infty$，须独立供给固定点条件或推导。存在、唯一、最大各是不同命题，符号本身不提供其中任何一项。内生动作与摘要相容使用[边界动力学卷 §41.1、式 (41.3)–(41.3a)](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)的实际像和策略下降合同；递归是否真正细化使用同卷 §31.3，而不以重复命名当前核为新信息。
+
+一个有限来源细化须另供非空有限载体 $\widetilde\Sigma$、映射 $\pi:\widetilde\Sigma\to\Sigma$、非空实际域 $\widetilde D\subseteq\Delta(\widetilde\Sigma)$ 和其中的非负归一化律 $q$，满足
+
+$$
+(\pi_*q)_s=\sum_{\pi(t)=s}q_t,\qquad
+\pi_*q=p\in D,\qquad
+\widetilde B_{\rm old}=B_{\rm obs}\pi_*.
+$$
+
+须说明该相容条件适用于一个已给律还是整个来源族；若要求覆盖全部旧制备，还须 $`\pi_*(\widetilde D)=D`$。附加读口 $\widetilde R$ 及其取得操作另行给出，新摘要取 $(\widetilde B_{\rm old}q,\widetilde R(q))$。它严格细化旧摘要，意指存在 $q,q'\in\widetilde D$，旧摘要相同而 $\widetilde R(q)\ne\widetilde R(q')$。若还保留旧随机动态 $T$，则给列随机 $\widetilde T$ 及前向可行域，要求
+
+$$
+\pi_*\widetilde Tq=T\pi_*q\quad(q\in\widetilde D).
+$$
+
+若任务只保留当前观察，可改为两边经 $B_{\rm obs}$ 后相等，但须明确这是较弱合同。完整回复、后继摘要、成本和策略仍按[观察者与算术关系卷 A-19.4](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md)、本卷数学引文 20.4 处理；一步均值相容不能替代联合操作核。
+
+这些假设没有从 $\mathbb Rh$ 生成新五态概率律。若输入仅为原线段的一个参数，$C^1$ 重编码的微分秩至多一；边场、多节点联合律或 jet 需要另外声明的来源。未来的 $PTh$ 灵敏度、实际非零差和回路算子的范围直接采用数学引文 20.4、定义 21.1 与命题 21.3。一般随机回路算子差不因此成为可逆 holonomy 或连接曲率。
+

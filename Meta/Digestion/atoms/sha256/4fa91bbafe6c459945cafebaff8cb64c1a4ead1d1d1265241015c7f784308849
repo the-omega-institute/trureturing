@@ -1,0 +1,29 @@
+**定义 27.1（同一五态载体的两个读口）。** 本节把定义 1.1 的支持
+$(0,1,2,3,13)$ 依次记为 $(0,x,z,y,xy)$；坐标函数仍按
+$(x,y,z)$ 排列。模式 $xy$ 的输出列表为 $[2,5]$，其加性数值为
+$7$；模式、列表、数值、素数编码与指数各按其所属载体解释。
+对同一律 $p\in\mathcal D$，取
+$$
+P(p)=(X,Y,Z)=(\mathbb E_p x,\mathbb E_p y,\mathbb E_p z),
+\qquad k=\kappa(p)=p_{xy},
+$$
+$$
+Q(p)=(A,B,C)=(X,Y,Z+k).
+$$
+采用[联合投影卷第二部 §15（源 II §3）](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+的重编码 $a=x,b=y,c_{\mathrm B}=z+xy$，将三位分别解释为
+$[1\sim2],[2\sim3],[1\sim3]$。记所对应的划分双射为 $f$：
+
+| 模式 | $(x,y,z)$ | $f$ 的划分值 |
+| --- | --- | --- |
+| $0$ | $(0,0,0)$ | $1\mid2\mid3$ |
+| $x$ | $(1,0,0)$ | $12\mid3$ |
+| $z$ | $(0,0,1)$ | $13\mid2$ |
+| $y$ | $(0,1,0)$ | $1\mid23$ |
+| $xy$ | $(1,1,0)$ | $123$ |
+
+五划分及 $B_3=5$ 的经典背景见
+[Stanley，§1.9，p.82](../../../Library/ConceptDynamics/stanley2011enumerative.md)。
+函数代数的重编码归于[关系商卷 I.7，theorem 1.4 及限定 Q11](AURIC_FIB_ATOM_RELATIONAL_QUOTIENTS_AND_PHYSICAL_CANDIDATES.md)；
+此处只使用上述有限状态对应及其指定均值。
+

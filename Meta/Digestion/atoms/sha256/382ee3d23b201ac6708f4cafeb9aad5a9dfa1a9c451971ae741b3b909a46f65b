@@ -1,0 +1,14 @@
+**数学引文 26.17（复用边界）。** 定理 25.3 的 singleton-boundary 五边
+图矩阵、单位标定和 source-summary collision 是本节的既有所有者；本节
+只消费其标量逆元和单位数据。静态 Schur/Kron 与接地正性复用
+[响应三角形卷 theorem 8.1](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)
+及 [Dörfler--Bullo](../../../Library/GraphInvariants/dorflerbullo2013kron.md)；
+条件高斯与 logdet 导数复用
+[Rasmussen--Williams](../../../Library/StatisticalMechanics/rasmussenwilliams2006gaussian.md)；
+共同基准高斯的互信息复用
+[Lami--Hirche--Adesso--Winter](../../../Library/StatisticalMechanics/lamihircheadessowinter2017logdet.md)；
+保留线性记忆的背景合同复用
+[Ma--Li--Liu](../../../Library/Dynamics/maliliu2017embeddedbrownian.md)。
+这些引文承担经典中间步骤。本节把它们用于同一加权五边图的实际五态纤维
+和交叉矩消费者，并保留平均/退火、可实现距离族及单位图校准记忆的各自合同。
+
