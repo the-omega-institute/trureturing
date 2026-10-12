@@ -134,6 +134,10 @@ $$\neg (\operatorname{D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutati
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kvashchuk-2026-multicopy-design-refutation` (refuted) by `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kvashchuk-2026-multicopy-design-refutation","declaration_gid":"D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Kvashchuk, P. Chernyshova, L. E. A. Porto, T.-A. Ohst, L. B. Vieira, M. T. Quintino (2026). *The most discriminable quantum states in the multicopy regime*. URL: <https://arxiv.org/abs/2604.26927v3>.

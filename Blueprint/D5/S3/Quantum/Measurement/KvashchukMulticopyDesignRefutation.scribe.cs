@@ -50,7 +50,10 @@ internal sealed class KvashchukMulticopyDesignRefutationDocument : IScribeDocume
                 StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "In dimension 2 with three copies, the six octahedral pure states with equal weights form a weighted design. The third-factor partial transpose of the normalized symmetric projector has rank six, whereas each positive-weight pure summand has rank at most one. Thus N′(2,3)=6, and every six-state weighted design has positive weights and pure states. The symmetric projector has trace four. Adding one eighth of its orthogonal complement gives an operator of trace 9/2 that dominates the three-copy state of every pure qubit and the three-copy maximally mixed state. Every six-state weighted design with the maximally mixed state appended therefore has discriminability at most 9/14. A competing family consists of the two computational basis states, the three pure states with normalized vectors (1,ω^j)/√2 for j=0,1,2 and ω=(−1+i√3)/2, and the two diagonal density matrices with diagonals (2/3,1/3) and (1/3,2/3). An explicit seven-outcome POVM has individual success probabilities 51/64, 51/64, 25/32, 25/32, 25/32, 8/27 and 8/27. Their uniform average is 1957/3024, exceeding 9/14 by 13/3024. This gives a negative answer to Kvashchuk and coauthors' question 4 already for qubits."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kvashchuk-2026-multicopy-design-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
