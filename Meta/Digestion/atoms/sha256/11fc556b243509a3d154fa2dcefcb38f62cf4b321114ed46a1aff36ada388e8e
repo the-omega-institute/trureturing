@@ -1,0 +1,43 @@
+### 12.1 形状、支撑与实际像语法
+
+令
+
+$$
+\mathcal S::=\dot{}\mid\langle s,t\rangle
+$$
+
+为保留有序左右关系而擦去叶标签的有限形状代数。对原树 $t$，令
+$\operatorname{sh}(t)\in\mathcal S$ 为逐节点擦去 $\alpha,\beta$ 的形状。地址
+集合 $\operatorname{Pos}(t)$ 包含根和全部实际节点；严格延伸叶地址不在其中。形状的
+半径 $r$ 观察记为 $\operatorname{sh}_{\le r}(t)$，其每个地址的值为
+
+$$
+\dot\quad(\text{叶}),\qquad
+\mathsf{branch}\quad(\text{配对}),\qquad
+\mathsf{absent}\quad(\text{不在 }\operatorname{Pos}(t)).
+$$
+
+这三值观察保留叶与分支的区别。只保留存在位的观察则记为
+
+$$
+\operatorname{supp}_{r}(t)=\{p\in\operatorname{Pos}(t):|p|\le r\},
+$$
+
+它在实际地址上只返回 $1$ 或 $0$，不能在同一半径直接区分叶与分支。以下所有支撑
+都在同一根、同一有序 $L/R$ 地址系上；擦除的是叶名，不是左右取向或出现次数。
+
+定义
+
+$$
+C(t)=\operatorname{sh}(\rho^2t),\qquad
+A=\langle\dot,\dot\rangle,\qquad
+B=\langle A,\dot\rangle,
+$$
+
+并令 $\mathcal G$ 是以下实际像语法的最小集合：
+
+$$
+\boxed{\mathcal G::=A\mid B\mid\langle g_1,g_2\rangle\quad(g_1,g_2\in\mathcal G).}
+\tag{ABT.30}
+$$
+
