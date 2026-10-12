@@ -12868,3 +12868,191 @@ Stieltjes errors do not bound the whole terminal comparison. No fixed
 \(\kappa\), source sign, RH, stronger external formal closure or
 all-integer Robin/5040 proof is supplied. The original signed target for
 every \(n>5040\) remains **ACTIVE_UNPROVED**.
+
+## Project application: density-weighted order-nine transport reaches 3e47
+
+This `repo-derived` quantitative application consumes the complete zero-mass
+bound already established in [Polak (W5), (X1)–(X2)](../Analytic/polak2026finiterobinca.md#keep-the-coupled-logarithmic-exponent-in-the-complete-density-tail)
+inside the existing GAK positive-law transport. The density theorem,
+whole-law construction, coefficient remainder and unrestricted reserve
+are reused. Their proofs and finite zero computations are not repeated.
+The additional step is to retain the density-weighted mass before choosing
+the smoothing order. Under the five primary analytic premises listed in
+GAK section 1, together with Chourasiya–Simonič's
+[arXiv:2507.15184v2](https://arxiv.org/pdf/2507.15184v2), Corollary 1 and
+Table 1, the resulting signed allowance applies uniformly on
+
+$$
+8\cdot10^{46}<A\le3\cdot10^{47},\qquad
+L=\log A,\quad T_A=\sqrt A L.
+\tag{GAD1}
+$$
+
+The cited density rows and finite-height verification remain external
+premises. This is an ordinary analytic application, without a full
+primary-proof audit, a Lean/kernel proof or a worldwide priority claim.
+
+### Retain the actual real-part layers in the complete zero mass
+
+Keep $H=3\cdot10^{12}$, $h=\log H$ and $s=\log(Hh)$. Reuse Polak's
+positive-ordinate mass, including every actual zero with analytic
+multiplicity,
+
+$$
+B_2(A)=\sum_{\gamma>H}m_\rho
+ \frac{A^{\beta-1/2}+A^{1/2-\beta}}{\gamma^2},\qquad
+\alpha(\sigma)=\frac{1+\sigma}{2-\sigma}.
+$$
+
+Its already established (X2) consequence is
+
+$$
+B_2(A)<2A^{1/4}S_2(H)
+ +144Lh^4\int_{3/4}^1
+    A^{\sigma-1/2}(Hh)^{-\alpha(\sigma)}\,d\sigma
+ +30000H^{-2}(\sqrt A-A^{1/4}).
+\tag{GAD2}
+$$
+
+This integrates the actual reflected population through every height
+above $H$. In particular it does not substitute a finite-height ceiling
+for a full-tail count. Its density source and parameter correspondence
+are those of Polak (W1), (W2), (W5), (X1).
+
+GAK25 gives $L>107$ on (GAD1). The same rational logarithm enclosure
+gives $\log3<1.099$ and $\log10<2.303$, hence $h<28.74<29$.
+The positive exponential prefix
+$\sum_{j=0}^{10}(84/25)^j/j!>1437/50$ gives
+$\log28.74<3.36$. Therefore $s<32.1$.
+
+For $f_A(\sigma)=L(\sigma-1/2)-s\alpha(\sigma)$,
+
+$$
+f_A'(\sigma)=L-\frac{3s}{(2-\sigma)^2}\ge L-3s>0
+\qquad(3/4\le\sigma\le1).
+$$
+
+Integrating this derivative lower bound from $\sigma$ to $1$ yields
+$f_A(\sigma)\le f_A(1)-(L-3s)(1-\sigma)$. Thus
+
+$$
+\int_{3/4}^1e^{f_A(\sigma)}\,d\sigma
+ <\frac{e^{L/2-2s}}{L-3s}.
+$$
+
+Since $h^4e^{-2s}=h^2/H^2$, (GAD2) gives the useful uniform envelope
+
+$$
+B_2(A)<2A^{1/4}S_2(H)
+ +\frac{144h^2\sqrt A}{H^2}\frac{L}{L-3s}
+ +\frac{30000\sqrt A}{H^2}.
+\tag{GAD3}
+$$
+
+Set $r=5478\cdot10^{20}$. Then
+$r^2=3.0008484\cdot10^{47}>3\cdot10^{47}$, so $\sqrt A<r$
+and $A^{1/4}<10^{12}$. Also $L/(L-3s)<10$, because $L>107$,
+$3s<96.3$ and $107/(107-96.3)=10$. Reuse
+$S_2(H)<37/(25\cdot10^{12})$ to obtain
+
+$$
+B_2(A)<2(10^{12})\frac{37}{25\cdot10^{12}}
+ +\frac{144(29)^2r}{H^2}\,10+\frac{30000r}{H^2}
+ =\frac{9442616}{125}<76000.
+\tag{GAD4}
+$$
+
+Reflection at fixed positive ordinate preserves multiplicity, and
+conjugation supplies negative ordinates. Consequently
+
+$$
+B_2(A)=\sum_{|\gamma|>H}
+       \frac{m_\rho A^{\beta-1/2}}{\gamma^2}.
+\tag{GAD5}
+$$
+
+No further factor of two belongs in the complete high-zero response.
+
+### Consume the complete mass with a lower-variance whole law
+
+Use GAK3–GAK6 with the changed order $k=9$, leaving
+$\delta=51/(20H)$ and $q=219/1000$. Put $x=\delta^2$ and reuse
+
+$$
+M_*=(1-2kx)^{-1},\qquad V_*=\frac{kx}{3-(k+3)x}.
+$$
+
+All denominators are positive; the whole support lies in $(.99,1.01)$
+and the mean is exactly one. GAK41 and GAK47's actual-real-part
+normalization give $|H_C(\rho)|<q^9$ for every $|\gamma|>H$;
+the head bound remains $M_*$. The scalar normalization base in GAK47
+is independent of $k$, so only its power changes.
+
+Retain the original complete coefficient $F_A$ of GAK10, including
+GAK12's remainder, in $Z_C(A)=\sum_\rho m_\rho H_C(\rho)F_A(\rho)$.
+GAK24's head and tail remainder factors $527/500$ and $10001/10000$,
+together with (GAD4)–(GAD5), imply
+
+$$
+T_A|Z_C(A)|<U_h+U_t,
+$$
+
+$$
+\begin{aligned}
+U_h&=\frac{108}{107}\frac{527}{500}\frac1{20}M_*,\\
+U_t&=\frac{108}{107}\frac{10001}{10000}q^9(76000),\\
+U_v&=\frac{260001}{500000}rV_*,\qquad
+U_e=\frac{5M_*}{10^{23}}.
+\end{aligned}
+\tag{GAD6}
+$$
+
+GAK26's bound $\eta_0(A)<10^{-6}$ is independent of the upper
+endpoint, and $\sqrt A>10^{23}$ still holds. GAK23 therefore gives
+the original uncentered signed integral, retaining its cutoff atoms and
+full elementary response,
+
+$$
+-T_AI_\psi(A)<U_h+U_t+U_v+U_e<\frac{19}{25}.
+\tag{GAD7}
+$$
+
+The sufficient exact rational comparisons are
+$U_h<.0532$, $U_t<.0889$, $U_v<.6175$ and
+$U_e<6\cdot10^{-23}$. Their sum is less than $.76$.
+No class average, favorable class selection or zero-phase sign is used.
+
+### Keep the actual integer defect and the selected-source distinction
+
+For each integer $n$ whose own clock $A=\log n$ satisfies (GAD1),
+reuse its own nonnegative $d_A(n)$ and the exact identity GAK39.
+GAK37's same unrestricted reserve obeys
+$T_AR(A)>Q_R+L/(L+2)^3$, with the unchanged
+$Q_R=67838284064811/83593750000000$ and $Q_R-19/25>1/20$.
+Consequently, under the stated analytic premises,
+
+$$
+T_A\Delta(n)>
+\frac1{20}+\frac{L}{(L+2)^3}+T_A d_A(n)>0.
+\tag{GAD8}
+$$
+
+This bounded all-integer clock conclusion sets no defect to zero and
+requires no CA or maximizer condition. It does not establish Robin
+for every smaller integer up to this upper endpoint.
+
+For the separate least-global-maximizer corollary, retain every extra
+selection and lower-clock supplier in GAK section 10 and the corollary
+following GAK51. That full existing chain already puts the same
+selected $N$ above $\log N=8\cdot10^{46}$. Equation (GAD8) then
+excludes $\log N\le3\cdot10^{47}$ for that same selected source.
+This conditional consequence is not a bound for the least counterexample.
+
+The parameter-specific
+[rational program and results](https://github.com/the-omega-institute/trureturing-experiments/tree/fbe2ee18cadc21f30afc368a29a5604fdb44e8b5/experiments/robin-density-transport-3e47)
+check the changed logarithm,
+exponential prefix, density mass, support, normalization and complete
+allowances. It does not certify the external analytic suppliers or the
+full inference in Lean. For this fixed $H$ and order-nine law,
+$V_*>0$ and the positive transport allowance grows with $\sqrt A$.
+The original unbounded signed estimate and RH remain open.
