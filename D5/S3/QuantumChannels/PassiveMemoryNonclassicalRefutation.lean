@@ -6,11 +6,9 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.claim; result=D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result; claim=D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.claim
    digest: A passive qutrit-memory implementation refutes classical Gram simulation. -/
 
-import D5.S3.Quantum.Foundation.FiniteStateChannel
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-import D5.S3.Quantum.FiniteDimensional
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.Hadamard
@@ -76,7 +74,7 @@ def implemented {d r : ℕ} (τ : DensityState (Fin r))
 
 def choi (d : ℕ) (F : MatrixMap (Fin d) (Fin d) ℂ) :
     Mat (Fin d × Fin d) :=
-  fun p q => (d : ℂ)⁻¹ * F (Matrix.single p.2 q.2 1) p.1 q.1
+  (d : ℂ)⁻¹ • MatrixMap.choi_matrix F
 
 def Gram {ι : Type*} (C : Mat ι) : Prop :=
   C.PosSemidef ∧ ∀ i, C i i = 1
@@ -122,8 +120,8 @@ private noncomputable def tau0 : DensityState (Fin 2) := by
 private def controls : Fin 3 → Mat (Fin 2) := fun i =>
   if i = 0 then 1 else if i = 1 then qubitX else qubitZ
 
-private def controlled : Mat (Fin 3 × Fin 2) := fun p q =>
-  if p.1 = q.1 then controls p.1 p.2 q.2 else 0
+private def controlled : Mat (Fin 3 × Fin 2) :=
+  (Matrix.blockDiagonal controls).submatrix Prod.swap Prod.swap
 
 private theorem controls_apply (i : Fin 3) (a b : Fin 2) :
     controls i a b = if i = 0 then (if a = b then 1 else 0)
@@ -136,7 +134,8 @@ private theorem controlled_apply (p q : Fin 3 × Fin 2) :
         if p.1 = 0 then (if p.2 = q.2 then 1 else 0)
         else if p.1 = 1 then qubitX p.2 q.2 else qubitZ p.2 q.2
       else 0 := by
-  dsimp only [controlled]
+  simp only [controlled, Matrix.submatrix_apply, Matrix.blockDiagonal_apply,
+    Prod.swap]
   rw [controls_apply]
 
 private theorem controlled_unitary :
@@ -289,7 +288,7 @@ private theorem witness_choi_identity (E : KrausChannel (Fin 3)) :
     choi 3 (implemented tau0 witnessChannel witnessChannel E) =
       Matrix.hadamard witnessC (choi 3 (act E)) := by
   ext ⟨i,j⟩ ⟨k,l⟩
-  dsimp only [choi, implemented]
+  dsimp only [choi, MatrixMap.choi_matrix, Matrix.smul_apply, smul_eq_mul, implemented]
   simp only [LinearMap.comp_apply, LinearMap.coe_mk, AddHom.coe_mk]
   rw [append_unit, encoded_unit, tensor_unit]
   simp only [Matrix.hadamard_apply]

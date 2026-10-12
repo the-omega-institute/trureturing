@@ -28,7 +28,7 @@ internal sealed class PassiveMemoryNonclassicalRefutationDocument : IScribeDocum
             Node("implemented", "The implemented channel", "implemented", ImplementedFormula(),
                 "Equation (9) first appends τ, applies the encoding channel Nen, applies E to the system while leaving the memory unchanged, applies the decoding channel Nde, and traces out the memory. D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.kron is the tensor product of the two linear maps."),
             Node("choi", "Normalized output-first Choi matrix", "choi", ChoiFormula(),
-                "Equation (2) uses a normalized maximally entangled input. Accordingly, the entry at row (i,j) and column (k,l) is the (i,k) entry of F applied to Matrix.single j l 1, multiplied by the inverse of the complex cast of d. The first coordinate is the output coordinate. The definition also accepts d=0."),
+                "Equation (2) uses a normalized maximally entangled input. The definition scales D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.choi_matrix F by the inverse of the complex cast of d. Accordingly, the entry at row (i,j) and column (k,l) is the (i,k) entry of F applied to Matrix.single j l 1, multiplied by that inverse. The first coordinate is the output coordinate. The definition also accepts d=0."),
             Node("gram", "Gram matrices", "Gram", GramFormula(),
                 "The Gram matrices in Equations (13) and (19) are positive semidefinite complex matrices with every diagonal entry equal to one."),
             Node("dephasing-gram", "Equal diagonal blocks", "DephasingGram", DephasingGramFormula(),
@@ -102,15 +102,12 @@ internal sealed class PassiveMemoryNonclassicalRefutationDocument : IScribeDocum
                                         LocalCall("stateMatrix", Tau)))))))))))));
 
     private static Formula ChoiFormula() => For(X("d"), Naturals(),
-        For(X("F"), Map(Fin(X("d")), Fin(X("d"))),
-            For(X("p"), Product(Fin(X("d")), Fin(X("d"))),
-                For(X("q"), Product(Fin(X("d")), Fin(X("d"))), Equal(
-                    At(LocalCall("choi", X("d"), X("F")), X("p"), X("q")),
-                    Multiply(new Formula.Power(Typed(At(Qualified("Nat", "cast"), X("d")), Complexes()),
-                            new Formula.Negate(Num(1))),
-                        At(X("F"), At(Qualified("Matrix", "single"), Projection(X("p"), 2),
-                                Projection(X("q"), 2), Typed(Num(1), Complexes())),
-                            Projection(X("p"), 1), Projection(X("q"), 1))))))));
+        For(X("F"), Map(Fin(X("d")), Fin(X("d"))), Equal(
+            LocalCall("choi", X("d"), X("F")),
+            At(Qualified("HSMul", "hSMul"),
+                new Formula.Power(Typed(At(Qualified("Nat", "cast"), X("d")), Complexes()),
+                    new Formula.Negate(Num(1))),
+                At(Seq(MatrixMapName("choi"), Underscore, Grp(X("matrix"))), X("F"))))));
 
     private static Formula GramFormula() => For(Iota, TypeStar(), For(X("C"), Mat(Iota),
         Equivalence(LocalCall("Gram", X("C")), And(
