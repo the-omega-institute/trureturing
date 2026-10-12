@@ -940,8 +940,5 @@ theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
     simp (disch := positivity) only [Real.log_div, Real.log_exp,
       Real.log_sqrt, Real.log_mul] at hs
     linarith
-/-- The four positive cells and their row and column margins are one table.
-The entropy term in its factorial ratio is nonpositive. -/
-
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
