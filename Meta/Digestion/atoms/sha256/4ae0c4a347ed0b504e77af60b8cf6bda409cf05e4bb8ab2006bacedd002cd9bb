@@ -1,0 +1,43 @@
+**Proof (literal small-image construction).** Assume $N\le H$ and let $h=\lceil\log_2N\rceil$. For each value $v$ with $n_v\ge3$, choose an injection
+
+$$
+\gamma_v:\lambda_v[J]\cup\{a_v\}\hookrightarrow\mathbb F_2^h,
+\qquad \gamma_v(a_v)=0.
+\tag{34.9}
+$$
+
+For each coordinate $b<h$, let
+
+$$
+S_{v,b}=\{j\in J:\gamma_v(\lambda_v(j))_b=1\}
+$$
+
+and correct its parity at the actual exterior phase $m$:
+
+$$
+E_{2b}=S_{v,b}\cup
+\begin{cases}
+\{m\},&|S_{v,b}|\text{ odd},\\
+\varnothing,&|S_{v,b}|\text{ even}.
+\end{cases}
+\tag{34.10}
+$$
+
+Every $E_{2b}$ is even and lies on $W_{2b}$. Use the one flag
+
+$$
+E_1=\{m,m+1\},
+\tag{34.11}
+$$
+
+and take all other odd supports below index $2h-2$ to be empty. For each support use the ordered-path inverse (33.16), so the supports are actual endpoint charge rows of literal blocks, not abstract responses. The coding blocks start with zero because their left endpoints are uncharged; every nonroot coding block ends with zero because its right endpoint is uncharged. The flag block has literal word $10^{m-1}$. The root may end in a run of at most $m-1$ ones, and the flag begins with one, so their seam has length at most $m<k$. The flag ends in zero, and every later coding block starts in zero. Internal runs are below $k$. Thus the whole prefix is safe for every inherited legal tail, in both alphabets, including the terminal tail $k-1$.
+
+For a source in $J$, the flag difference is zero and the even differences recover $\gamma_v(\lambda_v(j))$. For a source outside $J$, the two flag phases are the only phases with a nonzero flag difference; their OR is one, while all other exterior phases have the zero code $\gamma_v(a_v)=0$. The decoder therefore returns $a_v$ on every exterior source and inverts $\gamma_v$ on the interior sources. It uses only the source's own endpoint archive and the freely remembered value $v$. The last displayed index is $2h-2$, so the fee is $2h-1$.
+
+If a fibre has $n_v=1$, its target is constant on that fibre and it stops at the free observation. If it has $n_v=2$, use the two-block fallback of Proposition 34.3 below. Under (34.3) this is no larger than the global bound $2h-1$ because the other fibre realizes $N\ge3$ and hence $2h-1\ge3$. Therefore
+
+$$
+C_{\rm ad}\le2h-1.
+\tag{34.12}
+$$
+

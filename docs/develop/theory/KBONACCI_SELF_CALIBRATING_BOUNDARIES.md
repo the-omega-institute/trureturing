@@ -4055,3 +4055,593 @@ The broader identification and parity-query comparisons remain those credited in
 **Scope 33.5 (Remaining targets and resource boundary).** The exact adaptive fee for the general family (33.1)–(33.3) remains a separate target. Arbitrary label layouts without this delayed constant-exterior structure, other widths and phase orbits, differing free-value tables beyond a joined constant exterior, and tail-sensitive labels retain their unresolved cases. The original all-parameter objective remains exact adaptive and GLOBAL worst complete-block fees for every attainable immutable INITIAL target, under both original alphabets and all $k\ge2,m\ge1$. The present deterministic endpoint theorem makes no stochastic or full-law inference and supplies no memory, offline-computation, physical-resource or cross-reader cost law. Selecting the finite injection is semantic; no complexity bound for presenting or searching the table is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. Exact adaptive fees for delayed interior scalar labels
+
+**Definition 34.1 (Scalar images of the delayed-interior family).** Retain the complete source, observations, literal actions, inherited tails, absorbing rejection, complete-block fee and GLOBAL contract of Definition 33.1. Thus
+
+$$
+ m\ge5,\qquad 3\le d\le m-2,
+ \qquad k=2m-2,\qquad T=2m-1,
+ \qquad J=\{d,\ldots,m-1\},
+$$
+
+and the joined interior image satisfies
+
+$$
+2^{d-1}<|\Lambda[J]|\le2^d.
+$$
+
+For each freely observed initial value $v\in\mathbb F_2$, write
+
+$$
+ a_v=\lambda_v(j)\quad(j\in O=P\setminus J),
+ \qquad r_v=|\lambda_v[J]|,
+ \qquad n_v=|\lambda_v[J]\cup\{a_v\}|.
+\tag{34.1}
+$$
+
+Thus $r_v\le n_v\le r_v+1$, and consequently $M\le N\le M+1$.
+
+Put
+
+$$
+ H=2^{d-1},\qquad M=\max(r_0,r_1),\qquad N=\max(n_0,n_1).
+\tag{34.2}
+$$
+
+The quantities $r_v$ and $n_v$ count scalar labels in one free-value fibre. They do not count ordered joined pairs, and they do not identify the two fibres. Since
+
+$$
+|\Lambda[J]|\le r_0r_1\le n_0n_1,
+$$
+
+while $|\Lambda[J]|>H\ge4$, the present full contract implies
+
+$$
+N\ge3.
+\tag{34.3}
+$$
+
+This last fact is needed below: the small-image formula is a statement about the full two-fibre family, not an unconditional formula for an isolated fibre with only one or two scalar labels.
+
+**Theorem 34.2 (Exact adaptive law and unchanged GLOBAL law).** Under Definition 34.1, for either original alphabet,
+
+$$
+\boxed{
+C_{\rm ad}(f_\lambda)=
+\begin{cases}
+2d-1,&M>H,\\[2pt]
+2d-2,&M\le H<N,\\[2pt]
+2\lceil\log_2N\rceil-1,&N\le H,
+\end{cases}}
+\tag{34.4}
+$$
+
+and
+
+$$
+\boxed{C_{\rm pre}(f_\lambda)=2d-1.}
+\tag{34.5}
+$$
+
+The middle case is equivalently $M=H$ and $N=H+1$. In the last case, the integer
+
+$$
+ h=\lceil\log_2N\rceil
+$$
+
+satisfies $2\le h\le d-1$.
+
+**Proof (free-value separation).** The initial scalar value is freely observed. An adaptive controller may therefore choose its first literal action as a function of $v$, while the worst fee is the maximum of the two resulting fixed-value costs. A lower bound on one fibre is a lower bound for the full target. Conversely, constructions below are chosen separately for the two observed values and are run with the same original source and endpoint rules; their maximum fee is a valid adaptive protocol. No hidden phase or archive selects a stream.
+
+**Proof (the common-archive leaf lemma).** Fix one value $v$ and a finite set $S$ of tail-zero INITIAL phases whose target labels are pairwise distinct. Use the actual witnesses supplied by (33.4), one for each retained phase. Within any reached archive containing some of these witnesses, all retained sources have undergone the same literal actions and hence have the same current tail. A next complete word therefore either succeeds on every member of that archive or rejects every member. Uniform rejection produces one absorbing child and cannot separate two unequal immutable labels; a correct controller may therefore reject a non-singleton archive only when that archive is already homogeneous. A correct early stop is also one homogeneous leaf. If a successful action is issued, its endpoint difference has at most two scalar values.
+
+At emitted index $t$, the full-path charge support is contained in
+
+$$
+W_t=tm+\{0,\ldots,m\}\pmod T,
+$$
+
+and the path schedule through the horizons used here is (33.9):
+
+$$
+W_{2q}=[q,q+m],qquad
+W_{2q+1}=[m+q,\ldots,T-1,0,\ldots,q+1].
+\tag{34.6}
+$$
+
+The displayed odd paths miss $J$. More generally, the odd path with index $2q+1$ misses $J\cup\{d-1\}$ whenever $q+1\le d-2$. This is a statement about the actual emitted index, so it remains true at every adaptive node; changing the word does not change the phase path. Induction down the adaptive archive tree now gives
+
+$$
+\#\{\text{homogeneous leaves on }S\}
+\le2^{\lfloor(c+1)/2\rfloor}
+\tag{34.7}
+$$
+
+for a controller of fee at most $c$, whenever all odd indices before that horizon miss $S$. Even levels can at most double the number of nonempty archives, odd levels are unary on $S$, and rejection or early stopping never adds a label-dependent branch. This induction allows arbitrary literal words, archive-dependent feedback, waits, rejection attempts and source-local stopping.
+
+**Proof (the three lower bounds).** First suppose $M>H$. Choose a value $v$ with $r_v=M$ and retain one tail-zero witness in $J$ for each distinct scalar label in $\lambda_v[J]$. A correct controller cannot stop for free on this fibre. If its first bit were one, all actual terminal-tail sources would reject into the same absorbing archive, although the retained fibre has different target labels; hence the root starts with zero. Through fee $2d-2$, the only possible splitting levels on this witness set are the $d-1$ even indices $0,2,\ldots,2d-4$. By (34.7) there are at most $2^{d-1}=H$ homogeneous leaves, fewer than $M$. Thus $C_{\rm ad}\ge2d-1$. The fixed GLOBAL protocol of Theorem 33.2 is also an adaptive protocol, so $C_{\rm ad}\le2d-1$.
+
+Now suppose $M\le H<N$. Since $N\le M+1$, necessarily $M=H$ and $N=H+1$. Choose a value $v$ with $n_v=N$. The exterior label is then absent from $\lambda_v[J]$; retain witnesses in $J$ for its $H$ internal labels and one witness at phase $d-1$ for $a_v$. Through fee $2d-3$, every odd path still ends below phase $d-1$, so (34.7) gives at most $2^{d-1}=H$ leaves for $H+1$ distinct required labels. Therefore $C_{\rm ad}\ge2d-2$.
+
+Finally suppose $N\le H$, and set $h=\lceil\log_2N\rceil$. Choose a value $v$ with $n_v=N$. Retain one witness for each label in $\lambda_v[J]\cup\{a_v\}$, taking the exterior representative $d-1$ when $a_v$ is absent from the interior image. The odd paths before fee $2h-1$ miss all these representatives, because $h\le d-1$. If the fee were at most $2h-2$, only $h-1$ even levels could split, so (34.7) gives at most $2^{h-1}<N$ homogeneous leaves. Thus
+
+$$
+C_{\rm ad}\ge2h-1.
+\tag{34.8}
+$$
+
+These lower bounds use fixed actual witnesses and do not choose a new tail after an adaptive query. They also remain valid if a live label happens to equal the bottom label or if labels coincide across the two free-value fibres.
+
+**Proof (the high-image upper bound).** If $M>H$, use the $2d-1$-block literal GLOBAL construction of Theorem 33.2. It is selected without knowledge of $v$ and therefore is admissible for the adaptive contract. This gives the first upper bound.
+
+**Proof (literal small-image construction).** Assume $N\le H$ and let $h=\lceil\log_2N\rceil$. For each value $v$ with $n_v\ge3$, choose an injection
+
+$$
+\gamma_v:\lambda_v[J]\cup\{a_v\}\hookrightarrow\mathbb F_2^h,
+\qquad \gamma_v(a_v)=0.
+\tag{34.9}
+$$
+
+For each coordinate $b<h$, let
+
+$$
+S_{v,b}=\{j\in J:\gamma_v(\lambda_v(j))_b=1\}
+$$
+
+and correct its parity at the actual exterior phase $m$:
+
+$$
+E_{2b}=S_{v,b}\cup
+\begin{cases}
+\{m\},&|S_{v,b}|\text{ odd},\\
+\varnothing,&|S_{v,b}|\text{ even}.
+\end{cases}
+\tag{34.10}
+$$
+
+Every $E_{2b}$ is even and lies on $W_{2b}$. Use the one flag
+
+$$
+E_1=\{m,m+1\},
+\tag{34.11}
+$$
+
+and take all other odd supports below index $2h-2$ to be empty. For each support use the ordered-path inverse (33.16), so the supports are actual endpoint charge rows of literal blocks, not abstract responses. The coding blocks start with zero because their left endpoints are uncharged; every nonroot coding block ends with zero because its right endpoint is uncharged. The flag block has literal word $10^{m-1}$. The root may end in a run of at most $m-1$ ones, and the flag begins with one, so their seam has length at most $m<k$. The flag ends in zero, and every later coding block starts in zero. Internal runs are below $k$. Thus the whole prefix is safe for every inherited legal tail, in both alphabets, including the terminal tail $k-1$.
+
+For a source in $J$, the flag difference is zero and the even differences recover $\gamma_v(\lambda_v(j))$. For a source outside $J$, the two flag phases are the only phases with a nonzero flag difference; their OR is one, while all other exterior phases have the zero code $\gamma_v(a_v)=0$. The decoder therefore returns $a_v$ on every exterior source and inverts $\gamma_v$ on the interior sources. It uses only the source's own endpoint archive and the freely remembered value $v$. The last displayed index is $2h-2$, so the fee is $2h-1$.
+
+If a fibre has $n_v=1$, its target is constant on that fibre and it stops at the free observation. If it has $n_v=2$, use the two-block fallback of Proposition 34.3 below. Under (34.3) this is no larger than the global bound $2h-1$ because the other fibre realizes $N\ge3$ and hence $2h-1\ge3$. Therefore
+
+$$
+C_{\rm ad}\le2h-1.
+\tag{34.12}
+$$
+
+**Proof (literal middle-image construction).** Assume $M\le H<N$, so $M=H$ and $N=H+1$. For each $v$, choose an injection
+
+$$
+\eta_v:\lambda_v[J]\hookrightarrow\mathbb F_2^{d-1}.
+\tag{34.13}
+$$
+
+Use the parity-donor supports (34.10) with $\eta_v$ in place of $\gamma_v$, at the even indices $0,2,\ldots,2d-4$. Use the two already legal exterior flags from (33.12)–(33.15):
+
+$$
+E_1=A,qquad E_{2d-3}=B,
+$$
+
+where $A\cup B=O$, both supports are even, $A\subseteq W_1$ and $B\subseteq W_{2d-3}$. All other odd supports are empty. The same ordered-path inverse realizes every support as a literal block. The first flag has leading run one, the root has at most $m-1$ terminal ones, and their seam is below $k$; every later coding block starts with zero, and the last flag starts with zero. Hence the complete $2d-2$-block prefix is safe on every actual source and inherited tail.
+
+On an interior phase both flags vanish, and the even differences recover $\eta_v(\lambda_v(j))$. On an exterior phase one of the two flag differences is one, so their OR is one; the decoder returns $a_v$. This construction is selected after reading $v$ and uses no hidden phase or unexecuted branch. It proves $C_{\rm ad}\le2d-2$, completing (34.4). Theorem 33.2 supplies (34.5).
+
+**Proposition 34.3 (The omitted two-label fibre boundary).** Fix one free-value fibre under the geometry of Definition 34.1 and suppose its scalar image has exactly two labels. Let $b=a_v$ be the exterior label and let
+
+$$
+S=\{j\in J:\lambda_v(j)\ne b\}.
+$$
+
+Then the exact adaptive fee restricted to this fibre is
+
+$$
+\boxed{
+C_{\rm ad}^{v}=\begin{cases}
+1,&|S|\text{ even},\\
+2,&|S|\text{ odd}.
+\end{cases}}
+\tag{34.14}
+$$
+
+**Proof.** A one-block successful root must start with zero: a leading one rejects every terminal-tail source, and the fibre has two target labels. A one-block endpoint charge is supported on $W_0$ and has even cardinality. Every exterior phase outside $W_0$ has zero charge, so the exterior label must decode as zero. Consequently the only possible one-bit support is exactly $S$. If $|S|$ is even, the ordered-path inverse realizes it and separates the two labels in one block. If $|S|$ is odd, no one-block support can do so.
+
+For the two-block upper bound, use
+
+$$
+E_0=S\cup\{m\},qquad E_1=\{m,m+1\}.
+$$
+
+Both supports are even and lie on their paths. The first block starts zero; its possible donor charge at $m$ is identified by the second flag, whose literal word is $10^{m-1}$. Interior nonexterior phases have code $(1,0)$, while the exterior phases have codes $(1,1)$ at $m$, $(0,1)$ at $m+1$, and $(0,0)$ elsewhere. Mapping all three exterior codes to $b$ separates the two labels. The seam and inherited-tail safety are exactly the root-to-flag check in the proof above. This proves (34.14).
+
+This boundary explains why the full theorem records $N\ge3$ rather than claiming that $2\lceil\log_2n_v\rceil-1$ holds for every isolated fibre: a scalar image of size two can require two blocks because of the even full-path charge constraint, even though its binary information content is one bit.
+
+**Proposition 34.4 (Exterior membership is part of the calibration data).** The two numbers $r_v$ and $n_v$ are not interchangeable. If $a_v\in\lambda_v[J]$, then $n_v=r_v$ and the exterior class shares an interior scalar label; if $a_v\notin\lambda_v[J]$, then $n_v=r_v+1$ and the exterior class is new. The middle construction and the small-image construction treat these cases differently at decoding time: the former uses two explicit exterior flags, while the latter assigns $a_v$ the zero code and flags only the two actual donor phases.
+
+Thus a claimed adaptive formula that counts only internal labels, or only joined pairs, discards a source distinction that can change the fee. The relevant full-family invariant is the maximum scalar image $N$ together with the actual exterior-membership relation, while the strict joined-image condition is retained only to guarantee the global boundary $N\ge3$.
+
+**Scope 34.5 (What this closes and what remains open).** The separate adaptive target left open in Scope 33.5 is settled here for the exact family of Definition 33.1. Theorem 34.2 settles the adaptive fee for the entire delayed-interior family of Definition 33.1 and retains the exact GLOBAL fee from Theorem 33.2. It does not price arbitrary tail-dependent tables, arbitrary exterior layouts, different phase intervals, other $(k,m)$ geometries, memory or offline computation, physical-resource costs, stochastic laws, or the all-parameter exact-fee problem. Proposition 34.3 is a fixed-fibre boundary result and does not replace the two-fibre theorem. The arguments are ordinary mathematical proofs using the supplied KBonacci interfaces; they are not Lean/kernel verification, axiom auditing, coverage certification or a literature-priority claim.
+
+**Mathematical citation 34.6 (Supplied machinery and new content).** The complete source and endpoint contract, actual witnesses, matched coefficient paths, ordered-path literal inverse, common-tail adaptive leaf induction, and the $2d-1$ GLOBAL construction are supplied by Definitions 15.1, 18.1, 29.1, 31.1 and Theorem 33.2. The new content is the scalar-fibre exact classification (34.4), its observation-tree lower bounds at three horizons, the literal $2h-1$ and $2d-2$ adaptive constructions, and the two-label parity boundary (34.14). The free-value split is an explicit use of the free initial observation, not a hidden selection by phase or archive.
+
+## 35. Exact finite divisibility fibres in canonical Fibonacci windows
+
+**Definition 35.1 (Windows, probes and the unobserved prime support).** Let $\mathbb P$ denote the positive primes and let
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{j+2}=F_{j+1}+F_j.
+$$
+
+For $r\in\mathbb P$, define
+
+$$
+\begin{aligned}
+L_r&=\left\lceil F_r/10\right\rceil,&
+U_r&=\left\lfloor F_r/5\right\rfloor,\\
+I_r&=[L_r,U_r]\cap\mathbb Z,&
+W_r&=\{1+F_rg:g\in I_r\},\qquad
+W=\bigcup_{r\in\mathbb P}W_r.
+\end{aligned}
+\tag{35.1}
+$$
+
+Each $I_r$, and hence each $W_r$, is finite; an interval with $L_r>U_r$ is empty. For a positive integer $n$, let $\omega(n)=\#\{p\in\mathbb P:p\mid n\}$ count distinct prime divisors, with $\omega(1)=0$. For a finite set $S\subset\mathbb P$ of distinct probes, put
+
+$$
+\begin{aligned}
+d_S(n)&=(\mathbf 1_{p\mid n})_{p\in S}\in\{0,1\}^{S},\\
+\rho_S(n)&=\omega(n)-\sum_{p\in S}\mathbf 1_{p\mid n}
+          =\#\{p\in\mathbb P\setminus S:p\mid n\},\\
+W_{S,b}&=\{n\in W:d_S(n)=b\}\qquad(b\in\{0,1\}^{S}).
+\end{aligned}
+\tag{35.2}
+$$
+
+Thus the observer knows membership in the whole family $W$ and the indicated bits. The numerical value of $n$, its generating index $r$, a magnitude bound and additional arithmetic observations are not part of $d_S$. The prime-index variable here is local to (35.1), not a phase or an endpoint fee from Sections 33–34. Repeated queries to the same prime give one coordinate of $S$. For $S=\varnothing$, the bit space has one empty pattern, the sum is zero and $\rho_\varnothing=\omega$.
+
+**Theorem 35.2 (Every exact finite probe pattern retains arbitrarily many unseen prime divisors).** For every finite $S\subset\mathbb P$ and every integer $K\ge1$, there exists an integer $R(S,K)$ such that
+
+$$
+\begin{gathered}
+\forall r\in\mathbb P,\quad r\ge R(S,K)\ \Longrightarrow\\
+\forall b\in\{0,1\}^{S},\quad \exists g\in I_r:\\
+d_S(1+F_rg)=b\quad\hbox{and}\quad \rho_S(1+F_rg)\ge K.
+\end{gathered}
+\tag{35.3}
+$$
+
+The threshold is independent of $b$. In particular, the quantifiers are one threshold, then every sufficiently large prime index, then every pattern; they do not select a separate threshold for each pattern.
+
+**Proof.** Reuse the Fibonacci entry-rank, CRT and interval method supplied by [FIBONACCI_ATOMIC_RELATION_GENERATION, Section 258.6b, current-dev supplier](FIBONACCI_ATOMIC_RELATION_GENERATION.md). Its standard entry-rank interface is
+
+$$
+z(q)=\min\{j\ge1:q\mid F_j\},\qquad
+q\mid F_j\ \Longleftrightarrow\ z(q)\mid j
+\quad(q\in\mathbb P,\ j\ge1).
+\tag{35.4}
+$$
+
+The rank exists, and $z(q)\ge3$ because $F_1=F_2=1$. These are supplied Fibonacci facts, not new entry-rank results. The strengthening below imposes both the positive and the negative observed bits while reserving distinct unobserved divisors in the same integer.
+
+Choose $T$ to be the first $K$ primes outside $S$, so $T\cap S=\varnothing$ and $|T|=K$. Set
+
+$$
+Q=\prod_{q\in S\cup T}q.
+$$
+
+This choice depends only on $S,K$. Fibonacci growth permits an integer $R=R(S,K)\ge3$ satisfying
+
+$$
+R>\max_{q\in S\cup T}z(q),\qquad F_R\ge10(Q+1).
+\tag{35.5}
+$$
+
+Fix any prime $r\ge R$. If some $q\in S\cup T$ divided $F_r$, (35.4) would give $z(q)\mid r$. But $3\le z(q)<r$ and $r$ is prime, a contradiction. Consequently
+
+$$
+\gcd(F_r,Q)=1.
+\tag{35.6}
+$$
+
+For any chosen $b\in\{0,1\}^{S}$, impose the simultaneous congruences
+
+$$
+g\equiv
+\begin{cases}
+-F_r^{-1}\pmod q,&q\in T,\\
+-F_r^{-1}\pmod q,&q\in S\text{ and }b_q=1,\\
+0\pmod q,&q\in S\text{ and }b_q=0.
+\end{cases}
+\tag{35.7}
+$$
+
+Here each inverse is taken modulo its indicated prime. Distinct prime moduli are coprime, so the Chinese remainder theorem supplies a residue $a\in\{0,\ldots,Q-1\}$ satisfying all of (35.7).
+
+It remains to realize this residue inside the actual window. Write $F_r=10h+s$ with $0\le s\le9$. Since $F_r\ge F_R\ge10(Q+1)$, we have $h\ge Q+1$. Also $L_r\le h+1$ and $U_r\ge2h$, whence
+
+$$
+U_r-L_r\ge h-1\ge Q.
+\tag{35.8}
+$$
+
+An explicit representative is
+
+$$
+g=a+Q\left\lceil\frac{L_r-a}{Q}\right\rceil.
+\tag{35.9}
+$$
+
+The ceiling inequalities give $L_r\le g<L_r+Q\le U_r$, so $g\in I_r$. Set $n=1+F_rg$. Every prime in $T$, and every $q\in S$ with $b_q=1$, divides $n$. For $q\in S$ with $b_q=0$, (35.7) instead gives $n\equiv1\pmod q$, hence $q\nmid n$. Therefore the observed bits are exactly $b$, and the $K$ distinct divisors in $T\subset\mathbb P\setminus S$ give $\rho_S(n)\ge K$. Neither (35.5) nor (35.8) depends on $b$. This proves (35.3), including $S=\varnothing$.
+
+**Corollary 35.3 (No finite upper certificate on a probe fibre).** For every finite $S\subset\mathbb P$ and every $b\in\{0,1\}^{S}$, the fibre $W_{S,b}$ is nonempty and
+
+$$
+\sup_{n\in W_{S,b}}\rho_S(n)
+=\sup_{n\in W_{S,b}}\omega(n)=+\infty.
+\tag{35.10}
+$$
+
+Let $U:\{0,1\}^{S}\to\mathbb R\cup\{+\infty\}$ be a sound upper certificate, meaning that $\omega(n)\le U(d_S(n))$ for every $n\in W$. Then $U(b)=+\infty$ for every pattern $b$. The same conclusion holds for a sound upper certificate for $\rho_S$.
+
+**Proof.** For every integer $K\ge1$, choose a prime $r\ge R(S,K)$ and apply Theorem 35.2 to the fixed pattern $b$. Primes are unbounded, so such an index exists. On this fibre,
+
+$$
+\omega(n)=\rho_S(n)+\sum_{p\in S}b_p.
+\tag{35.11}
+$$
+
+The second term is fixed and finite, which proves both suprema. A finite $U(b)$ would bound the corresponding unbounded fibre, a contradiction. Consequently no rule using only these bits can soundly certify $\omega(n)\le B$ at any pattern for finite $B$. Positive bits can give lower bounds; the assertion concerns upper certificates.
+
+**Corollary 35.4 (A matched observation with an arbitrarily larger prime support).** For every finite $S\subset\mathbb P$, every $n_0\in W$ and every integer $H\ge1$, there exists $n_1\in W$ with
+
+$$
+d_S(n_1)=d_S(n_0),\qquad
+\omega(n_1)-\omega(n_0)\ge H.
+\tag{35.12}
+$$
+
+Moreover, $n_1$ can be chosen in every sufficiently large prime-index window, with $n_0$ fixed.
+
+**Proof.** Put $b=d_S(n_0)$ and $K=\rho_S(n_0)+H\ge1$. Theorem 35.2 gives, for every prime $r\ge R(S,K)$, an $n_1\in W_r$ with these same bits and $\rho_S(n_1)\ge\rho_S(n_0)+H$. Subtract (35.11) for the two integers: the observed contribution cancels, giving (35.12). The same conclusion for a real $H\ge1$ follows by applying the integer case to $\lceil H\rceil$. This is a comparison across the family of windows; it does not place a low-$\omega$ companion in the same window as $n_1$.
+
+**Proposition 35.5 (Two exact numerical anchors and their pattern restrictions).** The family contains
+
+$$
+\begin{aligned}
+27&=1+F_7\cdot2=1+13\cdot2=3^3,
+& I_7&=[2,2]\cap\mathbb Z,\\
+6059&=1+F_{13}\cdot26=1+233\cdot26=73\cdot83,
+& I_{13}&=[24,46]\cap\mathbb Z.
+\end{aligned}
+\tag{35.13}
+$$
+
+Thus $\omega(27)=1$ and $\omega(6059)=2$, with $6059>5040$. They have the same zero pattern for $S=\{2,5\}$, but they do not have the same pattern for every finite $S$.
+
+**Proof.** The Fibonacci recurrence gives $F_7=13$ and $F_{13}=233$; taking the displayed ceilings and floors gives the two intervals. The indices $7,13$ are prime, and $2,26$ belong to the respective intervals. The factorization of $27$ is immediate. Multiplication gives $73\cdot83=6059$; neither factor is divisible by $2,3,5,7$, the only primes below their square roots, so both are prime. Neither integer is divisible by $2$ or $5$, whereas $3\mid27$ and $3\nmid6059$, establishing the pattern claims.
+
+For arbitrary $S$, the first anchor belongs only to the pattern induced by the support $\{3\}$, and the second only to that induced by $\{73,83\}$. Taking either as $n_0$ in Corollary 35.4 gives arbitrarily large prime-support gaps with that anchor's own pattern. In particular, $6059$ supplies a cross-window $\omega=2$ baseline above $5040$; it is not a uniform low-$\omega$ baseline for every pattern. For the all-one pattern, (35.11) already forces $\omega(n)\ge|S|$, so it cannot imply a low-$\omega$ witness. No existence of a low-$\omega$ witness for an arbitrary other pattern follows either.
+
+**Theorem 35.6 (Finite adaptive transcripts cannot certify a finite upper bound).** Consider a deterministic observation-only procedure on an unknown $n\in W$. At each step it may query whether a selected prime divides $n$; the next prime, the stopping decision and the output depend only on its preceding query-answer transcript and fixed parameters common to all $n\in W$. No finite transcript realized by such a procedure can soundly output a finite upper bound for $\omega(n)$, or certify $\omega(n)\le B$ for a finite $B$.
+
+**Proof.** Fix a finite realized transcript $((p_1,b_1),\ldots,(p_m,b_m))$. Deduplicate its primes to obtain a finite set $S$, and let $b\in\{0,1\}^{S}$ be the recorded answers. Repeated queries have consistent answers because the transcript was realized by one integer. Every $n'\in W_{S,b}$ follows the same path: at the first step the rule chooses the same prime; inductively, equal earlier answers imply the same next query or stopping decision, and membership in the fibre supplies the same next answer. At the transcript's endpoint the rule therefore produces the same output for every member of $W_{S,b}$. Corollary 35.3 makes their $\omega$ values unbounded, contradicting soundness of any finite upper output. A transcript of length zero uses $S=\varnothing$ and obeys the same argument.
+
+This argument allows an input-dependent finite number of queries and arbitrary processing of the transcript; it does not assume a predetermined probe list or a uniform query bound. It only excludes sound finite upper outputs under the stated information restriction. Supplying $n$, $r$, a magnitude bound, or other arithmetic observations changes that restriction, so the theorem cannot be applied without rechecking the enlarged observation fibres. For example, a known bound $1\le n\le M$ gives $\omega(n)\le\lfloor\log_2 M\rfloor$, since $2^{\omega(n)}\le n$. A supplied nonempty window index gives the finite bound $n\le1+F_rU_r$. These finite domains are consistent with (35.10), whose supremum ranges over the unbounded union $W$.
+
+**Proposition 35.7 (Pointwise exhaustion is not uniform calibration).** Let $S_1\subseteq S_2\subseteq\cdots$ be finite prime sets with $\bigcup_{j\ge1}S_j=\mathbb P$. For each fixed $n\in W$, there is $J(n)$ such that $\rho_{S_j}(n)=0$ for all $j\ge J(n)$. Nevertheless, for every finite $j$ and every $b\in\{0,1\}^{S_j}$,
+
+$$
+\sup_{n\in W_{S_j,b}}\rho_{S_j}(n)=+\infty,
+\qquad
+\sup_{n\in W}\rho_{S_j}(n)=+\infty.
+\tag{35.14}
+$$
+
+**Proof.** The fixed integer $n$ has finitely many distinct prime divisors. Exhaustion and monotonicity of the sets $S_j$ put all of them in one $S_{J(n)}$, after which the residual is zero. At each finite stage, Corollary 35.3 applies to $S_j$ and every one of its patterns, proving (35.14). Thus the order of quantifiers matters: every fixed source is eventually exhausted, while at each finite stage other sources in the same observation fibre have arbitrarily large residual. This is pointwise, non-uniform calibration, not an observation-only certificate that the actual residual has reached zero.
+
+**Mathematical citation and scope 35.8 (Supplied method and the exact strengthening).** The cited current-dev supplier file FIBONACCI_ATOMIC_RELATION_GENERATION, Section 258.6b, supplies unbounded $\omega$ in the canonical window union and the entry-rank/CRT/interval construction. The Fibonacci entry-rank criterion, the Chinese remainder theorem and infinitude of primes are reused classical ingredients. The added deduction is (35.3): every exact finite bit pattern, including its zero coordinates, has at least $K$ unobserved prime divisors in every prime-index window beyond one pattern-independent threshold. The fibre certificates, matched pairs, adaptive-transcript obstruction and non-uniform exhaustion are consequences of this strengthened statement. These are `repo-derived` ordinary mathematical deductions, not a claim of literature priority or of a new CRT or entry-rank theorem.
+
+The restriction to sufficiently large prime indices is essential to this proof. If a queried prime $p$ divides $F_r$, then every $1+F_rg$ is $1$ modulo $p$, so that coordinate is forced to zero throughout that window. Small windows can also be empty. The threshold (35.5) excludes these obstructions for the selected finite set $S\cup T$; it does not assert every pattern in every small window. Each individual window remains finite, with a finite maximum of $\omega$ when it is nonempty. Increasing $K$ may require increasing the window index; no fixed finite window has unbounded prime support.
+
+The constructed integer has at least $K$ distinct prime divisors outside $S$. Nothing here asserts that it is prime, has exactly $K$ prime divisors in total or outside $S$, is squarefree, satisfies or violates Robin's inequality, or is colossally abundant (CA) or superabundant (SA). The numerical comparison with $5040$ has only the baseline role stated in Proposition 35.5. No uniform low-$\omega$ witness for all patterns, same-window low-$\omega$ companion, or bound on computational, query or physical resources for constructing or recognizing the witnesses is asserted. The information obstruction is for finitely many prime-divisibility bits on the whole family $W$, not arbitrary predicates or all arithmetic observations. The argument is ordinary theory prose and asserts no Lean/kernel verification.
+
+## 追加锚（本行以下为增补区）
+
+## 36. Local self-calibration from window and prime-support side information
+
+This section uses exactly the numerical source $W$ and prime-divisibility observations of Section 35. Its conclusions are `repo-derived` deductions from Theorem 35.2 and elementary finite-set and divisibility arguments. They are ordinary mathematical theory prose, with no claim of Lean/kernel verification or literature priority. The added information is an explicit source relation; it is not inferred for free from the old probe bits.
+
+**Definitions (labeled source and calibration intervals).** Let $\mathbb P$ denote the positive primes and $\mathbb N_0$ the nonnegative integers. Retain the Fibonacci recurrence $F_0=0$, $F_1=1$, $F_{j+2}=F_{j+1}+F_j$ and write
+
+$$
+\begin{aligned}
+L_r&=\lceil F_r/10\rceil,& U_r&=\lfloor F_r/5\rfloor,&
+I_r&=[L_r,U_r]\cap\mathbb Z,\\
+X&=\{(r,g):r\in\mathbb P,\ g\in I_r\},&
+N(r,g)&=1+F_rg,& \Omega(r,g)&=\omega(N(r,g)).
+\end{aligned}
+\tag{36.1}
+$$
+
+Thus $W_r=\{N(r,g):g\in I_r\}$ and $N[X]=W=\bigcup_{r\in\mathbb P}W_r$, where an interval with $L_r>U_r$ is empty. The target $\omega(n)$ counts distinct prime divisors, with $\omega(1)=0$. For finite $S\subset\mathbb P$, write $d_S(n)=(\mathbf1_{p\mid n})_{p\in S}$ and $\rho_S(n)=\omega(n)-\sum_{p\in S}\mathbf1_{p\mid n}$ for the probe record and the unobserved support size. For $S=\varnothing$ there is one empty pattern, its sum is zero and $\rho_S=\omega$.
+
+The labels in $X$ keep the generating window explicit: if two windows share a numerical value, their labeled sources remain distinct. A numerical observation on $W$ is pulled back along $N$. Supplying $r$ means supplying the label, or the promise $n\in W_r$; it does not assume a unique index determined by $n$. None of these labels is a phase or an endpoint fee from the earlier sections.
+
+For any observation $o:X\to Y$ and any occupied cell $C_y=o^{-1}(\{y\})\ne\varnothing$, define
+
+$$
+L_o(y)=\min_{x\in C_y}\Omega(x),\qquad
+U_o(y)=\sup_{x\in C_y}\Omega(x)\in\mathbb N_0\cup\{+\infty\}.
+\tag{36.2}
+$$
+
+The minimum exists because the values are nonnegative integers; a finite supremum is also attained. No calibration interval is assigned to an empty cell. The interval $[L_o(y),U_o(y)]$ encloses the possible target values; it need not contain only attainable values. A sound finite upper certificate at $y$ is a finite number $c(y)$ with $\Omega(x)\le c(y)$ for every $x\in C_y$. Such a certificate exists exactly when $U_o(y)<\infty$. An exact decoder $D:o[X]\to\mathbb N_0$ with $D(o(x))=\Omega(x)$ exists exactly when every occupied cell has one $\Omega$ value, equivalently $L_o(y)=U_o(y)$. These are set-theoretic criteria, not computability assertions.
+
+Say $\widetilde o$ refines $o$ when $o=h\circ\widetilde o$ for some map $h$ on the attained observations. For every occupied refined cell with $y=h(\widetilde y)$,
+
+$$
+L_o(y)\le L_{\widetilde o}(\widetilde y)
+\le U_{\widetilde o}(\widetilde y)\le U_o(y).
+\tag{36.3}
+$$
+
+Indeed, its sources form a nonempty subset of $C_y$, so taking the minimum and supremum gives these inequalities. The decoding criteria follow by constancy on each fibre, and the certificate criterion follows by the definition of supremum. If $o$ includes a finite probe record $d_S(N(x))=b$, then the observed contribution gives the sound lower bound
+
+$$
+\sum_{p\in S}b_p\le L_o(y)\le\Omega(x)\le U_o(y)
+\qquad(x\in C_y).
+\tag{36.4}
+$$
+
+This lower bound need not be sharp. Refinement can raise the lower endpoint and lower the upper endpoint, while exactness requires the endpoints to coincide.
+
+**Theorem 36.1 (The index-fibre criterion and finite completion of probes).** Let $\alpha:\mathbb P\to A$ be any index-side observation, let $S\subset\mathbb P$ be finite, and put
+
+$$
+\begin{aligned}
+o_{\alpha,S}(r,g)&=(\alpha(r),d_S(N(r,g))),\\
+C_{a,b}&=\{(r,g)\in X:\alpha(r)=a,\ d_S(N(r,g))=b\},\\
+P_a&=\{r\in\mathbb P:\alpha(r)=a,\ I_r\ne\varnothing\},\\
+P_{a,b}&=\{r\in P_a:\exists g\in I_r,\ d_S(N(r,g))=b\}.
+\end{aligned}
+\tag{36.5}
+$$
+
+Here $P_a$ is compatible with the side information, while $P_{a,b}$ is compatible with the entire observed record. For every occupied $C_{a,b}$,
+
+$$
+\begin{aligned}
+U_{o_{\alpha,S}}(a,b)<\infty
+&\ \Longleftrightarrow\ P_a\text{ is bounded}
+\ \Longleftrightarrow\ P_a\text{ is finite}\\
+&\ \Longleftrightarrow\ P_{a,b}\text{ is bounded}
+\ \Longleftrightarrow\ P_{a,b}\text{ is finite}.
+\end{aligned}
+\tag{36.6}
+$$
+
+If $P_a$ is finite, it is nonempty under this occupancy assumption, and
+
+$$
+B_a=\max_{r\in P_a}(1+F_rU_r),\qquad
+U_{o_{\alpha,S}}(a,b)\le\lfloor\log_2 B_a\rfloor<\infty.
+\tag{36.7}
+$$
+
+Given an explicit valid integer bound $B\ge B_a$, a finite additional set of prime queries recovers $\Omega$ exactly: with $Q_B=\{p\in\mathbb P:p\le B\}$,
+
+$$
+\Omega(x)=\sum_{p\in Q_B}\mathbf1_{p\mid N(x)}
+\qquad(x=(r,g)\in X,\ \alpha(r)=a).
+\tag{36.8}
+$$
+
+The added queries are only those in $Q_B\setminus S$. Exact recovery from $(a,b)$ itself, without these additional answers, still requires a singleton $\Omega$ fibre, or $L_{o_{\alpha,S}}(a,b)=U_{o_{\alpha,S}}(a,b)$.
+
+**Proof.** A subset of the positive integers is bounded if and only if it is finite. If $P_a$ is finite, its finitely many windows contain finitely many labeled sources, and every one has $1\le N(r,g)\le B_a$. The product of the distinct prime divisors of any positive integer $n$ divides $n$ and is at least $2^{\omega(n)}$. Therefore $2^{\Omega(r,g)}\le N(r,g)\le B_a$, giving (36.7). Every prime divisor is at most $N(r,g)\le B$, which proves (36.8).
+
+Conversely, suppose $P_a$ is unbounded. Fix any $b\in\{0,1\}^{S}$ and any integer $K\ge1$. Choose $r\in P_a$ with $r\ge R(S,K)$, where $R(S,K)$ is the threshold of Theorem 35.2. That theorem applies to this chosen prime index, however sparse $P_a$ is, and supplies $g\in I_r$ with
+
+$$
+d_S(N(r,g))=b,\qquad
+\Omega(r,g)=\rho_S(N(r,g))+\sum_{p\in S}b_p
+\ge K+\sum_{p\in S}b_p.
+\tag{36.9}
+$$
+
+Thus every pattern has an occupied cell and both its residual support and its total support are unbounded. This proves the reverse implication for $P_a$. In addition, Theorem 35.2 with $K=1$ gives
+
+$$
+P_a\setminus P_{a,b}\subseteq\{r\in\mathbb P:r<R(S,1)\}.
+\tag{36.10}
+$$
+
+Only finitely many indices can be lost when the bits are imposed. Since $P_{a,b}\subseteq P_a$, their boundedness and finiteness are equivalent, proving (36.6). This does not assert that every small window realizes every pattern: empty windows have already been removed, and primes dividing $F_r$ can force zero bits in the remaining small windows. The exactness assertion is the fibre criterion in (36.2), not a consequence of finiteness alone.
+
+**Corollary 36.2 (The adaptive obstruction inside an infinite index cell).** Fix $a$ with $P_a$ infinite. Consider a deterministic procedure whose only source information is $\alpha(r)=a$ and answers to prime-divisibility queries about $N(r,g)$. Its next prime, stopping decision and output may depend on $a$, the preceding transcript and parameters common to this entire index cell. Every finite realized transcript leaves $\Omega$ unbounded on its compatible sources. Hence no such transcript can be a sound leaf outputting a finite upper bound, or certifying $\Omega\le c$ for finite $c$.
+
+**Proof.** Deduplicate the finitely many queried primes into $S$ and their consistent answers into $b$. All sources in $C_{a,b}$ follow the same path: equal earlier answers force the same next query or stopping decision. Theorem 36.1 makes this cell's $\Omega$ values unbounded, so one finite upper output cannot be sound for all of them. The argument includes the empty transcript, repeated queries and a source-dependent number of queries; it does not assume a uniform bound on transcript length. It permits halting with no finite upper claim, and says nothing about procedures supplied with further source information. With constant $\alpha$, it recovers the global obstruction of Section 35. With exact $r$, the compatible index set is a singleton and this obstruction no longer applies.
+
+**Proposition 36.3 (A fixed window and finite probes need not determine $\omega$).** For the exact supplied index $r=13$ and $S=\{2,5\}$, one occupied observation cell contains two different $\omega$ values:
+
+$$
+\begin{aligned}
+F_{13}&=233,& I_{13}&=[24,46]\cap\mathbb Z,\\
+5593&=1+233\cdot24=7\cdot17\cdot47,& \omega(5593)&=3,\\
+6059&=1+233\cdot26=73\cdot83,& \omega(6059)&=2.
+\end{aligned}
+\tag{36.11}
+$$
+
+Both integers have $d_{\{2,5\}}=(0,0)$. Thus exact index information supplies finite upper calibration without, in general, exact target recovery from the index and the existing probes.
+
+**Proof.** The Fibonacci recurrence gives $F_{13}=233$; hence $L_{13}=\lceil233/10\rceil=24$ and $U_{13}=\lfloor233/5\rfloor=46$. The index $13$ is prime and both $24,26$ lie in the interval. Direct multiplication gives the two factorizations in (36.11). Trial division by primes not exceeding each factor's square root verifies that $7,17,47,73,83$ are prime; the only trial primes needed are among $2,3,5,7$. The factors in each product are distinct. Both products are odd and neither is a multiple of $5$, giving the same zero bits and the stated unequal counts. The window magnitude bound is
+
+$$
+1+F_{13}U_{13}=1+233\cdot46=10719,
+\qquad 2^{13}\le10719<2^{14}.
+\tag{36.12}
+$$
+
+For $o=o_{\mathrm{id},\{2,5\}}$ and $y=(13,(0,0))$, it follows that $L_o(y)\le2<3\le U_o(y)\le13$. These inequalities exhibit a nonzero exactness gap, without claiming either endpoint is sharp.
+
+**Proposition 36.4 (Four sufficient forms of side information).** In the source $X$, each of the following supplied relations gives finite upper calibration on every occupied cell to which the relation applies. The stated decoder uses further prime-divisibility answers; none of these relations alone is asserted to determine $\Omega$.
+
+1. **Exact window label.** A supplied nonempty index $r$ gives $N\le B_r=1+F_rU_r$ and $\Omega\le\lfloor\log_2B_r\rfloor$. Querying all primes at most $B_r$ gives the exact count.
+2. **Bounded index bucket.** A bucket value $a$ supplied with a known positive integer bound $R(a)$ and the promise $r\le R(a)$ gives a finite window union. For an occupied bucket,
+
+   $$
+   N\le M_a=1+F_{R(a)}\lfloor F_{R(a)}/5\rfloor,
+   \qquad \Omega\le\lfloor\log_2M_a\rfloor.
+   \tag{36.13}
+   $$
+
+   Querying all primes at most $M_a$ gives the exact count. For example, the supplied bucket number $j$ with $2^{j-1}<r\le2^j$ has the available bound $R(j)=2^j$.
+3. **Magnitude bound.** A supplied integer $M\ge1$ and the promise $1\le N\le M$ give $\Omega\le\lfloor\log_2M\rfloor$. Querying all primes at most $M$ gives the exact count, without supplying a generating index.
+4. **Certified complete prime-support envelope.** A supplied finite set $T\subset\mathbb P$ and the sound promise
+
+   $$
+   \{p\in\mathbb P:p\mid N(x)\}\subseteq T
+   \tag{36.14}
+   $$
+
+   for every source $x$ compatible with the supplied information give $\Omega\le|T|$. The set may contain primes that do not divide the actual integer; completeness means that no prime divisor lies outside it. For an additional occupied probe record $d_S(N)=b$, set $A_b=\sum_{p\in S}b_p$. Then
+
+   $$
+   A_b\le\Omega\le A_b+|T\setminus S|\le|T|.
+   \tag{36.15}
+   $$
+
+   Querying every prime in $T\setminus S$ gives $\Omega=\sum_{p\in T}\mathbf1_{p\mid N}$ exactly.
+
+**Proof.** The first relation is Theorem 36.1 with $\alpha(r)=r$. For the second, occupied windows have $r\ge5$: $I_2=I_3=\varnothing$, while $I_5=\{1\}$. Fibonacci monotonicity therefore gives $F_r\le F_{R(a)}$ and $U_r\le\lfloor F_{R(a)}/5\rfloor$, proving (36.13). The finite prime-query formula follows as in (36.8). For the third, $2^{\Omega}\le N\le M$ gives the bound and every prime divisor is at most $M$. For the fourth, occupancy forces $b_p=0$ at any queried prime outside $T$; the observed divisors contribute $A_b\le|S\cap T|$, and all remaining distinct divisors lie in $T\setminus S$. This proves (36.15) and the decoding formula.
+
+Empty promises create no occupied cell. In particular, $T=\varnothing$ would force $N=1$ for a positive integer, but no source in $X$ has that value: nonempty windows have $g\ge1$ and $F_r\ge5$. A bound $M=1$ is likewise empty here, although the convention $\omega(1)=0$ makes the general counting formula consistent. The completeness of $T$ and the magnitude or index bounds are source promises; a finite list of tested primes by itself certifies none of them on all of $W$.
+
+The finiteness in Theorem 36.1 is distinct from effectively available decoder data. An arbitrary map $\alpha$ need not provide a way to enumerate its finite fibre $P_a$, compute $B_a$, or find a valid upper bound from $a$. A supplied numerical index bound or magnitude bound does provide such finite data. In the support case the decoder needs the complete finite list $T$, not merely an assertion that the actual integer has finitely many prime divisors, which is already true for every $N$. Given these data, finite enumeration and the indicated finite queries suffice; no factoring-efficiency, polynomial-time, uniform query-budget or physical-resource bound is asserted.
+
+**Proposition 36.5 (Finite-valued side observations and the global/local distinction).** A finite-valued side observation does not automatically calibrate every source. More precisely, for any finite-valued $\beta:X\to E$, any finite $S\subset\mathbb P$ and every $b\in\{0,1\}^{S}$, at least one occupied joint cell
+
+$$
+\{x\in X:\beta(x)=e,\ d_S(N(x))=b\}
+\tag{36.16}
+$$
+
+has unbounded $\Omega$. For finite-valued index-side $\alpha$, at least one $P_a$ is infinite, and in that same index cell every finite probe pattern has unbounded $\Omega$ and Corollary 36.2 applies. Nevertheless, individual cells selected by additional source relations can have finite upper bounds, as in Proposition 36.4. There is no finite constant bounding $\Omega$ on all of $X$, or $\omega$ on all of $W$.
+
+**Proof.** For each fixed $S,b$, Theorem 35.2 makes the pullback of $W_{S,b}$ to $X$ unbounded in $\Omega$. Its partition by the finitely many values of $\beta$ must have an unbounded part: otherwise the maximum of the finitely many finite bounds on its occupied parts would bound the whole fibre. For index-side $\alpha$, infinitely many prime indices have nonempty windows, and finitely many finite sets cannot cover them. An infinite $P_a$ therefore exists and Theorem 36.1 applies. Taking $S=\varnothing$ in Theorem 35.2 rules out a global constant. These statements do not say that every cell of an arbitrary $\beta$ is unbounded, nor extend the index-only criterion to arbitrary restrictions on $g$ or $N$.
+
+**Scope 36.6 (The self-calibration bridge and its remaining exactness gap).** Section 35 diagnoses the original probe fibres: their upper endpoint is infinite at every finite record, including adaptive records. Adding a sound relation about the window, index range, magnitude or complete support refines those fibres. Theorem 36.1 classifies exactly when index-side refinement makes the upper endpoint finite, and Proposition 36.4 gives explicit finite decoding data for four sufficient relations. The interval $[L_o(y),U_o(y)]$ measures what remains unresolved: finite $U_o(y)$ permits upper calibration, while exact recovery from the current observation requires $L_o(y)=U_o(y)$. Proposition 36.3 separates these two conditions inside one fixed window. Further queries can close this gap when a complete finite probe envelope is available; merely processing the unchanged record cannot separate its unequal target values.
+
+The bounds are local to the supplied information and need not share any global constant. The target remains the number of distinct prime divisors. None of the decoding conclusions recovers prime exponents, the hidden integer, or its generating label; any such recovery requires its own identifiability argument under the chosen source promise. Numerical overlap of windows is handled by the labeled source (36.1), not by postulating a function assigning a unique index to every $n\in W$. The adaptive impossibility applies only while the information consists of an index-side value with infinite compatible index set and finite divisibility answers. Magnitude or support promises change the compatible sources and must be included before invoking it. No claim about arbitrary arithmetic predicates, efficient factorization, or uniform calibration on all of $W$ follows.
+
+## 追加锚（本行以下为增补区）
