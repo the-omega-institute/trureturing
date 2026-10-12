@@ -57,6 +57,7 @@ def sigma : Op 3 := (1 / 56 : ℝ) • ((7 : ℝ) • 1 + S)
 def bell : Op 6 := Matrix.of fun x y =>
   if (splitBits 3 3 x).1 = (splitBits 3 3 x).2 ∧
       (splitBits 3 3 y).1 = (splitBits 3 3 y).2 then (1 / 8 : ℂ) else 0
+def W (s : ℝ) : Op 3 := (1 / (1 + s) : ℝ) • ((1 : Op 3) + s • S)
 private lemma tensor_product {n m : ℕ} (A C : Op n) (B D : Op m) :
     tensor A B * tensor C D = tensor (A * C) (B * D) := by
   let e : Bits (n + m) ≃ Bits n × Bits m :=
@@ -544,4 +545,47 @@ private lemma conjugate_S_support {ρ : Op 3} (hρ : ρ ∈ STAB 3) :
   · intro i j h
     have he := congrArg conjugate (gamma_anticommute i j h)
     simpa only [conjugate_product, conjugate_neg] using he
+
+private lemma vacuum_vec (n : ℕ) : vacuum n = Matrix.vecMulVec (Pi.single 0 1) (star (Pi.single 0 1)) := by
+  have h0 : (fun _ : Fin n => Fin.castSucc (Fin.last 0)) = 0 := by
+    funext i
+    apply Fin.ext
+    norm_num
+  ext x y
+  unfold vacuum Matrix.vecMulVec
+  rw [h0]
+  simp only [Matrix.single_apply, Pi.single_apply, eq_comm]
+  by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> simp [hx, hy]
+
+private lemma vacuum_psd (n : ℕ) : (vacuum n).PosSemidef := by
+  rw [vacuum_vec]
+  exact Matrix.posSemidef_vecMulVec_self_star _
+
+private lemma vacuum_trace (n : ℕ) : (vacuum n).trace = 1 := by
+  simp [vacuum, Matrix.trace, Matrix.single_apply]
+
+private lemma pure_state {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
+    IsState (U * vacuum n * Uᴴ) := by
+  have hu := clifford_data hU
+  refine ⟨?_, ?_⟩
+  · simpa only [Matrix.conjTranspose_conjTranspose] using
+      (vacuum_psd n).conjTranspose_mul_mul_same Uᴴ
+  · rw [Matrix.trace_mul_cycle, Matrix.trace_mul_cycle]
+    have hleft : Uᴴ * U = 1 := by
+      simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp hu.1
+    calc
+      (vacuum n * Uᴴ * U).trace = (vacuum n * (Uᴴ * U)).trace := by
+        rw [Matrix.mul_assoc]
+      _ = 1 := by rw [hleft, Matrix.mul_one, vacuum_trace]
+
+private lemma stab_state {n : ℕ} {η : Op n} (hη : η ∈ STAB n) : IsState η := by
+  refine convexHull_min (t := {A : Op n | IsState A}) ?_ ?_ hη
+  · rintro A ⟨U, hU, rfl⟩
+    exact pure_state hU
+  · intro A hA B hB a b ha hb hab
+    rcases hA with ⟨hA, hAt⟩
+    rcases hB with ⟨hB, hBt⟩
+    refine ⟨(hA.smul ha).add (hB.smul hb), ?_⟩
+    simp only [Matrix.trace_add, Matrix.trace_smul, hAt, hBt, smul_eq_mul]
+    simpa [Algebra.smul_def] using congrArg (fun x : ℝ => (x : ℂ)) hab
 end D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
