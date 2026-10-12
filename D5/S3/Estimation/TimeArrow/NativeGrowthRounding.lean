@@ -391,7 +391,7 @@ theorem cell_logit_bound (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
         2*(L : ℝ)*ε + 1/(q : ℝ) + 2*p
       have hs := congrArg (fun z : ℝ => z*ε) hsum
       nlinarith only [hs, mul_nonneg hl hε]
-private theorem compensation_density_bound (M q : ℕ) (r : ℝ)
+theorem compensation_density_bound (M q : ℕ) (r : ℝ)
     (hr : 0 ≤ r) (hqm : q < M) (hp : (q : ℝ)/M ≤ 1/2) :
     compensation M q r ≤ 2*r*((q : ℝ)/M) := by
   have hM : (0 : ℝ) < M := by exact_mod_cast (show 0 < M by omega)
