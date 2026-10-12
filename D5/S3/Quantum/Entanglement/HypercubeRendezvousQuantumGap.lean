@@ -12,8 +12,6 @@ import Mathlib.Analysis.Complex.Order
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Analysis.InnerProductSpace.Defs
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 noncomputable section
 open scoped BigOperators symmDiff ComplexOrder
 namespace D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
@@ -62,11 +60,12 @@ def NSValues (d t : ℕ) : Set ℝ := {r | ∃ P : Correlation d t, IsNS P ∧ v
 def omegaQ (d t : ℕ) : ℝ := sSup (QValues d t)
 def omegaNS (d t : ℕ) : ℝ := sSup (NSValues d t)
 def claim : Prop := ∀ t d : ℕ, 2 ≤ t → 2 * t < d → omegaQ d t < omegaNS d t
+section AbstractGap
 private def n (d t : ℕ) : ℝ := (Nat.choose d t : ℝ)
 private def kappa (d t : ℕ) : ℝ :=
   1 / ((n d t) ^ 4 * (4 * Real.sqrt 2 * (t : ℝ) + 2) ^ 2)
 
-private lemma disjoint_extension {d t : ℕ} (S : Vertex d) (hc : S.card + t ≤ d) :
+private lemma disjoint_output {d t : ℕ} (S : Vertex d) (hc : S.card + t ≤ d) :
     ∃ B : Output d t, Disjoint S B.val := by
   obtain ⟨B, hB, hb⟩ := Finset.exists_subset_card_eq
     (show t ≤ (Finset.univ \ S).card by
@@ -166,7 +165,6 @@ private lemma winning_translate {d t : ℕ} (ζ : Vertex d) (A B : Output d t)
   refine ⟨hab, ?_⟩
   rw [symmDiff_symmDiff_symmDiff_comm, symmDiff_self]
   exact (Finset.symmDiff_eq_union hab).symm.trans (bot_symmDiff _).symm
-section AbstractGap
 variable {V : Type*} [AddCommGroup V] [Module ℝ V] (C : PreInnerProductSpace.Core ℝ V)
 private lemma form_symm (x y : V) : C.inner x y = C.inner y x := by
   simpa using C.conj_inner_symm y x
@@ -174,6 +172,9 @@ private lemma form_sub (x y : V) :
     C.inner (x - y) (x - y) = C.inner x x - 2 * C.inner x y + C.inner y y := by
   have he := @InnerProductSpace.Core.inner_sub_sub_self ℝ V _ _ _ C x y
   rw [form_symm C y x] at he; linarith
+private lemma form_sub_symm (x y : V) :
+    C.inner (x - y) (x - y) = C.inner (y - x) (y - x) := by
+  rw [form_sub C, form_sub C, form_symm C y x]; ring
 private lemma form_cs (x y : V) : (C.inner x y) ^ 2 ≤ C.inner x x * C.inner y y := by
   have he := @InnerProductSpace.Core.inner_mul_inner_self_le ℝ V _ _ _ C x y
   rw [form_symm C y x] at he
@@ -240,5 +241,127 @@ private lemma scalar_gap {d t : ℕ} (hn : 1 ≤ n d t) (δ : ℝ) (h0 : 0 ≤ �
   have hd : 0 < (n d t) ^ 4 * a ^ 2 := by positivity
   change 1 / ((n d t) ^ 4 * a ^ 2) ≤ δ
   exact (div_le_iff₀ hd).mpr (by simpa only [one_mul, mul_comm] using hg2)
+private theorem abstract_gap {d t : ℕ} (ht : 2 ≤ t) (hd : 2 * t < d) (h : V)
+    (u v : Vertex d → Output d t → V) (δ : ℝ) (hδ0 : 0 ≤ δ) (hδ1 : δ ≤ 1)
+    (hh : C.inner h h = n d t) (hu : ∀ σ A, C.inner h (u σ A) = 1)
+    (_hv : ∀ τ B, C.inner h (v τ B) = 1)
+    (qu : ∀ σ A, C.inner (u σ A) (u σ A) ≤ 1)
+    (qv : ∀ τ B, C.inner (v τ B) (v τ B) ≤ 1)
+    (qsum : ∀ σ A A', A ≠ A' → C.inner (u σ A + u σ A') (u σ A + u σ A') ≤ 2)
+    (win : ∀ σ τ A B, Wins σ τ A B → C.inner (u σ A) (v τ B) = 1 - δ) :
+    kappa d t ≤ δ := by
+  classical
+  have hn : 1 ≤ n d t := by
+    dsimp only [n]; exact_mod_cast Nat.choose_pos (show t ≤ d by omega)
+  let e := Real.sqrt (2 * δ)
+  have he : 0 ≤ e := Real.sqrt_nonneg _
+  have branch : ∀ σ τ A B, Wins σ τ A B →
+      (1 - δ) ^ 2 ≤ C.inner (u σ A) (u σ A) ∧
+      Real.sqrt (C.inner (u σ A - v τ B) (u σ A - v τ B)) ≤ e := by
+    intro σ τ A B hw
+    have hp : 0 ≤ C.inner (u σ A) (u σ A) := C.re_inner_nonneg _
+    have cs := form_cs C (u σ A) (v τ B)
+    rw [win σ τ A B hw] at cs
+    refine ⟨by nlinarith [qv τ B], ?_⟩
+    apply Real.sqrt_le_sqrt
+    rw [form_sub C, win σ τ A B hw]
+    linarith [qu σ A, qv τ B]
+  have qlower : ∀ σ A, (1 - δ) ^ 2 ≤ C.inner (u σ A) (u σ A) := by
+    intro σ A
+    obtain ⟨B, hB⟩ := disjoint_output (t := t) A.val (by rw [A.property]; omega)
+    have hw := winning_translate (σ ∆ A.val) A B hB
+    rw [symmDiff_symmDiff_cancel_right] at hw
+    exact (branch σ ((σ ∆ A.val) ∆ B.val) A B hw).1
+  have cross : ∀ σ A A', A ≠ A' → C.inner (u σ A) (u σ A') ≤ 2 * δ := by
+    intro σ A A' hAA'
+    have hx := @InnerProductSpace.Core.inner_add_add_self ℝ V _ _ _ C (u σ A) (u σ A')
+    rw [form_symm C (u σ A') (u σ A)] at hx
+    nlinarith [qsum σ A A' hAA', qlower σ A, qlower σ A', sq_nonneg δ]
+  have step : ∀ (ζ : Vertex d) (A A' : Output d t), (A.val ∪ A'.val).card ≤ t + 1 →
+      Real.sqrt (C.inner (u (ζ ∆ A.val) A - u (ζ ∆ A'.val) A')
+        (u (ζ ∆ A.val) A - u (ζ ∆ A'.val) A')) ≤ 2 * e := by
+    intro ζ A A' hunion
+    obtain ⟨B, hB⟩ := disjoint_output (t := t) (A.val ∪ A'.val) (by omega)
+    have hab : Disjoint A.val B.val := hB.mono_left Finset.subset_union_left
+    have hab' : Disjoint A'.val B.val := hB.mono_left Finset.subset_union_right
+    have h1 := (branch _ _ A B (winning_translate ζ A B hab)).2
+    have h2 := (branch _ _ A' B (winning_translate ζ A' B hab')).2
+    have htri := form_triangle C (u (ζ ∆ A.val) A) (v (ζ ∆ B.val) B)
+      (u (ζ ∆ A'.val) A')
+    rw [form_sub_symm C (v (ζ ∆ B.val) B) (u (ζ ∆ A'.val) A')] at htri
+    linarith
+  obtain ⟨R, _, hR⟩ := Finset.exists_subset_card_eq
+    (show t ≤ (Finset.univ : Vertex d).card by simp; omega)
+  let Astar : Output d t := ⟨R, hR⟩
+  let X : Vertex d → V := fun ζ => u (ζ ∆ Astar.val) Astar
+  have hX : ∀ ζ A, Real.sqrt (C.inner (u (ζ ∆ A.val) A - X ζ)
+      (u (ζ ∆ A.val) A - X ζ)) ≤ 2 * (t : ℝ) * e := by
+    intro ζ A
+    exact exchange_transport C (fun A => u (ζ ∆ A.val) A) e he
+      (fun A A' hs => step ζ A A' hs) A Astar
+  have normu : ∀ σ A, Real.sqrt (C.inner (u σ A) (u σ A)) ≤ 1 := by
+    intro σ A; exact Real.sqrt_le_one.mpr (qu σ A)
+  obtain ⟨J, hJcard, hJ⟩ := large_family ht hd
+  have hpair : ∀ ζ ∈ J, ∀ ζ' ∈ J, ζ ≠ ζ' →
+      C.inner (X ζ) (X ζ') ≤ 4 * (t : ℝ) * e + 2 * δ := by
+    intro ζ hz ζ' hz' hne
+    obtain ⟨σ, A, A', hAA', hr, hr'⟩ := common_sphere ht hd ζ ζ'
+      (hJ ζ hz) (hJ ζ' hz') hne
+    have hrA : ζ ∆ A.val = σ := by rw [← hr, symmDiff_symmDiff_cancel_right]
+    have hrA' : ζ' ∆ A'.val = σ := by rw [← hr', symmDiff_symmDiff_cancel_right]
+    have hdist := hX ζ A
+    have hdist' := hX ζ' A'
+    rw [hrA] at hdist; rw [hrA'] at hdist'
+    have hb1 := form_bound C (X ζ - u σ A) (X ζ')
+    have hb2 := form_bound C (X ζ' - u σ A') (u σ A)
+    rw [form_sub_symm C (X ζ) (u σ A)] at hb1
+    rw [form_sub_symm C (X ζ') (u σ A')] at hb2
+    have hnX := normu (ζ' ∆ Astar.val) Astar
+    have hnA := normu σ A
+    have hbd1 : C.inner (X ζ - u σ A) (X ζ') ≤ 2 * (t : ℝ) * e := by
+      have hm := mul_le_mul_of_nonneg_left hnX
+        (Real.sqrt_nonneg (C.inner (u σ A - X ζ) (u σ A - X ζ)))
+      apply hb1.trans
+      simpa only [mul_one] using hm.trans (by simpa only [mul_one] using hdist)
+    have hbd2 : C.inner (X ζ' - u σ A') (u σ A) ≤ 2 * (t : ℝ) * e := by
+      have hm := mul_le_mul_of_nonneg_left hnA
+        (Real.sqrt_nonneg (C.inner (u σ A' - X ζ') (u σ A' - X ζ')))
+      apply hb2.trans
+      simpa only [mul_one] using hm.trans (by simpa only [mul_one] using hdist')
+    rw [@InnerProductSpace.Core.inner_sub_left ℝ V _ _ _ C] at hbd1 hbd2
+    rw [form_symm C (X ζ') (u σ A), form_symm C (u σ A') (u σ A)] at hbd2
+    linarith [cross σ A A' hAA']
+  let w : V := ∑ ζ ∈ J, X ζ
+  have hwinner : C.inner h w = (J.card : ℝ) := by
+    dsimp only [w]; rw [form_sum C]
+    have hx : ∀ ζ, C.inner h (X ζ) = 1 := fun ζ => hu (ζ ∆ Astar.val) Astar
+    simp_rw [hx]; simp
+  have hJpos : 0 < J.card := by omega
+  have hwq : C.inner w w ≤ (J.card : ℝ) + (J.card : ℝ) * (J.card - 1 : ℕ) *
+      (4 * (t : ℝ) * e + 2 * δ) := by
+    change C.inner w (∑ ζ ∈ J, X ζ) ≤ _
+    rw [form_sum C]
+    have hrow : ∀ ζ ∈ J, C.inner w (X ζ) ≤ 1 + (J.card - 1 : ℕ) *
+        (4 * (t : ℝ) * e + 2 * δ) := by
+      intro ζ hz
+      rw [form_symm C w (X ζ), form_sum C]
+      rw [← Finset.sum_erase_add J (fun ζ' => C.inner (X ζ) (X ζ')) hz]
+      have hb := Finset.sum_le_sum (fun ζ' hζ' => hpair ζ hz ζ'
+        (Finset.mem_of_mem_erase hζ') (Finset.ne_of_mem_erase hζ').symm)
+      rw [Finset.sum_const, nsmul_eq_mul, Finset.card_erase_of_mem hz] at hb
+      linarith [qu (ζ ∆ Astar.val) Astar]
+    exact (Finset.sum_le_sum hrow).trans_eq (by
+      rw [Finset.sum_const, nsmul_eq_mul]; ring)
+  have hcs := form_cs C h w
+  rw [hh, hwinner] at hcs
+  have htotal := hcs.trans (mul_le_mul_of_nonneg_left hwq (by linarith : 0 ≤ n d t))
+  have hc : (J.card : ℝ) = n d t + 1 := by rw [hJcard]; dsimp only [n]; push_cast; rfl
+  have hc' : ((J.card - 1 : ℕ) : ℝ) = n d t := by
+    rw [Nat.cast_sub (by omega), hc]; norm_num
+  rw [hc, hc'] at htotal
+  have hg : 1 ≤ (n d t) ^ 2 * (4 * (t : ℝ) * e + 2 * δ) := by
+    apply (mul_le_mul_iff_right₀ (show 0 < n d t + 1 by linarith)).mp
+    nlinarith [htotal]
+  exact scalar_gap hn δ hδ0 hδ1 hg
 end AbstractGap
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
