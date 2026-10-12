@@ -23,6 +23,10 @@ on:
         description: '40-hex commit reachable from source_ref; the producer checks this pin'
         required: true
         type: string
+      auric_fib_tests:
+        description: 'Run the finite, compiled and universal AURIC FIB acceptance after seed publication'
+        type: boolean
+        default: false
 
 permissions: {}
 
@@ -213,6 +217,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib
+      - name: Run the requested AURIC FIB acceptance
+        if: github.event_name == 'workflow_dispatch' && inputs.auric_fib_tests
+        run: |
+          make -C tools auric-fib-analysis-test
+          make -C tools auric-fib-compiled-test
+          make -C tools auric-fib-universal-test
 
   pr-producer:
     name: Produce the pull request Lean cache
