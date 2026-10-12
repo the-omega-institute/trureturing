@@ -5597,3 +5597,364 @@ all-node coverage must still be controlled jointly. Separate
 localization or boundary relative-error bounds do not supply that
 comparison. RH and strict Robin for every integer $H>5040$ remain
 unresolved.
+
+
+## A centred source-to-node budget in a growing real-source chart
+
+A tangent fixed at the cluster center can leave an error proportional
+to the square of the cluster spread even as the extraction degree grows.
+For the actual-node sign task, the full-interval Wronskian certificate
+(LC203) is sufficient but stronger than necessary. Instead freeze a
+separate source tangent at each local model node, estimate against its
+actual derivative product, and use only the three responses needed to
+preserve endpoint signs and the two node factors. The original $F$,
+$\mathcal J_n$, $\mathcal G_n$ and coefficient shift remain unchanged.
+
+The suppliers below are reused: the finite-free root order theorem,
+KSV's finite multiplier and mesh theorems, classical Laguerre equations,
+the original exact circle, and the checked Buck/Titchmarsh source
+estimates. This is an ordinary analytical application without Lean,
+numerical-constant or originality certification. The local all-real
+source premise remains explicit. It is not asserted for every height.
+
+### Rootwise bounds retain the source cluster's spread
+
+Let $H=\mathscr T_nQ$, $V=\mathscr T_nQ'$, where
+$Q(z)=\prod_{j=1}^r(z-\alpha_j)$ has positive roots listed in
+nondecreasing order, including repetitions. For $r\ge2$, write
+$0<\beta_1<\cdots<\beta_r$ for the roots of $H$ and
+$\kappa=(n)_{\underline r}/n^r$ for its leading coefficient.
+The already cited Arizmendi--Fujie--Perales--Ueda,
+[*S-transform in finite free probability*, arXiv:2408.09337v2](https://arxiv.org/html/2408.09337v2),
+Notation 4.3 and Theorem 4.4, preserve the coordinatewise sorted-root
+order under finite-free multiplicative convolution with a
+nonnegative-root polynomial. This includes repeated input roots.
+Reuse that theorem, rather than another root-monotonicity proof.
+
+Put $S_{n,r}(z)=\mathscr T_n(z-1)^r$ and let $s_-,s_+$ be its
+smallest and largest roots. In the supplier's monic convention,
+$H/\kappa=Q\boxtimes_r(S_{n,r}/\kappa)$: its normalized elementary
+coefficient of index $j$ is multiplied by
+$\lambda_{n,r-j}/\kappa$.
+Compare $S_{n,r}/\kappa$ with $(z-s_-)^r$ and $(z-s_+)^r$.
+The two endpoint convolutions are dilations of $Q$, so the cited
+order theorem gives the individual, rather than only extreme, bounds
+
+$$
+s_-\alpha_i\le\beta_i\le s_+\alpha_i.
+\tag{LC209}
+$$
+
+For the source chart below, $\tau/2\le\alpha_i\le2\tau$.
+When $n\ge25r$, the existing Laguerre symbol and classical zero
+estimates give absolute constants $c,C>0$ such that, with
+$\sigma=\tau/\sqrt n$,
+
+$$
+\max_i|\beta_i-\alpha_i|\le C\sigma\sqrt r,
+\qquad
+\delta:=\min_i(\beta_{i+1}-\beta_i)\ge c\sigma/\sqrt r,
+\qquad
+\kappa\ge e^{-Cr}.
+\tag{LC210}
+$$
+
+Here is the precise Laguerre parameter application behind these costs.
+The roots of $S_{n,r}$ are $n/x_j$, in reverse order, where $x_j$
+are the roots of $L_r^{(n-r)}$.
+The classical three-term recurrence from
+[DLMF 18.9.13--14](https://dlmf.nist.gov/18.9#E13) gives the symmetric Jacobi matrix
+with diagonal $n-r+2k-1$ and off-diagonal
+$\sqrt{k(n-r+k)}$. Thus
+$x_j\in[n-d,n+d]$ with
+$d=r-1+2\sqrt{(r-1)(n-1)}<n/2$.
+For the spacing, the Laguerre equation in
+[DLMF Table 18.8.1, row 8](https://dlmf.nist.gov/18.8#T1), under its
+usual removal of the first derivative, gives
+$Y''+WY=0$ with
+$W=-1/4+(n+r+1)/(2x)-((n-r)^2-1)/(4x^2)$.
+Its positive supremum is
+$\{(n+r+1)^2-(n-r)^2+1\}/\{4((n-r)^2-1)\}$.
+The classical Dirichlet--Wirtinger inequality between consecutive
+zeros therefore gives
+$x_{j+1}-x_j\ge2\pi\sqrt{((n-r)^2-1)/((n+r+1)^2-(n-r)^2+1)}
+\ge c\sqrt{n/r}$.
+Combining these standard estimates with (LC209) and the already reused
+KSV logarithmic-mesh bound proves (LC210). No source spacing enters.
+The bound on $\kappa$ is the elementary logarithm of its finite product.
+These are parameter applications, not new general Laguerre or
+root-order theorems.
+
+The same finite multiplier preserves the real-root pencils
+$Q+uQ/(z-\alpha_\ell)$ for every real $u$.
+Classical interlacing then gives
+$(\mathscr T_n(Q/(z-\alpha_\ell)))(\beta_i)/H'(\beta_i)\ge0$.
+Apply $\mathscr T_n$ to
+$zQ'=rQ+\sum_\ell\alpha_\ell Q/(z-\alpha_\ell)$, using its
+commutation with $zD$. This yields the model residues
+
+$$
+\frac{V(z)}{H(z)}=\sum_i\frac{w_i}{z-\beta_i},
+\qquad
+\frac{\beta_i}{\alpha_{\max}}\le w_i\le
+\frac{\beta_i}{\alpha_{\min}},
+\qquad c\le w_i\le C.
+\tag{LC211}
+$$
+
+The last constants follow from the source root range and the symbol
+bounds above. It does not require each cofactor to interlace strictly.
+
+### An independent floor for the removed source factor
+
+Fix $T\ge32$, $L=\log(T+2)$, $0<\rho\le1/8$, $\tau=T^2$ and
+$R=T\rho/4$. Assume every source zero in the closed radius-$4\rho$
+disc about $1/2+iT$ is on the critical line. Select them all, with
+multiplicities, as $Q(z)=\prod_j(z-\gamma_j^2)$, and put $A=F/Q$.
+The source count is $r\le C_0L$ and its roots lie in
+$[\tau/2,2\tau]$. The pole-removal calculation (LC204) also applies
+when $r=0$ or $1$; the earlier degree restriction was for the mesh model,
+not for cancellation of the pole sum.
+On the closed $z$ disc of radius $R$, $A$ is zero-free and the same
+source estimates give
+
+$$
+|A'/A|\le B:=C L/(T\rho),\qquad
+|(\log A)''|\le K:=C L/(T^2\rho^2),\qquad
+|A(t)|\ge cE_Te^{-CL(1+\log(1/\rho))}(CT\rho)^{-r}
+\quad(|t-\tau|\le R/2).
+\tag{LC212}
+$$
+
+The last bound is independent of a source derivative at a zero.
+Indeed take $h=\rho/1024$ in the already checked complete exceptional
+union of (LC193)--(LC194). Its total radii are at most $h/32$,
+so some point $s_a=1/2+x+iT$, $h\le x\le2h$, is outside the
+entire union. Its source modulus is at least
+$cE_TV_T^{-K_h}\ge cE_Te^{-CL(1+\log(1/\rho))}$.
+The point $z_a=\Phi(s_a)$ lies in the radius-$R/32$ disc.
+Every selected root has distance at most $CT\rho$ from $z_a$,
+so division by $Q$ bounds $|A(z_a)|$ below by this floor times
+$(CT\rho)^{-r}$. Integrate the already bounded $A'/A$ along the
+segment from $z_a$ to $t$. Its cost is at most $CBR\le CL$.
+The zero-free factor, not $F$, is used along that segment.
+The same reasoning covers the empty product.
+
+### Freeze the tangent separately at each model node
+
+For real $t$ in $[\tau-R/2,\tau+R/2]$ put
+$b(t)=A'(t)/A(t)$ and
+$y(t)=t/(1+b(t)t/n)$.
+Require first that $B\sigma$ and $K\sigma^2$ are sufficiently small,
+$\sigma\le cR$, and $n\ge25\max(1,r)$.
+These conditions imply $1+b(t)t/n$ is bounded away from zero and
+
+$$
+y'(t)=\frac{1-b'(t)t^2/n}{(1+b(t)t/n)^2}\in[1/2,2],
+\qquad |y(t)-t|\le CB\sigma^2.
+\tag{LC213}
+$$
+
+For every $\beta_i\in[\tau-R/4,\tau+R/4]$ there is consequently a
+unique real $c_i\in[\tau-R/3,\tau+R/3]$ with $y(c_i)=\beta_i$.
+Set $a_i=A(c_i)$, $b_i=b(c_i)$ and freeze
+$f_i(z)=a_ie^{b_i(z-c_i)}Q(z)$.
+Thus $c_i$ is exactly a node of $M_i=\mathscr T_nf_i$.
+Put $U_i=\mathscr T_nf_i'$ and
+$D_i=|H'(\beta_i)|=\kappa\prod_{k\ne i}|\beta_i-\beta_k|$.
+For a sufficiently large absolute $C_*$ choose
+$q=\min\{\delta/(C_*r),\sigma/C_*\}$ and
+$I_i=[c_i-4q,c_i+4q]$.
+The intervals are disjoint and contained in the working source chart,
+and $q\ge c\sigma/r^{3/2}$.
+
+The exact tilt (LC202), the root product and (LC211) give
+
+$$
+|M_i|\ge c|a_i|D_iq\quad\text{at both endpoints of }I_i,
+\qquad
+|M_i'|,|U_i|\ge c|a_i|D_i\quad\text{on }I_i,
+\qquad M_i'U_i>0\quad\text{on }I_i.
+\tag{LC214}
+$$
+
+To check the neighborhood costs, put
+$y_i(t)=t/(1+b_it/n)$, whose coefficients are frozen.
+On $I_i$, $|y_i(t)-\beta_i|\le8q$.
+The other root factors lose at most
+$(1-8q/\delta)^{r-1}$, and the off-node residue sum loses at most
+$8q(r-1)\max w_i/(\delta-8q)$.
+Choose $C_*$ to leave both losses below one quarter.
+The $b_iH$ in $U_i$ and the $E_i'H$ in $M_i'$ cost at most
+$CBq$, also small. Moreover
+$E_i(t)=a_ie^{-b_ic_i}(1+b_it/n)^n$ satisfies
+$c|a_i|\le|E_i(t)|\le C|a_i|$:
+at $c_i$ its logarithmic attenuation is $O(B^2\sigma^2)$,
+and across $I_i$ its logarithmic change is $O(Bq)$.
+All differentiation of $M_i,U_i$ here keeps $a_i,b_i,c_i$ fixed.
+It does not differentiate a moving choice of tangent.
+
+### The local errors pay against the actual derivative product
+
+Use the exact weights $\omega_0,\omega_D,\omega_G$ of (LC206).
+For $u=\sqrt n|\theta|$, (LC209)--(LC210) give, uniformly for
+$t\in I_i$,
+
+$$
+|Q(te^{i\theta})|
+\le C\sigma D_i(\sqrt r+u)e^{Cr+C u\sqrt r}.
+\tag{LC215}
+$$
+
+For clarity, each factor with $k\ne i$ is at most
+$|\beta_i-\beta_k|+C\sigma(\sqrt r+u)$.
+Dividing by the actual derivative product leaves
+$\kappa^{-1}\prod_{k\ne i}(1+C(r+u\sqrt r)/|i-k|)$.
+Its factorial denominator is $(i-1)!(r-i)!$; using
+$(i-1)!(r-i)!\ge((r-1)/(2e))^{r-1}$ bounds the product by
+$e^{Cr+C u\sqrt r}$. The remaining $i$ factor is at most
+$C\sigma(\sqrt r+u)$.
+Thus cluster spread is compared through corresponding roots, and the
+factorial is retained. Replacing the derivative product by a single
+worst root gap before this division would lose that comparison.
+
+Take a fixed $\theta_0=cR/\tau\asymp\rho/T$ small enough for all
+local-arc points to lie inside the source disc. The analytic logarithm
+of $A$ gives
+$|F(z)-f_i(z)|\le|f_i(z)|(e^{K|z-c_i|^2/2}-1)$ there.
+Also $|z-c_i|\le C\sigma(1+u)$ and
+$|f_i(te^{i\theta})|\le
+C|a_i|e^{B t\theta^2/2}|Q(te^{i\theta})|$.
+The fixed kernel supplies $|\mathcal K_n|\le C\sqrt n e^{-c_0n\theta^2}$.
+For small $K\sigma^2$ and sufficiently large $n/(B\tau)$, absorb the
+two quadratic factors into half this Gaussian.
+The weights obey
+$|\omega_D|,|\omega_G|\le C(1+u)/\sigma$.
+Complete the square in
+$-cu^2+Cu\sqrt r$; its remaining polynomial moments cost at most
+$e^{Cr}$. Therefore the three local errors satisfy
+
+$$
+e_{0,i}^{\rm loc}\le C|a_i|D_iK\sigma^3e^{Cr},
+\qquad
+ e_{D,i}^{\rm loc},e_{G,i}^{\rm loc}
+\le C|a_i|D_iK\sigma^2e^{Cr}.
+\tag{LC216}
+$$
+
+All three integrals use the same $F-f_i$ and exact degree offsets.
+No whole-circle upper bound for a derivative of $F$ is substituted.
+
+### Pay both remote functions and exclude extra actual real nodes
+
+On the remote arc, (LC188) bounds the original source by
+$CE_T(T+2)^4e^{C(T+2)L|\theta|}$.
+Its angular growth is absorbed for
+$n\ge C(T+2)^2L/\rho$.
+The model is bounded by
+$C|a_i|(C\tau)^re^{B t\theta^2/2}$ on the entire circle, so its
+quadratic growth is separately absorbed for $n\ge CB\tau$.
+The remote integrals are bounded by these complete envelopes times
+$C\sqrt n e^{-cn\rho^2/(T+2)^2}$; the derivative and adjacent weights
+add at most $Cn/\tau$.
+The independent floor (LC212),
+$D_i\ge e^{-Cr}(c\sigma/\sqrt r)^{r-1}$ and
+$q\ge c\sigma/r^{3/2}$ retain all normalization costs.
+Together with (LC216), the actual three errors on $I_i$ consequently
+have the dimensionless bound
+
+$$
+\max\left\{
+\frac{\|\mathcal J_n-M_i\|_{I_i}}{|a_i|D_iq},
+\frac{\|\mathcal J_n'-M_i'\|_{I_i}}{|a_i|D_i},
+\frac{\|\mathcal G_n-U_i\|_{I_i}}{|a_i|D_i}
+\right\}
+\le CK\sigma^2e^{Cr}
++\exp\!\left[-\frac{cn\rho^2}{(T+2)^2}
++CL\{\log(n+2)+L+\log(1/\rho)\}\right]
+=:\varepsilon_n.
+\tag{LC217}
+$$
+
+If this is smaller than a fixed fraction of the constant in (LC214),
+endpoint signs persist and the actual derivative and adjacent response
+have the same fixed sign throughout $I_i$. There is exactly one actual
+simple real node there and its actual product is at least
+$c|a_i|^2D_i^2>0$.
+
+This is not yet enough to identify every actual node in a central
+interval. For that exclusion, at each real
+$|t-\tau|\le R/16$ freeze instead the tangent at that very $t$.
+Its model value is $E_tH(y(t))$, with $|E_t|\asymp|A(t)|$.
+Suppose $\operatorname{dist}(y(t),\{\beta_i\})\ge q$ and choose a
+nearest root $\beta_i$. Every other distance is at least
+$|\beta_i-\beta_k|/2$.
+Dividing the circle product by $|H(y(t))|$ now gives the same factorial
+estimate as (LC215), with the remaining factor bounded by
+$1+C\sigma(\sqrt r+u)/q$.
+Its polynomial $r$ cost is absorbed into $e^{Cr}$.
+The local relative error is thus at most $CK\sigma^2e^{Cr}$.
+For the remote relative error use
+$|H(y(t))|\ge\kappa q(\delta/2)^{r-1}(i-1)!(r-i)!$
+and the same independent source-factor floor.
+It is bounded by the remote term of (LC217).
+When $\varepsilon_n<1/2$, such a point cannot be an actual node.
+Every remaining actual central node has $|y(t)-\beta_i|<q$;
+(LC213) places it within $2q$ of $c_i$, inside its certified $I_i$.
+The associated $\beta_i$ belongs to the selected central model roots.
+This covers actual real nodes, without asserting an unproved complex
+root matching or zero count.
+
+If $r=1$, use $H=z-\alpha_1$, $V=1$, $D_1=1$ and
+$q=\sigma/C_*$; the same construction and exclusion have an empty
+other-root product. If $r=0$, the tangent model value is the nonzero
+$E_t$, and the same local and remote relative estimates exclude all
+actual central nodes. These cases do not invoke a nonexistent mesh.
+
+### A polynomial sufficient degree and an actual-node converse
+
+There are constants $C_1,A_1>0$ for the unchanged fixed source such
+that all the initial smallness conditions and the sufficient budgets
+above hold for every integer
+
+$$
+n\ge C_1(T+2)^{A_1}\rho^{-A_1}
+\quad\Longrightarrow\quad
+\left[\ |t-T^2|\le T\rho/64,\quad
+\mathcal J_n(t)=0\ \right]
+\Longrightarrow\mathcal J_n'(t)\mathcal G_n(t)>0,
+\tag{LC218}
+$$
+
+under the stated local all-critical-source premise.
+Indeed $r\le C_0L$ makes $e^{Cr}$ at most a fixed power of $T+2$.
+Choose $A_1$ greater than that power plus four and enlarge $C_1$.
+This makes $K\sigma^2e^{Cr}$ small and pays $B\sigma$, the chart
+clearance and both angular absorptions.
+For the remote term, its exponent is decreasing once
+$n\ge CL(T+2)^2/\rho^2$.
+At the chosen threshold its negative term dominates
+$CL\{\log(n+2)+L+\log(1/\rho)\}$ uniformly for $T\ge32$ and
+$0<\rho\le1/8$. Enlarging $C_1$ pays the remaining fixed margin.
+The conditions then hold for every larger $n$, not only at a
+subsequence. None of these constants is numerically certified.
+
+Taking $T=\sqrt t$, the contrapositive locates a genuine source
+obstruction: if $t\ge32^2$ is an actual positive $\mathcal J_n$ node,
+$\mathcal J_n'(t)\mathcal G_n(t)\le0$ and
+$n\ge C_1(\sqrt t+2)^{A_1}\rho^{-A_1}$, then the closed radius-$4\rho$
+disc about $1/2+i\sqrt t$ contains an actual off-line source zero.
+The statement includes a zero derivative or a zero adjacent response.
+It supplies neither a positive lower bound on that zero's off-line
+distance nor a complex-root trajectory of the Jensen polynomial.
+
+The winning source budget here is for centred node neighborhoods and
+a central real-node exclusion; it does not establish (LC203) on its
+original entire interval. Fixed $\rho$ permits a growing height
+$T\lesssim n^{1/A_1}$, with an unevaluated exponent, conditional on
+local source realness. It does not cover the whole unpaid interval
+$t\asymp n/\log n$, certify every local premise, exclude all complex
+Jensen roots or close the first-birth height/resolution obligation.
+The existing fixed-band, angular-capture and defect results remain
+valid independently. Full RH and strict Robin for every integer
+$H>5040$ remain unresolved.
