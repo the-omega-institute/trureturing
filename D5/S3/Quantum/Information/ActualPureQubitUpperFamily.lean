@@ -53,11 +53,8 @@ theorem actual_effect_family : ∀ {ι : Type} [Fintype ι]
         apply Matrix.IsHermitian.ext
         intro i j
         fin_cases i <;> fin_cases j <;> apply Complex.ext <;> simp [blochMatrix]
-      have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := by
-        apply Complex.ext <;> simp [blochMatrix, Matrix.trace, Fin.sum_univ_two] <;> ring
-      have hb : bloch (blochMatrix a r) = r := by
-        ext i
-        fin_cases i <;> simp [bloch, blochMatrix] <;> ring
+      have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := blochMatrix_trace a r
+      have hb : bloch (blochMatrix a r) = r := bloch_blochMatrix a r
       have hd : (Matrix.det (blochMatrix a r)).re = (a^2 - ‖r‖^2)/4 := by
         rw [EuclideanSpace.real_norm_sq_eq]
         simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three]
@@ -65,12 +62,8 @@ theorem actual_effect_family : ∀ {ι : Type} [Fintype ι]
       refine ⟨hh, ht, hb, hd, ?_⟩
       constructor
       · intro hp
-        have htpos := (Complex.nonneg_iff.mp hp.trace_nonneg).1
-        have hdpos := (Complex.nonneg_iff.mp hp.det_nonneg).1
-        rw [ht] at htpos
-        rw [hd] at hdpos
-        simp only [Complex.ofReal_re] at htpos
-        nlinarith [norm_nonneg r]
+        simpa only [ht, hb, Complex.ofReal_re] using
+          norm_bloch_le_trace_of_posSemidef (blochMatrix a r) hp
       · intro hbound
         apply hh.posSemidef_iff_eigenvalues_nonneg.mpr
         have hs := congrArg Complex.re hh.trace_eq_sum_eigenvalues
@@ -393,11 +386,8 @@ theorem actual_upper_family : ∀ {m : ℕ}
       apply Matrix.IsHermitian.ext
       intro i j
       fin_cases i <;> fin_cases j <;> apply Complex.ext <;> simp [blochMatrix]
-    have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := by
-      apply Complex.ext <;> simp [blochMatrix, Matrix.trace, Fin.sum_univ_two] <;> ring
-    have hb : bloch (blochMatrix a r) = r := by
-      ext i
-      fin_cases i <;> simp [bloch, blochMatrix] <;> ring
+    have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := blochMatrix_trace a r
+    have hb : bloch (blochMatrix a r) = r := bloch_blochMatrix a r
     have hd : (Matrix.det (blochMatrix a r)).re = (a^2 - ‖r‖^2)/4 := by
       rw [EuclideanSpace.real_norm_sq_eq]
       simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three]
@@ -405,12 +395,8 @@ theorem actual_upper_family : ∀ {m : ℕ}
     refine ⟨hh, ht, hb, hd, ?_⟩
     constructor
     · intro hp
-      have htpos := (Complex.nonneg_iff.mp hp.trace_nonneg).1
-      have hdpos := (Complex.nonneg_iff.mp hp.det_nonneg).1
-      rw [ht] at htpos
-      rw [hd] at hdpos
-      simp only [Complex.ofReal_re] at htpos
-      nlinarith [norm_nonneg r]
+      simpa only [ht, hb, Complex.ofReal_re] using
+        norm_bloch_le_trace_of_posSemidef (blochMatrix a r) hp
     · intro hbound
       apply hh.posSemidef_iff_eigenvalues_nonneg.mpr
       have hs := congrArg Complex.re hh.trace_eq_sum_eigenvalues
