@@ -139,7 +139,7 @@ Section 9.2, after Proposition 9.9, PDF p. 25: "We do not know if these conjectu
 **Remark 1.12 (A composition-compatible flag).**
 
 $$
-(PPT2C \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{C}\right))) \land (\operatorname{IPT2}\left(\mathbb{C}\right) \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{R}\right)))
+\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)), (\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)), \mathbb{C}\right),\; \forall Pplus \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall Pminus \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; ((Pplus = \frac{((1, \operatorname{Complex}.\operatorname{I}) ((1, \operatorname{Complex}.\operatorname{I}))^{*})}{2}) \land (Pminus = \frac{((1, -\operatorname{Complex}.\operatorname{I}) ((1, -\operatorname{Complex}.\operatorname{I}))^{*})}{2})) \Rightarrow (((\operatorname{Matrix}.\operatorname{PosSemidef}\left(rho\right)) \land (\operatorname{Matrix}.\operatorname{PosSemidef}\left(((rho)^{\Gamma_{\operatorname{B}}})\right))) \Rightarrow (\exists rhotilde \in \operatorname{Matrix}\left(((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)) \times \operatorname{Fin}\left(2\right)), ((\operatorname{Fin}\left(n\right) \times \operatorname{Fin}\left(m\right)) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; (rhotilde = ((\operatorname{tensor}\left(rho, Pplus\right)) + (\operatorname{tensor}\left(((rho)^{\Gamma_{\operatorname{B}}}), Pminus\right)))) \land ((\operatorname{Matrix}.\operatorname{PosSemidef}\left(rhotilde\right)) \land ((rhotilde)^{\Gamma_{\operatorname{B}\operatorname{B}'}} = rhotilde))))
 $$
 
 *Citation.* Marcus Huber; Ludovico Lami; Cécilia Lancien; Alexander Müller-Hermes (2018). *High-Dimensional Entanglement in States with Positive Partial Transposition*. DOI: [10.1103/PhysRevLett.121.200503](https://doi.org/10.1103/PhysRevLett.121.200503). URL: <https://arxiv.org/abs/1802.04975>.
@@ -153,6 +153,10 @@ On the auxiliary two-dimensional factor take P+ = (1,i)(1,i)*/2 and P- = (1,-i)(
 $$(PPT2C \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{C}\right))) \land (\operatorname{IPT2}\left(\mathbb{C}\right) \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{R}\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/chiribella-davidson-paulsen-rahaman-2023-ppt-ipt-squared-equivalence` (proved) by `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chiribella-davidson-paulsen-rahaman-2023-ppt-ipt-squared-equivalence","declaration_gid":"D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
