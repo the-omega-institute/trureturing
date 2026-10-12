@@ -119,7 +119,7 @@ def resetOddVector (q : ℕ) : VertexModule Sign q :=
   fun i => ((-1 : ℤ) ^ i.val) •
     (MonoidAlgebra.single (1 : Sign) 1 - MonoidAlgebra.single (ofAdd true) 1)
 
-private theorem resetOddVector_coeff_one (q : ℕ) (i : Fin q) :
+theorem resetOddVector_coeff_one (q : ℕ) (i : Fin q) :
     (resetOddVector q i).coeff 1 = (-1 : ℤ) ^ i.val := by
   change (((-1 : ℤ) ^ i.val) • oddAntiUnit).coeff 1 = _
   rw [MonoidAlgebra.coeff_smul_apply]
@@ -194,7 +194,7 @@ def resetTheta (q : ℕ) : Module.End ℤ (DimensionGroup (resetMatrix q)) :=
   induced (transition (resetMatrix q)) (transition (resetMatrix q))
     (Commute.refl (transition (resetMatrix q)))
 
-private theorem resetTheta_apply_of (q n : ℕ) (v : VertexModule Sign q) :
+theorem resetTheta_apply_of (q n : ℕ) (v : VertexModule Sign q) :
     resetTheta q
       (Module.DirectLimit.of ℤ ℕ (fun _ : ℕ => VertexModule Sign q)
         (stationaryTransition (transition (resetMatrix q))) n v) =
