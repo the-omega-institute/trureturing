@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Ordered greedy reconstruction of proper image prefixes under image-length dominance. -/
+import D5.S1.Words.Powers.WordPower
 import D5.S1.Words.RankOneMorphismIterationBoundDefs
 import Mathlib.Data.List.TakeDrop
 
@@ -17,7 +18,7 @@ open RankOneMorphismIterationBound (subst image image_add)
 
 /-- Concatenation power of a finite word, including the empty zeroth power. -/
 def wordPower {α : Type*} (w : List α) (d : ℕ) : List α :=
-  (List.replicate d w).flatten
+  Powers.wordPower d w
 
 /-- Ordered blocks selected by exactly `count` greedy quotient/remainder steps.
 The largest image exponent is `count - 1`; zero digits are retained as empty blocks. -/
@@ -28,12 +29,7 @@ def greedyBlocks {α : Type*} (f : α → List α) (z : α) : ℕ → ℕ → Li
 
 private theorem power_length {α : Type*} (w : List α) (d : ℕ) :
     (wordPower w d).length = d * w.length := by
-  induction d with
-  | zero => simp [wordPower]
-  | succ d ih =>
-      change (w ++ wordPower w d).length = (d+1) * w.length
-      rw [List.length_append, ih, Nat.add_mul]
-      omega
+  exact Powers.length_wordPower d w
 
 private theorem take_power_tail {α : Type*} (w t : List α) (d n : ℕ)
     (hw : 0 < w.length) (ht : t.length ≤ w.length)
@@ -42,24 +38,24 @@ private theorem take_power_tail {α : Type*} (w t : List α) (d n : ℕ)
       (if n / w.length < d then w else t).take (n % w.length) := by
   induction d generalizing n with
   | zero =>
-      have hnt : n < t.length := by simpa [wordPower] using hn
+      have hnt : n < t.length := by simpa [wordPower, Powers.wordPower_zero] using hn
       have hnw : n < w.length := lt_of_lt_of_le hnt ht
-      simp [wordPower, Nat.div_eq_of_lt hnw, Nat.mod_eq_of_lt hnw]
+      simp [wordPower, Powers.wordPower_zero, Nat.div_eq_of_lt hnw, Nat.mod_eq_of_lt hnw]
   | succ d ih =>
       by_cases hsmall : n < w.length
-      · simp [wordPower, List.replicate_succ, List.take_append,
+      · simp [wordPower, Powers.wordPower_succ, List.take_append,
           Nat.div_eq_of_lt hsmall, Nat.mod_eq_of_lt hsmall,
           Nat.sub_eq_zero_of_le (Nat.le_of_lt hsmall)]
       · have hle : w.length ≤ n := by omega
         obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_le hle
         have hr : r < (wordPower w d ++ t).length := by
-          simpa [wordPower, List.replicate_succ, List.length_append] using hn
+          simpa [wordPower, Powers.wordPower_succ, List.length_append] using hn
         rw [show wordPower w (d+1) ++ t = w ++ (wordPower w d ++ t) by
-          simp [wordPower, List.replicate_succ, List.append_assoc]]
+          simp [wordPower, Powers.wordPower_succ, List.append_assoc]]
         rw [List.take_append, List.take_of_length_le (by omega : w.length ≤ w.length+r)]
         simp only [Nat.add_sub_cancel_left]
         rw [ih r hr, Nat.add_div_left _ hw, Nat.add_mod_left]
-        simp [wordPower, List.replicate_succ, List.append_assoc]
+        simp [wordPower, Powers.wordPower_succ, List.append_assoc]
 
 private theorem image_shape {α : Type*} (f : α → List α) (z : α)
     (digit : α → ℕ) (next : α → Option α)
@@ -69,7 +65,7 @@ private theorem image_shape {α : Type*} (f : α → List α) (z : α)
       subst (image f k) (next a).toList := by
   rw [image_add f k 1]
   simp only [RankOneMorphismIterationBound.image_one, hshape, subst,
-    List.flatMap_append, List.flatMap_replicate, wordPower]
+    List.flatMap_append, List.flatMap_replicate, wordPower, Powers.wordPower]
 
 /-- Every proper prefix of every actual iterate has the same ordered greedy
 block description. The substitution may terminate or return to a cyclic state.

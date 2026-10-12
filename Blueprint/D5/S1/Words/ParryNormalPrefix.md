@@ -18,7 +18,7 @@ $$wordPower\left(w, d\right) = flatten\left(replicate\left(d, w\right)\right)$$
 
 *Commentary.*
 
-wordPower(w,d) concatenates d copies of w. The zeroth power is the empty list, and the order within every copy is preserved.
+wordPower(w,d) concatenates d copies of w. The zeroth power is the empty list, and the order within every copy is preserved. This is the concatenation power of `D5/S1/Words/Powers/WordPower` with the word argument first here. Its length is d times length(w).
 
 **Definition 1.2 (Blocks from every greedy step).**
 
@@ -88,3 +88,4 @@ Digitwise exponent bounds alone do not give the needed condition. For the simple
 - Truth anchor: `D5/S1/Words/ParryNormalPrefix.greedy_remainder_prefix`
 - Truth anchor: `D5/S1/Words/ParryNormalPrefix.wordPower`
 - Dependency: [D5/S1/Words/RankOneMorphismIterationBoundDefs](RankOneMorphismIterationBoundDefs.md)
+- Narrative reference: [D5/S1/Words/Powers/WordPower](Powers/WordPower.md)

@@ -27,7 +27,9 @@ internal sealed class ParryNormalPrefixDocument : IScribeDocumentDefinition
                         Call("flatten", Call("replicate", F.Id("d"), F.Id("w")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("wordPower(w,d) concatenates d copies of w. The zeroth "
-                    + "power is the empty list, and the order within every copy is preserved."))),
+                    + "power is the empty list, and the order within every copy is preserved. "
+                    + "This is the concatenation power of "), Ref("D5/S1/Words/Powers/WordPower"),
+                    Text(" with the word argument first here. Its length is d times length(w)."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("greedy-blocks"),
                 DeclarationHandle.Create("D5/S1/Words/ParryNormalPrefix.greedyBlocks"),
