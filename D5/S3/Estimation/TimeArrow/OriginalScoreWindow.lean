@@ -272,7 +272,7 @@ theorem original_count_cut_same_environment {M q s : ℕ} (S : Support M q)
     original_count_cut_transfer S e o k l H y z henv hH⟩
 
 open scoped Classical in
-set_option maxHeartbeats 1200000 in
+set_option maxHeartbeats 4000000 in
 /-- The original complete window posterior has the registered arithmetic
 bound, conditioned on the full native minimal readout. A cut and full-root
 anchor select an environment value; neither changes the posterior law. -/
@@ -373,8 +373,17 @@ theorem original_full_env_small_ball :
   have hf : conditionalFiberMass S r e o (Env.filter fun y => Pred y.val)/
       conditionalFiberMass S r e o Env ≤ B := by
     rw [hpred]
-    convert hnative using 1 <;> congr 1
-  convert heq.le.trans hf using 1 <;> first | rfl | (congr 1)
+    simpa only [Env,All,N,B,z] using hnative
+  have heqEnv : (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧ Pred x
+      then probability r e S x else 0)/
+      (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+        then probability r e S x else 0) =
+      conditionalFiberMass S r e o (Env.filter fun y => Pred y.val)/conditionalFiberMass S r e o Env := by
+    convert heq using 1 <;> congr 1
+    all_goals first
+      | (apply sum_congr rfl; intro x _; split_ifs <;> rfl)
+      | (congr 1; ext y; simp only [Env,z,mem_filter,mem_univ,true_and])
+  simpa only [N,B,z] using heqEnv.le.trans hf
 
 end
 end D5.S3.Estimation.TimeArrow.OriginalScoreWindow
