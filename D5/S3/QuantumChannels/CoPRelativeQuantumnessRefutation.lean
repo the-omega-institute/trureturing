@@ -24,6 +24,7 @@ Direct frozen dependencies:
   Mathlib constants are pinned upstream dependencies, not frozen repository nodes.
 -/
 
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Basic
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 
@@ -445,15 +446,31 @@ theorem result : ¬ claim := by
     constructor
     · exact (affine_posDef _ _ Z (pauli_sa _ _) Z_sq (by norm_num [t,ε])
         (by norm_num [t,ε])).posSemidef
-    · norm_num [ρ,Matrix.trace,Fin.sum_univ_two,Z,pauli]
-      ring
+    · have he : ρ =
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+            (WithLp.toLp 2 ![0, 0, t 7 / (1 - ε)]) := by
+        ext i j
+        fin_cases i <;> fin_cases j <;>
+          norm_num [ρ, Z, pauli, ε, Matrix.cons_val_two,
+            D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
+      rw [he]
+      exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
 
   have σ_density : IsDensity σ := by
     constructor
     · exact (affine_posDef _ _ H (pauli_sa _ _) H_sq (by norm_num [t,ε])
         (by norm_num [t,ε])).posSemidef
-    · norm_num [σ,Matrix.trace,Fin.sum_univ_two,H,pauli]
-      ring
+    · have he : σ =
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+            (WithLp.toLp 2
+              ![t 8 / (1 - ε) * (5 * Real.sqrt 3 / 14), 0,
+                t 8 / (1 - ε) * (11 / 14)]) := by
+        ext i j
+        fin_cases i <;> fin_cases j <;>
+          norm_num [σ, H, pauli, ε, Matrix.cons_val_two,
+            D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
+      rw [he]
+      exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
 
   have noncommuting : ρ*σ ≠ σ*ρ := by
     intro h

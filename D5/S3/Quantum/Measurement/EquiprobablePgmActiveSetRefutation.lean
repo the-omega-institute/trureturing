@@ -27,6 +27,7 @@ Direct frozen dependencies (GID, statement_id):
     sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3
 -/
 
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Estimation.TransmissivityTwoPointProbeRefutation
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
@@ -102,7 +103,16 @@ theorem result : ¬ claim := by
       exact hdiag _ _ (by norm_num) (by norm_num)
   have htr : ∀ i, trace (rho i) = 1 := by
     intro i
-    fin_cases i <;> simp [rho, trace, Fin.sum_univ_two] <;> norm_num
+    have he : (rho i) =
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+          (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch (rho i)) := by
+      ext j k
+      fin_cases i <;> fin_cases j <;> fin_cases k <;>
+        norm_num [rho,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two]
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
   obtain ⟨E, hE, hopt, hineq⟩ := h 1 3 rho (by norm_num) hPD htr
   set Γ : Matrix (Fin 2) (Fin 2) ℂ := diagonal ![(418 / 1203 : ℂ), 19 / 1203] with hΓ
   have hslack : ∀ i, (Γ - (1 / 3 : ℂ) • rho i).PosSemidef := by

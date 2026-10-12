@@ -433,11 +433,10 @@ private theorem bloch_sq {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : M
 
 private theorem bloch_mem {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : Matrix (Fin 2) (Fin 2) ℂ | IsDensity τ}) :
     ‖bloch τ‖ ∈ Icc 0 1 := by
-  have hd := qubit_det_bounds τ hτ.1 hτ.2
-  have hs := bloch_sq hτ
   constructor
-  · positivity
-  · nlinarith [norm_nonneg (bloch τ)]
+  · exact norm_nonneg _
+  · simpa only [hτ.2, Complex.one_re] using
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef τ hτ.1
 
 private theorem entropy_bloch {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : Matrix (Fin 2) (Fin 2) ℂ | IsDensity τ}) :
     S τ = g ‖bloch τ‖ := by
@@ -470,7 +469,13 @@ private theorem qubit_density_convex : Convex ℝ {τ : Matrix (Fin 2) (Fin 2) �
   have hp : ((1/2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)).PosSemidef :=
     hpone.smul (by norm_num [Complex.le_def])
   have ht : (((1/2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ))).trace = 1 := by
-    norm_num [Matrix.trace_smul, Matrix.trace_one]
+    have he : (1 / 2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) =
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1 0 := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix]
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 0
   simpa only [physicalFiber, LinearMap.zero_apply, eq_self, true_and, IsDensity] using
     (finite_dimensional_physical_fiber (0 : Matrix (Fin 2) (Fin 2) ℂ →ₗ[ℂ] (Empty → ℂ))
       _ hp ht).2.2

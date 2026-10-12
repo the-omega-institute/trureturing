@@ -5,6 +5,7 @@
    anchors: []
    digest: Conservation and autonomous observable evolution are distinct. -/
 
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Quantum.FiniteDimensional
 
@@ -80,7 +81,17 @@ theorem conservation_and_autonomy_are_distinct (H A : Matrix n n ℂ)
       ⟨_hanticommute, hXstar, hZstar, _hXsquare, _hZsquare⟩
     refine ⟨hZstar, hXstar, ?_, ?_, ?_⟩
     · rw [LinearMap.mem_ker]
-      norm_num [Matrix.trace, qubitX]
+      change Matrix.trace qubitX = 0
+      have he : qubitX =
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 0
+            (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch qubitX) := by
+        ext i j
+        fin_cases i <;> fin_cases j <;>
+          norm_num [qubitX,
+            D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+            D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two]
+      rw [he]
+      exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 0 _
     · intro B _hB
       rw [LinearMap.mem_ker]
       simp only [Matrix.traceLinearMap_apply, Matrix.trace_sub]

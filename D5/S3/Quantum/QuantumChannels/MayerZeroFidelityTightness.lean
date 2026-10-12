@@ -6,6 +6,7 @@
    utility: none
    digest: Product-SIC zero fidelity and the sharp process-fidelity bound on qubit channels. -/
 
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Resource.CompositeConeProperness
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
@@ -509,8 +510,19 @@ theorem tight_channel {n : ℕ} (hn : 1 ≤ n) (s : Fin n → Fin 4 → Fin 2 �
       ring
     rw [hc, one_smul]
   have local_trace (b : Pauli) (hb : b ≠ Pauli.I) : trace (pauliMatrix b) = 0 := by
-    simpa only [show pauliMatrix Pauli.I = 1 from rfl, mul_one, if_neg hb] using
-      pauli_trace_pair b Pauli.I
+    have he : pauliMatrix b =
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 0
+          (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch (pauliMatrix b)) := by
+      cases b <;> simp only [ne_eq, not_true_eq_false] at hb
+      all_goals ext i j
+      all_goals fin_cases i <;> fin_cases j <;>
+        norm_num [pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
+          D5.S3.Quantum.FiniteDimensional.qubitZ,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two]
+      all_goals ring
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 0 _
   have hsupp : HasWeightOneSupport K := by
     intro k β hw
     have hi : ∃ i : Fin n, i ≠ i0 ∧ β i ≠ Pauli.I := by

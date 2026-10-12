@@ -37,6 +37,7 @@ Direct frozen dependencies:
   Mathlib constants are pinned upstream dependencies, not frozen repository nodes.
 -/
 
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import D5.S3.QuantumChannels.ProjectionDiagnostics.StaticDynamicScalarSeparation
@@ -172,8 +173,14 @@ private theorem involutions : N*N=1 ∧ qubitZ*qubitZ=1 ∧ B*B=1 ∧ N-qubitZ=B
 
 private theorem state_trace (x : ℝ) (z v : ℝ) :
     Matrix.trace (state x (pauli z v)) = 1 := by
-  simp [state, pauli, Matrix.trace, Fin.sum_univ_two]
-  ring
+  have he : state x (pauli z v) =
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+        (WithLp.toLp 2 ![r x * v, 0, r x * z]) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [state, pauli, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
+  rw [he]
+  exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
 
 private def pPlus (x : ℝ) : ℝ := (3*x+1)/(4*(x+1))
 private def pMinus (x : ℝ) : ℝ := (x+3)/(4*(x+1))
@@ -417,7 +424,7 @@ theorem result : ¬ claim := by
   have hσ := state_posDef x hx qubitZ qubit_weyl_star.2.2.1 involutions.2.1
   have hbound := hQDPI 2 (state x N) (state x qubitZ) pinchingEnd
     ⟨hρ.posSemidef, state_trace x _ _⟩
-    ⟨hσ.posSemidef, by simp [state, qubitZ, Matrix.trace, Fin.sum_univ_two]; ring⟩
+    ⟨hσ.posSemidef, by simpa [pauli, qubitZ] using state_trace x 1 0⟩
     hρ hσ dephase_cptp (output_posDef x hx).1 (output_posDef x hx).2
   have hgap := scalar_family_gap t ht
   change 0 < _ ∧ _ < _ at hgap

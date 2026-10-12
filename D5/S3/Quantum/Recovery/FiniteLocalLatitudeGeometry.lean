@@ -641,18 +641,31 @@ theorem all_r_flat_geometry (r : ℝ) (hr : 0 < r) (hlo : 1/2 < r^2) (hhi : r^2 
       -2*(u 0*star (u 1)).im,spinorZ u]
     have un : Complex.normSq (u 0)+Complex.normSq (u 1) = 1 := by
       simpa only [UnitSpinor,Fin.sum_univ_two] using hu
-    refine ⟨a,?_,?_,rfl⟩
-    · have asq : ‖a‖^2 = 1 := by
-        rw [EuclideanSpace.real_norm_sq_eq]
-        have un2 := congrArg (fun t : ℝ => t^2) un
-        simp [a,spinorZ,Fin.sum_univ_succ,Complex.star_def,Complex.normSq_apply] at ⊢ un un2
-        nlinarith
-      nlinarith [norm_nonneg a]
-    · ext i j
-      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-        simp [rho,D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-          Matrix.vecMulVec,a,spinorZ,Complex.star_def,Complex.normSq_apply] at ⊢ un <;>
-        nlinarith
+    have ht : Matrix.trace (Matrix.vecMulVec u (star u)) = 1 := by
+      apply Complex.ext <;>
+        simp [Matrix.trace, Matrix.vecMulVec, Fin.sum_univ_two,
+          Complex.mul_re, Complex.mul_im, Complex.normSq_apply] at ⊢ un <;> nlinarith
+    have hn : star u ⬝ᵥ u = (1 : ℂ) := by
+      rw [dotProduct_comm, ← Matrix.trace_vecMulVec]
+      exact ht
+    have hp : Matrix.vecMulVec u (star u) * Matrix.vecMulVec u (star u) =
+        Matrix.vecMulVec u (star u) := by
+      rw [Matrix.vecMulVec_mul_vecMulVec, hn, one_smul]
+    have hb : D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch
+        (Matrix.vecMulVec u (star u)) = a := by
+      ext i
+      fin_cases i <;>
+        simp [a, spinorZ, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+          Matrix.vecMulVec, Complex.normSq_apply]
+    have hh : (Matrix.vecMulVec u (star u)).IsHermitian := by
+      apply Matrix.IsHermitian.ext
+      intro i j
+      simp [Matrix.vecMulVec_apply, mul_comm]
+    have hg := D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+      (Matrix.vecMulVec u (star u)) hh
+    refine ⟨a, ?_, ?_, rfl⟩
+    · simpa only [hb] using hg.2 ht hp
+    · simpa only [ht, Complex.one_re, hb, rho] using hg.1.symm
   have matrixSpinors (a b : Bloch) (u v : Fin 2 → ℂ)
       (ha : rho a = Matrix.vecMulVec u (star u))
       (hb : rho b = Matrix.vecMulVec v (star v)) (i : Fin 5) :

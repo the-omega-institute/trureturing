@@ -145,34 +145,70 @@ theorem result : ¬ claim := by
         2 * ψ.lambda0 * ψ.lambda1 * Real.sin ψ.phi,
         ψ.lambda0 ^ 2 - (ψ.lambda1 ^ 2 + ψ.lambda2 ^ 2 +
           ψ.lambda3 ^ 2 + ψ.lambda4 ^ 2)] := by
-    ext i
-    fin_cases i <;>
-      simp [bloch, rhoA, partialTraceRight, jointDensity, amplitudes,
-        Fintype.sum_prod_type, Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
-        Complex.exp_re, Complex.exp_im] <;>
-      nlinarith [Real.sin_sq_add_cos_sq ψ.phi]
+    let r : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2
+      ![2 * ψ.lambda0 * ψ.lambda1 * Real.cos ψ.phi,
+        2 * ψ.lambda0 * ψ.lambda1 * Real.sin ψ.phi,
+        ψ.lambda0 ^ 2 - (ψ.lambda1 ^ 2 + ψ.lambda2 ^ 2 +
+          ψ.lambda3 ^ 2 + ψ.lambda4 ^ 2)]
+    have he : rhoA ψ = blochMatrix
+        (ψ.lambda0 ^ 2 + ψ.lambda1 ^ 2 + ψ.lambda2 ^ 2 +
+          ψ.lambda3 ^ 2 + ψ.lambda4 ^ 2) r := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [r, blochMatrix, rhoA, partialTraceRight, jointDensity, amplitudes,
+          Fintype.sum_prod_type, Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
+          Complex.exp_re, Complex.exp_im, Matrix.cons_val_two] <;>
+        simp only [← Complex.ofReal_pow, ← Complex.ofReal_cos, ← Complex.ofReal_sin,
+          Complex.ofReal_re, Complex.ofReal_im] <;>
+        nlinarith [Real.sin_sq_add_cos_sq ψ.phi]
+    rw [he]
+    exact bloch_blochMatrix _ _
   have hB (ψ : CanonicalState) : bloch (rhoB ψ) = WithLp.toLp 2
       ![2 * (ψ.lambda1 * ψ.lambda3 * Real.cos ψ.phi + ψ.lambda2 * ψ.lambda4),
         -2 * ψ.lambda1 * ψ.lambda3 * Real.sin ψ.phi,
         ψ.lambda0 ^ 2 + ψ.lambda1 ^ 2 + ψ.lambda2 ^ 2 -
           ψ.lambda3 ^ 2 - ψ.lambda4 ^ 2] := by
-    ext i
-    fin_cases i <;>
-      simp [bloch, rhoB, partialTraceRight, partialTraceLeft, jointDensity, amplitudes,
-        Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
-        Complex.exp_re, Complex.exp_im] <;>
-      nlinarith [Real.sin_sq_add_cos_sq ψ.phi]
+    let r : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2
+      ![2 * (ψ.lambda1 * ψ.lambda3 * Real.cos ψ.phi + ψ.lambda2 * ψ.lambda4),
+        -2 * ψ.lambda1 * ψ.lambda3 * Real.sin ψ.phi,
+        ψ.lambda0 ^ 2 + ψ.lambda1 ^ 2 + ψ.lambda2 ^ 2 -
+          ψ.lambda3 ^ 2 - ψ.lambda4 ^ 2]
+    have he : rhoB ψ = blochMatrix
+        (ψ.lambda0 ^ 2 + ψ.lambda1 ^ 2 + ψ.lambda2 ^ 2 +
+          ψ.lambda3 ^ 2 + ψ.lambda4 ^ 2) r := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [r, blochMatrix, rhoB, partialTraceRight, partialTraceLeft, jointDensity, amplitudes,
+          Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
+          Complex.exp_re, Complex.exp_im, Matrix.cons_val_two] <;>
+        simp only [← Complex.ofReal_pow, ← Complex.ofReal_cos, ← Complex.ofReal_sin,
+          Complex.ofReal_re, Complex.ofReal_im] <;>
+        nlinarith [Real.sin_sq_add_cos_sq ψ.phi]
+    rw [he]
+    exact bloch_blochMatrix _ _
   have hC (ψ : CanonicalState) : bloch (rhoC ψ) = WithLp.toLp 2
       ![2 * (ψ.lambda1 * ψ.lambda2 * Real.cos ψ.phi + ψ.lambda3 * ψ.lambda4),
         -2 * ψ.lambda1 * ψ.lambda2 * Real.sin ψ.phi,
         ψ.lambda0 ^ 2 + ψ.lambda1 ^ 2 + ψ.lambda3 ^ 2 -
           ψ.lambda2 ^ 2 - ψ.lambda4 ^ 2] := by
-    ext i
-    fin_cases i <;>
-      simp [bloch, rhoC, partialTraceLeft, jointDensity, amplitudes,
-        Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
-        Complex.exp_re, Complex.exp_im] <;>
-      nlinarith [Real.sin_sq_add_cos_sq ψ.phi]
+    let r : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2
+      ![2 * (ψ.lambda1 * ψ.lambda2 * Real.cos ψ.phi + ψ.lambda3 * ψ.lambda4),
+        -2 * ψ.lambda1 * ψ.lambda2 * Real.sin ψ.phi,
+        ψ.lambda0 ^ 2 + ψ.lambda1 ^ 2 + ψ.lambda3 ^ 2 -
+          ψ.lambda2 ^ 2 - ψ.lambda4 ^ 2]
+    have he : rhoC ψ = blochMatrix
+        (ψ.lambda0 ^ 2 + ψ.lambda1 ^ 2 + ψ.lambda2 ^ 2 +
+          ψ.lambda3 ^ 2 + ψ.lambda4 ^ 2) r := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [r, blochMatrix, rhoC, partialTraceLeft, jointDensity, amplitudes,
+          Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
+          Complex.exp_re, Complex.exp_im, Matrix.cons_val_two] <;>
+        simp only [← Complex.ofReal_pow, ← Complex.ofReal_cos, ← Complex.ofReal_sin,
+          Complex.ofReal_re, Complex.ofReal_im] <;>
+        nlinarith [Real.sin_sq_add_cos_sq ψ.phi]
+    rw [he]
+    exact bloch_blochMatrix _ _
   have hdet (ψ : CanonicalState) : cayley (amplitudes ψ) =
       ((ψ.lambda0 ^ 2 * ψ.lambda4 ^ 2 : ℝ) : ℂ) := by
     simp [cayley, amplitudes]

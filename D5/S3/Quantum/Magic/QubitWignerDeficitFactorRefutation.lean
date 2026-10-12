@@ -164,13 +164,48 @@ private theorem density_witnesses : IsDensity rhoA ∧ IsDensity rhoB ∧ IsDens
   have pure (ρ : QubitMatrix) (hm : ρ * ρᴴ = ρ) (ht : ρ.trace = 1) : IsDensity ρ :=
     ⟨hm ▸ Matrix.posSemidef_self_mul_conjTranspose ρ,ht⟩
   refine ⟨pure rhoA ?_ ?_,pure rhoB ?_ ?_,pure sigma ?_ ?_⟩
-  all_goals first
-  | solve | norm_num [Matrix.vecMul,dotProduct,Matrix.cons_val_two,Matrix.cons_val_three,
-        Matrix.head_cons,Matrix.tail_cons,Complex.star_def,map_div₀,map_ofNat,rhoA,rhoB,sigma,Matrix.trace,Fin.sum_univ_two]
-  | ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [Matrix.vecMul,dotProduct,Matrix.cons_val_two,Matrix.cons_val_three,
-        Matrix.head_cons,Matrix.tail_cons,Complex.star_def,map_div₀,map_ofNat,rhoA,rhoB,sigma,Matrix.mul_apply,Fin.sum_univ_two,
-        Matrix.conjTranspose_apply,Complex.ext_iff]
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [Matrix.vecMul, dotProduct, Matrix.cons_val_two, Matrix.cons_val_three,
+        Matrix.head_cons, Matrix.tail_cons, Complex.star_def, map_div₀, map_ofNat,
+        rhoA, rhoB, sigma, Matrix.mul_apply, Fin.sum_univ_two,
+        Matrix.conjTranspose_apply, Complex.ext_iff]
+  · have he : rhoA = D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+        (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch rhoA) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [rhoA, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two] <;> ring
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [Matrix.vecMul, dotProduct, Matrix.cons_val_two, Matrix.cons_val_three,
+        Matrix.head_cons, Matrix.tail_cons, Complex.star_def, map_div₀, map_ofNat,
+        rhoA, rhoB, sigma, Matrix.mul_apply, Fin.sum_univ_two,
+        Matrix.conjTranspose_apply, Complex.ext_iff]
+  · have he : rhoB = D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+        (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch rhoB) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [rhoB, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two] <;> ring
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [Matrix.vecMul, dotProduct, Matrix.cons_val_two, Matrix.cons_val_three,
+        Matrix.head_cons, Matrix.tail_cons, Complex.star_def, map_div₀, map_ofNat,
+        rhoA, rhoB, sigma, Matrix.mul_apply, Fin.sum_univ_two,
+        Matrix.conjTranspose_apply, Complex.ext_iff]
+  · have he : sigma = D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+        (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch sigma) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [sigma, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two] <;> ring
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
 
 private theorem equatorial_values : bloch rhoA .Z = 0 ∧ bloch rhoB .Z = 0 ∧
     COne rhoA = 1/5 ∧ COne rhoB = 2/13 := by

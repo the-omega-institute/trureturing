@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/GeneralizedFidelity.claim; result=D5/S3/Quantum/GeneralizedFidelity.result; claim=D5/S3/Quantum/GeneralizedFidelity.claim
    digest: A bit-flip channel violates generalized-fidelity data processing for qubits. -/
 
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.PointerBasis
 
@@ -106,8 +107,28 @@ theorem result : ¬ claim := by
       (!![(2 : ℂ), 1; 0, 0] : QubitMatrix)).smul (show (0 : ℝ) ≤ 1/5 by norm_num)
     convert h using 1 <;> ext i j <;> fin_cases i <;> fin_cases j <;>
       norm_num [Q, m, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply, map_ofNat, RCLike.star_def]
-  have htrP : Matrix.trace P = 1 := by norm_num [P, m, Matrix.trace, Fin.sum_univ_two]
-  have htrQ : Matrix.trace Q = 1 := by norm_num [Q, m, Matrix.trace, Fin.sum_univ_two]
+  have htrP : Matrix.trace P = 1 := by
+    have he : P =
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+          (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch P) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [P, m,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two]
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
+  have htrQ : Matrix.trace Q = 1 := by
+    have he : Q =
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+          (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch Q) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [Q, m,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two]
+    rw [he]
+    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
   have horder : ∀ M : QubitMatrix, M.PosSemidef → (rawMatrix channel M).PosSemidef := by
     intro M hM
     have hCS : 0 ≤ CStarMatrix.ofMatrix M :=
@@ -251,7 +272,17 @@ theorem result : ¬ claim := by
           Fin.sum_univ_two] <;> push_cast <;> ring
     have hRPD := hdiagPD (1-e) e hue hepos
     have hRtrace : Matrix.trace (diag (1-e) e) = 1 := by
-      simp [diag, Matrix.trace, Fin.sum_univ_two]
+      have he : (diag (1-e) e) =
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
+            (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch (diag (1-e) e)) := by
+        ext i j
+        fin_cases i <;> fin_cases j <;>
+          norm_num [diag,
+            D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+            D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+            Matrix.cons_val_two] <;> ring
+      rw [he]
+      exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
     have hRoutPD : (rawMatrix channel (diag (1-e) e)).PosDef := by
       rw [hRout]
       exact hdiagPD u v hu hv

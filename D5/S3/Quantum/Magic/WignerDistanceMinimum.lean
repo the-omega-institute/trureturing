@@ -17,6 +17,7 @@ Direct frozen dependencies: D5/S3/Quantum/Information/BinaryStabilizerLocalInequ
   D5/S3/QuantumBounds/CHSHWitness (TwoQubitMatrix).
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import D5.S3.QuantumBounds.CHSHWitness
@@ -141,8 +142,20 @@ theorem spectral_stabilizer (p : Pauli) (ε : Fin 2) (hp : p ≠ .I) : spectral 
       apply Complex.ext <;> norm_num [Complex.mul_re,Complex.mul_im] <;> nlinarith [hrr]
   have hnorm : ∑ i, ‖eigenVector p ε i‖ ^ 2 = 1 := by
     have ht : (spectral p ε).trace = 1 := by
-      cases p <;> try contradiction
-      all_goals fin_cases ε <;> norm_num [spectral,pauliMatrix,qubitX,qubitZ,Matrix.trace]
+      let v : EuclideanSpace ℝ (Fin 3) := WithLp.toLp 2 (match p with
+        | .I => ![0, 0, 0]
+        | .X => ![(-1 : ℝ) ^ (ε : ℕ), 0, 0]
+        | .Y => ![0, (-1 : ℝ) ^ (ε : ℕ), 0]
+        | .Z => ![0, 0, (-1 : ℝ) ^ (ε : ℕ)])
+      have he : spectral p ε =
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1 v := by
+        cases p <;> try contradiction
+        all_goals fin_cases ε <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+          norm_num [v, spectral, pauliMatrix, qubitX, qubitZ,
+            D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+            Matrix.mul_apply, Fin.sum_univ_two, Matrix.cons_val_two] <;> ring
+      rw [he]
+      exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 v
     rw [← hpsi] at ht; have he : (Matrix.vecMulVec (eigenVector p ε) (star (eigenVector p ε))).trace = (∑ i, ‖eigenVector p ε i‖ ^ 2 : ℝ) := by
       simp [Matrix.trace,Matrix.vecMulVec,← Complex.normSq_eq_norm_sq,Complex.mul_conj]
     rw [he] at ht; exact_mod_cast ht
@@ -161,8 +174,14 @@ theorem spectral_stabilizer (p : Pauli) (ε : Fin 2) (hp : p ≠ .I) : spectral 
     · change (if Multiplicative.ofAdd (1 : ZMod 2)=1 then (1 : QubitMatrix) else P).trace =
         if Multiplicative.ofAdd (1 : ZMod 2)=1 then 2 else 0
       rw [if_neg hm1,if_neg hm1]
-      cases p <;> try contradiction
-      all_goals fin_cases ε <;> norm_num [P,pauliMatrix,qubitX,qubitZ,Matrix.trace]
+      have ht : (spectral p ε).trace = 1 := by
+        rw [← hpsi]
+        simpa [Matrix.trace, Matrix.vecMulVec, ← Complex.normSq_eq_norm_sq,
+          Complex.mul_conj] using congrArg Complex.ofReal hnorm
+      change Matrix.trace ((1 / 2 : ℂ) • (1 + P)) = 1 at ht
+      rw [Matrix.trace_smul, Matrix.trace_add] at ht
+      norm_num [Matrix.trace_one] at ht
+      linear_combination 2 * ht
   refine ⟨?_,U,hU,hUP,htrace,hnorm,havg,hpsi.symm⟩; rw [← hpsi]
   classical
   let S := U.range; have hn : (Fintype.card (Multiplicative (ZMod 2)) : ℂ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
