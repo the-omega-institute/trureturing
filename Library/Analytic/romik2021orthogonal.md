@@ -5172,3 +5172,303 @@ constructs the required Gram matrices for all zero-shift degrees.
 A strict source-specific joint margin in the unpaid moving real band
 remains the missing estimate. Reusing this interface changes its
 formulation, without reducing that gap or proving RH or strict Robin.
+
+
+## A polynomial cluster model without a prescribed source-root spacing
+
+The fixed-cluster conditions (LC27) use a pure-multiplicity Hermite
+model. For a cluster of close distinct real zeros, a finite polynomial
+model has a reusable separation supplier: Katkova, Shapiro and
+Vishnyakova, [*Multiplier sequences and logarithmic mesh*,
+arXiv:1010.6052v1](https://arxiv.org/abs/1010.6052v1), Theorem 6,
+printed p.3; the published DOI is
+[10.1016/j.crma.2010.11.031](https://doi.org/10.1016/j.crma.2010.11.031).
+Their theorem bounds the logarithmic mesh of a Schur--Szego product
+below by the larger input mesh. It permits repeated input roots.
+Reuse that theorem and the existing finite Laguerre and adjacent-row
+identities, without another general multiplier or root-repulsion proof.
+The bounds below are ordinary model applications, without Lean or
+originality certification. They do not yet estimate the original
+source's growing real-cluster error.
+
+### The finite Jensen model acquires its own separation
+
+For a polynomial $q(t)=\sum q_kt^k$ define
+$\mathscr T_nq(t)=\sum_{k=0}^n(n)_{\underline k}n^{-k}q_kt^k$.
+Let $Q(t)=\prod_{j=1}^r(t-\tau_j)$, where $2\le r\le n$ and
+$\tau_j\ge\tau_{\min}>0$; repetitions are allowed. Put
+$H=\mathscr T_nQ$ and $V=\mathscr T_nQ'$.
+The diagonal symbol in degree $r$ is
+
+$$
+B_{r,m}(u)=\sum_{k=0}^r\binom rk\frac{(m)_{\underline k}}{m^k}u^k
+=r!(u/m)^rL_r^{(m-r)}(-m/u),\qquad m\ge r.
+\tag{LC199}
+$$
+
+This is exactly [DLMF (18.5.12)](https://dlmf.nist.gov/18.5.E12)
+in the stated parameters, with its polynomial continuation at $u=0$.
+The Laguerre polynomial has positive simple roots
+$\ell_1<\cdots<\ell_r$, because $m-r\ge0$; reuse the classical
+orthogonal-polynomial zero theorem in
+[DLMF section 18.2(vi)](https://dlmf.nist.gov/18.2#vi).
+Thus $B_{r,m}$ has simple negative roots $-m/\ell_j$ and mesh
+$\zeta_{r,m}=\min_{j<r}\ell_{j+1}/\ell_j>1$.
+
+The Schur--Szego product of $Q(-u)$ and $B_{r,n}(u)$ is exactly
+$H(-u)$ in the binomial coefficient convention. Both inputs have only
+negative roots. Theorem 6 therefore gives
+$\operatorname{lmesh}(H)\ge\zeta_{r,n}>1$.
+In particular $H$ has positive simple roots, even if some or all
+$\tau_j$ coincide. This is a consequence of the published theorem,
+not a source-root spacing hypothesis. No large-$n$, fixed-$r$ limit
+has been used. The same observation applies with ambient degree $n+1$.
+
+### An explicit joint model margin
+
+Use only the polynomial identity accompanying Dumas's Theorem 2.3
+in the cited [adjacent-row supplier](https://doi.org/10.5281/zenodo.22897068).
+Its finite coefficient identities remain valid when the coefficients
+above index $r$ vanish; its positive-sequence equivalence is not applied
+to that zero tail. Set
+
+$$
+\begin{aligned}
+P(x)&=\sum_{k=0}^r(n)_{\underline k}(-1)^kq_kx^k,\\
+Q_1(x)&=\sum_{k=0}^{r-1}(n)_{\underline k}(k+1)(-1)^{k+1}q_{k+1}x^k,\\
+R(x)&=\sum_{k=0}^r(n+1)_{\underline k}(-1)^kq_kx^k.
+\end{aligned}
+$$
+
+Here $q_k$ are the coefficients of the monic $Q$, not coefficients
+of a changed original source. One has $R=P+xQ_1$,
+$R'=(n+1)Q_1$, $P(-t/n)=H(t)$ and $Q_1(-t/n)=-V(t)$.
+The reused Wronskian identity is
+$W[P,Q_1]=[n(R')^2-(n+1)RR'']/(n+1)^2$.
+The polynomial $R$ has $r$ simple negative roots. For its minimum
+root magnitude reuse another already cited result:
+Arizmendi, Fujie, Perales and Ueda,
+[*S-transform in finite free probability*, arXiv:2408.09337v2](https://arxiv.org/html/2408.09337v2),
+Introduction following (1.2), recalls the classical bound
+$\max\operatorname{root}(p\boxtimes_rk)\le
+(\max\operatorname{root}p)(\max\operatorname{root}k)$
+for polynomials with nonnegative roots. Put
+$p(y)=y^rQ(1/y)/Q(0)$ and
+$k(y)=(-1)^rr!L_r^{(n+1-r)}(y)$.
+Their normalized elementary coefficients are respectively those of
+the reciprocal source-cluster roots and $(n+1)_{\underline j}$.
+Coefficient matching in (1.1)--(1.2) gives exactly
+$y^rR(-1/y)/R(0)=p\boxtimes_rk$.
+If $\ell_{r,n+1}$ is the largest root of that Laguerre polynomial,
+the cited product bound therefore gives
+$|r_j|\ge\tau_{\min}/\ell_{r,n+1}$ for every root of $R$.
+Consequently its absolute root gaps are at least
+
+$$
+\begin{aligned}
+\delta_{r,n}&=(\zeta_{r,n+1}-1)\frac{\tau_{\min}}{\ell_{r,n+1}},\\
+f_r&=\lfloor(r-1)/2\rfloor!\,\lceil(r-1)/2\rceil!,\\
+\mu_{r,n}&=\frac{n+1-r}{n(n+1)^2}
+             ((n+1)_{\underline r})^2
+             (\delta_{r,n}/2)^{2r-2}f_r^2>0.
+\end{aligned}
+\tag{LC200}
+$$
+
+For real $x$ away from the roots of $R$, the same real-root expansion
+used in the supplier gives
+$W[P,Q_1]=R^2[(n+1)\sum_j(x-r_j)^{-2}
+-(\sum_j(x-r_j)^{-1})^2]/(n+1)^2$.
+Cauchy--Schwarz bounds this below by
+$(n+1-r)/(n+1)^2\sum_j(R/(x-r_j))^2$.
+Choose a nearest root $r_j$. For $k\ne j$,
+$|x-r_k|\ge|r_j-r_k|/2\ge|j-k|\delta_{r,n}/2$.
+Since the absolute leading coefficient of $R$ is
+$(n+1)_{\underline r}$, that single summand supplies the square
+in (LC200), with $(j-1)!(r-j)!\ge f_r$.
+Polynomial continuity covers the root points as well.
+The exact parameter map then gives the global real-variable model bound
+
+$$
+H'(t)V(t)-H(t)V'(t)\ge\mu_{r,n}\qquad(t\in\mathbb R).
+\tag{LC201}
+$$
+
+The Laguerre root sum is $r(n+1)$, so
+$\ell_{r,n+1}\le r(n+1)$. Compared with using only $R$'s own
+reciprocal-root sum, the model margin is improved by the explicit
+factor $[r(n+1)/\ell_{r,n+1}]^{2r-2}$.
+Every dependence on $r,n$ and the Laguerre mesh remains in (LC200).
+In particular a positive margin for each finite model is not an
+$r$-uniform constant or a bound on the actual source's errors.
+
+### Keep the source factor's drift in the model
+
+For real $a_*\ne0$, $b$ and center $\tau$, consider the auxiliary
+entire function $f_*(z)=a_*e^{b(z-\tau)}Q(z)$.
+Finite coefficient extraction, with the same ambient $n$, gives exactly
+
+$$
+\begin{aligned}
+d(t)&=1+bt/n,\quad y(t)=t/d(t),\quad E(t)=a_*e^{-b\tau}d(t)^n,\\
+M(t)&=\mathscr T_nf_*(t)=E(t)H(y(t)),\\
+U(t)&=\mathscr T_nf_*'(t)=E(t)\{V(y(t))+bH(y(t))\},\\
+M'(t)U(t)-M(t)U'(t)
+&=a_*^2e^{-2b\tau}d(t)^{2n-2}
+   \{H'(y(t))V(y(t))-H(y(t))V'(y(t))\}.
+\end{aligned}
+\tag{LC202}
+$$
+
+These are the ordinary exponential tilt and its transported derivative;
+the extra $bH$ term is retained. On a prescribed compact interval $I$
+where $d(t)>0$, define
+$\mu_*(I)=a_*^2e^{-2b\tau}\min_{t\in I}d(t)^{2n-2}\mu_{r,n}>0$.
+Equation (LC201) then supplies the same lower bound for the model
+Wronskian on all of $I$. The pole of the displayed fractional coordinate
+is excluded explicitly; the extracted polynomials themselves still
+have their polynomial continuation there.
+
+In a selected real source cluster with $F=AQ$ and $A$ zero-free near
+$\tau$, one can choose $a_*=A(\tau)$ and $b=A'(\tau)/A(\tau)$.
+Reality makes these real and $a_*\ne0$. This does not assume that $A$
+is constant or that the source has only real zeros elsewhere. The
+auxiliary $f_*$ is a comparison function; $F$, $\mathcal J_n$,
+$\mathcal G_n$ and coefficient shift zero remain unchanged.
+
+### The unpaid part is now a four-response source budget
+
+On the same independently prescribed $I$, write
+
+$$
+\begin{aligned}
+e_0&=\|\mathcal J_n-M\|_I,&
+e_1&=\|\mathcal J_n'-M'\|_I,\\
+v_0&=\|\mathcal G_n-U\|_I,&
+v_1&=\|\mathcal G_n'-U'\|_I,
+\end{aligned}
+$$
+
+where $\|\cdot\|_I$ is the uniform norm. Set
+$S_0=\|M\|_I$, $S_1=\|M'\|_I$, $T_0=\|U\|_I$, $T_1=\|U'\|_I$.
+Expanding the two products at the same argument gives the sufficient
+joint condition
+
+$$
+e_1T_0+S_1v_0+e_1v_0+e_0T_1+S_0v_1+e_0v_1
+<\mu_*(I).
+\tag{LC203}
+$$
+
+Under (LC203), $\mathcal J_n'\mathcal G_n-
+\mathcal J_n\mathcal G_n'>0$ on $I$. At every actual
+$\mathcal J_n$ node in $I$, this is the required strict product
+$\mathcal J_n'\mathcal G_n>0$. No approximate-node replacement,
+source-zero simplicity or within-cluster spacing is needed for this
+implication. It also excludes repeated or adjacent-common actual
+nodes in the certified interval. Condition (LC203) is stronger than
+positivity only at nodes; its failure is not a counterexample to that
+target.
+
+No bound proving (LC203) for the actual growing source clusters is
+supplied here. The four errors are exact transforms of $F-f_*$ and its
+derivatives; their local and remote contributions, including the
+$n-1$ extraction offsets, must be paid on the original source contour.
+The real-cluster premise must also be checked for every cluster being
+used. A positive model margin cannot turn a cluster containing
+nonreal source zeros into an all-real one. Neither the isolated-cluster
+geometry nor the required growing-$r$ error bound is supplied by the
+five FIB inclusion modes, reference-frame rotation or an unweighted
+length-conservation identity. RH and strict Robin for every integer
+$H>5040$, all-node coverage and a numerical margin certificate remain
+unresolved; this model application has not been checked in Lean.
+
+
+
+
+### A local original-source bound after removing the selected real zeros
+
+The model factor can receive a source-specific local estimate through
+Titchmarsh's already checked Theorem 9.6(A), rather than an assumed
+pointwise lower bound on $F'$ at a multiple source zero.
+Let $T\ge32$, $L=\log(T+2)$, $s_0=1/2+iT$ and $0<\rho\le1/8$.
+Assume that all source zeros in the closed disc $|s-s_0|\le4\rho$
+lie on the critical line; this is a selected local premise, not RH.
+List those zeros as $1/2+i\gamma_j$, with multiplicities, and form
+$Q(z)=\prod_j(z-\gamma_j^2)$.
+For use with the preceding model assume its degree is at least two.
+The existing count in (LC193) bounds its degree by $CL$.
+Put $\tau=T^2$ and $A(z)=F(z)/Q(z)$.
+The removed multiplicities are exactly those of $F$ because $\Phi$
+is injective and noncritical near $s_0$. Thus $A$ is analytic and
+zero-free on the image of the open radius-$4\rho$ disc.
+No condition is imposed on the other source zeros.
+
+Let $\Sigma_T$ contain every source zero $\omega$ with
+$|\Im\omega-T|\le2$, with multiplicity. On $|s-s_0|\le1/2$,
+Titchmarsh's local sum is a subset of $\Sigma_T$.
+The extra terms each have $|\Im\omega-\Im s|>1$, so replacing that
+varying sum by the fixed one changes the bound by $O(L)$.
+The already used Gamma/polynomial factor for $\xi$ also has logarithmic
+derivative $O(L)$ there. The remainder after this fixed pole sum is
+analytic near the selected disc and is uniformly $O(L)$.
+
+For each selected zero,
+$\Phi(s)-\gamma_j^2=-(s-1/2-i\gamma_j)(s-1/2+i\gamma_j)$.
+Hence its near pole cancels in
+$g(s)=\frac{d}{ds}\log A(\Phi(s))$.
+Its conjugate pole is at distance comparable to $T$ and costs at most
+$Cr/T$ in total. All remaining poles in $\Sigma_T$ are outside the
+radius-$4\rho$ disc, so on the radius-$2\rho$ disc they are at least
+$2\rho$ away. The fixed count and Cauchy estimate consequently give
+
+$$
+|g(s)|\le CL/\rho\quad(|s-s_0|\le2\rho),\qquad
+|g'(s)|\le CL/\rho^2\quad(|s-s_0|\le\rho).
+\tag{LC204}
+$$
+
+These bounds hold across the removed source zeros. They require no
+separation between those zeros and no simplicity assumption.
+Cauchy is applied to the analytic pole-removed function $g$, not to
+$F'/F$ across its poles or to a discontinuously selected zero sum.
+
+The local inverse of $\Phi(s)=-(s-1/2)^2$ maps
+$|z-\tau|\le T\rho/4$ inside $|s-s_0|<\rho/2$; its first and second
+derivatives are bounded by $C/T$ and $C/T^3$.
+Applying the chain rule to (LC204) gives
+$|(\log A)'|\le CL/(T\rho)$ and
+$|(\log A)''|\le CL/(T^2\rho^2)$ on that $z$ disc.
+Choose $a_*=A(\tau)\ne0$ and $b=A'(\tau)/A(\tau)$ as in (LC202).
+An analytic logarithm of $A(z)/A(\tau)$ exists on this disc, with
+value zero at $\tau$. Its linear Taylor remainder therefore gives
+
+$$
+\begin{aligned}
+|b|&\le CL/(T\rho),\\
+\left|\frac{A(z)}{a_*e^{b(z-\tau)}}-1\right|
+&\le\exp\!\left(\frac{CL|z-\tau|^2}{T^2\rho^2}\right)-1,\\
+|F(z)-f_*(z)|
+&\le |f_*(z)|\left\{
+\exp\!\left(\frac{CL|z-\tau|^2}{T^2\rho^2}\right)-1\right\},
+\qquad |z-\tau|\le T\rho/4.
+\end{aligned}
+\tag{LC205}
+$$
+
+The last line is also valid at zeros of $Q$ by continuity; it divides
+only by the zero-free factor, not by $F$. Reality of $F,Q$ gives real
+$a_*,b$, even when the center itself is a removed source zero.
+This is an original-source parameter application of the existing pole
+sum, Gamma bounds, count and analytic Taylor estimate, without a new
+local logarithmic-derivative theorem or Lean certification.
+
+Equation (LC205) supplies a local curvature remainder for the model
+factor. It does not supply the four extracted error bounds in (LC203):
+those still involve the exact coefficient kernel, the derivative
+extractions and the entire remote source circle. The interval and
+cluster spread must also be small enough for a useful quadratic
+remainder; the displayed exponential is not automatically small on
+the whole disc. A uniform real-cluster premise, sufficient bounds
+through the unpaid moving real-node band, numerical constants, RH and
+strict Robin for every integer $H>5040$ remain unresolved.
