@@ -346,6 +346,20 @@ private lemma trace_action_seed_event (π : Seed → Bool → History → Action
   · change π ω.1 S (acquiredHistory π S (Read p q) n ω) = a
     rwa [history_of_trace π S p q t n ω ht]
 
+omit [MeasurableSpace Seed] in
+private lemma trace_return_call_count (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (cell : Bool × Bool)
+    (ω : Seed × (ℕ → ℝ)) (ht : ω ∈ TraceEvent π S p q t n)
+    (ha : Act π S p q n ω = .inr cell) : Calls π S p q ω = (n : WithTop ℕ) := by
+  apply le_antisymm
+  · exact hittingAfter_le_of_mem (Nat.zero_le n) ⟨cell, ha.symm⟩
+  · apply le_of_not_gt
+    intro hlt
+    obtain ⟨i, hi, y, hy⟩ := hittingAfter_lt_iff.mp hlt
+    have hc := (ht i hi.2).1
+    rw [hc] at hy
+    simp at hy
+
 /-- On each reached labelled history, an actual next call has the declared
 Bernoulli answer kernel even when its source is chosen adaptively from the
 complete private seed and acquired record. The equality also covers null nodes. -/
@@ -527,31 +541,26 @@ private lemma table_rows_supported (table : (Bool × History) → PMF Action) :
 the requested source, and every finite return contains that actual first answer.
 The same private-seed null set works for every pair of source rates. -/
 theorem native_policy_table_identity (table : (Bool × History) → PMF Action)
-    (hidentity : IdentityRows table) (S : Bool) (p q : unitInterval) :
-    ∀ᵐ ω ∂(RawLaw (RowLaw table)),
-      Act TablePolicy S p q 0 ω = .inl S ∧
-      ∀ n (cell : Bool × Bool), Act TablePolicy S p q n ω = .inr cell →
-        cell.1 = Read p q S 0 ω.2 := by
-  have := uniform_probability
-  have hs : ∀ᵐ ω ∂(RawLaw (RowLaw table)),
-      ∀ row : Bool × History, table row (ω.1 row) ≠ 0 := by
-    apply ae_of_ae_map (μ := RawLaw (RowLaw table))
-      (p := fun seed : (Bool × History) → Action => ∀ row, table row (seed row) ≠ 0)
-      measurable_fst.aemeasurable
-    rw [Measure.map_fst_prod, measure_univ, one_smul]
-    exact table_rows_supported table
-  filter_upwards [hs] with ω hω
-  have hroot : ω.1 (S, []) = .inl S :=
-    (hidentity S [] _ (hω (S, []))).1 rfl
+    (hidentity : IdentityRows table) :
+    ∀ᵐ seed ∂(RowLaw table), ∀ (S : Bool) (p q : unitInterval) (tape : ℕ → ℝ),
+      Act TablePolicy S p q 0 (seed, tape) = .inl S ∧
+      ∀ n (cell : Bool × Bool), Act TablePolicy S p q n (seed, tape) = .inr cell →
+        cell.1 = Read p q S 0 tape := by
+  filter_upwards [table_rows_supported table] with seed hseed
+  intro S p q tape
+  have hroot : seed (S, []) = .inl S :=
+    (hidentity S [] _ (hseed (S, []))).1 rfl
   refine ⟨hroot, ?_⟩
   intro n cell ha
-  have hh : (acquiredHistory TablePolicy S (Read p q) n ω).head? = some (S, cell.1) :=
-    (hidentity S _ _ (hω (S, acquiredHistory TablePolicy S (Read p q) n ω))).2 cell ha
+  have hh : (acquiredHistory TablePolicy S (Read p q) n (seed, tape)).head? =
+      some (S, cell.1) :=
+    (hidentity S _ _ (hseed (S, acquiredHistory TablePolicy S (Read p q) n
+      (seed, tape)))).2 cell ha
   cases n with
   | zero => simp [acquiredHistory] at hh
   | succ n =>
-    have hf := history_actual_first_answer TablePolicy S (Read p q) ω hroot n
-    have he : (S, cell.1) = (S, Read p q S 0 ω.2) := Option.some.inj (hh.symm.trans hf)
+    have hf := history_actual_first_answer TablePolicy S (Read p q) (seed, tape) hroot n
+    have he : (S, cell.1) = (S, Read p q S 0 tape) := Option.some.inj (hh.symm.trans hf)
     exact congrArg Prod.snd he
 
 private lemma finite_return_cell_law (π : Seed → Bool → History → Action) (S : Bool)
@@ -779,11 +788,15 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
         (n : WithTop ℕ) ≤ Calls TablePolicy S p q ω →
         ((acquiredHistory TablePolicy S (Read p q) n ω).filter (fun v => v.1)).length +
           ((acquiredHistory TablePolicy S (Read p q) n ω).filter (fun v => !v.1)).length = n) ∧
-      (IdentityRows table → ∀ (S : Bool) (p q : unitInterval),
-        ∀ᵐ ω ∂(RawLaw (RowLaw table)),
-          Act TablePolicy S p q 0 ω = .inl S ∧
-          ∀ n (cell : Bool × Bool), Act TablePolicy S p q n ω = .inr cell →
-            cell.1 = Read p q S 0 ω.2) ∧
+      (∀ (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ)
+        (cell : Bool × Bool) (ω), ω ∈ TraceEvent TablePolicy S p q t n →
+        Act TablePolicy S p q n ω = .inr cell →
+          Calls TablePolicy S p q ω = (n : WithTop ℕ)) ∧
+      (IdentityRows table → ∀ᵐ seed ∂(RowLaw table),
+        ∀ (S : Bool) (p q : unitInterval) (tape : ℕ → ℝ),
+          Act TablePolicy S p q 0 (seed, tape) = .inl S ∧
+          ∀ n (cell : Bool × Bool), Act TablePolicy S p q n (seed, tape) = .inr cell →
+            cell.1 = Read p q S 0 tape) ∧
       ∀ δ : ℝ, δ ∈ Ioo 0 δ₀ →
       (∀ (w : World P) (S : Bool), ∀ᵐ ω ∂(RawLaw (RowLaw table)),
         Calls TablePolicy S (Rate P w false) (Rate P w true) ω ≠ ⊤) →
@@ -800,7 +813,7 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
     (Seed := (Bool × History) → Action) P m hm
   refine ⟨k, hk, δ₀, hδ₀, factory_target_probability P, ?_⟩
   intro table
-  refine ⟨native_policy_table_leaf_law table, ?_, ?_, ?_, ?_⟩
+  refine ⟨native_policy_table_leaf_law table, ?_, ?_, ?_, ?_, ?_⟩
   · intro S
     exact native_source_conditional_kernel TablePolicy
       (fun S h => measurable_pi_apply (S, h)) S (RowLaw table)
@@ -809,6 +822,7 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
       (l := acquiredHistory TablePolicy S (Read p q) n ω) (fun v => v.1)
     rw [acquired_history_length_before_return TablePolicy S (Read p q) ω n hn] at he
     exact he.symm
+  · exact trace_return_call_count TablePolicy
   · exact fun hi => native_policy_table_identity table hi
   intro δ hδ hfinite htv
   apply hbound (RowLaw table) inferInstance TablePolicy
