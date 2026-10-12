@@ -56,7 +56,9 @@ internal static partial class CleanLanesCommand
         {
             var root = Path.GetFullPath(repositoryRoot);
             var options = ParseArguments(arguments);
-            var baseCommit = ResolveCommit(root, options.Base, runner);
+            var devCommit = TryResolveDevCommit(root, runner);
+            var baseCommit = options.Base is "origin/dev" or "refs/remotes/origin/dev"
+                ? devCommit : ResolveCommit(root, options.Base, runner);
             var commonGitDirectory = ResolveCommonGitDirectory(root, runner);
             var inventory = ReadWorktrees(root, runner);
             root = inventory[0].Path; // Keep Git commands usable when the invoking linked tree is selected.
@@ -79,6 +81,7 @@ internal static partial class CleanLanesCommand
                 root,
                 commonGitDirectory,
                 baseCommit,
+                devCommit,
                 options.Force,
                 inventory,
                 events,
@@ -92,7 +95,7 @@ internal static partial class CleanLanesCommand
                 // 不占一棵树,删它是纯分支操作,不属于「顺手回收旧树」。
                 InspectOrphanBranches(
                     root,
-                    baseCommit,
+                    devCommit,
                     options.Force,
                     activeBranches,
                     events,
@@ -125,6 +128,8 @@ internal static partial class CleanLanesCommand
                     reason = item.Reason,
                     recovery_branch = item.RecoveryBranch,
                     recovery_branch_candidate = item.RecoveryBranchCandidate,
+                    selection_reason = item.SelectionReason,
+                    work_witness_reason = item.WorkWitnessReason,
                 }));
                 output.Append('\n');
             }
@@ -140,6 +145,9 @@ internal static partial class CleanLanesCommand
                     ? "lane_removal_unresolved" : null,
                 base_revision = options.Base,
                 base_commit = baseCommit,
+                dev_revision = "refs/remotes/origin/dev",
+                dev_commit = devCommit,
+                dev_state = devCommit is null ? "dev_unknown" : "known",
                 item_count = events.Count,
                 removable_count = events.Count(static item =>
                     item.Action is "would_remove" or "removed"),
@@ -212,7 +220,8 @@ internal static partial class CleanLanesCommand
     private static bool InspectRegisteredLanes(
         string repositoryRoot,
         string commonGitDirectory,
-        string baseCommit,
+        string? baseCommit,
+        string? devCommit,
         bool force,
         IReadOnlyList<RegisteredWorktree> inventory,
         ICollection<CleanLaneEvent> events,
@@ -242,7 +251,8 @@ internal static partial class CleanLanesCommand
 
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
-            if (string.Equals(item.GitDirectory, commonGitDirectory, StringComparison.Ordinal))
+            if (string.Equals(item.Path, inventory[0].Path, StringComparison.Ordinal)
+                || string.Equals(item.GitDirectory, commonGitDirectory, StringComparison.Ordinal))
             {
                 events.Add(BlockedWorktree(item, "main_worktree"));
                 continue;
@@ -275,18 +285,25 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var reason = LockAgeBlockReason(item, now) ?? ReclaimBlockReason(item, baseCommit, runner, now);
+            var reason = LockAgeBlockReason(item, now);
             if (reason is not null)
             {
                 events.Add(BlockedWorktree(item, reason));
                 continue;
             }
 
+            var selection = SelectForReclaim(item, baseCommit, devCommit, runner, now);
+            if (selection.BlockReason is not null)
+            {
+                events.Add(WithSelection(BlockedWorktree(item, selection.BlockReason), selection));
+                continue;
+            }
+
             if (force)
             {
-                var removal = RemoveLane(repositoryRoot, item, baseCommit, runner, now,
+                var removal = RemoveLane(repositoryRoot, item, baseCommit, devCommit, selection, runner, now,
                     protectObservedWorktree: Observe);
-                events.Add(RemovalEvent(item, removal));
+                events.Add(WithSelection(RemovalEvent(item, removal), selection));
                 CompleteRemoval(item, removal);
                 continue;
             }
@@ -299,13 +316,13 @@ internal static partial class CleanLanesCommand
                 incomplete = true;
                 continue;
             }
-            events.Add(new CleanLaneEvent(
+            events.Add(WithSelection(new CleanLaneEvent(
                 "stale_worktree",
                 item.Path,
                 item.Branch,
                 item.Head,
                 "would_remove",
-                item.Locked ? "stale_lock" : "stale_behind"));
+                selection.RemovalReason(item.Locked)), selection));
             remainingPaths.Remove(item.Path);
         }
 
@@ -316,7 +333,7 @@ internal static partial class CleanLanesCommand
 
     private static void InspectOrphanBranches(
         string repositoryRoot,
-        string baseCommit,
+        string? devCommit,
         bool force,
         IReadOnlySet<string> activeBranches,
         ICollection<CleanLaneEvent> events,
@@ -352,7 +369,8 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            if (!IsAncestor(repositoryRoot, head, baseCommit, runner))
+            var merged = devCommit is null ? null : IsAncestor(repositoryRoot, head, devCommit, runner);
+            if (merged != true)
             {
                 events.Add(new CleanLaneEvent(
                     "orphan_branch",
@@ -360,7 +378,7 @@ internal static partial class CleanLanesCommand
                     branch,
                     head,
                     "skipped",
-                    "unmerged"));
+                    devCommit is null ? "dev_unknown" : merged is null ? "merged_state_unknown" : "unmerged"));
                 continue;
             }
 
@@ -571,6 +589,9 @@ internal static partial class CleanLanesCommand
     private static CleanLaneEvent BlockedWorktree(RegisteredWorktree item, string reason) =>
         new("lane_worktree", item.Path, item.Branch, item.Head, "skipped", reason);
 
+    private static CleanLaneEvent WithSelection(CleanLaneEvent item, ReclaimSelection selection) =>
+        item with { SelectionReason = selection.Reason, WorkWitnessReason = selection.WitnessReason };
+
     private static IReadOnlyList<string> DefaultTempRoots() =>
         new[] { "/tmp", Path.GetTempPath() }
             .Where(Directory.Exists)
@@ -586,5 +607,7 @@ internal static partial class CleanLanesCommand
         string Action,
         string Reason,
         string? RecoveryBranch = null,
-        string? RecoveryBranchCandidate = null);
+        string? RecoveryBranchCandidate = null,
+        string? SelectionReason = null,
+        string? WorkWitnessReason = null);
 }

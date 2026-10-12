@@ -117,7 +117,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Contains(items, item =>
             ItemMatches(item, unreadable, "skipped", "unreadable"));
         Assert.Contains(items, item =>
-            ItemMatches(item, healthy, "would_remove", "stale_behind"));
+            ItemMatches(item, healthy, "would_remove", "merged_to_dev"));
     }
 
     [Fact]
@@ -201,7 +201,7 @@ public sealed partial class CleanLanesCommandTests
                 "partially_removed",
                 "worktree_remove_failed_state_indeterminate"));
         Assert.Contains(ReadItems(result.Output), item =>
-            ItemMatches(item, removed, "removed", "stale_behind"));
+            ItemMatches(item, removed, "removed", "merged_to_dev"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
@@ -224,7 +224,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(locked));
         Assert.False(Directory.Exists(unlocked));
         Assert.Equal("locked_recent", ReasonFor(result.Output, locked));
-        Assert.Equal("stale_behind", ReasonFor(result.Output, unlocked));
+        Assert.Equal("merged_to_dev", ReasonFor(result.Output, unlocked));
     }
 
     [Theory]
@@ -281,6 +281,7 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/recent-reset");
         var now = fixture.LastUpdate(lane).AddDays(2);
+        CleanLanesFixture.Git(lane, "reset", "--hard", "HEAD^");
         fixture.RewriteLastUpdate(lane, now.AddHours(-1));
 
         var result = fixture.RunAt(now, "--force", "--lanes-only");
@@ -309,7 +310,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.Run("--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
-        Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
+        Assert.Equal("work_witness_unknown", ReasonFor(result.Output, lane));
     }
 
     [Theory]
@@ -319,7 +320,7 @@ public sealed partial class CleanLanesCommandTests
     public void UnverifiableBehindCountIsRetained(string output)
     {
         using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane("harness/behind-unknown");
+        var lane = fixture.AddUnmergedLane("harness/behind-unknown");
         var runner = fixture.CreateRunner((file, args, directory) => args[0] == "rev-list"
             ? new ProcessOutput(0, Encoding.UTF8.GetBytes(output), []) : null);
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
@@ -343,7 +344,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
-        Assert.Equal("recently_updated", ReasonFor(result.Output, lane));
+        Assert.Equal("race_changed", ReasonFor(result.Output, lane));
     }
 
     [Theory]
@@ -411,7 +412,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
         Assert.True(Directory.Exists(fixture.RepositoryRoot));
-        Assert.Equal("stale_behind", ReasonFor(result.Output, lane));
+        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
         Assert.Equal("main_worktree", ReasonFor(result.Output, fixture.RepositoryRoot));
     }
 

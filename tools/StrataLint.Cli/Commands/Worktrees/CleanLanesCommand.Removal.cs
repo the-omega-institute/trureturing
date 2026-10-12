@@ -8,7 +8,9 @@ internal static partial class CleanLanesCommand
     private static LaneRemovalResult RemoveLane(
         string repositoryRoot,
         RegisteredWorktree item,
-        string baseCommit,
+        string? baseCommit,
+        string? devCommit,
+        ReclaimSelection selection,
         IWorktreeProcessRunner runner,
         DateTimeOffset now,
         Action<RegisteredWorktree>? protectObservedWorktree = null)
@@ -49,7 +51,7 @@ internal static partial class CleanLanesCommand
         if (!string.Equals(actualHead, item.Head, StringComparison.Ordinal)
             || !string.Equals(actualBranch, item.Branch ?? string.Empty, StringComparison.Ordinal))
         {
-            return Refused("unreadable");
+            return Refused("race_changed");
         }
 
         RegisteredWorktree? refreshed;
@@ -58,7 +60,7 @@ internal static partial class CleanLanesCommand
             var inventory = ReadWorktrees(repositoryRoot, runner, resolveGitDirectories: false);
             foreach (var observed in inventory) protectObservedWorktree?.Invoke(observed);
             if (inventory.Any(candidate => IsNestedWorktree(item.Path, candidate.Path)))
-                return Refused("nested_worktree");
+                return Refused("race_changed");
             refreshed = inventory.SingleOrDefault(candidate => string.Equals(
                     candidate.Path,
                     item.Path,
@@ -69,17 +71,22 @@ internal static partial class CleanLanesCommand
             return Refused("unreadable");
         }
 
-        if (refreshed is null) return Refused("unreadable");
+        if (refreshed is null) return Refused("race_changed");
 
         if (!string.Equals(refreshed.Head, item.Head, StringComparison.Ordinal)
             || !string.Equals(refreshed.Branch, item.Branch, StringComparison.Ordinal))
         {
-            return Refused("unreadable");
+            return Refused("race_changed");
         }
 
         if (refreshed.Locked != item.Locked || refreshed.LockReason != item.LockReason)
-            return Refused(item.Locked ? "locked_changed" : "locked");
-        var reason = LockAgeBlockReason(item, now) ?? ReclaimBlockReason(item, baseCommit, runner, now);
+            return Refused("race_changed");
+        var gitDirectory = TryResolveRegisteredGitDirectory(item.Path, runner);
+        if (!string.Equals(gitDirectory, item.GitDirectory, StringComparison.Ordinal))
+            return Refused("race_changed");
+        var refreshedSelection = SelectForReclaim(item, baseCommit, devCommit, runner, now);
+        if (refreshedSelection != selection) return Refused("race_changed");
+        var reason = LockAgeBlockReason(item, now) ?? refreshedSelection.BlockReason;
         if (reason is not null) return Refused(reason);
 
         string? recoveryBranch = null;
@@ -112,7 +119,10 @@ internal static partial class CleanLanesCommand
             }
             if (!removal.Success)
             {
-                if (removal.ExitCode is 68 or 73) return Refused("identity_or_lock_refused");
+                if (removal.ExitCode is 68 or 73)
+                    return Refused(removal.Error.Contains("observed_identity_changed", StringComparison.Ordinal)
+                        || removal.Error.Contains("observed_path_changed", StringComparison.Ordinal)
+                        ? "race_changed" : "identity_or_lock_refused");
                 if (outcome?.GetProperty("outcome").GetString() == "checkpoint_failed")
                     return new(LaneRemovalOutcome.CheckpointFailed,
                         "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate);
@@ -127,7 +137,7 @@ internal static partial class CleanLanesCommand
 
         // Retain both observed branches and refs created for detached recovery
         // through the invocation's later orphan sweep.
-        return new(LaneRemovalOutcome.Removed, "stale_behind", recoveryBranch);
+        return new(LaneRemovalOutcome.Removed, selection.RemovalReason(), recoveryBranch);
     }
 
     private static string? LockAgeBlockReason(RegisteredWorktree item, DateTimeOffset now)
