@@ -147,4 +147,61 @@ private theorem scalar_reductions : c * (a + c) = a ^ 2 ∧ kappa * s ^ 2 = a ^ 
       linear_combination a ^ 2 * (kappa - 1) * kappa_facts.2.2 + kappa * a_facts.1
     linear_combination kappa * sin_sq - hkc
 
+private def chi : AddChar (ZMod 12) ℂ := (ZMod.stdAddChar (N := 12)).mulShift 2
+private def z : ℂ := chi 1
+
+private theorem chi_norm (n : ZMod 12) : ‖chi n‖ = 1 := by
+  unfold chi
+  rw [AddChar.mulShift_apply, ZMod.stdAddChar_apply]
+  exact Circle.norm_coe _
+
+private theorem z_exp : z = Complex.exp (((Real.pi / 3 : ℝ) : ℂ) * Complex.I) := by
+  change ZMod.stdAddChar (2 : ZMod 12) = _
+  have h := ZMod.stdAddChar_coe (N := 12) (2 : ℤ)
+  norm_num only [Int.cast_ofNat, Nat.cast_ofNat] at h
+  rw [h]
+  congr 1
+  push_cast
+  ring
+
+private theorem z_norm : ‖z‖ = 1 := chi_norm 1
+
+private theorem z_re : z.re = 1 / 2 := by
+  rw [z_exp, Complex.exp_ofReal_mul_I_re, Real.cos_pi_div_three]
+
+private theorem z_conj : starRingEnd ℂ z = 1 - z := by
+  apply Complex.ext
+  · simp only [Complex.conj_re, Complex.sub_re, Complex.one_re]
+    linarith only [z_re]
+  · simp only [Complex.conj_im, Complex.sub_im, Complex.one_im]
+    ring
+
+private theorem z_unit : z * starRingEnd ℂ z = 1 := by
+  rw [Complex.mul_conj', z_norm]
+  norm_num
+
+private theorem z_poly : z ^ 2 - z + 1 = 0 := by
+  have h := z_unit
+  rw [z_conj] at h
+  linear_combination -h
+
+private theorem z_ne_zero : z ≠ 0 := by
+  intro h
+  have hn := z_norm
+  rw [h, norm_zero] at hn
+  exact zero_ne_one hn
+
+private theorem z_ne_one : z ≠ 1 := by
+  intro h
+  have hr := z_re
+  rw [h, Complex.one_re] at hr
+  norm_num at hr
+
+private theorem chi_sum : ∑ n : ZMod 12, chi n = 0 :=
+  AddChar.sum_eq_zero_of_ne_one (AddChar.ne_one_iff.mpr ⟨1, z_ne_one⟩)
+
+private theorem chi_neg_one : chi (-1) = starRingEnd ℂ z := by
+  rw [chi.map_neg_eq_inv]
+  exact Complex.inv_eq_conj z_norm
+
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
