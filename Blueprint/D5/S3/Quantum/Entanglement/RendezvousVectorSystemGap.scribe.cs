@@ -77,7 +77,8 @@ internal sealed class RendezvousVectorSystemGapDocument : IScribeDocumentDefinit
         return All("V", Seq(X("Type"), Star),
             All("ag", Call("AddCommGroup", X("V")),
             All("module", Call("Module", Reals(), X("V")),
-            All("C", At(Qualified("PreInnerProductSpace", "Core"), Reals(), X("V")), body))));
+            All("C", At(Qualified("PreInnerProductSpace", "Core"), Reals(), X("V"),
+                Qualified("Real", "instRCLike"), X("ag"), X("module")), body))));
     }
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
@@ -100,7 +101,8 @@ internal sealed class RendezvousVectorSystemGapDocument : IScribeDocumentDefinit
     private static Formula Card(Formula value) => At(Qualified("Finset", "card"), value);
     private static Formula Inner(Formula a, Formula b) => At(Qualified("Inner", "inner"),
         Reals(), X("V"), At(Seq(Operatorname,
-            Grp(X("PreInnerProductSpace"), Dot, X("Core"), Dot, X("toInner"))), X("C")), a, b);
+            Grp(X("PreInnerProductSpace"), Dot, X("Core"), Dot, X("toInner"))),
+            Reals(), X("V"), Qualified("Real", "instRCLike"), X("ag"), X("module"), X("C")), a, b);
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Parameters(Formula body) => All("d", Naturals(), All("t", Naturals(), body));
     private static Formula All(string v, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);

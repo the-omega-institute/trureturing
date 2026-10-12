@@ -11,7 +11,7 @@ internal sealed class HypercubeRendezvousQuantumGapDocument : IScribeDocumentDef
         LibraryNoteRef.Create("D5/L/QuantumBounds/wang2026rendezvous");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The quantum supremum is strictly below the no-signalling supremum in balanced hypercube rendezvous.",
+        "For t ≥ 2 and d > 2t, the quantum supremum is strictly below the no-signalling supremum in balanced hypercube rendezvous.",
         H("The quantum gap in hypercube rendezvous"), Blocks(
             Node("correlation", "Real correlation arrays", "Correlation",
                 Parameters(Equal(Local("Correlation", X("d"), X("t")),
@@ -82,7 +82,7 @@ internal sealed class HypercubeRendezvousQuantumGapDocument : IScribeDocumentDef
 
     private static Formula StrategyFormula()
     {
-        Formula rho = X("rho"), e = X("E"), f = X("F");
+        Formula rho = Rho, e = X("E"), f = X("F");
         Formula ea = At(e, X("sigma"), X("A"));
         Formula fb = At(f, X("tau"), X("B"));
         Formula fields = Seq(Mathrm, Grp(X("structure")), Sp, OpenBrace,

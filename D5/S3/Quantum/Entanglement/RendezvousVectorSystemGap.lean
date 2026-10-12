@@ -148,12 +148,11 @@ private lemma form_triangle (x y z : V) :
   rw [sub_add_sub_cancel] at he; exact he
 private lemma form_sum {ι : Type*} (S : Finset ι) (f : ι → V) (x : V) :
     C.inner x (∑ i ∈ S, f i) = ∑ i ∈ S, C.inner x (f i) := by
-  classical
-  induction S using Finset.induction_on
-  · exact @InnerProductSpace.Core.inner_zero_right ℝ V _ _ _ C x
-  · rename_i a S ha ih
-    rw [Finset.sum_insert ha, Finset.sum_insert ha,
-      @InnerProductSpace.Core.inner_add_right ℝ V _ _ _ C, ih]
+  let L : V →+ ℝ := {
+    toFun := C.inner x
+    map_zero' := @InnerProductSpace.Core.inner_zero_right ℝ V _ _ _ C x
+    map_add' := fun y z => @InnerProductSpace.Core.inner_add_right ℝ V _ _ _ C x y z }
+  exact map_sum L f S
 private lemma exchange_transport {d t : ℕ} (X : Output d t → V) (e : ℝ) (he : 0 ≤ e)
     (step : ∀ A A' : Output d t, (A.val ∪ A'.val).card ≤ t + 1 →
       Real.sqrt (C.inner (X A - X A') (X A - X A')) ≤ 2 * e) (A R : Output d t) :

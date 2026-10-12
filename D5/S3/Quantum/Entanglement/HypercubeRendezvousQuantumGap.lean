@@ -56,14 +56,6 @@ def claim : Prop := ∀ t d : ℕ, 2 ≤ t → 2 * t < d → omegaQ d t < omegaN
 
 
 section QuantumBridge
-private lemma core_sum {V ι : Type*} [AddCommGroup V] [Module ℝ V]
-    (C : PreInnerProductSpace.Core ℝ V) (T : Finset ι) (f : ι → V) (x : V) :
-    C.inner x (∑ i ∈ T, f i) = ∑ i ∈ T, C.inner x (f i) := by
-  let L : V →+ ℝ := {
-    toFun := C.inner x
-    map_zero' := @InnerProductSpace.Core.inner_zero_right ℝ V _ _ _ C x
-    map_add' := fun y z => @InnerProductSpace.Core.inner_add_right ℝ V _ _ _ C x y z }
-  exact map_sum L f T
 private abbrev G (d : ℕ) := Vertex d × Equiv.Perm (Fin d)
 private def pmap {d : ℕ} (p : Equiv.Perm (Fin d)) (s : Finset (Fin d)) : Finset (Fin d) :=
   s.map p.toEmbedding
@@ -73,9 +65,8 @@ private def actO {d t : ℕ} (g : G d) (A : Output d t) : Output d t :=
   ⟨pmap g.2 A.val, by dsimp only [pmap]; rw [Finset.card_map]; exact A.property⟩
 private lemma pmap_symmDiff {d : ℕ} (p : Equiv.Perm (Fin d)) (s t : Finset (Fin d)) :
     pmap p (s ∆ t) = pmap p s ∆ pmap p t := by
-  dsimp only [pmap]
-  rw [Finset.symmDiff_def, Finset.map_union, Finset.map_sdiff, Finset.map_sdiff,
-    Finset.symmDiff_def]
+  simpa only [pmap, Finset.map_eq_image, Equiv.coe_toEmbedding] using
+    Finset.image_symmDiff s t p.injective
 private lemma pmap_comp {d : ℕ} (p q : Equiv.Perm (Fin d)) (s : Finset (Fin d)) :
     pmap p (pmap q s) = pmap (p * q) s := by
   dsimp only [pmap]; rw [Finset.map_map]; rfl
@@ -107,16 +98,10 @@ private lemma effect_nonneg {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β
 private lemma effect_le_one {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d)
     (T : Finset (Output d t)) : effect S σ T ≤ 1 := by
-  refine Matrix.le_iff.mpr ?_
-  let R := (Finset.univ : Finset (Output d t)) \ T
-  have hR := Matrix.posSemidef_sum R (fun A hA => S.E_psd σ A)
-  have hsum := Finset.sum_sdiff (Finset.subset_univ T) (f := fun A => S.E σ A)
-  have hcomp : 1 - effect S σ T = ∑ A ∈ R, S.E σ A := by
-    dsimp only [R, effect]
-    rw [← S.E_sum σ, ← hsum]
-    abel
-  rw [hcomp]
-  exact hR
+  dsimp only [effect]
+  rw [← S.E_sum σ]
+  exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ T)
+    (fun A _ _ => (S.E_psd σ A).nonneg)
 private lemma contraction_sq {α : Type*} [Fintype α] [DecidableEq α]
     (X : Matrix α α ℂ) (hp : X.PosSemidef) (hc : X ≤ 1) : X * X ≤ X := by
   have hc' : 0 ≤ 1 - X := (Matrix.le_iff.mp hc).nonneg
@@ -189,34 +174,6 @@ private lemma kron_trace_uv {α β : Type*} [Fintype α] [Fintype β]
   simp only [Matrix.conjTranspose_one, hE.eq, Matrix.mul_one, Matrix.one_mul]
   rw [Matrix.trace_mul_comm]
   rfl
-private lemma finset_perm_map_exists {d t : ℕ} (A A' : Output d t) :
-    ∃ p : Equiv.Perm (Fin d), pmap p A.val = A'.val := by
-  classical
-  let e : A.val ≃ A'.val := (Fintype.equivOfCardEq (by simp [A.property, A'.property]))
-  let f : Fin d → Fin d := fun x => if hx : x ∈ A.val then (e ⟨x, hx⟩).val else x
-  have hfs : Set.InjOn f (A.val : Set (Fin d)) := by
-    intro x hx y hy hxy
-    change x ∈ A.val at hx
-    change y ∈ A.val at hy
-    dsimp only [f] at hxy
-    rw [dif_pos hx, dif_pos hy] at hxy
-    exact congrArg Subtype.val (e.injective (Subtype.ext hxy))
-  obtain ⟨p, hp⟩ := Finset.exists_equiv_extend_of_card_eq
-    (show Fintype.card (Fin d) = (Finset.univ : Finset (Fin d)).card by simp)
-    (s := A.val) (f := f) (Finset.subset_univ _) hfs
-  let q : Equiv.Perm (Fin d) := p.trans (Equiv.subtypeUnivEquiv (fun _ => Finset.mem_univ _))
-  refine ⟨q, Finset.eq_of_subset_of_card_le ?_ ?_⟩
-  · intro x hx
-    obtain ⟨y, hy, rfl⟩ := Finset.mem_map.mp hx
-    have hq : q y = (e ⟨y, hy⟩).val := by
-      change (p y).val = _
-      rw [hp y hy]
-      dsimp only [f]
-      rw [dif_pos hy]
-    change q y ∈ A'.val
-    rw [hq]
-    exact (e ⟨y, hy⟩).property
-  · rw [pmap_card, A.property, A'.property]
 private def rightMul {d : ℕ} (h g : G d) : G d :=
   (g.1 ∆ pmap g.2 h.1, g.2 * h.2)
 private def rightMul_equiv {d : ℕ} (h : G d) : G d ≃ G d := by
@@ -246,7 +203,8 @@ private lemma sum_rightMul {d : ℕ} {R : Type*} [AddCommMonoid R] (h : G d) (f 
   Fintype.sum_equiv (rightMul_equiv h) (fun g => f (rightMul h g)) f (fun _ => rfl)
 private lemma input_output_transitive {d t : ℕ} (σ σ' : Vertex d) (A A' : Output d t) :
     ∃ h : G d, actV h σ = σ' ∧ actO h A = A' := by
-  obtain ⟨p, hp⟩ := finset_perm_map_exists A A'
+  obtain ⟨p, hp⟩ := Equiv.Perm.exists_map_finset_eq A.val A'.val
+    (A.property.trans A'.property.symm)
   refine ⟨(σ' ∆ pmap p σ, p), ?_, ?_⟩
   · dsimp only [actV]
     exact symmDiff_symmDiff_cancel_right _ _
@@ -417,7 +375,14 @@ private lemma inner_hu {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
           ∑ g, pairTrace S.ρ 1 (S.E (actV g σ) (actO g A) ⊗ₖ 1)
     congr 1
     exact orbit_sum_constant (fun σ A => pairTrace S.ρ 1 (S.E σ A ⊗ₖ 1)) σ σ A' A
-  have hs := core_sum (weightedCore S) Finset.univ (uvec S σ) hvec
+  let L : VG d α β →+ ℝ := {
+    toFun := (weightedCore S).inner hvec
+    map_zero' := @InnerProductSpace.Core.inner_zero_right ℝ _ _ _ _ (weightedCore S) hvec
+    map_add' := fun x y =>
+      @InnerProductSpace.Core.inner_add_right ℝ _ _ _ _ (weightedCore S) hvec x y }
+  have hs := map_sum L (uvec S σ) Finset.univ
+  change (weightedCore S).inner hvec (∑ A, uvec S σ A) =
+    ∑ A, (weightedCore S).inner hvec (uvec S σ A) at hs
   rw [sum_uvec, inner_hh] at hs
   have hsum : (∑ A', (weightedCore S).inner hvec (uvec S σ A')) =
       ∑ _ : Output d t, (weightedCore S).inner hvec (uvec S σ A) :=
@@ -502,7 +467,14 @@ private lemma inner_hv {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
           ∑ g, pairTrace S.ρ 1 (1 ⊗ₖ S.F (actV g τ) (actO g B))
     congr 1
     exact orbit_sum_constant (fun τ B => pairTrace S.ρ 1 (1 ⊗ₖ S.F τ B)) τ τ B' B
-  have hs := core_sum (weightedCore S) Finset.univ (vvec S τ) hvec
+  let L : VG d α β →+ ℝ := {
+    toFun := (weightedCore S).inner hvec
+    map_zero' := @InnerProductSpace.Core.inner_zero_right ℝ _ _ _ _ (weightedCore S) hvec
+    map_add' := fun x y =>
+      @InnerProductSpace.Core.inner_add_right ℝ _ _ _ _ (weightedCore S) hvec x y }
+  have hs := map_sum L (vvec S τ) Finset.univ
+  change (weightedCore S).inner hvec (∑ B, vvec S τ B) =
+    ∑ B, (weightedCore S).inner hvec (vvec S τ B) at hs
   rw [sum_vvec, inner_hh] at hs
   have hsum : (∑ B', (weightedCore S).inner hvec (vvec S τ B')) =
       ∑ _ : Output d t, (weightedCore S).inner hvec (vvec S τ B) :=
@@ -548,20 +520,9 @@ private lemma pair_perm {d t : ℕ} (A B A' B' : Output d t)
   let eb : B.val ≃ B'.val := Fintype.equivOfCardEq (by simp [B.property, B'.property])
   let e := (Equiv.Finset.union A.val B.val hAB).symm |>.trans
     (Equiv.sumCongr ea eb) |>.trans (Equiv.Finset.union A'.val B'.val hAB')
-  let f : Fin d → Fin d := fun x =>
-    if hx : x ∈ A.val ∪ B.val then (e ⟨x, hx⟩).val else x
-  have hi : Set.InjOn f (↑(A.val ∪ B.val)) := by
-    intro x hx y hy he
-    change x ∈ A.val ∪ B.val at hx
-    change y ∈ A.val ∪ B.val at hy
-    dsimp only [f] at he; rw [dif_pos hx, dif_pos hy] at he
-    exact congrArg Subtype.val (e.injective (Subtype.ext he))
-  obtain ⟨p, hp⟩ := Finset.exists_equiv_extend_of_card_eq
-    (show Fintype.card (Fin d) = (Finset.univ : Vertex d).card by simp)
-    (s := A.val ∪ B.val) (f := f) (Finset.subset_univ _) hi
-  let q := p.trans (Equiv.subtypeUnivEquiv (fun _ => Finset.mem_univ _))
+  let q : Equiv.Perm (Fin d) := e.extendSubtype
   have hq : ∀ x (hx : x ∈ A.val ∪ B.val), q x = (e ⟨x, hx⟩).val := by
-    intro x hx; change (p x).val = _; rw [hp x hx]; dsimp only [f]; rw [dif_pos hx]
+    exact fun x hx => e.extendSubtype_apply_of_mem x hx
   refine ⟨q, Finset.eq_of_subset_of_card_le ?_ (by rw [pmap_card, A.property, A'.property]),
     Finset.eq_of_subset_of_card_le ?_ (by rw [pmap_card, B.property, B'.property])⟩
   · intro x hx; obtain ⟨y, hy, rfl⟩ := Finset.mem_map.mp hx
