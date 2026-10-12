@@ -168,8 +168,8 @@ theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
     have hh := (sigmoid_variance_tilt 0 x ht.1 ht.2).1
     norm_num [Real.sigmoid_def] at hh
     simpa [Real.sigmoid_def] using hh
-  have hvu := (sigmoid_variance_bounds x).2
-  have hp := (sigmoid_variance_bounds x).1
+  have hvu := (D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.sigmoid_variance_bounds x).2
+  have hp := (D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.sigmoid_variance_bounds x).1
   have hn : d ≤ -checkerboard r ε x := by linarith
   have hnu : -checkerboard r ε x ≤ 2 := by
     have hh := abs_le.mp (checkerboard_abs_le_two r ε x)

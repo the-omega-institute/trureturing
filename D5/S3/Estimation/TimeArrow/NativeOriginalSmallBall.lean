@@ -76,8 +76,8 @@ theorem full_native_environment_anchor_budget {M q s : ℕ} (S : Support M q)
   intro z hz
   letI : Fintype (Fiber S e z) := by unfold Fiber; infer_instance
   have ht := native_minimal_central_mass_tail S r e z hq hqm hr hr1 ha ha1 k l (⟨z,rfl⟩ : Fiber S e z) (hsize z hz)
-  have hn := full_environment_sum S r e k l z (fun y => ¬C y)
-  have hd := full_environment_sum S r e k l z (fun _ => True)
+  have hn := D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment.full_environment_sum S r e k l z (fun y => ¬C y)
+  have hd := D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment.full_environment_sum S r e k l z (fun _ => True)
   simp only [and_true] at hd
   have hl : (∑ y : Fiber S e z, if nativeMinimalRectangleReadout S e z k l y =
           nativeMinimalRectangleReadout S e z k l (⟨z,rfl⟩ : Fiber S e z) ∧ ¬C y.val
@@ -708,7 +708,7 @@ theorem original_native_environment_small_ball (r β : ℝ)
     apply sum_le_sum
     intro o _
     by_cases hg : Geom o <;> by_cases hx : Root o <;>
-      simp only [G,hg,hx,true_and,false_and,not_true_eq_false,not_false_eq_true,if_true,if_false] <;>; linarith only [hp o]
+      simp only [G,hg,hx,true_and,false_and,not_true_eq_false,not_false_eq_true,if_true,if_false] <;> linarith only [hp o]
   have hsize (o : Obs M (2*M*lam) e) (ho : G o) : 1 < (nativeRectangleRows S e o k l (⟨o,rfl⟩ : Fiber S e o)).card :=
     (hengine _ ho.1.1 ho.1.2.1).1
   have hanchors := full_native_environment_anchor_budget S r e hq hqm hr hr1 hε hε1 k l G hsize
@@ -861,7 +861,8 @@ theorem original_cube_environment_small_ball (r β : ℝ)
                       l*Real.log ((1-r)/(1+compensation M q r))) e Y)-b| ≤ τ)
               then originalCubeProbability r e S Y else 0)/
               (∑ Y : Sites (2*M*lam) e → Fin (d+1) → ℤˣ,
-              let y := cubeObservationEquiv d (2*M*lam) e Y if fullRectangleReadout S e k l y = fullRectangleReadout S e k l o
+              let y := cubeObservationEquiv d (2*M*lam) e Y
+              if fullRectangleReadout S e k l y = fullRectangleReadout S e k l o
                 then originalCubeProbability r e S Y else 0) ≤
               Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)))
         then originalCubeProbability r e S X else 0) ≤ budget n := by

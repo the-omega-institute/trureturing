@@ -884,8 +884,8 @@ theorem original_zero_group_eq_all_cell {M s : ℕ} (q : ℕ) (r center width η
   have he (K L : ℕ) (hKL : K+L ≤ H) :
       |(K : ℝ)*a+L*b-center-(h/Q)*
         (((P : ℤ)*((K : ℤ)-k0)-(Q : ℤ)*((L : ℤ)-l0) : ℤ) : ℝ)| ≤ E :=
-    count_score_grid_error K L k0 l0 H Q P h η ε center raw hQ hh hη hε hε1 hKL hraw
-  have hstep : 0 < (Q : ℝ)*a+P*b := compensated_grid_step_pos Q P h η ε hPQ hh hη hε hε1
+    D5.S3.Estimation.TimeArrow.OriginalScoreWindow.count_score_grid_error K L k0 l0 H Q P h η ε center raw hQ hh hη hε hε1 hKL hraw
+  have hstep : 0 < (Q : ℝ)*a+P*b := D5.S3.Estimation.TimeArrow.OriginalScoreWindow.compensated_grid_step_pos Q P h η ε hPQ hh hη hε hε1
   have hE : E ≤ width/2 := herror
   have hgap : 2*E < h/Q := by
     have hscale := div_pos hh hQreal
