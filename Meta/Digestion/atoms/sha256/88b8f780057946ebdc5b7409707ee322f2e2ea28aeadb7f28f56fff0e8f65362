@@ -1,0 +1,74 @@
+**定理 8.2（两步深移与奇数前沿）。** 对全部 $t,u\in\mathcal T$ 和 $r\ge0$，有
+
+$$
+\delta(\rho^2t,\rho^2u)=\delta(t,u)+1,
+\qquad
+\delta(t,u)\le\delta(\rho t,\rho u)\le\delta(t,u)+1,
+$$
+
+以及
+
+$$
+\ker(P_{r+1}\circ\rho^2)=\ker P_r,
+\qquad
+\ker(P_r\circ\rho)=\ker E_r.
+$$
+
+因此，写 $h=2k$ 或 $h=2k+1$，当 $d\ge k$ 时，精确的来源纤维为
+
+$$
+\boxed{
+\ker(P_d\circ\rho^{2k})=\ker P_{d-k},\qquad
+\ker(P_d\circ\rho^{2k+1})=\ker E_{d-k}.
+}
+$$
+
+当 $d<k$ 时，两种延迟前缀都在 $\mathcal T$ 上常值，值为深度 $d$ 内全部为分支的前缀。
+
+证明。先比较根标签不同的树。替换给出
+
+$$
+\rho^2\alpha=\langle\beta,\alpha\rangle,\qquad
+\rho^2\beta=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+$$
+
+而任意 $\rho^2v$ 的根都是分支。不同根类型的首次差异深度如下，表中分支一栏允许任意
+两个非空有限孩子：
+
+| 原根类型对 | 一次替换后的差异深度 | 两次替换后的差异深度 |
+| --- | --- | --- |
+| $\alpha,\beta$ | $0$ | $1$ |
+| $\alpha,\mathsf{branch}$ | $0$ | $1$ |
+| $\beta,\mathsf{branch}$ | $1$ | $1$ |
+
+最后一行的一步情形在根处同为分支；$\rho\beta$ 的右孩子为 $\alpha$，而复合来源
+像的右孩子为 $\rho v$，其根只能是 $\beta$ 或分支，故深度一必定不同。两步情形中，
+$\rho^2\alpha$ 的左孩子为 $\beta$，$\rho^2\beta$ 的右孩子为 $\beta$；复合来源
+的两个像孩子根都为分支，给出表中的另外两个比较。
+
+若原根同为分支，写 $t=\langle t_L,t_R\rangle$、$u=\langle u_L,u_R\rangle$，则
+
+$$
+\delta(t,u)=1+\min\{\delta(t_L,u_L),\delta(t_R,u_R)\}.
+$$
+
+替换保留这个配对，并分别作用于孩子。以两个源的总节点数归纳，根类型表和上式证明
+两步精确深移及一步上下界；相等源使用 $\infty$ 约定。迭代两步式还给出
+
+$$
+\delta(\rho^{2k}t,\rho^{2k}u)=\delta(t,u)+k,\qquad
+\delta(\rho^{2k+1}t,\rho^{2k+1}u)=\delta(\rho t,\rho u)+k.
+$$
+
+再证明 $\ker(P_r\rho)=\ker E_r$。$r=0$ 时，像根为 $\beta$ 恰对应原根 $\alpha$，
+像根为分支对应原根 $\beta$ 或分支，正是 $E_0$ 的合并。$r\ge1$ 时，从像前缀能确定
+原根的全部类型：像根为 $\beta$ 对应原根 $\alpha$；像根为分支且右孩子为 $\alpha$
+对应原根 $\beta$；剩下的情形对应原根为分支。若原根为叶，树及其像前缀均已确定；若
+原根为分支，对左右像孩子的深度 $r-1$ 前缀使用归纳假设，恰得到两个来源
+$E_{r-1}$。反方向也按相同根分类和孩子归纳成立。因此两者确有相同纤维，而不是只拥有
+相同标签数。结合首次差异深度的迭代式，得到 $d\ge k$ 时的两个核等式。
+
+最后，每个原叶的 $h$ 步像的最浅叶深至少为 $\lfloor h/2\rfloor=k$，这是 §4 和
+§7.6 的原子轨道最浅叶深公式；原叶原有的地址深度还须加上去。因此 $d<k$ 时看不到
+任何叶，全部深度至多 $d$ 的坐标均为分支。证毕。
+

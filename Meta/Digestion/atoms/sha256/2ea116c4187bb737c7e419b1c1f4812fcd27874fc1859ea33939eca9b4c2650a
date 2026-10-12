@@ -1,0 +1,14 @@
+**定义 3.1（组成、叶词和结构读数）。** 组成读数 $c:\mathcal T\to\mathbb N^2$、叶词
+$w:\mathcal T\to\{\alpha,\beta\}^{+}$ 和完整结构读数 $q$ 分别定义为
+
+$$
+\begin{aligned}
+c(\alpha)&=(1,0),&c(\beta)&=(0,1),&c(\langle s,t\rangle)&=c(s)+c(t),\\
+w(\alpha)&=\alpha,&w(\beta)&=\beta,&w(\langle s,t\rangle)&=w(s)w(t).
+\end{aligned}
+$$
+
+其中 $q(t)$ 是全部有限地址的响应函数，响应值为 $\alpha,\beta,\mathsf{branch},
+\mathsf{absent}$；它等价于保留完整的有序标记树。组成任务只读 $c$，叶词任务只读
+有序词，结构任务才允许任意有限地址查询。
+
