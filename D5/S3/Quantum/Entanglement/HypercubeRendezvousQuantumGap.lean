@@ -8,8 +8,6 @@
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowSeamCodes
 import D5.S3.Arith.Congruence.ConditionalComparison.CommonTreeUnion
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.Complex.Order
-import Mathlib.Analysis.InnerProductSpace.Defs
 noncomputable section
 open scoped BigOperators symmDiff ComplexOrder
 namespace D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
