@@ -1,4 +1,4 @@
-# trureturing / D5 —— 仓库规范全卷 v7.39(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
+# trureturing / D5 —— 仓库规范全卷 v7.40(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
 
 > ⚑ **铭牌**。组织:**trureturing**(收据三张:27.99 真理为攀登而不可达之 ν、27.90 理论过自家分类器返回原点、仪文"账本的最后一行永远是下一轮的第一行")。仓库名:**trureturing**——**仓库即模空间,单库承全族**(v7.4 裁决,撤姊妹分库):`Metallic/`(G 层参数化机器)+ `D5/ D8/ …`(实例层,按需生长)+ `Moduli/`(跨理论比较定理之家);分库仅当已证实压力(治理/许可/规模),**裂由压力,不预裂**。
 > README 首行:*trureturing — the last line of the ledger is always the first line of the next round.*
@@ -272,7 +272,7 @@ Registration bindings belong to their Reg occurrence owner. Delta selects change
 
 **A14 版本码与冻结状态表** 版辑 tag `E<n>`+Zenodo DOI;工具链钉版。环境升级的政策要求是同一 PR 原子更新 `lean-toolchain`/`lakefile.{toml,lean}`/`lake-manifest.json`,并通过 `make lean` 执行全量 clean 构建;强制无缓存 clean build 不是现役机器谓词。
 
-**A14.1 冻结成员。** 冻结成员是显式登记的 Closed 模块子集。`Golden/Frozen/state/<模块路径>.lean.json` 存在即冻结;Closed 而没有状态片是合法的未冻结状态。deposit 登记所请求的新 Closed 模块,不把全部 Closed 模块自动登记为冻结成员。状态表是冻结成员资格与陈述 pin 的唯一真源;数学真值仍只由 Lean 声明、证明项及其 axiom 闭包承载。冻结真值永不解冻;状态片删除遵守现行删除判定,不提供新增或放宽的取消冻结途径。
+**A14.1 冻结成员。** 冻结成员是显式登记的 Closed 模块子集。`Golden/Frozen/state/<模块路径>.lean.json` 存在即冻结;Closed 而没有状态片是合法的未冻结状态。deposit 登记所请求的新 Closed 模块,不把全部 Closed 模块自动登记为冻结成员。状态表是冻结成员资格与陈述 pin 的唯一真源;数学真值仍只由 Lean 声明、证明项及其 axiom 闭包承载。删除状态片与改 pin 同为合法的成员变更:该模块退出冻结成员,其已验证陈述的数学真值不变,历史由 git 查证;删除不产生判词,合法性与模块源码是否仍在无关。此后 SL-008 不再检查该模块,重新登记按首次冻结判定。
 
 **A14.2 状态片记录。** 每个冻结模块恰有一个文件。对 canonical 模块路径 `M.lean`,状态片路径恰为 `Golden/Frozen/state/M.lean.json`,移除固定前缀和 `.json` 后缀即可反解模块路径,两者双射。文件为单行规范 JSON 加恰一个 LF;对象闭键恰为 `{declarations,statement_id}`。`declarations` 包含当前 report 中该模块全部 `include_in_statement` 声明,每项闭键恰为 `{declaration_name_key,kind}`,按名称键、种类的 Ordinal 顺序排列且唯一,不得省略、增加或重复声明。
 
@@ -286,7 +286,7 @@ writer 不提供事件追加、事件替换、`Reattest`、`Revoke`、`Supersede
 
 **A14.5 准入。** `Golden/Frozen/accepted/` 不是 FILEMAP 登记路径;任何被跟踪文件出现在该目录下,均由 required 检查中的现有 FILEMAP 未分类路径判词拒绝,不另设路径禁令规则。严格状态 loader 只接受 A14.2 的闭键形,拒绝只含 `statement_id` 的记录及其他非闭键形;旧工具写出的不合规形不得与当前状态片并存。事件与状态片配对、改动事件 pin 核对两项过渡检查不存在。
 
-SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块存在且为 Closed,pin 等于当前 report 重算的模块陈述摘要,声明清单与当前 report 一致。该检查范围不因 writer 的模块写集合缩小。状态片 pin 相对受保护基线变化时,以 Observe 点名模块及旧、新 pin;状态片删除仍按现行判定处理。
+SL-008 检查当前树中的每个状态片:路径与 schema 合规,对应模块存在且为 Closed,pin 等于当前 report 重算的模块陈述摘要,声明清单与当前 report 一致。该检查范围不因 writer 的模块写集合缩小。状态片 pin 相对受保护基线变化时,以 Observe 点名模块及旧、新 pin;状态片删除不产生判词(A14.1)。
 
 **A14.6 并发合并。** 同一模块的两份不同规范记录位于同一路径的同一行,Git 三方合并报冲突;内容相同的并发写入正常合流。不同模块的记录更新写集合不相交,一个模块的重新钉定不写其他模块的记录。路径双射与严格 schema 保证每个冻结模块只有一份记录;记录不含前置记录地址,不存在悬空的前置记录引用。这些性质只约束冻结状态片,不承诺 PR 中其他源码改动之间无冲突。
 
