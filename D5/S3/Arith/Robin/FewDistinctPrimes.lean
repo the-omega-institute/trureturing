@@ -28,13 +28,15 @@ open D5.S3.Arith.ExponentExchange.PrefixNormalForm
 open D5.S3.Arith.GoldenResourceOptimalInteger
 
 /-- `1 + p + ⋯ + p^k` in closed form. -/
-private def geom (p k : ℕ) : ℕ := (p ^ (k + 1) - 1) / (p - 1)
+def geom (p k : ℕ) : ℕ := (p ^ (k + 1) - 1) / (p - 1)
 
-private def powProd : List ℕ → List ℕ → ℕ
+/-- The product `∏ pᵢ ^ eᵢ` along two aligned lists. -/
+def powProd : List ℕ → List ℕ → ℕ
   | p :: ps, e :: es => p ^ e * powProd ps es
   | _, _ => 1
 
-private def geomProd : List ℕ → List ℕ → ℕ
+/-- The product of the geometric sums `1 + pᵢ + ⋯ + pᵢ ^ eᵢ` along two aligned lists. -/
+def geomProd : List ℕ → List ℕ → ℕ
   | p :: ps, e :: es => geom p e * geomProd ps es
   | _, _ => 1
 
@@ -71,7 +73,7 @@ private theorem powProd_pos : ∀ (ps es : List ℕ), (∀ p ∈ ps, 0 < p) → 
 
 /-- An integer whose primes lie in the list `ps` is the product of its prime powers along `ps`,
 and its divisor sum is the product of the matching geometric sums. -/
-private theorem factor_repr {ps : List ℕ} (hps : ∀ p ∈ ps, p.Prime) (hnd : ps.Nodup)
+theorem factor_repr {ps : List ℕ} (hps : ∀ p ∈ ps, p.Prime) (hnd : ps.Nodup)
     {n : ℕ} (hn : n ≠ 0) (hsub : n.primeFactors ⊆ ps.toFinset) :
     powProd ps (ps.map n.factorization) = n ∧
       geomProd ps (ps.map n.factorization) = ArithmeticFunction.sigma 1 n := by
@@ -95,7 +97,7 @@ private theorem factor_repr {ps : List ℕ} (hps : ∀ p ∈ ps, p.Prime) (hnd :
     exact ArithmeticFunction.isMultiplicative_sigma.map_one
 
 /-- The saturation bound `σ(m)/m ≤ ∏ p/(p-1)` in integer form. -/
-private theorem geomProd_le : ∀ (ps es : List ℕ), (∀ p ∈ ps, 2 ≤ p) → es.length = ps.length →
+theorem geomProd_le : ∀ (ps es : List ℕ), (∀ p ∈ ps, 2 ≤ p) → es.length = ps.length →
     geomProd ps es * (ps.map (· - 1)).prod ≤ powProd ps es * ps.prod
   | [], [], _, _ => by simp [geomProd, powProd]
   | [], _ :: _, _, h => by simp at h

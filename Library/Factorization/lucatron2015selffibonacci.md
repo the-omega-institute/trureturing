@@ -43,3 +43,10 @@ Lemma 3.1 on page 6 quotes Gordon–Pomerance's uniform estimate for
 integers with a prescribed rank. Its \(x^{1-o(1)}\) scale and its integer
 counting domain do not supply the fixed-support prime count in §26 of
 the observer volume.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1007/978-1-4939-3201-6_6
+- URL: https://arxiv.org/abs/1410.2489v2
+- Version and location: arXiv:1410.2489v2, revised 20 February 2015; the arXiv record lists the
+  DOI above as the related publication.
