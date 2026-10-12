@@ -2802,3 +2802,447 @@ Hinrichs--Novak--Woźniakowski, *Discontinuous information in the worst case and
 The analytic source equality in (86.15) means one fixed $e,\Gamma,G,L,\mu,\pi$ and free clock, not a proved common native source-to-state realization. A native application must separately preserve the original source and immutable INITIAL, its same-source chronology, authentic Read/refusal/Stop semantics, and lawful state/probe acquisition, preparation, copying, retention, clocks, resources, permissions and costs. Neither the construction of an $L^2$ representer nor a band/cap certificate as a mathematical premise grants an operation acquiring it. Native retained-literal/root-depth or serial service results concern their own complete acquired source fibres and tasks; without an explicit correspondence they supply no analytic probe, carrier state, preparation, admissibility or optimal cost. All source-to-carrier, source-to-probe and source-to-state maps remain open. The weighted interface is a conditional analytic stability application, not a physical why-three conclusion or a resolution of those native bridges.
 
 ## 78.99 追加锚（本行以下为增补区）
+
+## 87. Central regularity order: sharp endpoint, closed kinetic laws and fixed-budget escape
+
+**Definition 87.1 (three distinct contracts on the unchanged source).** Keep the literal $G=H^1\times\mathbb R$, $e$, Lebesgue Haar measure, $X_i$, $L$, $\Gamma$, $\pi$ and free clock of (82.5), (82.8) and (84.1). In particular $\Gamma$ is the actual positive degree-$-3$ Green field, with $\int\Gamma(\xi,w)dw=(4\pi|\xi|)^{-1}$. Put $D_w=-i\partial_w$, and for $\sigma>0$ define
+
+$$
+\begin{gathered}
+D_\sigma[\psi]=\big\||D_w|^{\sigma/2}\psi\big\|_2^2,qquad
+\mathcal E_\sigma=D(L^{1/2})\cap D(|D_w|^{\sigma/2}),\
+\|\psi\|_{\mathcal E_\sigma}^2=\|\psi\|_2^2+T[\psi]+D_\sigma[\psi],\
+\mathcal A_\sigma=\mathcal E_\sigma\cap D(M_{\sqrt\Gamma}),\qquad
+q_0[\psi]=aT[\psi]-gV[\psi],\
+q_{\sigma,\eta}[\psi]=aT[\psi]+\eta D_\sigma[\psi]-gV[\psi],\
+\mathcal B_{\sigma,B}=\{\psi\in\mathcal A_\sigma:\|\psi\|_2=1,\ D_\sigma[\psi]\le B\},
+\qquad a,g,\eta>0.
+\end{gathered}
+\tag{87.1}
+$$
+
+The added-law contract is $q_{\sigma,\eta}$, whose kinetic functional differs from $q_0$. The fixed-budget contract is the original $q_0$ restricted to $\mathcal B_{\sigma,B}$. Mere finiteness means membership in $\mathcal A_\sigma$, with no common $B$ and no added term. For $\sigma\ge2$ the estimates below prove $\mathcal A_\sigma=\mathcal E_\sigma$; no such whole-domain equality is required for $0<\sigma<2$. All potential integrals on $\mathcal A_\sigma$ are actual same-field integrals.
+
+Use the shear $s=w-xy/2$ of (85.1). For convenience write the unitary central transform as $b(\xi,\lambda)=(2\pi)^{-1/2}\int e^{-i\lambda s}\Psi(\xi,s)ds$. Then
+
+$$
+D_\sigma[\psi]=\int_{\mathbb R^3\times\mathbb R}|\lambda|^\sigma|b(\xi,\lambda)|^2d\xi d\lambda.
+\tag{87.2}
+$$
+
+The phase relating the $w$ and $s$ transforms does not change this expression. The intersection domain in (87.1) is a dense Hilbert form domain. The punctured core $\mathcal D_0$ is dense in it for every finite $\sigma$: first truncate central frequencies, using the strong free commutation in Proposition 85.2, and approximate the free form by compact smooth functions before applying that truncation. These projected tests have compact horizontal support and smooth central tails, with every central derivative square integrable. Central smooth cutoffs converge in any fixed integer central Sobolev norm and in the horizontal norm, by their tails and the bounded horizontal coefficients on this support; interpolation gives convergence in the required fractional central norm. Finally remove a horizontal cylinder $|\xi|<\varepsilon$. For a fixed smooth compact test, its squared horizontal cutoff-gradient cost is $O(\varepsilon)$ in three horizontal variables; central derivatives commute with this cutoff. The other terms tend to zero by dominated convergence. This proves punctured-core density without using a high-order cutoff at a point in four Euclidean variables.
+
+For an $L^2$ state, $D_\sigma=0$ implies that its central Fourier transform is supported at the null singleton $\{0\}$, hence the state is zero. Likewise $T=0$ implies zero by (84.5). Thus $\mathcal B_{\sigma,0}$ is empty, whereas the zero vector is included in every linear form domain. Bounds involving powers of the norm are read at the zero vector by their continuous value zero. Budget assertions below require $0<B<\infty$.
+
+**Theorem 87.2 (whole-domain sharp same-field estimate and a closed comparison).** For every nonzero $\psi\in\mathcal E_2$,
+
+$$
+0<V[\psi]<\frac18\sqrt{T[\psi]D_2[\psi]}.
+\tag{87.3}
+$$
+
+The optimal non-strict constant on this whole domain, and already on $\mathcal D_0$, is $C_\star=1/8$. For every $\sigma\ge2$ and $\psi\in\mathcal E_\sigma$,
+
+$$
+V[\psi]\le\frac18\sqrt{T[\psi]}D_\sigma[\psi]^{1/\sigma}
+ \|\psi\|_2^{1-2/\sigma}.
+\tag{87.4}
+$$
+
+For nonzero states the estimate is strict; the constant in (87.4) is only asserted sharp at $\sigma=2$.
+
+Proof. The mature trace-Hardy ingredient is Alvino--Ferone--Volpicelli, *Sharp Hardy inequalities in the half space with trace remainder term*, [arXiv:1105.0335v1](https://arxiv.org/abs/1105.0335v1), Theorem 1.1 and (8), with $n=4$, $\beta=2$. Each halfspace has constant $2/\pi$, so on both halfspaces
+
+$$
+A[f]+C[f]\ge\frac4\pi J[f],\qquad
+A[f]=\|\nabla_\xi f\|_2^2,\quad C[f]=\|\partial_t f\|_2^2,
+\quad J[f]=\int\frac{|\operatorname{Tr}f(\xi,0)|^2}{|\xi|}d\xi.
+\tag{87.5}
+$$
+
+Here the trace belongs to its weighted space for every $f\in H^1(\mathbb R^4)$. The following representation also supplies the closure needed by the actual critical client. Write $r=|\xi|$, $\rho=(r^2+t^2)^{1/2}$ and $\Omega_*=\mathbb R^4\setminus\{0\}$. The auxiliary positive profile is
+
+$$
+\Phi(\xi,t)=\frac2{\pi r}\arctan\frac r{|t|},\qquad
+\Phi(\xi,0)=\frac1r,\quad \Phi(0,t)=\frac2{\pi|t|},\qquad
+\frac2{\pi\rho}\le\Phi\le\frac1\rho.
+\tag{87.6}
+$$
+
+This is the $n=4$ integral in AFV (12), with its boundary value normalized. It is harmonic on each open halfspace, and $\partial_t\Phi(\xi,0^\pm)=\mp2/(\pi r^2)$. On $\mathscr C=C_c^\infty(\Omega_*;\mathbb C)$, expansion of $f=\Phi v$ and integration by parts in both halfspaces give
+
+$$
+\mathfrak t_0[f]:=A[f]+C[f]-\frac4\pi J[f]
+ =\int\Phi^2|\nabla(f/\Phi)|^2.
+\tag{87.7}
+$$
+
+Indeed the two outward normal derivatives contribute $4/(\pi r^2)$, multiplied by $|f(\xi,0)|^2/\Phi(\xi,0)$; the support avoids the origin, so no puncture boundary survives. This is the usual ground-state representation, with the singular interface term computed explicitly rather than treated as an ordinary bounded potential.
+
+The densely defined operator $B_0f=\Phi\nabla(f/\Phi)$ from $L^2$ to $L^2(\mathbb R^4;\mathbb C^4)$ is closable. On every compact subset of $\Omega_*$, $\Phi,\Phi^{-1}$ are bounded and locally Lipschitz. If $f_n\to0$ and $B_0f_n\to F$ in their $L^2$ spaces, then $f_n/\Phi\to0$ locally and its gradients converge to $F/\Phi$. Closedness of distributional derivatives forces $F=0$. Consequently the closure $\mathfrak t$ has domain $\mathcal Q_\delta=D(\overline B_0)$ and
+
+$$
+\mathfrak t[f]=\|\overline B_0f\|_2^2
+ =\int\Phi^2|\nabla(f/\Phi)|^2,\qquad f\in\mathcal Q_\delta.
+\tag{87.8}
+$$
+
+The last equality follows by local distributional limits of graph approximants. The punctured smooth core is dense in $H^1(\mathbb R^4)$: a cutoff about the point costs $O(\varepsilon^2)$ for a fixed compact smooth function. Since $0\le\mathfrak t_0[h]\le\|\nabla h\|_2^2$, this density and (87.5) put every $H^1$ function in $\mathcal Q_\delta$, and give (87.7) on $H^1$ with the actual trace. No difference of infinite integrals defines (87.8). If $\mathfrak t[f]=0$, then $f/\Phi$ is constant on the connected $\Omega_*$. But $\Phi\notin L^2$ at infinity, since its lower bound in (87.6) gives $\int_1^\infty\rho^3\rho^{-2}d\rho=\infty$. Thus
+
+$$
+\{f\in\mathcal Q_\delta:\mathfrak t[f]=0\}=\{0\}.
+\tag{87.9}
+$$
+
+For nonzero $f\in H^1$, apply (87.5) strictly to $k^{-1/2}f(\xi,t/k)$ and minimize $kA+C/k$. This yields $J[f]<(\pi/2)\sqrt{A[f]C[f]}$. Neither derivative can vanish for a nonzero $L^2$ function.
+
+Now take the actual state $\psi\in\mathcal E_2$, put $U=\mathcal F_s^{-1}|b|$, and use the actual covariant derivatives
+
+$$
+\mathsf D^\lambda b=
+ (\partial_xb-i\lambda yb/2,\ \partial_yb+i\lambda xb/2,\ \partial_zb).
+\tag{87.10}
+$$
+
+The weak modulus chain rule gives $|\partial_i|b||\le|\mathsf D_i^\lambda b|$: away from zero take the real part of $\overline b\mathsf D_i^\lambda b/|b|$, whose magnetic term is imaginary, and use a regularized modulus at zero. Plancherel therefore gives $A[U]\le T[\psi]$, $C[U]=D_2[\psi]$ and $\|U\|_2=\|\psi\|_2$, so $U\in H^1$. On almost every central fibre the transform is in $L^1$ by its weighted $L^2$ norm with weight $1+\lambda^2$. Fourier inversion and triangle inequality give $|\Psi(\xi,s)|\le U(\xi,0)$, where this positive value agrees with the Sobolev trace. Apply the actual nonnegative $\mathcal G(\xi,s)=\Gamma(\xi,s+xy/2)$ and its actual marginal:
+
+$$
+V[\psi]\le\frac1{4\pi}J[U]
+ <\frac18\sqrt{A[U]C[U]}\le\frac18\sqrt{TD_2}.
+\tag{87.11}
+$$
+
+This is a comparison, not substitution of a marginal for the full multiplier. It proves finiteness on the whole intersection domain. Positivity of $\Gamma$ gives strict positive $V$ for a nonzero state.
+
+For $\sigma>2$, Hölder in the genuine measure $|b|^2d\xi d\lambda$ gives
+
+$$
+D_2\le D_\sigma^{2/\sigma}\|\psi\|_2^{2-4/\sigma}.
+\tag{87.12}
+$$
+
+Thus $\mathcal E_\sigma\subset\mathcal E_2$, and (87.11) gives (87.4), including its zero convention. The same-state sharpness of (87.3) is established next. $\square$
+
+**Proposition 87.3 (joint punctured profiles and the endpoint threshold).** For every prescribed $h>0$ there are real normalized $f_j\in C_c^\infty(\mathbb R^3\times\mathbb R)$ supported in $r>\delta_j>0$, with
+
+$$
+\frac{A_j}{C_j}=h^2,\qquad
+\frac{J_j}{4\pi\sqrt{A_jC_j}}\longrightarrow\frac18,
+\quad A_j=A[f_j]>0,\ C_j=C[f_j]>0,\ J_j=J[f_j].
+\tag{87.13}
+$$
+
+For each fixed such profile define an actual normalized punctured state by
+
+$$
+\Psi_{\varepsilon,j}(\xi,s)=\varepsilon^{-2}f_j(\xi/\varepsilon,s/\varepsilon),
+\qquad
+\psi_{\varepsilon,j}(\xi,w)=\Psi_{\varepsilon,j}(\xi,w-xy/2).
+\tag{87.14}
+$$
+
+For every fixed finite $\sigma>0$ these states satisfy jointly
+
+$$
+\begin{aligned}
+D_\sigma[\psi_{\varepsilon,j}]&=\varepsilon^{-\sigma}C_{\sigma,j},
+ &C_{\sigma,j}&=\||D_t|^{\sigma/2}f_j\|_2^2>0,\
+T[\psi_{\varepsilon,j}]&=\varepsilon^{-2}A_j+O_j(\varepsilon^{-1})+O_j(1),\
+\varepsilon^2V[\psi_{\varepsilon,j}]&\longrightarrow J_j/(4\pi).
+\end{aligned}
+\tag{87.15}
+$$
+
+In particular $C_\star=1/8$, and the sharp critical coupling for the added $\sigma=2$ law is
+
+$$
+g_c=16\sqrt{a\eta}.
+\tag{87.16}
+$$
+
+For $0<g\le g_c$ the law is nonnegative on $\mathcal E_2$; for $g>g_c$ it is unbounded below already on normalized $\mathcal D_0$.
+
+Proof. For the trace ingredient, cut $\Phi$ off radially on $e^{-j}<\rho<1$, with transition regions of fixed multiplicative width. Equation (87.7) bounds the cutoff remainder by a constant independent of $j$, while its trace has $J=4\pi j+O(1)$. Hence $J/(A+C)\to\pi/4$. The optimized version of (87.5) and $2\sqrt{AC}\le A+C$ give $J/\sqrt{AC}\to\pi/2$. Smooth $H^1$ approximation removes the interface kink, and a horizontal cylindrical cutoff removes $r=0$ with arbitrarily small $H^1$ cost for each fixed smooth profile. The weighted trace converges by (87.5). Normalize in $L^2$ and centrally rescale by $k^{-1/2}f(\xi,t/k)$ to obtain exactly $A/C=h^2$. This rescaling leaves $J/\sqrt{AC}$ unchanged. These operations construct actual smooth profiles; they do not assert the existence of a trace extremizer.
+
+The actual horizontal derivatives of (87.14), after change of variables $(\xi,s)=(\varepsilon v,\varepsilon u)$, are
+
+$$
+\varepsilon^{-1}\partial_{v_x}f_j-v_y\partial_uf_j/2,quad
+\varepsilon^{-1}\partial_{v_y}f_j+v_x\partial_uf_j/2,quad
+\varepsilon^{-1}\partial_{v_z}f_j.
+\tag{87.17}
+$$
+
+Their squared norms give the second line of (87.15), with finite profile-dependent constants. Central Fourier scaling proves the first line. For the potential instead change variables $(\xi,s)=(\varepsilon v,\varepsilon^2t)$ and use the actual Carnot homogeneity:
+
+$$
+\varepsilon^2V[\psi_{\varepsilon,j}]
+ =\int\mathcal G(v,t)|f_j(v,\varepsilon t)|^2dvdt
+ \longrightarrow\frac1{4\pi}\int\frac{|f_j(v,0)|^2}{|v|}dv.
+\tag{87.18}
+$$
+
+The dominating function is $\mathcal G(v,t)\sup_u|f_j(v,u)|^2$. It is integrable by the actual marginal and the compact horizontal support away from zero. This is dominated convergence for the same field, including all central frequencies and the full central tail. First fix $j$; only then take $\varepsilon\downarrow0$. Equations (87.13)--(87.18) give the sharp ratio. Choosing $h=\sqrt{\eta/a}$ makes $aA_j=\eta C_j$. If $g>g_c$, choose $j$ so that $aA_j+\eta C_j-gJ_j/(4\pi)<0$ and then concentrate. The leading energy is this negative coefficient times $\varepsilon^{-2}$. Nonnegativity at and below $g_c$ follows from (87.3) and $aT+\eta D_2\ge2\sqrt{a\eta TD_2}$. $\square$
+
+**Theorem 87.4 (subcritical domain, proper critical completion and absence of a critical zero mode).** For $0<g<g_c$, $q_{2,\eta}$ is a closed nonnegative form on exactly $\mathcal E_2$. At $g=g_c$ its restriction to $\mathcal D_0$ has a nonnegative Friedrichs closure $\overline q_c$ with domain $\mathcal Q_c$, and
+
+$$
+\mathcal E_2\subsetneq\mathcal Q_c,\qquad
+\{\psi\in\mathcal Q_c:\overline q_c[\psi]=0\}=\ker H_F=\{0\}.
+\tag{87.19}
+$$
+
+Here $H_F$ is the associated nonnegative self-adjoint operator. On $\mathcal E_2$ the closure agrees with the finite integral expression. On all of $\mathcal Q_c$ the closed form, rather than subtraction of its separate kinetic and potential integrals, defines the energy. For $0<g\le g_c$ the normalized infimum is zero and is not attained in the respective closed domain. There is no positive uniform spectral gap. No complete intrinsic characterization of $\mathcal Q_c$ or original-field threshold resonance classification is asserted.
+
+Proof. Set $S=aT+\eta D_2$ and $\theta=g/g_c$. Equation (87.3) gives $(1-\theta)S\le q_{2,\eta}\le S$ for $\theta<1$. The free intersection form is closed, and this norm equivalence proves the subcritical assertion, equivalently KLMN with relative bound $\theta<1$. At the endpoint the densely defined symmetric differential operator $aL+\eta D_w^2-g_c\Gamma$ on $\mathcal D_0$ is nonnegative by Proposition 87.3. The Friedrichs theorem gives a closable core form and its injective $L^2$ completion. Punctured-core density in $\mathcal E_2$ and $0\le q_c\le S$ imply inclusion and agreement there. They do not imply closedness on $\mathcal E_2$.
+
+To verify that the inclusion is proper for the actual field, put $\kappa=\sqrt{\eta/a}$ and take a smooth radial outer cutoff $\chi(\rho)$ equal to one near zero. Let $f_*=\chi\Phi$ and
+
+$$
+\Psi_*(\xi,s)=\kappa^{-1/2}f_*(\xi,s/\kappa).
+\tag{87.20}
+$$
+
+This is in $L^2$, but its ordinary gradient has a logarithmically divergent squared integral at zero. On compact boxes the $\mathcal E_2$ norm controls the ordinary $H^1$ norm, because $\partial_s$ is controlled and the shear coefficients are bounded. Thus the actual state in (87.20) is not in $\mathcal E_2$.
+
+Choose inner radial cutoffs $\zeta_\varepsilon$ that vanish for $\rho\le\varepsilon^2$, equal one for $\rho\ge\varepsilon$, and satisfy $|\nabla\zeta_\varepsilon|\le C/(\rho|\log\varepsilon|)$. Set $f_\varepsilon=f_*\zeta_\varepsilon$ and use (87.20) to define $\psi_\varepsilon$. Each is in $\mathcal E_2$ and has punctured-core approximants. For a difference $F=f_\varepsilon-f_{\varepsilon'}$ write $d=\max(\varepsilon,\varepsilon')$, small enough that $\chi=1$ on its support. Equation (87.7) gives
+
+$$
+\mathfrak t[F]\le C\bigl(|\log\varepsilon|^{-1}+|\log\varepsilon'|^{-1}\bigr),
+\quad |F|\le C/\rho,\quad |\nabla F|\le C/\rho^2,
+\quad \operatorname{supp}F\subset\{\rho\le d\}.
+\tag{87.21}
+$$
+
+These differences are real and radial in $\xi$, so the two magnetic cross terms cancel. The actual form identity for their scaled states is
+
+$$
+q_c[\psi_F]=a\mathfrak t[F]
+ +\frac a{4\kappa^2}\int r_\perp^2|\partial_tF|^2d\xi dt
+ +g_c\left(\frac{J[F]}{4\pi\kappa}-V[\psi_F]\right).
+\tag{87.22}
+$$
+
+All terms here are finite for each cutoff difference. The magnetic integral is $O(d^2)$. To bound the signed last difference, use the actual homogeneous bound $\mathcal G(\xi,s)\le C(r^4+s^2)^{-3/4}$. For any fixed $0<\alpha<1/2$ it implies
+
+$$
+\int|s|^\alpha\mathcal G(\xi,s)ds\le C_\alpha r^{2\alpha-1}.
+\tag{87.23}
+$$
+
+The power follows by $s=r^2v$; the tail integral converges precisely for $\alpha<1/2$. The bounds in (87.21) give, uniformly in the cutoffs,
+
+$$
+\bigl||F(\xi,0)|^2-|F(\xi,s/\kappa)|^2\bigr|
+ \le C_\kappa r^{-2}\min\{|s|/r,1\}.
+\tag{87.24}
+$$
+
+For $|s|\le\kappa r$ this is the central derivative bound for $|F|^2$; beyond that range its two values are each bounded by $C/r^2$. The expression vanishes for $r>d$. Use the actual marginal for the trace term and $\min(u,1)\le u^\alpha$ in (87.23)--(87.24). Integration in $\xi$ then gives
+
+$$
+\left|\frac{J[F]}{4\pi\kappa}-V[\psi_F]\right|
+ \le C_{\kappa,\alpha}\int_0^d r^{\alpha-1}dr
+ \le C'_{\kappa,\alpha}d^\alpha.
+\tag{87.25}
+$$
+
+Thus $q_c[\psi_\varepsilon-\psi_{\varepsilon'}]\to0$, and the states converge in $L^2$ to (87.20). Approximating each cutoff in $\mathcal E_2$ also in the $q_c+\|\cdot\|_2^2$ norm produces a genuine Friedrichs core sequence. Its limit proves $\psi_*\in\mathcal Q_c\setminus\mathcal E_2$. This uses a controlled same-field error, not identification of $\Gamma$ with a delta interface.
+
+The zero-kernel assertion requires a separate whole-closure argument. Define on all of $L^2(G)$ the nonlinear map
+
+$$
+\mathcal M_{a,\eta}\psi(\xi,t)=\kappa^{1/2}U(\xi,\kappa t),\qquad
+U=\mathcal F_s^{-1}|b_\psi|.
+\tag{87.26}
+$$
+
+Shear, Fourier transformation and this scaling are unitary, while $||b|-|c||\le|b-c|$. Hence $\|\mathcal M\psi\|_2=\|\psi\|_2$ and $\|\mathcal M\psi-\mathcal M\phi\|_2\le\|\psi-\phi\|_2$. The actual comparison (87.11), before its strict scalar optimization, gives on $\mathcal D_0$
+
+$$
+q_c[\psi]\ge a\mathfrak t[\mathcal M\psi],\qquad
+\mathcal M\psi\in H^1\subset\mathcal Q_\delta.
+\tag{87.27}
+$$
+
+Indeed $A[\mathcal M\psi]=A[U]$, $C[\mathcal M\psi]=\kappa^2D_2$, $J[\mathcal M\psi]=\kappa J[U]$, and $g_c/(4\pi)=4a\kappa/\pi$. Take a core form approximating sequence $\psi_n\to\psi\in\mathcal Q_c$. Its $q_c$ values tend to $\overline q_c[\psi]$, and $\mathcal M\psi_n\to\mathcal M\psi$ in $L^2$. A nonnegative closed form, extended by $+\infty$ outside its domain, is lower semicontinuous in $L^2$; this follows also by weak compactness in its graph Hilbert space for a bounded-energy subsequence. Therefore
+
+$$
+\mathcal M\psi\in\mathcal Q_\delta,\qquad
+\overline q_c[\psi]\ge a\mathfrak t[\mathcal M\psi]
+ =a\int\Phi^2|\nabla(\mathcal M\psi/\Phi)|^2.
+\tag{87.28}
+$$
+
+No estimate for $\mathfrak t[\mathcal M\psi_n-\mathcal M\psi_m]$ is used or inferred. If the left side is zero, (87.9) gives $\mathcal M\psi=0$, and norm preservation gives $\psi=0$. The form representation $\overline q_c[\psi]=\|H_F^{1/2}\psi\|_2^2$ identifies its zero set with $\ker H_F$. The remainder in (87.28) is strictly positive for every nonzero $\psi\in\mathcal Q_c$; it is generally a nonlinear functional, not a quadratic form or a uniform multiple of $\|\psi\|_2^2$.
+
+Finally normalized outward Carnot dilates of any core state have energy $aR^{-2}T+\eta R^{-4}D_2-gR^{-3}V\to0$. Subcritical strict positivity and (87.19) show nonattainment. At critical coupling $0\in\sigma(H_F)\setminus\sigma_p(H_F)$. The auxiliary $\Phi$ is not thereby an original-field resonance: (87.26) is nonlinear and (87.28) is only a comparison, with no inverse operator equivalence. $\square$
+
+**Theorem 87.5 (higher-order added laws and the full weighted compactness condition).** Fix $\sigma>2$ and $a,g,\eta>0$. The added-law form $q_{\sigma,\eta}$ is closed and semibounded on exactly $\mathcal E_\sigma$. Put $p=2/\sigma\in(0,1)$ and $K=g^2/(256a)$. Then
+
+$$
+q_{\sigma,\eta}[\psi]\ge
+ -(1-p)K\left(\frac{pK}{\eta}\right)^{p/(1-p)}\|\psi\|_2^2.
+\tag{87.29}
+$$
+
+The embedding $\mathcal E_\sigma\to L^2(G,\Gamma d\mu)$ is compact. If the normalized infimum $I_{\sigma,\eta}<0$, it is attained by a normalized form state, an eigenvector of the represented operator with eigenvalue $I_{\sigma,\eta}$. Always $I_{\sigma,\eta}\le0$; negativity at every positive coupling, a sharp value of this infimum, and attainment when it is zero are not supplied by this theorem.
+
+Proof. Let $N=\|\psi\|_2^2$ and $S=aT+\eta D_\sigma$. From (87.4), $gV\le C S^{1/2+1/\sigma}N^{1/2-1/\sigma}$ with $C=g/(8\sqrt a\,\eta^{1/\sigma})$. The exponent of $S$ is strictly less than one, so Young's inequality gives $gV\le\epsilon S+C_\epsilon N$ for every $\epsilon>0$. The free intersection form is closed and dense by Definition 87.1. KLMN, as in Theorem 85.3, therefore applies with relative bound zero, on this exact domain. To obtain the displayed finite constant, first complete the scalar square in $\sqrt T$:
+
+$$
+q_{\sigma,\eta}\ge\eta D_\sigma-KD_\sigma^pN^{1-p}.
+\tag{87.30}
+$$
+
+For $N>0$ minimize $\eta d-Kd^p$ over $d=D_\sigma/N\ge0$. Its minimizer is $d=(pK/\eta)^{1/(1-p)}$, giving (87.29); the zero state is immediate. This bound does not assert simultaneous equality in the scalar and spectral interpolation steps.
+
+Full weighted compactness needs the central tail in addition to the finite-band result (85.26). The actual complementary state obeys
+
+$$
+\begin{aligned}
+T[(I-P_\Lambda)\psi]&\le T[\psi],\
+D_2[(I-P_\Lambda)\psi]&\le\Lambda^{2-\sigma}D_\sigma[\psi],\
+V[(I-P_\Lambda)\psi]&\le\frac18\Lambda^{1-\sigma/2}
+ \sqrt{T[\psi]D_\sigma[\psi]}.
+\end{aligned}
+\tag{87.31}
+$$
+
+The first line uses the genuine strong free reduction; the second follows by $|\lambda|^2\le\Lambda^{2-\sigma}|\lambda|^\sigma$ outside the band; the third is the whole-domain endpoint estimate. Thus the weighted norm of the tail tends uniformly to zero on every bounded $\mathcal E_\sigma$ set. For each fixed band its images are bounded in $\mathcal F_\Lambda$, whose actual full-field weighted embedding is compact by (85.26), including both the source puncture and the central/exterior tails. A diagonal band subsequence and (87.31), applied to differences, give weighted Cauchy convergence for the unprojected states. Local $L^2$ identification, or testing on compact boxes away from $e$, identifies the weighted limit with the weak $\mathcal E_\sigma$ limit. This proves the asserted compactness, rather than just compactness of a selected band.
+
+An infimizing normalized sequence has bounded $T+D_\sigma$ by the relative bound with $\epsilon<1$. Pass to a weak form limit $\psi$, use weighted compactness for $V$ and lower semicontinuity for the two nonnegative kinetic terms. If $I=I_{\sigma,\eta}<0$ and $m=\|\psi\|_2^2\le1$, the same mass argument as (85.29) gives $I\ge q_{\sigma,\eta}[\psi]\ge Im\ge I$. Thus $m=1$ and the infimum is attained; form variation and representation give the eigenvector. Outward Carnot dilation has $D_\sigma[U_R\psi]=R^{-2\sigma}D_\sigma[\psi]$ and energy tending to zero, proving $I\le0$. A fixed core trial proves negativity when $g>(aT+\eta D_\sigma)/V$ for that trial, but establishes no all-coupling alternative. $\square$
+
+**Theorem 87.6 (exact original-law budget floor and same-state noncompactness).** For every $a,g>0$ and $B>0$,
+
+$$
+I_{2,B}:=\inf_{\psi\in\mathcal B_{2,B}}q_0[\psi]
+ =-\frac{g^2B}{256a},
+\tag{87.32}
+$$
+
+and this infimum is not attained anywhere in $\mathcal E_2$. There are normalized actual $\psi_j\in\mathcal D_0$ with $D_2[\psi_j]=B$ exactly and
+
+$$
+T[\psi_j]\longrightarrow\frac{g^2B}{256a^2},\qquad
+V[\psi_j]\longrightarrow\frac{gB}{128a},\qquad
+q_0[\psi_j]\longrightarrow I_{2,B}.
+\tag{87.33}
+$$
+
+They can be chosen weakly convergent to zero, with these nonzero kinetic and potential limits carried by a spike whose $L^2$ mass tends to zero. Hence the weighted embedding on $\mathcal E_2$ is not compact, and the fixed-budget negative floor supplies no normalized lowest state.
+
+Proof. By (87.3), every normalized state with $D_2\le B$ satisfies
+
+$$
+q_0[\psi]>aT[\psi]-\frac g8\sqrt{BT[\psi]}
+ \ge-\frac{g^2B}{256a}.
+\tag{87.34}
+$$
+
+This proves the lower bound and whole-domain nonattainment, including states with $D_2<B$.
+
+For the matching upper bound choose the single profiles (87.13) with $h=g/(16a)$, and let $u_{\varepsilon,j}$ be (87.14). Independently choose a normalized fixed $b\in\mathcal D_0$. Expand it by the Carnot dilation $U_L$ and translate only its $z$ coordinate by $L^2$, obtaining $b_L$. If the original $z$ support is in $[-C_b,C_b]$, then
+
+$$
+\operatorname{supp}_zb_L\subset L^2+[-C_bL,C_bL],\quad
+T[b_L]=L^{-2}T[b],\quad d_L:=D_2[b_L]=L^{-4}D_2[b],\quad V[b_L]\longrightarrow0.
+\tag{87.35}
+$$
+
+The last limit uses $|z|\ge L^2/2$ on the support for large $L$ and $\Gamma\le CN^{-3}$, giving $V[b_L]\le C'L^{-6}$. These are actual translations and derivatives, not a replacement of the potential by a translation-invariant field.
+
+For fixed $j$, choose $\varepsilon$ small so $C_j\varepsilon^{-2}>B$, then $L$ large so $d_L<B$ and the two horizontal $z$ supports are disjoint. Define one actual state by
+
+$$
+\theta_{\varepsilon,j,L}=
+ \frac{B-d_L}{C_j\varepsilon^{-2}-d_L}\in(0,1),\qquad
+\psi_{\varepsilon,j,L}=
+ \sqrt{\theta_{\varepsilon,j,L}}u_{\varepsilon,j}
+ +\sqrt{1-\theta_{\varepsilon,j,L}}b_L.
+\tag{87.36}
+$$
+
+Disjoint horizontal supports make the norm, $T$ and $V$ cross terms zero. They also make central derivative cross terms zero: the central operator, even at fractional orders, acts only in $s$ and preserves horizontal support. Thus the state has norm one and $D_2=B$ exactly, lies in $\mathcal D_0$, and its other integrals are the corresponding weighted sums. For fixed $j$, (87.15), with $\varepsilon\downarrow0$ and $L\to\infty$, gives
+
+$$
+\theta\sim\frac{B\varepsilon^2}{C_j}\to0,\qquad
+T[\psi]\to\frac{BA_j}{C_j}=\frac{g^2B}{256a^2},\qquad
+V[\psi]\to\frac{BJ_j}{4\pi C_j}.
+\tag{87.37}
+$$
+
+The last limit tends, as $j\to\infty$, to $gB/(128a)$ by (87.13). A legal diagonal is explicit: select the profile $j$ first, then $\varepsilon_j<1/j$ so its dominated-convergence and derivative errors, after multiplication by $B\varepsilon_j^2/C_j$, are less than $1/j$ and its spike mass is less than $1/j$; only then select $L_j>j$ so the background errors, budget correction and support separation have the same accuracy. Increase $L_j$ if necessary to keep its support outside $|z|\le j$. This proves (87.33) on a single normalized exact-budget sequence, rather than on separate optimizers.
+
+The spike's norm tends to zero while $b_{L_j}$ escapes every compact $z$ set, so $\psi_j\rightharpoonup0$. Equations (87.33) give bounded $\mathcal E_2$ norm and a strictly positive limiting weighted norm. A strongly convergent weighted subsequence would have zero limit on every compact set away from $e$, by weak $L^2$ convergence and the local boundedness of $\Gamma$; exhaustion would make its limit zero everywhere. This contradicts the nonzero limit of $V$. Thus weighted compactness fails at this endpoint. The energy in the vanishing mass spike is not discarded as a small norm perturbation. $\square$
+
+**Theorem 87.7 (lower-order exact-budget collapse and the safe higher-order boundary).** For every $0<\sigma<2$, $B>0$ and $a,g,\eta>0$ there are normalized actual $\psi_n\in\mathcal D_0$ with $D_\sigma[\psi_n]=B$ and
+
+$$
+q_0[\psi_n]\longrightarrow-\infty,\qquad
+q_{\sigma,\eta}[\psi_n]=q_0[\psi_n]+\eta B\longrightarrow-\infty.
+\tag{87.38}
+$$
+
+Consequently neither law has a finite floor on this fixed positive budget at lower orders. For every $\sigma>2$, the unchanged-law budget instead has the safe bound
+
+$$
+q_0[\psi]\ge-\frac{g^2B^{2/\sigma}}{256a},
+ \qquad \psi\in\mathcal B_{\sigma,B}.
+\tag{87.39}
+$$
+
+Its sharp value and attainment are not asserted. For every finite $\sigma>0$, mere finiteness of $D_\sigma$ leaves the original $q_0$ unbounded below, even on normalized $\mathcal D_0$.
+
+Proof. Choose a real normalized smooth compact central $h$ with $h(0)\ne0$. The Coulomb intermediate (84.11), or its exponential minimizer followed by smooth punctured approximation, supplies a real normalized $u\in C_c^\infty(\mathbb R^3\setminus\{0\})$ with
+
+$$
+a\|\nabla u\|_2^2-
+ \frac{g|h(0)|^2}{4\pi}\int\frac{|u|^2}{r}d\xi<0.
+\tag{87.40}
+$$
+
+For example horizontal expansion of any fixed such nonzero test makes the negative $r^{-1}$ term dominate its $r^{-2}$ kinetic term. Let $f(\xi,t)=u(\xi)h(t)$, $A=A[f]$, $J=J[f]$ and $C_\sigma=\||D_t|^{\sigma/2}f\|_2^2>0$. The actual state (87.14) for this fixed profile has $D_\sigma=C_\sigma\varepsilon^{-\sigma}$ and
+
+$$
+q_0[u_\varepsilon]=\varepsilon^{-2}
+ \left(aA-\frac{gJ}{4\pi}+o(1)\right),
+\qquad aA-gJ/(4\pi)<0.
+\tag{87.41}
+$$
+
+Use the same horizontally disjoint $b_L$ as in (87.35), now with $d_L=D_\sigma[b_L]=L^{-2\sigma}D_\sigma[b]$, and replace $C_j\varepsilon^{-2}$ in (87.36) by $C_\sigma\varepsilon^{-\sigma}$. Exact orthogonality for the actual fractional central operator proves norm one and exact $D_\sigma=B$. With $\varepsilon\downarrow0$ and then a sufficiently large $L=L(\varepsilon)$, its spike mass is asymptotic to $B\varepsilon^\sigma/C_\sigma$, the background energy tends to zero, and
+
+$$
+q_0[\psi_\varepsilon]
+ \sim\frac{B}{C_\sigma}\left(aA-\frac{gJ}{4\pi}\right)
+ \varepsilon^{\sigma-2}\longrightarrow-\infty.
+\tag{87.42}
+$$
+
+The error in (87.41) is small relative to the fixed strictly negative coefficient; no quantitative convergence rate is assumed. The background choice follows the fixed profile and concentration choice, and enforces actual disjoint $z$ supports, so no nonlocal central cross term has been omitted. Adding $\eta B$ proves the second law's collapse on the same sequence. All trials are punctured compact tests, with finite actual potential and central moments.
+
+For higher-order fixed budgets apply (87.4) with norm one and $D_\sigma\le B$, then minimize $aT-(g/8)B^{1/\sigma}\sqrt T$. This proves (87.39) without a matching upper construction. It is not the added-law result (87.29), and the compactness proof for minimizing an added law does not prove attainment under this safe scalar floor.
+
+Finally a fixed normalized core state $v$ has $T[v],V[v]>0$ and finite $D_\sigma[v]$ for every finite $\sigma$. Its inward Carnot dilates have
+
+$$
+q_0[U_rv]=ar^{-2}T[v]-gr^{-3}V[v]\to-\infty,
+\qquad D_\sigma[U_rv]=r^{-2\sigma}D_\sigma[v]<\infty
+ \quad\text{for each }r>0.
+\tag{87.43}
+$$
+
+There is no common budget here. This proves precisely the mere-finiteness assertion; it does not contradict any fixed-budget bound. $\square$
+
+**Proposition 87.8 (regularity and budgets do not recover the conditional interaction).** For every finite $\sigma>0$ and $B>0$, the reader $\mathscr R$ of Theorem 82.5, even supplemented with $D_\sigma$ and $B$, does not determine $V$, $q_0$ or $q_{\sigma,\eta}$ on $\mathcal B_{\sigma,B}$.
+
+Proof. Take a normalized compact smooth product $u(\xi)h(w)$ with the horizontal support in $r>\delta>0$. Expand its central factor enough that $D_\sigma\le B$. It lies in the actual horizontal domain by $X_2(uh)=(\partial_yu)h+xuh'$, and in the weighted domain by (85.13). Central translates preserve norm, every $X_i$, $T$, $D_\sigma$, the marginal and all projected free heat observations. The field is positive, so the untranslated $V$ is positive; its value on translates tends to zero by the actual field's decay and boundedness on $r>\delta$. Dominated convergence against this compact product proves distinct values at some finite translation. Both kinetic laws therefore retain the same reader defect. This concerns the free projected reader, not an interacting evolution invariance. $\square$
+
+**Definition 87.9 (mathematical correspondence and remaining realization conditions).** The trace ingredient (87.5) and the profile (87.6) correspond to AFV's $n=4,\beta=2$ halfspace problem, not a formula for $\Gamma$. Fourier inversion, Plancherel, spectral interpolation, weak modulus differentiation and closed-form lower semicontinuity are mature ingredients. The actual free Fourier fibres and band compactness are (85.7) and (85.26); both the full-frequency tail (87.31) and the same-field dominated convergence (87.18) are necessary clients. KLMN and form representation are the supplies used in Theorem 85.3, with Teschl's [primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 6.24 and Theorem 2.13. The Friedrichs construction is applied only after core nonnegativity, not to the collapsing original form. The actual Green, its marginal, positivity and homogeneous bounds retain Proposition 82.4's correspondence to Folland's [1975 paper](https://doi.org/10.1007/BF02386204), Theorem 3.1 and Proposition 3.17 at $\alpha=2$. No H-type closed Green formula, Euclidean inverse-square potential or marginal multiplier replaces that field.
+
+The same-field sharpness, cutoff error, critical-domain transfer, joint exact-budget constructions and their stated limits are source-specific deductions from these ingredients. Their literature correspondence is bounded to these supplies and §§82–86; it makes no exhaustive overlap, priority or originality assertion. The critical comparison proves neither $\mathcal Q_c=\mathcal M^{-1}(\mathcal Q_\delta)$ nor a full asymptotic description of its singular elements. It does exclude $L^2$ zero modes in the actual Friedrichs domain, while leaving the original-field non-$L^2$ threshold problem separate. Higher-order safe budget constants are not sharp-value or attainment statements; the higher-order added-law attainment result requires a strictly negative infimum.
+
+A source application must separately provide maps preserving the original source and immutable INITIAL, same-source chronology, authentic Read/refusal/Stop behavior, the carrier, state, field, Haar measure, horizontal metric, boundary and clock conventions. State and budget acquisition, preparation, observation, copying, retention, permissions, resources and costs remain separate conditions. An analytic derivative or budget premise does not supply those operations or a source-to-state realization, and the reader still needs the actual conditional interaction statistic (82.16). The added kinetic term defines a different mathematical law; a fixed budget restricts the original law; finiteness alone supplies neither change. None of these analytic contracts identifies a native invariant interacting sector or a physical space dimension.
+
+## 78.99 追加锚（本行以下为增补区）

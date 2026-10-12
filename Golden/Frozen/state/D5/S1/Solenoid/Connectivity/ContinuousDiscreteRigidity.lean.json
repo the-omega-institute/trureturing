@@ -1,1 +1,1 @@
-{"statement_id":"sha256:99da67c09e7af44ad33548b5008e9ca895feee6bfb610d6aa396e919b496d41e"}
+{"statement_id":"sha256:99da67c09e7af44ad33548b5008e9ca895feee6bfb610d6aa396e919b496d41e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Solenoid),12:Connectivity),26:ContinuousDiscreteRigidity),38:continuous_map_to_discrete_is_constant)","kind":"theorem"}]}

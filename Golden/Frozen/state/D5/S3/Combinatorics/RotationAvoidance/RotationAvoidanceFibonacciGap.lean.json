@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6dbf33d6ff478db9f47df394d122ed214df3af325951ed79a7318e9b1f203277"}
+{"statement_id":"sha256:6dbf33d6ff478db9f47df394d122ed214df3af325951ed79a7318e9b1f203277","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:RotationAvoidance),29:RotationAvoidanceFibonacciGap),20:fibonacci_lt_layered)","kind":"theorem"}]}

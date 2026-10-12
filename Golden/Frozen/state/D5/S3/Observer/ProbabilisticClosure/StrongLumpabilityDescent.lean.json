@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d2bcf9a201cbbfc65b0ff25f3e2908c22261baf3252b7b861a177204f31b9470"}
+{"statement_id":"sha256:d2bcf9a201cbbfc65b0ff25f3e2908c22261baf3252b7b861a177204f31b9470","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),20:ProbabilisticClosure),24:StrongLumpabilityDescent),31:strong_lumpability_descent_tfae)","kind":"theorem"}]}

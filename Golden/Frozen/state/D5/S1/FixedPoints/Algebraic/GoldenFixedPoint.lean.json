@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0711b0acf1a066d33ef6b75f82f22ba4f01249fa4455c41dba1a5eed0761f4c2"}
+{"statement_id":"sha256:0711b0acf1a066d33ef6b75f82f22ba4f01249fa4455c41dba1a5eed0761f4c2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),11:FixedPoints),9:Algebraic),16:GoldenFixedPoint),19:goldenReciprocalMap)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),11:FixedPoints),9:Algebraic),16:GoldenFixedPoint),25:golden_fixed_point_unique)","kind":"theorem"}]}

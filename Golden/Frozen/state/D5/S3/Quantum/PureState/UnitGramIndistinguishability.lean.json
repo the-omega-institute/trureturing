@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b655c2b0b304d3a523be8f5022da59f14187460754f17bba688e25cd3b2bbd9a"}
+{"statement_id":"sha256:b655c2b0b304d3a523be8f5022da59f14187460754f17bba688e25cd3b2bbd9a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:PureState),28:UnitGramIndistinguishability),34:unit_gram_overlap_characterization)","kind":"theorem"}]}
