@@ -9,7 +9,6 @@
 import D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.MeanErgodic
 
 set_option autoImplicit false
