@@ -16,7 +16,7 @@ public sealed class ActiveRuleScopeProbeTests
 
         var unrelated = MalformedAuthorizationLedger();
         AssertFinding(
-            Execute(unrelated, "Golden/Frozen/accepted/fixture-event.json"),
+            Execute(unrelated, "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json"),
             8,
             message,
             path);

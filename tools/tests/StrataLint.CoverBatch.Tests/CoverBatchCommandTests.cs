@@ -341,6 +341,36 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal("failed", Assert.Single(Results(result)).Status);
     }
 
+    [Fact]
+    public void ExistingCoverageUsesCurrentModulePinFromScopedReport()
+    {
+        using var world = new BatchWorld();
+        Assert.True(world.Run(Row(First, Gid)).Success);
+
+        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
+
+        Assert.True(result.Success, result.Error + result.Output);
+    }
+
+    [Fact]
+    public void ExistingCoverageRejectsStaleModulePin()
+    {
+        using var world = new BatchWorld();
+        Assert.True(world.Run(Row(First, Gid)).Success);
+        var stale = "sha256:" + new string('f', 64);
+        var statePath = Path.Combine(world.Root, "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json");
+        var record = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(statePath))!;
+        record["statement_id"] = stale;
+        File.WriteAllText(statePath, record.ToJsonString(new System.Text.Json.JsonSerializerOptions { WriteIndented = false }) + "\n");
+        var before = world.LedgerImage();
+
+        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
+
+        Assert.False(result.Success);
+        Assert.Contains("coverage-target-mismatch", result.Error + result.Output, StringComparison.Ordinal);
+        Assert.Equal(before, world.LedgerImage());
+    }
+
     [Theory]
     [InlineData("# preserved unrelated annotation\n")]
     [InlineData("malformed: [\n")]
@@ -503,13 +533,11 @@ public sealed partial class CoverBatchCommandTests
             {
                 var result = files.ToDictionary(static item => item.Key, item => identities.Aggregate(item.Value,
                     static (text, identity) => text.Replace(identity.Key, identity.Value, StringComparison.Ordinal)), StringComparer.Ordinal);
-                foreach (var path in result.Keys.Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath).ToArray())
+                foreach (var path in result.Keys.Where(FrozenStatePath.IsUnderRoot).ToArray())
                 {
-                    using var document = JsonDocument.Parse(result[path]);
-                    var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", document.RootElement.GetProperty("payload"));
-                    result.Remove(path);
-                    result[FrozenLedgerChangeClassifier.AcceptedRoot + "/" + encoded.Hash["sha256:".Length..] + ".json"] =
-                        Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+                    Assert.True(FrozenStatePath.TryToModulePath(path, out var selector));
+                    result[path] = Encoding.UTF8.GetString(FrozenStateRecord.Encode(
+                        FrozenContentAddress.ComputeModuleStatementId(selector, reports[selector.Value]), FrozenStateRecord.Project(reports[selector.Value])).AsSpan());
                 }
                 return result;
             }

@@ -219,7 +219,7 @@ public sealed class DepositHeaderUtilityTests
         var statePath = FrozenStatePath.FromModulePath(
             RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
         fixture.Files[statePath] =
-            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\",\"declarations\":[]}\n";
         var firstFreeze = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(31),
             fixture.Build(RawChangeSet.CreateWithKinds(
