@@ -70,7 +70,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_cut_aggre
 
 *Commentary.*
 
-Let 256<=ell<R, let S be any measurable subset of J=[ell,R], and retain M=volume(S)>0. Set N=floor(2R). The original lattice term C_cut(S) integrates over S the sum of mu(d)log(m)k(t,dm)(1_{t<d^(500/151)} -r_d(dm)) for 1<=d<=N and 1<=m<=N/d, where N/d is natural-number division. These are exactly all positive integer pairs with dm<=N.
+Let 256<=ell<R, let S be any measurable subset of J=[ell,R], and retain M=volume(S)>0. Set N=floor(2R). The original C_cut(S) integrates over S the full sum on positive integer pairs of mu(d)log(m)k(t,dm)(1_{t<d^(500/151)} -r_d(dm)). The actual kernel makes every term with dm>N zero. Thus its exact finite form uses 1<=d<=N and 1<=m<=N/d, where N/d is natural-number division. These are exactly all positive integer pairs with dm<=N.
 
 Define P_t(x)=sum over 1<=d<=floor(t^(151/500)) of mu(d)log(x/d)/d and Pbar(x)=integral_J k(s,x)P_s(x) ds divided by K_J(x), with the real zero convention. The original P_cut(S) is integral_S integral_t^B(t) k(t,x)(P_t(x)-Pbar(x)) dx dt. The exact floor identity d<=floor(t^(151/500)) iff t>=d^(500/151) preserves all equality endpoints. On the weighted support, k(t,x)(P_t(x)-Pbar(x))=-sum over 1<=d<=N of mu(d)F_(t,d)(x)/d. If K_J(x)=0, k(t,x)=0 for t in J, so this equality still holds.
 

@@ -1506,15 +1506,18 @@ theorem original_cut_row_pointwise_budget {ell R t : ℝ}
         _ ≤ 6 * t ^ (-99 / 500 : ℝ) * Real.log (2 * t) := by
           gcongr
 
-/-- The literal signed moving-cut lattice contribution, with all positive
-    integer pairs whose product is at most the complete support bound. -/
-def cutLattice (ell R : ℝ) (S : Set ℝ) : ℝ :=
-  ∫ t in S, ∑ d ∈ Finset.Icc 1 ⌊2 * R⌋₊,
+private def cutLatticeTerm (ell R t : ℝ) (d m : ℕ) : ℝ :=
+  if 1 ≤ d ∧ 1 ≤ m then
     ((ArithmeticFunction.moebius d : ℤ) : ℝ) *
-      ∑ m ∈ Finset.Icc 1 (⌊2 * R⌋₊ / d),
-        Real.log (m : ℝ) * kernel t ((d : ℝ) * m) *
-          ((if t < (d : ℝ) ^ (500 / 151 : ℝ) then 1 else 0) -
-            beforeRatio ell R d ((d : ℝ) * m))
+      (Real.log (m : ℝ) * kernel t ((d : ℝ) * m) *
+        ((if t < (d : ℝ) ^ (500 / 151 : ℝ) then 1 else 0) -
+          beforeRatio ell R d ((d : ℝ) * m)))
+  else 0
+
+/-- The literal signed moving-cut contribution over every positive integer pair.
+    Its finite support is derived from the original kernel. -/
+def cutLattice (ell R : ℝ) (S : Set ℝ) : ℝ :=
+  ∫ t in S, ∑' d : ℕ, ∑' m : ℕ, cutLatticeTerm ell R t d m
 
 /-- The original time-dependent continuous divisor sum. -/
 def divisorPosterior (t x : ℝ) : ℝ :=
@@ -1795,6 +1798,61 @@ private lemma latticePart_eq {ell R t : ℝ} {d : ℕ} (hd : 1 ≤ d) :
   have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (by omega : d ≠ 0)
   simp only [cutRow, mul_div_cancel_left₀ _ hd0]
 
+private lemma cutLatticeTerm_zero_past_support {ell R t : ℝ} (hell : 256 ≤ ell)
+    (ht : t ∈ Icc ell R) {d m : ℕ} (hN : ⌊2 * R⌋₊ < d * m) :
+    cutLatticeTerm ell R t d m = 0 := by
+  have hx : 2 * R < (d : ℝ) * m := by
+    simpa only [Nat.cast_mul] using
+      (Nat.floor_lt (show (0 : ℝ) ≤ 2 * R by linarith [ht.1, ht.2])).mp hN
+  have hb : endpoint t ≤ (d : ℝ) * m :=
+    ((endpoint_le_twice (by linarith [ht.1])).trans (by linarith [ht.2])).trans hx.le
+  simp [cutLatticeTerm, kernel_zero_of_outside (Or.inr hb)]
+
+private lemma cutLattice_full_sum {ell R t : ℝ} (hell : 256 ≤ ell)
+    (ht : t ∈ Icc ell R) :
+    (∑' d : ℕ, ∑' m : ℕ, cutLatticeTerm ell R t d m) =
+      ∑ d ∈ Finset.Icc 1 ⌊2 * R⌋₊,
+        ((ArithmeticFunction.moebius d : ℤ) : ℝ) * latticePart ell R t d := by
+  have hout : ∀ d ∉ Finset.Icc 1 ⌊2 * R⌋₊,
+      (∑' m : ℕ, cutLatticeTerm ell R t d m) = 0 := by
+    intro d hd
+    have hz : (fun m : ℕ => cutLatticeTerm ell R t d m) = fun _ => 0 := by
+      funext m
+      by_cases hd1 : 1 ≤ d
+      · by_cases hm1 : 1 ≤ m
+        · apply cutLatticeTerm_zero_past_support hell ht
+          have hNd : ⌊2 * R⌋₊ < d := by
+            by_contra h
+            exact hd (Finset.mem_Icc.mpr ⟨hd1, not_lt.mp h⟩)
+          exact hNd.trans_le (by nlinarith)
+        · simp [cutLatticeTerm, hm1]
+      · simp [cutLatticeTerm, hd1]
+    rw [hz, tsum_zero]
+  rw [tsum_eq_sum hout]
+  apply Finset.sum_congr rfl
+  intro d hd
+  have hd1 : 1 ≤ d := (Finset.mem_Icc.mp hd).1
+  have hinner : (∑' m : ℕ, cutLatticeTerm ell R t d m) =
+      ∑ m ∈ Finset.Icc 1 (⌊2 * R⌋₊ / d), cutLatticeTerm ell R t d m := by
+    apply tsum_eq_sum
+    intro m hm
+    by_cases hm1 : 1 ≤ m
+    · apply cutLatticeTerm_zero_past_support hell ht
+      have hmN : ¬m ≤ ⌊2 * R⌋₊ / d := by
+        intro h
+        exact hm (Finset.mem_Icc.mpr ⟨hm1, h⟩)
+      have hmul : ¬m * d ≤ ⌊2 * R⌋₊ := by
+        intro h
+        exact hmN ((Nat.le_div_iff_mul_le (by omega : 0 < d)).mpr h)
+      simpa only [Nat.mul_comm] using lt_of_not_ge hmul
+    · simp [cutLatticeTerm, hm1]
+  rw [hinner]
+  unfold latticePart
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro m hm
+  rw [cutLatticeTerm, if_pos ⟨hd1, (Finset.mem_Icc.mp hm).1⟩]
+
 private lemma latticePart_integrableOn {ell R : ℝ} (hell : 256 ≤ ell)
     {d : ℕ} (hd : 1 ≤ d) : IntegrableOn (fun t => latticePart ell R t d) (Icc ell R) := by
   simp_rw [latticePart_eq hd]
@@ -1852,8 +1910,13 @@ private lemma cut_aggregate_identity {ell R : ℝ} (hell : 256 ≤ ell) (horder 
     intro t ht
     dsimp [B]
     exact posterior_integral_identity hell horder (hSJ ht)
-  change (∫ t in S, A t) + cutPosterior ell R S = _
-  rw [hP, ← sub_eq_add_neg, ← integral_sub hA hB]
+  have hC : cutLattice ell R S = ∫ t in S, A t := by
+    unfold cutLattice
+    apply setIntegral_congr_fun hS
+    intro t ht
+    dsimp [A]
+    exact cutLattice_full_sum hell (hSJ ht)
+  rw [hC, hP, ← sub_eq_add_neg, ← integral_sub hA hB]
   apply setIntegral_congr_fun hS
   intro t _
   dsimp [A, B]

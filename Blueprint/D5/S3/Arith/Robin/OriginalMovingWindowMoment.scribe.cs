@@ -164,9 +164,12 @@ internal sealed class OriginalMovingWindowMomentDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "Let 256<=ell<R, let S be any measurable subset of "
                         + "J=[ell,R], and retain M=volume(S)>0. Set N=floor(2R). "
-                        + "The original lattice term C_cut(S) integrates over S "
-                        + "the sum of mu(d)log(m)k(t,dm)(1_{t<d^(500/151)} "
-                        + "-r_d(dm)) for 1<=d<=N and 1<=m<=N/d, where N/d is "
+                        + "The original C_cut(S) integrates over S the full sum "
+                        + "on positive integer pairs of "
+                        + "mu(d)log(m)k(t,dm)(1_{t<d^(500/151)} "
+                        + "-r_d(dm)). The actual kernel makes every term with "
+                        + "dm>N zero. Thus its exact finite form uses "
+                        + "1<=d<=N and 1<=m<=N/d, where N/d is "
                         + "natural-number division. These are exactly all "
                         + "positive integer pairs with dm<=N.")),
                     Paragraph(Text(
