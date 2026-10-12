@@ -1,0 +1,51 @@
+**定理 6.2 的剩余证明。** 固定 $\gamma,T$，$z=\gamma T$ 对 $\kappa$ 不变。(6.19)、(6.20)、(6.23) 及 $\|w\|_\infty=7$ 给出
+
+$$
+\partial_\kappa H_T(\kappa,\gamma)
+=-\frac5{2a^2}z^2+E_\kappa(z),
+\qquad
+|E_\kappa(z)|\le\frac{28}{3\epsilon^3}z^3.
+\tag{6.25}
+$$
+
+积分下求导由 (6.24) 的连续性与有限区间共同界保证。若 $0<T\le T_*$，则
+
+$$
+0<z\le g_{\max}T_* =\frac{15\epsilon^3}{28},
+\qquad
+\frac{28}{3\epsilon^3}z^3\le5z^2.
+$$
+
+又由 $a<1/2$，有 $5/(2a^2)\ge10$。因此
+
+$$
+\partial_\kappa H_T\le-10z^2+5z^2=-5z^2,
+$$
+
+即 (6.7)。对任意 $\kappa_2>\kappa_1$，在整个参数线段上积分，得到
+
+$$
+H_T(\kappa_2,\gamma)-H_T(\kappa_1,\gamma)
+\le-5\gamma^2T^2(\kappa_2-\kappa_1)<0.
+\tag{6.26}
+$$
+
+若两个参数点的 (6.6) 相同，则由第一坐标 (6.15) 和 $T>0$，先得 $\gamma_1=\gamma_2$。在这个相同的 $\gamma$ 上，(6.26) 再给 $\kappa_1=\kappa_2$。这直接排除了矩形上任意两点的碰撞，完成全局单射证明；没有把非零 Jacobian 的局部结论当成全局结论。∎
+
+为说明响应的阶数，(6.22) 同样给
+
+$$
+\left\|e^{uL_\kappa}-I-uL_\kappa\right\|_\infty
+\le\tfrac12u^2\|L_\kappa\|_\infty^2,
+$$
+
+从而有可核算的统一主项式
+
+$$
+\left|H_T(\kappa,\gamma)-\frac5{2a}(\gamma T)^2\right|
+\le\frac{14}{3\epsilon^2}(\gamma T)^3.
+\tag{6.27}
+$$
+
+首个非零项来自初态 $3$ 经 $3\to0\to1$ 的两跳贡献；初态 $0$ 的权重为零。这个说明与 (6.19)–(6.27) 一致，但单靠“两跳主导”的口头叙述不能承担统一性证明。
+

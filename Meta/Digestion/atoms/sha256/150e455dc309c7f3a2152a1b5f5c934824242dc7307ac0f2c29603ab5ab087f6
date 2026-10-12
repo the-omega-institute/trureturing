@@ -1,0 +1,36 @@
+**定理 8.3（本图的实际可行纤维识别）。** 固定 $p$ 和可见速度 $(x,z,y)$，令 $\mathcal F_p(x,z,y)$ 为定理 8.2 所列支持限制下的非负流纤维。定义
+
+$$
+\begin{aligned}
+I_a&=[\max(0,x),\infty)\cap
+ \begin{cases}\{0\},&p_0=0,\\\mathbb R,&p_0>0\end{cases}
+ \cap\begin{cases}\{x\},&p_{13}=0,\\\mathbb R,&p_{13}>0,\end{cases}\\
+I_b&=[\max(0,y),\infty)\cap
+ \begin{cases}\{0\},&p_1=0,\\\mathbb R,&p_1>0\end{cases}
+ \cap\begin{cases}\{y\},&p_3=0,\\\mathbb R,&p_3>0.\end{cases}
+\end{aligned}
+$$
+
+纤维非空当且仅当 $z\ge0$、$p_0=0\Rightarrow z=0$ 且两个区间非空；此时
+
+$$
+\mathcal F_p(x,z,y)=\{(a,b,a-x,b-y,z):a\in I_a,b\in I_b\}.
+$$
+
+置 $\epsilon_U=\mathbf1_{p_0p_{13}>0}$、$\epsilon_V=\mathbf1_{p_1p_3>0}$。对任意线性附加读口 $R:\mathbb R^5\to\mathbb R^q$，$R$ 在这个非空纤维上单射，当且仅当只保留活动列的矩阵
+
+$$
+[\,RU\ (\epsilon_U=1),\ RV\ (\epsilon_V=1)\,]
+$$
+
+具有列秩 $\epsilon_U+\epsilon_V$。零列情形表示纤维已为单点，无需附加读口。
+
+证明。消去 $c,d,e$ 得区间式；每个区间在对应两起点质量均正时为半直线，否则在非空前提下为单点。半直线的差集为 $\mathbb R$，单点差集为零，故
+
+$$
+\mathcal F_p-\mathcal F_p
+=\operatorname{span}\{U:\epsilon_U=1;\ V:\epsilon_V=1\}.
+$$
+
+应用[《局部源分裂与读出几何》约定 10.3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)的实际差集判据，单射恰要求该空间与 $\ker R$ 交为零，即所述列秩。这计算了整份实际纤维，不把单个流的零边支持或环境空间的二维核替代它。∎
+

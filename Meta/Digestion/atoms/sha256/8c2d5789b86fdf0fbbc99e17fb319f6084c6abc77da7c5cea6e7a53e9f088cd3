@@ -1,0 +1,31 @@
+**数学引文 26.14（单位图消费者所用的记忆与涨落中间式）。** 在定义
+26.13 的合同下，有限线性 OU 解公式用于定理 26.15 的图读口。令
+$$
+\Lambda=A-VK^{-1}V^{\mathsf T},\qquad
+M(t)=VK^{-1}e^{-Kt/\gamma}V^{\mathsf T}\quad(t\ge0).
+$$
+以实际确定输入的均值为中心，边界响应满足
+$$
+j(t)=\Lambda u(t)+\int_0^tM(t-s)\dot u(s)\,ds+\eta(t),
+$$
+其中 $\eta$ 为零均值高斯过程，且
+$$
+\mathbb E[\eta(t)\eta(s)^{\mathsf T}]
+=\vartheta M(|t-s|).
+$$
+这些中间式使用已声明的初态、未来增量独立性及确定输入。
+
+变常数公式在此给
+$$
+\xi_t=-K^{-1}V^{\mathsf T}u(t)
++e^{-Kt/\gamma}\bigl(\xi_0+K^{-1}V^{\mathsf T}u(0)\bigr)
++\int_0^te^{-K(t-r)/\gamma}K^{-1}V^{\mathsf T}\dot u(r)\,dr
++\sqrt{2\vartheta/\gamma}\int_0^te^{-K(t-r)/\gamma}dW_r,
+$$
+其中对 $u$ 的分部积分使用 $u\in C^1$。代入 $j$ 得所列静态和记忆项。
+初态的平衡协方差与随机积分的协方差相加为
+$\vartheta K^{-1}e^{-K|t-s|/\gamma}$；左右乘 $V,V^{\mathsf T}$
+得边界式。该配对要求与
+[Ma--Li--Liu，§II，式 (4)--(10)](../../../Library/Dynamics/maliliu2017embeddedbrownian.md)
+的有限线性记忆/噪声合同一致；本式仍是本节声明模型的直接解。
+
