@@ -1969,7 +1969,7 @@ and $a_n$ has a finite upper bound. Choose a fixed $\beta>0$ inside
 this disk and smaller than the endpoint radii. Holomorphy permits
 replacement by $[-\beta,\beta]$ and connecting paths in these sectors.
 The connecting paths can stay at radius at least $\beta$ and have
-$\Re(\tau^2)\ge c b^2$ for a uniform $c>0$, so their errors are
+$\Re(\tau^2)\ge c\beta^2$ for a uniform $c>0$, so their errors are
 uniformly exponentially small.
 
 Since $du/(iu)=dv$, the transformed amplitude is
@@ -2051,3 +2051,182 @@ compact bulk statement. A compact-bulk sign, even without RH
 as a premise, does not pay the original all-node sign or its
 low-degree and edge collision duties. RH and strict Robin for
 every integer greater than 5040 remain unresolved.
+
+## Excluding all positive outer nodes by one negative saddle
+
+Reuse the original source, (LC31), (LC46), the exact angular bound
+(LC50), and the fixed-Gaussian Perron application used for (LC55).
+The following source-specific application concerns all actual
+positive real nodes, without complete-row positivity or RH as a
+premise. It does not derive a finite-root edge from the conditional
+weak law (LC44), and it has no new Lean certification or claim of
+literature originality.
+
+Fix $0<a<1/4$, and now take $Y=[0,a]$. The limiting saddle radius is
+
+$$
+r(y)=\frac{2}{1+\sqrt{1-4y}},\qquad
+u_*(y)=-r(y)^2,\qquad 1\le r(y)\le r(a)<2. \tag{LC58}
+$$
+
+This includes $y=0$ with $r(0)=1$. The identity
+$yr(y)^2-r(y)+1=0$ selects the smaller negative saddle; for $y>0$
+the other root is not used as the circle radius.
+
+### The local phase across the negative axis
+
+On a fixed complex neighborhood of the compact negative segment
+$\{u_*(y):y\in Y\}$, choose $\sqrt{-u}$ positive on the negative
+axis, and set
+
+$$
+s_n(u)=1/2+\omega_n\sqrt{-u},\qquad
+F(r_nu)=\frac{\xi(s_n(u))}{\xi_0}.
+$$
+
+The second equality uses the same even square-variable source and
+xi reflection, rather than replacing it by another function.
+This neighborhood can be chosen with $\Re\sqrt{-u}\ge c>0$.
+The source is therefore nonzero for all sufficiently large $n$:
+$\Re s_n\ge c\omega_n$, the Dirichlet series tends to one, and
+Gamma and the polynomial factors are nonzero there. The same
+analytic Gamma–zeta logarithm as before defines $\ell_n(u)$,
+real on the negative segment and satisfying
+
+$$
+e^{\ell_n(u)}=F(r_nu),\qquad
+\ell_n(u)/n\longrightarrow2\sqrt{-u}. \tag{LC59}
+$$
+
+locally uniformly with every fixed number of derivatives. This
+uses the already established coefficient scale and sectorial
+Stirling argument, now on a neighborhood crossing the negative
+axis. It asserts no global source logarithm.
+
+Choose the local branch $\operatorname{Log}u=
+\operatorname{Log}(-u)+i\pi$, and define the exact and limiting
+local phases
+
+$$
+h_{n,y}(u)=yu+\ell_n(u)/n-\operatorname{Log}u,
+\qquad
+h_y(u)=yu+2\sqrt{-u}-\operatorname{Log}u.
+$$
+
+At $u_*(y)$ the limiting derivative is zero, and its angular
+Gaussian coefficient is
+
+$$
+u_*(y)^2 h_y''(u_*(y))=1-r(y)/2\ge1-r(a)/2>0.
+$$
+
+Uniform local analytic convergence and this nondegeneracy give a
+nearby exact saddle $u_n(y)\to u_*(y)$ uniformly on $Y$. Its
+uniqueness is only in the selected neighborhood. The local
+logarithm is real on the negative axis, apart from the constant
+$-i\pi$ in $h_{n,y}$, so conjugation and local uniqueness imply
+$u_n(y)$ is real. It is negative for large $n$. Consequently
+
+$$
+\rho_n(y)=-u_n(y)>0,\qquad
+q_n(y)=u_n(y)^2h_{n,y}''(u_n(y))>0,
+\qquad \inf_{y\in Y}q_n(y)>c_a>0. \tag{LC60}
+$$
+
+All relevant derivative bounds and radii are uniform including
+$y=0$; none divides by $y$.
+
+### One actual saddle is the unique dominant point
+
+Use $|u|=\rho_n(y)$ in the exact coefficient integral (LC51),
+with $d=0$. The negative real point is counted once, by the angular
+parameter $u=u_n(y)e^{iv}$, $-\pi\le v\le\pi$. At the limiting
+radius $\rho=r(y)^2$, (LC50) gives the real envelope
+
+$$
+E_y(\theta)=yr(y)^2(1-2q^2)+2r(y)q-2\log r(y),
+\qquad q=|\sin(\theta/2)|\in[0,1].
+$$
+
+Its derivative as a function of $q$ satisfies
+
+$$
+\partial_qE_y=2r(y)-4yr(y)^2q
+\ge2r(y)-4yr(y)^2=4-2r(y)\ge4-2r(a)>0.
+$$
+
+Thus the negative point, where $q=1$, is the unique circle maximum.
+The angles $\theta=\pi,-\pi$ label the same point and are not two
+saddle contributions. Outside a fixed neighborhood of that point
+the envelope has a uniform positive gap, for all $y\in[0,a]$.
+The annular estimate following (LC50) is uniform also at the
+auxiliary envelope endpoint $q=0$: its compact $x$ range was
+absorbed using positivity and continuity, before rescaling. No
+large-argument Stirling estimate is used at that endpoint.
+The exact radius convergence and local phase convergence transfer
+this gap to the finite contour relative to
+$\Re h_{n,y}(u_n(y))$. Near the point, the real quadratic decay
+has the uniform coefficient $q_n>0$.
+
+The exact local Gaussian coordinate (LC53), with coefficient
+$q_n$ in place of $a_n$, has a common analytic inverse disk and
+uniform bounded amplitude. Reuse the same fixed-phase
+Corollary 5.1 after this change of coordinate; the outer contour
+and short descent-sector connectors are uniformly exponentially
+small. There is now one saddle, with no real-part cancellation.
+Its nonzero leading contribution is real and has known sign:
+
+$$
+D_n(y)=
+\frac{e^{nyu_n(y)}F(r_nu_n(y))u_n(y)^{-n}}
+     {\sqrt{2\pi n q_n(y)}},
+\qquad (-1)^nD_n(y)>0. \tag{LC61}
+$$
+
+The actual source is positive on the negative axis by the original
+kernel representation, and the square root is positive real.
+The resulting remainder is relative to this exact finite
+amplitude, not its limiting approximation:
+
+$$
+\frac{n^n}{n!}A_{n,f_n}(y)
+=D_n(y)+O_a(|D_n(y)|/n),\qquad 0\le y\le a, \tag{LC62}
+$$
+
+uniformly in $y$. In particular there is $N_a$ such that
+
+$$
+(-1)^nA_{n,f_n}(y)>0
+\qquad(n\ge N_a,\ 0\le y\le a). \tag{LC63}
+$$
+
+At $y=0$ this agrees with the exact finite coefficient
+$A_{n,f_n}(0)=(-1)^n n!a_n(r_n/n)^n$; it requires no extension
+of the variable substitution $y=r_n/t$ to an infinite node.
+
+### The actual-positive-root upper bound and what it leaves
+
+For an actual positive $\mathcal J_n(t)$ root, its finite
+$y=r_n/t>0$ makes $A_{n,f_n}(y)=0$ by (LC46). The uniform
+zero-free result forces $y>a$, so $t<r_n/a$. Taking
+$a=1/(4+\varepsilon)$ gives the exact quantifiers
+
+$$
+\forall\varepsilon>0\ \exists N_\varepsilon\
+\forall n\ge N_\varepsilon\ \forall t>0:
+\quad \mathcal J_n(t)=0\ \Longrightarrow\
+t<(4+\varepsilon)r_n. \tag{LC64}
+$$
+
+This excludes every actual positive real outlier beyond each
+fixed upper-edge neighborhood. It assumes neither existence of
+positive nodes nor that all other roots are real; no conclusion
+about complex outliers follows. No numerical $N_\varepsilon$
+or uniformity as $\varepsilon\downarrow0$ is supplied. The
+collision at $y=1/4$ remains outside this single-saddle range.
+Together with (LC57), the remaining all-positive-node sign
+obligations include the shrinking soft-edge neighborhood,
+$t/r_n\to0$ and fixed-height/off-real source clusters, plus
+initial degrees and common-zero/multiplicity propagation outside
+the established ranges. The bound does not assert complete
+hyperbolicity or prove RH or strict Robin for every $H>5040$.
