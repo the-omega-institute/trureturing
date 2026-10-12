@@ -54,10 +54,12 @@ private def gammaWords : Fin 7 → Fin 3 → Pauli :=
   ![![.X, .I, .I], ![.Y, .I, .I], ![.Z, .X, .I], ![.Z, .Y, .I],
     ![.Z, .Z, .X], ![.Z, .Z, .Y], ![.Z, .Z, .Z]]
 def S : Op 3 := ∑ j : Fin 7, wordOp (gammaWords j)
-def sigma : Op 3 := (1 / 56 : ℝ) • ((7 : ℝ) • 1 + S)
-def bell : Op 6 := Matrix.of fun x y =>
+private def sigmaMatrix : Op 3 := (1 / 56 : ℝ) • ((7 : ℝ) • 1 + S)
+def sigma : Op 3 := sigmaMatrix
+private def bellMatrix : Op 6 := Matrix.of fun x y =>
   if (splitBits 3 3 x).1 = (splitBits 3 3 x).2 ∧
       (splitBits 3 3 y).1 = (splitBits 3 3 y).2 then (1 / 8 : ℂ) else 0
+def bell : Op 6 := bellMatrix
 def W (s : ℝ) : Op 3 := (1 / (1 + s) : ℝ) • ((1 : Op 3) + s • S)
 private lemma word_square {n : ℕ} (w : Fin n → Pauli) : wordOp w * wordOp w = 1 :=
   (wordUnit w).val_inv
@@ -735,17 +737,17 @@ private lemma conjugate_S_square : conjugate S * conjugate S = (7 : ℝ) • (1 
   simpa using he
 private lemma sigma_state_support : IsState sigma ∧ tr (sigma * S) = 1 := by
   have he : sigma = (1 / 8 : ℝ) • (1 + (1 / 7 : ℝ) • S) := by
-    unfold sigma
+    unfold sigma sigmaMatrix
     module
   refine ⟨⟨?_, ?_⟩, ?_⟩
   · rw [he]
     exact ((linear_posDef S S_adjoint S_square_real (1 / 7) (by norm_num)).smul
       (by norm_num : (0 : ℝ) < 1 / 8)).posSemidef
-  · dsimp only [sigma]
+  · dsimp only [sigma, sigmaMatrix]
     simp only [Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, S_trace,
       Fintype.card_fun, Fintype.card_fin]
     norm_num
-  · dsimp only [sigma, tr]
+  · dsimp only [sigma, sigmaMatrix, tr]
     rw [Matrix.smul_mul, Matrix.add_mul, Matrix.smul_mul, Matrix.one_mul, S_square_real]
     simp only [Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, S_trace,
       Fintype.card_fun, Fintype.card_fin]
