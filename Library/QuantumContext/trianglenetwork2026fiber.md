@@ -8,7 +8,7 @@ url: https://github.com/the-omega-institute/trureturing/blob/a67661769ba83cab769
 claim: "A concrete event-to-FIB readout and its compatibility theorem remain open."
 strata_touched: []
 license: repository-original
-triage: rejected(Internal working note; no external literature theorem is asserted.)
+triage: rejected(Internal working note, not an external source establishing the proposed event-to-FIB interface.)
 ---
 
 # Triangle-network source independence and fiber geometry
