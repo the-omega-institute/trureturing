@@ -29,11 +29,6 @@ def localProjection (R : L → L → Prop) (d : L → ℝ) (δ : ℝ)
     (n : ℕ) (s : L) (i : ℕ) (hi : 0 < i ∧ i < n) : C R n s :=
   fun t => pathProjection R d δ n s t i hi
 
-private theorem split_append (R : L → L → Prop) (n : ℕ) (s t u : L)
-    (h : R t u) (x : LegalPath R n s t) :
-    splitPath R n s u (append R n s t u h x) = ⟨⟨t, h⟩, x⟩ :=
-  (splitPath R n s u).apply_symm_apply ⟨⟨t, h⟩, x⟩
-
 private theorem append_kernel (R : L → L → Prop) (d : L → ℝ) (δ : ℝ)
     (n : ℕ) (s t u : L) (h : R t u) (i : ℕ) (hi : 0 < i ∧ i < n)
     (x y : LegalPath R n s t) :
@@ -82,17 +77,23 @@ private theorem local_projection_natural
   funext u x y
   obtain ⟨⟨⟨t, ht⟩, p⟩, rfl⟩ := (splitPath R n s u).symm.surjective x
   obtain ⟨⟨⟨v, hv⟩, q⟩, rfl⟩ := (splitPath R n s u).symm.surjective y
+  have hsplit_t :
+      splitPath R n s u (append R n s t u ht p) = ⟨⟨t, ht⟩, p⟩ :=
+    (splitPath R n s u).apply_symm_apply ⟨⟨t, ht⟩, p⟩
+  have hsplit_v :
+      splitPath R n s u (append R n s v u hv q) = ⟨⟨v, hv⟩, q⟩ :=
+    (splitPath R n s u).apply_symm_apply ⟨⟨v, hv⟩, q⟩
   change iota R n s (localProjection R d δ n s i hi) u
     (append R n s t u ht p) (append R n s v u hv q) =
     pathProjection R d δ (n + 1) s u i ⟨hi.1, by omega⟩
       (append R n s t u ht p) (append R n s v u hv q)
   by_cases htv : t = v
   · subst v
-    simp only [iota, Matrix.submatrix_apply, split_append,
+    simp only [iota, Matrix.submatrix_apply, hsplit_t, hsplit_v,
       Matrix.blockDiagonal'_apply_eq, localProjection]
     exact (append_kernel R d δ n s t u ht i hi p q).symm
   · rw [different_predecessor_kernel R d δ n s t v u ht hv i hi htv p q]
-    simp only [iota, Matrix.submatrix_apply, split_append]
+    simp only [iota, Matrix.submatrix_apply, hsplit_t, hsplit_v]
     apply Matrix.blockDiagonal'_apply_ne
     intro he
     exact htv (congrArg Subtype.val he)
