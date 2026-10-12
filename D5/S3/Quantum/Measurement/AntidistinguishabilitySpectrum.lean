@@ -98,6 +98,7 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 
 import D5.S3.Quantum.Measurement.IncoherentCone
 import D5.S3.Quantum.Measurement.LocallyPositiveSpectrum
+import D5.S3.Weil.ZetaLinear.RankTrace
 
 open Matrix Finset Filter Unitary
 open scoped BigOperators ComplexOrder Topology RealInnerProductSpace
