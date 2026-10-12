@@ -1469,3 +1469,518 @@ $\Psi(\operatorname{Cl}(S_0))=\operatorname{Cl}'(\Psi(S_0))$。重新着色不�
 不能改写为精确可逆或精确恢复。完整的 $n>5040$ 全局覆盖仍是原证书的独立义务。
 
 ## 追加锚（本行以下为增补区）
+
+## 21. 固定颜色的一阶状态、可逆方格与有限隐藏未来
+
+### 21.1. 同一五模式律的自由速度与固定颜色
+
+**定义 21.1（固定颜色合同及一阶来源域）。** 沿用定义 20.1 的
+$\Sigma=(O,L,T,R,J)$，以此顺序排列概率和带符号变化；它们对应索引
+$(\mathrm{null},1,2,3,\{1,3\})$，对应数量列表
+$(\mathrm{null},[2],[3],[5],[2,5])$。坐标仍为低—高—中
+$(x,y,z)$，印刷位串仍为低—中—高。固定命题 20.2 的五个实三维颜色、
+$b,A,j$，它们不随参数变化。取全正概率域
+
+$$
+\Delta_4^\circ=\{p\in\mathbb R^5:p_s>0,\ \sum_s p_s=1\},\qquad
+T_0=\{h:\sum_s h_s=0\}.
+$$
+
+一阶来源是 $(p,h)\in\Delta_4^\circ\times T_0$，即一条双侧可微概率曲线的
+当前律与当前速度。以 $m=(X,Y,Z)$、$\kappa=p_J$ 表示 $p$，
+以 $\dot m=(h_L+h_J,h_R+h_J,h_T)$、$\dot\kappa=h_J$ 表示 $h$。
+每个这样的速度都由充分短的曲线 $p+th$ 实现。这里的参数不指定物理时间。
+实际边界曲线的可行条件采用
+[局部源分裂卷定义 3.2、定理 3.3–3.4](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)，
+不把仿射包络中的全部速度授予零概率点。
+
+本合同使用本卷推导 3.2、数学引文 4.1 和
+[基础公式卷数学引文 2.2、4.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+的五函数基、概率逆式和归一化核。具体配对为
+
+$$
+\langle f,h\rangle=\sum_s f_s h_s,\qquad
+d=(1,-1,0,-1,1),\qquad
+\langle f,d\rangle=f_J-f_L-f_R+f_O.
+$$
+
+故函数商
+$\mathbb R^\Sigma/\operatorname{span}\{1,x,y,z\}$
+的一维余类 $[xy]$ 与概率差方向 $\mathbb Rd$ 经这个配对对偶，
+$\langle xy,d\rangle=1$；两者不是同一个空间，也未指定规范正交补。
+全 $\mathbb R^5$ 上的位置核另含空模式质量方向，只有限制到 $T_0$ 才为
+$\mathbb Rd$。联合一阶报告定义为
+
+$$
+\mathcal J_c(p,h)=(m,\bar c,\dot m,\dot{\bar c}),\qquad
+\bar c=b+Am+j\kappa,\quad
+\dot{\bar c}=A\dot m+j\dot\kappa.
+\tag{21.1}
+$$
+
+**命题 21.2（五模式联合一阶报告的实际秩）。** 在定义 21.1 的整个自由
+一阶来源域上，$\mathcal J_c$ 的像维数及微分秩均为
+$8$ 当 $j\ne0$，均为 $6$ 当 $j=0$。前者恢复 $(p,h)$；
+后者只确定 $(m,\dot m)$。这是固定五模式颜色的联合报告结论。
+
+证明。概率逆式使 $(m,\kappa)$ 成为 $\Delta_4^\circ$ 的四维开坐标，
+其速度有四个独立坐标。令
+
+$$
+B_c=\begin{pmatrix}I_3&0\\A&j\end{pmatrix}.
+$$
+
+式（21.1）除常数外是两个独立的 $B_c$ 块。前三列因上方 $I_3$
+独立，第四列与它们独立恰当且仅当 $j\ne0$。因此两块的秩分别为
+$2\cdot4$、$2\cdot3$，并且开来源域的像在相应线性像中相对开。
+在 $j\ne0$ 时，命题 20.3 的反解和它的速度式给出
+
+$$
+\kappa=\frac{j^{\mathsf T}(\bar c-b-Am)}{j^{\mathsf T}j},\qquad
+\dot\kappa=\frac{j^{\mathsf T}(\dot{\bar c}-A\dot m)}{j^{\mathsf T}j};
+\tag{21.2}
+$$
+
+再用同一概率逆式及其导数得到全部 $p,h$。当 $j=0$，两个
+$\kappa$ 坐标均不参与报告。$A$ 的奇异性不影响这些结论，因为位置均值本身
+仍在报告中。
+
+在非空固定支持 $S\subseteq\Sigma$ 的相对内部，来源改为
+$\Delta_S^\circ\times T_S$，其中
+$T_S=\{h:\operatorname{supp}h\subseteq S,\sum h_s=0\}$。
+若 $j\ne0$，像维数为 $2(|S|-1)$；若 $j=0$，为
+$2\operatorname{affdim}\{v_s:s\in S\}$。这是把上述两个块限制到实际
+$T_S$ 得到的，不给边界额外速度。例如仅四个底角为正时，前者为六、后者为四；
+单点支持均为零。固定整个 $m$ 的非退化纤维及其切空间只剩
+$(\kappa,\dot\kappa)$ 两个来源坐标，报告秩为二或零，仍按 $j\ne0$ 或
+$j=0$ 区分；单点纤维没有这两个自由坐标。若另给
+可微 $F:\Delta_4^\circ\to T_0$ 并指定 $h=F(p)$，
+则来源是四维状态图，报告秩至多四；自由速度的八／六结论
+不能套到这个约束动力学上。
+
+比较所需的另外两个模型时，用经典切空间坐标与链式法则作为中间工具
+（[Tong，§2.2.1 的曲线切向量与 §2.2.2 的向量场](https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S2.html)）。
+独立位置 $q\in\mathbb R^3$ 和独立颜色 $c\in\mathbb R^3$ 的来源
+$E=\mathbb R_q^3\times\mathbb R_c^3$ 为六维，其速度态
+$(q,c;\dot q,\dot c)\in TE$ 为十二维；若把参数 $t$ 本身也放入曲线的一阶
+jet，则 $\mathbb R_t\times TE$ 为十三维。若改为定义 20.1 的
+$c=\Phi(q)$，则 $\dot c=D\Phi(q)\dot q$，图上的速度态只有六维。
+这三种来源与式（21.1）的概率来源各有不同约束，十二、六、八不能相加。
+相同的数字十二也不同于
+[联合投影卷 theorem 18.2](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+的二十一合法边、十顶点、一个连通分量的双窗口边缘核；
+后者为 $21-10+1=12$，且非全正支持时还须使用该条目的边界限定。
+
+一个实际固定颜色选择是
+$c_s=(S_s,S_s^2,e^{\lambda S_s})$，
+$S=2x+5y+3z$，$\lambda\in\mathbb R\setminus\{0\}$。
+本卷推导 3.3 已给
+$J_S=0$、$J_{S^2}=20$ 及两个相应期望式；
+在五函数展开中代入这个指数函数，其第三系数为
+
+$$
+e^{7\lambda}-e^{2\lambda}-e^{5\lambda}+1
+=(e^{2\lambda}-1)(e^{5\lambda}-1)>0.
+$$
+
+故这个颜色的 $j=(0,20,(e^{2\lambda}-1)(e^{5\lambda}-1))$ 非零，
+在全正来源取得八维联合一阶报告；三项只补同一条隐藏方向，并非三条新方向。
+这里联合模式的数值是七，标签 $25$ 和列表 $[2,5]$ 不是数值二十五。
+
+同一均值纤维上颜色如何反映相关，直接消费
+[基础公式卷数学引文 5.2、命题 7.3、定理 9.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)：
+当 $r=1-Z>0$ 时，令 $\kappa_0=XY/r$ 和
+$\bar c_0=b+Am+j\kappa_0$，则
+
+$$
+\Delta=r\kappa-XY,\qquad
+\operatorname{Cov}(x,y\mid z=0)=\Delta/r^2,\qquad
+\bar c-\bar c_0=j\Delta/r.
+$$
+
+这些只是本报告的既有中间关系。自然对数熵 $H=-\sum_s p_s\ln p_s$
+在固定 $m$、四个底角质量都正时对 $\kappa$ 的导数满足
+$H'=\log(p_Lp_R/(p_Op_J))$、
+$H''=-(1/p_O+1/p_L+1/p_R+1/p_J)<0$；
+若采用所引定理的二底熵，导数同除 $\ln2$。
+其唯一最大熵律正是所引的条件独立补全；闭边界由该定理的零质量惯例处理。
+在 $r=0$ 的顶点 $T$，唯一律、$\kappa$ 和颜色都已确定，不定义底面条件律。
+$j=0$ 时颜色残差始终零，不能据零残差反推 $\Delta=0$；
+非退化纤维才有两份待分离的律。$\square$
+
+### 21.2. FIB 方格的仿射运输及根颜色条件
+
+**定义 21.3（方格、附枝与形式逆向遍历）。** 使用定义 7.1、推导 7.2
+的五模式单翻转图，给底面定向
+
+$$
+O\to L\to J,\qquad O\to R\to J,\qquad O\to T.
+$$
+
+每个节点 $s$ 另有颜色纤维 $C_s\cong\mathbb R^3$。
+每条边供应一个仿射同构
+$g_{st}(u)=T_{st}u+\eta_{st}$，
+$T_{st}\in\mathrm{GL}_3(\mathbb R)$、$\eta_{st}\in C_t$；
+所写矩阵使用已指定的各纤维坐标。可逆走法允许形式反边，并规定
+
+$$
+g_{ts}=g_{st}^{-1},\qquad
+T_{ts}=T_{st}^{-1},\quad
+\eta_{ts}=-T_{st}^{-1}\eta_{st}.
+\tag{21.3}
+$$
+
+这定义数学比较路径，不据此授予原生读者逆向动作。按走过的次序
+$e_1,\ldots,e_k$，复合为
+
+$$
+g_\gamma(u)=T_\gamma u+\eta_\gamma,\qquad
+T_\gamma=T_{e_k}\cdots T_{e_1},\quad
+\eta_\gamma=\sum_{i=1}^k T_{e_k}\cdots T_{e_{i+1}}\eta_{e_i};
+\tag{21.4}
+$$
+
+空乘积为单位阵，空路径的增量为零。
+取两条 $O$ 到 $J$ 路径
+$P_1=g_{LJ}\circ g_{OL}$、
+$P_2=g_{RJ}\circ g_{OR}$，写
+$P_i(u)=B_i u+\beta_i$。
+
+**命题 21.4（方格颜色相容的精确根纤维）。** 在定义 21.3 的走法下，
+固定根颜色 $u_O$ 后，全部根到同一节点的走法给相同颜色，
+当且仅当
+
+$$
+H(u_O)=u_O,\qquad
+H=P_2^{-1}\circ P_1,\qquad
+(B_1-B_2)u_O+\beta_1-\beta_2=0.
+\tag{21.5}
+$$
+
+因此相容的根颜色集合为式（21.5）的仿射解集，可以为空、单点或正维集合。
+对所有根颜色均路径无关，当且仅当
+$B_1=B_2$ 且 $\beta_1=\beta_2$，亦即
+$T_H=I_3,\eta_H=0$。静态模式颜色的混合差 $j$ 不决定这些条件。
+
+证明。仿射群的复合和逆运算是中间工具，式（21.3）两侧复合逐项给恒等，
+式（21.4）由逐边代入得到。此处具体计算为
+
+$$
+\begin{aligned}
+B_1&=T_{LJ}T_{OL},&
+\beta_1&=T_{LJ}\eta_{OL}+\eta_{LJ},\\
+B_2&=T_{RJ}T_{OR},&
+\beta_2&=T_{RJ}\eta_{OR}+\eta_{RJ},\\
+T_H&=B_2^{-1}B_1,&
+\eta_H&=B_2^{-1}(\beta_1-\beta_2).
+\end{aligned}
+$$
+
+路径独立先要求 $P_1(u_O)=P_2(u_O)$，等价于式（21.5）。
+反之，用边 $OL,OR,OT,RJ$ 选一棵生成树。任意闭走消去相邻的边及其反边，
+附枝 $OT$ 不产生剩余回路；唯一非树边 $LJ$ 每次连同树中返回路线产生
+$H$ 或 $H^{-1}$。故每条根闭走的仿射映射是 $H$ 的整数次幂，
+固定 $u_O$。这只消费图的经典路径约化
+（[Hatcher，§1A 的生成树与图基本群](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)），
+不把它另列为一般新定理。
+这里采用的可逆运输平坦性判据是：对指定初色，所有根闭走固定它
+当且仅当同终点路径独立；对全部初色，条件改为每个根回路映射恒等。
+必要性把闭走与空走法比较，充分性用一条路径的仿射逆返回根。
+对两条同终点走法 $\gamma,\delta$，
+$\delta^{-1}\gamma$ 是根闭走，故
+$g_\delta^{-1}g_\gamma(u_O)=u_O$；乘回 $g_\delta$ 得两端颜色相同。
+对全部 $u_O$ 的版本由仿射式的系数相等得到。
+例如取 $P_2=I$、$P_1=\operatorname{diag}(2,1,1)$，即使
+$H\ne I$，根颜色满足 $u_{O,1}=0$ 时仍相容。
+
+对命题 20.2 的任意静态颜色 $c_s$，另选
+$T_{st}=I$、$\eta_{st}=c_t-c_s$，则每条路径望远镜相消，$H=I$，
+不论 $j$ 是否为零。特别 $c_s=\Phi(v_s)$ 给 $j=e_3$；
+四角差非零，而通常梯度闭走仍为
+
+$$
+(c_L-c_O)+(c_J-c_L)-(c_J-c_R)-(c_R-c_O)=0.
+$$
+
+若边运输独立供应，即使静态标签全部为零而 $j=0$，
+也可取 $P_1=I$、$P_2(u)=u+e_1$，得到
+$H(u)=u-e_1$，无相容根颜色。此时静态标签不被宣称是该运输的截面。
+这两份具体方格分别分离混合差与 holonomy。
+若要求标签本身构成相容截面，准确的附加条件是
+$c_t=T_{st}c_s+\eta_{st}$ 对每条供应边成立；
+这在其所选根颜色上保证路径一致，不自动给所有根颜色的一致性。
+量词边界与
+[局部钟场卷 Q3、Q4、Q7](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)
+保持相同。$\square$
+
+**命题 21.5（仅沿有向边的菱形反例）。** 若定义 21.3 只允许所写有向边，
+“所有根有向闭走固定初色”不充分于终点颜色路径独立。
+
+证明。取 $o=O,a=L,b=R,v=J$，四条底边的 $T_e=I$，
+除了 $\eta_{RJ}=e_1$ 外全部增量为零，$u_O=0$。
+路径 $O\to L\to J$ 给零，$O\to R\to J$ 给 $e_1$。
+这个有向图没有非空有向闭走；唯一根闭走为空走法，固定每个根颜色。
+附加的 $O\to T$ 零增量边也不产生回路。因此连“对所有初色均固定”
+都不能修复有向版本。反边 $J\to R$ 不在该有向图中；
+在定义 21.3 的可逆走法中它应有 $T=I,\eta=-e_1$，
+闭走 $O\to L\to J\to R\to O$ 给 $u\mapsto u-e_1$，恰检出障碍。
+故可逆比较版使用仿射逆，不能把普通有向返回路径默认为逆。
+本命题是
+[局部钟场卷 Q3](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)
+所指出的平行路径缺口在本五模式颜色方格上的明确实现。$\square$
+
+### 21.3. 七位 RGB 读口与同一平稳隐藏模型
+
+**定义 21.6（长窗口颜色及 separator 合同）。** 对
+$W_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\}$，
+固定每个 $c_w\in\mathbb R^3$ 并令
+$C_n(p)=\sum_{w\in W_n}p_wc_w$。
+$S_n(p)$ 保留完整的长度 $n-1$ 前缀边缘和后缀边缘，
+$K_n=\ker S_n$ 是带符号差空间；因边缘包含总质量，$K_n$ 自动归一化。
+这里 $C_n$ 是三条固定线性统计读口，参数 $c_w$ 不依赖未知律。
+
+计数与 separator 核直接取
+[响应对比与长窗口卷 theorem 6.1、theorem 7.1 及 Q2、Q5、Q6](AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md)：
+$N_0=1,N_1=2,N_n=N_{n-1}+N_{n-2}$；
+只保留单位置均值的核维数为 $N_n-1-n$，
+而此 $K_n$ 的维数为
+$g_n=N_n-2N_{n-1}+N_{n-2}$，$n\ge4$ 时为 $N_{n-4}$。
+三、四、五、六、七位分别给 $g_n=1,1,2,3,5$。
+其五条七位基方向可明确写为
+
+$$
+\mathcal Q_7=\{00000,01000,00100,00010,01010\},\qquad
+h_q=\delta_{0q0}-\delta_{0q1}-\delta_{1q0}+\delta_{1q1}.
+\tag{21.6}
+$$
+
+各 $q$ 首尾为零，四词全部合法；不同 $q$ 的支持不交。
+本节的七位统计、定义 21.3 的模式节点运输、
+以及五边左右各三个顶点的二部运输图是不同对象。
+后一图的左、右 $00,10,01$ 必须保持为六个不同顶点；
+其五条模式边与核 $d$ 直接复用所引卷 theorem 2.1。
+
+**命题 21.7（七位 RGB 在正 separator 纤维上的实际遗漏）。**
+对任意定义 21.6 的固定七位颜色，只要该完整 separator 纤维含有
+每个合法词都为正的律 $p^\circ$，其中就存在两份不同的正律
+$p^+,p^-$，具有完全相同的 separator 和均值颜色。
+
+证明。复用
+[局部源分裂卷定理 8.3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)
+的实际全正分离判据，以其隐藏子空间取 $N=K_7$，
+三个读口取颜色三个坐标。由式（21.6），颜色在这五条方向上的列为
+
+$$
+J_q=c_{1q1}-c_{1q0}-c_{0q1}+c_{0q0}.
+$$
+
+标准秩–零化度作为中间工具给
+$\operatorname{rank}[J_q]_{q\in\mathcal Q_7}\le3$，
+因此存在非零 $a=(a_q)$ 使 $\sum_q a_qJ_q=0$；
+这样的系数空间维数至少二。置
+$h=\sum_q a_qh_q\ne0$，则 $S_7h=0,C_7h=0$。
+明确取
+
+$$
+0<\varepsilon<
+\min_{w:h_w\ne0}\frac{p_w^\circ}{|h_w|},\qquad
+p^\pm=p^\circ\pm\varepsilon h.
+\tag{21.7}
+$$
+
+五个基方向均质量零，故 $p^\pm$ 归一化；该严格界使每个概率仍正。
+这是同一实际概率纤维内的两个律，不只是一份形式核向量。
+在一般 $K_n$ 上，所引判据要求附加 $r$ 条固定线性读口的限制秩为
+$g_n$ 才能分离全正纤维，所以 $r\ge g_n$；零质量或受限制备纤维应改查
+其实际差异集，不能仅套这个维数。
+该论证没有限制任意非线性或无限精度编码。
+也未把一个点的奇异导数当作局部不单射证据：
+实映射 $u\mapsto u^3$ 在零处导数为零却单射。
+此处不可区分性来自固定线性读口的精确核及式（21.7）的两个可行点。$\square$
+
+**定义 21.8（同一平稳律的颜色与条件未来）。** 在
+[普适后验与有限隐藏分离卷定义 4.1、命题 4.2](FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md)
+的完整 $\Theta_N$ 中取
+$\theta=(\lambda,M_0,M_1)$。令
+
+$$
+p_{\theta,n}(w)=\lambda M_w\mathbf1,\qquad
+C_n(\theta)=\sum_{w\in W_n}p_{\theta,n}(w)c_w.
+$$
+
+同一 $P_\theta$ 下，正概率可见过去词 $u$ 后的完整有限未来柱概率为
+
+$$
+\mathscr L_\theta^u(w)=
+\frac{\lambda M_uM_w\mathbf1}{\lambda M_u\mathbf1}.
+\tag{21.8}
+$$
+
+空 $w$ 的值为一，不合法接续为零；全部有限柱概率及其相容扩张决定
+这个可见未来律。这个平稳位过程没有原生 Read／Stop 的额外菜单。
+三位边缘的模式对应为
+$000\mapsto O,100\mapsto L,010\mapsto T,001\mapsto R,101\mapsto J$，
+于是 $Q(p_{\theta,3})$ 使用的正是同一律的 $m,\kappa,\bar c$。
+此处 $N$ 是非负边发射表示的状态数，不是颜色分量数、$g_n$、
+速度态维数或最小表示维数。$\Theta_N$ 仍包含零质量隐藏状态和零可见柱；
+只在式（21.8）所用过去词的分母为正时条件化。
+
+**命题 21.9（相同颜色报告的两份二十一状态平稳实现）。** 对任意固定
+七位 RGB 颜色，存在 $\theta^+,\theta^-\in\Theta_{21}$，
+其可见律都有完整合法词支撑，且满足：
+全部六位边缘相同，七位均值颜色相同，三位完整律及其任意固定模式颜色
+报告相同；但某个正概率六位过去词之后，下一位条件概率不同。
+特别，即使三位颜色合同的 $j\ne0$，它恢复该三位律也不使完整未来相同。
+
+证明。取供应卷命题 7.1 的原两状态链 $R^{1/3}$，
+令 $p^\circ$ 为其七位边缘，$\pi$ 为其六位边缘。
+该供应链在全部合法词上正，平稳性使 $p^\circ$ 的前缀和后缀均为 $\pi$。
+把这份 $p^\circ$ 代入命题 21.7，得 $p^\pm$；
+它们的前、后六位边缘仍为同一个严格正的 $\pi$。
+用合法六位词 $u\in W_6$ 作隐藏状态，共 $N_6=21$ 个，令
+$\lambda_u^\pm=\pi(u)$，并定义
+
+$$
+M_x^\pm(u,v)=
+\begin{cases}
+p^\pm(ux)/\pi(u),
+&ux\in W_7,\quad v=u_2u_3u_4u_5u_6x,\\
+0,&\text{其余情形}.
+\end{cases}
+\tag{21.9}
+$$
+
+对每个 $u$，行和为
+$\sum_xp^\pm(ux)/\pi(u)=1$；
+输入到每个 $v$ 的平稳质量为
+$\sum_{ux:\,\operatorname{suffix}_6(ux)=v}p^\pm(ux)=\pi(v)$。
+故 $\lambda^\pm(M_0^\pm+M_1^\pm)=\lambda^\pm$。
+发射一后隐藏词末位为一，下一位一没有合法边，因而
+$M_1^\pm M_1^\pm=0$；所有定义 4.1 条件成立。
+用其命题 4.2 得到同一相容两侧联合律及实际可见 $P_{\theta^\pm}$，
+而不是独立拼接几个边缘。
+
+每步隐藏词移去第一位并追加当步发射位；走完六步后，隐藏词恰为这六个
+发射位。平稳隐藏分布为 $\pi$，所以实际六位可见分布为 $\pi$，
+七位分布为 $\pi(u)M_x^\pm(u,\operatorname{suffix}_6(ux))=p^\pm(ux)$。
+每条合法转移正，故任意合法长词从一个有正质量的相容六位前史开始，
+其发射概率是有限个正因子的乘积；全部合法词均有正概率。
+命题 21.7 遂给七位颜色相同。共同六位律边缘化给共同三位律，
+故包括式（21.1）静态部分在内的任意固定三位均值颜色均相同。
+因 $h\ne0$，某个 $ux$ 有 $p^+(ux)\ne p^-(ux)$，从式（21.8）得到
+
+$$
+\mathscr L_{\theta^+}^u(x)-\mathscr L_{\theta^-}^u(x)
+=\frac{2\varepsilon h_{ux}}{\pi(u)}\ne0.
+\tag{21.10}
+$$
+
+因此这里颜色与未来的缺口已在实际有限隐藏模型中实现。
+
+对此同一族使用供应卷定理 2.2 时，
+$q_\theta=E_{P_\theta}[X_0\mid\sigma(X_i:i\ne0)]$、
+$F_0=\{X_{-1}=X_1=0\}$、$I=[1/4,1/2]$，
+得到原目标的
+
+$$
+c_\star-d(P_\theta)\ge
+\Delta(P_\theta)
+=E_{P_\theta}[\mathbf1_{F_0}\operatorname{dist}(q_\theta,I)^2].
+$$
+
+这个 $\Delta(P_\theta)$ 是后验缺陷，不是前文五模式的
+$\det Q=r\kappa-XY$。供应卷命题 7.1–7.2 已给后验区间不足以达到的
+见证；本构造不计算或比较两律的 $d$。
+在供应卷定义 6.1 的整个紧 $\Theta_N$ 上，
+其定理 6.2 给 $C_N$ 取到，并给
+$C_N=c_\star$ 当且仅当存在至多 $N$ 个边发射隐藏状态的精确达到律，
+该达到律再由其定理 3.1 自动取得完整可见支撑。
+全支撑不是定义紧域的前置。其推论 7.3 给
+$C_N\le c_\star$、单调性与 $\sup_NC_N=c_\star$；
+开放问题 7.4 的某个有限 $N$ 是否达到仍是待解问题。
+这些全局量词既不由颜色恢复推出，也不由式（21.10）的未来分离否定。$\square$
+
+### 21.4. 原生活动未来与统一关系的有类型接口
+
+**定义 21.10（原生历史接口与共同来源合同）。** 若未来目标改为
+[动态未来商卷第一部分定理 1、推论 1](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+的原生剩余转录律，历史域必须是该卷 Q1–Q4 指定的第三标记写入并锁存后、
+正概率第四段活动历史。一个固定有限或可数正整数深度先验至少有两个正支持
+深度；$K$ 一次抽取，并由全部条件独立付费 Read 共享。
+其条件字母概率为
+$r_k=\mathrm{Fib}_{k+1}/\mathrm{Fib}_{k+3}$、
+$s_k=\mathrm{Fib}_{k+2}/\mathrm{Fib}_{k+3}$，满足 $r_k+s_k=1$。
+$a(h)\in\{p,\beta\}$ 与从首次付费 Read 开始的计数 $A_h,B_h$
+保留原 parser、控制、记录、renderer 和 Read／Stop 权限，
+计数包含拒绝、重试、合法返回和部分解析，不以未来接受条件化。
+在这些原条件下，所引定理的准确对应为
+
+$$
+\sigma(h)=(a(h),A_h,B_h),\qquad
+\mathscr L_h=\mathscr L_{h'}
+\ \Longleftrightarrow\ \sigma(h)=\sigma(h').
+$$
+
+其正向推导是同一先验的 Bayes 权重
+$\mu(k)r_k^{A_h}s_k^{B_h}$、共同后验和相同活动相位；
+反向使用该来源的完整未来律可识别性及 Fibonacci 整数比率分离，
+不是一般混合模型的推论。其推论 1 对任何未来充分摘要 $S$ 给
+$S(h)=S(h')\Rightarrow\sigma(h)=\sigma(h')$。
+实际可达摘要不被假设填满任意计数格。
+pending$_0$、pending$_1$ 保留各自原强制 Stop 且禁止 Read，
+delivered 未来为空；活动定理不能继续用于这些边界。
+式（21.8）的有限隐藏平稳词未来和这个原生未来有不同来源与菜单，
+二者没有被识别为同一律。
+
+把静态颜色接到任一未来模型时，须给同一实际历史上的条件模式律 $p_h$，
+以及同一个未来事件空间 $\mathcal Y$ 上固定的模式条件响应核
+$L_s\in\mathcal P(\mathcal Y)$，并验证
+$\mathscr L_h=\sum_s p_h(s)L_s$。
+若核另依赖深度或历史，则须保留那个联合律与其条件核；
+只保留两个边缘不确定它们的耦合，具体障碍采用
+[局部钟场卷 Q9](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)。
+在确有固定五个 $L_s$ 的合同内，
+[联合投影卷 theorem 27.1 及 corollary 29.1](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+直接以同一有符号测度空间给出
+
+$$
+\begin{aligned}
+J_L&=L_J-L_L-L_R+L_O,\\
+\mathscr L(p)&=L_O+(L_L-L_O)X+(L_R-L_O)Y+(L_T-L_O)Z+J_L\kappa.
+\end{aligned}
+$$
+
+固定 $m$ 的非退化纤维上，$J_L\ne0$ 才使该完整响应分离 $\kappa$；
+$J_L=0$ 时其恒定。颜色系数 $j$ 与测度系数 $J_L$ 仍是不同类型。
+有 $j\ne0$ 时 $Q(p_h)$ 确定当前 $p_h$；只有已经验证这个固定核分解，
+才进一步确定目标未来律。命题 21.9 展示缺少该分解时，
+同一完整三位律也不能替代历史或更长窗口关系。
+
+本应用中的统一对象可写为
+$\mathfrak A=(\Sigma,\mathcal A,\mathcal P,\mathcal F_\kappa,
+C,\{T_e,\eta_e\},\mathscr L)$，其中 $\mathcal A$ 是定义 21.1 引用的
+五态函数代数，$\mathcal P$ 是位置均值体，
+$\mathcal F_\kappa(m)$ 是命题 20.3 的实际概率区间，
+$C$ 是固定模式颜色读口，边运输使用定义 21.3 的节点颜色纤维，
+$\mathscr L$ 使用已选来源的条件未来。
+这个结构集合不自动证明各部分能共同实现。
+四角顶点关系经概率配对给 $d$，
+$p_J$ 给 $\kappa$；固定 $m$ 且 $r>0$ 才有
+$\Delta\leftrightarrow\kappa$，$j\ne0$ 才从联合颜色报告恢复非退化隐藏方向；
+静态颜色梯度不等于供应仿射运输；到未来还需上述共同来源和响应核合同。
+同样，
+[响应对比与长窗口卷 §9、Q3](AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md)
+的质量矩阵
+
+$$
+\mathsf T(p)=
+\begin{pmatrix}p_O&0&p_R\\p_L&0&p_J\\0&p_T&0\end{pmatrix},
+\qquad \det\mathsf T=-Z\Delta
+$$
+
+只在 $Z>0$ 时给线性可逆性等价于 $\Delta\ne0$；
+$Z=0$ 时仍奇异。它的符号采用此处 $(O,L,T,R,J)$ 字典，
+不是定义 21.3 的三维颜色边同构 $T_e$，
+也不是概率保持的逆更新或原生物理反演。
+
+## 追加锚（本行以下为增补区）
