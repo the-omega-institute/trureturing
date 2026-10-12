@@ -49,7 +49,7 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             Node("claim", "The equivalence question", Disp(IffOf(V("claim"), Equivalence())),
                 "Section 9.2, after Proposition 9.9, PDF p. 25: \"We do not know if these conjectures are equivalent.\" The encoding is the conjunction (PPT2C ↔ IPT2 ℂ) ∧ (IPT2 ℂ ↔ IPT2 ℝ). Each conjecture ranges over all dimensions; this does not assert that the conjectures themselves are true.",
                 DescribeRole.Definition, Lit()),
-            Describe.Remark(DescribeId.Create("flag-lift"), H("A composition-compatible flag"), Equivalence(),
+            Describe.Remark(DescribeId.Create("flag-lift"), H("A composition-compatible flag"), FlagConstruction(),
                 AssessedProvenance.FromLiterature(Flags), Blocks(Paragraph(Text(
                     "On the auxiliary two-dimensional factor take P+ = (1,i)(1,i)*/2 and P- = (1,-i)(1,-i)*/2. Their transpose exchanges them. Compress to these flag sectors with B+ and B-, and put E(X) = B+(X) + B-(X)^T and D(A) = A tensor P+ + A^T tensor P-. The lift D Phi E/2 has four completely positive branches for every complex PPT Phi. It is invariant under transpose on input and output, so its real restriction is IPT and complexifies back to the lift. The identity E D = 2 id makes the lift preserve composition. Completely positive insertion A tensor P+ and compression B+ recover Phi squared divided by two. This transfers entanglement breaking from the lifted square. The lift adapts the conjugate-flag construction rho tensor P+ + rho partially transposed tensor P- of Huber, Lami, Lancien and Müller-Hermes, arXiv v1, Section III.C, PDF p. 8, the second lemma labelled III.1. The map normalization, composition law and recovery are the consequences used here.")))),
             Node("result", "The three conjectures are equivalent", Disp(Equivalence()),
@@ -156,6 +156,30 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
 
     private static Formula ConjectureBody(Formula scalar, bool invariant) => All("n", N, All("Phi", EndOf(scalar),
         Imp(Call(invariant ? "IsIPT" : "IsPPT", V("Phi")), Call("IsEB", Parenthesized(Square(V("Phi")))))));
+    private static Formula FlagConstruction()
+    {
+        Formula ab = ProdOf(FinOf(V("n")), FinOf(V("m")));
+        Formula flag = Mat(FinOf(D(2)), C);
+        Formula plus = Pair(D(1), Qualified("Complex", "I"));
+        Formula minus = Pair(D(1), Seq(Minus, Qualified("Complex", "I")));
+        Formula pplus = Seq(Frac, Grp(Parenthesized(Seq(plus, Sp,
+            new Formula.Power(Parenthesized(plus), Star)))), Grp(D(2)));
+        Formula pminus = Seq(Frac, Grp(Parenthesized(Seq(minus, Sp,
+            new Formula.Power(Parenthesized(minus), Star)))), Grp(D(2)));
+        Formula pt = new Formula.Power(Parenthesized(V("rho")),
+            new Formula.Subscript(Gamma, Named("B")));
+        Formula liftedPt = new Formula.Power(Parenthesized(V("rhotilde")),
+            new Formula.Subscript(Gamma, Seq(Named("B"), Named("B"), Apos)));
+        Formula construction = Seq(Parenthesized(Call("tensor", V("rho"), V("Pplus"))),
+            Sp, Plus, Sp, Parenthesized(Call("tensor", Parenthesized(pt), V("Pminus"))));
+        Formula conclusion = Ex("rhotilde", Mat(Parenthesized(ProdOf(Parenthesized(ab), FinOf(D(2)))), C),
+            And(EqTo(V("rhotilde"), Parenthesized(construction)),
+                And(Psd(V("rhotilde")), EqTo(liftedPt, V("rhotilde")))));
+        return Disp(All("n", N, All("m", N, All("rho", Mat(Parenthesized(ab), C),
+            All("Pplus", flag, All("Pminus", flag,
+                Imp(And(EqTo(V("Pplus"), pplus), EqTo(V("Pminus"), pminus)),
+                    Imp(And(Psd(V("rho")), Psd(Parenthesized(pt))), conclusion))))))));
+    }
     private static Formula ComplexConjecture() => Disp(IffOf(V("PPT2C"), ConjectureBody(C, false)));
     private static Formula IptConjecture() => Disp(All("K", Named("Type"), Instance(IffOf(Call("IPT2", V("K")), ConjectureBody(V("K"), true)))));
     private static Formula Equivalence() => And(IffOf(V("PPT2C"), Call("IPT2", C)), IffOf(Call("IPT2", C), Call("IPT2", R)));

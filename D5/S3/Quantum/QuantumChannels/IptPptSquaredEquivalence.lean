@@ -224,24 +224,15 @@ private theorem choi_cp (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (
     (choi Phi).PosSemidef ↔ IsCP Phi := by
   constructor
   · intro h
-    obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_mul_star_self.mp
-      (Matrix.nonneg_iff_posSemidef.mpr h)
-    let x : (Fin n × Fin m) → (Fin n × Fin m) → 𝕜 := fun t a => B a t
-    have hx : choi Phi = ∑ t, Matrix.vecMulVec (x t) (star (x t)) := by
-      rw [hB]
-      ext a b
-      simp [x, Matrix.mul_apply, Matrix.star_eq_conjTranspose,
-        Matrix.conjTranspose_apply, Matrix.sum_apply, Matrix.vecMulVec_apply]
-    let K : (Fin n × Fin m) → Matrix (Fin m) (Fin n) 𝕜 := fun t a i => x t (i, a)
+    obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_mul_star_self.mp h.nonneg
+    let K : (Fin n × Fin m) → Matrix (Fin m) (Fin n) 𝕜 := fun t a i => B (i,a) t
     have he : Phi = MatrixMap.of_kraus K K := by
       apply choi_injective
       ext a b
-      have hh := congrFun (congrFun hx a) b
-      simp only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply] at hh
-      rw [hh]
-      simp [choi, MatrixMap.of_kraus, Matrix.sum_apply, Matrix.mul_apply, Matrix.single,
-        Matrix.of_apply, Matrix.conjTranspose_apply, K, ite_and, Finset.sum_ite_eq,
-        Finset.sum_ite_eq']
+      have hh := congrFun (congrFun hB a) b
+      simpa [choi, MatrixMap.of_kraus, Matrix.sum_apply, Matrix.mul_apply,
+        Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply, Matrix.single,
+        Matrix.of_apply, K, ite_and, Finset.sum_ite_eq, Finset.sum_ite_eq'] using hh
     rw [he, cp_bridge]
     exact MatrixMap.of_kraus_isCompletelyPositive K
   · exact choi_psd_of_cp Phi
