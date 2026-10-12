@@ -1,0 +1,35 @@
+**引理 6.7（参数导数的二阶余项界）。** 对上述全部参数及 $u\ge0$，
+
+$$
+\left\|\partial_\kappa e^{uL_\kappa}-uL'_\kappa\right\|_\infty
+\le u^2\|L_\kappa\|_\infty\|L'_\kappa\|_\infty
+\le\frac{4u^2}{\epsilon^3}.
+\tag{6.23}
+$$
+
+**证明。** 有限矩阵恒等式
+
+$$
+e^{uA}-e^{uB}
+=\int_0^u e^{(u-v)A}(A-B)e^{vB}\,dv
+$$
+
+可由对 $e^{(u-v)A}e^{vB}$ 求导并积分直接验证。取 $A=L_{\kappa+h}$、$B=L_\kappa$，除以 $h$ 后令 $h\to0$。有限区间上的矩阵连续性给
+
+$$
+\partial_\kappa e^{uL_\kappa}
+=\int_0^u e^{(u-v)L_\kappa}L'_\kappa e^{vL_\kappa}\,dv.
+\tag{6.24}
+$$
+
+这也证明所需导数存在，不假设 $L$ 与 $L'$ 交换。减去 $uL'_\kappa$ 后，积分内写成
+
+$$
+(e^{(u-v)L_\kappa}-I)L'_\kappa e^{vL_\kappa}
++L'_\kappa(e^{vL_\kappa}-I).
+$$
+
+应用 (6.22)，两项范数之和至多
+$[(u-v)+v]\|L_\kappa\|_\infty\|L'_\kappa\|_\infty$。
+积分即给第一界，再用 (6.21)。这里的界对整个矩形共同成立，没有隐含参数相关的 $O(\cdot)$ 常数。∎
+
