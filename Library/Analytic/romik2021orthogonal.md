@@ -3911,3 +3911,173 @@ This application does not count all real roots, exclude complex
 roots, supply a numerical starting degree, settle initial degrees or
 global common-zero propagation, or prove RH or all-integer strict Robin.
 It remains without Lean certification or a mathematical originality claim.
+
+## Counting actual bulk roots without a complete-positive-row premise
+
+Keep the unchanged source, normalization and degree-zero-shift family of
+(LC46)–(LC51). The accepted compact-bulk estimates (LC52)–(LC57) are the
+input; the original Gamma–zeta contour and Gaussian supplier are not
+reproved. This is a source-specific application of those estimates,
+Appell differentiation and real sign counting. It supplies neither a new
+generic zero-distribution theorem, a literature originality claim nor
+Lean certification.
+
+The finite S-transform application (LC44) assumed an unbounded sequence
+of entirely positive-root rows. The compact-bulk source estimates allow
+a different inference: actual positive roots can be counted in every
+fixed compact interval inside the limiting support, without assuming
+that any complete row is real-rooted.
+
+### Exact phase variation and the derivative at actual nodes
+
+Fix $Y=[a,b]\subset(1/4,\infty)$. Use the exact finite lower saddle
+$u_n(y)$, curvature $a_n(y)$ and common nonzero amplitude $B_n(y)$
+of (LC52)–(LC55). Choose a continuous phase $\Theta_n$ with
+$B_n(y)=|B_n(y)|e^{i\Theta_n(y)}$ on $Y$.
+
+The same source's analytic derivative bounds and saddle
+nondegeneracy give $u_n'(y)=-1/h_{n,y}''(u_n(y))$ and uniformly
+bounded $u_n',a_n',a_n'/a_n$ on this fixed interval. These are
+obtained by differentiating the exact saddle equation; no derivative
+of the remainder in (LC55) is used. Since $\partial_yh_{n,y}(u)=u$
+and $\partial_uh_{n,y}(u_n)=0$, the amplitude in (LC54) has
+
+$$
+\Theta_n'(y)
+=n\Im u_n(y)-\tfrac12\Im\frac{a_n'(y)}{a_n(y)},
+\qquad
+\frac{\Theta_n'(y)}n\longrightarrow
+-\frac{\sqrt{4y-1}}{2y^2}
+\quad\text{uniformly on }Y.
+\tag{LC152}
+$$
+
+In particular, $\Theta_n$ is strictly decreasing for sufficiently
+large $n$, with a derivative bounded away from zero after division
+by $n$. The continuous branch's additive multiple of $2\pi$ has no
+effect on any phase difference below.
+
+Reuse exact Appell differentiation, equivalently differentiating
+(LC51) on a fixed Cauchy circle, to obtain
+$\partial_y I_{n,0}(y)=nI_{n,-1}(y)$. Formula (LC55), with its
+absolute error and the same $B_n,u_n$, gives
+
+$$
+\frac{I_{n,0}(y)}{2|B_n(y)|}
+=\cos\Theta_n(y)+O_Y(n^{-1}),
+\qquad
+\frac{\partial_y I_{n,0}(y)}{2n|B_n(y)|}
+=\Re u_n\cos\Theta_n-\Im u_n\sin\Theta_n+O_Y(n^{-1}).
+\tag{LC153}
+$$
+
+At every actual real zero $I_{n,0}(y)=0$ in $Y$,
+$|\cos\Theta_n(y)|\le C_Y/n$. Its phase is within $O_Y(n^{-1})$
+of a unique $\pi/2+k\pi$. Since $-\Im u_n\ge c_Y>0$,
+
+$$
+\operatorname{sign}\bigl(\partial_y I_{n,0}(y)\bigr)
+=\operatorname{sign}\bigl(\sin\Theta_n(y)\bigr),
+\qquad \partial_y I_{n,0}(y)\ne0.
+\tag{LC154}
+$$
+
+These statements are at actual coefficient zeros, without replacing
+them by zeros of a leading cosine or assuming simplicity beforehand.
+
+### One actual root in each complete phase interval
+
+Consider a complete phase interval
+$[k\pi,(k+1)\pi]\subset\Theta_n(Y)$. Strict monotonicity supplies
+its two actual $y$ endpoints. By (LC153), the two endpoint values of
+$I_{n,0}$ have opposite signs for large $n$, so there is a real root
+between them. Every root in this interval has its phase near the
+same midpoint and, by (LC154), its derivative has the same nonzero
+sign. There is at most one such root: successive simple zeros of
+a real differentiable function have alternating crossing directions.
+Here $I_{n,0}$ is a nonzero polynomial in $y$, up to a positive
+constant, so it has finitely many zeros. Consequently there is
+exactly one root per complete phase interval. Each of the two
+possibly incomplete endpoint phase intervals contains at most one.
+
+Let $N_n(Y)$ count actual zeros with $r_n/t\in Y$, including
+multiplicity. All these bulk zeros are simple by (LC154).
+Endpoint conventions change the count by at most two. Thus
+
+$$
+N_n(Y)=\frac{\Theta_n(a)-\Theta_n(b)}\pi+O(1),
+\qquad
+\frac{N_n(Y)}n\longrightarrow
+\int_a^b\frac{\sqrt{4y-1}}{2\pi y^2}\,dy.
+\tag{LC155}
+$$
+
+The $O(1)$ counting discrepancy is independent of $n$ for fixed $Y$;
+it is not a rate for the phase convergence in (LC152).
+
+For any fixed $0<\alpha<\beta<4$, put
+$Y=[1/\beta,1/\alpha]$. The actual-source correspondence (LC46)
+and the substitution $x=1/y$ give
+
+$$
+\frac1n\#\{t>0:\mathcal J_n(t)=0,
+                  \alpha\le t/r_n\le\beta\}
+\longrightarrow
+\int_\alpha^\beta\frac1{2\pi}\sqrt{\frac{4-x}{x}}\,dx.
+\tag{LC156}
+$$
+
+This holds along every sufficiently large degree, rather than only
+along a hypothetical complete-positive-root subsequence. It counts
+actual simple positive roots in the displayed compact bulk interval.
+
+### What the count supplies, and what it leaves open
+
+The density in (LC156) is the same probability density of
+$\mathrm{MP}_1$ in (LC44). Let $N_n^+$ denote the total number of
+positive real roots of $\mathcal J_n$, with multiplicities. Because
+$a_n>0$, the polynomial has degree $n$. Also
+$\mathcal J_n(t)>0$ for every $t\le0$, so it has no nonpositive
+real roots. The lower count in (LC156), followed by
+$\alpha\downarrow0$, $\beta\uparrow4$, and the degree upper bound
+$N_n^+\le n$, yields
+
+$$
+\frac{N_n^+}{n}\longrightarrow1,
+\qquad n-N_n^+=o(n).
+\tag{LC157}
+$$
+
+Thus the number of nonreal roots is $o(n)$, without excluding any
+individual nonreal root. No numerical starting degree or quantitative
+rate is supplied.
+
+Equations (LC156)–(LC157) also give weak convergence to
+$\mathrm{MP}_1$ of the empirical measure of all $n$ complex roots,
+counting multiplicities and viewing this real limiting measure on
+$\mathbb C$. Explicitly, with the sum over all actual complex roots,
+
+$$
+\mu_n=\frac1n\sum_{\mathcal J_n(z)=0}\delta_{z/r_n}
+\ \Longrightarrow\ \mathrm{MP}_1.
+\tag{LC158}
+$$
+
+Indeed the positive-root measure has the stated counts
+on every compact subinterval of $(0,4)$ and total mass tending to one;
+the remaining roots carry mass $o(1)$. Test bounded continuous
+functions first on $[\alpha,\beta]$, then use the degree bound to
+make the mass of its complement arbitrarily small. This does not
+supply convergence of unbounded moments, exclude complex outliers,
+or put every root on the real line.
+
+The all-positive-subsequence premise is unnecessary for this weak
+law, because the present source-specific contour input supplies
+actual real-root counts. The earlier conditional finite S-transform
+application remains within its stated hypotheses and is not reproved.
+An $o(n)$ defect can still contain nonreal roots for arbitrarily large
+$n$; their mass can disappear from a weak limit. The result therefore
+does not prove RH or strict Robin for all $H>5040$, settle the
+uniform actual-node comparison in $0<t<T_n^{\rm mov}$, close initial
+degrees or global common-zero propagation, or localize every nonreal
+root. These are still full-criterion obligations.
