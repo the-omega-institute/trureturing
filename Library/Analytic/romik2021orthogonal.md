@@ -2224,12 +2224,12 @@ positive nodes nor that all other roots are real; no conclusion
 about complex outliers follows. No numerical $N_\varepsilon$
 or uniformity as $\varepsilon\downarrow0$ is supplied. The
 limiting collision at $y=1/4$ remains outside this single-saddle
-range; the finite fold is retained separately below. Together with
-(LC57), the remaining full-criterion obligations include the
-soft-edge arguments outside the logarithmic window established below,
-$t/r_n\to0$ through heights growing with degree, plus
-initial degrees, complex-root control and common-zero/multiplicity
-propagation outside the established ranges. The fixed real height bands already have
+range; the finite fold is retained separately below. The fixed and
+logarithmic soft-edge window estimates alone do not overlap (LC57);
+(LC107)–(LC133) supply the common-domain fixed-band bridge. The remaining
+full-criterion obligations include $t/r_n\to0$ through heights growing
+with degree, initial degrees, complex-root control and common-zero/
+multiplicity propagation outside the established ranges. The fixed real height bands already have
 the source-dependent eventual sign in (LC30); the missing step
 is uniform control across a growing band. The bound does not assert
 complete hyperbolicity or prove RH or strict Robin for every $H>5040$.
@@ -2644,9 +2644,10 @@ $$
 
 No numerical $N_M$ is supplied.
 The following pointwise estimates control an explicit growing Airy
-window. A uniform overlap with bulk ranges approaching the fold
-remains unpaid, as do the growing hard-edge
-band, complex roots, initial degrees and global collision propagation.
+window. These window estimates alone do not supply a uniform overlap
+with bulk ranges approaching the fold; (LC107)–(LC133) supply that
+fixed-band overlap. The growing hard-edge band, complex roots, initial
+degrees and global collision propagation remain unresolved.
 RH and strict Robin for all integers greater than 5040 remain unresolved.
 
 ## Pointwise errors and an explicit growing soft-edge window
@@ -2811,9 +2812,10 @@ this half of the window contains no actual middle-row nodes.
 The width in $y$ is $O(n^{-2/3}(\log n)^{2/3})$, which is smaller
 than the exact fold's displacement $y_n-1/4\asymp1/\log n$.
 For any fixed compact $Y\subset(1/4,\infty)$, this growing Airy
-window and $Y$ are eventually disjoint. Uniform overlap toward
-the fold, the growing hard-edge band, complex roots, initial degrees
-and global collision propagation remain unresolved. This proves
+window and $Y$ are eventually disjoint. The fixed-band application
+(LC107)–(LC133) supplies the overlap toward the fold that this window
+alone does not provide. The growing hard-edge band, complex roots,
+initial degrees and global collision propagation remain unresolved. This proves
 neither full-row hyperbolicity nor RH or strict Robin for all $H>5040$.
 
 ### The linear-coordinate residual is not a uniformly bounded amplitude
@@ -2924,3 +2926,638 @@ complex outliers, supply the total real-root count, identify
 $t_n^{\max}$ with the constructed Airy root, or prove RH/Robin.
 No numerical starting degree or next-order expansion of
 $t_n^{\max}$ is supplied.
+
+## Exact cubic rows and the common-domain interface
+
+This application keeps the original square-variable source and the same
+$f_n$ for all three offsets. It reuses (LC65)–(LC87), the classical
+cubic-coordinate method and the Airy integral and real-axis envelopes.
+It does not prove a new generic normal-form or Airy theorem, claim
+originality, or provide Lean certification. The fixed-band argument first states its exact common-domain
+interface (U); the final subsection supplies it by applying a published
+analytic implicit-function theorem to the actual source family. All new
+conclusions concern sufficiently large degrees and actual positive real
+Jensen nodes.
+
+### The published local coordinate and its quantifiers
+
+Levinson, *A canonical form for an analytic function of several
+variables at a critical point*, Bull. AMS **66** (1960), 68–69,
+[DOI 10.1090/S0002-9904-1960-10397-7](https://doi.org/10.1090/S0002-9904-1960-10397-7),
+the unnumbered THEOREM on printed p.68, supplies a local analytic
+change $w=v+v^2g(z,v)$ reducing an analytic function to an exact
+polynomial in $v$. Its assumptions are vanishing $w$ derivatives
+of orders $1,\ldots,m-1$ and a nonzero derivative of order $m$ at
+the reference point. Its statement and the proof indication on p.69
+also cover several analytic parameters. It is a local theorem for
+a specified analytic germ; the stated theorem alone does not supply
+a common domain and uniform analytic norms for a sequence of germs.
+
+For each fixed sufficiently large $n$, apply its $m=3$ case to
+$H_{n,y_e+\delta}(\rho_e+w)$, where
+$\rho_e=\rho_n^{\mathrm e}$ and $y_e=y_n^{\mathrm e}$ are the exact
+finite fold (LC68). The derivative conditions are exactly (LC69).
+Depress the resulting cubic and choose its real cubic scale with
+negative source derivative. This gives, locally for that $n$,
+
+$$
+H_{n,y}(R_n(s,y))=A_n(y)+s^3/3-\zeta_n(y)s,
+\qquad k_n=(-2/h_{3,n})^{1/3}=\rho_e\gamma_n, \tag{LC107}
+$$
+
+where $h_{j,n}=\partial_\rho^jH_{n,y_e}(\rho_e)$ and
+
+$$
+R_n(0,y_e)=\rho_e,\quad R_{n,s}(0,y_e)=-k_n,\quad
+\zeta_n(y_e)=0,\quad \zeta_n'(y_e)=-k_n. \tag{LC108}
+$$
+
+The last derivative follows by differentiating
+$H_\rho(R_n,y)R_{n,s}=s^2-\zeta_n$ at the fold and using
+$H_{\rho y}=-1$. Real-symmetric local branches are chosen throughout.
+In particular, $A_n(y_e)=H_{n,y_e}(\rho_e)$ and
+$A_n'(y_e)=-\rho_e$. This is a per-$n$ germ construction, not a
+verified uniformly bounded coordinate for the full sequence.
+
+**Interface (U).** There must exist $r,\Delta>0$, $C<\infty$ and
+$N$ independent of $n$, such that every $n\ge N$ has real-symmetric
+jointly analytic $R_n,A_n,\zeta_n$ (in particular real-valued for real
+arguments) satisfying (LC107)–(LC108) on
+$|s|<4r$, $|y-y_e|<2\Delta$. The image must stay inside the established
+source nonvanishing domain. On nested common neighborhoods,
+$R_n(\cdot,y)$ must be biholomorphic, its inverse must cover a fixed
+source disk about $\rho_e$, the maps and inverses must have uniformly
+bounded analytic norms, and $|R_{n,s}|$ must have a uniform positive
+lower bound. Uniform analytic convergence in (LC66) supplies source
+bounds; invoking the local theorem independently for each $n$ does
+not by itself establish these different quantifiers. The final subsection supplies this common-domain interface through an
+existing complex Banach-space analytic implicit-function theorem.
+
+### Exact normalization and the shared adjacent coefficients
+
+The source's upper theta rays map, to first order, by
+$s=-i\theta/\gamma_n$. Their image runs from the upper to the lower
+right Airy ray, reversing the standard Airy cycle
+[DLMF 9.5.4](https://dlmf.nist.gov/9.5#E4). Absorb this common
+reversal into the amplitude and normalize the complete original row:
+
+$$
+\mathscr G_{n,d}=-R_{n,s}R_n^{-d-1},\qquad
+K_{n,d}=(-1)^{n+d}e^{-nA_n(y)}I_{n,d}(y)
+=e^{n(H_{n,y}(\rho_e)-A_n(y))}\rho_e^{-d}J_{n,d}(y).
+\tag{LC109}
+$$
+
+The zero conditions $I_{n,0}=0$, $J_{n,0}=0$ and $K_{n,0}=0$
+therefore refer to the same actual node. No approximation is used
+in the prefactor. With $q=\sqrt{\zeta_n(y)}$ define
+
+$$
+\rho_\pm=R_n(\pm q,y),\qquad h_\pm=-R_{n,s}(\pm q,y)/\rho_\pm,
+$$
+
+$$
+\alpha_d=\frac{h_+\rho_+^{-d}+h_-\rho_-^{-d}}2,\qquad
+\beta_d=\frac{h_+\rho_+^{-d}-h_-\rho_-^{-d}}{2q},\qquad
+D_d=\beta_d-\frac{\alpha_d}{\alpha_0}\beta_0. \tag{LC110}
+$$
+
+All these quantities have removable limits at $q=0$ and are
+independent of the square-root sign. Direct common-row elimination gives
+
+$$
+D_d=\frac{h_+h_-}{q(h_++h_-)}
+(\rho_+^{-d}-\rho_-^{-d}),\qquad
+D_{+1}=-\frac{D_{-1}}{\rho_+\rho_-}. \tag{LC111}
+$$
+
+For real parameters in a small source neighborhood, the denominator
+$\rho_+\rho_-$ is positive: the saddles are positive real when
+$\zeta_n\ge0$, and conjugate when $\zeta_n<0$. At the exact fold,
+
+$$
+\alpha_d=k_n\rho_e^{-d-1},\qquad
+\beta_d=-R_{n,ss}(0,y_e)\rho_e^{-d-1}
+ +(d+1)k_n^2\rho_e^{-d-2},\qquad
+D_d=d\rho_e^{-d}\gamma_n^2. \tag{LC112}
+$$
+
+The common $R_{n,ss}$ contribution cancels. Thus the opposite
+neighboring signs come from one exact source relation, rather than
+three separately selected approximations. With these coefficients
+the correct elimination is $K_{n,d}-(\alpha_d/\alpha_0)K_{n,0}$,
+or its equivalent with $\rho_e^{-d}J_{n,d}$; an unadjusted
+$J_{n,d}-(\alpha_d/\alpha_0)J_{n,0}$ has a different coefficient.
+
+Comparing the fourth-order term in (LC107), and then differentiating
+in $y$, gives
+
+$$
+R_{n,ss}(0,y_e)=-\frac{h_{4,n}k_n^2}{6h_{3,n}},\qquad
+R_{n,y}(0,y_e)=-k_nR_{n,ss}(0,y_e)/2,\qquad
+A_n''(y_e)=k_nR_{n,ss}(0,y_e). \tag{LC113}
+$$
+
+The limiting phase is $-\rho/4+2\sqrt\rho-\log\rho$, so the
+already available derivative convergence yields
+$h_{3,n}\to-1/128$, $h_{4,n}\to9/1024$, and $k_n^3\to256$.
+Consequently
+
+$$
+\alpha_0(y_e)\to2^{2/3},\qquad
+\beta_0(y_e)\to2^{-2/3}>0,\qquad A_n''(y_e)\to48. \tag{LC114}
+$$
+
+For each fixed $n$, Taylor expansion therefore gives
+
+$$
+A_n(y_e+\delta)-H_{n,y_e+\delta}(\rho_e)
+=\tfrac12k_nR_{n,ss}(0,y_e)\delta^2+O_n(\delta^3). \tag{LC115}
+$$
+
+The quadratic coefficient tends to $24$. The exact exponential
+in (LC109) cannot be replaced by $1+o(1)$ at fixed nonzero
+displacement. Under (U), the Taylor bounds are uniform after
+shrinking the common domain, and there exist fixed positive
+$a_*,b_*,d_*$ such that on a sufficiently small real fold band
+
+$$
+\alpha_0\ge a_*,\quad\beta_0\ge b_*,\quad
+D_{-1}\le-d_*,\quad D_{+1}\ge d_*. \tag{LC116}
+$$
+
+### The finite-contour remainder
+
+Assume (U) for this subsection and the following fixed-band
+consequences. Set $\varepsilon=n^{-1/3}$, $X=n^{2/3}\zeta_n(y)$ and
+
+$$
+\mathcal M(X)=(1+|X|)^{-1/4}e^{-2(X_+)^{3/2}/3},\qquad
+\mathcal N(X)=(1+|X|)^{1/4}e^{-2(X_+)^{3/2}/3}. \tag{LC117}
+$$
+
+Inside the common chart use the standard two-point interpolation
+$\mathscr G_{n,d}=\alpha_d+\beta_ds+(s^2-\zeta_n)g_d$.
+The interpolation remainder and its derivative are uniformly
+bounded by Cauchy integration on a fixed enclosing circle, kept
+away from $\pm\sqrt{\zeta_n}$. For a finite local Airy contour
+$\Gamma$ the exact integration by parts is
+
+$$
+\begin{aligned}
+\frac1{2\pi i}\int_\Gamma e^{n\phi_\zeta}\mathscr G_{n,d}\,ds
+={}&\alpha_d C_{0,\Gamma}+\beta_d C_{1,\Gamma}
++\frac{[e^{n\phi_\zeta}g_d]_{\partial\Gamma}}{2\pi i n}\\
+&-\frac1{2\pi i n}\int_\Gamma e^{n\phi_\zeta}\partial_sg_d\,ds,
+\quad \phi_\zeta=s^3/3-\zeta s.
+\end{aligned} \tag{LC118}
+$$
+
+Only the polynomial canonical integrals $C_{0,\Gamma}$ and
+$C_{1,\Gamma}$ are completed with infinite tails. Their complete
+values are $\varepsilon\operatorname{Ai}(X)$ and
+$-\varepsilon^2\operatorname{Ai}'(X)$. The local $g_d$ need not
+have an analytic extension beyond its source disk.
+
+For $\zeta=q^2\ge0$, use truncated paths
+$s=q+u e^{\pm i\pi/3}$; exactly
+$\Re\phi_\zeta=-2q^3/3-qu^2/2-u^3/3$.
+For $\zeta=-q^2\le0$, use the upper exterior path
+$s=iq+u(1+i)$ and the interior path
+$s=iq-u(1+i)$, $0\le u\le q$, together with their conjugates.
+They join at $-q$; their real phases are respectively
+$-2qu^2-2u^3/3$ and $-2qu^2+2u^3/3\le-4qu^2/3$.
+The resulting truncated absolute integral satisfies
+$\int_\Gamma|e^{n\phi_\zeta}|\,|ds|\le C\varepsilon\mathcal M(X)$.
+This uses both the cubic scale at $q=0$ and the quadratic scale
+$(nq)^{-1/2}$ away from zero. Hence the integral remainder in
+(LC118) is at most $C\varepsilon^4\mathcal M(X)$.
+
+### The original contour, fixed-band exterior and finite caps
+
+The contour passage uses the common chart (U) together with an
+explicit extension of the original source estimates to the fixed
+parameter band. It does not read the bounded-$x$ quantifier in
+(LC82) as already covering a fixed band.
+
+Fix once a sufficiently small $\eta>0$, before choosing the
+parameter width. Require $\rho_e\eta e^\eta<d/2$, with the common
+source coverage radius from (LC133), and choose it smaller if
+necessary so the local theta image and the cap paths below stay
+inside the common coordinate disk. For the real exterior
+$\eta\le|\theta|\le\pi$, the original variable is
+$u=-\rho_e e^{i\theta}$: the angle in (LC50) is
+$\vartheta=\theta+\pi$ modulo $2\pi$, and hence
+$|\sin(\vartheta/2)|=\cos(\theta/2)$. The exact $Q_{n,y}$ of
+(LC79) therefore satisfies
+
+$$
+\begin{aligned}
+\frac1n\log|Q_{n,y}(\theta)|
+\le{}&y\rho_e(1-\cos\theta)
++2\sqrt{\rho_e}\cos(\theta/2)
+-\mathcal L_n(\rho_e)+o(1)\\
+={}&-2(1-\cos(\theta/2))^2
++\delta\rho_e(1-\cos\theta)+o(1),
+\qquad \delta=y-y_e.
+\end{aligned}
+$$
+
+The $o(1)$ is uniform in the angle and independent of $\delta$;
+the parameter dependence displayed here is exact. Let
+$g_\eta=2(1-\cos(\eta/2))^2>0$ and choose a fixed upper bound
+$\rho_e\le\rho^*$. First take $N$ so the uniform $o(1)$ is
+at most $g_\eta/4$; then require
+$2\rho^*\delta_0\le g_\eta/4$. The real exterior has
+$|Q_{n,y}|\le e^{-ng_\eta/2}$ throughout
+$|\delta|\le\delta_0$. Its three $J_{n,d}$ integrals have the
+same exponential bound because $|e^{-id\theta}|=1$ there.
+
+For the original fixed-radius connecting arcs, write
+$P_{n,0}(\theta)=n^{-1}\log Q_{n,y_e}(\theta)$ locally,
+with the branch through $P_{n,0}(0)=0$. Reuse the
+already established source expansion
+$P_{n,0}=i\mathfrak a_n\theta^3/6+\mathfrak b_n\theta^4
++O(\theta^5)$, with $\mathfrak a_n\to1/2$,
+$\mathfrak b_n\to-1/32$ and uniform analytic remainder.
+On $\theta=\eta e^{i\phi}$, $0\le\phi\le\pi/12$, the cubic
+has nonpositive real part and $\cos4\phi\ge1/2$; on
+$\pi/12\le\phi\le\pi/6$, the cubic has a negative real part
+of fixed order $\eta^3$. Fixing $\eta$ sufficiently small and
+then $N$ sufficiently large gives a uniform negative gap
+$\Re P_{n,0}\le-b_{\rm arc}<0$ on this arc. For example the
+bounds $\mathfrak a_n\ge1/4$, $\mathfrak b_n\le-1/64$
+and the uniform remainder give
+$b_{\rm arc}=\min\{\eta^4/256,\eta^3/(48\sqrt2)\}$ after
+shrinking $\eta$. Real symmetry gives the other arc, with
+$5\pi/6\le\phi\le\pi$.
+The exact parameter perturbation is
+$P_{n,\delta}-P_{n,0}=-\delta\rho_e(e^{i\theta}-1)$.
+Require $\delta_0\rho^*\eta e^\eta\le b_{\rm arc}/2$.
+Both original connecting arcs then retain half their gap
+on the whole fixed band; their offset amplitudes are uniformly
+bounded on these finite paths.
+
+These estimates are relative to $e^{nH_{n,y}(\rho_e)}$.
+Under (U), (LC115) has a uniform remainder and gives
+$|A_n-H_{n,y}(\rho_e)|\le C\delta^2$. Reduce $\delta_0$ so
+this is less than one quarter of the smaller original gap.
+Equation (LC109) then transports both bounds to the exact
+$K_{n,d}$ normalization with a fixed positive exponential gap.
+
+It remains to join the image of the two finite source rays to the
+finite canonical contour. The entire theta-ray source curve lies
+in $D(\rho_e,d/2)$, where the common inverse $S_n$ is analytic.
+Its endpoint expansion, uniformly in $n$, is
+
+$$
+S_n(\rho_e e^{i\theta},y)
+=-i\theta/\gamma_n+O(|\theta|^2+|\delta|).
+$$
+
+With $0<\gamma_*\le\gamma_n\le\gamma^*$, choose
+$a_s=\eta/(4\gamma^*)$. Reduce $\eta$ and then $\delta_0$
+so both endpoint radii exceed $2a_s$, stay within the common
+coordinate disk, and their arguments lie near $\pm\pi/3$.
+Choose also $\sqrt{|\zeta_n(y)|}<a_s/10$ uniformly on the band.
+Truncate each of the canonical paths described after (LC118)
+at its first intersection with $|s|=a_s$.
+Their endpoint arguments, and the original image endpoint
+arguments, all lie in the fixed right decay sectors
+$2\pi/9\le\arg s\le4\pi/9$ and their conjugates.
+
+Join endpoints by radial segments and circle arcs in these
+sectors, at radii at least $a_s$. Every such cap remains inside
+the common chart. Since $\cos(3\arg s)\le-1/2$ there,
+requiring $\zeta_0\le a_s^2/12$ gives
+
+$$
+\Re(s^3/3-\zeta_n s)
+\le-|s|^3/12\le-a_s^3/12
+$$
+
+on every cap. The original ray image and the capped canonical
+path have the same endpoints in the simply connected chart
+disk, where the exact transformed integrand is holomorphic.
+Cauchy's theorem therefore supplies their exact contour
+replacement. Taking the canonical contour from the lower to
+the upper right endpoint fixes the standard Airy orientation;
+the original reverse orientation is already in the minus sign
+of $\mathscr G_{n,d}$.
+
+The finite canonical boundary terms have the same cap gap.
+Only the degree-zero and degree-one canonical amplitudes are
+continued along the displayed cubic paths to infinity. Their
+tails start at $|s|=a_s$ and the explicit real phases following
+(LC118) bound them by $Ce^{-b_{\rm tail}n}$ for some fixed
+$b_{\rm tail}>0$. All local amplitudes and interpolation
+remainders remain confined to the common disk.
+
+The original exterior, original connections, canonical caps,
+finite boundary terms and polynomial tails now have a combined
+fixed gap $b>0$. Finally reduce $\delta_0$ once more to obtain
+(LC119). This last reduction keeps every preceding gap while
+$\zeta_0\to0$. It makes all these errors uniformly smaller than
+$\varepsilon^4\mathcal M(X)$ and completes the original-source
+interface used by (LC120).
+
+The comparison with the positive-side Airy decay is precisely
+
+$$
+b>\frac23\zeta_0^{3/2},\qquad
+\zeta_0=\sup_{n\ge N,\ |y-y_e|\le\delta_0}|\zeta_n(y)|. \tag{LC119}
+$$
+
+All errors therefore give the simultaneous original-row estimates
+
+$$
+K_{n,d}=\varepsilon\alpha_d\operatorname{Ai}(X)
+-\varepsilon^2\beta_d\operatorname{Ai}'(X)+E_{n,d},\qquad
+|E_{n,d}|\le C\varepsilon^4\mathcal M(X),\quad d=-1,0,1.
+\tag{LC120}
+$$
+
+The weaker bound $C\varepsilon^4(\mathcal M+\varepsilon\mathcal N)$
+would also suffice below. All constants are independent of the
+three offsets and of sufficiently large $n$ on this fixed band.
+
+### Actual-node signs and fixed overlap
+
+At an actual $K_{n,0}=0$ with $X\le0$, the middle estimate is the
+exact equality
+$\operatorname{Ai}(X)=\varepsilon(\beta_0/\alpha_0)
+\operatorname{Ai}'(X)-E_{n,0}/(\varepsilon\alpha_0)$.
+Use the nonzero Airy Wronskian
+[DLMF 9.2.7](https://dlmf.nist.gov/9.2#E7), together with
+$|\operatorname{Bi}(X)|\le C(1+|X|)^{-1/4}$ and
+$|\operatorname{Bi}'(X)|\le C(1+|X|)^{1/4}$ from
+[DLMF 9.7.9–9.7.12](https://dlmf.nist.gov/9.7#E9), with compact
+intervals covered by continuity. Since
+$\varepsilon\sqrt{1+|X|}\le\varepsilon+\sqrt{\zeta_0}$,
+the Wronskian's error is uniformly $O(\varepsilon^3)$. Its other
+factor has an upper bound $C(1+|X|)^{-1/4}$. Thus at these actual
+middle nodes, including $X$ of negative order $n^{2/3}$,
+
+$$
+|\operatorname{Ai}'(X)|\ge c(1+|X|)^{1/4}. \tag{LC121}
+$$
+
+Subtract the complete common middle-row term, rather than assuming
+an Airy zero. At the actual node this gives
+
+$$
+K_{n,d}=-\varepsilon^2D_d\operatorname{Ai}'(X)
++E_{n,d}-\frac{\alpha_d}{\alpha_0}E_{n,0},\qquad
+\frac{|E_{n,d}-(\alpha_d/\alpha_0)E_{n,0}|}
+ {\varepsilon^2|D_d\operatorname{Ai}'(X)|}=O(\varepsilon^2).
+\tag{LC122}
+$$
+
+The exact determinant (LC111) and (LC116) imply
+$K_{n,-1}K_{n,+1}<0$. Restoring the original rows multiplies
+their product by the positive $e^{2nA_n(y)}$; the two parity
+factors cancel. Therefore $I_{n,-1}I_{n,+1}<0$, with precisely
+the original-node interpretation consumed by (LC47).
+
+For $X\ge0$, the classical positive-axis envelopes and signs
+$\operatorname{Ai}>0$, $\operatorname{Ai}'<0$ give
+$\operatorname{Ai}(X)\ge c\mathcal M(X)$; see
+[DLMF 9.7.5–9.7.6](https://dlmf.nist.gov/9.7#E5) and
+[9.9(i)](https://dlmf.nist.gov/9.9#i). Both leading terms in
+(LC120) are positive by (LC116); the remainder divided by
+$c\varepsilon\mathcal M(X)$ tends uniformly to zero.
+Thus $K_{n,0}>0$ there. Under (U), after reducing the fixed
+band, $\zeta_n(y)\ge0$ is exactly $y\le y_e$. The resulting
+statement under (U) is
+
+$$
+\begin{gathered}
+n\ge N,\quad |y-y_e|\le\delta_0,\quad I_{n,0}(y)=0\\
+\Longrightarrow\quad y>y_e\quad\hbox{and}\quad
+I_{n,-1}(y)I_{n,+1}(y)<0.
+\end{gathered} \tag{LC123}
+$$
+
+Take $\delta_0<1/8$. Since $y_e\to1/4$, the fixed intervals
+
+$$
+Y_{\rm bulk}=[1/4+\delta_0/2,\ 1/4+3\delta_0/4],\qquad
+Y_{\rm out}=[1/4-3\delta_0/4,\ 1/4-\delta_0/2] \tag{LC124}
+$$
+
+both lie within the fold band specified by (U) for all sufficiently
+large $n$. The first is a fixed compact subset of $(1/4,\infty)$,
+so it overlaps (LC57). On the second, $t/r_n=1/y$ lies strictly
+above $4+\eta$ for the fixed positive choice
+
+$$
+\eta=\tfrac12\left((1/4-\delta_0/2)^{-1}-4\right). \tag{LC125}
+$$
+
+It therefore overlaps the all-actual-positive-root exterior
+exclusion (LC64). This is a fixed original-coordinate overlap,
+not merely a shrinking-window comparison. The final subsection
+supplies (U). This application does not settle growing hard-edge
+heights, initial degrees, complex roots,
+the total real-root count, global collision propagation, RH, or
+strict Robin for every $H>5040$.
+
+
+## Supplying the common cubic domain by an existing analytic implicit theorem
+
+The common-domain interface (U) is obtained by applying the complex
+Banach-space analytic implicit-function theorem, rather than by
+reproving generic cubic normal-form theory. The supplier is
+A. D. Michal and D. H. Hyers, *Solutions of differential equations
+as analytic functionals of the coefficient functions*, Acta Math.
+**91** (1954), 75–86,
+[DOI 10.1007/BF02393426](https://doi.org/10.1007/BF02393426),
+Theorem 1 on printed p.80, with its proof on p.81; the
+[original full text](https://projecteuclid.org/journalArticle/Download?urlid=10.1007/BF02393426)
+provides the complex Banach-space statement. Its analytic
+maps are between complex Banach spaces, and the unknown-variable
+differential must be a solvable bounded linear isomorphism. The
+following verifies that differential, the actual source-function
+parameter ball, common injectivity and source coverage. It is an
+ordinary-analysis application with no Lean certificate or claim
+of mathematical originality.
+
+### A fixed coordinate for the limiting phase
+
+Write $H_*(\rho)=-\rho/4+2\sqrt\rho-\log\rho$,
+$h_*=3-\log4$ and $k_*=256^{1/3}$. At $4$, the first two
+derivatives vanish and $H_*'''(4)=-1/128$. The fixed local coordinate
+
+$$
+U_0(\rho)=(\rho-4)
+\left(\frac{3(H_*(\rho)-h_*)}{(\rho-4)^3}\right)^{1/3},
+\qquad Q_0=U_0^{-1} \tag{LC126}
+$$
+
+uses the removable quotient's negative real cube-root branch.
+That quotient has value $-1/256$ at $4$, so
+$U_0'(4)=-1/k_*\ne0$. The ordinary local holomorphic inverse
+theorem gives $Q_0(0)=4$, $Q_0'(0)=-k_*$ and exactly
+$H_*(Q_0(t))=h_*+t^3/3$. Fix $a>0$ sufficiently small so $Q_0$
+is holomorphic and univalent on a neighborhood of
+$\overline{D_a}$, and its image lies strictly inside the established
+common source nonvanishing domain, away from $\rho=0$.
+
+Let $\mathscr A_a$ be the complex Banach algebra of continuous
+functions on $\overline{D_a}$ holomorphic in $D_a$, with the
+supremum norm. The entire source function, rather than $n$, will
+be the parameter in this fixed space.
+
+### The verified linear inverse and one common parameter ball
+
+For $g\in\mathscr A_a$ and $(W,c_1,c_0)\in\mathscr A_a\times\mathbb C^2$
+define the continuous polynomial map
+
+$$
+\mathcal F(g;W,c_1,c_0)=W^3/3+c_1W+c_0-g. \tag{LC127}
+$$
+
+It is complex analytic. At
+$(g_*;W_*,c_{1,*},c_{0,*})=(t^3/3;t,0,0)$ its differential in
+the unknowns is $\mathcal L(V,\alpha,\beta)=t^2V+\alpha t+\beta$.
+Its bounded inverse on the same fixed disk algebra is
+
+$$
+\mathcal L^{-1}g=
+\left(\frac{g-g(0)-tg'(0)}{t^2},\ g'(0),\ g(0)\right),\qquad
+\left\|\frac{g-g(0)-tg'(0)}{t^2}\right\|_a
+\le3a^{-2}\|g\|_a. \tag{LC128}
+$$
+
+The quotient extends at zero. Cauchy's estimate gives
+$|g'(0)|\le a^{-1}\|g\|_a$, and the boundary estimate for the
+quotient gives the displayed norm bound by the maximum principle.
+Thus no analytic radius is lost in inverting the differential.
+
+Apply the published analytic implicit theorem with parameter
+space $\mathscr A_a$, unknown space $\mathscr A_a\times\mathbb C^2$
+and target space $\mathscr A_a$. It supplies an analytic solution
+map $g\mapsto(W[g],c_1[g],c_0[g])$ on one ball
+$\|g-g_*\|_a<\eta$. Choose once $0<\epsilon_0<a/16$.
+By continuity, reduce this same ball so
+$\|W[g]-t\|_a<\epsilon_0$ and $|c_1[g]|+|c_0[g]|\le1$
+throughout it. Choose a Schwarz-conjugation-invariant ball;
+the equation and reference solution commute with this conjugation.
+Uniqueness of the analytic solution branch through the reference
+point makes the solution map commute with it as well.
+
+For the actual discrete source set $\delta=y-y_e(n)$ and
+$g_{n,\delta}(t)=H_{n,y_e(n)+\delta}(Q_0(t))-h_*$. Exactly,
+
+$$
+g_{n,\delta}-g_*=
+\mathcal L_n(Q_0)-2\sqrt{Q_0}
+-(y_e(n)-1/4)Q_0-\delta Q_0. \tag{LC129}
+$$
+
+The common complex source convergence in (LC66) and $y_e\to1/4$
+give, explicitly,
+
+$$
+e_n=\|g_{n,0}-g_*\|_a
+\le\sup_{Q_0(\overline{D_a})}|\mathcal L_n-2\sqrt\rho|
++|y_e(n)-1/4|\,\|Q_0\|_a\longrightarrow0.
+$$
+
+With $M_0=\|Q_0\|_a$,
+choose fixed $\Delta>0$ such that $2\Delta M_0<\eta/4$,
+and then $N$ such that $e_n<\eta/4$ for $n\ge N$. Hence
+$\|g_{n,\delta}-g_*\|_a<\eta/2$ simultaneously for all
+$n\ge N$, $|\delta|<2\Delta$. Each $\delta\mapsto g_{n,\delta}$
+is an affine complex analytic map into the same Banach space.
+This supplies a common complex parameter band without assuming
+any analytic interpolation of the discrete index $n$.
+
+### Injectivity, inverse coverage and uniform norms
+
+Write $W_{n,\delta}=W[g_{n,\delta}]$ and similarly for the two
+scalar coefficients. On $D_{3a/4}$ the Cauchy estimate gives
+
+$$
+|W'_{n,\delta}-1|\le q_0:=4\epsilon_0/a<1/4. \tag{LC130}
+$$
+
+Integrating along the segment between two points in this convex
+disk gives
+$|W_{n,\delta}(t_1)-W_{n,\delta}(t_2)|\ge(1-q_0)|t_1-t_2|$.
+Thus these maps are univalent on one common disk.
+For $|s|<a/2$ and $|t|=3a/4$, the strict inequality
+$|W_{n,\delta}(t)-t|<\epsilon_0<|t-s|$ lets Rouché's theorem
+count exactly one preimage of $s$ there. The inverse
+$V_{n,\delta}=W_{n,\delta}^{-1}$ is therefore jointly holomorphic
+on the common product domain and satisfies
+$|V_{n,\delta}(s)-s|<\epsilon_0$,
+$|V_{n,\delta}(s)|<9a/16$.
+
+Set $r=a/8$ and
+
+$$
+R_n(s,y)=Q_0(V_{n,y-y_e}(s)),\qquad
+A_n(y)=h_*+c_{0,n}(y-y_e),\qquad
+\zeta_n(y)=-c_{1,n}(y-y_e). \tag{LC131}
+$$
+
+The implicit equation is exactly (LC107) on
+$|s|<4r$, $|y-y_e|<2\Delta$. Each $R_n(\cdot,y)$ is univalent
+there and its image lies in $Q_0(D_{9a/16})$, strictly within the
+source nonzero domain. If
+$m_0=\min_{|t|\le3a/4}|Q_0'(t)|>0$ and
+$M_1=\max_{|t|\le3a/4}|Q_0'(t)|$, then
+
+$$
+\frac{m_0}{1+q_0}\le|R_{n,s}|\le\frac{M_1}{1-q_0}. \tag{LC132}
+$$
+
+For coverage, fix $d>0$ with
+$\overline{D(4,d)}\subset Q_0(D_{a/8})$. On this source disk
+define $S_n(\rho,y)=W_{n,y-y_e}(U_0(\rho))$.
+It is jointly holomorphic, $|S_n|<a/8+\epsilon_0<2r$, and
+$R_n(S_n(\rho,y),y)=\rho$. After increasing $N$ so
+$|\rho_e(n)-4|<d/2$,
+
+$$
+D(\rho_e(n),d/2)\subset D(4,d)\subset R_n(D_{2r},y)
+\quad(n\ge N,\ |y-y_e|<2\Delta). \tag{LC133}
+$$
+
+The displayed construction bounds $R_n,R_{n,s}$, their reciprocal
+magnitudes, $A_n,\zeta_n$ and the inverse coordinate $S_n$ on
+the common domains. Cauchy estimates give uniform bounds for
+every fixed order of mixed derivatives on nested smaller domains,
+such as $|s|\le3r$, $|y-y_e|\le\Delta$ and
+$|\rho-4|\le d/2$ for $S_n$. In particular, the bounded
+$V_{n,\delta}$ on $D_{4r}$ also has the immediate mixed bounds
+$|\partial_s^j\partial_\delta^\ell V_{n,\delta}|
+\le Cj!\ell!r^{-j}\Delta^{-\ell}$ on the same nested domains.
+
+It remains to check that this uniform construction is centered
+at the exact finite fold, rather than merely near it. By source
+coverage let $s_e=S_n(\rho_e,y_e)$. Differentiating (LC107) twice
+at this point gives
+$H_{\rho\rho}R_{n,s}^2+H_\rho R_{n,ss}=2s_e$.
+Both source derivatives vanish at the actual fold, so $s_e=0$.
+The first derivative then gives $\zeta_n(y_e)=0$.
+The third derivative gives $h_{3,n}R_{n,s}(0,y_e)^3=2$;
+real symmetry and $h_{3,n}<0$ select $R_{n,s}=-k_n$.
+The mixed derivative with $H_{\rho y}=-1$ gives
+$\zeta_n'(y_e)=-k_n$. Thus (LC108) and every clause of (U)
+are supplied by the same exact source construction.
+
+Consequently the fixed-band application (LC120)–(LC125) now
+has its common-domain premise discharged in ordinary analysis.
+There exist fixed $\delta_0>0$ and $N$ such that every actual
+positive real middle-row Jensen node with
+$n\ge N$ and $|r_n/t-y_e(n)|\le\delta_0$ satisfies the strict
+adjacent-row comparison, and the half $r_n/t\le y_e(n)$ is
+zero-free within that band. The band has the stated fixed
+original-coordinate overlaps with (LC57) and (LC64).
+No numerical starting degree, full-row real-rootedness, total
+real-root count, complex-root exclusion, growing hard-edge
+control, RH, or strict Robin for every $H>5040$ follows.
+The newly supplied interface and its application remain without
+Lean certification.
