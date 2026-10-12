@@ -1553,9 +1553,10 @@ CAR owns finite cycle atomicity and finite guarded atomic arithmetic; ABC
 and URR own normal coding, mass and clock. Lemma 2.1 owns the completed native
 interfaces, Theorem 2.3 the homogeneous classification, Theorems 4.1 and 6.3
 the guarded construction and $K$, and SLP the simultaneous signed finite
-filling. These supplier statements are not new cycle results. The precise
-source versions for this unit are repository revision
-09c4a550a9434737bc0f9ff08fd4a3e2322c5be3.
+filling. These supplier statements are not new cycle results. Definition 8.1's blanket supplier pin
+applies only to the published Sections 1–8. The appended Sections 9–12 use repository revision
+09c4a550a9434737bc0f9ff08fd4a3e2322c5be3 for their supplier attributions, including CAR and
+FFM; FFM is absent at the earlier fbccdb7e942aecb257cb70761488a7eef54a7374 pin.
 
 Ginsburg–Spanier [Theorems 1.2–1.3][GS] supplies the Presburger and semilinear
 step only after the exact native reduction has produced (SFS.30).
