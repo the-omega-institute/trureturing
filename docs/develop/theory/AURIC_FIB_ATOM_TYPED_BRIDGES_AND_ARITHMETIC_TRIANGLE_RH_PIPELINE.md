@@ -7804,11 +7804,11 @@ together with its finite-dimensional Cayley–Hamilton reduction.
 
 下面两节把一般有限 CPTP 的 SLD Fisher 收缩、triangle 源信息预算，以及 metric-measure/Mosco 极限条件接入前述预测商、曲率和量子场管线。它们保留有限维证明与极限假设的类型边界。
 
-## 49. CPTP Fisher 收缩与 triangle 网络的信息预算
+## 53. CPTP Fisher 收缩与 triangle 网络的信息预算
 
 前文已经证明了 FIB seam 在对角量子扇区中等于经典 Fisher 信息。本节把这一结果推进到一般有限维输出态：三个独立量子源先形成乘积态，再通过局部 triangle 网络 CPTP 映射输出。输出可以是非对角、非交换的量子态，但其 SLD Fisher 信息不能超过独立源所携带的信息总量。
 
-### 定义 49.1（SLD Fisher 的有限维二次型）
+### 定义 53.1（SLD Fisher 的有限维二次型）
 
 令 \(\rho\succ0\) 是有限维严格正定密度矩阵，令 \(X=X^\ast\) 且 \(\operatorname{tr}X=0\) 是一个合法切向量。定义 Lyapunov 超算子
 
@@ -7840,7 +7840,7 @@ F_\rho(X)
 \operatorname{Re}\operatorname{tr}(AB).
 \]
 
-### 引理 49.2（SLD Fisher 的变分表示）
+### 引理 53.2（SLD Fisher 的变分表示）
 
 对上述 \((\rho,X)\)，有
 
@@ -7885,7 +7885,7 @@ F_\rho(X)
 
 最后一项非负，并在 \(Y=L_\rho(X)\) 时取零。证毕。
 
-### 定理 49.3（一般 CPTP 映射下的 SLD Fisher 收缩）
+### 定理 53.3（一般 CPTP 映射下的 SLD Fisher 收缩）
 
 令 \(\Phi:\mathsf L(H)\to\mathsf L(K)\) 为 CPTP 映射，令
 
@@ -7944,11 +7944,11 @@ F_\rho(X).
 \end{aligned}
 \]
 
-其中最后一步使用引理 49.2。对 \(Y\) 取上确界即得结论。证毕。
+其中最后一步使用引理 53.2。对 \(Y\) 取上确界即得结论。证毕。
 
 这个定理将 §29 的经典 Fisher 收缩推广到可以产生非对角量子相干的任意有限 CPTP 网络。它只需要有限矩阵的 Kadison 不等式和 SLD 的变分表示，不需要连续流形或物理测量公理。
 
-### 推论 49.4（可逆 CPTP seam 上的 Fisher 等式）
+### 推论 53.4（可逆 CPTP seam 上的 Fisher 等式）
 
 若存在 CPTP 恢复映射
 
@@ -7972,7 +7972,7 @@ F_{\Phi(\rho)}(\Phi(X))=F_\rho(X).
 
 #### 证明
 
-定理 49.3 分别应用于 \(\Phi\) 和 \(\mathcal R\)，得到
+定理 53.3 分别应用于 \(\Phi\) 和 \(\mathcal R\)，得到
 
 \[
 F_\rho(X)
@@ -7988,7 +7988,7 @@ F_\rho(X).
 
 该推论提供了一个可形式化的“无信息逃逸”判据。若存在同一 CPTP 恢复映射同时恢复参考态和 seam 切向量，则 Fisher 几何在该 seam 上精确保持。若只有 Fisher 数值近似保持，不能直接声称存在恢复映射。量子 Fisher 度量的近似可恢复性依赖所选单调度量，SLD Fisher 本身不是一般恢复等价的充分统计判据。这个边界与 Gao、Li、Marvian、Rouzé 对量子 Fisher 度量和可恢复性的分析一致，见 [arXiv:2302.02341](https://arxiv.org/abs/2302.02341)。
 
-### 定义 49.5（参数化 triangle quantum network）
+### 定义 53.5（参数化 triangle quantum network）
 
 令 \(E=\{AB,BC,CA\}\)。对每条边给定严格正定参数化源态
 
@@ -8027,7 +8027,7 @@ X_e=\partial_{\theta_e}\omega_e(\theta_e).
 \mathcal N(\Omega_{\boldsymbol\theta}).
 \]
 
-### 定理 49.6（triangle 网络的源信息预算）
+### 定理 53.6（triangle 网络的源信息预算）
 
 对任意参数速度 \(\dot{\boldsymbol\theta}\)，有
 
@@ -8074,7 +8074,7 @@ F_Q(\Omega_{\boldsymbol\theta};
 F_Q(\omega_e;X_e).
 \]
 
-对网络信道 \(\mathcal N\) 应用定理 49.3，得到
+对网络信道 \(\mathcal N\) 应用定理 53.3，得到
 
 \[
 F_Q(\rho_{\boldsymbol\theta};
@@ -8086,7 +8086,7 @@ F_Q(\Omega_{\boldsymbol\theta};
 
 代入前式即得。证毕。
 
-### 推论 49.7（FIB 三角网络的量子 Fisher 上界）
+### 推论 53.7（FIB 三角网络的量子 Fisher 上界）
 
 若每条边源都位于 FIB 对角 seam：
 
@@ -8096,7 +8096,7 @@ F_Q(\Omega_{\boldsymbol\theta};
 \iota_\Sigma(p_{\kappa_e}),
 \]
 
-则定理 40.2 和定理 49.6 给出
+则定理 40.2 和定理 53.6 给出
 
 \[
 \boxed{
@@ -8111,7 +8111,7 @@ F_Q\left(\rho_{\boldsymbol\kappa};
 
 输出态可以因为局部节点信道而变成非对角态，右侧仍然只由三个独立 FIB 源的 seam Fisher 信息决定。这是当前三角网络中最严格的信息预算：节点局部相互作用可以重新组织信息，也可以将其编码为非交换相干，但不能从独立源中凭空产生新的 SLD Fisher 信息。
 
-### 推论 49.8（量子半群只给出 Fisher 单调性，不能自动给出 QCD 指数率）
+### 推论 53.8（量子半群只给出 Fisher 单调性，不能自动给出 QCD 指数率）
 
 若 \(T_t^\ast\) 是 Schrödinger 表示的 CPTP 半群，且 \(\rho_t=T_t^\ast(\rho_0)\)、\(X_t=T_t^\ast(X_0)\)，则
 
@@ -8139,7 +8139,7 @@ e^{-2Kt}F_Q(\rho_0;X_0).
 
 后一个指数 Fisher 衰减需要额外的比较不等式，将 SLD Fisher 二次型与 GNS Dirichlet 型在同一切空间上联系起来。这个区分防止把量子曲率证书误读成未经证明的物理耗散率。
 
-### 结论 49.9（量子层的严格闭环）
+### 结论 53.9（量子层的严格闭环）
 
 当前量子层可以按以下可形式化链条闭合：
 
@@ -8169,11 +8169,11 @@ e^{-2Kt}F_Q(\rho_0;X_0).
 
 
 
-## 50. 有限 Dirichlet 数据到 metric-measure/Mosco 极限的严格顺序
+## 54. 有限 Dirichlet 数据到 metric-measure/Mosco 极限的严格顺序
 
 本节把有限 \(CD_G\)、\(QCD\) 和图 Dirichlet 数据进一步分解为四个不可互换的层次：度量测度紧性、二次型 Mosco 收敛、局部性、曲率证书的极限稳定性。
 
-### 定义 50.1（有限图的度量测度 Dirichlet 数据）
+### 定义 54.1（有限图的度量测度 Dirichlet 数据）
 
 第 \(j\) 层数据为
 
@@ -8211,7 +8211,7 @@ c^{(j)}_{xy}=c^{(j)}_{yx}\ge0,\qquad c^{(j)}_{xx}=0.
 
 这里 \(d_j\) 与 \(c^{(j)}_{xy}\) 是两个独立输入。前者决定 metric-measure 紧性，后者决定 Dirichlet 形式。必须另行假设它们相容。
 
-### 定义 50.2（统一 metric-measure 紧性和局部化证书）
+### 定义 54.2（统一 metric-measure 紧性和局部化证书）
 
 称一族 \((X_j,d_j,m_j)\) 满足 \(\operatorname{MMC}(D,C_D,c_-,c_+,Q)\)，如果
 
@@ -8225,22 +8225,22 @@ c^{(j)}_{xy}=c^{(j)}_{yx}\ge0,\qquad c^{(j)}_{xx}=0.
 c_-r^Q
 \le m_j(B_{d_j}(x,r))
 \le c_+r^Q,
-\tag{50.1}
+\tag{54.1}
 \]
 
 \[
 m_j(B_{d_j}(x,2r))
 \le C_Dm_j(B_{d_j}(x,r)).
-\tag{50.2}
+\tag{54.2}
 \]
 
-若只要求子列紧性，可以把 (50.1) 的下界换成统一 covering-number 界。若要排除塌缩，至少需要某个固定 \(r_0>0\) 满足
+若只要求子列紧性，可以把 (54.1) 的下界换成统一 covering-number 界。若要排除塌缩，至少需要某个固定 \(r_0>0\) 满足
 
 \[
 \inf_j\inf_{x\in X_j}m_j(B_{d_j}(x,r_0))>0,
 \qquad
 \inf_j\operatorname{diam}(X_j,d_j)>0.
-\tag{50.3}
+\tag{54.3}
 \]
 
 定义跳跃半径
@@ -8249,7 +8249,7 @@ m_j(B_{d_j}(x,2r))
 \ell_j
 :=
 \sup\{d_j(x,y):c^{(j)}_{xy}>0\}.
-\tag{50.4}
+\tag{54.4}
 \]
 
 称 \(\ell_j\to0\) 为 vanishing-jump 条件。它把有限图形式的非局部边耦合限制到局部极限。若另有统一 \(L^2\)-Poincaré 条件
@@ -8258,12 +8258,12 @@ m_j(B_{d_j}(x,2r))
 \int_B|f-f_B|^2\,dm_j
 \le
 C_Pr^2\mathcal E_j(f;\lambda B),
-\tag{50.5}
+\tag{54.5}
 \]
 
 则得到统一的局部紧性控制。
 
-### 定理 50.3（有限图 Dirichlet 数据的 metric-measure/Mosco 子列极限）
+### 定理 54.3（有限图 Dirichlet 数据的 metric-measure/Mosco 子列极限）
 
 设 \(\mathfrak D_j\) 满足：
 
@@ -8277,12 +8277,12 @@ C_Pr^2\mathcal E_j(f;\lambda B),
    u_j\rightharpoonup u
    \Longrightarrow
    \mathcal E(u)\le\liminf_j\overline{\mathcal E}_j(u_j),
-   \tag{50.6}
+   \tag{54.6}
    \]
    且每个 \(u\in D(\mathcal E)\) 有恢复序列 \(u_j\to u\) 强收敛并满足
    \[
    \limsup_j\overline{\mathcal E}_j(u_j)\le\mathcal E(u);
-   \tag{50.7}
+   \tag{54.7}
    \]
 4. 有限能量子水平集在共同识别下相对紧。
 
@@ -8302,11 +8302,11 @@ P_t^{(j)}\to P_t
 
 在共同 \(L^2\) 识别下的强算子收敛。
 
-若另外满足 \(\ell_j\to0\) 和统一 Poincaré 条件 (50.5)，则极限形式强局部。
+若另外满足 \(\ell_j\to0\) 和统一 Poincaré 条件 (54.5)，则极限形式强局部。
 
 #### 证明账本
 
-统一 covering-number 界和质量界给出 metric-measure 子列紧性。共同宿主中的弱测度收敛给出极限测度。条件 (50.6) 和 (50.7) 是 Mosco 下极限与恢复序列，故给出闭极限二次型。闭对称 Markov 二次型对应唯一的自伴非负生成元和收缩热半群，Mosco 收敛给出 resolvent 与半群的强收敛。若支集距离大于 \(\varepsilon\)，则 \(\ell_j<\varepsilon\) 时所有跨支集边消失，有限层互能为零；利用恢复序列和下极限即得极限互能为零，故形式强局部。证毕。
+统一 covering-number 界和质量界给出 metric-measure 子列紧性。共同宿主中的弱测度收敛给出极限测度。条件 (54.6) 和 (54.7) 是 Mosco 下极限与恢复序列，故给出闭极限二次型。闭对称 Markov 二次型对应唯一的自伴非负生成元和收缩热半群，Mosco 收敛给出 resolvent 与半群的强收敛。若支集距离大于 \(\varepsilon\)，则 \(\ell_j<\varepsilon\) 时所有跨支集边消失，有限层互能为零；利用恢复序列和下极限即得极限互能为零，故形式强局部。证毕。
 
 因此必须按下列顺序记账：
 
@@ -8326,20 +8326,20 @@ P_t^{(j)}\to P_t
 }
 \]
 
-### 定理 50.4（谱隙和曲率证书的极限分层）
+### 定理 54.4（谱隙和曲率证书的极限分层）
 
-在定理 50.3 的假设下，若存在统一 Poincaré 常数 \(\lambda_0>0\)，即
+在定理 54.3 的假设下，若存在统一 Poincaré 常数 \(\lambda_0>0\)，即
 
 \[
 \mathcal E_j(f)\ge\lambda_0\operatorname{Var}_{m_j}(f),
-\tag{50.8}
+\tag{54.8}
 \]
 
 并且常数核恰为 \(\mathbb R\mathbf1\)，则
 
 \[
 \operatorname{gap}(A)\ge\lambda_0.
-\tag{50.9}
+\tag{54.9}
 \]
 
 若还存在统一半群梯度证书
@@ -8348,25 +8348,25 @@ P_t^{(j)}\to P_t
 \Gamma_j(P_t^{(j)}f)
 \le
 e^{-2Kt}P_t^{(j)}\Gamma_j(f),
-\tag{50.10}
+\tag{54.10}
 \]
 
 并且 \(\Gamma_j\) 在一个共同稠密 core 上收敛到 \(\Gamma\)，则
 
 \[
 \Gamma(P_tf)\le e^{-2Kt}P_t\Gamma(f).
-\tag{50.11}
+\tag{54.11}
 \]
 
 因此有限 \(CD_G(K,\infty)\) 的曲率下界要进入极限，除了 Mosco 和谱隙，还必须证明 \(\Gamma\) 或梯度半群不等式的收敛。点态 \(CD_G\) 本身不能替代这个稳定性假设。
 
-### 推论 50.5（有效电阻的极限条件）
+### 推论 54.5（有效电阻的极限条件）
 
 若均值零子空间上的 Green 算子满足
 
 \[
 A_j^\dagger\to A^\dagger
-\tag{50.12}
+\tag{54.12}
 \]
 
 强收敛，且点源差分 \(b_{x_jy_j}\to b_{xy}\)，则
@@ -8378,12 +8378,12 @@ R_{m_j}(x_j,y_j)
 \to
 \langle b_{xy},A^\dagger b_{xy}\rangle
 =R_m(x,y).
-\tag{50.13}
+\tag{54.13}
 \]
 
-Mosco 收敛、质量非塌缩或谱隙下界单独都不能推出 (50.13)。还必须证明点源识别和 Green 算子收敛。
+Mosco 收敛、质量非塌缩或谱隙下界单独都不能推出 (54.13)。还必须证明点源识别和 Green 算子收敛。
 
-### 命题 50.6（曲率不排除塌缩）
+### 命题 54.6（曲率不排除塌缩）
 
 取固定两点集 \(X_j=\{0,1\}\)，令
 
@@ -8411,9 +8411,9 @@ CD_G(K,\infty)+\text{统一谱隙}
 \text{非塌缩极限}.
 \]
 
-排除该反例需要 (50.3) 或等价的统一体积和直径下界。
+排除该反例需要 (54.3) 或等价的统一体积和直径下界。
 
-### 命题 50.7（Mosco 形式极限不决定 metric 几何）
+### 命题 54.7（Mosco 形式极限不决定 metric 几何）
 
 在固定 \(X=\{0,1\}\) 上取恒定形式 \(\mathcal E_j=\mathcal E\)，故 Mosco 收敛恒等成立；再令
 
@@ -8429,7 +8429,7 @@ d_{2j}(0,1)=1,\qquad d_{2j+1}(0,1)=2.
 \text{metric-measure 收敛}.
 \]
 
-### 命题 50.8（谱隙不决定局部连续场）
+### 命题 54.8（谱隙不决定局部连续场）
 
 令 \(X_j=\{1,\ldots,j\}\)，取均匀测度和
 
@@ -8453,7 +8453,7 @@ L_jf=\bar f-f.
 
 所以统一谱隙不能替代 vanishing-jump 或非局部质量消失条件。
 
-### 定义 50.9（量子度量极限的附加数据）
+### 定义 54.9（量子度量极限的附加数据）
 
 有限量子层
 
@@ -8472,7 +8472,7 @@ d_j(\varphi,\psi)
 
 并证明归一化 Lipschitz 球统一全有界、状态空间具有 quantum-GH 子列紧性、GNS resolvent 或量子 Dirichlet 形式满足 Mosco 条件，以及半范数与极限测度相容。没有这些附加数据，\(QCD(K)\) 只能给出非交换 Hilbert 空间的谱稳定性，不能推出 metric-measure 极限。
 
-### 定理 50.10（四层桥接的必要充分结构）
+### 定理 54.10（四层桥接的必要充分结构）
 
 在共同宿主空间框架中，要得到一个非塌缩、局部、带稳定谱隙的 metric-measure Dirichlet 极限，所需的可检验结构可分为：
 
@@ -8988,11 +8988,11 @@ B^*B&0\\
 这四项计算可以把“场产生能量、能量产生轨迹、观察产生三维投影、算术局部场产生尺度缺陷”转化为可审计的有限数学对象；它们仍然保留从有限结构到 RH 的行列式与显式公式门槛。
 
 
-## 51. 可见压缩缺陷与隐藏场记忆
+## 55. 可见压缩缺陷与隐藏场记忆
 
 前述三维读出和统一场候选必须先通过有限状态可观测性检验。有限读出若没有满足 lumpability，不能被当作闭合 Markov 场变量。
 
-### 定义 51.1（可观测子空间与压缩半群）
+### 定义 55.1（可观测子空间与压缩半群）
 
 令 \(S\) 为有限状态集，令 \(\pi\) 为满支撑平稳分布，令 \(L\) 为满足
 \[
@@ -9013,7 +9013,7 @@ L\mathcal H_q\subseteq\mathcal H_q,
 \]
 等价于 \((I-P)LP=0\)。
 
-### 定理 51.2（可逆压缩的精确记忆缺陷）
+### 定理 55.2（可逆压缩的精确记忆缺陷）
 
 对 \(f\in\mathcal H_q\) 和 \(t\ge0\)，
 \[
@@ -9049,7 +9049,7 @@ L\mathcal H_q\subseteq\mathcal H_q,
 \]
 除以 \(t^2\) 取极限即得。证毕。
 
-### 推论 51.3（dev 有限素因子盒反例）
+### 推论 55.3（dev 有限素因子盒反例）
 
 在 dev 的有限素因子盒 \(s=(a,b,c,k)\) 上，读出
 \[
@@ -9077,9 +9077,9 @@ K_t=P L(I-P)e^{t(I-P)L}(I-P)L P.
 \]
 没有该条件，\(q\)-层只能是观测量，不是闭合场本身。
 
-## 52. 有限可见 Markov 层的密度完备性
+## 56. 有限可见 Markov 层的密度完备性
 
-### 定义 52.1（Fibonacci 开路径图与调和边泛函）
+### 定义 56.1（Fibonacci 开路径图与调和边泛函）
 
 令
 \[
@@ -9097,7 +9097,7 @@ h(s,t)=
 c_\ast=\lim_{n\to\infty}\kappa_n/n.
 \]
 
-### 定义 52.2（有限可见阶密度）
+### 定义 56.2（有限可见阶密度）
 
 令 \(Q\) 是
 \[
@@ -9110,7 +9110,7 @@ D_m(Q)=
 h\!\left(Q_{2m+1}(a0v),Q_{2m+1}(a1v)\right).
 \]
 
-### 定理 52.3（内部坐标的共同因子分组）
+### 定理 56.3（内部坐标的共同因子分组）
 
 对 \(n\ge2m+1\)，
 \[
@@ -9131,7 +9131,7 @@ h\!\left(Q_{2m+1}(a0v),Q_{2m+1}(a1v)\right).
 \]
 而两个和正是 \(Q_{2m+1}(a0v)\) 和 \(Q_{2m+1}(a1v)\)。内部坐标共有 \(n-2m\) 个，端点边贡献由 \(0\le h\le1/4\) 控制，得到余项界。零 cylinder 质量也可直接在非负质量上分组。证毕。
 
-### 定理 52.4（有限可见记忆回收全局密度）
+### 定理 56.4（有限可见记忆回收全局密度）
 
 \[
 \boxed{
@@ -9143,9 +9143,9 @@ c_\ast=\sup\{d(Q):m<\infty,\ Q\text{ 为允许的有限可见 Markov 阶平稳�
 
 上界来自 \(\Phi_n(Q_n)\le\kappa_n\)。下界使用 dev 的 guarded-payload 构造：给定有限层近极值 \(\mu\) 和 \(\varepsilon>0\)，构造固定有限可见阶数且 full-support 的平稳 \(Q\)，使 \(d(Q)>c_\ast-\varepsilon\)。因此全局密度近极值可以由某个有限可见记忆层回收。该步骤是有限概率和有限图论，不是量子、连续时空或 RH 定理。来源：[FIB LEGAL EDGE LOAD FINITE VISIBLE MEMORY COMPLETENESS](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md)，dev commit 93f4ac5279，merge #15837。
 
-## 53. 三维读出、隐藏源纤维与两种不相容的尺度
+## 57. 三维读出、隐藏源纤维与两种不相容的尺度
 
-### 定义 53.1（有限源族与三维观测）
+### 定义 57.1（有限源族与三维观测）
 
 令 \(L_h=\{L,R\}^h\)，\(m=2^h\)，令 \(\omega:L_h\to\{0,1\}\)。按 dev 的 CE/source contract 构造
 \[
@@ -9154,7 +9154,7 @@ c_\ast=\sup\{d(Q):m<\infty,\ Q\text{ 为允许的有限可见 Markov 阶平稳�
 \]
 每个源具有相同 retained input、相同 native \(Q\)-row，并且三分量读出相同，例如 \(q(\nu_{h,\omega})=(0,0,0)\)，但 complete subtree valuation 两两不同。
 
-### 定理 53.2（地址深度的固定维度排除）
+### 定理 57.2（地址深度的固定维度排除）
 
 设地址超度量 \(d_h^A\) 对首个不同原始叶地址深度赋值，且同一深度最小非零距离为 \(s_h>0\)。若存在固定 \(k\)、\(0<c\le C<\infty\) 及 \(\Psi_h:\mathcal F_h\to\mathbb R^k\) 使
 \[
@@ -9170,7 +9170,7 @@ c\,d_h^A(u,v)\le\|\Psi_h(u)-\Psi_h(v)\|\le C\,d_h^A(u,v)
 
 固定一个源后，所有像点位于半径 \(Cs_h\) 的球内，且任意两点距离至少 \(cs_h\)。以半径 \(cs_h/2\) 的球围绕各像点，这些球两两不交且包含于半径 \(Cs_h+cs_h/2\) 的球内。比较 \(k\)-维体积得到所示界。证毕。
 
-### 定义 53.3（完整事件时钟与一维代码）
+### 定义 57.3（完整事件时钟与一维代码）
 
 按 full-event trace 对叶按字典序编号 \(p_1,\ldots,p_m\)，定义
 \[
@@ -9191,7 +9191,7 @@ d_h^E(\omega,\omega')\le|Z_h^E(\omega)-Z_h^E(\omega')|\le3d_h^E(\omega,\omega'),
 \]
 并且 \(n_h(1)=h+3\)、\(n_h(m)=4m-h-1\)。
 
-### 定理 53.4（地址尺度与事件尺度不可对应）
+### 定理 57.4（地址尺度与事件尺度不可对应）
 
 端点事件距离与地址尺度的比值为 \(3^{4m-2h-4}\)。故不存在统一常数 \(c,C\) 与正的层内重标定 \(a_h,b_h\)，使
 \[
@@ -9205,9 +9205,9 @@ c\,a_hd_h^A\le b_hd_h^E\le C\,a_hd_h^A
 
 这些命题只证明给定 finite source family 上 \(q\) 是高度非注入的 readout，且 hidden fiber 随 \(h\) 指数增长。它们不推出物理空间维数下界，也不否定另一个与物理度量相容的三维表示。若要把 \(q\) 或 \(Z^E\) 解释成场的几何坐标，仍必须另给 metric、measure、operator domain、clock 和 source-to-geometry correspondence。来源：[FIB ATOM RECURSIVE HOLOGRAPHIC BOUNDARY GEOMETRY CONTINUATION III §90](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)，dev commits 205ab4d1ce/3779de5fbb，merge #15838。
 
-## 54. 有界语法层上的统一残差观测反射
+## 58. 有界语法层上的统一残差观测反射
 
-### 定义 54.1（有限残差语法与统一分离元）
+### 定义 58.1（有限残差语法与统一分离元）
 
 令 \(\operatorname{MixedExpr}(\mathrm{Fin}\ m)\) 由有限 native ground、带 decoration 的共享 residual 名称及有序 pair 生成。令 weight 为 ground/pair 的 native constructor mass，decoration 为最大 residual exponent。对给定 \(m,M,d\)，令
 \[
@@ -9215,7 +9215,7 @@ c\,a_hd_h^A\le b_hd_h^E\le C\,a_hd_h^A
 \]
 为按 native substitution iterates 构造的有限 tuple。
 
-### 定理 54.2（bounded identity reflection，Lean）
+### 定理 58.2（bounded identity reflection，Lean）
 
 若 \(A,B\) 的 weight 不超过 \(M\)，decoration 不超过 \(d\)，则
 \[
@@ -9230,13 +9230,13 @@ c\,a_hd_h^A\le b_hd_h^E\le C\,a_hd_h^A
 \]
 Lean 真源为 NativeUniformResidualRealization.bounded_identity_reflection，dev commit cdb23e4374，状态 std3。
 
-### 定理 54.3（rank instantiation 与统一有限分离）
+### 定理 58.3（rank instantiation 与统一有限分离）
 
 对 RankedExpr(k,m)，instantiation 保持 native evaluation。对任意有限 pair-list \(L\)，同一个 uniformSeparator(L) 对所有无界 rank vectors \(n\) 同时满足：每个 pair 在 separator 下相等，当且仅当该 pair 在全部 residual valuations \(z\) 下相等。若列表中每个 pair 各自存在 residual valuation 使其不等，则同一个 separator 同时使所有 pair 不等。
 
 对应 Lean anchors 为 instantiate_eval、uniform_residual_reflection、simultaneous_completion。该机器检查结果限于有界语法类，不能外推到所有 source、无限 rank、物理读权限、资源最优性或 RH。来源：[Native Uniform Residual Realization](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.md)，dev commit cdb23e4374。
 
-## 55. 最新外部研究锚点与管线位置
+## 59. 最新外部研究锚点与管线位置
 
 本节只记录外部研究对接口设计的支持，不把其模型假设转写为 Auric FIB 内部定理。
 
