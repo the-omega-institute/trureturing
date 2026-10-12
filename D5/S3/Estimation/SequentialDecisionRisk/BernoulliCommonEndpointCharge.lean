@@ -8,6 +8,7 @@
 
 import D5.S3.Estimation.SequentialDecisionRisk.BernoulliStoppedCoefficientBudget
 import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 noncomputable section
 open MeasureTheory ProbabilityTheory Filter Finset
@@ -291,5 +292,199 @@ theorem bernoulli_finite_dyadic_common_endpoint_charge
     _ ≤ ∑ j ∈ range J, ENNReal.ofReal (W j) *
         ∫⁻ ω, ENNReal.ofReal ((Trunc M (2 ^ j) ω : ℝ) ^ m) ∂Law ν p₀ := sum_le_sum hcharges
     _ ≤ _ := endpoint_budget_finite (Law ν p₀) M hmeas a m ha ham J
+
+private lemma resolvable_dyadic_scale_count (a T δ : ℝ) (ha : 0 < a)
+    (hT : 0 < T) (hT1 : T ≤ 1) (hδ : 0 < δ) (hδT : δ < T ^ 2) :
+    let J := Nat.floor (Real.log (T / δ) / (a * Real.log 2)) + 1
+    (∀ j < J, δ * ((2 ^ j : ℕ) : ℝ) ^ a ≤ T) ∧
+      Real.log δ⁻¹ / (2 * a * Real.log 2) ≤ (J : ℝ) := by
+  let L := Real.log (T / δ)
+  let x := L / (a * Real.log 2)
+  let J := Nat.floor x + 1
+  have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hden : 0 < a * Real.log 2 := mul_pos ha hlog2
+  have hδT' : δ < T := hδT.trans_le (by nlinarith)
+  have hL : 0 < L := Real.log_pos ((one_lt_div hδ).mpr hδT')
+  have hx : 0 ≤ x := (div_pos hL hden).le
+  constructor
+  · intro j hj
+    change j < Nat.floor x + 1 at hj
+    have hjfloor : j ≤ Nat.floor x := by omega
+    have hjcast : (j : ℝ) ≤ Nat.floor x := by exact_mod_cast hjfloor
+    have hjx : (j : ℝ) ≤ x := hjcast.trans (Nat.floor_le hx)
+    have hje : (j : ℝ) * a * Real.log 2 ≤ L := by
+      simpa only [mul_assoc] using (le_div_iff₀ hden).mp hjx
+    have hjlogb : (j : ℝ) * a ≤ Real.logb 2 (T / δ) := by
+      rw [Real.logb]
+      exact (le_div_iff₀ hlog2).mpr hje
+    have he := (Real.le_logb_iff_rpow_le (by norm_num : (1 : ℝ) < 2) (div_pos hT hδ)).mp hjlogb
+    have hp : ((2 ^ j : ℕ) : ℝ) ^ a = (2 : ℝ) ^ ((j : ℝ) * a) := by
+      rw [Nat.cast_pow, Nat.cast_ofNat, Real.rpow_natCast_mul (by norm_num)]
+    calc
+      _ ≤ δ * (T / δ) := by rw [hp]; exact mul_le_mul_of_nonneg_left he hδ.le
+      _ = T := by field_simp
+  · have hlogδ := Real.log_lt_log hδ hδT
+    rw [Real.log_pow] at hlogδ
+    norm_num only [Nat.cast_ofNat] at hlogδ
+    have hhalf : Real.log δ⁻¹ / 2 ≤ L := by
+      dsimp [L]
+      rw [Real.log_inv, Real.log_div hT.ne' hδ.ne']
+      linarith
+    calc
+      _ = (Real.log δ⁻¹ / 2) / (a * Real.log 2) := by field_simp
+      _ ≤ x := div_le_div_of_nonneg_right hhalf hden.le
+      _ ≤ (J : ℝ) := by
+        dsimp [J]
+        simpa only [Nat.cast_add, Nat.cast_one] using (Nat.lt_floor_add_one x).le
+
+private lemma bernoulli_factory_local_window (p₀ : unitInterval)
+    (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1) (C ρ θ : ℝ)
+    (hC : 1 ≤ C) (hρ : 0 < ρ) (hθ : 0 < θ) (m n : ℕ) (hn : 0 < n)
+    (hρsmall : (2 * m + 1 : ℕ) * ρ ≤ (1 / 4 : ℝ))
+    (hρwindow : (2 * m + 1 : ℕ) * ρ ≤ (1 - (p₀ : ℝ)) * θ)
+    (h : ℝ) (hh : h ∈ Set.Icc (ρ / Real.sqrt (n : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt (n : ℝ)))) :
+    (0 < (p₀ : ℝ) + h * (-(p₀ : ℝ) / C) ∧
+      (p₀ : ℝ) + h * (-(p₀ : ℝ) / C) < 1) ∧
+    (|(-(p₀ : ℝ) / C) /
+        ((Rate p₀ (-(p₀ : ℝ) / C) h : ℝ) *
+          (1 - (Rate p₀ (-(p₀ : ℝ) / C) h : ℝ)))| ≤ 4 / (1 - (p₀ : ℝ))) ∧
+    |((Rate p₀ (-(p₀ : ℝ) / C) h : ℝ) - (p₀ : ℝ)) /
+        ((p₀ : ℝ) * (1 - (p₀ : ℝ)))| * Real.sqrt (n : ℝ) ≤ θ := by
+  have hC0 : 0 < C := by linarith
+  have hd : 0 < 1 - (p₀ : ℝ) := sub_pos.mpr h₁
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have hsqrt1 : 1 ≤ Real.sqrt (n : ℝ) := Real.one_le_sqrt.mpr hn1
+  have hsqrt : 0 < Real.sqrt (n : ℝ) := by linarith
+  have hH : 0 ≤ ((2 * m + 1 : ℕ) : ℝ) := Nat.cast_nonneg _
+  have hh0 : 0 ≤ h := (div_nonneg hρ.le hsqrt.le).trans hh.1
+  have hh1 : h ≤ (1 / 4 : ℝ) := hh.2.trans
+    ((mul_le_mul_of_nonneg_left (div_le_self hρ.le hsqrt1) hH).trans hρsmall)
+  have hratio0 : 0 ≤ h / C := div_nonneg hh0 hC0.le
+  have hratio1 : h / C ≤ 1 / 4 := (div_le_self hh0 hC).trans hh1
+  let p := (p₀ : ℝ) + h * (-(p₀ : ℝ) / C)
+  have hpform : p = (p₀ : ℝ) * (1 - h / C) := by dsimp [p]; ring
+  have hplow : (p₀ : ℝ) / 4 ≤ p := by rw [hpform]; nlinarith
+  have hp0 : 0 < p := (div_pos h₀ (by norm_num)).trans_le hplow
+  have hple : p ≤ (p₀ : ℝ) := by rw [hpform]; nlinarith
+  have hp1 : p < 1 := hple.trans_lt h₁
+  have hp : (Rate p₀ (-(p₀ : ℝ) / C) h : ℝ) = p :=
+    congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one) ⟨hp0.le, hp1.le⟩)
+  refine ⟨⟨hp0, hp1⟩, ?_, ?_⟩
+  · rw [hp, abs_div, abs_div, abs_neg, abs_of_nonneg h₀.le, abs_of_nonneg hC0.le,
+      abs_of_nonneg (mul_pos hp0 (sub_pos.mpr hp1)).le]
+    apply (div_le_iff₀ (mul_pos hp0 (sub_pos.mpr hp1))).mpr
+    have hv : (p₀ : ℝ) / 4 * (1 - (p₀ : ℝ)) ≤ p * (1 - p) :=
+      mul_le_mul hplow (by linarith) hd.le hp0.le
+    calc
+      _ ≤ (p₀ : ℝ) := div_le_self h₀.le hC
+      _ = (4 / (1 - (p₀ : ℝ))) * ((p₀ : ℝ) / 4 * (1 - (p₀ : ℝ))) := by
+        field_simp
+      _ ≤ _ := mul_le_mul_of_nonneg_left hv (div_nonneg (by norm_num) hd.le)
+  · rw [hp]
+    have heq : (p - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ))) =
+        -h / (C * (1 - (p₀ : ℝ))) := by
+      dsimp [p]
+      field_simp
+      ring
+    rw [heq, abs_div, abs_neg, abs_of_nonneg hh0,
+      abs_of_nonneg (mul_pos hC0 hd).le]
+    have hhscaled : h * Real.sqrt (n : ℝ) ≤ (2 * m + 1 : ℕ) * ρ := by
+      have ht := mul_le_mul_of_nonneg_right hh.2 hsqrt.le
+      calc
+        _ ≤ ((2 * m + 1 : ℕ) * (ρ / Real.sqrt (n : ℝ))) * Real.sqrt (n : ℝ) := ht
+        _ = _ := by field_simp
+    calc
+      _ = (h * Real.sqrt (n : ℝ)) / (C * (1 - (p₀ : ℝ))) := by ring
+      _ ≤ ((2 * m + 1 : ℕ) * ρ) / (C * (1 - (p₀ : ℝ))) :=
+        div_le_div_of_nonneg_right hhscaled (mul_pos hC0 hd).le
+      _ ≤ ((1 - (p₀ : ℝ)) * θ) / (C * (1 - (p₀ : ℝ))) :=
+        div_le_div_of_nonneg_right hρwindow (mul_pos hC0 hd).le
+      _ = θ / C := by field_simp
+      _ ≤ θ := div_le_self hθ.le hC
+
+/-- A uniform family of resolvable stopped-output windows gives a logarithmic
+lower bound on the common endpoint fractional cost. The finite-difference
+and output approximation contracts remain explicit hypotheses. -/
+theorem bernoulli_logarithmic_common_endpoint_charge
+    (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
+    (m : ℕ) (a ρ C δ S : ℝ) (ha : 0 < a) (ham : a < (m : ℝ))
+    (hC : 1 ≤ C) (hρ : 0 < ρ) (hS : 0 < S)
+    (hρsmall : (2 * m + 1 : ℕ) * ρ ≤ (1 / 4 : ℝ))
+    (hρwindow : (2 * m + 1 : ℕ) * ρ ≤ (1 - (p₀ : ℝ)) * (2 * MomentC m + 1)⁻¹)
+    (hδ0 : 0 < δ)
+    (hδsmall : δ < (min (1 / 2 : ℝ) (S / (2 : ℝ) ^ (2 * m + 1))) ^ 2)
+    (f : ℕ → Seed × (ℕ → Bool) → ℝ)
+    (hf : ∀ j, StronglyMeasurable[(truncation_stopping hM (2 ^ j)).measurableSpace] (f j))
+    (hfb : ∀ j ω, |f j ω| ≤ 1) (G : ℝ → ℝ)
+    (herror : ∀ j, ∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+      |G h - ∫ ω, f j ω ∂Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)| ≤
+        δ + (Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)).real {ω | ((2 ^ j : ℕ) : WithTop ℕ) < M ω})
+    (hsignal : ∀ j, S * ((2 ^ j : ℕ) : ℝ) ^ (-a) ≤
+      |Diff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) G|)
+    (hcalculus : ∀ j, ∀ U : ℝ, 0 ≤ U →
+      (∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+        ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+        |iteratedDeriv (2 * m)
+          (fun x : ℝ => ∫ ω, f j ω ∂Law ν (Rate p₀ (-(p₀ : ℝ) / C) x)) h| ≤ U) →
+      |Diff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+        (fun x : ℝ => ∫ ω, f j ω ∂Law ν (Rate p₀ (-(p₀ : ℝ) / C) x))| ≤
+        (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) ^ (2 * m) * U)
+    : ENNReal.ofReal ((S /
+      (4 * (2 * DerivC m (4 / (1 - (p₀ : ℝ))) * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1)) *
+        GeoBudget a m * a * Real.log 2)) * Real.log δ⁻¹) ≤
+      ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀ := by
+  let γ := -(p₀ : ℝ) / C
+  let σ := 4 / (1 - (p₀ : ℝ))
+  have hσ : 0 ≤ σ := div_nonneg (by norm_num) (sub_pos.mpr h₁).le
+  have hθ : 0 < (2 * MomentC m + 1)⁻¹ := by positivity
+  have hw : ∀ j, ∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+      (0 < (p₀ : ℝ) + h * γ ∧ (p₀ : ℝ) + h * γ < 1) ∧
+      |γ / ((Rate p₀ γ h : ℝ) * (1 - (Rate p₀ γ h : ℝ)))| ≤ σ ∧
+      |((Rate p₀ γ h : ℝ) - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ)))| *
+        Real.sqrt ((2 ^ j : ℕ) : ℝ) ≤ (2 * MomentC m + 1)⁻¹ := by
+    intro j h hh
+    exact bernoulli_factory_local_window p₀ h₀ h₁ C ρ _ hC hρ hθ m (2 ^ j)
+      (by positivity) hρsmall hρwindow h hh
+  let T := min (1 / 2 : ℝ) (S / (2 : ℝ) ^ (2 * m + 1))
+  let J := Nat.floor (Real.log (T / δ) / (a * Real.log 2)) + 1
+  let A := 2 * DerivC m σ * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1)
+  let z := S / (2 * A)
+  let K := S / (4 * A * GeoBudget a m * a * Real.log 2)
+  have hT : 0 < T := lt_min (by norm_num) (div_pos hS (by positivity))
+  have hT1 : T ≤ 1 := (min_le_left _ _).trans (by norm_num)
+  have hcount := resolvable_dyadic_scale_count a T δ ha hT hT1 hδ0 hδsmall
+  have hδj : ∀ j < J, δ * ((2 ^ j : ℕ) : ℝ) ^ a ≤ S / (2 : ℝ) ^ (2 * m + 1) := by
+    intro j hj
+    exact (hcount.1 j hj).trans (min_le_right _ _)
+  have hbudget := bernoulli_finite_dyadic_common_endpoint_charge ν p₀ h₀ h₁ M hM m
+    a ρ γ σ δ S ha ham hρ hσ hS J f hf hfb G
+    (fun j hj h hh => (hw j h hh).1) (fun j hj h hh => (hw j h hh).2.1)
+    (fun j hj h hh => (hw j h hh).2.2)
+    (fun j hj => herror j) (fun j hj => hsignal j) (fun j hj => hcalculus j) hδj
+  have hA : 0 < A := by dsimp [A]; positivity
+  have hz : 0 < z := div_pos hS (mul_pos (by norm_num) hA)
+  have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hr := Real.one_lt_rpow (by norm_num : (1 : ℝ) < 2) ha
+  have hq := Real.rpow_lt_one_of_one_lt_of_neg (by norm_num : (1 : ℝ) < 2)
+    (show a - (m : ℝ) < 0 by linarith)
+  have hG : 0 < GeoBudget a m := by positivity
+  have hcompare : GeoBudget a m * (K * Real.log δ⁻¹) ≤ (J : ℝ) * z := by
+    calc
+      _ = (Real.log δ⁻¹ / (2 * a * Real.log 2)) * z := by
+        dsimp [K, z]
+        field_simp [ne_of_gt hA, ne_of_gt hG, ha.ne', hlog2.ne']; ring
+      _ ≤ _ := mul_le_mul_of_nonneg_right hcount.2 hz.le
+  apply (ENNReal.mul_le_mul_iff_right
+    (ENNReal.ofReal_ne_zero_iff.mpr hG) ENNReal.ofReal_ne_top).mp
+  calc
+    _ = ENNReal.ofReal (GeoBudget a m * (K * Real.log δ⁻¹)) :=
+      (ENNReal.ofReal_mul hG.le).symm
+    _ ≤ ENNReal.ofReal ((J : ℝ) * z) := ENNReal.ofReal_le_ofReal hcompare
+    _ ≤ _ := hbudget
 
 end D5.S3.Estimation.SequentialDecisionRisk.BernoulliCommonEndpointCharge
