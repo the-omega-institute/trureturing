@@ -9,6 +9,8 @@
 import D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
 import D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
 import D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
+import Mathlib.Analysis.SpecialFunctions.Stirling
+import D5.S3.DivergenceSupport.LogSumInequality
 
 open scoped BigOperators Topology
 open Finset Filter
@@ -287,6 +289,311 @@ private theorem native_posterior_phase_kernel_bound :
     
     )
   simpa only using hh
+
+/-- Coarse Stirling envelopes used only inside the four-cell atom estimate. -/
+private theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
+    (n : ℝ) * Real.log n - n + Real.log n / 2 ≤ Real.log (n.factorial : ℝ) ∧
+      Real.log (n.factorial : ℝ) ≤ (n : ℝ) * Real.log n - n + Real.log n / 2 + 1 := by
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  constructor
+  · have hl := Stirling.le_log_factorial_stirling hn.ne'
+    have hc : 0 ≤ Real.log (2 * Real.pi) := Real.log_nonneg (by linarith [Real.pi_gt_three])
+    linarith
+  · have hs := Stirling.log_stirlingSeq'_antitone (show 0 ≤ n - 1 by omega)
+    have hi : n - 1 + 1 = n := by omega
+    change Real.log (Stirling.stirlingSeq (n - 1 + 1)) ≤
+      Real.log (Stirling.stirlingSeq (0 + 1)) at hs
+    rw [hi, Stirling.log_stirlingSeq_formula, Stirling.stirlingSeq_one] at hs
+    simp (disch := positivity) only [Real.log_div, Real.log_exp,
+      Real.log_sqrt, Real.log_mul] at hs
+    linarith
+
+/-- The four positive cells and their row and column margins are one table.
+The entropy term in its factorial ratio is nonpositive. -/
+private theorem four_cell_entropy (a b c d : ℝ)
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hd : 0 < d) :
+    (a+b) * Real.log (a+b) + (c+d) * Real.log (c+d) +
+      (a+c) * Real.log (a+c) + (b+d) * Real.log (b+d) -
+      (a+b+c+d) * Real.log (a+b+c+d) -
+      a * Real.log a - b * Real.log b - c * Real.log c - d * Real.log d ≤ 0 := by
+  let N := a+b+c+d
+  have hN : 0 < N := by dsimp [N]; positivity
+  let A : Fin 4 → ℝ := ![a,b,c,d]
+  let B : Fin 4 → ℝ := ![(a+b)*(a+c)/N, (a+b)*(b+d)/N,
+    (c+d)*(a+c)/N, (c+d)*(b+d)/N]
+  have hA (i : Fin 4) : 0 < A i := by fin_cases i <;> simp [A] <;> assumption
+  have hB (i : Fin 4) : 0 < B i := by fin_cases i <;> simp [B] <;> positivity
+  have hAs : (∑ i, A i) = N := by simp [A, Fin.sum_univ_four, N]
+  have hBs : (∑ i, B i) = N := by
+    simp [B, Fin.sum_univ_four]
+    field_simp
+    dsimp [N]
+    ring
+  have h := D5.S3.DivergenceSupport.LogSumInequality.log_sum_inequality A B
+    (fun i => (hA i).le) (fun i => (hB i).le)
+    (fun i hi => False.elim ((hB i).ne' hi))
+  rw [hAs, hBs, div_self hN.ne', Real.log_one, mul_zero] at h
+  simp [A, B, Fin.sum_univ_four] at h
+  simp (disch := positivity) only [Real.log_div, Real.log_mul] at h
+  dsimp [N] at h
+  linarith only [h]
+
+/-- A uniform atom cap on the central table region. The four lower bounds
+are for the same table; no independence or unguarded natural subtraction is used. -/
+private theorem hypergeometric_central_atom {N R U t : ℕ} (hR : R ≤ N) (hU : U ≤ N)
+    (htR : t < R) (htU : t < U) (hfour : U - t < N - R)
+    (ht : 0 < t) (γ : ℝ) (hγ : 0 < γ)
+    (h0 : γ * N ≤ t) (h1 : γ * N ≤ ((R-t : ℕ) : ℝ))
+    (h2 : γ * N ≤ ((U-t : ℕ) : ℝ))
+    (h3 : γ * N ≤ ((N-R-(U-t) : ℕ) : ℝ)) :
+    ((R.choose t : ℝ) * ((N-R).choose (U-t) : ℝ)) / (N.choose U : ℝ) ≤
+      Real.exp 4 / (γ ^ 2 * Real.sqrt N) := by
+  have hN : 0 < N := lt_of_lt_of_le (lt_trans ht htR) hR
+  have hNR : 0 < N - R := lt_of_le_of_lt (Nat.zero_le _) hfour
+  have hNU : 0 < N - U := by omega
+  have hRt : 0 < R - t := Nat.sub_pos_of_lt htR
+  have hUt : 0 < U - t := Nat.sub_pos_of_lt htU
+  have hD : 0 < N - R - (U-t) := Nat.sub_pos_of_lt hfour
+  have hRN : (R : ℝ) ≤ N := by exact_mod_cast hR
+  have hUN : (U : ℝ) ≤ N := by exact_mod_cast hU
+  have hN0 : (0 : ℝ) < N := by exact_mod_cast hN
+  have hR0 : (0 : ℝ) < R := by exact_mod_cast (by omega : 0 < R)
+  have hU0 : (0 : ℝ) < U := by exact_mod_cast (by omega : 0 < U)
+  have hNR0 : (0 : ℝ) < (N-R : ℕ) := by exact_mod_cast hNR
+  have hNU0 : (0 : ℝ) < (N-U : ℕ) := by exact_mod_cast hNU
+  have ht0 : (0 : ℝ) < t := by exact_mod_cast ht
+  have hRt0 : (0 : ℝ) < (R-t : ℕ) := by exact_mod_cast hRt
+  have hUt0 : (0 : ℝ) < (U-t : ℕ) := by exact_mod_cast hUt
+  have hD0 : (0 : ℝ) < (N-R-(U-t) : ℕ) := by exact_mod_cast hD
+  let H : ℝ := ((R.choose t : ℝ) * ((N-R).choose (U-t) : ℝ)) / (N.choose U : ℝ)
+  have hH : 0 < H := by
+    dsimp [H]
+    exact div_pos (mul_pos (by exact_mod_cast Nat.choose_pos htR.le)
+      (by exact_mod_cast Nat.choose_pos hfour.le)) (by exact_mod_cast Nat.choose_pos hU)
+  have hlogH : Real.log H = Real.log (R.factorial : ℝ) + Real.log ((N-R).factorial : ℝ) +
+      Real.log (U.factorial : ℝ) + Real.log ((N-U).factorial : ℝ) -
+      Real.log (N.factorial : ℝ) - Real.log (t.factorial : ℝ) -
+      Real.log ((R-t).factorial : ℝ) - Real.log ((U-t).factorial : ℝ) -
+      Real.log ((N-R-(U-t)).factorial : ℝ) := by
+    dsimp [H]
+    rw [Nat.cast_choose ℝ htR.le, Nat.cast_choose ℝ hfour.le, Nat.cast_choose ℝ hU]
+    simp (disch := positivity) only [Real.log_mul, Real.log_div]
+    ring
+  have hent := four_cell_entropy (t : ℝ) ((R-t : ℕ) : ℝ) ((U-t : ℕ) : ℝ)
+    ((N-R-(U-t) : ℕ) : ℝ) ht0 hRt0 hUt0 hD0
+  have hAB : (t : ℝ) + (R-t : ℕ) = R := by exact_mod_cast Nat.add_sub_of_le htR.le
+  have hCD : ((U-t : ℕ) : ℝ) + (N-R-(U-t) : ℕ) = (N-R : ℕ) := by
+    exact_mod_cast Nat.add_sub_of_le hfour.le
+  have hAC : (t : ℝ) + (U-t : ℕ) = U := by exact_mod_cast Nat.add_sub_of_le htU.le
+  have hBD : ((R-t : ℕ) : ℝ) + (N-R-(U-t) : ℕ) = (N-U : ℕ) := by
+    exact_mod_cast (by omega : R-t+(N-R-(U-t)) = N-U)
+  have hAll : (t : ℝ) + (R-t : ℕ) + (U-t : ℕ) + (N-R-(U-t) : ℕ) = N := by
+    exact_mod_cast (by omega : t+(R-t)+(U-t)+(N-R-(U-t)) = N)
+  rw [hAll, hAB, hCD, hAC, hBD] at hent
+  have hlogupper : Real.log H ≤ 4 +
+      (Real.log R + Real.log (N-R : ℕ) + Real.log U + Real.log (N-U : ℕ) -
+        Real.log N - Real.log t - Real.log (R-t : ℕ) - Real.log (U-t : ℕ) -
+        Real.log (N-R-(U-t) : ℕ)) / 2 := by
+    rw [hlogH]
+    have hRa := (log_factorial_envelopes (by omega : 0 < R)).2
+    have hNa := (log_factorial_envelopes hNR).2
+    have hUa := (log_factorial_envelopes (by omega : 0 < U)).2
+    have hNUa := (log_factorial_envelopes hNU).2
+    have hNb := (log_factorial_envelopes hN).1
+    have htb := (log_factorial_envelopes ht).1
+    have hRb := (log_factorial_envelopes hRt).1
+    have hUb := (log_factorial_envelopes hUt).1
+    have hDb := (log_factorial_envelopes hD).1
+    have htot : (R : ℝ) + (N-R : ℕ) + U + (N-U : ℕ) =
+        N + t + (R-t : ℕ) + (U-t : ℕ) + (N-R-(U-t) : ℕ) := by
+      exact_mod_cast (by omega : R+(N-R)+U+(N-U) = N+t+(R-t)+(U-t)+(N-R-(U-t)))
+    linarith
+  have hlR := Real.log_le_log hR0 hRN
+  have hlU := Real.log_le_log hU0 hUN
+  have hlNR := Real.log_le_log hNR0 (show ((N-R : ℕ) : ℝ) ≤ (N : ℝ) by exact_mod_cast (Nat.sub_le N R))
+  have hlNU := Real.log_le_log hNU0 (show ((N-U : ℕ) : ℝ) ≤ (N : ℝ) by exact_mod_cast (Nat.sub_le N U))
+  have hγN : 0 < γ * (N : ℝ) := mul_pos hγ hN0
+  have hl0 := Real.log_le_log hγN h0
+  have hl1 := Real.log_le_log hγN h1
+  have hl2 := Real.log_le_log hγN h2
+  have hl3 := Real.log_le_log hγN h3
+  rw [Real.log_mul hγ.ne' hN0.ne'] at hl0 hl1 hl2 hl3
+  have hl : Real.log H ≤ 4 - 2 * Real.log γ - Real.log N / 2 := by linarith
+  have hsqrt : 0 < Real.sqrt (N : ℝ) := Real.sqrt_pos.mpr hN0
+  have hexp := Real.exp_le_exp.mpr hl
+  rw [Real.exp_log hH] at hexp
+  have hrhs : Real.exp (4 - 2 * Real.log γ - Real.log (N : ℝ) / 2) =
+      Real.exp 4 / (γ ^ 2 * Real.sqrt N) := by
+    rw [show 4 - 2 * Real.log γ - Real.log (N : ℝ) / 2 =
+      4 - (Real.log (γ ^ 2) + Real.log (Real.sqrt (N : ℝ))) by
+        rw [Real.log_pow, Real.log_sqrt hN0.le]; ring,
+      Real.exp_sub, Real.exp_add, Real.exp_log (sq_pos_of_pos hγ), Real.exp_log hsqrt]
+  exact hexp.trans_eq hrhs
+
+/-- Balanced numerical margins supply the four interior-cell hypotheses of
+the atom estimate throughout one central interval. -/
+private theorem hypergeometric_balanced_central_atom {N R U t : ℕ}
+    (hN : 0 < N) (hR : R ≤ N) (hU : U ≤ N) (δ w : ℝ) (hδ : 0 < δ)
+    (hRlo : δ * N ≤ R) (hRhi : (R : ℝ) ≤ (1-δ)*N)
+    (hUlo : δ * N ≤ U) (hUhi : (U : ℝ) ≤ (1-δ)*N)
+    (hw : w ≤ δ ^ 2 * N / 2) (ht : |(t : ℝ) - (U : ℝ)*R/N| ≤ w) :
+    ((R.choose t : ℝ) * ((N-R).choose (U-t) : ℝ)) / (N.choose U : ℝ) ≤
+      Real.exp 4 / ((δ ^ 2 / 2) ^ 2 * Real.sqrt N) := by
+  have hN0 : (0 : ℝ) < N := by exact_mod_cast hN
+  have hc := central_four_cells_lower (N : ℝ) R U δ t w hN0 hδ.le
+    hRlo hRhi hUlo hUhi ht
+  have hγ : 0 < δ ^ 2 / 2 := by positivity
+  have hγN : 0 < δ ^ 2 / 2 * (N : ℝ) := mul_pos hγ hN0
+  have hs (j : Fin 4) : δ ^ 2 / 2 * (N : ℝ) ≤ cellCounts N R U t j := by
+    have hj := hc j
+    linarith
+  have h0 := hs 0
+  have h1 := hs 1
+  have h2 := hs 2
+  have h3 := hs 3
+  simp only [cellCounts, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.cons_val_three] at h0 h1 h2 h3
+  norm_num at h0 h1 h2 h3
+  have ht0 : 0 < t := by exact_mod_cast (hγN.trans_le h0)
+  have htR : t < R := by exact_mod_cast (by linarith : (t : ℝ) < R)
+  have htU : t < U := by exact_mod_cast (by linarith : (t : ℝ) < U)
+  have hf : U-t < N-R := by
+    have hsub : (U : ℝ) - t < (N : ℝ) - R := by linarith
+    exact_mod_cast (show ((U-t : ℕ) : ℝ) < (N-R : ℕ) by
+      rw [Nat.cast_sub htU.le, Nat.cast_sub hR]; exact hsub)
+  apply hypergeometric_central_atom hR hU htR htU hf ht0 (δ ^ 2 / 2) hγ h0
+  · simpa only [Nat.cast_sub htR.le] using h2
+  · simpa only [Nat.cast_sub htU.le] using h1
+  · rw [Nat.cast_sub hf.le, Nat.cast_sub hR, Nat.cast_sub htU.le]
+    linarith
+
+open D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
+
+set_option quotPrecheck false in
+local notation "H" => fun N R U t : ℕ => if t ≤ U then
+  ((R.choose t : ℝ) * ((N-R).choose (U-t) : ℝ)) / (N.choose U : ℝ) else 0
+
+open scoped Classical in
+/-- The integer count kernel retains both support guards. Its atom and tail
+inputs to the moving-center engine are proved here from the original kernel. -/
+private theorem hypergeometric_arithmetic_bound {N R U : ℕ}
+    (hN : 1 < N) (hR : R ≤ N) (hU : U ≤ N)
+    (δ L s K h : ℝ) (hδ : 0 < δ) (hL : 0 < L) (hs : 0 < s) (hK : 0 ≤ K) (hh : 0 ≤ h)
+    (hRlo : δ * N ≤ R) (hRhi : (R : ℝ) ≤ (1-δ)*N)
+    (hUlo : δ * N ≤ U) (hUhi : (U : ℝ) ≤ (1-δ)*N)
+    (hwide : 1 ≤ L * Real.sqrt N) (hsmall : L * Real.sqrt N ≤ δ ^ 2 * N / 2)
+    (g : ℤ → ℝ)
+    (hlower : ∀ x ∈ Icc ⌈(U : ℝ)*R/N-L*Real.sqrt N⌉ ⌊(U : ℝ)*R/N+L*Real.sqrt N⌋,
+      ∀ y ∈ Icc ⌈(U : ℝ)*R/N-L*Real.sqrt N⌉ ⌊(U : ℝ)*R/N+L*Real.sqrt N⌋,
+      x ≤ y → s * ((y-x : ℤ) : ℝ) ≤ g y-g x)
+    (hupper : ∀ x ∈ Icc ⌈(U : ℝ)*R/N-L*Real.sqrt N⌉ ⌊(U : ℝ)*R/N+L*Real.sqrt N⌋,
+      ∀ y ∈ Icc ⌈(U : ℝ)*R/N-L*Real.sqrt N⌉ ⌊(U : ℝ)*R/N+L*Real.sqrt N⌋,
+      x ≤ y → g y-g x ≤ K*s*((y-x : ℤ) : ℝ)) :
+    (∑ t ∈ (range (U+1)).filter (fun t : ℕ => ∃ z : ℤ, |g (t : ℤ)-z| ≤ h), H N R U t) ≤
+      Real.exp 4 / ((δ ^ 2 / 2) ^ 2 * Real.sqrt N) *
+        (K*s*(2*L*Real.sqrt N)+2*h+1) * (2*h/s+1) + 1/(4*L^2) := by
+  classical
+  let ν : ℝ := (U : ℝ)*R/N
+  let w : ℝ := L * Real.sqrt N
+  let a : ℤ := ⌈ν-w⌉
+  let b : ℤ := ⌊ν+w⌋
+  let T := (range (U+1)).map (Nat.castEmbedding : ℕ ↪ ℤ)
+  let p : ℤ → ℝ := fun t => if 0 ≤ t then H N R U t.toNat else 0
+  let A : ℝ := Real.exp 4 / ((δ ^ 2 / 2) ^ 2 * Real.sqrt N)
+  have hN0 : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
+  have hA : 0 ≤ A := by dsimp [A]; positivity
+  have hp (t : ℤ) : 0 ≤ p t := by dsimp [p]; split_ifs <;> positivity
+  have hpc (t : ℕ) : p t = H N R U t := by simp [p]
+  have hcentral (t : ℤ) : t ∈ Icc a b ↔ |(t : ℝ)-ν| ≤ w := by
+    simp only [mem_Icc, a, b, Int.ceil_le, Int.le_floor, abs_le]
+    constructor <;> rintro ⟨h1,h2⟩ <;> constructor <;> linarith
+  have hab : a ≤ b := by
+    have ha := Int.ceil_lt_add_one (ν-w)
+    have hb := Int.sub_one_lt_floor (ν+w)
+    have : (a : ℝ) < b := by dsimp [a,b]; dsimp [w] at *; linarith
+    exact_mod_cast this.le
+  have hmax (t : ℤ) (ht : t ∈ Icc a b) : p t ≤ A := by
+    by_cases ht0 : 0 ≤ t
+    · dsimp only [p]
+      rw [if_pos ht0]
+      by_cases htU : t.toNat ≤ U
+      · rw [if_pos htU]
+        apply hypergeometric_balanced_central_atom (by omega : 0 < N) hR hU δ w hδ
+          hRlo hRhi hUlo hUhi hsmall
+        have hcast : (t.toNat : ℝ) = (t : ℝ) := by
+          exact_mod_cast Int.toNat_of_nonneg ht0
+        simpa only [hcast] using (hcentral t).mp ht
+      · simp only [if_neg htU]
+        exact hA
+    · simp only [p, if_neg ht0]
+      exact hA
+  have hout : T \ Icc a b =
+      ((range (U+1)).filter fun t : ℕ => w < |(t : ℝ)-ν|).map (Nat.castEmbedding : ℕ ↪ ℤ) := by
+    rw [sdiff_eq_filter, filter_map]
+    congr 1
+    apply filter_congr
+    intro t _
+    simp only [Function.comp_apply, Nat.castEmbedding_apply]
+    rw [hcentral]
+    simp only [Int.cast_natCast, not_le]
+  have htail : eventMass p (T \ Icc a b) ≤ 1/(4*L^2) := by
+    rw [hout, eventMass, sum_map]
+    simp only [Nat.castEmbedding_apply, hpc]
+    exact kernel_central_tail hR hU hN L hL
+  have he := moving_center_small_ball p g g T a b s K h 0 A (1/(4*L^2)) hab hs hh
+    le_rfl hA hp hmax hlower hupper (fun t _ => by simp) htail
+  have hleft : eventMass p (T.filter fun t => ∃ z : ℤ, |g t-z| ≤ h) =
+      ∑ t ∈ (range (U+1)).filter (fun t : ℕ => ∃ z : ℤ, |g (t : ℤ)-z| ≤ h), H N R U t := by
+    rw [eventMass, filter_map, sum_map]
+    simp only [Function.comp_apply, Nat.castEmbedding_apply, hpc]
+  rw [hleft] at he
+  have hwidth : ((b-a : ℤ) : ℝ) ≤ 2*w := by
+    have ha := Int.le_ceil (ν-w)
+    have hb := Int.floor_le (ν+w)
+    dsimp [a,b]
+    push_cast
+    linarith
+  calc
+    _ ≤ A * (K*s*((b-a : ℤ) : ℝ)+2*h+1)*(2*h/s+1)+1/(4*L^2) := by
+      simpa only [add_zero] using he
+    _ ≤ _ := by
+      dsimp [A,w] at *
+      gcongr
+      simpa only [mul_assoc] using hwidth
+
+/-- Balanced margins give one root curve on an open neighborhood of the
+whole central interval, not a collection of separately chosen roots. -/
+private theorem balanced_shared_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q δ w : ℝ) (hN : 0 < N) (hq : 0 < q)
+    (hqM : q < (Fintype.card ι : ℝ) + N) (hδ : 0 < δ) (hw : w ≤ δ^2*N/2)
+    (hRlo : δ*N ≤ R) (hRhi : R ≤ (1-δ)*N)
+    (hUlo : δ*N ≤ U) (hUhi : U ≤ (1-δ)*N) :
+    ∃ θ : ℝ → ℝ, ∀ t : ℝ, |t-U*R/N| ≤ w →
+      calibratedMean outside r ε N R U t (θ t) = q ∧
+      HasDerivAt θ (-checkerboard r ε (θ t) /
+        calibratedVariance outside r ε N R U t (θ t)) t ∧
+      (∀ᶠ u in 𝓝 t, calibratedMean outside r ε N R U u (θ u) = q) ∧
+      0 < calibratedVariance outside r ε N R U t (θ t) := by
+  let ν := U*R/N
+  let v := δ^2*N
+  have hv : 0 < v := by dsimp [v]; positivity
+  have hcells (t : ℝ) (ht : t ∈ Set.Ioo (ν-v) (ν+v)) (j : Fin 4) :
+      0 ≤ cellCounts N R U t j := by
+    have hc := central_four_cells_lower N R U δ t v hN hδ.le hRlo hRhi hUlo hUhi
+      (abs_le.mpr ⟨by linarith [ht.1], by linarith [ht.2]⟩) j
+    dsimp [v] at hc
+    linarith
+  obtain ⟨θ,hθ⟩ := shared_calibration_curve outside r ε N R U q (ν-v) (ν+v)
+    hN hq hqM hcells
+  refine ⟨θ, fun t ht => ?_⟩
+  have hti : t ∈ Set.Ioo (ν-v) (ν+v) := by
+    have hb := abs_le.mp ht
+    dsimp [v,ν] at *
+    constructor <;> nlinarith
+  have he := hθ t hti
+  refine ⟨he.1,he.2.1,?_,he.2.2⟩
+  filter_upwards [isOpen_Ioo.mem_nhds hti] with u hu
+  exact (hθ u hu).1
 
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge

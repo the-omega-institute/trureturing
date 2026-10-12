@@ -606,7 +606,7 @@ theorem native_event_mass_le_kernel {M q s : ℕ} (S : Support M q)
 
 /-- Balanced margins make all four mean cells large; a single central
 A-count deviation controls all four cells at once. -/
-private theorem central_four_cells_lower (N R U δ t w : ℝ) (hN : 0 < N) (hδ : 0 ≤ δ)
+theorem central_four_cells_lower (N R U δ t w : ℝ) (hN : 0 < N) (hδ : 0 ≤ δ)
     (hR : δ * N ≤ R) (hR' : R ≤ (1 - δ) * N)
     (hU : δ * N ≤ U) (hU' : U ≤ (1 - δ) * N)
     (ht : |t - U * R / N| ≤ w) :

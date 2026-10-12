@@ -193,6 +193,58 @@ theorem moving_center_small_ball (p f g : ℤ → ℝ) (T : Finset ℤ) (a b : �
   exact hm.trans (add_le_add (hc.trans hzbound) htail)
 
 
+/-- The compensated group of one shared root curve has the same lower
+and upper increment bounds as its feedback derivative. -/
+theorem shared_calibration_increment_bounds {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q bg : ℝ) (θ : ℝ → ℝ) (a b : ℤ) (s K : ℝ)
+    (hcurve : ∀ x ∈ Set.Icc (a : ℝ) (b : ℝ), DifferentiableAt ℝ θ x ∧
+      (∀ᶠ u in 𝓝 x, SharedRectangleCalibration.calibratedMean outside r ε N R U u (θ u) = q) ∧
+      0 < SharedRectangleCalibration.calibratedVariance outside r ε N R U x (θ x))
+    (hfeedback : ∀ x ∈ interior (Set.Icc (a : ℝ) (b : ℝ)),
+      s ≤ Real.sigmoid (θ x) - 1 / 2 -
+        (bg + x) * Real.sigmoid (θ x) * (1 - Real.sigmoid (θ x)) *
+          SharedRectangleCalibration.checkerboard r ε (θ x) /
+            SharedRectangleCalibration.calibratedVariance outside r ε N R U x (θ x) ∧
+      Real.sigmoid (θ x) - 1 / 2 -
+        (bg + x) * Real.sigmoid (θ x) * (1 - Real.sigmoid (θ x)) *
+          SharedRectangleCalibration.checkerboard r ε (θ x) /
+            SharedRectangleCalibration.calibratedVariance outside r ε N R U x (θ x) ≤ K * s) :
+    (∀ x ∈ Icc a b, ∀ y ∈ Icc a b, x ≤ y → s * ((y-x : ℤ) : ℝ) ≤
+      ((bg+y)*Real.sigmoid (θ y)-y/2) - ((bg+x)*Real.sigmoid (θ x)-x/2)) ∧
+    (∀ x ∈ Icc a b, ∀ y ∈ Icc a b, x ≤ y →
+      ((bg+y)*Real.sigmoid (θ y)-y/2) - ((bg+x)*Real.sigmoid (θ x)-x/2) ≤
+        K*s*((y-x : ℤ) : ℝ)) := by
+  let G : ℝ → ℝ := fun x => (bg + x) * Real.sigmoid (θ x) - x / 2
+  have hder (x : ℝ) (hx : x ∈ Set.Icc (a : ℝ) (b : ℝ)) :
+      HasDerivAt G (Real.sigmoid (θ x) - 1 / 2 -
+        (bg + x) * Real.sigmoid (θ x) * (1 - Real.sigmoid (θ x)) *
+          SharedRectangleCalibration.checkerboard r ε (θ x) /
+            SharedRectangleCalibration.calibratedVariance outside r ε N R U x (θ x)) x := by
+    exact SharedRectangleCalibration.compensated_group_deriv outside r ε N R U q bg
+      x (θ x) (deriv θ x) θ (hcurve x hx).1.hasDerivAt rfl (hcurve x hx).2.1
+        (ne_of_gt (hcurve x hx).2.2)
+  have hcont : ContinuousOn G (Set.Icc (a : ℝ) (b : ℝ)) :=
+    fun x hx => (hder x hx).continuousAt.continuousWithinAt
+  have hdiff : DifferentiableOn ℝ G (interior (Set.Icc (a : ℝ) (b : ℝ))) :=
+    fun x hx => (hder x (interior_subset hx)).differentiableAt.differentiableWithinAt
+  have hl := (convex_Icc (a : ℝ) (b : ℝ)).mul_sub_le_image_sub_of_le_deriv hcont hdiff
+    (fun x hx => by rw [(hder x (interior_subset hx)).deriv]; exact (hfeedback x hx).1)
+  have hu := (convex_Icc (a : ℝ) (b : ℝ)).image_sub_le_mul_sub_of_deriv_le hcont hdiff
+    (fun x hx => by rw [(hder x (interior_subset hx)).deriv]; exact (hfeedback x hx).2)
+  constructor
+  · intro x hx y hy hxy
+    have hxR : (x : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
+      exact ⟨by exact_mod_cast (mem_Icc.mp hx).1, by exact_mod_cast (mem_Icc.mp hx).2⟩
+    have hyR : (y : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
+      exact ⟨by exact_mod_cast (mem_Icc.mp hy).1, by exact_mod_cast (mem_Icc.mp hy).2⟩
+    simpa only [Int.cast_sub] using hl x hxR y hyR (by exact_mod_cast hxy)
+  · intro x hx y hy hxy
+    have hxR : (x : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
+      exact ⟨by exact_mod_cast (mem_Icc.mp hx).1, by exact_mod_cast (mem_Icc.mp hx).2⟩
+    have hyR : (y : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
+      exact ⟨by exact_mod_cast (mem_Icc.mp hy).1, by exact_mod_cast (mem_Icc.mp hy).2⟩
+    simpa only [Int.cast_sub] using hu x hxR y hyR (by exact_mod_cast hxy)
+
 open scoped Classical in
 /-- A uniform feedback hypothesis for the same shared calibration yields a
 small-ball bound for its compensated group mean. The native conditional mass,
@@ -222,39 +274,11 @@ private theorem shared_calibration_small_ball {ι : Type*} [Fintype ι] (outside
       A * (K * s * ((b - a : ℤ) : ℝ) + 2 * (τ + err) + 1) *
         (2 * (τ + err) / s + 1) + tail := by
   classical
-  let G : ℝ → ℝ := fun x => (bg + x) * Real.sigmoid (θ x) - x / 2
-  have hder (x : ℝ) (hx : x ∈ Set.Icc (a : ℝ) (b : ℝ)) :
-      HasDerivAt G (Real.sigmoid (θ x) - 1 / 2 -
-        (bg + x) * Real.sigmoid (θ x) * (1 - Real.sigmoid (θ x)) *
-          SharedRectangleCalibration.checkerboard r ε (θ x) /
-            SharedRectangleCalibration.calibratedVariance outside r ε N R U x (θ x)) x := by
-    exact SharedRectangleCalibration.compensated_group_deriv outside r ε N R U q bg
-      x (θ x) (deriv θ x) θ (hcurve x hx).1.hasDerivAt rfl (hcurve x hx).2.1
-        (ne_of_gt (hcurve x hx).2.2)
-  have hcont : ContinuousOn G (Set.Icc (a : ℝ) (b : ℝ)) :=
-    fun x hx => (hder x hx).continuousAt.continuousWithinAt
-  have hdiff : DifferentiableOn ℝ G (interior (Set.Icc (a : ℝ) (b : ℝ))) :=
-    fun x hx => (hder x (interior_subset hx)).differentiableAt.differentiableWithinAt
-  have hl := (convex_Icc (a : ℝ) (b : ℝ)).mul_sub_le_image_sub_of_le_deriv hcont hdiff
-    (fun x hx => by rw [(hder x (interior_subset hx)).deriv]; exact (hfeedback x hx).1)
-  have hu := (convex_Icc (a : ℝ) (b : ℝ)).image_sub_le_mul_sub_of_deriv_le hcont hdiff
-    (fun x hx => by rw [(hder x (interior_subset hx)).deriv]; exact (hfeedback x hx).2)
-  apply moving_center_small_ball p f (fun t => G t) T a b s K τ err A tail hab hs
-    hτ herr hA hp hmax
-  · intro x hx y hy hxy
-    have hxR : (x : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
-      exact ⟨by exact_mod_cast (mem_Icc.mp hx).1, by exact_mod_cast (mem_Icc.mp hx).2⟩
-    have hyR : (y : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
-      exact ⟨by exact_mod_cast (mem_Icc.mp hy).1, by exact_mod_cast (mem_Icc.mp hy).2⟩
-    simpa only [Int.cast_sub] using hl x hxR y hyR (by exact_mod_cast hxy)
-  · intro x hx y hy hxy
-    have hxR : (x : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
-      exact ⟨by exact_mod_cast (mem_Icc.mp hx).1, by exact_mod_cast (mem_Icc.mp hx).2⟩
-    have hyR : (y : ℝ) ∈ Set.Icc (a : ℝ) (b : ℝ) := by
-      exact ⟨by exact_mod_cast (mem_Icc.mp hy).1, by exact_mod_cast (mem_Icc.mp hy).2⟩
-    simpa only [Int.cast_sub] using hu x hxR y hyR (by exact_mod_cast hxy)
-  · exact happrox
-  · exact htail
+  obtain ⟨hl, hu⟩ := shared_calibration_increment_bounds outside r ε N R U q bg θ a b s K
+    hcurve hfeedback
+  apply moving_center_small_ball p f
+    (fun t => (bg+t)*Real.sigmoid (θ t)-t/2) T a b s K τ err A tail hab hs
+    hτ herr hA hp hmax hl hu happrox htail
 
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
