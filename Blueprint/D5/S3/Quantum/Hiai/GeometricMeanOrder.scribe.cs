@@ -33,7 +33,7 @@ internal sealed class GeometricMeanOrderDocument : IScribeDocumentDefinition
                 H("Both-input order"), StatementSource.FromAuthor(Mono()),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Divergence/hiai2015meanconcavity")),
                 Blocks(Paragraph(Text("Increasing both strictly positive bases and the nonnegative second inputs increases the mean for theta in [0,1]. The comparison composes base monotonicity and Loewner-Heinz monotonicity."))), DescribeRole.Theorem),
-            Paragraph(Text("These are classical operator-mean and tracial variational arguments. The source dependencies retain their attribution and licenses. Full Hiai Problem 5.18 additionally requires inverse-geometric identification, its original parameter assembly and the support-preserving positive semidefinite extension. The native four-slot audit remains unfinished under issue #5214; no declared_validated registration is claimed.")))));
+            Paragraph(Text("These are classical operator-mean and tracial variational arguments. The source dependencies retain their attribution and licenses. Full Hiai Problem 5.18 additionally requires inverse-geometric identification, its original parameter assembly and the support-preserving positive semidefinite extension.")))));
 
     private static Formula Call(string name, params Formula[] args)
     {
