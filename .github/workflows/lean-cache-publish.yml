@@ -67,6 +67,19 @@ jobs:
               exit 0
             fi
           done
+          legacy_python="$(command -v python3 || true)"
+          if [[ -n "$legacy_python" ]] && "$legacy_python" -m pip --version >/dev/null 2>&1; then
+            "$legacy_python" -m pip install --disable-pip-version-check --target "$helper_dir" tomli
+            cat > "$helper_dir/tomllib.py" <<'PY_TOMLLIB'
+          from tomli import TOMLDecodeError, load, loads
+          PY_TOMLLIB
+            ln -s "$legacy_python" "$helper_dir/python3"
+            echo "$helper_dir" >> "$GITHUB_PATH"
+            echo "PYTHONPATH=$helper_dir${PYTHONPATH:+:$PYTHONPATH}" >> "$GITHUB_ENV"
+            PYTHONPATH="$helper_dir${PYTHONPATH:+:$PYTHONPATH}" "$legacy_python" -c 'import tomllib'
+            "$legacy_python" --version
+            exit 0
+          fi
           echo 'CACHE_PRODUCER_ERROR no Python interpreter with tomllib support' >&2
           exit 1
       - name: Validate the manual source ref and immutable pin
