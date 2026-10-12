@@ -21,3 +21,6 @@ The normalization is langlandsGaussSum(χ, ψ) = -gaussSum(χ⁻¹, ψ). The the
 ## References
 
 - Truth anchor: `D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/FiniteField/HasseDavenportLift.hasseDavenportLift`
+- Dependency: [D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/FiniteField/CharacterAPI](CharacterAPI.md)
+- Dependency: [D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/FiniteField/EulerProduct](EulerProduct.md)
+- Dependency: [D5/S3/Arith/CharacterSums/LanglandsFirstMainLemma/LocalField/Extension](../LocalField/Extension.md)
