@@ -1,4 +1,6 @@
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection
+import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.FirstWindowBoundaryAdaptive
+import Reg.Support.SingleDependentReadout
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.GlobalPresetObstruction
@@ -700,6 +702,134 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 #print axioms evidence
 #print axioms registration
 end ScriptPreset
+
+namespace PresetInclusionAudit
+@[reducible] def signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Nat) (fun _ => Nat)
+def actual : Realization signature := realize signature (fun _ _ n => n) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ {Y : Type u} (k m : ℕ) (hk : 0 < k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (d : ℕ)
+    (feasible : OriginalPresetFeasible k m hk alphabet f d),
+OriginalAdaptiveFeasible k m hk alphabet f (R.readout () () d)
+private theorem positive : arena.{u}.Law actual := preset_inclusion
+private theorem negative : ¬ arena.{u}.Law rejected := by
+  intro law
+  let f : Option (LiveRecord 8) → ULift.{u} (ZMod 2) := fun q =>
+    q.elim (ULift.up 0) (fun q => ULift.up (FirstWindowBoundaryAttainment.supportRow {1, 2} (-q.phase).val))
+  have supplied := FirstWindowBoundaryAttainment.original_first_window_binary_stream
+    5 (by omega) false {1, 2}
+    (by intro h hh; simp only [Finset.mem_insert, Finset.mem_singleton] at hh; rcases hh with rfl | rfl <;> omega)
+    f (fun _ b => ULift.up b) (by intro v j s hs; simp [f])
+  have feasible : OriginalPresetFeasible 8 5 (by omega) false f 1 := by
+    simpa only [show FirstWindowBoundaryAttainment.binaryCost {1, 2} = 1 by decide] using supplied.1
+  have bad := law 8 5 (by omega) false f 1 feasible
+  have adaptive : OriginalAdaptiveFeasible 8 5 (by omega) false f 0 := bad
+  have main := FirstWindowBoundaryAdaptive.original_first_window_adaptive_price 5 (by omega) false
+    (fun _ => {1, 2})
+    (by intro v h hh; simp only [Finset.mem_insert, Finset.mem_singleton] at hh; rcases hh with rfl | rfl <;> omega)
+    (fun _ => ULift.up (0 : ZMod 2)) (fun _ => ULift.up 1)
+    (by intro v h; exact zero_ne_one (congrArg ULift.down h))
+    f (by intro v j s hs; simp only [f, Option.elim_some, neg_neg, FirstWindowBoundaryAttainment.supportRow]; split_ifs <;> rfl)
+  have bound := (main.2.1 0).mp adaptive
+  change 1 ≤ 0 at bound
+  omega
+
+def evidence : Registration arena.{u} (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.preset_inclusion.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, rejected, negative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.{u}.Law actual rejected negative
+  dependence := by intro i; exact ⟨(), 0, 1, by change (0 : ℕ) ≠ 1; decide⟩
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.preset_inclusion.{u})
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.preset_inclusion
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.PresetInclusionAudit/arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.PresetInclusionAudit.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{u} ⟨evidence.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection,
+    definition := none, coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"],
+      stateBinder := 7, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms evidence
+#print axioms registration
+end PresetInclusionAudit
+
+namespace PresetMonotoneAudit
+@[reducible] def signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Nat) (fun _ => Nat)
+def actual : Realization signature := realize signature (fun _ _ n => n) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ {Y : Type u} (k m : ℕ) (hk : 2 ≤ k) (alphabet : Bool) (f : Option (LiveRecord k) → Y) (a b : ℕ) (le : a ≤ b)
+    (feasible : OriginalPresetFeasible k m (by omega) alphabet f a),
+OriginalPresetFeasible k m (by omega) alphabet f (R.readout () () b)
+private theorem positive : arena.{u}.Law actual := preset_monotone
+private theorem negative : ¬ arena.{u}.Law rejected := by
+  intro law
+  let f : Option (LiveRecord 8) → ULift.{u} (ZMod 2) := fun q =>
+    q.elim (ULift.up 0) (fun q => ULift.up (FirstWindowBoundaryAttainment.supportRow {1, 2} (-q.phase).val))
+  have supplied := FirstWindowBoundaryAttainment.original_first_window_binary_stream
+    5 (by omega) false {1, 2}
+    (by intro h hh; simp only [Finset.mem_insert, Finset.mem_singleton] at hh; rcases hh with rfl | rfl <;> omega)
+    f (fun _ b => ULift.up b) (by intro v j s hs; simp [f])
+  have feasible : OriginalPresetFeasible 8 5 (by omega) false f 1 := by
+    simpa only [show FirstWindowBoundaryAttainment.binaryCost {1, 2} = 1 by decide] using supplied.1
+  have bad := law 8 5 (by omega) false f 1 1 le_rfl feasible
+  have adaptive := preset_inclusion 8 5 (by omega) false f 0 bad
+  have main := FirstWindowBoundaryAdaptive.original_first_window_adaptive_price 5 (by omega) false
+    (fun _ => {1, 2})
+    (by intro v h hh; simp only [Finset.mem_insert, Finset.mem_singleton] at hh; rcases hh with rfl | rfl <;> omega)
+    (fun _ => ULift.up (0 : ZMod 2)) (fun _ => ULift.up 1)
+    (by intro v h; exact zero_ne_one (congrArg ULift.down h))
+    f (by intro v j s hs; simp only [f, Option.elim_some, neg_neg, FirstWindowBoundaryAttainment.supportRow]; split_ifs <;> rfl)
+  have bound := (main.2.1 0).mp adaptive
+  change 1 ≤ 0 at bound
+  omega
+
+def evidence : Registration arena.{u} (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.preset_monotone.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, rejected, negative⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.{u}.Law actual rejected negative
+  dependence := by intro i; exact ⟨(), 0, 1, by change (0 : ℕ) ≠ 1; decide⟩
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.preset_monotone.{u})
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.preset_monotone
+    "Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.PresetMonotoneAudit/arena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection.PresetMonotoneAudit.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena.{u}⟩, objectArena := .source ⟨arena.{u}⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena.{u} ⟨evidence.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection,
+    definition := none, coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"],
+      stateBinder := 7, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms evidence
+#print axioms registration
+end PresetMonotoneAudit
 
 end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.DonorCorrection

@@ -2119,3 +2119,112 @@ $$
 完整五态律、确定性词来源、带边记录的动态模型、[SIGNED《带符号阶乘核》](AURIC_FIB_ATOM_SIGNED_FACTORIAL_KERNEL_AND_GOLDEN_COMPATIBILITY.md) 定义 1.1、3.1、5.1 的有符号核及谱密度、付费停止观察律分别保留其原定义域；没有给出保留全部质量、标签和记录的映射时，不因同名、均值、秩或黄金数值相等而识别这些来源。对 native/物理接口、概率与作用的资源取得、确定性因子化及付费停止历史、精确或有效可达性，仍需各自的完整假设和证明。本节没有给这些开放对应增加公理；严格正域只是上述对数与 Fisher 断言的定义域，不替代其他开放对应的原问题域。
 
 ## 追加锚（本行以下为增补区）
+
+## 15. 条件独立截面的环境测地保持性与守卫误差
+
+**定义 15.1（全参数与环境测地路径）。** 在本卷的概率次序 $(0,2,3,5,25)$ 中，令
+
+$$
+\begin{aligned}
+ r&=1-Z, &
+ p&=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),\\
+ u&=(-\dot X-\dot Y-\dot Z+\dot\kappa,\ \dot X-\dot\kappa,\ \dot Z,\ \dot Y-\dot\kappa,\ \dot\kappa).
+\end{aligned}
+$$
+
+参数域为 $0<Z<1$, $0<X,Y<r$ 及
+$\max(0,X+Y-r)<\kappa<\min(X,Y)$。在此开域内，四个速度参数可任取实数；上式是概率重构的完整导数，故 $\sum_i u_i=0$。置
+
+$$
+ q_i=2\sqrt{p_i},\qquad v_i=\frac{u_i}{\sqrt{p_i}},\qquad
+ \omega=\left(\sum_i\frac{u_i^2}{p_i}\right)^{1/2}.
+$$
+
+复用本卷 §10 及 [HIDDEN《隐藏关系、统计、相位与接缝》](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) 命题 C-4.6 的平方根等距，有 $q\cdot v=2\sum_i u_i=0$、$\lVert q\rVert=2$，且 $\lVert v\rVert^2=\omega^2=g_p(u,u)$。把所声明的环境 Fisher--Levi--Civita 测地律作为路径前提，取 $t=0$ 为初点；当 $\omega>0$ 时
+
+$$
+ q(t)=\cos(\omega t/2)q+\frac{2\sin(\omega t/2)}{\omega}v.
+$$
+
+当 $\omega=0$ 时取 $q(t)=q$。两种情形均令 $p_i(t)=q_i(t)^2/4$。非零速时 $\lVert q(t)\rVert^2=4$、$q'(0)=v$、$q''=-(\omega^2/4)q(t)$；球面切向加速度为零，故确为半径二的 LC 测地，且 $p(0)=p$、$p'(0)=u$、$\sum_i p_i(t)=1$。令 $I$ 为包含 $0$ 的、满足全部 $q_i(t)>0$ 的最大连通开区间，并令
+$\mathcal N^\circ=\{p\in\mathcal D^\circ:p_0p_{25}=p_2p_5\}$。
+
+**定理 15.2（独立截面的完整保持判据）。** 若 $p\in\mathcal N^\circ$，则环境测地在整个 $I$ 内仍属于 $\mathcal N^\circ$，当且仅当
+
+$$
+ \omega=0
+ \quad\text{或}\quad
+ \begin{cases}
+ q_0v_{25}+q_{25}v_0-q_2v_5-q_5v_2=0,\\
+ v_0v_{25}-v_2v_5=0.
+ \end{cases}
+ \tag{15.1}
+$$
+
+初点不在 $\mathcal N^\circ$ 时没有保持性结论。这里的条件涵盖 $(X,Y,Z,\kappa)$ 及其四个独立速度参数；它不是只在一个端点或一个特例上的曲率测试。
+
+**证明。** 令 $F(a)=a_0a_{25}-a_2a_5$，并令
+$B(a,b)=a_0b_{25}+a_{25}b_0-a_2b_5-a_5b_2$。严格正性给出
+$F(q)=0\Longleftrightarrow p_0p_{25}=p_2p_5$。对 $\omega>0$，代入测地式得
+
+$$
+ F(q(t))=c^2F(q)+\frac{2cs}{\omega}B(q,v)
+ +\frac{4s^2}{\omega^2}F(v),\qquad
+ c=\cos(\omega t/2),\quad s=\sin(\omega t/2).
+$$
+
+若 (15.1) 成立，右端恒为零；结合归一化及 $I$ 上严格正性，得 $p(t)\in\mathcal N^\circ$。反之，$I$ 包含零的一个开邻域，在其中 $c\ne0$；除以 $c^2$ 并令 $z=\tan(\omega t/2)$，所得多项式
+$2zB(q,v)/\omega+4z^2F(v)/\omega^2$ 在一段区间为零，故两项系数均为零。这个局部必要条件又使原式在整个 $I$ 恒零，包括 $c=0$ 的点。$\omega=0$ 时 $u=v=0$，路径为常值。证毕。
+
+**命题 15.3（同一可见均值路径的隐藏误差与守卫读出）。** 对任意严格正曲线 $p(t)$，令
+
+$$
+ \bar p(t)=p^*(X(t),Y(t),Z(t)),\qquad
+ \kappa^*(t)=\frac{X(t)Y(t)}{r(t)},\qquad
+ \Delta(t)=r(t)\kappa(t)-X(t)Y(t).
+$$
+
+在 $r(t)>0$ 时，完整隐藏差异精确为
+
+$$
+ \kappa(t)-\kappa^*(t)=\frac{\Delta(t)}{r(t)}.
+ \tag{15.2}
+$$
+
+这里 $p^*$ 是声明的条件独立完成；它严格正且与 $p(t)$ 共享整个 $(X,Y,Z)$ 路径，只有实际来源满足 $\kappa=\kappa^*$ 时它才等于该来源。对 [OBSERVER《观察者与算术关系》](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md) 定义 A-14.3，要求实际从 $(s,C)=(0,0)$ 初始化、读取同一模式的精确首次数量 $Q=(0,2,3,5,7)_I$，在粗化前计算 $D_7=\mathbf1_{7\mid Q}$，随后只保存奇数事件 $A$ 并在同一状态输入固定高端模式。只要 $Y(t)+Z(t)>0$，其条件菜单满足
+
+$$
+ \begin{aligned}
+ d_7(p)-d_7(\bar p)&=\frac{2\Delta}{r},\\
+ (\Pr(18\mid A),\Pr(26\mid A),\Pr(\bot\mid A))_p
+ &=\frac{(Z,Y-\kappa,\kappa)}{Y+Z},\\
+ (\Pr(18\mid A),\Pr(26\mid A),\Pr(\bot\mid A))_p-(\Pr(18\mid A),\Pr(26\mid A),\Pr(\bot\mid A))_{\bar p}
+ &=\frac{\Delta}{r(Y+Z)}(0,-1,1).
+ \end{aligned}
+ \tag{15.3}
+$$
+
+**证明。** (15.2) 是本卷 §1 的完成式与 $\Delta=r\kappa-XY$ 的消元。命题 A-14.4 给出 $d_7=1-X-Y-Z+2\kappa$ 及三项菜单；代入 $\kappa^*=XY/r$ 即得 (15.3)。严格正源时 $Y+Z>0$，且三项菜单质量均为正。$\bar p$ 是同一可见路径点上的数学完成，其菜单是按同一合同计算的预测；式子不授予第二个实际来源、独立重采样或新增准备。单次取得 $Q$ 不认证总体均值 $d_7$，同源、同状态和既定菜单合同仍是适用条件。证毕。
+
+**例 15.4（相同一阶数据不保持守卫预测）。** 取均匀律 $p_i=1/5$ 和 $u=(-4/5,0,0,0,4/5)$。此时 $B(q,v)=0$ 而 $F(v)=-16/5$。定义 15.1 的测地满足
+
+$$
+ p_i''(0)=\frac{u_i^2}{2p_i}-\frac{\omega^2p_i}{2},\qquad
+ \omega^2=32/5,\qquad
+ p''(0)=(24,-16,-16,-16,24)/25.
+$$
+
+所以 $\Delta(0)=\Delta'(0)=0$，$\Delta''(0)=-16/25$，即
+$\Delta(t)=-8t^2/25+O(t^3)$。由 (15.2)--(15.3)，相对自身可见路径的独立完成，隐藏差、$d_7$ 预测差和条件拒绝概率差分别为
+$-2t^2/5+O(t^3)$、$-4t^2/5+O(t^3)$ 和 $-2t^2/3+O(t^3)$。
+另取
+
+$$
+ p_{\rm exp}(t)=\frac{(e^{-4t},1,1,1,e^{4t})}{e^{-4t}+3+e^{4t}}.
+$$
+
+它对所有有限 $t$ 严格正并满足 $\Delta=0$，且与上述测地共享初点和速度。对固定 $f=(-4,0,0,0,4)$，期望 $E_f=\sum p_if_i$ 的 Fisher 梯度是 $p_i(f_i-E_f)$，因为与任意零和切向量 $h$ 的内积为 $\sum f_ih_i$。直接微分 $p_{\rm exp}$ 即得此自然梯度流。其可见加速度为 $(16,16,-32)/25$，测地的可见加速度为 $(8,8,-16)/25$，两者均按 $(X,Y,Z)$ 排列，故不共享整个可见路径。
+
+环境测地、定义 14.2 的 Fisher 水平提升、自然梯度流以及独立截面的内在测地是四种不同路径。特别地，$p_{\rm exp}$ 与 $p_{\rm geo}$ 可共享初点和一阶速度，而不共享整个可见均值路径；前者是指定期望的自然梯度流，后者才使用本节的环境 Levi--Civita 律。每个路径点的数学条件源都可以交给 A-14.3--A-14.4 的既有守卫评价；因而只能对每条实际给定的路径逐点使用 $p^*(X(t),Y(t),Z(t))$ 和 (15.2)--(15.3)，不能把一条路径的零误差转移给另一条路径。上述路径是模型数学前提，不附加原生连续操作、物理时钟、自由制备或可观测完整历史。
+
+## 追加锚（本行以下为增补区）

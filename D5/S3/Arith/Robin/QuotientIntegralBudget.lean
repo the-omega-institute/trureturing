@@ -71,7 +71,7 @@ private theorem prefix_monotone (k : ℕ → ℝ) (hk : ∀ n : ℕ, 1 ≤ n →
   intro y z hyz
   unfold arithmeticPrefix
   exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono (Nat.floor_mono hyz)) (fun i _ _ => hk (i + 1) (Nat.succ_pos i))
-private theorem prefix_as_finite_sum (k : ℕ → ℝ) {N : ℕ} {y : ℝ} (hy : 0 ≤ y) (hyN : y ≤ N) : arithmeticPrefix k y = ∑ i ∈ Finset.range N, if ((i
+theorem prefix_as_finite_sum (k : ℕ → ℝ) {N : ℕ} {y : ℝ} (hy : 0 ≤ y) (hyN : y ≤ N) : arithmeticPrefix k y = ∑ i ∈ Finset.range N, if ((i
     + 1 : ℕ) : ℝ) ≤ y then k (i + 1) else 0 := by
   have hfloor : ⌊y⌋₊ ≤ N := by
     simpa using Nat.floor_mono hyN
@@ -92,7 +92,7 @@ private theorem prefix_as_finite_sum (k : ℕ → ℝ) {N : ℕ} {y : ℝ} (hy :
         exact hi (Finset.mem_range.mpr (Nat.lt_of_succ_le h'))
       simp only [if_neg hnot]
 
-private theorem prefix_difference_finite (k : ℕ → ℝ) {N : ℕ} {c y : ℝ} (hy : 0 ≤ y) (hcy : 0 ≤ c * y) (hcyle : c * y ≤ y) (hyN : y ≤ N) :
+theorem prefix_difference_finite (k : ℕ → ℝ) {N : ℕ} {c y : ℝ} (hy : 0 ≤ y) (hcy : 0 ≤ c * y) (hcyle : c * y ≤ y) (hyN : y ≤ N) :
     arithmeticPrefix k y - arithmeticPrefix k (c * y) = ∑ i ∈ Finset.range N, if c * y < ((i + 1 : ℕ) : ℝ) ∧ ((i + 1 : ℕ) : ℝ) ≤ y then k (i + 1)
     else 0 := by
   rw [prefix_as_finite_sum k hy hyN, prefix_as_finite_sum k hcy (hcyle.trans hyN), ← Finset.sum_sub_distrib]

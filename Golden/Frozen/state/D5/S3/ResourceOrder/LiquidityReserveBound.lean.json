@@ -1,1 +1,1 @@
-{"statement_id":"sha256:22a1f785dedfbc7ee9a18980eba831c07236157039063fd2d9183e394ad7e314"}
+{"statement_id":"sha256:22a1f785dedfbc7ee9a18980eba831c07236157039063fd2d9183e394ad7e314","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:ResourceOrder),21:LiquidityReserveBound),29:liquidity_reserve_nonnegative)","kind":"theorem"}]}

@@ -1,0 +1,17 @@
+**Proposition 34.3 (The omitted two-label fibre boundary).** Fix one free-value fibre under the geometry of Definition 34.1 and suppose its scalar image has exactly two labels. Let $b=a_v$ be the exterior label and let
+
+$$
+S=\{j\in J:\lambda_v(j)\ne b\}.
+$$
+
+Then the exact adaptive fee restricted to this fibre is
+
+$$
+\boxed{
+C_{\rm ad}^{v}=\begin{cases}
+1,&|S|\text{ even},\\
+2,&|S|\text{ odd}.
+\end{cases}}
+\tag{34.14}
+$$
+

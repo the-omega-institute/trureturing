@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0cc9e6d5df8bd867e5d4ffc0823bf72f83b0f5dea5e57f74b8d554dbfeeaa2dd"}
+{"statement_id":"sha256:0cc9e6d5df8bd867e5d4ffc0823bf72f83b0f5dea5e57f74b8d554dbfeeaa2dd","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),25:base_path_position_memory)","kind":"theorem"}]}

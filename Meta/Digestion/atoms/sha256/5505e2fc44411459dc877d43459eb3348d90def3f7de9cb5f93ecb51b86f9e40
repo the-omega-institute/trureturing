@@ -1,0 +1,24 @@
+**定义 8.1（对称边截面与残余坐标）。** 在定义 2.1 的边序下，记 $f=(a,b,c,d,e)$，并取
+
+$$
+x=a-c,\quad z=e,\quad y=b-d,\quad
+r_\sigma=a-b+c-d,\quad r_\omega=a+b+c+d.
+$$
+
+指定 $AB$ 的右逆 $Q(x,z,y)=(x/2,y/2,-x/2,-y/2,z)$。于是 $f-Q(ABf)=(a_0,b_0,a_0,b_0,0)$，其中 $a_0=(a+c)/2$、$b_0=(b+d)/2$。置
+
+$$
+\sigma=b_0-a_0=-r_\sigma/2,\qquad
+\Omega=a_0+b_0=r_\omega/2,\qquad
+U=(1,0,1,0,0),\quad V=(0,1,0,1,0).
+$$
+
+消费定理 2.2 得
+
+$$
+f-Q(ABf)=\frac{\Omega}{2}\mathbf c+\frac{\sigma}{2}(V-U),
+\qquad B(f-Q(ABf))=\sigma\mathbf d.
+$$
+
+因此 $\Omega$ 的一半才是此分裂中的循环系数。若 $\dot p=Bf$，实际 $\dot\kappa=b-c=(x+y)/2+\sigma$；只有 $x=y=0$ 时它等于 $\sigma$。这里的状态截面为 $BQ$，与数学引文 1.2 的 $L$ 相差 $\mathbf d(x+y)/2$。更换截面改变残余系数，不改变 $p_{13}$ 或 $\dot p_{13}$。
+

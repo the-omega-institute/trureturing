@@ -1,0 +1,18 @@
+**命题 13.2（熵相等的 seam 与复合源抵消）。** 本节熵用自然对数及 $0\log0=0$。对命题 11.2 的 $p_\kappa$，$p_\kappa$ 与 $p_{2/5-\kappa}$ 只是四个底面质量的置换。因此它们熵相等；例如 $\kappa=3/20,1/4$ 给不同律、相同边界与熵，而二阶矩相差 $2$。故纯熵源可在进入 Laplacian 以前即发生碰撞。
+
+对 $\rho=a m_1+b\mathbb EW^2+\eta H(p)$，即使 $b\ne0$，也没有任意 $\eta$ 下的无抵消保证。在两点 $\kappa\ne\kappa'$ 熵不同时，取
+
+$$
+\eta=-\frac{20b(\kappa'-\kappa)}{H(p_{\kappa'})-H(p_\kappa)}
+$$
+
+使两点源相等。这样的点存在，例如 $\kappa=1/10,\kappa'=1/5$。
+
+证明。$p_\kappa=(\kappa,2/5-\kappa,1/5,2/5-\kappa,\kappa)$，参数反射交换两对质量，熵的置换不变性来自 [Shannon §6](../../../Library/Estimation/shannon1948communication.md)。二阶矩差由数学引文 1.4 给 $20(1/4-3/20)=2$。沿区间内部
+
+$$
+\frac{d}{d\kappa}H(p_\kappa)=2\log\frac{2/5-\kappa}{\kappa},
+$$
+
+故熵从 $1/10$ 到 $1/5$ 严格增加，所列分母非零，代入即抵消。对于可微复合源，其导数为 $20b+\eta H'(p_\kappa)$，也可能在某点为零；一阶导数为零不推出整个函数恒定。∎
+

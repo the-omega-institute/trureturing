@@ -615,7 +615,7 @@ private theorem scripts_decode {Y : Type u} (r m : ℕ) (hr : 3 ≤ r)
     simpa only [neg_neg, commonWords] using script_decodes r (2 * r) m hr hm le_rfl alphabet
       (commonSchedule r) (commonPosition r v) labels f target v (scripts_match r v) (-phase) s hs
 
-private theorem script_history_trace {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
+theorem script_history_trace {Y : Type u} (k m : ℕ) (hk : 2 ≤ k)
     (f : Option (LiveRecord k) → Y) (D : ℕ)
     (words : ZMod 2 → List (Fin m → Bool))
     (decode : ZMod 2 → NarrowWindowCost.Archive m → Y)

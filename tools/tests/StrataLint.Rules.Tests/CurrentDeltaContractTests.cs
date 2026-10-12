@@ -31,7 +31,6 @@ public sealed class CurrentDeltaContractTests
     [InlineData(30)]
     [InlineData(31)]
     [InlineData(32)]
-    [InlineData(33)]
     [InlineData(34)]
     public void HistoricalAdmissionScopesRemainDeltaOnly(int rule)
     {

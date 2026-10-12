@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a271c83db9aed49214566390e19a6047bd9468732cf275ed3fcadf8844701b59"}
+{"statement_id":"sha256:a271c83db9aed49214566390e19a6047bd9468732cf275ed3fcadf8844701b59","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),9:Rewriting),6:Safety),15:InvariantSafety),16:invariant_safety)","kind":"theorem"}]}

@@ -1323,3 +1323,42 @@ special $4.03\times10^{46}$ zero-defect statement applies only to the
 correctly selected global $N$, and is not applied to event samples $N_p$.
 Accordingly, this supplement controls one conditional finite covariance band
 while the full signed RH/Robin objective remains open.
+
+## The full-real normal form also controls strict inventory at events
+
+The same primary's §8, `thm:psi-normal-form`, first states the
+full-real workload formula
+
+$$
+D_{\rm CA}(x)=x-\psi(x)-(\sqrt2-1)\sqrt x+o(\sqrt x),
+\qquad D_{\rm CA}(x)=x-\Phi_{\rm CA}(x).
+$$
+
+Its regular-return specialization is a subsequent consequence. The
+full-real statement is reusable without imposing self-tangency, GA1
+or GA2 at each intervening prefix. It is an archived preprint supplier,
+not a new project normal-form theorem or a Lean-verified input.
+
+The price and marginal correspondences above identify the primary's
+maximal prefix with $A^+$, whereas the project's strict inventory is
+$K(x)=A^-(x)=\log N_x^{\rm str}$. The [existing FIB source,
+§111.2](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+already reuses the strict full-real statement, including event points:
+
+$$
+Q(x):=K(x)-\psi(x)=(\sqrt2-1)\sqrt x+o(\sqrt x).
+$$
+
+That statement traces to the [existing Euler source](../../docs/develop/theory/ZECKENDORF_EULER_5040.md),
+Definition 7.1, Theorem 8.1 and (19)--(24). Its identification of the
+older restricted pressure with the unrestricted pressure requires
+$0<\lambda(x)<\log(12/11)/\log11$, which holds beyond one real start.
+Its strict endpoint convention and complete higher-layer remainder
+are already supplied; no endpoint-transfer or normal-form proof is
+repeated here. Weak $\psi$ is the same on both sides.
+
+There is no certified numeric start and no short-interval drift or
+signed zeta-zero estimate asserted. The [owning price-gap
+note](../Estimation/trureturing2026pricegapconvexity.md#the-existing-full-real-normal-form-pays-the-stock-term)
+uses this existing all-real result to pay the actual deterministic
+term in CR36, with every original source and maximizing tie retained.

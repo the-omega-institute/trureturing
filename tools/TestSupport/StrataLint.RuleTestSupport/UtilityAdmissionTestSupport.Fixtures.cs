@@ -23,7 +23,7 @@ internal static partial class UtilityAdmissionTestSupport
     internal static string AddCandidateState(RuleFixture fixture)
     {
         var state = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
-        fixture.Files[state] = "{\"statement_id\":\"sha256:" + new string('0', 64) + "\"}\n";
+        fixture.Files[state] = "{\"statement_id\":\"sha256:" + new string('0', 64) + "\",\"declarations\":[]}\n";
         return state;
     }
 

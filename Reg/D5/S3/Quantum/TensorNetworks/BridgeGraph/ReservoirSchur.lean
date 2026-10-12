@@ -655,29 +655,94 @@ noncomputable def sourceSL_kernelEmbeddingRegistration : Contract.Registration.{
 
 open Reg.Support.BridgeGraphOriginalLaws
 
+abbrev kernelOperatorSignature : Signature where
+  Params := FiveParams
+  State _ := type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := (Fin p.2.1 × Fin p.2.2.2.2 → ℚ) →
+    (SourceIndex p.1 p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 → ℚ)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def kernelOperatorActual : Realization kernelOperatorSignature :=
+  realize kernelOperatorSignature
+    (fun _ q f => f q.1 q.2.1 q.2.2.1 q.2.2.2.1 q.2.2.2.2)
+    (fun e => nomatch e)
+
+def kernelOperatorRejected : Realization kernelOperatorSignature :=
+  realize kernelOperatorSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+@[reducible] def kernelOperatorArena : Arena where
+  signature := kernelOperatorSignature
+  Law R := ∀ (p alpha beta gamma delta : ℕ),
+    Function.Injective (R.readout () ⟨p, ⟨alpha, ⟨beta, ⟨gamma, delta⟩⟩⟩⟩
+      (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding))
+
+theorem kernelOperatorPositive : kernelOperatorArena.Law kernelOperatorActual := by
+  intro p alpha beta gamma delta
+  exact _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
+    p alpha beta gamma delta
+
+theorem kernelOperatorNegative : ¬ kernelOperatorArena.Law kernelOperatorRejected := by
+  intro h
+  have hinj := h 1 1 1 1 1
+  have hzeroone := @hinj (fun _ => (0 : ℚ)) (fun _ => 1) (by rfl)
+  have hq := congrFun hzeroone (0, 0)
+  change (0 : ℚ) = 1 at hq
+  norm_num at hq
+
+theorem kernelOperatorDependence :
+    ObservationalDependence kernelOperatorSignature kernelOperatorActual := by
+  intro i
+  obtain ⟨p, x, y, hxy⟩ := kernelFunctionDependence i
+  let K : kernelOperatorSignature.State p :=
+    @_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding
+  let Z : kernelOperatorSignature.State p := fun _ _ _ _ _ => 0
+  refine ⟨p, K, Z, ?_⟩
+  intro h
+  have hx := congrFun h x
+  have hy := congrFun h y
+  apply hxy
+  simpa [kernelOperatorActual, kernelFunctionActual, realize, K, Z] using
+    (hx.trans hy.symm)
+
+def kernelOperatorEvidence : Registration kernelOperatorArena
+    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective)) where
+  actual := kernelOperatorActual
+  bridge := Iff.rfl
+  variation := ⟨kernelOperatorPositive, kernelOperatorRejected, kernelOperatorNegative⟩
+  sensitivity := ⟨fun i => ⟨kernelOperatorRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, kernelOperatorNegative⟩,
+    fun i => nomatch i⟩
+  dependence := kernelOperatorDependence
+
 noncomputable def kernelEmbedding_injectiveRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective)
-    (type_of% (realize kernelFunctionSignature (fun _ _ f => @Decidable.decide (Function.Injective f)
-      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize kernelOperatorSignature
+      (fun _ q f => f q.1 q.2.1 q.2.2.1 q.2.2.2.1 q.2.2.2.2)
+      (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
     "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injectiveArena/[anonymous]") "__information_unit",
-  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injectiveEvidence,
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelOperatorEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨kernelEmbedding_injectiveArena⟩,
-  objectArena := .source ⟨kernelEmbedding_injectiveArena⟩,
+  arena := .source ⟨kernelOperatorArena⟩,
+  objectArena := .source ⟨kernelOperatorArena⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source kernelEmbedding_injectiveArena ⟨kernelEmbedding_injectiveEvidence⟩,
+  realization := .source kernelOperatorArena ⟨kernelOperatorEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize kernelFunctionSignature (fun _ _ f => @Decidable.decide (Function.Injective f)
-      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)),
+  readout := some (realize kernelOperatorSignature
+    (fun _ q f => f q.1 q.2.1 q.2.2.1 q.2.2.2.1 q.2.2.2.2)
+    (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur, definition := none,
     coordinates := #[0, 1, 2, 3, 4], readouts := #[{
-      path := #["body", "body", "body", "body", "body"],
+      path := #["body", "body", "body", "body", "body", "arg"],
       stateBinder := 0, functionOperand := false,
-      stateOperand := some #["arg"], booleanPredicate := true }] },
+      stateOperand := some #["arg", "fn", "fn", "fn", "fn", "fn"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
@@ -688,9 +753,9 @@ noncomputable def kernelEmbedding_injectiveRegistration : Contract.Registration.
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 #print axioms _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
-#print axioms kernelEmbedding_injectivePositive
-#print axioms kernelEmbedding_injectiveNegative
-#print axioms kernelEmbedding_injectiveEvidence
+#print axioms kernelOperatorPositive
+#print axioms kernelOperatorNegative
+#print axioms kernelOperatorEvidence
 #print axioms kernelEmbedding_injectiveRegistration
 
 noncomputable def kernel_coordinatesRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

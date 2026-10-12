@@ -100,7 +100,7 @@ def Qser : PowerSeries (Polynomial ℤ) := X * geom (Y * X)
 def A : Matrix (Fin 2) (Fin 2) (PowerSeries (Polynomial ℤ)) :=
   !![Rser, Rser * Qser; Rser, Rser * Y * Qser]
 
-private lemma geom_mul (z : PowerSeries (Polynomial ℤ)) (hz : PowerSeries.constantCoeff z = 0) :
+lemma geom_mul (z : PowerSeries (Polynomial ℤ)) (hz : PowerSeries.constantCoeff z = 0) :
     (1-z) * geom z = 1 := by
   exact PowerSeries.mul_invOfUnit (1-z) 1 (by simp [hz])
 
@@ -137,12 +137,12 @@ def AgreeUpTo (N : Nat) (f g : (PowerSeries (Polynomial ℤ))) : Prop :=
 
 private lemma AgreeUpTo.refl (N : Nat) (f : (PowerSeries (Polynomial ℤ))) : AgreeUpTo N f f := fun _ _ => rfl
 
-private lemma AgreeUpTo.add {N : Nat} {f g u v : (PowerSeries (Polynomial ℤ))}
+lemma AgreeUpTo.add {N : Nat} {f g u v : (PowerSeries (Polynomial ℤ))}
     (h : AgreeUpTo N f g) (k : AgreeUpTo N u v) : AgreeUpTo N (f+u) (g+v) := by
   intro n hn
   simp only [map_add,h n hn,k n hn]
 
-private lemma AgreeUpTo.mul {N : Nat} {f g u v : (PowerSeries (Polynomial ℤ))}
+lemma AgreeUpTo.mul {N : Nat} {f g u v : (PowerSeries (Polynomial ℤ))}
     (h : AgreeUpTo N f g) (k : AgreeUpTo N u v) : AgreeUpTo N (f*u) (g*v) := by
   intro n hn
   simp only [PowerSeries.coeff_mul]
@@ -168,7 +168,7 @@ private lemma matrix_approx_pow {N : Nat} {M M' : Matrix (Fin 2) (Fin 2) (PowerS
   | zero => intro i j; exact AgreeUpTo.refl _ _
   | succ ell ih => simpa only [pow_succ] using matrix_approx_mul ih h
 
-private lemma geom_finite_identity (z : (PowerSeries (Polynomial ℤ))) (N : Nat) (hz : PowerSeries.constantCoeff z=0) :
+lemma geom_finite_identity (z : (PowerSeries (Polynomial ℤ))) (N : Nat) (hz : PowerSeries.constantCoeff z=0) :
     geom z = (∑ j ∈ Finset.range (N+1), z^j) + z^(N+1)*geom z := by
   have ht : (1-z)*(∑ j ∈ Finset.range (N+1), z^j)=1-z^(N+1) :=
     mul_neg_geom_sum z (N+1)
@@ -207,7 +207,7 @@ def openDegree (j : Fin 2) : List (Nat × Nat) → Nat
   | [b] => pairLocal b+adjacency (slackState b.2) j
   | b::c::t => pairLocal b+adjacency (slackState b.2) (slackState c.2)+openDegree j (c::t)
 
-private def transferLength (t : List (Nat × Nat)) : Nat := (t.map pairLength).sum
+def transferLength (t : List (Nat × Nat)) : Nat := (t.map pairLength).sum
 
 def provisionalDegree (t : List (Nat × Nat)) : Nat :=
   match t with
@@ -313,7 +313,7 @@ private def runPartial (N : Nat) : (PowerSeries (Polynomial ℤ)) :=
 
 private def slackPartial (N : Nat) : (PowerSeries (Polynomial ℤ)) := X*(∑ j : Fin (N+1), (Y*X)^j.val)
 
-private def alphabetPair {N : Nat} (b : Fin (N+2) × Fin (N+2)) : Nat × Nat :=
+def alphabetPair {N : Nat} (b : Fin (N+2) × Fin (N+2)) : Nat × Nat :=
   (b.1.val+1,b.2.val)
 
 private def letterPartial (N : Nat) : Matrix (Fin 2) (Fin 2) (PowerSeries (Polynomial ℤ)) :=
@@ -407,7 +407,7 @@ private theorem letterPartial_approx (N : Nat) :
   · exact (runPartial_approx N).mul (slackPartial_approx N)
   · exact ((runPartial_approx N).mul (AgreeUpTo.refl N Y)).mul (slackPartial_approx N)
 
-private def boundedList (n ell : Nat) (f : Fin ell → Fin (n+2) × Fin (n+2)) : List (Nat × Nat) :=
+def boundedList (n ell : Nat) (f : Fin ell → Fin (n+2) × Fin (n+2)) : List (Nat × Nat) :=
   List.ofFn (fun p => alphabetPair (f p))
 
 private def BoundedTuples (n ell : Nat) :=
@@ -479,7 +479,7 @@ private def boundedTupleEquiv (n ell : Nat) : BoundedTuples n (ell+1) ≃ RunTup
     apply Subtype.ext
     exact boundedList_boundRunTuple t
 
-private theorem bounded_weight_sum (n ell : Nat) (g : List (Nat × Nat) → Polynomial ℤ) :
+theorem bounded_weight_sum (n ell : Nat) (g : List (Nat × Nat) → Polynomial ℤ) :
     (∑ f : Fin (ell+1) → Fin (n+2) × Fin (n+2),
       if transferLength (boundedList n (ell+1) f)=n then
         g (boundedList n (ell+1) f) else 0) =

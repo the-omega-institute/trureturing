@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8ba2a13be4cc2aaaad1adce1a4f1ff8b2b29df1b066fc2f50f55e61f26f726df"}
+{"statement_id":"sha256:8ba2a13be4cc2aaaad1adce1a4f1ff8b2b29df1b066fc2f50f55e61f26f726df","declarations":[{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),6:WeilEF),12:digamma_conj)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),6:WeilEF),14:gammaR_bracket)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),6:WeilEF),17:logDeriv_Gamma\u211D)","kind":"theorem"}]}

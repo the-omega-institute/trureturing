@@ -172,6 +172,20 @@ $$\forall (\operatorname{n}: \operatorname{Nat}), \operatorname{runPolynomial} \
 
 A zero-run admissible word is the zero word, whose degree fixes its single polynomial weight.
 
+**Lemma 1.13 (Zero run count).**
+
+$$\forall (\operatorname{n}: \operatorname{Nat}), \forall (\operatorname{w}: \operatorname{Fin} \operatorname{n} \to \operatorname{Bool}), \forall (\operatorname{ha}: \operatorname{Admissible} \operatorname{w}), \operatorname{runCount} \operatorname{w} = 0 \iff \operatorname{w} = (\operatorname{Function}.\operatorname{const} (\operatorname{Fin} \operatorname{n}) \operatorname{false})$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.runCount_zero_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Wei and Y. Yang (2024). *Associated Mersenne graphs*. DOI: [10.48550/arXiv.2407.08237](https://doi.org/10.48550/arXiv.2407.08237). URL: <https://arxiv.org/abs/2407.08237v1>.
+
+*Commentary.*
+
+For an admissible word, zero run count is equivalent to being the all-false word.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.DegreeTuples`
@@ -182,6 +196,7 @@ A zero-run admissible word is the zero word, whose degree fixes its single polyn
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.marked_degree_double_count`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.polynomial_marked_double_count`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.runCount_le`
+- Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.runCount_zero_iff`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.runPolynomial`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.runPolynomial_zero`
 - Truth anchor: `D5/S1/Words/AssociatedMersenne/MarkedDegreeEnumeration.tuplePolynomial`

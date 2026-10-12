@@ -1,1 +1,1 @@
-{"statement_id":"sha256:078dac01d8126a834eb04b862aa12feb83b431b3d4283a204c581ed265ebdfb4"}
+{"statement_id":"sha256:078dac01d8126a834eb04b862aa12feb83b431b3d4283a204c581ed265ebdfb4","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:QuantumBounds),7:Designs),21:CollisionConservation),31:collision_sum_eq_one_add_purity)","kind":"theorem"}]}

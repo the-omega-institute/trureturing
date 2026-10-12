@@ -266,4 +266,178 @@ noncomputable def registration_1 :
 #print axioms registration_1
 
 end
+
+namespace PeriodicReuse
+noncomputable section
+abbrev endpointSignature : Signature where
+  Params := unitInterval
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def endpointActual : Realization endpointSignature :=
+  realize endpointSignature (fun _ r j => (explicitStoppedWordLaw .p r).real {some (pWord j 1)})
+    (fun e => nomatch e)
+def endpointRejected : Realization endpointSignature :=
+  realize endpointSignature (fun _ _ _ => 0) (fun e => nomatch e)
+def endpointArena : Arena where
+  signature := endpointSignature
+  Law R := ∀ (r : unitInterval) (j : ℕ),
+    R.readout () r j = (1-(r:ℝ))^2*((r:ℝ)*(1-r))^j
+private theorem rejected_endpoint : ¬ endpointArena.Law endpointRejected := by
+  intro law
+  have he := law endpointA 0
+  norm_num [endpointRejected,realize,endpointA] at he
+private theorem endpoint_dependence : ObservationalDependence endpointSignature endpointActual := by
+  intro role
+  refine ⟨endpointA,0,1,?_⟩
+  change (explicitStoppedWordLaw .p endpointA).real {some (pWord 0 1)} ≠
+    (explicitStoppedWordLaw .p endpointA).real {some (pWord 1 1)}
+  rw [endpoint_p_word,endpoint_p_word]
+  norm_num [endpointA]
+def endpointRecord : Registration endpointArena (type_of% (@endpoint_p_word)) where
+  actual := endpointActual
+  bridge := Iff.rfl
+  variation := ⟨endpoint_p_word,endpointRejected,rejected_endpoint⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨endpointRejected,?_,rfl,rejected_endpoint⟩
+      intro j hj; exact False.elim (hj (@Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := endpoint_dependence
+
+def endpointRegistration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@endpoint_p_word) (type_of% (realize endpointSignature
+      (fun _ r j => (explicitStoppedWordLaw .p r).real {some (pWord j 1)})
+      (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.PeriodicReuse.endpoint,
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.PeriodicReuse.endpointRecord,
+  realizationSource := none, generated := false,
+  arena := .source ⟨endpointArena⟩, objectArena := .source ⟨endpointArena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source endpointArena ⟨endpointRecord⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize endpointSignature
+    (fun _ r j => (explicitStoppedWordLaw .p r).real {some (pWord j 1)})
+    (fun e => nomatch e)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator,
+    definition := none, coordinates := #[0],
+    readouts := #[{
+        path := #["body", "body", "fn", "arg"], stateBinder := 1, functionOperand := false,
+        stateOperand := none, booleanPredicate := false }] }, continuation := .unknown, familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `autoImplicit, value := .bool false },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+#print axioms endpointRecord
+end
+end PeriodicReuse
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator
+
+namespace Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.ProbabilityAudit
+open _root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator
+open _root_.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FourthSegmentStoppedLaw
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal Classical
+noncomputable section
+
+abbrev signature : Signature where
+  Params := ActivePhase
+  State _ := unitInterval
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Measure RawTail
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ phase r => explicitStoppedWordLaw phase r) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law f := ∀ (phase : ActivePhase) (r : unitInterval), IsProbabilityMeasure (f.readout () phase r)
+
+theorem source_bridge : (type_of% (@endpoint_probability)) ↔ arena.Law actual := Iff.rfl
+
+theorem actual_law : arena.Law actual := endpoint_probability
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := (h .p ⟨0,by norm_num⟩).measure_univ
+  simp [rejected,realize] at hh
+
+theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨.p,⟨0,by norm_num⟩,⟨1,by norm_num⟩,?_⟩
+  intro h
+  have he := congrArg (fun P : Measure RawTail => P {some [0]}) h
+  simp only [actual,realize] at he
+  have hf : ∃ b, WordFamily .p b [0] := ⟨0,0,rfl⟩
+  rw [explicit_finite_mass,explicit_finite_mass,if_pos hf,if_pos hf] at he
+  norm_num [wordMass,alphaMass,bernoulliMeasure] at he
+
+def sourceRegistration : Registration arena (type_of% (@endpoint_probability)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law,rejected,rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,rfl,rejected_law⟩
+      intro j h
+      exact False.elim (h (@Subsingleton.elim Unit _ j i))
+    · intro i; exact nomatch i
+  dependence := actual_dependence
+
+noncomputable def registration_1 :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@endpoint_probability) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.probability_registration.__information_unit
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.ProbabilityAudit.sourceRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨sourceRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ phase r => explicitStoppedWordLaw phase r) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms sourceRegistration
+#print axioms registration_1
+end
+end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ConstantSuspensionSeparator.ProbabilityAudit

@@ -1,0 +1,38 @@
+**定义 24.1（Seven-phase source, original operations and actual fee）。** Retain the matched original reader of (15.1)–(15.4), the actual joint histories of Lemma 15.1, and the entire immutable INITIAL, endpoint, stopping and fee contract of Definition 18.1. Fix
+
+$$
+m=4,\qquad k=6,\qquad T=k+1=7,\qquad
+g=\gcd(4,7)=1,\qquad p=7,\qquad P=\mathbb Z/7\mathbb Z.
+\tag{24.1}
+$$
+
+The order $k=6$ stays fixed. Bits are read in increasing original weight order, with $G_i=2^i$ for $0\le i<6$ and $G_i=\sum_{h=1}^6G_{i-h}$ for $i\ge6$. The matched value of a legal history $w$ is $V_6(w)\bmod2$, and the supplied coefficient law is
+
+$$
+c_i=G_i\bmod2=\mathbf1_{\{0,-1\}}(i\bmod7).
+\tag{24.2}
+$$
+
+The two original alphabets are separately retained:
+
+$$
+\mathcal A_{\rm all}=\{0,1\}^4,\qquad
+\mathcal A_{\rm loc}=\{B\in\{0,1\}^4:B\text{ internally avoids }1^6\}
+=\{0,1\}^4.
+\tag{24.3}
+$$
+
+Their equality does not remove cross-block rejection. The source consists of every actual finite complete-block history in the chosen alphabet, including already rejected histories, with unknown history and length. Its immutable INITIAL record lies in
+
+$$
+Q=(\mathbb F_2\times\mathbb Z/7\mathbb Z\times\{0,1,2,3,4,5\})\sqcup\{\bot\},
+\qquad \theta=|w|\bmod7.
+\tag{24.4}
+$$
+
+Every live triple and $\bot$ are jointly attainable by Lemma 15.1. A zero sends $(v,\theta,s)$ to $(v,\theta+1,0)$; a one sends it to $(v+c_\theta,\theta+1,s+1)$ when $s<5$, and to $\bot$ when $s=5$. Rejection is independent of phase and value and is absorbing for both bits. A complete action executes all four bit updates.
+
+The INITIAL value $v$ or distinct rejection symbol $\bot$ is free. Later observations are only actual complete-block endpoints. Each emitted four-bit block costs one, including clearing, waiting, padding and every remaining bit after a rejection within that block. There is no reset, copy, interior observation, hidden INITIAL clock or observation of an unexecuted branch. A controller may remember its own inputs, endpoint observations and emitted block count; neither unknown INITIAL length nor other archives are supplied. Offline computation and this memory are outside the block fee.
+
+For an immutable target $f:Q\to Y$, $C_{\rm ad}(f)$ minimizes the worst number of actually emitted complete blocks among successful adaptive protocols, each actual execution stopping finitely with $f(q_{\rm INITIAL})$. The fee is $+\infty$ if no successful protocol has a uniform finite worst bound. $C_{\rm pre}(f)$ additionally requires one preset literal stream: at the same emitted block number, all live archives and both free-value fibres use the same word. Stopping depends only on the source's own actual archive. Initial bottom stops freely with its fixed target label.
+

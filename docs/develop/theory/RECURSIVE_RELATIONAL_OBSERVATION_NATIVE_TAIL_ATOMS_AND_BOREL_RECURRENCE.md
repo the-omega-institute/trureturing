@@ -764,3 +764,477 @@ or fixed-resource optimum in these conclusions.
 [PAID]: https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Uniform stability in the normalized word-return coordinate
+
+**Assumption 6.1 (the full boxed Borel domain).** In Sections 6--8 use
+exactly [LATE, Definitions 1.2--1.3 and Assumption 1.1][LATE15403]. Thus
+$a=1/3$, $b=2/5$, $z_r=r(1-r)$, $c_r=(1-r)^2$, and $\lambda=4/15$.
+The complete carriers, native laws, regular TV spaces, and endpoint
+coordinate boxes are (1.2)--(1.7) above. Both infinite outcomes remain
+in their carriers. The phase marginals have arbitrary Borel support.
+The two disintegrations satisfy the entire-measure equations
+
+$$
+\begin{aligned}
+Q&=u(Q)\delta_\alpha+(1-u(Q))\beta\!\int W\,B(Q,dW),\\
+W&=(1-v(W))\delta_\beta+v(W)\alpha\!\int Q'\,A(W,dQ'),\\
+\nu_pB&=\nu_\beta,\qquad \nu_\beta A=\nu_p.
+\end{aligned}
+\tag{6.1}
+$$
+
+Conditioning is on the whole input descriptor. The last line uses the
+original unweighted marginals; no continuation or survival factor is
+inserted into either marginal.
+
+The prior $\mu$ is any fixed finite or countable probability distribution
+with $\mu(1),\mu(2)>0$. One $K$ is drawn before the first paid Read;
+conditional on that same $K=k$, letters have alpha probability
+$r_k=F_{k+1}/F_{k+3}$. Every supported $k$ remains a target. This includes
+the three-depth source of Section 1 as its corresponding special case.
+The source parameters remain $(m,d,\ell,n)=(2,1,2,4)$; a subscript $n$
+below counts word returns and does not change a source parameter.
+Both accepted seeds, all positive finite paid rejections, partial parses
+and returns, marker triples, bare and held records, selectors, write
+and latch flags, permissions, third write before its latch, fourth
+completion, delivery and matching Stop retain their original meaning.
+Terminal states permit no Read. Initialization is source-independent;
+acquired and synthetic letters use identical updates. The complete-record
+renderer of [PAIR, Section 2][PAIR-STABILITY] retains future letters,
+operation blocks and noncompletion, and preserves TV. COMPLETE charges
+the original control, installed program and numbers, selectors, addresses,
+labels, output cursors, sampler states, workspace and persistent randomness.
+The descriptors and operators in (6.1) are analytical coordinates, not
+additional observer ports, resets or newly sampled depths.
+
+**Definition 6.2 (normalized slack and the constant).** Retain the
+notation of [LATE, Theorem 6.1][LATE15403]:
+
+$$
+\begin{aligned}
+d_n&=\int Q(w_{n,1})\,d\nu_p(Q),\\
+e_{a,n}&=d_n-c_az_a^n,&e_{b,n}&=c_bz_b^n-d_n,\\
+E_r&=\max_{s\in\{p,\beta\}}
+       \int\operatorname{TV}(D,P_{s,r})\,d\nu_s(D),\\
+\kappa&=\frac15,&
+M_r&=1+z_r+z_r^2+(1+z_r)\lambda+\lambda^2,\\
+H_r&=M_rc_r\kappa^{-3}z_r^3
+                  \sum_{j=0}^2(\lambda/z_r)^j.
+\end{aligned}
+\tag{6.2}
+$$
+
+Here TV is half the complete-carrier $\ell^1$ distance, evaluated at each
+configuration before integration. In particular $E_r$ is neither TV
+between descriptor distributions nor a loss obtained by replacing each
+configuration law by the phase barycentre.
+
+**Theorem 6.3 (uniform normalized complete-configuration stability).**
+For every pair satisfying Assumption 6.1, both $r\in\{a,b\}$ and every
+integer $n\ge4$, one has
+
+$$
+E_r\le H_r\frac{e_{r,n}}{c_rz_r^n},\qquad
+H_a=\frac{9839648}{2657205},\qquad
+H_b=\frac{20723912}{5859375}.
+\tag{6.3}
+$$
+
+The same constants apply to every such pair and every word-return index.
+No finite-support, recurrence, deterministic-successor, reversibility,
+mixing or additional observation hypothesis is imposed.
+
+**Proof.** Marginal transport in (6.1) gives
+$\int B|f|\,d\nu_p=\int|f|\,d\nu_\beta$ and
+$\int A|h|\,d\nu_\beta=\int|h|\,d\nu_p$ for bounded Borel functions.
+A null set at either phase therefore has zero conditional mass from
+almost every input at the other phase. The kernels and their bounded
+positive weighted compositions act on functions modulo the respective
+marginal null sets. Coordinate equations and boxes hold simultaneously
+there because the complete carriers are countable; a countable union
+also accommodates every iterate below. Thus no conditional version at
+a null input affects an identity or inequality. The regular tail bounds
+force both infinite masses to zero by continuity from above, without
+removing those coordinates or conditioning on completion.
+
+Use the full-word recursion of [LATE, (6.4)--(6.5)][LATE15403], on
+these same quotients:
+
+$$
+\begin{gathered}
+P=BA,\qquad Lf=(1-u)B(vAf),\qquad
+ g=(1-u)B(1-v),\qquad w=L\mathbf1=1-u-g,\\
+q_j(Q):=Q(w_{j,1})=L^jg(Q),\qquad
+c_b\le g\le c_a,\qquad \nu_pP=\nu_p,\\
+\kappa Pf\le Lf\le\lambda Pf\quad(f\ge0),\qquad
+\kappa^j\!\int f\,d\nu_p
+ \le\int L^jf\,d\nu_p
+ \le\lambda^j\!\int f\,d\nu_p\quad(f\ge0).
+\end{gathered}
+\tag{6.4}
+$$
+
+The last comparison follows by positive-kernel iteration and
+$\nu_pP^j=\nu_p$, not by stationarity of $L$. Neither commutation of
+$P,L$ nor an invariant probability for $L$ is required.
+
+Fix $r,n$, and abbreviate $c=c_r,z=z_r$. Put $\sigma=1$ for $r=a$
+and $\sigma=-1$ for $r=b$, and define
+
+$$
+F=\sigma(c-g),\quad \Phi=\int F\,d\nu_p,\quad
+h_j=\sigma(q_j-cz^j),\quad V=\sigma(w-z).
+\tag{6.5}
+$$
+
+Here $F\ge0$. The ratio of the two native marker-one masses is
+$(81/100)(27/25)^j$, which exceeds one for $j\ge3$. The complete
+boxes therefore give $h_j\ge0$ for $j\ge3$ and
+$\int h_n\,d\nu_p=e_{r,n}$. In particular, the predecessor at
+$n-1\ge3$ and positivity of $L$ imply
+
+$$
+0\le Lh_{n-1}
+ =h_n-cz^{n-1}V,\qquad
+ V\le\frac{h_n}{cz^{n-1}}.
+\tag{6.6}
+$$
+
+This is an order bound on a possibly signed $V$; it asserts no
+nonnegativity of $V$.
+
+Use a block of exactly three returns, independently of $n$. Finite
+telescoping gives
+$L^3\mathbf1-z^3\mathbf1=\sum_{j=0}^2z^{2-j}L^j(w-z)$.
+Since $q_3=L^3g$, it follows that
+
+$$
+\begin{aligned}
+L^3F
+ &=c\sum_{j=0}^2z^{2-j}L^jV-h_3\\
+ &\le c\sum_{j=0}^2z^{2-j}L^jV\\
+ &\le z^{3-n}\sum_{j=0}^2z^{-j}L^jh_n.
+\end{aligned}
+\tag{6.7}
+$$
+
+The first inequality uses the actual index-three box $h_3\ge0$;
+the second applies the positive operators $L^j$ to (6.6).
+Apply (6.4) to the nonnegative $F$ and $h_n$ and integrate:
+
+$$
+\kappa^3\Phi\le\int L^3F\,d\nu_p
+ \le z^{3-n}\sum_{j=0}^2(\lambda/z)^j e_{r,n}.
+\tag{6.8}
+$$
+
+Only three powers of the lower comparison constant occur. This yields
+an estimate uniform in $n$ after division by the native word mass.
+
+To pass from $\Phi$ to the two entire configuration losses, reuse the
+complete-TV conversion of [LATE, (6.10)--(6.15)][LATE15403]. Its exact
+hypotheses are present here: normalization, both full boxes, both full
+residuals and the same unweighted marginal transport. More explicitly,
+the endpoint-a-positive events on the entire carriers are
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+\tag{6.9}
+$$
+
+Every other finite coordinate has the opposite endpoint ordering, and
+the infinite coordinates have zero difference. Inside the boxes, the
+signs of every coordinate difference from either endpoint are fixed.
+Normalization identifies complete TV with the corresponding signed
+event difference; (6.9) is not a truncation of the laws.
+
+For clarity, the conversion uses $x=|u-r|$, $y=|v-r|$ and the identities
+
+$$
+F=(1-r)x+(1-u)By=(1-r)By+B(1-v)x,
+\qquad F\ge(1-r)x,\quad F\ge(1-r)By.
+\tag{6.10}
+$$
+
+Writing $f_j=\sigma(cz^j-q_j)$ for $j=0,1,2$, its p identities are
+$\operatorname{TV}(Q,P_{p,r})=f_0+f_1+f_2$ and
+$f_{j+1}=Lf_j+cz^j(x-F)$ for $j=0,1$. As
+$c(x-F)\le zF$, these give the supplied pointwise bound
+
+$$
+\operatorname{TV}(Q,P_{p,r})
+ \le(1+z+z^2)F+(1+z)LF+L^2F.
+\tag{6.11}
+$$
+
+At suspension the exact conversion is
+$\operatorname{TV}(W,P_{\beta,r})=(1-c)y+vAF$.
+Consequently (6.4), (6.10) and both marginal transports give
+
+$$
+\begin{aligned}
+\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p&\le M_r\Phi,\\
+\int\operatorname{TV}(W,P_{\beta,r})\,d\nu_\beta
+ &\le\left(\frac{1-c}{1-r}+b\right)\Phi\le M_r\Phi.
+\end{aligned}
+\tag{6.12}
+$$
+
+The middle suspended coefficient is $37/30$ for a and $22/15$ for b;
+its differences from $M_a,M_b$ are respectively $1763/4050$ and
+$1309/5625$. All TV expressions have thus been evaluated on complete
+configuration laws before taking expectations. Combining (6.8) and
+(6.12) gives exactly (6.3).
+
+Finally $M_a=3379/2025$, $M_b=9559/5625$, and the two three-term sums
+in (6.2) are $91/25$ and $271/81$. Thus the rational values in (6.3)
+follow from
+
+$$
+\begin{aligned}
+H_a&=\frac{3379}{2025}\frac49\,125
+           \left(\frac29\right)^3\frac{91}{25}
+       =\frac{9839648}{2657205},\\
+H_b&=\frac{9559}{5625}\frac9{25}\,125
+           \left(\frac6{25}\right)^3\frac{271}{81}
+       =\frac{20723912}{5859375}.
+\end{aligned}
+\tag{6.13}
+$$
+
+The proof treats both signs and all $n\ge4$ on one original pair.
+$\square$
+
+## 7. The all-supported-depth consumer and necessary lower-tail repairs
+
+**Definition 7.1 (the original risk and the separate midpoint condition).**
+For the source of Assumption 6.1 use exactly
+[PAIR, (11.9)][PAIR-STABILITY]:
+
+$$
+\mathcal J=\max_{s\in\{p,\beta\}}
+ \left\{\sup_{k:\mu(k)>0}
+       \int\operatorname{TV}(D,P_{s,r_k})\,d\nu_s(D)-\rho_s\right\},
+\qquad
+\rho_p=\frac{1116529}{22781250},\quad
+\rho_\beta=\frac{239}{6750}.
+\tag{7.1}
+$$
+
+A compatible zero-excess pair means $\mathcal J=0$, with every supported
+target still present. Separately, a boxed p-midpoint pair means a pair
+satisfying Assumption 6.1 and
+
+$$
+\int Q(E_p)\,d\nu_p=C_p,\qquad
+C_p=\frac{11758471}{22781250}.
+\tag{7.2}
+$$
+
+This second condition asserts neither the suspended midpoint nor the
+supported-target loss budgets.
+
+**Corollary 7.2 (a uniform necessary normalized correction).** For every
+boxed compatible pair of Assumption 6.1, both endpoints and all $n\ge4$,
+
+$$
+\mathcal J+H_r\frac{e_{r,n}}{c_rz_r^n}\ge\rho_p.
+\tag{7.3}
+$$
+
+Every compatible pair with $\mathcal J=0$, and separately every boxed
+p-midpoint pair, therefore satisfies simultaneously
+
+$$
+\frac{e_{r,n}}{c_rz_r^n}\ge\frac{\rho_p}{H_r}>0
+\quad(r=a,b,\ n\ge4).
+\tag{7.4}
+$$
+
+Equivalently, on either of those two classes,
+
+$$
+c_az_a^n\left(1+\frac{\rho_p}{H_a}\right)
+ \le d_n\le
+c_bz_b^n\left(1-\frac{\rho_p}{H_b}\right)
+\quad(n\ge4).
+\tag{7.5}
+$$
+
+**Proof.** The complete endpoint distance at p is $2\rho_p$; its
+endpoint-positive event is (6.9), with endpoint values $C_p+\rho_p$
+and $C_p-\rho_p$. Given $r$, the opposite endpoint $r^{\rm opp}$ is
+an original supported target since $\mu(1),\mu(2)>0$. The triangle
+inequality on each complete configuration law gives
+
+$$
+\begin{aligned}
+\mathcal J
+ &\ge\int\operatorname{TV}(Q,P_{p,r^{\rm opp}})\,d\nu_p-\rho_p\\
+ &\ge\rho_p-\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p\\
+ &\ge\rho_p-E_r.
+\end{aligned}
+\tag{7.6}
+$$
+
+Apply Theorem 6.3. Taking one supported target as a lower bound in
+(7.6) does not remove any other target from (7.1).
+
+For a compatible pair with $\mathcal J=0$, the full boxes need not be
+assumed separately. At each phase both endpoint losses are at most
+$\rho_s$ and their sum is at least
+$\operatorname{TV}(P_{s,a},P_{s,b})=2\rho_s$. Thus both equal
+$\rho_s$. Equality in the integrated coordinate triangle inequality
+forces its nonnegative slack to vanish almost surely at each complete
+atom. Countability gives the full boxes simultaneously; their signed
+event formula also gives both midpoint means. This is the exact
+zero-face implication of [PAIR, (11.29)--(11.30)][PAIR-STABILITY].
+Hence (7.3) applies to that same pair and proves (7.4).
+
+Under the separate boxed p-midpoint assumption, the complete-TV event
+formula directly gives
+
+$$
+\int\operatorname{TV}(Q,P_{p,a})\,d\nu_p
+ =C_p+\rho_p-C_p=\rho_p,
+\qquad
+\int\operatorname{TV}(Q,P_{p,b})\,d\nu_p
+ =C_p-(C_p-\rho_p)=\rho_p.
+\tag{7.7}
+$$
+
+Thus $E_r\ge\rho_p$ for both endpoints, and Theorem 6.3 again gives
+(7.4). Substitution of the two definitions of slack gives (7.5).
+$\square$
+
+**Corollary 7.3 (no subnative-order NULL155 lower-tail repair).** The two
+p descriptors in [NULL155, Definition 2.1][NULL-STABILITY] have the same
+marker-one masses $c_az_a^n$ for every $n\ge5$. Let a proposed repair
+supply a single compatible pair in the original domain, satisfying
+either $\mathcal J=0$ or the separate boxed p-midpoint condition of
+Definition 7.1. If its corrected mean is
+$d_n=c_az_a^n+\Delta_n$ for $n\ge5$, then
+
+$$
+\Delta_n\ge\frac{c_a\rho_p}{H_a}z_a^n>0
+\qquad(n\ge5).
+\tag{7.8}
+$$
+
+In particular $\Delta_n=o(z_a^n)$ is impossible, even if that
+asymptotic condition is required only along an unbounded subsequence.
+The conclusion allows arbitrary changes to support, mixture weights,
+earlier coordinates and conditional branching, subject to the same
+complete compatibility and face hypotheses.
+
+**Proof.** Every probability mixture of those two specified p laws has
+the displayed original tail means. For any repaired pair with the stated
+hypotheses, $\Delta_n=e_{a,n}$, and (7.4) gives (7.8). If
+$n_j\to\infty$, then every $n_j\ge5$ obeys
+$\Delta_{n_j}/z_a^{n_j}\ge c_a\rho_p/H_a>0$, which contradicts
+convergence of that ratio to zero. The same bound also applies termwise
+to a family of proposed repairs, each satisfying the stated hypotheses,
+when the return indices tend to infinity across the family.
+
+The NULL155 measures themselves fail common full marginals and omitted
+complete residual equations [NULL155, Proposition 5.1][NULL-STABILITY].
+They are not inputs to Theorem 6.3. The conclusion constrains their
+proposed compatible repairs, not merely their retained feature moments.
+Meeting (7.8) alone supplies none of the remaining compatibility or
+loss conditions. $\square$
+
+## 8. Supplier correspondence and unresolved realization
+
+**Mathematical citation 8.1 (source-specific inference and mature tools).**
+[LATE, Sections 6--9][LATE15403] is used at the exact source revision
+$\mathtt{e0b3be330ba79b298ea9e02d67ff3ddea04b75a3}$.
+Its positive-kernel comparison, two complete-TV conversions and original
+risk consumer supply (6.4), (6.10)--(6.12) and the triangle argument.
+Its coefficient $C_{r,n}$ is finite at each fixed index. The additional
+source-specific implication here is (6.7)--(6.8): the index-three box
+and a late predecessor box control $L^3F$, regardless of the distance
+to that predecessor. This gives the constants $H_r$ independent of the
+word-return index, and the simultaneous necessary bound (7.4).
+Neither an eventual recurrence nor positive mass at a native descriptor
+is assumed. This is a repo-derived ordinary mathematical
+deduction relative to the cited suppliers, without a global originality
+or optimal-constant claim.
+
+Positive-kernel order, integration against an invariant probability,
+finite telescoping and the complete-measure triangle inequality are
+mature intermediate tools. Ferré, Rousset and Stoltz, *More on the long
+time stability of Feynman--Kac semigroups*,
+[Section 2, Assumptions 1--3 and Lemma 2](https://arxiv.org/html/1807.00390v3),
+study positive kernels with Lyapunov, minorization/irreducibility and
+local regularity hypotheses for their spectral conclusions. None of
+those extra hypotheses is supplied here; (6.8) instead uses the given
+stationary unweighted probability for $P$ and three positive comparisons.
+Li and Schneider, *Applications of Perron--Frobenius Theory to Population
+Dynamics*, [Theorems 2.1(a) and 2.3](https://arxiv.org/html/math/0109008v1),
+require a finite irreducible matrix for their positive Perron vectors
+and primitivity for normalized-power convergence. Neither conclusion
+is used to replace the arbitrary Borel kernels. Leskelä and Vihola,
+*Conditional convex orders and measurable martingale couplings*,
+[Theorems 1.2(i) and 1.3(i)](https://arxiv.org/html/1404.0999v3),
+supply finite-first-moment vector and measurable-kernel coupling results.
+Bounded word projections meet that integrability premise, but do not
+by themselves supply two compatible full-law flows or this stability
+estimate. [PAIR, Theorem 20.2][PAIR-STABILITY] retains the entire
+prescribed marginals in its compatibility criterion; they are not
+replaced here by separately chosen finite projections.
+
+**Mathematical citation 8.2 (distinct suppliers and boundary controls).**
+The all-source [cut-partition classification][CUT-STABILITY] concerns
+finite prefix-free cuts: factorization between realized images of the
+entire literal row maps is equivalent to a common suffix decomposition.
+Its source-free decoder and absent-cut and empty/root clauses concern
+those original tree rows. They supply neither the stochastic residual
+identities (6.1) nor the unweighted law comparison (6.8).
+The [arbitrary-family lexicographic supplier, Theorem 41.2][LEX-STABILITY]
+assumes linear forms on one finite-dimensional real input space and
+finite feasibility. Its polynomial witnesses have constraintwise
+thresholds. No such full-law parameterization with both residuals,
+common marginals and every supported budget is established here, and
+those constraintwise thresholds supply no simultaneous complete-law
+application or replacement for (6.8).
+
+The native endpoint flows, half-native mixture and index-three nonnative
+contact remain the supplied controls of [LATE, Section 8][LATE15403].
+At a native r flow, both sides of (6.3) vanish. The half-native mixture
+retains its own two-endpoint zero-excess scope and its supported
+nonendpoint obstruction; its midpoint conditions alone do not imply
+all other supported budgets. The nonnative upper contact has
+$e_{b,3}=0$ and positive complete TV, so a universal finite-coefficient
+extension to $n=3$ remains false. These are supplier consistency
+conditions, not substitutes for the proof over arbitrary Borel supports.
+
+**Definition 8.3 (remaining feasibility and operational bridges).** The
+simultaneous feasibility problem still asks for one pair with both full
+residual equations, the common unweighted marginals, both complete boxes,
+both midpoint means and every supported configuration-loss budget.
+Theorem 6.3 and Corollaries 7.2--7.3 are necessary constraints; they
+construct no such pair and determine no general value of $j_c$.
+Uniformity in (7.4) is in the normalized word-return coordinate.
+The absolute lower correction in (7.8) tends to zero with $n$; no
+uniform absolute correction, uniform source-depth risk gap or general
+positive value of $j_c$ is asserted.
+
+The operational bridge additionally requires an admissible finite
+representation, allowed exact samplers, source-independent installation,
+actual paid acquisition and execution with identical acquired/synthetic
+updates, matching Stop and all COMPLETE charges. Analytical kernels
+and their bounds add no observable register, posterior port, clock,
+reset or free randomness. Neither finite representation, exact sampling,
+installation, physical attainment nor any fixed-resource optimum follows
+from the necessary normalized estimate. The original common source,
+both seeds and every paid history remain part of those obligations.
+
+[LATE15403]: https://github.com/the-omega-institute/trureturing/blob/e0b3be330ba79b298ea9e02d67ff3ddea04b75a3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_CONTACT_RIGIDITY.md
+[PAIR-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md
+[NULL-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FIXED_FULL_RESIDUAL_NULL.md
+[CUT-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionClassification.md
+[LEX-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md
+
+## 追加锚（本行以下为增补区）

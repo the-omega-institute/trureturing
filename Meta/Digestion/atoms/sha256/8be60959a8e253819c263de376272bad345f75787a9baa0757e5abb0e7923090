@@ -1,0 +1,34 @@
+**Definition 29.1 (The complete first-window binary family).** Retain the original reader, joint actual histories, immutable INITIAL targets, observations and fees of Definitions 18.1 and 27.1 and [INITIAL target-cost theory, Definitions 1.1–1.3](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee). Fix
+
+$$
+ m\ge5,\qquad k=2m-2,\qquad T=2m-1,\qquad
+ P=\mathbb Z/T\mathbb Z,
+$$
+$$
+ B=\{1,\ldots,m\},\qquad U=\{2,\ldots,m-1\},\qquad
+ R=P\setminus B=\{0,m+1,\ldots,2m-2\}.
+\tag{29.1}
+$$
+
+For each free INITIAL value $v\in\mathbb F_2$, choose labels $A_v\ne B_v$ and an arbitrary support $H_v\subseteq B$. Allow arbitrary coincidences between labels belonging to different free values. On every actual INITIAL record put
+
+$$
+ f(v,-j,s)=
+ \begin{cases}B_v,&j\in H_v,\\ A_v,&j\notin H_v,\end{cases}
+ \qquad j\in P,\quad 0\le s<k.
+\tag{29.2}
+$$
+
+Initial $\bot$ has its arbitrary independently observed label and stops freely. The history and its length are unknown. Every actually emitted complete length-$m$ block costs one, including waits, padding and rejecting blocks; only its endpoint is observed. GLOBAL means one preselected literal word at each emitted block number, shared by every live archive and both free values, with stopping and decoding based on that source's own acquired archive. Both original alphabets are retained. They contain the same length-$m$ literal words here because $m<k$; cross-block rejection remains part of the operation.
+
+Define the ordered membership table, its full and internal images, and the two boundary labels by
+
+$$
+ o=(0,0),\qquad \ell(j)=(\mathbf1_{H_0}(j),\mathbf1_{H_1}(j)),\qquad
+ L=\ell[P],\quad n=|L|,\quad K=\ell[U],\quad r=|K|,
+ \qquad x=\ell(1),\quad y=\ell(m).
+\tag{29.3}
+$$
+
+In particular $\ell|_R=o$. Equality of these membership pairs is exactly equality of the ordered original label pairs, since $A_v\ne B_v$ separately. For $n=2$ put $H=H_0\cup H_1$: its members carry the unique nonbase membership pair. Thus $n=1$ means both supports are empty, and $n=2$ includes both a common nonempty support and one empty fibre.
+
