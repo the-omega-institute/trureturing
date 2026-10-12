@@ -8,6 +8,288 @@
 import D5.S3.Quantum.Entanglement.RendezvousVectorSystemGap
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Analysis.Matrix.Order
+
+/-
+Declaration inventory. Names are relative to this module namespace; private names use their
+source spelling. Compiler-generated constants are included.
+Correlation: Real input-output correlation type.
+  proof_shape: bind-only; consumer: statement of claim.
+G: Translation-permutation parameter type.
+  proof_shape: bind-only; consumer: statement of claim.
+Inputs: Finite set of promised ordered inputs.
+  proof_shape: bind-only; consumer: statement of claim.
+IsNS: Nonnegative normalized no-signalling predicate.
+  proof_shape: bind-only; consumer: statement of claim.
+IsQuantum: Existential finite-dimensional quantum realization.
+  proof_shape: bind-only; consumer: statement of claim.
+NSValues: Set of no-signalling correlation values.
+  proof_shape: bind-only; consumer: statement of claim.
+Promised: Distance-2t input predicate.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy: Density matrix and two local POVMs.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.E: Strategy field projection E.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.E_psd: Strategy field projection E_psd.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.E_sum: Strategy field projection E_sum.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.F: Strategy field projection F.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.F_psd: Strategy field projection F_psd.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.F_sum: Strategy field projection F_sum.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy._sizeOf_1: Generated strategy size declaration.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy._sizeOf_inst: Generated strategy size declaration.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.casesOn: Generated strategy eliminator.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.ctorIdx: Generated strategy constructor index.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.mk: Generated strategy constructor.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.mk._flat_ctor: Generated strategy constructor.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.mk.inj: Generated strategy constructor injectivity.
+  proof_shape: bind-only; consumer: QStrategy.mk.injEq.
+QStrategy.mk.injEq: Generated strategy constructor injectivity.
+  proof_shape: bind-only; consumer: none (compiler-generated theorem).
+QStrategy.mk.noConfusion: Generated strategy no-confusion principle.
+  proof_shape: bind-only; consumer: QStrategy.mk.inj.
+QStrategy.mk.sizeOf_spec: Generated strategy size declaration.
+  proof_shape: bind-only; consumer: none (compiler-generated theorem).
+QStrategy.noConfusion: Generated strategy no-confusion principle.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.noConfusionType: Generated strategy no-confusion principle.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.prob: Real trace Born correlation.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.rec: Generated strategy eliminator.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.recOn: Generated strategy eliminator.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.rho_psd: Strategy field projection rho_psd.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.rho_trace: Strategy field projection rho_trace.
+  proof_shape: bind-only; consumer: statement of claim.
+QStrategy.ρ: Strategy field projection ρ.
+  proof_shape: bind-only; consumer: statement of claim.
+QValues: Set of quantum correlation values.
+  proof_shape: bind-only; consumer: statement of claim.
+VG: Operator-valued orbit vector space.
+  proof_shape: bind-only; consumer: statement of claim.
+actO: Action on fixed-cardinality outputs.
+  proof_shape: bind-only; consumer: statement of claim.
+actO._proof_1: Generated proof certificate for actO.
+  proof_shape: bind-only; consumer: actO.
+actO_equiv: Permutation equivalence on outputs.
+  proof_shape: bind-only; consumer: statement of claim.
+actO_equiv._proof_1: Generated proof certificate for actO_equiv.
+  proof_shape: bind-only; consumer: actO_equiv.
+actO_equiv._proof_2: Generated proof certificate for actO_equiv.
+  proof_shape: bind-only; consumer: actO_equiv.
+actO_rightMul: Composition of the output action.
+  proof_shape: bind-only; consumer: orbit_sum_constant.
+actV: Action on input vertices.
+  proof_shape: bind-only; consumer: statement of claim.
+actVEquiv: Equivalence of the vertex action.
+  proof_shape: bind-only; consumer: statement of claim.
+actVEquiv._proof_1: Generated proof certificate for actVEquiv.
+  proof_shape: bind-only; consumer: actVEquiv.
+actVEquiv._proof_2: Generated proof certificate for actVEquiv.
+  proof_shape: bind-only; consumer: actVEquiv.
+actV_rightMul: Composition of the vertex action.
+  proof_shape: bind-only; consumer: orbit_sum_constant.
+claim: Strict comparison of quantum and no-signalling values.
+  proof_shape: bind-only; consumer: statement of claim.
+contraction_sq: Square of a positive contraction is bounded by it.
+  proof_shape: bind-only; consumer: inner_qv.
+core_sum: Linearity of a core over finite sums.
+  proof_shape: bind-only; consumer: inner_hu.
+deterministic: One-dimensional deterministic POVM strategy.
+  proof_shape: bind-only; consumer: statement of claim.
+deterministic._proof_1: Generated proof certificate for deterministic.
+  proof_shape: bind-only; consumer: deterministic.
+deterministic._proof_2: Generated proof certificate for deterministic.
+  proof_shape: bind-only; consumer: deterministic.
+deterministic._proof_3: Generated proof certificate for deterministic.
+  proof_shape: bind-only; consumer: deterministic.
+deterministic._proof_4: Generated proof certificate for deterministic.
+  proof_shape: bind-only; consumer: deterministic.
+effect: Sum of selected Alice effects.
+  proof_shape: bind-only; consumer: statement of claim.
+effect_budget: State-weighted square bound for selected effects.
+  proof_shape: bind-only; consumer: inner_u_budget.
+effect_le_one: Identity upper bound for a sum of effects.
+  proof_shape: bind-only; consumer: effect_sq_le.
+effect_le_one._abel_1_1: Generated additive normalization certificate for effect_le_one.
+  proof_shape: bind-only; consumer: effect_le_one.
+effect_nonneg: Positive semidefiniteness of a sum of effects.
+  proof_shape: bind-only; consumer: effect_sq_le.
+effect_sq_le: Square bound for selected effects.
+  proof_shape: bind-only; consumer: effect_budget.
+exists_win: Existence of a winning input-output branch.
+  proof_shape: bind-only; consumer: quantum_bound.
+exists_win._proof_1_1: Generated arithmetic certificate for exists_win.
+  proof_shape: bind-only; consumer: exists_win.
+finset_perm_map_exists: Permutation carrying one output set to another.
+  proof_shape: bind-only; consumer: input_output_transitive.
+flip: Guarded complementary-output map.
+  proof_shape: bind-only; consumer: statement of claim.
+flip._proof_1: Generated proof certificate for flip.
+  proof_shape: bind-only; consumer: flip._proof_2.
+flip._proof_2: Generated proof certificate for flip.
+  proof_shape: bind-only; consumer: flip.
+flipEquiv: Equivalence of the complementary-output map.
+  proof_shape: bind-only; consumer: statement of claim.
+flip_involutive: Involutivity of the complementary-output map.
+  proof_shape: bind-only; consumer: flipEquiv.
+hvec: Constant identity vector.
+  proof_shape: bind-only; consumer: statement of claim.
+inner_hh: Pairing of the identity vector with itself.
+  proof_shape: bind-only; consumer: inner_hu.
+inner_hu: Uniform identity pairing of Alice vectors.
+  proof_shape: bind-only; consumer: inner_qu.
+inner_hv: Uniform identity pairing of Bob vectors.
+  proof_shape: bind-only; consumer: inner_qv.
+inner_pair_budget: Two-outcome square bound for Alice vectors.
+  proof_shape: bind-only; consumer: quantum_bound.
+inner_qu: Unit square bound for Alice vectors.
+  proof_shape: bind-only; consumer: quantum_bound.
+inner_qv: Unit square bound for Bob vectors.
+  proof_shape: bind-only; consumer: quantum_bound.
+inner_u_budget: Alice vector square bound by its identity pairing.
+  proof_shape: bind-only; consumer: inner_qu.
+inner_uv_eq: Pairing of local vectors as the averaged Born probability.
+  proof_shape: bind-only; consumer: quantum_bound.
+inner_winning_constant: Constant vector pairing on winning branches.
+  proof_shape: bind-only; consumer: winning_cross.
+inner_winning_constant._simp_1_1: Generated simplification certificate for inner_winning_constant.
+  proof_shape: bind-only; consumer: inner_winning_constant.
+inner_winning_constant._simp_1_2: Generated simplification certificate for inner_winning_constant.
+  proof_shape: bind-only; consumer: inner_winning_constant.
+input_output_transitive: Transitivity on input-output pairs.
+  proof_shape: bind-only; consumer: orbit_sum_constant.
+inputs_pos: Existence of a promised input.
+  proof_shape: bind-only; consumer: ns_bound.
+kron_sq_le: Contraction square bounds for Kronecker products.
+  proof_shape: bind-only; consumer: inner_qv.
+kron_trace_uv: Born trace identity for local Kronecker effects.
+  proof_shape: bind-only; consumer: inner_uv_eq.
+nsP: Guarded complementary no-signalling correlation.
+  proof_shape: bind-only; consumer: statement of claim.
+nsP_isNS: No-signalling of the complementary correlation.
+  proof_shape: bind-only; consumer: result.
+nsP_value: Value of the complementary correlation.
+  proof_shape: bind-only; consumer: result.
+nsP_value._proof_1_1: Generated arithmetic certificate for nsP_value.
+  proof_shape: bind-only; consumer: nsP_value.
+ns_bound: Unit upper bound for no-signalling values.
+  proof_shape: bind-only; consumer: result.
+omegaNS: Supremum of no-signalling values.
+  proof_shape: bind-only; consumer: statement of claim.
+omegaQ: Supremum of quantum values.
+  proof_shape: bind-only; consumer: statement of claim.
+orbit_sum_constant: Equality of input-output orbit sums.
+  proof_shape: bind-only; consumer: inner_hu.
+pairTrace: Real state-weighted operator pairing.
+  proof_shape: bind-only; consumer: statement of claim.
+pair_perm: Simultaneous permutation of two disjoint outputs.
+  proof_shape: bind-only; consumer: winning_transitive.
+pmap: Permutation map on finite subsets.
+  proof_shape: bind-only; consumer: statement of claim.
+pmap_card: Permutation preservation of cardinality.
+  proof_shape: bind-only; consumer: pair_perm.
+pmap_comp: Composition of permutation maps.
+  proof_shape: bind-only; consumer: actO_rightMul.
+pmap_one: Identity permutation map.
+  proof_shape: bind-only; consumer: actVEquiv._proof_1.
+pmap_refl: Identity equivalence map.
+  proof_shape: bind-only; consumer: pmap_one.
+pmap_symmDiff: Permutation compatibility with symmetric difference.
+  proof_shape: bind-only; consumer: wins_act.
+promised_act: Invariance of the input promise.
+  proof_shape: bind-only; consumer: value_transport.
+q_nonempty: Nonemptiness of the set of quantum values.
+  proof_shape: bind-only; consumer: result.
+quantum_bound: Uniform upper bound for finite-dimensional quantum values.
+  proof_shape: content; consumer: result.
+quantum_bound._proof_1_2: Generated arithmetic certificate for quantum_bound.
+  proof_shape: bind-only; consumer: quantum_bound.
+quantum_bound._proof_1_3: Generated arithmetic certificate for quantum_bound.
+  proof_shape: bind-only; consumer: quantum_bound.
+quantum_bound._simp_1_1: Generated simplification certificate for quantum_bound.
+  proof_shape: bind-only; consumer: quantum_bound.
+result: Universal strict-gap theorem.
+  proof_shape: content; consumer: none (final theorem).
+result._proof_1_1: Generated arithmetic certificate for result.
+  proof_shape: bind-only; consumer: result.
+result._proof_1_2: Generated arithmetic certificate for result.
+  proof_shape: bind-only; consumer: result.
+rightMul: Right composition of orbit parameters.
+  proof_shape: bind-only; consumer: statement of claim.
+rightMul_equiv: Equivalence for right composition.
+  proof_shape: bind-only; consumer: statement of claim.
+rightMul_equiv._proof_1: Generated proof certificate for rightMul_equiv.
+  proof_shape: bind-only; consumer: rightMul_equiv.
+rightMul_equiv._proof_2: Generated proof certificate for rightMul_equiv.
+  proof_shape: bind-only; consumer: rightMul_equiv.
+sum_rightMul: Invariance of finite orbit sums under composition.
+  proof_shape: bind-only; consumer: orbit_sum_constant.
+sum_uvec: Alice vector sum equals the identity vector.
+  proof_shape: bind-only; consumer: inner_hu.
+sum_vvec: Bob vector sum equals the identity vector.
+  proof_shape: bind-only; consumer: inner_hv.
+trace_budget: State trace bound from a contraction inequality.
+  proof_shape: bind-only; consumer: inner_qv.
+uvec: Alice effects along the orbit.
+  proof_shape: bind-only; consumer: statement of claim.
+value: Uniform average of winning entries.
+  proof_shape: bind-only; consumer: statement of claim.
+value_constant: Value from a constant winning-branch entry.
+  proof_shape: bind-only; consumer: nsP_value.
+value_sum: Linearity of value over scaled finite sums.
+  proof_shape: bind-only; consumer: winning_cross.
+value_sum._simp_1_1: Generated simplification certificate for value_sum.
+  proof_shape: bind-only; consumer: value_sum.
+value_transport: Invariance of value under the orbit action.
+  proof_shape: bind-only; consumer: winning_cross.
+value_transport._simp_1_1: Generated simplification certificate for value_transport.
+  proof_shape: bind-only; consumer: value_transport.
+value_transport._simp_1_2: Generated simplification certificate for value_transport.
+  proof_shape: bind-only; consumer: value_transport.
+vvec: Bob effects along the orbit.
+  proof_shape: bind-only; consumer: statement of claim.
+weightedCore: Scaled real state-weighted positive semidefinite core.
+  proof_shape: bind-only; consumer: statement of claim.
+weightedCore._proof_1: Generated proof certificate for weightedCore.
+  proof_shape: bind-only; consumer: weightedCore.
+weightedCore._proof_2: Generated proof certificate for weightedCore.
+  proof_shape: bind-only; consumer: weightedCore.
+weightedCore._proof_3: Generated proof certificate for weightedCore.
+  proof_shape: bind-only; consumer: weightedCore.
+weightedCore._proof_4: Generated proof certificate for weightedCore.
+  proof_shape: bind-only; consumer: weightedCore.
+weightedCore._proof_5: Generated proof certificate for weightedCore.
+  proof_shape: bind-only; consumer: weightedCore.
+weightedCore._proof_6: Generated proof certificate for weightedCore.
+  proof_shape: bind-only; consumer: weightedCore.
+winning_cross: Winning vector pairing in terms of game value.
+  proof_shape: bind-only; consumer: quantum_bound.
+winning_cross._proof_1_1: Generated arithmetic certificate for winning_cross.
+  proof_shape: bind-only; consumer: winning_cross.
+winning_sum: Count of winning output pairs on a promised input.
+  proof_shape: bind-only; consumer: value_constant.
+winning_transitive: Transitivity on winning input-output branches.
+  proof_shape: bind-only; consumer: inner_winning_constant.
+wins_act: Invariance of winning under the orbit action.
+  proof_shape: bind-only; consumer: value_transport.
+wins_iff: Winning as containment and complementary output.
+  proof_shape: bind-only; consumer: nsP_value.
+-/
+
 noncomputable section
 open scoped BigOperators symmDiff ComplexOrder Kronecker MatrixOrder
 namespace D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap

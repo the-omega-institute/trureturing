@@ -7,6 +7,118 @@
    digest: Symmetric rendezvous vector systems have a quantitative semidefinite gap. -/
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowSeamCodes
 import D5.S3.Arith.Congruence.ConditionalComparison.CommonTreeUnion
+
+/-
+Declaration inventory. Names are relative to this module namespace; private names use their
+source spelling. Compiler-generated constants are included.
+Output: Subtype of t-element outputs.
+  proof_shape: bind-only; consumer: statement of claim.
+Vertex: Hypercube vertex type.
+  proof_shape: bind-only; consumer: statement of claim.
+Wins: Disjoint partition winning predicate.
+  proof_shape: bind-only; consumer: statement of claim.
+common_sphere: Common t-sphere for two meeting vertices.
+  proof_shape: content; consumer: vector_system_gap.
+common_sphere._proof_1_1: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_10: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_11: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_12: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_2: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_3: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_4: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_5: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_6: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_7: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_8: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._proof_1_9: Generated arithmetic certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+common_sphere._simp_1_13: Generated simplification certificate for common_sphere.
+  proof_shape: bind-only; consumer: common_sphere.
+disjoint_output: Existence of a disjoint t-element output.
+  proof_shape: bind-only; consumer: vector_system_gap.
+disjoint_output._proof_1_1: Generated arithmetic certificate for disjoint_output.
+  proof_shape: bind-only; consumer: disjoint_output.
+exchange_reduction: One exchange reducing the output difference.
+  proof_shape: content; consumer: exchange_transport.
+exchange_reduction._proof_1_1: Generated arithmetic certificate for exchange_reduction.
+  proof_shape: bind-only; consumer: exchange_reduction.
+exchange_reduction._proof_1_2: Generated arithmetic certificate for exchange_reduction.
+  proof_shape: bind-only; consumer: exchange_reduction.
+exchange_reduction._proof_1_3: Generated arithmetic certificate for exchange_reduction.
+  proof_shape: bind-only; consumer: exchange_reduction.
+exchange_reduction._simp_1_4: Generated simplification certificate for exchange_reduction.
+  proof_shape: bind-only; consumer: exchange_reduction.
+exchange_reduction._simp_1_5: Generated simplification certificate for exchange_reduction.
+  proof_shape: bind-only; consumer: exchange_reduction.
+exchange_reduction._simp_1_6: Generated simplification certificate for exchange_reduction.
+  proof_shape: bind-only; consumer: exchange_reduction.
+exchange_transport: Bound along at most t exchanges.
+  proof_shape: content; consumer: vector_system_gap.
+exchange_transport._proof_1_1: Generated arithmetic certificate for exchange_transport.
+  proof_shape: bind-only; consumer: exchange_transport.
+form_bound: Square-root Cauchy-Schwarz bound.
+  proof_shape: bind-only; consumer: vector_system_gap.
+form_cs: Squared Cauchy-Schwarz bound.
+  proof_shape: bind-only; consumer: vector_system_gap.
+form_cs._simp_1_1: Generated simplification certificate for form_cs.
+  proof_shape: bind-only; consumer: form_cs.
+form_sub: Squared difference expansion.
+  proof_shape: bind-only; consumer: form_sub_symm.
+form_sub_symm: Symmetry of squared differences.
+  proof_shape: bind-only; consumer: vector_system_gap.
+form_sum: Linearity over finite sums.
+  proof_shape: bind-only; consumer: vector_system_gap.
+form_symm: Symmetry of the real inner-product core.
+  proof_shape: bind-only; consumer: form_cs.
+form_triangle: Triangle inequality for the core seminorm.
+  proof_shape: bind-only; consumer: vector_system_gap.
+kappa: Explicit real gap constant.
+  proof_shape: bind-only; consumer: statement of claim.
+kappa._proof_1: Generated proof certificate for kappa.
+  proof_shape: bind-only; consumer: kappa.
+kappa._proof_2: Generated proof certificate for kappa.
+  proof_shape: bind-only; consumer: kappa.
+large_family: Family of one more meeting vertices than outputs.
+  proof_shape: bind-only; consumer: vector_system_gap.
+large_family._proof_1_1: Generated arithmetic certificate for large_family.
+  proof_shape: bind-only; consumer: large_family.
+large_family._proof_1_2: Generated arithmetic certificate for large_family.
+  proof_shape: bind-only; consumer: large_family.
+n: Real binomial output count.
+  proof_shape: bind-only; consumer: statement of claim.
+scalar_gap: Scalar conversion to the explicit gap.
+  proof_shape: bind-only; consumer: vector_system_gap.
+symmDiff_card: Symmetric-difference cardinality identity.
+  proof_shape: bind-only; consumer: common_sphere.
+symmDiff_card._proof_1_1: Generated arithmetic certificate for symmDiff_card.
+  proof_shape: bind-only; consumer: symmDiff_card.
+vector_system_gap: Quantitative vector-system gap.
+  proof_shape: content; consumer: HypercubeRendezvousQuantumGap.quantum_bound.
+vector_system_gap._proof_1_1: Generated arithmetic certificate for vector_system_gap.
+  proof_shape: bind-only; consumer: vector_system_gap.
+vector_system_gap._proof_1_2: Generated arithmetic certificate for vector_system_gap.
+  proof_shape: bind-only; consumer: vector_system_gap.
+vector_system_gap._proof_1_3: Generated arithmetic certificate for vector_system_gap.
+  proof_shape: bind-only; consumer: vector_system_gap.
+vector_system_gap._proof_1_4: Generated arithmetic certificate for vector_system_gap.
+  proof_shape: bind-only; consumer: vector_system_gap.
+vector_system_gap._proof_1_5: Generated arithmetic certificate for vector_system_gap.
+  proof_shape: bind-only; consumer: vector_system_gap.
+winning_translate: Winning branches from disjoint translated outputs.
+  proof_shape: bind-only; consumer: vector_system_gap.
+-/
+
 noncomputable section
 open scoped BigOperators symmDiff
 namespace D5.S3.Quantum.Entanglement.RendezvousVectorSystemGap
