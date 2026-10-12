@@ -1,3 +1,4 @@
+import D5.S1.Words.MBonacciParikhStarConverse
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.MBonacciMinimumParikhDescent
 import Reg.Support.DependentFamily
@@ -160,3 +161,198 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end minimal_abelian_complexity_length
 end Reg.D5.S1.Words.MBonacciMinimumParikhDescent
+
+open _root_.D5.S1.Words.MBonacciSentinelDesubstitution
+open _root_.D5.S1.Words.MBonacciReversedPrefixFRS
+open _root_.D5.S1.Words.MBonacciMinimumParikhDescent
+open _root_.D5.S1.Words.MBonacciMinimumGreedy
+open _root_.D5.S1.Words.MBonacciParikhStarConverse
+open _root_.D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs (factor letterCount)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace Reg.D5.S1.Words.MBonacciMinimumParikhDescent
+
+abbrev ConverseOrder := {m : ℕ // 2 ≤ m}
+abbrev ConverseFive := {m : ℕ // 2 ≤ m ∧ 5 ≤ m}
+
+namespace star_injective
+
+abbrev signature : Signature where
+  Params := Σ m : ℕ, List (Fin m)
+  State p := Fin p.1 → Fin p.1 → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def observed (p : signature.Params) (x : signature.State p) : Prop :=
+  Function.Injective x
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => observed p x) (fun e _ => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e _ => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (r : List (Fin m)), R.readout () ⟨m, r⟩ (star r)
+
+private theorem actual_law : arena.Law actual := by
+  intro m r
+  exact _root_.D5.S1.Words.MBonacciMinimumParikhDescent.star_injective r
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (m := 2) []
+
+private theorem bad_observation : ¬ observed ⟨2, []⟩ (fun _ _ => 0) := by
+  intro h
+  have hh := h (a₁ := (0 : Fin 2)) (a₂ := 1) rfl
+  exact (by decide : (0 : Fin 2) ≠ 1) hh
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star_injective)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law, ⟨rejected, rejected_law⟩⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨2, []⟩, (star ([] : List (Fin 2))), (fun _ _ => 0), ?_⟩
+    intro he
+    exact bad_observation (Eq.mp he (by
+      exact actual_law (m := 2) []))
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star_injective) (type_of% actual)
+    (type_of% (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star)) Unit := {
+  unitName := `D5.S1.Words.MBonacciMinimumParikhDescent.star_injective.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciMinimumParikhDescent.star_injective.family,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := some (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end star_injective
+
+namespace star_subset
+
+abbrev signature : Signature where
+  Params := Σ p : ConverseOrder, List (Fin p.val)
+  State p := Fin p.1.val → Fin p.1.val → ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def observed (p : signature.Params) (x : signature.State p) : Prop :=
+  FRS p.1.property p.2 → Set.range x ⊆ parikhImage p.1.property (p.2.length + 1)
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => observed p x) (fun e _ => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e _ => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (r : List (Fin m)),
+      R.readout () ⟨⟨m, hm⟩, r⟩ (star r)
+
+private theorem actual_law : arena.Law actual := by
+  intro m hm r
+  exact _root_.D5.S1.Words.MBonacciMinimumParikhDescent.star_subset hm r
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (by omega : 2 ≤ 2) []
+
+private theorem bad_observation : ¬ observed ⟨⟨2, by omega⟩, []⟩ (fun _ _ => 0) := by
+  intro h
+  have hf : FRS (by omega : 2 ≤ 2) [] := by
+    simpa [sentinelIter] using sentinel_frs (by omega : 2 ≤ 2) 0
+  have hz := h hf (show (fun _ : Fin 2 => 0) ∈ Set.range (fun _ : Fin 2 => fun _ : Fin 2 => 0) from ⟨0, rfl⟩)
+  obtain ⟨q, hq⟩ := hz
+  have hh := congrFun hq (word (by omega : 2 ≤ 2) q)
+  simpa [factor, letterCount] using hh
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star_subset)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law, ⟨rejected, rejected_law⟩⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨⟨2, by omega⟩, []⟩, (star ([] : List (Fin 2))), (fun _ _ => 0), ?_⟩
+    intro he
+    exact bad_observation (Eq.mp he (by
+      exact actual_law (by omega : 2 ≤ 2) []))
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star_subset) (type_of% actual)
+    (type_of% (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star)) Unit := {
+  unitName := `D5.S1.Words.MBonacciMinimumParikhDescent.star_subset.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciMinimumParikhDescent.star_subset.family,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := some (@_root_.D5.S1.Words.MBonacciMinimumParikhDescent.star),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end star_subset
+
+end Reg.D5.S1.Words.MBonacciMinimumParikhDescent
+
+#print axioms Reg.D5.S1.Words.MBonacciMinimumParikhDescent.star_injective.family
+#print axioms Reg.D5.S1.Words.MBonacciMinimumParikhDescent.star_injective.audit
+#print axioms Reg.D5.S1.Words.MBonacciMinimumParikhDescent.star_subset.family
+#print axioms Reg.D5.S1.Words.MBonacciMinimumParikhDescent.star_subset.audit

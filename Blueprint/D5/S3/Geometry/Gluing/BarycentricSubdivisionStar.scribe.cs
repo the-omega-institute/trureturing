@@ -82,7 +82,18 @@ internal sealed class BarycentricSubdivisionStarDocument : IScribeDocumentDefini
                         + "short extension away from p(0) that remains in its chain hull. If any other "
                         + "parent coordinate were tied with coordinate 0, this extension would make "
                         + "that coordinate larger than coordinate 0, contradicting the closed-star "
-                        + "implication. Thus all three comparisons are strict."))), DescribeRole.Theorem))));
+                        + "implication. Thus all three comparisons are strict."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-prefix-face"),
+                DeclarationHandle.Create(Root + "prefixFace"),
+                H("Complete original parent flags"),
+                StatementSource.FromAuthor(F.Disp(All("pi", Call("Perm", FinFour()),
+                    All("k", FinFour(), Eq(Call("prefixFace", Id("pi"), Id("k")),
+                        Call("image", Id("pi"), Call("Iic", Id("k")))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Iic(k) consists of positions "
+                    + "from 0 through k. Its image under pi is an original face with k+1 vertices. "
+                    + "Write parentVertices(E,p,pi)(k)=barycenter(E,p,prefixFace(pi,k)). "
+                    + "These are actual first-level barycenters in E; in particular the zeroth is p(pi(0))."))),
+                DescribeRole.Definition))));
 
     private static Formula ChainFormula()
     {

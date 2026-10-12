@@ -13,6 +13,27 @@ internal sealed class MBonacciMinimumParikhDescentDocument : IScribeDocumentDefi
             + "m-bonacci word.",
         H("Minimum Parikh Cardinality and Sentinel Lengths"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("star"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciMinimumParikhDescent.star"),
+                H("Star vectors"), StatementSource.FromAuthor(ConverseStatement("star")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a list r and a letter a, star(r,a) has coordinate i equal to letterCount(r,i) plus one exactly when i equals a. These are vectors in natural coordinates; no truncated subtraction is used."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("star-injective"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciMinimumParikhDescent.star_injective"),
+                H("Distinct star vectors"), StatementSource.FromAuthor(ConverseStatement("star_injective")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every alphabet size and list r, the map from excess letters to star vectors is injective. Comparing the coordinate of one excess letter distinguishes unequal letters. At a sentinel length this identifies exactly m distinct attained vectors."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("star-subset"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciMinimumParikhDescent.star_subset"),
+                H("Attainment by actual right extensions"), StatementSource.FromAuthor(ConverseStatement("star_subset")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every m at least two and every fully right-special actual factor r, every star vector is the count vector of an actual factor at a natural start. Each excess letter chooses its own right-extension occurrence. Combined with the converse all-start upper inclusion, this yields equality and exact cardinality, rather than an upper bound alone."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "Let m be a natural number with 2 at most m and 3 at most m. The alphabet "
                 + "is Fin m. The literal substitution sends each letter a below m minus one "
@@ -92,4 +113,56 @@ internal sealed class MBonacciMinimumParikhDescentDocument : IScribeDocumentDefi
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Add(Formula a, Formula b) =>
         new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+
+    private static Formula ConverseStatement(string name)
+    {
+        var m = F.Id("m"); var n = F.Id("n"); var k = F.Id("k");
+        var q = F.Id("q"); var i = F.Id("i"); var t = F.Id("t");
+        var r = F.Id("r"); var s = F.Id("s"); var a = F.Id("a");
+        var x = F.Id("x"); var count = F.Id("count");
+        Formula ns = CFCall("S", m, k);
+        Formula si = CFCall("sentinelIter", m, k);
+        Formula rho = CFCall("ncard", CFCall("parikhImage", m, n));
+        Formula minimum = CFEq(rho, m);
+        Formula sentinel = CFEx("k", CFN(), CFEq(n, ns));
+        Formula periodic = CFEx("k", CFN(), CFEq(CFCall("fullGreedy", m, n),
+            CFCall("periodicDigits", m, k)));
+        Formula body = name switch
+        {
+            "star" => CFAll("r", CFCall("List", CFCall("Fin", m)),
+                CFAll("a", CFCall("Fin", m), CFAll("i", CFCall("Fin", m),
+                    CFAnd(CFImp(CFEq(i, a), CFEq(CFCall("star", r, a, i),
+                            CFAdd(CFCall("letterCount", r, i), F.D(1)))),
+                        CFImp(new Formula.Relation(i, FormulaRelationOperator.NotEqual, a),
+                            CFEq(CFCall("star", r, a, i), CFCall("letterCount", r, i))))))),
+            "star_injective" => CFAll("r", CFCall("List", CFCall("Fin", m)),
+                CFCall("Injective", CFCall("star", r))),
+            "star_subset" => CFAll("r", CFCall("List", CFCall("Fin", m)),
+                CFImp(CFCall("FRS", m, r), CFCall("Subset", CFCall("range", CFCall("star", r)),
+                    CFCall("parikhImage", m, CFAdd(CFCall("length", r), F.D(1)))))),
+            _ => throw new ArgumentOutOfRangeException(nameof(name)),
+        };
+        Formula bound = name == "uniform_minimum_characterization"
+            ? CFAnd(CFLe(F.D(2), m), CFLe(F.D(5), m)) : CFLe(F.D(2), m);
+        bool unrestricted = name is "star" or "star_injective" or "factor_add";
+        return F.Disp(CFAll("m", CFN(), unrestricted ? body : CFImp(bound, body)));
+    }
+
+    private static Formula CFN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    private static Formula CFCall(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula CFAll(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEx(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula CFLe(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula CFAdd(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula CFAnd(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula CFImp(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
 }

@@ -1844,3 +1844,961 @@ For the §81.5 and §82.1 consumers, (83.2) is the actual point field of the spe
 The retained inference joins the mature fixed-source heat limit and elementary normalized localization to the existing transport and point-source consumers, beyond the global stratified hypothesis of §82. No new general heat, nilpotentization or Coulomb theorem is asserted. A native application still requires the §22.1 bundle correspondence and lawful flow execution, and the §81.5 common map for states, source, field, measure, boundary convention, operator and clock. It must preserve the original source and INITIAL, chronological legal actions, authentic Reads and refusals, Stop, and acquisition, record and copy permissions and resource charges. The carrier above supplies none of those maps or admissibility proofs, nor a physical meaning for $n$ or $z$. In particular it neither recovers the conditional interaction statistic (82.16) from a source-free reader nor derives a physical three-dimensional space. $\square$
 
 ## 78.99 追加锚（本行以下为增补区）
+
+## 84. Supplied fibre-density cap: same-field energy and distinct free evolutions
+
+**Definition 84.1 (unchanged point source and supplied cap class).** Fix exactly the carrier, horizontal metric, Haar measure, projection and clock of (82.5):
+$$
+\begin{gathered}
+p\,p'=(x+x',y+y',z+z',w+w'+xy'),\qquad d\mu=dx\,dy\,dz\,dw,\\
+X_1=\partial_x,\qquad X_2=\partial_y+x\partial_w,\qquad X_3=\partial_z,\\
+L=-X_1^2-X_2^2-X_3^2,\qquad \xi=(x,y,z),\qquad \pi(p)=\xi,\qquad H_t=e^{-tL}.
+\end{gathered}
+\tag{84.1}
+$$
+The source remains the unit point source at $e$, with the actual positive kernel $\Gamma=\int_0^\infty h_t\,dt$ of (82.8), $L\Gamma=\delta_e$, and its actual fibre marginal (82.10). In particular neither $\Gamma$ nor its source is truncated or replaced. Let $L$ on $L^2(G,d\mu)$ denote the nonnegative self-adjoint operator associated with the closure of the free horizontal kinetic form, and put
+$$
+\mathcal H_H^1=D(L^{1/2})
+ =\{\psi\in L^2(G):X_i\psi\in L^2(G),\ i=1,2,3\},\qquad
+T[\psi]=\sum_{i=1}^3\|X_i\psi\|_2^2.
+\tag{84.2}
+$$
+Here derivatives are distributional. The free Sobolev-domain characterization and smooth-core density are the mature supplies of Folland, [doi:10.1007/BF02386204](https://doi.org/10.1007/BF02386204), Theorems 4.10 at $p=2,\alpha=0$ and 4.5. This invokes only the free form.
+
+For independently supplied $M>0$, define
+$$
+\begin{aligned}
+m_\psi(\xi)&=\int_{\mathbb R}|\psi(\xi,w)|^2dw,\\
+\mathcal C_M&=\{\psi\in\mathcal H_H^1:\ \|\psi\|_2=1,
+\quad |\psi(\xi,w)|^2\le M m_\psi(\xi)\ \text{for almost every }(\xi,w)\}.
+\end{aligned}
+\tag{84.3}
+$$
+The marginal is an $L^1$ function and is finite almost everywhere. On fibres with $m_\psi>0$ the inequality says $\rho_\psi(w\mid\xi)\le M$, with $\rho_\psi=|\psi|^2/m_\psi$. On a zero-marginal fibre, $\psi=0$ almost everywhere in $w$, and no division is made. If a conditional probability density is desired there, choose $M\mathbf1_{[0,1/M]}(w)$; this choice has zero weight in (82.16). Exceptional marginal representatives on null sets do not change any assertion. For $a,g>0$ the expression
+$$
+q[\psi]=aT[\psi]-gV[\psi],\qquad
+V[\psi]=\int_G\Gamma|\psi|^2d\mu
+\tag{84.4}
+$$
+will be a finite functional on the normalized nonlinear class $\mathcal C_M$. Neither a linear domain nor an interacting operator is defined by this class.
+
+**Proposition 84.2 (inhabited same-field energy certificate on the whole cap class).** For every $M>0$, $\mathcal C_M$ contains states in the original punctured smooth core $\mathcal D_0$. For every $\psi\in\mathcal H_H^1$,
+$$
+f_\psi:=\sqrt{m_\psi}\in H^1(\mathbb R^3),\qquad
+\|f_\psi\|_2=\|\psi\|_2,\qquad
+\|\nabla f_\psi\|_2^2\le T[\psi].
+\tag{84.5}
+$$
+For every $\psi\in\mathcal C_M$, define the finite projected integral
+$$
+J_\psi=\int_{\mathbb R^3}\frac{m_\psi(\xi)}{|\xi|}d\xi.
+$$
+Then the actual conditional field expectation in (82.16) obeys, for almost every $\xi\ne0$,
+$$
+0\le G_\psi(\xi):=\int_{\mathbb R}\Gamma(\xi,w)\rho_\psi(w\mid\xi)dw
+\le\frac{M}{4\pi|\xi|},\qquad
+V[\psi]=\int m_\psi G_\psi\,d\xi\le\frac{M}{4\pi}J_\psi<\infty.
+\tag{84.6}
+$$
+Consequently the same-field energy has the interval certificate and normalized lower bound
+$$
+\begin{gathered}
+aT[\psi]-\frac{gM}{4\pi}J_\psi\le q[\psi]\le aT[\psi],\\
+q[\psi]\ge-\frac{g^2M^2}{64\pi^2a}.
+\end{gathered}
+\tag{84.7}
+$$
+
+Proof. First choose $u\in C_c^\infty(\mathbb R^3\setminus\{0\})$ and $h\in C_c^\infty(\mathbb R)$ with both $\|u\|_2=1$ and $\|h\|_2=1$. For
+$$
+h_R(w)=R^{-1/2}h(w/R),\qquad R\ge\frac{\|h\|_\infty^2}{M},\qquad
+\psi(\xi,w)=u(\xi)h_R(w),
+$$
+we have $\|h_R\|_2=1$, $\|\psi\|_2=1$, $m_\psi=|u|^2$ and $|h_R|^2\le M$. The support avoids $e$. All horizontal derivatives are square integrable, including
+$X_2\psi=(\partial_yu)h_R+xu h_R'$, because $u$ has compact support. Thus $\psi\in\mathcal D_0\cap\mathcal C_M$.
+
+For a general compactly supported smooth $\psi$, fibre integration gives
+$$
+\partial_{\xi_i}m_\psi
+ =2\operatorname{Re}\int_{\mathbb R}\overline\psi X_i\psi\,dw.
+\tag{84.8}
+$$
+For $i=2$, the additional $x\partial_w$ contribution cancels because
+$$
+\operatorname{Re}\int\overline\psi\partial_w\psi\,dw
+ =\frac12\int\partial_w|\psi|^2dw=0.
+$$
+To include zeros of $m_\psi$, use $f_\varepsilon=\sqrt{m_\psi+\varepsilon^2}-\varepsilon$. Cauchy--Schwarz gives
+$$
+|\partial_{\xi_i}f_\varepsilon|^2
+ =\frac{|\operatorname{Re}\int\overline\psi X_i\psi\,dw|^2}{m_\psi+\varepsilon^2}
+ \le\frac{m_\psi}{m_\psi+\varepsilon^2}\int|X_i\psi|^2dw
+ \le\int|X_i\psi|^2dw.
+$$
+These $f_\varepsilon$ are bounded in $H^1$, satisfy $0\le f_\varepsilon\le\sqrt{m_\psi}$, and converge in $L^2$ to $\sqrt{m_\psi}$. Weak lower semicontinuity proves (84.5) for smooth states. Now approximate any $\psi\in\mathcal H_H^1$ by $\psi_n\in C_c^\infty(G)$ in the free form norm. The fibre $L^2$ reverse triangle inequality implies
+$$
+\|\sqrt{m_{\psi_n}}-\sqrt{m_\psi}\|_{L^2(\mathbb R^3)}
+ \le\|\psi_n-\psi\|_{L^2(G)}.
+\tag{84.9}
+$$
+Together with weak lower semicontinuity and $T[\psi_n]\to T[\psi]$, this proves (84.5) on the whole free form domain. No cap condition on the approximating sequence is used. The punctured core has the same free form closure: if $\chi\in C_c^\infty(G)$ equals one near $e$ and $\chi_\varepsilon=\chi\circ\delta_{1/\varepsilon}$, the $Q=5$ dilation gives
+$$
+\|\chi_\varepsilon\|_2^2=\varepsilon^5\|\chi\|_2^2,\qquad
+T[\chi_\varepsilon]=\varepsilon^3T[\chi].
+$$
+The product rule then gives $(1-\chi_\varepsilon)\psi\to\psi$ in the free form norm for each compactly supported smooth $\psi$.
+
+The Coulomb estimate used next is a mature intermediate of (82.4). Its integrability and constant can also be seen directly. For smooth compactly supported $f$, integrate against $v_\varepsilon(\xi)=\xi/\sqrt{|\xi|^2+\varepsilon^2}$, whose divergence is
+$$
+\operatorname{div}v_\varepsilon
+ =\frac2{\sqrt{|\xi|^2+\varepsilon^2}}
+   +\frac{\varepsilon^2}{(|\xi|^2+\varepsilon^2)^{3/2}}.
+$$
+Integration by parts and $|v_\varepsilon|\le1$, followed by Fatou, give
+$$
+J[f]:=\int\frac{|f|^2}{|\xi|}d\xi\le\|f\|_2\|\nabla f\|_2.
+\tag{84.10}
+$$
+Smooth $H^1$ approximation and Fatou extend the inequality to every $f\in H^1$. Applying it to differences of approximants also gives convergence in $L^2(|\xi|^{-1}d\xi)$. Thus the integration-by-parts identity extends without an unaccounted singular boundary term:
+$$
+a\|\nabla f\|_2^2-kJ[f]
+ =a\left\|\nabla f+\frac{k}{2a}\frac{\xi}{|\xi|}f\right\|_2^2
+   -\frac{k^2}{4a}\|f\|_2^2,\qquad k>0.
+\tag{84.11}
+$$
+For $f=f_\psi$ in the normalized class, (84.5) and (84.10) give $J_\psi\le\sqrt{T[\psi]}<\infty$.
+
+Apply the cap to the actual nonnegative $\Gamma$ and use Tonelli with its genuine marginal (82.10). This proves (84.6); $\xi=0$ is a Lebesgue null set, so its divergent fibre marginal contributes no extra term. Substitution in (84.4) yields the interval in (84.7). With $k=gM/(4\pi)$, (84.5) and (84.11) yield $q[\psi]\ge-k^2/(4a)$; equivalently $q[\psi]\ge aT[\psi]-k\sqrt{T[\psi]}\ge-k^2/(4a)$. This proves the stated constant. The calculation bounds the conditional expectation in (82.16); it never identifies that expectation with the unweighted marginal (82.10). $\square$
+
+**Proposition 84.3 (same-cap invariance for the free probability-density heat law).** Let
+$$
+\mathcal P_M=\{p\in L^1(G):\ p\ge0,\ \int_Gp\,d\mu=1,
+\quad p(\xi,w)\le M m_p(\xi)\ \text{almost everywhere}\},\qquad
+m_p(\xi)=\int_{\mathbb R}p(\xi,w)dw.
+\tag{84.12}
+$$
+For $p_0\in\mathcal P_M$, the actual free Markov density $p_t=H_tp_0$ has mass one and satisfies
+$$
+m_{p_t}=P_tm_{p_0}\quad\text{almost everywhere},\qquad
+p_t\le M(m_{p_t}\circ\pi),\qquad P_t=e^{t\Delta_3},\qquad t\ge0.
+\tag{84.13}
+$$
+In particular $H_t\mathcal P_M\subseteq\mathcal P_M$ with the same $M$, including unbounded initial marginals and infinite Haar fibres.
+
+Proof. Reuse the bounded-Borel factor (82.7), writing $Uf=f\circ\pi$. Folland's Theorem 3.1 supplies the nonnegative mass-one symmetric heat kernel. Let $K_t(p,q)$ be that kernel for $H_t$ relative to $d\mu$, so $K_t(p,q)=K_t(q,p)$ and each variable has integral one. Extend its action to every nonnegative measurable $F$ by
+$$
+\widetilde H_tF(p)=\int_GK_t(p,q)F(q)d\mu(q)\in[0,\infty],\qquad t>0.
+$$
+Choose a finite nonnegative Borel representative of $m_0=m_{p_0}$ outside its null exceptional set. The bounded truncations $m_0\wedge n$, (82.7), and monotone convergence give
+$$
+\widetilde H_t(Um_0)
+ =\lim_{n\to\infty}H_t(U(m_0\wedge n))
+ =\lim_{n\to\infty}U(P_t(m_0\wedge n))
+ =U(P_tm_0).
+\tag{84.14}
+$$
+This is a positive-kernel extension, requiring no $L^1$ or $L^2$ membership of the pullback $Um_0$ on the infinite fibres. Since $\|m_0\|_1=1$, for positive time its Euclidean heat marginal has a representative satisfying
+$$
+0<P_tm_0(\xi)\le(4\pi t)^{-3/2}\qquad\text{for every }\xi.
+\tag{84.15}
+$$
+Positivity now yields $p_t\le M U(P_tm_0)$. To identify the true marginal rather than only a dominating function, test with any bounded Borel $f$ on $\mathbb R^3$. Kernel symmetry, integrability against $p_0$, (82.7), and Euclidean heat symmetry give
+$$
+\begin{aligned}
+\int f\,m_{p_t}\,d\xi
+ &=\int_G(Uf)H_tp_0\,d\mu
+  =\int_GH_t(Uf)p_0\,d\mu\\
+ &=\int(P_tf)m_0\,d\xi
+  =\int f(P_tm_0)\,d\xi.
+\end{aligned}
+\tag{84.16}
+$$
+Thus $m_{p_t}=P_tm_0$ almost everywhere. The mass-one kernel preserves $\int p_t=1$, and the dominance proves (84.13). Time zero is the defining inequality, including zero fibres. This is evolution of a probability density. It supplies no identity between $H_t|\psi|^2$ and the squared modulus of a wave evolution, and no invariance assertion for an interacting Schrödinger law. $\square$
+
+**Proposition 84.4 (an exact normalized free-unitary cap violation on the same carrier).** For every $M>0$ there is $\psi_0\in\mathcal C_M$ with finite horizontal kinetic energy such that, at a finite positive time in the $L$ clock, $\psi_t=e^{-itL}\psi_0$ violates the same cap on an open set of positive Haar measure. Specifically put
+$$
+\begin{gathered}
+s=w-\frac{xy}{2},\qquad r^2=x^2+y^2,\qquad
+b=\frac2{\pi M},\qquad \tau=4b,\\
+A=b+\frac{r^2}{4},\qquad C_b=\frac{b}{\sqrt2\,\pi},\qquad
+\phi(z)=\pi^{-1/4}e^{-z^2/2},\\
+\phi_t(z)=\frac{\pi^{-1/4}}{\sqrt{1+2it}}
+ \exp\!\left(-\frac{z^2}{2(1+2it)}\right),\\
+F_d(A,s)=\frac1{(A-i(s+d))^2}+\frac1{(A+i(s-d))^2},\qquad
+\psi_t(x,y,z,w)=C_b\phi_t(z)F_{\tau-t}(A,s).
+\end{gathered}
+\tag{84.17}
+$$
+The square root in $\phi_t$ is the continuous branch equal to one at $t=0$. These states satisfy
+$$
+\psi_t=e^{-itL}\psi_0,\qquad
+\|\psi_t\|_2=1,\qquad
+T[\psi_t]=\frac1b+\frac12,
+\tag{84.18}
+$$
+and at $t=\tau$ their conditional density exceeds $M$ on such an open set. If instead the declared free wave Hamiltonian is $aL$, its evolution parameter $\theta$ gives $e^{-i\theta aL}\psi_0=\psi_{a\theta}$, and the violation time is $\theta=\tau/a$.
+
+Proof. The one-sided central-translation ingredient is mature: Bahouri--Barilari--Gallagher, *Restriction theorems and Strichartz estimates on the Heisenberg group*, [arXiv:1911.03729v2](https://arxiv.org/abs/1911.03729v2), Proposition 1.1 and (1.12)--(1.15), attributes it to Bahouri--Gérard--Xu, *Espaces de Besov et estimations de Strichartz généralisées sur le groupe de Heisenberg*, Journal d'Analyse Mathématique 82 (2000), 93--118. Their fields $\partial_{y_j}+2\eta_j\partial_\sigma$, $\partial_{\eta_j}-2y_j\partial_\sigma$ and equation $i\partial_tu-\Delta_Hu=0$ have different constants and sign conventions. The following calculation fixes those correspondences directly for (84.1); the cap violation uses both frequency signs.
+
+The coordinate change to $s$ has Jacobian one, keeps $\pi=(x,y,z)$, and rewrites the actual fields as
+$$
+X_1=\partial_x-\frac y2\partial_s,\qquad
+X_2=\partial_y+\frac x2\partial_s,\qquad X_3=\partial_z.
+$$
+On a central Fourier mode $e^{i\lambda s}$, the Heisenberg part is
+$$
+L_\lambda=-\partial_x^2-\partial_y^2
+ -i\lambda(x\partial_y-y\partial_x)+\frac{\lambda^2r^2}{4}.
+$$
+Direct differentiation gives, for $\lambda\ne0$,
+$$
+L_\lambda e^{-|\lambda|r^2/4}=|\lambda|e^{-|\lambda|r^2/4}.
+\tag{84.19}
+$$
+Moreover the convergent Laplace integrals are
+$$
+F_d(A,s)=\int_0^\infty\lambda e^{-A\lambda}e^{id\lambda}
+ (e^{i\lambda s}+e^{-i\lambda s})d\lambda.
+\tag{84.20}
+$$
+Both frequency sectors therefore acquire the factor $e^{-it\lambda}$ under the free wave evolution, giving $d=\tau-t$. The normalized Gaussian satisfies $\phi_t=e^{it\partial_z^2}\phi$. This proves the evolution identity with the literal $L$ and fixes the two central packet velocities at $+1$ and $-1$. Here $e^{-itL}$ is the first-order-in-time Schrödinger unitary on wave amplitudes, not the second-order wave equation or the half-wave law $e^{-it\sqrt L}$.
+
+For completeness, take the central Fourier convention $F(s)=\int_{\mathbb R}\alpha(\lambda)e^{i\lambda s}d\lambda$, so $\int|F|^2ds=2\pi\int|\alpha|^2d\lambda$. The two terms in (84.20) have disjoint positive and negative Fourier supports. Thus, for every real $d$,
+$$
+\int_{\mathbb R}|F_d(A,s)|^2ds
+ =4\pi\int_0^\infty\lambda^2e^{-2A\lambda}d\lambda
+ =\frac{\pi}{A^3},\qquad
+\int_{\mathbb R^2}\frac{\pi}{(b+r^2/4)^3}dx\,dy
+ =\frac{2\pi^2}{b^2}.
+\tag{84.21}
+$$
+The Gaussian has $\|\phi_t\|_2=1$, and $C_b^2=b^2/(2\pi^2)$, proving normalization. Integrating $e^{-\lambda r^2/2}$ over $\mathbb R^2$ gives $2\pi/\lambda$, so the horizontal Heisenberg kinetic contribution is
+$$
+C_b^2\,8\pi^2\int_0^\infty\lambda^2e^{-2b\lambda}d\lambda=\frac1b.
+$$
+The remaining contribution is $\|\phi'\|_2^2=1/2$. The same spectral integral with any additional nonnegative integer power of $\lambda$ is finite, and the Gaussian has finite spectral moments of all orders for $-\partial_z^2$. In particular $\psi_0\in D(L)$, so the displayed evolution is the actual strong free solution, not merely a formal mode equation; it belongs to $\mathcal H_H^1$ at every time.
+
+Since $\phi_t(z)$ is everywhere nonzero, the genuine marginal and conditional density are
+$$
+m_{\psi_t}(x,y,z)=C_b^2|\phi_t(z)|^2\frac{\pi}{A^3}>0,\qquad
+\rho_t(w\mid x,y,z)=\frac{A^3}{\pi}|F_{\tau-t}(A,s)|^2.
+\tag{84.22}
+$$
+Initially at least one of $|s+\tau|$, $|s-\tau|$ is at least $\tau$, so the triangle inequality gives
+$$
+\rho_0\le\frac1{\pi A}
+ \left(1+\frac{A^2}{A^2+\tau^2}\right)^2.
+$$
+For $b\le A\le2b$, this is at most $36/(25\pi b)<2/(\pi b)=M$. For $A\ge2b$, the separate bound on each summand gives $\rho_0\le4/(\pi A)\le M$. These two ranges cover all $x,y$, and the estimates hold for every $s,z$. Hence $\psi_0\in\mathcal C_M$ globally.
+
+At $t=\tau$, $x=y=s=0$ gives $F_0(b,0)=2/b^2$ and
+$$
+\rho_\tau(0\mid0,0,z)=\frac4{\pi b}=2M.
+\tag{84.23}
+$$
+For instance the original-coordinate point $(0,0,1,0)$ lies away from $e$, has positive marginal and this strict violation. Continuity gives a bounded open neighbourhood on which $\rho_\tau>M$; its Haar measure is positive because the coordinate change preserves Lebesgue measure. This proves $e^{-i\tau L}\psi_0\notin\mathcal C_M$. Replacing $t$ by $a\theta$ proves the stated $aL$ clock relation. No step introduces the singular interaction $-g\Gamma$. $\square$
+
+**Corollary 84.5 (restricted quantifier and continuing exact-energy defect).** The supplied fixed cap changes the state-and-scale quantifier of (82.3), while retaining its literal source field. It makes (84.7) a certificate from $m_\psi$, $T[\psi]$ and independently supplied $M$, but those data, even together with all projected free heat laws, do not determine exact $V$ or $q$ on $\mathcal C_M$.
+
+Proof. Under the original normalized dilation $\psi_r(p)=r^{-5/2}\psi(\delta_{1/r}p)$,
+$$
+m_{\psi_r}(\xi)=r^{-3}m_\psi(\xi/r),\qquad
+\rho_{\psi_r}(w\mid\xi)=r^{-2}\rho_\psi(w/r^2\mid\xi/r)
+\tag{84.24}
+$$
+on positive marginal fibres. If $M_\psi$ is the essential supremum of the conditional density over those fibres, then a capped normalized state has $0<M_\psi\le M$, and $M_{\psi_r}=r^{-2}M_\psi$. Thus each such fixed state eventually leaves $\mathcal C_M$ as $r\downarrow0$. The unrestricted concentrating core family of §82.2 is not a family at fixed $M$. This restriction changes neither $\Gamma$ nor the proof or conclusion of the all-core collapse contract.
+
+For exact nonrecovery, reuse the central-translation mechanism of §82.5 with the normalized compact product inhabitant from 84.2. For $c\in\mathbb R$ set
+$$
+\psi^c(\xi,w)=u(\xi)h_R(w-c).
+$$
+Central translation preserves the measure, all $X_i$, the marginal, the kinetic value and the bound $|h_R|^2\le M$. Hence every $\psi^c$ belongs to the same $\mathcal C_M$ and has the same reader $\mathscr R$ of §82.5. The unchanged positive field gives $V[\psi^0]>0$. Its decay off the identity, already supplied in §82.4, is uniform on the translated compact support as $|c|\to\infty$; consequently $V[\psi^c]\to0$. A sufficiently large finite $c$ therefore gives distinct actual energies with identical $m,T,M$ and projected free heat observations. This is the existing translation defect with cap membership checked, not a new unrestricted escape theorem. The interval certifies the actual expectation in (82.16) but does not decode it. $\square$
+
+**Definition 84.6 (conditional consumer and unresolved native obligations).** A native application of (84.7) must supply a source-to-carrier correspondence preserving the actual source and immutable INITIAL, the state, field, Haar measure, horizontal kinetic law, projection, boundary convention and clock of §81.5. It must separately establish admissibility and authentic preparation or acquisition of a state in $\mathcal C_M$, lawful acquisition of its cap information, and the permission and costs of observation, copying and retention. Same-source chronology, legal actions, authentic Reads and refusals, Stop, preparation, acquisition, copy, retention, clock and resource obligations remain those of the original source. A supplied analytic cap grants none of these operations or their costs. A native source certificate or a retained calibration has its own target and actual acquisition contract; without a proved correspondence it supplies neither a smooth carrier state nor access to $M$.
+
+The retained conditional inference is the same-field interval (84.7), probability-density invariance (84.13), and explicit free-unitary failure (84.17)--(84.23). The free Sobolev and positive-kernel suppliers, the Coulomb intermediate and the one-sided central translations remain attributed ingredients; their combination here is a source-specific application with no literature-priority assertion. The nonlinear normalized class and its finite functional supply no closed interacting quadratic form, invariant linear Hilbert space, sharp constant, attained ground state, exact decoder, or singular interacting dynamics. Construction and propagation of an admissible interacting class, native access to the cap, recovery of the exact conditional interaction statistic, and the source-to-carrier realization remain open. No physical space dimension follows from these conditional estimates.
+
+## 78.99 追加锚（本行以下为增补区）
+
+## 85. Finite central spectral sector: linear stability, compressed response and cutoff removal
+
+**Definition 85.1 (the same source on a different state sector).** Keep exactly (82.5), its Lebesgue Haar measure, $L$, $\pi$, $a,g>0$, and the actual unit-source field $\Gamma=\int_0^\infty h_t\,dt$. In particular the source and potential are not cut off. Write $\xi=(x,y,z)$, $R=|\xi|$, $r_\perp^2=x^2+y^2$, and use the measure-preserving gauge
+$$
+s=w-\frac{xy}{2},\qquad
+\Psi(\xi,s)=\psi(x,y,z,s+xy/2).
+\tag{85.1}
+$$
+In these coordinates the group product and inverse, with the independent $z$ coordinate understood, are
+$$
+\begin{aligned}
+(x,y,z,s)(x',y',z',s')
+ &=\left(x+x',y+y',z+z',s+s'+\frac{xy'-yx'}2\right),\\
+(x,y,z,s)^{-1}&=(-x,-y,-z,-s),
+\end{aligned}
+$$
+and
+$$
+X_1=\partial_x-\frac y2\partial_s,\qquad
+X_2=\partial_y+\frac x2\partial_s,\qquad X_3=\partial_z.
+$$
+The central Fourier convention throughout this section is
+$$
+\widetilde\Psi(\xi,\lambda)=\int_{\mathbb R}e^{-i\lambda s}\Psi(\xi,s)ds,
+\qquad
+\Psi(\xi,s)=\frac1{2\pi}\int_{\mathbb R}e^{i\lambda s}\widetilde\Psi(\xi,\lambda)d\lambda,
+\qquad
+\|\Psi\|_2^2=\int_{\mathbb R^3}\int_{\mathbb R}|\widetilde\Psi|^2\frac{d\lambda}{2\pi}d\xi.
+\tag{85.2}
+$$
+For $\Lambda>0$ set
+$$
+\begin{gathered}
+B_\Lambda=[-\Lambda,\Lambda],\qquad
+P_\Lambda=\mathcal F_s^{-1}\mathbf1_{B_\Lambda}\mathcal F_s,\qquad
+\mathcal H_\Lambda=P_\Lambda L^2(G),\\
+\mathcal F_\Lambda=\mathcal H_\Lambda\cap D(L^{1/2}),\qquad
+T[\psi]=\sum_i\|X_i\psi\|_2^2,\qquad
+V[\psi]=\int_G\Gamma|\psi|^2d\mu,\qquad
+q_\Lambda[\psi]=aT[\psi]-gV[\psi].
+\end{gathered}
+\tag{85.3}
+$$
+Central Fourier transformation in $w$ gives the same band: its transform differs from (85.2) only by the phase $e^{-i\lambda xy/2}$. Thus this restriction has no dependence on a choice between the two gauges. The free form domain is the actual distributional horizontal domain (84.2), not an independently chosen Euclidean Sobolev domain.
+
+**Proposition 85.2 (sharp fibre cap and strong free reduction).** The domain $\mathcal F_\Lambda$ is nonzero and dense in $\mathcal H_\Lambda$, is closed in the free form norm, and satisfies
+$$
+\mathcal F_\Lambda=P_\Lambda D(L^{1/2}).
+\tag{85.4}
+$$
+Every band state has a continuous central representative on almost every fibre, with
+$$
+|\psi(\xi,w)|^2\le\frac{\Lambda}{\pi}m_\psi(\xi),\qquad
+m_\psi(\xi)=\int_{\mathbb R}|\psi(\xi,w)|^2dw.
+\tag{85.5}
+$$
+The constant $\Lambda/\pi$ is optimal even on $\mathcal F_\Lambda$. The projection strongly commutes with $L$: it commutes with every spectral projection of $L$, hence with $e^{-tL}$ for $t\ge0$ and $e^{-itL}$ for real $t$. These free evolutions preserve $\mathcal H_\Lambda$ and $\mathcal F_\Lambda$.
+
+Proof. The mature Fourier inversion and Plancherel supplies (Teschl, *Mathematical Methods in Quantum Mechanics*, §7.1), in the explicitly fixed normalization (85.2), and Cauchy--Schwarz on $B_\Lambda$ give (85.5). A fibre of zero marginal has zero Fourier transform and zero continuous representative; no conditional division is used there. On positive-marginal fibres the normalized density is bounded by $\Lambda/\pi$. The zero-fibre convention of Definition 84.1 remains available, for example $(\Lambda/\pi)\mathbf1_{[0,\pi/\Lambda]}$ if a probability density is wanted.
+
+For sharpness put
+$$
+h_\Lambda(w)=\frac{\sin(\Lambda w)}{\sqrt{\pi\Lambda}\,w},\qquad
+h_\Lambda(0)=\sqrt{\frac{\Lambda}{\pi}}.
+\tag{85.6}
+$$
+Its Fourier transform in $w$ is $\sqrt{\pi/\Lambda}\,\mathbf1_{B_\Lambda}$, so $\|h_\Lambda\|_2=1$ and $\|h_\Lambda'\|_2^2=\Lambda^2/3$. For nonzero $u\in C_c^\infty(\mathbb R^3)$, the state $u(\xi)h_\Lambda(w)$ belongs to $\mathcal F_\Lambda$: in particular its second horizontal derivative of order one is $(\partial_yu)h_\Lambda+xu h_\Lambda'$. Its conditional density is $|h_\Lambda|^2$, whose essential supremum is $\Lambda/\pi$ by continuity at zero. This also verifies that the sharp cap is attained as a fibre evaluation norm, not as a claim about the finite-band energy constant.
+
+More generally finite sums of products $u(\xi)h(w)$ with $u\in C_c^\infty(\mathbb R^3)$ and $\widetilde h\in C_c^\infty((-\Lambda,\Lambda))$, using the $w$ transform, lie in the actual horizontal domain and are dense in $\mathcal H_\Lambda$. The central projection commutes with all three horizontal distributional derivatives, and Plancherel gives $T[P_\Lambda\psi]\le T[\psi]$. It therefore splits the closed free form into orthogonal band and complementary forms. Equivalently the central direct integral has fibre form
+$$
+\begin{aligned}
+t_\lambda[b]&=\left\|\left(\partial_x-\frac{i\lambda y}{2}\right)b\right\|_2^2
+ +\left\|\left(\partial_y+\frac{i\lambda x}{2}\right)b\right\|_2^2
+ +\|\partial_zb\|_2^2,\\
+L_\lambda&=-\partial_x^2-\partial_y^2
+ -i\lambda(x\partial_y-y\partial_x)+\frac{\lambda^2r_\perp^2}{4}-\partial_z^2,
+\end{aligned}
+\tag{85.7}
+$$
+with the operator interpreted through its closed free form. The standard direct-integral spectral theorem now gives strong commutation, rather than just a formal commutator on smooth functions. The restriction of the closed free form to the closed band subspace proves (85.4). Its spectral calculus proves preservation of the form domain; the unitary preserves $T$ and norm, whereas heat can decrease both. The time in these formulas is precisely the $L$ clock of (82.7). For a declared free Hamiltonian $aL$, the unitary parameter $\theta$ corresponds to $t=a\theta$. $\square$
+
+**Theorem 85.3 (closed same-field restricted form).** On the Hilbert space $\mathcal H_\Lambda$, $q_\Lambda$ is a densely defined closed semibounded Hermitian form with domain exactly $\mathcal F_\Lambda$. For all $\psi$ in this domain,
+$$
+\begin{gathered}
+V[\psi]\le\frac{\Lambda}{4\pi^2}\|\psi\|_2\sqrt{T[\psi]},\\
+q_\Lambda[\psi]\ge-\frac{g^2\Lambda^2}{64\pi^4a}\|\psi\|_2^2.
+\end{gathered}
+\tag{85.8}
+$$
+It has a unique associated self-adjoint representation operator $A_\Lambda$ on $\mathcal H_\Lambda$.
+
+Proof. Reuse the complete global contraction (84.5), including its treatment of zero marginals and its form-domain approximation. Put $f=\sqrt{m_\psi}$, so $\|f\|_2=\|\psi\|_2$ and $\|\nabla f\|_2^2\le T[\psi]$. The actual marginal (82.10), (85.5), and the mature Coulomb estimate (84.10) give
+$$
+V[\psi]\le\frac{\Lambda}{4\pi^2}\int\frac{|f(\xi)|^2}{R}d\xi
+ \le\frac{\Lambda}{4\pi^2}\|\psi\|_2\sqrt{T[\psi]}.
+\tag{85.9}
+$$
+Thus every state in $\mathcal F_\Lambda$ lies in $D(M_{\sqrt\Gamma})$. The sesquilinear potential form is the actual integral $v(\phi,\psi)=\int\Gamma\overline\phi\psi\,d\mu$; Cauchy--Schwarz in this weighted space makes it well defined. For each $\varepsilon>0$,
+$$
+gV[\psi]\le\varepsilon T[\psi]
+ +\frac{g^2\Lambda^2}{64\pi^4\varepsilon}\|\psi\|_2^2.
+\tag{85.10}
+$$
+The free form restricted to the band is closed and dense by Proposition 85.2. Choose $\varepsilon<a$ to make the relative bound strictly less than one. Teschl, *Mathematical Methods in Quantum Mechanics*, version February 12, 2009, [primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 6.24 (KLMN), applies on this Hilbert space and this domain. Completing the scalar square $aT-(g\Lambda/(4\pi^2))\|\psi\|_2\sqrt T$ gives the sharper displayed lower bound. Teschl's Theorem 2.13 supplies the representation operator, characterized by
+$$
+\begin{aligned}
+D(A_\Lambda)=\{\psi\in\mathcal F_\Lambda:\ &\text{there is }F\in\mathcal H_\Lambda\text{ such that}\\
+&q_\Lambda(\phi,\psi)=\langle\phi,F\rangle\text{ for all }\phi\in\mathcal F_\Lambda\},\\
+&A_\Lambda\psi=F.
+\end{aligned}
+\tag{85.11}
+$$
+This is the form representation, with no identification of its domain with a free operator domain. The abstract supplier proves no client bound until (85.9)--(85.10) and the dense closed free restriction have been established. $\square$
+
+**Proposition 85.4 (actual central Green kernel and normalized field bound).** Set
+$$
+\mathcal G(\xi,s)=\Gamma(x,y,z,s+xy/2).
+$$
+For $\xi\ne0$ the unnormalized central transform of this actual field is the strictly positive even kernel
+$$
+\begin{aligned}
+K_\xi(\eta)&=\int_0^\infty B_t(\xi,\eta)dt,\\
+B_t(\xi,\eta)&=
+ \frac{|\eta|}{4\pi\sinh(|\eta|t)}
+ \exp\!\left(-\frac{|\eta|\coth(|\eta|t)}4r_\perp^2\right)
+ (4\pi t)^{-1/2}e^{-z^2/(4t)},\\
+B_t(\xi,0)&=(4\pi t)^{-3/2}e^{-R^2/(4t)}.
+\end{aligned}
+\tag{85.12}
+$$
+In particular
+$$
+0<K_\xi(\eta)\le K_\xi(0)=\frac1{4\pi R},\qquad
+\mathcal G(\xi,s)=\frac1{2\pi}\int_{\mathbb R}e^{i\eta s}K_\xi(\eta)d\eta,
+\qquad
+0<\mathcal G(\xi,s)\le\frac1{8R^3}.
+\tag{85.13}
+$$
+The inverse integral is absolutely convergent for $R>0$; no finite kernel value is assigned at the exceptional fibre $\xi=0$.
+
+Proof. The mature Heisenberg heat supplier is Krötz--Thangavelu--Xu, *The heat kernel transform for the Heisenberg group*, [arXiv:math/0401243v2](https://arxiv.org/abs/math/0401243v2), §4.1, equation (4.1.2), with $n=1$. Its product law is exactly the symmetric law in (85.1), its Haar measure is Lebesgue, and its partial transform uses $e^{+i\eta s}$. Replacing its parameter by $-\eta$ matches (85.2); the displayed radial coefficient is even. Its heat generator is the horizontal sum of squares. The additional $z$ direction here contributes the independent $(4\pi t)^{-1/2}e^{-z^2/(4t)}$ factor. In particular its §2 full Laplacian, which also includes the central second derivative and the factor $e^{-t\eta^2}$, is not the supplier for this problem.
+
+The inverse central transform contributes $1/(2\pi)$, independently of the $(4\pi)^{-1}$ in (4.1.2). At $\eta=0$ formula (85.12) gives the actual marginal heat density (82.9), checking both mass and the literal $e^{-tL}$ clock. The heat representation of the actual unit-source Green field, its positivity and decay are those of Folland's Theorem 3.1, Proposition 3.17 at $\alpha=2$, and §§82.4, 84.1. Thus this parameter match gives the transform of that field, rather than a replacement potential.
+
+For $u>0$, $u/\sinh u\le1$ and $u\coth u\ge1$. They imply $B_t(\xi,\eta)\le B_t(\xi,0)$. Integration proves the upper bound for $K$ and its value at zero; positivity of every integrand proves strict positivity. To justify the inverse and its bound, use also
+$$
+\int_{\mathbb R}\frac{|\eta|}{4\pi\sinh(|\eta|t)}d\eta
+ =\frac{\pi}{8t^2},
+\qquad
+\int_0^\infty\frac{u}{\sinh u}du=\frac{\pi^2}{4}.
+$$
+The latter identity follows from the positive expansion $1/\sinh u=2\sum_{j\ge0}e^{-(2j+1)u}$. Tonelli now gives
+$$
+\begin{aligned}
+\frac1{2\pi}\int_{\mathbb R}K_\xi(\eta)d\eta
+ &\le\frac1{32\sqrt\pi}\int_0^\infty t^{-5/2}e^{-R^2/(4t)}dt
+ =\frac1{8R^3}.
+\end{aligned}
+\tag{85.14}
+$$
+For $R>0$, the heat inverse and its time integral can therefore be interchanged absolutely. This identifies $K$ as the Fourier transform of $\mathcal G$ as well as proving (85.13), since $\mathcal G\ge0$ and the modulus of its inverse is bounded by (85.14). All constants concern the fixed Haar normalization and source of §82. $\square$
+
+**Theorem 85.5 (actual leakage and the centrally nonlocal compression).** For every finite $\Lambda>0$, there is
+$$
+0\ne\psi\in\mathcal H_\Lambda\cap D(L)\cap D(M_\Gamma)
+\quad\text{with}\quad
+(I-P_\Lambda)M_\Gamma\psi\ne0.
+\tag{85.15}
+$$
+Consequently the free spectral sector does not reduce actual multiplication by $\Gamma$. The band form retains the same actual expectation $V$, but its interaction response is compressed.
+
+Proof. Choose nonzero nonnegative $u\in C_c^\infty(\{\xi:R>\delta\})$ for some $\delta>0$ and nonzero nonnegative $b\in C_c^\infty((-\Lambda,\Lambda))$. In the symmetric gauge set
+$$
+\widetilde\Psi(\xi,\lambda)=u(\xi)b(\lambda),\qquad
+\Psi(\xi,s)=u(\xi)\frac1{2\pi}\int e^{i\lambda s}b(\lambda)d\lambda.
+\tag{85.16}
+$$
+The central factor is Schwartz, all derivatives of $u$ have compact support, and the coefficients of (85.7) are bounded on that support. The direct-integral operator, or smooth free-graph approximation, therefore gives $\psi\in D(L)$. On this support (85.13) bounds $\Gamma$ by $1/(8\delta^3)$, proving $\psi\in D(M_\Gamma)$ independently of the form argument. The exact product formula is
+$$
+\widetilde{\mathcal G\Psi}(\xi,\lambda)
+ =\frac{u(\xi)}{2\pi}\int_{B_\Lambda}K_\xi(\lambda-\eta)b(\eta)d\eta.
+\tag{85.17}
+$$
+Indeed $\mathcal G(\xi,\cdot)\in L^1\cap L^\infty$ for $R>0$, and $b\in L^1$, so insertion of Fourier inversion and Fubini are valid. The integral is strictly positive for every real $\lambda$ wherever $u(\xi)>0$. It is therefore nonzero outside $B_\Lambda$ on a set of positive $(\xi,\lambda)$ measure. Since $M_\Gamma\psi\in L^2$, this proves (85.15) in the actual Hilbert space.
+
+For a measurable fibre formulation let $\mathfrak h_\Lambda=L^2(B_\Lambda,d\lambda/(2\pi))$. For $R>0$ define
+$$
+(C_{\Lambda,\xi}b)(\lambda)
+ =\frac1{2\pi}\int_{B_\Lambda}K_\xi(\lambda-\eta)b(\eta)d\eta,
+\qquad\lambda\in B_\Lambda.
+\tag{85.18}
+$$
+These are measurable bounded nonnegative self-adjoint fibre operators: they are the compressions of the bounded positive multiplier $\mathcal G(\xi,\cdot)$. The kernel is measurable by (85.12), and Schur's estimate together with (85.13) gives
+$$
+\|C_{\Lambda,\xi}\|\le
+ \min\left\{\frac{\Lambda}{4\pi^2R},\frac1{8R^3}\right\}.
+\tag{85.19}
+$$
+Values on $\xi=0$ may be set to zero without affecting the direct integral. Fibre Fourier transformation identifies their positive direct-integral form with $V$ on its natural weighted domain. In particular for $\phi,\psi\in\mathcal F_\Lambda$,
+$$
+v(\phi,\psi)=\int_{\mathbb R^3}
+ \langle\widetilde\Phi(\xi,\cdot),C_{\Lambda,\xi}\widetilde\Psi(\xi,\cdot)\rangle_{\mathfrak h_\Lambda}d\xi.
+\tag{85.20}
+$$
+This identity extends from the fibre formula by weighted Cauchy--Schwarz, since both weighted norms are finite by (85.9). It does not require the general form state to belong to $D(M_\Gamma)$. When $\psi$ does belong to that multiplier domain, the form response is represented by $P_\Lambda M_\Gamma\psi$; on the common free operator and multiplier domain the form identity gives $A_\Lambda\psi=aL\psi-gP_\Lambda M_\Gamma\psi$. No converse domain assertion is made.
+
+The multiplier-domain distinction is substantive. Choose $u\in C_c^\infty(\mathbb R^3)$ equal to one near zero and a Schwartz central factor $h$ whose transform is nonnegative, nonzero and compactly supported in $(-\Lambda,\Lambda)$. Then $h(0)>0$, and $u(\xi)h(w)$ is in $\mathcal F_\Lambda\cap D(L)$ by the same product derivative calculation, but it is not in $D(M_\Gamma)$. Indeed its modulus is bounded below on a neighbourhood of $e$. For the homogeneous norm $N(\xi,s)=(R^4+s^2)^{1/4}$, positivity and homogeneity give $\Gamma\ge cN^{-3}$ there for some $c>0$, and $\int_{N<\epsilon}\Gamma^2d\mu=\infty$: on disjoint dyadic homogeneous annuli the integrals scale as $\rho^{5-6}=\rho^{-1}$ and have a positive base value. Thus finiteness of the actual potential form must not be promoted to multiplier-domain membership.
+
+The distinction is also explicit in the central coordinate. The projection kernel is
+$$
+p_\Lambda(s-s')=\frac{\sin(\Lambda(s-s'))}{\pi(s-s')},\qquad p_\Lambda(0)=\frac{\Lambda}{\pi}.
+$$
+For fixed $\xi\ne0$, the kernel of the compressed potential, initially acting on Schwartz functions of $s'$, is instead
+$$
+J_{\Lambda,\xi}(s,s')
+ =\int_{\mathbb R}p_\Lambda(s-u)\mathcal G(\xi,u)p_\Lambda(u-s')du.
+\tag{85.21}
+$$
+This integral converges absolutely because $p_\Lambda$ is bounded and $\mathcal G(\xi,\cdot)\in L^1$. Inserting the two projections justifies the formula by Fubini on Schwartz inputs. It defines a continuous kernel. Its diagonal is strictly positive, since $\mathcal G>0$ and $p_\Lambda^2$ is positive except at a discrete set. Continuity consequently gives nonzero off-diagonal values near every diagonal point, proving central nonlocality. The sinc alone is the projection kernel, not the kernel of the compressed potential.
+
+Thus equality of the band expectation with the same-field expectation does not identify the responses: (85.17) has an actual discarded component. The represented band Hamiltonian defines its own closed-form evolution on $\mathcal H_\Lambda$. No full-space singular interacting realization has been specified, and no reduction or invariance of such a realization follows from the free commutation or the equality of expectations. $\square$
+
+**Corollary 85.6 (the existing conditional-energy reader gap inside the band).** The reader $\mathscr R$ of §82.5, even supplemented with $\Lambda$ and its sharp cap, does not determine exact $V$ or $q_\Lambda$ on the normalized band form domain.
+
+Proof. This is the §82 central-translation defect with actual band membership checked. Choose normalized $u\in C_c^\infty(\{R>\delta\})$ and normalized Schwartz $h$ with nonzero smooth Fourier transform supported in $(-\Lambda,\Lambda)$, now in the original $w$ gauge. For $c\in\mathbb R$ put $\psi^c(\xi,w)=u(\xi)h(w-c)$. Every state lies in $\mathcal F_\Lambda$ and has the cap (85.5). Central translations commute with every $X_i$ and preserve $m_\psi$, $T$, norm and central frequency support; all projected free heat observations in $\mathscr R$ agree. The actual field gives $V[\psi^0]>0$. For each fixed $(\xi,v)$ on the support of $u$, $\Gamma(\xi,v+c)\to0$ as $|c|\to\infty$ by the actual Green decay. The uniform bound $\Gamma\le1/(8\delta^3)$ there permits dominated convergence against $|u(\xi)|^2|h(v)|^2d\xi\,dv$, giving $V[\psi^c]\to0$. Some finite $c$ therefore gives distinct energies in one reader fibre. This proves neither another all-scale escape statement nor any equality of interacting futures. The missing statistic is still the actual conditional field expectation (82.16), not the Haar marginal (82.10). $\square$
+
+**Theorem 85.7 (finite-band variational boundary and negative-infimum attainment).** For fixed $a,g,\Lambda>0$ define
+$$
+\begin{aligned}
+E_\Lambda(a,g)&=\inf\{q_\Lambda[\psi]:\psi\in\mathcal F_\Lambda,\ \|\psi\|_2=1\},\\
+C_\Lambda&=\sup_{0\ne\psi\in\mathcal F_\Lambda}\frac{V[\psi]}{T[\psi]}.
+\end{aligned}
+\tag{85.22}
+$$
+Then $0<C_\Lambda\le\sqrt\Lambda/(\sqrt2\pi)$, $C_\Lambda=\sqrt\Lambda C_1$, and
+$$
+\begin{gathered}
+-\frac{g^2\Lambda^2}{64\pi^4a}\le E_\Lambda(a,g)\le0,\\
+E_\Lambda(a,g)=0\quad\Longleftrightarrow\quad gC_\Lambda\le a,\qquad
+E_\Lambda(a,g)<0\quad\Longleftrightarrow\quad gC_\Lambda>a.
+\end{gathered}
+\tag{85.23}
+$$
+In particular $g\sqrt\Lambda\le\sqrt2\pi a$ is a sufficient no-negative-energy region. If $E_\Lambda(a,g)<0$, the infimum is attained by a normalized state in $\mathcal F_\Lambda$, which is an eigenvector of $A_\Lambda$ with eigenvalue $E_\Lambda(a,g)$. The numerical value of $C_1$ and attainment at the critical coupling $g=a/C_\Lambda$ are not determined here.
+
+Proof. The conditional expectation on a positive-marginal fibre is bounded both by (85.9)'s pointwise cap estimate and by the actual-field supremum (85.13). Therefore
+$$
+V[\psi]\le\int m_\psi(\xi)
+ \min\left\{\frac{\Lambda}{4\pi^2R},\frac1{8R^3}\right\}d\xi
+ \le\frac{\sqrt\Lambda}{4\sqrt2\pi}\int\frac{m_\psi(\xi)}{R^2}d\xi
+ \le\frac{\sqrt\Lambda}{\sqrt2\pi}T[\psi].
+\tag{85.24}
+$$
+For the middle inequality, $\min(AR,B/R)\le\sqrt{AB}$ with $A=\Lambda/(4\pi^2)$, $B=1/8$. The final step uses the classical three-dimensional Hardy inequality $\int|f|^2/R^2\le4\|\nabla f\|_2^2$ on the actual $f=\sqrt{m_\psi}$ supplied by (84.5). Thus the stated constant is a sufficient estimate; no sharpness at fixed bandwidth is asserted. Also $T[\psi]=0$ forces $\nabla f=0$ and then $f=0$ because $f\in L^2(\mathbb R^3)$, so the ratios in (85.22) have nonzero denominators. Positivity of $\Gamma$ and an inhabitant of $\mathcal F_\Lambda$ prove $C_\Lambda>0$.
+
+Use the same normalized dilation as §82,
+$$
+(U_\rho\psi)(p)=\rho^{-5/2}\psi(\delta_{1/\rho}p),\qquad
+U_\rho\mathcal F_\Lambda=\mathcal F_{\Lambda/\rho^2},\qquad
+T[U_\rho\psi]=\rho^{-2}T[\psi],\qquad
+V[U_\rho\psi]=\rho^{-3}V[\psi].
+\tag{85.25}
+$$
+Central Fourier scaling proves the sector identity, and the last two identities use the actual kinetic degree and actual Green homogeneity. Taking $\rho=\Lambda^{-1/2}$ maps $\mathcal F_1$ onto $\mathcal F_\Lambda$ and proves $C_\Lambda=\sqrt\Lambda C_1$. Taking $\rho\to\infty$ on any fixed normalized band inhabitant keeps it in $\mathcal F_\Lambda$ and gives $q_\Lambda[U_\rho\psi]\to0$. Hence $E_\Lambda\le0$. The definition of the supremum now proves both alternatives in (85.23), including equality at the threshold; (85.8) supplies the lower bound. For strictly subcritical $gC_\Lambda<a$, every nonzero state's form value is positive, so the zero infimum is not attained. At critical coupling this argument does not decide attainment.
+
+For the negative case the required compactness concerns the actual full field. We prove that
+$$
+\mathcal F_\Lambda\longrightarrow L^2(G,\Gamma d\mu),\qquad\psi\longmapsto\psi,
+\quad\text{is compact for the norm }(\|\psi\|_2^2+T[\psi])^{1/2}.
+\tag{85.26}
+$$
+First, $\|\partial_w\psi\|_2\le\Lambda\|\psi\|_2$ by the band restriction. In the original coordinates $\partial_x=X_1$, $\partial_z=X_3$, and $\partial_y=X_2-x\partial_w$. A form-bounded sequence is consequently bounded in ordinary $H^1$ on every relatively compact coordinate box, after multiplication by a smooth compact cutoff. The classical Rellich--Kondrachov theorem, applied to these cutoffs on bounded smooth coordinate balls in dimension four with $H^1$ boundedness and target $L^2$, gives a diagonal subsequence converging strongly in local $L^2$; the weak form limit identifies that limit.
+
+Second, uniformly for all $\phi\in\mathcal F_\Lambda$, the singular central cylinder is small in the weighted norm:
+$$
+\int_{R<\delta}\Gamma|\phi|^2d\mu
+ \le\frac{\Lambda}{4\pi^2}\int_{R<\delta}\frac{m_\phi}{R}d\xi
+ \le\frac{\Lambda\delta}{\pi^2}T[\phi].
+\tag{85.27}
+$$
+This uses the marginal cap and Hardy, and covers the entire infinite central fibre, not merely a small Euclidean neighbourhood of the source. Third let $N(\xi,s)=(R^4+s^2)^{1/4}$. Folland's smoothness and homogeneous degree $-3$ on the compact unit $N$ sphere give $\mathcal G(\xi,s)\le C N^{-3}$. Consequently
+$$
+\int_{N>K}\Gamma|\phi|^2d\mu\le CK^{-3}\|\phi\|_2^2.
+\tag{85.28}
+$$
+The remaining region $\{R\ge\delta,N\le K\}$ is compact, and its potential is bounded by $1/(8\delta^3)$. Local strong $L^2$ convergence controls the weighted norm there. Apply (85.27)--(85.28) to differences of the convergent subsequence, first making $\delta$ small and $K$ large and then using local convergence. This proves weighted Cauchy convergence; local identification gives its weighted limit as the weak form limit. Thus (85.26) is a compact embedding with the actual $\Gamma$, including its singularity and its full central tail.
+
+Now let $\|\psi_n\|_2=1$ and $q_\Lambda[\psi_n]\to E=E_\Lambda(a,g)<0$. Estimate (85.10) with $\varepsilon=a/2$ bounds $T[\psi_n]$. Pass to a weakly convergent subsequence in $\mathcal F_\Lambda$ with limit $\psi$. Weighted compactness gives $V[\psi_n]\to V[\psi]$, and weak lower semicontinuity gives $q_\Lambda[\psi]\le E$. Set $m=\|\psi\|_2^2\le1$. Homogeneity and the definition of $E$ give $q_\Lambda[\psi]\ge Em$, also when $m=0$. Hence
+$$
+E\ge q_\Lambda[\psi]\ge Em\ge E.
+\tag{85.29}
+$$
+Since $E<0$, equality forces $m=1$ and $q_\Lambda[\psi]=E$. This supplies the missing norm/mass conclusion as well as attainment. Constrained variation of the Hermitian form gives $q_\Lambda(\phi,\psi)=E\langle\phi,\psi\rangle$ for every $\phi\in\mathcal F_\Lambda$. The representation characterization (85.11) yields the asserted eigenvector. Semiboundedness alone was used for neither negativity nor attainment. $\square$
+
+**Theorem 85.8 (matched leading collapse as the finite cutoff is removed).** For the same actual field and fixed $a,g>0$,
+$$
+\lim_{\Lambda\to\infty}\frac{E_\Lambda(a,g)}{\Lambda^2}
+ =-\frac{g^2}{64\pi^4a}.
+\tag{85.30}
+$$
+In particular the fixed-band lower bound has the correct leading coefficient in this limit, without a claim that it is sharp at any finite $\Lambda$.
+
+Proof. The lower limit follows from (85.8). For the matching upper limit, use the mature normalized Coulomb minimizer from (82.4), with the different, explicitly matched coupling
+$$
+k_0=\frac{g}{4\pi^2},\qquad \kappa_0=\frac{k_0}{2a},\qquad
+\nu(\xi)=\left(\frac{\kappa_0^3}{\pi}\right)^{1/2}e^{-\kappa_0R}.
+$$
+Thus $\|\nu\|_2=1$, $\nu\in H^1(\mathbb R^3)$, $x\nu\in L^2$, and
+$$
+a\|\nabla\nu\|_2^2-\frac{g}{4\pi^2}\int\frac{|\nu|^2}{R}d\xi
+ =-\frac{g^2}{64\pi^4a}.
+\tag{85.31}
+$$
+Define, in the original $w$ gauge,
+$$
+\nu_\Lambda(\xi)=\Lambda^{3/2}\nu(\Lambda\xi),\qquad
+\psi_\Lambda(\xi,w)=\nu_\Lambda(\xi)h_\Lambda(w),
+\tag{85.32}
+$$
+where $h_\Lambda$ is exactly (85.6). This normalized state is in $\mathcal F_\Lambda$: its weak horizontal derivatives are square integrable. Both factors are real, and $\int h_\Lambda h_\Lambda'\,dw=0$, so the actual $X_2=\partial_y+x\partial_w$ gives
+$$
+T[\psi_\Lambda]
+ =\Lambda^2\|\nabla\nu\|_2^2
+  +\frac13\int_{\mathbb R^3}x^2|\nu(\xi)|^2d\xi.
+\tag{85.33}
+$$
+In particular the magnetic contribution is controlled rather than silently omitted.
+
+Let $h_1(t)=\sin t/(\sqrt\pi t)$ with its continuous value at zero. Substituting $\xi=v/\Lambda$ and $w=t/\Lambda^2$, and using the actual degree $-3$ Green homogeneity in the original coordinates, gives the exact identity
+$$
+\frac{V[\psi_\Lambda]}{\Lambda^2}
+ =\int_{\mathbb R^3}\int_{\mathbb R}|\nu(v)|^2\Gamma(v,t)
+   |h_1(t/\Lambda)|^2dt\,dv.
+\tag{85.34}
+$$
+Here $|h_1(t/\Lambda)|^2\le1/\pi$ and it tends to $1/\pi$ for every finite $t$. The dominating integral is finite by the actual fibre marginal:
+$$
+\frac1\pi\int|\nu(v)|^2\left(\int\Gamma(v,t)dt\right)dv
+ =\frac1{4\pi^2}\int\frac{|\nu(v)|^2}{|v|}dv<\infty.
+$$
+Dominated convergence therefore proves $V[\psi_\Lambda]/\Lambda^2\to(4\pi^2)^{-1}\int|\nu|^2/R$. Equations (85.31)--(85.34) give the upper limit, hence (85.30). The trial proves an energy asymptotic on the actual field; it makes no state/profile convergence claim and supplies no rate beyond the stated limit. $\square$
+
+**Proposition 85.9 (the admissible-state quantifier and one-sided collapse).** The finite-band form does not extend the all-core form contract of §82, nor the relatively compact zero-extension contract of §83. It has no nonzero state with compact central support. Restricting instead to a half-infinite central frequency range, with no upper bound in one direction, still permits collapse for the same actual field.
+
+Proof. On almost every $\xi$ fibre, a function whose Fourier transform is supported in $B_\Lambda$ has the entire extension $(2\pi)^{-1}\int_{B_\Lambda}e^{i\lambda\zeta}b(\lambda)d\lambda$ in $\zeta\in\mathbb C$, since $b\in L^2(B_\Lambda)\subset L^1(B_\Lambda)$. If it has compact support in the real central coordinate, its continuous representative vanishes on an open real interval. The identity theorem forces that entire function to vanish. Fubini therefore proves the claimed absence of nonzero compact-central-support states, even if the compact interval is allowed to depend on the fibre. In particular $\mathcal H_\Lambda\cap\mathcal D_0=\{0\}$. Whenever a relatively compact §83 domain is placed on this carrier, its zero extensions have bounded central support and hence cannot be nonzero band states. For other §83 carriers no identification with $\mathcal H_\Lambda$ is supplied.
+
+Under (85.25), central Fourier support scales by $\rho^{-2}$. A nonzero $L^2$ band state cannot have central support only at frequency zero, so its concentrating dilates eventually leave every fixed $\mathcal H_\Lambda$. Thus fixed-band stability changes precisely the admissible-state quantifier that carried the §82 collapse. It does not change the proof or conclusion on the whole punctured core.
+
+For the half-infinite restriction, take the smooth product witness of Corollary 85.6 with its central transform supported in $[\alpha,\beta]\subset(0,\infty)$, with $\alpha$ beyond any prescribed finite lower endpoint. It has finite $T$ and strictly positive finite $V$. Its dilates $U_\rho\psi$, $\rho\downarrow0$, remain in that half-infinite sector and satisfy
+$$
+aT[U_\rho\psi]-gV[U_\rho\psi]
+ =a\rho^{-2}T[\psi]-g\rho^{-3}V[\psi]\longrightarrow-\infty.
+\tag{85.35}
+$$
+A negative-frequency interval gives the other direction, with its negative endpoint beyond any prescribed finite upper endpoint. These are actual horizontally admissible states; no compact-central-support assertion is needed. A finite bound in both frequency directions, not just a sign selection or one finite endpoint, is what excluded this scaling family. $\square$
+
+**Definition 85.10 (conditional application and open source correspondences).** The retained analytic consumer consists of the sharp cap and free reduction in Proposition 85.2, the closed same-field restricted form in Theorem 85.3, the actual leakage and compressed response in Theorem 85.5, the finite-band variational alternatives with their proved compactness condition in Theorem 85.7, and the matched energy asymptotic in Theorem 85.8. Fourier evaluation, direct-integral spectral calculus, Hardy, local Rellich, the Coulomb minimizer, Folland's heat/Green supplies and Teschl's form theorems are mature ingredients. The source-specific parameter matching, leakage witness, full-field weighted compactness and simultaneous bandwidth/horizontal trial connect those ingredients to the unchanged §82 contract. These applications are repository-derived; no exhaustive novelty or literature-priority claim is made.
+
+A native use must separately supply the same source and immutable INITIAL, the state-to-carrier and field correspondence, Haar and kinetic laws, projection, boundary convention, clock, and an admissible native operation producing or acquiring a state in $\mathcal H_\Lambda$. The exact conditional statistic in (82.16) remains an additional reader obligation by Corollary 85.6. Same-source chronology, authentic Reads/refusals/Stop, preparation and acquisition, observation, copying and retention, clock and resource permissions and costs keep their original contracts. A native static retained-row/depth recovery or coding statement under its complete same-source handoff supplies its own read conclusion, not a band state or a map to this carrier. Frequency restriction provides none of those bridges.
+
+The $\Lambda^2$ analytic energy scale in (85.30) is cutoff dependent, not a proved native resource price. No source-independent preparation, exact-energy decoder, full-space singular interacting realization, full-space resolvent limit, state/profile limit, or physical dimension follows. In particular the original all-core instability, the separate §83 local domain result, and the nonlinear cap/free-density and free-unitary distinctions of §84 retain their stated scopes.
+
+## 78.99 追加锚（本行以下为增补区）
+
+## 86. Finite amplitude observations and the missing interaction stability control
+
+**Definition 86.1 (actual energy, domains and the different observation model).** Fix the same unit source at $e$, $G=H^1\times\mathbb R$, Lebesgue Haar measure, projection $\pi$, horizontal metric and free $L$ clock as (82.5). Thus, in the original coordinates,
+
+$$
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\quad L=-\sum_{i=1}^3X_i^2,
+\quad \delta_r(\xi,w)=(r\xi,r^2w),\quad Q=5.
+\tag{86.1}
+$$
+
+Here $L$ is the nonnegative self-adjoint free realization of Definition 84.1, and $\Gamma$ is exactly (82.8), with degree $-3$, not a truncated, massive or compressed substitute. Put $\mathcal H=L^2(G,d\mu)$, with inner product $\langle f,u\rangle=\int\overline f u\,d\mu$, conjugate linear in the first argument. Write
+
+$$
+\begin{gathered}
+\mathcal D=D(L^{1/2})\cap D(M_{\sqrt\Gamma}),\qquad
+\mathcal R=D(L)\cap D(M_\Gamma),\qquad
+\mathcal D_0=C_c^\infty(G\setminus\{e\}),\\
+t(f,u)=\sum_i\langle X_if,X_iu\rangle,\quad T[u]=t(u,u),\quad
+V[u]=\|\sqrt\Gamma u\|_2^2,\quad q[u]=aT[u]-gV[u],\quad a,g>0,\\
+\|u\|_H^2=\|u\|_2^2+T[u].
+\end{gathered}
+\tag{86.2}
+$$
+
+The functional $q$ has finite integrals on $\mathcal D$. No closed or semibounded full-space singular interacting form is assumed. In particular $\mathcal R\subset\mathcal D$: the free spectral calculus gives $D(L)\subset D(L^{1/2})$, and $V[u]\le\|\Gamma u\|_2\|u\|_2$ on $D(M_\Gamma)$. Every punctured compact test belongs to $\mathcal R$, by the free integration-by-parts domain and boundedness of $\Gamma$ on its support. All these domains are complex vector spaces.
+
+For any $m\ge0$ and any $f_1,\ldots,f_m\in\mathcal H$, the finite amplitude observation is
+
+$$
+Au=(\langle f_1,u\rangle,\ldots,\langle f_m,u\rangle),\qquad
+F=\operatorname{span}_{\mathbb C}\{f_1,\ldots,f_m\},\quad
+E=A\mathcal H\subseteq\mathbb C^m,\quad k=\dim F=\dim E.
+\tag{86.3}
+$$
+
+Each observation is bounded, complex linear, and $\ker A=F^\perp$. Dependent and zero probes are allowed; a right inverse has domain $E$, not an assumed $\mathbb C^m$. These amplitudes are a different observation model from the continuous marginal reader $\mathscr R$ of Theorem 82.5. Neither amplitudes nor the optional scalar $T$ are identified with native Reads. The band $\mathcal H_\Lambda$, projector $P_\Lambda$ and conditional-density cap $\mathcal C_M$ retain Definitions 85.1 and 84.1, including the convention on zero marginal fibres.
+
+For support arguments use the homogeneous norm $N(\xi,s)=(|\xi|^4+s^2)^{1/4}$ in the gauge $s=w-xy/2$. It is continuous, vanishes only at $e$, and satisfies $N(\delta_rp)=rN(p)$. Smoothness, positivity and homogeneity of the actual field give $\Gamma\le C N^{-3}$ off $e$, by its maximum on $N=1$.
+
+**Lemma 86.2 (finite-codimension concentration with a genuine exterior right inverse).** For every list (86.3) there exist $\rho>0$, a fixed finite family of punctured compact tests supported in $\{N>\rho\}$ giving a right inverse $J:E\to\mathcal D_0$ of $A$, and normalized $v_r\in\mathcal D_0\cap\ker A$, for all sufficiently small $r>0$, such that
+
+$$
+T[v_r]\sim A_0r^{-2},\qquad V[v_r]\sim B_0r^{-3},\qquad
+q[v_r]\longrightarrow-\infty,
+\quad A_0,B_0>0,\quad v_r\rightharpoonup0\text{ in }\mathcal H.
+\tag{86.4}
+$$
+
+The correction family has the full effective rank $k$. The choice of $\rho$ depends on the list; no assertion of full rank on an arbitrary preassigned exterior is needed. The conclusion also holds after adjoining any finite list of actual $L^2$ representers.
+
+Proof. Choose an orthonormal basis $g_1,\ldots,g_k$ of $F$. The Gram matrix of $\mathbf1_{\{N>\rho\}}g_j$ tends to the identity as $\rho\downarrow0$, by absolute continuity of the $L^2$ integrals and the null measure of $e$. For a sufficiently small positive $\rho$ it is positive definite. Thus the effective independent functionals remain independent on $L^2(\{N>\rho\})$. Compact smooth tests in this open exterior are dense there. Their image under $A$ is a linear subspace of the finite-dimensional space $E$, hence closed; density and the preceding rank show that this image is all of $E$. Choose tests whose images are a basis of $E$ and invert their image matrix. This defines $J$, with $AJ=I_E$. If $k=0$, take $J=0$. This argument is the mature finite-dimensional right-inverse construction, with its exterior rank verified here.
+
+Choose a fixed normalized $u\in\mathcal D_0$ supported in a compact annulus $0<c\le N\le C_1$, and let $u_r=r^{-5/2}u\circ\delta_{1/r}$. The §82 change of variables gives
+
+$$
+\|u_r\|_2=1,\qquad T[u_r]=A_0r^{-2},\quad
+V[u_r]=B_0r^{-3},\qquad A_0=T[u]>0,\ B_0=V[u]>0.
+\tag{86.5}
+$$
+
+For any $f\in\mathcal H$, $|\langle f,u_r\rangle|\le\|\mathbf1_{\{N\le C_1r\}}f\|_2\to0$. Consequently $Au_r\to0$ and $c_r=JAu_r\to0$ in the $L^2$, free form and $\Gamma$-weighted norms, since $J$ has a fixed finite smooth range. For $C_1r<\rho$, the supports of $u_r$ and $c_r$, and of their horizontal derivatives, are disjoint. Hence $z_r=u_r-c_r$ has $Az_r=0$ and
+
+$$
+\|z_r\|_2^2=1+\|c_r\|_2^2,quad
+T[z_r]=A_0r^{-2}+T[c_r],\quad V[z_r]=B_0r^{-3}+V[c_r].
+\tag{86.6}
+$$
+
+Set $v_r=z_r/\|z_r\|_2$. Equations (86.6) prove the two asymptotics, with no rate assumption on $Au_r$; the negative term has higher order. Weak convergence follows from that of $u_r$ and strong convergence of $c_r$ to zero. Each support is compact and avoids $e$. Adjoining finitely many $L^2$ representers simply repeats the rank argument for the enlarged effective span. $\square$
+
+**Theorem 86.3 (local free-form ambiguity, approximate readings and exact normalized fibres).** Let $\phi\in\mathcal D$, $\|\phi\|_2=1$, and fix (86.3). There are normalized $\psi_r\in\mathcal D$ with
+
+$$
+\|\psi_r-\phi\|_H\to0,\qquad A\psi_r\to A\phi,\qquad
+T[\psi_r]\to T[\phi],\qquad V[\psi_r]\to\infty,
+\qquad q[\psi_r]\to-\infty.
+\tag{86.7}
+$$
+
+If $\phi\in\mathcal R$, the perturbations can all be taken in $\mathcal R$. For exact amplitudes, the normalized fibre in $\mathcal H$ is a singleton if and only if $\phi\in F$. The same singleton criterion holds after intersecting the fibre with $\mathcal D$, or with $\mathcal R$ when $\phi\in\mathcal R$. If $\phi\notin F$, (86.7) can be achieved with $A\psi_r=A\phi$ for every $r$. This is not a claim of exact kinetic equality.
+
+Proof. Apply Lemma 86.2 with the additional representer $\phi$ to obtain $\langle\phi,v_r\rangle=0$. Fix $1<\beta<3/2$, put $b_r=r^\beta$, and first take
+
+$$
+\psi_r=\frac{\phi+b_rv_r}{\sqrt{1+b_r^2}}.
+\tag{86.8}
+$$
+
+Normalization is exact, and $A\psi_r=A\phi/\sqrt{1+b_r^2}$. The free-form change is bounded by the normalization change times $\|\phi\|_H$, plus $b_r\|v_r\|_H$, and tends to zero since $b_r/r\to0$. Triangle inequality for the actual weighted $L^2$ space, on the whole domain $\mathcal D$, gives
+
+$$
+\sqrt{V[\psi_r]}\ge
+\frac{b_r\sqrt{V[v_r]}-\sqrt{V[\phi]}}{\sqrt{1+b_r^2}}\longrightarrow\infty,
+\tag{86.9}
+$$
+
+because $b_rr^{-3/2}\to\infty$. Free-form convergence gives kinetic convergence and then $q\to-\infty$. All sums remain in $\mathcal D$, and in $\mathcal R$ if the target is regular. In particular an explicit regular target is any normalized nonzero punctured compact test; (86.8) already proves its local ambiguity. No smoothness-to-multiplier-domain inference is used for a general target.
+
+For the exact fibre, let $p=P_F\phi$. Hilbert orthogonal projection gives exactly
+
+$$
+\{\psi:\|\psi\|_2=1, A\psi=A\phi\}
+ =\{p+z:z\in F^\perp,\ \|z\|_2^2=1-\|p\|_2^2\}.
+\tag{86.10}
+$$
+
+If $\phi\in F$, the right side is $\{\phi\}$. If $\phi\notin F$, it is a nontrivial sphere. To prove the stronger local assertion in the actual domains, rather than merely use that sphere, note that $\mathcal D_0\cap\ker A$ is $L^2$ dense in $\ker A$: approximate any $z\in\ker A$ by $z_n\in\mathcal D_0$, then subtract $JAz_n\to0$ using Lemma 86.2. Since $P_{F^\perp}\phi\ne0$, choose a normalized $u\in\mathcal D_0\cap\ker A$ and change its phase so $d=\langle\phi,u\rangle>0$ is real. Apply Lemma 86.2 with the additional representers $\phi,u$, so $v_r$ is orthogonal to both. For $b_r<d$ put
+
+$$
+c_r=-d+\sqrt{d^2-b_r^2}
+ =-\frac{b_r^2}{d+\sqrt{d^2-b_r^2}},\qquad
+\psi_r=\phi+b_rv_r+c_ru.
+\tag{86.11}
+$$
+
+Then $A\psi_r=A\phi$ and $\|\psi_r\|_2^2=1+2dc_r+c_r^2+b_r^2=1$. Also $c_r=O(b_r^2)$, so free-form convergence still holds. The weighted norm of $\phi+c_ru$ stays bounded, whereas $b_r\sqrt{V[v_r]}\to\infty$. The weighted reverse triangle again proves potential divergence. Thus every nonsingleton case has actual local witnesses, including in the original regular subclass. No assumption that $P_F\phi$ itself is regular is necessary. $\square$
+
+**Proposition 86.4 (a genuine additional singleton from exact kinetic equality).** There exist a normalized $\phi\in\mathcal D_0$, a single bounded amplitude probe with representer $f\in\mathcal H$, and $T_\phi=T[\phi]>0$, for which the normalized exact amplitude fibre is nonsingleton, but
+
+$$
+\{\psi\in D(L^{1/2}):\|\psi\|_2=1,\ \langle f,\psi\rangle=\langle f,\phi\rangle,
+\ T[\psi]=T_\phi\}=\{\phi\}.
+\tag{86.12}
+$$
+
+Proof. Choose a normalized product $\phi(x,y,z,w)=b(x,y,w)\zeta(z)$ of nonzero smooth compact factors, with $b$ supported away from $(x,y)=(0,0)$. It is a punctured compact test. It is not an eigenfunction of $L$. Indeed, if $L\phi=\lambda\phi$, projection in $(x,y,w)$ against $b$ gives $-\zeta''+c\zeta=\lambda\zeta$ for a real constant $c$. A compactly supported nonzero smooth solution of this constant-coefficient ODE is impossible by uniqueness from zero Cauchy data outside its support. Fix $\tau>0$ and take $f=(L+\tau)\phi\in L^2$. Then $f$ is not proportional to $\phi$, so $\phi\notin\operatorname{span}\{f\}$ and Theorem 86.3 proves that the amplitude-only fibre is nonsingleton.
+
+For $\psi$ in (86.12), define the strictly positive free inner product $t_\tau(u,v)=t(u,v)+\tau\langle u,v\rangle$. The operator-form identity gives
+
+$$
+t_\tau(\phi,\psi)=\langle (L+\tau)\phi,\psi\rangle
+ =T_\phi+\tau,qquad
+t_\tau(\phi,\phi)=t_\tau(\psi,\psi)=T_\phi+\tau.
+\tag{86.13}
+$$
+
+Equality in Cauchy--Schwarz forces $\psi$ to be proportional to $\phi$, and the positive exact complex response forces the proportionality factor to be one. This proves (86.12). In contrast, Theorem 86.3 produces exact-amplitude collapsing perturbations with $T[\psi_r]\to T_\phi$, so every positive kinetic tolerance still permits those perturbations. A simpler amplitude-only singleton uses $f=\phi$ and the exact response one. These examples forbid a blanket collapse assertion on every normalized exact record. $\square$
+
+**Theorem 86.5 (a joint zero-amplitude norm/kinetic/band/cap fibre).** For every finite list (86.3), every $0<\Lambda<\infty$, every $M>0$ and every prescribed $T_*>0$, there exist
+
+$$
+\phi\in\mathcal R\cap\mathcal H_\Lambda\cap\mathcal C_M,qquad
+\psi_r\in\mathcal R,
+\tag{86.14}
+$$
+
+with, simultaneously for these actual states,
+
+$$
+A\phi=A\psi_r=0,qquad \|\phi\|_2=\|\psi_r\|_2=1,qquad
+T[\phi]=T[\psi_r]=T_*,qquad
+V[\psi_r]\to\infty,quad q[\psi_r]\to-\infty.
+\tag{86.15}
+$$
+
+Every sufficiently small $r$ has $\psi_r\notin\mathcal H_\Lambda$, and eventually $\psi_r\notin\mathcal C_M$. There is also a normalized $b\in\mathcal R\cap\mathcal H_\Lambda\cap\mathcal C_M\cap\ker A$ with $T_b=T[b]<T_*$ such that $\psi_r\to b$ in $L^2$, but not in the free form norm. All states use the same actual analytic source, field, projection and clock.
+
+Proof. First verify a regular test class. In the original $w$ gauge, finite sums of $u(\xi)h(w)$, with $u\in C_c^\infty(\{R>\delta\})$, $\delta>0$, and $\widetilde h\in C_c^\infty(\mathbb R)$, have compact horizontal support and Schwartz central factors. Explicitly
+
+$$
+\begin{aligned}
+X_1(uh)&=(\partial_xu)h,\quad X_2(uh)=(\partial_yu)h+xuh',\quad
+X_3(uh)=(\partial_zu)h,\\
+L(uh)&=-(\Delta_\xi u)h-2x(\partial_yu)h'-x^2uh''.
+\end{aligned}
+\tag{86.16}
+$$
+
+These derivatives are in $L^2$ because $x$ is bounded on the horizontal support. Multiplying by a central cutoff $\chi(w/n)$ gives punctured compact tests converging with both the first horizontal derivatives and $L$; the additional terms contain $x\chi'/n$ or $x^2\chi''/n^2$ and vanish by the Schwartz tails. The closed free operator therefore contains the products in $D(L)$. Independently, the actual field estimate (85.13) gives $\Gamma\le1/(8\delta^3)$ on their support, so they are in $D(M_\Gamma)$. This proves regularity, also for their finite sums, without asserting it for arbitrary smooth band states. The non-multiplier-domain example after (85.18) retains its full force.
+
+Choose a real normalized Schwartz $h$ with smooth even Fourier transform supported in a small interval $[-\sigma_0,\sigma_0]$, and real normalized horizontal products supported away from $x=0$. Take $m+1$ disjoint $z$ translates of one such product times $h$. They are normalized, have disjoint horizontal supports, and all have one finite kinetic value $t_0>0$. Homogeneous expansion $U_Su=S^{-5/2}u\circ\delta_{1/S}$, with $S$ sufficiently large, makes their common kinetic value $t_0S^{-2}<T_*$ and their bandwidth $\sigma=\sigma_0S^{-2}<\min(\Lambda,\pi M)$. Their horizontal supports remain disjoint and away from $R=0$. The linear map $A$ on their $(m+1)$-dimensional span has a nonzero kernel vector. Normalize one to obtain $b$. Disjoint supports make its kinetic value exactly $T_b=t_0S^{-2}$, regardless of its complex coefficients. The sharp cap (85.5) gives $b\in\mathcal C_M$.
+
+Take a second set of $m+1$ disjoint $z$ translates of the expanded templates, with supports disjoint from those of $b$, and multiply all of them by $e^{iKz}$. Their bandwidth is still $\sigma$. Since their unmodulated horizontal factors are real, the $\partial_z$ cross term has zero real part, and each normalized template has kinetic value $T_b+K^2$. A normalized kernel vector $d$ in this second span therefore has $Ad=0$, $T_d=T_b+K^2$, and disjoint horizontal support from $b$. Choose $K$ with $T_d>T_*$. The single band comparison state
+
+$$
+\phi=\sqrt{1-\theta}\,b+\sqrt\theta\,d,qquad
+\theta=\frac{T_*-T_b}{T_d-T_b}\in(0,1)
+\tag{86.17}
+$$
+
+has exact norm one, amplitudes zero and kinetic $T_*$. It remains in the narrower band $\mathcal H_\sigma$, hence has cap at most $\sigma/\pi<M$, and it is regular by (86.16).
+
+Now apply Lemma 86.2 to the original list with the additional $L^2$ representers $b,Lb$. They are legitimate because regularity was proved separately. We obtain normalized punctured compact $v_r$ with $Av_r=0$, $\langle b,v_r\rangle=0$ and $t(b,v_r)=\langle Lb,v_r\rangle=0$. Let $T_r=T[v_r]$ and set
+
+$$
+\eta_r=\frac{T_*-T_b}{T_r-T_b},\qquad
+\psi_r=\sqrt{1-\eta_r}\,b+\sqrt{\eta_r}\,v_r.
+\tag{86.18}
+$$
+
+For small $r$, $0<\eta_r<1$ and $\eta_r\sim (T_*-T_b)r^2/A_0$. Orthogonality gives the exact three equalities in (86.15), not separate feasibility statements. Weighted Cauchy--Schwarz bounds the potential cross term by $2\sqrt{\eta_r(1-\eta_r)V[b]V[v_r]}$. Consequently
+
+$$
+V[\psi_r]\sim\eta_rV[v_r]
+ \sim\frac{(T_*-T_b)B_0}{A_0}\,r^{-1}\longrightarrow\infty.
+\tag{86.19}
+$$
+
+Here the bounded $V[b]$ term and the cross term of order $r^{-1/2}$ are lower order than $r^{-1}$. Each state is regular by linearity of the two operator domains.
+
+Proposition 85.9 says that a nonzero compact-central-support state cannot belong to $\mathcal H_\Lambda$. Since $v_r\in\mathcal D_0$ is nonzero and $b\in\mathcal H_\Lambda$, $(I-P_\Lambda)\psi_r=\sqrt{\eta_r}(I-P_\Lambda)v_r\ne0$. If a normalized $\psi_r$ satisfied $\mathcal C_M$, (84.6) and (84.10) would give $V[\psi_r]\le M\sqrt{T_*}/(4\pi)$, contradicting (86.19) for small $r$. Finally $\eta_r\to0$ gives $L^2$ convergence to $b$, whereas
+
+$$
+T[\psi_r-b]=(\sqrt{1-\eta_r}-1)^2T_b+\eta_rT_r
+ \longrightarrow T_*-T_b>0.
+\tag{86.20}
+$$
+
+Thus a fixed positive kinetic increment is not free-form convergence. $\square$
+
+The positivity endpoints in this theorem are essential. The zero central band contains only zero, since the singleton frequency set has zero Plancherel measure. A normalized free form state cannot have $T=0$: (84.5) forces $\sqrt{m_\psi}$ to be a constant $L^2(\mathbb R^3)$ function, hence zero. A normalized cap-zero state is also impossible, since its conditional density must integrate to one on positive-marginal fibres.
+
+**Theorem 86.6 (uniform bounded adaptive acceptance and its stopping exceptions).** Fix $\Lambda,M,T_*>0$ as in Theorem 86.5. Let
+
+$$
+\mathcal P=\{u\in\mathcal R\cap\mathcal H_\Lambda\cap\mathcal C_M:
+ \|u\|_2=1, T[u]=T_*\},\qquad
+\mathcal U=\{u\in\mathcal R:\|u\|_2=1, T[u]=T_*\}.
+\tag{86.21}
+$$
+
+Consider a deterministic protocol whose only state-dependent answers are bounded complex amplitudes and the scalar kinetic value. Probe selection, output and stopping depend only on the preceding answers and declared fixed parameters. Suppose it stops and accepts every input in $\mathcal P$ within a uniform finite $N$ total queries, counting amplitude and kinetic queries. It cannot be sound on $\mathcal U$ if its accepting output certifies band membership, cap membership, or a finite lower bound on the actual $q$. Refusal is allowed in general; complete acceptance on $\mathcal P$ is an essential premise here. Soundness restricted to $\mathcal P$ is a different assertion and is compatible with the supplied bounds of §§84–85.
+
+Proof. Follow the response branch with every amplitude equal to zero and every kinetic answer $T_*$. Follow it only until its first stopping decision or $N$ total queries. It selects a finite list of actual bounded representers. Theorem 86.5 realizes this list by a state $\phi\in\mathcal P$. Induction on queries shows that $\phi$ has this exact record: the preceding zero answers select the same next probe. Therefore a refusal before $N$, or failure to accept by the $N$-query deadline, contradicts complete uniformly bounded acceptance. This includes a decision after zero queries when $N=0$. Let $j\le N$ be its total number of queries at acceptance. Apply Theorem 86.5 to the selected accepting prefix. Its collapsing $\psi_r\in\mathcal U$ gives the same amplitudes, norm and kinetic scalar and hence exactly the same accepting record and output. For small $r$ it is outside both restrictions, and its actual energy is below any finite lower bound in that output. This is a realized finite-fibre argument. It does not apply a theorem requiring continuity of the singular target $V$. $\square$
+
+The fixed-record principle used here also says that any other finite deterministic adaptive record has the fibre of its selected functionals, intersected with any norm or exact kinetic constraints actually supplied. It does not assert that this intersection is always large: (86.10) and (86.12) exhibit singleton exceptions. The induction is the linear adaptive-record observation in Krieg--Novak--Ullrich, *How many continuous measurements are needed to learn a vector?*, [arXiv:2412.06468v1](https://arxiv.org/abs/2412.06468v1), pp. 1–2. Their nonlinear adaptive measurement results concern a different family.
+
+Per-state finite stopping is not a uniform budget. A concrete exception to any unqualified finite-stopping impossibility is as follows. Since $\mathcal D_0$ is dense in the separable Hilbert space $\mathcal H$, Gram--Schmidt on a countable total list gives an orthonormal basis $(e_j)$ with every $e_j\in\mathcal R$. On normalized states, query $\langle e_j,u\rangle$ successively and stop as soon as $\sum_{j\le n}|\langle e_j,u\rangle|^2=1$. At a stop, Pythagoras forces $u=\sum_{j\le n}\langle e_j,u\rangle e_j$, so the fibre in the entire normalized Hilbert sphere is a singleton. On the promise class of normalized finite expansions, this protocol terminates for every state, has no uniform bound, and its record determines the actual finite energy of the regular state. This is an information assertion, without a bound on computation or acquisition cost. Infinite expansions do not terminate. Moreover every finite zero prefix is realized by $e_{n+1}$, while the entire infinite zero sequence is realized by no normalized state, by completeness. Thus witnesses depending on a finite horizon do not manufacture an infinite normalized zero path. This example does not claim finite stopping on every member of $\mathcal P$.
+
+**Theorem 86.7 (finite accepting noisy records with positive response margins).** Consider a finite accepting branch of a deterministic protocol as above, realized with reports $y_j$ for its selected amplitude probes and reports $s_\ell$ for its finitely many kinetic queries. Let a normalized $\phi\in\mathcal D$ satisfy all branch response constraints with strict positive margins:
+
+$$
+|\langle f_j,\phi\rangle-y_j|<\varepsilon_j,quad\varepsilon_j>0,qquad
+|T[\phi]-s_\ell|<\kappa_\ell,quad\kappa_\ell>0.
+\tag{86.22}
+$$
+
+Then the same reports and accepting branch are compatible with normalized $\psi_r\in\mathcal D$ having $q[\psi_r]\to-\infty$. If $\phi\in\mathcal R$, all witnesses are regular. Thus no finite actual-energy lower certificate can be sound on all states compatible with such a record. For every fixed positive finite $\Lambda$ and $M>0$, these witnesses are also eventually outside $\mathcal H_\Lambda$ and $\mathcal C_M$.
+
+Proof. Freeze the finite probe list selected by those reports and apply the approximate-reading construction (86.8). Free-form convergence gives $T[\psi_r]\to T[\phi]$, and boundedness of every selected functional gives its amplitude convergence. The minimum of the finitely many strictly positive response margins is positive. For sufficiently small $r$, each actual amplitude and kinetic value remains within its declared error radius about the same report. Induction using the same reports gives the same selected probes and stopping decision, while (86.9) makes the energy arbitrarily negative. Since their kinetic values remain bounded and their norms are one, the potential bounds (84.6), (84.10) and (85.9) exclude membership in each fixed band and cap for sufficiently small $r$. The proof uses permitted error sets, not a claim that a noise mechanism must generate every compatible report. $\square$
+
+For an accepting quantized branch the same argument requires that every actual response lie in the interior of its reported cell, with a strictly positive neighbourhood contained in that cell. Zero-margin boundaries are excluded. If amplitudes are exact and $\phi\notin F$, (86.11) instead gives their exact equality together with any strictly positive kinetic tolerance. Exact kinetic equality is not covered by this extension, by Proposition 86.4. No statement about arbitrary nonlinear observations, randomized probabilities, or infinitely many response constraints is supplied.
+
+**Theorem 86.8 (actual interaction-weighted error and a conditional energy-transfer consumer).** For any $\psi,\phi\in\mathcal D$, define
+
+$$
+d_\Gamma=\|\sqrt\Gamma(\psi-\phi)\|_2,qquad
+d_H=\left(\sum_i\|X_i(\psi-\phi)\|_2^2\right)^{1/2}.
+\tag{86.23}
+$$
+
+On this whole domain, without any multiplier-domain assumption,
+
+$$
+\begin{aligned}
+|V[\psi]-V[\phi]|&\le2\sqrt{V[\phi]}d_\Gamma+d_\Gamma^2,\\
+|T[\psi]-T[\phi]|&\le2\sqrt{T[\phi]}d_H+d_H^2.
+\end{aligned}
+\tag{86.24}
+$$
+
+Suppose a comparator $\phi$ and actual state $\psi$ are normalized, and independently justified data supply $V[\phi]\le B<\infty$, $d_\Gamma\le\epsilon$ and $|T[\psi]-T[\phi]|\le\kappa$. Then
+
+$$
+\begin{aligned}
+|q[\psi]-q[\phi]|&\le a\kappa+g(2\sqrt B\epsilon+\epsilon^2),\\
+q[\psi]&\ge a(T[\phi]-\kappa)-g(\sqrt B+\epsilon)^2.
+\end{aligned}
+\tag{86.25}
+$$
+
+For an independently justified $\phi\in\mathcal C_M$, one may take $B=M\sqrt{T[\phi]}/(4\pi)$ and use the actual §84 lower bound to obtain
+
+$$
+q[\psi]\ge-\frac{g^2M^2}{64\pi^2a}
+ -a\kappa-g(2\sqrt B\epsilon+\epsilon^2).
+\tag{86.26}
+$$
+
+For an independently justified $\phi\in\mathcal H_\Lambda$, replace $B$ by $\Lambda\sqrt{T[\phi]}/(4\pi^2)$ and the first constant by $g^2\Lambda^2/(64\pi^4a)$. These are sufficient scalar error and admissibility interfaces; they do not require full-state, full marginal or conditional-density recovery. In particular, a valid supplied cap on $\psi$ itself already suffices for its existing §84 lower bound, without comparison with $\phi$.
+
+Proof. Put $h=\psi-\phi$. In the genuine Hilbert space $L^2(G,\Gamma d\mu)$, expansion and Cauchy--Schwarz give
+
+$$
+V[\psi]-V[\phi]
+ =2\operatorname{Re}\langle\sqrt\Gamma\phi,\sqrt\Gamma h\rangle+d_\Gamma^2.
+\tag{86.27}
+$$
+
+All terms are finite by $\mathcal D$; this neither uses $\Gamma\phi\in L^2$ nor introduces it as a bounded-probe representer. The same expansion in the three-component horizontal derivative space proves the kinetic estimate. Substitute the separately supplied kinetic accuracy and potential bound to obtain (86.25). The cap estimate is (84.6) combined with (84.10); its normalized lower bound is (84.7). The band estimates are exactly (85.8)–(85.9). Substituting them in the first line of (86.25) proves (86.26) and its band version. The original regular subclass is included, but is not needed for these weighted Hilbert calculations. $\square$
+
+A concrete way to close the missing weighted control is to supply, in addition to an $L^2$ error $\|\psi-\phi\|_2\le e_0$, an actual weighted remainder estimate
+
+$$
+\int_{G\setminus\Omega}\Gamma|\psi-\phi|^2d\mu\le\eta^2,qquad
+\Omega=\{\rho\le N\le R_0\},\quad 0<\rho<R_0<\infty.
+\tag{86.28}
+$$
+
+Then the bounded field on $\Omega$ gives
+
+$$
+d_\Gamma^2\le C\rho^{-3}e_0^2+\eta^2.
+\tag{86.29}
+$$
+
+Alternatively separately supplied weighted tail norms of $\psi$ and $\phi$ bound the remainder by their sum through triangle inequality. The remainder includes the puncture and the exterior tail, so an unweighted far-tail estimate alone does not discharge (86.28). Theorem 86.3 has $d_H\to0$ and $\|\psi_r-\phi\|_2\to0$ while $d_\Gamma\to\infty$, by the reverse triangle and $V[\psi_r]\to\infty$. Theorem 86.5 has exact common amplitudes and kinetic value with the same divergent weighted obstruction relative to its fixed comparison state. Thus neither a name for $\eta$ or $\epsilon$, nor finite amplitudes plus free-kinetic accuracy, acquires the missing estimate. The conditional consumer in (86.25) becomes valid when the estimate or a sufficient actual admissibility bound is independently established.
+
+**Definition 86.9 (reference correspondence and remaining source bridges).** The finite-dimensional Gram inversion, Riesz representation, Hilbert projection and equality cases used inside these proofs are mature supplies; see Teschl, *Mathematical Methods in Quantum Mechanics*, [primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), §1.3, Theorems 1.7–1.8, and §7.1 for Fourier inversion and Plancherel. Here the Hilbert space is the actual $L^2(G,d\mu)$, the effective output space is $E$, the auxiliary representers in (86.18) are $b,Lb\in L^2$, and the positive equality inner product in (86.13) is the free $t+\tau\langle\cdot,\cdot\rangle$. In the band construction the Fourier convention and fibre evaluation constant are precisely (85.2) and (85.5), with the gauge equivalence already proved in §85. No non-$L^2$ multiplier target is inserted into a probe list.
+
+Folland's [1975 primary paper](https://doi.org/10.1007/BF02386204), Theorem 2.1, Theorem 3.1, Corollaries 3.4–3.6 and Proposition 3.17 at $\alpha=2$, is matched through Proposition 82.4 to this Haar normalization, horizontal generator and actual degree-$-3$ point-source field. The client steps supplied here are exterior rank retention, correction estimates, horizontal/operator-domain checks, local normalized fibre constructions and joint kinetic matching. The heat or Fourier supplier names alone do not prove these steps. Kombe, [arXiv:math/0501522v1](https://arxiv.org/abs/math/0501522v1), Theorem 4.1 at $\alpha=0$ and $Q=5$, has the degree-$-2$ Hardy weight $|\nabla_HN_F|^2/N_F^2$, where $N_F$ is defined from Folland's solution. It is not the degree-$-3$ actual $\Gamma$, and its H-type explicit kernel is not substituted for this product-group field. The cap and band consumer bounds instead use the previously matched three-dimensional marginal and Hardy/Coulomb estimates in §§84–85.
+
+Hinrichs--Novak--Woźniakowski, *Discontinuous information in the worst case and randomized settings*, [arXiv:1106.2945v1](https://arxiv.org/abs/1106.2945v1), §2, equation (2), takes the radius over realized information values $y\in N(F)$. Its Theorem 1 assumes a continuous target operator. Here the singular $V$ is not continuous in the free form norm, as (86.7) proves, and that theorem is not an impossibility supplier for $V$. The finite-record induction and the actual fibre witnesses establish the present conclusions directly. Krieg--Novak--Ullrich's linear fixed-record observation supplies only that induction, not the concentration or the norm/kinetic/admissibility intersection. The present source-specific applications are repository-derived, with mature ingredients acknowledged. The correspondence is bounded to these references and §§82–85, not an exhaustive absence-of-overlap or originality claim.
+
+The analytic source equality in (86.15) means one fixed $e,\Gamma,G,L,\mu,\pi$ and free clock, not a proved common native source-to-state realization. A native application must separately preserve the original source and immutable INITIAL, its same-source chronology, authentic Read/refusal/Stop semantics, and lawful state/probe acquisition, preparation, copying, retention, clocks, resources, permissions and costs. Neither the construction of an $L^2$ representer nor a band/cap certificate as a mathematical premise grants an operation acquiring it. Native retained-literal/root-depth or serial service results concern their own complete acquired source fibres and tasks; without an explicit correspondence they supply no analytic probe, carrier state, preparation, admissibility or optimal cost. All source-to-carrier, source-to-probe and source-to-state maps remain open. The weighted interface is a conditional analytic stability application, not a physical why-three conclusion or a resolution of those native bridges.
+
+## 78.99 追加锚（本行以下为增补区）

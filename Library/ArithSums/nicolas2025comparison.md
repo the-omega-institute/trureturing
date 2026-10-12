@@ -12868,3 +12868,361 @@ Stieltjes errors do not bound the whole terminal comparison. No fixed
 \(\kappa\), source sign, RH, stronger external formal closure or
 all-integer Robin/5040 proof is supplied. The original signed target for
 every \(n>5040\) remains **ACTIVE_UNPROVED**.
+
+## Project application: density-weighted order-nine transport reaches 3e47
+
+This `repo-derived` quantitative application consumes the complete zero-mass
+bound already established in [Polak (W5), (X1)–(X2)](../Analytic/polak2026finiterobinca.md#keep-the-coupled-logarithmic-exponent-in-the-complete-density-tail)
+inside the existing GAK positive-law transport. The density theorem,
+whole-law construction, coefficient remainder and unrestricted reserve
+are reused. Their proofs and finite zero computations are not repeated.
+The additional step is to retain the density-weighted mass before choosing
+the smoothing order. Under the five primary analytic premises listed in
+GAK section 1, together with Chourasiya–Simonič's
+[arXiv:2507.15184v2](https://arxiv.org/pdf/2507.15184v2), Corollary 1 and
+Table 1, the resulting signed allowance applies uniformly on
+
+$$
+8\cdot10^{46}<A\le3\cdot10^{47},\qquad
+L=\log A,\quad T_A=\sqrt A L.
+\tag{GAD1}
+$$
+
+The cited density rows and finite-height verification remain external
+premises. This is an ordinary analytic application, without a full
+primary-proof audit, a Lean/kernel proof or a worldwide priority claim.
+
+### Retain the actual real-part layers in the complete zero mass
+
+Keep $H=3\cdot10^{12}$, $h=\log H$ and $s=\log(Hh)$. Reuse Polak's
+positive-ordinate mass, including every actual zero with analytic
+multiplicity,
+
+$$
+B_2(A)=\sum_{\gamma>H}m_\rho
+ \frac{A^{\beta-1/2}+A^{1/2-\beta}}{\gamma^2},\qquad
+\alpha(\sigma)=\frac{1+\sigma}{2-\sigma}.
+$$
+
+Its already established (X2) consequence is
+
+$$
+B_2(A)<2A^{1/4}S_2(H)
+ +144Lh^4\int_{3/4}^1
+    A^{\sigma-1/2}(Hh)^{-\alpha(\sigma)}\,d\sigma
+ +30000H^{-2}(\sqrt A-A^{1/4}).
+\tag{GAD2}
+$$
+
+This integrates the actual reflected population through every height
+above $H$. In particular it does not substitute a finite-height ceiling
+for a full-tail count. Its density source and parameter correspondence
+are those of Polak (W1), (W2), (W5), (X1).
+
+GAK25 gives $L>107$ on (GAD1). The same rational logarithm enclosure
+gives $\log3<1.099$ and $\log10<2.303$, hence $h<28.74<29$.
+The positive exponential prefix
+$\sum_{j=0}^{10}(84/25)^j/j!>1437/50$ gives
+$\log28.74<3.36$. Therefore $s<32.1$.
+
+For $f_A(\sigma)=L(\sigma-1/2)-s\alpha(\sigma)$,
+
+$$
+f_A'(\sigma)=L-\frac{3s}{(2-\sigma)^2}\ge L-3s>0
+\qquad(3/4\le\sigma\le1).
+$$
+
+Integrating this derivative lower bound from $\sigma$ to $1$ yields
+$f_A(\sigma)\le f_A(1)-(L-3s)(1-\sigma)$. Thus
+
+$$
+\int_{3/4}^1e^{f_A(\sigma)}\,d\sigma
+ <\frac{e^{L/2-2s}}{L-3s}.
+$$
+
+Since $h^4e^{-2s}=h^2/H^2$, (GAD2) gives the useful uniform envelope
+
+$$
+B_2(A)<2A^{1/4}S_2(H)
+ +\frac{144h^2\sqrt A}{H^2}\frac{L}{L-3s}
+ +\frac{30000\sqrt A}{H^2}.
+\tag{GAD3}
+$$
+
+Set $r=5478\cdot10^{20}$. Then
+$r^2=3.0008484\cdot10^{47}>3\cdot10^{47}$, so $\sqrt A<r$
+and $A^{1/4}<10^{12}$. Also $L/(L-3s)<10$, because $L>107$,
+$3s<96.3$ and $107/(107-96.3)=10$. Reuse
+$S_2(H)<37/(25\cdot10^{12})$ to obtain
+
+$$
+B_2(A)<2(10^{12})\frac{37}{25\cdot10^{12}}
+ +\frac{144(29)^2r}{H^2}\,10+\frac{30000r}{H^2}
+ =\frac{9442616}{125}<76000.
+\tag{GAD4}
+$$
+
+Reflection at fixed positive ordinate preserves multiplicity, and
+conjugation supplies negative ordinates. Consequently
+
+$$
+B_2(A)=\sum_{|\gamma|>H}
+       \frac{m_\rho A^{\beta-1/2}}{\gamma^2}.
+\tag{GAD5}
+$$
+
+No further factor of two belongs in the complete high-zero response.
+
+### Consume the complete mass with a lower-variance whole law
+
+Use GAK3–GAK6 with the changed order $k=9$, leaving
+$\delta=51/(20H)$ and $q=219/1000$. Put $x=\delta^2$ and reuse
+
+$$
+M_*=(1-2kx)^{-1},\qquad V_*=\frac{kx}{3-(k+3)x}.
+$$
+
+All denominators are positive; the whole support lies in $(.99,1.01)$
+and the mean is exactly one. GAK41 and GAK47's actual-real-part
+normalization give $|H_C(\rho)|<q^9$ for every $|\gamma|>H$;
+the head bound remains $M_*$. The scalar normalization base in GAK47
+is independent of $k$, so only its power changes.
+
+Retain the original complete coefficient $F_A$ of GAK10, including
+GAK12's remainder, in $Z_C(A)=\sum_\rho m_\rho H_C(\rho)F_A(\rho)$.
+GAK24's head and tail remainder factors $527/500$ and $10001/10000$,
+together with (GAD4)–(GAD5), imply
+
+$$
+T_A|Z_C(A)|<U_h+U_t,
+$$
+
+$$
+\begin{aligned}
+U_h&=\frac{108}{107}\frac{527}{500}\frac1{20}M_*,\\
+U_t&=\frac{108}{107}\frac{10001}{10000}q^9(76000),\\
+U_v&=\frac{260001}{500000}rV_*,\qquad
+U_e=\frac{5M_*}{10^{23}}.
+\end{aligned}
+\tag{GAD6}
+$$
+
+GAK26's bound $\eta_0(A)<10^{-6}$ is independent of the upper
+endpoint, and $\sqrt A>10^{23}$ still holds. GAK23 therefore gives
+the original uncentered signed integral, retaining its cutoff atoms and
+full elementary response,
+
+$$
+-T_AI_\psi(A)<U_h+U_t+U_v+U_e<\frac{19}{25}.
+\tag{GAD7}
+$$
+
+The sufficient exact rational comparisons are
+$U_h<.0532$, $U_t<.0889$, $U_v<.6175$ and
+$U_e<6\cdot10^{-23}$. Their sum is less than $.76$.
+No class average, favorable class selection or zero-phase sign is used.
+
+### Keep the actual integer defect and the selected-source distinction
+
+For each integer $n$ whose own clock $A=\log n$ satisfies (GAD1),
+reuse its own nonnegative $d_A(n)$ and the exact identity GAK39.
+GAK37's same unrestricted reserve obeys
+$T_AR(A)>Q_R+L/(L+2)^3$, with the unchanged
+$Q_R=67838284064811/83593750000000$ and $Q_R-19/25>1/20$.
+Consequently, under the stated analytic premises,
+
+$$
+T_A\Delta(n)>
+\frac1{20}+\frac{L}{(L+2)^3}+T_A d_A(n)>0.
+\tag{GAD8}
+$$
+
+This bounded all-integer clock conclusion sets no defect to zero and
+requires no CA or maximizer condition. It does not establish Robin
+for every smaller integer up to this upper endpoint.
+
+For the separate least-global-maximizer corollary, retain every extra
+selection and lower-clock supplier in GAK section 10 and the corollary
+following GAK51. That full existing chain already puts the same
+selected $N$ above $\log N=8\cdot10^{46}$. Equation (GAD8) then
+excludes $\log N\le3\cdot10^{47}$ for that same selected source.
+This conditional consequence is not a bound for the least counterexample.
+
+The parameter-specific
+[rational program and results](https://github.com/the-omega-institute/trureturing-experiments/tree/fbe2ee18cadc21f30afc368a29a5604fdb44e8b5/experiments/robin-density-transport-3e47)
+check the changed logarithm,
+exponential prefix, density mass, support, normalization and complete
+allowances. It does not certify the external analytic suppliers or the
+full inference in Lean. For this fixed $H$ and order-nine law,
+$V_*>0$ and the positive transport allowance grows with $\sqrt A$.
+The original unbounded signed estimate and RH remain open.
+
+
+## Complete higher-prime-power transport on an unlimited clock range
+
+This application retains the GAK kernel, actual prime-power counting
+functions and a single whole probability law. The inputs are the existing
+GAK36–GAK39 pressure reserve and identity, and
+[Dusart arXiv:1002.0442v1](https://arxiv.org/pdf/1002.0442v1),
+Lemma 3.3 and Theorem 5.2. The square-root main term, convexity and
+prime-counting estimates are published suppliers. The application below
+pays the complete $k\ge2$ transport for this kernel; the first-power
+prime transport and full smoothed signed response remain unpaid.
+No additional all-integer Robin interval or global RH conclusion follows.
+
+### The same whole law and complete counting function
+
+Write $L=\log A$, $T_A=\sqrt A L$ and retain
+
+$$
+K(u)=\frac{1+\log u}{u^2\log^2u},\qquad
+P_{\ge2}(t)=\psi(t)-\vartheta(t)
+=\sum_{k\ge2}\vartheta(t^{1/k}).
+$$
+
+Let $\mu$ be any whole probability law satisfying
+$99/100\le C\le101/100$ almost surely and $\mathbb EC=1$.
+This includes the original GAK and GAD laws; no conditioning or
+separate choice of law for different components is made. Define
+
+$$
+\begin{aligned}
+J_c^{\ge2}(A)&=-\frac1c\int_A^\infty P_{\ge2}(cu)K(u)\,du,\\
+\mathcal T_{\ge2}(A,\mu)&=J_1^{\ge2}(A)-\mathbb E J_C^{\ge2}(A),\\
+m_\mu&=\mathbb EC^{-1/2},\qquad
+V_\mu=\mathbb E(C-1)^2,\\
+B(A)&=T_A\int_A^\infty\sqrt u K(u)\,du.
+\end{aligned}
+\tag{GPP1}
+$$
+
+The counting function retains every actual atom $p^k$, $k\ge2$, of
+mass $\log p$, with $p^k\le t$ at endpoints. It is not replaced by a
+density in the definition of either response.
+
+### Uniform full-tail comparison
+
+Put
+
+$$
+s=\frac{99A}{100}>(3594641)^2,\qquad
+\epsilon(s)=\frac4{5\log^2s}+\frac{89}{50}s^{-1/6}.
+$$
+
+Dusart Lemma 3.3 gives
+$0\le P_{\ge2}(t)-\vartheta(\sqrt t)<1.777745t^{1/3}$ for every
+$t>0$. Theorem 5.2's row $(k,\eta_k,x_k)=(2,1/5,3594641)$ gives
+$|\vartheta(y)-y|<y/(5\log^2y)$ for $y\ge3594641$.
+Consequently, for $t\ge s$,
+
+$$
+|P_{\ge2}(t)-\sqrt t|
+\le\sqrt t\left[\frac4{5\log^2t}+\frac{89}{50}t^{-1/6}\right]
+\le\epsilon(s)\sqrt t.
+\tag{GPP2}
+$$
+
+These are applications of the fixed primary statements; their underlying
+finite computations and analytic proofs are external inputs.
+Since every $cu\ge s$ for $u\ge A$, the same bound controls all scales
+and the whole infinite tail. Positivity of $K$ and the integrable
+square-root majorant justify exchanging expectation and integration.
+Subtracting the two responses gives
+
+$$
+\mathcal T_{\ge2}
+=\int_A^\infty
+\left[\mathbb E\frac{P_{\ge2}(Cu)}C-P_{\ge2}(u)\right]K(u)\,du.
+$$
+
+The square-root main term is $(m_\mu-1)\sqrt u$; the error is at most
+$(m_\mu+1)\epsilon(s)\sqrt u$. Thus
+
+$$
+\left|T_A\mathcal T_{\ge2}-B(A)(m_\mu-1)\right|
+\le B(A)(m_\mu+1)\epsilon(s).
+\tag{GPP3}
+$$
+
+Integration by parts, with the upper boundary zero, gives
+
+$$
+B(A)=2-T_A\int_A^\infty\frac{du}{u^{3/2}\log^2u},\qquad
+2-\frac2L\le B(A)<2.
+\tag{GPP4}
+$$
+
+For $f(c)=c^{-1/2}$, $0<f''(c)=3c^{-5/2}/4<1$ throughout the support.
+Convexity and Taylor's bound, using the exact whole-law mean, imply
+
+$$
+0\le m_\mu-1\le\frac{V_\mu}{2}\le\frac1{20000}.
+$$
+
+If $A>e^{107}$, then $s>e^{106}$, so
+$4/(5\log^2s)<1/14000$ and $(89/50)s^{-1/6}<1/70000$.
+The second comparison follows from $e>2$ and $106/6>17$.
+Hence $\epsilon(s)<3/35000<1/10000$ and $m_\mu+1<201/100$.
+Combining these bounds with GPP3–GPP4 proves
+
+$$
+\left|T_A\mathcal T_{\ge2}(A,\mu)\right|
+<2\left[\frac1{20000}+\frac{201}{100}\frac1{10000}\right]
+=\frac{251}{500000}<\frac1{1000}
+\qquad(A>e^{107}).
+\tag{GPP5}
+$$
+
+This is uniform for all such real clocks, with no upper endpoint,
+and allows the whole law to vary with $A$ within the stated conditions.
+
+### Fixed-law sign and the original reserve consumer
+
+For a fixed law, GPP3–GPP4 and $\epsilon(.99A)\to0$ give
+
+$$
+T_A\mathcal T_{\ge2}(A,\mu)\longrightarrow2(m_\mu-1).
+\tag{GPP6}
+$$
+
+For a fixed nondegenerate mean-one law, strict convexity makes this
+limit strictly positive. This is eventual positivity; GPP5 does not
+assert positivity for every $A>e^{107}$, or for a varying law.
+In particular, the negative local square atoms from GAK21 cannot
+be recorded as extra reserve without their regular companions:
+the complete higher-power contribution eventually has the opposite sign.
+
+Let $J_c^\vartheta$ retain the GAK definition with
+$\vartheta(cu)-cu$ in place of $\psi(cu)-cu$, and set
+$\mathcal T_\vartheta=J_1^\vartheta-\mathbb E J_C^\vartheta$.
+Then $J_c^\psi-J_c^\vartheta=J_c^{\ge2}$ exactly.
+For each integer's own clock $A=\log n>e^{107}$, GAK39 therefore gives
+
+$$
+\Delta(n)=R(A)+d_A(n)-J_\mu^\psi(A)
+-\mathcal T_\vartheta(A,\mu)-\mathcal T_{\ge2}(A,\mu).
+$$
+
+Retain every analytic premise and event convention of GAK36–GAK39.
+The original unrestricted reserve bound GAK37 requires only its lower
+clock, so it still applies on this unlimited range. Using GPP5 yields
+
+$$
+\begin{aligned}
+T_A\Delta(n)>&\ Q_R-\frac1{1000}
++\frac{L}{(L+2)^3}+T_A d_A(n)\\
+&-T_AJ_\mu^\psi(A)-T_A\mathcal T_\vartheta(A,\mu),\\
+Q_R={}&\frac{67838284064811}{83593750000000}.
+\end{aligned}
+\tag{GPP7}
+$$
+
+The actual nonnegative defect of this same integer is retained; it is
+not replaced by zero or by the defect of a selected optimizer.
+GPP7 pays the complete higher-prime-power transport with an explicit
+small budget on an unlimited range. It supplies no upper bound for
+the remaining combined $J_\mu^\psi+\mathcal T_\vartheta$ at the same
+source. The full signed response still includes all actual zeros,
+real parts, coefficients and elementary terms. These ordinary
+applications are not new prime-counting theorems or Lean-certified
+results; the all-integer Robin inequality and RH remain open.
