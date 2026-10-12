@@ -133,6 +133,19 @@ theorem central_fiber_variance_bounds {ι : Type*} [Fintype ι] (outside : ι �
   have hb := variance_root_tilt outside r ε N R U t x h hc hl hu
   constructor <;> linarith
 
+private theorem checkerboard_abs_le_two (r ε x : ℝ) : |checkerboard r ε x| ≤ 2 := by
+  unfold checkerboard
+  apply abs_le.mpr
+  have h0 := Real.sigmoid_nonneg x
+  have h0' := Real.sigmoid_le_one x
+  have h1 := Real.sigmoid_nonneg (x + offsets r ε 1)
+  have h1' := Real.sigmoid_le_one (x + offsets r ε 1)
+  have h2 := Real.sigmoid_nonneg (x + offsets r ε 2)
+  have h2' := Real.sigmoid_le_one (x + offsets r ε 2)
+  have h3 := Real.sigmoid_nonneg (x + offsets r ε 3)
+  have h3' := Real.sigmoid_le_one (x + offsets r ε 3)
+  constructor <;> linarith
+
 private theorem calibration_histogram_displacement {ι : Type*} [Fintype ι]
     (outside : ι → ℝ) (r ε N R U t t0 x : ℝ) :
     |calibratedMean outside r ε N R U t x - calibratedMean outside r ε N R U t0 x| ≤
@@ -141,18 +154,7 @@ private theorem calibration_histogram_displacement {ι : Type*} [Fintype ι]
       calibratedMean outside r ε N R U t0 x = (t - t0) * checkerboard r ε x := by
     simp [calibratedMean, cellCounts, checkerboard, offsets, Fin.sum_univ_four]
     ring
-  have hb : |checkerboard r ε x| ≤ 2 := by
-    unfold checkerboard
-    apply abs_le.mpr
-    have h0 := Real.sigmoid_nonneg x
-    have h0' := Real.sigmoid_le_one x
-    have h1 := Real.sigmoid_nonneg (x + offsets r ε 1)
-    have h1' := Real.sigmoid_le_one (x + offsets r ε 1)
-    have h2 := Real.sigmoid_nonneg (x + offsets r ε 2)
-    have h2' := Real.sigmoid_le_one (x + offsets r ε 2)
-    have h3 := Real.sigmoid_nonneg (x + offsets r ε 3)
-    have h3' := Real.sigmoid_le_one (x + offsets r ε 3)
-    constructor <;> linarith
+  have hb := checkerboard_abs_le_two r ε x
   rw [hi, abs_mul]
   simpa only [mul_comm] using mul_le_mul_of_nonneg_left hb (abs_nonneg (t - t0))
 
@@ -254,6 +256,124 @@ theorem shared_root_central_bootstrap {ι : Type*} [Fintype ι] (outside : ι �
   have hv := central_fiber_variance_bounds outside r ε N R U t t0 x0 (x - x0) w
     hc ht (htilt _ hbox).1 (htilt _ hbox).2
   simpa only [add_sub_cancel] using And.intro hbox (And.intro hmove hv)
+
+
+open private
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_lipschitz_certificate
+from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+
+/-- Quantitative feedback in a common compensated root box. Its size is
+controlled by the same full variance, rather than an independent denominator. -/
+private theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
+    (ha : 0 < a) (haD : a ≤ D) (hDb : D ≤ b)
+    (hB : 0 ≤ B) (hd : 0 ≤ d) (hneg : checkerboard r ε x ≤ -d)
+    (hx : |x| ≤ X) (hbox : |x| ≤ Real.log 2) :
+    B * d / (8 * b) - X / 4 ≤
+      Real.sigmoid x - 1 / 2 -
+        B * Real.sigmoid x * (1 - Real.sigmoid x) * checkerboard r ε x / D ∧
+      Real.sigmoid x - 1 / 2 -
+        B * Real.sigmoid x * (1 - Real.sigmoid x) * checkerboard r ε x / D ≤
+          X / 4 + B / (2 * a) := by
+  have hD : 0 < D := lt_of_lt_of_le ha haD
+  have hb : 0 < b := lt_of_lt_of_le hD hDb
+  have ht : 1 / 2 ≤ Real.exp (-x) ∧ Real.exp (-x) ≤ 2 := by
+    have hh := abs_le.mp hbox
+    constructor
+    · calc
+        1 / 2 = Real.exp (-Real.log (2 : ℝ)) := by simp [Real.exp_neg, Real.exp_log]
+        _ ≤ Real.exp (-x) := Real.exp_le_exp.mpr (by linarith)
+    · calc
+        Real.exp (-x) ≤ Real.exp (Real.log (2 : ℝ)) := Real.exp_le_exp.mpr (by linarith)
+        _ = 2 := Real.exp_log (by norm_num)
+  have hv : 1 / 8 ≤ Real.sigmoid x * (1 - Real.sigmoid x) := by
+    have hh := (sigmoid_variance_tilt 0 x ht.1 ht.2).1
+    norm_num [Real.sigmoid_def] at hh
+    simpa [Real.sigmoid_def] using hh
+  have hvu := (sigmoid_variance_bounds x).2
+  have hp := (sigmoid_variance_bounds x).1
+  have hn : d ≤ -checkerboard r ε x := by linarith
+  have hnu : -checkerboard r ε x ≤ 2 := by
+    have hh := abs_le.mp (checkerboard_abs_le_two r ε x)
+    linarith
+  have hs : |Real.sigmoid x - 1 / 2| ≤ X / 4 := by
+    have hh := D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_lipschitz_certificate.dist_le_mul x 0
+    norm_num [Real.dist_eq, Real.sigmoid_def] at hh
+    exact hh.trans (by linarith)
+  have hl : B * d / (8 * b) ≤
+      B * (Real.sigmoid x * (1 - Real.sigmoid x)) * (-checkerboard r ε x) / D := by
+    apply (div_le_div_iff₀ (by positivity : (0 : ℝ) < 8 * b) hD).mpr
+    have h1 := mul_le_mul hv hn hd hp
+    have h2 := mul_le_mul_of_nonneg_left h1 hB
+    have h3 := mul_le_mul_of_nonneg_left hDb (mul_nonneg hB hd)
+    have h4 := mul_le_mul_of_nonneg_left h2 hb.le
+    nlinarith
+  have hu : B * (Real.sigmoid x * (1 - Real.sigmoid x)) * (-checkerboard r ε x) / D ≤
+      B / (2 * a) := by
+    apply (div_le_div_iff₀ hD (by positivity : (0 : ℝ) < 2 * a)).mpr
+    have h1 := mul_le_mul hvu hnu (by linarith : 0 ≤ -checkerboard r ε x) (by norm_num : (0 : ℝ) ≤ 1 / 4)
+    have h2 := mul_le_mul_of_nonneg_left h1 hB
+    have h3 := mul_le_mul_of_nonneg_left haD hB
+    have h4 := mul_le_mul_of_nonneg_left h2 ha.le
+    nlinarith
+  have he : Real.sigmoid x - 1 / 2 -
+      B * Real.sigmoid x * (1 - Real.sigmoid x) * checkerboard r ε x / D =
+        Real.sigmoid x - 1 / 2 +
+          B * (Real.sigmoid x * (1 - Real.sigmoid x)) * (-checkerboard r ε x) / D := by ring
+  rw [he]
+  constructor <;> linarith [abs_le.mp hs]
+
+/-- One rectangle-independent compensated root box works for every
+outside histogram and both native experiments. -/
+private theorem compensated_feedback_box {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+    ∃ d δ : ℝ, 0 < d ∧ 0 < δ ∧ δ ≤ Real.log 2 ∧
+      ∀ ε x : ℝ, |ε| < δ → |x| < δ → checkerboard r ε x ≤ -d := by
+  obtain ⟨d, hd, hh⟩ := checkerboard_negative_neighborhood hr hr1
+  obtain ⟨η, hη, he⟩ := Metric.eventually_nhds_iff.mp hh
+  refine ⟨d, min η (Real.log 2), hd, lt_min hη (Real.log_pos (by norm_num)), min_le_right _ _, ?_⟩
+  intro ε x hε hx
+  apply le_of_lt
+  apply he (y := (ε, x))
+  simpa only [Prod.dist_eq, Real.dist_eq, sub_zero, max_lt_iff] using
+    And.intro (hε.trans_le (min_le_left _ _)) (hx.trans_le (min_le_left _ _))
+
+/-- The base variance and root produce feedback bounds uniformly over the
+whole feasible central fiber, including nonzero native compensation. -/
+private theorem shared_root_uniform_feedback {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
+    ∃ d δ : ℝ, 0 < d ∧ 0 < δ ∧ ∀ ε N R U q t t0 x0 x w B X : ℝ,
+      0 < N → (∀ j, 0 ≤ cellCounts N R U t j) → |t - t0| ≤ w →
+      calibratedMean outside r ε N R U t0 x0 = q →
+      calibratedMean outside r ε N R U t x = q →
+      w < calibratedVariance outside r ε N R U t0 x0 →
+      2 * w ≤ (calibratedVariance outside r ε N R U t0 x0 - w) / 2 * Real.log 2 →
+      |ε| < δ →
+      |x0| + 4 * w / (calibratedVariance outside r ε N R U t0 x0 - w) ≤ X →
+      X < δ → 0 ≤ B →
+      B * d / (16 * (calibratedVariance outside r ε N R U t0 x0 + w)) - X / 4 ≤
+        Real.sigmoid x - 1 / 2 -
+          B * Real.sigmoid x * (1 - Real.sigmoid x) * checkerboard r ε x /
+            calibratedVariance outside r ε N R U t x ∧
+        Real.sigmoid x - 1 / 2 -
+          B * Real.sigmoid x * (1 - Real.sigmoid x) * checkerboard r ε x /
+            calibratedVariance outside r ε N R U t x ≤
+              X / 4 + B / (calibratedVariance outside r ε N R U t0 x0 - w) := by
+  obtain ⟨d, δ, hd, hδ, hδ2, hbox⟩ := compensated_feedback_box hr hr1
+  refine ⟨d, δ, hd, hδ, ?_⟩
+  intro ε N R U q t t0 x0 x w B X hN hc ht hbase hroot hvar hsmall hε hX hXδ hB
+  have hb := shared_root_central_bootstrap outside r ε N R U q t t0 x0 x w
+    hN hc ht hbase hroot hvar hsmall
+  have hx : |x| ≤ X := by
+    calc
+      |x| = |x0 + (x - x0)| := by congr 1; ring
+      _ ≤ |x0| + |x - x0| := abs_add_le _ _
+      _ ≤ X := by linarith [hb.2.1]
+  have hh := compensated_feedback_bounds r ε x B
+    (calibratedVariance outside r ε N R U t x) d
+    ((calibratedVariance outside r ε N R U t0 x0 - w) / 2)
+    (2 * (calibratedVariance outside r ε N R U t0 x0 + w)) X
+    (by linarith) hb.2.2.1 hb.2.2.2 hB hd.le (hbox ε x hε (hx.trans_lt hXδ))
+    hx (hx.trans (hXδ.le.trans hδ2))
+  convert hh using 1 <;> ring
 
 end
 end D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds

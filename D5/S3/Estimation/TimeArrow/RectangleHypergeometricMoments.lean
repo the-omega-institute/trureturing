@@ -7,6 +7,7 @@
    digest: Exact finite hypergeometric moments give a central conditional tail bound. -/
 
 import D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
+import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 import Mathlib.Data.Nat.Choose.Vandermonde
 
 /-!
@@ -236,6 +237,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
 noncomputable section
 
+set_option quotPrecheck false in
 local notation "H" => fun N K n k : ℕ => if k ≤ n then
   ((K.choose k : ℝ) * ((N - K).choose (n - k) : ℝ)) / (N.choose n : ℝ) else 0
 
@@ -288,7 +290,7 @@ private theorem kernel_normalization {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N)
       rw [sum_div]
       apply sum_congr rfl
       intro k hk
-      rw [if_pos (by omega : k ≤ n)]
+      simp only [if_pos (Nat.lt_succ_iff.mp (mem_range.mp hk))]
     _ = 1 := by
       have hh : (∑ k ∈ range (n + 1), (K.choose k : ℝ) * ((N - K).choose (n - k) : ℝ)) =
           (N.choose n : ℝ) := by exact_mod_cast hv
@@ -312,7 +314,7 @@ private theorem first_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 0
       rw [sum_div]
       apply sum_congr rfl
       intro k hk
-      rw [if_pos (by omega : k ≤ n)]
+      simp only [if_pos (Nat.lt_succ_iff.mp (mem_range.mp hk))]
       ring
     _ = ((K * (N - 1).choose (n - 1) : ℕ) : ℝ) / (N.choose n : ℝ) := by rw [hm]
     _ = _ := by
@@ -343,7 +345,7 @@ private theorem second_factorial_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤
         rw [sum_div]
         apply sum_congr rfl
         intro k hk
-        rw [if_pos (by omega : k ≤ n)]
+        simp only [if_pos (Nat.lt_succ_iff.mp (mem_range.mp hk))]
         cases k with
         | zero => simp
         | succ k => simp only [Nat.cast_succ, Nat.succ_sub_one]; ring
@@ -359,7 +361,9 @@ private theorem second_factorial_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤
         have hcR : (N : ℝ) * ((N : ℝ) - 1) * ((N - 2).choose (n - 2) : ℝ) =
             (N.choose n : ℝ) * n * ((n : ℝ) - 1) := by
           rw [← hn1, ← hN1]
-          exact_mod_cast hnat.symm
+          have hnat' : N * (N - 1) * (N - 2).choose (n - 2) =
+              N.choose n * n * (n - 1) := by nlinarith [hnat]
+          exact_mod_cast hnat'
         have hKpred : (K : ℝ) * ((K - 1 : ℕ) : ℝ) = (K : ℝ) * ((K : ℝ) - 1) := by
           cases K <;> norm_num [Nat.cast_sub]
         have hNR : (1 : ℝ) < N := by exact_mod_cast hN
@@ -392,6 +396,169 @@ theorem kernel_second_central_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N)
   dsimp [m]
   field_simp
   ring
+
+/-- The kernel's second central moment is at most the population size over
+four, including empty samples. -/
+private theorem kernel_variance_le {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 < N) :
+    (∑ k ∈ range (n + 1), H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) ≤ (N : ℝ) / 4 := by
+  rw [kernel_second_central_moment hK hn hN]
+  by_cases hn0 : n = 0
+  · simp [hn0]; positivity
+  have hKR : (K : ℝ) ≤ N := by exact_mod_cast hK
+  have hnR : (n : ℝ) ≤ N := by exact_mod_cast hn
+  have hn1 : (1 : ℝ) ≤ n := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr hn0
+  have hNR : (1 : ℝ) < N := by exact_mod_cast hN
+  have hratio0 : 0 ≤ (K : ℝ) / N := by positivity
+  have hratio1 : (K : ℝ) / N ≤ 1 := (div_le_one (by linarith)).mpr hKR
+  have hbern : ((K : ℝ) / N) * (1 - (K : ℝ) / N) ≤ 1 / 4 := by
+    nlinarith [sq_nonneg ((K : ℝ) / N - 1 / 2)]
+  have hpop : (n : ℝ) * (((N : ℝ) - n) / ((N : ℝ) - 1)) ≤ N := by
+    rw [← mul_div_assoc, div_le_iff₀ (by linarith : (0 : ℝ) < (N : ℝ) - 1)]
+    have hp := mul_le_mul hnR (show (N : ℝ) - n ≤ N - 1 by linarith)
+      (show 0 ≤ (N : ℝ) - n by linarith) (show 0 ≤ (N : ℝ) by positivity)
+    nlinarith
+  have hscale : 0 ≤ (n : ℝ) * (((N : ℝ) - n) / ((N : ℝ) - 1)) := by positivity
+  calc
+    _ = ((n : ℝ) * (((N : ℝ) - n) / ((N : ℝ) - 1))) *
+        (((K : ℝ) / N) * (1 - (K : ℝ) / N)) := by ring
+    _ ≤ ((n : ℝ) * (((N : ℝ) - n) / ((N : ℝ) - 1))) * (1 / 4) :=
+      mul_le_mul_of_nonneg_left hbern hscale
+    _ ≤ (N : ℝ) / 4 := by nlinarith
+
+/-- A finite Chebyshev tail for the exact rectangle kernel; the variance
+input is proved from the kernel's own first two factorial moments. -/
+theorem kernel_central_tail {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 < N)
+    (L : ℝ) (hL : 0 < L) :
+    (∑ k ∈ (range (n + 1)).filter
+      (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|), H N K n k) ≤
+        1 / (4 * L ^ 2) := by
+  classical
+  let T := (range (n + 1)).filter
+    (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|)
+  have hNpos : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
+  have hw (k : ℕ) : 0 ≤ H N K n k := by
+    dsimp only
+    split_ifs <;> positivity
+  have ht : L ^ 2 * (N : ℝ) * (∑ k ∈ T, H N K n k) ≤
+      ∑ k ∈ T, H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2 := by
+    rw [mul_sum]
+    apply sum_le_sum
+    intro k hk
+    have hb := (mem_filter.mp hk).2
+    have hs : (L * Real.sqrt (N : ℝ)) ^ 2 ≤
+        ((k : ℝ) - (n : ℝ) * K / N) ^ 2 := by
+      nlinarith [sq_abs ((k : ℝ) - (n : ℝ) * K / N),
+        mul_nonneg hL.le (Real.sqrt_nonneg (N : ℝ))]
+    rw [mul_pow, Real.sq_sqrt hNpos.le] at hs
+    nlinarith [mul_nonneg (hw k) (sub_nonneg.mpr hs)]
+  have hsub : (∑ k ∈ T, H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) ≤
+      ∑ k ∈ range (n + 1), H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2 :=
+    sum_le_sum_of_subset_of_nonneg (filter_subset _ _) (fun k _ _ => mul_nonneg (hw k) (sq_nonneg _))
+  have hb := ht.trans (hsub.trans (kernel_variance_le hK hn hN))
+  apply (le_div_iff₀ (by positivity : (0 : ℝ) < 4 * L ^ 2)).mpr
+  have hc : (0 : ℝ) < N := hNpos
+  nlinarith
+
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
+open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
+open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+open private
+  D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment.native_minimal_four_cell_law
+from D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
+open private
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins
+from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+
+/-- The exact original conditional mass is the numerical kernel for every
+finite event of the A count. This connects the native law to scalar estimates
+without replacing the native history or its conditioning environment. -/
+theorem native_kernel_event_mass {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (k l : ℕ) (z : Fiber S e o) (P : ℕ → Prop) [DecidablePred P] :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let V := nativeRectangleRows S e o k l z
+    let R := (V.filter fun i => count e z.val i.val 1 = k).card
+    let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+    let Env := univ.filter fun y : Fiber S e o =>
+      nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+    conditionalFiberMass S r e o (Env.filter fun y => P (nativeRectangleACount S e o k l y)) /
+      conditionalFiberMass S r e o Env =
+        ∑ t ∈ (range (U + 1)).filter P, H V.card R U t := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  dsimp only
+  let V := nativeRectangleRows S e o k l z
+  let R := (V.filter fun i => count e z.val i.val 1 = k).card
+  let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+  let Env := univ.filter fun y : Fiber S e o =>
+    nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+  let A := nativeRectangleACount S e o k l
+  let T := (range (U + 1)).filter P
+  have hs (y : Fiber S e o) (hy : y ∈ Env) : A y ≤ U := by
+    have he := (native_minimal_readout_eq_iff S e o k l y z).mp (mem_filter.mp hy).2
+    have hm := congrArg (fun v => v.2.2.2) he
+    change ((nativeRectangleRows S e o k l y).filter
+      fun i => count e y.val i.val (-1) = l).card = U at hm
+    have hc := D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins
+      S e o k l y
+    dsimp only at hc
+    dsimp only [A]
+    omega
+  have hE : Env.filter (fun y => P (A y)) = Env.filter (fun y => A y ∈ T) := by
+    ext y
+    simp only [mem_filter]
+    constructor
+    · rintro ⟨hy, hp⟩
+      exact ⟨hy, mem_filter.mpr ⟨mem_range.mpr (by have hh := hs y hy; omega), hp⟩⟩
+    · rintro ⟨hy, ht⟩
+      exact ⟨hy, (mem_filter.mp ht).2⟩
+  have hsum : conditionalFiberMass S r e o (Env.filter fun y => P (A y)) =
+      ∑ t ∈ T, conditionalFiberMass S r e o (Env.filter fun y => A y = t) := by
+    simp only [conditionalFiberMass]
+    rw [← sum_div, hE]
+    congr 1
+    exact (sum_fiberwise_eq_sum_filter Env T A (fun y => probability r e S y.val)).symm
+  rw [hsum, sum_div]
+  apply sum_congr rfl
+  intro t ht
+  exact D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment.native_minimal_four_cell_law
+    S r e o hq hqm hr hr1 ha ha1 k l z t
+
+/-- The native pair/path central tail uses the exact conditional kernel and
+its proved variance; no tail assumption or independent surrogate law is used. -/
+private theorem native_minimal_central_tail {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (k l : ℕ) (z : Fiber S e o) (L : ℝ) (hL : 0 < L)
+    (hN : 1 < (nativeRectangleRows S e o k l z).card) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let V := nativeRectangleRows S e o k l z
+    let R := (V.filter fun i => count e z.val i.val 1 = k).card
+    let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+    let Env := univ.filter fun y : Fiber S e o =>
+      nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+    conditionalFiberMass S r e o (Env.filter fun y => L * Real.sqrt V.card <
+      |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ) * R / V.card|) /
+        conditionalFiberMass S r e o Env ≤ 1 / (4 * L ^ 2) ∧
+      nativeMinimalRectangleSigma S e o k l = nativeMarginRectangleSigma S e o k l := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  dsimp only
+  constructor
+  · have he := native_kernel_event_mass S r e o hq hqm hr hr1 ha ha1 k l z
+      (fun t : ℕ => L * Real.sqrt (nativeRectangleRows S e o k l z).card <
+        |(t : ℝ) -
+          (((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val (-1) = l).card : ℝ) *
+          ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val 1 = k).card /
+          (nativeRectangleRows S e o k l z).card|)
+    dsimp only at he
+    exact he.trans_le (kernel_central_tail (card_filter_le _ _) (card_filter_le _ _) hN L hL)
+  · exact native_rectangle_sigma_eq S e o k l
 
 end
 end D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
