@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5a8bdf7fc389c1b5e89b79b44bd6cbdf7cea00a6f77542fafafe1f357a014989"}
+{"statement_id":"sha256:5a8bdf7fc389c1b5e89b79b44bd6cbdf7cea00a6f77542fafafe1f357a014989","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),11:Observation),40:DeterministicReadoutEntropyDecomposition),43:deterministic_readout_entropy_decomposition)","kind":"theorem"}]}

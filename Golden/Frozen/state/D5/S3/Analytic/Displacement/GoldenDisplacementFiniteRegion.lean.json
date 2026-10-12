@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c3c6199584e8d1197e88a01c563a29dbba4d56d54218e6f747d58e93c23ccc09"}
+{"statement_id":"sha256:c3c6199584e8d1197e88a01c563a29dbba4d56d54218e6f747d58e93c23ccc09","declarations":[{"declaration_name_key":"ns(ns(n0,30:GoldenDisplacementFiniteRegion),24:dTerm_summable_slope_pos)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,30:GoldenDisplacementFiniteRegion),38:dTerm_summable_iff_finite_of_slope_pos)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,30:GoldenDisplacementFiniteRegion),42:dTerm_constraint_of_slope_pos_of_threshold)","kind":"theorem"}]}

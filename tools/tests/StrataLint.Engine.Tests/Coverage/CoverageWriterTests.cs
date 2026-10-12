@@ -84,7 +84,6 @@ public sealed class CoverageWriterTests
                 "bootstrap-pr-1",
                 "open",
                 "Godel boundary: the trust root cannot prove its own consistency.",
-                "sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262",
                 "f3f471846dd81cfcc39ecaa386966fcf0b058464",
                 1,
                 "ASSUMED-UNVERIFIED"));

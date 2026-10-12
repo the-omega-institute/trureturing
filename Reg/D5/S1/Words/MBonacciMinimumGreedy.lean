@@ -1,3 +1,4 @@
+import D5.S1.Words.MBonacciParikhStarConverse
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.MBonacciMinimumGreedy
 import Reg.Support.DependentFamily
@@ -157,3 +158,359 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end minimal_abelian_complexity_greedy
 end Reg.D5.S1.Words.MBonacciMinimumGreedy
+
+open _root_.D5.S1.Words.MBonacciSentinelDesubstitution
+open _root_.D5.S1.Words.MBonacciReversedPrefixFRS
+open _root_.D5.S1.Words.MBonacciMinimumParikhDescent
+open _root_.D5.S1.Words.MBonacciMinimumGreedy
+open _root_.D5.S1.Words.MBonacciParikhStarConverse
+open _root_.D5.S1.Words.AbelianBorders.AbelianBorderQuestionDefs (factor letterCount)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace Reg.D5.S1.Words.MBonacciMinimumGreedy
+
+abbrev ConverseOrder := {m : ℕ // 2 ≤ m}
+abbrev ConverseFive := {m : ℕ // 2 ≤ m ∧ 5 ≤ m}
+
+namespace sentinel_sum
+
+abbrev signature : Signature where
+  Params := ConverseOrder × ℕ
+  State p := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def observed (p : signature.Params) (x : signature.State p) : Prop :=
+  x = S p.1.property p.2
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => observed p x) (fun e _ => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e _ => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (k : ℕ), R.readout () ⟨⟨m, hm⟩, k⟩
+      ((((T hm)^[k]) ([] : List (Fin m))).length + 1)
+
+private theorem actual_law : arena.Law actual := by
+  intro m hm k
+  exact _root_.D5.S1.Words.MBonacciMinimumGreedy.sentinel_sum hm k
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (by omega : 2 ≤ 2) 0
+
+private theorem bad_observation : ¬ observed ⟨⟨2, by omega⟩, 0⟩ (2) := by
+  norm_num [observed, S]
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciMinimumGreedy.sentinel_sum)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law, ⟨rejected, rejected_law⟩⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨⟨2, by omega⟩, 0⟩, (1), (2), ?_⟩
+    intro he
+    exact bad_observation (Eq.mp he (by
+      exact actual_law (by omega : 2 ≤ 2) 0))
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciMinimumGreedy.sentinel_sum) (type_of% actual)
+    (type_of% (@T)) Unit := {
+  unitName := `D5.S1.Words.MBonacciMinimumGreedy.sentinel_sum.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciMinimumGreedy.sentinel_sum.family,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := some (@T),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end sentinel_sum
+
+namespace scan_length
+
+abbrev signature : Signature where
+  Params := ConverseOrder × (ℕ × ℕ)
+  State p := List ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def observed (p : signature.Params) (x : signature.State p) : Prop :=
+  x.length = p.2.1
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => observed p x) (fun e _ => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e _ => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (count r : ℕ),
+      R.readout () ⟨⟨m, hm⟩, count, r⟩ (greedyScan hm count r)
+
+private theorem actual_law : arena.Law actual := by
+  intro m hm count r
+  exact _root_.D5.S1.Words.MBonacciMinimumGreedy.scan_length hm count r
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (by omega : 2 ≤ 2) 1 0
+
+private theorem bad_observation : ¬ observed ⟨⟨2, by omega⟩, 1, 0⟩ ([]) := by
+  simp [observed]
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciMinimumGreedy.scan_length)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law, ⟨rejected, rejected_law⟩⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨⟨2, by omega⟩, 1, 0⟩, (greedyScan (by omega : 2 ≤ 2) 1 0), ([]), ?_⟩
+    intro he
+    exact bad_observation (Eq.mp he (by
+      exact actual_law (by omega : 2 ≤ 2) 1 0))
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciMinimumGreedy.scan_length) (type_of% actual)
+    (type_of% (@greedyScan)) Unit := {
+  unitName := `D5.S1.Words.MBonacciMinimumGreedy.scan_length.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciMinimumGreedy.scan_length.family,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := some (@greedyScan),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end scan_length
+
+namespace sentinel_top
+
+abbrev signature : Signature where
+  Params := ConverseOrder × ℕ
+  State p := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def observed (p : signature.Params) (x : signature.State p) : Prop :=
+  x = p.2
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => observed p x) (fun e _ => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e _ => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (k : ℕ),
+      R.readout () ⟨⟨m, hm⟩, k⟩ (topIndex hm (S hm k))
+
+private theorem actual_law : arena.Law actual := by
+  intro m hm k
+  exact _root_.D5.S1.Words.MBonacciMinimumGreedy.sentinel_top hm k
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (by omega : 2 ≤ 2) 0
+
+private theorem bad_observation : ¬ observed ⟨⟨2, by omega⟩, 0⟩ (1) := by
+  simp [observed]
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciMinimumGreedy.sentinel_top)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law, ⟨rejected, rejected_law⟩⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨⟨2, by omega⟩, 0⟩, (topIndex (by omega : 2 ≤ 2) (S (by omega : 2 ≤ 2) 0)), (1), ?_⟩
+    intro he
+    exact bad_observation (Eq.mp he (by
+      exact actual_law (by omega : 2 ≤ 2) 0))
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciMinimumGreedy.sentinel_top) (type_of% actual)
+    (type_of% (@topIndex)) Unit := {
+  unitName := `D5.S1.Words.MBonacciMinimumGreedy.sentinel_top.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciMinimumGreedy.sentinel_top.family,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := some (@topIndex),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end sentinel_top
+
+namespace scan_sentinel
+
+abbrev signature : Signature where
+  Params := ConverseOrder × ℕ
+  State p := List ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def observed (p : signature.Params) (x : signature.State p) : Prop :=
+  x = periodicDigits (m := p.1.val) p.2
+
+def actual : Realization signature :=
+  realize signature (fun _ p x => observed p x) (fun e _ => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e _ => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (k : ℕ),
+      R.readout () ⟨⟨m, hm⟩, k⟩ (greedyScan hm (k + 1) (S hm k))
+
+private theorem actual_law : arena.Law actual := by
+  intro m hm k
+  exact _root_.D5.S1.Words.MBonacciMinimumGreedy.scan_sentinel hm k
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (by omega : 2 ≤ 2) 0
+
+private theorem bad_observation : ¬ observed ⟨⟨2, by omega⟩, 0⟩ ([]) := by
+  simp [observed, periodicDigits]
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciMinimumGreedy.scan_sentinel)) where
+  actual := actual
+  bridge := by rfl
+  variation := ⟨actual_law, ⟨rejected, rejected_law⟩⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨⟨⟨2, by omega⟩, 0⟩, (greedyScan (by omega : 2 ≤ 2) 1 (S (by omega : 2 ≤ 2) 0)), ([]), ?_⟩
+    intro he
+    exact bad_observation (Eq.mp he (by
+      exact actual_law (by omega : 2 ≤ 2) 0))
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciMinimumGreedy.scan_sentinel) (type_of% actual)
+    (type_of% (@greedyScan)) Unit := {
+  unitName := `D5.S1.Words.MBonacciMinimumGreedy.scan_sentinel.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciMinimumGreedy.scan_sentinel.family,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := some (@greedyScan),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end scan_sentinel
+
+end Reg.D5.S1.Words.MBonacciMinimumGreedy
+
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.sentinel_sum.family
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.sentinel_sum.audit
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.scan_length.family
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.scan_length.audit
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.sentinel_top.family
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.sentinel_top.audit
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.scan_sentinel.family
+#print axioms Reg.D5.S1.Words.MBonacciMinimumGreedy.scan_sentinel.audit

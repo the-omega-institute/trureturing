@@ -147,7 +147,7 @@ private lemma integral_continuousOn_nonneg {F : ℝ → ℝ → ℝ} {a b : ℝ}
   dsimp only
   rw [max_eq_left ht, intervalIntegral.integral_of_le hab, integral_Icc_eq_integral_Ioc]
 
-private lemma deriv_integral_compact {F H : ℝ → ℝ → ℝ} {a b t δ : ℝ}
+lemma deriv_integral_compact {F H : ℝ → ℝ → ℝ} {a b t δ : ℝ}
     (hab : a ≤ b) (hδ : 0 < δ)
     (hF : ContinuousOn F.uncurry (Icc (t-δ) (t+δ) ×ˢ Icc a b))
     (hH : ContinuousOn H.uncurry (Icc (t-δ) (t+δ) ×ˢ Icc a b))

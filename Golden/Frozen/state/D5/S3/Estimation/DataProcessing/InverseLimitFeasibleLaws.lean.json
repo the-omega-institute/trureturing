@@ -1,1 +1,1 @@
-{"statement_id":"sha256:375073e6e7ae070a7a3977236c4c5fb1901badf1130f11f5c39b5aaaca81ad7e"}
+{"statement_id":"sha256:375073e6e7ae070a7a3977236c4c5fb1901badf1130f11f5c39b5aaaca81ad7e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Estimation),14:DataProcessing),24:InverseLimitFeasibleLaws),23:feasible_iff_all_levels)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Estimation),14:DataProcessing),24:InverseLimitFeasibleLaws),8:Feasible)","kind":"def"}]}

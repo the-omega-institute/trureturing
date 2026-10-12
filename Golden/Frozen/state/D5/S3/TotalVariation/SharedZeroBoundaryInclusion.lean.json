@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ffbb6aa12a1a841f6d342679c97a2f70e0c79521a32a0d0c685827c6459d6c41"}
+{"statement_id":"sha256:ffbb6aa12a1a841f6d342679c97a2f70e0c79521a32a0d0c685827c6459d6c41","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:TotalVariation),27:SharedZeroBoundaryInclusion),37:shared_rule_defect_boundary_inclusion)","kind":"theorem"}]}
