@@ -996,6 +996,72 @@ originality claim, all-node estimate, RH or all-integer Robin proof
 follows from (LC16)–(LC20).
 
 
+## Why the compact positive-coefficient budget cannot cover every node
+
+The fixed coefficient of the normalized source tower and the classical
+root–coefficient identity give a limitation of (LC18)–(LC20).
+This is a parameter application, not a new Viète theorem or a conclusion
+that the actual node inequality fails.
+
+For an integer $n\ge1$, suppose the unchanged polynomial
+$q_n(\lambda)=\lambda^n\mathcal J_n(1/\lambda)$ has $n$ positive roots
+$\lambda_i$, counted with multiplicity. Its leading two coefficients
+are $1,-a_1$, by the
+[existing source normalization](../../Blueprint/D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.md).
+Viète's identity, also supplied by Mathlib's
+`Polynomial.Splits.nextCoeff_eq_neg_sum_roots_of_monic`,
+therefore gives
+
+$$
+\sum_{i=1}^n\lambda_i=a_1,\qquad
+\max_i(1/\lambda_i)\ge n/a_1. \tag{LC21}
+$$
+
+Thus any one interval $[0,R]$ containing all these actual reciprocal
+nodes must have $R\ge n/a_1$.
+
+Fix a positive real zero $t_*$ of the same $f$ and put
+$M=|f'(t_*)|<\infty$. Once $R\ge t_*$, the separation data in (LC18)
+require $t_*\in U$ and $0<m\le M$. If $M=0$, such data cannot exist.
+Both $M$ and the positive source coefficients $a_1,a_3$ are independent
+of the polynomial degree.
+
+The already used positive entire series, retaining just its $a_3$ term,
+gives
+
+$$
+E_1(R)\ge9a_3R^2,\qquad
+B_R\ge\tfrac{15}{2}a_3R^2. \tag{LC22}
+$$
+
+If $R\ge t_*$, all reciprocal nodes are covered and the separation data
+in (LC18) exist, then $M>0$ and (LC18) requires
+$n<Ma_1^2/(9a_3)$. Under those same separation and coverage assumptions,
+the (LC20) half-margin condition $nm\ge E_1(R)+2B_R$ requires
+$n\le Ma_1^2/(24a_3)$. Indeed, the applicable budgets obey
+
+$$
+9a_3n^2/a_1^2\le E_1(R)<nm\le nM,
+\qquad
+24a_3n^2/a_1^2\le E_1(R)+2B_R\le nm\le nM.
+$$
+
+These are finite certificate caps, not numerical values for the actual
+source. They use $R\ge t_*$; before that inclusion, $m\le M$ is unavailable.
+
+Assuming such a fixed positive source zero $t_*$ exists, no unbounded set
+of degrees with $n$ positive roots can admit these single-interval
+certificates. For every $n\ge a_1t_*$, all-node coverage forces
+$R_n\ge t_*$. Whenever separation data exist, the same $M$ bounds every
+$m_n$, even if $R_n,U_n,m_n$ vary with $n$. If $M=0$, those separation
+data are impossible. This obstruction leaves multiple local certificates,
+fixed-band applications, cancellation-sensitive estimates, the weaker
+margin goal and the underlying sign/RH/Robin goals undecided. The
+calculation is ordinary analysis, with no new Lean declaration or
+originality claim.
+
+
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
