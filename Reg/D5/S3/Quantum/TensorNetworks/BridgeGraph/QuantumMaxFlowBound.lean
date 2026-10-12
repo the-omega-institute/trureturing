@@ -8,7 +8,7 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 namespace Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound
-universe u v w z
+universe u_1 u_2 u_3 u_4
 
 abbrev natSignature : Signature where
   Params := Unit
@@ -131,13 +131,13 @@ theorem rationalNegative : ¬ rationalArena.Law natRejected := by
 
 /-- The four independent carrier universes are retained without finiteness assumptions. -/
 structure Carriers where
-  I : Type u
-  J : Type v
-  K : Type w
-  L : Type z
+  I : Type u_1
+  J : Type u_2
+  K : Type u_3
+  L : Type u_4
 
 abbrev matrixSignature : Signature where
-  Params := Carriers.{u,v,w,z}
+  Params := Carriers.{u_1,u_2,u_3,u_4}
   State p := Matrix (p.I × p.L) (p.J × p.K) ℚ
   Role := Unit
   finiteRole := inferInstance
@@ -146,27 +146,27 @@ abbrev matrixSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def matrixActual : Realization matrixSignature.{u,v,w,z} :=
+def matrixActual : Realization matrixSignature.{u_1,u_2,u_3,u_4} :=
   realize matrixSignature (fun _ _ A B => A = B) (fun e => nomatch e)
-def matrixRejected : Realization matrixSignature.{u,v,w,z} :=
+def matrixRejected : Realization matrixSignature.{u_1,u_2,u_3,u_4} :=
   realize matrixSignature (fun _ _ _ _ => False) (fun e => nomatch e)
 @[reducible] def slicesArena : Arena where
-  signature := matrixSignature.{u,v,w,z}
-  Law R := ∀ {I : Type u} {J : Type v} {K : Type w} {L : Type z}
+  signature := matrixSignature.{u_1,u_2,u_3,u_4}
+  Law R := ∀ {I : Type u_1} {J : Type u_2} {K : Type u_3} {L : Type u_4}
     (A B C : Matrix I J ℚ) (D E F : Matrix L K ℚ),
     R.readout () ⟨I,J,K,L⟩
       (∑ r : Fin 3, Matrix.kronecker (threeSlices A B C r) (threeSlices D E F r))
       (Matrix.kronecker A D + Matrix.kronecker B E + Matrix.kronecker C F)
-theorem slicesPositive : slicesArena.{u,v,w,z}.Law matrixActual := @typed_three_slice_flow
+theorem slicesPositive : slicesArena.{u_1,u_2,u_3,u_4}.Law matrixActual := @typed_three_slice_flow
 
-theorem slicesNegative : ¬ slicesArena.{u,v,w,z}.Law matrixRejected := by
+theorem slicesNegative : ¬ slicesArena.{u_1,u_2,u_3,u_4}.Law matrixRejected := by
   intro h
-  exact h (I := ULift.{u} Unit) (J := ULift.{v} Unit)
-    (K := ULift.{w} Unit) (L := ULift.{z} Unit) 0 0 0 0 0 0
+  exact h (I := ULift.{u_1} Unit) (J := ULift.{u_2} Unit)
+    (K := ULift.{u_3} Unit) (L := ULift.{u_4} Unit) 0 0 0 0 0 0
 
-theorem matrixDependence : ObservationalDependence matrixSignature.{u,v,w,z} matrixActual := by
+theorem matrixDependence : ObservationalDependence matrixSignature.{u_1,u_2,u_3,u_4} matrixActual := by
   intro i
-  let p : Carriers.{u,v,w,z} := ⟨ULift.{u} Unit, ULift.{v} Unit, ULift.{w} Unit, ULift.{z} Unit⟩
+  let p : Carriers.{u_1,u_2,u_3,u_4} := ⟨ULift.{u_1} Unit, ULift.{u_2} Unit, ULift.{u_3} Unit, ULift.{u_4} Unit⟩
   let x : matrixSignature.State p := 0
   let y : matrixSignature.State p := fun _ _ => 1
   refine ⟨p, x, y, ?_⟩
@@ -535,7 +535,7 @@ namespace SourceOperands
 
 /-- Coordinate packing follows the four independent source carrier binders. -/
 abbrev matrixSignature : Signature where
-  Params := Σ _ : Type u, Σ _ : Type v, Σ _ : Type w, Type z
+  Params := Σ _ : Type u_1, Σ _ : Type u_2, Σ _ : Type u_3, Type u_4
   State p := Matrix (p.1 × p.2.2.2) (p.2.1 × p.2.2.1) ℚ
   Role := Unit
   finiteRole := inferInstance
@@ -544,23 +544,23 @@ abbrev matrixSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def matrixActual : Realization matrixSignature.{u,v,w,z} :=
+def matrixActual : Realization matrixSignature.{u_1,u_2,u_3,u_4} :=
   realize matrixSignature (fun _ _ A B => A = B) (fun e => nomatch e)
-def matrixRejected : Realization matrixSignature.{u,v,w,z} :=
+def matrixRejected : Realization matrixSignature.{u_1,u_2,u_3,u_4} :=
   realize matrixSignature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 @[reducible] def slicesArena : Arena where
-  signature := matrixSignature.{u,v,w,z}
-  Law R := ∀ {I : Type u} {J : Type v} {K : Type w} {L : Type z}
+  signature := matrixSignature.{u_1,u_2,u_3,u_4}
+  Law R := ∀ {I : Type u_1} {J : Type u_2} {K : Type u_3} {L : Type u_4}
     (A B C : Matrix I J ℚ) (D E F : Matrix L K ℚ),
     R.readout () ⟨I, ⟨J, ⟨K, L⟩⟩⟩
       (∑ r : Fin 3, Matrix.kronecker (threeSlices A B C r) (threeSlices D E F r))
       (Matrix.kronecker A D + Matrix.kronecker B E + Matrix.kronecker C F)
 
-theorem matrixDependence : ObservationalDependence matrixSignature.{u,v,w,z} matrixActual := by
+theorem matrixDependence : ObservationalDependence matrixSignature.{u_1,u_2,u_3,u_4} matrixActual := by
   intro i
-  let p : matrixSignature.{u,v,w,z}.Params :=
-    ⟨ULift.{u} Unit, ⟨ULift.{v} Unit, ⟨ULift.{w} Unit, ULift.{z} Unit⟩⟩⟩
+  let p : matrixSignature.{u_1,u_2,u_3,u_4}.Params :=
+    ⟨ULift.{u_1} Unit, ⟨ULift.{u_2} Unit, ⟨ULift.{u_3} Unit, ULift.{u_4} Unit⟩⟩⟩
   let x : matrixSignature.State p := 0
   let y : matrixSignature.State p := fun _ _ => 1
   refine ⟨p, x, y, ?_⟩
@@ -620,9 +620,10 @@ theorem witnessDependence : ObservationalDependence witnessSignature witnessActu
 
 end SourceOperands
 
-def slicesEvidence : Registration SourceOperands.slicesArena.{u,v,w,z}
-    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow.{u,v,w,z})) where
-  actual := SourceOperands.matrixActual
+def slicesEvidence : Registration SourceOperands.slicesArena.{u_1,u_2,u_3,u_4}
+    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow.{u_1,u_2,u_3,u_4})) where
+  actual := realize SourceOperands.matrixSignature.{u_1,u_2,u_3,u_4}
+    (fun _ _ A B => A = B) (fun e => nomatch e)
   bridge := Iff.rfl
   variation := ⟨slicesPositive, SourceOperands.matrixRejected, slicesNegative⟩
   sensitivity := ⟨fun i => ⟨SourceOperands.matrixRejected,
@@ -631,21 +632,21 @@ def slicesEvidence : Registration SourceOperands.slicesArena.{u,v,w,z}
   dependence := SourceOperands.matrixDependence
 
 noncomputable def slicesRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow.{u,v,w,z})
-    (type_of% (realize SourceOperands.matrixSignature.{u,v,w,z} (fun _ _ A B => A = B) (fun e => nomatch e))) Unit Unit := {
+    (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow.{u_1,u_2,u_3,u_4})
+    (type_of% (realize SourceOperands.matrixSignature.{u_1,u_2,u_3,u_4} (fun _ _ A B => A = B) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.typed_three_slice_flow
     "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.slicesArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.QuantumMaxFlowBound.slicesEvidence,
   realizationSource := none,
   generated := false,
-  arena := .source ⟨SourceOperands.slicesArena.{u,v,w,z}⟩,
-  objectArena := .source ⟨SourceOperands.slicesArena.{u,v,w,z}⟩,
+  arena := .source ⟨SourceOperands.slicesArena.{u_1,u_2,u_3,u_4}⟩,
+  objectArena := .source ⟨SourceOperands.slicesArena.{u_1,u_2,u_3,u_4}⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source SourceOperands.slicesArena.{u,v,w,z} ⟨slicesEvidence.{u,v,w,z}⟩,
+  realization := .source SourceOperands.slicesArena.{u_1,u_2,u_3,u_4} ⟨slicesEvidence.{u_1,u_2,u_3,u_4}⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize SourceOperands.matrixSignature.{u,v,w,z} (fun _ _ A B => A = B) (fun e => nomatch e)),
+  readout := some (realize SourceOperands.matrixSignature.{u_1,u_2,u_3,u_4} (fun _ _ A B => A = B) (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,

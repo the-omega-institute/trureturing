@@ -139,7 +139,7 @@ internal sealed partial class LeanSourceCatalog
 
     internal ImmutableArray<byte> ExtractPropositionSource(
         RepoPath modulePath,
-        ImmutableArray<FrozenDeclarationStatement> recordedDeclarations)
+        ImmutableArray<FrozenDeclaration> recordedDeclarations)
     {
         var moduleDeclarations = declarations
             .Where(declaration => declaration.Path == modulePath)
@@ -150,7 +150,7 @@ internal sealed partial class LeanSourceCatalog
                 $"Lean proposition source is unavailable for {modulePath.Value}.");
         }
 
-        var roots = ImmutableArray.CreateBuilder<(FrozenDeclarationStatement Recorded, LeanSourceDeclaration Source)>();
+        var roots = ImmutableArray.CreateBuilder<(FrozenDeclaration Recorded, LeanSourceDeclaration Source)>();
         foreach (var recorded in recordedDeclarations)
         {
             roots.Add((recorded, ResolveRecordedDeclaration(moduleDeclarations, recorded)));
@@ -223,7 +223,7 @@ internal sealed partial class LeanSourceCatalog
 
     private static LeanSourceDeclaration ResolveRecordedDeclaration(
         ImmutableArray<LeanSourceDeclaration> moduleDeclarations,
-        FrozenDeclarationStatement recorded)
+        FrozenDeclaration recorded)
     {
         var recordedSegments = DecodeNameKey(recorded.DeclarationNameKey);
         if (recordedSegments.IsEmpty)

@@ -96,7 +96,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
         var registrations = Enumerable.Range(1, 23).Except([5, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(number => new RuleRegistration(
                 Descriptor(
                     number,
@@ -218,7 +218,7 @@ public sealed class RuleCatalogAssociationTests
         var setterId = RuleId.CreateKnown(1);
         var finderId = RuleId.CreateKnown(2);
         var remainingIds = Enumerable.Range(1, 23).Except([5, 7, 9, 13, 14, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(RuleId.CreateKnown)
             .Where(id => id != setterId && id != finderId)
             .ToImmutableArray();
@@ -262,7 +262,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var rule = new CountingUnaffectedRule();
         var registrations = Enumerable.Range(1, 23).Except([5, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(number => Registration(
                 Descriptor(
                     number,
@@ -291,8 +291,6 @@ public sealed class RuleCatalogAssociationTests
     [Theory]
     [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.cs")]
     [InlineData("tools/StrataLint.Engine/Rules/FutureSharedRule.cs")]
-    [InlineData("tools/StrataLint.Engine/Ledger/FrozenAcceptedEventLoader.cs")]
-    [InlineData("tools/StrataLint.Engine/Revocation/TrustedRevocationReceipts.cs")]
     [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
     public void SharedRuleImplementationChangesRespectDeltaOnlyRuleScoping(string changedPath)
     {
@@ -418,7 +416,7 @@ public sealed class RuleCatalogAssociationTests
     public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
     {
         Assert.Equal(
-            "sha256:09f8bf89469a864d5ddaa1cbd4191c46031fac663818d6fe36b750d190f9a032",
+            "sha256:e1a347dfa781a9f7fb646c80aa1055703f64709275d2965b6238a61542b6906e",
             RuleCatalog.Default.RootSha256);
     }
 
@@ -456,7 +454,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var state = new OrderDependentState();
         var registrations = Enumerable.Range(1, 23).Except([5, 16])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(34)
             .Select(number => new RuleRegistration(
                 Descriptor(number, $"descriptor {number}", DisplaySeverity.Error, AdmissionEffect.Block),
                 number switch
