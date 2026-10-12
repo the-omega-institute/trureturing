@@ -48,3 +48,14 @@ Lean over cofiltered thin categories. It shadows on an unreduced finer stage
 and lifts only the projected coarse point. It also handles empty stages
 vacuously. The core preservation theorem is attributed known background,
 not a new mathematical result or a settlement of Peng's construction question.
+
+## Verified locator
+
+Primary final journal source: https://doi.org/10.1007/s00222-019-00936-8.
+DOI: 10.1007/s00222-019-00936-8.
+
+Inventiones mathematicae 220(3), pp.715–736. Theorem 8 is on printed
+pp.722–723; Definitions 2–4 on pp.719–720 specify compact Hausdorff
+stages, arbitrary directed indices and Mittag-Leffler image stabilization.
+The final-journal theorem, rather than the surjective-bond v1 theorem, is
+the cited inverse-limit preservation result.

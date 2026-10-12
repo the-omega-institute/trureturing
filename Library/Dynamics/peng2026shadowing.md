@@ -50,3 +50,13 @@ separate solved problem.
 The formal inverse-limit shadowing bridge is
 `D5/S1/Dynamics/Shadowing/MittagLefflerInverseLimit`. It assumes a genuine
 coherent ML diagram and therefore does not settle the construction question.
+
+## Verified locator
+
+Versioned primary source: https://arxiv.org/abs/2606.14435v3.
+PDF: https://arxiv.org/pdf/2606.14435v3.
+
+Question 5.1 is on printed/PDF p.21. Section 5.1 and Question 5.2 give
+the simultaneous finite-face row-deletion construction on pp.21–22.
+Definition 1.10 on p.6 supplies the Mittag-Leffler condition; Theorems
+3.1 and 4.4 provide the metric-case and metrizable-factor results only.
