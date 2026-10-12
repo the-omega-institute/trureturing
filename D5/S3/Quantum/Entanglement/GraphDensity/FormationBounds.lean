@@ -433,11 +433,10 @@ private theorem bloch_sq {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : M
 
 private theorem bloch_mem {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : Matrix (Fin 2) (Fin 2) ℂ | IsDensity τ}) :
     ‖bloch τ‖ ∈ Icc 0 1 := by
-  have hd := qubit_det_bounds τ hτ.1 hτ.2
-  have hs := bloch_sq hτ
   constructor
-  · positivity
-  · nlinarith [norm_nonneg (bloch τ)]
+  · exact norm_nonneg _
+  · simpa only [hτ.2, Complex.one_re] using
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef τ hτ.1
 
 private theorem entropy_bloch {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : Matrix (Fin 2) (Fin 2) ℂ | IsDensity τ}) :
     S τ = g ‖bloch τ‖ := by
