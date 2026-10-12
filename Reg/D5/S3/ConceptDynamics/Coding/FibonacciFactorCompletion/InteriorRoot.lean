@@ -1476,3 +1476,86 @@ def original_literal_codebook_growth_registration :
 #print axioms original_literal_codebook_growth_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal90
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal95
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => List CuLetter) (fun _ => ℕ)
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ _ w => wordWeight w) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ w : List CuLetter,
+    6*w.length ≤ r.readout () () w ∧ wordWeight w ≤ 20*w.length
+
+theorem source_bridge : (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.word_weight_bounds) ↔
+    sourceArena.Law actual := Iff.rfl
+
+theorem positive_law : sourceArena.Law actual := @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.word_weight_bounds
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := (h [CuLetter.u]).1
+  norm_num [rejected, realize] at impossible
+
+theorem sensitivity : Sensitivity sourceArena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+
+theorem actual_dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨(), [], [CuLetter.u], ?_⟩
+  norm_num [actual, realize, wordWeight]
+
+def evidence : Registration sourceArena (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.word_weight_bounds) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := actual_dependence
+
+def word_weight_bounds_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.word_weight_bounds)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ w => wordWeight w) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal95.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal95.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ w => wordWeight w) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms word_weight_bounds_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal95

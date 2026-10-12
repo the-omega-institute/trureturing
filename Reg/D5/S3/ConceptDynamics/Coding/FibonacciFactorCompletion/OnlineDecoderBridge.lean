@@ -1,3 +1,5 @@
+import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge
 import Reg.Support.DependentFamily
@@ -644,3 +646,93 @@ def operation_finite_source_iff_of_bridge_registration :
 #print axioms operation_finite_source_iff_of_bridge_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal215
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal213
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature CLabel (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ l y => _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.branch l y) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (l : CLabel) (y : ℝ),
+    _root_.D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel.branch
+      (labelWindow l) y = r.readout () l y
+
+theorem source_bridge : (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.branch_transport) ↔
+    sourceArena.Law actual := Iff.rfl
+
+theorem positive_law : sourceArena.Law actual := @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.branch_transport
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := h Label.L0 0
+  rw [_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.branch_transport] at impossible
+  norm_num [rejected, realize, _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.branch, _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.shift] at impossible
+
+theorem sensitivity : Sensitivity sourceArena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+
+theorem actual_dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨Label.L0, 0, 1, ?_⟩
+  have hgp : 0 < _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.g :=
+    _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.tail_arithmetic.2.2.2.1
+  change _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.branch Label.L0 0 ≠ _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.branch Label.L0 1
+  simp only [_root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.branch, _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.shift]
+  intro impossible
+  linarith
+
+def evidence : Registration sourceArena (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.branch_transport) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := actual_dependence
+
+def branch_transport_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.branch_transport)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ l y => _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.branch l y) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal213.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal213.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ l y => _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.branch l y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms branch_transport_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.OnlineDecoderBridge.ExactOriginal213
