@@ -657,5 +657,85 @@ private lemma inputs_pos {d t : ℕ} (hd : 2 * t ≤ d) : 0 < (Inputs d t).card 
   change (∅ ∆ η).card = 2 * t
   simpa only [Finset.symmDiff_def, Finset.empty_sdiff, Finset.sdiff_empty,
     Finset.empty_union] using hη
+private def actVEquiv {d : ℕ} (g : G d) : Vertex d ≃ Vertex d := by
+  refine ⟨actV g, fun s => pmap g.2⁻¹ (g.1 ∆ s), ?_, ?_⟩
+  · intro s; dsimp only [actV]
+    rw [symmDiff_symmDiff_cancel_left, pmap_comp, inv_mul_cancel, pmap_one]
+  · intro s; dsimp only [actV]
+    rw [pmap_comp, mul_inv_cancel, pmap_one, symmDiff_symmDiff_cancel_left]
+private lemma promised_act {d t : ℕ} (g : G d) (σ τ : Vertex d) :
+    Promised d t (actV g σ) (actV g τ) ↔ Promised d t σ τ := by
+  dsimp only [Promised, actV]
+  rw [symmDiff_symmDiff_symmDiff_comm, symmDiff_self, bot_symmDiff,
+    ← pmap_symmDiff, pmap_card]
+private lemma value_transport {d t : ℕ} (P : Correlation d t) (g : G d) :
+    value (fun σ τ A B => P (actV g σ) (actV g τ) (actO g A) (actO g B)) = value P := by
+  classical
+  let e := Equiv.prodCongr (actVEquiv g) (actVEquiv g)
+  have hm : ∀ p, p ∈ Inputs d t ↔ e p ∈ Inputs d t := by
+    intro p; change p ∈ Finset.univ.filter _ ↔ e p ∈ Finset.univ.filter _
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    exact (promised_act g p.1 p.2).symm
+  let ei : (Inputs d t) ≃ (Inputs d t) := e.subtypeEquiv hm
+  dsimp only [value]
+  congr 1
+  conv_lhs => rw [← Finset.sum_coe_sort]
+  conv_rhs => rw [← Finset.sum_coe_sort]
+  apply Fintype.sum_equiv ei
+  intro p
+  apply Fintype.sum_equiv (actO_equiv g)
+  intro A
+  apply Fintype.sum_equiv (actO_equiv g)
+  intro B
+  change (if Wins p.val.1 p.val.2 A B then _ else 0) =
+    (if Wins (actV g p.val.1) (actV g p.val.2) (actO g A) (actO g B) then _ else 0)
+  rw [wins_act]
+  rfl
+private lemma value_sum {d t : ℕ} {ι : Type*} [Fintype ι]
+    (P : ι → Correlation d t) (k : ℝ) :
+    value (fun σ τ A B => k * ∑ i, P i σ τ A B) = k * ∑ i, value (P i) := by
+  classical
+  have hi : ∀ σ τ A B, (if Wins σ τ A B then k * ∑ i, P i σ τ A B else 0) =
+      k * ∑ i, if Wins σ τ A B then P i σ τ A B else 0 := by
+    intro σ τ A B; split_ifs <;> simp
+  dsimp only [value]
+  simp_rw [hi, ← Finset.mul_sum]
+  have he : (∑ p ∈ Inputs d t, ∑ A, ∑ B, ∑ i, if Wins p.1 p.2 A B then
+      P i p.1 p.2 A B else 0) =
+      ∑ i, ∑ p ∈ Inputs d t, ∑ A, ∑ B, if Wins p.1 p.2 A B then P i p.1 p.2 A B else 0 := by
+    simp_rw [Finset.sum_comm (f := fun B i => if Wins _ _ _ B then P i _ _ _ B else 0)]
+    simp_rw [Finset.sum_comm (f := fun A i => ∑ B, if Wins _ _ A B then P i _ _ A B else 0)]
+    rw [Finset.sum_comm]
+  rw [he, ← Finset.sum_div]
+  ring
+private lemma value_constant {d t : ℕ} (hd : 2 * t ≤ d) (P : Correlation d t) (r : ℝ)
+    (h : ∀ σ τ A B, Wins σ τ A B → P σ τ A B = r) :
+    value P = (Nat.choose (2 * t) t : ℝ) * r := by
+  classical
+  have hp : ((Inputs d t).card : ℝ) ≠ 0 := by exact_mod_cast (inputs_pos hd).ne'
+  dsimp only [value]
+  have hs : ∀ p ∈ Inputs d t, (∑ A, ∑ B, if Wins p.1 p.2 A B then P p.1 p.2 A B else 0) =
+      (Nat.choose (2 * t) t : ℝ) * r := by
+    intro p hp
+    have hpr : Promised d t p.1 p.2 := (Finset.mem_filter.mp hp).2
+    convert winning_sum p.1 p.2 hpr r using 1
+    apply Finset.sum_congr rfl; intro A hA
+    apply Finset.sum_congr rfl; intro B hB
+    split_ifs with hw
+    · exact h _ _ _ _ hw
+    · rfl
+  rw [Finset.sum_congr rfl hs, Finset.sum_const, nsmul_eq_mul]
+  exact mul_div_cancel_left₀ _ hp
+private lemma inner_winning_constant {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β)
+    (σ τ σ' τ' : Vertex d) (A B A' B' : Output d t)
+    (hw : Wins σ τ A B) (hw' : Wins σ' τ' A' B') :
+    (weightedCore S).inner (uvec S σ A) (vvec S τ B) =
+      (weightedCore S).inner (uvec S σ' A') (vvec S τ' B') := by
+  obtain ⟨h, hs, ht, ha, hb⟩ := winning_transitive σ τ σ' τ' A B A' B' hw hw'
+  rw [inner_uv_eq, inner_uv_eq, ← hs, ← ht, ← ha, ← hb]
+  congr 1
+  simp_rw [← actV_rightMul, ← actO_rightMul]
+  exact (sum_rightMul h (fun g => S.prob (actV g σ) (actV g τ) (actO g A) (actO g B))).symm
 end QuantumBridge
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
