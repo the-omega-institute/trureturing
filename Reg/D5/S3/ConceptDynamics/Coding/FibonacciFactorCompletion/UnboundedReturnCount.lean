@@ -136,39 +136,32 @@ private theorem root_spec : 0 < criticalX ∧ criticalX < 1 ∧ criticalX^3 + cr
   unfold criticalX
   exact Classical.choose_spec (p := fun x : ℝ => 0 < x ∧ x < 1 ∧ x^3 + x^10 = 1) _
 
-abbrev windowSignature : Signature where
-  Params := ℝ
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Bool
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev windowSignature : Signature := countSignature
 
 def windowActual : Realization windowSignature := realize windowSignature
-  (fun _ x s => decide (s ≤ x^13)) (fun e => nomatch e)
+  (fun _ _ n => returnCount n) (fun e => nomatch e)
 def windowRejected : Realization windowSignature := realize windowSignature
-  (fun _ _ _ => false) (fun e => nomatch e)
+  (fun _ _ _ => 2) (fun e => nomatch e)
 abbrev windowArena : Arena where
   signature := windowSignature
   Law R := ∀ (x : ℝ), 0 < x → x < 1 → x^3 + x^10 = 1 →
-    (∀ n : ℕ, R.readout () x ((returnCount n : ℝ) * x^n) = true) ∧
+    (∀ n : ℕ, (R.readout () () n : ℝ) * x^n ≤ x^13) ∧
     (∀ n : ℕ, 31 ≤ n → x^40 ≤ (returnCount n : ℝ) * x^n)
 private theorem window_actual : windowArena.Law windowActual := by
-  intro x hx hu hr
-  simpa [windowActual, realize] using actual_count_window x hx hu hr
+  exact actual_count_window
 private theorem window_rejected : ¬ windowArena.Law windowRejected := by
   intro h
   have hh := (h criticalX root_spec.1 root_spec.2.1 root_spec.2.2).1 0
-  simp [windowRejected, realize] at hh
+  norm_num [windowRejected, realize] at hh
+  have upper : criticalX^13 ≤ 1 := pow_le_one₀ root_spec.1.le root_spec.2.1.le
+  linarith
 
 def windowRegistration : Registration windowArena
     (∀ (x : ℝ), 0 < x → x < 1 → x^3 + x^10 = 1 →
       (∀ n : ℕ, (returnCount n : ℝ) * x^n ≤ x^13) ∧
       (∀ n : ℕ, 31 ≤ n → x^40 ≤ (returnCount n : ℝ) * x^n)) where
   actual := windowActual
-  bridge := by simp [windowActual, realize]
+  bridge := Iff.rfl
   variation := ⟨window_actual, windowRejected, window_rejected⟩
   sensitivity := by
     constructor
@@ -177,43 +170,26 @@ def windowRegistration : Registration windowArena
       intro j hj
       exact (hj (Subsingleton.elim j i)).elim
     · intro e; exact nomatch e
-  dependence := by
-    intro i
-    have c6 : returnCount 6 = 0 := by simpa using (actual_count_middle 6).2
-    have c16 : returnCount 16 = 1 := by
-      have h := actual_count_recurrence 16
-      norm_num [count_thirteen, c6] at h
-      exact h
-    refine ⟨2, (returnCount 0 : ℝ) * (2 : ℝ)^0,
-      (returnCount 16 : ℝ) * (2 : ℝ)^16, ?_⟩
-    norm_num [windowActual, realize, count_zero, c16]
-    simp
+  dependence := middleRegistration.dependence
 
-abbrev positiveSignature : Signature where
-  Params := Unit
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Bool
-  Anchor := Empty
-  finiteAnchor := inferInstance
+abbrev positiveSignature : Signature := countSignature
 
 def positiveActual : Realization positiveSignature := realize positiveSignature
-  (fun _ _ x => decide (0 < x)) (fun e => nomatch e)
+  (fun _ _ n => returnCount n) (fun e => nomatch e)
 def positiveRejected : Realization positiveSignature := realize positiveSignature
-  (fun _ _ _ => false) (fun e => nomatch e)
+  (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev logArena : Arena where
   signature := positiveSignature
-  Law R := R.readout () () alphaInfinity = true ∧ ∀ n : ℕ, 31 ≤ n →
-    0 < (returnCount n : ℝ) ∧
+  Law R := 0 < alphaInfinity ∧ ∀ n : ℕ, 31 ≤ n →
+    0 < (R.readout () () n : ℝ) ∧
     2*alphaInfinity*(n : ℝ)-80*alphaInfinity ≤ Real.logb 2 (returnCount n : ℝ) ∧
     Real.logb 2 (returnCount n : ℝ) ≤ 2*alphaInfinity*(n : ℝ)-26*alphaInfinity
 private theorem log_actual : logArena.Law positiveActual := by
-  simpa [positiveActual, realize] using actual_count_log_bounds
+  exact actual_count_log_bounds
 private theorem log_rejected : ¬ logArena.Law positiveRejected := by
   intro h
-  simp [positiveRejected, realize] at h
+  have hh := (h.2 31 (by omega)).1
+  norm_num [positiveRejected, realize] at hh
 
 def logRegistration : Registration logArena
     (0 < alphaInfinity ∧ ∀ n : ℕ, 31 ≤ n →
@@ -221,7 +197,7 @@ def logRegistration : Registration logArena
       2*alphaInfinity*(n : ℝ)-80*alphaInfinity ≤ Real.logb 2 (returnCount n : ℝ) ∧
       Real.logb 2 (returnCount n : ℝ) ≤ 2*alphaInfinity*(n : ℝ)-26*alphaInfinity) where
   actual := positiveActual
-  bridge := by simp [positiveActual, realize]
+  bridge := Iff.rfl
   variation := ⟨log_actual, positiveRejected, log_rejected⟩
   sensitivity := by
     constructor
@@ -230,34 +206,29 @@ def logRegistration : Registration logArena
       intro j hj
       exact (hj (Subsingleton.elim j i)).elim
     · intro e; exact nomatch e
-  dependence := by
-    intro i
-    refine ⟨(), 0, alphaInfinity, ?_⟩
-    simp [positiveActual, realize, actual_count_log_bounds.1]
+  dependence := middleRegistration.dependence
 
 abbrev rateSignature : Signature := positiveSignature
 def rateActual : Realization rateSignature := realize rateSignature
-  (fun _ _ x => decide (Filter.Tendsto
-    (fun n : ℕ => Real.logb 2 (returnCount n : ℝ) / (2*(n : ℝ)))
-    Filter.atTop (nhds x))) (fun e => nomatch e)
+  (fun _ _ n => returnCount n) (fun e => nomatch e)
 def rateRejected : Realization rateSignature := realize rateSignature
-  (fun _ _ _ => false) (fun e => nomatch e)
+  (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev rateArena : Arena where
   signature := rateSignature
   Law R := Asymptotics.IsBigO Filter.atTop
     (fun n : ℕ => Real.logb 2 (returnCount n : ℝ)-2*alphaInfinity*(n : ℝ))
-    (fun _ : ℕ => (1 : ℝ)) ∧ R.readout () () alphaInfinity = true
+    (fun _ : ℕ => (1 : ℝ)) ∧
+    Filter.Tendsto (fun n : ℕ => Real.logb 2 (R.readout () () n : ℝ) / (2*(n : ℝ)))
+      Filter.atTop (nhds alphaInfinity)
 private theorem rate_actual : rateArena.Law rateActual := by
-  simpa [rateActual, realize] using actual_even_rate
+  exact actual_even_rate
 private theorem rate_rejected : ¬ rateArena.Law rateRejected := by
   intro h
-  simp [rateRejected, realize] at h
-private theorem rate_zero : ¬ Filter.Tendsto
-    (fun n : ℕ => Real.logb 2 (returnCount n : ℝ) / (2*(n : ℝ)))
-    Filter.atTop (nhds (0 : ℝ)) := by
-  intro h
-  have he := tendsto_nhds_unique actual_even_rate.2 h
-  exact actual_count_log_bounds.1.ne' he
+  have hlimit : Filter.Tendsto (fun _ : ℕ => (0 : ℝ))
+      Filter.atTop (nhds alphaInfinity) := by
+    simpa [rateRejected, realize] using h.2
+  have he : (0 : ℝ) = alphaInfinity := tendsto_nhds_unique tendsto_const_nhds hlimit
+  exact actual_count_log_bounds.1.ne' he.symm
 
 def rateRegistration : Registration rateArena
     (Asymptotics.IsBigO Filter.atTop
@@ -266,7 +237,7 @@ def rateRegistration : Registration rateArena
     Filter.Tendsto (fun n : ℕ => Real.logb 2 (returnCount n : ℝ) / (2*(n : ℝ)))
       Filter.atTop (nhds alphaInfinity)) where
   actual := rateActual
-  bridge := by simp [rateActual, realize]
+  bridge := Iff.rfl
   variation := ⟨rate_actual, rateRejected, rate_rejected⟩
   sensitivity := by
     constructor
@@ -275,10 +246,7 @@ def rateRegistration : Registration rateArena
       intro j hj
       exact (hj (Subsingleton.elim j i)).elim
     · intro e; exact nomatch e
-  dependence := by
-    intro i
-    refine ⟨(), alphaInfinity, 0, ?_⟩
-    simp [rateActual, realize, actual_even_rate.2, rate_zero]
+  dependence := middleRegistration.dependence
 
 def actual_count_middle_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -379,7 +347,7 @@ def actual_count_recurrence_registration :
 def actual_count_window_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.actual_count_window)
-      (type_of% (realize.{0,0,0,0,0} windowSignature (fun _ x s => decide (s ≤ x^13)) (fun e => nomatch e))) Unit Unit where
+      (type_of% (realize.{0,0,0,0,0} windowSignature (fun _ _ n => returnCount n) (fun e => nomatch e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.actual_count_window_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.windowRegistration
   realizationSource := none
@@ -391,7 +359,7 @@ def actual_count_window_registration :
   realization := .source windowArena ⟨windowRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{0,0,0,0,0} windowSignature (fun _ x s => decide (s ≤ x^13)) (fun e => nomatch e))
+  readout := some (realize.{0,0,0,0,0} windowSignature (fun _ _ n => returnCount n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -399,8 +367,8 @@ def actual_count_window_registration :
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount
     definition := none
-    coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := true }] }
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -411,7 +379,7 @@ def actual_count_window_registration :
 def actual_count_log_bounds_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.actual_count_log_bounds)
-      (type_of% (realize.{0,0,0,0,0} positiveSignature (fun _ _ x => decide (0 < x)) (fun e => nomatch e))) Unit Unit where
+      (type_of% (realize.{0,0,0,0,0} positiveSignature (fun _ _ n => returnCount n) (fun e => nomatch e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.actual_count_log_bounds_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.logRegistration
   realizationSource := none
@@ -423,7 +391,7 @@ def actual_count_log_bounds_registration :
   realization := .source logArena ⟨logRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{0,0,0,0,0} positiveSignature (fun _ _ x => decide (0 < x)) (fun e => nomatch e))
+  readout := some (realize.{0,0,0,0,0} positiveSignature (fun _ _ n => returnCount n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -432,7 +400,7 @@ def actual_count_log_bounds_registration :
     owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] }
+    readouts := #[{ path := #["arg", "body", "body", "fn", "arg", "arg", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -443,7 +411,7 @@ def actual_count_log_bounds_registration :
 def actual_even_rate_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.actual_even_rate)
-      (type_of% (realize.{0,0,0,0,0} rateSignature (fun _ _ x => decide (Filter.Tendsto (fun n : ℕ => Real.logb 2 (returnCount n : ℝ) / (2*(n : ℝ))) Filter.atTop (nhds x))) (fun e => nomatch e))) Unit Unit where
+      (type_of% (realize.{0,0,0,0,0} rateSignature (fun _ _ n => returnCount n) (fun e => nomatch e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.actual_even_rate_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.rateRegistration
   realizationSource := none
@@ -455,7 +423,7 @@ def actual_even_rate_registration :
   realization := .source rateArena ⟨rateRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{0,0,0,0,0} rateSignature (fun _ _ x => decide (Filter.Tendsto (fun n : ℕ => Real.logb 2 (returnCount n : ℝ) / (2*(n : ℝ))) Filter.atTop (nhds x))) (fun e => nomatch e))
+  readout := some (realize.{0,0,0,0,0} rateSignature (fun _ _ n => returnCount n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -464,7 +432,7 @@ def actual_even_rate_registration :
     owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg"], booleanPredicate := true }] }
+    readouts := #[{ path := #["arg", "fn", "fn", "arg", "body", "fn", "arg", "arg", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -487,7 +455,6 @@ def actual_even_rate_registration :
 #print axioms log_rejected
 #print axioms rate_actual
 #print axioms rate_rejected
-#print axioms rate_zero
 
 #print axioms _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.UnboundedReturnCount.actual_count_middle
 
