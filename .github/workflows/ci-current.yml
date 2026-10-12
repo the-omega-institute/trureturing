@@ -2337,7 +2337,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean']
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj 'TEST_FILTER=FullyQualifiedName!~CompiledFibIntegrationTests'
+      project: tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj
       lean: toolchain
       cache-dependency-path: |
         tools/tests/StrataLint.Lean.Tests/packages.lock.json
