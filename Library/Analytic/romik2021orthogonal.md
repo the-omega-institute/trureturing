@@ -344,6 +344,15 @@ equation in [18.8, Table 1](https://dlmf.nist.gov/18.8), its finite series in
 [18.5.12](https://dlmf.nist.gov/18.5.E12), the terminating
 Chu–Vandermonde evaluation [15.4.24](https://dlmf.nist.gov/15.4.E24), and the
 gamma-ratio asymptotic [5.11.12](https://dlmf.nist.gov/5.11.E12).
+Weniger's [*On the Analyticity of Laguerre Series*, arXiv:0808.3926v1](https://arxiv.org/abs/0808.3926v1),
+section 3, equations (3.2)–(3.3), printed p.9, supplies the fractional-power
+integral and its weighted $L^2$ expansion directly. For $\alpha>-1$,
+real $\rho\notin\mathbb N_0$ and $\alpha+2\rho>-1$, its integral formula
+specialized to $\alpha=-1/2,\rho=1/2$ gives
+$-\Gamma(n-1/2)/(2\sqrt\pi\,\Gamma(n+1))$.
+This is the unnormalized projection; division by the Laguerre norm gives
+the series coefficient $-1/(\sqrt\pi(2n-1))$. These two coefficient
+normalizations must not be compared as different decay mechanisms.
 
 First, termwise differentiation of the normally convergent theta series gives
 
@@ -530,6 +539,108 @@ correlated error with the signed margin $\beta a^2-ab$ at the original
 nodes, especially near $a=0$. The original all-node inequality,
 common-zero vanishing and multiplicity propagation remain unproved.
 This source-specific analytic interface has not been checked in Lean.
+
+## Explicit polynomial moments and one correlated tail projection
+
+The same $H_N$ supplies an explicit error bound for every polynomial;
+no second cutoff construction is required. Put $\delta=1/8$, $M=N+1$
+and $d\nu_N=d\mu-d\mu_{H_N}$. Equation (LC3) gives, for $u\ge0$,
+
+$$
+0\le K(u)-H_N(u)
+\le R_N(u)+\tfrac12\mathbf1_{[0,\delta]}(u)R_N(-u).
+$$
+
+For $c=\pi$ or $c=\pi e^{-4\delta}$ define
+
+$$
+U_M(c)=\frac{M^4e^{-cM^2}}
+ {1-(1+1/M)^4e^{-c(2M+1)}}.
+$$
+
+The successive-term ratio of $m^4e^{-cm^2}$ decreases with $m$;
+for $M\ge2$ and $c\ge\pi e^{-1/2}>3/2$ it is strictly less than one.
+Thus $\sum_{m\ge M}m^4e^{-cm^2}\le U_M(c)$.
+The original summands satisfy
+
+$$
+\begin{aligned}
+0<k_m(u)&\le2\pi^2m^4e^{-\pi m^2}
+             e^{-(4\pi m^2-9)u} &&(u\ge0),\\
+0<k_m(-u)&\le2\pi^2m^4e^{-\pi e^{-4\delta}m^2}
+                                      &&(0\le u\le\delta).
+\end{aligned}
+$$
+
+The first bound uses $e^{4u}\ge1+4u$. Substitution $T=u^2$ gives
+$d\nu_N=8(K-H_N)(u)\,du/\xi_0$. Integrating these envelopes against
+$u^{2j}$ yields, for integers $j\ge0$,
+
+$$
+\int T^j\,d\nu_N\le\overline M_j(N)
+:=\frac{16\pi^2}{\xi_0}
+ \left[
+ \frac{(2j)!\,U_M(\pi)}{(4\pi M^2-9)^{2j+1}}
+ +\frac{\delta^{2j+1}}{2(2j+1)}U_M(\pi e^{-4\delta})
+ \right]. \tag{LC5}
+$$
+
+Consequently, for $P(T)=\sum_jp_jT^j$,
+$|\int P\,d\nu_N|\le\sum_j|p_j|\overline M_j(N)$.
+All degree and $v$ dependence remains in the polynomial coefficients;
+this finite-parameter bound also applies at the unchanged full-source nodes.
+
+Write $\Pi_{j,v}^{(\alpha)}(T)=(-1)^jj!v^jL_j^{(\alpha)}(T/v)$,
+$P_j=\Pi_{j,v}^{(-1/2)}$, and for $n\ge1$ set
+$\eta=\beta/(2n)=(n-1/2)v^2/2$.
+The classical contiguous and derivative identities
+[DLMF 18.9.13](https://dlmf.nist.gov/18.9.E13),
+[18.9.14](https://dlmf.nist.gov/18.9.E14) and
+[18.9.23](https://dlmf.nist.gov/18.9.E23) give, in this normalization,
+
+$$
+\begin{aligned}
+F_{n,v}(T)&:=(T+v/2)P_n(T)+\eta P_{n-1}(T)\\
+ &=T\left(P_n(T)+\frac{v}{2n}P_n'(T)\right)
+ =T^2\Pi_{n-1,v}^{(3/2)}(T). \tag{LC6}
+\end{aligned}
+$$
+
+This is direct reuse of those identities, not a new polynomial theorem.
+It cancels the constant and linear endpoint coefficients before estimating
+the joint tail. At the same full-source node $\int P_n\,d\mu=0$, let
+
+$$
+a_H=\int P_{n-1}\,d\mu_{H_N},\qquad
+b_H=\int TP_n\,d\mu_{H_N},\qquad
+c_H=\int P_n\,d\mu_{H_N},\qquad
+D_N=b_H+\eta a_H+(v/2)c_H.
+$$
+
+Then $b+\eta a=D_N+\mathcal R_N$, where
+$\mathcal R_N=\int F_{n,v}\,d\nu_N$.
+The approximation's $c_H$ need not vanish at the full-source node and
+cannot be dropped. The finite Laguerre series supplies the coefficient
+absolute values, and (LC5) gives the independently estimable bound
+
+$$
+|\mathcal R_N|\le E_F(n,v,N)
+:=\sum_{j=2}^{n+1}
+ \frac{(n-1)!v^{n+1-j}}{(j-2)!}
+ \binom{n+1/2}{n+1-j}\overline M_j(N). \tag{LC7}
+$$
+
+Thus the independent comparison
+$aD_N+|a|E_F\le(\beta+\eta)a^2$ would imply $\beta a^2-ab\ge0$,
+with no restriction on the sign of $a$. This comparison has not been
+established for every actual node. Positive residual measure alone is
+insufficient: $F_{2,v}(T)=T^2(T-5v/2)$ changes sign.
+At a collision $a=0=\int P_n\,d\mu$, the scalar inequality is automatic;
+the separate required equality is $D_N+\mathcal R_N=b=0$.
+Neither the explicit absolute bound nor the endpoint cancellation supplies
+that equality or multiplicity propagation. These source-specific error
+applications are ordinary analysis, with no Lean or originality claim;
+RH and all-integer strict Robin remain unproved.
 
 ## Source anomalies retained
 
