@@ -9,6 +9,7 @@
 import D5.S3.Estimation.SequentialDecisionRisk.SeededBernoulliStoppedMoment
 import Mathlib.RingTheory.MvPolynomial.Symmetric.NewtonIdentities
 import Mathlib.RingTheory.Polynomial.Vieta
+import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 
 noncomputable section
 open MeasureTheory ProbabilityTheory Filter Finset
@@ -133,6 +134,38 @@ private lemma even_elem_bound (k : ℕ) (v : Fin k → ℝ)
       exact le_add_of_nonneg_left (by positivity)
   exact h.trans hsplit
 
+private lemma product_deriv_zero (k : ℕ) (v : Fin k → ℝ) (r : ℕ) :
+    iteratedDeriv r (fun t : ℝ => ∏ i, (1 + t * v i)) 0 =
+      (r.factorial : ℝ) * Elem k v r := by
+  classical
+  have hpoly : (fun t : ℝ => ∏ i, (1 + t * v i)) =
+      fun t => ∑ s ∈ (univ : Finset (Fin k)).powerset,
+        t ^ s.card * ∏ i ∈ s, v i := by
+    funext t
+    rw [prod_one_add]
+    apply sum_congr rfl
+    intro s hs
+    rw [prod_mul_distrib, prod_const]
+  rw [hpoly, iteratedDeriv_fun_sum (by intro s hs; fun_prop)]
+  simp_rw [iteratedDeriv_mul_const_field, iteratedDeriv_fun_pow_zero]
+  simp only [Nat.cast_ite, Nat.cast_zero]
+  change (∑ s ∈ (univ : Finset (Fin k)).powerset,
+    (if r = s.card then (s.card.factorial : ℝ) else 0) * ∏ i ∈ s, v i) = _
+  simp only [MvPolynomial.esymm, map_sum, map_prod, MvPolynomial.aeval_X]
+  rw [mul_sum, powersetCard_eq_filter, sum_filter]
+  apply sum_congr rfl
+  intro s hs
+  by_cases h : s.card = r
+  · simp [h]
+  · simp [h, Ne.symm h]
+
+private lemma elem_scale (k : ℕ) (v : Fin k → ℝ) (q : ℝ) (r : ℕ) :
+    Elem k (fun i => q * v i) r = q ^ r * Elem k v r := by
+  classical
+  simp only [MvPolynomial.aeval_esymm_eq_multiset_esymm]
+  simpa only [smul_eq_mul, Multiset.map_map, Function.comp_def] using
+    (Multiset.pow_smul_esymm q r ((univ : Finset (Fin k)).val.map v)).symm
+
 /-- Every even likelihood coefficient at a bounded Bernoulli stopping time
 is paid by the same stopping-time moment. The estimate applies to arbitrary
 independent private seeds and has no deterministic-horizon factor. -/
@@ -186,6 +219,47 @@ theorem bernoulli_stopped_even_coefficient_budget
         ∫⁻ ω, ENNReal.ofReal ((τ ω : ℝ) ^ m) ∂Law ν p₀ := add_le_add hscore le_rfl
     _ = _ := by rw [ENNReal.ofReal_add (by positivity) (by norm_num),
       ENNReal.ofReal_one, add_mul, one_mul]
+
+/-- A bounded output multiplier and a fixed parameter slope preserve the
+even-derivative budget of the stopped likelihood polynomial. -/
+theorem bernoulli_stopped_even_derivative_budget
+    (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (τ : Seed × (ℕ → Bool) → ℕ)
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ)))
+    (n : ℕ) (hτn : ∀ ω, τ ω ≤ n) {m : ℕ} (hm : 0 < m)
+    (q : ℝ) (f : Seed × (ℕ → Bool) → ℝ) (hf : ∀ ω, |f ω| ≤ 1) :
+    (∫⁻ ω, ENNReal.ofReal |f ω * iteratedDeriv (2 * m)
+      (fun t : ℝ => ∏ i : Fin (τ ω), (1 + t * (q * Bit p₀ i.1 ω))) 0| ∂Law ν p₀) ≤
+      ENNReal.ofReal ((2 * m).factorial * |q| ^ (2 * m) * (2 * MomentC m + 1)) *
+        ∫⁻ ω, ENNReal.ofReal ((τ ω : ℝ) ^ m) ∂Law ν p₀ := by
+  have hcoeff := bernoulli_stopped_even_coefficient_budget ν p₀ h₀ h₁ τ hτ n hτn hm
+  let d : ℝ := (2 * m).factorial * |q| ^ (2 * m)
+  have hd : 0 ≤ d := by dsimp [d]; positivity
+  calc
+    _ ≤ ∫⁻ ω, ENNReal.ofReal d *
+        ENNReal.ofReal |Elem (τ ω) (fun i : Fin (τ ω) => Bit p₀ i.1 ω) (2 * m)|
+        ∂Law ν p₀ := by
+      apply lintegral_mono
+      intro ω
+      dsimp only
+      rw [product_deriv_zero, elem_scale, abs_mul, abs_mul, abs_mul,
+        abs_of_nonneg (show (0 : ℝ) ≤ (2 * m).factorial from Nat.cast_nonneg _), abs_pow]
+      rw [← ENNReal.ofReal_mul hd]
+      apply ENNReal.ofReal_le_ofReal
+      calc
+        _ ≤ 1 * ((2 * m).factorial * (|q| ^ (2 * m) *
+            |Elem (τ ω) (fun i : Fin (τ ω) => Bit p₀ i.1 ω) (2 * m)|)) :=
+          mul_le_mul_of_nonneg_right (hf ω) (by positivity)
+        _ = _ := by dsimp [d]; ring
+    _ = ENNReal.ofReal d *
+        ∫⁻ ω, ENNReal.ofReal |Elem (τ ω)
+          (fun i : Fin (τ ω) => Bit p₀ i.1 ω) (2 * m)| ∂Law ν p₀ :=
+      lintegral_const_mul' _ _ ENNReal.ofReal_ne_top
+    _ ≤ ENNReal.ofReal d * (ENNReal.ofReal (2 * MomentC m + 1) *
+        ∫⁻ ω, ENNReal.ofReal ((τ ω : ℝ) ^ m) ∂Law ν p₀) :=
+      mul_le_mul_right hcoeff _
+    _ = _ := by rw [← mul_assoc, ← ENNReal.ofReal_mul hd]
 
 
 end D5.S3.Estimation.SequentialDecisionRisk.BernoulliStoppedCoefficientBudget
