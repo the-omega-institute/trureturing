@@ -1392,3 +1392,597 @@ $\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 的无向根支撑
 本卷的全球新颖性或优先权主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 任意原地址的付费存在解码
+
+### 13.1 同源接口与三个字面地址
+
+本章沿用 §12 的实际有限非空有序树、根和 $L/R$ 地址。记
+$r_x(p)\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$ 为原四值
+Read，$P_x(p)=\mathbf1_{r_x(p)\ne\mathsf{absent}}$ 为其存在投影。
+一次取得 $P_x(p)$ 仍执行一次原付费 Read；物理 writer 保留该 Read 的完整
+四值回复，解码控制器只保留并使用这一位。不存在另设的免费存在传感器。
+
+固定公开认证的 $N=2k\ge2$，实际寄存器为 $v=\rho^{2k}u$。
+$u$ 不作为控制器输入。供给的 $p\in\{L,R\}^{*}$ 任意，可以是原来不存在、
+现在存在的位置；不供给祖先回复、原位置确认、来源名称或原树描述。
+一个读宏内没有替换或其他寄存器写入，全部物理 Read 作用于同一个 $v$。
+地址不可达时 Read 返回 absent，仍是合法且付费的调用。
+
+定义两个标签探针，以及非根地址 $p=ad$、$d\in\{L,R\}$ 的存在守卫：
+
+$$
+\begin{aligned}
+B_k(p)&=pR^{k-1}LL,\\
+C_k(p)&=pR^kL,\\
+G_k(p)&=aR^{k+1}\qquad(p=ad\ne\varepsilon).
+\end{aligned}
+\tag{ABT.40}
+$$
+
+这里 $p$ 是每个标签探针实际执行的完整前缀。令
+$b=P_v(B_k(p))$、$c=P_v(C_k(p))$，非根时再令 $g=P_v(G_k(p))$。
+§12.3 的 (ABT.36)–(ABT.37) 已供应原来存在的 $p$ 上的标签表
+$\alpha:00$、$\beta:10$、$\mathsf{branch}:11$。以下补足原 absence，
+而不把那张有前提的表直接用到新生位置上。
+
+### 13.2 新生位置不能伪造标签探针
+
+**引理 13.1（原 absence 的双零扩充）。** 对每个上述 $u,k,p$，
+若 $r_u(p)=\mathsf{absent}$，则 $b=c=0$，无论 $p$ 在 $v$ 中是否存在。
+
+证明。复用 ActualLeafHistoryRigidity.actual_address_geometry 的原叶分解：
+存在一个原叶地址 $z$ 和非空余词 $w$，使 $p=zw$；$z$ 处的原叶为
+$\alpha$ 或 $\beta$。配对分配律将其当前子树分别运输为
+$T_{2k}$ 或 $T_{2k+1}$，其中 $T_j=\rho^j\alpha$。
+若 $w$ 在该子树上失败，则 $p$ 和它的全部延伸都 absent，结论立即成立。
+
+否则，按 Atomic Block Conjugacy §3 的守卫导航，成功路径上的每一步都从
+一个分支 $T_i$、$i\ge2$ 出发，$L$ 减一、$R$ 减二。
+于是 $p$ 处为某个 $T_j$，且
+
+$$
+0\le j=2k+\epsilon-\bigl(\#_L(w)+2\#_R(w)\bigr)\le2k,
+\qquad\epsilon\in\{0,1\}.
+\tag{ABT.41}
+$$
+
+在 $T_j$ 内执行 $R^{k-1}LL$：若右脊已失败，探针 absent；若右脊成功，
+余下的原子等级不超过二。$T_0,T_1$ 是叶，不能走首个 $L$；$T_2$ 的
+$L$ 孩子是叶 $T_1$，不能再走第二个 $L$。故 $b=0$。
+执行 $R^kL$ 时，若 $R^k$ 成功，其余等级不超过零，只能为叶 $T_0$，
+最后的 $L$ 仍失败，故 $c=0$。
+
+这个证明逐步检查分支条件，不以末端等级非负代替可达性；也没有从
+address_clock_bounds 的新生右时钟上界推断任意左支 absence。
+$\square$
+
+非根守卫直接复用 DelayedOriginalReadout.original_presence_guard：在偶数
+$N=2k$ 时，guardAccept 恰是原付费 Read 的非 absence 位。因此该声明
+在本章参数上的确切结论为
+
+$$
+g=1\quad\Longleftrightarrow\quad r_u(p)\ne\mathsf{absent}.
+\tag{ABT.42}
+$$
+
+它不要求 $a$ 原来存在；整个证明中的原叶、子树和原树都只是证明参数，
+不是运行时 advice。该守卫连同引理 13.1 和已有标签表给出完整的同源表：
+
+| 原四值回复 $r_u(p)$ | $g$（非根） | $b$ | $c$ |
+| --- | --- | --- | --- |
+| $\mathsf{absent}$ | $0$ | $0$ | $0$ |
+| $\alpha$ | $1$ | $0$ | $0$ |
+| $\beta$ | $1$ | $1$ | $0$ |
+| $\mathsf{branch}$ | $1$ | $1$ | $1$ |
+
+根没有 absence 一行。这里三个位同属一个实际 $\rho^{2k}u$，不使用独立块、
+各自最优来源或可以重置的多个样本。
+
+### 13.3 总解码器
+
+**定理 13.2（无原位置 advice 的总存在解码器）。** 对全部 $u,k,p$，
+下列单一来源无关自适应宏精确返回 $r_u(p)$：先执行 $B_k(p)$。
+若所得 $b=1$，再执行 $C_k(p)$，以 $c=0$ 返回 $\beta$、$c=1$ 返回
+$\mathsf{branch}$。若 $b=0$ 且 $p=\varepsilon$，立即返回 $\alpha$。
+若 $b=0$ 且 $p\ne\varepsilon$，再执行 $G_k(p)$，以 $g=1$ 返回
+$\alpha$、$g=0$ 返回 $\mathsf{absent}$。
+
+非自适应宏在根固定执行 $[B_k(p),C_k(p)]$，非根固定执行
+$[G_k(p),B_k(p),C_k(p)]$，按上表解码；根的 $00,10,11$ 分别返回
+$\alpha,\beta,\mathsf{branch}$。为使程序在任意输入位词上也总定义，
+其余组合约定返回 absent；正确性只声明于实际像上的回复词。
+
+证明。$b=1$ 时引理 13.1 排除原 absence，已有标签表又排除 $\alpha$，
+余下两值由 $c$ 区分。$b=0$ 时仅剩 $\alpha$ 或 absence：根非空使后者
+不可能，非根则由 (ABT.42) 精确区分。固定宏直接使用完整表。每个分支最多
+执行两次或三次既有 Read，不执行任何改变寄存器的动作，且每次只按其存在位
+继续。因此全部地址和回复，包括原 absence，均在同一实际来源上取得。
+$\square$
+
+例如 $k=1,u=\beta,p=L$ 时，当前树为
+$\rho^2\beta=\langle\langle\beta,\alpha\rangle,\beta\rangle$。
+$p$ 现在存在，但标签探针是完整字面词 $LLL$、$LRL$，两者都 absent；
+守卫是 $RR$，也 absent。宏返回原 absence。把 $pLL,pRL$ 误当成
+$LL,RL$ 会得到另一问题的回复，不能作为本合同的反例。
+
+## 14. 实际来源上的尖锐调用数与字面词费用
+
+### 14.1 优化的量词
+
+固定同一公开输入 $(k,p)$，一个候选协议必须对每个有限非空原树正确，
+只从其实际 $\rho^{2k}u$ 的付费存在投影取得信息。允许任意有限探针地址，
+不要求探针以 $p$ 为前缀；每条实际路径须终止。固定协议的查询列表及其顺序
+不得依回复改变，自适应协议可依先前取得的存在位改变查询或停止。
+每次执行 Read 都计一调用，重复词也重新付费。
+
+对一条实际路径的查询词 $q_1,\ldots,q_s$，定义
+
+$$
+Q=s,\qquad W=\sum_{i=1}^s|q_i|,\qquad
+M=\max_{1\le i\le s}|q_i|.
+\tag{ABT.43}
+$$
+
+$W$ 是每次从共同根提交的完整字面 $L/R$ 词总长，不按最长公共前缀减费，
+不缓存先前定位，也不把当前游标当成免费的起点。
+下述尖锐值分别指所有正确协议的最小最坏调用数、最小最坏总词长和最小最坏
+最大词长；各上界由同一协议同时取得。成本为无穷的协议不改善这些极小值。
+确定协议是基本合同；若允许随机程序并要求对每个来源几乎必然精确且具有统一
+最坏成本界，下述有限来源族可同时固定在一个正确种子上，故下界仍成立。
+不涉及有误差概率的查询复杂度。
+
+### 14.2 共同接口的嵌套支撑族
+
+**引理 14.1（尖锐界所需的实际支撑链）。** 记
+$S_j=\operatorname{Pos}(T_j)$，$H_k=\operatorname{Pos}(\langle T_{2k},T_{2k}\rangle)$。
+则
+
+$$
+S_{2k}\subsetneq S_{2k+1}\subsetneq H_k,
+\qquad
+S_{2k},S_{2k+1},H_k\text{ 在所有长度至 }k\text{ 的词上相同}.
+\tag{ABT.44}
+$$
+
+证明。这里只使用已有 $T_{j+2}=\langle T_{j+1},T_j\rangle$ 的支撑后果。
+$S_0=S_1=\{\varepsilon\}$，$S_1\subsetneq S_2$；递推和归纳给
+$S_j\subseteq S_{j+1}$ 对全部 $j$ 成立。
+$S_{2k+1}$ 的左、右子支撑为 $S_{2k},S_{2k-1}$，故它包含于 $H_k$。
+已有原位置标签表在 $R^{k-1}LL$ 区分 $T_{2k},T_{2k+1}$，在 $R^kL$
+区分 $T_{2k+1},\langle T_{2k},T_{2k}\rangle$，给两次严格包含。
+
+对 $T_{2k}$ 或 $T_{2k+1}$，长度至 $k$ 的任何词均可达：在第 $i+1$ 条
+边之前，$i\le k-1$，剩余等级至少为 $2k-2i\ge2$，所以每一步确从分支
+出发。$H_k$ 也含全部这些词。因而三者在该半径的支撑全为一，证明最后一句。
+这是一条关于原实际树的中间引理，不另认领原子导航或前缀恢复供应。
+$\square$
+
+令 $E_p[x]$ 为沿 $p$ 建立的原分支脊，每个不在脊上的兄弟原子均为
+$\alpha$，终点放 $x$；明确递归为
+
+$$
+E_\varepsilon[x]=x,\qquad
+E_{Lz}[x]=\langle E_z[x],\alpha\rangle,\qquad
+E_{Rz}[x]=\langle\alpha,E_z[x]\rangle.
+\tag{ABT.45}
+$$
+
+这仅构造下界中的实际来源，不授予解码器一个新的源构造端口。
+对固定 $p$，三个来源
+$E_p[\alpha],E_p[\beta],E_p[\langle\alpha,\alpha\rangle]$
+都使 $p$ 原来存在，三种原回复不同。配对分配律使其当前支撑只在 $p$ 以下
+发生差别。由 (ABT.44)，任何区分其中两个的探针长度至少为
+
+$$
+D=|p|+k+1.
+\tag{ABT.46}
+$$
+
+特别地，短词即使不以 $p$ 为前缀，也不能取得额外的来源区别。
+
+非根时写 $p=ad$，令四个原来源为 $u_i=E_a[Y_i]$，其中
+
+$$
+\begin{aligned}
+Y_0&=\beta,&Y_1&=\langle\alpha,\alpha\rangle,\\
+Y_2&=\begin{cases}\langle\beta,\alpha\rangle&d=L,\\
+\langle\alpha,\beta\rangle&d=R,\end{cases}
+&Y_3&=\begin{cases}\langle\langle\alpha,\alpha\rangle,\alpha\rangle&d=L,\\
+\langle\alpha,\langle\alpha,\alpha\rangle\rangle&d=R.
+\end{cases}
+\end{aligned}
+\tag{ABT.47}
+$$
+
+它们在同一 $(k,p)$ 接口上的目标回复依次为
+absent、$\alpha$、$\beta$、branch；$u_0$ 的 $p$ 在当前树中已经存在。
+用 $V_i=\operatorname{Pos}(\rho^{2k}u_i)$，(ABT.44) 在 $a$、再在 $p$
+处给出
+
+$$
+V_0\subsetneq V_1\subsetneq V_2\subsetneq V_3.
+\tag{ABT.48}
+$$
+
+相邻增量 $\Delta_i=V_{i+1}\setminus V_i$ 两两不交。
+$\Delta_0$ 中任何词长度至少为 $|a|+k+1=D-1$；
+$\Delta_1,\Delta_2$ 中任何词长度至少为 $|p|+k+1=D$。
+这些下界由引理的同半径支撑相同和脊外支撑相同给出，不是仅按四个答案计数。
+
+### 14.3 调用数的源特定下界
+
+**定理 14.2（尖锐最坏付费调用数）。** 任意 $p$ 的自适应最坏调用数恰为二；
+固定宏在根恰为二，在每个非根 $p$ 恰为三。
+
+证明。定理 13.2 给出全部上界，根 $\alpha$ 的自适应路径只调用一次。
+对 (ABT.45) 的三个实际来源，零次或一次二值 Read 不能产生三个不同的正确
+回复，故每个正确自适应或固定协议都有至少两次调用的实际来源。
+
+非根固定协议还必须区分 (ABT.47) 的四个来源。每个任意地址 $q$ 在
+(ABT.48) 上的存在位是单调的二进制词：它只可能在一个相邻对之间由零变一。
+所以一次 Read 至多切开三个相邻对中的一个。固定列表必须各命中
+$\Delta_0,\Delta_1,\Delta_2$ 至少一次，需要至少三次调用。
+两次位读虽然形式上有四种位词，但这个实际共同来源族上至多产生三种；
+它不能实现四个所需回复。因此固定三的下界不由信息计数单独承担。
+$\square$
+
+### 14.4 执行费用和尖锐总费用
+
+由 (ABT.40)，$|B_k(p)|=|C_k(p)|=D$，非根时 $|G_k(p)|=D-1$。
+因此定理 13.2 的精确逐路径费用为：
+
+| 宏及实际原回复 | 执行的完整词 | $Q$ | $W$ | $M$ |
+| --- | --- | --- | --- | --- |
+| 自适应，根 $\alpha$ | $B_k(p)$ | $1$ | $D=k+1$ | $D$ |
+| 自适应，根 $\beta$ 或 branch | $B_k(p),C_k(p)$ | $2$ | $2D$ | $D$ |
+| 自适应，非根 $\alpha$ 或 absent | $B_k(p),G_k(p)$ | $2$ | $2D-1$ | $D$ |
+| 自适应，非根 $\beta$ 或 branch | $B_k(p),C_k(p)$ | $2$ | $2D$ | $D$ |
+| 固定，根任意回复 | $B_k(p),C_k(p)$ | $2$ | $2k+2$ | $D$ |
+| 固定，非根任意回复 | $G_k(p),B_k(p),C_k(p)$ | $3$ | $3|p|+3k+2$ | $D$ |
+
+**定理 14.3（尖锐最坏最大词长和总词长）。** 在 §14.1 的全部探针地址和
+来源量词下，两类协议的最小最坏最大词长均为 $D$。自适应最小最坏总词长为
+$2D$，固定非根为 $3D-1=3|p|+3k+2$，固定根为 $2k+2$。
+这些是最优下界加上实际达到的上界，不仅是上表某一宏的费用报告。
+
+证明。最大词长的下界使用 (ABT.45)：若所有实际探针都短于 $D$，三个来源
+对每次 Read 给相同位，来源无关控制器就沿相同路径执行、停止和输出，不能正确
+区分它们。上表达到 $D$。
+
+对自适应总词长，在这三个来源上保留全部尚未区分的候选。第一个产生不同位的
+Read 长度至少为 $D$；其二值划分必有一侧仍含至少两个来源。选择这一侧的
+实际来源。该路径不能在两者仍不可区分时停止，随后至少还有一次长度不小于
+$D$ 的区分 Read。两个区分调用都实际支付，其他调用的词长非负，因此某个
+实际来源的总费用至少 $2D$。这也适用于调用数不限制为二的协议。
+
+固定非根列表须各命中三个不交增量。相应三次调用的长度分别至少为
+$D-1,D,D$，故整个固定列表总词长至少 $3D-1$，允许额外调用并不减少这个和。
+根的三来源族同样要求命中两次不同支撑增量，二者长度均至少 $k+1$，故至少
+$2k+2$。上表分别达到全部下界。$\square$
+
+这些最优值只评价精确恢复一个给定原回复的来源调用与字面词成本；不同时声称
+最优的位运算、记录复制、材料更新、峰值存储或物理历时。
+
+## 15. 原生串行语言的在线运输与两种纪元
+
+### 15.1 固定表示滞后与单一实际寄存器
+
+令 $\delta:C\to\operatorname{Op}(C,O)$ 是实际 NativeSerialMachine 的
+来源无关程序。其四种指令为
+$\mathsf{localStep}(c')$、$\mathsf{read}(p,f)$、$\mathsf{applyRho}(c')$、
+$\mathsf{stop}(o)$；$f$ 接受全部四种 Reply。解释器只看控制 $c$，不直接看
+寄存器、纪元或历史；若原策略使用已取得历史，该历史须在原控制中按原合同保留。
+有限非终止片段指 nativeStep 的有限可达路径，实际终止则使用原 Run；
+不把只描述终止执行的 Run 偷换为任意前缀。
+
+在一个逻辑边界，以 $r=\rho^e u$ 表示逻辑当前树，唯一实际物理寄存器为
+
+$$
+\widehat r=\rho^N r=\rho^{e+N}u,
+\qquad \widehat e=e+N,
+\qquad N=2k\text{ 固定}.
+\tag{ABT.49}
+$$
+
+$r,u$ 是证明参数，不另存一个隐藏寄存器。初始 $\widehat r=\rho^N u$、
+$\widehat e=N$ 及同一实际原来源的证书由合同供给；不要求控制器自行发现或认证
+未知来源。允许一般起始逻辑纪元 $e_0$，但须同时供应同源初始关系
+$r_0=\rho^{e_0}u$、$\widehat r_0=\rho^{e_0+N}u$ 和纪元偏移。
+程序中的 $k$ 是认证表示滞后，不是随绝对纪元重算的 $\widehat e/2$。
+
+### 15.2 在原 Op 签名内的宏状态
+
+**定义 15.1（自适应编译控制）。** 取控制类型由以下三种状态组成：
+$\mathsf{Ready}(c)$、$\mathsf{NeedC}(p,f)$、$\mathsf{NeedG}(p,f)$。
+后两者分别记录已经实际取得的首位 $b=1$ 或非根首位 $b=0$，以及该原 Read
+尚未调用的续延 $f$。$N$ 为整个程序的固定公开参数。编译器 $\widehat\delta_N$
+依下列规则仅输出原有 Op：
+
+| 控制与原指令 | 输出的真实原生指令及续延 |
+| --- | --- |
+| Ready，$\delta(c)=\mathsf{localStep}(c')$ | $\mathsf{localStep}(\mathsf{Ready}(c'))$ |
+| Ready，$\delta(c)=\mathsf{applyRho}(c')$ | $\mathsf{applyRho}(\mathsf{Ready}(c'))$ |
+| Ready，$\delta(c)=\mathsf{stop}(o)$ | $\mathsf{stop}(o)$ |
+| Ready，$\delta(c)=\mathsf{read}(p,f)$ | Read $B_k(p)$；首位一进入 NeedC；首位零且根进入 Ready$(f(\alpha))$；首位零且非根进入 NeedG |
+| NeedC$(p,f)$ | Read $C_k(p)$；按存在位零／一进入 Ready$(f(\beta))$／Ready$(f(\mathsf{branch}))$ |
+| NeedG$(p,f)$ | Read $G_k(p)$；按存在位零／一进入 Ready$(f(\mathsf{absent}))$／Ready$(f(\alpha))$ |
+
+每个物理回复 $y$ 的续延只用 $\mathbf1_{y\ne\mathsf{absent}}$，不利用其
+$\alpha/\beta/\mathsf{branch}$ 细分。可以把 NeedG 限定为非根地址的有类型状态；
+非法手造的 NeedG 根状态另取固定来源无关默认行为，不出现在实际编译运行中。
+固定版本使用存放 $(p,f,g,b)$ 的有限相位标签，依定理 13.2 的固定列表读取后
+调用 $f$，没有更强端口。
+
+这里描述的是原 Op 的抽象一步解释器。构造字面地址、解释 $\delta$、编码相位、
+计算投影和记录的具体 evaluator 若需局部微步，这些步骤实际以 localStep 执行，
+在 §15.5 另外收费；本表不把其物理代价设为零。
+
+### 15.3 因果逻辑迹与未完成宏
+
+物理日志始终按 Event 保存每个
+$\mathsf{localStep}$、$\mathsf{update}(\widehat e)$ 和
+$\mathsf{read}(\widehat e,q,y)$，其中 $y=r_{\widehat r}(q)$ 是原四值物理回复。
+Native 的 stop 本身不追加 Event；终止输出 $o$ 另接在末端观察中。
+
+**定义 15.2（在线解释 $\Pi_N$）。** 从公开的原程序、初始控制及逻辑纪元出发，
+逐项处理物理事件和编译相位。在 Ready 的原 localStep 事件处发出一个逻辑
+localStep。在实际 update 处发出 $\mathsf{update}(e)$，同时令逻辑纪元加一；
+它对应的物理标记仍为 $e+N$。原 Read 宏的首个物理 Read 开始待决记录
+$(e,p,f)$；按定义 15.1 消费其存在位，且只在宏完成时发出
+$\mathsf{read}(e,p,y_{\rm decoded})$。根的首位零在该首个事件处已完成。
+原控制随后按 $f(y_{\rm decoded})$ 继续。具体 backend 插入的局部工作仅在
+已声明的 backend 相位中不发出逻辑事件，物理事件仍在原处。
+
+这个解释不读取未来或隐藏原树，不用其他来源的回答补全当前宏。若物理前缀在
+首个 Read 后结束，解释器只输出已完成的逻辑前缀，并保留 NeedC 或 NeedG、
+待决 $(e,p,f)$ 和已取得的首位。此时逻辑原 Read 尚未完成，原续延尚未调用；
+实际寄存器与纪元均没有变化。不同前缀可以带不同待决状态，不能把单独一个物理
+词、不带初始控制和相位，视为拥有与所有上下文无关的全局擦除函数。
+
+令 $s$ 为解释器状态，$h_1,h_2$ 为可连接的真实物理片段，$s_1$ 为处理 $h_1$
+后的状态。因逐项递推，因果连接律为
+
+$$
+\Pi_N(s,h_1h_2)=\Pi_N(s,h_1)\,\Pi_N(s_1,h_2).
+\tag{ABT.50}
+$$
+
+这也覆盖切在宏内部的前缀：恢复时继续待决宏，不重新执行已经收费的首个 Read。
+若切在 Ready 边界，则可接任意有同一合法输入和控制合同的来源无关续延。
+完整物理日志的连接仍为原始 append，(ABT.50) 不改写其中任何事件。
+
+### 15.4 有限运行及任意续延
+
+**定理 15.3（固定偶滞后的原生在线运输）。** 给定上述认证同源初始关系，
+任意原程序 $\delta$ 的每个实际有限运行片段均有 $\widehat\delta_N$ 在唯一
+实际寄存器上的有限执行片段，使完成边界满足 (ABT.49)，控制为 Ready 下的
+原控制，逻辑迹逐项等于原片段。若原运行终止，编译运行以同一个 $o$ 终止；
+每个四值原回复，包括 absence，原样交给原续延。该关系在所有可连接的有限
+运行、已到达前缀和来源无关续延上保持。
+
+证明。对原片段的原生步骤归纳。localStep 原样执行，不改两个纪元或实际寄存器，
+故边界关系保持；其逻辑事件相同。Read 时应用定理 13.2，以当前逻辑树 $r$
+作为该定理的未知来源，以固定 $N$ 作为认证滞后。宏的全部调用作用于同一个
+$\widehat r=\rho^N r$，至多两次后取得 $r_r(p)$ 并进入
+Ready$(f(r_r(p)))$。宏不更新寄存器，其唯一完成逻辑事件正是原 Read。
+这不要求 $p$ 原存在，也不提前调用原续延。
+
+applyRho 时真实执行一次替换，利用迭代相容性得
+
+$$
+\rho\widehat r=\rho(\rho^N r)=\rho^N(\rho r),
+\qquad (\widehat e+1)-(e+1)=N.
+\tag{ABT.51}
+$$
+
+真实更新事件标记为原物理旧纪元 $\widehat e$，逻辑解释标记为原逻辑旧纪元
+$e$，二者都保留各自语义。stop 则输出相同的 $o$，没有伪造额外 stop Event。
+归纳中每个宏为有限片段，片段连接使用 (ABT.50)；已有实际有限运行供应
+存在性，未声称任意部分程序都会停止。反向检查编译器的每个完成宏，只能得到
+这四种原步骤及其正确后继，所以其实际完成边界不会产生额外逻辑分支或输出。
+
+对切在宏内部的真实前缀，关系保持为同一个逻辑待决 Read 和未变的寄存器，
+剩余自适应部分最多一 Read 即完成；固定部分最多剩两 Read。接上片段时继续
+这个状态，再应用完成边界归纳。具体有限 evaluator 相位也按原有限计算逐步
+保留，不假设一个免费的总 next-boundary oracle。$\square$
+
+固定版本满足同一边界和因果迹结论；只将 Read 情形换成根两次、非根三次的
+固定宏及定理 13.2 的表，不改变其他三种原指令或寄存器关系。
+
+绝对物理纪元可以为奇数。例如 $N=2,u=\alpha$，一次逻辑 update 后，
+逻辑当前树为 $\beta$，物理树为 $T_3$，绝对物理纪元为三。此时根探针
+$LL,RL$ 的位为 $10$，按固定滞后二正确返回 $\beta$。
+定理 13.2 的偶数前提在这里用于 $\widehat r=\rho^{2k}r$，
+而非要求 $\widehat e$ 始终偶数。不断增加 $k$ 或把每次回复仍解释为最初 $u$
+的回复都会改变任务；本运输恢复的是原程序此刻实际应读的 $\rho^e u$。
+它没有新增一个更新后仍可免费查询最初档案的端口。
+
+NativeSerialEffective.OriginalState 中的 input、workspace、epoch 和完整
+已取得逻辑历史可作为原控制的组成部分。其 afterOriginalRead 在宏完成时
+追加原 $(e,p,\operatorname{originalReplyCode}(y))$，afterOriginalUpdate
+追加原旧纪元并递增逻辑纪元，故四个 originalContinuation 的选择与
+OriginalRun 相同。物理日志另外保留全部宏 Read。已有
+original_service_simulation 和显式代码版供应原有效 selector 到原生程序的
+有限 evaluator 实现，之后才应用本定理；它们原来保持的外部 read list
+不等于加入付费宏后的物理 read list，不能拿那个旧等式直接证明本编译器。
+提供实际代码 realization 时可复用其 backend；仅给部分有效性时，只承诺各
+实际已到达有限计算的实现，不把数学选择代码包装成免费的边界预言器。
+
+### 15.5 每个前缀的物理账目
+
+**命题 15.4（完整执行的查询、词长、更新和局部工作）。** 对原有限片段，
+记 $R$ 为逻辑 Read 数，$R_0$ 为其中根 Read 数，$A_0$ 为其中根回复
+$\alpha$ 的次数，$A_*$ 为非根回复 $\alpha$ 或 absent 的次数；
+其依次地址为 $p_i$，$D_i=|p_i|+k+1$。记 $U$ 为原更新数、$L$ 为原
+localStep 数。自适应编译器的精确实际费用为
+
+$$
+\begin{aligned}
+Q_{\rm ad}&=2R-A_0,\\
+W_{\rm ad}&=2\sum_{i=1}^R D_i-(k+1)A_0-A_*,\\
+U_{\rm phys}&=U,\qquad L_{\rm abstract}=L.
+\end{aligned}
+\tag{ABT.52}
+$$
+
+固定版本为
+
+$$
+\begin{aligned}
+Q_{\rm fix}&=3R-R_0,\\
+W_{\rm fix}&=\sum_{p_i=\varepsilon}2(k+1)
+ +\sum_{p_i\ne\varepsilon}(3|p_i|+3k+2),\\
+U_{\rm phys}&=U,\qquad L_{\rm abstract}=L.
+\end{aligned}
+\tag{ABT.53}
+$$
+
+证明。逐 Read 应用 §14.4 的执行表，再对真实片段求和。根 $\alpha$ 比通常
+两次长度 $k+1$ 的 Read 少一次；非根 $\alpha$/absence 的第二词比 $D_i$
+短一。更新和原 localStep 各执行一次。每项来自同一次实际运行，不把不同来源
+的最好分支合成一个路径。$\square$
+
+物理宏中的每个 Read 都写一个事件，故抽象物理事件数为 $Q+U+L$。
+若选定 backend 额外执行 $B$ 个局部步骤，则实际 localStep 总数为 $L+B$，
+实际事件数为 $Q+U+L+B$。代码解释、构造与复制 $pR^{k-1}LL$ 等字面词、
+位投影、待决相位保存、原控制与续延的求值、物理事件复制和消费者输出的
+具体工作、峰值工作空间及时间须另按那个 backend 的实际单位计费。
+单独给出 $Q,W$ 不供应这些项目的上界，更不把整树更新的材料费等同于一位操作。
+
+切在宏内部的前缀已经支付其全部实际调用和完整字面词；待决状态存放尚未完成的
+逻辑请求而不折扣旧费。两前缀连接时，实际调用、词长、update 和 localStep
+按真实事件相加。若初始滞后由在原寄存器上执行 $N$ 次替换来准备，准备还须
+增加 $N$ 个真实 update 及其控制、记录和材料费用。若滞后及其证书已供给，
+(ABT.52)–(ABT.53) 从这个实际起始边界计，不倒推为免费准备。
+
+### 15.6 writer 与游标的独立边界
+
+一个原 Read 通常编译成两个真实 Read，固定非根则为三个。原程序“Read 后
+立即 Stop”已使 raw writer 的事件数、地址和物理四值回复不同于其逻辑单 Read。
+具体取 $N=2,u=\beta,p=\varepsilon$：逻辑 writer 是单项
+$\mathsf{read}(0,\varepsilon,\beta)$，自适应物理 writer 是依次
+$\mathsf{read}(2,LL,\beta)$、$\mathsf{read}(2,RL,\mathsf{absent})$。
+两者输出虽同为 $\beta$，完整事件词不相等。
+故 $\Pi_N$ 是声明的因果逻辑解释，不是完整原始历史相等，也不保持原物理调用
+预算或固定物理截止。若任务直接读取 raw writer、当前物理 Read 数、绝对时钟、
+每个地址或中间物理叶标签，必须把这些新观察和费用加入任务合同，原输出保持
+定理不自动适用。全部实际已发生的事件仍保留，不能事后删除它们制造同迹。
+
+直接游标动作也不是本定理的签名。取原 $u=\alpha$，逻辑根是叶，DownL
+失败；实际 $\rho^2\alpha=\langle\beta,\alpha\rangle$ 的根是分支，DownL
+成功。按同一地址保留游标并不能同时保留这两个动作的合法域。本章的根地址 Read
+可以付费返回所需原 absence，且必要时由控制器维护虚拟游标；若要运输真实
+DownL/DownR/Up，须另证明完整动作的域、失败、后继、参考和费用关系。
+两步编码的静态逆、原位置恢复和前向 intertwining 均不供应这个直接动作同构。
+
+## 16. 恢复后继续行动的具体原生消费者
+
+### 16.1 复用遍历而接上新的动作
+
+复用 NativeFullSourceProducer.native_source_producer 的来源无关栈程序。
+它从根遍历每个实际原节点一次，以已取得的回复构造原有序树 $U$；每个原分支
+有两个真实 localStep，寄存器保持不变。对应的数字 workspace 和部分有效
+selector 由 NativeEffectiveSourceProducer.effective_source_producer 供应。
+这里不重新发表遍历、有效性或全树恢复为新定理。
+
+取一个具体消费者：生产器到达 $\mathsf{deliver}(U,[])$ 时，将原 stop
+改接一个来源无关 localStep。由已经取得的 $U$ 计算其左端原叶地址 $\ell(U)$，
+令 $p=\ell(U)L$。随后执行原逻辑 Read $p$：若回复 absent，则执行一次
+applyRho，再执行一次根 Read，最后输出 $(U,p,\mathsf{absent},y)$，其中
+$y$ 是这次根回复。其余 Read 回复接固定错误输出，使程序在非实际分支也有
+定义。左端叶和地址只从已取得的 $U$ 构造，不读潜在原树；具体构造费用另计。
+
+**推论 16.1（同一原来源的恢复—absence—更新—消费）。** 对每个有限非空
+初始原树 $u$，这个原程序终止，精确输出
+
+$$
+\left(u,\ell(u)L,\mathsf{absent},r_{\rho u}(\varepsilon)\right).
+\tag{ABT.54}
+$$
+
+在认证初始实际 $\rho^{2k}u$ 上，其存在编译程序也终止并输出同一个元组，
+只用 §15 的原 Op。生产结束至随后宏之间不换来源、不重置或克隆寄存器；
+一次真实 update 后物理寄存器为 $\rho^{2k+1}u$，仍正确继续。
+
+证明。既有生产器供应取得 $U=u$ 和原不变寄存器。原叶的严格后继
+$\ell(u)L$ absent，所以真实达到的续延必选更新分支。一次原替换后，根回复为
+$r_{\rho u}(\varepsilon)$；有限树遍历及附加有限步骤给终止性。
+对整个原生程序应用定理 15.3，包含那个原 absence、其后续选择和更新后的
+根回复，即得 (ABT.54)。证明的新增部分是这些已有供应在同源存在宏中的
+继续行动关系，不另复制生产器的结构归纳。$\square$
+
+令 $n$ 为原节点数、$b_u$ 为原分支数。这个原程序有 $n+2$ 次 Read、一次
+update 和 $2b_u+1$ 次抽象 localStep。两个根 Read 分别是遍历首 Read 和
+更新后的 Read；更新后根不为 $\alpha$。故存在编译的精确调用数为
+
+$$
+Q_{\rm ad}=2(n+2)-\mathbf1_{u=\alpha},\qquad
+Q_{\rm fix}=3n+4.
+\tag{ABT.55}
+$$
+
+完整字面词费按 (ABT.52)–(ABT.53) 对该实际遍历地址、原 absence 地址和
+最后根地址求和。源大小无界时，遍历记录、重建 $U$、地址和真实物理日志也无
+统一有限总空间界。采用数字编码或一个自然数 workspace 不改变其位数无界。
+具体 evaluator 可以有额外有限 localStep，仍在原物理日志和费用中计入。
+
+### 16.2 两种原子与恢复纲领的范围
+
+§12 已证明在认证两步实际像上，叶标签可由保留根和左右关系的无标签有序形状
+唯一解析；本章证明在固定认证偶滞后上，仅保留既有付费 Read 的存在位也能
+取得任意原四值回复，并在 Read/applyRho/localStep/stop 语言内继续原策略。
+所以 $\alpha/\beta$ 可以在这个明确合同中由有序无标签支撑编码，不能仅从
+原标签有两种就推出所有表示必有两个不可约内禀叶标签。
+
+这个结论依赖真实发生的扩展关系和实际源读数。保留的是一个非空根、两个有序
+入射方向、足够深的实际支撑、认证初始滞后、可保存控制与事件的 workspace，
+以及在同一寄存器上执行真正替换的 actuator。它没有把这些资源从表示中消除。
+更新后支撑语义相容，由 (ABT.51) 供应；单个无标签裸叶上的替换动作本身并未
+因此获得一个脱离其实际树、来源和历史的物理实现。
+
+仍需分别供应：未知初始来源和滞后的绑定与认证，实际根和左右参考的取得及保持，
+事件的真实写入、权限、保留、传递和消费，具体地址 evaluator 和足够资源的
+分配，以及扩展动作菜单的完整 actuator 关系。已有档案时才可复制给逻辑控制；
+本定理不能由当前树制造未知历史档案。§9 的未知纪元历史碰撞继续适用，
+§15.6 的 raw writer 和直接游标反例也继续成立。
+
+这里不主张绝对两原子最小性、有限总 memory、物理空间距离、物理时间、
+未知历史恢复，或 joint-contact/memory 联合纲领完成。单源串行字面 Read 的
+本章结果不替代那些任务所需的共同接触、双向参考、跨事件 memory 和费用桥梁。
+
+## 17. 供应、来源特定新内容与验证边界
+
+本章组的承重内容是任意原地址的 absence 扩充、实际支撑链给出的常数与字面词
+尖锐界，以及带固定相对滞后的付费原生宏和实际消费关系，归为 repo-derived
+的普通数学推导。下表区分它们所用的既有供应；读取源声明不表示当前 kernel 核验。
+
+| 供应 | 使用的精确范围 |
+| --- | --- |
+| 本卷 §8、§12 | 认证纪元的原带标签前缀桥、两步形状逆、偶纪元支撑桥、已确认原位置的标签探针、来源逐树遍历和前向 intertwining；不重新认领这些内容 |
+| [DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean) | original_decoder_correct / original_decoder_service 供应任意纪元至多两次四值 Read；original_presence_guard 在偶滞后提供一个非 absence 守卫；address_clock_bounds 的新生上界为 $\le N$，不供应左支 absence |
+| [ActualLeafHistoryRigidity](../../../D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean) | actual_address_geometry 供应原 absence 的原叶严格延伸分解和地址/子树连接；替换分配律运输原来存在的子树；原叶分解不作为源 advice |
+| [Atomic Block Conjugacy §3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md) | 每步从分支出发的原子导航、失败传播和原物理地址；不只检查末端非负等级 |
+| [NativeSerialMachine](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean) | 实际 Op、Event、nativeStep、Run 的单一寄存器、完整时间顺序、旧纪元 update 标记及 stop 无事件；actual_register_execution 保实际来源与日志 |
+| [NativeSerialEffective](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean) | OriginalState、OriginalRun、四值续延及 original_service_simulation / original_code_service_simulation 的有限 evaluator；原外部 read list 等式限于其既有模拟，不涵盖新增付费宏 |
+| [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) 与 [NativeEffectiveSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveSourceProducer.lean) | 来源无关栈生产器、每节点一次原 Read、每分支两 localStep、数字 workspace 有效 selector；只作 §16 消费者的供应 |
+| [Process Geometry §19](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 与 [Transport Memory Completion §52](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | 声明宏任务与 raw writer 的区别，在线控制、实际取得、完整事件保留和逐坐标费用合同；本章不改动这些卷或其任务 |
+
+通用有限片段模拟纪律的文献背景为 Lynch–Vaandrager，
+*Forward and Backward Simulations, Part I: Untimed Systems*，
+[作者 IC95 稿](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf)，
+§3.2、PDF 页 11–12。其 forward relation 要求初始关联覆盖，且每个原步骤
+从每个相关目标状态都有同观察迹的有限目标片段；Lemma 3.8 将其连接到有限
+片段，Proposition 3.9 给预序，Theorem 3.10 给 trace inclusion。
+这些是 literature-attested 的通用中间框架。这里的观察须先声明为定义 15.2
+的逻辑迹，并额外证明实际付费宏、固定滞后、有限进展和成本；该文献不授权删除
+本来可见的物理 Read，也不提供 raw paid writer identity。本章的源特定证明
+已逐步给出，不把通用 trace inclusion 当作未经条件的成本或物理历史等式。
+
+没有将独立查询块假设用于一个固定来源上的重复查询，也没有用来源无关信息计数
+替代固定三的实际支撑链证明。文献和项目供应核对限于这些具名来源，不主张全球
+新颖性、穷尽搜索或跨物理模型的最佳复杂度。
+剩余实现义务正是 §§15.5–16.2
+列出的参考、证书、完整物理事件、计算、资源、档案和 actuator 桥梁。
+
+## 追加锚（本行以下为增补区）
