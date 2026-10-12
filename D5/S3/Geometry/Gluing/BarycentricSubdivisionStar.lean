@@ -44,10 +44,10 @@ def openStar (p : Fin 4 → E) : Set E :=
   {x | ∃ C : FaceChain, p 0 ∈ barycenter p '' (C.faces : Set (Finset (Fin 4))) ∧
     x ∈ intrinsicInterior ℝ (chainHull p C)}
 
-private noncomputable def faceWeight (F : Finset (Fin 4)) (i : Fin 4) : ℝ :=
+noncomputable def faceWeight (F : Finset (Fin 4)) (i : Fin 4) : ℝ :=
   if i ∈ F then (F.card : ℝ)⁻¹ else 0
 
-private lemma faceWeight_sum (F : Finset (Fin 4)) (hF : F.Nonempty) :
+lemma faceWeight_sum (F : Finset (Fin 4)) (hF : F.Nonempty) :
     ∑ i, faceWeight F i = 1 := by
   classical
   simp only [faceWeight]
@@ -56,13 +56,13 @@ private lemma faceWeight_sum (F : Finset (Fin 4)) (hF : F.Nonempty) :
     nsmul_eq_mul]
   exact mul_inv_cancel₀ (Nat.cast_ne_zero.mpr (Finset.card_ne_zero.mpr hF))
 
-private lemma barycenter_eq_sum (p : Fin 4 → E) (F : Finset (Fin 4)) :
+lemma barycenter_eq_sum (p : Fin 4 → E) (F : Finset (Fin 4)) :
     barycenter p F = ∑ i, faceWeight F i • p i := by
   classical
   simp only [faceWeight, ite_smul, zero_smul, ← Finset.sum_filter]
   simp [barycenter, Finset.smul_sum]
 
-private lemma weights_unique (p : Fin 4 → E) (hp : AffineIndependent ℝ p)
+lemma weights_unique (p : Fin 4 → E) (hp : AffineIndependent ℝ p)
     (a b : Fin 4 → ℝ) (ha : ∑ i, a i = 1) (hb : ∑ i, b i = 1)
     (heq : ∑ i, a i • p i = ∑ i, b i • p i) : a = b := by
   apply (affineIndependent_iff_eq_of_fintype_affineCombination_eq ℝ p).mp hp a b ha hb
@@ -135,14 +135,14 @@ private lemma closedStar_dominates (p : Fin 4 → E) (hp : AffineIndependent ℝ
   · exact le_rfl
   · positivity
 
-private def prefixFace (π : Equiv.Perm (Fin 4)) (k : Fin 4) : Finset (Fin 4) :=
+def prefixFace (π : Equiv.Perm (Fin 4)) (k : Fin 4) : Finset (Fin 4) :=
   (Finset.Iic k).image π
 
 private lemma prefix_mono (π : Equiv.Perm (Fin 4)) {k l : Fin 4} (h : k ≤ l) :
     prefixFace π k ⊆ prefixFace π l :=
   Finset.image_subset_image (Finset.Iic_subset_Iic.mpr h)
 
-private def flagChain (π : Equiv.Perm (Fin 4)) : FaceChain where
+def flagChain (π : Equiv.Perm (Fin 4)) : FaceChain where
   faces := Finset.univ.image (prefixFace π)
   nonempty := Finset.univ_nonempty.image _
   face_nonempty := by
@@ -157,7 +157,7 @@ private def flagChain (π : Equiv.Perm (Fin 4)) : FaceChain where
     · exact Or.inl (prefix_mono π h)
     · exact Or.inr (prefix_mono π h)
 
-private lemma prefix_barycenters (p : Fin 4 → E) (π : Equiv.Perm (Fin 4)) (k : Fin 4) :
+lemma prefix_barycenters (p : Fin 4 → E) (π : Equiv.Perm (Fin 4)) (k : Fin 4) :
     barycenter p (prefixFace π k) =
       ![p (π 0), (1 / 2 : ℝ) • (p (π 0) + p (π 1)),
         (1 / 3 : ℝ) • (p (π 0) + p (π 1) + p (π 2)),
