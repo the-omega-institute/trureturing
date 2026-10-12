@@ -1,0 +1,66 @@
+**定理 34.3（固定有限名字律的精确优化值）。** 对定义 34.1 的每一个固定概率律，
+
+$$
+\boxed{V_\mu^{\mathrm w}=V_\mu^{\mathrm s}=2+p_*.}
+$$
+
+两个最小值均达到。下界覆盖全部原可测历史策略，包括任意自适应、重复、停滞及无统一燃料上界的竞争域。
+
+证明。先明确所复用的供应及缺口。公开的 [`ExactRealProbeCosts.result` 与其报告](../../../Blueprint/D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts.md)给出完整相容纤维的证书下界、确定性发现下界以及连续强族。它们没有直接给固定有限律的最优期望；这里补足的是一个困难来源与其余种子费用的共同实现关系。
+
+对每个全域正确的固定策略，`execute_transfer` 使任意终端记录对其实际来源相容，并使每个匹配该记录的来源重放同一返回。再以有限返回唯一性与那个匹配来源上的正确返回比较，得到终端记录对整个相容纤维有声。直接应用供应的两参数证书下界，得
+
+$$
+\operatorname{Correct}(\pi_\omega)\quad\Longrightarrow\quad
+\forall s\in S:\ C_\pi(\omega;s)\ge2.
+$$
+
+没有把任意部分历史当作已经取得的证书。定理 34.2 使这个不等式适用于弱族的全部正质量种子；强族也满足它。
+
+选 $\omega_*\in\Omega_+$ 使 $p_{\omega_*}=p_*$。原确定性发现下界为这个全域正确策略提供一个实际来源 $s_*\in S$，在该来源上有限返回且不同参数数至少为 $3$。其公开证明的见证可取 $s_*=(a_*,1)$，其中 $a_*$ 是该策略的首查询；全域正确排除初始直接返回。这个 $s_*$ 可依赖已选族和概率律，但不随实际抽出的种子改变；下面只用这一个来源。在 $s_*$ 上其余每个正质量种子仍由证书下界至少收费 $2$，所以
+
+$$
+\begin{aligned}
+\int_\Omega C_\pi(\omega;s_*)\,d\mu
+&=\sum_{\omega\in\Omega_+}p_\omega C_\pi(\omega;s_*)\\
+&\ge3p_*+2\sum_{\substack{\omega\in\Omega_+\\\omega\ne\omega_*}}p_\omega
+=2+p_*.
+\end{aligned}
+$$
+
+这给 $J_\mu(\pi)\ge2+p_*$。所有被加总的费用属于同一个实际来源、同一个概率律；不使用 $\mathbb E\sup_s C$ 代替 $\sup_s\mathbb E C$。原确定性供应的全历史下界已经允许重复与迟到的新参数；本段没有另加有限深度、有限查询域或树正规形前提。
+
+为达到此界，枚举全部声明名字为 $\omega_0,\ldots,\omega_{K-1}$，其中 $K=|\Omega|\ge1$，包括零质量名字。取
+
+$$
+u_j=\frac{j}{2K},\qquad
+E_j=\left\{u_j,u_j+\frac12\right\},\qquad 0\le j<K.
+$$
+
+有 $0\le u_j<\tfrac12$。所有 $u_j$ 互异，所有 $u_j+\tfrac12$ 互异，两个半区间不交，故 $E_j$ 两两不交且都不包含 $1$。直接选原公开强族在 $u_j$ 处的策略：
+
+$$
+\pi_{\omega_j}=\operatorname{strongFamily}(u_j)
+=\operatorname{threeProbe}\left(u_j,u_j+\frac12,1\right).
+$$
+
+这里 `strongFamily` 是供应报告对 `threeProbe(u,shift(u),1)` 的记号，不是另一个新增控制器；在此 $\operatorname{shift}(u_j)=u_j+\tfrac12$。供应证明已给每个声明种子、每个实际来源的有限正确返回与精确费用
+
+$$
+C_\pi(\omega_j;(x,b))=2+\mathbf1_{\{x\in E_j\}}.
+$$
+
+有限名字到 $u_j\in[0,1)$ 的选择映射可测。把它与原强族的控制在种子—记录乘积空间上复合，直接继承每个记录长度的 Borel 可测性。上述费用在种子上可测；逐来源有限返回事件为 $\Omega$，错误事件为空。原执行器分别以燃料 $3$ 或 $4$ 见证两查询后返回或三查询后返回，费用只数其中两个或三个互异参数。全部声明名字，包括零质量名字，都全域有限正确。这个达到族有统一的小燃料见证，不把该性质追加为竞争域限制，也不添入来源信息或新随机权限。
+
+因为 $E_j$ 两两不交，对全部 $x\in[0,1]$ 和两个标签均有
+
+$$
+\int_\Omega C_\pi(\omega;(x,b))\,d\mu
+=2+\sum_{j=0}^{K-1}p_{\omega_j}\mathbf1_{\{x\in E_j\}}
+\le2+p_*.
+$$
+
+若 $\omega_{j_*}$ 质量为 $p_*$，取实际来源 $(u_{j_*},b)$ 就有等号；$x=1$ 时期望恰为 $2$。因此这个可测强族达到下界，也属于弱族，得到所述两个最小值。
+
+对这个达到族，每个正质量种子的逐种子最坏费用仍是 $3$，故 $\sum_{\omega\in\Omega_+}p_\omega\sup_s C_\pi(\omega;s)=3$；当 $p_*<1$ 时它严格大于 $J_\mu(\pi)=2+p_*$。公式是对策略赋值优化后的值，不是每个有限族的费用公式。∎
+
