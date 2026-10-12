@@ -95,4 +95,14 @@ private theorem w_nonneg (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1)
   cases b <;> cases x <;> cases z <;>
     simp [w, p, rule10, rule245, bit] <;> linarith
 
+private theorem sum_cons (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
+    (∑ a, F a) = ∑ c : Bool, ∑ b : Fin n → Bool, F (Fin.cons c b) := by
+  rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp F]
+  exact Fintype.sum_prod_type _
+
+private theorem sum_snoc (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
+    (∑ a, F a) = ∑ c : Bool, ∑ b : Fin n → Bool, F (Fin.snoc b c) := by
+  rw [← (Fin.snocEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp F]
+  exact Fintype.sum_prod_type _
+
 end D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
