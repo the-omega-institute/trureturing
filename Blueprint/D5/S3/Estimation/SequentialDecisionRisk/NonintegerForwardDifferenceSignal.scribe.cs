@@ -60,22 +60,6 @@ internal sealed class NonintegerForwardDifferenceSignalDocument : IScribeDocumen
                 Blocks(Paragraph(Text("For every real beta differing from every natural number and every natural R, |Delta_1^R(u -> u^beta)(1)|>0."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("nonintegerforwarddifferencesignal-abs-fwd-diff-iter-le-of-node-bound"),
-                DeclarationHandle.Create(Prefix + "abs_fwd_diff_iter_le_of_node_bound"),
-                H("Only the sampled values need be bounded"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Estimation/nist2010interpolation")),
-                Blocks(Paragraph(Text("For every real f, natural R, and real x,t,D, if |f(x+i t)|<=D for every natural i<=R, then |Delta_t^R f(x)|<=2^R D. The step t can have either sign or be zero."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("nonintegerforwarddifferencesignal-power-signal-upper-bound"),
-                DeclarationHandle.Create(Prefix + "power_signal_upper_bound"),
-                H("An upper bound from the largest positive node"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/nist2010interpolation")),
-                Blocks(Paragraph(Text("For every real beta>=0, natural R, and positive real t with (R+1)t<=eta, |Delta_t^R(u -> u^beta)(t)|<=2^R eta^beta. The nodes range from t to (R+1)t."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("nonintegerforwarddifferencesignal-rpow-fwd-diff-iter-scale"),
                 DeclarationHandle.Create(Prefix + "rpow_fwd_diff_iter_scale"),
                 H("Homogeneity of the power difference"),

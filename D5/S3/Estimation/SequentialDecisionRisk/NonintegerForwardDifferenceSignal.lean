@@ -163,44 +163,6 @@ theorem unit_signal_pos (β : ℝ) (R : ℕ) (hβ : ∀ j : ℕ, β ≠ j) :
     0 < |(fwdDiff (1 : ℝ))^[R] (fun u : ℝ => u ^ β) 1| :=
   abs_pos.mpr (rpow_fwd_diff_iter_ne_zero β R (by norm_num) (by norm_num) hβ)
 
-
-/-- The absolute binomial weights sum to two to the difference order, so a
-uniform bound at the actual evaluation nodes controls perturbations. -/
-theorem abs_fwd_diff_iter_le_of_node_bound (f : ℝ → ℝ) (R : ℕ) (x t D : ℝ)
-    (hD : ∀ i : ℕ, i ≤ R → |f (x + i * t)| ≤ D) :
-    |(fwdDiff t)^[R] f x| ≤ (2 : ℝ) ^ R * D := by
-  rw [fwdDiff_iter_eq_sum_shift]
-  calc
-    |∑ i ∈ range (R + 1), ((-1 : ℤ) ^ (R - i) * R.choose i) • f (x + i • t)|
-        ≤ ∑ i ∈ range (R + 1),
-          |((-1 : ℤ) ^ (R - i) * R.choose i) • f (x + i • t)| :=
-      abs_sum_le_sum_abs _ _
-    _ ≤ ∑ i ∈ range (R + 1), (R.choose i : ℝ) * D := by
-      apply sum_le_sum
-      intro i hi
-      simp only [zsmul_eq_mul, Int.cast_mul, Int.cast_pow, Int.cast_neg, Int.cast_one,
-        Int.cast_natCast, abs_mul, abs_pow, abs_neg, abs_one, one_pow, one_mul,
-        abs_of_nonneg (Nat.cast_nonneg (R.choose i) : (0 : ℝ) ≤ R.choose i), nsmul_eq_mul]
-      exact mul_le_mul_of_nonneg_left (hD i (by simpa using mem_range.mp hi))
-        (Nat.cast_nonneg _)
-    _ = (2 : ℝ) ^ R * D := by
-      rw [← sum_mul]
-      congr 1
-      exact_mod_cast Nat.sum_range_choose R
-
-/-- On a bounded positive scale interval, the power signal has a constant upper
-bound independent of the step size. -/
-theorem power_signal_upper_bound (β : ℝ) (R : ℕ) {t η : ℝ} (hβ : 0 ≤ β)
-    (ht : 0 < t) (hη : (R + 1 : ℝ) * t ≤ η) :
-    |(fwdDiff t)^[R] (fun u : ℝ => u ^ β) t| ≤ (2 : ℝ) ^ R * η ^ β := by
-  apply abs_fwd_diff_iter_le_of_node_bound
-  intro i hi
-  have hip : (0 : ℝ) ≤ i := Nat.cast_nonneg i
-  have hir : (i : ℝ) ≤ R := by exact_mod_cast hi
-  have hn : 0 ≤ t + i * t := by positivity
-  rw [abs_of_nonneg (Real.rpow_nonneg hn _)]
-  exact Real.rpow_le_rpow hn (by nlinarith) hβ
-
 /-- Positive dilations preserve the unit-step power signal exactly. -/
 theorem rpow_fwd_diff_iter_scale (β : ℝ) (R : ℕ) {t : ℝ} (ht : 0 < t) :
     (fwdDiff t)^[R] (fun u : ℝ => u ^ β) t =
