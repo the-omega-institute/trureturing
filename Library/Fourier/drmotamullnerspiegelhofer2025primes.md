@@ -182,7 +182,7 @@ comparison does not identify the two coordinate spaces or imply that
 the unconditional five-window frequencies equal the state-0 ratios.
 
 For every fixed finite legal prefix, the same detection and sampling
-results are reusable. They do not provide a uniform error when the
+results are reusable. These sampling statements alone do not provide a uniform error when the
 prefix length grows with $X$, an estimate on a selected composite CA
 chain, or a one-sided bound for its signed prime-error tail. Abel
 summation also transfers a fixed-window frequency to its logarithmically
@@ -311,3 +311,95 @@ no extra budget. It gives neither the sign of the same-source Mertens
 error nor a lower bound for $I_\psi$ at the root. Those remain the
 signed arithmetic obligations in the
 [full-support core](../Analytic/polak2026finiterobinca.md#directly-reusable-effective-core).
+
+## Quantitative resolution of the same prime-axis cut
+
+A quantitative input gives an absolute error for this cut and a
+sufficient range for increasing its depth. Reuse
+[Maynard–Pandey–Radziwiłł, Theorem 1.1](maynardpandeyradziwill2026primes.md)
+and its golden-rotation parameter application, together with DMS's
+low-address detection. For every fixed $\epsilon>0$, uniformly over
+circle intervals $I$,
+
+$$
+\#\{p\le X:\{p\varphi\}\in I\}-|I|\pi(X)
+=O_\epsilon(X^{19/24+\epsilon}/\log X).
+\tag{5}
+$$
+
+The same uniform bound applies to a union of at most two circle
+intervals. Its centering uses the **actual** $\pi(X)$; no power-saving
+estimate for $\pi(X)-\operatorname{Li}(X)$ is inserted. The source
+note preserves the harmonic-average denominator bound needed to retain
+the $19/24$ exponent and removes proper prime powers before reading
+the digits of an actual support prime.
+
+Let $B$ specify a legal prefix of $r\ge1$ consecutive five-mode
+windows, after the separate unit digit. Keeping the unit gives DMS
+cutoff $3r+3$ and one low address $u$ with interval length
+
+$$
+\mu_B\in\{\varphi^{-(3r+1)},\varphi^{-(3r+2)}\}.
+$$
+
+If only the unit is forgotten, sum the masses of its admissible unit
+choices; the resulting window is a union of at most two circle
+intervals and still has $\mu_B\ge\varphi^{-(3r+2)}$. All labels
+refer to the digits of the support prime $p$. Define $T_B(t)$ by
+restricting the same actual correction $T(t)$ to those support primes.
+The previously established higher-exponent estimate and exponent-one
+interval give, for every fixed $0<\epsilon<1/24$, with a constant
+independent of $B,r,t$,
+
+$$
+\boxed{
+T_B(t)-\mu_BT(t)
+=O_\epsilon\!\left(
+\frac{t^{-29/48+\epsilon}}{\log t}+t^{-2/3}
+\right).
+}
+\tag{6}
+$$
+
+Indeed, apply (5) to the centered prime counting function and use Abel
+summation with $p^{-2}$ over $[x_2(t),x_1(t))$. Its lower endpoint
+and integral each cost
+$O_\epsilon(x_2^{-29/24+2\epsilon}/\log x_2)$; the upper endpoint
+is smaller. The strict endpoints add at most $O(x_2^{-2})$.
+Since $x_2\sim\sqrt{2t}$, this is the first error in (6). Subtracting
+$\mu_B$ times the total higher-exponent contribution adds only the
+already bounded $O(t^{-2/3})$, uniformly over every prefix. The
+logarithmic factor's quadratic remainder is smaller as well. The
+argument remains valid at tied prices and on all sufficiently large
+real $t$, so it also retains every necessary stable root.
+
+Because the existing total satisfies
+$T(t)\sim\sqrt2/(\sqrt t\log t)$, (6) yields
+
+$$
+\left|\frac{T_B(t)}{\mu_BT(t)}-1\right|
+\ll_\epsilon \varphi^{3r+2}
+\left(t^{-5/48+\epsilon}+t^{-1/6}\log t\right).
+\tag{7}
+$$
+
+Consequently, for each fixed $0<\eta<5/48$, choose
+$0<\epsilon<\min(\eta,1/24)$. The relative error tends to zero
+uniformly over all admissible prefixes with
+
+$$
+1\le r\le
+\left(\frac5{48}-\eta\right)
+\frac{\log t}{3\log\varphi}.
+\tag{8}
+$$
+
+This is a sufficient resolution range for the **Fibonacci prime-axis
+correction**, obtained by transporting the cited estimates. It is not
+an optimal depth, a general Pisot growing-block theorem, an effective
+numerical starting threshold, or a claim of originality. At a fixed
+depth, (6) sharpens only the centered allocation of an existing
+correction. Even in the growing range (8), summing the exact class
+differences gives zero: the common prime-error mode and the same-root
+signed Robin obligation remain unchanged. This paper application has
+no new Lean declaration or Lean verification.
