@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0b5678e66333616b8ebd8e903d87e44b1e111822ae0ff015ff9023b987eebfa9"}
+{"statement_id":"sha256:0b5678e66333616b8ebd8e903d87e44b1e111822ae0ff015ff9023b987eebfa9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),11:PrimePowers),33:AlternatingFiveResidualSeparation),14:pGroupResidual)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),11:PrimePowers),33:AlternatingFiveResidualSeparation),36:alternating_five_residual_separation)","kind":"theorem"}]}
