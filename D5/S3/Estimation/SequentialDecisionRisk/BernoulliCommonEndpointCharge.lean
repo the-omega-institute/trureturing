@@ -344,7 +344,7 @@ private lemma bernoulli_factory_local_window (p₀ : unitInterval)
     (hρwindow : (2 * m + 1 : ℕ) * ρ ≤ (1 - (p₀ : ℝ)) * θ)
     (h : ℝ) (hh : h ∈ Set.Icc (ρ / Real.sqrt (n : ℝ))
       ((2 * m + 1 : ℕ) * (ρ / Real.sqrt (n : ℝ)))) :
-    h ∈ Set.Icc 0 (1 / 4 : ℝ) ∧
+    h ∈ Set.Ioc 0 (1 / 4 : ℝ) ∧
     (0 < (p₀ : ℝ) + h * (-(p₀ : ℝ) / C) ∧
       (p₀ : ℝ) + h * (-(p₀ : ℝ) / C) < 1) ∧
     (|(-(p₀ : ℝ) / C) /
@@ -358,7 +358,8 @@ private lemma bernoulli_factory_local_window (p₀ : unitInterval)
   have hsqrt1 : 1 ≤ Real.sqrt (n : ℝ) := Real.one_le_sqrt.mpr hn1
   have hsqrt : 0 < Real.sqrt (n : ℝ) := by linarith
   have hH : 0 ≤ ((2 * m + 1 : ℕ) : ℝ) := Nat.cast_nonneg _
-  have hh0 : 0 ≤ h := (div_nonneg hρ.le hsqrt.le).trans hh.1
+  have hhpos : 0 < h := (div_pos hρ hsqrt).trans_le hh.1
+  have hh0 : 0 ≤ h := hhpos.le
   have hh1 : h ≤ (1 / 4 : ℝ) := hh.2.trans
     ((mul_le_mul_of_nonneg_left (div_le_self hρ.le hsqrt1) hH).trans hρsmall)
   have hratio0 : 0 ≤ h / C := div_nonneg hh0 hC0.le
@@ -371,7 +372,7 @@ private lemma bernoulli_factory_local_window (p₀ : unitInterval)
   have hp1 : p < 1 := hple.trans_lt h₁
   have hp : (Rate p₀ (-(p₀ : ℝ) / C) h : ℝ) = p :=
     congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one) ⟨hp0.le, hp1.le⟩)
-  refine ⟨⟨hh0, hh1⟩, ⟨hp0, hp1⟩, ?_, ?_⟩
+  refine ⟨⟨hhpos, hh1⟩, ⟨hp0, hp1⟩, ?_, ?_⟩
   · rw [hp, abs_div, abs_div, abs_neg, abs_of_nonneg h₀.le, abs_of_nonneg hC0.le,
       abs_of_nonneg (mul_pos hp0 (sub_pos.mpr hp1)).le]
     apply (div_le_iff₀ (mul_pos hp0 (sub_pos.mpr hp1))).mpr
@@ -540,7 +541,7 @@ theorem bernoulli_logarithmic_common_endpoint_charge
     (hδsmall : δ < (min (1 / 2 : ℝ) (S / (2 : ℝ) ^ (2 * m + 1))) ^ 2)
     (s : Set (Seed × (ℕ → Bool))) (hs : MeasurableSet[hM.measurableSpace] s)
     (G : ℝ → ℝ)
-    (haccuracy : ∀ h ∈ Set.Icc 0 (1 / 4 : ℝ),
+    (haccuracy : ∀ h ∈ Set.Ioc 0 (1 / 4 : ℝ),
       |G h - (Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)).real s| ≤ δ)
     (hsignal : ∀ j, S * ((2 ^ j : ℕ) : ℝ) ^ (-a) ≤
       |Diff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) G|)
