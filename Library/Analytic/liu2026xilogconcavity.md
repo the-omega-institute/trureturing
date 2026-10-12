@@ -32,6 +32,36 @@ $$
 
 The paper combines saddle estimates, a two-index recurrence for logarithmic ratios, interval verification for the finite initial range, and a global closure argument. The introduction records the classical implication that RH would put $F$ in the Laguerre--Pólya class and hence imply infinite log-concavity; the new theorem proves the coefficient property without assuming RH.
 
+## Correspondence with the fixed theta measure
+
+To distinguish these coefficients from the prescribed Jensen node parameter,
+write $b_j=\lambda_j=\xi^{(2j)}(1/2)/(2j)!$. With the
+[Romik source normalization](romik2021orthogonal.md), put
+
+$$
+T=x^2/4,\qquad S(T)=\Phi(2\sqrt T),\qquad
+d\mu(T)=\frac{2S(T)}{\xi_0\sqrt T}\,dT,\qquad \xi_0=\xi(1/2).
+$$
+
+Equations (4.3)–(4.4), printed p.43, give the positive-kernel moment
+representation of $b_j$. The paper's kernel in (4.3) is $2\Phi(x)$;
+it is not the Csordas-normalized $K(u)$ used in the
+[square-variable concavity note](planatsole2026secondlevel.md).
+Writing $M_j=\int_0^\infty T^j\,d\mu(T)$ gives the exact correspondence
+
+$$
+b_j=\frac{\xi_0\,4^j}{(2j)!}\,M_j.
+$$
+
+This is reuse of the source representation in the fixed receiving
+coordinate, not an additional coefficient theorem. Theorem 1.1 concerns
+the ordinary Taylor coefficients $b_j$. The Jensen convention uses
+$\gamma_j=j!b_j$ in the paper's equation (1.1); its factorial multiplier
+cannot be discarded when applying an iterated log-concavity conclusion.
+The coefficient result does not supply the signed neighboring-row
+comparison at every prescribed node or the extra vanishing at common
+zeros. Those interfaces remain separate obligations.
+
 ## Boundary for Robin and FIB ATOM
 
 The coefficient sequence is a central Taylor expansion of $\xi$, whereas Robin's target is a pointwise divisor-sum inequality. These $\lambda_n$ are not the Li coefficients. The stated result supplies no implication to positivity of all Li coefficients, a zero-free half-plane, or a bound on the same integer's signed Robin tail. Neither this source nor the five-window FIB definitions supply a coefficient-preserving map from $N_g=1+F_rg$ to the Taylor index and coefficient $\lambda_n$.

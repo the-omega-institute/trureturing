@@ -100,3 +100,11 @@ no proof of strict Robin for every integer greater than 5040.
 The [original-variable derivative counterexample](sra2026thetakernelcounterexample.md)
 concerns Csordas Open Problem 4.13, a different assertion. Its negative
 witness must not be transferred to $T$ derivatives without a new argument.
+
+The separate proposed cumulative Peano sufficient condition is investigated
+in the private experiment repository's
+[theta-node interval certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/516e129fbffe660a60a4d9231436c69b573f8f58/experiments/theta-peano-node-obstruction).
+That entry contains the source correspondence, analytic truncation bounds,
+executable certificate and its result. It tests a stronger condition than
+the original neighboring-row estimate and is not a theorem attributed to
+this preprint or a Lean proof of the target estimate.
