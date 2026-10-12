@@ -1,0 +1,18 @@
+**Assumption 106.1 (forcing, centered readout and initial data).**
+Let $f\in C_c([0,\infty))$ be a supplied scalar forcing.
+On the declared scaled comparison clock initialize
+$u_n(0)=0\in P_n\mathcal V_n$ and solve
+
+$$
+\frac{d}{dt}u_n(t)=-N_nL_nu_n(t)+N_nf(t)g_n,\qquad
+y_n(t)=\langle g_n,u_n(t)\rangle=u_n(t)(r).
+\tag{106.1}
+$$
+
+The input is the centered comparison root port $g_n$ and the
+output its conjugate root readout. This specifies a mathematical
+input-output experiment on the retained occurrence operator.
+A native actuator, physical positions or physical clock require
+the additional realization of Assumptions 97.3 and 102.3.
+No such realization is assumed.
+
