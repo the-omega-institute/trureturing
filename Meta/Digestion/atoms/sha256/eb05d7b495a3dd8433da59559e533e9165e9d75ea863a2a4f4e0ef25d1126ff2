@@ -1,0 +1,90 @@
+**Theorem 93.2 (screened Fibonacci limit without an infinite source).**
+For every fixed $\lambda>0$,
+
+$$
+\lim_{n\to\infty}G_\lambda(T_n)
+ =\lim_{k\to\infty}g_k(\lambda)
+ =b_\lambda
+ :=\frac{2}{\lambda+1+\sqrt{\lambda^2+6\lambda+1}}.
+\tag{93.1}
+$$
+
+More precisely, for every $h\ge0$ and every $n\ge2h+2$,
+
+$$
+|G_\lambda(T_n)-b_\lambda|
+ \le\lambda^{-1}\left(\frac3{3+\lambda}\right)^{2h+3}.
+\tag{93.2}
+$$
+
+All operators in this assertion are the original finite-source operators.
+No infinite-source operator realization is assumed.
+
+**Proof.**
+For a finite subtree with closed response $g=G_\lambda(t)$,
+adding one unit parent seam changes its child-root block to
+$L_t+\lambda I+|r\rangle\langle r|$. Its diagonal inverse is
+$g/(1+g)$, by the elementary rank-one inverse identity.
+Eliminating the two child blocks at the root of
+$\langle a,b\rangle$ therefore gives the finite Schur complement
+
+$$
+G_\lambda(\langle a,b\rangle)
+ =\frac1{\lambda+2-G_\lambda(a)/(1+G_\lambda(a))
+                    -G_\lambda(b)/(1+G_\lambda(b))}.
+\tag{93.3}
+$$
+
+The root diagonal is $\lambda+2$, because the original closed root has
+exactly two children. The parent terms occur only in the eliminated child
+blocks; they do not change the original whole-source boundary convention.
+These rank-one and Schur identities are intermediate matrix calculations.
+
+For the finite perfect sources they yield
+
+$$
+g_0(\lambda)=\frac1\lambda,\qquad
+g_{k+1}(\lambda)=f_\lambda(g_k(\lambda)),\qquad
+f_\lambda(g)=\frac{1+g}{\lambda+2+\lambda g}.
+\tag{93.4}
+$$
+
+The positive number in (93.1) is the positive root of
+$\lambda b^2+(\lambda+1)b-1=0$ and satisfies $f_\lambda(b)=b$.
+For $g\ge0$,
+
+$$
+0<f_\lambda'(g)=\frac2{(\lambda+2+\lambda g)^2}
+ \le\frac2{(\lambda+2)^2}<1.
+\tag{93.5}
+$$
+
+Thus
+$|g_k(\lambda)-b_\lambda|
+ \le[2/(\lambda+2)^2]^k|\lambda^{-1}-b_\lambda|$,
+proving the perfect-tree limit purely from finite matrices.
+
+Use the inclusive four-reply table $p_h$ of Continuation III, (91.1).
+At every address of length at most $h$, $T_n$ is a branch when
+$n\ge2h+2$: descending one edge decreases the Fibonacci index by
+one or two, so the index at any such address is still at least two.
+The same table consists entirely of branches on $B_k$ when $k\ge h+1$.
+Thus $p_h(T_n)=p_h(B_k)$ under these two conditions.
+The same-operator certificate of Theorem 91.2, with
+$q_\lambda=3/(3+\lambda)$, is exactly
+
+$$
+|G_\lambda(T_n)-g_k(\lambda)|
+ \le\lambda^{-1}q_\lambda^{2h+3}.
+\tag{93.6}
+$$
+
+There is no factor two. Holding $h,n,\lambda$ fixed and taking the
+already proved scalar limit $k\to\infty$ gives (93.2).
+For any fixed positive $\lambda$, its right side tends to zero as
+$h\to\infty$, and all $n\ge2h+2$ obey it. This proves the Fibonacci
+limit. The locality input is precisely §91; its
+[Benzi–Boito–Razouk reference](https://arxiv.org/abs/1203.3953) is
+background for sparse-matrix locality, not an additional decay theorem
+used in this argument. $\square$
+

@@ -1,0 +1,16 @@
+**Theorem 104.3 (density convergence and all three time regimes).**
+For every $0<\epsilon<S<\infty$,
+
+$$
+\sup_{\epsilon\le s\le S}|k_n(s)-k(s)|\longrightarrow0.
+\tag{104.9}
+$$
+
+For any sequence $s_n\ge0$ tending to a positive finite $s$,
+$k_n(s_n)\to k(s)$. If $s_n\to\infty$, then $k_n(s_n)\to0$.
+If $s_n\to0$, then $k_n(s_n)\to+\infty$, using the biased-source
+endpoint of Theorem 105.1; this includes $k_n(0)=N_n-1$.
+Weak measure convergence (104.4) and density convergence (104.9)
+are different statements. There is no finite density at zero
+representing the mass-one limiting atom.
+

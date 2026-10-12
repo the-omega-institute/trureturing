@@ -1982,3 +1982,206 @@ premise. The native occurrence actuator and physical-time realization
 remain outside Assumption 106.1.
 
 ## 106.99 追加锚（本行以下为增补区）
+
+## 107. Root readout, action closure and future memory
+
+The preceding sections distinguish the complete finite occurrence state from
+the scalar root response. This section makes the corresponding memory
+boundary explicit. It is an ordinary finite-dimensional linear result. The
+actions below are an abstract contract; they are not claimed to be native
+original-root queries unless a separate realization supplies them.
+
+**Definition 107.1 (multi-port future response).**
+Let $V$ be a finite-dimensional real vector space, let
+$A:V\to V$ be a linear evolution, let ${C_\ell:V\to Y_\ell\}_{\ell\in L}$ be
+a finite family of linear readout ports, and let ${T_a:V\to V\}_{a\in A_0}$
+be a finite family of admissible interventions. For a word
+$w=a_1\cdots a_m$ put
+
+$$
+T_w=T_{a_m}\cdots T_{a_1},
+\qquad T_\varepsilon=I.
+$$
+
+The unacted hidden subspace and the action-closed hidden subspace are
+
+$$
+\begin{aligned}
+K_{\mathrm{stat}}
+  &=\bigcap_{\ell\in L}\bigcap_{j\ge0}
+      \ker(C_\ell A^j),\\
+K_{\mathrm{fut}}
+  &=\bigcap_{w\in A_0^*}\bigcap_{\ell\in L}\bigcap_{j\ge0}
+      \ker(C_\ell A^jT_w).
+\end{aligned}
+\tag{107.1}
+$$
+
+The first space contains perturbations invisible to every declared port under
+the passive evolution. The second contains perturbations invisible after every
+finite intervention word as well.
+
+**Theorem 107.2 (the maximal action-closed hidden subspace).**
+
+The subspace $K_{\mathrm{fut}}$ satisfies
+
+$$
+K_{\mathrm{fut}}\subseteq K_{\mathrm{stat}},
+\qquad
+T_aK_{\mathrm{fut}}\subseteq K_{\mathrm{fut}}
+\quad(a\in A_0).
+\tag{107.2}
+$$
+
+Moreover, if $M\subseteq K_{\mathrm{stat}}$ is a linear subspace with
+
+$$
+T_aM\subseteq M\quad(a\in A_0),
+\tag{107.3}
+$$
+
+then $M\subseteq K_{\mathrm{fut}}$. Consequently $K_{\mathrm{fut}}$ is the
+largest subspace that is both passively invisible and closed under every
+declared intervention.
+
+### Proof
+
+The empty word belongs to $A_0^*$, so the second intersection is contained
+in the first. If $x\in K_{\mathrm{fut}}$, $a\in A_0$, and
+$w\in A_0^*$, then
+
+$$
+C_\ell A^jT_w(T_ax)=C_\ell A^jT_{aw}x=0,
+$$
+
+where $aw$ denotes the word obtained by prefixing $a$, so
+$T_{aw}=T_wT_a$. Hence $T_ax$ lies in
+every factor of the second intersection, proving invariance.
+
+Now let $x\in M$. By (107.3), $T_wx\in M$ for every word $w$. Since
+$M\subseteq K_{\mathrm{stat}}$, each vector $T_wx$ is killed by every
+$C_\ell A^j$. Thus $x$ belongs to every factor in the definition of
+$K_{\mathrm{fut}}$. The maximality statement follows. $\square$
+
+**Corollary 107.3 (when the static quotient is already safe).**
+
+The following are equivalent:
+
+$$
+K_{\mathrm{fut}}=K_{\mathrm{stat}},
+$$
+
+and
+
+$$
+T_aK_{\mathrm{stat}}\subseteq K_{\mathrm{stat}}
+\quad\text{for every }a\in A_0.
+\tag{107.4}
+$$
+
+### Proof
+
+If the spaces are equal, (107.2) gives invariance of $K_{\mathrm{stat}}$.
+Conversely, if $K_{\mathrm{stat}}$ is invariant under every intervention,
+it satisfies the hypotheses for $M$ in Theorem 107.2, so
+$K_{\mathrm{stat}}\subseteq K_{\mathrm{fut}}$. The reverse inclusion was
+already proved. $\square$
+
+Thus a static observation quotient can be used as a future quotient exactly
+when its hidden fiber is closed under all later actions. A current scalar
+response does not acquire this property merely because it is exact for the
+passive evolution.
+
+**Proposition 107.4 (a two-dimensional leakage witness).**
+
+Let $V=\mathbb R^2$,
+
+$$
+A=\begin{pmatrix}1&0\\0&2\end{pmatrix},
+\qquad
+C(x_1,x_2)=x_1,
+\qquad
+T(x_1,x_2)=(x_2,x_1).
+\tag{107.5}
+$$
+
+Then
+
+$$
+K_{\mathrm{stat}}=\mathbb R(0,1),
+\qquad
+K_{\mathrm{fut}}=\{0\}.
+\tag{107.6}
+$$
+
+In fact $q=(0,1)$ is invisible to every passive response,
+
+$$
+C e^{-tA}q=0\quad(t\ge0),
+$$
+
+but after one intervention it is visible:
+
+$$
+C e^{-tA}Tq=e^{-t}\ne0.
+\tag{107.7}
+$$
+
+### Proof
+
+For the passive evolution,
+$C A^j(x_1,x_2)=x_1$ for every $j$, so its common kernel is
+$\mathbb R(0,1)$. The swap sends $(0,1)$ to $(1,0)$, which the port sees;
+therefore no nonzero vector in $K_{\mathrm{stat}}$ is action-closed. The
+displayed exponential formulas give the same conclusion directly. $\square$
+
+**Corollary 107.5 (the spectral boundary response is not by itself a
+future memory state).**
+
+For the occurrence carriers of §§103–106, the root scalar response and the
+root spectral weights are passive-port data. The root-invisible directions in
+Theorem 103.2 therefore belong to a static hidden fiber whenever they are
+annihilated by that port. If a separately declared intervention or another
+port acts nontrivially on such a direction, the correct memory quotient is
+$K_{\mathrm{fut}}$, not $K_{\mathrm{stat}}$; the scalar quantity
+$p_n(t)$, $R_\lambda(T_n)$, or their limiting analogues cannot serve as the
+complete future state.
+
+This is a statement about the declared linear comparison contract. It does
+not install an actuator, identify an original-root query with $T_a$, or
+provide a physical time, reset, or cost. A native FIB realization must still
+prove that the proposed action and port are available on the same immutable
+source and that their response-successor-cost kernel descends.
+
+**Theorem 107.6 (finite-horizon stabilization of each fixed action family).**
+
+Let $d=\dim V$. For every fixed intervention word $w$ and port $C_\ell$,
+
+$$
+\bigcap_{j\ge0}\ker(C_\ell A^jT_w)
+=
+\bigcap_{0\le j<d}\ker(C_\ell A^jT_w).
+\tag{107.8}
+$$
+
+Consequently, the infinite time index in (107.1) is not the source of an
+infinite-dimensional carrier; any non-finiteness of the exact future quotient
+comes from the unbounded family of action words or from an unbounded source
+family.
+
+### Proof
+
+By Cayley–Hamilton, every $A^j$ with $j\ge d$ is a linear combination of
+$I,A,\ldots,A^{d-1}$. A vector annihilated by the first $d$ composed maps is
+therefore annihilated by every later $C_\ell A^jT_w$. The reverse inclusion is
+immediate. $\square$
+
+The distinction is useful for the latest FIB boundary results. Under the
+promised family $T_n$ and a fixed positive screening parameter, a finite prefix
+can support a uniform approximation as in Theorem 97.2. Once the screening
+parameter is allowed to scale toward zero with the source size, Theorem 102.2
+shows that the same fixed-depth table can miss a nonzero response gap. The
+obstruction is therefore a joint source–parameter boundary, not a failure of
+the finite-dimensional spectral algebra.
+
+## 107.99 追加锚（本行以下为增补区）
