@@ -31,7 +31,7 @@ internal sealed class FiveModePrimeWindowExplicitDocument : IScribeDocumentDefin
         Formula n = F.Id("n");
         Formula u = F.Id("u");
         Formula v = F.Id("v");
-        Formula d = Add(Add(Num(13), u), v);
+        Formula d = Add(Add(Num(13), Call("val", u)), Call("val", v));
         Formula body = All(
             Equal(n, Multiply(Multiply(Num(5040), Pow(Num(2), Call("val", u))), Pow(Num(3), Call("val", v)))),
             Equal(Call("windowDenom", n), d),
