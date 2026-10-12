@@ -90,7 +90,7 @@ Equation (9) first appends τ, applies the encoding channel Nen, applies E to th
 
 **Definition 1.8 (Normalized output-first Choi matrix).**
 
-$$\forall (d : \mathbb{N}), \forall (F : \operatorname{D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), \forall (p : (\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right))), \forall (q : (\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right))), \operatorname{D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation.choi}\left(d, F\right)\left(p, q\right) = (\operatorname{Nat.cast}\left(d\right) : \mathbb{C})^{-1} \cdot F\left(\operatorname{Matrix.single}\left((p).2, (q).2, (1 : \mathbb{C})\right), (p).1, (q).1\right)$$
+$$\forall (d : \mathbb{N}), \forall (F : \operatorname{D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), \operatorname{D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation.choi}\left(d, F\right) = \operatorname{HSMul.hSMul}\left((\operatorname{Nat.cast}\left(d\right) : \mathbb{C})^{-1}, \operatorname{D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.choi}_{matrix}\left(F\right)\right)$$
 
 *Formalization.* `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.choi` (`✓ std3`).
 
@@ -98,7 +98,7 @@ $$\forall (d : \mathbb{N}), \forall (F : \operatorname{D5.S3.Quantum.Foundation.
 
 *Commentary.*
 
-Equation (2) uses a normalized maximally entangled input. Accordingly, the entry at row (i,j) and column (k,l) is the (i,k) entry of F applied to Matrix.single j l 1, multiplied by the inverse of the complex cast of d. The first coordinate is the output coordinate. The definition also accepts d=0.
+Equation (2) uses a normalized maximally entangled input. The definition scales D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.choi_matrix F by the inverse of the complex cast of d. Accordingly, the entry at row (i,j) and column (k,l) is the (i,k) entry of F applied to Matrix.single j l 1, multiplied by that inverse. The first coordinate is the output coordinate. The definition also accepts d=0.
 
 **Definition 1.9 (Gram matrices).**
 
@@ -204,7 +204,5 @@ For a system of dimension 3 and a memory of dimension 2, take the memory state t
 - Truth anchor: `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.result`
 - Truth anchor: `D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation.stateMatrix`
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.md)
-- Dependency: [D5/S3/Quantum/FiniteDimensional](../Quantum/FiniteDimensional.md)
-- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Quantum/Foundation/FiniteKrausChannel.md)
-- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Quantum/Foundation/FiniteStateChannel.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Quantum/Foundation/FiniteKrausRepresentation.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Quantum/Information/PartialTraceMutualInformation.md)
