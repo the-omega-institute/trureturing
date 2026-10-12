@@ -95,7 +95,7 @@ private theorem word_eq_iterate (k n : ℕ) (hn : n < (image (phi hm) k (zero hm
 private theorem factor_len (x : ℕ → Fin m) (i n : ℕ) : (factor x i n).length = n := by
   simp [factor]
 
-private theorem factor_add (x : ℕ → Fin m) (i n t : ℕ) :
+theorem factor_add (x : ℕ → Fin m) (i n t : ℕ) :
     factor x i (n + t) = factor x i n ++ factor x (i + n) t := by
   simp only [factor, List.range_add, List.map_append, List.map_map]
   congr 1
@@ -181,7 +181,7 @@ private theorem after_boundary (i : ℕ) : word hm (boundary hm i + 1) = rot hm 
     rw [boundary_succ] at hb
     simpa [phi, rot, h] using hb
 
-private theorem boundary_window (q : ℕ) :
+theorem boundary_window (q : ℕ) :
     ∃ i, boundary hm i ≤ q ∧ q < boundary hm (i + 1) := by
   induction q with
   | zero =>
@@ -266,7 +266,7 @@ private theorem occ_append (s t : List (Fin m)) (q : ℕ) :
 private theorem occ_singleton (a : Fin m) (q : ℕ) : Occ hm [a] q ↔ word hm q = a := by
   simp [Occ, factor]
 
-private theorem occ_cons (a : Fin m) (s : List (Fin m)) (q : ℕ) :
+theorem occ_cons (a : Fin m) (s : List (Fin m)) (q : ℕ) :
     Occ hm (a :: s) q ↔ word hm q = a ∧ Occ hm s (q + 1) := by
   simpa [occ_singleton] using occ_append hm [a] s q
 
@@ -290,7 +290,7 @@ private theorem transport {s : List (Fin m)} {i : ℕ} (h : Occ hm s i) :
     rw [← boundary_occ hm h]
     exact at_boundary hm _
 
-private theorem t_head (s : List (Fin m)) :
+theorem t_head (s : List (Fin m)) :
     ∃ v, T hm s = zero hm :: v := by
   cases s with
   | nil => exact ⟨[], rfl⟩
