@@ -5,26 +5,7 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Fact]
-    public void NonInitialReflogRecordRequiresMessageSeparator()
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/missing-message-separator");
-        fixture.AdvanceBase(300);
-        var log = Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD");
-        var lines = File.ReadAllLines(log);
-        lines[^1] = lines[^1].Split('\t', 2)[0];
-        File.WriteAllLines(log, lines);
-
-        var result = fixture.Run("--force", "--lanes-only");
-
-        Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("work_witness_unknown", ReasonFor(result.Output, lane));
-        AssertItemProperty(ReadItems(result.Output), "path", lane, "work_witness_reason", "reflog_invalid");
-    }
-
-    [Fact]
-    public void MalformedReflogIdentityCannotCertifyWork()
+    public void MalformedReflogIdentityRetainsLane()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/corrupt-identity");
@@ -39,14 +20,14 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
-        Assert.Equal("work_witness_unknown", ReasonFor(result.Output, lane));
-        AssertItemProperty(ReadItems(result.Output), "path", lane, "work_witness_reason", "reflog_invalid");
+        Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
+        AssertItemProperty(ReadItems(result.Output), "path", lane, "selection_detail", "reflog_invalid");
     }
 
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
-    public void BlankReflogCommitterCannotCertifyWork(string name)
+    public void BlankReflogCommitterRetainsLane(string name)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/blank-identity");
@@ -60,20 +41,20 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.Run("--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal("work_witness_unknown", ReasonFor(result.Output, lane));
-        AssertItemProperty(ReadItems(result.Output), "path", lane, "work_witness_reason", "reflog_invalid");
+        Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
+        AssertItemProperty(ReadItems(result.Output), "path", lane, "selection_detail", "reflog_invalid");
         Assert.True(Directory.Exists(lane));
     }
 
     [Theory]
     [InlineData("status", "unreadable")]
-    [InlineData("commit", "work_witness_unknown")]
+    [InlineData("commit", "update_unknown")]
     public void UnreadableShortcutPrerequisitesRetainLane(string failure, string reason)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/unknown-state");
         var runner = fixture.CreateRunner((file, args, directory) => file == "git" && directory == lane
-            && args[0] == (failure == "status" ? "status" : "cat-file")
+            && args[0] == (failure == "status" ? "status" : "show")
                 ? GitFailure("shortcut prerequisite failed") : null);
 
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
@@ -98,25 +79,6 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(lane));
         Assert.Equal("dev_unknown", ReasonFor(result.Output, lane));
         Assert.Equal("dev_unknown", ReadSummary(result.Output).GetProperty("dev_state").GetString());
-    }
-
-    [Fact]
-    public void ReflogChangesRetainEvenWhenTheyStillSupplyAWorkWitness()
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/witness-race");
-        var runner = fixture.CreateRunner((file, args, directory) =>
-        {
-            if (IsLaneGit(file, args, directory, lane, "rev-parse", "--verify", "HEAD^{commit}"))
-                fixture.RewriteLastRecord(lane, message: "commit: changed work evidence");
-            return null;
-        });
-
-        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
-
-        Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("race_changed", ReasonFor(result.Output, lane));
     }
 
     [Fact]

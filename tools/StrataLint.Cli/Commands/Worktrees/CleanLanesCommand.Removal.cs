@@ -95,17 +95,12 @@ internal static partial class CleanLanesCommand
         {
             var arguments = new List<string> { "remove", "--path", item.Path };
             arguments.Add("--expected");
-            var expected = new Dictionary<string, object?>
+            var expected = new
             {
-                ["path"] = item.Path, ["head"] = item.Head,
-                ["branch"] = item.Branch is null ? null : "refs/heads/" + item.Branch,
-                ["locked"] = item.Locked ? item.LockReason ?? "" : null,
+                path = item.Path, head = item.Head,
+                branch = item.Branch is null ? null : "refs/heads/" + item.Branch,
+                locked = item.Locked ? item.LockReason ?? "" : null,
             };
-            if (selection.Reason == "merged_to_dev")
-            {
-                expected["reflog_sha256"] = selection.ReflogFingerprint;
-                expected["require_clean"] = true;
-            }
             arguments.Add(System.Text.Json.JsonSerializer.Serialize(expected));
             var removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
             System.Text.Json.JsonElement? outcome = null;
@@ -125,12 +120,7 @@ internal static partial class CleanLanesCommand
             }
             if (!removal.Success)
             {
-                if (outcome?.TryGetProperty("error", out var error) == true
-                    && error.GetString() == "race_changed") return Refused("race_changed");
-                if (removal.ExitCode is 68 or 73)
-                    return Refused(removal.Error.Contains("observed_identity_changed", StringComparison.Ordinal)
-                        || removal.Error.Contains("observed_path_changed", StringComparison.Ordinal)
-                        ? "race_changed" : "identity_or_lock_refused");
+                if (removal.ExitCode is 68 or 73) return Refused("identity_or_lock_refused");
                 if (outcome?.GetProperty("outcome").GetString() == "checkpoint_failed")
                     return new(LaneRemovalOutcome.CheckpointFailed,
                         "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate);

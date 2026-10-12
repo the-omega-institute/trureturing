@@ -19,6 +19,7 @@ internal static partial class CleanLanesCommand
         + "[--active-paths-file FILE]";
 
     private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60;
+    private const long MinimumMergedLaneAgeSeconds = 3L * 60 * 60;
     private const long MinimumBehindCommits = 300;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -129,7 +130,7 @@ internal static partial class CleanLanesCommand
                     recovery_branch = item.RecoveryBranch,
                     recovery_branch_candidate = item.RecoveryBranchCandidate,
                     selection_reason = item.SelectionReason,
-                    work_witness_reason = item.WorkWitnessReason,
+                    selection_detail = item.SelectionDetail,
                 }));
                 output.Append('\n');
             }
@@ -590,7 +591,7 @@ internal static partial class CleanLanesCommand
         new("lane_worktree", item.Path, item.Branch, item.Head, "skipped", reason);
 
     private static CleanLaneEvent WithSelection(CleanLaneEvent item, ReclaimSelection selection) =>
-        item with { SelectionReason = selection.Reason, WorkWitnessReason = selection.WitnessReason };
+        item with { SelectionReason = selection.Reason, SelectionDetail = selection.Detail };
 
     private static IReadOnlyList<string> DefaultTempRoots() =>
         new[] { "/tmp", Path.GetTempPath() }
@@ -609,5 +610,5 @@ internal static partial class CleanLanesCommand
         string? RecoveryBranch = null,
         string? RecoveryBranchCandidate = null,
         string? SelectionReason = null,
-        string? WorkWitnessReason = null);
+        string? SelectionDetail = null);
 }

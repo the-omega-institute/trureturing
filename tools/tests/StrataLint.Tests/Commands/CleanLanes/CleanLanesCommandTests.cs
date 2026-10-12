@@ -236,7 +236,7 @@ public sealed partial class CleanLanesCommandTests
     public void ExactInactivityAndBehindBoundaries(int behind, int seconds, bool removable)
     {
         using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddMergedLane("harness/boundary");
+        var lane = fixture.AddWorkedLane("harness/boundary", landed: false);
         fixture.AdvanceBase(behind);
         var now = fixture.LastUpdate(lane).AddSeconds(seconds);
 
@@ -310,7 +310,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.Run("--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
-        Assert.Equal("work_witness_unknown", ReasonFor(result.Output, lane));
+        Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
     }
 
     [Theory]
@@ -366,8 +366,10 @@ public sealed partial class CleanLanesCommandTests
         CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "push", "origin", "dev");
         CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "branch", "lane/governance/recovery-old", head);
         var recent = fixture.AddDetachedJudge("trureturing-recent-detached");
+        var now = fixture.LastUpdate(stale).AddDays(1);
+        fixture.RewriteLastUpdate(recent, now.AddSeconds(-10799));
         var args = lanesOnly ? new[] { "--force", "--lanes-only" } : new[] { "--force" };
-        var result = fixture.Run(args);
+        var result = fixture.RunAt(now, args);
         Assert.True(result.Success, result.Output + result.Error);
         Assert.False(Directory.Exists(stale));
         var item = ReadItems(result.Output).Single(item => item.GetProperty("path").GetString() == stale);
@@ -384,7 +386,7 @@ public sealed partial class CleanLanesCommandTests
         }
         else Assert.Equal(head, fixture.Head(stale));
         Assert.True(Directory.Exists(recent));
-        Assert.Equal("not_far_behind", ReasonFor(result.Output, recent));
+        Assert.Equal("recently_updated", ReasonFor(result.Output, recent));
     }
 
     [Fact]
@@ -424,6 +426,7 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         var parent = fixture.AddLandedLane("harness/parent");
         var child = fixture.AddNestedWorktree(parent);
+        CleanLanesFixture.Git(child, "commit", "--allow-empty", "-m", "nested work");
         if (childEligible) fixture.AdvanceBase(300);
         var preview = fixture.Run("--lanes-only");
         Assert.True(preview.Success, preview.Error);
@@ -456,12 +459,14 @@ public sealed partial class CleanLanesCommandTests
         var snapshot = fixture.AddGitlessJudgeSnapshot("trureturing-parent-snapshot");
         var child = fixture.AddNestedWorktree(snapshot);
         fixture.LockLane(child);
+        File.SetLastWriteTimeUtc(Path.Combine(fixture.WorktreeGitDirectory(child), "locked"),
+            new DateTime(2030, 1, 2, 0, 0, 0, DateTimeKind.Utc));
         var result = fixture.Run("--force");
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(snapshot));
         Assert.True(Directory.Exists(child));
         Assert.True(fixture.WorktreeRegistered(child));
-        Assert.Equal("not_far_behind", ReasonFor(result.Output, child));
+        Assert.Equal("locked_recent", ReasonFor(result.Output, child));
     }
 
     private sealed partial class CleanLanesFixture : IDisposable

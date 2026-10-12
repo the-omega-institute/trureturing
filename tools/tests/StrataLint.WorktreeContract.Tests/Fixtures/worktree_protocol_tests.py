@@ -26,10 +26,9 @@ SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
 sys.path.insert(0, str(SCRIPT.parent))
 import worktree_protocol as protocol
 import worktree_preservation as preservation
-from shortcut_reclaim_cases import ShortcutReclaimCases
 
 
-class ProtocolTests(ShortcutReclaimCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
