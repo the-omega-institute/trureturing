@@ -1,11 +1,14 @@
 ---
 bibkey: trianglenetwork2026fiber
-title: "Triangle-network source independence and fiber geometry"
-authors:
-  - trureturing contributors
+authors: trureturing contributors
 year: 2026
-type: theory-interface
-status: working-note
+title: "Triangle-network source independence and fiber geometry"
+doi: null
+url: https://github.com/the-omega-institute/trureturing/blob/a67661769ba83cab76986bb430c23baa857fc97a/Library/QuantumContext/trianglenetwork2026fiber.md
+claim: "A concrete event-to-FIB readout and its compatibility theorem remain open."
+strata_touched: []
+license: repository-original
+triage: rejected(Internal working note, not an external source establishing the proposed event-to-FIB interface.)
 ---
 
 # Triangle-network source independence and fiber geometry
