@@ -1990,6 +1990,8 @@ $Z=0$ 时仍奇异。它的符号采用此处 $(O,L,T,R,J)$ 字典，
 
 ### 22.1. 同一五态切向载体上的二次接口
 
+本章五态有理二次式、按实际叶数的几何读出及固定 $J$ 的 Fisher 来源族反例为 repo-derived 综合应用，不主张原创性；完成平方、Schur 变分、谱几何均值及压缩方法为 literature-attested 的中间工具，其文献和已有接口在各项实际推导中引用。
+
 **定义 22.1（完整切向与另供的正定二次式）。** 沿用定义20.1的
 $(O,L,T,R,J)$ 状态顺序、低—高—中占位 $(x,y,z)$、
 命题20.3的概率逆式。在五项全正的律
@@ -2224,7 +2226,7 @@ $$
 **命题 22.3（原 Fibonacci 树上的几何读出及接口界）。** 采用原有有序树
 $T_0=\alpha,T_1=\beta,T_{n+2}=\langle T_{n+1},T_n\rangle$，
 其语法与组成归属见
-[基础公式卷定义7.1、定理7.2–7.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
+[基础公式卷定义1.1、数学引文1.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
 另供命题22.2的 $Q_0,Q_1$ 作为叶读出，令 $\ell$ 是实际叶数，定义
 
 $$
