@@ -20,10 +20,9 @@ public sealed class TruthReleaseAccessorTests
     private static byte[] SourceSnapshotBytes(
         byte[] truthGraph,
         byte[] rawLeanReport,
-        byte[] truthExport,
-        byte[] frozenLedgerHead) => Utf8.GetBytes($$"""
+        byte[] truthExport) => Utf8.GetBytes($$"""
         {
-          "schema": "source-snapshot.v2",
+          "schema": "source-snapshot",
           "source_repo": "the-omega-institute/trureturing",
           "source_commit": "{{Commit}}",
           "source_tree": "{{Tree}}",
@@ -33,9 +32,7 @@ public sealed class TruthReleaseAccessorTests
           "truth_graph_sha256": "sha256:{{Hex(truthGraph)}}",
           "raw_lean_report_sha256": "sha256:{{Hex(rawLeanReport)}}",
           "dag_md_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
-          "declarations_sha256": "sha256:{{Hex(truthExport)}}",
-          "frozen_ledger_head_hash": "sha256:{{Hex(frozenLedgerHead)}}",
-          "frozen_ledger_sequence": 42
+          "declarations_sha256": "sha256:{{Hex(truthExport)}}"
         }
         """);
 
@@ -82,19 +79,16 @@ public sealed class TruthReleaseAccessorTests
     private static (string Directory, string Digest) BuildBundle(byte[] truthGraph, byte[] truthExport)
     {
         var rawLeanReport = Utf8.GetBytes("raw_lean_report");
-        var frozenLedgerHead = Utf8.GetBytes("frozen_ledger_head");
         var artifacts = new (string Key, string File, byte[] Bytes)[]
         {
             ("source_snapshot", "source-snapshot.v1.json", SourceSnapshotBytes(
                 truthGraph,
                 rawLeanReport,
-                truthExport,
-                frozenLedgerHead)),
+                truthExport)),
             ("truth_graph", "truth-graph.v1.json", truthGraph),
             ("raw_lean_report", "raw-lean-report.json", rawLeanReport),
             ("truth_export", "truth-export.v1.json", truthExport),
             ("blueprint_index", "blueprint-index.v1.json", Utf8.GetBytes("blueprint_index")),
-            ("frozen_ledger_head", "frozen-ledger-head.json", frozenLedgerHead),
         };
 
         var sums = string.Concat(artifacts
@@ -105,7 +99,7 @@ public sealed class TruthReleaseAccessorTests
         var artifactJson = string.Join(",\n", artifacts.Select(a =>
             $"    \"{a.Key}\": {{ \"file\": \"{a.File}\", \"sha256\": \"sha256:{Hex(a.Bytes)}\" }}"));
         var manifest = $@"{{
-  ""schema"": ""truth-release.v2"",
+  ""schema"": ""truth-release"",
   ""source"": {{ ""source_repo"": ""the-omega-institute/trureturing"", ""source_commit"": ""{Commit}"", ""source_tree"": ""{Tree}"" }},
   ""trust"": {{
     ""commit_on_protected_dev"": true,
