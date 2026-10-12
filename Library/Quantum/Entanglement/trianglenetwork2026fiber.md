@@ -10,7 +10,7 @@ status: working-note
 
 # Triangle-network source independence and fiber geometry
 
-This note records the typed bridge between the classical triangle-local carrier and the Auric FIB readout geometry.
+This note proposes an interface between the classical triangle-local carrier and the Auric FIB readout geometry. A concrete event-to-FIB readout and its compatibility theorem remain open.
 
 ## Core objects
 
@@ -50,7 +50,7 @@ p_3=Z,\quad
 p_0=1-X-Y-Z+\kappa.
 \]
 
-The conditional-independence surface is \((1-Z)\kappa=XY\). This is a local feature relation, not the three-source product law.
+The conditional-independence surface, when \(Z<1\), is \((1-Z)\kappa=XY\). This is a local feature relation, not the three-source product law.
 
 ## Main conclusion
 
