@@ -68,8 +68,10 @@ The canonical source is `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefut
   - `ConcealmentKernelNecessityRefutation.IsPOVM`;
   - `EquiprobablePgmActiveSetRefutation.success`;
   - `KickedIsingNegativityRefutation.partialTranspose`;
+  - `StabilizerPairLocalUnitaryInequivalence.tensorOp` and `StabilizerPovmMaximalEntanglementRefutation.tensor_trace`;
+  - `GibbsVariationalIdentity.gibbsState` at H = 0 with `gibbs_state_zero` (the maximally mixed state);
   - `RHLinalg.trace_mul_nonneg_of_posSemidef`;
-  - Mathlib's `finFunctionFinEquiv`, `Finset.univ_perm_fin_succ` and `Equiv.Perm.decomposeFin`, and PSD order.
+  - Mathlib's `finFunctionFinEquiv`, `Finset.univ_perm_fin_succ`, `Equiv.Perm.decomposeFin`, `IsStarProjection.le_of_mul_eq_right` and PSD order.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
 Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.lean.json`, statement `sha256:5b7befcd8b3908c03409e2a5ec85d0202eaf479cc957b5f029a5178ab2da3c5e`.
