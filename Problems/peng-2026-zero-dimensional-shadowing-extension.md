@@ -118,6 +118,106 @@ This is an unresolved construction question outside the metric case. The
 Mittag-Leffler shadowing bridge is known-background infrastructure, not an
 original question settlement.
 
+### Projective-cover obstruction
+
+The proposed construction "take a projective compact Hausdorff cover and lift
+f" cannot supply a shadowing extension in general. This obstruction applies
+to every projective cover of the following original shadowing source, not
+only to one choice of lift. It does not refute Question 5.1.
+
+Let X be the one-point compactification of discrete natural numbers, with
+f(n)=n+1 and f(infinity)=infinity. Every finite open cover is refined by the
+finite clopen partition
+
+$$
+\{\{0\},\ldots,\{K-1\},\{K,K+1,\ldots,\infty\}\}.
+$$
+
+Its quotient map commutes with the saturated successor map on
+{0,...,K}. Use this same partition as the control cover. The partition labels
+of any whole pseudo-orbit are an exact saturated-successor orbit. A sequence
+beginning below K is traced by its finite initial point, and one beginning
+in the tail is traced by infinity. Thus (X,f) has finite-cover shadowing.
+Time zero is included, and f is not onto. X is already zero-dimensional, so
+its identity map is a solution of Q5.1 for this source.
+
+Suppose a compact extremally disconnected (Y,g) with continuous g and
+shadowing admitted a continuous onto equivariant pi:Y->X. Set
+U_n=pi^{-1}({n}). These are nonempty pairwise disjoint clopen sets and
+g(U_n) is contained in U_{n+1}. Extremal disconnectedness makes
+
+$$
+W=\overline{\bigcup_{k\ge0}U_{2^k}}
+$$
+
+clopen. On U_n its indicator a is 1 exactly when n is a power of two:
+for unselected n, the open U_n is disjoint from the selected union and
+therefore from its closure. Let O be the union of all U_n. W is contained
+in closure(O).
+
+Consider any finite a-itinerary beginning with 1. Its finite-cylinder
+preimage is a nonempty open set meeting closure(O), hence it meets some
+U_n. Forward containment then realizes that same finite itinerary on
+n,n+1,... in the discrete tube indices. In particular, if its first and
+next 1 are at times 0 and d>0, then n and n+d are consecutive powers of
+two. Thus d is itself a power of two. Conversely, every such distance
+2^k occurs by starting on U_{2^k}.
+
+The existing finite-observation theorem says that the entire a-itinerary
+image of a shadowing system is the complete-path label language of one
+finite graph. Suppose it has N vertices. Choose D=2^{N+2} and start an
+actual orbit on U_D. Its initial word has 1 at times 0 and D, with 0 at
+all times strictly between. Among graph vertices at times 1,...,N+1,
+two agree; write their times as i<j. Erase the intervening zero cycle and
+keep the original entire suffix. This remains an entire graph path and
+has consecutive 1s at distance
+
+$$
+d=D-(j-i),\qquad 2^{N+1}<d<2^{N+2}.
+$$
+
+It must be an actual a-itinerary, while no power of two lies strictly
+between these consecutive powers. This is a contradiction. Therefore
+no extremally disconnected compact Hausdorff shadowing system admits
+such a factor onto (X,f). Gleason's characterization identifies compact
+Hausdorff projective spaces with extremally disconnected spaces, so the
+same exclusion applies to all projective covers and all continuous
+lifts of these dynamics.
+
+The irreducible Gleason cover here is beta(N): the continuous extension
+of N->X collapses the remainder to infinity. It is irreducible because
+the singleton fibers over the dense isolated natural points force every
+closed onto subset to contain their closure. Every continuous equivariant
+lift agrees with successor on these singleton fibers, hence is the
+unique continuous beta(N) successor extension by density. This particular
+lift fails shadowing by the same argument.
+
+Every continuous binary observation on X is eventually constant on the
+natural points. Its clopen algebra is the finite/cofinite algebra.
+Extremal disconnectedness completes the cover's clopen algebra far beyond
+these source observations: the power-of-two tube coloring cannot descend
+continuously to X. It is these extra cover observations that fail the
+necessary finite-graph condition. Sofic observation languages alone are
+only a necessary condition for shadowing; the obstruction does not replace
+the remaining tracing and coherent-graph construction obligations by that
+condition.
+
+The general open-forward-tube obstruction is implemented in
+`D5/S1/Dynamics/Shadowing/StoneanForwardTubeObstruction`.
+The specialization to X, the shadowing proof for X, and the description
+of its irreducible cover are mathematical exposition, not separate new
+Lean declarations or an original open-problem settlement. The graph
+construction, projectivity characterization and closure machinery are
+reused; no worldwide novelty claim is made for their combination.
+
+The remaining construction must use zero-dimensional covers with
+controlled clopen observations, rather than projectivity alone. It still
+must provide one globally chosen coherent finite-face family in which
+every live finite word is source-feasible, with complete-path deletion
+lifting or proved Mittag-Leffler stabilization. The projective obstruction
+neither supplies this finite feasibility nor disproves existence of such
+a family for arbitrary compact Hausdorff shadowing sources.
+
 ## ASSUMED-UNVERIFIED
 
 No worldwide open-status conclusion is inferred from a bounded search. The

@@ -1161,3 +1161,234 @@ $$
 读数取得、物理时钟、存储寿命及已填充全载体上的操作存在性不在上述条件的结论中。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 无标签两步像的精确支撑恢复
+
+### 12.1 形状、支撑与实际像语法
+
+令
+
+$$
+\mathcal S::=\dot{}\mid\langle s,t\rangle
+$$
+
+为保留有序左右关系而擦去叶标签的有限形状代数。对原树 $t$，令
+$\operatorname{sh}(t)\in\mathcal S$ 为逐节点擦去 $\alpha,\beta$ 的形状。地址
+集合 $\operatorname{Pos}(t)$ 包含根和全部实际节点；严格延伸叶地址不在其中。形状的
+半径 $r$ 观察记为 $\operatorname{sh}_{\le r}(t)$，其每个地址的值为
+
+$$
+\dot\quad(\text{叶}),\qquad
+\mathsf{branch}\quad(\text{配对}),\qquad
+\mathsf{absent}\quad(\text{不在 }\operatorname{Pos}(t)).
+$$
+
+这三值观察保留叶与分支的区别。只保留存在位的观察则记为
+
+$$
+\operatorname{supp}_{r}(t)=\{p\in\operatorname{Pos}(t):|p|\le r\},
+$$
+
+它在实际地址上只返回 $1$ 或 $0$，不能在同一半径直接区分叶与分支。以下所有支撑
+都在同一根、同一有序 $L/R$ 地址系上；擦除的是叶名，不是左右取向或出现次数。
+
+定义
+
+$$
+C(t)=\operatorname{sh}(\rho^2t),\qquad
+A=\langle\dot,\dot\rangle,\qquad
+B=\langle A,\dot\rangle,
+$$
+
+并令 $\mathcal G$ 是以下实际像语法的最小集合：
+
+$$
+\boxed{\mathcal G::=A\mid B\mid\langle g_1,g_2\rangle\quad(g_1,g_2\in\mathcal G).}
+\tag{ABT.30}
+$$
+
+**定理 12.1（两步擦除像的精确语法与双向逆）。** 对全部有限非空有序
+$\alpha/\beta$ 树，$C(\mathcal T)=\mathcal G$。定义递归解析器
+
+$$
+D(A)=\alpha,\qquad D(B)=\beta,\qquad
+D(\langle g_1,g_2\rangle)=\langle D(g_1),D(g_2)\rangle.
+\tag{ABT.31}
+$$
+
+则 $D(C(t))=t$ 对每个 $t\in\mathcal T$，且 $C(D(g))=g$ 对每个
+$g\in\mathcal G$。因此 $C$ 是从原树到其实际擦除像的有效双射。
+
+**证明。** 由原子替换律
+
+$$
+\rho^2\alpha=\langle\beta,\alpha\rangle,\qquad
+\rho^2\beta=\langle\rho\beta,\rho\alpha\rangle
+=\langle\langle\beta,\alpha\rangle,\beta\rangle
+$$
+
+得到 $C(\alpha)=A$、$C(\beta)=B$；配对处的分配律给出
+$C(\langle s,t\rangle)=\langle C(s),C(t)\rangle$。三种产生式互斥：$A$ 的两个
+孩子都是叶，$B$ 的左孩子是分支而右孩子是叶，$\langle g_1,g_2\rangle$ 的两个
+孩子都是分支，因为每个 $g\in\mathcal G$ 的根都是分支。故根类型给出唯一解析选择。
+对树和语法同时作结构归纳，得到 $D(C(t))=t$ 和 $C(D(g))=g$。归纳还给出
+算法终止性；这里的逆只在实际像 $\mathcal G$ 上声明。证毕。$\square$
+
+**推论 12.2（两步是固定擦除像的尖锐最小纪元）。** 在所有固定 $n\ge0$ 中，
+$\operatorname{sh}\circ\rho^n$ 在整个 $\mathcal T$ 上单射的最小值为 $n=2$。
+
+**证明。** $n=0$ 时两个叶 $\alpha,\beta$ 形状相同。$n=1$ 时
+$\rho\beta=\langle\beta,\alpha\rangle$ 与
+$\rho\langle\alpha,\alpha\rangle=\langle\beta,\beta\rangle$ 都擦成 $A$。
+定理 12.1 给出 $n=2$ 的单射性。这里的“最小”只针对固定纪元的无标签形状像，
+不把它提升为所有观察任务或所有带动作记录的全局最小性。证毕。$\square$
+
+### 12.2 精确深度桥与存在位的一个额外层
+
+**定理 12.3（擦除形状深度恰移一层）。** 对全部 $u,v\in\mathcal T$ 与
+$h\ge0$，有
+
+$$
+\boxed{
+ p_h(u)=p_h(v)
+ \iff
+ \operatorname{sh}_{\le h+1}(\rho^2u)
+ =\operatorname{sh}_{\le h+1}(\rho^2v).
+}
+\tag{ABT.32}
+$$
+
+等价地，在两步实际像上，存在位必须再支付一层：
+
+$$
+\boxed{
+ p_h(u)=p_h(v)
+ \iff
+ \operatorname{supp}_{h+2}(\rho^2u)
+ =\operatorname{supp}_{h+2}(\rho^2v).
+}
+\tag{ABT.33}
+$$
+
+**证明。** 在一个已知为原位置的地址，$C(\alpha)=A$、$C(\beta)=B$ 和
+$C(\langle s,t\rangle)=\langle C(s),C(t)\rangle$ 的根下两层模式分别为
+
+$$
+\alpha:00,\qquad \beta:10,\qquad
+\mathsf{branch}:11,
+\tag{ABT.34}
+$$
+
+其中两位是该局部码的 $LL,RL$ 存在位。于是形状在一层更深处恢复原节点的三值
+回复；一旦解出叶，就把所有原后继地址定为 absent，而不再解释当前像中可能新生的
+节点。沿已解出的原分支递归，得到从 $p_h$ 到形状半径 $h+1$ 的一方向。反向
+归纳时，原叶的 $A/B$ 码完全确定，原分支把两个子形状分别确定；所以形状半径
+$h+1$ 又唯一产生原四值表半径 $h$，包括叶下的 absence。两方向均保留同一有序
+出现地址，故得 (ABT.32)。
+
+对任意形状 $x,y$，存在集至半径 $r+1$ 确定形状至半径 $r$：在深度至 $r$
+的实际节点处，两个子地址都存在当且仅当该节点是分支；叶和 absent 由此区分。反向地，
+形状至半径 $r$ 确定存在集至半径 $r+1$，因为分支的两个子节点必存在、叶的严格
+后继均不存在。取 $r=h+1$ 与 (ABT.32) 合成即得 (ABT.33)。证毕。$\square$
+
+**命题 12.4（固定认证偶纪元的精确存在支撑半径）。** 令认证实际纪元
+$N=2k\ge2$，$k\ge1$。对所有 $u,v\in\mathcal T$ 与 $h\ge0$，
+
+$$
+\boxed{
+\operatorname{supp}_{h+k+1}(\rho^{2k}u)
+=\operatorname{supp}_{h+k+1}(\rho^{2k}v)
+\iff p_h(u)=p_h(v).
+}
+\tag{ABT.35}
+$$
+
+形状观察的对应半径为 $h+k$，而存在支撑的对应半径为 $h+k+1$。这里的
+$N$ 是同一原根寄存器上已认证的实际替换次数。
+
+**证明。** 置 $v_u=\rho^{2(k-1)}u$、$v_v=\rho^{2(k-1)}v$，在
+(ABT.33) 中取 $h'=h+k-1$，得到左侧等价于
+$p_{h+k-1}(v_u)=p_{h+k-1}(v_v)$。已有定理 8.2 的标记前缀移位给出
+
+$$
+\ker(P_{h+k-1}\circ\rho^{2(k-1)})=\ker P_h,
+$$
+
+因为 $h+k-1\ge k-1$。这正是右侧。注意这里复用的是带叶标签的既有 ABT8.2
+核等式；新增内容是将其接到擦除后的实际支撑像。证毕。$\square$
+
+### 12.3 两次付费存在查询的原位置解码器
+
+在认证 $N=2k$ 的当前寄存器上，对已经由祖先解码确认的原位置 $p$，提交
+恰好两次存在查询
+
+$$
+q_0(p)=pR^{k-1}LL,\qquad q_1(p)=pR^{k-1}RL.
+\tag{ABT.36}
+$$
+
+令 $b_i(p)=1$ 当且仅当当前寄存器在 $q_i(p)$ 有节点，反之为 $0$。在 $p$
+确为原位置的前提下，(ABT.34) 给出实际表
+
+$$
+\boxed{
+(b_0,b_1)=00\Rightarrow\alpha,\qquad
+10\Rightarrow\beta,\qquad
+11\Rightarrow\mathsf{branch}.
+}
+\tag{ABT.37}
+$$
+
+表 (ABT.37) 可由 $k$ 作归纳直接验证：$k=1$ 是 $A,B$ 的定义；每增加
+一个真实的两步替换，右脊 $R$ 把同一局部码移入下一层，而原分支的两个子树都保留
+为实际分支。命题 12.4 的前缀支持保证 $pR^{k-1}$ 在查询时已到达，不需要自由的
+选择器或回溯端口。
+
+解码器从根开始，只在已解码为 branch 时递归提交左右子地址的两次查询；若得到
+$00$ 或 $10$，该原位置是叶，所有原后继立即记为 absent。当前替换在叶下产生的
+新节点因此永远不被重分类为原后代。每个所需原位置恰有两次实际付费存在查询；对
+每个有限原树终止，但树大小无界时不产生统一的总调用界。查询保持原根和左右方向，
+也不恢复未认证的纪元或历史。
+
+### 12.4 前向相容、碰撞与范围
+
+在实际码像上定义
+
+$$
+\Theta(A)=B,\qquad \Theta(B)=\langle B,A\rangle,\qquad
+\Theta(\langle g_1,g_2\rangle)=\langle\Theta(g_1),\Theta(g_2)\rangle.
+\tag{ABT.38}
+$$
+
+则
+
+$$
+\boxed{\Theta(C(t))=C(\rho t)\quad(t\in\mathcal T).}
+\tag{ABT.39}
+$$
+
+证明只需在 $\alpha,\beta$ 两个产生元上用 (ABT.30)，在配对处用归纳；这是实际
+擦除码的一个前向 intertwining。它不是保留 DownL、DownR、Up、失败和历史记录的全类型
+动作同构，也没有引入逆替换。
+
+认证纪元是必要条件。相同当前树可以来自
+
+$$
+(\alpha,N=4)\quad\text{和}\quad(\rho^2\alpha,N=2),
+$$
+
+因为二者当前寄存器都为 $\rho^4\alpha$；任意当前形状支撑不能从这两个历史中
+恢复绝对纪元。左右方向同样不可删：忘掉 $L/R$ 时，
+$\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 的无向根支撑在
+每个纪元都由交换左右子树而碰撞，虽有序原树不同。故 (ABT.35) 的原根、认证偶纪元和
+有序根入射都是实质前提。
+
+这些结论只涉及离散地址半径和实际付费读数。它们不定义物理距离、自由端口、游标等级
+相等、经过时间、历史恢复或物理存储。形状同态/可识别性的经典背景可参照 Nász,
+*The Weighted HOM-Problem over Fields*（arXiv:2311.11067，非擦除树同态的
+可判性背景）以及 Berthé--Steiner--Thuswaldner--Yassawi,
+*Recognizability for sequences of morphisms*（arXiv:1705.00167，唯一反分解的
+可识别性背景）；这些文献没有被用来替代 (ABT.30)--(ABT.39) 的有限树证明，也不构成
+本卷的全球新颖性或优先权主张。
+
+## 追加锚（本行以下为增补区）
