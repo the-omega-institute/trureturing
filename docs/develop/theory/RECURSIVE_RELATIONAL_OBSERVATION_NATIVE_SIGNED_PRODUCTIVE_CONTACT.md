@@ -625,3 +625,1235 @@ undecidability or empirical learning conclusion is asserted.
 [MM]: https://arxiv.org/pdf/0904.2385v2
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Exact comparison of closed native presentations
+
+**Definition 7.1 (closed defining subsystem).** A closed presentation has
+finitely many named states $X_1,\ldots,X_m$ and one supplied definition
+
+$$
+X_i=\langle E_i,F_i\rangle\qquad(1\le i\le m).
+\tag{SPC.21}
+$$
+
+Expressions have finite syntax built from finite native grounds,
+$\Omega$, ordered pairing and $\rho^kX_j$, with fixed numeral $k\ge0$.
+Powers on compound expressions can first be distributed and evaluated
+on grounds; $\rho^k\Omega=\Omega$. Every state occurrence is under the
+displayed pair guard. Explicitly supplied finite ground definitions may
+be inlined before (SPC.21); no unspecified root-link normalization is
+assumed. There are no unknown free tree values or uninstantiated ranks.
+Repeated occurrences of a state denote one whole value.
+
+The presentation may retain finitely many further positive equations
+$A_l(\mathbf X)=B_l(\mathbf X)$ and image filters
+$C_l(\mathbf X)\in L_{s_l}$, where
+$L_s=\rho^s[\widehat{\mathcal T}]$ and each $s_l$ is a fixed numeral.
+The equations selected for (SPC.21) form a defining subsystem, not a
+choice between alternative productions. They must define every variable
+of every retained expression. All other equations and filters are
+conjuncts on its single generated valuation.
+
+**Theorem 7.2 (native two-argument grammar comparison).** The subsystem
+(SPC.21) has a unique completed valuation $\mathbf K$. Every expression
+in that valuation has an effective finite ground initial term in one
+finite deterministic first-order grammar. Its action semantics preserves
+every original-address reply, including absence. Equality of any two
+such expressions is decidable. For each fixed compiled grammar and
+fixed pair of initial terms one can compute a depth $H$ such that
+unequal native values already disagree at an original address of length
+at most $H$.
+
+Proof. The guarded existence and uniqueness argument is the one used
+in Theorem 4.2, now on a finite product. Matching original prefixes
+remain matching under every fixed native power. Pairing gains one
+level, so simultaneous iteration stabilizes every finite prefix
+independently of the seed and yields exactly one valuation. This is
+reuse of guarded interpreted recursion, not a new fixed-point principle.
+
+For completed native $a,b,t$, let $H_{a,b}(t)$ replace each alpha leaf
+of $t$ by $a$, each beta leaf by $b$, and preserve its ordered branches
+and infinite paths. Define finite two-variable constructor terms
+
+$$
+P_0(a,b)=a,\qquad P_1(a,b)=b,\qquad
+P_{k+2}(a,b)=\langle P_{k+1}(a,b),P_k(a,b)\rangle.
+\tag{SPC.22}
+$$
+
+In particular $P_k(\alpha,\beta)=T_k$. The two actual leaf laws,
+distribution through ordered pairs and composition of leaf replacement
+give
+
+$$
+H_{a,b}(\rho^k t)
+ =H_{P_k(a,b),P_{k+1}(a,b)}(t).
+\tag{SPC.23}
+$$
+
+For finite $t$ this follows by structural induction, with
+$H_{a,b}(\rho\alpha)=b$ and
+$H_{a,b}(\rho\beta)=\langle b,a\rangle$ as its two leaf cases.
+Iterating these cases gives (SPC.22). For a completed $t$, fill its
+successively deeper frontiers by finite leaves. Each fixed original
+prefix of either side stabilizes to the same reply as the corresponding
+finite replacement: neither native update nor leaf replacement changes
+an already specified branch prefix. Thus (SPC.23) holds also on infinite
+branches and on mixed finite/infinite trees. In particular
+$H_{a,b}(\Omega)=\Omega$. This identity is an intermediate operation
+correspondence, not a separate leaf-language representation result.
+
+Use ranked grammar symbols $\mathsf P$ of arity two, $G_i$ of arity
+two, and $\mathsf a,\mathsf b,\mathsf O,\mathsf D$ of arity zero.
+Translate expressions with two formal variables $a,b$ by
+
+$$
+\begin{aligned}
+\tau_{a,b}(\alpha)&=a,&
+\tau_{a,b}(\beta)&=b,&
+\tau_{a,b}(\Omega)&=\mathsf O,\\
+\tau_{a,b}(\langle A,B\rangle)
+ &=\mathsf P(\tau_{a,b}(A),\tau_{a,b}(B)),\\
+\tau_{a,b}(\rho^kX_j)
+ &=G_j(P_k(a,b),P_{k+1}(a,b)).
+\end{aligned}
+\tag{SPC.24}
+$$
+
+Here and below the $P_k$ in grammar terms use $\mathsf P$ in place
+of native pairing; a finite ground is translated by its finite tree.
+Introduce the rules
+
+$$
+\begin{aligned}
+G_i(a,b)&\xrightarrow{L}\tau_{a,b}(E_i),&
+G_i(a,b)&\xrightarrow{R}\tau_{a,b}(F_i),\\
+\mathsf P(a,b)&\xrightarrow{L}a,&
+\mathsf P(a,b)&\xrightarrow{R}b,\\
+\mathsf O&\xrightarrow{L}\mathsf O,&
+\mathsf O&\xrightarrow{R}\mathsf O,\\
+\mathsf a&\xrightarrow{o_\alpha}\mathsf D,&
+\mathsf b&\xrightarrow{o_\beta}\mathsf D.
+\end{aligned}
+\tag{SPC.25}
+$$
+
+The sink $\mathsf D$ has no rules. There are no other rules.
+The initial term for $A$ is
+$S_A=\tau_{\mathsf a,\mathsf b}(A)$.
+All powers are fixed before translation, so every $P_k$, rule and
+initial term is finite. Expanding (SPC.22) is sufficient for this
+finiteness assertion; no succinctness bound is required.
+
+To verify the semantics, interpret $\mathsf P$ as pairing,
+$\mathsf a,\mathsf b$ as the two leaves, $\mathsf O$ as $\Omega$,
+and $G_i(A,B)$ as $H_{\llbracket A\rrbracket,\llbracket B\rrbracket}(K_i)$.
+Identity (SPC.23) gives
+$\llbracket\tau_{a,b}(E)\rrbracket=H_{a,b}(E(\mathbf K))$
+after substituting any interpreted arguments. Consequently each $L$
+or $R$ rule returns exactly the corresponding whole native subtree.
+The only configurations reachable by $L,R$ from an initial term have
+either a branch with enabled actions $\{L,R\}$, an alpha leaf with
+enabled action $\{o_\alpha\}$, or a beta leaf with enabled action
+$\{o_\beta\}$. The sink is reached only after an observation marker.
+
+Induction on an address $p$ now proves: an $L,R$ path labelled $p$
+exists exactly when the native node at $p$ is reached, and its
+configuration has exactly that node's native label. If a leaf blocks
+the path, $p$ and all its extensions are absent. Thus the correspondence
+includes all four replies, rather than just reached leaf labels.
+The order of $L,R$ is fixed, and every occurrence of $X_i$ still uses
+the same $K_i$, even when its two leaf-image arguments differ.
+
+The grammar has the precise rule format of [Jančar, §2, (3)][FOG]:
+$A(x_1,\ldots,x_n)\xrightarrow{c}E$, with finite ranked alphabet,
+finite action alphabet, finite right side, and no variable outside
+$x_1,\ldots,x_n$. For each symbol and action there is at most one
+rule. The relevant labelled transition system is his action-based
+$\mathcal L^{\mathsf a}_{\mathcal G}$, which is deterministic here.
+All initial terms and all configurations reached in finitely many
+steps are finite ground terms. They are therefore regular syntactic
+terms in the sense required by his theorem. Unused arguments are
+permitted: the remark on shortest sink words in his §2 explicitly
+states that the proof needs no normalization making every argument
+reachable.
+
+Write $\sim_k$ for his $k$-round bisimulation approximants, with
+$\sim_0$ universal, and
+$\operatorname{el}(S,T)=\max\{k:S\sim_kT\}$, taking value $\omega$
+for bisimilar terms. In this grammar, for every $k\ge0$,
+
+$$
+S_A\sim_kS_B
+\quad\Longleftrightarrow\quad
+\forall |p|<k\quad r_{A(\mathbf K)}(p)=r_{B(\mathbf K)}(p).
+\tag{SPC.26}
+$$
+
+For $k=0$ both conditions are vacuous. At the next round the enabled
+actions distinguish the three reached labels. At equal branches their
+unique child transitions require the previous-round conditions on both
+children. At equal leaves the same observation marker reaches the same
+dead sink, while all native descendants are absent. This proves (SPC.26)
+by induction. A first discrepancy cannot be an absent/reached pair
+without an earlier ancestor discrepancy. Hence a first native mismatch
+at depth $d$ gives $\operatorname{el}(S_A,S_B)=d$, not $d+1$.
+Inclusive agreement through $h$ is $S_A\sim_{h+1}S_B$.
+Jančar's special convention for open variable terms is irrelevant:
+these configurations are ground.
+
+For completeness, let $n=\operatorname{Size}(S_A,S_B)$ be the number
+of nodes in their joint least syntactic graph presentation, allowing
+shared subterms. [Jančar, §3, Theorem 7][FOG] gives grammar-dependent
+computable numbers $c,\mathcal E$ such that
+
+$$
+S_A\not\sim S_B\quad\Longrightarrow\quad
+\operatorname{el}(S_A,S_B)
+ \le c\bigl(\mathcal E n+n^2\bigr).
+\tag{SPC.27}
+$$
+
+His term “small” for $c$ explicitly includes computability from the
+grammar; $\mathcal E$ is also computable. Thus one may take the integer
+ceiling of the right side for $H$. Any computable upper bound on $n$,
+such as the total size of the two finite syntax trees, also suffices.
+Agreement through inclusive $H$ forces equality, since it gives
+$\operatorname{el}\ge H+1$. Otherwise the finite prefix evaluator finds
+a discrepancy at depth at most $H$. Equivalently, [Corollary 8][FOG]
+decides bisimilarity directly, and the correspondence above transfers
+its answer to native equality. Neither computation presupposes
+rationality of the native output. $\square$
+
+**Corollary 7.3 (all retained closed positive equations and filters).**
+For Definition 7.1, consistency of the defining subsystem together with
+all the additional positive equations and fixed image filters is
+decidable. If consistent, it has exactly the valuation $\mathbf K$.
+
+Proof. Every solution of the conjunction must first solve (SPC.21),
+so must equal $\mathbf K$. Apply Theorem 7.2 to each additional
+$A_l(\mathbf K)=B_l(\mathbf K)$ and conjoin the answers. A second
+definition for the same head is therefore checked as an equality,
+not interpreted as another possible production. A failed comparison
+rejects this valuation; it does not authorize choosing independent
+values for its repeated state occurrences.
+
+Image tests remain separate conjuncts. Their decision here is an exact
+application of [NIS, Definition 3.1 and Proposition 4.3][NIS], with the
+following full correspondence. Its parameter tuple is empty: all grounds,
+atomic indices and powers are already fixed. There is exactly one
+defining equation per state, every state is defined, every recursive
+right side is explicitly pair-rooted, and the only other constructors
+are its permitted finite grounds, $\Omega$ and fixed native decorators.
+There are no free states and therefore one empty saturation mode;
+its canonical guarded extension is precisely $\mathbf K$. Each
+retained filter is literally an expression $C_l\in L_{s_l}$ of that
+definition, with a supplied finite threshold. Additional equations
+do not change this extension and are checked separately.
+Proposition 4.3's Presburger guard in an empty parameter tuple is a
+decidable truth value for the conjunction of these exact filters.
+This uses its closed functional canonical case only; no replacement
+of arbitrary shared unknowns by $\Omega$ or additional model-checking
+theorem is assumed.
+
+In particular, selecting a guarded subsystem from a larger equation
+list is valid for this consumer only when every variable is covered.
+An uncovered residual is still an existential tree variable, outside
+this corollary. The existence of some syntactic selection is a finite
+check on a supplied list; its existence for every acquired-input chart
+has not been proved. The bound (SPC.27) concerns fixed expressions and
+fixed numeric data, not elimination of unbounded rank parameters or a
+uniform depth bound for arbitrary acquired inputs. $\square$
+
+## 8. Original-address finite-state representation obstructions
+
+**Definition 8.1 (the supplied right-spine instance).** Specialize
+Definition 3.1 to
+
+$$
+F(y)=\langle\alpha,\rho y\rangle,\qquad
+U(x,y)=\langle x,\langle y,F(y)\rangle\rangle.
+\tag{SPC.28}
+$$
+
+The old cut is $P=\{\varepsilon\}$, with its entire one-reached-hole
+row. The literal history is exactly
+
+$$
+H_0=\{(0,\varepsilon,\mathsf{branch}),
+       (0,R,\mathsf{branch}),(0,RR,\mathsf{branch}),
+       (0,RRL,\alpha)\},
+\tag{SPC.29}
+$$
+
+and the signed history is exactly
+
+$$
+H_{\rm rel}=\{(1,RL,0,RRR,=),\ (0,RL,0,RR,\ne)\}.
+\tag{SPC.30}
+$$
+
+Retain $Q=\{L,RL,RR\}$ and certified final epoch $N=1$.
+Theorems 3.2–3.3 apply with the hole at $R$, not $L$:
+the entire fiber is all $U(x,y)$ with finite $x,y$, and its exact
+three complete target rows have the common numbered-hole exterior
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$,
+reached set $Q$, and partitions
+
+$$
+r_0:\{\{1,2\},\{3\}\},\qquad
+r_1:\{\{1,3\},\{2\}\},\qquad
+r_2:\{\{1\},\{2\},\{3\}\}.
+\tag{SPC.31}
+$$
+
+Take $B=\{r_0,r_1\}$. Its exact strata remain
+$D_0=\{U(y,y):y\in\mathcal T\}$ and
+$D_1=\{U(F(y),y):y\in\mathcal T\}$; $r_2$ is retained in the
+whole fiber. The positive record identifies the original $RRR$
+subtree with $\rho y$, since the epoch-one $RL$ subtree is $\rho y$.
+All its endpoints and both endpoints of the negative are reached.
+The finite inequality $y\ne F(y)$ is the leaf-count inequality
+(SPC.16). Thus this instance uses the entire supplied source family,
+not unconstrained names for infinite trees.
+
+Let $y_n=F^n(\beta)$. The actual finite witnesses from (SPC.18) are
+$U(y_n,y_n)$ and $U(y_{n+1},y_n)$, retaining every literal, sign and
+complete row, with discrepancy depth at least $n+1$. Taking $n=h+1$
+suffices for every inclusive $h$. Under ARH Assumption 1.3 they are
+alternative originals for the one source-total paid producer of
+Theorem 3.2. This remains a supplied acquisition and complete-state
+factoring premise, not a measurement of actual acquisition or cost.
+
+Theorem 4.2 identifies their common contact set as the singleton
+$\{W\}$, where
+
+$$
+K=\langle\alpha,\rho K\rangle,\qquad
+W=\langle K,\langle K,K\rangle\rangle.
+\tag{SPC.32}
+$$
+
+For comparison, Theorem 7.2 represents this same non-rational $K$
+by the finite binary-state rules
+
+$$
+G(a,b)\xrightarrow{L}a,\qquad
+G(a,b)\xrightarrow{R}G(b,\mathsf P(b,a)),
+\quad\text{initial term }G(\mathsf a,\mathsf b).
+\tag{SPC.33}
+$$
+
+After $j$ right actions the configuration is
+$G(P_j(\mathsf a,\mathsf b),P_{j+1}(\mathsf a,\mathsf b))$.
+Consequently, in original coordinates,
+
+$$
+K|_{R^j}=\rho^jK,\qquad K|_{R^jL}=T_j,\qquad
+W|_{LR^jL}=T_j\qquad(j\ge0).
+\tag{SPC.34}
+$$
+
+The first two equations also follow directly by distributing
+$\rho^j$ through (SPC.32): its right child becomes $\rho^{j+1}K$
+and its left child becomes $\rho^j\alpha$. In particular the side
+index is $j$, while its address in $W$ has length $j+2$.
+The grammar's finite syntax and finite initial term do not make its
+unbounded sequence of configurations, or its expanded native output,
+a finite native subtree graph.
+
+**Theorem 8.2 (no nonempty sound ordinary parity contact output).**
+Pad every native completion by its absent replies to obtain a full
+binary tree over
+$\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$ at the original
+addresses. No ordinary nondeterministic finite-state parity tree
+automaton has a nonempty accepted language contained in the padded
+contact set of Definition 8.1.
+
+More quantitatively, if a valid native tree $V$ is generated by a
+rooted deterministic labelled graph with at most $q\ge1$ reachable
+vertices, then
+
+$$
+V\not\equiv_{\,2q+2}W.
+\tag{SPC.35}
+$$
+
+The same bound holds when “at most $q$ vertices” is replaced by “at
+most $q$ distinct native whole subtrees”. A nonempty $q$-state parity
+language consisting of valid native padded trees cannot be contained
+even in the cylinder of agreement with $W$ through depth $2q+2$.
+
+Proof. First fix the regular-witness implication used here. For an
+ordinary top-down parity automaton, a transition chooses a node label
+and two successor states. Its nonemptiness game has existential
+vertices at states and universal vertices at the chosen transitions;
+the universal player chooses the child. An accepted labelled tree and
+its run give a winning strategy by following that run at the address
+specified by the successive child choices. The game is finite and
+has finitely many priorities; a state with no legal transition leads
+to a losing odd sink. Give each transition vertex the priority
+of its preceding state so that inserting these vertices does not
+change the parity condition.
+
+[Le Roux, §3, Theorem 3][PARITY] supplies a positional winning
+strategy, using the convention that the largest priority seen
+infinitely often is even. The other usual parity convention is
+equivalent by renumbering priorities. The positional strategy chooses
+one fixed label and pair of successors for every reached state.
+Unfolding these choices gives an accepted padded tree with at most
+$q$ distinct rooted padded subtrees. If the accepted language is
+contained in valid padded native trees, this witness is valid, and
+its reached native subtree values number at most $q$. This verifies
+the regular-witness property at the precise output encoding in use.
+
+Definition 8.1 and Theorem 4.2 give the contact set $\{W\}$ and its
+non-rationality. Any nonempty sound accepted language would therefore
+contain $W$ and, by the preceding implication, an accepted rational
+native tree equal to $W$, a contradiction. This argument needs only
+a nonempty sound subset, rather than an exact enumeration of contacts.
+
+For the explicit prefix bound, ABC's supplied atomic recurrence and
+index injectivity give distinct $T_0,\ldots,T_q$. Their heights obey
+$\operatorname{ht}(T_0)=\operatorname{ht}(T_1)=0$ and
+$\operatorname{ht}(T_j)=j-1$ for $j\ge1$, directly by
+$T_{j+2}=\langle T_{j+1},T_j\rangle$ and the height of a pair.
+Thus $\operatorname{ht}(T_j)\le j$. If $V\equiv_{2q+2}W$, every
+subtree in (SPC.34) for $0\le j\le q$ is visible in full, since
+
+$$
+|LR^jL|+\operatorname{ht}(T_j)
+\le (j+2)+j\le2q+2.
+\tag{SPC.36}
+$$
+
+Matching the displayed leaves makes the entire subtree exactly $T_j$:
+validity forbids additional reached descendants below those leaves.
+So $V$ contains at least $q+1$ different native whole subtrees.
+This proves (SPC.35). A graph with $q$ reachable vertices has at most
+$q$ such values. The regular witness above then proves the cylinder
+claim for a $q$-state parity language. This is an inclusive-depth
+bound for a representation class, not a depth excluding $J_B$:
+the actual finite witnesses exist at every depth. $\square$
+
+**Theorem 8.3 (raw support and regular auxiliary-track boundary).**
+Use finite partial native trees
+$p::=\#\mid\alpha\mid\beta\mid\langle p,p\rangle$.
+Each $\#$ is an independent unfinished frontier position.
+Write $p\preceq u$ when every displayed native node agrees with $u$;
+a displayed leaf also fixes absence at its strict descendants. Put
+
+$$
+\mathcal S_B=
+\{p:\exists(u_r)_{r\in B}\in\prod_{r\in B}D_r
+                   \quad\forall r\in B\ p\preceq u_r\}.
+\tag{SPC.37}
+$$
+
+For the entire signed instance of Definition 8.1, $\mathcal S_B$
+is not a regular finite ranked-tree language. In particular no exact
+certificate language regular in a canonical padded convolution of
+finitely many finite-tree tracks can have $\mathcal S_B$ as its
+projection onto the unaltered partial-prefix track.
+
+Proof. The language is downward closed under replacing displayed
+subtrees by $\#$, because the same simultaneous whole sources still
+witness membership. Membership at any supplied $p$ uses the already
+supplied NSF finite observation decision: impose its displayed nodes
+on one original per row and keep that original's entire $D_r$.
+This reuse asserts neither regularity nor a new finite-feasibility
+theorem.
+
+Suppose a complete deterministic bottom-up automaton recognizes
+$\mathcal S_B$. Determinization permits this assumption for any
+ordinary regular finite-tree presentation. Let $p_n(W)$ retain the
+native nodes of $W$ through inclusive depth $n$, putting $\#$ at
+the next reached frontier. Because $W$ is a common closure point,
+every $p_n(W)$ belongs to $\mathcal S_B$.
+
+Run the automaton on these accepted finite trees. For every reached
+address $v$ of $W$, its bottom-up state is defined for all sufficiently
+large $n$. Enumerate those countably many addresses and successively
+take infinite subsequences on which their states are constant.
+A diagonal subsequence yields states $q(v)$, with an accepting
+$q(\varepsilon)$ and with the native transition identities at every
+branch and leaf of $W$. For each state that occurs, there is a finite
+partial-tree representative $t_q$ having that state: take the subtree
+at a suitable occurrence in a sufficiently late $p_n(W)$.
+
+For each occurring state choose one native-labelled transition
+witnessed at one of its occurrences in $W$. These choices define a
+finite graph: its vertex $q$ has that label, and, at a branch, the
+two chosen child states. Its unfolding $V$ from $q(\varepsilon)$
+is a valid rational native tree with no $\#$ labels. For any finite
+truncation of $V$, fill its unfinished frontier positions by the
+representatives $t_q$ of their intended states. The resulting finite
+partial tree has accepting root state, so is in $\mathcal S_B$.
+Downward closure, replacing these fillers by $\#$ again, puts the
+truncation itself in $\mathcal S_B$.
+
+Every prefix of $V$ therefore has simultaneous actual witnesses in
+all the exact row fibers. Hence
+$V\in\overline{D_0}\cap\overline{D_1}=\{W\}$. This contradicts
+the supplied non-rationality of $W$. The argument uses the exact
+downward-closed support; it does not assume that accepted partial
+trees satisfy their signs at an infinite limit.
+
+Finally, projection of a regular finite-tree language through a
+linear, possibly erasing tree homomorphism is regular. Forgetting
+finitely many auxiliary coordinates in canonical convolution, and
+pruning padding below a nullary symbol of the prefix track, is
+such a projection. Thus an exact regular certificate language with
+that projection would make $\mathcal S_B$ regular, a contradiction.
+Finite auxiliary regular tracks can encode local annotations and
+bounded certificates; they cannot give this exact raw support
+projection. On infinite padded contact outputs their ordinary
+existential parity projection is likewise a parity language, so
+Theorem 8.2 also excludes a nonempty sound contact-output projection.
+
+The claims require these regular projections onto original addresses.
+They exclude neither nonregular decoders, richer encodings, global
+constraint automata nor interpreted parameter grammars such as
+(SPC.33). They also make no claim against a decision procedure whose
+output is a truth value and finite witnesses at requested depths,
+without a finite-state contact output. $\square$
+
+## 9. Separate owned lifts above one original prefix
+
+**Definition 9.1 (a bare-shift entire input and refinement).** Put
+$V(x,y,z)=\langle x,\langle y,z\rangle\rangle$.
+Take $P=\{\varepsilon\}$ with its complete one-hole old row,
+$Q=\{L,RL,RR\}$, $N=1$, and exactly
+
+$$
+\begin{aligned}
+H_0&=\{(0,\varepsilon,\mathsf{branch}),(0,R,\mathsf{branch})\},\\
+H_{\rm rel}
+ &=\{(1,L,0,RR,=),\ (0,L,0,RR,\ne)\}.
+\end{aligned}
+\tag{SPC.38}
+$$
+
+This is the bare shift $z=\rho x$, rather than the proper-context
+map $F$ of Definition 8.1.
+
+For a general complete acquired input and finite set $B$ of at least
+two distinct attained whole rows, retain the exact finite fibers $D_r$
+and write
+
+$$
+J_B(h)\iff
+\exists(u_r)_{r\in B}\in\prod_{r\in B}D_r
+              \quad\forall r,s\in B\ u_r\equiv_hu_s.
+\tag{SPC.39}
+$$
+
+A compact Hausdorff refinement consists of a compact Hausdorff space
+$Z$, a map $j:\mathcal T\to Z$, and a continuous
+$\pi:Z\to\widehat{\mathcal T}$ with $\pi(j(u))=u$.
+For each row take the closure of its entire jointly constrained
+realizations,
+$C_r=\overline{j(D_r)}^{\,Z}$.
+
+**Theorem 9.2 (exact owned-lift condition and strict native separation).**
+For every such refinement,
+
+$$
+\begin{aligned}
+\forall h\ J_B(h)
+&\quad\Longleftrightarrow\quad
+ \bigcap_{r\in B}\pi(C_r)\ne\varnothing\\
+&\quad\Longleftrightarrow\quad
+ \exists W\ \exists(\xi_r)_{r\in B}\in\prod_{r\in B}C_r
+       \quad\forall r\in B\ \pi(\xi_r)=W.
+\end{aligned}
+\tag{SPC.40}
+$$
+
+The lifts $\xi_r$ are separate row-specific points. They cannot in
+general be required to coincide: the entire input (SPC.38) admits
+two attained complete rows with all-depth actual finite witnesses
+and a regular finite-valued source refinement for which
+$C_0\cap C_1=\varnothing$ although
+$\pi(C_0)\cap\pi(C_1)\ne\varnothing$.
+
+Proof. The valid four-reply completion is a closed subset of the
+product of a finite discrete alphabet over all finite addresses.
+Validity is imposed by the root condition and the local conditions
+on children of branches, leaves and absent nodes. It is compact
+Hausdorff, with clopen inclusive-prefix cylinders.
+For each $h$, the union of the depth-$h$ cylinders realized by every
+$D_r$ is a finite union of clopen cylinders. These sets are nested
+and are nonempty exactly when $J_B(h)$ holds. Compactness therefore
+gives
+
+$$
+\forall h\ J_B(h)
+\quad\Longleftrightarrow\quad
+\bigcap_{r\in B}\overline{D_r}^{\,\widehat{\mathcal T}}
+ \ne\varnothing.
+\tag{SPC.41}
+$$
+
+Conversely a point in that intersection supplies, at each requested
+$h$, one finite source from each exact row in its cylinder.
+There are finitely many rows, so these choices form the required
+simultaneous tuple.
+
+The standard compact-image identity is
+
+$$
+\pi\!\left(\overline{j(D_r)}^{\,Z}\right)
+       =\overline{D_r}^{\,\widehat{\mathcal T}}.
+\tag{SPC.42}
+$$
+
+Continuity proves inclusion into the right side; compactness of
+$C_r$ and the Hausdorff target make its image closed and containing
+$D_r$, proving the reverse inclusion. This is reuse of compact-image
+topology, not a new compactness theorem. Equations (SPC.41)–(SPC.42)
+prove (SPC.40), with one preimage chosen separately for each row.
+A finite common $W$ is impossible for distinct rows: the cylinder
+displaying every leaf of a finite tree isolates that same finite
+source, whose complete target row is unique.
+
+For the strict source-faithful instance, use the already supplied
+right clock
+
+$$
+c(\alpha)=0,\quad c(\beta)=1,\quad
+c(\langle s,t\rangle)=2+c(t),\qquad
+c(\rho^k t)=c(t)+k.
+\tag{SPC.43}
+$$
+
+The last identity is [DelayedOriginalReadout,
+right_clock_iterate][CLOCK], also supplied as
+[NativePrefixIdentityReflection, kappa_iterate][KAPPA].
+Let $\chi(t)=c(t)\bmod2$. Its quotient has
+$\chi(\langle s,t\rangle)=\chi(t)$ and
+$\chi(\rho t)=1-\chi(t)$; in particular $t\ne\rho t$
+for every finite native $t$. No clock identity or its private
+one-step helper is reproved here.
+
+The two branch literals in (SPC.38) give exactly
+$u=V(x,y,z)$ with all three original holes reached. The epoch-one
+subtree at $L$ is $\rho x$, because the original root branch survives.
+Thus its positive record gives $z=\rho x$. Its negative record is
+$x\ne z$, which holds for every finite $x$ by (SPC.43), with both
+original endpoints reached. Conversely every $V(x,y,\rho x)$
+satisfies the entire old row, both literals and both guarded records.
+Hence the whole original fiber is exactly
+
+$$
+D=\{V(x,y,\rho x):x,y\in\mathcal T\}.
+\tag{SPC.44}
+$$
+
+The complete $Q$-exterior is
+$V(\square_1,\square_2,\square_3)$, with every hole reached.
+Because $x\ne\rho x$, the two selected whole rows and their exact
+fibers are
+
+$$
+\begin{aligned}
+r_0&:\{\{1,2\},\{3\}\},&
+D_0&=\{V(t,t,\rho t):t\in\mathcal T\},\\
+r_1&:\{\{1\},\{2,3\}\},&
+D_1&=\{V(t,\rho t,\rho t):t\in\mathcal T\}.
+\end{aligned}
+\tag{SPC.45}
+$$
+
+Both are attained. The remaining possible partition is all singleton
+classes, attained for example by
+$x=\alpha,y=\langle\alpha,\alpha\rangle,z=\beta$.
+It remains in $D$; no row or exterior has been discarded.
+ARH Proposition 2.1 supplies one source-total paid producer for these
+fixed public records, on the same original register through epoch one,
+conditional on its complete accessible-state cut. Each displayed
+source produces that same retained input. The traversal and comparison
+costs are sourcewise finite, with no claimed uniform bound. The common
+producer and cut remain premises and supply no extra clock port.
+
+Given an inclusive depth $h$, choose the actual finite trees
+
+$$
+t_h=T_{2h+2},\qquad
+u_h^0=V(t_h,t_h,\rho t_h),\qquad
+u_h^1=V(t_h,\rho t_h,\rho t_h).
+\tag{SPC.46}
+$$
+
+By [NLC, Lemma 3.1][NLC], both $t_h$ and
+$\rho t_h=T_{2h+3}$ have minimum leaf depth $h+1$.
+Every reply of both whole originals through depth $h$ is therefore
+branch. They lie in the two exact fibers (SPC.45), so satisfy every
+retained sign, guard and whole partition at that finite depth.
+As $h$ increases both converge in original prefixes to the all-branch
+tree $\Omega$.
+
+Define the additional finite source predicate
+
+$$
+E(u)=
+\begin{cases}
+1,&u=V(x,y,z)\text{ and }\chi(x)=\chi(y),\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{SPC.47}
+$$
+
+It is an ordinary regular finite-tree test. A bottom-up state can
+store the rightmost-leaf bit $\chi$, whether its root is a branch,
+and, at a branch, the bit of its left child. At the root these
+finitely many data decide whether the right child is a branch and
+whether the bits of $x$ and $y$ agree. Thus $E$ does not depend
+on an unverified automata recognition theorem for native histories.
+It equals $1$ throughout $D_0$ and $0$ throughout $D_1$, since
+$\chi(\rho t)=1-\chi(t)$.
+
+Now let
+
+$$
+Z=\overline{\{(u,E(u)):u\in\mathcal T\}}
+          ^{\,\widehat{\mathcal T}\times\{0,1\}},
+\qquad j(u)=(u,E(u)),\qquad \pi(w,e)=w.
+\tag{SPC.48}
+$$
+
+This is a compact Hausdorff refinement. The two row closures are
+contained respectively in the disjoint closed color slices $e=1$
+and $e=0$. Thus $C_0\cap C_1=\varnothing$.
+The finite sequences (SPC.46) converge after lifting to
+$(\Omega,1)\in C_0$ and $(\Omega,0)\in C_1$, respectively.
+Both project to $\Omega$. Therefore
+
+$$
+\pi(C_0\cap C_1)=\varnothing
+\quad\text{but}\quad
+\Omega\in\pi(C_0)\cap\pi(C_1).
+\tag{SPC.49}
+$$
+
+The predicate $E$ is an auxiliary mathematical refinement, not an
+additional observed field in the acquired input (SPC.38). If such a
+field were accessible at the cut it would change that input's fiber.
+Here its two limiting values distinguish alternative originals.
+Within each original all occurrences of $x$, its update $\rho x$,
+its row equalities and the entire signed list still share their
+one source. The separation therefore refutes cross-alternative
+identification of refined points, not same-source sharing.
+In particular $\rho\Omega=\Omega$ does not invalidate the finite
+negative in (SPC.38); that negative was checked on (SPC.46), not
+at the contact. $\square$
+
+## 10. Transfer conditions and the remaining joint support problem
+
+**Open problem 10.1 (unrestricted finite signed support).** For every
+complete acquired input $I=(P,R,H_0,H_{\rm rel},Q,N)$ and every supplied
+finite set $B$ of at least two distinct attained whole rows, decide
+between a finite $H$ with $\neg J_B(H)$ and actual simultaneous finite
+realizations for every requested depth. The whole old row, concrete exterior, reached
+holes, complete partitions, all actual-epoch records and off-task
+constraints remain imposed. This is the unchanged unrestricted
+obligation, not a restriction to closed systems, rational contacts
+or two rows.
+
+Theorem 7.2 supplies exact comparison after a closed native valuation
+has been faithfully presented. Corollary 7.3 checks every additional
+positive equation on that one valuation and retains fixed image
+filters at their explicit NIS scope. Neither result synthesizes
+assignments to existential shared residuals, eliminates unbounded
+correlated ranks, or proves that arbitrary exact row-fiber contacts
+admit these presentations.
+
+Theorem 8.2 excludes ordinary finite-state original-address contact
+outputs even when only a nonempty sound subset is requested.
+Theorem 8.3 gives the corresponding obstruction to exact downward-closed
+raw prefix certificates with regular projections. These obstructions
+favor retaining stronger symbolic descriptions, including carried
+parameters, instead of requiring a finite native subtree graph.
+They do not exclude a terminating algorithm that never outputs
+a contact.
+
+Equation (SPC.40) fixes how such descriptions may be combined: keep
+each source's whole joint constraint relation and its own refined lift,
+and identify only the common original-prefix projection across rows.
+The next missing theorem is a completeness or density/lifting theorem
+for arbitrary finite signed witnesses, preserving multiple positive
+definitions, repeated values, images, ranks and all reached guards
+simultaneously. Closure of the actual jointly constrained finite
+realizations cannot be replaced by an intersection of separate
+conjunct closures, a product of marginal source states, or the set
+of completed positive solutions without that theorem. Finite
+disequalities can escape to increasing addresses and are evaluated
+on the finite witnesses only.
+
+Once a justified all-depth conclusion is available, the existing NSF
+supplied-depth procedure extracts the requested finite tuple. Merely
+running it at successive depths, enumerating closed grammars without
+a completeness theorem, or invoking compactness does not decide the
+unrestricted alternative. Actual paid acquisition, complete accessible
+state factoring and all action/resource quantities of Definition 5.3
+remain separate supplied premises and obligations.
+
+**Definition 10.2 (source and increment attribution).** The following
+correspondences distinguish reused results from the deductions here.
+
+| Source | Exact use and limit |
+| --- | --- |
+| Theorems 3.2–3.3 and 4.2 of this volume | Entire shifted-context source family, finite signed witnesses, singleton non-rational contact and its side ladder. Section 8 adds the parity-output and quantitative prefix obstruction, and the raw-support projection consequence; it does not claim a new contact family. |
+| [Jančar, §2, rule (3); §3, Theorem 7 and Corollary 8][FOG] | Literature-attested equivalence and computable equivalence-level bound for first-order grammars. Section 7 supplies the native two-leaf-image correspondence, exact absence semantics and closed conjunctive equation consumer. Regular syntactic configurations and non-rational generated native trees are distinct. |
+| [Le Roux, §3, Theorem 3][PARITY] | Literature-attested positional parity determinacy, used in the finite nonemptiness game to obtain a regular accepted output. The new native consequence uses the entire SPC signed family and its exact original-address encoding. |
+| [NIS, Definitions 3.1 and 4.1, Proposition 4.3][NIS] | Image filters only for the explicitly closed, fixed-data, empty-free-state canonical extension in Corollary 7.3. No general free-state saturation or arbitrary multiple-definition solver is transferred. |
+| [NSF, Theorem 4.3, Lemma 5.1 and Theorem 5.2][NSF] | Finite native existential queries, original-source reconstruction and supplied-depth witnesses are reused. Witness templates are not an all-solution contact presentation. |
+| [NativeDepthPatterns, depthEquiv][DEPTH]; [NativeCutFibers, rowFiberEquiv][FIBERS] | Existing exact prefix/frontier and whole-row correspondences underpin the reused NSF source compilation. Their private inverse helpers remain part of those suppliers, not new proofs here. |
+| [DelayedOriginalReadout, right_clock_iterate][CLOCK]; [NativePrefixIdentityReflection, kappa_iterate][KAPPA]; [NLC, Lemma 3.1][NLC] | Existing clock transport, its parity quotient, and atomic minimum depth supply the bare-shift counterexample's finite signs and witnesses. The increment is its entire acquired-input mapping and the strict separation of refined row lifts above one projected contact. |
+| Compact-image topology | The closed-image identity in (SPC.42) is standard reuse. It yields no effective presentation of $C_r$ and no decision of projected intersections. |
+
+The operation correspondence, representation obstructions and
+source-faithful gluing constraint are repo-derived deductions using
+these suppliers. They are ordinary mathematical arguments, without
+an external-priority, undecidability, physical-realization or
+kernel-verification assertion. Finite syntax supplies no absolute
+atomic minimality or physical spacetime/dimension conclusion.
+
+[FOG]: https://arxiv.org/html/1812.03518v2
+[PARITY]: https://arxiv.org/html/1803.00655v2
+[NIS]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_SATURATION.md
+[CLOCK]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[KAPPA]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePrefixIdentityReflection.lean
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[FIBERS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+
+## 追加锚（本行以下为增补区）
+
+## 11. Pairwise persistence with least triple failure at depth three
+
+**Definition 11.1 (one entire acquired four-hole input).** In the native
+algebra of Definition 1.1 put
+
+$$
+\begin{aligned}
+F(y)&=\langle\alpha,\rho y\rangle,\\
+G(y)&=\langle\alpha,\rho^2y\rangle,\\
+U_*(x,y)&=\langle x,\langle y,\langle F(y),G(y)\rangle\rangle\rangle.
+\end{aligned}
+\tag{SPC.11.1}
+$$
+
+Here $F$ is the proper-context map of Definition 8.1, and $G$ has
+the same context with shift two. All occurrences of $y$ within
+one source denote that same whole native value.
+
+Take $P=\{\varepsilon\}$ with its complete one-hole old row,
+authentic final epoch $N=2$, and the target cut
+
+$$
+Q=\{L,RL,RRL,RRR\},
+\tag{SPC.11.2}
+$$
+
+numbered in that order. Retain exactly
+
+$$
+\begin{aligned}
+H_0=\{&(0,\varepsilon,\mathsf{branch}),
+       (0,R,\mathsf{branch}),
+       (0,RR,\mathsf{branch}),\\
+      &(0,RRL,\mathsf{branch}),
+       (0,RRR,\mathsf{branch}),\\
+      &(0,RRLL,\alpha),(0,RRRL,\alpha)\},\\
+H_{\rm rel}=\{&
+ (1,RL,0,RRLR,=),\
+ (2,RL,0,RRRR,=),\\
+ &(0,RL,0,RRL,\ne),\
+ (0,RL,0,RRR,\ne),\
+ (0,RRL,0,RRR,\ne)\}.
+\end{aligned}
+\tag{SPC.11.3}
+$$
+
+There are no other constraints in this instance. The entire old
+row, all listed literal and signed records, both reached guards
+for every relation, and Definition 1.2's supplied paid-source
+complete-state contract are retained. Epochs zero, one and two
+refer to the same original register.
+
+**Theorem 11.2 (entire fiber, exact reconstruction and every row).**
+The input of Definition 11.1 has exactly the entire original fiber
+
+$$
+D_*=\{U_*(x,y):x,y\in\mathcal T\}.
+\tag{SPC.11.4}
+$$
+
+Its complete target-row image consists of exactly four attained
+labels. All have reached set $Q$ and the entire exterior
+
+$$
+\langle\square_1,
+ \langle\square_2,\langle\square_3,\square_4\rangle\rangle\rangle.
+\tag{SPC.11.5}
+$$
+
+Their partitions and entire strata are
+
+$$
+\begin{aligned}
+r_0&:\{\{1,2\},\{3\},\{4\}\},&
+D_0&=\{U_*(y,y):y\in\mathcal T\},\\
+r_1&:\{\{1,3\},\{2\},\{4\}\},&
+D_1&=\{U_*(F(y),y):y\in\mathcal T\},\\
+r_2&:\{\{1,4\},\{2\},\{3\}\},&
+D_2&=\{U_*(G(y),y):y\in\mathcal T\},\\
+r_3&:\{\{1\},\{2\},\{3\},\{4\}\},&
+D_3&=\{U_*(x,y):x,y\in\mathcal T,\
+                    x\ne y,\ x\ne F(y),\ x\ne G(y)\}.
+\end{aligned}
+\tag{SPC.11.6}
+$$
+
+Every source in each right-hand set satisfies the complete original
+input and its stated row. Conversely every source satisfying that
+input and row is reconstructed as the same original source in that
+set, with its original whole values.
+
+Proof. The seven epoch-zero literals force precisely a decomposition
+
+$$
+u=\langle x,\langle y,
+        \langle\langle\alpha,z\rangle,
+               \langle\alpha,w\rangle\rangle\rangle\rangle
+\tag{SPC.11.7}
+$$
+
+with $x,y,z,w\in\mathcal T$. To see the entire direction, the branch
+literals at $\varepsilon,R,RR$ force the first three pairings.
+Those at $RRL,RRR$ force their two child pairings, and the literals
+at $RRLL,RRRL$ fix the displayed alpha leaves. Their other children
+are exactly $z,w$, without any extra restrictions. These values
+are the actual subtrees of the original $u$.
+
+All the strict original ancestors of $RL$ are branches.
+They survive every update, so
+
+$$
+(\rho u)|_{RL}=\rho y,\qquad
+(\rho^2u)|_{RL}=\rho^2y.
+\tag{SPC.11.8}
+$$
+
+The original addresses $RRLR,RRRR$ are reached by the displayed
+branch skeleton. Thus the two positive records, including their
+guards, force $z=\rho y$ and $w=\rho^2y$. The relation endpoint
+values after this substitution are exactly:
+
+| Retained record | First reached whole value | Second reached whole value |
+| --- | --- | --- |
+| $(1,RL,0,RRLR,=)$ | $\rho y$ | $\rho y$ |
+| $(2,RL,0,RRRR,=)$ | $\rho^2y$ | $\rho^2y$ |
+| $(0,RL,0,RRL,\ne)$ | $y$ | $F(y)$ |
+| $(0,RL,0,RRR,\ne)$ | $y$ | $G(y)$ |
+| $(0,RRL,0,RRR,\ne)$ | $F(y)$ | $G(y)$ |
+
+Every listed original endpoint is reached in (SPC.11.7), and the
+two nonzero-epoch endpoints remain reached by (SPC.11.8). Both
+guards are therefore established for every record on the whole
+displayed domain, before its sign is checked.
+
+The proper-context leaf-count argument (SPC.16), applied to
+$C[z]=\langle\alpha,z\rangle$ with shifts one and two, gives
+
+$$
+\ell(F(y))=1+\ell(\rho y)>\ell(y),\qquad
+\ell(G(y))=1+\ell(\rho^2y)>\ell(y).
+\tag{SPC.11.9}
+$$
+
+Thus the first two negatives hold for every finite $y$.
+For the third, use the existing finite right clock (SPC.43):
+
+$$
+c(\rho y)=c(y)+1,\qquad c(\rho^2y)=c(y)+2.
+$$
+
+These whole values differ. Free ordered pairing then gives
+$F(y)\ne G(y)$. The clock transport is the supplied
+[DelayedOriginalReadout, right_clock_iterate][CLOCK], equivalently
+[NativePrefixIdentityReflection, kappa_iterate][KAPPA];
+no new clock law is required.
+
+Consequently every $U_*(x,y)$ has the old root row, every literal
+in (SPC.11.3), both positive records, and all three finite negatives
+with their guards. Conversely (SPC.11.7)–(SPC.11.8) recover that
+very original source as $U_*(x,y)$. This proves (SPC.11.4) in both
+directions; no witness subset replaces its entire fiber.
+
+All four target holes are reached. Their values are
+$x,y,F(y),G(y)$, of which the last three are pairwise distinct.
+The first value can equal exactly one of those three or none.
+These are all and only the partitions in (SPC.11.6), with precisely
+the displayed conditions. The first three rows are attained for
+every finite $y$. For the all-singleton row take $x=\alpha,y=\beta$:
+the last two values are branches and the second is beta, all
+different from alpha. This proves attainment and exhausts the
+complete row image, including its concrete exterior.
+
+For actual acquisition the finite public schedule in
+[ARH, Proposition 2.1][ARH] uses precisely the coordinates of
+(SPC.11.3), the old root cut, and final epoch two. It acquires
+the epoch-zero literals and endpoint descriptions, then the
+epoch-one $RL$ description, then the epoch-two $RL$ description
+on the same register. The two later descriptions are compared
+with their previously acquired original counterparts before the
+stipulated complete cut. Every source in (SPC.11.4) gives the
+stated signs and replies, hence the same retained input under
+ARH Assumption 1.3. The converse source correspondence is that
+supplier's complete-state premise, instantiated with these
+coordinates. Paid acquisition is sourcewise finite; this
+argument supplies no uniform cost or free comparison port.
+$\square$
+
+**Theorem 11.3 (persistence of every selected pair).** For each
+two-element $A\subseteq\{r_0,r_1,r_2\}$ and every $h\in\mathbb N$,
+
+$$
+J_A(h).
+\tag{SPC.11.10}
+$$
+
+Here $J_A$ is (SPC.39) on the entire strata (SPC.11.6).
+All witnesses are finite originals satisfying the entire input
+of Definition 11.1.
+
+Proof. For $r_0,r_1$, put $y_t=F^t(\beta)$.
+The native prefix estimate (SPC.9), followed by the proper
+context's one-edge guard, gives
+
+$$
+\delta(F(s),F(t))\ge\delta(s,t)+1.
+$$
+
+This is the guarded-prefix supplier used in Theorem 3.3 with
+$C[z]=\langle\alpha,z\rangle$ and $a=1$.
+Since $\delta(\beta,F(\beta))=0$, its iteration gives
+$\delta(y_t,y_{t+1})\ge t$. The two sources
+
+$$
+U_*(y_t,y_t)\in D_0,\qquad
+U_*(y_{t+1},y_t)\in D_1
+\tag{SPC.11.11}
+$$
+
+share their entire right subtree. Their only differences occur
+below the original $L$ hole, so their first discrepancy has depth
+at least $t+1$. Taking $t=h+1$ proves $J_{\{r_0,r_1\}}(h)$.
+
+For $r_0,r_2$, put $z_t=G^t(\beta)$.
+The same supplier with shift two gives
+
+$$
+\delta(G(s),G(t))\ge\delta(s,t)+2,
+\qquad
+\delta(z_t,z_{t+1})\ge2t.
+$$
+
+The finite sources $U_*(z_t,z_t)\in D_0$ and
+$U_*(z_{t+1},z_t)\in D_2$ again have an identical complete
+right part. Their discrepancy depth is at least $1+2t$.
+The choice $t=h+1$ proves $J_{\{r_0,r_2\}}(h)$.
+
+For $r_1,r_2$, take $y=T_{2h+2}$, where $T_n=\rho^n\alpha$.
+The existing atomic-depth formula [NLC, Lemma 3.1][NLC] gives
+
+$$
+\mu(\rho y)=\mu(T_{2h+3})=h+1,\qquad
+\mu(\rho^2y)=\mu(T_{2h+4})=h+2.
+\tag{SPC.11.12}
+$$
+
+Both trees therefore reply branch at every relative address of
+length at most $h$, and so $\rho y\equiv_h\rho^2y$.
+The sources
+
+$$
+U_*(F(y),y)\in D_1,\qquad
+U_*(G(y),y)\in D_2
+\tag{SPC.11.13}
+$$
+
+share their entire right subtree. Inside their left subtree they
+share the alpha child; only the right children $\rho y,\rho^2y$
+can differ. Those children are at original address $LR$, so the
+sources agree at least through depth $h+2$, and hence through $h$.
+Every membership assertion here is Theorem 11.2 on actual finite
+whole values. In particular its three retained negatives continue
+to hold for every iterate and every atomic choice; no negative
+is inferred from a completed limit. $\square$
+
+**Theorem 11.4 (least triple failure is exactly three).** For
+$B=\{r_0,r_1,r_2\}$ in Definition 11.1,
+
+$$
+J_B(2),\qquad \neg J_B(3).
+\tag{SPC.11.14}
+$$
+
+Consequently the least inclusive failed depth is $H=3$.
+
+Proof. To witness depth two, set
+$y=\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ and take
+
+$$
+\bigl(U_*(y,y),\ U_*(F(y),y),\ U_*(G(y),y)\bigr)
+ \in D_0\times D_1\times D_2.
+\tag{SPC.11.15}
+$$
+
+Theorem 11.2 checks their entire retained histories and exact
+partitions. Their complete original reply tables through depth
+two are identical:
+
+| Original address | Common reply |
+| --- | --- |
+| $\varepsilon$ | $\mathsf{branch}$ |
+| $L$ | $\mathsf{branch}$ |
+| $R$ | $\mathsf{branch}$ |
+| $LL$ | $\alpha$ |
+| $LR$ | $\mathsf{branch}$ |
+| $RL$ | $\mathsf{branch}$ |
+| $RR$ | $\mathsf{branch}$ |
+
+For $LR$, the first source has the right child of $y$, a branch;
+the other two have $\rho y$ and $\rho^2y$, branches because $y$
+is a branch. The other six replies follow from the displayed
+skeleton and fixed alpha children. These seven addresses are
+all words of length at most two. Thus (SPC.11.15) is an actual
+simultaneous witness of $J_B(2)$.
+
+For the negative assertion, suppose an arbitrary tuple in the
+entire product agreed through depth three. By the converse
+direction of Theorem 11.2 it has the form
+
+$$
+u_0=U_*(y_0,y_0),\qquad
+u_1=U_*(F(y_1),y_1),\qquad
+u_2=U_*(G(y_2),y_2)
+\tag{SPC.11.16}
+$$
+
+for independent finite $y_0,y_1,y_2$. No equality between these
+parameters is assumed.
+
+The original $L$ and $LL$ replies of $u_1$ are respectively
+branch and alpha. Agreement forces $y_0$ to be a branch with
+left child alpha, because the entire $L$ subtree of $u_0$ is
+$y_0$. Hence the $RL$ and $RLL$ replies of $u_0$ are branch
+and alpha. Agreement at those two original addresses now forces
+$y_1,y_2$ to be branches, each with left child alpha.
+Write $y_i=\langle\alpha,b_i\rangle$ for $i=1,2$.
+
+The address $LRL$ is reached in both $u_1,u_2$: their $L$
+subtrees are branches, and their $LR$ subtrees are respectively
+$\rho y_1,\rho^2y_2$, also branches. Native distribution and
+the two alpha updates give
+
+$$
+\begin{aligned}
+u_1|_{LRL}&=\rho\alpha=\beta,
+&
+r_{u_1}(LRL)&=\beta,\\
+u_2|_{LRL}&=\rho^2\alpha=\langle\beta,\alpha\rangle,
+&
+r_{u_2}(LRL)&=\mathsf{branch}.
+\end{aligned}
+\tag{SPC.11.17}
+$$
+
+These different replies occur at an original address of length
+three, contradicting the assumed agreement. All subtree uses
+in this contradiction have their required branch ancestors;
+absence is never treated as a reached negative or omitted from
+the prefix table. The argument applies to every tuple
+(SPC.11.16), so $J_B(3)$ fails on the entire product.
+
+Inclusive-prefix agreement is monotone downward in depth.
+The depth-two witness therefore supplies depths zero and one.
+Failure at three excludes every greater depth. This proves
+the claimed least $H$. $\square$
+
+## 12. The obstruction to a pairwise replacement
+
+**Corollary 12.1 (pairwise contacts do not imply a multiway contact).**
+Let $C_i=\overline{D_i}^{\,\widehat{\mathcal T}}$, for $i=0,1,2$,
+where $\widehat{\mathcal T}$ is the original four-reply completion
+of Definition 4.1. For the entire strata of Definition 11.1,
+
+$$
+C_i\cap C_j\ne\varnothing\quad(i\ne j),\qquad
+C_0\cap C_1\cap C_2=\varnothing.
+\tag{SPC.12.1}
+$$
+
+Thus the criterion requiring all selected two-row subfamilies to
+be persistent cannot replace the finite-family predicate (SPC.39).
+
+Proof. The compact-cylinder equivalence (SPC.41), already supplied
+in Theorem 9.2, applies to closures of entire finite row strata.
+Theorem 11.3 gives its pairwise nonempty intersections. If there
+were a point in the triple intersection, its inclusive depth-three
+cylinder would meet every $D_i$. Choosing one finite original from
+each intersection with that same cylinder would give $J_B(3)$,
+contrary to Theorem 11.4. This proves the empty triple intersection.
+
+Every one of the three pair predicates is true at every depth on
+this fixed full native input, whereas the required triple predicate
+already fails at depth three. Independently chosen pair tuples,
+or separate pairwise contact points, therefore do not supply the
+one simultaneous tuple required by (SPC.39). $\square$
+
+**Definition 12.2 (supplier correspondence and unresolved scope).**
+The whole old row and actual signed-epoch meanings remain
+[ARH, Definitions 1.1–1.2 and Assumption 1.3][ARH]; its Proposition
+2.1 supplies the paid producer correspondence for the fixed schedule.
+[NIC, Theorems 3.2 and 4.3][NIC] already provide entire positive
+and complete signed-row image covers. Theorem 11.2 gives both
+original-source directions explicitly for this four-hole input;
+it does not replace any source stratum by a sample.
+
+The proper-context prefix growth in (SPC.9) and Theorem 3.3,
+the right-clock transport (SPC.43), and
+[NLC, Lemma 3.1][NLC] supply respectively the guarded pair
+iterations, the finite third negative, and the atomic pair
+witnesses. The new deduction is their full native four-row
+reconstruction together with pairwise persistence and the
+all-tuple least triple failure. Standard compactness is used
+only as the intermediate equivalence (SPC.41).
+No external-priority assertion is attached to this deduction.
+
+[SLP, Lemma 2.1 and Theorem 3.1][SPC-SLP] lift whole signed
+conjunctions at the fixed scalar and finite-residual data of
+their normalized Cartesian scope; they do not identify
+different alternative originals or turn separate pair
+witnesses into a common triple. Its Open problem 7.1 and
+Open problem 10.1 of this volume retain the unknown coupled
+contact and finite-barrier obligations. Exact positive normalization
+is already supplied by NIC; the remaining question is simultaneous
+common original-prefix depth of the coupled whole source outputs,
+including whether some finite barrier exists.
+
+Theorem 11.4 is a finite native obstruction to a multiway
+criterion, with an exact failed depth. It is not native
+undecidability and does not decide Open problem 10.1 on
+arbitrary inputs. In this same example the persistent pairs
+still prevent any finite original prefix from determining
+the entire target row, by (ARH.2.2); triple exclusion alone
+does not assert such row recovery. All source parameters are
+mathematical values, and actual acquisition and complete-state
+factoring remain supplied premises.
+
+[SPC-SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
+
+## 追加锚（本行以下为增补区）

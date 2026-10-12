@@ -26,7 +26,9 @@
 | 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
 | 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
-| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；自动选择保留 24 小时 Git 更新窗口及落后 BASE 300 提交条件；删除按锁时长与身份核验） |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已合并到 dev、干净且满 3 小时无 Git 更新可回收；未合并或不干净的须同时满 24 小时无 Git 更新及落后 BASE 300 提交；未知保留，删除按锁时长与身份核验） |
+| 清理本任务完成后的 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
+| 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
 
 常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
 
@@ -72,7 +74,7 @@ docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)�
 ### 1.3 真值图、冻结与两个偏序
 
 - **节点/边**:命题或工件(closed/open/tail/semantic 四态账目)/证明依赖;证明无环,故良基、可归纳分层。
-- **冻结律**:kernel-verified 为真即冻结,单调累积、永不解冻。成员身份取 `Golden/Frozen/state/<module>.lean.json` 存在;SL-008 只判成员状态与当前树一致,历史归 git。冻结真值是 GICT 7.3 的运行标架。
+- **冻结律**:kernel-verified 为真即冻结,已验证的真不因账目变更而失效。成员身份取 `Golden/Frozen/state/<module>.lean.json` 存在;删除状态片与改 pin 同为合法的成员变更,该模块退出冻结成员而陈述真值不变;SL-008 只判成员状态与当前树一致,历史归 git。冻结真值是 GICT 7.3 的运行标架。
 - **两个偏序禁混用**:图深度 `depth(v)` 是最长依赖路径(无前置=0,否则 `1+max depth(前置)`),非任意拓扑序号或入度;信任地层 τ 是 harness 保护面的变更治理分层(信任根 τ=0,内容 τ_max,第 7.12 条)。两者相关而不同构,各自机器可算。
 - **成本**:翻一节点须撤其全部后代,`Cost ∝ |后代子图|`,去重并用可审计向量,非单浮点;越核心越贵(第 7.12 条成本式的图论根)。
 - **保守扩展**:`H(a)=admit ⟹ H′(a)=admit`,新规则不翻已冻结节点。
@@ -382,7 +384,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;账本 loader 只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`cover-atom` 在写入前按当前 report 与冻结账本解析本次 GID，未解析即失败；任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 
-- **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;**永不解冻**是第 1.3 条冻结律的数学规范。SL-008 检查状态片路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
+- **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;删除状态片是合法的成员变更,不产生判词,不改变已验证陈述的真值(第 1.3 条)。SL-008 检查状态片路径、闭键 schema、模块存在与 Closed、pin 和声明清单同当前报告一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
 
 - **消化态(账目侧)**：`residual-open` 表示尚无 GID 覆盖，`partial-closed` 表示部分子项覆盖，`absorbed-closed` 表示本项与子链满足覆盖条件，`nonpropositional-inapplicable` 表示无需项目覆盖的终结：非命题，或命题仅由钉版上游闭合而仓内无 GID。第四态由 `receipts.nonpropositional` 的 justification 与真实邻居经目标处理命令派生，不由 atom 字节或 kind 自动判定。唯一写者是 `settle-atom`（`make settle` / `make settle-clear`）；写前以 `make atom-context ATOM_ID=x` 连读前后 atom，writer 复算邻接不等即拒，`--clear` 删除目标收据并退回 `residual-open`。目标 writer 拒绝所处理记录的非法字段共存与坏形；无关账目的目录或收据偏差不触发准入审计。链闭合要求父项自身完成且全部子项为 Absorbed 或 Nonpropositional；该状态对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。
 - **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结登记。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
@@ -503,9 +505,11 @@ Commit ordinary working snapshots promptly with `make worktree-checkpoint MESSAG
 
 形式化工具不要求先提交：`ledger-align` 按 `repository.ReadCurrent()` 的工作树读取契约，通过 `repository.ReadCurrentProjection(...)` 读取当前真值输入，不按 delta 选择；deposit/cover 只改工作树、不自动提交。完成逻辑单元后仍须按上述普通工作快照流程及时提交、推送。
 
-All registered worktree cleanup follows SPEC A20/A20.1: selected unlocked trees are eligible; locked trees require at least 24 hours since Git lock-file modification. Automatic selection additionally requires 24 hours without a Git update and at least 300 commits behind BASE; named removal bypasses those selectors. Keep whole-batch eligibility preflight, main/nested registration and target identity protection. Before removal, checkpoint outstanding ordinary changes using the real index. Retain the current branch, or for detached HEAD create a new local recovery branch at the resulting commit without replacing an existing ref. Retain that branch through the entire cleanup, including the orphan sweep. An unmerged/unfinished operation, failed commit or failed recovery-branch creation retains the affected tree with a concrete failure; earlier completed removals remain reported. Clean trees need no empty commit. Ignored files and intermediate staged versions are outside snapshot recovery. Activity, cwd, programs, participation and cache use do not govern deletion. Remote confirmation is the separate timely-publication workflow, not a recycling prerequisite. Native branch checkout reconstructs the committed snapshot while its ref and reachable objects remain intact. Non-worktree artifacts and later orphan ref retirement retain independent policies.
+**worktree 的位置与清理**：worktree 用 `make worktree … DEST=<主检出父目录>/trureturing-<session-id>` 建立，不得放在 `/tmp`、`/private/tmp` 或 `$TMPDIR` 下。任务完成（交付按下文定义：PR MERGED 且首个 dev push 核验）后，及时用 `make worktree-remove NAMES="<目录名>"` 清理本任务创建的 worktree；已由后续任务接手的除外。磁盘可用空间低于 5%（与 `make worktree` 磁盘门同一阈值），或命令因磁盘空间不足而失败时，AI 可直接执行 `make -C tools clean-all FORCE=1`，不需另行确认；清理范围与保护条件以该目标及 spec A20 为准。
 
-Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. Worktrees may be reused for later tasks; reclamation is separate. Independent review follows section 5.6 and integration follows sections 8.12-8.14.
+All registered worktree cleanup follows SPEC A20/A20.1: selected unlocked trees are eligible; locked trees require at least 24 hours since Git lock-file modification. Automatic selection pins and reports origin/dev as an immutable commit, independently of BASE. A clean tree with no unfinished Git operation is eligible when its observed tip is an ancestor of that dev commit and its last Git update was at least 3 hours ago. The last update is the maximum of all HEAD reflog timestamps and the HEAD commit time. Known unmerged trees and merged trees with outstanding work require both 24 hours without a Git update and at least 300 commits behind BASE. Unknown dev/ancestry/update readings retain the tree with a named reason. FORCE reobserves tip, branch, registration, lock and Git directory, then recomputes the selection result before removal; any changed observation or selection result retains with race_changed. Original-selector removal checkpoints ordinary changes, including changes made after selection. Named removal bypasses automatic selectors. Keep whole-batch eligibility preflight, main/nested registration and target identity protection. Before removal, checkpoint outstanding ordinary changes using the real index. Retain the current branch, or for detached HEAD create a new local recovery branch at the resulting commit without replacing an existing ref. Retain that branch through the entire cleanup, including the orphan sweep. An unmerged/unfinished operation, failed commit or failed recovery-branch creation retains the affected tree with a concrete failure; earlier completed removals remain reported. Clean trees need no empty commit. Ignored files and intermediate staged versions are outside snapshot recovery. Activity, cwd, programs, participation and cache use do not govern deletion. Remote confirmation is the separate timely-publication workflow, not a recycling prerequisite. Native branch checkout reconstructs the committed snapshot while its ref and reachable objects remain intact. Non-worktree artifacts and later orphan ref retirement retain independent policies.
+
+Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. After delivery completes, the task removes the worktrees it created unless a later task has taken one over (see the worktree location and cleanup paragraph above). Independent review follows section 5.6 and integration follows sections 8.12-8.14.
 
 ### 6.2 PR 层序、delta 门与债务收缩
 
@@ -941,10 +945,10 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 
 ### 10.7 账本强度、许可集与升级门 open
 
-**账本冻真值、强度不退化；保证在门，不在存档。** 强度是给定 toolchain/pin 下的公理闭包。登记 Closed 模块须有当前 Lean 范围报告与标准公理闭包。mathlib 升级授权保留有效 pin 变化、源码命题等价和候选标准公理闭包条件：旧侧声明根取受保护基线状态片的 `declarations`，新侧取候选范围报告，全部受保护成员的候选闭包仍在许可集才放行。
-第 10.5 条只要求保留未来判词需要的输入；状态片不存旧公理闭包、逐声明摘要、依赖边或动作历史。升级检查候选环境的许可集，不比较旧环境的派生闭包。
+**账本冻真值、强度不退化；保证在门，不在存档。** 强度是给定 toolchain/pin 下的公理闭包。登记 Closed 模块须有当前 Lean 范围报告与标准公理闭包。mathlib 升级授权保留有效 pin 变化、源码命题等价（源码比较的已实现保证限于可解析的仓内命题及其定义依赖；真实 toolchain/mathlib pin bump 后的外部语义一般等价与外部 import 语义分别保留 spec A14.4 的 `open(EXTERNAL-PIN-BUMP-SEMANTIC-EQUIVALENCE)` 与 `open(EXTERNAL-IMPORT-SEMANTICS)`）和候选标准公理闭包条件：旧侧声明根取受保护基线状态片的 `declarations`，新侧取候选范围报告，全部受保护成员的候选闭包仍在许可集才放行。
+第 10.5 条只要求保留未来判词需要的输入；状态片不存旧公理闭包、逐声明摘要、依赖边或动作历史。公理闭包这一比较维度只比较候选闭包与许可集，不比较新旧闭包；升级授权还须满足上述有效 pin 变化与源码命题等价条件。
 **许可集红线**:唯一真源,测试钉死成员恰为该集合,任何放宽走 τ=0 贵路;否则先放宽再写弱节点仍绿,保证消失。
-**逐字段分层**:真源=树上无物可重导、断言当时事实,必守;加工产物=原料哈希且携权威,存值为地址,重算验证即重放;纯投影=同值第二名,消除。可机器判①升级只比许可集;②许可集单一且加公理变异有具名红测试;③写入无绕门入口。
+**逐字段分层**:真源=树上无物可重导、断言当时事实,必守;加工产物=原料哈希且携权威,存值为地址,重算验证即重放;纯投影=同值第二名,消除。可机器判①升级的公理闭包比较只比许可集;②许可集单一且加公理变异有具名红测试;③写入无绕门入口。
 〔守护:**软+硬投影**·目的靠评审，许可集/变异、源码等价、有效 pin 变化及候选公理闭包由现役授权入口检查；跨环境的通用数学不退化保证仍 open〕
 
 ## 11. 古典不动点与成熟锚

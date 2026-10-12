@@ -1,0 +1,37 @@
+**引理 26.4（路径项与控制项的精确退化）。** 令
+$$
+c=\frac{h_Lh_R}{h_L+h_R},\qquad A=g_L+c,\qquad B=g_R+c,
+$$
+对 $s,t\ge0$，令 $r(s,t)$ 表示
+$K(g_L+s,g_T,g_R+t;h)^{-1}$ 的 $LR$ 元素。则
+$$
+r(s,t)=\frac{c}{(A+s)(B+t)-c^2}.
+$$
+$K_2^{-1}$ 的 $LR$ 元素等于 $r(0,0)$。因此四角系数
+$$
+\Gamma=r(\lambda,\mu)-r(\lambda,0)-r(0,\mu)+r(0,0)
+$$
+满足
+$$
+\Gamma>0\iff h_Lh_R\lambda\mu>0.
+$$
+若 $h_L=0$ 或 $h_R=0$，路径在 $L,R$ 间断开且 $\Gamma=0$；若
+$\lambda=0$ 或 $\mu=0$，没有两个独立控制宽度且 $\Gamma=0$。
+
+**证明。** 定义 26.2 的二次型非负；若为零，三个正的接地权强制
+$\xi_L=\xi_T=\xi_R=0$，而 $h_L+h_R>0$ 再强制 $\xi_J=0$。
+故 $K(g,h)>0$，非负控制保持正定。又因 $h_L+h_R>0$，$c$ 有定义，且
+$c\ge0$，$c>0\iff h_Lh_R>0$。消去 $J$ 得到 $L,R$ 的二阶块
+$\left(\begin{smallmatrix}A+s&-c\\-c&B+t\end{smallmatrix}\right)$，
+而 $T$ 是分离的标量块。分母为
+$(g_L+s)(g_R+t)+c(g_L+s+g_R+t)>0$，其逆的非对角元即所列
+$r(s,t)$。在该控制域的开正定邻域内
+$$
+\partial_s\partial_t r(s,t)
+=\frac{c((A+s)(B+t)+c^2)}
+{((A+s)(B+t)-c^2)^3}\ge0,
+$$
+且导数严格为正当且仅当 $c>0$。由
+$\Gamma=\int_0^\lambda\int_0^\mu\partial_s\partial_t r(s,t)\,dt\,ds$
+得到所述充要条件；路径断开或任一控制宽度为零时 $\Gamma=0$。证毕。
+

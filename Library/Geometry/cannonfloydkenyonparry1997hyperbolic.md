@@ -46,3 +46,15 @@ in the cited chapter. The acknowledgement makes no novelty claim.
   discussion, page 80; Section 10, Theorem 10.1, page 82; distance lemma,
   page 83.
 - The PDF title page identifies the authors, title, volume 31, and year 1997.
+
+## Supporting-plane application
+
+The full plane realization uses the same classical Lorentz-isometry and
+distance ingredients (Section 10, Theorem 10.1, page 82, and the distance
+lemma on page 83). Its auxiliary reflection is required to preserve the
+future sheet, not just the bilinear form. Together with the existing H2
+metric formula, the repository construction parametrizes the entire
+original spacelike supporting plane in its existing H3 metric. It does
+not change the chosen length Gram frame or its radial body. This precise
+Lean-type transport is a repository derivation, with no novelty claim.
+It does not establish the full tetrahedron realization or its angles.

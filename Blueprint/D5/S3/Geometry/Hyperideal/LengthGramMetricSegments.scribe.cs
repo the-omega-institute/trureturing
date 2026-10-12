@@ -86,7 +86,143 @@ internal sealed class LengthGramMetricSegmentsDocument : IScribeDocumentDefiniti
                         + "dihedral angles and orthogonal truncation, permutation isometries, "
                         + "inverse source realization and rigidity, volume, Schlaefli theory "
                         + "and global CFMP gluing remain separate obligations."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Paragraph(Text("The following original APIs are used by the full plane realization. "
+                + "Their statements and proof bodies remain the metric-segment owner's originals. "
+                + "Phi denotes lift; Psi(Y)=((Y0+i*Y1)/(Y3-Y2),1/(Y3-Y2)). "
+                + "Project is defined on B(Y,Y)=-1 and Y3>0 using the two displayed proof arguments. "
+                + "R4 is the real four-coordinate space; H3 retains its hyperbolic metric. "
+                + "The formula operators add, sub, mul, div, sq, neg and scale have their ordinary "
+                + "real or vector meanings; tuple4 forms an ordered four-vector.")),
+            Describe.Lean(
+                DescribeId.Create("api-lift"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift"),
+                H("The original Lorentz lift"), StatementSource.FromAuthor(F.Disp(LiftDefinition())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("api-lift-unit"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_unit"),
+                H("Unit negative Lorentz norm"), StatementSource.FromAuthor(F.Disp(All("p", F.Id("H3"), Eq(B(Phi(F.Id("p")), Phi(F.Id("p"))), Neg(F.D(1)))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-lift-cosh"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_cosh"),
+                H("The original actual-distance pairing"), StatementSource.FromAuthor(F.Disp(All("p", F.Id("H3"), All("q", F.Id("H3"), Eq(B(Phi(F.Id("p")), Phi(F.Id("q"))), Neg(Call("cosh", Call("dist", F.Id("p"), F.Id("q"))))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-lift-injective"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_injective"),
+                H("Injectivity of the original lift"), StatementSource.FromAuthor(F.Disp(Call("Injective", F.Id("Phi")))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-lift-of-coordinates"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_of_coordinates"),
+                H("The inverse-coordinate identity"), StatementSource.FromAuthor(F.Disp(InverseStatement())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-lorentz-linear"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_linear"),
+                H("Four-term bilinear expansion"), StatementSource.FromAuthor(F.Disp(BilinearStatement())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-lorentz-symm"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_symm"),
+                H("Symmetry of the original Lorentz form"), StatementSource.FromAuthor(F.Disp(All("X", F.Id("R4"), All("Y", F.Id("R4"), Eq(B(F.Id("X"), F.Id("Y")), B(F.Id("Y"), F.Id("X"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-lorentz-right"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lorentz_right"),
+                H("Linearity in the second argument"), StatementSource.FromAuthor(F.Disp(RightStatement())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-future-den"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.future_den"),
+                H("Positive inverse-coordinate denominator"), StatementSource.FromAuthor(F.Disp(All("Y", F.Id("R4"), Implies(FutureUnit(F.Id("Y")), Lt(F.D(0), Call("sub", Coord(F.Id("Y"), 3), Coord(F.Id("Y"), 2))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("api-project"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.project"),
+                H("Projection from the future unit sheet"), StatementSource.FromAuthor(F.Disp(All("Y", F.Id("R4"), Implies(FutureUnit(F.Id("Y")), Eq(Call("coordinates", Call("project", F.Id("Y"))), Call("Psi", F.Id("Y"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("api-lift-time"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.lift_time"),
+                H("Future sheet of every original lift"), StatementSource.FromAuthor(F.Disp(All("p", F.Id("H3"), Lt(F.D(0), Coord(Phi(F.Id("p")), 3))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/cannonfloydkenyonparry1997hyperbolic")),
+                Blocks(Paragraph(Text("This is an original consumed API of the metric-segment construction, "
+                    + "used at its source by HyperbolicPlaneRealization. Its Lorentz form, lift and metric "
+                    + "are unchanged."))), DescribeRole.Theorem))));
+
+
+    private static Formula Phi(Formula p) => Call("Phi", p);
+    private static Formula B(Formula x, Formula y) => Call("B", x, y);
+    private static Formula Coord(Formula x, byte i) => Call("coord", x, F.D(i));
+    private static Formula Neg(Formula x) => Call("neg", x);
+    private static Formula Mul(Formula x, Formula y) => Call("mul", x, y);
+    private static Formula Add(Formula x, Formula y) => Call("add", x, y);
+    private static Formula Scale(Formula a, Formula x) => Call("scale", a, x);
+    private static Formula FutureUnit(Formula y) => And(Eq(B(y,y), Neg(F.D(1))), Lt(F.D(0),Coord(y,3)));
+    private static Formula LiftDefinition()
+    {
+        var p=F.Id("p"); var x=Call("horizontalReal",p); var y=Call("horizontalImag",p); var h=Call("height",p);
+        var q=Add(Add(Call("sq",x),Call("sq",y)),Call("sq",h)); var d=Mul(F.D(2),h);
+        return All("p",F.Id("H3"),Eq(Phi(p),Call("tuple4",Call("div",x,h),Call("div",y,h),
+            Call("div",Call("sub",q,F.D(1)),d),Call("div",Add(q,F.D(1)),d))));
+    }
+    private static Formula InverseStatement()
+    {
+        var p=F.Id("p"); var y=F.Id("Y");
+        return All("p",F.Id("H3"),All("Y",F.Id("R4"),Implies(
+            And(FutureUnit(y),Eq(Call("coordinates",p),Call("Psi",y))),Eq(Phi(p),y))));
+    }
+    private static Formula BilinearStatement()
+    {
+        var x=F.Id("X"); var y=F.Id("Y"); var z=F.Id("Z"); var w=F.Id("W");
+        var a=F.Id("a"); var b=F.Id("b"); var c=F.Id("c"); var d=F.Id("d");
+        Formula result=Eq(B(Add(Scale(a,x),Scale(b,y)),Add(Scale(c,z),Scale(d,w))),
+            Add(Add(Add(Mul(Mul(a,c),B(x,z)),Mul(Mul(a,d),B(x,w))),Mul(Mul(b,c),B(y,z))),Mul(Mul(b,d),B(y,w))));
+        foreach(var name in new[]{"d","c","b","a"}) result=All(name,F.Id("R"),result);
+        foreach(var name in new[]{"W","Z","Y","X"}) result=All(name,F.Id("R4"),result);
+        return result;
+    }
+    private static Formula RightStatement()
+    {
+        var x=F.Id("X"); var y=F.Id("Y"); var z=F.Id("Z"); var a=F.Id("a"); var b=F.Id("b");
+        Formula result=Eq(B(x,Add(Scale(a,y),Scale(b,z))),Add(Mul(a,B(x,y)),Mul(b,B(x,z))));
+        foreach(var name in new[]{"b","a"}) result=All(name,F.Id("R"),result);
+        foreach(var name in new[]{"Z","Y","X"}) result=All(name,F.Id("R4"),result);
+        return result;
+    }
 
     private static Formula Witness()
     {
