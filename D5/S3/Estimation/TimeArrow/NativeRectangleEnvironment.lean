@@ -640,7 +640,7 @@ theorem kernel_central_tail {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 
     _ ≤ ((N : ℝ) / 4) / (L * Real.sqrt N) ^ 2 := he
     _ = 1 / (4 * L ^ 2) := by
       rw [mul_pow, Real.sq_sqrt hNpos.le]
-      field_simp
+      field_simp [hNpos.ne', hL.ne']
       <;> ring
 
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
