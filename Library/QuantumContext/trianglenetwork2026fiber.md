@@ -4,8 +4,6 @@ title: "Triangle-network source independence and fiber geometry"
 authors:
   - trureturing contributors
 year: 2026
-type: theory-interface
-status: working-note
 doi: null
 claim: "Working note recording a proposed triangle-network source-independence and fiber-geometry interface; no external theorem or formal claim is asserted."
 strata_touched: []
