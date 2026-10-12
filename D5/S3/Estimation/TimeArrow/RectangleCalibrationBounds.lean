@@ -163,6 +163,42 @@ open private
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance_pos
 from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 
+/-- A positive derivative on a fixed box turns a center residual into
+an explicit displacement bound for any root of the same equation. -/
+private theorem root_box_of_residual (F : ℝ → ℝ) (q x0 x d a b : ℝ)
+    (hd : 0 < d) (ha : 0 < a) (hmono : StrictMono F)
+    (hcont : ContinuousOn F (Set.Icc (x0 - d) (x0 + d)))
+    (hdiff : DifferentiableOn ℝ F (interior (Set.Icc (x0 - d) (x0 + d))))
+    (hlower : ∀ u ∈ interior (Set.Icc (x0 - d) (x0 + d)), a ≤ deriv F u)
+    (hroot : F x = q) (hres : |F x0 - q| ≤ b) (hsmall : b ≤ a * d) :
+    |x - x0| ≤ d ∧ a * |x - x0| ≤ b := by
+  have hslope := (convex_Icc (x0 - d) (x0 + d)).mul_sub_le_image_sub_of_le_deriv
+    hcont hdiff hlower
+  have h0 : x0 ∈ Set.Icc (x0 - d) (x0 + d) := ⟨by linarith, by linarith⟩
+  have hbot : x0 - d ∈ Set.Icc (x0 - d) (x0 + d) := ⟨le_rfl, by linarith⟩
+  have htop : x0 + d ∈ Set.Icc (x0 - d) (x0 + d) := ⟨by linarith, le_rfl⟩
+  have hres' := abs_le.mp hres
+  have hb := hslope (x0 - d) hbot x0 h0 (by linarith)
+  have hu := hslope x0 h0 (x0 + d) htop (by linarith)
+  have hx : x ∈ Set.Icc (x0 - d) (x0 + d) := by
+    constructor
+    · apply hmono.le_iff_le.mp
+      rw [hroot]
+      nlinarith only [hb, hsmall, hres'.1, hres'.2]
+    · apply hmono.le_iff_le.mp
+      rw [hroot]
+      nlinarith only [hu, hsmall, hres'.1, hres'.2]
+  refine ⟨abs_le.mpr ⟨by linarith [hx.1], by linarith [hx.2]⟩, ?_⟩
+  by_cases h : x0 ≤ x
+  · have hh := hslope x0 h0 x hx h
+    rw [hroot] at hh
+    rw [abs_of_nonneg (sub_nonneg.mpr h)]
+    linarith only [hh, hres'.1]
+  · have hh := hslope x hx x0 h0 (le_of_not_ge h)
+    rw [hroot] at hh
+    rw [abs_of_nonpos (by linarith : x - x0 ≤ 0)]
+    linarith only [hh, hres'.2]
+
 /-- A quantitative bootstrap confines any root of a feasible central
 histogram to one fixed box around the base root and bounds its displacement.
 The base variance alone supplies the derivative lower bound throughout the
@@ -208,46 +244,22 @@ theorem shared_root_central_bootstrap {ι : Type*} [Fintype ι] (outside : ι �
         outside r ε N R U t u).continuousAt.continuousWithinAt
   have hdiff : DifferentiableOn ℝ F (interior (Set.Icc (x0 - d) (x0 + d))) :=
     fun u _ => (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv outside r ε N R U t u).differentiableAt.differentiableWithinAt
-  have hslope := (convex_Icc (x0 - d) (x0 + d)).mul_sub_le_image_sub_of_le_deriv
-    hcont hdiff (fun u hu => by
-      rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv outside r ε N R U t u).deriv]
-      exact hlower u (interior_subset hu))
-  have h0 : x0 ∈ Set.Icc (x0 - d) (x0 + d) := ⟨by linarith, by linarith⟩
-  have hbot : x0 - d ∈ Set.Icc (x0 - d) (x0 + d) := ⟨le_rfl, by linarith⟩
-  have htop : x0 + d ∈ Set.Icc (x0 - d) (x0 + d) := ⟨by linarith, le_rfl⟩
   have hdisp : |F x0 - q| ≤ 2 * w := by
     have hh := calibration_histogram_displacement outside r ε N R U t t0 x0
     rw [hbase] at hh
     exact hh.trans (mul_le_mul_of_nonneg_left ht (by norm_num))
-  have hdisp' := abs_le.mp hdisp
-  have hb := hslope (x0 - d) hbot x0 h0 (by linarith)
-  have hu := hslope x0 h0 (x0 + d) htop (by linarith)
   have hmono : StrictMono F := strictMono_of_deriv_pos fun u => by
-    rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv outside r ε N R U t u).deriv]
-    exact D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance_pos outside r ε N R U t u hN hc
-  have hx : x ∈ Set.Icc (x0 - d) (x0 + d) := by
-    constructor
-    · apply hmono.le_iff_le.mp
-      change F (x0 - d) ≤ F x
-      rw [hroot]
-      dsimp [a, d] at hb ⊢
-      nlinarith
-    · apply hmono.le_iff_le.mp
-      change F x ≤ F (x0 + d)
-      rw [hroot]
-      dsimp [a, d] at hu ⊢
-      nlinarith
-  have hbox : |x - x0| ≤ d := abs_le.mpr ⟨by linarith [hx.1], by linarith [hx.2]⟩
-  have hmotion : a * |x - x0| ≤ 2 * w := by
-    by_cases h : x0 ≤ x
-    · have hh := hslope x0 h0 x hx h
-      rw [hroot] at hh
-      rw [abs_of_nonneg (sub_nonneg.mpr h)]
-      linarith
-    · have hh := hslope x hx x0 h0 (le_of_not_ge h)
-      rw [hroot] at hh
-      rw [abs_of_nonpos (by linarith : x - x0 ≤ 0)]
-      linarith
+    rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
+      outside r ε N R U t u).deriv]
+    exact D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance_pos
+      outside r ε N R U t u hN hc
+  have hb := root_box_of_residual F q x0 x d a (2 * w) hd ha hmono hcont hdiff
+    (fun u hu => by
+      rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
+        outside r ε N R U t u).deriv]
+      exact hlower u (interior_subset hu)) hroot hdisp hsmall
+  have hbox := hb.1
+  have hmotion := hb.2
   have hmove : |x - x0| ≤ 4 * w /
       (calibratedVariance outside r ε N R U t0 x0 - w) := by
     apply (le_div_iff₀ (sub_pos.mpr hvar)).mpr
@@ -256,6 +268,65 @@ theorem shared_root_central_bootstrap {ι : Type*} [Fintype ι] (outside : ι �
   have hv := central_fiber_variance_bounds outside r ε N R U t t0 x0 (x - x0) w
     hc ht (htilt _ hbox).1 (htilt _ hbox).2
   simpa only [add_sub_cancel] using And.intro hbox (And.intro hmove hv)
+
+
+/-- A small full-mean residual at a fixed center moves the same shared root
+by at most twice the residual divided by the complete center variance. -/
+theorem shared_root_from_mean_residual {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q t x0 x b : ℝ) (hN : 0 < N)
+    (hc : ∀ j, 0 ≤ cellCounts N R U t j)
+    (hroot : calibratedMean outside r ε N R U t x = q)
+    (hres : |calibratedMean outside r ε N R U t x0 - q| ≤ b)
+    (hsmall : b ≤ calibratedVariance outside r ε N R U t x0 / 2 * Real.log 2) :
+    |x - x0| ≤ Real.log 2 ∧
+      |x - x0| ≤ 2 * b / calibratedVariance outside r ε N R U t x0 ∧
+      calibratedVariance outside r ε N R U t x0 / 2 ≤
+        calibratedVariance outside r ε N R U t x := by
+  let F := calibratedMean outside r ε N R U t
+  let V := calibratedVariance outside r ε N R U t x0
+  let d := Real.log (2 : ℝ)
+  have hV : 0 < V :=
+    D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance_pos
+      outside r ε N R U t x0 hN hc
+  have hd : 0 < d := Real.log_pos (by norm_num)
+  have htilt (u : ℝ) (hu : u ∈ Set.Icc (-d) d) :
+      1 / 2 ≤ Real.exp (-u) ∧ Real.exp (-u) ≤ 2 := by
+    constructor
+    · calc
+        1 / 2 = Real.exp (-d) := by simp [d, Real.exp_neg, Real.exp_log]
+        _ ≤ Real.exp (-u) := Real.exp_le_exp.mpr (by linarith [hu.2])
+    · calc
+        Real.exp (-u) ≤ Real.exp d := Real.exp_le_exp.mpr (by linarith [hu.1])
+        _ = 2 := Real.exp_log (by norm_num)
+  have hmono : StrictMono F := strictMono_of_deriv_pos fun u => by
+    rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
+      outside r ε N R U t u).deriv]
+    exact D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibratedVariance_pos
+      outside r ε N R U t u hN hc
+  have hb := root_box_of_residual F q x0 x d (V / 2) b hd (by positivity) hmono
+    (fun u _ => (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
+      outside r ε N R U t u).continuousAt.continuousWithinAt)
+    (fun u _ => (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
+      outside r ε N R U t u).differentiableAt.differentiableWithinAt)
+    (fun u hu => by
+      have hu' : u - x0 ∈ Set.Icc (-d) d := by
+        have hh := interior_subset hu
+        constructor <;> linarith [hh.1, hh.2]
+      have ht := htilt (u - x0) hu'
+      rw [(D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
+        outside r ε N R U t u).deriv]
+      simpa only [add_sub_cancel] using
+        (variance_root_tilt outside r ε N R U t x0 (u - x0) hc ht.1 ht.2).1)
+    hroot hres hsmall
+  have hm : |x - x0| ≤ 2 * b / V := by
+    apply (le_div_iff₀ hV).mpr
+    nlinarith only [hb.2]
+  have hu : x - x0 ∈ Set.Icc (-d) d := abs_le.mp hb.1
+  have ht := htilt (x - x0) hu
+  refine ⟨hb.1, hm, ?_⟩
+  simpa only [add_sub_cancel] using
+    (variance_root_tilt outside r ε N R U t x0 (x - x0) hc ht.1 ht.2).1
+
 
 
 open private
