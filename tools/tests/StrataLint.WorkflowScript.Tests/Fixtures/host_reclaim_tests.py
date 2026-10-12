@@ -889,6 +889,25 @@ class HostReclaimTests(unittest.TestCase):
             with self.assertRaisesRegex(OSError, "ipc_activity_unobservable"):
                 cleanup.macos_active_paths(strict_ipc=True)
 
+    def test_scoped_macos_observation_does_not_resolve_unrelated_paths(self):
+        scope = self.root / "scope"
+        endpoint = scope / "observed"
+        unrelated = Path("/unrelated-observation")
+        rows = "p123\nf4\ntREG\nn" + str(endpoint) + "\nf5\ntREG\nn" + str(unrelated / "file") + "\n"
+        run = lambda command, **kwargs: subprocess.CompletedProcess(
+            command, 0, rows if command[0] == "lsof" else "", "")
+        resolve = Path.resolve
+        def restricted(path, *args, **kwargs):
+            if path == unrelated:
+                raise AssertionError("an unrelated observation must be filtered before filesystem access")
+            return resolve(path, *args, **kwargs)
+        with patch.object(cleanup.sys, "platform", "darwin"), \
+             patch.object(cleanup.subprocess, "run", side_effect=run), \
+             patch.object(Path, "resolve", restricted):
+            paths = cleanup.active_paths(self.root / "codex", scopes=[scope])
+        self.assertIn(endpoint, paths)
+        self.assertNotIn(unrelated / "file", paths)
+
     def test_escaped_absolute_socket_observation_retains_endpoint(self):
         endpoint = self.root / "endpoint\\name"
         self.make_endpoint(endpoint, "socket")

@@ -187,7 +187,7 @@ def macos_active_paths(strict_ipc=False):
         raise OSError("ipc_activity_unobservable") from error
     if (result.returncode == 0 and (result.stdout or not strict_ipc)
             and (not result.stderr or not strict_ipc)):
-        observed, parents, kind = set(), {}, None
+        observed, kind = set(), None
         for row in result.stdout.splitlines():
             if row.startswith(("p", "f")):
                 kind = None
@@ -201,10 +201,7 @@ def macos_active_paths(strict_ipc=False):
                         raise OSError("ipc_activity_unobservable:ambiguous_lsof_name")
                 if not raw.startswith("/"):
                     continue
-                endpoint = Path(row[1:].removesuffix(" (deleted)"))
-                if endpoint.parent not in parents:
-                    parents[endpoint.parent] = endpoint.parent.resolve()
-                observed.add(parents[endpoint.parent] / endpoint.name)
+                observed.add(Path(raw.removesuffix(" (deleted)")))
         return observed
     if strict_ipc and result.returncode == 1 and not result.stdout and not result.stderr:
         return set()
@@ -215,7 +212,12 @@ def ipc_paths():
     """Observe named IPC endpoints without opening or connecting to them."""
     if sys.platform != "darwin":
         raise OSError("ipc_activity_unobservable")
-    return macos_active_paths(strict_ipc=True)
+    observed, parents = set(), {}
+    for endpoint in macos_active_paths(strict_ipc=True):
+        if endpoint.parent not in parents:
+            parents[endpoint.parent] = endpoint.parent.resolve()
+        observed.add(parents[endpoint.parent] / endpoint.name)
+    return observed
 
 
 class LowDiskSpace(RuntimeError):
