@@ -12,7 +12,7 @@ import Mathlib.Analysis.Matrix.Order
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.PosDef
 noncomputable section
-open scoped BigOperators symmDiff ComplexOrder Kronecker
+open scoped BigOperators symmDiff ComplexOrder Kronecker MatrixOrder
 namespace D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
 abbrev Vertex (d : ℕ) :=
   D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.WindowSeamCodes.Word d
@@ -373,8 +373,90 @@ private def actV {d : ℕ} (g : G d) (s : Vertex d) : Vertex d :=
   g.1 ∆ pmap g.2 s
 private def actO {d t : ℕ} (g : G d) (A : Output d t) : Output d t :=
   ⟨pmap g.2 A.val, by dsimp only [pmap]; rw [Finset.card_map]; exact A.property⟩
+private lemma pmap_symmDiff {d : ℕ} (p : Equiv.Perm (Fin d)) (s t : Finset (Fin d)) :
+    pmap p (s ∆ t) = pmap p s ∆ pmap p t := by
+  dsimp only [pmap]
+  rw [Finset.symmDiff_def, Finset.map_union, Finset.map_sdiff, Finset.map_sdiff,
+    Finset.symmDiff_def]
+private lemma pmap_comp {d : ℕ} (p q : Equiv.Perm (Fin d)) (s : Finset (Fin d)) :
+    pmap p (pmap q s) = pmap (p * q) s := by
+  dsimp only [pmap]; rw [Finset.map_map]; rfl
+private lemma pmap_refl {d : ℕ} (s : Finset (Fin d)) : pmap (Equiv.refl _) s = s := by
+  dsimp only [pmap]; exact Finset.map_refl
+private lemma pmap_one {d : ℕ} (s : Finset (Fin d)) : pmap 1 s = s := by
+  change pmap (Equiv.refl _) s = s
+  exact pmap_refl s
+private lemma pmap_card {d : ℕ} (p : Equiv.Perm (Fin d)) (s : Finset (Fin d)) :
+    (pmap p s).card = s.card := by dsimp only [pmap]; exact Finset.card_map _
+private def transZ {d : ℕ} (h : G d) : G d → G d := fun g => (h.1 ∆ g.1, g.2)
+private def transP {d : ℕ} (h : G d) : G d → G d := fun g => (pmap h.2 g.1, h.2 * g.2)
+private def transZ_equiv {d : ℕ} (h : G d) : G d ≃ G d := {
+  toFun := transZ h, invFun := transZ h,
+  left_inv := by intro g; ext <;> simp [transZ, symmDiff_assoc],
+  right_inv := by intro g; ext <;> simp [transZ, symmDiff_assoc] }
+private def transP_equiv {d : ℕ} (h : G d) : G d ≃ G d := by
+  let p := h.2
+  refine ⟨transP h, transP (pmap p.symm h.1, p.symm), ?_, ?_⟩
+  · intro g; ext <;> dsimp [transP, p] <;>
+      simp [pmap_comp, pmap_refl, pmap_one, Equiv.Perm.mul_def, mul_assoc]
+  · intro g; ext <;> dsimp [transP, p] <;>
+      simp [pmap_comp, pmap_refl, pmap_one, Equiv.Perm.mul_def, mul_assoc]
+private lemma actV_transZ {d : ℕ} (h g : G d) (s : Vertex d) :
+    actV (transZ h g) s = h.1 ∆ actV g s := by
+  simp [actV, transZ, symmDiff_assoc, pmap_symmDiff]
+private lemma actV_transP {d : ℕ} (h g : G d) (s : Vertex d) :
+    actV (transP h g) s = pmap h.2 (actV g s) := by
+  simp [actV, transP, pmap_comp, pmap_symmDiff]
 private abbrev VG (d : ℕ) (α β : Type*) [Fintype α] [Fintype β] [DecidableEq α]
     [DecidableEq β] := G d → Matrix (α × β) (α × β) ℂ
+private def hvec {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] : VG d α β := fun _ => 1
+private def uvec {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d) (A : Output d t) :
+    VG d α β := fun g => Matrix.kronecker (S.E (actV g σ) (actO g A)) 1
+private def vvec {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (τ : Vertex d) (B : Output d t) :
+    VG d α β := fun g => Matrix.kronecker 1 (S.F (actV g τ) (actO g B))
+private def effect {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d)
+    (T : Finset (Output d t)) : Matrix α α ℂ := ∑ A ∈ T, S.E σ A
+private lemma effect_nonneg {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d)
+    (T : Finset (Output d t)) : (effect S σ T).PosSemidef := by
+  dsimp only [effect]
+  exact Matrix.posSemidef_sum T (fun A hA => S.E_psd σ A)
+private lemma effect_le_one {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d)
+    (T : Finset (Output d t)) : effect S σ T ≤ 1 := by
+  refine Matrix.le_iff.mpr ?_
+  let R := (Finset.univ : Finset (Output d t)) \ T
+  have hR := Matrix.posSemidef_sum R (fun A hA => S.E_psd σ A)
+  have hsum := Finset.sum_sdiff (Finset.subset_univ T) (f := fun A => S.E σ A)
+  have hcomp : 1 - effect S σ T = ∑ A ∈ R, S.E σ A := by
+    dsimp only [R, effect]
+    rw [← S.E_sum σ, ← hsum]
+    abel
+  rw [hcomp]
+  exact hR
+private lemma effect_sq_le {d t : ℕ} {α β : Type*} [Fintype α] [Fintype β]
+    [DecidableEq α] [DecidableEq β] (S : QStrategy d t α β) (σ : Vertex d)
+    (T : Finset (Output d t)) :
+    effect S σ T * effect S σ T ≤ effect S σ T := by
+  have hp := effect_nonneg S σ T
+  have hc := effect_le_one S σ T
+  have hc' : 0 ≤ 1 - effect S σ T := (Matrix.le_iff.mp hc).nonneg
+  have hcomm : Commute (effect S σ T) (1 - effect S σ T) :=
+    (Commute.one_right _).sub_right (Commute.refl _)
+  have hmul := Commute.mul_nonneg hp.nonneg hc' hcomm
+  have hprod : (effect S σ T * (1 - effect S σ T)).PosSemidef :=
+    Matrix.nonneg_iff_posSemidef.mp hmul
+  have heq : effect S σ T - effect S σ T * effect S σ T =
+      effect S σ T * (1 - effect S σ T) := by
+    simp [mul_sub, mul_one]
+  have hpsd : (effect S σ T - effect S σ T * effect S σ T).PosSemidef := by
+    rw [heq]
+    exact hprod
+  exact Matrix.le_iff.mpr hpsd
 private def pairTrace {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α]
     [DecidableEq β] (ρ : Matrix (α × β) (α × β) ℂ)
     (x y : Matrix (α × β) (α × β) ℂ) : ℝ :=
