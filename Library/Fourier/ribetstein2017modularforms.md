@@ -37,7 +37,7 @@ The source normalization gives
 `T_p f(z) = p^(k-1) f(pz) + p^(-1) sum_(0 <= a < p) f((z+a)/p)`.
 The owning Blueprint attributes this action and its analytic coefficient
 law to the classical source through the typed literature reference
-`D5/L/Arith/ribetstein2017modularforms`.
+`D5/L/Fourier/ribetstein2017modularforms`.
 
 The Lean implementation constructs a complex-linear endomorphism of the
 actual level-one cusp-form space using Mathlib's translation and trace.

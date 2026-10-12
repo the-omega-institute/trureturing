@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.ModularForms;
 internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/ribetstein2017modularforms");
+        LibraryNoteRef.Create("D5/L/Fourier/ribetstein2017modularforms");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual prime Hecke endomorphism, its complete finite representatives, and its analytic coefficient law.",
