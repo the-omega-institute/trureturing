@@ -35,7 +35,7 @@ internal sealed class NativeGrowthRoundingDocument : IScribeDocumentDefinition
             Theorem("original-full-environment-small-ball", "original_full_env_small_ball", "Under the original hypotheses and the decimal-alpha identity, there are positive constants and a vanishing budget such that every nonzero integer root origin has the complete native environment small-ball bound."),
             Provenance())));
 
-    private static Describe Theorem(string id, string name, string statement) =>
+    private static DocumentBlock.Describe Theorem(string id, string name, string statement) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Module + name),
@@ -46,7 +46,7 @@ internal sealed class NativeGrowthRoundingDocument : IScribeDocumentDefinition
                 Paragraph(Text("The proof is repo-derived and uses the native arithmetic, calibration, and small-ball interfaces. Classical references consulted for the surrounding estimates include Erdos–Littlewood–Offord, Le Cam's Poisson-binomial comparison, Chernoff moderate deviations, and saddlepoint bounds; those works supply context and tools, while this theorem's stated result is repo-derived."))),
             DescribeRole.Theorem);
 
-    private static Describe Definition(string id, string name, string statement) =>
+    private static DocumentBlock.Describe Definition(string id, string name, string statement) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Module + name),
@@ -56,6 +56,6 @@ internal sealed class NativeGrowthRoundingDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(statement + " The definition is reproduced by the compiled Lean source."))),
             DescribeRole.Definition);
 
-    private static ScribeNode Provenance() =>
+    private static DocumentBlock Provenance() =>
         Paragraph(Text("Literature notes in Library/Estimation cover discrete Gaussian rounding, logarithmic forms, rare-event and moderate-deviation estimates, Poisson-binomial approximation, hypergeometric tails, and saddlepoint methods. They are cited as classical tools; all displayed declarations remain repo-derived."));
 }

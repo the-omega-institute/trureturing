@@ -26,7 +26,7 @@ internal sealed class NativeOriginalSmallBallDocument : IScribeDocumentDefinitio
             Theorem("original-cube-environment-small-ball", "original_cube_environment_small_ball", "Under the same original hypotheses, the cube observation equivalence and original cube probability satisfy the complete-window small-ball conclusion with a vanishing failure budget, uniformly over dimensions, supports, experiments, and nonzero integer root origins."),
             Provenance())));
 
-    private static Describe Theorem(string id, string name, string statement) =>
+    private static DocumentBlock.Describe Theorem(string id, string name, string statement) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Module + name),
@@ -37,7 +37,7 @@ internal sealed class NativeOriginalSmallBallDocument : IScribeDocumentDefinitio
                 Paragraph(Text("The result is repo-derived from the native growth, parity-kernel, rectangle, calibration, and finite-support interfaces. Literature notes on Littlewood–Offord small-ball bounds, hypergeometric concentration, Poisson approximation, and rare-event estimates describe related tools but do not replace this formal statement."))),
             DescribeRole.Theorem);
 
-    private static Describe Definition(string id, string name, string statement) =>
+    private static DocumentBlock.Describe Definition(string id, string name, string statement) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Module + name),
@@ -47,6 +47,6 @@ internal sealed class NativeOriginalSmallBallDocument : IScribeDocumentDefinitio
             Blocks(Paragraph(Text(statement + " The definition is reproduced by the compiled Lean source."))),
             DescribeRole.Definition);
 
-    private static ScribeNode Provenance() =>
+    private static DocumentBlock Provenance() =>
         Paragraph(Text("Library/Estimation notes consulted include discrete Gaussian rounding, logarithmic-form estimates, Littlewood–Offord small-ball theory, hypergeometric concentration, Poisson-binomial approximation, and saddlepoint methods. These are contextual references; the declarations above are repo-derived."));
 }
