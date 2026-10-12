@@ -1,0 +1,24 @@
+**Theorem 44.2 (conditional decidability and effective frontier).** Assume:
+
+1. $K$, the chart types, action types, reply types, and controller positions
+   are finite;
+2. an independent finite horizon $T_K(B)$ is available for every finite or
+   mixed budget $B\in(\mathbb N\cup\{\infty\})^d$ that has at least one
+   constrained coordinate, or a certified regular history encoding from
+   Definition 42.2 is available;
+3. admission, reply, legality, successor, epoch, exact cost, and complete-row
+   equality predicates are Presburger-definable in the chart parameters and
+   epoch; and
+4. either a finite feasible seed controller is supplied, or an all-infinite
+   synthesis extractor decides the unconstrained case and returns a finite
+   controller when one exists.
+
+Then budget feasibility $\operatorname{Feas}_K(B)$ is decidable. If it is
+nonempty, $\mathcal F_K$ has a finite effectively computable Pareto basis
+$\mathcal B_K$ and
+
+$$
+\mathcal F_K=\uparrow\mathcal B_K
+ =\{B:\exists v\in\mathcal B_K, v\le B\}.
+$$
+
