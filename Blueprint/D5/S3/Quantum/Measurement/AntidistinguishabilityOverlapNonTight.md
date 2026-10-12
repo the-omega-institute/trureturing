@@ -50,6 +50,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/AntidistinguishabilityOverlapNonTight.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/johnston-russo-sikora-2025-antidistinguishability-tightness` (proved) by `D5/S3/Quantum/Measurement/AntidistinguishabilityOverlapNonTight.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"johnston-russo-sikora-2025-antidistinguishability-tightness","declaration_gid":"D5/S3/Quantum/Measurement/AntidistinguishabilityOverlapNonTight.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nathaniel Johnston, Vincent Russo, Jamie Sikora (2025). *Tight bounds for antidistinguishability and circulant sets of pure quantum states*. DOI: [10.22331/q-2025-02-04-1622](https://doi.org/10.22331/q-2025-02-04-1622). URL: <https://arxiv.org/abs/2311.17047v2>.
