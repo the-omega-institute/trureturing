@@ -131,12 +131,6 @@ def fullRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment)
   (collapsedObs S e o,
     nativeMinimalRectangleReadout S e o k l (⟨o,rfl⟩ : Fiber S e o))
 
-/-- The full native sigma-algebra contains no extra good-event flag. -/
-def fullRectangleSigma {M q s : ℕ} (S : Support M q) (e : Experiment)
-    (k l : ℕ) : MeasurableSpace (Obs M s e) :=
-  MeasurableSpace.comap (fullRectangleReadout S e k l) ⊤
-
-open scoped Classical in
 private theorem full_environment_sum {M q s : ℕ} (S : Support M q) (r : ℝ)
     (e : Experiment) (k l : ℕ) (o : Obs M s e) (P : Obs M s e → Prop) :
     letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance

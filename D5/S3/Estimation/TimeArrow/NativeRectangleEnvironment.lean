@@ -24,7 +24,7 @@ noncomputable section
 
 open private
   D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_departure_word_counts
-from D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 /-- The collapsed history fixes both total signal departure counts. -/
 theorem native_signal_count_totals {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (y : Fiber S e o) :
@@ -196,7 +196,7 @@ theorem native_minimal_four_cell_law {M q s : ℕ} (S : Support M q)
   rw [he]
   exact (D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.native_four_cell_conditional_law
     S r e o hq hqm hr hr1 ha ha1 V outsideP outsideM k l R U t
-      hpos hneg hR hU hout).1
+      hpos hneg hR hU hout)
 
 end
 end D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment

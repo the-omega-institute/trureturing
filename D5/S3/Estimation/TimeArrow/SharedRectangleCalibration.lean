@@ -5,59 +5,48 @@
    anchors: []
    utility: none
    digest: Four adjacent score cells share one moving logistic calibration. -/
-
 import Mathlib.Analysis.SpecialFunctions.Stirling
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
-import D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
+import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 import D5.S3.Estimation.SequentialDecisionRisk.UniformPosteriorOdds
-
 open scoped BigOperators Topology
 open Finset Filter
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
-
 namespace D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 noncomputable section
-
 /-- The four score increments relative to the lower-left count cell. -/
 def offsets (r ε : ℝ) : Fin 4 → ℝ :=
   ![0, Real.log ((1 + r) / (1 - ε)), Real.log ((1 - r) / (1 + ε)),
     Real.log ((1 + r) / (1 - ε)) + Real.log ((1 - r) / (1 + ε))]
-
 /-- The checkerboard change of the calibration equation at fixed root. -/
 def checkerboard (r ε x : ℝ) : ℝ :=
   Real.sigmoid x + Real.sigmoid (x + offsets r ε 3) -
     Real.sigmoid (x + offsets r ε 1) - Real.sigmoid (x + offsets r ε 2)
-
 /-- Real interpolation of the four counts with both margins fixed. The
 order is A, B, C, D, and the count in A is the parameter `t`. -/
 def cellCounts (N R U t : ℝ) : Fin 4 → ℝ :=
   ![t, U - t, R - t, N - R - U + t]
-
 /-- All rows outside the four cells remain in the calibration sum. -/
 def calibratedMean {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U t x : ℝ) : ℝ :=
   (∑ i, Real.sigmoid (x + outside i)) +
     ∑ j, cellCounts N R U t j * Real.sigmoid (x + offsets r ε j)
-
 /-- The variance of the same full Bernoulli calibration. -/
 def calibratedVariance {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U t x : ℝ) : ℝ :=
   (∑ i, Real.sigmoid (x + outside i) * (1 - Real.sigmoid (x + outside i))) +
     ∑ j, cellCounts N R U t j * Real.sigmoid (x + offsets r ε j) *
       (1 - Real.sigmoid (x + offsets r ε j))
-
 private theorem sigmoid_log {u : ℝ} (hu : 0 < u) :
     Real.sigmoid (Real.log u) = u / (1 + u) := by
   rw [Real.sigmoid_def, Real.exp_neg, Real.exp_log hu]
   field_simp
   <;> ring
-
 private theorem checkerboard_center {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     checkerboard r 0 0 = -r ^ 4 / (2 * (2 - r ^ 2) * (4 - r ^ 2)) := by
   have hp : 0 < 1 + r := by linarith
@@ -77,19 +66,16 @@ private theorem checkerboard_center {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   rw [hlog, sigmoid_log hpq, sigmoid_log hp, sigmoid_log hm]
   field_simp
   <;> ring
-
 private theorem checkerboard_center_neg {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     checkerboard r 0 0 < 0 := by
   rw [checkerboard_center hr hr1]
   have h2 : 0 < 2 - r ^ 2 := by nlinarith
   have h4 : 0 < 4 - r ^ 2 := by nlinarith
   exact div_neg_of_neg_of_pos (neg_neg_of_pos (pow_pos hr 4)) (by positivity)
-
 theorem sigmoid_shift_deriv (a x : ℝ) :
     HasDerivAt (fun x : ℝ => Real.sigmoid (x + a))
       (Real.sigmoid (x + a) * (1 - Real.sigmoid (x + a))) x := by
   simpa only [Function.comp_def, mul_one] using! (Real.hasDerivAt_sigmoid (x + a)).comp x ((hasDerivAt_id x).add_const a)
-
 /-- Differentiate the complete calibration along one common root. The
 histogram derivative is the checkerboard term, rather than four independent
 root derivatives. -/
@@ -122,7 +108,6 @@ theorem moving_calibration_deriv {ι : Type*} [Fintype ι] (outside : ι → ℝ
   simp [calibratedVariance, checkerboard, hx, Fin.sum_univ_four, cellCounts, offsets,
     Function.comp_def]
   <;> ring
-
 /-- Every differentiable root of the same constant calibration equation has
 the shared implicit response `-Delta / Dcal`. -/
 theorem shared_root_response {ι : Type*} [Fintype ι] (outside : ι → ℝ)
@@ -135,7 +120,6 @@ theorem shared_root_response {ι : Type*} [Fintype ι] (outside : ι → ℝ)
   have hz := hd.unique ((hasDerivAt_const t q).congr_of_eventuallyEq hcal)
   apply (eq_div_iff hv).mpr
   nlinarith
-
 private theorem calibration_root_deriv {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U t x : ℝ) :
     HasDerivAt (calibratedMean outside r ε N R U t)
@@ -149,7 +133,6 @@ private theorem calibration_root_deriv {ι : Type*} [Fintype ι] (outside : ι �
   · funext y
     simp only [calibratedMean, Pi.add_apply, Finset.sum_apply]
   · simp only [calibratedVariance, mul_assoc]
-
 /-- A locally defined shared calibration root exists whenever its actual full
 variance is nonzero. Its derivative is computed from the same histogram. -/
 theorem exists_shared_calibration_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
@@ -201,7 +184,6 @@ theorem exists_shared_calibration_root {ι : Type*} [Fintype ι] (outside : ι �
     simpa only [f, θ, hcal] using eventually_apply_implicitFunctionOfBivariate df₁ df₂ cf₁ cf₂ iv
   refine ⟨θ, hx, he, ?_⟩
   rwa [shared_root_response outside r ε N R U q t x _ θ hθ hx he hv] at hθ
-
 /-- The compensated group response uses the same root and full variance. -/
 theorem compensated_group_deriv {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U q bg t x v : ℝ) (θ : ℝ → ℝ) (hθ : HasDerivAt θ v t)
@@ -217,7 +199,6 @@ theorem compensated_group_deriv {ι : Type*} [Fintype ι] (outside : ι → ℝ)
   convert! hg using 1
   simp only [Function.comp_apply, id_eq, hr, hx]
   ring
-
 private theorem continuous_checkerboard_parameters {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     ContinuousAt (fun a : ℝ × ℝ => checkerboard r a.1 a.2) (0, 0) := by
   have hp : (1 + r) / (1 - (0 : ℝ)) ≠ 0 := by simp; linarith
@@ -237,7 +218,6 @@ private theorem continuous_checkerboard_parameters {r : ℝ} (hr : 0 < r) (hr1 :
     (continuous_sigmoid.continuousAt.comp (continuous_snd.continuousAt.add (cp.add cm)))).sub
     (continuous_sigmoid.continuousAt.comp (continuous_snd.continuousAt.add cp))).sub
     (continuous_sigmoid.continuousAt.comp (continuous_snd.continuousAt.add cm))
-
 /-- Strictly negative checkerboard response persists in a full neighborhood
 of the compensated symmetric center, with one constant for all outside rows. -/
 theorem checkerboard_negative_neighborhood {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
@@ -246,11 +226,9 @@ theorem checkerboard_negative_neighborhood {r : ℝ} (hr : 0 < r) (hr1 : r < 1) 
   have hd : 0 < d := by dsimp [d]; linarith [checkerboard_center_neg hr hr1]
   refine ⟨d, hd, ?_⟩
   exact (continuous_checkerboard_parameters hr hr1).eventually_lt_const (by dsimp [d]; linarith [checkerboard_center_neg hr hr1])
-
 private theorem cellCounts_sum (N R U t : ℝ) : (∑ j, cellCounts N R U t j) = N := by
   simp [Fin.sum_univ_four, cellCounts]
   ring
-
 private theorem calibratedVariance_pos {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U t x : ℝ) (hN : 0 < N)
     (hc : ∀ j, 0 ≤ cellCounts N R U t j) :
@@ -278,7 +256,6 @@ private theorem calibratedVariance_pos {ι : Type*} [Fintype ι] (outside : ι �
       exact mul_pos hj (hp _)
     exact hjp.trans_le he
   exact add_pos_of_nonneg_of_pos ho hi
-
 theorem exists_calibration_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U q t : ℝ) (hq : 0 < q)
     (hqM : q < (Fintype.card ι : ℝ) + N)
@@ -306,7 +283,6 @@ theorem exists_calibration_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
   obtain ⟨x, hx⟩ := intermediate_value_univ₂_eventually₂ hcont continuous_const
     (hb.eventually_le_const hq) (ht.eventually_const_le hqM)
   exact ⟨x,hx⟩
-
 theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U q t : ℝ) (hN : 0 < N) (hq : 0 < q)
     (hqM : q < (Fintype.card ι : ℝ) + N)
@@ -318,7 +294,6 @@ theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
       rw [(calibration_root_deriv outside r ε N R U t x).deriv]
       exact calibratedVariance_pos outside r ε N R U t x hN hc
   exact ⟨x, hx, fun y hy => hm.injective (hy.trans hx.symm)⟩
-
 /-- One shared root is defined on the entire feasible open interval. Local
 implicit roots agree with it by uniqueness, so their responses belong to one
 curve rather than separately selected roots. This does not assert a uniform
@@ -348,117 +323,7 @@ theorem shared_calibration_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ
     filter_upwards [hφeq, isOpen_Ioo.mem_nhds ht] with u hu hui
     exact (hex u hui).unique (heq u hui) hu
   exact ⟨heq t ht, hφt ▸ hφder.congr_of_eventuallyEq hagree, hv⟩
-
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-
-/-- Only true signal rows in the four adjacent count cells receive an
-interior cell index. All background rows remain in the full outside sum. -/
-
-def nativeRowCell {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
-    (k l : ℕ) (i : Fin M) : Option (Fin 4) := by
-  classical
-  exact if i ∈ S.val then
-    if count e o i 1 = k ∧ count e o i (-1) = l then some 0 else
-    if count e o i 1 = k + 1 ∧ count e o i (-1) = l then some 1 else
-    if count e o i 1 = k ∧ count e o i (-1) = l + 1 then some 2 else
-    if count e o i 1 = k + 1 ∧ count e o i (-1) = l + 1 then some 3 else none
-  else none
-
-theorem native_row_cell_iff {M q s : ℕ} (S : Support M q) (e : Experiment)
-    (o : Obs M s e) (k l : ℕ) (i : Fin M) (j : Fin 4) :
-    nativeRowCell S e o k l i = some j ↔ i ∈ S.val ∧
-      count e o i 1 = k + ![0, 1, 0, 1] j ∧
-      count e o i (-1) = l + ![0, 0, 1, 1] j := by
-  classical
-  by_cases hs : i ∈ S.val
-  · by_cases hA : count e o i 1 = k ∧ count e o i (-1) = l
-    · fin_cases j <;> simp [nativeRowCell, hs, hA, hA.1, hA.2]
-    · by_cases hB : count e o i 1 = k + 1 ∧ count e o i (-1) = l
-      · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hB.1, hB.2]
-      · by_cases hC : count e o i 1 = k ∧ count e o i (-1) = l + 1
-        · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hC.1, hC.2]
-        · by_cases hD : count e o i 1 = k + 1 ∧ count e o i (-1) = l + 1
-          · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hD, hD.1, hD.2]
-          · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hD]
-  · simp [nativeRowCell, hs]
-
-/-- The exact labelled row subsets supplying the four calibration counts. -/
-def nativeCalibrationCells {M q s : ℕ} (S : Support M q) (e : Experiment)
-    (o : Obs M s e) (k l : ℕ) (j : Fin 4) : Finset (Fin M) := by
-  classical
-  exact univ.filter fun i => nativeRowCell S e o k l i = some j
-
-/-- The original four signal-cell sizes give exactly the two numerical
-margins and A-count in the native conditional readout. -/
-theorem native_calibration_counts_margins {M q s : ℕ} (S : Support M q)
-    (e : Experiment) (o : Obs M s e) (k l : ℕ)
-    (y : NativeSignalConditionalFiber.Fiber S e o) :
-    let V := RectangleHypergeometricKernel.nativeRectangleRows S e o k l y
-    let C := fun j => (nativeCalibrationCells S e y.val k l j).card
-    V.card = C 0 + C 1 + C 2 + C 3 ∧
-      (V.filter fun i => count e y.val i.val 1 = k).card = C 0 + C 2 ∧
-      (V.filter fun i => count e y.val i.val (-1) = l).card = C 0 + C 1 ∧
-      RectangleHypergeometricKernel.nativeRectangleACount S e o k l y = C 0 := by
-  classical
-  dsimp only
-  have hc (J : Finset (Fin 4)) :
-      ((univ : Finset {i : Fin M // i ∈ S.val}).filter fun i =>
-        ∃ j ∈ J, nativeRowCell S e y.val k l i.val = some j).card =
-      ∑ j ∈ J, (nativeCalibrationCells S e y.val k l j).card := by
-    let P := (univ : Finset (Fin M)).filter fun i =>
-      ∃ j ∈ J, nativeRowCell S e y.val k l i = some j
-    have hs : ∀ i ∈ P, i ∈ S.val := by
-      intro i hi
-      obtain ⟨j, _, hj⟩ := (mem_filter.mp hi).2
-      exact ((native_row_cell_iff S e y.val k l i j).mp hj).1
-    have he : (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
-        ∃ j ∈ J, nativeRowCell S e y.val k l i.val = some j) =
-          P.subtype (fun i => i ∈ S.val) := by
-      ext i
-      simp [P]
-    rw [he, card_subtype, filter_true_of_mem hs]
-    have hf := sum_card_fiberwise_eq_card_filter (univ : Finset (Fin M))
-      (J.image (some : Fin 4 → Option (Fin 4))) (nativeRowCell S e y.val k l)
-    rw [sum_image (fun _ _ _ _ h => Option.some.inj h)] at hf
-    simpa [P, nativeCalibrationCells, eq_comm] using hf.symm
-  have hN : RectangleHypergeometricKernel.nativeRectangleRows S e o k l y =
-      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
-        ∃ j ∈ (univ : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
-    ext i
-    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff,
-      i.property, Fin.exists_fin_succ]
-    omega
-  have hR : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
-      (fun i => count e y.val i.val 1 = k) =
-      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
-        ∃ j ∈ ({0, 2} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
-    ext i
-    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]
-    omega
-  have hU : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
-      (fun i => count e y.val i.val (-1) = l) =
-      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
-        ∃ j ∈ ({0, 1} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
-    ext i
-    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]
-    omega
-  have hA : (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
-      count e y.val i.val 1 = k ∧ count e y.val i.val (-1) = l) =
-      univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
-        ∃ j ∈ ({0} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
-    ext i
-    simp [native_row_cell_iff, i.property]
-  refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [hN, hc]
-    simp [Fin.sum_univ_four, add_assoc]
-  · rw [hR, hc]
-    simp
-  · rw [hU, hc]
-    simp
-  · unfold RectangleHypergeometricKernel.nativeRectangleACount
-    rw [hA, hc]
-    simp
-
 private theorem sigmoid_lipschitz_certificate :
     LipschitzWith (1 / 4 : NNReal) Real.sigmoid := by
   apply lipschitzWith_of_nnnorm_deriv_le differentiable_sigmoid
@@ -468,27 +333,21 @@ private theorem sigmoid_lipschitz_certificate :
   rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (Real.sigmoid_nonneg x)
     (sub_nonneg.mpr (Real.sigmoid_le_one x)))]
   nlinarith [sq_nonneg (Real.sigmoid x - 1 / 2)]
-
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-
 open scoped BigOperators Topology
 open Finset Filter
 open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
 noncomputable section
-
 private theorem sigmoid_variance_formula (x : ℝ) :
     Real.sigmoid x * (1 - Real.sigmoid x) =
       Real.exp (-x) / (1 + Real.exp (-x)) ^ 2 := by
   rw [Real.sigmoid_def]
   field_simp
   <;> ring
-
 /-- A bounded common odds tilt controls every Bernoulli variance by the
 same factors, independently of its unshifted score. -/
 theorem sigmoid_variance_tilt (x h : ℝ)
@@ -517,14 +376,12 @@ theorem sigmoid_variance_tilt (x h : ℝ)
     have hp : 0 ≤ z * (2 * z - 1) * w ^ 2 :=
       mul_nonneg (mul_nonneg hz.le (by linarith)) (sq_nonneg w)
     nlinarith
-
 private theorem sigmoid_variance_bounds (x : ℝ) :
     0 ≤ Real.sigmoid x * (1 - Real.sigmoid x) ∧
       Real.sigmoid x * (1 - Real.sigmoid x) ≤ 1 / 4 := by
   constructor
   · exact mul_nonneg (Real.sigmoid_nonneg x) (sub_nonneg.mpr (Real.sigmoid_le_one x))
   · nlinarith [sq_nonneg (Real.sigmoid x - 1 / 2)]
-
 /-- Changing the same rectangle histogram has a uniform effect on full
 variance at a fixed root. The outside rows cancel exactly. -/
 private theorem variance_histogram_displacement {ι : Type*} [Fintype ι] (outside : ι → ℝ)
@@ -551,7 +408,6 @@ private theorem variance_histogram_displacement {ι : Type*} [Fintype ι] (outsi
     have h3 := sigmoid_variance_bounds (x + offsets r ε 3)
     constructor <;> linarith
   exact (mul_le_mul_of_nonneg_left hb (abs_nonneg _)).trans_eq (mul_one _)
-
 /-- A bounded root tilt gives uniform full-variance comparison for every
 feasible rectangle histogram, including every outside row. -/
 private theorem variance_root_tilt {ι : Type*} [Fintype ι] (outside : ι → ℝ)
@@ -583,7 +439,6 @@ private theorem variance_root_tilt {ι : Type*} [Fintype ι] (outside : ι → �
       intro j _
       have hh := mul_le_mul_of_nonneg_left (hi j).2 (hc j)
       simpa only [mul_assoc, mul_left_comm, mul_comm, add_assoc, add_left_comm, add_comm] using hh
-
 /-- A single base variance controls the entire feasible central rectangle
 fiber and a fixed root box. No histogram-dependent neighborhood is used. -/
 theorem central_fiber_variance_bounds {ι : Type*} [Fintype ι] (outside : ι → ℝ)
@@ -596,7 +451,6 @@ theorem central_fiber_variance_bounds {ι : Type*} [Fintype ι] (outside : ι �
   have hd := (abs_le.mp ((variance_histogram_displacement outside r ε N R U t t0 x).trans ht))
   have hb := variance_root_tilt outside r ε N R U t x h hc hl hu
   constructor <;> linarith
-
 private theorem checkerboard_abs_le_two (r ε x : ℝ) : |checkerboard r ε x| ≤ 2 := by
   unfold checkerboard
   apply abs_le.mpr
@@ -609,7 +463,6 @@ private theorem checkerboard_abs_le_two (r ε x : ℝ) : |checkerboard r ε x| �
   have h3 := Real.sigmoid_nonneg (x + offsets r ε 3)
   have h3' := Real.sigmoid_le_one (x + offsets r ε 3)
   constructor <;> linarith
-
 private theorem calibration_histogram_displacement {ι : Type*} [Fintype ι]
     (outside : ι → ℝ) (r ε N R U t t0 x : ℝ) :
     |calibratedMean outside r ε N R U t x - calibratedMean outside r ε N R U t0 x| ≤
@@ -621,7 +474,6 @@ private theorem calibration_histogram_displacement {ι : Type*} [Fintype ι]
   have hb := checkerboard_abs_le_two r ε x
   rw [hi, abs_mul]
   simpa only [mul_comm] using mul_le_mul_of_nonneg_left hb (abs_nonneg (t - t0))
-
 /-- A positive derivative on a fixed box turns a center residual into
 an explicit displacement bound for any root of the same equation. -/
 theorem root_box_of_residual (F : ℝ → ℝ) (q x0 x d a b : ℝ)
@@ -657,7 +509,6 @@ theorem root_box_of_residual (F : ℝ → ℝ) (q x0 x d a b : ℝ)
     rw [hroot] at hh
     rw [abs_of_nonpos (by linarith : x - x0 ≤ 0)]
     linarith only [hh, hres'.2]
-
 /-- A quantitative bootstrap confines any root of a feasible central
 histogram to one fixed box around the base root and bounds its displacement.
 The base variance alone supplies the derivative lower bound throughout the
@@ -727,7 +578,6 @@ theorem shared_root_central_bootstrap {ι : Type*} [Fintype ι] (outside : ι �
   have hv := central_fiber_variance_bounds outside r ε N R U t t0 x0 (x - x0) w
     hc ht (htilt _ hbox).1 (htilt _ hbox).2
   simpa only [add_sub_cancel] using And.intro hbox (And.intro hmove hv)
-
 /-- Quantitative feedback in a common compensated root box. Its size is
 controlled by the same full variance, rather than an independent denominator. -/
 theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
@@ -787,7 +637,6 @@ theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
           B * (Real.sigmoid x * (1 - Real.sigmoid x)) * (-checkerboard r ε x) / D := by ring
   rw [he]
   constructor <;> linarith [abs_le.mp hs]
-
 /-- One rectangle-independent compensated root box works for every
 outside histogram and both native experiments. -/
 theorem compensated_feedback_box {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
@@ -801,16 +650,13 @@ theorem compensated_feedback_box {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   apply he (y := (ε, x))
   simpa only [Prod.dist_eq, Real.dist_eq, sub_zero, max_lt_iff] using
     And.intro (hε.trans_le (min_le_left _ _)) (hx.trans_le (min_le_left _ _))
-
 end
 end D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
-
 open Filter
 open scoped Topology BigOperators
 open Finset
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
-
 namespace D5.S3.Estimation.TimeArrow.NativeGrowthRounding
 noncomputable section
 /-- Index zero corresponds to the first decimal exponent of the original sequence. -/
@@ -921,7 +767,6 @@ theorem information_rate_bounds (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
   constructor <;> nlinarith
 end
 end D5.S3.Estimation.TimeArrow.NativeGrowthRounding
-
 namespace D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
 noncomputable section
 theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
@@ -942,3 +787,142 @@ theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
     linarith
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+namespace D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+noncomputable section
+open private D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks
+  from D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+private theorem word_occupation_count {α : Type*} [DecidableEq α] {n : ℕ}
+    (w : Fin n → α) (i : α) :
+    (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation w).count i =
+      (univ.filter fun k => i = w k).card := by
+  unfold D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
+  rw [List.ofFn_eq_map, ← Multiset.map_coe, Multiset.count_map,
+    ← Finset.val_univ_fin, ← Finset.filter_val]
+  rfl
+private theorem signed_block_count {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) [Fintype (Sites s e)]
+    (g : SignalSites S e o → {i : Fin M // i ∈ S.val}) (i : {i : Fin M // i ∈ S.val})
+    (z : ℝ) (B : Finset (SignalSites S e o))
+    (hB : ∀ k, k ∈ B ↔ isSignedDeparture S e o z k)
+    (E : Fin B.card ≃ {k // k ∈ B}) :
+    (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
+      (fun k => g (E k).val)).count i = departureLabelCount S e o g i.val z := by
+  classical
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  rw [word_occupation_count]
+  let C := univ.filter fun k : SignalSites S e o => (g k).val = i.val ∧
+    isSignedDeparture S e o z k
+  let D := univ.filter fun k : Fin B.card => i = g (E k).val
+  have hc : {k // k ∈ D} ≃ {k // k ∈ C} :=
+    { toFun := fun k => ⟨(E k.val).val, mem_filter.mpr ⟨mem_univ _,
+        congrArg Subtype.val ((mem_filter.mp k.property).2.symm),
+        (hB _).mp (E k.val).property⟩⟩
+      invFun := fun k => ⟨E.symm ⟨k.val, (hB _).mpr (mem_filter.mp k.property).2.2⟩,
+        mem_filter.mpr ⟨mem_univ _, by
+          simp only [E.apply_symm_apply]
+          apply Subtype.ext
+          exact (mem_filter.mp k.property).2.1.symm⟩⟩
+      left_inv := by intro k; apply Subtype.ext; simp
+      right_inv := by intro k; apply Subtype.ext; simp }
+  simpa only [Fintype.card_coe, D, C, departureLabelCount, isSignedDeparture]
+    using Fintype.card_congr hc
+/-- The two occupation words are obtained from the actual positive and
+negative departure sites of the native history. -/
+private theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (ap am : Multiset {i : Fin M // i ∈ S.val})
+    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
+    (ham : am.card = (signedDepartureBlocks S e o 1).card) :
+    let kp := (signedDepartureBlocks S e o 0).card
+    let km := (signedDepartureBlocks S e o 1).card
+    let kr := (signedDepartureBlocks S e o 2).card
+    let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
+        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
+    conditionalFiberMass S r e o
+      ((A.map (labelBlockEquiv S e o kp km kr (nativeDepartureEnumeration S e o)).symm.toEmbedding).map
+        (fiberLabelEquiv S e o).symm.toEmbedding) =
+      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
+        (q : ℝ) ^ (kp + km) := by
+  exact native_multinomial_label_blocks S r e o hq hqm hr hr1 ha ha1 _ _ _
+    (nativeDepartureEnumeration S e o) ap am hap ham
+/-- Both occupation words retain the exact native positive and negative row
+counts, including adjacent path departures. -/
+private theorem native_departure_word_counts {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (y : Fiber S e o)
+    (i : {i : Fin M // i ∈ S.val}) :
+    let J := nativeDepartureEnumeration S e o
+    let W := labelBlockEquiv S e o _ _ _ J (fiberLabelEquiv S e o y)
+    count e y.val i.val 1 =
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation W.1.1).count i ∧
+    count e y.val i.val (-1) =
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation W.1.2).count i := by
+  classical
+  dsimp only
+  rw [native_departure_label_count S e o y i.val i.property 1,
+    native_departure_label_count S e o y i.val i.property (-1)]
+  constructor
+  · exact (signed_block_count S e o (fiberLabelEquiv S e o y) i 1
+      (signedDepartureBlocks S e o 0) (fun k => by simp only [signedDepartureBlocks,
+        Matrix.cons_val_zero, mem_filter, mem_univ, true_and])
+      (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm).symm
+  · exact (signed_block_count S e o (fiberLabelEquiv S e o y) i (-1)
+      (signedDepartureBlocks S e o 1) (fun k => by simp [signedDepartureBlocks])
+      (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm).symm
+/-- The event specifies the entire labelled joint histogram of signal-row
+positive and negative departures, under the original pair or path law. -/
+def jointRowHistogramEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (ap am : Multiset {i : Fin M // i ∈ S.val}) :
+    Finset (Fiber S e o) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  exact univ.filter fun y => ∀ i : {i : Fin M // i ∈ S.val},
+    count e y.val i.val 1 = ap.count i ∧ count e y.val i.val (-1) = am.count i
+/-- The exact pushforward of the native history law to the complete labelled
+joint signal-row histogram. Both arrays share the same history realization. -/
+theorem native_joint_row_histogram_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (ap am : Multiset {i : Fin M // i ∈ S.val})
+    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
+    (ham : am.card = (signedDepartureBlocks S e o 1).card) :
+    conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap am) =
+      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
+        (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card +
+          (signedDepartureBlocks S e o 1).card) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  let kp := (signedDepartureBlocks S e o 0).card
+  let km := (signedDepartureBlocks S e o 1).card
+  let kr := (signedDepartureBlocks S e o 2).card
+  let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
+        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
+  have he : jointRowHistogramEvent S e o ap am =
+      ((A.map (labelBlockEquiv S e o kp km kr (nativeDepartureEnumeration S e o)).symm.toEmbedding).map
+        (fiberLabelEquiv S e o).symm.toEmbedding) := by
+    ext y
+    simp only [jointRowHistogramEvent, mem_filter, mem_univ, true_and,
+      mem_map_equiv, Equiv.symm_symm, A, mem_product,
+      D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords]
+    constructor
+    · intro hy
+      refine ⟨⟨?_, ?_⟩, trivial⟩
+      · apply Multiset.ext.mpr
+        intro i
+        exact (native_departure_word_counts S e o y i).1.symm.trans (hy i).1
+      · apply Multiset.ext.mpr
+        intro i
+        exact (native_departure_word_counts S e o y i).2.symm.trans (hy i).2
+    · rintro ⟨⟨hp, hm⟩, _⟩ i
+      exact ⟨(native_departure_word_counts S e o y i).1.trans (congrArg (Multiset.count i) hp),
+        (native_departure_word_counts S e o y i).2.trans (congrArg (Multiset.count i) hm)⟩
+  rw [he]
+  exact native_signed_departure_occupation_law S r e o hq hqm hr hr1 ha ha1 ap am hap ham
+end
+end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
