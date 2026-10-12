@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8fa7d42a29af2da4e3a9003cd16ec7cd2d8182dc18d5ca8fe5f0417064404d32"}
+{"statement_id":"sha256:8fa7d42a29af2da4e3a9003cd16ec7cd2d8182dc18d5ca8fe5f0417064404d32","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),6:Limits),26:EulerCountertermUniqueness),24:euler_counterterm_unique)","kind":"theorem"}]}

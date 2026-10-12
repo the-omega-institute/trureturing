@@ -1,1 +1,1 @@
-{"statement_id":"sha256:91e947b3f1caa92fa06db82b9e0e05575562e77a638556ed8f569ecdc6abe432"}
+{"statement_id":"sha256:91e947b3f1caa92fa06db82b9e0e05575562e77a638556ed8f569ecdc6abe432","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),19:PopStackTerminalGap),1:R)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),19:PopStackTerminalGap),27:terminal_gap_classification)","kind":"theorem"}]}

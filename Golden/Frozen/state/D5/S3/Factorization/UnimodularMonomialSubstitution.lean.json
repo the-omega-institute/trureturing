@@ -1,1 +1,1 @@
-{"statement_id":"sha256:75f9f124b218d0c436343acb2ea42f96fb44e64b81cb3ea71e2cfecc5f192897"}
+{"statement_id":"sha256:75f9f124b218d0c436343acb2ea42f96fb44e64b81cb3ea71e2cfecc5f192897","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),30:UnimodularMonomialSubstitution),32:unimodular_monomial_substitution)","kind":"theorem"}]}

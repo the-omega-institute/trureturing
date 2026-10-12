@@ -173,7 +173,6 @@ internal static partial class RepositoryPathPolicy
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
-            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
             || FrozenStatePath.TryToModulePath(value, out _)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)

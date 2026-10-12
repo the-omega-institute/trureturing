@@ -1,1 +1,1 @@
-{"statement_id":"sha256:92c3d4f674f37f9d0d28050725163e6178dab8ac35874be12cc31388b305c68b"}
+{"statement_id":"sha256:92c3d4f674f37f9d0d28050725163e6178dab8ac35874be12cc31388b305c68b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),11:Observation),36:FiniteReadoutAlphabetEntropyCapacity),40:finite_readout_alphabet_entropy_capacity)","kind":"theorem"}]}

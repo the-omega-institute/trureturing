@@ -8,158 +8,21 @@ namespace StrataLint.Cli;
 
 internal static class TruthReleaseCommand
 {
-    private const string SourceRepository = "the-omega-institute/trureturing";
-    private const string ProducerRepository = "the-omega-institute/trureturing";
-
-    internal static ExplicitCommandResult Run(
-        IRepositoryGateway repository,
-        IScribeEmissionVerifier? scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+    internal static ExplicitCommandResult Run(IRepositoryGateway repository,
+        IScribeEmissionVerifier? scribeEmissionVerifier, IReadOnlyList<string> arguments)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(arguments);
-        if (!TryParseArguments(arguments, out var options, out var missingScribePack))
-        {
+        if (!TryParseArguments(arguments, out _, out var missingScribePack))
             return missingScribePack ? MissingScribePackUsage() : Usage();
-        }
-
-        try
-        {
-            var suppliedDefinitions = ScribePackInput.ReadDefinitions(
-                options.ScribePackPath, options.ScribePackDigest);
-            var verifier = scribeEmissionVerifier
-                ?? throw new InvalidOperationException("truth-release requires Scribe emission verification.");
-            TruthExportValidation.RequireGitObjectId(
-                options.ProducerPackageCommit,
-                "producer_package_commit");
-            var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
-            var contentHashes = new Dictionary<string, ReadOnlyMemory<byte>>(StringComparer.Ordinal);
-            var snapshot = Decode(DagLedgerCommandPreparation.Ask(
-                () => repository.ReadRevisionProjection(identity.Revision, IsReleaseInput,
-                    (path, hash) => contentHashes.Add(path, hash))));
-            var rawLeanReportBytes = ImmutableArray.CreateRange(
-                File.ReadAllBytes(options.CandidateLeanReport));
-            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
-            var preparation = TruthExportCommand.PrepareStrictHistory(
-                repository,
-                snapshot,
-                identity,
-                report);
-            if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
-            {
-                return new ExplicitCommandResult(
-                    2,
-                    string.Empty,
-                    $"TRUTH_RELEASE_REJECTED {rejected.Message}\n");
-            }
-
-            var truth = preparation.Truth;
-            verifier.Verify(snapshot, truth.Report, suppliedDefinitions);
-            var sourceTree = Bare(identity.TreeOid);
-            var truthExportBytes = TruthExportJsonWriter.Write(TruthExportProjection.Project(
-                preparation.Catalog.ClosedNodes,
-                FrozenStateCatalog.Load(snapshot).Selectors.ToImmutableHashSet(),
-                identity.Revision,
-                sourceTree));
-            var projection = TruthDagProjectionAssembler.Build(
-                truth.Snapshot,
-                truth.Lean,
-                preparation.States);
-            var dagMarkdownBytes = CanonicalDagWriter.Write(projection);
-            var truthGraphBytes = AssembleTruthGraph(contentHashes, truth, projection, rawLeanReportBytes, suppliedDefinitions);
-            var blueprintIndexBytes = BlueprintIndexAssembler.Assemble(snapshot);
-            var frozenLedgerHeadBytes = FrozenLedgerHeadAssembler.Assemble(preparation.BaseView);
-            var sourceSnapshot = SourceSnapshotAssembler.Assemble(
-                snapshot,
-                identity,
-                SourceRepository,
-                options.ProducerPackageCommit,
-                truthGraphBytes,
-                rawLeanReportBytes,
-                dagMarkdownBytes,
-                truthExportBytes,
-                frozenLedgerHeadBytes,
-                preparation.BaseView.EventCount);
-            var source = new TruthReleaseSource(SourceRepository, identity.Revision, sourceTree);
-            var digest = TruthReleaseBundleWriter.WriteBundle(
-                options.OutDirectory,
-                new TruthReleaseBundleInput(
-                    sourceSnapshot,
-                    truthGraphBytes,
-                    rawLeanReportBytes,
-                    truthExportBytes,
-                    blueprintIndexBytes,
-                    frozenLedgerHeadBytes,
-                    source,
-                    options.Trust,
-                    new TruthReleaseProducer(
-                        ProducerRepository,
-                        options.ProducerPackageCommit,
-                        ReadOnly: true),
-                    options.ProducedAt));
-            return new ExplicitCommandResult(
-                0,
-                $"TRUTH_RELEASE release_digest={digest} source_commit={identity.Revision} "
-                    + $"out={Path.GetFullPath(options.OutDirectory)}\n",
-                string.Empty);
-        }
-        catch (Exception exception) when (
-            exception is DagLedgerCommandPreparation.RepositoryUnavailableException
-                or InvalidOperationException
-                or FormatException
-                or ArgumentException
-                or JsonException
-                or IOException
-                or UnauthorizedAccessException)
-        {
-            return new ExplicitCommandResult(
-                2,
-                string.Empty,
-                $"TRUTH_RELEASE_INVALID {exception.Message}\n");
-        }
-    }
-
-    private static ImmutableArray<byte> AssembleTruthGraph(
-        IReadOnlyDictionary<string, ReadOnlyMemory<byte>> contentHashes,
-        TruthContext truth,
-        TruthDagProjection projection,
-        ImmutableArray<byte> rawLeanReportBytes,
-        IReadOnlyList<DocumentDefinition> suppliedDefinitions)
-    {
-        var catalog = DeclarationCatalog.Create(truth.Report);
-
-        var provenance = new TruthGraphProvenance(
-            SnapshotContentDigest.ComputeContentHashes(
-                contentHashes,
-                suppliedDefinitions.Select(static definition => definition.RelativePath.Value)),
-            RawLeanReportArtifact.ContentAddress(rawLeanReportBytes.AsSpan()));
-        return TruthGraphJsonWriter.Write(
-            TruthGraphModelBuilder.Create(
-                projection,
-                provenance,
-                suppliedDefinitions,
-                string.Empty,
-                catalog,
-                tolerateAbsentDocuments: true));
+        return new(2, string.Empty, "TRUTH_RELEASE_EVENT_FIELDS_UNAVAILABLE "
+            + "frozen-ledger-head and source-snapshot frozen_ledger_sequence have no state-table source; issuance is unavailable\n");
     }
 
     internal static bool IsReleaseInput(string path) =>
         !path.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
-        && !path.StartsWith("docs/", StringComparison.Ordinal);
-
-    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(
-                "immutable revision snapshot is invalid: " + failure.Message),
-        };
-
-    private static string Bare(string taggedOid)
-    {
-        var separator = taggedOid.IndexOf(':', StringComparison.Ordinal);
-        return separator < 0 ? taggedOid : taggedOid[(separator + 1)..];
-    }
+        && !path.StartsWith("docs/", StringComparison.Ordinal)
+        && !path.StartsWith("Blueprint/", StringComparison.Ordinal);
 
     private static bool TryParseArguments(
         IReadOnlyList<string> arguments,
