@@ -133,7 +133,6 @@ private theorem trace_P8 : trace P8 = 4 := by
   change ∑ i, P8 i i = 4
   norm_num [P8, weight, Fin.sum_univ_succ]
 
-
 private def octVec : Fin 6 → Fin 2 → ℂ :=
   ![![1,0],![0,1],![1,1],![1,-1],![1,Complex.I],![1,-Complex.I]]
 
@@ -190,7 +189,6 @@ private theorem octDesign : IsWeightedDesign 3 octStates (fun _ => 1/6) := by
 private theorem nprime_le_six : Nprime 2 3 ≤ 6 :=
   Nat.sInf_le (show DesignExists 2 3 6 from ⟨octStates, fun _ => 1/6, octDesign⟩)
 
-
 private def pt (A : Matrix (Fin 8) (Fin 8) ℂ) : Matrix (Fin 8) (Fin 8) ℂ :=
   let e : Fin 4 × Fin 2 ≃ Fin 8 := finProdFinEquiv
   (partialTranspose (A.submatrix e e)).submatrix e.symm e.symm
@@ -245,5 +243,91 @@ private theorem rank_Q : Q.rank = 6 := by
   rw [hm] at hl
   simpa only [Fintype.card_fin] using le_antisymm hu hl
 
+private theorem rank_sum {N : ℕ} (s : Finset (Fin N))
+    (A : Fin N → Matrix (Fin 8) (Fin 8) ℂ) :
+    (∑ i ∈ s, A i).rank ≤ ∑ i ∈ s, (A i).rank := by
+  have h := LinearMap.rank_finsetSum_le s (fun i => Matrix.toLin' (A i))
+  rw [← map_sum] at h
+  have hc : ((∑ i ∈ s, A i).rank : Cardinal) ≤ ∑ i ∈ s, ((A i).rank : Cardinal) := by
+    dsimp only [Matrix.rank]
+    simpa only [Matrix.toLin'_apply', ← Module.finrank_eq_rank] using h
+  exact_mod_cast hc
+
+private def ptVector (v : Fin 2 → ℂ) (i : Fin 8) : ℂ :=
+  v (bit i 2) * v (bit i 1) * star (v (bit i 0))
+
+set_option maxHeartbeats 2000000 in
+-- Entrywise reindexing identifies the transposed tensor as an outer product.
+private theorem pure_pt (v : Fin 2 → ℂ) :
+    pt (tensorPow 3 (vecMulVec v (star v))) = vecMulVec (ptVector v) (star (ptVector v)) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp only [pt, partialTranspose, Matrix.submatrix_apply, tensor23, ptVector,
+      vecMulVec_apply, Pi.star_apply, star_mul, star_star]
+    <;> norm_num [finProdFinEquiv, bit_table, Matrix.cons_val_two] <;> ring
+
+private theorem pure_pt_rank (ρ : DensityState (Fin 2)) (hρ : IsPure ρ) (c : ℂ) :
+    (c • pt (tensorPow 3 ρ.1)).rank ≤ 1 := by
+  obtain ⟨v, hv⟩ := hρ
+  change ρ.1 = vecMulVec v (star v) at hv
+  rw [hv, pure_pt, ← smul_vecMulVec]
+  exact rank_vecMulVec_le _ _
+
+private theorem design_rank {N : ℕ} (ρ : Fin N → DensityState (Fin 2)) (p : Fin N → ℝ)
+    (h : IsWeightedDesign 3 ρ p) :
+    6 ≤ (Finset.univ.filter (fun i => 0 < p i)).card := by
+  classical
+  let S := Finset.univ.filter (fun i => 0 < p i)
+  have hm : Q = ∑ i ∈ S, (p i : ℂ) • pt (tensorPow 3 (ρ i).1) := by
+    have hh := congrArg pt h.2.2.2
+    rw [piSym23, trace_P8] at hh
+    have hc : (4 : ℂ)⁻¹ = 1/4 := by norm_num
+    rw [hc] at hh
+    change pt (∑ i, (p i : ℂ) • tensorPow 3 (ρ i).1) = Q at hh
+    rw [← hh]
+    ext a b
+    simp only [pt, partialTranspose, Matrix.submatrix_apply, Matrix.sum_apply,
+      Matrix.smul_apply, smul_eq_mul]
+    symm
+    apply Finset.sum_subset (Finset.filter_subset _ _)
+    intro i _ hi
+    have hz : p i = 0 := le_antisymm (le_of_not_gt (by simpa [S] using hi)) (h.1 i)
+    simp [hz]
+  have hb : ∀ i ∈ S, ((p i : ℂ) • pt (tensorPow 3 (ρ i).1)).rank ≤ 1 :=
+    fun i hi => pure_pt_rank (ρ i) (h.2.2.1 i (Finset.mem_filter.mp hi).2) _
+  calc
+    6 = Q.rank := rank_Q.symm
+    _ = (∑ i ∈ S, (p i : ℂ) • pt (tensorPow 3 (ρ i).1)).rank := congrArg Matrix.rank hm
+    _ ≤ ∑ i ∈ S, ((p i : ℂ) • pt (tensorPow 3 (ρ i).1)).rank := rank_sum S _
+    _ ≤ ∑ _i ∈ S, 1 := Finset.sum_le_sum hb
+    _ = S.card := by simp
+
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
+private theorem nprime23 : Nprime 2 3 = 6 := by
+  have he : ∃ N, DesignExists 2 3 N := ⟨6, octStates, fun _ => 1/6, octDesign⟩
+  obtain ⟨ρ, p, hp⟩ := Nat.sInf_mem he
+  have hle := (design_rank ρ p hp).trans (Finset.card_filter_le _ _)
+  rw [Finset.card_univ, Fintype.card_fin] at hle
+  change Nat.le 6 (Nprime 2 3) at hle
+  exact Nat.le_antisymm nprime_le_six hle
+
+private theorem six_design_pure (ρ : Fin 6 → DensityState (Fin 2)) (p : Fin 6 → ℝ)
+    (h : IsWeightedDesign 3 ρ p) : (∀ i, 0 < p i) ∧ (∀ i, IsPure (ρ i)) := by
+  classical
+  have hc := design_rank ρ p h
+  have he : Finset.univ.filter (fun i => 0 < p i) = Finset.univ :=
+    Finset.eq_of_subset_of_card_le (Finset.filter_subset _ _) (by simpa using hc)
+  have hp : ∀ i, 0 < p i := by
+    intro i
+    have hi : i ∈ Finset.univ.filter (fun j : Fin 6 => 0 < p j) := by
+      rw [he]
+      exact Finset.mem_univ i
+    exact (Finset.mem_filter.mp hi).2
+  exact ⟨hp, fun i => h.2.2.1 i (hp i)⟩
+
+#print axioms nprime23
+#print axioms six_design_pure
+#print prefix D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
 
 end D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
