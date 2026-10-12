@@ -751,9 +751,6 @@ private theorem central_calibration_kernel_estimate (r : ℝ) (hr : 0 < r) (hr1 
     have he := mul_le_mul_of_nonneg_left (hu x hx y hy hxy) hm.le
     nlinarith only [he]
 
-open private
-  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins
-from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 
 /-- The rectangle and all remaining candidate rows partition the original
 M rows, so the root range uses the original support-size condition. -/

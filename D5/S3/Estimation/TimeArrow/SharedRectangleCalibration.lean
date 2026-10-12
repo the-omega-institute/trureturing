@@ -802,7 +802,7 @@ private theorem native_environment_calibration_identification {M q s : ℕ}
 
 /-- The original four signal-cell sizes give exactly the two numerical
 margins and A-count in the native conditional readout. -/
-private theorem native_calibration_counts_margins {M q s : ℕ} (S : Support M q)
+theorem native_calibration_counts_margins {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (k l : ℕ)
     (y : NativeSignalConditionalFiber.Fiber S e o) :
     let V := RectangleHypergeometricKernel.nativeRectangleRows S e o k l y

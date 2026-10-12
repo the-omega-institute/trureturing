@@ -128,7 +128,7 @@ theorem reference_variance_count_window {M q L : ℕ} (S : Support M q) (r κ : 
 
 /-- The two signal Poisson coordinates supply an explicit mass for every
 finite rectangle contained in a square-root window. -/
-private theorem signal_rectangle_mass_lower {M q L : ℕ} (S : Support M q)
+theorem signal_rectangle_mass_lower {M q L : ℕ} (S : Support M q)
     (r K : ℝ) (hr : 0 < r) (hr1 : r < 1) (hK : 0 ≤ K) (hL : 1 ≤ L)
     (i : Fin M) (hi : i ∈ S.val) (D : Finset (ℕ × ℕ))
     (hD : ∀ c ∈ D, 0 < c.1 ∧ 0 < c.2 ∧

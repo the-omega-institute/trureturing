@@ -183,7 +183,7 @@ from D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 /-- On an attained minimal environment, the original pair/path A count has
 an exact hypergeometric law. All departure-total side conditions are derived
 from the reference native history, rather than assumed. -/
-private theorem native_minimal_four_cell_law {M q s : ℕ} (S : Support M q)
+theorem native_minimal_four_cell_law {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)

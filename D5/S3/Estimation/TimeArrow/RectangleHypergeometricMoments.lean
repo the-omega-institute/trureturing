@@ -464,12 +464,6 @@ open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-open private
-  D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment.native_minimal_four_cell_law
-from D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
-open private
-  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins
-from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 
 /-- The exact original conditional mass is the numerical kernel for every
 finite event of the A count. This connects the native law to scalar estimates
@@ -530,7 +524,7 @@ theorem native_kernel_event_mass {M q s : ℕ} (S : Support M q)
 
 /-- The native pair/path central tail uses the exact conditional kernel and
 its proved variance; no tail assumption or independent surrogate law is used. -/
-private theorem native_minimal_central_tail {M q s : ℕ} (S : Support M q)
+theorem native_minimal_central_tail {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
     (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
