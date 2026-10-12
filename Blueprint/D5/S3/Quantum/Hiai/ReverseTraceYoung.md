@@ -32,7 +32,7 @@ $$\forall u: \operatorname{Level}(), d: \operatorname{Type}(u), [\operatorname{F
 
 The positive definite W0 = M to exponent 1/a attains objective a M W0 = a tracePower (1/a) M and has objective at most that of every positive definite W. The same-base CFC power composition proves M W0 to exponent 1-a = W0. At a=1 all positive definite W attain equality. No attained positive definite optimizer is asserted for singular M.
 
-This exact optimizer will be used at both endpoints of the Carlen-Lieb convexity argument. Remaining suppliers are dimension-independent power convexity on the full positive cone, the public Jensen perspective and its trace transport, and interpolation of the two positive definite endpoint optimizers. Hiai additionally needs mean-trace concavity, inverse-mean identification, full parameter assembly and its support-constrained semidefinite extension. Audit exception: #5214; no declared_validated registration is claimed.
+CarlenLiebConvexity consumes this exact optimizer at both endpoints, together with the dimension-independent power convexity on the full positive cone, public Jensen perspective and its trace transport. The positive definite mixture of the endpoint optimizers supplies the convexity comparison. Hiai still needs mean-trace concavity, inverse-mean identification, full parameter assembly and its support-constrained semidefinite extension. Audit exception: #5214; no declared_validated registration is claimed.
 
 ## References
 

@@ -44,12 +44,12 @@ internal sealed class ReverseTraceYoungDocument : IScribeDocumentDefinition
                     + "power composition proves M W0 to exponent 1-a = W0. "
                     + "At a=1 all positive definite W attain equality. No attained "
                     + "positive definite optimizer is asserted for singular M.")),
-                    Paragraph(Text("This exact optimizer will be used at both endpoints "
-                    + "of the Carlen-Lieb convexity argument. Remaining suppliers are "
-                    + "dimension-independent power convexity on the full positive cone, "
-                    + "the public Jensen perspective and its trace transport, and "
-                    + "interpolation of the two positive definite endpoint optimizers. "
-                    + "Hiai additionally needs mean-trace concavity, inverse-mean "
+                    Paragraph(Text("CarlenLiebConvexity consumes this exact optimizer at "
+                    + "both endpoints, together with the dimension-independent power "
+                    + "convexity on the full positive cone, public Jensen perspective "
+                    + "and its trace transport. The positive definite mixture of the "
+                    + "endpoint optimizers supplies the convexity comparison. "
+                    + "Hiai still needs mean-trace concavity, inverse-mean "
                     + "identification, full parameter assembly and its support-constrained "
                     + "semidefinite extension. Audit exception: #5214; no declared_validated "
                     + "registration is claimed."))), DescribeRole.Theorem))));

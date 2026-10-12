@@ -34,7 +34,7 @@ private lemma integrand_eq {p t : ℝ} (ht : 0 < t) {X : 𝓐} (hX : 0 ≤ X) :
   simp only [map_one]
 
 /-- The whole compensated kernel is convex; its individual terms are not integrated. -/
-theorem convexOn_cfc_rpowIntegrand₁₂ {p t : ℝ} (ht : 0 < t) :
+theorem convexOn_cfc_rpowIntegrand_one_two {p t : ℝ} (ht : 0 < t) :
     ConvexOn ℝ (Ici (0 : 𝓐)) (cfc (rpowIntegrand₁₂ p t)) := by
   have heq : (Ici (0 : 𝓐)).EqOn (cfc (rpowIntegrand₁₂ p t))
       (fun X => t ^ (p - 1) •
@@ -54,7 +54,7 @@ private lemma integrand_nonunital_eq {p t : ℝ} (ht : 0 < t) {X : 𝓐} (hX : 0
 
 private lemma convexOn_cfcₙ_rpowIntegrand₁₂ {p t : ℝ} (ht : 0 < t) :
     ConvexOn ℝ (Ici (0 : 𝓐)) (cfcₙ (rpowIntegrand₁₂ p t)) := by
-  exact (convexOn_cfc_rpowIntegrand₁₂ ht).congr
+  exact (convexOn_cfc_rpowIntegrand_one_two ht).congr
     (fun _ hX => (integrand_nonunital_eq ht hX).symm)
 
 private lemma convexOn_nnrpow_Ioo {p : ℝ≥0} (hp : p ∈ Ioo 1 2) :

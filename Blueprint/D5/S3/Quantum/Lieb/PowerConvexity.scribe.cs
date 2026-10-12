@@ -10,7 +10,7 @@ internal sealed class PowerConvexityDocument : IScribeDocumentDefinition
         "Dimension-independent operator power convexity through a compensated integral.",
         H("PowerConvexity"), Blocks(
             Describe.Lean(DescribeId.Create("compensated-kernel"),
-                DeclarationHandle.Create("D5/S3/Quantum/Lieb/PowerConvexity.convexOn_cfc_rpowIntegrand₁₂"),
+                DeclarationHandle.Create("D5/S3/Quantum/Lieb/PowerConvexity.convexOn_cfc_rpowIntegrand_one_two"),
                 H("Convex compensated resolvent kernel"), StatementSource.FromAuthor(Kernel()),
                 Provenance(), Blocks(Paragraph(Text("For t > 0 and every real p, the CFC of "
                     + "the compensated kernel t to exponent p-1 times [t inverse X "
@@ -45,9 +45,10 @@ internal sealed class PowerConvexityDocument : IScribeDocumentDefinition
                     + "uniform condition.")),
                     Paragraph(Text("The method is classical and consumes pinned Mathlib "
                     + "sources by Frederic Dupuis, Apache-2.0; it makes no novelty claim. "
-                    + "The next Hiai consumer is trace perspective convexity via the "
-                    + "existing public unrestricted-real-exponent phiK bridge, followed "
-                    + "by the reverse Young endpoint optimizer interpolation. The "
+                    + "TracePerspectiveConvexity consumes the uniform condition via the "
+                    + "existing public unrestricted-real-exponent phiK bridge. Its matrix "
+                    + "transport and reverse Young endpoint optimizer interpolation "
+                    + "supply CarlenLiebConvexity. The "
                     + "original Hiai theorem and support boundary remain separate "
                     + "obligations. Native four-slot audit is unfinished under #5214: "
                     + "a faithful enrolled template and realization covering the full "
@@ -81,7 +82,7 @@ internal sealed class PowerConvexityDocument : IScribeDocumentDefinition
     private static Formula Power() => Seq(Domain(), F.Id("p"), Colon, Sp,
         Seq(Mathbb, Grp(F.Id("R"))), Comma, Sp, D(1), Le, Sp, F.Id("p"), Le, Sp, D(2),
         Implies, Esc, Call("ConvexOn", Seq(Mathbb, Grp(F.Id("R"))), Cone(),
-            Seq(Lambda, Sp, F.Id("X"), Mapsto, Call("CFC.rpow", F.Id("X"), F.Id("p")))));
+            Seq(Lambda, Sp, F.Id("X"), Mapsto, Call("rpow", F.Id("X"), F.Id("p")))));
     private static Formula Uniform() => Seq(Forall, Sp, F.Id("u"), Colon, Sp, Call("Level"),
         Comma, Sp, F.Id("p"), Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Comma, Esc,
         D(1), Le, Sp, F.Id("p"), Le, Sp, D(2), Implies, Esc,
