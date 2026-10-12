@@ -1,0 +1,19 @@
+**假设 18.2（同律、固定基架的通道实现）。** 使用[基础卷数学引文 14.1–14.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)与[《二阶关系完成》定义 112.1、定理 112.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#112-五模式权重与固定基架旋转)的指定来源代表及经典随机模式选择：
+
+$$
+\mathcal N_p(\rho)=p_0\rho+p_2\sigma_x\rho\sigma_x
+ +(p_3+p_{25})\sigma_y\rho\sigma_y+p_5\sigma_z\rho\sigma_z.
+$$
+
+输入量子态 $\rho=(I+r\cdot\sigma)/2$ 的 Bloch 向量 $r$ 位于单位球；固定共同输入、输出基架后，通道作用为 $r\mapsto D(p)r$，$D(p)=\operatorname{diag}(d_x,d_y,d_z)$。通道系数 $d_{\rm ch}=(d_x,d_y,d_z)$ 位于四个 Pauli 共轭的系数四面体，既不是占据点 $q$，也不是输入态 $r$。在质量归一化时，所引公式可写为 $d_{\rm ch}=Cp$，其中
+
+$$
+C=\begin{pmatrix}
+1&1&-1&-1&-1\\
+1&-1&1&-1&1\\
+1&-1&-1&1&-1
+\end{pmatrix}.
+$$
+
+这里的 $C$ 是通道读数矩阵，不是定义 9.2 的配置矩阵。所引全旋转协变条件是 $p_2=p_5=p_3+p_{25}$，不重新证明该一般通道事实。以下恢复要求 $q$ 与校准后的通道系数属于同一精确律 $p$；改变输入、输出基架或模式实现须相应重建字典。独立新环境且每步重置的同通道复合给 $D(p)^n$；反复使用同一个保留环境则须使用二阶卷定义 110.1、定理 110.2 的联合演化，命题 110.4 已给两者不同的例子。普通通道也不供应共同相干控制、来源相位或实际历史。
+

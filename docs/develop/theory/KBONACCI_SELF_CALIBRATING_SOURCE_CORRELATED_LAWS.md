@@ -2441,3 +2441,338 @@ Infimum, attained cap and exact acquisition remain separate: a positive $R_\mu$ 
 The mathematical additions are the intrinsic target refinement and its lawful cap/locus consequences, its two distinct endpoint diagnostics, and the positive correct-proposal constructions with their moving-event lower bounds. The local value, continuity necessity, countable inverse-cumulative acquisition, arbitrary-carrier common-submeasure criterion, finite-common-carrier attainment and dyadic-hole family are reused from Sections 45--53. Closed-valued selection and transfinite derived mappings are established mathematics, used with the explicit correspondences and complete proofs above. The event-TV convention and finite-partition mass calculations agree with Levin and Peres, with Wilmer, [*Markov Chains and Mixing Times*, Proposition 4.2 and Remark 4.4](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf). The actual-source coloring uses only Boundaries 35.2 and Fibonacci (363.13). These are ordinary mathematical deductions in the stipulated measurable common-rule model, without a literature-priority assertion.
 
 ## 追加锚（本行以下为增补区）
+
+## 59. A lossless target-density range on the original measurable tapes
+
+**Definition 59.1 (Target-generated tape information).** Fix exactly the full labeled source (44.1), every target law, the original consumer and its nonempty measurable tape carrier $(\Theta,\mathcal F)$, as in Definition 50.1. Thus
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor,\ g\in\mathbb Z\},\\
+N(r,g)&=1+F_rg,\qquad \Omega(r,g)=\omega(N(r,g)),\qquad \beta_0=0.
+\end{aligned}
+\tag{59.1}
+$$
+
+Here $\omega$ counts distinct prime divisors. All original labels remain in the occupied cylinders $C_m(x)$, including equal-signature labels with different targets. Only actual prime-divisibility answers are source observations. Any prescribed row or profile constrains the original $\mu_y$, without constraining the prepared rows.
+
+Enumerate $X$ without repetitions as $x_1,x_2,\ldots$, and define
+
+$$
+\begin{aligned}
+\sigma&=\sum_{i\ge1}2^{-i}\mu_{x_i},
+&f_i&=\frac{d\mu_{x_i}}{d\sigma},\\
+\mathcal G&=\sigma(f_i:i\ge1)\subseteq\mathcal F,
+&P_{\mathcal G}&=\left\{g\sigma:g\ge0,\ g\text{ is }\mathcal G\text{-measurable},\ \int g\,d\sigma=1\right\}.
+\end{aligned}
+\tag{59.2}
+$$
+
+Choose finite nonnegative measurable density versions; since $\mu_{x_i}\le2^i\sigma$, they can be chosen with $f_i\le2^i$ everywhere. Densities are identified almost everywhere. The notation $g\sigma$ means the measure $A\mapsto\int_A g\,d\sigma$ on the entire original $\mathcal F$, rather than a measure only on $\mathcal G$. The mixture $\sigma$ is a probability on tapes; its index weights supply no probability or sampling operation on sources.
+
+For a finite positive tape measure $\nu$, write its Lebesgue decomposition relative to $\sigma$ as $\nu=h_\nu\sigma+\nu_\perp$, where $\nu_\perp$ is singular to $\sigma$. Put
+
+$$
+\Pi\nu=\left(\mathsf E_\sigma[h_\nu\mid\mathcal G]+\nu_\perp(\Theta)\right)\sigma.
+\tag{59.3}
+$$
+
+The conditional expectation is on the probability space of tapes: it is the integrable $\mathcal G$-measurable density whose integral over each $B\in\mathcal G$ equals $\int_B h_\nu\,d\sigma$. This is a map on finite measures, not an extra observation or a supplied consumer tape map.
+
+**Theorem 59.2 (Lossless density reduction for radii and lawful caps).** The map $\Pi$ is positive, additive, positively homogeneous and mass-preserving. It is idempotent, fixes every original target, and contracts event-supremum TV between probability measures. The space $P_{\mathcal G}$ is complete and separable in TV. For every occupied cylinder $C$,
+
+$$
+\inf_{v\in P_{\mathcal G}}\sup_{y\in C}\operatorname{TV}(v,\mu_y)
+=\rho_\mu(C).
+\tag{59.4}
+$$
+
+Consequently the original sharp value is exactly
+
+$$
+R_\mu=\sup_{x\in X}\inf_{m\ge0}\inf_{v\in P_{\mathcal G}}
+                       \sup_{y\in C_m(x)}\operatorname{TV}(v,\mu_y).
+\tag{59.5}
+$$
+
+Moreover, for each cap $\eta\in[0,1]$, a lawful preparation within cap $\eta$ exists if and only if one exists whose prepared laws all belong to $P_{\mathcal G}$. The latter preparation hands tapes in the original $(\Theta,\mathcal F)$ to the same consumer on the same static source. Thus this restriction preserves cap feasibility, endpoint attainment and exact acquisition separately, on arbitrary measurable carriers.
+
+**Proof.** Both measures in the Lebesgue decomposition are finite and positive. Uniqueness makes their absolutely continuous and singular parts additive and positively homogeneous. Conditional expectation exists without a regular conditional distribution: for any nonnegative integrable $h$, apply Radon--Nikodym on $(\Theta,\mathcal G,\sigma|_{\mathcal G})$ to the finite measure $B\mapsto\int_B h\,d\sigma$. Its density is nonnegative, has the same integral as $h$, and is unique almost everywhere. Uniqueness gives additivity and positive homogeneity. A $\mathcal G$-measurable $h$ is its own conditional expectation. These statements prove all the asserted algebraic properties of $\Pi$, including
+
+$$
+\Pi\nu(\Theta)=\nu(\Theta),\qquad
+\rho\le\nu\Longrightarrow\Pi\rho\le\Pi\nu,
+\qquad \Pi\mu_y=\mu_y.
+\tag{59.6}
+$$
+
+Its image among probability laws is precisely $P_{\mathcal G}$, on which it is the identity.
+
+For the TV contraction, take probabilities $v,w$, dominate them by $\alpha=v+w$, and let their densities be $u,t$. Their greatest common submeasure is $\rho=\min(u,t)\alpha$. The event $\{u>t\}$ and its complement show directly that
+
+$$
+\operatorname{TV}(v,w)=\int(u-t)_+\,d\alpha
+                     =1-\rho(\Theta).
+\tag{59.7}
+$$
+
+By (59.6), $\Pi\rho$ is a common submeasure of $\Pi v$ and $\Pi w$ with the same mass. Their positive residual measures each have total mass $1-\rho(\Theta)$, so every event discrepancy between them is bounded by that number. Hence
+
+$$
+\operatorname{TV}(\Pi v,\Pi w)\le\operatorname{TV}(v,w),
+\qquad
+\operatorname{TV}(\Pi v,\mu_y)\le\operatorname{TV}(v,\mu_y).
+\tag{59.8}
+$$
+
+Applying the second inequality to each center gives one inequality in (59.4); inclusion $P_{\mathcal G}\subseteq\mathcal P(\Theta,\mathcal F)$ gives the other. Each cylinder is handled separately, with no presumed center attainer or exchange of extrema. Equation (59.5) then follows in the original order of quantifiers.
+
+The rational level sets of the countably many $f_i$ generate $\mathcal G$, so their finite Boolean combinations form a countable generating algebra. Every $\mathcal G$-measurable set can be approximated in $\sigma$-measure by this algebra: the class of approximable sets contains the algebra, is closed under complements, and is closed under countable unions by first truncating a union to finitely many terms under the finite measure. Rational simple functions over the algebra are consequently dense in $L^1(\sigma|_{\mathcal G})$. This space is separable and complete. Its inclusion in $L^1(\sigma)$ is isometric, and its nonnegative integral-one subset is closed. For two densities in that subset, (59.7) gives
+
+$$
+\operatorname{TV}(g\sigma,k\sigma)=\frac12\int|g-k|\,d\sigma.
+\tag{59.9}
+$$
+
+This proves the asserted completeness and separability of $P_{\mathcal G}$ even when the full tape sigma algebra has no countable-generation property.
+
+It remains to establish the operational assertion; contraction alone would not establish it. Suppose a lawful preparation has laws $\lambda_y$. Lemma 45.3 supplies, for each actual $x$, common finite-record submeasures $\rho_{x,m}\le\lambda_y$ for every $y\in C_m(x)$, with masses tending to one. Thus $\Pi\rho_{x,m}\le\Pi\lambda_y$ throughout that cylinder, with unchanged mass. The greatest common submeasure $\ell'_C$ of the countable family $(\Pi\lambda_y)_{y\in C}$ therefore satisfies
+
+$$
+a'_{C_m(x)}:=\ell'_{C_m(x)}(\Theta)
+\ge\rho_{x,m}(\Theta)\longrightarrow1.
+\tag{59.10}
+$$
+
+These greatest submeasures exist by the same countable RN-infimum argument as Theorem 46.4. They increase under cylinder refinement and are dominated along source $x$ by $\Pi\lambda_x$.
+
+For completeness, their actual realization is the positive-increment construction of that theorem. At the root use $\Delta_X=\ell'_X$; at every other occupied node with parent $C^-$ use $\Delta_C=\ell'_C-\ell'_{C^-}$. Preload an original-tape coordinate $W_C$ of law $\Delta_C/\Delta_C(\Theta)$ when its mass is positive, and a fixed tape when it is zero. All these coordinates and an independent uniform $U\in(0,1)$ belong from the start to one source-independent product seed. At a reached node $C$, hand over $W_C$ if $U<a'_C$; otherwise query the next actual prime. The node-output submeasure is $\Delta_C$, since reaching a non-root node implies $U\ge a'_{C^-}$. Along each actual source the submeasures telescope to $\ell'_{C_m(x)}$, and (59.10) gives a finite actual handoff almost surely with total output law $\Pi\lambda_x$.
+
+Finite records and output-event preimages are measurable interval and coordinate events, or countable unions of them. The normalized coordinates are probability laws on the original arbitrary measurable tapes; the countable product gives a seed directly. The consumer receives the selected tape, with no further record input. This uses no conditional sampling kernel implementing $\Pi$, and supplies no uniform horizon, effectiveness or finite-description sampler. By (59.8) the new uniform error is no greater than that of $\lambda$. Conversely any lawful preparation valued in $P_{\mathcal G}$ is already a lawful preparation on the original carrier.
+
+The finite-measure decomposition and conditional-expectation ingredients are standard: see Fremlin, *Measure Theory*, [232I, Lebesgue decomposition](https://www1.essex.ac.uk/maths/people/fremlin/chap23.pdf), and [242J(b)--(g), printed pp. 13--14](https://www1.essex.ac.uk/maths/people/fremlin/chap24.pdf). Their inputs here are finite tape measures and a sigma subalgebra of a probability space. The acquisition bridge is the original prime-prefix construction of Theorem 46.4. The conclusion is their lossless reduction for this fixed acquisition problem, rather than a new conditional-expectation or product-measure theorem. $\square$
+
+The range in (59.2) is target-defined modulo null sets. Changing countably many density versions changes its sigma algebra only modulo the common null ideal. More generally take another positive target mixture $\sigma'=\sum_i a_i\mu_{x_i}$, with $a_i>0$ and $\sum_i a_i=1$. Its density $w=d\sigma'/d\sigma=\sum_i a_i f_i$ is $\mathcal G$-measurable, finite and positive almost everywhere. The new target densities are $f_i'=f_i/w$, and conversely $1/w=\sum_i2^{-i}f_i'$. These two formulas identify the density-generated sigma algebras modulo their common null ideal. They also identify their law ranges by $g\sigma=(g/w)\sigma'$. Thus enumeration and positive mixture weights do not change the reduced probability-law range.
+
+## 60. Countably atomic likelihood information and original-tape acquisition
+
+**Definition 60.1 (The atomic input subclass).** In addition to Definition 59.1, assume that $\sigma|_{\mathcal G}$ is purely atomic in the following explicit sense. There is a nonempty finite or countable index set $J$ and pairwise disjoint $A_j\in\mathcal G$ such that
+
+$$
+\sigma(A_j)>0,\qquad
+\sigma\left(\bigcup_{j\in J}A_j\right)=1,
+\qquad
+\sigma(A_j\cap B)\in\{0,\sigma(A_j)\}\quad(B\in\mathcal G).
+\tag{60.1}
+$$
+
+Define fixed probability components on the original tapes and target vectors on $J$ by
+
+$$
+\kappa_j(A)=\frac{\sigma(A\cap A_j)}{\sigma(A_j)}\quad(A\in\mathcal F),
+\qquad p_y(j)=\mu_y(A_j).
+\tag{60.2}
+$$
+
+The components may be diffuse with respect to $\mathcal F$. Hypothesis (60.1) is a condition on the entire original target family through its likelihood information; it is not a restriction on prepared laws, a finite point-support assumption, or a consequence of countability of $X$.
+
+**Theorem 60.2 (Restricted intrinsic cap criterion with the original carrier retained).** Under (60.1), use the actual signature space $Q$ and every original label, and apply the target refinement (54.3)--(54.5) on $\mathcal P(J)$ to the vectors $p_y$. Denote its stable values by $K_{\infty,J}^{\eta}(q)$. Then, for every $\eta\in[0,1]$,
+
+$$
+\begin{aligned}
+&\text{a lawful original-tape preparation within cap }\eta\text{ exists}\\
+&\qquad\Longleftrightarrow\quad
+K_{\infty,J}^{\eta}(q)\ne\varnothing\quad\text{for every actual }q\in Q.
+\end{aligned}
+\tag{60.3}
+$$
+
+Every occupied-cylinder radius equals that of the vector targets, so the cap $\eta=R_\mu$ in (60.3) gives the endpoint criterion with the original sharp value. If $J$ is finite, that endpoint is always attained. The refinement and its countable-carrier selection theorem are reused from Section 54; the additional assertion is their lossless lift to this subclass of arbitrary original tape spaces.
+
+**Proof.** On a positive-mass $\mathcal G$-atom, each real $\mathcal G$-measurable function is constant almost everywhere: its rational sublevel sets have either zero or full atom mass, which determines one essential value. Applying this to all $f_i$ and all atoms, with one countable union of exceptional null sets, gives
+
+$$
+\mu_y=\sum_{j\in J}p_y(j)\kappa_j.
+\tag{60.4}
+$$
+
+In particular every original target vector is a normalized probability. More generally define
+
+$$
+\mathcal L(u)=\sum_{j\in J}u(j)\kappa_j\qquad(u\in\mathcal P(J)).
+\tag{60.5}
+$$
+
+The same atom argument identifies $P_{\mathcal G}$ exactly with these mixtures. For probabilities $u,v$, an event $A\in\mathcal F$ gives discrepancy $\sum_j(u(j)-v(j))\kappa_j(A)$, with every coefficient $\kappa_j(A)$ between zero and one. Its absolute value is bounded by half the sum of the absolute vector discrepancies. The measurable union of the $A_j$ for which $u(j)>v(j)$ achieves the positive discrepancy. Therefore
+
+$$
+\operatorname{TV}(\mathcal L(u),\mathcal L(v))
+=\operatorname{TV}(u,v)=\frac12\sum_{j\in J}|u(j)-v(j)|.
+\tag{60.6}
+$$
+
+Define a measurable index map $T:\Theta\to J$ by $T=j$ on $A_j$, and send the measurable null remainder to one fixed $j_0\in J$. Countability of the partition makes preimages of all subsets of $J$ measurable. Equation (60.4) gives $T_*\mu_y=p_y$, and preimages in the event definition give
+
+$$
+\operatorname{TV}(T_*v,p_y)\le\operatorname{TV}(v,\mu_y)
+\qquad(v\in\mathcal P(\Theta,\mathcal F)).
+\tag{60.7}
+$$
+
+Thus compression of arbitrary centers and the isometric lift of vector centers prove equality of the radius in each unchanged occupied cylinder. This also follows from (59.4) and (60.6), and preserves the order $\sup_x\inf_m\inf_v\sup_y$ without requiring attained local centers.
+
+A lawful original-tape cap preparation can be compressed by declaring $T$ of its terminal tape. This adds a measurable terminal operation and no source observation. Its index laws have the same cap or a smaller one by (60.7), and its sourcewise almost-sure finite stopping is unchanged. The necessity of Theorem 54.2 therefore gives the all-source nonemptiness condition in (60.3).
+
+Conversely, suppose all stable vector fibers are nonempty. Theorem 54.2 supplies a TV-continuous selected vector family $u([y])$ within cap $\eta$ of every original $p_y$, and acquires its index $J_y$ by the finite-prime uniform-seed certificates (54.11). In one common seed, include that uniform coordinate and independent original-tape coordinates $W_j$ of laws $\kappa_j$. The index acquisition uses only the uniform coordinate and actual prime answers, so it is independent of the $W_j$. At its finite termination hand $W_{J_y}$ to the unchanged consumer. For every $A\in\mathcal F$,
+
+$$
+\mathsf P\{W_{J_y}\in A\}
+=\sum_{j\in J}\mathsf P\{J_y=j\}\kappa_j(A)
+=\mathcal L(u([y]))(A).
+\tag{60.8}
+$$
+
+The output preimage is the countable union of $\{J_y=j\}\cap\{W_j\in A\}$, hence is measurable. Normalization is exact; index acquisition terminates almost surely at each original source, and the handoff is one further finite operation. The original consumer subsequently runs on that source. Equation (60.6) proves the cap against every fixed $\mu_y$. No constancy of the consumer within an atom is needed, because (60.8) identifies its entire tape law on $\mathcal F$.
+
+The source set in this application of Section 54 is still $X$: in particular its initial vector fiber intersects the cap balls for every label with signature $q$. All occupied prefix neighborhoods and all-source gates are retained. The index construction is only an auxiliary representation; its final output is the actual original tape. For finite $J$, reuse Theorem 51.1 on that finite index carrier and the same lift to attain the original $R_\mu$. The common product seed may still have diffuse tape coordinates and supplies no common finite execution bound. $\square$
+
+Condition (60.1) can equivalently be checked by essential countability of the joint likelihood profile $(f_i(\theta))_{i\ge1}$. Indeed each atom makes all its coordinates constant outside one common null set, so the profile has countable range almost everywhere. Conversely, if it has countable range on a full-measure measurable set, its positive-mass fibers are measurable by countably many coordinate equalities. These fibers cover almost all tapes and are atoms of the generated sigma algebra, since every generating level set is constant on each fiber. This equivalence concerns likelihood information, not countability of the original tapes. Domination, standard Borel structure and separable $L^1$ alone do not imply the condition.
+
+## 61. Local depletion of prepared correct-proposal mass
+
+**Definition 61.1 (Original correct mass in an occupied high-target tail).** For the unchanged consumer put $S_y=H_y\setminus F_y$, its measurable event of a correct finite proposal, and write
+
+$$
+s_y=\mu_y(S_y)=h_y-e_y.
+\tag{61.1}
+$$
+
+Let $\mathscr C$ consist of the occupied finite-prime-prefix cylinders, including $X$. For $C\in\mathscr C$ and an integer $K\ge0$, define
+
+$$
+D(C,K)=\{y\in C:\Omega(y)>K\},
+\qquad
+L_\mu=\sup_{C\in\mathscr C}\sup_{K\ge0}\inf_{y\in D(C,K)}s_y.
+\tag{61.2}
+$$
+
+Every such tail is nonempty by [Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows) on the actual source (59.1). Its arithmetic interface is [Fibonacci equation (363.13)](FIBONACCI_ATOMIC_RELATION_GENERATION.md), $q\mid F_n\Longleftrightarrow z(q)\mid n$, with the standard recurrence $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$. The quantity $L_\mu$ is fixed by the original targets and consumer events; it quantifies over no prepared-law family.
+
+**Theorem 61.2 (Local depletion and the intrinsic correct-mass lower bound).** For every lawful preparation on the original arbitrary measurable carrier,
+
+$$
+\inf_{y\in D(C,K)}\widehat\mu_y(S_y)=0
+\qquad(C\in\mathscr C,\ K\ge0).
+\tag{61.3}
+$$
+
+If its uniform event-TV error is $\varepsilon$, then
+
+$$
+\varepsilon\ge L_\mu,
+\qquad
+R_\mu=I(\mu)\ge L_\mu\ge\inf_{y\in X}(h_y-e_y).
+\tag{61.4}
+$$
+
+There is no row or error constraint on the prepared laws in this statement, and no assumption that the consumer terminates almost surely.
+
+**Proof.** Fix $C=C_d(z)$, $K$ and $\gamma>0$. Write $D=D(C,K)$ and
+
+$$
+p_y=\widehat\mu_y(H_y),\qquad
+c_y=\widehat\mu_y(S_y),\qquad M=\sup_{y\in D}p_y\le1.
+\tag{61.5}
+$$
+
+If $M=0$, every $c_y$ in $D$ is zero. Otherwise choose one actual $x\in D$ with $p_x>M-\gamma/2$. Flatten preparation and consumer chronologically under their one common seed as in Proposition 45.2. Let $G_m(x)$ be the measurable seed event on which the actual composite execution terminates with a finite proposal within $m$ transitions, uses only primes in $P_m$, and has terminal proposal at most $m$. These events increase to the actual composite proposal event at $x$. Finite proposals have finite composite length and finite queried menus; preparation divergence is null. Consequently choose an integer $m\ge\max\{d,K,1\}$ such that
+
+$$
+\mathsf P(G_m(x))>p_x-\gamma/2>M-\gamma.
+\tag{61.6}
+$$
+
+Theorem 35.2 supplies one actual $y$ matching $x$ on all of $P_m$ and satisfying $\Omega(y)>m$. This source is chosen for the whole measurable event $G_m(x)$, before quantifying over its seeds. It belongs to $D$: matching the first $d$ bits puts it in $C$, and $m\ge K$ gives its target bound. Deterministic replay of each finite composite record at that same $y$ keeps its handoff, consumer record and terminal proposal identical. All transported proposals are at most $m<\Omega(y)$, so they are false at $y$. Therefore
+
+$$
+\widehat\mu_y(F_y)\ge\mathsf P(G_m(x)),\qquad
+c_y=p_y-\widehat\mu_y(F_y)\le M-\mathsf P(G_m(x))<\gamma.
+\tag{61.7}
+$$
+
+This proves (61.3) by nonnegativity and arbitrary $\gamma$. The selected comparison source is a proof witness, not an operation that selects or samples the execution source. The same source works for the entire finite event, including all its real-output restrictions.
+
+At that witness, event-TV on the source's own correct event gives
+
+$$
+s_y\le\widehat\mu_y(S_y)+\varepsilon<\gamma+\varepsilon.
+\tag{61.8}
+$$
+
+When $M=0$ the analogous inequality holds at every $y\in D$. Thus $\inf_{y\in D}s_y\le\varepsilon$ after letting $\gamma$ decrease to zero. Taking the two suprema in (61.2) proves $\varepsilon\ge L_\mu$. Taking the infimum over lawful preparations and reusing Theorem 50.2 proves the bound on the unchanged sharp expression. Finally $D(X,0)=X$, since every actual $\Omega$ is positive, so $L_\mu\ge\inf_y s_y$.
+
+This proof uses finite-record replay, continuity from below and event-TV. Compared with the saturation calculation (43.29), the approximate supremum over $D(C,K)$ removes the need for an anchor or a radius attainer to realize maximal proposal mass. It constructs no new acquisition procedure, uses no uniform horizon and conditions away no failures. $\square$
+
+**Theorem 61.3 (The universal truthful-row restriction with its all-source premise).** Suppose the original fixed targets satisfy
+
+$$
+h_y=h>0,\qquad e_y=0\qquad\text{for every original }y\in X.
+\tag{61.9}
+$$
+
+For every allowed consumer and arbitrary measurable tape carrier, $R_\mu\ge h$. Thus a proposed sharp value $r<h$ is impossible in this input class. If $h=1$, then $R_\mu=1$ and the endpoint is attained. More generally, under the original profile (44.2), an all-source premise $h_y\ge h_0$ gives
+
+$$
+R_\mu\ge L_\mu\ge(1-B)h_0,
+\qquad B=\lim_{k\to\infty}b(k).
+\tag{61.10}
+$$
+
+**Proof.** Under (61.9), every correct mass $s_y$ equals $h$, so every nonempty tail in (61.2) has infimum $h$ and $L_\mu=h$. Apply Theorem 61.2. At $h=1$, TV is at most one, and Theorem 50.2 supplies attainment at that value. Under the more general premise,
+
+$$
+s_y=h_y-e_y\ge(1-b(\Omega(y)))h_y\ge(1-B)h_0
+\qquad(y\in X),
+\tag{61.11}
+$$
+
+so the same theorem gives (61.10); the actual $L_\mu$ can be stronger than this profile-only bound.
+
+For $0<h<1$, the already prescribed examples of Theorems 56.2, 57.1 and 57.2 give unattained and attained possibilities at every $h\le r<1$ for the row $(h,0,0,1-h)$ and every allowed profile. Those examples are reused without reconstructing or substituting their families. They show, in particular, that $L_\mu=R_\mu=h$ does not decide attainment. The necessity $h\le R_\mu$ holds with arbitrary target divergence/nonproposal splits under (61.9), because its proof uses only correct mass.
+
+The all-source premise is essential to this conclusion. It is not the anchor-only bound $(1-B)h/(2-B)$ of Theorem 46.1, whose other target rows are free. For nonzero prescribed errors the correct quantity is $h_y-e_y$ or its localized bound (61.2); the inequality $h_y>r$ alone gives no exclusion. Thus the theorem settles the truthful-row parameter obstruction without classifying all nonzero-error profiles or all fixed families at a permissible scalar value. $\square$
+
+## 62. The remaining order-compatible selection problem
+
+**Question 62.1 (Intrinsic exhaustion beyond atomic likelihood information).** Retain the unresolved general problem of Question 58.1 for the original targets, carrier, consumer and occupied cylinders. Theorem 59.2 permits its candidate laws to be sought in the target-defined complete separable range $P_{\mathcal G}$ without losing any lawful cap. Theorem 60.2 gives an intrinsic cap criterion only under the additional atomic input condition (60.1). Find a target-defined construction or obstruction that settles general lawful cap feasibility and endpoint attainment when that condition fails.
+
+The precise remaining obligation can be displayed in this range. A candidate cap selection on the actual signatures has laws $\lambda_q=g_q\sigma$, with nonnegative $\mathcal G$-measurable densities of integral one, and must satisfy
+
+$$
+\operatorname{TV}(g_{[y]}\sigma,\mu_y)\le\eta\qquad(y\in X).
+\tag{62.1}
+$$
+
+For each $q$ its greatest cylinder common-submeasure mass is
+
+$$
+\int\inf_{q'\in U_m(q)}g_{q'}\,d\sigma.
+\tag{62.2}
+$$
+
+By Theorem 46.4, exact acquisition of that selected family requires these masses to increase to one at every actual $q$. Equivalently, after one common null-set removal,
+
+$$
+g_q(\theta)=\sup_m\inf_{q'\in U_m(q)}g_{q'}(\theta)
+\qquad\text{for every }q\in Q
+\text{ and almost every }\theta.
+\tag{62.3}
+$$
+
+Indeed the increasing infima are bounded by $g_q$, and monotone convergence identifies their limiting integral; equality of that integral with one makes the nonnegative deficit zero. Countability of $Q$ permits the single exceptional-set removal. At each remaining tape, (62.3) is lower semicontinuity of $q\mapsto g_q(\theta)$ in the actual prefix topology. This is the existing exhaustion obligation in densities, not a target-intrinsic solution obtained by renaming candidate prepared laws.
+
+The complete separable range supplies the metric stabilization and clopen continuous-selection hypotheses used in Section 54, but those metric steps do not force (62.3). This failure persists within the reduced range itself. To see it, reuse the fixed positive-row family of Theorem 57.1 and its unique continuous cap-$r$ optimum $\kappa$. The contraction (59.8) makes $\Pi\kappa$ another continuous cap-$r$ family for exactly those same targets. Uniqueness gives $\Pi\kappa_y=\kappa_y$ at every source, so this optimum already belongs to $P_{\mathcal G}$. Its anchor-cylinder common-submeasure mass remains the published $\beta<1$ in (57.8), and no lawful cap-$r$ preparation exists. Hence separability and continuous compatibility still leave a genuine exhaustion gap, even for the existing standard Borel example; no additional example family is needed.
+
+The general prescribed positive-proposal/profile and arbitrary-consumer endpoint classifications likewise remain unresolved beyond the all-source correct-mass obstruction of Section 61 and the explicitly restricted criteria above. The results preserve the original event-TV convention, sharp quantifier order and every actual source. Their common seeds and tables establish measurable law existence with sourcewise almost-sure finite execution; they imply no finite-description or effective sampler, finite seed support, common finite horizon, physical realization or kernel guarantee. The substantive deductions are the lossless target-density reduction with its operational bridge and the local correct-mass depletion bound. Countable refinement, finite-index attainment, common-submeasure acquisition and the endpoint examples are reused results, and the measure-theoretic ingredients are classical. No literature-priority assertion is made.
+
+## 追加锚（本行以下为增补区）
