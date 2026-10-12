@@ -2226,7 +2226,7 @@ or uniformity as $\varepsilon\downarrow0$ is supplied. The
 limiting collision at $y=1/4$ remains outside this single-saddle
 range; the finite fold is retained separately below. Together with
 (LC57), the remaining full-criterion obligations include the
-soft-edge arguments escaping every bounded window,
+soft-edge arguments outside the logarithmic window established below,
 $t/r_n\to0$ through heights growing with degree, plus
 initial degrees, complex-root control and common-zero/multiplicity
 propagation outside the established ranges. The fixed real height bands already have
@@ -2643,7 +2643,284 @@ $$
 $$
 
 No numerical $N_M$ is supplied.
-Unbounded Airy arguments and a uniform overlap with bulk ranges
-approaching the fold remain unpaid, as do the growing hard-edge
+The following pointwise estimates control an explicit growing Airy
+window. A uniform overlap with bulk ranges approaching the fold
+remains unpaid, as do the growing hard-edge
 band, complex roots, initial degrees and global collision propagation.
 RH and strict Robin for all integers greater than 5040 remain unresolved.
+
+## Pointwise errors and an explicit growing soft-edge window
+
+Reuse the exact finite fold and original canceled contour formulas
+(LC78)–(LC85). Retain $\varepsilon=n^{-1/3}$ and the exact
+$\rho_n,y_n,\gamma_n,x_n,c_{n,y},J_{n,d}$, with the same $f_n$
+for $d=-1,0,1$. The classical Airy representations, real-axis
+asymptotic envelopes and Wronskian are reused from
+[DLMF 9.5](https://dlmf.nist.gov/9.5),
+[DLMF 9.7](https://dlmf.nist.gov/9.7) and
+[DLMF (9.2.7)](https://dlmf.nist.gov/9.2.E7).
+This source-specific application has no Lean or originality certification.
+
+For any fixed $c_0>0$, put $M_n=c_0(\log n)^{2/3}$ and
+$|x|=|x_n(y)|\le M_n$. The exact parameter displacement is
+$\delta=-x\varepsilon^2/(\rho_n\gamma_n)$, so the original
+exterior-circle and connecting-arc gaps persist uniformly on
+this parameter set. Increase the starting degree so that
+$1\le\gamma_n\le2$ and $3\le\rho_n\le5$.
+
+On the finite upper Airy rays, use $\theta=\gamma_n\varepsilon t$,
+$r=|t|\le T_n=\eta/(\gamma_n\varepsilon)$ and
+$q_x(t)=i(t^3/3+xt)$. The original source's fixed analytic norms give
+
+$$
+nP_{n,y}(\theta)=q_x(t)+R_{n,x}(t),\qquad
+|R_{n,x}(t)|\le C_P\varepsilon(r^4+|x|r^2). \tag{LC88}
+$$
+
+Choose one fixed $\eta\le1$ with $C_P\eta\le1/12$, and require
+$C_P\varepsilon M_n\le1/12$. Then
+$|R_{n,x}(t)|\le r^3/6+1/12$. Both rays have
+$\operatorname{Im}t=r/2$. Write
+
+$$
+U=1+|x|,\qquad v=(-x)_+,\qquad
+\zeta=\frac23(x_+)^{3/2}. \tag{LC89}
+$$
+
+The direction of the linear term is retained:
+
+$$
+e^{\Re q_x(t)+|R_{n,x}(t)|}
+\le e^{1/12}\exp(-r^3/6+vr/2). \tag{LC90}
+$$
+
+For the finitely many moment orders needed by the two errors, set
+
+$$
+W_k(v)=\int_0^\infty r^k e^{-r^3/6+vr/2}\,dr.
+$$
+
+The maximum of $-r^3/6+vr/2$ is $v^{3/2}/3$. Split at
+$r=2\sqrt{1+v}$; below this point use the maximum, and above it
+use $v\le r^2/4$, which leaves an integrable $e^{-r^3/24}$ tail.
+Thus
+
+$$
+W_k(v)\le K_k(1+v)^{(k+1)/2}e^{v^{3/2}/3},\qquad
+K_k=\frac{2^{k+1}}{k+1}
++\frac{24^{(k+1)/3}}3\Gamma\left(\frac{k+1}{3}\right). \tag{LC91}
+$$
+
+The middle-row error is bounded by
+$C\varepsilon^2(W_4(v)+|x|W_2(v))$. For a neighboring-row
+difference, retain the canceled amplitude's linear term and
+uniform quadratic remainder; its error is bounded by
+$C\varepsilon^3(W_5(v)+|x|W_3(v)+W_2(v))$.
+Canonical ray tails and original exterior errors are uniformly
+exponentially small, because $T_n\asymp n^{1/3}$ and
+$M_n=o(T_n^2)$. Only the canonical rays are extended beyond
+the source's fixed analytic disk.
+
+It follows that there are $C_0,C_1>0$ independent of $n,x,d,c_0$
+such that, for each fixed $c_0$ and all sufficiently large $n$,
+
+$$
+J_{n,0}=\gamma_n\varepsilon\operatorname{Ai}(x)+\mathcal R_0,
+\qquad |\mathcal R_0|\le
+C_0\varepsilon^2U^{5/2}e^{v^{3/2}/3}, \tag{LC92}
+$$
+
+$$
+J_{n,d}-J_{n,0}=-d\gamma_n^2\varepsilon^2
+\operatorname{Ai}'(x)+\mathcal R_d,
+\qquad |\mathcal R_d|\le
+C_1\varepsilon^3U^3e^{v^{3/2}/3},\qquad d=-1,1. \tag{LC93}
+$$
+
+These track the width dependence from the original phase bounds;
+they do not use a growing parameter in an unspecified fixed-$M$ error.
+
+### Weighted derivative floor at the actual node
+
+The cited positive- and negative-axis Airy asymptotics, extended
+over a bounded real interval by continuity, give a fixed $B>0$ with
+
+$$
+|\operatorname{Bi}(x)|\le B U^{-1/4}e^\zeta,\qquad
+|\operatorname{Bi}'(x)|\le B U^{1/4}e^\zeta.
+$$
+
+At an actual $I_{n,0}(y)=0$ the exact normalization gives
+$J_{n,0}=0$, so $|\operatorname{Ai}(x)|\le
+C_0\varepsilon U^{5/2}e^{v^{3/2}/3}$, using $\gamma_n\ge1$.
+Define
+
+$$
+\Theta_n(x)=\varepsilon U^{11/4}
+e^{v^{3/2}/3+\zeta}. \tag{LC94}
+$$
+
+If $C_0B\Theta_n(x)\le1/(2\pi)$, the nonzero Wronskian forces
+$|\operatorname{Ai}'(x)\operatorname{Bi}(x)|\ge1/(2\pi)$ and hence
+
+$$
+|\operatorname{Ai}'(x)|\ge
+\frac1{2\pi B}U^{1/4}e^{-\zeta}. \tag{LC95}
+$$
+
+The neighboring errors divided by their leading magnitude are at
+most $2\pi BC_1\Theta_n(x)$. Once this is at most $1/2$, the real
+$J_{n,-1}$ and $J_{n,1}$ have opposite signs. In particular,
+
+$$
+I_{n,-1}I_{n,1}=c_{n,y}^2J_{n,-1}J_{n,1}
+\le-\frac{c_{n,y}^2\gamma_n^4\varepsilon^4}{16\pi^2B^2}
+U^{1/2}e^{-2\zeta}<0. \tag{LC96}
+$$
+
+At each real $x$, at most one of $v$ and $x_+$ is nonzero.
+Consequently
+
+$$
+\sup_{|x|\le M_n}\Theta_n(x)
+\le(1+M_n)^{11/4}
+n^{-(1-2c_0^{3/2})/3}\longrightarrow0
+\qquad\left(0<c_0<2^{-2/3}\right). \tag{LC97}
+$$
+
+For example, the explicit choice
+
+$$
+M_n=\frac12(\log n)^{2/3}. \tag{LC98}
+$$
+
+gives an error ratio of order
+$n^{-(1-1/\sqrt2)/3}(\log n)^{11/6}$.
+Thus for some $N$ and all $n\ge N$, every actual positive
+middle-row node with $|x_n(r_n/t)|\le M_n$ satisfies the original
+strict derivative comparison (LC47). No numerical $N$ is supplied.
+
+The classical positive-axis Airy envelope and absence of nonnegative
+real Airy zeros, [DLMF 9.9(i)](https://dlmf.nist.gov/9.9#i), give
+$\operatorname{Ai}(x)\ge A_0(1+x)^{-1/4}e^{-2x^{3/2}/3}$ for
+$x\ge0$ and some $A_0>0$. The middle-row error relative to its
+positive leading term is at most $(C_0/A_0)\Theta_n(x)$.
+Therefore $J_{n,0}(y)>0$ for $0\le x_n(y)\le M_n$ and large $n$;
+this half of the window contains no actual middle-row nodes.
+
+The width in $y$ is $O(n^{-2/3}(\log n)^{2/3})$, which is smaller
+than the exact fold's displacement $y_n-1/4\asymp1/\log n$.
+For any fixed compact $Y\subset(1/4,\infty)$, this growing Airy
+window and $Y$ are eventually disjoint. Uniform overlap toward
+the fold, the growing hard-edge band, complex roots, initial degrees
+and global collision propagation remain unresolved. This proves
+neither full-row hyperbolicity nor RH or strict Robin for all $H>5040$.
+
+### The linear-coordinate residual is not a uniformly bounded amplitude
+
+The same source derivatives give a concrete distinction between
+weighted integral control and an unweighted amplitude norm.
+At $x=0$, write $\mathfrak b_n=P^{(4)}(0)/24\to-1/32$.
+At the fixed original ray endpoint $\theta=\eta e^{i\pi/6}$,
+the scaled residual after extracting the exact cubic is
+
+$$
+R_{n,0}\left(\frac{\eta e^{i\pi/6}}{\gamma_n\varepsilon}\right)
+=n\mathfrak b_n\eta^4e^{2\pi i/3}+O(n\eta^5). \tag{LC99}
+$$
+
+Its real quartic term is $-n\mathfrak b_n\eta^4/2>0$.
+By fixing $\eta$ sufficiently small and then $n$ sufficiently large,
+
+$$
+\Re R_{n,0}\left(\frac{\eta e^{i\pi/6}}{\gamma_n\varepsilon}\right)
+\ge\frac{n\eta^4}{256},\qquad
+\left|e^{R_{n,0}}\right|\ge e^{n\eta^4/256}. \tag{LC100}
+$$
+
+The complete cubic-weighted kernel still has the preceding
+integrable bound. The residual exponential alone has no
+$n$-independent supremum on these growing truncated rays.
+Applying a full uniform-expansion supplier through a bounded-amplitude
+route therefore still requires a different representation, such as
+absorbing the higher phase terms into an exact cubic coordinate and
+checking its common amplitude domain and growth conditions.
+
+## The positive real outer scale is actually attained
+
+The fixed-window middle-row estimate (LC84) and the unconditional
+positive-root enclosure (LC64) together determine the largest
+positive real root's leading scale. Reuse the classical negative
+real zeros of $\operatorname{Ai}$ from
+[DLMF 9.9(i)](https://dlmf.nist.gov/9.9#i) and their simplicity
+from the nonzero Wronskian (9.2.7). This is an application of
+the existing estimates and the intermediate value theorem,
+with no new generic Airy theorem, Lean certificate or originality claim.
+
+Fix any negative real zero $a$ of $\operatorname{Ai}$. Since
+$\operatorname{Ai}'(a)\ne0$, choose a fixed interval
+$U=[a-\kappa,a+\kappa]$ on which $\operatorname{Ai}'$ is nonzero
+and the two endpoint values have opposite signs. Retain the exact
+finite parameters and define, for $x\in U$,
+
+$$
+Y_n(x)=y_n-\frac{x}{\rho_n\gamma_n}n^{-2/3},\qquad
+B_n(x)=\frac{J_{n,0}(Y_n(x))}{\gamma_n n^{-1/3}}. \tag{LC101}
+$$
+
+For all sufficiently large $n$, every $Y_n(x)$ here is positive.
+By (LC84),
+
+$$
+B_n(x)=\operatorname{Ai}(x)+O(n^{-1/3}). \tag{LC102}
+$$
+
+uniformly on this fixed interval. The normalized contour is real
+and continuous in $x$. Its endpoint signs therefore agree with
+the opposite Airy endpoint signs for all sufficiently large $n$.
+The intermediate value theorem supplies a real $x_n^*\in U$
+with $J_{n,0}(Y_n(x_n^*))=0$. This is an actual coefficient zero,
+not an approximate Airy zero. The finite normalization (LC80)
+and source correspondence (LC46) give the actual positive root
+
+$$
+t_n^*=\frac{r_n}{Y_n(x_n^*)},\qquad \mathcal J_n(t_n^*)=0. \tag{LC103}
+$$
+
+At this zero the middle estimate and a fixed lower bound for
+$|\operatorname{Ai}'|$ on $U$ give
+$|x_n^*-a|=O(n^{-1/3})$. Consequently,
+
+$$
+\frac{t_n^*}{r_n}
+=\frac{1}{y_n-\dfrac{a}{\rho_n\gamma_n}n^{-2/3}+O(n^{-1})}
+\longrightarrow4. \tag{LC104}
+$$
+
+One may choose any such actual root for each sufficiently large
+degree. The existence and estimate do not assert uniqueness
+inside $U$, or that the constructed root is the largest root.
+
+For these degrees the positive-root set is nonempty and finite:
+$\mathcal J_n$ is a nonzero degree-$n$ polynomial with constant
+term one. Its largest positive real root $t_n^{\max}$ is therefore
+well defined. It satisfies $t_n^{\max}\ge t_n^*$, while (LC64)
+gives $t_n^{\max}/r_n<4+\epsilon$ for every fixed $\epsilon>0$
+and all sufficiently large $n$. The two bounds yield
+
+$$
+\lim_{n\to\infty}\frac{t_n^{\max}}{r_n}=4. \tag{LC105}
+$$
+
+Together with (LC31), this is equivalently
+
+$$
+t_n^{\max}\sim\frac{64n^2}{W(2n/\pi)^2}. \tag{LC106}
+$$
+
+It assumes neither RH nor complete-row real-rootedness. It concerns
+the largest actual positive real root only; it does not exclude
+complex outliers, supply the total real-root count, identify
+$t_n^{\max}$ with the constructed Airy root, or prove RH/Robin.
+No numerical starting degree or next-order expansion of
+$t_n^{\max}$ is supplied.
