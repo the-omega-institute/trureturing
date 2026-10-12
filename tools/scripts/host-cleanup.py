@@ -163,7 +163,7 @@ def remove_tree(path):
 
 
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
-                    reclaim=True, refresh_activity=False, qualification=None, initial=None):
+                    reclaim=True, refresh_activity=False):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
@@ -172,14 +172,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
         if not reclaim:
             kwargs["reclaim"] = False
         def observe(protection):
-            snapshot = inspect_candidate(path, cutoff, protection, **kwargs)
-            if snapshot["reason"] is None and qualification:
-                qualified = qualification()
-                if qualified["reason"] is not None:
-                    return qualified
-                snapshot["qualification"] = qualified
-            return snapshot
-        before = observe(protected) if initial is None else initial
+            return inspect_candidate(path, cutoff, protection, **kwargs)
+        before = observe(protected)
         result.update({key: before[key] for key in ("reason", "detail", "apparent_bytes") if key in before})
         if before["reason"] is not None:
             return result
