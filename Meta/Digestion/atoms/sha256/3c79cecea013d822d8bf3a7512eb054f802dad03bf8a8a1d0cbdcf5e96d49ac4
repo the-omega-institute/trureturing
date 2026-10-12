@@ -1,0 +1,46 @@
+**Theorem 103.3 (relaxation scale and all transported positive states).**
+Let $\mathscr K=(\ker\Sigma)^\perp$. For $s>0$ put
+$F_s(x)=e^{-s/x}$ for $x>0$, $F_s(0)=0$, and
+$\mathcal T(s)=F_s(\Sigma)$. Then, as operators on $\mathscr H$,
+
+$$
+\mathcal T_n(s):=U_ne^{-N_nsL_n}U_n^*
+=F_s(\Sigma_n)\longrightarrow\mathcal T(s)
+\quad\text{in operator norm}.
+\tag{103.7}
+$$
+
+Convergence is uniform on compact subintervals of $(0,\infty)$.
+If $c_n\to c$ and $z_n\in\mathscr E_n$ converge in $\mathscr H$ to $z$,
+the complete states initialized at $c_ne_{n,0}+U_n^*z_n$ have
+transported states at scaled time $s>0$ converging to
+$(c,\mathcal T(s)z)$ in $\mathbb R\oplus\mathscr H$.
+This includes arbitrary root-invisible modes.
+
+For the smallest positive eigenvalue $\gamma_n$ of $L_n$,
+
+$$
+\gamma_n^{-1}=N_n\|\Sigma_n\|,\qquad
+\frac{\gamma_n^{-1}}{N_n}\longrightarrow\|\Sigma\|>0.
+\tag{103.8}
+$$
+
+The full comparison relaxation time is therefore asymptotic to a
+positive constant times the actual source size.
+On $\mathscr K$, $\mathcal T(s)=e^{-sA}$ is a strongly continuous
+contraction semigroup, where $A=(\Sigma|_{\mathscr K})^{-1}$ is
+positive self-adjoint on the dense domain
+$\operatorname{ran}(\Sigma|_{\mathscr K})$; its generator is $-A$.
+On the entire common space,
+
+$$
+\operatorname*{s-lim}_{s\downarrow0}\mathcal T(s)=P_{\mathscr K},
+\qquad
+\operatorname*{s-lim}_{n\to\infty}\mathcal T_n(0)
+=\operatorname*{s-lim}_{n\to\infty}Q_n=I.
+\tag{103.9}
+$$
+
+The two limits differ, since $q\ne0$ belongs to $\ker\Sigma$.
+An identity-at-zero extension on all of $\mathscr H$ is false.
+

@@ -1,0 +1,8 @@
+### Proof
+
+For the passive evolution,
+$C A^j(x_1,x_2)=x_1$ for every $j$, so its common kernel is
+$\mathbb R(0,1)$. The swap sends $(0,1)$ to $(1,0)$, which the port sees;
+therefore no nonzero vector in $K_{\mathrm{stat}}$ is action-closed. The
+displayed exponential formulas give the same conclusion directly. $\square$
+
