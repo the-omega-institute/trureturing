@@ -436,7 +436,9 @@ lemma truncation_cast (M : Seed × (ℕ → Bool) → WithTop ℕ) (n : ℕ)
 lemma truncation_stopping {M : Seed × (ℕ → Bool) → WithTop ℕ}
     (hM : IsStoppingTime seededFiltration M) (n : ℕ) :
     IsStoppingTime seededFiltration (fun ω => (Trunc (M ω) n : WithTop ℕ)) := by
-  simpa only [truncation_cast] using hM.min_const n
+  rw [show (fun ω => (Trunc (M ω) n : WithTop ℕ)) =
+    (fun ω => min (M ω) (n : WithTop ℕ)) from funext (truncation_cast M n)]
+  exact hM.min_const n
 
 lemma truncation_le (t : WithTop ℕ) (n : ℕ) : Trunc t n ≤ n := by
   cases t with

@@ -495,7 +495,12 @@ private lemma truncated_output_measurable
       (s ∩ {ω | M ω ≤ (n : WithTop ℕ)}) := by
   have hh := (hM.measurableSet_inter_le_const_iff s n).mp
     (hs.inter (hM.measurableSet_le' n))
-  simpa only [IsStoppingTime.measurableSet, truncation_cast] using hh
+  rw [IsStoppingTime.measurableSet] at hh ⊢
+  refine ⟨hh.1, fun i => ?_⟩
+  convert hh.2 i using 1
+  ext ω
+  simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, truncation_cast]
+  rfl
 
 private lemma truncated_output_error
     {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
@@ -509,7 +514,9 @@ private lemma truncated_output_error
   rw [integral_indicator_one (hs.inter ht)]
   have hpartition := measureReal_inter_add_sdiff (μ := μ) (s := s) ht
   have hdiff : μ.real (s \ t) ≤ μ.real {ω | (n : WithTop ℕ) < M ω} :=
-    measureReal_mono (by intro ω hω; exact lt_of_not_ge hω.2)
+    measureReal_mono (by
+      intro ω hω
+      exact lt_of_not_ge (show ¬ M ω ≤ (n : WithTop ℕ) from hω.2))
   have hnonneg : 0 ≤ μ.real (s \ t) := measureReal_nonneg
   calc
     _ = |(G - μ.real s) + μ.real (s \ t)| := by congr 1; linarith
