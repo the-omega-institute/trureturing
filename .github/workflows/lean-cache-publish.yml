@@ -52,6 +52,9 @@ jobs:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Validate the manual source ref and immutable pin
         if: github.event_name == 'workflow_dispatch'
         env:
