@@ -34,20 +34,20 @@ def tensor {n m : ℕ} (A : Op n) (B : Op m) : Op (n + m) :=
   (Matrix.kronecker A B).submatrix (splitBits n m) (splitBits n m)
 private def PauliGroup (n : ℕ) : Set (Op n) :=
   {A | ∃ c : ℂ, Phase c ∧ ∃ w : Fin n → Pauli, A = c • wordOp w}
-private abbrev gateH :=
+abbrev gateH :=
   D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard
-private def gateS : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![1, Complex.I]
-private def gateCNOT {n : ℕ} (c t : Fin n) : Op n :=
+def gateS : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![1, Complex.I]
+def gateCNOT {n : ℕ} (c t : Fin n) : Op n :=
   Matrix.of fun x y => if x = Function.update y t (y t + y c) then 1 else 0
-private def gates (n : ℕ) : Set (Op n) :=
+def gates (n : ℕ) : Set (Op n) :=
   {U | (∃ i : Fin n, U = localOp i gateH) ∨ (∃ i : Fin n, U = localOp i gateS) ∨
     (∃ c t : Fin n, c ≠ t ∧ U = gateCNOT c t)}
-private def Clifford (n : ℕ) : Submonoid (Op n) :=
+def Clifford (n : ℕ) : Submonoid (Op n) :=
   Submonoid.closure (gates n ∪ (fun U : Op n => Uᴴ) '' gates n)
-private def vacuum (n : ℕ) : Op n :=
+def vacuum (n : ℕ) : Op n :=
   Matrix.single (fun _ : Fin n => Fin.castSucc (Fin.last 0))
     (fun _ : Fin n => Fin.castSucc (Fin.last 0)) 1
-private def PureStabilizer (n : ℕ) : Set (Op n) :=
+def PureStabilizer (n : ℕ) : Set (Op n) :=
   {ρ | ∃ U : Op n, U ∈ Clifford n ∧ ρ = U * vacuum n * Uᴴ}
 def STAB (n : ℕ) : Set (Op n) := convexHull ℝ (PureStabilizer n)
 private def gammaWords : Fin 7 → Fin 3 → Pauli :=
@@ -59,18 +59,6 @@ def bell : Op 6 := Matrix.of fun x y =>
   if (splitBits 3 3 x).1 = (splitBits 3 3 x).2 ∧
       (splitBits 3 3 y).1 = (splitBits 3 3 y).2 then (1 / 8 : ℂ) else 0
 def W (s : ℝ) : Op 3 := (1 / (1 + s) : ℝ) • ((1 : Op 3) + s • S)
-private lemma tensor_product {n m : ℕ} (A C : Op n) (B D : Op m) :
-    tensor A B * tensor C D = tensor (A * C) (B * D) := by
-  let e : Bits (n + m) ≃ Bits n × Bits m :=
-    { toFun := splitBits n m, invFun := fun p => Fin.append p.1 p.2
-      left_inv := fun x => Fin.append_castAdd_natAdd
-      right_inv := by intro p; ext i <;> (dsimp only [splitBits] ; simp) }
-  unfold tensor
-  change (A.kronecker B).submatrix e e * (C.kronecker D).submatrix e e = _
-  rw [Matrix.submatrix_mul_equiv]
-  change (A.kronecker B * C.kronecker D).submatrix (splitBits n m) (splitBits n m) = _
-  congr 1
-  exact (Matrix.mul_kronecker_mul A C B D).symm
 private lemma word_square {n : ℕ} (w : Fin n → Pauli) : wordOp w * wordOp w = 1 :=
   (wordUnit w).val_inv
 private lemma tensor_adjoint {n : ℕ} (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) :
@@ -315,7 +303,8 @@ private lemma local_normalizes {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2)
 private lemma H_adjoint : gateHᴴ = gateH := by
   ext i j; fin_cases i <;> fin_cases j <;>
     dsimp only [pauliMatrix, gateH,
-      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard, s2, qubitX, qubitZ] <;> simp
+      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard, s2,
+      qubitX, qubitZ] <;> simp
 private lemma gates_data {n : ℕ} {U : Op n}
     (hu : U ∈ gates n ∪ (fun A : Op n => Aᴴ) '' gates n) :
     U ∈ Matrix.unitaryGroup (Bits n) ℂ ∧
@@ -624,7 +613,8 @@ private lemma bellCircuit_vec : bellCircuit *ᵥ Pi.single 0 1 =
         ((Real.sqrt 2 / 2 : ℝ) : ℂ) ^ 3 else 0 := by
     have hh (a : Fin 2) : gateH a 0 = ((Real.sqrt 2 / 2 : ℝ) : ℂ) := by
       fin_cases a <;> (dsimp only [pauliMatrix, gateH,
-      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard, s2, qubitX, qubitZ] ; simp)
+      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
+        s2, qubitX, qubitZ] ; simp)
     unfold localOp
     rw [tensor_mul, tensor_mul]
     simp only [tensorOp, Matrix.of_apply, Fin.prod_univ_succ]
@@ -743,6 +733,23 @@ private lemma conjugate_S_square : conjugate S * conjugate S = (7 : ℝ) • (1 
   rw [← conjugate_product, S_square_real]
   have he := conjugate_linear (7 : ℝ) 0 S
   simpa using he
+private lemma sigma_state_support : IsState sigma ∧ tr (sigma * S) = 1 := by
+  have he : sigma = (1 / 8 : ℝ) • (1 + (1 / 7 : ℝ) • S) := by
+    unfold sigma
+    module
+  refine ⟨⟨?_, ?_⟩, ?_⟩
+  · rw [he]
+    exact ((linear_posDef S S_adjoint S_square_real (1 / 7) (by norm_num)).smul
+      (by norm_num : (0 : ℝ) < 1 / 8)).posSemidef
+  · dsimp only [sigma]
+    simp only [Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, S_trace,
+      Fintype.card_fun, Fintype.card_fin]
+    norm_num
+  · dsimp only [sigma, tr]
+    rw [Matrix.smul_mul, Matrix.add_mul, Matrix.smul_mul, Matrix.one_mul, S_square_real]
+    simp only [Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, S_trace,
+      Fintype.card_fun, Fintype.card_fin]
+    norm_num [Complex.smul_re]
 private lemma W_bell (s : ℝ) :
     tr (bell * tensor (W s) (conjugate (W s))) = (1 + 7 * s ^ 2) / (1 + s) ^ 2 := by
   have ha : (W s)ᴴ = W s := by
@@ -764,6 +771,7 @@ private lemma W_bell (s : ℝ) :
   ring
 theorem stabilizer_polar_tensor_escape (s : ℝ) (hl : 1 / 3 < s) (hu : 7 * s ^ 2 < 1) :
     (∀ (n : ℕ) (η : Op n), η ∈ STAB n → IsState η) ∧
+    (IsState sigma ∧ tr (sigma * S) = 1) ∧
     Sᴴ = S ∧ S * S = (7 : ℂ) • (1 : Op 3) ∧ S.trace = 0 ∧
     (∀ η ∈ STAB 3, tr (η * S) ≤ 1 ∧ tr (η * conjugate S) ≤ 1) ∧
     (∀ A B : Op 3, tr (bell * tensor A (conjugate B)) = tr (A * Bᴴ) / 8) ∧
@@ -775,7 +783,7 @@ theorem stabilizer_polar_tensor_escape (s : ℝ) (hl : 1 / 3 < s) (hu : 7 * s ^ 
   have hc : conjugate (W s) = (1 / (1 + s) : ℝ) • (1 + s • conjugate S) := by
     have he := conjugate_linear (1 / (1 + s)) ((1 / (1 + s)) * s) S
     dsimp only [W] ; simpa only [smul_add, smul_smul] using he
-  refine ⟨fun n η hη => stab_state hη, S_adjoint, S_square, S_trace,
+  refine ⟨fun n η hη => stab_state hη, sigma_state_support, S_adjoint, S_square, S_trace,
     fun η hη => ⟨S_support hη, conjugate_S_support hη⟩, bell_trace, bell_mem,
     (linear_posDef S S_adjoint S_square_real s hu).smul (by positivity), ?_, ?_, W_bell s, ?_⟩
   · rw [hc]
