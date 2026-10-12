@@ -159,4 +159,42 @@ private theorem marginal_cons (lam : ℝ) (t n : ℕ) (b : Fin n → Bool) :
     simp only [Fin.tail_cons]
     rw [← Finset.mul_sum, ih]
 
+private theorem total_mass (lam : ℝ) (t n : ℕ) :
+    (∑ b : Fin n → Bool, P lam t n b) = P lam t 0 Fin.elim0 := by
+  induction n with
+  | zero => exact Fintype.sum_subsingleton _ Fin.elim0
+  | succ n ih =>
+    rw [sum_snoc n, Finset.sum_comm]
+    simp_rw [marginal_snoc]
+    exact ih
+
+private theorem empty_mass (lam : ℝ) (t : ℕ) : P lam t 0 Fin.elim0 = 1 := by
+  induction t with
+  | zero => rw [P_zero, pow_zero]
+  | succ t ih =>
+    rw [P_succ]
+    change (∑ a : Fin 2 → Bool, (∏ j : Fin 0,
+      w lam (Fin.elim0 j) (a j.castSucc.castSucc)
+        (a j.succ.castSucc) (a j.succ.succ)) * P lam t 2 a) = 1
+    simp only [Fin.prod_univ_zero, one_mul]
+    rw [total_mass, ih]
+
+private theorem normalized (lam : ℝ) (t n : ℕ) :
+    (∑ b : Fin n → Bool, P lam t n b) = 1 := by
+  rw [total_mass, empty_mass]
+
+private theorem P_nonneg (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1)
+    (t n : ℕ) (b : Fin n → Bool) : 0 ≤ P lam t n b := by
+  induction t generalizing n b with
+  | zero => rw [P_zero]; positivity
+  | succ t ih =>
+    rw [P_succ]
+    apply Finset.sum_nonneg
+    intro a _
+    exact mul_nonneg (Finset.prod_nonneg fun j _ => w_nonneg lam hlam _ _ _ _) (ih _ _)
+
+private theorem cylinder_law (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1) :
+    CylinderLaw lam := by
+  exact ⟨P_nonneg lam hlam, normalized lam, marginal_snoc lam, marginal_cons lam⟩
+
 end D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
