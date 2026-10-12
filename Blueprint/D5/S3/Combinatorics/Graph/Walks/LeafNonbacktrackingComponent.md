@@ -10,7 +10,7 @@ Let G be a simple graph on a finite type V with decidable equality. Assume every
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(V\right)] [\mathrm{Finite}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; \forall a \in V,\; \forall b \in V,\; \forall p \in \mathrm{Walk}\left(G, a, b\right),\; ((\forall z \in V,\; \mathrm{ncard}\left(\mathrm{neighborSet}\left(G, z\right)\right) \le 2) \land ((\mathrm{Subsingleton}\left(\mathrm{neighborSet}\left(G, a\right)\right)) \land (\mathrm{Nonbacktracking}\left(p\right)))) \Rightarrow (\mathrm{IsPath}\left(p\right))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LeafNonbacktrackingComponent.nonbacktracking_leaf_isPath` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/LeafNonbacktrackingComponent.nonbacktracking_leaf_isPath` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ Every actual walk starting at a leaf and having no immediate backtracking is a p
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(V\right)] [\mathrm{Finite}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; \forall a \in V,\; \forall b \in V,\; \forall p \in \mathrm{Walk}\left(G, a, b\right),\; (((\forall z \in V,\; \mathrm{ncard}\left(\mathrm{neighborSet}\left(G, z\right)\right) \le 2) \land ((\mathrm{Subsingleton}\left(\mathrm{neighborSet}\left(G, a\right)\right)) \land (\mathrm{Nonbacktracking}\left(p\right)))) \land ((\mathrm{Subsingleton}\left(\mathrm{neighborSet}\left(G, b\right)\right)) \land (\neg (\mathrm{Nil}\left(p\right))))) \Rightarrow ((\mathrm{IsPath}\left(p\right)) \land ((a \ne b) \land ((\mathrm{ncard}\left(\mathrm{neighborSet}\left(G, a\right)\right) = 1) \land ((\mathrm{ncard}\left(\mathrm{neighborSet}\left(G, b\right)\right) = 1) \land ((\forall x \in V,\; (x \in \mathrm{support}\left(p\right)) \Leftrightarrow (\mathrm{Reachable}\left(G, a, x\right))) \land (\forall x \in V,\; \forall y \in V,\; ((\mathrm{Adj}\left(G, x, y\right)) \land (\mathrm{Reachable}\left(G, a, x\right))) \Leftrightarrow (\mathrm{Sym2Mk}\left(x, y\right) \in \mathrm{edges}\left(p\right))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LeafNonbacktrackingComponent.nonbacktracking_leaf_full_component` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/LeafNonbacktrackingComponent.nonbacktracking_leaf_full_component` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,5 +36,5 @@ For the prefix-reversal construction, this bridge turns a proved legal native wo
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/LeafNonbacktrackingComponent.nonbacktracking_leaf_full_component`
-- Truth anchor: `D5/S3/Combinatorics/Graph/LeafNonbacktrackingComponent.nonbacktracking_leaf_isPath`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/LeafNonbacktrackingComponent.nonbacktracking_leaf_full_component`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/LeafNonbacktrackingComponent.nonbacktracking_leaf_isPath`
