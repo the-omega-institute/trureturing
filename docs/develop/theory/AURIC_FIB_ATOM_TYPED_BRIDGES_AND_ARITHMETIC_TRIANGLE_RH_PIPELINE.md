@@ -8509,3 +8509,480 @@ Aobo Chen 的 2024/2026 工作在 pointed Gromov-Hausdorff 收敛、统一体积
 
 Inagaki 2025 对具有 Ricci 下界、体积下界和直径上界的流形上的随机图 Laplacian 建立谱收敛，并延伸到非塌缩 Ricci 极限空间。该结果支持本节的分层原则：图谱或有限 Dirichlet 数据要取得连续几何解释，必须同时记录曲率、体积非塌缩、尺度和谱识别条件。参见 M. Inagaki, *Spectral convergence of graph Laplacians with Ricci curvature bounds and in non-collapsed Ricci limit spaces*, arXiv:2506.07427。
 
+
+
+---
+
+## 49. Fisher–Dirichlet 谱场与自伴能级接口
+
+前面的能量泛函只说明了一个场如何产生势能、耦合和轨迹。本节把“能级”限定为势能在内禀度量下的二阶曲率，避免把任何有限矩阵的特征值直接叫作物理能量或 zeta 零点。
+
+### 定义 49.1（Fisher 切空间）
+
+令 \(p\in\Delta^\circ(\Sigma)\) 是五态单纯形内点，定义
+
+\[
+T_p\Delta(\Sigma)=\left\{a\in\mathbb R^\Sigma:\sum_s a_s=0\right\},
+\qquad
+g_p^F(a,b)=\sum_{s\in\Sigma}\frac{a_sb_s}{p_s}.
+\]
+
+对于 \(a\in T_p\Delta(\Sigma)\)，相对熵有局部展开
+
+\[
+D_{\rm KL}(p+\varepsilon a\Vert p)
+=
+\frac{\varepsilon^2}{2}g_p^F(a,a)+O(\varepsilon^3).
+\tag{49.1}
+\]
+
+因此 Fisher 度量是概率场在观察点的二阶信息尺度。它是由概率与归一化产生的几何量，不预设物理单位。
+
+### 定理 49.2（Fisher Hessian 的自伴能级）
+
+设 \(\mathscr E:\Delta^\circ(\Sigma)\to\mathbb R\) 光滑，\(q\) 是约束临界点，令
+
+\[
+B_q(a,b)=d^2\mathscr E_q[a,b]
+\]
+
+为切空间上的 Hessian 双线性型。存在唯一线性算子 \(H_q:T_q\Delta\to T_q\Delta\)，满足
+
+\[
+B_q(a,b)=g_q^F(H_qa,b).
+\tag{49.2}
+\]
+
+若 \(B_q\) 对称，则 \(H_q\) 在 Fisher 内积下自伴；若 \(B_q\) 半正定，则 \(H_q\) 半正定。令 \(G_q\) 表示 \(g_q^F\) 的矩阵，则欧氏共轭
+
+\[
+\widehat H_q
+=
+G_q^{1/2}H_qG_q^{-1/2}
+=
+G_q^{-1/2}B_qG_q^{-1/2}
+\]
+
+是实对称半正定矩阵。其特征值 \(\lambda_j\ge0\) 是严格意义上的局部场能级，零特征值对应势能的平坦方向、约束方向或规范冗余。
+
+证明：Fisher 度量在内点的切空间上正定，故 Riesz 表示给出唯一 \(H_q\)。由 (49.2) 立即得到自伴性和半正定性。矩阵共轭把 Fisher 自伴算子变为普通欧氏对称矩阵。证毕。
+
+### 推论 49.3（耗散率与保守频率必须分开）
+
+若在 \(q\) 附近采用 Fisher 梯度流，令 \(\delta=p-q\)，则在 Fisher 正交坐标的一阶近似为
+
+\[
+\dot\delta=-H_q\delta.
+\]
+
+每个 \(\lambda_j\) 是相应模态的线性衰减率。若另有满足 \(J_q^*=-J_q\) 的保守结构，则
+
+\[
+\dot\delta=J_qH_q\delta.
+\]
+
+此时 \(H_q\) 仍是自伴能量算子，而 \(J_qH_q\) 一般不是自伴，轨迹谱可以出现 \(\pm i\omega\)。因此，若要讨论 Hilbert–Pólya，候选对象应优先取 \(H_q\) 或全局 Dirichlet 算子；耗散生成元和保守轨迹生成元不能直接互换为 zeta 的自伴算子。
+
+### 定理 49.4（可逆图的 Dirichlet 自伴谱）
+
+令 \(\Omega=V\times\Sigma\)，取 \(\pi_i>0\) 和转移核 \(P\)，满足
+
+\[
+\pi_iP_{ij}=\pi_jP_{ji}.
+\]
+
+在 \(L^2(\pi)\) 内积
+
+\[
+\langle f,g\rangle_\pi=\sum_i\pi_if_ig_i
+\]
+
+下，\(L=I-P\) 自伴半正定，并且
+
+\[
+\langle f,Lg\rangle_\pi
+=
+\frac12\sum_{i,j}\pi_iP_{ij}(f_i-f_j)(g_i-g_j).
+\tag{49.3}
+\]
+
+于是 \(f_t=e^{-tL}f_0\) 满足
+
+\[
+\frac{d}{dt}\|f_t\|_\pi^2
+=
+-2\langle f_t,Lf_t\rangle_\pi
+\le0.
+\]
+
+这给出了“地势沿图传播并耗散”的有限精确版本。若总场 Hessian 可写成
+
+\[
+B=L_G\otimes K,
+\]
+
+其中 \(L_G\) 是节点图拉普拉斯，\(K\) 是内部五态曲率型，则在相应度量下全局能级为
+
+\[
+\Lambda_{ab}=\mu_a\lambda_b,
+\]
+
+这里 \(\mu_a\) 是 \(L_G\) 的特征值，\(\lambda_b\) 是 \(K\) 的广义 Fisher 特征值。图传播与局部五态能级因此可以先分离，再研究耦合。
+
+### 定理 49.5（镜像扇区与隐藏纤维的兼容分解）
+
+令 \(R\) 交换状态 \(2\) 与 \(5\)，固定 \(0,3,25\)。当 \(q_2=q_5\) 时，\(R\) 是 Fisher 等距。若势满足
+
+\[
+\mathscr E\circ R=\mathscr E,
+\]
+
+则 \(H_qR=RH_q\)，切空间分解为 Fisher 正交的偶、奇两个谱块。
+
+在坐标顺序 \((0,2,3,5,25)\) 下，奇方向可取
+
+\[
+o=(0,1,0,-1,0),
+\]
+
+而可见投影的隐藏方向是
+
+\[
+d=(1,-1,0,-1,1).
+\]
+
+它们不是同一个方向：\(o\) 是镜像奇向量，\(d\) 是镜像偶向量。全空间满足
+
+\[
+\mathbb R^5=E_+\oplus E_-,
+\qquad
+\dim(E_+,E_-)=(4,1),
+\]
+
+而 \(K=\ker P=\operatorname{span}\{e_0,d\}\subset E_+\)，所以
+
+\[
+\mathbb R^5/K
+\quad\text{的奇偶维数为}\quad
+(2,1).
+\]
+
+归一化切空间的维数为 \(4\)，商去 \(d\) 后得到可见切空间的维数 \(3=2+1\)。这与
+
+\[
+\dim(\ker P)+\dim(\operatorname{im}P)=2+3=5
+\]
+
+完全兼容，但二者表达不同的结构：前者是观察核的维数分解，后者是镜像对合的 parity 分解。
+
+在对称参考点 \(q=(q_0,r,q_3,r,q_{25})\) 上，奇基 \(o\) 的 Fisher 范数为
+
+\[
+g_q^F(o,o)=\frac2r.
+\]
+
+例如取镜像不变的局部势
+
+\[
+\mathscr E_{\rm odd}(p)=\frac{\kappa_o}{2}(p_2-p_5)^2,
+\]
+
+则奇块唯一非零的广义能级为
+
+\[
+\lambda_{\rm odd}=2\kappa_or.
+\]
+
+这只是一个可计算的 toy 曲率模型，不能解释 zeta 零点。
+
+### FIB 支持转移的边界
+
+禁邻支持的转移矩阵
+
+\[
+A_{\rm Fib}=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\]
+
+是实对称矩阵，谱为
+
+\[
+\left\{\varphi,-\varphi^{-1}\right\}.
+\]
+
+这证明 Fibonacci 支持场拥有有限真实谱，但它没有提供素数 Euler 因子、Archimedean Gamma 因子或 zeta 行列式。一般带权转移矩阵只有在存在正权 \(d_i\) 使
+
+\[
+d_i^2T_{ij}=d_j^2T_{ji}
+\]
+
+时才能通过正对角共轭变成自伴矩阵；复杂振荡权不自动满足该条件。
+
+---
+
+## 50. 素数三胞胎的算术场、缺陷能量与局部曲率
+
+素数三胞胎可以进入当前框架，但最稳的进入方式是把它看作局部算术统计场，而不是直接把三胞胎等同于五态 \(101\) 支持模式。
+
+### 定义 50.1（固定模式的三点统计）
+
+令 \(x(n)=\mathbf 1_{\mathbb P}(n)\)，取固定模式
+
+\[
+H=\{0,h_1,h_2\},
+\qquad
+t_H(n)=\prod_{h\in H}x(n+h),
+\qquad
+T_H(N)=\sum_{n\le N}t_H(n).
+\]
+
+当 \(T_H(N)>0\) 时，对模数 \(q\) 定义可容许起点集合
+
+\[
+A_H(q)=
+\left\{a\bmod q:
+\gcd\!\left(\prod_{h\in H}(a+h),q\right)=1
+\right\}.
+\]
+
+经验条件分布和均匀可容许基准分别为
+
+\[
+\mu_{H,q}^{N}(a)
+=
+\frac1{T_H(N)}
+\sum_{n\le N}t_H(n)\mathbf 1_{n\equiv a\pmod q},
+\]
+
+\[
+\lambda_{H,q}(a)
+=
+\frac{\mathbf 1_{a\in A_H(q)}}{|A_H(q)|}.
+\]
+
+取 \(\epsilon>0\)，定义局部缺陷能量
+
+\[
+D_{H,q}^{2}(N)
+=
+\sum_{a\bmod q}
+\frac{\bigl(\mu_{H,q}^{N}(a)-\lambda_{H,q}(a)\bigr)^2}
+{\lambda_{H,q}(a)+\epsilon}.
+\tag{50.1}
+\]
+
+对 \(q\le Q\) 和非负权 \(w_q\)，定义算术场能量
+
+\[
+\mathscr E_{\rm sieve}^{Q}(H,N)
+=
+\sum_{q\le Q}w_qD_{H,q}^{2}(N)\ge0.
+\tag{50.2}
+\]
+
+它测量真实三点起点在局部模可容许场中的偏离，不是物理能量。
+
+### 定义 50.2（模尺度输运与离散曲率）
+
+若 \(q\mid q'\)，令 \(\rho_{q'\to q}\) 为剩余类归约。使用同一 \(N\) 的经验分布满足精确一致性
+
+\[
+(\rho_{q'\to q})_\#\mu_{H,q'}^N=\mu_{H,q}^N.
+\tag{50.3}
+\]
+
+因此经验输运可以作为数据一致性检查。基准分布一般不满足同样的均匀性，定义
+
+\[
+\Theta_{q'\to q}
+=
+W_2\!\left(
+(\rho_{q'\to q})_\#\lambda_{H,q'},
+\lambda_{H,q}
+\right).
+\tag{50.4}
+\]
+
+在模数格的选定边集 \(q\sim q\ell\) 上，把
+
+\[
+U_H(q)=D_{H,q}^{2}(N)
+\]
+
+当作尺度势，定义
+
+\[
+K_H(q)
+=
+\sum_{\ell\in L(q)}
+a_{q,\ell}\bigl[U_H(q\ell)-U_H(q)\bigr],
+\qquad a_{q,\ell}\ge0.
+\tag{50.5}
+\]
+
+这是模数图上的加权拉普拉斯差分，能定位筛约束随尺度的变化。称其为算术曲率时，含义仅限于这个离散统计场。
+
+### 定理 50.3（局部奇异因子与正算子迹）
+
+令
+
+\[
+\nu_H(\ell)
+=
+\left|\{-h\bmod\ell:h\in H\}\right|.
+\]
+
+在 \(\mathcal H_\ell=\mathbb C^\ell\) 上定义可容许投影
+
+\[
+P_{H,\ell}
+=
+\sum_{a\in A_H(\ell)}
+|a\rangle\langle a|.
+\]
+
+它是正交自伴投影，归一化迹为
+
+\[
+\tau_\ell(P_{H,\ell})
+=
+1-\frac{\nu_H(\ell)}{\ell}.
+\]
+
+相对于独立单点基准，定义
+
+\[
+u_H(\ell)
+=
+\frac{1-\nu_H(\ell)/\ell}{(1-1/\ell)^3},
+\qquad
+\kappa_H(\ell)=\log u_H(\ell).
+\tag{50.6}
+\]
+
+当 \(q\) 为平方自由数时，中国剩余定理给出局部投影的张量化，且
+
+\[
+\log \tau_q(P_{H,q})
+=
+\sum_{\ell\mid q}
+\log\!\left(1-\frac{\nu_H(\ell)}{\ell}\right).
+\tag{50.7}
+\]
+
+所以截断的奇异级数是局部正算子迹比的乘法势。有限截断保持严格自伴性和正性，但无限乘积、正则化行列式与全局谱参数仍未构造。
+
+以 \(H=\{0,2,6\}\) 为例，
+
+\[
+\nu_H(2)=1,\qquad
+\nu_H(3)=2,\qquad
+\nu_H(\ell)=3\quad(\ell\ge5),
+\]
+
+从而 Hardy–Littlewood 型基准为
+
+\[
+\mathfrak S(H)
+=
+\frac92
+\prod_{\ell\ge5}
+\frac{\ell^2(\ell-3)}{(\ell-1)^3}.
+\tag{50.8}
+\]
+
+其中 \(\mathfrak S(H)\) 以及由它得到的三胞胎渐近仍是猜想性基准。对应的局部算术曲率
+
+\[
+\kappa_H(2)=\log4,\qquad
+\kappa_H(3)=\log\frac98,\qquad
+\kappa_H(\ell)=
+\log\frac{\ell^2(\ell-3)}{(\ell-1)^3}
+\]
+
+描述 CRT 局部模障碍，不是时空曲率，也不是 RH 的谱曲率。
+
+若用 \(Y_n=(x(n+h))_{h\in H}\in\{0,1\}^3\) 的经验分布构造三阶指数族，则三体累积量是独立基线之外的不可约三点场强。它能作为三点相关的第三阶观测，但仍不足以决定全局一阶显式公式。
+
+---
+
+## 51. 从有限自伴能级到广义 RH 的必要门槛
+
+镜像、Fisher Hessian 和局部正算子只能构造 RH 的候选接口。一个可审计的 Hilbert–Pólya 路线至少需要以下对象。
+
+设 \(H_N=H_N^*\) 是有限场谱算子，\(D=D^*\) 是具有紧预解式的极限算子，且 \(D\) 的谱写为 \(\{\gamma_j\}\)。若正规化特征行列式 \(D_N^{\rm reg}(z)\) 在紧集上一致收敛到 \(D^{\rm reg}(z)\)，并存在无零整函数 \(e^{Q(z)}\) 使
+
+\[
+\Xi(z)
+=
+\xi\!\left(\frac12+iz\right)
+=
+C e^{Q(z)}D^{\rm reg}(z),
+\tag{51.1}
+\]
+
+同时已匹配 Gamma 因子、Euler 局部因子、零点重数和增长条件，则 \(D\) 的实谱才会推出 \(\Xi\) 的全部零点位于实 \(z\) 轴，从而推出 RH。
+
+若研究一般完成 \(L\)-函数，则非自对偶扇区必须成对出现。取单位ary 对合
+
+\[
+R:\mathcal H_\pi\to\mathcal H_{\widetilde\pi},
+\qquad
+R^2=I,
+\]
+
+并构造满足
+
+\[
+RDR^{-1}=-D
+\tag{51.2}
+\]
+
+的一阶自伴算子，便得到谱的 \(\pm\gamma\) 配对，对应 \(s\leftrightarrow1-s\) 的功能方程对称。一个抽象模板是
+
+\[
+D=
+\begin{pmatrix}
+0&B^*\\
+B&0
+\end{pmatrix},
+\qquad
+D^2=
+\begin{pmatrix}
+B^*B&0\\
+0&BB^*
+\end{pmatrix}.
+\]
+
+这说明“镜像”首先给出对称配对；实谱仍来自自伴性和正定 Hilbert 结构。仅有有限矩阵实谱、谱间距相似、前若干数值吻合或 \(2\leftrightarrow5\) 的组合对称，都不构成 RH 证据。
+
+等价的迹公式接口需要对测试函数 \(f\) 证明正规化恒等式，其结构必须同时包含恒等项、Archimedean 项、素数及幂次项、扇区对偶项和零点谱项。当前文档中的 Fibonacci 矩阵、模投影和有限 Hessian 只完成 field-side 的有限对象，尚未完成 prime-coded transfer、正则化、完成 \(L\)-函数行列式或全局自伴算子。
+
+---
+
+## 52. 下一轮可证伪的有限计算
+
+为了让上述路线继续推进，下一轮应固定有限输入并输出可复核数据，而不是扩大物理解读。
+
+1. 选取 \(q=(q_0,r,q_3,r,q_{25})\)，在偶基
+   \[
+   (1,0,0,0,-1),\quad
+   (0,1,0,1,-2),\quad
+   (0,0,1,0,-1)
+   \]
+   和奇基 \(o=(0,1,0,-1,0)\) 下，计算 Fisher Gram 矩阵、给定镜像不变势的 \(3\times3\) 偶块与 \(1\times1\) 奇块。
+
+2. 在有限节点图上验证 \(B=L_G\otimes K\) 时的乘积谱 \(\mu_a\lambda_b\)，并记录图常数零模、内部隐藏核和镜像奇模态分别来自哪一个因子。
+
+3. 对有限 \(N,Q\) 计算 \(\mu_{H,q}^{N}\)、\(D_{H,q}^2\)、\(\Theta_{q'\to q}\) 和 \(K_H(q)\)，同时报告 \(T_H(N)=0\) 时统计量未定义的边界。把 \(H=\{0,2,6\}\) 与其他可容许三点模式分开比较。
+
+4. 构造有限 \(H_N\) 的
+   \[
+   \det(H_N-zI)
+   \]
+   只检查反射奇偶、实谱、正定性和截断收敛。除非之后证明 (51.1) 的完成函数恒等式，否则不得把这些 toy 零点称为 zeta 零点。
+
+这四项计算可以把“场产生能量、能量产生轨迹、观察产生三维投影、算术局部场产生尺度缺陷”转化为可审计的有限数学对象；它们仍然保留从有限结构到 RH 的行列式与显式公式门槛。
