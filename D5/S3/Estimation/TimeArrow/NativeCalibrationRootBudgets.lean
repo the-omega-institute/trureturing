@@ -8,12 +8,14 @@
 
 import D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
 import D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
+import D5.S3.Estimation.TimeArrow.NativeReferenceVarianceBounds
 
 open scoped BigOperators
 open Finset
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
+open D5.S3.Estimation.TimeArrow.NativeReferenceVarianceBounds
 open private
   D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.root_box_of_residual
   D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.sigmoid_variance_tilt
@@ -165,6 +167,59 @@ theorem native_calibration_root_budget (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1)
       · exact False.elim (not_lt_of_ge (by simpa only [add_sub_assoc, div_div, show (2 : ℝ) * 2 = 4 by norm_num] using hvarroot.1) hfail)
       · exact False.elim (not_lt_of_ge (by simpa only [add_sub_assoc] using hvarroot.2) hfail)
     · exact le_rfl
+
+/-- The explicit signal count window supplies the variance input to the
+native complete-root probability budget. -/
+theorem native_calibration_window_root_budget (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1) :
+    ∃ (A : ℝ) (M₀ : ℕ) (η₀ : ℝ), 0 < A ∧ 1 ≤ M₀ ∧ 0 < η₀ ∧
+      ∀ (M q L : ℕ) (r : ℝ), M₀ ≤ M → 1 ≤ q → q < M →
+        0 < r → r ≤ 1 - κ → compensation M q r ≤ 1 - κ →
+        4 ≤ L → (L : ℝ) / M ≤ η₀ → A * (L : ℝ) ^ 2 / M ≤ 1 / 2 →
+        6 ≤ M → (L : ℝ) / M ≤ 1 / 45 →
+        4 * Real.sqrt L ≤ ((1 + r) / 2) * L →
+        4 * Real.sqrt L ≤ ((1 - r) / 2) * L →
+        ((((1 + r) / 2) * L) * Real.log ((1 + r) / (1 - compensation M q r)) +
+          (((1 - r) / 2) * L) * Real.log ((1 - r) / (1 + compensation M q r)) -
+            Real.log (((M - q : ℕ) : ℝ) / q) ≤
+          Real.sqrt L * (Real.log ((1 + r) / (1 - compensation M q r)) -
+            Real.log ((1 - r) / (1 + compensation M q r)))) →
+        ∀ (S : Support M q) (e : Experiment) (i j : Fin M),
+          i ∈ S.val → j ∉ S.val →
+          let v := (q : ℝ) / 8 *
+            (Real.exp (-(2 : ℝ) ^ 2 / ((1 + r) / 2) - 1) *
+              Real.exp (-(2 : ℝ) ^ 2 / ((1 - r) / 2) - 1) /
+              (Real.sqrt ((3 / 2) * ((1 + r) / 2)) *
+                Real.sqrt ((3 / 2) * ((1 - r) / 2))))
+          ∀ b : ℝ, 0 < b → b ≤ v / 4 * Real.log 2 →
+          ∀ x : Obs M (2 * M * L) e → ℝ,
+          (∀ o, (∑ k : Fin M, Real.sigmoid (x o + score q r e o k -
+            Real.log (((M - q : ℕ) : ℝ) / q))) = q) →
+          let D := fun o => ∑ k : Fin M,
+            Real.sigmoid (x o + score q r e o k - Real.log (((M - q : ℕ) : ℝ) / q)) *
+              (1 - Real.sigmoid (x o + score q r e o k - Real.log (((M - q : ℕ) : ℝ) / q)))
+          let B := 3 * (q : ℝ) + 8 * (A * (L : ℝ) ^ 3 / M) * (q : ℝ) ^ 2 +
+            10 * (M : ℝ) ^ 2 * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ)))
+          (∑ o, if 4 * b / v < |x o| ∨ D o < v / 4 ∨ q < D o
+            then probability r e S o else 0) ≤ B / b ^ 2 + B / (v / 2) ^ 2 := by
+  obtain ⟨A, M₀, η₀, hA, hM₀, hη₀, h⟩ := native_calibration_root_budget κ hκ hκ1
+  refine ⟨A, M₀, η₀, hA, hM₀, hη₀, ?_⟩
+  intro M q L r hMM hq hqm hr hrκ hcκ hL hLη hsmall hM6 hLM hplus hminus hcenter
+  intro S e i j hi hj
+  dsimp only
+  intro b hb hbudget x hx
+  have hr1 : r < 1 := by linarith only [hrκ, hκ]
+  have hqR : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
+  have ha : 0 < (3 / 2) * ((1 + r) / 2) := by linarith only [hr]
+  have hc : 0 < (3 / 2) * ((1 - r) / 2) := by linarith only [hr1]
+  have hv : 0 < (q : ℝ) / 8 *
+      (Real.exp (-(2 : ℝ) ^ 2 / ((1 + r) / 2) - 1) *
+        Real.exp (-(2 : ℝ) ^ 2 / ((1 - r) / 2) - 1) /
+        (Real.sqrt ((3 / 2) * ((1 + r) / 2)) *
+          Real.sqrt ((3 / 2) * ((1 - r) / 2)))) := by positivity
+  exact h M q L r hMM hq hqm hr hrκ hcκ (by omega) hLη hsmall hM6 hLM
+    S e i j hi hj _ b hv hb
+    (reference_linear_variance_lower S r κ hκ hr hrκ hcκ hL hq hqm i j hi hj
+      hplus hminus hcenter) hbudget x hx
 
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibrationRootBudgets
