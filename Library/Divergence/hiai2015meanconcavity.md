@@ -35,3 +35,7 @@ arXiv:2510.04691v3. That original problem also requires inverse-geometric
 identification, the original parameter assembly, and a common-epsilon-I
 positive semidefinite limit preserving the support constraint s(A)>=s(B).
 The paper is cited; no paper proof text is transcribed.
+
+## Verified locator
+
+https://arxiv.org/abs/1507.00853v3, Lemma 3.3.

@@ -28,9 +28,6 @@ noncomputable def mean (θ : ℝ) (B A : L H) : L H :=
 private lemma strict_of_pd {A : L H} (hA : A ∈ pdSet) : IsStrictlyPositive A :=
   (StarOrderedRing.isStrictlyPositive_iff_spectrum_pos A (ha := hA.1)).2 hA.2
 
-private lemma pd_of_strict {A : L H} (hA : IsStrictlyPositive A) : A ∈ pdSet :=
-  ⟨hA.isSelfAdjoint, fun _ hx ↦ hA.spectrum_pos hx⟩
-
 /-- The local perspective has its base in its second argument. -/
 theorem mean_eq_operatorPowerMean (θ : ℝ) {A B : L H}
     (hB : B ∈ pdSet) (hA : 0 ≤ A) :
@@ -50,15 +47,6 @@ theorem mean_eq_operatorPowerMean (θ : ℝ) {A B : L H}
   simp only [Real.rpow_one]
   rw [← CFC.rpow_eq_cfc_real hsB.nonneg, ← CFC.rpow_eq_cfc_real hsB.nonneg,
     ← CFC.rpow_eq_cfc_real hm]
-
-/-- Genuine means of strictly positive inputs are strictly positive for every real exponent. -/
-theorem mean_pd (θ : ℝ) {B A : L H} (hB : B ∈ pdSet) (hA : A ∈ pdSet) :
-    mean θ B A ∈ pdSet := by
-  have hsB := strict_of_pd hB
-  have hsA := strict_of_pd hA
-  have hm := (CFC.isStrictlyPositive_conjSqrt_iff (Ring.inverse B) A hsB.ringInverse).2 hsA
-  exact pd_of_strict ((CFC.isStrictlyPositive_conjSqrt_iff B
-    ((CFC.conjSqrt (Ring.inverse B) A) ^ θ) hsB).2 (hm.rpow _ θ))
 
 /-- Joint concavity of the genuine mean with the classical base-first convention. -/
 theorem mean_jointlyConcave {θ : ℝ} (hθ : θ ∈ Set.Icc (0 : ℝ) 1) :
