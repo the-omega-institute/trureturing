@@ -651,9 +651,8 @@ from D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
 open scoped Classical in
 /-- One base root and its full variance control compensated feedback
 uniformly on the balanced central count interval. -/
-private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
-    (outside : ι → ℝ) (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
-    ∃ d η : ℝ, 0 < d ∧ 0 < η ∧
+private theorem central_calibration_kernel_estimate (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
+    ∃ d η : ℝ, 0 < d ∧ 0 < η ∧ ∀ (ι : Type*) [Fintype ι] (outside : ι → ℝ),
     ∀ (N R U : ℕ) (q bg δ L s K ε X m : ℝ),
       1 < N → R ≤ N → U ≤ N → 0 < q → q < (Fintype.card ι : ℝ)+N →
       0 < δ → 0 < L → 0 < s → 0 ≤ K → 0 < m →
@@ -681,8 +680,9 @@ private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
        Real.exp 4 / ((δ^2/2)^2*Real.sqrt N) *
          (K*(m*s)*(2*L*Real.sqrt N)+2*h+1)*(2*h/(m*s)+1)+1/(4*L^2)) := by
   obtain ⟨d,η,hd,hη,huniform⟩ :=
-    D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.shared_root_uniform_feedback outside r hr hr1
+    D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.shared_root_uniform_feedback r hr hr1
   refine ⟨d,η,hd,hη,?_⟩
+  intro ι _ outside
   intro N R U q bg δ L s K ε X m hN hR hU hq hqM hδ hL hs hK hm
     hRlo hRhi hUlo hUhi hwide hsmall
   have hN0 : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
@@ -723,7 +723,7 @@ private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
       linarith
     have htlo : bg+ν-w ≤ bg+t := by linarith [(abs_le.mp hpt).1]
     have hthi : bg+t ≤ bg+ν+w := by linarith [(abs_le.mp hpt).2]
-    have he := huniform ε N R U q t ν (θ ν) (θ t) w (bg+t) X hN0 hcells hpt
+    have he := huniform ι outside ε N R U q t ν (θ ν) (θ t) w (bg+t) X hN0 hcells hpt
       hbase (hθ t hpt).1 hvar hbudget hε hX hXη (hB.trans htlo)
     have hden : 0 < 16*(V+w) := by dsimp [V]; linarith
     have hlow : (bg+ν-w)*d/(16*(V+w)) ≤ (bg+t)*d/(16*(V+w)) :=
@@ -752,6 +752,29 @@ private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
     have he := mul_le_mul_of_nonneg_left (hu x hx y hy hxy) hm.le
     nlinarith only [he]
 
+open private
+  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins
+from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+
+/-- The rectangle and all remaining candidate rows partition the original
+M rows, so the root range uses the original support-size condition. -/
+private theorem native_outside_rectangle_card {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) (k l : ℕ) (z : Fiber S e o) :
+    Fintype.card {i : Fin M // nativeRowCell S e z.val k l i = none} +
+      (nativeRectangleRows S e o k l z).card = M := by
+  classical
+  have hn := (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins
+    S e o k l z).1
+  have he := sum_fiberwise (univ : Finset (Fin M)) (nativeRowCell S e z.val k l)
+    (fun _ => (1 : ℕ))
+  rw [Fintype.sum_option] at he
+  simp only [sum_const, nsmul_eq_mul, mul_one, card_univ, Fintype.card_fin,
+    Fin.sum_univ_four] at he
+  rw [hn, Fintype.card_subtype]
+  simp only [nativeCalibrationCells,add_assoc] at *
+  convert he using 1 <;> congr 1
+  all_goals ext i; simp only [mem_filter]
+
 /-- A finite native conditional estimate is controlled by the shared base
 root, its full variance, and the central calibration budgets. -/
 private theorem native_base_calibrated_small_ball :
@@ -774,8 +797,7 @@ private theorem native_base_calibrated_small_ball :
         nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
       ∃ d η : ℝ, 0 < d ∧ 0 < η ∧
       ∀ (δ L s0 K X τ : ℝ) (ell : ℤ),
-        1 < V.card → (q : ℝ) < (Fintype.card {i : Fin M //
-          nativeRowCell S e z.val k l i = none} : ℝ)+V.card →
+        1 < V.card →
         0 < δ → 0 < L → 0 < s0 → 0 ≤ K → 0 ≤ τ → ell ≠ 0 →
         δ*V.card ≤ R → (R : ℝ) ≤ (1-δ)*V.card →
         δ*V.card ≤ U → (U : ℝ) ≤ (1-δ)*V.card →
@@ -816,15 +838,20 @@ private theorem native_base_calibrated_small_ball :
     fun i => score q r e z.val i.val-z0
   let Env := univ.filter fun y : Fiber S e o =>
     nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
-  obtain ⟨d,η,hd,hη,hengine⟩ := central_calibration_kernel_estimate outside r hr hr1
+  obtain ⟨d,η,hd,hη,hengine⟩ := central_calibration_kernel_estimate r hr hr1
   refine ⟨d,η,hd,hη,?_⟩
-  intro δ L s0 K X τ ell hN hqM hδ hL hs hK hτ hell hRlo hRhi hUlo hUhi hwide hsmall
+  intro δ L s0 K X τ ell hN hδ hL hs hK hτ hell hRlo hRhi hUlo hUhi hwide hsmall
+  have hpartition := native_outside_rectangle_card S e o k l z
+  have hqM : (q : ℝ) <
+      (Fintype.card {i : Fin M // nativeRowCell S e z.val k l i = none} : ℝ)+V.card := by
+    exact_mod_cast hqm.trans_eq hpartition.symm
   have hR : R ≤ V.card := card_filter_le _ _
   have hU : U ≤ V.card := card_filter_le _ _
   have hm : 0 < 2*|(ell : ℝ)| := by
     have he : (ell : ℝ) ≠ 0 := by exact_mod_cast hell
     positivity
-  obtain ⟨θ,hθ,hbound⟩ := hengine V.card R U q bg δ L s0 K (compensation M q r) X
+  obtain ⟨θ,hθ,hbound⟩ := hengine {i : Fin M // nativeRowCell S e z.val k l i = none} outside
+    V.card R U q bg δ L s0 K (compensation M q r) X
     (2*|(ell : ℝ)|) hN hR hU (by exact_mod_cast (by omega : 0 < q)) hqM hδ hL hs hK hm
     hRlo hRhi hUlo hUhi hwide hsmall
   refine ⟨θ,?_⟩
@@ -853,10 +880,15 @@ private theorem native_base_calibrated_small_ball :
         (∑ i ∈ nativeCalibrationCells All e y.val k l 0, inclusion q r e y.val i))-a| ≤ τ) /
       conditionalFiberMass S r e o Env ≤ ∑ t ∈ (range (U+1)).filter P, H V.card R U t := by
     convert hp using 1 <;> congr 1
+    ext t
+    simp only [mem_filter]
+    rfl
   apply hp'.trans
   convert hypergeometric_predicate_bound hR hU hN L hL P g h _ ?_ (hscalar h hh) using 1
   · congr 1
   · congr 1
+    ext t
+    simp only [mem_filter]
   intro t _ hc hP
   rcases hP with ht | ⟨a,ha⟩
   · exact False.elim ((not_lt.mpr hc) ht)

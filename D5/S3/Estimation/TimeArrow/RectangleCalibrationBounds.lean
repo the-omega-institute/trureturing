@@ -338,9 +338,9 @@ private theorem compensated_feedback_box {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
 
 /-- The base variance and root produce feedback bounds uniformly over the
 whole feasible central fiber, including nonzero native compensation. -/
-private theorem shared_root_uniform_feedback {ι : Type*} [Fintype ι] (outside : ι → ℝ)
-    (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
-    ∃ d δ : ℝ, 0 < d ∧ 0 < δ ∧ ∀ ε N R U q t t0 x0 x w B X : ℝ,
+private theorem shared_root_uniform_feedback (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
+    ∃ d δ : ℝ, 0 < d ∧ 0 < δ ∧ ∀ (ι : Type*) [Fintype ι] (outside : ι → ℝ),
+    ∀ ε N R U q t t0 x0 x w B X : ℝ,
       0 < N → (∀ j, 0 ≤ cellCounts N R U t j) → |t - t0| ≤ w →
       calibratedMean outside r ε N R U t0 x0 = q →
       calibratedMean outside r ε N R U t x = q →
@@ -359,6 +359,7 @@ private theorem shared_root_uniform_feedback {ι : Type*} [Fintype ι] (outside 
               X / 4 + B / (calibratedVariance outside r ε N R U t0 x0 - w) := by
   obtain ⟨d, δ, hd, hδ, hδ2, hbox⟩ := compensated_feedback_box hr hr1
   refine ⟨d, δ, hd, hδ, ?_⟩
+  intro ι _ outside
   intro ε N R U q t t0 x0 x w B X hN hc ht hbase hroot hvar hsmall hε hX hXδ hB
   have hb := shared_root_central_bootstrap outside r ε N R U q t t0 x0 x w
     hN hc ht hbase hroot hvar hsmall
