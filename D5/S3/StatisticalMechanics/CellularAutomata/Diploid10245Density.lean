@@ -105,4 +105,58 @@ private theorem sum_snoc (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
   rw [← (Fin.snocEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp F]
   exact Fintype.sum_prod_type _
 
+private def K (lam : ℝ) (n : ℕ) (b : Fin n → Bool) (a : Fin (n + 2) → Bool) : ℝ :=
+  ∏ j : Fin n, w lam (b j) (a j.castSucc.castSucc)
+    (a j.succ.castSucc) (a j.succ.succ)
+
+private theorem K_snoc_sum (lam : ℝ) (n : ℕ) (b : Fin n → Bool)
+    (a : Fin (n + 3) → Bool) :
+    (∑ c : Bool, K lam (n + 1) (Fin.snoc b c) a) = K lam n b (Fin.init a) := by
+  dsimp only [K]
+  simp_rw [Fin.prod_univ_castSucc, Fin.snoc_castSucc, Fin.snoc_last]
+  rw [← Finset.mul_sum, w_sum, mul_one]
+  rfl
+
+private theorem K_cons_sum (lam : ℝ) (n : ℕ) (b : Fin n → Bool)
+    (a : Fin (n + 3) → Bool) :
+    (∑ c : Bool, K lam (n + 1) (Fin.cons c b) a) = K lam n b (Fin.tail a) := by
+  dsimp only [K]
+  simp_rw [Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ]
+  rw [← Finset.sum_mul, w_sum, one_mul]
+  rfl
+
+private theorem marginal_snoc (lam : ℝ) (t n : ℕ) (b : Fin n → Bool) :
+    (∑ c : Bool, P lam t (n + 1) (Fin.snoc b c)) = P lam t n b := by
+  induction t generalizing n b with
+  | zero => simp only [P_zero, Fintype.sum_bool, pow_succ]; ring
+  | succ t ih =>
+    simp only [P_succ]
+    change (∑ c : Bool, ∑ a : Fin (n + 3) → Bool,
+      K lam (n + 1) (Fin.snoc b c) a * P lam t (n + 3) a) =
+      ∑ a : Fin (n + 2) → Bool, K lam n b a * P lam t (n + 2) a
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.sum_mul, K_snoc_sum]
+    rw [sum_snoc (n + 2), Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro a _
+    simp only [Fin.init_snoc]
+    rw [← Finset.mul_sum, ih]
+
+private theorem marginal_cons (lam : ℝ) (t n : ℕ) (b : Fin n → Bool) :
+    (∑ c : Bool, P lam t (n + 1) (Fin.cons c b)) = P lam t n b := by
+  induction t generalizing n b with
+  | zero => simp only [P_zero, Fintype.sum_bool, pow_succ]; ring
+  | succ t ih =>
+    simp only [P_succ]
+    change (∑ c : Bool, ∑ a : Fin (n + 3) → Bool,
+      K lam (n + 1) (Fin.cons c b) a * P lam t (n + 3) a) =
+      ∑ a : Fin (n + 2) → Bool, K lam n b a * P lam t (n + 2) a
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.sum_mul, K_cons_sum]
+    rw [sum_cons (n + 2), Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro a _
+    simp only [Fin.tail_cons]
+    rw [← Finset.mul_sum, ih]
+
 end D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
