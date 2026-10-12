@@ -60,6 +60,17 @@ augmentation. The result Describe carries `OpenProblemResolutionClaim(Proved)`.
 The one result uses proof-local arguments; there are no companion theorems,
 private mathematical helpers, or wrapper results.
 
+The source-specific [unfinished-audit issue 15686](https://github.com/the-omega-institute/trureturing/issues/15686)
+records the missing producer-accepted source binding and registration. The
+retained `Reg/D5/S3/ArithUnits/MinacNguyenTanQuestion35.lean` compiles the
+complete family, bridge, variation, sensitivity and dependence, including
+`F = ULift (ZMod 3)`, `G = ULift Unit`, `U = ⊤`, `n = 2` and a
+bottom-subgroup counterreadout. The attempted descriptor was rejected with
+producer exit 2 and
+`contract.discovery:rigid_universes:Reg.D5.S3.ArithUnits.MinacNguyenTanQuestion35.registration_1`.
+There is no `declared_validated` registration; the linked-issue route leaves
+the audit unfinished.
+
 ## Falsifier
 
 A mismatch in the native group-algebra or unit definitions, loss of a
@@ -76,6 +87,11 @@ bounded enumeration, checker, numeric reduction, or certified finite instance;
 its utility classification is `none`. Independent review, source-author audit
 completion or its linked-issue exception, canonical freeze, required checks,
 and integration are separate delivery obligations.
+
+The author classifies the compiled proof as `content`, pending independent
+review. Preregistration 15666 anticipated `bind-only`; the original exact
+question was preregistered, not the content classification. The admission
+basis remains `open-problem-resolution`.
 
 ## ASSUMED-UNVERIFIED
 
