@@ -5,6 +5,7 @@ import Reg.Support.DependentFamily
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
 import Reg.Support.FibonacciL22Budget
 import Reg.Support.FibonacciConsensus
+import Reg.Support.FibonacciConsensusUniverse
 
 open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
@@ -846,6 +847,73 @@ theorem rejected_law_of_operational_premises {Configuration : Type u}
   change phi + 1 < coordinate w 0 at lower
   linarith
 
+
+/-- The actual legal L22 tuple supplies a counterexample to the whole original Law.
+The decoder's liveness proof is below lam; no endpoint or all-theta model is asserted. -/
+theorem rejected_law : ¬ sourceArena.{u}.Law rejected := by
+  exact rejected_law_of_operational_premises.{u}
+    (Reg.Support.FibonacciConsensusUniverse.action Reg.Support.FibonacciL22.theta)
+    Reg.Support.FibonacciConsensusUniverse.initial
+    (Reg.Support.FibonacciConsensusUniverse.safety Reg.Support.FibonacciL22.ownership
+      Reg.Support.FibonacciL22.theta Reg.Support.FibonacciL22.theta_bounds.1.le)
+    (Reg.Support.FibonacciConsensusUniverse.liveness Reg.Support.FibonacciL22.ownership
+      Reg.Support.FibonacciL22.theta Reg.Support.FibonacciL22.theta_bounds.1.le
+      Reg.Support.FibonacciL22.theta_bounds.2)
+    (Reg.Support.FibonacciConsensusUniverse.postprocessing Reg.Support.FibonacciL22.ownership
+      Reg.Support.FibonacciL22.theta)
+
+theorem sensitivity : Sensitivity sourceArena.{u} actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.{u}.Law actual rejected rejected_law
+
+def evidence : Registration sourceArena.{u}
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_synchronous_common_stem.{u}) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := actual_dependence
+
+def canonical_synchronous_common_stem_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_synchronous_common_stem.{u})
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ U L => canonicalReturnLo U L) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal22.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal22.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena.{u}⟩
+  objectArena := .source ⟨sourceArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena.{u} ⟨evidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ U L => canonicalReturnLo U L) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    definition := none
+    coordinates := #[14]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms rejected_law
+#print axioms sensitivity
+#print axioms evidence
+#print axioms canonical_synchronous_common_stem_registration
 #print axioms source_bridge
 #print axioms positive_law
 #print axioms actual_dependence
