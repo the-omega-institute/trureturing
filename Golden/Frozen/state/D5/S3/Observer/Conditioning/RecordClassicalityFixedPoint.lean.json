@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a28200a537fd4e91e289489e8249e9f9f6c1518fad676b74868ec881c4099242"}
+{"statement_id":"sha256:a28200a537fd4e91e289489e8249e9f9f6c1518fad676b74868ec881c4099242","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),12:Conditioning),28:RecordClassicalityFixedPoint),31:record_classicality_fixed_point)","kind":"theorem"}]}

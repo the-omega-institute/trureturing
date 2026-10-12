@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6254624b19f71733788aaa201d27c9919197cf259570b22f9d2d771858f635bd"}
+{"statement_id":"sha256:6254624b19f71733788aaa201d27c9919197cf259570b22f9d2d771858f635bd","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Fishburn),26:FishburnTenTenBTransitions),19:b_append_transition)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Fishburn),26:FishburnTenTenBTransitions),21:b_internal_transition)","kind":"theorem"}]}

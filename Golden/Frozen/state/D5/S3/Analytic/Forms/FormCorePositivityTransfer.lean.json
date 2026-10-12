@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2e67394a5d0f01c76389674533e4aab0ea86560b540859fbb675eefe2e5027ea"}
+{"statement_id":"sha256:2e67394a5d0f01c76389674533e4aab0ea86560b540859fbb675eefe2e5027ea","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),5:Forms),26:FormCorePositivityTransfer),10:IsFormCore)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),5:Forms),26:FormCorePositivityTransfer),23:nonnegative_of_formCore)","kind":"theorem"}]}
