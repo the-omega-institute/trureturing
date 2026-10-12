@@ -220,7 +220,6 @@ theorem native_fiber_departure_counts {M q s : ℕ} (S : Support M q)
       k ∈ (univ.filter fun a : Fin s => y.val a.castSucc = Sum.inl i ∧ chi (o a.succ) = z)
     simp only [mem_filter, mem_univ, true_and, hchi]
 
-
 /-- Retain only the freely varying signal identities. Every other site is
 reconstructed from the same complete collapsed history. -/
 def fiberLabelEquiv {M q s : ℕ} (S : Support M q) (e : Experiment)
@@ -266,7 +265,6 @@ theorem native_signal_assignment_law {M q s : ℕ} (S : Support M q)
   simp only [Fintype.card_fun, Fintype.card_coe, S.property] at hc
   simp only [Nat.card_eq_fintype_card, hc, Nat.cast_pow]
 
-
 /-- An exact site enumeration gives two departure-label words and all
 remaining erased labels. In particular, terminal path labels belong in the
 remaining block, not in either departure word. -/
@@ -311,7 +309,6 @@ private theorem native_multinomial_label_blocks {M q s : ℕ} (S : Support M q)
     Nat.card_eq_fintype_card, hc, Nat.cast_pow, pow_add]
   have hqR : (q : ℝ) ≠ 0 := by exact_mod_cast (by omega : q ≠ 0)
   exact mul_div_mul_right _ _ (pow_ne_zero kr hqR)
-
 
 private theorem departureSite_injective (s : ℕ) (e : Experiment) :
     Function.Injective (departureSite s e) := by
@@ -385,7 +382,6 @@ theorem native_departure_label_count {M q s : ℕ} (S : Support M q) (e : Experi
       exact hjsite
   simpa only [Fintype.card_coe] using Fintype.card_congr (Equiv.ofBijective f hf)
 
-
 /-- An erased site contributes to the positive or negative departure block
 according to its successor in the complete collapsed history. -/
 def isSignedDeparture {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
@@ -458,7 +454,6 @@ def nativeDepartureEnumeration {M q s : ℕ} (S : Support M q) (e : Experiment)
       (Equiv.sumCongr (Fintype.equivFinOfCardEq (Fintype.card_coe _))
         (Fintype.equivFinOfCardEq (Fintype.card_coe _)))
       (Fintype.equivFinOfCardEq (Fintype.card_coe _)))
-
 
 private theorem word_occupation_count {α : Type*} [DecidableEq α] {n : ℕ}
     (w : Fin n → α) (i : α) :

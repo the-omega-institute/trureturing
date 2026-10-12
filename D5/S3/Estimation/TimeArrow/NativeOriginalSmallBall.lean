@@ -105,7 +105,6 @@ private theorem decimal_series_decomposition (n : ℕ) :
     intro j
     rw [Nat.add_comm])
 
-
 private theorem decimal_alpha_lt_one : decimalAlpha < 1 := by
   have hg : Summable (fun j : ℕ => (1/10 : ℝ)^(j+1)) :=
     (summable_geometric_of_lt_one (by norm_num : (0 : ℝ) ≤ 1/10)
@@ -349,7 +348,6 @@ private theorem original_window_sequence_conditions (r β : ℝ) (hr : 0 < r) (h
     have hi : 0 ≤ (signalSize r β (scale n) : ℝ)⁻¹ := inv_nonneg.mpr hq0.le
     linarith only [hsum,hh',hi]
 
-
 /-- Complete calibration exists for every full observation, including empty rectangles. -/
 private theorem complete_root {M q s : ℕ} (r : ℝ) (e : Experiment)
     (o : Obs M s e) (hq : 1 ≤ q) (hqm : q < M) :
@@ -420,7 +418,6 @@ private theorem original_engine_scales (r β v a γ c η V0 cN CN : ℝ)
       (γ*c*((N : ℝ)*Real.sqrt N))/signalSize r β (scale n) by ring]
     apply (le_div_iff₀ hq0).mpr
     simpa only [one_mul] using hh
-
 
 open scoped Classical in
 set_option maxHeartbeats 4000000 in
@@ -666,7 +663,6 @@ theorem original_native_environment_small_ball (r β : ℝ)
 
   · try simp only [hz,not_false_eq_true,if_true]
     split_ifs <;> first | exact le_rfl | exact hp o
-
 
 open scoped Classical in
 set_option maxHeartbeats 1600000 in

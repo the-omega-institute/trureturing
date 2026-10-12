@@ -6,18 +6,378 @@
    utility: none
    digest: Finite native row transfer restores both actual and reference tails. -/
 
-import D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
-import D5.S3.Estimation.TimeArrow.NativeRowCountTail
-import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+import D5.S3.Estimation.TimeArrow.ActualMarkedCountPoissonRelative
+import D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
+
+open scoped BigOperators
+open Finset
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+open D5.S3.Estimation.TimeArrow.ActualMarkedCountPoissonRelative
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
+noncomputable section
+
+/-- The reference mass uses the native compensated row drift. -/
+def rowReference {M q : ℕ} (S : Support M q) (r : ℝ) (L : ℕ)
+    (i : Fin M) (c : ℕ × ℕ) : ℝ :=
+  (Real.exp (-((L : ℝ) * (1 + b r S (.inl i)) / 2)) *
+      ((L : ℝ) * (1 + b r S (.inl i)) / 2) ^ c.1 / c.1.factorial) *
+    (Real.exp (-((L : ℝ) * (1 - b r S (.inl i)) / 2)) *
+      ((L : ℝ) * (1 - b r S (.inl i)) / 2) ^ c.2 / c.2.factorial)
+
+/-- A deterministic row function restricted to a finite count set. -/
+def truncatedRow {M s : ℕ} (e : Experiment) (D : Finset (ℕ × ℕ))
+    (g : Fin M → ℕ × ℕ → ℝ) (i : Fin M) (o : Obs M s e) : ℝ :=
+  ∑ c ∈ D, if count e o i 1 = c.1 ∧ count e o i (-1) = c.2 then g i c else 0
+
+theorem reference_pos {M q L : ℕ} (S : Support M q) (r κ : ℝ)
+    (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
+    (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L)
+    (i : Fin M) (c : ℕ × ℕ) : 0 < rowReference S r L i c := by
+  have hLpos : (0 : ℝ) < L := by exact_mod_cast (show 0 < L by omega)
+  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
+  have hb : -(1 - κ) ≤ b r S (.inl i) ∧ b r S (.inl i) ≤ 1 - κ := by
+    simp only [b]
+    split_ifs <;> constructor <;> linarith
+  have hp : 0 < (L : ℝ) * (1 + b r S (.inl i)) / 2 :=
+    div_pos (mul_pos hLpos (by linarith [hb.1])) (by norm_num)
+  have hm : 0 < (L : ℝ) * (1 - b r S (.inl i)) / 2 :=
+    div_pos (mul_pos hLpos (by linarith [hb.2])) (by norm_num)
+  unfold rowReference
+  exact mul_pos
+    (div_pos (mul_pos (Real.exp_pos _) (pow_pos hp _)) (by positivity))
+    (div_pos (mul_pos (Real.exp_pos _) (pow_pos hm _)) (by positivity))
+
+private theorem multiply_relative {P Q δ : ℝ} (hQ : 0 < Q)
+    (h : |P / Q - 1| ≤ δ) : |P - Q| ≤ δ * Q := by
+  have he : P - Q = (P / Q - 1) * Q := by field_simp
+  rw [he, abs_mul, abs_of_pos hQ]
+  exact mul_le_mul_of_nonneg_right h hQ.le
+
+private theorem native_point_transfer (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1) :
+    ∃ (A : ℝ) (M₀ : ℕ) (η₀ : ℝ), 0 < A ∧ 1 ≤ M₀ ∧ 0 < η₀ ∧
+      ∀ (M q L : ℕ) (r : ℝ), M₀ ≤ M → 1 ≤ q → q < M →
+        0 < r → r ≤ 1 - κ → compensation M q r ≤ 1 - κ →
+        1 ≤ L → (L : ℝ) / M ≤ η₀ →
+        ∀ (S : Support M q) (e : Experiment) (i : Fin M) (c : ℕ × ℕ),
+          (c.1 : ℝ) ≤ 8 * L → (c.2 : ℝ) ≤ 8 * L →
+          (|((∑ o : Obs M (2 * M * L) e,
+              if count e o i 1 = c.1 ∧ count e o i (-1) = c.2
+              then probability r e S o else 0) - rowReference S r L i c)| ≤
+            (A * (L : ℝ) ^ 2 / M) * rowReference S r L i c) ∧
+          ∀ (j : Fin M) (d : ℕ × ℕ), i ≠ j →
+            (d.1 : ℝ) ≤ 8 * L → (d.2 : ℝ) ≤ 8 * L →
+            |((∑ o : Obs M (2 * M * L) e,
+                if (count e o i 1 = c.1 ∧ count e o i (-1) = c.2) ∧
+                   (count e o j 1 = d.1 ∧ count e o j (-1) = d.2)
+                then probability r e S o else 0) -
+              rowReference S r L i c * rowReference S r L j d)| ≤
+              (A * (L : ℝ) ^ 3 / M) *
+                (rowReference S r L i c * rowReference S r L j d) := by
+  classical
+  obtain ⟨A, M₀, η₀, hA, hM₀, hη₀, h⟩ :=
+    actual_marked_count_poisson_relative κ 8 hκ hκ1 (by norm_num)
+  refine ⟨A, M₀, η₀, hA, hM₀, hη₀, ?_⟩
+  intro M q L r hMM hq hqm hr hrκ hcκ hL hLη S e i c hc1 hc2
+  have hQc := reference_pos S r κ hκ hr hrκ hcκ hL i c
+  constructor
+  · have hh := h M q L 1 r hMM hq hqm hr hrκ hcκ hL hLη (Or.inl rfl)
+      S (fun _ => i) (fun a b _ => Subsingleton.elim a b)
+      (fun _ => c.1) (fun _ => c.2) (fun _ => ⟨hc1, hc2⟩) e
+    simp only [Fin.prod_univ_one, Fin.forall_fin_one] at hh
+    exact multiply_relative hQc hh
+  · intro j d hij hd1 hd2
+    let m : Fin 2 → Fin M := ![i, j]
+    have hm : Function.Injective m := by
+      intro a b hab
+      fin_cases a <;> fin_cases b
+      · rfl
+      · exact False.elim (hij hab)
+      · exact False.elim (hij hab.symm)
+      · rfl
+    have hn : ∀ a : Fin 2, ((![c.1, d.1] a : ℕ) : ℝ) ≤ 8 * L ∧
+        ((![c.2, d.2] a : ℕ) : ℝ) ≤ 8 * L := by
+      intro a; fin_cases a
+      · exact ⟨hc1, hc2⟩
+      · exact ⟨hd1, hd2⟩
+    have hh := h M q L 2 r hMM hq hqm hr hrκ hcκ hL hLη (Or.inr rfl)
+      S m hm ![c.1, d.1] ![c.2, d.2] hn e
+    simp only [Fin.prod_univ_two, Fin.forall_fin_two, m,
+      Matrix.cons_val_zero, Matrix.cons_val_one] at hh
+    exact multiply_relative (mul_pos hQc (reference_pos S r κ hκ hr hrκ hcκ hL j d)) hh
+
+private theorem weighted_relative_sum {α : Type*} (D : Finset α)
+    (P Q g : α → ℝ) (δ : ℝ) (hg : ∀ c ∈ D, 0 ≤ g c)
+    (h : ∀ c ∈ D, |P c - Q c| ≤ δ * Q c) :
+    |(∑ c ∈ D, g c * P c) - ∑ c ∈ D, g c * Q c| ≤
+      δ * ∑ c ∈ D, g c * Q c := by
+  rw [← sum_sub_distrib]
+  calc
+    |∑ c ∈ D, (g c * P c - g c * Q c)| ≤
+        ∑ c ∈ D, |g c * P c - g c * Q c| := abs_sum_le_sum_abs _ _
+    _ ≤ ∑ c ∈ D, δ * (g c * Q c) := by
+      apply sum_le_sum
+      intro c hc
+      rw [← mul_sub, abs_mul, abs_of_nonneg (hg c hc)]
+      simpa only [mul_comm, mul_left_comm, mul_assoc] using
+        mul_le_mul_of_nonneg_left (h c hc) (hg c hc)
+    _ = δ * ∑ c ∈ D, g c * Q c := (mul_sum ..).symm
+
+private theorem truncated_bounds {M s : ℕ} (e : Experiment)
+    (D : Finset (ℕ × ℕ)) (g : Fin M → ℕ × ℕ → ℝ)
+    (hg : ∀ i c, c ∈ D → 0 ≤ g i c ∧ g i c ≤ 1)
+    (i : Fin M) (o : Obs M s e) :
+    0 ≤ truncatedRow e D g i o ∧ truncatedRow e D g i o ≤ 1 := by
+  classical
+  let c := (count e o i 1, count e o i (-1))
+  have hi : truncatedRow e D g i o = if c ∈ D then g i c else 0 := by
+    unfold truncatedRow
+    simp_rw [show ∀ d : ℕ × ℕ,
+      (count e o i 1 = d.1 ∧ count e o i (-1) = d.2) ↔ d = c by
+      intro d; simp [c, Prod.ext_iff, eq_comm]]
+    simp
+  rw [hi]
+  split_ifs with hc
+  · exact hg i c hc
+  · norm_num
+
+private theorem truncated_expectation {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (D : Finset (ℕ × ℕ)) (g : Fin M → ℕ × ℕ → ℝ) (i : Fin M) :
+    (∑ o : Obs M s e, probability r e S o * truncatedRow e D g i o) =
+      ∑ c ∈ D, g i c * (∑ o : Obs M s e,
+        if count e o i 1 = c.1 ∧ count e o i (-1) = c.2
+        then probability r e S o else 0) := by
+  classical
+  simp only [truncatedRow, mul_sum]
+  rw [sum_comm]
+  apply sum_congr rfl
+  intro c _
+  apply sum_congr rfl
+  intro o _
+  split_ifs <;> ring
+
+private theorem truncated_product_expectation {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (D : Finset (ℕ × ℕ)) (g : Fin M → ℕ × ℕ → ℝ) (i j : Fin M) :
+    (∑ o : Obs M s e, probability r e S o *
+        (truncatedRow e D g i o * truncatedRow e D g j o)) =
+      ∑ c ∈ D, ∑ d ∈ D, (g i c * g j d) * (∑ o : Obs M s e,
+        if (count e o i 1 = c.1 ∧ count e o i (-1) = c.2) ∧
+           (count e o j 1 = d.1 ∧ count e o j (-1) = d.2)
+        then probability r e S o else 0) := by
+  classical
+  have he (o : Obs M s e) : probability r e S o *
+      (truncatedRow e D g i o * truncatedRow e D g j o) =
+      ∑ c ∈ D, ∑ d ∈ D, probability r e S o *
+        ((if count e o i 1 = c.1 ∧ count e o i (-1) = c.2 then g i c else 0) *
+          (if count e o j 1 = d.1 ∧ count e o j (-1) = d.2 then g j d else 0)) := by
+    unfold truncatedRow
+    rw [sum_mul]
+    simp_rw [mul_sum]
+  simp_rw [he, mul_sum]
+  rw [sum_comm]
+  apply sum_congr rfl
+  intro c _
+  rw [sum_comm]
+  apply sum_congr rfl
+  intro d _
+  apply sum_congr rfl
+  intro o _
+  by_cases hi : count e o i 1 = c.1 ∧ count e o i (-1) = c.2 <;>
+    by_cases hj : count e o j 1 = d.1 ∧ count e o j (-1) = d.2 <;>
+    simp [hi, hj] <;> ring
+
+private theorem finite_weighted_moments {Ω ι : Type*} [Fintype Ω] [DecidableEq ι]
+    (I : Finset ι) (p : Ω → ℝ) (X : ι → Ω → ℝ) (a : ι → ℝ)
+    (δ₁ δ₂ : ℝ) (hp : ∀ o, 0 ≤ p o) (hsum : ∑ o, p o = 1)
+    (ha : ∀ i ∈ I, 0 ≤ a i)
+    (hX : ∀ i ∈ I, ∀ o, 0 ≤ X i o ∧ X i o ≤ 1)
+    (hδ₁ : δ₁ ≤ 1 / 2) (hδ₂ : 0 ≤ δ₂) (hδ : δ₁ ≤ δ₂)
+    (hmean : ∀ i ∈ I, |(∑ o, p o * X i o) - a i| ≤ δ₁ * a i)
+    (hpair : ∀ i ∈ I, ∀ j ∈ I, i ≠ j →
+      (∑ o, p o * (X i o * X j o)) ≤ (1 + δ₂) * (a i * a j)) :
+    |(∑ o, p o * ∑ i ∈ I, X i o) - ∑ i ∈ I, a i| ≤ δ₁ * ∑ i ∈ I, a i ∧
+    (∑ o, p o * ((∑ i ∈ I, X i o) - ∑ i ∈ I, a i) ^ 2) ≤
+      (3 / 2) * (∑ i ∈ I, a i) + 3 * δ₂ * (∑ i ∈ I, a i) ^ 2 := by
+  classical
+  let A := ∑ i ∈ I, a i
+  let Z := fun o => ∑ i ∈ I, X i o
+  let E := fun f : Ω → ℝ => ∑ o, p o * f o
+  have hA : 0 ≤ A := sum_nonneg ha
+  have hEZ : E Z = ∑ i ∈ I, E (X i) := by
+    dsimp [E, Z]
+    simp_rw [mul_sum]
+    rw [sum_comm]
+  have hm : |E Z - A| ≤ δ₁ * A := by
+    rw [hEZ]
+    dsimp [A]
+    rw [← sum_sub_distrib]
+    exact (abs_sum_le_sum_abs _ _).trans
+      ((sum_le_sum hmean).trans_eq (mul_sum ..).symm)
+  have hmlo : (1 - δ₁) * A ≤ E Z := by
+    have := (abs_le.mp hm).1
+    nlinarith
+  have hmhi : E Z ≤ (1 + δ₁) * A := by
+    have := (abs_le.mp hm).2
+    nlinarith
+  have hproduct (i : ι) (hi : i ∈ I) (j : ι) (hj : j ∈ I) :
+      E (fun o => X i o * X j o) ≤
+        (if i = j then E (X i) else 0) + (1 + δ₂) * (a i * a j) := by
+    by_cases hij : i = j
+    · subst j
+      rw [if_pos rfl]
+      have hd : E (fun o => X i o * X i o) ≤ E (X i) := by
+        apply sum_le_sum
+        intro o _
+        apply mul_le_mul_of_nonneg_left _ (hp o)
+        nlinarith [(hX i hi o).1, (hX i hi o).2]
+      exact hd.trans (le_add_of_nonneg_right
+        (mul_nonneg (by linarith) (mul_nonneg (ha i hi) (ha i hi))))
+    · rw [if_neg hij, zero_add]
+      exact hpair i hi j hj hij
+  have hsecond : E (fun o => (Z o) ^ 2) ≤ E Z + (1 + δ₂) * A ^ 2 := by
+    have he : E (fun o => (Z o) ^ 2) =
+        ∑ i ∈ I, ∑ j ∈ I, E (fun o => X i o * X j o) := by
+      dsimp [E, Z]
+      simp only [pow_two, sum_mul, mul_sum]
+      rw [sum_comm]
+      apply sum_congr rfl
+      intro i _
+      rw [sum_comm]
+      apply sum_congr rfl
+      intro j _
+      apply sum_congr rfl
+      intro o _
+      ring
+    rw [he]
+    calc
+      (∑ i ∈ I, ∑ j ∈ I, E (fun o => X i o * X j o)) ≤
+          ∑ i ∈ I, ∑ j ∈ I,
+            ((if i = j then E (X i) else 0) + (1 + δ₂) * (a i * a j)) :=
+        sum_le_sum fun i hi => sum_le_sum fun j hj => hproduct i hi j hj
+      _ = E Z + (1 + δ₂) * A ^ 2 := by
+        simp only [sum_add_distrib]
+        have hi (i : ι) (hi : i ∈ I) : (∑ j ∈ I, if i = j then E (X i) else 0) =
+            E (X i) := by simp [← eq_comm, hi]
+        rw [sum_congr rfl hi, ← hEZ]
+        congr 1
+        dsimp [A]
+        simp_rw [← mul_sum, ← sum_mul]
+        ring
+  have hcenter : E (fun o => (Z o - A) ^ 2) =
+      E (fun o => (Z o) ^ 2) - 2 * A * E Z + A ^ 2 := by
+    dsimp [E]
+    calc
+      (∑ o, p o * (Z o - A) ^ 2) =
+          ∑ o, (p o * (Z o) ^ 2 - 2 * A * (p o * Z o) + p o * A ^ 2) := by
+        apply sum_congr rfl
+        intro o _
+        ring
+      _ = _ := by
+        rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, ← sum_mul, hsum, one_mul]
+  refine ⟨hm, ?_⟩
+  change E (fun o => (Z o - A) ^ 2) ≤ (3 / 2) * A + 3 * δ₂ * A ^ 2
+  rw [hcenter]
+  have hlow := mul_le_mul_of_nonneg_left hmlo (show 0 ≤ 2 * A by positivity)
+  have hlin := mul_le_mul_of_nonneg_right hδ₁ hA
+  have hquad := mul_le_mul_of_nonneg_right hδ (sq_nonneg A)
+  nlinarith
+
+/-- The native relative point laws give finite weighted moments without a
+count-box cardinality loss or an independence assumption on actual rows. -/
+theorem native_truncated_weighted_moments (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1) :
+    ∃ (A : ℝ) (M₀ : ℕ) (η₀ : ℝ), 0 < A ∧ 1 ≤ M₀ ∧ 0 < η₀ ∧
+      ∀ (M q L : ℕ) (r : ℝ), M₀ ≤ M → 1 ≤ q → q < M →
+        0 < r → r ≤ 1 - κ → compensation M q r ≤ 1 - κ →
+        1 ≤ L → (L : ℝ) / M ≤ η₀ → A * (L : ℝ) ^ 2 / M ≤ 1 / 2 →
+        ∀ (S : Support M q) (e : Experiment) (I : Finset (Fin M))
+          (D : Finset (ℕ × ℕ)) (g : Fin M → ℕ × ℕ → ℝ),
+          (∀ c ∈ D, (c.1 : ℝ) ≤ 8 * L ∧ (c.2 : ℝ) ≤ 8 * L) →
+          (∀ i c, c ∈ D → 0 ≤ g i c ∧ g i c ≤ 1) →
+          let a := fun i => ∑ c ∈ D, g i c * rowReference S r L i c
+          let Z := fun o : Obs M (2 * M * L) e => ∑ i ∈ I, truncatedRow e D g i o
+          (|(∑ o, probability r e S o * Z o) - ∑ i ∈ I, a i| ≤
+            (A * (L : ℝ) ^ 2 / M) * ∑ i ∈ I, a i) ∧
+          ((∑ o, probability r e S o * (Z o - ∑ i ∈ I, a i) ^ 2) ≤
+            (3 / 2) * (∑ i ∈ I, a i) +
+              3 * (A * (L : ℝ) ^ 3 / M) * (∑ i ∈ I, a i) ^ 2) := by
+  classical
+  obtain ⟨A, M₀, η₀, hA, hM₀, hη₀, h⟩ := native_point_transfer κ hκ hκ1
+  refine ⟨A, M₀, η₀, hA, hM₀, hη₀, ?_⟩
+  intro M q L r hMM hq hqm hr hrκ hcκ hL hLη hsmall S e I D g hD hg
+  let a := fun i => ∑ c ∈ D, g i c * rowReference S r L i c
+  let δ₁ := A * (L : ℝ) ^ 2 / M
+  let δ₂ := A * (L : ℝ) ^ 3 / M
+  have hr1 : r < 1 := by linarith
+  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
+  have hc1 : compensation M q r < 1 := by linarith
+  have hlaw := (finite_support_bayes (s := 2 * M * L) hq hqm hr hr1 hc hc1 e).2.1
+  have hp : ∀ o : Obs M (2 * M * L) e, 0 ≤ probability r e S o := hlaw.1 S
+  have hsum : (∑ o : Obs M (2 * M * L) e, probability r e S o) = 1 := hlaw.2 S
+  have ha (i : Fin M) : 0 ≤ a i := by
+    apply sum_nonneg
+    intro c hc
+    exact mul_nonneg (hg i c hc).1 (reference_pos S r κ hκ hr hrκ hcκ hL i c).le
+  have hδ₂ : 0 ≤ δ₂ := by dsimp [δ₂]; positivity
+  have hδ : δ₁ ≤ δ₂ := by
+    have hLr : (1 : ℝ) ≤ L := by exact_mod_cast hL
+    have hpow : (L : ℝ) ^ 2 ≤ (L : ℝ) ^ 3 := by nlinarith [sq_nonneg (L : ℝ)]
+    exact div_le_div_of_nonneg_right
+      (mul_le_mul_of_nonneg_left hpow hA.le) (by positivity)
+  have hm (i : Fin M) :
+      |(∑ o : Obs M (2 * M * L) e,
+        probability r e S o * truncatedRow e D g i o) - a i| ≤ δ₁ * a i := by
+    rw [truncated_expectation]
+    apply weighted_relative_sum D _ _ (g i) δ₁ (fun c hc => (hg i c hc).1)
+    intro c hc
+    exact (h M q L r hMM hq hqm hr hrκ hcκ hL hLη S e i c
+      (hD c hc).1 (hD c hc).2).1
+  have hpair (i j : Fin M) (hij : i ≠ j) :
+      (∑ o : Obs M (2 * M * L) e, probability r e S o *
+        (truncatedRow e D g i o * truncatedRow e D g j o)) ≤
+        (1 + δ₂) * (a i * a j) := by
+    rw [truncated_product_expectation]
+    have hb : ∀ c ∈ D, ∀ d ∈ D,
+        (∑ o : Obs M (2 * M * L) e,
+          if (count e o i 1 = c.1 ∧ count e o i (-1) = c.2) ∧
+             (count e o j 1 = d.1 ∧ count e o j (-1) = d.2)
+          then probability r e S o else 0) ≤
+            (1 + δ₂) * (rowReference S r L i c * rowReference S r L j d) := by
+      intro c hc d hd
+      have hh := (abs_le.mp ((h M q L r hMM hq hqm hr hrκ hcκ hL hLη S e i c
+        (hD c hc).1 (hD c hc).2).2 j d hij (hD d hd).1 (hD d hd).2)).2
+      dsimp [δ₂]
+      nlinarith
+    calc
+      _ ≤ ∑ c ∈ D, ∑ d ∈ D, (g i c * g j d) *
+          ((1 + δ₂) * (rowReference S r L i c * rowReference S r L j d)) :=
+        sum_le_sum fun c hc => sum_le_sum fun d hd =>
+          mul_le_mul_of_nonneg_left (hb c hc d hd)
+            (mul_nonneg (hg i c hc).1 (hg j d hd).1)
+      _ = (1 + δ₂) * (a i * a j) := by
+        dsimp [a]
+        rw [sum_mul]
+        simp_rw [mul_sum]
+        apply sum_congr rfl
+        intro c _
+        apply sum_congr rfl
+        intro d _
+        ring
+  exact finite_weighted_moments I (probability r e S)
+    (truncatedRow e D g) a δ₁ δ₂ hp hsum (fun i _ => ha i)
+    (fun i _ o => truncated_bounds e D g hg i o) hsmall hδ₂ hδ
+    (fun i _ => hm i) (fun i _ j _ hij => hpair i j hij)
+
+end
+end D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 
 open scoped BigOperators
 open Finset
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeRowCountTail
-open private D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.truncated_bounds
-  from D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -400,451 +760,3 @@ theorem native_full_weighted_deviation (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1)
 
 end
 end D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
-
-open scoped BigOperators
-open Finset
-open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
-open D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-
-namespace D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
-noncomputable section
-
-/-- Complete count-level calibration at zero common odds shift. -/
-def referenceParameter (M q : ℕ) (r : ℝ) (c : ℕ × ℕ) : ℝ :=
-  Real.sigmoid (c.1 * Real.log ((1 + r) / (1 - compensation M q r)) +
-    c.2 * Real.log ((1 - r) / (1 + compensation M q r)) -
-    Real.log (((M - q : ℕ) : ℝ) / q))
-
-private theorem reference_factor {M q : ℕ} (S : Support M q) (r : ℝ) (L : ℕ)
-    (i : Fin M) (c : ℕ × ℕ) :
-    rowReference S r L i c = Real.exp (-(L : ℝ)) *
-      (((L : ℝ) * (1 + b r S (.inl i)) / 2) ^ c.1 *
-        ((L : ℝ) * (1 - b r S (.inl i)) / 2) ^ c.2) /
-          (c.1.factorial * c.2.factorial : ℕ) := by
-  unfold rowReference
-  push_cast
-  have hexp : Real.exp (-((L : ℝ) * (1 + b r S (.inl i)) / 2)) *
-      Real.exp (-((L : ℝ) * (1 - b r S (.inl i)) / 2)) = Real.exp (-(L : ℝ)) := by
-    rw [← Real.exp_add]
-    congr 1
-    ring
-  calc
-    _ = (Real.exp (-((L : ℝ) * (1 + b r S (.inl i)) / 2)) *
-        Real.exp (-((L : ℝ) * (1 - b r S (.inl i)) / 2))) *
-      (((L : ℝ) * (1 + b r S (.inl i)) / 2) ^ c.1 *
-        ((L : ℝ) * (1 - b r S (.inl i)) / 2) ^ c.2) /
-          ((c.1.factorial : ℝ) * c.2.factorial) := by ring
-    _ = _ := by rw [hexp]
-
-theorem reference_likelihood_ratio {M q L : ℕ} (S : Support M q) (r κ : ℝ)
-    (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
-    (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L)
-    (i j : Fin M) (hi : i ∈ S.val) (hj : j ∉ S.val) (c : ℕ × ℕ) :
-    rowReference S r L i c =
-      Real.exp (c.1 * Real.log ((1 + r) / (1 - compensation M q r)) +
-        c.2 * Real.log ((1 - r) / (1 + compensation M q r))) * rowReference S r L j c := by
-  have hr1 : r < 1 := by linarith
-  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
-  have hc1 : compensation M q r < 1 := by linarith
-  have hp : 0 < (1 + r) / (1 - compensation M q r) := div_pos (by linarith) (by linarith)
-  have hm : 0 < (1 - r) / (1 + compensation M q r) := div_pos (by linarith) (by linarith)
-  have hexp : Real.exp (c.1 * Real.log ((1 + r) / (1 - compensation M q r)) +
-      c.2 * Real.log ((1 - r) / (1 + compensation M q r))) =
-      ((1 + r) / (1 - compensation M q r)) ^ c.1 *
-        ((1 - r) / (1 + compensation M q r)) ^ c.2 := by
-    rw [Real.exp_add, Real.exp_nat_mul, Real.exp_nat_mul, Real.exp_log hp, Real.exp_log hm]
-  rw [hexp, reference_factor, reference_factor]
-  simp only [b, if_pos hi, if_neg hj, sub_neg_eq_add]
-  have hplus : ((1 + r) / (1 - compensation M q r)) *
-      ((L : ℝ) * (1 + -compensation M q r) / 2) = (L : ℝ) * (1 + r) / 2 := by
-    field_simp [ne_of_gt (sub_pos.mpr hc1)]
-    <;> ring
-  have hminus : ((1 - r) / (1 + compensation M q r)) *
-      ((L : ℝ) * (1 + compensation M q r) / 2) = (L : ℝ) * (1 - r) / 2 := by
-    field_simp
-    <;> ring
-  have he :
-      (((1 + r) / (1 - compensation M q r)) ^ c.1 *
-        ((1 - r) / (1 + compensation M q r)) ^ c.2) *
-      (((L : ℝ) * (1 + -compensation M q r) / 2) ^ c.1 *
-        ((L : ℝ) * (1 + compensation M q r) / 2) ^ c.2) =
-      ((L : ℝ) * (1 + r) / 2) ^ c.1 * ((L : ℝ) * (1 - r) / 2) ^ c.2 := by
-    rw [show ∀ a b d e : ℝ, (a * b) * (d * e) = (a * d) * (b * e) by intros; ring,
-      ← mul_pow, ← mul_pow, hplus, hminus]
-  calc
-    _ = Real.exp (-(L : ℝ)) *
-      ((((1 + r) / (1 - compensation M q r)) ^ c.1 *
-        ((1 - r) / (1 + compensation M q r)) ^ c.2) *
-      (((L : ℝ) * (1 + -compensation M q r) / 2) ^ c.1 *
-        ((L : ℝ) * (1 + compensation M q r) / 2) ^ c.2)) /
-        (c.1.factorial * c.2.factorial : ℕ) := by rw [he]
-    _ = _ := by ring
-
-private theorem pointwise_calibration {M q L : ℕ} (S : Support M q) (r κ : ℝ)
-    (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
-    (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L) (hq : 1 ≤ q) (hqm : q < M)
-    (i j : Fin M) (hi : i ∈ S.val) (hj : j ∉ S.val) (c : ℕ × ℕ) :
-    ((q : ℝ) * rowReference S r L i c + ((M - q : ℕ) : ℝ) * rowReference S r L j c) *
-      referenceParameter M q r c = (q : ℝ) * rowReference S r L i c := by
-  let W := c.1 * Real.log ((1 + r) / (1 - compensation M q r)) +
-      c.2 * Real.log ((1 - r) / (1 + compensation M q r))
-  let B : ℝ := ((M - q : ℕ) : ℝ) / q
-  have hqR : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
-  have hN : (0 : ℝ) < (M - q : ℕ) := by exact_mod_cast (show 0 < M - q by omega)
-  have hB : 0 < B := div_pos hN hqR
-  have hR : rowReference S r L i c = Real.exp W * rowReference S r L j c :=
-    reference_likelihood_ratio S r κ hκ hr hrκ hcκ hL i j hi hj c
-  rw [hR]
-  change _ * Real.sigmoid (W - Real.log B) = _
-  rw [Real.sigmoid_def, neg_sub, Real.exp_sub, Real.exp_log hB]
-  dsimp [B]
-  field_simp
-  <;> ring
-
-/-- The complete reference mean is exactly q. Its complete calibration
-variance is the signal reference expectation of one minus the same parameter. -/
-theorem reference_calibration_mean_variance {M q L : ℕ} (S : Support M q) (r κ : ℝ)
-    (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
-    (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L) (hq : 1 ≤ q) (hqm : q < M)
-    (i j : Fin M) (hi : i ∈ S.val) (hj : j ∉ S.val) :
-    ((q : ℝ) * (∑' c, referenceParameter M q r c * rowReference S r L i c) +
-      ((M - q : ℕ) : ℝ) * (∑' c, referenceParameter M q r c * rowReference S r L j c) = q) ∧
-    ((q : ℝ) * (∑' c, (referenceParameter M q r c * (1 - referenceParameter M q r c)) *
-        rowReference S r L i c) +
-      ((M - q : ℕ) : ℝ) * (∑' c, (referenceParameter M q r c * (1 - referenceParameter M q r c)) *
-        rowReference S r L j c) =
-      (q : ℝ) * (∑' c, (1 - referenceParameter M q r c) * rowReference S r L i c)) := by
-  let p := referenceParameter M q r
-  have hp (c : ℕ × ℕ) : 0 ≤ p c ∧ p c ≤ 1 :=
-    ⟨Real.sigmoid_nonneg _, Real.sigmoid_le_one _⟩
-  have hv (c : ℕ × ℕ) : 0 ≤ p c * (1 - p c) ∧ p c * (1 - p c) ≤ 1 := by
-    constructor
-    · exact mul_nonneg (hp c).1 (by linarith [(hp c).2])
-    · nlinarith [(hp c).1, (hp c).2, sq_nonneg (p c - 1 / 2)]
-  have hs (g : ℕ × ℕ → ℝ) (hg : ∀ c, 0 ≤ g c ∧ g c ≤ 1) (k : Fin M) :
-      Summable (fun c => g c * rowReference S r L k c) :=
-    (D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_weighted_tail
-      S r κ hκ hr hrκ hcκ hL k g hg).1
-  have hpoint := pointwise_calibration S r κ hκ hr hrκ hcκ hL hq hqm i j hi hj
-  have hnorm : (∑' c, rowReference S r L i c) = 1 := by
-    have hh := D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_exponential_sum
-      S r κ 1 hκ hr hrκ hcκ hL (by norm_num) i
-    simpa using hh.tsum_eq
-  constructor
-  · have hadd := ((hs p hp i).mul_left (q : ℝ)).tsum_add
-      ((hs p hp j).mul_left ((M - q : ℕ) : ℝ))
-    rw [← tsum_mul_left, ← tsum_mul_left, ← hadd]
-    have he (c : ℕ × ℕ) : (q : ℝ) * (p c * rowReference S r L i c) +
-        ((M - q : ℕ) : ℝ) * (p c * rowReference S r L j c) =
-        (q : ℝ) * rowReference S r L i c := by
-      have hh := hpoint c
-      change (_ * p c) = _ at hh
-      nlinarith
-    simp_rw [he]
-    rw [tsum_mul_left, hnorm, mul_one]
-  · have hadd := ((hs (fun c => p c * (1 - p c)) hv i).mul_left (q : ℝ)).tsum_add
-      ((hs (fun c => p c * (1 - p c)) hv j).mul_left ((M - q : ℕ) : ℝ))
-    rw [← tsum_mul_left, ← tsum_mul_left, ← hadd]
-    have he (c : ℕ × ℕ) : (q : ℝ) * ((p c * (1 - p c)) * rowReference S r L i c) +
-        ((M - q : ℕ) : ℝ) * ((p c * (1 - p c)) * rowReference S r L j c) =
-        (q : ℝ) * ((1 - p c) * rowReference S r L i c) := by
-      have hh := congrArg (fun x : ℝ => x * (1 - p c)) (hpoint c)
-      change _ = _ at hh
-      nlinarith
-    simp_rw [he]
-    rw [tsum_mul_left]
-
-private theorem all_row_reference_sum {M q L : ℕ} (S : Support M q) (r : ℝ)
-    (g : ℕ × ℕ → ℝ) (i j : Fin M) (hi : i ∈ S.val) (hj : j ∉ S.val) :
-    (∑ k : Fin M, ∑' c, g c * rowReference S r L k c) =
-      (q : ℝ) * (∑' c, g c * rowReference S r L i c) +
-        ((M - q : ℕ) : ℝ) * (∑' c, g c * rowReference S r L j c) := by
-  classical
-  have hk (k : Fin M) : (∑' c, g c * rowReference S r L k c) =
-      if k ∈ S.val then (∑' c, g c * rowReference S r L i c)
-      else (∑' c, g c * rowReference S r L j c) := by
-    by_cases h : k ∈ S.val
-    · rw [if_pos h]
-      congr 1
-      funext c
-      simp only [rowReference, b, if_pos h, if_pos hi]
-    · rw [if_neg h]
-      congr 1
-      funext c
-      simp only [rowReference, b, if_neg h, if_neg hj]
-  rw [sum_congr rfl (fun k _ => hk k)]
-  rw [sum_ite]
-  have hsig : (univ.filter fun k : Fin M => k ∈ S.val) = S.val := by ext k; simp
-  have hbg : (univ.filter fun k : Fin M => k ∉ S.val).card = M - q := by
-    have hc := card_filter_add_card_filter_not (s := (univ : Finset (Fin M))) (p := fun k => k ∈ S.val)
-    rw [hsig, S.property] at hc
-    simp only [card_univ, Fintype.card_fin] at hc
-    omega
-  simp [hsig, hbg, S.property]
-
-/-- The reference calibration identities control all-row mean and variance
-deviations under each original law, with a common restored-tail budget. -/
-theorem native_reference_calibration_deviation (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1) :
-    ∃ (A : ℝ) (M₀ : ℕ) (η₀ : ℝ), 0 < A ∧ 1 ≤ M₀ ∧ 0 < η₀ ∧
-      ∀ (M q L : ℕ) (r : ℝ), M₀ ≤ M → 1 ≤ q → q < M →
-        0 < r → r ≤ 1 - κ → compensation M q r ≤ 1 - κ →
-        1 ≤ L → (L : ℝ) / M ≤ η₀ → A * (L : ℝ) ^ 2 / M ≤ 1 / 2 →
-        6 ≤ M → (L : ℝ) / M ≤ 1 / 45 →
-        ∀ (S : Support M q) (e : Experiment) (i j : Fin M),
-          i ∈ S.val → j ∉ S.val → ∀ b h : ℝ, 0 < b → 0 < h →
-          let p := referenceParameter M q r
-          let V := ∑ k : Fin M, ∑' c, (p c * (1 - p c)) * rowReference S r L k c
-          let P := fun o : Obs M (2 * M * L) e =>
-            ∑ k : Fin M, p (count e o k 1, count e o k (-1))
-          let D := fun o : Obs M (2 * M * L) e =>
-            ∑ k : Fin M, p (count e o k 1, count e o k (-1)) *
-              (1 - p (count e o k 1, count e o k (-1)))
-          let B := 3 * (q : ℝ) + 8 * (A * (L : ℝ) ^ 3 / M) * (q : ℝ) ^ 2 +
-            10 * (M : ℝ) ^ 2 * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ)))
-          0 ≤ V ∧ V ≤ q ∧
-            (∑ o, if b < |P o - q| ∨ h < |D o - V| then probability r e S o else 0) ≤
-              B / b ^ 2 + B / h ^ 2 := by
-  classical
-  obtain ⟨A, M₀, η₀, hA, hM₀, hη₀, h⟩ := native_full_weighted_deviation κ hκ hκ1
-  refine ⟨A, M₀, η₀, hA, hM₀, hη₀, ?_⟩
-  intro M q L r hMM hq hqm hr hrκ hcκ hL hLη hsmall hM6 hLM S e i j hi hj b t hb ht
-  let p := referenceParameter M q r
-  let v := fun c : ℕ × ℕ => p c * (1 - p c)
-  let V := ∑ k : Fin M, ∑' c, v c * rowReference S r L k c
-  let B := 3 * (q : ℝ) + 8 * (A * (L : ℝ) ^ 3 / M) * (q : ℝ) ^ 2 +
-      10 * (M : ℝ) ^ 2 * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ)))
-  have hp (c : ℕ × ℕ) : 0 ≤ p c ∧ p c ≤ 1 :=
-    ⟨Real.sigmoid_nonneg _, Real.sigmoid_le_one _⟩
-  have hv (c : ℕ × ℕ) : 0 ≤ v c ∧ v c ≤ 1 := by
-    dsimp [v]
-    constructor
-    · exact mul_nonneg (hp c).1 (by linarith [(hp c).2])
-    · nlinarith only [(hp c).1, (hp c).2, sq_nonneg (p c - 1 / 2)]
-  have hcal := reference_calibration_mean_variance S r κ hκ hr hrκ hcκ hL hq hqm i j hi hj
-  have hmean : (∑ k : Fin M, ∑' c, p c * rowReference S r L k c) = (q : ℝ) := by
-    rw [all_row_reference_sum S r p i j hi hj]
-    exact hcal.1
-  have hVar : V = (q : ℝ) * (∑' c, (1 - p c) * rowReference S r L i c) := by
-    dsimp [V]
-    rw [all_row_reference_sum S r v i j hi hj]
-    exact hcal.2
-  have hQ (c : ℕ × ℕ) : 0 ≤ rowReference S r L i c :=
-    (D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.reference_pos S r κ hκ hr hrκ hcκ hL i c).le
-  have hcomplement (c : ℕ × ℕ) : 0 ≤ 1 - p c ∧ 1 - p c ≤ 1 := by
-    constructor <;> linarith [(hp c).1, (hp c).2]
-  have hs := (D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_weighted_tail
-    S r κ hκ hr hrκ hcκ hL i (fun c => 1 - p c) hcomplement).1
-  have hnorm := D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_exponential_sum
-    S r κ 1 hκ hr hrκ hcκ hL (by norm_num) i
-  have htotal : (∑' c, rowReference S r L i c) = 1 := by simpa using hnorm.tsum_eq
-  have hq0 : (0 : ℝ) ≤ q := by positivity
-  have hV0 : 0 ≤ V := by
-    rw [hVar]
-    exact mul_nonneg hq0 (tsum_nonneg fun c => mul_nonneg (hcomplement c).1 (hQ c))
-  have hVq : V ≤ q := by
-    rw [hVar]
-    have hh := hs.tsum_le_tsum (fun c => by
-      simpa only [one_mul] using mul_le_mul_of_nonneg_right (hcomplement c).2 (hQ c))
-      (by simpa only [one_pow, one_mul] using hnorm.summable)
-    rw [htotal] at hh
-    simpa only [mul_one] using mul_le_mul_of_nonneg_left hh hq0
-  have hP := h M q L r hMM hq hqm hr hrκ hcκ hL hLη hsmall hM6 hLM S e univ
-    (fun _ => p) (fun _ c => hp c) b hb
-  simp only [hmean, card_univ, Fintype.card_fin] at hP
-  have hD := h M q L r hMM hq hqm hr hrκ hcκ hL hLη hsmall hM6 hLM S e univ
-    (fun _ => v) (fun _ c => hv c) t ht
-  have hδ : 0 ≤ A * (L : ℝ) ^ 3 / M := by positivity
-  have hbudget : 3 * V + 8 * (A * (L : ℝ) ^ 3 / M) * V ^ 2 +
-      10 * (M : ℝ) ^ 2 * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) ≤ B := by
-    have hsq : V ^ 2 ≤ (q : ℝ) ^ 2 := by nlinarith only [hV0, hVq, hq0]
-    have hh := mul_le_mul_of_nonneg_left hsq (show 0 ≤ 8 * (A * (L : ℝ) ^ 3 / M) by positivity)
-    dsimp [B]
-    linarith only [hVq, hh]
-  have hD' : (∑ o : Obs M (2 * M * L) e,
-      if t < |(∑ k : Fin M, v (count e o k 1, count e o k (-1))) - V|
-      then probability r e S o else 0) ≤ B / t ^ 2 := by
-    apply hD.trans
-    simp only [card_univ, Fintype.card_fin]
-    exact div_le_div_of_nonneg_right hbudget (sq_nonneg t)
-  refine ⟨hV0, hVq, ?_⟩
-  have hr1 : r < 1 := by linarith
-  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
-  have hc1 : compensation M q r < 1 := by linarith
-  have hprob := (finite_support_bayes (s := 2 * M * L) hq hqm hr hr1 hc hc1 e).2.1.1 S
-  apply le_trans _ (add_le_add hP hD')
-  rw [← sum_add_distrib]
-  apply sum_le_sum
-  intro o _
-  change (if b < |(∑ k : Fin M, p (count e o k 1, count e o k (-1))) - q| ∨
-      t < |(∑ k : Fin M, v (count e o k 1, count e o k (-1))) - V|
-      then probability r e S o else 0) ≤
-    (if b < |(∑ k : Fin M, p (count e o k 1, count e o k (-1))) - q|
-      then probability r e S o else 0) +
-    (if t < |(∑ k : Fin M, v (count e o k 1, count e o k (-1))) - V|
-      then probability r e S o else 0)
-  by_cases hp' : b < |(∑ k : Fin M, p (count e o k 1, count e o k (-1))) - q| <;>
-    by_cases hd' : t < |(∑ k : Fin M, v (count e o k 1, count e o k (-1))) - V| <;>
-    simp only [hp', hd', or_true, true_or, or_false, false_or, if_true, if_false]
-  · exact le_add_of_nonneg_right (hprob o)
-  · simp
-  · simp
-  · simp
-
-end
-end D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
-
-open scoped BigOperators
-open Finset
-open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
-open D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-
-namespace D5.S3.Estimation.TimeArrow.NativeRectangleReferenceRatios
-noncomputable section
-
-private theorem row_reference_successors {M q L : ℕ} (S : Support M q) (r : ℝ)
-    (i : Fin M) (k l : ℕ) :
-    rowReference S r L i (k + 1, l) =
-      ((L : ℝ) * (1 + b r S (.inl i)) / 2 / (k + 1)) * rowReference S r L i (k, l) ∧
-    rowReference S r L i (k, l + 1) =
-      ((L : ℝ) * (1 - b r S (.inl i)) / 2 / (l + 1)) * rowReference S r L i (k, l) := by
-  unfold rowReference
-  simp only [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, pow_succ]
-  constructor <;> field_simp <;> ring
-
-/-- Large central signal counts give simultaneous reference ratios for all
-four cells, using the original compensated model rather than a new law. -/
-theorem signal_four_reference_ratios {M q L : ℕ} (S : Support M q) (r κ : ℝ)
-    (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
-    (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L)
-    (i : Fin M) (hi : i ∈ S.val) (k l : ℕ)
-    (hkp : 15 / 16 ≤ ((L : ℝ) * (1 + r) / 2 / (k + 1)))
-    (hkp' : ((L : ℝ) * (1 + r) / 2 / (k + 1)) ≤ 1)
-    (hlp : 15 / 16 ≤ ((L : ℝ) * (1 - r) / 2 / (l + 1)))
-    (hlp' : ((L : ℝ) * (1 - r) / 2 / (l + 1)) ≤ 1) :
-    ∀ j : Fin 4,
-      7 / 8 * rowReference S r L i (k, l) ≤
-        rowReference S r L i (![(k,l), (k+1,l), (k,l+1), (k+1,l+1)] j) ∧
-      rowReference S r L i (![(k,l), (k+1,l), (k,l+1), (k+1,l+1)] j) ≤
-        9 / 8 * rowReference S r L i (k, l) := by
-  have hpos := D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.reference_pos
-    S r κ hκ hr hrκ hcκ hL i (k,l)
-  have hk := (row_reference_successors (L := L) S r i k l).1
-  have hl := (row_reference_successors (L := L) S r i k l).2
-  have hkl := (row_reference_successors (L := L) S r i k (l+1)).1
-  simp only [b, if_pos hi] at hk hl hkl
-  have hprodlo : 7 / 8 ≤
-      ((L : ℝ) * (1 + r) / 2 / (k + 1)) * ((L : ℝ) * (1 - r) / 2 / (l + 1)) := by
-    have hh := mul_le_mul hkp hlp (by norm_num : (0 : ℝ) ≤ 15 / 16) (by linarith)
-    norm_num at hh
-    linarith only [hh]
-  have hprodhi :
-      ((L : ℝ) * (1 + r) / 2 / (k + 1)) * ((L : ℝ) * (1 - r) / 2 / (l + 1)) ≤ 1 := by
-    nlinarith only [hkp, hkp', hlp, hlp',
-      mul_nonneg (by linarith : 0 ≤ 1 - ((L : ℝ) * (1 + r) / 2 / (k + 1)))
-        (by linarith : 0 ≤ ((L : ℝ) * (1 - r) / 2 / (l + 1)))]
-  intro j
-  fin_cases j
-  · change 7/8 * rowReference S r L i (k,l) ≤ rowReference S r L i (k,l) ∧
-      rowReference S r L i (k,l) ≤ 9/8 * rowReference S r L i (k,l)
-    constructor <;> nlinarith only [hpos]
-  · change 7/8 * rowReference S r L i (k,l) ≤ rowReference S r L i (k+1,l) ∧
-      rowReference S r L i (k+1,l) ≤ 9/8 * rowReference S r L i (k,l)
-    rw [hk]
-    constructor <;> nlinarith only [hpos, hkp, hkp']
-  · change 7/8 * rowReference S r L i (k,l) ≤ rowReference S r L i (k,l+1) ∧
-      rowReference S r L i (k,l+1) ≤ 9/8 * rowReference S r L i (k,l)
-    rw [hl]
-    constructor <;> nlinarith only [hpos, hlp, hlp']
-  · change 7/8 * rowReference S r L i (k,l) ≤ rowReference S r L i (k+1,l+1) ∧
-      rowReference S r L i (k+1,l+1) ≤ 9/8 * rowReference S r L i (k,l)
-    rw [hkl, hl, ← mul_assoc]
-    exact ⟨mul_le_mul_of_nonneg_right hprodlo hpos.le,
-      (mul_le_mul_of_nonneg_right hprodhi hpos.le).trans (by nlinarith only [hpos])⟩
-
-
-theorem original_count_rounding (r : ℝ) (L : ℕ) (hr : 0 < r) (hr1 : r < 1)
-    (hL : 1 ≤ L) (hplus : 15 ≤ ((1+r)/2)*(L : ℝ))
-    (hminus : 30 ≤ ((1-r)/2)*(L : ℝ)) :
-    let k := ⌊((1+r)/2)*(L : ℝ)⌋₊
-    let l := L-k
-    k ≤ L ∧ 0 < k ∧ 0 < l ∧
-      15/16 ≤ ((L : ℝ)*(1+r)/2/(k+1)) ∧ ((L : ℝ)*(1+r)/2/(k+1)) ≤ 1 ∧
-      15/16 ≤ ((L : ℝ)*(1-r)/2/(l+1)) ∧ ((L : ℝ)*(1-r)/2/(l+1)) ≤ 1 := by
-  let k := ⌊((1+r)/2)*(L : ℝ)⌋₊
-  let l := L-k
-  have ha0 : 0 ≤ ((1+r)/2)*(L : ℝ) := by positivity
-  have hklo := Nat.floor_le ha0
-  have hkhi := Nat.lt_floor_add_one (((1+r)/2)*(L : ℝ))
-  change (k : ℝ) ≤ _ at hklo
-  change _ < (k : ℝ)+1 at hkhi
-  have hkL : k ≤ L := by
-    apply Nat.floor_le_of_le
-    nlinarith only [hr1, show (0 : ℝ) ≤ L by positivity]
-  have hlr : (l : ℝ) = (L : ℝ)-k := by
-    exact Nat.cast_sub hkL
-  have hkp : 0 < k := by
-    have hh : (0 : ℝ) < k := by linarith only [hplus,hkhi]
-    exact_mod_cast hh
-  have hlp : 0 < l := by
-    have hh : (0 : ℝ) < l := by rw [hlr]; linarith only [hminus,hklo]
-    exact_mod_cast hh
-  refine ⟨hkL,hkp,hlp,?_,?_,?_,?_⟩
-  · apply (le_div_iff₀ (by positivity : (0 : ℝ) < k+1)).mpr
-    nlinarith only [hplus,hklo]
-  · apply (div_le_iff₀ (by positivity : (0 : ℝ) < k+1)).mpr
-    linarith only [hkhi]
-  · apply (le_div_iff₀ (by positivity : (0 : ℝ) < l+1)).mpr
-    rw [hlr]
-    nlinarith only [hminus,hkhi]
-  · apply (div_le_iff₀ (by positivity : (0 : ℝ) < l+1)).mpr
-    rw [hlr]
-    nlinarith only [hklo]
-
-/-- The central four-cell comparison retains the original natural floor
-and l=lambda-k. Only explicit lower scale bounds are needed. -/
-theorem floored_signal_four_reference_ratios {M q L : ℕ} (S : Support M q) (r κ : ℝ)
-    (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1-κ)
-    (hcκ : compensation M q r ≤ 1-κ) (hL : 1 ≤ L)
-    (i : Fin M) (hi : i ∈ S.val)
-    (hplus : 15 ≤ ((1+r)/2)*(L : ℝ)) (hminus : 30 ≤ ((1-r)/2)*(L : ℝ)) :
-    let k := ⌊((1+r)/2)*(L : ℝ)⌋₊
-    let l := L-k
-    ∀ j : Fin 4, 7/8 * rowReference S r L i (k,l) ≤
-      rowReference S r L i (![(k,l),(k+1,l),(k,l+1),(k+1,l+1)] j) ∧
-      rowReference S r L i (![(k,l),(k+1,l),(k,l+1),(k+1,l+1)] j) ≤
-        9/8 * rowReference S r L i (k,l) := by
-  have hr1 : r < 1 := by linarith only [hrκ,hκ]
-  have hh := original_count_rounding r L hr hr1 hL hplus hminus
-  dsimp only at hh ⊢
-  exact signal_four_reference_ratios S r κ hκ hr hrκ hcκ hL i hi _ _
-    hh.2.2.2.1 hh.2.2.2.2.1 hh.2.2.2.2.2.1 hh.2.2.2.2.2.2
-
-/-- The background A mean is exactly the signal A mean times the negative
-original A logit. The finite-size compensation and M-q are preserved. -/
-theorem background_reference_cell_ratio {M q L : ℕ} (S : Support M q) (r κ : ℝ)
-    (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
-    (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L)
-    (hq : 1 ≤ q) (hqm : q < M) (i j : Fin M)
-    (hi : i ∈ S.val) (hj : j ∉ S.val) (k l : ℕ) :
-    ((M - q : ℕ) : ℝ) * rowReference S r L j (k,l) =
-      ((q : ℝ) * rowReference S r L i (k,l)) *
-        Real.exp (-(k * Real.log ((1+r)/(1-compensation M q r)) +
-          l * Real.log ((1-r)/(1+compensation M q r)) -
-          Real.log (((M-q : ℕ) : ℝ) / q))) := by
-  have hqR : (0 : ℝ) < q := by exact_mod_cast (show 0 < q by omega)
-  have hMR : (0 : ℝ) < (M-q : ℕ) := by exact_mod_cast (show 0 < M-q by omega)
-  rw [reference_likelihood_ratio S r κ hκ hr hrκ hcκ hL i j hi hj (k,l)]
-  rw [neg_sub, Real.exp_sub, Real.exp_log (div_pos hMR hqR)]
-  field_simp
-  <;> ring
-
-end
-end D5.S3.Estimation.TimeArrow.NativeRectangleReferenceRatios

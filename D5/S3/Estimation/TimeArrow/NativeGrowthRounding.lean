@@ -5,13 +5,18 @@
    anchors: []
    utility: none
    digest: Original decimal growth and integer rounding supply native finite-scale bounds. -/
+
 import D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 import D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-import D5.S3.Estimation.TimeArrow.NativeRectangleGeometry
-import D5.S3.Estimation.TimeArrow.NativeCalibrationRootBudgets
+import D5.S3.Estimation.TimeArrow.OriginalScoreWindow
+import D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+import D5.S3.Estimation.TimeArrow.NativeAnchoredSmallBall
+import D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
+import D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
+
 open Filter
 open scoped Topology BigOperators
 open Finset
@@ -25,114 +30,10 @@ open D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
 namespace D5.S3.Estimation.TimeArrow.NativeGrowthRounding
 noncomputable section
-/-- Index zero corresponds to the first decimal exponent of the original sequence. -/
-def decimalExponent : ℕ → ℕ
-  | 0 => 1
-  | n + 1 => 10 ^ (5 * decimalExponent n)
-/-- The original decimal denominator. -/
-def denominator (n : ℕ) : ℕ := 10 ^ decimalExponent n
-/-- The original integer observation scale. -/
-def scale (n : ℕ) : ℕ := denominator n ^ 3
-/-- The lower-left signal cell retains the original floor. -/
-def centralPositive (r : ℝ) (L : ℕ) : ℕ := ⌊((1 + r) / 2) * (L : ℝ)⌋₊
-/-- The second coordinate retains the exact total count. -/
-def centralNegative (r : ℝ) (L : ℕ) : ℕ := L - centralPositive r L
-/-- The uncompensated score at the original lower-left cell. -/
-def center (r : ℝ) (L : ℕ) : ℝ :=
-  centralPositive r L * Real.log (1 + r) +
-    centralNegative r L * Real.log (1 - r)
-/-- Original population size, with its base-two floor. -/
-def population (r β : ℝ) (L : ℕ) : ℕ :=
-  2 ^ ⌊phi r * (L : ℝ) / (β * Real.log 2)⌋₊
-/-- Original signal cardinality, with its final floor. -/
-def signalSize (r β : ℝ) (L : ℕ) : ℕ :=
-  ⌊(population r β L : ℝ) * Real.exp (-center r L)⌋₊
-/-- The original A-cell logit uses the complete background population. -/
-def cellLogit (r β : ℝ) (L : ℕ) : ℝ :=
-  let M := population r β L
-  let q := signalSize r β L
-  centralPositive r L * Real.log ((1 + r) / (1 - compensation M q r)) +
-    centralNegative r L * Real.log ((1 - r) / (1 + compensation M q r)) -
-      Real.log (((M - q : ℕ) : ℝ) / q)
-/-- Both central coordinates have a bounded rounding error. -/
-theorem central_rounding (r : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r ≤ 1) :
-    centralPositive r L ≤ L ∧
-      0 ≤ ((1 + r) / 2) * (L : ℝ) - centralPositive r L ∧
-      ((1 + r) / 2) * (L : ℝ) - centralPositive r L < 1 ∧
-      (centralNegative r L : ℝ) = (L : ℝ) - centralPositive r L := by
-  have ha : 0 ≤ ((1 + r) / 2) * (L : ℝ) := by positivity
-  have hk : centralPositive r L ≤ L := by
-    apply Nat.floor_le_of_le
-    nlinarith [show (0 : ℝ) ≤ L from Nat.cast_nonneg L]
-  refine ⟨hk, sub_nonneg.mpr (Nat.floor_le ha), ?_, ?_⟩
-  · have h : ((1 + r) / 2) * (L : ℝ) <
-        (⌊((1 + r) / 2) * (L : ℝ)⌋₊ : ℝ) + 1 := Nat.lt_floor_add_one _
-    change ((1 + r) / 2) * (L : ℝ) - ⌊((1 + r) / 2) * (L : ℝ)⌋₊ < 1
-    linarith
-  · exact Nat.cast_sub hk
-/-- The original score is the information rate times scale minus a bounded error. -/
-theorem center_rounding (r : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1) :
-    phi r * (L : ℝ) - Real.log ((1 + r) / (1 - r)) ≤ center r L ∧
-      center r L ≤ phi r * (L : ℝ) := by
-  obtain ⟨hk, hx0, hx1, hl⟩ := central_rounding r L hr hr1.le
-  have hp : 0 < 1 + r := by linarith
-  have hm : 0 < 1 - r := by linarith
-  have hc : 0 ≤ Real.log (1 + r) - Real.log (1 - r) :=
-    sub_nonneg.mpr (Real.log_le_log hm (by linarith))
-  have he : center r L = phi r * (L : ℝ) -
-      (((1 + r) / 2) * (L : ℝ) - centralPositive r L) *
-        (Real.log (1 + r) - Real.log (1 - r)) := by
-    unfold center phi
-    rw [hl]
-    ring
-  rw [he, Real.log_div hp.ne' hm.ne']
-  constructor <;> nlinarith
-/-- The base-two floor costs at most one factor of two. -/
-theorem population_exponential_bounds (r β : ℝ) (L : ℕ)
-    (hφ : 0 ≤ phi r) (hβ : 0 < β) :
-    Real.exp (phi r / β * (L : ℝ)) / 2 ≤ (population r β L : ℝ) ∧
-      (population r β L : ℝ) ≤ Real.exp (phi r / β * (L : ℝ)) := by
-  let t := phi r * (L : ℝ) / (β * Real.log 2)
-  have hlog : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
-  have ht : 0 ≤ t := by dsimp [t]; positivity
-  have hm : 0 < (population r β L : ℝ) := by unfold population; positivity
-  have he : Real.log (population r β L : ℝ) = (⌊t⌋₊ : ℝ) * Real.log 2 := by
-    simp [population, t, Real.log_pow]
-  have hlo := mul_le_mul_of_nonneg_right (Nat.floor_le ht) hlog.le
-  have hhi := mul_lt_mul_of_pos_right (Nat.lt_floor_add_one t) hlog
-  have hrate : t * Real.log 2 = phi r / β * (L : ℝ) := by
-    dsimp [t]
-    field_simp
-  rw [← he, hrate] at hlo
-  have hlower : phi r / β * (L : ℝ) - Real.log 2 ≤
-      Real.log (population r β L : ℝ) := by
-    rw [add_mul, one_mul, ← he, hrate] at hhi
-    linarith
-  constructor
-  · have h := Real.exp_le_exp.mpr hlower
-    simpa [Real.exp_sub, Real.exp_log hm, Real.exp_log (by norm_num : (0 : ℝ) < 2)] using h
-  · simpa only [Real.exp_log hm] using Real.exp_le_exp.mpr hlo
-/-- The fixed nonzero signal amplitude gives a strictly positive information rate. -/
-theorem information_rate_bounds (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
-    0 < phi r ∧ phi r < Real.log 2 := by
-  have hp : 0 < 1 + r := by linarith
-  have hm : 0 < 1 - r := by linarith
-  have hstrict := Real.strictConvexOn_mul_log.2 hp.le hm.le
-    (show 1 + r ≠ 1 - r by linarith) (by norm_num : (0 : ℝ) < 1/2)
-    (by norm_num : (0 : ℝ) < 1/2) (by norm_num : (1/2 : ℝ) + 1/2 = 1)
-  have he : (1/2 : ℝ) • (1+r) + (1/2 : ℝ) • (1-r) = 1 := by
-    simp only [smul_eq_mul]; ring
-  rw [he] at hstrict
-  dsimp only at hstrict
-  simp only [Real.log_one, mul_zero, smul_eq_mul] at hstrict
-  have hlp : Real.log (1+r) < Real.log 2 := Real.log_lt_log hp (by linarith)
-  have hlm : Real.log (1-r) < Real.log 2 := Real.log_lt_log hm (by linarith)
-  have h1 := mul_lt_mul_of_pos_left hlp hp
-  have h2 := mul_lt_mul_of_pos_left hlm hm
-  unfold phi
-  constructor <;> nlinarith
+
 /-- The decimal tower dominates its index. -/
 theorem decimalExponent_index (n : ℕ) : n + 1 ≤ decimalExponent n := by
   induction n with
@@ -934,5 +835,142 @@ theorem original_rectangle_feedback_scales (r β c C η T : ℝ)
     have hh := mul_le_mul_of_nonneg_left hscale hN0.le
     apply (mul_le_mul_iff_left₀ hc).mp
     nlinarith only [hlow,hh]
+
 end
 end D5.S3.Estimation.TimeArrow.NativeGrowthRounding
+
+open scoped BigOperators Topology
+open Finset Filter
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+open D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+open D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
+open D5.S3.Estimation.TimeArrow.NativeAnchoredSmallBall
+open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
+open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
+open D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
+
+namespace D5.S3.Estimation.TimeArrow.OriginalScoreWindow
+noncomputable section
+
+open scoped Classical in
+set_option maxHeartbeats 4000000 in
+/-- The original complete window posterior has the registered arithmetic
+bound, conditioned on the full native minimal readout. A cut and full-root
+anchor select an environment value; neither changes the posterior law. -/
+theorem original_full_env_small_ball :
+    ∃ Cpost V0 : ℝ, 0 < Cpost ∧ 0 < V0 ∧
+    ∀ (r v : ℝ), 0 < r → r < 1 → 0 < v →
+    ∃ a γ η c Cfb : ℝ, 0 < a ∧ 0 < γ ∧ γ ≤ 1/32 ∧ 0 < η ∧ 0 < c ∧ 0 < Cfb ∧
+    ∀ ell : ℤ, ell ≠ 0 → ∃ Cell : ℝ, 0 < Cell ∧
+    ∀ (M q s : ℕ) (S : Support M q) (e : Experiment) (o : Obs M s e),
+    ∀ [Fintype (Sites s e)], ∀ (k l H Q P : ℕ) (center width ζ : ℝ),
+      1 ≤ q → q < M → 0 ≤ compensation M q r → compensation M q r ≤ 1/2 →
+      letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+      let z : Fiber S e o := ⟨o,rfl⟩
+      let All : Support M M := ⟨univ,by simp⟩
+      let bg : ℝ := (nativeCalibrationCells All e o k l 0 \ S.val).card
+      let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+        (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+      let V := nativeRectangleRows S e o k l z
+      let N : ℝ := V.card
+      let R : ℝ := (V.filter fun i => count e o i.val 1 = k).card
+      let U : ℝ := (V.filter fun i => count e o i.val (-1) = l).card
+      let s0 := c*(N/q)
+      1 < V.card → N/4 ≤ R → R ≤ 3*N/4 → N/4 ≤ U → U ≤ 3*N/4 →
+      max 4 (32/(a*v)) ≤ Real.sqrt N →
+      N/q ≤ v/2 → N/q ≤ v*Real.log 2/8 → a*N/q < η →
+      |compensation M q r| < η → bg ≤ N → s0 ≤ 1 → V0 ≤ v*q/4 →
+      1 ≤ γ*s0*Real.sqrt N →
+      k+l+2 ≤ H → P < Q → 0 < width → 0 < ζ →
+      Real.log (1+r) = (-Real.log (1-r))*((P : ℝ)/Q+ζ) →
+      (-Real.log (1-r))*ζ*(H+k+l)+2*compensation M q r*H+
+        |(k : ℝ)*Real.log (1+r)+l*Real.log (1-r)-center| ≤ width/2 →
+      (Q : ℝ)*width ≤ (-Real.log (1-r))/4 →
+      ∀ (anchor : Fiber S e o) (xStar : ℝ),
+        nativeMinimalRectangleReadout S e o k l anchor = nativeMinimalRectangleReadout S e o k l z →
+        originalCountCut H e anchor.val →
+        (∑ i : Fin M,Real.sigmoid (xStar+(score q r e anchor.val i-z0))) = q →
+        v*q ≤ ∑ i : Fin M,Real.sigmoid (xStar+(score q r e anchor.val i-z0))*
+          (1-Real.sigmoid (xStar+(score q r e anchor.val i-z0))) →
+        |xStar| ≤ a*N/(4*q) →
+        |(nativeRectangleACount S e o k l anchor : ℝ)-U*R/N| ≤ 2*Real.sqrt N →
+        ∀ L τ : ℝ,0 < L → 0 ≤ τ →
+          (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧
+            (∃ b : ℤ,|(ell : ℝ)*(1/2-originalGroupPosteriorMean q r center width z0 e x)-b| ≤ τ)
+            then probability r e S x else 0)/
+            (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+              then probability r e S x else 0) ≤
+            Cell*(L*(s0+τ)+(1+τ/s0)/Real.sqrt N+L^(-2 : ℤ)) := by
+  classical
+  obtain ⟨Cpost,V0,hCpost,hV0,hmain⟩ := native_anchored_posterior_small_ball
+  refine ⟨Cpost,V0,hCpost,hV0,?_⟩
+  intro r v hr hr1 hv
+  obtain ⟨a,γ,η,c,Cfb,ha,hγ,hγsmall,hη,hc,hCfb,hmain⟩ := hmain r v hr hr1 hv
+  refine ⟨a,γ,η,c,Cfb,ha,hγ,hγsmall,hη,hc,hCfb,?_⟩
+  intro ell hell
+  obtain ⟨Cell,hCell,hmain⟩ := hmain ell hell
+  refine ⟨Cell,hCell,?_⟩
+  intro M q s S e o _ k l H Q P center width ζ hq hqm hε hεhalf
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  dsimp only
+  let z : Fiber S e o := ⟨o,rfl⟩
+  let All : Support M M := ⟨univ,by simp⟩
+  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+    (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+  let Env := univ.filter fun y : Fiber S e o =>
+    nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
+  intro hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
+    hH hPQ hwidth hζ hlog herror hgrid anchor xStar henv hcut hroot hvar hx hstar L τ hL hτ
+  have hε1 : compensation M q r < 1 := by linarith only [hεhalf]
+  have hnative := hmain M q s S e o k l z hq hqm hε hε1 hN hRlo hRhi hUlo hUhi
+    hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
+    anchor xStar henv hroot hvar hx hstar L τ hL hτ
+  have hmu (y : Fiber S e o) (hy : y ∈ Env) :
+      originalGroupPosteriorMean q r center width z0 e y.val =
+        ∑ i ∈ nativeCalibrationCells All e y.val k l 0,inclusion q r e y.val i := by
+    have hyenv : nativeMinimalRectangleReadout S e o k l y =
+        nativeMinimalRectangleReadout S e o k l z := (mem_filter.mp hy).2
+    have hcuty := (original_count_cut_same_environment S e o k l H y anchor
+      (hyenv.trans henv.symm) hH).mpr hcut
+    unfold originalGroupPosteriorMean
+    rw [original_zero_group_eq_all_cell q r center width ζ e y.val k l H Q P
+      hr hr1 hPQ hζ hε hεhalf (by omega) hcuty hwidth hlog herror hgrid]
+  let Pred := fun x : Obs M s e => ∃ b : ℤ,
+    |(ell : ℝ)*(1/2-originalGroupPosteriorMean q r center width z0 e x)-b| ≤ τ
+  have heq := full_native_conditional_mass_eq S r e o hq hqm hr hr1 hε hε1 k l Pred
+  change (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧ Pred x
+    then probability r e S x else 0)/
+    (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+      then probability r e S x else 0) ≤ _
+  dsimp only at heq
+  have hpred : Env.filter (fun y => Pred y.val) = Env.filter (fun y => ∃ b : ℤ,
+      |(ell : ℝ)*(1/2-(∑ i ∈ nativeCalibrationCells All e y.val k l 0,inclusion q r e y.val i))-b| ≤ τ) := by
+    apply filter_congr
+    intro y hy
+    dsimp only [Pred]
+    rw [hmu y hy]
+  let N : ℝ := (nativeRectangleRows S e o k l z).card
+  let B := Cell*(L*(c*(N/q)+τ)+(1+τ/(c*(N/q)))/Real.sqrt N+L^(-2 : ℤ))
+  have hf : conditionalFiberMass S r e o (Env.filter fun y => Pred y.val)/
+      conditionalFiberMass S r e o Env ≤ B := by
+    rw [hpred]
+    simpa only [Env,All,N,B,z] using hnative
+  have heqEnv : (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧ Pred x
+      then probability r e S x else 0)/
+      (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+        then probability r e S x else 0) =
+      conditionalFiberMass S r e o (Env.filter fun y => Pred y.val)/conditionalFiberMass S r e o Env := by
+    convert heq using 1 <;> congr 1
+    all_goals first
+      | (apply sum_congr rfl; intro x _; split_ifs <;> rfl)
+      | (congr 1; ext y; simp only [Env,z,mem_filter,mem_univ,true_and])
+  simpa only [N,B,z] using heqEnv.le.trans hf
+
+end
+end D5.S3.Estimation.TimeArrow.OriginalScoreWindow

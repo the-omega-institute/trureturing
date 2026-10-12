@@ -166,7 +166,6 @@ private theorem rectangle_multinomial_constant {α : Type*} [Fintype α] [Decida
     rectangle_counts_factorials V B outside l U hB,
     rectangle_counts_factorials V C outside l U hC]
 
-
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 
@@ -254,7 +253,6 @@ private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
     rw [native_joint_row_histogram_law S r e o hq hqm hr hr1 ha ha1 _ _ hap hcard]
     simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
     rw [rectangle_multinomial_constant V B B0 outside l U hB hB0]
-
 
   have hd : Set.PairwiseDisjoint (↑Bs)
       (fun B => jointRowHistogramEvent S e o ap
