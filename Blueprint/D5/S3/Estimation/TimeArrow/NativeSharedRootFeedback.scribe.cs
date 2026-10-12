@@ -18,7 +18,7 @@ internal sealed class NativeSharedRootFeedbackDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("signal-rectangle-mass-lower"),
-                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/NativeSharedRootFeedback.NativeRectangleReferenceMass.signal_rectangle_mass_lower"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/NativeSharedRootFeedback.NativeReferenceVarianceBounds.signal_rectangle_mass_lower"),
                 H("Signal rectangle mass lower bound"),
                 StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
