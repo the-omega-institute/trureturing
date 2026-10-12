@@ -231,8 +231,9 @@ def source_inventory(root):
     return set(inputs.dependency_sources())
 
 
-def validate_dependency_paths(root, utility_path):
-    allowed = source_inventory(str(root))
+def validate_dependency_paths(root, utility_path, *, inputs=None):
+    allowed = (set(inputs.dependency_sources()) if inputs is not None
+               else source_inventory(str(root)))
     paths = public.read_json(Path(str(utility_path) + '.sources.json').read_bytes())
     materials.require_sorted_strings(sorted(set(paths)), 'native dependency sources')
     if set(paths) - allowed:
@@ -316,10 +317,11 @@ def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
 def module(root, name, source, utility_path, executable, output, analyzer="", previous=""):
     root, source, output = Path(root), Path(source), Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
+    template_inputs = selection.Selection(root)
     with tempfile.TemporaryDirectory(prefix='.module.', dir=output.parent) as directory:
         directory = Path(directory)
         record = public.read_json(Path(utility_path).read_bytes())
-        validate_dependency_paths(root, utility_path)
+        validate_dependency_paths(root, utility_path, inputs=template_inputs)
         utility = directory / 'utility.json'
         utility.write_bytes(materials.canonical_json(record['utilities']))
         spool = directory / 'spool'
@@ -337,11 +339,12 @@ def module(root, name, source, utility_path, executable, output, analyzer="", pr
         with phase('native-materials', module=name):
             (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
             materials.compact(directory / 'spool.json', spool, report)
-            public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
+            public.write_origin(report, name,
+                public.production_origin(root, executable, inputs=template_inputs), input_projection(root, name))
         # Like an olean, an artifact is validated once, when it is produced;
         # Lake's trace alone decides later reuse.
         with phase('native-validation', module=name):
-            rows, _ = validate_module(report, root, name, utility_path)
+            rows, _ = validate_module(report, root, name, utility_path, template_inputs=template_inputs)
         with phase('native-package', module=name):
             artifact = directory / 'module.zip'
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
