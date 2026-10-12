@@ -406,10 +406,6 @@ open Finset
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
-open private
-  D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_exponential_sum
-  D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_weighted_tail
-from D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
