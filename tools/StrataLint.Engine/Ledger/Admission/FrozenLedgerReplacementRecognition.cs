@@ -102,18 +102,29 @@ internal static class FrozenLedgerReplacementClosure
         IEnumerable<RepoPath> seedPaths)
     {
         ArgumentNullException.ThrowIfNull(baseView);
+        return DescendantsFrom(baseView.ActiveByPath.Values, seedPaths);
+    }
+
+    internal static ImmutableHashSet<RepoPath> DescendantsFrom(
+        IEnumerable<FrozenActiveEntry> activeEntries,
+        IEnumerable<RepoPath> seedPaths)
+    {
+        ArgumentNullException.ThrowIfNull(activeEntries);
         ArgumentNullException.ThrowIfNull(seedPaths);
 
+        var entries = activeEntries.ToImmutableArray();
         var pathByIdentity = new Dictionary<string, RepoPath>(StringComparer.Ordinal);
-        foreach (var (path, entry) in baseView.ActiveByPath)
+        foreach (var entry in entries)
         {
+            var path = entry.Material.RepoPath;
             AddIdentity(entry.EventHash, path);
             AddIdentity(entry.Material.FrozenNodeId.Value, path);
         }
 
         var dependents = new Dictionary<RepoPath, HashSet<RepoPath>>();
-        foreach (var (path, entry) in baseView.ActiveByPath)
+        foreach (var entry in entries)
         {
+            var path = entry.Material.RepoPath;
             foreach (var prerequisite in entry.Material.PrerequisiteFrozenNodeIds)
             {
                 if (!pathByIdentity.TryGetValue(prerequisite.Value, out var dependencyPath))

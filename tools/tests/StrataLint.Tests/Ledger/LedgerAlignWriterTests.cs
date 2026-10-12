@@ -737,7 +737,10 @@ public sealed partial class LedgerAlignWriterTests
         {
             var path = reportPath;
             if (options.Length > 0 && options.Length % 2 == 0
-                && options.Where((_, index) => index % 2 == 0).All(static option => option == "--add"))
+                && (options.Where((_, index) => index % 2 == 0).All(static option => option == "--add")
+                    || options.Contains("--repair-duplicate-registration", StringComparer.Ordinal)
+                    && options.Where((_, index) => index % 2 == 0)
+                        .All(static option => option is "--repair-duplicate-registration" or "--selector")))
             {
                 var targets = options.Where((_, index) => index % 2 == 1).Select(RepoPath.CreateKnown).ToArray();
                 if (targets.All(snapshot.Files.ContainsKey)) path = WriteScopedReport(targets);
@@ -816,6 +819,15 @@ public sealed partial class LedgerAlignWriterTests
             DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(AcceptedPath);
 
         internal bool StateExists(string name) => File.Exists(StateFile(name));
+
+        internal byte[] StateBytes() => Directory.EnumerateFiles(
+                Path.Combine(temporary.Path, "Golden", "Frozen", "state"), "*.json", SearchOption.AllDirectories)
+            .Order(StringComparer.Ordinal).SelectMany(File.ReadAllBytes).ToArray();
+
+        internal void BlockAcceptedPublication(RepoPath path) =>
+            Directory.CreateDirectory(Path.Combine(AcceptedPath, Path.GetFileName(path.Value)));
+
+        internal bool HasPublicationStaging() => Directory.EnumerateDirectories(AcceptedPath, ".ledger-stage-*").Any();
 
         internal int StateFileCount()
         {

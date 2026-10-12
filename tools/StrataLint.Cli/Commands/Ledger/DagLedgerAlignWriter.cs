@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class DagLedgerAlignWriter
+internal static partial class DagLedgerAlignWriter
 {
     private const string AliasNotice =
         "ledger-append is an alias of ledger-align --add <module> "
@@ -37,6 +37,8 @@ internal static class DagLedgerAlignWriter
                 ? ListClosed(repository, options.ReportPath!)
                 : options.FromAccepted
                 ? MaterializeAccepted(repositoryRoot)
+                : !options.DuplicateRepairs.IsEmpty
+                ? RepairDuplicateRegistrations(repositoryRoot, repository, options)
                 : AlignFromReport(repositoryRoot, repository, options, appendAlias);
             return result with { Output = prefix + result.Output };
         }
@@ -639,6 +641,7 @@ internal static class DagLedgerAlignWriter
         var selectors = ImmutableArray.CreateBuilder<RepoPath>();
         var adds = ImmutableArray.CreateBuilder<RepoPath>();
         var retirements = ImmutableArray.CreateBuilder<RepoPath>();
+        var duplicateRepairs = ImmutableArray.CreateBuilder<RepoPath>();
         var fromAccepted = false;
         var listClosed = false;
         for (var index = 0; index < arguments.Count; index++)
@@ -657,6 +660,9 @@ internal static class DagLedgerAlignWriter
                 case "--retire-registration" when !appendAlias && ++index < arguments.Count:
                     retirements.Add(ParseModulePath(arguments[index]));
                     break;
+                case "--repair-duplicate-registration" when !appendAlias && ++index < arguments.Count:
+                    duplicateRepairs.Add(ParseModulePath(arguments[index]));
+                    break;
                 case "--from-accepted" when !appendAlias && !fromAccepted:
                     fromAccepted = true;
                     break;
@@ -670,7 +676,8 @@ internal static class DagLedgerAlignWriter
 
         if (fromAccepted)
         {
-            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0 || listClosed)
+            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0
+                || duplicateRepairs.Count != 0 || listClosed)
             {
                 throw Usage(appendAlias);
             }
@@ -679,10 +686,12 @@ internal static class DagLedgerAlignWriter
         {
             throw Usage(appendAlias);
         }
-        if (listClosed && (selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0))
+        if (listClosed && (selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0 || duplicateRepairs.Count != 0))
+            throw Usage(appendAlias);
+        if (duplicateRepairs.Count != 0 && (adds.Count != 0 || retirements.Count != 0))
             throw Usage(appendAlias);
 
-        foreach (var group in selectors.Concat(adds).Concat(retirements).GroupBy(static path => path))
+        foreach (var group in selectors.Concat(adds).Concat(retirements).Concat(duplicateRepairs).GroupBy(static path => path))
         {
             if (group.Count() != 1)
                 throw new InvalidOperationException($"duplicate or conflicting module selector: {group.Key.Value}");
@@ -693,6 +702,7 @@ internal static class DagLedgerAlignWriter
             selectors.ToImmutable(),
             adds.ToImmutable(),
             retirements.ToImmutable(),
+            duplicateRepairs.ToImmutable(),
             fromAccepted,
             listClosed);
     }
@@ -714,6 +724,8 @@ internal static class DagLedgerAlignWriter
             : "USAGE: StrataLint ledger-align --candidate-lean-report FILE "
                 + "[--selector D5/.../X.lean]... [--add D5/.../X.lean]... "
                 + "[--retire-registration D5/.../Missing.lean]... "
+                + "| ledger-align --candidate-lean-report FILE --repair-duplicate-registration D5/.../X.lean "
+                + "[--repair-duplicate-registration D5/.../Y.lean]... [--selector D5/.../Descendant.lean]... "
                 + "| ledger-align --from-accepted "
                 + "| ledger-align --list-closed --candidate-lean-report FILE");
 
@@ -754,6 +766,7 @@ internal static class DagLedgerAlignWriter
         ImmutableArray<RepoPath> Selectors,
         ImmutableArray<RepoPath> Adds,
         ImmutableArray<RepoPath> Retirements,
+        ImmutableArray<RepoPath> DuplicateRepairs,
         bool FromAccepted,
         bool ListClosed);
 }
