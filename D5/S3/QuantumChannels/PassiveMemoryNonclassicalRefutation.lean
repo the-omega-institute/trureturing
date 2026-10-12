@@ -128,12 +128,16 @@ private def controlled : Mat (Fin 3 × Fin 2) := fun p q =>
 private theorem controls_apply (i : Fin 3) (a b : Fin 2) :
     controls i a b = if i = 0 then (if a = b then 1 else 0)
       else if i = 1 then qubitX a b else qubitZ a b := by
-  unfold controls
-  split_ifs <;> rfl
+  fin_cases i <;> fin_cases a <;> fin_cases b <;> rfl
 
 private theorem controlled_apply (p q : Fin 3 × Fin 2) :
-    controlled p q = if p.1 = q.1 then controls p.1 p.2 q.2 else 0 := by
-  rfl
+    controlled p q =
+      if p.1 = q.1 then
+        if p.1 = 0 then (if p.2 = q.2 then 1 else 0)
+        else if p.1 = 1 then qubitX p.2 q.2 else qubitZ p.2 q.2
+      else 0 := by
+  dsimp only [controlled]
+  rw [controls_apply]
 
 private theorem controlled_unitary :
     controlled.conjTranspose * controlled = 1 := by
