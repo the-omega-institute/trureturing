@@ -1412,6 +1412,123 @@ published results to the unchanged source, with no new Lean declaration,
 originality claim, RH or all-integer Robin proof.
 
 
+## A conditional second-moment enclosure on the mandatory scale
+
+Reuse the unchanged normalization $a_k=\Gamma_k/(\xi_0 k!)$ and
+$r_n=a_{n-1}/a_n$ of (LC31). Griffin, Ono, Rolen, Thorner, Tripp and
+Wagner, [*Jensen polynomials for the Riemann xi-function*,
+arXiv:1910.01227v3](https://arxiv.org/html/1910.01227v3), use the same
+$\Gamma_k=\gamma(k)$ in (1.1)–(1.2). Their (2.3) and Theorem 2.1(1)
+give, without RH or whole-row hyperbolicity,
+
+$$
+\Delta(n)^2=\frac12\left(1-
+\frac{\Gamma_{n-2}\Gamma_n}{\Gamma_{n-1}^2}\right),
+\qquad \Delta(n)\sim\frac1{\sqrt{2n}}.
+$$
+
+The theorem numbering here refers to that arXiv version. Its
+$C$-dependent threshold $M_C$ is existential, not a numerical cutoff.
+For $n\ge3$, the factorial correspondence gives
+
+$$
+d_n:=n\left(1-\frac{a_{n-2}a_n}{a_{n-1}^2}\right)
+=1+2(n-1)\Delta(n)^2\longrightarrow2. \tag{LC37}
+$$
+
+This second-order information is taken directly from the supplier;
+it is not inferred by subtracting the first-order remainder in (LC31).
+
+Suppose now that this actual row $\mathcal J_n$ has all $n$ roots
+$t_i>0$, counted with multiplicity. No assumption about another row
+is made. The last three positive coefficient magnitudes are
+
+$$
+b_{n,n}=\frac{n!}{n^n}a_n,\qquad
+b_{n,n-1}=\frac{n!}{n^{n-1}}a_{n-1},\qquad
+b_{n,n-2}=\frac{n!}{2n^{n-2}}a_{n-2}.
+$$
+
+Apply the classical root–coefficient identities
+([DLMF (1.11.10), §1.11(ii)](https://dlmf.nist.gov/1.11.E10)) to these same roots:
+$\sum_i t_i=nr_n$ and
+$\sum_{i<j}t_it_j=(n^2/2)a_{n-2}/a_n$. Hence
+
+$$
+\sum_{i=1}^nt_i^2=nd_nr_n^2,\qquad
+\frac1n\sum_{i=1}^n(t_i-r_n)^2=(d_n-1)r_n^2. \tag{LC38}
+$$
+
+Since $t_i^2\le t_{\max}t_i$ and
+$t_{\max}^2\le\sum_i t_i^2$, the complete positive-root premise gives
+
+$$
+d_nr_n\le t_{\max}\le r_n\sqrt{nd_n}. \tag{LC39}
+$$
+
+Together with (LC31) and (LC37), along any unbounded set of such degrees,
+
+$$
+t_{\max}\ge(32+o(1))\frac{n^2}{W(2n/\pi)^2},\qquad
+t_{\max}\le(16\sqrt2+o(1))\frac{n^{5/2}}{W(2n/\pi)^2}.
+$$
+
+The upper bound is conditional on this row's positive roots; it cannot
+replace the unconditional complex-root enclosure (LC35). Neither bound
+is an asymptotic equality for the largest root.
+
+The same empirical law on these $n$ actual roots supplies a proportion
+bound. For $0<\theta<1$ and $B>\theta$, apply finite Cauchy–Schwarz
+and the second-moment Markov bound using (LC38):
+
+$$
+(1-\theta)nr_n
+\le\sum_{t_i\ge\theta r_n}t_i
+\le\sqrt{\#\{i:t_i\ge\theta r_n\}\,nd_nr_n^2},
+\qquad
+\frac{\#\{i:t_i>Br_n\}}n\le\frac{d_n}{B^2}.
+$$
+
+Consequently,
+
+$$
+\frac{\#\{i:\theta r_n\le t_i\le Br_n\}}n
+\ge\frac{(1-\theta)^2}{d_n}-\frac{d_n}{B^2}. \tag{LC40}
+$$
+
+Both bounds concern the same complete row and count multiplicities;
+no separately optimized distributions are combined. In particular,
+
+$$
+\frac{\#\{i:r_n/2\le t_i\le8r_n\}}n
+\ge\frac1{4d_n}-\frac{d_n}{64}
+\longrightarrow\frac3{32}\quad\text{on the right-hand side}. \tag{LC41}
+$$
+
+Thus along any unbounded set of complete positive-root degrees, the
+liminf of the fraction in this band is at least $3/32$. This is not a
+claim that the actual fraction converges to that value, or that the
+nodes are distinct. The original parameters of each node in the band are
+
+$$
+\frac{n}{8r_n}\le v=\frac nt\le\frac{2n}{r_n},\qquad
+\frac1{8r_n}\le\lambda=\frac1t\le\frac2{r_n}. \tag{LC42}
+$$
+
+By (LC31), the two $v$ endpoints are asymptotic respectively to
+$W(2n/\pi)^2/(128n)$ and $W(2n/\pi)^2/(8n)$, and both tend to zero.
+Under the explicit row premise, a fixed positive $v$ regime therefore
+misses a positive proportion of the original nodes, not merely one
+possible outlier. No numerical starting degree is supplied.
+
+These are parameter applications of published coefficient results and
+classical root and moment inequalities, with no new generic theorem,
+Lean declaration or originality claim. The positive-root premise is
+not established by (LC37). The moments supply no separation, derivative
+floor, adjacent-row signed margin or collision propagation on this band.
+The all-height signed comparison and RH/all-integer Robin remain unresolved.
+
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
