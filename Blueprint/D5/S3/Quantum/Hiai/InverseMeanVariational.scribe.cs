@@ -71,9 +71,9 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
             OpenBracket, Call("DecidableEq", d), CloseBracket, Comma, Esc,
             x, Comma, Sp, m, Colon, Sp, matrix, Comma, Esc,
             r, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Comma, Esc,
-            Call("PosDef", x), Land, Call("PosDef", m), Land, D(0), Lt, r,
+            Call("PosDef", x), Land, Sp, Call("PosDef", m), Land, Sp, D(0), Lt, r,
             Implies, Esc, Exists, Sp, z, Colon, Sp, matrix, Comma, Esc,
-            Call("IsUnit", z), Land, z, Eq, Seq(inverse, x), Land,
+            Call("IsUnit", z), Land, Sp, z, Eq, Seq(inverse, x), Land, Sp,
             Call("objective", r, x, m, z), Eq, bound, Land,
             Open, Forall, Sp, w, Colon, Sp, matrix, Comma, Esc,
             Call("objective", r, x, m, w), Le, bound, Close);
