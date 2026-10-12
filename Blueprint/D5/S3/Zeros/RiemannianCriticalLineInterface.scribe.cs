@@ -27,6 +27,24 @@ internal sealed class RiemannianCriticalLineInterfaceDocument : IScribeDocumentD
                     "The displacement equals 2 arsinh(|Re(rho)-1/2|/2), giving a faithful nonnegative gauge of the off-line abscissa."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("normal-displacement-central-coordinate-equivalence"),
+                DeclarationHandle.Create("D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_zero_iff_central_coord_im_zero"),
+                H("Zero displacement is equivalent to zero central-coordinate imaginary part"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "This bridges the hyperbolic metric interface to the existing critical-center coordinate, whose imaginary part is the signed off-line coordinate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("rh-central-coordinate-equivalence"),
+                DeclarationHandle.Create("D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_central_coord_im_zero"),
+                H("RH is equivalent to zero central-coordinate imaginary parts for every zero"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Using the repository's actual nontrivial-zero predicate, this is the coordinate form of the existing RH-to-critical-line equivalence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("rh-normal-displacement-equivalence"),
                 DeclarationHandle.Create("D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_normal_displacements_zero"),
                 H("RH is equivalent to zero hyperbolic normal displacement of every actual zero"),
