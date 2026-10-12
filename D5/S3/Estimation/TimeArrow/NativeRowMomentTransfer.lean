@@ -32,7 +32,7 @@ def truncatedRow {M s : ℕ} (e : Experiment) (D : Finset (ℕ × ℕ))
     (g : Fin M → ℕ × ℕ → ℝ) (i : Fin M) (o : Obs M s e) : ℝ :=
   ∑ c ∈ D, if count e o i 1 = c.1 ∧ count e o i (-1) = c.2 then g i c else 0
 
-private theorem reference_pos {M q L : ℕ} (S : Support M q) (r κ : ℝ)
+theorem reference_pos {M q L : ℕ} (S : Support M q) (r κ : ℝ)
     (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
     (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L)
     (i : Fin M) (c : ℕ × ℕ) : 0 < rowReference S r L i c := by

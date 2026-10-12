@@ -85,9 +85,6 @@ private theorem poisson_window_lower (c K lam : ℝ) (hc : 0 < c) (hK : 0 ≤ K)
 open private
   D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_weighted_tail
 from D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
-open private
-  D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.reference_pos
-from D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open private D5.S3.Estimation.TimeArrow.NativeReferenceCalibration.all_row_reference_sum
 from D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
 

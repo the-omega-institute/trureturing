@@ -14,8 +14,7 @@ open Finset
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeRowCountTail
-open private D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.reference_pos
-  D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.truncated_bounds
+open private D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.truncated_bounds
   from D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 
 set_option autoImplicit false

@@ -18,8 +18,6 @@ open private
   D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_exponential_sum
   D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets.reference_weighted_tail
 from D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
-open private D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer.reference_pos
-from D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -54,7 +52,7 @@ private theorem reference_factor {M q : ℕ} (S : Support M q) (r : ℝ) (L : �
           ((c.1.factorial : ℝ) * c.2.factorial) := by ring
     _ = _ := by rw [hexp]
 
-private theorem reference_likelihood_ratio {M q L : ℕ} (S : Support M q) (r κ : ℝ)
+theorem reference_likelihood_ratio {M q L : ℕ} (S : Support M q) (r κ : ℝ)
     (hκ : 0 < κ) (hr : 0 < r) (hrκ : r ≤ 1 - κ)
     (hcκ : compensation M q r ≤ 1 - κ) (hL : 1 ≤ L)
     (i j : Fin M) (hi : i ∈ S.val) (hj : j ∉ S.val) (c : ℕ × ℕ) :

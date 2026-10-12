@@ -406,7 +406,7 @@ def nativeRowCell {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s 
     if count e o i 1 = k + 1 ∧ count e o i (-1) = l + 1 then some 3 else none
   else none
 
-private theorem native_row_cell_iff {M q s : ℕ} (S : Support M q) (e : Experiment)
+theorem native_row_cell_iff {M q s : ℕ} (S : Support M q) (e : Experiment)
     (o : Obs M s e) (k l : ℕ) (i : Fin M) (j : Fin 4) :
     nativeRowCell S e o k l i = some j ↔ i ∈ S.val ∧
       count e o i 1 = k + ![0, 1, 0, 1] j ∧
