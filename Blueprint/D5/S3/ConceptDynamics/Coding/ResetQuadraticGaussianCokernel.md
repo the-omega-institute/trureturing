@@ -54,7 +54,7 @@ $$\forall m \in Nat,\; \operatorname{hasType}\left(\operatorname{resetGaussianCo
 
 The complete image criterion identifies range(id+T^2) with the kernel of the surjective primitive pair character. The first isomorphism theorem constructs the displayed integer-linear equivalence. In particular the ordinary cokernel is free of rank two, with no additional order-two torsion. Gaussian denotes the period-four recurrence a,b,-a,-b; the displayed target is its integer coordinate pair, not a separately proved Gaussian-ring module equivalence.
 
-Native applicability. The existing resetNativeEquiv q hq identifies the original stationary dimension group with stage-zero integer rows, and resetNativeEquiv_theta states F Theta=T F. Applying it twice gives F(id+Theta^2)=(id+T^2)F. Therefore the same exact image and ordinary cokernel transport to genuine native time. This paragraph describes that application of the existing equivalence; it asserts no full reset-group classification or RH result.
+Native applicability. For q=4m+3, let F=resetNativeEquiv q hq be the integer-linear equivalence from the stationary dimension group to stage-zero rows, where hq proves 0<q, and let Theta be the native time endomorphism. The intertwining F Theta=T F gives F Theta^2=T^2 F and hence F(id+Theta^2)=(id+T^2)F. A native element x therefore lies in image(id+Theta^2) exactly when resetGaussianCharacter m (F x)=0, and F induces an integer-linear equivalence from the native ordinary cokernel to Int x Int. This transport concerns the ordinary integer cokernel; no Gaussian-ring equivalence, order-cone equivalence or full reset-group classification is asserted.
 
 ## References
 
