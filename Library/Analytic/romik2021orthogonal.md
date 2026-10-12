@@ -5472,3 +5472,128 @@ remainder; the displayed exponential is not automatically small on
 the whole disc. A uniform real-cluster premise, sufficient bounds
 through the unpaid moving real-node band, numerical constants, RH and
 strict Robin for every integer $H>5040$ remain unresolved.
+
+
+### Extract all four errors from the same undifferentiated source remainder
+
+The local factor estimate can be connected to the four-response budget
+without separately supplying global bounds for $F'$ and $F''$.
+This uses the existing exact coefficient circle (LC176); it is a
+source-specific extraction interface, not another multiplier, mesh or
+logarithmic-derivative theorem. The ordinary derivation below carries
+no Lean or originality certificate and does not establish that the
+resulting budget is small enough.
+
+Keep the cluster, $Q$, $a_*,b,f_*$ and compact interval $I$ from
+(LC202)--(LC205). Put $\mathscr D=F-f_*$, an entire function.
+For $t>0$, $v=e^{i\theta}$, use exactly the kernel $\mathcal K_n$ in
+(LC176) and define
+
+$$
+\begin{aligned}
+\omega_0(t,\theta)&=1,\\
+\omega_D(t,\theta)&=\frac nt(1-v),\\
+\omega_G(t,\theta)&=\frac{(n+1)v^{-1}-n}{t},\\
+\omega_{DG}(t,\theta)&=
+\frac n{t^2}\{(n+1)v^{-1}+nv-2n\}.
+\end{aligned}
+\tag{LC206}
+$$
+
+The four actual errors, including both derivatives, are exactly
+
+$$
+\begin{pmatrix}
+\mathcal J_n(t)-M(t)\\
+\mathcal J_n'(t)-M'(t)\\
+\mathcal G_n(t)-U(t)\\
+\mathcal G_n'(t)-U'(t)
+\end{pmatrix}
+=
+\int_{-\pi}^{\pi}\mathcal K_n(\theta)
+\begin{pmatrix}\omega_0\\\omega_D\\\omega_G\\\omega_{DG}\end{pmatrix}
+\mathscr D(te^{i\theta})\,d\theta.
+\tag{LC207}
+$$
+
+For the derivative extraction differentiate the original circle and
+integrate by parts, using
+$\partial_\theta\mathscr D(tv)=itv\mathscr D'(tv)$ and
+$\mathcal K_n'/\mathcal K_n=in(v-1)$.
+Periodicity removes the endpoint terms. This gives $\omega_D$.
+For $\mathscr T_n\mathscr D'$ the same integration by parts with the
+additional $v^{-1}$ gives $\omega_G$.
+Differentiating its integral in $t$ gives
+$t^{-2}\{-A+i(\mathcal K_n A)'/\mathcal K_n\}$,
+where $A=(n+1)v^{-1}-n$, which is exactly $\omega_{DG}$.
+All integrands are smooth on the compact circle, so the differentiations
+and integration by parts are legitimate. These identities keep the
+$n-1$ and upper-adjacent extraction costs inside their exact weights;
+in particular the $n+1$ terms cannot be replaced by $n$.
+For $-\pi\le\theta\le\pi$ the weights satisfy
+
+$$
+|\omega_D|\le n|\theta|/t,\qquad
+|\omega_G|\le\{1+(n+1)|\theta|\}/t,\qquad
+|\omega_{DG}|\le n\{1+n\theta^2\}/t^2.
+$$
+
+The last bound uses the exact expression
+$\omega_{DG}=n\{v^{-1}-2n(1-\cos\theta)\}/t^2$,
+rather than discarding its opposite angular terms.
+
+### One local--remote envelope for that source remainder
+
+For the original-source specialization in (LC204)--(LC205), let
+$R=T\rho/4$ and prescribe a nonempty compact
+$I\subset(\tau-R,\tau+R)$, still with $d(t)>0$.
+Set $t_{\max}=\max I$ and $a_I=\max_{t\in I}|t-\tau|<R$.
+Choose
+$0<\theta_0\le\min\{1,(R-a_I)/(2t_{\max})\}$.
+Then every local-arc point $te^{i\theta}$, $t\in I$,
+$|\theta|\le\theta_0$, lies in the disc covered by (LC205).
+Write $\kappa_A=CL/(T^2\rho^2)$ with the same sufficiently large
+source constant as that estimate. For $z=te^{i\theta}$ define
+
+$$
+\begin{aligned}
+B_*(t,\theta)&=|a_*|e^{b(t\cos\theta-\tau)}
+                     \prod_{j=1}^r|te^{i\theta}-\tau_j|,\\
+B_F(t,\theta)&=CE_T(T+2)^4e^{C(T+2)L|\theta|},\\
+\mathcal E_j&=\sup_{t\in I}\left\{
+\int_{|\theta|\le\theta_0}|\mathcal K_n\omega_j|
+ B_*(t,\theta)(e^{\kappa_A|te^{i\theta}-\tau|^2}-1)\,d\theta
++\int_{|\theta|>\theta_0}|\mathcal K_n\omega_j|
+ \{B_F(t,\theta)+B_*(t,\theta)\}\,d\theta
+\right\},\qquad j\in\{0,D,G,DG\}.
+\end{aligned}
+\tag{LC208}
+$$
+
+Here $B_*$ is the exact model modulus, retaining its signed drift
+and all cluster roots. The already checked (LC188) supplies $B_F$:
+$|t-\tau|<T\rho/4$ puts $1/2+i\sqrt t$ in its fixed source window.
+On the local arc apply (LC205); on the remote arc use
+$|\mathscr D|\le|F|+|f_*|$. Equation (LC207) then gives
+$e_0\le\mathcal E_0$, $e_1\le\mathcal E_D$,
+$v_0\le\mathcal E_G$ and $v_1\le\mathcal E_{DG}$ on the same $I$.
+If numerical or symbolic evaluation is needed, the elementary bound
+$|te^{i\theta}-\tau_j|\le|t-\tau_j|+t|\theta|$ keeps each
+spread contribution explicit, without an input-spacing denominator.
+
+Consequently, substituting these four upper bounds for the four errors
+in (LC203) is a sufficient original-source contour criterion. Its
+satisfaction would certify every actual node in this prescribed
+interval. Both the original source and the model remain in every
+remote integral; no source derivatives, independent-row approximations
+or uncharged offset replacements enter this criterion.
+
+The integrals are upper bounds, not a proved winning budget. No
+height-uniform inequality comparing them with $\mu_*(I)$ is established.
+The smallness of the local exponent, Gaussian suppression of the
+remote model as well as source, growth of $r$, decline of the model
+margin, placement of $I$, the local all-real-source premise and
+all-node coverage must still be controlled jointly. Separate
+localization or boundary relative-error bounds do not supply that
+comparison. RH and strict Robin for every integer $H>5040$ remain
+unresolved.
