@@ -1,0 +1,32 @@
+**定理 33.4（达到线性下界的原子单位扫描与完整证书）。** 存在全部状态可达的控制器，达到
+
+$$
+(K,Q_{\max},D_{\mathrm{act}})=(3P-2,P-1,2P-1).
+$$
+
+证明。取不交状态 $A_n,B_n$（$1\le n<P$）以及 $H_r$（$0\le r<P$），初态为 $A_1$。完整实际表为
+
+$$
+\begin{aligned}
+u(A_n)&=\operatorname{Advance},&v(A_n,\operatorname{Ack})&=B_n,\\
+u(B_n)&=\operatorname{Read},&v(B_n,1-b)&=H_{P-n},\\
+&&v(B_n,b)&=\begin{cases}A_{n+1},&n<P-1,\\H_0,&n=P-1,\end{cases}\\
+u(H_r)&=\operatorname{Halt}(r).
+\end{aligned}
+$$
+
+其余带类型响应的表项补到已有状态。在 $B_n$ 上的实际候选为 $0\le r\le P-n$，其中仅 $r=P-n$ 的字面位变成 $1-b$。令 $h(r)=P-r$（$r>0$）、$h(0)=P-1$。精确目标—装置支持与非 Stop 自然秩为
+
+$$
+\begin{aligned}
+C_{A_n}&=\{(r,X_r(n-1)):0\le r\le P-n\},
+&\rho(r,X_r(n-1),A_n)&=2(h(r)-n+1),\\
+C_{B_n}&=\{(r,X_r(n)):0\le r\le P-n\},
+&\rho(r,X_r(n),B_n)&=2(h(r)-n)+1,\\
+C_{H_r}&=\{(r,X_r(h(r)))\},
+&\rho(r,X_r(h(r)),H_r)&=0.
+\end{aligned}
+$$
+
+Advance 推进第二坐标，Read 保持第二坐标并按真实高位分支，第一坐标始终是原 $r$。每个非停止动作使秩恰减一；Halt 输出正确。每个 $A_n,B_n$ 由来源 $0$ 实现，每个 $H_r$ 由其原来源实现。故所有 $2(P-1)+P$ 个状态可达。来源 $r$ 恰有 $h(r)$ 次 Advance、$h(r)$ 次 Read 和一次 Stop，最坏值如式。$n$ 是已收费的状态名，不是另一个计数输入。∎
+
