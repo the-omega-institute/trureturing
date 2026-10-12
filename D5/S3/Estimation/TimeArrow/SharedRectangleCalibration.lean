@@ -275,11 +275,11 @@ private theorem calibratedVariance_pos {ι : Type*} [Fintype ι] (outside : ι �
     exact hjp.trans_le he
   exact add_pos_of_nonneg_of_pos ho hi
 
-theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
-    (r ε N R U q t : ℝ) (hN : 0 < N) (hq : 0 < q)
+theorem exists_calibration_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q t : ℝ) (hq : 0 < q)
     (hqM : q < (Fintype.card ι : ℝ) + N)
-    (hc : ∀ j, 0 ≤ cellCounts N R U t j) :
-    ∃! x, calibratedMean outside r ε N R U t x = q := by
+    :
+    ∃ x, calibratedMean outside r ε N R U t x = q := by
   classical
   have hbot (a : ℝ) : Tendsto (fun x : ℝ => Real.sigmoid (x + a)) atBot (𝓝 0) :=
     Real.tendsto_sigmoid_atBot.comp (tendsto_atBot_add_const_right _ a tendsto_id)
@@ -301,6 +301,14 @@ theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     fun_prop
   obtain ⟨x, hx⟩ := intermediate_value_univ₂_eventually₂ hcont continuous_const
     (hb.eventually_le_const hq) (ht.eventually_const_le hqM)
+  exact ⟨x,hx⟩
+
+theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+    (r ε N R U q t : ℝ) (hN : 0 < N) (hq : 0 < q)
+    (hqM : q < (Fintype.card ι : ℝ) + N)
+    (hc : ∀ j, 0 ≤ cellCounts N R U t j) :
+    ∃! x, calibratedMean outside r ε N R U t x = q := by
+  obtain ⟨x,hx⟩ := exists_calibration_root outside r ε N R U q t hq hqM
   have hm : StrictMono (calibratedMean outside r ε N R U t) :=
     strictMono_of_deriv_pos fun x => by
       rw [(calibration_root_deriv outside r ε N R U t x).deriv]

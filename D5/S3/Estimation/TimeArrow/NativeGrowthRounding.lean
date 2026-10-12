@@ -5,7 +5,6 @@
    anchors: []
    utility: none
    digest: Original decimal growth and integer rounding supply native finite-scale bounds. -/
-
 import D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 import D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 import D5.S3.Estimation.TimeArrow.NativeRectangleGeometry
@@ -13,7 +12,6 @@ import D5.S3.Estimation.TimeArrow.NativeCalibrationRootBudgets
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-
 open Filter
 open scoped Topology BigOperators
 open Finset
@@ -25,43 +23,32 @@ open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeCalibrationRootBudgets
 open D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Estimation.TimeArrow.NativeGrowthRounding
 noncomputable section
-
 /-- Index zero corresponds to the first decimal exponent of the original sequence. -/
 def decimalExponent : ℕ → ℕ
   | 0 => 1
   | n + 1 => 10 ^ (5 * decimalExponent n)
-
 /-- The original decimal denominator. -/
 def denominator (n : ℕ) : ℕ := 10 ^ decimalExponent n
-
 /-- The original integer observation scale. -/
 def scale (n : ℕ) : ℕ := denominator n ^ 3
-
 /-- The lower-left signal cell retains the original floor. -/
 def centralPositive (r : ℝ) (L : ℕ) : ℕ := ⌊((1 + r) / 2) * (L : ℝ)⌋₊
-
 /-- The second coordinate retains the exact total count. -/
 def centralNegative (r : ℝ) (L : ℕ) : ℕ := L - centralPositive r L
-
 /-- The uncompensated score at the original lower-left cell. -/
 def center (r : ℝ) (L : ℕ) : ℝ :=
   centralPositive r L * Real.log (1 + r) +
     centralNegative r L * Real.log (1 - r)
-
 /-- Original population size, with its base-two floor. -/
 def population (r β : ℝ) (L : ℕ) : ℕ :=
   2 ^ ⌊phi r * (L : ℝ) / (β * Real.log 2)⌋₊
-
 /-- Original signal cardinality, with its final floor. -/
 def signalSize (r β : ℝ) (L : ℕ) : ℕ :=
   ⌊(population r β L : ℝ) * Real.exp (-center r L)⌋₊
-
 /-- The original A-cell logit uses the complete background population. -/
 def cellLogit (r β : ℝ) (L : ℕ) : ℝ :=
   let M := population r β L
@@ -220,7 +207,6 @@ theorem signal_log_rounding (r β : ℝ) (L : ℕ) (hq : 0 < signalSize r β L) 
     dsimp [X]
     rw [Real.log_mul hM.ne' (Real.exp_ne_zero _), Real.log_exp]
     ring
-
 private theorem polynomial_ratio_zero (L : ℕ → ℝ) (D : ℕ → ℕ)
     (hL : Tendsto L atTop atTop) (hL0 : ∀ n, 0 ≤ L n)
     (c C : ℝ) (hc : 0 < c) (hC : 0 < C) (p : ℕ)
@@ -296,7 +282,6 @@ theorem original_density_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1) (p : ℕ
       dsimp [c, L] at *
       linarith only [hcenter]
     _ = _ := by rw [Real.exp_sub, neg_mul, Real.exp_neg]; ring
-
 private theorem small_log_bounds (u : ℝ) (hu : 0 ≤ u) (hu1 : u ≤ 1/2) :
     |Real.log (1-u)| ≤ 2*u ∧ |Real.log (1+u)| ≤ u := by
   have hm : 0 < 1-u := by linarith
@@ -406,7 +391,6 @@ theorem cell_logit_bound (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
         2*(L : ℝ)*ε + 1/(q : ℝ) + 2*p
       have hs := congrArg (fun z : ℝ => z*ε) hsum
       nlinarith only [hs, mul_nonneg hl hε]
-
 private theorem compensation_density_bound (M q : ℕ) (r : ℝ)
     (hr : 0 ≤ r) (hqm : q < M) (hp : (q : ℝ)/M ≤ 1/2) :
     compensation M q r ≤ 2*r*((q : ℝ)/M) := by
@@ -589,7 +573,6 @@ theorem original_tail_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
             Real.exp (-(I*(scale n : ℝ))))) by ring, ← Real.exp_add]
         congr 2
         ring
-
 private theorem eventually_four_sqrt_scale (c : ℝ) (hc : 0 < c) :
     ∀ᶠ n in atTop, 4*Real.sqrt (scale n : ℝ) ≤ c*(scale n : ℝ) := by
   filter_upwards [(Real.tendsto_sqrt_atTop.comp scale_tendsto).eventually
@@ -737,9 +720,14 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       let q := signalSize r β L
       ∀ (S : Support M q) (e : Experiment),
         (∑ o : Obs M (2*M*L) e,
-          let N := (nativeRectangleRows S e o (centralPositive r L) (centralNegative r L)
-            (⟨o,rfl⟩ : Fiber S e o)).card
-          if ¬(c*(q : ℝ)/L ≤ N ∧ (N : ℝ) ≤ C*(q : ℝ)/L)
+          let V := nativeRectangleRows S e o (centralPositive r L) (centralNegative r L) (⟨o,rfl⟩ : Fiber S e o)
+          let R := (V.filter fun i => count e o i.val 1 = centralPositive r L).card
+          let U := (V.filter fun i => count e o i.val (-1) = centralNegative r L).card
+          if ¬(c*(q : ℝ)/L ≤ V.card ∧ (V.card : ℝ) ≤ C*(q : ℝ)/L ∧
+              3/8*(V.card : ℝ) ≤ R ∧ (R : ℝ) ≤ 5/8*V.card ∧
+              3/8*(V.card : ℝ) ≤ U ∧ (U : ℝ) ≤ 5/8*V.card ∧
+              ((D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.nativeCalibrationCells
+                (⟨univ,by simp⟩ : Support M M) e o (centralPositive r L) (centralNegative r L) 0 \ S.val).card : ℝ) ≤ 5/12*V.card)
           then probability r e S o else 0) ≤ budget n := by
   classical
   let κ := (1-r)/2
@@ -789,7 +777,7 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     split_ifs with hfail hfull hfull
     · exact le_rfl
     · exact hp
-    · exact False.elim (hfail ⟨hfull.1,hfull.2.1⟩)
+    · exact False.elim (hfail ⟨hfull.1,hfull.2.1,hfull.2.2.1,hfull.2.2.2.1,hfull.2.2.2.2.1,hfull.2.2.2.2.2.1,hfull.2.2.2.2.2.2.1⟩)
     · exact le_rfl
   · have hlo : c*(q : ℝ)/L ≤ (q : ℝ)*rowReference S r L i
         (centralPositive r L,centralNegative r L) := by
@@ -800,12 +788,11 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     have hh := mul_le_mul_of_nonneg_left hrec (by norm_num : (0 : ℝ) ≤ 540)
     convert add_le_add_left hh (1215*(A*(L : ℝ)^3/M)) using 1 <;>
       first | rfl | (rw [one_div_div]; ring) | ring
-
 /-- All complete calibrated roots at the original scales have arbitrarily fine A-logit precision,
 with the same vanishing failure budget for every support and for pair and path experiments. -/
-theorem original_complete_root_budget (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r < 1)
-    (hβ : 1/2 < β) (hβ1 : β < 1) (hκ₀ : 0 < κ₀) :
-    ∃ (v A : ℝ), 0 < v ∧ 0 < A ∧
+theorem original_complete_root_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
+    (hβ : 1/2 < β) (hβ1 : β < 1) :
+    ∃ (v A : ℝ), 0 < v ∧ 0 < A ∧ ∀ κ₀ : ℝ, 0 < κ₀ →
       Tendsto (rootFailureBudget r β v κ₀ A) atTop (𝓝 0) ∧ ∀ᶠ n in atTop,
       let L := scale n
       let M := population r β L
@@ -833,7 +820,9 @@ theorem original_complete_root_budget (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r <
   have ha : 0 < (1+r)/2 := by linarith only [hr]
   have hb : 0 < (1-r)/2 := by linarith only [hr1]
   have hv : 0 < v := by dsimp [v]; positivity
-  refine ⟨v,A,hv,hA,original_root_failure_budget_zero r β v κ₀ A hr hr1 hβ hβ1,?_⟩
+  refine ⟨v,A,hv,hA,?_⟩
+  intro κ₀ hκ₀
+  refine ⟨original_root_failure_budget_zero r β v κ₀ A hr hr1 hβ hβ1,?_⟩
   filter_upwards [original_native_scale_conditions r β A η₀ M₀ hr hr1 hβ0 hβ1 hη₀,
     original_cell_logit_bounds r β κ₀ hr hr1 hβ0 hβ1 hκ₀,
     original_central_score_condition r β hr hr1 hβ0 hβ1,
@@ -897,7 +886,6 @@ theorem original_complete_root_budget (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r <
     dsimp only [rootFailureBudget,b,L,M,q]
     field_simp
     ring
-
 /-- All rectangle sizes in the original comparison range have vanishing slope and
 inverse feedback width, and arbitrarily large square-root size. -/
 theorem original_rectangle_feedback_scales (r β c C η T : ℝ)
