@@ -12,7 +12,7 @@ Layer(S,P,v) means erase(S,configurationCycle(v)) equals P or reverse(P). ChildC
 
 $$\forall m \in \mathrm{Nat},\; \forall S \in \mathrm{Finset}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall D \in \mathrm{Cycle}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall hn \in \mathrm{Nodup}\left(D\right),\; \forall hm \in \left(\forall y \in \mathrm{Fin}\left(m + 1\right),\; y \in D \Leftrightarrow \left(\neg y \in S\right)\right),\; \exists v \in \mathrm{Configuration}\left(m\right),\; \mathrm{erase}\left(S, \mathrm{configurationCycle}\left(v\right)\right) = D$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition.nativeResidual_surjective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition.nativeResidual_surjective` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,7 +24,7 @@ For every natural m, every finite selected set S and every directed residual D o
 
 $$\forall m \in \mathrm{Nat},\; \forall S \in \mathrm{Finset}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall x \in \mathrm{Fin}\left(m + 1\right),\; \forall P \in \mathrm{Cycle}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall hP \in P \ne \mathrm{reverse}\left(P\right),\; \forall v \in \mathrm{Configuration}\left(m\right),\; \mathrm{Layer}\left(\mathrm{insert}\left(x, S\right), P, v\right) \Leftrightarrow \left(\exists D \in \mathrm{ChildCircle}\left(S, x, P\right),\; \mathrm{ChildDomain}\left(D, v\right) \land \left(\forall E \in \mathrm{ChildCircle}\left(S, x, P\right),\; (\mathrm{ChildDomain}\left(E, v\right)) \Rightarrow (E = D)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition.insertionLayer_partition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition.insertionLayer_partition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,7 +36,7 @@ For every natural m, selected set S, label x, directed base P different from its
 
 $$\forall m \in \mathrm{Nat},\; \forall S \in \mathrm{Finset}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall x \in \mathrm{Fin}\left(m + 1\right),\; \forall P \in \mathrm{Cycle}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall hP \in P \ne \mathrm{reverse}\left(P\right),\; \mathrm{insertionLayerEquiv}\left(hP\right): \mathrm{Equiv}\left(\{v: \mathrm{Configuration}\left(m\right) \mid \mathrm{Layer}\left(\mathrm{insert}\left(x, S\right), P, v\right)\}, (\Sigma D: \mathrm{ChildCircle}\left(S, x, P\right), \{v: \mathrm{Configuration}\left(m\right) \mid \mathrm{ChildDomain}\left(D, v\right)\})\right)$$
 
-*Formalization.* `D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition.insertionLayerEquiv` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition.insertionLayerEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ For a directed base P distinct from its reverse, insertionLayerEquiv(hP) is an e
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition.insertionLayerEquiv`
-- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition.insertionLayer_partition`
-- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition.nativeResidual_surjective`
-- Dependency: [D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement](PrefixReversalZeroStarComplement.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition.insertionLayerEquiv`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition.insertionLayer_partition`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition.nativeResidual_surjective`
+- Dependency: [D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement](../PrefixReversalZeroStarComplement.md)
