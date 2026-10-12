@@ -14,7 +14,7 @@ $$\forall d \in \mathbb{N},\; \forall iota \in Type,\; [\operatorname{Fintype}\l
 
 *Commentary.*
 
-Section II.B, p. 2: “A CPTP map Θ : S(Hin) → S(Hout) is called a quantum channel, where Hin and Hout are two Hilbert spaces [15].” Finite Kraus form expresses complete positivity and trace preservation. MatrixMap.ofKraus denotes the frozen MatrixMap.of_kraus operation; its action is the finite sum of K(j) X conjTranspose(K(j)). The output index type iota has anonymous Fintype and DecidableEq instances.
+Section II.B, p. 2: “A CPTP map Θ : S(Hin) → S(Hout) is called a quantum channel, where Hin and Hout are two Hilbert spaces [15].” Finite Kraus form expresses complete positivity and trace preservation. MatrixMap.of_kraus is the frozen operation; its action is the finite sum of K(j) X conjTranspose(K(j)). The output index type iota has anonymous Fintype and DecidableEq instances.
 
 **Definition 1.2 (Broadcasting an observable).**
 
@@ -93,6 +93,10 @@ Section III.A, p. 5: “For an observable, in this way, one can get the set of d
 $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/mitra-2021-broadcasting-channel-extrema` (refuted) by `D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mitra-2021-broadcasting-channel-extrema","declaration_gid":"D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

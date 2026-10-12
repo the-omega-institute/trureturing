@@ -17,7 +17,7 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
         H("Broadcasting channels need have neither extremum"),
         Blocks(
             Node("IsChannel", "Finite Kraus channels", ChannelFormula(),
-                "Section II.B, p. 2: “A CPTP map Θ : S(Hin) → S(Hout) is called a quantum channel, where Hin and Hout are two Hilbert spaces [15].” Finite Kraus form expresses complete positivity and trace preservation. MatrixMap.ofKraus denotes the frozen MatrixMap.of_kraus operation; its action is the finite sum of K(j) X conjTranspose(K(j)). The output index type iota has anonymous Fintype and DecidableEq instances.",
+                "Section II.B, p. 2: “A CPTP map Θ : S(Hin) → S(Hout) is called a quantum channel, where Hin and Hout are two Hilbert spaces [15].” Finite Kraus form expresses complete positivity and trace preservation. MatrixMap.of_kraus is the frozen operation; its action is the finite sum of K(j) X conjTranspose(K(j)). The output index type iota has anonymous Fintype and DecidableEq instances.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("Broadcasts", "Broadcasting an observable", BroadcastingFormula(),
                 "Definition 1, p. 2: “A channel Λ : S(H) → S(H_A ⊗ H_B) with H_A = H_B = H is called a broadcasting channel.” Definition 3, p. 3: “An observable A ∈ O_X^d is broadcast by a broadcasting channel Λ ∈ C_broad^d if for all ρ ∈ S(H), x ∈ X” followed by equation (5), Tr[ρA(x)] = Tr[Λ(ρ)A(x) ⊗ I] = Tr[Λ(ρ)I ⊗ A(x)]. Outcomes are Fin m, and each subsystem is indexed by Fin d. The state predicate is the frozen GHZMeasureBiseparableBound.IsDensity: positive semidefinite with trace one.",
@@ -39,14 +39,17 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Both answers can be negative", Disp(Seq(Neg, Sp, V("claim"))),
                 "Take d = 3, m = 2, P = diag(1,1,0), Q = I − P, A(0) = (3/4)P + (1/4)Q, and A(1) = I − A(0). Three broadcasting channels prepare the matrix units at (0,0), (1,1), and (0,1) on the P sector and at (2,2) on the Q sector. Preservation of A(0) and trace forces preservation of P. Normalized real and imaginary pure states determine the dual effect on all matrices, so nondisturbing precomposition fixes each of the three channels. Their inequality excludes a lowest element. A highest element would have three input states supported by P that produce three orthogonal pure outputs. Positivity and the dual Kraus completeness identity bound their total trace by trace(P) = 2, although each output contributes at least one. Thus 3 ≤ 2, a contradiction. Only this three-dimensional, two-outcome instance is asserted; the rank-r family and the qubit and sharp-observable questions remain open here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mitra-2021-broadcasting-channel-extrema"), ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("broadcasting-extrema-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
