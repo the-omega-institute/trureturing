@@ -7,13 +7,13 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/Gluing/ActualLinkCornerChains.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Original affine link chains: exact interior and positive-side classes, strict-region saturation, restriction and path connectedness of every actual vertex-class quotient.",
+        "Original affine link chains: exact interior and positive-side classes, strict-region saturation and restriction.",
         H("Actual guarded corner chains"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-link-faceperm"),
                 DeclarationHandle.Create(Prefix + "facePerm"), H("The original whole-face permutations"),
                 StatementSource.FromAuthor(F.Disp(FormulaFor("facePerm"))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The four rows are p=(3,0,1,2), q=(3,2,0,1), q inverse and p inverse. The private frozen_face_data proof compares these whole-face maps with the published facePair and slotMap on each actual face slot."))),
+                Blocks(Paragraph(Text("The four rows are p=(3,0,1,2), q=(3,2,0,1), q inverse and p inverse. The source-owned frozen_face_data proof compares these whole-face maps with the published facePair and slotMap on each actual face slot."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("actual-link-reverseface"),
                 DeclarationHandle.Create(Prefix + "reverseFace"), H("Inverse omitted faces"),
@@ -25,6 +25,13 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(F.Disp(FormulaFor("faceWord"))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The source-to-target words are u, v, v inverse, u inverse, in omitted-face order. Multiplication retains the published right-action convention."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("actual-link-frozen-face-data"),
+                DeclarationHandle.Create(Prefix + "frozen_face_data"),
+                H("The actual slot map and whole-face extension agree"),
+                StatementSource.FromAuthor(F.Disp(FormulaFor("frozen_face_data"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each sheet t, each of the four faces f and each of its three slots r, the original facePair is (act(t,faceWord(u,v,f)),reverseFace(f)), and the whole-face permutation sends faceVertex(f,r) to faceVertex(reverseFace(f),slotMap(f,r)). This source-owned comparison supplies the target corner tag for both the original carrier preservation proof and the common-point construction in ActualLinkPathConnected."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-link-raw"),
                 DeclarationHandle.Create(Prefix + "Raw"), H("Tagged barycentric coordinates"),
                 StatementSource.FromAuthor(F.Disp(FormulaFor("Raw"))), AssessedProvenance.FromRepo(),
@@ -99,15 +106,6 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "actual_guarded_point_analysis"), H("Source-specific normal forms and full-chain restriction"),
                 StatementSource.FromAuthor(F.Disp(FormulaFor("actual_guarded_point_analysis"))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every group, arbitrary right action, u and v, actual corner class nu, and original representatives x and y: an interior x has singleton class; an EdgePoint has exactly x and its distinct original paired image as its class; every strict component neighborhood is invariant under the full EqvGen; and restriction to that neighborhood reflects the full relation. The positive-side proof constructs a two-point invariant from the unique active guard and inverse pairing. It then inducts through all four EqvGen constructors. Saturation is established before the restriction proof, whose transitive case explicitly transports membership to the intermediate representative. These are new original-carrier deductions, not applications of an assumed cycle or assumed relation correspondence. The helpers are consumed on these live proof paths. The remaining local obligations are the four minimal point-period Fin(3r) enumerations, the exact origin-cycle and fan-seam correspondence, openness with the actual quotient-subspace topology, the supplied fan radial chart at the same actual vertex, and the geometric truncation-slice chain and topology comparison. Global orientability, genus, marked-manifold realization and metric statements remain outside this result. No external novelty is claimed."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("actual-link-path-connected"),
-                DeclarationHandle.Create(Prefix + "actual_link_path_connected"), H("Paths in the full original vertex-class link"),
-                StatementSource.FromAuthor(F.Disp(FormulaFor("actual_link_path_connected"))), AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text("Let G be any group, let the finite set Omega carry any right action of G and its discrete topology, and choose arbitrary u, v and an actual vertex class nu in Vertex(pairing(u,v)). Raw carries the product of the discrete corner-tag topology and the usual topology of the four real coordinates. Point is exactly the Carrier subtype, and L is exactly Quotient(EqvGen.setoid(Step(u,v))). Its topology is the quotient topology induced by Point. This L is nonempty and path connected, and is therefore connected.")),
-                    Paragraph(Text("Within a fixed tag (omega,j), the full triangle beta(j)=0, beta>=0, sum(beta)=1 is convex. The pinned mathlib Convex.isPathConnected theorem supplies continuous segment paths; the continuous fixed-tag inclusion into Point followed by the continuous quotient map takes them to paths in L. For each actual slot ((omega,f),r), put j=faceVertex(f,r). Choose k different from f and j, and take beta(k)=1 with all other coordinates zero. This belongs to the original triangle and satisfies the actual guard beta(f)=0. Its original pairedPoint, using the complete face permutation and source action, belongs to the next triangle. The two points have equal quotient image by Step itself. The source-owned frozen_face_data comparison identifies the next tag with b(J(pairing(u,v),slot)); no abstract adjacency is used in place of this common point.")),
-                    Paragraph(Text("For arbitrary source representatives x and y, their Carrier memberships give equal actual corner labels. Apply the frozen actual_corner_transport theorem with index type Unit, constant endpoints x.corner and y.corner, real weight zero and bound zero. Its complete Transport conclusion supplies a finite list of actual Slots satisfying Follows. Induction on this list joins paths across the shared quotient points just constructed, retaining every original intermediate representative. Finally quotient induction gives a continuous path between arbitrary points of L. A representative of nu and a coordinate unit vector in its triangle prove nonemptiness without a Nonempty Omega premise.")),
-                    Paragraph(Text("This closes only the global actual-link connectivity clause of section 122.1. The proof allows nonfaithful and nonregular actions, arbitrary u and v, all four omitted corners, every actual ordered slot and repeated or self face identifications. It imposes no transitivity, generation, freeness or no-selfgluing assumption. It does not identify a physical truncation slice or establish manifold charts, orientability, Euler characteristic or genus. Convex-cell paths and path concatenation are classical; the new source-specific construction verifies their common-point bridge for the unchanged Carrier and guarded Step."))),
                 DescribeRole.Theorem))));
 
     private static Formula FormulaFor(string name)
@@ -138,6 +136,14 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
                 Call("lookup", Tuple(F.D(3),F.D(2),F.D(1),F.D(0)), f))),
             "faceWord" => Scope(All("f", fin4, Eq(Call("faceWord",u,v,f),
                 Call("lookup", Tuple(u,v,Call("inverse",v),Call("inverse",u)), f)))),
+            "frozen_face_data" => ActionScope(All("t",omega,All("f",fin4,
+                All("r",Call("Fin",F.D(3)),And(
+                    Eq(Call("facePair",u,v,Pair(F.Id("t"),f)),
+                        Pair(Call("act",F.Id("t"),Call("faceWord",u,v,f)),
+                            Call("reverseFace",f))),
+                    Eq(Call("apply",perm,Call("faceVertex",f,F.Id("r"))),
+                        Call("faceVertex",Call("reverseFace",f),
+                            Call("slotMap",f,F.Id("r"))))))))),
             "Raw" => All("Omega",F.Id("Type"),
                 Eq(Call("Raw",omega), Product(Product(omega,fin4),Call("Functions",fin4,F.Id("R"))))),
             "Carrier" => Scope(All("x",Call("Raw",omega),
@@ -189,15 +195,12 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
                 All("d",Call("Dart",omega),Implies(And(In(x,neighborhood),In(y,neighborhood)),
                     Iff(related,Call("EqvGen",Call("StepRestrictedTo",u,v,neighborhood),
                         Call("subtype",x),Call("subtype",y)))))))),
-            "actual_link_path_connected" => Scope(Implies(
-                And(Call("Finite",omega),Call("DiscreteTopology",omega)),
-                Call("PathConnectedSpace",Call("QuotientTopology",
-                    Call("Quotient",Call("EqvGenSetoid",Call("Step",u,v,nu))),
-                    Call("SubtypeTopology",Call("Carrier",u,v,nu),
-                        Call("ProductTopology",Call("DiscreteCornerTopology",omega),Call("RealPiTopology",fin4))))))),
             _ => throw new System.ArgumentOutOfRangeException(nameof(name))
         };
     }
+    private static Formula ActionScope(Formula body) =>
+        All("G",F.Id("Group"),All("Omega",Call("RightAction",F.Id("G")),
+            All("u",F.Id("G"),All("v",F.Id("G"),body))));
     private static Formula Scope(Formula body) =>
         All("G",F.Id("Group"),All("Omega",Call("RightAction",F.Id("G")),
             All("u",F.Id("G"),All("v",F.Id("G"),
