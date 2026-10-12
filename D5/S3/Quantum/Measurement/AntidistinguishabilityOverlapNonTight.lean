@@ -112,6 +112,12 @@ Definition rows classify unfolding; they assert no proposition and supply no esc
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 Published owner references use the protected baseline private declaration identities.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module. The result Reg candidate has DTR-Undeclared.
+The candidate diagnostic is IE-C050 ClosedTruthReadout: unclassified_form under
+source.residual_requires_open; no source-bound escape certificate is produced.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 import D5.S3.Quantum.Measurement.AntidistinguishabilitySpectrum

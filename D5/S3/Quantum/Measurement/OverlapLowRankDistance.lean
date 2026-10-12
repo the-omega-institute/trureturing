@@ -105,6 +105,10 @@ F12: D5/S3/Weil/ZetaLinear/VonNeumann.normSqMatrix
 Definition rows classify unfolding; they assert no proposition and supply no escape witness.
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram

@@ -49,6 +49,10 @@ Direct frozen dependencies:
     declaration statement_id: sha256:accd04d85421c0847456ddb52626f272e79ea98e568dcf9dfeddc5035a1f2013
   Other lane imports are same-delivery prerequisites, not baseline-frozen dependencies.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 import D5.S3.Quantum.Matrix.CartesianVariance

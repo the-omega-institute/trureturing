@@ -36,6 +36,10 @@ Utility: none; symbolic constructions and proofs for arbitrary dimensions,
 not bounded enumeration, a checker, numeric reduction, or a certified instance.
 Information-escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14762
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 import Mathlib.LinearAlgebra.Matrix.Rank

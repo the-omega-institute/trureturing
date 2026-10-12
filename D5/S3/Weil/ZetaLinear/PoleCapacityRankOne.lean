@@ -11,6 +11,10 @@ proof_shape: rank_hermNegPart_eq_negIndex: bind-only; consumer: LocallyPositiveS
 escape_witness: negDefOn_range_hermNegPart: none
 escape_witness: rank_hermNegPart_eq_negIndex: none
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 
