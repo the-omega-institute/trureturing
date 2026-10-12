@@ -433,6 +433,13 @@ private theorem trace_Y : (trace Y).re = 9/2 := by
     Complex.ofReal_re, Complex.ofReal_im]
   norm_num
 
+private theorem success7 (R E : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ) :
+    success R E = (∑ i, (trace (R i * E i)).re) / 7 := by
+  simp only [success, smul_mul_assoc, trace_smul, smul_eq_mul, Complex.mul_re]
+  norm_num
+  rw [← Finset.mul_sum]
+  ring
+
 private theorem weak_dual (R E : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ)
     (Z : Matrix (Fin 8) (Fin 8) ℂ) (hE : IsPOVM E)
     (hZ : ∀ i, (Z - R i).PosSemidef) : success R E ≤ (trace Z).re / 7 := by
@@ -442,12 +449,7 @@ private theorem weak_dual (R E : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ)
     rw [← Complex.re_sum, ← trace_sum, ← Finset.mul_sum, hE.2, mul_one]
   change 0 ≤ ∑ i, (trace ((Z - R i) * E i)).re at h
   simp only [sub_mul, trace_sub, Complex.sub_re, Finset.sum_sub_distrib, hz] at h
-  have he : success R E = (∑ i, (trace (R i * E i)).re) / 7 := by
-    simp only [success, smul_mul_assoc, trace_smul, smul_eq_mul, Complex.mul_re]
-    norm_num
-    rw [← Finset.mul_sum]
-    ring
-  rw [he]
+  rw [success7]
   linarith
 
 private theorem discr_pure_le (ρ : Fin 6 → DensityState (Fin 2))
@@ -472,5 +474,243 @@ private theorem discr_pure_le (ρ : Fin 6 → DensityState (Fin 2))
     rw [trace_Y] at hh
     norm_num at hh ⊢
     exact hh
+
+private theorem tensor_psd (A : Matrix (Fin 2) (Fin 2) ℂ) (hA : A.PosSemidef) :
+    (tensorPow 3 A).PosSemidef := by
+  let f : Fin 8 → (Fin 2 × Fin 2) × Fin 2 := fun i => ((bit i 2, bit i 1), bit i 0)
+  have he : tensorPow 3 A = (kronecker (kronecker A A) A).submatrix f f := by
+    ext i j
+    simp only [tensor23, submatrix_apply, f]
+    rfl
+  rw [he]
+  exact ((hA.kronecker hA).kronecker hA).submatrix f
+
+private theorem discr_bdd (ρ : Fin 7 → DensityState (Fin 2)) :
+    BddAbove {r : ℝ | ∃ E : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ,
+      IsPOVM E ∧ r = success (fun i => tensorPow 3 (ρ i).1) E} := by
+  classical
+  let R : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ := fun i => tensorPow 3 (ρ i).1
+  let Z := ∑ i, R i
+  refine ⟨(trace Z).re / 7, ?_⟩
+  rintro r ⟨E, hE, rfl⟩
+  apply weak_dual R E Z hE
+  intro i
+  have he : Z - R i = ∑ j ∈ Finset.univ.erase i, R j := by
+    dsimp only [Z]
+    rw [← Finset.sum_erase_add _ _ (Finset.mem_univ i)]
+    abel
+  rw [he]
+  apply posSemidef_sum
+  intro j _
+  apply tensor_psd
+  exact (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm (ρ j).2.1).posSemidef
+
+private def omega3 : ℂ := (-1 + (Real.sqrt 3 : ℂ) * Complex.I) / 2
+
+private theorem omega_unit : star omega3 * omega3 = 1 := by
+  have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  apply Complex.ext <;> norm_num [omega3, Complex.mul_re, Complex.mul_im] <;> nlinarith
+
+private theorem omega_sq : omega3 ^ 2 = star omega3 := by
+  have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  apply Complex.ext <;> norm_num [omega3, pow_two, Complex.mul_re, Complex.mul_im] <;> nlinarith
+
+private theorem omega_sum : 1 + omega3 + star omega3 = 0 := by
+  apply Complex.ext <;> norm_num [omega3]
+  ring
+
+private def phase : Fin 3 → ℂ := ![1, omega3, star omega3]
+
+private theorem phase_unit (j : Fin 3) : star (phase j) * phase j = 1 := by
+  fin_cases j
+  · norm_num [phase]
+  · exact omega_unit
+  · change star (star omega3) * star omega3 = 1
+    rw [star_star, mul_comm]
+    exact omega_unit
+
+private def trineMat (j : Fin 3) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (1/2 : ℝ) • vecMulVec ![1, phase j] (star ![1, phase j])
+
+private theorem trine_psd (j : Fin 3) : (trineMat j).PosSemidef :=
+  (posSemidef_vecMulVec_self_star ![1, phase j]).smul (by norm_num : (0:ℝ) ≤ 1/2)
+
+private theorem trine_trace (j : Fin 3) : trace (trineMat j) = 1 := by
+  dsimp only [trineMat]
+  rw [trace_smul, trace_vecMulVec]
+  norm_num [dotProduct, Fin.sum_univ_succ, Pi.star_apply, Complex.real_smul]
+  simp only [starRingEnd_apply]
+  linear_combination (1/2 : ℂ) * phase_unit j
+
+private def witnessMat : Fin 7 → Matrix (Fin 2) (Fin 2) ℂ :=
+  ![octMat 0, octMat 1, trineMat 0, trineMat 1, trineMat 2,
+    diagonal ![2/3,1/3], diagonal ![1/3,2/3]]
+
+private theorem witness_psd (i : Fin 7) : (witnessMat i).PosSemidef := by
+  fin_cases i
+  · exact octMat_psd 0
+  · exact octMat_psd 1
+  · exact trine_psd 0
+  · exact trine_psd 1
+  · exact trine_psd 2
+  · apply posSemidef_diagonal_iff.mpr
+    intro j
+    fin_cases j <;> norm_num [Complex.nonneg_iff]
+  · apply posSemidef_diagonal_iff.mpr
+    intro j
+    fin_cases j <;> norm_num [Complex.nonneg_iff]
+
+private theorem witness_trace (i : Fin 7) : trace (witnessMat i) = 1 := by
+  fin_cases i
+  · exact octMat_trace 0
+  · exact octMat_trace 1
+  · exact trine_trace 0
+  · exact trine_trace 1
+  · exact trine_trace 2
+  · norm_num [witnessMat, trace_diagonal, Fin.sum_univ_succ]
+  · norm_num [witnessMat, trace_diagonal, Fin.sum_univ_succ]
+
+private def witness (i : Fin 7) : DensityState (Fin 2) :=
+  ⟨CStarMatrix.ofMatrix (witnessMat i),
+    map_nonneg CStarMatrix.ofMatrixStarAlgEquiv (witness_psd i).nonneg, witness_trace i⟩
+
+private def trineEffectVec (j : Fin 3) : Fin 8 → ℂ :=
+  ![1/4,phase j/3,phase j/3,star (phase j)/3,phase j/3,
+    star (phase j)/3,star (phase j)/3,1/4]
+
+private def witnessPOVM : Fin 7 → Matrix (Fin 8) (Fin 8) ℂ :=
+  ![(1/64 : ℝ) • (vecMulVec ![-6,0,0,0,0,0,0,1] (star ![-6,0,0,0,0,0,0,1]) +
+       (15 : ℝ) • vecMulVec ![1,0,0,0,0,0,0,0] (star ![1,0,0,0,0,0,0,0])),
+    (1/64 : ℝ) • (vecMulVec ![1,0,0,0,0,0,0,-6] (star ![1,0,0,0,0,0,0,-6]) +
+       (15 : ℝ) • vecMulVec ![0,0,0,0,0,0,0,1] (star ![0,0,0,0,0,0,0,1])),
+    vecMulVec (trineEffectVec 0) (star (trineEffectVec 0)),
+    vecMulVec (trineEffectVec 1) (star (trineEffectVec 1)),
+    vecMulVec (trineEffectVec 2) (star (trineEffectVec 2)),
+    (1/2 : ℝ) • vecMulVec ![0,1,-1,0,0,0,0,0] (star ![0,1,-1,0,0,0,0,0]) +
+      (1/6 : ℝ) • vecMulVec ![0,1,1,0,-2,0,0,0] (star ![0,1,1,0,-2,0,0,0]),
+    (1/2 : ℝ) • vecMulVec ![0,0,0,1,0,-1,0,0] (star ![0,0,0,1,0,-1,0,0]) +
+      (1/6 : ℝ) • vecMulVec ![0,0,0,1,0,1,-2,0] (star ![0,0,0,1,0,1,-2,0])]
+
+private theorem witnessPOVM_psd (i : Fin 7) : (witnessPOVM i).PosSemidef := by
+  fin_cases i
+  · exact ((posSemidef_vecMulVec_self_star _).add
+      ((posSemidef_vecMulVec_self_star _).smul (by norm_num : (0:ℝ) ≤ 15))).smul
+      (by norm_num : (0:ℝ) ≤ 1/64)
+  · exact ((posSemidef_vecMulVec_self_star _).add
+      ((posSemidef_vecMulVec_self_star _).smul (by norm_num : (0:ℝ) ≤ 15))).smul
+      (by norm_num : (0:ℝ) ≤ 1/64)
+  · exact posSemidef_vecMulVec_self_star _
+  · exact posSemidef_vecMulVec_self_star _
+  · exact posSemidef_vecMulVec_self_star _
+  · exact ((posSemidef_vecMulVec_self_star _).smul (by norm_num : (0:ℝ) ≤ 1/2)).add
+      ((posSemidef_vecMulVec_self_star _).smul (by norm_num : (0:ℝ) ≤ 1/6))
+  · exact ((posSemidef_vecMulVec_self_star _).smul (by norm_num : (0:ℝ) ≤ 1/2)).add
+      ((posSemidef_vecMulVec_self_star _).smul (by norm_num : (0:ℝ) ≤ 1/6))
+
+private theorem omega_conj : star omega3 = -1 - omega3 := by
+  linear_combination omega_sum
+
+set_option maxHeartbeats 2000000 in
+-- All entries of the seven-effect sum reduce to the cubic-root identities.
+private theorem witnessPOVM_sum : ∑ i, witnessPOVM i = 1 := by
+  ext a b
+  fin_cases a <;> fin_cases b <;>
+    norm_num [Matrix.sum_apply, Fin.sum_univ_succ, witnessPOVM, trineEffectVec,
+      phase, vecMulVec_apply, Matrix.smul_apply, Pi.star_apply, map_ofNat, Matrix.cons_val_two,
+      Complex.real_smul, Matrix.one_apply, -cons_vecMulVec, -vecMulVec_cons]
+  all_goals simp only [starRingEnd_apply, omega_conj]
+  all_goals ring_nf
+  all_goals simp only [omega_sq, omega_conj]
+  all_goals ring
+
+private theorem witnessPOVM_valid : IsPOVM witnessPOVM :=
+  ⟨witnessPOVM_psd, witnessPOVM_sum⟩
+
+private theorem phase_cube (j : Fin 3) : phase j ^ 3 = 1 := by
+  have h : omega3 ^ 3 = 1 := by rw [pow_succ, omega_sq, omega_unit]
+  fin_cases j
+  · norm_num [phase]
+  · exact h
+  · change (star omega3) ^ 3 = 1
+    rw [← star_pow, h, star_one]
+
+private theorem trine_tensor (j : Fin 3) : tensorPow 3 (trineMat j) =
+    (1/8 : ℝ) • vecMulVec (tensorVec ![1,phase j]) (star (tensorVec ![1,phase j])) := by
+  rw [← pure_tensor]
+  ext a b
+  simp only [tensor23, trineMat, Matrix.smul_apply]
+  norm_num [Complex.real_smul]
+  ring
+
+private theorem trine_overlap (j : Fin 3) :
+    star (trineEffectVec j) ⬝ᵥ tensorVec ![1,phase j] = 5/2 := by
+  norm_num [dotProduct, Fin.sum_univ_succ, trineEffectVec, tensorVec,
+    bit_table, Pi.star_apply, Matrix.cons_val_two, map_ofNat]
+  simp only [starRingEnd_apply]
+  ring_nf
+  rw [phase_cube]
+  linear_combination phase_unit j
+
+private theorem trine_score (j : Fin 3) :
+    (trace (tensorPow 3 (trineMat j) *
+      vecMulVec (trineEffectVec j) (star (trineEffectVec j)))).re = 25/32 := by
+  rw [trine_tensor, smul_mul_assoc, trace_smul, vecMulVec_mul_vecMulVec, trace_vecMulVec]
+  have ho : tensorVec ![1,phase j] ⬝ᵥ star (trineEffectVec j) = 5/2 := by
+    rw [dotProduct_comm, trine_overlap]
+  have hr : star (tensorVec ![1,phase j]) ⬝ᵥ trineEffectVec j = 5/2 := by
+    rw [star_dotProduct, trine_overlap]
+    norm_num
+  simp only [dotProduct_smul, smul_eq_mul, hr, ho]
+  norm_num [Complex.real_smul]
+
+private theorem witness_scores (i : Fin 7) :
+    (trace (tensorPow 3 (witnessMat i) * witnessPOVM i)).re =
+      (![51/64,51/64,25/32,25/32,25/32,8/27,8/27] : Fin 7 → ℝ) i := by
+  change (∑ a : Fin 8, ∑ b : Fin 8, tensorPow 3 (witnessMat i) a b *
+    witnessPOVM i b a).re = _
+  fin_cases i
+  · norm_num [witnessMat, witnessPOVM, octMat, octScale, octVec, trace, mul_apply,
+      Fin.sum_univ_succ, tensor23, bit_table, vecMulVec_apply, Matrix.smul_apply,
+      Complex.real_smul, Matrix.cons_val_two, Pi.star_apply,
+      -cons_vecMulVec, -vecMulVec_cons]
+  · norm_num [witnessMat, witnessPOVM, octMat, octScale, octVec, trace, mul_apply,
+      Fin.sum_univ_succ, tensor23, bit_table, vecMulVec_apply, Matrix.smul_apply,
+      Complex.real_smul, Matrix.cons_val_two, Pi.star_apply,
+      -cons_vecMulVec, -vecMulVec_cons]
+  · exact trine_score 0
+  · exact trine_score 1
+  · exact trine_score 2
+  · norm_num [witnessMat, witnessPOVM, trace, mul_apply, Fin.sum_univ_succ,
+      tensor23, bit_table, vecMulVec_apply, Matrix.smul_apply, Complex.real_smul,
+      Matrix.cons_val_two, diagonal_apply, Pi.star_apply,
+      -cons_vecMulVec, -vecMulVec_cons]
+  · norm_num [witnessMat, witnessPOVM, trace, mul_apply, Fin.sum_univ_succ,
+      tensor23, bit_table, vecMulVec_apply, Matrix.smul_apply, Complex.real_smul,
+      Matrix.cons_val_two, diagonal_apply, Pi.star_apply,
+      -cons_vecMulVec, -vecMulVec_cons]
+
+private theorem witness_success :
+    success (fun i => tensorPow 3 (witness i).1) witnessPOVM = 1957/3024 := by
+  rw [success7]
+  change (∑ i : Fin 7, (trace (tensorPow 3 (witnessMat i) * witnessPOVM i)).re) / 7 = _
+  simp only [witness_scores]
+  norm_num [Fin.sum_univ_succ]
+
+private theorem discr_witness_ge : 1957/3024 ≤ Discr 3 witness := by
+  rw [← witness_success]
+  exact le_csSup (discr_bdd witness) ⟨witnessPOVM, witnessPOVM_valid, rfl⟩
+
+private theorem discr_design_le (ρ : Fin 6 → DensityState (Fin 2)) (p : Fin 6 → ℝ)
+    (h : IsWeightedDesign 3 ρ p) : Discr 3 (adjoin ρ (by norm_num)) ≤ 9/14 :=
+  discr_pure_le ρ (six_design_pure ρ p h).2
+
+theorem result : ¬ claim := by
+  intro h
+  have hs := h 2 3 (by norm_num) (by norm_num)
+  rw [nprime23] at hs
+  have hu := discr_design_le octStates (fun _ => 1/6) octDesign
+  have hl := discr_witness_ge
+  have hc := hs octStates (fun _ => 1/6) octDesign witness
+  linarith
 
 end D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation
