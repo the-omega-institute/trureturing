@@ -38,8 +38,7 @@ structure ExactGenerator (n : ℕ) (κ : ℝ) (Z : Type*) [Fintype Z] where
   mean_bound : ∀ z i, |mean z i| ≤ 1
   exact_mass : ∀ x, ∑ z, weight z * productChannel (mean z) x = parityMass κ x
 
-/-- The full signed product moment of a source component. -/
-def componentMoment {n : ℕ} (m : Fin n → ℝ) : ℝ := ∏ i, m i
+local notation "componentMoment" => (fun {n : ℕ} (m : Fin n → ℝ) => ∏ i, m i)
 
 /-- The total absolute parity charge in one realized generator. -/
 def absoluteCharge {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype Z]
@@ -100,7 +99,7 @@ private theorem productChannel_nonneg {n : ℕ} (m : Fin n → ℝ)
 
 private theorem componentMoment_abs_le_one {n : ℕ} (m : Fin n → ℝ)
     (hm : ∀ i, |m i| ≤ 1) : |componentMoment m| ≤ 1 := by
-  rw [componentMoment, Finset.abs_prod]
+  rw [Finset.abs_prod]
   exact (Finset.prod_le_prod (fun i _ => abs_nonneg (m i))
     (fun i _ => hm i)).trans_eq (by simp)
 
@@ -123,7 +122,7 @@ private theorem mode_mass {n : ℕ} (m : Fin n → ℝ) :
 
 private theorem moment_le_mode_sq {n : ℕ} (m : Fin n → ℝ) :
     |componentMoment m| ≤ (productChannel m (mode m)) ^ 2 := by
-  rw [componentMoment, Finset.abs_prod, mode_mass, ← Finset.prod_pow]
+  rw [Finset.abs_prod, mode_mass, ← Finset.prod_pow]
   apply Finset.prod_le_prod (fun i _ => abs_nonneg (m i))
   intro i _
   nlinarith [sq_nonneg (1 - |m i|)]
@@ -175,7 +174,7 @@ private theorem component_log_capacity {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype
 private theorem channel_parity_moment {n : ℕ} (m : Fin n → ℝ) :
     (∑ x : Fin n → Fin 2, productChannel m x * ∏ i, σ (x i)) =
       componentMoment m := by
-  simp only [windowLaw, componentMoment, ← Finset.prod_mul_distrib]
+  simp only [windowLaw, ← Finset.prod_mul_distrib]
   rw [← Fintype.prod_sum (fun (i : Fin n) (b : Fin 2) => (1 + m i * σ b) / 2 * σ b)]
   apply Finset.prod_congr rfl
   intro i _
@@ -388,7 +387,8 @@ private theorem log_coordinate_chord {u : ℝ} (hu : 0 ≤ u) (hu1 : u ≤ 1) :
     (show (0 : ℝ) < 1 by norm_num) (show (0 : ℝ) < 2 by norm_num)
     (show 0 ≤ 1 - u by linarith) hu (by ring : (1 - u) + u = 1)
   simp only [smul_eq_mul, Real.log_one, mul_zero, zero_add] at hh
-  convert hh using 1 <;> congr 1 <;> ring
+  have heq : (1 - u) * 1 + u * 2 = 1 + u := by ring
+  simpa only [heq] using hh
 
 private theorem large_coordinate_budget {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype Z]
     (G : ExactGenerator n κ Z) (hκ : 0 ≤ κ) (L : ℝ) (z : Z)
@@ -673,7 +673,8 @@ private theorem large_flip_average_bound {n : ℕ} {κ : ℝ} {Z : Type*} [Finty
   rw [hidentity, abs_div, abs_of_pos hnR]
   apply (div_le_iff₀ hnR).2
   have hh := (Finset.abs_sum_le_sum_abs _ _).trans hsum
-  convert hh using 1 <;> field_simp
+  convert hh using 1
+  field_simp
 
 /-- The entropy-selected large-source mixture is uniformly close to the
 constant density `1 - κ` under the fair law, for the same exact generator. -/
@@ -751,10 +752,5 @@ theorem entropy_cutoff_parity_transfer {n : ℕ} {κ : ℝ} {Z : Type*} [Fintype
   change (𝔼 x : Fin n → Fin 2, |largeDensity G L x - a|) ≤
     B / D + B / L + η + 2 * ε
   linarith [(abs_le.mp hmass).1]
-
-#print axioms entropy_cutoff_parity_transfer
-
-#print axioms entropy_truncation_coercivity
-
 end
 end D5.S3.Entropy.ProductGenerator.EntropyTruncation
