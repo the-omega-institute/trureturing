@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e9e9bec85c42b3cd4eed1539abd71435059aa86daf8dcd2fe94e554062a53237"}
+{"statement_id":"sha256:e9e9bec85c42b3cd4eed1539abd71435059aa86daf8dcd2fe94e554062a53237","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),29:MutualInformationIndependence),38:mutual_information_eq_zero_iff_product)","kind":"theorem"}]}

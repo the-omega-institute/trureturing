@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c836840b5d12380bce5c3095db7a3ab5d4f449391ee494beffc3aa727466314c"}
+{"statement_id":"sha256:c836840b5d12380bce5c3095db7a3ab5d4f449391ee494beffc3aa727466314c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),13:Interventions),32:RedundantAppealDefectPersistence),17:ConceptEquivalent)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),13:Interventions),32:RedundantAppealDefectPersistence),48:redundant_appeal_cannot_repair_structural_defect)","kind":"theorem"}]}

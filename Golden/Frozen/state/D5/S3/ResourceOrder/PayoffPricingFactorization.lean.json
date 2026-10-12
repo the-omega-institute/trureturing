@@ -1,1 +1,1 @@
-{"statement_id":"sha256:fd2056a3ccf9ace322be34e2cbb1def49dab56fe3fd776b6dd673a48ccdb297e"}
+{"statement_id":"sha256:fd2056a3ccf9ace322be34e2cbb1def49dab56fe3fd776b6dd673a48ccdb297e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:ResourceOrder),26:PayoffPricingFactorization),30:payoff_price_factorization_iff)","kind":"theorem"}]}
