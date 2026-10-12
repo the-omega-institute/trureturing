@@ -8,14 +8,14 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 
-universe u v w
+universe u_1 u_2 u_3
 noncomputable section
 
-abbrev Params : Type (max (u + 1) (max (v + 1) (w + 1))) :=
-  Σ C : Type u, Σ I : Type v, Σ O : Type w, Σ _ : C → Op C I O, ℕ → Option I
+abbrev Params : Type (max (u_1 + 1) (max (u_2 + 1) (u_3 + 1))) :=
+  Σ C : Type u_1, Σ I : Type u_2, Σ O : Type u_3, Σ _ : C → Op C I O, ℕ → Option I
 
 abbrev relationSignature : Signature where
-  Params := Params.{u,v,w}
+  Params := Params.{u_1,u_2,u_3}
   State p := Frame p.1 p.2.2.1
   Role := Unit
   finiteRole := inferInstance
@@ -25,7 +25,7 @@ abbrev relationSignature : Signature where
   finiteAnchor := inferInstance
 
 abbrev traceSignature : Signature where
-  Params := Params.{u,v,w}
+  Params := Params.{u_1,u_2,u_3}
   State p := Frame p.1 p.2.2.1
   Role := Unit
   finiteRole := inferInstance
@@ -34,113 +34,113 @@ abbrev traceSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def stepActual : Realization relationSignature.{u,v,w} :=
+def stepActual : Realization relationSignature.{u_1,u_2,u_3} :=
   realize relationSignature (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e)
 
-def traceActual : Realization traceSignature.{u,v,w} :=
+def traceActual : Realization traceSignature.{u_1,u_2,u_3} :=
   realize traceSignature (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e)
 
-def runActual : Realization relationSignature.{u,v,w} :=
+def runActual : Realization relationSignature.{u_1,u_2,u_3} :=
   realize relationSignature (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e)
 
-def stepRejected : Realization relationSignature.{u,v,w} :=
+def stepRejected : Realization relationSignature.{u_1,u_2,u_3} :=
   realize relationSignature (fun _ _ _ _ => True) (fun (e : Empty) _ => Empty.elim e)
 
-def traceRejected : Realization traceSignature.{u,v,w} :=
+def traceRejected : Realization traceSignature.{u_1,u_2,u_3} :=
   realize traceSignature (fun _ _ _ _ _ => True) (fun (e : Empty) _ => Empty.elim e)
 
-def runRejected : Realization relationSignature.{u,v,w} :=
+def runRejected : Realization relationSignature.{u_1,u_2,u_3} :=
   realize relationSignature (fun _ _ _ _ => False) (fun (e : Empty) _ => Empty.elim e)
 
 abbrev stepArena : Arena where
-  signature := relationSignature.{u,v,w}
-  Law R := ∀ {C : Type u} {I : Type v} {O : Type w}
+  signature := relationSignature.{u_1,u_2,u_3}
+  Law R := ∀ {C : Type u_1} {I : Type u_2} {O : Type u_3}
     (action : C → Op C I O) (input : ℕ → Option I),
     Relator.RightUnique (R.readout () ⟨C, I, O, action, input⟩)
 
 abbrev traceArena : Arena where
-  signature := traceSignature.{u,v,w}
-  Law R := ∀ {C : Type u} {I : Type v} {O : Type w}
+  signature := traceSignature.{u_1,u_2,u_3}
+  Law R := ∀ {C : Type u_1} {I : Type u_2} {O : Type u_3}
     {action : C → Op C I O} {input : ℕ → Option I}
     {s t : Frame C O} {vertices : List C}
     (_h : R.readout () ⟨C, I, O, action, input⟩ s t vertices),
     Relation.ReflTransGen (Step action input) s t
 
 abbrev runClosureArena : Arena where
-  signature := relationSignature.{u,v,w}
-  Law R := ∀ {C : Type u} {I : Type v} {O : Type w}
+  signature := relationSignature.{u_1,u_2,u_3}
+  Law R := ∀ {C : Type u_1} {I : Type u_2} {O : Type u_3}
     {action : C → Op C I O} {input : ℕ → Option I} {s t : Frame C O},
     R.readout () ⟨C, I, O, action, input⟩ s t ↔
       Relation.ReflTransGen (Step action input) s t
 
 abbrev runTransArena : Arena where
-  signature := relationSignature.{u,v,w}
-  Law R := ∀ {C : Type u} {I : Type v} {O : Type w}
+  signature := relationSignature.{u_1,u_2,u_3}
+  Law R := ∀ {C : Type u_1} {I : Type u_2} {O : Type u_3}
     {action : C → Op C I O} {input : ℕ → Option I} {s t z : Frame C O}
     (_h : Run action input s t) (_g : Run action input t z),
     R.readout () ⟨C, I, O, action, input⟩ s z
 
 abbrev runComparableArena : Arena where
-  signature := relationSignature.{u,v,w}
-  Law R := ∀ {C : Type u} {I : Type v} {O : Type w}
+  signature := relationSignature.{u_1,u_2,u_3}
+  Law R := ∀ {C : Type u_1} {I : Type u_2} {O : Type u_3}
     {action : C → Op C I O} {input : ℕ → Option I} {s t z : Frame C O}
     (_h : Run action input s t) (_g : Run action input s z),
     R.readout () ⟨C, I, O, action, input⟩ t z ∨ Run action input z t
 
 /-- These inhabited fibers witness global variation; the Laws quantify over all fibers. -/
-private def sampleFrame (n : ℕ) : Frame (ULift.{u} Unit) (ULift.{w} Unit) :=
+private def sampleFrame (n : ℕ) : Frame (ULift.{u_1} Unit) (ULift.{u_3} Unit) :=
   ⟨⟨()⟩, n, []⟩
 
-private def idleAction : ULift.{u} Unit →
-    Op (ULift.{u} Unit) (ULift.{v} Unit) (ULift.{w} Unit) :=
+private def idleAction : ULift.{u_1} Unit →
+    Op (ULift.{u_1} Unit) (ULift.{u_2} Unit) (ULift.{u_3} Unit) :=
   fun c => .internal c []
 
-private def sampleParams : Params.{u,v,w} :=
-  ⟨ULift.{u} Unit, ULift.{v} Unit, ULift.{w} Unit, idleAction, fun _ => none⟩
+private def sampleParams : Params.{u_1,u_2,u_3} :=
+  ⟨ULift.{u_1} Unit, ULift.{u_2} Unit, ULift.{u_3} Unit, idleAction, fun _ => none⟩
 
 private theorem no_run_back
-    (action : ULift.{u} Unit → Op (ULift.{u} Unit) (ULift.{v} Unit) (ULift.{w} Unit))
-    (input : ℕ → Option (ULift.{v} Unit)) :
+    (action : ULift.{u_1} Unit → Op (ULift.{u_1} Unit) (ULift.{u_2} Unit) (ULift.{u_3} Unit))
+    (input : ℕ → Option (ULift.{u_2} Unit)) :
     ¬ Run action input (sampleFrame 1) (sampleFrame 0) := by
   intro h
   have bound := (run_mono h).1
   change 1 ≤ 0 at bound
   omega
 
-theorem step_rejected_law : ¬ stepArena.{u,v,w}.Law stepRejected.{u,v,w} := by
+theorem step_rejected_law : ¬ stepArena.{u_1,u_2,u_3}.Law stepRejected.{u_1,u_2,u_3} := by
   intro h
-  have unique := h idleAction.{u,v,w} (fun _ => none)
-  have equal : sampleFrame.{u,w} 0 = sampleFrame.{u,w} 1 :=
+  have unique := h idleAction.{u_1,u_2,u_3} (fun _ => none)
+  have equal : sampleFrame.{u_1,u_3} 0 = sampleFrame.{u_1,u_3} 1 :=
     unique (a := sampleFrame 0) True.intro True.intro
   have impossible : (0 : ℕ) = 1 := congrArg Frame.acquired equal
   omega
 
-theorem trace_rejected_law : ¬ traceArena.{u,v,w}.Law traceRejected.{u,v,w} := by
+theorem trace_rejected_law : ¬ traceArena.{u_1,u_2,u_3}.Law traceRejected.{u_1,u_2,u_3} := by
   intro h
-  have closure := h (action := idleAction.{u,v,w}) (input := fun _ => none)
+  have closure := h (action := idleAction.{u_1,u_2,u_3}) (input := fun _ => none)
     (s := sampleFrame 1) (t := sampleFrame 0) (vertices := []) True.intro
   exact no_run_back _ _ (run_closure.mpr closure)
 
-theorem run_closure_rejected_law : ¬ runClosureArena.{u,v,w}.Law runRejected.{u,v,w} := by
+theorem run_closure_rejected_law : ¬ runClosureArena.{u_1,u_2,u_3}.Law runRejected.{u_1,u_2,u_3} := by
   intro h
-  exact (h (action := idleAction.{u,v,w}) (input := fun _ => none)
+  exact (h (action := idleAction.{u_1,u_2,u_3}) (input := fun _ => none)
     (s := sampleFrame 0) (t := sampleFrame 0)).mpr .refl
 
-theorem run_trans_rejected_law : ¬ runTransArena.{u,v,w}.Law runRejected.{u,v,w} := by
+theorem run_trans_rejected_law : ¬ runTransArena.{u_1,u_2,u_3}.Law runRejected.{u_1,u_2,u_3} := by
   intro h
-  exact h (action := idleAction.{u,v,w}) (input := fun _ => none)
+  exact h (action := idleAction.{u_1,u_2,u_3}) (input := fun _ => none)
     (s := sampleFrame 0) (t := sampleFrame 0) (z := sampleFrame 0)
     ⟨_, .refl⟩ ⟨_, .refl⟩
 
-theorem run_comparable_rejected_law : ¬ runComparableArena.{u,v,w}.Law runRejected.{u,v,w} := by
+theorem run_comparable_rejected_law : ¬ runComparableArena.{u_1,u_2,u_3}.Law runRejected.{u_1,u_2,u_3} := by
   intro h
-  let action : ULift.{u} Unit →
-      Op (ULift.{u} Unit) (ULift.{v} Unit) (ULift.{w} Unit) :=
+  let action : ULift.{u_1} Unit →
+      Op (ULift.{u_1} Unit) (ULift.{u_2} Unit) (ULift.{u_3} Unit) :=
     fun _ => .acquire (fun _ => some (⟨()⟩, []))
-  let input : ℕ → Option (ULift.{v} Unit) := fun _ => some ⟨()⟩
+  let input : ℕ → Option (ULift.{u_2} Unit) := fun _ => some ⟨()⟩
   have edge : Step action input (sampleFrame 0) (sampleFrame 1) :=
     Step.acquire (action := action) (input := input)
       ⟨()⟩ ⟨()⟩ 0 [] [] (fun _ => some (⟨()⟩, [])) ⟨()⟩ rfl rfl rfl
@@ -152,23 +152,23 @@ theorem run_comparable_rejected_law : ¬ runComparableArena.{u,v,w}.Law runRejec
   · exact impossible
   · exact no_run_back action input backward
 
-theorem run_dependence : ObservationalDependence relationSignature.{u,v,w} runActual.{u,v,w} := by
+theorem run_dependence : ObservationalDependence relationSignature.{u_1,u_2,u_3} runActual.{u_1,u_2,u_3} := by
   intro i
   refine ⟨sampleParams, sampleFrame 0, sampleFrame 1, ?_⟩
   intro h
-  have equal : Run idleAction.{u,v,w} (fun _ => none) (sampleFrame 0) (sampleFrame 0) =
-      Run idleAction.{u,v,w} (fun _ => none) (sampleFrame 1) (sampleFrame 0) :=
+  have equal : Run idleAction.{u_1,u_2,u_3} (fun _ => none) (sampleFrame 0) (sampleFrame 0) =
+      Run idleAction.{u_1,u_2,u_3} (fun _ => none) (sampleFrame 1) (sampleFrame 0) :=
     congrFun h (sampleFrame 0)
   exact no_run_back _ _ (equal.mp ⟨_, Trace.refl⟩)
 
-def stepRegistration : Registration stepArena.{u,v,w}
-    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique.{u,v,w})) where
-  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+def stepRegistration : Registration stepArena.{u_1,u_2,u_3}
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique.{u_1,u_2,u_3})) where
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
-  variation := ⟨@step_unique.{u,v,w}, stepRejected, step_rejected_law⟩
+  variation := ⟨@step_unique.{u_1,u_2,u_3}, stepRejected, step_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -181,22 +181,22 @@ def stepRegistration : Registration stepArena.{u,v,w}
     intro i
     refine ⟨sampleParams, sampleFrame 0, sampleFrame 1, ?_⟩
     intro h
-    have edge : Step idleAction.{u,v,w} (fun _ => none) (sampleFrame 0) (sampleFrame 0) :=
-      Step.internal (action := idleAction.{u,v,w}) (input := fun _ => none)
+    have edge : Step idleAction.{u_1,u_2,u_3} (fun _ => none) (sampleFrame 0) (sampleFrame 0) :=
+      Step.internal (action := idleAction.{u_1,u_2,u_3}) (input := fun _ => none)
         ⟨()⟩ ⟨()⟩ 0 [] [] rfl
-    have equal : Step idleAction.{u,v,w} (fun _ => none) (sampleFrame 0) (sampleFrame 0) =
-        Step idleAction.{u,v,w} (fun _ => none) (sampleFrame 1) (sampleFrame 0) :=
+    have equal : Step idleAction.{u_1,u_2,u_3} (fun _ => none) (sampleFrame 0) (sampleFrame 0) =
+        Step idleAction.{u_1,u_2,u_3} (fun _ => none) (sampleFrame 1) (sampleFrame 0) :=
       congrFun h (sampleFrame 0)
     exact no_run_back _ _ ⟨_, Trace.refl.tail (equal.mp edge)⟩
 
-def traceRegistration : Registration traceArena.{u,v,w}
-    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure.{u,v,w})) where
-  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    traceSignature.{u,v,w}
+def traceRegistration : Registration traceArena.{u_1,u_2,u_3}
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure.{u_1,u_2,u_3})) where
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    traceSignature.{u_1,u_2,u_3}
     (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
-  variation := ⟨@trace_closure.{u,v,w}, traceRejected, trace_rejected_law⟩
+  variation := ⟨@trace_closure.{u_1,u_2,u_3}, traceRejected, trace_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -209,19 +209,19 @@ def traceRegistration : Registration traceArena.{u,v,w}
     intro i
     refine ⟨sampleParams, sampleFrame 0, sampleFrame 1, ?_⟩
     intro h
-    have equal : Trace idleAction.{u,v,w} (fun _ => none) (sampleFrame 0) (sampleFrame 0) [⟨()⟩] =
-        Trace idleAction.{u,v,w} (fun _ => none) (sampleFrame 1) (sampleFrame 0) [⟨()⟩] :=
+    have equal : Trace idleAction.{u_1,u_2,u_3} (fun _ => none) (sampleFrame 0) (sampleFrame 0) [⟨()⟩] =
+        Trace idleAction.{u_1,u_2,u_3} (fun _ => none) (sampleFrame 1) (sampleFrame 0) [⟨()⟩] :=
       congrFun (congrFun h (sampleFrame 0)) [⟨()⟩]
     exact no_run_back _ _ ⟨_, equal.mp Trace.refl⟩
 
-def runClosureRegistration : Registration runClosureArena.{u,v,w}
-    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure.{u,v,w})) where
-  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+def runClosureRegistration : Registration runClosureArena.{u_1,u_2,u_3}
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure.{u_1,u_2,u_3})) where
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
-  variation := ⟨@run_closure.{u,v,w}, runRejected, run_closure_rejected_law⟩
+  variation := ⟨@run_closure.{u_1,u_2,u_3}, runRejected, run_closure_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -232,14 +232,14 @@ def runClosureRegistration : Registration runClosureArena.{u,v,w}
       exact nomatch e
   dependence := run_dependence
 
-def runTransRegistration : Registration runTransArena.{u,v,w}
-    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans.{u,v,w})) where
-  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+def runTransRegistration : Registration runTransArena.{u_1,u_2,u_3}
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans.{u_1,u_2,u_3})) where
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
-  variation := ⟨@run_trans.{u,v,w}, runRejected, run_trans_rejected_law⟩
+  variation := ⟨@run_trans.{u_1,u_2,u_3}, runRejected, run_trans_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -250,14 +250,14 @@ def runTransRegistration : Registration runTransArena.{u,v,w}
       exact nomatch e
   dependence := run_dependence
 
-def runComparableRegistration : Registration runComparableArena.{u,v,w}
-    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable.{u,v,w})) where
-  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+def runComparableRegistration : Registration runComparableArena.{u_1,u_2,u_3}
+    (type_of% (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable.{u_1,u_2,u_3})) where
+  actual := (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   bridge := Iff.rfl
-  variation := ⟨@run_comparable.{u,v,w}, runRejected, run_comparable_rejected_law⟩
+  variation := ⟨@run_comparable.{u_1,u_2,u_3}, runRejected, run_comparable_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -270,8 +270,8 @@ def runComparableRegistration : Registration runComparableArena.{u,v,w}
 
 def step_unique_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique.{u,v,w})
-      (type_of% (realize relationSignature.{u,v,w}
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique.{u_1,u_2,u_3})
+      (type_of% (realize relationSignature.{u_1,u_2,u_3}
         (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.step_unique_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.stepRegistration
@@ -284,8 +284,8 @@ def step_unique_registration :
   realization := .source stepArena ⟨stepRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Step p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
@@ -308,8 +308,8 @@ def step_unique_registration :
 
 def trace_closure_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure.{u,v,w})
-      (type_of% (realize traceSignature.{u,v,w}
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure.{u_1,u_2,u_3})
+      (type_of% (realize traceSignature.{u_1,u_2,u_3}
         (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_closure_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.traceRegistration
@@ -322,8 +322,8 @@ def trace_closure_registration :
   realization := .source traceArena ⟨traceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    traceSignature.{u,v,w}
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    traceSignature.{u_1,u_2,u_3}
     (fun _ p s => Trace p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
@@ -347,8 +347,8 @@ def trace_closure_registration :
 
 def run_closure_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure.{u,v,w})
-      (type_of% (realize relationSignature.{u,v,w}
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure.{u_1,u_2,u_3})
+      (type_of% (realize relationSignature.{u_1,u_2,u_3}
         (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_closure_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.runClosureRegistration
@@ -361,8 +361,8 @@ def run_closure_registration :
   realization := .source runClosureArena ⟨runClosureRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
@@ -386,8 +386,8 @@ def run_closure_registration :
 
 def run_trans_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans.{u,v,w})
-      (type_of% (realize relationSignature.{u,v,w}
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans.{u_1,u_2,u_3})
+      (type_of% (realize relationSignature.{u_1,u_2,u_3}
         (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_trans_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.runTransRegistration
@@ -400,8 +400,8 @@ def run_trans_registration :
   realization := .source runTransArena ⟨runTransRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
@@ -425,8 +425,8 @@ def run_trans_registration :
 
 def run_comparable_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable.{u,v,w})
-      (type_of% (realize relationSignature.{u,v,w}
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable.{u_1,u_2,u_3})
+      (type_of% (realize relationSignature.{u_1,u_2,u_3}
         (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s) (fun (e : Empty) _ => Empty.elim e))) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_comparable_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.runComparableRegistration
@@ -439,8 +439,8 @@ def run_comparable_registration :
   realization := .source runComparableArena ⟨runComparableRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-    relationSignature.{u,v,w}
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+    relationSignature.{u_1,u_2,u_3}
     (fun _ p s => Run p.2.2.2.1 p.2.2.2.2 s)
     (fun (e : Empty) _ => Empty.elim e))
   variation := .absent
@@ -467,27 +467,27 @@ end Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 
 namespace Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace
 
-universe u v w
+universe u_1 u_2 u_3
 noncomputable section
 
 def run_mono_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_mono.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.runSignature.{u,v,w} Cohort.runReadout.{u,v,w} Cohort.inputAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_mono.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.runSignature.{u_1,u_2,u_3} Cohort.runReadout.{u_1,u_2,u_3} Cohort.inputAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.run_mono_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.runMonoEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.runMonoArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.runMonoArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.runMonoArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.runMonoArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.runMonoArena.{u,v,w} ⟨Cohort.runMonoEvidence.{u,v,w}⟩
+  realization := .source Cohort.runMonoArena.{u_1,u_2,u_3} ⟨Cohort.runMonoEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.runSignature.{u,v,w} Cohort.runReadout.{u,v,w} Cohort.inputAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.runSignature.{u_1,u_2,u_3} Cohort.runReadout.{u_1,u_2,u_3} Cohort.inputAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -509,22 +509,22 @@ def run_mono_registration :
 
 def trace_input_transfer_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_input_transfer.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.traceSignature.{u,v,w} Cohort.traceReadout.{u,v,w} Cohort.inputAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_input_transfer.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.traceSignature.{u_1,u_2,u_3} Cohort.traceReadout.{u_1,u_2,u_3} Cohort.inputAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_input_transfer_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.traceInputTransferEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.traceInputTransferArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.traceInputTransferArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.traceInputTransferArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.traceInputTransferArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.traceInputTransferArena.{u,v,w} ⟨Cohort.traceInputTransferEvidence.{u,v,w}⟩
+  realization := .source Cohort.traceInputTransferArena.{u_1,u_2,u_3} ⟨Cohort.traceInputTransferEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.traceSignature.{u,v,w} Cohort.traceReadout.{u,v,w} Cohort.inputAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.traceSignature.{u_1,u_2,u_3} Cohort.traceReadout.{u_1,u_2,u_3} Cohort.inputAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -546,22 +546,22 @@ def trace_input_transfer_registration :
 
 def prefix_trace_iff_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.prefix_trace_iff.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.fullSignature.{u,v,w} Cohort.fullReadout.{u,v,w} Cohort.fullAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.prefix_trace_iff.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.fullSignature.{u_1,u_2,u_3} Cohort.fullReadout.{u_1,u_2,u_3} Cohort.fullAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.prefix_trace_iff_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.prefixTraceIffEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.prefixTraceIffArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.prefixTraceIffArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.prefixTraceIffArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.prefixTraceIffArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.prefixTraceIffArena.{u,v,w} ⟨Cohort.prefixTraceIffEvidence.{u,v,w}⟩
+  realization := .source Cohort.prefixTraceIffArena.{u_1,u_2,u_3} ⟨Cohort.prefixTraceIffEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.fullSignature.{u,v,w} Cohort.fullReadout.{u,v,w} Cohort.fullAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.fullSignature.{u_1,u_2,u_3} Cohort.fullReadout.{u_1,u_2,u_3} Cohort.fullAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -584,22 +584,22 @@ def prefix_trace_iff_registration :
 
 def cut_unique_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.cut_unique.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), v, 0, max u w, 0}
-        Cohort.cutSignature.{u,v,w} Cohort.cutReadout.{u,v,w} Cohort.cutAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.cut_unique.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_2, 0, max u_1 u_3, 0}
+        Cohort.cutSignature.{u_1,u_2,u_3} Cohort.cutReadout.{u_1,u_2,u_3} Cohort.cutAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.cut_unique_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.cutUniqueEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.cutUniqueArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.cutUniqueArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.cutUniqueArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.cutUniqueArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.cutUniqueArena.{u,v,w} ⟨Cohort.cutUniqueEvidence.{u,v,w}⟩
+  realization := .source Cohort.cutUniqueArena.{u_1,u_2,u_3} ⟨Cohort.cutUniqueEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), v, 0, max u w, 0}
-        Cohort.cutSignature.{u,v,w} Cohort.cutReadout.{u,v,w} Cohort.cutAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_2, 0, max u_1 u_3, 0}
+        Cohort.cutSignature.{u_1,u_2,u_3} Cohort.cutReadout.{u_1,u_2,u_3} Cohort.cutAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -621,22 +621,22 @@ def cut_unique_registration :
 
 def trace_replay_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_replay.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.fullSignature.{u,v,w} Cohort.fullReadout.{u,v,w} Cohort.fullAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_replay.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.fullSignature.{u_1,u_2,u_3} Cohort.fullReadout.{u_1,u_2,u_3} Cohort.fullAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.trace_replay_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.traceReplayEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.traceReplayArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.traceReplayArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.traceReplayArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.traceReplayArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.traceReplayArena.{u,v,w} ⟨Cohort.traceReplayEvidence.{u,v,w}⟩
+  realization := .source Cohort.traceReplayArena.{u_1,u_2,u_3} ⟨Cohort.traceReplayEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.fullSignature.{u,v,w} Cohort.fullReadout.{u,v,w} Cohort.fullAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.fullSignature.{u_1,u_2,u_3} Cohort.fullReadout.{u_1,u_2,u_3} Cohort.fullAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -658,22 +658,22 @@ def trace_replay_registration :
 
 def drain_acquired_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.drain_acquired.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.drainSignature.{u,v,w} Cohort.drainReadout.{u,v,w} Cohort.drainAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.drain_acquired.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.drainSignature.{u_1,u_2,u_3} Cohort.drainReadout.{u_1,u_2,u_3} Cohort.drainAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.drain_acquired_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.drainAcquiredEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.drainAcquiredArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.drainAcquiredArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.drainAcquiredArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.drainAcquiredArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.drainAcquiredArena.{u,v,w} ⟨Cohort.drainAcquiredEvidence.{u,v,w}⟩
+  realization := .source Cohort.drainAcquiredArena.{u_1,u_2,u_3} ⟨Cohort.drainAcquiredEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.drainSignature.{u,v,w} Cohort.drainReadout.{u,v,w} Cohort.drainAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.drainSignature.{u_1,u_2,u_3} Cohort.drainReadout.{u_1,u_2,u_3} Cohort.drainAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -695,22 +695,22 @@ def drain_acquired_registration :
 
 def drain_run_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.drain_run.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.runSignature.{u,v,w} Cohort.runReadout.{u,v,w} Cohort.inputAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.drain_run.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.runSignature.{u_1,u_2,u_3} Cohort.runReadout.{u_1,u_2,u_3} Cohort.inputAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.drain_run_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.drainRunEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.drainRunArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.drainRunArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.drainRunArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.drainRunArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.drainRunArena.{u,v,w} ⟨Cohort.drainRunEvidence.{u,v,w}⟩
+  realization := .source Cohort.drainRunArena.{u_1,u_2,u_3} ⟨Cohort.drainRunEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.runSignature.{u,v,w} Cohort.runReadout.{u,v,w} Cohort.inputAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.runSignature.{u_1,u_2,u_3} Cohort.runReadout.{u_1,u_2,u_3} Cohort.inputAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -732,22 +732,22 @@ def drain_run_registration :
 
 def actual_cut_exists_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.actual_cut_exists.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), v, 0, max u w, 0}
-        Cohort.cutSignature.{u,v,w} Cohort.cutReadout.{u,v,w} Cohort.cutAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.actual_cut_exists.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_2, 0, max u_1 u_3, 0}
+        Cohort.cutSignature.{u_1,u_2,u_3} Cohort.cutReadout.{u_1,u_2,u_3} Cohort.cutAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.actual_cut_exists_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.actualCutExistsEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.actualCutExistsArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.actualCutExistsArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.actualCutExistsArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.actualCutExistsArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.actualCutExistsArena.{u,v,w} ⟨Cohort.actualCutExistsEvidence.{u,v,w}⟩
+  realization := .source Cohort.actualCutExistsArena.{u_1,u_2,u_3} ⟨Cohort.actualCutExistsEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), v, 0, max u w, 0}
-        Cohort.cutSignature.{u,v,w} Cohort.cutReadout.{u,v,w} Cohort.cutAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_2, 0, max u_1 u_3, 0}
+        Cohort.cutSignature.{u_1,u_2,u_3} Cohort.cutReadout.{u_1,u_2,u_3} Cohort.cutAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -770,22 +770,22 @@ def actual_cut_exists_registration :
 
 def actual_address_eq_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.actual_address_eq.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.runFullSignature.{u,v,w} Cohort.runFullReadout.{u,v,w} Cohort.fullAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.actual_address_eq.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.runFullSignature.{u_1,u_2,u_3} Cohort.runFullReadout.{u_1,u_2,u_3} Cohort.fullAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.actual_address_eq_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.actualAddressEqEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.actualAddressEqArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.actualAddressEqArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.actualAddressEqArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.actualAddressEqArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.actualAddressEqArena.{u,v,w} ⟨Cohort.actualAddressEqEvidence.{u,v,w}⟩
+  realization := .source Cohort.actualAddressEqArena.{u_1,u_2,u_3} ⟨Cohort.actualAddressEqEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.runFullSignature.{u,v,w} Cohort.runFullReadout.{u,v,w} Cohort.fullAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.runFullSignature.{u_1,u_2,u_3} Cohort.runFullReadout.{u_1,u_2,u_3} Cohort.fullAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -808,22 +808,22 @@ def actual_address_eq_registration :
 
 def peak_bound_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_bound.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), u, 0, 0, 0}
-        Cohort.peakSignature.{u,v,w} Cohort.peakReadout.{u,v,w} Cohort.peakAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_bound.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
+        Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_bound_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.peakBoundEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.peakBoundArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.peakBoundArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.peakBoundArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.peakBoundArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.peakBoundArena.{u,v,w} ⟨Cohort.peakBoundEvidence.{u,v,w}⟩
+  realization := .source Cohort.peakBoundArena.{u_1,u_2,u_3} ⟨Cohort.peakBoundEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), u, 0, 0, 0}
-        Cohort.peakSignature.{u,v,w} Cohort.peakReadout.{u,v,w} Cohort.peakAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
+        Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -845,22 +845,22 @@ def peak_bound_registration :
 
 def peak_trace_bound_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_trace_bound.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), u, 0, 0, 0}
-        Cohort.peakSignature.{u,v,w} Cohort.peakReadout.{u,v,w} Cohort.peakAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_trace_bound.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
+        Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_trace_bound_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.peakTraceBoundEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.peakTraceBoundArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.peakTraceBoundArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.peakTraceBoundArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.peakTraceBoundArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.peakTraceBoundArena.{u,v,w} ⟨Cohort.peakTraceBoundEvidence.{u,v,w}⟩
+  realization := .source Cohort.peakTraceBoundArena.{u_1,u_2,u_3} ⟨Cohort.peakTraceBoundEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), u, 0, 0, 0}
-        Cohort.peakSignature.{u,v,w} Cohort.peakReadout.{u,v,w} Cohort.peakAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
+        Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -883,22 +883,22 @@ def peak_trace_bound_registration :
 
 def peak_monotone_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_monotone.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), u, 0, 0, 0}
-        Cohort.peakSignature.{u,v,w} Cohort.peakReadout.{u,v,w} Cohort.peakAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_monotone.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
+        Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.peak_monotone_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.peakMonotoneEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.peakMonotoneArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.peakMonotoneArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.peakMonotoneArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.peakMonotoneArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.peakMonotoneArena.{u,v,w} ⟨Cohort.peakMonotoneEvidence.{u,v,w}⟩
+  realization := .source Cohort.peakMonotoneArena.{u_1,u_2,u_3} ⟨Cohort.peakMonotoneEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), u, 0, 0, 0}
-        Cohort.peakSignature.{u,v,w} Cohort.peakReadout.{u,v,w} Cohort.peakAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), u_1, 0, 0, 0}
+        Cohort.peakSignature.{u_1,u_2,u_3} Cohort.peakReadout.{u_1,u_2,u_3} Cohort.peakAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -920,22 +920,22 @@ def peak_monotone_registration :
 
 def initial_drain_of_acquired_run_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.initial_drain_of_acquired_run.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.drainSignature.{u,v,w} Cohort.drainReadout.{u,v,w} Cohort.drainAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.initial_drain_of_acquired_run.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.drainSignature.{u_1,u_2,u_3} Cohort.drainReadout.{u_1,u_2,u_3} Cohort.drainAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.initial_drain_of_acquired_run_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.initialDrainEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.initialDrainArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.initialDrainArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.initialDrainArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.initialDrainArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.initialDrainArena.{u,v,w} ⟨Cohort.initialDrainEvidence.{u,v,w}⟩
+  realization := .source Cohort.initialDrainArena.{u_1,u_2,u_3} ⟨Cohort.initialDrainEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u w, 0, max u w, 0}
-        Cohort.drainSignature.{u,v,w} Cohort.drainReadout.{u,v,w} Cohort.drainAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 u_3, 0, max u_1 u_3, 0}
+        Cohort.drainSignature.{u_1,u_2,u_3} Cohort.drainReadout.{u_1,u_2,u_3} Cohort.drainAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -957,22 +957,22 @@ def initial_drain_of_acquired_run_registration :
 
 def processing_of_safe_live_pair_registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.processing_of_safe_live_pair.{u,v,w})
-      (type_of% (realize.{max (u + 1) (max (v + 1) (w + 1)), max u (max v w), 0, max u (max v w), 0}
-        Cohort.processingSignature.{u,v,w} Cohort.processingReadout.{u,v,w} Cohort.processingAnchor.{u,v,w})) Unit Unit where
+      (@_root_.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.processing_of_safe_live_pair.{u_1,u_2,u_3})
+      (type_of% (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 (max u_2 u_3), 0, max u_1 (max u_2 u_3), 0}
+        Cohort.processingSignature.{u_1,u_2,u_3} Cohort.processingReadout.{u_1,u_2,u_3} Cohort.processingAnchor.{u_1,u_2,u_3})) Unit Unit where
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.processing_of_safe_live_pair_unit
   realizationName := `Reg.D5.S3.ConceptDynamics.Coding.DecoderOperationTrace.Cohort.processingPairEvidence
   realizationSource := none
   generated := false
-  arena := .source ⟨Cohort.processingPairArena.{u,v,w}⟩
-  objectArena := .source ⟨Cohort.processingPairArena.{u,v,w}⟩
+  arena := .source ⟨Cohort.processingPairArena.{u_1,u_2,u_3}⟩
+  objectArena := .source ⟨Cohort.processingPairArena.{u_1,u_2,u_3}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source Cohort.processingPairArena.{u,v,w} ⟨Cohort.processingPairEvidence.{u,v,w}⟩
+  realization := .source Cohort.processingPairArena.{u_1,u_2,u_3} ⟨Cohort.processingPairEvidence.{u_1,u_2,u_3}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize.{max (u + 1) (max (v + 1) (w + 1)), max u (max v w), 0, max u (max v w), 0}
-        Cohort.processingSignature.{u,v,w} Cohort.processingReadout.{u,v,w} Cohort.processingAnchor.{u,v,w})
+  readout := some (realize.{max (u_1 + 1) (max (u_2 + 1) (u_3 + 1)), max u_1 (max u_2 u_3), 0, max u_1 (max u_2 u_3), 0}
+        Cohort.processingSignature.{u_1,u_2,u_3} Cohort.processingReadout.{u_1,u_2,u_3} Cohort.processingAnchor.{u_1,u_2,u_3})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
