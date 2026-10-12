@@ -384,3 +384,145 @@ lattice by an index-two sublattice. By contrast, Proposition 9 with
 \(2\mathrm{id}\), with cokernel \(\mathbb Z/2\mathbb Z\).
 The absence of order-two torsion in the reset case follows from the
 actual swap on the original lattice, not from involutivity alone.
+
+## Theorem 11. Native integral coordinates and signed time character
+
+Let \(q>0\), \(M_q=(\mathbb Z[C_2])^q\), and retain the original
+right-row transition \(T_q\) and stationary group \(G_q\) of Definition 1.
+For \(q=n+1\), define
+\[
+ P_q(y)=\bigl(y_1,\ldots,y_n,
+              y_0[\tau]-\sum_{j=1}^{n}y_j\bigr).
+\]
+Then \(P_qT_q=T_qP_q=\mathrm{id}\), and there is an integer-linear
+equivalence \(F_q:G_q\to M_q\) whose inverse is the original stage-zero
+map and which satisfies
+\[
+ F_q(\operatorname{of}_m(v))=P_q^m v,
+ \qquad F_q\Theta_q=T_qF_q.
+\]
+For odd \(q\), put \(\Lambda_q=\ell_qF_q\), with the primitive
+character \(\ell_q\) of Theorem 10. Then
+\[
+ \Lambda_q(\operatorname{of}_m(v))=(-1)^m\ell_q(v),\qquad
+ \Lambda_q\Theta_q=-\Lambda_q,
+\]
+and \(\Lambda_q:G_q\to\mathbb Z\) is surjective.
+
+Proof. Right multiplication by \([\tau]\) is involutive. The sum of the
+coordinates of \(P_qy\) is \(y_0[\tau]\), so the head of \(T_qP_qy\)
+is \(y_0\), and its remaining coordinates are \(y_1,\ldots,y_n\).
+Conversely, the first \(n\) coordinates of \(P_qT_qv\) recover the
+first \(n\) coordinates of \(v\); its last coordinate is the total sum
+minus that recovered prefix, hence \(v_n\). These statements also apply
+to the empty prefix at \(q=1\).
+
+The endomorphism identity
+\(P_q^jT_q^{j-i}=P_q^i\), for \(i\le j\), makes \(P_q^m\) a
+compatible family on the original forward stationary system. Its induced
+map is \(F_q\). It is inverse to stage zero because
+\[
+ \operatorname{of}_0(P_q^m v)
+   =\operatorname{of}_m(T_q^mP_q^m v)=\operatorname{of}_m(v).
+\]
+Since the two inverses commute, the same stage calculation proves the time
+intertwining. By Theorem 10,
+\(\ell_q(v+T_qv)=0\), so \(\ell_qT_q=-\ell_q\).
+Substitute \(P_qv\) to get \(\ell_qP_q=-\ell_q\), and iterate.
+Surjectivity follows from the surjectivity of \(\ell_q\) and \(F_q\).
+The universal property of the module direct limit and the first isomorphism
+theorem used here are the standard module constructions; the inverse and
+character formulas concern this specific original reset transition.
+
+This is an equivalence of integer modules, without a coordinatewise cone
+claim. For \(q=2\), the nonnegative row \((0,[1])\) is sent by \(P_2\)
+to \(([1],-[1])\). Moreover, an unsigned stage prescription cannot replace
+\(\Lambda_q\). At \(q=1\), \(T_1([1])=[\tau]\) and
+\(\operatorname{of}_0([1])=\operatorname{of}_1([\tau])\), whereas their
+unsigned finite characters are \(1\) and \(-1\).
+
+## Theorem 12. Complete native integral defect and arithmetic index
+
+Write \(D_q=\mathrm{id}+\Theta_q\) and
+\(c_q=\operatorname{of}_0(w)\), retaining the original class of
+Proposition 4. For positive even \(q\), \(D_q\) is an integer-linear
+bijection. For positive odd \(q\),
+\[
+ \ker D_q=\mathbb Zc_q,\qquad
+ \operatorname{im}D_q=\ker\Lambda_q,\qquad
+ G_q/\operatorname{im}D_q\cong\mathbb Z.
+\]
+The coefficient of \(c_q\) in the kernel is unique. If
+\(\Lambda_q(y)=0\), all solutions of \(D_qx=y\) are exactly
+\[
+ x=F_q^{-1}\bigl(v^*(F_qy)\bigr)+kc_q,\qquad k\in\mathbb Z,
+\]
+with unique \(k\), where \(v^*\) is the particular finite solution of
+Theorem 10. The exact kernel-character pairing and combined quotient are
+\[
+ \Lambda_q(c_q)=q+1,\qquad
+ \ker D_q\cap\operatorname{im}D_q=\{0\},\qquad
+ G_q/(\operatorname{im}D_q+\ker D_q)
+    \cong\mathbb Z/(q+1)\mathbb Z.
+\]
+In particular,
+\[
+ x\in\operatorname{im}D_q+\ker D_q
+ \quad\Longleftrightarrow\quad
+ (q+1)\mid\Lambda_q(x).
+\]
+
+Proof. The equivalence of Theorem 11 gives
+\(F_qD_q=(\mathrm{id}+T_q)F_q\) and \(F_qc_q=w\).
+Transport the whole finite classification of Theorem 10, including its
+constructive solver, unique kernel coefficient and surjective character.
+This yields the native kernel, image, fibres and ordinary cokernel; no
+second finite elimination is needed.
+
+For the pairing, the contribution of suffix \(i\) in \(w\) is two
+when \(i\) is even and zero when it is odd. Equivalently it is
+\(1+(-1)^i\). Therefore
+\[
+ \ell_q(w)=\sum_{i<q}\bigl(1+(-1)^i\bigr)=q+1
+\]
+for odd \(q\). If \(kc_q\) belongs to the image, its character is zero,
+so \(k(q+1)=0\), forcing \(k=0\). If
+\(x=a+kc_q\), with \(a\) in the image, then
+\(\Lambda_q(x)=k(q+1)\). Conversely, if
+\(\Lambda_q(x)=k(q+1)\), the difference \(x-kc_q\) has zero
+character and lies in the image. Thus reduction of \(\Lambda_q\)
+modulo \(q+1\) has kernel exactly the actual sum of the two submodules.
+It is onto, and the first isomorphism theorem gives the combined quotient.
+
+At \(q=1\), the native coordinates are \(\mathbb Z^2\), genuine time
+swaps the coordinates, \(c_1=(1,-1)\), and
+\(\Lambda_1(a,b)=a-b\). The ordinary cokernel is \(\mathbb Z\);
+the combined quotient has order two. Thus a zero intersection does not make
+the image and kernel a decomposition of the entire integer lattice.
+The obstruction is the exact index \(q+1\), not torsion in the ordinary
+cokernel and not a rational spectral obstruction.
+
+## Theorem 13. Integral equivariant nonsplitting
+
+For positive odd \(q\), there is no integer-linear section
+\(s:\mathbb Z\to G_q\) satisfying
+\[
+ \Lambda_qs=\mathrm{id}_{\mathbb Z},\qquad
+ \Theta_qs(n)=s(-n)\quad(n\in\mathbb Z).
+\]
+Here the action on \(\mathbb Z\) is negation and the action on \(G_q\)
+is the original genuine time action.
+
+Proof. Equivariance and additivity imply
+\(D_qs(1)=s(1)+s(-1)=0\). The full kernel classification gives
+\(s(1)=kc_q\). Applying the section equation and the pairing yields
+\(1=k(q+1)\), impossible for \(q>0\).
+
+The underlying integer-linear surjection does split after forgetting time:
+choose \(e\in G_q\) with \(\Lambda_q(e)=1\) and send \(n\) to
+\(ne\). The assertion also requires additivity. At \(q=1\), the
+nonadditive set map
+\(n\mapsto(\max(n,0),\max(-n,0))\) is a section of \(a-b\) and
+intertwines negation with coordinate swap. The arithmetic index therefore
+obstructs a linear dynamic splitting, without forbidding equivariant set
+sections or a nonequivariant linear section.
