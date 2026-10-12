@@ -63,7 +63,7 @@ $e=(a,p,b,q,\bowtie)$ with $\bowtie\in\{=,\ne\}$. A literal requires
 $r_{\rho^a u}(p)$ to equal its stated reply. A relation record means
 
 $$
-\operatorname{Rel}_e(u)\;:\\Longleftrightarrow\;
+\operatorname{Rel}_e(u)\;:\Longleftrightarrow\;
  p\in\operatorname{Pos}(\rho^a u)\ \land\ q\in\operatorname{Pos}(\rho^b u)\ \land
  (\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q .
 \tag{SJM.5}
@@ -118,8 +118,8 @@ reply table, not an arbitrary word over four symbols.
 ## 2. The exact conditional alphabet
 
 **Definition 2.1 (row strata and prefix multiplicity).** Assume first that
-$A=f(D)$ is finite and nonempty. For $r\in A$ put $D_r=f^{-1}(r)$. For an
-attained prefix $p$, set
+$A=f(D)$ is finite and nonempty. For $r\in A$ put
+$D_r=\{u\in D:f(u)=r\}$. For an attained prefix $p$, set
 
 $$
 S_h(p)=\{r\in A:\exists u\in D_r\text{ with }p_h(u)=p\},
@@ -128,10 +128,18 @@ m_h=\max_{p\ {\rm attained}}|S_h(p)| .
 \tag{SJM.8}
 $$
 
-The sequence $m_h$ is nonincreasing. Let $M(D,Q)$ be the least cardinality of a
-complete conditional field $E$ for which one source-total effective consumer,
-using the handoff $(P,Q,R_P,H_0,H_{\rm rel},N,E(u))$, has a uniform finite number
-of post-entry reads and returns $f(u)$.
+The sequence $m_h$ is nonincreasing. Let $I=(P,Q,R_P,H_0,H_{\rm rel},N)$.
+An admissible extra field is a source-total effective map $E:\mathcal T\to C$,
+actually computed from the same acquired finite source before the complete cut,
+with finite nonempty conditional image $E(D)$. Its program and installed data
+are common functions of $I$ and declared source-independent parameters. The
+entire accessible initial state factors through $(I,E(u))$ and recovers these
+fields; no source-dependent program, selector, length, timing or archive lies
+outside them. Define $M(D,Q)$ to be the least $|E(D)|$ over such fields for
+which one common effective consumer terminates correctly on every $u\in D$,
+has a uniform finite number of post-entry reads, and returns $f(u)$.
+Only complete conditional values are minimized. The acquisition, computation,
+installation and complete cut must actually be supplied and paid.
 
 **Theorem 2.2 (minimum complete field and static reduction).** Under
 Assumption 1.3, if $A$ is finite and nonempty, then
@@ -143,8 +151,9 @@ M(D,Q)=\min_{h\ge0}m_h
 \tag{SJM.9}
 $$
 
-The closure is in the prefix topology of finite or infinite ordered trees. The
-minimum is attained at a finite $h$. The same value holds when the consumer is
+The closure is in the prefix topology of finite or infinite full ordered trees
+over $\alpha,\beta,\langle\ ,\ \rangle$, with no descendants below a leaf.
+The minimum is attained at a finite $h$. The same value holds when the consumer is
 allowed every legal adaptive serial $\mathsf{ApplyRho}$ strategy, and when it is
 restricted to static reads at the supplied epoch. This equality concerns only the
 number of complete conditional field values; it does not identify an optimal raw
@@ -155,7 +164,8 @@ at most $K$ reads. Fix one field value $e$. Between two replies, the consumer's
 computation and update schedule are source-independent and terminate on every
 source reaching that segment. Unrolling the reachable four-valued reply histories
 therefore gives a finite tree. Across the $m$ values, only finitely many physical
-addresses are submitted; let $h$ be the largest address length.
+addresses are submitted; let $h$ be the largest address length, taking $h=0$
+if no address is submitted.
 
 The original-address locality clause (SLH.74.7), including born and absent
 positions, says that a reply at any declared epoch from an address of length at
@@ -166,35 +176,75 @@ rows, selecting one source from each of those strata forces $k$ different field
 values. Hence $m\ge m_h\ge\min_jm_j$.
 
 The argument did not assume the field was constant on rows: arbitrary effective
-encodings are covered. It also did not remove serial competitors. It compresses
-their finite update segments and then applies the existing actual-prefix bridge
+encodings are covered. The common-state premise is applied separately to each
+nonempty $D_e=\{u\in D:E(u)=e\}$. For the same given effective $E$, the
+inherited existence bridge is precisely
 
 $$
-\text{uniform finite-read serial}
-\Longleftrightarrow
-\text{uniform finite-read static}
-\Longleftrightarrow
-\exists h\ \operatorname{PrefDet}(D,Q,h)
+\begin{aligned}
+&\text{uniform finite-read serial service using }(I,E)\\
+\Longleftrightarrow\;&\text{uniform finite-read static service using }(I,E)\\
+\Longleftrightarrow\;&\exists h\ \forall e\in E(D),\quad
+ \operatorname{PrefDet}(D_e,Q,h).
+\end{aligned}
 \tag{SJM.10}
 $$
 
-from [ARH, (ARH.2.3)][ARH].
+Here $\operatorname{PrefDet}(X,Q,h)$ means that $p_h$ determines the full
+$Q$-row on $X$. The serial-to-prefix proof of [ARH, (ARH.2.3)][ARH] uses only
+the common initial state and locality, so it applies on each $D_e$; take the
+maximum depth over the finitely many values. Conversely, given $e,h$ and the
+actually decoded prefix, enumerate finite sources until finding one in $D$
+with that prefix and $E(u)=e$. Membership of $D$ is decidable on a concrete
+source and the source-total encoder terminates, so each candidate test
+terminates. The actual source witnesses eventual success; $\operatorname{PrefDet}$
+makes the candidate's full row the correct output. The static prefix menu has
+a common finite read bound. No effective extraction of $h$ from arbitrary
+consumer code is claimed. In particular (SJM.10) does not assert unassisted
+prefix determination on the unconditioned $D$.
 
-For the converse, take any supplied $h$. The finite table $p\mapsto S_h(p)$ is
-effectively computable by the whole-source fixed-depth queries of [NSF, Lemma
-5.1][NSF] and the complete-row compiler [NPL, Lemma 5.2][NPL]. During the same
-paid acquisition, compute the actual full row and retain
+For the converse bound, take a supplied source-independent $h$. Here is the
+exact finite table compilation. First [NPL, Theorem 5.3][NPL], on the entire
+input (SJM.6) and cut $Q$, returns $A$, including each concrete exterior,
+reached set and full partition, and an original realizing source for each row.
+Lemma 5.2 there supplies the guarded native cells; Theorem 5.3 additionally
+decides their mask images and every complete partition, so it supplies the
+row list that the rank construction needs. Order that list canonically by
+finite serialization. For each four-valued table $p$ on the finitely many
+words $|w|\le h$ and each $r\in A$, decide
+
+$$
+\exists u\in\mathcal T,\quad
+u\in D\ \land\ R_Q(u)=r\ \land\
+\bigwedge_{|w|\le h} r_u(w)=p(w)
+\tag{SJM.35}
+$$
+
+using [NSF, Lemma 5.1 and Theorem 5.2][NSF]. These are fixed-coordinate and
+fixed-complete-row tests on one whole source; every old class disequality,
+off-task constraint, literal and signed reach guard remains in $D$.
+A YES answer supplies an actual finite original witness. The YES labels are
+exactly $S_h(p)$; discard tables with no YES label. This both removes
+unrealizable reply tables and retains every actual prefix. There are finitely
+many tables and rows and each query terminates. The resulting installed table
+depends only on $I,h$, never on a hidden choice of source.
+During the same paid pre-cut acquisition, compute the actual full row and retain
 
 $$
 E_h(u)=\text{the zero-based rank of }f(u)\text{ in the canonical list }S_h(p_h(u)).
 \tag{SJM.11}
 $$
 
-The installed table depends only on the public retained input and $h$. A default
-value outside the successful fiber makes this a source-total effective encoder;
-it is not a hidden source selector. At the actual current epoch $N$, recover all
-replies in $p_h(u)$ by the supplied current-register decoder [SLH, Theorem
-2.2][SLH]. At most $2(2^{h+1}-1)$ physical reads suffice, with submitted address
+The producer obtains the needed original descriptions during the paid traversal,
+computes $f(u)$ and $p_h(u)$, and evaluates this rank before cutting all other
+source-bearing state. On concrete sources outside $D$ it uses default value
+$0$; membership is decidable, and $m_h\ge1$, so this extends $E_h$ to a
+source-total effective map without adding a conditional value. All successful
+accessible fields factor through $(I,E_h)$; the paid descriptions do not remain
+available after the cut. Neither the program nor $h$ is selected from the
+actual source outside the charged field. At the actual current epoch $N$,
+recover all replies in $p_h(u)$ by the supplied current-register decoder
+[SLH, Theorem 2.2][SLH]. At most $2(2^{h+1}-1)$ physical reads suffice, with submitted address
 length at most $h+\lceil N/2\rceil$. The consumer then looks up the rank and
 returns the complete row. A prefix attaining $m_h$ realizes every rank below
 $m_h$, so the conditional field has exactly $m_h$ values. This proves the first
@@ -204,9 +254,9 @@ one.
 For the closure identity, if $k$ row strata share a completion point $\xi$, each
 finite depth of $\xi$ is met by all $k$ strata, so $m_h\ge k$ for every $h$. In
 the reverse direction, suppose $m_h\ge k$ for all $h$. Since $A$ is finite,
-one $k$-element set of row labels occurs for arbitrarily large $h$. The finite
-prefix tree of simultaneous witnesses is finitely branching and has a node at
-every depth. König's lemma gives a compatible finite or infinite completion
+one $k$-element set of row labels occurs for arbitrarily large $h$, hence at
+every depth by restriction. Its tree of common finite reply prefixes is closed
+under restriction, finitely branching, and has a node at every depth. König's lemma gives a compatible finite or infinite completion
 meeting all those strata, so its closure multiplicity is at least $k$.
 Finally, $m_h$ is a nonincreasing sequence of integers between $1$ and $|A|$;
 it stabilizes at a finite depth. $\square$
@@ -220,15 +270,12 @@ gives an effective optimal installation once that $h$ is supplied. No uniform
 terminating procedure for finding a minimizing $h$ on arbitrary signed input is
 claimed.
 
-*Proof.* Split the finite original prefix at depth $h$ and beyond every recorded
-endpoint. [NSF, Lemma 5.1][NSF] gives the exact finite native query for each pair
-of candidate row pieces, retaining the complete old row, every guard and every
-signed whole-subtree comparison in both source copies. [NPL, Theorem 5.3][NPL]
-returns the finite target-row list and an original finite witness when the image
-is finite. Enumerating the finitely many attained prefix patterns and applying
-those feasibility decisions computes every $S_h(p)$. The monotonicity and
-stabilization statements are immediate. The final sentence is a quantifier
-distinction: existence of a finite minimizer supplies an effective construction
+*Proof.* Apply the exact full-row-list and one-source compiler (SJM.35).
+It returns every $S_h(p)$, its realizing original sources and the maximum
+cardinality $m_h$. Refining a prefix can only remove labels, which proves
+monotonicity. A nonempty finite image bounds this decreasing integer sequence
+between $1$ and $|A|$, so its minimum is attained. The final sentence is a
+quantifier distinction: existence of a finite minimizer supplies an effective construction
 parameterized by that witness, but does not provide a terminating search that
 knows no later depth lowers the value. $\square$
 
@@ -264,29 +311,69 @@ The all-depth assertion is $\forall h\,J_{r_1,\ldots,r_k}(h)$ with fresh finite
 witnesses allowed at each depth. It does not require an infinite source satisfying
 the signed predicates.
 
-**Theorem 3.2 (what the finite tests do and do not settle).** Every fixed
-$J_{r_1,\ldots,r_k}(h)$ is decidable by a finite native feasibility test. The
-question whether it holds for all $h$ is exactly the unsupplied stopping and
-realization obligation for the minimum in (SJM.9).
+**Theorem 3.2 (fixed sets, multiplicity bounds and minimization).** Assume
+$A$ is finite and nonempty. For a nonempty subset $B\subseteq A$, use $J_B(h)$
+for (SJM.12) with exactly those labels. Each fixed $J_B(h)$ is decidable, and
 
-*Proof.* Use independent whole-source copies of each finite row piece from
-[NPL, Lemma 5.2][NPL], impose equality of every reply at words of length at most
-$h$, and retain all old classes, off-task disequalities, signed endpoint guards
-and complete target partitions. The variable-rank navigation cases and
-scalar-preserving mixed-image reduction of [NIC, Proposition 5.3][NIC] terminate
-on this finite query and produce actual finite witnesses in both directions.
+$$
+\begin{aligned}
+m_h<k
+&\Longleftrightarrow
+ \forall B\subseteq A,\ |B|=k\Longrightarrow\neg J_B(h),\\
+M(D,Q)<k
+&\Longleftrightarrow
+ \forall B\subseteq A,\ |B|=k\Longrightarrow
+       \exists H_B\ \neg J_B(H_B),\\
+M(D,Q)
+&=\max\{|B|:\varnothing\ne B\subseteq A,\ \forall h\ J_B(h)\}.
+\end{aligned}
+\tag{SJM.36}
+$$
 
-For a finite image, failure of all-depth contact for every $k$-tuple would give a
-finite exclusion depth for each tuple, and the maximum of those finitely many
-depths would give a determining prefix. Conversely, one persistent tuple gives
-failure of every determining depth. What is absent is a terminating procedure
-that, for an arbitrary input, chooses between a finite exclusion depth and a
-source-faithful family of finite witnesses for every depth while preserving the
-whole signed input. A sequence of finite positive answers, a limit partition, a
-prescribed-budget certificate or a supplied guarded description does not perform
-that quantifier exchange. No undecidability claim follows from this missing
-procedure. This is the open stopping boundary recorded in [NPL, §10][NPL] and
-[ARH, Definition 9.1][ARH]. $\square$
+The first two lines hold for $1\le k\le |A|+1$, with a vacuous family when
+$k>|A|$. A fixed $k$-set's exclusion says only that this set does not jointly
+occur at that depth. Excluding **every** $k$-set gives $m_h<k$.
+Full unassisted determination is the special case $k=2$: it is equivalent to
+some depth excluding every distinct row pair, and hence to $M=1$.
+
+*Proof.* For fixed $B,h$, apply NSF Lemma 5.1 and Theorem 5.2 to $|B|$
+independent whole-source variables. Each copy satisfies all of (SJM.6) and its
+specified complete target row; impose identical four-valued replies at every
+word $|w|\le h$. All epochs, words, cuts and row constants are finite supplied
+values. YES produces each original finite source, including all signed guards
+and off-task constraints. The query is exactly $J_B(h)$ in both directions.
+
+At depth $h$, $J_B(h)$ holds exactly when some attained prefix has
+$B\subseteq S_h(p)$, proving the first line. Each $J_B$ is downward closed in
+$h$. If all $k$-sets have failed depths, take their finite maximum (zero for
+an empty family); every such set still fails there, so $m_h<k$ and $M<k$.
+Conversely, a depth with $m_h<k$ excludes each $k$-set. This proves the second
+line without confusing multiplicity with uniqueness.
+
+A persistent $k$-set gives $m_h\ge k$ for all $h$, hence $M\ge k$.
+Conversely, if $M\ge k$, at every $h$ some $k$-set has contact. Finitely many
+$k$-sets are available, so one occurs at arbitrarily large depths; downward
+closure makes that same set persistent at every depth. At least one singleton
+is persistent, and no set has size larger than $|A|$. This proves the maximum
+formula and also covers $k=1$, where contact of each attained singleton is
+always true. Taking $k=2$ gives the stated unassisted determination criterion.
+
+Thus a minimizing depth $h_*$ is certified by an upper bound $m_{h_*}=m$
+and a persistent $m$-set, not by exclusion of one set or by a temporary plateau.
+If a terminating all-depth chooser for every fixed $B$ were supplied, finitely
+many calls would find the largest persistent size $m$ and exclusion depths for
+all $(m+1)$-sets. Their maximum yields $m_h\le m$; the persistent set gives
+the matching lower bound. When $m=|A|$, there are no larger sets and $h=0$
+suffices. The rank encoder then follows from Theorem 2.2.
+
+No such complete all-depth chooser or general minimizing-depth synthesis is
+supplied here. Fixed-depth decisions and a supplied productive mechanism do
+not prove that arbitrary contacts have a finitely recognizable persistent
+case. Deciding a fixed set's persistence is a sufficient route to the global
+optimizer, not a claim that every optimizer must decide every fixed set.
+The unsupplied all-depth/finite-realization boundary is consistent with
+[NPL, §10][NPL] and [ARH, Definition 9.1][ARH]; neither reference proves the
+multi-label synthesis now required. No undecidability claim follows. $\square$
 
 An observed plateau of the computable values $m_h$, finitely many tests, or a
 valid supplied guarded certificate at a prescribed budget does not prove that
@@ -296,10 +383,13 @@ realization of every positive witness remain required at every finite stage.
 ## 4. Two actually acquired native fibers
 
 The next construction is a native simultaneous-contact separation. Both inputs
-use the same one-hole root row, the same target cut, the same original root and
-register, and the same paid producer implementation. Their public signed schedules
-differ only by the listed negative records. All witnesses below are finite actual
-sources; no negative is tested only at a limiting completion.
+use the same one-hole root row, target cut and root-based register interface,
+and one common paid producer implementation parameterized by public coordinate
+lists. The literal and positive-relation coordinate lists differ as displayed;
+the negative-relation lists are identical. In each run every record and later
+read concerns that run's same actual original source, root and register.
+All witnesses below are finite actual sources; no negative is tested only at a
+limiting completion.
 
 **Definition 4.1 (the three-value fiber).** Let $P=\{\varepsilon\}$ with its
 complete one-hole old row and let
@@ -377,9 +467,11 @@ endpoints are reached by (SJM.14). Conversely every $U(y,z)$ satisfies the
 literals and both equalities. The three inequalities follow from (SJM.4), so
 both directions give the entire fiber, including all guards.
 
-The four target holes contain $z,y,\rho y,Fy$. Their first three values are
-pairwise unequal by (SJM.4), so the only possible complete partitions are those
-in (SJM.19), according to which of the three is selected by $z$. The choices
+The four target holes contain $z,y,\rho y,Fy$. The three reference values
+$y,\rho y,Fy$ are pairwise unequal by (SJM.4). Therefore the arbitrary $z$
+can equal at most one reference value. It equals one of them or differs from
+all three, giving exactly the four complete partitions (SJM.19); no inequality
+between $z$ and a reference is assumed before selecting that case. The choices
 $z=y$, $z=\rho y$, $z=Fy$ attain $r_0,r_1,r_2$, and $z=\rho^2y$ attains
 $r_3$, since $\kappa(\rho^2y)=\kappa(y)+2$ differs from the offsets
 $0,1,3$. The exterior and reached set are fixed, so these are the complete rows,
@@ -458,9 +550,11 @@ M(D_3,Q)=3,\qquad M(D_4,Q)=4.
 \tag{SJM.26}
 $$
 
-*Proof.* First record the finite witnesses used for contact. The atomic trees
-$T_n$ agree on every fixed finite original prefix once $n$ is sufficiently
-large. The three sources
+*Proof.* First establish the finite-prefix claims used by the witnesses.
+For $n\ge2h+2$, recurrence (SJM.1) makes every reply of $T_n$ through depth
+$h$ a branch: along a path of length at most $h$, its index falls by at most
+$2h$, and every remaining index is at least $2$. Thus $T_n,T_{n+1},T_{n+2}$
+agree through any prescribed depth when $n$ is large. The three sources
 
 $$
 U(T_n,T_n),\quad U(T_n,T_{n+1}),\quad U(T_n,T_{n+2})
@@ -470,11 +564,21 @@ $$
 have rows $r_0,r_1,r_3$ respectively, and all retained signs hold by the
 clock. This gives the three contacts among $r_0,r_1,r_3$ in $D_3$.
 
-For the remaining contacts use the two finite prefix-growing contexts
-$F(t)=\langle\beta,\rho t\rangle$ and $B(t)=\langle\alpha,t\rangle$. The
-standard finite witness calculation for the native recurrence gives
-$F^n(\beta)\to K$ with $F(K)=K$, and $B^n(\beta)\to J$ with $B(J)=J$;
-these are prefix limits only. The triples
+For the remaining contacts use $F(t)=\langle\beta,\rho t\rangle$ and
+$B(t)=\langle\alpha,t\rangle$. Locality (SLH.74.7) at epoch one gives
+$u\equiv_h v\Rightarrow\rho u\equiv_h\rho v$. Hence either $F$ or $B$
+increases agreement depth by one, since it inserts a common branch and left
+leaf above its argument or its iterate. For arbitrary finite $u,v$, $F^n(u)$
+and $F^n(v)$ agree through depth $n-1$: the case $n=1$ is the common branch
+root, and induction proves the claim. The same statement holds for $B$.
+In particular $F^n\beta$ and $F^{n+j}\beta$ agree through depth $n-1$
+for every $j\ge0$, and likewise for $B$. These stabilized compatible
+prefixes define completions $K,J$ with $F(K)=K$ and $B(J)=J$.
+Here $\rho$ on a completion means only its continuous prefix extension
+supplied by locality; no completion is asserted to satisfy a signed input.
+Since $J=\langle\alpha,J\rangle$,
+$\rho J=\langle\beta,\rho J\rangle=FJ$.
+The triples
 
 $$
 \bigl(U(F^n\beta,F^n\beta),\ U(F^n\beta,F^{n+1}\beta),\
@@ -515,10 +619,14 @@ prefix completion $V(K,K)$, and every finite source satisfies (SJM.22). Thus
 $m_h\ge4$ for every $h$. Since there are only four rows, $m_h=4$ for all $h$,
 so $\min_hm_h=4$. Theorem 2.2 now proves (SJM.26).
 
-Both inputs are produced by the same paid ARH traversal and comparison procedure,
-with the same original root, register and final epoch. Their signed records are
-actual outcomes of reached endpoint comparisons; no arbitrary graph or compactness
-model replaces the source-fiber directions. The off-diagonal Boolean contact
+The public lists (SJM.14)–(SJM.16) and (SJM.20)–(SJM.22) are two parameter
+instances of the same paid traversal and comparison procedure of ARH
+Proposition 2.1, at a common final epoch $N$. For either list the producer
+computes both signs, with invalid reached-endpoint outcomes kept separate;
+conditioning on the stated successful output gives exactly the fiber proved
+above. Every record on each witness is an actual reached comparison on that
+witness's same source and register. No arbitrary graph or completion substitutes
+for either original-source direction. The off-diagonal Boolean contact
 matrix is the complete graph $K_4$ in both cases, while the simultaneous contact
 number, and hence the minimum field, differs. $\square$
 
@@ -526,9 +634,12 @@ number, and hence the minimum field, differs. $\square$
 three in $D_3$ is attained by a three-value complete field, and the value four in
 $D_4$ by a four-value complete field.
 
-*Proof.* For $D_3$ use $h=3$ in (SJM.11). The producer has the complete finite
-source description already paid for by Proposition 2.1, computes its full row
-and stores its rank in the canonical $S_3(p_3(u))$ list. Proposition 4.5 shows
+*Proof.* For $D_3$ use $h=3$ in (SJM.11). During the paid pre-cut traversal
+of ARH Proposition 2.1, the common producer computes the full $Q$-row and
+original depth-three table from the actually acquired descriptions, then stores
+the rank in the canonical $S_3(p_3(u))$ list. Its successful complete cut
+retains only the declared input and this code; the traversal descriptions,
+lengths and control distinctions are no longer accessible. Proposition 4.5 shows
 that some attained depth-three prefix has exactly three rows, so all three ranks
 occur. The consumer reconstructs the inclusive original depth-three table at the
 actual register epoch $N$ using [SLH, Theorem 2.2][SLH] and returns the whole
@@ -551,8 +662,10 @@ $$
 \tag{SJM.32}
 $$
 
-This outcome is attained. After a complete successor handoff retaining this
-read and the original input, the source fiber is
+This outcome is attained. First consider entry with only the declared input,
+without an extra code. A paid complete successor handoff retaining precisely
+that input and the new literal $(1,RL,\beta)$, with common ready control and
+no other source-bearing state, has source fiber
 
 $$
 D'_3=\{U(\alpha,z):z\in\mathcal T\},
@@ -582,21 +695,37 @@ $$
 
 Choosing $z$ equal to these three values gives $r_0,r_1,r_2$, while
 $z=\rho^2\alpha=\langle\beta,\alpha\rangle$ gives $r_3$. Hence the full
-four-row image is preserved. The inclusive original depth-two replies of the
-$z$-subtree distinguish the three templates in (SJM.30) from every other finite
-$z$: the root, child replies and the absent replies below the two leaves identify
-$\alpha$, $\beta$ and $\langle\beta,\beta\rangle$; a deeper finite tree cannot
-have the same depth-two table. Every remaining finite tree is therefore in
-$r_3$. Thus $m_2=1$ and Theorem 2.2 gives (SJM.34). At the actual epoch one, the
-supplied current-register decoder obtains the depth-two replies in at most
-$2(2^3-1)=14$ further reads, then returns the complete exterior and partition.
+four-row image is preserved. The **whole original source** table $p_2$ contains
+$L,LL,LR$, namely the root and depth-one child replies relative to $z$.
+A leaf reply at $L$ identifies exactly $z=\alpha$ or $z=\beta$. If $L$ is a
+branch, replies $\beta$ at both $LL,LR$ identify exactly
+$z=\langle\beta,\beta\rangle$: leaves have no hidden descendants in the
+native algebra. Every other pattern puts $z$ in $r_3$. These three replies
+therefore determine the complete row on $D'_3$, whose other hole values and
+exterior are fixed. Thus the root-based $m_2$ equals $1$ and Theorem 2.2 gives
+(SJM.34).
 
-If the old three-value field is retained, its old decoding table remains valid
-on the refined fiber and still gives a correct service. It is no longer optimal.
-A new complete successor cut may instead discard it and install the constant
-one-value field justified by (SJM.30). That replacement is a paid computation
-from the actual acquired continuation state; it is not a free reinterpretation
-of the old rank. $\square$
+At the same actual epoch one, apply the SLH Theorem 2.2 decoder to all seven
+original words $|w|\le2$. This is at most $2(2^3-1)=14$ **further** physical
+reads, each of length at most $2+\lceil1/2\rceil=3$, with no updates; together
+with (SJM.32) it gives at most $15$ reads. The mathematical original replies
+are inferred from those current-register replies, not accessed at a fictional
+old version. The decoder then returns the complete exterior and partition.
+No relative depth-two $z$ table (which would reach original depth three) is
+used in this bound.
+
+If entry already retains the old three-value field $E_3$ from Proposition 4.6,
+the actual successor fiber retaining its value $e$ is
+$D'_3\cap\{u:E_3(u)=e\}$, not the unconditioned $D'_3$. The old rank and its
+old table still decode correctly on this refinement; no new preparation is
+needed merely to keep using them. A complete successor cut may discard $e$
+and any code-dependent control state and install a constant field. The resulting
+state has exactly fiber $D'_3$, and the displayed decoder is sufficient there.
+This replacement uses the actually acquired literal and a common fixed row
+table; it needs paid local preparation, installation and cut, but no fresh
+full-source traversal. A constant code is not a reinterpretation of the old
+rank. With four rows still attained, zero-read recovery would instead require
+four complete field values. $\square$
 
 **Proposition 5.2 (known updates and refined code fibers).** After any known
 finite sequence of forward updates, the original source $u$, the original target
@@ -612,24 +741,38 @@ D'_e=D_e\cap\{u:r_{\rho^M u}(p)=c\}
 \tag{SJM.31}
 $$
 
-for every old code value $e$. In particular, $M(D',Q)\le M(D,Q)$ whenever both
-images are finite.
+for every old code value $e$, where $D_e=\{u\in D:E(u)=e\}$.
+The physical reply must be actually attained, so $D'\ne\varnothing$; only
+nonempty $D'_e$ are service entry fibers. In particular,
+$M(D',Q)\le M(D,Q)$ for such a refinement whenever $f(D)$ is finite.
 
 *Proof.* A known update changes only the physical register from $\rho^M u$ to
 $\rho^{M+k}u$; it does not change the original source or the declared target.
 [SLH, Theorem 2.2][SLH] converts each needed original prefix to reads at the
 new actual epoch, so no old-version read or reset is inserted. If a decoder was
 interrupted by an update, its bounded query list is restarted at the new
-certified epoch; replies from different epochs are not spliced.
+certified epoch; replies from different epochs are not spliced. The decoder's
+stated bound applies after the last update; all interrupted and restarted reads
+are additional actual calls and remain charged.
 
-The new reply restricts every code fiber as shown in (SJM.31). Restricting a
-source domain cannot increase the number of rows meeting an attained prefix, so
-Theorem 2.2 gives the inequality. The observer must retain the old code value
-and any code-dependent path/control state when it refines the fiber; using only
-$D'$ while forgetting $e$ would describe a larger state than the actual handoff.
-A newly optimal code requires a separately paid complete preparation unless the
-retained continuation already supplies its determining prefix and row table.
-Changing $Q$ changes the target and requires a new sufficiency argument. $\square$
+The new reply restricts every code fiber as shown in (SJM.31). At each depth
+$S'_h(p)\subseteq S_h(p)$ for every prefix attained in $D'$, hence
+$m'_h\le m_h$. At an old minimizing depth $h_*$ this gives
+$M(D',Q)\le m'_{h_*}\le m_{h_*}=M(D,Q)$. Both images are nonempty and finite
+because the reply is attained and $f(D')\subseteq f(D)$.
+The same old code and decoder already give a correct bounded service on each
+nonempty refined code fiber. If code-dependent path/control state remains
+accessible, it must still factor through the retained input, code and recorded
+replies. Using only $D'$ while forgetting $e$ describes a coarser state than
+the actual handoff retaining $e$.
+
+The inequality compares minima over newly admissible encoders; restriction
+alone does not compute or acquire a new optimal code. Such a replacement
+requires a justified source-total effective encoder, evaluated from actually
+acquired data or further paid acquisition, together with paid preparation,
+installation and a complete successor cut. Known updates alone need no new
+code computation when the target remains the original $R_Q(u)$. Changing $Q$
+changes the target and requires a new sufficiency argument. $\square$
 
 ## 6. Source correspondence, literature and boundaries
 
@@ -643,10 +786,23 @@ the broader relation/space/time/boundary/memory programme.
 prefix/locality and complete-handoff suppliers, and quantifies over every legal
 serial competitor. The upper bound uses the same source description and current
 register, with finite local enumeration. Propositions 4.2–4.6 and 5.1 use
-finite sources and finite signed guards in both directions. Proposition 3.2
-leaves exactly the all-depth choice between a finite exclusion depth and a
-source-faithful productive witness family. No statement here removes that
-choice. The remaining claims are therefore outside the proved scope. $\square$
+finite sources and finite signed guards in both directions. Theorem 3.2
+separates fixed-set exclusion, all-set multiplicity bounds and the global
+optimizer. The latter still needs a certified minimizing depth and matching
+all-depth lower evidence; a complete fixed-set chooser with source-faithful
+witnesses would suffice but is not supplied. No statement here supplies that
+stopping or realization mechanism.
+
+The conditional alphabet charge is $|E(D)|$, not the size of $I$, installed
+row/prefix tables, transient acquired descriptions, physical words or total
+memory. All of these are separate paid resources. The rank table is finite
+for each supplied $I,h$ but no uniform installation, local computation or
+pre-cut acquisition bound across inputs is asserted. Current-prefix acquisition
+uses the stated physical read and address-length upper bounds and no post-entry
+updates; allowing real updates in the lower bound does not establish equal
+minimum raw-call or update costs. Sourcewise finite traversal does not imply
+uniform finite acquisition or physical time. The remaining claims are therefore
+outside the proved scope. $\square$
 
 **文献与来源表态。**
 
@@ -654,36 +810,55 @@ choice. The remaining claims are therefore outside the proved scope. $\square$
 | --- | --- |
 | [ARH, §§1–3, (ARH.2.3)](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md) | `repo-derived`: complete signed source fiber, paid same-root producer, endpoint guards, current register and static/serial prefix bridge. It does not supply a uniform optimizer for arbitrary signed input. |
 | [SLH, §§2, 59–75](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md) | `repo-derived`: actual original-address locality and current-epoch decoding, including born and absent positions. It does not turn a finite test sequence into an all-depth stopping certificate. |
-| [NPL, §§5–6](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md) | `repo-derived`: exact finite/infinite complete-row image decision and original finite witnesses. A finite image does not by itself reveal a determining depth. |
-| [NSF, Lemma 5.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md) | `repo-derived`: fixed-depth whole-source native feasibility with designated ranks, all old constraints and both endpoint copies. It does not decide the all-depth quantifier. |
+| [NPL, Lemma 5.2, Theorem 5.3 and §§6, 10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md) | `repo-derived`: Lemma 5.2 provides complete guarded source cells; Theorem 5.3 decides finite/infinite complete-row image and returns the exact finite row list with original witnesses. Combined with NSF in (SJM.35), this compiles every supplied-depth rank table. It does not compute a global minimizing depth. |
+| [NSF, Lemma 5.1 and Theorem 5.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md) | `repo-derived`: fixed-coordinate Boolean whole-source queries with supplied epochs, full row tests, all old constraints and signed endpoint guards. Positive answers reconstruct all original finite source copies. It does not decide the all-depth quantifier. |
 | [NIC, Proposition 5.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md) | `repo-derived`: mixed interpreted-$\rho$ navigation and finite-depth signed feasibility. Its finite image cover is not a uniform synthesis theorem for arbitrary signed contacts. |
 | [RDR, Theorem 6.2](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_ROW_DEPTH_RECOVERY.md) | `repo-derived overlap`: conditional rank coding for retained-row intrinsic depth. The present target is a signed full original recut and its native joint examples. |
 | [SPC, §§2–5](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md) | `repo-derived`: finite productive signed witnesses and the discipline that every negative is checked on actual finite approximants. Supplied certificates are sufficient evidence, not complete stopping decisions. |
 | `D5/S0/History/Coding/MinimumRollbackAlphabet.minimum_rollback_alphabet` | Exact finite process-fiber lower bound and fiberwise attaining labels. At fixed $h$ take $X_h=\{(p,r):r\in S_h(p)\}$, $Y$ the finite set of attained prefixes, $U(p,r)=p$ and $L(p,r)=r$; the largest process fiber is exactly $m_h$. ARH/SLH supply acquisition and current-register decoding. |
-| Charpenay–Le Treust–Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, Definition III.1 and Theorem III.4, [arXiv:2211.03649](https://arxiv.org/abs/2211.03649) | `literature-attested`: the one-shot support/colouring intuition. Only the finite zero-error colouring correspondence transfers; asymptotic rates, stochastic sources and free side information do not. |
+| Charpenay–Le Treust–Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, Definition III.1 and the colouring equivalence in the proof of Theorem III.4, [arXiv:2211.03649](https://arxiv.org/abs/2211.03649) | `literature-attested`: at fixed $h$, use finite support $X_h=\{(p,r):r\in S_h(p)\}$, decoder side information $Y=p$, $g(Y)=Y$, encoder observation $X=(p,r)$ and target $r$; any positive distribution on this support gives disjoint prefix cliques of sizes $|S_h(p)|$. Proper colouring is exactly distinct labels within each prefix, and ranks attain $m_h$. Theorem III.4's asymptotic rate is not used. No stochastic acquisition or free physical side information transfers; ARH/SLH separately pay for and realize $p$. |
 | Barguñó–Creus–Godoy–Jacquemard–Vacher, *Decidable Classes of Tree Automata Mixing Local and Global Constraints Modulo Flat Theories*, Theorem 5.22 and Corollaries 5.23–5.24, [arXiv:1302.6960](https://arxiv.org/abs/1302.6960) | `literature-attested`: emptiness for their constrained-tree-automaton classes. No faithful translation of arbitrary interpreted mixed-epoch $\rho$ histories or the unbounded joint-prefix obligation is assumed. |
-| Milius–Moss, *The category theoretic solution of guarded recursive equations*, Theorem 7.15 | `literature-attested`: guarded recursive solutions in a contracting/complete setting. It does not certify that finite signed approximants preserve this native source fiber or that a finite productive description is complete. |
+| Milius–Moss, *The Category Theoretic Solution of Recursive Program Schemes*, §7.3 and Theorem 7.15, [arXiv:0904.2385v2](https://arxiv.org/abs/0904.2385v2) | `literature-attested`: interpreted guarded solutions as unique fixed points in the stated nonempty complete metric/contracting-functor setting. This is background only: Proposition 4.5 directly proves its needed prefix stabilization. No metric completeness of finite native sources, signed preservation on a limit, or completeness of finite productive descriptions transfers. |
 | PR15621 at `0487ddfee131db56e40b654fad5a69689948e3c7` and PR15653 at `c0f820f0b4800326b5c9d06b23f11ce925b404fb` | Published overlap only: supplied-coordinate closure and guarded-description equality. They are not premises for arbitrary stopping or universal certificate completeness. |
 | Retained literal root-depth manuscript, merged at `3508d303746985c18ca446a13c92b5c22f9df10d` | Static root target and specified normal-code continuation. It is distinct from this signed mixed-epoch full-row target. |
 
-The supplier pin for this volume is the merged integration baseline
+The canonical merged mathematical supplier pin for this volume is
 `21dc7376d6bf6518ffd95621637dd6bb1ee8764d`. No external literature or repository
 source cited here is being promoted to a kernel-certified premise.
 
-**开放问题 6.2 (terminating signed joint synthesis).** For every arbitrary
-attained finite signed input and every finite set of complete row labels, decide
-between
+**开放问题 6.2 (terminating signed joint synthesis).** For an arbitrary
+attained input (SJM.6), first use NPL Theorem 5.3 to decide its entire full-row
+image. An infinite answer excludes all finite complete fields by Corollary 2.4;
+a consistency query may also return empty, which has no attained entry.
+For every nonempty finite answer, the unsolved optimization task is to terminate with the exact $M$, a finite depth
+$h_*$ with $m_{h_*}=M$, and a justified all-depth lower bound excluding every
+smaller field, together with the source-total effective rank encoder and lawful
+current-register consumer of Theorem 2.2. The installed data must depend only
+on declared common input, and the actual encoder must be evaluated on the
+acquired source before the complete cut. Existence of $h_*$ is not its uniform
+synthesis, and no supplied-budget decision replaces this task.
 
-1. a finite depth excluding all joint contacts of that set, and
-2. an effective source-faithful family of finite witnesses at every depth,
-   preserving the old complete row, every literal and guard, every signed
-   equality/disequality, the same-source coupling and the complete target rows.
+A sufficient unresolved route is a complete fixed-set chooser: for each
+nonempty $B\subseteq A$, return either a finite $H_B$ with $\neg J_B(H_B)$,
+or valid all-depth persistence evidence with an effective procedure returning,
+for every $h$, actual finite sources in the respective $D_r$ that agree through
+$h$. Every returned source must preserve the entire old row, every literal,
+each reached signed relation and off-task constraint, and its exact full target
+row, on that source's same original root and legal acquisition. A limit satisfying
+some positive equations, without these finite realizations, is insufficient.
+Once persistence is proved, NSF's positive finite queries can produce each
+requested witness; the missing step is the terminating, sound and complete
+choice of that branch for arbitrary signed input. No particular finite form of
+persistence certificate is assumed complete.
 
-A solution must return the minimizing depth and the rank encoder when the first
-alternative occurs, or a valid all-depth witness mechanism when the second does.
-The finite tests, decreasing sequence $m_h$, and the two native fibers above do
-not supply this completeness result. Failure to find such a procedure is not an
-undecidability theorem.
+For one fixed $B$, the exclusion branch only excludes that set. For every
+$k$-set it certifies $M<k$ by taking their finite maximum. Deciding all sets
+would yield the optimizer as proved in Theorem 3.2, while pairwise exclusion
+alone addresses the special value $M=1$. Neither exclusion of a single set nor
+a finite plateau certifies optimality. The native $D_3$ illustrates the distinction:
+its four-set is excluded at depth three, but its persistent triple supplies the
+separate lower bound $M=3$. These finite tests and examples do not solve the
+general synthesis or prove that it is undecidable.
 
 **产地。** This is one theory-only continuation of the signed full-recut
 memory question. Its positive claims are the ordinary proofs and explicit finite
