@@ -523,4 +523,112 @@ private theorem F_outer (x y : H) : F (outer x y) = outer (walkIso x) (walkIso y
   rw [hy, M_step x, M_step y]
   rfl
 
+private theorem P_inner (A : K) :
+    inner ℂ P A = ∑ j : Fin 2 × Fin 2, A ((0, j), (0, j)) := by
+  rw [PiLp.inner_apply, Fintype.sum_prod_type]
+  change (∑ i : Index, ∑ j : Index,
+    A (i, j) * starRingEnd ℂ (Matrix.diagonal
+      (fun k : Index => if k.1 = 0 then (1 : ℂ) else 0) i j)) = _
+  simp only [Matrix.diagonal_apply, apply_ite, map_zero, map_one, mul_one,
+    mul_zero, Fintype.sum_ite_eq]
+  rw [Fintype.sum_prod_type, Finset.sum_comm]
+  simp only [Fintype.sum_ite_eq']
+
+private def f : H := WithLp.toLp 2 (fun i => v i.2)
+private def g : H := WithLp.toLp 2 (fun i => chi i.1 * w i.2)
+private def X : K := outer f g
+private def Y : K := (1 / 12 : ℂ) • identity
+
+private theorem global_eigenvectors : walkIso f = lam • f ∧ walkIso g = lam • g := by
+  constructor
+  · ext ⟨n, j⟩
+    change U phiStar (fun _ i => v i) n j = lam * v j
+    rw [trivial_mode, eigenvectors.1]
+    rfl
+  · ext ⟨n, j⟩
+    change U phiStar (fun n i => chi n * w i) n j = lam * (chi n * w j)
+    rw [character_mode, eigenvectors.2]
+    change chi n * (lam * w j) = _
+    ring
+
+private theorem X_fixed : F X = X := by
+  rw [X, F_outer, global_eigenvectors.1, global_eigenvectors.2]
+  ext ⟨i, j⟩
+  change (lam * f i) * starRingEnd ℂ (lam * g j) = f i * starRingEnd ℂ (g j)
+  rw [map_mul]
+  calc
+    _ = (lam * starRingEnd ℂ lam) * (f i * starRingEnd ℂ (g j)) := by ring
+    _ = _ := by rw [resonance.1, one_mul]
+
+private theorem X_pairings : inner ℂ X identity = 0 ∧ inner ℂ X P ≠ 0 := by
+  constructor
+  · have htr : (mat X).trace = 0 := by
+      change (∑ i : Index, v i.2 * starRingEnd ℂ (chi i.1 * w i.2)) = 0
+      rw [Fintype.sum_prod_type]
+      simp only [map_mul]
+      calc
+        _ = (∑ n : ZMod 12, starRingEnd ℂ (chi n)) *
+            (∑ j : Fin 2 × Fin 2, v j * starRingEnd ℂ (w j)) := by
+          rw [Finset.sum_mul]
+          apply Finset.sum_congr rfl
+          intro n _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro j _
+          ring
+        _ = 0 := by rw [← map_sum, chi_sum, map_zero, zero_mul]
+    rw [← inner_conj_symm, identity_inner, htr, map_zero]
+  · rw [← inner_conj_symm, P_inner]
+    change starRingEnd ℂ (∑ j, v j * starRingEnd ℂ (chi 0 * w j)) ≠ 0
+    simp only [AddChar.map_zero_eq_one, one_mul, map_sum, map_mul, Complex.conj_conj]
+    rw [coin_overlap]
+    exact mul_ne_zero (by norm_num) ((map_ne_zero (starRingEnd ℂ)).mpr z_ne_zero)
+
+private theorem baseline : F Y = Y ∧ inner ℂ Y P = 1 / 3 ∧ ‖Y‖ ^ 2 = 1 / 3 := by
+  have hp : (mat P).trace = 4 := by
+    change (Matrix.diagonal (fun i : Index => if i.1 = 0 then (1 : ℂ) else 0)).trace = 4
+    rw [Matrix.trace_diagonal, Fintype.sum_prod_type, Finset.sum_comm]
+    simp only [Fintype.sum_ite_eq', Finset.sum_const, Finset.card_univ,
+      Fintype.card_prod, Fintype.card_fin, nsmul_eq_mul, mul_one]
+    norm_num
+  have hi : inner ℂ identity identity = 48 := by
+    rw [identity_inner]
+    change (1 : Matrix Index Index ℂ).trace = 48
+    rw [Matrix.trace_one]
+    norm_num only [Fintype.card_prod, ZMod.card, Fintype.card_fin, Nat.cast_mul,
+      Nat.cast_ofNat]
+  refine ⟨?_, ?_, ?_⟩
+  · change F ((1 / 12 : ℂ) • identity) = (1 / 12 : ℂ) • identity
+    rw [map_smul, F_identity]
+  · rw [Y, inner_smul_left, identity_inner, hp]
+    norm_num [map_ofNat]
+  · rw [@norm_sq_eq_re_inner ℂ, Y, inner_smul_left, inner_smul_right, hi]
+    norm_num
+
+private theorem projection_pairing (Z A : K) (hZ : F Z = Z) :
+    inner ℂ Z (Q A) = inner ℂ Z A := by
+  have hz : Z ∈ E := hZ
+  change inner ℂ Z (E.starProjection A) = inner ℂ Z A
+  rw [← E.inner_starProjection_left_eq_right, E.starProjection_eq_self_iff.mpr hz]
+
+private theorem strict_surplus : 1 / 3 < ‖Q P‖ ^ 2 := by
+  have hne : Q P - Y ≠ 0 := by
+    intro h
+    have he : Q P = Y := sub_eq_zero.mp h
+    have hxp := projection_pairing X P X_fixed
+    rw [he, Y, inner_smul_right, X_pairings.1, mul_zero] at hxp
+    exact X_pairings.2 hxp.symm
+  have horth : inner ℂ Y (Q P - Y) = 0 := by
+    rw [inner_sub_right, projection_pairing Y P baseline.1, baseline.2.1]
+    have hy : inner ℂ Y Y = (1 / 3 : ℂ) := by
+      rw [inner_self_eq_norm_sq_to_K, ← RCLike.ofReal_pow, baseline.2.2]
+      norm_num
+    rw [hy, sub_self]
+  have hp := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero Y (Q P - Y) horth
+  rw [add_sub_cancel] at hp
+  simp only [← pow_two] at hp
+  rw [baseline.2.2] at hp
+  have hpos : 0 < ‖Q P - Y‖ ^ 2 := sq_pos_of_pos (norm_pos_iff.mpr hne)
+  linarith only [hp, hpos]
+
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
