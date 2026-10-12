@@ -13,6 +13,20 @@ internal sealed class MBonacciReversedPrefixFRSDocument : IScribeDocumentDefinit
             + "fully right-special factor.",
         H("Reversed Prefixes Are Fully Right-Special"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("sentinel-iterate"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciReversedPrefixFRS.sentinelIter"),
+                H("Original sentinel iterates"), StatementSource.FromAuthor(ConverseStatement("sentinelIter")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("sentinelIter(0) is the empty list and sentinelIter(k+1) is T(sentinelIter(k)). This is the original recursive sentinel, definitionally related by induction to the original function iterate. The Parikh converse uses this same sequence."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("sentinel-frs"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciReversedPrefixFRS.sentinel_frs"),
+                H("All original sentinel right extensions"), StatementSource.FromAuthor(ConverseStatement("sentinel_frs")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every m at least two and every k, the original sentinelIter(k) is fully right-special on the same actual infinite word. The empty case uses the existing occurrence of every letter. Each successor uses the original cyclic predecessor and the exact right-extension occurrence bridge. This supplies all m attained vectors for the converse."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "For every natural order m at least two, write word, Occ and FRS for the "
                 + "literal m-bonacci word and its predicates at that order. For every natural "
@@ -71,5 +85,51 @@ internal sealed class MBonacciReversedPrefixFRSDocument : IScribeDocumentDefinit
     private static Formula Conj(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+
+    private static Formula ConverseStatement(string name)
+    {
+        var m = F.Id("m"); var n = F.Id("n"); var k = F.Id("k");
+        var q = F.Id("q"); var i = F.Id("i"); var t = F.Id("t");
+        var r = F.Id("r"); var s = F.Id("s"); var a = F.Id("a");
+        var x = F.Id("x"); var count = F.Id("count");
+        Formula ns = CFCall("S", m, k);
+        Formula si = CFCall("sentinelIter", m, k);
+        Formula rho = CFCall("ncard", CFCall("parikhImage", m, n));
+        Formula minimum = CFEq(rho, m);
+        Formula sentinel = CFEx("k", CFN(), CFEq(n, ns));
+        Formula periodic = CFEx("k", CFN(), CFEq(CFCall("fullGreedy", m, n),
+            CFCall("periodicDigits", m, k)));
+        Formula body = name switch
+        {
+            "sentinelIter" => CFAnd(CFEq(CFCall("sentinelIter", m, F.D(0)), CFCall("nil")),
+                CFAll("k", CFN(), CFEq(CFCall("sentinelIter", m, CFAdd(k, F.D(1))),
+                    CFCall("T", m, si)))),
+            "sentinel_frs" => CFAll("t", CFN(),
+                CFCall("FRS", m, CFCall("sentinelIter", m, t))),
+            _ => throw new ArgumentOutOfRangeException(nameof(name)),
+        };
+        Formula bound = name == "uniform_minimum_characterization"
+            ? CFAnd(CFLe(F.D(2), m), CFLe(F.D(5), m)) : CFLe(F.D(2), m);
+        bool unrestricted = name is "star" or "star_injective" or "factor_add";
+        return F.Disp(CFAll("m", CFN(), unrestricted ? body : CFImp(bound, body)));
+    }
+
+    private static Formula CFN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    private static Formula CFCall(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula CFAll(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEx(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula CFLe(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula CFAdd(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula CFAnd(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula CFImp(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
 }

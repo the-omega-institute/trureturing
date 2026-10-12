@@ -108,7 +108,7 @@ private lemma singleton_occurrence (a : Fin m) :
   rw [ha] at h
   simpa [Occ, factor] using h
 
-private def sentinelIter : ℕ → List (Fin m)
+def sentinelIter : ℕ → List (Fin m)
   | 0 => []
   | t + 1 => T hm (sentinelIter t)
 
@@ -122,7 +122,7 @@ private lemma sentinel_occurrence (t : ℕ) :
       have hzero := (actual_word_laws hm).2.2.1
       simpa [sentinelIter, hzero] using h
 
-private lemma sentinel_frs (t : ℕ) :
+lemma sentinel_frs (t : ℕ) :
     FRS hm (sentinelIter hm t) := by
   induction t with
   | zero =>
