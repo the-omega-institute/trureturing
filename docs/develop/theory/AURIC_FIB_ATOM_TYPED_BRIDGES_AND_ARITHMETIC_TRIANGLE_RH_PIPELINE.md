@@ -9287,3 +9287,63 @@ L(\ker P)\subseteq\ker P.
 因此 FIB 或三维 \(q\) 只有在 hidden kernel 对全部 transport、CPTP 或 Hamiltonian 更新不变时，才形成自治静态场。否则精确约化动力学必含记忆项。定理 51.2 的 \(t^2\) 压缩缺陷是这一充要条件失败的有限可计算证书。
 
 该定理只涉及有限维线性代数和矩阵指数。它不把 \(P\) 解释为物理测量，也不推出引力或 RH。相关行为商的最大不动点版本见 dev 的 [COMPUTATIONAL BEHAVIOR REPRESENTATION THEORY](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md)。
+
+
+## 61. 五模式预测律几何的机器证明
+
+### 定义 61.1（预测律场）
+
+对五模式载体 \(S=\{0,1,2,3,4\}\)，不把静态向量 \(p\in\Delta(S)\) 直接当作完整状态，而定义其 future-word profile
+\[
+\mathcal P_H(p)=\operatorname{Law}_p(X_1,\ldots,X_H)
+\]
+以及全时 profile \(\mathcal P_\infty(p)\)，其中允许性、startup 和 mixture law 均按 dev 的 Fin5 source/admissibility contract 给定。预测律场的等价关系是
+\[
+p\sim_{\mathrm{pred}}q
+\iff
+\mathcal P_\infty(p)=\mathcal P_\infty(q).
+\]
+
+### 定理 61.2（五模式的有限预测几何，Lean 锚点）
+
+在该明确的 Fin5 source/admissibility 模型中，dev 的 Lean 文件
+[FiveModePredictiveLawGeometry](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/ObserverMemory/Prediction/FiveModePredictiveLawGeometry.md)
+机器证明了：
+
+1. 对 coherent mixture law，有限 horizon 的总变差距离满足
+   \[
+   \operatorname{TV}_H
+   =
+   |x-z|\bigl(1-\min(a,b)^H\bigr),
+   \]
+   且 profileDistance 等于 \(|x-z|\)；
+2. 不同 pure states 具有统一正分离下界 \(\kappa\)；
+3. startup laws 的距离公式成立，startup length 映射是单射；
+4. cutoff 满足
+   \[
+   N_2=
+   \left\lceil
+   \frac{\log((1-2\varepsilon)/(2\varepsilon))}
+        {|\log\theta|}
+   \right\rceil
+   \]
+   并有指数衰减；
+5. 长度上限 \(L\ge2\) 时 exact predictive classes 有 \(L+5\) 个，加入 empty boundary 后为 \(L+6\)；
+6. postread/initialized predictive-law image 可数且无限；
+7. 总包装定理 five_mode_predictive_geometry 成立。
+
+### 推论 61.3（五向量不是自动的完整动态场）
+
+即使静态五态向量 \(p\) 只有五个坐标，预测律商
+\[
+\Delta(S)/{\sim_{\mathrm{pred}}}
+\]
+在该模型中可以具有可数无限多个类。因此
+\[
+\text{静态五向量}
+\ne
+\text{完整动态状态}
+\]
+除非另行证明读出对全部 future profiles 是完备的。该推论与定理 48.2 的最大预测商、定理 55.2 的 hidden-memory 缺陷以及定理 60.1 的自治闭合条件相接。
+
+这些结论是指定 Fin5 合约下的 Lean 机器证明，不能外推到一般五态量子网络、物理能级、引力或 RH。它们为“能级”提供的严格对象只是预测律商上的距离和有限截断谱，不是物理 Hamiltonian 能级。
