@@ -460,6 +460,14 @@ a,b,c\text{ all distinct}&-1&1/3&5/256.
 \end{array}
 \]
 
+Among the 64 ordered output triples, four are all equal, 36 have exactly two equal entries, and 24 are all distinct. Thus every entry is nonnegative and the total mass is
+
+\[
+\frac{4\cdot25+36\cdot1+24\cdot5}{256}=1.
+\]
+
+The Gram expression therefore specifies an exact rational probability law on the 64 output triples.
+
 This identity is an exact finite calculation. It is a genuine three-dimensional representation of the output symmetry because the four outcomes are encoded by a regular tetrahedron in \(\mathbb R^3\). It is not a proof that the causal sources are spatial axes.
 
 The term \(S\) is a sum of pairwise Gram interactions. The term \(R\) is the symmetric sum of pairwise products among the three edge-pair Gram entries, so it is a cycle-sensitive invariant that still respects the full permutation symmetry of \(a,b,c\). Equivalently,
@@ -528,6 +536,51 @@ P_S,
 \]
 
 where \(P_S\) is the distribution with ideal state on edges in \(S\) and maximally mixed state on the other edges. This is a multi-affine polynomial in the three source visibilities. It is a mixture of eight quantum distributions, not generally the one-dimensional global line (6.1).
+
+### 6.2.1 Exact finite source-noise application
+
+For eight rational tables \(P_i(a,b,c)\), index the source choices by the binary tuples
+
+\[
+0=000,\quad1=100,\quad2=010,\quad3=110,\quad
+4=001,\quad5=101,\quad6=011,\quad7=111,
+\]
+
+where the tuple order is \((\alpha,\beta,\gamma)\) and one means the ideal source. The exact coefficient list is
+
+\[
+\begin{aligned}
+c_0&=(1-w_\alpha)(1-w_\beta)(1-w_\gamma),&
+c_1&=w_\alpha(1-w_\beta)(1-w_\gamma),\\
+c_2&=(1-w_\alpha)w_\beta(1-w_\gamma),&
+c_3&=w_\alpha w_\beta(1-w_\gamma),\\
+c_4&=(1-w_\alpha)(1-w_\beta)w_\gamma,&
+c_5&=w_\alpha(1-w_\beta)w_\gamma,\\
+c_6&=(1-w_\alpha)w_\beta w_\gamma,&
+c_7&=w_\alpha w_\beta w_\gamma.
+\end{aligned}
+\]
+
+Define \(N_{\mathbf w}(P)(a,b,c)=\sum_{i=0}^{7}c_iP_i(a,b,c)\). This is precisely the eight-term expansion of (6.2). The coefficients satisfy
+
+\[
+\sum_i c_i=
+((1-w_\alpha)+w_\alpha)
+((1-w_\beta)+w_\beta)
+((1-w_\gamma)+w_\gamma)=1.
+\]
+
+Grouping terms with the same first source choice gives
+
+\[
+N_{(w_\alpha,w_\beta,w_\gamma)}(P)
+=(1-w_\alpha)N_{(0,w_\beta,w_\gamma)}(P)
++w_\alpha N_{(1,w_\beta,w_\gamma)}(P).
+\]
+
+The identities hold algebraically for arbitrary rational visibilities and tables. To interpret the result as a probability law, require \(0\le w_e\le1\) and normalized nonnegative component tables. Then each \(c_i\ge0\), and summing the output entries gives \(\sum_i c_i=1\). Physical source-noise semantics require a further construction identifying each \(P_i\) with the Born-rule table of its indicated source replacements; arbitrary tables with these labels do not supply that construction.
+
+These finite calculations preserve the EJM and source-noise application. They are applications of rational arithmetic and finite distributivity, rather than new reusable library theorems. The repository's existing `Erdos7.FiniteLaw` carrier describes the resulting finite probability law; the separate `IsTriangleLocal` predicate supplies no locality conclusion for it. No new D5 declaration, first freeze, inflation certificate, or physical noise threshold is claimed here.
 
 ### 6.3 Independent local output post-processing
 
