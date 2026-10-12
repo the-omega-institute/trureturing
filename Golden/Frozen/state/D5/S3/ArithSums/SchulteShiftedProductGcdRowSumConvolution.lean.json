@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c7949cf7c8dbcb24bd855e584bc6db9b70dfa2c2991615e1adae4a5214807ebe"}
+{"statement_id":"sha256:c7949cf7c8dbcb24bd855e584bc6db9b70dfa2c2991615e1adae4a5214807ebe","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:ArithSums),41:SchulteShiftedProductGcdRowSumConvolution),6:result)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:ArithSums),41:SchulteShiftedProductGcdRowSumConvolution),6:rowSum)","kind":"def"}]}

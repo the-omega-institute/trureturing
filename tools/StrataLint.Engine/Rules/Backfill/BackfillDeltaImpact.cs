@@ -54,8 +54,7 @@ internal static class BackfillDeltaImpactResolver
         // dependency change does not widen evaluation to unrelated edges.
         var evaluationEntries = repositoryChanges.Entries
             .Where(static change =>
-                !FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
-                && !FrozenStatePath.IsUnderRoot(change.Path.Value)
+                !FrozenStatePath.IsUnderRoot(change.Path.Value)
                 && !(change.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
                     && change.Path.Value.EndsWith(".lean", StringComparison.Ordinal)))
             .ToDictionary(static change => change.Path.Value, StringComparer.Ordinal);

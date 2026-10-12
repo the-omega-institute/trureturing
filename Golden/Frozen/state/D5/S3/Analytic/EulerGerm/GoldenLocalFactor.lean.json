@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5c975bac3fe42afe981ba2b61cbea68bf6447dead6d641a2a1f2325f21a55857"}
+{"statement_id":"sha256:5c975bac3fe42afe981ba2b61cbea68bf6447dead6d641a2a1f2325f21a55857","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),9:EulerGerm),17:GoldenLocalFactor),12:o5_beta_zero)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),9:EulerGerm),17:GoldenLocalFactor),15:germLocalFactor)","kind":"def"}]}

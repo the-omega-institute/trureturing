@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2eb719e11608e9d5fe22b15b9de9ff689baee1e99b3d77bd698d99a5207c3a16"}
+{"statement_id":"sha256:2eb719e11608e9d5fe22b15b9de9ff689baee1e99b3d77bd698d99a5207c3a16","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),12:InversionSeq),21:InversionSeq152Bounds),25:rotated_suffix_bounds_iff)","kind":"theorem"}]}
