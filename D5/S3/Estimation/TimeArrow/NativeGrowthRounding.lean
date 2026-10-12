@@ -494,7 +494,7 @@ theorem original_cell_logit_precision (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   have hb := mul_le_mul_of_nonneg_left
     (cell_logit_bound r β (scale n) hr.le hr1 hqN hqm hnc.le hnp.le)
     (show (0 : ℝ) ≤ scale n from Nat.cast_nonneg _)
-  convert hb using 1 <;> ring
+  convert hb using 1 <;> first | rfl | ring
 
 /-- Any prescribed root-origin precision and the occupancy log interval hold eventually. -/
 theorem original_cell_logit_bounds (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r < 1)
@@ -520,6 +520,158 @@ theorem original_cell_logit_bounds (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r < 1)
     linarith only [h]
   · have h := (abs_le.mp hnh.le).1
     linarith only [h]
+
+/-- The fixed Chernoff exponent dominates both population growth and squared odds growth. -/
+theorem original_tail_rates (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
+    (hβ : 1/2 < β) :
+    0 < (8*Real.log 4-6)-phi r/β ∧
+      0 < (8*Real.log 4-6)-2*phi r := by
+  have hφ := information_rate_bounds r hr hr1
+  have hβ0 : 0 < β := by linarith only [hβ]
+  have hrate : phi r/β < 2*phi r := by
+    apply (div_lt_iff₀ hβ0).mpr
+    nlinarith only [hβ, hφ.1]
+  have hlog := Real.one_sub_inv_le_log_of_pos (by norm_num : (0 : ℝ) < 2)
+  have hlog2 : (1/2 : ℝ) ≤ Real.log 2 := by norm_num at hlog ⊢; exact hlog
+  rw [show (4 : ℝ) = 2^2 by norm_num, Real.log_pow]
+  norm_num only [Nat.cast_ofNat]
+  constructor <;> nlinarith only [hφ.2, hrate, hlog2]
+
+/-- Both all-row tail payments decay at the original scale. -/
+theorem original_tail_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
+    (hβ : 1/2 < β) (hβ1 : β < 1) (p : ℕ) :
+    Tendsto (fun n => (scale n : ℝ)^p * population r β (scale n) *
+      Real.exp (-((8*Real.log 4-6)*(scale n : ℝ)))) atTop (𝓝 0) ∧
+    Tendsto (fun n => (scale n : ℝ)^p *
+      ((population r β (scale n) : ℝ)/signalSize r β (scale n))^2 *
+      Real.exp (-((8*Real.log 4-6)*(scale n : ℝ)))) atTop (𝓝 0) := by
+  have hφ := (information_rate_bounds r hr hr1).1
+  have hβ0 : 0 < β := by linarith only [hβ]
+  obtain ⟨hIM, hIq⟩ := original_tail_rates r β hr hr1 hβ
+  let I := 8*Real.log 4-6
+  constructor
+  · have hz := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero
+      (p : ℝ) (I-phi r/β) hIM).comp scale_tendsto
+    simp only [Function.comp_apply, Real.rpow_natCast] at hz
+    refine squeeze_zero' (Eventually.of_forall fun n => by positivity) ?_ hz
+    apply Eventually.of_forall
+    intro n
+    have hm := (population_exponential_bounds r β (scale n) hφ.le hβ0).2
+    calc
+      _ ≤ (scale n : ℝ)^p * Real.exp (phi r/β*(scale n : ℝ)) *
+          Real.exp (-(I*(scale n : ℝ))) := by gcongr
+      _ = _ := by rw [mul_assoc, ← Real.exp_add]; congr 1; ring
+  · have hcq : 0 < phi r/β-phi r := by
+      apply sub_pos.mpr
+      apply (lt_div_iff₀ hβ0).mpr
+      nlinarith only [hφ, hβ1]
+    have hlarge := (Real.tendsto_exp_atTop.comp
+      (scale_tendsto.const_mul_atTop hcq)).eventually (eventually_ge_atTop 4)
+    have hz := ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero
+      (p : ℝ) (I-2*phi r) hIq).comp scale_tendsto).const_mul 16
+    simp only [Function.comp_apply, Real.rpow_natCast, mul_zero] at hz
+    refine squeeze_zero' (Eventually.of_forall fun n => by positivity) ?_ hz
+    filter_upwards [hlarge] with n hn
+    have hq := (signal_exponential_bounds r β (scale n) hr.le hr1 hφ.le hβ0 hn).1
+    have hqpos : (0 : ℝ) < signalSize r β (scale n) :=
+      (div_pos (Real.exp_pos _) (by norm_num)).trans_le hq
+    have hm := (population_exponential_bounds r β (scale n) hφ.le hβ0).2
+    have hratio : (population r β (scale n) : ℝ)/signalSize r β (scale n) ≤
+        4*Real.exp (phi r*(scale n : ℝ)) := by
+      calc
+        _ ≤ Real.exp (phi r/β*(scale n : ℝ)) /
+            (Real.exp ((phi r/β-phi r)*(scale n : ℝ))/4) :=
+          div_le_div₀ (by positivity) hm (by positivity) hq
+        _ = _ := by
+          rw [div_div_eq_mul_div, mul_comm (Real.exp _) (4 : ℝ), mul_div_assoc, ← Real.exp_sub]
+          congr 1
+          ring
+    calc
+      _ ≤ (scale n : ℝ)^p * (4*Real.exp (phi r*(scale n : ℝ)))^2 *
+          Real.exp (-(I*(scale n : ℝ))) := by gcongr
+      _ = 16*((scale n : ℝ)^p*Real.exp (-(I-2*phi r)*(scale n : ℝ))) := by
+        rw [mul_pow, ← Real.exp_nat_mul]
+        norm_num only [Nat.cast_ofNat, show (4 : ℝ)^2 = 16 by norm_num]
+        rw [show (scale n : ℝ)^p*(16*Real.exp (2*(phi r*(scale n : ℝ))))*
+            Real.exp (-(I*(scale n : ℝ))) =
+          16*((scale n : ℝ)^p*(Real.exp (2*(phi r*(scale n : ℝ)))*
+            Real.exp (-(I*(scale n : ℝ))))) by ring, ← Real.exp_add]
+        congr 2
+        ring
+
+/-- A deterministic budget shared by all supports and both native experiments. -/
+def failureBudget (r β C : ℝ) (n : ℕ) : ℝ :=
+  let L := (scale n : ℝ)
+  let M := (population r β (scale n) : ℝ)
+  let q := (signalSize r β (scale n) : ℝ)
+  let ζ := Real.exp (-((8*Real.log 4-6)*L))
+  C*(L^2/q+L^5/M+L^2*(M/q)^2*ζ+M*ζ)
+
+/-- The four payments in the native uniform failure budget tend to zero. -/
+theorem original_failure_budget_zero (r β C : ℝ) (hr : 0 < r) (hr1 : r < 1)
+    (hβ : 1/2 < β) (hβ1 : β < 1) :
+    Tendsto (failureBudget r β C) atTop (𝓝 0) := by
+  have hβ0 : 0 < β := by linarith only [hβ]
+  have h1 := (original_polynomial_scales r β hr hr1 hβ0 hβ1 2).1
+  have h2 := (original_polynomial_scales r β hr hr1 hβ0 hβ1 5).2
+  have h3 := (original_tail_scales r β hr hr1 hβ hβ1 2).2
+  have h4 := (original_tail_scales r β hr hr1 hβ hβ1 0).1
+  simp only [pow_zero, one_mul] at h4
+  unfold failureBudget
+  simpa only [zero_add, mul_zero, mul_one] using (((h1.add h2).add h3).add h4).const_mul C
+
+private theorem eventually_four_sqrt_scale (c : ℝ) (hc : 0 < c) :
+    ∀ᶠ n in atTop, 4*Real.sqrt (scale n : ℝ) ≤ c*(scale n : ℝ) := by
+  filter_upwards [(Real.tendsto_sqrt_atTop.comp scale_tendsto).eventually
+    (eventually_ge_atTop (4/c))] with n hn
+  have h := mul_le_mul_of_nonneg_right ((div_le_iff₀ hc).mp hn) (Real.sqrt_nonneg (scale n : ℝ))
+  simp only [Function.comp_apply] at h
+  have hs := congrArg (fun z : ℝ => c*z)
+    (Real.sq_sqrt (show (0 : ℝ) ≤ scale n from Nat.cast_nonneg _))
+  nlinarith only [h, hs]
+
+/-- Exact finite scale premises for the native relative, occupancy and variance interfaces. -/
+theorem original_native_scale_conditions (r β A η : ℝ) (M₀ : ℕ)
+    (hr : 0 < r) (hr1 : r < 1) (hβ : 0 < β) (hβ1 : β < 1) (hη : 0 < η) :
+    ∀ᶠ n in atTop,
+      M₀ ≤ population r β (scale n) ∧ 1 ≤ signalSize r β (scale n) ∧
+      signalSize r β (scale n) < population r β (scale n) ∧
+      4 ≤ scale n ∧ 6 ≤ population r β (scale n) ∧
+      compensation (population r β (scale n)) (signalSize r β (scale n)) r ≤ (1+r)/2 ∧
+      (scale n : ℝ)/population r β (scale n) ≤ η ∧
+      (scale n : ℝ)/population r β (scale n) ≤ 1/45 ∧
+      A*(scale n : ℝ)^2/population r β (scale n) ≤ 1/2 ∧
+      15 ≤ ((1+r)/2)*(scale n : ℝ) ∧
+      30 ≤ ((1-r)/2)*(scale n : ℝ) ∧
+      4*Real.sqrt (scale n : ℝ) ≤ ((1+r)/2)*(scale n : ℝ) ∧
+      4*Real.sqrt (scale n : ℝ) ≤ ((1-r)/2)*(scale n : ℝ) := by
+  have ha : 0 < (1+r)/2 := by linarith only [hr]
+  have hb : 0 < (1-r)/2 := by linarith only [hr1]
+  obtain ⟨hq, hM⟩ := original_populations_tendsto r β hr hr1 hβ hβ1
+  have hd := original_density_scales r β hr hr1 0
+  have hc := original_compensation_scales r β hr hr1 0
+  simp only [pow_zero, one_mul] at hd hc
+  have hLM := (original_polynomial_scales r β hr hr1 hβ hβ1 1).2
+  have hALM := ((original_polynomial_scales r β hr hr1 hβ hβ1 2).2).const_mul A
+  simp only [pow_one] at hLM
+  simp only [mul_zero] at hALM
+  filter_upwards [hM.eventually (eventually_ge_atTop (M₀ : ℝ)),
+    hq.eventually (eventually_ge_atTop 1), hM.eventually (eventually_ge_atTop 6),
+    scale_tendsto.eventually (eventually_ge_atTop 4),
+    hd.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1)),
+    hc.eventually (gt_mem_nhds ha), hLM.eventually (gt_mem_nhds hη),
+    hLM.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1/45)),
+    hALM.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1/2)),
+    (scale_tendsto.const_mul_atTop ha).eventually (eventually_ge_atTop 15),
+    (scale_tendsto.const_mul_atTop hb).eventually (eventually_ge_atTop 30),
+    eventually_four_sqrt_scale ((1+r)/2) ha,
+    eventually_four_sqrt_scale ((1-r)/2) hb] with n hM₀ hq1 hM6 hL4 hden hcomp hLη hL45 hA haL hbL haS hbS
+  have hM0 : (0 : ℝ) < population r β (scale n) := by unfold population; positivity
+  have hqm : signalSize r β (scale n) < population r β (scale n) := by
+    exact_mod_cast (div_lt_one hM0).mp hden
+  exact ⟨by exact_mod_cast hM₀, by exact_mod_cast hq1, hqm,
+    by exact_mod_cast hL4, by exact_mod_cast hM6, hcomp.le, hLη.le, hL45.le,
+    by simpa only [← mul_div_assoc] using hA.le, haL, hbL, haS, hbS⟩
 
 end
 end D5.S3.Estimation.TimeArrow.NativeGrowthRounding
