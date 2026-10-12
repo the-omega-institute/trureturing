@@ -53,6 +53,6 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
 
         Assert.Equal(3, inventoryCalls);
-        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
+        AssertRetainedAndControlReclaimed(result, retained, removed, "race_changed");
     }
 }

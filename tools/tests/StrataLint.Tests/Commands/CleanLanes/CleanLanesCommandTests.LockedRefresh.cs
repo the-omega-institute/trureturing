@@ -23,6 +23,6 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
-        Assert.Equal("locked_changed", ReasonFor(result.Output, lane));
+        Assert.Equal("race_changed", ReasonFor(result.Output, lane));
     }
 }

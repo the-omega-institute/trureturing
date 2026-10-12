@@ -1,5 +1,6 @@
 using StrataLint.Runtime;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -21,22 +22,25 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static bool IsAncestor(
+    private static bool? IsAncestor(
         string repositoryRoot,
         string ancestor,
         string descendant,
         IWorktreeProcessRunner runner)
     {
-        var result = runner.Run(
-            "git",
-            ["merge-base", "--is-ancestor", ancestor, descendant],
-            repositoryRoot,
-            BoundedProcessRunner.HangDetectionBudget);
-        if (result.ExitCode == 0) return true;
-        if (result.ExitCode == 1) return false;
-        var error = Decode(result.StandardError).Trim();
-        throw new InvalidOperationException(
-            error.Length == 0 ? "could not compare lane ancestry" : error);
+        try
+        {
+            var result = runner.Run(
+                "git",
+                ["merge-base", "--is-ancestor", ancestor, descendant],
+                repositoryRoot,
+                BoundedProcessRunner.HangDetectionBudget);
+            return result.ExitCode switch { 0 => true, 1 => false, _ => null };
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return null;
+        }
     }
 
     internal static ProcessOutput RunGit(
@@ -53,31 +57,37 @@ internal static partial class CleanLanesCommand
 
     internal static string Decode(byte[] bytes) => StrictUtf8.GetString(bytes);
 
-    private static string? ReclaimBlockReason(
-        RegisteredWorktree item,
-        string baseCommit,
-        IWorktreeProcessRunner runner,
-        DateTimeOffset now)
+    private static long? ReadLastUpdate(
+        RegisteredWorktree item, long reflogUpdated, IWorktreeProcessRunner runner)
     {
-        var updated = ReadLastUpdate(item.GitDirectory!, item.Head);
-        if (updated is null) return "update_unknown";
         try
         {
             var commitTime = Decode(RunGit(
                 item.Path, ["show", "-s", "--format=%ct", item.Head], runner,
                 "could not read HEAD commit time").StandardOutput).Trim();
             if (!long.TryParse(commitTime, NumberStyles.None, CultureInfo.InvariantCulture,
-                    out var committed)) return "update_unknown";
-            updated = Math.Max(updated.Value, committed);
+                    out var committed)) return null;
+            return Math.Max(reflogUpdated, committed);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return "update_unknown";
+            return null;
         }
+    }
 
+    private static string? UpdateAgeBlockReason(long updated, long minimumAge, DateTimeOffset now)
+    {
         var nowSeconds = now.ToUnixTimeSeconds();
         if (updated > nowSeconds) return "age_unverifiable";
-        if (nowSeconds - updated < MinimumReclaimableLaneAgeSeconds) return "recently_updated";
+        return nowSeconds - updated < minimumAge ? "recently_updated" : null;
+    }
+
+    private static string? OriginalReclaimBlockReason(
+        RegisteredWorktree item, string baseCommit, long updated,
+        IWorktreeProcessRunner runner, DateTimeOffset now)
+    {
+        var reason = UpdateAgeBlockReason(updated, MinimumReclaimableLaneAgeSeconds, now);
+        if (reason is not null) return reason;
         try
         {
             var output = Decode(RunGit(
@@ -93,33 +103,6 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    // Trust Git's local clock; source file mtimes and uncommitted changes are irrelevant.
-    private static long? ReadLastUpdate(string gitDirectory, string observedHead)
-    {
-        try
-        {
-            long? latest = null;
-            string? lastHead = null;
-            foreach (var line in File.ReadLines(Path.Combine(gitDirectory, "logs", "HEAD"), StrictUtf8))
-            {
-                var tab = line.IndexOf('\t');
-                var record = tab < 0 ? line : line[..tab];
-                var fields = record.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                if (fields.Length < 6 || !IsObjectOid(fields[0]) || !IsObjectOid(fields[1])
-                    || !long.TryParse(fields[^2], NumberStyles.None, CultureInfo.InvariantCulture,
-                        out var timestamp) || !IsTimezone(fields[^1])) return null;
-                latest = Math.Max(latest ?? timestamp, timestamp);
-                lastHead = fields[1];
-            }
-
-            return string.Equals(lastHead, observedHead, StringComparison.Ordinal) ? latest : null;
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return null;
-        }
-    }
-
     private static bool IsObjectOid(string? value) =>
         value is not null
         && value.Length is 40 or 64
@@ -127,6 +110,28 @@ internal static partial class CleanLanesCommand
             character is >= '0' and <= '9'
                 or >= 'a' and <= 'f'
                 or >= 'A' and <= 'F');
+
+    private static bool TryParseHeadLogRecord(string line, out HeadLogRecord? record)
+    {
+        // The message separator follows the complete identity, timestamp and
+        // timezone; a committer name can itself contain a TAB.
+        var match = Regex.Match(line,
+            @"^(?<old>[0-9a-fA-F]+) (?<new>[0-9a-fA-F]+) (?<name>[^<>]+) <[^<>]*> (?<time>[0-9]+) (?<zone>[+-][0-9]{4})(?:\t.*)?$",
+            RegexOptions.CultureInvariant);
+        var oldHead = match.Groups["old"].Value;
+        var newHead = match.Groups["new"].Value;
+        record = null;
+        if (!match.Success || !IsObjectOid(oldHead) || !IsObjectOid(newHead)
+            || oldHead.Length != newHead.Length
+            || string.IsNullOrWhiteSpace(match.Groups["name"].Value)
+            || !long.TryParse(match.Groups["time"].Value, NumberStyles.None,
+                CultureInfo.InvariantCulture, out var timestamp)
+            || !IsTimezone(match.Groups["zone"].Value)) return false;
+        record = new(newHead, timestamp);
+        return true;
+    }
+
+    private sealed record HeadLogRecord(string NewHead, long Updated);
 
     private static bool IsTimezone(string value) =>
         value.Length == 5
