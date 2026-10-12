@@ -8,14 +8,14 @@ internal static class LeanPropositionSourceComparer
         RepositorySnapshot protectedBase,
         RepositorySnapshot candidate,
         ImmutableHashSet<RepoPath> reanchoredPaths,
-        FrozenLedgerBaseView baseView,
-        FrozenMaterialCatalog candidateCatalog)
+        FrozenStateCatalog baseState,
+        LeanAxiomReport candidateReport)
     {
         ArgumentNullException.ThrowIfNull(protectedBase);
         ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(reanchoredPaths);
-        ArgumentNullException.ThrowIfNull(baseView);
-        ArgumentNullException.ThrowIfNull(candidateCatalog);
+        ArgumentNullException.ThrowIfNull(baseState);
+        ArgumentNullException.ThrowIfNull(candidateReport);
         try
         {
             var baseSources = LeanSourceCatalog.Parse(protectedBase);
@@ -24,18 +24,18 @@ internal static class LeanPropositionSourceComparer
                 static path => path.Value,
                 StringComparer.Ordinal))
             {
-                if (!baseView.ActiveByPath.TryGetValue(path, out var recorded)
-                    || !candidateCatalog.ByPath.TryGetValue(path, out var current))
+                if (!baseState.Records.TryGetValue(path, out var recorded)
+                    || !candidateReport.Files.TryGetValue(path, out var current))
                 {
                     return false;
                 }
 
                 var baseFingerprint = baseSources.ExtractPropositionSource(
                     path,
-                    recorded.Material.DeclarationStatementIds);
+                    recorded.Declarations);
                 var candidateFingerprint = candidateSources.ExtractPropositionSource(
                     path,
-                    current.DeclarationStatementIds);
+                    FrozenStateRecord.Project(current));
                 if (!baseFingerprint.AsSpan().SequenceEqual(candidateFingerprint.AsSpan()))
                 {
                     return false;

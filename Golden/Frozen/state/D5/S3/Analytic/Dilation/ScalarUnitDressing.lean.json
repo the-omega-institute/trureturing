@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9fc60513089d30ee139cb512947c819567dc84c576673ee4d5ad10cf41b7b258"}
+{"statement_id":"sha256:9fc60513089d30ee139cb512947c819567dc84c576673ee4d5ad10cf41b7b258","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),8:Dilation),18:ScalarUnitDressing),57:nonzero_scalar_dressing_preserves_zero_and_analytic_order)","kind":"theorem"}]}

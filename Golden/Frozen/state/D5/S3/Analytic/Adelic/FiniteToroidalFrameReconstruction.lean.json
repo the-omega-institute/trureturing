@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d17d393e0efd4b729c59831fac6cdd3a03590261d58c904e42bf31cfba629d15"}
+{"statement_id":"sha256:d17d393e0efd4b729c59831fac6cdd3a03590261d58c904e42bf31cfba629d15","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),6:Adelic),33:FiniteToroidalFrameReconstruction),13:weightedFrame)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),6:Adelic),33:FiniteToroidalFrameReconstruction),36:finite_toroidal_frame_reconstruction)","kind":"theorem"}]}

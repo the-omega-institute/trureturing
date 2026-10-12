@@ -30,18 +30,26 @@ internal static class TruthExportCommand
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
                 () => repository.ReadRevisionProjection(identity.Revision, IsTruthInput)));
             var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
-            var preparation = PrepareStrictHistory(repository, snapshot, identity, report);
-            if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
+            var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
+            var states = LeanTruthStates.Resolve(snapshot, truth.Lean);
+            var frozen = FrozenStateCatalog.Load(snapshot);
+            foreach (var (path, record) in frozen.Records)
+                if (!snapshot.Files.ContainsKey(path) || !states.TryGetValue(path, out var state) || state is not TruthState.Closed
+                    || !report.Files.TryGetValue(path, out var module)
+                    || record.StatementId != FrozenContentAddress.ComputeModuleStatementId(path, module)
+                    || !record.Declarations.SequenceEqual(FrozenStateRecord.Project(module)))
+                    return new(2, string.Empty, $"TRUTH_EXPORT_REJECTED frozen state does not match current report: {path.Value}\n");
+            var catalog = FrozenContentAddress.Build(snapshot, truth.Lean, states,
+                LeanImportAdjacency.BuildFromSources(snapshot)) switch
             {
-                return new ExplicitCommandResult(
-                    2,
-                    string.Empty,
-                    $"TRUTH_EXPORT_REJECTED {rejected.Message}\n");
-            }
+                FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
+                FrozenMaterialOutcome.Rejected rejected => throw new FormatException(rejected.Message),
+                _ => throw new InvalidOperationException("unknown frozen material outcome"),
+            };
 
             var model = TruthExportProjection.Project(
-                preparation.Catalog.ClosedNodes,
-                FrozenStateCatalog.Load(snapshot).Selectors.ToImmutableHashSet(),
+                catalog.ClosedNodes,
+                frozen.Selectors.ToImmutableHashSet(),
                 identity.Revision,
                 Bare(identity.TreeOid));
             var finalPath = WriteAtomically(options.OutDirectory, model);
@@ -67,48 +75,10 @@ internal static class TruthExportCommand
         }
     }
 
-    internal static StrictTruthHistoryPreparation PrepareStrictHistory(
-        IRepositoryGateway repository,
-        RepositorySnapshot snapshot,
-        FrozenRevisionIdentity identity,
-        LeanAxiomReport report)
-    {
-        var ledgerFiles = LedgerFiles(snapshot);
-        var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
-            ledgerFiles.ToImmutableDictionary(static file => file.Path)));
-        var truth = DagLedgerCommandPreparation.BuildTruth(snapshot, report);
-        var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
-        var adjacency = LeanImportAdjacency.Build(truth.Snapshot, truth.Lean);
-        var catalog = DagLedgerCommandPreparation.BuildCompleteCatalog(
-            truth.Snapshot,
-            truth.Lean,
-            states,
-            adjacency,
-            baseView,
-            identity);
-        _ = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(
-            ledgerFiles,
-            "frozen ledger");
-        var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog, requireCompleteCatalog: false);
-        return new StrictTruthHistoryPreparation(truth, states, baseView, catalog, outcome);
-    }
-
     internal static bool IsTruthInput(string path) => LeanClosureValidator.IsReportLean(path)
         || path == RepositoryPathPolicy.AssumptionRegistryPath
-        || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-        || path.StartsWith("Golden/Frozen/state/", StringComparison.Ordinal)
+        || FrozenStatePath.IsUnderRoot(path)
         || path is "lean-toolchain" or "lakefile.toml" or "lake-manifest.json";
-
-    private static ImmutableArray<RepositoryFile> LedgerFiles(RepositorySnapshot snapshot)
-    {
-        var prefix = FrozenLedgerChangeClassifier.AcceptedRoot + "/";
-        return snapshot.Files.Values
-            .Where(file => file.Path.Value.StartsWith(prefix, StringComparison.Ordinal)
-                && file.Path.Value.EndsWith(".json", StringComparison.Ordinal)
-                && !file.Path.Value[prefix.Length..].Contains('/', StringComparison.Ordinal))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
@@ -207,10 +177,3 @@ internal static class TruthExportCommand
         string OutDirectory,
         string CandidateLeanReport);
 }
-
-internal sealed record StrictTruthHistoryPreparation(
-    TruthContext Truth,
-    ImmutableDictionary<RepoPath, TruthState> States,
-    FrozenLedgerBaseView BaseView,
-    FrozenMaterialCatalog Catalog,
-    FrozenLedgerValidationOutcome Outcome);
