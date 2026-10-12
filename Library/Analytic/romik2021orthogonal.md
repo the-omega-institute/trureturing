@@ -4810,3 +4810,365 @@ $t\asymp T^2$ for that real witness. Uniform actual-node strict
 comparison below $T_n^{\rm mov}$, RH and strict Robin for every
 $H>5040$ remain open. This is ordinary analysis without Lean
 certification.
+
+## Angular source payment and two-way local zero capture
+
+Keep the original $F$, zero coefficient shift, exact moments (LC176),
+local relative bound (LC184), and the checked Buck and Titchmarsh
+suppliers of (LC180)--(LC183). The sectorial Gamma bound and the
+functional equation are the same published DLMF inputs already used
+in this note. No generic saddle, Gaussian, Cartan, zero-count or
+logarithmic-derivative theorem is reproved. The following is an ordinary
+source-specific application, with no Lean certification or originality
+assurance.
+
+The term $CQL$ in (LC185) pays the global source maximum over the
+remote circle. Its sharper angular payment below keeps the same source
+on the whole circle. This also lets the local comparison apply outside
+the complete exceptional union, rather than only on a disc chosen
+around a presumed source zero. The resulting reverse statement has
+an explicit window and resolution; it is not a location theorem for
+all complex Jensen roots.
+
+### A full-circle envelope for the unchanged source
+
+Let $T\ge32$, $Q=T+2$, $L=\log Q$ and $E_T=e^{-\pi T/4}$.
+For $|s-(1/2+iT)|\le1$ put $w=-i(s-1/2)$ and $t=w^2=\Phi(s)$.
+For $-\pi\le\theta\le\pi$, put
+$u=we^{i\theta/2}$, $x=|\Im u|$, $y=|\Re u|$ and
+$S=1/2+x+iy$.
+The even entire identity $F(u^2)=\Xi(u)/\xi_0$, conjugation and the
+functional equation give
+$|F(te^{i\theta})|=|\xi(S)|/\xi_0$.
+There is no global square-root branch in this identity.
+
+Here $|w-T|\le1$ and
+$|S|^2=|w|^2+x+1/4$, so $|S|=T+O(1)$ and $|S|<Q$.
+The real part $\sigma=1/2+x$ can grow with $T$; replacing the
+Gamma power's base by an unspecified comparable quantity would lose
+uniform constants. Retain $|S|$ until the explicit upper base $Q$
+is used.
+
+The same sectorial Stirling bound gives
+$|\Gamma(S/2)|\le C(|S|/2)^{\sigma/2-1/2}e^{-\pi y/4}$.
+Indeed its angular factor is
+$e^{-\sigma/2-\pi y/4+(y/2)\arctan(\sigma/y)}$, and
+$y\arctan(\sigma/y)\le\sigma$, including the limit $y=0$.
+The sector $|\arg(S/2)|\le\pi/2$ stays fixed.
+When $1/2\le\sigma\le2$, one has $y=T+O(1)$, so reuse (LC134)
+with summation length comparable to $T$ to bound $|\zeta(S)|\le C\sqrt Q$.
+When $\sigma\ge2$, use the Dirichlet-series constant instead.
+The explicit $S(S-1)\pi^{-S/2}$ factor then gives
+$|F(te^{i\theta})|\le CQ^{9/4+x/2}e^{-\pi y/4}$.
+
+Writing $w=a+ib$, one has
+$x\le1+(T+1)|\theta|/2$ and
+$T-y\le1+(T+1)\theta^2/8+|\theta|/2\le C+CQ|\theta|$.
+Thus the original source on its entire circle satisfies
+
+$$
+|F(te^{i\theta})|
+\le CE_TQ^4\exp(CQL|\theta|),
+\qquad -\pi\le\theta\le\pi.
+\tag{LC188}
+$$
+
+The Gamma attenuation is kept even on the remote arc; the positive
+angular growth is explicitly bounded rather than deleted.
+
+### A smaller all-distance threshold on the same source contour
+
+First keep the source-zero premise and target disc from (LC181)--(LC182),
+with $h=|\eta|$, $0<h<1/2$, and write
+$K_h=6+\log(3072/h)/\log2$, $B_h=1+\log(1/h)$.
+For a boundary point take the same $r_t=a_0Th/L^2$ as in (LC184),
+and put $\theta_0=r_t/(2|t|)\asymp h/(QL^2)$.
+Reuse the exact constant/linear subtraction and the local term in
+(LC177). On its remote arc the fixed kernel satisfies
+$|\mathcal K_n(\theta)|\le C\sqrt n e^{-c_0n\theta^2}$.
+Equation (LC188), divided by the independently obtained floor
+$cE_TV_T^{-K_h}$, bounds the unsubtracted source there by
+$CQ^4V_T^{K_h}e^{CQL|\theta|}$.
+The subtracted constant and derivative cost at most
+$C(1+|t|/r_t)$ relative to $|F(t)|$, using (LC184) and Cauchy.
+
+For $|\theta|\ge\theta_0$, the positive angular exponent is absorbed
+into half the Gaussian exponent whenever
+
+$$
+n\ge C_0Q^2L^3/h.
+\tag{LC189}
+$$
+
+Since $\log[Q^4+1+|t|/r_t]=O(L+\log(1/h)+\log L)$ is
+bounded by $CK_h\log V_T$, the full remote integral and the
+unchanged central term now give
+
+$$
+\frac{|\mathcal J_n(t)-F(t)|}{|F(t)|}
+\le\frac{CQ^2L^4}{nh^2}
++C\sqrt n\exp\!\left[
+-\frac{cnh^2}{Q^2L^4}+CK_h\log V_T\right],
+\quad s\in\partial D,\quad n\text{ satisfying (LC189)}.
+\tag{LC190}
+$$
+
+This uses the pre-maximum remote integral from (LC177), not a
+replacement of its constant $G(|t|)$ by a variable inside a finished
+inequality. The whole original circle and both subtraction terms
+remain included.
+
+Choose one sufficiently large universal $C_2$ and set
+
+$$
+\mathcal N_{\rm ang}(T,h)
+=\left\lceil C_2Q^2h^{-2}L^5B_h\right\rceil.
+\tag{LC191}
+$$
+
+This threshold meets (LC189) because its ratio to $Q^2L^3/h$ is
+$C_2h^{-1}L^2B_h$. For every $n\ge\mathcal N_{\rm ang}$,
+the central fraction is at most $C/(C_2LB_h)$.
+The remote factor decreases once $n\ge Q^2L^4/(2ch^2)$,
+also covered by the same choice of $C_2$.
+At the threshold its negative exponent has magnitude at least
+$cC_2LB_h$, while its remaining logarithmic cost is bounded by
+
+$$
+CK_h\log V_T+\tfrac12\log(2C_2)+L+\log(1/h)
++\tfrac52\log L+\tfrac12\log B_h+O(1).
+$$
+
+Use $K_h\log V_T=O(LB_h)$, $\log B_h\le B_h$, $Q\ge34$,
+and $0<h<1/2$. One universal increase of $C_2$ makes (LC190)
+strictly less than one for every allowed height, resolution and degree.
+This is uniform for arbitrarily small $h$, not a fixed-distance limit.
+
+The already established Rouché and defect-ledger application
+(LC187), using this smaller threshold, therefore gives conditionally
+on the same actual off-line source zero
+
+$$
+b_\Delta\le\mathcal N_{\rm ang}(T,|\eta|)-1,
+\qquad
+\Delta_n\ge2\quad(n\ge\mathcal N_{\rm ang}(T,|\eta|)).
+\tag{LC192}
+$$
+
+For fixed $A>0$ and $|\eta|\ge T^{-A}$ this sufficient degree is
+$O_A(T^{2+2A}(\log T)^6)$.
+The earlier thresholds (LC168) and (LC186) remain valid independently;
+no previous assumption or source is changed.
+
+### Extend the comparison outside the complete union
+
+For a two-way local statement remove the premise that a source zero
+is already present. Let $h\in(0,1/2)$ be a requested resolution and
+let $m_T$ count the actual nontrivial zeros with
+$|\Im\rho'-T|\le2$, with multiplicity. The same Euler anchor and
+reciprocal pole-count inequality in (LC180) give $m_T=O(L)$,
+including $m_T=0$.
+Set
+
+$$
+M_T=\max(1,m_T),\qquad d=h/(64M_T).
+\tag{LC193}
+$$
+
+Take Buck's complete exceptional union at scale $2$ and
+$\epsilon=h/3072$, add radius-$d$ discs about each distinct counted
+zero, and merge the complete union. Call it $U$ in the $s$ plane.
+Its total radii are at most $h/32$, also when the count is zero.
+For every $s\notin U$ with $|s-(1/2+iT)|\le3/4$, the same independently
+obtained Gamma/Buck floor and chosen clearance hold:
+
+$$
+|F(\Phi(s))|\ge cE_TV_T^{-K_h},\qquad
+\operatorname{dist}(s,\{\rho':|\Im\rho'-T|\le2\})\ge d
+\quad\text{if this set is nonempty}.
+\tag{LC194}
+$$
+
+On the $d/4$ neighborhood, every zero in Titchmarsh's local sum
+is still in this counted window: $3/4+d/4+1<2$. If $m_T=0$ its sum is empty and
+$|\zeta'/\zeta|=O(L)$. Otherwise use the same clearance estimate.
+In both cases $|\mathcal A'/\mathcal A+\zeta'/\zeta|\le CL^2/h$,
+and a fixed sufficiently small radius $ah/L^2$ is at most $d/4$.
+The local inverse and relative modulus argument of (LC184) applies
+unchanged. Equations (LC188)--(LC191) consequently give the strict
+relative error throughout this complement, with one universal constant
+chosen to cover both counts. The absence of a presumed target zero
+has not removed the independent floor.
+
+### Both functions' local zeros lie in the same small clusters
+
+Define the closed windows
+
+$$
+\begin{aligned}
+W(T,h)&=\{s:|s-(1/2+iT)|\le1/2,\ |\Re(s-1/2)|\ge h\},\\
+W^+(T,h)&=\{s:|s-(1/2+iT)|\le1/2+h/16,\
+                         |\Re(s-1/2)|\ge15h/16\}.
+\end{aligned}
+\tag{LC195}
+$$
+
+Select every merged disc in $U$ that meets $W(T,h)$; this choice is
+independent of $n$. Its radius is at most $h/32$, so its closure is
+within $h/16$ of any one intersection point. It lies in $W^+(T,h)$,
+inside the radius-one window, and avoids the critical line.
+Its entire boundary is outside $U$ and satisfies the strict comparison.
+Rouché gives equal zero counts of $\xi(s)/\xi_0$ and
+$\mathcal J_n(\Phi(s))$ on each selected disc for every
+$n\ge\mathcal N_{\rm ang}(T,h)$.
+No selected disc is required to contain a source zero beforehand.
+If it contains a polynomial zero, the equal positive count supplies
+an actual source zero there. In particular this also handles an
+empty local source count.
+
+Let $\nu_f(E)$ count zeros of $f$ with multiplicity. Every source zero
+in $W$ belongs to $U$ by the floor; every polynomial zero there
+belongs to $U$ by the strict error in its complement. Summing the
+equal counts on the disjoint selected discs yields
+
+$$
+\begin{aligned}
+\nu_{\mathcal J_n\circ\Phi}(W(T,h))
+ &\le\nu_\xi(W^+(T,h)),\\
+\nu_\xi(W(T,h))
+ &\le\nu_{\mathcal J_n\circ\Phi}(W^+(T,h)),
+\qquad n\ge\mathcal N_{\rm ang}(T,h).
+\end{aligned}
+\tag{LC196}
+$$
+
+More precisely each polynomial zero in $W$ shares its selected disc
+with a source zero at distance at most $h/16$, and conversely.
+These are multiplicity-preserving cluster counts, not a unique matching
+or a source-zero spacing statement. The high window makes $\Phi$
+injective with nonzero derivative, and its off-line discs have nonreal
+images. Thus they are actual original-$\mathcal J_n$ roots, not zeros
+of a changed source or only of a leading approximation.
+
+In particular, a separately certified absence of source zeros in $W^+$
+excludes polynomial zeros in $W$ for every degree meeting (LC191).
+It does not certify a numerical degree until the universal constants
+are instantiated. No existing verified zero-height range is extended.
+
+### How far this approaches the unpaid actual-node interval
+
+For each fixed $h>0$ in the allowed range,
+$T_n\to\infty$ with
+$T_n=o(\sqrt n/(\log n)^{5/2})$ eventually meets (LC191).
+For $h_n=T_n^{-A}$, fixed $A>0$, the sufficient relation is
+
+$$
+T_n^{2+2A}(\log T_n)^6=o(n).
+\tag{LC197}
+$$
+
+Thus there is two-way localization in specified growing windows,
+including their source and polynomial multiplicities. It still controls
+no arbitrarily thin band without its explicitly growing resolution cost.
+For fixed resolution its squared-frequency scale is
+$t=o(n/(\log n)^5)$, whereas the unpaid actual-node interval extends
+to $T_n^{\rm mov}\asymp n/\log n$. Those scales cannot be identified.
+
+To use (LC196) at a first defect birth, one would have to locate a
+nonreal zero of $\mathcal J_{b_\Delta+1}$ in a covered window with
+$b_\Delta+1\ge\mathcal N_{\rm ang}(T,h)$.
+The real-node witness (LC165) supplies neither this complex-root
+location nor its off-line distance $h$. At a real node the source
+floor can vanish, so the present strict relative error cannot be
+substituted for $\mathcal J_n'(t)\mathcal G_n(t)>0$.
+Growing real-cluster signed margins, the larger-height and thinner-band
+complex-root exclusions, initial-degree overlap, RH and strict Robin
+for every integer $H>5040$ remain open. This source application has
+no Lean or numerical-constant certificate and no originality claim.
+
+
+### Reuse the verified-height lower bound at the first source height
+
+The known finite-degree implication (VH) is already recorded in
+[the Jensen supplier](osullivan2021modifiedjensen.md#known-finite-degree-coverage-from-verified-zero-height).
+Its primary source is Griffin, Ono, Rolen, Thorner, Tripp and Wagner,
+[*Jensen polynomials for the Riemann xi-function*, arXiv:1910.01227v3](https://arxiv.org/abs/1910.01227v3),
+Theorem 1.2 at $m=0$, which the authors identify as Chasse's
+Theorem 1.8. Reuse that theorem, without another sector or
+real-root-preserver proof. Their coefficient convention (1.1)--(1.2)
+and $a_k=\Gamma_k/(\xi_0 k!)$ give exactly
+$\mathcal J_n(t)=\xi_0^{-1}J^{n,0}(-t/n)$.
+Thus their degree is this note's $n$, and their coefficient shift is zero.
+
+Conditionally on an actual off-line source zero, let $T_0\ge32$
+be the least positive ordinate of any such zero and choose one of
+its zeros $1/2-\eta_0+iT_0$, $0<|\eta_0|<1/2$.
+This minimum exists: source zeros are discrete, a bounded-height
+closed critical strip contains finitely many, and conjugation supplies
+a positive ordinate. The source has no real zero in the critical strip.
+Let $D=b_\Delta+1$ be the first nonhyperbolic zero-shift degree;
+(LC192) supplies its finiteness. For every $T<T_0$, the premise
+$\mathrm{RH}_0(T)$ of (VH) holds. Take $T$ sufficiently close to $T_0$
+from below that $\lfloor T\rfloor=\lceil T_0\rceil-1$.
+The already proved finite-degree implication and (LC192) then bracket
+that first degree:
+
+$$
+(\lceil T_0\rceil-1)^2<D=b_\Delta+1
+\le\mathcal N_{\rm ang}(T_0,|\eta_0|).
+\tag{LC198}
+$$
+
+The lower inequality is the published (VH) applied to the unchanged
+source; only its pairing with the angular upper bound is made here.
+It cannot be attached to an arbitrary later off-line zero. Equivalently,
+a nonhyperbolic degree $D$ forces an off-line source zero of height at
+most $\lceil\sqrt D\rceil$, by the contrapositive of (VH).
+These degree--height implications still give neither the location nor
+the distance from the critical line of a particular nonreal polynomial
+root. They do not meet the first-birth window and resolution obligation
+following (LC197).
+
+### A published adjacent-row interface, without a new sign estimate
+
+A further reusable supplier is Alexandre Dumas,
+[*Adjacent-Shift Proper Position for Jensen Polynomials*, Zenodo v1.1](https://doi.org/10.5281/zenodo.22897068),
+Theorem 2.3, a preprint. Its published hyperbolicity--proper-position
+interface is used here only with its original positive-sequence
+hypotheses; it is not a new structural theorem or a Lean result.
+Put $c_k=k!a_k=\Gamma_k/\xi_0>0$ and use the supplier's notation
+$J_c^{d,m}(x)=\sum_{k=0}^d\binom dk c_{m+k}x^k$.
+For $P_n=J_c^{n,0}$, $Q_n=J_c^{n,1}$ and $R_n=J_c^{n+1,0}$,
+the parameter map is exactly
+
+$$
+P_n(-t/n)=\mathcal J_n(t),\qquad
+Q_n(-t/n)=-\mathcal G_n(t),\qquad
+R_n=P_n+xQ_n.
+$$
+
+With the supplier's oriented Wronskian $W[P,Q]=P'Q-PQ'$, this gives
+
+$$
+W[P_n,Q_n](-t/n)
+=n\bigl(\mathcal J_n'(t)\mathcal G_n(t)
+       -\mathcal J_n(t)\mathcal G_n'(t)\bigr).
+$$
+
+Theorem 2.3 states that $R_n$ is hyperbolic if and only if $P_n,Q_n$
+are hyperbolic and $W[P_n,Q_n]\ge0$ on the entire real axis.
+If $R_n$ has $n+1$ distinct real roots, its strict version gives
+$\mathcal J_n'(t)\mathcal G_n(t)>0$ at every actual positive
+$\mathcal J_n$ node. With only hyperbolicity, it supplies a weak sign;
+repeated roots and common zeros cannot be discarded. The verified-height
+input therefore already gives this weak actual-node sign when
+$n+1\le9\cdot10^{24}$, without adding an all-degree statement.
+Source-zero simplicity is not a certificate of Jensen-root simplicity.
+
+The supplier's Theorem 5.1 expresses the global Wronskian sign as a
+positive-semidefinite Gram representation, assuming both rows are
+hyperbolic. Neither that equivalence nor the adjacent-shift transfer
+constructs the required Gram matrices for all zero-shift degrees.
+A strict source-specific joint margin in the unpaid moving real band
+remains the missing estimate. Reusing this interface changes its
+formulation, without reducing that gap or proving RH or strict Robin.
