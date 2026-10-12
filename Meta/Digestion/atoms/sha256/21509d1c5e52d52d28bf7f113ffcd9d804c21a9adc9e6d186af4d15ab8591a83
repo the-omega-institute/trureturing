@@ -1,0 +1,46 @@
+**假设 25.6（能量和钟读口的外部几何比较域）。** 若将定理 25.3 的负交叉项与连续力比较，另行供应 Euclidean 三维空间、$G>0$、质量密度及物理单位。一个足够的静态数学域是 $\rho\in C_c^\infty(\mathbb R^3)$、非负，$\Phi$ 在无穷远趋零，$\int|\nabla\Phi|^2<\infty$，并采用
+
+$$
+\mathcal I[\Phi;\rho]=\frac1{8\pi G}\int|\nabla\Phi|^2\,d^3x+\int\rho\Phi\,d^3x,
+\qquad \Delta\Phi=4\pi G\rho.
+$$
+
+$\Phi$ 的单位为速度平方，$G$、$\rho$ 分别取通常的引力常数和质量密度单位，两个积分均为能量。取紧支撑变分及无穷远条件后，正算子是 $-\Delta/(4\pi G)$；其源符号对应定义 25.1 的 $+q u$。这是 [Tong §5.1.2 的 Newtonian 极限](../../../Library/Geometry/tong2021general.md)中另行选入的 Poisson 模型，不由图推导。用其衰减 Green 核，两份平滑紧支撑源的有限交叉积分为
+
+$$
+U_{\rm cross}=-G\iint\frac{\rho_1(\mathbf x)\rho_3(\mathbf y)}{|\mathbf x-\mathbf y|}\,d^3x\,d^3y.
+$$
+
+理想点源只能另取互作用部分，排除各自发散自能；对不同位置的正质量 $M_1,M_3$、实际距离 $R>0$，$U_{\rm cross}=-GM_1M_3/R$ 才给 $F_R=-\partial_RU=-GM_1M_3/R^2$。本图没有提供这个距离核，因此 $J_U<0$ 自身不推出吸引力。作为 GR 弱场解释还需 $|\Phi|/c^2\ll1$、缓慢且低压物质及相应边界条件；完整应力与几何耦合仍属假设 24.6 的另给合同。
+
+钟率的经典反比较直接用 [Tong §1.2.4 式 (1.26)](../../../Library/Geometry/tong2021general.md)：取 $c=1$、$a>0$、右楔 $1+ax>0$ 及未来定向 $dt>0$，
+
+$$
+T=(a^{-1}+x)\sinh(at),\quad X=(a^{-1}+x)\cosh(at),\qquad
+ds^2=-dT^2+dX^2=-(1+ax)^2dt^2+dx^2.
+$$
+
+这是平直空间的加速坐标，曲率零，固定 $x$ 的 $d\tau=(1+ax)dt$；离开该正楔，必须使用绝对 lapse 并另定时间方向，不能延用正率式。这里采用 $-+$ 签名，与假设 24.6 的 $+-$ 场约定不同。非均匀钟率不单独识别曲率或物质源。
+
+再以 [Will，PPN Box 2、§4.1.1 式 (59)–(60)](../../../Library/Geometry/will2014confrontation.md)作同一读口限制的经典参照。独立给 $3+1$ 维静态各向同性候选度规、$-+++$ 签名，$\Phi=-GM/r$，$G,M,c>0$，固定有限实 $\gamma$，在外部弱场区声明
+
+$$
+ds^2=-[1+2\Phi/c^2+O(\Phi^2/c^4)]c^2dt^2
++[1-2\gamma\Phi/c^2+O(\Phi^2/c^4)]d\mathbf x^2.
+$$
+
+取在所用外部路径上一致受控的光滑高阶项及其所需导数，并要求 $|\Phi|/c^2\ll1$、$|\gamma\Phi|/c^2\ll1$；各时间、空间系数保持正以维持该签名。静止 lapse 在一阶同为 $1+\Phi/c^2$，慢粒子在领先低速、弱场阶有 $\ddot{\mathbf x}=-\nabla\Phi$，不声称高阶运动相同。光学折射率却为
+
+$$
+n_\gamma=1-(1+\gamma)\Phi/c^2+O(\Phi^2/c^4).
+$$
+
+对源与观察者均在渐近无穷远、冲击参数 $b_{\rm imp}>0$、整条散射路径留在外部弱场区的光线，令 $\eta=GM/(b_{\rm imp}c^2)\ll1$ 且 $|\gamma|\eta\ll1$，引文的渐近端点特例给向内为正的偏折
+
+$$
+\delta\theta=2(1+\gamma)\eta+O(\eta^2),\qquad
+|\delta\theta|=2|1+\gamma|\eta+O(\eta^2).
+$$
+
+有限观察者应保留所引式 (59) 的几何因子；$\gamma=-1$ 时领先项为零。$\gamma=0,1$ 分别给 $2\eta,4\eta$ 的领先项，却有相同领先钟率与慢粒子落体。任意 $\gamma$ 的度规族未被声明满足同一 Einstein–物质方程。这些经典比较只列明图源、标量能量、探针相位和时空输运之间尚需供应的对象与操作；五态标签、共同场的交叉项或三均值都没有自动生成该几何。
+

@@ -1,0 +1,29 @@
+**定义 7.1（四种编码及其共同来源）。** 沿用定义 1.1 的原生列表标签。另取非负整数指数 $a=(a_2,a_3,a_5,a_7)$，指定数值编码
+
+$$
+N(a)=2^{a_2}3^{a_3}5^{a_5}7^{a_7},\qquad
+M a=(a_2+a_7,a_3,a_5+a_7)=(u,v,w),\qquad
+S(a)=2a_2+3a_3+5a_5+7a_7.
+$$
+
+这里 $7$ 是编码所用素数；列表 $[2,5]$ 的加性值也是 $7$，但列表、素数、指数不是同一对象。由[《Fibonacci 原子关系生成》定理 58.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md)及[《kappa 荷、指数纤维与黄金范数读出》Q1、Q3–Q7](AURIC_FIB_ATOM_KAPPA_CHARGE_EXPONENT_FIBERS_AND_GOLDEN_NORM_READOUT.md)，固定 $Ma$ 后指数为 $(u-k,v,w-k,k)$，$k\in\mathbb Z\cap[0,\min(u,w)]$，且 $\ker M=\mathbb Z(-1,0,-1,1)$。这不是 $S$ 的核：$S=(2,3,5)M$，而 $(3,-2,0,0)\in\ker S\setminus\ker M$。
+
+给定总槽数 $m\ge1$，只允许 $\sum_j a_j\le m$，将指数解释成四种非空模式的出现次数，并补空槽
+
+$$
+n=(n_0,n_1,n_2,n_3,n_{13})
+=(m-\textstyle\sum_j a_j,a_2,a_3,a_5,a_7),\qquad p=n/m.
+$$
+
+这是一份声明的计数来源，不从整数 $N(a)$ 自动生成有序原生历史。[《观察者与算术关系》A-3.1–A-3.3](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md)供应固定总数计数纤维。其在此字典下给出
+
+$$
+\begin{aligned}
+n(k)&=(m-u-v-w+k,u-k,v,w-k,k),\\
+\max(0,u+v+w-m)&\le k\le\min(u,w),\qquad k\in\mathbb Z,\\
+(X,Z,Y)&=(u/m,v/m,w/m),\qquad \kappa=k/m.
+\end{aligned}
+$$
+
+整数区间非空恰要求 $u,v,w\ge0$、$u+v\le m$、$w+v\le m$。若另设指数盒 $0\le a_j\le A_j$，还须 $0\le v\le A_3$，并把下界换为 $\max(0,u+v+w-m,u-A_2,w-A_5)$、上界换为 $\min(u,w,A_7)$。非空时格点数为上界减下界加一。总槽数零仅给零计数，不能除以零归一化。
+

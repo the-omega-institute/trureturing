@@ -1,0 +1,25 @@
+**定理 26.6（单位特化的共同律消费者）。** 取定义 26.2 的五条边和三个
+控制都为一，并使用定理 25.3 已拥有的同一单边界矩阵与单位标定，不重新
+复制其逆矩阵。直接的标量核值为
+$$
+\det K_s=(4,7,8,7,12),\qquad
+(r_0,r_1,r_2,r_3,r_{13})=(\tfrac14,\tfrac17,\tfrac14,\tfrac17,\tfrac1{12}).
+$$
+故
+$$
+\Gamma=\tfrac1{21}.
+$$
+两份同一五态占据均值
+$(X,Y,Z)=(\tfrac12,\tfrac12,0)$ 的合法律
+$$
+p^{A}=\tfrac12\delta_{\varnothing}+\tfrac12\delta_{13},\qquad
+p^{B}=\tfrac12\delta_1+\tfrac12\delta_3
+$$
+有 $\kappa_A=\tfrac12$、$\kappa_B=0$，却给出
+$$
+C_A-C_B=\frac{\vartheta}{42}.
+$$
+因此同一共享测度、图、噪声和控制下，交叉矩是占位纤维的真实消费者；
+它不是把定理 25.3 的 singleton-boundary source-summary collision 重新声明
+为另一份矩阵定理。
+
