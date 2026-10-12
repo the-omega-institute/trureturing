@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.List.Cycle, mathlib/module/Mathlib.Data.List.NodupEquivFin]
    utility: none
@@ -10,7 +10,7 @@ import Mathlib.Data.List.NodupEquivFin
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.PrefixReversalInsertionLayerPartition
+namespace D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 
 open D5.S3.Combinatorics.CircularWords.CircularDeletionTransport
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
@@ -286,4 +286,4 @@ noncomputable def insertionLayerEquiv {m : ℕ} {S : Finset (Fin (m + 1))}
 #print axioms insertionLayer_partition
 #print axioms insertionLayerEquiv
 
-end D5.S3.Combinatorics.Graph.PrefixReversalInsertionLayerPartition
+end D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition

@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.PrefixReversal;
 
-internal sealed class PrefixReversalInsertionLayerPartitionDocument : IScribeDocumentDefinition
+internal sealed class InsertionLayerPartitionDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/PrefixReversalInsertionLayerPartition.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/PrefixReversal/InsertionLayerPartition.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Over a directed base distinct from its reverse, every actual configuration in the complete insertion layer belongs to exactly one independently specified positive directed child domain.",
