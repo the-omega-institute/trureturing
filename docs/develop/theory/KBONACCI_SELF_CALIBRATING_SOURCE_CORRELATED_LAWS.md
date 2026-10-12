@@ -3781,3 +3781,459 @@ are positive, have integral one, and have derivative of absolute value at most o
 The compactness used inside individual regular classes in Theorem 68.4 is the mature Arzelà--Ascoli input with its stated hypotheses. The quantitative averaging estimate (68.12), its finite-block tail consequence (68.10), and the resulting fixed-range supplier and its original-target correspondence are repository-relative deductions; no literature-priority claim is made. The established lower-envelope reference [Galves, Garcia, Löcherbach and Orlandi, Kalikow-type decomposition for multicolor infinite range particle systems, Theorem 1, equations (9)--(16)](https://arxiv.org/html/1008.2740v3) assumes a Borel color space, a finite reference measure, bounded integrated change rates and the uniform integrated rate-continuity condition (9). The static-source range condition here requires neither those rate data nor that uniformity over sources, and no particle-system conclusion is applied. [Gallo, Lerasle and Takahashi, Markov approximation of chains of infinite order in the bar-d metric, Definition 3.1 and Lemma 3.1](https://arxiv.org/html/1107.4353v2) treats countable-alphabet conditional pasts and range partitions; its stationary-chain conclusions are likewise not applied. The metric refinement, lossless likelihood range and acquisition realization are reused from Sections 54, 59 and 46.4, respectively. Condition (62.3) and the finite-dimensional and common-anchor suppliers of Sections 64 and 66 remain distinct reused results. TV compactness alone supplies no replacement for (68.2), as the already published 46.5 and 53.1 show.
 
 ## 追加锚（本行以下为增补区）
+
+## 69. A uniform calibration modulus and the cost of carrying it to the source
+
+A selected law can have cylinder common-submeasure masses tending to one along
+each individual source branch without one depth sufficing for all branches.
+Uniform order calibration adds this common depth requirement; summability adds
+an expected-query bound.
+
+**Definition 69.1 (Uniform order-calibration modulus).** Let $Q$ be a nonempty
+countable subset of $\{0,1\}^{\mathbb N_{>0}}$, with occupied prefix neighborhoods
+
+$$
+U_m(q)=\{q'\in Q:q'_i=q_i\ (1\le i\le m)\},
+\qquad m\in\mathbb N_0,
+\qquad U_0(q)=Q.
+$$
+
+At each fixed depth these sets form a clopen partition of $Q$, and
+$U_{m+1}(q)\subseteq U_m(q)$. Let $(\Theta,\mathcal F,\sigma)$ be a nonempty
+probability carrier, let $\mathcal G\subseteq\mathcal F$ be a sigma algebra, and
+choose finite nonnegative $\mathcal G$-measurable representatives of density
+classes satisfying
+
+$$
+g_q\ge0,
+\qquad
+\int g_q\,d\sigma=1
+\qquad(q\in Q).
+\tag{69.1}
+$$
+
+The law $g_q\sigma$ is on the entire $\mathcal F$. For each $q$ and $m$ put
+
+$$
+\underline g_m(q)(\theta)=\inf_{q'\in U_m(q)}g_{q'}(\theta),
+\qquad
+a_m(q)=\int\underline g_m(q)\,d\sigma,
+\tag{69.2}
+$$
+
+and define the uniform calibration modulus
+
+$$
+\boxed{
+\Omega_g(m)=\sup_{q\in Q}\bigl(1-a_m(q)\bigr).
+}
+\tag{69.3}
+$$
+
+The infimum is measurable because $Q$ is countable. It lies between zero and
+$g_q$, so $0\le a_m(q)\le1$. The measure $\underline g_m(q)\sigma$ is the
+greatest common submeasure of the selected laws
+$\{g_{q'}\sigma:q'\in U_m(q)\}$. Indeed any common submeasure is absolutely
+continuous with respect to $\sigma$, and its Radon--Nikodym density is at most
+each of the countably many $g_{q'}$ off a single null set, hence at most their
+infimum. We call $g$ uniformly order-calibrated when $\Omega_g(m)\to0$.
+
+Changing representatives for the countable family changes them only on a
+countable union of measurable $\sigma$-null sets. Off that one set every
+infimum in (69.2) is unchanged, simultaneously for all $q,m$. Thus (69.2)--(69.3)
+are representative independent. The same convention applies to countably many
+families and their limits below.
+
+**Theorem 69.2 (Uniform modulus gives a uniform original-source query bound).**
+For the original-source application retain the entire labeled source, zero
+advice, target laws and consumer of Definition 59.1, namely
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+       \ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad \Omega(r,g)=\omega(N(r,g)),\qquad\beta_0=0.
+\end{aligned}
+$$
+
+Here $\omega$ counts distinct prime divisors; $\Omega_g$ in (69.3) is a separate
+quantity. Enumerate the actual primes as $p_1<p_2<\cdots$, put
+$[x]_i=\mathbf1_{p_i\mid N(x)}$, and take exactly $Q=\{[x]:x\in X\}$, without
+additional limit signatures. Then
+
+$$
+C_m(x)=\{y\in X:[y]\in U_m([x])\},\qquad C_0(x)=X.
+$$
+
+Use the original nonempty measurable tape carrier $(\Theta,\mathcal F)$ and
+its target mixture $\sigma=\sum_{i\ge1}2^{-i}\mu_{x_i}$ and likelihood sigma
+algebra $\mathcal G$ of (59.2), with $X$ enumerated without repetitions. Let $g$
+be a family of Definition 69.1 for these data, and set
+$\lambda_x=g_{[x]}\sigma$. The mixture is a tape probability, not a supplied
+source sampling law. All labels remain in $C_m(x)$, even when equal
+signatures have distinct original targets $\mu_x$.
+
+Assume the measurable common-rule semantics of Definitions 40.1 and 45.1:
+a preparation uses one source-independent seed probability space and fixed
+cylinder tables, observes only actual prime-divisibility answers with zero
+advice, and has measurable finite records and output-event preimages. The seed
+may be the countable probability product of original-tape coordinates and an
+independent uniform variable used in Theorem 46.4. After handoff the unchanged
+consumer receives only the declared original tape and runs on the same static
+source. No effective evaluation of the fixed tables or sampling from a single
+real seed is assumed.
+
+The masses $a_m(q)$ are nondecreasing in $m$, and $\Omega_g(m)$ is
+nonincreasing. If $a_m([x])\uparrow1$ at every actual $x$, the positive-increment
+realization of Theorem 46.4 acquires exactly $(\lambda_x)$ with sourcewise
+almost-sure finite handoff. Its handoff depth $N_x$, counting actual prefix
+queries and allowing depth zero, has the exact tail
+$\mathsf P\{N_x>m\}=1-a_m([x])$.
+In particular, uniform order calibration implies
+
+$$
+\boxed{
+\sup_{x\in X}\mathsf P\{N_x>m\}=\Omega_g(m).
+}
+\tag{69.4}
+$$
+
+If $\sum_{m\ge0}\Omega_g(m)<\infty$, then
+
+$$
+\boxed{
+\sup_{x\in X}\mathbb E[N_x]
+\le \sum_{m\ge0}\Omega_g(m)<\infty.
+}
+\tag{69.5}
+$$
+
+If $\Omega_g(m_0)=0$, this realization hands off by depth $m_0$ almost surely
+at every source.
+
+**Proof.** Refining a prefix neighborhood removes candidate signatures, so its
+pointwise infimum increases. This proves both monotonicity statements. The
+signature-cylinder correspondence gives the greatest common submeasure
+$\ell_C$ of $(\lambda_y)_{y\in C}$ and, at $C=C_m(x)$, gives
+
+$$
+\ell_C=\underline g_m([x])\sigma,
+\qquad a_C:=\ell_C(\Theta)=a_m([x])
+\ge1-\Omega_g(m).
+\tag{69.6}
+$$
+
+Index each occupied node by its depth and finite prime-answer word, so equal
+source sets at different depths remain distinct nodes. Give the depth-zero root
+$X$ a fictitious parent with zero submeasure. At each occupied non-root node put
+$\Delta_C=\ell_C-\ell_{C^-}$, and put
+$\Delta_X=\ell_X$. These are positive original-tape measures. For positive
+mass $d_C=\Delta_C(\Theta)$, preload a coordinate $W_C$ with probability law
+$\Delta_C/d_C$; for zero mass use the point-evaluation probability at one fixed
+original tape. There are countably many nodes, so these coordinates and an
+independent $U$ uniform on $(0,1)$ form one common product seed.
+
+At a reached node $C$, hand over $W_C$ if $U<a_C$; otherwise query the next
+actual prime. Reaching a non-root node implies $U\ge a_{C^-}$, so for every
+$A\in\mathcal F$ the unconditional node-output measure is
+
+$$
+\mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}=\Delta_C(A),
+$$
+
+with root lower threshold zero; a zero-mass node has an empty output interval.
+The measures telescope along source $x$ through depth $m$ to $\ell_{C_m(x)}$.
+They are dominated by $\lambda_x$, and if their masses tend to one their limit
+is exactly $\lambda_x$. Finite records and output-event preimages are measurable
+interval and coordinate events, or countable unions of them. Thus the
+construction meets the stated handoff hypotheses on the original carrier.
+
+Define $N_x=\infty$ on a branch with no handoff. No handoff through depth $m$
+is equivalent to $U\ge a_{C_m(x)}$, including the root test before any query.
+Hence $\mathsf P\{N_x>m\}=1-a_m([x])$. Any endpoint ambiguities can be
+removed on the single seed-null union of $\{U=a_C\}$ over the countably many
+nodes. Surjectivity of $x\mapsto[x]$ onto the actual $Q$ gives (69.4).
+For a nonnegative integer-valued depth, with the extended value $\infty$ allowed,
+Tonelli's tail-sum identity gives
+
+$$
+\mathbb E[N_x]=\sum_{m\ge0}\mathsf P\{N_x>m\}.
+\tag{69.7}
+$$
+
+Bounding each term by $\Omega_g(m)$ proves (69.5); no exchange of supremum
+and sum as an equality is needed. Zero deficit at $m_0$ gives the final
+assertion. These are query-depth bounds for this specified realization, rather
+than bounds on all preparation transitions or on every possible preparation.
+$\square$
+
+Theorem 68.2 gives $a_m(q)\uparrow1$ separately at every $q$ for continuous
+selections into a locally order-controlled fixed range. Its depth can depend
+on $q$ and the tolerance. Uniform order calibration requires one depth for all
+$q$ at a given tolerance, and (69.5) additionally requires a summable modulus.
+Neither a uniform tail decay nor a finite uniform expected depth follows from
+the local block hypotheses of Section 68 alone.
+
+**Theorem 69.3 (Uniform density stability and shared-modulus $L^1$ closure).**
+Let $g$ and $h$ be two families of Definition 69.1. If $\delta\ge0$ satisfies
+
+$$
+|g_q(\theta)-h_q(\theta)|\le\delta
+\quad\text{for every }q\in Q\text{ and }\sigma\text{-almost every }\theta,
+\tag{69.8}
+$$
+
+then for every $m$
+
+$$
+\boxed{
+\Omega_h(m)\le\Omega_g(m)+\delta.
+}
+\tag{69.9}
+$$
+
+In particular, let $g^{(r)}$, $r\in\mathbb N_0$, and $g$ be families of
+Definition 69.1. Suppose
+
+$$
+\sup_{q\in Q}\|g^{(r)}_q-g_q\|_\infty\longrightarrow0,
+\tag{69.10}
+$$
+
+and one nonincreasing sequence $\varpi:\mathbb N_0\to[0,1]$, tending to zero,
+bounds every stage:
+
+$$
+\Omega_{g^{(r)}}(m)\le\varpi(m)
+\qquad(r,m\ge0).
+\tag{69.11}
+$$
+
+Then $\Omega_g(m)\le\varpi(m)$ for every $m$. The same conclusion holds under
+the weaker convergence hypothesis
+$\|g^{(r)}_q-g_q\|_1\to0$ for every fixed $q\in Q$, with (69.11) retained;
+no uniformity in $q$ is required for this $L^1$ closure.
+Under the original-source and handoff hypotheses of Theorem 69.2, this gives its
+common tail bound, and a summable $\varpi$ gives the common expected-depth bound
+$\sup_x\mathbb E[N_x]\le\sum_m\varpi(m)$.
+
+**Proof.** For (69.8), take the union of the exceptional null sets over the
+countable $Q$. On its complement all coordinate inequalities hold together,
+so for every $q,m$
+
+$$
+\inf_{q'\in U_m(q)}h_{q'}(\theta)
+\ge\inf_{q'\in U_m(q)}g_{q'}(\theta)-\delta.
+\tag{69.12}
+$$
+
+Integrating and using $\sigma(\Theta)=1$ gives
+$a_m^h(q)\ge a_m^g(q)-\delta$. Taking the supremum of the deficits proves
+(69.9). For (69.10), apply it with
+$\delta_r=\sup_q\|g^{(r)}_q-g_q\|_\infty$ for all sufficiently large $r$,
+when this supremum is finite, and let $r\to\infty$ in (69.11).
+The essential-supremum bounds hold simultaneously outside the union of their
+null sets over the countable pairs $(r,q)$.
+
+For coordinatewise $L^1$ convergence fix $q,m$, and exhaust $U_m(q)$ by
+increasing finite nonempty sets $F_k$ containing $q$; if the neighborhood is
+finite, keep $F_k=U_m(q)$ after its last element. Put
+
+$$
+b_k^{(r)}=\min_{q'\in F_k}g^{(r)}_{q'},\qquad
+b_k=\min_{q'\in F_k}g_{q'}.
+$$
+
+The elementary finite-minimum inequality gives
+
+$$
+\|b_k^{(r)}-b_k\|_1
+\le\sum_{q'\in F_k}\|g^{(r)}_{q'}-g_{q'}\|_1\longrightarrow0
+\qquad\text{for each fixed }k.
+$$
+
+Since $b_k^{(r)}\ge\underline g_m^{(r)}(q)$, (69.11) implies
+$\int b_k^{(r)}\,d\sigma\ge1-\varpi(m)$ for every $r$. Taking $r\to\infty$
+first yields $\int b_k\,d\sigma\ge1-\varpi(m)$. Then
+$b_k\downarrow\underline g_m(q)$ and $0\le b_k\le g_q$, with $g_q$ integrable.
+Dominated convergence gives $a_m^g(q)\ge1-\varpi(m)$. Taking the supremum of
+the deficits over $q$ proves $\Omega_g(m)\le\varpi(m)$. Representatives of all
+$g^{(r)}_q$ and $g_q$ can be changed only on one null union over $(r,q)$, so
+every finite and countable infimum in this proof has the same integral for all
+such choices. Finally apply Theorem 69.2 with its stated source hypotheses.
+$\square$
+
+A shared modulus thus survives coordinatewise $L^1$ convergence. Uniform
+$L^\infty$ control also supplies the perturbation estimate (69.9) without a
+shared modulus; $L^1$ or TV convergence alone supplies no corresponding
+uniform order-calibration guarantee.
+
+**Theorem 69.4 (Loss under uniform $L^1$ convergence without a shared modulus).**
+There are a countable binary prefix space $Q$, a probability carrier
+$([0,1],\mathcal B,\lambda)$ and density families $g^{(N)}$ converging uniformly
+in $q$ in $L^1(\lambda)$ to $g$ such that
+
+$$
+\Omega_{g^{(N)}}(m)=0\text{ for all sufficiently large }m
+\quad\text{for each }N\ge1,
+\tag{69.13}
+$$
+
+but
+
+$$
+\boxed{\Omega_g(m)=1\quad\text{for every }m\in\mathbb N_0.}
+\tag{69.14}
+$$
+
+There is no single decaying modulus bounding all $\Omega_{g^{(N)}}$.
+This is an abstract prefix-space counterexample, not an additional target
+family prescribed on the original $X$.
+
+**Proof.** For each integer $r\ge2$, partition $[0,1)$ into its $r$ half-open
+intervals of length $1/r$, and enumerate all these intervals as
+$A_1,A_2,\ldots$ in increasing blocks of $r$. Their measures
+$\alpha_n=\lambda(A_n)$ tend to zero, while every point of $[0,1)$ belongs to
+infinitely many $A_n$. Put
+
+$$
+h_n=\frac{\mathbf1_{A_n^c}}{1-\alpha_n},\qquad n\ge1,
+\tag{69.15}
+$$
+
+with complements taken in $[0,1]$. Each $h_n$ is a probability density, and
+
+$$
+\|h_n-1\|_1=2\alpha_n\longrightarrow0.
+\tag{69.16}
+$$
+
+Let $q_\ast=0^\infty$, $q_n=0^n10^\infty$ for $n\ge1$, and
+$Q=\{q_\ast,q_1,q_2,\ldots\}$. With coordinates indexed from one, the first
+$1$ of $q_n$ is at coordinate $n+1$. Its genuine depth-$m$ neighborhoods are
+
+$$
+U_m(q_\ast)=\{q_\ast\}\cup\{q_n:n\ge1,\ n\ge m\},
+\qquad
+U_m(q_n)=
+\begin{cases}
+\{q_n\},&n<m,\\
+U_m(q_\ast),&n\ge m.
+\end{cases}
+\tag{69.17}
+$$
+
+For each fixed $m$, the singleton sets with $1\le n<m$ and the one remaining
+tail set form the clopen prefix partition. At $m=0$ every neighborhood is
+$Q$; at $m=1$ it is still $Q$, since all first coordinates are zero.
+
+Take $\mathcal G=\mathcal B$, set $g_{q_\ast}=1$, $g_{q_n}=h_n$, and for
+$N\ge1$ set
+
+$$
+g^{(N)}_{q_\ast}=1,
+\qquad
+g^{(N)}_{q_n}=\begin{cases}h_n,&n\le N,\\1,&n>N.\end{cases}
+\tag{69.18}
+$$
+
+Because $\alpha_n\to0$,
+
+$$
+\sup_{q\in Q}\|g^{(N)}_q-g_q\|_1
+\le2\sup_{n>N}\alpha_n\longrightarrow0.
+\tag{69.19}
+$$
+
+For fixed $N$, the tail neighborhood contains only unit densities once $m>N$,
+and the remaining singleton cylinders have common mass one. Therefore
+$\Omega_{g^{(N)}}(m)=0$ for $m>N$.
+
+In the limit, every $t\in[0,1)$ belongs to infinitely many $A_n$, hence for
+every $m$ some $n\ge\max\{1,m\}$ has $h_n(t)=0$. Thus
+$\underline g_m(q_\ast)=0$ on $[0,1)$ and $a_m(q_\ast)=0$, proving (69.14).
+The endpoint $1$ is null. Changing representatives adds only a single null
+union over the countably many densities and stages and leaves this calculation
+unchanged.
+
+For any fixed $m$, choose a partition block whose every index is at least
+$\max\{1,m\}$, and choose $N$ at its last index. At that finite stage the
+corresponding $h_n$ vanish collectively on all of $[0,1)$ inside
+$U_m(q_\ast)$, so $\Omega_{g^{(N)}}(m)=1$. Consequently
+$\sup_N\Omega_{g^{(N)}}(m)=1$ for each $m$, excluding any shared decaying
+modulus. $\square$
+
+Each finite stage has an exact cutoff and converges uniformly in TV to the
+limit, but its cutoff depends on the stage. This failure does not contradict
+Theorem 69.3, whose common bound (69.11) is absent. The local range conditions of
+Section 68 are sufficient for sourcewise acquisition of continuous selections;
+they do not replace a shared uniform or summable cost modulus.
+
+**Corollary 69.5 (A calibration ladder with a retained expected-query bound).**
+Use exactly the original-source, signature-cylinder and measurable handoff data
+of Theorem 69.2. Let $P_{\mathcal R}$ be the density range of (68.8) for one
+fixed supplied law range $\mathcal R$ of Theorem 68.5. For each $r\ge0$ let
+$g^{(r)}:Q\to P_{\mathcal R}$ satisfy, for $\eta_r\in[0,1]$,
+
+$$
+\operatorname{TV}(g^{(r)}_q\sigma,\mu_y)\le\eta_r
+\quad(y\in X,\ [y]=q),
+\qquad\eta_r\to\eta.
+\tag{69.20}
+$$
+
+Assume coordinatewise $L^1(\sigma)$ convergence to $g$, and (69.11) for one
+summable nonincreasing $\varpi$ tending to zero. If the fixed law range
+$\mathcal R$ is closed in TV, as supplied by Theorem 68.4, then
+$g_q\in P_{\mathcal R}$, the limit satisfies the original target cap $\eta$,
+and it has a lawful original-tape realization with
+
+$$
+\sup_{x\in X}\mathbb E[N_x]\le\sum_{m\ge0}\varpi(m).
+\tag{69.21}
+$$
+
+**Proof.** The isometric image of the complete space
+$L^1(\sigma|_{\mathcal G})$ is closed in $L^1(\sigma)$, and its nonnegative
+integral-one subset is closed, as in Theorem 59.2. Thus each fixed $q$ has a
+nonnegative $\mathcal G$-measurable limit representative of integral one.
+The equality
+$\operatorname{TV}(g^{(r)}_q\sigma,g_q\sigma)
+=\tfrac12\|g^{(r)}_q-g_q\|_1$ shows that its law is the TV limit of elements
+of the one closed range $\mathcal R$, so $g_q\in P_{\mathcal R}$.
+For each original label $y$ with $[y]=q$,
+
+$$
+\operatorname{TV}(g_q\sigma,\mu_y)
+\le\tfrac12\|g_q-g^{(r)}_q\|_1+\eta_r.
+$$
+
+Letting $r\to\infty$ gives the cap $\eta$ at every label, including all
+labels sharing a signature. The coordinatewise $L^1$ part of Theorem 69.3
+preserves (69.11); Theorem 69.2 then realizes exactly these limit laws on the
+original tapes with the same static source and consumer, and proves (69.21).
+Neither coordinatewise convergence nor closedness asserts an effective method
+for selecting laws or evaluating their cylinder infima. $\square$
+
+Closedness of the one fixed range gives the range-membership conclusion in this
+ladder; varying ranges require a separate condition placing the limit laws in
+the declared limit range. Pointwise cylinder exhaustion gives sourcewise
+almost-sure handoff by Theorem 69.2, whereas a shared decaying modulus
+and its summability give the respective uniform tail and expected-query bounds.
+Theorem 68.5 alone supplies no such quantitative modulus. Without (69.11), even
+uniform $L^1$ convergence and a finite cutoff at each stage do not preserve the
+order conclusion, as Theorem 69.4 shows. With (69.11), coordinatewise $L^1$
+convergence suffices.
+
+The mature inputs are Radon--Nikodym domination and the countable probability
+product on arbitrary measurable carriers, reused with their precise hypotheses
+from Theorem 46.4, together with dominated convergence and Tonelli's theorem.
+The lower-envelope literature cited in Sections 46 and 68 has its stated
+stationary-chain or bounded-rate hypotheses; no conclusion requiring those
+hypotheses is applied here. The original-source query bounds, shared-modulus
+limit passage and fixed-range cap ladder are their combination in this
+repository's prescribed acquisition problem, without a literature-priority
+assertion. These conditional results do not settle Question 62.1 on unrestricted
+measurable inputs and do not provide an effective sampler or modulus algorithm.
+
+## 追加锚（本行以下为增补区）
