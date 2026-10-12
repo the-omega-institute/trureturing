@@ -160,7 +160,8 @@ private lemma geometricMean_projection {α p x : ℝ} (hα : 0 < α) (hp : 0 < p
     calc
       R ^ α = (μ • Q) ^ α := congrArg (fun X : Mat => X ^ α) hscale.symm
       _ = μ ^ α • Q := scaled_projection_rpow Q hQ hQQ hμ.le hα
-      _ = μ ^ (α - 1) • (μ • Q) := by rw [smul_smul, ← hcoeff]
+      _ = μ ^ (α - 1) • (μ • Q) :=
+        (congrArg (fun t : ℝ => t • Q) hcoeff).trans (mul_smul _ _ _)
       _ = μ ^ (α - 1) • R := by rw [hscale]
   have hleft : D ^ (-p / 2) * S = 1 := by
     convert CFC.rpow_neg_mul_rpow (p / 2) hD.isStrictlyPositive using 1 <;> congr 1 <;> ring
@@ -325,17 +326,20 @@ private lemma scalar_jensen {α p : ℝ} (hαhalf : α < 1 / 2)
   rw [hmid]
   nlinarith [mul_pos hθ hhc]
 
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
 set_option backward.isDefEq.respectTransparency false in
 private lemma positive_power_continuousOn {q : ℝ} (hq : 0 < q) :
-    ContinuousOn (fun B : Mat => B ^ q) {B | B.PosSemidef} := by
+    ContinuousOn (fun B : Mat => CFC.rpow B q) {B | B.PosSemidef} := by
   let qn : ℝ≥0 := ⟨q, hq.le⟩
   have hqn : 0 < qn := hq
-  have h : ContinuousOn (fun B : Mat => CFC.nnrpow B qn) {B | B.PosSemidef} := by
-    simpa only [Matrix.nonneg_iff_posSemidef] using CFC.continuousOn_nnrpow (A := Mat) qn
-  convert h using 1
+  have h := CFC.continuousOn_nnrpow (A := Mat) qn
+  simp only [Matrix.nonneg_iff_posSemidef] at h
+  convert! h using 1
   funext B
   exact (CFC.nnrpow_eq_rpow (a := B) hqn).symm
 
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+set_option backward.isDefEq.respectTransparency false in
 private lemma tildeTrace_continuousOn {α p : ℝ} (hα : 0 < α) (hp : 0 < p) (A : Mat) :
     ContinuousOn (tildeTrace α p A) {B | B.PosSemidef} := by
   let F := (A ^ (-p)) ^ (1 / 2 : ℝ)
@@ -384,8 +388,11 @@ private lemma diagonal_affine (a c θ : ℝ) :
   fin_cases i <;> fin_cases j <;>
     simp [diagonal, Matrix.smul_apply, Complex.real_smul] <;> ring
 
-/-- For every lower-half weight and every positive power, an SPD qubit pair violates
-first-variable concavity of the exact tilde spectral trace. -/
+attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
+set_option backward.isDefEq.respectTransparency false in
+/-- For every weight strictly between zero and one half and every positive power,
+positive definite complex 2 by 2 matrices violate first-variable concavity of the
+exact tilde spectral trace. -/
 theorem strict_first_variable_jensen_violation {α p : ℝ}
     (hα : 0 < α) (hαhalf : α < 1 / 2) (hp : 0 < p) :
     ∃ A₀ A₁ B : Mat, A₀.PosDef ∧ A₁.PosDef ∧ B.PosDef ∧
