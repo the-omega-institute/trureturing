@@ -1333,6 +1333,85 @@ and Viète are used; the parameter application is ordinary analysis,
 with no new Lean declaration or originality claim.
 
 
+## An all-node enclosure without a hyperbolicity premise
+
+The original coefficient normalization also permits a direct application
+of classical Eneström–Kakeya. For its positive nondecreasing-coefficient
+form, see Ramulu and Reddy, *On the Eneström Kakeya Theorem*,
+[Theorem (A1), printed p.688](https://www.ijpam.eu/contents/2015-102-4/8/8.pdf),
+*International Journal of Pure and Applied Mathematics* **102** (2015),
+687–700, DOI [10.12732/ijpam.v102i4.8](https://doi.org/10.12732/ijpam.v102i4.8).
+Only the classical theorem recalled there is used; none of that paper's
+new generalizations is needed.
+
+[O'Sullivan's (1.5)](https://arxiv.org/html/2007.13582v2) reports the
+coefficient Turán inequality, proved for all indices by Csordas, Norfolk
+and Varga, *The Riemann hypothesis and the Turán inequalities*,
+*Transactions of the American Mathematical Society* **296** (1986),
+521–541, DOI [10.2307/2000378](https://doi.org/10.2307/2000378):
+$\Gamma_{j+1}^2\ge\Gamma_j\Gamma_{j+2}$ for every $j\ge0$.
+This is the original $\Gamma_j$ convention already used in (LC31),
+not the ordinary Taylor coefficients with their factorial removed.
+The published inequality is reused; its proof is not repeated here.
+
+For $n\ge1$, write
+
+$$
+B_n(z)=\mathcal J_n(-z)=\sum_{k=0}^nb_{n,k}z^k,
+\qquad b_{n,k}=c_{n,k}a_k>0,
+\qquad r_k=\frac{a_{k-1}}{a_k}
+       =\frac{k\Gamma_{k-1}}{\Gamma_k}.
+$$
+
+The published coefficient inequality gives
+$r_k/k\ge r_{k-1}/(k-1)$ for $k\ge2$.
+Consequently $r_k$ increases, and the adjacent coefficient ratios are
+
+$$
+\frac{b_{n,k-1}}{b_{n,k}}
+=\frac{n r_k}{n-k+1},\qquad
+\min_{1\le k\le n}\frac{b_{n,k-1}}{b_{n,k}}=r_1,
+\qquad
+\max_{1\le k\le n}\frac{b_{n,k-1}}{b_{n,k}}=n r_n. \tag{LC34}
+$$
+
+The positive coefficients of $B_n(nr_n z)$ are nondecreasing.
+Those of $z^nB_n(r_1/z)$, written in increasing powers of $z$, are
+also nondecreasing. Applying the cited classical theorem to these two
+polynomials supplies, for every complex zero of the actual row,
+
+$$
+\mathcal J_n(t)=0
+\quad\Longrightarrow\quad
+r_1=\frac1{a_1}\le |t|\le n r_n. \tag{LC35}
+$$
+
+No real-rootedness, simplicity or RH hypothesis is used in this enclosure.
+In particular every actual positive node obeys
+
+$$
+\frac1{nr_n}\le\lambda=\frac1t\le a_1,
+\qquad
+\frac1{r_n}\le v=\frac nt\le n a_1. \tag{LC36}
+$$
+
+Reuse (LC31) for the upper endpoint
+$nr_n\sim16n^3/W(2n/\pi)^2$.
+Thus $[r_1,nr_n]$ is a degree-dependent all-positive-node band available
+without the complete positive-root premise of (LC32). It is an enclosure,
+not an assertion that either endpoint is attained or that the actual
+largest node is asymptotic to that upper endpoint.
+
+The signed comparison $\mathcal J_n'(t)\mathcal G_n(t)\ge0$ must still
+be established at every actual positive node in this growing band, with
+the original additional vanishing and multiplicity obligations at
+collisions. The enclosure provides no error, derivative floor, separation
+or signed margin there. Neither it nor the fixed-band result (LC30)
+supplies a uniform conclusion on $[r_1,nr_n]$. This is an application of
+published results to the unchanged source, with no new Lean declaration,
+originality claim, RH or all-integer Robin proof.
+
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
