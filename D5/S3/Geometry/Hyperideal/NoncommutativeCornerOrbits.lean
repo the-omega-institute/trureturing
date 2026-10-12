@@ -52,7 +52,7 @@ def kWord (u v : G) : G := v * u ^ 3
 def boundaryGroup (u v : G) : Subgroup G :=
   Subgroup.closure ({sWord u v,tWord u v,kWord u v} : Set G)
 
-private lemma actual_step (u v : G) (x : Ω) (f : Fin 4) (r : Fin 3) :
+lemma actual_step (u v : G) (x : Ω) (f : Fin 4) (r : Fin 3) :
     Relation.EqvGen (cornerRel (pairing u v)) (x,faceVertex f r)
       ((facePair u v (x,f)).1,
         faceVertex (facePair u v (x,f)).2 (slotMap f r)) :=
