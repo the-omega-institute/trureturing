@@ -442,6 +442,23 @@ theorem native_source_conditional_kernel (π : Seed → Bool → History → Act
   rw [hp, hn]
   simp only [mul_assoc]
 
+private lemma private_seed_posterior (π : Seed → Bool → History → Action)
+    (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool)
+    (ν : Measure Seed) [IsProbabilityMeasure ν] (p q : unitInterval)
+    (t : ℕ → Bool × Bool) (n : ℕ) (D : Set Seed) (hD : MeasurableSet D)
+    (hL : (∏ i ∈ Finset.range n,
+      (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2}) ≠ 0) :
+    (RawLaw ν) ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) /
+      (RawLaw ν) (TraceEvent π S p q t n) =
+        ν ((SeedSection π S t n) ∩ D) / ν (SeedSection π S t n) := by
+  have hnum := (native_source_trace_law π hπ S ν p q t n D hD).2
+  have hden := (native_source_trace_law π hπ S ν p q t n Set.univ
+    MeasurableSet.univ).2
+  simp only [Set.preimage_univ, Set.inter_univ] at hden
+  rw [hnum, hden]
+  exact ENNReal.mul_div_mul_right _ _ hL
+    (ENNReal.prod_ne_top (fun i hi => measure_ne_top _ _))
+
 private lemma table_seed_section_law (table : (Bool × History) → PMF Action)
     (S : Bool) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action) :
     (RowLaw table) ((SeedSection TablePolicy S t n) ∩
@@ -792,6 +809,14 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
           (RawLaw (RowLaw table)) (((TraceEvent TablePolicy S p q t n) ∩
             {ω | Act TablePolicy S p q n ω = .inl source}) ∩ Prod.fst ⁻¹' D) *
             (bernoulliMeasure true false (if source then q else p)) {b}) ∧
+      (∀ (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ)
+        (D : Set ((Bool × History) → Action)), MeasurableSet D →
+        (∏ i ∈ Finset.range n,
+          (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2}) ≠ 0 →
+        (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S p q t n) ∩ Prod.fst ⁻¹' D) /
+          (RawLaw (RowLaw table)) (TraceEvent TablePolicy S p q t n) =
+            (RowLaw table) ((SeedSection TablePolicy S t n) ∩ D) /
+              (RowLaw table) (SeedSection TablePolicy S t n)) ∧
       (∀ (S : Bool) (p q : unitInterval) (ω) (n : ℕ),
         (n : WithTop ℕ) ≤ Calls TablePolicy S p q ω →
         ((acquiredHistory TablePolicy S (Read p q) n ω).filter (fun v => v.1)).length +
@@ -821,9 +846,12 @@ theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) 
     (Seed := (Bool × History) → Action) P m hm
   refine ⟨k, hk, δ₀, hδ₀, factory_target_probability P, ?_⟩
   intro table
-  refine ⟨native_policy_table_leaf_law table, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨native_policy_table_leaf_law table, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro S
     exact native_source_conditional_kernel TablePolicy
+      (fun S h => measurable_pi_apply (S, h)) S (RowLaw table)
+  · intro S
+    exact private_seed_posterior TablePolicy
       (fun S h => measurable_pi_apply (S, h)) S (RowLaw table)
   · intro S p q ω n hn
     have he := List.length_eq_length_filter_add
