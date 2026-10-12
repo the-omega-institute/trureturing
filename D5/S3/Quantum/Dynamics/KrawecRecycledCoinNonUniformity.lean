@@ -9,6 +9,9 @@
 import D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.NumberTheory.Real.GoldenRatio
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.InnerProductSpace.MeanErgodic
+import Mathlib.LinearAlgebra.Matrix.Trace
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -349,5 +352,100 @@ private theorem coin_overlap :
   simp only [map_sub, map_mul, map_add, Complex.conj_ofReal, z_conj]
   linear_combination -(c : ℂ) * ((a : ℂ) + c) * z_poly +
     (2 - 2 * z) * hc - z * hk + (3 / 2 : ℂ) * (1 - z) * ha
+
+private abbrev Index := ZMod 12 × (Fin 2 × Fin 2)
+private abbrev H := EuclideanSpace ℂ Index
+private abbrev K := EuclideanSpace ℂ (Index × Index)
+
+private theorem coin_inner (θ : ℝ) (x y : Fin 2 → ℂ) :
+    (∑ i : Fin 2,
+      starRingEnd ℂ (∑ j : Fin 2,
+        (D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness.X3 θ i j : ℂ) * x j) *
+      (∑ j : Fin 2,
+        (D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness.X3 θ i j : ℂ) * y j)) =
+      ∑ i : Fin 2, starRingEnd ℂ (x i) * y i := by
+  have h : (Real.sin θ : ℂ) ^ 2 + (Real.cos θ : ℂ) ^ 2 = 1 := by
+    exact_mod_cast Real.sin_sq_add_cos_sq θ
+  simp only [Fin.sum_univ_two]
+  change starRingEnd ℂ ((Real.cos θ : ℂ) * x 0 + (Real.sin θ : ℂ) * x 1) *
+      ((Real.cos θ : ℂ) * y 0 + (Real.sin θ : ℂ) * y 1) +
+    starRingEnd ℂ ((Real.sin θ : ℂ) * x 0 + ((-Real.cos θ : ℝ) : ℂ) * x 1) *
+      ((Real.sin θ : ℂ) * y 0 + ((-Real.cos θ : ℝ) : ℂ) * y 1) = _
+  simp only [Complex.ofReal_neg, map_add, map_neg, map_mul, Complex.conj_ofReal]
+  linear_combination (starRingEnd ℂ (x 0) * y 0 + starRingEnd ℂ (x 1) * y 1) * h
+
+private theorem walk_inner (x y : ZMod 12 → Fin 2 × Fin 2 → ℂ) :
+    (∑ n, ∑ i, starRingEnd ℂ (U phiStar x n i) * U phiStar y n i) =
+      ∑ n, ∑ i, starRingEnd ℂ (x n i) * y n i := by
+  calc
+    _ = ∑ i : Fin 2 × Fin 2, ∑ n : ZMod 12,
+        starRingEnd ℂ (coinFlip phiStar x
+          (n + (if i.1 = 0 then 1 else -1)) (i.2, i.1)) *
+        coinFlip phiStar y (n + (if i.1 = 0 then 1 else -1)) (i.2, i.1) := by
+      rw [Finset.sum_comm]; rfl
+    _ = ∑ i : Fin 2 × Fin 2, ∑ n : ZMod 12,
+        starRingEnd ℂ (coinFlip phiStar x n (i.2, i.1)) *
+        coinFlip phiStar y n (i.2, i.1) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      exact Equiv.sum_comp (Equiv.addRight (if i.1 = 0 then (1 : ZMod 12) else -1))
+        (fun n => starRingEnd ℂ (coinFlip phiStar x n (i.2, i.1)) *
+          coinFlip phiStar y n (i.2, i.1))
+    _ = ∑ n : ZMod 12, ∑ i : Fin 2 × Fin 2,
+        starRingEnd ℂ (coinFlip phiStar x n i) * coinFlip phiStar y n i := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro n _
+      exact (Equiv.prodComm (Fin 2) (Fin 2)).sum_comp
+        (fun i => starRingEnd ℂ (coinFlip phiStar x n i) * coinFlip phiStar y n i)
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro n _
+      rw [Fintype.sum_prod_type, Fintype.sum_prod_type]
+      apply Finset.sum_congr rfl
+      intro i _
+      exact coin_inner (angle phiStar i) (fun j => x n (i, j)) (fun j => y n (i, j))
+
+private def walkLin : H →ₗ[ℂ] H where
+  toFun x := WithLp.toLp 2 (fun i => U phiStar (fun n j => x (n, j)) i.1 i.2)
+  map_add' x y := by
+    ext ⟨n, i, j⟩
+    change U phiStar (fun n j => x (n, j) + y (n, j)) n (i, j) =
+      U phiStar (fun n j => x (n, j)) n (i, j) + U phiStar (fun n j => y (n, j)) n (i, j)
+    unfold U swap shift coinFlip
+    simp only [mul_add, Finset.sum_add_distrib]
+  map_smul' r x := by
+    ext ⟨n, i, j⟩
+    change U phiStar (fun n j => r * x (n, j)) n (i, j) =
+      r * U phiStar (fun n j => x (n, j)) n (i, j)
+    unfold U swap shift coinFlip
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro b _
+    ring
+
+private def walkIso : H →ₗᵢ[ℂ] H := walkLin.isometryOfInner (by
+  intro x y
+  simp only [PiLp.inner_apply, RCLike.inner_apply', walkLin, LinearMap.coe_mk,
+    AddHom.coe_mk, Fintype.sum_prod_type]
+  simpa only [Fintype.sum_prod_type] using walk_inner (fun n j => x (n, j)) (fun n j => y (n, j)))
+
+private def walkEquiv : H ≃ₗᵢ[ℂ] H :=
+  LinearIsometryEquiv.ofSurjective walkIso
+    (LinearMap.surjective_of_injective walkIso.injective)
+
+private def M : Matrix Index Index ℂ :=
+  walkEquiv.toLinearEquiv.toLinearMap.toMatrix
+    (EuclideanSpace.basisFun Index ℂ).toBasis (EuclideanSpace.basisFun Index ℂ).toBasis
+
+private theorem M_unitary : Mᴴ * M = 1 ∧ M * Mᴴ = 1 := by
+  exact walkEquiv.toMatrix_mem_unitaryGroup
+    (EuclideanSpace.basisFun Index ℂ) (EuclideanSpace.basisFun Index ℂ)
+
+private theorem M_step (x : H) :
+    M *ᵥ (fun i => x i) = fun i => U phiStar (fun n j => x (n, j)) i.1 i.2 := by
+  exact walkEquiv.toLinearEquiv.toLinearMap.toMatrix_mulVec_repr
+    (EuclideanSpace.basisFun Index ℂ).toBasis
+    (EuclideanSpace.basisFun Index ℂ).toBasis x
 
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
