@@ -1,0 +1,1 @@
+| [JointLaw.lean，3a56aa4](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean)：`native_reply_injective`、`native_probability_separation` | 既有 Lean 声明归属：已知固定长度合法 source 的精确自然数 reply；$n\ge3$、$0<\mathrm{mix}<1$ 的 lawful separation。完整分布与期望区分，正条件事件与实际初始化保留。 

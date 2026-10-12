@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9d28ae1efa2ebdff45925e4d59e2bf851122cb235993014545291e053d0f7ba0"}
+{"statement_id":"sha256:9d28ae1efa2ebdff45925e4d59e2bf851122cb235993014545291e053d0f7ba0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),10:Tomography),20:SublevelRowEnclosure),37:preconditioned_sublevel_row_enclosure)","kind":"theorem"}]}

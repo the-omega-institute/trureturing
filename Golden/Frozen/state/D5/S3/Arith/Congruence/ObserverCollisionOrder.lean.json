@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8c9d133c9b743f1ad4ec92d69bc023b49cbb40df3970daf2fb317ad867b02f49"}
+{"statement_id":"sha256:8c9d133c9b743f1ad4ec92d69bc023b49cbb40df3970daf2fb317ad867b02f49","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),10:Congruence),22:ObserverCollisionOrder),54:observer_collision_order_eq_padic_valuation_and_exists)","kind":"theorem"}]}

@@ -1,0 +1,11 @@
+**Claim status: open.** 对严格正的五模式概率，
+
+$$
+p\in\mathfrak M\iff\Delta(p):=p_{\varnothing}p_{13}-p_1p_3=0,
+\qquad \Delta=(1-Z)\kappa-XY.
+$$
+
+证明。乘积权直接给出四角等式。反过来，令 $a=p_1/p_{\varnothing}$、$b=p_2/p_{\varnothing}$、$c=p_3/p_{\varnothing}$，四角等式保证 $p_{13}/p_{\varnothing}=ac$。第二式由概率恢复式展开。证毕。
+
+在条件 $z=0$ 下，这正是 $x$ 与 $y$ 独立。本篇分类的是哪些观察能够保持这份明确的三参数来源模型，而不是禁止一切关联。
+

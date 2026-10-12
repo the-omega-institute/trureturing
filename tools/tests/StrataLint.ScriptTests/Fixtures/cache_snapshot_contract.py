@@ -329,12 +329,13 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertEqual(self.next_page(2), opened.call_args_list[1].args[0].full_url)
         self.assertEqual(self.next_page(3), opened.call_args_list[2].args[0].full_url)
 
-    def test_project_lookup_queries_the_pr_base_or_push_ref_with_a_bounded_request(self):
+    def test_project_lookup_queries_the_pr_base_after_its_own_ref_or_the_push_ref(self):
         for event, ref, base, expected in (("pull_request", "refs/pull/12/merge", "feature/with space", "refs/heads/feature/with space"),
                 ("push", "refs/heads/integration-ci-tests", "ignored", "refs/heads/integration-ci-tests")):
             with self.subTest(event=event):
                 row = self.cache_row("123-1", ref=expected)
-                values, receipt, opened = self.lookup_keys([self.cache_page([row])],
+                responses = ([self.cache_page()] if event == "pull_request" else []) + [self.cache_page([row])]
+                values, receipt, opened = self.lookup_keys(responses,
                     GITHUB_EVENT_NAME=event, GITHUB_REF=ref, GITHUB_BASE_REF=base)
                 self.assertEqual(row["key"], values["project_restore_key"])
                 self.assertEqual(expected, receipt["base_ref"])
@@ -348,6 +349,23 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 self.assertEqual("Bearer synthetic-token", request.get_header("Authorization"))
                 self.assertGreater(opened.call_args.kwargs["timeout"], 0)
                 self.assertNotIn("synthetic-token", json.dumps(receipt))
+
+    def test_pr_producer_seed_takes_precedence_over_the_base_seed(self):
+        own_ref = "refs/pull/42/merge"
+        row = self.cache_row("123-1", ref=own_ref)
+        values, receipt, opened = self.lookup_keys([self.cache_page([row])],
+            GITHUB_EVENT_NAME="pull_request", GITHUB_REF=own_ref, GITHUB_BASE_REF="dev")
+        self.assertEqual(row["key"], values["project_restore_key"])
+        self.assertEqual(own_ref, receipt["base_ref"])
+        opened.assert_called_once()
+        query = urllib.parse.parse_qs(urllib.parse.urlsplit(opened.call_args.args[0].full_url).query)
+        self.assertEqual([own_ref], query["ref"])
+
+    def test_pr_lookup_failure_does_not_mistake_an_unreadable_scope_for_an_empty_scope(self):
+        opened = self.assert_lookup_fallback([OSError("unavailable PR listing")],
+            "lookup-request-failed", GITHUB_EVENT_NAME="pull_request",
+            GITHUB_REF="refs/pull/42/merge", GITHUB_BASE_REF="dev")
+        opened.assert_called_once()
 
     def test_project_lookup_supplies_github_json_accept_header(self):
         opened = self.assert_lookup_fallback([self.cache_page()], "lookup-no-eligible-seed")
@@ -627,6 +645,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.work(0, 0)
         ready, receipts = self.snapshot_result()
         self.assertEqual("false", ready["project_ready"])
+        self.assertEqual("no-build-work", ready["project_skip_reason"])
         self.assertEqual("no-build-work", receipts["project"]["reason"])
 
     def test_project_report_and_program_only_work_are_publishable_on_push(self):
@@ -661,6 +680,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     self.env["STRATALINT_LEAN_BUILD_WORK_FILE"] = str(link)
                 ready, receipts = self.snapshot_result()
                 self.assertEqual("false", ready["project_ready"])
+                self.assertEqual("build-work-unknown", ready["project_skip_reason"])
                 self.assertEqual("build-work-unknown", receipts["project"]["reason"])
 
     def test_project_work_from_another_run_cannot_publish(self):
@@ -670,7 +690,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertEqual("false", ready["project_ready"])
         self.assertEqual("build-work-unknown", receipts["project"]["reason"])
 
-    def test_pull_requests_never_publish_project_seeds_even_with_build_work(self):
+    def test_ordinary_pull_requests_never_publish_project_seeds_even_with_build_work(self):
         self.native_seed("project")
         self.native_seed("dependency")
         self.env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge")
@@ -681,6 +701,37 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 self.assertEqual("false", ready["project_ready"])
                 self.assertEqual("pull-requests-do-not-publish-project-seeds", receipts["project"]["reason"])
                 self.assertEqual("true", ready["dependency_ready"])
+
+    def test_pr_producer_publishes_built_project_material_in_its_merge_ref(self):
+        _, _, target = self.native_seed("project")
+        self.env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge",
+                        STRATALINT_CACHE_PR_PRODUCER="true")
+        for report, programs, expected in ((2, 0, "true"), (0, 3, "true"),
+                                           (0, 0, "false"), (None, None, "false")):
+            with self.subTest(report=report, programs=programs):
+                self.work(report, programs)
+                ready, receipts = self.snapshot_result()
+                self.assertEqual(expected, ready["project_ready"])
+                if expected == "true":
+                    self.assertEqual(report + programs, receipts["project"]["build_work"])
+                self.assertEqual(b"native build material", (target / "module.olean").read_bytes())
+
+    def test_pr_producer_publication_rejects_missing_authorization_or_foreign_refs(self):
+        self.native_seed("project")
+        self.work(2, 0)
+        valid = dict(self.env, GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge",
+                     STRATALINT_CACHE_PR_PRODUCER="true")
+        for defect in ({"STRATALINT_CACHE_PR_PRODUCER": "false"},
+                       {"STRATALINT_CACHE_WRITES": "false"},
+                       {"STRATALINT_REPORT_SUCCEEDED": "false"},
+                       {"GITHUB_REF": "refs/heads/dev"},
+                       {"GITHUB_REF": "refs/pull/12/head"},
+                       {"GITHUB_REF": "refs/pull/0/merge"},
+                       {"GITHUB_EVENT_NAME": "pull_request_target"}):
+            with self.subTest(defect=defect):
+                self.env = dict(valid, **defect)
+                ready, _ = self.snapshot_result()
+                self.assertEqual("false", ready["project_ready"])
 
     def test_only_dev_and_integration_pushes_publish_project_seeds(self):
         self.native_seed("project")

@@ -1,0 +1,23 @@
+## 9. 精确恢复与稳定恢复的区别
+
+沿用共同矩纤维卷 §51 的实际来源构造：
+
+$$
+T_n=\rho^n\alpha,\qquad
+U_3=\langle\beta,\langle\alpha,\beta\rangle\rangle,
+\qquad U_{n+1}=\langle U_n,T_{n-1}\rangle.
+$$
+
+对全部 $n\ge3$，它们满足
+
+$$
+w(T_n)=w(U_n),\qquad \nu(T_n)=n,\quad\nu(U_n)=0,
+$$
+
+且只相差一次局部旋转。旋转发生在深处的三叶子树
+
+$$
+\langle\langle\beta,\alpha\rangle,\beta\rangle
+\longleftrightarrow\langle\beta,\langle\alpha,\beta\rangle\rangle.
+$$
+

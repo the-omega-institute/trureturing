@@ -1,0 +1,30 @@
+## 三、FIB 五模式中，全部新增关系只需检验一个四角差
+
+Claim status: open
+
+沿用：
+
+$$
+\Sigma=\{\mathsf F[\varnothing],\mathsf F[1],\mathsf F[2],\mathsf F[3],\mathsf F[1,3]\}.
+$$
+
+记低端、高端、中间占位为 $x,y,z$，满足：
+
+$$
+x^2=x,\quad y^2=y,\quad z^2=z,\quad xz=yz=0.
+$$
+
+五个模式依次是：
+
+$$
+(0,0,0),\quad(1,0,0),\quad(0,0,1),\quad(0,1,0),\quad(1,1,0).
+$$
+
+已有边界函数为：
+
+$$
+\boxed{\mathcal R_0=\operatorname{span}\{1,x,y,z\}.}
+$$
+
+既有五模式推导 [R2，§§2–3] 给出：这个边界能给出三个占位均值，但条件更新通常还会读取 $xy$。
+

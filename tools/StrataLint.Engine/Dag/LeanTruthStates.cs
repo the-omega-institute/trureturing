@@ -32,7 +32,10 @@ public static class LeanTruthStates
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
 
-        return snapshot.Files.Keys
+        var paths = lean.Report.IsScoped
+            ? lean.Report.Files.Keys
+            : snapshot.Files.Keys.Where(static path => LeanClosureValidator.IsManagedLean(path.Value));
+        return paths
             .Where(static path => LeanClosureValidator.IsManagedLean(path.Value))
             .ToImmutableDictionary(
                 static path => path,

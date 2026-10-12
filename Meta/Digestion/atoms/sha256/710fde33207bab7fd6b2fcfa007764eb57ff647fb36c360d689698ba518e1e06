@@ -1,0 +1,72 @@
+#### theorem 18.1: 定理 2：双窗边缘的存在条件
+
+Claim status: open.（供文 II 原第 6 节「定理 2」；保留纸面论证及其边界。）
+
+> 编者限定（II.6，原定理 2）：原商式分支要求 $a,b<1$。端点 $a=1$ 由可行性强制 $b=0$，仅在 $\mathcal R_1\times\mathcal C_0$ 取 $P_{ij}=\mu_i\nu_j$；端点 $b=1$ 对称地在 $\mathcal R_0\times\mathcal C_1$ 取该乘积，其余格零。不得给 $0/0$ 赋值；$a+b=1$ 且 $a,b<1$ 时余块质量 $c=0$。这些端点分支复用 C 卷 C-16.2，原文分式完整保留。
+
+
+存在满足守卫条件的双窗口联合律，当且仅当：
+
+$$
+\boxed{
+a+b\le1.
+}
+$$
+
+**证明。**
+
+$a$ 是第一窗口要求第二窗口处于 $\mathcal C_0$ 的概率，$b$ 是第二窗口要求第一窗口处于 $\mathcal R_0$ 的概率。两种限制必须在同一个联合样本中同时满足，因此必须有足够的非冲突质量：
+
+$$
+1-a-b\ge0.
+$$
+
+反过来，当 $a+b\le1$ 时，可以构造如下联合律。令：
+
+$$
+c=1-a-b.
+$$
+
+非法块取零：
+
+$$
+P_{ij}^\star=0,
+\qquad
+i\in\mathcal R_1,\ j\in\mathcal C_1.
+$$
+
+其余四个块取：
+
+$$
+P_{ij}^\star =
+\frac{\mu_i\nu_j}{1-b},
+\qquad
+i\in\mathcal R_1,\ j\in\mathcal C_0,
+$$
+
+$$
+P_{ij}^\star =
+\frac{\mu_i\nu_j}{1-a},
+\qquad
+i\in\mathcal R_0,\ j\in\mathcal C_1,
+$$
+
+$$
+P_{ij}^\star =
+\frac{c\,\mu_i\nu_j}{(1-a)(1-b)},
+\qquad
+i\in\mathcal R_0,\ j\in\mathcal C_0.
+$$
+
+逐行逐列求和即可恢复 $\mu_i,\nu_j$。因此条件也是充分的。证毕。
+
+这说明“最大熵补全”不能简单写成两个窗口的独立乘积。独立乘积可能把质量放入非法的：
+
+$$
+\mathcal R_1\times\mathcal C_1
+$$
+
+块中。
+
+---
+

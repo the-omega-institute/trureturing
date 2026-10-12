@@ -19,7 +19,8 @@ public sealed class Gid : IEquatable<Gid>
                 or '_'
                 or '/'
                 or '.'
-                or '-')
+                or '-'
+            || char.IsLetter(character))
         .AtLeastOnceString()
         .Before(End);
 
@@ -28,7 +29,7 @@ public sealed class Gid : IEquatable<Gid>
         RegexOptions.CultureInvariant);
 
     private static readonly Regex DeclarationPattern = new(
-        "^[A-Za-z_][A-Za-z0-9_]*$",
+        @"^[\p{L}_][\p{L}0-9_]*$",
         RegexOptions.CultureInvariant);
 
     private static readonly Regex SafeSegmentPattern = new(

@@ -123,7 +123,7 @@ public sealed partial class WorktreeCommandTests
     [InlineData("post-checkout")]
     [InlineData("inherit-partial")]
     [InlineData("policy-changed")]
-    public void FailedCreationRestoresTrackingAndAllowsImmediateNativeEquivalentRetry(string failure)
+    public void FailedCreationPreservesBranchTrackingAndAllowsAlternateContinuation(string failure)
     {
         using var repository = new TemporaryDirectory();
         var inherit = failure == "inherit-partial";
@@ -140,23 +140,17 @@ public sealed partial class WorktreeCommandTests
         Assert.False(failed.Success);
         using var receipt = JsonDocument.Parse(failed.Error["WORKTREE_FAILED ".Length..]);
         Assert.Contains("simulated upstream", receipt.RootElement.GetProperty("reason").GetString(), StringComparison.Ordinal);
-        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("cleanup_error").ValueKind);
-        Assert.Equal(before, ReadUpstreamConfiguration(repository.Path));
-        Assert.Equal(1, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{UpstreamBranch}"));
-        Assert.False(Directory.Exists(target));
-        Assert.False(Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
-
-        if (failure == "policy-changed")
-        {
-            Assert.Equal("always\n", WorktreeHookFixture.RunGit(repository.Path, "config", "--get", "branch.autoSetupRebase"));
-            oracle = NativeUpstreamOracle(repository.Path, revision);
-        }
-        var retry = WorktreeCommand.Run(repository.Path, UpstreamArguments(target, revision));
-
+        Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{UpstreamBranch}"));
+        var retainedConfiguration = ReadUpstreamConfiguration(repository.Path);
+        var alternate = Path.Combine(repository.Path, "alternate-upstream");
+        var arguments = UpstreamArguments(alternate, revision)
+            .Select(argument => argument == "upstream" ? "alternate-upstream" : argument).ToArray();
+        var retry = WorktreeCommand.Run(repository.Path, arguments);
         Assert.True(retry.Success, retry.Error);
-        Assert.Equal(oracle.Configuration, ReadUpstreamConfiguration(repository.Path));
-        AssertRegisteredAndUsable(repository.Path, target, UpstreamBranch);
-        Assert.False(File.Exists(Path.Combine(GitWorktreeDirectory.Read(target)!, "locked")));
+        Assert.Equal(retainedConfiguration, ReadUpstreamConfiguration(repository.Path));
+        AssertRegisteredAndUsable(repository.Path, alternate,
+            $"{WorktreeCommand.CreationNamespace}/math/alternate-upstream");
+
     }
 
     [Theory]
@@ -165,7 +159,7 @@ public sealed partial class WorktreeCommandTests
     [InlineData("concurrent-unset-remote")]
     [InlineData("concurrent-unset-merge")]
     [InlineData("concurrent-unset-rebase")]
-    public void TrackingRollbackPreservesPreexistingAndConcurrentConfiguration(string failure)
+    public void TrackingFailurePreservesConcurrentConfigurationWithRetainedBranch(string failure)
     {
         using var repository = new TemporaryDirectory();
         InitializeUpstreamRepository(repository.Path, "true", "origin/dev", "always", "none");
@@ -192,7 +186,7 @@ public sealed partial class WorktreeCommandTests
         Assert.Contains("simulated upstream", receipt.RootElement.GetProperty("reason").GetString(), StringComparison.Ordinal);
         if (failure.StartsWith("concurrent-", StringComparison.Ordinal))
         {
-            Assert.Contains("tracking changed", receipt.RootElement.GetProperty("cleanup_error").GetString(), StringComparison.Ordinal);
+            Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{UpstreamBranch}"));
             if (deletedKey is not null)
                 Assert.Equal(1, GitExit(repository.Path, "config", "--get", deletedKey));
             else
@@ -201,8 +195,8 @@ public sealed partial class WorktreeCommandTests
         }
         else
         {
-            Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("cleanup_error").ValueKind);
-            Assert.Equal(before, ReadUpstreamConfiguration(repository.Path));
+            Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{UpstreamBranch}"));
+            Assert.NotEqual(before, ReadUpstreamConfiguration(repository.Path));
         }
         Assert.Equal("keep\n", WorktreeHookFixture.RunGit(repository.Path, "config", "--get", $"branch.{UpstreamBranch}.description"));
     }

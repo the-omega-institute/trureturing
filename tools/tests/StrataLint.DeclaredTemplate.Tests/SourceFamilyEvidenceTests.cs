@@ -371,17 +371,16 @@ public sealed class SourceFamilyEvidenceTests
             LeanAxiomReport.Create(files), [selected[0]]).Inventory);
     }
     [Fact]
-    public void four_original_named_claims_pass_compiled_strict_join()
+    public void obsolete_named_reference_fixture_is_rejected_by_current_join()
     {
         var wire = CompiledWire("CompiledNamedClaimWire.lean");
         var (snapshot, report, selected) = Inputs(wire);
-        var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
-        Assert.Equal(4, evidence.Inventory.Count);
-        Assert.All(evidence.Occurrences.Values, row =>
-        {
-            Assert.True(row.HasFourSlots);
-            Assert.Equal(row.SourceOwner + ".claim", row.SourceDefinitionName);
-        });
+        // Closed certificate shape cannot make an obsolete source-reference
+        // encoding current. Current positive joins use producer conformance
+        // vectors and the independently addressed native source materials.
+        var error = Assert.Throws<FormatException>(() =>
+            InformationTemplateEvidence.Collect(snapshot, report, selected));
+        Assert.Contains("reference identity differs from current declaration", error.Message, StringComparison.Ordinal);
         Assert.All(wire, module =>
         {
             var source = module!["records"]![0]!["certificate"]!["source_binding"]!;

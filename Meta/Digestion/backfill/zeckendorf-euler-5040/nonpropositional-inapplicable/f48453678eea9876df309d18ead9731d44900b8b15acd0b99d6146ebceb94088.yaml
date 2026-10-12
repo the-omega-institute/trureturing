@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f48453678eea9876df309d18ead9731d44900b8b15acd0b99d6146ebceb94088
+  normalized_sha256: sha256:f48453678eea9876df309d18ead9731d44900b8b15acd0b99d6146ebceb94088
+cas_ref: sha256:f48453678eea9876df309d18ead9731d44900b8b15acd0b99d6146ebceb94088
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 节标题与实施前预登记说明，描述本节反驳目标及其文献记录；不在此段提出独立待证明的数学结论。后续 V-1 至 V-6 的数学子项保留各自证据状态。
+    previous_atom_id: 6f4110237cb749552f1f2719f5e2d71a63e78b1f0251e67b7b97f2a42ff76fe2
+    next_atom_id: 9db3959c4156b1bfd5ccc802b3d65d31b9b6914b87721f3762b1e3d6da4130e8

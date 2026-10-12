@@ -1,0 +1,20 @@
+## 11. 相干后继也需要反向闭包
+
+对量子仪器 $\mathcal J_o$，结果概率和后继态为
+
+$$
+q_o=\operatorname{tr}\mathcal J_o(\varrho),
+\qquad
+\varrho^o=\frac{\mathcal J_o(\varrho)}{q_o}.
+$$
+
+若当前保留的可观察量空间为 $\mathcal W$，相应条件是
+
+$$
+\boxed{\mathcal J_o^\dagger(\mathcal W)\subseteq\mathcal W.}
+$$
+
+仅知道结果概率一般不决定后继态；额外酉操作可以保持结果概率而改变输出状态。比如 $\varrho_\pm=(I\pm Y)/2$ 具有相同的 $X,Z$ 读数，但 $U=e^{-i\pi Z/4}$ 将 $Y$ 送到 $-X$，揭示两态差异。
+
+经典 $\kappa$ 与量子非对角相位不是同一对象，但它们遵循同一观察者纪律：后续操作会读取的关系，不能被当前边界无条件删除。
+

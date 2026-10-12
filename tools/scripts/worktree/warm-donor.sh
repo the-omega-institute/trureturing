@@ -41,6 +41,15 @@ if (( pull_rc != 0 )); then
   exit "$pull_rc"
 fi
 
+if [[ -f "$ROOT/.lake/build/stratalint/raw-lean-report.json" ]]; then
+  python3 -B "$ROOT/tools/lean-inspector/reuse.py" refresh-stale-seed --repository "$ROOT"
+  refresh_rc=$?
+  if (( refresh_rc != 0 )); then
+    receipt failed refresh "stale seed refresh failed"
+    exit "$refresh_rc"
+  fi
+fi
+
 make -C "$ROOT" lean
 lean_rc=$?
 if (( lean_rc != 0 )); then

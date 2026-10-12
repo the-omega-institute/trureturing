@@ -1,0 +1,86 @@
+### theorem 5.1: 定理 3：隐藏关系的动态显现判据
+
+在固定 $(X,Y,Z)$ 的概率纤维上，所有一步目标 $f\in V$ 都能由当前边缘读数预测，当且仅当：
+
+$$
+J(U_af)=0
+$$
+
+对所有允许动作 $a$ 和所有 $f\in V$ 成立。
+
+若存在某个 $a,f$ 使：
+
+$$
+J(U_af)\neq0
+$$
+
+则存在两个具有相同 $(X,Y,Z)$ 的当前分布，却具有不同的一步未来输出。
+
+#### 证明
+
+如果：
+
+$$
+J(U_af)=0
+$$
+
+则：
+
+$$
+U_af\in V
+$$
+
+所以：
+
+$$
+\mathbb E_p[U_af]
+$$
+
+只依赖：
+
+$$
+\mathbb E_p[1],\mathbb E_p[x],\mathbb E_p[y],\mathbb E_p[z]
+$$
+
+即只依赖 $(X,Y,Z)$。
+
+反过来，若：
+
+$$
+J(U_af)\neq0
+$$
+
+取同一均值纤维中的两个分布：
+
+$$
+p_\kappa
+\quad\text{和}\quad
+p_{\kappa'}
+$$
+
+则：
+
+$$
+p_\kappa-p_{\kappa'}=
+(\kappa-\kappa')d
+$$
+
+于是：
+
+$$
+\mathbb E_{p_\kappa}[U_af]
+-
+\mathbb E_{p_{\kappa'}}[U_af]=
+(\kappa-\kappa')J(U_af)
+$$
+
+只要：
+
+$$
+\kappa\neq\kappa'
+$$
+
+这个差就非零。证毕。
+
+---
+

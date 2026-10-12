@@ -1,0 +1,31 @@
+\[
+\sigma(h)
+=
+\bigl(a(h),A_h,B_h\bigr).
+\]
+
+给定固定的非单例深度先验 \(\mu\)，定义
+
+\[
+\mathscr L_h
+\]
+
+为从历史 \(h\) 开始的完整合法剩余未来律。这里的“完整”包括：
+
+- 后续合法 Read 字母；
+- phase 转移；
+- 第四标记完成；
+- pending Stop；
+- delivered 终态；
+- 不允许的 post-Stop Read 被排除。
+
+定义未来等价关系
+
+\[
+h\sim_{\mathrm{Fut}}h'
+\quad\Longleftrightarrow\quad
+\mathscr L_h=\mathscr L_{h'}.
+\]
+
+---
+

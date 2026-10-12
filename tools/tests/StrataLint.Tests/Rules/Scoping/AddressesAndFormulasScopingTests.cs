@@ -10,12 +10,12 @@ public sealed class AddressesAndFormulasScopingTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void FormulaBodiesFollowRegisteredMaterialsWithoutChangingGovernanceRejection(bool includeExperiment)
+    public void FormulaBodiesFollowRegisteredMaterialsWithoutChangingGovernanceRejection(bool includeExtraMaterial)
     {
-        const string experiment = "docs/reports/example/results.json";
+        const string extraMaterial = "Evidence/D5/S0/Carrier/Extra.check.json";
         var fixture = new RuleFixture();
-        RegisterFormulaMaterials(fixture, includeExperiment ? ["Evidence/**/*.json", experiment] : ["Evidence/**/*.json"]);
-        SetOldSnapshotFile(fixture, experiment,
+        RegisterFormulaMaterials(fixture, includeExtraMaterial ? [FormulaPath, extraMaterial] : [FormulaPath]);
+        SetOldSnapshotFile(fixture, extraMaterial,
             "{\"kind\":\"inline\",\"value\":{\"formula\":\"T >= sum of source bounds\"}}\n");
         SetOldSnapshotFile(fixture, FormulaPath, "{\"formula\":\"sqrt@5\",\"refs\":{}}\n");
         SetUnrelatedDelta(fixture);
@@ -24,8 +24,8 @@ public sealed class AddressesAndFormulasScopingTests
 
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
             && diagnostic.Path == FormulaPath && diagnostic.Message.Contains("illegal formula character", StringComparison.Ordinal));
-        Assert.Equal(includeExperiment, result.Diagnostics.Any(diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
-            && diagnostic.Path == experiment && diagnostic.Message == "formula and refs must be string/object"));
+        Assert.Equal(includeExtraMaterial, result.Diagnostics.Any(diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
+            && diagnostic.Path == extraMaterial && diagnostic.Message == "formula and refs must be string/object"));
     }
 
     [Fact]

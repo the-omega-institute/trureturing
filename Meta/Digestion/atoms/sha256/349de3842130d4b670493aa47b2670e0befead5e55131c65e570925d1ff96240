@@ -1,0 +1,10 @@
+能否对所有 $a,b,p,q\in\mathbb N$ 及 $n\in\mathbb Z$，无附加假设地证明
+
+$$
+((Y(X_a^p))[[n]])(X_b^q)
+=\sum_{k\in\operatorname{Finset.range}(\min(p,q)+1)}
+\left(\binom pk\,q^{\underline{k}}:\mathbb C\right)c(a,b)^k
+\cdot B\!\left(a,p-k,(a+b+2)k-n-1\right)X_b^{q-k},
+\qquad q^{\underline{k}}=q(q-1)\cdots(q-k+1)?
+$$
+

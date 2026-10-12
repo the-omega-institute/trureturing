@@ -1,0 +1,28 @@
+**定义 2.2（完整可数尾载体）。** 置 $t_r=r(1-r)$，$w_{n,0}=(\beta\alpha)^n\alpha$，$w_{n,1}=(\beta\alpha)^n\beta\beta$，其中 $n\ge0$。载体为
+
+$$
+\Omega_p=\{w_{n,c}:n\ge0,\ c\in\{0,1\}\}\cup\{\omega_{p,\infty}\},
+$$
+
+$$
+\Omega_\beta=\{\beta\}\cup\{\alpha w_{n,c}:n\ge0,\ c\in\{0,1\}\}
+\cup\{\omega_{\beta,\infty}\}.
+\tag{2.2}
+$$
+
+两个无限不完成词是合法结果，保留在求和与等式中。ST §§2.1–2.2供应的原固定参数律为
+
+$$
+\begin{aligned}
+P_{p,r}(w_{n,0})&=rt_r^n,&
+P_{p,r}(w_{n,1})&=(1-r)^2t_r^n,\\
+P_{\beta,r}(\beta)&=1-r,&
+P_{\beta,r}(\alpha w_{n,c})&=rP_{p,r}(w_{n,c}).
+\end{aligned}
+\tag{2.3}
+$$
+
+其无限结果质量为零，不通过条件于完成来归一化。悬置切口已经取得的 $\beta$ 不再算作未来 Read。
+
+每个实际完整记录纤维 $c$ 上，复用 ST §2.1和 PAID 定义1.2的转录双射 $I_c$：保留每个未来 Read 字母，插入同一原控制规定的记录、许可、完成、Stop 与交付事件；逆映射读取字母。它保持 TV，并与删去下一操作及其原事件块相容。各记录纤维仍持有自己的记录。下文在原词上证明的等式，经 $I_c$ 得到该完整转录纤维上的等式。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:328a1dc9a918786fe5d12bef3b74933f58de9d50bff88a6e96a7de9c0826ae4f
+  normalized_sha256: sha256:328a1dc9a918786fe5d12bef3b74933f58de9d50bff88a6e96a7de9c0826ae4f
+cas_ref: sha256:328a1dc9a918786fe5d12bef3b74933f58de9d50bff88a6e96a7de9c0826ae4f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is an application-domain label under the preceding compact continuous realization principle, not a universal assertion that every parameter model is compact or every experimental readout continuous. The stated compactness and continuity assumptions are retained.
+    previous_atom_id: f9952e8b149315843a10f8e6cc3152214f4eab9877a62bbc153e0ae2a2c9a81e
+    next_atom_id: d2b46f0adf0f6d99af74a008460bf5ae9de929e4300fc78235ae07ed8bf79163

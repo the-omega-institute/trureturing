@@ -1,0 +1,30 @@
+\[
+\mathcal I
+=
+\frac1{p_{\mathrm{null}}}
++
+\frac1{p_1}
++
+\frac1{p_3}
++
+\frac1{p_{13}}
+\]
+
+并且线性边界近似的最小误差为：
+
+\[
+\frac{J_f^2}{\mathcal I}
+\]
+
+这可以继续发展成：
+
+\[
+\text{恢复代价}
+\sim
+\text{隐藏维数}
+\times
+\text{隐藏残差}
+\times
+\text{动态维护时间}
+\]
+

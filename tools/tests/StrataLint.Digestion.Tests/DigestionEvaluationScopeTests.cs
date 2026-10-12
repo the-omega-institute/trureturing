@@ -175,7 +175,7 @@ public sealed class DigestionEvaluationScopeTests
             (targetPath, target),
             CasFile(atom),
             ("docs/source.md", sourceBytes),
-            .. FrozenStatementReceiptTestData.LedgerFiles(
+            .. FrozenStatementReceiptTestData.LedgerFiles(out _,
                 new FrozenStatementReceiptTestData.Module(
                     targetPath,
                     FrozenStatementReceiptTestData.Id('a'),

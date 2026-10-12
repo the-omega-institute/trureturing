@@ -1,1 +1,1 @@
-{"statement_id":"sha256:24c2bcd1adb9497ba351add0c8f2785ff6c5b54312666956f3af8fceb70214ae"}
+{"statement_id":"sha256:24c2bcd1adb9497ba351add0c8f2785ff6c5b54312666956f3af8fceb70214ae","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Solenoid),19:RealFlowInjectivity),18:realFlow_injective)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Solenoid),19:RealFlowInjectivity),20:realFlow_eq_zero_iff)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:333be6fd8c3b8ae2ba004484b17d9b0a7b6aaa055fd5809339144c88eb5aaea1"}
+{"statement_id":"sha256:333be6fd8c3b8ae2ba004484b17d9b0a7b6aaa055fd5809339144c88eb5aaea1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),6:Fusion),37:IndependentPredictionStateCardinality),20:predictiveStateCount)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),6:Fusion),37:IndependentPredictionStateCardinality),47:finite_independent_prediction_state_cardinality)","kind":"theorem"}]}

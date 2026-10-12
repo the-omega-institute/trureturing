@@ -54,7 +54,7 @@ private theorem triple (m : ℕ) (hm : 1 ≤ m) :
       simp [h, show (2 : ZMod 3) ^ 2 - 1 = 0 from rfl]
   rw [hs, add_zero]
 
-private theorem sum_triples {R : Type*} [AddCommMonoid R] (f : ℕ → R) (m : ℕ) :
+theorem sum_triples {R : Type*} [AddCommMonoid R] (f : ℕ → R) (m : ℕ) :
     ∑ j ∈ range (3 * m), f j =
       ∑ r ∈ range m, (f (3 * r) + f (3 * r + 1) + f (3 * r + 2)) := by
   induction m with

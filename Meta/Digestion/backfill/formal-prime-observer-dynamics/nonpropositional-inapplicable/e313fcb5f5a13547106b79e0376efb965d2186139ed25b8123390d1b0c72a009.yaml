@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e313fcb5f5a13547106b79e0376efb965d2186139ed25b8123390d1b0c72a009
+  normalized_sha256: sha256:e313fcb5f5a13547106b79e0376efb965d2186139ed25b8123390d1b0c72a009
+cas_ref: sha256:e313fcb5f5a13547106b79e0376efb965d2186139ed25b8123390d1b0c72a009
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only bind-only settlement under CLAUDE.md 3.2. Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d: mul_sub and Finset.sum_sub_distrib. For every Boolean potential-outcome joint probability mass, distribute mass*(Y1-Y0) and distribute the finite sum; projecting/reindexing the two finite marginals gives E[Y1]-E[Y0]. The formula depends only on these marginals, for every coupling. No frozen repository GID supplies this expectation identity.'
+    previous_atom_id: 15ebbc493d6e2dd16d5da8e2e38e5e95cd2b4f42888a62e75c5ff2ecee8a9d0a
+    next_atom_id: 7ad16f046e02ae7edf1af5f01bf66904db291a04645087dd3196c3971e082e0c

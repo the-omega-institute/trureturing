@@ -17,7 +17,7 @@ set_option relaxedAutoImplicit false
 open ArithmeticFunction
 open scoped ArithmeticFunction
 
-private theorem sigma_odd_iff_square_or_twice_square (m : ℕ) (hm : 0 < m) :
+theorem sigma_odd_iff_square_or_twice_square (m : ℕ) (hm : 0 < m) :
     Odd (sigma 1 m) ↔ (IsSquare m ∨ ∃ t : ℕ, m = 2 * t ^ 2) := by
   classical
   have hm0 : m ≠ 0 := by omega

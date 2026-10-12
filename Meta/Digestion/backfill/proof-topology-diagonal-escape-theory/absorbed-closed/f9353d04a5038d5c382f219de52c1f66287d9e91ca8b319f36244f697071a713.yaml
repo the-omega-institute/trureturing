@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f9353d04a5038d5c382f219de52c1f66287d9e91ca8b319f36244f697071a713
+  normalized_sha256: sha256:f9353d04a5038d5c382f219de52c1f66287d9e91ca8b319f36244f697071a713
+cas_ref: sha256:f9353d04a5038d5c382f219de52c1f66287d9e91ca8b319f36244f697071a713
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationTopology/PartitionTopologyKernel.partition_inseparable_iff_kernel
+    target_statement_id: sha256:086e4bd07f52703e91f5b094dd316c53f2b627ebc294ccfbf2c0bc00e3331531
+receipts:
+  unresolved_subitems: []

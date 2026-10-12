@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ab9dfc1a0ea476841ea4d803aa20d64e3269b5b88f78c52f65d2bce069a0058a"}
+{"statement_id":"sha256:ab9dfc1a0ea476841ea4d803aa20d64e3269b5b88f78c52f65d2bce069a0058a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),11:Termination),25:GuardedRankingTermination),26:guarded_ranking_terminates)","kind":"theorem"}]}

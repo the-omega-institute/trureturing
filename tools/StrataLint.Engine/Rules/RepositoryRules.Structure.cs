@@ -170,7 +170,6 @@ internal static partial class RepositoryRules
         || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
-        || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
         || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
@@ -187,6 +186,7 @@ internal static partial class RepositoryRules
     // measure source complexity. This exemption does not change directory occupancy.
     internal static bool IsArtifactLineCapacityExcluded(string path) =>
         IsCapacityExcluded(path)
+        || IsLibraryDocument(path)
         || Path.GetExtension(path).ToLowerInvariant() is
             ".json" or ".jsonl" or ".ndjson" or ".json5" or ".jsonc"
             or ".yaml" or ".yml" or ".toml" or ".csv" or ".tsv" or ".xml" or ".trx" or ".b64";
@@ -224,6 +224,7 @@ internal static partial class RepositoryRules
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         findings.AddRange(TheoryCapacity(context));
+        findings.AddRange(LibraryCapacity(context));
         var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
         var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
 
@@ -353,7 +354,6 @@ internal static partial class RepositoryRules
 
         }
 
-        ValidateChangedAcceptedFreezePins(context, findings);
         foreach (var path in context.Changes.Paths.Where(path => FrozenStatePath.IsUnderRoot(path.Value)).OrderBy(path => path.Value, StringComparer.Ordinal))
         {
             if (context.Current.Files.TryGetValue(path, out var file)

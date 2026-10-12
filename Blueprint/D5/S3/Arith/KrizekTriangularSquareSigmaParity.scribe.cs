@@ -15,6 +15,19 @@ internal sealed class KrizekTriangularSquareSigmaParityDocument
         H("Krizek's Triangular-Square Divisor-Sum Characterization"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("sigma-odd-square-or-twice-square"),
+                DeclarationHandle.Create(Prefix + "sigma_odd_iff_square_or_twice_square"),
+                H("Divisor-sum parity"),
+                StatementSource.FromAuthor(ParityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a positive natural number, the divisor sum is odd exactly when "
+                    + "the number is a square or twice a square. The proof factors the "
+                    + "divisor sum into prime-power geometric sums and characterizes "
+                    + "the parity of each exponent at an odd prime. This criterion is "
+                    + "also consumed by the twin-prime sigma-gcd results."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("a001108-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The triangular-square divisor-sum characterization"),
@@ -34,6 +47,21 @@ internal sealed class KrizekTriangularSquareSigmaParityDocument
                     ProblemSlugRef.Create(
                         "oeis-a001108-krizek-triangular-square-sigma-parity"),
                     ResolutionKind.Proved)))));
+
+    private static Formula ParityFormula()
+    {
+        var m = F.Id("m");
+        var t = F.Id("t");
+        var twiceSquare = new Formula.BindMany(
+            FormulaQuantifier.Exists,
+            [new Formula.BoundVariable(FormulaIdentifier.Create("t"), Naturals())],
+            new Formula.Relation(m, FormulaRelationOperator.Equal,
+                Multiply(D(2), new Formula.Power(t, D(2)))));
+        var shape = new Formula.Logic(Call("IsSquare", m),
+            FormulaLogicOperator.Or, twiceSquare);
+        return Disp(Universal("m", Implies(Greater(m, D(0)),
+            Iff(Call("Odd", SigmaAt(1, m)), Parenthesized(shape)))));
+    }
 
     private static Formula ResultFormula()
     {

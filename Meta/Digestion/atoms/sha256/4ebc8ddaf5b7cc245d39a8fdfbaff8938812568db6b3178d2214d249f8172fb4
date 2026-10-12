@@ -1,0 +1,24 @@
+#### theorem 34.1: 定理 A：响应向量纤维定理
+
+Claim status: open.（供文 III 原第 10 节「定理 A」；形式化建议。）
+
+
+在 Lean 中定义一个有限响应向量 $L_I$，证明
+
+$$
+\overline L(p) =
+L_{\mathrm{null}}
++(L_1-L_{\mathrm{null}})X
++(L_3-L_{\mathrm{null}})Y
++(L_2-L_{\mathrm{null}})Z
++J_L\kappa.
+$$
+
+然后证明：
+
+$$
+J_L\neq0
+\Longrightarrow
+(P,\overline L)\text{ injective}.
+$$
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a2ad029a970b6760269f250c5ec6926e98afd2e7f41dff17ed781519b6f7af09"}
+{"statement_id":"sha256:a2ad029a970b6760269f250c5ec6926e98afd2e7f41dff17ed781519b6f7af09","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),10:Relabeling),19:InjectiveInvariance),31:shannonEntropy_extend_injective)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),10:Relabeling),19:InjectiveInvariance),31:shannonEntropy_extend_injective),9:match_1_1)","kind":"def"}]}

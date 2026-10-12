@@ -1,0 +1,25 @@
+**Theorem 16.4 (original deterministic acquired-update lower bound).**
+Fix the same prior as in Corollary 16.3. Let $M$ be any original finite
+COMPLETE observer, and put
+
+$$
+e(M)=\max\{R_{{\rm conf},p}(M)-\rho_p,
+           R_{{\rm conf},\beta}(M)-\rho_\beta\}.
+$$
+
+Assume that the acquired p-beta and suspended-alpha updates are deterministic
+on all relevant reachable complete configurations. It suffices to assume
+this on the original seed-1, marker-100 held-record fibre used in
+[PAID, Lemma 14.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md).
+Then
+
+$$
+e(M)\ge\frac{11}{61}j_{\rm det}>0.
+\tag{16.31}
+$$
+
+Thus no sequence of such observers for this one fixed prior, with arbitrarily
+growing finite COMPLETE size, has excess tending to zero. Source-independent
+random initialization, random synthetic emissions and other allowed
+randomization outside these two acquired updates remain permitted.
+

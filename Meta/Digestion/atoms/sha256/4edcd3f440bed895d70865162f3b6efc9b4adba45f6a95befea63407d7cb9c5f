@@ -1,0 +1,28 @@
+### theorem 2.2: 读取低端后继位置需要联合参数
+
+**Claim status: open.** 读取 $x$ 后，若结果为一，则
+
+$$
+\boxed{(X_1,Y_1,Z_1)=\left(1,\frac\kappa X,0\right).}
+$$
+
+若结果为零，则
+
+$$
+\boxed{(X_0,Y_0,Z_0)=\left(0,\frac{Y-\kappa}{1-X},\frac Z{1-X}\right).}
+$$
+
+相应结果概率为 $X$ 与 $1-X$；零分母的情形只在相应结果概率为零时出现，不作除法。
+
+**证明。** 当 $x=1$ 时，排斥迫使 $z=0$，且 $\Pr(y=1\mid x=1)=\mathbb E[xy]/\mathbb E[x]$。当 $x=0$ 时，$\Pr(y=1,x=0)=Y-\kappa$，而 $z=1$ 已保证 $x=0$。证毕。
+
+两个均值相同的来源
+
+$$
+p^{(A)}=\tfrac12\delta_{\varnothing}+\tfrac12\delta_{13},
+\qquad
+p^{(B)}=\tfrac12\delta_1+\tfrac12\delta_3
+$$
+
+都给出 $(X,Y,Z)=(1/2,1/2,0)$。读取 $x$ 的结果概率相同，但结果为一后分别变为 $\delta_{13}$ 与 $\delta_1$，结果为零后分别变为 $\delta_{\varnothing}$ 与 $\delta_3$。同一读口和同一结果概率不保证同一后继来源。
+

@@ -7,7 +7,8 @@ internal sealed record RegisteredWorktree(
     string Head,
     string? Branch,
     string? GitDirectory,
-    bool Locked);
+    bool Locked,
+    string? LockReason);
 
 internal static class RegisteredWorktreeInventory
 {
@@ -26,6 +27,7 @@ internal static class RegisteredWorktreeInventory
         string? head = null;
         string? branch = null;
         var locked = false;
+        string? lockReason = null;
         foreach (var field in Decode(result.StandardOutput).Split('\0'))
         {
             if (field.StartsWith("worktree ", StringComparison.Ordinal))
@@ -43,6 +45,9 @@ internal static class RegisteredWorktreeInventory
             else if (field == "locked" || field.StartsWith("locked ", StringComparison.Ordinal))
             {
                 locked = true;
+                lockReason = field.Length == "locked".Length
+                    ? string.Empty
+                    : field["locked ".Length..];
             }
             else if (field.Length == 0 && path is not null)
             {
@@ -56,11 +61,13 @@ internal static class RegisteredWorktreeInventory
                     head,
                     branch,
                     resolveGitDirectories ? TryResolveRegisteredGitDirectory(path, runner) : null,
-                    locked));
+                    locked,
+                    lockReason));
                 path = null;
                 head = null;
                 branch = null;
                 locked = false;
+                lockReason = null;
             }
         }
 

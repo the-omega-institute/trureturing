@@ -64,7 +64,7 @@ The source theorem is reused, without a new proof or priority claim.
 For the project's real even finite signed prime-minus-continuum head,
 the atoms are exactly $\pm\log n$, with masses $\Lambda(n)/\sqrt n$.
 The negative continuous component has no atomic mass. The
-[fixed-head scalar-budget application](../../docs/reports/theta-mixed-matrix/signed-low-row.md#fixed-head-band-expansion-has-a-classical-obstruction)
+[fixed-head scalar-budget application](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/signed-low-row.md#fixed-head-band-expansion-has-a-classical-obstruction)
 uses this same theorem to diagnose a frequency-envelope loss. It does
 not assert growth of the actual weighted operator norm, an obstruction
 to a growing arithmetic cutoff, or an RH/Robin conclusion. No compiled
@@ -76,7 +76,7 @@ The same retained first-edition PDF gives Lemma 0.32, printed pp.28--29,
 the Schur criterion for a measurable integral kernel dominated by
 $K_1(x,y)K_2(x,y)$. For conjugate exponents, its separate row and column
 norm bounds $C_1,C_2$ give operator norm at most $C_1C_2$. The
-[local signed-frequency note](../../docs/reports/theta-mixed-matrix/local-signed-frequency.md)
+[local signed-frequency note](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/local-signed-frequency.md)
 uses the $L^2$ case with a Lorentzian factorization of the actual Fourier
 kernel. It is a direct source-criterion application, with no new theorem
 or compiled specialization claimed.

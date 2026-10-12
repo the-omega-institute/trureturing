@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-observation-update-and-return-prediction"
+path = "docs/develop/theory/AURIC_FIB_ATOM_OBSERVATION_UPDATE_AND_RETURN_PREDICTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

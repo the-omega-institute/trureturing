@@ -19,6 +19,9 @@ import tempfile
 import time
 
 REPOSITORY = Path(__file__).resolve().parents[2]
+# BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
+PROTECTED_FLAGS = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
+                   stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
 
 
 class LowDiskSpace(RuntimeError):
@@ -85,6 +88,8 @@ def inspect_candidate(path, cutoff, protected):
             return dict(reason="not_owned")
         if info.st_dev != root_stat.st_dev:
             return dict(reason="mount")
+        if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
+            return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
         if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)):
@@ -105,6 +110,16 @@ def inspect_candidate(path, cutoff, protected):
     return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes)
 
 
+def remove_tree(path):
+    """Remove an inspected owned tree, first granting its owner access to read-only directories."""
+    # os.walk does not descend into directory links, so only directories inside the tree change mode.
+    for directory, _, _ in os.walk(path):
+        mode = stat.S_IMODE(os.lstat(directory).st_mode)
+        if mode & stat.S_IRWXU != stat.S_IRWXU:
+            os.chmod(directory, mode | stat.S_IRWXU)
+    shutil.rmtree(path)
+
+
 def clean_candidate(path, cutoff, protected, delete=False):
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
@@ -122,7 +137,7 @@ def clean_candidate(path, cutoff, protected, delete=False):
             return result
         removal_started = True
         if path.is_dir():
-            shutil.rmtree(path)
+            remove_tree(path)
         else:
             path.unlink()
         result["action"] = "removed"
@@ -145,6 +160,21 @@ def children(root):
         yield from root.iterdir()
 
 
+def superseded_releases(package):
+    """Yield a Codex package's releases other than the one its current link selects."""
+    current = package / "current"
+    if package.is_symlink():
+        return
+    releases = package / "releases"
+    selected = current.resolve()
+    # Without a resolvable current release in this package, no release can be called superseded.
+    if selected.parent != releases.resolve() or not selected.is_dir():
+        return
+    for release in children(releases):
+        if release.name != selected.name:
+            yield release
+
+
 def candidates(codex, sshx, tmp_roots):
     for name in ("sessions", "archived_sessions"):
         root = codex / name
@@ -161,6 +191,9 @@ def candidates(codex, sshx, tmp_roots):
                 yield "codex", run
         else:
             yield "codex", path
+    for package in children(codex / "packages"):
+        for release in superseded_releases(package):
+            yield "codex", release
     for path in children(sshx):
         if re.fullmatch(r"[0-9a-f]{24}", path.name):
             yield "sshx", path
@@ -169,9 +202,53 @@ def candidates(codex, sshx, tmp_roots):
             yield "tmp", path
 
 
-def active_paths(codex):
+def linux_observation_unavailable(process, boundary, error):
+    """Only a completely observed terminal thread group has no active handles."""
+    try:
+        process.stat()
+    except (FileNotFoundError, ProcessLookupError):
+        return
+    status = {}
+    try:
+        for line in (process / "status").read_text().splitlines():
+            key, separator, value = line.partition(":")
+            if separator and key in ("State", "Threads", "Uid"):
+                status[key] = value.strip()
+        if status.get("State", "").split()[:1] in (["Z"], ["X"]):
+            # A terminal leader alone does not certify surviving threads.
+            tasks = list((process / "task").iterdir())
+            if status.get("Threads") == "1" and [task.name for task in tasks] == [process.name]:
+                observed = (tasks[0] / "status").read_text()
+                fields = dict(line.split(":", 1) for line in observed.splitlines() if ":" in line)
+                if (fields.get("State", "").split()[:1] in (["Z"], ["X"])
+                        and fields.get("Threads", "").strip() == "1"):
+                    return
+    except (OSError, ValueError):
+        # A missing status/task file is not proof of process disappearance.
+        try:
+            process.stat()
+        except (FileNotFoundError, ProcessLookupError):
+            return
+    raise OSError("linux_activity_unavailable " + json.dumps(dict(
+        process=str(process), boundary=boundary, status=status, error=str(error)))) from error
+
+
+def active_paths(codex, scopes=()):
     """Read open files/cwds and process arguments for the current user only."""
     protected = {Path.cwd().resolve(), Path(__file__).resolve()}
+    scopes = tuple(str(Path(scope).resolve()) for scope in scopes)
+
+    physical_parents = {}
+
+    def open_path(raw):
+        # Kernel observations already resolve the endpoint. Canonicalize parent
+        # aliases once per directory; symbolic process argv is resolved below.
+        normalized = os.path.normpath(raw)
+        if not scopes or any(normalized == scope or normalized.startswith(scope + os.sep) for scope in scopes):
+            path = Path(normalized)
+            if path.parent not in physical_parents:
+                physical_parents[path.parent] = path.parent.resolve()
+            protected.add(physical_parents[path.parent] / path.name)
     if sys.platform.startswith("linux"):
         for process in Path("/proc").iterdir():
             if not process.name.isdigit():
@@ -179,12 +256,30 @@ def active_paths(codex):
             try:
                 if process.stat().st_uid != os.getuid():
                     continue
-                for link in [process / "cwd", *list((process / "fd").iterdir())]:
-                    target = os.readlink(link).removesuffix(" (deleted)")
-                    if target.startswith("/"):
-                        protected.add(Path(target).resolve())
             except (FileNotFoundError, ProcessLookupError):
                 continue
+            try:
+                descriptors = list((process / "fd").iterdir())
+            except (FileNotFoundError, ProcessLookupError, PermissionError) as error:
+                linux_observation_unavailable(process, "fd_inventory", error)
+                continue
+            cwd = process / "cwd"
+            missing_cwd = None
+            for link in [cwd, *descriptors]:
+                try:
+                    target = os.readlink(link).removesuffix(" (deleted)")
+                except PermissionError as error:
+                    linux_observation_unavailable(process, "cwd" if link == cwd else "fd", error)
+                    break
+                except (FileNotFoundError, ProcessLookupError) as error:
+                    # Closing one handle must not hide the remaining handles.
+                    if link == cwd:
+                        missing_cwd = error
+                    continue
+                if target.startswith("/"):
+                    open_path(target)
+            if missing_cwd is not None:
+                linux_observation_unavailable(process, "cwd", missing_cwd)
     elif sys.platform == "darwin":
         result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
                                 capture_output=True, text=True, timeout=120)
@@ -192,14 +287,21 @@ def active_paths(codex):
             raise OSError("cannot inspect active files with lsof: " + result.stderr.strip())
         for line in result.stdout.splitlines():
             if line.startswith("n/"):
-                protected.add(Path(line[1:].removesuffix(" (deleted)")).resolve())
+                open_path(line[1:].removesuffix(" (deleted)"))
     else:
         raise OSError("host cleanup supports macOS and Linux")
-    result = subprocess.run(["ps", "-axo", "uid=,args="], capture_output=True, text=True, timeout=30)
+    result = subprocess.run(["ps", "-axo", "uid=,pid=,args=" if scopes else "uid=,args="],
+                            capture_output=True, text=True, timeout=30)
     if result.returncode != 0:
         raise OSError("cannot inspect process arguments: " + result.stderr.strip())
     for line in result.stdout.splitlines():
-        fields = line.strip().split(None, 1)
+        fields = line.strip().split(None, 2 if scopes else 1)
+        if scopes:
+            # The sampler and its inspecting caller name their target in argv.
+            # Their real cwd/open handles remain inspected; argv is not a user.
+            if len(fields) != 3 or fields[1] in (str(os.getpid()), str(os.getppid())):
+                continue
+            fields = [fields[0], fields[2]]
         if len(fields) != 2 or fields[0] != str(os.getuid()):
             continue
         try:
@@ -231,16 +333,17 @@ def active_paths(codex):
 def registered_worktrees(repository):
     result = subprocess.run(["git", "-C", str(repository), "worktree", "list", "--porcelain", "-z"],
                             capture_output=True, check=True, timeout=60)
-    return {Path(os.fsdecode(field[len(b"worktree "):])).resolve()
-            for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")}
+    # Git lists the main worktree first; it survives registered-tree cleanup.
+    return [Path(os.fsdecode(field[len(b"worktree "):])).resolve()
+            for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")]
 
 
-def clean_worktrees(repository, base, delete):
+def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
     if delete:
         arguments.append("--force")
-    return subprocess.run(arguments, cwd=repository, check=False).returncode
+    return subprocess.run(arguments, cwd=working_directory or repository).returncode
 
 
 def nonnegative_hours(value):
@@ -251,6 +354,24 @@ def nonnegative_hours(value):
 
 
 def run_clean(options):
+    caller = Path.cwd().resolve()
+    options.repository = options.repository.absolute()
+    options.codex_home = options.codex_home.absolute()
+    options.sshx_home = options.sshx_home.absolute()
+    options.tmp_root = [path.absolute() for path in options.tmp_root]
+    # Worktree removal may unlink both the caller and the repository. Keep
+    # filesystem measurements on the same volume through an OS-owned handle.
+    descriptor = os.open(options.repository, os.O_RDONLY)
+    try:
+        os.chdir("/")
+        return clean_from_anchor(options, caller, descriptor)
+    finally:
+        os.close(descriptor)
+        if caller.is_dir():
+            os.chdir(caller)
+
+
+def clean_from_anchor(options, caller, disk_descriptor):
     codex = options.codex_home.absolute()
     sshx = options.sshx_home.absolute()
     if codex.is_symlink() or sshx.is_symlink():
@@ -264,15 +385,23 @@ def run_clean(options):
         if root.exists() and not root.is_dir():
             raise OSError("artifact root must be a directory: " + str(root))
     roots = {path for path in roots if not any(parent in roots for parent in path.parents)}
-    worktrees = registered_worktrees(options.repository)
-    protected = active_paths(codex) | worktrees
+    inventory = registered_worktrees(options.repository)
+    worktrees = set(inventory)
+    lanes_exit = clean_worktrees(options.repository, options.base, options.delete,
+                                working_directory=next(iter(inventory), options.repository))
+    try:
+        active = active_paths(codex)
+    except OSError as error:
+        emit("host_cleanup_summary", status="failed", worktree_exit=lanes_exit,
+             inventory_error=str(error), artifact_sweep="not_started")
+        return 1
+    protected = active | worktrees | {caller}
     protections = {"codex": ProtectedPaths(protected), "sshx": ProtectedPaths(protected),
                    "tmp": ProtectedPaths(protected | {codex, sshx})}
     cutoff = time.time() - options.min_age_hours * 3600
-    before = shutil.disk_usage(options.repository).free
+    before = shutil.disk_usage(disk_descriptor).free
     counts, skipped = Counter(), Counter()
     apparent_bytes = 0
-    lanes_exit = clean_worktrees(options.repository, options.base, options.delete)
     seen = set()
     inventory_error = None
     try:
@@ -298,7 +427,7 @@ def run_clean(options):
          min_age_hours=options.min_age_hours, counts=dict(counts), skipped=dict(skipped),
          candidate_apparent_bytes=apparent_bytes, worktree_exit=lanes_exit,
          inventory_error=inventory_error,
-         disk_available_before=before, disk_available_after=shutil.disk_usage(options.repository).free,
+         disk_available_before=before, disk_available_after=shutil.disk_usage(disk_descriptor).free,
          status="failed" if failed else "succeeded")
     return 1 if failed else 0
 
@@ -309,6 +438,8 @@ def main(arguments=None):
     disk = commands.add_parser("check-disk", help="reject worktree creation below 5%% available disk space")
     disk.add_argument("--path", type=Path, action="append", required=True)
     disk.add_argument("--allow-low-disk", action="store_true")
+    activity = commands.add_parser("active-paths", help="read current host activity for worktree reclamation")
+    activity.add_argument("--scope", type=Path, action="append", default=[])
     clean = commands.add_parser("clean", help="preview inactive owned artifacts; --delete executes")
     clean.add_argument("--repository", type=Path, default=REPOSITORY)
     clean.add_argument("--base", default="origin/dev")
@@ -322,6 +453,10 @@ def main(arguments=None):
     clean.add_argument("--verbose", action="store_true", help="list individual paths, including kept artifacts")
     options = parser.parse_args(arguments)
     try:
+        if options.command == "active-paths":
+            codex = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
+            print(json.dumps(sorted(str(path) for path in active_paths(codex, options.scope))))
+            return 0
         if options.command == "check-disk":
             for report in check_disk(options.path, options.allow_low_disk):
                 emit("worktree_disk", **report)

@@ -1,0 +1,125 @@
+**Mathematical correspondence attached to Theorems 16.2--16.4.**
+PAIRED Lemmas 11.1 and 11.3 supply TV compactness, residual continuity and
+lower semicontinuity of the original objective. Its Section 11.8 supplies
+boxes and midpoint means only at zero level. Equations (15.10) and
+(15.13)--(15.20) supply the g-derivative bound and diagonal sign certificate;
+(15.25)--(15.26) supply the native complete-word gap. PAID Lemma 14.1 and
+PAIRED Section 6 supply the common-row extraction and same-kernel clipping
+comparison used with the original source. These results retain their stated
+ordinary mathematical hypotheses.
+
+The source-relative additional implication is the passage from both full
+residual graphs to an arbitrary stationary descriptor orbit, the
+four-successive-rate certificate (16.21)--(16.26), and its equality lift to
+matching complete endpoint flows. Corollary 16.3 consumes that equality in
+all supported losses and only then uses compactness. Theorem 16.4 verifies
+the deterministic-label-to-complete-law bridge for those same clipped kernels.
+Neither a generic compactness theorem nor the literature rearrangement
+inequality is a new standalone result here. The domain witness in
+Proposition 16.5 is outside the periodic, native-mixture and zero-motion
+restrictions; no theorem is promoted from a finite check to an unrestricted
+statement.
+
+For the external rearrangement step, Puccetti--Wang Theorem 2.1(d) requires
+fixed scalar marginals and a supermodular test dominated by a sum of
+integrable one-coordinate functions. Here the dimension is four, the
+marginals are those of the actual stationary $x_t$, and the clipped extension
+of $H$ is bounded continuous, so constants provide that domination.
+Côté--Wang Proposition 6 supplies the same comparison for bounded
+right-continuous supermodular tests. Its distinction from unrestricted tests
+with merely finite expectations causes no gap here: the test function
+itself is bounded. Both results supply only the expectation comparison,
+not the source-specific product identity, mixed derivatives, seam proof,
+equality-to-native inference or risk consumer. No equality characterization
+from a rearrangement theorem is used.
+
+[Leskelä and Vihola, *Conditional convex orders and measurable martingale
+couplings*, Theorems 1.2--1.4](https://arxiv.org/html/1404.0999v3),
+requires finite first moments and the appropriate finite-dimensional convex
+order, or its conditional/kernel version. Bounded finite-word and residual
+projections meet the integrability premise, but that coupling conclusion
+does not supply both original full-descriptor flows with their shared
+marginals. It also does not replace conditional barycentres by individual
+successor laws. Thus it is not a direct supplier for (16.13) or an evaluation
+of the common minimax face. These correspondences attribute the reused
+mature results and delimit the source-relative inference, without a global
+novelty or priority assertion.
+
+To distinguish nearby necessary conditions, write
+$\bar Q=\int Q\,d\nu_p$ and $\bar W=\int W\,d\nu_\beta$.
+The finite-table quantities of [PAID, Theorem 13.1] are
+
+$$
+b_p=\int\operatorname{TV}(\mathcal R_B(Q),\bar W)\,d\nu_p,
+\qquad
+b_\beta=\int\operatorname{TV}(\mathcal R_A(W),\bar Q)\,d\nu_\beta.
+$$
+
+They measure variation of conditional successor barycentres across inputs;
+$d_B,d_A$ instead measure dispersion of the individual successor laws about
+that input's residual. The former can be positive when the latter vanish.
+The native-acquired-residual restriction of
+[Native acquired residual obstruction, Definition 1.2 and Theorem 1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_RESIDUAL_OBSTRUCTION.md)
+requires those A residuals to be native mixtures. The individual-law
+representation restriction of
+[Native mixture recurrence obstruction, Sections 3--5](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md)
+is different again. Proposition 16.5's p laws and A residuals are outside
+these native families. No native representation is assumed in Theorem 16.2.
+
+The suspended statistic in
+[Suspended-emission heterogeneity, Definition 8.1 and Theorem 8.3](RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_HETEROGENEITY.md)
+is the oscillation of the synthetic alpha probability over all reachable
+suspended configurations on the designated fibre. Its conditional supplier
+premises and its quantitative modulus remain unchanged. That scalar
+oscillation is neither $d_A+d_B$ nor return motion. Likewise PAIRED
+Chapters 12 and 14 use the distinct nonnegative defect
+$\Sigma=2J_p+2J_\beta+M_B+M_A$ in (15.27), with its original flow integrals.
+The witness (16.35) has positive emission tent terms, hence $\Sigma>0$,
+while $d_A=d_B=0$. The present proof does not replace the full compatible
+domain by synchronized four-moment endpoint chords.
+
+[RETURN, Chapters 12--14](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md)
+keeps an actual triple $(Q,W,Q')$, its incoming-pair full-law causality
+$\mathbb E[Q'\mid Q,W]=\mathcal R_A(W)$, and prescribed joint flows.
+In Chapter 14's SAME fibre, (14.2) gives
+$\mathcal R_B(Q_{\sigma,i})=W_\sigma$ and
+$\mathcal R_A(W_\sigma)=G_\sigma=\tfrac13\sum_iQ_{\sigma,i}$.
+The successor laws have different alpha coordinates, so these specific flows
+have $d_B=0$ and $d_A>0$. Their exact returned suspended-cut counts 2, 3 and 4
+and their optimized motion images concern that prescribed fibre. They do
+not supply an all-size deterministic-successor exclusion. The actual-return
+quantity $V_\pi$ in RETURN Theorem 10.2 remains free in
+$C_{\rm RETURN}\le5000V_\pi$; it is not replaced here by a risk-only bound.
+
+For [Return-survival dispersion, Definition 2.3, Theorem 4.1 and
+Corollary 5.2](RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md),
+use a distinct name for its statistic:
+
+$$
+Z(Q,W)=(1-u(Q))v(W),\qquad c_Z=\int Z\,d\Gamma_B,\qquad
+D_{\rm weight}=\int|Z-c_Z|\,d\Gamma_B.
+$$
+
+Its stated three-depth objective has
+$19\mathcal J+D_{\rm weight}>9/160000$, with the same inequality for the
+maximum of the four endpoint excesses. Its flat-weight subfamily has the
+evaluated gap $9/3040000$. Constancy there is on the entire positive edge
+support, not merely separately on recurrent components. Neither its
+$D_{\rm weight}$ nor the event-chord defect $D$ of (16.7) is one of
+$d_A,d_B$. For (16.35), $Z(Q_i,W_{i+1})=x_{i+1}$ is nonconstant despite
+$d_A=d_B=0$. Those supplied weight results do not give the graph rigidity
+proved here, and their supported-loss scope is not substituted for (16.8).
+
+PAIRED Chapter 15's event-feasible pair has complete endpoint boxes,
+midpoint means and all supported losses, but its beta residual differs by
+$-97339/246148875$. It fails (16.4), so it is not a counterexample to
+Theorem 16.2. The interface in
+[Acquired-kernel blind directions, Conventions 1.1--1.2 and Theorems 5.1,
+6.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md)
+omits the acquired B kernel and supplies configured finite transcript
+prefixes, emissions, A and paired event arrays. Its strictly positive
+full-rank kernels and interior emissions give finite-horizon invisible
+directions; its explicit risk comparison uses an endpoint-only prior.
+Those are identification statements on a different observation interface,
+not compatible common zero pairs or evaluations of (16.8).
+

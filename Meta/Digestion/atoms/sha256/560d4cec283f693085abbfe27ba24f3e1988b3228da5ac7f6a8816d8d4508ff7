@@ -1,0 +1,17 @@
+\[
+\boxed{
+\mathcal O_{\min}
+=
+\bigl(
+\kappa,\,
+a,\,
+A,\,
+B,\,
+\tau
+\bigr)
+}
+\]
+
+但这里要加一个重要条件：
+
+- \(\kappa\) 只有在 future response 的 \(J_{\mathscr L}\neq0\) 时才必须保留；

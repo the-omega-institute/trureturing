@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:d0fe0229b06566b73db098e86ddc34acd26c24e27cd40506b25d2e10cf7be5f7
+  normalized_sha256: sha256:d0fe0229b06566b73db098e86ddc34acd26c24e27cd40506b25d2e10cf7be5f7
+cas_ref: sha256:d0fe0229b06566b73db098e86ddc34acd26c24e27cd40506b25d2e10cf7be5f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only bind-only settlement under CLAUDE.md 3.2. Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d: FreeMagma.lift, FreeMagma.lift_of, FreeMagma.hom_ext. Use FreeMagma Bool for ordered two-atom syntax, and local multiplication mu on arbitrary X. Lift the true/false values a_X/b_X; lift_of supplies the leaf equations, its magma-hom law supplies the constructor equation, and hom_ext gives uniqueness. The proof child and statement child already carry these upstream-only receipts. Equality of interpretations need not imply equality of trees: specialize X to Unit and mu to its constant operation. No frozen repository GID states this arbitrary-magma universal evaluator.'
+    previous_atom_id: 547bfff9ca737662c912b22c5eed15656622617ed950baa01fbfd98c739355c3
+    next_atom_id: 7dc6daf3e19daecb29c37dee71c3abc538eee6d6e1730c9c273c8c9298827188
+  chain_atoms:
+    - 0acb7a22425ff06ef1f8f7db44baca6a3366fa4408c0a2707447be84ba27b81f
+    - 05abe2c978ebd3f22d168817ef931c83bbf7462be7d1bd7de15525d3b7846da1

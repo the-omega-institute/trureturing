@@ -1,0 +1,32 @@
+### theorem 5.1: 条件协方差分解
+
+**Claim status: open.** 有
+
+$$
+\boxed{m=\sum_oq_om_o}
+$$
+
+以及
+
+$$
+\boxed{
+C=\sum_oq_oC_o+\sum_oq_o(m_o-m)(m_o-m)^{\mathsf T}.
+}
+$$
+
+因此 $C-\mathbb E[C_o]\succeq0$。观察把一部分内部不确定性转化为不同结果间的均值分离；这不要求每次结果都使每个方差或熵单调下降。
+
+读取二值 $x$ 时，若 $0<X<1$，令
+
+$$
+c_x=(X(1-X),\ \kappa-XY,\ -XZ)^{\mathsf T}.
+$$
+
+则
+
+$$
+\boxed{\operatorname{Cov}_o(m_o)=\frac{c_xc_x^{\mathsf T}}{X(1-X)},}
+$$
+
+其秩至多一。
+

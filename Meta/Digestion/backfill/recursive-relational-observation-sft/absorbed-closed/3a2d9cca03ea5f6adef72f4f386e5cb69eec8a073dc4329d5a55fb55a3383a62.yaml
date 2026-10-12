@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3a2d9cca03ea5f6adef72f4f386e5cb69eec8a073dc4329d5a55fb55a3383a62
+  normalized_sha256: sha256:3a2d9cca03ea5f6adef72f4f386e5cb69eec8a073dc4329d5a55fb55a3383a62
+cas_ref: sha256:3a2d9cca03ea5f6adef72f4f386e5cb69eec8a073dc4329d5a55fb55a3383a62
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance.theorem32_2
+    target_statement_id: sha256:f5bfd6d4ee16e1f995de5a011b11ee00107f98f243c7d6bbbcd7886d1ed7fa30
+receipts:
+  unresolved_subitems: []

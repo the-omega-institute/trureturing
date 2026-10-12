@@ -1,0 +1,17 @@
+**Proof (actual joint sources and the necessary root).** The supplied joint-source construction (25.3), equivalently (30.6) and [INITIAL Convention 1.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee), applies to every $(v,-j,s)$ here. Namely choose
+
+$$
+ \ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,
+ \qquad \ell\ge s+2,\qquad
+ d=\bigoplus_{i=\ell-s}^{\ell-1}c_i,
+ \qquad w=(v\oplus d)0^{\ell-s-1}1^s,
+ \quad c_i=\mathbf1_{\{0,T-1\}}(i\bmod T).
+\tag{31.4}
+$$
+
+Coprimality supplies arbitrarily large compatible lengths. The separating zero makes this one history legal, its first bit and terminal run sum to scalar $v$, and its complete-block endpoint has phase $-j$ and tail $s$ simultaneously. Thus (31.4) supplies whole joint sources, rather than separately reachable coordinates. Its length is not an additional observation. The history $1^{2m}$ realizes initial bottom under both alphabets: each constituent block is internally legal, and the second crosses the rejection threshold.
+
+Fix either free value on its entire prior. Its four labels prohibit a free stop. A root starting with one immediately rejects every actual source $(v,-j,k-1)$. These include all four labels by (31.4); they acquire the same first endpoint $\bot$ and the same absorbing archive at every later endpoint. No subsequent action or stop can recover the unequal INITIAL labels. Therefore every correct root on this fibre starts zero, even when its words may depend on the free value. Such a root clears every inherited tail within the paid block, and its remaining $m-1<k$ bits cannot reject. All live sources finish it with a common current tail determined solely by this literal word.
+
+This forced-root and binary-endpoint reasoning is the supplied argument of Theorems 25.2 and 26.2. In particular Theorem 25.2 with $q=0$ already supplies the lower fee two: the image of $J_0^{\star}=\{0,m+1,\ldots,2m-2\}$ is $\{A,C\}$. Equivalently, a successful zero-leading root has only two scalar endpoint replies for four distinct actual labels. We use this existing capacity bound for $C_{\rm ad}^{v}(f)\ge2$.
+

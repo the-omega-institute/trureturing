@@ -72,6 +72,12 @@ internal static class InformationTemplateDefinitionReference
     {
         var bytes = new StringBuilder();
         var tokens = new Dictionary<string, int>(StringComparer.Ordinal);
+        var names = new Dictionary<string, int>(StringComparer.Ordinal);
+        var expressions = new Dictionary<(string Name, int Levels), int>();
+        var expressionCount = 0;
+        string NameKey((string Kind, string Value)[] parts, int count) =>
+            string.Concat(parts.Take(count).Select(part => part.Kind
+                + part.Value.Length.ToString(CultureInfo.InvariantCulture) + ":" + part.Value));
         void Emit(string token)
         {
             if (tokens.TryGetValue(token, out var index))
@@ -83,13 +89,39 @@ internal static class InformationTemplateDefinitionReference
                 tokens.Add(token, tokens.Count);
             }
         }
+        void Name((string Kind, string Value)[] parts, int count)
+        {
+            var key = NameKey(parts, count);
+            if (names.TryGetValue(key, out var index))
+            {
+                Emit("name-ref");
+                Emit(index.ToString(CultureInfo.InvariantCulture));
+                return;
+            }
+            Emit("name-node");
+            names.Add(key, names.Count);
+            if (count == 0) Emit("anonymous");
+            else
+            {
+                var part = parts[count - 1];
+                Emit(part.Kind == "ns" ? "str" : "num");
+                Name(parts, count - 1);
+                Emit(part.Value);
+            }
+        }
         void Constant((string Kind, string Value)[] parts, int levelCount)
         {
+            var key = (NameKey(parts, parts.Length), levelCount);
+            if (expressions.TryGetValue(key, out var index))
+            {
+                Emit("expr-ref");
+                Emit(index.ToString(CultureInfo.InvariantCulture));
+                return;
+            }
+            expressions.Add(key, expressionCount++);
             Emit("expr-node");
             Emit("const");
-            foreach (var part in parts.Reverse()) Emit(part.Kind == "ns" ? "str" : "num");
-            Emit("anonymous");
-            foreach (var part in parts) Emit(part.Value);
+            Name(parts, parts.Length);
             Emit(levelCount.ToString(CultureInfo.InvariantCulture));
             for (var i = 0; i < levelCount; i++)
             {
@@ -97,9 +129,10 @@ internal static class InformationTemplateDefinitionReference
                 Emit(i.ToString(CultureInfo.InvariantCulture));
             }
         }
-        Emit("DTR-source-expr-dag-v1");
+        Emit("DTR-source-expr-dag-v2");
         if (negated)
         {
+            expressionCount++;
             Emit("expr-node");
             Emit("app");
             Constant([("ns", "Not")], 0);

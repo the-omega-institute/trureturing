@@ -1,0 +1,51 @@
+# Part IIUnitary Intrinsic Prescribed Product
+
+## Abstract
+
+The diagonal and field components define genuine automorphisms of the literal determinant-one Hermitian SU carrier. Steinberg commutation proves inverse closure. Positive-U and negative-L value products retain q/e, uniform constants before all fields/ranks>=6 above the field cutoff and one right-inner correction before all targets in the respective actual subgroups.
+
+**Definition 1.1 (action).**
+
+Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.action`
+
+*Formalization.* `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.action` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Actual prescribed D/Phi automorphism of the LITERAL SU carrier. Its inverse closure is derived from the actual Steinberg commutation.
+
+**Theorem 1.2 (actual uniform intrinsic positive q over e product).**
+
+Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_positive_q_over_e_product`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_positive_q_over_e_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Original scalar supplier correction convention, intrinsically on SU, for ALL positive-U targets. N,C precede all fields/ranks/tuples; ONE y precedes ALL targets. This is honest U coverage, not full scalar coverage.
+
+**Theorem 1.3 (actual uniform intrinsic negative q over e product).**
+
+Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_negative_q_over_e_product`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_negative_q_over_e_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Original scalar supplier correction convention, intrinsically on SU, for ALL negative-U targets. N,C precede all fields/ranks/tuples; ONE y precedes ALL targets. This is honest lower-U coverage, not full scalar coverage.
+
+The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.
+
+## References
+
+- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.action`
+- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_negative_q_over_e_product`
+- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_positive_q_over_e_product`
+- Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryPrescribedLowerProduct](PartIIUnitaryPrescribedLowerProduct.md)
+- Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier](UnitarySylowCarrier.md)

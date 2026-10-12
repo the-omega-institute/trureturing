@@ -118,7 +118,7 @@ Hunter--Worsley bound
  \leq\sum_i\Pr(E_i)-\sum_{\{i,j\}\in F}\Pr(E_i\cap E_j).
 \]
 
-Repository [profile 334](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/334-same-chain-overlap-and-future-risk-certificates.md), *Same-chain overlap and future-risk certificates*,
+Repository [profile 334](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/334-same-chain-overlap-and-future-risk-certificates.md), *Same-chain overlap and future-risk certificates*,
 already gives this argument and inequality (JC2), including the permitted
 use of a certified forest. Its references include Hunter (1976),
 DOI 10.2307/3212481; Worsley (1982), DOI 10.1093/biomet/69.2.297;
@@ -220,7 +220,7 @@ therefore does not refute the use of that branch in the later algorithm.
 The paper's Lemma 3.1 states that a primitive covering number n satisfies
 \(P^+(n)\le\tau(n/P^+(n))\). Its introductory sentence credits Sun's
 Lemma 2.1. The repository already retains the needed Simpson result in
-[profile 343](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md), *CRT to multivalued SAT: prefix-preserving reductions and
+[profile 343](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md), *CRT to multivalued SAT: prefix-preserving reductions and
 transport obstructions*, section 2. For an inclusion-minimal full cover
 with actual lcm Q, Simpson's Theorem 2 gives
 
@@ -256,7 +256,7 @@ existing stronger result, with no new Lean declaration or novelty claim.
 
 ## 5. Verification and scope
 
-The [standard-library checker](../../docs/reports/erdos7-odd-covering/frontier/cover-geometry/mcnew-setty-v2-counterexamples/mcnew_setty_v2_counterexamples.py)
+The [standard-library checker](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/erdos7-odd-covering/frontier/cover-geometry/mcnew-setty-v2-counterexamples/mcnew_setty_v2_counterexamples.py)
 constructs exact integer residue masks, evaluates all 1,023 nonempty
 label subsets for the first example, checks every residue of periods
 225, 128 and 1920, and computes the divisor and Stirling-number terms

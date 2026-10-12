@@ -1,0 +1,19 @@
+**命题 9.3（同源摘要的钟率反例与因子化边界）。** 令源摘要为 $S_O=(\Delta(p),\mathcal H_\ell)$，其中 $\mathcal H_\ell=\ell_1+\ell_2+\ell_3+\ell_4$ 是方形一周的成本。对定理 3.2 的均匀平稳律，取五条合法边成本全为一，并分别取 $\gamma=1,2$。两份有限率模型同有
+
+$$
+S_O=(0,4),\qquad ABf=Bf=0,
+$$
+
+但 $d\mathbb E J_t/dt$ 分别为 $4,8$。因此即使另给完整 $p$，此源摘要仍不决定该钟率。
+
+在任一声明的相容域 $\mathcal A$ 上，响应 $\Gamma:\mathcal A\to\mathcal Y$ 能写成 $\bar\Gamma\circ S_O$，当且仅当
+
+$$
+S_O(a)=S_O(a')\Longrightarrow\Gamma(a)=\Gamma(a')
+\quad(a,a'\in\mathcal A).
+$$
+
+该判据只在像 $S_O(\mathcal A)$ 上要求定义 $\bar\Gamma$；其他外参若未固定，必须进入摘要或进入同纤维条件。
+
+证明。钟率数值直接消费定理 3.2 的 $\gamma\mathcal H_\ell$，没有重新构造平稳过程。因子化的必要性由函数保持相等；充分性是在每个非空摘要纤维上取其共同响应值，条件保证良定义。反例两元素属于同纤维而钟率不同，故否定该域上的因子化。$\mathcal H_\ell$ 是每圈成本，$\gamma$ 是每单位指定参数的概率环流；两者不能互相替代。∎
+

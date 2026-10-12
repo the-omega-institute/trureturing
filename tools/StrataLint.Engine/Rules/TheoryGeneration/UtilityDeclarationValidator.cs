@@ -307,7 +307,7 @@ internal static class UtilityDeclarationValidator
             && baseline.Text.AsSpan(before.BodyOffset).SequenceEqual(current.Text.AsSpan(after.BodyOffset));
     }
 
-    private static IEnumerable<Gid> DeclarationReferences(UtilityDeclaration declaration)
+    internal static IEnumerable<Gid> DeclarationReferences(UtilityDeclaration declaration)
     {
         if (declaration.BasisTarget?.Gid is { } basis)
         {

@@ -1,0 +1,12 @@
+**Claim status: open.** 对零初始条件的 Laplace 变换，记 $c=(c_1,\ldots,c_m)^{\mathsf T}$，则
+
+$$
+\boxed{\Lambda(s)=\operatorname{diag}(c_i)-\frac{cc^{\mathsf T}}{C+ms}}
+$$
+
+以及
+
+$$
+\boxed{\Lambda(s)-\Lambda(0)=\frac{ms}{C(C+ms)}cc^{\mathsf T}.}
+$$
+

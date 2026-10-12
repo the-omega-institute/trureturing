@@ -582,7 +582,7 @@ obstruction.
 
 ### A complete block minorant improves the inverse constant
 
-The [whole-space negative-edge block estimate](../../docs/reports/theta-mixed-matrix/theta-negative-block-gap.md)
+The [whole-space negative-edge block estimate](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta-negative-block-gap.md)
 reuses the existing depth-two five-mode FIB tiling of $[0,3/2]$, adds
 the whole outside cell and integrates the actual folded theta masses.
 A nonnegative block conductance minorant separates within-cell

@@ -1,0 +1,19 @@
+**问题 2147.2（实际多项式 Fock 的全整数态场复合律）。** 在同一个复多项式 Fock 空间及已经构造的实际全态场 $Y$ 上，令
+
+$$
+\mu(a,n,b)=((Y a)[[n]])b,\qquad
+C(t,i)=\left(\binom{t}{i}_{\!\mathbb Z}:\mathbb C\right),\qquad
+\varepsilon(r)=(-1: \mathbb C)^r,
+$$
+
+其中 $t,r\in\mathbb Z$、$i\in\mathbb N$，而 $\binom{t}{i}_{\!\mathbb Z}$ 是整数广义二项式系数。对所有 $a,b,c\in F_{\mathbb C}$ 及 $p,q,r\in\mathbb Z$，证明
+
+$$
+\sum_{i\geq0}^{\mathrm{fin}} C(p,i)\,\mu(\mu(a,r+i,b),p+q-i,c)
+=
+\sum_{i\geq0}^{\mathrm{fin}}((-1: \mathbb C)^i C(r,i))
+\left(\mu(a,p+r-i,\mu(b,q+i,c))
+-\varepsilon(r)\,\mu(b,q+r-i,\mu(a,p+i,c))\right).
+$$
+
+这里的三个逐态有限和必须分别证明：左侧支路有限，右侧第一支路有限，右侧第二支路有限；不得把端同态值域的统一有限支撑误作逐态有限性，也不得把负整数 $r$ 的广义二项式系数截为有限多项式。

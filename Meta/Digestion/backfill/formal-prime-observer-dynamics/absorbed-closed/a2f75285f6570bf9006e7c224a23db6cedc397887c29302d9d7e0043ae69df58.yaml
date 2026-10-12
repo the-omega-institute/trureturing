@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a2f75285f6570bf9006e7c224a23db6cedc397887c29302d9d7e0043ae69df58
+  normalized_sha256: sha256:a2f75285f6570bf9006e7c224a23db6cedc397887c29302d9d7e0043ae69df58
+cas_ref: sha256:a2f75285f6570bf9006e7c224a23db6cedc397887c29302d9d7e0043ae69df58
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GaloisCompatibleFiberProduct.galois_compatible_fiber_product
+    target_statement_id: sha256:7f95fdb0f8d429adb8dff856bcf229f14342a5ec510a7981576b9ca84a710b36
+receipts:
+  unresolved_subitems: []

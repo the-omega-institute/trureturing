@@ -1,0 +1,67 @@
+**接口 4.1（端点盒与中点事件，复用）。** 令 $X_{p,i}=Q_i$、$X_{\beta,i}=W_i$。本章的四个端点条件是
+
+$$
+\sum_i\pi_i\operatorname{TV}(X_{s,i},P_{s,r})\le\rho_s,
+\qquad s\in\{p,\beta\},\ r\in\{a,b\}.
+\tag{4.1}
+$$
+
+对任意完整概率律 $X$，CLIP 式（3.6）的可数坐标恒等式为
+
+$$
+\begin{aligned}
+&\operatorname{TV}(X,P_{s,a})+\operatorname{TV}(X,P_{s,b})-2\rho_s\\
+&\quad=\sum_{e\in\Omega_s}\operatorname{dist}
+\left(X(e),[\min\{P_{s,a}(e),P_{s,b}(e)\},
+              \max\{P_{s,a}(e),P_{s,b}(e)\}]\right).
+\end{aligned}
+\tag{4.2}
+$$
+
+它由实数绝对值恒等式逐坐标求和，包含无限词。将式（4.2）按严格正的 $\pi_i$ 求和，式（4.1）迫使每行每坐标距离为零，故
+
+$$
+\min\{P_{s,a}(e),P_{s,b}(e)\}\le X_{s,i}(e)
+\le\max\{P_{s,a}(e),P_{s,b}(e)\},
+\quad i\in J,\ e\in\Omega_s.
+\tag{4.3}
+$$
+
+这是**每个配置的完整盒**。它不声称每行的端点距离均为 $\rho_s$。若只有混合律的端点 TV 条件，非负逐行余量不能这样消去。
+
+ST 式（2.5）–（2.6）及 CLIP 定理6.2供应正差事件
+
+$$
+C_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+C_\beta=\{\beta,\alpha w_{0,1}\},
+\tag{4.4}
+$$
+
+及其质量
+
+$$
+\begin{aligned}
+P_{p,a}(C_p)&=412/729,&P_{p,b}(C_p)&=7299/15625,\\
+P_{\beta,a}(C_\beta)&=22/27,&P_{\beta,b}(C_\beta)&=93/125.
+\end{aligned}
+\tag{4.5}
+$$
+
+端点 a 在这些事件上逐坐标大于端点 b，在其补集逐坐标小于或等于端点 b。盒内逐行因此满足
+
+$$
+\operatorname{TV}(X_{s,i},P_{s,a})=P_{s,a}(C_s)-X_{s,i}(C_s),\qquad
+\operatorname{TV}(X_{s,i},P_{s,b})=X_{s,i}(C_s)-P_{s,b}(C_s).
+\tag{4.6}
+$$
+
+令 $M_s=(P_{s,a}(C_s)+P_{s,b}(C_s))/2$。四条件（4.1）等价于完整盒（4.3）与两条中点方程
+
+$$
+\pi(I+H+H^2)g=M_p=\frac{11758471}{22781250},\qquad
+\sum_i\pi_i(1-v_i+v_ig_i)=M_\beta=\frac{5261}{6750}.
+\tag{4.7}
+$$
+
+所有四个**加权**端点距离随即恰为 $\rho_s$。坐标盒和事件平衡必须作用于式（3.3）的同一生成律；把事件平均单独配平不能代替完整盒。
+

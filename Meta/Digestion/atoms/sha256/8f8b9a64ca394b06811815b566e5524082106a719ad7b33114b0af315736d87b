@@ -1,0 +1,16 @@
+**Claim status: open.** 令 $C=\sum_i c_i$。则唯一内部极小点为
+
+$$
+\boxed{y_* = \frac{\sum_i c_i u_i}{C}}
+$$
+
+且
+
+$$
+\boxed{
+\mathcal E_\partial(u)=\frac1{2C}\sum_{i<j}c_ic_j(u_i-u_j)^2.
+}
+$$
+
+有效边权为 $g_{ij}=c_ic_j/C$。
+

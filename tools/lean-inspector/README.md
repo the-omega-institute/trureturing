@@ -9,18 +9,88 @@
 make lean-report
 make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 make lean-report REBUILD_REPORT_CACHE=1
-make lean-cache-from-github-without-mathlib REFRESH_STALE=1
 ```
 
 本地默认 `fetch-or-fail`：报告种子缺失、不完整或成功收据的 `inputs.report_format`
-不符时，先在私有写锁内恢复 dev 同分区、缓存 key 一致的 Release 快照。恢复后仍无
+不符时，主 checkout 先在私有写锁内恢复 dev 同分区、缓存 key 一致的 Release 快照。恢复后仍无
 相符种子时，以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 和非零状态退出，不进入 Lake 报告提取。
-格式相符而输入有差量时，由 Lake 原生机制增量更新；相符的整份收据仍可直接复用。
-`REBUILD_REPORT_CACHE=1` 跳过整份收据复用，显式允许报告构建路径。
-CI 与 Release publisher 显式传入 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，
-不读 Release；环境变量不选择本地或 CI 策略。直接 `inspect.sh` 默认 `reuse-or-build`，
+production Release 恢复（`make lean-cache-from-github-without-mathlib`）和
+`fetch-or-fail` 报告恢复只在主 checkout 运行；显式选择的 verification-mode fetch 不变。
+linked worktree 的 `fetch-or-fail` 在所选种子缺失、不完整、损坏或格式不符时，先检查
+工作树内的 canonical 种子 `.lake/build/stratalint/raw-lean-report.json`；相符时从它复用，
+发布到 `LEAN_REPORT` 指定的输出，不取回 Release。canonical 种子也不可用时，以
+`reason=linked-worktree` 和退出码 4 拒绝。
+补救前提是主 checkout 为干净的 `dev` 检出；否则 `warm-donor` 以退出码 0 和
+`skipped` 收据返回，这不代表 donor 已预热。先在该主 checkout 同步、预热并成功生成
+相符的封口报告，再移除 worktree 的 `.lake` 并由 ensure 从热主 checkout 重新播种：
+
+```sh
+make -C '<main checkout>' warm-donor && make -C '<main checkout>' lean-report && rm -rf -- '<worktree>/.lake' && make -C '<worktree>' lean-cache-ensure
+```
+
+ensure 不会用 donor 替换已有且 stamp 相符的 `.lake`，所以重新播种须先移除它。
+主 checkout 可用 `make lean-cache-from-github-without-mathlib REFRESH_STALE=1`
+显式取回并替换 Release 快照；无法判定 Git checkout 类型时拒绝取回。
+linked worktree 只在 Git worktree 列表首条候选的物理顶层路径及共同 Git 目录均通过
+核验时给出主 checkout 路径；候选为 bare、记录缺失或不可解析、核验不通过时仍拒绝，
+补救要求在本仓库的 dev 主 checkout 执行 `make warm-donor && make lean-report` 后重新播种，
+并说明无法从当前 worktree 确定其位置，不将 Git store 目录当作主 checkout。
+格式相符而输入有差量时，干净的 dev 主 checkout 读取 `.lake/lean-report-seed-base.json` 中的生产提交，
+记录的 `seed_sha256` 绑定 canonical 报告、全部四个 sidecar 和成功收据的实际字节；任一成员不符或缺失时 base 未知。已未知 base 的记录清理失败只报告维护诊断，不拒绝有效复用或阻断生产准备；实际替换 generation 的 provenance 写入与失效要求不变。
+只有选中的种子是 canonical 种子时才进行可选刷新；自定义种子打印 `reason=non-canonical-seed` 并保留。
+未知 base、不干净、CI、非 dev 或 detached checkout 均在列举前打印各自的 keep 收据并返回。
+可继续选择时列举兼容 Release 分区的最新快照。只有快照清单的 `producer_commit_sha` 是当前 `HEAD` 的祖先、
+且本地记录是它的严格祖先时才在现有缓存锁内用 `--refresh-stale` 取回；本地记录未知、快照较旧
+或不在当前历史上时保留本地种子。缺失对象或浅历史无法证明祖先关系时打印 ancestry-unprovable 原因，
+与完整历史上已证的非祖先区分。列举、清单读取或取回失败且回滚成功时打印 keep 收据并继续 Lake 增量路径；
+输入也相符时打印 `action=keep`、`reason=seed-current`，整份收据仍可直接复用。
+复用阶段完成后，入口立即打印一次决策收据，再进行 provisioning、ensure 或程序构建；后续失败保留原退出码。
+可选取回只恢复已批准的 tag，并核验清单生产提交与批准值一致，
+不重新列举或向较旧快照回退。替换前检查 staged 报告的格式和完整性；build 与 base 在同一安装中
+提交，提交前的失败恢复原 build 和 base，提交后的备份清理失败保留备份并报告已安装。
+回滚失败单独报告 `rollback-failed` 和保留的 backup 路径，以 `reason=release-rollback-failed` 非零退出；
+可选刷新后重新检查种子，缺失或不兼容时拒绝进入 Lake。
+干净谓词包含未跟踪文件。成功的 canonical 种子生产和验证后的恢复更新该记录，
+恢复写入清单的生产提交与安装种子的完整身份；新种子没有可信 base 时先清除旧记录。
+canonical publication、seal 和 base 写入在同一缓存锁内完成，seal 核对 publication 返回的五件 bundle 身份，
+已被替换的 generation 不重封或改写 base。base 还绑定 seal 写入的成功收据；从 canonical 整份复用时更新身份并保留原生产提交，从自定义种子发布到 canonical 时 base 未知。
+capture 只读输入，不改 base 或成功收据，也不依赖 Release 模块。canonical 生产准备只在现有缓存锁内移除 metadata。
+失败清理不移除 canonical 成功收据或 base；入口未改变 canonical 报告时，包含复用后的程序构建失败，保留当前收据和 base。
+成功收据仅在持有现有缓存锁、即将改变报告的准备阶段移除，并在报告成功封口后写入。
+已准备的生产失败保持无收据，下一次入口按既有缺失种子恢复路径处理。锁忙时不改活动 generation。
+自定义输出的生产准备和 seal 保留 canonical base。
+跳过或拒绝的恢复不改 base。
+CI、非 dev 和 detached checkout 不进行可选刷新。记录不参与格式、输入、收据或缓存 key 的兼容性判断。
+`REBUILD_REPORT_CACHE=1` 跳过报告恢复和整份收据复用，显式允许报告构建路径；
+主 checkout 的 ensure 仍可按现有主检出专用路径由归档补齐冷的项目层。
+CI required checks use `fetch-or-fail`; a missing or incompatible native seed exits nonzero with the
+independent `lean-cache-publish.yml` producer route. The scheduled Release publisher continues to use
+`reuse-or-build`. Environment variables do not select local or CI policy. Direct `inspect.sh` defaults to `reuse-or-build`,
 也可显式传入 `--cache-miss-policy fetch-or-fail`。兼容性只由报告格式标识表达，
 没有判官语义版本或旧格式适配。种子需保留报告、四个 sidecar 与 `.reuse.json`。
+
+为受保护的 `dev` 或 `integration-*` 分支生产独立 Actions 种子，按精确提交手动触发：
+
+```sh
+gh workflow run lean-cache-publish.yml --ref dev \
+  -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
+```
+
+尚未合并的升级 PR 可以手动加 `lean-cache-produce` label：
+
+```sh
+gh pr edit <PR> --add-label lean-cache-produce
+```
+
+独立 producer 用 `pull_request:labeled` 的 merge SHA 构建，token 只读仓库和 Actions；
+缓存只写该 PR 的 `refs/pull/<PR>/merge` 空间。producer 成功后重试该 PR 的 required CI；
+再次启动时先移除再添加 label。普通 PR required job 不发布 project 种子。
+PR 的 project 恢复先查自身 merge ref，没有种子时再查 base 分支，避免旧 base 种子遮住升级后的 PR 种子。
+这些私有种子不能给其它 PR 或合并后的 dev push 使用。新 pin 合并后，为受保护 dev 手动运行上述
+producer，再重试首次 dev push 中因缺种子失败的检查。
+
+`source_ref` 必须等于 dispatch ref，且分支受保护；`source_sha` 必须是该分支可达的 40 位提交。
+手动作业使用 GitHub-hosted 的 360 分钟上限；定时的受保护 `dev` Release publisher 仍为 120 分钟。
 
 `LEAN_REPORT` 可省略；默认输出为
 `.lake/build/stratalint/raw-lean-report.json`。相对目的路径按仓库根目录解析，
@@ -183,7 +253,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 程序编译义务由 `inspect.sh` 的默认目标选择；直接调用可用排序后的 JSON 列表通过
 `STRATALINT_LEAN_BUILD_TARGETS` 覆盖。报告、materials 与这些构建产物随项目
 `.lake/build` 缓存运输，不另建报告缓存。
-正常入口校验可选 `.reuse.json`：报告格式标识、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
+正常入口校验可选 `.reuse.json`：报告格式标识、登记的报告模块与配置输入的内容摘要及 Git 记录的所有者可执行位(0755 或 0644;其它权限位不参与)、显式工具/环境/平台与上轮成功调用
 一致，并且报告五件套与收据逐字节相符、信封和输入坐标仍为当前时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
 缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，判官实现或规则变化保留有效历史报告；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
 `:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。

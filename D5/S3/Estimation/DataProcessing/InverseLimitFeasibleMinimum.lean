@@ -25,8 +25,6 @@ open D5.S3.Estimation.DataProcessing.OneCutZeroExcess
 open D5.S3.Estimation.DataProcessing.InverseLimitZeroExcess
 open D5.S3.Estimation.DataProcessing.InverseLimitFeasibleLaws
 open D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
-open private measurable_total_variation_map_le from
-  D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
 
 set_option maxHeartbeats 1000000 in
 -- Two probability extensions and the finite compact faces require additional elaboration steps.

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:30d66c09bd8a9f7805d0b0eae24c9f91d7589e8e8d24742b27c660f464327151"}
+{"statement_id":"sha256:30d66c09bd8a9f7805d0b0eae24c9f91d7589e8e8d24742b27c660f464327151","declarations":[{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),25:OddDistinctCoveringSystem),13:oddPrimeBelow)","kind":"def"},{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),25:OddDistinctCoveringSystem),35:odd_prime_product_dvd_commonModulus)","kind":"theorem"}]}

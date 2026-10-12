@@ -200,7 +200,7 @@ no stronger maximal-domain core equality is a prerequisite.
 
 ## Weighted Fourier cutoff and a complete finite cosine family
 
-The [sharp-band center interface](../../docs/reports/theta-mixed-matrix/sharp-center.md)
+The [sharp-band center interface](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharp-center.md)
 uses the same even minimal realization and full operator with the later
 high-block gap. It supplies actual operator-domain cosine columns and
 an analytic approximation of their complete Schur center. A prescribed
@@ -341,10 +341,10 @@ Formula (WF3) supplies the first condition. For the second, use
 $m(N/2)\le16N$ for $N\ge2$ in (WF5). This threshold is sufficient;
 direct symbol and leakage bounds can permit smaller bandwidths.
 
-The [direct actual-theta supplier](../../docs/reports/theta-mixed-matrix/derivative-bandwidth.md)
+The [direct actual-theta supplier](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/derivative-bandwidth.md)
 verifies both conditions at $\varepsilon=1/4$, $N=64$, without claiming
 that this meets the coarse displayed $N_0$ formula. The
-[joint full-row floor](../../docs/reports/theta-mixed-matrix/joint-high-floor.md)
+[joint full-row floor](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/joint-high-floor.md)
 further gives $\widetilde D\ge0.4133682545007734\|v\|_2^2$ on the
 even high-frequency restriction, above $c=3/8$. Its positive variance
 gap retains the complete operator and mean term. The low-frequency block
@@ -682,7 +682,7 @@ $$
 Constants have zero energy and variance. Continuity in the original
 form norm consequently makes the full half-bound equivalent to
 $H^{(m)}\succeq0$ for **every** $m$. The
-[two-direction polynomial certificate](../../docs/reports/theta-mixed-matrix/theta-polynomial-energy-bounds.md)
+[two-direction polynomial certificate](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/theta-polynomial-energy-bounds.md)
 only addresses $m=2$. No all-degree PSD result, effective exhaustion
 rate, uniformly conditioned polynomial basis or RH/Robin conclusion
 is supplied by this density argument.
@@ -814,7 +814,7 @@ finite matrix signs or RH assumption.
 
 This excludes that sufficient pointwise gradient route at rate
 $e^{-t}$. It excludes neither a weaker gradient estimate nor an
-integrated or directly estimated global half-bound. The [accepted conditional $0.41$ lower bound](../../docs/reports/theta-mixed-matrix/sharper-exterior.md)
+integrated or directly estimated global half-bound. The [accepted conditional $0.41$ lower bound](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharper-exterior.md)
 remains reusable, while positivity on
 the complete critical quotient, the one-half bound, Robin and RH
 remain unresolved. No precise smaller optimal curvature constant is
@@ -876,7 +876,7 @@ The nonnegative ground term is dropped only in the last lower bound.
 This uses the closed high restriction of the original form, rather
 than a new maximal domain. The sharp low projection maps $L^2$ into
 $H^1$ and the original operator domain as in the
-[complete-column interface](../../docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block).
+[complete-column interface](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharp-center.md#operator-domain-and-complete-block).
 Consequently its complementary projection preserves the minimal form
 domain. The original core approximation and (WF1), (WF5) extend the
 same inequality to that high form domain.
@@ -916,7 +916,7 @@ $$
 For every nonzero $r$ this saving is strictly positive because $s>0$.
 There is no claimed uniform fractional saving for arbitrary sources:
 $s(x)\to0$ at spatial infinity. The
-[same-residual consumer](../../docs/reports/theta-mixed-matrix/sharp-center.md#retain-this-spatial-weight-in-the-complete-inverse-residual)
+[same-residual consumer](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharp-center.md#retain-this-spatial-weight-in-the-complete-inverse-residual)
 uses (WH4)–(WH5) before any scalar residual norm is taken.
 The low Schur and complementary-low signs on the same bandwidth
 sequence remain unproved; no saved fixed-band matrix is transported to
@@ -982,7 +982,7 @@ Here $A\preceq\delta^{-1}I$ gives the last inequality. The projection
 and ground corrections are jointly valid because the latter uses the
 same constrained $R$, not the unconstrained $M_w$. Each correction can
 vanish; at $c=0$ the ground correction vanishes. The
-[same-residual application](../../docs/reports/theta-mixed-matrix/sharp-center.md#keep-the-projection-and-ground-corrections-on-the-same-residual)
+[same-residual application](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharp-center.md#keep-the-projection-and-ground-corrections-on-the-same-residual)
 keeps all cross entries and the exact ground trial cost.
 This is a conditional paper application of existing block and rank-one
 inverse tools. It supplies no evaluated entries, low or complementary-low

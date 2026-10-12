@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5b97785660ce7a3516df8525b07ce51aafe039441b1bb57fc66d68bcb90783b2"}
+{"statement_id":"sha256:5b97785660ce7a3516df8525b07ce51aafe039441b1bb57fc66d68bcb90783b2","declarations":[{"declaration_name_key":"ns(ns(ns(n0,4:ZMod),7:castHom),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:ArithUnits),15:NonSplitModFour),41:mod_four_quotient_has_no_additive_section)","kind":"theorem"}]}
