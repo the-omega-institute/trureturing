@@ -1,0 +1,33 @@
+**命题 23.3（固定占据场中的四参数一阶信息）。** 在额外指定的参数域 $U=(-1,1)^3$ 上，给定平滑五态律场族
+
+$$
+\begin{gathered}
+\Theta_0=\{(a,b_1,b_2,b_3)\in\mathbb R^4:
+|a|+|b_1|+|b_2|+|b_3|<1/8\},\\
+p_\circ=(3/8,1/8,1/4,1/8,1/8),\qquad
+\chi_\theta(s)=a+b_1s_1+b_2s_2+b_3s_3,\qquad
+p_\theta(s)=p_\circ+\chi_\theta(s)h.
+\end{gathered}
+$$
+
+每个 $p_\theta(s)$ 都严格正且归一化，并在整个 $U$ 上满足
+
+$$
+B_{\rm obs}p_\theta(s)=(1,1/4,1/4,1/4).
+$$
+
+点态映射 $\theta\mapsto p_\theta(0)$ 的微分秩一，只依赖 $a$；若另给精确一阶 jet 读口，则
+
+$$
+j^1_0\chi_\theta=(\chi_\theta(0),\partial_1\chi_\theta(0),
+\partial_2\chi_\theta(0),\partial_3\chi_\theta(0))=(a,b_1,b_2,b_3)
+$$
+
+的像是四维开集 $\Theta_0$。特别地，$\theta=0$ 与 $\theta=(0,1/32,0,0)$ 的中心完整律及全部占据场相同，中心一阶导数不同。这不违反固定单点纤维的秩界：jet 读口的源是整个已供给场族，不能经中心概率律因子化。
+
+证明。对 $s\in U$，有 $|\chi_\theta(s)|\le|a|+\sum_i|b_i|<1/8$，故四个变化质量 $3/8+\chi,1/8-\chi,1/8-\chi,1/8+\chi$ 均正，第三分量固定为 $1/4$。$\sum h_s=0$ 保持总质量一，$B_{\rm obs}h=0$ 保持所列整个占据场。中心评价为 $p_\circ+ah$，其微分为 $(\dot a,\dot b)\mapsto\dot a h$；直接求导给 jet 恒等映射。两指定参数都在 $\Theta_0$ 内，且 $\partial_1p_\theta(0)$ 分别为 $0,h/32$，因子化若存在就会把相同中心律送到两个不同 jet，矛盾。
+
+在同一域上取实标量势的一形式 $\mathscr A_\theta=d\chi_\theta=\sum_i b_i\,ds_i$，则 $d\mathscr A_\theta=0$。这里可直接由常系数求导，也符合 [Tong §2.4.1–§2.4.3](../../../Library/Geometry/tong2021general.md) 的 $d^2=0$。一般光滑流形上只要 $\chi$ 是全局 $C^2$ 实函数，全局恰当的 $d\chi$ 仍闭且所有分段 $C^1$ 闭路径积分为零；拓扑不把它变成非零场强。局部势或另给的非恰当连接是另一合同。
+
+该构造的 $\chi_\theta$ 是相对于 $p_\circ$ 的概率纤维系数，既非定义 20.1 的函数系数，也非 $\kappa-XY$；此处 $\kappa=1/8+\chi_\theta$。参数空间 $U$ 不因这个公式成为物理空间，精确导数读取、共同多点采样律与场动力学均须另供。命题消费[局部源分裂卷 §§1–3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)的质量和可行路径合同，以这个正律场给出点态秩与 jet 秩的具体分离，不宣称额外内禀单点自由度。∎
+

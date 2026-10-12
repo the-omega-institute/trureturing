@@ -1,0 +1,28 @@
+**数学引文 26.10（定理 26.9 的控制微分中间式）。** 对该五边图取
+$U=e_Le_L^{\mathsf T}$、$V=e_Re_R^{\mathsf T}$，在开集
+$D=\{(s,t)\in\mathbb R^2:K(s,t)=K_0+sU+tV>0\}$ 上令
+$\mathcal F(s,t)=\frac{\vartheta}{2}\log\det K(s,t)$ 加上与
+$(s,t)$ 无关的共同归一化项；源与常数仍为零，并在 $D$ 上记
+$r(s,t)=(K(s,t)^{-1})_{LR}$。所用的经典 logdet 微分式在这里给
+$$
+\partial_s\partial_t\mathcal F
+=-\frac{\vartheta}{2}\operatorname{tr}(K^{-1}UK^{-1}V)
+=-\frac{\vartheta}{2}r(s,t)^2\le0.
+$$
+在 $\xi\sim\mathcal N(0,\vartheta K(s,t)^{-1})$ 下，标准高斯四阶矩
+把同一式写成 $-\operatorname{Cov}(\xi_L^2,\xi_R^2)/(4\vartheta)$。
+引理 26.4 保证控制矩形 $[0,\lambda]\times[0,\mu]$ 包含在 $D$ 中，故
+定理 26.9 的实际四角差还可写为
+$$
+\mathcal J_{\mathcal F}
+=-\frac{\vartheta}{2}\int_0^\lambda\int_0^\mu r(s,t)^2\,dt\,ds.
+$$
+它严格为负当且仅当 $h_Lh_R\lambda\mu>0$，与同一图的路径和控制退化一致。
+
+这里引用开放正定域中的
+$d\log\det K=\operatorname{tr}(K^{-1}dK)$ 与
+$dK^{-1}=-K^{-1}(dK)K^{-1}$，见
+[Rasmussen--Williams，式 (A.14)--(A.15)](../../../Library/StatisticalMechanics/rasmussenwilliams2006gaussian.md)
+及其高斯合同。迹式也是一般正半定控制的经典矩阵形式；本处只在上述
+坐标控制应用中使用它，未另立一般 Hessian 定理。
+
