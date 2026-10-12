@@ -67,5 +67,61 @@ internal sealed class OriginalMovingWindowMomentDocument : IScribeDocumentDefini
                         + "s=x-3, mass-action flow, entropy and Fisher-action "
                         + "claims remain outside this theorem. The full signed "
                         + "Robin/RH obligation remains open."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-cut-row-lattice-estimate"),
+                DeclarationHandle.Create(Prefix + "original_cut_row_lattice_estimate"),
+                H("A moving-cut row with its continuum compensation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let 256<=ell<R, J=[ell,R], t in J and d>=1 be an integer. "
+                        + "Use the same literal kernel, K_J(x)=integral_J k(s,x) ds, "
+                        + "N_d(x)=integral_(J intersect {s<d^(500/151)}) k(s,x) ds "
+                        + "and r_d(x)=N_d(x)/K_J(x), with zero ratio at zero mass. "
+                        + "Write F_(t,d)(x)=log(x/d)k(t,x) "
+                        + "(1_{t<d^(500/151)}-r_d(x)) and "
+                        + "b(t)=(lambda(t)-lambda(B(t)))/(w(t)t^(11/10)).")),
+                    Paragraph(Text(
+                        "The complete row remainder is the sum over "
+                        + "1<=m<=floor(2R)/d of log(m)k(t,dm) "
+                        + "(1_{t<d^(500/151)}-r_d(dm)), minus "
+                        + "(1/d)integral_t^B(t) F_(t,d)(x) dx. Its absolute value "
+                        + "is at most 3 b(t) log(2t). The height satisfies "
+                        + "0<=b(t)<=t^(-3/10). The sum includes the zero log at "
+                        + "m=1, every nonzero Mobius row remains available for "
+                        + "subsequent signed summation, and the floor is applied "
+                        + "before the natural-number division.")),
+                    Paragraph(Text(
+                        "Cross multiplication of the literal kernels and two "
+                        + "integral comparisons show that r_d decreases wherever "
+                        + "K_J is positive. Positivity of k(t,x) for t in J "
+                        + "implies positivity of K_J(x), including the ends of J. "
+                        + "The ratio's zero extension need not decrease. On a "
+                        + "single window use the decreasing extension taking "
+                        + "value 1 on x<=t and 0 on x>=B(t); multiplication by "
+                        + "k(t,x) agrees exactly with the original ratio at "
+                        + "all x, including both zero endpoints.")),
+                    Paragraph(Text(
+                        "For d<=B(t)^(151/500), the logarithmic price body "
+                        + "decreases on [t,B(t)]. Its zero extension has the "
+                        + "lower-end jump and variation at most 2 b(t)log(2t). "
+                        + "The decreasing ratio adds at most b(t)log(2t). "
+                        + "For d>=B(t)^(151/500) the original row is zero, "
+                        + "since all its positive reference mass precedes "
+                        + "the divisor clock. Variation on adjacent lattice "
+                        + "cells adds to variation on the full grid. The "
+                        + "initial zero cell and the entire last cell are "
+                        + "included; the last grid endpoint exceeds 2R.")),
+                    Paragraph(Text(
+                        "This row estimate supplies no count of crossing "
+                        + "integer rows and no summed bound with exponent "
+                        + "-99/500. Integral interchange over an arbitrary "
+                        + "complete selected S, the favorable paired term, "
+                        + "the early-error estimate and cofinal positive-mass "
+                        + "original witnesses are not conclusions of this "
+                        + "theorem. The full signed Robin/RH obligation "
+                        + "remains open."))),
                 DescribeRole.Theorem))));
 }
