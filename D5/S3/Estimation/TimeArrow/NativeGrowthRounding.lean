@@ -69,7 +69,6 @@ def cellLogit (r β : ℝ) (L : ℕ) : ℝ :=
   centralPositive r L * Real.log ((1 + r) / (1 - compensation M q r)) +
     centralNegative r L * Real.log ((1 - r) / (1 + compensation M q r)) -
       Real.log (((M - q : ℕ) : ℝ) / q)
-
 /-- Both central coordinates have a bounded rounding error. -/
 theorem central_rounding (r : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r ≤ 1) :
     centralPositive r L ≤ L ∧
@@ -86,7 +85,6 @@ theorem central_rounding (r : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r ≤ 1) :
     change ((1 + r) / 2) * (L : ℝ) - ⌊((1 + r) / 2) * (L : ℝ)⌋₊ < 1
     linarith
   · exact Nat.cast_sub hk
-
 /-- The original score is the information rate times scale minus a bounded error. -/
 theorem center_rounding (r : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1) :
     phi r * (L : ℝ) - Real.log ((1 + r) / (1 - r)) ≤ center r L ∧
@@ -104,7 +102,6 @@ theorem center_rounding (r : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1) :
     ring
   rw [he, Real.log_div hp.ne' hm.ne']
   constructor <;> nlinarith
-
 /-- The base-two floor costs at most one factor of two. -/
 theorem population_exponential_bounds (r β : ℝ) (L : ℕ)
     (hφ : 0 ≤ phi r) (hβ : 0 < β) :
@@ -130,7 +127,6 @@ theorem population_exponential_bounds (r β : ℝ) (L : ℕ)
   · have h := Real.exp_le_exp.mpr hlower
     simpa [Real.exp_sub, Real.exp_log hm, Real.exp_log (by norm_num : (0 : ℝ) < 2)] using h
   · simpa only [Real.exp_log hm] using Real.exp_le_exp.mpr hlo
-
 /-- The fixed nonzero signal amplitude gives a strictly positive information rate. -/
 theorem information_rate_bounds (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
     0 < phi r ∧ phi r < Real.log 2 := by
@@ -150,7 +146,6 @@ theorem information_rate_bounds (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
   have h2 := mul_lt_mul_of_pos_left hlm hm
   unfold phi
   constructor <;> nlinarith
-
 /-- The decimal tower dominates its index. -/
 theorem decimalExponent_index (n : ℕ) : n + 1 ≤ decimalExponent n := by
   induction n with
@@ -159,7 +154,6 @@ theorem decimalExponent_index (n : ℕ) : n + 1 ≤ decimalExponent n := by
     have h := Nat.mul_le_pow (a := 10) (by decide : 10 ≠ 1) (5 * decimalExponent n)
     rw [decimalExponent]
     omega
-
 /-- The original integer scales tend to infinity. -/
 theorem scale_tendsto : Tendsto (fun n => (scale n : ℝ)) atTop atTop := by
   have hd : Tendsto decimalExponent atTop atTop :=
@@ -174,7 +168,6 @@ theorem scale_tendsto : Tendsto (fun n => (scale n : ℝ)) atTop atTop := by
     intro n
     exact Nat.le_self_pow (by decide : 3 ≠ 0) (denominator n)
   exact tendsto_natCast_atTop_atTop.comp hL
-
 /-- The second floor preserves the positive exponential signal rate. -/
 theorem signal_exponential_bounds (r β : ℝ) (L : ℕ)
     (hr : 0 ≤ r) (hr1 : r < 1) (hφ : 0 ≤ phi r) (hβ : 0 < β)
@@ -203,7 +196,6 @@ theorem signal_exponential_bounds (r β : ℝ) (L : ℕ)
       _ = _ := by rw [← Real.exp_add]; congr 1; ring
   have hfloor : X < (signalSize r β L : ℝ) + 1 := Nat.lt_floor_add_one X
   exact ⟨by linarith only [hlarge, hlo, hfloor], (Nat.floor_le hx.le).trans hhi⟩
-
 /-- The logarithmic error of the final floor is bounded by the reciprocal count. -/
 theorem signal_log_rounding (r β : ℝ) (L : ℕ) (hq : 0 < signalSize r β L) :
     let X := (population r β L : ℝ) * Real.exp (-center r L)
@@ -250,7 +242,6 @@ private theorem polynomial_ratio_zero (L : ℕ → ℝ) (D : ℕ → ℕ)
     _ = C * L n ^ p * Real.exp (-c * L n) := by
       rw [one_div_div, neg_mul, Real.exp_neg]
       ring
-
 /-- Every fixed polynomial scale is negligible compared with both original integer populations. -/
 theorem original_polynomial_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 0 < β) (hβ1 : β < 1) (p : ℕ) :
@@ -276,7 +267,6 @@ theorem original_polynomial_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       (fun n => population r β (scale n)) scale_tendsto (fun _ => Nat.cast_nonneg _)
       (phi r / β) 2 hcM (by norm_num) p
       (Eventually.of_forall fun n => (population_exponential_bounds r β (scale n) hφ.le hβ).1)
-
 /-- The original signal density decays faster than every fixed polynomial. -/
 theorem original_density_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1) (p : ℕ) :
     Tendsto (fun n => (scale n : ℝ) ^ p *
@@ -322,7 +312,6 @@ private theorem small_log_bounds (u : ℝ) (hu : 0 ≤ u) (hu1 : u ≤ 1/2) :
   exact ⟨by linarith only [hlo, hinv], by
     have h := Real.log_le_sub_one_of_pos hp
     linarith only [h]⟩
-
 /-- The exact final-floor error and compensation determine the original A-logit. -/
 theorem cell_logit_identity (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
     (hq : 0 < signalSize r β L) (hqm : signalSize r β L < population r β L)
@@ -366,7 +355,6 @@ theorem cell_logit_identity (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
     Real.log_div hsub.ne' hqR.ne']
   unfold center
   ring
-
 /-- The exact original A-logit has a reciprocal-count and compensation error bound. -/
 theorem cell_logit_bound (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
     (hq : 0 < signalSize r β L) (hqm : signalSize r β L < population r β L)
@@ -432,7 +420,6 @@ private theorem compensation_density_bound (M q : ℕ) (r : ℝ)
     compensation M q r ≤ r*(q : ℝ)/((M : ℝ)/2) :=
       div_le_div_of_nonneg_left (by positivity) (by positivity) hhalf
     _ = _ := by ring
-
 /-- The two integer populations eventually exceed every fixed threshold. -/
 theorem original_populations_tendsto (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 0 < β) (hβ1 : β < 1) :
@@ -452,7 +439,6 @@ theorem original_populations_tendsto (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   · exact tendsto_atTop_mono
       (fun n => (population_exponential_bounds r β (scale n) hφ.le hβ).1)
       (hMexp.atTop_div_const (by norm_num : (0 : ℝ) < 2))
-
 /-- The original compensation is negligible at every fixed polynomial scale. -/
 theorem original_compensation_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (p : ℕ) :
@@ -477,7 +463,6 @@ theorem original_compensation_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     _ ≤ (scale n : ℝ)^p * (2*r*((signalSize r β (scale n) : ℝ)/population r β (scale n))) :=
       mul_le_mul_of_nonneg_left hb (by positivity)
     _ = _ := by ring
-
 /-- The original A-logit error is smaller than any fixed constant divided by scale. -/
 theorem original_cell_logit_precision (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 0 < β) (hβ1 : β < 1) :
@@ -504,7 +489,6 @@ theorem original_cell_logit_precision (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (cell_logit_bound r β (scale n) hr.le hr1 hqN hqm hnc.le hnp.le)
     (show (0 : ℝ) ≤ scale n from Nat.cast_nonneg _)
   convert hb using 1 <;> first | rfl | ring
-
 /-- Any prescribed root-origin precision and the occupancy log interval hold eventually. -/
 theorem original_cell_logit_bounds (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 0 < β) (hβ1 : β < 1) (hκ : 0 < κ₀) :
@@ -529,7 +513,6 @@ theorem original_cell_logit_bounds (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r < 1)
     linarith only [h]
   · have h := (abs_le.mp hnh.le).1
     linarith only [h]
-
 /-- The fixed Chernoff exponent dominates both population growth and squared odds growth. -/
 theorem original_tail_rates (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 1/2 < β) :
@@ -545,7 +528,6 @@ theorem original_tail_rates (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   rw [show (4 : ℝ) = 2^2 by norm_num, Real.log_pow]
   norm_num only [Nat.cast_ofNat]
   constructor <;> nlinarith only [hφ.2, hrate, hlog2]
-
 /-- Both all-row tail payments decay at the original scale. -/
 theorem original_tail_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 1/2 < β) (hβ1 : β < 1) (p : ℕ) :
@@ -617,7 +599,6 @@ private theorem eventually_four_sqrt_scale (c : ℝ) (hc : 0 < c) :
   have hs := congrArg (fun z : ℝ => c*z)
     (Real.sq_sqrt (show (0 : ℝ) ≤ scale n from Nat.cast_nonneg _))
   nlinarith only [h, hs]
-
 /-- Exact finite scale premises for the native relative, occupancy and variance interfaces. -/
 theorem original_native_scale_conditions (r β A η : ℝ) (M₀ : ℕ)
     (hr : 0 < r) (hr1 : r < 1) (hβ : 0 < β) (hβ1 : β < 1) (hη : 0 < η) :
@@ -660,7 +641,6 @@ theorem original_native_scale_conditions (r β A η : ℝ) (M₀ : ℕ)
   exact ⟨by exact_mod_cast hM₀, by exact_mod_cast hq1, hqm,
     by exact_mod_cast hL4, by exact_mod_cast hM6, hcomp.le, hLη.le, hL45.le,
     by simpa only [← mul_div_assoc] using hA.le, haL, hbL, haS, hbS⟩
-
 /-- Original central counts satisfy the finite reference-variance score condition. -/
 theorem original_central_score_condition (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 0 < β) (hβ1 : β < 1) :
@@ -718,7 +698,6 @@ theorem original_central_score_condition (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   change _ ≤ Real.sqrt (scale n : ℝ)*g
   simp only [Function.comp_apply] at hsg
   nlinarith only [hcell,hg,hξ,hsg]
-
 /-- The explicit full-root budget is written in the polynomial payments used by the native laws. -/
 def rootFailureBudget (r β v κ A : ℝ) (n : ℕ) : ℝ :=
   let L := (scale n : ℝ)
@@ -727,7 +706,6 @@ def rootFailureBudget (r β v κ A : ℝ) (n : ℕ) : ℝ :=
   let ζ := Real.exp (-((8*Real.log 4-6)*L))
   64/(v^2*κ^2)*(3*L^2/q+8*A*L^5/M+10*L^2*(M/q)^2*ζ) +
     4/v^2*(3/q+8*A*L^3/M+10*(M/q)^2*ζ)+M*ζ
-
 /-- Every full-root payment vanishes at the original growth and rounding sequence. -/
 theorem original_root_failure_budget_zero (r β v κ A : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 1/2 < β) (hβ1 : β < 1) :
@@ -748,7 +726,6 @@ theorem original_root_failure_budget_zero (r β v κ A : ℝ) (hr : 0 < r) (hr1 
     simp only [pow_zero,one_mul]
     ring
   · simp only [mul_zero,zero_add]
-
 /-- The native rectangle cardinality has a support- and experiment-uniform vanishing budget
 at the original floored population and count scales. -/
 theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
@@ -758,8 +735,7 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       let L := scale n
       let M := population r β L
       let q := signalSize r β L
-      ∀ (S : Support M q) (e : Experiment) (i j : Fin M),
-        i ∈ S.val → j ∉ S.val →
+      ∀ (S : Support M q) (e : Experiment),
         (∑ o : Obs M (2*M*L) e,
           let N := (nativeRectangleRows S e o (centralPositive r L) (centralNegative r L)
             (⟨o,rfl⟩ : Fiber S e o)).card
@@ -788,11 +764,14 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   filter_upwards [original_native_scale_conditions r β A η₀ M₀ hr hr1 hβ hβ1 hη₀,
     original_cell_logit_bounds r β 1 hr hr1 hβ hβ1 (by norm_num)] with n hn hd
   dsimp only
-  intro S e i j hi hj
+  intro S e
   let L := scale n
   let M := population r β L
   let q := signalSize r β L
   obtain ⟨hMM,hq,hqm,hL,hM6,hcomp,hLη,hL45,hsmall,hplus,hminus,hsplus,hsminus⟩ := hn
+  obtain ⟨i,hi⟩ := Finset.card_pos.mp (show 0 < S.val.card by rw [S.property]; omega)
+  obtain ⟨j,_,hj⟩ := Finset.exists_mem_notMem_of_card_lt_card
+    (s := S.val) (t := univ) (by simpa only [S.property, card_univ, Fintype.card_fin] using hqm)
   have he := h M q L r hMM hq hqm hr hrκ (by dsimp [κ,M,q,L]; linarith only [hcomp])
     (by change 1 ≤ scale n; omega) hLη hsmall S e i j hi hj hplus hminus hd.2.1 hd.2.2
   have hm := floored_signal_reference_mass S r hr hr1 (by change 1 ≤ scale n; omega) i hi hplus hminus
@@ -801,8 +780,6 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   have hLR : (0 : ℝ) < L := by exact_mod_cast (show 0 < L by omega)
   have hmlo : c/(L : ℝ) ≤ rowReference S r L i (centralPositive r L,centralNegative r L) := by
     convert hm.1 using 1 <;> first | rfl | (dsimp [c,L]; simp only [div_div])
-  have hmass : 0 < rowReference S r L i (centralPositive r L,centralNegative r L) :=
-    (div_pos hc hLR).trans_le hmlo
   apply le_trans _ (he.trans _)
   · apply sum_le_sum
     intro o _
@@ -833,7 +810,7 @@ theorem original_complete_root_budget (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r <
       let L := scale n
       let M := population r β L
       let q := signalSize r β L
-      ∀ (S : Support M q) (e : Experiment) (i j : Fin M), i ∈ S.val → j ∉ S.val →
+      ∀ (S : Support M q) (e : Experiment),
       ∀ x : Obs M (2*M*L) e → ℝ,
       (∀ o, (∑ k : Fin M, Real.sigmoid (x o+score q r e o k-
         Real.log (((M-q : ℕ) : ℝ)/q))) = q) →
@@ -856,7 +833,6 @@ theorem original_complete_root_budget (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r <
   have ha : 0 < (1+r)/2 := by linarith only [hr]
   have hb : 0 < (1-r)/2 := by linarith only [hr1]
   have hv : 0 < v := by dsimp [v]; positivity
-  have hlog : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
   refine ⟨v,A,hv,hA,original_root_failure_budget_zero r β v κ₀ A hr hr1 hβ hβ1,?_⟩
   filter_upwards [original_native_scale_conditions r β A η₀ M₀ hr hr1 hβ0 hβ1 hη₀,
     original_cell_logit_bounds r β κ₀ hr hr1 hβ0 hβ1 hκ₀,
@@ -864,11 +840,14 @@ theorem original_complete_root_budget (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r <
     (scale_tendsto.const_mul_atTop (by positivity : 0 < 2*Real.log (2 : ℝ))).eventually
       (eventually_ge_atTop κ₀)] with n hn hd hcenter hlarge
   dsimp only
-  intro S e i j hi hj x hx
+  intro S e x hx
   let L := scale n
   let M := population r β L
   let q := signalSize r β L
   obtain ⟨hMM,hq,hqm,hL,hM6,hcomp,hLη,hL45,hsmall,hplus,hminus,hsplus,hsminus⟩ := hn
+  obtain ⟨i,hi⟩ := Finset.card_pos.mp (show 0 < S.val.card by rw [S.property]; omega)
+  obtain ⟨j,_,hj⟩ := Finset.exists_mem_notMem_of_card_lt_card
+    (s := S.val) (t := univ) (by simpa only [S.property, card_univ, Fintype.card_fin] using hqm)
   have hqR : (0 : ℝ) < q := by exact_mod_cast (show 0 < signalSize r β (scale n) by omega)
   have hLR : (0 : ℝ) < L := by exact_mod_cast (show 0 < L by omega)
   let b := v*(q : ℝ)*κ₀/(8*(L : ℝ))
@@ -919,5 +898,53 @@ theorem original_complete_root_budget (r β κ₀ : ℝ) (hr : 0 < r) (hr1 : r <
     field_simp
     ring
 
+/-- All rectangle sizes in the original comparison range have vanishing slope and
+inverse feedback width, and arbitrarily large square-root size. -/
+theorem original_rectangle_feedback_scales (r β c C η T : ℝ)
+    (hr : 0 < r) (hr1 : r < 1) (hβ : 0 < β) (hβ1 : β < 1)
+    (hc : 0 < c) (hη : 0 < η) :
+    ∀ᶠ n in atTop, ∀ N : ℕ,
+      c*(signalSize r β (scale n) : ℝ)/scale n ≤ N →
+      (N : ℝ) ≤ C*(signalSize r β (scale n) : ℝ)/scale n →
+      T ≤ Real.sqrt (N : ℝ) ∧
+        (N : ℝ)/signalSize r β (scale n) ≤ η ∧
+        (signalSize r β (scale n) : ℝ)/((N : ℝ)*Real.sqrt N) ≤ η := by
+  have hp := (original_polynomial_scales r β hr hr1 hβ hβ1 3).1
+  have hq := (original_populations_tendsto r β hr hr1 hβ hβ1).1
+  filter_upwards [hp.eventually (gt_mem_nhds (by positivity : 0 < c^3*η^2)),
+    hq.eventually (eventually_ge_atTop 1), scale_tendsto.eventually (eventually_ge_atTop 1),
+    scale_tendsto.eventually (eventually_ge_atTop (C/η)),
+    scale_tendsto.eventually (eventually_ge_atTop (c*η*T))] with n hp hq hL hC hT
+  intro N hlo hhi
+  let L := (scale n : ℝ)
+  let q := (signalSize r β (scale n) : ℝ)
+  have hL0 : 0 < L := by dsimp [L]; linarith only [hL]
+  have hq0 : 0 < q := by dsimp [q]; linarith only [hq]
+  have hN0 : (0 : ℝ) < N := (div_pos (mul_pos hc hq0) hL0).trans_le hlo
+  have hlow : c*q ≤ (N : ℝ)*L := (div_le_iff₀ hL0).mp hlo
+  have hpow : L^3 ≤ c^3*η^2*q := (div_le_iff₀ hq0).mp hp.le
+  have hmul := mul_le_mul_of_nonneg_left hlow (by positivity : 0 ≤ c^2*η^2)
+  have hsquare : L^2 ≤ c^2*η^2*(N : ℝ) := by
+    apply (mul_le_mul_iff_right₀ hL0).mp
+    nlinarith only [hpow,hmul]
+  have hsq : (L/(c*η))^2 ≤ (N : ℝ) := by
+    rw [div_pow]
+    apply (div_le_iff₀ (by positivity : 0 < (c*η)^2)).mpr
+    nlinarith only [hsquare]
+  have hs := Real.le_sqrt_of_sq_le hsq
+  have hscale : L ≤ c*η*Real.sqrt (N : ℝ) :=
+    by simpa only [mul_comm, mul_left_comm] using (div_le_iff₀ (mul_pos hc hη)).mp hs
+  refine ⟨((le_div_iff₀ (mul_pos hc hη)).mpr (by nlinarith only [hT])).trans hs, ?_, ?_⟩
+  · apply (div_le_iff₀ hq0).mpr
+    have hηL : C ≤ η*L := by
+      have hh := (div_le_iff₀ hη).mp hC
+      nlinarith only [hh]
+    exact hhi.trans (by
+      apply (div_le_iff₀ hL0).mpr
+      nlinarith only [mul_le_mul_of_nonneg_right hηL hq0.le])
+  · apply (div_le_iff₀ (mul_pos hN0 (Real.sqrt_pos.mpr hN0))).mpr
+    have hh := mul_le_mul_of_nonneg_left hscale hN0.le
+    apply (mul_le_mul_iff_left₀ hc).mp
+    nlinarith only [hlow,hh]
 end
 end D5.S3.Estimation.TimeArrow.NativeGrowthRounding
