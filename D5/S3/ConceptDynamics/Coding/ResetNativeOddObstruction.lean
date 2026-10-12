@@ -22,11 +22,11 @@ open D5.S3.ConceptDynamics.Coding.InertGroupBlockConjugacy
   (VertexModule integerMatrix transition stationaryTransition DimensionGroup
    StationaryModule induced)
 
-private abbrev oddTau : Sign := ofAdd true
+abbrev oddTau : Sign := ofAdd true
 
 private theorem oddTau_ne_one : oddTau ≠ (1 : Sign) := by decide
 
-private def resetLabel : MonoidAlgebra ℤ Sign := MonoidAlgebra.single oddTau 1
+def resetLabel : MonoidAlgebra ℤ Sign := MonoidAlgebra.single oddTau 1
 
 private def oddAntiUnit : MonoidAlgebra ℤ Sign :=
   MonoidAlgebra.single 1 1 - MonoidAlgebra.single oddTau 1
@@ -43,7 +43,7 @@ private theorem integer_reset_entry (q : ℕ) (i j : Fin q) :
 
 /- The original integerMatrix and row toLinearMapRight' are used here.
    In particular, the reset label multiplies the input coordinate on the RIGHT. -/
-private theorem transition_zero (N : ℕ) (v : VertexModule Sign (N + 1)) :
+theorem transition_zero (N : ℕ) (v : VertexModule Sign (N + 1)) :
     transition (resetMatrix (N + 1)) v (0 : Fin (N + 1)) =
       (∑ i : Fin (N + 1), v i) * resetLabel := by
   classical
@@ -56,7 +56,7 @@ private theorem transition_zero (N : ℕ) (v : VertexModule Sign (N + 1)) :
   simp_rw [hentry]
   rw [Finset.sum_mul]
 
-private theorem transition_succ (N : ℕ) (v : VertexModule Sign (N + 1))
+theorem transition_succ (N : ℕ) (v : VertexModule Sign (N + 1))
     (j : Fin N) :
     transition (resetMatrix (N + 1)) v j.succ = v j.castSucc := by
   classical
