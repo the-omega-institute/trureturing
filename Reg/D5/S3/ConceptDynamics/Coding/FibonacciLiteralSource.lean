@@ -1,6 +1,7 @@
 import D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -219,3 +220,179 @@ def literal_full_slot_readout_registration :
 #print axioms literal_full_slot_readout_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal205
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.LiteralBranchReadout
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => Label) (fun _ => ℝ → ℝ)
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ l => branch l) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => fun _ => (1 : ℝ)) (fun e => nomatch e)
+
+/-- The actual branch functions distinguish two legal label states at zero. -/
+theorem actual_dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨(), Label.L0, Label.L2, ?_⟩
+  intro heq
+  have h := congrFun heq (0 : ℝ)
+  norm_num [actual, realize, branch, shift] at h
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.LiteralBranchReadout
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal202
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => List Label) (fun _ => ℝ → ℝ)
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature (fun _ _ w => compose w) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => fun _ => (1 : ℝ)) (fun e => nomatch e)
+
+theorem actual_dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨(), [], [Label.L2], ?_⟩
+  intro heq
+  have h := congrFun heq (0 : ℝ)
+  norm_num [actual, realize, compose, branch, shift] at h
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r :=     (∀ (s e : Guard) (w : List Label) (z : ℝ), LegalWord s e w → InSupport e z →
+      InSupport s (compose w z)) ∧
+    (∀ (left B right : List Label) (p : ℕ), p ≤ B.length →
+      coordinate (left ++ B ++ right) (left.length + p) =
+        compose (B.drop p) c0 + (-g) ^ (B.length - p) * (coordinate right 0 - c0)) ∧
+    (∀ (w : List Label) (n p : ℕ), coordinate (w ++ List.replicate n Label.L0) p =
+      coordinate w p) ∧
+    (∀ (w : List Label) (x y : ℝ),
+      compose w (x + y) = compose w x + (-g) ^ w.length * y) ∧
+    (∀ (w v : List Label) (z : ℝ), r.readout () () (w ++ v) z = compose w (compose v z))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have h := h.2.2.2.2 [] [] 0
+  norm_num [rejected, realize, compose] at h
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_source_geometry) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_source_geometry, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence := actual_dependence
+
+def literal_source_geometry_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_source_geometry)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ w => compose w) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal202.literal_source_geometry_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal202.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ w => compose w) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "arg", "arg", "arg", "body", "body", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms literal_source_geometry_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal202
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal204
+noncomputable section
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.LiteralBranchReadout
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (s e : Guard) (w : List Label) (hw : LegalWord s e w),
+    ∃ path : ℕ → Guard, path 0 = s ∧
+      (∀ p, nextGuard (path p) (address w p) = some (path (p + 1))) ∧
+      (∀ p, InSupport (path p) (coordinate w p)) ∧
+      (∀ p, coordinate w p = r.readout () () (address w p) (coordinate w (p + 1)))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨path, hpath0, hedges, hsupp, hrec⟩ := h .G0 .G0 [] rfl
+  have h := hrec 0
+  norm_num [LiteralBranchReadout.rejected, realize, coordinate, compose] at h
+
+def evidence : Registration sourceArena (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_address_path) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_address_path, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence := actual_dependence
+
+def literal_address_path_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.literal_address_path)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ l => branch l) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal204.literal_address_path_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal204.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ l => branch l) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "arg", "arg", "body", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms literal_address_path_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource.ExactOriginal204
