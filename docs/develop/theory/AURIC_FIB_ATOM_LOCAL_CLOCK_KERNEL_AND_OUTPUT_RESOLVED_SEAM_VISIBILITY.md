@@ -2557,3 +2557,338 @@ $1/(n+1)\to0$。因而这个纤维端的高后验成功率既没有建立原始�
 已给另一恢复任务；局部缩放也不意味着整个环境的信息销毁。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 十五、完整因子化来源的守卫遗忘、体相与统计响应
+
+本章使用五个实际事件及同一原生高到低读取方向。等待核、当前模式律、统计体相和另供的 Pauli 实现分别保留其来源合同。
+
+**定义 15.1（完整来源、守卫消息与当前模式律）。**
+
+
+依次写 Σ=(O,L,T,R,J)，印刷位串按低、中、高为 (000,100,010,001,101)。占位函数 x、y、z 分别是低、高、中位，xz=yz=0；J 是同时占据两端。原生读取为高到低，输入旧守卫 g，检查 gy(s)=0，输出新守卫 x(s)。本句中的字母 R 指模式；下面粗体 R 指后缀向量。原生完整状态还含组成 $C\in\mathbb N^2$。置 $M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$、$S=M^3=\left(\begin{smallmatrix}1&2\\2&3\end{smallmatrix}\right)$，事件贡献依 $(O,L,T,R,J)$ 为 $d_s=(0,0),(1,0),(0,1),(1,1),(2,1)$；合法时 $C'=SC+d_s$，空窗也执行 $S$。两守卫消息不代替数量任务所需的完整 $C$。
+
+固定长度 m 的源，局部权 w_k(s)>0，端权 L(s_1),B(s_m) 非负，定义
+
+$$
+W(s_1,\ldots,s_m)=L(s_1)\prod_{k=1}^m w_k(s_k)
+ \prod_{k=1}^{m-1}\mathbf1_{x(s_k)y(s_{k+1})=0}B(s_m),\qquad
+\mathbb P(s_1,\ldots,s_m)=W/Z,\quad Z=\sum_{\Sigma^m}W>0.
+$$
+
+只对这同一完整法则求和。端点亦可指定守卫向量 ℓ,b∈[0,∞)²\{0}，在首端求和 ℓ_g 1_{gy(s_1)=0}，末端乘 b_{x(s_m)}；这是上述端权合同的明确特例。任意固定边缘窗端权可先纳入有效消息，以下 N 个单位权窗口不包括被折入的边缘窗。初始固定守卫 g=0 或 1 是允许的非负端权。额外全局奇偶、环境耦合、算术筛或历史相干条件通常破坏本因子化假设，须另供状态和转移。合法支撑本身不指定概率律。
+
+R_g 是给定 incoming guard g 的全部后缀总权，不是一个事件样本或完整来源编码。逐模式求和得到
+
+$$
+K_{g,t}=\sum_{s:\,gy(s)=0,\,x(s)=t}w(s),\qquad
+K=\begin{pmatrix}w_O+w_T+w_R&w_L+w_J\\w_O+w_T&w_L\end{pmatrix},\qquad
+\mathbf R_{\rm before}=K\mathbf R_{\rm after}.
+$$
+
+行索引 g、列索引输出 x。g=1 排除 R,J。O,T 在这项后缀任务中同入 (g,0) 项，其权相加；查询中位事件时仍须保留各模式条件比例。对读取顺序 1,…,N，列消息为 K₁K₂⋯K_N b，故比值映射复合为 T_{K₁}∘⋯∘T_{K_N}，最远的 K_N 首先作用。共同标量缩放可约去；独立行归一化改变来源路径权和两条件 partition 的相对尺度，不允许免费采用。
+
+固定当前权及整个另一端来源后，可写实际当前律
+
+$$
+\mu_{\mathbf R}(s)=\frac{a_s R_{x(s)}}{U_0R_0+U_1R_1},\qquad
+a_s\ge0,\quad U_i=\sum_{x(s)=i}a_s,\quad U_0+U_1>0.
+$$
+
+a_s 包含当前 w(s) 和固定前缀的所有 guard 权；至少一个当前模式允许。它不等于下面只归一化当前原始局部权的 p。
+
+**命题 15.7（同三均值的三种守卫响应）。**
+
+令 p_s=w_s/∑w_s>0，X=p_L+p_J，Y=p_R+p_J，Z=p_T，κ=p_J。这里 p 是原始局部权归一化，通常不是 μ 的链上边缘。
+
+$$
+K_p=\begin{pmatrix}1-X&X\\1-X-Y+\kappa&X-\kappa\end{pmatrix},\qquad
+\det K_p=XY-\kappa=-\operatorname{Cov}_p(x,y).
+$$
+
+对任意严格正 K=(a,b;c,d) 和 r=R₁/R₀>0，
+
+$$
+T_K(r)=\frac{c+dr}{a+br},\qquad T'_K(r)=\frac{ad-bc}{(a+br)^2}.
+$$
+
+因此在该任务的整个正比值域，det K=0 当且仅当 T_K 对所有边界比值完全盲；det K≠0 时有限步映射单射。当前某个 U_i=0 还能另使当前任务盲，不是 det 的逆命题。
+
+底面四格的另一个量为 Δ=p_Op_J-p_Lp_R=(1-Z)κ-XY。仅当 1-Z>0，底面条件协方差是 Δ/(1-Z)²；以底面事件 1-z 中心化的残差内积则是 Δ/(1-Z)。两者都不同于上述无条件 Cov，也不把 det K 写成 -Δ/(1-Z)。在固定 0<Z<1、0<X,Y<1-Z 的最大熵纤维内部，熵对 κ 的导数为 -log(p_Op_J/(p_Lp_R))，故唯一条件独立截面 κ=XY/(1-Z)，此时 det K=-XYZ/(1-Z)<0，而非盲截面 κ=XY。
+
+例 X=Y=2/5、Z=1/5 时，κ=1/10,4/25,1/5 给五个均正权，行列式分别为 3/50,0,-1/25。最后一个是底面条件独立且局部五态均匀的律，仍有非零无条件协方差。
+
+
+证明。逐模式求和给定义 15.1 的 $K$；将 $w$ 除以总质量后直接求行列式给 $XY-\kappa$。$\mathbb E_pxy=\kappa$，所以它是负的无条件协方差。商法则给比值导数，严格正分母给单射与常量判据。四底角乘积展开给 $\Delta$；熵微分时四项的导数系数为 $(1,-1,-1,1)$，故得到所列对数。三个实例由完整反解 $p=(1-X-Y-Z+\kappa,X-\kappa,Z,Y-\kappa,\kappa)$ 逐项代入，均严格正。
+
+**定理 15.4（八个单位中间窗口的实际当前律界）。** 当前局部权和整个另一端来源固定，仅一个远端边界改变；中间八个完整窗口的五个权全部为一，且来源是定义 15.1 的精确因子化法则。在此合同下，任意两个非零非负远端向量对应的实际当前五态律满足
+
+$$
+\operatorname{TV}(\mu,\mu')<\frac1{8599965696}<1.17\times10^{-10}.
+$$
+
+证明。所需中间步骤采用 Birkhoff 的 Hilbert 正锥收缩框架，以下给出本二守卫应用的完整计算。
+
+
+正向量 u,v∈(0,∞)² 上 d_H(u,v)=|log(u₁/u₀)-log(v₁/v₀)|。对正 K，令 s=log r，则
+
+$$
+\left|\frac{d\log T_K(e^s)}{ds}\right|
+=\frac{r|ad-bc|}{(a+br)(c+dr)}.
+$$
+
+分母除以 r 是 ac/r+(ad+bc)+bd r；AM–GM 给最小值 (√ad+√bc)²，恰在 r=√(ac/(bd))。均值定理给全局 Lipschitz 界，取该点的趋近扰动又给下界，故精确最优系数为
+
+$$
+\tau(K)=\frac{|\sqrt{ad}-\sqrt{bc}|}{\sqrt{ad}+\sqrt{bc}}<1,\qquad
+d_H(Ku,Kv)\le\tau(K)d_H(u,v).
+$$
+
+正矩阵将任何非零非负端向量变成严格正向量；含零的初始端向量不能直接代入 log 距离。对正矩阵 K=(a,b;c,d)，扩展比值 r∈[0,∞] 的像端点为 c/a、d/b；由 命题 15.7 的单调性（det=0 时为常量），正像直径恰为 Δ_H(K)=|log(ad/(bc))|，且 τ(K)=tanh(Δ_H(K)/4)。
+
+固定原生顺序的严格正 2×2 矩阵 K₁,…,K_N，N≥1，记 M_N=K₁⋯K_N、p_N=∏_{i=1}^Nτ(K_i)∈[0,1)。对任意严格正 u,v，逐次使用精确系数界给
+
+$$
+d_H(M_Nu,M_Nv)\le p_N d_H(u,v).
+$$
+
+取 d_H(u,v)>0 的距离比的上确界，左侧的精确全局 Lipschitz 系数是前面已推导的 τ(M_N)，故 τ(M_N)≤p_N。M_N 仍严格正，将同一个精确直径恒等式用于整个乘积，并用 artanh 在 [0,1) 上单调，得到
+
+$$
+\tau(M_N)\le p_N<1,\qquad
+\Delta_H(M_N)=4\operatorname{artanh}\tau(M_N)
+\le4\operatorname{artanh}p_N.
+$$
+
+因此对任何 b_N,c_N∈[0,∞)²\{0}，包括含零且随 N 改变的端点，两个乘积像都严格正，并有
+
+$$
+d_H(M_Nb_N,M_Nc_N)\le\Delta_H(M_N)
+\le4\operatorname{artanh}p_N.
+$$
+
+在 定义 15.1 的同一精确因子化来源、原生 gy=0/output x 方向下，每次比较保持当前权及另一端来源固定（即同一 a_s≥0、U₀+U₁>0），只改变这个远端。定理 15.4 的实际当前五态 TV 桥于是给
+
+$$
+\operatorname{TV}(\mu_{M_Nb_N},\mu_{M_Nc_N})
+\le\tanh\big(\Delta_H(M_N)/4\big)
+=\tau(M_N)\le p_N.
+$$
+
+若某个 U_i=0，TV=0，仍满足该界。因乘积像严格正且 U₀+U₁>0，两种归一化分母都为正。这是实际当前律 μ 的结论，原始局部 p 不代入此桥；每个比较中的当前/另一端数据固定，跨 N 的比较可以另选这些数据。
+
+对固定正矩阵序列，只要 $p_N\to0$，上述界就对所有非零非负、任意随 N 改变的端点一致趋零；不需要另加最远单矩阵的直径控制。初始距离乘积式本身仍不能直接用于零边界，对无界变化初始距离也不能单靠该式推得收敛；这里的结论来自整个正乘积的直径。对参数族 θ∈Θ，每个固定 θ 的 p_N(θ)→0 不自动给全族一致性；若另有 $\sup_{\theta\in\Theta}p_N(\theta)\to0$，则同样给全族的端点一致界。命题 15.10 的全部 λ>0 反例仍有效。
+
+
+
+只在所有五个局部权都是 1 时 K=A=((3,2);(2,1))=B³，B=((1,1);(1,0))。以 F₀=0、F₁=1、F_{n+2}=F_{n+1}+F_n，由归纳的 B 幂式，对每个整数 N≥1，
+
+$$
+A^N=\begin{pmatrix}F_{3N+1}&F_{3N}\\F_{3N}&F_{3N-1}\end{pmatrix},\qquad
+\det A^N=(-1)^N.
+$$
+
+任何非零非负 b 的扩展比值 r∈[0,∞] 都有
+
+$$
+r_N=\frac{F_{3N}+F_{3N-1}r}{F_{3N+1}+F_{3N}r},\qquad
+I_N=\left[\min\left(\frac{F_{3N}}{F_{3N+1}},\frac{F_{3N-1}}{F_{3N}}\right),
+\max\left(\frac{F_{3N}}{F_{3N+1}},\frac{F_{3N-1}}{F_{3N}}\right)\right].
+$$
+
+两端来自 r=0,∞，单调性保证整个像正是 I_N。Cassini 给其厚度 1/(F_{3N}F_{3N+1})。因 A^{N+1}[0,∞]⊂A^N[0,∞]，这些正区间嵌套，厚度趋零；正固定比值解 r=(2+r)/(3+2r) 为 φ⁻¹，φ=(1+√5)/2，故交为 {φ⁻¹}。有限 N 的非零行列式保留单射，与极限遗忘并存。N=0 为恒等，像 [0,∞]，不使用 F_{-1}，也没有此有限正像界。
+
+在 定义 15.1 同一当前 a_s 和另一端固定、仅后缀边界改变，组内条件律 a_s/U_{x(s)} 保持不变。若 U₀,U₁>0，x=1 组质量为 q(r)=U₁r/(U₀+U₁r)，故完整五态 TV 恰为 |q(r)-q(r')|。对 t=log(U₁r/U₀)，q=1/(1+e^{-t})；固定 log 比值差 D≥0，差在 t=-D/2 与 t'=D/2 达到最大 tanh(D/4)。于是
+
+$$
+\operatorname{TV}(\mu_{\mathbf R},\mu_{\mathbf R'})\le\tanh(d_H(\mathbf R,\mathbf R')/4).
+$$
+
+若 U₀=0 或 U₁=0，则当前五态律对该端变化完全盲，TV=0，条件组零质量时不定义其组内条件律。该桥只比较实际 μ，不能拿原始 p 代替它。
+
+经过 N≥1 个全部单位权的完整中间窗口后，写 f=F_{3N}、e=(-1)^N，由 Cassini 有 F_{3N-1}F_{3N+1}=f²+e，因此 I_N 的 Hilbert 直径为 |log(f²/(f²+e))|。有理化给
+
+$$
+\operatorname{TV}(\mu,\mu')\le\epsilon_N
+=\tanh\left(\frac14\left|\log\frac{f^2}{f^2+e}\right|\right)
+=\frac{|f-\sqrt{f^2+e}|}{f+\sqrt{f^2+e}}
+=\frac1{(F_{3N}+\sqrt{F_{3N}^2+(-1)^N})^2}.
+$$
+
+最后等号利用 |e|=1。十进制仅用于展示：ε₁≈0.07179677，ε₂≈0.00387603，ε₄≈1.20561×10⁻⁵，ε₈≈1.16280×10⁻¹⁰；精确界为：
+
+$$
+F_{24}=46368,\quad
+\epsilon_8=\frac1{(46368+\sqrt{46368^2+1})^2}
+<\frac1{4\cdot46368^2}=\frac1{8599965696}
+<\frac{117}{10^{12}}=1.17\times10^{-10}.
+$$
+
+最后严格不等式可按正整数交叉相乘：8599965696×117=1006195986432>10¹²。此结论对任意固定当前权及固定另一端、非零非负变化端向量成立，来源须是 定义 15.1 精确因子化；“相同活动权”必须在此明确为所有中间权均等于 1，不能泛指相同但任意 λ。24 位点只数八个实际中间窗口，不另数当前窗或远端外侧位点。
+
+同一条件下任何固定 0≤f(s)≤1 的当前有界函数有 |E_μ f-E_{μ'} f|≤ε_N。两端都变时，须通过正 partition 的共同中间律逐端用三角不等式并分别计距离，得到适用的两个界之和；不能直接复用单端 ε_N。这里不估计整个历史联合 TV、相干距离或任意未来档案。
+
+**命题 15.6（单位来源的实际五模式体相及文献对应）。**
+
+完整合法位词取单位权，固定非零非负且使 partition 为正的因子化端权，在观察窗到左右两端距离都趋∞时，对归一化法则应用 B 的两特征值 φ,-φ⁻¹：正特征投影系数由端权与正向量的内积给出，均严格正；其余项相对按 φ⁻² 的距离幂衰减。两侧正投影相乘并除以 partition 得体相马尔可夫律，任一侧距离保持有限时不宣称此极限。
+
+$$
+v=(\phi,1)^T,\quad P_{ij}=B_{ij}v_j/(\phi v_i)
+=\begin{pmatrix}\phi^{-1}&\phi^{-2}\\1&0\end{pmatrix},\quad
+\pi=\left(\frac{\phi^2}{\phi^2+1},\frac1{\phi^2+1}\right).
+$$
+
+置 η=φ⁻²，逐条乘 π_i P_{ij}P_{jk}，以印刷低、中、高排列得到
+
+$$
+p_\infty=\frac1{1+\eta}\big((1-\eta)^2,\eta(1-\eta),\eta,\eta(1-\eta),\eta^2\big).
+$$
+
+于是 O=T≈0.2763932、L=R≈0.1708204、J≈0.1055728。这是明确有限单位法则的双侧体相极限，既非局部五态 1/5，也非所有合法来源必选的物理法则。一般 Perron–Markov 构造复用 Parry 的成熟结果；本模型的极限由上面的两特征值推导。
+
+
+与此体相相关的已发表构造为 P. Gohlke、A. Mitchell、D. Rust、T. Samuel，*Measure Theoretic Entropy of Random Substitution Subshifts*，Annales Henri Poincaré 24，277–323，DOI [10.1007/s00023-022-01212-x](https://doi.org/10.1007/s00023-022-01212-x)，Example 5.5。它给原生合法位词另一种来源逼近，条件及限制如下。
+
+
+该例的字母表为 {a,b}、禁词为 bb，以 b↔占位 1、a↔空位 0 对应 golden-mean 合法位词。文中的 τ=(1+√5)/2（这里的黄金比，非本篇矩阵收缩系数）满足 τ²=τ+1；随机替换 a→aa/aba 的概率分别为 τ⁻¹、τ⁻²，b→b。这个替换不 primitive，不能直接套用该文的 primitive 结果。对 ε∈(0,1)，保持 a 的替换及概率不变，把 b 改为 b→b/abb，概率 1−ε、ε，得到 primitive 的 θ_ε，且有 unique realisation paths 与 disjoint set condition；μ_ε 是相应的 frequency measure。由于 abb 含 bb，不能把每个 ε>0 的近似来源直接说成原 golden-mean 位词法则。
+
+Example 5.5 对 ε→0 的弱极限 μ 使用 shift invariance、support 为 golden-mean X、Perron 数据 R_{a,ε}/(λ_ε−1)→τ²/(τ²+1)，再由熵的上半连续性及该文 Theorem 3.5 得 h(μ)≥logτ=h_top(X)。该 shift 的最大熵测度唯一，因而该弱极限为 Parry measure。紧随该例的段落保留其限制：某个 primitive 随机替换的 frequency measure 是否能直接等于 golden-mean Parry measure，文中仍列为 open。这里 λ_ε 是该随机替换的 Perron 特征值，不是 命题 15.8 的活动参数 λ。该例只支持上述随机替换逼近/弱极限联系；本篇一般活动权 hard-core 协方差、开放链压力或 Fisher 公式仍由 命题 15.8–9 的普通证明拥有，不能归给 Example 5.5。
+
+**命题 15.8（活动来源的方向系数与平稳相关）。**
+
+对活动权 (w_O,w_L,w_T,w_R,w_J)=(1,a,b,c,ac)，a,b,c>0，原生高到低矩阵及其系数是
+
+$$
+K_{\rm high}=\begin{pmatrix}1+b+c&a(1+c)\\1+b&a\end{pmatrix},\quad
+\operatorname{tr}K=1+a+b+c,\quad \det K=-abc,
+\quad\tau_{\rm high}=\frac{\sqrt{(1+b)(1+c)}-\sqrt{1+b+c}}
+{\sqrt{(1+b)(1+c)}+\sqrt{1+b+c}}.
+$$
+
+它不依赖 a。反向低到高以旧守卫检查 gx=0、输出 y，矩阵 K_low=((1+b+a,c(1+a));(1+b,c))，同迹同 det，而 τ_low 将上式 c 换为 a，不依赖 c。同谱不意味同一投影收缩界。方向交换是完整来源及边界的重标识，不是原生同步前缀回复的同构。上述二阶精确推导是 Birkhoff 正锥收缩理论的成熟特例，无新颖性主张。
+
+对每个固定 λ>0，完整位词权为 λ^{#ones}，故窗权 (1,λ,λ,λ,λ²)。单个位守卫矩阵 H_λ=((1,λ);(1,0)) 满足 H_λ³=K_high，不能先把每行概率化。令
+
+$$
+D=\sqrt{1+4\lambda},\quad\Lambda=(1+D)/2,\quad
+\eta=(\Lambda-1)/\Lambda\in(0,1),\quad
+\lambda=\eta/(1-\eta)^2,
+\quad P_\eta=\begin{pmatrix}1-\eta&\eta\\1&0\end{pmatrix},\quad
+\pi=(1,\eta)/(1+\eta),\quad \mu=\eta/(1+\eta).
+$$
+
+P_η 是用 v=(Λ,1) 做 Perron 共轭 H_λ=Λ diag(v)P_η diag(v)⁻¹ 后的归一化平稳链，附相应端因子；并非把原始 K 各行独立归一化。固定合法端权的有限 Gibbs 律在双侧体相距离趋∞时得到此链。
+
+在此平稳链，中心化二值函数 X_i-μ 张成唯一非平凡特征方向，其特征值 -η。因此对每个整数 d≥0，
+
+$$
+\operatorname{Cov}(X_0,X_d)=\frac\eta{(1+\eta)^2}(-\eta)^d.
+$$
+
+三个相邻位点的均值 X=Y=Z=μ；低、高、中顺序的协方差矩阵是
+
+$$
+\frac\eta{(1+\eta)^2}
+\begin{pmatrix}1&\eta^2&-\eta\\\eta^2&1&-\eta\\-\eta&-\eta&1\end{pmatrix}.
+$$
+
+五态概率仍由 命题 15.6 的 p_∞(η) 式给出。直接相乘得 p_Op_J=p_Lp_R，即给定中位为 0 后端点条件独立（条件质量 1-μ>0）；但无条件 Cov(x,y)=η³/(1+η)²>0。三个均值相同不意味着协方差或量子响应各向同性。
+
+
+证明。将五个活动权代入定义 15.1 的守卫矩阵，直接计算迹和行列式；将两种方向的 $ad,bc$ 代入定理 15.4 证明中的系数式，得到不同的方向系数。逐项检查 $H_\lambda v=\Lambda v$ 和 $\pi P_\eta=\pi$，得到 Perron 共轭。中心化占位函数是特征值 $-\eta$ 的方向，迭代后取平稳内积即为协方差；距离二和一给矩阵的端点项和中端项。三位模式概率由同一条平稳链的 $\pi_iP_{ij}P_{jk}$ 给出，所以条件独立与无条件正关联同时成立。
+
+**定理 15.9（开放有限来源的压力与每位 Fisher）。**
+
+
+令 h=logλ、S_N=∑_{i=1}^N X_i。开放 N 位合法词法则为 exp(h S_N)/Z_N(h)，两端无额外权。固定支持、有限和可以直接求导：∂_h log Z_N=E_open S_N，∂²_h log Z_N=Var_open(S_N)。首位分解给 Z₀=1、Z₁=1+λ、Z_N=Z_{N-1}+λ Z_{N-2}。
+
+令 ρ=1-Λ=-ηΛ。解这个实际开放链递推得
+
+$$
+Z_N=\frac{\Lambda^{N+2}-\rho^{N+2}}D,\qquad
+\frac{\log Z_N}N=\frac{N+2}N\log\Lambda-\frac{\log D}N
++\frac1N\log(1-(-\eta)^{N+2}).
+$$
+
+在每个紧 h 区间上，0<η≤q<1，D,Λ,η 的前二阶导数有界，末项及其前二阶 h 导数受常数倍 N² q^N/N 控制并趋零；中间项的导数是 O(1/N)。这是极限求导的显式一致控制，不是未经证明交换导数与极限。因此
+
+$$
+\psi(h)=\lim_{N\to\infty}N^{-1}\log Z_N=\log\Lambda,\quad
+\psi'(h)=\mu=\tfrac12(1-1/D),\quad
+\psi''(h)=\frac\lambda{(1+4\lambda)^{3/2}}
+=\frac{\eta(1-\eta)}{(1+\eta)^3}
+=\lim_{N\to\infty}\frac{\operatorname{Var}_{\rm open}(S_N)}N.
+$$
+
+对另一个明确平稳抽样的 N 位段，才有有限精确式
+
+$$
+\operatorname{Var}_{\rm stat}(S_N)=N\operatorname{Var}(X_0)
++2\sum_{d=1}^{N-1}(N-d)\operatorname{Cov}(X_0,X_d).
+$$
+
+固定 λ 下绝对可和的 (-η)^d 允许除 N 后取极限；几何级数给 Var(X₀)+2∑_{d≥1}Cov(X₀,X_d)=η(1-η)/(1+η)³=ψ''。开放有限 Gibbs 律一般不平稳，不能把这项仅依赖 d 的协方差公式作为其精确有限恒等式。两者每位极限相同已由真实开放 partition 递推证明。
+
+同一有限统计族的 score 为 S_N-E S_N，Fisher 信息是 Var_open S_N；在 h 坐标的每位极限为 ψ''。在 λ=1 时单点平稳方差为 1/5，而每位 Fisher 极限为 1/(5√5)。这是一参数统计度量；换参数须按导数平方变换。若谈 KL 的二阶展开，仅对固定有限 N 的这个共同正支持族有 D_KL(P_h||P_{h+t})=½Var_h(S_N)t²+o(t²)；这不推出无限体量统一 KL 界、物理曲率或 RH。
+
+**命题 15.10（原生当前模式的有限深度非统一遗忘）。**
+
+固定 λ 时，P_η 的行差给 TV(P_η^d(0,·),P_η^d(1,·))=η^d，每个整数 d≥0；任意固定有限正 d 的 sup_{0<η<1}η^d=1。但这句话须接回原生窗口边界任务。
+
+取 N≥1 个中间窗口及一个当前窗，所有窗权为 (1,λ,λ,λ,λ²)。固定当前高端 incoming guard 权 ℓ_g=π_g/v_g>0，v=(Λ,1)；只改变最远输出守卫边界 b=e₀ 或 e₁。这完全属于 定义 15.1 因子化合同，两种 partition 均正。当前窗后输出守卫 g 的固定总前权为 α=ℓK=Λ³ℓ，因为 K=Λ³diag(v)P_η³diag(v)⁻¹。于是远端 e_j 时当前输出守卫的归一化质量为
+
+$$
+q^{(j)}_g=\frac{\pi_g(P_\eta^{3N})_{gj}}{\pi_j}
+=(P_\eta^{3N})_{jg},\qquad j,g\in\{0,1\}.
+$$
+
+最后一步是 π₀η=π₁ 的详细平衡及其幂。两种当前五態律在 x=g 组内仍相同，所以由 定理 15.4 的精确组公式，
+
+$$
+\operatorname{TV}(\mu^{(0)}_\lambda,\mu^{(1)}_\lambda)=\eta^{3N},\qquad
+\sup_{\lambda>0}\operatorname{TV}(\mu^{(0)}_\lambda,\mu^{(1)}_\lambda)=1
+\quad\text{对每个固定整数 }N\ge1.
+$$
+
+每个 λ 下当前权与另一端 ℓ 都固定，仅一个远端变；在参数族之间 λ 和指定 ℓ 可以变化，这正是被否定的“全部 λ 一致深度”量词。位点距离 d=3N，不能把八位点当成八窗口：η=0.999 时 d=8 的 η⁸>0.99；八窗口用 η=0.9999，则 η²⁴≥1-24×0.0001=0.9976>0.99。任意固定 λ 仍趋零。λ→∞ 的近交替极限解释慢衰减；它不反驳所有中间权固定为 1 的主定理。非局部全局约束则是另一种模型外障碍，也不被本反例或本定理消去。
+
+
+证明。$P_\eta$ 的非平凡特征值为 $-\eta$，两行差迭代得到 $\eta^d$。守卫消息式及 Perron 共轭使当前组质量等于显示的 $q^{(j)}$；详细平衡给反向幂，组内模式比例不变，因此完整五态 TV 恰为行 TV。$\eta\uparrow1$ 等价于 $\lambda\uparrow\infty$，给上确界一；每个固定 $\eta<1$ 仍指数衰减。
+
+**命题 15.11（单位体相在指定 Pauli 读口下各向异性）。**
+
+
+只在另行供应 U_O=I、U_L=σ_x、U_T=U_J=σ_y、U_R=σ_z 的数学实现时，定义 Φ_p(M)=∑_s p_s U_s M U_s*。此处 p 必须是实际所选五态律；先前原始局部 p 不自动代入体相或当前律。对 M=½(aI+r·σ)，共轭逐项给保迹且 Bloch 对角乘数
+
+$$
+(p_O+p_L-p_T-p_J-p_R,\ p_O-p_L+p_T+p_J-p_R,\ p_O-p_L-p_T-p_J+p_R).
+$$
+
+若要该 Pauli 混合对任意三维 Bloch 旋转协变，各轴乘数必须相同，即 p_L=p_R=p_T+p_J。单位权体相 p_∞ 不满足它；以 κ_∞=p_J=1-2/√5，映射为 (r_x,r_y,r_z)↦κ_∞(-r_x,3r_y,-r_z)，是各向异性的。沿给定可微 p 路径的响应仅由这些系数的导数计算，限于声明的 Pauli 实现。
+
+
+
+
+本节采用 [SecondOrder 定义 112.1、定理 112.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#112-五模式权重与固定基架旋转) 的同一 Pauli 字典，$O,L,T,R,J$ 对应该条目的 $0,2,3,5,25$。一般 Bloch 表示使用该卷第 66 章：Hermitian $M=\tfrac12(aI+r\cdot\sigma)$ 的迹为 $a$，特征值为 $(a\pm\|r\|)/2$，所以 $M\ge0$ 当且仅当 $a\ge\|r\|$。这是本应用的矩阵中间步骤。其代数对应为 `D5.S3.Quantum.Information.ActualPureQubitCostInfimum` 的 `blochMatrix_trace`、`bloch_blochMatrix`、`bloch_geometry_of_isHermitian` 和 `norm_bloch_le_trace_of_posSemidef`：该处 Hermitian 矩阵、迹与三维 Bloch 向量分别对应本节的 $M,a,r$。
+
+证明。$\sigma_j$ 共轭保持第 $j$ 个坐标、反转另外两个，按同一 $p$ 加权便得到三个系数。与所有旋转交换的实对角矩阵只能是标量矩阵，三系数相等给 $p_L=p_R=p_T+p_J$。将命题 15.6 的五概率代入得到 $\kappa_\infty(-1,3,-1)$，其中 $\kappa_\infty=1-2/\sqrt5>0$，所以三系数不同。经典二守卫比值不包含非对角历史块或再用环境；本结果须有声明的 Pauli 实现。
+
+**命题 15.12（原生开放位词的求和—最大值误差）。**
+
+
+令 L≥0 为位点个数（若按窗口计 m，则 L=3m），Ω_L 为开放合法位词，|Ω_L|=F_{L+2}。对固定有限实值 score f:Ω_L→ℝ、β>0，设 M=max_Ω f，把 e^{βM} 从和中提出即得
+
+$$
+M\le\beta^{-1}\log\sum_{w\in\Omega_L}e^{\beta f(w)}
+\le M+\frac{\log F_{L+2}}\beta.
+$$
+
+固定 L 时 β→∞ 给最大值；固定有限 β 而 L→∞，未按 L 归一化的上界误差约 L logφ/β，不趋零，每位上界误差趋 logφ/β。原生 $K$ 在这些合法位词上求和。另一份算术最大值接口见 [RoughPrimeSuffixBellman](../../../Blueprint/D5/S3/Arith/ExponentExchange/RoughPrimeSuffixBellman.md)：其 $\operatorname{Feasible}(y,i,b,h)$ 保留截点后的连续素数、整数预算和指数上限，$V$ 取同一可行指数列表的最大值。这里的 $L,\beta$ 及位词没有给出到该整数域的映射。
+
+Robin 所需逐点目标是对每个整数 n>5040 证明 σ(n)/n<e^γ log log n。[FewDistinctPrimes](../../../Blueprint/D5/S3/Arith/Robin/FewDistinctPrimes.md) 的范围为不同素因子数至多八及 $5040<n<223092870$，保留原假设，此范围不含全部正整数。本章 TV 界只控制上述共同法则下的有界平均，不能推出逐 n 正间隙或算术最坏尾界。若要迁移，须供应同一真实逐点来源及转移、覆盖所有可行路径的上界、正的统一裕量，以及与该任务量纲及归一化相容的显式误差桥；这些额外桥梁不由本章假设推出。小平均差允许某个稀有路径有大误差。
+
+
+证明。有限 log-sum-exp 是本原生应用中的经典中间步骤：最大项给下界，全部 $F_{L+2}$ 项各不超过最大项给上界；$L=0$ 时只有空词，误差零。Binet 式给 $L^{-1}\log F_{L+2}\to\log\phi$，得到所列每位误差界。这没有给逐整数 Robin 目标的比较桥。
+
+数学引文。Garrett Birkhoff，*Extensions of Jentzsch’s theorem*，Transactions AMS 85，219–227，DOI [10.1090/S0002-9947-1957-0087058-6](https://doi.org/10.1090/S0002-9947-1957-0087058-6)，承担 Hilbert 正锥收缩先例；二阶精确系数已在定理 15.4 内推导。William Parry，*Intrinsic Markov chains*，Transactions AMS 112，DOI [10.1090/S0002-9947-1964-0161372-1](https://doi.org/10.1090/S0002-9947-1964-0161372-1)，承担 Perron–Markov 构造先例。Ole J. Heilmann、Elliott H. Lieb，*Theory of monomer-dimer systems*，Communications in Mathematical Physics 25，190–232，DOI [10.1007/BF01877590](https://doi.org/10.1007/BF01877590)：第 $i$ 个占位对应扩展路径的边 $(i,i+1)$ 上权 $\lambda$ 的 dimer，monomer 权一，才给本章 $\lambda^{\#ones}$ 的来源；协方差、开放压力由命题 15.8、定理 15.9 的计算承担。R. A. Fisher，*On the mathematical foundations of theoretical statistics*，Philosophical Transactions A 222，309–368，DOI [10.1098/rsta.1922.0009](https://doi.org/10.1098/rsta.1922.0009)，只作 score 方差信息的命名先例，不替代开放 partition 的求导证明。
+
+## 追加锚（本行以下为增补区）
