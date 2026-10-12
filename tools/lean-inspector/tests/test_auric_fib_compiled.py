@@ -305,7 +305,9 @@ class CompiledFibIntegration(unittest.TestCase):
 
     def write_sources(self):
         for path, text in zip(self.paths, (self.application, self.source)):
-            path.write_text(text)
+            data = text.encode('utf-8')
+            if not path.exists() or path.read_bytes() != data:
+                path.write_bytes(data)
 
     def command(self, args, expected=0, *, full=False):
         started = time.monotonic()
@@ -571,6 +573,32 @@ class CompiledFibObservationTests(unittest.TestCase):
         for index, (phase, boundary) in enumerate([
             ('lake-report-programs', 'start'), ('lake-report-programs-callback', 'start'),
             ('lake-report-inspector', 'ready'), ('lake-analyzer-await', 'start')]))
+
+    def test_source_writes_preserve_unchanged_dependency_and_apply_each_mutation(self):
+        fixture = CompiledFibIntegration()
+        with tempfile.TemporaryDirectory() as directory:
+            fixture.paths = [Path(directory) / name for name in ('application.lean', 'source.lean')]
+            fixture.application, fixture.source = 'first application\n', 'private source\n'
+            fixture.write_sources()
+            for path in fixture.paths:
+                os.utime(path, ns=(1_000_000_000, 1_000_000_000))
+            original = [(path.read_bytes(), path.stat().st_mtime_ns) for path in fixture.paths]
+            fixture.write_sources()
+            self.assertEqual(original, [(path.read_bytes(), path.stat().st_mtime_ns)
+                                        for path in fixture.paths])
+            fixture.application = 'removed application\n'
+            fixture.write_sources()
+            self.assertEqual(fixture.paths[0].read_bytes(), fixture.application.encode())
+            self.assertEqual(original[1], (fixture.paths[1].read_bytes(), fixture.paths[1].stat().st_mtime_ns))
+            fixture.application = original[0][0].decode()
+            fixture.write_sources()
+            self.assertEqual(original[0][0], fixture.paths[0].read_bytes())
+            self.assertEqual(original[1], (fixture.paths[1].read_bytes(), fixture.paths[1].stat().st_mtime_ns))
+            fixture.source = 'changed private source\n'
+            before = (fixture.paths[0].read_bytes(), fixture.paths[0].stat().st_mtime_ns)
+            fixture.write_sources()
+            self.assertEqual(before, (fixture.paths[0].read_bytes(), fixture.paths[0].stat().st_mtime_ns))
+            self.assertEqual(fixture.paths[1].read_bytes(), fixture.source.encode())
 
     def test_only_complete_callback_and_inspector_sequence_opens_interval(self):
         events = self.await_start.splitlines(keepends=True)
