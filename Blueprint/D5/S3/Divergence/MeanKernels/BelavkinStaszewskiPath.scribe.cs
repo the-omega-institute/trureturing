@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence.MeanKernels;
@@ -9,11 +10,53 @@ internal sealed class BelavkinStaszewskiPathDocument : IScribeDocumentDefinition
     {
         var rho = F.Id("rho");
         var sigma = F.Id("sigma");
+        var n = F.Id("n");
+        var a = F.Id("A");
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "A positive-density logarithmic divergence equals its weighted affine-inverse path energy.",
             H("The Positive-Density Logarithmic Path Identity"),
             Blocks(
+                Paragraph(Text(
+                    "For an arbitrary finite index type n with decidable equality, put "
+                    + "logPath(A,u) = (A-I) inverse((1-u)I+uA) for a square complex matrix A. "
+                    + "The inverse is the matrix nonsingular inverse. The following two "
+                    + "statements require positive definiteness, without trace normalization "
+                    + "or a nonempty-index assumption.")),
+                Describe.Lean(
+                    DescribeId.Create("positive-matrix-log-path-interval-integrability"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Divergence/MeanKernels/BelavkinStaszewskiPath.matrixLogPath_intervalIntegrable"),
+                    H("The positive-matrix logarithm path is interval integrable"),
+                    StatementSource.FromAuthor(Disp(All(
+                        [Bound("n", F.Id("FiniteType")), Bound("A", Call("ComplexSquareMatrix", n))],
+                        Implies(Call("PosDef", a),
+                            Call("IntervalIntegrable", Call("logPath", a), Call("Lebesgue"), D(0), D(1)))))),
+                    AssessedProvenance.FromRepo(
+                        LibraryNoteRef.Create("D5/L/Divergence/bhatia1997matrixanalysis")),
+                    Blocks(Paragraph(Text(
+                        "The scalar logarithm kernel is integrable on the compact parameter "
+                        + "interval after continuous functional calculus. Its inverse expression "
+                        + "equals logPath pointwise on that interval, which transfers integrability."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("positive-matrix-logarithm-path-representation"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Divergence/MeanKernels/BelavkinStaszewskiPath.matrix_log_eq_integral_path"),
+                    H("The actual matrix logarithm equals its affine-path integral"),
+                    StatementSource.FromAuthor(Disp(All(
+                        [Bound("n", F.Id("FiniteType")), Bound("A", Call("ComplexSquareMatrix", n))],
+                        Implies(Call("PosDef", a), Equal(Call("CFCLog", a),
+                            Call("intervalIntegral", Call("logPath", a), D(0), D(1))))))),
+                    AssessedProvenance.FromRepo(
+                        LibraryNoteRef.Create("D5/L/Divergence/bhatia1997matrixanalysis")),
+                    Blocks(Paragraph(Text(
+                        "The scalar logarithm integral holds on the positive spectrum of A. "
+                        + "Continuous functional calculus commutes with the integrable kernel "
+                        + "integral and identifies its scalar inverse with the matrix inverse. "
+                        + "Null endpoints connect the closed-interval set integral to the "
+                        + "oriented interval integral from zero to one."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("positive-density-logarithmic-divergence-equals-affine-inverse-path"),
                     DeclarationHandle.Create(
@@ -56,4 +99,11 @@ internal sealed class BelavkinStaszewskiPathDocument : IScribeDocumentDefinition
                             + "calculus, and finite-dimensional matrix algebra."))),
                     DescribeRole.Theorem))));
     }
+
+    private static Formula.BoundVariable Bound(string name, Formula type) =>
+        new(FormulaIdentifier.Create(name), type);
+    private static Formula All(Formula.BoundVariable[] variables, Formula body) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 }

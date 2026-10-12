@@ -43,7 +43,9 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
                     H("The affine-path integral differentiates the actual logarithm"),
                     StatementSource.FromAuthor(Disp(All(parameters,
                         Implies(hypothesis, Call("HasFDerivAt", Call("logMap", n), path, a))))),
-                    AssessedProvenance.FromRepo(),
+                    AssessedProvenance.FromRepo(
+                        LibraryNoteRef.Create("D5/L/Divergence/bhatia1997matrixanalysis"),
+                        LibraryNoteRef.Create("D5/L/Divergence/petz2001bkm")),
                     Blocks(
                         Paragraph(Text(
                             "Positive definiteness supplies a positive scalar d and a neighborhood s "
@@ -68,8 +70,9 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
                             Call("HasFDerivAt", Call("logMap", n), resolvent, a),
                             And(Call("IntegrableOn", Call("resolventDerivative", a), Call("positiveHalfLine")),
                                 All([Bound("H", s)], Eqn(Call("apply", resolvent, h),
-                                    Call("logDeriv", Call("value", a), Call("value", h))))))))),
-                    AssessedProvenance.FromRepo(),
+                                    Call("logDeriv", Call("value", a), Call("value", h)))))))))),
+                    AssessedProvenance.FromRepo(
+                        LibraryNoteRef.Create("D5/L/Divergence/petz2001bkm")),
                     Blocks(Paragraph(Text(
                         "The change of variable t = inverse(u)-1 sends (0,1) onto (0,infinity). "
                         + "The absolute Jacobian inverse(u squared) cancels the two inverse-scaling "
@@ -101,7 +104,8 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
                                             Call("logDeriv", Call("value", a), Call("value", h))))),
                                 All([Bound("H", s)],
                                     Le(D(0), Call("apply", hessian, h, h))))))))),
-                    AssessedProvenance.FromRepo(),
+                    AssessedProvenance.FromRepo(
+                        LibraryNoteRef.Create("D5/L/Divergence/petz2001bkm")),
                     Blocks(
                         Paragraph(Text(
                             "The product rule and trace_mul_logDeriv give the entropy gradient "
@@ -126,9 +130,7 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
                     + "classical formulas. The proofs above establish their CFC and derivative "
                     + "interfaces in the present real Hermitian space. Binary conditional "
                     + "expectation curvature, square contraction, singular-state limits, and "
-                    + "sharp contraction coefficients require further arguments.")),
-                Reference(LibraryNoteRef.Create("D5/L/Divergence/bhatia1997matrixanalysis")),
-                Reference(LibraryNoteRef.Create("D5/L/Divergence/petz2001bkm")))));
+                    + "sharp contraction coefficients require further arguments.")))));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula type) =>
@@ -138,7 +140,7 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
     private static Formula Eqn(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Le(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.LessOrEqual, right);
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
     private static Formula Implies(Formula left, Formula right) =>
