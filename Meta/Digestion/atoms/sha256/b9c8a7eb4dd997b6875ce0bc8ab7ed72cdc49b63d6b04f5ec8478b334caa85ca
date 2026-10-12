@@ -1,0 +1,122 @@
+**定理 8.3（固定原叶数的延迟重建）。** 对定义 8.1 的全部 $n\ge1$、$h,d\ge0$，
+从 $F_{n,h,d}^{\xi}(t)$ 恢复原来源 $q(t)$ 的充分且必要条件是
+$d\ge D_{\xi}(n,h)$，其中
+
+$$
+\boxed{
+\begin{aligned}
+D_P(n,h)&=n-1+\left\lfloor\frac h2\right\rfloor,\\
+D_c(n,h)&=
+\begin{cases}
+0,&n=1,\\
+n-1+\left\lfloor\frac h2\right\rfloor,&n\ge2,
+\end{cases}\\
+D_w(n,h)&=
+\begin{cases}
+0,&n\le2,\\
+n-2+\left\lceil\frac h2\right\rceil,&n\ge3.
+\end{cases}
+\end{aligned}
+}
+$$
+
+每个非零阈值都有同一对原 $n$ 叶来源，同时见证全部 $0\le d<D_{\xi}(n,h)$ 的失败；
+组成接口的见证保持延迟组成相等，叶词接口的见证保持延迟叶词相等。
+
+证明。定理 3.2 的 $c\rho=M c$、$w\rho=\sigma w$ 给出
+
+$$
+c(\rho^h t)=M^h c(t),\qquad w(\rho^h t)=\sigma^h(w(t)).
+$$
+
+$M$ 在整数向量上单射，$\sigma$ 在词上单射，故延迟组成相等恰等于原组成相等，延迟
+叶词相等恰等于原叶词相等。这是在实际像上的信息对应，不是把逆替换加入合法操作。
+
+充分性先取 $k=\lfloor h/2\rfloor$。§7.3 的叶预算给出：$\mathcal T_n$ 的最大叶深
+至多为 $n-1$，且深度 $n-1$ 不可能出现分支。因此 $P_{n-1}$ 恢复全部来源，
+$E_{n-1}$ 也恢复全部来源：它的 $\theta$ 在这个切片上只能代表 $\beta$，不可能代表
+分支。定理 8.2 于是给出 $d=n-1+k$ 时两种奇偶延迟的前缀都单射，证明 $P$ 的充分性，
+也证明 $n\ge2$ 时组成混合接口的充分性。$n=1$ 时，组成本身就区分 $\alpha,\beta$，
+所以延迟组成在 $d=0$ 已足够。
+
+当 $n\le2$ 时，原叶词决定全部树：一叶来源就是该叶，两叶来源只有一种有序二叉骨架。
+由 $\sigma^h$ 单射，任意延迟的叶词本身已足够，给出 $D_w=0$。对 $n\ge3$，若
+$h=2k$，在 $d=n-2+k$ 时定理 8.2 将前缀纤维送回 $P_{n-2}$，延迟叶词将词纤维
+送回 $w$；两者是同一来源的联合纤维，§7.3 的静态 $(w,P_{n-2})$ 重建恰好适用。若
+$h=2k+1$，所列阈值为 $n-1+k$，前缀本身已经足够。更深前缀包含临界前缀，故所有
+$d\ge D_{\xi}$ 都足够。
+
+必要性使用固定右梳上下文
+
+$$
+C_0(z)=z,\qquad C_{m+1}(z)=\langle\beta,C_m(z)\rangle.
+$$
+
+它增加 $m$ 个叶，并把 $z$ 放在地址 $R^m$。替换逐配对分配，所以对任意 $h$，两个
+共同上下文内来源的差异满足
+
+$$
+\delta(\rho^h C_m(z),\rho^h C_m(z'))
+=m+\delta(\rho^h z,\rho^h z').
+$$
+
+对纯前缀，取
+
+$$
+t_P=C_{n-1}(\alpha),\qquad u_P=C_{n-1}(\beta).
+$$
+
+这两棵树同有 $n$ 个叶且不相等。原子对的一步差异深度为零，定理 8.2 给出
+
+$$
+\delta(\rho^h t_P,\rho^h u_P)=n-1+k=D_P(n,h).
+$$
+
+因此全部更浅 $P_d$ 都相同。这也包含 $n=1$：当 $k>0$ 时单叶对见证所有
+$0\le d<k$，当 $k=0$ 时阈值为零，无非负的阈值以下深度。
+
+对 $n\ge2$ 的组成混合接口，取
+
+$$
+t_c=C_{n-2}(\langle\alpha,\beta\rangle),\qquad
+u_c=C_{n-2}(\langle\beta,\alpha\rangle).
+$$
+
+两者原组成同为 $(1,n-1)$，故所有延迟组成相等。原二叶子树在深度一出现
+$\alpha/\beta$ 差异，一次替换后首次差异仍在深度一。由两步深移及共同上下文，
+
+$$
+\delta(\rho^h t_c,\rho^h u_c)=n-1+k=D_c(n,h).
+$$
+
+所以全部阈值以下深度都产生相同的 $(c,P_d)$。在 $n=2$ 时上下文为空，正是两个
+有向二叶排列；$d=0$ 也包含在此见证中。
+
+对 $n\ge3$ 的叶词混合接口，取
+
+$$
+\begin{aligned}
+L_\beta&=\langle\langle\beta,\beta\rangle,\beta\rangle,
+&R_\beta&=\langle\beta,\langle\beta,\beta\rangle\rangle,\\
+t_w&=C_{n-3}(L_\beta),&u_w&=C_{n-3}(R_\beta).
+\end{aligned}
+$$
+
+两者同为 $n$ 叶来源，原叶词都是 $\beta^n$，故所有延迟叶词相等。局部原差异在深度一，
+且两个首差坐标都是 $\beta$ 与分支的比较；一次替换后这两个坐标都同为分支，差异推到
+深度二。具体地，$\rho L_\beta$ 与 $\rho R_\beta$ 的 $P_1$ 都只含分支，而地址
+$LR$ 分别返回分支与 $\alpha$。定理 8.2 因此给出
+
+$$
+\delta(\rho^h t_w,\rho^h u_w)=
+\begin{cases}
+n-2+k,&h=2k,\\
+n-1+k,&h=2k+1,
+\end{cases}
+=D_w(n,h).
+$$
+
+全部更浅 $(w,P_d)$ 都相同。$n=3$ 时上下文为空，$d=0$ 仍是碰撞；$n=1,2$ 的
+叶词阈值为零，无须也不存在非负的阈值以下深度。三类见证的原 $q$ 均不同，故任何实际像
+上的解码器都不能在这些碰撞处恢复来源。证毕。
+

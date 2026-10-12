@@ -319,7 +319,7 @@ private theorem B_completion (F : CommonFlow) :
   rw [hi]
   simpa only [hb, g, coordinate, lawKernel, Kernel.coe_mk] using h
 
-private theorem A_coordinate (F : CommonFlow) (n : ℕ) (i : Letter) :
+theorem A_coordinate (F : CommonFlow) (n : ℕ) (i : Letter) :
     ∀ᵐ W ∂F.nuB, law W {betaAtom n i} =
       v W * ∫⁻ Q, coordinate n i Q ∂F.A W := by
   filter_upwards [F.residualA] with W hW
@@ -356,7 +356,7 @@ private theorem B_coordinate (F : CommonFlow) (n : ℕ) (i : Letter) :
   rw [Measure.bind_apply (measurableSet_singleton _) (Kernel.aemeasurable _)] at h
   simpa only [hb, lawKernel, Kernel.coe_mk, coordinate] using h
 
-private theorem coordinate_step (F : CommonFlow) (n : ℕ) (i : Letter) :
+theorem coordinate_step (F : CommonFlow) (n : ℕ) (i : Letter) :
     ∀ᵐ Q ∂F.nuP, coordinate (n + 1) i Q = ∫⁻ R, coordinate n i R ∂F.L Q := by
   have hB : F.B ∘ₘ F.nuP = F.nuB := by
     rw [← F.marginB₁, ← Measure.snd_compProd, F.disintegrateB.disintegrate, F.marginB₂]
