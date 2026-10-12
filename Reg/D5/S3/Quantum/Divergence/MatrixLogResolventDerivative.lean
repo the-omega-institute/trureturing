@@ -46,7 +46,7 @@ local notation "L" => fun (A : S) (t : ℝ) =>
 def pathKernel (R : Realization weightSignature) (A : S) (t : ℝ) : S →L[ℝ] M :=
   (ContinuousLinearMap.mulLeftRight ℝ M
     (Ring.inverse (R.readout () () t • (1 : M) + t • A.val))
-    (Ring.inverse (R.readout () () t • (1 : M) + t • A.val))).comp ι
+    (Ring.inverse (B A.val t))).comp ι
 
 def resolventKernel (A : S) (t : ℝ) : S →L[ℝ] M :=
   (ContinuousLinearMap.mulLeftRight ℝ M (Ring.inverse (A.val + t • (1 : M)))
@@ -60,7 +60,7 @@ def gradientLinear : M →L[ℝ] (S →L[ℝ] ℝ) :=
     (Complex.reCLM.comp (Matrix.traceLinearMap n ℝ ℂ).toContinuousLinearMap)).comp
       ((ContinuousLinearMap.mul ℝ M).precompL S ι)
 
-/-- Every hypothesis and conclusion is retained; only the affine weight varies. -/
+/-- The first inverse's affine weight varies; the second inverse remains source-fixed. -/
 def pathArena : Arena where
   signature := weightSignature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
@@ -68,31 +68,31 @@ def pathArena : Arena where
     HasFDerivAt (fun Y : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)) => CFC.log Y.val)
       (∫ t in (0 : ℝ)..1, pathKernel R A t) A
 
-/-- The same half-line readout supplies the derivative, integrability and action clauses. -/
+/-- The derivative integral's half-line varies; integrability and action remain source-fixed. -/
 def resolventArena : Arena where
   signature := domainSignature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     (A : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ))) (_hA : A.val.PosDef),
     HasFDerivAt (fun Y : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)) => CFC.log Y.val)
       (∫ t in R.readout () () 0, resolventKernel A t) A ∧
-    IntegrableOn (resolventKernel A) (R.readout () () 0) ∧
+    IntegrableOn (resolventKernel A) (Ioi (0 : ℝ)) ∧
     ∀ H : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)),
-      (∫ t in R.readout () () 0, resolventKernel A t) H =
+      (∫ t in Ioi (0 : ℝ), resolventKernel A t) H =
         _root_.D5.S3.Divergence.LogDerivTrace.logDeriv A.val H.val
 
-/-- The real-part readout varies at each entropy and trace-pairing occurrence. -/
+/-- Only the explicit trace pairing varies; both actual entropy derivatives remain fixed. -/
 def hessianArena : Arena where
   signature := traceSignature
   Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
     (A : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ))) (_hA : A.val.PosDef),
-    HasFDerivAt (fderiv ℝ (traceEntropy R))
+    HasFDerivAt (fderiv ℝ (traceEntropy traceActual))
       (gradientLinear.comp (∫ t in Ioi (0 : ℝ), resolventKernel A t)) A ∧
     (∀ H J : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)),
-      (fderiv ℝ (fderiv ℝ (traceEntropy R)) A) H J =
+      (fderiv ℝ (fderiv ℝ (traceEntropy traceActual)) A) H J =
         R.readout () ()
           (J.val * _root_.D5.S3.Divergence.LogDerivTrace.logDeriv A.val H.val).trace) ∧
     ∀ H : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)),
-      0 ≤ (fderiv ℝ (fderiv ℝ (traceEntropy R)) A) H H
+      0 ≤ (fderiv ℝ (fderiv ℝ (traceEntropy traceActual)) A) H H
 
 theorem actual_path_law : pathArena.{u}.Law weightActual := @matrix_log_hasFDerivAt_path.{u}
 theorem actual_resolvent_law : resolventArena.{u}.Law domainActual :=
@@ -150,8 +150,6 @@ theorem rejected_hessian_law : ¬ hessianArena.{u}.Law traceRejected := by
   let n := ULift.{u} (Fin 1)
   let A : ↥(selfAdjoint.submodule ℝ (Matrix n n ℂ)) := ⟨1, IsSelfAdjoint.one _⟩
   have hh := (h A Matrix.PosDef.one).2.1 0 0
-  have he : traceEntropy (n := n) traceRejected = fun _ => (-1 : ℝ) := rfl
-  rw [he] at hh
   simp [traceRejected, realize] at hh
 
 theorem weight_dependence : ObservationalDependence weightSignature weightActual := by
@@ -199,7 +197,115 @@ def hessianEvidence : Registration hessianArena.{u}
     hessianArena.Law traceActual traceRejected rejected_hessian_law
   dependence := trace_dependence
 
-#print axioms pathEvidence
-#print axioms resolventEvidence
-#print axioms hessianEvidence
+/-- Source-bound four-slot candidate for the complete path theorem. -/
+def pathRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.matrix_log_hasFDerivAt_path.{u})
+      (type_of% (realize weightSignature (fun _ _ t => 1-t) (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.matrix_log_hasFDerivAt_path.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.pathEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨pathArena.{u}⟩
+  objectArena := .source ⟨pathArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source pathArena.{u} ⟨pathEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize weightSignature (fun _ _ t => 1-t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
+    definition := none
+    coordinates := #[]
+    readouts := #[
+    { path := #["body", "body", "body", "body", "body", "fn", "arg", "fn",
+        "fn", "fn", "arg", "body", "fn", "fn", "body", "body",
+        "fn", "arg", "fn", "arg", "arg", "fn", "fn", "body",
+        "body", "arg", "fn", "fn", "body", "body", "fn", "arg",
+        "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+/-- Source-bound four-slot candidate for the complete resolvent theorem. -/
+def resolventRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.matrix_log_hasFDerivAt_resolvent.{u})
+      (type_of% (realize domainSignature (fun _ _ t => Ioi t) (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.matrix_log_hasFDerivAt_resolvent.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.resolventEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨resolventArena.{u}⟩
+  objectArena := .source ⟨resolventArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source resolventArena.{u} ⟨resolventEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize domainSignature (fun _ _ t => Ioi t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
+    definition := none
+    coordinates := #[]
+    readouts := #[
+    { path := #["body", "body", "body", "body", "body", "fn", "arg", "fn",
+        "arg", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+/-- Source-bound four-slot candidate for the complete hessian theorem. -/
+def hessianRegistration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.trace_entropy_hessian_resolvent.{u})
+      (type_of% (realize traceSignature (fun _ _ z => z.re) (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.trace_entropy_hessian_resolvent.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative.hessianEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨hessianArena.{u}⟩
+  objectArena := .source ⟨hessianArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source hessianArena.{u} ⟨hessianEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize traceSignature (fun _ _ z => z.re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
+    definition := none
+    coordinates := #[]
+    readouts := #[
+    { path := #["body", "body", "body", "body", "body", "arg", "fn", "arg",
+        "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Quantum.Divergence.MatrixLogResolventDerivative
