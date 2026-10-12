@@ -1,1 +1,1 @@
-{"statement_id":"sha256:cbad0fb2efc70fc91db4315cff170134985cd4726f5e93ead531c969fbe0c92d"}
+{"statement_id":"sha256:cbad0fb2efc70fc91db4315cff170134985cd4726f5e93ead531c969fbe0c92d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:QuantumContext),19:FourierMatrixDefect),13:fourierDefect)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:QuantumContext),19:FourierMatrixDefect),28:fourier_defect_factor_supply)","kind":"theorem"}]}

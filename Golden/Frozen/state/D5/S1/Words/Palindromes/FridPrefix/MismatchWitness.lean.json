@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d3def712e600eaadd6545d63a05ef0756b25bf7065f9ef396256535e761eebca"}
+{"statement_id":"sha256:d3def712e600eaadd6545d63a05ef0756b25bf7065f9ef396256535e761eebca","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:FridPrefix),8:Language),14:badCoordinates)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:FridPrefix),8:Language),16:mismatch_witness)","kind":"theorem"}]}

@@ -212,12 +212,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositAfterSnapshotRevocationAppendsANewFreeze()
+    public void DepositForUnregisteredModuleWritesItsState()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalization();
-        fixture.WriteRevokedSnapshot();
 
         var result = fixture.Run("deposit");
 

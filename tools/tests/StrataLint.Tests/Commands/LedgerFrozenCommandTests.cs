@@ -57,7 +57,6 @@ public sealed class LedgerFrozenCommandTests
     }
 
     [Theory]
-    [InlineData("Golden/Frozen/accepted/unrelated.json")]
     [InlineData("Golden/Frozen/state/D5/S0/Carrier/Other.lean.json")]
     public void FrozenMembershipIgnoresMalformedUnrelatedFrozenInput(string frozenPath)
     {
@@ -83,7 +82,7 @@ public sealed class LedgerFrozenCommandTests
     [InlineData("not json")]
     [InlineData("{\"statement_id\":\"sha256:bad\"}\n")]
     [InlineData("{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"extra\":true}\n")]
-    [InlineData("{ \"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n")]
+    [InlineData("{ \"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"declarations\":[]}\n")]
     public void FrozenMembershipRejectsMalformedTargetState(string body)
     {
         var result = Run(createLedgerDirectory: true, activeFreeze: false,
@@ -99,7 +98,7 @@ public sealed class LedgerFrozenCommandTests
     public void NoncanonicalModuleTargetFailsBeforeReading(string target)
     {
         using var temporary = new TemporaryDirectory();
-        Directory.CreateDirectory(Path.Combine(temporary.Path, FrozenLedgerChangeClassifier.AcceptedRoot));
+        Directory.CreateDirectory(Path.Combine(temporary.Path, FrozenStatePath.Root));
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create([]), null);
 
         var result = LedgerFrozenCommand.Run(temporary.Path, gateway, ["--target", target]);
@@ -130,20 +129,17 @@ public sealed class LedgerFrozenCommandTests
         {
             Directory.CreateDirectory(Path.Combine(
                 temporary.Path,
-                FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar)));
+                FrozenStatePath.Root.Replace('/', Path.DirectorySeparatorChar)));
         }
 
-        IEnumerable<RawRepositoryEntry> entries = activeFreeze
-            ? EventFiles(BuildCatalog(Module("A"))).Select(static file =>
-                new RawRepositoryEntry(file.Path.Value, file.RawBytes))
-            : [];
+        IEnumerable<RawRepositoryEntry> entries = [];
         entries = entries.Append(RawRepositoryEntry.FromText(
             PathFor("A"), "theorem a : True := by\n  trivial\n"));
         if (statePin ?? activeFreeze)
         {
             entries = entries.Append(RawRepositoryEntry.FromText(
                 "Golden/Frozen/state/D5/S0/Carrier/A.lean.json",
-                "{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n"));
+                "{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"declarations\":[]}\n"));
         }
         if (unrelatedBody is not null)
         {

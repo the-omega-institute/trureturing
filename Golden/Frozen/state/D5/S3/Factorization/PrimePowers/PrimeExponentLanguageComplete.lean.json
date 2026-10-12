@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f97d487df6276aedf094140a4d07373d5a20f596434cd491a826616abb9a254f"}
+{"statement_id":"sha256:f97d487df6276aedf094140a4d07373d5a20f596434cd491a826616abb9a254f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),11:PrimePowers),29:PrimeExponentLanguageComplete),21:primeExponentLanguage)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),11:PrimePowers),29:PrimeExponentLanguageComplete),32:prime_exponent_language_complete)","kind":"theorem"}]}

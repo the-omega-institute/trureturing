@@ -107,7 +107,7 @@ __main() {
               (Meta/Digestion/backfill/*) continue ;;
               (Meta/Digestion/atomizers.toml) continue ;;
               (Meta/Digestion/atoms/sha256/*) continue ;;
-              (Golden/Frozen/accepted/*) continue ;;
+              (Golden/Frozen/state/*) continue ;;
               (Golden/Frozen/state/*) continue ;;
               (Blueprint/*.md) continue ;;
               (Problems/*.md)

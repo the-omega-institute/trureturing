@@ -1,1 +1,1 @@
-{"statement_id":"sha256:933adb8240e26ee8c16ace37c94ea6c43a9ee78f3ed32320397a7687deacc295"}
+{"statement_id":"sha256:933adb8240e26ee8c16ace37c94ea6c43a9ee78f3ed32320397a7687deacc295","declarations":[{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),19:SmallTwistedProduct),20:right_stable_closure)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),19:SmallTwistedProduct),23:finite_right_stable_inv)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),19:SmallTwistedProduct),29:card_mul_strict_of_generating)","kind":"theorem"}]}

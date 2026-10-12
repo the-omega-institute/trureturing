@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4d7c27fda367a40e58b43c73c0e540d9655da316122d91753445412b8a0a40ca"}
+{"statement_id":"sha256:4d7c27fda367a40e58b43c73c0e540d9655da316122d91753445412b8a0a40ca","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),7:Algebra),26:WeylDisplacementTwoTorsion),24:two_torsion_overlap_conj)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),7:Algebra),26:WeylDisplacementTwoTorsion),32:star_displacement_of_two_torsion)","kind":"theorem"}]}

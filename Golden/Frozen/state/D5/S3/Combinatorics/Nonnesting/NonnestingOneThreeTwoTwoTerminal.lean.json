@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f3d9c22f2344f836b64eae393021cd1cf66a7ebcfddcf47d1ae04786bc42f8af"}
+{"statement_id":"sha256:f3d9c22f2344f836b64eae393021cd1cf66a7ebcfddcf47d1ae04786bc42f8af","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),32:NonnestingOneThreeTwoTwoTerminal),22:terminal_factorization)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),32:NonnestingOneThreeTwoTwoTerminal),22:terminal_factorization),7:match_1)","kind":"def"}]}

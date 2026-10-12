@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f8d4e451ac8459519dca05b63dd8ddbd9dfb9f9e46b70e4db0b37d2d04517e94"}
+{"statement_id":"sha256:f8d4e451ac8459519dca05b63dd8ddbd9dfb9f9e46b70e4db0b37d2d04517e94","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),10:Bogoliubov),26:BogoliubovNormConservation),28:bogoliubov_norm_conservation)","kind":"theorem"}]}

@@ -18,25 +18,23 @@ __GOAL_ARTIFACT__
 1. **Statement fidelity**: the public theorem(s) state exactly the target (open problem / atom clause); no weakening, no invented hypothesis, no definitional tautology; grader traps: witness-vs-universal, instance-vs-general, conditional-vs-unconditional, pointwise-vs-operator, proof-internal-vs-addressable, mechanism-vs-outcome.
 2. **Escape content (CLAUDE.md §3.2)**: for every public theorem check the PR body's `proof_shape` / direct frozen dependencies (GID + statement_id) / `escape_witness` (on the LIVE proof path, not smuggled) / module `admission_basis`. The module-level admission bases are `escape-witness` and, for a preregistered, literature-checked EXTERNAL named open problem only, `open-problem-resolution` (CLAUDE.md §3.2, owner 2026-09-15: a bind-only proof does not refuse such a resolution; check its conditions (a)–(d) — only the settling declarations and consumed helpers, honest per-declaration `proof_shape`, `OpenProblemResolutionClaim` + dossier + literature check, §3.3 utility unchanged); under `escape-witness` reject every wholly bind-only first-freeze module, including upstream wrappers and atom-required bridges. Atom prose, API/coverage needs and future consumer promises grant no exception. Bind-only helpers and companions, public or private, are allowed when another declaration of the delivery or the existing tree uses them on its live proof path (a live `consumer → prerequisite` edge; §3.2 「有消费的辅助声明」); reject an unused one, and do not ask for a consumed helper to be inlined. A consumed helper never supplies the module's escape witness or admission basis; the module must still have its own valid escape witness or settle under `open-problem-resolution`.
 3. **Duplicate / bind-first**: equal-or-stronger statement in D5 or pinned Mathlib? (`git grep` statement shapes; def-level duplicates too; the seat's search trace is a claim — verify it.)
-4. **Artifact shape**: header shape: a NEW module (first freeze) has a SEVEN-line header — `utility:` on line 6 (SL-031) and line 7 ends with ` -/`; a pre-existing module without `utility:` keeps six lines (the field is optional in `RepositoryRules.Helpers.cs` `HeaderPattern` and is required only where `UtilityAdmissionRule` sees a first Freeze). `tools/scripts/agent/header-check.sh` accepts exactly these two shapes — treat it, not this brief, as the arbiter, generality tag vs weakest import, GID = path, natural bucket + capacity (read `DirectoryFileLimit` from the owner file), Blueprint `.scribe.cs` mirror and emitted `.md` mirror every conjunct symbol by symbol, scribe formula taxonomy, every import consumed by a declaration (unused import = false ledger edge).
-5. **Ledger (post-#4847 regime)**: ONE builder commit carrying module + mirror + one Freeze event (+ cover moves only if an atom is covered); no hand edits to `Meta/Digestion/**` or `Golden/Frozen/**` beyond door output; `prerequisite_frozen_node_ids` resolve to modules actually imported and used.
+4. **Artifact shape**: header shape: a NEW module (first freeze) has a SEVEN-line header — `utility:` on line 6 (SL-031) and line 7 ends with ` -/`; a pre-existing module without `utility:` keeps six lines (the field is optional in `RepositoryRules.Helpers.cs` `HeaderPattern` and is required only where `UtilityAdmissionRule` sees a first state pin). `tools/scripts/agent/header-check.sh` accepts exactly these two shapes — treat it, not this brief, as the arbiter, generality tag vs weakest import, GID = path, natural bucket + capacity (read `DirectoryFileLimit` from the owner file), Blueprint `.scribe.cs` mirror and emitted `.md` mirror every conjunct symbol by symbol, scribe formula taxonomy, every import consumed by a declaration (unused import = false ledger edge).
+5. **Frozen state**: ONE builder commit carrying module + mirror + its state record (+ cover moves only if an atom is covered); no hand edits to `Meta/Digestion/**` or `Golden/Frozen/**` beyond door output; state pin and declaration inventory match the current module report, and direct dependencies are resolved from source imports.
 6. **PR body**: provenance triple (skill / carriers / mixing), echo table, search trace, readings with exit codes and HEAD; no vague-word substitutes for measurements.
 
 ## Seat-specific bias
 __BIAS__
 
-## Two contract readings that have each cost a review round — settle them from the source text, not from intuition
+## Publication boundary and carrier composition
 
 **"One builder commit."** `skills/codex-formalize/SKILL.md` Step 7 introduces it as: *"Before pushing,
 inspect the complete **deposit-and-cover** delta and create one builder-owned commit"*, and the Step 7
 postcondition ("the complete intended delta is in one explicit builder commit") is that sentence's
-postcondition. Its scope is the **door output** — the Freeze event, the state pin, the coverage moves, the
+postcondition. Its scope is the **door output** — the state record, the coverage moves, the
 Problems dossier and any mirror the door regenerated — not the whole lane. `CLAUDE.md` §6.1 separately
 requires committing and pushing each logical unit as it compiles, so a lane necessarily has earlier
 content commits; reading Step 7 as "one commit for the entire lane" makes the two requirements
-unsatisfiable together. The landed precedent is uniform: e.g. `0fea3f42a3` ("evidence: freeze the A091915
-resolution", PR #8110, MERGED) is a freeze-only commit touching two Blueprint files plus the accepted
-event, the state pin and the Problems dossier. Judge whether the **deposit-and-cover delta** is in one
+unsatisfiable together. Judge whether the **deposit-and-cover delta** is in one
 commit; do not require the Lean module to be in it.
 
 **Carrier composition and its fallback.** The GoalArtifact's composition line states the intended mix, and

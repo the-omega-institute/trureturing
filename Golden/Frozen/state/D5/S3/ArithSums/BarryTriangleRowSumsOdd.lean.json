@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f98dceb061920be928f4a5e9a8e0d9e090fd580dafb12cf4213ec8c52b937070"}
+{"statement_id":"sha256:f98dceb061920be928f4a5e9a8e0d9e090fd580dafb12cf4213ec8c52b937070","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:ArithSums),23:BarryTriangleRowSumsOdd),6:result)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:ArithSums),23:BarryTriangleRowSumsOdd),6:rowSum)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:ArithSums),23:BarryTriangleRowSumsOdd),8:rowEntry)","kind":"def"}]}

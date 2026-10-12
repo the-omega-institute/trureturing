@@ -1,1 +1,1 @@
-{"statement_id":"sha256:07d3400c4ef817b7e80cdb687b938ceeadf6cb432f8b9ade099d1ded75563c16"}
+{"statement_id":"sha256:07d3400c4ef817b7e80cdb687b938ceeadf6cb432f8b9ade099d1ded75563c16","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),17:RefinementAlgebra),36:DominanceNontransitivityCountermodel),33:complete_dominance_not_transitive)","kind":"theorem"}]}

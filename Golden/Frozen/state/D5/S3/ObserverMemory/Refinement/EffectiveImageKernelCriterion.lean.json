@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9d34cb0f6a36656142ebebcd3801f27befec523b6e623f93eb1ac02553bec081"}
+{"statement_id":"sha256:9d34cb0f6a36656142ebebcd3801f27befec523b6e623f93eb1ac02553bec081","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Refinement),29:EffectiveImageKernelCriterion),51:refinement_iff_kernel_inclusion_on_effective_images)","kind":"theorem"}]}

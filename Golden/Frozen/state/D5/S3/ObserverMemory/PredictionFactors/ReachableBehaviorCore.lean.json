@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d902ce90ff56eba39596f2a5eabed6162f1615e4cc37e9c54e43aea71b0b1a22"}
+{"statement_id":"sha256:d902ce90ff56eba39596f2a5eabed6162f1615e4cc37e9c54e43aea71b0b1a22","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),17:PredictionFactors),21:ReachableBehaviorCore),23:reachable_behavior_core)","kind":"theorem"}]}

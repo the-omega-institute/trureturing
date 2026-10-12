@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1d760c225a226c7296c0d54f4d4539c6f35c5109a48683ddbaf422b19d30a1f1"}
+{"statement_id":"sha256:1d760c225a226c7296c0d54f4d4539c6f35c5109a48683ddbaf422b19d30a1f1","declarations":[{"declaration_name_key":"ns(ns(n0,8:Function),7:funEqOn)","kind":"def"},{"declaration_name_key":"ns(ns(ns(n0,8:Function),7:funEqOn),9:of_subset)","kind":"theorem"}]}

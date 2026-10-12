@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6e3e898ec6b6d38283f42744ca0d390f739de000f9cfd82e54e4a65c58b5de76"}
+{"statement_id":"sha256:6e3e898ec6b6d38283f42744ca0d390f739de000f9cfd82e54e4a65c58b5de76","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),11:FixedPoints),13:ThreeCycleGap),31:three_cycle_has_fixed_point_gap)","kind":"theorem"}]}

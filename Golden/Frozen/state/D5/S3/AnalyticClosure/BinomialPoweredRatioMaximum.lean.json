@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2fede5a7e30ad2ccc62f3e45cd46fe7e854550fad308a2ab280556562c1515b5"}
+{"statement_id":"sha256:2fede5a7e30ad2ccc62f3e45cd46fe7e854550fad308a2ab280556562c1515b5","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:AnalyticClosure),27:BinomialPoweredRatioMaximum),12:maximumValue)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:AnalyticClosure),27:BinomialPoweredRatioMaximum),18:maximum_asymptotic)","kind":"theorem"}]}

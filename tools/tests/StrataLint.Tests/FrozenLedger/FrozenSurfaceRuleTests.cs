@@ -14,9 +14,9 @@ public sealed partial class FrozenSurfaceRuleTests
     // Derived with POSIX printf and shasum -a 256 over the documented statement
     // domain prefix and canonical declaration/module JSON, outside production code.
     private const string ExpectedFrozenModuleStatementPin =
-        "sha256:3d2b9bf06c5fb9076c8206428611c597cc723e59b64f5415e7dae6049ee954e2";
+        "sha256:c7c16c7d0d3f7aff1acedaf38c726973791a72b27e0e86a86253b869689f54fd";
     private const string ExpectedChangedFrozenModuleStatementPin =
-        "sha256:410bb522f539e28e4d11d468ba910476da9a0462246fc575d54526b3c57d0a2e";
+        "sha256:33d3186ad1f1f006be932d8879572ef0da6f645de65b62648e80df40fcd3d417";
     private static readonly string FrozenStatePathValue =
         FrozenStatePath.FromModulePath(RepoPath.CreateKnown(FrozenPath)).Value;
 
@@ -104,30 +104,30 @@ public sealed partial class FrozenSurfaceRuleTests
     [Theory]
     [InlineData(RawChangeKind.Modified)]
     [InlineData(RawChangeKind.Deleted)]
-    public void Sl008AllowsSnapshotReplacementOfAcceptedEventFragment(RawChangeKind kind)
+    public void Sl008AllowsStateReplacementOrDeletion(RawChangeKind kind)
     {
-        var fixture = FrozenFixture(out var eventPath);
+        var fixture = FrozenFixture(out var statePath);
         if (kind == RawChangeKind.Deleted)
         {
-            fixture.Files.Remove(eventPath);
+            fixture.Files.Remove(statePath);
         }
         else
         {
             AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
         }
 
-        var evaluation = Evaluate(fixture, (eventPath, kind));
+        var evaluation = Evaluate(fixture, (statePath, kind));
 
         Assert.Empty(evaluation.Diagnostics);
     }
 
     [Fact]
-    public void Sl008AllowsAddedAcceptedEventFragment()
+    public void Sl008AllowsAddedStateRecord()
     {
-        var fixture = FrozenFixture(out var eventPath);
+        var fixture = FrozenFixture(out var statePath);
         AddState(fixture, FrozenPath, ModuleStatementId(fixture, FrozenPath));
 
-        var evaluation = Evaluate(fixture, (eventPath, RawChangeKind.Added));
+        var evaluation = Evaluate(fixture, (statePath, RawChangeKind.Added));
 
         Assert.Empty(evaluation.Diagnostics);
     }
@@ -202,7 +202,7 @@ public sealed partial class FrozenSurfaceRuleTests
 
         Assert.Equal($"frozen state {FrozenStatePathValue}", diagnostic.Path);
         Assert.Contains(
-            "record keys must be exactly {statement_id}",
+            "record keys must be exactly {statement_id, declarations}",
             diagnostic.Message,
             StringComparison.Ordinal);
     }
@@ -223,31 +223,12 @@ public sealed partial class FrozenSurfaceRuleTests
     }
 
     [Fact]
-    public void Sl008CatalogExecutesC6ForAddedAcceptedFreezeWithoutFrozenStatePin()
-    {
-        var fixture = new RuleFixture();
-        var eventPath = AddFreeze(fixture, FrozenPath);
-
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(
-                RawChangeSet.CreateWithKinds([(eventPath, RawChangeKind.Added)])))).Capability;
-
-        var diagnostic = Assert.Single(completed.Diagnostics, static diagnostic =>
-            diagnostic.RuleId == RuleId.CreateKnown(8));
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(eventPath, diagnostic.Path);
-        Assert.Contains(FrozenPath, diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains(FrozenStatePathValue, diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains(RuleId.CreateKnown(8), completed.ExecutedRules);
-    }
-
-    [Fact]
     public void Sl008AllowsHeaderOrCommentChangesWhenTheModulePinIsUnchanged()
     {
         var fixture = new RuleFixture();
         var pin = StatementId.Create(ExpectedFrozenModuleStatementPin);
         AddState(fixture, FrozenPath, pin, includeInBaseline: true);
-        _ = AddFreeze(fixture, FrozenPath, pin);
+        _ = RegisterState(fixture, FrozenPath, pin);
         var baselineSource = fixture.Baseline[FrozenPath];
         fixture.Files[FrozenPath] = fixture.Files[FrozenPath].Replace(
             "anchors: []",
@@ -365,7 +346,7 @@ public sealed partial class FrozenSurfaceRuleTests
                 "fixtureValue",
                 "def",
                 "Nat",
-                ImmutableArray.Create("Classical.choice", "Quot.sound", "propext"))]);
+                ImmutableArray.Create("Classical.choice", "Quot.sound", "propext")) { NameKey = "ns(n0,12:fixtureValue)" }]);
         var actual = ModuleStatementId(fixture, downstream);
         Assert.NotEqual(stored, actual);
 
@@ -545,37 +526,24 @@ public sealed partial class FrozenSurfaceRuleTests
         Assert.NotEmpty(evaluation.Diagnostics);
     }
 
-    private static RuleFixture FrozenFixture(out string eventPath)
+    private static RuleFixture FrozenFixture(out string statePath)
     {
         var fixture = new RuleFixture();
-        eventPath = AddFreeze(fixture, FrozenPath);
+        statePath = RegisterState(fixture, FrozenPath);
         return fixture;
     }
 
-    private static string AddFreeze(
+    private static string RegisterState(
         RuleFixture fixture,
         string descriptorSelector,
         StatementId? statementId = null)
     {
         var path = RepoPath.CreateKnown(descriptorSelector);
-        var declarations = CanonicalStatementWriter.DeclarationStatementIds(
-            path,
-            fixture.Reports[descriptorSelector]);
-        var material = new FrozenNodeMaterial(
-            path,
-            declarations,
-            statementId ?? FrozenContentAddress.ComputeModuleStatementId(
-                path,
-                fixture.Reports[descriptorSelector]),
-            FrozenNodeId.Create("sha256:" + new string('0', 64)),
-            [],
-            []);
-        var payload = FrozenLedgerCanonicalWriter.FreezeElement(
-            FrozenLedgerCanonicalWriter.FreezePayload(material));
-        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
-        var eventPath = FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash);
-        fixture.Files[eventPath] = Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
-        return eventPath;
+        var statePath = FrozenStatePath.FromModulePath(path).Value;
+        fixture.Files[statePath] = Encoding.UTF8.GetString(FrozenStateRecord.Encode(
+            statementId ?? ModuleStatementId(fixture, descriptorSelector),
+            FrozenStateRecord.Project(fixture.Reports[descriptorSelector])).AsSpan());
+        return statePath;
     }
 
     private static StatementId ModuleStatementId(RuleFixture fixture, string modulePath)
@@ -605,7 +573,8 @@ public sealed partial class FrozenSurfaceRuleTests
         bool includeInBaseline = false)
     {
         var statePath = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(modulePath)).Value;
-        fixture.Files[statePath] = StateText(statementId);
+        fixture.Files[statePath] = Encoding.UTF8.GetString(FrozenStateRecord.Encode(statementId,
+            FrozenStateRecord.Project(fixture.Reports[modulePath])).AsSpan());
         if (includeInBaseline)
         {
             fixture.Baseline[statePath] = fixture.Files[statePath];
@@ -613,7 +582,7 @@ public sealed partial class FrozenSurfaceRuleTests
     }
 
     private static string StateText(StatementId statementId) =>
-        $"{{\"statement_id\":\"{statementId.Value}\"}}\n";
+        Encoding.UTF8.GetString(FrozenStateRecord.Encode(statementId).AsSpan());
 
     private static (string Header, string Statements) SplitSixLineHeader(string source)
     {

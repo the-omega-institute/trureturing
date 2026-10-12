@@ -251,7 +251,7 @@ public sealed class AnchorReferenceRuleTests
             var path = RepoPath.CreateKnown(RuleFixture.RingPath);
             var statement = FrozenContentAddress.ComputeModuleStatementId(path, report.Files[path]);
             current[FrozenStatePath.FromModulePath(path).Value] =
-                $"{{\"statement_id\":\"{statement.Value}\"}}\n";
+                System.Text.Encoding.UTF8.GetString(FrozenStateRecord.Encode(statement, FrozenStateRecord.Project(report.Files[path])).AsSpan());
         }
 
         var baseline = new Dictionary<string, string>(current, StringComparer.Ordinal);

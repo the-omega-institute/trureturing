@@ -432,7 +432,6 @@ public sealed class TypeModelTests
     [Theory]
     [InlineData("tools/TestSupport/StrataLint.ConfigurationTestSupport/TestFileMap.cs")]
     [InlineData("Golden/Projection/x.json")]
-    [InlineData("Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.lean.json")]
     [InlineData("Golden/values-kernels.toml")]
     public void CanonicalGoldenDataResidencesAreClosedWorldRegistered(string value)
@@ -452,7 +451,6 @@ public sealed class TypeModelTests
     [InlineData("Golden/Projection/bad.name.json")]
     [InlineData("Golden/Projection/bad+name.json")]
     [InlineData("Golden/Projection/caf\u00e9.json")]
-    [InlineData("Golden/Frozen/accepted/nested/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/Frozen/other/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.json")]
     public void CanonicalGoldenDataResidencesRejectNoncanonicalNeighbors(string value)

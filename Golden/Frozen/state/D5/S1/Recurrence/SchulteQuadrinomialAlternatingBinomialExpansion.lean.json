@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f66375969477000d9fa1023e71a94a5038da0fe76225d23a1dd228d6b2623582"}
+{"statement_id":"sha256:f66375969477000d9fa1023e71a94a5038da0fe76225d23a1dd228d6b2623582","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),47:SchulteQuadrinomialAlternatingBinomialExpansion),1:T)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),47:SchulteQuadrinomialAlternatingBinomialExpansion),6:result)","kind":"theorem"}]}

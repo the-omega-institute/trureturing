@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5b9c465a03cbd2850cd65eb3848ad8a89a781a920e51059d985843135a191a79"}
+{"statement_id":"sha256:5b9c465a03cbd2850cd65eb3848ad8a89a781a920e51059d985843135a191a79","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),19:FishburnTenThirteen),32:FishburnBasicTenThirteenPatterns),30:maximum_crossing_pattern_tests)","kind":"theorem"}]}

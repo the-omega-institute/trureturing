@@ -1,1 +1,1 @@
-{"statement_id":"sha256:dec567245049c7b3466b4b00a4d723e82f223e1499bfa2c70fb2a0035e3eb396"}
+{"statement_id":"sha256:dec567245049c7b3466b4b00a4d723e82f223e1499bfa2c70fb2a0035e3eb396","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),19:EpistemicRefinement),31:KnowledgeRefinementMonotonicity),70:knowledge_monotone_under_indexed_refinement_with_converse_countermodel)","kind":"theorem"}]}

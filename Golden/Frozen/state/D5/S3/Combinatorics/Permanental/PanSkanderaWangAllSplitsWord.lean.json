@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c05f9047eefd4f51a754f23002a8d07b9456e181408fa2a810af1b382c3c24fa"}
+{"statement_id":"sha256:c05f9047eefd4f51a754f23002a8d07b9456e181408fa2a810af1b382c3c24fa","declarations":[{"declaration_name_key":"ns(ns(n0,3:PSW),4:word)","kind":"def"},{"declaration_name_key":"ns(ns(n0,3:PSW),6:ofWord)","kind":"def"}]}

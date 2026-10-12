@@ -5,15 +5,11 @@ namespace StrataLint.Tests;
 public sealed class DepositFreezeReplayWorkflowScriptTests
 {
     [Fact]
-    public void DepositAfterStatePinRevocationRefreezesAndCoversInOneMakeInvocation()
+    public void DepositForUnregisteredModuleRegistersAndCoversInOneMakeInvocation()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
-        fixture.WriteActiveFreeze();
-        fixture.CommitAll("frozen baseline");
         var historyBefore = fixture.LedgerState();
-        var pinBefore = fixture.StatePinContents();
-        fixture.RevokeStatePin();
         fixture.ChangeFormalization();
         Assert.False(fixture.StatePinExists());
         Assert.Equal(historyBefore, fixture.LedgerState());
@@ -22,7 +18,6 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.True(fixture.StatePinExists());
-        Assert.NotEqual(pinBefore, fixture.StatePinContents());
         Assert.Equal(1, fixture.FreezeCount());
         Assert.NotEqual(historyBefore, fixture.LedgerState());
         Assert.Equal(

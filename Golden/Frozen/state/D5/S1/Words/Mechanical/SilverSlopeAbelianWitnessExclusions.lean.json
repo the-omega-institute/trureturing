@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c3e630d0398a800b6cab6fd8931ccd2e13c816441548303e7903ad009b83bd38"}
+{"statement_id":"sha256:c3e630d0398a800b6cab6fd8931ccd2e13c816441548303e7903ad009b83bd38","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:Mechanical),18:silver_no_q_period)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:Mechanical),21:silver_w2_no_r_period)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:Mechanical),29:silver_short_period_exclusion)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a59c5401c1898947be540eba7922508a4064ea28bd8c404b54c59ed6d774c226"}
+{"statement_id":"sha256:a59c5401c1898947be540eba7922508a4064ea28bd8c404b54c59ed6d774c226","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:PermutationSquare),25:PermutationSquareCounting),16:count_recurrence)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),17:PermutationSquare),25:PermutationSquareCounting),16:count_recurrence),10:match_1_19)","kind":"def"}]}

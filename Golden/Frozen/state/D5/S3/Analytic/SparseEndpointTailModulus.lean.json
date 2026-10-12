@@ -1,1 +1,1 @@
-{"statement_id":"sha256:89da4b7f47d3c410d5c051130c16c8b096aa99489d7f0a3b1358bfc5e10707a9"}
+{"statement_id":"sha256:89da4b7f47d3c410d5c051130c16c8b096aa99489d7f0a3b1358bfc5e10707a9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),25:SparseEndpointTailModulus),28:sparse_endpoint_tail_modulus)","kind":"theorem"}]}

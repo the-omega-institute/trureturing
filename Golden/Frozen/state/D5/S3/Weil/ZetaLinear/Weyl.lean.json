@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2465baa99408e3e2c4ef7485760b4a2200320d049e92998a8a4e83eb88bd1584"}
+{"statement_id":"sha256:2465baa99408e3e2c4ef7485760b4a2200320d049e92998a8a4e83eb88bd1584","declarations":[{"declaration_name_key":"ns(ns(n0,8:RHLinalg),19:cauchySchwarz_count)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,8:RHLinalg),21:weyl_posIndexAbove_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,8:RHLinalg),13:posIndexAbove),10:congr_simp)","kind":"theorem"}]}

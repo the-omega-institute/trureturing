@@ -1,1 +1,1 @@
-{"statement_id":"sha256:758b6536458c2fee87e6c162767137b628b4809f9276eda589202ebdbce3fac6"}
+{"statement_id":"sha256:758b6536458c2fee87e6c162767137b628b4809f9276eda589202ebdbce3fac6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),28:GoldenCubicBlockPrimePeriods),26:cubic_block_b_prime_period)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),28:GoldenCubicBlockPrimePeriods),26:cubic_block_c_prime_period)","kind":"theorem"}]}

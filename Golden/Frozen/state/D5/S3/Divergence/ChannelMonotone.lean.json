@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b81e0cebdd2a00defd988cf36a0d61d5ee3d27840ba3af1d507c2ed0ea89da7f"}
+{"statement_id":"sha256:b81e0cebdd2a00defd988cf36a0d61d5ee3d27840ba3af1d507c2ed0ea89da7f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Divergence),15:ChannelMonotone),24:kl_divergence_channel_le)","kind":"theorem"}]}

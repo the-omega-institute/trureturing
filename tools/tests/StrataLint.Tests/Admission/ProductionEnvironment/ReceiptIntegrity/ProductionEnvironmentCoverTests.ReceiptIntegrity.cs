@@ -36,7 +36,7 @@ public sealed partial class ProductionEnvironmentTests
             .CoverageGids.Single();
         var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var baselineVerified));
-        var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid);
+        var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid, inputs.Report);
         var document = inputs.Document.WithDigestionSources(
             inputs.Document.RequireDigestionSources()
                 .Select(source => source with

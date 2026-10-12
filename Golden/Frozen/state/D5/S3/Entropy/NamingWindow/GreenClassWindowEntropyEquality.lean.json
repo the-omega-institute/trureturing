@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8a79c4fc880296d48b0f63eb82d3002477341d41037e5e44ce946cc606e2018a"}
+{"statement_id":"sha256:8a79c4fc880296d48b0f63eb82d3002477341d41037e5e44ce946cc606e2018a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),12:NamingWindow),31:GreenClassWindowEntropyEquality),49:shannonEntropy_windowLaw_eq_namingDim_iff_uniform)","kind":"theorem"}]}

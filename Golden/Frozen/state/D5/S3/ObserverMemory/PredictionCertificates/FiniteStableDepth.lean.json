@@ -1,1 +1,1 @@
-{"statement_id":"sha256:39389e748f58e124f7aabad670cc50b296c6936232f1593bd111e89eca77b1a2"}
+{"statement_id":"sha256:39389e748f58e124f7aabad670cc50b296c6936232f1593bd111e89eca77b1a2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),22:PredictionCertificates),17:FiniteStableDepth),29:finite_state_has_stable_depth)","kind":"theorem"}]}

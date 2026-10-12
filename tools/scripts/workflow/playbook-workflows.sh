@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
-FROZEN_LEDGER="Golden/Frozen/accepted"
+FROZEN_LEDGER="Golden/Frozen/state"
 COMMAND="${1:-}"
 # cover and cover-batch read nothing from git, so they take no base.
 case "$COMMAND" in
@@ -29,44 +29,24 @@ run_cli() {
 }
 
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module closed_query_output targets=''
-  local accepted_files=("$FROZEN_LEDGER"/*.json)
+  local closed_modules module closed_query_output targets=''
   local align_args=(ledger-align)
 
   if ! command -v jq >/dev/null 2>&1; then
-    echo "PLAYBOOK_INVALID jq is required to derive ledger additions" >&2
-    return 2
-  fi
-  if [[ ! -e "${accepted_files[0]}" ]]; then
-    accepted_files=()
-  fi
-  if [[ "${#accepted_files[@]}" -gt 0 ]] \
-      && ! accepted_modules="$(jq -sc '
-        [ .[]
-          | select(.event_type == "Freeze" and .schema_version == 5)
-          | .payload.descriptor_selector
-          | select(type == "string") ]
-        | unique
-      ' "${accepted_files[@]}" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to read accepted module selectors: $accepted_modules" >&2
+    echo "PLAYBOOK_INVALID jq is required to read Closed module selectors" >&2
     return 2
   fi
   if ! closed_query_output="$(run_cli ledger-align --list-closed --candidate-lean-report "$REPORT")"; then
     echo "PLAYBOOK_INVALID current Closed module query failed" >&2
     return 2
   fi
-  if ! closed_modules="$(jq -r --argjson accepted "$accepted_modules" '
-      .[]
-      | . as $path
-      | select(($accepted | index($path)) == null)
-      | $path
-    ' <<< "$closed_query_output" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to derive Closed modules from current Lean report: $closed_modules" >&2
+  if ! closed_modules="$(jq -r '.[]' <<< "$closed_query_output" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to read Closed modules: $closed_modules" >&2
     return 2
   fi
 
   while IFS= read -r module; do
-    if [[ -n "$module" ]]; then
+    if [[ -n "$module" && ! -f "$FROZEN_LEDGER/$module.json" ]]; then
       align_args+=(--add "$module")
       targets+="${targets:+ }${module%.lean}"
     fi
@@ -76,7 +56,6 @@ align_delivery_ledger() {
     step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$targets"
     run_cli "${align_args[@]}" --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json
   fi
-  run_cli ledger-align --candidate-lean-report "$REPORT"
 }
 
 
@@ -238,81 +217,6 @@ deposit_module() {
   freeze_module_if_needed "$freeze_precheck"
 }
 
-verify_added_frozen_event_v5() {
-  local path="$1" event_type
-  if ! event_type="$(jq -er '.event_type | select(type == "string")' "$path")"; then
-    echo "PLAYBOOK_INVALID added frozen event has no valid event_type: $path; re-freeze before delivery" >&2
-    return 1
-  fi
-
-  if [[ "$event_type" == "Freeze" ]] \
-      && jq -e '
-        def exact_keys($expected): (keys | sort) == ($expected | sort);
-        exact_keys(["event_hash", "event_type", "payload", "schema_version"])
-        and .schema_version == 5
-        and (.payload | exact_keys([
-          "declaration_statement_ids",
-          "descriptor_selector",
-          "prerequisite_frozen_node_ids",
-          "statement_id"
-        ]))
-        and (.event_hash | type) == "string"
-        and (.payload.descriptor_selector | type) == "string"
-        and (.payload.statement_id | type) == "string"
-        and (.payload.declaration_statement_ids | type) == "array"
-        and all(.payload.declaration_statement_ids[];
-          type == "object"
-          and exact_keys(["declaration_name_key", "kind", "statement_id"])
-          and (.declaration_name_key | type) == "string"
-          and (.kind | type) == "string"
-          and (.statement_id | type) == "string")
-        and (.payload.prerequisite_frozen_node_ids | type) == "array"
-        and all(.payload.prerequisite_frozen_node_ids[]; type == "string")
-      ' "$path" >/dev/null; then
-    return 0
-  fi
-  echo "PLAYBOOK_INVALID added frozen event is not a v5 Freeze: $path" >&2
-  return 1
-
-}
-
-verify_added_frozen_events_v5() {
-  local added_paths path
-  added_paths="$(mktemp)"
-  if ! git diff --diff-filter=A --name-only -z "$BASE"...HEAD -- "$FROZEN_LEDGER/*.json" \
-      > "$added_paths"; then
-    rm -f -- "$added_paths"
-    echo "PLAYBOOK_INVALID cannot determine added frozen events from base $BASE" >&2
-    return 1
-  fi
-  if ! git ls-files --others --exclude-standard -z -- "$FROZEN_LEDGER/*.json" \
-      >> "$added_paths"; then
-    rm -f -- "$added_paths"
-    echo "PLAYBOOK_INVALID cannot determine untracked frozen events" >&2
-    return 1
-  fi
-  if [[ ! -s "$added_paths" ]]; then
-    rm -f -- "$added_paths"
-    return 0
-  fi
-  if ! command -v jq >/dev/null 2>&1; then
-    rm -f -- "$added_paths"
-    echo "PLAYBOOK_INVALID jq is required to verify added frozen events" >&2
-    return 2
-  fi
-
-  while IFS= read -r -d '' path; do
-    if verify_added_frozen_event_v5 "$path"; then
-      :
-    else
-      local status=$?
-      rm -f -- "$added_paths"
-      return "$status"
-    fi
-  done < "$added_paths"
-  rm -f -- "$added_paths"
-}
-
 
 cover_atom_or_resume() {
   local output
@@ -358,10 +262,8 @@ case "$COMMAND" in
     make lean-report
     make emit
     # Freeze last among all mutating derivations so the proposition snapshot is current.
-    verify_added_frozen_events_v5
     align_delivery_ledger
     make gate BASE="$BASE"
-    verify_added_frozen_events_v5
     ;;
   deposit)
     require_transaction_arguments

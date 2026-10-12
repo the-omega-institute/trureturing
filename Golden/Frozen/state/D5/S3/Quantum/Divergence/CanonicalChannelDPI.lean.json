@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4d74b75dd14b8c355d050f6b8ac0398f364bf447f56d5f4a7a4ea5e28b4431d3"}
+{"statement_id":"sha256:4d74b75dd14b8c355d050f6b8ac0398f364bf447f56d5f4a7a4ea5e28b4431d3","declarations":[{"declaration_name_key":"ns(ns(ns(n0,8:RHLinalg),7:specMap),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),10:Divergence),19:CanonicalChannelDPI),45:extended_quantum_relative_entropy_channel_dpi)","kind":"theorem"}]}

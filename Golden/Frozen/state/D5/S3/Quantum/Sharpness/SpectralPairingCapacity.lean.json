@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2e0f5a45603f0307e36e14f2c445e0003966aa81ce2f80008393a481583ccfc1"}
+{"statement_id":"sha256:2e0f5a45603f0307e36e14f2c445e0003966aa81ce2f80008393a481583ccfc1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:Sharpness),23:SpectralPairingCapacity),23:spectralPairingCapacity)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:Sharpness),23:SpectralPairingCapacity),55:spectral_pairing_capacity_monotone_of_doubly_stochastic)","kind":"theorem"}]}

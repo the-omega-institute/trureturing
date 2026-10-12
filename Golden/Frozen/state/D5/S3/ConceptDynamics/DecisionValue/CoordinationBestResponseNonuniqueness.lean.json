@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1d4a5dea7f03a89d341798444f822205917a9ca4396af7293f60f1bf10d41b34"}
+{"statement_id":"sha256:1d4a5dea7f03a89d341798444f822205917a9ca4396af7293f60f1bf10d41b34","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),13:DecisionValue),37:CoordinationBestResponseNonuniqueness),49:local_best_responses_do_not_select_unique_outcome)","kind":"theorem"}]}
