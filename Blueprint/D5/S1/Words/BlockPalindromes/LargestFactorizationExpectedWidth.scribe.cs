@@ -52,12 +52,16 @@ internal sealed class LargestFactorizationExpectedWidthDocument : IScribeDocumen
                 "Conjecture 5 (arXiv v2, §3, p. 5): “Let k ≥ 2. Then E_k = 1+∑_{i=1}^∞ a_i k^{-i} where the sequence (a_n/2)_{n≥1} is A274199 in the On-Line Encyclopedia of Integer Sequences (OEIS).” A274199(d) is the stabilized diagonal a274190 (2*d) d. The positive index is i+1, so the source expansion starts with coefficients 2,4,6,10.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("bpal-result", "result",
                 Disp(Const("claim")),
-                "For every alphabet size k≥2, the expected largest width tends to the A274199 coefficient series. The proof uses the exact renewal recursion and does not use the source Lemma 3.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "For every alphabet size k≥2, the expected largest width tends to the A274199 coefficient series. The proof uses the exact renewal recursion and does not use the source Lemma 3.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gabric-shallit-2023-block-palindrome-expected-width"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string name, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(name),
-        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula WeightedCountSum() => Seq(
         Sum, Underscore, Grp(Seq(FormulaDsl.Id("i"), Sp, InMacro, Sp, Const("Finset"), Dot, Const("Icc"), Sp, D(1), Sp, FormulaDsl.Id("n"))), Sp,
         Parenthesized(Seq(FormulaDsl.Id("i"), Sp, Colon, Sp, R())), Sp, Cdot, Sp,

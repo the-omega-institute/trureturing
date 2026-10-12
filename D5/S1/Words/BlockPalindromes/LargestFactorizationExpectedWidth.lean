@@ -13,19 +13,19 @@
      consumers: renewal_tail_limit, expectedWidth_limit.
    proof_shape: tailProbability_zero=bind-only.
      consumers: renewal_tail_bound, renewal_tail_limit.
-   proof_shape: renewal_tail_bound=content.
-   proof_shape: tailProbability_recursion=bind-only.
+   proof_shape: renewal_tail_bound=content. escape_witness: LargestFactorizationExpectedWidth.renewal_tail_bound.
+   proof_shape: tailProbability_recursion=content. escape_witness: GreedyRenewal.renewal_tail_count.
      consumers: renewal_tail_bound, tsum_tailTerm.
    proof_shape: tailTerm=not-applicable (definition).
-   proof_shape: tsum_tailTerm=bind-only.
+   proof_shape: tsum_tailTerm=content. escape_witness: GreedyRenewal.renewal_tail_count.
      consumers: renewal_tail_limit.
-   proof_shape: renewal_tail_limit=content.
+   proof_shape: renewal_tail_limit=content. escape_witness: LargestFactorizationExpectedWidth.renewal_tail_limit.
    proof_shape: peelCentre=not-applicable (definition).
-   proof_shape: peelCentre_outer=bind-only.
+   proof_shape: peelCentre_outer=content. escape_witness: GreedyRenewal.unbordered_outer_shortest.
      consumers: empty_partition, emptyCentre_iff_outer.
    proof_shape: peelCentre_empty=bind-only.
      consumers: emptyWords_zero.
-   proof_shape: emptyCentre_iff_outer=content.
+   proof_shape: emptyCentre_iff_outer=content. escape_witness: LargestFactorizationExpectedWidth.emptyCentre_iff_outer.
    proof_shape: emptyWords=not-applicable (definition).
    proof_shape: mem_emptyWords=bind-only.
      consumers: empty_partition, emptyProbability_odd, emptyWords_zero.
@@ -34,47 +34,47 @@
    proof_shape: emptyOuterWords=not-applicable (definition).
    proof_shape: mem_emptyOuterWords=bind-only.
      consumers: empty_partition, empty_centre_count.
-   proof_shape: card_emptyOuterWords=content.
-   proof_shape: empty_partition=content.
-   proof_shape: empty_centre_count=content.
+   proof_shape: card_emptyOuterWords=content. escape_witness: LargestFactorizationExpectedWidth.card_emptyOuterWords.
+   proof_shape: empty_partition=content. escape_witness: LargestFactorizationExpectedWidth.empty_partition.
+   proof_shape: empty_centre_count=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_count.
    proof_shape: emptyProbability=not-applicable (definition).
    proof_shape: emptyProbability_zero=bind-only.
      consumers: empty_centre_powerSeries.
-   proof_shape: emptyProbability_recursion=bind-only.
+   proof_shape: emptyProbability_recursion=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_count.
      consumers: emptyProbability_even_recursion.
-   proof_shape: emptyProbability_even_recursion=bind-only.
+   proof_shape: emptyProbability_even_recursion=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_count.
      consumers: empty_centre_powerSeries.
    proof_shape: QSeries=not-applicable (definition).
    proof_shape: ESeries=not-applicable (definition).
    proof_shape: QSeries_constant_zero=bind-only.
      consumers: empty_centre_powerSeries, empty_even_convolution.
-   proof_shape: empty_centre_powerSeries=content.
+   proof_shape: empty_centre_powerSeries=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_powerSeries.
    proof_shape: emptyProbability_nonneg=bind-only.
      consumers: empty_probability_limit, empty_even_summable.
-   proof_shape: empty_even_convolution=bind-only.
+   proof_shape: empty_even_convolution=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_powerSeries.
      consumers: empty_partial_sum.
-   proof_shape: empty_partial_sum=bind-only.
+   proof_shape: empty_partial_sum=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_powerSeries.
      consumers: empty_partial_sum_bound.
-   proof_shape: empty_partial_sum_bound=bind-only.
+   proof_shape: empty_partial_sum_bound=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
      consumers: empty_even_summable.
-   proof_shape: empty_even_summable=bind-only.
+   proof_shape: empty_even_summable=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
      consumers: empty_probability_limit.
-   proof_shape: peelCentre_length_mod_two=bind-only.
+   proof_shape: peelCentre_length_mod_two=content. escape_witness: GreedyRenewal.split_nonoverlapping_border.
      consumers: emptyProbability_odd.
-   proof_shape: emptyProbability_odd=bind-only.
+   proof_shape: emptyProbability_odd=content. escape_witness: GreedyRenewal.split_nonoverlapping_border.
      consumers: empty_probability_limit.
-   proof_shape: empty_probability_limit=bind-only.
+   proof_shape: empty_probability_limit=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
      consumers: expectedWidth_limit.
-   proof_shape: largest_pairs_centre=content.
-   proof_shape: peelPairs_le_length=bind-only.
+   proof_shape: largest_pairs_centre=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
+   proof_shape: peelPairs_le_length=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
      consumers: tailWords_empty, pair_tail_sum.
-   proof_shape: tailWords_empty=bind-only.
+   proof_shape: tailWords_empty=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
      consumers: tsum_positive_tails.
-   proof_shape: tsum_positive_tails=bind-only.
+   proof_shape: tsum_positive_tails=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
      consumers: mean_pairs_tail.
-   proof_shape: pair_tail_sum=bind-only.
+   proof_shape: pair_tail_sum=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
      consumers: mean_pairs_tail.
-   proof_shape: mean_pairs_tail=bind-only.
+   proof_shape: mean_pairs_tail=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
      consumers: expectedWidth_tail_formula.
    proof_shape: expectedWidth=not-applicable (definition).
    proof_shape: sum_words_ofFn=bind-only.
@@ -83,26 +83,26 @@
      consumers: expectedWidth_uniform_average.
    proof_shape: expectedWidth_uniform_average=bind-only.
      consumers: expectedWidth_tail_formula.
-   proof_shape: expectedWidth_tail_formula=bind-only.
+   proof_shape: expectedWidth_tail_formula=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
      consumers: expectedWidth_limit.
-   proof_shape: positive_q_powers_summable=bind-only.
+   proof_shape: positive_q_powers_summable=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
      consumers: expectedWidth_limit.
-   proof_shape: positive_q_powers_tsum=bind-only.
+   proof_shape: positive_q_powers_tsum=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
      consumers: expectedWidth_limit.
-   proof_shape: expectedWidth_limit=content.
+   proof_shape: expectedWidth_limit=content. escape_witness: LargestFactorizationExpectedWidth.expectedWidth_limit.
    proof_shape: claim=not-applicable (definition).
-   proof_shape: stable_series_summable=bind-only.
+   proof_shape: stable_series_summable=content. escape_witness: CompositionInversion.composition_series_summable.
      consumers: coefficient_series_summable, conjectured_limit_identity.
-   proof_shape: stable_series_identity=bind-only.
+   proof_shape: stable_series_identity=content. escape_witness: CompositionInversion.unbordered_composition_series.
      consumers: conjectured_limit_identity.
-   proof_shape: coefficient_series_summable=bind-only.
+   proof_shape: coefficient_series_summable=content. escape_witness: CompositionInversion.composition_series_summable.
      consumers: coefficient_limit_results.
-   proof_shape: conjectured_limit_identity=bind-only.
+   proof_shape: conjectured_limit_identity=content. escape_witness: CompositionInversion.unbordered_composition_series.
      consumers: coefficient_limit_results.
-   proof_shape: coefficient_limit_results=bind-only.
+   proof_shape: coefficient_limit_results=content. escape_witness: LargestFactorizationExpectedWidth.expectedWidth_limit.
      consumers: result.
-   proof_shape: result=bind-only.
-   escape_witness: none
+   proof_shape: result=content. escape_witness: LargestFactorizationExpectedWidth.expectedWidth_limit.
+   escape_witness: LargestFactorizationExpectedWidth.expectedWidth_limit
    admission_basis: open-problem-resolution (#15445; Proved)
    Direct frozen dependencies: D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality.words
      statement_id: sha256:ac39f4d6ac85644b4d36960e026f51c85dafd409386991d3defafb1ebead5aa6.

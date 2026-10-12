@@ -11,22 +11,22 @@
    proof_shape: a274190=not-applicable (definition).
    proof_shape: a274190_zero_of_lt=bind-only.
      consumers: a274190_stable, a274190_compCount.
-   proof_shape: a274190_stable=content.
-   proof_shape: a274190_diagonal_limit=bind-only.
+   proof_shape: a274190_stable=content. escape_witness: CompositionInversion.a274190_stable.
+   proof_shape: a274190_diagonal_limit=content. escape_witness: CompositionInversion.a274190_stable.
      consumers: result.
    proof_shape: compCount=not-applicable (definition).
-   proof_shape: compCount_one=content.
+   proof_shape: compCount_one=content. escape_witness: CompositionInversion.compCount_one.
    proof_shape: compCount_full=bind-only.
      consumers: a274190_stable_compCount, compSeries_limit.
    proof_shape: compCount_bound_succ=bind-only.
      consumers: a274190_compCount.
-   proof_shape: a274190_compCount=content.
-   proof_shape: a274190_stable_compCount=bind-only.
+   proof_shape: a274190_compCount=content. escape_witness: CompositionInversion.a274190_compCount.
+   proof_shape: a274190_stable_compCount=content. escape_witness: CompositionInversion.a274190_compCount.
      consumers: stable_series_summable, stable_series_identity.
-   proof_shape: compCount_fib_bound=content.
+   proof_shape: compCount_fib_bound=content. escape_witness: CompositionInversion.compCount_fib_bound.
    proof_shape: fib_real_bound=bind-only.
      consumers: composition_series_summable.
-   proof_shape: composition_series_summable=bind-only.
+   proof_shape: composition_series_summable=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: stable_series_summable, compSeries_limit, compTerm_summable, compSeries_le_total.
    proof_shape: compCount_le_full=bind-only.
      consumers: compTerm_le_full.
@@ -37,36 +37,36 @@
      consumers: compSeries_nonneg, totalSeries_nonneg, compSeries_limit, compTerm_summable.
    proof_shape: compTerm_le_full=bind-only.
      consumers: compSeries_limit, compTerm_summable, compSeries_le_total.
-   proof_shape: compTerm_summable=bind-only.
+   proof_shape: compTerm_summable=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: compSeries_le_total, shiftedComp_summable.
    proof_shape: compSeries_nonneg=bind-only.
      consumers: cCoeff_nonneg.
    proof_shape: totalSeries_nonneg=bind-only.
      consumers: cCoeff_summable.
-   proof_shape: compSeries_le_total=bind-only.
+   proof_shape: compSeries_le_total=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: cCoeff_summable.
    proof_shape: cCoeff=not-applicable (definition).
    proof_shape: cCoeff_nonneg=bind-only.
      consumers: cCoeff_summable, unbordered_composition_series.
-   proof_shape: cCoeff_summable=bind-only.
+   proof_shape: cCoeff_summable=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: unbordered_composition_series, totalSeries_firstpart.
    proof_shape: shiftedComp=not-applicable (definition).
    proof_shape: shiftedComp_add=bind-only.
      consumers: shiftedComp_tsum, shiftedComp_summable.
-   proof_shape: shiftedComp_summable=bind-only.
+   proof_shape: shiftedComp_summable=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: compSeries_firstpart, shiftedComp_tsum.
-   proof_shape: shiftedComp_tsum=bind-only.
+   proof_shape: shiftedComp_tsum=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: compSeries_firstpart.
    proof_shape: compCount_firstpart=bind-only.
      consumers: compSeries_firstpart.
-   proof_shape: compSeries_firstpart=content.
-   proof_shape: compSeries_limit=bind-only.
+   proof_shape: compSeries_firstpart=content. escape_witness: CompositionInversion.compSeries_firstpart.
+   proof_shape: compSeries_limit=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: totalSeries_firstpart.
-   proof_shape: totalSeries_firstpart=bind-only.
+   proof_shape: totalSeries_firstpart=content. escape_witness: CompositionInversion.compCount_fib_bound.
      consumers: unbordered_composition_series.
    proof_shape: series_pairing_identity=bind-only.
      consumers: unbordered_composition_series.
-   proof_shape: unbordered_composition_series=content.
+   proof_shape: unbordered_composition_series=content. escape_witness: CompositionInversion.unbordered_composition_series.
    escape_witness: unbordered_composition_series
    admission_basis: escape-witness
    Direct frozen dependencies: D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality.words
