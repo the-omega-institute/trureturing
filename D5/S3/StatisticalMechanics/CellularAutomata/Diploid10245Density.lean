@@ -257,4 +257,59 @@ private theorem density_succ (lam : ℝ) (t : ℕ) :
     _ = lam + (1 - 2 * lam) * q lam t := by
       rw [normalized, ← q_sum, mul_one]
 
+private theorem q_update (lam : ℝ) (t : ℕ) :
+    q lam (t + 1) = ∑ a : Fin 5 → Bool,
+      (1 - p lam (a 0) (a 1) (a 2)) * p lam (a 2) (a 3) (a 4) * P lam t 5 a := by
+  rw [q]
+  simp_rw [P_succ]
+  change (∑ c : Bool, ∑ a : Fin 5 → Bool,
+    K lam 3 (Fin.cons false (Fin.cons c (Fin.cons true Fin.elim0))) a * P lam t 5 a) = _
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [← Finset.sum_mul]
+  congr 1
+  dsimp only [K]
+  simp_rw [Fin.prod_univ_three]
+  change (∑ c : Bool, w lam false (a 0) (a 1) (a 2) *
+    w lam c (a 1) (a 2) (a 3) * w lam true (a 2) (a 3) (a 4)) = _
+  simp_rw [mul_assoc]
+  rw [← Finset.mul_sum, ← Finset.sum_mul, w_sum, one_mul]
+  rfl
+
+private theorem A_overlap_zero (x y z : Bool) : A x y * A y z = 0 := by
+  cases y <;> simp [A, bit]
+
+private theorem p_pair (lam : ℝ) (x y z u v : Bool) :
+    (1 - p lam x y z) * p lam z u v = lam * (1 - lam) +
+      (1 - 2 * lam) * (1 - lam) * A z v - (1 - 2 * lam) * lam * A x z := by
+  rw [p_affine, p_affine]
+  calc
+    (1 - (lam + (1 - 2 * lam) * A x z)) * (lam + (1 - 2 * lam) * A z v) =
+        lam * (1 - lam) + (1 - 2 * lam) * (1 - lam) * A z v -
+          (1 - 2 * lam) * lam * A x z - (1 - 2 * lam) ^ 2 * (A x z * A z v) := by
+      ring
+    _ = _ := by rw [A_overlap_zero, mul_zero, sub_zero]
+
+private theorem q_succ (lam : ℝ) (t : ℕ) :
+    q lam (t + 1) = lam * (1 - lam) + (1 - 2 * lam) ^ 2 * q lam t := by
+  calc
+    q lam (t + 1) = ∑ a : Fin 5 → Bool,
+        (1 - p lam (a 0) (a 1) (a 2)) * p lam (a 2) (a 3) (a 4) * P lam t 5 a :=
+      q_update lam t
+    _ = (lam * (1 - lam)) * (∑ a : Fin 5 → Bool, P lam t 5 a) +
+        ((1 - 2 * lam) * (1 - lam)) *
+          (∑ a : Fin 5 → Bool, A (a 2) (a 4) * P lam t 5 a) -
+        ((1 - 2 * lam) * lam) *
+          (∑ a : Fin 5 → Bool, A (a 0) (a 2) * P lam t 5 a) := by
+      rw [Finset.mul_sum, Finset.mul_sum, Finset.mul_sum,
+        ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
+      apply Finset.sum_congr rfl
+      intro a _
+      rw [p_pair]
+      ring
+    _ = lam * (1 - lam) + (1 - 2 * lam) ^ 2 * q lam t := by
+      rw [normalized, prefix_q, suffix_q]
+      ring
+
 end D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
