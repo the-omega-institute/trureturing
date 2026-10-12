@@ -23,7 +23,6 @@ open scoped Topology BigOperators
 open Finset
 open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
-open D5.S3.Estimation.TimeArrow.NativeRectangleGeometry
 open D5.S3.Estimation.TimeArrow.NativeRectangleReferenceMass
 open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeCalibrationRootBudgets
