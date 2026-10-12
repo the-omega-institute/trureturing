@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Independent seeded Bernoulli prefix laws and stopped moment transfer. -/
+   digest: Seeded Bernoulli stopped laws and common endpoint moment budgets. -/
 
 import D5.S3.Estimation.SequentialDecisionRisk.StoppedLikelihoodAbsorption
 import Mathlib.Probability.Distributions.Bernoulli
@@ -644,7 +644,9 @@ private lemma dyadic_window_tendsto (p₀ : unitInterval) (p : ℕ → unitInter
 
 /-- All dyadic truncated moments are charged to one endpoint law of the same
 stopping rule. The endpoint cost is allowed to be infinite; every perturbed
-law retains the independent private seed and the same acquired-bit rule. -/
+law retains the independent private seed and the same acquired-bit rule.
+A uniform fractional-cost bound along the shrinking windows also bounds
+the endpoint cost, without assuming endpoint termination in advance. -/
 theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
     (p : ℕ → unitInterval) (M : Seed × (ℕ → Bool) → WithTop ℕ)
@@ -692,6 +694,7 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
     intro K
     exact endpoint_budget_finite (Law ν p₀) M
       (hM.measurable.mono hM.measurableSpace_le le_rfl) a m ha ham K
+
 
 
 end D5.S3.Estimation.SequentialDecisionRisk.SeededBernoulliStoppedMoment
