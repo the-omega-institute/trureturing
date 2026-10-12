@@ -9,6 +9,7 @@
 import D5.S3.Estimation.SequentialDecisionRisk.BernoulliCommonEndpointCharge
 import D5.S3.TotalVariation.Metric
 import Mathlib.Probability.Process.HittingTime
+import Mathlib.Probability.ProbabilityMassFunction.Constructions
 
 noncomputable section
 open MeasureTheory ProbabilityTheory Filter Finset
@@ -21,11 +22,11 @@ set_option backward.isDefEq.respectTransparency.types false
 
 namespace D5.S3.Estimation.SequentialDecisionRisk.SeededBernoulliFactoryExecution
 open SeededBernoulliStoppedMoment BernoulliCommonEndpointCharge
-variable {Seed : Type*} [MeasurableSpace Seed]
+variable {Seed : Type} [MeasurableSpace Seed]
 
 local notation "Action" => (Unit ⊕ Bool) ⊕ (Bool × Bool)
 local notation "History" => List (Bool × Bool)
-local notation "Law" => fun (ν : Measure Seed) (p : unitInterval) =>
+local notation "Law" => fun {Seed : Type} [MeasurableSpace Seed] (ν : Measure Seed) (p : unitInterval) =>
   ν.prod (Measure.infinitePi (fun _ : ℕ => bernoulliMeasure true false p))
 local notation "Rate" => fun (p₀ : unitInterval) (C h : ℝ) =>
   Set.projIcc 0 1 zero_le_one ((p₀ : ℝ) + h * (-(p₀ : ℝ) / C))
@@ -35,30 +36,35 @@ local notation "Cost" => fun (a : ℝ) (t : WithTop ℕ) =>
 /-- A policy acts on the complete labelled record and the private seed.
 `inl (inl ())` means that no further visible action occurs. Each source action appends
 one actually acquired source answer; `.inr` returns the complete output cell. -/
-def acquiredHistory (π : Seed → Bool → History → Action) (S : Bool) :
-    ℕ → Seed × (ℕ → Bool) → History
+def acquiredHistory {Tape : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (answer : Bool → ℕ → Tape → Bool) : ℕ → Seed × Tape → History
   | 0, _ => []
   | n + 1, ω =>
-    let h := acquiredHistory π S n ω
+    let h := acquiredHistory π S answer n ω
     match π ω.1 S h with
-    | .inl (.inr source) => h ++ [(source, ω.2 n)]
+    | .inl (.inr source) => h ++ [(source, answer source n ω.2)]
     | _ => h
 
-local notation "Act" => fun (π : Seed → Bool → History → Action) (S : Bool)
-  (n : ℕ) (ω : Seed × (ℕ → Bool)) => π ω.1 S (acquiredHistory π S n ω)
+local notation "HistoryAt" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+  (n : ℕ) (ω : Seed × (ℕ → Bool)) => acquiredHistory π S (fun _ i bits => bits i) n ω
+local notation "TapeAct" => fun {Seed : Type} {Tape : Type} (π : Seed → Bool → History → Action) (S : Bool)
+  (answer : Bool → ℕ → Tape → Bool) (n : ℕ) (ω : Seed × Tape) =>
+  π ω.1 S (acquiredHistory π S answer n ω)
+local notation "Act" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+  (n : ℕ) (ω : Seed × (ℕ → Bool)) => π ω.1 S (HistoryAt π S n ω)
 local notation "Returns" => Set.range (fun cell : Bool × Bool => (.inr cell : Action))
-local notation "Calls" => fun (π : Seed → Bool → History → Action) (S : Bool) =>
+local notation "Calls" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool) =>
   hittingAfter (Act π S) Returns 0
-local notation "CellAt" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "CellAt" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (n : ℕ) (ω : Seed × (ℕ → Bool)) =>
   match Act π S n ω with
   | .inr cell => cell
   | _ => (false, false)
 
-local notation "RecordCost" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "RecordCost" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (a : ℝ) (ω : Seed × (ℕ → Bool)) =>
   if Calls π S ω = ⊤ then (⊤ : ℝ≥0∞) else
-    ENNReal.ofReal (((acquiredHistory π S ((Calls π S ω).untopD 0) ω).length : ℝ) ^ a)
+    ENNReal.ofReal (((HistoryAt π S ((Calls π S ω).untopD 0) ω).length : ℝ) ^ a)
 
 private lemma action_singleton_measurable (a : Action) : MeasurableSet {a} := by
   cases a with
@@ -94,7 +100,7 @@ private lemma actions_adapted (π : Seed → Bool → History → Action)
         (ω.1, (range (n + 1)).restrict ω.2)))
   have hpolicy : Measurable (fun z : Seed × History => π z.1 S z.2) :=
     measurable_from_prod_countable_left (hπ S)
-  have hhist (n : ℕ) : Measurable[seededFiltration n] (acquiredHistory π S n) := by
+  have hhist (n : ℕ) : Measurable[seededFiltration n] (HistoryAt π S n) := by
     induction n with
     | zero => exact measurable_const
     | succ n ih =>
@@ -107,12 +113,12 @@ private lemma actions_adapted (π : Seed → Bool → History → Action)
       exact hupdate.comp (hprev.prodMk (hact.prodMk (hbit n)))
   exact fun n => hpolicy.comp ((hseed n).prodMk (hhist n))
 
-private lemma calls_stopping (π : Seed → Bool → History → Action)
+lemma calls_stopping (π : Seed → Bool → History → Action)
     (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool) :
     IsStoppingTime seededFiltration (Calls π S) :=
   (actions_adapted π hπ S).isStoppingTime_hittingAfter measurableSet_range_inr
 
-private lemma output_stopped_measurable (π : Seed → Bool → History → Action)
+lemma output_stopped_measurable (π : Seed → Bool → History → Action)
     (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool) :
     Measurable[(calls_stopping π hπ S).measurableSpace]
       (stoppedValue (CellAt π S) (Calls π S)) := by
@@ -126,14 +132,15 @@ private lemma output_stopped_measurable (π : Seed → Bool → History → Acti
 
 omit [MeasurableSpace Seed] in
 private lemma history_terminal (π : Seed → Bool → History → Action) (S : Bool)
-    (ω : Seed × (ℕ → Bool)) (n : ℕ)
-    (hterminal : ∀ source : Bool, Act π S n ω ≠ .inl (.inr source)) (k : ℕ) :
-    acquiredHistory π S (n + k) ω = acquiredHistory π S n ω := by
+    {Tape : Type} (answer : Bool → ℕ → Tape → Bool)
+    (ω : Seed × Tape) (n : ℕ)
+    (hterminal : ∀ source : Bool, TapeAct π S answer n ω ≠ .inl (.inr source)) (k : ℕ) :
+    acquiredHistory π S answer (n + k) ω = acquiredHistory π S answer n ω := by
   induction k with
   | zero => simp
   | succ k ih =>
     rw [Nat.add_succ, acquiredHistory, ih]
-    cases ha : Act π S n ω with
+    cases ha : TapeAct π S answer n ω with
     | inl a =>
       cases a with
       | inl u => simp only [ha]
@@ -142,53 +149,54 @@ private lemma history_terminal (π : Seed → Bool → History → Action) (S : 
 
 omit [MeasurableSpace Seed] in
 private lemma call_before_return (π : Seed → Bool → History → Action) (S : Bool)
-    (ω : Seed × (ℕ → Bool)) (n : ℕ) (hn : (n : WithTop ℕ) < Calls π S ω)
-    (hfinite : Calls π S ω ≠ ⊤) : ∃ source : Bool, Act π S n ω = .inl (.inr source) := by
+    {Tape : Type} (answer : Bool → ℕ → Tape → Bool)
+    (ω : Seed × Tape) (n : ℕ) (hn : (n : WithTop ℕ) < (hittingAfter (TapeAct π S answer) Returns 0 ω))
+    (hfinite : (hittingAfter (TapeAct π S answer) Returns 0 ω) ≠ ⊤) : ∃ source : Bool, TapeAct π S answer n ω = .inl (.inr source) := by
   classical
   by_contra hc
-  have hterminal : ∀ source : Bool, Act π S n ω ≠ .inl (.inr source) := by
+  have hterminal : ∀ source : Bool, TapeAct π S answer n ω ≠ .inl (.inr source) := by
     simpa only [not_exists] using hc
-  have hnot : Act π S n ω ∉ Returns :=
-    notMem_of_lt_hittingAfter (u := Act π S) (s := Returns) (n := 0) hn (Nat.zero_le n)
-  have hret := hittingAfter_mem_set_of_ne_top (u := Act π S) (s := Returns) (n := 0) hfinite
-  have hle : n ≤ (Calls π S ω).untopA := by
-    lift Calls π S ω to ℕ using hfinite with r
+  have hnot : TapeAct π S answer n ω ∉ Returns :=
+    notMem_of_lt_hittingAfter (u := TapeAct π S answer) (s := Returns) (n := 0) hn (Nat.zero_le n)
+  have hret := hittingAfter_mem_set_of_ne_top (u := TapeAct π S answer) (s := Returns) (n := 0) hfinite
+  have hle : n ≤ ((hittingAfter (TapeAct π S answer) Returns 0 ω)).untopA := by
+    lift (hittingAfter (TapeAct π S answer) Returns 0 ω) to ℕ using hfinite with r
     simpa using hn.le
   obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le hle
-  have he : Act π S (Calls π S ω).untopA ω = Act π S n ω := by
+  have he : TapeAct π S answer ((hittingAfter (TapeAct π S answer) Returns 0 ω)).untopA ω = TapeAct π S answer n ω := by
     dsimp
-    rw [hk, history_terminal π S ω n hterminal k]
+    rw [hk, history_terminal π S answer ω n hterminal k]
   exact hnot (he ▸ hret)
 
 omit [MeasurableSpace Seed] in
 /-- At every finite return, the charged number is exactly the length of the
 complete record. Both source labels contribute one call per acquired answer. -/
 theorem acquired_history_length_at_return (π : Seed → Bool → History → Action)
-    (S : Bool) (ω : Seed × (ℕ → Bool)) (n : ℕ) (hn : Calls π S ω = (n : WithTop ℕ)) :
-    (acquiredHistory π S n ω).length = n := by
-  have hfinite : Calls π S ω ≠ ⊤ := by rw [hn]; exact WithTop.coe_ne_top
-  have hlen : ∀ i : ℕ, i ≤ n → (acquiredHistory π S i ω).length = i := by
+    (S : Bool) {Tape : Type} (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) (n : ℕ) (hn : (hittingAfter (TapeAct π S answer) Returns 0 ω) = (n : WithTop ℕ)) :
+    (acquiredHistory π S answer n ω).length = n := by
+  have hfinite : (hittingAfter (TapeAct π S answer) Returns 0 ω) ≠ ⊤ := by rw [hn]; exact WithTop.coe_ne_top
+  have hlen : ∀ i : ℕ, i ≤ n → (acquiredHistory π S answer i ω).length = i := by
     intro i
     induction i with
     | zero => intro hi; rfl
     | succ i ih =>
       intro hi
-      obtain ⟨source, hs⟩ := call_before_return π S ω i
+      obtain ⟨source, hs⟩ := call_before_return π S answer ω i
         (by rw [hn]; exact_mod_cast (by omega : i < n)) hfinite
-      change π ω.1 S (acquiredHistory π S i ω) = .inl (.inr source) at hs
+      change π ω.1 S (acquiredHistory π S answer i ω) = .inl (.inr source) at hs
       simp only [acquiredHistory, hs, List.length_append, ih (by omega)]
       simp
   exact hlen n le_rfl
 
 omit [MeasurableSpace Seed] in
-private lemma cost_eq_record_cost (π : Seed → Bool → History → Action) (S : Bool)
+lemma cost_eq_record_cost (π : Seed → Bool → History → Action) (S : Bool)
     (a : ℝ) (ω : Seed × (ℕ → Bool)) :
     Cost a (Calls π S ω) = RecordCost π S a ω := by
   cases hM : Calls π S ω with
   | top => simp [hM]
   | coe n =>
     simp only [hM, WithTop.coe_ne_top, if_false, WithTop.untopD_coe]
-    rw [acquired_history_length_at_return π S ω n hM]
+    rw [acquired_history_length_at_return π S (fun _ i bits => bits i) ω n hM]
 
 /-- The four-cell noninteger perturbation is normalized. -/
 private lemma target_mass (u h β : ℝ) :
@@ -285,5 +293,42 @@ theorem seeded_policy_logarithmic_total_call_cost
     ⨆ h : {h : ℝ // h ∈ Set.Ioc 0 (1 / 4 : ℝ)},
       ∫⁻ ω, RecordCost π S (β / 2) ω
         ∂Law ν (Set.projIcc 0 1 zero_le_one ((1 - h.1 / C) / B))) false)
+
+set_option maxHeartbeats 600000 in
+-- The full table and complete-output telescope uses the labelled execution expressions.
+/-- Every countable table of arbitrary real probability rows is realized by
+independent private action coordinates. Its marginal rows are exact, and the
+same logarithmic complete-output cost bound holds for this execution. -/
+theorem real_policy_table_logarithmic_total_call_cost
+    (B C β : ℝ) (hB : B = 2 ∨ B = 4) (hC : 1 ≤ C)
+    (hβ : 0 < β) (hβint : ∀ j : ℕ, β ≠ j) (m : ℕ) (hm : β / 2 < (m : ℝ)) :
+    ∃ k : ℝ, 0 < k ∧ ∃ δ₀ : ℝ, δ₀ ∈ Set.Ioo 0 1 ∧
+      ∀ table : (Bool × History) → PMF Action,
+      let ν := Measure.infinitePi (fun row : Bool × History => (table row).toMeasure)
+      let π := fun (seed : (Bool × History) → Action) S h => seed (S, h)
+      (∀ row : Bool × History, ν.map (fun seed => seed row) = (table row).toMeasure) ∧
+      ∀ δ : ℝ, δ ∈ Set.Ioo 0 δ₀ →
+      (∀ (S : Bool) (h : ℝ), h ∈ Set.Ioc 0 (1 / 4 : ℝ) →
+        D5.S3.TotalVariation.Pinsker.totalVariation
+          (fun cell : Bool × Bool => (Law ν (Set.projIcc 0 1 zero_le_one ((1 - h / C) / B))).real
+            ((stoppedValue (CellAt π S) (Calls π S)) ⁻¹' {cell}))
+          (fun cell : Bool × Bool =>
+            (if cell.1 then (1 - h / C) / B else 1 - (1 - h / C) / B) / 2 +
+              (h ^ β / 16) * (if cell.1 = cell.2 then 1 else -1)) ≤ δ) →
+      ENNReal.ofReal (k * Real.log δ⁻¹) ≤
+        ⨆ S : Bool, ⨆ h : {h : ℝ // h ∈ Set.Ioc 0 (1 / 4 : ℝ)},
+          ∫⁻ ω, RecordCost π S (β / 2) ω
+            ∂Law ν (Set.projIcc 0 1 zero_le_one ((1 - h.1 / C) / B)) := by
+  obtain ⟨k, hk, δ₀, hδ₀, hbound⟩ :=
+    seeded_policy_logarithmic_total_call_cost (Seed := (Bool × History) → Action)
+      B C β hB hC hβ hβint m hm
+  refine ⟨k, hk, δ₀, hδ₀, ?_⟩
+  intro table
+  dsimp only
+  refine ⟨fun row => Measure.infinitePi_map_eval _ row, ?_⟩
+  intro δ hδ htv
+  exact hbound (Measure.infinitePi (fun row : Bool × History => (table row).toMeasure))
+    inferInstance (fun seed S h => seed (S, h)) (fun S h => measurable_pi_apply (S, h))
+    δ hδ htv
 
 end D5.S3.Estimation.SequentialDecisionRisk.SeededBernoulliFactoryExecution
