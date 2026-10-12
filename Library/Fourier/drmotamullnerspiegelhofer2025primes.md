@@ -191,3 +191,123 @@ needed for Robin. The signed target remains the
 [same-source residual](../Analytic/polak2026finiterobinca.md).
 This application is a paper derivation with no new Lean declaration or
 Lean verification.
+
+## A prime-axis cut of the same actual CA correction
+
+The fixed-window law can be applied to the **actual support primes** of
+one strict CA inventory. This is a different observable from the
+five-window label of the composite integer itself. Reuse the inventory
+and rejected-layer bound in the
+[Mertens application](../Weil/broadbent2026mertens.md#fixed-table-upper-allowances-at-the-actual-ca-inventory):
+
+$$
+\varepsilon(t)=\frac1{t\log t},\qquad
+a_p(t)=\#\{k\ge1:r_{p,k}>\varepsilon(t)\},\qquad
+N^-(t)=\prod_p p^{a_p(t)}.
+$$
+
+For a label $\sigma\in\{null,2,3,2\ 5,5\}$, put
+
+$$
+T_\sigma(t)=
+-\sum_{\substack{p:a_p(t)\ge1\\\chi(p)=\sigma}}
+\log(1-p^{-a_p(t)-1}).
+$$
+
+These are positive contributions of this very inventory, with no
+replacement prime law or separately optimized exponent vector. The
+partition gives the finite exact equality
+$T(t)=\sum_\sigma T_\sigma(t)$, where $T$ is its existing
+finite-exponent Euler correction. Let $w_\sigma$ denote the
+**unconditional** column of the preceding table. The classical CA
+threshold formula and fixed-window prime law yield the application
+
+$$
+T_\sigma(t)
+=\frac{\sqrt2\,w_\sigma+o(1)}{\sqrt t\log t},
+\qquad t\longrightarrow\infty.
+\tag{3}
+$$
+
+The limit is over all real prices in this clock parametrization,
+including tied layer thresholds, and hence also applies along any
+unbounded stable self-match roots. It requires only fixed windows.
+The ingredients are published CA factorization and prime sampling;
+(3) is their attributed same-inventory application, not a new prime
+distribution theorem, new Robin coverage or Lean verification.
+
+Here is the parameter and error correspondence. Define, for real
+$x>1$,
+
+$$
+F(x,k)=\frac{\log(1+(x+\cdots+x^k)^{-1})}{\log x},
+\qquad F(x_k(t),k)=\varepsilon(t).
+$$
+
+The strict threshold convention is the one in
+[Alaoglu–Erdős, §3, Theorem 10](../Arith/alaoglu1944highly.md),
+[primary PDF, p.9](https://www.renyi.hu/~p_erdos/1944-03.pdf#page=9):
+its brackets mean the greatest integer strictly less than the
+argument. In these parameters, $a_p(t)=\#\{k:p<x_k(t)\}$,
+so the exponent-one primes are exactly
+$x_2(t)\le p<x_1(t)$. The first-layer inequalities already used in
+the Mertens application give $t-1<x_1(t)<t$. The fixed second-layer
+relation $F(x,2)\sim1/(x^2\log x)$ gives
+
+$$
+x_2(t)\sim\sqrt{2t}.
+$$
+
+For completeness, $x_2\to\infty$ and the defining relation imply
+$x_2^2\log x_2\sim t\log t$. Taking logarithms first gives
+$\log x_2/\log t\to1/2$, and substituting back gives
+$x_2^2/t\to2$. No prime error or RH assumption is inserted into
+this real threshold computation.
+
+For the higher-exponent contributions, the existing rejected next layer
+gives $p^{-a_p-1}<3\log p/(t\log t)$. Split those primes at
+$t^{1/3}$. Below the split, the bound and ordinary integer counting
+give $O(t^{-2/3})$; above it, $a_p\ge2$ gives
+$p^{-a_p-1}\le p^{-3}$ and the decreasing integer tail gives the
+same bound. Since $p^{-a_p-1}\le1/4$, replacing it by
+$-\log(1-p^{-a_p-1})$ changes this estimate by at most a factor
+$4/3$. On the exponent-one range, the quadratic remainder in
+$-\log(1-p^{-2})=p^{-2}+O(p^{-4})$ totals
+$O(x_2^{-3})$. These bounds apply to any of the nonnegative class
+subsum contributions and are uniform at events. Consequently
+
+$$
+T_\sigma(t)=
+\sum_{\substack{x_2(t)\le p<x_1(t)\\\chi(p)=\sigma}}\frac1{p^2}
++O(t^{-2/3}).
+\tag{4}
+$$
+
+Let $A_\sigma(y)=\#\{p\le y:\chi(p)=\sigma\}$. The fixed-window
+law and PNT give $A_\sigma(y)\sim w_\sigma y/\log y$.
+Abel summation therefore gives
+
+$$
+\sum_{\substack{p\ge y\\\chi(p)=\sigma}}p^{-2}
+\sim\frac{w_\sigma}{y\log y}.
+$$
+
+The possible endpoint term is $O(y^{-2})$. Subtracting the tail at
+$x_1(t)\asymp t$ costs $O(1/(t\log t))$. Inserting
+$x_2(t)\sim\sqrt{2t}$ into (4) gives (3), since
+$t^{-2/3}=o(1/(\sqrt t\log t))$.
+
+The same argument keeps the unit of each **prime** $p$ and uses the
+joint masses of $(h(p),\chi(p))$ in place of $w_\sigma$. Thus the
+conditional geometric ratios describe how the actual correction
+divides among prime labels after conditioning on $h(p)$. They are
+not conditioned on $h(N^-(t))$, and a label of $N^-(t)$ supplies no
+such prime-factor condition.
+
+Summing (3) recovers the classical leading correction
+$\sqrt2/(\sqrt t\log t)$ because $\sum_\sigma w_\sigma=1$.
+This cut identifies the shares of an existing compensation and creates
+no extra budget. It gives neither the sign of the same-source Mertens
+error nor a lower bound for $I_\psi$ at the root. Those remain the
+signed arithmetic obligations in the
+[full-support core](../Analytic/polak2026finiterobinca.md#directly-reusable-effective-core).
