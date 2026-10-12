@@ -53,9 +53,7 @@ internal interface ICliEnvironment
 
     CommandResult AlignLedger(IReadOnlyList<string> arguments);
 
-    CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
-    CommandResult RevokeLedger(IReadOnlyList<string> arguments);
 
     CommandResult ReanchorMathlibLedger(IReadOnlyList<string> arguments);
 
@@ -143,12 +141,8 @@ internal static class CliApplication
                 RenderCommand(environment.Ingest(tail), console),
             ["ledger-align"] = static (environment, tail, console) =>
                 RenderCommand(environment.AlignLedger(tail), console),
-            ["ledger-append"] = static (environment, tail, console) =>
-                RenderCommand(environment.AppendLedger(tail), console),
             ["ledger-frozen"] = static (environment, tail, console) =>
                 RenderExplicit(environment.LedgerFrozen(tail), console),
-            ["ledger-revoke"] = static (environment, tail, console) =>
-                RenderCommand(environment.RevokeLedger(tail), console),
             ["ledger-reanchor-mathlib"] = static (environment, tail, console) =>
                 RenderCommand(environment.ReanchorMathlibLedger(tail), console),
             ["route"] = static (environment, tail, console) =>

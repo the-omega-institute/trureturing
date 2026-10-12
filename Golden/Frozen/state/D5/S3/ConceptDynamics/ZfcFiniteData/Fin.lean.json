@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4f64063351eda3efcecd650c66768aa0811ec077d2b76db2a5c6801d9f9eb86d"}
+{"statement_id":"sha256:4f64063351eda3efcecd650c66768aa0811ec077d2b76db2a5c6801d9f9eb86d","declarations":[{"declaration_name_key":"ns(n0,14:eq_finZeroElim)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,3:Fin),11:addCast_val)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,3:Fin),7:addCast)","kind":"def"},{"declaration_name_key":"ns(ns(ns(n0,3:Fin),4:Fin1),6:eq_one)","kind":"theorem"}]}

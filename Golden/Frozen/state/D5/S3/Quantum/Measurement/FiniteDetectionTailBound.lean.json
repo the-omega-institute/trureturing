@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f970d6025e86c98085856ca3dfed1126ae0a5d4a33be2e84235a6fc51bab0212"}
+{"statement_id":"sha256:f970d6025e86c98085856ca3dfed1126ae0a5d4a33be2e84235a6fc51bab0212","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Measurement),24:FiniteDetectionTailBound),27:finite_detection_tail_bound)","kind":"theorem"}]}

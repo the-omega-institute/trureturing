@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2c0aaf865a3b4d11d57db7d53e5829f62865f5d2458c8006e88918d6e20a877f"}
+{"statement_id":"sha256:2c0aaf865a3b4d11d57db7d53e5829f62865f5d2458c8006e88918d6e20a877f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),8:Negation),31:DirectImageComplementSaturation),30:image_complement_iff_saturated)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c30fd7eb358e7b3571d65d13815e63e4c1667770965793e8807ad863d9237a87"}
+{"statement_id":"sha256:c30fd7eb358e7b3571d65d13815e63e4c1667770965793e8807ad863d9237a87","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),14:MetricGeometry),24:SemiconjugacyComposition),19:semiconjugacyDefect)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),14:MetricGeometry),24:SemiconjugacyComposition),32:semiconjugacy_defect_composition)","kind":"theorem"}]}

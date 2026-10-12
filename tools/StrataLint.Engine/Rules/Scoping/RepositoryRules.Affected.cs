@@ -15,7 +15,6 @@ internal static partial class RepositoryRules
     private static bool HeartsAffected(DeltaRuleContext context) =>
         Changed(context, static path =>
             path is HeartsPath or HeartsAuthorizationLedger.Path
-            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
             || FrozenStatePath.IsUnderRoot(path)
             || path.StartsWith("D5/", StringComparison.Ordinal)
                 && path.EndsWith(".lean", StringComparison.Ordinal))
