@@ -21,6 +21,8 @@ import Mathlib.Tactic.Ring
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
+set_option linter.unusedSimpArgs false
+set_option linter.unusedTactic false
 noncomputable section
 
 open Matrix
@@ -207,6 +209,7 @@ private theorem witness_passive : Passive tau0 witnessChannel := by
   intro ρ σ
   rw [witness_memory_marginal ρ, witness_memory_marginal σ]
 
+-- The finite controlled-channel expansion needs more reduction heartbeats.
 set_option maxHeartbeats 2000000 in
 private theorem controlled_tensor (A : Mat (Fin 3)) (B : Mat (Fin 2))
     (i k : Fin 3) (a b : Fin 2) :
@@ -233,13 +236,13 @@ private theorem encoded_unit (j l : Fin 3) :
   rw [controlled_tensor]
   by_cases hi : i = j <;> by_cases hk : k = l
   all_goals simp_all [Matrix.kronecker_apply, Matrix.single, eq_comm]
-  all_goals aesop
 
 private theorem append_unit (j l : Fin 3) :
     appendMemory (d := 3) tau0 (Matrix.single j l 1) =
       Matrix.kronecker (Matrix.single j l 1) (stateMatrix tau0) := by
   rfl
 
+-- The tensor-map basis expansion needs more reduction heartbeats.
 set_option maxHeartbeats 2000000 in
 private theorem tensor_unit (E : MatrixMap (Fin 3) (Fin 3) ℂ)
     (B : Mat (Fin 2)) (j l : Fin 3) :
@@ -279,5 +282,54 @@ private theorem witness_choi_identity (E : KrausChannel (Fin 3)) :
   simp only [Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, Matrix.trace_smul,
     smul_eq_mul, Matrix.mul_assoc]
   ring
+
+private theorem witness_implements : Implements tau0 witnessChannel witnessChannel witnessC :=
+  ⟨witnessC_dephasing, witness_choi_identity⟩
+
+private theorem classical_ppt {d : ℕ} {C : Mat (Fin d × Fin d)}
+    (h : ClassicalGram C) : (partialTransposeB C).PosSemidef := by
+  rcases h with ⟨n, q, P, Q, hq, _, hG, hC⟩
+  have heq : partialTransposeB C =
+      ∑ a : Fin n, q a • Matrix.kronecker (P a) (Q a).transpose := by
+    rw [hC]
+    ext ⟨i,j⟩ ⟨k,l⟩
+    simp only [partialTransposeB, Matrix.sum_apply, Matrix.smul_apply,
+      Matrix.kronecker_apply, Matrix.transpose_apply]
+    rfl
+  rw [heq]
+  apply Matrix.posSemidef_sum
+  intro a ha
+  exact ((hG a).1.1.kronecker (hG a).2.1.transpose).smul (hq a)
+
+private theorem witness_not_ppt : ¬ (partialTransposeB witnessC).PosSemidef := by
+  intro h
+  have hp := h.submatrix (fun i : Fin 3 => (i,i))
+  have hn := hp.dotProduct_mulVec_nonneg (![-1,1,1] : Fin 3 → ℂ)
+  have hb : (partialTransposeB witnessC).submatrix (fun i : Fin 3 => (i,i))
+      (fun i : Fin 3 => (i,i)) = !![(1 : ℂ),1,1; 1,1,-1; 1,-1,1] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [partialTransposeB, witnessC_formula, controls, Matrix.trace,
+        Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
+        Matrix.vecMul, Matrix.vecMul_eq_sum, Matrix.cons_val_zero,
+        Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons,
+        qubitX, qubitZ]
+    all_goals norm_num
+  have hv : star (![-1,1,1] : Fin 3 → ℂ) ⬝ᵥ
+      ((partialTransposeB witnessC).submatrix (fun i : Fin 3 => (i,i))
+        (fun i : Fin 3 => (i,i)) *ᵥ (![-1,1,1] : Fin 3 → ℂ)) = -3 := by
+    rw [hb]
+    norm_num [dotProduct, Matrix.mulVec, Matrix.mul_apply, Fin.sum_univ_three,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons,
+      Matrix.vecHead, Matrix.vecTail]
+  rw [hv] at hn
+  norm_num [Complex.nonneg_iff] at hn
+
+theorem result : ¬ claim := by
+  intro h
+  have hc := h 3 2 (by norm_num) (by norm_num) tau0 witnessChannel witnessChannel
+    witnessC witness_implements witness_passive
+  exact witness_not_ppt (classical_ppt hc)
 
 end D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
