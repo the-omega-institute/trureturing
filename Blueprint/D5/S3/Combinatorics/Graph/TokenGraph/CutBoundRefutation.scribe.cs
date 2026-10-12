@@ -34,7 +34,10 @@ internal sealed class CutBoundRefutationDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Take the five-cycle blow-up with five independent blocks of size 40 and complete bipartite edges between successive blocks. Its 100-token graph uses the existing tokenGraph. Put z = (−4+3i)/5 and multiply z to the block index over the occupied vertices. Each phase has modulus one. Each oriented edge of the original graph occurs as a token move in choose(198,99) token subsets, so the energy reduces to a sum over the original graph. The squared norm is choose(200,100), and the ratio of these binomial coefficients is 50/199. The real part of the edge-phase sum is 2·40²·(4 Re z + Re z⁴), with 4 Re z + Re z⁴ = −2527/625. The quotient is −646912/199. Splitting the complex phase vector into its real and imaginary parts connects this quotient to the least eigenvalue of the real adjacency matrix. The cut weight is affine in each block occupancy; rounding each occupancy to zero or 40 gives at most four cut cycle edges, hence maximum cut at most 6400. The matching weight is at most 100. The conjectured lower bound is therefore at least −3250, whereas the least eigenvalue is at most −646912/199, smaller by 162/199."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("apte-parekh-sud-2025-token-graph-cut-bound"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, AssessedProvenance provenance) => Describe.Lean(

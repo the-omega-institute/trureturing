@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/apte-parekh-sud-2025-token-graph-cut-bound` (refuted) by `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"apte-parekh-sud-2025-token-graph-cut-bound","declaration_gid":"D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anuj Apte; Ojas Parekh; James Sud (2025). *Conjectured Bounds for 2-Local Hamiltonians via Token Graphs*. URL: <https://arxiv.org/abs/2506.03441v2>.
