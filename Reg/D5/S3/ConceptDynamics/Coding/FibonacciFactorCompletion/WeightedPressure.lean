@@ -1505,3 +1505,188 @@ def pressure_strictAnti_registration :
 #print axioms pressure_strictAnti_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal184
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.AnalyticWitnesses
+noncomputable section
+
+theorem log_partitions_differ : ∃ k : ℕ,
+    logPartition language (pressure language 0 + 1) 0 ≠
+      logPartition language (pressure language 0 + 1) k := by
+  obtain ⟨k, hk⟩ := partitions_differ
+  refine ⟨k, ?_⟩
+  intro h
+  exact hk (Real.logb_injOn_pos (by norm_num : (1 : ℝ) < 2)
+    (partition_positive language occupied 0 _) (partition_positive language occupied k _) h)
+
+theorem log_quotients_differ : ∃ k : ℕ,
+    logPartition language (pressure language 0 + 1) 0 / (0 : ℝ) ≠
+      logPartition language (pressure language 0 + 1) k / (k : ℝ) := by
+  by_contra h
+  push_neg at h
+  have same : (fun k : ℕ => logPartition language (pressure language 0 + 1) k / (k : ℝ)) =
+      (fun _ : ℕ => (0 : ℝ)) := by
+    funext k
+    simpa only [div_zero] using (h k).symm
+  have convergence := pressure_tendsto language occupied (pressure language 0 + 1)
+  rw [same] at convergence
+  have zero_pressure : pressure language (pressure language 0 + 1) = 0 :=
+    tendsto_nhds_unique convergence tendsto_const_nhds
+  exact (ne_of_lt negative) zero_pressure
+
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.AnalyticWitnesses
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal177
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature (Σ _ : Set (ℤ → CuLetter), ℝ)
+    (fun _ => ℕ) (fun _ => ℝ)
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature
+    (fun _ p k => logPartition p.1 p.2 k) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (occupied : X.Nonempty) (θ : ℝ),
+    Subadditive (r.readout () ⟨X, θ⟩)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have impossible := h AnalyticWitnesses.language AnalyticWitnesses.occupied 0 0 0
+  norm_num [rejected, realize] at impossible
+
+def evidence : Registration sourceArena (type_of% @log_partition_subadditive) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@log_partition_subadditive, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    obtain ⟨k, hk⟩ := AnalyticWitnesses.log_partitions_differ
+    exact ⟨⟨AnalyticWitnesses.language, pressure AnalyticWitnesses.language 0 + 1⟩, 0, k, hk⟩
+
+def log_partition_subadditive_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.log_partition_subadditive)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => logPartition p.1 p.2 k) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal177.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal177.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ p k => logPartition p.1 p.2 k) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms log_partition_subadditive_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal177
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal180
+noncomputable section
+open Filter Topology
+
+abbrev observationSignature := ExactOriginal177.observationSignature
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature
+    (fun _ p k => logPartition p.1 p.2 k / (k : ℝ)) (fun e => nomatch e)
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ p _ => pressure p.1 p.2 + 1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (X : Set (ℤ → CuLetter)) (occupied : X.Nonempty) (θ : ℝ),
+    Tendsto (r.readout () ⟨X, θ⟩) atTop (𝓝 (pressure X θ))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have convergence := h AnalyticWitnesses.language AnalyticWitnesses.occupied 0
+  change Tendsto (fun _ : ℕ => pressure AnalyticWitnesses.language 0 + 1) atTop
+    (𝓝 (pressure AnalyticWitnesses.language 0)) at convergence
+  have impossible : pressure AnalyticWitnesses.language 0 =
+      pressure AnalyticWitnesses.language 0 + 1 :=
+    tendsto_nhds_unique convergence tendsto_const_nhds
+  linarith
+
+def evidence : Registration sourceArena (type_of% @pressure_tendsto) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@pressure_tendsto, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    obtain ⟨k, hk⟩ := AnalyticWitnesses.log_quotients_differ
+    refine ⟨⟨AnalyticWitnesses.language, pressure AnalyticWitnesses.language 0 + 1⟩, 0, k, ?_⟩
+    simpa only [actual, realize, Nat.cast_zero] using hk
+
+def pressure_tendsto_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.pressure_tendsto)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ p k => logPartition p.1 p.2 k / (k : ℝ)) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal180.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal180.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ p k => logPartition p.1 p.2 k / (k : ℝ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms pressure_tendsto_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure.ExactOriginal180
