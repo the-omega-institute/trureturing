@@ -27,7 +27,7 @@ internal sealed class GoldenCell5040SmallPrimeExclusionDocument : IScribeDocumen
                     Open, Mathrm, Grp(F.Id("mod")), Sp, F.Id("n"), Close, Sp, Land, Sp,
                     Call("Prime", F.Id("p")), Sp, Land, Sp,
                     D(7), Sp, Lt, Sp, F.Id("p"), Sp, Lt, Sp, D(4,7), Sp,
-                    Implies, Sp, Lnot, Grp(Seq(F.Id("p"), Sp, Mid, Sp, F.Id("n")))))),
+                    Implies, Sp, Neg, Grp(Seq(F.Id("p"), Sp, Mid, Sp, F.Id("n")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The possible primes are eleven, thirteen, seventeen, "
