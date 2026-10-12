@@ -5,13 +5,9 @@
    anchors: []
    utility: none
    digest: Balanced hypercube rendezvous has a dimension-independent quantum gap. -/
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Finset.SymmDiff
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Analysis.Complex.Order
-import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Analysis.InnerProductSpace.Defs
-import Mathlib.Tactic.Linarith
 noncomputable section
 open scoped BigOperators symmDiff ComplexOrder
 namespace D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
