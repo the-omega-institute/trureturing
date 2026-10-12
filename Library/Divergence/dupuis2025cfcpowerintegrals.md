@@ -43,3 +43,16 @@ The mathematical operator convexity result and the integral method are
 classical. The Mathlib source cites Eric A. Carlen, *Trace inequalities and
 quantum entropies: An introductory course*, Lemma 2.8. No mathematical
 originality or completion of Hiai Problem 5.18 is claimed.
+
+## Verified locator
+
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/IntegralRepresentation.lean
+
+Declarations `Real.exists_measure_rpow_eq_integral_rpowIntegrand₁₂` and
+`CFC.exists_measure_nnrpow_eq_integral_cfcₙ_rpowIntegrand₁₂` locate the
+compensated whole-kernel representations described above. The shifted
+inverse convexity input is
+`CStarAlgebra.convexOn_ringInverse_algebraMap_add` in the same pinned
+`Rpow/RingInverseOrder.lean` source:
+
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/RingInverseOrder.lean

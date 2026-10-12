@@ -47,3 +47,13 @@ support-constrained semidefinite limit also remain separate obligations.
 The paper is cited; its prose or proof text is not transcribed. Physlib
 and Mathlib source dependencies retain their respective Apache-2.0
 attribution and source licenses.
+
+## Verified locator
+
+https://arxiv.org/abs/0710.4167v3
+
+Theorem 1.1, the fixed-congruence specialization at `q = 1` and
+`1 <= p <= 2`, is the classical convexity result cited above. The local
+connected variational proof is in
+`D5/S3/Quantum/Hiai/CarlenLiebConvexity.lean`, declaration
+`fixed_congruence_trace_convex`.
