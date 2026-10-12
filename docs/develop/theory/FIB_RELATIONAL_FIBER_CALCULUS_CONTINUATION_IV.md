@@ -332,3 +332,156 @@ clock, reset, actuator, unrestricted action language, global controller-size
 optimization or Lean/kernel theorem is supplied here.
 
 ## 追加锚（本行以下为增补区）
+
+## 46. Execution-boundary corrections
+
+The preceding sections are read with the following corrections. They close
+three independent gaps: silent actions must not carry a hidden source-dependent
+controller successor, a mixed budget must not turn an unbounded worst
+coordinate into a finite frontier point, and a finite path enumeration must
+prove source-total termination rather than enumerate only runs already known
+to succeed.
+
+**Definition 46.1 (all-action reply factorization).** Put
+
+$$
+O_\bot=O\sqcup\{\bot\}.
+$$
+
+For every primitive action, including read, passive, intervention, update and
+any other non-halt action, write its response as
+
+$$
+\operatorname{Reply}_{e,a}(s,j)\in O_\bot.
+$$
+
+The value $\bot$ is the declared response of a silent action; it is not an
+unobserved side channel. For every legal action there must be a single map
+
+$$
+\delta_{e,a}:O_\bot\to E
+$$
+
+such that
+
+$$
+\operatorname{Next}_{e,a}(s,j)
+   =\delta_{e,a}(\operatorname{Reply}_{e,a}(s,j)).
+$$
+
+Thus the controller position after *every* action factors through the actual
+visible response, with silent actions factoring through $\bot$. Legality is
+constant on a complete boundary fiber, and the reply, successor, resource
+increment, epoch update, stop flag and terminal row are all evaluated on the
+same source and ordered event. This all-action condition supersedes the
+read-only restriction in Definition 41.3. A source-dependent update of the
+hidden physical state is allowed only when it does not make the controller
+position or its next instruction source-dependent.
+
+**Theorem 46.2 (corrected realizability implication).** Theorem 43.3 remains
+valid after replacing its reply-factorization hypothesis by Definition 46.1.
+In particular, a silent passive or intervention action cannot select two
+different halt positions merely because two hidden sources share the same
+visible boundary. Conversely, a source/action factorization is a controller
+witness only when it includes a finite position set, the all-action maps
+$\delta_{e,a}$, and a fixed instruction at each position. An arbitrary policy
+or a list of source-indexed words is not by itself a finite controller.
+
+The proof is the same induction on ordered events, now applied to every
+action. The source-independent map $\delta_{e,a}$ supplies the unique next
+instruction; same-source evaluation supplies the physical successor and full
+terminal row; the rank excludes infinite event sequences.
+
+**Definition 46.3 (finite resource frontier and mixed feasibility).** A
+controller may have finite cost on every individual source while its
+coordinatewise worst cost over an infinite source domain is unbounded. Define
+
+$$
+\mathcal C_K^{\mathrm{fin}}
+ =\{C\in\mathcal C_K:b(C)\in\mathbb N^d\},
+$$
+
+$$
+\mathcal F_K^{\mathrm{fin}}
+ =\{B\in\mathbb N^d:\exists C\in\mathcal C_K^{\mathrm{fin}},\ b(C)\le B\}.
+$$
+
+For a mixed budget $\bar B\in(\mathbb N\cup\{\infty\})^d$, use the
+finite-profile predicate
+
+$$
+\operatorname{Feas}^{\mathrm{fin}}_K(\bar B)
+\iff
+\exists x\in\mathbb N^d,
+\quad x\le\bar B\quad\land\quad x\in\mathcal F_K^{\mathrm{fin}}.
+$$
+
+An $\infty$ coordinate therefore removes a constraint; it does not license an
+infinite worst coordinate as a member of the finite frontier. If an
+all-infinite synthesis procedure is used, it must either return a controller
+with a finite profile or report that only unbounded profiles were found.
+
+**Theorem 46.4 (corrected mixed-box test).** The Dickson/Pareto construction
+in Theorem 44.2 applies to $\mathcal F_K^{\mathrm{fin}}$ and uses
+$\operatorname{Feas}^{\mathrm{fin}}_K$ in every mixed box. For a finite current
+basis $A\subseteq\mathcal F_K^{\mathrm{fin}}$, the negative test is
+
+$$
+\exists x\in\mathcal F_K^{\mathrm{fin}}\setminus\uparrow A
+\quad\Longleftrightarrow\quad
+\bigvee_f\operatorname{Feas}^{\mathrm{fin}}_K(B^f).
+$$
+
+The assertion is about finite Pareto points only. A controller with profile
+$b(C)=(0,\infty)$ can satisfy an uncorrected mixed predicate while
+contributing no vector to $\mathcal F_K^{\mathrm{fin}}$; it must not make the
+negative test true. For example, on $D=\mathbb N$ a source can require
+$n+1$ legal events before a final read, giving finite cost per source but an
+unbounded worst cost. This is a valid termination behavior and still lies
+outside the finite frontier.
+
+**Definition 46.5 (source-total horizon certificate).** A finite synthesis
+certificate for a budget $\bar B$ must apply to every admitted source, not
+only to paths that have already been classified as successful. It consists of
+
+1. full source coverage: every $s\in D$ satisfies the admission predicate and
+   belongs to at least one enumerated ordered-history case;
+2. all-response coverage: every response, including $\bot$ and every failure
+   response allowed by the contract, has its successor case;
+3. common legality and all-action reply factorization from Definition 46.1;
+4. a terminal event with the complete same-source row on every admitted run;
+5. a well-founded rank that strictly decreases on every actual nonterminal
+   successor, or an exact regular-history acceleration certificate with the
+   same termination and maximum-cost guarantee.
+
+The resulting Presburger sentence has the form
+
+$$
+\forall s\in D\;\exists h\in\mathcal H_{\le T}:\quad
+\operatorname{Run}_C(s)=h\ \land\operatorname{Terminal}(h)\ \land
+Y_C(s)=Y_{\mathrm{target}}(s)\ \land c_C(s)\le\bar B,
+$$
+
+with the path partition and response successor equations included in the
+certificate. A controller is admitted to $\mathcal C_K^{\mathrm{fin}}$ only
+after this universal source-total and termination condition has been proved.
+
+**Theorem 46.6 (sound finite synthesis after the correction).** Under the
+finite chart, action and reply assumptions of Theorem 44.2, if a
+source-total horizon or certified regular-history certificate is supplied,
+and all predicates above are Presburger-definable, finite-budget feasibility
+and the finite Pareto basis are decidable by the stated finite enumeration.
+
+**Proof.** The certificate makes the path family finite and complete: no
+admitted source, response branch, or nonterminal extension is omitted. The
+universal source formula therefore decides legality, termination, terminal-row
+equality and the actual same-source cost bound for each finite controller
+graph. Presburger elimination decides that formula. Upward closure and
+Dickson's lemma then compute the finite Pareto basis, using
+$\operatorname{Feas}^{\mathrm{fin}}_K$ for mixed boxes. \(\square\)
+
+Finally, $q_r+1$ is a terminal-run convention: it counts response-producing
+phases together with the terminal phase only when a terminal event exists. An
+infinite passive loop has no terminal phase, so the notation does not assign
+it a completed phase count. In either case, it does not bound the raw ordered
+event history.
