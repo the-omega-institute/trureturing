@@ -7,6 +7,7 @@
    digest: A resolvable finite-difference signal charges one common endpoint stopping moment. -/
 
 import D5.S3.Estimation.SequentialDecisionRisk.BernoulliStoppedCoefficientBudget
+import D5.S3.Estimation.SequentialDecisionRisk.NonintegerForwardDifferenceSignal
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Analysis.SpecialFunctions.Log.Base
 
@@ -39,6 +40,12 @@ local notation "EndpointCost" => fun (a : ℝ) (t : WithTop ℕ) =>
   if t = ⊤ then (⊤ : ℝ≥0∞) else ENNReal.ofReal (((t.untopD 0 : ℕ) : ℝ) ^ a)
 local notation "DerivC" => fun (m : ℕ) (σ : ℝ) =>
   (2 * m).factorial * σ ^ (2 * m) * (2 * MomentC m + 1)
+
+private lemma difference_eq_fwdDiff (r : ℕ) (t : ℝ) (f : ℝ → ℝ) :
+    Diff r t f = (fwdDiff t)^[r] f t := by
+  rw [fwdDiff_iter_eq_sum_shift]
+  simp only [zsmul_eq_mul, nsmul_eq_mul, Int.cast_mul, Int.cast_pow,
+    Int.cast_neg, Int.cast_one, Int.cast_natCast]
 
 private lemma difference_error_bound (r : ℕ) (t K : ℝ) (f g : ℝ → ℝ)
     (he : ∀ i ∈ range (r + 1), |f (t + i * t) - g (t + i * t)| ≤ K) :
@@ -584,5 +591,158 @@ theorem bernoulli_logarithmic_common_endpoint_charge
       (G h) δ (haccuracy h hlocal.1)
   exact logarithmic_charge_of_output_windows ν p₀ h₀ h₁ M hM m a ρ C δ S ha ham
     hC hρ hS hρsmall hρwindow hδ0 hδsmall f hf hfb G herr hsignal hcalculus
+
+/-- The noninteger-power target alone supplies the signal. Finite stopped
+observations supply the smoothness needed for the difference budget, so neither
+of these is an additional hypothesis. All scales charge the same endpoint law. -/
+theorem bernoulli_power_target_logarithmic_endpoint
+    (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (B C β ρ : ℝ) (m : ℕ) (hβ : 0 < β) (hβint : ∀ j : ℕ, β ≠ j)
+    (hm : β / 2 < (m : ℝ)) (hC : 1 ≤ C) (hρ : 0 < ρ)
+    (hρsmall : (2 * m + 1 : ℕ) * ρ ≤ (1 / 4 : ℝ))
+    (hρwindow : (2 * m + 1 : ℕ) * ρ ≤ (1 - (p₀ : ℝ)) * (2 * MomentC m + 1)⁻¹)
+    (δ : ℝ) (hδ0 : 0 < δ)
+    (hδsmall : δ < (min (1 / 2 : ℝ)
+      ((ρ ^ β * |(fwdDiff (1 : ℝ))^[2 * m] (fun u : ℝ => u ^ β) 1| / 16) /
+        (2 : ℝ) ^ (2 * m + 1))) ^ 2)
+    (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
+    (s : Set (Seed × (ℕ → Bool))) (hs : MeasurableSet[hM.measurableSpace] s)
+    (haccuracy : ∀ h ∈ Set.Ioc 0 (1 / 4 : ℝ),
+      |((1 - h / C) / (2 * B) - h ^ β / 16) -
+        (Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)).real s| ≤ δ) :
+    ENNReal.ofReal (((ρ ^ β *
+      |(fwdDiff (1 : ℝ))^[2 * m] (fun u : ℝ => u ^ β) 1| / 16) /
+      (4 * (2 * DerivC m (4 / (1 - (p₀ : ℝ))) * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1)) *
+        GeoBudget (β / 2) m * (β / 2) * Real.log 2)) * Real.log δ⁻¹) ≤
+      ∫⁻ ω, EndpointCost (β / 2) (M ω) ∂Law ν p₀ := by
+  classical
+  have hm0 : 0 < m := by
+    by_contra h
+    have hz : m = 0 := by omega
+    rw [hz, Nat.cast_zero] at hm
+    linarith
+  have hR : 2 ≤ 2 * m := by omega
+  have hsignal := NonintegerForwardDifferenceSignal.target_signal_scaled
+    B C β ρ (2 * m) hR hρ hβint
+  apply bernoulli_logarithmic_common_endpoint_charge ν p₀ h₀ h₁ M hM m (β / 2)
+    ρ C δ _ (by positivity) hm hC hρ hsignal.1 hρsmall hρwindow hδ0 hδsmall
+    s hs (fun h : ℝ => (1 - h / C) / (2 * B) - h ^ β / 16) haccuracy
+  · intro j
+    rw [difference_eq_fwdDiff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      (fun h : ℝ => (1 - h / C) / (2 * B) - h ^ β / 16)]
+    exact (hsignal.2 ((2 ^ j : ℕ) : ℝ) (by positivity)).ge
+  · intro j U hU hD
+    let n : ℕ := 2 ^ j
+    let t := ρ / Real.sqrt (n : ℝ)
+    let τ := fun ω => Trunc M n ω
+    let f := (s ∩ {ω | M ω ≤ (n : WithTop ℕ)}).indicator (fun _ => (1 : ℝ))
+    let γ := -(p₀ : ℝ) / C
+    have ht : 0 < t := div_pos hρ (Real.sqrt_pos.mpr (by positivity))
+    have hf : StronglyMeasurable[(truncation_stopping hM n).measurableSpace] f :=
+      stronglyMeasurable_const.indicator (truncated_output_measurable M hM s hs n)
+    have hfb : ∀ ω, |f ω| ≤ 1 := by
+      intro ω
+      dsimp [f]
+      by_cases hω : ω ∈ s ∩ {ω | M ω ≤ (n : WithTop ℕ)}
+      · rw [Set.indicator_of_mem hω]; norm_num
+      · rw [Set.indicator_of_notMem hω]; norm_num
+    have hinterval : t + (2 * m : ℕ) * t = (2 * m + 1 : ℕ) * t := by
+      push_cast
+      ring
+    change |Diff (2 * m) t (fun x : ℝ => ∫ ω, f ω ∂Law ν (Rate p₀ γ x))| ≤
+      t ^ (2 * m) * U
+    rw [difference_eq_fwdDiff (2 * m) t (fun x : ℝ => ∫ ω, f ω ∂Law ν (Rate p₀ γ x))]
+    apply NonintegerForwardDifferenceSignal.abs_fwd_diff_iter_le _ (2 * m) ht
+    · intro k hk y hy
+      rw [hinterval] at hy
+      have hlocal := bernoulli_factory_local_window p₀ h₀ h₁ C ρ
+        ((2 * MomentC m + 1)⁻¹) hC hρ (by positivity) m n
+        (by dsimp [n]; positivity) hρsmall hρwindow y hy
+      let p := Rate p₀ γ y
+      have hp : (p₀ : ℝ) + y * γ = (p : ℝ) :=
+        (congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one)
+          ⟨hlocal.2.1.1.le, hlocal.2.1.2.le⟩)).symm
+      exact bernoulli_stopped_affine_iterated_differentiable ν p
+        (by rw [← hp]; exact hlocal.2.1.1) (by rw [← hp]; exact hlocal.2.1.2)
+        τ (truncation_stopping hM n) n (fun ω => truncation_le (M ω) n)
+        γ (p₀ : ℝ) y hp f hf hfb k
+    · intro y hy
+      rw [hinterval] at hy
+      exact hD y hy
+
+/-- Constants are chosen before the seed law, error and stopping rule. Accuracy
+for the noninteger-power target forces logarithmic worst-world fractional cost
+on the legal positive-parameter interval, including infinite cost. -/
+theorem bernoulli_power_target_logarithmic_uniform_cost
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (B C β : ℝ) (m : ℕ) (hβ : 0 < β) (hβint : ∀ j : ℕ, β ≠ j)
+    (hm : β / 2 < (m : ℝ)) (hC : 1 ≤ C) :
+    ∃ k : ℝ, 0 < k ∧ ∃ δ₀ : ℝ, δ₀ ∈ Set.Ioo 0 1 ∧
+      ∀ (ν : Measure Seed), IsProbabilityMeasure ν →
+      ∀ δ : ℝ, δ ∈ Set.Ioo 0 δ₀ →
+      ∀ (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
+        (s : Set (Seed × (ℕ → Bool))), MeasurableSet[hM.measurableSpace] s →
+      (∀ h ∈ Set.Ioc 0 (1 / 4 : ℝ),
+        |((1 - h / C) / (2 * B) - h ^ β / 16) -
+          (Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)).real s| ≤ δ) →
+      ENNReal.ofReal (k * Real.log δ⁻¹) ≤
+        ⨆ h : {h : ℝ // h ∈ Set.Ioc 0 (1 / 4 : ℝ)},
+          ∫⁻ ω, EndpointCost (β / 2) (M ω)
+            ∂Law ν (Rate p₀ (-(p₀ : ℝ) / C) h.1) := by
+  have ha : 0 < β / 2 := by positivity
+  let θ := (2 * MomentC m + 1)⁻¹
+  let H : ℝ := (2 * m + 1 : ℕ)
+  let ρ : ℝ := min (1 / 4 : ℝ) ((1 - (p₀ : ℝ)) * θ) / H
+  have hθ : 0 < θ := by dsimp [θ]; positivity
+  have hH : 0 < H := by dsimp [H]; positivity
+  have hρ : 0 < ρ := div_pos (lt_min (by norm_num)
+    (mul_pos (sub_pos.mpr h₁) hθ)) hH
+  have hρeq : H * ρ = min (1 / 4 : ℝ) ((1 - (p₀ : ℝ)) * θ) := by
+    dsimp [ρ]
+    field_simp
+  have hρsmall : H * ρ ≤ (1 / 4 : ℝ) := hρeq.trans_le (min_le_left _ _)
+  have hρwindow : H * ρ ≤ (1 - (p₀ : ℝ)) * θ := hρeq.trans_le (min_le_right _ _)
+  let S := ρ ^ β * |(fwdDiff (1 : ℝ))^[2 * m] (fun u : ℝ => u ^ β) 1| / 16
+  let A := 2 * DerivC m (4 / (1 - (p₀ : ℝ))) * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1)
+  let T := min (1 / 2 : ℝ) (S / (2 : ℝ) ^ (2 * m + 1))
+  let k := S / (4 * A * GeoBudget (β / 2) m * (β / 2) * Real.log 2)
+  have hS : 0 < S := div_pos (mul_pos (Real.rpow_pos_of_pos hρ _)
+    (NonintegerForwardDifferenceSignal.unit_signal_pos β (2 * m) hβint)) (by norm_num)
+  have hT : 0 < T := lt_min (by norm_num) (div_pos hS (by positivity))
+  have hTle : T ≤ 1 / 2 := min_le_left _ _
+  have hδ₀ : T ^ 2 ∈ Set.Ioo (0 : ℝ) 1 := ⟨by positivity, by nlinarith⟩
+  have hr := Real.one_lt_rpow (by norm_num : (1 : ℝ) < 2) ha
+  have hq := Real.rpow_lt_one_of_one_lt_of_neg (by norm_num : (1 : ℝ) < 2)
+    (show β / 2 - (m : ℝ) < 0 by linarith)
+  have hGeo : 0 < GeoBudget (β / 2) m := by positivity
+  have hA : 0 < A := by dsimp [A]; positivity
+  have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hk : 0 < k := div_pos hS (by positivity)
+  refine ⟨k, hk, T ^ 2, hδ₀, ?_⟩
+  intro ν hν δ hδ M hM s hs haccuracy
+  have := hν
+  have hbound := bernoulli_power_target_logarithmic_endpoint ν p₀ h₀ h₁ B C β ρ m
+    hβ hβint hm hC hρ hρsmall hρwindow δ hδ.1 hδ.2 M hM s hs haccuracy
+  apply hbound.trans
+  let p := fun j : ℕ => Rate p₀ (-(p₀ : ℝ) / C) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+  have hw : ∀ j, (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) ∈ Set.Ioc 0 (1 / 4 : ℝ) ∧
+      |((p j : ℝ) - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ)))| *
+        Real.sqrt ((2 ^ j : ℕ) : ℝ) ≤ θ := by
+    intro j
+    let t := ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)
+    have ht : 0 < t := div_pos hρ (Real.sqrt_pos.mpr (by positivity))
+    have hH1 : (1 : ℝ) ≤ H := by
+      dsimp [H]
+      exact_mod_cast (show 1 ≤ 2 * m + 1 by omega)
+    have hi : t ∈ Set.Icc t (H * t) := ⟨le_rfl, by nlinarith⟩
+    have hh := bernoulli_factory_local_window p₀ h₀ h₁ C ρ θ hC hρ hθ m (2 ^ j)
+      (by positivity) hρsmall hρwindow t hi
+    exact ⟨hh.1, hh.2.2.2⟩
+  have hb := bernoulli_common_endpoint_budget ν p₀ h₀ h₁ p M hM (β / 2) m ha hm
+    (fun j => (hw j).2)
+  apply hb.2.2.2.1
+  intro j
+  exact le_iSup_of_le ⟨ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ), (hw j).1⟩ le_rfl
 
 end D5.S3.Estimation.SequentialDecisionRisk.BernoulliCommonEndpointCharge

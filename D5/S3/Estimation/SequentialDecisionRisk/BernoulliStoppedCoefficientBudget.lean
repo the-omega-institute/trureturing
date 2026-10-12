@@ -265,6 +265,62 @@ theorem bernoulli_stopped_even_derivative_budget
       mul_le_mul_right hcoeff _
     _ = _ := by rw [← mul_assoc, ← ENNReal.ofReal_mul hd]
 
+private lemma integrable_product_coefficient {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (n : ℕ)
+    (v : Fin n → Ω → ℝ) (hv : ∀ i, Measurable (v i))
+    (b : ℝ) (hvb : ∀ i ω, |v i ω| ≤ b)
+    (f : Ω → ℝ) (hf : Measurable f) (hfb : ∀ ω, |f ω| ≤ 1)
+    (s : Finset (Fin n)) : Integrable (fun ω => f ω * ∏ i ∈ s, v i ω) μ := by
+  let C := fun (s : Finset (Fin n)) (ω : Ω) => f ω * ∏ i ∈ s, v i ω
+  refine ⟨(hf.mul (s.measurable_prod (fun i hi => hv i))).aestronglyMeasurable,
+    HasFiniteIntegral.of_bounded (C := b ^ s.card) (ae_of_all _ (fun ω => ?_))⟩
+  change ‖f ω * ∏ i ∈ s, v i ω‖ ≤ _
+  rw [norm_mul, Real.norm_eq_abs, Real.norm_eq_abs, abs_prod]
+  calc
+    _ ≤ 1 * ∏ _i ∈ s, b := mul_le_mul (hfb ω)
+      (prod_le_prod (fun i hi => abs_nonneg _) (fun i hi => hvb i ω))
+      (prod_nonneg (fun i hi => abs_nonneg _)) (by norm_num)
+    _ = _ := by simp
+
+private lemma integral_product_expansion {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (n : ℕ)
+    (v : Fin n → Ω → ℝ) (hv : ∀ i, Measurable (v i))
+    (b : ℝ) (hvb : ∀ i ω, |v i ω| ≤ b)
+    (f : Ω → ℝ) (hf : Measurable f) (hfb : ∀ ω, |f ω| ≤ 1) :
+    (fun t : ℝ => ∫ ω, f ω * ∏ i, (1 + t * v i ω) ∂μ) =
+      fun t => ∑ s ∈ (univ : Finset (Fin n)).powerset,
+        t ^ s.card * ∫ ω, f ω * ∏ i ∈ s, v i ω ∂μ := by
+  classical
+  let C := fun (s : Finset (Fin n)) (ω : Ω) => f ω * ∏ i ∈ s, v i ω
+  have hCi : ∀ s, Integrable (C s) μ :=
+    integrable_product_coefficient μ n v hv b hvb f hf hfb
+  funext t
+  calc
+    _ = ∫ ω, ∑ s ∈ (univ : Finset (Fin n)).powerset, t ^ s.card * C s ω ∂μ := by
+      apply integral_congr_ae
+      apply ae_of_all
+      intro ω
+      change f ω * (∏ i, (1 + t * v i ω)) =
+        ∑ s ∈ (univ : Finset (Fin n)).powerset, t ^ s.card * C s ω
+      rw [congrFun (product_expansion n (fun i => v i ω)) t, mul_sum]
+      apply sum_congr rfl
+      intro s hs
+      dsimp [C]
+      ring
+    _ = ∑ s ∈ (univ : Finset (Fin n)).powerset,
+        ∫ ω, t ^ s.card * C s ω ∂μ :=
+      integral_finsetSum _ (fun s hs => (hCi s).const_mul _)
+    _ = _ := by simp_rw [integral_const_mul]; rfl
+
+private lemma contDiff_integral_product {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (n : ℕ)
+    (v : Fin n → Ω → ℝ) (hv : ∀ i, Measurable (v i))
+    (b : ℝ) (hvb : ∀ i ω, |v i ω| ≤ b)
+    (f : Ω → ℝ) (hf : Measurable f) (hfb : ∀ ω, |f ω| ≤ 1) :
+    ContDiff ℝ ⊤ (fun t : ℝ => ∫ ω, f ω * ∏ i, (1 + t * v i ω) ∂μ) := by
+  rw [integral_product_expansion μ n v hv b hvb f hf hfb]
+  fun_prop
+
 private lemma integral_iteratedDeriv_product {Ω : Type*} [MeasurableSpace Ω]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (n r : ℕ)
     (v : Fin n → Ω → ℝ) (hv : ∀ i, Measurable (v i))
@@ -274,37 +330,9 @@ private lemma integral_iteratedDeriv_product {Ω : Type*} [MeasurableSpace Ω]
       ∫ ω, f ω * iteratedDeriv r (fun t : ℝ => ∏ i, (1 + t * v i ω)) 0 ∂μ := by
   classical
   let C := fun (s : Finset (Fin n)) (ω : Ω) => f ω * ∏ i ∈ s, v i ω
-  have hCi : ∀ s, Integrable (C s) μ := by
-    intro s
-    refine ⟨(hf.mul (s.measurable_prod (fun i hi => hv i))).aestronglyMeasurable,
-      HasFiniteIntegral.of_bounded (C := b ^ s.card) (ae_of_all _ (fun ω => ?_))⟩
-    change ‖f ω * ∏ i ∈ s, v i ω‖ ≤ _
-    rw [norm_mul, Real.norm_eq_abs, Real.norm_eq_abs, abs_prod]
-    calc
-      _ ≤ 1 * ∏ _i ∈ s, b := mul_le_mul (hfb ω)
-        (prod_le_prod (fun i hi => abs_nonneg _) (fun i hi => hvb i ω))
-        (prod_nonneg (fun i hi => abs_nonneg _)) (by norm_num)
-      _ = _ := by simp
-  have hF : (fun t : ℝ => ∫ ω, f ω * ∏ i, (1 + t * v i ω) ∂μ) =
-      fun t => ∑ s ∈ (univ : Finset (Fin n)).powerset,
-        t ^ s.card * ∫ ω, C s ω ∂μ := by
-    funext t
-    calc
-      _ = ∫ ω, ∑ s ∈ (univ : Finset (Fin n)).powerset, t ^ s.card * C s ω ∂μ := by
-        apply integral_congr_ae
-        apply ae_of_all
-        intro ω
-        change f ω * (∏ i, (1 + t * v i ω)) =
-          ∑ s ∈ (univ : Finset (Fin n)).powerset, t ^ s.card * C s ω
-        rw [congrFun (product_expansion n (fun i => v i ω)) t, mul_sum]
-        apply sum_congr rfl
-        intro s hs
-        dsimp [C]
-        ring
-      _ = ∑ s ∈ (univ : Finset (Fin n)).powerset,
-          ∫ ω, t ^ s.card * C s ω ∂μ :=
-        integral_finsetSum _ (fun s hs => (hCi s).const_mul _)
-      _ = _ := by simp_rw [integral_const_mul]
+  have hCi : ∀ s, Integrable (C s) μ :=
+    integrable_product_coefficient μ n v hv b hvb f hf hfb
+  have hF := integral_product_expansion μ n v hv b hvb f hf hfb
   have hD : (fun ω => f ω * iteratedDeriv r
       (fun t : ℝ => ∏ i, (1 + t * v i ω)) 0) =
       fun ω => ∑ s ∈ (univ : Finset (Fin n)).powerset,
@@ -320,6 +348,7 @@ private lemma integral_iteratedDeriv_product {Ω : Type*} [MeasurableSpace Ω]
   rw [hF, hD, iteratedDeriv_fun_sum (by intro s hs; fun_prop),
     integral_finsetSum _ (fun s hs => (hCi s).const_mul _)]
   simp_rw [iteratedDeriv_mul_const_field, integral_const_mul]
+  rfl
 
 omit [MeasurableSpace Seed] in
 private lemma padded_product (τ : Seed × (ℕ → Bool) → ℕ) (n : ℕ)
@@ -336,6 +365,47 @@ private lemma padded_product (τ : Seed × (ℕ → Bool) → ℕ) (n : ℕ)
       intro i hin hi
       simp [not_lt.mpr (Nat.le_of_not_gt (fun h => hi (mem_range.mpr h)))]
     _ = _ := prod_congr rfl (fun i hi => by simp [mem_range.mp hi])
+
+private lemma stopped_padding_measurable
+    (p₀ : unitInterval) (τ : Seed × (ℕ → Bool) → ℕ) (ht : Measurable τ)
+    (q : ℝ) (i : ℕ) :
+    Measurable (fun ω => if i < τ ω then q * Bit p₀ i ω else 0) := by
+  apply Measurable.ite (measurableSet_lt measurable_const ht) _ measurable_const
+  apply Measurable.const_mul
+  exact ((Measurable.of_discrete : Measurable (fun b : Bool =>
+    (if b then (1 : ℝ) else 0) - (p₀ : ℝ))).comp
+    ((measurable_pi_apply i).comp measurable_snd))
+
+omit [MeasurableSpace Seed] in
+private lemma stopped_padding_bound
+    (p₀ : unitInterval) (τ : Seed × (ℕ → Bool) → ℕ) (q : ℝ)
+    (i : ℕ) (ω : Seed × (ℕ → Bool)) :
+    |if i < τ ω then q * Bit p₀ i ω else 0| ≤ |q| := by
+  change |if i < τ ω then q * Bit p₀ i ω else 0| ≤ |q|
+  split_ifs with hi
+  · rw [abs_mul]
+    exact (mul_le_mul_of_nonneg_left (centered_bit_bound p₀ i ω) (abs_nonneg q)).trans_eq
+      (mul_one _)
+  · simp
+
+private lemma contDiff_stopped_output
+    (ν : Measure Seed) [IsProbabilityMeasure ν] (p₀ : unitInterval)
+    (τ : Seed × (ℕ → Bool) → ℕ) (ht : Measurable τ)
+    (n : ℕ) (hτn : ∀ ω, τ ω ≤ n) (q : ℝ)
+    (f : Seed × (ℕ → Bool) → ℝ) (hf : Measurable f) (hfb : ∀ ω, |f ω| ≤ 1) :
+    ContDiff ℝ ⊤ (fun t : ℝ => ∫ ω, f ω *
+      ∏ i : Fin (τ ω), (1 + t * (q * Bit p₀ i.1 ω)) ∂Law ν p₀) := by
+  have hp := contDiff_integral_product (Law ν p₀) n
+    (fun (i : Fin n) ω => if i.1 < τ ω then q * Bit p₀ i.1 ω else 0)
+    (fun i => stopped_padding_measurable p₀ τ ht q i.1) |q|
+    (fun i ω => stopped_padding_bound p₀ τ q i.1 ω) f hf hfb
+  convert hp using 1
+  funext t
+  apply integral_congr_ae
+  apply ae_of_all
+  intro ω
+  exact congrArg (fun z : ℝ => f ω * z)
+    (padded_product τ n hτn (fun i ω => q * Bit p₀ i ω) t ω).symm
 
 /-- The even derivative of a bounded stopped-output likelihood polynomial
 is controlled by the same random stopping-time moment. -/
@@ -356,21 +426,10 @@ theorem bernoulli_stopped_output_derivative_budget
     simpa using (hτ.measurable.mono hτ.measurableSpace_le le_rfl).untopD 0
   let v := fun (i : Fin n) (ω : Seed × (ℕ → Bool)) =>
     if i.1 < τ ω then q * Bit p₀ i.1 ω else 0
-  have hv : ∀ i, Measurable (v i) := by
-    intro i
-    apply Measurable.ite (measurableSet_lt measurable_const ht) _ measurable_const
-    apply Measurable.const_mul
-    exact ((Measurable.of_discrete : Measurable (fun b : Bool =>
-      (if b then (1 : ℝ) else 0) - (p₀ : ℝ))).comp
-      ((measurable_pi_apply i.1).comp measurable_snd))
-  have hb : ∀ i ω, |v i ω| ≤ |q| := by
-    intro i ω
-    change |if i.1 < τ ω then q * Bit p₀ i.1 ω else 0| ≤ |q|
-    split_ifs with hi
-    · rw [abs_mul]
-      exact (mul_le_mul_of_nonneg_left (centered_bit_bound p₀ i.1 ω) (abs_nonneg q)).trans_eq
-        (mul_one _)
-    · simp
+  have hv : ∀ i, Measurable (v i) := fun i =>
+    stopped_padding_measurable p₀ τ ht q i.1
+  have hb : ∀ i ω, |v i ω| ≤ |q| := fun i ω =>
+    stopped_padding_bound p₀ τ q i.1 ω
   have hp : ∀ ω, (fun t : ℝ => ∏ i : Fin n, (1 + t * v i ω)) =
       fun t : ℝ => ∏ i : Fin (τ ω), (1 + t * (q * Bit p₀ i.1 ω)) := by
     intro ω
@@ -440,6 +499,42 @@ private lemma stopped_output_parameter_identity
     split_ifs
     · exact div_nonneg p.2.1 p₀.2.1
     · exact div_nonneg (sub_nonneg.mpr p.2.2) (sub_nonneg.mpr p₀.2.2)), hprod, mul_comm]
+
+/-- Every iterated derivative of a bounded stopped observation is differentiable
+at each interior point of an affine Bernoulli family. -/
+theorem bernoulli_stopped_affine_iterated_differentiable
+    (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (τ : Seed × (ℕ → Bool) → ℕ)
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ)))
+    (n : ℕ) (hτn : ∀ ω, τ ω ≤ n)
+    (γ x h : ℝ) (hp : x + h * γ = (p₀ : ℝ))
+    (f : Seed × (ℕ → Bool) → ℝ)
+    (hf : StronglyMeasurable[hτ.measurableSpace] f) (hfb : ∀ ω, |f ω| ≤ 1)
+    (k : ℕ) :
+    DifferentiableAt ℝ (iteratedDeriv k (fun t : ℝ => ∫ ω, f ω ∂Law ν
+      (Set.projIcc 0 1 zero_le_one (x + t * γ)))) h := by
+  have ht : Measurable τ := by
+    simpa using (hτ.measurable.mono hτ.measurableSpace_le le_rfl).untopD 0
+  let q := γ / ((p₀ : ℝ) * (1 - (p₀ : ℝ)))
+  let P := fun t : ℝ => ∫ ω, f ω *
+    ∏ i : Fin (τ ω), (1 + t * (q * Bit p₀ i.1 ω)) ∂Law ν p₀
+  have hP : ContDiff ℝ ⊤ P := contDiff_stopped_output ν p₀ τ ht n hτn q f
+    (hf.mono hτ.measurableSpace_le).measurable hfb
+  have hQ : ContDiff ℝ ⊤ (fun t => P (t - h)) := hP.comp (by fun_prop)
+  have he : (fun t : ℝ => ∫ ω, f ω ∂Law ν
+      (Set.projIcc 0 1 zero_le_one (x + t * γ))) =ᶠ[𝓝 h] (fun t => P (t - h)) := by
+    have hc : Continuous (fun t : ℝ => x + t * γ) := by fun_prop
+    have hw : ∀ᶠ t : ℝ in 𝓝 h, x + t * γ ∈ Set.Ioo 0 1 :=
+      hc.continuousAt.preimage_mem_nhds (by simpa only [hp] using Ioo_mem_nhds h₀ h₁)
+    filter_upwards [hw] with t ht
+    apply stopped_output_parameter_identity ν p₀ _ h₀ h₁ τ hτ f hf (t - h) γ
+    rw [Set.projIcc_of_mem (h := zero_le_one) ⟨ht.1.le, ht.2.le⟩]
+    dsimp
+    rw [← hp]
+    ring
+  exact (hQ.differentiable_iteratedDeriv k (by simp)).differentiableAt.congr_of_eventuallyEq
+    (he.iteratedDeriv k)
 
 /-- The actual parameter law of every bounded stopped observation has an
 even derivative paid by its stopping-time moment at the same base point.
