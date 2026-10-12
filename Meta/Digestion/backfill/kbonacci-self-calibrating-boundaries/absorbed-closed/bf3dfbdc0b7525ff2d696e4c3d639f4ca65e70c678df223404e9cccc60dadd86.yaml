@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:bf3dfbdc0b7525ff2d696e4c3d639f4ca65e70c678df223404e9cccc60dadd86
   normalized_sha256: sha256:bf3dfbdc0b7525ff2d696e4c3d639f4ca65e70c678df223404e9cccc60dadd86
 cas_ref: sha256:bf3dfbdc0b7525ff2d696e4c3d639f4ca65e70c678df223404e9cccc60dadd86
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/NearCriticalGrid.original_near_critical_grid_law
+    target_statement_id: sha256:94dcc65f1657d6203364cf7a8cee142fd4877f2458e1678f6d883a5e709d9ce5
 receipts:
   unresolved_subitems: []
