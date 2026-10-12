@@ -98,6 +98,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/horodecki-2022-rank-of-contextuality-non-power-of-two` (proved) by `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"horodecki-2022-rank-of-contextuality-non-power-of-two","declaration_gid":"D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Horodecki; J. Zhou; M. Stankiewicz; R. Salazar; P. Horodecki; R. Raussendorf; R. Horodecki; R. Ramanathan; E. Tyhurst (2022). *The rank of contextuality*. DOI: [10.1088/1367-2630/acdf78](https://doi.org/10.1088/1367-2630/acdf78). URL: <https://arxiv.org/abs/2205.10307>.
