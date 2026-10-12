@@ -8502,6 +8502,12 @@ X_e=\partial_{\theta_e}\omega_e(\theta_e).
 \mathcal N(\Omega_{\boldsymbol\theta}).
 \]
 
+以下定理在所考察参数点满足
+\[
+\rho_{\boldsymbol\theta}\succ0
+\]
+时陈述。若网络输出发生秩下降，则必须把 SLD 超算子限制到输出支撑，或改用带 Moore--Penrose 伪逆的广义 Fisher 型。
+
 ### 定理 53.6（triangle 网络的源信息预算）
 
 对任意参数速度 \(\dot{\boldsymbol\theta}\)，有
@@ -8586,7 +8592,19 @@ F_Q\left(\rho_{\boldsymbol\kappa};
 
 输出态可以因为局部节点信道而变成非对角态，右侧仍然只由三个独立 FIB 源的 seam Fisher 信息决定。这是当前三角网络中最严格的信息预算：节点局部相互作用可以重新组织信息，也可以将其编码为非交换相干，但不能从独立源中凭空产生新的 SLD Fisher 信息。
 
-### 推论 53.8（量子半群只给出 Fisher 单调性，不能自动给出 QCD 指数率）
+### 推论 53.8（多参数 Fisher 矩阵的 Loewner 收缩）
+
+若每条边携带参数向量，令 (J_e) 为源态 (omega_e) 的 SLD Fisher 矩阵，令 (J_{mathrm{out}}) 为网络输出态的 SLD Fisher 矩阵，则
+\[
+\boxed{
+J_{\mathrm{out}}
+\preceq
+\operatorname{diag}(J_{AB},J_{BC},J_{CA}).
+}
+\]
+对任意实参数方向 (v)，该不等式的二次型正是定理 53.6 的标量预算；有限维对称矩阵的 Loewner 序由所有实二次型比较刻画，故结论成立。该矩阵形式可直接接到多参数量子 Cramér--Rao 界。
+
+### 推论 53.9（量子半群只给出 Fisher 单调性，不能自动给出 QCD 指数率）
 
 若 \(T_t^\ast\) 是 Schrödinger 表示的 CPTP 半群，且 \(\rho_t=T_t^\ast(\rho_0)\)、\(X_t=T_t^\ast(X_0)\)，则
 
