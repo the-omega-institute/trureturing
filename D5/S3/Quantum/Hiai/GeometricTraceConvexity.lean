@@ -110,8 +110,8 @@ theorem geometric_trace_jointly_convex {α p : ℝ}
   have hBm := hdomain hB₀ hB₁ (sub_nonneg.mpr ht1) ht0 (by ring : 1 - t + t = 1)
   obtain ⟨Zm, hZm, heqm, _⟩ := variational_formula hAm hBm α hp0
   have hc := objective_jointly_convex hp hθ Zm hZm hA₀ hA₁ hB₀ hB₁ ht0 ht1
-  have hb₀ := (variational_formula hA₀ hB₀ α hp0).choose_spec.2.2 Zm
-  have hb₁ := (variational_formula hA₁ hB₁ α hp0).choose_spec.2.2 Zm
+  have hb₀ := (variational_formula hA₀ hB₀ α hp0).elim (fun _ h => h.2.2 Zm)
+  have hb₁ := (variational_formula hA₁ hB₁ α hp0).elim (fun _ h => h.2.2 Zm)
   rw [heqm] at hc
   simp only [smul_eq_mul] at hc ⊢
   exact hc.trans (add_le_add
