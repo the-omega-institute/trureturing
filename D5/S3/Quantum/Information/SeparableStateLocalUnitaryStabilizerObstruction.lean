@@ -503,13 +503,9 @@ private theorem unit_projector_ray {n : Type*} [Fintype n] {ψ χ : n → ℂ} (
     exact hψ
   rw [hz,projector_smul,hn,one_smul]
 private theorem pauli_projector_trace (p : Pauli) (hp : p ≠ .I) (ep : Bool) : (spectral p (if ep then 1 else 0)).trace=1 := by
-  obtain ⟨_, _, _, _, _, hn, _, he⟩ := spectral_stabilizer p (if ep then 1 else 0) hp
-  rw [he]
-  calc
-    _ = ((∑ i, ‖eigenVector p (if ep then 1 else 0) i‖ ^ 2 : ℝ) : ℂ) := by
-      simp [Matrix.trace, Matrix.vecMulVec, ← Complex.normSq_eq_norm_sq, Complex.mul_conj]
-    _ = 1 := by rw [hn]; rfl
-
+  cases p <;> cases ep <;>
+    norm_num [spectral,pauliMatrix,qubitX,qubitZ,Matrix.trace,Matrix.diag,
+      Matrix.mul_apply,Fin.sum_univ_two] at *
 private theorem pauli_product_marginal {A : (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)} (h : PauliProductProjector A) : ∃ p : Pauli, p ≠ .I ∧ ∃ ep : Bool, partialTraceRight A=spectral p (if ep then 1 else 0) := by
   obtain ⟨p,q,hp,hq,ep,eq,rfl⟩ := h
   refine ⟨p,hp,ep,?_⟩

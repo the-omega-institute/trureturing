@@ -388,12 +388,9 @@ theorem result : claim := by
       intro i
       fin_cases i <;> norm_num
     · change trace basisZeroDensity = 1
-      have he : basisZeroDensity = blochMatrix 1 (WithLp.toLp 2 ![0, 0, 1]) := by
-        ext i j
-        fin_cases i <;> fin_cases j <;>
-          norm_num [basisZeroDensity, blochMatrix, Matrix.cons_val_two]
-      rw [he]
-      exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
+      rw [trace, Fin.sum_univ_two]
+      change (1 + 0 : ℂ) = 1
+      exact add_zero 1
 
   have rhoBell_density : IsDensity rhoBell := bell_density_is_state
 

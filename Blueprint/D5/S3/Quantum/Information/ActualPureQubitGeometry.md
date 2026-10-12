@@ -154,7 +154,7 @@ For a positive semidefinite qubit matrix, the Bloch-vector norm is at most the r
 
 **Definition 1.13 (Visible readout map).**
 
-$$\forall m \in \mathbb{N},\; \forall N \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{LinearMap.toFun}\left((\operatorname{effectReadout}\left(N\right): \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), \operatorname{Fin}\left(m\right) \to \mathbb{R}\right))\right) = ((r: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)) \mapsto (((j: \operatorname{Fin}\left(m\right)) \mapsto (\frac{\langle\operatorname{bloch}\left(N\left(j\right)\right), r\rangle_{\mathbb{R}}}{2}))))$$
+$$\forall m \in \mathbb{N},\; \forall N \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{DFunLike.coe}\left((\operatorname{effectReadout}\left(N\right): \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), \operatorname{Fin}\left(m\right) \to \mathbb{R}\right))\right) = ((r: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)) \mapsto (((j: \operatorname{Fin}\left(m\right)) \mapsto (\frac{\langle\operatorname{bloch}\left(N\left(j\right)\right), r\rangle_{\mathbb{R}}}{2}))))$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.effectReadout` (`✓ std3`).
 
@@ -178,7 +178,7 @@ An orthogonal change of the Bloch vector preserves the trace coordinate.
 
 **Definition 1.15 (Linear Bloch map).**
 
-$$\operatorname{LinearMap.toFun}\left((\operatorname{blochLinear}: \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right))\right) = \operatorname{bloch}$$
+$$\operatorname{DFunLike.coe}\left((\operatorname{blochLinear}: \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right))\right) = \operatorname{bloch}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.blochLinear` (`✓ std3`).
 
@@ -190,7 +190,7 @@ The Bloch coordinates form a real linear map on complex matrices.
 
 **Definition 1.16 (Linear change of matrix coordinates).**
 
-$$\forall O \in \operatorname{LinearIsometryEquiv}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right),\; \operatorname{LinearMap.toFun}\left((\operatorname{reframeLinear}\left(O\right): \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right))\right) = \operatorname{reframe}\left(O\right)$$
+$$\forall O \in \operatorname{LinearIsometryEquiv}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right),\; \operatorname{DFunLike.coe}\left((\operatorname{reframeLinear}\left(O\right): \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right))\right) = \operatorname{reframe}\left(O\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.reframeLinear` (`✓ std3`).
 

@@ -363,15 +363,7 @@ theorem diagState_isState {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a+b=1
     fin_cases i
     · exact ⟨ha,rfl⟩
     · exact ⟨hb,rfl⟩
-  · have he : D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState ![a,b] =
-        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix (a + b)
-          (WithLp.toLp 2 ![0, 0, a - b]) := by
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        simp [D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState,
-          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix]
-    rw [he, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace,
-      hab, Complex.ofReal_one]
+  · simp [D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState, Matrix.trace, Fin.sum_univ_succ, ← Complex.ofReal_add, hab]
 
 private theorem diag_overlap_le {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
     {P : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ} (hp : P ∈ couplings (D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState ![a,b]) (D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics.diagonalState ![a,b])) :

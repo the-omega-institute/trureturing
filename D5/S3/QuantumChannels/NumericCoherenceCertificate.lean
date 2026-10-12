@@ -5,7 +5,6 @@
    anchors: []
    digest: Exact two-hundred phase-damping channels preserve zero coherence; a biased diagonal witness has Hadamard seven-fiftieth coherence. -/
 
-import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Observer.StateNotPath
 
 namespace D5.S3.QuantumChannels.NumericCoherenceCertificate
@@ -60,16 +59,7 @@ theorem biased_diagonal_density_is_state :
     rw [hDiagonal, Matrix.posSemidef_diagonal_iff]
     intro i
     fin_cases i <;> positivity
-  · have he : biasedDiagonalDensity =
-        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1
-          (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch biasedDiagonalDensity) := by
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [biasedDiagonalDensity,
-          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch, Matrix.cons_val_two]
-    rw [he]
-    exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace 1 _
+  · norm_num [biasedDiagonalDensity, Matrix.trace, Fin.sum_univ_two]
 
 theorem two_hundred_channel_zero_coherence
     (c : Fin 200 → DampingCoefficient) :
