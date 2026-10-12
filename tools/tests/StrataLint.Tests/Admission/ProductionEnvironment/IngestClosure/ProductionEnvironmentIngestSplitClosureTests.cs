@@ -233,7 +233,6 @@ public sealed partial class ProductionEnvironmentTests
     [Theory]
     [InlineData("entry")]
     [InlineData("source-metadata")]
-    [InlineData("accepted-event")]
     [InlineData("atomizer-data")]
     [InlineData("cas")]
     [InlineData("tail")]
@@ -245,7 +244,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             "entry" => DirectoryAtomPath(entry.AtomId, "residual-open"),
             "source-metadata" => DirectorySourceMetadataPath(),
-            "accepted-event" => FrozenLedgerChangeClassifier.AcceptedRoot + "/changed.json",
             "atomizer-data" => TheoryAtomizerDataLoader.DataPath,
             "cas" => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..],
             "tail" => entry.Receipts.TailAuthorization!.Path,
@@ -257,6 +255,18 @@ public sealed partial class ProductionEnvironmentTests
             entry,
             DigestionReceiptAlignment.Seen,
             changes: RawChangeSet.Create([changedPath]),
+            isBaseFactAffected: null));
+    }
+
+    [Fact]
+    public void StatusAuthorityClosureDoesNotReplayUnchangedEntryForStateRecord()
+    {
+        var statePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown("D5/S0/Carrier/Ring.lean")).Value;
+        Assert.False(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
+            StatusAuthorityClosureEntry(),
+            DigestionReceiptAlignment.Seen,
+            RawChangeSet.Create([statePath]),
             isBaseFactAffected: null));
     }
 

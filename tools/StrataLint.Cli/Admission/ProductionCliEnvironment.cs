@@ -334,12 +334,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public CommandResult AlignLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAlignWriter.Align(repositoryRoot, repository, arguments);
 
-    public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
-
-    public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
-        DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
-
     public CommandResult ReanchorMathlibLedger(IReadOnlyList<string> arguments) =>
         DagLedgerMathlibReanchorWriter.Reanchor(
             repositoryRoot,

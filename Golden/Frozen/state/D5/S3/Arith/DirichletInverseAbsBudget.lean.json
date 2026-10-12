@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e6256b59686157e7ef0dededd002b08bb713b585122121339522b327b4048fe9"}
+{"statement_id":"sha256:e6256b59686157e7ef0dededd002b08bb713b585122121339522b327b4048fe9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),25:DirichletInverseAbsBudget),32:dirichletInverse_absolute_budget)","kind":"theorem"}]}

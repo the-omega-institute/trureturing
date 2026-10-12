@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f90b6fa5e68ba13c50072efc83df7c34d7385cea145563a167ae19514f3e1f41"}
+{"statement_id":"sha256:f90b6fa5e68ba13c50072efc83df7c34d7385cea145563a167ae19514f3e1f41","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),35:FibonacciPrimePowerModularNonsquare),39:fibonacci_prime_power_modular_nonsquare)","kind":"theorem"}]}

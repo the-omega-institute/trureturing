@@ -1,1 +1,1 @@
-{"statement_id":"sha256:22925fe0fcecb194eeb38b5338591067eeecde3a265d3b803b4f8f1488356998"}
+{"statement_id":"sha256:22925fe0fcecb194eeb38b5338591067eeecde3a265d3b803b4f8f1488356998","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),25:PopStackLeftDecomposition),25:prepend_two_decomposition)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),25:PopStackLeftDecomposition),25:prepend_two_decomposition),10:match_1_73)","kind":"def"}]}
