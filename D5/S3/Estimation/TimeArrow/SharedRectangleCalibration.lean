@@ -275,7 +275,7 @@ private theorem calibratedVariance_pos {ι : Type*} [Fintype ι] (outside : ι �
     exact hjp.trans_le he
   exact add_pos_of_nonneg_of_pos ho hi
 
-private theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+theorem unique_shared_root {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U q t : ℝ) (hN : 0 < N) (hq : 0 < q)
     (hqM : q < (Fintype.card ι : ℝ) + N)
     (hc : ∀ j, 0 ≤ cellCounts N R U t j) :
