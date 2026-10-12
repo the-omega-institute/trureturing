@@ -27,6 +27,8 @@
 | 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
 | 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；自动选择保留 24 小时 Git 更新窗口及落后 BASE 300 提交条件；删除按锁时长与身份核验） |
+| 清理本任务完成后的 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
+| 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
 
 常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
 
@@ -503,9 +505,11 @@ Commit ordinary working snapshots promptly with `make worktree-checkpoint MESSAG
 
 形式化工具不要求先提交：`ledger-align` 按 `repository.ReadCurrent()` 的工作树读取契约，通过 `repository.ReadCurrentProjection(...)` 读取当前真值输入，不按 delta 选择；deposit/cover 只改工作树、不自动提交。完成逻辑单元后仍须按上述普通工作快照流程及时提交、推送。
 
+**worktree 的位置与清理**：worktree 用 `make worktree … DEST=<主检出父目录>/trureturing-<session-id>` 建立，不得放在 `/tmp`、`/private/tmp` 或 `$TMPDIR` 下。任务完成（交付按下文定义：PR MERGED 且首个 dev push 核验）后，及时用 `make worktree-remove NAMES="<目录名>"` 清理本任务创建的 worktree；已由后续任务接手的除外。磁盘可用空间低于 5%（与 `make worktree` 磁盘门同一阈值），或命令因磁盘空间不足而失败时，AI 可直接执行 `make -C tools clean-all FORCE=1`，不需另行确认；清理范围与保护条件以该目标及 spec A20 为准。
+
 All registered worktree cleanup follows SPEC A20/A20.1: selected unlocked trees are eligible; locked trees require at least 24 hours since Git lock-file modification. Automatic selection additionally requires 24 hours without a Git update and at least 300 commits behind BASE; named removal bypasses those selectors. Keep whole-batch eligibility preflight, main/nested registration and target identity protection. Before removal, checkpoint outstanding ordinary changes using the real index. Retain the current branch, or for detached HEAD create a new local recovery branch at the resulting commit without replacing an existing ref. Retain that branch through the entire cleanup, including the orphan sweep. An unmerged/unfinished operation, failed commit or failed recovery-branch creation retains the affected tree with a concrete failure; earlier completed removals remain reported. Clean trees need no empty commit. Ignored files and intermediate staged versions are outside snapshot recovery. Activity, cwd, programs, participation and cache use do not govern deletion. Remote confirmation is the separate timely-publication workflow, not a recycling prerequisite. Native branch checkout reconstructs the committed snapshot while its ref and reachable objects remain intact. Non-worktree artifacts and later orphan ref retirement retain independent policies.
 
-Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. Worktrees may be reused for later tasks; reclamation is separate. Independent review follows section 5.6 and integration follows sections 8.12-8.14.
+Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. After delivery completes, the task removes the worktrees it created unless a later task has taken one over (see the worktree location and cleanup paragraph above). Independent review follows section 5.6 and integration follows sections 8.12-8.14.
 
 ### 6.2 PR 层序、delta 门与债务收缩
 
