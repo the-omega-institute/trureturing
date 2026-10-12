@@ -1,7 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
-using static StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
 
@@ -34,7 +33,7 @@ internal sealed class FiveModePrimeWindowExplicitDocument : IScribeDocumentDefin
         Formula v = F.Id("v");
         Formula d = Add(Add(D(13), u), v);
         Formula body = All(
-            Equal(n, Multiply(Multiply(D(5040), Pow(D(2), Call("val", u))), Pow(D(3), Call("val", v)))),
+            Equal(n, Multiply(Multiply(D(5, 0, 4, 0), Pow(D(2), Call("val", u))), Pow(D(3), Call("val", v)))),
             Equal(Call("windowDenom", n), d),
             Equal(Call("primeWindow", n, D(0)), Fraction(Add(D(5), Call("val", u)), d)),
             Equal(Call("primeWindow", n, D(1)), Fraction(Add(D(3), Call("val", v)), d)),
