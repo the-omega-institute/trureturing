@@ -6,6 +6,7 @@
    utility: none
    digest: The original full posterior and native conditional mass use one shared calibration. -/
 
+import D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
 import D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 import D5.S3.Estimation.SequentialDecisionRisk.UniformPosteriorOdds
 import D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
@@ -13,23 +14,18 @@ import D5.S3.Estimation.TimeArrow.CalibratedArithmeticSmallBall
 import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 import Mathlib.Analysis.SpecialFunctions.Stirling
 import D5.S3.DivergenceSupport.LogSumInequality
-
 open scoped BigOperators Topology
 open Finset Filter
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
-
 namespace D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 noncomputable section
-
 open private
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_log
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_lipschitz_certificate
 from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-
 private theorem native_row_score_offset {M q s : ℕ} (S : Support M q) (r : ℝ)
     (e : Experiment) (o : Obs M s e) (k l : ℕ) (i : Fin M) (j : Fin 4)
     (hij : nativeRowCell S e o k l i = some j) :
@@ -41,7 +37,6 @@ private theorem native_row_score_offset {M q s : ℕ} (S : Support M q) (r : ℝ
   unfold score
   rw [hi.2.1, hi.2.2]
   fin_cases j <;> simp [offsets] <;> ring
-
 /-- The full original row calibration is the same one shared by the four
 cells. The outside index contains every background row and every signal row
 outside the rectangle; no row is discarded. -/
@@ -89,7 +84,6 @@ theorem native_full_calibration_sum {M q s : ℕ} (S : Support M q) (r : ℝ)
   · exact (sum_subtype (univ.filter fun i => nativeRowCell S e o k l i = none)
       (fun i => by simp) f)
   · exact sum_congr rfl (fun j _ => hf j)
-
 private theorem native_calibrated_row_parameter {M q s : ℕ} (r : ℝ)
     (e : Experiment) (o : Obs M s e)
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
@@ -114,7 +108,6 @@ private theorem native_calibrated_row_parameter {M q s : ℕ} (r : ℝ)
   field_simp [ne_of_gt ht, ne_of_gt hw.1, ne_of_gt hB0, hden]
   <;> try ring
   rw [← add_mul, mul_inv_cancel₀ hden]
-
 /-- The original calibrated Bernoulli parameters, with their original common
 multiplicative parameter, use exactly the same full-row four-cell equation. -/
 private theorem native_original_calibration_identification {M q s : ℕ} (S : Support M q) (r : ℝ)
@@ -139,7 +132,6 @@ private theorem native_original_calibration_identification {M q s : ℕ} (S : Su
   rw [← native_calibrated_row_parameter r e o hq hqm hr hr1 ha ha1 t ht i]
   congr 1
   ring
-
 /-- The original group-zero posterior center and auxiliary Bernoulli center
 both use all rows of the same count cell, including background rows. -/
 theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
@@ -185,7 +177,6 @@ theorem native_group_zero_centers {M q s : ℕ} (r : ℝ)
         rw [← native_calibrated_row_parameter r e o hq hqm hr hr1 ha ha1 t ht i]
         simp only [score, (hc i hi).1, (hc i hi).2]
       _ = _ := by simp only [sum_const, nsmul_eq_mul]; rfl
-
 /-- The full group-zero size is a fixed background count plus the native
 rectangle A count on the same complete collapsed-history fiber. -/
 private theorem native_group_zero_count_bridge {M q s : ℕ} (S : Support M q)
@@ -223,14 +214,12 @@ private theorem native_group_zero_count_bridge {M q s : ℕ} (S : Support M q)
   simp only [filter_mem_eq_inter] at hs
   rw [hs] at hsig
   exact hc.symm.trans (congrArg (fun n => BG.card + n) hsig)
-
 private theorem sigmoid_log_odds {p : ℝ} (hp : 0 < p) (hp1 : p < 1) :
     Real.sigmoid (Real.log (p / (1 - p))) = p := by
   rw [D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_log
     (div_pos hp (sub_pos.mpr hp1))]
   field_simp [ne_of_gt (sub_pos.mpr hp1)]
   <;> ring
-
 /-- The full original group posterior is compared with its common calibrated
 center. The mean and variance premises are exactly those of the frozen
 posterior-odds theorem; no auxiliary posterior replaces the original one. -/
@@ -299,7 +288,6 @@ private theorem native_group_zero_posterior_approximation :
       _ = _ := by ring
   · have he : G = ∅ := not_nonempty_iff_eq_empty.mp hG
     simp [he]
-
 /-- Every row outside the signal rectangle retains both native counts on
 one coarse environment fiber. Background rows are included. -/
 theorem native_environment_outside_counts {M q s : ℕ} (S : Support M q)
@@ -339,7 +327,6 @@ theorem native_environment_outside_counts {M q s : ℕ} (S : Support M q)
       NativeSignalConditionalFiber.native_background_row_counts S e o y i hs (-1),
       NativeSignalConditionalFiber.native_background_row_counts S e o z i hs (-1)]
     exact ⟨rfl, rfl, by simp [nativeRowCell, hs]⟩
-
 /-- The original outside logits are fixed by the same numerical-margin
 readout as the native hypergeometric law. -/
 private theorem native_environment_outside_score {M q s : ℕ} (S : Support M q)
@@ -352,7 +339,6 @@ private theorem native_environment_outside_score {M q s : ℕ} (S : Support M q)
       nativeRowCell S e y.val k l i = none := by
   have h := native_environment_outside_counts S e o k l y z henv i hi
   exact ⟨by simp only [score, h.1, h.2.1], h.2.2⟩
-
 /-- The all-row calibration on a native rectangle environment uses one
 fixed outside function. Only the four cell multiplicities change. -/
 private theorem native_environment_calibration_identification {M q s : ℕ}
@@ -387,7 +373,6 @@ private theorem native_environment_calibration_identification {M q s : ℕ}
   intro i
   have hi := native_environment_outside_score S r e o k l z y henv.symm i.val i.property
   simp only [E, Equiv.subtypeEquivRight_apply, hi.1]
-
 /-- The original full calibration on one environment fiber is exactly the
 moving four-cell equation with the native N, R, U, and A count. -/
 private theorem native_environment_full_calibration {M q s : ℕ} (S : Support M q)
@@ -433,10 +418,8 @@ private theorem native_environment_full_calibration {M q s : ℕ} (S : Support M
   · simpa only [Nat.cast_add, RectangleHypergeometricKernel.nativeMarginRectangleReadout] using
       congrArg (fun n : ℕ => (n : ℝ)) (hc.2.2.1.symm.trans hU)
   · exact congrArg (fun n : ℕ => (n : ℝ)) hc.2.2.2.symm
-
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-
 open scoped BigOperators Topology
 open Finset Filter
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
@@ -445,15 +428,12 @@ open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 open D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 800000
-
 namespace D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
 noncomputable section
-
 open private
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
 from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
@@ -521,7 +501,6 @@ theorem native_environment_mean_variance {M q s : ℕ} (S : Support M q)
   rw [hfun] at hd
   exact hd.unique (D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
     outside r (compensation M q r) V.card R U A x)
-
 /-- The integer target keeps the parity forced by the original harmonic
 and count. Half-integer shifts are preserved before any set enlargement. -/
 theorem posterior_phase_iff_parity_band (ell t : ℤ) (mu τ : ℝ) :
@@ -546,7 +525,6 @@ theorem posterior_phase_iff_parity_band (ell t : ℤ) (mu τ : ℝ) :
     rw [he,abs_mul] at hz
     norm_num at hz
     linarith only [hz]
-
 /-- A half-lattice enlargement removes the parity split uniformly for
 positive and negative harmonics. The approximation is for the original mu. -/
 private theorem posterior_phase_lattice_reduction (ell t : ℤ) (mu bg x τ err : ℝ)
@@ -567,7 +545,6 @@ private theorem posterior_phase_lattice_reduction (ell t : ℤ) (mu bg x τ err 
       rw [abs_mul,abs_mul,abs_sub_comm ((bg+(t : ℝ))*Real.sigmoid x) mu]
       norm_num
       exact add_le_add hz (mul_le_mul_of_nonneg_left happrox (by positivity))
-
 /-- The full original posterior is approximated by the same native shared
 root. Its error is proved from frozen posterior odds and the exact all-row
 mean and variance identification. -/
@@ -643,7 +620,6 @@ private theorem native_environment_posterior_approximation :
       (∑ i, p i * (1 - p i)) at hh
   rw [hx, hpv, hgroup] at hh
   simpa only [Nat.cast_add] using hh
-
 /-- The original posterior phase is covered centrally by a lattice band.
 Outside the central interval the original count tail is retained unchanged. -/
 theorem native_posterior_central_kernel_bound :
@@ -735,10 +711,8 @@ theorem native_posterior_central_kernel_bound :
         BG.card (θ (nativeRectangleACount S e o k l y)) τ (C*((BG.card : ℝ)+ν+w)/D)
         (by simpa only [Int.cast_natCast] using herr) hphase
     · exact Or.inl (lt_of_not_ge hc)
-
   have hp := native_event_mass_le_kernel S r e o hq hqm hr hr1 ha ha1 k l z Q' P' hpush
   simpa only [Q',P'] using hp
-
 /-- Balanced margins give one root curve on an open neighborhood of the
 whole central interval, not a collection of separately chosen roots. -/
 theorem balanced_shared_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ)
@@ -772,7 +746,6 @@ theorem balanced_shared_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ)
   refine ⟨he.1,he.2.1,?_,he.2.2⟩
   filter_upwards [isOpen_Ioo.mem_nhds hti] with u hu
   exact (hθ u hu).1
-
 /-- The rectangle and all remaining candidate rows partition the original
 M rows, so the root range uses the original support-size condition. -/
 theorem native_outside_rectangle_card {M q s : ℕ} (S : Support M q)
@@ -791,6 +764,226 @@ theorem native_outside_rectangle_card {M q s : ℕ} (S : Support M q)
   simp only [nativeCalibrationCells,add_assoc] at *
   convert he using 1 <;> congr 1
   all_goals ext i; simp only [mem_filter]
-
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+
+open D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
+namespace D5.S3.Estimation.TimeArrow.OriginalScoreWindow
+noncomputable section
+set_option maxHeartbeats 800000 in
+private theorem compensated_log_bounds (ε : ℝ) (hε : 0 ≤ ε) (hε1 : ε ≤ 1/2) :
+    |Real.log (1-ε)| ≤ 2*ε ∧ |Real.log (1+ε)| ≤ ε ∧
+    Real.log (1-ε) ≤ -ε ∧ Real.log (1+ε) ≤ ε := by
+  have hp : 0 < 1-ε := by linarith only [hε1]
+  have hm := Real.log_le_sub_one_of_pos hp
+  have hl := Real.one_sub_inv_le_log_of_pos hp
+  have hi : (1-ε)⁻¹ ≤ 1+2*ε := by
+    apply (inv_le_iff_one_le_mul₀ hp).mpr
+    nlinarith only [hε,hε1]
+  have hpl := Real.log_le_sub_one_of_pos (by linarith only [hε] : 0 < 1+ε)
+  rw [abs_of_nonpos (Real.log_nonpos hp.le (by linarith only [hε])),
+    abs_of_nonneg (Real.log_nonneg (by linarith only [hε]))]
+  exact ⟨by linarith only [hl,hi],by linarith only [hpl],
+    by linarith only [hm],by linarith only [hpl]⟩
+set_option maxHeartbeats 800000 in
+/-- Integer separation applies to the actual compensated scores. The error
+uses the complete count cut and the original uncorrected window center. -/
+private theorem count_score_grid_error (k l k0 l0 H Q P : ℕ) (h η ε center raw : ℝ)
+    (hQ : 0 < Q) (hh : 0 < h) (hη : 0 < η) (hε : 0 ≤ ε) (hε1 : ε ≤ 1/2)
+    (hkl : k+l ≤ H) (hraw : raw = k0*(h*((P : ℝ)/Q+η))-(l0 : ℝ)*h) :
+    let a := h*((P : ℝ)/Q+η)-Real.log (1-ε)
+    let b := -h-Real.log (1+ε)
+    let D : ℤ := (P : ℤ)*((k : ℤ)-k0)-(Q : ℤ)*((l : ℤ)-l0)
+    |k*a+l*b-center-(h/Q)*D| ≤
+      h*η*(H+k0+l0)+2*ε*H+|raw-center| := by
+  dsimp only
+  obtain ⟨hminus,hplus,_,_⟩ := compensated_log_bounds ε hε hε1
+  have hQ0 : (Q : ℝ) ≠ 0 := by exact_mod_cast hQ.ne'
+  have he : (k : ℝ)*(h*((P : ℝ)/Q+η)-Real.log (1-ε))+
+      l*(-h-Real.log (1+ε))-center-(h/Q)*
+        (((P : ℤ)*((k : ℤ)-k0)-(Q : ℤ)*((l : ℤ)-l0) : ℤ) : ℝ) =
+      h*η*((k : ℝ)-k0)-(k : ℝ)*Real.log (1-ε)-l*Real.log (1+ε)+(raw-center) := by
+    rw [hraw]
+    push_cast
+    field_simp <;> ring
+  rw [he]
+  have hk : |(k : ℝ)-k0| ≤ H+k0+l0 := by
+    have hh' : (k : ℝ)+(l : ℝ) ≤ H := by exact_mod_cast hkl
+    rw [abs_le]
+    constructor <;> linarith only [hh',(Nat.cast_nonneg l : (0 : ℝ) ≤ l),(Nat.cast_nonneg k : (0 : ℝ) ≤ k),(Nat.cast_nonneg k0 : (0 : ℝ) ≤ k0),(Nat.cast_nonneg l0 : (0 : ℝ) ≤ l0)]
+  have hcounts : 2*ε*k+ε*l ≤ 2*ε*H := by
+    have hh' : (k : ℝ)+(l : ℝ) ≤ H := by exact_mod_cast hkl
+    nlinarith only [mul_le_mul_of_nonneg_left hh' hε,(Nat.cast_nonneg l : (0 : ℝ) ≤ l),hε]
+  calc
+    _ ≤ |h*η*((k : ℝ)-k0)|+|(k : ℝ)*Real.log (1-ε)|+
+        |(l : ℝ)*Real.log (1+ε)|+|raw-center| := by
+      have h1 := abs_add_le (h*η*((k : ℝ)-k0)-(k : ℝ)*Real.log (1-ε)-l*Real.log (1+ε)) (raw-center)
+      have h2 := abs_sub_le (h*η*((k : ℝ)-k0)-(k : ℝ)*Real.log (1-ε)) 0 (l*Real.log (1+ε))
+      have h3 := abs_sub_le (h*η*((k : ℝ)-k0)) 0 ((k : ℝ)*Real.log (1-ε))
+      simp only [sub_zero,zero_sub,abs_neg] at h2 h3
+      linarith only [h1,h2,h3]
+    _ ≤ h*η*(H+k0+l0)+2*ε*k+ε*l+|raw-center| := by
+      simp only [abs_mul,abs_of_nonneg hh.le,abs_of_nonneg hη.le,
+        abs_of_nonneg (Nat.cast_nonneg k : (0 : ℝ) ≤ k),abs_of_nonneg (Nat.cast_nonneg l : (0 : ℝ) ≤ l)]
+      have hx := mul_le_mul_of_nonneg_left hk (mul_nonneg hh.le hη.le)
+      have hm := mul_le_mul_of_nonneg_left hminus (Nat.cast_nonneg k : (0 : ℝ) ≤ k)
+      have hp := mul_le_mul_of_nonneg_left hplus (Nat.cast_nonneg l : (0 : ℝ) ≤ l)
+      nlinarith only [hx,hm,hp]
+    _ ≤ _ := by linarith only [hcounts]
+set_option maxHeartbeats 800000 in
+/-- The positive original score step separates exact groups, including
+negative original grid indices. -/
+private theorem compensated_grid_step_pos (Q P : ℕ) (h η ε : ℝ)
+    (hPQ : P < Q) (hh : 0 < h) (hη : 0 < η) (hε : 0 ≤ ε) (hε1 : ε ≤ 1/2) :
+    0 < (Q : ℝ)*(h*((P : ℝ)/Q+η)-Real.log (1-ε))+
+      P*(-h-Real.log (1+ε)) := by
+  have hQ : (0 : ℝ) < Q := by exact_mod_cast (show 0 < Q by omega)
+  have hPQ' : (P : ℝ) < Q := by exact_mod_cast hPQ
+  obtain ⟨_,_,hminus,hplus⟩ := compensated_log_bounds ε hε hε1
+  have he : (Q : ℝ)*(h*((P : ℝ)/Q+η)-Real.log (1-ε))+
+      P*(-h-Real.log (1+ε)) = (Q : ℝ)*h*η-Q*Real.log (1-ε)-P*Real.log (1+ε) := by
+    field_simp <;> ring
+  rw [he]
+  have hm := mul_le_mul_of_nonneg_left hminus hQ.le
+  have hp := mul_le_mul_of_nonneg_left hplus (Nat.cast_nonneg P : (0 : ℝ) ≤ P)
+  have hgap : 0 ≤ ((Q : ℝ)-P)*ε := mul_nonneg (by linarith only [hPQ']) hε
+  have hpos : 0 < (Q : ℝ)*h*η := by positivity
+  nlinarith only [hm,hp,hgap,hpos]
+set_option maxHeartbeats 800000 in
+private theorem count_zero_score_unique (k l k0 l0 H Q P : ℕ) (a b scale center E : ℝ)
+    (hQ : 0 < Q) (hscale : 0 < scale) (hgap : 2*E < scale)
+    (hstep : 0 < (Q : ℝ)*a+P*b)
+    (hkl : k+l ≤ H) (hbase : k0+l0 ≤ H)
+    (herror : ∀ K L : ℕ,K+L ≤ H →
+      |(K : ℝ)*a+L*b-center-scale*
+        (((P : ℤ)*((K : ℤ)-k0)-(Q : ℤ)*((L : ℤ)-l0) : ℤ) : ℝ)| ≤ E)
+    (heq : (k : ℝ)*a+l*b = k0*a+l0*b) : k = k0 ∧ l = l0 := by
+  let D : ℤ := (P : ℤ)*((k : ℤ)-k0)-(Q : ℤ)*((l : ℤ)-l0)
+  have hi := herror k l hkl
+  have hb := herror k0 l0 hbase
+  simp only [sub_self,mul_zero,sub_zero,Int.cast_zero] at hb
+  have hD : D = 0 := by
+    by_contra hn
+    have habs : (1 : ℝ) ≤ |(D : ℝ)| := by exact_mod_cast Int.one_le_abs hn
+    have he : scale*(D : ℝ) = ((k0 : ℝ)*a+l0*b-center)-
+        ((k : ℝ)*a+l*b-center-scale*(D : ℝ)) := by rw [heq]; ring
+    have hbound : |scale*(D : ℝ)| ≤ 2*E := by
+      rw [he]
+      calc
+        _ ≤ |(k0 : ℝ)*a+l0*b-center|+|(k : ℝ)*a+l*b-center-scale*(D : ℝ)| := abs_sub _ _
+        _ ≤ _ := by linarith only [hi,hb]
+    rw [abs_mul,abs_of_pos hscale] at hbound
+    have hl := mul_le_mul_of_nonneg_left habs hscale.le
+    linarith only [hl,hbound,hgap]
+  have hQ0 : (Q : ℝ) ≠ 0 := by exact_mod_cast hQ.ne'
+  have hDreal : (P : ℝ)*((k : ℝ)-k0)-(Q : ℝ)*((l : ℝ)-l0) = 0 := by
+    have hd : (D : ℝ) = 0 := by rw [hD]; simp
+    simpa only [D,Int.cast_sub,Int.cast_mul,Int.cast_natCast] using hd
+  have hlinear : ((Q : ℝ)*a+P*b)*((k : ℝ)-k0) =
+      (Q : ℝ)*((k : ℝ)*a+l*b-(k0*a+l0*b))+b*((P : ℝ)*((k : ℝ)-k0)-(Q : ℝ)*((l : ℝ)-l0)) := by ring
+  rw [heq,sub_self,hDreal,mul_zero,zero_add,mul_zero] at hlinear
+  have hk : (k : ℝ) = k0 := by
+    have hh := (mul_eq_zero.mp hlinear).resolve_left hstep.ne'
+    linarith only [hh]
+  have hl : (l : ℝ) = l0 := by
+    rw [hk,sub_self,mul_zero,zero_sub,neg_eq_zero] at hDreal
+    have hh := (mul_eq_zero.mp hDreal).resolve_left hQ0
+    linarith only [hh]
+  exact ⟨by exact_mod_cast hk,by exact_mod_cast hl⟩
+set_option maxHeartbeats 1000000 in
+/-- Finite original numerical bounds identify the complete exact zero score
+group with the A cell over all candidates, including background rows. -/
+theorem original_zero_group_eq_all_cell {M s : ℕ} (q : ℕ) (r center width η : ℝ)
+    (e : Experiment) (o : Obs M s e) (k0 l0 H Q P : ℕ)
+    (hr : 0 < r) (hr1 : r < 1) (hPQ : P < Q) (hη : 0 < η)
+    (hε : 0 ≤ compensation M q r) (hε1 : compensation M q r ≤ 1/2)
+    (hbase : k0+l0 ≤ H) (hcut : originalCountCut H e o) (hwidth : 0 < width)
+    (hlog : Real.log (1+r) = (-Real.log (1-r))*((P : ℝ)/Q+η))
+    (herror : (-Real.log (1-r))*η*(H+k0+l0)+2*compensation M q r*H+
+      |(k0 : ℝ)*Real.log (1+r)+l0*Real.log (1-r)-center| ≤ width/2)
+    (hgrid : (Q : ℝ)*width ≤ (-Real.log (1-r))/4) :
+    let value := (k0 : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
+      l0*Real.log ((1-r)/(1+compensation M q r))
+    originalScoreGroup q r center width value e o =
+      nativeCalibrationCells (⟨univ,by simp⟩ : Support M M) e o k0 l0 0 := by
+  classical
+  dsimp only
+  let h := -Real.log (1-r)
+  let ε := compensation M q r
+  let raw := (k0 : ℝ)*Real.log (1+r)+l0*Real.log (1-r)
+  let E := h*η*(H+k0+l0)+2*ε*H+|raw-center|
+  let a := h*((P : ℝ)/Q+η)-Real.log (1-ε)
+  let b := -h-Real.log (1+ε)
+  have hh : 0 < h := by
+    dsimp [h]
+    exact neg_pos.mpr (Real.log_neg (by linarith only [hr1]) (by linarith only [hr]))
+  have hQ : 0 < Q := by omega
+  have hQreal : (0 : ℝ) < Q := by exact_mod_cast hQ
+  have ha : Real.log ((1+r)/(1-ε)) = a := by
+    rw [Real.log_div (by linarith only [hr]) (by linarith only [hε1]),hlog]
+  have hb : Real.log ((1-r)/(1+ε)) = b := by
+    rw [Real.log_div (by linarith only [hr1]) (by linarith only [hε])]
+    dsimp [b,h]
+    ring
+  have hraw : raw = k0*(h*((P : ℝ)/Q+η))-(l0 : ℝ)*h := by dsimp [raw,h]; rw [hlog] <;> ring
+  have he (K L : ℕ) (hKL : K+L ≤ H) :
+      |(K : ℝ)*a+L*b-center-(h/Q)*
+        (((P : ℤ)*((K : ℤ)-k0)-(Q : ℤ)*((L : ℤ)-l0) : ℤ) : ℝ)| ≤ E :=
+    count_score_grid_error K L k0 l0 H Q P h η ε center raw hQ hh hη hε hε1 hKL hraw
+  have hstep : 0 < (Q : ℝ)*a+P*b := compensated_grid_step_pos Q P h η ε hPQ hh hη hε hε1
+  have hE : E ≤ width/2 := herror
+  have hgap : 2*E < h/Q := by
+    have hscale := div_pos hh hQreal
+    have hsmall : width ≤ (h/Q)/4 := by
+      apply (le_div_iff₀ (by norm_num : (0 : ℝ) < 4)).mpr
+      apply (le_div_iff₀ hQreal).mpr
+      nlinarith only [hgrid]
+    linarith only [hE,hsmall,hscale]
+  have hbaseerror := he k0 l0 hbase
+  simp only [sub_self,mul_zero,sub_zero,Int.cast_zero] at hbaseerror
+  have hwindow : center-width < (k0 : ℝ)*a+l0*b ∧ (k0 : ℝ)*a+l0*b ≤ center+width := by
+    have hx := abs_le.mp hbaseerror
+    constructor <;> linarith only [hx.1,hx.2,hE,hwidth]
+  ext i
+  simp only [originalScoreGroup,originalWindow,nativeCalibrationCells,mem_filter,mem_univ,true_and]
+  rw [native_row_cell_iff]
+  simp only [mem_univ,true_and,Fin.isValue,Matrix.cons_val_zero,Nat.add_zero]
+  rw [ha,hb]
+  constructor
+  · rintro ⟨_,hscore⟩
+    change (count e o i 1 : ℝ)*Real.log ((1+r)/(1-ε))+
+      count e o i (-1)*Real.log ((1-r)/(1+ε)) = _ at hscore
+    rw [ha,hb] at hscore
+    exact count_zero_score_unique (count e o i 1) (count e o i (-1)) k0 l0 H Q P a b
+      (h/Q) center E hQ (div_pos hh hQreal) hgap hstep (hcut i) hbase he hscore
+  · rintro ⟨hk,hl⟩
+    constructor
+    · simpa only [score,hk,hl,ε,ha,hb] using hwindow
+    · simpa only [score,hk,hl,ε,ha,hb]
+private theorem original_count_cut_transfer {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (k l H : ℕ)
+    (y z : Fiber S e o)
+    (henv : nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z)
+    (hH : k+l+2 ≤ H) (hcut : originalCountCut H e z.val) : originalCountCut H e y.val := by
+  classical
+  intro i
+  cases ho : nativeRowCell S e y.val k l i with
+  | none =>
+    have hmargin := (native_minimal_readout_eq_iff S e o k l z y).mp henv.symm
+    have hi := native_environment_outside_counts S e o k l z y hmargin i ho
+    rw [←hi.1,←hi.2.1]
+    exact hcut i
+  | some j =>
+    have hi := (native_row_cell_iff S e y.val k l i j).mp ho
+    fin_cases j <;> simp at hi <;> omega
+/-- A cut witnessed by one anchor holds on its entire original environment;
+the conditioning sigma-algebra receives no additional success flag. -/
+theorem original_count_cut_same_environment {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (k l H : ℕ)
+    (y z : Fiber S e o)
+    (henv : nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z)
+    (hH : k+l+2 ≤ H) : originalCountCut H e y.val ↔ originalCountCut H e z.val :=
+  ⟨original_count_cut_transfer S e o k l H z y henv.symm hH,
+    original_count_cut_transfer S e o k l H y z henv hH⟩
+end
+end D5.S3.Estimation.TimeArrow.OriginalScoreWindow

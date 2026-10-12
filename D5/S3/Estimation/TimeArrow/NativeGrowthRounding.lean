@@ -6,9 +6,10 @@
    utility: none
    digest: Original decimal growth and integer rounding supply native finite-scale bounds. -/
 
+import D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 import D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 import D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
-import D5.S3.Estimation.TimeArrow.OriginalScoreWindow
 import D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Algebra.Order.Floor.Semiring

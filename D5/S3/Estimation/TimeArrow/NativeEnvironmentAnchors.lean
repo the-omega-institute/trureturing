@@ -851,3 +851,29 @@ theorem background_reference_cell_ratio {M q L : ℕ} (S : Support M q) (r κ : 
 
 end
 end D5.S3.Estimation.TimeArrow.NativeRectangleReferenceRatios
+
+open Finset
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+
+namespace D5.S3.Estimation.TimeArrow.OriginalScoreWindow
+noncomputable section
+/-- The original complete window keeps its left-open, right-closed endpoints. -/
+def originalWindow {M s : ℕ} (q : ℕ) (r center width : ℝ)
+    (e : Experiment) (o : Obs M s e) : Finset (Fin M) := by
+  classical
+  exact univ.filter fun i => center-width < score q r e o i ∧ score q r e o i ≤ center+width
+/-- Exact scores index groups inside the complete window. -/
+def originalScoreGroup {M s : ℕ} (q : ℕ) (r center width value : ℝ)
+    (e : Experiment) (o : Obs M s e) : Finset (Fin M) := by
+  classical
+  exact (originalWindow q r center width e o).filter fun i => score q r e o i = value
+/-- The denominator in inclusion is the complete uniform-size support posterior. -/
+def originalGroupPosteriorMean {M s : ℕ} (q : ℕ) (r center width value : ℝ)
+    (e : Experiment) (o : Obs M s e) : ℝ :=
+  ∑ i ∈ originalScoreGroup q r center width value e o,inclusion q r e o i
+/-- A cut on complete signed departure counts, including all background rows. -/
+def originalCountCut {M s : ℕ} (H : ℕ) (e : Experiment) (o : Obs M s e) : Prop :=
+  ∀ i : Fin M,count e o i 1+count e o i (-1) ≤ H
+
+end
+end D5.S3.Estimation.TimeArrow.OriginalScoreWindow
