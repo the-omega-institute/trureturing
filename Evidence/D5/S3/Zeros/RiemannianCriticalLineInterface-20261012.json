@@ -2,35 +2,32 @@
   "schema": 1,
   "module": "D5.S3.Zeros.RiemannianCriticalLineInterface",
   "source": "D5/S3/Zeros/RiemannianCriticalLineInterface.lean",
-  "source_sha256": "sha256:946af4a299a31b1b6c44542f923bc961f8deda5c87a0a083b7b22b2488fe749b",
-  "scoped_report": ".lake/build/stratalint/riemann-scoped.json",
-  "scoped_report_sha256": "sha256:37d9151e29fa7f99f01a69a847490a4c89d2e61373ff8efa9b5121708286a767",
-  "checked_utc": "2026-10-12T13:10:00+08:00",
+  "source_sha256": "sha256:d33e8637a6c2093dfc60825622007ad732f6dbf9e3a832254aabad2fabeca687",
+  "scoped_report": ".lake/build/stratalint/scoped-lean-report.json",
+  "scoped_report_sha256": "sha256:2ca00710c148366412f2b2a15228204478a021fd5054a2218b35622350c07af9",
+  "checked_utc": "2026-10-12T13:41:30+08:00",
   "commands": [
     {
       "command": "make lean LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
       "exit": 0,
-      "note": "warm clonefile cache; final rerun after source cleanup succeeded; producer DLL used UseAppHost=false because macOS CreateAppHost gid overflow affected make bootstrap"
+      "note": "warm linked-worktree cache; omega-gate admitted build"
     },
     {
       "command": "lake env lean D5/S3/Zeros/RiemannianCriticalLineInterface.lean",
       "exit": 0
     },
     {
-      "command": "STRATALINT_LEAN_PRODUCER_DLL=... make lean LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
-      "exit": 0
-    },
-    {
-      "command": "make LEAN_REPORT=.lake/build/stratalint/riemann-scoped.json lean-report-scoped LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
-      "exit": 0
-    },
-    {
-      "command": "SCRIBE_DOTNET=/usr/local/share/dotnet/dotnet STRATALINT_LEAN_REPORT=.lake/build/stratalint/riemann-scoped.json dotnet StrataLint.Scribe.dll emit --paths-from /tmp/riemann-scribe-paths --scoped",
+      "command": "make lean-report-scoped LEAN_TARGETS=D5.S3.Zeros.RiemannianCriticalLineInterface",
       "exit": 0,
-      "note": "emitted Markdown blueprint"
+      "note": "scoped report generated at .lake/build/stratalint/scoped-lean-report.json"
+    },
+    {
+      "command": "UseAppHost=false SCRIBE_DOTNET=/usr/local/share/dotnet/dotnet make emit PATHS=/tmp/riemann-scribe-paths",
+      "exit": 0,
+      "note": "canonical scoped Scribe emission; Markdown blueprint regenerated"
     }
   ],
-  "declarations": 15,
+  "declarations": 19,
   "axioms": [
     "Classical.choice",
     "Quot.sound",

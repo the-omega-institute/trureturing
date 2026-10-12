@@ -53,6 +53,17 @@ theorem normal_displacement_eq_zero_iff (rho : ℂ) :
   rw [normalDisplacement, dist_eq_zero]
   exact normal_translation_fixed_iff rho
 
+/-- The hyperbolic normal displacement is the arsinh transform of the signed offset. -/
+theorem normal_displacement_eq_arsinh (rho : ℂ) :
+    normalDisplacement rho = 2 * Real.arsinh (|normalOffset rho| / 2) := by
+  rw [normalDisplacement, normalTranslation]
+  change hyperbolicDist _ _ = _
+  rw [hyperbolicDist]
+  congr 1
+  simp [horizontalTranslation, horizontalTranslate, basepoint, height,
+    WithLp.prod_dist_eq_of_L2]
+  exact Real.sqrt_sq_eq_abs _
+
 /-- A nontrivial zero lies on the critical line exactly when its normal
 translation has zero hyperbolic displacement. This is an interface theorem;
 it does not assert that all zeros have zero displacement. -/
@@ -88,6 +99,7 @@ theorem rh_iff_all_normal_translations_fix_basepoint :
 #print axioms normal_offset_eq_neg_central_coord_im
 #print axioms normal_translation_fixed_iff
 #print axioms normal_displacement_eq_zero_iff
+#print axioms normal_displacement_eq_arsinh
 #print axioms rh_iff_all_normal_displacements_zero
 #print axioms rh_iff_all_normal_translations_fix_basepoint
 

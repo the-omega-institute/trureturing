@@ -18,6 +18,15 @@ internal sealed class RiemannianCriticalLineInterfaceDocument : IScribeDocumentD
                     "The signed offset Re(rho)-1/2 acts as a horizontal isometry of the real hyperbolic upper-half-space model. Its canonical basepoint is fixed exactly when the offset vanishes. This is a geometric interface and adds no zero-free hypothesis."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("normal-displacement-arsinh-formula"),
+                DeclarationHandle.Create("D5/S3/Zeros/RiemannianCriticalLineInterface.normal_displacement_eq_arsinh"),
+                H("Exact hyperbolic displacement formula"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The displacement equals 2 arsinh(|Re(rho)-1/2|/2), giving a faithful nonnegative gauge of the off-line abscissa."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("rh-normal-displacement-equivalence"),
                 DeclarationHandle.Create("D5/S3/Zeros/RiemannianCriticalLineInterface.rh_iff_all_normal_displacements_zero"),
                 H("RH is equivalent to zero hyperbolic normal displacement of every actual zero"),
