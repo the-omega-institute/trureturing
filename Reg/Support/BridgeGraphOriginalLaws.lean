@@ -60,42 +60,34 @@ theorem vectorFunctionDependence :
 
 abbrev kernelFunctionSignature : Signature where
   Params := FiveParams
-  State p := (Fin p.2.1 × Fin p.2.2.2.2 → ℚ) →
-    (SourceIndex p.1 p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 → ℚ)
+  State p := Fin p.2.1 × Fin p.2.2.2.2 → ℚ
+  Output _ p := SourceIndex p.1 p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 → ℚ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def kernelFunctionActual : Realization kernelFunctionSignature :=
   realize kernelFunctionSignature
-    (fun _ _ f => @Decidable.decide (Function.Injective f)
-      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)
+    (fun _ p x => kernelEmbedding p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2 x) (fun e => nomatch e)
 def kernelFunctionRejected : Realization kernelFunctionSignature :=
-  realize kernelFunctionSignature (fun _ _ _ => false) (fun e => nomatch e)
+  realize kernelFunctionSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
 theorem kernelFunctionDependence :
     ObservationalDependence kernelFunctionSignature kernelFunctionActual := by
-  classical
   intro i
   let p : kernelFunctionSignature.Params := ⟨1, ⟨1, ⟨1, ⟨1, 1⟩⟩⟩⟩
-  let x : kernelFunctionSignature.State p := kernelEmbedding 1 1 1 1 1
-  let y : kernelFunctionSignature.State p := fun _ _ => 0
-  have hx : Function.Injective x :=
-    _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
-      1 1 1 1 1
+  let x : kernelFunctionSignature.State p := fun _ => 0
+  let y : kernelFunctionSignature.State p := fun _ => 1
   refine ⟨p, x, y, ?_⟩
   intro h
-  change decide (Function.Injective x) = decide (Function.Injective y) at h
-  have hx' : decide (Function.Injective x) = true := by
-    simpa only [decide_eq_true_eq] using hx
-  have hy : Function.Injective y := of_decide_eq_true (h ▸ hx')
-  have h01 := @hy (0 : Fin 1 × Fin 1 → ℚ) (fun _ => 1) rfl
-  have hq := congrFun h01 (0, 0)
-  change (0 : ℚ) = 1 at hq
-  norm_num at hq
+  dsimp [p] at h
+  dsimp [kernelFunctionActual, realize] at h
+  have hq := congrFun h
+    (⟨Sum.inl (0 : Fin 1), ⟨0, by simp [blockLength]⟩⟩,
+      ⟨Sum.inr (0 : Fin 1), ⟨1, by simp [blockLength]⟩⟩)
+  simp [kernelEmbedding, antiDiagonal, x, y] at hq
 
 abbrev typedVectorEqualitySignature : Signature where
   Params := Type u_1
@@ -175,32 +167,25 @@ namespace Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur
 @[reducible] def kernelEmbedding_injectiveArena : Arena where
   signature := kernelFunctionSignature
   Law S := ∀ (p alpha beta gamma delta : ℕ),
-    S.readout () ⟨p, ⟨alpha, ⟨beta, ⟨gamma, delta⟩⟩⟩⟩
-      (kernelEmbedding p alpha beta gamma delta) = true
+    Function.Injective (S.readout () ⟨p, ⟨alpha, ⟨beta, ⟨gamma, delta⟩⟩⟩⟩)
 theorem kernelEmbedding_injectivePositive :
     kernelEmbedding_injectiveArena.Law kernelFunctionActual := by
-  classical
   intro p alpha beta gamma delta
-  change decide (Function.Injective (kernelEmbedding p alpha beta gamma delta)) = true
-  simpa only [decide_eq_true_eq] using
-    _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
-      p alpha beta gamma delta
+  exact _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective
+    p alpha beta gamma delta
 theorem kernelEmbedding_injectiveNegative :
     ¬ kernelEmbedding_injectiveArena.Law kernelFunctionRejected := by
   intro h
-  exact Bool.noConfusion (h 0 0 0 0 0)
+  have hinj := h 1 1 1 1 1
+  have hzeroone := @hinj (fun _ => (0 : ℚ)) (fun _ => 1) (by rfl)
+  have hq := congrFun hzeroone (0, 0)
+  change (0 : ℚ) = 1 at hq
+  norm_num at hq
 
 def kernelEmbedding_injectiveEvidence : Registration kernelEmbedding_injectiveArena
     (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ReservoirSchur.kernelEmbedding_injective)) where
   actual := kernelFunctionActual
-  bridge := by
-    classical
-    constructor
-    · intro h p alpha beta gamma delta
-      change decide (Function.Injective (kernelEmbedding p alpha beta gamma delta)) = true
-      simpa only [decide_eq_true_eq] using h p alpha beta gamma delta
-    · intro h p alpha beta gamma delta
-      exact of_decide_eq_true (h p alpha beta gamma delta)
+  bridge := Iff.rfl
   variation := ⟨kernelEmbedding_injectivePositive, kernelFunctionRejected, kernelEmbedding_injectiveNegative⟩
   sensitivity := ⟨fun i => ⟨kernelFunctionRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, kernelEmbedding_injectiveNegative⟩,
