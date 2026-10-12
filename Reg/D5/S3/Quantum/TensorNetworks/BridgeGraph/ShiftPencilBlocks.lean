@@ -802,29 +802,97 @@ noncomputable def witness_of_typed_slicesRegistration : Contract.Registration.{_
 #print axioms witness_of_typed_slicesEvidence
 #print axioms witness_of_typed_slicesRegistration
 
+abbrev matrixStateSignature : Signature where
+  Params := Σ m : Type u_1, Type u_2
+  State p := Matrix p.1 p.2 ℚ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix p.1 p.2 ℚ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def matrixStateActual : Realization matrixStateSignature.{u_1,u_2} :=
+  realize matrixStateSignature (fun _ _ A => A) (fun e => nomatch e)
+
+def matrixStateRejected : Realization matrixStateSignature.{u_1,u_2} :=
+  realize matrixStateSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+@[reducible] def matrixStateArena : Arena where
+  signature := matrixStateSignature.{u_1,u_2}
+  Law R := ∀ {m : Type u_1} {n : Type u_2} [Fintype m] [Fintype n] [DecidableEq n]
+    (A : Matrix m n ℚ) (hA : A.rank = Fintype.card n),
+    Function.Injective (R.readout () ⟨m, n⟩ A).mulVecLin
+
+theorem matrixStatePositive : matrixStateArena.{u_1,u_2}.Law matrixStateActual := by
+  intro m n _ _ _ A hA
+  exact _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank A hA
+
+theorem matrixStateNegative : ¬ matrixStateArena.{u_1,u_2}.Law matrixStateRejected := by
+  intro h
+  let e : ULift.{u_2} Unit → ULift.{u_1} Unit := fun _ => ⟨()⟩
+  have he : Function.Injective e := fun _ _ _ => Subsingleton.elim _ _
+  let A : Matrix (ULift.{u_1} Unit) (ULift.{u_2} Unit) ℚ := inclusion e
+  have hI : Function.Injective A.mulVecLin := by
+    simpa only [Matrix.coe_mulVecLin] using
+      _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.CyclicResolvent.inclusion_injective e he
+  have hA : A.rank = Fintype.card (ULift.{u_2} Unit) := by
+    rw [Matrix.rank, LinearMap.finrank_range_of_inj hI, Module.finrank_pi]
+  have hinj := h A hA
+  change Function.Injective (0 : Matrix (ULift.{u_1} Unit) (ULift.{u_2} Unit) ℚ).mulVecLin at hinj
+  have hv := hinj (show (0 : Matrix (ULift.{u_1} Unit) (ULift.{u_2} Unit) ℚ).mulVecLin
+      (fun _ => 0) = (0 : Matrix (ULift.{u_1} Unit) (ULift.{u_2} Unit) ℚ).mulVecLin
+      (fun _ => 1) by simp only [Matrix.mulVecLin_zero, LinearMap.zero_apply])
+  have hq := congrFun hv (⟨()⟩ : ULift.{u_2} Unit)
+  norm_num at hq
+
+theorem matrixStateDependence :
+    ObservationalDependence matrixStateSignature.{u_1,u_2} matrixStateActual := by
+  intro i
+  let e : ULift.{u_2} Unit → ULift.{u_1} Unit := fun _ => ⟨()⟩
+  let p : matrixStateSignature.{u_1,u_2}.Params := ⟨ULift.{u_1} Unit, ULift.{u_2} Unit⟩
+  let A : matrixStateSignature.{u_1,u_2}.State p := inclusion e
+  let Z : matrixStateSignature.{u_1,u_2}.State p := fun _ _ => 0
+  refine ⟨p, A, Z, ?_⟩
+  intro h
+  have hq := congrFun (congrFun h (⟨()⟩ : ULift.{u_1} Unit))
+    (⟨()⟩ : ULift.{u_2} Unit)
+  norm_num [matrixStateActual, realize, p, A, Z, e, inclusion,
+    Matrix.submatrix, Matrix.one_apply] at hq
+
+def matrixStateEvidence : Registration matrixStateArena.{u_1,u_2}
+    (type_of% (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank.{u_1,u_2})) where
+  actual := matrixStateActual
+  bridge := Iff.rfl
+  variation := ⟨matrixStatePositive, matrixStateRejected, matrixStateNegative⟩
+  sensitivity := ⟨fun i => ⟨matrixStateRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, matrixStateNegative⟩,
+    fun i => nomatch i⟩
+  dependence := matrixStateDependence
+
 noncomputable def matrix_injective_of_rankRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank.{u_1,u_2})
-    (type_of% (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => @Decidable.decide (Function.Injective f)
-      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize matrixStateSignature.{u_1,u_2}
+      (fun _ _ A => A) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank
-    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rankArena/[anonymous]") "__information_unit",
-  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rankEvidence,
+    "Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks/Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrixStateArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrixStateEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨matrix_injective_of_rankArena.{u_1,u_2}⟩,
-  objectArena := .source ⟨matrix_injective_of_rankArena.{u_1,u_2}⟩,
+  arena := .source ⟨matrixStateArena.{u_1,u_2}⟩,
+  objectArena := .source ⟨matrixStateArena.{u_1,u_2}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source matrix_injective_of_rankArena.{u_1,u_2} ⟨matrix_injective_of_rankEvidence⟩,
+  realization := .source matrixStateArena.{u_1,u_2} ⟨matrixStateEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize vectorFunctionSignature.{u_1,u_2} (fun _ _ f => @Decidable.decide (Function.Injective f)
-      (Classical.propDecidable (Function.Injective f))) (fun e => nomatch e)),
+  readout := some (realize matrixStateSignature.{u_1,u_2}
+      (fun _ _ A => A) (fun e => nomatch e)),
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks, definition := none,
     coordinates := #[0, 1], readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body"],
-      stateBinder := 0, functionOperand := false,
-      stateOperand := some #["arg"], booleanPredicate := true }] },
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"],
+      stateBinder := 5, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
@@ -835,9 +903,10 @@ noncomputable def matrix_injective_of_rankRegistration : Contract.Registration.{
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 #print axioms _root_.D5.S3.Quantum.TensorNetworks.BridgeGraph.ShiftPencilBlocks.matrix_injective_of_rank
-#print axioms matrix_injective_of_rankPositive
-#print axioms matrix_injective_of_rankNegative
-#print axioms matrix_injective_of_rankEvidence
+#print axioms matrixStatePositive
+#print axioms matrixStateNegative
+#print axioms matrixStateDependence
+#print axioms matrixStateEvidence
 #print axioms matrix_injective_of_rankRegistration
 
 noncomputable def schur_two_equationsRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}

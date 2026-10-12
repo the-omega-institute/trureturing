@@ -170,6 +170,28 @@ a positive GENERALIZED length realization. Its only nongeometric tetrahedra
 these flat tetrahedra in the maximum is the missing full-eight existence
 step; positive angle feasibility or energy monotonicity does not exclude them.
 
+## Same-body metric segments for the section 66 prerequisite
+
+`D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.same_body_metric_segments`
+keeps the original positive six-length vector, cut body, radial map, frame
+matrix and injective realization map into `HyperbolicThreeSpace`. For any
+witnesses satisfying its exact future-unit-sheet coordinate contract and any
+two points of that same body, it supplies an isometry from the closed real
+interval of their hyperbolic distance. Its range is both the image of the
+original affine segment and the set of all ambient metric-between points.
+Coincident endpoints and boundary points are included. The frozen body and
+polytope results are unchanged.
+
+The corresponding Blueprint gives the complete formulas and argument.
+`Library/Geometry/cannonfloydkenyonparry1997hyperbolic.md` identifies the
+classical hyperbolic-geodesic, projective-model and Lorentz-distance inputs;
+the exact custom same-body theorem is repository-derived, with no novelty
+claim. This is a local prerequisite to the original section 66 realization,
+not its completion. The full-source application retains all six strict
+cosine inequalities. The remaining halfspace, interior, incidence,
+prescribed-length and angle, rigidity, volume and gluing obligations are
+not discharged by this segment result.
+
 ## Finite verification boundary
 
 The derivative numerator identity, seven displayed cosine evaluations, the
@@ -3401,3 +3423,8 @@ The face-chain realization uses the actual averages of nonempty sets of
 parent vertices; no coordinate-maximum predicate is used to define the
 geometric star. This is an existing mathematical result, with no novelty
 claim for the coordinate characterization.
+## Closed-simplex radial profile comparison
+
+[RadialProfileSimplexHomeomorph](../../D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.lean), with its [mathematical exposition](../../Blueprint/D5/S3/Geometry/Gluing/RadialProfileSimplexHomeomorph.md), constructs the nonlinear homeomorphism and explicit inverse on the standard real simplex with vertex set `Fin 4`. The parameters are \(q=1/4\), \(R=1/2\), and the profile range \([1/4,23/48]\). The maps fix the entire central region, preserve and reflect every zero-coordinate face, and are natural under vertex permutations. The concrete source profile uses the three opposite-face coordinates: if their maximum, middle value and minimum are \(M,w,m\), then \(a=1/(1+M+\max(2(M-w),\max(3(w-m),4m)))\). Its continuity, bounds and permutation covariance are derived in the same module.
+
+The same constructed source map preserves and reflects the original tagged face generator and its full `Relation.EqvGen` closure, including self-pairings and repeated occurrences, and induces the unmarked quotient homeomorphism. This supplies the closed-simplex radial comparison and original-relation interface from source §70.6–70.10 within that scope. It does not identify literal second-subdivision stars with radial sublevel sets, prove the deleted-piece restriction, or identify the retained quotient and cap marking with the specified \((N,\partial N)\). Those geometric and marked-source bridges remain separate inputs. No novelty or completion of §70 or of the full CFMP program is claimed.

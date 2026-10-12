@@ -296,4 +296,66 @@ theorem immediateBridge : (type_of% (@endpoint_immediate)) ↔
 theorem immediateActualLaw : immediateArena.Law immediateActual :=
   immediateBridge.mp (@endpoint_immediate)
 
+
+abbrev sourceCoordSignature : Signature where
+  Params := Parameters
+  State _ := ActivePhase × ℕ × Letter × Label
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def sourceCoordActual : Realization sourceCoordSignature := realize _
+  (fun _ T p => sourceCoord T p.1 p.2.1 p.2.2.1 p.2.2.2) (fun e => nomatch e)
+
+def sourceCoordArena : Arena where
+  signature := sourceCoordSignature
+  Law R := ∀ T s n b i, R.readout () T (s,n,b,i) = nativeCoord T s n b i
+
+theorem source_coord_bridge : (type_of% (@source_coord_eq)) ↔
+    sourceCoordArena.Law sourceCoordActual := Iff.rfl
+
+theorem source_coord_actual_law : sourceCoordArena.Law sourceCoordActual :=
+  source_coord_bridge.mp source_coord_eq
+
+abbrev fixedCoordSignature : Signature where
+  Params := Parameters
+  State _ := ℕ × Letter
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def fixedCoordActual : Realization fixedCoordSignature := realize _
+  (fun _ T p => coord T p.1 p.2 2) (fun e => nomatch e)
+
+def fixedCoordArena : Arena where
+  signature := fixedCoordSignature
+  Law R := ∀ T n b, R.readout () T (n,b) = fixedRate T^n * coord T 0 b 2
+
+theorem fixed_coord_bridge : (type_of% (@fixed_coord)) ↔
+    fixedCoordArena.Law fixedCoordActual := Iff.rfl
+
+theorem fixed_coord_actual_law : fixedCoordArena.Law fixedCoordActual :=
+  fixed_coord_bridge.mp fixed_coord
+
+
+def allIndicesArena : Arena where
+  signature := sourceCoordSignature
+  Law R := ∀ T, Rates T → Seeds T → ∀ s n b i,
+    InBox (R.readout () T (s,n,b,i)) (pureCoord (1/3) s n b) (pureCoord (2/5) s n b)
+
+def allIndicesActual : Realization sourceCoordSignature := realize _
+  (fun _ T p => nativeCoord T p.1 p.2.1 p.2.2.1 p.2.2.2) (fun e => nomatch e)
+
+theorem all_indices_bridge : (type_of% (@all_indices)) ↔
+    allIndicesArena.Law allIndicesActual := Iff.rfl
+
+theorem all_indices_actual_law : allIndicesArena.Law allIndicesActual :=
+  all_indices_bridge.mp all_indices
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativePeriodicWordLaw
