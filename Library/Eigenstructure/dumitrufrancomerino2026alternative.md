@@ -21,23 +21,23 @@ R. Dumitru, J. Franco, and A. Merino, *On The Linearization of Alternative Means
 
 ## Question and definitions
 
-The Question in §1, restated in Remark 4.4, is supplied verbatim:
+The Question in §1 (p. 3), restated as a problem in Remark 4.4, reads:
 
-> Question : Can we characterize all functions f : (0, ∞) → (0, ∞) such that Aσ̂_f B is linearizable if and only if AB = BA and |Spec(A⁻¹♯B)| ≤ 2 ?
+> Question : Can we characterize all functions f : (0 , ∞) → (0 , ∞) such that Aσ̂_f B is linearizable if and only if AB = BA and |Spec(A⁻¹♯B)| ≤ 2 ?
 
-Definition 2.3, supplied verbatim excerpt:
+Definition 2.3 (p. 5) reads:
 
-> for continuous f : (0,∞) → (0,∞) with f(1) = 1, Aσ̂_f B = f(A⁻¹♯B) A f(A⁻¹♯B) for A, B ∈ P_n(D)
+> Let f : (0 , ∞) → (0 , ∞) be a continuous function such that f(1) = 1. The alternative mean associated with f is the binary operation σ̂_f : P_n(D) × P_n(D) → P_n(D) defined by Aσ̂_f B = f(A⁻¹♯B) A f(A⁻¹♯B), (A , B ∈ P_n(D)).
 
-Remark 2.2, supplied verbatim excerpt:
+Remark 2.2 (p. 4), items (1) and (2), reads in part:
 
-> AσB is linearizable if AσB = aA + bB for some a, b ∈ R
+> (1) Let σ be a Kubo-Ando mean on P_n(D). For two matrices A , B ∈ P_n(D), we say that AσB is linearizable if there exists a , b ∈ R such that AσB = aA + bB.
+>
+> (2) We denote by ♯ the geometric mean, i.e. the Kubo-ando mean corresponding to f(x) = √x. In particular, A♯B = A^{1/2}(A^{−1/2}BA^{−1/2})^{1/2}A^{1/2}, (A , B ∈ P_n(D)).
 
-Remark 4.3, supplied verbatim sufficient condition:
+Remark 4.3 (p. 11) reads:
 
-> f² increasing and strictly concave, and x ↦ f(x)/x injective.
-
-These supplied excerpts have not been independently compared with the author text.
+> The proof of Theorem 4.2 shows that the operator monotonicity assumption can be weakened. Indeed, the spectral part only uses that f² is increasing and strictly concave, while the commutativity part uses that the function x ↦ f(x)/x is injective on (0 , ∞). Therefore, the conclusion of Theorem 4.2 remains valid for any continuous function f : (0 , ∞) → (0 , ∞), with f(1) = 1, and satisfying these two conditions.
 
 The geometric mean is
 
@@ -84,4 +84,4 @@ Remark 4.3 supplies a sufficient condition rather than this full characterizatio
 
 ## ASSUMED-UNVERIFIED
 
-The quotations and locators are supplied references to arXiv:2606.25150v1; exact agreement with the author text is ASSUMED-UNVERIFIED. No exhaustive literature or priority claim is established. The formal theorem concerns complex matrices; real and quaternionic extensions are mathematical reasoning rather than formal results of this module.
+No exhaustive literature or priority claim is established. The formal theorem concerns complex matrices; real and quaternionic extensions are mathematical reasoning rather than formal results of this module.
