@@ -14,7 +14,7 @@ $$\forall f \in Fin\left(4\right),\; \forall i \in Fin\left(4\right),\; facePerm
 
 *Commentary.*
 
-The four rows are p=(3,0,1,2), q=(3,2,0,1), q inverse and p inverse. The private frozen_face_data proof compares these whole-face maps with the published facePair and slotMap on each actual face slot.
+The four rows are p=(3,0,1,2), q=(3,2,0,1), q inverse and p inverse. The source-owned frozen_face_data proof compares these whole-face maps with the published facePair and slotMap on each actual face slot.
 
 **Definition 1.2 (Inverse omitted faces).**
 
@@ -40,7 +40,19 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 The source-to-target words are u, v, v inverse, u inverse, in omitted-face order. Multiplication retains the published right-action convention.
 
-**Definition 1.4 (Tagged barycentric coordinates).**
+**Theorem 1.4 (The actual slot map and whole-face extension agree).**
+
+$$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall t \in Omega,\; \forall f \in Fin\left(4\right),\; \forall r \in Fin\left(3\right),\; facePair\left(u, v, (t, f)\right) = (act\left(t, faceWord\left(u, v, f\right)\right), reverseFace\left(f\right)) \land apply\left(facePerm\left(f\right), faceVertex\left(f, r\right)\right) = faceVertex\left(reverseFace\left(f\right), slotMap\left(f, r\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Gluing/ActualLinkCornerChains.frozen_face_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each sheet t, each of the four faces f and each of its three slots r, the original facePair is (act(t,faceWord(u,v,f)),reverseFace(f)), and the whole-face permutation sends faceVertex(f,r) to faceVertex(reverseFace(f),slotMap(f,r)). This source-owned comparison supplies the target corner tag for both the original carrier preservation proof and the common-point construction in ActualLinkPathConnected.
+
+**Definition 1.5 (Tagged barycentric coordinates).**
 
 $$\forall Omega \in Type,\; Raw\left(Omega\right) = Omega \times Fin\left(4\right) \times Functions\left(Fin\left(4\right), R\right)$$
 
@@ -52,7 +64,7 @@ $$\forall Omega \in Type,\; Raw\left(Omega\right) = Omega \times Fin\left(4\righ
 
 A raw representative has an actual corner (omega,j) and four real barycentric coordinates.
 
-**Definition 1.5 (The complete original corner triangle).**
+**Definition 1.6 (The complete original corner triangle).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall x \in Raw\left(Omega\right),\; x \in Carrier\left(u, v, nu\right) \Leftrightarrow \left(coordinate\left(x, second\left(corner\left(x\right)\right)\right) = 0 \land \left(\left(\forall i \in Fin\left(4\right),\; 0 \le coordinate\left(x, i\right)\right) \land \left(sumCoordinates\left(x\right) = 1 \land label\left(pairing\left(u, v\right), corner\left(x\right)\right) = nu\right)\right)\right)$$
 
@@ -64,7 +76,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 The coordinate at j is zero, every coordinate is nonnegative, and their sum is one. The actual corner label is the fixed nu from the frozen Pairing quotient. Boundary ties remain in this closed carrier.
 
-**Definition 1.6 (The actual carrier subtype).**
+**Definition 1.7 (The actual carrier subtype).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; Point\left(u, v, nu\right) = Subtype\left(Carrier\left(u, v, nu\right)\right)$$
 
@@ -76,7 +88,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 Representatives carry all closed-carrier conditions and the same actual corner-class tag.
 
-**Definition 1.7 (Original affine face transport).**
+**Definition 1.8 (Original affine face transport).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall f \in Fin\left(4\right),\; \forall x \in Raw\left(Omega\right),\; move\left(u, v, f, x\right) = ((act\left(first\left(corner\left(x\right)\right), faceWord\left(u, v, f\right)\right), apply\left(facePerm\left(f\right), second\left(corner\left(x\right)\right)\right)), pullback\left(facePerm\left(f\right), coordinates\left(x\right)\right))$$
 
@@ -88,7 +100,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 Transport the sheet by the exact source word, the omitted corner by the whole-face permutation, and the coordinate vector by its inverse. No endpoints are sorted.
 
-**Definition 1.8 (A permitted affine image in the same actual corner class).**
+**Definition 1.9 (A permitted affine image in the same actual corner class).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall x \in Point\left(u, v, nu\right),\; \forall f \in Fin\left(4\right),\; f \neq second\left(corner\left(x\right)\right) \Rightarrow value\left(pairedPoint\left(u, v, x, f\right)\right) = move\left(u, v, f, value\left(x\right)\right)$$
 
@@ -100,7 +112,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 The input requires f different from the omitted corner j. The carrier proof directly consumes the published actual_step helper at its original owner, after extending the original face-slot table. The sum and coordinate conditions are preserved by the whole-face permutation. This definition constructs the affine image even away from a side; the Step relation separately imposes the zero guard.
 
-**Definition 1.9 (Only the original guarded link generators).**
+**Definition 1.10 (Only the original guarded link generators).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall x \in Point\left(u, v, nu\right),\; \forall y \in Point\left(u, v, nu\right),\; Step\left(u, v, x, y\right) \Leftrightarrow \left(\exists f \in Fin\left(4\right),\; f \neq second\left(corner\left(x\right)\right) \land \left(coordinate\left(x, f\right) = 0 \land value\left(y\right) = move\left(u, v, f, value\left(x\right)\right)\right)\right)$$
 
@@ -112,7 +124,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 A step requires f different from j and beta(f)=0, and its target is the displayed affine image. The identically zero omitted-corner coordinate creates no fourth side.
 
-**Definition 1.10 (The full original affine equivalence closure).**
+**Definition 1.11 (The full original affine equivalence closure).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall x \in Point\left(u, v, nu\right),\; \forall y \in Point\left(u, v, nu\right),\; Related\left(u, v, x, y\right) \Leftrightarrow EqvGen\left(Step\left(u, v\right), x, y\right)$$
 
@@ -124,7 +136,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 Take EqvGen of Step on the entire closed carrier. No chart region, assumed cycle or radial-map kernel defines this relation.
 
-**Definition 1.11 (Ordered endpoint data).**
+**Definition 1.12 (Ordered endpoint data).**
 
 $$\forall Omega \in Type,\; Dart\left(Omega\right) = Omega \times Fin\left(4\right) \times Fin\left(4\right)$$
 
@@ -136,7 +148,7 @@ $$\forall Omega \in Type,\; Dart\left(Omega\right) = Omega \times Fin\left(4\rig
 
 The raw ordered occurrence is ((omega,j),k). Actual corner neighborhoods have j different from k because beta(j)=0 and beta(k)>1/2. The data type retains every order, including (3,0).
 
-**Definition 1.12 (The same whole-face transport on ordered endpoints).**
+**Definition 1.13 (The same whole-face transport on ordered endpoints).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall d \in Dart\left(Omega\right),\; \forall f \in Fin\left(4\right),\; dartMove\left(u, v, f, d\right) = ((act\left(sheet\left(d\right), faceWord\left(u, v, f\right)\right), apply\left(facePerm\left(f\right), firstEndpoint\left(d\right)\right)), apply\left(facePerm\left(f\right), secondEndpoint\left(d\right)\right))$$
 
@@ -148,7 +160,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 Both j and k move by the actual face permutation; the sheet moves by the actual word.
 
-**Definition 1.13 (Original oriented edge-incidence transport).**
+**Definition 1.14 (Original oriented edge-incidence transport).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall d \in Dart\left(Omega\right),\; \forall e \in Dart\left(Omega\right),\; DartStep\left(u, v, d, e\right) \Leftrightarrow \left(\exists f \in Fin\left(4\right),\; f \neq firstEndpoint\left(d\right) \land \left(f \neq secondEndpoint\left(d\right) \land e = dartMove\left(u, v, f, d\right)\right)\right)$$
 
@@ -160,7 +172,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 A dart step may use only a face omitting neither endpoint. This is a generated incidence relation, not an assumed cyclic enumeration.
 
-**Definition 1.14 (The actual ordered-dart component).**
+**Definition 1.15 (The actual ordered-dart component).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall d \in Dart\left(Omega\right),\; \forall e \in Dart\left(Omega\right),\; DartRelated\left(u, v, d, e\right) \Leftrightarrow EqvGen\left(DartStep\left(u, v\right), d, e\right)$$
 
@@ -172,7 +184,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 The equivalence closure is generated by the actual guarded endpoint moves. This delivery does not enumerate its component by Fin(3r).
 
-**Definition 1.15 (Strict corner regions from an actual endpoint component).**
+**Definition 1.16 (Strict corner regions from an actual endpoint component).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall d \in Dart\left(Omega\right),\; \forall x \in Point\left(u, v, nu\right),\; x \in Neighborhood\left(u, v, d\right) \Leftrightarrow \left(\exists k \in Fin\left(4\right),\; \frac{1}{2} < coordinate\left(x, k\right) \land DartRelated\left(u, v, d, (corner\left(x\right), k)\right)\right)$$
 
@@ -184,7 +196,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 A representative is selected when some beta(k)>1/2 and its ordered dart is in the actual component of the selected seed. The strict inequality excludes boundary ties from this region while retaining them in Carrier. This delivery proves saturation and chain reflection; it does not yet prove openness or a disk coordinate.
 
-**Definition 1.16 (Interior coordinates).**
+**Definition 1.17 (Interior coordinates).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall x \in Point\left(u, v, nu\right),\; Interior\left(x\right) \Leftrightarrow \left(\forall f \in Fin\left(4\right),\; f \neq second\left(corner\left(x\right)\right) \Rightarrow coordinate\left(x, f\right) \neq 0\right)$$
 
@@ -196,7 +208,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 Every non-omitted coordinate is nonzero. On the nonnegative closed carrier this means each of those three coordinates is positive.
 
-**Definition 1.17 (A unique active side).**
+**Definition 1.18 (A unique active side).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall x \in Point\left(u, v, nu\right),\; \forall f \in Fin\left(4\right),\; EdgePoint\left(x, f\right) \Leftrightarrow \left(f \neq second\left(corner\left(x\right)\right) \land \left(coordinate\left(x, f\right) = 0 \land \left(\forall g \in Fin\left(4\right),\; \left(g \neq second\left(corner\left(x\right)\right) \land coordinate\left(x, g\right) = 0\right) \Rightarrow g = f\right)\right)\right)$$
 
@@ -208,7 +220,7 @@ $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall 
 
 Exactly one non-omitted coordinate is zero. The other two are nonzero and, on this carrier, positive.
 
-**Theorem 1.18 (Source-specific normal forms and full-chain restriction).**
+**Theorem 1.19 (Source-specific normal forms and full-chain restriction).**
 
 $$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall nu \in Vertex\left(pairing\left(u, v\right)\right),\; \forall x \in Point\left(u, v, nu\right),\; \forall y \in Point\left(u, v, nu\right),\; \left(Interior\left(x\right) \Rightarrow \left(Related\left(u, v, x, y\right) \Leftrightarrow y = x\right)\right) \land \left(\left(\forall f \in Fin\left(4\right),\; EdgePoint\left(x, f\right) \Rightarrow \left(pairedPoint\left(u, v, x, f\right) \neq x \land \left(Related\left(u, v, x, y\right) \Leftrightarrow \left(y = x \lor y = pairedPoint\left(u, v, x, f\right)\right)\right)\right)\right) \land \left(\left(\forall d \in Dart\left(Omega\right),\; Related\left(u, v, x, y\right) \Rightarrow \left(x \in Neighborhood\left(u, v, d\right) \Leftrightarrow y \in Neighborhood\left(u, v, d\right)\right)\right) \land \left(\forall d \in Dart\left(Omega\right),\; \left(x \in Neighborhood\left(u, v, d\right) \land y \in Neighborhood\left(u, v, d\right)\right) \Rightarrow \left(Related\left(u, v, x, y\right) \Leftrightarrow EqvGen\left(StepRestrictedTo\left(u, v, Neighborhood\left(u, v, d\right)\right), subtype\left(x\right), subtype\left(y\right)\right)\right)\right)\right)\right)$$
 
@@ -262,6 +274,7 @@ The application includes all four omitted corners, boundary ties, every actual c
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.dartMove`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.facePerm`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.faceWord`
+- Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.frozen_face_data`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.move`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.pairedPoint`
 - Truth anchor: `D5/S3/Geometry/Gluing/ActualLinkCornerChains.reverseFace`
