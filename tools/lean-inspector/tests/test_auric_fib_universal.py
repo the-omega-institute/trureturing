@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 import zipfile
 
@@ -113,6 +114,7 @@ end AuricFibUniversalProduction
 
     @classmethod
     def command(cls, targets, *, full=False, expected=0):
+        started = time.monotonic()
         cls.sequence += 1
         log = cls.diagnostics / f'command-{cls.sequence}.log'
         activity = cls.diagnostics / f'activity-{cls.sequence}.jsonl'
@@ -155,27 +157,38 @@ end AuricFibUniversalProduction
         for line in activity.read_text().splitlines() if activity.exists() else []:
             row = json.loads(line)
             cls.counts[row['kind']] = cls.counts.get(row['kind'], 0) + row['count']
+        print('UNIVERSAL_ANALYSIS_WORK ' + json.dumps(dict(sequence=cls.sequence,
+            exit=result.returncode, elapsed_seconds=time.monotonic() - started,
+            full=full, actual_work=cls.counts)), flush=True)
         return result
 
     @classmethod
     def build(cls, *, full=False):
-        # Compile changed sources separately from artifact acquisition. Each
-        # actual command retains the same infrastructure guard.
-        cls.command([MODULE, SIBLING])
         sibling_before = ((hashlib.sha256(cls.artifacts[1].read_bytes()).hexdigest(),
                            cls.artifacts[1].stat().st_mtime_ns)
                           if cls.artifacts[1].exists() else None)
         if full:
+            previous_reports = {}
+            for artifact in cls.artifacts:
+                with zipfile.ZipFile(artifact) as bundle:
+                    previous_reports[artifact.name] = bundle.read('raw-lean-report.json')
             # These two fixture artifacts were created by this invocation.
             for artifact in cls.artifacts:
                 for suffix in ('', '.trace', '.hash'):
                     Path(str(artifact) + suffix).unlink(missing_ok=True)
-        counts = {}
-        for name in (MODULE, SIBLING):
-            cls.command([name + ':report'], full=full)
-            for kind, count in cls.counts.items():
-                counts[kind] = counts.get(kind, 0) + count
-        cls.counts = counts
+        # The facets compile their source/export closures and share Lake's
+        # preparation in one invocation. Keep the existing per-command guard.
+        cls.command([name + ':report' for name in (MODULE, SIBLING)], full=full)
+        if full:
+            if cls.counts.get('extract', 0) != len(cls.artifacts) or cls.counts.get('fib-reused', 0):
+                raise AssertionError('complete report did not independently extract both fixture modules')
+            for artifact in cls.artifacts:
+                with zipfile.ZipFile(artifact) as bundle:
+                    if previous_reports[artifact.name] != bundle.read('raw-lean-report.json'):
+                        raise AssertionError('complete compiler report differs from incremental: ' + artifact.name)
+            print('UNIVERSAL_ANALYSIS_COMPLETE ' + json.dumps(dict(
+                modules=len(cls.artifacts), compiler_reports_byte_equal=True,
+                actual_work=cls.counts)), flush=True)
         if not full and sibling_before is not None:
             sibling_after = (hashlib.sha256(cls.artifacts[1].read_bytes()).hexdigest(),
                              cls.artifacts[1].stat().st_mtime_ns)
@@ -303,7 +316,7 @@ end AuricFibUniversalProduction
             self.assertEqual(self.counts.get('extract', 0), 0)
             self.assertEqual(stamps, [(hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns)
                                      for p in self.artifacts])
-            program_log = (self.diagnostics / f'command-{self.sequence - 1}.log').read_text()
+            program_log = (self.diagnostics / f'command-{self.sequence}.log').read_text()
             self.assertIn('Built LeanInformationAudit.Contract.FibApplications', program_log)
             program.write_bytes(invalid)
             failed = self.command([MODULE + ':report'], expected=1)
