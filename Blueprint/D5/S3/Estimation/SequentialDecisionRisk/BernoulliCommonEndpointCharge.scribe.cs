@@ -34,5 +34,21 @@ internal sealed class BernoulliCommonEndpointChargeDocument : IScribeDocumentDef
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/williams1991martingales")),
                 Blocks(Paragraph(Text("For every natural m, real a,rho,C,delta,S with 0<a<m, C>=1, rho>0 and S>0, assume (2m+1)rho<=1/4 and (2m+1)rho<=(1-p0)/(2A(m)+1). Assume 0<delta<min(1/2,S/2^(2m+1))^2. Set gamma=-p0/C. Let s be an event measurable at M and G a real function satisfying |G(h)-P(p(h))(s)|<=delta for every 0<h<=1/4. For every natural j, require |Delta_{2m}(rho/sqrt(2^j),G)|>=S(2^j)^(-a). Also require the explicit uniform derivative-to-difference implication on I_{2^j} for the integrated indicator of s intersect {M<=2^j}, for every U>=0. Then ofReal(k log(delta^(-1))) <= E_{P(p0)}^+[C_a(M)], where k=S/[4(2D(m,4/(1-p0))rho^(2m)+2^(2m+1)) H(a,m) a log(2)]. The hypotheses concern one stopped output event under every positive-window parameter law. The conclusion is a conditional endpoint lower bound; it does not itself supply the finite-difference signal, the calculus implication, or a reduction from a two-source strategy."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("bernoullicommonendpointcharge-bernoulli-power-target-logarithmic-endpoint"),
+                DeclarationHandle.Create(Prefix + "bernoulli_power_target_logarithmic_endpoint"),
+                H("A noninteger power target supplies the logarithmic endpoint charge"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/williams1991martingales")),
+                Blocks(Paragraph(Text("For a positive noninteger beta, the finite-difference signal of the power target, the stopped derivative budget and the stated window and accuracy hypotheses imply the explicit k log(delta inverse) lower bound for the common endpoint fractional cost."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("bernoullicommonendpointcharge-bernoulli-power-target-logarithmic-uniform-cost"),
+                DeclarationHandle.Create(Prefix + "bernoulli_power_target_logarithmic_uniform_cost"),
+                H("Uniform constants give a worst-world logarithmic cost"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/williams1991martingales")),
+                Blocks(Paragraph(Text("For legal B,C,beta and moment order m, there are positive k and delta-zero, chosen before the seed law, error and stopping rule, such that every measurable seeded stopping time with the power-target accuracy contract has worst-window expected fractional endpoint cost at least k log(delta inverse)."))),
                 DescribeRole.Theorem))));
 }

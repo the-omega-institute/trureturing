@@ -36,6 +36,14 @@ internal sealed class BernoulliStoppedCoefficientBudgetDocument : IScribeDocumen
                 Blocks(Paragraph(Text("Under the same stopping hypotheses, for every real q and measurable real f with |f|<=1 everywhere, ofReal(|D^{2m}_{t=0} E_{P(p0)}[f product_{i<tau}(1+t q X_i)]|) <= ofReal((2m)! |q|^(2m) (2A(m)+1)) E_{P(p0)}^+[ofReal(tau^m)]. Bounded stopping pads the random-degree product to a fixed finite degree, permitting coefficientwise integration."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("bernoullistoppedcoefficientbudget-bernoulli-stopped-affine-iterated-differentiable"),
+                DeclarationHandle.Create(Prefix + "bernoulli_stopped_affine_iterated_differentiable"),
+                H("Affine parameter families are smooth at interior points"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Estimation/williams1991martingales")),
+                Blocks(Paragraph(Text("For every bounded seeded stopping time, affine slope gamma, interior base point p0 and x+h gamma=p0, every iterated derivative of the projected affine-law expectation of a bounded stopped observation is differentiable at h. The projection is locally inactive because p0 lies in (0,1)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("bernoullistoppedcoefficientbudget-bernoulli-stopped-affine-derivative-budget"),
                 DeclarationHandle.Create(Prefix + "bernoulli_stopped_affine_derivative_budget"),
                 H("Derivatives of the actual affine parameter law"),
