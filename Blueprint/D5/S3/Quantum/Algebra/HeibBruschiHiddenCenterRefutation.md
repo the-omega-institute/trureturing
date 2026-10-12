@@ -26,7 +26,7 @@ $$claim \Leftrightarrow (\forall K: Type, [\operatorname{Field}\left(K\right)], 
 
 *Commentary.*
 
-Conjecture 80 of Heib and Bruschi, arXiv:2601.16161v1, §IV.D, p. 47: "Let g be a finite-dimensional minimal-graph-admissible Lie algebra associated with the minimal graph G(V,E). If g has a non-zero center Z(g), then there exists a proper non-empty subset W⊊V that satisfies the ideal-graph-property and spans a solvable ideal of g." The paper's convention "We denote any field with the symbol 𝔽" makes this an assertion over every field K.
+Conjecture 80 of Heib and Bruschi, arXiv:2601.16161v1, §IV.D, p. 46: "Let g be a finite-dimensional minimal-graph-admissible Lie algebra associated with the minimal graph G(V,E). If g has a non-zero center Z(g), then there exists a proper non-empty subset W⊊V that satisfies the ideal-graph-property and spans a solvable ideal of g." The paper's convention "We denote any field with the symbol 𝔽" makes this an assertion over every field K.
 
 **Theorem 1.3 (Conjecture 80 is refuted).**
 

@@ -25,7 +25,7 @@ DOI: 10.48550/arXiv.2601.16161.
 Primary version: https://arxiv.org/abs/2601.16161v1 (the only version).
 The TeX source `pr09_arXiv_01.tex` of v1 and the v1 PDF supply §I (conventions),
 Definition 16 and Eq. (7) in §II.A, Algorithm 1 and the minimal-graph definition in §II,
-Definition 75 and Conjecture 80 (p. 47) in §IV, and Conjecture 83 (p. 48) in §IV.D.
+Definition 75, Conjecture 80 (p. 46) and Conjecture 83 (p. 48) in §IV.D.
 
 ## Source statements
 
@@ -52,7 +52,7 @@ Definition 75 (§IV.D): "A subset \(W\subseteq V\) is said to satisfy the ideal-
 and only if no edge \(e\in E\) points from a vertex \(w\in W\) to a vertex
 \(v\in V\setminus W\)."
 
-Conjecture 80 (§IV, p. 47): "Let \(\mathfrak g\) be a finite-dimensional minimal-graph-admissible
+Conjecture 80 (§IV.D, p. 46): "Let \(\mathfrak g\) be a finite-dimensional minimal-graph-admissible
 Lie algebra associated with the minimal graph \(G(V,E)\). If \(\mathfrak g\) has a non-zero
 center \(\mathcal{Z}(\mathfrak g)\), then there exists a proper non-empty subset
 \(W\subsetneq V\) that satisfies the ideal-graph-property and spans a solvable ideal of

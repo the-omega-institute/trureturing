@@ -17,7 +17,7 @@ labeled directed graphs*, arXiv:2601.16161v1, attach to a minimal-graph-admissib
 Lie algebra (every bracket of two basis vectors is a multiple of a basis vector) the directed
 graph with an edge from $x_j$ to $x_\ell$, labelled $x_k$, whenever $[x_j,x_k]$ is a nonzero
 multiple of $x_\ell$. A vertex subset has the ideal-graph-property when no edge leaves it.
-Conjecture 80 (§IV, p. 47) states that if such an algebra has a nonzero center, then some proper
+Conjecture 80 (§IV.D, p. 46) states that if such an algebra has a nonzero center, then some proper
 non-empty vertex subset has the ideal-graph-property and spans a solvable ideal. The verbatim
 statements are in [the literature note](../Library/LieTheory/heib2026structural.md).
 
@@ -113,9 +113,10 @@ Utility is `certified-instance` with basis `refutes` of `claim`. There is no dig
 
 ### What the settlement shows
 
-**Proved by `result`:** Conjecture 80 fails as stated over every field; the algebra above has a
-nonzero center, an admissible basis, and no proper non-empty vertex subset with the
-ideal-graph-property that spans a solvable ideal.
+**Proved by `result`:** `claim`, Conjecture 80 asserted over every field, is false. `result`
+specializes the private `conjecture_fails`, which proves that Conjecture 80 fails over each field
+$K$: the algebra above has a nonzero center, an admissible basis, and no proper non-empty vertex
+subset with the ideal-graph-property that spans a solvable ideal.
 
 **Argued, not formalized.**
 
