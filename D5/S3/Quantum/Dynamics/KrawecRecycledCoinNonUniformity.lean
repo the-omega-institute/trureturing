@@ -289,4 +289,65 @@ private theorem trivial_mode (u : Fin 2 × Fin 2 → ℂ) :
   simpa only [AddChar.one_apply, one_mul] using
     mode_step (1 : AddChar (ZMod 12) ℂ) (by simp only [AddChar.one_apply, map_one]) u
 
+
+private def v (i : Fin 2 × Fin 2) : ℂ :=
+  if i.1 = 0 then if i.2 = 0 then a else lam - a
+  else if i.2 = 0 then -lam - c else -s
+
+private def w (i : Fin 2 × Fin 2) : ℂ :=
+  if i.1 = 0 then if i.2 = 0 then a else (c : ℂ) * z
+  else if i.2 = 0 then -c else (kappa : ℂ) * s * z
+
+private theorem eigenvectors : B 1 *ᵥ v = lam • v ∧ B z *ᵥ w = lam • w := by
+  have ha : 2 * (a : ℂ) ^ 2 = 1 := by exact_mod_cast a_facts.1
+  have hs : (s : ℂ) ^ 2 + (c : ℂ) ^ 2 = 1 := by exact_mod_cast sin_sq
+  have hc : (c : ℂ) * ((a : ℂ) + c) = (a : ℂ) ^ 2 := by
+    exact_mod_cast scalar_reductions.1
+  have hk : (kappa : ℂ) * (s : ℂ) ^ 2 = (a : ℂ) ^ 2 := by
+    exact_mod_cast scalar_reductions.2
+  have hca : (c : ℂ) = (a : ℂ) * kappa := by unfold c; push_cast; rfl
+  constructor
+  · ext ⟨i, j⟩
+    rw [B_apply]
+    fin_cases i <;> fin_cases j
+    all_goals
+      simp only [v, Pi.smul_apply, smul_eq_mul, Fin.ext_iff, Fin.val_zero,
+        one_ne_zero, ite_true, ite_false, map_one, mul_one, one_mul]
+    · ring
+    · linear_combination -resonance.2.1 - hs
+    · linear_combination resonance.2.1 + ha
+    · ring
+  · ext ⟨i, j⟩
+    rw [B_apply]
+    fin_cases i <;> fin_cases j
+    all_goals
+      simp only [w, Pi.smul_apply, smul_eq_mul, Fin.ext_iff, Fin.val_zero,
+        one_ne_zero, ite_true, ite_false, z_conj]
+      unfold lam
+    · linear_combination (a : ℂ) * (c : ℂ) * z_poly
+    · linear_combination z ^ 2 * hk - z ^ 2 * hc
+    · linear_combination (a : ℂ) * (c : ℂ) * z_poly + (z - 1) * hc
+    · rw [hca]
+      linear_combination -(a : ℂ) * (kappa : ℂ) * (s : ℂ) * z_poly
+
+private theorem coin_overlap :
+    (∑ i : Fin 2 × Fin 2, starRingEnd ℂ (v i) * w i) =
+      (3 / 2 : ℂ) * starRingEnd ℂ z := by
+  have ha : 2 * (a : ℂ) ^ 2 = 1 := by exact_mod_cast a_facts.1
+  have hc : (c : ℂ) * ((a : ℂ) + c) = (a : ℂ) ^ 2 := by
+    exact_mod_cast scalar_reductions.1
+  have hk : (kappa : ℂ) * (s : ℂ) ^ 2 = (a : ℂ) ^ 2 := by
+    exact_mod_cast scalar_reductions.2
+  rw [Fintype.sum_prod_type]
+  simp only [Fin.sum_univ_two]
+  change starRingEnd ℂ (a : ℂ) * a +
+    starRingEnd ℂ (lam - a) * ((c : ℂ) * z) +
+    (starRingEnd ℂ (-lam - c) * (-c) +
+    starRingEnd ℂ (-s : ℂ) * ((kappa : ℂ) * s * z)) = _
+  simp only [map_sub, map_neg, Complex.conj_ofReal]
+  unfold lam
+  simp only [map_sub, map_mul, map_add, Complex.conj_ofReal, z_conj]
+  linear_combination -(c : ℂ) * ((a : ℂ) + c) * z_poly +
+    (2 - 2 * z) * hc - z * hk + (3 / 2 : ℂ) * (1 - z) * ha
+
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
