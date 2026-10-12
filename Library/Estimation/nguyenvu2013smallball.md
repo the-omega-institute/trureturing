@@ -1,9 +1,9 @@
 ---
-bibkey: nguyenvu2012smallball
+bibkey: nguyenvu2013smallball
 authors: Hoi H. Nguyen and Van H. Vu
-year: 2012
+year: 2013
 title: Small ball probability, Inverse theorems, and applications
-doi: null
+doi: 10.1007/978-3-642-39286-3_16
 url: https://arxiv.org/abs/1301.0019v1
 claim: "The survey reviews concentration of independent random linear combinations and inverse Littlewood–Offord theorems that associate large concentration with additive structure."
 strata_touched: []
@@ -15,11 +15,13 @@ triage: anchor
 
 ## Verified locator
 
+DOI: <https://doi.org/10.1007/978-3-642-39286-3_16>.
+Crossref identifies the published chapter in *Erdős Centennial*
+(2013), pp. 409–463. The consumed text is the prepublication version.
 The [arXiv record](https://arxiv.org/abs/1301.0019v1) and its 47-page
 PDF are accessible with HTTP 200 and identify Nguyen, Vu and this
 title. The record's sole version is submitted 31 December 2012;
-the note uses that archive year rather than inferring a year from
-the `1301` identifier. The independent-summand setup and Theorems
+this differs from the chapter's publication year. The independent-summand setup and Theorems
 1.1–1.2 on PDF pp. 2–3, the fixed-dimension discussion in section 2,
 and the bibliography were inspected.
 
