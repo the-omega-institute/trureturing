@@ -561,6 +561,40 @@ private theorem hypergeometric_arithmetic_bound {N R U : ℕ}
       gcongr
       simpa only [mul_assoc] using hwidth
 
+open scoped Classical in
+/-- An arbitrary native predicate only needs lattice containment centrally.
+The remaining count values are paid by the original kernel tail. -/
+private theorem hypergeometric_predicate_bound {N R U : ℕ}
+    (hR : R ≤ N) (hU : U ≤ N) (hN : 1 < N) (L : ℝ) (hL : 0 < L)
+    (P : ℕ → Prop) (g : ℤ → ℝ) (h B : ℝ)
+    (hpush : ∀ t ∈ range (U+1), |(t : ℝ)-(U : ℝ)*R/N| ≤ L*Real.sqrt N →
+      P t → ∃ z : ℤ, |g t-z| ≤ h)
+    (hsmall : (∑ t ∈ (range (U+1)).filter (fun t : ℕ => ∃ z : ℤ, |g t-z| ≤ h),
+      H N R U t) ≤ B+1/(4*L^2)) :
+    (∑ t ∈ (range (U+1)).filter P, H N R U t) ≤ B+1/(2*L^2) := by
+  have hpart : (∑ t ∈ (range (U+1)).filter P, H N R U t) ≤
+      (∑ t ∈ (range (U+1)).filter (fun t : ℕ => ∃ z : ℤ, |g t-z| ≤ h), H N R U t) +
+      ∑ t ∈ (range (U+1)).filter (fun t : ℕ => L*Real.sqrt N <
+        |(t : ℝ)-(U : ℝ)*R/N|), H N R U t := by
+    simp only [sum_filter]
+    rw [← sum_add_distrib]
+    apply sum_le_sum
+    intro t ht
+    have hp : 0 ≤ H N R U t := by dsimp; split_ifs <;> positivity
+    by_cases hP : P t
+    · rw [if_pos hP]
+      by_cases hc : |(t : ℝ)-(U : ℝ)*R/N| ≤ L*Real.sqrt N
+      · rw [if_pos (hpush t ht hc hP), if_neg (not_lt.mpr hc)]
+        exact le_add_of_nonneg_right (le_refl 0)
+      · rw [if_pos (lt_of_not_ge hc)]
+        exact le_add_of_nonneg_left (by split_ifs <;> positivity)
+    · rw [if_neg hP]
+      positivity
+  have htail := kernel_central_tail hR hU hN L hL
+  have he := hpart.trans (add_le_add hsmall htail)
+  have hsum : 1/(4*L^2)+1/(4*L^2) = 1/(2*L^2) := by ring
+  linarith only [he,hsum]
+
 /-- Balanced margins give one root curve on an open neighborhood of the
 whole central interval, not a collection of separately chosen roots. -/
 private theorem balanced_shared_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ)
@@ -594,6 +628,104 @@ private theorem balanced_shared_curve {ι : Type*} [Fintype ι] (outside : ι �
   refine ⟨he.1,he.2.1,?_,he.2.2⟩
   filter_upwards [isOpen_Ioo.mem_nhds hti] with u hu
   exact (hθ u hu).1
+
+open private
+  D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.shared_root_uniform_feedback
+from D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
+
+open scoped Classical in
+/-- The atom and tail inputs are discharged for the exact count kernel.
+Uniform compensated feedback is derived from one base root and its variance;
+only the quantitative base budgets remain to be supplied by native environments. -/
+private theorem central_calibration_kernel_estimate {ι : Type*} [Fintype ι]
+    (outside : ι → ℝ) (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
+    ∃ d η : ℝ, 0 < d ∧ 0 < η ∧
+    ∀ (N R U : ℕ) (q bg δ L s K h ε X m : ℝ),
+      1 < N → R ≤ N → U ≤ N → 0 < q → q < (Fintype.card ι : ℝ)+N →
+      0 < δ → 0 < L → 0 < s → 0 ≤ K → 0 ≤ h → 0 < m →
+      δ*N ≤ R → (R : ℝ) ≤ (1-δ)*N →
+      δ*N ≤ U → (U : ℝ) ≤ (1-δ)*N →
+      1 ≤ L*Real.sqrt N → L*Real.sqrt N ≤ δ^2*N/2 →
+      ∃ θ : ℝ → ℝ,
+      (∀ t : ℝ, |t-(U : ℝ)*R/N| ≤ L*Real.sqrt N →
+        calibratedMean outside r ε N R U t (θ t) = q ∧
+        HasDerivAt θ (-checkerboard r ε (θ t) /
+          calibratedVariance outside r ε N R U t (θ t)) t ∧
+        (∀ᶠ u in 𝓝 t, calibratedMean outside r ε N R U u (θ u) = q) ∧
+        0 < calibratedVariance outside r ε N R U t (θ t)) ∧
+      (let ν : ℝ := (U : ℝ)*R/N
+       let w : ℝ := L*Real.sqrt N
+       let V : ℝ := calibratedVariance outside r ε N R U ν (θ ν)
+       w < V → 2*w ≤ (V-w)/2*Real.log 2 → |ε| < η →
+       |θ ν|+4*w/(V-w) ≤ X → X < η → 0 ≤ bg+ν-w →
+       s ≤ (bg+ν-w)*d/(16*(V+w))-X/4 →
+       X/4+(bg+ν+w)/(V-w) ≤ K*s →
+       (∑ t ∈ (range (U+1)).filter (fun t : ℕ => ∃ z : ℤ,
+         |m*((bg+t)*Real.sigmoid (θ t)-(t : ℝ)/2)-z| ≤ h), H N R U t) ≤
+       Real.exp 4 / ((δ^2/2)^2*Real.sqrt N) *
+         (K*(m*s)*(2*L*Real.sqrt N)+2*h+1)*(2*h/(m*s)+1)+1/(4*L^2)) := by
+  obtain ⟨d,η,hd,hη,huniform⟩ :=
+    D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.shared_root_uniform_feedback outside r hr hr1
+  refine ⟨d,η,hd,hη,?_⟩
+  intro N R U q bg δ L s K h ε X m hN hR hU hq hqM hδ hL hs hK hh hm
+    hRlo hRhi hUlo hUhi hwide hsmall
+  have hN0 : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
+  obtain ⟨θ,hθ⟩ := balanced_shared_curve outside r ε N R U q δ (L*Real.sqrt N)
+    hN0 hq hqM hδ hsmall hRlo hRhi hUlo hUhi
+  refine ⟨θ,hθ,?_⟩
+  let ν : ℝ := (U : ℝ)*R/N
+  let w : ℝ := L*Real.sqrt N
+  let V : ℝ := calibratedVariance outside r ε N R U ν (θ ν)
+  let a : ℤ := ⌈ν-w⌉
+  let b : ℤ := ⌊ν+w⌋
+  dsimp only
+  intro hvar hbudget hε hX hXη hB hslow hfast
+  have hw : 0 ≤ w := by dsimp [w]; positivity
+  have hbase := (hθ ν (by simpa [ν,w] using hw)).1
+  have hpoint (t : ℝ) (ht : t ∈ Set.Icc (a : ℝ) (b : ℝ)) : |t-ν| ≤ w := by
+    have ha := Int.le_ceil (ν-w)
+    have hb := Int.floor_le (ν+w)
+    dsimp [a,b] at ht
+    exact abs_le.mpr ⟨by linarith [ht.1], by linarith [ht.2]⟩
+  have hcurve (t : ℝ) (ht : t ∈ Set.Icc (a : ℝ) (b : ℝ)) :
+      DifferentiableAt ℝ θ t ∧
+      (∀ᶠ u in 𝓝 t, calibratedMean outside r ε N R U u (θ u) = q) ∧
+      0 < calibratedVariance outside r ε N R U t (θ t) := by
+    have he := hθ t (hpoint t ht)
+    exact ⟨he.2.1.differentiableAt,he.2.2.1,he.2.2.2⟩
+  have hfeedback (t : ℝ) (ht : t ∈ interior (Set.Icc (a : ℝ) (b : ℝ))) :
+      s ≤ Real.sigmoid (θ t)-1/2 -
+        (bg+t)*Real.sigmoid (θ t)*(1-Real.sigmoid (θ t))*checkerboard r ε (θ t) /
+          calibratedVariance outside r ε N R U t (θ t) ∧
+      Real.sigmoid (θ t)-1/2 -
+        (bg+t)*Real.sigmoid (θ t)*(1-Real.sigmoid (θ t))*checkerboard r ε (θ t) /
+          calibratedVariance outside r ε N R U t (θ t) ≤ K*s := by
+    have hpt := hpoint t (interior_subset ht)
+    have hcells (j : Fin 4) : 0 ≤ cellCounts N R U t j := by
+      have hc := central_four_cells_lower N R U δ t w hN0 hδ.le
+        hRlo hRhi hUlo hUhi hpt j
+      linarith
+    have htlo : bg+ν-w ≤ bg+t := by linarith [(abs_le.mp hpt).1]
+    have hthi : bg+t ≤ bg+ν+w := by linarith [(abs_le.mp hpt).2]
+    have he := huniform ε N R U q t ν (θ ν) (θ t) w (bg+t) X hN0 hcells hpt
+      hbase (hθ t hpt).1 hvar hbudget hε hX hXη (hB.trans htlo)
+    have hden : 0 < 16*(V+w) := by dsimp [V]; linarith
+    have hlow : (bg+ν-w)*d/(16*(V+w)) ≤ (bg+t)*d/(16*(V+w)) :=
+      div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_right htlo hd.le) hden.le
+    have hhigh : (bg+t)/(V-w) ≤ (bg+ν+w)/(V-w) :=
+      div_le_div_of_nonneg_right hthi (sub_pos.mpr hvar).le
+    constructor <;> linarith [he.1,he.2]
+  obtain ⟨hl,hu⟩ := shared_calibration_increment_bounds outside r ε N R U q bg θ a b s K
+    hcurve hfeedback
+  apply hypergeometric_arithmetic_bound hN hR hU δ L (m*s) K h hδ hL
+    (mul_pos hm hs) hK hh hRlo hRhi hUlo hUhi hwide hsmall
+    (fun t : ℤ => m*((bg+t)*Real.sigmoid (θ t)-(t : ℝ)/2))
+  · intro x hx y hy hxy
+    have he := mul_le_mul_of_nonneg_left (hl x hx y hy hxy) hm.le
+    nlinarith only [he]
+  · intro x hx y hy hxy
+    have he := mul_le_mul_of_nonneg_left (hu x hx y hy hxy) hm.le
+    nlinarith only [he]
 
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
