@@ -68,7 +68,7 @@ local notation "RecordCost" => fun {Seed : Type} (π : Seed → Bool → History
   if Calls π S ω = ⊤ then (⊤ : ℝ≥0∞) else
     ENNReal.ofReal (((HistoryAt π S ((Calls π S ω).untopD 0) ω).length : ℝ) ^ a)
 
-private lemma action_singleton_measurable (a : Action) : MeasurableSet {a} := by
+lemma action_singleton_measurable (a : Action) : MeasurableSet {a} := by
   cases a with
   | inl source =>
     simpa only [Set.image_singleton] using

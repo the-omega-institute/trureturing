@@ -26,30 +26,31 @@ variable {Seed : Type} [MeasurableSpace Seed]
 local notation "Action" => Bool ⊕ (Bool × Bool)
 local notation "History" => List (Bool × Bool)
 local notation "Uniform" => (volume.restrict (Icc (0 : ℝ) 1) : Measure ℝ)
-local notation "RawLaw" => fun ν : Measure Seed =>
+local notation "RawLaw" => fun {Seed : Type} [MeasurableSpace Seed] (ν : Measure Seed) =>
   ν.prod (Measure.infinitePi (fun _ : ℕ => Uniform))
-local notation "Law" => fun (ν : Measure Seed) (p : unitInterval) =>
+local notation "Law" => fun {Seed : Type} [MeasurableSpace Seed]
+  (ν : Measure Seed) (p : unitInterval) =>
   ν.prod (Measure.infinitePi (fun _ : ℕ => bernoulliMeasure true false p))
 local notation "Coin" => fun (p : unitInterval) (u : ℝ) => decide (u ≤ (p : ℝ))
 local notation "Read" => fun (p q : unitInterval) (source : Bool) (n : ℕ) (tape : ℕ → ℝ) =>
   Coin (if source then q else p) (tape n)
 local notation "Returns" => Set.range (fun cell : Bool × Bool => (.inr cell : Action))
-local notation "Act" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "Act" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (p q : unitInterval) (n : ℕ) (ω : Seed × (ℕ → ℝ)) =>
   π ω.1 S (acquiredHistory π S (Read p q) n ω)
-local notation "Calls" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "Calls" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (p q : unitInterval) => hittingAfter (Act π S p q) Returns 0
-local notation "CellAt" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "CellAt" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (p q : unitInterval) (n : ℕ) (ω : Seed × (ℕ → ℝ)) =>
   match Act π S p q n ω with
   | .inr cell => cell
   | _ => (false, false)
-local notation "RawCost" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "RawCost" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (p q : unitInterval) (a : ℝ) (ω : Seed × (ℕ → ℝ)) =>
   if Calls π S p q ω = ⊤ then (⊤ : ℝ≥0∞) else
     ENNReal.ofReal (((acquiredHistory π S (Read p q)
       ((Calls π S p q ω).untopD 0) ω).length : ℝ) ^ a)
-local notation "Bits" => fun (p : unitInterval) (ω : Seed × (ℕ → ℝ)) =>
+local notation "Bits" => fun {Seed : Type} (p : unitInterval) (ω : Seed × (ℕ → ℝ)) =>
   (ω.1, fun n : ℕ => Coin p (ω.2 n))
 
 private lemma uniform_probability : IsProbabilityMeasure Uniform := by
@@ -118,15 +119,15 @@ private lemma common_rate_history (π : Seed → Bool → History → Action) (S
       cases source <;> rfl
     · rfl
 
-local notation "FlatAct" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "FlatAct" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (n : ℕ) (ω : Seed × (ℕ → Bool)) =>
   π ω.1 S (acquiredHistory π S (fun _ i tape => tape i) n ω)
-local notation "FlatCalls" => fun (π : Seed → Bool → History → Action) (S : Bool) =>
+local notation "FlatCalls" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool) =>
   hittingAfter (FlatAct π S) Returns 0
-local notation "FlatCellAt" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "FlatCellAt" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (n : ℕ) (ω : Seed × (ℕ → Bool)) =>
   match FlatAct π S n ω with | .inr cell => cell | _ => (false, false)
-local notation "FlatCost" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "FlatCost" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (a : ℝ) (ω : Seed × (ℕ → Bool)) =>
   if FlatCalls π S ω = ⊤ then (⊤ : ℝ≥0∞) else
     ENNReal.ofReal (((acquiredHistory π S (fun _ i tape => tape i)
@@ -179,7 +180,7 @@ private lemma common_rate_output_law (π : Seed → Bool → History → Action)
     (ν : Measure Seed) [IsProbabilityMeasure ν] (p : unitInterval) (cell : Bool × Bool) :
     (RawLaw ν).real ((stoppedValue (CellAt π S p p) (Calls π S p p)) ⁻¹' {cell}) =
       (Law ν p).real ((stoppedValue (FlatCellAt π S) (FlatCalls π S)) ⁻¹' {cell}) := by
-  have hm : Measurable (Bits p) := measurable_fst.prodMk
+  have hm : Measurable (fun ω : Seed × (ℕ → ℝ) => Bits p ω) := measurable_fst.prodMk
     (measurable_pi_lambda _ (fun n => (coin_measurable p).comp
       ((measurable_pi_apply n).comp measurable_snd)))
   have ho := (output_stopped_measurable π hπ S).mono
@@ -203,7 +204,7 @@ private lemma common_rate_cost_law (π : Seed → Bool → History → Action)
     (ν : Measure Seed) [IsProbabilityMeasure ν] (p : unitInterval) (a : ℝ) :
     (∫⁻ ω, RawCost π S p p a ω ∂(RawLaw ν)) =
       ∫⁻ ω, FlatCost π S a ω ∂(Law ν p) := by
-  have hm : Measurable (Bits p) := measurable_fst.prodMk
+  have hm : Measurable (fun ω : Seed × (ℕ → ℝ) => Bits p ω) := measurable_fst.prodMk
     (measurable_pi_lambda _ (fun n => (coin_measurable p).comp
       ((measurable_pi_apply n).comp measurable_snd)))
   have hM := (calls_stopping π hπ S).measurable.mono
@@ -224,12 +225,12 @@ private lemma common_rate_cost_law (π : Seed → Bool → History → Action)
 
 local notation "Prefix" => fun (t : ℕ → Bool × Bool) (n : ℕ) =>
   List.ofFn (fun i : Fin n => t i)
-local notation "SeedSection" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "SeedSection" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (t : ℕ → Bool × Bool) (n : ℕ) =>
   {seed | ∀ i < n, π seed S (Prefix t i) = .inl (t i).1}
 local notation "TapeSection" => fun (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) =>
   Set.pi (Finset.range n) (fun i => (Coin (if (t i).1 then q else p)) ⁻¹' {(t i).2})
-local notation "TraceEvent" => fun (π : Seed → Bool → History → Action) (S : Bool)
+local notation "TraceEvent" => fun {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
   (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) =>
   {ω : Seed × (ℕ → ℝ) | ∀ i < n,
     Act π S p q i ω = .inl (t i).1 ∧ Read p q (t i).1 i ω.2 = (t i).2}
@@ -244,10 +245,14 @@ private lemma history_of_trace (π : Seed → Bool → History → Action) (S : 
   | succ n ih =>
     have hprev := ih (fun i hi => htrace i (Nat.lt_succ_of_lt hi))
     have hn := htrace n (Nat.lt_succ_self n)
-    change π ω.1 S (acquiredHistory π S (Read p q) n ω) = .inl (t n).1 at hn.1
-    simp only [acquiredHistory, hn.1, hn.2, hprev]
-    rw [List.ofFn_succ']
-    rfl
+    have ha : π ω.1 S (acquiredHistory π S (Read p q) n ω) = .inl (t n).1 := hn.1
+    have hb : Read p q (t n).1 n ω.2 = (t n).2 := hn.2
+    rw [acquiredHistory, ha]
+    change acquiredHistory π S (Read p q) n ω ++
+      [((t n).1, Read p q (t n).1 n ω.2)] = Prefix t (n + 1)
+    rw [hb, hprev]
+    simpa [List.concat_eq_append] using
+      (List.ofFn_succ' (fun i : Fin (n + 1) => t i)).symm
 
 omit [MeasurableSpace Seed] in
 private lemma trace_event_sections (π : Seed → Bool → History → Action) (S : Bool)
@@ -274,10 +279,11 @@ private lemma trace_event_sections (π : Seed → Bool → History → Action) (
         intro hk
         have hp := ih (by omega)
         have ha := hseed k (by omega)
-        have hb := hbits k (Finset.mem_range.mpr (by omega))
+        have hb : Read p q (t k).1 k ω.2 = (t k).2 :=
+          hbits k (Finset.mem_range.mpr (by omega))
         simp only [acquiredHistory, hp, ha, hb]
         rw [List.ofFn_succ']
-        rfl
+        simp
     intro i hi
     constructor
     · change π ω.1 S (acquiredHistory π S (Read p q) i ω) = .inl (t i).1
@@ -292,23 +298,28 @@ theorem native_source_trace_law (π : Seed → Bool → History → Action)
     (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool)
     (ν : Measure Seed) [IsProbabilityMeasure ν] (p q : unitInterval)
     (t : ℕ → Bool × Bool) (n : ℕ) (D : Set Seed) (hD : MeasurableSet D) :
+    MeasurableSet ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) ∧
     (RawLaw ν) ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) =
       ν ((SeedSection π S t n) ∩ D) *
         ∏ i ∈ Finset.range n, (bernoulliMeasure true false
           (if (t i).1 then q else p)) {(t i).2} := by
   have := uniform_probability
-  have hs : MeasurableSet (SeedSection π S t n) :=
-    MeasurableSet.iInter fun i => MeasurableSet.iInter fun hi =>
-      (hπ S (Prefix t i)) (by
-        cases (t i).1 <;> simpa only [Set.image_singleton] using
-          ((measurableSet_singleton ((t i).1)).inl_image (β := Bool × Bool)))
+  have hs : MeasurableSet (SeedSection π S t n) := by
+    change MeasurableSet {seed | ∀ i, ∀ _ : i < n,
+      π seed S (Prefix t i) = .inl (t i).1}
+    simp only [Set.ofPred_forall]
+    exact MeasurableSet.iInter (fun i : ℕ => MeasurableSet.iInter (fun hi : i < n =>
+      (hπ S (Prefix t i)) (action_singleton_measurable (.inl (t i).1))))
   have he : (TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D =
       ((SeedSection π S t n) ∩ D) ×ˢ (TapeSection p q t n) := by
     rw [trace_event_sections]
     ext ω
     simp only [Set.mem_inter_iff, Set.mem_prod, Set.mem_preimage]
     tauto
-  rw [he, Measure.prod_prod]
+  rw [he]
+  refine ⟨(hs.inter hD).prod (MeasurableSet.pi (Finset.countable_toSet _)
+    (fun i hi => (coin_measurable _) (measurableSet_singleton _))), ?_⟩
+  rw [Measure.prod_prod]
   rw [Measure.infinitePi_pi _ (fun i hi =>
     (coin_measurable _) (measurableSet_singleton _))]
   congr 1
@@ -316,6 +327,174 @@ theorem native_source_trace_law (π : Seed → Bool → History → Action)
   intro i hi
   rw [← uniform_coin_law, Measure.map_apply (coin_measurable _)
     (measurableSet_singleton _)]
+
+local notation "RowLaw" => fun table : (Bool × History) → PMF Action =>
+  Measure.infinitePi (fun row => (table row).toMeasure)
+local notation "TablePolicy" => fun (seed : (Bool × History) → Action) S h => seed (S, h)
+
+private lemma table_seed_section_law (table : (Bool × History) → PMF Action)
+    (S : Bool) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action) :
+    (RowLaw table) ((SeedSection TablePolicy S t n) ∩
+      {seed | seed (S, Prefix t n) = a}) =
+      (∏ i ∈ Finset.range n, table (S, Prefix t i) (.inl (t i).1)) *
+        table (S, Prefix t n) a := by
+  let row : ℕ → Bool × History := fun i => (S, Prefix t i)
+  have hi : Function.Injective row := by
+    intro i j hij
+    have hl := congrArg (fun r : Bool × History => r.2.length) hij
+    simpa [row] using hl
+  let act : ℕ → Action := fun i => if i < n then .inl (t i).1 else a
+  let Q : Set (ℕ → Action) := Set.pi (Finset.range (n + 1)) (fun i => {act i})
+  have hQ : MeasurableSet Q :=
+    MeasurableSet.pi (Finset.countable_toSet _) (fun i hi => action_singleton_measurable _)
+  have he : ((SeedSection TablePolicy S t n) ∩
+      {seed | seed (S, Prefix t n) = a}) =
+      (fun seed : (Bool × History) → Action => fun i => seed (row i)) ⁻¹' Q := by
+    ext seed
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage,
+      Q, Set.mem_pi, Finset.mem_coe, Finset.mem_range, Set.mem_singleton_iff]
+    constructor
+    · rintro ⟨hp, ha⟩ i hi
+      by_cases hin : i < n
+      · simpa [row, act, hin] using hp i hin
+      · have heq : i = n := by omega
+        subst i
+        simpa [row, act] using ha
+    · intro hp
+      constructor
+      · intro i hi
+        simpa [row, act, hi] using hp i (Nat.lt_succ_of_lt hi)
+      · simpa [row, act] using hp n (Nat.lt_succ_self n)
+  rw [he, ← Measure.map_apply (by fun_prop) hQ,
+    Measure.map_infinitePi_infinitePi_of_inj hi]
+  rw [Measure.infinitePi_pi _ (fun i hi => action_singleton_measurable _),
+    Finset.prod_range_succ]
+  simp only [PMF.toMeasure_apply_singleton _ _ (action_singleton_measurable _)]
+  have hp : (∏ i ∈ Finset.range n, table (row i) (act i)) =
+      ∏ i ∈ Finset.range n, table (S, Prefix t i) (.inl (t i).1) := by
+    apply Finset.prod_congr rfl
+    intro i hi
+    simp [row, act, Finset.mem_range.mp hi]
+  simp [row, act, hp]
+
+/-- Independent private action coordinates realize every finite labelled leaf
+of an arbitrary real-probability policy table, with the exact source likelihood
+and without a bound on the possible number of calls. -/
+theorem native_policy_table_leaf_law (table : (Bool × History) → PMF Action)
+    (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action) :
+    (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S p q t n) ∩
+      {ω | Act TablePolicy S p q n ω = a}) =
+      ((∏ i ∈ Finset.range n, table (S, Prefix t i) (.inl (t i).1)) *
+        table (S, Prefix t n) a) *
+      ∏ i ∈ Finset.range n,
+        (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2} := by
+  have he : (TraceEvent TablePolicy S p q t n) ∩
+      {ω | Act TablePolicy S p q n ω = a} =
+      (TraceEvent TablePolicy S p q t n) ∩
+        Prod.fst ⁻¹' {seed | seed (S, Prefix t n) = a} := by
+    ext ω
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_preimage]
+    constructor <;> rintro ⟨ht, ha⟩ <;> refine ⟨ht, ?_⟩
+    · change ω.1 (S, Prefix t n) = a
+      change ω.1 (S, acquiredHistory TablePolicy S (Read p q) n ω) = a at ha
+      rwa [history_of_trace TablePolicy S p q t n ω ht] at ha
+    · change ω.1 (S, acquiredHistory TablePolicy S (Read p q) n ω) = a
+      rwa [history_of_trace TablePolicy S p q t n ω ht]
+  have hD : MeasurableSet {seed : (Bool × History) → Action | seed (S, Prefix t n) = a} := by
+    change MeasurableSet ((fun seed : (Bool × History) → Action => seed (S, Prefix t n)) ⁻¹' {a})
+    exact (measurable_pi_apply (S, Prefix t n)) (action_singleton_measurable a)
+  have hb := (native_source_trace_law TablePolicy (fun S h => measurable_pi_apply (S, h))
+    S (RowLaw table) p q t n
+      {seed : (Bool × History) → Action | seed (S, Prefix t n) = a}
+      hD).2
+  rw [he]
+  rw [table_seed_section_law] at hb
+  exact hb
+
+local notation "IdentityRows" => fun table : (Bool × History) → PMF Action =>
+  ∀ S h a, table (S, h) a ≠ 0 →
+    (h = [] → a = .inl S) ∧
+      ∀ cell : Bool × Bool, a = .inr cell → h.head? = some (S, cell.1)
+
+omit [MeasurableSpace Seed] in
+private lemma history_actual_first_answer (π : Seed → Bool → History → Action)
+    (S : Bool) {Tape : Type} (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape)
+    (hroot : π ω.1 S [] = .inl S) (n : ℕ) :
+    (acquiredHistory π S answer (n + 1) ω).head? = some (S, answer S 0 ω.2) := by
+  induction n with
+  | zero => simp [acquiredHistory, hroot]
+  | succ n ih =>
+    rw [acquiredHistory]
+    split
+    · have hne : acquiredHistory π S answer (n + 1) ω ≠ [] := by
+        intro he
+        simp only [he, List.head?_nil, reduceCtorEq] at ih
+      rw [List.head?_append_of_ne_nil _ hne]
+      exact ih
+    · exact ih
+
+private lemma table_rows_supported (table : (Bool × History) → PMF Action) :
+    ∀ᵐ seed ∂(RowLaw table), ∀ row : Bool × History, table row (seed row) ≠ 0 := by
+  let : MeasurableSingletonClass Action := ⟨action_singleton_measurable⟩
+  apply ae_all_iff.mpr
+  intro row
+  have hs : ∀ᵐ a ∂(table row).toMeasure, a ∈ (table row).support := by
+    apply (ae_mem_iff_measure_eq (table row).support_countable.measurableSet.nullMeasurableSet).mpr
+    simpa using ((table row).toMeasure_apply_eq_one_iff
+      (table row).support_countable.measurableSet).mpr Set.Subset.rfl
+  apply ae_of_ae_map (μ := RowLaw table) (p := fun a : Action => table row a ≠ 0)
+    (measurable_pi_apply row).aemeasurable
+  rw [Measure.infinitePi_map_eval]
+  exact hs
+
+/-- The identity face of a real policy table makes the first global call use
+the requested source, and every finite return contains that actual first answer.
+The same private-seed null set works for every pair of source rates. -/
+theorem native_policy_table_identity (table : (Bool × History) → PMF Action)
+    (hidentity : IdentityRows table) (S : Bool) (p q : unitInterval) :
+    ∀ᵐ ω ∂(RawLaw (RowLaw table)),
+      Act TablePolicy S p q 0 ω = .inl S ∧
+      ∀ n (cell : Bool × Bool), Act TablePolicy S p q n ω = .inr cell →
+        cell.1 = Read p q S 0 ω.2 := by
+  have := uniform_probability
+  have hs : ∀ᵐ ω ∂(RawLaw (RowLaw table)),
+      ∀ row : Bool × History, table row (ω.1 row) ≠ 0 := by
+    apply ae_of_ae_map (μ := RawLaw (RowLaw table))
+      (p := fun seed : (Bool × History) → Action => ∀ row, table row (seed row) ≠ 0)
+      measurable_fst.aemeasurable
+    rw [Measure.map_fst_prod, measure_univ, one_smul]
+    exact table_rows_supported table
+  filter_upwards [hs] with ω hω
+  have hroot : ω.1 (S, []) = .inl S :=
+    (hidentity S [] _ (hω (S, []))).1 rfl
+  refine ⟨hroot, ?_⟩
+  intro n cell ha
+  have hh : (acquiredHistory TablePolicy S (Read p q) n ω).head? = some (S, cell.1) :=
+    (hidentity S _ _ (hω (S, acquiredHistory TablePolicy S (Read p q) n ω))).2 cell ha
+  cases n with
+  | zero => simp [acquiredHistory] at hh
+  | succ n =>
+    have hf := history_actual_first_answer TablePolicy S (Read p q) ω hroot n
+    have he : (S, cell.1) = (S, Read p q S 0 ω.2) := Option.some.inj (hh.symm.trans hf)
+    exact congrArg Prod.snd he
+
+private lemma finite_return_cell_law (π : Seed → Bool → History → Action) (S : Bool)
+    (ν : Measure Seed) (p q : unitInterval)
+    (hfinite : ∀ᵐ ω ∂(RawLaw ν), Calls π S p q ω ≠ ⊤) (cell : Bool × Bool) :
+    (RawLaw ν).real {ω | ∃ n : ℕ,
+      Calls π S p q ω = (n : WithTop ℕ) ∧ Act π S p q n ω = .inr cell} =
+      (RawLaw ν).real ((stoppedValue (CellAt π S p q) (Calls π S p q)) ⁻¹' {cell}) := by
+  apply measureReal_congr
+  filter_upwards [hfinite] with ω hω
+  cases ht : Calls π S p q ω with
+  | top => exact False.elim (hω ht)
+  | coe n =>
+    have hm : Act π S p q n ω ∈ Returns := by
+      simpa [ht] using
+        (hittingAfter_mem_set_of_ne_top (u := Act π S p q) (s := Returns) (n := 0) hω)
+    obtain ⟨y, hy⟩ := hm
+    apply propext
+    simp [ht, stoppedValue, ← hy]
 
 /-- The fixed known parameters of the two-source factory. -/
 structure FactoryParameters where
@@ -448,5 +627,60 @@ theorem native_factory_logarithmic_total_call_cost (P : FactoryParameters) (m : 
   apply le_iSup_of_le S
   apply le_iSup_of_le (CommonWorld P h)
   simp
+
+set_option maxHeartbeats 800000 in
+-- The complete table law, identity and infinite-cost telescope is elaborated together.
+/-- Arbitrary real-probability tables have the exact native finite-leaf law.
+Their identity face preserves the actual first source answer, and complete
+finite-return TV accuracy forces the logarithmic total-call cost bound. -/
+theorem real_policy_factory_logarithmic_total_call_cost (P : FactoryParameters) (m : ℕ)
+    (hm : P.β / 2 < (m : ℝ)) :
+    ∃ k : ℝ, 0 < k ∧ ∃ δ₀ : ℝ, δ₀ ∈ Ioo 0 1 ∧
+      ∀ table : (Bool × History) → PMF Action,
+      (∀ (S : Bool) (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action),
+        (RawLaw (RowLaw table)) ((TraceEvent TablePolicy S p q t n) ∩
+          {ω | Act TablePolicy S p q n ω = a}) =
+          ((∏ i ∈ Finset.range n, table (S, Prefix t i) (.inl (t i).1)) *
+            table (S, Prefix t n) a) *
+          ∏ i ∈ Finset.range n,
+            (bernoulliMeasure true false (if (t i).1 then q else p)) {(t i).2}) ∧
+      (IdentityRows table → ∀ (S : Bool) (p q : unitInterval),
+        ∀ᵐ ω ∂(RawLaw (RowLaw table)),
+          Act TablePolicy S p q 0 ω = .inl S ∧
+          ∀ n (cell : Bool × Bool), Act TablePolicy S p q n ω = .inr cell →
+            cell.1 = Read p q S 0 ω.2) ∧
+      ∀ δ : ℝ, δ ∈ Ioo 0 δ₀ →
+      (∀ (w : World P) (S : Bool), ∀ᵐ ω ∂(RawLaw (RowLaw table)),
+        Calls TablePolicy S (Rate P w false) (Rate P w true) ω ≠ ⊤) →
+      (∀ (w : World P) (S : Bool), D5.S3.TotalVariation.Pinsker.totalVariation
+        (fun cell : Bool × Bool => (RawLaw (RowLaw table)).real {ω | ∃ n : ℕ,
+          Calls TablePolicy S (Rate P w false) (Rate P w true) ω = (n : WithTop ℕ) ∧
+          Act TablePolicy S (Rate P w false) (Rate P w true) n ω = .inr cell})
+        (Target P w S) ≤ δ) →
+      ENNReal.ofReal (k * Real.log δ⁻¹) ≤
+        ⨆ S : Bool, ⨆ w : World P,
+          ∫⁻ ω, RawCost TablePolicy S (Rate P w false) (Rate P w true) (P.β / 2) ω
+            ∂(RawLaw (RowLaw table)) := by
+  obtain ⟨k, hk, δ₀, hδ₀, hbound⟩ := native_factory_logarithmic_total_call_cost
+    (Seed := (Bool × History) → Action) P m hm
+  refine ⟨k, hk, δ₀, hδ₀, ?_⟩
+  intro table
+  refine ⟨native_policy_table_leaf_law table, ?_, ?_⟩
+  · exact fun hi => native_policy_table_identity table hi
+  intro δ hδ hfinite htv
+  apply hbound (RowLaw table) inferInstance TablePolicy
+    (fun S h => measurable_pi_apply (S, h)) δ hδ
+  intro w S
+  have he : (fun cell : Bool × Bool => (RawLaw (RowLaw table)).real {ω | ∃ n : ℕ,
+      Calls TablePolicy S (Rate P w false) (Rate P w true) ω = (n : WithTop ℕ) ∧
+      Act TablePolicy S (Rate P w false) (Rate P w true) n ω = .inr cell}) =
+      (fun cell : Bool × Bool => (RawLaw (RowLaw table)).real
+        ((stoppedValue (CellAt TablePolicy S (Rate P w false) (Rate P w true))
+          (Calls TablePolicy S (Rate P w false) (Rate P w true))) ⁻¹' {cell})) := by
+    funext cell
+    exact finite_return_cell_law TablePolicy S (RowLaw table)
+      (Rate P w false) (Rate P w true) (hfinite w S) cell
+  have ht := htv w S
+  rwa [he] at ht
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernoulliFactoryCriticalMoment
