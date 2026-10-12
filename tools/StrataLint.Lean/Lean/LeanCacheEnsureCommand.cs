@@ -14,8 +14,6 @@ internal static partial class LeanCacheEnsureCommand
         OleanWarmthInspection Mathlib,
         OleanWarmthInspection Project)
     {
-        internal bool AllCold => !Mathlib.IsWarm && !Project.IsWarm;
-
         internal bool HasProbeFailure => Mathlib.State == OleanWarmth.ProbeFailed
             || Project.State == OleanWarmth.ProbeFailed;
 
@@ -207,7 +205,16 @@ internal static partial class LeanCacheEnsureCommand
                 receipt,
                 "cold-build guard did not receive a cache state from ensure\n");
         }
-        if (cacheState.AllCold)
+        if (cacheState.HasProbeFailure)
+        {
+            return new CommandResult(
+                false,
+                receipt,
+                "COLD_BUILD_REFUSED cache warmth probe failed (fail-closed): "
+                + cacheState.ProbeFailureDescription + "\n"
+                + $"Fetch caches with: make -C {ShellQuote(root)} lean-cache-ensure\n");
+        }
+        if (cacheState.Project.State == OleanWarmth.Cold)
         {
             var consent = string.Equals(
                 readEnvironment(ColdBuildConsentVariable),
@@ -215,15 +222,11 @@ internal static partial class LeanCacheEnsureCommand
                 StringComparison.Ordinal);
             if (!consent)
             {
-                var refusal = cacheState.HasProbeFailure
-                    ? "COLD_BUILD_REFUSED cache warmth probe failed and was treated as cold (fail-closed): "
-                        + cacheState.ProbeFailureDescription
-                    : "COLD_BUILD_REFUSED mathlib and project olean caches are both cold.";
                 var target = ShellQuote(root);
                 return new CommandResult(
                     false,
                     receipt,
-                    refusal + "\n"
+                    "COLD_BUILD_REFUSED project olean cache is cold.\n"
                     + $"Fetch caches with: make -C {target} lean-cache-ensure\n"
                     + "To accept this cold build once, run: "
                     + $"{ColdBuildConsentVariable}=1 make -C {target} lean\n");

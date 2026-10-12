@@ -15,6 +15,50 @@ internal sealed class FewDistinctPrimesDocument : IScribeDocumentDefinition
             + "factors, hence for every integer between 5040 and 223092870.",
         H("Robin's Inequality for Integers with at Most Eight Distinct Primes"),
         Blocks(
+            Paragraph(Text(
+                "Application to the 5040 congruence cell: GoldenCell5040Shape.modEq_2241_shape "
+                    + "takes 5040 dividing n and Nat.ModEq n (3^n) 2241 and gives "
+                    + "n=2^a*3^b*5*7*r, with 4<=a<=6, 2<=b<=3 and "
+                    + "r coprime to 2*3*5*7*83. The prime factors of this product are "
+                    + "the disjoint union of {2,3,5,7} and those of r. Thus a residual "
+                    + "with at most four distinct primes has total support at most eight, "
+                    + "and the theorem below proves Robin for n>5040. These are applications "
+                    + "of the existing shape and support theorems, rather than additional "
+                    + "mathematical declarations. Support-cardinality partitions do not "
+                    + "represent the FIB legal windows 000,100,010,101,001.")),
+            Paragraph(Text(
+                "A further application of the existing positive-price and logarithm bounds "
+                    + "excludes every weak Robin failure through log(n)=40. The preceding "
+                    + "finite-floor theorem handles 5040<n<223092870. For the remaining "
+                    + "integers with log(n)<=40, write A=log(n). The threshold criterion at "
+                    + "price 1/60 has optimizer N=6983776800 and divisor ratio Z=249984/46189; "
+                    + "at price 1/102 it has N=9316358251200 and Z=181416960/30808063. "
+                    + "Occupied and next layers are checked at each prime in these integers. "
+                    + "The first missing primes are 23 and 31; first-layer antitonicity and "
+                    + "layer decrease extend those checks to every absent prime and further layer.")),
+            Paragraph(Text(
+                "Optimality gives log(sigma(1,n)/n)<=log(Z)+(A-log(N))/d. Concavity of "
+                    + "log(log(A)) makes the difference convex, so its endpoint bounds on "
+                    + "[19,24] for d=60 and [24,40] for d=102 control the whole intervals. "
+                    + "The existing rational logarithm bounds pay each endpoint strictly below "
+                    + "57/100, while log(89/50)>57/100. Together with log(223092870)>19, "
+                    + "this yields sigma(1,n)/n<(89/50)*log(log(n)) on the whole remaining "
+                    + "range. Since 89/50<exp(gamma), equality in the Robin comparison "
+                    + "is excluded as well.")),
+            Paragraph(Text(
+                "For arbitrary prime support of cardinality at most eleven, the saturation "
+                    + "bound is sigma(1,n)/n<=product(p/(p-1))<=86822723/13271040<131/20. "
+                    + "The sorted support's i-th prime is at least the i-th prime overall: "
+                    + "Mathlib's finite order embedding, strictly increasing prime-count "
+                    + "function, rank bound and nth/count inverse supply that comparison. "
+                    + "The factor p/(p-1) reverses the order, and factors above one allow "
+                    + "padding to eleven. This applies to arbitrary exponents and arbitrarily "
+                    + "large support primes, not just smooth integers. Finally log(40)>92/25 "
+                    + "and (89/50)*(92/25)>131/20 rule out such support after log(n)>40. "
+                    + "Consequently every n>5040 with exp(gamma)*log(log(n))<=sigma(1,n)/n "
+                    + "has log(n)>40 and at least twelve distinct prime factors. This is "
+                    + "an application of existing results, not a new retained theorem, "
+                    + "a claim of a new literature bound, or a proof of RH.")),
             Describe.Lean(
                 DescribeId.Create("robin-eight-distinct-primes"),
                 DeclarationHandle.Create(Prefix + "robin_of_card_primeFactors_le_eight"),
@@ -56,8 +100,8 @@ internal sealed class FewDistinctPrimesDocument : IScribeDocumentDefinition
                             + "to 21-full integers and calculation, and "),
                         Ref("D5/L/ArithSums/mishra2026finiterobin"),
                         Text(" states a stronger omega-graded bound for at most six distinct primes; "
-                            + "neither is a machine verification, and this proof uses neither. Integers "
-                            + "with nine or more distinct prime factors are not covered, and the Riemann "
+                            + "neither is a machine verification, and this proof uses neither. This "
+                            + "eight-prime theorem alone does not cover larger support, and the Riemann "
                             + "hypothesis remains open."))),
                 DescribeRole.Theorem),
             Describe.Lean(

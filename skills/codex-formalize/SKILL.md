@@ -432,7 +432,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never hand-write a status field; `agents/CONTEXT.md` and status derivation own it.
 - Never hand-edit generated projections; their canonical producers own them.
 - Never hand-edit the frozen ledger; the deposit door owns it.
-- Never add a declaration to a frozen state member; the frozen ledger owns this constraint.
+- Never add a declaration to a frozen state member; this is a formalization discipline. State records contain all included module declarations; SL-008 checks the pin and declaration list against the current report and reports pin changes as Observe, with no cross-tree declaration-set monotonicity or invariance gate.
 - Never modify the judge during formalization (CLAUDE.md §1.2 「形式化不改判官」): a formalization lane changes only content surfaces (D5, Blueprint, Reg declaration sources and content templates, digestion ledger, theory volumes); `tools/**` (StrataLint, lean-inspector, report producers and schedulers, scripts), the judge Interface/Impl packages, `.github/**` and other admission surfaces are out of scope. If the judge is wrong or blocks you, open or reuse an issue with the verdict and readings, report the blocker, and continue other mathematical work; do not carry a judge fix in the delivery.
 - Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
 - Never edit `Meta/Digestion/**` from a producing seat; digestion-ledger surgery is dispatcher-owned.
