@@ -309,6 +309,8 @@ private theorem eigenvectors : B 1 *ᵥ v = lam • v ∧ B z *ᵥ w = lam • w
   have hk : (kappa : ℂ) * (s : ℂ) ^ 2 = (a : ℂ) ^ 2 := by
     exact_mod_cast scalar_reductions.2
   have hca : (c : ℂ) = (a : ℂ) * kappa := by unfold c; push_cast; rfl
+  have hr := resonance.2.2
+  unfold lam at hr
   constructor
   · ext ⟨i, j⟩
     rw [B_apply]
@@ -329,7 +331,7 @@ private theorem eigenvectors : B 1 *ᵥ v = lam • v ∧ B z *ᵥ w = lam • w
       unfold lam
     · linear_combination (a : ℂ) * (c : ℂ) * z_poly
     · linear_combination z ^ 2 * hk - z ^ 2 * hc
-    · linear_combination (a : ℂ) * (c : ℂ) * z_poly + (z - 1) * hc
+    · linear_combination hr - (a : ℂ) ^ 2 * z_poly - (z - 1) * ha
     · rw [hca]
       linear_combination -(a : ℂ) * (kappa : ℂ) * (s : ℂ) * z_poly
 
@@ -630,5 +632,131 @@ private theorem strict_surplus : 1 / 3 < ‖Q P‖ ^ 2 := by
   rw [baseline.2.2] at hp
   have hpos : 0 < ‖Q P - Y‖ ^ 2 := sq_pos_of_pos (norm_pos_iff.mpr hne)
   linarith only [hp, hpos]
+
+private def basisCoin (j i : Fin 2 × Fin 2) : ℂ := if i = j then 1 else 0
+private def b (j : Fin 2 × Fin 2) : H :=
+  WithLp.toLp 2 (fun i => initial (basisCoin j) i.1 i.2)
+
+private theorem basis_unit (j : Fin 2 × Fin 2) : unitCoin (basisCoin j) := by
+  unfold unitCoin basisCoin
+  simp only [apply_ite, Complex.normSq_one, Complex.normSq_zero, Fintype.sum_ite_eq']
+
+private theorem P_sum : P = ∑ j : Fin 2 × Fin 2, outer (b j) (b j) := by
+  ext ⟨⟨n, i⟩, ⟨m, j⟩⟩
+  change Matrix.diagonal (fun k : Index => if k.1 = 0 then (1 : ℂ) else 0) (n, i) (m, j) =
+    ∑ k : Fin 2 × Fin 2,
+      (if n = 0 then basisCoin k i else 0) * starRingEnd ℂ (if m = 0 then basisCoin k j else 0)
+  rw [Matrix.diagonal_apply]
+  by_cases hn : n = 0 <;> by_cases hm : m = 0
+  · subst n; subst m
+    simp only [Prod.mk.injEq, true_and, ite_true]
+    change (if i = j then (1 : ℂ) else 0) =
+      ∑ k : Fin 2 × Fin 2, (if i = k then (1 : ℂ) else 0) *
+        starRingEnd ℂ (if j = k then 1 else 0)
+    simp only [apply_ite, map_one, map_zero, mul_one, mul_zero, Fintype.sum_ite_eq]
+    split_ifs <;> rfl
+  · have hnm : (n, i) ≠ (m, j) := by intro h; exact hm ((congrArg Prod.fst h).symm.trans hn)
+    simp only [hnm, ite_false, hm, map_zero, mul_zero, Finset.sum_const_zero]
+  · have hnm : (n, i) ≠ (m, j) := by intro h; exact hn ((congrArg Prod.fst h).trans hm)
+    simp only [hnm, ite_false, hn, zero_mul, Finset.sum_const_zero]
+  · by_cases hnm : (n, i) = (m, j) <;>
+      simp only [hnm, hn, hm, ite_true, ite_false, zero_mul, Finset.sum_const_zero]
+
+private theorem walk_iterate (α : Fin 2 × Fin 2 → ℂ) (t : ℕ) :
+    ((walkIso : H → H)^[t]) (WithLp.toLp 2 (fun i => initial α i.1 i.2)) =
+      WithLp.toLp 2 (fun i => ((U phiStar)^[t]) (initial α) i.1 i.2) := by
+  induction t with
+  | zero => rfl
+  | succ t ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih]
+    rfl
+
+private theorem density_iterate (x : H) (t : ℕ) :
+    ((F : K → K)^[t]) (outer x x) =
+      outer (((walkIso : H → H)^[t]) x) (((walkIso : H → H)^[t]) x) := by
+  induction t with
+  | zero => rfl
+  | succ t ih =>
+    rw [Function.iterate_succ_apply', ih, F_outer, Function.iterate_succ_apply']
+
+private theorem density_probability (j : Fin 2 × Fin 2) (t : ℕ) :
+    (inner ℂ P (((F : K → K)^[t]) (outer (b j) (b j)))).re =
+      p phiStar (basisCoin j) (0 : ZMod 12) t := by
+  rw [density_iterate, b, walk_iterate, P_inner]
+  change (∑ i : Fin 2 × Fin 2,
+    ((U phiStar)^[t]) (initial (basisCoin j)) 0 i *
+      starRingEnd ℂ (((U phiStar)^[t]) (initial (basisCoin j)) 0 i)).re = _
+  simp only [Complex.mul_conj, Complex.re_sum, Complex.ofReal_re]
+  rfl
+
+private theorem avg_observable (j : Fin 2 × Fin 2) (T : ℕ) :
+    avg phiStar (basisCoin j) (0 : ZMod 12) T =
+      (inner ℂ P (birkhoffAverage ℂ F id T (F (outer (b j) (b j))))).re := by
+  unfold avg birkhoffAverage birkhoffSum
+  rw [inner_smul_right, inner_sum]
+  have hinv : (T : ℂ)⁻¹ = (((T : ℝ)⁻¹ : ℝ) : ℂ) := by
+    simp only [Complex.ofReal_inv, Complex.ofReal_natCast]
+  rw [hinv]
+  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
+    Complex.re_sum, id_eq, ← Function.iterate_succ_apply, density_probability]
+  ring
+
+private def limit (j : Fin 2 × Fin 2) : ℝ :=
+  (inner ℂ P (Q (outer (b j) (b j)))).re
+
+private theorem avg_limit (j : Fin 2 × Fin 2) :
+    Filter.Tendsto (avg phiStar (basisCoin j) (0 : ZMod 12)) Filter.atTop (nhds (limit j)) := by
+  have hf : ‖F.toContinuousLinearMap‖ ≤ 1 := by
+    apply ContinuousLinearMap.opNorm_le_bound _ (by norm_num)
+    intro A
+    change ‖F A‖ ≤ 1 * ‖A‖
+    rw [F.norm_map, one_mul]
+  have hmean := F.toContinuousLinearMap.tendsto_birkhoffAverage_orthogonalProjection hf
+    (F (outer (b j) (b j)))
+  change Filter.Tendsto (fun T => birkhoffAverage ℂ F id T (F (outer (b j) (b j))))
+    Filter.atTop (nhds (Q (F (outer (b j) (b j))))) at hmean
+  rw [QF] at hmean
+  have hobs : Continuous (fun A : K => (inner ℂ P A).re) :=
+    Complex.continuous_re.comp (continuous_const.inner continuous_id)
+  have h := (hobs.tendsto _).comp hmean
+  change Filter.Tendsto (fun T =>
+    (inner ℂ P (birkhoffAverage ℂ F id T (F (outer (b j) (b j))))).re)
+    Filter.atTop (nhds (limit j)) at h
+  simpa only [← avg_observable] using h
+
+private theorem limit_sum : ∑ j : Fin 2 × Fin 2, limit j = ‖Q P‖ ^ 2 := by
+  unfold limit
+  rw [← Complex.re_sum, ← inner_sum, ← map_sum, ← P_sum]
+  have h := projection_pairing (Q P) P (E.starProjection_apply_mem P)
+  have hi : inner ℂ P (Q P) = inner ℂ (Q P) (Q P) := by
+    calc
+      _ = inner ℂ (Q P) P := (E.inner_starProjection_left_eq_right P P).symm
+      _ = _ := h.symm
+  rw [hi]
+  exact (norm_sq_eq_re_inner (𝕜 := ℂ) (Q P)).symm
+
+private theorem witness12 : phiStar ∈ Set.Ioo (0 : ℝ) 1 ∧
+    ∃ (j : Fin 2 × Fin 2) (L : ℝ), 1 / (12 : ℝ) < L ∧
+      Filter.Tendsto (avg (d := 12) phiStar (fun i => if i = j then 1 else 0) 0)
+        Filter.atTop (nhds L) := by
+  refine ⟨⟨phi_facts.1, phi_facts.2.1⟩, ?_⟩
+  have hex : ∃ j : Fin 2 × Fin 2, 1 / (12 : ℝ) < limit j := by
+    by_contra h
+    push Not at h
+    have hs := Finset.sum_le_sum (s := Finset.univ) (fun j _ => h j)
+    rw [limit_sum] at hs
+    norm_num only [Finset.sum_const, Finset.card_univ, Fintype.card_prod, Fintype.card_fin,
+      nsmul_eq_mul] at hs
+    linarith only [strict_surplus, hs]
+  obtain ⟨j, hj⟩ := hex
+  exact ⟨j, limit j, hj, avg_limit j⟩
+
+theorem result : ¬ claim := by
+  intro h
+  obtain ⟨hφ, j, L, hL, ht⟩ := witness12
+  have hu := h 12 (by norm_num) phiStar ⟨hφ.1.le, by linarith only [hφ.2]⟩
+    phi_nonexceptional (basisCoin j) (basis_unit j) 0
+  have he := tendsto_nhds_unique ht hu
+  exact (ne_of_gt hL) he
 
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
