@@ -33,7 +33,6 @@ open private
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_environment_full_calibration
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibrated_row_parameter
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
-  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_shift_deriv
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_group_zero_count_bridge
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_group_zero_posterior_approximation
 from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
@@ -306,7 +305,7 @@ private theorem native_posterior_central_kernel_bound :
   simpa only [Q',P'] using hp
 
 /-- Coarse Stirling envelopes used only inside the four-cell atom estimate. -/
-private theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
+theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
     (n : ℝ) * Real.log n - n + Real.log n / 2 ≤ Real.log (n.factorial : ℝ) ∧
       Real.log (n.factorial : ℝ) ≤ (n : ℝ) * Real.log n - n + Real.log n / 2 + 1 := by
   have hnR : (0 : ℝ) < n := by exact_mod_cast hn

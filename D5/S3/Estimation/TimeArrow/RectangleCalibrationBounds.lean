@@ -27,7 +27,7 @@ private theorem sigmoid_variance_formula (x : ℝ) :
 
 /-- A bounded common odds tilt controls every Bernoulli variance by the
 same factors, independently of its unshifted score. -/
-private theorem sigmoid_variance_tilt (x h : ℝ)
+theorem sigmoid_variance_tilt (x h : ℝ)
     (hl : 1 / 2 ≤ Real.exp (-h)) (hu : Real.exp (-h) ≤ 2) :
     (Real.sigmoid x * (1 - Real.sigmoid x)) / 2 ≤
         Real.sigmoid (x + h) * (1 - Real.sigmoid (x + h)) ∧
@@ -165,7 +165,7 @@ from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 
 /-- A positive derivative on a fixed box turns a center residual into
 an explicit displacement bound for any root of the same equation. -/
-private theorem root_box_of_residual (F : ℝ → ℝ) (q x0 x d a b : ℝ)
+theorem root_box_of_residual (F : ℝ → ℝ) (q x0 x d a b : ℝ)
     (hd : 0 < d) (ha : 0 < a) (hmono : StrictMono F)
     (hcont : ContinuousOn F (Set.Icc (x0 - d) (x0 + d)))
     (hdiff : DifferentiableOn ℝ F (interior (Set.Icc (x0 - d) (x0 + d))))

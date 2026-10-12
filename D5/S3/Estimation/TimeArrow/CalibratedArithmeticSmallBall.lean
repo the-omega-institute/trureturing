@@ -284,7 +284,6 @@ open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 open private
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.calibration_root_deriv
-  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_shift_deriv
   D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibrated_row_parameter
 from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 

@@ -80,7 +80,7 @@ private theorem checkerboard_center_neg {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
   have h4 : 0 < 4 - r ^ 2 := by nlinarith
   exact div_neg_of_neg_of_pos (neg_neg_of_pos (pow_pos hr 4)) (by positivity)
 
-private theorem sigmoid_shift_deriv (a x : ℝ) :
+theorem sigmoid_shift_deriv (a x : ℝ) :
     HasDerivAt (fun x : ℝ => Real.sigmoid (x + a))
       (Real.sigmoid (x + a) * (1 - Real.sigmoid (x + a))) x := by
   simpa only [Function.comp_def, mul_one] using! (Real.hasDerivAt_sigmoid (x + a)).comp x ((hasDerivAt_id x).add_const a)

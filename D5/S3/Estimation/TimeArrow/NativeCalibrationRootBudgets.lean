@@ -16,13 +16,8 @@ open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
 open D5.S3.Estimation.TimeArrow.NativeReferenceVarianceBounds
-open private
-  D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.root_box_of_residual
-  D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds.sigmoid_variance_tilt
-from D5.S3.Estimation.TimeArrow.RectangleCalibrationBounds
-open private
-  D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.sigmoid_shift_deriv
-from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -199,8 +194,11 @@ theorem native_calibration_window_root_budget (κ : ℝ) (hκ : 0 < κ) (hκ1 : 
               (1 - Real.sigmoid (x o + score q r e o k - Real.log (((M - q : ℕ) : ℝ) / q)))
           let B := 3 * (q : ℝ) + 8 * (A * (L : ℝ) ^ 3 / M) * (q : ℝ) ^ 2 +
             10 * (M : ℝ) ^ 2 * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ)))
-          (∑ o, if 4 * b / v < |x o| ∨ D o < v / 4 ∨ q < D o
-            then probability r e S o else 0) ≤ B / b ^ 2 + B / (v / 2) ^ 2 := by
+          (∑ o, if (4 * b / v < |x o| ∨ D o < v / 4 ∨ q < D o) ∨
+              ¬∀ k : Fin M, count e o k 1 + count e o k (-1) ≤ 8 * L
+            then probability r e S o else 0) ≤ B / b ^ 2 + B / (v / 2) ^ 2 +
+              (M : ℝ) * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) := by
+  classical
   obtain ⟨A, M₀, η₀, hA, hM₀, hη₀, h⟩ := native_calibration_root_budget κ hκ hκ1
   refine ⟨A, M₀, η₀, hA, hM₀, hη₀, ?_⟩
   intro M q L r hMM hq hqm hr hrκ hcκ hL hLη hsmall hM6 hLM hplus hminus hcenter
@@ -216,10 +214,37 @@ theorem native_calibration_window_root_budget (κ : ℝ) (hκ : 0 < κ) (hκ1 : 
         Real.exp (-(2 : ℝ) ^ 2 / ((1 - r) / 2) - 1) /
         (Real.sqrt ((3 / 2) * ((1 + r) / 2)) *
           Real.sqrt ((3 / 2) * ((1 - r) / 2)))) := by positivity
-  exact h M q L r hMM hq hqm hr hrκ hcκ (by omega) hLη hsmall hM6 hLM
+  have hroot := h M q L r hMM hq hqm hr hrκ hcκ (by omega) hLη hsmall hM6 hLM
     S e i j hi hj _ b hv hb
     (reference_linear_variance_lower S r κ hκ hr hrκ hcκ hL hq hqm i j hi hj
       hplus hminus hcenter) hbudget x hx
+  have he : 0 ≤ compensation M q r := by unfold compensation; positivity
+  have he1 : compensation M q r < 1 := by linarith only [hcκ, hκ]
+  have hcut := D5.S3.Estimation.TimeArrow.NativeRowCountTail.native_all_row_count_cut
+    r S hq hqm hr hr1 he1 hM6 (by omega) hLM e
+  have law := (finite_support_bayes (s := 2 * M * L) hq hqm hr hr1 he he1 e).2.1
+  let K := fun o : Obs M (2 * M * L) e =>
+    ∀ k : Fin M, count e o k 1 + count e o k (-1) ≤ 8 * L
+  have hpartition : (∑ o, if K o then probability r e S o else 0) +
+      (∑ o, if ¬K o then probability r e S o else 0) = 1 := by
+    rw [← sum_filter, ← sum_filter, sum_filter_add_sum_filter_not]
+    exact law.2 S
+  have hcutbad : (∑ o, if ¬K o then probability r e S o else 0) ≤
+      (M : ℝ) * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) := by
+    change 1 - (M : ℝ) * Real.exp (-((8 * Real.log 4 - 6) * (L : ℝ))) ≤
+      ∑ o, if K o then probability r e S o else 0 at hcut
+    linarith only [hpartition, hcut]
+  apply le_trans _ (add_le_add hroot hcutbad)
+  rw [← sum_add_distrib]
+  apply sum_le_sum
+  intro o _
+  have hp := law.1 S o
+  by_cases hk : K o
+  · dsimp only [K] at hk
+    simp only [K, hk, forall_true_iff, not_true_eq_false, if_false, or_false, add_zero, le_refl]
+  · dsimp only [K] at hk
+    simp only [K, hk, not_false_eq_true, if_true, or_true]
+    split_ifs <;> linarith only [hp]
 
 end
 end D5.S3.Estimation.TimeArrow.NativeCalibrationRootBudgets

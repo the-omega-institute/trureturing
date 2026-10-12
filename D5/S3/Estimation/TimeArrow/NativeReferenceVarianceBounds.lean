@@ -15,9 +15,7 @@ open Finset ProbabilityTheory
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeRowMomentTransfer
 open D5.S3.Estimation.TimeArrow.NativeReferenceCalibration
-open private
-  D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge.log_factorial_envelopes
-from D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
