@@ -55,7 +55,7 @@ public sealed partial class LedgerWriterProductionPathTests
         if (defect == "missing-state") world.Files.Remove("Golden/Frozen/state/D5/S0/Carrier/Zeta.lean.json");
         else if (defect == "state-mismatch")
             world.Files["Golden/Frozen/state/D5/S0/Carrier/Zeta.lean.json"] =
-                "{\"statement_id\":\"sha256:" + new string('d', 64) + "\"}\n";
+                "{\"statement_id\":\"sha256:" + new string('d', 64) + "\",\"declarations\":[]}\n";
         else
         {
             world = world with { Report = LeanAxiomReport.Create(world.Report.Files.ToDictionary(

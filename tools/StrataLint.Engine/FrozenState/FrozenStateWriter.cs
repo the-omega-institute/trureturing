@@ -4,12 +4,12 @@ namespace StrataLint.Engine;
 
 internal static class FrozenStateWriter
 {
-    internal static bool Write(string root, RepoPath modulePath, StatementId statementId)
+    internal static bool Write(string root, RepoPath modulePath, StatementId statementId, ImmutableArray<FrozenDeclaration> declarations = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(root);
         ArgumentNullException.ThrowIfNull(modulePath);
         ArgumentNullException.ThrowIfNull(statementId);
-        var bytes = FrozenStateRecord.Encode(statementId);
+        var bytes = FrozenStateRecord.Encode(statementId, declarations);
         var path = AbsolutePath(root, modulePath);
         if (File.Exists(path) && File.ReadAllBytes(path).AsSpan().SequenceEqual(bytes.AsSpan()))
         {

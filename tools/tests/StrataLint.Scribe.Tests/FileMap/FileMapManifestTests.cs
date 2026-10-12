@@ -207,7 +207,7 @@ public sealed class FileMapManifestTests
     private const string GeneratedPath = "Artifacts/Ring.md";
     private const string FormalPath = "D5/S0/Carrier/Ring.lean";
     private const string FrozenLedgerPath =
-        "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json";
+        "Ledger/Fixture.json";
     private const string RuleCatalogPath =
         "tools/StrataLint.Engine/Rules/RuleCatalog.cs";
 
@@ -245,11 +245,11 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
-            pattern = "Golden/Frozen/accepted/*.json"
+            pattern = "Ledger/*.json"
             kind = "ledger"
             admission_plane = "content"
-            produced_by = "FrozenLedgerCanonicalWriter"
-            consumed_by = ["FrozenLedger"]
+            produced_by = "FixtureLedgerWriter"
+            consumed_by = ["FixtureLedgerReader"]
             verified_by = ["SL-008"]
             runtime_disposition = "committed-ledger"
             artifact_id = "none"
