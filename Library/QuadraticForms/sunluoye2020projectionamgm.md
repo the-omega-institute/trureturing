@@ -23,7 +23,7 @@ Sun, Luo, and Ye study random permutation for ADMM and coordinate descent. In Se
 >
 > Here $\Gamma$ is the set of all permutations of $\{1,\dots,n\}$ and $X \preceq Y$ means that $Y-X$ is positive semidefinite. The paper says that proving this inequality would solve the open question of the best convergence rate of RP-CD for quadratic problems.
 
-The formalized result supplies a three-dimensional rank-one projection counterexample to this unrestricted statement. The structured coordinate-descent class, the optimal RP-CD rate, and the even-dimensional case remain separate questions.
+The formalized result supplies a three-dimensional rank-one projection counterexample to this unrestricted statement. The structured coordinate-descent class, the optimal RP-CD rate, and the case of an even number $n$ of projections remain separate questions.
 
 ## Verified locator
 
