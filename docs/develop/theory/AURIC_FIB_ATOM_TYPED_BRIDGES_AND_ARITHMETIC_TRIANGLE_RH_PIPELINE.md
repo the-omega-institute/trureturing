@@ -7580,7 +7580,7 @@ The finite FIB quotient is a current observation quotient. For dynamics, the cor
 
 ### Definition 48.1 (Future-behavior equivalence)
 
-Let \(X\) be a state set, \(\mathcal A\) a finite action alphabet, \(F_a:X\to Y\) an update for each \(a\in\mathcal A\), and \(O:X\to Y\) an observation. For a word \(w=a_1\cdots a_m\), set
+Let \(X\) be a state set, \(\mathcal A\) a finite action alphabet, \(F_a:X\to X\) an update for each \(a\in\mathcal A\), and \(O:X\to Y\) an observation. For a word \(w=a_1\cdots a_m\), set
 
 \[
 F_w=F_{a_m}\circ\cdots\circ F_{a_1},
@@ -7647,7 +7647,7 @@ then there is a unique surjection \(q:r(X)\to Q_O\) such that
 \qquad
 qG_a=\overline F_aq,
 \qquad
-\overline O_Oq=\overline O_S.
+\overline O_O\circ q=\overline O_S.
 \]
 
 Thus \(Q_O\) is the coarsest state representation that preserves every future observation.
@@ -7796,3 +7796,716 @@ The result supplies the missing bridge between the FIB hidden coordinate and the
 \]
 
 together with its finite-dimensional Cayley–Hamilton reduction.
+
+
+---
+
+## 后续严格补充
+
+下面两节把一般有限 CPTP 的 SLD Fisher 收缩、triangle 源信息预算，以及 metric-measure/Mosco 极限条件接入前述预测商、曲率和量子场管线。它们保留有限维证明与极限假设的类型边界。
+
+## 49. CPTP Fisher 收缩与 triangle 网络的信息预算
+
+前文已经证明了 FIB seam 在对角量子扇区中等于经典 Fisher 信息。本节把这一结果推进到一般有限维输出态：三个独立量子源先形成乘积态，再通过局部 triangle 网络 CPTP 映射输出。输出可以是非对角、非交换的量子态，但其 SLD Fisher 信息不能超过独立源所携带的信息总量。
+
+### 定义 49.1（SLD Fisher 的有限维二次型）
+
+令 \(\rho\succ0\) 是有限维严格正定密度矩阵，令 \(X=X^\ast\) 且 \(\operatorname{tr}X=0\) 是一个合法切向量。定义 Lyapunov 超算子
+
+\[
+\mathcal J_\rho(Y)=\frac12(\rho Y+Y\rho).
+\]
+
+由于 \(\rho\succ0\)，\(\mathcal J_\rho\) 在 Hermitian 矩阵空间上可逆。令
+
+\[
+L_\rho(X)=\mathcal J_\rho^{-1}(X)
+\]
+
+为 SLD，并定义
+
+\[
+F_\rho(X)
+=
+\operatorname{tr}\bigl(XL_\rho(X)\bigr)
+=
+\operatorname{tr}\bigl(\rho L_\rho(X)^2\bigr).
+\]
+
+在 Hermitian 矩阵空间上使用实 Hilbert--Schmidt 配对
+
+\[
+\langle A,B\rangle_{\mathbb R}
+=
+\operatorname{Re}\operatorname{tr}(AB).
+\]
+
+### 引理 49.2（SLD Fisher 的变分表示）
+
+对上述 \((\rho,X)\)，有
+
+\[
+\boxed{
+F_\rho(X)
+=
+\sup_{Y=Y^\ast}
+\left\{
+2\operatorname{Re}\operatorname{tr}(XY)
+-\operatorname{tr}(\rho Y^2)
+\right\}.
+}
+\]
+
+#### 证明
+
+在 Hermitian 空间上，\(\mathcal J_\rho\) 是严格正的自伴算子。对任意 Hermitian \(Y\)，完成平方得到
+
+\[
+\begin{aligned}
+&2\langle X,Y\rangle_{\mathbb R}
+-\langle Y,\mathcal J_\rho(Y)\rangle_{\mathbb R}\\
+&=
+2\langle\mathcal J_\rho(L_\rho(X)),Y\rangle_{\mathbb R}
+-\langle Y,\mathcal J_\rho(Y)\rangle_{\mathbb R}\\
+&=
+F_\rho(X)
+-
+\langle Y-L_\rho(X),
+\mathcal J_\rho(Y-L_\rho(X))\rangle_{\mathbb R}.
+\end{aligned}
+\]
+
+而
+
+\[
+\langle Y,\mathcal J_\rho(Y)\rangle_{\mathbb R}
+=
+\operatorname{tr}(\rho Y^2),
+\]
+
+最后一项非负，并在 \(Y=L_\rho(X)\) 时取零。证毕。
+
+### 定理 49.3（一般 CPTP 映射下的 SLD Fisher 收缩）
+
+令 \(\Phi:\mathsf L(H)\to\mathsf L(K)\) 为 CPTP 映射，令
+
+\[
+\sigma=\Phi(\rho)\succ0,
+\qquad
+Z=\Phi(X).
+\]
+
+则
+
+\[
+\boxed{
+F_\sigma(Z)
+\le
+F_\rho(X).
+}
+\]
+
+#### 证明
+
+令 \(\Phi^\ast\) 为 Hilbert--Schmidt 伴随。因为 \(\Phi\) CPTP，\(\Phi^\ast\) 是首一完全正映射。对任意 Hermitian \(Y\in\mathsf L(K)\)，由伴随关系有
+
+\[
+\operatorname{Re}\operatorname{tr}(ZY)
+=
+\operatorname{Re}\operatorname{tr}(X\Phi^\ast(Y)),
+\]
+
+以及
+
+\[
+\operatorname{tr}(\sigma Y^2)
+=
+\operatorname{tr}(\rho\Phi^\ast(Y^2)).
+\]
+
+首一完全正映射满足 Kadison 不等式
+
+\[
+\Phi^\ast(Y^2)
+\succeq
+\Phi^\ast(Y)^2.
+\]
+
+因此
+
+\[
+\begin{aligned}
+&2\operatorname{Re}\operatorname{tr}(ZY)
+-\operatorname{tr}(\sigma Y^2)\\
+&\le
+2\operatorname{Re}\operatorname{tr}(X\Phi^\ast(Y))
+-\operatorname{tr}\bigl(\rho\Phi^\ast(Y)^2\bigr)\\
+&\le F_\rho(X),
+\end{aligned}
+\]
+
+其中最后一步使用引理 49.2。对 \(Y\) 取上确界即得结论。证毕。
+
+这个定理将 §29 的经典 Fisher 收缩推广到可以产生非对角量子相干的任意有限 CPTP 网络。它只需要有限矩阵的 Kadison 不等式和 SLD 的变分表示，不需要连续流形或物理测量公理。
+
+### 推论 49.4（可逆 CPTP seam 上的 Fisher 等式）
+
+若存在 CPTP 恢复映射
+
+\[
+\mathcal R:\mathsf L(K)\to\mathsf L(H)
+\]
+
+满足
+
+\[
+\mathcal R(\Phi(\rho))=\rho,
+\qquad
+\mathcal R(\Phi(X))=X,
+\]
+
+则
+
+\[
+F_{\Phi(\rho)}(\Phi(X))=F_\rho(X).
+\]
+
+#### 证明
+
+定理 49.3 分别应用于 \(\Phi\) 和 \(\mathcal R\)，得到
+
+\[
+F_\rho(X)
+\ge
+F_{\Phi(\rho)}(\Phi(X))
+\ge
+F_{\mathcal R\Phi(\rho)}(\mathcal R\Phi(X))
+=
+F_\rho(X).
+\]
+
+两端相等，所以中间等式成立。证毕。
+
+该推论提供了一个可形式化的“无信息逃逸”判据。若存在同一 CPTP 恢复映射同时恢复参考态和 seam 切向量，则 Fisher 几何在该 seam 上精确保持。若只有 Fisher 数值近似保持，不能直接声称存在恢复映射。量子 Fisher 度量的近似可恢复性依赖所选单调度量，SLD Fisher 本身不是一般恢复等价的充分统计判据。这个边界与 Gao、Li、Marvian、Rouzé 对量子 Fisher 度量和可恢复性的分析一致，见 [arXiv:2302.02341](https://arxiv.org/abs/2302.02341)。
+
+### 定义 49.5（参数化 triangle quantum network）
+
+令 \(E=\{AB,BC,CA\}\)。对每条边给定严格正定参数化源态
+
+\[
+\omega_e(\theta_e)\succ0,
+\qquad
+X_e=\partial_{\theta_e}\omega_e(\theta_e).
+\]
+
+独立源乘积态为
+
+\[
+\Omega_{\boldsymbol\theta}
+=
+\omega_{AB}(\theta_{AB})
+\otimes
+\omega_{BC}(\theta_{BC})
+\otimes
+\omega_{CA}(\theta_{CA}).
+\]
+
+令
+
+\[
+\mathcal N:
+\mathsf L(H_{AB}\otimes H_{BC}\otimes H_{CA})
+\to
+\mathsf L(K_A\otimes K_B\otimes K_C)
+\]
+
+为由输入重排、局部节点 CPTP 映射和输出重排组成的网络信道，并定义
+
+\[
+\rho_{\boldsymbol\theta}
+=
+\mathcal N(\Omega_{\boldsymbol\theta}).
+\]
+
+### 定理 49.6（triangle 网络的源信息预算）
+
+对任意参数速度 \(\dot{\boldsymbol\theta}\)，有
+
+\[
+\boxed{
+F_Q\left(\rho_{\boldsymbol\theta};
+\dot{\boldsymbol\theta}\right)
+\le
+\sum_{e\in E}
+\dot\theta_e^{\,2}
+F_Q\left(\omega_e;
+\partial_{\theta_e}\omega_e\right).
+}
+\]
+
+#### 证明
+
+先计算独立源的乘积态。每个边源的局部 SLD 记为 \(L_e\)。乘积态沿参数方向的全局 SLD 为
+
+\[
+L_{\Omega}
+=
+\sum_{e\in E}
+\dot\theta_e
+\,I_{\bar e}\otimes L_e.
+\]
+
+因为
+
+\[
+\operatorname{tr}(\omega_eL_e)
+=
+\operatorname{tr}(X_e)=0,
+\]
+
+不同边之间的交叉项在 \(\operatorname{tr}(\Omega L_\Omega^2)\) 中消失。因此
+
+\[
+F_Q(\Omega_{\boldsymbol\theta};
+\dot{\boldsymbol\theta})
+=
+\sum_{e\in E}
+\dot\theta_e^{\,2}
+F_Q(\omega_e;X_e).
+\]
+
+对网络信道 \(\mathcal N\) 应用定理 49.3，得到
+
+\[
+F_Q(\rho_{\boldsymbol\theta};
+\dot{\boldsymbol\theta})
+\le
+F_Q(\Omega_{\boldsymbol\theta};
+\dot{\boldsymbol\theta}),
+\]
+
+代入前式即得。证毕。
+
+### 推论 49.7（FIB 三角网络的量子 Fisher 上界）
+
+若每条边源都位于 FIB 对角 seam：
+
+\[
+\omega_e(\kappa_e)
+=
+\iota_\Sigma(p_{\kappa_e}),
+\]
+
+则定理 40.2 和定理 49.6 给出
+
+\[
+\boxed{
+F_Q\left(\rho_{\boldsymbol\kappa};
+\dot{\boldsymbol\kappa}\right)
+\le
+\sum_{e\in E}
+\dot\kappa_e^{\,2}
+\mathcal I_e(\kappa_e).
+}
+\]
+
+输出态可以因为局部节点信道而变成非对角态，右侧仍然只由三个独立 FIB 源的 seam Fisher 信息决定。这是当前三角网络中最严格的信息预算：节点局部相互作用可以重新组织信息，也可以将其编码为非交换相干，但不能从独立源中凭空产生新的 SLD Fisher 信息。
+
+### 推论 49.8（量子半群只给出 Fisher 单调性，不能自动给出 QCD 指数率）
+
+若 \(T_t^\ast\) 是 Schrödinger 表示的 CPTP 半群，且 \(\rho_t=T_t^\ast(\rho_0)\)、\(X_t=T_t^\ast(X_0)\)，则
+
+\[
+F_Q(\rho_t;X_t)
+\le
+F_Q(\rho_0;X_0).
+\]
+
+若同时满足 §38 的 detailed balance 和 \(QCD(K)\)，则 GNS Dirichlet 能量满足
+
+\[
+\mathcal E_\sigma(T_tA)
+\le
+e^{-2Kt}\mathcal E_\sigma(A),
+\]
+
+但不能仅由 \(QCD(K)\) 推出
+
+\[
+F_Q(\rho_t;X_t)
+\le
+e^{-2Kt}F_Q(\rho_0;X_0).
+\]
+
+后一个指数 Fisher 衰减需要额外的比较不等式，将 SLD Fisher 二次型与 GNS Dirichlet 型在同一切空间上联系起来。这个区分防止把量子曲率证书误读成未经证明的物理耗散率。
+
+### 结论 49.9（量子层的严格闭环）
+
+当前量子层可以按以下可形式化链条闭合：
+
+\[
+\begin{aligned}
+&\text{FIB seam}
+\longrightarrow
+\text{对角密度矩阵切向量}
+\longrightarrow
+\text{源态 SLD Fisher};\\
+&\text{独立边源}
+\longrightarrow
+\text{乘积态 Fisher 可加性};\\
+&\text{局部 triangle CPTP 网络}
+\longrightarrow
+\text{输出 Fisher 收缩};\\
+&\text{GNS detailed balance}
+\longrightarrow
+\text{QCD 谱隙和 Dirichlet 衰减};\\
+&\text{恢复映射存在}
+\longrightarrow
+\text{seam Fisher 精确保持}.
+\end{aligned}
+\]
+
+其中最后一项是“信息没有逃逸”的严格判据，第一到第四项是无物理前提的有限维数学定理。要把这条链连接到引力或 RH，仍需独立构造从 QFI/QCD 数据到度量、Hamiltonian 或谱行列式的桥接映射。
+
+
+
+## 50. 有限 Dirichlet 数据到 metric-measure/Mosco 极限的严格顺序
+
+本节把有限 \(CD_G\)、\(QCD\) 和图 Dirichlet 数据进一步分解为四个不可互换的层次：度量测度紧性、二次型 Mosco 收敛、局部性、曲率证书的极限稳定性。
+
+### 定义 50.1（有限图的度量测度 Dirichlet 数据）
+
+第 \(j\) 层数据为
+
+\[
+\mathfrak D_j=(X_j,d_j,m_j,\mathcal E_j,\mathcal F_j),
+\]
+
+其中 \(X_j=V_j\) 是有限集，\(d_j\) 是外部度量，\(m_j\) 是满支撑概率测度，
+
+\[
+\mathcal F_j=\mathbb R^{X_j},
+\qquad
+\mathcal E_j(f)
+=
+\frac12\sum_{x,y\in X_j}c^{(j)}_{xy}(f(x)-f(y))^2,
+\]
+
+\[
+c^{(j)}_{xy}=c^{(j)}_{yx}\ge0,\qquad c^{(j)}_{xx}=0.
+\]
+
+令
+
+\[
+(L_jf)(x)
+=
+\frac1{m_j(x)}\sum_yc^{(j)}_{xy}(f(y)-f(x)).
+\]
+
+则
+
+\[
+\mathcal E_j(f)=\langle f,-L_jf\rangle_{L^2(m_j)}.
+\]
+
+这里 \(d_j\) 与 \(c^{(j)}_{xy}\) 是两个独立输入。前者决定 metric-measure 紧性，后者决定 Dirichlet 形式。必须另行假设它们相容。
+
+### 定义 50.2（统一 metric-measure 紧性和局部化证书）
+
+称一族 \((X_j,d_j,m_j)\) 满足 \(\operatorname{MMC}(D,C_D,c_-,c_+,Q)\)，如果
+
+\[
+\operatorname{diam}(X_j,d_j)\le D,
+\]
+
+且对所有 \(x\in X_j\) 和 \(0<r\le D\) 有
+
+\[
+c_-r^Q
+\le m_j(B_{d_j}(x,r))
+\le c_+r^Q,
+\tag{50.1}
+\]
+
+\[
+m_j(B_{d_j}(x,2r))
+\le C_Dm_j(B_{d_j}(x,r)).
+\tag{50.2}
+\]
+
+若只要求子列紧性，可以把 (50.1) 的下界换成统一 covering-number 界。若要排除塌缩，至少需要某个固定 \(r_0>0\) 满足
+
+\[
+\inf_j\inf_{x\in X_j}m_j(B_{d_j}(x,r_0))>0,
+\qquad
+\inf_j\operatorname{diam}(X_j,d_j)>0.
+\tag{50.3}
+\]
+
+定义跳跃半径
+
+\[
+\ell_j
+:=
+\sup\{d_j(x,y):c^{(j)}_{xy}>0\}.
+\tag{50.4}
+\]
+
+称 \(\ell_j\to0\) 为 vanishing-jump 条件。它把有限图形式的非局部边耦合限制到局部极限。若另有统一 \(L^2\)-Poincaré 条件
+
+\[
+\int_B|f-f_B|^2\,dm_j
+\le
+C_Pr^2\mathcal E_j(f;\lambda B),
+\tag{50.5}
+\]
+
+则得到统一的局部紧性控制。
+
+### 定理 50.3（有限图 Dirichlet 数据的 metric-measure/Mosco 子列极限）
+
+设 \(\mathfrak D_j\) 满足：
+
+1. 统一 covering-number 界、总质量 \(m_j(X_j)=1\) 和直径上界；
+2. 存在共同紧宿主空间 \(Z\) 和等距嵌入 \(\iota_j:X_j\hookrightarrow Z\)，使得 \(\iota_j(X_j)\) 的 Hausdorff 子列收敛到 \(X\subset Z\)，且
+   \[
+   (\iota_j)_\#m_j\rightharpoonup m;
+   \]
+3. 存在共同 \(L^2\) 识别，使扩展二次型 \(\overline{\mathcal E}_j\) 满足
+   \[
+   u_j\rightharpoonup u
+   \Longrightarrow
+   \mathcal E(u)\le\liminf_j\overline{\mathcal E}_j(u_j),
+   \tag{50.6}
+   \]
+   且每个 \(u\in D(\mathcal E)\) 有恢复序列 \(u_j\to u\) 强收敛并满足
+   \[
+   \limsup_j\overline{\mathcal E}_j(u_j)\le\mathcal E(u);
+   \tag{50.7}
+   \]
+4. 有限能量子水平集在共同识别下相对紧。
+
+则存在子列
+
+\[
+(X_j,d_j,m_j)\to(X,d,m)
+\]
+
+以 measured Gromov-Hausdorff 意义收敛，且 \(\mathcal E\) 是 \(L^2(X,m)\) 上闭、Markov、对称的 Dirichlet 形式。其非负自伴生成元 \(A\) 和热半群 \(P_t=e^{-tA}\) 满足
+
+\[
+(I+\alpha A_j)^{-1}\to(I+\alpha A)^{-1},
+\qquad
+P_t^{(j)}\to P_t
+\]
+
+在共同 \(L^2\) 识别下的强算子收敛。
+
+若另外满足 \(\ell_j\to0\) 和统一 Poincaré 条件 (50.5)，则极限形式强局部。
+
+#### 证明账本
+
+统一 covering-number 界和质量界给出 metric-measure 子列紧性。共同宿主中的弱测度收敛给出极限测度。条件 (50.6) 和 (50.7) 是 Mosco 下极限与恢复序列，故给出闭极限二次型。闭对称 Markov 二次型对应唯一的自伴非负生成元和收缩热半群，Mosco 收敛给出 resolvent 与半群的强收敛。若支集距离大于 \(\varepsilon\)，则 \(\ell_j<\varepsilon\) 时所有跨支集边消失，有限层互能为零；利用恢复序列和下极限即得极限互能为零，故形式强局部。证毕。
+
+因此必须按下列顺序记账：
+
+\[
+\boxed{
+\text{metric-measure 紧性}
+\Rightarrow
+\text{空间子列极限};
+\quad
+\text{Mosco}
+\Rightarrow
+\text{形式/半群极限};
+\quad
+\text{vanishing jumps}
+\Rightarrow
+\text{强局部性}.
+}
+\]
+
+### 定理 50.4（谱隙和曲率证书的极限分层）
+
+在定理 50.3 的假设下，若存在统一 Poincaré 常数 \(\lambda_0>0\)，即
+
+\[
+\mathcal E_j(f)\ge\lambda_0\operatorname{Var}_{m_j}(f),
+\tag{50.8}
+\]
+
+并且常数核恰为 \(\mathbb R\mathbf1\)，则
+
+\[
+\operatorname{gap}(A)\ge\lambda_0.
+\tag{50.9}
+\]
+
+若还存在统一半群梯度证书
+
+\[
+\Gamma_j(P_t^{(j)}f)
+\le
+e^{-2Kt}P_t^{(j)}\Gamma_j(f),
+\tag{50.10}
+\]
+
+并且 \(\Gamma_j\) 在一个共同稠密 core 上收敛到 \(\Gamma\)，则
+
+\[
+\Gamma(P_tf)\le e^{-2Kt}P_t\Gamma(f).
+\tag{50.11}
+\]
+
+因此有限 \(CD_G(K,\infty)\) 的曲率下界要进入极限，除了 Mosco 和谱隙，还必须证明 \(\Gamma\) 或梯度半群不等式的收敛。点态 \(CD_G\) 本身不能替代这个稳定性假设。
+
+### 推论 50.5（有效电阻的极限条件）
+
+若均值零子空间上的 Green 算子满足
+
+\[
+A_j^\dagger\to A^\dagger
+\tag{50.12}
+\]
+
+强收敛，且点源差分 \(b_{x_jy_j}\to b_{xy}\)，则
+
+\[
+R_{m_j}(x_j,y_j)
+=
+\langle b_{x_jy_j},A_j^\dagger b_{x_jy_j}\rangle
+\to
+\langle b_{xy},A^\dagger b_{xy}\rangle
+=R_m(x,y).
+\tag{50.13}
+\]
+
+Mosco 收敛、质量非塌缩或谱隙下界单独都不能推出 (50.13)。还必须证明点源识别和 Green 算子收敛。
+
+### 命题 50.6（曲率不排除塌缩）
+
+取固定两点集 \(X_j=\{0,1\}\)，令
+
+\[
+m_j(0)=m_j(1)=\frac12,\qquad c^{(j)}_{01}=c^{(j)}_{10}=\frac12,
+\]
+
+但令 \(d_j(0,1)=j^{-1}\)。直接计算得
+
+\[
+\Gamma_2(f)=2\Gamma(f),
+\]
+
+所以每一层满足 \(CD_G(2,\infty)\)，且 Dirichlet 形式、谱隙和半群完全不变。然而
+
+\[
+(X_j,d_j,m_j)\to(\{\ast\},0,\delta_\ast)
+\]
+
+在 measured Gromov-Hausdorff 意义下塌缩到一点。因此
+
+\[
+CD_G(K,\infty)+\text{统一谱隙}
+\not\Rightarrow
+\text{非塌缩极限}.
+\]
+
+排除该反例需要 (50.3) 或等价的统一体积和直径下界。
+
+### 命题 50.7（Mosco 形式极限不决定 metric 几何）
+
+在固定 \(X=\{0,1\}\) 上取恒定形式 \(\mathcal E_j=\mathcal E\)，故 Mosco 收敛恒等成立；再令
+
+\[
+d_{2j}(0,1)=1,\qquad d_{2j+1}(0,1)=2.
+\]
+
+形式有唯一极限，度量没有全序列极限。因此
+
+\[
+\text{Mosco 收敛}
+\not\Rightarrow
+\text{metric-measure 收敛}.
+\]
+
+### 命题 50.8（谱隙不决定局部连续场）
+
+令 \(X_j=\{1,\ldots,j\}\)，取均匀测度和
+
+\[
+L_jf=\bar f-f.
+\]
+
+则所有非零谱值恒为 \(1\)，但将点嵌入 \([0,1]\) 后边跳跃长度不趋于零，且
+
+\[
+\mathcal E_j(f)=\operatorname{Var}_{m_j}(f)
+\to
+\operatorname{Var}_{[0,1]}(f),
+\]
+
+其极限是非局部形式，不是
+
+\[
+\int_0^1|f'(x)|^2\,dx.
+\]
+
+所以统一谱隙不能替代 vanishing-jump 或非局部质量消失条件。
+
+### 定义 50.9（量子度量极限的附加数据）
+
+有限量子层
+
+\[
+\mathfrak Q_j=(\mathcal A_j,\sigma_j,\mathcal L_j)
+\]
+
+中的 \(QCD(K)\) 只约束 GNS Hilbert 空间中的二次型。要得到 metric-measure 极限，还必须给出量子 Lipschitz 半范数 \(\operatorname{Lip}_j\)，或状态空间距离
+
+\[
+d_j(\varphi,\psi)
+=
+\sup_{\operatorname{Lip}_j(a)\le1}
+|\varphi(a)-\psi(a)|,
+\]
+
+并证明归一化 Lipschitz 球统一全有界、状态空间具有 quantum-GH 子列紧性、GNS resolvent 或量子 Dirichlet 形式满足 Mosco 条件，以及半范数与极限测度相容。没有这些附加数据，\(QCD(K)\) 只能给出非交换 Hilbert 空间的谱稳定性，不能推出 metric-measure 极限。
+
+### 定理 50.10（四层桥接的必要充分结构）
+
+在共同宿主空间框架中，要得到一个非塌缩、局部、带稳定谱隙的 metric-measure Dirichlet 极限，所需的可检验结构可分为：
+
+\[
+\boxed{
+\begin{array}{ll}
+\mathrm{(G)}&\text{统一 metric-measure 紧性和非塌缩};\\
+\mathrm{(M)}&\text{共同 }L^2\text{ 识别下的 Mosco 下极限和恢复序列};\\
+\mathrm{(L)}&\text{vanishing jumps 与局部 Poincaré 控制};\\
+\mathrm{(K)}&\text{\(\Gamma\)/梯度不等式的稳定收敛}.
+\end{array}}
+\]
+
+\((G)+(M)\) 给出空间和闭 Dirichlet 形式的子列极限；\((G)+(M)+(L)\) 给出强局部形式；加入 \((K)\) 才能把有限曲率证书传到极限。若再要求有效电阻收敛，还需 Green 算子和点源的识别条件。
+
+对应的严格管线是
+
+\[
+\boxed{
+\begin{aligned}
+&\text{有限 FIB/图/量子数据}
+\xrightarrow{\mathrm{(G)}}
+\text{metric-measure 子列极限}\\
+&\xrightarrow{\mathrm{(M)}}
+\text{闭 Dirichlet 形式、resolvent、热半群}\\
+&\xrightarrow{\mathrm{(L)}}
+\text{强局部极限}\\
+&\xrightarrow{\mathrm{(K)}}
+\text{曲率梯度不等式或 RCD 型候选证书}.
+\end{aligned}}
+\]
+
+Aobo Chen 的 2024/2026 工作在 pointed Gromov-Hausdorff 收敛、统一体积增长和统一热核估计下构造极限度量测度空间上的保守强局部正则对称 Dirichlet 形式，并沿子列证明 Mosco 收敛；其假设正好显示空间收敛、体积控制、热核控制和非退化尺度必须分别记账。参见 A. Chen, *Stability of heat kernel bounds under pointed Gromov--Hausdorff convergence*, arXiv:2411.19047。
+
+Inagaki 2025 对具有 Ricci 下界、体积下界和直径上界的流形上的随机图 Laplacian 建立谱收敛，并延伸到非塌缩 Ricci 极限空间。该结果支持本节的分层原则：图谱或有限 Dirichlet 数据要取得连续几何解释，必须同时记录曲率、体积非塌缩、尺度和谱识别条件。参见 M. Inagaki, *Spectral convergence of graph Laplacians with Ricci curvature bounds and in non-collapsed Ricci limit spaces*, arXiv:2506.07427。
+
