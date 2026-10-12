@@ -209,8 +209,8 @@ private theorem witness_passive : Passive tau0 witnessChannel := by
   intro ρ σ
   rw [witness_memory_marginal ρ, witness_memory_marginal σ]
 
--- The finite controlled-channel expansion needs more reduction heartbeats.
 set_option maxHeartbeats 2000000 in
+-- The finite controlled-channel expansion needs more reduction heartbeats.
 private theorem controlled_tensor (A : Mat (Fin 3)) (B : Mat (Fin 2))
     (i k : Fin 3) (a b : Fin 2) :
     act witnessChannel (Matrix.kronecker A B) (i,a) (k,b) =
@@ -242,8 +242,8 @@ private theorem append_unit (j l : Fin 3) :
       Matrix.kronecker (Matrix.single j l 1) (stateMatrix tau0) := by
   rfl
 
--- The tensor-map basis expansion needs more reduction heartbeats.
 set_option maxHeartbeats 2000000 in
+-- The tensor-map basis expansion needs more reduction heartbeats.
 private theorem tensor_unit (E : MatrixMap (Fin 3) (Fin 3) ℂ)
     (B : Mat (Fin 2)) (j l : Fin 3) :
     MatrixMap.kron E (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ)
