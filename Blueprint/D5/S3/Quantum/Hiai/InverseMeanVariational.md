@@ -36,8 +36,26 @@ For the spectral sandwich geometric mean, put D = X to exponent minus one half t
 
 This is a concrete specialization of Zhang's variational method, not a claim of mathematical originality. For Hiai's target set X = B to exponent p and M = X weighted geometric mean A to exponent p. Joint convexity still requires the Carlen-Lieb fixed-congruence trace convexity and the Hiai outer-power geometric-mean trace concavity. Neither curvature supplier is assumed by this theorem.
 
+**Theorem 1.3 (Support-sensitive PSD variational formula).**
+
+$$\forall u: \operatorname{Level}(),\ d: \operatorname{Type}(u), [\operatorname{Fintype}(d)], [\operatorname{DecidableEq}(d)],\ X, M: \operatorname{Matrix}(d, d, \mathbb{C}),\ r: \mathbb{R},\ \operatorname{PosSemidef}(X)\land \operatorname{PosSemidef}(M)\land (\forall v: d \to \mathbb{C}, \operatorname{mulVec}(M, v)=0\implies\operatorname{mulVec}(X, v)=0)\land 0<r\implies\ \exists Z: \operatorname{Matrix}(d, d, \mathbb{C}),\ Z=\operatorname{rpow}(M, -1)X\land \operatorname{objective}(r, X, M, Z)=\operatorname{tracePower}(r, X\operatorname{rpow}(M, -1)X)\land(\forall W: \operatorname{Matrix}(d, d, \mathbb{C}),\ \operatorname{objective}(r, X, M, W)\le\operatorname{tracePower}(r, X\operatorname{rpow}(M, -1)X))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Hiai/InverseMeanVariational.psd_variational_bound_and_attainment` (`✓ std3`). ∎
+
+*Citation.* Haonan Zhang (2020). *From Wigner-Yanase-Dyson conjecture to Carlen-Frank-Lieb conjecture*. URL: <https://arxiv.org/abs/1811.01205v2>.
+
+*Commentary.*
+
+For arbitrary finite complex positive semidefinite X and M, assume every vector in the kernel of M is also in the kernel of X. For every r > 0, the same inverse variational objective has the universal upper bound tracePower r of X M to exponent minus one X. The actual spectral generalized inverse vanishes on the kernel. The explicit optimizer M to exponent minus one times X attains the bound and may be singular. All dimensions, zero inputs and noncommuting matrices are included.
+
+The proof derives support action from the kernel hypothesis, then factors X Z through the inverse square root and square root of M. It consumes the existing Schatten Holder and row/column Gram trace suppliers rather than repeating their proofs. The spectral support is the library's canonical cfc indicator of nonzero spectrum. At the generalized optimizer the two Gram matrices reduce to the same PSD sandwich; the PSD square-power identity gives equality.
+
+This establishes a support-sensitive PSD supplier for the Hiai extension. It does not yet identify the original PSD geometric mean or prove its common epsilon I trace limit and joint convexity. Invertibility of the optimizer is not asserted. The four-slot escape audit remains unfinished under issue #5214: the full source bridge, variation and sensitivity compile, but native binding fails at contract.discovery rigid_universes. No declared_validated status is claimed.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Hiai/InverseMeanVariational.norm_rpow_gram`
+- Truth anchor: `D5/S3/Quantum/Hiai/InverseMeanVariational.psd_variational_bound_and_attainment`
 - Truth anchor: `D5/S3/Quantum/Hiai/InverseMeanVariational.variational_bound_and_attainment`
+- Dependency: [D5/S3/Quantum/Recovery/SpectralTransposeRecovery](../Recovery/SpectralTransposeRecovery.md)
 - Dependency: [D5/S3/Quantum/Schatten/Holder](../Schatten/Holder.md)

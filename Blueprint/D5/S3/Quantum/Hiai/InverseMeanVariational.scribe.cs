@@ -141,7 +141,7 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
         var r = F.Id("r"); var z = F.Id("Z"); var w = F.Id("W"); var v = F.Id("v");
         var complex = Seq(Mathbb, Grp(F.Id("C")));
         var matrix = Call("Matrix", d, d, complex);
-        var inverse = Call("rpow", m, D(-1));
+        var inverse = Call("rpow", m, Seq(Minus, D(1)));
         var bound = Call("tracePower", r, Seq(x, inverse, x));
         var kernel = Seq(Open, Forall, Sp, v, Colon, Sp,
             new Formula.TypeArrow(d, complex), Comma, Sp,
