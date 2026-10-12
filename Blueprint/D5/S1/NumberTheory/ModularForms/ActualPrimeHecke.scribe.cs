@@ -8,7 +8,7 @@ internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An actual trace-and-translate prime Hecke endomorphism on level-one cusp forms.",
-        H("Actual Prime Hecke Trace"),
+        H("Actual Prime Hecke Action"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("prime-hecke-endomorphism"),
@@ -24,16 +24,27 @@ internal sealed class ActualPrimeHeckeDocument : IScribeDocumentDefinition
                     "For a prime p and an integer weight k, this is the complex-linear map obtained by translating by the rational diagonal p-isogeny matrix and applying Mathlib's finite-index cusp-form trace. The codomain is the level-one CuspForm space itself; the trace construction supplies holomorphy and vanishing at every cusp."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("prime-hecke-trace-application"),
+                DescribeId.Create("prime-hecke-literal-action"),
                 DeclarationHandle.Create(
-                    "D5/S1/NumberTheory/ModularForms/ActualPrimeHecke.primeHecke_apply"),
-                H("Pointwise trace application"),
+                    "D5/S1/NumberTheory/ModularForms/ActualPrimeHecke.primeHecke_action"),
+                H("The full p+1 action"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Operatorname, Grp(F.Id("primeHeckeApply"))))),
+                    Operatorname, Grp(F.Id("primeHeckeAction"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The pointwise equality unfolds the endomorphism to the actual translated cusp-form trace. The finite quotient and its inverse representative convention remain explicit in the library definition.")),
+                    "For every prime p, including 2, every integer weight k and every upper-half-plane point z, the actual trace equals p^(k-1) times f(pz) plus p^(-1) times the sum of f((z+a)/p) over a in Fin p. Both points have explicit positivity proofs. Mathlib uses inverse representatives: 1 and (S T^a)^(-1). The actual slash normalization gives these factors without any weight restriction.")),
                     Paragraph(Text(
-                    "The explicit P^1(F_p) representative expansion, the literal upper-triangular slash formula, and the unconditional convergent q-expansion coefficient law are not asserted by this document; they remain the next unpaid obligations for the complete analytic unit."))),
+                    "The representative map primeTraceEquiv is a proved bijection from Fin p plus Unit onto the actual quotient in the trace. The unconditional coefficient law derived from convergent q-expansions remains unpaid."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("prime-hecke-congruence-intersection"),
+                DeclarationHandle.Create(
+                    "D5/S1/NumberTheory/ModularForms/ActualPrimeHecke.primeHeckeSubgroup_mem"),
+                H("The actual congruence intersection"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("primeHeckeSubgroupMem"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For an integer determinant-one matrix s, its real image belongs to the conjugate by diag(p,1)^(-1) of SL2(Z) exactly when its lower-left entry is divisible by p. This identifies the actual trace intersection with Gamma0(p). Coverage and uniqueness of the representatives are proved from this entry criterion, using ZMod p as a field; no representative frame is assumed."))),
                 DescribeRole.Theorem))));
 }

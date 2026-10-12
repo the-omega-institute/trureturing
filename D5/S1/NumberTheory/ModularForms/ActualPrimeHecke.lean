@@ -343,6 +343,42 @@ private instance primeHeckeSubgroup_isFiniteRelIndex (p : ℕ) [Fact p.Prime] :
       (𝒮ℒ : Subgroup (GL (Fin 2) ℝ)) :=
   Subgroup.IsArithmetic.isFiniteRelIndexSL (primeHeckeSubgroup p)
 
+private def primeTraceRep (p : ℕ) (i : Fin p ⊕ Unit) :
+    (𝒮ℒ : Subgroup (GL (Fin 2) ℝ)) :=
+  ⟨Matrix.SpecialLinearGroup.mapGL ℝ (primeCosetRep p i),
+    ⟨primeCosetRep p i, rfl⟩⟩
+
+private def primeTraceClass (p : ℕ) [Fact p.Prime] (i : Fin p ⊕ Unit) :
+    (𝒮ℒ : Subgroup (GL (Fin 2) ℝ)) ⧸ (primeHeckeSubgroup p).subgroupOf 𝒮ℒ :=
+  ⟦primeTraceRep p i⟧
+
+private lemma primeTraceClass_bijective (p : ℕ) [Fact p.Prime] :
+    Function.Bijective (primeTraceClass p) := by
+  constructor
+  · intro i j hij
+    have hm := QuotientGroup.leftRel_apply.mp (Quotient.exact hij)
+    change (Matrix.SpecialLinearGroup.mapGL ℝ (primeCosetRep p i))⁻¹ *
+      Matrix.SpecialLinearGroup.mapGL ℝ (primeCosetRep p j) ∈ primeHeckeSubgroup p at hm
+    rw [← map_inv, ← map_mul, primeHeckeSubgroup_mem] at hm
+    apply (primeCosetEquiv p).injective
+    exact Quotient.sound (QuotientGroup.leftRel_apply.mpr hm)
+  · intro q
+    induction q using Quotient.inductionOn with
+    | h r =>
+      obtain ⟨s, hs⟩ := r.property
+      obtain ⟨i, hi⟩ := primeCosetRep_cover p s
+      refine ⟨i, Quotient.sound (QuotientGroup.leftRel_apply.mpr ?_)⟩
+      change (Matrix.SpecialLinearGroup.mapGL ℝ (primeCosetRep p i))⁻¹ *
+        r.val ∈ primeHeckeSubgroup p
+      rw [← hs, ← map_inv, ← map_mul, primeHeckeSubgroup_mem]
+      exact hi
+
+/-- The complete finite representative bijection for the actual quotient used by the trace. -/
+def primeTraceEquiv (p : ℕ) [Fact p.Prime] :
+    (Fin p ⊕ Unit) ≃
+      ((𝒮ℒ : Subgroup (GL (Fin 2) ℝ)) ⧸ (primeHeckeSubgroup p).subgroupOf 𝒮ℒ) :=
+  Equiv.ofBijective (primeTraceClass p) (primeTraceClass_bijective p)
+
 private lemma quotientFunc_add
     {𝒢 ℋ : Subgroup (GL (Fin 2) ℝ)} {k : ℤ}
     [𝒢.IsFiniteRelIndex ℋ] (f h : CuspForm 𝒢 k)
@@ -440,9 +476,62 @@ theorem primeHecke_apply (p : ℕ) [Fact p.Prime] (k : ℤ)
       (CuspForm.trace 𝒮ℒ (CuspForm.translate f (primeHeckeReal p))) z := by
   rfl
 
+/-- The point `pz` of the upper half-plane. -/
+def primeHeckeDiagPoint (p : ℕ) [Fact p.Prime] (z : ℍ) : ℍ :=
+  ⟨(p : ℂ) * (z : ℂ), by
+    have hp : (0 : ℝ) < p := by
+      exact_mod_cast (show 0 < p from (Fact.out : Nat.Prime p).pos)
+    simpa using mul_pos hp z.im_pos⟩
+
+private lemma primeHecke_diag_point (p : ℕ) [Fact p.Prime] (z : ℍ) :
+    primeHeckeReal p • z = primeHeckeDiagPoint p z := by
+  apply UpperHalfPlane.ext
+  rw [UpperHalfPlane.coe_smul_of_det_pos (primeHeckeReal_det_pos p)]
+  simp [UpperHalfPlane.num, UpperHalfPlane.denom, primeHeckeReal_coe,
+    primeHeckeDiagPoint]
+
+private lemma primeTrace_term (p : ℕ) [Fact p.Prime] (k : ℤ)
+    (f : CuspForm 𝒮ℒ k) (i : Fin p ⊕ Unit) :
+    SlashInvariantForm.quotientFunc (CuspForm.translate f (primeHeckeReal p))
+      (primeTraceEquiv p i) =
+      ((f : ℍ → ℂ) ∣[k]
+        (primeHeckeReal p * Matrix.SpecialLinearGroup.mapGL ℝ (primeCosetRep p i)⁻¹)) := by
+  change (((f : ℍ → ℂ) ∣[k] primeHeckeReal p) ∣[k]
+    (Matrix.SpecialLinearGroup.mapGL ℝ (primeCosetRep p i))⁻¹) = _
+  rw [← SlashAction.slash_mul, map_inv]
+
+/-- The literal `p+1` action of the actual cusp-preserving trace operator. -/
+theorem primeHecke_action (p : ℕ) [Fact p.Prime] (k : ℤ)
+    (f : CuspForm 𝒮ℒ k) (z : ℍ) :
+    primeHecke p k f z = (p : ℂ) ^ (k - 1) * f (primeHeckeDiagPoint p z) +
+      (p : ℂ)⁻¹ * ∑ a : Fin p, f (primeHeckeUpperPoint p (a.val : ℤ) z) := by
+  rw [primeHecke_apply]
+  letI := Fintype.ofFinite
+    ((𝒮ℒ : Subgroup (GL (Fin 2) ℝ)) ⧸ (primeHeckeSubgroup p).subgroupOf 𝒮ℒ)
+  change (∑ q, SlashInvariantForm.quotientFunc
+    (CuspForm.translate f (primeHeckeReal p)) q) z = _
+  simp only [Finset.sum_apply]
+  rw [← (primeTraceEquiv p).sum_comp]
+  simp_rw [primeTrace_term]
+  rw [Fintype.sum_sum_type]
+  simp only [primeCosetRep, inv_inv, inv_one, map_mul, map_one, mul_one,
+    Fintype.sum_unique]
+  rw [primeHecke_diag_apply, primeHecke_diag_point]
+  rw [add_comm]
+  congr 1
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [← map_mul, ← primeHecke_upper_matrix, SlashAction.slash_mul]
+  have hS : Matrix.SpecialLinearGroup.mapGL ℝ ModularGroup.S ∈
+      (𝒮ℒ : Subgroup (GL (Fin 2) ℝ)) := ⟨ModularGroup.S, rfl⟩
+  rw [SlashInvariantFormClass.slash_action_eq (Γ := 𝒮ℒ) (k := k) f _ hS]
+  exact primeHecke_upper_apply p (a.val : ℤ) k f z
+
 end
 
 end D5.S1.NumberTheory.ModularForms
 
 #print axioms D5.S1.NumberTheory.ModularForms.primeHecke
 #print axioms D5.S1.NumberTheory.ModularForms.primeHecke_apply
+#print axioms D5.S1.NumberTheory.ModularForms.primeHecke_action
