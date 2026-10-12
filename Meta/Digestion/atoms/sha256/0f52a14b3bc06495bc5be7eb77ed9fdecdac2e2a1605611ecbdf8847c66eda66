@@ -1,0 +1,6 @@
+**证明。** $n=0$ 时两个叶 $\alpha,\beta$ 形状相同。$n=1$ 时
+$\rho\beta=\langle\beta,\alpha\rangle$ 与
+$\rho\langle\alpha,\alpha\rangle=\langle\beta,\beta\rangle$ 都擦成 $A$。
+定理 12.1 给出 $n=2$ 的单射性。这里的“最小”只针对固定纪元的无标签形状像，
+不把它提升为所有观察任务或所有带动作记录的全局最小性。证毕。$\square$
+
