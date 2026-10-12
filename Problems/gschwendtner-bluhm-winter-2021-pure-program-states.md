@@ -100,11 +100,20 @@ The tested scope is all eight dihedral matrices and their products, the two
 common-eigenvector candidates, twenty random qubit states for the group average,
 fifty random qubit states for symmetric purification, and two hundred samples
 for each environment dimension $r\in\{1,2,3,5\}$ for the rank-one algebraic step.
-It also tests all twelve $A_4$ matrices and products, computes commutant dimensions
+It also checks that the $A_4$ matrix and product sets each have twelve elements,
+computes commutant dimensions
 $1$ for $\vartheta$, $7$ for $\bar\vartheta\otimes\vartheta$, and $4$ for the
-dihedral instance, and verifies the rank-six invariant block and phase relation.
-The numerical matrix-rank tolerance is $10^{-9}$; these are finite numerical
-checks, not a proof of a uniform statement or of an exact pure optimum.
+dihedral instance, and checks the block projector's trace six, its commutation
+with all twelve tensor matrices, and the phase relation.
+`commutant_dim` uses matrix-rank tolerance $10^{-9}$. The `allclose` and
+`isclose` comparisons use NumPy defaults ($\mathrm{rtol}=10^{-5}$,
+$\mathrm{atol}=10^{-8}$). The common-eigenvector test uses an explicit
+$10^{-6}$ threshold, and the parallel-environment test bounds the second
+singular value by $10^{-12}$. The phase test branches on
+$|\operatorname{tr}V|>10^{-9}$; matrix and product sets are rounded to eight
+decimal places before comparison. There are no $A_4$ averaging or purification
+loops. These are finite numerical checks, not a proof of a uniform statement
+or of an exact pure optimum.
 
 ### Escape audit
 
@@ -119,6 +128,21 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 ## Triage
 
 ### What the settlement shows
+
+**Qubit rigidity — literature ingredient.** Braun, Giraud, Nechita, Pellegrini
+and Žnidarič, *A universal set of qubit quantum channels*,
+[arXiv:1306.0495v2](https://arxiv.org/abs/1306.0495v2), Theorem IV.9,
+DOI [10.1088/1751-8113/47/13/135302](https://doi.org/10.1088/1751-8113/47/13/135302),
+classify the pure outputs of a qubit channel: three distinct pure outputs
+force unitary conjugation. Evidence kind: literature reading; the Library
+note is `Library/QuantumChannels/braun2014universalqubitchannels.md`.
+Fixing a normalized basis input of a qubit-program processor yields a qubit
+channel from programs to outputs. The three distinct pure replacement targets
+force it to send every pure program to a pure state, so it cannot also attain
+$\mathbb1/2$ with a pure program. GBW-5 applies this known ingredient to
+covariant programming. The supporting Lean theorem proves the stronger
+selected-target algebraic obstruction without program normalization; the full
+classification is not a Lean statement of this delivery.
 
 **Mechanism — kernel-checked obstruction.** `PureProgramQubitObstruction.no_four_replacements`
 states that a fixed Kraus channel with a two-dimensional pure program space
@@ -176,8 +200,19 @@ least $1+1+1+3=6$. Direct-summing the three scalar sectors and the symmetric
 qubit construction, and dephasing coherences between sectors, implements every
 block state with pure dimension six. Thus its pure optimum is six. These lower
 and upper arguments are proved in prose. The experiment computes the commutant
-dimension seven and verifies a rank-six invariant block; it does not itself
+dimension seven and checks the block projector's trace six and commutation;
+it does not itself
 compute or kernel-prove the optimum.
+
+**Readings — computed.** The pinned experiment entry in Evidence returns
+`bad= 0` (`python3 check.py`, exit 0, SHA-256
+`ba75df54b52797813a70c303a6a2360aec8c9637698e18b0600ad04f6dc461e1`).
+It checks the eight $D_4$ matrices and products, two eigenvector candidates,
+twenty $D_4$ group averages, fifty qubit symmetric purifications, and two
+hundred parallel-environment samples at each $r\in\{1,2,3,5\}$. For $A_4$ it
+checks the twelve-element matrix and product sets, the commutant ranks, the phase
+relation, and the block projector's trace six and commutation. Its tolerances are stated in that entry;
+no $A_4$ averaging or purification loop or uniform extension is computed.
 
 **Larger blocks — open exact optimum.** For one multiplicity block $n\ge3$,
 the exact pure optimum remains open between

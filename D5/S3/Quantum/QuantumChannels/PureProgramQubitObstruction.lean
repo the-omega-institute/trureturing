@@ -26,7 +26,7 @@ kraus_pure_gram: proof_shape: bind-only; escape_witness: none;
   consumers: no_four_replacements; Direct frozen dependencies: F3
 no_four_replacements: proof_shape: content; escape_witness: three_pure_outputs_rigidity;
   consumers: not_pure_programmable; Direct frozen dependencies: F2, F3, F1
-Frozen declaration identities (baseline Freeze declaration_statement_ids):
+Frozen declaration identities (declaration statement_ids from the Lean report):
   F1: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap
     statement_id: sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
   F2: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus

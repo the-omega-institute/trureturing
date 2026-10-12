@@ -14,7 +14,7 @@ $$\forall (A : Type), (\forall (B : Type), ([\operatorname{Fintype}\left(A\right
 
 *Commentary.*
 
-PDF p. 3: “A quantum channel is a completely positive trace-preserving map T : B(H₁) → B(H₂), where d₁, d₂ ∈ ℕ.” The finite Kraus convention represents such channels on complex Matrix carriers. A and B may be arbitrary finite types, so a processor's product index is included. ofKraus denotes the frozen MatrixMap.of_kraus, whose action is the sum Kᵢ rho (Kᵢ)ᴴ; conjTranspose is the matrix conjugate transpose. The completeness identity preserves trace. finite_kraus_quantum_channel identifies this action with the canonical QuantumChannel on CStarMatrix.
+PDF p. 3: “A quantum channel is a completely positive trace-preserving map T : B(H₁) → B(H₂), where d₁, d₂ ∈ ℕ.” The finite Kraus convention represents such channels on complex Matrix carriers. A and B may be arbitrary finite types, so a processor's product index is included. ofKraus denotes the frozen MatrixMap.of_kraus, whose action is the sum Kᵢ rho (Kᵢ)ᴴ; conjTranspose is the matrix conjugate transpose. The completeness identity preserves trace. finite_kraus_quantum_channel states the related canonical QuantumChannel formulation on CStarMatrix; it is not on this module's dependency path.
 
 **Theorem 1.2 (Four targets are incompatible).**
 
@@ -22,13 +22,11 @@ $$\forall (d : \mathbb{N}), (\forall (P : \operatorname{Matrix}\left(\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/PureProgramQubitObstruction.no_four_replacements` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Martina Gschwendtner, Andreas Bluhm, Andreas Winter (2021). *Programmability of covariant quantum channels*. DOI: [10.22331/q-2021-06-29-488](https://doi.org/10.22331/q-2021-06-29-488). URL: <https://arxiv.org/abs/2012.00717v2>.
+*Citation.* Daniel Braun, Olivier Giraud, Ion Nechita, Clément Pellegrini, Marko Žnidarič (2014). *A universal set of qubit quantum channels*. DOI: [10.1088/1751-8113/47/13/135302](https://doi.org/10.1088/1751-8113/47/13/135302). URL: <https://arxiv.org/abs/1306.0495v2>.
 
 *Commentary.*
 
-The input dimension and the finite Kraus count are unrestricted. Fix the basis input Matrix.single x x 1. The program-to-output map is linear, and its Gram matrix is the processor output. The first two targets force independent program vectors with opposite zero rows. The third target forces their nonzero environment rows to be parallel. Every program image then has dependent rows, whereas one half of the identity has independent rows. Program normalization is unnecessary for this stronger algebraic obstruction. kronecker is Matrix.kronecker, and rankOneDensity is the frozen vecMulVec p (star p) construction.
+Braun, Giraud, Nechita, Pellegrini and Žnidarič, A universal set of qubit quantum channels, arXiv:1306.0495v2, Theorem IV.9, classify the pure outputs of qubit channels: three distinct pure outputs force unitary conjugation. Fixing a basis input of an exact processor gives a qubit channel from the program register to the output. In the GBW-5 covariant-program question, its three pure replacement targets therefore force every pure program output to be pure, excluding the fourth target, one half of the identity. The theorem here establishes a stronger algebraic formulation that does not require program normalization. The input dimension and the finite Kraus count are unrestricted. Fix the basis input Matrix.single x x 1. The program-to-output map is linear, and its Gram matrix is the processor output. The first two targets force independent program vectors with opposite zero rows. The third target forces their nonzero environment rows to be parallel. Every program image then has dependent rows, whereas one half of the identity has independent rows. kronecker is Matrix.kronecker, and rankOneDensity is the frozen vecMulVec p (star p) construction.
 
 ## References
 

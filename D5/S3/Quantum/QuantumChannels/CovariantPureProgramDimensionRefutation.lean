@@ -76,9 +76,10 @@ replacement_covariant: proof_shape: bind-only; escape_witness: none;
   consumers: not_pure_programmable; Direct frozen dependencies: none
 not_pure_programmable: proof_shape: content; escape_witness: PureProgramQubitObstruction.three_pure_outputs_rigidity;
   consumers: result; Direct frozen dependencies: F3, F9, F2
+  Same-delivery supporting module: PureProgramQubitObstruction.no_four_replacements
 result: proof_shape: content; escape_witness: PureProgramQubitObstruction.three_pure_outputs_rigidity;
   consumers: external settlement; Direct frozen dependencies: F1, F3, F7, F4, F6, F8, F9, F2, F5
-Frozen declaration identities (baseline Freeze declaration_statement_ids):
+Frozen declaration identities (declaration statement_ids from the Lean report):
   F1: D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity
     statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
   F2: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap
