@@ -134,6 +134,9 @@ domains:
   Naming:
     stratum: S0
     definition: Countable naming systems over uncountable carriers and their dark-side measure.
+  NumberTheory:
+    stratum: S1
+    definition: Classical arithmetic and modular-form structures, including finite character sums and Hecke interfaces.
   Observation:
     stratum: S0
     definition: Finite observation windows over integer walks and the residue readings they admit.
