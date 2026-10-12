@@ -1038,7 +1038,7 @@ Then $Lh=-DE_{OO}$, so
 $(P_V)_{OO,OO}=(DE_{OO})^{\mathsf T}(-h)=17/45$.
 Since 17 is coprime to 45, this entry separately proves the denominator cannot be smaller. Changing the deleted row changes the potential coordinates; reversing an edge changes the corresponding signs of off-diagonal projection entries. The quotient and denominator for the same graph and metric are invariant. The number 45 is an arithmetic modulus of this projection, not an energy unit or a universal constant.
 
-**定理 12.7（二十二记录同一目标的正负与精确整数间隙）。**
+二十二记录的投影与商类应用。平方最优值与整数支撑线复用《[隐藏关系统计、相位与接缝](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)》C-55.1、C-55.2；参数对应是定义12.4的同一二十一格支撑、相同模式次序与下列完整边缘。
 
 Use exactly the legal support and row/column order of 定义12.4. Fix margins $r=(6,3,5,5,3)$, $s=(6,5,5,3,3)$, with common total 22. The integer table and real candidate are
 $$
@@ -1048,38 +1048,17 @@ W^*=\frac1{45}\begin{pmatrix}62&53&53&51&51\\51&42&42&0&0\\53&44&44&42&42\\53&44
 $$
 The numerator row sums of $`W^*`$ are $(270,135,225,225,135)$; its column sums are $(270,225,225,135,135)$, proving the fixed margins. Every legal entry is strictly positive and exactly the four illegal entries are zero.
 
-On legal entries, $`45W^*_{ij}=a_i+b_j`$ with
-$a=(62,51,53,53,51)$, $b=(0,-9,-9,-11,-11)$.
-Thus $`\langle W^*,Z\rangle=0`$ for every zero-margin legal signed array $Z$, and
+令 $\mathbf1_E$ 为每个合法位置取一的数组。它由整数行势一、列势零产生，所以 $\mathbf1_E\in\operatorname{im}D^{\mathsf T}$；并且 $W_0=\mathbf1_E+E_{OO}$。下列实际投影把商群与既有最优值连接：
+
 $$
-\|W^*+Z\|^2=\frac{1052}{45}+\|Z\|^2. \tag{12.B}
+P_VW_0=W^*,\qquad [DW_0]=[DE_{OO}]\in\mathbb Z^9/L\mathbb Z^9.
 $$
-Here
-$`45\|W^*\|^2=a\cdot r+b\cdot s=1208-156=1052`$.
-The norm is the sum of squared legal event coordinates, without an unannounced weight. Since $`W^*`$ is feasible, (12.B) proves the unique real nonnegative optimum and its value, without relying on numerical minimization.
 
-Any twenty-one nonnegative integer entries totaling 22 have an entry at least 2. For each such integer $k$, $k^2=k+k(k-1)$, and $k(k-1)\ge0$, with at least one contribution at least 2. Hence $\|W\|^2\ge24$. The table $W_0$ has one entry 2 and twenty entries 1 on the legal support, so $\|W_0\|^2=24$ and it meets the required margins. It proves attainment of the integer minimum.
+证明。每个合法位置满足 $45W^*_{ij}=a_i+b_j$，其中 $a=(62,51,53,53,51)$、$b=(0,-9,-9,-11,-11)$。所以 $W^*\in\operatorname{im}_{\mathbb R}D^{\mathsf T}$；已检查的同边缘关系给出 $D(W_0-W^*)=0$，正交分解的唯一性即给投影式。整数全一数组属于整数割格，因而商类式成立。由命题12.6，45倍投影为整数；该投影保持边界，而约化生成树上的整数势差恢复全部约化顶点势，故45倍 $L^{-1}D$ 为整数。于是45杀死该商类。反过来，若整数 $m>0$ 杀死 $[DE_{OO}]$，则 $mE_{OO}$ 的割投影为整数；其 $OO$ 坐标为 $17m/45$，由互素性得 $45\mid m$。因此这份二十二记录的商类阶恰为45。证毕。
 
-For the common objective $F(W)=45\|W\|^2-1066$ on these fixed-margin domains,
-$$
-\min_{\mathbb R_{\ge0}}F=-14,\qquad
-\min_{\mathbb Z_{\ge0}}F=14,\qquad
-\text{gap}=28.
-$$
-Equation (12.B) also shows that the closest feasible integer table has squared distance $24-1052/45=28/45$ from $`W^*`$. This is an exact lattice distance in this fixed fiber, not a gap inferred merely from discreteness.
+C-55.1 与 C-55.2 对相同边缘、相同单位事件度量给出 $\|W^*\|^2=1052/45$、整数最小值24。故本投影纤维的最近整数平方距离为 $24-1052/45=28/45$；同一目标 $F(W)=45\|W\|^2-1066$ 的连续与整数最小值分别为 $-14,14$。这些最优值采用所引条目的完整证明，不另立同义定理。商类阶45与距离28/45是不同量，不能只由前者推断后者。
 
-The continuous negative value therefore does not imply an integer negative value for this twenty-two-record task. The probability $`W^*/22`$ remains perfectly legal. The empirical requirement is $22p\in\mathbb Z^{21}$, with the specified scaled margins; after changing the total, the objective and margins must be restated. For example $`45W^*`$ is an integer table of 990 records. Neither the integer bound nor the values $-14,14$ quantify over all probability laws, arbitrary marginals, physical sources or other metrics.
-
-此应用也说明带余项的距离下界必须保留同一目标、度量和可行域；作为该应用的中间估计，
-
-For an actual specified feasible integer domain $\mathcal I$, suppose an ordinary proof supplies
-$$
-F(w)\ge F_{\rm cont}+\mu\|w-w^*\|^2-\varepsilon,
-\quad \mu>0,
-$$
-with the same objective and metric, a justified remainder upper bound $\varepsilon$, and an independently proved $`\operatorname{dist}(w^*,\mathcal I)\ge\delta\ge0`$. Only then does $F(w)\ge F_{\rm cont}+\mu\delta^2-\varepsilon$ follow. Strict positivity requires this last lower bound to be positive. Discreteness alone gives no uniform $\delta$ across targets or totals: some targets are integer, and others approach the lattice arbitrarily closely. The twenty-two-record example has $F_{\rm cont}=-14$, $\mu=45$, $\delta^2=28/45$, $\varepsilon=0$, giving $-14+28=14$.
-
-
+$W^*/22$ 是合法概率律，但不是这22条记录的经验律；$45W^*$ 则有990条记录。改变总量、目标、边缘或度量后，须重新给出所需距离。作为此投影应用的中间估计，若原任务确已证明 $F(w)\ge F_{\rm cont}+\mu\|w-w^*\|^2-\varepsilon$ 且 $\operatorname{dist}(w^*,\mathcal I)\ge\delta$，才能得到 $F\ge F_{\rm cont}+\mu\delta^2-\varepsilon$；整数性本身不提供统一正距离。此例对应 $F_{\rm cont}=-14$、$\mu=45$、$\delta^2=28/45$、$\varepsilon=0$。它不量化所有概率律、物理来源或任意Robin目标。
 
 **命题 12.8（原二十一格的Fisher分母随权重变化）。**
 
@@ -1122,7 +1101,7 @@ For a legal integral event increment $\delta w=e_s$, the single-window residue o
 
 
 
-算术来源对应。《AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS》§18.6的对象是同一普通整数 $n>5040$，其余项接口为 $\log(e^\gamma\log\log n/(\sigma(n)/n))=I_\psi(\log n)+R(\log n)+d_n$、$d_n\ge0$，含有符号无限尾。`RoughPrimeSuffixBellman` 的 `rough_prime_suffix_complete` 则保留截点以上连续素数、正反单调指数、整数乘积预算和有限最大 $\sigma(n)/n$；它没有给上述二次距离估计。要将定理12.7的方法用于Robin目标，尚须实际指数编码、同目标比较、度量、可行格距离与解析余项上界；有限模数没有替代这些义务。
+算术来源对应。《AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS》§18.6的对象是同一普通整数 $n>5040$，其余项接口为 $\log(e^\gamma\log\log n/(\sigma(n)/n))=I_\psi(\log n)+R(\log n)+d_n$、$d_n\ge0$，含有符号无限尾。`RoughPrimeSuffixBellman` 的 `rough_prime_suffix_complete` 则保留截点以上连续素数、正反单调指数、整数乘积预算和有限最大 $\sigma(n)/n$；它没有给上述二次距离估计。要将上述二十二记录投影的距离方法用于Robin目标，尚须实际指数编码、同目标比较、度量、可行格距离与解析余项上界；有限模数没有替代这些义务。
 
 在非空嵌套实／整数域、同一目标且两侧有限最小值均取得时，间隙定义为 $\min_{\mathcal I}F-\min_{\mathcal R}F\ge0$。固定总数计数多面体紧，整数纤维非空时有限；空纤维、无界目标及未取得下确界另需定义。正整数间隙不量化所有实概率律；正总源的线性分裂也不保证各项非负或可分别执行。
 

@@ -2379,7 +2379,7 @@ Q(P_+)=\frac{21}{20}.
 $$
 相同局部边缘、相同熵及相同额外 KL 不能决定这个目标的符号或组织；等 KL 不是目标极值证明。这里不外推到未声明目标域的全局最优性。
 
-该目标与 Hidden C-30.6 的参数对应为同一五环邻接 $C_5$、$\varepsilon=1/10$、$A_\varepsilon=(11/10)11^{\mathsf T}-2C_5$；此处额外保留共同最大熵参考的散度计算。
+该目标与 [共同来源正性卷 C-30.6](AURIC_FIB_ATOM_COMMON_SOURCE_POSITIVITY_AND_HISTORICAL_PREFIXES.md) 的参数对应为同一五环邻接 $C_5$、$\varepsilon=1/10$、$A_\varepsilon=(11/10)11^{\mathsf T}-2C_5$；此处额外保留共同最大熵参考的散度计算。
 
 **命题 21.5（参考点的八维可见与十二维隐藏Fisher分解）。**
 
