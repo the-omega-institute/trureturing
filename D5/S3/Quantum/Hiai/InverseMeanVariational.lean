@@ -7,6 +7,7 @@
    digest: Inverse-mean trace variational bound with its explicit nonselfadjoint optimizer. -/
 
 import D5.S3.Quantum.Schatten.Holder
+import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 
 noncomputable section
 namespace D5.S3.Quantum.Hiai.InverseMeanVariational
@@ -147,4 +148,148 @@ theorem variational_bound_and_attainment {X M : Matrix d d ℂ}
   ring
 
 #print axioms variational_bound_and_attainment
+
+/-- The inverse variational formula on the actual support, with the spectral
+generalized inverse zero on the kernel. Unlike the SPD optimizer, this optimizer
+may be singular. The kernel hypothesis is necessary for the universal bound. -/
+theorem psd_variational_bound_and_attainment {X M : Matrix d d ℂ}
+    (hX : X.PosSemidef) (hM : M.PosSemidef)
+    (hker : ∀ x : d → ℂ, M *ᵥ x = 0 → X *ᵥ x = 0)
+    {r : ℝ} (hr : 0 < r) :
+    ∃ Z₀ : Matrix d d ℂ, Z₀ = M ^ (-1 : ℝ) * X ∧
+      objective r X M Z₀ = tracePower r (X * M ^ (-1 : ℝ) * X) ∧
+      ∀ Z : Matrix d d ℂ,
+        objective r X M Z ≤ tracePower r (X * M ^ (-1 : ℝ) * X) := by
+  let D := M ^ (-1 / 2 : ℝ)
+  let S := M ^ (1 / 2 : ℝ)
+  let G := M ^ (-1 : ℝ)
+  let P := D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectralSupport M
+  have hcont (f : ℝ → ℝ) : ContinuousOn f (spectrum ℝ M) := by
+    rw [continuousOn_iff_continuous_domRestrict]
+    fun_prop
+  have hmul (f g : ℝ → ℝ) :
+      cfc f M * cfc g M = cfc (fun x => f x * g x) M :=
+    (cfc_mul f g M (hcont f) (hcont g)).symm
+  have hpowers (a b : ℝ) :
+      M ^ a * M ^ b = cfc (fun x : ℝ => x ^ a * x ^ b) M := by
+    rw [CFC.rpow_eq_cfc_real hM.nonneg, CFC.rpow_eq_cfc_real hM.nonneg, hmul]
+  have hspectrum (x : ℝ) (hx : x ∈ spectrum ℝ M) : 0 ≤ x := by
+    rw [hM.isHermitian.spectrum_real_eq_range_eigenvalues] at hx
+    obtain ⟨i, rfl⟩ := hx
+    exact hM.eigenvalues_nonneg i
+  have hDS : D * S = P := by
+    rw [hpowers]
+    apply cfc_congr
+    intro x hx
+    by_cases h0 : x = 0
+    · simp [h0]
+    · have hp : 0 < x := lt_of_le_of_ne (hspectrum x hx) (Ne.symm h0)
+      change x ^ (-1 / 2 : ℝ) * x ^ (1 / 2 : ℝ) = if x = 0 then 0 else 1
+      rw [← Real.rpow_add hp]
+      norm_num [P, D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectralSupport, h0]
+  have hDD : D * D = G := by
+    change M ^ (-1 / 2 : ℝ) * M ^ (-1 / 2 : ℝ) = M ^ (-1 : ℝ)
+    rw [hpowers, CFC.rpow_eq_cfc_real hM.nonneg]
+    apply cfc_congr
+    intro x hx
+    by_cases h0 : x = 0
+    · simp [h0]
+    · change x ^ (-1 / 2 : ℝ) * x ^ (-1 / 2 : ℝ) = x ^ (-1 : ℝ)
+      rw [← Real.rpow_add (lt_of_le_of_ne (hspectrum x hx) (Ne.symm h0))]
+      norm_num
+  have hSS : S * S = M := by
+    calc
+      _ = cfc (fun x : ℝ => x ^ (1 / 2 : ℝ) * x ^ (1 / 2 : ℝ)) M := hpowers _ _
+      _ = cfc (fun x : ℝ => x) M := by
+        apply cfc_congr
+        intro x hx
+        by_cases h0 : x = 0
+        · simp [h0]
+        · change x ^ (1 / 2 : ℝ) * x ^ (1 / 2 : ℝ) = x
+          rw [← Real.rpow_add (lt_of_le_of_ne (hspectrum x hx) (Ne.symm h0))]
+          norm_num
+      _ = M := cfc_id' ℝ M hM.isHermitian.isSelfAdjoint
+  have hGM : G * M = P := by
+    change M ^ (-1 : ℝ) * M = P
+    conv_lhs => rhs; rw [← CFC.rpow_one M hM.nonneg]
+    rw [hpowers]
+    apply cfc_congr
+    intro x hx
+    by_cases h0 : x = 0
+    · simp [h0]
+    · change x ^ (-1 : ℝ) * x ^ (1 : ℝ) = if x = 0 then 0 else 1
+      rw [← Real.rpow_add (lt_of_le_of_ne (hspectrum x hx) (Ne.symm h0))]
+      norm_num [P, D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectralSupport, h0]
+  have hPG : P * G = G := by
+    change P * M ^ (-1 : ℝ) = M ^ (-1 : ℝ)
+    simp only [CFC.rpow_eq_cfc_real hM.nonneg]
+    unfold P D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectralSupport
+    rw [hmul]
+    apply cfc_congr
+    intro x hx
+    by_cases h0 : x = 0 <;> simp [h0]
+  have hMP : M * P = M := by
+    rw [← cfc_id' ℝ M hM.isHermitian.isSelfAdjoint]
+    unfold P D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectralSupport
+    rw [hmul]
+    apply cfc_congr
+    intro x hx
+    by_cases h0 : x = 0 <;> simp [h0]
+  have hMzero : M * (1 - P) = 0 := by rw [mul_sub, mul_one, hMP, sub_self]
+  have hXzero : X * (1 - P) = 0 := by
+    ext i j
+    have hm : M *ᵥ (fun k => (1 - P) k j) = 0 := by
+      ext k
+      change (M * (1 - P)) k j = 0
+      rw [hMzero]
+      rfl
+    exact congrFun (hker _ hm) i
+  have hXP : X * P = X := by
+    exact (sub_eq_zero.mp (by simpa only [mul_sub, mul_one] using hXzero)).symm
+  have hDstar : Dᴴ = D := (IsSelfAdjoint.of_nonneg CFC.rpow_nonneg).star_eq
+  have hSstar : Sᴴ = S := (IsSelfAdjoint.of_nonneg CFC.rpow_nonneg).star_eq
+  have hGstar : Gᴴ = G := (IsSelfAdjoint.of_nonneg CFC.rpow_nonneg).star_eq
+  have hG : G.PosSemidef := CFC.rpow_nonneg.posSemidef
+  have hR : (X * G * X).PosSemidef := by
+    simpa only [hX.isHermitian.eq] using hG.mul_mul_conjTranspose_same X
+  have hbound (Z : Matrix d d ℂ) :
+      objective r X M Z ≤ tracePower r (X * G * X) := by
+    let U := X * D
+    let V := S * Z
+    have hU : U * Uᴴ = X * G * X := by
+      simp only [U, Matrix.conjTranspose_mul, hDstar, hX.isHermitian.eq,
+        mul_assoc]
+      rw [← mul_assoc D D X, hDD]
+    have hV : Vᴴ * V = Zᴴ * M * Z := by
+      simp only [V, Matrix.conjTranspose_mul, hSstar, mul_assoc]
+      rw [← mul_assoc S S Z, hSS]
+    have hUV : U * V = X * Z := by
+      change X * D * (S * Z) = X * Z
+      rw [← mul_assoc, mul_assoc X D S, hDS, hXP]
+    have hgram : (X * Z)ᴴ * (X * Z) = Zᴴ * (X * X) * Z := by
+      simp only [Matrix.conjTranspose_mul, hX.isHermitian.eq, mul_assoc]
+    have hh := holder_two_young U V hr
+    rw [hUV, norm_rpow_gram _ hr, hgram,
+      norm_rpow_gram V (by positivity), norm_rpow_rowGram U (by positivity), hV, hU] at hh
+    simpa only [show 2 * r / 2 = r by ring, objective] using hh
+  refine ⟨G * X, rfl, ?_, hbound⟩
+  have hGram : (G * X)ᴴ * M * (G * X) = X * G * X := by
+    simp only [Matrix.conjTranspose_mul, hX.isHermitian.eq, hGstar, mul_assoc]
+    rw [← mul_assoc G M (G * X), hGM, ← mul_assoc P G X, hPG]
+  have hGramX : (G * X)ᴴ * (X * X) * (G * X) =
+      (X * G * X) * (X * G * X) := by
+    simp only [Matrix.conjTranspose_mul, hX.isHermitian.eq, hGstar, mul_assoc]
+  have hSquare : tracePower (r / 2) ((X * G * X) * (X * G * X)) =
+      tracePower r (X * G * X) := by
+    unfold tracePower
+    have hsquare : (X * G * X) * (X * G * X) = (X * G * X) ^ (2 : ℝ) := by
+      simpa [pow_two] using (CFC.rpow_natCast (X * G * X) 2 hR.nonneg).symm
+    rw [hsquare, CFC.rpow_rpow_of_exponent_nonneg _ _ _ (by norm_num)
+      (by positivity) hR.nonneg]
+    congr 2
+    ring
+  rw [objective, hGram, hGramX, hSquare]
+  ring
+
+#print axioms psd_variational_bound_and_attainment
 end D5.S3.Quantum.Hiai.InverseMeanVariational

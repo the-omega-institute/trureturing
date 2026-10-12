@@ -58,6 +58,35 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
                     + "Joint convexity still requires the Carlen-Lieb fixed-congruence trace "
                     + "convexity and the Hiai outer-power geometric-mean trace concavity. "
                     + "Neither curvature supplier is assumed by this theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("psd-variational-bound-attainment"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Hiai/InverseMeanVariational.psd_variational_bound_and_attainment"),
+                H("Support-sensitive PSD variational formula"),
+                StatementSource.FromAuthor(PsdEndpoint()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Divergence/zhang2020variational")),
+                Blocks(Paragraph(Text("For arbitrary finite complex positive semidefinite X and M, "
+                    + "assume every vector in the kernel of M is also in the kernel of X. "
+                    + "For every r > 0, the same inverse variational objective has the universal "
+                    + "upper bound tracePower r of X M to exponent minus one X. The actual "
+                    + "spectral generalized inverse vanishes on the kernel. The explicit "
+                    + "optimizer M to exponent minus one times X attains the bound and may be "
+                    + "singular. All dimensions, zero inputs and noncommuting matrices are included.")),
+                    Paragraph(Text("The proof derives support action from the kernel hypothesis, "
+                    + "then factors X Z through the inverse square root and square root of M. "
+                    + "It consumes the existing Schatten Holder and row/column Gram trace "
+                    + "suppliers rather than repeating their proofs. The spectral support is "
+                    + "the library's canonical cfc indicator of nonzero spectrum. At the "
+                    + "generalized optimizer the two Gram matrices reduce to the same PSD "
+                    + "sandwich; the PSD square-power identity gives equality.")),
+                    Paragraph(Text("This establishes a support-sensitive PSD supplier for the "
+                    + "Hiai extension. It does not yet identify the original PSD geometric mean "
+                    + "or prove its common epsilon I trace limit and joint convexity. Invertibility "
+                    + "of the optimizer is not asserted. The four-slot escape audit remains "
+                    + "unfinished under issue #5214: the full source bridge, variation and "
+                    + "sensitivity compile, but native binding fails at contract.discovery "
+                    + "rigid_universes. No declared_validated status is claimed."))),
                 DescribeRole.Theorem))));
 
     private static Formula Frac(Formula x, Formula y) => new Formula.Fraction(x, y);
@@ -101,6 +130,33 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
             Call("PosDef", x), Land, Sp, Call("PosDef", m), Land, Sp, D(0), Lt, r,
             Implies, Esc, Exists, Sp, z, Colon, Sp, matrix, Comma, Esc,
             Call("IsUnit", z), Land, Sp, z, Eq, Seq(inverse, x), Land, Sp,
+            Call("objective", r, x, m, z), Eq, bound, Land,
+            Open, Forall, Sp, w, Colon, Sp, matrix, Comma, Esc,
+            Call("objective", r, x, m, w), Le, bound, Close);
+    }
+
+    private static Formula PsdEndpoint()
+    {
+        var d = F.Id("d"); var x = F.Id("X"); var m = F.Id("M");
+        var r = F.Id("r"); var z = F.Id("Z"); var w = F.Id("W"); var v = F.Id("v");
+        var complex = Seq(Mathbb, Grp(F.Id("C")));
+        var matrix = Call("Matrix", d, d, complex);
+        var inverse = Call("rpow", m, D(-1));
+        var bound = Call("tracePower", r, Seq(x, inverse, x));
+        var kernel = Seq(Open, Forall, Sp, v, Colon, Sp,
+            new Formula.TypeArrow(d, complex), Comma, Sp,
+            Call("mulVec", m, v), Eq, D(0), Implies,
+            Call("mulVec", x, v), Eq, D(0), Close);
+        return Seq(Forall, Sp, F.Id("u"), Colon, Sp, Call("Level"), Comma, Esc,
+            d, Colon, Sp, Call("Type", F.Id("u")), Comma, Sp,
+            OpenBracket, Call("Fintype", d), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", d), CloseBracket, Comma, Esc,
+            x, Comma, Sp, m, Colon, Sp, matrix, Comma, Esc,
+            r, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Comma, Esc,
+            Call("PosSemidef", x), Land, Sp, Call("PosSemidef", m), Land, Sp,
+            kernel, Land, Sp, D(0), Lt, r, Implies, Esc,
+            Exists, Sp, z, Colon, Sp, matrix, Comma, Esc,
+            z, Eq, Seq(inverse, x), Land, Sp,
             Call("objective", r, x, m, z), Eq, bound, Land,
             Open, Forall, Sp, w, Colon, Sp, matrix, Comma, Esc,
             Call("objective", r, x, m, w), Le, bound, Close);
