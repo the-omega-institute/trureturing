@@ -274,7 +274,7 @@ local notation "Bit" => fun (p : unitInterval) (i : ℕ) (ω : Seed × (ℕ → 
   (if ω.2 i then (1 : ℝ) else 0) - (p : ℝ)
 
 omit [MeasurableSpace Seed] in
-private lemma centered_bit_bound (p : unitInterval) (i : ℕ) (ω : Seed × (ℕ → Bool)) :
+lemma centered_bit_bound (p : unitInterval) (i : ℕ) (ω : Seed × (ℕ → Bool)) :
     |Bit p i ω| ≤ 1 := by
   cases hb : ω.2 i <;> simp only [hb, Bool.false_eq_true, ↓reduceIte]
   · rw [zero_sub, abs_neg, abs_of_nonneg p.2.1]; exact p.2.2
