@@ -6,6 +6,180 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.claim; result=D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.result; claim=D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.claim
    digest: Nonuniformity of the recycled-coin walk at a nonexceptional memory parameter. -/
 
+/-
+proof_shape (same-delivery helpers inlined):
+Definitions and abbreviations below record binding/organization, not independent proof claims.
+Compiler-generated support and equations are included with their live consumers.
+  angle: bind-only; consumer: coinFlip.
+  angle._proof_1: bind-only; consumer: B.
+  angle._proof_2: bind-only; consumer: angle.
+  coinFlip: bind-only; consumer: U.
+  shift: bind-only; consumer: U.
+  swap: bind-only; consumer: U.
+  U: bind-only; consumer: p.
+  initial: bind-only; consumer: b.
+  p: bind-only; consumer: avg.
+  avg: bind-only; consumer: claim.
+  exceptional: bind-only; consumer: claim.
+  exceptional._proof_1: bind-only; consumer: a.
+  exceptional._proof_2: bind-only; consumer: kappa.
+  exceptional._proof_3: bind-only; consumer: exceptional.
+  unitCoin: bind-only; consumer: claim.
+  claim: bind-only; consumer: result.
+  claim._proof_1: bind-only; consumer: claim.
+  a: bind-only; consumer: B.
+  kappa: bind-only; consumer: c.
+  c: bind-only; consumer: B.
+  theta: bind-only; consumer: s.
+  s: bind-only; consumer: B.
+  phiStar: bind-only; consumer: M_step.
+  a_facts: bind-only; consumer: c_bounds.
+  kappa_facts: bind-only; consumer: c_bounds.
+  c_bounds: bind-only; consumer: theta_facts.
+  theta_facts: bind-only; consumer: sin_sq.
+  phi_facts: bind-only; consumer: mode_step.
+  phi_nonexceptional: bind-only; consumer: result.
+  phi_nonexceptional._simp_1_1: bind-only; consumer: phi_nonexceptional.
+  phi_nonexceptional._simp_1_2: bind-only; consumer: phi_nonexceptional.
+  scalar_resonance: bind-only; consumer: resonance.
+  sin_sq: bind-only; consumer: eigenvectors.
+  scalar_reductions: bind-only; consumer: coin_overlap.
+  z: bind-only; consumer: w.
+  z._proof_1: bind-only; consumer: E.
+  chi_norm: bind-only; consumer: z_norm.
+  z_exp: bind-only; consumer: z_re.
+  z_norm: bind-only; consumer: z_unit.
+  z_re: bind-only; consumer: z_conj.
+  z_conj: bind-only; consumer: z_poly.
+  z_unit: bind-only; consumer: z_poly.
+  z_poly: bind-only; consumer: resonance.
+  z_ne_zero: bind-only; consumer: X_pairings.
+  z_ne_one: bind-only; consumer: chi_sum.
+  chi_sum: bind-only; consumer: X_pairings.
+  chi_neg_one: bind-only; consumer: character_mode.
+  lam: bind-only; consumer: v.
+  resonance: bind-only; consumer: X_fixed.
+  B: bind-only; consumer: B_apply.
+  B_apply: bind-only; consumer: mode_step.
+  B_apply._simp_1_1: bind-only; consumer: B_apply.
+  B_apply._simp_1_2: bind-only; consumer: B_apply.
+  mode_step: bind-only; consumer: trivial_mode.
+  character_mode: bind-only; consumer: global_eigenvectors.
+  trivial_mode: bind-only; consumer: global_eigenvectors.
+  v: bind-only; consumer: f.
+  w: bind-only; consumer: g.
+  eigenvectors: bind-only; consumer: global_eigenvectors.
+  eigenvectors._simp_1_1: bind-only; consumer: eigenvectors.
+  eigenvectors._simp_1_2: bind-only; consumer: eigenvectors.
+  coin_overlap: bind-only; consumer: X_pairings.
+  Index: bind-only; consumer: E.
+  H: bind-only; consumer: M.
+  K: bind-only; consumer: E.
+  coin_inner: bind-only; consumer: walk_inner.
+  walk_inner: bind-only; consumer: walkIso._proof_1.
+  walkLin: bind-only; consumer: walkIso.
+  walkLin._proof_1: bind-only; consumer: walkLin.
+  walkLin._proof_2: bind-only; consumer: walkLin.
+  walkIso: bind-only; consumer: F_outer.
+  walkIso._proof_1: bind-only; consumer: walkIso.
+  walkEquiv: bind-only; consumer: M.
+  walkEquiv._proof_1: bind-only; consumer: walkEquiv.
+  M: bind-only; consumer: M_step.
+  M._proof_1: bind-only; consumer: M.
+  M._proof_2: bind-only; consumer: M.
+  M._proof_3: bind-only; consumer: M.
+  M_unitary: bind-only; consumer: F_identity.
+  M_step: bind-only; consumer: F_outer.
+  flat: bind-only; consumer: P.
+  mat: bind-only; consumer: baseline.
+  hs_inner: bind-only; consumer: identity_inner.
+  conjugateLin: bind-only; consumer: F.
+  conjugateLin._proof_1: bind-only; consumer: conjugateLin.
+  conjugateLin._proof_2: bind-only; consumer: conjugateLin.
+  F: bind-only; consumer: E.
+  F._proof_1: bind-only; consumer: F.
+  E: bind-only; consumer: Q.
+  Q: bind-only; consumer: QF.
+  Q._proof_1: bind-only; consumer: Q.
+  QF: bind-only; consumer: avg_limit.
+  identity: bind-only; consumer: Y.
+  P: bind-only; consumer: P_sum.
+  outer: bind-only; consumer: X.
+  F_identity: bind-only; consumer: baseline.
+  identity_inner: bind-only; consumer: baseline.
+  F_outer: bind-only; consumer: X_fixed.
+  P_inner: bind-only; consumer: X_pairings.
+  f: bind-only; consumer: X.
+  g: bind-only; consumer: X.
+  X: bind-only; consumer: X_fixed.
+  X.eq_1: bind-only; consumer: X_fixed.
+  Y: bind-only; consumer: baseline.
+  Y._proof_1: bind-only; consumer: Y.
+  Y.eq_1: bind-only; consumer: baseline.
+  global_eigenvectors: bind-only; consumer: X_fixed.
+  X_fixed: bind-only; consumer: strict_surplus.
+  X_pairings: bind-only; consumer: strict_surplus.
+  baseline: bind-only; consumer: strict_surplus.
+  projection_pairing: bind-only; consumer: limit_sum.
+  strict_surplus: bind-only; consumer: witness12.
+  strict_surplus._simp_1_2: bind-only; consumer: strict_surplus.
+  basisCoin: bind-only; consumer: b.
+  b: bind-only; consumer: P_sum.
+  basis_unit: bind-only; consumer: result.
+  P_sum: bind-only; consumer: limit_sum.
+  walk_iterate: bind-only; consumer: probability_norm.
+  probability_norm: bind-only; consumer: density_probability.
+  density_iterate: bind-only; consumer: density_probability.
+  density_probability: bind-only; consumer: avg_observable.
+  avg_observable: bind-only; consumer: avg_limit._simp_1_1.
+  limit: bind-only; consumer: avg_limit.
+  avg_limit: bind-only; consumer: witness12.
+  avg_limit._simp_1_1: bind-only; consumer: avg_limit.
+  limit_sum: bind-only; consumer: witness12.
+  witness12: bind-only; consumer: result.
+  result: bind-only; consumer: none (designated settlement result).
+escape_witness: none under the normalization criterion of CLAUDE.md §3.2.
+admission_basis: open-problem-resolution (#15747; Refuted)
+
+Public reuse:
+  chi: the public D5/S3/Fourier/FinitePoisson.character at momentum 2 on ZMod 12;
+    used directly, with no local character definition.
+  Import closure adds one frozen D5 owner and 115 pinned-Mathlib modules.
+Representation overlaps (Index = ZMod 12 × (Fin 2 × Fin 2)):
+  flat: D5/S3/Quantum/Dynamics/OrderedThreePulseTrace.lean:54, frobMap;
+    local binding, unavailable for public reuse.
+  flat: D5/S3/Quantum/QuantumChannels/EntanglementBreakingNormCoefficient.lean:132, vec;
+    private definition on Fin d, a different index type.
+  flat: D5/S3/Quantum/Matrix/CartesianVariance.lean:83, vectorize;
+    public definition on Fin n, a different index type.
+  hs_inner, identity_inner:
+    D5/S3/Quantum/QuantumChannels/EntanglementBreakingNormCoefficient.lean:135, inner_vec;
+    private theorem on Fin d, a different index type; identity_inner is its identity case.
+  hs_inner, identity_inner: matrix_inner_eq_trace_conjTranspose_mul at
+    D5/S3/Observer/Linear/PrimeTimeGramianEnergyIdentity.lean:102,
+    D5/S3/QuantumBounds/Designs/MixedStateRobertson.lean:60,
+    D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.lean:61,
+    D5/S3/Quantum/Tomography/FutureProbabilityResidualCorrelation.lean:62,
+    D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.lean:86,
+    D5/S3/Quantum/Measurement/BasisMeasurementProjection.lean:161;
+    private theorems on Fin indices with a matrix inner-product structure.
+  hs_inner, identity_inner:
+    D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace.lean:347, hsInner;
+    public structure on Fin d matrices, a different index type and representation.
+  hs_inner, identity_inner: D5/S3/Quantum/Matrix/CartesianVariance.lean:327, matrix_pairing;
+    public theorem on Fin n vectorization, a different index type.
+  hs_inner, identity_inner:
+    D5/S3/Quantum/Measurements/CompleteContextPurityIdentities.lean:78, hMatrixInner;
+    local binding on Fin (n + 1) matrices, unavailable for public reuse.
+  F_outer, density_iterate:
+    D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.lean:859, density_mulVec;
+    local binding, unavailable for public reuse; its diagonal rank-one form and iteration
+    use the same Matrix multiplication identities and semiconjugacy principle.
+No public exact match at Index was found in the D5 and pinned-Mathlib searches.
+The private helpers retain their proof paths to result.
+-/
+
+import D5.S3.Fourier.FinitePoisson
 import D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.NumberTheory.Real.GoldenRatio
@@ -17,6 +191,7 @@ set_option linter.style.longLine false
 
 noncomputable section
 open scoped BigOperators Topology Matrix
+open D5.S3.Fourier
 namespace D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
 
 
@@ -140,11 +315,10 @@ private theorem scalar_reductions : c * (a + c) = a ^ 2 ∧ kappa * s ^ 2 = a ^ 
       linear_combination a ^ 2 * (kappa - 1) * kappa_facts.2.2 + kappa * a_facts.1
     linear_combination kappa * sin_sq - hkc
 
-private def chi : AddChar (ZMod 12) ℂ := (ZMod.stdAddChar (N := 12)).mulShift 2
-private def z : ℂ := chi 1
+private def z : ℂ := FinitePoisson.character (2 : ZMod 12) 1
 
-private theorem chi_norm (n : ZMod 12) : ‖chi n‖ = 1 := by
-  unfold chi
+private theorem chi_norm (n : ZMod 12) : ‖FinitePoisson.character (2 : ZMod 12) n‖ = 1 := by
+  unfold FinitePoisson.character
   rw [AddChar.mulShift_apply, ZMod.stdAddChar_apply]
   exact Circle.norm_coe _
 
@@ -191,11 +365,11 @@ private theorem z_ne_one : z ≠ 1 := by
   rw [h, Complex.one_re] at hr
   norm_num at hr
 
-private theorem chi_sum : ∑ n : ZMod 12, chi n = 0 :=
+private theorem chi_sum : ∑ n : ZMod 12, FinitePoisson.character (2 : ZMod 12) n = 0 :=
   AddChar.sum_eq_zero_of_ne_one (AddChar.ne_one_iff.mpr ⟨1, z_ne_one⟩)
 
-private theorem chi_neg_one : chi (-1) = starRingEnd ℂ z := by
-  rw [chi.map_neg_eq_inv]
+private theorem chi_neg_one : FinitePoisson.character (2 : ZMod 12) (-1) = starRingEnd ℂ z := by
+  rw [(FinitePoisson.character (2 : ZMod 12)).map_neg_eq_inv]
   exact Complex.inv_eq_conj z_norm
 
 private def lam : ℂ := ((a : ℂ) + (c : ℂ)) * z - (c : ℂ)
@@ -283,8 +457,9 @@ private theorem mode_step (η : AddChar (ZMod 12) ℂ)
     ring
 
 private theorem character_mode (u : Fin 2 × Fin 2 → ℂ) :
-    U phiStar (fun n i => chi n * u i) = fun n i => chi n * (B z *ᵥ u) i :=
-  mode_step chi chi_neg_one u
+    U phiStar (fun n i => FinitePoisson.character (2 : ZMod 12) n * u i) =
+      fun n i => FinitePoisson.character (2 : ZMod 12) n * (B z *ᵥ u) i :=
+  mode_step (FinitePoisson.character (2 : ZMod 12)) chi_neg_one u
 
 private theorem trivial_mode (u : Fin 2 × Fin 2 → ℂ) :
     U (d := 12) phiStar (fun _ i => u i) = fun _ i => (B 1 *ᵥ u) i := by
@@ -540,7 +715,7 @@ private theorem P_inner (A : K) :
   simp only [Fintype.sum_ite_eq']
 
 private def f : H := WithLp.toLp 2 (fun i => v i.2)
-private def g : H := WithLp.toLp 2 (fun i => chi i.1 * w i.2)
+private def g : H := WithLp.toLp 2 (fun i => FinitePoisson.character (2 : ZMod 12) i.1 * w i.2)
 private def X : K := outer f g
 private def Y : K := (1 / 12 : ℂ) • identity
 
@@ -551,9 +726,10 @@ private theorem global_eigenvectors : walkIso f = lam • f ∧ walkIso g = lam 
     rw [trivial_mode, eigenvectors.1]
     rfl
   · ext ⟨n, j⟩
-    change U phiStar (fun n i => chi n * w i) n j = lam * (chi n * w j)
+    change U phiStar (fun n i => FinitePoisson.character (2 : ZMod 12) n * w i) n j =
+      lam * (FinitePoisson.character (2 : ZMod 12) n * w j)
     rw [character_mode, eigenvectors.2]
-    change chi n * (lam * w j) = _
+    change FinitePoisson.character (2 : ZMod 12) n * (lam * w j) = _
     ring
 
 private theorem X_fixed : F X = X := by
@@ -568,11 +744,12 @@ private theorem X_fixed : F X = X := by
 private theorem X_pairings : inner ℂ X identity = 0 ∧ inner ℂ X P ≠ 0 := by
   constructor
   · have htr : (mat X).trace = 0 := by
-      change (∑ i : Index, v i.2 * starRingEnd ℂ (chi i.1 * w i.2)) = 0
+      change (∑ i : Index, v i.2 *
+        starRingEnd ℂ (FinitePoisson.character (2 : ZMod 12) i.1 * w i.2)) = 0
       rw [Fintype.sum_prod_type]
       simp only [map_mul]
       calc
-        _ = (∑ n : ZMod 12, starRingEnd ℂ (chi n)) *
+        _ = (∑ n : ZMod 12, starRingEnd ℂ (FinitePoisson.character (2 : ZMod 12) n)) *
             (∑ j : Fin 2 × Fin 2, v j * starRingEnd ℂ (w j)) := by
           rw [Finset.sum_mul]
           apply Finset.sum_congr rfl
@@ -584,7 +761,8 @@ private theorem X_pairings : inner ℂ X identity = 0 ∧ inner ℂ X P ≠ 0 :=
         _ = 0 := by rw [← map_sum, chi_sum, map_zero, zero_mul]
     rw [← inner_conj_symm, identity_inner, htr, map_zero]
   · rw [← inner_conj_symm, P_inner]
-    change starRingEnd ℂ (∑ j, v j * starRingEnd ℂ (chi 0 * w j)) ≠ 0
+    change starRingEnd ℂ (∑ j, v j *
+      starRingEnd ℂ (FinitePoisson.character (2 : ZMod 12) 0 * w j)) ≠ 0
     simp only [AddChar.map_zero_eq_one, one_mul, map_sum, map_mul, Complex.conj_conj]
     rw [coin_overlap]
     exact mul_ne_zero (by norm_num) ((map_ne_zero (starRingEnd ℂ)).mpr z_ne_zero)
