@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2609.06298v1
 claim: "The entries marked Open indicate cases for which preservation under Pick functions remains an open question."
 strata_touched:
   - D5/S3/Quantum/Matrix/InfinitelyDivisiblePickRefutation
+  - D5/S3/Quantum/Matrix/EmbeddablePickRefutation
 license: citation-only
 triage: anchor
 ---
@@ -32,6 +33,14 @@ Definition 3.25 states verbatim:
 Table 2, “Behavior of Matrix Classes under Pick Functions and Fractional Powers”, p. 22, row 12 reads verbatim:
 
 > Strongly Infinitely Divisible Matrix (SIDM) | Open | Yes
+
+Remark 3.28, p. 17, states verbatim:
+
+> The embedding problem, introduced in [11], asks whether a given stochastic matrix A can be realized as the transition matrix of a continuous-time Markov process. It was shown in [24] that a nonsingular stochastic matrix A is embeddable if and only if A = e^B for some essentially nonnegative matrix B satisfying Be = 0.
+
+Table 2, “Behavior of Matrix Classes under Pick Functions and Fractional Powers”, p. 22, row 13 reads verbatim:
+
+> Embeddable Matrix | Open | Yes
 
 The note below Table 2 states verbatim:
 

@@ -1,0 +1,31 @@
+**定义 37.11（同一执行的资源与两种正确性）。** 在位流 $\omega$ 上记首次初始化终端的位数为 $K_A(\omega)$、名字为 $I_A(\omega)$。要求初始化几乎必然返回且 $c_A=\mathbb E K_A<\infty$；不要求每条位流返回。非返回位流的联合费用为 $+\infty$，可在这一零测集上任意延拓名字。记返回律 $p_i=\Pr(I_A=i)$、$\Omega_+=\{i:p_i>0\}$。
+
+从 $c(i)$ 开始的探针在固定来源 $s$ 上有限返回时，令 $C_P(i;s)$ 为其实际有序查询记录中不同参数的数目；探针不返回时令 $C_P(i;s)=+\infty$。错误的有限输出仍按同一参数规则收费，正确性另行要求。逐固定来源的弱合同是名字律下几乎处处有限正确返回；强合同要求每个声明名字在全部 $S$ 上有限正确返回。强合同也只要求初始化几乎必停，不把它改成所有位流必停。
+
+完整返回运行的实际向量为
+
+$$
+\bigl(K_A(\omega),N,C_P(I_A(\omega);s)\bigr),
+\qquad\text{价格向量为 }(\lambda,\kappa,1).
+\tag{37.5}
+$$
+
+任一阶段不返回时联合费用为 $+\infty$。定义
+
+$$
+\begin{aligned}
+\mathcal D_{\lambda,\kappa}(A,P,c)
+&=\sup_{s\in S}\mathbb E_{\rm tape}
+ [\lambda K_A+\kappa N+C_P(I_A;s)],\\
+\mathcal U_M^{\mathrm w}(\lambda,\kappa)
+&=\inf_{\text{定义37.10--37.11的弱观察者}}\mathcal D_{\lambda,\kappa},\\
+\mathcal U_M^{\mathrm s}(\lambda,\kappa)
+&=\inf_{\text{定义37.10--37.11的强观察者}}\mathcal D_{\lambda,\kappa}.
+\end{aligned}
+\tag{37.6}
+$$
+
+期望是非负扩展积分，来源先固定、再取期望、最后取上确界。$K_A$ 与 $I_A$ 可以相关。参数费用的数学记录及集合不是可供控制器读取的档案。
+
+本合同的初始化投影是定义36.10；安装后是定义26.1--26.2在原只读来源上的闭环。其全局初始编码为 $c_{\rm global}(*)=q_0$，指令分别是读下一公平位、$\operatorname{ReturnInstall}$、查询或 $\operatorname{Halt}$。第36节的 $|Q|$ 账单明确排除了后续控制；名字—历史策略也没有指定一个已收费的 $P$。因此第36节的值不等于式（37.6）。这里的有限驻定 $Q$、分离状态分配与返回原语是可见的新限制和组合约定，不把它们归给第35节的任意内部状态／实返回律竞争域。
+

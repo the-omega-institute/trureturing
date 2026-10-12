@@ -1,0 +1,22 @@
+## 定义 31.2（有限动作合同）
+
+令 $A$ 为有限动作字母表，$E$ 为有限控制位置集合，$O$ 为有限回复集合。
+每个位置 $e\in E$ 具有一个动作 $a_e\in A$ 或停止指令。对每个来源图表，
+给定：
+
+$$
+\begin{aligned}
+\operatorname{Guard}_e(i,x)&\subseteq X_i,\\
+\operatorname{Reply}_e(i,x)&\in O,\\
+\operatorname{Next}_e(i,x)&\in E,\\
+\operatorname{Cost}_e(i,x)&\in\mathbb N^d.
+\end{aligned}
+$$
+
+这些关系和函数的图都必须是 Presburger 可定义的。`Cost` 是资源向量，
+不能被未经声明的单一标量替代。
+
+一个动作合同是**同源的**，如果同一次运行中的回复、后继和资源增量都由
+同一个 $(i,x)$ 产生。分别在不同来源上实现的边缘回复不能拼成一条联合
+历史。
+

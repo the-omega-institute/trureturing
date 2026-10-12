@@ -1,0 +1,30 @@
+**命题 43.3（整个来源族的完整实际路径与准确支持）。** 定义43.2两表在每个 $u\in D$ 上的完整路径及入口后资源为下表，且每个非空前缀的来源支持恰为符合该表前缀的扇区之并。
+
+| 原扇区 | $A$ 的完整实际事件 | $B$ 的完整实际事件 | $v_A(u)$ | $v_B(u)$ |
+| --- | --- | --- | --- | --- |
+| $D_\alpha$ | $\mathsf R_0(\varepsilon,\alpha),\mathsf S_0(r_\alpha)$ | $\mathsf U_{0,1},\mathsf R_1(R,\mathsf{absent}),\mathsf S_1(r_\alpha)$ | $(1,0)$ | $(1,1)$ |
+| $D_\beta$ | $\mathsf R_0(\varepsilon,\beta),\mathsf S_0(r_\beta)$ | $\mathsf U_{0,1},\mathsf R_1(R,\alpha),\mathsf S_1(r_\beta)$ | $(1,0)$ | $(1,1)$ |
+| $D_{L\alpha}$ | $\mathsf R_0(\varepsilon,\mathsf{branch}),\mathsf R_0(R,\alpha),\mathsf S_0(r_{L\alpha})$ | $\mathsf U_{0,1},\mathsf R_1(R,\beta),\mathsf S_1(r_{L\alpha})$ | $(2,0)$ | $(1,1)$ |
+| $D_{L\beta}$ | $\mathsf R_0(\varepsilon,\mathsf{branch}),\mathsf R_0(R,\beta),\mathsf S_0(r_{L\beta})$ | $\mathsf U_{0,1},\mathsf R_1(R,\mathsf{branch}),\mathsf S_1(r_{L\beta})$ | $(2,0)$ | $(1,1)$ |
+
+证明。固定任意原见证 $u$。若 $u$ 为叶，$A$ 的首读即给它的原标签；若 $u=\langle x,b\rangle$，首读必为分支，次读给原右叶 $b$，与任意 $x$ 无关。$B$ 的实际更新在同一根上给
+
+$$
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle x,\alpha\rangle=\langle\rho x,\beta\rangle,
+\quad \rho\langle x,\beta\rangle=\langle\rho x,\langle\beta,\alpha\rangle\rangle.
+\tag{43.3}
+$$
+
+所以当时 $R$ 回复恰为表中四值；这是原树等式，对所有 $x\in\mathcal T$ 成立。每个扇区非空，取任意 $x$ 已给后两者的见证；这些见证只证存在，不替换运行中的未知实际 $x$。
+
+$A$ 的第一项分支回复之支持恰为 $D_{L\alpha}\cup D_{L\beta}$，第二项筛为相应 $D_{Lb}$；首读叶的支持为对应单点。$B$ 的更新事件支持仍为整个 $D$，其一读的四个分支支持分别为四个 $D_i$。停止只保留已有支持。完整状态的其余字段由这些实际前缀共同确定，故无额外隐含筛选。于是每个前缀 $\gamma$ 都满足
+
+$$
+\Gamma_\gamma=\{(u,\rho^{N_\gamma}u):u\in D_\gamma\},\qquad
+D_{\gamma o}=\{u\in D_\gamma:e(\gamma,u)=o\},
+\tag{43.4}
+$$
+
+恰为40.2–40.3的一步支持条件。真实更新不伪造新 raw，零纪元 $H_0$ 保持零纪元；原来源在整个递推中不变。逐项相加给两列资源。以控制表中到停止的最大剩余动作数为自然数秩，每个活动动作严格下降，两表均至多三项实际动作即吸收，不依赖 $x$ 的大小。∎
+
