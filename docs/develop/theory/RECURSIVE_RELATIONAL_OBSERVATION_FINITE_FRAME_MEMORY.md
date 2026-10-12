@@ -928,3 +928,196 @@ kernel validation and actual paid execution.
 [CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Complete-field memory as a conditional carrier-capacity test
+
+Theorem 5.4 gives a cardinality for the extra complete field required by a
+finite whole-image task. That cardinality is a source and observation
+quantity. It becomes a geometric capacity statement only after the source
+states have been placed in a metric carrier with a declared separation and
+scale rule.
+
+**Definition 9.1 (a finite-depth metric row bridge).** Let \(A=f(D)\) be the
+finite whole-image row set of Definition 5.1. For an attained prefix \(p\) at
+depth \(h\), retain
+
+$$
+S_h(p)=\{r\in A:\exists u\in D_r,\ p_h(u)=p\},\qquad
+m_h=\max_p |S_h(p)|.
+$$
+
+Fix a metric space \((X,d_X)\) and a source-state map
+\(\chi:D\to X\). A bridge certificate at depth \(h\) consists of numbers
+\(R_h\ge0\), \(\delta_h>0\), and, for every \(p\) with \(S_h(p)\ne\varnothing\),
+a centre \(c_{h,p}\in X\) and one representative
+
+$$
+x_{h,p,r}\in\chi\bigl(\{u\in D_r:p_h(u)=p\}\bigr)
+\qquad(r\in S_h(p))
+$$
+
+such that
+
+$$
+d_X(x_{h,p,r},c_{h,p})\le R_h,\qquad
+d_X(x_{h,p,r},x_{h,p,s})>\delta_h\quad(r\ne s).
+\tag{FFM.30}
+$$
+
+The first condition is the declared observation-cell radius and the second
+condition is a row-separation claim. Neither follows from equality of native
+prefixes or from the existence of a complete field. Define the carrier
+packing number
+
+$$
+\mathsf P_X(R,\delta)=\sup_{c\in X}\sup\left\{
+n:\exists x_1,\ldots,x_n\in B_X(c,R),\
+d_X(x_i,x_j)>\delta\ (i\ne j)\right\}.
+\tag{FFM.31}
+$$
+
+The supremum is allowed to be infinite; no properness is silently assumed.
+
+**Theorem 9.2 (memory is bounded by certified carrier capacity).** If a
+finite-depth metric row bridge exists at depth \(h\), then
+
+$$
+\boxed{m_h\le \mathsf P_X(R_h,\delta_h).}
+\tag{FFM.32}
+$$
+
+Under whole-image admission, with \(H_A\) and \(M_*\) from Theorem 5.2,
+
+$$
+\boxed{M_*=m_{H_A}\le\mathsf P_X(R_{H_A},\delta_{H_A}).}
+\tag{FFM.33}
+$$
+
+In particular, if \(X=\mathbb R^d\) with its Euclidean metric and
+\(0<\delta_h\le R_h\), then
+
+$$
+\boxed{
+m_h\le\left(1+\frac{2R_h}{\delta_h}\right)^d,\qquad
+M_*\le\left(1+\frac{2R_{H_A}}{\delta_{H_A}}\right)^d.
+}
+\tag{FFM.34}
+$$
+
+Consequently, whenever \(M_*>1\) and \(R_{H_A}>0\), any such Euclidean
+bridge must satisfy the conditional lower bound
+
+$$
+\boxed{
+d\ge
+\frac{\log M_*}
+{\log(1+2R_{H_A}/\delta_{H_A})}.
+}
+\tag{FFM.35}
+$$
+
+**Proof.** Fix \(p\). The representatives in (FFM.30) are a
+\(\delta_h\)-separated subset of one ball of radius \(R_h\), so their number
+is at most \(\mathsf P_X(R_h,\delta_h)\). Taking the maximum over \(p\) proves
+(FFM.32). Theorem 5.2 identifies \(m_{H_A}\) with \(M_*\), giving
+(FFM.33).
+
+For Euclidean \(X\), the open balls of radius \(\delta_h/2\) around the
+representatives are pairwise disjoint and lie in the ball of radius
+\(R_h+\delta_h/2\). Comparing Lebesgue volumes gives
+
+$$
+m_h\left(\frac{\delta_h}{2}\right)^d
+\le\left(R_h+\frac{\delta_h}{2}\right)^d,
+$$
+
+which is (FFM.34). Taking logarithms gives (FFM.35). The case \(R_h=0\)
+already forces \(m_h\le1\), so it cannot occur together with \(M_*>1\).
+\(\square\)
+
+The estimate is a capacity test, not a dimension theorem. It uses a metric
+cell radius and a row-separation scale that are additional bridge data. If
+the source rows are not separated in the carrier, the estimate has no force;
+if \(R_h/\delta_h\) is allowed to grow without a declared relation to native
+prefix depth, (FFM.35) does not identify a stable exponent.
+
+**Proposition 9.3 (the exact memory multiplicity is carrier-independent
+without a bridge).** Let \(D\) be a countably infinite native source domain
+and keep the complete input, target rows, prefixes and all \(m_h\) unchanged.
+For every integer \(d\ge1\), there are injective maps
+
+$$
+\chi_d:D\to\mathbb R^d,\qquad
+\widetilde\chi_d:D\to\mathbb R^d
+$$
+
+such that \(\chi_d(D)\) is unbounded and \(\widetilde\chi_d(D)\) is bounded,
+while both placements have the same \(M_*\). Thus \(M_*\), by itself, does
+not determine \(d\), proper metric escape, or a Green operator.
+
+**Proof.** Enumerate \(D=\{u_0,u_1,\ldots\}\). Set
+
+$$
+\chi_d(u_n)=(n,0,\ldots,0),\qquad
+\widetilde\chi_d(u_n)=(2^{-n},0,\ldots,0).
+$$
+
+Both maps are injective and do not occur in the definitions of \(p_h\),
+\(S_h(p)\), \(m_h\), or \(M_*\). Therefore all source-side quantities are
+identical. The first image is unbounded and the second has a finite
+accumulation point. Since no metric separation or scale condition was
+assumed, neither placement is preferred by the source problem. The same
+argument works for any prescribed \(d\ge1\). \(\square\)
+
+**Corollary 9.4 (what a three-dimensional memory certificate would have to
+show).** A single finite \(M_*\) supplies only a capacity inequality. To
+identify a carrier exponent from memory, consider a sequence of admitted
+finite whole-image instances
+
+$$
+(D_n,Q_n,A_n),\qquad
+m^{(n)}_h=\max_p|S^{(n)}_h(p)|,\qquad
+M_n=m^{(n)}_{H_{A_n}},
+$$
+
+where \(H_{A_n}\) is the computed minimizing depth of Theorem 5.2. For a
+common bridge and a sequence of scales \(h_n\), impose all of the following:
+
+1. \(R_n/\delta_n\to\infty\) is tied in both directions to the native
+   observation scale;
+2. the row representatives in one prefix cell satisfy the separation and
+   radius conditions (FFM.30);
+3. the carrier packing number has a two-sided exponent
+   \(\mathsf P_X(R_n,\delta_n)\asymp(R_n/\delta_n)^d\);
+4. the observed complete-field multiplicity saturates that capacity up to
+   fixed factors, \(M_n\asymp\mathsf P_X(R_n,\delta_n)\).
+
+If the source computation independently gives
+\(M_n\asymp(R_n/\delta_n)^3\), these four clauses imply \(d=3\). Without
+the saturation clause, they give only an upper capacity bound; without the
+two-way scale clause, the ratio can be chosen after the fact. Neither the
+finite-memory identity \(M(D,Q)=M_*\) nor terminal overlap supplies these
+bridge clauses.
+
+**Proof.** The upper and lower packing estimates in clauses 3--4 give
+
+$$
+c_1(R_n/\delta_n)^d\le M_n\le c_2(R_n/\delta_n)^d
+$$
+
+for fixed positive constants. The independent source asymptotic gives the
+same pair of inequalities with exponent \(3\). Taking logarithms and using
+\(\log(R_n/\delta_n)\to\infty\) forces \(d=3\). Clause 1 prevents a
+reparameterization of the scale from manufacturing the exponent, clause 2
+is what permits Theorem 9.2 to apply, and clause 4 prevents a carrier with
+unused capacity from being mistaken for the source dimension. \(\square\)
+
+This gives a sharper division of labour. The finite-frame theorem computes
+the exact number of complete boundary values required by the declared source
+task. A geometry bridge may convert that number into a packing constraint.
+Only a scale family that saturates a proved carrier capacity can identify an
+exponent, and the conditional stability window of §88 still requires the
+same carrier's measure, operator, Green estimates and clock. No native or
+physical three-dimensional conclusion follows from \(M_*\) alone.
+
+## 9.99 追加锚（本行以下为增补区）
