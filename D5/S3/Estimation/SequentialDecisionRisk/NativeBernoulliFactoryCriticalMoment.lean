@@ -8,6 +8,7 @@
 
 import D5.S3.Estimation.SequentialDecisionRisk.SeededBernoulliFactoryExecution
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Data.List.OfFn
 
 noncomputable section
 open MeasureTheory ProbabilityTheory Filter Set
@@ -220,6 +221,101 @@ private lemma common_rate_cost_law (π : Seed → Bool → History → Action)
   apply lintegral_congr
   intro ω
   exact common_rate_cost π S p a ω
+
+local notation "Prefix" => fun (t : ℕ → Bool × Bool) (n : ℕ) =>
+  List.ofFn (fun i : Fin n => t i)
+local notation "SeedSection" => fun (π : Seed → Bool → History → Action) (S : Bool)
+  (t : ℕ → Bool × Bool) (n : ℕ) =>
+  {seed | ∀ i < n, π seed S (Prefix t i) = .inl (t i).1}
+local notation "TapeSection" => fun (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) =>
+  Set.pi (Finset.range n) (fun i => (Coin (if (t i).1 then q else p)) ⁻¹' {(t i).2})
+local notation "TraceEvent" => fun (π : Seed → Bool → History → Action) (S : Bool)
+  (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) =>
+  {ω : Seed × (ℕ → ℝ) | ∀ i < n,
+    Act π S p q i ω = .inl (t i).1 ∧ Read p q (t i).1 i ω.2 = (t i).2}
+
+omit [MeasurableSpace Seed] in
+private lemma history_of_trace (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (ω : Seed × (ℕ → ℝ))
+    (htrace : ω ∈ TraceEvent π S p q t n) :
+    acquiredHistory π S (Read p q) n ω = Prefix t n := by
+  induction n with
+  | zero => simp [acquiredHistory]
+  | succ n ih =>
+    have hprev := ih (fun i hi => htrace i (Nat.lt_succ_of_lt hi))
+    have hn := htrace n (Nat.lt_succ_self n)
+    change π ω.1 S (acquiredHistory π S (Read p q) n ω) = .inl (t n).1 at hn.1
+    simp only [acquiredHistory, hn.1, hn.2, hprev]
+    rw [List.ofFn_succ']
+    rfl
+
+omit [MeasurableSpace Seed] in
+private lemma trace_event_sections (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) :
+    TraceEvent π S p q t n = (SeedSection π S t n) ×ˢ (TapeSection p q t n) := by
+  ext ω
+  constructor
+  · intro ht
+    refine ⟨?_, ?_⟩
+    · intro i hi
+      have hp := history_of_trace π S p q t i ω
+        (fun j hj => ht j (hj.trans hi))
+      have ha := (ht i hi).1
+      change π ω.1 S (acquiredHistory π S (Read p q) i ω) = .inl (t i).1 at ha
+      rwa [hp] at ha
+    · intro i hi
+      exact (ht i (Finset.mem_range.mp hi)).2
+  · rintro ⟨hseed, hbits⟩
+    have hh : ∀ k ≤ n, acquiredHistory π S (Read p q) k ω = Prefix t k := by
+      intro k
+      induction k with
+      | zero => intro hk; simp [acquiredHistory]
+      | succ k ih =>
+        intro hk
+        have hp := ih (by omega)
+        have ha := hseed k (by omega)
+        have hb := hbits k (Finset.mem_range.mpr (by omega))
+        simp only [acquiredHistory, hp, ha, hb]
+        rw [List.ofFn_succ']
+        rfl
+    intro i hi
+    constructor
+    · change π ω.1 S (acquiredHistory π S (Read p q) i ω) = .inl (t i).1
+      rw [hh i hi.le]
+      exact hseed i hi
+    · exact hbits i (Finset.mem_range.mpr hi)
+
+/-- A fixed labelled source trace has the prescribed independent Bernoulli
+likelihood. Adaptive source choices and private memory stay in the same seed
+section, which is independent of both unknown source rates. -/
+theorem native_source_trace_law (π : Seed → Bool → History → Action)
+    (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool)
+    (ν : Measure Seed) [IsProbabilityMeasure ν] (p q : unitInterval)
+    (t : ℕ → Bool × Bool) (n : ℕ) (D : Set Seed) (hD : MeasurableSet D) :
+    (RawLaw ν) ((TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D) =
+      ν ((SeedSection π S t n) ∩ D) *
+        ∏ i ∈ Finset.range n, (bernoulliMeasure true false
+          (if (t i).1 then q else p)) {(t i).2} := by
+  have := uniform_probability
+  have hs : MeasurableSet (SeedSection π S t n) :=
+    MeasurableSet.iInter fun i => MeasurableSet.iInter fun hi =>
+      (hπ S (Prefix t i)) (by
+        cases (t i).1 <;> simpa only [Set.image_singleton] using
+          ((measurableSet_singleton ((t i).1)).inl_image (β := Bool × Bool)))
+  have he : (TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' D =
+      ((SeedSection π S t n) ∩ D) ×ˢ (TapeSection p q t n) := by
+    rw [trace_event_sections]
+    ext ω
+    simp only [Set.mem_inter_iff, Set.mem_prod, Set.mem_preimage]
+    tauto
+  rw [he, Measure.prod_prod]
+  rw [Measure.infinitePi_pi _ (fun i hi =>
+    (coin_measurable _) (measurableSet_singleton _))]
+  congr 1
+  apply Finset.prod_congr rfl
+  intro i hi
+  rw [← uniform_coin_law, Measure.map_apply (coin_measurable _)
+    (measurableSet_singleton _)]
 
 /-- The fixed known parameters of the two-source factory. -/
 structure FactoryParameters where
