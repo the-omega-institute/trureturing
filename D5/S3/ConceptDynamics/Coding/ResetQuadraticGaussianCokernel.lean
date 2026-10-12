@@ -20,6 +20,8 @@ open D5.S3.ConceptDynamics.Coding.ResetFiniteIntegralDefect
 open D5.S3.ConceptDynamics.Coding.InertGroupBlockConjugacy
   (VertexModule transition DimensionGroup)
 open D5.S1.Recurrence.QuadraticCompanionDefect
+open private flip_twice from D5.S3.ConceptDynamics.Coding.ResetNativeIntegralDefect
+open private flip_coeff sign_cases from D5.S3.ConceptDynamics.Coding.ResetFiniteIntegralDefect
 
 private abbrev RingRow := MonoidAlgebra ℤ Sign
 private abbrev tau : Sign := ofAdd true
@@ -27,23 +29,6 @@ private abbrev tau : Sign := ofAdd true
 /-- Identity plus the square of the original integer right-row transition. -/
 def resetTwoStepDefect (q : ℕ) : Module.End ℤ (VertexModule Sign q) :=
   LinearMap.id + transition (resetMatrix q) ^ 2
-
-private theorem flip_twice (x : RingRow) : resetFlip (resetFlip x) = x := by
-  change (x * MonoidAlgebra.single tau 1) * MonoidAlgebra.single tau 1 = x
-  rw [mul_assoc, MonoidAlgebra.single_mul_single]
-  have ht : tau * tau = (1 : Sign) := by decide
-  simp [ht, ← MonoidAlgebra.one_def]
-
-private theorem flip_coeff (x : RingRow) (h : Sign) :
-    (resetFlip x).coeff h = x.coeff (h * tau) := by
-  change (x * MonoidAlgebra.single tau 1).coeff h = _
-  have ht : tau⁻¹ = tau := by decide
-  simp only [MonoidAlgebra.coeff_mul_single_apply, mul_one, ht]
-
-private theorem sign_cases (h : Sign) : h = 1 ∨ h = tau := by
-  rcases Bool.dichotomy (toAdd h) with hb | hb
-  · exact Or.inl (congrArg (fun b : Bool => (ofAdd b : Sign)) hb)
-  · exact Or.inr (congrArg (fun b : Bool => (ofAdd b : Sign)) hb)
 
 private def difference : RingRow →+ ℤ where
   toFun x := x.coeff 1 - x.coeff tau
