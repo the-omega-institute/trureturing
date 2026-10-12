@@ -32,6 +32,10 @@ local notation "Diff" => fun (r : ℕ) (t : ℝ) (f : ℝ → ℝ) =>
   ∑ i ∈ range (r + 1), (-1 : ℝ) ^ (r - i) * (r.choose i : ℝ) * f (t + i * t)
 local notation "Rate" => fun (p₀ : unitInterval) (γ h : ℝ) =>
   Set.projIcc 0 1 zero_le_one ((p₀ : ℝ) + h * γ)
+local notation "GeoBudget" => fun (a : ℝ) (m : ℕ) =>
+  (2 : ℝ) ^ a / ((2 : ℝ) ^ a - 1) + (1 - (2 : ℝ) ^ (a - (m : ℝ)))⁻¹
+local notation "EndpointCost" => fun (a : ℝ) (t : WithTop ℕ) =>
+  if t = ⊤ then (⊤ : ℝ≥0∞) else ENNReal.ofReal (((t.untopD 0 : ℕ) : ℝ) ^ a)
 local notation "DerivC" => fun (m : ℕ) (σ : ℝ) =>
   (2 * m).factorial * σ ^ (2 * m) * (2 * MomentC m + 1)
 
@@ -180,18 +184,18 @@ theorem bernoulli_one_scale_common_endpoint_charge
       δ + 2 * V / (n : ℝ) ^ m := by
     intro i hi
     apply (herror _ (hpoints i hi)).trans
-    apply add_le_add_left
+    apply add_le_add le_rfl
     exact (le_div_iff₀ hnPow).mpr (by simpa only [mul_comm] using (hlocal _ (hpoints i hi)).2)
   have hdiff := difference_error_bound (2 * m) t (δ + 2 * V / (n : ℝ) ^ m) G g herr
   have hgd := hcalculus (2 * D * V) (by positivity) (fun h hh => (hlocal h hh).1)
   have hscale : t ^ (2 * m) = ρ ^ (2 * m) / (n : ℝ) ^ m := by
     dsimp [t]
-    rw [div_pow, pow_mul, Real.sq_sqrt hnR.le]
+    simp_rw [div_pow, pow_mul, Real.sq_sqrt hnR.le]
   have hbound : S * (n : ℝ) ^ (-a) ≤ (2 : ℝ) ^ (2 * m) * δ + A * V / (n : ℝ) ^ m := by
     calc
       _ ≤ |Diff (2 * m) t G| := hsignal
-      _ ≤ |Diff (2 * m) t G - Diff (2 * m) t g| + |Diff (2 * m) t g| :=
-        (abs_sub_le _ _ _).trans_eq (by simp)
+      _ ≤ |Diff (2 * m) t G - Diff (2 * m) t g| + |Diff (2 * m) t g| := by
+        simpa only [sub_zero] using abs_sub_le (Diff (2 * m) t G) (Diff (2 * m) t g) 0
       _ ≤ (2 : ℝ) ^ (2 * m) * (δ + 2 * V / (n : ℝ) ^ m) + t ^ (2 * m) * (2 * D * V) :=
         add_le_add hdiff hgd
       _ = _ := by rw [hscale]; dsimp [A]; rw [pow_succ]; ring
@@ -199,14 +203,93 @@ theorem bernoulli_one_scale_common_endpoint_charge
       A * ((n : ℝ) ^ (a - (m : ℝ)) * V) := by
     have h := mul_le_mul_of_nonneg_right hbound (Real.rpow_nonneg hnR.le a)
     rw [mul_assoc S, ← Real.rpow_add hnR, neg_add_cancel, Real.rpow_zero, mul_one] at h
-    convert h using 1
-    rw [Real.rpow_sub_natCast hnR, div_eq_mul_inv]
-    ring
+    calc
+      S ≤ ((2 : ℝ) ^ (2 * m) * δ + A * V / (n : ℝ) ^ m) * (n : ℝ) ^ a := h
+      _ = _ := by
+        rw [Real.rpow_sub_natCast (ne_of_gt hnR), div_eq_mul_inv]
+        ring
   have hsmall : (2 : ℝ) ^ (2 * m) * δ * (n : ℝ) ^ a ≤ S / 2 := by
     have h := mul_le_mul_of_nonneg_left hδ (pow_nonneg (by norm_num : (0 : ℝ) ≤ 2) (2 * m))
     rw [pow_succ] at h
-    convert h using 1 <;> field_simp <;> ring
+    calc
+      (2 : ℝ) ^ (2 * m) * δ * (n : ℝ) ^ a =
+          (2 : ℝ) ^ (2 * m) * (δ * (n : ℝ) ^ a) := by ring
+      _ ≤ (2 : ℝ) ^ (2 * m) * (S / ((2 : ℝ) ^ (2 * m) * 2)) := h
+      _ = S / 2 := by field_simp
   apply (div_le_iff₀ (mul_pos (by norm_num) hA)).mpr
   nlinarith
+
+/-- A finite family of resolved windows is paid by a single endpoint
+fractional cost of the same stopping rule. Infinite endpoint cost is
+included in the statement. -/
+theorem bernoulli_finite_dyadic_common_endpoint_charge
+    (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
+    (m : ℕ) (a ρ γ σ δ S : ℝ) (ha : 0 < a) (ham : a < (m : ℝ))
+    (hρ : 0 < ρ) (hσ : 0 ≤ σ) (hS : 0 < S) (J : ℕ)
+    (f : ℕ → Seed × (ℕ → Bool) → ℝ)
+    (hf : ∀ j, StronglyMeasurable[(truncation_stopping hM (2 ^ j)).measurableSpace] (f j))
+    (hfb : ∀ j ω, |f j ω| ≤ 1) (G : ℝ → ℝ)
+    (hrate : ∀ j < J, ∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+      0 < (p₀ : ℝ) + h * γ ∧ (p₀ : ℝ) + h * γ < 1)
+    (hscore : ∀ j < J, ∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+      |γ / ((Rate p₀ γ h : ℝ) * (1 - (Rate p₀ γ h : ℝ)))| ≤ σ)
+    (hwindow : ∀ j < J, ∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+      |((Rate p₀ γ h : ℝ) - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ)))| *
+        Real.sqrt ((2 ^ j : ℕ) : ℝ) ≤ (2 * MomentC m + 1)⁻¹)
+    (herror : ∀ j < J, ∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+      |G h - ∫ ω, f j ω ∂Law ν (Rate p₀ γ h)| ≤
+        δ + (Law ν (Rate p₀ γ h)).real {ω | ((2 ^ j : ℕ) : WithTop ℕ) < M ω})
+    (hsignal : ∀ j < J, S * ((2 ^ j : ℕ) : ℝ) ^ (-a) ≤
+      |Diff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) G|)
+    (hcalculus : ∀ j < J, ∀ U : ℝ, 0 ≤ U →
+      (∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+        ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+        |iteratedDeriv (2 * m) (fun x : ℝ => ∫ ω, f j ω ∂Law ν (Rate p₀ γ x)) h| ≤ U) →
+      |Diff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+        (fun x : ℝ => ∫ ω, f j ω ∂Law ν (Rate p₀ γ x))| ≤
+        (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) ^ (2 * m) * U)
+    (hδ : ∀ j < J, δ * ((2 ^ j : ℕ) : ℝ) ^ a ≤ S / (2 : ℝ) ^ (2 * m + 1)) :
+    ENNReal.ofReal ((J : ℝ) * (S /
+      (2 * (2 * DerivC m σ * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1))))) ≤
+      ENNReal.ofReal (GeoBudget a m) * ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀ := by
+  have hm : 0 < m := by
+    by_contra h
+    have hz : m = 0 := by omega
+    rw [hz, Nat.cast_zero] at ham
+    linarith
+  let z := S / (2 * (2 * DerivC m σ * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1)))
+  let W := fun j : ℕ => ((2 : ℝ) ^ (a - (m : ℝ))) ^ j
+  have hmeas := hM.measurable.mono hM.measurableSpace_le le_rfl
+  have hW : ∀ j, 0 ≤ W j := fun j => by dsimp [W]; positivity
+  have hcharges : ∀ j ∈ range J, ENNReal.ofReal z ≤ ENNReal.ofReal (W j) *
+      ∫⁻ ω, ENNReal.ofReal ((Trunc M (2 ^ j) ω : ℝ) ^ m) ∂Law ν p₀ := by
+    intro j hj
+    have hjJ := mem_range.mp hj
+    have hc := bernoulli_one_scale_common_endpoint_charge ν p₀ h₀ h₁ M hM (2 ^ j)
+      (by positivity) m hm a ρ γ σ δ S hρ hσ hS (f j) (hf j) (hfb j) G
+      (hrate j hjJ) (hscore j hjJ) (hwindow j hjJ) (herror j hjJ)
+      (hsignal j hjJ) (hcalculus j hjJ) (hδ j hjJ)
+    have hw : ((2 ^ j : ℕ) : ℝ) ^ (a - (m : ℝ)) = W j := by
+      dsimp [W]
+      rw [Nat.cast_pow, Nat.cast_ofNat, ← Real.rpow_natCast_mul (by norm_num),
+        mul_comm (j : ℝ), Real.rpow_mul_natCast (by norm_num)]
+    rw [hw] at hc
+    rw [← ofReal_integral_eq_lintegral_ofReal
+      (truncated_moment_integrable (Law ν p₀) M hmeas (2 ^ j) m)
+      (ae_of_all _ (fun ω => by positivity)), ← ENNReal.ofReal_mul (hW j)]
+    exact ENNReal.ofReal_le_ofReal hc
+  calc
+    _ = ∑ _j ∈ range J, ENNReal.ofReal z := by
+      rw [sum_const, card_range, nsmul_eq_mul, ENNReal.ofReal_mul (Nat.cast_nonneg J)]
+      simp [z]
+    _ ≤ ∑ j ∈ range J, ENNReal.ofReal (W j) *
+        ∫⁻ ω, ENNReal.ofReal ((Trunc M (2 ^ j) ω : ℝ) ^ m) ∂Law ν p₀ := sum_le_sum hcharges
+    _ ≤ _ := endpoint_budget_finite (Law ν p₀) M hmeas a m ha ham J
 
 end D5.S3.Estimation.SequentialDecisionRisk.BernoulliCommonEndpointCharge

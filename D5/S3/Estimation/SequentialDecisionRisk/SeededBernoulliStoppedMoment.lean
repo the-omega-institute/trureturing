@@ -478,7 +478,7 @@ lemma truncation_tail_bound {Ω : Type*} [MeasurableSpace Ω]
       gcongr
     _ ≤ _ := mul_meas_ge_le_lintegral (μ := μ) hf (ENNReal.ofReal ((n : ℝ) ^ m))
 
-private lemma endpoint_budget_finite {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+lemma endpoint_budget_finite {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
     (M : Ω → WithTop ℕ) (hM : Measurable M) (a : ℝ) (m : ℕ)
     (ha : 0 < a) (ham : a < (m : ℝ)) (K : ℕ) :
     (∑ j ∈ range K, ENNReal.ofReal (Weight a m j) *
