@@ -160,4 +160,85 @@ private lemma large_family {d t : ℕ} (ht : 2 ≤ t) (hd : 2 * t < d) :
   · intro ζ hz; rcases Finset.mem_insert.mp hz with hz | hz
     · exact Or.inr (hz ▸ hk)
     · exact Or.inl (Finset.mem_powersetCard.mp hz).2
+
+private lemma winning_translate {d t : ℕ} (ζ : Vertex d) (A B : Output d t)
+    (hab : Disjoint A.val B.val) : Wins (ζ ∆ A.val) (ζ ∆ B.val) A B := by
+  refine ⟨hab, ?_⟩
+  rw [symmDiff_symmDiff_symmDiff_comm, symmDiff_self]
+  exact (Finset.symmDiff_eq_union hab).symm.trans (bot_symmDiff _).symm
+section AbstractGap
+variable {V : Type*} [AddCommGroup V] [Module ℝ V] (C : PreInnerProductSpace.Core ℝ V)
+private lemma form_symm (x y : V) : C.inner x y = C.inner y x := by
+  simpa using C.conj_inner_symm y x
+private lemma form_sub (x y : V) :
+    C.inner (x - y) (x - y) = C.inner x x - 2 * C.inner x y + C.inner y y := by
+  have he := @InnerProductSpace.Core.inner_sub_sub_self ℝ V _ _ _ C x y
+  rw [form_symm C y x] at he; linarith
+private lemma form_cs (x y : V) : (C.inner x y) ^ 2 ≤ C.inner x x * C.inner y y := by
+  have he := @InnerProductSpace.Core.inner_mul_inner_self_le ℝ V _ _ _ C x y
+  rw [form_symm C y x] at he
+  simpa only [Real.norm_eq_abs, ← sq, sq_abs, RCLike.re_to_real] using he
+private lemma form_bound (x y : V) :
+    C.inner x y ≤ Real.sqrt (C.inner x x) * Real.sqrt (C.inner y y) := by
+  have he := @InnerProductSpace.Core.norm_inner_le_norm ℝ V _ _ _ C x y
+  change |C.inner x y| ≤ Real.sqrt (C.inner x x) * Real.sqrt (C.inner y y) at he
+  exact (le_abs_self _).trans he
+private lemma form_triangle (x y z : V) :
+    Real.sqrt (C.inner (x - z) (x - z)) ≤
+      Real.sqrt (C.inner (x - y) (x - y)) + Real.sqrt (C.inner (y - z) (y - z)) := by
+  let _ := C
+  let _ := InnerProductSpace.Core.toSeminormedAddCommGroup (𝕜 := ℝ) (F := V)
+  have he := norm_add_le (x - y) (y - z)
+  rw [sub_add_sub_cancel] at he; exact he
+private lemma form_sum {ι : Type*} (S : Finset ι) (f : ι → V) (x : V) :
+    C.inner x (∑ i ∈ S, f i) = ∑ i ∈ S, C.inner x (f i) := by
+  classical
+  induction S using Finset.induction_on
+  · exact @InnerProductSpace.Core.inner_zero_right ℝ V _ _ _ C x
+  · rename_i a S ha ih
+    rw [Finset.sum_insert ha, Finset.sum_insert ha,
+      @InnerProductSpace.Core.inner_add_right ℝ V _ _ _ C, ih]
+private lemma exchange_transport {d t : ℕ} (X : Output d t → V) (e : ℝ) (he : 0 ≤ e)
+    (step : ∀ A A' : Output d t, (A.val ∪ A'.val).card ≤ t + 1 →
+      Real.sqrt (C.inner (X A - X A') (X A - X A')) ≤ 2 * e) (A R : Output d t) :
+    Real.sqrt (C.inner (X A - X R) (X A - X R)) ≤ 2 * (t : ℝ) * e := by
+  have bound : ∀ k (A : Output d t), (A.val \ R.val).card = k →
+      Real.sqrt (C.inner (X A - X R) (X A - X R)) ≤ 2 * (k : ℝ) * e := by
+    intro k
+    induction k using Nat.strong_induction_on
+    rename_i k ih
+    intro A hk
+    by_cases hAR : A = R
+    · subst A; rw [sub_self, @InnerProductSpace.Core.inner_zero_right ℝ V _ _ _ C, Real.sqrt_zero]
+      positivity
+    · obtain ⟨A', hcard, hUnion⟩ := exchange_reduction A R hAR
+      have hlt : (A'.val \ R.val).card < k := by omega
+      have hrec := ih _ hlt A' rfl
+      have htri := form_triangle C (X A) (X A') (X R)
+      have hstep := step A A' hUnion
+      have hcast : ((A'.val \ R.val).card : ℝ) + 1 = k := by exact_mod_cast hcard.trans hk
+      nlinarith
+  have hb := bound _ A rfl
+  have hc : ((A.val \ R.val).card : ℝ) ≤ t := by
+    exact_mod_cast (Finset.card_le_card Finset.sdiff_subset).trans_eq A.property
+  nlinarith
+private lemma scalar_gap {d t : ℕ} (hn : 1 ≤ n d t) (δ : ℝ) (h0 : 0 ≤ δ) (h1 : δ ≤ 1)
+    (hg : 1 ≤ (n d t) ^ 2 * (4 * (t : ℝ) * Real.sqrt (2 * δ) + 2 * δ)) :
+    kappa d t ≤ δ := by
+  have hs := Real.sq_sqrt h0
+  have hr := Real.sqrt_nonneg δ
+  have hδ : δ ≤ Real.sqrt δ := by nlinarith
+  rw [Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 2)] at hg
+  let a := 4 * Real.sqrt 2 * (t : ℝ) + 2
+  have ha : 0 < a := by dsimp only [a]; positivity
+  have hg' : 1 ≤ (n d t) ^ 2 * a * Real.sqrt δ := by
+    dsimp only [a]; nlinarith [mul_nonneg (sq_nonneg (n d t)) (sub_nonneg.mpr hδ)]
+  have hg2 : 1 ≤ ((n d t) ^ 2 * a * Real.sqrt δ) ^ 2 := by nlinarith
+  have hid : ((n d t) ^ 2 * a * Real.sqrt δ) ^ 2 = ((n d t) ^ 4 * a ^ 2) * δ := by
+    rw [mul_pow, mul_pow, hs]; ring
+  rw [hid] at hg2
+  have hd : 0 < (n d t) ^ 4 * a ^ 2 := by positivity
+  change 1 / ((n d t) ^ 4 * a ^ 2) ≤ δ
+  exact (div_le_iff₀ hd).mpr (by simpa only [one_mul, mul_comm] using hg2)
+end AbstractGap
 end D5.S3.Quantum.Entanglement.HypercubeRendezvousQuantumGap
