@@ -145,6 +145,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
+          set -euo pipefail
+          heartbeat_pid=''
+          heartbeat() {
+            while :; do
+              printf 'CACHE_PRODUCER_HEARTBEAT %s\n' "$(date -u +%FT%TZ)"
+              sleep 60
+            done
+          }
+          heartbeat &
+          heartbeat_pid=$!
+          trap 'kill "$heartbeat_pid" 2>/dev/null || true; wait "$heartbeat_pid" 2>/dev/null || true' EXIT
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
             export STRATALINT_LEAN_PRODUCER_DLL="$producer"
@@ -285,6 +296,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
+          set -euo pipefail
+          heartbeat_pid=''
+          heartbeat() {
+            while :; do
+              printf 'CACHE_PRODUCER_HEARTBEAT %s\n' "$(date -u +%FT%TZ)"
+              sleep 60
+            done
+          }
+          heartbeat &
+          heartbeat_pid=$!
+          trap 'kill "$heartbeat_pid" 2>/dev/null || true; wait "$heartbeat_pid" 2>/dev/null || true' EXIT
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
             export STRATALINT_LEAN_PRODUCER_DLL="$producer"
