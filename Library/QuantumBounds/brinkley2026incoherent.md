@@ -29,6 +29,7 @@ Example 4.4 (last paragraph):
 
 ## Locator
 
+Author text: <https://arxiv.org/abs/2610.05302v1>.
 - arXiv v1, Definition 3.2, Section 3, p. 8.
 - arXiv v1, Example 4.4, last paragraph.
 - DOI: https://doi.org/10.48550/arXiv.2610.05302
