@@ -3246,3 +3246,175 @@ The same-field sharpness, cutoff error, critical-domain transfer, joint exact-bu
 A source application must separately provide maps preserving the original source and immutable INITIAL, same-source chronology, authentic Read/refusal/Stop behavior, the carrier, state, field, Haar measure, horizontal metric, boundary and clock conventions. State and budget acquisition, preparation, observation, copying, retention, permissions, resources and costs remain separate conditions. An analytic derivative or budget premise does not supply those operations or a source-to-state realization, and the reader still needs the actual conditional interaction statistic (82.16). The added kinetic term defines a different mathematical law; a fixed budget restricts the original law; finiteness alone supplies neither change. None of these analytic contracts identifies a native invariant interacting sector or a physical space dimension.
 
 ## 78.99 追加锚（本行以下为增补区）
+
+## 88. Terminal overlap is a source-side persistence certificate
+
+The latest DEV terminal-overlap synthesis gives a terminating result for a
+recognized class of acquired signed inputs. Its cofinality sentence is useful
+for the present geometry question, but it has to be kept at its actual level:
+it certifies persistence of common finite prefixes of source outputs. It does
+not by itself define a metric carrier, a propagation clock, or a spatial
+dimension.
+
+**Definition 88.1 (recognized source-overlap datum).** Let \(I\) be a complete
+acquired input and let \(B\) be a finite set of distinct attained complete
+target rows. Let \(J_B(h)\) be the joint finite-prefix predicate for the same
+source contract at depth \(h\). Call \((I,B)\) terminal-recognized when every
+source-cover chart tuple either has a finite constructor clash or passes the
+terminal comparison test of the DEV synthesis.
+
+For a nonclash tuple and one scalar-divergence face \(K\), write
+\(\mathcal C_K\) for its exact joint cofinal support sentence. The sentence
+holds only after all finite scalar anchors and forced finite residuals have
+been fixed; its lower bounds are then imposed simultaneously on every
+divergent original scalar.
+
+**Theorem 88.2 (source-side persistence certificate).** For a
+terminal-recognized \((I,B)\), exactly one of the following alternatives is
+returned by the finite procedure:
+
+1. Some face has \(\mathcal C_K\) true. The procedure then constructs, for
+   every requested \(h\), actual finite originals in every row of \(B\) whose
+   complete outputs share one prefix of depth \(h\).
+2. Every face has \(\mathcal C_K\) false. The procedure then returns a finite
+   \(H\) with \(\neg J_B(H)\).
+
+This is a source-level theorem. The first alternative says that the acquired
+contract admits fresh finite witnesses at every requested depth; the second
+says that this selected joint set is separated at a finite depth. Neither
+alternative supplies a metric realization or a physical signal law.
+
+**Proof.** The complete mixed covers are finite, and terminal recognition
+reduces each nonclash tuple to finitely many scalar faces. The DEV cofinal
+support theorem is necessary and sufficient for one fixed tuple to have
+witnesses at all depths. If one face is true, its finite-prefix lifting
+constructs the required sources at each requested depth. If all faces are
+false, each chart tuple fails at some finite depth; the maximum of those
+finitely many failures excludes the whole finite cover. The fixed-depth
+source query then finds the first exclusion depth. The construction retains
+the complete old row, all signed endpoint conditions, repeated occurrences,
+and the common-source contract throughout. \(\square\)
+
+The theorem improves the boundary calculation in a precise way. It replaces
+an unproved phrase such as “the two rows remain indistinguishable forever” by
+one of two finite certificates: a uniform construction parameterized by the
+requested depth, or a finite separating depth. It does not turn source rank
+into radius.
+
+**Definition 88.3 (cofinal source rank).** In a true face \(\mathcal C_K\),
+call \(K\) the escaping source set. Its cofinality is the statement
+
+$$
+\forall b\in\mathbb N\ \exists \mathbf v\quad
+\Phi_K(\mathbf t,\mathbf q,\mathbf v)\ \land\
+\bigwedge_{i\in K}v_i\ge b,
+$$
+
+with the finite anchors \(\mathbf t,\mathbf q\) fixed before the lower-bound
+request. Thus all coordinates in \(K\) escape jointly in source-index space.
+
+**Proposition 88.4 (cofinality is not metric escape).** Source cofinality
+does not imply that a corresponding geometric realization escapes to
+infinite distance.
+
+**Proof.** Let \(n\in\mathbb N\) be a cofinal source index. The maps
+
+$$
+\chi_1(n)=(n,0,\ldots,0)\in\mathbb R^d,\qquad
+\chi_2(n)=(2^{-n},0,\ldots,0)\in\mathbb R^d
+$$
+
+are both injective source placements. The first has unbounded distance from
+the origin, while the second has a finite accumulation point. Replacing the
+second by
+\(\chi_3(n)=(\sin(\theta n),\cos(\theta n),0,\ldots,0)\), with
+\(\theta/(2\pi)\) irrational, gives an injective bounded placement as well.
+The source predicate, its cofinality sentence, and every \(J_B(h)\) value are
+unchanged because none of these definitions contains \(\chi_i\) or a metric.
+Therefore cofinal source rank alone cannot establish properness, radial
+escape, or a physical infinite boundary. \(\square\)
+
+The counterexample is deliberately elementary. It identifies the missing
+bridge rather than denying that a useful bridge may exist for FIB. A native
+transport could rule out the bounded placements, but that requires a theorem
+about the transport and its metric compatibility.
+
+**Definition 88.5 (source-to-geometry bridge).** A bridge for a source
+family consists of a carrier \((X,d,\mu)\), a source-state map
+\(\chi:D\to X\), and an explicit response map satisfying all of the following
+where they are needed:
+
+* source actions and same-register forward updates map to declared local
+  transports on \(X\);
+* prefix depth is related to a declared observation scale \(r(h)\), with
+  both directions of the implication needed by the target task;
+* escaping source coordinates are proper in the relevant sector, for example
+  \(v_i\to\infty\Rightarrow d(o,\chi(u_{\mathbf v}))\to\infty\);
+* the carrier has a measure and local operator whose volume, heat, or Green
+  estimates are proved at that scale;
+* the acquired clock, boundary, and interaction readouts are the same
+  objects used in the claimed propagation or energy statement.
+
+A source-cover result supplies none of these clauses unless they are included
+as additional hypotheses or proved from the native operations.
+
+**Theorem 88.6 (conditional composition with the stability window).**
+Suppose a terminal-recognized source family admits a source-to-geometry
+bridge whose coarse carrier has volume exponent \(d\), whose field operator
+has homogeneous order \(\sigma\), and whose localizing operator has order
+\(\tau\). Suppose further that the Green and variational hypotheses of the
+stability analysis hold on that same carrier. Then the scale competition has
+a finite strict minimum only in the window
+
+$$
+\sigma<d<\sigma+\tau.
+$$
+
+For the ordinary second-order field and second-order localization contract,
+\(\sigma=\tau=2\), so the integer window is \(d=3\).
+
+**Proof.** Under the bridge, a point response has homogeneous order
+\(d-\sigma\), while localization has order \(\tau\). At scale \(R\) the
+two terms therefore have the form
+
+$$
+AR^{-\tau}-BR^{-(d-\sigma)},\qquad A,B>0.
+$$
+
+The strict finite-scale minimum criterion is
+\(0<d-\sigma<\tau\), which is exactly the displayed window. The
+terminal-overlap certificate is used only to establish the source family and
+its finite-prefix persistence; the analytic lower bound, attainment, and
+transport compatibility remain separate bridge obligations. \(\square\)
+
+**Proposition 88.7 (no reverse inference from persistent overlap).** A true
+\(\mathcal C_K\), even for every finite target-row set \(B\) considered by the
+acquisition, does not imply \(d=3\), the existence of a second-order field,
+or the existence of a stable negative-energy state.
+
+**Proof.** The same source datum can be placed on a line, a planar lattice,
+or a four-dimensional lattice while leaving all source rows, signed records,
+prefix replies, and cofinal support sentences unchanged. The differing
+carriers have different volume growth and Green kernels. The analytic
+stability conclusion therefore cannot be recovered from the source predicate
+alone. Theorem 88.6 becomes applicable only after one of these placements is
+selected by a proved bridge and its operator estimates are established. \(\square\)
+
+This separates two kinds of persistence that had previously been easy to
+conflate:
+
+| persistence statement | what it certifies | what it does not certify |
+| --- | --- | --- |
+| \(\mathcal C_K\) true | fresh finite source witnesses at every requested prefix depth | metric properness or a dimension |
+| source rank escapes every bound | a necessary unbounded parameter in the chosen source chart | unbounded physical radius |
+| bridge plus Green estimates | a carrier-level propagation and stability model | that the bridge is native to FIB unless proved |
+| \(\sigma<d<\sigma+\tau\) | a conditional scale window in the declared analytic model | a source-to-physics realization |
+
+The next concrete proof obligation is therefore not another list of
+three-dimensional properties. It is to construct, or refute, a native bridge
+from the FIB legal transport and acquired clock to a carrier with a proved
+volume exponent and local operator. Terminal overlap can certify that the
+source family persists through arbitrary finite observation depth; it cannot
+choose the carrier on which that persistence propagates.
+
+## 88.99 追加锚（本行以下为增补区）
