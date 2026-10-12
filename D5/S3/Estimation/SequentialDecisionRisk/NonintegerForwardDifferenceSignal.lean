@@ -38,8 +38,9 @@ theorem has_deriv_at_fwd_diff_iter (t : ℝ) (n : ℕ) (f f' : ℝ → ℝ) (x :
     have h1 := ih (x + t) (fun i hi => by
       have he : x + t + i * t = x + (i + 1 : ℕ) * t := by push_cast; ring
       simpa only [he] using hf (i + 1) (by omega))
-    convert (h1.comp_add_const x t).fun_sub h0 using 1 <;>
-      simp only [Function.iterate_succ_apply', fwdDiff]
+    convert (h1.comp_add_const x t).fun_sub h0 using 1 <;> first
+      | rfl
+      | (simp only [Function.iterate_succ_apply', fwdDiff] <;> rfl)
 
 /-- A higher-order mean value formula with every evaluation point in the original
 closed forward-difference interval. -/
@@ -269,6 +270,7 @@ theorem target_signal_scaled (B C β ρ : ℝ) (R : ℕ) (hR : 2 ≤ R)
     rw [← Real.rpow_neg hn.le]
     rw [show -(1 * (2 : ℝ)⁻¹ * β) = -(β * 2⁻¹) by ring]
     ring
+
 
 
 end D5.S3.Estimation.SequentialDecisionRisk.NonintegerForwardDifferenceSignal
