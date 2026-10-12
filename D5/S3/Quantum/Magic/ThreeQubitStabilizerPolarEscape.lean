@@ -5,14 +5,12 @@
    anchors: []
    utility: none
    digest: Seven anticommuting Paulis support a three-qubit stabilizer polar escape. -/
-
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Entanglement.NandiMutualPredictabilityLOCCRefutation
 import Mathlib.Analysis.Convex.Hull
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Algebra.Group.Submonoid.Basic
-
 set_option autoImplicit false
 noncomputable section
 open Matrix
@@ -23,9 +21,7 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
   (Phase letterProduct letterPhase word_mul word_comm_sign tensor_one wordUnit word_one tensor_trace
     word_hermitian pauli_hermitian)
-
 namespace D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
-
 abbrev Bits (n : ℕ) := Fin n → Fin 2
 abbrev Op (n : ℕ) := Matrix (Bits n) (Bits n) ℂ
 def IsState {n : ℕ} (ρ : Op n) : Prop := ρ.PosSemidef ∧ ρ.trace = 1
@@ -59,13 +55,11 @@ def sigma : Op 3 := (1 / 56 : ℝ) • ((7 : ℝ) • 1 + S)
 def bell : Op 6 := Matrix.of fun x y =>
   if (splitBits 3 3 x).1 = (splitBits 3 3 x).2 ∧
       (splitBits 3 3 y).1 = (splitBits 3 3 y).2 then (1 / 8 : ℂ) else 0
-
 private def splitEquiv (n m : ℕ) : Bits (n + m) ≃ Bits n × Bits m where
   toFun := splitBits n m
   invFun := fun p => Fin.append p.1 p.2
   left_inv := fun x => Fin.append_castAdd_natAdd
   right_inv := by intro p; ext i <;> simp [splitBits]
-
 private lemma tensor_product {n m : ℕ} (A C : Op n) (B D : Op m) :
     tensor A B * tensor C D = tensor (A * C) (B * D) := by
   unfold tensor
@@ -75,16 +69,12 @@ private lemma tensor_product {n m : ℕ} (A C : Op n) (B D : Op m) :
   change (A.kronecker B * C.kronecker D).submatrix (splitBits n m) (splitBits n m) = _
   congr 1
   exact (Matrix.mul_kronecker_mul A C B D).symm
-
-
 private lemma word_square {n : ℕ} (w : Fin n → Pauli) : wordOp w * wordOp w = 1 :=
   (wordUnit w).val_inv
-
 private lemma tensor_adjoint {n : ℕ} (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) :
     (tensorOp M)ᴴ = tensorOp (fun i => (M i)ᴴ) := by
   ext x y
   simp [tensorOp, Matrix.conjTranspose_apply, star_prod]
-
 private lemma gamma_anticommute (i j : Fin 7) (h : i ≠ j) :
     wordOp (gammaWords i) * wordOp (gammaWords j) =
       -(wordOp (gammaWords j) * wordOp (gammaWords i)) := by
@@ -94,10 +84,8 @@ private lemma gamma_anticommute (i j : Fin 7) (h : i ≠ j) :
     all_goals first | exact (h rfl).elim |
       (norm_num [gammaWords, Fin.prod_univ_succ, sgn, anticomm]; decide)
   rw [hs, neg_one_smul]
-
 private lemma S_adjoint : Sᴴ = S := by
   simp only [S, Matrix.conjTranspose_sum, word_hermitian]
-
 private lemma S_square : S * S = (7 : ℂ) • (1 : Op 3) := by
   let G := fun i => wordOp (gammaWords i)
   let T : Op 3 := ∑ i : Fin 7, ∑ j : Fin 7, if i ≠ j then G i * G j else 0
@@ -142,34 +130,17 @@ private lemma S_square : S * S = (7 : ℂ) • (1 : Op 3) := by
   simp only [G, word_square, Finset.sum_const, Finset.card_univ, Fintype.card_fin]
   ext x y
   simp [Matrix.one_apply]
-
 private lemma S_trace : S.trace = 0 := by
   have hg (j : Fin 7) : (wordOp (gammaWords j)).trace = 0 := by
     unfold wordOp
     rw [tensor_trace]
-    fin_cases j <;> norm_num [gammaWords, Fin.prod_univ_succ, Matrix.trace,
+    fin_cases j <;> unfold Matrix.trace <;> norm_num [gammaWords, Fin.prod_univ_succ,
       pauliMatrix, qubitX, qubitZ, Fin.sum_univ_two, Matrix.mul_apply]
   simp only [S, Matrix.trace_sum, hg, Finset.sum_const_zero]
-
 private lemma phase_mul {c d : ℂ} (hc : Phase c) (hd : Phase d) : Phase (c * d) := by
   dsimp only [Phase] at hc hd ⊢
   rcases hc with rfl | rfl | rfl | rfl <;> rcases hd with rfl | rfl | rfl | rfl <;>
     simp [Complex.I_mul_I]
-
-private lemma pauli_mul {n : ℕ} {A B : Op n}
-    (ha : A ∈ PauliGroup n) (hb : B ∈ PauliGroup n) : A * B ∈ PauliGroup n := by
-  obtain ⟨c, hc, w, rfl⟩ := ha
-  obtain ⟨d, hd, v, rfl⟩ := hb
-  have hp : Phase (∏ i, letterPhase (w i) (v i)) := by
-    apply Finset.prod_induction _ (fun z => Phase z) (fun _ _ => phase_mul) (Or.inl rfl)
-    intro i _
-    cases w i <;> cases v i <;> dsimp only [letterPhase, Phase] <;> simp
-  refine ⟨c * d * ∏ i, letterPhase (w i) (v i), phase_mul (phase_mul hc hd) hp,
-    fun i => letterProduct (w i) (v i), ?_⟩
-  simp only [Matrix.smul_mul, Matrix.mul_smul, word_mul, smul_smul]
-  congr 1
-  ring
-
 private lemma local_adjoint {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     (localOp i A)ᴴ = localOp i Aᴴ := by
   unfold localOp
@@ -177,7 +148,6 @@ private lemma local_adjoint {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) �
   congr 1
   funext j
   by_cases h : j = i <;> simp [h]
-
 private lemma local_product {n : ℕ} (i : Fin n) (A B : Matrix (Fin 2) (Fin 2) ℂ) :
     localOp i A * localOp i B = localOp i (A * B) := by
   unfold localOp
@@ -185,27 +155,22 @@ private lemma local_product {n : ℕ} (i : Fin n) (A B : Matrix (Fin 2) (Fin 2) 
   congr 1
   funext j
   by_cases h : j = i <;> simp [h]
-
 private lemma local_identity {n : ℕ} (i : Fin n) :
     localOp i (1 : Matrix (Fin 2) (Fin 2) ℂ) = 1 := by
   unfold localOp
   rw [Function.update_eq_self_iff.mpr rfl, tensor_one]
-
 private lemma local_unitary {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ)
     (ha : A ∈ Matrix.unitaryGroup (Fin 2) ℂ) : localOp i A ∈ Matrix.unitaryGroup (Bits n) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff] at ha ⊢
   rw [Matrix.star_eq_conjTranspose] at ha ⊢
   rw [local_adjoint, local_product, ha, local_identity]
-
 private lemma gateS_unitary : gateS ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff]
   rw [Matrix.star_eq_conjTranspose]
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [gateS, Matrix.mul_apply, Fin.sum_univ_two]
-
 private def cnotBits {n : ℕ} (c t : Fin n) (x : Bits n) : Bits n :=
   Function.update x t (x t + x c)
-
 private lemma cnot_involutive {n : ℕ} (c t : Fin n) (h : c ≠ t) :
     Function.Involutive (cnotBits c t) := by
   intro x
@@ -216,7 +181,6 @@ private lemma cnot_involutive {n : ℕ} (c t : Fin n) (h : c ≠ t) :
     have hz : ∀ b : Fin 2, b + b = 0 := by decide
     rw [add_assoc, hz, add_zero]
   · simp [cnotBits, hi]
-
 private lemma cnot_action {n : ℕ} (c t : Fin n) (h : c ≠ t) (A : Op n) :
     gateCNOT c t * A * gateCNOT c t = A.submatrix (cnotBits c t) (cnotBits c t) := by
   have hi := cnot_involutive c t h
@@ -227,7 +191,6 @@ private lemma cnot_action {n : ℕ} (c t : Fin n) (h : c ≠ t) (A : Op n) :
     (if j = cnotBits c t y then 1 else 0)) = A (cnotBits c t x) (cnotBits c t y)
   simp only [he, ite_mul, one_mul, zero_mul, mul_ite, mul_one, mul_zero]
   simp
-
 private lemma cnot_unitary {n : ℕ} (c t : Fin n) (h : c ≠ t) :
     gateCNOT c t ∈ Matrix.unitaryGroup (Bits n) ℂ ∧ (gateCNOT c t)ᴴ = gateCNOT c t := by
   have hi := cnot_involutive c t h
@@ -246,7 +209,6 @@ private lemma cnot_unitary {n : ℕ} (c t : Fin n) (h : c ≠ t) :
       simp [Matrix.one_apply, hi.injective.eq_iff]
     simpa only [mul_one, he] using cnot_action c t h (1 : Op n)
   exact hs
-
 private lemma cnot_table (p q : Pauli) : ∃ (d : ℂ) (a b : Pauli), Phase d ∧
     ∀ x y u v : Fin 2, pauliMatrix p x u * pauliMatrix q (y + x) (v + u) =
       d * (pauliMatrix a x u * pauliMatrix b y v) := by
@@ -270,7 +232,6 @@ private lemma cnot_table (p q : Pauli) : ∃ (d : ℂ) (a b : Pauli), Phase d �
   all_goals intro x y u v; fin_cases x <;> fin_cases y <;> fin_cases u <;> fin_cases v <;>
     norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
       Fin.add_def, Matrix.one_apply]
-
 private lemma cnot_normalizes {n : ℕ} (c t : Fin n) (h : c ≠ t) (w : Fin n → Pauli) :
     gateCNOT c t * wordOp w * (gateCNOT c t)ᴴ ∈ PauliGroup n := by
   obtain ⟨d, a, b, hd, he⟩ := cnot_table (w c) (w t)
@@ -292,7 +253,6 @@ private lemma cnot_normalizes {n : ℕ} (c t : Fin n) (h : c ≠ t) (w : Fin n �
   have hic : i ≠ c := (Finset.mem_erase.mp (Finset.mem_erase.mp hi).2).1
   have hit : i ≠ t := (Finset.mem_erase.mp hi).1
   simp only [Function.update_of_ne hic, Function.update_of_ne hit]
-
 private lemma local_table (A : Matrix (Fin 2) (Fin 2) ℂ)
     (ha : A = gateH ∨ A = gateS ∨ A = gateSᴴ) (p : Pauli) :
     ∃ (c : ℂ) (q : Pauli), Phase c ∧ A * pauliMatrix p * Aᴴ = c • pauliMatrix q := by
@@ -319,7 +279,6 @@ private lemma local_table (A : Matrix (Fin 2) (Fin 2) ℂ)
         qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
         map_ofNat]
       <;> nlinarith [hs]
-
 private lemma local_normalizes {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ)
     (ha : A = gateH ∨ A = gateS ∨ A = gateSᴴ) (w : Fin n → Pauli) :
     localOp i A * wordOp w * (localOp i A)ᴴ ∈ PauliGroup n := by
@@ -343,13 +302,11 @@ private lemma local_normalizes {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2)
   apply Finset.prod_congr rfl
   intro j hj
   simp only [Function.update_of_ne (Finset.ne_of_mem_erase hj)]
-
 private lemma H_adjoint : gateHᴴ = gateH := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [gateH, D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
       D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2, pauliMatrix,
       qubitX, qubitZ]
-
 private lemma gates_data {n : ℕ} {U : Op n}
     (hu : U ∈ gates n ∪ (fun A : Op n => Aᴴ) '' gates n) :
     U ∈ Matrix.unitaryGroup (Bits n) ℂ ∧
@@ -370,7 +327,6 @@ private lemma gates_data {n : ℕ} {U : Op n}
         local_normalizes i _ (Or.inr (Or.inr rfl))⟩
     · rw [(cnot_unitary c t h).2]
       exact ⟨(cnot_unitary c t h).1, cnot_normalizes c t h⟩
-
 private lemma clifford_data {n : ℕ} {U : Op n} (hu : U ∈ Clifford n) :
     U ∈ Matrix.unitaryGroup (Bits n) ℂ ∧
       ∀ P ∈ PauliGroup n, U * P * Uᴴ ∈ PauliGroup n := by
@@ -388,7 +344,6 @@ private lemma clifford_data {n : ℕ} {U : Op n} (hu : U ∈ Clifford n) :
     refine ⟨(Matrix.unitaryGroup (Bits n) ℂ).mul_mem ihU.1 ihV.1, ?_⟩
     intro P hP
     simpa only [Matrix.conjTranspose_mul, mul_assoc] using ihU.2 _ (ihV.2 P hP)
-
 private lemma clifford_adjoint {n : ℕ} {U : Op n} (hu : U ∈ Clifford n) :
     Uᴴ ∈ Clifford n := by
   induction hu using Submonoid.closure_induction with
@@ -400,5 +355,185 @@ private lemma clifford_adjoint {n : ℕ} {U : Op n} (hu : U ∈ Clifford n) :
   | one => simp only [Matrix.conjTranspose_one]; exact (Clifford n).one_mem
   | mul U V hU hV ihU ihV =>
     simpa only [Matrix.conjTranspose_mul] using (Clifford n).mul_mem ihV ihU
-
+private lemma pauli_real {n : ℕ} {P : Op n} (hp : P ∈ PauliGroup n) (hh : Pᴴ = P) :
+    ∃ (c : ℂ) (w : Fin n → Pauli), (c = 1 ∨ c = -1) ∧ P = c • wordOp w := by
+  obtain ⟨c, hc, w, rfl⟩ := hp
+  have he := congrArg (fun M : Op n => (M * wordOp w) 0 0) hh
+  have hr : star c = c := by
+    simpa only [Matrix.conjTranspose_smul, word_hermitian, Matrix.smul_mul, word_square,
+      Matrix.smul_apply, smul_eq_mul, Matrix.one_apply, ite_true, mul_one] using he
+  refine ⟨c, w, ?_, rfl⟩
+  rcases hc with h | h | h | h
+  · exact Or.inl h
+  · exact Or.inr h
+  all_goals subst c; norm_num [Complex.ext_iff] at hr
+private lemma vacuum_word {n : ℕ} (w : Fin n → Pauli) : wordOp w 0 0 = 0 ∨
+    (wordOp w * vacuum n = vacuum n ∧ wordOp w 0 0 = 1) := by
+  by_cases hd : ∀ i, w i = .I ∨ w i = .Z
+  · have he (x : Bits n) : wordOp w x 0 = (1 : Op n) x 0 := by
+      calc
+        wordOp w x 0 = tensorOp (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) x 0 := by
+          dsimp only [wordOp, tensorOp, Matrix.of_apply]
+          apply Finset.prod_congr rfl
+          intro i _
+          rcases hd i with h | h <;> rw [h] <;>
+            (generalize x i = b; fin_cases b <;> simp [pauliMatrix, qubitZ, Matrix.one_apply])
+        _ = _ := congrArg (fun M : Op n => M x 0) tensor_one
+    refine Or.inr ⟨?_, by simpa using he 0⟩
+    ext x y
+    unfold vacuum
+    by_cases hy : y = 0
+    · subst y
+      rw [Matrix.mul_single_apply_same, mul_one, he, Matrix.one_apply]
+      simp only [Matrix.single_apply, and_true, eq_comm]
+    · rw [Matrix.mul_single_apply_of_ne _ _ _ _ _ hy,
+        Matrix.single_apply_of_col_ne _ _ (Ne.symm hy)]
+  · push Not at hd
+    obtain ⟨i, hi, hz⟩ := hd
+    apply Or.inl
+    apply Finset.prod_eq_zero (Finset.mem_univ i)
+    cases h : w i <;> simp_all [pauliMatrix, qubitX, qubitZ]
+private lemma pure_expectation {n : ℕ} {U P : Op n} (hu : U ∈ Clifford n)
+    (hp : P ∈ PauliGroup n) (hh : Pᴴ = P) :
+    (P * (U * vacuum n * Uᴴ)).trace = 0 ∨
+      (((P * (U * vacuum n * Uᴴ)).trace = 1 ∨
+        (P * (U * vacuum n * Uᴴ)).trace = -1) ∧
+        P * (U * vacuum n * Uᴴ) = (P * (U * vacuum n * Uᴴ)).trace •
+          (U * vacuum n * Uᴴ)) := by
+  have hn := clifford_data (clifford_adjoint hu)
+  have hq : (Uᴴ * P * U)ᴴ = Uᴴ * P * U := by
+    simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, hh, mul_assoc]
+  obtain ⟨c, w, hc, hw⟩ := pauli_real (by simpa using hn.2 P hp) hq
+  have ht : (P * (U * vacuum n * Uᴴ)).trace = c * wordOp w 0 0 := by
+    calc
+      _ = (Uᴴ * P * U * vacuum n).trace := by
+        simpa only [mul_assoc] using Matrix.trace_mul_cycle (P * U) (vacuum n) Uᴴ
+      _ = _ := by rw [hw, Matrix.smul_mul, Matrix.trace_smul]; simp [vacuum,
+          Matrix.trace_mul_single]
+  rcases vacuum_word w with hz | ⟨he, hv⟩
+  · exact Or.inl (by rw [ht, hz, mul_zero])
+  · have htc : (P * (U * vacuum n * Uᴴ)).trace = c := by rw [ht, hv, mul_one]
+    have huR : U * Uᴴ = 1 := by
+      simpa only [Matrix.star_eq_conjTranspose] using
+        Matrix.mem_unitaryGroup_iff.mp (clifford_data hu).1
+    refine Or.inr ⟨htc ▸ hc, ?_⟩
+    rw [htc]
+    calc
+      _ = U * ((Uᴴ * P * U) * vacuum n) * Uᴴ := by
+        simp only [← mul_assoc, huR, one_mul]
+      _ = _ := by rw [hw, Matrix.smul_mul, he, Matrix.mul_smul, Matrix.smul_mul]
+private lemma pure_eigenvector {n : ℕ} {U P : Op n} (hu : U ∈ Clifford n)
+    (hp : P ∈ PauliGroup n) (hh : Pᴴ = P)
+    (he : (P * (U * vacuum n * Uᴴ)).trace ≠ 0) :
+    P *ᵥ (U *ᵥ Pi.single 0 1) = (P * (U * vacuum n * Uᴴ)).trace •
+      (U *ᵥ Pi.single 0 1) := by
+  have hl : Uᴴ * U = 1 := by simpa only [Matrix.star_eq_conjTranspose] using
+    Matrix.mem_unitaryGroup_iff'.mp (clifford_data hu).1
+  have h := congrArg (fun A : Op n => A * U)
+    (((pure_expectation hu hp hh).resolve_left he).2)
+  simp only [Matrix.smul_mul, mul_assoc, hl, mul_one] at h
+  rw [Matrix.mulVec_mulVec]
+  simp only [Matrix.mulVec_single_one]
+  ext x
+  have hx := congrArg (fun A : Op n => A x 0) h
+  simpa only [vacuum, ← mul_assoc, Matrix.mul_single_apply_same, mul_one,
+    Matrix.smul_apply, smul_eq_mul, Matrix.col_apply, Pi.smul_apply] using hx
+private lemma anticommuting_support {n k : ℕ} (G : Fin k → Op n)
+    (hg : ∀ i, G i ∈ PauliGroup n ∧ (G i)ᴴ = G i)
+    (ha : ∀ i j, i ≠ j → G i * G j = -(G j * G i)) :
+    ∀ ρ ∈ STAB n, tr (ρ * ∑ i, G i) ≤ 1 := by
+  have hc : Convex ℝ {ρ : Op n | tr (ρ * ∑ i, G i) ≤ 1} :=
+    convex_halfSpace_le ⟨fun A B => by simp [tr, Matrix.add_mul, Matrix.trace_add],
+      fun r A => by simp [tr, Matrix.trace_smul]⟩ 1
+  apply convexHull_min (t := {ρ : Op n | tr (ρ * ∑ i, G i) ≤ 1}) ?_ hc
+  rintro ρ ⟨U, hu, rfl⟩
+  let ρ : Op n := U * vacuum n * Uᴴ
+  let e : Fin k → ℂ := fun i => (G i * ρ).trace
+  have hψ : (U *ᵥ Pi.single 0 1 : Bits n → ℂ) ≠ 0 := by
+    intro hz
+    have hl : Uᴴ * U = 1 := by simpa only [Matrix.star_eq_conjTranspose] using
+      Matrix.mem_unitaryGroup_iff'.mp (clifford_data hu).1
+    have hv := congrArg (fun v : Bits n → ℂ => Uᴴ *ᵥ v) hz
+    rw [Matrix.mulVec_mulVec, hl, Matrix.one_mulVec, Matrix.mulVec_zero] at hv
+    have hc := congrFun hv 0
+    simp at hc
+  have he (i) : e i = 0 ∨ ((e i = 1 ∨ e i = -1) ∧ G i * ρ = e i • ρ) :=
+    pure_expectation hu (hg i).1 (hg i).2
+  have hs (i j) (hij : i ≠ j) : e i = 0 ∨ e j = 0 := by
+    by_contra h
+    push Not at h
+    have ei := pure_eigenvector hu (hg i).1 (hg i).2 h.1
+    have ej := pure_eigenvector hu (hg j).1 (hg j).2 h.2
+    have hi : (G i * G j) *ᵥ (U *ᵥ Pi.single 0 1) =
+        (e j * e i) • (U *ᵥ Pi.single 0 1) := by
+      rw [← Matrix.mulVec_mulVec, ej, Matrix.mulVec_smul, ei, smul_smul]
+    have hj : (G j * G i) *ᵥ (U *ᵥ Pi.single 0 1) =
+        (e i * e j) • (U *ᵥ Pi.single 0 1) := by
+      rw [← Matrix.mulVec_mulVec, ei, Matrix.mulVec_smul, ej, smul_smul]
+    have hh := congrArg (fun M : Op n => M *ᵥ (U *ᵥ Pi.single 0 1)) (ha i j hij)
+    simp only [hi, Matrix.neg_mulVec, hj, mul_comm (e j) (e i)] at hh
+    have hz : (e i * e j) • (U *ᵥ Pi.single 0 1) = 0 := by
+      ext x
+      exact CharZero.eq_neg_self_iff.mp (congrFun hh x)
+    exact (smul_eq_zero.mp hz).elim (mul_ne_zero h.1 h.2) hψ
+  have ht : tr (ρ * ∑ i, G i) = (∑ i, e i).re := by
+    unfold tr
+    rw [Matrix.mul_sum, Matrix.trace_sum]
+    congr 1
+    exact Finset.sum_congr rfl (fun i _ => Matrix.trace_mul_comm _ _)
+  change tr (ρ * ∑ i, G i) ≤ 1
+  rw [ht]
+  by_cases hz : ∀ i, e i = 0
+  · simp only [hz, Finset.sum_const_zero, Complex.zero_re]; norm_num
+  · push Not at hz
+    obtain ⟨i, hi⟩ := hz
+    have hsum : (∑ j, e j) = e i := Finset.sum_eq_single i
+      (fun j _ hj => (hs j i hj).resolve_right hi) (by simp)
+    rw [hsum]
+    rcases ((he i).resolve_left hi).1 with h | h <;> rw [h] <;> norm_num
+private lemma S_support {ρ : Op 3} (hρ : ρ ∈ STAB 3) : tr (ρ * S) ≤ 1 := by
+  apply anticommuting_support (fun i : Fin 7 => wordOp (gammaWords i)) ?_
+    gamma_anticommute ρ hρ
+  intro i
+  exact ⟨⟨1, Or.inl rfl, gammaWords i, (one_smul _ _).symm⟩, word_hermitian _⟩
+private lemma word_conjugate {n : ℕ} (w : Fin n → Pauli) :
+    ∃ c : ℂ, Phase c ∧ conjugate (wordOp w) = c • wordOp w := by
+  let d : Pauli → ℂ := fun p => if p = .Y then -1 else 1
+  have hd (p) : Phase (d p) := by
+    dsimp only [d]; split_ifs <;> first | exact Or.inl rfl | exact Or.inr (Or.inl rfl)
+  have he (p) (x y : Fin 2) : star (pauliMatrix p x y) = d p * pauliMatrix p x y := by
+    cases p <;> fin_cases x <;> fin_cases y <;>
+      norm_num [d, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two] <;> decide
+  refine ⟨∏ i, d (w i), Finset.prod_induction _ _ (fun _ _ => phase_mul)
+    (Or.inl rfl) (fun i _ => hd (w i)), ?_⟩
+  ext x y
+  simp only [conjugate, Matrix.map_apply, wordOp, tensorOp, Matrix.of_apply,
+    Matrix.smul_apply, smul_eq_mul, star_prod, he, Finset.prod_mul_distrib]
+private lemma conjugate_product {n : ℕ} (A B : Op n) :
+    conjugate (A * B) = conjugate A * conjugate B := by
+  change (A * B).map (starRingEnd ℂ) = A.map (starRingEnd ℂ) * B.map (starRingEnd ℂ)
+  exact Matrix.map_mul
+private lemma conjugate_adjoint {n : ℕ} (A : Op n) :
+    (conjugate A)ᴴ = conjugate Aᴴ := by ext x y; rfl
+private lemma conjugate_neg {n : ℕ} (A : Op n) : conjugate (-A) = -conjugate A := by
+  ext x y; exact star_neg _
+private lemma conjugate_S_support {ρ : Op 3} (hρ : ρ ∈ STAB 3) :
+    tr (ρ * conjugate S) ≤ 1 := by
+  have hs : conjugate S = ∑ i : Fin 7, conjugate (wordOp (gammaWords i)) := by
+    ext x y
+    simp only [conjugate, S, Matrix.map_apply, Matrix.sum_apply, star_sum]
+  rw [hs]
+  apply anticommuting_support (fun i : Fin 7 => conjugate (wordOp (gammaWords i)))
+    ?_ ?_ ρ hρ
+  · intro i
+    obtain ⟨c, hc, he⟩ := word_conjugate (gammaWords i)
+    refine ⟨⟨c, hc, gammaWords i, he⟩, ?_⟩
+    rw [conjugate_adjoint, word_hermitian]
+  · intro i j h
+    have he := congrArg conjugate (gamma_anticommute i j h)
+    simpa only [conjugate_product, conjugate_neg] using he
+#print axioms clifford_data
+#print axioms S_square
+#print axioms S_support
+#print axioms conjugate_S_support
 end D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
