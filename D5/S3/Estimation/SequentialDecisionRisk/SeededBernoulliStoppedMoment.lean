@@ -665,7 +665,12 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
       ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀) ≤
       ENNReal.ofReal (GeoBudget a m) * ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) ∧
     (∀ K : ℝ≥0∞, (∀ j, (∫⁻ ω, EndpointCost a (M ω) ∂Law ν (p j)) ≤ K) →
-      (∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) ≤ K) := by
+      (∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) ≤ K) ∧
+    ((∑' j, ENNReal.ofReal (Weight a m j) *
+      (ENNReal.ofReal (((2 ^ j : ℕ) : ℝ) ^ m) *
+        Law ν (p j) {ω | ((2 ^ j : ℕ) : WithTop ℕ) < M ω})) ≤
+      2 * ENNReal.ofReal (GeoBudget a m) *
+        ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) := by
   have hm : 0 < m := by
     by_contra h
     have hz : m = 0 := by omega
@@ -678,10 +683,11 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
       (fun ω => Trunc (M ω) (2 ^ j)) (truncation_stopping hM (2 ^ j))
       (2 ^ j) (fun ω => truncation_le (M ω) (2 ^ j)) hm (hwindow j)).2
   have hmeas := hM.measurable.mono hM.measurableSpace_le le_rfl
-  refine ⟨hmoment, fun j => ?_, ?_, fun K hK =>
-    endpoint_from_uniform_cost ν p₀ h₀ h₁ M hM a ha p
-      (dyadic_window_tendsto p₀ p h₀ h₁ _ hwindow) K hK⟩
-  · apply (truncation_tail_bound (Law ν (p j)) M hmeas (2 ^ j) m).trans
+  have htail : ∀ j, ENNReal.ofReal (((2 ^ j : ℕ) : ℝ) ^ m) *
+      Law ν (p j) {ω | ((2 ^ j : ℕ) : WithTop ℕ) < M ω} ≤
+      2 * ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀ := by
+    intro j
+    apply (truncation_tail_bound (Law ν (p j)) M hmeas (2 ^ j) m).trans
     rw [← ofReal_integral_eq_lintegral_ofReal
       (truncated_moment_integrable (Law ν (p j)) M hmeas (2 ^ j) m)
       (ae_of_all _ (fun ω => by positivity)),
@@ -690,10 +696,32 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
       (ae_of_all _ (fun ω => by positivity))]
     simpa only [ENNReal.ofReal_mul (by norm_num : (0 : ℝ) ≤ 2), ENNReal.ofReal_ofNat]
       using ENNReal.ofReal_le_ofReal (hmoment j)
+  refine ⟨hmoment, htail, ?_, fun K hK =>
+    endpoint_from_uniform_cost ν p₀ h₀ h₁ M hM a ha p
+      (dyadic_window_tendsto p₀ p h₀ h₁ _ hwindow) K hK, ?_⟩
   · apply ENNReal.tsum_le_of_sum_range_le
     intro K
-    exact endpoint_budget_finite (Law ν p₀) M
-      (hM.measurable.mono hM.measurableSpace_le le_rfl) a m ha ham K
+    exact endpoint_budget_finite (Law ν p₀) M hmeas a m ha ham K
+  · apply ENNReal.tsum_le_of_sum_range_le
+    intro K
+    calc
+      (∑ j ∈ range K, ENNReal.ofReal (Weight a m j) *
+          (ENNReal.ofReal (((2 ^ j : ℕ) : ℝ) ^ m) *
+            Law ν (p j) {ω | ((2 ^ j : ℕ) : WithTop ℕ) < M ω})) ≤
+          ∑ j ∈ range K, 2 * (ENNReal.ofReal (Weight a m j) *
+            ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀) := by
+        apply sum_le_sum
+        intro j hj
+        simpa only [mul_left_comm] using
+          mul_le_mul_right (htail j) (ENNReal.ofReal (Weight a m j))
+      _ = 2 * (∑ j ∈ range K, ENNReal.ofReal (Weight a m j) *
+          ∫⁻ ω, ENNReal.ofReal ((Trunc (M ω) (2 ^ j) : ℝ) ^ m) ∂Law ν p₀) := by
+        rw [Finset.mul_sum]
+      _ ≤ 2 * (ENNReal.ofReal (GeoBudget a m) *
+          ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀) :=
+        mul_le_mul_right (endpoint_budget_finite (Law ν p₀) M hmeas a m ha ham K) 2
+      _ = 2 * ENNReal.ofReal (GeoBudget a m) *
+          ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀ := (mul_assoc _ _ _).symm
 
 
 
