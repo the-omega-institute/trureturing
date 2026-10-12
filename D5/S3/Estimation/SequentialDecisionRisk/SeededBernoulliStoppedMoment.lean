@@ -14,6 +14,8 @@ import Mathlib.Algebra.Order.Field.GeomSum
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.Calculus.Deriv.Mul
 
 noncomputable section
 
@@ -266,6 +268,18 @@ private lemma likelihood_step (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ))
   cases ω.2 i <;> simp only [Bool.false_eq_true, ↓reduceIte]
   all_goals field_simp [ne_of_gt h₀, ne_of_gt (sub_pos.mpr h₁)] <;> ring
 
+local notation "MomentC" => fun m : ℕ =>
+  (((2 : ℝ) ^ (2 * m + 1) * (2 * m : ℝ) ^ 2) ^ m * (2 : ℝ) ^ (2 * m))
+local notation "Bit" => fun (p : unitInterval) (i : ℕ) (ω : Seed × (ℕ → Bool)) =>
+  (if ω.2 i then (1 : ℝ) else 0) - (p : ℝ)
+
+omit [MeasurableSpace Seed] in
+private lemma centered_bit_bound (p : unitInterval) (i : ℕ) (ω : Seed × (ℕ → Bool)) :
+    |Bit p i ω| ≤ 1 := by
+  cases hb : ω.2 i <;> simp only [hb, Bool.false_eq_true, ↓reduceIte]
+  · rw [zero_sub, abs_neg, abs_of_nonneg p.2.1]; exact p.2.2
+  · rw [abs_of_nonneg (sub_nonneg.mpr p.2.2)]; linarith [p.2.1]
+
 /-- A parameter-independent stopping rule on an iid Bernoulli stream and an
 independent arbitrary private seed has its parameter-`p` stopped moment
 bounded by twice its endpoint moment in the local likelihood window. -/
@@ -293,11 +307,7 @@ theorem bernoulli_stopped_moment_bound (ν : Measure Seed) [IsProbabilityMeasure
     (fun ω => by simp) hτn
     (fun i ω => ?_) (fun ω => like_nonneg p₀ p (τ ω) ω)
     (likelihood_step p₀ p h₀ h₁) hm hwindow).2
-  cases ω.2 i <;> simp only [Bool.false_eq_true, ↓reduceIte]
-  · rw [zero_sub, abs_neg, abs_of_nonneg p₀.2.1]
-    exact p₀.2.2
-  · rw [abs_of_nonneg (sub_nonneg.mpr p₀.2.2)]
-    linarith [p₀.2.1]
+  exact centered_bit_bound p₀ i ω
 
 local notation "Weight" => fun (a : ℝ) (m j : ℕ) => ((2 : ℝ) ^ (a - (m : ℝ))) ^ j
 local notation "GeoBudget" => fun (a : ℝ) (m : ℕ) =>
@@ -485,6 +495,14 @@ private lemma endpoint_budget_finite {Ω : Type*} [MeasurableSpace Ω] (μ : Mea
       ← ENNReal.ofReal_mul hG.le]
     exact ENNReal.ofReal_le_ofReal (dyadic_truncation_kernel a m ha ham t K)
 
+private lemma stopped_like_measurable (p₀ p : unitInterval)
+    (τ : Seed × (ℕ → Bool) → ℕ) (hτ : Measurable τ) :
+    Measurable (fun ω => Like p₀ p (τ ω) ω) := by
+  have hjoint : Measurable (fun z : ℕ × (Seed × (ℕ → Bool)) => Like p₀ p z.1 z.2) :=
+    measurable_from_prod_countable_right
+      (fun i => ((like_adapted p₀ p i).mono (seededFiltration.le i)).measurable)
+  exact hjoint.comp (hτ.prodMk measurable_id)
+
 private lemma stopped_statistic_continuous (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
     (τ : Seed × (ℕ → Bool) → ℕ)
@@ -492,12 +510,8 @@ private lemma stopped_statistic_continuous (ν : Measure Seed) [IsProbabilityMea
     (n : ℕ) (hτn : ∀ ω, τ ω ≤ n) (F : ℕ → ℝ) :
     Continuous (fun p : unitInterval => ∫ ω, F (τ ω) ∂Law ν p) := by
   have ht := stopping_nat_measurable hτ
-  have hL : ∀ p : unitInterval, Measurable (fun ω => Like p₀ p (τ ω) ω) := by
-    intro p
-    have hjoint : Measurable (fun z : ℕ × (Seed × (ℕ → Bool)) => Like p₀ p z.1 z.2) :=
-      measurable_from_prod_countable_right
-        (fun i => ((like_adapted p₀ p i).mono (seededFiltration.le i)).measurable)
-    exact hjoint.comp (ht.prodMk measurable_id)
+  have hL : ∀ p : unitInterval, Measurable (fun ω => Like p₀ p (τ ω) ω) :=
+    fun p => stopped_like_measurable p₀ p τ ht
   have hF : Measurable (fun ω => F (τ ω)) := (measurable_from_nat (f := F)).comp ht
   let R : ℝ := ∑ k ∈ range (n + 1), |F k|
   have hFb : ∀ ω, |F (τ ω)| ≤ R := fun ω =>
@@ -722,6 +736,155 @@ theorem bernoulli_common_endpoint_budget (ν : Measure Seed) [IsProbabilityMeasu
         mul_le_mul_right (endpoint_budget_finite (Law ν p₀) M hmeas a m ha ham K) 2
       _ = 2 * ENNReal.ofReal (GeoBudget a m) *
           ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀ := (mul_assoc _ _ _).symm
+
+
+private lemma normalized_likelihood_moment (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ p : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (τ : Seed × (ℕ → Bool) → ℕ)
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ)))
+    (n : ℕ) (hτn : ∀ ω, τ ω ≤ n) (lam : ℝ) (hlam : 0 < lam)
+    (heq : ((p : ℝ) - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ))) = lam)
+    {m : ℕ} (hm : 0 < m)
+    (hw : lam * Real.sqrt (n : ℝ) ≤ (2 * MomentC m + 1)⁻¹) :
+    (∫⁻ ω, ENNReal.ofReal (|(Like p₀ p (τ ω) ω - 1) / lam| ^ (2 * m)) ∂Law ν p₀) ≤
+      ENNReal.ofReal (2 * MomentC m * ∫ ω, (τ ω : ℝ) ^ m ∂Law ν p₀) := by
+  let μ := Law ν p₀
+  let S := fun ω => (range (n + 1)).sup' nonempty_range_add_one
+    (fun i => |Like p₀ p (min i (τ ω)) ω - 1|)
+  have ht := stopping_nat_measurable hτ
+  have hS : Measurable S := by
+    have hm : ∀ i ∈ range (n + 1), Measurable
+        (fun ω => |Like p₀ p (min i (τ ω)) ω - 1|) := by
+      intro i hi
+      exact continuous_abs.measurable.comp
+        ((stopped_like_measurable p₀ p (fun ω => min i (τ ω))
+          (measurable_const.min ht)).sub measurable_const)
+    convert Finset.measurable_sup' nonempty_range_add_one hm using 1
+    funext ω
+    exact (Finset.sup'_apply nonempty_range_add_one
+      (fun i ω => |Like p₀ p (min i (τ ω)) ω - 1|) ω).symm
+  have hS0 : ∀ ω, 0 ≤ S ω := by
+    intro ω
+    exact (abs_nonneg (Like p₀ p (min 0 (τ ω)) ω - 1)).trans
+      (le_sup' (fun i => |Like p₀ p (min i (τ ω)) ω - 1|)
+        (mem_range.mpr (show 0 < n + 1 by omega)))
+  have hSb : ∀ ω, S ω ≤ RatioBound p₀ ^ n + 1 := by
+    intro ω
+    apply sup'_le
+    intro i hi
+    calc
+      _ ≤ |Like p₀ p (min i (τ ω)) ω| + |(1 : ℝ)| := abs_sub _ _
+      _ ≤ RatioBound p₀ ^ n + 1 := by
+        rw [abs_of_nonneg (like_nonneg p₀ p _ _), abs_one]
+        exact add_le_add_left ((like_uniform_bound p₀ p _ ω).trans
+          (pow_le_pow_right₀ (le_max_left _ _) ((min_le_right i (τ ω)).trans (hτn ω)))) 1
+  have hSi : Integrable (fun ω => S ω ^ (2 * m)) μ :=
+    ⟨hS.stronglyMeasurable.pow _ |>.aestronglyMeasurable,
+      HasFiniteIntegral.of_bounded (C := (RatioBound p₀ ^ n + 1) ^ (2 * m))
+        (ae_of_all _ (fun ω => by
+          rw [Real.norm_eq_abs, abs_of_nonneg (pow_nonneg (hS0 ω) _)]
+          exact pow_le_pow_left₀ (hS0 ω) (hSb ω) _))⟩
+  have hterminal : ∀ ω, |Like p₀ p (τ ω) ω - 1| ≤ S ω := by
+    intro ω
+    have h := le_sup' (fun i => |Like p₀ p (min i (τ ω)) ω - 1|)
+      (mem_range.mpr (Nat.lt_succ_self n))
+    simpa only [min_eq_right (hτn ω)] using h
+  have htp : Measurable (fun ω => |Like p₀ p (τ ω) ω - 1| ^ (2 * m)) :=
+    (continuous_abs.measurable.comp
+      ((stopped_like_measurable p₀ p τ ht).sub measurable_const)).pow_const _
+  have hti : Integrable (fun ω => |Like p₀ p (τ ω) ω - 1| ^ (2 * m)) μ :=
+    hSi.mono' htp.aestronglyMeasurable (ae_of_all _ (fun ω => by
+      rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+      exact pow_le_pow_left₀ (abs_nonneg _) (hterminal ω) _))
+  have habs := (StoppedLikelihoodAbsorption.stopped_likelihood_bounds
+    (likelihood_martingale ν p₀ p h₀ h₁) (Bit p₀) τ hτ lam n
+    (fun ω => by simp) hτn (centered_bit_bound p₀)
+    (fun ω => like_nonneg p₀ p _ _)
+    (fun i ω => by rw [← heq]; exact likelihood_step p₀ p h₀ h₁ i ω) hm
+    (by simpa only [abs_of_pos hlam] using hw)).1
+  have hreal : (∫ ω, |Like p₀ p (τ ω) ω - 1| ^ (2 * m) ∂μ) ≤
+      2 * MomentC m * lam ^ (2 * m) * ∫ ω, (τ ω : ℝ) ^ m ∂μ :=
+    (integral_mono hti hSi (fun ω => pow_le_pow_left₀ (abs_nonneg _)
+      (hterminal ω) _)).trans (by simpa only [abs_of_pos hlam] using habs)
+  simp_rw [abs_div, abs_of_pos hlam, div_pow]
+  rw [← ofReal_integral_eq_lintegral_ofReal (hti.div_const _)
+    (ae_of_all _ (fun ω => by positivity)), integral_div]
+  apply ENNReal.ofReal_le_ofReal
+  apply (div_le_iff₀ (pow_pos hlam _)).2
+  convert hreal using 1 <;> first | rfl | ring
+
+/-- The stopped centered Bernoulli score has an even moment controlled by the
+same random stopping-time moment, uniformly in the deterministic horizon. -/
+theorem bernoulli_stopped_score_moment (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (τ : Seed × (ℕ → Bool) → ℕ)
+    (hτ : IsStoppingTime seededFiltration (fun ω => (τ ω : WithTop ℕ)))
+    (n : ℕ) (hτn : ∀ ω, τ ω ≤ n) {m : ℕ} (hm : 0 < m) :
+    (∫⁻ ω, ENNReal.ofReal (|∑ i ∈ range (τ ω), Bit p₀ i ω| ^ (2 * m)) ∂Law ν p₀) ≤
+      ENNReal.ofReal (2 * MomentC m * ∫ ω, (τ ω : ℝ) ^ m ∂Law ν p₀) := by
+  let d : ℝ := (p₀ : ℝ) * (1 - (p₀ : ℝ))
+  have hd : 0 < d := mul_pos h₀ (sub_pos.mpr h₁)
+  let lam : ℕ → ℝ := fun j => ((j : ℝ) + 2)⁻¹
+  have hl0 : ∀ j, 0 < lam j := fun j => by dsimp [lam]; positivity
+  have hl1 : ∀ j, lam j ≤ 1 := fun j => by
+    dsimp [lam]
+    exact inv_le_one_of_one_le₀ (by linarith [Nat.cast_nonneg (α := ℝ) j])
+  let p : ℕ → unitInterval := fun j => ⟨(p₀ : ℝ) + lam j * d, by
+    constructor
+    · positivity
+    · have hp : (p₀ : ℝ) ≤ 1 := p₀.2.2
+      have hmul := mul_le_mul_of_nonneg_right (hl1 j) hd.le
+      dsimp [d] at hmul
+      nlinarith [p₀.2.1]⟩
+  have heq : ∀ j, ((p j : ℝ) - (p₀ : ℝ)) / d = lam j := by
+    intro j
+    dsimp [p]
+    rw [add_sub_cancel_left, mul_div_cancel_right₀ _ hd.ne']
+  let f := fun j ω => ENNReal.ofReal (|(Like p₀ (p j) (τ ω) ω - 1) / lam j| ^ (2 * m))
+  have ht := stopping_nat_measurable hτ
+  have hf : ∀ j, Measurable (f j) := by
+    intro j
+    have hg : Measurable (fun ω => (Like p₀ (p j) (τ ω) ω - 1) / lam j) :=
+      ((stopped_like_measurable p₀ (p j) τ ht).sub measurable_const).div_const _
+    exact ((continuous_abs.measurable.comp hg).pow_const _).ennreal_ofReal
+  have hl : Tendsto lam atTop (𝓝 0) :=
+    tendsto_inv_atTop_zero.comp
+      (tendsto_atTop_add_const_right atTop 2 tendsto_natCast_atTop_atTop)
+  have hlne : Tendsto lam atTop (𝓝[≠] 0) :=
+    tendsto_nhdsWithin_iff.2 ⟨hl, Eventually.of_forall (fun j => (hl0 j).ne')⟩
+  have hlim : ∀ ω, Tendsto (fun j => f j ω) atTop
+      (𝓝 (ENNReal.ofReal (|∑ i ∈ range (τ ω), Bit p₀ i ω| ^ (2 * m)))) := by
+    intro ω
+    have hder : HasDerivAt (fun t : ℝ => ∏ i ∈ range (τ ω), (1 + t * Bit p₀ i ω))
+        (∑ i ∈ range (τ ω), Bit p₀ i ω) 0 := by
+      simpa using HasDerivAt.fun_finsetProd (u := range (τ ω))
+        (fun i hi => ((hasDerivAt_id (0 : ℝ)).mul_const (Bit p₀ i ω)).const_add 1)
+    have hprod : ∀ j, Like p₀ (p j) (τ ω) ω =
+        ∏ i ∈ range (τ ω), (1 + lam j * Bit p₀ i ω) := by
+      intro j
+      apply prod_congr rfl
+      intro i hi
+      cases hb : ω.2 i <;> simp only [hb, Bool.false_eq_true, ↓reduceIte]
+      all_goals dsimp [p, d]; field_simp [h₀.ne', (sub_pos.mpr h₁).ne'] <;> ring
+    have hs := hder.tendsto_slope_zero.comp hlne
+    have hs' : Tendsto (fun j => (Like p₀ (p j) (τ ω) ω - 1) / lam j) atTop
+        (𝓝 (∑ i ∈ range (τ ω), Bit p₀ i ω)) := by
+      simpa only [Function.comp_def, zero_add, zero_mul, add_zero, prod_const_one,
+        smul_eq_mul, ← div_eq_inv_mul, ← hprod] using hs
+    exact ENNReal.continuous_ofReal.continuousAt.tendsto.comp (hs'.abs.pow _)
+  have hw : ∀ᶠ j in atTop,
+      lam j * Real.sqrt (n : ℝ) ≤ (2 * MomentC m + 1)⁻¹ := by
+    have hpos : 0 < (2 * MomentC m + 1)⁻¹ := by positivity
+    have hz : Tendsto (fun j => lam j * Real.sqrt (n : ℝ)) atTop (𝓝 0) := by
+      simpa using hl.mul_const (Real.sqrt (n : ℝ))
+    exact (hz.eventually (gt_mem_nhds hpos)).mono (fun j hj => hj.le)
+  calc
+    _ = ∫⁻ ω, liminf (fun j => f j ω) atTop ∂Law ν p₀ :=
+      lintegral_congr (fun ω => (hlim ω).liminf_eq.symm)
+    _ ≤ liminf (fun j => ∫⁻ ω, f j ω ∂Law ν p₀) atTop := lintegral_liminf_le hf
+    _ ≤ _ := liminf_le_of_frequently_le' (hw.mono (fun j hj =>
+      normalized_likelihood_moment ν p₀ (p j) h₀ h₁ τ hτ n hτn (lam j) (hl0 j)
+        (heq j) hm hj)).frequently
 
 
 
