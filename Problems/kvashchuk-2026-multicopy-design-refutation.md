@@ -59,7 +59,7 @@ The refutation would fail if the source's construction allowed a non-minimal des
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.lean` (731 lines).
+The canonical source is `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.lean` (742 lines).
 - Public declarations:
   - the definitions `tensorPow`, `permOp`, `PiSym`, `IsWeightedDesign`, `DesignExists`, `Nprime`, `maxMixed`, `adjoin` and `Discr`;
   - `claim` and `result`.
@@ -72,7 +72,7 @@ The canonical source is `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefut
   - Mathlib's `finFunctionFinEquiv`, `Finset.univ_perm_fin_succ` and `Equiv.Perm.decomposeFin`, and PSD order.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.lean.json`, statement `sha256:4348bf50fcbe54c2222ef5a09cc27232dd079cf084ee546b23c3d3c2286d683f`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.lean.json`, statement `sha256:5b7befcd8b3908c03409e2a5ec85d0202eaf479cc957b5f029a5178ab2da3c5e`.
 
 Declaration statements:
 - `result`: `sha256:a9fec4edca4d56d7fd970b99dbfe6919be70320a987bf8a45b9421d019ae5c36`;

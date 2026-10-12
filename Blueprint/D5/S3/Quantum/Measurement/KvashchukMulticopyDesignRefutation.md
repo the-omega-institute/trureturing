@@ -78,7 +78,7 @@ Section 3.3 defines N′(d,k) as the smallest size admitting a weighted state k-
 
 **Definition 1.7 (The maximally mixed density state).**
 
-$$\forall (d : \mathbb{N}), \forall (hd : 0 < d), (\operatorname{D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation.maxMixed}\left(d, hd\right)).1 = \operatorname{CStarMatrix.ofMatrix}\left(\operatorname{HSMul.hSMul}\left(((\operatorname{Nat.cast}\left(d\right) : \mathbb{R}))^{-1}, (1 : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right))\right)\right)$$
+$$\forall (d : \mathbb{N}), \forall (hd : 0 < d), \operatorname{D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation.maxMixed}\left(d, hd\right) = \operatorname{D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbsState}\left((0 : \operatorname{CStarMatrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), \operatorname{IsSelfAdjoint.zero}\left(\operatorname{CStarMatrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.maxMixed` (`✓ std3`).
 
@@ -86,7 +86,11 @@ $$\forall (d : \mathbb{N}), \forall (hd : 0 < d), (\operatorname{D5.S3.Quantum.M
 
 *Commentary.*
 
-For positive dimension d, the underlying CStarMatrix value is obtained by applying CStarMatrix.ofMatrix to the identity matrix scaled by the inverse of the real cast of d. Positivity and trace one make this a D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState. The formula specifies its underlying value, which uniquely determines the density state.
+For positive dimension d, maxMixed is D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbsState at the zero Hamiltonian, with self-adjointness supplied by IsSelfAdjoint.zero. The index ⟨0,hd⟩ supplies the Nonempty (Fin d) instance. D5.S3.Quantum.Divergence.GibbsVariationalIdentity.gibbs_state_zero identifies its underlying value with the identity scaled by the inverse of the real cast of d, as displayed below.
+
+$$
+\forall (d : \mathbb{N}), \forall (hd : 0 < d), (\operatorname{D5.S3.Quantum.Measurement.KvashchukMulticopyDesignRefutation.maxMixed}\left(d, hd\right)).1 = \operatorname{CStarMatrix.ofMatrix}\left(\operatorname{HSMul.hSMul}\left(((\operatorname{Nat.cast}\left(d\right) : \mathbb{R}))^{-1}, (1 : \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right))\right)\right)
+$$
 
 **Definition 1.8 (Append the maximally mixed state).**
 
@@ -159,7 +163,9 @@ In dimension 2 with three copies, the six octahedral pure states with equal weig
 - Truth anchor: `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.permOp`
 - Truth anchor: `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Measurement/KvashchukMulticopyDesignRefutation.tensorPow`
+- Dependency: [D5/S3/Quantum/Divergence/GibbsVariationalIdentity](../Divergence/GibbsVariationalIdentity.md)
 - Dependency: [D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation](../Dynamics/KickedIsingNegativityRefutation.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDiamondDistance](../Foundation/FiniteDiamondDistance.md)
 - Dependency: [D5/S3/Quantum/Measurement/EquiprobablePgmActiveSetRefutation](EquiprobablePgmActiveSetRefutation.md)
+- Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](StabilizerPovmMaximalEntanglementRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation](../QuantumChannels/ConcealmentKernelNecessityRefutation.md)
