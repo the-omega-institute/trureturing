@@ -135,7 +135,7 @@ private lemma cfc_logPathKernel_eq {n : Type*} [Fintype n] [DecidableEq n]
     ← Matrix.nonsing_inv_eq_ringInverse]
   simp only [map_one, Algebra.smul_def, Matrix.mul_one]
 
-private lemma matrixLogPath_intervalIntegrable {n : Type*} [Fintype n] [DecidableEq n]
+lemma matrixLogPath_intervalIntegrable {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.PosDef) :
     IntervalIntegrable
       (fun u : ℝ => (A - 1) * ((1 - u) • (1 : Matrix n n ℂ) + u • A)⁻¹)
@@ -150,7 +150,7 @@ private lemma matrixLogPath_intervalIntegrable {n : Type*} [Fintype n] [Decidabl
   apply cfc_logPathKernel_eq A hA u
   exact ⟨hu.1.le, hu.2⟩
 
-private lemma matrix_log_eq_integral_path {n : Type*} [Fintype n] [DecidableEq n]
+lemma matrix_log_eq_integral_path {n : Type*} [Fintype n] [DecidableEq n]
     (A : Matrix n n ℂ) (hA : A.PosDef) :
     CFC.log A =
       ∫ u in (0 : ℝ)..1,
