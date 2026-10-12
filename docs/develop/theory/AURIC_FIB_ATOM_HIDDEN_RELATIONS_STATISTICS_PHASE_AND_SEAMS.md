@@ -4270,3 +4270,177 @@ $$
 最后，(29.8) 要求每轮新环境。若旧环境返回，则应调用 [SecondOrder 命题 110.4](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#110-相干历史块递归与可复用环境) 的同环境双 CNOT 比较及其共同联合载体，而不能使用通道平方。一次抽样并保留参数 $\lambda$、条件于它作无记忆调用的过程，仍是 [LocalClock 假设 25](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md) 的另一份合同；本式不把其 $\int\lambda^n\,d\nu$ 换成独立重采样的 $c_1^n$。空标签在本章只是五个实际标签之一，其持久性由具体记录关系决定。上述是给定有限载体和操作的普通数学结论，不赋予物理空间方向、场、引力或统一无界执行资源。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 30. 合法双窗上的共正核、CP 伙伴与同边缘反例
+
+本章固定五态顺序 $Sigma=(O,L,T,R,J)$，其中窗内位串为
+$000,100,010,001,101$，跨窗合法条件为
+$y(i)x(j)=0$。因此联合支持是二十一个合法格；四个被禁止的格不属于本章的
+概率域。以下的二次量是一个指定的有符号核，不把它解释成概率、物理相互作用或
+自动可组合的实验规则。
+
+**定义 30.1（局部与联合二次量）。** 对实对称矩阵 $A$ 和局部概率
+$pinDelta_4$，令
+
+$$
+F_A(p)=p^{\mathsf T}Ap .
+$$
+
+对实对称 $A,B$ 和同一非负联合律 $P=(P_{ij})$，令
+
+$$
+Q_{A,B}(P)=\sum_{i,k,j,l}A_{ik}B_{jl}P_{ij}P_{kl}.
+$$
+
+按行优先向量化，$Q_{A,B}(P)=\operatorname{vec}(P)^{\mathsf T}
+(A\otimes B)\operatorname{vec}(P)$。若 $P=pq^{\mathsf T}$，则
+$Q_{A,B}(P)=F_A(p)F_B(q)$；一般 $P$ 不作独立乘积。
+
+令 $C$ 为五环邻接矩阵、$D=\mathbf1\mathbf1^{\mathsf T}$，并置
+$H=D-2C$。共正性是 $x\ge0\Rightarrow x^{\mathsf T}Ax\ge0$，它只要求
+$F_A$ 在单纯形上非负；PSD 要求所有实向量，逐项非负又是第三个独立条件。
+
+**定理 30.2（五环局部下界）。** 对任意 $p\in\Delta_4$，
+
+$$
+F_H(p)=1-4\sum_{i\bmod5}p_ip_{i+1}\ge0,
+\qquad \min_{\Delta_4}F_H=0.
+$$
+
+若 $A_\varepsilon=H+\varepsilon D$ 且 $\varepsilon>0$，则
+
+$$
+F_{A_\varepsilon}(p)\ge\varepsilon,
+$$
+
+且相邻两态各取 $1/2$ 时等号成立。
+
+**证明。** 在使五环边乘积和最大的律中，选支撑数最小者。若支撑中有
+两个不相邻顶点，保持两者总质量而把一个顶点的质量移到另一个，目标沿该线段
+是仿射的；某个端点仍为最大点且支撑更小。故最小支撑最大点的支撑是团。
+五环无三角形，团至多含两个相邻顶点。单点给边乘积和 $0$，相邻两点的和为
+$a(1-a)\le1/4$，在 $a=1/2$ 取到。于是 $F_H\ge0$ 且最小值为零；加上
+$\varepsilon D$ 后，$\mathbf1^{\mathsf T}p=1$ 给出第二式。齐次化还给
+$x^{\mathsf T}A_\varepsilon x\ge\varepsilon(\mathbf1^{\mathsf T}x)^2$。
+这里所用的五环极值是 Motzkin--Straus 结果在本五态核上的具体应用。
+
+**定理 30.3（CP 伙伴的充分接口与严格余量）。** 若 $A$ 共正，且
+$B=\sum_\alpha b_\alpha b_\alpha^{\mathsf T}$ 为有限完全正分解，
+$b_\alpha\ge0$，则对每个非负联合数组 $P$ 有 $Q_{A,B}(P)\ge0$。
+若另有
+
+$$
+F_A(u)\ge\delta>0,\qquad F_B(v)\ge\eta>0
+\quad(u,v\in\Delta),
+$$
+
+且 $\sum_{ij}P_{ij}=1$，则
+
+$$
+Q_{A,B}(P)\ge\delta\eta.
+$$
+
+总质量为 $s$ 的非负数组满足相应的界 $Q_{A,B}(P)\ge\delta\eta s^2$。
+
+**证明。** 逐项收缩得
+
+$$
+Q_{A,B}(P)=\sum_\alpha(Pb_\alpha)^{\mathsf T}A(Pb_\alpha)\ge0.
+$$
+
+置 $q=P^{\mathsf T}\mathbf1\in\Delta$。齐次化与严格下界给
+
+$$
+Q_{A,B}(P)\ge\delta\sum_\alpha(\mathbf1^{\mathsf T}Pb_\alpha)^2
+=\delta q^{\mathsf T}Bq\ge\delta\eta.
+$$
+
+零因子无需除法；当 $\delta$ 或 $\eta$ 为零时只能保留非负性。这个结论是
+单一 $P$ 上的同源收缩，不能把两个任意共正矩阵互相当作 CP 伙伴。
+
+**命题 30.4（完整 Cartesian 测试的 CP 充要性）。** 对固定实对称
+$B\in\mathbb R^{m\times m}$，以下两件事等价：
+
+1. $B$ 是完全正矩阵；
+2. 对每个有限 $n$ 及每个共正 $A\in\mathbb R^{n\times n}$，
+   $A\otimes B$ 在完整非负 Cartesian 域上共正。
+
+**证明。** 充分性是定理 30.3。反向只取 $n=m$，令
+$z=\operatorname{vec}(I_m)\ge0$，则
+
+$$
+z^{\mathsf T}(A\otimes B)z=\langle A,B\rangle .
+$$
+
+若对所有 $A$ 共正均非负，有限维 CP--COP 对偶给 $B$ 完全正；归一化测试
+$P=I_m/m$ 只多出因子 $m^{-2}$。这个必要性依赖完整 Cartesian 域和全部
+共正伙伴；本五态合法 seam 通常不包含该见证，故在受限二十一个格上只保留
+CP 的充分性，不能把充要性强行迁移。CP--COP 对偶在本节只是证明中的成熟工具，
+不是新的独立理论声明。
+
+**定义 30.5（两个同边缘合法 seam）。** 令 $P_-$、$P_+$ 分别在下列五个
+合法格取 $1/5$，其他格取零：
+
+$$
+P_-:\ (O,T),(L,J),(T,L),(R,R),(J,O),
+\qquad
+P_+ :\ (O,J),(L,O),(T,L),(R,T),(J,R).
+$$
+
+两者行、列边缘都为 $u_5=(1/5,ldots,1/5)$。令
+$A_\varepsilon=H+\varepsilon D$，其中 $\varepsilon=1/10$。
+
+**定理 30.6（同一合法边缘不能决定联合核符号）。**
+
+$$
+Q_{A_\varepsilon,A_\varepsilon}(P_-)= -\frac{11}{20},
+\qquad
+Q_{A_\varepsilon,A_\varepsilon}(P_+)=\frac{21}{20}.
+$$
+
+**证明。** 乘二映射 $i\mapsto2i+2$ 给 $P_-$，它把五个对角配对贡献
+$+1$、其余二十个有序配对贡献 $-1$，所以 $H\times H$ 项为 $-3/5$。
+平移映射 $i\mapsto i-1$ 给 $P_+$，保持边与非边，$H\times H$ 项为 $1$。
+均匀边缘使两个混合项各为 $1/5$，而 $D\times D$ 项为 $1$，故一般式
+
+$$
+Q_{A_\varepsilon,A_\varepsilon}(P_-)=\varepsilon^2+\frac25\varepsilon-\frac35,
+\quad
+Q_{A_\varepsilon,A_\varepsilon}(P_+)=\varepsilon^2+\frac25\varepsilon+1.
+$$
+
+代入 $\varepsilon=1/10$ 即得。负值是指定有符号二次目标的值，不是负概率。
+独立数组 $u_5u_5^{\mathsf T}$ 在四个禁止格带正质量，不能充当本 seam 的合法补全。
+
+**命题 30.7（相对内部也可出现负值）。** 令
+
+$$
+P_0=\frac1{45}\begin{pmatrix}
+1&3&1&1&3\\1&3&1&1&3\\1&3&1&1&3\\
+3&0&3&3&0\\3&0&3&3&0
+\end{pmatrix}.
+$$
+
+这是均匀边缘的合法 seam，且二十一个合法格均为正。对
+$\widehat P_-=(9/10)P_-+(1/10)P_0$，
+
+$$
+Q_{A_\varepsilon,A_\varepsilon}(\widehat P_-)
+=-\frac{89407}{202500}<0.
+$$
+
+**证明。** 令 $u=(1,1,1,0,0)$、$v=(0,0,0,1,1)$，以及
+$r=(1,3,1,1,3)$、$s=(3,0,3,3,0)$。则 $K_0=45P_0=ur^{\mathsf T}+vs^{\mathsf T}$，
+$u^{\mathsf T}Hu=1$、$u^{\mathsf T}Hv=2$、$v^{\mathsf T}Hv=0$、
+$r^{\mathsf T}Hr=29$、$r^{\mathsf T}Hs=-3$。因此
+$Q_{H,H}(P_0)=17/2025$，而 $\beta_H(P_-,P_0)=-7/225$。
+加入 $D$ 的双线性增量为 $1/20$，二次展开即得所列分数。故反例不依赖稀疏端点。
+
+本章只证明指定五态、指定方向和指定合法支持上的结果。固定边缘纤维的维数应由
+全部可进入格的二部图计算；零边缘删去相应行列，单点纤维没有非零切向量。
+SPN 分解、共同 Gram 记录、量子复用环境以及 Robin 的 Euler 乘积分别属于
+[SecondOrder 关系卷](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)、既有
+HiddenRelations 接口和 [Robin 比例卷](AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)
+的不同对象。本章没有把它们合并成一个正性、量子实现或算术结论。
+
+
+## 追加锚（本行以下为增补区）
