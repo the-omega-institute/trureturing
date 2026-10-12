@@ -65,7 +65,7 @@ private theorem pair_infix_fibWord_three {r : Nat} {a b : Bool}
   · decide
   · decide
 
-private theorem take_drop_isInfix (l : List α) (p n : Nat) :
+theorem take_drop_isInfix (l : List α) (p n : Nat) :
     (l.drop p).take n <:+: l := by
   refine ⟨l.take p, l.drop (p + n), ?_⟩
   rw [List.append_assoc, List.drop_take_append_drop, List.take_append_drop]
@@ -81,7 +81,7 @@ private theorem goldenFactor_eq_take_drop (Q n p : Nat)
     have hindex : p + i < (fibWord Q).length := by omega
     simpa [goldenFactor] using goldenWord_eq_fibWord_get Q (p + i) hindex
 
-private theorem exists_flatMap_block {f : α → List β} {l : List α} {p : Nat}
+theorem exists_flatMap_block {f : α → List β} {l : List α} {p : Nat}
     (hp : p < (l.flatMap f).length) :
     ∃ pre a post, l = pre ++ a :: post ∧
       (pre.flatMap f).length ≤ p ∧ p < (pre.flatMap f).length + (f a).length := by
@@ -102,7 +102,7 @@ private theorem exists_flatMap_block {f : α → List β} {l : List α} {p : Nat
         · simp only [List.flatMap_cons, List.length_append]
           omega
 
-private theorem take_drop_append_eq_left {x y : List α} {p n : Nat}
+theorem take_drop_append_eq_left {x y : List α} {p n : Nat}
     (h : p + n ≤ x.length) : ((x ++ y).drop p).take n = (x.drop p).take n := by
   have hp : p ≤ x.length := by omega
   rw [List.drop_append_of_le_length hp, List.take_append_of_le_length]

@@ -11,6 +11,24 @@ internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinitio
         H("Uniform Recurrence of the Golden Word"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("window-take-drop-is-infix"),
+                DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.take_drop_isInfix"),
+                H("Every truncated suffix is an infix"), StatementSource.FromAuthor(WindowSupplier("take_drop_isInfix")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every type alpha, list l and natural p,n, taking n entries after dropping p entries yields an infix of l. No length assumption is needed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-exists-flat-map-block"),
+                DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.exists_flatMap_block"),
+                H("Locate a start inside a concatenated block"), StatementSource.FromAuthor(WindowSupplier("exists_flatMap_block")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For arbitrary types alpha and beta, a list-valued map f, a source list l and a natural p below the concatenated image length, there are lists pre and post and a letter a with l=pre++a::post, length(flatMap(f,pre)) at most p, and p strictly below that length plus length(f(a)). Images may be empty."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-take-drop-append-eq-left"),
+                DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.take_drop_append_eq_left"),
+                H("Windows contained in the left list"), StatementSource.FromAuthor(WindowSupplier("take_drop_append_eq_left")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every type alpha, lists x,y and natural p,n with p+n at most length(x), the window obtained from x++y by dropping p entries and taking n is exactly the corresponding window of x."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-recurrence-bound"),
                 DeclarationHandle.Create("D5/S1/Words/GoldenUniformRecurrence.goldenRecurrenceBound"),
                 H("The recurrence window is an explicit Fibonacci quantity"),
@@ -76,4 +94,57 @@ internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinitio
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S1/Words/GoldenWord")),
         ]));
+    private static Formula WindowSupplier(string name)
+    {
+        Formula a = F.Id("alpha"), b = F.Id("beta"), l = F.Id("l"), f = F.Id("f");
+        Formula p = F.Id("p"), n = F.Id("n"), x = F.Id("x"), y = F.Id("y");
+        Formula pre = F.Id("pre"), letter = F.Id("a"), post = F.Id("post");
+        Formula lists = WC("List", a);
+        Formula Flat(Formula word) => WC("flatMap", f, word);
+        Formula Len(Formula word) => WC("length", word);
+        Formula Window(Formula word) => WC("take", n, WC("drop", p, word));
+        Formula decomposition = WQ(l, WC("append", pre, WC("cons", letter, post)));
+        Formula blockStart = Len(Flat(pre));
+        Formula blockEnd = WP(blockStart, Len(new Formula.Apply(f, [letter])));
+        Formula blockBounds = WB(WL(blockStart, p), WT(p, blockEnd));
+        Formula blockWitness = WE("pre", lists, WE("a", a,
+            WE("post", lists, WB(decomposition, blockBounds))));
+        Formula locatedBlock = WA("p", WN(), WI(WT(p, Len(Flat(l))), blockWitness));
+        Formula blockStatement = WA("beta", F.Id("Type"),
+            WA("f", WC("Function", a, WC("List", b)), WA("l", lists, locatedBlock)));
+        Formula leftWindow = WQ(Window(WC("append", x, y)), Window(x));
+        Formula leftBound = WI(WL(WP(p, n), Len(x)), leftWindow);
+        Formula leftStatement = WA("x", lists, WA("y", lists,
+            WA("p", WN(), WA("n", WN(), leftBound))));
+        Formula body = name switch
+        {
+            "take_drop_isInfix" => WA("l", lists, WA("p", WN(), WA("n", WN(),
+                WC("IsInfix", Window(l), l)))),
+            "exists_flatMap_block" => blockStatement,
+            "take_drop_append_eq_left" => leftStatement,
+            _ => throw new ArgumentOutOfRangeException(nameof(name)),
+        };
+        return F.Disp(WA("alpha", F.Id("Type"), body));
+    }
+
+    private static Formula WN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    private static Formula WC(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula WA(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula WE(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(x), domain, body);
+    private static Formula WQ(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula WL(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula WT(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula WP(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula WI(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula WB(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+
 }

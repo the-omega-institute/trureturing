@@ -527,6 +527,320 @@ noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end occurrence_transport
 
+namespace iterate_prefix
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Output _ _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ k => k) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ k => k + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) {k t : ℕ} (_h : k ≤ t),
+    image (phi hm) (R.readout () () k) (zero hm) <+: image (phi hm) t (zero hm)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (by decide : 2 ≤ 2) (k := 0) (t := 0) (by decide)
+  exact (by decide : ¬ image (phi (by decide : 2 ≤ 2)) 1 (zero (by decide : 2 ≤ 2)) <+:
+    image (phi (by decide : 2 ≤ 2)) 0 (zero (by decide : 2 ≤ 2))) hh
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_prefix)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_prefix, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro _
+    refine ⟨(), 0, 1, ?_⟩
+    change (0 : ℕ) ≠ 1
+    decide
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_prefix) (type_of% actual) Unit Unit := {
+  unitName := `D5.S1.Words.MBonacciSentinelDesubstitution.iterate_prefix.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_prefix.family,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Words.MBonacciSentinelDesubstitution, definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #[
+        "body",
+        "body",
+        "body",
+        "body",
+        "body",
+        "fn",
+        "arg",
+        "fn",
+        "arg"],
+      stateBinder := 2,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+end iterate_prefix
+
+namespace iterate_growth
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Output _ _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ k => k) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (k : ℕ),
+    k + 1 ≤ (image (phi hm) (R.readout () () k) (zero hm)).length
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (by decide : 2 ≤ 2) 1
+  exact (by decide : ¬ (1 + 1 ≤ (image (phi (by decide : 2 ≤ 2)) 0
+    (zero (by decide : 2 ≤ 2))).length)) hh
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_growth)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_growth, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro _
+    refine ⟨(), 0, 1, ?_⟩
+    change (0 : ℕ) ≠ 1
+    decide
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_growth) (type_of% actual) Unit Unit := {
+  unitName := `D5.S1.Words.MBonacciSentinelDesubstitution.iterate_growth.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciSentinelDesubstitution.iterate_growth.family,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Words.MBonacciSentinelDesubstitution, definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #[
+        "body",
+        "body",
+        "body",
+        "arg",
+        "arg",
+        "fn",
+        "arg"],
+      stateBinder := 2,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+end iterate_growth
+
+namespace word_eq_iterate
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Output _ _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => n) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (hm : 2 ≤ m) (k n : ℕ)
+    (hn : n < (image (phi hm) k (zero hm)).length),
+    word hm (R.readout () () n) = (image (phi hm) k (zero hm))[n]
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (by decide : 2 ≤ 2) 1 1 (by decide)
+  exact (by decide : ¬ word (by decide : 2 ≤ 2) 0 =
+    (image (phi (by decide : 2 ≤ 2)) 1 (zero (by decide : 2 ≤ 2)))[1]) hh
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.word_eq_iterate)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.word_eq_iterate, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro _
+    refine ⟨(), 0, 1, ?_⟩
+    change (0 : ℕ) ≠ 1
+    decide
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.word_eq_iterate) (type_of% actual) Unit Unit := {
+  unitName := `D5.S1.Words.MBonacciSentinelDesubstitution.word_eq_iterate.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciSentinelDesubstitution.word_eq_iterate.family,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Words.MBonacciSentinelDesubstitution, definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #[
+        "body",
+        "body",
+        "body",
+        "body",
+        "body",
+        "fn",
+        "arg",
+        "arg"],
+      stateBinder := 3,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+end word_eq_iterate
+
+namespace factor_get
+
+abbrev signature : Signature where
+  Params := Σ m : ℕ, Σ _x : ℕ → Fin m, ℕ
+  State _ := ℕ
+  Output _ p := Fin p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p j => p.2.1 (p.2.2 + j)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ p _ => p.2.1 p.2.2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ} (x : ℕ → Fin m) (i n j : ℕ) (hj : j < n),
+    (factor x i n)[j]'(by simpa [factor] using hj) = R.readout () ⟨m, x, i⟩ j
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let x : ℕ → Fin 2 := fun q => ⟨q % 2, Nat.mod_lt _ (by decide)⟩
+  have hh := h x 0 2 1 (by decide)
+  have he : (1 : Fin 2) = 0 := hh
+  exact (by decide : (1 : Fin 2) ≠ 0) he
+
+def family : Registration arena (type_of% (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.factor_get)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.factor_get, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro _
+    let x : ℕ → Fin 2 := fun q => ⟨q % 2, Nat.mod_lt _ (by decide)⟩
+    refine ⟨⟨2, x, 0⟩, 0, 1, ?_⟩
+    change x 0 ≠ x 1
+    decide
+
+noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S1.Words.MBonacciSentinelDesubstitution.factor_get) (type_of% actual) Unit Unit := {
+  unitName := `D5.S1.Words.MBonacciSentinelDesubstitution.factor_get.__information_unit,
+  realizationName := `Reg.D5.S1.Words.MBonacciSentinelDesubstitution.factor_get.family,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨family⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S1.Words.MBonacciSentinelDesubstitution, definition := none,
+    coordinates := #[0, 1, 2],
+    readouts := #[{
+      path := #[
+        "body",
+        "body",
+        "body",
+        "body",
+        "body",
+        "body",
+        "arg"],
+      stateBinder := 4,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+end factor_get
+
 end Reg.D5.S1.Words.MBonacciSentinelDesubstitution
 
 open _root_.D5.S1.Words.MBonacciSentinelDesubstitution

@@ -66,14 +66,14 @@ private theorem iterate_prefix_succ (k : ℕ) :
     image (phi hm) k (zero hm) <+: image (phi hm) (k + 1) (zero hm) := by
   rw [image_step]; exact List.prefix_append _ _
 
-private theorem iterate_prefix {k t : ℕ} (h : k ≤ t) :
+theorem iterate_prefix {k t : ℕ} (h : k ≤ t) :
     image (phi hm) k (zero hm) <+: image (phi hm) t (zero hm) := by
   obtain ⟨s, rfl⟩ := Nat.exists_eq_add_of_le h
   induction s with
   | zero => simp
   | succ s ih => exact (ih (by omega)).trans (iterate_prefix_succ hm (k + s))
 
-private theorem iterate_growth (k : ℕ) : k + 1 ≤ (image (phi hm) k (zero hm)).length := by
+theorem iterate_growth (k : ℕ) : k + 1 ≤ (image (phi hm) k (zero hm)).length := by
   induction k with
   | zero => simp [image]
   | succ k ih =>
@@ -85,7 +85,7 @@ private theorem iterate_growth (k : ℕ) : k + 1 ≤ (image (phi hm) k (zero hm)
 def word (n : ℕ) : Fin m :=
   (image (phi hm) (n + 1) (zero hm))[n]'(by have := iterate_growth hm (n + 1); omega)
 
-private theorem word_eq_iterate (k n : ℕ) (hn : n < (image (phi hm) k (zero hm)).length) :
+theorem word_eq_iterate (k n : ℕ) (hn : n < (image (phi hm) k (zero hm)).length) :
     word hm n = (image (phi hm) k (zero hm))[n] := by
   have hk := iterate_prefix hm (Nat.le_max_left k (n + 1))
   have hn' := iterate_prefix hm (Nat.le_max_right k (n + 1))
@@ -105,7 +105,7 @@ theorem factor_add (x : ℕ → Fin m) (i n t : ℕ) :
   congr 1
   omega
 
-private theorem factor_get (x : ℕ → Fin m) (i n j : ℕ) (hj : j < n) :
+theorem factor_get (x : ℕ → Fin m) (i n j : ℕ) (hj : j < n) :
     (factor x i n)[j]'(by rw [factor_len]; exact hj) = x (i + j) := by
   simp [factor]
 
