@@ -23,7 +23,7 @@ internal sealed class EquicontinuousObstructionDocument : IScribeDocumentDefinit
     private static Formula[] Contraction() => [
         Seq(All("X", V("Type")), Sp, Inst("MetricSpace", V("X"))),
         Seq(All("f", Map(V("X"), V("X"))), Sp, All("q", Seq(Mathbb, Grp(V("R"))))),
-        Hyp(Seq(D(0), Le, V("q"), Sp, Land, Sp, V("q"), Lt, D(1))),
+        Hyp(Seq(D(0), Le, Sp, V("q"), Sp, Land, Sp, V("q"), Lt, D(1))),
         Hyp(Call("ContractionBound", V("f"), V("q"))) ];
     private static Formula[] Factor() => [
         Seq(All("X", V("Type")), Sp, Inst("UniformSpace", V("X")), Sp,
@@ -81,7 +81,7 @@ internal sealed class EquicontinuousObstructionDocument : IScribeDocumentDefinit
             "ConstantOn(pi,K) is ∀x,y:K, pi(x.val)=pi(y.val). Local constancy and preconnectedness imply this equality. "
             + "Surjectivity is not required. Consequently positively expansive factors cannot separate a nondegenerate connected equicontinuous subset."),
         Doc("contraction-pseudo-orbit-estimate", "contraction_pseudo_orbit_estimate", St([.. Contraction(),
-            All("delta", Seq(Mathbb, Grp(V("R")))), Hyp(Seq(D(0), Le, V("delta"))),
+            All("delta", Seq(Mathbb, Grp(V("R")))), Hyp(Seq(D(0), Le, Sp, V("delta"))),
             All("a", Map(Seq(Mathbb, Grp(V("N"))), V("X"))), Hyp(Call("WeakMetricPseudoOrbit", V("f"), V("delta"), V("a"))),
             All("n", Seq(Mathbb, Grp(V("N")))), Call("GeometricErrorBound", V("f"), V("q"), V("delta"), V("a"), V("n"))]),
             "ContractionBound is ∀x,y, dist(f(x),f(y))≤q dist(x,y). WeakMetricPseudoOrbit is "

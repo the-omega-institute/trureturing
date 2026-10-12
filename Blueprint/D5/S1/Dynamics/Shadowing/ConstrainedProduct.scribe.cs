@@ -12,15 +12,16 @@ internal sealed class ConstrainedProductDocument : IScribeDocumentDefinition
     private static Formula All(string x, Formula t) => Seq(Forall, Sp, V(x), Colon, Sp, t, Comma);
     private static Formula Hyp(Formula a) => Seq(a, Sp, Rightarrow);
     private static Formula Inst(string c, Formula x) => Seq(OpenBracket, Call(c, x), CloseBracket);
+    private static Formula FamilyInst(string c, string x) => Seq(OpenBracket, Forall, Sp,
+        V("i"), Colon, Sp, V("I"), Comma, Sp, Call(c, Call(x, V("i"))), CloseBracket);
     private static Formula St(params Formula[] lines) => Disp(new Formula.Aligned([.. lines]));
     private static Formula[] Family(bool uniform, bool zero) => [
         Seq(All("I", V("Type")), Sp, All("X", V("Type")), Sp,
             Inst(uniform ? "UniformSpace" : "TopologicalSpace", V("X")), Sp, Inst("CompactSpace", V("X")),
             uniform ? Seq() : Inst("TTwoSpace", V("X"))),
         Seq(All("B", Map(V("I"), V("Type"))), Sp, All("Y", Map(V("I"), V("Type")))),
-        Seq(Forall, Sp, V("i"), Colon, Sp, V("I"), Comma, Sp,
-            Inst("MetricSpace", Call("B", V("i"))), Sp, Inst("MetricSpace", Call("Y", V("i"))), Sp,
-            Inst("CompactSpace", Call("Y", V("i"))), zero ? Inst("TotallyDisconnectedSpace", Call("Y", V("i"))) : Seq()),
+        Seq(Grp(), FamilyInst("MetricSpace", "B"), Sp, FamilyInst("MetricSpace", "Y"), Sp,
+            FamilyInst("CompactSpace", "Y"), zero ? FamilyInst("TotallyDisconnectedSpace", "Y") : Seq()),
         Seq(All("pi", Call("DependentMap", V("I"), V("X"), V("B"))), Sp,
             All("p", Call("CoordinateMap", V("I"), V("Y"), V("B")))),
         Hyp(Call("CoordinateContinuous", V("pi"), V("p"))),
@@ -37,7 +38,7 @@ internal sealed class ConstrainedProductDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("finite-support-entourage"), DeclarationHandle.Create(Owner + "finite_support_entourage"),
             H("Every observation has finite support"), StatementSource.FromAuthor(St(
                 Seq(All("I", V("Type")), Sp, All("Y", Map(V("I"), V("Type")))),
-                Seq(Forall, Sp, V("i"), Colon, Sp, V("I"), Comma, Sp, Inst("MetricSpace", Call("Y", V("i")))),
+                Seq(Grp(), FamilyInst("MetricSpace", "Y")),
                 Seq(All("S", Call("Set", Call("Product", V("Y")))), Sp, All("E", Call("Set", Call("Pair", V("S"))))),
                 Hyp(Call("Entourage", V("S"), V("E"))),
                 Seq(Exists, Sp, V("F"), Colon, Sp, Call("Finset", V("I")), Comma, Sp,
@@ -71,13 +72,13 @@ internal sealed class ConstrainedProductDocument : IScribeDocumentDefinition
                 Seq(V("Z"), Eq, Call("CommonSource", V("pi"), V("p")), Comma, Sp,
                     V("q"), Eq, Call("CommonSourceMap", V("pi"), V("p")), Comma),
                 Seq(V("G"), Eq, Call("CommonSourceDynamics", V("pi"), V("p"), V("f"), V("d"), V("g"))),
-                Call("IsClosed", Call("CommonSourceSet", V("pi"), V("p"))),
+                Seq(Call("IsClosed", Call("CommonSourceSet", V("pi"), V("p"))), Sp, Land),
                 Seq(Call("CompactSpace", V("Z")), Sp, Land, Sp, Call("TTwoSpace", V("Z")), Sp, Land, Sp,
-                    Call("TotallyDisconnectedSpace", V("Z"))),
-                Seq(Call("Continuous", V("q")), Sp, Land, Sp, Call("Surjective", V("q")), Sp, Land, Sp, Call("Continuous", V("G"))),
-                Seq(Call("Semiconj", V("q"), V("G"), V("f")), Sp, Land, Sp, Call("HasShadowing", V("G"))),
+                    Call("TotallyDisconnectedSpace", V("Z")), Sp, Land),
+                Seq(Call("Continuous", V("q")), Sp, Land, Sp, Call("Surjective", V("q")), Sp, Land, Sp, Call("Continuous", V("G")), Sp, Land),
+                Seq(Call("Semiconj", V("q"), V("G"), V("f")), Sp, Land, Sp, Call("HasShadowing", V("G")), Sp, Land),
                 Call("WholeOrbitCoding", V("X"), V("I"), V("Z"), V("q"), V("G"), V("p"), V("pi"), V("f"))])),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/peng2026shadowing")), Blocks(Paragraph(Text(
                 "X is compact Hausdorff; the compatible uniformity is introduced explicitly inside the proof. Each Y(i) is also totally disconnected. "
                 + "The exact conclusion is a conjunction: commonSourceSet is closed; Z is compact, Hausdorff and totally disconnected; "
                 + "q is continuous and onto; G is continuous; q semiconjugates G to f; and G has the existing finite-open-cover shadowing property. "

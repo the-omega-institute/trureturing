@@ -47,7 +47,7 @@ internal sealed class UniformTracingDocument : IScribeDocumentDefinition
                 + "No semiconjugacy or surjectivity is required for this equivalence; uniform continuity is an explicit premise."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("positive-expansivity-source-relative"), DeclarationHandle.Create(Owner + "positive_expansivity_source_relative"),
             H("Deriving prescribed-source tracing"), StatementSource.FromAuthor(St(Types(true),
-                Seq(Inst("CompactSpace", Y), Comma), Maps(), Hyp(Call("Continuous", p)),
+                Seq(Grp(), Inst("CompactSpace", Y), Comma), Maps(), Hyp(Call("Continuous", p)),
                 Hyp(Call("Semiconj", p, g, f)), Hyp(Call("HasShadowing", g)), Hyp(Call("PositivelyExpansive", f)),
                 Call("SourceRelativeTracing", p, g, f))),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
