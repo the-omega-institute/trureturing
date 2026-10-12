@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4c75756d5a0d7a9a8cedfa976c4bd2cf0294014a82782dbf959e4185ddf89661"}
+{"statement_id":"sha256:4c75756d5a0d7a9a8cedfa976c4bd2cf0294014a82782dbf959e4185ddf89661","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Measurement),33:FiniteKrausInstrumentBornMarginal),37:finite_kraus_instrument_born_marginal)","kind":"theorem"}]}

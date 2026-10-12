@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
 # op-body-shapes.sh WORKTREE MODULE_DOTTED — per-public-declaration evidence table for a deposit PR body.
 #
-# Three review seats on two PRs asked for the same thing: first-freeze evidence reported per public
-# theorem, not one module-wide paragraph. This runs the kernel-derived edge/axiom extractor in the
-# worktree and prints a table whose machine columns come from the elaborated environment.
-#
-# This table gives NO verdict. Three attempts to make the machine classify proof shape each produced a
-# fabrication: "a live path through a module theorem implies content" (a seat rejected it), "no module
-# theorem on the live path implies bind-only" (wrong for a multi-step estimate built from Mathlib), and
-# "closed type plus a decide marker implies a numeric certificate" (it fired on a two-line derivation
-# whose only decide marker arrived transitively). The machine reports facts — dependencies, external
-# dependencies, axioms, whether the type is closed, whether a decision procedure appears — and the
-# proposer states the shape and the witness in the PR body, where a review seat can overturn it.
+# Machine columns describe elaborated dependencies and axioms; proof shape requires review.
 set -uo pipefail
 W="${1:?worktree}"; MOD="${2:?module dotted}"
 SP="$(cd "$(dirname "$0")" && pwd)"
@@ -27,24 +17,14 @@ w, edges_path, tooldir, mod = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 eg = json.load(open(edges_path))
 changed = subprocess.run(["git", "-C", w, "diff", "--name-only", "origin/dev...HEAD"],
                          capture_output=True, text=True).stdout.split()
-# The event must be the one for the module that was asked for. Taking changed[0] blindly gave a
-# traceback when the deposit was not committed yet, and silently stripped the wrong module prefix off
-# every constant name when a lane carried two deposits.
 selector = "/".join(mod.split(".")) + ".lean"
-accepted = [p for p in changed if p.startswith("Golden/Frozen/accepted/")]
-matched = []
-for path in accepted:
-    cand = json.load(open(os.path.join(w, path)))
-    if (cand.get("payload", cand)).get("descriptor_selector") == selector:
-        matched.append((path, cand))
-if not matched:
-    sys.exit(f"shapes.sh: origin/dev...HEAD carries no freeze event for {selector} "
-             f"({len(accepted)} accepted event(s) in the diff). Commit the deposit first, then rerun.")
-if len(matched) > 1:
-    sys.exit(f"shapes.sh: {len(matched)} freeze events name {selector}; refusing to guess which one.")
-ev = matched[0][1]
-p = ev.get("payload", ev)
-mod_comps = p.get("descriptor_selector", "")[:-5].split("/")
+state_path = "Golden/Frozen/state/" + selector + ".json"
+if state_path not in changed:
+    sys.exit(f"shapes.sh: committed delta carries no state record for {selector}")
+p = json.load(open(os.path.join(w, state_path)))
+if set(p) != {"statement_id", "declarations"}:
+    sys.exit("shapes.sh: invalid frozen state schema")
+mod_comps = selector[:-5].split("/")
 
 GEN = re.compile(r'\.(eq_def|eq_\d+|match_\d+(_\d+)*|proof_\d+(_\d+)*|sizeOf_spec|_sizeOf_inst|_sizeOf_\d+'
                  r'|_f|_sunfold|_unsafe_rec|_mutual|injEq|inj|noConfusion\w*|noConfusionType|rec|recOn'
@@ -56,10 +36,9 @@ def nm(key):
     return '.'.join(c[len(mod_comps):]) if c[:len(mod_comps)] == mod_comps else '.'.join(c)
 
 
-src_path = os.path.join(w, p.get("descriptor_selector", ""))
+src_path = os.path.join(w, selector)
 src = open(src_path, encoding="utf-8").read() if os.path.exists(src_path) else ""
-# One parser, one place. This regex used to be duplicated here; when facts.py was fixed and this
-# copy was not, the two tools disagreed by exactly the declaration the first bug had hidden.
+# Authored declaration parsing is shared with facts.py.
 sys.path.insert(0, tooldir)
 from facts import AUTHORED
 authored = {m.group(2) for m in AUTHORED.finditer(src)}
@@ -71,9 +50,6 @@ ext = eg.get("external_deps", {})
 undecided = []
 
 def _pending_sentence(rows):
-    # Three review seats on two pull requests caught this sentence calling every public declaration a
-    # theorem. The generator, not the author, wrote that word; count by kind so the body cannot inherit
-    # a wrong label the way it inherited `public=` before #6425.
     from collections import Counter
     c = Counter(k or "?" for _, k in rows)
     parts = "、".join(f"{n} 条 {k}" for k, n in sorted(c.items()))
@@ -81,7 +57,7 @@ def _pending_sentence(rows):
 
 print("| 公开声明 | kind | 类型闭合 | 直接依赖含判定程序标记 | 模块内直接依赖(consumer → prerequisite) | 模块外依赖 | axioms |")
 print("|---|---|---|---|---|---|---|")
-for d in p.get("declaration_statement_ids", []):
+for d in p.get("declarations", []):
     name = nm(d.get("declaration_name_key", ""))
     if name not in authored or GEN.search(name):
         continue

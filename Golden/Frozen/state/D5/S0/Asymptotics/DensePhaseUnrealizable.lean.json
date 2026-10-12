@@ -1,1 +1,1 @@
-{"statement_id":"sha256:cfbc4d4e2b20bcccbaa117dad834b981ef9d5997ac93285c019cdf08853dd18b"}
+{"statement_id":"sha256:cfbc4d4e2b20bcccbaa117dad834b981ef9d5997ac93285c019cdf08853dd18b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Asymptotics),22:DensePhaseUnrealizable),47:fixed_point_dense_phase_eventually_unrealizable)","kind":"theorem"}]}

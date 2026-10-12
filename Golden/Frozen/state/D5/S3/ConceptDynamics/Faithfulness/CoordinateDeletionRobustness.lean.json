@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d49e59e63b1523fd9457450e15ba41243cce9ed8debc238341d0885ebe6863ca"}
+{"statement_id":"sha256:d49e59e63b1523fd9457450e15ba41243cce9ed8debc238341d0885ebe6863ca","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),12:Faithfulness),28:CoordinateDeletionRobustness),30:coordinate_deletion_robustness)","kind":"theorem"}]}

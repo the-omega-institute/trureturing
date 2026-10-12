@@ -170,7 +170,6 @@ internal static partial class RepositoryRules
         || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
-        || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
         || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
@@ -355,7 +354,6 @@ internal static partial class RepositoryRules
 
         }
 
-        ValidateChangedAcceptedFreezePins(context, findings);
         foreach (var path in context.Changes.Paths.Where(path => FrozenStatePath.IsUnderRoot(path.Value)).OrderBy(path => path.Value, StringComparer.Ordinal))
         {
             if (context.Current.Files.TryGetValue(path, out var file)

@@ -579,8 +579,6 @@ internal static partial class FileMapPolicy
                 && kind is not FileMapKind.Generated
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
-                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-                    && kind is not FileMapKind.Ledger
                 || FrozenStatePath.IsUnderRoot(path)
                     && kind is not FileMapKind.Data)
             {

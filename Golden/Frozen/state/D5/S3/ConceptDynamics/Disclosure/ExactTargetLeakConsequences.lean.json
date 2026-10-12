@@ -1,1 +1,1 @@
-{"statement_id":"sha256:cee25b454d607a4c7dfc4304ec33351e1fd061856a16c125e3769fadb749640a"}
+{"statement_id":"sha256:cee25b454d607a4c7dfc4304ec33351e1fd061856a16c125e3769fadb749640a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),10:Disclosure),27:ExactTargetLeakConsequences),30:exact_target_leak_consequences)","kind":"theorem"}]}
