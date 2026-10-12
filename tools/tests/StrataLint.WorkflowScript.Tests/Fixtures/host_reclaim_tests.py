@@ -459,6 +459,7 @@ raise SystemExit(cleanup.run_clean(options))
     def test_unreadable_recent_artifact_does_not_abort_the_sweep(self):
         blocked = self.root / "artifacts/TemporaryItems"
         blocked.mkdir(parents=True)
+        os.utime(blocked, (self.cutoff + 1, self.cutoff + 1))
         old = self.root / "artifacts/old"
         old.write_text("artifact")
         os.utime(old, (self.cutoff - 10, self.cutoff - 10))
