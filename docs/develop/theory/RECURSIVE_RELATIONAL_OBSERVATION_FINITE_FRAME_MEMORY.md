@@ -906,10 +906,7 @@ ordinary synthesis and application results under their named supplier contracts.
 The cited supplier methods and finite-tree topology are credited existing
 mathematics. The bounded source comparison establishes no external novelty or
 priority. Textual source checks and structural checks are distinct from Lean
-kernel validation and actual paid execution. Authorship uses the repository
-default formal-thinking-and-answer and theory-volume-template workflows and the
-SSHX implementation boundary; no independent review or new formal-verification
-status is asserted by this text.
+kernel validation and actual paid execution.
 
 [ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
 [NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
