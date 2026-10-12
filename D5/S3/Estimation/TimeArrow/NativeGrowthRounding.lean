@@ -5,9 +5,9 @@
    anchors: []
    utility: none
    digest: Original decimal growth and integer rounding supply native finite-scale bounds. -/
-
+import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 import D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
-import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 import D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 import D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 import D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
@@ -15,9 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import D5.S3.Estimation.TimeArrow.NativeAnchoredSmallBall
-import D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
 import D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
-
 open Filter
 open scoped Topology BigOperators
 open Finset
@@ -31,18 +29,15 @@ open D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Estimation.TimeArrow.NativeGrowthRounding
 noncomputable section
-
 /-- The decimal tower dominates its index. -/
 theorem decimalExponent_index (n : ℕ) : n + 1 ≤ decimalExponent n := by
   induction n with
   | zero => simp [decimalExponent]
   | succ n ih =>
     have h := Nat.mul_le_pow (a := 10) (by decide : 10 ≠ 1) (5 * decimalExponent n)
-    rw [decimalExponent]
-    omega
+    rw [decimalExponent]; omega
 /-- The original integer scales tend to infinity. -/
 theorem scale_tendsto : Tendsto (fun n => (scale n : ℝ)) atTop atTop := by
   have hd : Tendsto decimalExponent atTop atTop :=
@@ -107,8 +102,7 @@ theorem signal_log_rounding (r β : ℝ) (L : ℕ) (hq : 0 < signalSize r β L) 
     linarith only [hupper]
   · rw [Real.log_div hX.ne' hqR.ne']
     dsimp [X]
-    rw [Real.log_mul hM.ne' (Real.exp_ne_zero _), Real.log_exp]
-    ring
+    rw [Real.log_mul hM.ne' (Real.exp_ne_zero _), Real.log_exp]; ring
 private theorem polynomial_ratio_zero (L : ℕ → ℝ) (D : ℕ → ℕ)
     (hL : Tendsto L atTop atTop) (hL0 : ∀ n, 0 ≤ L n)
     (c C : ℝ) (hc : 0 < c) (hC : 0 < C) (p : ℕ)
@@ -117,8 +111,7 @@ private theorem polynomial_ratio_zero (L : ℕ → ℝ) (D : ℕ → ℕ)
   have hz : Tendsto (fun n => C * L n ^ p * Real.exp (-c * L n)) atTop (𝓝 0) := by
     have h := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero (p : ℝ) c hc).comp hL
     simpa only [Function.comp_apply, Real.rpow_natCast, mul_assoc, mul_zero] using h.const_mul C
-  refine squeeze_zero' (Eventually.of_forall fun n => div_nonneg
-    (pow_nonneg (hL0 n) p) (Nat.cast_nonneg _)) ?_ hz
+  refine squeeze_zero' (Eventually.of_forall fun n => div_nonneg (pow_nonneg (hL0 n) p) (Nat.cast_nonneg _)) ?_ hz
   filter_upwards [hbound] with n hn
   have hd : 0 < (D n : ℝ) := (div_pos (Real.exp_pos _) hC).trans_le hn
   calc
@@ -128,8 +121,7 @@ private theorem polynomial_ratio_zero (L : ℕ → ℝ) (D : ℕ → ℕ)
         (one_div_le_one_div_of_le (div_pos (Real.exp_pos _) hC) hn)
         (pow_nonneg (hL0 n) p)
     _ = C * L n ^ p * Real.exp (-c * L n) := by
-      rw [one_div_div, neg_mul, Real.exp_neg]
-      ring
+      rw [one_div_div, neg_mul, Real.exp_neg]; ring
 /-- Every fixed polynomial scale is negligible compared with both original integer populations. -/
 theorem original_polynomial_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (hβ : 0 < β) (hβ1 : β < 1) (p : ℕ) :
@@ -141,8 +133,7 @@ theorem original_polynomial_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     apply sub_pos.mpr
     apply (lt_div_iff₀ hβ).mpr
     nlinarith only [hφ, hβ1]
-  have hlarge : ∀ᶠ n in atTop,
-      4 ≤ Real.exp ((phi r / β - phi r) * (scale n : ℝ)) :=
+  have hlarge : ∀ᶠ n in atTop, 4 ≤ Real.exp ((phi r / β - phi r) * (scale n : ℝ)) :=
     (Real.tendsto_exp_atTop.comp (scale_tendsto.const_mul_atTop hcq)).eventually
       (eventually_ge_atTop 4)
   constructor
@@ -170,8 +161,7 @@ theorem original_density_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1) (p : ℕ
   intro n
   let L := scale n
   have hM : (0 : ℝ) < population r β L := by unfold population; positivity
-  have hx : (signalSize r β L : ℝ) ≤ (population r β L : ℝ) * Real.exp (-center r L) :=
-    Nat.floor_le (by positivity)
+  have hx : (signalSize r β L : ℝ) ≤ (population r β L : ℝ) * Real.exp (-center r L) := Nat.floor_le (by positivity)
   have hd : (signalSize r β L : ℝ) / population r β L ≤ Real.exp (-center r L) :=
     (div_le_iff₀ hM).mpr (by simpa only [mul_comm] using hx)
   have hcenter := (center_rounding r L hr.le hr1).1
@@ -181,8 +171,7 @@ theorem original_density_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1) (p : ℕ
       mul_le_mul_of_nonneg_left hd (by positivity)
     _ ≤ (scale n : ℝ)^p * Real.exp (c - phi r * (scale n : ℝ)) := by
       gcongr
-      dsimp [c, L] at *
-      linarith only [hcenter]
+      dsimp [c, L] at *; linarith only [hcenter]
     _ = _ := by rw [Real.exp_sub, neg_mul, Real.exp_neg]; ring
 private theorem small_log_bounds (u : ℝ) (hu : 0 ≤ u) (hu1 : u ≤ 1/2) :
     |Real.log (1-u)| ≤ 2*u ∧ |Real.log (1+u)| ≤ u := by
@@ -195,8 +184,7 @@ private theorem small_log_bounds (u : ℝ) (hu : 0 ≤ u) (hu1 : u ≤ 1/2) :
     nlinarith only [hu, hu1]
   have hneg : Real.log (1-u) ≤ 0 := Real.log_nonpos hm.le (by linarith)
   have hpos : 0 ≤ Real.log (1+u) := Real.log_nonneg (by linarith)
-  rw [abs_of_nonpos hneg, abs_of_nonneg hpos]
-  exact ⟨by linarith only [hlo, hinv], by
+  rw [abs_of_nonpos hneg, abs_of_nonneg hpos]; exact ⟨by linarith only [hlo, hinv], by
     have h := Real.log_le_sub_one_of_pos hp
     linarith only [h]⟩
 /-- The exact final-floor error and compensation determine the original A-logit. -/
@@ -231,17 +219,14 @@ theorem cell_logit_identity (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
   have he : 1-(q : ℝ)/M = ((M-q : ℕ) : ℝ)/M := by
     rw [hsubeq]
     field_simp
-  have hlogp : Real.log (1-(q : ℝ)/M) = Real.log ((M-q : ℕ) : ℝ)-Real.log (M : ℝ) := by
-    rw [he, Real.log_div hsub.ne' hM.ne']
+  have hlogp : Real.log (1-(q : ℝ)/M) = Real.log ((M-q : ℕ) : ℝ)-Real.log (M : ℝ) := by rw [he, Real.log_div hsub.ne' hM.ne']
   have hround := (signal_log_rounding r β L hq).2.2
   change cellLogit r β L = _
   unfold cellLogit
   dsimp only
   rw [hround, hlogp]
-  rw [Real.log_div hpr.ne' hminus.ne', Real.log_div hmr.ne' hplus.ne',
-    Real.log_div hsub.ne' hqR.ne']
-  unfold center
-  ring
+  rw [Real.log_div hpr.ne' hminus.ne', Real.log_div hmr.ne' hplus.ne', Real.log_div hsub.ne' hqR.ne']
+  unfold center; ring
 /-- The exact original A-logit has a reciprocal-count and compensation error bound. -/
 theorem cell_logit_bound (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
     (hq : 0 < signalSize r β L) (hqm : signalSize r β L < population r β L)
@@ -266,8 +251,7 @@ theorem cell_logit_bound (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
   have hk : 0 ≤ (centralPositive r L : ℝ) := Nat.cast_nonneg _
   have hl : 0 ≤ (centralNegative r L : ℝ) := Nat.cast_nonneg _
   have hsum : (centralPositive r L : ℝ)+(centralNegative r L : ℝ) = L := by
-    rw [(central_rounding r L hr hr1.le).2.2.2]
-    ring
+    rw [(central_rounding r L hr hr1.le).2.2.2]; ring
   dsimp only at he
   rw [he]
   calc
@@ -280,17 +264,13 @@ theorem cell_logit_bound (r β : ℝ) (L : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
       exact abs_sub _ _
     _ = (centralPositive r L : ℝ)*|Real.log (1-ε)| +
         (centralNegative r L : ℝ)*|Real.log (1+ε)| + η + |Real.log (1-p)| := by
-      rw [abs_mul, abs_neg, abs_of_nonneg hk, abs_mul, abs_of_nonneg hl,
-        abs_of_nonneg hη.1]
+      rw [abs_mul, abs_neg, abs_of_nonneg hk, abs_mul, abs_of_nonneg hl, abs_of_nonneg hη.1]
     _ ≤ (centralPositive r L : ℝ)*(2*ε) +
         (centralNegative r L : ℝ)*ε + 1/(q : ℝ) + 2*p := by
-      exact add_le_add (add_le_add (add_le_add
-        (mul_le_mul_of_nonneg_left hlogs.1 hk)
+      exact add_le_add (add_le_add (add_le_add (mul_le_mul_of_nonneg_left hlogs.1 hk)
         (mul_le_mul_of_nonneg_left hlogs.2 hl)) hη.2.1) hlogp
     _ ≤ _ := by
-      change (centralPositive r L : ℝ)*(2*ε) +
-        (centralNegative r L : ℝ)*ε + 1/(q : ℝ) + 2*p ≤
-        2*(L : ℝ)*ε + 1/(q : ℝ) + 2*p
+      change (centralPositive r L : ℝ)*(2*ε) + (centralNegative r L : ℝ)*ε + 1/(q : ℝ) + 2*p ≤ 2*(L : ℝ)*ε + 1/(q : ℝ) + 2*p
       have hs := congrArg (fun z : ℝ => z*ε) hsum
       nlinarith only [hs, mul_nonneg hl hε]
 theorem compensation_density_bound (M q : ℕ) (r : ℝ)
@@ -322,8 +302,7 @@ theorem original_populations_tendsto (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   · apply tendsto_atTop_mono' atTop _ (hqexp.atTop_div_const (by norm_num : (0 : ℝ) < 4))
     filter_upwards [hqexp.eventually (eventually_ge_atTop 4)] with n hn
     exact (signal_exponential_bounds r β (scale n) hr.le hr1 hφ.le hβ hn).1
-  · exact tendsto_atTop_mono
-      (fun n => (population_exponential_bounds r β (scale n) hφ.le hβ).1)
+  · exact tendsto_atTop_mono (fun n => (population_exponential_bounds r β (scale n) hφ.le hβ).1)
       (hMexp.atTop_div_const (by norm_num : (0 : ℝ) < 2))
 /-- The original compensation is negligible at every fixed polynomial scale. -/
 theorem original_compensation_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
@@ -333,8 +312,7 @@ theorem original_compensation_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       atTop (𝓝 0) := by
   have hd := original_density_scales r β hr hr1 0
   simp only [pow_zero, one_mul] at hd
-  have hh : ∀ᶠ n in atTop,
-      (signalSize r β (scale n) : ℝ)/population r β (scale n) < 1/2 :=
+  have hh : ∀ᶠ n in atTop, (signalSize r β (scale n) : ℝ)/population r β (scale n) < 1/2 :=
     hd.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1/2))
   have hz := (original_density_scales r β hr hr1 p).const_mul (2*r)
   simp only [mul_zero] at hz
@@ -363,16 +341,14 @@ theorem original_cell_logit_precision (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     ((original_density_scales r β hr hr1 1).const_mul 2)
   simp only [mul_zero, zero_add, pow_one] at hz
   refine squeeze_zero' (Eventually.of_forall fun n => by positivity) ?_ hz
-  filter_upwards [hq.eventually (eventually_gt_atTop 0),
-    hden.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1/2)),
+  filter_upwards [hq.eventually (eventually_gt_atTop 0), hden.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1/2)),
     hcomp.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1/2))] with n hnq hnp hnc
   have hqN : 0 < signalSize r β (scale n) := by exact_mod_cast hnq
   have hM : (0 : ℝ) < population r β (scale n) := by unfold population; positivity
   have hqm : signalSize r β (scale n) < population r β (scale n) := by
     have hratio : (signalSize r β (scale n) : ℝ)/population r β (scale n) < 1 := by linarith only [hnp]
     exact_mod_cast (div_lt_one hM).mp hratio
-  have hb := mul_le_mul_of_nonneg_left
-    (cell_logit_bound r β (scale n) hr.le hr1 hqN hqm hnc.le hnp.le)
+  have hb := mul_le_mul_of_nonneg_left (cell_logit_bound r β (scale n) hr.le hr1 hqN hqm hnc.le hnp.le)
     (show (0 : ℝ) ≤ scale n from Nat.cast_nonneg _)
   convert hb using 1 <;> first | rfl | ring
 /-- Any prescribed root-origin precision and the occupancy log interval hold eventually. -/
@@ -411,8 +387,7 @@ theorem original_tail_rates (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     nlinarith only [hβ, hφ.1]
   have hlog := Real.one_sub_inv_le_log_of_pos (by norm_num : (0 : ℝ) < 2)
   have hlog2 : (1/2 : ℝ) ≤ Real.log 2 := by norm_num at hlog ⊢; exact hlog
-  rw [show (4 : ℝ) = 2^2 by norm_num, Real.log_pow]
-  norm_num only [Nat.cast_ofNat]
+  rw [show (4 : ℝ) = 2^2 by norm_num, Real.log_pow]; norm_num only [Nat.cast_ofNat]
   constructor <;> nlinarith only [hφ.2, hrate, hlog2]
 /-- Both all-row tail payments decay at the original scale. -/
 theorem original_tail_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
@@ -427,8 +402,7 @@ theorem original_tail_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   obtain ⟨hIM, hIq⟩ := original_tail_rates r β hr hr1 hβ
   let I := 8*Real.log 4-6
   constructor
-  · have hz := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero
-      (p : ℝ) (I-phi r/β) hIM).comp scale_tendsto
+  · have hz := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero (p : ℝ) (I-phi r/β) hIM).comp scale_tendsto
     simp only [Function.comp_apply, Real.rpow_natCast] at hz
     refine squeeze_zero' (Eventually.of_forall fun n => by positivity) ?_ hz
     apply Eventually.of_forall
@@ -442,16 +416,13 @@ theorem original_tail_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       apply sub_pos.mpr
       apply (lt_div_iff₀ hβ0).mpr
       nlinarith only [hφ, hβ1]
-    have hlarge := (Real.tendsto_exp_atTop.comp
-      (scale_tendsto.const_mul_atTop hcq)).eventually (eventually_ge_atTop 4)
-    have hz := ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero
-      (p : ℝ) (I-2*phi r) hIq).comp scale_tendsto).const_mul 16
+    have hlarge := (Real.tendsto_exp_atTop.comp (scale_tendsto.const_mul_atTop hcq)).eventually (eventually_ge_atTop 4)
+    have hz := ((tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero (p : ℝ) (I-2*phi r) hIq).comp scale_tendsto).const_mul 16
     simp only [Function.comp_apply, Real.rpow_natCast, mul_zero] at hz
     refine squeeze_zero' (Eventually.of_forall fun n => by positivity) ?_ hz
     filter_upwards [hlarge] with n hn
     have hq := (signal_exponential_bounds r β (scale n) hr.le hr1 hφ.le hβ0 hn).1
-    have hqpos : (0 : ℝ) < signalSize r β (scale n) :=
-      (div_pos (Real.exp_pos _) (by norm_num)).trans_le hq
+    have hqpos : (0 : ℝ) < signalSize r β (scale n) := (div_pos (Real.exp_pos _) (by norm_num)).trans_le hq
     have hm := (population_exponential_bounds r β (scale n) hφ.le hβ0).2
     have hratio : (population r β (scale n) : ℝ)/signalSize r β (scale n) ≤
         4*Real.exp (phi r*(scale n : ℝ)) := by
@@ -467,22 +438,18 @@ theorem original_tail_scales (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       _ ≤ (scale n : ℝ)^p * (4*Real.exp (phi r*(scale n : ℝ)))^2 *
           Real.exp (-(I*(scale n : ℝ))) := by gcongr
       _ = 16*((scale n : ℝ)^p*Real.exp (-(I-2*phi r)*(scale n : ℝ))) := by
-        rw [mul_pow, ← Real.exp_nat_mul]
-        norm_num only [Nat.cast_ofNat, show (4 : ℝ)^2 = 16 by norm_num]
-        rw [show (scale n : ℝ)^p*(16*Real.exp (2*(phi r*(scale n : ℝ))))*
-            Real.exp (-(I*(scale n : ℝ))) =
+        rw [mul_pow, ← Real.exp_nat_mul]; norm_num only [Nat.cast_ofNat, show (4 : ℝ)^2 = 16 by norm_num]
+        rw [show (scale n : ℝ)^p*(16*Real.exp (2*(phi r*(scale n : ℝ))))* Real.exp (-(I*(scale n : ℝ))) =
           16*((scale n : ℝ)^p*(Real.exp (2*(phi r*(scale n : ℝ)))*
             Real.exp (-(I*(scale n : ℝ))))) by ring, ← Real.exp_add]
         congr 2
         ring
 private theorem eventually_four_sqrt_scale (c : ℝ) (hc : 0 < c) :
     ∀ᶠ n in atTop, 4*Real.sqrt (scale n : ℝ) ≤ c*(scale n : ℝ) := by
-  filter_upwards [(Real.tendsto_sqrt_atTop.comp scale_tendsto).eventually
-    (eventually_ge_atTop (4/c))] with n hn
+  filter_upwards [(Real.tendsto_sqrt_atTop.comp scale_tendsto).eventually (eventually_ge_atTop (4/c))] with n hn
   have h := mul_le_mul_of_nonneg_right ((div_le_iff₀ hc).mp hn) (Real.sqrt_nonneg (scale n : ℝ))
   simp only [Function.comp_apply] at h
-  have hs := congrArg (fun z : ℝ => c*z)
-    (Real.sq_sqrt (show (0 : ℝ) ≤ scale n from Nat.cast_nonneg _))
+  have hs := congrArg (fun z : ℝ => c*z) (Real.sq_sqrt (show (0 : ℝ) ≤ scale n from Nat.cast_nonneg _))
   nlinarith only [h, hs]
 /-- Exact finite scale premises for the native relative, occupancy and variance interfaces. -/
 theorem original_native_scale_conditions (r β A η : ℝ) (M₀ : ℕ)
@@ -507,8 +474,7 @@ theorem original_native_scale_conditions (r β A η : ℝ) (M₀ : ℕ)
   simp only [pow_zero, one_mul] at hd hc
   have hLM := (original_polynomial_scales r β hr hr1 hβ hβ1 1).2
   have hALM := ((original_polynomial_scales r β hr hr1 hβ hβ1 2).2).const_mul A
-  simp only [pow_one] at hLM
-  simp only [mul_zero] at hALM
+  simp only [pow_one] at hLM; simp only [mul_zero] at hALM
   filter_upwards [hM.eventually (eventually_ge_atTop (M₀ : ℝ)),
     hq.eventually (eventually_ge_atTop 1), hM.eventually (eventually_ge_atTop 6),
     scale_tendsto.eventually (eventually_ge_atTop 4),
@@ -521,8 +487,7 @@ theorem original_native_scale_conditions (r β A η : ℝ) (M₀ : ℕ)
     eventually_four_sqrt_scale ((1+r)/2) ha,
     eventually_four_sqrt_scale ((1-r)/2) hb] with n hM₀ hq1 hM6 hL4 hden hcomp hLη hL45 hA haL hbL haS hbS
   have hM0 : (0 : ℝ) < population r β (scale n) := by unfold population; positivity
-  have hqm : signalSize r β (scale n) < population r β (scale n) := by
-    exact_mod_cast (div_lt_one hM0).mp hden
+  have hqm : signalSize r β (scale n) < population r β (scale n) := by exact_mod_cast (div_lt_one hM0).mp hden
   exact ⟨by exact_mod_cast hM₀, by exact_mod_cast hq1, hqm,
     by exact_mod_cast hL4, by exact_mod_cast hM6, hcomp.le, hLη.le, hL45.le,
     by simpa only [← mul_div_assoc] using hA.le, haL, hbL, haS, hbS⟩
@@ -545,8 +510,7 @@ theorem original_central_score_condition (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   have hprec := original_cell_logit_precision r β hr hr1 hβ hβ1
   have hcomp := original_compensation_scales r β hr hr1 0
   simp only [pow_zero, one_mul] at hcomp
-  filter_upwards [hprec.eventually (gt_mem_nhds hc),
-    hcomp.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1)),
+  filter_upwards [hprec.eventually (gt_mem_nhds hc), hcomp.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1)),
     (Real.tendsto_sqrt_atTop.comp scale_tendsto).eventually (eventually_ge_atTop 2),
     scale_tendsto.eventually (eventually_ge_atTop 1)] with n hd he hs hL
   dsimp only
@@ -569,19 +533,16 @@ theorem original_central_score_condition (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   obtain ⟨hk,hξ0,hξ1,hl⟩ := central_rounding r (scale n) hr.le hr1.le
   have hξ := mul_le_mul_of_nonneg_right hξ1.le hg0
   have hsg := mul_le_mul_of_nonneg_right hs hg0
-  have hid : (((1+r)/2)*(scale n : ℝ))*Real.log ((1+r)/(1-ε)) +
-      (((1-r)/2)*(scale n : ℝ))*Real.log ((1-r)/(1+ε)) -
+  have hid : (((1+r)/2)*(scale n : ℝ))*Real.log ((1+r)/(1-ε)) + (((1-r)/2)*(scale n : ℝ))*Real.log ((1-r)/(1+ε)) -
       Real.log (((population r β (scale n)-signalSize r β (scale n) : ℕ) : ℝ)/signalSize r β (scale n)) =
       cellLogit r β (scale n)+
         (((1+r)/2)*(scale n : ℝ)-centralPositive r (scale n))*g := by
     unfold cellLogit
     dsimp only
     rw [hl]
-    dsimp [g,ε]
-    ring
+    dsimp [g,ε]; ring
   rw [hid]
-  change _ ≤ Real.sqrt (scale n : ℝ)*g
-  simp only [Function.comp_apply] at hsg
+  change _ ≤ Real.sqrt (scale n : ℝ)*g; simp only [Function.comp_apply] at hsg
   nlinarith only [hcell,hg,hξ,hsg]
 /-- The explicit full-root budget is written in the polynomial payments used by the native laws. -/
 def rootFailureBudget (r β v κ A : ℝ) (n : ℕ) : ℝ :=
@@ -600,15 +561,12 @@ theorem original_root_failure_budget_zero (r β v κ A : ℝ) (hr : 0 < r) (hr1 
   have hM := fun p => (original_polynomial_scales r β hr hr1 hβ0 hβ1 p).2
   have htail := fun p => (original_tail_scales r β hr hr1 hβ hβ1 p).2
   have hlast := (original_tail_scales r β hr hr1 hβ hβ1 0).1
-  have hfirst := ((((hq 2).const_mul 3).add ((hM 5).const_mul (8*A))).add
-    ((htail 2).const_mul 10)).const_mul (64/(v^2*κ^2))
-  have hsecond := ((((hq 0).const_mul 3).add ((hM 3).const_mul (8*A))).add
-    ((htail 0).const_mul 10)).const_mul (4/v^2)
+  have hfirst := ((((hq 2).const_mul 3).add ((hM 5).const_mul (8*A))).add ((htail 2).const_mul 10)).const_mul (64/(v^2*κ^2))
+  have hsecond := ((((hq 0).const_mul 3).add ((hM 3).const_mul (8*A))).add ((htail 0).const_mul 10)).const_mul (4/v^2)
   unfold rootFailureBudget
   convert (hfirst.add hsecond).add hlast using 1
   · funext n
-    dsimp only
-    simp only [pow_zero,one_mul]
+    dsimp only; simp only [pow_zero,one_mul]
     ring
   · simp only [mul_zero,zero_add]
 /-- The native rectangle cardinality has a support- and experiment-uniform vanishing budget
@@ -637,15 +595,13 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   have hκ1 : κ < 1 := by dsimp [κ]; linarith only [hr]
   have hrκ : r ≤ 1-κ := by dsimp [κ]; linarith only [hr1]
   obtain ⟨A,M₀,η₀,K,hA,hM₀,hη₀,hK,h⟩ := native_signal_geometry_budget κ hκ hκ1
-  let c := Real.exp (-1/((1+r)/2)-1)*Real.exp (-1/((1-r)/2)-1) /
-    (Real.sqrt ((3/2)*((1+r)/2))*Real.sqrt ((3/2)*((1-r)/2)))
+  let c := Real.exp (-1/((1+r)/2)-1)*Real.exp (-1/((1-r)/2)-1) / (Real.sqrt ((3/2)*((1+r)/2))*Real.sqrt ((3/2)*((1-r)/2)))
   let C := 2/Real.sqrt (((1+r)/2)*((1-r)/2))
   have ha : 0 < (1+r)/2 := by linarith only [hr]
   have hb : 0 < (1-r)/2 := by linarith only [hr1]
   have hc : 0 < c := by dsimp [c]; positivity
   have hC : 0 < C := by dsimp [C]; positivity
-  let budget := fun n => (540/c)*((scale n : ℝ)/signalSize r β (scale n)) +
-    (1215*A)*((scale n : ℝ)^3/population r β (scale n))
+  let budget := fun n => (540/c)*((scale n : ℝ)/signalSize r β (scale n)) + (1215*A)*((scale n : ℝ)^3/population r β (scale n))
   have hbudget : Tendsto budget atTop (𝓝 0) := by
     have h1 := ((original_polynomial_scales r β hr hr1 hβ hβ1 1).1).const_mul (540/c)
     have h2 := ((original_polynomial_scales r β hr hr1 hβ hβ1 3).2).const_mul (1215*A)
@@ -673,8 +629,7 @@ theorem original_rectangle_scale_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   apply le_trans _ (he.trans _)
   · apply sum_le_sum
     intro o _
-    have hp := (finite_support_bayes (s := 2*M*L) hq hqm hr hr1
-      (by unfold compensation; positivity)
+    have hp := (finite_support_bayes (s := 2*M*L) hq hqm hr hr1 (by unfold compensation; positivity)
       (by dsimp [κ] at hκ; linarith only [hcomp,hr1]) e).2.1.1 S o
     split_ifs with hfail hfull hfull
     · exact le_rfl
@@ -703,8 +658,7 @@ theorem original_complete_root_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       ∀ x : Obs M (2*M*L) e → ℝ,
       (∀ o, (∑ k : Fin M, Real.sigmoid (x o+score q r e o k-
         Real.log (((M-q : ℕ) : ℝ)/q))) = q) →
-      let D := fun o => ∑ k : Fin M,
-        Real.sigmoid (x o+score q r e o k-Real.log (((M-q : ℕ) : ℝ)/q)) *
+      let D := fun o => ∑ k : Fin M, Real.sigmoid (x o+score q r e o k-Real.log (((M-q : ℕ) : ℝ)/q)) *
           (1-Real.sigmoid (x o+score q r e o k-Real.log (((M-q : ℕ) : ℝ)/q)))
       (∑ o, if κ₀/(L : ℝ) < |x o+cellLogit r β L| ∨ D o < v*(q : ℝ)/4 ∨
           (q : ℝ) < D o ∨ ¬∀ k : Fin M, count e o k 1+count e o k (-1) ≤ 8*L
@@ -716,8 +670,7 @@ theorem original_complete_root_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   have hrκ : r ≤ 1-κ := by dsimp [κ]; linarith only [hr1]
   have hβ0 : 0 < β := by linarith only [hβ]
   obtain ⟨A,M₀,η₀,hA,hM₀,hη₀,h⟩ := native_calibration_window_root_budget κ hκ hκ1
-  let v := 1/8*(Real.exp (-(2 : ℝ)^2/((1+r)/2)-1)*
-    Real.exp (-(2 : ℝ)^2/((1-r)/2)-1) /
+  let v := 1/8*(Real.exp (-(2 : ℝ)^2/((1+r)/2)-1)* Real.exp (-(2 : ℝ)^2/((1-r)/2)-1) /
     (Real.sqrt ((3/2)*((1+r)/2))*Real.sqrt ((3/2)*((1-r)/2))))
   have ha : 0 < (1+r)/2 := by linarith only [hr]
   have hb : 0 < (1-r)/2 := by linarith only [hr1]
@@ -746,8 +699,7 @@ theorem original_complete_root_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
   have hbsmall : b ≤ (v*(q : ℝ))/4*Real.log 2 := by
     apply (div_le_iff₀ (by positivity : 0 < 8*(L : ℝ))).mpr
     have hh := mul_le_mul_of_nonneg_left hlarge (mul_pos hv hqR).le
-    dsimp [L] at *
-    nlinarith only [hh]
+    dsimp [L] at *; nlinarith only [hh]
   have he := h M q L r hMM hq hqm hr hrκ (by dsimp [κ,M,q,L]; linarith only [hcomp])
     hL hLη hsmall hM6 hL45 hsplus hsminus hcenter S e i j hi hj b hbpos
     (by convert hbsmall using 1 <;> dsimp [v] <;> ring) x hx
@@ -756,11 +708,9 @@ theorem original_complete_root_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
     dsimp [b]
     field_simp
     ring
-  have hvform : (q : ℝ)/8*(Real.exp (-(2 : ℝ)^2/((1+r)/2)-1)*
-      Real.exp (-(2 : ℝ)^2/((1-r)/2)-1) /
+  have hvform : (q : ℝ)/8*(Real.exp (-(2 : ℝ)^2/((1+r)/2)-1)* Real.exp (-(2 : ℝ)^2/((1-r)/2)-1) /
       (Real.sqrt ((3/2)*((1+r)/2))*Real.sqrt ((3/2)*((1-r)/2)))) = v*(q : ℝ) := by
-    dsimp [v]
-    ring
+    dsimp [v]; ring
   rw [hvform,hthreshold] at he
   apply le_trans _ (he.trans _)
   · apply sum_le_sum
@@ -777,8 +727,7 @@ theorem original_complete_root_budget (r β : ℝ) (hr : 0 < r) (hr1 : r < 1)
       have hxsum := (abs_add_le (x o) (cellLogit r β L)).trans (add_le_add hxgood hd.1)
       rcases hfail with hfail | hfail | hfail | hfail
       · have ht : κ₀/(2*(L : ℝ))+κ₀/(2*(L : ℝ)) = κ₀/(L : ℝ) := by ring
-        rw [ht] at hxsum
-        exact not_lt_of_ge hxsum hfail
+        rw [ht] at hxsum; exact not_lt_of_ge hxsum hfail
       · exact hvar.1 hfail
       · exact hvar.2 hfail
       · exact hgood.2 hfail
@@ -822,8 +771,7 @@ theorem original_rectangle_feedback_scales (r β c C η T : ℝ)
     apply (div_le_iff₀ (by positivity : 0 < (c*η)^2)).mpr
     nlinarith only [hsquare]
   have hs := Real.le_sqrt_of_sq_le hsq
-  have hscale : L ≤ c*η*Real.sqrt (N : ℝ) :=
-    by simpa only [mul_comm, mul_left_comm] using (div_le_iff₀ (mul_pos hc hη)).mp hs
+  have hscale : L ≤ c*η*Real.sqrt (N : ℝ) := by simpa only [mul_comm, mul_left_comm] using (div_le_iff₀ (mul_pos hc hη)).mp hs
   refine ⟨((le_div_iff₀ (mul_pos hc hη)).mpr (by nlinarith only [hT])).trans hs, ?_, ?_⟩
   · apply (div_le_iff₀ hq0).mpr
     have hηL : C ≤ η*L := by
@@ -836,29 +784,19 @@ theorem original_rectangle_feedback_scales (r β c C η T : ℝ)
     have hh := mul_le_mul_of_nonneg_left hscale hN0.le
     apply (mul_le_mul_iff_left₀ hc).mp
     nlinarith only [hlow,hh]
-
 end
 end D5.S3.Estimation.TimeArrow.NativeGrowthRounding
-
 open scoped BigOperators Topology
 open Finset Filter
-open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 open D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
 open D5.S3.Estimation.TimeArrow.NativeSharedRootFeedback
 open D5.S3.Estimation.TimeArrow.NativeAnchoredSmallBall
-open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
-open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 open D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
-
 namespace D5.S3.Estimation.TimeArrow.OriginalScoreWindow
 noncomputable section
-
 open scoped Classical in
 set_option maxHeartbeats 4000000 in
 /-- The original complete window posterior has the registered arithmetic
@@ -876,8 +814,7 @@ theorem original_full_env_small_ball :
       let z : Fiber S e o := ⟨o,rfl⟩
       let All : Support M M := ⟨univ,by simp⟩
       let bg : ℝ := (nativeCalibrationCells All e o k l 0 \ S.val).card
-      let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
-        (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+      let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+ (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
       let V := nativeRectangleRows S e o k l z
       let N : ℝ := V.card
       let R : ℝ := (V.filter fun i => count e o i.val 1 = k).card
@@ -922,23 +859,18 @@ theorem original_full_env_small_ball :
   dsimp only
   let z : Fiber S e o := ⟨o,rfl⟩
   let All : Support M M := ⟨univ,by simp⟩
-  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+
-    (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
+  let z0 := (k : ℝ)*Real.log ((1+r)/(1-compensation M q r))+ (l : ℝ)*Real.log ((1-r)/(1+compensation M q r))
   let Env := univ.filter fun y : Fiber S e o =>
     nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z
   intro hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
     hH hPQ hwidth hζ hlog herror hgrid anchor xStar henv hcut hroot hvar hx hstar L τ hL hτ
   have hε1 : compensation M q r < 1 := by linarith only [hεhalf]
-  have hnative := hmain M q s S e o k l z hq hqm hε hε1 hN hRlo hRhi hUlo hUhi
-    hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
+  have hnative := hmain M q s S e o k l z hq hqm hε hε1 hN hRlo hRhi hUlo hUhi hlarge hsize hsize' hηscale hεη hbgN hs1 hV hscale
     anchor xStar henv hroot hvar hx hstar L τ hL hτ
-  have hmu (y : Fiber S e o) (hy : y ∈ Env) :
-      originalGroupPosteriorMean q r center width z0 e y.val =
+  have hmu (y : Fiber S e o) (hy : y ∈ Env) : originalGroupPosteriorMean q r center width z0 e y.val =
         ∑ i ∈ nativeCalibrationCells All e y.val k l 0,inclusion q r e y.val i := by
-    have hyenv : nativeMinimalRectangleReadout S e o k l y =
-        nativeMinimalRectangleReadout S e o k l z := (mem_filter.mp hy).2
-    have hcuty := (original_count_cut_same_environment S e o k l H y anchor
-      (hyenv.trans henv.symm) hH).mpr hcut
+    have hyenv : nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z := (mem_filter.mp hy).2
+    have hcuty := (original_count_cut_same_environment S e o k l H y anchor (hyenv.trans henv.symm) hH).mpr hcut
     unfold originalGroupPosteriorMean
     rw [original_zero_group_eq_all_cell q r center width ζ e y.val k l H Q P
       hr hr1 hPQ hζ hε hεhalf (by omega) hcuty hwidth hlog herror hgrid]
@@ -972,6 +904,5 @@ theorem original_full_env_small_ball :
       | (apply sum_congr rfl; intro x _; split_ifs <;> rfl)
       | (congr 1; ext y; simp only [Env,z,mem_filter,mem_univ,true_and])
   simpa only [N,B,z] using heqEnv.le.trans hf
-
 end
 end D5.S3.Estimation.TimeArrow.OriginalScoreWindow

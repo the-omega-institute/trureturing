@@ -5,27 +5,22 @@
    anchors: []
    utility: none
    digest: Numerical rectangle margins are recovered from the collapsed native history and outside counts. -/
-
+import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 import D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
-import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 import Mathlib.Data.Nat.Choose.Vandermonde
-
 open scoped BigOperators
 open Finset
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 noncomputable section
-
 open private
   D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_departure_word_counts
-from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
+from D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 /-- The collapsed history fixes both total signal departure counts. -/
 theorem native_signal_count_totals {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (y : Fiber S e o) :
@@ -34,8 +29,7 @@ theorem native_signal_count_totals {M q s : ℕ} (S : Support M q)
       (∑ i : {i : Fin M // i ∈ S.val}, count e y.val i.val (-1)) =
         (signedDepartureBlocks S e o 1).card := by
   classical
-  let W := labelBlockEquiv S e o _ _ _ (nativeDepartureEnumeration S e o)
-    (fiberLabelEquiv S e o y)
+  let W := labelBlockEquiv S e o _ _ _ (nativeDepartureEnumeration S e o) (fiberLabelEquiv S e o y)
   have hp : (∑ i : {i : Fin M // i ∈ S.val}, count e y.val i.val 1) =
       (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation W.1.1).card := by
     rw [← Multiset.sum_count_eq_card (s := univ) (fun _ _ => mem_univ _)]
@@ -45,7 +39,6 @@ theorem native_signal_count_totals {M q s : ℕ} (S : Support M q)
     rw [← Multiset.sum_count_eq_card (s := univ) (fun _ _ => mem_univ _)]
     exact sum_congr rfl fun i _ => (D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_departure_word_counts S e o y i).2
   simpa only [D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation_card] using And.intro hp hm
-
 /-- The environment retains membership and all outside signal-row count
 pairs; departure totals are already fixed by the collapsed history. -/
 def nativeMinimalRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment)
@@ -53,7 +46,6 @@ def nativeMinimalRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experimen
     Finset {i : Fin M // i ∈ S.val} × ({i : Fin M // i ∈ S.val} → Option (ℕ × ℕ)) :=
   ((nativeMarginRectangleReadout S e o k l y).1,
     (nativeMarginRectangleReadout S e o k l y).2.1)
-
 private theorem two_level_count_sum {α : Type*} [Fintype α] [DecidableEq α]
     (V : Finset α) (f : α → ℕ) (k : ℕ)
     (hf : ∀ i ∈ V, f i = k ∨ f i = k + 1) :
@@ -62,8 +54,7 @@ private theorem two_level_count_sum {α : Type*} [Fintype α] [DecidableEq α]
   have hi : (∑ i ∈ V, f i) + (V.filter fun i => f i = k).card =
       V.card * (k + 1) := by
     have hb : (∑ i ∈ V, if f i = k then (1 : ℕ) else 0) =
-        (V.filter fun i => f i = k).card := by
-      simpa using (sum_boole (R := ℕ) (fun i => f i = k) V)
+        (V.filter fun i => f i = k).card := by simpa using (sum_boole (R := ℕ) (fun i => f i = k) V)
     rw [← hb, ← sum_add_distrib]
     calc
       _ = ∑ i ∈ V, (k + 1) := by
@@ -76,7 +67,6 @@ private theorem two_level_count_sum {α : Type*} [Fintype α] [DecidableEq α]
       _ = _ := by simp
   have ht := sum_sdiff (subset_univ V) (f := f)
   omega
-
 /-- Both margins are determined by the minimal environment. -/
 theorem native_minimal_readout_eq_iff {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (k l : ℕ)
@@ -94,8 +84,7 @@ theorem native_minimal_readout_eq_iff {M q s : ℕ} (S : Support M q)
           count e y.val i.val (-1) = count e z.val i.val (-1) := by
       have hiz : i ∉ nativeRectangleRows S e o k l z := by rwa [← hV]
       have hh := congrFun hout i
-      change (if i ∈ nativeRectangleRows S e o k l y then none else
-          some (count e y.val i.val 1, count e y.val i.val (-1))) =
+      change (if i ∈ nativeRectangleRows S e o k l y then none else some (count e y.val i.val 1, count e y.val i.val (-1))) =
         (if i ∈ nativeRectangleRows S e o k l z then none else
           some (count e z.val i.val 1, count e z.val i.val (-1))) at hh
       simpa only [if_neg hi, if_neg hiz, Option.some.injEq, Prod.mk.injEq] using hh
@@ -113,30 +102,25 @@ theorem native_minimal_readout_eq_iff {M q s : ℕ} (S : Support M q)
       (fun i => count e v.val i.val (-1)) l (fun i hi => (mem_filter.mp hi).2.2)
     have hty := native_signal_count_totals S e o y
     have htz := native_signal_count_totals S e o z
-    have hR : ((nativeRectangleRows S e o k l y).filter
-        fun i => count e y.val i.val 1 = k).card =
+    have hR : ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val 1 = k).card =
         ((nativeRectangleRows S e o k l z).filter
         fun i => count e z.val i.val 1 = k).card := by
       rw [hV]
       have hy := hp y
       have hz := hp z
       rw [hty.1, hs.1, hV] at hy
-      rw [htz.1] at hz
-      omega
-    have hU : ((nativeRectangleRows S e o k l y).filter
-        fun i => count e y.val i.val (-1) = l).card =
+      rw [htz.1] at hz; omega
+    have hU : ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val (-1) = l).card =
         ((nativeRectangleRows S e o k l z).filter
         fun i => count e z.val i.val (-1) = l).card := by
       rw [hV]
       have hy := hn y
       have hz := hn z
       rw [hty.2, hs.2, hV] at hy
-      rw [htz.2] at hz
-      omega
+      rw [htz.2] at hz; omega
     exact Prod.ext hV (Prod.ext hout (Prod.ext hR hU))
   · intro h
     exact congrArg (fun v => (v.1, v.2.1)) h
-
 open private
   D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.native_four_cell_conditional_law
 from D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
@@ -168,20 +152,16 @@ theorem native_minimal_four_cell_law {M q s : ℕ} (S : Support M q)
   let outsideM := fun i : {i : Fin M // i ∈ S.val} => count e z.val i.val (-1)
   have hR : R ≤ V.card := card_filter_le V _
   have hU : U ≤ V.card := card_filter_le V _
-  have hp := two_level_count_sum V outsideP k
-    (fun i hi => (mem_filter.mp hi).2.1)
-  have hn := two_level_count_sum V outsideM l
-    (fun i hi => (mem_filter.mp hi).2.2)
+  have hp := two_level_count_sum V outsideP k (fun i hi => (mem_filter.mp hi).2.1)
+  have hn := two_level_count_sum V outsideM l (fun i hi => (mem_filter.mp hi).2.2)
   rw [(native_signal_count_totals S e o z).1] at hp
   rw [(native_signal_count_totals S e o z).2] at hn
   have hpos : (∑ i ∈ univ \ V, outsideP i) + R * k + (V.card - R) * (k + 1) =
       (signedDepartureBlocks S e o 0).card := by
-    change (signedDepartureBlocks S e o 0).card + R = _ at hp
-    nlinarith [Nat.sub_add_cancel hR]
+    change (signedDepartureBlocks S e o 0).card + R = _ at hp; nlinarith [Nat.sub_add_cancel hR]
   have hneg : (∑ i ∈ univ \ V, outsideM i) + U * l + (V.card - U) * (l + 1) =
       (signedDepartureBlocks S e o 1).card := by
-    change (signedDepartureBlocks S e o 1).card + U = _ at hn
-    nlinarith [Nat.sub_add_cancel hU]
+    change (signedDepartureBlocks S e o 1).card + U = _ at hn; nlinarith [Nat.sub_add_cancel hU]
   have hout : ∀ i ∉ V, ¬ ((outsideP i = k ∨ outsideP i = k + 1) ∧
       (outsideM i = l ∨ outsideM i = l + 1)) := by
     intro i hi
@@ -191,17 +171,13 @@ theorem native_minimal_four_cell_law {M q s : ℕ} (S : Support M q)
     (univ.filter fun y : Fiber S e o => nativeMarginRectangleReadout S e o k l y =
       (V, (fun i => if i ∈ V then none else some (outsideP i, outsideM i)), R, U)) := by
     ext y
-    simp only [mem_filter, mem_univ, true_and,
-      native_minimal_readout_eq_iff S e o k l y z]
+    simp only [mem_filter, mem_univ, true_and, native_minimal_readout_eq_iff S e o k l y z]
     rfl
-  rw [he]
-  exact (D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.native_four_cell_conditional_law
+  rw [he]; exact (D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel.native_four_cell_conditional_law
     S r e o hq hqm hr hr1 ha ha1 V outsideP outsideM k l R U t
       hpos hneg hR hU hout)
-
 end
 end D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
-
 /-!
 The falling-factorial convolution and finite moment calculations are adapted
 from TauCetiProject/TauCeti, commit 8eecb48e9b51da99ca119f190a64ca43c100795b,
@@ -214,22 +190,16 @@ The finite real kernel replaces ENNReal-toReal and measure integration.
 Copyright (c) 2026 The Tau Ceti contributors. Authors: The Tau Ceti contributors.
 Retire these ports when this repository's pinned Mathlib provides equivalent
 weighted Vandermonde and finite hypergeometric moment declarations.
-
 Full upstream license:
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
-
    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
    1. Definitions.
-
       "License" shall mean the terms and conditions for use, reproduction,
       and distribution as defined by Sections 1 through 9 of this document.
-
       "Licensor" shall mean the copyright owner or entity authorized by
       the copyright owner that is granting the License.
-
       "Legal Entity" shall mean the union of the acting entity and all
       other entities that control, are controlled by, or are under common
       control with that entity. For the purposes of this definition,
@@ -237,24 +207,19 @@ Full upstream license:
       direction or management of such entity, whether by contract or
       otherwise, or (ii) ownership of fifty percent (50%) or more of the
       outstanding shares, or (iii) beneficial ownership of such entity.
-
       "You" (or "Your") shall mean an individual or Legal Entity
       exercising permissions granted by this License.
-
       "Source" form shall mean the preferred form for making modifications,
       including but not limited to software source code, documentation
       source, and configuration files.
-
       "Object" form shall mean any form resulting from mechanical
       transformation or translation of a Source form, including but
       not limited to compiled object code, generated documentation,
       and conversions to other media types.
-
       "Work" shall mean the work of authorship, whether in Source or
       Object form, made available under the License, as indicated by a
       copyright notice that is included in or attached to the work
       (an example is provided in the Appendix below).
-
       "Derivative Works" shall mean any work, whether in Source or Object
       form, that is based on (or derived from) the Work and for which the
       editorial revisions, annotations, elaborations, or other modifications
@@ -262,7 +227,6 @@ Full upstream license:
       of this License, Derivative Works shall not include works that remain
       separable from, or merely link (or bind by name) to the interfaces of,
       the Work and Derivative Works thereof.
-
       "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
       to that Work or Derivative Works thereof, that is intentionally
@@ -276,18 +240,15 @@ Full upstream license:
       Licensor for the purpose of discussing and improving the Work, but
       excluding communication that is conspicuously marked or otherwise
       designated in writing by the copyright owner as "Not a Contribution."
-
       "Contributor" shall mean Licensor and any individual or Legal Entity
       on behalf of whom a Contribution has been received by Licensor and
       subsequently incorporated within the Work.
-
    2. Grant of Copyright License. Subject to the terms and conditions of
       this License, each Contributor hereby grants to You a perpetual,
       worldwide, non-exclusive, no-charge, royalty-free, irrevocable
       copyright license to reproduce, prepare Derivative Works of,
       publicly display, publicly perform, sublicense, and distribute the
       Work and such Derivative Works in Source or Object form.
-
    3. Grant of Patent License. Subject to the terms and conditions of
       this License, each Contributor hereby grants to You a perpetual,
       worldwide, non-exclusive, no-charge, royalty-free, irrevocable
@@ -303,24 +264,19 @@ Full upstream license:
       or contributory patent infringement, then any patent licenses
       granted to You under this License for that Work shall terminate
       as of the date such litigation is filed.
-
    4. Redistribution. You may reproduce and distribute copies of the
       Work or Derivative Works thereof in any medium, with or without
       modifications, and in Source or Object form, provided that You
       meet the following conditions:
-
       (a) You must give any other recipients of the Work or
           Derivative Works a copy of this License; and
-
       (b) You must cause any modified files to carry prominent notices
           stating that You changed the files; and
-
       (c) You must retain, in the Source form of any Derivative Works
           that You distribute, all copyright, patent, trademark, and
           attribution notices from the Source form of the Work,
           excluding those notices that do not pertain to any part of
           the Derivative Works; and
-
       (d) If the Work includes a "NOTICE" text file as part of its
           distribution, then any Derivative Works that You distribute must
           include a readable copy of the attribution notices contained
@@ -337,14 +293,12 @@ Full upstream license:
           or as an addendum to the NOTICE text from the Work, provided
           that such additional attribution notices cannot be construed
           as modifying the License.
-
       You may add Your own copyright statement to Your modifications and
       may provide additional or different license terms and conditions
       for use, reproduction, or distribution of Your modifications, or
       for any such Derivative Works as a whole, provided Your use,
       reproduction, and distribution of the Work otherwise complies with
       the conditions stated in this License.
-
    5. Submission of Contributions. Unless You explicitly state otherwise,
       any Contribution intentionally submitted for inclusion in the Work
       by You to the Licensor shall be under the terms and conditions of
@@ -352,12 +306,10 @@ Full upstream license:
       Notwithstanding the above, nothing herein shall supersede or modify
       the terms of any separate license agreement you may have executed
       with Licensor regarding such Contributions.
-
    6. Trademarks. This License does not grant permission to use the trade
       names, trademarks, service marks, or product names of the Licensor,
       except as required for reasonable and customary use in describing the
       origin of the Work and reproducing the content of the NOTICE file.
-
    7. Disclaimer of Warranty. Unless required by applicable law or
       agreed to in writing, Licensor provides the Work (and each
       Contributor provides its Contributions) on an "AS IS" BASIS,
@@ -367,7 +319,6 @@ Full upstream license:
       PARTICULAR PURPOSE. You are solely responsible for determining the
       appropriateness of using or redistributing the Work and assume any
       risks associated with Your exercise of permissions under this License.
-
    8. Limitation of Liability. In no event and under no legal theory,
       whether in tort (including negligence), contract, or otherwise,
       unless required by applicable law (such as deliberate and grossly
@@ -379,7 +330,6 @@ Full upstream license:
       work stoppage, computer failure or malfunction, or any and all
       other commercial damages or losses), even if such Contributor
       has been advised of the possibility of such damages.
-
    9. Accepting Warranty or Additional Liability. While redistributing
       the Work or Derivative Works thereof, You may choose to offer,
       and charge a fee for, acceptance of support, warranty, indemnity,
@@ -390,11 +340,8 @@ Full upstream license:
       defend, and hold each Contributor harmless for any liability
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
-
    END OF TERMS AND CONDITIONS
-
    APPENDIX: How to apply the Apache License to your work.
-
       To apply the Apache License to your work, attach the following
       boilerplate notice, with the fields enclosed by brackets "{}"
       replaced with your own identifying information. (Don't include
@@ -403,43 +350,27 @@ Full upstream license:
       file or class name and description of purpose be included on the
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
-
    Copyright {yyyy} {name of copyright owner}
-
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
-
        http://www.apache.org/licenses/LICENSE-2.0
-
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
 -/
-
-open scoped BigOperators
-open Finset
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-
 namespace D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
 noncomputable section
-
 set_option quotPrecheck false in
 local notation "H" => fun N K n k : ℕ => if k ≤ n then
   ((K.choose k : ℝ) * ((N - K).choose (n - k) : ℝ)) / (N.choose n : ℝ) else 0
-
 private theorem desc_factorial_mul_choose {m i : ℕ} (hmi : m ≤ i) (A : ℕ) :
     i.descFactorial m * A.choose i = A.descFactorial m * (A - m).choose (i - m) := by
   rw [Nat.descFactorial_eq_factorial_mul_choose, Nat.descFactorial_eq_factorial_mul_choose,
     Nat.mul_assoc, Nat.mul_assoc, Nat.mul_comm (i.choose m) (A.choose i), Nat.choose_mul hmi]
-
 /-- **Vandermonde's convolution weighted by a falling factorial of the summation index.**
-
 Weighting the `i`th summand of `∑ i, C(A, i) * C(B, r - i) = C(A + B, r)` by `(i)ₘ` multiplies
 the value by `(A)ₘ` and lowers both indices by `m`. After division by `C(A + B, r)`, the cases
 `m = 1` and `m = 2` give the first two factorial moments of a hypergeometric law. -/
@@ -450,8 +381,7 @@ private theorem factorial_vandermonde {m r : ℕ} (hmr : m ≤ r) (A B : ℕ) :
   have hvanish : ∀ i ∈ range (r + 1), i ∉ Ico m (r + 1) →
       i.descFactorial m * (A.choose i * B.choose (r - i)) = 0 := by
     intro i hi hni
-    simp only [mem_range] at hi
-    simp only [mem_Ico, not_and, not_lt] at hni
+    simp only [mem_range] at hi; simp only [mem_Ico, not_and, not_lt] at hni
     simp [Nat.descFactorial_eq_zero_iff_lt.2 (by omega : i < m)]
   have key : ∑ i ∈ range (r + 1), i.descFactorial m * (A.choose i * B.choose (r - i)) =
       A.descFactorial m * (A - m + B).choose (r - m) := by
@@ -461,20 +391,17 @@ private theorem factorial_vandermonde {m r : ℕ} (hmr : m ≤ r) (A B : ℕ) :
         (fun i j ↦ (A - m).choose i * B.choose j) (r - m), Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     have hri : r - (m + i) = r - m - i := by omega
-    rw [hri, ← Nat.mul_assoc, desc_factorial_mul_choose (Nat.le_add_right m i) A,
-      Nat.add_sub_cancel_left, Nat.mul_assoc]
+    rw [hri, ← Nat.mul_assoc, desc_factorial_mul_choose (Nat.le_add_right m i) A, Nat.add_sub_cancel_left, Nat.mul_assoc]
   rcases le_or_gt m A with hmA | hmA
   · have hsub_add : A + B - m = A - m + B := by omega
     rwa [hsub_add]
   · rw [Nat.descFactorial_eq_zero_iff_lt.2 hmA] at key ⊢
     simpa using key
-
 private theorem kernel_normalization {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) :
     (∑ k ∈ range (n + 1), H N K n k) = 1 := by
   have hz : (N.choose n : ℝ) ≠ 0 := by exact_mod_cast Nat.choose_ne_zero hn
   have hv : ∑ k ∈ range (n + 1), K.choose k * (N - K).choose (n - k) = N.choose n := by
-    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ
-      (fun i j => K.choose i * (N - K).choose j) n,
+    rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => K.choose i * (N - K).choose j) n,
       ← Nat.add_choose_eq, Nat.add_sub_of_le hK]
   calc
     _ = (∑ k ∈ range (n + 1), (K.choose k : ℝ) * ((N - K).choose (n - k) : ℝ)) /
@@ -487,7 +414,6 @@ private theorem kernel_normalization {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N)
       have hh : (∑ k ∈ range (n + 1), (K.choose k : ℝ) * ((N - K).choose (n - k) : ℝ)) =
           (N.choose n : ℝ) := by exact_mod_cast hv
       rw [hh, div_self hz]
-
 private theorem first_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 0 < N) :
     (∑ k ∈ range (n + 1), H N K n k * (k : ℝ)) = (n : ℝ) * K / N := by
   by_cases hn0 : n = 0
@@ -506,19 +432,15 @@ private theorem first_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 0
       rw [sum_div]
       apply sum_congr rfl
       intro k hk
-      simp only [if_pos (Nat.lt_succ_iff.mp (mem_range.mp hk))]
-      ring
+      simp only [if_pos (Nat.lt_succ_iff.mp (mem_range.mp hk))]; ring
     _ = ((K * (N - 1).choose (n - 1) : ℕ) : ℝ) / (N.choose n : ℝ) := by rw [hm]
     _ = _ := by
       have hc : N * (N - 1).choose (n - 1) = N.choose n * n := by
-        simpa [Nat.descFactorial_one, Nat.mul_comm] using
-          (desc_factorial_mul_choose (m := 1) hnpos N).symm
-      have hcR : (N : ℝ) * ((N - 1).choose (n - 1) : ℝ) = (N.choose n : ℝ) * n := by
-        exact_mod_cast hc
+        simpa [Nat.descFactorial_one, Nat.mul_comm] using (desc_factorial_mul_choose (m := 1) hnpos N).symm
+      have hcR : (N : ℝ) * ((N - 1).choose (n - 1) : ℝ) = (N.choose n : ℝ) * n := by exact_mod_cast hc
       push_cast
       field_simp
       linear_combination (K : ℝ) * hcR
-
 private theorem second_factorial_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N)
     (hN : 1 < N) :
     (∑ k ∈ range (n + 1), H N K n k * (k : ℝ) * ((k : ℝ) - 1)) =
@@ -544,51 +466,42 @@ private theorem second_factorial_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤
       _ = ((K * (K - 1) * (N - 2).choose (n - 2) : ℕ) : ℝ) / (N.choose n : ℝ) := by rw [hm]
       _ = _ := by
         have hnat : (n - 1) * n * N.choose n = (N - 1) * N * (N - 2).choose (n - 2) := by
-          simpa [Nat.descFactorial_succ, Nat.mul_assoc] using
-            desc_factorial_mul_choose (m := 2) hn2 N
-        have hn1 : ((n - 1 : ℕ) : ℝ) = (n : ℝ) - 1 := by
-          rw [Nat.cast_sub (by omega)]; norm_num
-        have hN1 : ((N - 1 : ℕ) : ℝ) = (N : ℝ) - 1 := by
-          rw [Nat.cast_sub (by omega)]; norm_num
+          simpa [Nat.descFactorial_succ, Nat.mul_assoc] using desc_factorial_mul_choose (m := 2) hn2 N
+        have hn1 : ((n - 1 : ℕ) : ℝ) = (n : ℝ) - 1 := by rw [Nat.cast_sub (by omega)]; norm_num
+        have hN1 : ((N - 1 : ℕ) : ℝ) = (N : ℝ) - 1 := by rw [Nat.cast_sub (by omega)]; norm_num
         have hcR : (N : ℝ) * ((N : ℝ) - 1) * ((N - 2).choose (n - 2) : ℝ) =
             (N.choose n : ℝ) * n * ((n : ℝ) - 1) := by
           rw [← hn1, ← hN1]
           have hnat' : N * (N - 1) * (N - 2).choose (n - 2) =
               N.choose n * n * (n - 1) := by nlinarith [hnat]
           exact_mod_cast hnat'
-        have hKpred : (K : ℝ) * ((K - 1 : ℕ) : ℝ) = (K : ℝ) * ((K : ℝ) - 1) := by
-          cases K <;> norm_num [Nat.cast_sub]
+        have hKpred : (K : ℝ) * ((K - 1 : ℕ) : ℝ) = (K : ℝ) * ((K : ℝ) - 1) := by cases K <;> norm_num [Nat.cast_sub]
         have hNR : (1 : ℝ) < N := by exact_mod_cast hN
         have hNm1 : (N : ℝ) - 1 ≠ 0 := by linarith
         push_cast
         rw [hKpred]
         field_simp [hNm1]
         linear_combination (K : ℝ) * ((K : ℝ) - 1) * hcR
-  · have hnle : n ≤ 1 := by omega
-    interval_cases n <;> norm_num [Finset.sum_range_succ]
-
+  · have hnle : n ≤ 1 := by omega interval_cases n <;> norm_num [Finset.sum_range_succ]
 /-- Exact second central moment of the same finite rectangle kernel. -/
 theorem kernel_second_central_moment {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 < N) :
     (∑ k ∈ range (n + 1), H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) =
       (n : ℝ) * ((K : ℝ) / N) * (1 - (K : ℝ) / N) * (((N : ℝ) - n) / ((N : ℝ) - 1)) := by
   let m : ℝ := (n : ℝ) * K / N
-  have he : (∑ k ∈ range (n + 1), H N K n k * ((k : ℝ) - m) ^ 2) =
-      (∑ k ∈ range (n + 1), H N K n k * (k : ℝ) * ((k : ℝ) - 1)) +
+  have he : (∑ k ∈ range (n + 1), H N K n k * ((k : ℝ) - m) ^ 2) = (∑ k ∈ range (n + 1), H N K n k * (k : ℝ) * ((k : ℝ) - 1)) +
         (1 - 2 * m) * (∑ k ∈ range (n + 1), H N K n k * (k : ℝ)) +
           m ^ 2 * (∑ k ∈ range (n + 1), H N K n k) := by
     rw [mul_sum, mul_sum, ← sum_add_distrib, ← sum_add_distrib]
     apply sum_congr rfl
     intro k _
     ring
-  rw [he, second_factorial_moment hK hn hN, first_moment hK hn (by omega),
-    kernel_normalization hK hn]
+  rw [he, second_factorial_moment hK hn hN, first_moment hK hn (by omega), kernel_normalization hK hn]
   have hNR : (1 : ℝ) < N := by exact_mod_cast hN
   have hNz : (N : ℝ) ≠ 0 := by linarith
   have hNm1 : (N : ℝ) - 1 ≠ 0 := by linarith
   dsimp [m]
   field_simp
   ring
-
 /-- The kernel's second central moment is at most the population size over
 four, including empty samples. -/
 private theorem kernel_variance_le {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 < N) :
@@ -602,8 +515,7 @@ private theorem kernel_variance_le {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (
   have hNR : (1 : ℝ) < N := by exact_mod_cast hN
   have hratio0 : 0 ≤ (K : ℝ) / N := by positivity
   have hratio1 : (K : ℝ) / N ≤ 1 := (div_le_one (by linarith)).mpr hKR
-  have hbern : ((K : ℝ) / N) * (1 - (K : ℝ) / N) ≤ 1 / 4 := by
-    nlinarith [sq_nonneg ((K : ℝ) / N - 1 / 2)]
+  have hbern : ((K : ℝ) / N) * (1 - (K : ℝ) / N) ≤ 1 / 4 := by nlinarith [sq_nonneg ((K : ℝ) / N - 1 / 2)]
   have hpop : (n : ℝ) * (((N : ℝ) - n) / ((N : ℝ) - 1)) ≤ N := by
     rw [← mul_div_assoc, div_le_iff₀ (by linarith : (0 : ℝ) < (N : ℝ) - 1)]
     have hp := mul_le_mul hnR (show (N : ℝ) - n ≤ N - 1 by linarith)
@@ -616,7 +528,6 @@ private theorem kernel_variance_le {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (
     _ ≤ ((n : ℝ) * (((N : ℝ) - n) / ((N : ℝ) - 1))) * (1 / 4) :=
       mul_le_mul_of_nonneg_left hbern hscale
     _ ≤ (N : ℝ) / 4 := by nlinarith
-
 /-- A finite Chebyshev tail for the exact rectangle kernel; the variance
 input is proved from the kernel's own first two factorial moments. -/
 theorem kernel_central_tail {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 < N)
@@ -632,29 +543,23 @@ theorem kernel_central_tail {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) (hN : 1 
     (fun j => by dsimp only; split_ifs <;> positivity)
     (mul_pos hL (Real.sqrt_pos.mpr hNpos))
     (by
-      rw [Fin.sum_univ_eq_sum_range
-        (fun k : ℕ => H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) (n + 1)]
+      rw [Fin.sum_univ_eq_sum_range (fun k : ℕ => H N K n k * ((k : ℝ) - (n : ℝ) * K / N) ^ 2) (n + 1)]
       exact kernel_variance_le hK hn hN)
-  have he : (∑ k ∈ (range (n + 1)).filter
-      (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|), H N K n k) ≤
+  have he : (∑ k ∈ (range (n + 1)).filter (fun k : ℕ => L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|), H N K n k) ≤
       ((N : ℝ) / 4) / (L * Real.sqrt N) ^ 2 := by
-    rw [Fin.sum_univ_eq_sum_range
-      (fun k : ℕ => if L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|
+    rw [Fin.sum_univ_eq_sum_range (fun k : ℕ => if L * Real.sqrt N < |(k : ℝ) - (n : ℝ) * K / N|
         then H N K n k else 0) (n + 1)] at hm
     simpa only [← sum_filter] using hm
   calc
     _ ≤ ((N : ℝ) / 4) / (L * Real.sqrt N) ^ 2 := he
     _ = 1 / (4 * L ^ 2) := by
       rw [mul_pow, Real.sq_sqrt hNpos.le]
-      field_simp [hNpos.ne', hL.ne']
-      <;> ring
-
+      field_simp [hNpos.ne', hL.ne'] <;> ring
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
 open D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 open D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-
 /-- The exact original conditional mass is the numerical kernel for every
 finite event of the A count. This connects the native law to scalar estimates
 without replacing the native history or its conditioning environment. -/
@@ -685,13 +590,10 @@ theorem native_kernel_event_mass {M q s : ℕ} (S : Support M q)
   have hs (y : Fiber S e o) (hy : y ∈ Env) : A y ≤ U := by
     have he := (native_minimal_readout_eq_iff S e o k l y z).mp (mem_filter.mp hy).2
     have hm := congrArg (fun v => v.2.2.2) he
-    change ((nativeRectangleRows S e o k l y).filter
-      fun i => count e y.val i.val (-1) = l).card = U at hm
-    have hc := D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins
-      S e o k l y
+    change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val (-1) = l).card = U at hm
+    have hc := D5.S3.Estimation.TimeArrow.SharedRectangleCalibration.native_calibration_counts_margins S e o k l y
     dsimp only at hc
-    dsimp only [A]
-    omega
+    dsimp only [A]; omega
   have hE : Env.filter (fun y => P (A y)) = Env.filter (fun y => A y ∈ T) := by
     ext y
     simp only [mem_filter]
@@ -709,9 +611,7 @@ theorem native_kernel_event_mass {M q s : ℕ} (S : Support M q)
   rw [hsum, sum_div]
   apply sum_congr rfl
   intro t ht
-  exact D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment.native_minimal_four_cell_law
-    S r e o hq hqm hr hr1 ha ha1 k l z t
-
+  exact D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment.native_minimal_four_cell_law S r e o hq hqm hr hr1 ha ha1 k l z t
 /-- The native pair/path central tail uses the exact conditional kernel and
 its proved variance; no tail assumption or independent surrogate law is used. -/
 theorem native_minimal_central_tail {M q s : ℕ} (S : Support M q)
@@ -738,9 +638,7 @@ theorem native_minimal_central_tail {M q s : ℕ} (S : Support M q)
         (((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val (-1) = l).card : ℝ) *
         ((nativeRectangleRows S e o k l z).filter fun i => count e z.val i.val 1 = k).card /
         (nativeRectangleRows S e o k l z).card|)
-  dsimp only at he
-  exact he.trans_le (kernel_central_tail (card_filter_le _ _) (card_filter_le _ _) hN L hL)
-
+  dsimp only at he; exact he.trans_le (kernel_central_tail (card_filter_le _ _) (card_filter_le _ _) hN L hL)
 open private
   D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass_eq_card
 from D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
@@ -780,9 +678,7 @@ theorem native_event_mass_le_kernel {M q s : ℕ} (S : Support M q)
   have hden : 0 ≤ conditionalFiberMass S r e o Env := by
     rw [D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.conditionalFiberMass_eq_card S r e o hp]
     positivity
-  exact (div_le_div_of_nonneg_right hm hden).trans_eq
-    (native_kernel_event_mass S r e o hq hqm hr hr1 ha ha1 k l z P)
-
+  exact (div_le_div_of_nonneg_right hm hden).trans_eq (native_kernel_event_mass S r e o hq hqm hr hr1 ha ha1 k l z P)
 /-- Balanced margins make all four mean cells large; a single central
 A-count deviation controls all four cells at once. -/
 theorem central_four_cells_lower (N R U δ t w : ℝ) (hN : 0 < N) (hδ : 0 ≤ δ)
@@ -814,6 +710,204 @@ theorem central_four_cells_lower (N R U δ t w : ℝ) (hN : 0 < N) (hδ : 0 ≤ 
   rw [he3] at h3
   intro j
   fin_cases j <;> simp [cellCounts] <;> nlinarith [abs_le.mp ht]
-
 end
 end D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
+open D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
+open D5.S3.Estimation.TimeArrow.RectangleHypergeometricMoments
+namespace D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
+noncomputable section
+/-- The central native tail in unnormalized original probability weights. -/
+theorem native_minimal_central_mass_tail {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (k l : ℕ) (z : Fiber S e o)
+    (hsize : 1 < (nativeRectangleRows S e o k l z).card) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let env := nativeMinimalRectangleReadout S e o k l
+    let C := fun y : Fiber S e o =>
+      let V := nativeRectangleRows S e o k l y
+      let R := (V.filter fun i => count e y.val i.val 1 = k).card
+      let U := (V.filter fun i => count e y.val i.val (-1) = l).card
+      |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ)*R/V.card| ≤
+        2*Real.sqrt V.card
+    (∑ y : Fiber S e o, if env y = env z ∧ ¬C y then probability r e S y.val else 0) ≤
+      1/16 * ∑ y : Fiber S e o, if env y = env z then probability r e S y.val else 0 := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  letI : Nonempty (Fiber S e o) := ⟨⟨o,rfl⟩⟩
+  dsimp only
+  let env := nativeMinimalRectangleReadout S e o k l
+  let C := fun y : Fiber S e o =>
+    let V := nativeRectangleRows S e o k l y
+    let R := (V.filter fun i => count e y.val i.val 1 = k).card
+    let U := (V.filter fun i => count e y.val i.val (-1) = l).card
+    |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ)*R/V.card| ≤ 2*Real.sqrt V.card
+  let p := fun y : Fiber S e o => probability r e S y.val
+  have hprob := (finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.1 S
+  have hp : ∀ y, 0 ≤ p y := fun y => (hprob y.val).1.le
+  have htotal : 0 < ∑ y : Fiber S e o, p y := sum_pos (fun y _ => (hprob y.val).1) univ_nonempty
+  let V := nativeRectangleRows S e o k l z
+  let R := (V.filter fun i => count e z.val i.val 1 = k).card
+  let U := (V.filter fun i => count e z.val i.val (-1) = l).card
+  let Env := univ.filter fun y : Fiber S e o => env y = env z
+  have henvpos : 0 < ∑ y ∈ Env, p y := by
+    apply (hprob z.val).1.trans_le
+    exact single_le_sum (fun y _ => hp y) (by simp [Env])
+  have hc (y : Fiber S e o) (hy : y ∈ Env) : ¬C y ↔ 2*Real.sqrt V.card <
+        |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ)*R/V.card| := by
+    have he := (native_minimal_readout_eq_iff S e o k l y z).mp (mem_filter.mp hy).2
+    have hV := congrArg (fun v => v.1.card) he
+    have hR := congrArg (fun v => v.2.2.1) he
+    have hU := congrArg (fun v => v.2.2.2) he
+    change (nativeRectangleRows S e o k l y).card = V.card at hV
+    change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val 1 = k).card = R at hR
+    change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val (-1) = l).card = U at hU
+    simp only [C,hV,hR,hU,not_le]
+  have ht := (native_minimal_central_tail S r e o hq hqm hr hr1 ha ha1 k l z 2 (by norm_num) hsize)
+  have hevent : (univ.filter fun y : Fiber S e o => env y = env z ∧ ¬C y) = Env.filter fun y => 2*Real.sqrt V.card <
+        |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ)*R/V.card| := by
+    ext y
+    simp only [Env,mem_filter,mem_univ,true_and]
+    constructor
+    · rintro ⟨he,hy⟩
+      exact ⟨he,(hc y (by simp [Env,he])).mp hy⟩
+    · rintro ⟨he,hy⟩
+      exact ⟨he,(hc y (by simp [Env,he])).mpr hy⟩
+  change conditionalFiberMass S r e o (Env.filter fun y => 2*Real.sqrt V.card <
+        |(nativeRectangleACount S e o k l y : ℝ) - (U : ℝ)*R/V.card|) /
+      conditionalFiberMass S r e o Env ≤ 1/(4*(2:ℝ)^2) at ht
+  simp only [conditionalFiberMass] at ht
+  rw [div_div_div_cancel_right₀ (by
+    convert htotal.ne' using 1
+    congr 1
+    ext y
+    simp [p])] at ht
+  norm_num only at ht
+  have hh := (div_le_iff₀ (by simpa only [p] using henvpos)).mp ht
+  rw [← sum_filter, hevent, ← sum_filter]
+  simpa only [p,mul_comm] using hh
+end
+end D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
+open D5.S3.Estimation.TimeArrow.NativeEnvironmentAnchors
+namespace D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment
+noncomputable section
+/-- The original complete observation determines its collapsed history,
+rectangle membership, and complete outside signal-row counts. -/
+def fullRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (k l : ℕ) (o : Obs M s e) :
+    (Sites s e → Option (Vertex M)) ×
+      (Finset {i : Fin M // i ∈ S.val} × ({i : Fin M // i ∈ S.val} → Option (ℕ × ℕ))) :=
+  (collapsedObs S e o,
+    nativeMinimalRectangleReadout S e o k l (⟨o,rfl⟩ : Fiber S e o))
+private theorem full_environment_sum {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (k l : ℕ) (o : Obs M s e) (P : Obs M s e → Prop) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    (∑ x : Obs M s e, if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧ P x
+      then probability r e S x else 0) =
+    ∑ y : Fiber S e o,
+      if nativeMinimalRectangleReadout S e o k l y =
+        nativeMinimalRectangleReadout S e o k l (⟨o,rfl⟩ : Fiber S e o) ∧ P y.val
+      then probability r e S y.val else 0 := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  let f := fun x : Obs M s e =>
+    if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧ P x
+    then probability r e S x else 0
+  have hcollapse (x : Obs M s e) : fullRectangleReadout S e k l x =
+      fullRectangleReadout S e k l o → collapsedObs S e x = collapsedObs S e o :=
+    fun h => congrArg Prod.fst h
+  calc
+    _ = ∑ x ∈ univ.filter (fun x => collapsedObs S e x = collapsedObs S e o), f x := by
+      rw [sum_filter]
+      apply sum_congr rfl
+      intro x _
+      by_cases hc : collapsedObs S e x = collapsedObs S e o
+      · simp [f,hc]
+      · have hh : fullRectangleReadout S e k l x ≠ fullRectangleReadout S e k l o := fun h => hc (hcollapse x h)
+        simp [f,hc,hh]
+    _ = ∑ y : Fiber S e o, f y.val :=
+      sum_subtype _ (by intro x; simp) f
+    _ = _ := by
+      apply sum_congr rfl
+      intro y _
+      have he : fullRectangleReadout S e k l y.val = fullRectangleReadout S e k l o ↔ nativeMinimalRectangleReadout S e o k l y =
+            nativeMinimalRectangleReadout S e o k l (⟨o,rfl⟩ : Fiber S e o) := by
+        simp only [fullRectangleReadout, Prod.mk.injEq]
+        change (collapsedObs S e y.val = collapsedObs S e o ∧ _) ↔ _; simp only [y.property,true_and]
+        rfl
+      simp only [f,he]
+/-- Conditioning the original pair or path law on the full minimal
+environment gives the same hypergeometric kernel, with its support guard. -/
+theorem full_native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (k l t : ℕ) :
+    let z : Fiber S e o := ⟨o,rfl⟩
+    let V := nativeRectangleRows S e o k l z
+    let R := (V.filter fun i => count e o i.val 1 = k).card
+    let U := (V.filter fun i => count e o i.val (-1) = l).card
+    (∑ x : Obs M s e,
+        if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧
+          nativeRectangleACount S e x k l (⟨x,rfl⟩ : Fiber S e x) = t
+        then probability r e S x else 0) /
+      (∑ x : Obs M s e, if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+        then probability r e S x else 0) =
+      if t ≤ U then ((R.choose t : ℝ)*((V.card-R).choose (U-t) : ℝ))/(V.card.choose U : ℝ)
+      else 0 := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  letI : Nonempty (Fiber S e o) := ⟨⟨o,rfl⟩⟩
+  dsimp only
+  let z : Fiber S e o := ⟨o,rfl⟩
+  have ht := native_minimal_four_cell_law S r e o hq hqm hr hr1 ha ha1 k l z t
+  have hprob := (finite_support_bayes (s := s) hq hqm hr hr1 ha ha1 e).2.2.1 S
+  have htotal : 0 < ∑ y : Fiber S e o, probability r e S y.val := sum_pos (fun y _ => (hprob y.val).1) univ_nonempty
+  simp only [conditionalFiberMass] at ht
+  rw [div_div_div_cancel_right₀ (by
+    convert htotal.ne' using 1
+    congr 1
+    ext y
+    simp)] at ht
+  rw [sum_filter,sum_filter] at ht
+  have hn := full_environment_sum S r e k l o (fun x =>
+    nativeRectangleACount S e x k l (⟨x,rfl⟩ : Fiber S e x) = t)
+  simp only [nativeRectangleACount] at hn ⊢
+  rw [hn]
+  have hd := full_environment_sum S r e k l o (fun _ => True)
+  simp only [and_true] at hd; simp only [Fiber] at hd
+  rw [hd]; simp only [nativeRectangleACount] at ht
+  convert ht using 1 <;> simp only [sum_filter,ite_and,z]
+  congr 3 <;> first | exact Subsingleton.elim _ _ | (ext y <;> simp)
+open scoped Classical in
+/-- A predicate of complete observations is conditioned on the original
+full minimal readout. The collapsed-fiber normalization cancels exactly. -/
+theorem full_native_conditional_mass_eq {M q s : ℕ} (S : Support M q) (r : ℝ)
+    (e : Experiment) (o : Obs M s e)
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (hε : 0 ≤ compensation M q r) (hε1 : compensation M q r < 1)
+    (k l : ℕ) (P : Obs M s e → Prop) :
+    letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+    let Env := univ.filter fun y : Fiber S e o =>
+      nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l (⟨o,rfl⟩ : Fiber S e o)
+    letI : DecidablePred (fun y : Fiber S e o => P y.val) := Classical.decPred _
+    (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o ∧ P x
+      then probability r e S x else 0)/
+      (∑ x : Obs M s e,if fullRectangleReadout S e k l x = fullRectangleReadout S e k l o
+        then probability r e S x else 0) =
+      conditionalFiberMass S r e o (Env.filter fun y => P y.val)/conditionalFiberMass S r e o Env := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  letI : Nonempty (Fiber S e o) := ⟨⟨o,rfl⟩⟩
+  dsimp only
+  have htotal : 0 < ∑ y : Fiber S e o,probability r e S y.val :=
+    sum_pos (fun y _ => ((finite_support_bayes (s := s) hq hqm hr hr1 hε hε1 e).2.2.1 S y.val).1) univ_nonempty
+  rw [full_environment_sum S r e k l o P]
+  have hd := full_environment_sum S r e k l o (fun _ => True)
+  simp only [and_true] at hd
+  rw [hd]
+  unfold conditionalFiberMass
+  rw [div_div_div_cancel_right₀ htotal.ne']; simp only [sum_filter,ite_and]
+end
+end D5.S3.Estimation.TimeArrow.NativeGlobalRectangleEnvironment

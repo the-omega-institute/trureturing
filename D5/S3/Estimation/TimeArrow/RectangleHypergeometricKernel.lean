@@ -5,24 +5,169 @@
    anchors: []
    utility: none
    digest: Uniform labelled four-cell tables have the exact hypergeometric intersection kernel. -/
-
-import D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
-
+import D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+import D5.S3.Estimation.TimeArrow.NativeWeightedRowBudgets
 open scoped BigOperators
 open Finset
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
-
+open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+namespace D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+noncomputable section
+open private D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks
+  from D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+private theorem word_occupation_count {α : Type*} [DecidableEq α] {n : ℕ}
+    (w : Fin n → α) (i : α) :
+    (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation w).count i =
+      (univ.filter fun k => i = w k).card := by
+  unfold D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
+  rw [List.ofFn_eq_map, ← Multiset.map_coe, Multiset.count_map, ← Finset.val_univ_fin, ← Finset.filter_val]
+  rfl
+private theorem signed_block_count {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) [Fintype (Sites s e)]
+    (g : SignalSites S e o → {i : Fin M // i ∈ S.val}) (i : {i : Fin M // i ∈ S.val})
+    (z : ℝ) (B : Finset (SignalSites S e o))
+    (hB : ∀ k, k ∈ B ↔ isSignedDeparture S e o z k)
+    (E : Fin B.card ≃ {k // k ∈ B}) :
+    (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation
+      (fun k => g (E k).val)).count i = departureLabelCount S e o g i.val z := by
+  classical
+  letI : Fintype (SignalSites S e o) := by unfold SignalSites; infer_instance
+  rw [word_occupation_count]
+  let C := univ.filter fun k : SignalSites S e o => (g k).val = i.val ∧ isSignedDeparture S e o z k
+  let D := univ.filter fun k : Fin B.card => i = g (E k).val
+  have hc : {k // k ∈ D} ≃ {k // k ∈ C} := { toFun := fun k => ⟨(E k.val).val, mem_filter.mpr ⟨mem_univ _,
+        congrArg Subtype.val ((mem_filter.mp k.property).2.symm),
+        (hB _).mp (E k.val).property⟩⟩
+      invFun := fun k => ⟨E.symm ⟨k.val, (hB _).mpr (mem_filter.mp k.property).2.2⟩,
+        mem_filter.mpr ⟨mem_univ _, by
+          simp only [E.apply_symm_apply]
+          apply Subtype.ext
+          exact (mem_filter.mp k.property).2.1.symm⟩⟩
+      left_inv := by intro k; apply Subtype.ext; simp
+      right_inv := by intro k; apply Subtype.ext; simp }
+  simpa only [Fintype.card_coe, D, C, departureLabelCount, isSignedDeparture] using Fintype.card_congr hc
+/-- The two occupation words are obtained from the actual positive and
+negative departure sites of the native history. -/
+private theorem native_signed_departure_occupation_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (ap am : Multiset {i : Fin M // i ∈ S.val})
+    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
+    (ham : am.card = (signedDepartureBlocks S e o 1).card) :
+    let kp := (signedDepartureBlocks S e o 0).card
+    let km := (signedDepartureBlocks S e o 1).card
+    let kr := (signedDepartureBlocks S e o 2).card
+    let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
+        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
+    conditionalFiberMass S r e o
+      ((A.map (labelBlockEquiv S e o kp km kr (nativeDepartureEnumeration S e o)).symm.toEmbedding).map
+        (fiberLabelEquiv S e o).symm.toEmbedding) =
+      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
+        (q : ℝ) ^ (kp + km) := by
+  exact D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_multinomial_label_blocks S r e o hq hqm hr hr1 ha ha1 _ _ _
+    (nativeDepartureEnumeration S e o) ap am hap ham
+/-- Both occupation words retain the exact native positive and negative row
+counts, including adjacent path departures. -/
+private theorem native_departure_word_counts {M q s : ℕ} (S : Support M q)
+    (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (y : Fiber S e o)
+    (i : {i : Fin M // i ∈ S.val}) :
+    let J := nativeDepartureEnumeration S e o
+    let W := labelBlockEquiv S e o _ _ _ J (fiberLabelEquiv S e o y)
+    count e y.val i.val 1 =
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation W.1.1).count i ∧
+    count e y.val i.val (-1) =
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.occupation W.1.2).count i := by
+  classical
+  dsimp only
+  rw [native_departure_label_count S e o y i.val i.property 1, native_departure_label_count S e o y i.val i.property (-1)]
+  constructor
+  · exact (signed_block_count S e o (fiberLabelEquiv S e o y) i 1
+      (signedDepartureBlocks S e o 0) (fun k => by simp only [signedDepartureBlocks,
+        Matrix.cons_val_zero, mem_filter, mem_univ, true_and])
+      (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm).symm
+  · exact (signed_block_count S e o (fiberLabelEquiv S e o y) i (-1)
+      (signedDepartureBlocks S e o 1) (fun k => by simp [signedDepartureBlocks])
+      (Fintype.equivFinOfCardEq (Fintype.card_coe _)).symm).symm
+/-- The event specifies the entire labelled joint histogram of signal-row
+positive and negative departures, under the original pair or path law. -/
+def jointRowHistogramEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
+    (o : Obs M s e) (ap am : Multiset {i : Fin M // i ∈ S.val}) :
+    Finset (Fiber S e o) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  exact univ.filter fun y => ∀ i : {i : Fin M // i ∈ S.val},
+    count e y.val i.val 1 = ap.count i ∧ count e y.val i.val (-1) = am.count i
+/-- The exact pushforward of the native history law to the complete labelled
+joint signal-row histogram. Both arrays share the same history realization. -/
+theorem native_joint_row_histogram_law {M q s : ℕ} (S : Support M q)
+    (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
+    (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
+    (ha : 0 ≤ compensation M q r) (ha1 : compensation M q r < 1)
+    (ap am : Multiset {i : Fin M // i ∈ S.val})
+    (hap : ap.card = (signedDepartureBlocks S e o 0).card)
+    (ham : am.card = (signedDepartureBlocks S e o 1).card) :
+    conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap am) =
+      ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ am.count : ℝ)) /
+        (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card +
+          (signedDepartureBlocks S e o 1).card) := by
+  classical
+  letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
+  let kp := (signedDepartureBlocks S e o 0).card
+  let km := (signedDepartureBlocks S e o 1).card
+  let kr := (signedDepartureBlocks S e o 2).card
+  let A := ((D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords kp ap) ×ˢ
+      (D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords km am)) ×ˢ
+        (univ : Finset (Fin kr → {i : Fin M // i ∈ S.val}))
+  have he : jointRowHistogramEvent S e o ap am =
+      ((A.map (labelBlockEquiv S e o kp km kr (nativeDepartureEnumeration S e o)).symm.toEmbedding).map
+        (fiberLabelEquiv S e o).symm.toEmbedding) := by
+    ext y
+    simp only [jointRowHistogramEvent, mem_filter, mem_univ, true_and, mem_map_equiv, Equiv.symm_symm, A, mem_product,
+      D5.S3.Quantum.Entanglement.OccupancyWordSectors.sectorWords]
+    constructor
+    · intro hy
+      refine ⟨⟨?_, ?_⟩, trivial⟩
+      · apply Multiset.ext.mpr
+        intro i
+        exact (native_departure_word_counts S e o y i).1.symm.trans (hy i).1
+      · apply Multiset.ext.mpr
+        intro i
+        exact (native_departure_word_counts S e o y i).2.symm.trans (hy i).2
+    · rintro ⟨⟨hp, hm⟩, _⟩ i
+      exact ⟨(native_departure_word_counts S e o y i).1.trans (congrArg (Multiset.count i) hp),
+        (native_departure_word_counts S e o y i).2.trans (congrArg (Multiset.count i) hm)⟩
+  rw [he]; exact native_signed_departure_occupation_law S r e o hq hqm hr hr1 ha ha1 ap am hap ham
+end
+end D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+namespace D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
+noncomputable section
+theorem log_factorial_envelopes {n : ℕ} (hn : 0 < n) :
+    (n : ℝ) * Real.log n - n + Real.log n / 2 ≤ Real.log (n.factorial : ℝ) ∧
+      Real.log (n.factorial : ℝ) ≤ (n : ℝ) * Real.log n - n + Real.log n / 2 + 1 := by
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  constructor
+  · have hl := Stirling.le_log_factorial_stirling hn.ne'
+    have hc : 0 ≤ Real.log (2 * Real.pi) := Real.log_nonneg (by linarith [Real.pi_gt_three])
+    linarith
+  · have hs := Stirling.log_stirlingSeq'_antitone (show 0 ≤ n - 1 by omega)
+    have hi : n - 1 + 1 = n := by omega
+    change Real.log (Stirling.stirlingSeq (n - 1 + 1)) ≤ Real.log (Stirling.stirlingSeq (0 + 1)) at hs
+    rw [hi, Stirling.log_stirlingSeq_formula, Stirling.stirlingSeq_one] at hs
+    simp (disch := positivity) only [Real.log_div, Real.log_exp, Real.log_sqrt, Real.log_mul] at hs
+    linarith
+end
+end D5.S3.Estimation.TimeArrow.NativeCalibratedArithmeticBridge
 namespace D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 noncomputable section
-
 /-- A fixed first margin, and a uniformly chosen second margin of size U.
 The A cell is the intersection of the two labelled margins. -/
 def intersectionEvent {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ) :
     Finset (Finset α) := (V.powersetCard U).filter fun B => (B ∩ R).card = t
-
 /-- Split a table's second margin into its portions inside and outside the
 first margin, retaining the original labels. -/
 def intersectionSplit {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ)
@@ -46,10 +191,8 @@ def intersectionSplit {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ
     · exact union_subset (hA.1.trans hR) (hD.1.trans sdiff_subset)
     · rw [card_union_of_disjoint hd, hA.2, hD.2, Nat.add_sub_of_le ht]
     · have hi : (P.1.val ∪ P.2.val) ∩ R = P.1.val := by
-        have hdR : Disjoint P.2.val R :=
-          disjoint_of_subset_left hD.1 disjoint_sdiff_self_left
-        rw [union_inter_distrib_right, Finset.inter_eq_left.mpr hA.1,
-          disjoint_iff_inter_eq_empty.mp hdR, union_empty]
+        have hdR : Disjoint P.2.val R := disjoint_of_subset_left hD.1 disjoint_sdiff_self_left
+        rw [union_inter_distrib_right, Finset.inter_eq_left.mpr hA.1, disjoint_iff_inter_eq_empty.mp hdR, union_empty]
       rw [hi, hA.2]
   left_inv B := by
     apply Subtype.ext
@@ -75,34 +218,28 @@ def intersectionSplit {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ
         · exact False.elim (hr (hA hx))
         · exact hx
       · intro hx; exact ⟨Or.inr hx, (mem_sdiff.mp (hD hx)).2⟩
-
 /-- Exact counting law before normalization; the two margins refer to the
 same labelled table. -/
 theorem rectangle_intersection_card {α : Type*} [DecidableEq α]
     (V R : Finset α) (U t : ℕ) (hR : R ⊆ V) (ht : t ≤ U) :
     (intersectionEvent V R U t).card = R.card.choose t * (V.card - R.card).choose (U - t) := by
   have hc := Fintype.card_congr (intersectionSplit V R U t hR ht)
-  simpa only [Fintype.card_coe, Fintype.card_prod, card_powersetCard,
-    card_sdiff_of_subset hR] using hc
-
+  simpa only [Fintype.card_coe, Fintype.card_prod, card_powersetCard, card_sdiff_of_subset hR] using hc
 /-- The mass of the A-cell count, under the uniform second-margin law. -/
 def rectangleMass {α : Type*} [DecidableEq α] (V R : Finset α) (U t : ℕ) : ℝ :=
   (intersectionEvent V R U t).card / (V.powersetCard U).card
-
 /-- The negative counts in the rectangle take the two adjacent values.
 Outside rows retain their full labelled count array. -/
 def rectangleNegativeCounts {α : Type*} [DecidableEq α]
     (V B : Finset α) (outside : α → ℕ) (l : ℕ) (i : α) : ℕ :=
   if i ∈ V then if i ∈ B then l else l + 1 else outside i
-
 private theorem rectangle_counts_sum {α : Type*} [Fintype α] [DecidableEq α]
     (V B : Finset α) (outside : α → ℕ) (l U : ℕ) (hB : B ∈ V.powersetCard U) :
     (∑ i, rectangleNegativeCounts V B outside l i) =
       (∑ i ∈ univ \ V, outside i) + U * l + (V.card - U) * (l + 1) := by
   have hBV := (mem_powersetCard.mp hB).1
   have hBU := (mem_powersetCard.mp hB).2
-  have hsplit := (sum_filter_add_sum_filter_not univ (fun i => i ∈ V)
-    (rectangleNegativeCounts V B outside l)).symm
+  have hsplit := (sum_filter_add_sum_filter_not univ (fun i => i ∈ V) (rectangleNegativeCounts V B outside l)).symm
   simp only [filter_mem_eq_inter, univ_inter, filter_notMem_eq_sdiff] at hsplit
   rw [hsplit]
   have hin : (∑ i ∈ V, rectangleNegativeCounts V B outside l i) =
@@ -113,18 +250,14 @@ private theorem rectangle_counts_sum {α : Type*} [Fintype α] [DecidableEq α]
         intro i hi
         simp only [rectangleNegativeCounts, if_pos hi]
       _ = _ := by
-        rw [sum_ite]
-        simp only [filter_mem_eq_inter, filter_notMem_eq_sdiff,
-          inter_eq_right.mpr hBV, sum_const, nsmul_eq_mul,
+        rw [sum_ite]; simp only [filter_mem_eq_inter, filter_notMem_eq_sdiff, inter_eq_right.mpr hBV, sum_const, nsmul_eq_mul,
           card_sdiff_of_subset hBV, hBU, Nat.cast_id]
   have hout : (∑ i ∈ univ \ V, rectangleNegativeCounts V B outside l i) =
       ∑ i ∈ univ \ V, outside i := by
     apply sum_congr rfl
     intro i hi
     simp only [rectangleNegativeCounts, if_neg (mem_sdiff.mp hi).2]
-  rw [hin, hout]
-  omega
-
+  rw [hin, hout]; omega
 private theorem rectangle_counts_factorials {α : Type*} [Fintype α] [DecidableEq α]
     (V B : Finset α) (outside : α → ℕ) (l U : ℕ) (hB : B ∈ V.powersetCard U) :
     (∏ i, (rectangleNegativeCounts V B outside l i).factorial) =
@@ -144,8 +277,7 @@ private theorem rectangle_counts_factorials {α : Type*} [Fintype α] [Decidable
         intro i hi
         simp only [rectangleNegativeCounts, if_pos hi, apply_ite Nat.factorial]
       _ = _ := by
-        rw [prod_ite]
-        simp only [filter_mem_eq_inter, filter_notMem_eq_sdiff,
+        rw [prod_ite]; simp only [filter_mem_eq_inter, filter_notMem_eq_sdiff,
           inter_eq_right.mpr hBV, prod_const, card_sdiff_of_subset hBV, hBU]
   have hout : (∏ i ∈ univ \ V, (rectangleNegativeCounts V B outside l i).factorial) =
       ∏ i ∈ univ \ V, (outside i).factorial := by
@@ -154,21 +286,17 @@ private theorem rectangle_counts_factorials {α : Type*} [Fintype α] [Decidable
     simp only [rectangleNegativeCounts, if_neg (mem_sdiff.mp hi).2]
   rw [hin, hout]
   ac_rfl
-
 private theorem rectangle_multinomial_constant {α : Type*} [Fintype α] [DecidableEq α]
     (V B C : Finset α) (outside : α → ℕ) (l U : ℕ)
     (hB : B ∈ V.powersetCard U) (hC : C ∈ V.powersetCard U) :
     Nat.multinomial univ (rectangleNegativeCounts V B outside l) =
       Nat.multinomial univ (rectangleNegativeCounts V C outside l) := by
   unfold Nat.multinomial
-  rw [rectangle_counts_sum V B outside l U hB,
-    rectangle_counts_sum V C outside l U hC,
+  rw [rectangle_counts_sum V B outside l U hB, rectangle_counts_sum V C outside l U hC,
     rectangle_counts_factorials V B outside l U hB,
     rectangle_counts_factorials V C outside l U hC]
-
 open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
-
 /-- Native joint-histogram events compatible with fixed outside rows,
 fixed positive counts, and a fixed negative margin within the rectangle. -/
 def nativeRectangleEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
@@ -178,7 +306,6 @@ def nativeRectangleEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
   classical
   exact Bs.biUnion fun B => jointRowHistogramEvent S e o ap
     (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset
-
 private theorem rectangle_histogram_disjoint {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (ap : Multiset {i : Fin M // i ∈ S.val})
     (V : Finset {i : Fin M // i ∈ S.val}) (outside : {i : Fin M // i ∈ S.val} → ℕ)
@@ -191,8 +318,7 @@ private theorem rectangle_histogram_disjoint {M q s : ℕ} (S : Support M q)
   intro y hyB hyC
   have hBval := (mem_powersetCard.mp hB).1
   have hCval := (mem_powersetCard.mp hC).1
-  have hy (D : Finset {i : Fin M // i ∈ S.val})
-      (h : y ∈ jointRowHistogramEvent S e o ap
+  have hy (D : Finset {i : Fin M // i ∈ S.val}) (h : y ∈ jointRowHistogramEvent S e o ap
         (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V D outside l)).toMultiset)
       (i : {i : Fin M // i ∈ S.val}) :
       count e y.val i.val (-1) = rectangleNegativeCounts V D outside l i := by
@@ -202,13 +328,10 @@ private theorem rectangle_histogram_disjoint {M q s : ℕ} (S : Support M q)
   ext i
   by_cases hiV : i ∈ V
   · have hi := (hy B hyB i).symm.trans (hy C hyC i)
-    dsimp only [rectangleNegativeCounts] at hi
-    simp only [if_pos hiV] at hi
+    dsimp only [rectangleNegativeCounts] at hi; simp only [if_pos hiV] at hi
     by_cases hiB : i ∈ B <;> by_cases hiC : i ∈ C <;>
       simp only [hiB, hiC, if_true, if_false] at hi ⊢ <;> omega
-  · exact ⟨fun hi => False.elim (hiV (hBval hi)),
-      fun hi => False.elim (hiV (hCval hi))⟩
-
+  · exact ⟨fun hi => False.elim (hiV (hBval hi)), fun hi => False.elim (hiV (hCval hi))⟩
 /-- Conditional mass on the original native histories after fixing the
 complete outside-row array and both rectangle margins. -/
 def nativeRectangleConditionalMass {M q s : ℕ} (S : Support M q) (r : ℝ)
@@ -219,7 +342,6 @@ def nativeRectangleConditionalMass {M q s : ℕ} (S : Support M q) (r : ℝ)
       (nativeRectangleEvent S e o ap V outside l (intersectionEvent V R U t)) /
     conditionalFiberMass S r e o
       (nativeRectangleEvent S e o ap V outside l (V.powersetCard U))
-
 private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)]
     (hq : 1 ≤ q) (hqm : q < M) (hr : 0 < r) (hr1 : r < 1)
@@ -238,14 +360,12 @@ private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
       (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card + (signedDepartureBlocks S e o 1).card)) := by
   classical
   letI : Fintype (Fiber S e o) := by unfold Fiber; infer_instance
-  let c : ℝ := ((Nat.multinomial univ ap.count : ℝ) *
-      (Nat.multinomial univ (rectangleNegativeCounts V B0 outside l) : ℝ)) /
+  let c : ℝ := ((Nat.multinomial univ ap.count : ℝ) * (Nat.multinomial univ (rectangleNegativeCounts V B0 outside l) : ℝ)) /
     (q : ℝ) ^ ((signedDepartureBlocks S e o 0).card + (signedDepartureBlocks S e o 1).card)
   have hmass (B : Finset {i : Fin M // i ∈ S.val}) (hB : B ∈ V.powersetCard U) :
       conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap
         (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset) = c := by
-    have hcard : (Finsupp.equivFunOnFinite.symm
-        (rectangleNegativeCounts V B outside l)).toMultiset.card =
+    have hcard : (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset.card =
           (signedDepartureBlocks S e o 1).card := by
       rw [Finsupp.card_toMultiset, Finsupp.sum_fintype]
       · exact (rectangle_counts_sum V B outside l U hB).trans hneg
@@ -253,9 +373,7 @@ private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
     rw [native_joint_row_histogram_law S r e o hq hqm hr hr1 ha ha1 _ _ hap hcard]
     simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
     rw [rectangle_multinomial_constant V B B0 outside l U hB hB0]
-
-  have hd : Set.PairwiseDisjoint (↑Bs)
-      (fun B => jointRowHistogramEvent S e o ap
+  have hd : Set.PairwiseDisjoint (↑Bs) (fun B => jointRowHistogramEvent S e o ap
         (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset) := by
     intro B hB C hC hBC
     exact rectangle_histogram_disjoint S e o ap V outside l U (hBs hB) (hBs hC) hBC
@@ -263,10 +381,8 @@ private theorem native_rectangle_event_mass {M q s : ℕ} (S : Support M q)
   rw [sum_biUnion hd, sum_div]
   change (∑ B ∈ Bs, conditionalFiberMass S r e o (jointRowHistogramEvent S e o ap
     (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset)) = _
-  rw [sum_congr rfl (fun B hB => hmass B (hBs hB))]
-  simp only [sum_const, nsmul_eq_mul]
+  rw [sum_congr rfl (fun B hB => hmass B (hBs hB))]; simp only [sum_const, nsmul_eq_mul]
   rfl
-
 /-- The actual signal rows whose count pair lies in the four adjacent cells. -/
 def nativeRectangleRows {M q s : ℕ} (S : Support M q) (e : Experiment)
     (o : Obs M s e) (k l : ℕ) (y : Fiber S e o) : Finset {i : Fin M // i ∈ S.val} := by
@@ -274,7 +390,6 @@ def nativeRectangleRows {M q s : ℕ} (S : Support M q) (e : Experiment)
   exact univ.filter fun i =>
     (count e y.val i.val 1 = k ∨ count e y.val i.val 1 = k + 1) ∧
     (count e y.val i.val (-1) = l ∨ count e y.val i.val (-1) = l + 1)
-
 /-- This finite conditioning readout keeps the complete positive histogram,
 rectangle membership, every negative count outside it, and its negative margin.
 The full positive histogram determines its labelled first margin. -/
@@ -284,16 +399,13 @@ def nativeRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment)
       ({i : Fin M // i ∈ S.val} → Option ℕ) × ℕ := by
   classical
   let V := nativeRectangleRows S e o k l y
-  exact (fun i => count e y.val i.val 1, V,
-    (fun i => if i ∈ V then none else some (count e y.val i.val (-1))),
+  exact (fun i => count e y.val i.val 1, V, (fun i => if i ∈ V then none else some (count e y.val i.val (-1))),
     (V.filter fun i => count e y.val i.val (-1) = l).card)
-
 /-- The exact finite environment data matching the conditional event. -/
 def rectangleEnvironmentData {α : Type*} [DecidableEq α]
     (ap : Multiset α) (V : Finset α) (outside : α → ℕ) (U : ℕ) :
     (α → ℕ) × Finset α × (α → Option ℕ) × ℕ :=
   (ap.count, V, (fun i => if i ∈ V then none else some (outside i)), U)
-
 /-- The conditioning event is precisely a fiber of the native readout,
 with actual rectangle membership and all labelled outside counts retained. -/
 theorem native_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
@@ -314,8 +426,7 @@ theorem native_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
     obtain ⟨B, hB, hyB⟩ := mem_biUnion.mp hy
     have hBV := (mem_powersetCard.mp hB).1
     have hBU := (mem_powersetCard.mp hB).2
-    have hrow (i : {i : Fin M // i ∈ S.val}) :
-        count e y.val i.val 1 = ap.count i ∧
+    have hrow (i : {i : Fin M // i ∈ S.val}) : count e y.val i.val 1 = ap.count i ∧
         count e y.val i.val (-1) = rectangleNegativeCounts V B outside l i := by
       have h := (mem_filter.mp hyB).2 i
       simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm] using h
@@ -352,8 +463,7 @@ theorem native_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
           rw [hV, hlow, hBU]
   · intro hy
     have he := (mem_filter.mp hy).2
-    have hp : ∀ i : {i : Fin M // i ∈ S.val}, count e y.val i.val 1 = ap.count i :=
-      fun i => congrFun (congrArg Prod.fst he) i
+    have hp : ∀ i : {i : Fin M // i ∈ S.val}, count e y.val i.val 1 = ap.count i := fun i => congrFun (congrArg Prod.fst he) i
     have hV : nativeRectangleRows S e o k l y = V := congrArg (fun x => x.2.1) he
     have ho : ∀ i ∉ V, count e y.val i.val (-1) = outside i := by
       intro i hi
@@ -373,10 +483,8 @@ theorem native_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
     refine ⟨hp i, ?_⟩
     simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
     by_cases hi : i ∈ V
-    · have hm : count e y.val i.val (-1) = l ∨ count e y.val i.val (-1) = l + 1 :=
-        (mem_filter.mp (hV.symm ▸ hi)).2.2
-      dsimp only [rectangleNegativeCounts]
-      simp only [if_pos hi]
+    · have hm : count e y.val i.val (-1) = l ∨ count e y.val i.val (-1) = l + 1 := (mem_filter.mp (hV.symm ▸ hi)).2.2
+      dsimp only [rectangleNegativeCounts]; simp only [if_pos hi]
       by_cases hiB : i ∈ B
       · simp only [if_pos hiB]
         exact (mem_filter.mp hiB).2
@@ -384,14 +492,12 @@ theorem native_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
         exact hm.resolve_left fun h => hiB (mem_filter.mpr ⟨hi, h⟩)
     · simp only [rectangleNegativeCounts, if_neg hi]
       exact ho i hi
-
 /-- The A-cell count is measured on the actual true-support rows. -/
 def nativeRectangleACount {M q s : ℕ} (S : Support M q) (e : Experiment)
     (o : Obs M s e) (k l : ℕ) (y : Fiber S e o) : ℕ := by
   classical
   exact (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
     count e y.val i.val 1 = k ∧ count e y.val i.val (-1) = l).card
-
 private theorem native_a_count_intersection {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (ap : Multiset {i : Fin M // i ∈ S.val})
     (V B : Finset {i : Fin M // i ∈ S.val})
@@ -403,8 +509,7 @@ private theorem native_a_count_intersection {M q s : ℕ} (S : Support M q)
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V B outside l)).toMultiset) :
     nativeRectangleACount S e o k l y = (B ∩ V.filter (fun i => ap.count i = k)).card := by
   classical
-  have hrow (i : {i : Fin M // i ∈ S.val}) :
-      count e y.val i.val 1 = ap.count i ∧
+  have hrow (i : {i : Fin M // i ∈ S.val}) : count e y.val i.val 1 = ap.count i ∧
       count e y.val i.val (-1) = rectangleNegativeCounts V B outside l i := by
     have h := (mem_filter.mp hy).2 i
     simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm] using h
@@ -417,7 +522,6 @@ private theorem native_a_count_intersection {M q s : ℕ} (S : Support M q)
     by_cases hiB : i ∈ B <;> simp [hiB]
   · simp only [rectangleNegativeCounts, if_neg hi, hi, false_and, and_false]
     exact ⟨fun h => False.elim (hout i hi ⟨Or.inl h.1, Or.inl h.2⟩), False.elim⟩
-
 private theorem native_a_event_eq {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (ap : Multiset {i : Fin M // i ∈ S.val})
     (V : Finset {i : Fin M // i ∈ S.val})
@@ -435,15 +539,12 @@ private theorem native_a_event_eq {M q s : ℕ} (S : Support M q)
     have hc := (mem_filter.mp hy).2
     obtain ⟨B, hB, hyB⟩ := mem_biUnion.mp (mem_filter.mp hy).1
     refine mem_biUnion.mpr ⟨B, mem_filter.mpr ⟨hB, ?_⟩, hyB⟩
-    exact (native_a_count_intersection S e o ap V B outside k l
-      (mem_powersetCard.mp hB).1 hout y hyB).symm.trans hc
+    exact (native_a_count_intersection S e o ap V B outside k l (mem_powersetCard.mp hB).1 hout y hyB).symm.trans hc
   · intro hy
     obtain ⟨B, hB, hyB⟩ := mem_biUnion.mp hy
     have hBc := mem_filter.mp hB
-    exact mem_filter.mpr ⟨mem_biUnion.mpr ⟨B, hBc.1, hyB⟩,
-      (native_a_count_intersection S e o ap V B outside k l
+    exact mem_filter.mpr ⟨mem_biUnion.mpr ⟨B, hBc.1, hyB⟩, (native_a_count_intersection S e o ap V B outside k l
         (mem_powersetCard.mp hBc.1).1 hout y hyB).trans hBc.2⟩
-
 /-- Both labelled margins are allowed to vary while their sizes and all
 outside-row counts are fixed. This is a union of native history events. -/
 def nativeMarginRectangleEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
@@ -455,7 +556,6 @@ def nativeMarginRectangleEvent {M q s : ℕ} (S : Support M q) (e : Experiment)
   exact (V.powersetCard R).biUnion fun A => nativeRectangleEvent S e o
     (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
     V outsideM l (test A)
-
 private theorem native_margin_events_disjoint {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (V : Finset {i : Fin M // i ∈ S.val})
     (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R : ℕ)
@@ -469,8 +569,7 @@ private theorem native_margin_events_disjoint {M q s : ℕ} (S : Support M q)
   intro y hyA hyB
   obtain ⟨DA, _, hyDA⟩ := mem_biUnion.mp hyA
   obtain ⟨DB, _, hyDB⟩ := mem_biUnion.mp hyB
-  have hy (C D : Finset {i : Fin M // i ∈ S.val})
-      (h : y ∈ jointRowHistogramEvent S e o
+  have hy (C D : Finset {i : Fin M // i ∈ S.val}) (h : y ∈ jointRowHistogramEvent S e o
         (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V C outsideP k)).toMultiset
         (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V D outsideM l)).toMultiset)
       (i : {i : Fin M // i ∈ S.val}) :
@@ -484,9 +583,7 @@ private theorem native_margin_events_disjoint {M q s : ℕ} (S : Support M q)
     simp only [rectangleNegativeCounts, if_pos hiV] at hi
     by_cases hiA : i ∈ A <;> by_cases hiB : i ∈ B <;>
       simp only [hiA, hiB, if_true, if_false] at hi ⊢ <;> omega
-  · exact ⟨fun hi => False.elim (hiV ((mem_powersetCard.mp hA).1 hi)),
-      fun hi => False.elim (hiV ((mem_powersetCard.mp hB).1 hi))⟩
-
+  · exact ⟨fun hi => False.elim (hiV ((mem_powersetCard.mp hA).1 hi)), fun hi => False.elim (hiV ((mem_powersetCard.mp hB).1 hi))⟩
 /-- Exact native hypergeometric mass with only the two numerical rectangle
 margins fixed. The labelled positive margin is summed out, retaining the same
 pair/path histories and complete labelled outside counts. -/
@@ -524,19 +621,15 @@ theorem native_margin_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M 
       conditionalFiberMass S r e o (nativeRectangleEvent S e o
         (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
         V outsideM l Bs) = (Bs.card : ℝ) * c := by
-    have hcard : (Finsupp.equivFunOnFinite.symm
-        (rectangleNegativeCounts V A outsideP k)).toMultiset.card =
+    have hcard : (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.card =
           (signedDepartureBlocks S e o 0).card := by
       rw [Finsupp.card_toMultiset, Finsupp.sum_fintype]
       · exact (rectangle_counts_sum V A outsideP k R hA).trans hpos
       · intro; rfl
-    rw [native_rectangle_event_mass S r e o hq hqm hr hr1 ha ha1 _ V outsideM l U
-      hcard hneg B0 hB0 Bs hBs]
+    rw [native_rectangle_event_mass S r e o hq hqm hr hr1 ha ha1 _ V outsideM l U hcard hneg B0 hB0 Bs hBs]
     simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
     rw [rectangle_multinomial_constant V A A0 outsideP k R hA hA0]
-  have hsum (test : Finset {i : Fin M // i ∈ S.val} →
-      Finset (Finset {i : Fin M // i ∈ S.val})) :
-      conditionalFiberMass S r e o
+  have hsum (test : Finset {i : Fin M // i ∈ S.val} → Finset (Finset {i : Fin M // i ∈ S.val})) : conditionalFiberMass S r e o
         (nativeMarginRectangleEvent S e o V outsideP outsideM k l R test) =
         ∑ A ∈ V.powersetCard R, conditionalFiberMass S r e o (nativeRectangleEvent S e o
           (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
@@ -562,14 +655,11 @@ theorem native_margin_rectangle_hypergeometric_law {M q s : ℕ} (S : Support M 
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset
       V outsideM l (V.powersetCard U))) =
       ((V.powersetCard R).card : ℝ) * ((V.powersetCard U).card : ℝ) * c := by
-    rw [sum_congr rfl (fun A hA => hmass A hA _ (Subset.refl _))]
-    simp only [sum_const, nsmul_eq_mul]
+    rw [sum_congr rfl (fun A hA => hmass A hA _ (Subset.refl _))]; simp only [sum_const, nsmul_eq_mul]
     ring
   rw [hhit, hall, mul_div_mul_right _ _ (ne_of_gt hc)]
-  have hcardR : ((V.powersetCard R).card : ℝ) ≠ 0 := by
-    exact_mod_cast (powersetCard_nonempty.mpr hR).card_ne_zero
+  have hcardR : ((V.powersetCard R).card : ℝ) ≠ 0 := by exact_mod_cast (powersetCard_nonempty.mpr hR).card_ne_zero
   rw [mul_div_mul_left _ _ hcardR, card_powersetCard]
-
 /-- The rectangle conditioning records its members, both labelled outside
 count arrays, and the two numerical margins, without retaining an interior
 labelled margin. -/
@@ -582,7 +672,6 @@ def nativeMarginRectangleReadout {M q s : ℕ} (S : Support M q) (e : Experiment
     else some (count e y.val i.val 1, count e y.val i.val (-1))),
     (V.filter fun i => count e y.val i.val 1 = k).card,
     (V.filter fun i => count e y.val i.val (-1) = l).card)
-
 private theorem rectangle_low_rows {α : Type*} [Fintype α] [DecidableEq α]
     (V A : Finset α) (outside : α → ℕ) (k : ℕ) (hA : A ⊆ V) :
     (V.filter fun i => rectangleNegativeCounts V A outside k i = k) = A := by
@@ -591,7 +680,6 @@ private theorem rectangle_low_rows {α : Type*} [Fintype α] [DecidableEq α]
   · by_cases hiA : i ∈ A <;> simp [rectangleNegativeCounts, hi, hiA]
   · have hiA : i ∉ A := fun h => hi (hA h)
     simp [hi, hiA]
-
 /-- The union over labelled margins is exactly the fiber of the coarser
 native conditioning readout. -/
 theorem native_margin_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
@@ -607,21 +695,18 @@ theorem native_margin_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
   have hin (A : Finset {i : Fin M // i ∈ S.val}) (i : {i : Fin M // i ∈ S.val}) (hi : i ∈ V) :
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k ∨
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k + 1 := by
-    simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
-      rectangleNegativeCounts, if_pos hi]
+    simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm, rectangleNegativeCounts, if_pos hi]
     split_ifs <;> simp
   have houtA (A : Finset {i : Fin M // i ∈ S.val}) (i : {i : Fin M // i ∈ S.val}) (hi : i ∉ V) :
       ¬ (((Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k ∨
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k + 1) ∧
         (outsideM i = l ∨ outsideM i = l + 1)) := by
-    simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
-      rectangleNegativeCounts, if_neg hi] using hout i hi
+    simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm, rectangleNegativeCounts, if_neg hi] using hout i hi
   ext y
   constructor
   · intro hy
     obtain ⟨A, hA, hyA⟩ := mem_biUnion.mp hy
-    have hfull := (mem_filter.mp ((native_rectangle_readout_fiber S e o _ V outsideM k l U
-      (hin A) (houtA A)) ▸ hyA)).2
+    have hfull := (mem_filter.mp ((native_rectangle_readout_fiber S e o _ V outsideM k l U (hin A) (houtA A)) ▸ hyA)).2
     have hV : nativeRectangleRows S e o k l y = V := congrArg (fun x => x.2.1) hfull
     have hp (i : {i : Fin M // i ∈ S.val}) :
         count e y.val i.val 1 = rectangleNegativeCounts V A outsideP k i := by
@@ -648,8 +733,7 @@ theorem native_margin_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
       · simp [hi, hp i, hm i hi, rectangleNegativeCounts]
     · apply Prod.ext
       · change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val 1 = k).card = R
-        simp only [hV, hp, rectangle_low_rows V A outsideP k (mem_powersetCard.mp hA).1,
-          (mem_powersetCard.mp hA).2]
+        simp only [hV, hp, rectangle_low_rows V A outsideP k (mem_powersetCard.mp hA).1, (mem_powersetCard.mp hA).2]
       · exact congrArg (fun x => x.2.2.2) hfull
   · intro hy
     have he := (mem_filter.mp hy).2
@@ -673,8 +757,7 @@ theorem native_margin_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
     refine mem_filter.mpr ⟨mem_univ _, ?_⟩
     apply Prod.ext
     · funext i
-      change count e y.val i.val 1 =
-        (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i
+      change count e y.val i.val 1 = (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i
       simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm]
       by_cases hi : i ∈ V
       · have hc := (mem_filter.mp (hV.symm ▸ hi)).2.1
@@ -694,7 +777,6 @@ theorem native_margin_rectangle_readout_fiber {M q s : ℕ} (S : Support M q)
         · simp [hi]
         · simp [hi, (ho i hi).2]
       · exact congrArg (fun x => x.2.2.2) he
-
 private theorem native_margin_a_event_eq {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (V : Finset {i : Fin M // i ∈ S.val})
     (outsideP outsideM : {i : Fin M // i ∈ S.val} → ℕ) (k l R U t : ℕ)
@@ -713,12 +795,10 @@ private theorem native_margin_a_event_eq {M q s : ℕ} (S : Support M q)
       ¬ (((Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k ∨
       (Finsupp.equivFunOnFinite.symm (rectangleNegativeCounts V A outsideP k)).toMultiset.count i = k + 1) ∧
         (outsideM i = l ∨ outsideM i = l + 1)) := by
-    simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
-      rectangleNegativeCounts, if_neg hi] using hout i hi
+    simpa only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm, rectangleNegativeCounts, if_neg hi] using hout i hi
   rw [native_a_event_eq S e o _ V outsideM k l U t houtA]
   simp only [Finsupp.count_toMultiset, Finsupp.coe_equivFunOnFinite_symm,
     rectangle_low_rows V A outsideP k (mem_powersetCard.mp hA).1]
-
 /-- The A-cell count has the exact native hypergeometric law conditioned
 only on rectangle membership, complete outside-row count pairs, and the two
 numerical margins. This includes the full continuous-path experiment. -/
@@ -749,8 +829,7 @@ private theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
   by_cases ht : t ≤ U
   · rw [if_pos ht, ← native_margin_rectangle_readout_fiber S e o V outsideP outsideM k l R U hout,
       native_margin_a_event_eq S e o V outsideP outsideM k l R U t hout]
-    exact native_margin_rectangle_hypergeometric_law S r e o hq hqm hr hr1 ha ha1
-      V outsideP outsideM k l R U t hpos hneg hR hU ht
+    exact native_margin_rectangle_hypergeometric_law S r e o hq hqm hr hr1 ha ha1 V outsideP outsideM k l R U t hpos hneg hR hU ht
   · rw [if_neg ht]
     have hz : (univ.filter fun y : Fiber S e o =>
         nativeMarginRectangleReadout S e o k l y =
@@ -761,8 +840,7 @@ private theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
       obtain ⟨hyenv, hyt⟩ := mem_filter.mp hy
       have he := (mem_filter.mp hyenv).2
       have hm := congrArg (fun v => v.2.2.2) he
-      change ((nativeRectangleRows S e o k l y).filter
-        fun i => count e y.val i.val (-1) = l).card = U at hm
+      change ((nativeRectangleRows S e o k l y).filter fun i => count e y.val i.val (-1) = l).card = U at hm
       have hs : (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
           count e y.val i.val 1 = k ∧ count e y.val i.val (-1) = l) ⊆
           (nativeRectangleRows S e o k l y).filter
@@ -773,30 +851,22 @@ private theorem native_four_cell_conditional_law {M q s : ℕ} (S : Support M q)
         refine ⟨mem_filter.mpr ⟨mem_univ _, Or.inl hp, Or.inl hn⟩, hn⟩
       have hc := card_le_card hs
       change nativeRectangleACount S e o k l y ≤ _ at hc
-      rw [hyt, hm] at hc
-      exact ht hc
-    rw [hz]
-    simp [conditionalFiberMass]
-
+      rw [hyt, hm] at hc; exact ht hc
+    rw [hz]; simp [conditionalFiberMass]
 end
 end D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
-
-open D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
 namespace D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 noncomputable section
 /-- Only true signal rows in the four adjacent count cells receive an
 interior cell index. All background rows remain in the full outside sum. -/
-
 def nativeRowCell {M q s : ℕ} (S : Support M q) (e : Experiment) (o : Obs M s e)
     (k l : ℕ) (i : Fin M) : Option (Fin 4) := by
   classical
-  exact if i ∈ S.val then
-    if count e o i 1 = k ∧ count e o i (-1) = l then some 0 else
+  exact if i ∈ S.val then if count e o i 1 = k ∧ count e o i (-1) = l then some 0 else
     if count e o i 1 = k + 1 ∧ count e o i (-1) = l then some 1 else
     if count e o i 1 = k ∧ count e o i (-1) = l + 1 then some 2 else
     if count e o i 1 = k + 1 ∧ count e o i (-1) = l + 1 then some 3 else none
   else none
-
 theorem native_row_cell_iff {M q s : ℕ} (S : Support M q) (e : Experiment)
     (o : Obs M s e) (k l : ℕ) (i : Fin M) (j : Fin 4) :
     nativeRowCell S e o k l i = some j ↔ i ∈ S.val ∧
@@ -814,13 +884,11 @@ theorem native_row_cell_iff {M q s : ℕ} (S : Support M q) (e : Experiment)
           · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hD, hD.1, hD.2]
           · fin_cases j <;> simp [nativeRowCell, hs, hA, hB, hC, hD]
   · simp [nativeRowCell, hs]
-
 /-- The exact labelled row subsets supplying the four calibration counts. -/
 def nativeCalibrationCells {M q s : ℕ} (S : Support M q) (e : Experiment)
     (o : Obs M s e) (k l : ℕ) (j : Fin 4) : Finset (Fin M) := by
   classical
   exact univ.filter fun i => nativeRowCell S e o k l i = some j
-
 /-- The original four signal-cell sizes give exactly the two numerical
 margins and A-count in the native conditional readout. -/
 theorem native_calibration_counts_margins {M q s : ℕ} (S : Support M q)
@@ -858,23 +926,18 @@ theorem native_calibration_counts_margins {M q s : ℕ} (S : Support M q)
       univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
         ∃ j ∈ (univ : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
     ext i
-    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff,
-      i.property, Fin.exists_fin_succ]
+    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property, Fin.exists_fin_succ]
     omega
-  have hR : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
-      (fun i => count e y.val i.val 1 = k) =
+  have hR : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter (fun i => count e y.val i.val 1 = k) =
       univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
         ∃ j ∈ ({0, 2} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
     ext i
-    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]
-    omega
-  have hU : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter
-      (fun i => count e y.val i.val (-1) = l) =
+    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]; omega
+  have hU : (RectangleHypergeometricKernel.nativeRectangleRows S e o k l y).filter (fun i => count e y.val i.val (-1) = l) =
       univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
         ∃ j ∈ ({0, 1} : Finset (Fin 4)), nativeRowCell S e y.val k l i.val = some j) := by
     ext i
-    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]
-    omega
+    simp [RectangleHypergeometricKernel.nativeRectangleRows, native_row_cell_iff, i.property]; omega
   have hA : (univ.filter fun i : {i : Fin M // i ∈ S.val} =>
       count e y.val i.val 1 = k ∧ count e y.val i.val (-1) = l) =
       univ.filter (fun i : {i : Fin M // i ∈ S.val} =>
@@ -889,8 +952,6 @@ theorem native_calibration_counts_margins {M q s : ℕ} (S : Support M q)
   · rw [hU, hc]
     simp
   · unfold RectangleHypergeometricKernel.nativeRectangleACount
-    rw [hA, hc]
-    simp
-
+    rw [hA, hc]; simp
 end
 end D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
