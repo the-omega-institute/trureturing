@@ -11,7 +11,6 @@ import D5.S3.Resource.LogDet.PathSpectralClassical
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Integral
 import Mathlib.MeasureTheory.Integral.Prod
 
 set_option quotPrecheck false
@@ -398,7 +397,7 @@ private lemma scalar_weighted_resolvent (k : ℝ) (hk : |k| < 1) :
       ext i j
       fin_cases i; fin_cases j
       simp [D5.S3.Resource.LogDet.PathSpectralClassical.affineSegment, ρ, σ, p, q₀,
-        Matrix.smul_apply, smul_eq_mul]
+        Matrix.smul_apply]
       ring
     have hΔ : ρ - σ = Matrix.diagonal (fun _ : Fin 1 => (k : ℂ)) := by
       ext i j
@@ -407,7 +406,7 @@ private lemma scalar_weighted_resolvent (k : ℝ) (hk : |k| < 1) :
     dsimp only
     rw [hs, hΔ, Matrix.inv_diagonal, Matrix.diagonal_mul_diagonal,
       Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal, hfi]
-    simp only [Fin.sum_univ_one, Pi.inv_apply, ← Complex.ofReal_inv,
+    simp only [Fin.sum_univ_one, ← Complex.ofReal_inv,
       ← Complex.ofReal_mul, Complex.ofReal_re]
     congr 1
     field_simp [hden]
@@ -631,7 +630,7 @@ private lemma scalar_log_bounds (r z : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1)
   have he : (1 - z / r ^ 2) * 1 + (z / r ^ 2) * (1 - r ^ 2) = 1 - z := by
     field_simp
     ring
-  simp only [smul_eq_mul, Real.log_one, mul_zero, zero_add, he] at hc
+  simp only [Real.log_one, mul_zero, zero_add, he] at hc
   rw [if_neg hr]
   have hc' : z / r ^ 2 * Real.log (1 - r ^ 2) =
       -(-Real.log (1 - r ^ 2) / r ^ 2 * z) := by ring
@@ -689,9 +688,5 @@ theorem symmetric_entropy_gap_bkm_bounds (A H : S)
   rw [integral_neg, integral_const_mul, ← eb] at hu
   rw [he]
   constructor <;> linarith
-
-#print axioms symmetric_entropy_gap_eq_integral_bkm
-#print axioms symmetric_entropy_gap_eq_integral_log
-#print axioms symmetric_entropy_gap_bkm_bounds
 
 end D5.S3.Quantum.Divergence.FiniteAmplitudeBKMRemainder
