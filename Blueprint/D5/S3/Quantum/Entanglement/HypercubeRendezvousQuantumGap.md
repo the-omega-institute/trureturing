@@ -166,6 +166,10 @@ $$\operatorname{HypercubeRendezvousQuantumGap.claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/HypercubeRendezvousQuantumGap.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wang-2026-hypercube-rendezvous-quantum-gap` (proved) by `D5/S3/Quantum/Entanglement/HypercubeRendezvousQuantumGap.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wang-2026-hypercube-rendezvous-quantum-gap","declaration_gid":"D5/S3/Quantum/Entanglement/HypercubeRendezvousQuantumGap.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Wang (2026). *Quantum-assisted rendezvous on hypercubes: a quantum Bernoulli noise approach*. URL: <https://arxiv.org/abs/2610.12949v1>.

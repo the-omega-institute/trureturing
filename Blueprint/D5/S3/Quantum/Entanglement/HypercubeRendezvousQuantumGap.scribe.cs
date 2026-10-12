@@ -146,7 +146,10 @@ internal sealed class HypercubeRendezvousQuantumGapDocument : IScribeDocumentDef
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + (declaration == "QStrategy.prob" ? "prob" : declaration)), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            declaration == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("wang-2026-hypercube-rendezvous-quantum-gap"),
+                ResolutionKind.Proved) : null);
     private static Formula X(string name) => F.Id(name);
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(X(owner), Dot, X(name)));
     private static Formula Name(string name) => Qualified("HypercubeRendezvousQuantumGap", name);
