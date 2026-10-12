@@ -49,7 +49,12 @@ Fix d = 12, a = √2/2, κ = (√5 − 1)/2, c = aκ, θ = arccos c and φ★ = 
 
 ## Falsifier
 
-The refutation would fail if the conjecture were read only on the source's grid φ = m/10. φ★ is irrational, and the grid value φ = 1.3 at d = 12 is uniform (to within 6·10⁻¹⁵ numerically).
+The refutation would fail if the conjecture were read only on the source's grid φ = m/10: φ★ ≈ 0.4241 is not a grid value, and the grid value φ = 1.3 at d = 12 is uniform (to within 6·10⁻¹⁵ numerically).
+
+φ★ is moreover irrational (argued, not formalized; `result` does not use it).
+- cos 2θ = 2c² − 1 = (1 − √5)/2, so 2cos 2θ = 1 − √5 is an algebraic integer whose conjugate 1 + √5 exceeds 2.
+- For rational r, every conjugate of 2cos(rπ) is again of the form 2cos(r′π) and lies in [−2, 2].
+- Hence 2θ/π is irrational, and so is φ★ = 4θ/π − 1.
 
 ## Evidence
 
