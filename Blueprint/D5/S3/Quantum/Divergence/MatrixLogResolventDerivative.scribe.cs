@@ -86,8 +86,9 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
                 Paragraph(Text(
                     "Define entropy(Y) = Re Tr(value(Y) CFC.log(value(Y))); this is trace entropy "
                     + "with the positive sign, rather than the negated von Neumann entropy. "
-                    + "entropyHessian(A) denotes fderiv over the reals of fderiv over the reals "
-                    + "of entropy at A. gradientMap(C) sends H to Re Tr(value(H) C). "
+                    + "entropyGradient(n) is fderiv over the reals of entropy, as a function on S. "
+                    + "entropyHessian(A) is fderiv over the reals of that gradient at A. "
+                    + "gradientMap(C) sends H to Re Tr(value(H) C). "
                     + "The first Hessian argument differentiates the gradient and the second "
                     + "evaluates the resulting linear functional.")),
                 Describe.Lean(
