@@ -4307,3 +4307,194 @@ those increases. No degree threshold for the new comparisons has
 been placed inside that finite verified range. RH, strict Robin for
 all $H>5040$, the uniform lower-range comparison and individual
 complex-root exclusion remain unresolved.
+
+## A no-separation source capture bound and its finite-degree obstruction
+
+Keep the same entire source $F(z)=\Xi(\sqrt z)/\xi_0$, $F(0)=1$,
+positive coefficients $a_k$, zero coefficient shift and finite Jensen
+multipliers of (LC17) and (LC46). Reuse the already checked
+Craven–Csordas finite-tower criterion and complex-zero-decreasing
+supplier cited above, rather than introduce another generic Jensen or
+root-count theorem. The additional published supplier is Matthew Buck,
+[*Integer points of meromorphic functions*](https://doi.org/10.1017/S0013091513000436),
+Lemma 2.4, equation (2.2), and Remark 2.3, printed pp.369–370.
+The source-specific application below has no Lean certification or
+literature originality claim.
+
+The fixed-real-cluster interface (LC27) uses a chosen isolation radius
+and an unevaluated positive source floor on its circle. The bound here
+instead captures nonreal source clusters, without separating their
+individual zeros, using only positive-axis source upper bounds. It does
+not replace the real-cluster Hermite margins or prove the low-range
+strict comparison.
+
+### Exact finite Jensen error and the published exceptional-disc floor
+
+Put
+
+$$
+G(x)=F(-x)=\sum_{k\ge0}a_kx^k
+=\frac{\xi(1/2+\sqrt x)}{\xi_0},\qquad x\ge0,
+\qquad
+\max_{|z|\le x}|F(z)|=G(x).
+\tag{LC166}
+$$
+
+The maximum follows from coefficient positivity and equality at $z=-x$.
+For $R\ge1$, the complex triangle-inequality version of the existing
+(LC17) gives the same finite-multiplier error; the ordinary Cauchy
+second-derivative bound on the circle of radius $2R$ centred at $2R$
+then gives
+
+$$
+\sup_{|z|\le2R}|\mathcal J_n(z)-F(z)|
+\le\frac{(2R)^2G''(2R)}{2n}
+\le\frac{G(4R)}n.
+\tag{LC167}
+$$
+
+This uses the unchanged finite weights, including their zero tail at
+$k>n$; it is not an error estimate for a shifted coefficient source.
+
+Let $0<h\le R$ and set
+
+$$
+K(R,h)=6+\frac{\log(384R/h)}{\log2},\qquad
+\mathcal N(R,h)
+=\left\lfloor G(4R)G(8R)^{K(R,h)}\right\rfloor+1.
+\tag{LC168}
+$$
+
+Use the standard Nevanlinna normalization
+$T(r,u)=m(r,u)+N(r,u)$, with the proximity average of $\log^+|u|$.
+Apply Buck's lemma to $u=1/F$, $s=R$, $m=0$ and
+$\epsilon=h/(384R)$. These satisfy $s\ge1$ and $0<\epsilon\le1$;
+$1/F$ is meromorphic on the required disk. Since $F(0)=1$, the
+classical Jensen/first-main-theorem identity has zero additive constant:
+
+$$
+T(8R,1/F)=T(8R,F)\le\log G(8R).
+\tag{LC169}
+$$
+
+Thus there is a finite union $U$ of open discs of total radius at most
+$24\epsilon R=h/16$, outside which, for $|z|\le2R$,
+
+$$
+|F(z)|\ge G(8R)^{-K(R,h)}>0.
+\tag{LC170}
+$$
+
+Every source zero in this region lies inside $U$. By the merging rule
+in Buck's Remark 2.3, intersecting discs can be replaced by disjoint
+open discs without increasing the total radius. Enlarging their union
+retains (LC170) on its complement. No lower bound for $|\zeta|$ on a
+critical-line or critical-strip contour is assumed.
+
+### Joint capture with multiplicity, including arbitrarily close zeros
+
+Write
+$\Omega(R,h)=\{z:|z|\le R,\ |\Im z|\ge h\}$ and let
+$\nu_P(E)$ count zeros of $P$ in $E$, with multiplicity.
+Select the merged discs containing the source zeros in $\Omega(R,h)$.
+Each selected disc has radius at most $h/16$. Every point of it is
+within $h/8$ of a source zero it contains, and hence belongs to
+$\Omega(R+h/8,7h/8)$; its closure lies in $|z|<2R$ and avoids the
+real axis. Its boundary is outside $U$ and satisfies (LC170).
+
+For every integer $n\ge\mathcal N(R,h)$, the definition of the floor
+in (LC168) makes
+$G(4R)/n<G(8R)^{-K(R,h)}$. Equations (LC167) and (LC170) therefore
+supply the strict boundary inequality for the classical Rouché theorem
+on each selected disc. The two functions have exactly the same zero
+count in each one. In particular,
+
+$$
+\nu_{\mathcal J_n}\bigl(\Omega(R+h/8,7h/8)\bigr)
+\ge\nu_F\bigl(\Omega(R,h)\bigr),
+\qquad n\ge\mathcal N(R,h).
+\tag{LC171}
+$$
+
+Multiplicity and close zero clusters are retained together inside a
+disc; there is no minimum source-zero spacing or simple-zero premise.
+Additional polynomial zeros outside the selected discs are not
+controlled. In particular, this is a forward capture statement,
+not a converse location statement for every nonreal polynomial zero.
+
+The source upper-growth estimate already used after (LC50), with
+$x=\sqrt{8R}$, gives
+
+$$
+\log\mathcal N(R,h)
+=O\!\left(\sqrt R\log(R+2)\,[1+\log(R/h)]\right).
+\tag{LC172}
+$$
+
+No new Stirling theorem or source asymptotic is needed. For every fixed
+$A\ge0$, if $R_n\to\infty$, $h_n=R_n^{-A}$ and
+
+$$
+R_n=o\!\left(\frac{(\log n)^2}{(\log\log n)^4}\right),
+\tag{LC173}
+$$
+
+then $\log\mathcal N(R_n,h_n)=o(\log n)$, so (LC171) eventually
+applies jointly at $(n,R_n,h_n)$. This range does not reach the moving
+actual-node boundary (LC151), and it controls no strict signs in real
+zero clusters or in the thinner band $|\Im z|<h_n$.
+
+### An off-line source zero forces a bounded-degree defect birth
+
+Suppose, conditionally, that
+$\tau=T+i\eta$, $T>0$, $0<|\eta|<1/2$, is a zero of $\Xi$.
+It corresponds to a zeta zero $1/2-\eta+iT$. For the actual source,
+$z_0=\tau^2$ and its conjugate are distinct nonreal zeros. Take
+
+$$
+R=\max\{1,T^2+\eta^2\},\qquad h=2T|\eta|,
+\qquad 0<h\le R.
+\tag{LC174}
+$$
+
+Equation (LC171) gives $\Delta_n\ge2$ for every
+$n\ge\mathcal N(R,h)$, with $\Delta_n$ as in (LC160).
+Since $\Delta_1=0$ and this integer defect is nondecreasing, its first
+increase exists. Define
+
+$$
+b_\Delta=\min\{m\ge1:\Delta_{m+1}>\Delta_m\},
+\qquad b_\Delta\le\mathcal N(R,h)-1.
+\tag{LC175}
+$$
+
+The already established critical-value ledger implies that at this
+actual degree there is a positive $\mathcal J_{b_\Delta}$ node with
+$\mathcal J_{b_\Delta}'(t)\mathcal G_{b_\Delta}(t)\le0$; otherwise
+all strict comparisons would preserve its defect. This implication
+allows a repeated node or a zero critical value. It does not assert
+that the integer step must pass through a multiple root. Nor does it
+identify this real witness as a trajectory ancestor of the captured
+complex zero, or imply $t\asymp T^2$.
+
+If this degree is beyond the existing fixed-band and moving-range
+thresholds, (LC165) places its witness between each already paid fixed
+$R_0$ and $T_{b_\Delta}^{\rm mov}$. There is no numerical threshold
+placing that condition inside the literature's finite verified range.
+The earlier strict-comparison criterion can separately bound the first
+strict failure, which can precede a defect increase in a degenerate
+step; the two notions are not silently identified.
+
+Conversely, a certified zero defect through a degree $D$ excludes
+source zeros in any $\Omega(R,h)$ with $\mathcal N(R,h)\le D$.
+This is a conditional certificate-consumption rule, not an extension
+of the existing numerical verified range. The dependence on distance
+from the real axis is explicit; no source-zero separation constant is
+hidden in it.
+
+The finite-source capture and its finite-degree obstruction do not
+exclude a hypothetical off-line zero. They leave open the uniform
+actual-node comparison in $0<t<T_n^{\rm mov}$, individual nonreal-root
+exclusion, RH and strict Robin for every integer $H>5040$. The new
+application remains ordinary analysis without Lean certification or
+an originality assertion.
