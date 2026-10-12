@@ -4,6 +4,7 @@ title: "Triangle-network source independence and fiber geometry"
 authors: trureturing contributors
 year: 2026
 doi: null
+url: https://github.com/the-omega-institute/trureturing/blob/dev/Library/QuantumContext/trianglenetwork2026fiber.md
 claim: "Working note recording a proposed triangle-network source-independence and fiber-geometry interface; no external theorem or formal claim is asserted."
 strata_touched: []
 license: repository-original
@@ -11,6 +12,10 @@ triage: anchor
 ---
 
 # Triangle-network source independence and fiber geometry
+
+## Verified locator
+
+- URL: https://github.com/the-omega-institute/trureturing/blob/dev/Library/QuantumContext/trianglenetwork2026fiber.md
 
 This note proposes an interface between the classical triangle-local carrier and the Auric FIB readout geometry. A concrete event-to-FIB readout and its compatibility theorem remain open.
 
