@@ -1,0 +1,27 @@
+**假设 24.2（Gibbs 比较及预先指定的检验对象）。** 给定非空、固定有限支持 $S\subseteq\Sigma$、有限 $H_s$ 和有限实参数 $\beta$，在 $S$ 外取零质量，在 $S$ 上采用计数基准测度及
+
+$$
+\mathcal Z_H(\beta)=\sum_{s\in S}e^{-\beta H_s},\qquad
+\pi_s=\frac{e^{-\beta H_s}}{\mathcal Z_H(\beta)}.
+$$
+
+这是 [Jaynes，式 (2-9)–(2-15)](../../../Library/StatisticalMechanics/jaynes1957information.md)的有限指数族作为本节的比较律。若 $H$ 有能量单位，$\beta$ 有其倒数单位；正温度的自由能解释另外要求 $\beta>0$ 及温标、环境和单位的独立对应。$H\mapsto H+C$ 不改变 $\pi$，只改变配分函数的因子和期望能量的共同零点。以下反演固定 $\beta\ne0$；若连 $\beta$ 也未知，则 $H\mapsto aH,\beta\mapsto\beta/a$ 的尺度不能由同一律辨识。$\beta=0$ 时有限 $H$ 仅给 $S$ 上均匀律。
+
+对全支持严格正五态律，固定 $\beta\ne0$ 后总能取 $H_s=-\beta^{-1}\log p_s+C$。在 $H_0=0$ 的规范中，定义 24.1 的字典给
+
+$$
+\epsilon_i=-\beta^{-1}\log(p_i/p_0)\quad(i=1,2,3),\qquad
+\beta J=-\log\frac{p_0p_{13}}{p_1p_3}.
+$$
+
+故自由拟合五个能级只重写原有四维正概率律，不确认能量、平衡或跃迁率。零概率不能由全支持有限能级给出，须另定支持或明确采用无限能级的极限；支持缩小后也不沿用全五函数系数的可辨识性。用 Gibbs 律提出可被否定的模型时，$S,H,\beta$、允许的控制参数及能量／率的意义须独立于待检验律预先给定，再比较全部状态比，而不是仅比较一个交叉比。样本误差和物理标定不由精确律公式提供。
+
+对固定支持、固定 $\beta\ne0$，仅令 $J$ 通过 $Jxy$ 变化且其余能量系数固定时，所引对数配分函数导数给
+
+$$
+-\beta^{-1}\partial_J\log\mathcal Z_H=\mathbb E_\pi[xy],\qquad
+\partial_J(-\beta^{-1}\log\mathcal Z_H)=\mathbb E_\pi[xy].
+$$
+
+这里读出的是该指定 Gibbs 族对耦合的响应，不是任意非平衡 $p$ 的实验性定义。$\beta>0$ 时括号才采用正温度自由能的称呼。
+

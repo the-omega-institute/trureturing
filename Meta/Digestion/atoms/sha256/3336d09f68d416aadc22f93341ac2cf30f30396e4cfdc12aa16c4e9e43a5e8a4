@@ -1,0 +1,29 @@
+**定理 26.9（五边图控制的共同基准读口）。** 在定义 26.2 的四维
+共同坐标、Lebesgue 测度、单位和 $\vartheta$ 下，令
+$K_0=K_{\varnothing}$、$a=\sqrt\lambda e_L$、$b=\sqrt\mu e_R$。
+四个成员 $K_{\varnothing},K_1,K_3,K_{13}$ 均取 $q_s=0,c_s=0$。
+取一个共同基准场 $\xi_0\sim\mathcal N(0,\vartheta K_0^{-1})$，并令
+$$
+Y_1=a^{\mathsf T}\xi_0+\epsilon_1,\qquad
+Y_3=b^{\mathsf T}\xi_0+\epsilon_3,
+$$
+其中噪声独立、各为 $\mathcal N(0,\vartheta)$，与 $\xi_0$ 独立。令
+$\alpha=a^{\mathsf T}K_0^{-1}a$、$\beta=b^{\mathsf T}K_0^{-1}b$、
+$\chi=a^{\mathsf T}K_0^{-1}b$，则
+$$
+r^2=\frac{\chi^2}{(1+\alpha)(1+\beta)},\qquad
+I(Y_1;Y_3)=-\tfrac12\log(1-r^2).
+$$
+本应用恰有 $K_1=K_0+aa^{\mathsf T}$、$K_3=K_0+bb^{\mathsf T}$、
+$K_{13}=K_0+aa^{\mathsf T}+bb^{\mathsf T}$，故其四角自由能满足
+$$
+\mathcal J_{\mathcal F}
+=\mathcal F_{13}-\mathcal F_1-\mathcal F_3+\mathcal F_{\varnothing}
+=-\vartheta I(Y_1;Y_3).
+$$
+在定理 26.6 的单位图中，$1-r^2=48/49$，所以
+$I(Y_1;Y_3)=\tfrac12\log(49/48)$，并且定理 26.8 的平均自由能差为
+$-\vartheta I(Y_1;Y_3)/2$。这里的 $I$ 只指这个单一基准高斯的互信息；
+模式混合读口的互信息未被此等式计算。若允许定义 26.1 的任意模式源或常数，
+还须保留 $c_s-\tfrac12q_s^{\mathsf T}K_s^{-1}q_s$ 的四角差，不能沿用裸等式。
+
