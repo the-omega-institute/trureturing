@@ -1,0 +1,13 @@
+**Theorem 43.3 (safe factorization by a well-founded rank).** Suppose a finite
+controller satisfies the realizable ExactChart conditions, and suppose there
+is a rank $\rho$ from pending boundaries to a well-founded ordered set such
+that every nonterminal legal event sends $b$ to $b'$ with
+$\rho(b')<\rho(b)$. Suppose also that all sources reaching one terminal
+position have the same complete row there. Then every source has one finite
+same-source action word $w_s\in\mathcal W_s$, the controller halts, and its
+terminal row is the complete target row of $s$.
+
+Conversely, an exact source/action factorization with common legality, the
+reply-factorized transitions, the terminal-row condition, and this rank is a
+realizable controller witness.
+
