@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a866b2584793ec7af411fff55bc0987ac7b2b81c90069b72b70613e06534348a"}
+{"statement_id":"sha256:a866b2584793ec7af411fff55bc0987ac7b2b81c90069b72b70613e06534348a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),12:hit_tail_yOf)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),18:measure_hitSet_fst)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a8a4b81685c3761a34cdbe5e7c3ab6bbafcd867c31fba815ff9dc77abdf5fbbb"}
+{"statement_id":"sha256:a8a4b81685c3761a34cdbe5e7c3ab6bbafcd867c31fba815ff9dc77abdf5fbbb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),18:DecisionValueScale),31:FiniteHorizonValueFactorization),34:finite_horizon_value_factorization)","kind":"theorem"}]}

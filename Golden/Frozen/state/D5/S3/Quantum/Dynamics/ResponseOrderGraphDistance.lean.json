@@ -1,1 +1,1 @@
-{"statement_id":"sha256:777ef4f44c146d34ecceb339771cfe1570698a00131b61fe21a87c1611eebe56"}
+{"statement_id":"sha256:777ef4f44c146d34ecceb339771cfe1570698a00131b61fe21a87c1611eebe56","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Dynamics),26:ResponseOrderGraphDistance),13:couplingGraph)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Dynamics),26:ResponseOrderGraphDistance),37:first_nonzero_power_eq_graph_distance)","kind":"theorem"}]}
