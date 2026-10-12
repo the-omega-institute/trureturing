@@ -1469,3 +1469,395 @@ $\Psi(\operatorname{Cl}(S_0))=\operatorname{Cl}'(\Psi(S_0))$。重新着色不�
 不能改写为精确可逆或精确恢复。完整的 $n>5040$ 全局覆盖仍是原证书的独立义务。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 22. 几何连接中的隐藏调整与原生叶数递归
+
+### 22.1. 同一五态切向载体上的二次接口
+
+**定义 22.1（完整切向与另供的正定二次式）。** 沿用定义20.1的
+$(O,L,T,R,J)$ 状态顺序、低—高—中占位 $(x,y,z)$、
+命题20.3的概率逆式。在五项全正的律
+
+$$
+p=(1-X-Y-Z+\kappa, X-\kappa, Z, Y-\kappa, \kappa)
+$$
+
+处，取 $u=(\delta X,\delta Y,\delta Z)^{\mathsf T}$、
+$\eta=\delta\kappa$，则实际归一化切向映射为
+
+$$
+J\binom u\eta=
+(-u_1-u_2-u_3+\eta, u_1-\eta, u_3, u_2-\eta, \eta)^{\mathsf T}.
+\tag{22.1}
+$$
+
+第五、第二、第四、第三分量依次恢复 $\eta,u_1,u_2,u_3$，所以它单射，
+像是四维零质量切空间。全正律允许每个方向的双侧充分小扰动。
+$J(0,1)=d=(1,-1,0,-1,1)$ 是固定可见报告的垂直方向；
+尚未指定度量时，不把它称为与所有可见方向正交的法向。
+
+在这个共同四维坐标载体上，另供实对称正定二次式
+
+$$
+Q=\begin{pmatrix}A&B\\B^{\mathsf T}&D\end{pmatrix},
+\qquad A\in\mathbb R^{3\times3},\ B\in\mathbb R^{3\times1},\ D>0,
+\qquad v=(u^{\mathsf T},\eta)^{\mathsf T},\quad \mathcal E_Q(u,\eta)=v^{\mathsf T}Qv.
+$$
+
+定义
+
+$$
+G=A-BD^{-1}B^{\mathsf T},\qquad L=-D^{-1}B^{\mathsf T},\qquad Eu=(u,0).
+\tag{22.2}
+$$
+
+本接口使用经典完成平方和分块逆作为中间工具：
+
+$$
+\begin{aligned}
+\mathcal E_Q(u,\eta)&=u^{\mathsf T}Gu+(\eta-Lu)^{\mathsf T}D(\eta-Lu),\\
+\min_\eta\mathcal E_Q(u,\eta)&=u^{\mathsf T}Gu,\qquad \eta_*=Lu,\\
+Q&=\begin{pmatrix}G+L^{\mathsf T}DL&-L^{\mathsf T}D\\-DL&D\end{pmatrix},
+\qquad G^{-1}=E^{\mathsf T}Q^{-1}E.
+\end{aligned}
+\tag{22.3}
+$$
+
+代入 $DL=-B^{\mathsf T}$ 展开即得平方式，$D>0$ 给唯一极小点，
+分块逆的可见主块给最后式。可引用
+[Schur 二次最小的已有接口](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean)
+和 Lami–Hirche–Adesso–Winter，
+[*Schur complement inequalities for covariance matrices and monogamy of quantum correlations*，
+性质(v)、定理1](https://arxiv.org/abs/1607.05285)
+的 Schur 变分背景；本文只在下列具体五态应用中消费这些工具。
+一般四阶正定式的 $(G,L,D)$ 有 $6+3+1=10$ 个参数，重构式保留全部十项；
+它们不是十个原子。只保留 $G$ 删除了隐藏调整 $L$ 与偏离代价 $D$。
+同一中间配方与块逆对有限维正定隐藏块 $D$ 仍成立，$L$ 相应成为矩阵；
+以下实际五态实例固定一个隐藏坐标，不由块推广增添物理自由度。
+任意另供 $Q$ 不被宣称来自五态 Fisher 源族；该源族另在命题22.4检验。
+
+### 22.2. 相同可见端点的有理路径
+
+**命题 22.2（相反隐藏调整的五态二次反例）。** 在定义22.1的实际切向
+载体上供应
+
+$$
+\mathcal E_0=\|u\|^2+(\eta-3u_1/4)^2,\qquad
+\mathcal E_1=\|u\|^2+(\eta+3u_1/4)^2.
+$$
+
+它们的完整矩阵为
+
+$$
+Q_0=\begin{pmatrix}25/16&0&0&-3/4\\0&1&0&0\\0&0&1&0\\-3/4&0&0&1\end{pmatrix},
+\quad
+Q_1=\begin{pmatrix}25/16&0&0&3/4\\0&1&0&0\\0&0&1&0\\3/4&0&0&1\end{pmatrix}.
+\tag{22.4}
+$$
+
+两者正定，$G_0=G_1=I_3$，
+$L_0=(3/4,0,0)$、$L_1=(-3/4,0,0)$、$D_0=D_1=1$。
+令 $\mathcal S(Q)$ 表示式（22.2）的 $G$。按照加权正定几何均值连接完整式，
+
+$$
+Q_0\#_tQ_1=Q_0^{1/2}
+(Q_0^{-1/2}Q_1Q_0^{-1/2})^tQ_0^{1/2},\qquad t\in\mathbb R,
+\tag{22.5}
+$$
+
+其全实参数路径为
+
+$$
+Q_t=\begin{pmatrix}
+5\cosh\nu/4&0&0&\sinh\nu\\
+0&1&0&0\\0&0&1&0\\
+\sinh\nu&0&0&4\cosh\nu/5
+\end{pmatrix},\qquad \nu=(2t-1)\log2.
+\tag{22.6}
+$$
+
+每点正定、行列式一，且
+
+$$
+\mathcal S(Q_t)=\operatorname{diag}\left(\frac5{4\cosh\nu},1,1\right).
+\tag{22.7}
+$$
+
+尤其完整中点为 $R=\operatorname{diag}(5/4,1,1,4/5)$，
+有效可见中点为 $\operatorname{diag}(5/4,1,1)$；
+先消元再取几何中点则为 $I_3$。完整算术中点消元后为
+$\operatorname{diag}(25/16,1,1)$。当 $t=2$ 时，
+$\mathcal S(Q_2)=\operatorname{diag}(4/13,1,1)\preceq I_3$ 且不相等，
+所以区间内的次序比较不能直接外推至全部实权重。
+
+证明。两个能量式是正定平方和；式（22.3）给端点接口。
+直接计算 $RQ_0^{-1}R=Q_1$，$R$ 是唯一正定解：
+将 $XQ_0^{-1}X=Q_1$ 同余归一化后，唯一正定平方根确定 $X$。
+为验证整条路径确实是式（22.5），令
+$P=R^{1/2}$，令 $H$ 只在坐标 $(u_1,\eta)$ 上为
+$\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，其余为零。
+则
+
+$$
+Q_0=P e^{-(\log2)H}P,\qquad Q_1=P e^{(\log2)H}P,
+\qquad Q_t=P e^{(2t-1)(\log2)H}P.
+$$
+
+同一 $H$ 的指数交换，幂运算直接给参数插值。
+$\cosh^2\nu-\sinh^2\nu=1$ 给非平凡块行列式一，
+正对角和行列式给其正定性；直接 Schur 消元得式（22.7）。
+$\cosh(3\log2)=65/16$ 给 $4/13$，其余两个方向恒为一，
+因此不能把该非零半正定差写成正定差。
+
+**本路径及后续节点所用的几何均值工具。**
+经典共同同余与反演公式对任意实 $t$ 给
+
+$$
+(T^{\mathsf T}Q_0T)\#_t(T^{\mathsf T}Q_1T)
+=T^{\mathsf T}(Q_0\#_tQ_1)T,\qquad
+(Q_0\#_tQ_1)^{-1}=Q_0^{-1}\#_tQ_1^{-1}.
+\tag{22.8}
+$$
+
+这里 $T$ 可逆，所有矩阵位于同一载体。
+令 $C=Q_0^{-1/2}Q_1Q_0^{-1/2}$；
+$U=Q_0^{1/2}T(T^{\mathsf T}Q_0T)^{-1/2}$ 为正交矩阵，
+变换后的归一化矩阵为 $U^{\mathsf T}CU$，谱幂的正交相容性恢复第一式。
+第二式两边同为 $Q_0^{-1/2}C^{-t}Q_0^{-1/2}$。
+交换公式 $Q_0\#_tQ_1=Q_1\#_{1-t}Q_0$ 和
+$Q_0\#_{-t}Q_1=Q_0(Q_0\#_tQ_1)^{-1}Q_0$
+沿用加权几何均值的已有
+[交换与逆夹心接口](../../../D5/S3/Quantum/Hiai/InverseGeometricIdentification.lean)。
+这些经典公式是本实际路径和递归的中间工具，不另编号为新定理。
+
+其经典几何背景见 Moakher，
+[*A Differential Geometric Approach to the Geometric Mean of Symmetric
+Positive-Definite Matrices*](https://doi.org/10.1137/S0895479803436937)。
+在度量 $\langle U,V\rangle_Q=\operatorname{tr}(Q^{-1}UQ^{-1}V)$ 下，
+共同归一化路径 $e^{t\log C}$ 满足
+$\ddot Q=\dot Q Q^{-1}\dot Q$，直接对指数微分即验证该方程。
+这里连接两份二次响应；不同位置的矩阵仍须先供应共同标架或运输。
+
+**本例消元不相容的压缩解释。** 以一般共同分块作为此例、命题22.3的树
+节点及命题22.4的 Fisher 对的中间比较接口，记
+$K_i=Q_i^{-1}$、$C_i=E^{\mathsf T}K_iE=G_i^{-1}$，并令
+
+$$
+V=K_0^{1/2}EC_0^{-1/2},\quad V^{\mathsf T}V=I,
+\quad T=K_0^{-1/2}K_1K_0^{-1/2}.
+$$
+
+对 $0<t<1$，经典压缩幂不等式
+$V^{\mathsf T}T^tV\preceq(V^{\mathsf T}TV)^t$
+及其等号在此可完整解释。补成正交标架，写
+$T=\left(\begin{smallmatrix}C&R_1\\R_1^{\mathsf T}&D_1\end{smallmatrix}\right)$。
+对每个 $s>0$，
+
+$$
+V^{\mathsf T}(T+sI)^{-1}V
+=(C+sI-R_1(D_1+sI)^{-1}R_1^{\mathsf T})^{-1}
+\succeq(C+sI)^{-1}.
+$$
+
+代入经典正幂积分
+
+$$
+x^t=\frac{\sin\pi t}{\pi}\int_0^\infty
+s^{t-1}\frac{x}{s+x}\,ds
+$$
+
+即得压缩不等式。$R_1\ne0$ 时每个参数的逆差为非零半正定，
+其正权积分不可能是零矩阵；等号当且仅当 $R_1=0$，
+亦即 $T$ 保持 $\operatorname{ran}V$。写回并用式（22.8）反序求逆，得到
+
+$$
+\mathcal S(Q_0\#_tQ_1)\succeq G_0\#_tG_1,\qquad 0\le t\le1.
+\tag{22.9}
+$$
+
+内部权重的矩阵等号要求
+$K_1E\subseteq\operatorname{ran}(K_0E)$；由式（22.3）
+
+$$
+K_iE=\binom{G_i^{-1}}{L_iG_i^{-1}},
+$$
+
+它们的列空间是图 $\{(u,L_i u)\}$，故等号恰为 $L_0=L_1$。
+端点自动等号；非零半正定缺口仍可有可见方向的核。
+这些压缩与短算子的经典中间方法只用于本例和下面的实际来源应用。
+
+**本例共用隐藏变量的算术比较。** 更一般的本接口混合
+$u^{\mathsf T}G_i u+c_i(\eta-L_i u)^2$，$c_i>0$，
+权重 $0<t<1$ 时，把 $a=(1-t)c_0,b=tc_1$ 完成平方，得到
+
+$$
+\begin{aligned}
+\eta_*&=\frac{aL_0u+bL_1u}{a+b},\\
+\min_\eta\bigl((1-t)\mathcal E_0+t\mathcal E_1\bigr)
+&=u^{\mathsf T}((1-t)G_0+tG_1)u+\frac{ab}{a+b}((L_0-L_1)u)^2.
+\end{aligned}
+$$
+
+本例 $c_0=c_1=1$，额外代价为 $9t(1-t)u_1^2/4$，
+中点恰为 $9u_1^2/16$。对所有方向都消失等价于共同 $L$，
+对某一个方向则只需 $(L_0-L_1)u=0$。
+这是同一个隐藏变量的极小化，未引入独立环境或量子操作。$\square$
+
+### 22.3. 原生叶数加权后的非消失差异
+
+**命题 22.3（原 Fibonacci 树上的几何读出及接口界）。** 采用原有有序树
+$T_0=\alpha,T_1=\beta,T_{n+2}=\langle T_{n+1},T_n\rangle$，
+其语法与组成归属见
+[基础公式卷定义7.1、定理7.2–7.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
+另供命题22.2的 $Q_0,Q_1$ 作为叶读出，令 $\ell$ 是实际叶数，定义
+
+$$
+\mathcal Q(\alpha)=Q_0,\quad\mathcal Q(\beta)=Q_1,\quad
+\mathcal Q(\langle s,t\rangle)=\mathcal Q(s)\#_{\ell(t)/(\ell(s)+\ell(t))}\mathcal Q(t).
+$$
+
+则取 $F_0=0,F_1=1$，对全部 $n\ge0$ 有
+
+$$
+\ell(T_n)=F_{n+1},\quad N_\beta(T_n)=F_n,\quad
+\mathcal Q(T_n)=Q_0\#_{\theta_n}Q_1,\qquad \theta_n=F_n/F_{n+1},
+$$
+
+并有精确误差
+
+$$
+|\theta_n-\varphi^{-1}|=\frac{\varphi^{-(n+1)}}{F_{n+1}},
+\qquad\varphi=(1+\sqrt5)/2.
+$$
+
+因此完整几何读出收敛，其有效边界极限为
+
+$$
+\operatorname{diag}\left(\frac5{4\cosh((2\varphi^{-1}-1)\log2)},1,1\right)\ne I_3.
+\tag{22.10}
+$$
+
+第一系数严格大于一；若先把每片叶压成 $I_3$，同一递归每层都为 $I_3$。
+几何读出的收敛不消去这份来源压缩差。
+
+证明。两个叶计数按相同树递推，初值给所列 Fibonacci 数。
+共同同余归一化后，同一测地线各点只是 $C$ 的谱幂，故
+
+$$
+(Q_0\#_aQ_1)\#_t(Q_0\#_bQ_1)=Q_0\#_{(1-t)a+tb}Q_1.
+$$
+
+叶数加权令参数等于 $\beta$ 叶数比例，归纳给 $\theta_n$。
+Binet 恒等式给 $F_{n+1}/\varphi-F_n=(-1)^n\varphi^{-(n+1)}$，
+除以 $F_{n+1}$ 得误差并涵盖 $n=0,1$。
+代入式（22.7）得极限；$0<\varphi^{-1}<1$ 和
+$\cosh\log2=5/4$ 证明第一系数大于一。
+本读出只保留叶比例，合并不同叶序与括号；
+叶数权不同于 Fibonacci 原子数值，不被当作忠实原生表示或顺序相干表示。
+
+**同一类树读出的保守接口。** 若在相同有序树上另供共同载体的正定叶式，
+以同一 $[0,1]$ 权重递归完整 $Q$，仅在叶保留 $G_i=\mathcal S(Q_i)$，
+递归 $\widehat G=\widehat G_0\#_t\widehat G_1$，则逐节点式（22.9）与
+几何均值的同输入单调性给 $\mathcal S(Q_{\rm full})\succeq\widehat G$。
+该经典单调性可从正幂积分的 resolvent 反序推出固定输入的单调性，
+再用交换式控制另一输入；亦可引用
+[既有均值单调接口](../../../D5/S3/Quantum/Hiai/GeometricMeanOrder.lean)。
+这是树节点的归纳下界，不是精确响应。
+若子节点已认证 $\widehat G_i\succeq\varepsilon_iI$，$\varepsilon_i>0$，
+则父界为
+
+$$
+\widehat G_0\#_t\widehat G_1
+\succeq\varepsilon_0^{1-t}\varepsilon_1^tI.
+$$
+
+若所有叶共同给同一 $L$，用一个可逆剪切
+$(u,\eta)\mapsto(u,\eta-Lu)$ 同时写成 $\operatorname{diag}(G_i,D_i)$。
+同余相容和分块谱幂使每个新节点继续有相同 $L$，
+整棵树上的消元与连接于是精确交换。命题22.2的两叶不满足此条件。
+完整接口仍是式（22.3）的 $(G,L,D)$，不是仅有 $G$。
+
+对原目标应用此界，须先在同一区域认证
+$F_{\rm true}\ge c+u^{\mathsf T}Gu+(\eta-Lu)^{\mathsf T}D(\eta-Lu)-\varepsilon$。
+正定平方项给 $F_{\rm true}\ge c+u^{\mathsf T}Gu-\varepsilon$；
+若 $G\succeq\delta I$，再得 $c+\delta\|u\|^2-\varepsilon$。
+常数、可能的一次项、有效区域和余项上界必须随原任务保留；
+有额外一次项时需重新处理其极小化，不能由 Hessian 正定直接推原目标为正。
+本树界没有建立 Robin 整数指数、预算与原目标的控制桥，
+也没有把实二次极小化解释为测量、环境擦除或物理反演。$\square$
+
+### 22.4. 原五态 Fisher 族的中点反例
+
+**命题 22.4（共同均值的原生 Fisher 对不对中点封闭）。** 在式（22.1）的
+固定 $J$ 坐标中，取真正五态 Fisher 式
+$Q(p)=J^{\mathsf T}\operatorname{diag}(1/p_s)J$，$p_s>0$；
+它沿用
+[隐藏关系卷C-18.4](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)
+的概率度量。取
+
+$$
+p^{(0)}=(1/10,3/10,1/5,3/10,1/10),\quad
+p^{(1)}=(3/10,1/10,1/5,1/10,3/10).
+$$
+
+二者共享 $(X,Y,Z)=(2/5,2/5,1/5)$，$D_i=80/3$，
+$L_0=(1/2,1/2,3/8)$、$L_1=(1/2,1/2,1/8)$。
+以 $a=\sqrt3,b=\sqrt{15}$，完整几何中点为
+
+$$
+R=\frac5{12}
+\begin{pmatrix}
+8a+4b&4b&4a+2b&-8b\\
+4b&8a+4b&4a+2b&-8b\\
+4a+2b&4a+2b&4a+5b&-4b\\
+-8b&-8b&-4b&16b
+\end{pmatrix}.
+\tag{22.11}
+$$
+
+在同一固定坐标中，不存在全正概率 $p$ 使 $R=Q(p)$。
+同时，式（22.9）的有效边界中点不等号并非矩阵等号。
+
+证明。实际代入给 $Q(p^{(i)})=(5/3)H_i$，其中
+
+$$
+H_0=\begin{pmatrix}8&6&6&-8\\6&8&6&-8\\6&6&9&-6\\-8&-8&-6&16\end{pmatrix},\quad
+H_1=\begin{pmatrix}8&2&2&-8\\2&8&2&-8\\2&2&5&-2\\-8&-8&-2&16\end{pmatrix}.
+$$
+
+从隐藏块和交叉项直接得到上述 $D_i,L_i$。
+令 $M=12R/5$，则
+
+$$
+Q(p^{(0)})^{-1}=\frac1{100}Z,\qquad
+Z=\begin{pmatrix}24&-6&-8&6\\-6&24&-8&6\\-8&-8&16&-2\\6&6&-2&9\end{pmatrix},
+\qquad MZM=960H_1.
+$$
+
+第一式由 $H_0Z=60I$；第二式将 $M=aM_a+bM_b$ 分离后，
+混合项 $M_aZM_b=0$，其余项代 $a^2=3,b^2=15$ 逐项给所列整数矩阵。
+因而 $RQ(p^{(0)})^{-1}R=MZM/576=(5/3)H_1=Q(p^{(1)})$。
+
+为证 $R$ 正定，去掉正因子 $5/12$，以隐藏元 $16b>0$ 消元，余下
+
+$$
+\begin{pmatrix}8a&0&4a\\0&8a&4a\\4a&4a&4a+4b\end{pmatrix}.
+$$
+
+再以 $8aI_2$ 消元得 $4b>0$。因此正定方程的唯一性使 $R$ 确为中点。
+另一方面，任意固定 $J$ 的 Fisher 源式必须满足
+$Q_{XY}=Q_{XZ}=Q_{YZ}=1/p_O$，因为三对坐标交叉都只来自 $O$ 行。
+式（22.11）却有
+
+$$
+R_{XY}-R_{XZ}=\frac{5\sqrt3(\sqrt5-2)}6>0,
+$$
+
+违背源约束。两端 $L_i$ 不同，又由式（22.9）的内部等号条件给非零
+半正定边界缺口；不声称它沿所有可见方向严格。
+本反例只检验固定五态坐标中的 Fisher 来源族。
+任意正定锥的几何均值封闭，不代表该更小来源族封闭；
+二者均不自动提供物理场、仪器、量子相位或完整未来历史的实现。$\square$
+
+## 追加锚（本行以下为增补区）
