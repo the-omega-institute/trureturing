@@ -75,7 +75,7 @@ private lemma abs_sin_nat_mul_le (n : ℕ) (u : ℝ) : |sin (n * u)| ≤ (n : �
   have h := abs_iterate_derivative_T_real_le (n : ℤ) 1 (Real.abs_cos_le_one u)
   simp only [Function.iterate_one] at h
   rw [derivative_T_eval_one, T_derivative_eq_U] at h
-  simp only [Polynomial.eval_mul, Polynomial.eval_natCast, Polynomial.eval_intCast, Int.cast_natCast,
+  simp only [Polynomial.eval_mul, Polynomial.eval_natCast, Int.cast_natCast,
     abs_mul, abs_of_pos hn] at h
   have hu : |(U ℝ ((n : ℤ) - 1)).eval (cos u)| ≤ (n : ℝ) := by nlinarith [h]
   have hs : (U ℝ ((n : ℤ) - 1)).eval (cos u) * sin u = sin ((n : ℝ) * u) := by
