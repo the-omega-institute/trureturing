@@ -989,4 +989,78 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, 
 
 end NodeDepth
 
+namespace NodeDistinct
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Address
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ U => nodes U) (fun e => nomatch e)
+
+def bad : Realization signature :=
+  realize signature (fun _ _ _ => [[],[]]) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ U : Source, (R.readout () () U).Nodup
+
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  simpa [bad,realize] using h (.of true)
+
+def proof : Registration arena (type_of% (@nodes_nodup)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨nodes_nodup,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad,
+    fun j h => (h (Subsingleton.elim j i)).elim,rfl,bad_law⟩,fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨(),.of true,.mul (.of true) (.of true),?_⟩
+    simp [actual,realize,nodes]
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@nodes_nodup) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDistinct.unit
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDistinct.proof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨proof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ U => nodes U) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some Source
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end NodeDistinct
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
