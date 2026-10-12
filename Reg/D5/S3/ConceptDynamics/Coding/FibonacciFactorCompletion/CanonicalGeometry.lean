@@ -605,3 +605,103 @@ def endpoint_certificate_mono_registration :
 #print axioms endpoint_certificate_mono_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal48
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal49
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47.observationSignature
+
+abbrev actual : Realization observationSignature :=
+  Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47.actual
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => (-2 : ℝ)) (fun e => nomatch e)
+
+/-- Only the low endpoint in the high stem certificate is intervened on.
+The original budget and every other endpoint occurrence remain fixed. -/
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (s1 s2 : Guard) (P Q : List Label) (h : List Color)
+    (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
+    (U V : Bool → List Label) (W : Bool → List Color)
+    (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
+    (hVlen : ∀ i, (V i).length = L)
+    (hlegal : ∀ i, LegalWord s1 s1 (U i)) (hV : ∀ i, LegalWord s2 s2 (V i))
+    (hcolors : ∀ i, (U i).length = (W i).length),
+    let θ := familyEndpointBudget P Q h U V W L
+    0 ≤ θ ∧ (familyEndpointCosts P Q h U V W L).length = 2*h.length+4*L ∧
+    EndpointCertificate θ (r.readout () L U) (canonicalReturnHi U L) P h ∧
+    (∀ i, EndpointCertificate θ (canonicalReturnLo U L) (canonicalReturnHi U L) (U i) (W i)) ∧
+    EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) Q h ∧
+    (∀ i, EndpointCertificate θ (canonicalReturnLo V L) (canonicalReturnHi V L) (V i) (W i))
+
+theorem source_bridge : (type_of% @family_endpoint_certificates) ↔ sourceArena.Law actual :=
+  Iff.rfl
+
+theorem positive_law : sourceArena.Law actual := @family_endpoint_certificates
+
+/-- The original telescope permits an empty legal stem and a nonempty color list.
+The return words still have positive length and satisfy every original guard. -/
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  have cert := (h .G0 .G0 [] [] [(0 : Color)] rfl rfl
+    (fun _ => [Label.L0]) (fun _ => [Label.L0]) (fun _ => [(0 : Color)])
+    1 (by decide) (by intro i; rfl) (by intro i; rfl)
+    (fun _ => Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47.witness_returns_legal.1)
+    (fun _ => Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47.witness_returns_legal.1)
+    (by intro i; rfl)).2.2.1
+  have impossible := (cert 0 (by simp)).1.1.1
+  norm_num [rejected, realize, compose] at impossible
+
+theorem sensitivity : Sensitivity sourceArena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+
+def evidence : Registration sourceArena (type_of% @family_endpoint_certificates) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal47.actual_dependence
+
+def family_endpoint_certificates_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@family_endpoint_certificates)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal49.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal49.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
+    definition := none
+    coordinates := #[10]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms family_endpoint_certificates_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry.ExactOriginal49
