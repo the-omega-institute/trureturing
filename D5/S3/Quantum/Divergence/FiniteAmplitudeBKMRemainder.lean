@@ -708,10 +708,13 @@ private lemma normalized_norm_lt_one_of_posdef (A H : S)
     simpa only [Submodule.coe_sub, map_sub,
       CFC.conjSqrt_ringInverse_self A.val hA.isStrictlyPositive, zero_smul, add_zero, Z] using h
   have ep : cfc (fun x : ℝ => 1 + x) Z = 1 + Z := by
+    change cfc (fun x : ℝ => 1 + id x) Z = _
     rw [cfc_const_add 1 (id : ℝ → ℝ) Z continuousOn_id hZ, cfc_id ℝ Z hZ, map_one]
   have em : cfc (fun x : ℝ => 1 - x) Z = 1 - Z := by
+    change cfc (fun x : ℝ => 1 - id x) Z = _
     rw [cfc_sub (fun _ : ℝ => 1) (id : ℝ → ℝ) Z,
       cfc_const 1 Z hZ, cfc_id ℝ Z hZ, map_one]
+  change ‖Z‖ < 1
   rw [← cfc_id ℝ Z hZ]
   apply norm_cfc_lt zero_lt_one
   intro x hx
@@ -724,6 +727,7 @@ private lemma normalized_norm_lt_one_of_posdef (A H : S)
     rw [← em, cfc_map_spectrum (fun x : ℝ => 1 - x) Z hZ (by fun_prop)]
     exact mem_image_of_mem _ hx
   rw [Real.norm_eq_abs]
+  change |x| < 1
   exact abs_lt.mpr ⟨by linarith, by linarith⟩
 
 private lemma scalar_log_square_contraction (s z : ℝ)
@@ -744,7 +748,7 @@ private lemma scalar_log_square_contraction (s z : ℝ)
   rw [if_neg hr0, Real.sq_sqrt hz0] at h
   calc
     _ ≤ -Real.log (1 - z) / z * (s ^ 2 * z) := h
-    _ = _ := by field_simp [hz]; ring
+    _ = _ := by field_simp [hz]
 
 private lemma kernel_log_square_contraction (Z : M) (hZ : IsSelfAdjoint Z)
     (hZ1 : ‖Z‖ < 1) (s : ℝ) (hs : s ∈ Icc (0 : ℝ) 1) :
@@ -768,8 +772,7 @@ private lemma kernel_log_square_contraction (Z : M) (hZ : IsSelfAdjoint Z)
     (hZ.isHermitian.eigenvalues_mem_spectrum_real i) continuousOn_id hZ
   rw [cfc_id ℝ Z hZ, Real.norm_eq_abs] at hb
   have hk : hZ.isHermitian.eigenvalues i ^ 2 < 1 := by
-    have ha := hb.trans_lt hZ1
-    nlinarith [(abs_lt.mp ha).1, (abs_lt.mp ha).2]
+    exact (sq_lt_one_iff_abs_lt_one _).mpr (hb.trans_lt hZ1)
   simpa only [mul_pow] using scalar_log_square_contraction s
     (hZ.isHermitian.eigenvalues i ^ 2) hs (sq_nonneg _) hk
 
@@ -806,10 +809,15 @@ private lemma trace_entropy_continuous : Continuous entropy := by
       Real.continuous_mul_log.continuousOn
   have he (Y : S) : cfc (fun x : ℝ => x * Real.log x) Y.val =
       Y.val * CFC.log Y.val := by
-    rw [cfc_mul (id : ℝ → ℝ) Real.log Y.val continuousOn_id
-      (Y.val.finite_real_spectrum.continuousOn _), cfc_id ℝ Y.val Y.property]
-    rfl
-  simpa only [he] using (Tr).continuous.comp hc
+    calc
+      _ = cfc (id : ℝ → ℝ) Y.val * cfc Real.log Y.val :=
+        cfc_mul (id : ℝ → ℝ) Real.log Y.val continuousOn_id
+          (Y.val.finite_real_spectrum.continuousOn _)
+      _ = _ := congrArg (fun B : M => B * CFC.log Y.val) (cfc_id ℝ Y.val Y.property)
+  have ht := (Tr).continuous.comp hc
+  change Continuous (fun Y : S =>
+    (cfc (fun x : ℝ => x * Real.log x) Y.val).trace.re) at ht
+  simpa only [he] using ht
 
 private lemma positive_regularization (A : S) (hA : 0 ≤ A.val) (e : ℝ) (he : 0 < e) :
     (A.val + e • (1 : M)).PosDef := by
@@ -840,14 +848,23 @@ theorem symmetric_entropy_gap_square_contraction_psd (A H : S)
         positive_regularization (A - H) hm e he
     · exact hs
   have hc := trace_entropy_continuous (n := n)
+  have hpath (B : S) : Continuous (fun e : ℝ => entropy (A + e • I + B)) :=
+    hc.comp (by fun_prop)
+  have hmPath (B : S) : Continuous (fun e : ℝ => entropy (A + e • I - B)) :=
+    hc.comp (by fun_prop)
+  have hbase : Continuous (fun e : ℝ => entropy (A + e • I)) :=
+    hc.comp (by fun_prop)
   have hl : Continuous (fun e : ℝ =>
       entropy ((A + e • I) + s • H) / 2 + entropy ((A + e • I) - s • H) / 2 -
-        entropy (A + e • I)) := by fun_prop
+        entropy (A + e • I)) :=
+    (((hpath (s • H)).div_const 2).add ((hmPath (s • H)).div_const 2)).sub hbase
   have hr : Continuous (fun e : ℝ => s ^ 2 *
       (entropy ((A + e • I) + H) / 2 + entropy ((A + e • I) - H) / 2 -
-        entropy (A + e • I))) := by fun_prop
-  have hh := le_of_tendsto_of_tendsto ((hl.tendsto 0).mono_left inf_le_left)
-    ((hr.tendsto 0).mono_left inf_le_left) (show ∀ᶠ e in 𝓝[Ioi (0 : ℝ)] 0, _ from by
+        entropy (A + e • I))) :=
+    ((((hpath H).div_const 2).add ((hmPath H).div_const 2)).sub hbase).const_mul (s ^ 2)
+  have hh := le_of_tendsto_of_tendsto
+    ((hl.tendsto 0).mono_left (show 𝓝[>] (0 : ℝ) ≤ 𝓝 0 from inf_le_left))
+    ((hr.tendsto 0).mono_left inf_le_left) (show ∀ᶠ e in 𝓝[>] (0 : ℝ), _ from by
       filter_upwards [self_mem_nhdsWithin] with e he using hi e he)
   simpa only [zero_smul, add_zero] using hh
 
