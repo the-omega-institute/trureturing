@@ -101,20 +101,92 @@ noncomputable def representationProof : Registration arena.{u} (type_of% (@repre
 
 
 
+abbrev operatorSignature : Signature where
+  Params := Type u
+  State _ := type_of% (@relabel.{u})
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ E := type_of% (@relabel.{u} E)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+abbrev operatorActual : Realization operatorSignature.{u} :=
+  realize operatorSignature (fun _ E f => @f E) (fun e => nomatch e)
+
+abbrev operatorArena : Arena where
+  signature := operatorSignature.{u}
+  Law R := ∀ {E : Type u} [i : Fintype E] (N : Nat) (M : @Observer E i)
+    (positive : 0 < @Fintype.card E i) (r : E ≃ Fin (@Fintype.card E i))
+    (T : NativeTable N (@Fintype.card E i)) (initial : r M.e0 = ⟨0, positive⟩)
+    (table : tableObserver positive T =
+      @Realization.readout operatorSignature.{u} R () E (@relabel.{u})
+        i (@Fintype.card E i) M r),
+    @RepresentationContract E i N M positive r T
+
+theorem operatorBridge : (type_of% (@representation_contract.{u})) ↔
+    operatorArena.{u}.Law operatorActual.{u} := Iff.rfl
+
+theorem operatorActualLaw : operatorArena.{u}.Law operatorActual.{u} :=
+  @representation_contract.{u}
+
+def rejectedOperator : type_of% (@relabel.{u}) :=
+  fun {A} [j : Fintype A] {n} M r =>
+    { @relabel.{u} A j n M r with action := fun _ => .inr false }
+
+abbrev operatorRejected : Realization operatorSignature.{u} :=
+  realize operatorSignature (fun _ E _ => @rejectedOperator.{u} E)
+    (fun e => nomatch e)
+
+theorem operatorRejectedLaw : ¬ operatorArena.{u}.Law operatorRejected.{u} :=
+  rejected_law
+
+theorem operatorDependence : ObservationalDependence operatorSignature.{u} operatorActual.{u} := by
+  classical
+  intro i
+  let E := ULift.{u} Unit
+  let r := Fintype.equivFin E
+  refine ⟨E, @relabel.{u}, @rejectedOperator.{u}, ?_⟩
+  intro equal
+  have applied := congrArg (fun f => @f inferInstance (Fintype.card E) (halted true) r) equal
+  have actions := congrArg (fun M => M.action (r (ULift.up ()))) applied
+  change Sum.inr true = Sum.inr false at actions
+  cases actions
+
+theorem operatorSensitivity : Sensitivity operatorArena.{u} operatorActual.{u} :=
+  ⟨fun i => ⟨operatorRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, operatorRejectedLaw⟩,
+    fun i => nomatch i⟩
+
+noncomputable def operatorRepresentationProof :
+    Registration operatorArena.{u} (type_of% (@representation_contract.{u})) where
+  actual := operatorActual
+  bridge := operatorBridge
+  variation := ⟨operatorActualLaw, operatorRejected, operatorRejectedLaw⟩
+  sensitivity := operatorSensitivity
+  dependence := operatorDependence
+
+#print axioms operatorBridge
+#print axioms operatorActualLaw
+#print axioms operatorRejectedLaw
+#print axioms operatorDependence
+#print axioms operatorSensitivity
+#print axioms operatorRepresentationProof
+
 noncomputable def representation_contract_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverFiniteTable.representation_contract.{u}) (Realization arena.{u}.signature) Unit Unit where
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverFiniteTable.representation_contract.{u}) (Realization operatorArena.{u}.signature) Unit Unit where
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverFiniteTable.representation_contract
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverFiniteTable.representationProof
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverFiniteTable.operatorRepresentationProof
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨operatorArena⟩
+  objectArena := .source ⟨operatorArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨representationProof⟩
+  realization := .source operatorArena ⟨operatorRepresentationProof⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize arena.signature actual.readout actual.anchor)
+  readout := some (realize operatorArena.signature operatorActual.readout operatorActual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -122,8 +194,8 @@ noncomputable def representation_contract_registration : LeanInformationAudit.Co
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverFiniteTable
     definition := none
-    coordinates := #[0, 1, 3]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    coordinates := #[0]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg", "fn", "fn", "fn", "fn"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
