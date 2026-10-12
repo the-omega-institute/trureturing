@@ -222,7 +222,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 Evaluate the original strategy on the fixed coarse-history representative.
 
-**Definition 1.19 (Strategy-indexed observer).**
+**Theorem 1.19 (Exact coarse projection of the fixed section).**
+
+$$\forall g: CoarseHistory, \operatorname{kappaHist}\left(\operatorname{encodeHistory}\left(g\right)\right) = g$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.encode_projection` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original coarse history g, kappa_hist(encodeHistory(g)) equals g. The section preserves each literal address and chronological repetition, chooses raw branch for coarse none, and chooses the corresponding raw Boolean leaf for a Boolean label. This is a right inverse of coarse projection, not an identity on arbitrary raw histories: branch and absent remain distinct raw replies. The native counterfactual completion obstruction consumes this exact supplier to certify its route representative.
+
+**Definition 1.20 (Strategy-indexed observer).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategyObserver`
 
@@ -236,7 +248,7 @@ Instantiate the exact finite observer on all allowed terminal coarse prefixes.
 
 Strategy-indexed replay, exact terminal runs and admissibility assume a positive source bound and an original strategy policy that factors through kappa_hist. Sourcewise replay and run statements range over the allowed sources at that bound.
 
-**Theorem 1.20 (Strategy prefix cache replay).**
+**Theorem 1.21 (Strategy prefix cache replay).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_actual_prefix_replay`
 
@@ -248,7 +260,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 Actual prefixes of the strategy-indexed observer carry the original full coarse history and first-write raw cache.
 
-**Definition 1.21 (Coarse control projection).**
+**Definition 1.22 (Coarse control projection).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exactControl`
 
@@ -260,7 +272,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.e
 
 Forget cache lifts while retaining full logical coarse control or the sink.
 
-**Theorem 1.22 (All-history ghost safety).**
+**Theorem 1.23 (All-history ghost safety).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exact_all_history_factorization`
 
@@ -272,7 +284,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.e
 
 Equal coarse response histories have equal actions, including contradictory repeats and post-halt reports.
 
-**Theorem 1.23 (Exact terminal run).**
+**Theorem 1.24 (Exact terminal run).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_exact_run`
 
@@ -284,7 +296,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 The compiled observer realizes the original terminal trace and output bit.
 
-**Theorem 1.24 (Finite observer admissibility).**
+**Theorem 1.25 (Finite observer admissibility).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_admissible`
 
@@ -296,7 +308,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.s
 
 The strategy-indexed observer satisfies the original bounded finite observer contract.
 
-**Theorem 1.25 (Exact state bound).**
+**Theorem 1.26 (Exact state bound).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.strategy_state_card_bound`
 
@@ -317,6 +329,7 @@ The exact state count is one plus the sum of 2 to the number of distinct coarse-
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.ExactState`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.ReplayStep`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.coarseCacheUpdate`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.encode_projection`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exactAction`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exactAppendRow`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.exactControl`

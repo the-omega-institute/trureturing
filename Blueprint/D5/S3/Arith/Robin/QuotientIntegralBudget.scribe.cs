@@ -22,6 +22,29 @@ internal sealed class QuotientIntegralBudgetDocument : IScribeDocumentDefinition
                 + "|R(t/m)-R(t/(m+1))|*w(t). This absolute value is taken inside the integral. "
                 + "Put a2=C+|A|, a1=C+2*|A|*(1+log(2))+2*|D|+2*mu and a0=4*mu.")),
             Describe.Lean(
+                DescribeId.Create("right-closed-finite-prefix"),
+                DeclarationHandle.Create(Prefix + "prefix_as_finite_sum"),
+                H("The original prefix is a fixed finite sum with a right-closed cutoff"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary real coefficients k, 0<=y<=N with natural N, "
+                    + "arithmeticPrefix(k,y) equals the sum over i<N of k(i+1) when i+1<=y "
+                    + "and zero otherwise. This original supplier is exposed for reuse by the actual "
+                    + "von Mangoldt band composition; its statement and proof are unchanged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("half-open-prefix-difference"),
+                DeclarationHandle.Create(Prefix + "prefix_difference_finite"),
+                H("The original prefix difference selects exactly the directed cutoff atoms"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary k and 0<=c*y<=y<=N, the prefix at y minus the prefix at c*y "
+                    + "is the fixed finite sum with indicator c*y<i+1<=y. The lower atom is excluded "
+                    + "and the upper atom retained. The original proof is reused without duplication."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("original-absolute-block-budget"),
                 DeclarationHandle.Create(Prefix + "quotientIntegralProducer"),
                 H("The actual residual blocks are integrable with separate first and quadratic logarithmic budgets"),

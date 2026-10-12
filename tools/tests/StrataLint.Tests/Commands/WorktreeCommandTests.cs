@@ -53,6 +53,7 @@ public sealed partial class WorktreeCommandTests
         using var environment = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         MathlibProjectionFixture.Write(Path.Combine(repository.Path, ".lake"));
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         var lake = Path.Combine(environment.Path, "toolchain", "lake");
         Directory.CreateDirectory(Path.GetDirectoryName(lake)!);
         File.WriteAllText(lake, "fake lake\n");
@@ -357,7 +358,7 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Fact]
-    public void IgnoreWriteFailureRollsBackWorktreeAndBranch()
+    public void IgnoreWriteFailurePreservesWorktreeAndBranch()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -385,14 +386,14 @@ public sealed partial class WorktreeCommandTests
 
         Assert.Equal(2, exitCode);
         Assert.Contains("WORKTREE_FAILED", console.Error, StringComparison.Ordinal);
-        Assert.False(Directory.Exists(target));
+        Assert.True(Directory.Exists(target));
         var branchLookup = TestProcessRunner.Run(
             "git",
             ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
             repository.Path,
             BoundedProcessRunner.HangDetectionBudget,
             4096);
-        Assert.Equal(1, branchLookup.ExitCode);
+        Assert.Equal(0, branchLookup.ExitCode);
     }
 
     [Fact]
@@ -417,8 +418,8 @@ public sealed partial class WorktreeCommandTests
             new ProductionCliEnvironment(repository.Path),
             console);
 
-        Assert.Equal(2, exitCode);
-        Assert.Contains("path already exists", console.Error, StringComparison.Ordinal);
+        Assert.Equal(73, exitCode);
+        Assert.Contains("repository_identity", console.Error, StringComparison.Ordinal);
         Assert.True(Directory.Exists(target));
     }
 

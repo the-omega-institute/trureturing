@@ -1,0 +1,31 @@
+### 13.1 同一来源、同一风险与两个不同的边二次量
+
+本章保持§12.1的周期1与三个私有标签 $J=\{0,1,2\}$：$A=I_3$，$\pi=\tau$ 是严格正且归一化的概率行，$B$ 非负行随机并满足 $\pi_iB_{ij}=\pi_jB_{ji}$，$u_i,v_i\in[a,b]=[1/3,2/5]$。原来源仍为式（11.1）：第一笔实际 Read 之前只抽取一次均匀的 $K\in\{1,2,3\}$，条件于这个同一 K 的所有提种与载荷字母使用率 $r_K$，三个支持目标为 $a,b,3/8$。
+
+完整控制 $C_0$、所有付费相等提种对、两个接受种、标记树、选择器、裸字段及持有的 $B,Q^+,Z$ 记录、第三记录先写再锁存、许可、完成与唯一匹配 Stop/交付全部沿用约定2.1。风险仍遍历全部正概率有限第四段 p 与悬置历史，包含任意多次实际返回；不把域缩成第三锁存后的首个切口。未来载体仍为定义2.2，包含合法无限不完成结果；当前记录的转录仍用保持 TV 的 $I_c$。
+
+记 $X_{p,i}=Q_i$、$X_{\beta,i}=W_i$，其中两相完整律由同一原表的 $H=\operatorname{diag}(\mathbf1-u)B\operatorname{diag}(v)$、$g=\operatorname{diag}(\mathbf1-u)B(\mathbf1-v)$ 与式（3.3）生成。定义
+
+$$
+\begin{aligned}
+F_s(r)&=\sum_i\pi_i\operatorname{TV}(X_{s,i},P_{s,r}),\\
+\epsilon_s&=R_{\mathrm{conf},s}-\rho_s
+ =\max_{r\in\{a,b,3/8\}}F_s(r)-\rho_s,\\
+e&=\max\{\epsilon_p,\epsilon_\beta\},\\
+\rho_p&=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750}.
+\end{aligned}
+\tag{13.1}
+$$
+
+风险等式复用接口3.2与式（11.34）；TV 始终在每个完整配置律上先计算，再按实际配置行平均。对每相，端点三角不等式给出 $F_s(a)+F_s(b)\ge2\rho_s$，所以 $\epsilon_s\ge0$、$e\ge0$。
+
+保持式（12.37）的
+
+$$
+J_u=\frac12\sum_{i,j}\pi_iB_{ij}(u_i-u_j)^2.
+\tag{13.2}
+$$
+
+若 $X_0\sim\pi$、$X_1\mid X_0=i\sim B_i$，则 $J_u=\tfrac12\mathbb E[(u_{X_1}-u_{X_0})^2]$。这是一次实际无权 $\beta\alpha$ 返回的平稳平方变化量，使用 $BA=B$，不是合成返回核 H，也不是物理能量、作用量或操作价格。§12的 $J_v=J$、$T$ 和 $\delta_-$ 保持原定义；本章不将它们与 $J_u$ 等同。
+

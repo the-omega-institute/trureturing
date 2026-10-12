@@ -137,6 +137,13 @@ def prepare(root):
         inputs = selection.Selection(root)
         inputs.validate('lean-report')
         modules = inputs.modules()
+        scope_file = os.environ.get('STRATALINT_INSPECTOR_SCOPE_FILE')
+        if scope_file:
+            scope = public.read_json(Path(scope_file).read_bytes())
+            selected = {row['module']: row['source_path'] for row in scope['modules']}
+            if not selected or any(modules.get(name) != path for name, path in selected.items()):
+                raise ValueError('invalid scoped report membership')
+            modules = selected
     producer = os.environ.get('STRATALINT_LEAN_PRODUCER_DLL')
     if producer:
         if not Path(producer).is_absolute() or not Path(producer).is_file():
@@ -146,14 +153,21 @@ def prepare(root):
         command = ['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'),
             '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--']
     with phase('native-utility-input'):
-        result = subprocess.run([*command, 'lean-utility-input'],
-            cwd=root, stdout=subprocess.PIPE, check=True)
+        utility_input = os.environ.get('STRATALINT_INSPECTOR_UTILITY_INPUT') if scope_file else None
+        if utility_input:
+            utility_bytes = Path(utility_input).read_bytes()
+        else:
+            result = subprocess.run([*command, 'lean-utility-input'],
+                cwd=root, stdout=subprocess.PIPE, check=True)
+            utility_bytes = result.stdout
     with phase('native-input-files'):
-        utilities = public.read_json(result.stdout)
+        utilities = public.read_json(utility_bytes)
         if not isinstance(utilities, list):
             raise ValueError('utility input must be an array')
         by_path = {}
         for utility in utilities:
+            if scope_file and utility.get('modulePath') not in modules.values():
+                continue
             materials.require_keys(utility, UTILITY_FIELDS, 'authoritative utility input')
             if any(not isinstance(value, str) or not value for value in utility.values()):
                 raise ValueError('incomplete utility input')
@@ -175,7 +189,8 @@ def prepare(root):
     with phase('native-input-coordinates'):
         write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
             'modules': sorted(modules),
-            'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
+            'configs': inputs.expand('config_inputs'),
+            'coordinates': None if scope_file else public.coordinates(root)}))
 
 
 @lru_cache(maxsize=None)
@@ -407,10 +422,12 @@ def aggregate_module(name, artifact, report_stream, material_spool, material_off
     return origin, declarations
 
 
-def aggregate(root, output, *artifacts):
+def aggregate(root, output, *artifacts, config=None, schema=materials.REPORT_SCHEMA,
+              write_sidecars=public.write_sidecars):
     """Concatenate module artifacts that were validated when produced."""
     root, output = Path(root), Path(output)
-    config = public.read_json((state(root) / 'inputs.json').read_bytes())
+    if config is None:
+        config = public.read_json((state(root) / 'inputs.json').read_bytes())
     if len(artifacts) != len(config['modules']):
         raise ValueError('native aggregate membership mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -429,7 +446,7 @@ def aggregate(root, output, *artifacts):
             origin, count = aggregate_module(name, artifact, report_stream, material_spool, material_offsets)
             origins[name] = origin
             declarations += count
-        report_stream.write(b'], "schema": ' + materials.canonical_json(materials.REPORT_SCHEMA)[:-1] + b'}\n')
+        report_stream.write(b'], "schema": ' + materials.canonical_json(schema)[:-1] + b'}\n')
         report_stream.close()
         with zipfile.ZipFile(public.member(report, '.materials.zip'), 'w', compression=zipfile.ZIP_DEFLATED,
                              compresslevel=6, allowZip64=True) as archive:
@@ -444,7 +461,7 @@ def aggregate(root, output, *artifacts):
                 if len(data) != size:
                     raise ValueError('truncated private material spool')
                 append_compressed(archive, info, data)
-        public.write_sidecars(report, config['coordinates'], origins)
+        write_sidecars(report, config['coordinates'], origins)
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)

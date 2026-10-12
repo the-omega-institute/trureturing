@@ -36,6 +36,10 @@ public sealed partial class CleanLanesCommandTests
             disposeWorktrees = worktrees.Dispose;
             disposeTemp = temp.Dispose;
             CopyDirectory(TemplateRepositoryPath, repository.Path);
+            var remote = Path.Combine(temp.Path, "remote.git");
+            Git(temp.Path, "init", "--bare", remote);
+            Git(repository.Path, "remote", "add", "origin", remote);
+            Git(repository.Path, "push", "origin", "dev");
             now = new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration);
         }
 
@@ -49,7 +53,13 @@ public sealed partial class CleanLanesCommandTests
                 Path.Combine(path, "README.md"),
                 "# clean lanes fixture\n",
                 new UTF8Encoding(false));
-            Git(path, "add", "README.md");
+            foreach (var name in new[] { "CLAUDE.md", "AGENTS.md", "Trureturing.lean", "lean-toolchain", "tools/scripts/local-harness-gate.sh" })
+            {
+                var file = Path.Combine(path, name);
+                Directory.CreateDirectory(Path.GetDirectoryName(file)!);
+                File.WriteAllText(file, "fixture\n", new UTF8Encoding(false));
+            }
+            Git(path, "add", ".");
             // The template is copied immediately; maintenance must not keep modifying .git.
             Git(path, "-c", "maintenance.auto=false", "commit", "-m", "fixture baseline");
             return path;
@@ -188,8 +198,11 @@ public sealed partial class CleanLanesCommandTests
                 new UTF8Encoding(false));
         }
 
-        internal void LockLane(string path, string reason = "fixture session") =>
+        internal void LockLane(string path, string reason = "fixture session")
+        {
             Git(repository.Path, "worktree", "lock", "--reason", reason, path);
+            File.SetLastWriteTimeUtc(Path.Combine(WorktreeGitDirectory(path), "locked"), new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+        }
 
         internal string WorktreeGitDirectory(string path) =>
             Git(path, "rev-parse", "--absolute-git-dir").Trim();
@@ -232,13 +245,13 @@ public sealed partial class CleanLanesCommandTests
         internal string AddNestedWorktree(string parent)
         {
             var path = Path.Combine(parent, "nested");
-            Git(repository.Path, "worktree", "add", "--detach", path, "dev");
+            Git(repository.Path, "worktree", "add", "-b", "nested-recovery", path, "dev");
             return Git(path, "rev-parse", "--show-toplevel").Trim();
         }
 
         internal string AddForeignTempDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(path);
             Git(path, "init", "--initial-branch=dev");
             return path;
@@ -246,23 +259,23 @@ public sealed partial class CleanLanesCommandTests
 
         internal string AddAttachedTempDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Git(repository.Path, "worktree", "add", "-b", "scratch/attached", path, "dev");
             return path;
         }
 
         internal string AddOrphanTempDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(path);
             File.WriteAllText(Path.Combine(path, ".git"),
-                $"gitdir: {Path.Combine(repository.Path, ".git", "worktrees", "unregistered")}\n");
+                $"gitdir: {Path.Combine(RepositoryRoot, ".git", "worktrees", "unregistered")}\n");
             return path;
         }
 
         internal string AddGitlessJudgeSnapshot(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(Path.Combine(path, "D5"));
             Directory.CreateDirectory(Path.Combine(path, "tools"));
             Directory.CreateDirectory(Path.Combine(path, "tools", "scripts"));
@@ -279,7 +292,7 @@ public sealed partial class CleanLanesCommandTests
 
         internal string AddReportDirectory(string name)
         {
-            var path = Path.Combine(temp.Path, name);
+            var path = Path.Combine(Path.GetDirectoryName(RepositoryRoot)!, Path.GetFileName(temp.Path), name);
             Directory.CreateDirectory(path);
             File.WriteAllText(Path.Combine(path, "candidate.json"), "{}\n", new UTF8Encoding(false));
             return path;
@@ -394,6 +407,7 @@ public sealed partial class CleanLanesCommandTests
             using var activity = new TemporaryDirectory(TestScratchRoot.Current);
             var activityFile = Path.Combine(activity.Path, "activity.json");
             File.WriteAllText(activityFile, System.Text.Json.JsonSerializer.Serialize(new[] { activePath }));
+            Git(repository.Path, "push", "origin", "dev");
             var allArguments = new List<string> { "--base", "dev", "--active-paths-file", activityFile };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
@@ -408,10 +422,11 @@ public sealed partial class CleanLanesCommandTests
             IWorktreeProcessRunner runner,
             params string[] arguments)
         {
+            Git(repository.Path, "push", "origin", "dev");
             var allArguments = new List<string> { "--base", "dev" };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(
-                repository.Path,
+                RepositoryRoot,
                 allArguments,
                 runner,
                 [temp.Path],
@@ -434,6 +449,7 @@ public sealed partial class CleanLanesCommandTests
             IReadOnlyList<string> arguments,
             string baseRevision = "dev")
         {
+            Git(repository.Path, "push", "origin", "dev");
             var allArguments = new List<string> { "--base", baseRevision };
             allArguments.AddRange(arguments);
             return CleanLanesCommand.Run(

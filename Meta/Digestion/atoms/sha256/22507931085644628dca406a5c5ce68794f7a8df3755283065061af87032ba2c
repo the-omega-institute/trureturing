@@ -1,0 +1,23 @@
+**数学引文 1.2（内禀 seam 与所选截面）。** 使用[《局部源分裂与读出几何》数学引文 2.1–2.2、约定 2.3、定理 3.3–3.4 及 4.2–4.3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)的以下前提。固定 $b=(X,Z,Y)$ 的概率纤维非空当且仅当
+
+$$
+Z\ge0,\qquad 0\le X,Y\le1-Z.
+$$
+
+此时令 $l_b=\max(0,X+Z+Y-1)$、$u_b=\min(X,Y)$，则
+
+$$
+\mathcal F_b=\{p_\kappa:l_b\le\kappa\le u_b\},\qquad
+p_\kappa=(1-X-Z-Y+\kappa,X-\kappa,Z,Y-\kappa,\kappa).
+$$
+
+有 $p_\kappa-p_{\kappa'}=(\kappa-\kappa')\mathbf d$ 及 $\ker(A|_T)=\mathbb R\mathbf d$；整个 $H$ 上的核则为 $\operatorname{span}\{\mathbf e_0,\mathbf d\}$。取明确截面
+
+$$
+L(\dot X,\dot Z,\dot Y)=(-\dot X-\dot Z-\dot Y,\dot X,\dot Z,\dot Y,0),
+$$
+
+便有 $AL=I$ 及 $v=L(Av)+v_{13}\mathbf d$。若 $L'=L+\mathbf d\ell_0$，其中 $\ell_0$ 为线性泛函，则相对于 $L'$ 的隐藏系数为 $v_{13}-\ell_0(Av)$。这不改变实际联合坐标导数 $\dot p_{13}$。内禀对象是核以及商映射；上述直和系数相对于截面定义。
+
+在 $p$ 的零坐标上，单侧可行导数须非负，双侧可微路径的导数须为零。在线段相对内点，$a\mathbf d$ 的两个符号均可行；在端点须保持参数位于 $[l_b,u_b]$。单点纤维没有非零纤维内导数。代数截面的分量不自动满足这些概率条件。
+

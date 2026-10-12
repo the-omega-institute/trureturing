@@ -317,7 +317,8 @@ def _validate_row(row, archive, available, verified_materials, identities):
     return set(references)
 
 
-def validated_rows(report, archive_path, verified_materials=None, *, identities=True):
+def validated_rows(report, archive_path, verified_materials=None, *, identities=True,
+                   schema=materials.REPORT_SCHEMA):
     """Validate each module and release its certificate and reference map on advance."""
     previous = None
     paths, used = set(), set()
@@ -326,7 +327,7 @@ def validated_rows(report, archive_path, verified_materials=None, *, identities=
         if len(names) != len(set(names)):
             raise ValueError('duplicate, missing, or unreferenced material')
         available = set(names)
-        for row in report_rows(report, materials.REPORT_SCHEMA, canonical=True):
+        for row in report_rows(report, schema, canonical=True):
             name, path = row.get('module'), row.get('source_path')
             if (not isinstance(name, str) or not isinstance(path, str)
                     or previous is not None and name <= previous or path in paths):
@@ -494,7 +495,7 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
 
 
 def publish(report, destination, expected, repository=None, *, mode=None, expected_hashes=None,
-            validate=True):
+            validate=True, validator=None):
     """Stage, validate and atomically publish a bundle.
 
     validate=False is only for bundle bytes whose acceptance is already
@@ -518,7 +519,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, expect
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
         if expected_hashes is not None and accepted != expected_hashes:
             raise ValueError('publication snapshot differs from sealed bundle')
-        validate_bundle(staged, expected, repository, check_rows=validate)
+        (validator or validate_bundle)(staged, expected, repository, check_rows=validate)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
 

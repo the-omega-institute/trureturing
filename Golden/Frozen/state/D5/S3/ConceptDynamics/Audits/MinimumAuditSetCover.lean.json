@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6cc088809d83a7a6334b9dd62eb828ff42659e9d1b6c0f634cc55685fc301cfb"}
+{"statement_id":"sha256:6cc088809d83a7a6334b9dd62eb828ff42659e9d1b6c0f634cc55685fc301cfb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),6:Audits),20:MinimumAuditSetCover),30:minimum_audit_set_is_set_cover)","kind":"theorem"}]}

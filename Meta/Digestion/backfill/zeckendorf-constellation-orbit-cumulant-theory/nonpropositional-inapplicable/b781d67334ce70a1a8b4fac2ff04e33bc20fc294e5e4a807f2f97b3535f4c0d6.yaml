@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b781d67334ce70a1a8b4fac2ff04e33bc20fc294e5e4a807f2f97b3535f4c0d6
+  normalized_sha256: sha256:b781d67334ce70a1a8b4fac2ff04e33bc20fc294e5e4a807f2f97b3535f4c0d6
+cas_ref: sha256:b781d67334ce70a1a8b4fac2ff04e33bc20fc294e5e4a807f2f97b3535f4c0d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure upstream closure; 仓内无 GID (no available frozen project GID). Mathlib pin db584cd6d46c92f209a44c0f1c829460d327499d supplies every proposition of section 123 with the uniform-residue log-mgf K from section 122. For all prime p, k,d with d>=2, injective r:Fin k->ZMod p and injective b:Fin d->Fin k, instantiate iteratedFDeriv_comp with outer Real.log, inner g(u)=1+(1/p)*sum_j(exp(-u_j)-1), basepoint 0 and directions Pi.single (b t) 1. Here g(0)=1 and Real.contDiffAt_log plus standard ContDiff operations discharge smoothness. ContinuousLinearMap.iteratedFDeriv_comp_right, iteratedFDeriv_apply_eq_iteratedDeriv_mul_prod, Real.iter_deriv_exp, iteratedFDeriv_fun_sum_apply, fun_iteratedFDeriv_sub_apply and iteratedFDeriv_const_smul_apply' evaluate inner derivatives. Injectivity makes every block of at least two directions zero by Finset.prod_eq_zero. OrderedFinpartition.equivSigma, Fintype.card_congr, Fintype.card_sigma and StrictMono.eq_id identify the all-singleton partition as OrderedFinpartition.atomic; ContinuousMultilinearMap.map_coord_zero and Finset.sum_eq_single remove all other terms. hasFPowerSeriesAt_log_one and HasFPowerSeriesOnBall.factorial_smul supply the remaining scalar coefficient; Nat.factorial_succ, mul_pow and field normalization give -(d-1)!/p^d. fun_iteratedFDeriv_add_apply and iteratedFDeriv_succ_const remove the linear sum in K; ZMod.card supplies the denominator p. Nat.factorial_pos, Nat.Prime.pos, pow_pos and div_neg_of_neg_of_pos imply strict negativity for every allowed d. Substitution d=2,3,4,5 and factorial normalization give -1/p^2,-2/p^3,-6/p^4,-24/p^5. The connected-cumulant and mutual-exclusion descriptions refer to these same mixed log-mgf derivatives, not to an additional jointCumulant API. No new Lean declaration or coverage GID is introduced.
+    previous_atom_id: 9393e69edc24046a955de08fefd895ca11fa8a8488ed545bb17b23c714222e01
+    next_atom_id: c64f3eb02900aa3c24d8afe1442b9a1edd431e8aa0cb751d172d203225f9739b

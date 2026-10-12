@@ -81,9 +81,18 @@ public sealed record LeanFileReport(
 
 public sealed class LeanAxiomReport
 {
-    private LeanAxiomReport(ImmutableDictionary<RepoPath, LeanFileReport> files) => Files = files;
+    private LeanAxiomReport(ImmutableDictionary<RepoPath, LeanFileReport> files, bool isScoped)
+    {
+        Files = files;
+        IsScoped = isScoped;
+    }
 
     public ImmutableDictionary<RepoPath, LeanFileReport> Files { get; }
+
+    // Scoped reports are accepted only by consumers that supplied an explicit
+    // target scope.  The marker is set by the strict artifact reader, never by
+    // callers constructing an in-memory full report for tests.
+    internal bool IsScoped { get; }
 
     public static LeanAxiomReport Create(IReadOnlyDictionary<string, LeanFileReport> reports)
     {
@@ -97,7 +106,13 @@ public sealed class LeanAxiomReport
             }
         }
 
-        return new LeanAxiomReport(builder.ToImmutable());
+        return new LeanAxiomReport(builder.ToImmutable(), isScoped: false);
+    }
+
+    internal static LeanAxiomReport CreateScoped(IReadOnlyDictionary<string, LeanFileReport> reports)
+    {
+        var report = Create(reports);
+        return new LeanAxiomReport(report.Files, isScoped: true);
     }
 }
 
@@ -134,11 +149,20 @@ public static class LeanClosureValidator
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
-        foreach (var (path, file) in snapshot.Files)
+        var paths = report.IsScoped
+            ? report.Files.Keys.Select(path => (Path: path, File: snapshot.Files.TryGetValue(path, out var source) ? source : null))
+            : snapshot.Files.Select(static item => (Path: item.Key, File: (RepositoryFile?)item.Value));
+        foreach (var (path, file) in paths)
         {
             if (!IsReportLean(path.Value))
             {
                 continue;
+            }
+
+            if (file is null)
+            {
+                return new LeanValidationOutcome.InfrastructureFailure(
+                    $"Lean environment report source is missing for {path.Value}.");
             }
 
             if (!report.Files.TryGetValue(path, out var fileReport))

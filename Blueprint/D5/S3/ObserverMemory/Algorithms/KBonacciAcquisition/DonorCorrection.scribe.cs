@@ -307,6 +307,18 @@ internal sealed class DonorCorrectionDocument : IScribeDocumentDefinition
                             + "separation, construction or safety hypothesis is left in the statement.")),
                         Paragraph(Text("This result is the full same-table upper price bound. "
                             + "It does not assert a sharp lower gap, supremum equality, or "
-                            + "the separate attainment claim in section 31."))), DescribeRole.Theorem))));
+                            + "the separate attainment claim in section 31."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("calendar"),
+                DeclarationHandle.Create(Owner + "calendar"), H("The near-critical literal calendar"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every m>=5 and all natural h, eps and i, in ZMod(2m-1) the vertex ((2h+eps)m+i) equals h+eps*m+i. The identity follows from 2m=1 modulo 2m-1. It supplies physical window positions, rather than acquired observations."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("script-global-preset"),
+                DeclarationHandle.Create(Owner + "script_global_preset"), H("A fixed original script supplies one common preset"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any label universe Y, k>=2, m<k, either original alphabet, immutable target f, fixed finite list words of m-bit literals and decoder decode(saved scalar,own archive), assume the scriptArchive at every scalar, phase and legal inherited tail decodes to f of that INITIAL record. Then OriginalPresetFeasible holds at words.length. Every actual history is included. Initial bottom returns f(bottom) freely; live sources use one literal stream extending words by zero words, stop at the final acquired endpoint and pay the full script length. The actual archive and execution follow the existing original_final_script and native paid-trace equivalence."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("row-readings-index"),
+                DeclarationHandle.Create(Owner + "row_readings_index"), H("A scheduled row within the own reading sequence"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For all natural k,m,t, any finite list of charge rows and phase j, entry t of rowReadings(k,m,rows,j) is obtained by mapping rows[t] to the optional scalar windowCharge(k,m,row,j-t*m). The index uses the chronological paid position. The formula describes a fixed physical reading sequence; it grants no endpoint after a source has stopped."))), DescribeRole.Theorem))));
     }
 }

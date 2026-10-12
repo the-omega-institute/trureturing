@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
 import Reg.Support.DependentFamily
+import Reg.Support.FibonacciAtomic.ActualPureAcquisitionCompiler
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -16,190 +17,269 @@ open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
 
-abbrev Budget := {N : Nat // 1 ≤ N}
+noncomputable def pureState_card_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pureState_card) (Realization countArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pureState_card
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.countProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨countArena⟩
+  objectArena := .source ⟨countArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source countArena ⟨countProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize countArena.signature countActual.readout countActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-abbrev countSignature : Signature where
-  Params := Unit
-  State _ := Nat
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Nat
-  Anchor := Empty
-  finiteAnchor := inferInstance
+#print axioms pureState_card_registration
 
-noncomputable def countActual : Realization countSignature :=
-  realize countSignature (fun _ _ N => Fintype.card (PureState N)) (fun e => nomatch e)
+noncomputable def trace_addresses_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.trace_addresses) (Realization traceArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.trace_addresses
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.traceProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨traceArena⟩
+  objectArena := .source ⟨traceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source traceArena ⟨traceProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize traceArena.signature traceActual.readout traceActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[1]
+    readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-abbrev countArena : Arena where
-  signature := countSignature
-  Law R := ∀ N, R.readout () () N = nominalCard N
+#print axioms trace_addresses_registration
 
-abbrev traceSignature : Signature where
-  Params := Address
-  State _ := Source
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := List Address
-  Anchor := Empty
-  finiteAnchor := inferInstance
+noncomputable def pure_all_history_factorization_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_all_history_factorization) (Realization quotientArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_all_history_factorization
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.quotientProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨quotientArena⟩
+  objectArena := .source ⟨quotientArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source quotientArena ⟨quotientProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize quotientArena.signature quotientActual.readout quotientActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-def traceActual : Realization traceSignature :=
-  realize traceSignature (fun _ u U => (acquisitionTrace u U).map Sigma.fst)
-    (fun e => nomatch e)
+#print axioms pure_all_history_factorization_registration
 
-abbrev traceArena : Arena where
-  signature := traceSignature
-  Law R := ∀ (U : Source) (u : Address), R.readout () u U = (nodes U).map (u ++ ·)
+noncomputable def pure_acquisition_run_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_acquisition_run) (Realization runArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_acquisition_run
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.runProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨runArena⟩
+  objectArena := .source ⟨runArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source runArena ⟨runProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize runArena.signature runActual.readout runActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "fn", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-abbrev controlSignature : Signature where
-  Params := Budget
-  State _ := RawHistory
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Sum Address Bool
-  Anchor := Empty
-  finiteAnchor := inferInstance
+#print axioms pure_acquisition_run_registration
 
-noncomputable def controlActual : Realization controlSignature :=
-  realize controlSignature (fun _ p h => historyAction (pureObserver p.val p.property) h)
-    (fun e => nomatch e)
-
-abbrev controlArena : Arena where
-  signature := controlSignature
-  Law R := ∀ (N : Nat) (positive : 1 ≤ N),
-    Function.FactorsThrough (R.readout () ⟨N, positive⟩) kappa_hist
-
-abbrev runSignature : Signature where
-  Params := Unit
-  State _ := Source
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := RawHistory
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def runActual : Realization runSignature :=
-  realize runSignature (fun _ _ U => acquisitionTrace [] U) (fun e => nomatch e)
-
-abbrev runArena : Arena where
+private abbrev cacheTraceArena : Arena where
   signature := runSignature
   Law R := ∀ (N : Nat) (positive : 1 ≤ N) (U : Source), Allowed N U →
-    ∃ f, Run (pureObserver N positive) U (pureObserver N positive).e0
-      (R.readout () () U) f (finiteDecision U)
-
-abbrev cacheSignature : Signature where
-  Params := Budget
-  State p := PureState p.val
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := RawHistory
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-noncomputable def cacheActual : Realization cacheSignature :=
-  realize cacheSignature (fun _ p e => (pureObserver p.val p.property).decoder e)
-    (fun e => nomatch e)
-
-abbrev cacheArena : Arena where
-  signature := cacheSignature
-  Law R := ∀ (N : Nat) (positive : 1 ≤ N) (U : Source), Allowed N U →
     ∀ {e : PureState N} {h : RawHistory}, ActualPrefix (pureObserver N positive) U e h →
-      h.IsPrefix (acquisitionTrace [] U) ∧ R.readout () ⟨N, positive⟩ e = h ∧ CacheTruth h U
+      h.IsPrefix (R.readout () () U) ∧ (pureObserver N positive).decoder e = h ∧ CacheTruth h U
 
-abbrev observerSignature : Signature where
-  Params := Budget
-  State _ := Unit
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ p := Observer (PureState p.val)
-  Anchor := Empty
-  finiteAnchor := inferInstance
+private theorem cacheTrace_rejected : ¬ cacheTraceArena.Law runRejected := by
+  intro h
+  obtain ⟨f, run⟩ := pure_acquisition_run 1 (by omega) (.of true) (by exact Nat.le_refl 1)
+  have pref := (run_from_actualPrefix _ _ run ActualPrefix.initial).1
+  simp only [List.nil_append] at pref
+  have bad := (h 1 (by omega) (.of true) (by exact Nat.le_refl 1) pref).1
+  change (acquisitionTrace [] (.of true)).IsPrefix [] at bad
+  have empty := List.eq_nil_of_prefix_nil bad
+  simp [acquisitionTrace] at empty
 
-noncomputable def observerActual : Realization observerSignature :=
-  realize observerSignature (fun _ p _ => pureObserver p.val p.property)
-    (fun e => nomatch e)
+private def cacheTraceProof : Registration cacheTraceArena (type_of% (@pure_actual_prefix_cache)) where
+  actual := runActual
+  bridge := Iff.rfl
+  variation := ⟨pure_actual_prefix_cache, runRejected, cacheTrace_rejected⟩
+  sensitivity := ⟨fun i => ⟨runRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, cacheTrace_rejected⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨(), .of true, .of false, ?_⟩
+    intro bad
+    cases bad
 
-abbrev admissibilityArena : Arena where
-  signature := observerSignature
-  Law R := ∀ (N : Nat) (positive : 1 ≤ N), Admissible N (R.readout () ⟨N, positive⟩ ())
+#print axioms cacheTraceProof
+#print axioms _root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_actual_prefix_cache
 
-abbrev feeSignature : Signature where
-  Params := Budget × (Address → ℝ)
-  State _ := Source
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+noncomputable def pure_actual_prefix_cache_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_actual_prefix_cache) (Realization cacheTraceArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_actual_prefix_cache
+  realizationName := ``cacheTraceProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨cacheTraceArena⟩
+  objectArena := .source ⟨cacheTraceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source cacheTraceArena ⟨cacheTraceProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize cacheTraceArena.signature runActual.readout runActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-noncomputable def feeActual : Realization feeSignature :=
-  realize feeSignature (fun _ p U => Fee (pureObserver p.1.val p.1.property) p.2 U)
-    (fun e => nomatch e)
+#print axioms pure_actual_prefix_cache_registration
 
-abbrev feeArena : Arena where
-  signature := feeSignature
-  Law R := ∀ (N : Nat) (positive : 1 ≤ N) (tau : Address → ℝ) (U : Source),
-    Allowed N U → R.readout () (⟨N, positive⟩, tau) U = ∑ q ∈ (nodes U).toFinset, tau q
+noncomputable def pure_admissible_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_admissible) (Realization admissibleArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_admissible
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.admissibleProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨admissibleArena⟩
+  objectArena := .source ⟨admissibleArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source admissibleArena ⟨admissibleProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize admissibleArena.signature admissibleActual.readout admissibleActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[0]
+    readouts := #[{ path := #["body", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-abbrev priceSignature : Signature where
-  Params := Budget × (Address → ℝ)
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
+#print axioms pure_admissible_registration
 
-noncomputable def priceActual : Realization priceSignature :=
-  realize priceSignature (fun _ p c => J_N p.1.val (pureObserver p.1.val p.1.property) p.2 c)
-    (fun e => nomatch e)
+noncomputable def pure_node_fee_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_node_fee) (Realization nodeArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_node_fee
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.nodeProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨nodeArena⟩
+  objectArena := .source ⟨nodeArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source nodeArena ⟨nodeProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize nodeArena.signature nodeActual.readout nodeActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[2]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-abbrev priceArena : Arena where
-  signature := priceSignature
-  Law R := ∀ (N : Nat) (positive : 1 ≤ N) (tau : Address → ℝ) (c : ℝ),
-    R.readout () (⟨N, positive⟩, tau) c = c * (nominalCard N : ℝ) + nodeMax N positive tau ∧
-    ∃ U : Source, Allowed N U ∧ nodeMax N positive tau = ∑ q ∈ (nodes U).toFinset, tau q
+#print axioms pure_node_fee_registration
 
-theorem count_bridge : (type_of% (@pureState_card)) ↔ countArena.Law countActual := Iff.rfl
-theorem trace_bridge : (type_of% (@trace_addresses)) ↔ traceArena.Law traceActual := Iff.rfl
-theorem control_bridge : (type_of% (@pure_all_history_factorization)) ↔ controlArena.Law controlActual := Iff.rfl
-theorem run_bridge : (type_of% (@pure_acquisition_run)) ↔ runArena.Law runActual := Iff.rfl
-theorem cache_bridge : (type_of% (@pure_actual_prefix_cache)) ↔ cacheArena.Law cacheActual := Iff.rfl
-theorem admissibility_bridge : (type_of% (@pure_admissible)) ↔ admissibilityArena.Law observerActual := Iff.rfl
-theorem fee_bridge : (type_of% (@pure_node_fee)) ↔ feeArena.Law feeActual := Iff.rfl
-theorem price_bridge : (type_of% (@pure_joint_price)) ↔ priceArena.Law priceActual := Iff.rfl
+noncomputable def pure_joint_price_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_joint_price) (Realization nominalPriceArena.signature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.pure_joint_price
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.nominalPriceProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨nominalPriceArena⟩
+  objectArena := .source ⟨nominalPriceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source nominalPriceArena ⟨nominalPriceProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize nominalPriceArena.signature nominalPriceActual.readout nominalPriceActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[0]
+    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
-theorem count_actual_law : countArena.Law countActual := pureState_card
-theorem trace_actual_law : traceArena.Law traceActual := trace_addresses
-theorem control_actual_law : controlArena.Law controlActual := pure_all_history_factorization
-theorem run_actual_law : runArena.Law runActual := pure_acquisition_run
-theorem cache_actual_law : cacheArena.Law cacheActual := pure_actual_prefix_cache
-theorem admissibility_actual_law : admissibilityArena.Law observerActual := pure_admissible
-theorem fee_actual_law : feeArena.Law feeActual := pure_node_fee
-theorem price_actual_law : priceArena.Law priceActual := pure_joint_price
-
-theorem observer_no_dependence : ¬ ObservationalDependence observerSignature observerActual := by
-  rintro h
-  obtain ⟨p, x, y, different⟩ := h ()
-  exact different (congrArg (observerActual.readout () p) (Subsingleton.elim x y))
-
-#print axioms count_bridge
-#print axioms trace_bridge
-#print axioms control_bridge
-#print axioms run_bridge
-#print axioms cache_bridge
-#print axioms admissibility_bridge
-#print axioms fee_bridge
-#print axioms price_bridge
-#print axioms observer_no_dependence
+#print axioms pure_joint_price_registration
 
 namespace NodeDepth
 
@@ -297,5 +377,79 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_, 
 #print axioms registration
 
 end NodeDepth
+
+namespace NodeDistinct
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Address
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ U => nodes U) (fun e => nomatch e)
+
+def bad : Realization signature :=
+  realize signature (fun _ _ _ => [[],[]]) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ U : Source, (R.readout () () U).Nodup
+
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  simpa [bad,realize] using h (.of true)
+
+def proof : Registration arena (type_of% (@nodes_nodup)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨nodes_nodup,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad,
+    fun j h => (h (Subsingleton.elim j i)).elim,rfl,bad_law⟩,fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨(),.of true,.mul (.of true) (.of true),?_⟩
+    simp [actual,realize,nodes]
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@nodes_nodup) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDistinct.unit
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler.NodeDistinct.proof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨proof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ U => nodes U) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some Source
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end NodeDistinct
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualPureAcquisitionCompiler

@@ -1,0 +1,21 @@
+**推论 12.4（完整端点风险误差）。** 在定理12.1的全部假设下，令 $\epsilon_p,\epsilon_\beta\ge0$。若对两个 $r\in\{a,b\}$ 均有
+
+$$
+\sum_i\pi_i\operatorname{TV}(Q_i,P_{p,r})\le\rho_p+\epsilon_p,
+\qquad
+\sum_i\pi_i\operatorname{TV}(W_i,P_{\beta,r})\le\rho_\beta+\epsilon_\beta,
+\tag{12.25}
+$$
+
+则
+
+$$
+L\delta_-+\epsilon_p+k\epsilon_\beta\ge r_0T+\gamma J.
+\tag{12.26}
+$$
+
+若在同一条件下还有推论12.3的内部带假设，则右边可下界为
+$r_0\varepsilon(1/15-\varepsilon)+\gamma J$。
+
+证明：完整 TV 支配事件差。用两个端点分别夹住式（12.1）的加权事件质量，得到 $|P-M_p|\le\epsilon_p$、$|S-M_\beta|\le\epsilon_\beta$，即 $P-kS-C\ge-\epsilon_p-k\epsilon_\beta$。与式（12.3）合并即可。本推论不预设精确盒；式（12.25）是完整配置风险条件，不能换成短词矩或先混合律再算 TV。$\square$
+

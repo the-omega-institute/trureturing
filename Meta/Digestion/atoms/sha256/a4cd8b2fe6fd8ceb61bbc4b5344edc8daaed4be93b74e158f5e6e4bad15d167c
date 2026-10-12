@@ -1,0 +1,7 @@
+**定理 5.2（切换图到静态隐藏空间的比较）。** 对每个 $n\ge0$，有 $\operatorname{im}B_n=T_n$，并有实向量空间短正合列
+
+$$
+0\longrightarrow\ker B_n\longrightarrow\ker(A_nB_n)
+\xrightarrow{\ B_n\ }\ker(A_n|_{T_n})\longrightarrow0.
+$$
+

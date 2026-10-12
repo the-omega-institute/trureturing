@@ -37,7 +37,15 @@ internal sealed class TracePreservingEigenvalueBoundDocument : IScribeDocumentDe
                 "The displayed statement gives the hypotheses and conclusion for faithful_fourth_roots. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.", DescribeRole.Theorem, Repo()),
             Node("theorem1-general", "theorem1 general", "theorem1_general",
                 Disp(Named("SourceTheorem1Goal")),
-                "Theorem 1, page 4, arXiv:2506.02145v1: \"Let \u03a6 \u2208 L(\u2102^{d\u00d7d}) be a 2-positive and trace-preserving linear map. Then\" tr(\u03a6) \u2264 d min \u211c(\u03c3(\u03a6)) + (d\u00b2 \u2212 d). SourceTheorem1Goal states this for every positive dimension. The weighted Hilbert\u2013Schmidt symmetric part supplies a real eigenvalue no larger than the real part of any original eigenvalue. Diagonalization then gives the transition estimate; depolarizing approximation removes faithfulness of the invariant state.", DescribeRole.Theorem, Lit()))));
+                "Theorem 1, page 4, arXiv:2506.02145v1: \"Let \u03a6 \u2208 L(\u2102^{d\u00d7d}) be a 2-positive and trace-preserving linear map. Then\" tr(\u03a6) \u2264 d min \u211c(\u03c3(\u03a6)) + (d\u00b2 \u2212 d). SourceTheorem1Goal states this for every positive dimension. The weighted Hilbert\u2013Schmidt symmetric part supplies a real eigenvalue no larger than the real part of any original eigenvalue. Diagonalization then gives the transition estimate; depolarizing approximation removes faithfulness of the invariant state.", DescribeRole.Theorem, Lit()),
+            Node("depolarized", "depolarized", "depolarized",
+                Disp(Seq(Forall, Sp, Parenthesized(Seq(Named("d"), Sp, Colon, Sp, NatType())), Sp, Comma,
+                    Forall, Sp, Parenthesized(Seq(Named("Phi"), Sp, Colon, Sp, LinearMapType(Named("d")))), Sp, Comma,
+                    Forall, Sp, Parenthesized(Seq(Varepsilon, Sp, Colon, Sp, RealType())), Sp, Comma,
+                    Named("depolarized"), Sp, Named("Phi"), Sp, Varepsilon, Sp, Eq, Sp,
+                    Smul(Cast(Cast(Subtract(D(1), Varepsilon), RealType()), ComplexType()), Named("Phi")), Sp, Plus, Sp,
+                    Smul(Cast(Cast(Divide(Varepsilon, Named("d")), RealType()), ComplexType()), TraceIdentity(Named("d"))))),
+                "This is the depolarized channel (1−ε)Φ + ε Tr(·)I/d; the real coefficients are cast to ℂ, with Matrix.traceLinearMap and LinearMap.smulRight supplying the trace-times-identity term.", DescribeRole.Definition, Repo()))));
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Repo() => AssessedProvenance.FromRepo(Source);
@@ -45,6 +53,20 @@ internal sealed class TracePreservingEigenvalueBoundDocument : IScribeDocumentDe
         string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+    private static Formula NatType() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula RealType() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula ComplexType() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula FinType(Formula d) => Parenthesized(Seq(Named("Fin"), Sp, d));
+    private static Formula MatrixType(Formula d) => Parenthesized(Seq(Named("Matrix"), Sp, FinType(d), Sp, FinType(d), Sp, ComplexType()));
+    private static Formula LinearMapType(Formula d) => Parenthesized(Seq(MatrixType(d), Sp,
+        new Formula.Subscript(To, Seq(F.Id("l"), OpenBracket, ComplexType(), CloseBracket)), Sp, MatrixType(d)));
+    private static Formula Cast(Formula value, Formula type) => Parenthesized(Seq(value, Sp, Colon, Sp, type));
+    private static Formula Subtract(Formula left, Formula right) => Parenthesized(Seq(left, Minus, right));
+    private static Formula Divide(Formula numerator, Formula denominator) => new Formula.Fraction(numerator, denominator);
+    private static Formula Smul(Formula scalar, Formula value) => Seq(Parenthesized(scalar), Sp, Cdot, Sp, Parenthesized(value));
+    private static Formula TraceIdentity(Formula d) => Parenthesized(Seq(
+        Parenthesized(Seq(Named("Matrix"), Sp, Dot, Sp, Named("traceLinearMap"), Sp, FinType(d), Sp, ComplexType(), Sp, ComplexType())),
+        Sp, Dot, Sp, Named("smulRight"), Sp, Parenthesized(Seq(D(1), Sp, Colon, Sp, MatrixType(d)))));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
 }

@@ -1,0 +1,14 @@
+**定义 29.7（同输入的辅助端点链）。** 对每个整数 $n\ge1$ 置
+$A_n$ 为 $n$ 点路径的邻接矩阵，$K_n=3I_n-A_n$，$b_n=e_1$。
+另在实 Hilbert 空间 $\mathcal H=\ell^2(\{1,2,\ldots\};\mathbb R)$ 上，
+令 $Se_j=e_{j+1}$ 为单边移位，$A_\infty=S+S^{\mathsf *}$，
+$K_\infty=3I-A_\infty$。端点注入 $u\mapsto ue_1$ 与读出
+$\xi\mapsto\langle e_1,\xi\rangle$ 都有范数一。
+有限及半无限系统使用同一实际标量输入和各自零初态；输出记为 $y_n,y_\infty$。
+
+这条路径只是辅助响应载体，不是定义 29.3 的五边图，也不是 no11 合法字
+窗口、列表编码或原生算术执行。其对角为三；
+[GoldenResource 的链逆矩阵](../../../D5/S3/Arith/GoldenResource/TridiagonalChainInverse.lean)
+及 [Schur 响应](../../../D5/S3/Arith/GoldenResource/ChainSchurResponse.lean)
+采用对角四，不能用其数列直接代替本链。这里的对象对应由上述显式矩阵给出。
+

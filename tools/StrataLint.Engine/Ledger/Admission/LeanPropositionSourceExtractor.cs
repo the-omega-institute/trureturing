@@ -99,7 +99,7 @@ internal sealed partial class LeanSourceCatalog
             customSyntaxByModule.ToImmutable());
     }
 
-    internal static ImmutableArray<string> ParseFileImports(RepositoryFile file)
+    internal static ImmutableArray<string> ParseFileImports(RepositoryFile file, bool includeImplicitInit = false)
     {
         ArgumentNullException.ThrowIfNull(file);
 
@@ -109,8 +109,9 @@ internal sealed partial class LeanSourceCatalog
         using var tokens = LeanSourceTokenizer.ReadTokens(file.Text, importHeader: true).GetEnumerator();
         var current = tokens.MoveNext() ? tokens.Current : null;
         Consume("module");
-        Consume("prelude");
+        var prelude = Consume("prelude");
         var imports = ImmutableArray.CreateBuilder<string>();
+        if (includeImplicitInit && !prelude) imports.Add("Init");
         while (current is not null)
         {
             Consume("public");
@@ -138,7 +139,7 @@ internal sealed partial class LeanSourceCatalog
 
     internal ImmutableArray<byte> ExtractPropositionSource(
         RepoPath modulePath,
-        ImmutableArray<FrozenDeclarationStatement> recordedDeclarations)
+        ImmutableArray<FrozenDeclaration> recordedDeclarations)
     {
         var moduleDeclarations = declarations
             .Where(declaration => declaration.Path == modulePath)
@@ -149,7 +150,7 @@ internal sealed partial class LeanSourceCatalog
                 $"Lean proposition source is unavailable for {modulePath.Value}.");
         }
 
-        var roots = ImmutableArray.CreateBuilder<(FrozenDeclarationStatement Recorded, LeanSourceDeclaration Source)>();
+        var roots = ImmutableArray.CreateBuilder<(FrozenDeclaration Recorded, LeanSourceDeclaration Source)>();
         foreach (var recorded in recordedDeclarations)
         {
             roots.Add((recorded, ResolveRecordedDeclaration(moduleDeclarations, recorded)));
@@ -222,7 +223,7 @@ internal sealed partial class LeanSourceCatalog
 
     private static LeanSourceDeclaration ResolveRecordedDeclaration(
         ImmutableArray<LeanSourceDeclaration> moduleDeclarations,
-        FrozenDeclarationStatement recorded)
+        FrozenDeclaration recorded)
     {
         var recordedSegments = DecodeNameKey(recorded.DeclarationNameKey);
         if (recordedSegments.IsEmpty)

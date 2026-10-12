@@ -600,3 +600,201 @@ $$
 **约定 13.3（综合的内容边界）。** `repo-derived` 指本卷在固定五态起始纤维上组合带类型观察者传输、全合法路径、概率切空间、稀疏模拟和局部联合读口的应用推导，尤其命题 12.2–12.4。它不表示一般线性代数、概率识别、层粘合、Markov lumping 或仪器闭包的方法原创。本卷的物理候选保留定义 12.5 的 open 条件，模型反例仅反驳所指接口推断。
 
 ## 追加锚（本行以下为增补区）
+## 14. Exact \(m=1\) common-teacher quotient certificate
+
+This appendix compares deterministic actions on an independent four-window source with deterministic actions that use only the pair of priority-teacher labels. Loss factorization, literal action factorization, and existence of an optimal quotient replacement are distinct properties. The statements concern the ordinary finite probability model defined below.
+
+### 14.1 Fixed source, teachers, record, and action classes
+
+Let
+\[
+W=(\mathrm{zero},\mathrm{low},\mathrm{middle},\mathrm{ends},\mathrm{high})
+ \cong(\varnothing,\{1\},\{2\},\{1,3\},\{3\}).
+\]
+For \(0<s\leq 1/5\), put
+\[
+p_s(\mathrm{zero})=p_s(\mathrm{middle})=(1-3s)/2,\qquad
+p_s(\mathrm{low})=p_s(\mathrm{ends})=p_s(\mathrm{high})=s,
+\quad \mu_s=p_s^{\otimes4}=\operatorname{extremal}(s)^{\otimes4}.
+\]
+The four coordinates are independent complete windows; this is not a seam-conditioned concatenation. Write \(L_j\) and \(H_j\) for the first and last endpoint bits of \(w_j\). Thus
+\[
+(\mathrm{zero},\mathrm{low},\mathrm{middle},\mathrm{ends},\mathrm{high})
+\mapsto(0,0),(1,0),(0,0),(1,1),(0,1).
+\]
+With the original priority retained, define
+\[
+ A(w)=\begin{cases}1&H_0L_1=1,\\2&H_0L_1=0,\ H_1L_2=1,\\0&\text{otherwise},\end{cases}
+\quad
+ B(w)=\begin{cases}1&H_0L_2=1,\\2&H_0L_2=0,\ H_2L_3=1,\\0&\text{otherwise}.\end{cases}
+\]
+Here \(A\) is the \((0,1,2)\) teacher and \(B\) is the \((0,2,3)\) teacher. The available record is the deterministic postprocessing
+\[
+Q(w)=(A(w),B(w))\in\{0,1,2\}^2.
+\]
+The complete input is already available; forming \(Q\) is postprocessing of that input. A full-word action is a deterministic \(f:W^4\to\{0,1,2\}\); a quotient action is a deterministic \(g:\{0,1,2\}^2\to\{0,1,2\}\), consumed as \(g\circ Q\). Both risks use the same \(\mu_s\):
+\[
+R_A(f)=\mu_s[f\ne A],\quad R_B(f)=\mu_s[f\ne B],\quad
+V_{\rm full}=\min_f\max(R_A(f),R_B(f)),\quad
+V_Q=\min_g\max(R_A(g\circ Q),R_B(g\circ Q)).
+\]
+
+The full-word supplier `SharpRisk.sharp_risk_full`, with \(n=4,q=1,r=2,v=3\) (so \(m=q.\mathrm{val}=1\)), and the common majority/exterior-capacity construction `CommonSelector.uniform_mass_balanced` give, under exactly these independent-window and priority hypotheses (scientific sources in §14.6),
+\[
+V_{\rm full}(s)=T(1,s)=8s^2-18s^3+4s^4,\qquad 0<s\leq1/5.
+\]
+The supplier provides one deterministic full-word classifier with both individual risks equal to this threshold.
+
+### 14.2 The six disagreement fibers
+
+The endpoint probabilities needed for a direct expansion are
+\[
+\Pr(H_j=1)=\Pr(L_j=1)=2s,\quad
+\Pr(H_j=L_j=1)=s,\quad
+\Pr(H_j=L_j=0)=1-3s.
+\]
+Expanding the two priority tests over the independent coordinates gives the six nonempty disagreement fibers in the order
+\[
+(0,1),(0,2),(1,0),(1,2),(2,0),(2,1)
+\]
+with masses \(4s^2b_i\), where
+\[
+(b_1,\ldots,b_6)=
+(1-3s,\ 1-2s,\ 1-2s-2s^2,\ 2s^2,\ 1-3s+2s^2,\ s). \tag{14.1}
+\]
+Conditioning on \(H_0\) gives the expansion. If \(H_0=0\), the only disagreements are \((0,2)\) and \((2,0)\), each of mass
+\(4s^2(1-3s+2s^2)\). If \(H_0=1\), the contributions to
+\((0,1),(0,2),(1,0),(1,2),(2,1)\) are respectively
+\[
+4s^2(1-3s),\quad4s^3(1-2s),\quad
+4s^2(1-2s-2s^2),\quad8s^4,\quad4s^3.
+\]
+These disjoint cases sum to (14.1). Hence the total disagreement mass is
+\[
+D=4s^2\sum_i b_i=16s^2-36s^3+8s^4=2T(1,s). \tag{14.2}
+\]
+
+### 14.3 Whole-fiber criterion and the finite lower certificate
+
+On a diagonal fiber \((a,a)\), output \(a\) weakly improves both losses. On an off-diagonal fiber \((a,b)\), a third label is weakly dominated by either \(a\) or \(b\). Thus, after these pointwise improvements, a deterministic quotient rule selects a set \(S\) of complete off-diagonal fibers on which it outputs \(A\), and outputs \(B\) on the other disagreement fibers. If
+\[
+x=4s^2\sum_{i\in S}b_i,
+\]
+then
+\[
+(R_A,R_B)=(D-x,x). \tag{14.3}
+\]
+Consequently, the exact deterministic realization criterion is global:
+\[
+V_Q=V_{\rm full}=D/2
+\quad\Longleftrightarrow\quad
+\text{some union of entire disagreement fibers has mass }D/2. \tag{14.4}
+\]
+Indeed every action has \(R_A+R_B\ge D\); equality at the lower bound forces no diagonal or third-label error, and then (14.3) forces \(x=D/2\). Conversely such a union gives both risks \(D/2\). This is one half of the total disagreement mass, not one half inside every fiber.
+
+It remains to solve the six-term subset problem. Put
+\[
+h=\frac{D}{8s^2}=2-\frac92s+s^2.
+\]
+Call \(1,2,3,5\) in (14.1) large and \(4,6\) small. For a subset with at most one large term,
+\[
+\sum_{i\in S}b_i\le 1-s+2s^2,\qquad
+h-\sum_{i\in S}b_i\ge1-\frac72s-s^2\ge\frac{13}{50}. \tag{14.5}
+\]
+For three large terms, the three-smallest direct comparison is
+\(b_1+b_3+b_5=3-8s\), giving the same lower bound in (14.5); four large terms give a larger sum and the bound remains valid. The subset \(\{2,3\}\) has distance at most \(s/2\), so no minimizer has zero, one, three, or four large terms.
+
+For exactly two large terms, substituting the four possibilities for adding \(b_4\) and \(b_6\) gives the complete table
+\[
+\begin{array}{c|c}
+\text{large pair}&\min_{E\subseteq\{4,6\}}
+\left|\sum_{i\in\mathrm{pair}\cup E}b_i-h\right|\\ \hline
+\{1,2\},\{3,5\}&s(1/2-s)\\
+\{1,3\},\{1,5\},\{2,3\},\{2,5\}&s|1/2-3s|.
+\end{array}
+\]
+Since \(|1/2-3s|\le1/2-s\) on \(0<s\le1/5\), (14.5) and this table prove
+\[
+\min_{S\subseteq\{1,\ldots,6\}}
+\left|\sum_{i\in S}b_i-h\right|=s|1/2-3s|. \tag{14.6}
+\]
+Multiplying (14.6) by \(4s^2\) yields the exact quotient value
+\[
+\boxed{V_Q(s)=T(1,s)+2s^3|1-6s|}. \tag{14.7}
+\]
+
+A single common rule attaining (14.7) for every allowed \(s\) is
+\[
+g_\ast(a,b)=
+\begin{cases}
+a,&(a,b)\in\{(0,2),(1,0)\},\\
+b,&\text{otherwise}.
+\end{cases} \tag{14.8}
+\]
+It selects \(b_2+b_3=2-4s-2s^2\), so the two risks from this one action are
+\[
+R_A(g_\ast Q)=8s^2-20s^3+16s^4,\qquad
+R_B(g_\ast Q)=8s^2-16s^3-8s^4. \tag{14.9}
+\]
+Their maximum is (14.7). Since \(s>0\), (14.7) equals the full-word threshold exactly at \(s=1/6\). This is an attainment statement for the deterministic quotient on this product law; it does not assert that every full-word minimizer factors through \(Q\).
+
+### 14.4 Uniform atomic obstruction and a fine-word witness
+
+At \(s=1/5\), every state in \(W\) has mass \(1/5\), so every word has mass \(1/625\). Direct endpoint splitting gives
+\[
+625\,\mu_s[A=a,B=b]=
+\begin{pmatrix}
+345&40&60\\
+52&40&8\\
+48&20&12
+\end{pmatrix}_{a,b}. \tag{14.10}
+\]
+The six off-diagonal fiber counts are \(40,60,52,8,48,20\), all divisible by \(4\), and total \(228\). After the dominance reductions, each quotient-side error count is a multiple of \(4\), while their sum is \(228\); hence one is at least \(116\). For any unreduced quotient rule, correcting a diagonal output replaces the loss pair \((1,1)\) by \((0,0)\), and replacing a third label on an off-diagonal fiber replaces \((1,1)\) by \((0,1)\) or \((1,0)\). These replacements remain constant on each record fiber and weakly decrease each risk. The original rule therefore has maximum error count at least that of its reduced rule, hence at least \(116\). Rule (14.8) selects \(60+52=112\) atoms for \(A\), giving error counts \((116,112)\), so
+\[
+V_Q(1/5)=116/625,\qquad V_{\rm full}(1/5)=T(1,1/5)=114/625. \tag{14.11}
+\]
+
+The full-word lower bound \(R_A+R_B\ge D\) is attained by a single fine action: start with \(g_\ast Q\), then on exactly
+\[
+(\mathrm{high},\mathrm{zero},\mathrm{low},\mathrm{zero}),\qquad
+(\mathrm{high},\mathrm{middle},\mathrm{low},\mathrm{zero})
+\]
+change the output on record \((0,1)\) from \(B=1\) to \(A=0\). Each word has mass \(1/625\); the resulting one classifier has error counts \((114,114)\). Thus the full-word optimum exists on the original source while no deterministic \(Q\)-action reaches it. The obstruction is literal whole-fiber divisibility, not a failure of loss measurability.
+
+### 14.5 Loss factorization, action factorization, and randomized comparison
+
+For a fixed action label \(c\), the pair of loss functions factors through \(Q\):
+\[
+\ell(w,c)=\bigl(\mathbf1_{c\ne A(w)},\mathbf1_{c\ne B(w)}\bigr)
+=\bar\ell(Q(w),c),\qquad
+\bar\ell((a,b),c)=\bigl(\mathbf1_{c\ne a},\mathbf1_{c\ne b}\bigr).
+\]
+A specified full-word action \(f\) factors literally as \(g\circ Q\) if and only if it is constant on every \(Q\)-fiber: necessity follows from composition, and sufficiency defines \(g(y)\) by the common value on that fiber, arbitrarily off the image. Every word has positive mass for the stated parameter range, so an almost-sure factorization is also a pointwise factorization here. Existence of some optimal quotient replacement is the different condition (14.4); it does not require a specified full-word minimizer to descend.
+
+For any full-word action \(f\), conditional averaging on the actual record gives
+\[
+\pi(c\mid y)=
+\frac{\mu_s\{w:Q(w)=y,\ f(w)=c\}}{\mu_s\{w:Q(w)=y\}}
+\]
+when the denominator is positive. Because both teacher labels are functions of \(y=Q(w)\), the randomized record action \(\pi\) has exactly the same pair \((R_A,R_B)\) as \(f\). This is the finite same-source content of Blackwell-style randomized comparison. It is a randomized consumer and therefore does not define \(V_Q\).
+
+A non-atomic purification theorem (Dvoretzky--Wald--Wolfowitz type) cannot be invoked for this source: \(W^4\) is finite and every atom is positive. The record fibers impose the finite partition condition (14.4), with the exact subset-sum discrepancy (14.6). Conditional averaging preserves the two risks but need not select a single label on each fiber. Equality of marginal risks, an abstract record compatibility, or a randomized kernel does not make \(f\) literally constant on \(Q\)-fibers.
+
+The consumer in (14.8) is one deterministic \(g_\ast\) applied to the original record \(Q\), under the same source law for both risks. No extra read, conditional resampling, external coin, omitted branch, change of source, or separate teacher-wise optimizer is part of this action class. Since \(D>0\) throughout \(0<s\le1/5\), no action has both teacher risks zero; equality at \(s=1/6\) is attainment of the positive full-word minimax value.
+
+### 14.6 Scientific sources and applicability
+
+| Scientific source | Mathematical role |
+| --- | --- |
+| [CommonPredictionWordCounts.lean](https://github.com/the-omega-institute/trureturing/blob/8e70a655ae3dc1965637bfc070169d7405526887/D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.lean); [mathematical statement](https://github.com/the-omega-institute/trureturing/blob/8e70a655ae3dc1965637bfc070169d7405526887/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.md) | `TeacherLabels.actual_left_label`, `actual_right_label` and `MajorityGeometry.aLabel`, `bLabel` specify the priority tests; `Capacity.integer_split_positive` supplies the integer reservoir capacity for the full-word construction. |
+| [CommonPredictionExteriorCapacity.lean](https://github.com/the-omega-institute/trureturing/blob/8e70a655ae3dc1965637bfc070169d7405526887/D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionExteriorCapacity.lean); [mathematical statement](https://github.com/the-omega-institute/trureturing/blob/8e70a655ae3dc1965637bfc070169d7405526887/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionExteriorCapacity.md) | `CommonSelector.uniform_mass_balanced` supplies one deterministic pointwise majority classifier balancing all teachers in each rare-count class; the reservoir split concerns complete words. |
+| [CommonPredictionSharpRisk.lean](https://github.com/the-omega-institute/trureturing/blob/8e70a655ae3dc1965637bfc070169d7405526887/D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionSharpRisk.lean); [mathematical statement](https://github.com/the-omega-institute/trureturing/blob/8e70a655ae3dc1965637bfc070169d7405526887/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionSharpRisk.md) | `SharpRisk.lawMass`, `gappedRisk`, `T` and `sharp_risk_full` supply the independent product law and the simultaneous full-word attainment and lower bound, specialized here to \(n=4,q=1,r=2,v=3\). |
+| [Static seams, transition circulation and Fibonacci toggle cycles](https://github.com/the-omega-institute/trureturing/blob/900686d5e22f6d576c37a7884d823260b6e251b1/docs/develop/theory/AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md) | §§1–2 and 4 distinguish five-state probability fibers, edge chains and complete future records. |
+| [Signed factorial kernel and golden compatibility](https://github.com/the-omega-institute/trureturing/blob/900686d5e22f6d576c37a7884d823260b6e251b1/docs/develop/theory/AURIC_FIB_ATOM_SIGNED_FACTORIAL_KERNEL_AND_GOLDEN_COMPATIBILITY.md) | §§5–6 distinguish signed analytic responses and Gram-vector realizations from probability laws and acquisition operations. |
+| [Symmetric seam, path defect and Fibonacci hierarchy](https://github.com/the-omega-institute/trureturing/blob/900686d5e22f6d576c37a7884d823260b6e251b1/docs/develop/theory/AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md) | Q1–Q4, Q6–Q7 and Q10–Q14 specify carrier, feasible-difference, complete-record and physical-interpretation conditions. |
+| [Observer-relative local models and future identifiability](https://github.com/the-omega-institute/trureturing/blob/900686d5e22f6d576c37a7884d823260b6e251b1/docs/develop/theory/AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md) | §§1–2, 5–8 and 11–12 supply the same-source, typed-operation and literal-factorization setting of this appendix. |
+| [Local source splitting and readout geometry](https://github.com/the-omega-institute/trureturing/blob/900686d5e22f6d576c37a7884d823260b6e251b1/docs/develop/theory/AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md) | §§1–3, 5 and 9–11 distinguish state laws, actual feasible fibers, readouts, complete records and source transport. |
+
+The quotient \(Q\) supplies no acquisition operation or native read port. Its deterministic postprocessing presupposes the complete input and does not identify a state law with an edge flow, a signed/spectral or golden vector, or a paid stopped-observer carrier. Equal means, ranks or names, record packing, and randomized comparison supply no operation, clock, reset or resource bridge. Physical realization, calibration and resource accounting require their own source, operation and readout contracts. The finite certificate concerns only the specified two teachers and \(W^4\) law; it makes no assertion about unrestricted \(j_c\), \(155\), COMPLETE, all triples, all \(m\), all times, or the whole pyramid.
+
+## 追加锚（本行以下为增补区）

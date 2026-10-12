@@ -1,0 +1,40 @@
+**Proof (all-action lower bound excluding two blocks).** Use the exact preset value-join law [INITIAL target-cost theory, Theorem 29.2](KBONACCI_INITIAL_TARGET_COST_THEORY.md#29-one-literal-stream-across-the-two-free-value-fibres). Any two-block GLOBAL stream for $f$ would be the same two-block stream for the ordered joined phase target
+
+$$
+ \Lambda(j)=\bigl(\lambda_0(j),\lambda_1(j)\bigr),
+ \qquad
+ \ell(j)=\bigl(\mathbf 1_{H_0}(j),\mathbf 1_{H_1}(j)\bigr),
+\tag{28.17}
+$$
+
+where equal membership pairs are exactly equal joined labels. Since the supports are distinct and nonempty, the joined target has at least three labels: two distinct nonzero pairs on $U$ and the outside pair $(0,0)$, with any further pair types only increasing the count.
+
+The terminal-tail histories with $s=k-1$ force every successful root to begin with zero. A root beginning with one rejects all those actual sources to the same absorbing endpoint, while their joined labels are unequal. A root beginning with zero succeeds on every source, clears the inherited tail and leaves one common current tail. Let $a(j)$ be its charge. If a second word rejects on a reached mixed archive, rejection is uniform because legality depends only on the common tail and the common literal word; absorption cannot recover the merged labels. Thus every second word that is actually needed succeeds on its reached mixed archive, and its charge $b(j)$ must combine with $a(j)$ to separate all unequal joined labels. This argument allows arbitrary root and second literal words, archive-dependent stopping, rejection attempts and both alphabets.
+
+At block index one the physical path is
+
+$$
+ W_1=\{m,m+1,\ldots,2m-2,0,1\}=P\setminus U.
+\tag{28.18}
+$$
+
+Therefore every successful second charge satisfies $b(j)=0$ for all $j\in U$. If $r\ge3$, at least three different joined labels already occur on $U$, while the root supplies only the two values of $a$, so two blocks are impossible.
+
+Suppose $r=2$. The two internal labels are distinct nonzero vectors, and the root charge must take both values on their two nonempty classes. Every outside phase has the third label $(0,0)$. For any outside phase $j$, the root archive with value $a(j)$ also contains an internal phase with that same root value, so that archive is mixed and cannot stop before the second block. If $b(j)=0$, its pair $(a(j),b(j))$ then equals the pair of that internal class, contradicting separation. Hence necessarily
+
+$$
+ b(j)=1\quad(j\in P\setminus U=W_1).
+\tag{28.19}
+$$
+
+The full-path parity identity for one literal block gives
+
+$$
+ 0=\bigoplus_{j\in W_1}b(j)=m+1\pmod2.
+\tag{28.20}
+$$
+
+Thus $m$ must be odd. When $m$ is even, or when $r\ne2$, no correct two-block GLOBAL stream exists. A one-block stream is already impossible because the forced zero root has only two successful endpoint values while the joined target has at least three labels. Together with the three-block construction, this proves the last line of (28.5).
+
+Finally, (28.6) follows by inspecting the two membership pairs. With two pairs and no $(0,0)$ on $U$, every phase belongs to $H_0\cup H_1$, and the pair pattern is either the two disjoint nonzero vectors, or the two vectors obtained when one support is all of $U$. Conversely each of those forms has exactly two occurring pairs. The proof is complete. $\square$
+

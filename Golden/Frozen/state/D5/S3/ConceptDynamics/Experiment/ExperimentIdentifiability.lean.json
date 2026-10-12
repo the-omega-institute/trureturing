@@ -1,1 +1,1 @@
-{"statement_id":"sha256:924b6cad8b21d0978319e3c99ae70711d597bf19768c3104062302f6c15246ff"}
+{"statement_id":"sha256:924b6cad8b21d0978319e3c99ae70711d597bf19768c3104062302f6c15246ff","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),10:Experiment),25:ExperimentIdentifiability),12:targetKernel)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),10:Experiment),25:ExperimentIdentifiability),17:identifiable_tfae)","kind":"theorem"}]}

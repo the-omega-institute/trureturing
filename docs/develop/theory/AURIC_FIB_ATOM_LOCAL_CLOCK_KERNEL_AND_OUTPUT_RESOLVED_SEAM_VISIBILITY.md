@@ -1627,3 +1627,933 @@ M_0(i,j)=(1-h(i))\mathbf1_{\{j=s_0\}}.
 供文所引三个公开理论文件保留各自开放输入与适用边界；固定核反演与省略取得核反演不是同一问题。有限维观察与 belief 最大不动点是既有数学方法；这份来源特异综合可作为应用／提案保存，不能仅据类比、重述或链接宣称数学优先权、新一般证明、物理实现或生物认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 十三、校准的共同等待解析实际五模式可行纤维
+
+### 定义17（五模式来源与可行纤维）
+
+沿用本卷 Q1 及 [隐藏 seam 卷，第二节定理一、Q1](AURIC_FIB_ATOM_HIDDEN_SEAM_CAUSAL_READOUT_CLOSURE.md) 的归一化五模式载体：
+
+~~~math
+\Sigma=\{s_0,s_1,s_2,s_3,s_{13}\}
+=\{F[\varnothing],F[1],F[2],F[3],F[1,3]\}.
+~~~
+
+令 $x,y,z$ 分别指示位置 $1,3,2$。给定已知实数 $X,Y,Z\ge0$，要求
+
+~~~math
+I_{X,Y,Z}=\bigl[\max(0,X+Y+Z-1),\ \min(X,Y)\bigr]\ne\varnothing.
+~~~
+
+在顺序 $(s_0,s_1,s_2,s_3,s_{13})$ 下，以这三项边缘为均值的全部概率律为
+
+~~~math
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad \kappa\in I_{X,Y,Z}.
+~~~
+
+端点允许零质量；区间为单点时没有待识别的方向。上述条件保证每项非负且总和为一。既有纤维与四角泛函在这里的参数对应为
+
+~~~math
+p_\kappa-p_{\kappa'}=(\kappa-\kappa')d,
+\qquad d=(1,-1,0,-1,1),\qquad J(f)=d\cdot f.
+~~~
+
+### 假设18（一个完整运行的校准相位探针合同）
+
+取已校准的两种等待时长 $a,b>0$、实数 $\Omega _2$，置
+
+~~~math
+\Omega _1=\frac{2\pi}{a},\qquad \Omega _3=\frac{2\pi}{b},
+\qquad
+\omega(s)=\Omega _1x(s)+\Omega _2z(s)+\Omega _3y(s).
+~~~
+
+每次完整运行从固定的 $p_\kappa$ 抽取一个模式 $s$，在该次运行的全部等待阶段保持这个 $s$。探针为有固定校准基 $|0\rangle,|1\rangle$ 的量子比特，每次运行与来源无初始关联，并重新制备为
+
+~~~math
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2}.
+~~~
+
+对每个 $t\ge0$，实际供应的条件相对相位操作及状态为
+
+~~~math
+V_s(t)=|0\rangle\langle0|+e^{-i\omega(s)t}|1\rangle\langle1|,
+\qquad
+|\psi_s(t)\rangle=V_s(t)|+\rangle
+=\frac{|0\rangle+e^{-i\omega(s)t}|1\rangle}{\sqrt2}.
+~~~
+
+同一模式上的等待满足 $V_s(t_2)V_s(t_1)=V_s(t_1+t_2)$。这些操作由同一对角生成元产生并彼此交换；有序 FIB 树的其他非交换表示不由此实现。这里测量的是两基矢之间相对于校准参照的相位，整体相位不产生该读数。重复运行按同一来源律作独立同分布准备；一个未知模式永久固定于所有运行是另一统计实验。
+
+使用标准矩阵
+
+~~~math
+X_{\rm P}=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y_{\rm P}=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+Z_{\rm P}=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+~~~
+
+允许的仪器是运行末端的二值测量，$\theta\in\mathbb R$ 为校准方向：
+
+~~~math
+M_\theta=\cos\theta\,X_{\rm P}+\sin\theta\,Y_{\rm P}
+=\begin{pmatrix}0&e^{-i\theta}\\e^{i\theta}&0\end{pmatrix},
+\qquad E_{\theta,\pm}=\frac{I\pm M_\theta}{2}.
+~~~
+
+输出标记为 $\pm1$。分别准备的 $\theta=0,\pi/2$ 试验用于取得两项期望；一次输出不直接给出精确复数。中途测量、反馈、重置、动态切换及任意中间仪器均须另供合同。本卷 Q2、Q9–Q10 及 [输出仪器卷 Q2–Q4、Q13](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md) 在此分别约束共同来源、菜单和概率取得。下文的重抽及环境重置仅是显式声明的比较协议。
+
+### 定理19（实际终端密度矩阵及其纤维响应）
+
+在假设18下，对每个 $t\ge0$，平均探针态及复读数为
+
+~~~math
+\varrho_\kappa(t)=\sum_s p_\kappa(s)|\psi_s(t)\rangle\langle\psi_s(t)|
+=\frac12\begin{pmatrix}1&\overline{C_\kappa(t)}\\C_\kappa(t)&1\end{pmatrix},
+\qquad C_\kappa(t)=\sum_s p_\kappa(s)e^{-i\omega(s)t}=B(t)+\kappa J(t),
+~~~
+
+其中
+
+~~~math
+B(t)=1-X-Y-Z+X e^{-i\Omega _1t}+Z e^{-i\Omega _2t}+Y e^{-i\Omega _3t},
+\qquad
+J(t)=\bigl(1-e^{-i\Omega _1t}\bigr)\bigl(1-e^{-i\Omega _3t}\bigr).
+~~~
+
+$B(t)$ 为本卷 Q3 意义的代数基线，$\kappa=0$ 可以不可行。实际输出律为
+
+~~~math
+\mathbb E[M_\theta]=\operatorname{Tr}(\varrho_\kappa M_\theta)
+=\operatorname{Re}\!\bigl(e^{-i\theta}C_\kappa(t)\bigr),
+\qquad
+\Pr(\pm\mid\theta,t)=\frac{1\pm\operatorname{Re}(e^{-i\theta}C_\kappa(t))}{2}.
+~~~
+
+**证明。** 条件纯态的外积是 $\frac12\left(\begin{smallmatrix}1&e^{i\omega(s)t}\\e^{-i\omega(s)t}&1\end{smallmatrix}\right)$；按概率平均给出所示密度矩阵，且 $|C_\kappa|\le1$。五个相位依次是 $1,e^{-i\Omega _1t},e^{-i\Omega _2t},e^{-i\Omega _3t},e^{-i(\Omega _1+\Omega _3)t}$。代入定义17，$\kappa$ 的系数为 $1-e^{-i\Omega _1t}-e^{-i\Omega _3t}+e^{-i(\Omega _1+\Omega _3)t}$，即既有四角泛函在这个实际条件响应上的因子式。最后直接乘矩阵取迹，两个对角项之和是 $\operatorname{Re}(e^{-i\theta}C_\kappa)$；$M_\theta^2=I$ 给出相应二值概率。若改从 $|0\rangle$ 开始，操作保持 $|0\rangle$，所有这些赤道期望为零，故上述制备是必要的实验前提。证毕。
+
+### 定理20（单时钟整纤维盲性与共同混合等待的分离）
+
+对所有 $m,n\in\mathbb Z_{\ge0}$，
+
+~~~math
+J(ma)=J(nb)=0.
+~~~
+
+所以单独 $a$-时钟或 $b$-时钟在所有非负整数刻度的终端密度矩阵和所供二值律均与 $\kappa$ 无关。该密度矩阵相等也使任何另行供应的同一终端 POVM 律相等，但不确定任意多时刻仪器记录。
+
+对 $t\ge0$，$J(t)\ne0$ 当且仅当 $t/a,t/b$ 都不是整数。特别地，
+
+~~~math
+J(a+b)=\bigl(1-e^{-2\pi i b/a}\bigr)\bigl(1-e^{-2\pi i a/b}\bigr)\ne0
+\quad\Longleftrightarrow\quad b/a\notin\mathbb Z\ \text{且}\ a/b\notin\mathbb Z.
+~~~
+
+若 $b/a=p/q$ 为既约正整数比，则条件等价于 $p,q>1$，例如 $3/2$ 已足够；无理比不是此处必要条件。对一般 $t=ma+nb$，判据为 $nb/a,ma/b$ 都不是整数。若 $p=1$ 或 $q=1$，每个这种混合等待仍盲。对含至少两个点的可行区间，在任一 $J(t)\ne0$ 处，每对 $\kappa\ne\kappa'$ 都满足
+
+~~~math
+C_\kappa(t)-C_{\kappa'}(t)=(\kappa-\kappa')J(t)\ne0.
+~~~
+
+**证明。** 第一时钟的因子在 $ma$ 为零，第二时钟的因子在 $nb$ 为零；其余判据来自 $e^{-2\pi i u}=1\iff u\in\mathbb Z$。定理19把这些等式落实为实际密度矩阵及概率律的等式；非零响应则至少被一个所供赤道方向检测。
+
+为解释这条纤维为何不能靠增加同种刻度解除盲性，在本证明中消费既有单时钟所有者 [事件采样卷定理11.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 和 [有限 Vandermonde 所有者](../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean) 的 finite_moment_readout_injective、finite_moments_eq_iff。取任一固定步长 $h>0$（本应用取 $a$ 或 $b$），将实际频率测度 $\mu_\kappa=\sum_s p_\kappa(s)\delta_{\omega(s)}$ 中相同节点 $z=e^{-i\omega h}$ 合并，删去零质量，得到 $q$ 个不同节点及正质量 $P_j$。两份有限测度的全部单时钟响应相等，恰等于每个相位类的总质量相等：在两者节点的并集上，最初若干矩给出上述所有者的单射映射。这里的别名关系是 $(\omega-\omega')h\in2\pi\mathbb Z$，并非模式标签相等。
+
+同一正质量分解给出本实际来源的记录矩阵
+
+~~~math
+G^{(h)}_\ell=\bigl[C_\kappa((n-m)h)\bigr]_{m,n=0}^{\ell},\qquad
+G_{mn}=\sum_{j=1}^q P_j\overline{z_j^m}z_j^n,
+\qquad G^{(h)}_\ell\succeq0,\quad
+\operatorname{rank}G^{(h)}_\ell=\min(\ell+1,q).
+~~~
+
+这是特征列 $(\sqrt{P_j}z_j^n)_j$ 的 Gram 矩阵；秩等式直接消费同一所有者的 vandermonde_det_ne_zero_of_injective，正质量不改变特征矩阵的秩。负参数项仅由 $C(-t)=\overline{C(t)}$ 填入，实际等待仍为非负。故无限多同刻度记录和有限 Gram 秩都只描述采样相位类，不能超出定理的盲性边界。
+
+此机制不应转给前述实衰减模型：若另有 $M(t)=\sum_{j=1}^q w_j e^{-\lambda_jt}$，$w_j>0$、互异 $\lambda_j>0$，则 $x_j=e^{-\lambda_jh}$ 互异。对 $R,C\ge1$，从零开始的矩形 Hankel 块为
+
+~~~math
+H_{mn}=M((m+n)h),\quad 0\le m<R,\ 0\le n<C,
+\qquad \operatorname{rank}H=\min(R,C,q).
+~~~
+
+应用同一 Vandermonde 所有者于实节点，分解 $H=V_R\operatorname{diag}(w)V_C^T$ 给秩上界；令 $d=\min(R,C,q)$，左上 $d\times d$ 块是正权 Gram 矩阵，$V_d$ 行满秩给下界。全秩 $q$ 需要两边尺寸都至少 $q$。实指数单射排除周期性精确别名，不能排除有限精度病态。
+
+经典采样边界的文献定位为 [Yue、Thunberg、Goncalves，arXiv:1605.06973v1，§II.A 定理1、定义5及§III.A](../../../Library/Dynamics/yue2016systemaliasing.md)。其主对数使用严格开条带 $-\pi<\operatorname{Im}z<\pi$；对采样矩阵 $e^{hA}$ 使用时，生成元的对应条件是 $-\pi<h\operatorname{Im}\lambda(A)<\pi$。本文不导入端点唯一性，也不由该引用取得本五模式实验的实现。证毕。
+
+### 定理21（一个实际混合终端读数的整纤维逆式与目标边界）
+
+在假设18下，已知 $X,Y,Z$ 且校准的 $t\ge0$ 满足 $J(t)\ne0$ 时，
+
+~~~math
+\kappa=\frac{\operatorname{Re}\!\left(\overline{J(t)}[C_\kappa(t)-B(t)]\right)}{|J(t)|^2}
+=\frac{\mathbb E[M_{\arg J(t)}]-\operatorname{Re}(e^{-i\arg J(t)}B(t))}{|J(t)|}.
+~~~
+
+这是整个闭可行区间上的逆式，随后定义17逐项恢复全部五个质量。任取可行 $\kappa_0$，也可用 $C_\kappa-C_{\kappa_0}=(\kappa-\kappa_0)J$ 作为概率来源之间的比较。若复响应误差至多 $\varepsilon$，上述线性逆式的误差至多 $\varepsilon/|J(t)|$；若对齐二值的正输出概率误差至多 $\varepsilon$，则相应误差至多 $2\varepsilon/|J(t)|$。这里固定精确占据及校准，有限样本如何达到给定概率误差另需取得合同。
+
+**证明。** 在定理19的 $C_\kappa-B=\kappa J$ 两边乘 $\overline J$ 取实部，或直接令 $\theta=\arg J$，即得斜率 $|J|$。复误差的实投影不超过其模；概率与期望相差因子二。这是本卷第五节定理二及 Q1–Q4 的既有纤维逆式在假设18所供事件上的具体应用。
+
+准确描述这一恢复的范围，可对任一实际实验族定义 $\mu\sim_{\mathscr E}\nu$ 为每个 $e\in\mathscr E$ 的结果律均相等。若 $\mathscr E\subseteq\mathscr E'$，增加等式条件给出 $\sim_{\mathscr E'}\subseteq\sim_{\mathscr E}$。定理20的两个单时钟终端族之并把整条纤维合为一类；加入一个同源混合等待及其对齐测量，逆式使本纤维上的类成为单点。这一新增操作不是旧边缘律的后处理；合法菜单及实际可行增量的所有者为 [输出仪器卷 Q1–Q4、Q7–Q8](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)。单点纤维则无需任何新增读数。
+
+本逆式也不是未知频谱恢复。为限定两者的关系，在此消费 [Kunis 等，arXiv:1506.00450v1，§2、定理3.1](../../../Library/Fourier/kunis2015multivariateprony.md) 的有限节点插值方法：若另把来源类改为至多 $r\ge1$ 个未知实频率，仍供应同源等待及假设18的探针，并要求 $b/a\notin\mathbb Q$，则相位对 $\omega\mapsto(z,w)=(e^{-i\omega a},e^{-i\omega b})$ 单射。因为相同相位对给 $(\omega-\omega')a=2\pi k$、$(\omega-\omega')b=2\pi l$，非零差会使 $b/a=l/k$。相反，对约分有理比 $p/q$，频率差 $2\pi q/a$ 给完全相同的相位对，所以无界实频率上全局单射需要无理比；这比定理20的已知模式纤维目标更强。
+
+这里所需的三角形取样界由如下普通分离步骤给出，不冒称是该文矩形取样定理的逐字结论。两份至多 $r$ 点测度的相位对并集有 $q\le2r$ 个不同点 $\zeta_j=(z_j,w_j)$。对每个 $k\ne j$ 选一个能区分两点的坐标函数 $u_{jk}\in\{z,w\}$，置
+
+~~~math
+P_j(z,w)=\prod_{k\ne j}
+\frac{u_{jk}(z,w)-u_{jk}(\zeta_k)}{u_{jk}(\zeta_j)-u_{jk}(\zeta_k)}.
+~~~
+
+分母非零，$P_j(\zeta_k)=\delta_{jk}$，总次数 $q-1\le2r-1$。故若两测度的同源混合矩
+
+~~~math
+c_{mn}=C(ma+nb)=\sum_j p_j z_j^m w_j^n,
+\qquad m,n\in\mathbb Z_{\ge0},\quad m+n\le2r-1
+~~~
+
+相同，则积分每个 $P_j$ 得各点质量相同，再由相位对单射得频率测度相同。取样数量为 $\sum_{d=0}^{2r-1}(d+1)=r(2r+1)$，含已知的 $c_{00}=1$，只为充分数量，不声称最少。没有预给 $r$ 时，全部混合矩也通过任意两份有限测度的有限并集给唯一性。
+
+这段插值用于界定本纤维应用的外推范围：它仅是另一个目标的精确唯一性，不能替代这里的一次对齐期望，也不提供无界频率的统一有限精度反演。该文定义3.6、定理3.7另有节点分离和系数比条件；多原子支撑合并、权重趋零及校准误差仍需额外限制。即使完整频率测度可知，若 $\Omega _2$ 与其他模式频率相撞，频率测度也不分辨相撞的模式标签；本定理依靠另已知的 $X,Y,Z$ 仍可由非零 $J$ 恢复 $p_\kappa$。
+
+最后，正单位变换 $t'=ct,\ a'=ca,\ b'=cb,\ \omega'=\omega/c$（$c>0$）保持每个相位和时长比，属于 [事件采样卷定理11.5](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的已知单位运输在此处的应用。它不供应漂移、时钟噪声、空间运输或相位控制模型，也不把局部校准提升为绝对物理时间。证毕。
+
+### 定理22（同源接续、独立重抽与历史闭包的边界）
+
+在假设18的实验中，同一模式贯穿两次等待给 $C_\kappa(a+b)$。作为比较协议，若第一等待后保持同一探针，但第二等待的模式按同一 $p_\kappa$ 独立重抽，则终端相干为 $C_\kappa(a)C_\kappa(b)$，在本纤维上不含 $\kappa$。若来源重抽时还将探针重新制备为 $|+\rangle$，最后仅得到 $C_\kappa(b)$；分别在两次完整运行末端读出才构成两次独立的单时钟实验。它们均不代替定理21所用的保留来源、保留探针的接续。
+
+**证明。** 保留模式 $s$ 时，实际终态为
+
+~~~math
+V_s(b)V_s(a)|+\rangle
+=\frac{|0\rangle+e^{-i\omega(s)(a+b)}|1\rangle}{\sqrt2}.
+~~~
+
+按 $p_\kappa(s)$ 平均后得到 $\varrho(C_\kappa(a+b))$，其中 $\varrho(C)=\frac12\left(\begin{smallmatrix}1&\overline C\\C&1\end{smallmatrix}\right)$。独立重抽时，实际终态条件于 $(s,s')$ 的下分量是 $e^{-i\omega(s)a}e^{-i\omega(s')b}/\sqrt2$，联合权重是 $p_\kappa(s)p_\kappa(s')$，所以
+
+~~~math
+\sum_{s,s'}p_\kappa(s)p_\kappa(s')e^{-i\omega(s)a}e^{-i\omega(s')b}
+=C_\kappa(a)C_\kappa(b).
+~~~
+
+等价地，对保留的已平均探针施加第二次随机相位通道，将其下非对角元乘 $C_\kappa(b)$。定理20给 $J(a)=J(b)=0$，故乘积不含 $\kappa$；探针制备映射则直接删除第一段相干，仅留下第二段。这证明两种实际终端律不同的来源，并落实本卷 Q2、Q6、Q9–Q10 的同源与历史合同。
+
+要解释本结论为何不等于整个观察空间的闭包，可在此消费既有 [AnalyticFlowGeneration](../../../D5/S3/Quantum/Dynamics/AnalyticFlowGeneration.lean) 的 analytic_flow_generates_commutator_closure（复观察空间），连同其中已有的 flow_span_eq_power_orbit、hasDerivAt_heisenbergFlow。它们与这里的实 Hermitian 表述有如下明确桥梁：另供有限维 Hermitian 生成元 $\Omega$ 和含 $I$ 的实 Hermitian 子空间 $\mathcal V$，令 $\mathcal A_t(F)=e^{i\Omega t}Fe^{-i\Omega t}$。复化 $\mathcal V_{\mathbb C}=\mathcal V+i\mathcal V$ 满足 $\mathcal V_{\mathbb C}\cap\mathrm{Herm}=\mathcal V$，因为 $A+iB$（$A,B\in\mathcal V$）为 Hermitian 迫使 $B=0$。因此该既有复流结论不能直接省略实载体的条件。
+
+对上述另供空间，$b/a$ 无理时的适用判据为
+
+~~~math
+\bigl[\mathcal A_a\mathcal V\subseteq\mathcal V\ \text{且}\ \mathcal A_b\mathcal V\subseteq\mathcal V\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[\mathcal A_t\mathcal V\subseteq\mathcal V\ (t\in\mathbb R)\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[i[\Omega,F]\in\mathcal V\ (F\in\mathcal V)\bigr].
+~~~
+
+在本证明中使用的稠密子群步骤为：有限维单射使两次包含成为等号，从而其数学逆及所有整数复合 $ma+nb$ 保持 $\mathcal V$。鸽巢原理作用于 $jb/a$ 的小数部分给任意小的非零整数线性组合；取其整数倍逼近任意实数，故该群稠密。连续共轭与有限维子空间的闭性将不变性延至所有 $t$；在零点求导给 $i[\Omega,F]$。反向用保 $\mathcal V$ 的实线性算子 $L(F)=i[\Omega,F]$ 及 $e^{tL}=\mathcal A_t$。同类稠密性已有 [SparseWindowMutualDetermination 的 natural_phase_visit](../../../D5/S1/Digit/Infinite/SparseWindowMutualDetermination.lean)，其调用 AddCircle.denseRange_zsmul_coe_iff；这里的两时判据只作为所需量词的中间说明。数学逆不供应倒放仪器，且它量化整个 $\mathcal V$，比本定理两来源终端律的比较更强。
+
+这个区别在 $\Omega=\pi Z_{\rm P}/a$、$\mathcal V=\operatorname{span}_{\mathbb R}\{I,X_{\rm P}\}$ 处可直接看出：整数 $a$ 刻度的酉为标量，但 $\mathcal A_{a/4}(X_{\rm P})=-Y_{\rm P}\notin\mathcal V$。这套另外供应的观察空间不是从五模式实验推得的共同历史。
+
+同样，为限定“局部消失后返回”的量子读法，消费 [二阶关系卷命题110.4、假设111.1与定理111.2、命题115.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 的保留环境与新环境区分。其连续参数示例采用 [Ziman 等，Quantum homogenization，arXiv:quant-ph/0110164v1，§II 式(2.1)–(2.7)](../../../Library/QuantumChannels/ziman2001quantumhomogenization.md) 的标准部分交换：另给系统比特 $S$、环境比特 $E$、$g>0$、初态 $\rho\otimes I/2$，令
+
+~~~math
+U_t=\cos(gt)I-i\sin(gt)\mathsf S,\qquad \mathsf S^2=I.
+~~~
+
+该文约定 $P(\eta)=\cos\eta I+i\sin\eta\mathsf S$，此处 $\eta=-gt$；原文每个 reservoir 粒子至多交互一次，给的是新环境标准模型，不能把其递推当作保留同一个 $E$ 的返回证明。这里直接展开同一个联合态：令 $c=\cos(gt),s=\sin(gt)$，则
+
+~~~math
+U_t(\rho\otimes I/2)U_t^\dagger
+=c^2(\rho\otimes I/2)+s^2(I/2\otimes\rho)
++ics\bigl[(\rho\otimes I/2)\mathsf S-\mathsf S(\rho\otimes I/2)\bigr].
+~~~
+
+交叉项的环境偏迹为 $ics[\rho,I/2]=0$，故
+
+~~~math
+\Phi_t(\rho)=\operatorname{Tr}_E[U_t(\rho\otimes I/2)U_t^\dagger]
+=c^2\rho+s^2 I/2,\qquad \mathbf r(t)=c^2\mathbf r(0).
+~~~
+
+每个时刻三方向等缩放，且对任意系统酉 $W$ 有 $\Phi_t(W\rho W^\dagger)=W\Phi_t(\rho)W^\dagger$。令本量子示例的刻度为 $h_Q=\pi/g$，在 $n h_Q$（$n\ge0$ 为整数）有 $U_{n h_Q}=(-1)^nI$。半刻度 $U_{h_Q/2}=-i\mathsf S$，给出的实际两段历史为
+
+~~~math
+\rho\otimes I/2
+\ \longmapsto\ I/2\otimes\rho
+\ \xrightarrow{\text{同一 }E}\ \rho\otimes I/2,
+~~~
+
+而在半刻度另行丢弃 $E$ 并放入新 $I/2$ 后，联合态变为 $I/2\otimes I/2$，第二次交换仍是它。对 $\rho=|0\rangle\langle0|$，末端 $Z_{\rm P}$ 的正输出概率分别为 $1$ 和 $1/2$。各向同性与粗刻度返回因而没有确定中间的局部信息或替换环境后的历史。
+
+这个联合态计算只消费已有模型来限定本五模式结论的外推；它不是该五模式的量子实现，也没有增加假设18的干预菜单。[Pollock 等，arXiv:1801.09811v1，第2页过程张量及第3页定义、定理与引理](../../../Library/QuantumChannels/pollock2018operationalmarkov.md) 要求以明确控制序列及因果断裂讨论过程记忆。若另供半刻度系统替换 $\mathcal R_\sigma(A)=\operatorname{Tr}(A)\sigma$，则两初始准备 $\rho,\rho'$ 在该时刻分别变为 $\sigma\otimes\rho,\sigma\otimes\rho'$，末次交换给不同系统态 $\rho,\rho'$；这才是相同系统再准备后的记忆见证，且使用了额外控制。本应用仅以已写出的保留/重置对照说明限制，不从 $\Phi_t$ 或 $C_\kappa(t)$ 单独推断完整过程张量。证毕。
+
+### 定义23（原树上的辅助黄金时长选择）
+
+采用 [FIBONACCI_ATOMIC_RELATION_GENERATION，定义2.1、3.1、3.3及定理2.2、3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的有序原树、替换 $\rho$ 与组成列向量 $c(u)=(c_\alpha(u),c_\beta(u))^T$：$\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$。对 $\Delta>0$，另赋辅助时长
+
+~~~math
+\varphi=\frac{1+\sqrt5}{2},\qquad
+ d(u)=\Delta\,[c_\alpha(u)+\varphi c_\beta(u)].
+~~~
+
+由此 $d(\alpha)=\Delta$、$d(\beta)=\varphi\Delta$、$d(\langle u,v\rangle)=d(u)+d(v)$。其在假设18中的用途仅是选择 $a=\Delta,b=\varphi\Delta$。这份加法解释忘掉树的次序和括号，不改原数量映射，也不认证原生时钟、物理黄金时长或其他非交换表示。
+
+### 定理24（黄金等待的实际边界辨别值与校准限制）
+
+在假设18及定义23下，取边界来源
+
+~~~math
+p_+=\tfrac12\delta_{s_0}+\tfrac12\delta_{s_{13}},\qquad
+p_-=\tfrac12\delta_{s_1}+\tfrac12\delta_{s_3}.
+~~~
+
+它们同属 $(X,Y,Z)=(1/2,1/2,0)$ 的纤维，$\kappa_+=1/2,\kappa_-=0$。在有序树 $\rho(\beta)$ 所赋的共同等待 $t=a+b=\varphi^2\Delta$ 处，令 $z=e^{-2\pi i\varphi}$，有
+
+~~~math
+\delta C=C_+(t)-C_-(t)=\frac12(1-z)^2,\qquad
+D_{\rm tr}(\varrho_+(t),\varrho_-(t))=\sin^2(\pi\varphi).
+~~~
+
+所供菜单中的 $M_{\arg\delta C}$ 已达到等先验二值分类成功率
+
+~~~math
+P_{\rm succ}=\frac{1+D_{\rm tr}}2.
+~~~
+
+模型值分别约为 $0.8686844390$ 和 $0.9343422195$。它们描述两种规定来源的单次概率分类；定理21对整条连续纤维的恢复仍以精确律或所声明的概率误差为输入。黄金时长在此供应一个非零响应的选择，不供应未知频谱的统一有限精度恢复。
+
+**证明。** 原树组成传输 $c(\rho u)=Mc(u)$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ 的精确所有者是上述定理3.4，以及 [GeometryEntranceRatio 中已有的 private composition_transport](../../../D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.lean)。在这个应用中 $(1,\varphi)M=\varphi(1,\varphi)$，故 $d(\rho u)=\varphi d(u)$，尤其 $d(\rho\beta)=(1+\varphi)\Delta=\varphi^2\Delta$。这只应用既有组成传输，不另立时长递推定理。
+
+由 $\varphi^{-1}=\varphi-1$，$t/a=1+\varphi$、$t/b=1+\varphi^{-1}=\varphi$ 的两个相位均为 $z$，定理19给 $\delta C=(1-z)^2/2$。平均探针态一般是混合态；直接计算它们之差
+
+~~~math
+D=\varrho_+-\varrho_-
+=\frac12\begin{pmatrix}0&\overline{\delta C}\\\delta C&0\end{pmatrix},
+\qquad \operatorname{spec}(D)=\{+|\delta C|/2,-|\delta C|/2\}.
+~~~
+
+因此 $D_{\rm tr}=\tfrac12\|D\|_1=|\delta C|/2=|1-z|^2/4=\sin^2(\pi\varphi)$。设 $\theta=\arg\delta C$，则 $D=(|\delta C|/2)M_\theta$；允许的 $E_{\theta,+}$ 正是正特征空间投影。以正输出判 $p_+$，其等先验成功率为
+
+~~~math
+\tfrac12\operatorname{Tr}(E_{\theta,+}\varrho_+)
++\tfrac12\operatorname{Tr}((I-E_{\theta,+})\varrho_-)
+=\tfrac12+\tfrac12\operatorname{Tr}(E_{\theta,+}D)
+=\tfrac12+\tfrac14|\delta C|.
+~~~
+
+任意二值效应 $0\le E\le I$ 在 $D$ 的两个特征方向上的对角元均在 $[0,1]$，故 $\operatorname{Tr}(ED)\le|\delta C|/2$；上述菜单已达到上界，不借用未供应的测量。
+
+为限定这一黄金参数选择的校准含义，先按 [事件采样卷定理11.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 复用整数刻度别名：若 $\omega'-\omega=2\pi k/\Delta$，$k\in\mathbb Z$，则对任意非负整数序列 $n_j$ 有 $e^{-i\omega'n_j\Delta}=e^{-i\omega n_j\Delta}$，取 $n_j=F_j$ 仍成立。代数等式也适用于负整数，但本等待合同不使用它们。Fibonacci 采样索引并未提供第二种黄金时长。
+
+取 $F_0=0,F_1=1$。精确残差直接采用 [FibonacciErrorRatio 的 fibonacci_golden_residual](../../../D5/S1/Scale/FibonacciErrorRatio.lean)：
+
+~~~math
+F_n\varphi-F_{n+1}=(-1)^{n+1}\varphi^{-n}\quad(n\ge0).
+~~~
+
+把它用在定理21所区分的未知频率目标，令 $\omega_n=2\pi F_n/\Delta$。与零频率相比，第一时钟完全别名；第二时钟的弦长和有界混合等待误差为
+
+~~~math
+\bigl|e^{-i\omega_n\varphi\Delta}-1\bigr|=2\bigl|\sin(\pi\varphi^{-n})\bigr|,
+\qquad
+\bigl|e^{-i\omega_n(m\Delta+k\varphi\Delta)}-1\bigr|
+\le2\pi L\varphi^{-n},
+\quad m,k,L\in\mathbb Z_{\ge0},\quad 0\le k\le L.
+~~~
+
+这是将残差代入相位后用 $|e^{iu}-1|\le|u|$ 得到的消费步骤。残差式在 $n=0$ 仍成立，此时 $\omega_0=0$ 不是不同来源；非零频率比较和以下有理比需要 $n\ge1$。频率从 $n\ge2$ 起严格增加；把 $\varphi^{-n}$ 称为最近整数距离也必须 $n\ge2$，因为 $n=1$ 的残差为 $\varphi^{-1}>1/2$。该有限深度上界趋零，限制的是任意固定相位精度及第二时钟深度的统一分离，不否定无限精度唯一性或另供更多资源的估计。
+
+若实际校准改为 $\varphi_n=F_{n+1}/F_n$（$n\ge1$），同一残差所有者及其中 private fibonacci_convergent_error_eq 的指标平移给
+
+~~~math
+|\varphi-\varphi_n|=\frac{\varphi^{-n}}{F_n},\qquad
+\omega_n\Delta=2\pi F_n,\quad
+\omega_n\varphi_n\Delta=2\pi F_{n+1}.
+~~~
+
+两个采样相位此时完全重合，说明理想无理比不能由有限校准精度代替。此处比较的是零频率与 $\omega_n$ 的未知频谱目标，不将校准改变后的信号误作原固定五模式合同的结果。
+
+反向分离下界也须保留其准确前提。对非零整数第一时钟别名编号 $k$，选最近整数 $\ell$，置 $\delta=\ell-\varphi k$，故 $|\delta|\le1/2$。其二次范数机制来自 [GoldenHurwitzBound 的 private golden_form_ne_zero 及 golden_hurwitz_bound](../../../D5/S1/Depth/GoldenHurwitzBound.lean)；后者逐字给的是有理数 $q$ 的 $1/(\sqrt5\operatorname{den}(q)^2+\operatorname{den}(q))<|\varphi-q|$，不是下面的更强最近整数分母。此处所需的有域估计为
+
+~~~math
+N=\ell^2-k\ell-k^2
+=(\ell-\varphi k)(\ell+\varphi^{-1}k)
+=\delta(\sqrt5 k+\delta)\in\mathbb Z\setminus\{0\}.
+~~~
+
+非零性因为 $k\ne0$ 且两个根 $\varphi,-\varphi^{-1}$ 都无理；于是
+
+~~~math
+1\le|N|\le|\delta|(\sqrt5|k|+1/2),\qquad
+\operatorname{dist}(\varphi k,\mathbb Z)=|\delta|
+\ge\frac1{\sqrt5|k|+1/2}.
+~~~
+
+对 $0\le d\le1/2$，正弦在 $[0,\pi/2]$ 上的凹性给 $\sin(\pi d)\ge2d$，从而同一编号的第二时钟弦长满足
+
+~~~math
+|1-e^{-2\pi i\varphi k}|\ge\frac4{\sqrt5|k|+1/2}.
+~~~
+
+这只控制已限制别名编号的频率差，不是有界频率区间内任意不同频率的统一正分离；后者仍可任意接近。多原子权重趋零、支撑合并和时长/参照误差也不由该下界消除。因此黄金模型的边界分类值、已校准纤维逆式和未知频谱的有限精度问题各保留其来源、量词和资源条件。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 十四、保留谱来源的有限调用纤维与持久端点证书
+
+### 假设25（完整循环、保留参数与允许的实验）
+
+沿用定义17的实际非空纤维 $I_{X,Y,Z}$ 及顺序 $(0,1,2,3,13)$。
+给每个模式一份固定已知的 Borel 概率测度 $\nu_s$，支撑于 $[0,1]$。
+一次历史先按 $p_\kappa$ 抽取模式 $s$，再按 $\nu_s$ 抽取 $\lambda$，
+在该历史的全部调用中保留这一个 $\lambda$。其边缘谱为
+
+$$
+\nu_\kappa=\sum_s p_{\kappa,s}\nu_s,\qquad
+\Delta\nu=\nu_0-\nu_1-\nu_3+\nu_{13}.
+\tag{25.1}
+$$
+
+这里下标 $s$ 指模式，$\kappa$ 指混合来源；下文的辅助谱用 $\mu_-,\mu_+$
+命名，避免与模式 $0,1$ 混淆。模式和参数均不是可读输出。
+
+每次调用是在已校准的量子比特 $S$ 上施加完整通道
+
+$$
+\mathcal D_\lambda(A)=\lambda A+(1-\lambda)\operatorname{tr}(A)I_2/2,
+\qquad 0\le\lambda\le1.
+\tag{25.2}
+$$
+
+消费[二阶关系卷假设111.1、定理111.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)
+时，参数对应为 $\lambda=\eta^2$：一次调用是全部三个方向的完整循环，
+其间没有开放读口。在给定 $\lambda$ 后，每次调用的条件通道不随过去记录
+改变，并在任何保留参考 $R$ 上按 $\mathcal D_\lambda\otimes\mathrm{id}_R$ 作用。
+这是另行供应的条件无记忆过程合同；单次约化通道的名称或三方向等缩放
+本身不蕴含它。原生五模式合法性也不供应任意 Borel 抽样或这个量子接口。
+
+允许的一个实验有有限调用上界 $N\ge0$，调用总数在每条分支上都至多 $N$。
+初始迹类密度算子可以使探针与参考纠缠，但与 $s,\lambda,\kappa$ 无关联，
+在所比较的全部来源上相同。参考和量子记忆可取任意已供应的可分 Hilbert
+空间；每个实验的输入、记忆和终端空间固定，可把分支空间嵌入共同直和。
+调用之间允许已供应的正常完全正量子仪器、状态准备、丢弃、测量、停止及
+因果反馈。仪器在迹类算子上是有界线性的，事件映射完全正且迹不增，
+总事件保迹；不成功或停止分支保留为输出的一部分。
+
+离散或连续结果空间取标准 Borel 空间，仪器按迹范数可数可加；其关于
+先前记录的依赖可测，使有限次核复合与迹类积分有定义。策略可依赖已知
+校准和已经得到的记录，但不能依赖隐藏的 $s,\lambda$ 或待比较的 $\kappa$。
+这些空间、初态、仪器和策略在每次来源比较中全部固定。任意多个相邻的
+无调用处理可合并为这样的一个仪器核。一个可测历史事件 $E$ 的终端
+未归一化算子记为 $M_\lambda(E)$，其迹是该事件的条件概率；全输出包括
+所有这些事件及其终端量子状态。对连续记录不假设单点历史有正概率，
+也不假设存在相对于某个固定标量测度的仪器密度。
+
+[量子网络的有限维 tester 表述](../../../Library/QuantumChannels/chiribella2009networks.md)
+提供此实验的有限维先例；下文的直接线性证明承担上述可分参考及事件测度
+范围。过程层次与单时刻通道的区别另见
+[Pollock 等的操作性记忆条件](../../../Library/QuantumChannels/pollock2018operationalmarkov.md)。
+这里没有隐藏参数读口、环境读口、错误档案、内部循环读口或相干受控 dilation。
+额外授予其中任何一种访问都改变实验族。
+
+为区分条件化目标，还可另供一个经典成功仪器：在同一保留参数下，每次
+成功概率为 $\lambda$，各次成功条件独立。若与其他仪器一起使用，须另给
+它们的联合合同；下文只计算单独这一串成功的经典后验。这一仪器不属于
+上述仅通道实验族，不能从 $\mathcal D_\lambda$ 推得。
+
+本节的标量谱载体与
+[NativeTail 定理2.1、3.1及命题4.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_TAIL_ATOMS_AND_BOREL_RECURRENCE.md)
+保持区分：那些结果在完整两相兼容共同流、平稳边缘及两套全端点盒下，
+给原生上端点原子、最终递推刚性和无原子边界率例子；其中
+$d_n/(6/25)^n\to(9/25)\nu_p(\{P_{p,2/5}\})$，无原子例子的归一化尾为
+$1/n$ 阶，且不是原 unrestricted 问题的零超额最优见证。
+此处没有把一般 Borel 描述子流化为 $\lambda$ 的混合，也不以本节的标量
+递推替代该卷对整个共同流的结论。
+
+### 定理26（每个有限调用层都有持久量变化的固定校准五模式纤维）
+
+在假设25下，记
+
+$$
+m_{s,n}=\int\lambda^n\,d\nu_s,\quad
+c_n(\kappa)=\int\lambda^n\,d\nu_\kappa,\quad
+\alpha_s=\nu_s(\{1\}),\quad
+ a_\infty(\kappa)=\nu_\kappa(\{1\}),\quad c_0=1.
+\tag{26.1}
+$$
+
+两个来源的 $c_0,\ldots,c_N$ 相同时，假设25中每个至多 $N$ 次调用的
+实验都有相同的完整历史概率律与终端算子值事件测度。若允许全部该类
+准备和测量，反向也成立。因此非退化五模式纤维上的全部这些输出恒定
+恰在 $\int\lambda^n d\Delta\nu=0$ 对 $0\le n\le N$ 成立。
+
+对每个有限整数 $N\ge0$，存在一套固定模式谱、固定
+$X=Y=1/2,Z=0$、合法区间 $0\le\kappa\le1/2$，使整个区间的这些输出
+完全相同，而 $a_\infty(\kappa)$ 严格递增。校准及模式谱可以依赖 $N$，
+同一个 $N$ 的全部来源比较使用同一套校准。
+
+对任意一套固定已知校准，若 $\Delta\nu(\{1\})\ne0$，则存在某个有限
+$n\ge1$ 使精确 $c_n$ 唯一识别这条纤维上的 $\kappa$。故不存在跨任意
+校准的统一有限调用上界，但不排除一套给定校准在较长有限历史上暴露
+持久 seam。非零谱差本身也不保证端点质量不同。
+
+证明。先把既有纤维和本过程接起来。[Pyramid 第三、四节](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)
+的模式记号 $(0,2,5,3,25)$ 在这里对应 $(0,1,3,2,13)$；其三均值、
+四角泛函及非空区间正是定义17。对固定模式评价函数代入既有仿射公式，得
+
+$$
+\begin{aligned}
+ c_n(\kappa')-c_n(\kappa)
+  &=(\kappa'-\kappa)\int\lambda^n\,d\Delta\nu,\\
+ a_\infty(\kappa')-a_\infty(\kappa)
+  &=(\kappa'-\kappa)\Delta\nu(\{1\}).
+\end{aligned}
+\tag{26.2}
+$$
+
+这一步只复用已有合法纤维，新增目标是整个保留参数实验的可见性。
+[Static 定理29.2、29.5及定义29.10](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)
+已分别处理指定阶跃任务的瞬态 seam、有限矩相同而未来不同，以及共同
+来源记录；它们的实 LTI 输入输出合同不等于假设25的通道实验。
+
+在本证明内消费经典紧区间矩方法
+[Liu–Pego 引言的 Hausdorff 刻画](../../../Library/Estimation/liu2014hausdorff.md)。
+对一份已供应的 $\nu$，令 $\mathcal R(A)=\operatorname{tr}(A)I_2/2$，
+则 $\mathcal R^2=\mathcal R$，所以无中间干预的 $n$ 次调用给
+
+$$
+\mathcal D_\lambda^n=\mathcal R+\lambda^n(\mathrm{id}-\mathcal R),\qquad
+\mathcal E_n(\rho)=c_n\rho+(1-c_n)I_2/2,
+\quad c_n=\int\lambda^n d\nu.
+\tag{26.3}
+$$
+
+$0$ 次调用取恒等映射和 $c_0=1$。所有三条 Bloch 方向共用 $c_n$，
+没有由此确定空间维数或整个环境内的信息。二项式展开给
+
+$$
+\sum_{j=0}^k(-1)^j\binom kjc_{n+j}
+ =\int\lambda^n(1-\lambda)^k d\nu\ge0
+ \quad(n,k\ge0).
+\tag{26.4}
+$$
+
+若改为每次独立重抽参数，则无干预系数为 $c_1^n$，不再是一般的 $c_n$。
+例如均匀谱给 $1/(n+1)$，独立重抽给 $2^{-n}$。这与本卷定理22的
+同源/重抽区别一致，但这里的通道和来源另由假设25供应。
+
+支配收敛给 $c_n\to\nu(\{1\})$。在 $L^2(\nu)$ 上取乘法正收缩
+$Tf(\lambda)=\lambda f(\lambda)$，则
+
+$$
+c_n=\langle1,T^n1\rangle,\qquad
+\nu(\{1\})=\|P_{\ker(I-T)}1\|^2.
+\tag{26.5}
+$$
+
+因为 $(I-T)f=0$ 恰要求 $f$ 在 $\{1\}$ 外为零，投影就是乘该集合的
+指示函数。若 $r=\sup\operatorname{supp}\nu>0$，则对每个 $0<t<r$，
+$\nu([t,r])>0$ 且
+$t^n\nu([t,r])\le c_n\le r^n$，取 $n$ 次根再令 $t\uparrow r$ 得
+$c_n^{1/n}\to r$。$r=0$ 时 $\nu=\delta_0$，正阶矩均零。
+特别地 $\delta_1$ 与均匀谱的根率都为一，端点质量却分别为一与零。
+当 $0<a_\infty<1$ 时，极限通道仍把两个正交纯态的迹范数距离从二缩为
+$2a_\infty$，故整个比特接口并非无噪子系统。此处的谱投影不是额外可访问
+的量子子系统，也不给 null 或 joint 模式指定稳定物理含义。
+
+现固定假设25中的一个策略，把每个调用写为
+$\mathcal R_R+\lambda\mathcal Q_R$，其中
+$\mathcal R_R(A)=I_2/2\otimes\operatorname{Tr}_S A$，
+$\mathcal Q_R=\mathrm{id}-\mathcal R_R$。
+离散正概率历史的未归一化块从常数初态开始；每个固定历史上的仪器
+是与 $\lambda$ 无关的线性映射，故不增次数，每次调用最多增一次。
+但对连续结果，正确对象是事件测度：展开有限个调用并复合可测反馈核，得
+
+$$
+M_\lambda(E)=\sum_{j=0}^N\lambda^j A_j(E)
+\tag{26.6}
+$$
+
+对所有可测历史事件 $E$ 同时成立。这里 $A_j$ 是不依赖 $\lambda$ 的
+迹类算子值有符号测度，不要求各系数为正。说明其积分合法性：每个
+$\mathcal Q_R$ 是两个有界通道之差；把全部这些差再展开，产生有限个
+由正常完全正仪器和通道复合所得的算子值测度之线性组合。每个正项的
+总迹至多一，因而有限变差；初态固定使系数测度也有限变差。
+这同时证明迹范数可数可加及交换有限和与积分的合法性。
+有限调用前的停止分支直接归入较低次数，停止输出可嵌入共同终端空间；
+没有把停止后补成真实调用。连续反馈的可测性、仪器积分和与参数无关性
+正是假设25的合同，不能仅凭有限维 comb 引文省去。
+
+对谱积分后得到
+
+$$
+M_\nu(E)=\sum_{j=0}^N c_j A_j(E).
+\tag{26.7}
+$$
+
+因此匹配的矩给相同算子值事件测度，取迹给相同完整历史法则，随后任意
+共同终端测量亦相同。只在某事件的共同概率严格为正时，才将同一个块
+除以该概率而得到相同条件态；零概率事件不定义此后验。对连续单点
+历史，不以形式上的除零表达式取代事件测度。反向用固定纯态 $|0\rangle$
+连续调用 $n\le N$ 次后测量 $Z_{\rm P}$：正输出概率为 $(1+c_n)/2$。
+故全实验相等迫使这些矩相等。结合 (26.2) 即得整条非退化纤维的判据；
+单点纤维的恒定性不需判 seam。
+
+构造所需校准时，置 $\mu_-$ 为 $[0,1]$ 的均匀概率。令
+
+$$
+H^{(N)}_{ij}=\frac1{i+j+1}\quad(0\le i,j\le N),\qquad
+H^{(N)}a=\mathbf1,\qquad
+K_N(\lambda)=\sum_{j=0}^N a_j\lambda^j.
+\tag{26.8}
+$$
+
+这是经典 Gram/再生核计算，也对应
+[Simon 定理2.1](../../../Library/Estimation/simon2008christoffel.md)。
+非零多项式的平方在区间上积分严格正，故 $H^{(N)}$ 正定，线性方程
+有唯一解。其逐行等式就是
+$\int_0^1\lambda^nK_N(\lambda)d\lambda=1$，$0\le n\le N$。
+令 $L_N=\sum_j|a_j|>0$、$w_N=1/(2L_N)$，并置
+
+$$
+d\mu_+=(1-w_NK_N(\lambda))d\lambda+w_N\delta_1.
+\tag{26.9}
+$$
+
+$|K_N|\le L_N$ 给密度至少 $1/2$。零阶等式给其总质量为一，并有
+$\int\lambda^n d\mu_+=1/(n+1)=\int\lambda^n d\mu_-$ 对 $n\le N$。
+$\int K_N=1$ 还给 $L_N\ge1$，故 $0<w_N\le1/2$；
+$\mu_-(\{1\})=0$，$\mu_+(\{1\})=w_N$。
+构造用的矩阵到 $2N$ 阶只是已知均匀谱的计算资料，不是声称 $N$ 次
+调用提供了这些高阶矩。
+
+现令
+
+$$
+\nu_0=\nu_{13}=\mu_+,\qquad
+\nu_1=\nu_3=\mu_-,\qquad \nu_2=\mu_-,\qquad
+X=Y=\tfrac12,\quad Z=0.
+\tag{26.10}
+$$
+
+五项概率为 $(\kappa,1/2-\kappa,0,1/2-\kappa,\kappa)$，全部合法。
+整条纤维给
+
+$$
+\nu_\kappa=2\kappa\mu_++(1-2\kappa)\mu_-,\quad
+c_n(\kappa)=\frac1{n+1}\ (0\le n\le N),\quad
+ a_\infty(\kappa)=2\kappa w_N.
+\tag{26.11}
+$$
+
+以 (26.7) 代入，得每一个允许实验的完整输出在整条纤维上恒定，而
+持久量严格变化。模式 $2$ 在此纤维质量为零，其固定校准仍已指定。
+$N=0$ 也被构造覆盖：$K_0=1,w_0=1/2$。
+
+最后，有限符号测度 $\Delta\nu$ 上的支配收敛给
+$\int\lambda^n d\Delta\nu\to\Delta\nu(\{1\})$。
+非零极限保证某有限阶 seam 非零。对任意可行基点 $\kappa_0$，那个阶数给
+
+$$
+\kappa=\kappa_0+
+ \frac{c_n(\kappa)-c_n(\kappa_0)}{\int\lambda^n d\Delta\nu}.
+\tag{26.12}
+$$
+
+这是固定校准下精确期望的逆式，误差会被该分母放大，不是有限样本保证。
+更一般地，若两份 $[0,1]$ 概率的所有矩都相等，则它们在所有多项式上
+积分相同，由多项式在连续函数中的一致稠密性及有限测度的唯一性得到
+两测度相等。所以 (26.9) 的配对必须随 $N$ 变化，不能宣称一个不同的
+无限矩相同配对。
+
+为分清两个 seam 目标，将给定的两种校准作为本逆式的实例消费。
+仍取 $X=Y=1/2,Z=0$。第一种令 $\nu_0=\nu_{13}=\delta_1$，
+$\nu_1=\nu_3=\operatorname{Unif}[0,1]$，则
+
+$$
+c_n(\kappa)=2\kappa+\frac{1-2\kappa}{n+1},\qquad
+ a_\infty(\kappa)=2\kappa.
+\tag{26.13}
+$$
+
+它的任一正阶精确矩可识别持久量，故有限层盲性不是每套校准的共同性质。
+第二种令 $\nu_0=\delta_{1/4},\nu_{13}=\delta_{3/4}$，
+$\nu_1=\nu_3=\delta_{1/2}$，则所有 $\kappa$ 都有
+$c_1=1/2,a_\infty=0$，但 $c_2(\kappa)=1/4+\kappa/8$。
+在 joint 端 $p_+=(\delta_0+\delta_{13})/2$ 和 separate 端
+$p_-=(\delta_1+\delta_3)/2$，二阶差为 $1/16$，故两次调用可见的谱 seam
+并不改变持久量。这里 $\delta_s$ 表示模式点质量，谱点质量则在
+$[0,1]$ 上；两种载体不能互换。证毕。
+
+### 定理27（有限证书在同一校准纤维上的作用与精度边界）
+
+固定假设25的一套校准及可行纤维。有限精确矩不仅可以描述定理26的盲区，
+也给下列对该来源的约束。对 $d\ge0$ 及实多项式 $P$，定义
+
+$$
+\begin{aligned}
+H_d(\kappa)&=[c_{i+j}(\kappa)]_{i,j=0}^d,
+ &v_d&=(1,\ldots,1)^T,\\
+B_d(\kappa)&=\inf_{\deg Q\le d,\ Q(1)=1}\int Q^2d\nu_\kappa,
+ &R_P(\kappa)&=\int P^2d\nu_\kappa.
+\end{aligned}
+\tag{27.1}
+$$
+
+$B_d$ 是该纤维来源的端点上证书：
+$a_\infty(\kappa)\le B_{d+1}(\kappa)\le B_d(\kappa)\le c_{2d}(\kappa)$，
+并且 $B_d(\kappa)\to a_\infty(\kappa)$。
+$R_P=0$ 精确限定支撑到 $P$ 的零集，因而同时限定哪些校准模式可以
+有正权；只有 $P\ne0$ 才给有限支撑结论。两根在 $[0,1]$ 内且相异时，
+小残差给至两根投影的有限时间矩界；这些界不把小残差变成精确零。
+
+这些证书可在同一五模式纤维上有实际不同的强度：存在两次调用完全
+盲的固定校准，端点上界恰为 $1/4$ 且纤维两端分别达到持久量零和
+$1/4$；另有前三次调用完全盲的固定校准，其第四阶非负残差唯一选出
+一个无端点质量的两根支撑端。无额外谱隙时，有限精度的近完全保留
+也不证明正端点质量。
+
+证明。所有经典矩步骤在此用于 (27.1) 所约束的实际 $\nu_\kappa$，
+而不是未知量的另一个实现。首先
+
+$$
+c_2-c_1^2=\int(\lambda-c_1)^2d\nu_\kappa\ge0,
+\qquad c_1-c_2=\int\lambda(1-\lambda)d\nu_\kappa\ge0.
+\tag{27.2}
+$$
+
+非负连续函数积分为零强制其在支撑上为零，故
+$c_2=c_1^2$ 恰在 $\nu_\kappa=\delta_{c_1}$；
+$c_2=c_1$ 恰在 $\nu_\kappa=(1-c_1)\delta_0+c_1\delta_1$。
+这是经典矩三角形及精确支撑步骤，参见
+[Schmüdgen Lecture 3 与 Proposition 9.2](../../../Library/Estimation/schmudgen2020moment.md)。
+近似等号不能给这两种精确谱。若从数值表反建测度，单独 $H_d\ge0$
+也不能替代该文的区间 localizing 条件；本节的测度由假设25已经供应。
+
+对端点质量，直接消费
+[Simon 的 Christoffel 变分原理与原子极限](../../../Library/Estimation/simon2008christoffel.md)，
+其参数为 $x=1$、$\mu=\nu_\kappa$。具体地，写
+$Q(\lambda)=\sum_{j=0}^d q_j\lambda^j$，则
+$\int Q^2d\nu_\kappa=q^TH_dq$，约束是 $v_d^Tq=1$。
+当 $H_d>0$ 时，在此内积下的 Cauchy–Schwarz 给
+
+$$
+B_d=(v_d^TH_d^{-1}v_d)^{-1},\qquad
+q_* =\frac{H_d^{-1}v_d}{v_d^TH_d^{-1}v_d}.
+\tag{27.3}
+$$
+
+当 $H_d$ 奇异时保留原来的约束二次最小化，不写逆矩阵。
+所有情形下，每个可行 $Q$ 在端点的一份积分贡献就是 $a_\infty$；
+次数增加扩充可行集，$Q(\lambda)=\lambda^d$ 给上界 $c_{2d}$。
+由 (26.5) 的极限夹逼得 $B_d\to a_\infty$，包括有限支撑与奇异情形。
+此变分界不承诺任意有限矩资料下都有一个达到 $B_d$ 的 $[0,1]$ 谱；
+下面只证明给出的具体资料确有达到者。
+
+取
+
+$$
+\mu_U=d\lambda\big|_{[0,1]},\qquad
+\mu_E=\tfrac34\delta_{1/3}+\tfrac14\delta_1.
+\tag{27.4}
+$$
+
+两谱的 $(c_0,c_1,c_2)=(1,1/2,1/3)$。代入 (27.3) 得
+$Q_*=(3\lambda-1)/2$、$B_1=1/4$，而二者的持久量为零与 $1/4$。
+三阶矩分别是 $1/4$ 与 $5/18$。将此校准装入同一合法纤维：
+$\nu_0=\nu_{13}=\mu_E$、$\nu_1=\nu_3=\mu_U$，
+$X=Y=1/2,Z=0$（$\nu_2$ 任取固定概率）。于是
+
+$$
+c_0=1,\quad c_1=\tfrac12,\quad c_2=\tfrac13,\quad
+B_1=\tfrac14,\quad a_\infty(\kappa)=\tfrac\kappa2,\quad
+c_3(\kappa)=\tfrac14+\tfrac\kappa{18}.
+\tag{27.5}
+$$
+
+定理26把前三个相同矩提升为任意两次调用的全输出盲性，第三次的
+$Z_{\rm P}$ 期望则可分离；有限证书在整个盲纤维上是同一个上界，
+不能被误读为已经识别出端点质量。这是 (27.4) 在本实验内的用途。
+
+再消费所引矩核的支撑性质。对实
+$P(\lambda)=\sum_{j=0}^d a_j\lambda^j$，有
+
+$$
+R_P=\sum_{i,j=0}^d a_i a_jc_{i+j},\qquad
+R_P=0
+\ \Longleftrightarrow\ \operatorname{supp}\nu_\kappa\subseteq\{P=0\}
+\ \Longleftrightarrow\ \sum_{j=0}^d a_jc_{n+j}=0\quad\text{对所有 }n\ge0.
+\tag{27.6}
+$$
+
+第一等价由非负连续函数 $P^2$；支撑条件给所有有符号递推。
+反向不需从有限个递推猜测未来：已假设全部 $n\ge0$，将其中
+$n=0,\ldots,d$ 的等式分别乘 $a_n$ 并求和，恰得 $R_P=0$。
+$P=0$ 时这些条件全为真，却不限制支撑；非零一元多项式的零点有限
+才给有限支撑。更精确地，令 $r_s(P)=\int P^2d\nu_s\ge0$，则
+
+$$
+R_P(\kappa)=\sum_s p_{\kappa,s}r_s(P)=0
+\quad\Longleftrightarrow\quad
+r_s(P)=0\ \text{对每个 }p_{\kappa,s}>0\text{ 的模式}.
+\tag{27.7}
+$$
+
+所以证书约束同一个来源的有效模式，不能以不同模式分别最优代替
+共同实现。对 $P=(\lambda-a)(\lambda-b)$，展开给
+
+$$
+\begin{aligned}
+R_{a,b}={}&c_4-2(a+b)c_3+\bigl((a+b)^2+2ab\bigr)c_2\\
+ &-2ab(a+b)c_1+a^2b^2,\\
+R_{a,b}=0&\ \Longrightarrow\
+c_{n+2}=(a+b)c_{n+1}-ab c_n\quad(n\ge0).
+\end{aligned}
+\tag{27.8}
+$$
+
+此处根可为实数；支撑总还要与 $[0,1]$ 相交。以下投影估计另需根域。
+为证明仅检查递推的最初几处不够，取
+
+$$
+\mu_A=\tfrac12(\delta_{1/3}+\delta_{2/3}),\qquad
+\mu_B=\tfrac1{18}\delta_0+\tfrac89\delta_{1/2}+\tfrac1{18}\delta_1.
+\tag{27.9}
+$$
+
+两谱共有 $(c_0,c_1,c_2,c_3)=(1,1/2,5/18,1/6)$。
+对 $a=1/3,b=2/3$，两者在 $n=0,1$ 的有符号递推均成立，但
+$c_4^A=17/162$、$c_4^B=1/9$，所以 $R_{a,b}^A=0$、
+$R_{a,b}^B=1/162$。将 $\nu_0=\nu_{13}=\mu_A$，
+$\nu_1=\nu_3=\mu_B$ 放入 $X=Y=1/2,Z=0$，则
+
+$$
+R_{1/3,2/3}(\kappa)=\frac{1-2\kappa}{162},\qquad
+ a_\infty(\kappa)=\frac{1-2\kappa}{18}.
+\tag{27.10}
+$$
+
+前三次调用的完整输出在整条纤维上相同，但第四阶零残差唯一给
+$\kappa=1/2$、两根支撑及零持久量。反之每个 $\kappa<1/2$ 仍有相同的
+两个最初递推等式，却有正端点质量。这为 (27.6) 的精确/有限截断区别
+提供同一来源实验内的消费者。
+
+现额外限制 $0\le a<b\le1$，置 $g=b-a>0$，
+$d(\lambda)=\min(|\lambda-a|,|\lambda-b|)$，并以一个固定可测最近根
+选择 $\pi(\lambda)\in\{a,b\}$（中点任选固定一侧）。两个距离的最大值
+至少 $g/2$，故
+
+$$
+d(\lambda)^2\le\frac4{g^2}(\lambda-a)^2(\lambda-b)^2,
+\qquad \int d^2d\nu_\kappa\le\frac{4R_{a,b}(\kappa)}{g^2}.
+\tag{27.11}
+$$
+
+定义 $\widetilde\nu_\kappa=\pi_*\nu_\kappa$；它仍是 $[0,1]$ 上概率，
+而且 $\widetilde\nu_\kappa=\sum_s p_{\kappa,s}\pi_*\nu_s$，保持同一模式
+混合权重。$n\ge1$ 时 $\lambda\mapsto\lambda^n$ 在 $[0,1]$ 上 Lipschitz
+常数至多 $n$，由 Cauchy–Schwarz 得
+
+$$
+|c_n(\kappa)-\widetilde c_n(\kappa)|
+ \le n\int d\,d\nu_\kappa
+ \le\frac{2n\sqrt{R_{a,b}(\kappa)}}g.
+\tag{27.12}
+$$
+
+$n=0$ 的差为零。若两根不在 $[0,1]$，距离估计 (27.11) 仍可成立，
+但投影可能离开谱域，$n$ 的 Lipschitz 常数和合法通道来源结论不能照用。
+这个耦合在每个有限 $n$ 控制矩，不宣称全部时间统一精确相同。
+
+在 (27.9) 的根处，若 $c_0=1$ 精确、$\widehat c_1,\ldots,\widehat c_4$
+各有绝对误差至多 $\varepsilon\ge0$，则多项式
+$P^2=\lambda^4-2\lambda^3+(13/9)\lambda^2-(4/9)\lambda+4/81$ 给
+
+$$
+|\widehat R-R|\le\frac{44}{9}\varepsilon.
+\tag{27.13}
+$$
+
+因此投影界可以使用 $R\le\widehat R+44\varepsilon/9$，前提仍是有一份
+满足误差合同的真实概率来源；若右边负，数据与该合同不相容。
+对 (27.10) 更得到
+$|\widehat a-a_\infty|\le44\varepsilon$，其中
+$\widehat a=9\widehat R$，并可和 $0\le a_\infty\le1/18$ 交取。
+这个校准专属逆式没有把小估计残差认证为真残差零。
+
+对“近完全保留”的边界，使用连续谱
+$\mu_\epsilon=\operatorname{Unif}[1-\epsilon,1]$，$0<\epsilon\le1$。
+直接积分及 $1-\lambda^n\le n(1-\lambda)$ 给
+
+$$
+c_n^\epsilon=\frac{1-(1-\epsilon)^{n+1}}{(n+1)\epsilon},\qquad
+0\le1-c_n^\epsilon\le\frac{n\epsilon}{2},\qquad
+\mu_\epsilon(\{1\})=0.
+\tag{27.14}
+$$
+
+每个固定有限层可任意接近完全保留，仍有 $c_n^\epsilon\to0$。
+将 (26.13) 的均匀谱换成此谱，得到同一个合法纤维
+$\nu_\kappa=2\kappa\delta_1+(1-2\kappa)\mu_\epsilon$。
+其两端的持久量为零与一，而任意固定有限阶矩差可任意小。
+对一般假设25的自适应实验也有有限层近似：
+$\|\mathcal D_\lambda-\mathrm{id}\|_\diamond\le2(1-\lambda)$。
+逐次替换调用，仪器（连同完整经典记录）是收缩映射，故任意至多 $N$
+调用策略的两端输出在完整经典—量子迹范数中相差至多
+$2N\int(1-\lambda)d\mu_\epsilon=N\epsilon$。
+连续记录时使用算子值测度的变差范数；其收缩性由对每个可测分割的
+完全正仪器迹范数收缩得到。于是任何事后事件测试的概率差至多
+$N\epsilon/2$，但稀有事件后的归一化态不享有无概率因子的同一界。
+这里的混合是已保留的 $\lambda$，逐次替换在给定同一个 $\lambda$ 的
+过程上进行，之后才积分。
+
+若另知实际谱隙
+$\operatorname{supp}\nu_\kappa\subseteq[0,1-\delta]\cup\{1\}$，
+$0<\delta\le1$，则 $n\ge1$ 时可分开端点和其余质量，得
+
+$$
+\begin{aligned}
+a_\infty&\le c_n\le a_\infty+(1-a_\infty)(1-\delta)^n,\\
+\max\left(0,\frac{c_n-(1-\delta)^n}{1-(1-\delta)^n}\right)
+ &\le a_\infty\le c_n.
+\end{aligned}
+\tag{27.15}
+$$
+
+$\delta>0,n\ge1$ 使分母正；$\delta=1$ 时所有正阶矩恰等于端点质量。
+若矩误差至多 $e\ge0$，可分别用 $\widehat c_n-e$ 代入下界、
+$\widehat c_n+e$ 代入上界，并与 $[0,1]$ 交取。这是已知谱隙的条件证书；
+没有谱隙或额外校准时，不存在由“已经等了有限步”单独供应的统一预算。
+(27.14) 也不否认 (27.2)、(27.6) 所允许的特殊精确数据证书。
+
+最后，在假设25另供的成功仪器下，固定同一份 $\nu_\kappa$，若
+$c_n(\kappa)>0$，贝叶斯公式给连续 $n$ 次成功后的谱后验及下一次成功率
+
+$$
+d\nu_{\kappa,n}=\frac{\lambda^n}{c_n(\kappa)}d\nu_\kappa,\qquad
+r_n=\frac{c_{n+1}}{c_n},\qquad
+c_nc_{n+2}-c_{n+1}^2
+ =c_n^2\operatorname{Var}_{\nu_{\kappa,n}}(\lambda)\ge0.
+\tag{27.16}
+$$
+
+这把经典条件矩计算应用到同一模式来源：其模式后验权重为
+$p_{\kappa,s}m_{s,n}/c_n(\kappa)$；$m_{s,n}=0$ 的模式权为零，无需定义
+其条件谱。全后验端点质量为 $a_\infty(\kappa)/c_n(\kappa)$。
+特别地 (26.13) 的均匀端 $\kappa=0$ 给
+
+$$
+d\nu_{0,n}=(n+1)\lambda^n d\lambda,\qquad
+r_n=\frac{n+1}{n+2}\longrightarrow1.
+\tag{27.17}
+$$
+
+每个有限后验仍无端点原子，但对任意 $0<t<1$，其 $[0,t]$ 质量为
+$t^{n+1}\to0$，故弱收敛到 $\delta_1$；条件事件的原概率却为
+$1/(n+1)\to0$。因而这个纤维端的高后验成功率既没有建立原始持久量，
+也没有为仅通道实验增加一个成功读口。若有实际错误档案与反馈，
+[二阶关系卷第113、114章](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)
+已给另一恢复任务；局部缩放也不意味着整个环境的信息销毁。证毕。
+
+## 追加锚（本行以下为增补区）

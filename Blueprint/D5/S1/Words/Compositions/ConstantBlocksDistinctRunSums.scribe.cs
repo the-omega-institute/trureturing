@@ -43,6 +43,8 @@ internal sealed class ConstantBlocksDistinctRunSumsDocument : IScribeDocumentDef
                 + "then certifies that these blocks are exactly the maximal runs. Conversely, "
                 + "the maximal runs themselves provide the constant-block decomposition.",
                 DescribeRole.Theorem),
+            Node("split_replicates", "Splitting positive alternating constant blocks", Disp(All(Name("l"), Seq(Name("List"), Sp, Par(Seq(Name("Nat"), Sp, Times, Sp, Name("Nat")))), Seq(Par(Seq(Forall, Sp, Name("b"), Sp, InMacro, Sp, Name("l"), Sp, Comma, Sp, D(0), Sp, Lt, Sp, Name("b.2"))), Sp, To, Sp, Par(Seq(Par(Seq(Name("l.map"), Sp, Name("Prod.fst"))), Sp, Dot, Sp, Name("IsChain"), Sp, Par(Seq(Name("fun"), Sp, Name("a"), Sp, Name("b"), Sp, Mapsto, Sp, Name("a"), Sp, Neq, Sp, Name("b"))))), Sp, To, Sp, Par(Seq(Par(Seq(Par(Seq(Name("l.map"), Sp, Par(Seq(Name("fun"), Sp, Name("b"), Sp, Mapsto, Sp, Name("List.replicate"), Sp, Name("b.2"), Sp, Name("b.1"))))), Sp, Dot, Sp, Name("flatten"))), Sp, Dot, Sp, Name("splitBy"), Sp, Par(Seq(Name("fun"), Sp, Name("a"), Sp, Name("b"), Sp, Mapsto, Sp, App(Q("BEq", "beq"), Name("a"), Name("b")))), Sp, Eq, Sp, Name("l.map"), Sp, Par(Seq(Name("fun"), Sp, Name("b"), Sp, Mapsto, Sp, Name("List.replicate"), Sp, Name("b.2"), Sp, Name("b.1")))))))),
+                "Positive block multiplicities and different consecutive values make the displayed blocks exactly the maximal runs returned by List.splitBy.", DescribeRole.Theorem),
             Node("card_constantBlocks_eq_distinctRunSums", "The A382427 counting identity", CountFormula(),
                 "The pointwise equivalence identifies two filters of the same finite type "
                 + "Nat.Partition(n), and hence their cardinalities. This holds for every n, "
@@ -58,6 +60,20 @@ internal sealed class ConstantBlocksDistinctRunSumsDocument : IScribeDocumentDef
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, claim);
 
+
+    private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(Seq(F.Id(owner), Dot, F.Id(name))));
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Name(string name) {
+        var parts = name.Split('.');
+        Formula value = Word(parts[0]);
+        for (var i = 1; i < parts.Length; i++) value = Seq(value, Dot, Word(parts[i]));
+        return value;
+    }
+    private static Formula Word(string word) {
+        if (word == "1") return D(1);
+        if (word == "2") return D(2);
+        return Seq(Operatorname, Grp(F.Id(word)));
+    }
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula Par(Formula f) => Seq(Open, f, Close);
