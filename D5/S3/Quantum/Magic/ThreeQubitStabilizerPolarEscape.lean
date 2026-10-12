@@ -546,7 +546,8 @@ private lemma conjugate_S_support {ρ : Op 3} (hρ : ρ ∈ STAB 3) :
     have he := congrArg conjugate (gamma_anticommute i j h)
     simpa only [conjugate_product, conjugate_neg] using he
 
-private lemma vacuum_vec (n : ℕ) : vacuum n = Matrix.vecMulVec (Pi.single 0 1) (star (Pi.single 0 1)) := by
+private lemma vacuum_vec (n : ℕ) :
+    vacuum n = Matrix.vecMulVec (Pi.single 0 1) (star (Pi.single 0 1)) := by
   have h0 : (fun _ : Fin n => Fin.castSucc (Fin.last 0)) = 0 := by
     funext i
     apply Fin.ext
@@ -589,39 +590,109 @@ private lemma stab_state {n : ℕ} {η : Op n} (hη : η ∈ STAB n) : IsState �
     simp only [Matrix.trace_add, Matrix.trace_smul, hAt, hBt]
     simpa [Algebra.smul_def] using congrArg (fun x : ℝ => (x : ℂ)) hab
 
-private def gateX : Matrix (Fin 2) (Fin 2) ℂ := gateH * gateS * gateS * gateH
-private def prep : Pauli → Fin 2 → Matrix (Fin 2) (Fin 2) ℂ
-  | .I, 0 => 1 | .I, 1 => gateX
-  | .X, 0 => gateH | .X, 1 => gateH * gateX
-  | .Y, 0 => gateS * gateH | .Y, 1 => gateS * gateH * gateX
-  | .Z, 0 => 1 | .Z, 1 => gateX
-private def prepUnit (w : Fin 3 → Pauli) (b : Bits 3) : Op 3 :=
-  localOp 0 (prep (w 0) (b 0)) * localOp 1 (prep (w 1) (b 1)) *
-    localOp 2 (prep (w 2) (b 2))
-
-private lemma local_gate_mem {n : ℕ} (i : Fin n) :
-    localOp i gateH ∈ Clifford n ∧ localOp i gateS ∈ Clifford n ∧
-      localOp i gateX ∈ Clifford n := by
-  have hH : localOp i gateH ∈ Clifford n :=
-    Submonoid.subset_closure (Or.inl (Or.inl ⟨i, rfl⟩))
-  have hS : localOp i gateS ∈ Clifford n :=
-    Submonoid.subset_closure (Or.inl (Or.inr (Or.inl ⟨i, rfl⟩)))
-  refine ⟨hH, hS, ?_⟩
-  rw [gateX, ← local_product, ← local_product, ← local_product]
-  exact (Clifford n).mul_mem ((Clifford n).mul_mem ((Clifford n).mul_mem hH hS) hS) hH
-
-private lemma prepUnit_mem (w : Fin 3 → Pauli) (b : Bits 3) : prepUnit w b ∈ Clifford 3 := by
-  have h (i : Fin 3) (p : Pauli) (q : Fin 2) : localOp i (prep p q) ∈ Clifford 3 := by
-    cases p <;> fin_cases q
-    all_goals simp only [prep]
-    case I.«0» => rw [local_identity]; exact (Clifford 3).one_mem
-    case I.«1» => exact (local_gate_mem i).2.2
-    case X.«0» => exact (local_gate_mem i).1
-    case X.«1» => rw [← local_product]; exact (Clifford 3).mul_mem (local_gate_mem i).1 (local_gate_mem i).2.2
-    case Y.«0» => rw [← local_product]; exact (Clifford 3).mul_mem (local_gate_mem i).2.1 (local_gate_mem i).1
-    case Y.«1» => rw [← local_product, ← local_product]; exact (Clifford 3).mul_mem ((Clifford 3).mul_mem (local_gate_mem i).2.1 (local_gate_mem i).1) (local_gate_mem i).2.2
-    case Z.«0» => rw [local_identity]; exact (Clifford 3).one_mem
-    case Z.«1» => exact (local_gate_mem i).2.2
-  exact (Clifford 3).mul_mem ((Clifford 3).mul_mem (h 0 (w 0) (b 0)) (h 1 (w 1) (b 1)))
-    (h 2 (w 2) (b 2))
+private lemma H_mem {n : ℕ} (i : Fin n) : localOp i gateH ∈ Clifford n :=
+  Submonoid.subset_closure (Or.inl (Or.inl ⟨i, rfl⟩))
+private lemma CNOT_mem {n : ℕ} (c t : Fin n) (h : c ≠ t) :
+    gateCNOT c t ∈ Clifford n :=
+  Submonoid.subset_closure (Or.inl (Or.inr (Or.inr ⟨c, t, h, rfl⟩)))
+private lemma cnot_mulVec {n : ℕ} (c t : Fin n) (h : c ≠ t) (v : Bits n → ℂ) :
+    gateCNOT c t *ᵥ v = fun x => v (cnotBits c t x) := by
+  ext x
+  have hi := cnot_involutive c t h
+  have he (y : Bits n) : x = cnotBits c t y ↔ y = cnotBits c t x :=
+    ⟨fun e => by rw [e, hi], fun e => by rw [e, hi]⟩
+  change (∑ y, (if x = cnotBits c t y then 1 else 0) * v y) = _
+  simp only [he, ite_mul, one_mul, zero_mul]
+  simp
+private def bellCircuit : Op 6 :=
+  gateCNOT 2 5 * gateCNOT 1 4 * gateCNOT 0 3 *
+    (localOp 0 gateH * localOp 1 gateH * localOp 2 gateH)
+private lemma bellCircuit_mem : bellCircuit ∈ Clifford 6 := by
+  unfold bellCircuit
+  exact (Clifford 6).mul_mem
+    ((Clifford 6).mul_mem ((Clifford 6).mul_mem
+      (CNOT_mem 2 5 (by decide)) (CNOT_mem 1 4 (by decide)))
+      (CNOT_mem 0 3 (by decide)))
+    ((Clifford 6).mul_mem ((Clifford 6).mul_mem (H_mem 0) (H_mem 1)) (H_mem 2))
+private lemma bellCircuit_vec : bellCircuit *ᵥ Pi.single 0 1 =
+    fun x => if (splitBits 3 3 x).1 = (splitBits 3 3 x).2 then
+      ((Real.sqrt 2 / 2 : ℝ) : ℂ) ^ 3 else 0 := by
+  have he (x : Bits 6) : (localOp 0 gateH * localOp 1 gateH * localOp 2 gateH : Op 6) x 0 =
+      if x 3 = 0 ∧ x 4 = 0 ∧ x 5 = 0 then
+        ((Real.sqrt 2 / 2 : ℝ) : ℂ) ^ 3 else 0 := by
+    have hh (a : Fin 2) : gateH a 0 = ((Real.sqrt 2 / 2 : ℝ) : ℂ) := by
+      fin_cases a <;> simp [gateH,
+        D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
+        D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2,
+        pauliMatrix, qubitX, qubitZ]
+    unfold localOp
+    rw [tensor_mul, tensor_mul]
+    simp only [tensorOp, Matrix.of_apply, Fin.prod_univ_succ]
+    simp only [Function.update_self, Function.update_of_ne (by decide : (0 : Fin 6) ≠ 1),
+      Function.update_of_ne (by decide : (0 : Fin 6) ≠ 2)]
+    simp [hh, Matrix.one_apply, pow_succ]
+    split_ifs <;> simp_all [mul_assoc]
+  unfold bellCircuit
+  rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec]
+  rw [cnot_mulVec _ _ (by decide), cnot_mulVec _ _ (by decide),
+    cnot_mulVec _ _ (by decide)]
+  ext x
+  simp only [Matrix.mulVec_single_one, Matrix.col_apply, he]
+  have hz (a b : Fin 2) : a + b = 0 ↔ a = b := by revert a b; decide
+  have hs : (splitBits 3 3 x).1 = (splitBits 3 3 x).2 ↔
+      x 0 = x 3 ∧ x 1 = x 4 ∧ x 2 = x 5 := by
+    constructor
+    · intro h
+      exact ⟨congrFun h 0, congrFun h 1, congrFun h 2⟩
+    · rintro ⟨h0, h1, h2⟩
+      funext i; fin_cases i <;> assumption
+  simp [cnotBits, hz, hs, eq_comm]
+private lemma bell_prepared : bell = bellCircuit * vacuum 6 * bellCircuitᴴ := by
+  rw [vacuum_vec, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+  rw [← Matrix.star_mulVec, bellCircuit_vec]
+  have hs : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
+    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have hr : ((Real.sqrt 2 / 2 : ℝ) : ℂ) ^ 2 = (1 / 2 : ℂ) := by
+    calc
+      _ = (((Real.sqrt 2 / 2) ^ 2 : ℝ) : ℂ) := (Complex.ofReal_pow _ _).symm
+      _ = ((1 / 2 : ℝ) : ℂ) := congrArg Complex.ofReal hs
+      _ = _ := by norm_num
+  ext x y
+  change (if _ ∧ _ then (1 / 8 : ℂ) else 0) =
+    (if _ then _ else 0) * star (if _ then _ else 0)
+  by_cases hx : (splitBits 3 3 x).1 = (splitBits 3 3 x).2 <;>
+    by_cases hy : (splitBits 3 3 y).1 = (splitBits 3 3 y).2
+  all_goals simp only [hx, hy, and_self, and_false, false_and, if_true, if_false,
+    star_pow, Complex.star_def, Complex.conj_ofReal, map_zero, mul_zero, zero_mul]
+  rw [← pow_add, show (3 + 3 : ℕ) = 2 * 3 from rfl, pow_mul, hr]
+  norm_num
+private lemma bell_mem : bell ∈ STAB 6 :=
+  subset_convexHull ℝ (PureStabilizer 6) ⟨bellCircuit, bellCircuit_mem, bell_prepared⟩
+private lemma bell_trace (A B : Op 3) :
+    tr (bell * tensor A (conjugate B)) = tr (A * Bᴴ) / 8 := by
+  let e : Bits 6 ≃ Bits 3 × Bits 3 :=
+    { toFun := splitBits 3 3, invFun := fun p => Fin.append p.1 p.2
+      left_inv := fun x => Fin.append_castAdd_natAdd
+      right_inv := by
+        intro p
+        apply Prod.ext
+        · funext i; exact Fin.append_left p.1 p.2 i
+        · funext i; exact Fin.append_right p.1 p.2 i }
+  have ht : (bell * tensor A (conjugate B)).trace = (1 / 8 : ℂ) * (A * Bᴴ).trace := by
+    change (∑ x : Bits 6, ∑ y : Bits 6,
+      (if (e x).1 = (e x).2 ∧ (e y).1 = (e y).2 then (1 / 8 : ℂ) else 0) *
+        (A (e y).1 (e x).1 * star (B (e y).2 (e x).2))) = _
+    rw [← e.symm.sum_comp]
+    simp only [Equiv.apply_symm_apply]
+    conv_lhs => arg 2; ext x; rw [← e.symm.sum_comp]
+    simp only [Equiv.apply_symm_apply, Fintype.sum_prod_type, ite_mul, zero_mul]
+    simp only [ite_and, Finset.sum_ite_irrel, Finset.sum_const_zero,
+      Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    simp only [← Finset.mul_sum, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+      Matrix.conjTranspose_apply]
+    congr 1
+    rw [Finset.sum_comm]
+  unfold tr
+  rw [ht]
+  simp [Complex.mul_re, div_eq_mul_inv, mul_comm]
 end D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
