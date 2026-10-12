@@ -241,4 +241,20 @@ private theorem suffix_q (lam : ℝ) (t : ℕ) :
     ∑ a : Fin 3 → Bool, A (a 0) (a 2) * P lam t 3 a at h3
   exact h4.trans (h3.trans (q_sum lam t).symm)
 
+private theorem density_succ (lam : ℝ) (t : ℕ) :
+    d lam (t + 1) = lam + (1 - 2 * lam) * q lam t := by
+  calc
+    d lam (t + 1) = ∑ a : Fin 3 → Bool, p lam (a 0) (a 1) (a 2) * P lam t 3 a := by
+      unfold d
+      rw [P_succ]
+      dsimp only [evolve]
+      simp only [Fin.prod_univ_one]
+      rfl
+    _ = lam * (∑ a : Fin 3 → Bool, P lam t 3 a) +
+        (1 - 2 * lam) * (∑ a : Fin 3 → Bool, A (a 0) (a 2) * P lam t 3 a) := by
+      simp_rw [p_affine, add_mul, mul_assoc, Finset.sum_add_distrib]
+      rw [← Finset.mul_sum, ← Finset.mul_sum]
+    _ = lam + (1 - 2 * lam) * q lam t := by
+      rw [normalized, ← q_sum, mul_one]
+
 end D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
