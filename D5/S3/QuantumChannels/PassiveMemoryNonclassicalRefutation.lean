@@ -9,12 +9,6 @@
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.Hadamard
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -134,7 +128,7 @@ private theorem controlled_apply (p q : Fin 3 × Fin 2) :
         if p.1 = 0 then (if p.2 = q.2 then 1 else 0)
         else if p.1 = 1 then qubitX p.2 q.2 else qubitZ p.2 q.2
       else 0 := by
-  simp only [controlled, Matrix.submatrix_apply, Matrix.blockDiagonal_apply,
+  simp only [controlled.eq_1, Matrix.submatrix_apply, Matrix.blockDiagonal_apply,
     Prod.swap]
   rw [controls_apply]
 
