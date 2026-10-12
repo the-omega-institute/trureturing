@@ -217,8 +217,8 @@ private lemma stopped_event_density (ν : Measure Seed) [IsProbabilityMeasure ν
   let E := fun k : ℕ => s ∩ {ω | τ ω = k}
   have hE : ∀ k, MeasurableSet[seededFiltration k] (E k) := by
     intro k
-    simpa only [E, WithTop.coe_eq_coe] using
-      (hτ.measurableSet_inter_eq_iff s hs k).mp
+    simpa [E] using
+      (hτ.measurableSet_inter_eq_iff s k).mp
         (hs.inter (hτ.measurableSet_eq' k))
   have hu : s = ⋃ k, E k := by ext ω; simp [E]
   have hd : Pairwise (fun i j => Disjoint (E i) (E j)) := by
@@ -235,6 +235,7 @@ private lemma stopped_event_density (ν : Measure Seed) [IsProbabilityMeasure ν
     _ = ∫⁻ ω in E k, ENNReal.ofReal (Like p₀ p k ω) ∂Law ν p₀ := by
       apply setLIntegral_congr_fun (seededFiltration.le k _ (hE k))
       intro ω hω
+      change ENNReal.ofReal (Like p₀ p (τ ω) ω) = ENNReal.ofReal (Like p₀ p k ω)
       rw [hω.2]
     _ = _ := by
       rw [← withDensity_apply _ (seededFiltration.le k _ (hE k))]
@@ -252,7 +253,7 @@ theorem bernoulli_stopped_output_identity (ν : Measure Seed) [IsProbabilityMeas
   have ht : ((Law ν p₀).withDensity
       (fun ω => ENNReal.ofReal (Like p₀ p (τ ω) ω))).trim hτ.measurableSpace_le =
       (Law ν p).trim hτ.measurableSpace_le := by
-    apply Measure.ext
+    refine @Measure.ext _ hτ.measurableSpace _ _ ?_
     intro s hs
     rw [trim_measurableSet_eq _ hs, trim_measurableSet_eq _ hs]
     exact stopped_event_density ν p₀ p h₀ h₁ τ hτ s hs
@@ -516,7 +517,7 @@ private lemma endpoint_budget_finite {Ω : Type*} [MeasurableSpace Ω] (μ : Mea
       ← ENNReal.ofReal_mul hG.le]
     exact ENNReal.ofReal_le_ofReal (dyadic_truncation_kernel a m ha ham t K)
 
-private lemma stopped_like_measurable (p₀ p : unitInterval)
+lemma stopped_like_measurable (p₀ p : unitInterval)
     (τ : Seed × (ℕ → Bool) → ℕ) (hτ : Measurable τ) :
     Measurable (fun ω => Like p₀ p (τ ω) ω) := by
   have hjoint : Measurable (fun z : ℕ × (Seed × (ℕ → Bool)) => Like p₀ p z.1 z.2) :=
