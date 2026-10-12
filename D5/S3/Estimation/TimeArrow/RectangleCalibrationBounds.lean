@@ -335,7 +335,7 @@ from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 
 /-- Quantitative feedback in a common compensated root box. Its size is
 controlled by the same full variance, rather than an independent denominator. -/
-private theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
+theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
     (ha : 0 < a) (haD : a ≤ D) (hDb : D ≤ b)
     (hB : 0 ≤ B) (hd : 0 ≤ d) (hneg : checkerboard r ε x ≤ -d)
     (hx : |x| ≤ X) (hbox : |x| ≤ Real.log 2) :
@@ -395,7 +395,7 @@ private theorem compensated_feedback_bounds (r ε x B D d a b X : ℝ)
 
 /-- One rectangle-independent compensated root box works for every
 outside histogram and both native experiments. -/
-private theorem compensated_feedback_box {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+theorem compensated_feedback_box {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     ∃ d δ : ℝ, 0 < d ∧ 0 < δ ∧ δ ≤ Real.log 2 ∧
       ∀ ε x : ℝ, |ε| < δ → |x| < δ → checkerboard r ε x ≤ -d := by
   obtain ⟨d, hd, hh⟩ := checkerboard_negative_neighborhood hr hr1

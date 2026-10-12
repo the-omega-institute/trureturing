@@ -39,7 +39,7 @@ from D5.S3.Estimation.TimeArrow.SharedRectangleCalibration
 
 /-- The native environment fixes the complete sigmoid equation, including
 its derivative. The variance is not supplied as an independent surrogate. -/
-private theorem native_environment_mean_variance {M q s : ℕ} (S : Support M q)
+theorem native_environment_mean_variance {M q s : ℕ} (S : Support M q)
     (r : ℝ) (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (k l : ℕ)
     (y z : Fiber S e o)
     (henv : nativeMinimalRectangleReadout S e o k l y = nativeMinimalRectangleReadout S e o k l z)
@@ -611,7 +611,7 @@ private theorem hypergeometric_predicate_bound {N R U : ℕ}
 
 /-- Balanced margins give one root curve on an open neighborhood of the
 whole central interval, not a collection of separately chosen roots. -/
-private theorem balanced_shared_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ)
+theorem balanced_shared_curve {ι : Type*} [Fintype ι] (outside : ι → ℝ)
     (r ε N R U q δ w : ℝ) (hN : 0 < N) (hq : 0 < q)
     (hqM : q < (Fintype.card ι : ℝ) + N) (hδ : 0 < δ) (hw : w ≤ δ^2*N/2)
     (hRlo : δ*N ≤ R) (hRhi : R ≤ (1-δ)*N)
@@ -754,7 +754,7 @@ private theorem central_calibration_kernel_estimate (r : ℝ) (hr : 0 < r) (hr1 
 
 /-- The rectangle and all remaining candidate rows partition the original
 M rows, so the root range uses the original support-size condition. -/
-private theorem native_outside_rectangle_card {M q s : ℕ} (S : Support M q)
+theorem native_outside_rectangle_card {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) (k l : ℕ) (z : Fiber S e o) :
     Fintype.card {i : Fin M // nativeRowCell S e z.val k l i = none} +
       (nativeRectangleRows S e o k l z).card = M := by
