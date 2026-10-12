@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelTVTopology
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelTVTopology
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -11,6 +11,9 @@ import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.MeasureTheory.Function.AEEqOfIntegral
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativePaidHistoryCommonRowRisks
 import Mathlib.Topology.EMetricSpace.Lipschitz
+
+/- This instance layer retains the native descriptor and paid-history dependency family.
+   The I classification does not enlarge its original endpoint boxes or mathematical quantifiers. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

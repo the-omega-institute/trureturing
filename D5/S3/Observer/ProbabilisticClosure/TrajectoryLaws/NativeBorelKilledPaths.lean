@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelKilledPaths
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelKilledPaths
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -9,6 +9,9 @@
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelEndpointIdentification
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass
 import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+
+/- This instance layer retains the native descriptor and paid-history dependency family.
+   The I classification does not enlarge its original endpoint boxes or mathematical quantifiers. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

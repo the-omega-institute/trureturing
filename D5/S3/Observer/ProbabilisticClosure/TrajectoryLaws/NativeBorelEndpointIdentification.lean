@@ -1,5 +1,5 @@
 /- GID: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelEndpointIdentification
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelEndpointIdentification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,6 +7,9 @@
    digest: The surviving stationary class determines the complete upper native law. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelStationaryLocalization
+
+/- This instance layer retains the native descriptor and paid-history dependency family.
+   The I classification does not enlarge its original endpoint boxes or mathematical quantifiers. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

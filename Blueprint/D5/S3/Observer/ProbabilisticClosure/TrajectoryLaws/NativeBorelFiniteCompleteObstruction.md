@@ -138,6 +138,8 @@ $$
 
 Write m(n)=averagedCompletion(n). Here recurrenceResidual(n) denotes m(n+2)-(2/9+6/25)*m(n+1)+(2/9)*(6/25)*m(n). The exact moment representation and integrability identify it with the integral of curveG(x)*x^n*(x-2/9)*(x-6/25) against the same curveUniform law. On its conull half-open carrier, curveG(x)>0, x>2/9 and x<6/25, so this integrable expression has strictly negative integral for every natural n, including 0, 1 and 2. Failure of this fixed two-root recurrence alone does not exclude every finite carrier; the finite COMPLETE exclusion uses the all-order polynomial-moment argument and actual installed-law transfer in NativeBorelFiniteCompleteObstruction.
 
+NativeFiniteWordCoordinates owns the periodic curve parameters and the installed cylinder-transfer suppliers. Their original declaration namespace is retained. The full continuous descriptors, common flow, moment obstruction and finite COMPLETE conclusion are owned here.
+
 Z is any finite original COMPLETE carrier with its measurable space and measurable singletons. M is its original Observer with source-independent initialization and acquired-operation update rows. e is any lawful InstalledEmitter(M), with arbitrary real probability tables. rho is any starting configuration PMF on this same Z. sumConfigurations is sum over z of rho(z).toReal times the real singleton mass of the actual tailLaw(M,e,p,z). It therefore includes arbitrary original acquired starting distributions.
 
 All moments are the original averagedCompletion(n), the integral of g(x)x^n against curveUniform on [239/1000,6/25). For a real polynomial p, recurrenceSum(p,N,n) is the sum over i in p.support of p.coeff(i) averagedCompletion(N+n+i). Every finite order and every finite initial offset N is included.
@@ -191,5 +193,6 @@ The strictly negative two-endpoint recurrence is one diagnostic of this same con
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelFiniteCompleteObstruction.recovered_curve`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelFiniteCompleteObstruction.recovered_measurable`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelFiniteProducts](NativeBorelFiniteProducts.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeFiniteWordCoordinates](NativeFiniteWordCoordinates.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw](NativeInstalledFullLaw.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw](NativePeriodicWordLaw.md)
