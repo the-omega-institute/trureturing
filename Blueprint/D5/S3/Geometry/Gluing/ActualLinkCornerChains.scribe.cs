@@ -13,7 +13,7 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("actual-link-faceperm"),
                 DeclarationHandle.Create(Prefix + "facePerm"), H("The original whole-face permutations"),
                 StatementSource.FromAuthor(F.Disp(FormulaFor("facePerm"))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The four rows are p=(3,0,1,2), q=(3,2,0,1), q inverse and p inverse. The private frozen_face_data proof compares these whole-face maps with the published facePair and slotMap on each actual face slot."))),
+                Blocks(Paragraph(Text("The four rows are p=(3,0,1,2), q=(3,2,0,1), q inverse and p inverse. The source-owned frozen_face_data proof compares these whole-face maps with the published facePair and slotMap on each actual face slot."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("actual-link-reverseface"),
                 DeclarationHandle.Create(Prefix + "reverseFace"), H("Inverse omitted faces"),
@@ -25,6 +25,13 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(F.Disp(FormulaFor("faceWord"))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The source-to-target words are u, v, v inverse, u inverse, in omitted-face order. Multiplication retains the published right-action convention."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("actual-link-frozen-face-data"),
+                DeclarationHandle.Create(Prefix + "frozen_face_data"),
+                H("The actual slot map and whole-face extension agree"),
+                StatementSource.FromAuthor(F.Disp(FormulaFor("frozen_face_data"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each sheet t, each of the four faces f and each of its three slots r, the original facePair is (act(t,faceWord(u,v,f)),reverseFace(f)), and the whole-face permutation sends faceVertex(f,r) to faceVertex(reverseFace(f),slotMap(f,r)). This source-owned comparison supplies the target corner tag for both the original carrier preservation proof and the common-point construction in ActualLinkPathConnected."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-link-raw"),
                 DeclarationHandle.Create(Prefix + "Raw"), H("Tagged barycentric coordinates"),
                 StatementSource.FromAuthor(F.Disp(FormulaFor("Raw"))), AssessedProvenance.FromRepo(),
@@ -140,6 +147,14 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
                 Call("lookup", Tuple(F.D(3),F.D(2),F.D(1),F.D(0)), f))),
             "faceWord" => Scope(All("f", fin4, Eq(Call("faceWord",u,v,f),
                 Call("lookup", Tuple(u,v,Call("inverse",v),Call("inverse",u)), f)))),
+            "frozen_face_data" => ActionScope(All("t",omega,All("f",fin4,
+                All("r",Call("Fin",F.D(3)),And(
+                    Eq(Call("facePair",u,v,Pair(F.Id("t"),f)),
+                        Pair(Call("act",F.Id("t"),Call("faceWord",u,v,f)),
+                            Call("reverseFace",f))),
+                    Eq(Call("apply",perm,Call("faceVertex",f,F.Id("r"))),
+                        Call("faceVertex",Call("reverseFace",f),
+                            Call("slotMap",f,F.Id("r"))))))))),
             "Raw" => All("Omega",F.Id("Type"),
                 Eq(Call("Raw",omega), Product(Product(omega,fin4),Call("Functions",fin4,F.Id("R"))))),
             "Carrier" => Scope(All("x",Call("Raw",omega),
@@ -194,6 +209,9 @@ internal sealed class ActualLinkCornerChainsDocument : IScribeDocumentDefinition
             _ => throw new System.ArgumentOutOfRangeException(nameof(name))
         };
     }
+    private static Formula ActionScope(Formula body) =>
+        All("G",F.Id("Group"),All("Omega",Call("RightAction",F.Id("G")),
+            All("u",F.Id("G"),All("v",F.Id("G"),body))));
     private static Formula Scope(Formula body) =>
         All("G",F.Id("Group"),All("Omega",Call("RightAction",F.Id("G")),
             All("u",F.Id("G"),All("v",F.Id("G"),
