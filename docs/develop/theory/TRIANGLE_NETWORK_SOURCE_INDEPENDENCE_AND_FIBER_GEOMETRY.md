@@ -1,6 +1,6 @@
 # Triangle Network Source Independence as a Fibered Three-Geometry
 
-**Status.** This is a theory supplement for the Auric FIB geometry and the quantum interface. It records ordinary mathematical definitions and proofs, together with explicit boundaries between inherited results, new interfaces, and open obligations. It does not claim that the triangle network is a physical three-dimensional space, and it does not claim a Lean admission. The target is a common formal carrier for three independent sources, two-source local responses, the trureturing three-coordinate quotient, and noise certificates. The finite rational EJM and source-noise identities are kernel-checked in D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.lean; the full causal and inflation bridge remains a separate target.
+**Status.** This is a theory supplement for the Auric FIB geometry and the quantum interface. It records ordinary mathematical definitions and proofs, together with explicit boundaries between inherited results, new interfaces, and open obligations. It does not claim that the triangle network is a physical three-dimensional space, and it does not claim a Lean admission. The target is a common formal carrier for three independent sources, two-source local responses, the trureturing three-coordinate quotient, and noise certificates.
 
 ## 0. Main statement
 
@@ -460,6 +460,14 @@ a,b,c\text{ all distinct}&-1&1/3&5/256.
 \end{array}
 \]
 
+Among the 64 ordered output triples, four are all equal, 36 have exactly two equal entries, and 24 are all distinct. Thus every entry is nonnegative and the total mass is
+
+\[
+\frac{4\cdot25+36\cdot1+24\cdot5}{256}=1.
+\]
+
+The Gram expression therefore specifies an exact rational probability law on the 64 output triples.
+
 This identity is an exact finite calculation. It is a genuine three-dimensional representation of the output symmetry because the four outcomes are encoded by a regular tetrahedron in \(\mathbb R^3\). It is not a proof that the causal sources are spatial axes.
 
 The term \(S\) is a sum of pairwise Gram interactions. The term \(R\) is the symmetric sum of pairwise products among the three edge-pair Gram entries, so it is a cycle-sensitive invariant that still respects the full permutation symmetry of \(a,b,c\). Equivalently,
@@ -528,6 +536,51 @@ P_S,
 \]
 
 where \(P_S\) is the distribution with ideal state on edges in \(S\) and maximally mixed state on the other edges. This is a multi-affine polynomial in the three source visibilities. It is a mixture of eight quantum distributions, not generally the one-dimensional global line (6.1).
+
+### 6.2.1 Exact finite source-noise application
+
+For eight rational tables \(P_i(a,b,c)\), index the source choices by the binary tuples
+
+\[
+0=000,\quad1=100,\quad2=010,\quad3=110,\quad
+4=001,\quad5=101,\quad6=011,\quad7=111,
+\]
+
+where the tuple order is \((\alpha,\beta,\gamma)\) and one means the ideal source. The exact coefficient list is
+
+\[
+\begin{aligned}
+c_0&=(1-w_\alpha)(1-w_\beta)(1-w_\gamma),&
+c_1&=w_\alpha(1-w_\beta)(1-w_\gamma),\\
+c_2&=(1-w_\alpha)w_\beta(1-w_\gamma),&
+c_3&=w_\alpha w_\beta(1-w_\gamma),\\
+c_4&=(1-w_\alpha)(1-w_\beta)w_\gamma,&
+c_5&=w_\alpha(1-w_\beta)w_\gamma,\\
+c_6&=(1-w_\alpha)w_\beta w_\gamma,&
+c_7&=w_\alpha w_\beta w_\gamma.
+\end{aligned}
+\]
+
+Define \(N_{\mathbf w}(P)(a,b,c)=\sum_{i=0}^{7}c_iP_i(a,b,c)\). This is precisely the eight-term expansion of (6.2). The coefficients satisfy
+
+\[
+\sum_i c_i=
+((1-w_\alpha)+w_\alpha)
+((1-w_\beta)+w_\beta)
+((1-w_\gamma)+w_\gamma)=1.
+\]
+
+Grouping terms with the same first source choice gives
+
+\[
+N_{(w_\alpha,w_\beta,w_\gamma)}(P)
+=(1-w_\alpha)N_{(0,w_\beta,w_\gamma)}(P)
++w_\alpha N_{(1,w_\beta,w_\gamma)}(P).
+\]
+
+The identities hold algebraically for arbitrary rational visibilities and tables. To interpret the result as a probability law, require \(0\le w_e\le1\) and normalized nonnegative component tables. Then each \(c_i\ge0\), and summing the output entries gives \(\sum_i c_i=1\). Physical source-noise semantics require a further construction identifying each \(P_i\) with the Born-rule table of its indicated source replacements; arbitrary tables with these labels do not supply that construction.
+
+These finite calculations preserve the EJM and source-noise application. They are applications of rational arithmetic and finite distributivity, rather than new reusable library theorems. The repository's existing `Erdos7.FiniteLaw` carrier describes the resulting finite probability law; the separate `IsTriangleLocal` predicate supplies no locality conclusion for it. No new D5 declaration, first freeze, inflation certificate, or physical noise threshold is claimed here.
 
 ### 6.3 Independent local output post-processing
 
@@ -630,7 +683,7 @@ The repository already contains a finite classical interface in D5/S3/Quantum/En
 
 The repository also has a reusable product-source skeleton in D5/S3/ConceptDynamics/PartialIdentification/FiniteIndependentSourceGrouping.lean and the associated response-factorization modules. It proves normalization, pushforward regrouping and restriction, and factorization for disjoint readouts. A triangle is the first overlapping case: the three readouts have supports \(\{\beta,\gamma\}\), \(\{\gamma,\alpha\}\), and \(\{\alpha,\beta\}\), so pairwise output independence is false in general even though the source law is a product. The missing theorem is a single three-output pushforward formula with these overlapping supports, followed by a typed FIB readout map.
  
-Those modules certify explicit **local** models and refute two proposed global bounds. The new TriangleEJMGramInterface module now formalizes the finite EJM Gram table, its exact mass and nonnegativity, and the eight-term independent-source visibility map over rational tables. It does not formalize the EJM quantum realization, Fritz embedding, the Renou parameter family, inflation certificates, or a physical noise threshold. The finite identities are therefore admitted without promoting them to a locality or nonlocality theorem.
+Those modules certify explicit **local** models and refute two proposed global bounds. They do not formalize the EJM distribution, Fritz embedding, the Renou parameter family, inflation certificates, quantum sources, or a physical noise threshold. This separation is useful: the finite Lean carrier is the correct base for the source-product layer, while the FIB documents supply a separate readout and hidden-fiber layer. The present document defines the bridge but does not claim that bridge is already kernel-checked.
 
 A second repository warning is already machine-checked in D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean: pairwise local laws can have all one-coordinate marginals compatible and still admit no common global state around a three-cycle. This is not a triangle-locality criterion, but it is the exact finite analogue of why local marginal compatibility is weaker than a product-source global lift. The later inflation layer must therefore carry the common lifted state, not only its pairwise projections.
 
@@ -679,24 +732,7 @@ Use three separate structures:
 - IndependentSourceNoise with the eight tables \(P_S\);
 - LocalOutputChannel with stochastic matrices.
 
-The post-processing monotonicity theorem is the next admission. The finite multi-affine source expansion (6.2) is already kernel-checked as independentSourceNoise_eight_terms, with coefficient normalization sourceNoiseWeight_mass and edge-wise affinity independentSourceNoise_affine_alpha. Certificate evaluation (6.5), and the map from the quantum tensor-product construction to the eight rational component tables, remain open.
-
-### 8.5 Implemented finite interface
-
-The companion Lean file
-D5/S3/Quantum/Entanglement/TriangleEJMGramInterface.lean
-imports the existing IsTriangleLocal anchor and the repository's Erdos7.FiniteLaw carrier. It proves, over (mathbb Q):
-
-- the exact regular-tetrahedron Gram formula (P=(4+S+6R)/256);
-- the table (25/256), (1/256), (5/256) for the equal, two-equal and all-distinct output classes;
-- nonnegativity and total mass one for the 64-entry EJM table;
-- the eight-term independent-source noise polynomial and the normalization of its eight coefficients;
-- affinity in each source visibility, shown explicitly for the alpha edge.
-
-These declarations are probability identities. They do not prove (P_{mathrm{EJM}}inmathcal L_	riangle), do not prove (P_{mathrm{EJM}}
-otinmathcal L_	riangle), and do not instantiate an inflation certificate. In particular, the eight component tables are typed placeholders for the eight ideal/maximally-mixed source choices. Connecting them to a Born-rule construction is a later quantum formalization obligation.
-
-For inflation, the useful finite-dimensional consequence is now precise: any exact linear functional evaluated on a source-typed noisy table is a multi-affine polynomial in ((w_alpha,w_eta,w_gamma)). A future inflation certificate can therefore be checked by substituting its rational values into this polynomial. This provides a finite constraint interface and supports exact outer bounds, but it is not itself an outer certificate. A genuine nonlocality theorem still requires a separately proved soundness implication from the inflation relaxation to exclusion from (mathcal L_	riangle).
+The post-processing monotonicity theorem is the easiest first admission. The multi-affine source expansion (6.2) and certificate evaluation (6.5) follow by finite distributivity.
 
 ## 9. Boundary and conclusion
 
