@@ -873,6 +873,129 @@ obligations. This restricted uniform error interface does not prove an
 all-node Jensen estimate, RH, or all-integer strict Robin, and has not
 been checked in Lean.
 
+## Reusing compact Jensen convergence for the principal comparison
+
+The local convergence mechanism is already classical:
+[O'Sullivan, section 3.1, proof sketch following Theorem 3.1](https://arxiv.org/html/2007.13582v2#S3.SS1)
+uses $g_n(F;z/n)\to F(z)$ locally uniformly. Its coefficient convention
+and the repository's unchanged zero-shift normalization are recorded in
+[the existing Jensen supplier](osullivan2021modifiedjensen.md) and
+[the normalized source tower](../../Blueprint/D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.md).
+That convergence, its generic proof and the known finite-degree coverage
+are reused; they are not additional mathematical results here.
+
+For the same moments $M_k=\int T^k\,d\mu$ set
+$a_k=4^kM_k/(2k)!$, $a_0=1$, and use the entire series
+
+$$
+f(t)=\Xi(\sqrt t)/\xi_0=\sum_{k\ge0}(-1)^ka_kt^k,
+\qquad f_+(t)=\xi(1/2+\sqrt t)/\xi_0=\sum_{k\ge0}a_kt^k.
+$$
+
+The square-root notation names the even entire expansions. For $n\ge1$,
+let $c_{n,k}=n^{\underline k}/n^k$ for $0\le k\le n$ and zero otherwise,
+where $n^{\underline k}$ is the falling factorial. Write
+
+$$
+\mathcal J_n(t)=\sum_{k=0}^n(-1)^kc_{n,k}a_kt^k
+=P_n^{\mathrm{source}}(-t),\qquad
+\mathcal G_n(t)=\sum_{k=1}^{n+1}(-1)^kkc_{n,k-1}a_kt^{k-1}.
+$$
+
+The existing falling-factorial recurrence gives
+$\mathcal J_{n+1}((1+1/n)t)-\mathcal J_n(t)=(t/n)\mathcal G_n(t)$.
+At the unchanged original node $v=n\lambda>0$, $t=n/v=1/\lambda$,
+require $\operatorname{sourceQ}_n(\lambda)=0$, equivalently
+$\mathcal J_n(t)=0$. Then
+the finite Laguerre series and the scale derivative and three-term
+identities already used above give the parameter correspondence
+
+$$
+\beta a^2-ab
+=(1/2)_{n-1}(1/2)_{n+1}v^{2n-2}
+                \mathcal J_n'(t)\mathcal G_n(t). \tag{LC16}
+$$
+
+Here $(1/2)_j$ is the rising factorial. The prefactor is strictly positive;
+(LC16) uses no division by $a$ and no simplicity assumption. It connects
+the original principal comparison, rather than a changed measure or a
+cutoff node, to two approximations of the same source derivative.
+
+The positive coefficients give an explicit application of the classical
+compact convergence. For fixed $R>0$ and $|t|\le R$,
+
+$$
+\begin{aligned}
+|\mathcal J_n(t)-f(t)|&\le E_0/n,& E_0&=R^2f_+''(R)/2,\\
+|\mathcal J_n'(t)-f'(t)|&\le E_1/n,& E_1&=(R^2f_+'''(R)+2Rf_+''(R))/2,\\
+|\mathcal G_n(t)-f'(t)|&\le E_G/n,& E_G&=R^2f_+'''(R)/2.
+\end{aligned} \tag{LC17}
+$$
+
+These coefficient budgets use $0\le1-c_{n,k}\le k(k-1)/(2n)$,
+including the truncated tail, and the same bound with $k-1$ for
+$\mathcal G_n$. No additional source or generic convergence theorem
+is introduced.
+
+Suppose all real zeros of $f$ in $I=[0,R]$ are simple, and supply relative
+open neighborhoods $U$ of those zeros and finite separation inputs $c,m>0$
+with $|f|\ge c$ on $I\setminus U$ and $|f'|\ge m$ on $U$. Then
+
+$$
+n>\max\{E_0/c,E_1/m,E_G/m\} \tag{LC18}
+$$
+
+places every real $\mathcal J_n$ node in $I$ inside $U$ and makes
+$\mathcal J_n'$ and $\mathcal G_n$ have the same nonzero sign as $f'$
+at those nodes.
+The margin in (LC16) is strictly positive in both residual orientations,
+and $a\ne0$ there. If $f$ has no zeros in $I$, only $E_0/c$ is needed
+and there are no nodes in that band. This is a conditional application
+of the cited convergence, not an assertion of source-zero simplicity.
+
+The same source also gives a relative principal-margin budget without
+separating the finite part from its residual. Define
+
+$$
+h_n(t)=\sum_{k=0}^nc_{n,k}
+             \frac{M_{k+1}}{k!(1/2)_k}(-t)^k,\qquad
+B_R=Rf_+''(R)+\tfrac12f_+'(R)>0.
+$$
+
+The finite Laguerre coefficients give, at these unchanged nodes,
+
+$$
+\frac{b}{\beta a}=\frac{h_n(t)}{n\mathcal J_n'(t)},\qquad
+|h_n(t)|\le
+\sum_{k\ge0}\frac{M_{k+1}R^k}{k!(1/2)_k}=B_R. \tag{LC19}
+$$
+
+Here $a\ne0$ follows from the already stated source separation and (LC17).
+Thus, with $\epsilon_n=B_R/(nm-E_1)$,
+
+$$
+\left|\frac{b}{\beta a}\right|\le\epsilon_n,\qquad
+\beta a^2-ab\ge(1-\epsilon_n)\beta a^2,\qquad
+aD_N+a\mathcal R_N\le(\eta+\epsilon_n\beta)a^2. \tag{LC20}
+$$
+
+The last inequality keeps the same splice and its nonzero node residual:
+$D_N+\mathcal R_N=b+\eta a$ by (LC6); $c_H$ is not dropped.
+The additional condition $nm\ge E_1+2B_R$ gives
+$\epsilon_n\le1/2$, hence a positive relative margin in both orientations.
+This bounds the total correlation. An available lower bound on a favorable
+residual cannot be substituted for its actual value in an upper bound
+for the finite part.
+
+The range is $\lambda\ge1/R$ above a source-dependent degree threshold.
+No numerical $c,m$ or threshold is supplied. Degrees below it, source
+multiplicities and uniform control as $R\to\infty$ are not settled by
+this application. Existing finite certificates are cited directly in the
+Jensen supplier, without rerunning them. No new Lean declaration,
+originality claim, all-node estimate, RH or all-integer Robin proof
+follows from (LC16)–(LC20).
+
+
 ## Source anomalies retained
 
 On page 40 the printed c-prime integral omits the factor `2*sqrt(2)` used in the
