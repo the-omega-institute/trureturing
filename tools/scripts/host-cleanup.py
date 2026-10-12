@@ -35,97 +35,22 @@ def worktree_modules():
     return worktree_preservation, lean_cache_release
 
 
-def source_object_directories(source, removal_root, preservation):
-    """Find source object storage and reject dependencies inside the removal tree."""
-    common = Path(preservation.value(source, "rev-parse", "--path-format=absolute", "--git-common-dir"))
-    pending = [common / "objects"]
-    visited = set()
-    removal_root = removal_root.resolve()
-    def surviving_path(path):
-        physical = path.resolve(strict=True)
-        aliases, inspected = [path.absolute()], set()
-        while aliases:
-            alias = aliases.pop()
-            if alias in inspected:
-                continue
-            inspected.add(alias)
-            for dependency in (alias, alias.resolve(strict=True)):
-                if dependency == removal_root or removal_root in dependency.parents:
-                    raise preservation.Refused("repository_source_dependency:" + str(dependency))
-            if alias.is_symlink():
-                target = Path(os.readlink(alias))
-                aliases.append(target if target.is_absolute() else alias.parent / target)
-            aliases.extend(alias.parents)
-        return physical
-    while pending:
-        objects = surviving_path(pending.pop())
-        if objects in visited:
-            continue
-        visited.add(objects)
-        if not objects.is_dir():
-            raise preservation.Refused("repository_unverifiable:source_object_directory")
-        alternates = objects / "info/alternates"
-        if os.path.lexists(alternates):
-            surviving_path(alternates)
-            for raw in alternates.read_text().splitlines():
-                if not raw or raw.startswith('"'):
-                    raise preservation.Refused("repository_unverifiable:source_alternate_path")
-                pending.append(objects / raw)
-    return sorted(map(str, visited))
-
-
-def source_dependency_snapshot(source, removal_root):
-    """Protect storage needed by the main repository, including alternate-list aliases."""
-    try:
-        preservation, _ = worktree_modules()
-        return dict(reason=None, source_objects=source_object_directories(source, removal_root, preservation))
-    except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
-        reason = str(error).split(":", 1)[0]
-        if reason != "repository_source_dependency":
-            reason = "repository_unverifiable"
-        return dict(reason=reason, detail=str(error))
-
-
-def macos_active_paths(strict_ipc=False):
-    """Read typed lsof names; ambiguous named IPC cannot certify inactivity."""
+def macos_active_paths():
+    """Read absolute paths held by the current user's processes."""
     try:
         result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fftn"],
                                 capture_output=True, text=True, timeout=120)
     except (OSError, subprocess.SubprocessError) as error:
-        raise OSError("ipc_activity_unobservable") from error
-    if (result.returncode == 0 and (result.stdout or not strict_ipc)
-            and (not result.stderr or not strict_ipc)):
-        observed, kind = set(), None
+        raise OSError("activity_unobservable") from error
+    if result.returncode == 0 and result.stdout:
+        observed = set()
         for row in result.stdout.splitlines():
-            if row.startswith(("p", "f")):
-                kind = None
-            elif row.startswith("t"):
-                kind = row[1:]
-            elif row.startswith("n"):
-                raw = row[1:]
-                if strict_ipc and kind in (None, "unix", "FIFO"):
-                    unnamed = not raw or re.fullmatch(r"->0x[0-9a-fA-F]+", raw)
-                    if not unnamed and (not raw.startswith("/") or "\\" in raw):
-                        raise OSError("ipc_activity_unobservable:ambiguous_lsof_name")
-                if not raw.startswith("/"):
-                    continue
-                observed.add(Path(raw.removesuffix(" (deleted)")))
+            if row.startswith("n") and row[1:].startswith("/"):
+                observed.add(Path(row[1:].removesuffix(" (deleted)")))
         return observed
-    if strict_ipc and result.returncode == 1 and not result.stdout and not result.stderr:
+    if result.returncode == 1 and not result.stdout and not result.stderr:
         return set()
-    raise OSError("ipc_activity_unobservable")
-
-
-def ipc_paths():
-    """Observe named IPC endpoints without opening or connecting to them."""
-    if sys.platform != "darwin":
-        raise OSError("ipc_activity_unobservable")
-    observed, parents = set(), {}
-    for endpoint in macos_active_paths(strict_ipc=True):
-        if endpoint.parent not in parents:
-            parents[endpoint.parent] = endpoint.parent.resolve()
-        observed.add(parents[endpoint.parent] / endpoint.name)
-    return observed
+    raise OSError("activity_unobservable")
 
 
 class LowDiskSpace(RuntimeError):
@@ -170,7 +95,7 @@ class ProtectedPaths:
         return path in self.prefixes
 
 
-def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ipc_observed=False):
+def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
     if path.name == ".git" and not reclaim:
@@ -179,7 +104,6 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
         protected = ProtectedPaths(protected)
     if path in protected:
         return dict(reason="protected")
-    source_objects, registrations = [], []
     if repository is not None:
         try:
             registrations = registered_worktrees(repository)
@@ -187,10 +111,6 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
                 return dict(reason="protected")
         except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
             return dict(reason="repository_unverifiable", detail=str(error))
-        dependency = source_dependency_snapshot(repository, path)
-        if dependency["reason"] is not None:
-            return dependency
-        source_objects = dependency["source_objects"]
     root_stat = path.lstat()
     if stat.S_ISLNK(root_stat.st_mode):
         return dict(reason="symlink")
@@ -198,8 +118,6 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
         return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
-    ipc_observation = None
-    has_ipc = False
     lakes = []
     pending = [path]
     while pending:
@@ -213,20 +131,10 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
             return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
-        ipc = reclaim and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))
-        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode) or ipc):
+        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)):
             return dict(reason="special_file")
-        if info.st_mtime > (min(cutoff, time.time() - 24 * 3600) if ipc else cutoff):
+        if info.st_mtime > cutoff:
             return dict(reason="recent")
-        if ipc and not ipc_observed:
-            try:
-                if ipc_observation is None:
-                    ipc_observation = ipc_paths()
-                if entry.parent.resolve() / entry.name in ipc_observation:
-                    return dict(reason="protected")
-            except OSError:
-                return dict(reason="ipc_activity_unobservable")
-        has_ipc = has_ipc or ipc
         digest.update(os.fsencode(str(entry.relative_to(path))))
         digest.update(str((info.st_dev, info.st_ino, info.st_mode, info.st_size,
                            info.st_mtime_ns, info.st_ctime_ns)).encode())
@@ -241,8 +149,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, ip
                 lakes.append(str(entry))
             pending.extend(entry / name for name in names)
     return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes,
-                source_objects=source_objects, registrations=sorted(map(str, registrations)),
-                lakes=lakes, has_ipc=has_ipc)
+                lakes=lakes)
 
 
 def remove_tree(path):
@@ -256,17 +163,14 @@ def remove_tree(path):
 
 
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
-                    reclaim=True, refresh_activity=False, qualification=None, ipc_observed=False,
-                    initial=None):
+                    reclaim=True, refresh_activity=False, qualification=None, initial=None):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
     try:
-        kwargs = {} if repository is None else dict(repository=repository)
+        kwargs = {} if repository is None else {"repository": repository}
         if not reclaim:
             kwargs["reclaim"] = False
-        if ipc_observed:
-            kwargs["ipc_observed"] = True
         def observe(protection):
             snapshot = inspect_candidate(path, cutoff, protection, **kwargs)
             if snapshot["reason"] is None and qualification:
@@ -286,7 +190,7 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             for lake in before.get("lakes", []):
                 _, release = worktree_modules()
                 stack.enter_context(release.cache_guard(Path(lake).parent))
-            refreshed = ProtectedPaths(activity()) if activity and (repository is not None or before.get("has_ipc") or refresh_activity) else protected
+            refreshed = ProtectedPaths(activity()) if activity and (repository is not None or refresh_activity) else protected
             after = observe(refreshed)
             if after != before:
                 result["reason"] = "changed"
@@ -307,42 +211,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
         else:
             result.update(action="kept", reason="unreadable", detail=str(error))
     except OSError as error:
-        if ipc_observed and not removal_started:
-            result.update(action="kept", reason="ipc_activity_unobservable", detail=str(error))
-        else:
-            result.update(action="failed", reason=str(error))
+        result.update(action="failed", reason=str(error))
     return result
-
-
-def clean_ipc_batch(paths, cutoff, protected, delete, activity, repository=None):
-    """Share complete IPC observations across a batch, then recheck each endpoint's identity."""
-    base = protected if isinstance(protected, ProtectedPaths) else ProtectedPaths(protected)
-    def protection():
-        observed = ProtectedPaths(activity())
-        observed.prefixes.update(base.prefixes)
-        return observed
-    snapshots = []
-    try:
-        observed = protection()
-        for path in paths:
-            try:
-                snapshots.append((path, inspect_candidate(path, cutoff, observed,
-                                                         repository=repository, ipc_observed=True)))
-            except OSError as error:
-                snapshots.append((path, dict(reason="unreadable", detail=str(error))))
-    except (OSError, subprocess.SubprocessError) as error:
-        for path in paths:
-            yield dict(path=str(path), action="kept", reason="ipc_activity_unobservable",
-                       detail=str(error), apparent_bytes=0)
-        return
-    for path, before in snapshots:
-        try:
-            yield clean_candidate(path, cutoff, observed, delete=delete, initial=before, ipc_observed=True,
-                                  repository=repository,
-                                  activity=lambda: protection().prefixes, refresh_activity=True)
-        except (OSError, subprocess.SubprocessError) as error:
-            yield dict(path=str(path), action="kept", reason="ipc_activity_unobservable",
-                       detail=str(error), apparent_bytes=0)
 
 
 def children(root):
@@ -425,7 +295,7 @@ def linux_observation_unavailable(process, boundary, error):
         process=str(process), boundary=boundary, status=status, error=str(error)))) from error
 
 
-def active_paths(codex, scopes=(), strict_ipc=False):
+def active_paths(codex, scopes=()):
     """Read open files/cwds and process arguments for the current user only."""
     protected = {Path.cwd().resolve(), Path(__file__).resolve()}
     scopes = tuple(str(Path(scope).resolve()) for scope in scopes)
@@ -473,7 +343,7 @@ def active_paths(codex, scopes=(), strict_ipc=False):
             if missing_cwd is not None:
                 linux_observation_unavailable(process, "cwd", missing_cwd)
     elif sys.platform == "darwin":
-        for path in macos_active_paths(strict_ipc=strict_ipc):
+        for path in macos_active_paths():
             open_path(str(path))
     else:
         raise OSError("host cleanup supports macOS and Linux")
@@ -552,58 +422,6 @@ def artifact_lakes(path, protected, worktrees):
             pending.extend(child for child in entry.iterdir() if child.name != ".git")
 
 
-def clean_generated_build(lake, cutoff, protected, source, delete, activity):
-    """Reclaim only build output under its physical cache guard, retaining registered trees."""
-    path = lake / "build"
-    result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
-    try:
-        _, release = worktree_modules()
-        with release.cache_guard(lake.parent):
-            def qualify():
-                registrations = registered_worktrees(source)
-                if any(tree == path or tree in path.parents for tree in registrations):
-                    return dict(reason="protected")
-                dependency = source_dependency_snapshot(source, path)
-                if dependency["reason"] is not None:
-                    return dependency
-                info = lake.lstat()
-                if stat.S_ISLNK(info.st_mode):
-                    return dict(reason="symlink")
-                if info.st_uid != os.getuid():
-                    return dict(reason="not_owned")
-                if info.st_dev != lake.parent.stat().st_dev:
-                    return dict(reason="mount")
-                if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
-                    return dict(reason="protected_flag")
-                governing = containing_repository(lake.parent)
-                attachments = []
-                if governing is not None:
-                    preservation, _ = worktree_modules()
-                    attachments = registered_worktrees(governing)
-                    if (not (governing / ".git").is_dir()
-                            or attachments != [governing.resolve()]):
-                        return dict(reason="protected")
-                    top = Path(preservation.value(governing, "rev-parse", "--show-toplevel")).resolve()
-                    if top != governing.resolve():
-                        return dict(reason="repository_unverifiable")
-                    if preservation.git(top, "ls-files", "--", str(path.relative_to(top))).stdout:
-                        return dict(reason="protected")
-                return dict(reason=None, registrations=sorted(map(str, registrations)),
-                            source_objects=dependency["source_objects"],
-                            attachments=list(map(str, attachments)),
-                            lake=(info.st_dev, info.st_ino, info.st_mode, info.st_ctime_ns),
-                            repository=str(governing) if governing is not None else None)
-            if delete:
-                protected = ProtectedPaths(activity())
-            return clean_candidate(path, min(cutoff, time.time() - 24 * 3600), protected, delete=delete,
-                                   activity=activity, refresh_activity=True, qualification=qualify)
-    except BlockingIOError:
-        result["reason"] = "cache_busy"
-    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
-        result.update(reason="unreadable", detail=str(error))
-    return result
-
-
 def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
@@ -675,7 +493,6 @@ def clean_from_anchor(options, caller, disk_descriptor):
     inventory_error = None
     main_checkout = next(iter(inventory), options.repository)
     seen_lakes = set()
-    ipc_candidates = []
     def record(category, result):
         nonlocal apparent_bytes
         counts[category + ":" + result["action"]] += 1
@@ -695,9 +512,6 @@ def clean_from_anchor(options, caller, disk_descriptor):
         seen_lakes.add(lake)
         _, release = worktree_modules()
         def inspect(path):
-            dependency = source_dependency_snapshot(main_checkout, path)
-            if dependency["reason"] is not None:
-                return dependency
             protection = ProtectedPaths(active_paths(codex) | {caller}) if options.delete else ProtectedPaths(active | {caller})
             return inspect_candidate(path, cutoff, protection)
         for result in release.clean_staging(lake, cutoff=cutoff, now=now,
@@ -717,47 +531,17 @@ def clean_from_anchor(options, caller, disk_descriptor):
             elif category != "codex" and any(parent.name == ".lake" for parent in path.parents):
                 lake = next(parent for parent in path.parents if parent.name == ".lake")
                 clean_staging(lake)
-                if path == lake / "build":
-                    result = clean_generated_build(lake, cutoff, protections[category],
-                                                   main_checkout, options.delete, fresh_protection)
-                else:
-                    result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
+                result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
             else:
-                if category != "codex" and sys.platform == "darwin":
-                    try:
-                        mode = path.lstat().st_mode
-                    except FileNotFoundError:
-                        record(category, dict(path=str(path), action="kept", reason="vanished", apparent_bytes=0))
-                        continue
-                    except PermissionError as error:
-                        record(category, dict(path=str(path), action="kept", reason="unreadable",
-                                              detail=str(error), apparent_bytes=0))
-                        continue
-                    if stat.S_ISFIFO(mode) or stat.S_ISSOCK(mode):
-                        ipc_candidates.append((category, path))
-                        continue
                 result = clean_candidate(path, cutoff, protections[category], options.delete,
                                          repository=None if category == "codex" else main_checkout,
-                                         activity=fresh_protection, reclaim=category != "codex")
+                                         activity=fresh_protection, reclaim=category != "codex",
+                                         refresh_activity=True)
             record(category, result)
-            if category != "codex" and result["action"] == "kept" and (
-                    result["reason"] == "recent" or result["reason"].startswith("repository")):
+            if category != "codex" and result["action"] == "kept" and result["reason"] == "recent":
                 for lake, repository in artifact_lakes(path, protections[category], worktrees):
                     if repository:
                         clean_staging(lake)
-                    if (lake / "build").exists():
-                        record(category, clean_generated_build(lake, cutoff, protections[category],
-                                                              main_checkout, options.delete, fresh_protection))
-        if ipc_candidates:
-            categories = dict((path, category) for category, path in ipc_candidates)
-            def ipc_activity():
-                registrations = set(registered_worktrees(main_checkout))
-                active = active_paths(codex, strict_ipc=True) | {caller, codex, sshx}
-                active.update(path for path in categories if any(parent in registrations for parent in path.parents))
-                return active
-            for result in clean_ipc_batch(list(categories), cutoff, protections["tmp"], options.delete,
-                                         ipc_activity, repository=main_checkout):
-                record(categories[Path(result["path"])], result)
     except OSError as error:
         inventory_error = str(error)
     failed = inventory_error is not None or lanes_exit != 0 or any(key.endswith(":failed") for key in counts)

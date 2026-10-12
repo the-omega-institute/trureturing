@@ -7,7 +7,6 @@ import json
 import os
 from pathlib import Path
 import shutil
-import socket
 import stat
 import subprocess
 import sys
@@ -65,23 +64,6 @@ class HostReclaimTests(unittest.TestCase):
     def clean(self, target, delete=True):
         return cleanup.clean_candidate(target, self.cutoff, [], delete=delete, repository=self.main)
 
-    def make_endpoint(self, path, kind):
-        if kind == "fifo":
-            os.mkfifo(path)
-        else:
-            temporary = self.root / "socket"
-            with socket.socket(socket.AF_UNIX) as handle:
-                handle.bind(str(temporary))
-            temporary.rename(path)
-
-    def lsof_process(self, pid):
-        run = subprocess.run
-        def observe(command, **kwargs):
-            if command[0] == "lsof":
-                command = [*command, "-p", str(pid)]
-            return run(command, **kwargs)
-        return patch.object(cleanup.subprocess, "run", side_effect=observe)
-
     def test_case_inventory_lists_every_case_without_running_git(self):
         environment = dict(os.environ, PATH="")
         result = subprocess.run([sys.executable, "-B", __file__, str(ROOT), "--list-tests"],
@@ -137,41 +119,6 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual(("kept", "protected"), (result["action"], result["reason"]))
         self.assertTrue((target / ".git").is_file())
 
-    def test_main_alternate_dependency_protects_an_ordinary_directory(self):
-        target = self.root / "artifacts/object storage"
-        shutil.copytree(self.main / ".git/objects", target)
-        (self.main / ".git/objects/info/alternates").write_text(str(target) + "\n")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual(("kept", "repository_source_dependency"),
-                         (result["action"], result["reason"]), "[FAIL] ordinary_source_dependency: " + str(result))
-        self.assertTrue(target.exists())
-
-    def test_main_alternate_dependency_protects_generated_build(self):
-        target = self.clone()
-        objects = target / ".lake/build/objects"
-        shutil.copytree(self.main / ".git/objects", objects)
-        (self.main / ".git/objects/info/alternates").write_text(str(objects) + "\n")
-        self.age(target)
-        result = cleanup.clean_generated_build(target / ".lake", self.cutoff, [],
-                                               self.main, True, lambda: set())
-        self.assertEqual(("kept", "repository_source_dependency"),
-                         (result["action"], result["reason"]), "[FAIL] build_source_dependency: " + str(result))
-        self.assertTrue(objects.exists())
-
-    def test_main_alternate_dependency_protects_staging(self):
-        target = self.clone()
-        objects = target / ".lake/.release-token/build/objects"
-        shutil.copytree(self.main / ".git/objects", objects)
-        (self.main / ".git/objects/info/alternates").write_text(str(objects) + "\n")
-        self.age(target)
-        rows = self.run_sweep()
-        items = {row.get("path"): row for row in rows}
-        result = items[str(objects.parent.parent)]
-        self.assertEqual(("kept", "repository_source_dependency"),
-                         (result["action"], result["reason"]), "[FAIL] staging_source_dependency: " + str(result))
-        self.assertTrue(objects.exists())
-
     def test_staging_on_another_device_is_retained(self):
         lake = self.main / ".lake"
         stage = lake / ".release-token/build"
@@ -190,140 +137,6 @@ class HostReclaimTests(unittest.TestCase):
             self.assertEqual(("kept", "mount"), (rows[0]["action"], rows[0]["reason"]),
                              "[FAIL] cross_device_staging: " + str(rows))
         self.assertTrue(stage.exists())
-
-    def test_main_direct_alternate_dependency_retains_candidate(self):
-        self.check_main_alternate_dependency(False)
-
-    def test_main_indirect_alternate_dependency_retains_candidate(self):
-        self.check_main_alternate_dependency(True)
-
-    def check_main_alternate_dependency(self, indirect):
-        target = self.clone()
-        shutil.rmtree(self.main)
-        if indirect:
-            bridge = self.root / "bridge"
-            self.git(target, "clone", "--shared", target, bridge)
-            self.git(bridge, "clone", "--shared", bridge, self.main)
-        else:
-            self.git(target, "clone", "--shared", target, self.main)
-        self.git(self.main, "cat-file", "-e", "HEAD")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("kept", result["action"], result)
-        self.assertEqual("repository_source_dependency", result["reason"], result)
-        self.assertTrue(target.exists())
-        self.git(self.main, "cat-file", "-e", "HEAD")
-
-    def test_unrelated_main_alternate_does_not_block_reclamation(self):
-        target = self.clone()
-        backing = self.clone("backing")
-        (self.main / ".git/objects/info/alternates").write_text(str(backing / ".git/objects") + "\n")
-        self.age(target)
-        self.assertEqual("removed", self.clean(target)["action"])
-        self.git(self.main, "cat-file", "-e", "HEAD")
-
-    def test_main_alternate_symlink_dependency_retains_candidate(self):
-        target = self.clone()
-        alias = self.root / "object alias"
-        alias.symlink_to(target / ".git/objects", target_is_directory=True)
-        (self.main / ".git/objects/info/alternates").write_text(str(alias) + "\n")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("repository_source_dependency", result["reason"], result)
-        self.assertTrue(target.exists())
-
-    def test_main_alternate_chain_of_aliases_retains_candidate(self):
-        target = self.clone()
-        backing = self.clone("backing")
-        inside = target / ".git/object-alias"
-        inside.symlink_to(backing / ".git/objects", target_is_directory=True)
-        outside = self.root / "outside-alias"
-        outside.symlink_to(inside, target_is_directory=True)
-        (self.main / ".git/objects/info/alternates").write_text(str(outside) + "\n")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual(("kept", "repository_source_dependency"),
-                         (result["action"], result["reason"]), "[FAIL] alternate_alias_chain: " + str(result))
-        self.assertTrue(inside.is_symlink())
-
-    def test_main_alternate_lexical_path_inside_candidate_retains_candidate(self):
-        target = self.clone()
-        objects = target / ".git/objects"
-        # Git resolves a relative alternate before applying its parent traversal.
-        relative = os.path.relpath(objects, self.main / ".git/objects")
-        (self.main / ".git/objects/info/alternates").write_text(relative + "\n")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual(("kept", "repository_source_dependency"),
-                         (result["action"], result["reason"]))
-        self.assertTrue(objects.exists())
-
-    def test_main_alternate_created_before_deletion_retains_candidate(self):
-        target = self.clone()
-        self.age(target)
-        def activity():
-            (self.main / ".git/objects/info/alternates").write_text(str(target / ".git/objects") + "\n")
-            return set()
-        result = cleanup.clean_candidate(target, self.cutoff, [], True, repository=self.main, activity=activity)
-        self.assertEqual("changed", result["reason"], result)
-        self.assertTrue(target.exists())
-
-    def test_main_alternate_alias_inside_candidate_retains_candidate(self):
-        self.check_source_alternate_metadata_dependency(False)
-
-    def test_main_alternates_file_inside_candidate_retains_candidate(self):
-        self.check_source_alternate_metadata_dependency(True)
-
-    def check_source_alternate_metadata_dependency(self, linked_file):
-        target = self.clone()
-        backing = self.clone("backing")
-        shutil.rmtree(self.main)
-        self.git(backing, "clone", "--shared", backing, self.main)
-        alternates = self.main / ".git/objects/info/alternates"
-        if linked_file:
-            listing = target / ".git/alternate-list"
-            listing.write_text(str(backing / ".git/objects") + "\n")
-            alternates.unlink()
-            alternates.symlink_to(listing)
-        else:
-            alias = target / ".git/object-alias"
-            alias.symlink_to(backing / ".git/objects", target_is_directory=True)
-            alternates.write_text(str(alias) + "\n")
-        self.git(self.main, "cat-file", "-e", "HEAD")
-        self.age(target)
-        result = self.clean(target)
-        self.assertEqual("repository_source_dependency", result["reason"], result)
-        self.assertTrue(target.exists())
-        self.git(self.main, "cat-file", "-e", "HEAD")
-
-    def test_external_registered_worktree_build_is_preserved(self):
-        target = self.clone()
-        external = target / "external worktree"
-        self.git(target, "worktree", "add", "-b", "attached", external)
-        build = external / ".lake/build"
-        build.mkdir(parents=True)
-        (build / "generated").write_text("cache")
-        self.age(external)
-        result = cleanup.clean_generated_build(external / ".lake", self.cutoff, [],
-                                               self.main, True, lambda: set())
-        self.assertEqual("protected", result["reason"], result)
-        self.run_sweep()
-        self.assertTrue(build.exists())
-
-    def test_nested_project_tracked_build_and_local_edits_are_retained(self):
-        target = self.clone()
-        build = target / "subproject/.lake/build"
-        build.mkdir(parents=True)
-        source = build / "source.lean"
-        source.write_text("tracked source")
-        self.git(target, "add", "-f", "subproject/.lake/build/source.lean")
-        self.git(target, "commit", "-m", "Track nested source")
-        source.write_text("private local edits")
-        self.age(target)
-        os.utime(target / "source", (self.now, self.now))
-        self.run_sweep()
-        self.assertTrue(source.exists())
-        self.assertEqual("private local edits", source.read_text())
 
     def test_nested_repositories_are_ordinary_candidates(self):
         parent = self.root / "parent"
@@ -354,72 +167,13 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("changed", result["reason"])
         self.assertTrue(target.exists())
 
-    def test_tracked_build_is_preserved(self):
-        target = self.clone()
-        build = target / ".lake/build"
-        build.mkdir(parents=True)
-        (build / "source").write_text("tracked source")
-        self.git(target, "add", "-f", ".lake/build/source")
-        self.git(target, "commit", "-m", "Track source in build")
+    def test_activity_changes_before_delete_are_retained(self):
+        target = self.clone("activity")
         self.age(target)
-        os.utime(target / "source", (self.now, self.now))
-        self.run_sweep()
-        self.assertTrue(build.exists())
-
-    def test_build_tracked_after_first_check_is_preserved(self):
-        target = self.clone()
-        build = target / ".lake/build"
-        build.mkdir(parents=True)
-        (build / "generated").write_text("source")
-        self.age(target)
-        inspect = cleanup.inspect_candidate
-        calls = 0
-        def track(*args, **kwargs):
-            nonlocal calls
-            calls += 1
-            if calls == 2:
-                self.git(target, "add", "-f", ".lake/build/generated")
-            return inspect(*args, **kwargs)
-        with patch.object(cleanup, "inspect_candidate", side_effect=track):
-            result = cleanup.clean_generated_build(target / ".lake", self.cutoff, [], self.main, True, lambda: set())
+        result = cleanup.clean_candidate(target, self.cutoff, [], delete=True,
+                                         activity=lambda: {target / "source"}, refresh_activity=True)
         self.assertEqual("changed", result["reason"], result)
-        self.assertTrue(build.exists())
-
-    @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
-    def test_real_lsof_observes_live_fifo_and_socket_handles(self):
-        with self.lsof_process(os.getpid()):
-            self.check_live_fifo_and_socket_handles()
-
-    def check_live_fifo_and_socket_handles(self):
-        for kind in ("fifo", "socket"):
-            endpoint = self.root / kind
-            if kind == "fifo":
-                os.mkfifo(endpoint)
-                handle = os.open(endpoint, os.O_RDONLY | os.O_NONBLOCK)
-                close = lambda: os.close(handle)
-            else:
-                handle = socket.socket(socket.AF_UNIX)
-                handle.bind(str(endpoint))
-                close = handle.close
-            self.age(self.root)
-            try:
-                self.assertEqual("protected", cleanup.clean_candidate(endpoint, self.cutoff, [], True)["reason"])
-            finally:
-                close()
-            self.assertEqual("removed", cleanup.clean_candidate(endpoint, self.cutoff, [], True)["action"])
-
-    def test_registration_and_activity_changes_before_delete_are_retained(self):
-        for change in ("registration", "activity"):
-            target = self.clone(change)
-            self.age(target)
-            if change == "registration":
-                with patch.object(cleanup, "registered_worktrees", side_effect=[[self.main], [self.main, target]]):
-                    result = self.clean(target)
-            else:
-                result = cleanup.clean_candidate(target, self.cutoff, [], delete=True, repository=self.main,
-                                                 activity=lambda: {target / "source"})
-            self.assertEqual("changed", result["reason"], result)
-            self.assertTrue(target.exists())
+        self.assertTrue(target.exists())
 
     def run_sweep(self, trees=(), artifact_root=None, expected_exit=0, active=()):
         options = cleanup.argparse.Namespace(repository=self.main, base="dev",
@@ -439,67 +193,17 @@ class HostReclaimTests(unittest.TestCase):
     def test_artifact_root_inside_cache_uses_guarded_owners(self):
         project = self.root / "artifacts/project"
         lake = project / ".lake"
-        for name in (".release-token", ".release-backup-token", "packages", "build"):
+        for name in (".release-token", ".release-backup-token", "packages"):
             (lake / name).mkdir(parents=True)
             (lake / name / "source").write_text("keep")
         self.age(project)
         with release.cache_guard(project):
             self.run_sweep(artifact_root=lake)
-        self.assertEqual(4, len(list(lake.iterdir())))
+        self.assertEqual(3, len(list(lake.iterdir())))
         self.run_sweep(artifact_root=lake)
         self.assertTrue((lake / ".release-token/source").exists())
         self.assertTrue((lake / ".release-backup-token/source").exists())
         self.assertTrue((lake / "packages/source").exists())
-        self.assertFalse((lake / "build").exists())
-
-    def test_ipc_candidates_inside_temporary_repository_are_ordinary_candidates(self):
-        target = self.clone()
-        endpoints = [target / kind for kind in ("fifo", "socket")]
-        for endpoint in endpoints:
-            self.make_endpoint(endpoint, endpoint.name)
-        self.age(target)
-        with patch.object(cleanup.sys, "platform", "darwin"):
-            rows = self.run_sweep(artifact_root=target)
-        reasons = {row.get("path"): row.get("reason") for row in rows}
-        for endpoint in endpoints:
-            self.assertFalse(endpoint.exists())
-            self.assertIsNone(reasons.get(str(endpoint)))
-
-    def test_host_sweep_ipc_activity_protects_fifo_and_socket_endpoints(self):
-        artifacts = self.root / "artifacts"
-        artifacts.mkdir()
-        endpoints, active = [], []
-        for kind in ("fifo", "socket"):
-            for state in ("idle", "active"):
-                endpoint = artifacts / (kind + "-" + state)
-                self.make_endpoint(endpoint, kind)
-                endpoints.append(endpoint)
-                if state == "active":
-                    active.append(endpoint)
-        self.age(artifacts)
-        with patch.object(cleanup.sys, "platform", "darwin"):
-            rows = self.run_sweep(active=active)
-        items = {row.get("path"): row for row in rows}
-        for endpoint in endpoints:
-            self.assertEqual(endpoint in active, endpoint.exists())
-            self.assertEqual("kept" if endpoint in active else "removed", items[str(endpoint)]["action"])
-            self.assertEqual("protected" if endpoint in active else None, items[str(endpoint)]["reason"])
-
-    def test_ipc_candidates_inside_registered_worktree_are_preserved(self):
-        target = self.root / "registered worktree"
-        self.git(self.main, "worktree", "add", "-b", "registered", target)
-        self.assertTrue((target / ".git").is_file())
-        endpoints = [target / kind for kind in ("fifo", "socket")]
-        for endpoint in endpoints:
-            self.make_endpoint(endpoint, endpoint.name)
-        self.age(target)
-        with patch.object(cleanup.sys, "platform", "darwin"):
-            rows = self.run_sweep([target], artifact_root=target)
-        reasons = {row.get("path"): row.get("reason") for row in rows}
-        for endpoint in endpoints:
-            self.assertTrue(endpoint.exists())
-            self.assertEqual("protected", reasons.get(str(endpoint)))
-        self.assertTrue((target / "source").exists())
 
     def test_partial_removal_reports_failed_summary(self):
         target = self.root / "artifacts/ordinary"
@@ -518,56 +222,6 @@ class HostReclaimTests(unittest.TestCase):
         with patch.object(cleanup, "remove_tree", side_effect=partial):
             rows = self.run_sweep(expected_exit=1)
         self.assertEqual("failed", rows[-1]["status"], rows)
-
-    def test_retained_or_recent_repository_reclaims_only_old_build(self):
-        for kind in ("dependency", "recent"):
-            target = self.clone(kind)
-            build = target / ".lake/build"
-            build.mkdir(parents=True)
-            (build / "generated").write_text("cache")
-            packages = target / ".lake/packages"
-            packages.mkdir()
-            (packages / "dependency").write_text("keep")
-            self.age(target)
-            if kind == "dependency":
-                (self.main / ".git/objects/info/alternates").write_text(str(target / ".git/objects") + "\n")
-            else:
-                os.utime(target / "source", (self.now, self.now))
-            self.run_sweep()
-            self.assertFalse(build.exists())
-            self.assertTrue(packages.exists())
-            self.assertTrue((target / ".git").exists())
-
-    def test_build_cache_lock_and_registered_tree_protection(self):
-        target = self.clone()
-        build = target / ".lake/build"
-        build.mkdir(parents=True)
-        (build / "generated").write_text("cache")
-        self.age(target)
-        with release.cache_guard(target):
-            self.run_sweep()
-        self.assertTrue(build.exists())
-        self.run_sweep([target])
-        self.assertTrue(build.exists())
-
-    def test_fifo_and_socket_require_observable_inactivity(self):
-        for kind in ("fifo", "socket"):
-            target = self.root / kind
-            if kind == "fifo":
-                os.mkfifo(target)
-            else:
-                handle = socket.socket(socket.AF_UNIX)
-                handle.bind(str(target))
-                handle.close()
-            self.age(target.parent)
-            for platform, active, action, reason in (("linux", False, "kept", "ipc_activity_unobservable"),
-                    ("darwin", True, "kept", "protected"), ("darwin", False, "removed", None)):
-                with self.subTest(kind=kind, platform=platform, active=active), \
-                     patch.object(cleanup.sys, "platform", platform), \
-                     patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess(
-                         [], 0 if active else 1, "n" + str(target) + "\n" if active else "", "")):
-                    result = cleanup.clean_candidate(target, self.cutoff, [], delete=True)
-                self.assertEqual((action, reason), (result["action"], result["reason"]), result)
 
     def test_staging_inventory_shape_age_lock_and_backup_exclusion(self):
         lake = self.main / ".lake"
@@ -615,16 +269,11 @@ class HostReclaimTests(unittest.TestCase):
         self.assertFalse(old.exists())
         self.assertTrue(recent.exists())
 
-    def test_staging_nested_git_and_changed_snapshot_are_retained(self):
+    def test_staging_changed_snapshot_is_retained(self):
         lake = self.main / ".lake"
         stage = lake / ".release-token/build"
-        (stage / ".git").mkdir(parents=True)
-        (stage / ".git/HEAD").write_text("recovery history")
-        self.age(lake)
-        rows = release.clean_staging(lake, self.cutoff, now=self.now)
-        self.assertTrue(stage.exists())
-        self.assertEqual("repository", rows[0]["reason"])
-        shutil.rmtree(stage / ".git")
+        stage.mkdir(parents=True)
+        (stage / "generated").write_text("cache")
         self.age(lake)
         observe = release.staging_snapshot
         calls = 0
@@ -672,16 +321,6 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue(any(row["reason"] == "vanished" for row in rows), rows)
         self.assertFalse(retained.exists())
 
-    def test_ipc_keeps_a_full_day_minimum(self):
-        recent = self.now - 3600
-        fifo = self.root / "fifo"
-        os.mkfifo(fifo)
-        os.utime(fifo, (recent, recent))
-        with patch.object(cleanup.sys, "platform", "darwin"), \
-             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 1, "", "")):
-            result = cleanup.clean_candidate(fifo, self.now, [], True)
-        self.assertEqual("recent", result["reason"])
-
     def test_codex_repository_and_special_file_rules_remain_unchanged(self):
         codex = self.root / "codex"
         skeleton = codex / "tmp/skeleton"
@@ -696,108 +335,15 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue(skeleton.exists())
         self.assertTrue(fifo.exists())
 
-    def test_ipc_observation_failure_recent_and_activity_are_fail_closed(self):
-        endpoint = self.root / "endpoint"
-        os.mkfifo(endpoint)
+    def test_temporary_special_entries_keep_baseline_result(self):
+        fifo = self.root / "temporary-fifo"
+        os.mkfifo(fifo)
         self.age(self.root)
-        with patch.object(cleanup.sys, "platform", "darwin"):
-            for observed in (subprocess.CompletedProcess([], 1, "", "cannot inspect"),
-                             subprocess.CompletedProcess([], 0, "", "")):
-                with patch.object(cleanup.subprocess, "run", return_value=observed):
-                    self.assertEqual("ipc_activity_unobservable",
-                                     cleanup.clean_candidate(endpoint, self.cutoff, [], True)["reason"])
-            with patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 1, "", "")):
-                self.assertEqual("protected", cleanup.clean_candidate(endpoint, self.cutoff, [endpoint], True)["reason"])
-                os.utime(endpoint, (self.now, self.now))
-                self.assertEqual("recent", cleanup.clean_candidate(endpoint, self.cutoff, [], True)["reason"])
+        result = self.clean(fifo)
+        self.assertEqual(("kept", "special_file"), (result["action"], result["reason"]))
+        self.assertTrue(fifo.exists())
 
-    def test_ipc_batch_reobserves_activity_and_fingerprints_before_unlink(self):
-        paths = [self.root / ("fifo-" + str(index)) for index in range(4)]
-        for path in paths:
-            os.mkfifo(path)
-        self.age(self.root)
-        calls = 0
-        def activity():
-            nonlocal calls
-            calls += 1
-            if calls == 2:
-                os.utime(paths[2], (self.now, self.now))
-            return {paths[0]} if calls == 1 else {paths[0], paths[1]}
-        with patch.object(cleanup.sys, "platform", "darwin"), \
-             patch.object(cleanup.subprocess, "run", side_effect=AssertionError("activity is already observed")):
-            rows = list(cleanup.clean_ipc_batch(paths, self.cutoff, [], True, activity))
-        self.assertEqual(["protected", "changed", "changed", None], [row["reason"] for row in rows])
-        self.assertEqual([True, True, True, False], [path.exists() for path in paths])
-
-    def test_ipc_batch_timeout_retains_and_names_every_endpoint(self):
-        paths = [self.root / ("fifo-" + str(index)) for index in range(2)]
-        for path in paths:
-            os.mkfifo(path)
-        self.age(self.root)
-        def activity():
-            raise subprocess.TimeoutExpired(["lsof"], 120)
-        try:
-            rows = list(cleanup.clean_ipc_batch(paths, self.cutoff, [], True, activity))
-        except subprocess.TimeoutExpired as error:
-            self.fail("IPC batch must retain endpoints after observer timeout: " + str(error))
-        self.assertEqual([str(path) for path in paths], [row["path"] for row in rows])
-        self.assertEqual(["ipc_activity_unobservable"] * 2, [row["reason"] for row in rows])
-        self.assertTrue(all(path.exists() for path in paths))
-
-    def test_ipc_batch_recheck_timeout_retains_remaining_endpoints(self):
-        paths = [self.root / ("fifo-" + str(index)) for index in range(2)]
-        for path in paths:
-            os.mkfifo(path)
-        self.age(self.root)
-        calls = 0
-        def activity():
-            nonlocal calls
-            calls += 1
-            if calls > 1:
-                raise subprocess.TimeoutExpired(["lsof"], 120)
-            return set()
-        try:
-            rows = list(cleanup.clean_ipc_batch(paths, self.cutoff, [], True, activity))
-        except subprocess.TimeoutExpired as error:
-            self.fail("IPC recheck must retain endpoints after observer timeout: " + str(error))
-        self.assertEqual(["ipc_activity_unobservable"] * 2, [row["reason"] for row in rows])
-        self.assertTrue(all(path.exists() for path in paths))
-
-    def test_host_sweep_ipc_timeout_retains_each_endpoint_and_continues(self):
-        artifacts = self.root / "artifacts"
-        artifacts.mkdir()
-        endpoints = [artifacts / ("fifo-" + str(index)) for index in range(2)]
-        for endpoint in endpoints:
-            os.mkfifo(endpoint)
-        ordinary = artifacts / "ordinary"
-        ordinary.write_text("old artifact")
-        self.age(artifacts)
-        def observe(*args, **kwargs):
-            if kwargs.get("strict_ipc"):
-                raise subprocess.TimeoutExpired(["lsof"], 120)
-            return set()
-        with patch.object(cleanup.sys, "platform", "darwin"), \
-             patch.object(cleanup, "active_paths", side_effect=observe):
-            rows = self.run_sweep(active=None)
-        items = {row.get("path"): row for row in rows}
-        for endpoint in endpoints:
-            self.assertEqual("ipc_activity_unobservable", items[str(endpoint)]["reason"])
-            self.assertTrue(endpoint.exists())
-        self.assertFalse(ordinary.exists())
-        self.assertEqual("succeeded", rows[-1]["status"])
-
-    def test_relative_named_socket_observation_cannot_certify_inactivity(self):
-        endpoint = self.root / "endpoint"
-        self.make_endpoint(endpoint, "socket")
-        self.age(self.root)
-        with patch.object(cleanup.sys, "platform", "darwin"), \
-             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess(
-                 [], 0, "p123\nf4\ntunix\nnendpoint\n", "")):
-            result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
-        self.assertEqual("ipc_activity_unobservable", result["reason"], result)
-        self.assertTrue(endpoint.exists())
-
-    def test_nonipc_lsof_observation_preserves_warning_handling(self):
+    def test_lsof_observation_preserves_warning_handling(self):
         endpoint = self.root / "observed"
         observed = subprocess.CompletedProcess([], 0, "p123\nf4\ntREG\nn" + str(endpoint) + "\n", "warning")
         with patch.object(cleanup.subprocess, "run", return_value=observed):
@@ -806,9 +352,6 @@ class HostReclaimTests(unittest.TestCase):
             except OSError as error:
                 self.fail("ordinary activity observations retain their warning policy: " + str(error))
         self.assertIn(endpoint, paths)
-        with patch.object(cleanup.subprocess, "run", return_value=observed):
-            with self.assertRaisesRegex(OSError, "ipc_activity_unobservable"):
-                cleanup.macos_active_paths(strict_ipc=True)
 
     def test_scoped_macos_observation_does_not_resolve_unrelated_paths(self):
         scope = self.root / "scope"
@@ -828,111 +371,6 @@ class HostReclaimTests(unittest.TestCase):
             paths = cleanup.active_paths(self.root / "codex", scopes=[scope])
         self.assertIn(endpoint, paths)
         self.assertNotIn(unrelated / "file", paths)
-
-    def test_escaped_absolute_socket_observation_retains_endpoint(self):
-        endpoint = self.root / "endpoint\\name"
-        self.make_endpoint(endpoint, "socket")
-        self.age(self.root)
-        escaped = str(endpoint).replace("\\", "\\\\")
-        with patch.object(cleanup.sys, "platform", "darwin"), \
-             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess(
-                 [], 0, "p123\nf4\ntunix\nn" + escaped + "\n", "")):
-            result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
-        self.assertIn(result["reason"], ("protected", "ipc_activity_unobservable"), result)
-        self.assertTrue(endpoint.exists())
-
-    def test_unnamed_sockets_do_not_block_idle_ipc_reclamation(self):
-        endpoint = self.root / "endpoint"
-        os.mkfifo(endpoint)
-        self.age(self.root)
-        rows = "p123\nf4\ntunix\nn->0xabcdef\nf5\ntunix\nn\nf6\ntIPv4\nn127.0.0.1:8000\n"
-        with patch.object(cleanup.sys, "platform", "darwin"), \
-             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, rows, "")):
-            result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
-        self.assertEqual("removed", result["action"], result)
-
-    @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
-    def test_real_unnamed_sockets_do_not_block_idle_ipc_reclamation(self):
-        endpoint = self.root / "endpoint"
-        os.mkfifo(endpoint)
-        self.age(self.root)
-        first, second = socket.socketpair()
-        try:
-            with self.lsof_process(os.getpid()):
-                result = cleanup.clean_candidate(endpoint, self.cutoff, [], True)
-            self.assertEqual("removed", result["action"], result)
-        finally:
-            first.close()
-            second.close()
-
-    @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
-    def test_real_relative_socket_survives_full_host_sweep(self):
-        self.check_live_socket_sweep("endpoint", True)
-
-    @unittest.skipUnless(sys.platform == "darwin" and shutil.which("lsof"), "macOS lsof")
-    def test_real_escaped_socket_survives_full_host_sweep(self):
-        self.check_live_socket_sweep("endpoint\\name", False)
-
-    def check_live_socket_sweep(self, name, relative):
-        workspace = tempfile.TemporaryDirectory(prefix="ipc with spaces ", dir="/tmp")
-        self.addCleanup(workspace.cleanup)
-        artifacts = Path(workspace.name).resolve()
-        endpoint = artifacts / name
-        program = '''import json, os, socket, sys
-directory, name, relative = json.loads(sys.stdin.readline())
-os.chdir(directory)
-handle = socket.socket(socket.AF_UNIX)
-handle.bind(name if relative else os.path.join(directory, name))
-handle.listen()
-os.chdir("/")
-print("ready", flush=True)
-sys.stdin.read()
-'''
-        child = subprocess.Popen([sys.executable, "-B", "-c", program],
-                                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        try:
-            child.stdin.write(json.dumps([str(artifacts), name, relative]) + "\n")
-            child.stdin.flush()
-            self.assertEqual("ready\n", child.stdout.readline())
-            self.age(artifacts)
-            with self.lsof_process(child.pid):
-                rows = self.run_sweep(artifact_root=artifacts, active=None)
-            self.assertEqual("succeeded", rows[-1]["status"], rows)
-            self.assertTrue(endpoint.exists(), rows)
-            with socket.socket(socket.AF_UNIX) as client:
-                client.connect(str(endpoint))
-        finally:
-            child.communicate("", timeout=30)
-
-    def test_later_ipc_endpoint_opened_after_an_unlink_is_retained(self):
-        paths = [self.root / ("fifo-" + str(index)) for index in range(2)]
-        for path in paths:
-            os.mkfifo(path)
-        self.age(self.root)
-        handles = []
-        self.addCleanup(lambda: [os.close(handle) for handle in handles])
-        unlink = Path.unlink
-        def opened_after_first(path, *args, **kwargs):
-            unlink(path, *args, **kwargs)
-            if path == paths[0]:
-                handles.append(os.open(paths[1], os.O_RDONLY | os.O_NONBLOCK))
-        with patch.object(cleanup.sys, "platform", "darwin"), patch.object(Path, "unlink", opened_after_first):
-            rows = list(cleanup.clean_ipc_batch(paths, self.cutoff, [], True,
-                                              lambda: {paths[1]} if handles else set()))
-        self.assertEqual(["removed", "kept"], [row["action"] for row in rows])
-        self.assertTrue(paths[1].exists())
-
-    def test_nested_ipc_tree_shares_complete_lsof_observations(self):
-        root = self.root / "nested ipc"
-        root.mkdir()
-        for index in range(8):
-            os.mkfifo(root / ("fifo-" + str(index)))
-        self.age(root)
-        with patch.object(cleanup.sys, "platform", "darwin"), \
-             patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 1, "", "")) as run:
-            result = cleanup.clean_candidate(root, self.cutoff, [], True)
-        self.assertEqual("removed", result["action"], result)
-        self.assertLessEqual(run.call_count, 2)
 
     def test_registered_staging_is_a_narrow_cleanup_exception(self):
         target = self.clone()

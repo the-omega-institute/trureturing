@@ -442,10 +442,6 @@ def staging_snapshot(path, cutoff):
             return dict(reason="recent")
         if not (stat.S_ISDIR(info.st_mode) or stat.S_ISREG(info.st_mode)):
             return dict(reason="staging_shape")
-        if entry.name == ".git":
-            return dict(reason="repository")
-        if stat.S_ISDIR(info.st_mode) and all((entry / name).exists() for name in ("HEAD", "objects", "refs")):
-            return dict(reason="repository")
         digest.update(os.fsencode(str(entry.relative_to(path))))
         digest.update(str((info.st_dev, info.st_ino, info.st_mode, info.st_size,
                            info.st_mtime_ns, info.st_ctime_ns)).encode())

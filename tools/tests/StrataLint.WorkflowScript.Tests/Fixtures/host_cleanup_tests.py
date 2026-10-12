@@ -90,7 +90,6 @@ class HostCleanupTests(unittest.TestCase):
             min_age_hours=1, delete=False, verbose=True)
         with patch.object(cleanup, "active_paths", return_value=set()), \
              patch.object(cleanup, "registered_worktrees", return_value=set()), \
-             patch.object(cleanup, "source_object_directories", return_value=[]), \
              patch.object(cleanup, "clean_worktrees", return_value=0):
             for delete in (False, True):
                 options.delete = delete
@@ -214,7 +213,6 @@ class HostCleanupTests(unittest.TestCase):
         output = io.StringIO()
         with patch.object(cleanup, "active_paths", return_value=set()), \
              patch.object(cleanup, "registered_worktrees", return_value={self.root / "checkout"}), \
-             patch.object(cleanup, "source_object_directories", return_value=[]), \
              patch.object(cleanup, "clean_worktrees", return_value=2), contextlib.redirect_stdout(output):
             self.assertEqual(1, cleanup.run_clean(options))
         self.assertFalse(artifact.exists())
@@ -569,7 +567,6 @@ class HostCleanupTests(unittest.TestCase):
         output = io.StringIO()
         with patch.object(cleanup, "active_paths", return_value=set()), \
              patch.object(cleanup, "registered_worktrees", return_value=set()), \
-             patch.object(cleanup, "source_object_directories", return_value=[]), \
              patch.object(cleanup, "clean_worktrees", return_value=0), \
              patch.object(cleanup, "candidates", side_effect=interrupted_inventory), \
              contextlib.redirect_stdout(output):
