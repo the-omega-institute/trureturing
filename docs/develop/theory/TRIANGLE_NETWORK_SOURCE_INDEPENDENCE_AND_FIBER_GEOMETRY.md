@@ -117,7 +117,7 @@ t\,\mu_\alpha\mu_\beta\mu_\gamma
 (1-t)\,\mu'_\alpha\mu'_\beta\mu'_\gamma.
 \]
 
-Introduce a selector \(S\) that chooses the first or second product. Unless \(S\) is available to every source edge, the joint source law is not a product of three independent edge marginals. Thus the mixture is not automatically triangle-local.
+The evident implementation uses one shared selector \(S\) to choose between the two entire models. Giving \(S\) to every edge generally correlates the augmented edge variables \((S,\alpha)\), \((S,\beta)\), and \((S,\gamma)\), violating their independence. Independent selectors preserve a product law but generally introduce cross terms instead of the desired two-term mixture. Therefore this construction does not establish triangle locality of the mixture; a different local representation might still exist.
 
 This is the precise point where the Bell-hyperplane intuition breaks. In an ordinary Bell scenario, convex mixtures can be implemented by a shared hidden selector because one source already connects the relevant parties. In the triangle scenario, a selector shared by all three edge sources is an additional common ancestor and changes the causal graph.
 
