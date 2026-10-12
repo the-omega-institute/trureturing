@@ -13,7 +13,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 
 noncomputable section
 namespace D5.S3.Quantum.Hiai.TildeSpectralNonconcavity
-open scoped MatrixOrder Matrix.Norms.L2Operator ComplexOrder
+open scoped MatrixOrder Matrix.Norms.L2Operator ComplexOrder NNReal Topology
 open Matrix Set Filter
 
 abbrev Mat := Matrix (Fin 2) (Fin 2) ℂ
@@ -66,14 +66,14 @@ private lemma diagonal_rpow {x : ℝ} (hx : 0 < x) (t : ℝ) :
   have harg : ((x + 1) / 2) • (1 : Mat) + ((x - 1) / 2) • H = diagonal x := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [H, diagonal, Matrix.smul_apply, Algebra.smul_def] <;> ring
+      simp [H, diagonal, Matrix.smul_apply, Complex.real_smul] <;> ring
   rw [CFC.rpow_eq_cfc_real (diagonal_posDef hx).posSemidef.nonneg, ← harg,
     D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation.two_point_cfc _ _ _ _ hH hHH]
   rw [show (x + 1) / 2 + (x - 1) / 2 = x by ring,
     show (x + 1) / 2 - (x - 1) / 2 = 1 by ring]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [H, diagonal, Matrix.smul_apply, Algebra.smul_def] <;> ring
+    simp [H, diagonal, Matrix.smul_apply, Complex.real_smul] <;> ring
 
 private lemma scaled_projection_rpow (Q : Mat) (hQ : Q.PosSemidef)
     (hQQ : Q * Q = Q) {s q : ℝ} (hs : 0 ≤ s) (hq : 0 < q) :
@@ -105,8 +105,8 @@ private lemma projection_diagonal_projection (x : ℝ) :
     projection * diagonal x * projection = ((1 + x) / 2) • projection := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [projection, diagonal, Matrix.mul_apply, Fin.sum_univ_two, Matrix.smul_apply,
-      Algebra.smul_def] <;> ring
+    simp [projection, diagonal, Matrix.mul_apply, Matrix.vecMul, dotProduct,
+      Fin.sum_univ_two, Matrix.smul_apply, Complex.real_smul] <;> ring
 
 private lemma geometricMean_power {A : Mat} (hA : A.PosDef) {p : ℝ} (hp : 0 < p)
     (α : ℝ) (B : Mat) :
@@ -142,7 +142,7 @@ private lemma geometricMean_projection {α p x : ℝ} (hα : 0 < α) (hp : 0 < p
   have hRR : R * R = μ • R := by
     calc
       R * R = S * (projection * (S * S) * projection) * S := by simp [R, mul_assoc]
-      _ = μ • R := by rw [hSS, hPDP]; simp [R, Matrix.mul_smul, Matrix.smul_mul]
+      _ = μ • R := by rw [hSS, hPDP]; simp [R]
   let Q := μ⁻¹ • R
   have hQ : Q.PosSemidef := hR.smul (inv_nonneg.mpr hμ.le)
   have hQQ : Q * Q = Q := by
@@ -153,11 +153,15 @@ private lemma geometricMean_projection {α p x : ℝ} (hα : 0 < α) (hp : 0 < p
     field_simp
   have hscale : μ • Q = R := by simp [Q, smul_smul, hμ.ne']
   have hpow : R ^ α = μ ^ (α - 1) • R := by
-    rw [← hscale, scaled_projection_rpow Q hQ hQQ hμ.le hα, smul_smul]
-    congr 1
-    rw [← Real.rpow_add_one hμ.ne']
-    congr 1
-    ring
+    have hcoeff : μ ^ α = μ ^ (α - 1) * μ := by
+      rw [← Real.rpow_add_one hμ.ne']
+      congr 1
+      ring
+    calc
+      R ^ α = (μ • Q) ^ α := congrArg (fun X : Mat => X ^ α) hscale.symm
+      _ = μ ^ α • Q := scaled_projection_rpow Q hQ hQQ hμ.le hα
+      _ = μ ^ (α - 1) • (μ • Q) := by rw [smul_smul, ← hcoeff]
+      _ = μ ^ (α - 1) • R := by rw [hscale]
   have hleft : D ^ (-p / 2) * S = 1 := by
     convert CFC.rpow_neg_mul_rpow (p / 2) hD.isStrictlyPositive using 1 <;> congr 1 <;> ring
   have hright : S * D ^ (-p / 2) = 1 := by
@@ -203,13 +207,18 @@ private lemma trace_projection {α p x : ℝ} (hα : 0 < α) (hp : 0 < p) (hx : 
     change (s ^ (1 / 2 : ℝ) * s ^ (1 / 2 : ℝ)) * ν = s * ν
     rw [hsquare]
   unfold tildeTrace
-  rw [geometricMean_projection hα hp hx,
-    scaled_projection_rpow projection projection_posSemidef projection_sq hs.le
+  rw [geometricMean_projection hα hp hx]
+  dsimp only
+  change (Matrix.trace (((s • projection) ^ (1 / 2 : ℝ) *
+    (diagonal x) ^ (2 * p * (1 - α)) * (s • projection) ^ (1 / 2 : ℝ)) ^
+    (1 / p))).re = scalarTrace α p x
+  rw [scaled_projection_rpow projection projection_posSemidef projection_sq hs.le
       (show (0 : ℝ) < 1 / 2 by norm_num), hinner]
   rw [scaled_projection_rpow projection projection_posSemidef projection_sq
     (mul_nonneg hs.le hν.le) (one_div_pos.mpr hp)]
-  simp [Matrix.trace, projection, Fin.sum_univ_two, Matrix.smul_apply, Algebra.smul_def,
+  simp [Matrix.trace, projection, Fin.sum_univ_two, Complex.real_smul,
     scalarTrace, scalarCore, s, ν]
+  ring
 
 private lemma scalarCore_derivative (α p : ℝ) {x : ℝ} (hx : 0 < x) :
     HasDerivAt (scalarCore α p)
@@ -232,11 +241,10 @@ private lemma scalarCore_derivative (α p : ℝ) {x : ℝ} (hx : 0 < x) :
     rw [← Real.rpow_add_one hμ.ne']
     congr 1
     ring
-  convert (hdμ.rpow_const (Or.inl hμ.ne')).mul hdν using 1
-  · rfl
-  · dsimp [μ] at hμsplit
-    rw [show α - 1 - 1 = α - 2 by ring, hsplit, hμsplit]
-    ring
+  convert! (hdμ.rpow_const (p := α - 1) (Or.inl hμ.ne')).mul hdν using 1
+  dsimp only [μ] at hμsplit
+  rw [show α - 1 - 1 = α - 2 by ring, hsplit, hμsplit]
+  ring
 
 private lemma scalarCore_decreases {α p : ℝ} (hαhalf : α < 1 / 2)
     (hp : 0 < p) :
@@ -247,9 +255,11 @@ private lemma scalarCore_decreases {α p : ℝ} (hαhalf : α < 1 / 2)
   have hx₀ : 0 < x₀ := Real.rpow_pos_of_pos (by norm_num) _
   have hx₀1 : x₀ < 1 := by
     dsimp [x₀]
-    exact Real.rpow_lt_one_of_one_lt_of_neg (by norm_num) (by positivity)
+    exact Real.rpow_lt_one_of_one_lt_of_neg (by norm_num)
+      (div_neg_of_neg_of_pos (by norm_num) hq)
   have hx₀q : x₀ ^ q = (1 / 8 : ℝ) := by
-    rw [x₀, ← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 8)]
+    dsimp only [x₀]
+    rw [← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 8)]
     rw [show -1 / q * q = -1 by field_simp [hq.ne']]
     norm_num
   have hneg : ∀ x ∈ Icc (x₀ / 4) (x₀ / 2), deriv (scalarCore α p) x < 0 := by
@@ -315,6 +325,7 @@ private lemma scalar_jensen {α p : ℝ} (hαhalf : α < 1 / 2)
   rw [hmid]
   nlinarith [mul_pos hθ hhc]
 
+set_option backward.isDefEq.respectTransparency false in
 private lemma positive_power_continuousOn {q : ℝ} (hq : 0 < q) :
     ContinuousOn (fun B : Mat => B ^ q) {B | B.PosSemidef} := by
   let qn : ℝ≥0 := ⟨q, hq.le⟩
@@ -371,7 +382,7 @@ private lemma diagonal_affine (a c θ : ℝ) :
     diagonal ((1 - θ) * a + θ * c) = (1 - θ) • diagonal a + θ • diagonal c := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [diagonal, Matrix.smul_apply, Algebra.smul_def] <;> ring
+    simp [diagonal, Matrix.smul_apply, Complex.real_smul] <;> ring
 
 /-- For every lower-half weight and every positive power, an SPD qubit pair violates
 first-variable concavity of the exact tilde spectral trace. -/
@@ -397,7 +408,7 @@ theorem strict_first_variable_jensen_violation {α p : ℝ}
     (tildeTrace_continuousOn hα hp (diagonal x)).comp hBcont.continuousOn hBpos
   have hgapCont : ContinuousWithinAt gap (Ici 0) 0 :=
     ((((hcont a).const_mul (1 - θ)).add ((hcont c).const_mul θ)).sub
-      (hcont b)).continuousWithinAt (show (0 : ℝ) ∈ Ici 0 from le_rfl)
+      (hcont b)).continuousWithinAt (by simp : (0 : ℝ) ∈ Ici 0)
   have hgap0 : 0 < gap 0 := by simpa [gap, Bε] using sub_pos.mpr hboundary
   have hev : ∀ᶠ e in 𝓝[Ici 0] (0 : ℝ), 0 < gap e :=
     hgapCont.eventually (IsOpen.mem_nhds isOpen_Ioi hgap0)

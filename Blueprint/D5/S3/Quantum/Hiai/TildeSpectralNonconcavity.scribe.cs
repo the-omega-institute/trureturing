@@ -12,7 +12,7 @@ internal sealed class TildeSpectralNonconcavityDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("strict-first-variable-jensen-violation"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Hiai/TildeSpectralNonconcavity.strict_first_variable_jensen_violation"),
-                H("Strict Jensen violation on positive definite qubits"),
+                H("Strict Jensen violation on positive definite 2 by 2 matrices"),
                 StatementSource.FromAuthor(Endpoint()),
                 AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/Quantum/hiai2026quasigeometric")),
