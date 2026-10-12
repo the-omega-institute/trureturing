@@ -65,7 +65,8 @@ private def actO {d t : ℕ} (g : G d) (A : Output d t) : Output d t :=
   ⟨pmap g.2 A.val, by dsimp only [pmap]; rw [Finset.card_map]; exact A.property⟩
 private lemma pmap_symmDiff {d : ℕ} (p : Equiv.Perm (Fin d)) (s t : Finset (Fin d)) :
     pmap p (s ∆ t) = pmap p s ∆ pmap p t := by
-  simpa only [pmap, Finset.map_eq_image, Equiv.coe_toEmbedding] using
+  dsimp only [pmap]
+  simpa only [Finset.map_eq_image, Equiv.coe_toEmbedding] using
     Finset.image_symmDiff s t p.injective
 private lemma pmap_comp {d : ℕ} (p q : Equiv.Perm (Fin d)) (s : Finset (Fin d)) :
     pmap p (pmap q s) = pmap (p * q) s := by
