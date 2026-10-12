@@ -750,3 +750,798 @@ positive-increment acquisition are the cited suppliers; the resource
 comparisons above are deductions under their stated measurable hypotheses.
 
 ## 追加锚（本行以下为增补区）
+
+## 77. Positive-error marked acquisition and the unique full-carrier centers
+
+**Definition 77.1 (Selected-law approximation).** Retain the actual labeled
+sources, static answers, zero advice and common-rule acquisition contract of
+Definition 71.1, and exactly the original carrier and consumer of Definition
+73.1. Fix a sequence satisfying (73.3). For brevity write
+
+$$
+\lambda_n=(1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n},
+\qquad \lambda^a_x=\lambda_{n(x)},
+\qquad H_m=\{x:n(x)>m\}\quad(m\in\mathbb N_0).
+\tag{77.1}
+$$
+
+Thus $H_0=X$, and $H_m$ is precisely the actual all-positive depth-$m$
+cylinder. Every $D_n$, and every finite comparison pattern used below, is
+occupied by Boundaries, Theorem 35.2. There is no additional source with an
+infinite all-positive signature.
+
+For $0\le\varepsilon\le1$, let $\mathcal A_\varepsilon(a)$ consist of all
+lawful acquisitions whose original-tape output probabilities satisfy
+
+$$
+\sup_{x\in X}\operatorname{TV}(\widehat\lambda_{A,x},\lambda^a_x)
+\le\varepsilon,
+\qquad
+\operatorname{TV}(\nu,\lambda)=\sup_{E\in\mathcal F}|\nu(E)-\lambda(E)|.
+\tag{77.2}
+$$
+
+The seed probability space may vary with $A$, but within each acquisition
+its law is source-independent and its seeded deterministic rule is common
+to every actual source. Arbitrary adaptive addresses, repeated requests,
+measurable finite records and outputs, and sourcewise almost-sure finite
+handoff are retained. The laws $\widehat\lambda_{A,x}$ may have mass on any
+original tapes, including outside the marked points. No extra support or
+proposal-row condition is imposed in (77.2). The error in (77.2) is relative
+to the selected laws (73.4); the nonatomic original targets $\mu_x$ of
+Theorem 67.5 are unchanged. The resources $K,M,S_c$ and their nonhandoff
+values retain Definitions 71.2 and 72.1.
+
+For $t\ge0$ put
+
+$$
+S_m(t)=\sum_{n>m}(a_n-t)_+,
+\qquad v_+=\max\{v,0\}.
+\tag{77.3}
+$$
+
+At $t=0$ the sum is an extended nonnegative real number. At every $t>0$
+it has finite support, since $a_n\to0$.
+
+**Theorem 77.2 (Full-carrier center feasibility and its unique minimum).**
+For every $m\ge0$, $0\le\varepsilon\le1$ and probability $\nu$ on the
+entire original carrier,
+
+$$
+\sup_{x\in H_m}\operatorname{TV}(\nu,\lambda^a_x)\le\varepsilon
+\quad\Longleftrightarrow\quad
+\begin{cases}
+\nu(\{\theta_0\})\ge1-\varepsilon,\\
+\nu(\{\theta_n\})\ge(a_n-\varepsilon)_+&\text{for every }n>m.
+\end{cases}
+\tag{77.4}
+$$
+
+Such a probability exists exactly when $S_m(\varepsilon)\le\varepsilon$.
+The attained minimum radius is
+
+$$
+R_m=\max_{k\ge1}\frac{\sum_{j=1}^k a_{m+j}}{k+1}.
+\tag{77.5}
+$$
+
+It is the unique positive solution of $S_m(R_m)=R_m$. Its unique minimizing
+probability, even among all full-carrier probabilities, is
+
+$$
+\nu_m^*=(1-R_m)\delta_{\theta_0}
+       +\sum_{n>m}(a_n-R_m)_+\delta_{\theta_n}.
+\tag{77.6}
+$$
+
+This law has finite support. Moreover
+$a_{m+1}/2\le R_m<a_{m+1}$, and $R_m$ is nonincreasing with limit zero.
+
+**Proof.** Put $T=1-\nu(\{\theta_0\})$ and
+$b_n=\nu(\{\theta_n\})$. The two target singletons and their complement
+give
+
+$$
+\begin{aligned}
+\operatorname{TV}(\nu,\lambda_n)
+ &=1-\min\{1-T,1-a_n\}-\min\{b_n,a_n\}\\
+ &=\max\{T,a_n\}-\min\{b_n,a_n\}.
+\end{aligned}
+\tag{77.7}
+$$
+
+Indeed all negative mass of $\nu-\lambda_n$ lies on these two singletons;
+the sum of their negative deficits equals its positive mass, since both
+measures have total mass one. This also proves (77.7) when $\nu$ has
+diffuse mass or other atoms. The elementary TV overlap identity and its
+event-supremum normalization are the ingredients in Levin and Peres, with
+Wilmer, [*Markov Chains and Mixing Times*, second edition, Chapter 4,
+Proposition 4.2, Remark 4.3 and equation
+(4.13)](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf).
+The finite partition argument here accounts for the whole original carrier.
+
+Every $n>m$ is realized at an actual source in $H_m$. As $n\to\infty$,
+the right side of (77.7) tends to $T$: both $a_n$ and
+$\min\{b_n,a_n\}$ tend to zero. A uniform cap therefore forces
+$T\le\varepsilon$. If $a_n>\varepsilon$, then
+$b_n\le T\le\varepsilon<a_n$, and (77.7) reduces to $a_n-b_n$.
+The cap then forces $b_n\ge a_n-\varepsilon$. If
+$a_n\le\varepsilon$, (77.7) is at most
+$\max\{T,a_n\}\le\varepsilon$ without an additional condition.
+These statements prove necessity and sufficiency in (77.4). The limiting
+inequality is taken along occupied actual $D_n$; it introduces no limiting
+source.
+
+Disjointness of the marked singletons gives
+$S_m(\varepsilon)\le T\le\varepsilon$. Conversely, if this sum is at
+most $\varepsilon$, assign mass $(a_n-\varepsilon)_+$ to each $n>m$
+and the remaining mass to $\theta_0$. This is a probability satisfying
+(77.4). At $\varepsilon=0$ feasibility is impossible, because
+$S_m(0)\ge a_{m+1}>0$.
+
+For $t>0$, monotonicity of $(a_n)$ gives the finite-positive-part identity
+
+$$
+S_m(t)=\sup_{k\ge0}
+       \left(\sum_{j=1}^k a_{m+j}-kt\right),
+\tag{77.8}
+$$
+
+where the term $k=0$ is zero. The positive summands form an initial
+segment, and adjoining a nonpositive summand cannot increase a partial
+sum. Hence $S_m(t)\le t$ is equivalent to
+$\sum_{j=1}^k a_{m+j}\le(k+1)t$ for every $k\ge1$.
+The averages in (77.5) tend to zero, by $a_n\to0$, and the first one is
+positive. Their positive supremum is consequently a maximum at a finite
+$k$. Let that maximum be $R$. The preceding equivalence gives
+$S_m(R)\le R$. A maximizing $k$ in (77.5), substituted in (77.8), gives
+$S_m(R)\ge R$. Thus $S_m(R)=R$ and $R$ is the minimum feasible radius.
+
+On every closed interval of positive $t$, only finitely many summands can
+be nonzero; therefore $S_m$ is continuous there. Since $S_m$ is
+nonincreasing, $S_m(t)-t$ is strictly decreasing. Its positive root is
+unique. At that root (77.4) forces
+
+$$
+R_m=S_m(R_m)\le\sum_{n>m}b_n\le T\le R_m.
+$$
+
+All inequalities are equalities. Each required marked mass is fixed, and
+there is no remaining mass for another tape. This proves (77.6) and
+uniqueness on the entire carrier. Finite support follows from $R_m>0$.
+The first average in (77.5) gives $R_m\ge a_{m+1}/2$. Each average is
+strictly less than $a_{m+1}$, and the maximum is attained, so
+$R_m<a_{m+1}$. Finally $S_{m+1}(t)\le S_m(t)$ implies
+$R_{m+1}\le R_m$, and the upper bound implies $R_m\to0$.
+$\square$
+
+## 78. The sharp deterministic maximum-index boundary
+
+**Theorem 78.1 (Error under a hard address ceiling).** Among all lawful
+adaptive acquisitions satisfying $M_{A,x}\le m$ almost surely at every
+actual source, the attained minimum of
+$\sup_x\operatorname{TV}(\widehat\lambda_{A,x},\lambda^a_x)$ is $R_m$.
+For every $0<\varepsilon\le1$, the least possible deterministic
+maximum-index ceiling in $\mathcal A_\varepsilon(a)$ is the finite integer
+
+$$
+h_\varepsilon=\min\{m\ge0:S_m(\varepsilon)\le\varepsilon\}
+             =\min\{m\ge0:R_m\le\varepsilon\}.
+\tag{78.1}
+$$
+
+It has an attainer with $K_{A,x}\le h_\varepsilon$ and
+$M_{A,x}\le h_\varepsilon$ at every source and seed. The minimum remaining
+error after an actually observed all-positive prefix of length $m$, with
+no further source observations and a common continuation seed law, is
+$R_m$. A prefix containing a negative answer instead fixes $n(x)$ and has
+remaining error zero.
+
+**Proof.** Fix an acquisition under the ceiling and one actual $x\in H_m$.
+Let $E_{x,m}$ be its measurable event of finite handoff with all requested
+indices at most $m$. It has probability one. On this whole event every
+$y\in H_m$ follows the same finite execution and hands the same tape:
+the initial inputs are common, and every requested answer agrees. This
+is the finite-record transport in Lemma 45.3 and the proof of Theorem
+71.3, applied to the complete event rather than to a selected seed.
+The output submeasure on $E_{x,m}$ is dominated by every
+$\widehat\lambda_{A,y}$. Its mass is one, so it equals each of these
+probabilities. There is therefore one common probability on $H_m$,
+whose uniform error is at least $R_m$ by Theorem 77.2. Adaptivity and
+repeated requests do not alter this argument.
+
+For attainment query $p_1,\ldots,p_m$ in order, stopping at the first
+negative answer. If that answer has index $n\le m$, sample $\lambda_n$.
+If all $m$ answers are positive, sample $\nu_m^*$. The finite-support
+sampling tables use a uniform coordinate of one source-independent seed,
+and the same rule applies at every actual source. The queried prefix
+chooses the appropriate table. Handoff is finite for every seed, and its
+finite records and output events are measurable intervals. The error is
+zero on $D_n$ with $n\le m$ and at most $R_m$ on $H_m$, with equality
+in the supremum by Theorem 77.2. Both $K$ and $M$ are at most $m$.
+
+The center criterion proves both equalities in (78.1). An $m$ with
+$a_{m+1}\le\varepsilon$ has $S_m(\varepsilon)=0$, proving finiteness.
+For the continuation assertion the possible selected laws are precisely
+$\lambda_n$, $n>m$, so a zero-request continuation produces a common
+center and Theorem 77.2 applies. An observed negative fixes the first
+absence and permits its exact two-point sampler. This assertion uses a
+common continuation seed law; it does not condition a source-dependent
+failure event away. $\square$
+
+## 79. One shared error allowance and all adaptive mean-resource optima
+
+**Definition 79.1 (Residual mass and cumulative weights).** Fix
+$0<\varepsilon\le1$ and put
+
+$$
+\begin{aligned}
+u_i&=(a_i-\varepsilon)_+,&
+S&=\sum_{i\ge1}u_i,& D&=(S-\varepsilon)_+,\\
+d_i&=\min\left\{u_i,\left(D-\sum_{j<i}u_j\right)_+\right\},&
+b_i&=u_i-d_i,& B&=\sum_{i\ge1}b_i.
+\end{aligned}
+\tag{79.1}
+$$
+
+All sums in (79.1) have finite support. Let $w_1,w_2,\ldots$ be any
+nondecreasing sequence of finite real weights with $w_1>0$. At finite
+handoff define
+
+$$
+W_{w,A,x}=\sum_{j=1}^{K_{A,x}}w_{I_{A,x,j}},
+\tag{79.2}
+$$
+
+and put $W_{w,A,x}=\infty$ on nonhandoff. Taking $w_i=1$ gives $K$;
+taking $w_i=c(i)$ for a charge of Definition 72.1 with $c(1)>0$ gives
+$S_c$. Repetitions contribute repeatedly in (79.2).
+
+**Theorem 79.2 (Sharp positive-error means over all adaptive acquisitions).**
+For every sequence (73.3) and every $0<\varepsilon\le1$,
+
+$$
+\begin{aligned}
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x\mathsf E_A K_{A,x}
+ &=\left(\sum_{i\ge1}(a_i-\varepsilon)_+-\varepsilon\right)_+=D,\\
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x\mathsf E_A W_{w,A,x}
+ &=\sum_{i\ge1}w_i d_i.
+\end{aligned}
+\tag{79.3}
+$$
+
+One acquisition attains these minima simultaneously for every allowed
+weight sequence. It also satisfies $K_{A,x},M_{A,x}\le h_\varepsilon$ at
+every source and seed, where $h_\varepsilon$ is the sharp maximum-index
+ceiling of (78.1). In particular the attained optimum for every
+nondecreasing cumulative charge is $\sum_i c(i)d_i$.
+
+**Proof.** If $D=0$, all $d_i$ are zero. If $D>0$, let $h$ be the first
+index with $\sum_{i\le h}u_i\ge D$. Then
+
+$$
+d_i=u_i\ (i<h),\qquad
+0<d_h=D-\sum_{i<h}u_i\le u_h,\qquad
+d_i=0\ (i>h).
+\tag{79.4}
+$$
+
+In either case $(d_i)$ is nonincreasing, $\sum_i d_i=D$, and
+$B=S-D=\min\{S,\varepsilon\}$. When $D=0$ set $h=0$.
+For $D>0$ the condition defining $h$ is
+$S_h(\varepsilon)=S-\sum_{i\le h}u_i\le\varepsilon$ and fails at
+every smaller index. When $D=0$ it already holds at zero. Thus
+$h=h_\varepsilon$ in all cases.
+
+We first prove the universal lower bound for a fixed $w$. Put
+$C_A=\sup_x\mathsf E_A W_{w,A,x}$. If $C_A=\infty$ the finite right
+side of (79.3) is a lower bound. If $D=0$ the desired lower bound is zero.
+Suppose $C_A<\infty$ and $D>0$. Let
+$L=\max\{i:u_i>0\}$, which is finite. For any $\delta>0$, the pointwise
+bound $W_{w,A,x}\ge w_1K_{A,x}$ and Markov's inequality permit a finite
+$k\ge1$ with
+
+$$
+\sup_x\mathsf P_A\{K_{A,x}>k\}
+\le\frac{C_A}{w_1(k+1)}<\delta.
+\tag{79.5}
+$$
+
+Use the common event $J_{A,k,m}$ of (70.3), also written (74.4).
+Its finite-forest property (70.4) uses only the common seeded rule and
+finite binary branching, so applies here without exact output laws.
+Specifically, at a fixed seed the first $k$ requests across all actual
+sources use at most $2^k-1$ query nodes, with a finite maximum address.
+Processing without a further request adds no node. Request-index events
+are measurable unions over finite records, and countability of $X$ makes
+$J_{A,k,m}$ measurable. Hence $J_{A,k,m}\downarrow\varnothing$ and its
+probability tends to zero. Choose $m\ge L$ with
+$\mathsf P_A(J_{A,k,m})<\delta$.
+
+Before using any individual seed, fix one actual $z$ positive through
+index $m$, and, for each $1\le i\le L$, one actual $y_i$ positive through
+$m$ except at $i$. Boundaries, Theorem 35.2 supplies these finite patterns.
+Then $n(y_i)=i$ and $n(z)>m$. At $y_i$ the cap on the singleton
+$\{\theta_i\}$ gives an output probability at least
+$a_i-\varepsilon=u_i$. Restrict this finite-handoff output event to
+$\{K_{A,y_i}\le k\}\setminus J_{A,k,m}$ and call the resulting measurable
+event $E_i$. The two probability losses give
+
+$$
+\mathsf P_A(E_i)\ge u_i-2\delta.
+\tag{79.6}
+$$
+
+Every execution in $E_i$ uses indices at most $m$. Partition this whole
+event by its finite request/answer record and handoff time. If the record
+requests $p_i$, its execution up to the first such request replays at $z$,
+since all preceding requested answers agree. If it never requests $p_i$,
+its complete execution replays at $z$, including output $\theta_i$.
+For the measurable events $Q_i(z)$ of requesting $p_i$ at least once and
+$O_i(z)$ of finite output $\theta_i$, this proves
+
+$$
+E_i\subseteq Q_i(z)\cup O_i(z),\qquad
+\mathsf P_A(Q_i(z))\ge(u_i-v_i)_+-2\delta,\quad v_i=\mathsf P_A(O_i(z)).
+\tag{79.7}
+$$
+
+The finite marked union $F=\{\theta_1,\ldots,\theta_L\}$ has target mass
+zero at $z$, since $n(z)>m\ge L$. Its cap therefore gives the single
+collective constraint
+
+$$
+\sum_{i=1}^L v_i=\widehat\lambda_{A,z}(F)\le\varepsilon.
+\tag{79.8}
+$$
+
+The comparison source $z$ is one fixed actual source for all these events.
+Counting each distinct requested index once in the resource yields
+
+$$
+C_A\ge\mathsf E_A W_{w,A,z}
+\ge\sum_{i=1}^L w_i(u_i-v_i)_+-2\delta\sum_{i=1}^L w_i.
+\tag{79.9}
+$$
+
+For any nonnegative $v_i$ satisfying (79.8), put $t_i=(u_i-v_i)_+$.
+Then $0\le t_i\le u_i$ and
+$\sum_i t_i\ge S-\sum_i v_i\ge D$. The earliest filled vector (79.4)
+minimizes every nondecreasing weighted cost under these conditions.
+To see this without assuming strict weights, subtract its cost and use
+
+$$
+\begin{aligned}
+\sum_{i=1}^L w_i(t_i-d_i)
+={}&w_h\left(\sum_{i=1}^L t_i-D\right)\\
+ &+\sum_{i<h}(w_i-w_h)(t_i-u_i)
+  +\sum_{i>h}(w_i-w_h)t_i\ \ge0.
+\end{aligned}
+\tag{79.10}
+$$
+
+Each term is nonnegative, by monotonicity of $w$ and the stated bounds
+on $t$. Equations (79.9)--(79.10), followed by $\delta\downarrow0$,
+prove $C_A\ge\sum_i w_i d_i$. The finite actual comparison sources may
+change with $\delta$, while the same source supremum $C_A$ remains on
+the left. No infinite source or seed-dependent comparison is used.
+Taking $w_i=1$ gives the count lower bound. Wrong marked outputs are
+accounted for by (79.8), rather than assigned the null probability in
+the exact certificate of Theorem 73.3.
+
+For attainment take a common uniform seed $U\in[0,1)$. Reserve consecutive
+half-open intervals of lengths $b_i$ in $[0,B)$, and immediately emit
+$\theta_i$ on its interval. On $[B,1)$ put $V=U-B$. At an all-positive
+prefix of depth $j$, emit $\theta_0$ if $V\ge d_{j+1}$; otherwise request
+$p_{j+1}$. On a negative answer emit $\theta_{j+1}$, and on a positive
+answer continue. This is the threshold rule of Theorem 73.2 applied to
+the nonincreasing residual amplitudes $d_i$, with a zero next amplitude
+forcing handoff. Since $B\le\varepsilon$ and $d_i\le u_i$, whenever
+$d_i>0$ one has $B+d_i\le\varepsilon+(a_i-\varepsilon)=a_i\le1$.
+Thus the thresholds fit inside the remaining interval.
+
+At every $x\in D_n$ its output law is
+
+$$
+\widehat\lambda_{A,x}
+=(1-B-d_n)\delta_{\theta_0}
+ +\sum_{i\ge1}b_i\delta_{\theta_i}
+ +d_n\delta_{\theta_n}.
+\tag{79.11}
+$$
+
+The coefficients are nonnegative and sum to one. Its mass at $\theta_n$
+is $b_n+d_n=u_n$, and its total mass outside $\theta_0$ is $B+d_n$.
+If $a_n>\varepsilon$, then $B+d_n\le a_n$, and (77.7) gives error
+$a_n-u_n=\varepsilon$. If $a_n\le\varepsilon$, then $b_n=d_n=0$ and
+the error is $\max\{B,a_n\}\le\varepsilon$. Thus the acquisition lies
+in $\mathcal A_\varepsilon(a)$.
+
+All immediate-output intervals and finite-record thresholds are measurable.
+There are finitely many nonzero amplitudes. The rule hands off by the first
+absence or after at most $h$ requests, for every source and seed, using the
+same original tape points and consumer. At $x\in D_n$, request $i$ occurs
+with probability $d_i$ for $i\le n$, and never occurs for $i>n$. Hence
+
+$$
+\mathsf E_A W_{w,A,x}=\sum_{i=1}^{n(x)}w_i d_i.
+\tag{79.12}
+$$
+
+An actual source with $n(x)\ge h$ exists, so the uniform mean equals
+$\sum_i w_i d_i$. The same acquisition and its sourcewise probabilities
+give equality for every weight sequence. Its request and address ceilings
+are $h=h_\varepsilon$, completing the proof. $\square$
+
+## 80. Robust common subprobabilities and individually optimal address tails
+
+**Theorem 80.1 (The full-carrier common-subprobability criterion).** Fix
+$m\ge0$, $0\le\varepsilon\le1$ and $p\in[0,1]$. For a nonnegative
+measure $\rho$ on the original carrier of total mass $1-p$, probabilities
+$\sigma_n\ge\rho$ with
+$\operatorname{TV}(\sigma_n,\lambda_n)\le\varepsilon$ for every $n>m$
+exist if and only if
+
+$$
+\rho(\Theta\setminus\{\theta_0\})\le\varepsilon,
+\qquad
+\rho(\{\theta_n\})\ge(a_n-\varepsilon-p)_+\quad(n>m).
+\tag{80.1}
+$$
+
+There exists such a common $\rho$ of mass $1-p$ exactly when
+
+$$
+S_m(\varepsilon+p)\le\varepsilon.
+\tag{80.2}
+$$
+
+No atomic-support restriction on $\rho$ or on the probabilities
+$\sigma_n$ is part of necessity. When (80.2) holds, one explicit choice,
+with $C=S_m(\varepsilon+p)$, is
+
+$$
+\begin{aligned}
+\rho&=(1-p-C)\delta_{\theta_0}
+       +\sum_{j>m}(a_j-\varepsilon-p)_+\delta_{\theta_j},\\
+q_n&=\min\{p,(a_n-\varepsilon)_+\},\\
+\sigma_n&=\rho+q_n\delta_{\theta_n}+(p-q_n)\delta_{\theta_0}.
+\end{aligned}
+\tag{80.3}
+$$
+
+**Proof.** Write $C_\rho=\rho(\Theta\setminus\{\theta_0\})$ and
+$r_n=\rho(\{\theta_n\})$. The positive discrepancy of $\rho$ over
+$\lambda_n$ has total mass
+
+$$
+\begin{aligned}
+e_n&=(a_n-p-C_\rho)_++(r_n-a_n)_++C_\rho-r_n\\
+   &=\max\{C_\rho,a_n-p\}-\min\{r_n,a_n\}.
+\end{aligned}
+\tag{80.4}
+$$
+
+The three contributions are respectively the excess on $\theta_0$, the
+excess on $\theta_n$, and the mass on their complement. This formula
+includes every other original tape. If $\sigma_n\ge\rho$, the positive
+mass of $\sigma_n-\lambda_n$ is at least $e_n$. Since $\sigma_n$ and
+$\lambda_n$ are probabilities, their TV is that positive mass. Thus
+$e_n\le\varepsilon$ is necessary.
+
+It is also sufficient for completion at a fixed $n$. Let
+$\Delta_n=(\lambda_n-\rho)_+$ be the positive deficit measure.
+Because $\lambda_n(\Theta)-\rho(\Theta)=p$, it has total mass
+$p+e_n$. If that mass is positive, put
+
+$$
+\sigma_n=\rho+\frac{p}{p+e_n}\Delta_n.
+\tag{80.5}
+$$
+
+This is a probability dominating $\rho$. The added measure fills only
+deficits and fills no more than their full amount. Its remaining positive
+discrepancy over $\lambda_n$ is exactly $e_n$, so its TV is $e_n$.
+If $p+e_n=0$, then $p=e_n=0$ and $\rho=\lambda_n$; use
+$\sigma_n=\rho$ without division. This proves the completion assertion
+for an arbitrary full-carrier $\rho$.
+
+As $n\to\infty$, (80.4) tends to $C_\rho$, because $a_n\to0$ and
+$\min\{r_n,a_n\}\to0$. Therefore $e_n\le\varepsilon$ for every
+occupied $n>m$ forces $C_\rho\le\varepsilon$. Under this bound, if
+$a_n-p>\varepsilon$, then $r_n\le C_\rho\le\varepsilon<a_n$ and
+(80.4) reduces to $a_n-p-r_n$. Its cap is precisely
+$r_n\ge a_n-p-\varepsilon$. If $a_n-p\le\varepsilon$, (80.4) is at
+most $\varepsilon$ without any extra marked mass. This proves (80.1).
+
+Summing the required disjoint singleton masses gives
+$S_m(\varepsilon+p)\le C_\rho\le\varepsilon$, proving necessity of
+(80.2). For its sufficiency the first line of (80.3) has nonnegative base
+coefficient. Indeed if $1-p>\varepsilon$, then
+$C\le\varepsilon<1-p$; if $1-p\le\varepsilon$, then
+$\varepsilon+p\ge1\ge a_j$ and $C=0$. The measure has mass $1-p$
+and satisfies (80.1).
+
+The last line of (80.3) is a probability dominating this $\rho$.
+For each $n>m$ its mass at $\theta_n$ is
+
+$$
+(a_n-\varepsilon-p)_++\min\{p,(a_n-\varepsilon)_+\}
+=(a_n-\varepsilon)_+.
+$$
+
+Its mass outside $\theta_0$ is $C+q_n$. If $a_n>\varepsilon$,
+$C+q_n\le\varepsilon+(a_n-\varepsilon)=a_n$, so (77.7) gives TV
+$\varepsilon$. If $a_n\le\varepsilon$, then $q_n=0$ and the marked
+mass at $n$ is zero; (77.7) gives $\max\{C,a_n\}\le\varepsilon$.
+This proves all of (80.3). $\square$
+
+**Theorem 80.2 (The attained frontier for each fixed address horizon).** For
+$0<\varepsilon\le1$ and $m\ge0$, define
+
+$$
+\begin{aligned}
+\beta_m(\varepsilon)
+ &=\inf\{p\in[0,1]:S_m(\varepsilon+p)\le\varepsilon\}\\
+ &=\max\left\{0,\sup_{k\ge1}
+    \frac{\sum_{j=1}^k a_{m+j}-(k+1)\varepsilon}{k}\right\}.
+\end{aligned}
+\tag{80.6}
+$$
+
+Every $A\in\mathcal A_\varepsilon(a)$ obeys, for every actual $x\in H_m$,
+
+$$
+\mathsf P_A\{M_{A,x}>m\}\ge\beta_m(\varepsilon).
+\tag{80.7}
+$$
+
+For each fixed $m$ there is an acquisition attaining equality throughout
+$H_m$, and with $\mathsf P_A\{M_{A,x}>m\}=0$ outside $H_m$. In particular
+
+$$
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x
+     \mathsf P_A\{M_{A,x}>m\}=\beta_m(\varepsilon).
+\tag{80.8}
+$$
+
+Its $K$ and $M$ have a deterministic finite uniform bound. Also
+$\beta_m(\varepsilon)=0$ exactly when $\varepsilon\ge R_m$.
+The attaining acquisition in (80.8) may depend on $m$.
+
+**Proof.** For a competitor and a fixed actual $x\in H_m$, let $E_{x,m}$
+be the whole measurable finite-handoff event with every requested index
+at most $m$. Its mass is $1-p_x$, where
+$p_x=\mathsf P_A\{M_{A,x}>m\}$, by the nonhandoff convention. Finite
+execution transport gives one output submeasure $\rho_{x,m}$ on this
+event, dominated by every $\widehat\lambda_{A,y}$ for $y\in H_m$.
+Choose one fixed actual source in each occupied $D_n$, $n>m$; its
+output probability completes $\rho_{x,m}$ within cap $\varepsilon$.
+Theorem 80.1 gives $S_m(\varepsilon+p_x)\le\varepsilon$, so
+$p_x\ge\beta_m(\varepsilon)$. This uses a whole measurable event and
+fixed actual comparison sources; it makes no exact marked-output
+certificate assumption.
+
+For $p\in[0,1]$, equation (77.8) makes feasibility equivalent to
+
+$$
+\sum_{j=1}^k a_{m+j}\le(k+1)\varepsilon+kp
+\quad\text{for every }k\ge1.
+\tag{80.9}
+$$
+
+The resulting lower bound on $p$ is the second line of (80.6).
+It is at most $a_{m+1}\le1$, and $p=1$ is feasible. The feasible set
+is closed, since $S_m(\varepsilon+p)$ is a finite continuous sum on
+$[0,1]$. Its infimum is consequently feasible and proves (80.6).
+The case $p=0$ is feasible exactly when $S_m(\varepsilon)\le\varepsilon$,
+equivalently $\varepsilon\ge R_m$ by Theorem 77.2.
+
+For attainment fix this $m$ and take $p=\beta_m(\varepsilon)$ and the
+submeasure and completions (80.3). Put
+$L=\max(\{i:a_i>\varepsilon\}\cup\{0\})$. Initially query the first
+$m$ primes in order, stopping at the first negative answer. If one occurs
+at $n\le m$, hand a sample from the exact $\lambda_n$ and terminate.
+If all these answers are positive, use a seed branch of probability
+$1-p$ to sample $\rho/(1-p)$ and hand off, and a branch of probability
+$p$ for the residual part. A zero-mass branch needs no normalized
+probability and is omitted.
+
+On the residual branch, read the consecutive indices $m+1,\ldots,L$,
+stopping at the first absence $n$. If an absence is observed, sample
+$\theta_n$ with probability $q_n/p$ and otherwise sample $\theta_0$.
+If every index through $L$ is positive, emit $\theta_0$, since the actual
+first absence then has $a_{n(x)}\le\varepsilon$ and $q_{n(x)}=0$.
+When $p>0$, the zero-branch criterion fails, so $S_m(\varepsilon)>\varepsilon$;
+in particular $L>m$ and this branch always requests an index above $m$.
+When $p=0$, the common-probability sampler alone is used on $H_m$.
+
+The branch choice and output samples are fixed finite probability tables
+under coordinates of one common source-independent seed. They use only
+the actual prefix answers, with no restart or removal of a failure event.
+All records are finite measurable coordinate events, and both resources
+are bounded by $\max\{m,L\}$ at every source and seed. At a source
+in $H_m$ the law is exactly $\sigma_{n(x)}$ of (80.3), so its error is
+at most $\varepsilon$. Its tail probability at this horizon is exactly
+$p$. At a source outside $H_m$ the acquisition is exact and has
+$M\le m$. This proves (80.8) and its stated attainment. $\square$
+
+## 81. Nonjoint tails, the harmonic zero-query law and the diameter boundary
+
+**Theorem 81.1 (Two individually optimal tails can be incompatible).** For
+
+$$
+a_1=a_2=1,\qquad a_n=1/n\quad(n\ge3),\qquad\varepsilon=1/4,
+\tag{81.1}
+$$
+
+one has $\beta_0(\varepsilon)=5/8$ and
+$\beta_1(\varepsilon)=1/2$. Each minimum in (80.8) is attained
+individually, but no acquisition simultaneously satisfies
+
+$$
+\sup_x\mathsf P_A\{M_{A,x}>0\}=5/8,
+\qquad
+\sup_x\mathsf P_A\{M_{A,x}>1\}=1/2.
+\tag{81.2}
+$$
+
+**Proof.** At $p=5/8$, $\varepsilon+p=7/8$ and
+$S_0(7/8)=2(1-7/8)=1/4$. For a smaller $p$ the first two terms alone
+exceed $1/4$. Thus (80.2) gives $\beta_0=5/8$. Similarly
+$S_1(3/4)=1-3/4=1/4$, and a smaller $p<1/2$ makes its $n=2$ term
+exceed $1/4$. Thus $\beta_1=1/2$. Individual attainment follows from
+Theorem 80.2.
+
+Suppose (81.2) held. The zero-request finite-handoff event and its
+output submeasure $\rho_0$ are common to every actual source, since no
+source answer has been used. Its mass must be $1-5/8=3/8$.
+Theorem 80.1 at $m=0$ forces
+
+$$
+\rho_0(\Theta\setminus\{\theta_0\})\le1/4,
+\qquad \rho_0(\{\theta_1\}),\rho_0(\{\theta_2\})\ge1/8.
+\tag{81.3}
+$$
+
+The two required singleton masses exhaust the permitted mass outside
+$\theta_0$, so in particular $\rho_0(\{\theta_1\})=1/8$.
+
+Fix one actual $x\in H_1$. Inequality (80.7) and the second supremum
+in (81.2) force its tail at horizon one to equal $1/2$. Its finite-handoff
+output submeasure $\rho_1$ on $\{M_{A,x}\le1\}$ thus has mass $1/2$,
+and transports to every actual source in $H_1$. Theorem 80.1 forces
+
+$$
+\rho_1(\Theta\setminus\{\theta_0\})\le1/4,
+\qquad \rho_1(\{\theta_2\})\ge1/4.
+\tag{81.4}
+$$
+
+Therefore $\rho_1(\{\theta_1\})=0$. But at this same fixed $x$ the
+zero-request handoff event is contained in $\{M_{A,x}\le1\}$. Restricting
+one output map to these nested seed events gives $\rho_0\le\rho_1$,
+contradicting their masses at $\theta_1$. The obstruction is a common
+execution constraint on nested output submeasures, not a change of
+carrier or comparison source. $\square$
+
+**Theorem 81.2 (Harmonic mean correction and equal diameters with unequal
+centers).** For $a_n=1/n$, the unique optimal zero-query law is
+$(\delta_{\theta_0}+\delta_{\theta_1})/2$, with uniform radius $R_0=1/2$.
+At cap $\varepsilon=1/2$ the attained minimum uniform mean count is zero,
+whereas $\sum_i(a_i-\varepsilon)_+=1/2$. For every positive cap, putting
+$L=\max(\{i:1/i>\varepsilon\}\cup\{0\})$ and
+$H_L=\sum_{i=1}^L1/i$, $H_0=0$, gives
+
+$$
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x\mathsf E_A K_{A,x}
+=(H_L-(L+1)\varepsilon)_+<\infty.
+\tag{81.5}
+$$
+
+The harmonic family and the family in (81.1) both have pairwise TV
+diameter one on $X$, but their zero-query radii are respectively $1/2$
+and $2/3$.
+
+**Proof.** For the harmonic sequence,
+$S_0(1/2)=(1-1/2)=1/2$, with all later summands zero. Theorem 77.2 gives
+$R_0=1/2$ and the asserted unique law. Its distance to $\lambda_1$ is
+$1/2$. For $n\ge2$, (77.7) gives distance
+$\max\{1/2,1/n\}=1/2$, so its uniform error is exactly $1/2$ and it
+requires no observations. Nonnegativity of request counts proves the
+zero mean optimum, also given by Theorem 79.2. The proposed expression
+$\sum_i(a_i-\varepsilon)_+$ without a collective allowance therefore
+cannot be the approximate count optimum. Theorem 79.2 instead gives
+(81.5), since $S_0(\varepsilon)=H_L-L\varepsilon$. At error zero the
+existing exact harmonic identity (75.2) is infinite; the positive-error
+formula does not change that endpoint.
+
+For distinct $i,j$, direct comparison on the three relevant atoms gives
+$\operatorname{TV}(\lambda_i,\lambda_j)=\max\{a_i,a_j\}$.
+Both sequences have $a_1=1$, and their occupied $D_i$ realize this
+diameter. For (81.1),
+$S_0(2/3)=2(1-2/3)=2/3$ with no later positive term, so its radius is
+$2/3$ by Theorem 77.2. Thus the diameter gives a necessary half-diameter
+bound by the TV triangle inequality, but it does not determine the
+multilaw center radius. $\square$
+
+## 82. Original-carrier and resource applicability of the positive-error laws
+
+**Theorem 82.1 (Measurable marked projection and original-target separation).**
+Let $H=\{\theta_j:j\ge0\}$, and define $T:\Theta\to\Theta$ to fix every
+point in $H$ and send every other original tape to $\theta_0$. Then $T$ is
+measurable, fixes every selected $\lambda^a_x$ by pushforward, and for
+every original-tape probability $\nu$,
+
+$$
+\operatorname{TV}(T_*\nu,\lambda^a_x)
+\le\operatorname{TV}(\nu,\lambda^a_x).
+\tag{82.1}
+$$
+
+Composing a lawful output map with $T$ preserves its request resources
+and measurable finite handoff under the contract of Definition 71.1.
+For every $A\in\mathcal A_\varepsilon(a)$, without any support
+restriction on its output, the unchanged original targets obey
+
+$$
+\operatorname{TV}(\widehat\lambda_{A,x},\mu_x)\ge1-\varepsilon
+\qquad(x\in X).
+\tag{82.2}
+$$
+
+All explicit attaining acquisitions in Theorems 78.1, 79.2 and 80.2
+instead have distance exactly one from every $\mu_x$. Their tapes remain
+in $B_1$, on which the original consumer returns unknown.
+
+**Proof.** The countable marked set and its singletons are Borel on the
+original carrier (73.1). For a Borel tape event $E$, its inverse image
+under $T$ is $E\cap H$ if $\theta_0\notin E$, and
+$(E\cap H)\cup(\Theta\setminus H)$ if $\theta_0\in E$. These are
+measurable sets, proving measurability. Since $T$ fixes the selected
+support, $T_*\lambda^a_x=\lambda^a_x$. Pulling back each event in the
+definition of TV proves (82.1). The output composition is a fixed
+measurable terminal map, permitted by the common-rule semantics; it
+adds no source observation or request and retains finite handoff.
+
+Every selected $\lambda^a_x$ has $\lambda^a_x(H)=1$, so the cap in
+(77.2) implies $\widehat\lambda_{A,x}(H)\ge1-\varepsilon$.
+Every original $\mu_x$ of (67.18) is nonatomic, so $\mu_x(H)=0$.
+The event $H$ proves (82.2). Each explicit attainer above is supported
+on finitely many points of $H$ at every source, hence gives $H$ mass one;
+the same event then gives TV exactly one. Those points are the unchanged
+original tapes in $B_1$, proving the consumer assertion.
+The projection does not fix $\mu_x$, and its selected-law contraction
+provides no original-target reduction. $\square$
+
+**Definition 82.2 (Resource and semantic range of the formulas).** The
+center and common-subprobability statements concern the whole original
+measurable carrier. Their explicit finite marked constructions do not
+assert that every approximate competitor is atomic. The all-adaptive
+mean identities (79.3) optimize uniform source suprema for this particular
+marked family, and simultaneously attain nondecreasing cumulative-weight
+means. They do not prescribe sourcewise minimum means or cumulative
+optima for arbitrary selected families. The ceiling (78.1) is a maximum
+requested index; its finite count attainers do not identify the optimum
+deterministic count ceiling among arbitrary nonprefix rules. The minima
+(80.8) concern each fixed maximum-index horizon; Theorem 81.1 excludes
+a general simultaneous-tail inference. In particular these individual
+minima are not a simultaneously attained maximum-charge moment formula.
+
+All constructions use fixed real probability tables under one inherited
+seed, and the actual source observations only. The request and numerical
+charge statements impose no computability, effective cutoff, finite
+description, arithmetic-time or transition-time bound. The exact
+$\varepsilon=0$ resources and simultaneous address tails remain the
+suppliers in Theorems 71.3, 73.2 and 74.1. Positive-error formulas here
+use the finite-pattern supplier, whole-event transport and the
+exactness-independent finite request forest together with the displayed
+TV mass calculations; they concern (73.4), with no change to (67.18) or
+to its required proposal row.
+
+The cited TV overlap identity is a literature ingredient. The marked-family
+centers, shared-allowance resource formulas and robust-tail bounds are
+`repo-derived` deductions under these suppliers, with no literature-priority
+claim.
+
+## 追加锚（本行以下为增补区）
