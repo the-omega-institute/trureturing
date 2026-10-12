@@ -28,7 +28,10 @@ internal sealed class ProjectionAMGMRefutationDocument : IScribeDocumentDefiniti
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             provenance,
-            Blocks(Paragraph(Text(prose))), role ?? (definition ? DescribeRole.Definition : DescribeRole.Theorem));
+            Blocks(Paragraph(Text(prose))), role ?? (definition ? DescribeRole.Definition : DescribeRole.Theorem),
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("sun-luo-ye-2020-projection-matrix-amgm"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula MeanProj()
     {

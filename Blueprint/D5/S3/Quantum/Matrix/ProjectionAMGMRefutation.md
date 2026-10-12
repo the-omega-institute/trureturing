@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sun-luo-ye-2020-projection-matrix-amgm` (refuted) by `D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun-luo-ye-2020-projection-matrix-amgm","declaration_gid":"D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. Sun; Z.-Q. Luo; Y. Ye (2020). *On the efficiency of random permutation for ADMM and coordinate descent*. DOI: [10.1287/moor.2019.0990](https://doi.org/10.1287/moor.2019.0990). URL: <https://arxiv.org/abs/1503.06387v3>.
