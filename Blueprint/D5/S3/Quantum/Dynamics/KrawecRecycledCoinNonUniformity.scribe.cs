@@ -50,7 +50,10 @@ internal sealed class KrawecRecycledCoinNonUniformityDocument : IScribeDocumentD
                 H("The uniformity conjecture is false"), StatementSource.FromAuthor(Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "For cycle size 12, take the memory parameter 4·arccos((√2/2)·((√5−1)/2))/π−1. It lies strictly between zero and one, outside the exceptional set. Fourier blocks for momenta zero and two share an eigenvalue whose eigenspaces have nonzero coin overlap. The mean ergodic theorem gives convergent Cesàro averages, and a strict surplus in the sum of the four return averages forces some normalized computational basis coin to have return limit greater than 1/12. This contradicts the uniformity conjecture in Krawec's §IV."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("krawec-2015-recycled-coin-uniformity-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(

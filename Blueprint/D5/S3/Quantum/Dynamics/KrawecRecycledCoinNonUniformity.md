@@ -142,6 +142,10 @@ $$\neg (\operatorname{D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity.cla
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/krawec-2015-recycled-coin-uniformity-refutation` (refuted) by `D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"krawec-2015-recycled-coin-uniformity-refutation","declaration_gid":"D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* W. O. Krawec (2015). *History dependent quantum walk on the cycle with an unbalanced coin*. DOI: [10.1016/j.physa.2015.02.061](https://doi.org/10.1016/j.physa.2015.02.061). URL: <https://arxiv.org/abs/1411.6298v1>.
@@ -164,4 +168,5 @@ For cycle size 12, take the memory parameter 4·arccos((√2/2)·((√5−1)/2))
 - Truth anchor: `D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.shift`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.swap`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KrawecRecycledCoinNonUniformity.unitCoin`
+- Dependency: [D5/S3/Fourier/FinitePoisson](../../Fourier/FinitePoisson.md)
 - Dependency: [D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness](../Measurement/FreeSpectrahedronFeasibilityWitness.md)
