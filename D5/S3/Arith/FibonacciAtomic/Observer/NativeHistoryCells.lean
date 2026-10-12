@@ -33,7 +33,7 @@ def patternTerm {X : Type} : {d : Nat} → (p : Pattern d) → (Frontier p → X
   | _ + 1, .inr p, name => .mul (patternTerm p.1 (fun x => name (.inl x)))
       (patternTerm p.2 (fun x => name (.inr x)))
 
-private theorem pattern_evaluate {X : Type} (d : Nat) (p : Pattern d)
+theorem pattern_evaluate {X : Type} (d : Nat) (p : Pattern d)
     (name : Frontier p → X) (v : X → Source) :
     evaluate v (patternTerm p name) = fill p (v ∘ name) := by
   induction d with
@@ -42,7 +42,7 @@ private theorem pattern_evaluate {X : Type} (d : Nat) (p : Pattern d)
     | inl b => rfl
     | inr p => exact congrArg₂ FreeMagma.mul (ih p.1 _) (ih p.2 _)
 
-private theorem pattern_deep {X : Type} (d D : Nat) (p : Pattern d)
+theorem pattern_deep {X : Type} (d D : Nat) (p : Pattern d)
     (name : Frontier p → X) (a : Address) (bound : D ≤ a.length + d) :
     DeepAt D a (patternTerm p name) := by
   induction d generalizing a with
@@ -59,7 +59,7 @@ def oldTerm {C : LiteralRow} {d : Nat} (η : Patterns C d) (b : Classes C) : Ter
 def oldValues {C : LiteralRow} {d : Nat} (η : Patterns C d) (v : Variables η → Source) :
     Classes C → Source := fun b => fill (η b) (fun x => v ⟨b,x⟩)
 
-private theorem oldTerm_evaluate {C : LiteralRow} {d : Nat} (η : Patterns C d)
+theorem oldTerm_evaluate {C : LiteralRow} {d : Nat} (η : Patterns C d)
     (v : Variables η → Source) (b : Classes C) : evaluate v (oldTerm η b) = oldValues η v b :=
   pattern_evaluate d (η b) _ v
 
@@ -69,7 +69,7 @@ def wholeTerm {C : LiteralRow} {d : Nat} (η : Patterns C d) : Term (Variables �
     | .inl b => .of (.inl b)
     | .inr n => if h : n ∈ labels C then oldTerm η ⟨n,h⟩ else .of (.inl true)) C
 
-private theorem whole_evaluate {C : LiteralRow} {d : Nat} (η : Patterns C d)
+theorem whole_evaluate {C : LiteralRow} {d : Nat} (η : Patterns C d)
     (v : Variables η → Source) :
     evaluate v (wholeTerm η) = evaluateRow (extend C (oldValues η v)) C := by
   have general (t : LiteralRow) :
@@ -110,7 +110,7 @@ private theorem whole_deep {C : LiteralRow} {d : Nat} (η : Patterns C d) :
 def requiredDepth (Q : CutSet) (H : History) : Nat :=
   1 + max (cutDepth Q) ((H.map (fun e => e.2.1)).toFinset.sup List.length)
 
-private theorem required_bounds (Q : CutSet) (H : History) :
+theorem required_bounds (Q : CutSet) (H : History) :
     (∀ q ∈ Q, q.length < requiredDepth Q H) ∧
     (∀ e ∈ H, e.2.1.length < requiredDepth Q H) := by
   constructor
@@ -231,7 +231,7 @@ theorem cell_feasibility_exact {C : LiteralRow} {d : Nat} (η : Patterns C d) (H
   · rintro ⟨v,inj,hist⟩
     exact ⟨(history v).mpr hist,v,inj⟩
 
-private theorem feasible_history {C : LiteralRow} {d : Nat} (η : Patterns C d)
+theorem feasible_history {C : LiteralRow} {d : Nat} (η : Patterns C d)
     (H : History) (bound : ∀ e ∈ H, e.2.1.length < d)
     (pass : feasible η H = true) (v : Variables η → Source) :
     Consistent H (evaluate v (wholeTerm η)) := by
