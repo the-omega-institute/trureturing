@@ -138,7 +138,7 @@ For u,v in G, boundaryGroup(u,v) is Subgroup.closure of the set containing sWord
 
 **Theorem 1.12 (The original face-slot corner step).**
 
-Lean statement: `D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.actual_step`
+$$\forall G \in Group,\; \forall Omega \in RightAction\left(G\right),\; \forall u \in G,\; \forall v \in G,\; \forall x \in Omega,\; \forall f \in Fin\left(4\right),\; \forall r \in Fin\left(3\right),\; EqvGen\left(cornerRel\left(pairing\left(u, v\right)\right), (x, faceVertex\left(f, r\right)), (first\left(facePair\left(u, v, (x, f)\right)\right), faceVertex\left(second\left(facePair\left(u, v, (x, f)\right)\right), slotMap\left(f, r\right)\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.actual_step` (`✓ std3`). ∎
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.actual_ste
 
 *Commentary.*
 
-This existing helper is now public for direct reuse by ActualLinkCornerChains.move_carrier. Its statement and proof are unchanged: each actual face slot supplies a generator of the original corner EqvGen. The affine link construction uses this exact step to preserve the same corner-class tag; no copied private proof or alternative orbit relation is introduced.
+Here G ranges over all groups and Omega over all types equipped with a left action of the opposite group, written as a right action of G. For every u,v in G, x in Omega, f in Fin(4) and r in Fin(3), the displayed corners are related in the equivalence closure of the original cornerRel for pairing(u,v). Fin(n) means the integers from zero through n-1, and first and second denote pair projections. No finiteness, faithfulness or freeness assumption is imposed. This existing helper is now public for direct reuse by ActualLinkCornerChains.move_carrier. Its statement and proof are unchanged: each actual face slot supplies a generator of the original corner EqvGen. The affine link construction uses this exact step to preserve the same corner-class tag; no copied private proof or alternative orbit relation is introduced.
 
 **Theorem 1.13 (Actual corner equivalence is exactly the subgroup orbit relation).**
 

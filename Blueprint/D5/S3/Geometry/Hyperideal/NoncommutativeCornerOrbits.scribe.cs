@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Hyperideal;
 
@@ -100,9 +101,9 @@ internal sealed class NoncommutativeCornerOrbitsDocument : IScribeDocumentDefini
                 DescribeId.Create("noncommutative-corner-actual-step"),
                 DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/NoncommutativeCornerOrbits.actual_step"),
                 H("The original face-slot corner step"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(F.Disp(ActualStepFormula())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("This existing helper is now public for direct reuse by ActualLinkCornerChains.move_carrier. Its statement and proof are unchanged: each actual face slot supplies a generator of the original corner EqvGen. The affine link construction uses this exact step to preserve the same corner-class tag; no copied private proof or alternative orbit relation is introduced."))),
+                Blocks(Paragraph(Text("Here G ranges over all groups and Omega over all types equipped with a left action of the opposite group, written as a right action of G. For every u,v in G, x in Omega, f in Fin(4) and r in Fin(3), the displayed corners are related in the equivalence closure of the original cornerRel for pairing(u,v). Fin(n) means the integers from zero through n-1, and first and second denote pair projections. No finiteness, faithfulness or freeness assumption is imposed. This existing helper is now public for direct reuse by ActualLinkCornerChains.move_carrier. Its statement and proof are unchanged: each actual face slot supplies a generator of the original corner EqvGen. The affine link construction uses this exact step to preserve the same corner-class tag; no copied private proof or alternative orbit relation is introduced."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("noncommutative-corner-actual-corner-orbit-iff"),
@@ -112,4 +113,28 @@ internal sealed class NoncommutativeCornerOrbitsDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every group G, arbitrary type Omega with an action of the opposite group, u,v in G and actual corners c,d in Omega times Fin(4), the equivalence closure of ActualCornerTransport.cornerRel for pairing(u,v) relates c and d if and only if there exists g in boundaryGroup(u,v) with act(normalize(u,c),g)=normalize(u,d). The proof constructs actual face-slot paths from each corner to its normalized corner at vertex zero, constructs actual paths for the three subgroup generators, extends those paths over subgroup products and inverses, and proves that every original face-slot generator preserves the specified orbit relation. Empty Omega, infinite groups, nonfaithful actions and stabilizers are included. This statement supplies the corner-relation characterization only; it does not assert edge periods, Euler characteristic, surface links, manifold charts or a geometric metric."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ActualStepFormula()
+    {
+        var group = F.Id("G"); var omega = F.Id("Omega");
+        var u = F.Id("u"); var v = F.Id("v"); var x = F.Id("x");
+        var f = F.Id("f"); var r = F.Id("r");
+        var image = Call("facePair", u, v, Pair(x, f));
+        var conclusion = Call("EqvGen", Call("cornerRel", Call("pairing", u, v)),
+            Pair(x, Call("faceVertex", f, r)),
+            Pair(Call("first", image),
+                Call("faceVertex", Call("second", image), Call("slotMap", f, r))));
+        return All("G", F.Id("Group"),
+            All("Omega", Call("RightAction", group),
+                All("u", group, All("v", group, All("x", omega,
+                    All("f", Call("Fin", F.D(4)),
+                        All("r", Call("Fin", F.D(3)), conclusion)))))));
+    }
+
+    private static Formula All(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula Pair(Formula left, Formula right) =>
+        F.Seq(F.Open, left, F.Comma, F.Sp, right, F.Close);
 }
