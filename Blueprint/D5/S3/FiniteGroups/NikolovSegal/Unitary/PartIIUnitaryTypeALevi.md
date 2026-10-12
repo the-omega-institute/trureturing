@@ -28,19 +28,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.
 
 The parameterized actual typeA levi entry statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
 
-**Theorem 1.3 (actual typeA levi injective).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_injective`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_injective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized actual typeA levi injective statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
-**Theorem 1.4 (actual typeA levi unitary).**
+**Theorem 1.3 (actual typeA levi unitary).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_unitary`
 
@@ -52,7 +40,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.
 
 The parameterized actual typeA levi unitary statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
 
-**Theorem 1.5 (actual typeA levi upper).**
+**Theorem 1.4 (actual typeA levi upper).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_upper`
 
@@ -64,7 +52,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.
 
 Actual positive type-A U maps into the positive UNITARY U. Reversal of the second half is essential and is proved in the index law.
 
-**Theorem 1.6 (actual typeA levi field action).**
+**Theorem 1.5 (actual typeA levi field action).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_field_action`
 
@@ -76,7 +64,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.
 
 Every finite-field automorphism restricts to the literal field action on the type-A Levi, on ALL group elements. Commutation with the quadratic involution is DERIVED from its actual Frobenius power, not assumed.
 
-**Theorem 1.7 (actual typeA levi ambient diagonal inner).**
+**Theorem 1.6 (actual typeA levi ambient diagonal inner).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_ambient_diagonal_inner`
 
@@ -95,7 +83,6 @@ The results concern special-unitary matrix groups over finite fields. Their geom
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_ambient_diagonal_inner`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_entry`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_field_action`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_injective`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_unitary`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.actual_typeA_levi_upper`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryTypeALevi.embed`

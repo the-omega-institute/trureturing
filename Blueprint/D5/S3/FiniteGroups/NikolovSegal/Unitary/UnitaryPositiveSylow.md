@@ -64,37 +64,11 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.po
 
 Genuine native Sylow with exactly the actual positive-unitriangular SU carrier.
 
-**Theorem 1.6 (positiveUSylow toSubgroup).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.positiveUSylow_toSubgroup`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.positiveUSylow_toSubgroup` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized positiveUSylow toSubgroup statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
-**Theorem 1.7 (exists positiveU sylow).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.exists_positiveU_sylow`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.exists_positiveU_sylow` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized exists positiveU sylow statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
 The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.exists_positiveU_sylow`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.positiveUSylow`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.positiveUSylow_toSubgroup`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.positiveU_maximal`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.unitriangular_of_p_power`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryPositiveSylow.upper_pow`

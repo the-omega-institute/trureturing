@@ -88,31 +88,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNorm
 
 The parameterized downRadical one statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
 
-**Theorem 1.8 (upRadical inv).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.upRadical_inv`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.upRadical_inv` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized upRadical inv statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
-**Theorem 1.9 (downRadical inv).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.downRadical_inv`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.downRadical_inv` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized downRadical inv statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
-**Theorem 1.10 (positive levi radical).**
+**Theorem 1.8 (positive levi radical).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.positive_levi_radical`
 
@@ -124,7 +100,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNorm
 
 The accepted actual U=Levi*radical decomposition, in the literal SU carrier.
 
-**Theorem 1.11 (negative levi radical).**
+**Theorem 1.9 (negative levi radical).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.negative_levi_radical`
 
@@ -144,11 +120,9 @@ The results concern special-unitary matrix groups over finite fields. Their geom
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.centralEmbed_positive`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.centralEmbed_transpose`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.central_conjugate_downRadical`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.downRadical_inv`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.downRadical_one`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.negative_levi_radical`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.positive_levi_radical`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.slCentral_transpose`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.upRadical_inv`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRadicalNormalization.upRadical_one`
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthLeviGeometry](UnitaryWidthLeviGeometry.md)

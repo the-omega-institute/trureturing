@@ -51,13 +51,6 @@ internal sealed class UnitaryRankTwoCoordinatesDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("The parameterized scaleSL statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("unitary-unitaryranktwocoordinates-scalesl-val"),
-                DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.scaleSL_val"),
-                H("scaleSL val"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The parameterized scaleSL val statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("unitary-unitaryranktwocoordinates-coordinatematrix-fixed"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.coordinateMatrix_fixed"),
                 H("coordinateMatrix fixed"), StatementSource.WithoutFormula(),

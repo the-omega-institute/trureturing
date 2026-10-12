@@ -76,19 +76,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinat
 
 The parameterized scaleSL statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
 
-**Theorem 1.7 (scaleSL val).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.scaleSL_val`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.scaleSL_val` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized scaleSL val statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
-**Theorem 1.8 (coordinateMatrix fixed).**
+**Theorem 1.7 (coordinateMatrix fixed).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.coordinateMatrix_fixed`
 
@@ -100,7 +88,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinat
 
 Each entry of the changed SU2 basis lies in the actual fixed subfield.
 
-**Definition 1.9 (fixedCoordinateMatrix).**
+**Definition 1.8 (fixedCoordinateMatrix).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.fixedCoordinateMatrix`
 
@@ -112,7 +100,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinat
 
 The literal fixed-field coordinate matrix, with membership proved entry by entry.
 
-**Theorem 1.10 (fixedCoordinateMatrix coe).**
+**Theorem 1.9 (fixedCoordinateMatrix coe).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.fixedCoordinateMatrix_coe`
 
@@ -124,7 +112,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinat
 
 The parameterized fixedCoordinateMatrix coe statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
 
-**Definition 1.11 (toFixedSL).**
+**Definition 1.10 (toFixedSL).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.toFixedSL`
 
@@ -136,7 +124,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinat
 
 Actual SU2 → native SL2 over its fixed field.
 
-**Definition 1.12 (fromFixedSL).**
+**Definition 1.11 (fromFixedSL).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.fromFixedSL`
 
@@ -162,6 +150,5 @@ The results concern special-unitary matrix groups over finite fields. Their geom
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.fixedCoordinateMatrix_coe`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.fromFixedSL`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.scaleSL`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.scaleSL_val`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoCoordinates.toFixedSL`
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryRankTwoGeometry](UnitaryRankTwoGeometry.md)

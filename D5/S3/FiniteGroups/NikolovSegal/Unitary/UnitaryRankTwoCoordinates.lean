@@ -51,9 +51,6 @@ def scaleSL (τ : F) (hτ : τ ≠ 0) :
     fin_cases i <;> fin_cases j <;> simp [coordinateMatrix]
   map_mul' A B := Subtype.ext (coordinateMatrix_mul τ hτ A.val B.val)
 
-@[simp] theorem scaleSL_val (τ : F) (hτ : τ ≠ 0) (A : SpecialLinearGroup (Fin 2) F) :
-    (scaleSL τ hτ A).val = coordinateMatrix τ A.val := rfl
-
 variable [Finite F]
 
 /-- Each entry of the changed SU2 basis lies in the actual fixed subfield. -/

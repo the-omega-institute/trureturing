@@ -52,19 +52,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.mem
 
 The parameterized mem positiveU iff statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
 
-**Theorem 1.5 (positiveU map subtype).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU_map_subtype`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU_map_subtype` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized positiveU map subtype statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
-**Theorem 1.6 (positiveU isPGroup).**
+**Theorem 1.5 (positiveU isPGroup).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU_isPGroup`
 
@@ -83,7 +71,6 @@ The results concern special-unitary matrix groups over finite fields. Their geom
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.mem_positiveU_iff`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU_isPGroup`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.positiveU_map_subtype`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.specialUnitary`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitarySylowCarrier.unitriangular_iff_depth`
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/TypeA/RootGeometry/PartIISLnUnipotentNormalizer](../TypeA/RootGeometry/PartIISLnUnipotentNormalizer.md)

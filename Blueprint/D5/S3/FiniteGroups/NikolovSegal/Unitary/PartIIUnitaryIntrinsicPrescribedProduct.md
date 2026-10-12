@@ -16,19 +16,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicP
 
 Actual prescribed D/Phi automorphism of the LITERAL SU carrier. Its inverse closure is derived from the actual Steinberg commutation.
 
-**Theorem 1.2 (actual action entry).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_action_entry`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_action_entry` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The parameterized actual action entry statement describes the actual unitary geometry or prescribed ordered-product construction. Its Lean telescope retains every field, rank, involution, input and equality hypothesis shown.
-
-**Theorem 1.3 (actual uniform intrinsic positive q over e product).**
+**Theorem 1.2 (actual uniform intrinsic positive q over e product).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_positive_q_over_e_product`
 
@@ -40,7 +28,7 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicP
 
 Original scalar supplier correction convention, intrinsically on SU, for ALL positive-U targets. N,C precede all fields/ranks/tuples; ONE y precedes ALL targets. This is honest U coverage, not full scalar coverage.
 
-**Theorem 1.4 (actual uniform intrinsic negative q over e product).**
+**Theorem 1.3 (actual uniform intrinsic negative q over e product).**
 
 Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_negative_q_over_e_product`
 
@@ -57,7 +45,6 @@ The results concern special-unitary matrix groups over finite fields. Their geom
 ## References
 
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.action`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_action_entry`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_negative_q_over_e_product`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryIntrinsicPrescribedProduct.actual_uniform_intrinsic_positive_q_over_e_product`
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/PartIIUnitaryPrescribedLowerProduct](PartIIUnitaryPrescribedLowerProduct.md)

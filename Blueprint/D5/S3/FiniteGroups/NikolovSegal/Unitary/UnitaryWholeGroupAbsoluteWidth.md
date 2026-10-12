@@ -23,4 +23,3 @@ The results concern special-unitary matrix groups over finite fields. Their geom
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWholeGroupAbsoluteWidth.five_factor`
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthFiveAbsorption](UnitaryWidthFiveAbsorption.md)
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankThree](UnitaryWidthRankThree.md)
-- Dependency: [D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthTrivialRanks](UnitaryWidthTrivialRanks.md)

@@ -40,24 +40,11 @@ Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.tri
 
 Degenerate ranks remain literal actual SU groups.
 
-**Theorem 1.4 (rankTwo alternating 25).**
-
-Lean statement: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.rankTwo_alternating_25`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.rankTwo_alternating_25` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The desired literal ordered Fin25 endpoint, fully closed on the rank-two base.
-
 The results concern special-unitary matrix groups over finite fields. Their geometric setting is Nikolov and Segal, On finitely generated profinite groups, II: Products in quasisimple groups, Annals of Mathematics 165 (2007), 239-273, DOI 10.4007/annals.2007.165.239. Prescribed-product statements retain their field-size, rank and automorphism hypotheses.
 
 ## References
 
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.rankTwoCarrierEquiv`
-- Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.rankTwo_alternating_25`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.rankTwo_four_factor`
 - Truth anchor: `D5/S3/FiniteGroups/NikolovSegal/Unitary/UnitaryWidthRankTwo.trivial_four_factor`
 - Dependency: [D5/S3/FiniteGroups/NikolovSegal/TypeA/Unitriangular/SLnUnipotentWidth](../TypeA/Unitriangular/SLnUnipotentWidth.md)
