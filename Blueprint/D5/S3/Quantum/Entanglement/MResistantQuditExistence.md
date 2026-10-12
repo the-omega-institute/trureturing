@@ -34,6 +34,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/MResistantQuditExistence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/quinta-andre-burchardt-zyczkowski-2019-m-resistant-states` (proved) by `D5/S3/Quantum/Entanglement/MResistantQuditExistence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"quinta-andre-burchardt-zyczkowski-2019-m-resistant-states","declaration_gid":"D5/S3/Quantum/Entanglement/MResistantQuditExistence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* G. M. Quinta; R. André; A. Burchardt; K. Życzkowski (2019). *Cut-resistant links and multipartite entanglement resistant to particle loss*. DOI: [10.1103/PhysRevA.100.062329](https://doi.org/10.1103/PhysRevA.100.062329). URL: <https://arxiv.org/abs/1908.10390v1>.
