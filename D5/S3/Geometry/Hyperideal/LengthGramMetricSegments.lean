@@ -45,7 +45,7 @@ def lift (p : HyperbolicThreeSpace) : Fin 4 → ℝ :=
   let h := height p.coordinates
   ![x/h, y/h, (x^2+y^2+h^2-1)/(2*h), (x^2+y^2+h^2+1)/(2*h)]
 
-private theorem lift_unit (p : HyperbolicThreeSpace) : lorentz (lift p) (lift p) = -1 := by
+theorem lift_unit (p : HyperbolicThreeSpace) : lorentz (lift p) (lift p) = -1 := by
   have hh : height p.coordinates ≠ 0 := ne_of_gt p.coordinates.property
   simp [lift, lorentz, Fin.sum_univ_succ]
   field_simp
@@ -146,7 +146,7 @@ private theorem interpolate_zero (X Y : Fin 4 → ℝ) (D : ℝ) (hD : Real.sinh
 private theorem interpolate_end (X Y : Fin 4 → ℝ) (D : ℝ) (hD : Real.sinh D ≠ 0) :
     interpolate X Y D D = Y := by simp [interpolate, hD]
 
-private theorem lorentz_right (X Y Z : Fin 4 → ℝ) (a b : ℝ) :
+theorem lorentz_right (X Y Z : Fin 4 → ℝ) (a b : ℝ) :
     lorentz X (a • Y + b • Z) = a * lorentz X Y + b * lorentz X Z := by
   simpa using lorentz_linear X X Y Z 1 0 a b
 
@@ -194,7 +194,7 @@ private theorem between_lift (p q z : HyperbolicThreeSpace) (hpq : p ≠ q)
   change lift z k = T k
   linarith
 
-private theorem future_den (Y : Fin 4 → ℝ) (hu : lorentz Y Y = -1) (ht : 0 < Y 3) :
+theorem future_den (Y : Fin 4 → ℝ) (hu : lorentz Y Y = -1) (ht : 0 < Y 3) :
     0 < Y 3 - Y 2 := by
   simp [lorentz, Fin.sum_univ_succ] at hu
   nlinarith [sq_nonneg (Y 0), sq_nonneg (Y 1)]
@@ -204,7 +204,7 @@ def project (Y : Fin 4 → ℝ) (hu : lorentz Y Y = -1) (ht : 0 < Y 3) :
   ⟨⟨WithLp.toLp 2 (Complex.mk (Y 0/(Y 3-Y 2)) (Y 1/(Y 3-Y 2)), 1/(Y 3-Y 2)),
     one_div_pos.mpr (future_den Y hu ht)⟩⟩
 
-private theorem lift_time (p : HyperbolicThreeSpace) : 0 < lift p 3 := by
+theorem lift_time (p : HyperbolicThreeSpace) : 0 < lift p 3 := by
   simp only [lift, Matrix.cons_val_three]
   exact div_pos (by positivity) (mul_pos (by norm_num) p.coordinates.property)
 

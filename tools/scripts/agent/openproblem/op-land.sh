@@ -82,16 +82,15 @@ git commit -q -F /tmp/op-land-msg-$$.txt
 echo "COMMIT_EXIT=$? HEAD=$(git rev-parse HEAD)"
 git show --stat --format='%h %s' HEAD | head -20
 
-EVENT=$(git show --name-only --format='' HEAD | grep '^Golden/Frozen/accepted/' | head -1)
-echo "ACCEPTED_EVENT=$EVENT"
-if [ -n "$EVENT" ]; then
+STATE=$(git show --name-only --format='' HEAD | grep '^Golden/Frozen/state/' | head -1)
+echo "ACCEPTED_STATE=$STATE"
+if [ -n "$STATE" ]; then
   python3 -c "
 import json,sys
 d=json.load(open(sys.argv[1]))
-print('EVENT_HASH='+str(d.get('event_hash')))
-p=d.get('payload',d)
+p=d
 print('STATEMENT_ID='+str(p.get('statement_id')))
-" "$EVENT" 2>/dev/null
+" "$STATE" 2>/dev/null
 fi
 
 GIT_TERMINAL_PROMPT=0 git -c credential.helper='!gh auth git-credential' \

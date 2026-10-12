@@ -1,1 +1,1 @@
-{"statement_id":"sha256:67e485abf3344b8a87d8c1990bd5cfdd79b083719c27c1ccdb8e905aa379b9e3"}
+{"statement_id":"sha256:67e485abf3344b8a87d8c1990bd5cfdd79b083719c27c1ccdb8e905aa379b9e3","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),7:Deficit),12:Displacement),23:GoldenInverseRecurrence),32:inv_goldenRatio_pow_add_pow_succ)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),7:Deficit),12:Displacement),23:GoldenInverseRecurrence),38:inv_goldenRatio_sq_add_inv_goldenRatio)","kind":"theorem"}]}
