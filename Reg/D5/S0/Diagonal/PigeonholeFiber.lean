@@ -180,4 +180,10 @@ def familyAnalysis : Application.{u+1,u,0,u,0,0} (@finite_reading_has_fiber.{u})
     plan := plan
     acquisition := .unavailable "No complete finite presentation of the selected family was supplied" }
 
+def qualificationFinite : Application (@finite_reading_has_fiber.{0}) where
+  evidence := .typed {
+    source := source
+    plan := plan
+    acquisition := .finite threeDomain threePresentation }
+
 end Reg.D5.S0.Diagonal.PigeonholeFiber

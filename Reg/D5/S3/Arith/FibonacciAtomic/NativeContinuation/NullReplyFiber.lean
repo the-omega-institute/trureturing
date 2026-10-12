@@ -21,4 +21,11 @@ def initializedWindow : Application.{0,0,0,0,0,0}
   evidence := .native source bridge
     (.absent "complete initialized native Window source") [] [.seam, .guard, .reply, .atom]
 
+def qualificationNative : Application.{0,0,0,0,0,0}
+    NativeContinuation.NullReplyFiber.native_execution where
+  evidence := .native source bridge (.declared "R3 qualification input" {
+    nullMass := 1, lowMass := 1, highMass := 1, endsMass := 1, middleMass := 1,
+    denominator := 5, positive := by decide, normalized := by decide })
+    [] [.seam, .guard, .reply, .atom]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
