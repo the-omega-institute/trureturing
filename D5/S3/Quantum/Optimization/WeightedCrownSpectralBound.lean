@@ -9,7 +9,9 @@
 /-
 admission_basis: escape-witness.
 escape_witness: crown_spectral_bound.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15610.
+Escape audit unfinished: issue #15610 records missing observational-dependence evidence at
+n = 3, x = 0 and x = 8, plus source-selection/report-decoding evidence for the hub/leaf
+registrations; delivered-head reading: DTR-Unregistered (Observe).
 site_apply_of_offEq: proof_shape: bind-only; escape_witness: none; consumers: site_adjoint, site_one, site_smul.
 site_apply_of_not_offEq: proof_shape: bind-only; escape_witness: none; consumers: site_adjoint, site_one, site_smul.
 site_mul_same: proof_shape: bind-only; escape_witness: none; consumers: site_pair_mul_left, site_pair_mul_pair, site_pair_mul_right, site_pair_shared, site_pair_shared_rev.

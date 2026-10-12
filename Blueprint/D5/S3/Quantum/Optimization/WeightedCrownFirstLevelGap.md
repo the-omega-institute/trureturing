@@ -22,6 +22,10 @@ $$\forall (n:\mathbb{N}), (3 \le n) \Rightarrow (\forall (x:\mathbb{R}), (\opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Optimization/WeightedCrownFirstLevelGap.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/takahashi-et-al-2023-weighted-crown-npa1-gap` (proved) by `D5/S3/Quantum/Optimization/WeightedCrownFirstLevelGap.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"takahashi-et-al-2023-weighted-crown-npa1-gap","declaration_gid":"D5/S3/Quantum/Optimization/WeightedCrownFirstLevelGap.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Takahashi; C. Rayudu; C. Zhou; R. King; K. Thompson; O. Parekh (2023). *An SU(2)-symmetric Semidefinite Programming Hierarchy for Quantum Max Cut*. DOI: [10.48550/arXiv.2307.15688](https://doi.org/10.48550/arXiv.2307.15688). URL: <https://arxiv.org/abs/2307.15688v3>.

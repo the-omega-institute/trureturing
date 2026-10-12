@@ -23,9 +23,9 @@ internal sealed class WeightedCrownFirstLevelGapDocument : IScribeDocumentDefini
     private static Formula Hamiltonian() => Call("crownH", N, X);
     private static Formula Region(Formula f) => OverN(Imp(Le(D(3), N), All(X, Real(), Imp(Lt(Call("L", N), X), Imp(Lt(X, Call("U", N)), f)))));
     private static Formula Claim() => Region(Lt(Call("lambdaMax", Hamiltonian()), Call("npa1Value", N, X)));
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("weighted-crown-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The first-level SDP is inexact throughout the open weighted-crown interval.",
@@ -33,5 +33,6 @@ internal sealed class WeightedCrownFirstLevelGapDocument : IScribeDocumentDefini
             Node("claim", "The open weighted-crown interval", Eq(F.Id("claim"),Parenthesized(Claim())),
                 "Appendix C.1, printed p. 33, verbatim: \"The intermediate region (n + 2)\u00b2/4(n + 1) < x < (n + 2)/3 is left as an open problem, although numerics strongly suggest that SDP indeed fails in that region.\" The encoding quantifies every n \u2265 3 and every real x in the displayed open interval, and compares the nonzero-vector Rayleigh supremum with the real level-one moment optimum.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The first-level SDP is inexact", Claim(),
-                "The feasible moment objective is strictly above n+1, while the literal Hamiltonian has Rayleigh supremum at most n+1. The upper interval endpoint is below 1+n/2, so the spectral bound applies to every point of the open interval.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "The feasible moment objective is strictly above n+1, while the literal Hamiltonian has Rayleigh supremum at most n+1. The upper interval endpoint is below 1+n/2, so the spectral bound applies to every point of the open interval.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("takahashi-et-al-2023-weighted-crown-npa1-gap"), ResolutionKind.Proved)))));
 }

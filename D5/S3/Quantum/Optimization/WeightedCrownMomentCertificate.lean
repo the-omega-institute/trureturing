@@ -9,7 +9,9 @@
 /-
 admission_basis: escape-witness.
 escape_witness: moment_feasible.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15610.
+Escape audit unfinished: issue #15610 records missing observational-dependence evidence at
+n = 3, x = 0 and x = 8, plus source-selection/report-decoding evidence for the hub/leaf
+registrations; delivered-head reading: DTR-Unregistered (Observe).
 objective_formula: proof_shape: bind-only; escape_witness: none; consumers: moment_objective.
 parameter_bounds: proof_shape: bind-only; escape_witness: none; consumers: block_coefficients_pos, gramMoment_psd.
 block_coefficients_pos: proof_shape: bind-only; escape_witness: none; consumers: gramMoment_psd, gram_center_spoke, gram_spokes, residualK_eq.

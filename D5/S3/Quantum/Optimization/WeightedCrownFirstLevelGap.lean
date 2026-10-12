@@ -8,10 +8,12 @@
 
 /-
 admission_basis: open-problem-resolution (#15210; Proved).
-escape_witness: none.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15610.
+escape_witness: WeightedCrownMomentCertificate.moment_feasible.
+Escape audit unfinished: issue #15610 records missing observational-dependence evidence at
+n = 3, x = 0 and x = 8, plus source-selection/report-decoding evidence for the hub/leaf
+registrations; delivered-head reading: DTR-Unregistered (Observe).
 upper_endpoint_lt_sector: proof_shape: bind-only; escape_witness: none; consumers: result.
-result: proof_shape: content; escape_witness: none; consumers: settling root.
+result: proof_shape: content; escape_witness: WeightedCrownMomentCertificate.moment_feasible; consumers: settling root.
 Direct frozen dependencies:
   D5/S3/Quantum/FiniteDimensional.QubitMatrix; declaration statement_id: sha256:e376bbe008ddbbc49fcf9763247304ed70ec54ac5cf49af3c6f7fb58fa626f30.
   D5/S3/Quantum/FiniteDimensional.qubitX; declaration statement_id: sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7.
