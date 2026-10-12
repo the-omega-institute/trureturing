@@ -32,38 +32,38 @@ density_le_one: proof_shape: bind-only; escape_witness: none;
 IsChannel: proof_shape: bind-only; escape_witness: none;
   consumers: Broadcasts, Nondisturbing, broadcast_a, channel_trace_preserving, nondisturbing_state_P, nondisturbing_fix_P, channel_posSemidef, comp_fix, no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
 Broadcasts: proof_shape: bind-only; escape_witness: none;
   consumers: HasHighest, HasLowest, no_lowest, no_highest, claim, result.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
 Nondisturbing: proof_shape: bind-only; escape_witness: none;
   consumers: ConstructedFrom, nondisturbing_state_P, nondisturbing_fix_P, comp_fix, no_lowest, no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
 ConstructedFrom: proof_shape: bind-only; escape_witness: none;
   consumers: HasHighest, HasLowest, no_lowest, no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
 HasHighest: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest, claim, result.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
 HasLowest: proof_shape: bind-only; escape_witness: none;
   consumers: no_lowest, claim, result.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
 P: proof_shape: bind-only; escape_witness: none;
   consumers: A0, broadcastChannel, observable_A, kraus_action_formula, broadcast_a, nondisturbing_state_P, nondisturbing_fix_P, state_support_P, comp_fix, channels_neq, lambda_basis, basis_P_trace, no_highest.
   Direct frozen dependencies: none.
@@ -85,22 +85,22 @@ broadcastChannel: proof_shape: bind-only; escape_witness: none;
 K: proof_shape: bind-only; escape_witness: none;
   consumers: kraus_action_formula, channel_a.
   Direct frozen dependencies:
-    D5/S3/Quantum/Recovery/KrausCompletion.rowReset [sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31].
+    | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
 observable_A: proof_shape: bind-only; escape_witness: none;
   consumers: result.
   Direct frozen dependencies:
-    D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM [sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1].
-    D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.diagonal_povm [sha256:de0639eb7d2cc0e2744e5c02a6801acaa920144435fb7dd8831281ad678d7430].
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.IsPOVM` | `sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.diagonal_povm` | `sha256:de0639eb7d2cc0e2744e5c02a6801acaa920144435fb7dd8831281ad678d7430` |  |
 kraus_action_formula: proof_shape: bind-only; escape_witness: none;
   consumers: channel_a.
   Direct frozen dependencies:
-    D5/S3/Quantum/Recovery/KrausCompletion.rowReset [sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31].
+    | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
 channel_a: proof_shape: bind-only; escape_witness: none;
   consumers: broadcast_a.
   Direct frozen dependencies:
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Recovery/KrausCompletion.rowReset [sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31].
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
 trace_single_left: proof_shape: bind-only; escape_witness: none;
   consumers: broadcast_a.
   Direct frozen dependencies: none.
@@ -110,130 +110,133 @@ trace_single_right: proof_shape: bind-only; escape_witness: none;
 broadcast_a: proof_shape: bind-only; escape_witness: none;
   consumers: no_lowest, no_highest, result.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Recovery/KrausCompletion.rowReset [sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
 channel_trace_preserving: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_state_P, comp_fix, no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.trace_preserving` | `sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15` |  |
 rhoPlus: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
-
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoPlus12: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoImag01: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoImag02: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoImag12: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 scaled_pure_state: proof_shape: bind-only; escape_witness: none;
   consumers: rhoPlus_state, rhoPlus02_state, rhoPlus12_state, rhoImag01_state, rhoImag02_state, rhoImag12_state.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
 rhoPlus_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoPlus02_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/Information/ActualQubitChordObstruction.signalProbe [sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0].
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Information/ActualQubitChordObstruction` | `D5.S3.Quantum.Information.ActualQubitChordObstruction.signalProbe` | `sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0` |  |
 rhoPlus12_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoImag01_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoImag02_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 rhoImag12_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
 nondisturbing_state_P: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P, no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.trace_preserving` | `sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15` |  |
 basis_state: proof_shape: bind-only; escape_witness: none;
   consumers: nondisturbing_fix_P, no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
 nondisturbing_fix_P: proof_shape: bind-only; escape_witness: none;
   consumers: comp_fix.
   Direct frozen dependencies:
-    D5/S3/Quantum/Information/ActualQubitChordObstruction.signalProbe [sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0].
-    D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.dual_kraus [sha256:dd9f5f1ce4725296d08145a6066f3ee325b93def4f274543427b5520e5234de5].
-    D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation.trace_eq [sha256:4b9d5299e7cc9ef1ebad4b43e8fff47d1c203797359d108299c3be4eea0bec33].
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.Dual.trace_eq` | `sha256:4b9d5299e7cc9ef1ebad4b43e8fff47d1c203797359d108299c3be4eea0bec33` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.dual` | `sha256:853fb5326477f481c103e8204034cb05d57c32bd135f3ed8554657612f12d5d3` | The short selector `MatrixMap.dual` is ambiguous. |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.trace_preserving` | `sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15` |  |
+    | `D5/S3/Quantum/Information/ActualQubitChordObstruction` | `D5.S3.Quantum.Information.ActualQubitChordObstruction.signalProbe` | `sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.dual_kraus` | `sha256:dd9f5f1ce4725296d08145a6066f3ee325b93def4f274543427b5520e5234de5` |  |
 state_support_P: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero [sha256:72e5d3b134abd653c9f2e4dd9d86b9a04e2ae4da3f759abcbc26215c6f57cf67].
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity` | `D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero` | `sha256:72e5d3b134abd653c9f2e4dd9d86b9a04e2ae4da3f759abcbc26215c6f57cf67` |  |
 channel_posSemidef: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
 single_trace_nonneg: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest.
   Direct frozen dependencies: none.
 comp_fix: proof_shape: bind-only; escape_witness: none;
   consumers: no_lowest.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.Dual.trace_eq` | `sha256:4b9d5299e7cc9ef1ebad4b43e8fff47d1c203797359d108299c3be4eea0bec33` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.dual` | `sha256:853fb5326477f481c103e8204034cb05d57c32bd135f3ed8554657612f12d5d3` | The short selector `MatrixMap.dual` is ambiguous. |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.trace_preserving` | `sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15` |  |
+    | `D5/S3/Quantum/Information/ActualQubitChordObstruction` | `D5.S3.Quantum.Information.ActualQubitChordObstruction.signalProbe` | `sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.dual_kraus` | `sha256:dd9f5f1ce4725296d08145a6066f3ee325b93def4f274543427b5520e5234de5` |  |
 channels_neq: proof_shape: bind-only; escape_witness: none;
   consumers: no_lowest.
   Direct frozen dependencies: none.
@@ -246,50 +249,60 @@ basis_P_trace: proof_shape: bind-only; escape_witness: none;
 no_lowest: proof_shape: bind-only; escape_witness: none;
   consumers: result.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
-    D5/S3/Quantum/Recovery/KrausCompletion.rowReset [sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.Dual.trace_eq` | `sha256:4b9d5299e7cc9ef1ebad4b43e8fff47d1c203797359d108299c3be4eea0bec33` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.dual` | `sha256:853fb5326477f481c103e8204034cb05d57c32bd135f3ed8554657612f12d5d3` | The short selector `MatrixMap.dual` is ambiguous. |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.trace_preserving` | `sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15` |  |
+    | `D5/S3/Quantum/Information/ActualQubitChordObstruction` | `D5.S3.Quantum.Information.ActualQubitChordObstruction.signalProbe` | `sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.dual_kraus` | `sha256:dd9f5f1ce4725296d08145a6066f3ee325b93def4f274543427b5520e5234de5` |  |
+    | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
 sigma_gap_pos: proof_shape: bind-only; escape_witness: none;
   consumers: no_highest.
   Direct frozen dependencies: none.
 no_highest: proof_shape: bind-only; escape_witness: none;
   consumers: result.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
-    D5/S3/Quantum/Recovery/KrausCompletion.rowReset [sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.trace_preserving` | `sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15` |  |
+    | `D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity` | `D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero` | `sha256:72e5d3b134abd653c9f2e4dd9d86b9a04e2ae4da3f759abcbc26215c6f57cf67` |  |
+    | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
 claim: proof_shape: bind-only; escape_witness: none;
   consumers: result.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM [sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.IsPOVM` | `sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1` |  |
 result: proof_shape: bind-only; escape_witness: none;
   consumers: none.
   Direct frozen dependencies:
-    D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity [sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap [sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus [sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287].
-    D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel [sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel [sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap [sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc].
-    D5/S3/Quantum/Foundation/FiniteStateChannel.QuantumChannel.trace_preserving [sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15].
-    D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity [sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3].
-    D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM [sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1].
-    D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.diagonal_povm [sha256:de0639eb7d2cc0e2744e5c02a6801acaa920144435fb7dd8831281ad678d7430].
-    D5/S3/Quantum/Recovery/KrausCompletion.rowReset [sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31].
+    | `D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound` | `D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity` | `sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap` | `sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.Dual.trace_eq` | `sha256:4b9d5299e7cc9ef1ebad4b43e8fff47d1c203797359d108299c3be4eea0bec33` |  |
+    | `D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.dual` | `sha256:853fb5326477f481c103e8204034cb05d57c32bd135f3ed8554657612f12d5d3` | The short selector `MatrixMap.dual` is ambiguous. |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus` | `sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287` |  |
+    | `D5/S3/Quantum/Foundation/FiniteKrausChannel` | `D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel` | `sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel` | `sha256:b7b2554d55122b11b177ecdf92367d243e4d35ec1e3897c844deba5df1285d05` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap` | `sha256:7e2eefba0a4c0a6af6a4d36e7168066ad5899f2ba2622c43f082056bec8fb7dc` |  |
+    | `D5/S3/Quantum/Foundation/FiniteStateChannel` | `D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.trace_preserving` | `sha256:f7348a8905d2b54384d2e26b2c769f3d8eae0d734f588b9c2c8b8cc3892faf15` |  |
+    | `D5/S3/Quantum/Information/ActualQubitChordObstruction` | `D5.S3.Quantum.Information.ActualQubitChordObstruction.signalProbe` | `sha256:bef2288b884ed1760c2775060f1baefa0bdd53b5afe1d54cb8d54ac4f438beb0` |  |
+    | `D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity` | `D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero` | `sha256:72e5d3b134abd653c9f2e4dd9d86b9a04e2ae4da3f759abcbc26215c6f57cf67` |  |
+    | `D5/S3/Quantum/PureState/PureStateHandshake` | `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity` | `sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.IsPOVM` | `sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.diagonal_povm` | `sha256:de0639eb7d2cc0e2744e5c02a6801acaa920144435fb7dd8831281ad678d7430` |  |
+    | `D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation` | `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.dual_kraus` | `sha256:dd9f5f1ce4725296d08145a6066f3ee325b93def4f274543427b5520e5234de5` |  |
+    | `D5/S3/Quantum/Recovery/KrausCompletion` | `D5.S3.Quantum.Recovery.KrausCompletion.rowReset` | `sha256:63b0c2d244c2f26eaa46ef36429ea4c9ccb72f7db37882de172d0e5045f79e31` |  |
 -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
