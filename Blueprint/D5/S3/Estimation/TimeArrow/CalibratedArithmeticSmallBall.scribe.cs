@@ -87,6 +87,38 @@ internal sealed class CalibratedArithmeticSmallBallDocument : IScribeDocumentDef
                 StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The native anchored experiment supplies a common calibrated central feedback bound for the original and conditioned environments."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("floored-signal-four-reference-ratios"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/CalibratedArithmeticSmallBall.NativeRectangleReferenceRatios.floored_signal_four_reference_ratios"),
+                H("Floored signal four reference ratios"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original floor and its complementary count give the displayed four-cell reference-mass comparisons."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("background-reference-cell-ratio"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/CalibratedArithmeticSmallBall.NativeRectangleReferenceRatios.background_reference_cell_ratio"),
+                H("Background reference cell ratio"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At the same count cell, the background reference mass has its exact ratio to the signal reference mass."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-window"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/CalibratedArithmeticSmallBall.OriginalScoreWindow.originalWindow"),
+                H("Original window"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The selection window uses the original compensated score with its complete left-open and right-closed bounds."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("original-group-posterior-mean"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/CalibratedArithmeticSmallBall.OriginalScoreWindow.originalGroupPosteriorMean"),
+                H("Original group posterior mean"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The group mean sums the complete support posterior over all rows in the same original score group."))),
+                DescribeRole.Definition)
         )));
 }

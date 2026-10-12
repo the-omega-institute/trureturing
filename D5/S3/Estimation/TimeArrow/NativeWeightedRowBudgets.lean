@@ -14,6 +14,8 @@ open D5.S3.Estimation.TimeArrow.ActualMarkedCountPoissonRelative
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+open D5.S3.Estimation.TimeArrow.ActualMarkedPathPgfPoissonEnvelope
+set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Estimation.TimeArrow.NativeRowCountTail
 noncomputable section
 private theorem path_fourth_moment {M q L : ℕ} (r : ℝ) (S : Support M q)

@@ -20,7 +20,7 @@ namespace D5.S3.Estimation.TimeArrow.NativeRectangleEnvironment
 noncomputable section
 open private
   D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber.native_departure_word_counts
-from D5.S3.Estimation.TimeArrow.NativeSignalConditionalFiber
+from D5.S3.Estimation.TimeArrow.RectangleHypergeometricKernel
 /-- The collapsed history fixes both total signal departure counts. -/
 theorem native_signal_count_totals {M q s : ℕ} (S : Support M q)
     (e : Experiment) (o : Obs M s e) [Fintype (Sites s e)] (y : Fiber S e o) :

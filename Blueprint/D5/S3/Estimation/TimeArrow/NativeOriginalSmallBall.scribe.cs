@@ -24,6 +24,14 @@ internal sealed class NativeOriginalSmallBallDocument : IScribeDocumentDefinitio
             Definition("decimal-tail", "decimalTail", "decimalTail n is the positive tail of the same reciprocal-denominator series after index n."),
             Theorem("original-native-environment-small-ball", "original_native_environment_small_ball", "For 0 < r < 1, β > 1/2, β < 1, and the decimal-alpha identity, there exist positive native constants cN, CN, and c such that every nonzero integer Fourier coefficient admits a positive cell constant and a budget tending to zero; eventually the conditional native environment failure mass is bounded by that budget for every support and experiment."),
             Theorem("original-cube-environment-small-ball", "original_cube_environment_small_ball", "Under the same original hypotheses, the cube observation equivalence and original cube probability satisfy the complete-window small-ball conclusion with a vanishing failure budget, uniformly over supports and experiments at the dimension d = floor(phi r * scale n / (β log 2)), for each fixed nonzero integer Fourier coefficient."),
+            Describe.Lean(
+                DescribeId.Create("full-native-environment-anchor-budget"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/NativeOriginalSmallBall.NativeGlobalRectangleEnvironment.full_native_environment_anchor_budget"),
+                H("Full native environment anchor budget"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The probability of full environments without a good central anchor is bounded by the original good-event failure budget."))),
+                DescribeRole.Theorem),
             Provenance())));
 
     private static DocumentBlock.Describe Theorem(string id, string name, string statement, string scope = "NativeOriginalSmallBall") =>

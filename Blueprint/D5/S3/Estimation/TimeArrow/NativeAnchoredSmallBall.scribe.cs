@@ -55,6 +55,22 @@ internal sealed class NativeAnchoredSmallBallDocument : IScribeDocumentDefinitio
                 StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The native signal rectangle geometry is bounded by the explicit calibration budget under the stated parameter range."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-zero-group-eq-all-cell"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/NativeAnchoredSmallBall.OriginalScoreWindow.original_zero_group_eq_all_cell"),
+                H("Original zero group eq all cell"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual count cut and integer-grid separation identify every row in the original central score group with the same lower-left count cell."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-count-cut-same-environment"),
+                DeclarationHandle.Create("D5/S3/Estimation/TimeArrow/NativeAnchoredSmallBall.OriginalScoreWindow.original_count_cut_same_environment"),
+                H("Original count cut same environment"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The full native environment preserves the original count cut."))),
                 DescribeRole.Theorem)
         )));
 }
