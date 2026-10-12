@@ -351,7 +351,7 @@ theorem native_full_weighted_moments (κ : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1) :
     nlinarith only [he, hmd, hmono, hBdB, hD2, hbq,
       mul_nonneg hδ2 (sq_nonneg B), mul_nonneg (sq_nonneg n) hz0]
 
-private theorem finite_square_markov {Ω : Type*} [Fintype Ω] (p X : Ω → ℝ)
+theorem finite_square_markov {Ω : Type*} [Fintype Ω] (p X : Ω → ℝ)
     (a h B : ℝ) (hp : ∀ o, 0 ≤ p o) (hh : 0 < h)
     (hB : (∑ o, p o * (X o - a) ^ 2) ≤ B) :
     (∑ o, if h < |X o - a| then p o else 0) ≤ B / h ^ 2 := by
