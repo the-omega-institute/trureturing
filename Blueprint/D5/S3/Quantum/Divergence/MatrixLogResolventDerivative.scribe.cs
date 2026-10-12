@@ -92,6 +92,22 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
                     + "The first Hessian argument differentiates the gradient and the second "
                     + "evaluates the resulting linear functional.")),
                 Describe.Lean(
+                    DescribeId.Create("actual-trace-entropy-frechet-derivative"),
+                    DeclarationHandle.Create(Owner + "trace_entropy_hasFDerivAt"),
+                    H("The entropy differential is the logarithmic trace pairing"),
+                    StatementSource.FromAuthor(Disp(All(parameters,
+                        Implies(hypothesis, Call("HasFDerivAt", Call("entropy", n),
+                            Call("gradientMap", Call("add", Call("matrixLog", Call("value", a)),
+                                Call("identityMatrix", n))), a))))),
+                    AssessedProvenance.FromRepo(
+                        LibraryNoteRef.Create("D5/L/Divergence/petz2001bkm")),
+                    Blocks(Paragraph(Text(
+                        "The differential sends H to Re Tr(value(H)(CFC.log(value(A))+I)). "
+                        + "The product rule differentiates value(Y) CFC.log(value(Y)), and "
+                        + "the trace identity Tr(A Dlog(A)[H]) = Tr(H) gives the identity term. "
+                        + "The formula holds for every positive-definite A and every Hermitian direction."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("actual-trace-entropy-bkm-hessian"),
                     DeclarationHandle.Create(Owner + "trace_entropy_hessian_resolvent"),
                     H("The entropy Hessian is the BKM form and is nonnegative on the diagonal"),
@@ -129,9 +145,9 @@ internal sealed class MatrixLogResolventDerivativeDocument : IScribeDocumentDefi
                     + "Petz gives the resolvent BKM form and its logarithmic differential "
                     + "in equations (24), (25), (28), and (29). These references attest the "
                     + "classical formulas. The proofs above establish their CFC and derivative "
-                    + "interfaces in the present real Hermitian space. Binary conditional "
-                    + "expectation curvature, square contraction, singular-state limits, and "
-                    + "sharp contraction coefficients require further arguments.")))));
+                    + "interfaces in the present real Hermitian space. The binary conditional "
+                    + "expectation estimates and semidefinite extensions are developed in the "
+                    + "companion documents; an optimal contraction coefficient requires a separate lower-bound argument.")))));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula type) =>
