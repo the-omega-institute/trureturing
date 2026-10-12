@@ -127,6 +127,7 @@ def remove(options):
     outcomes = []
     # Resolve and preflight the entire batch before any checkpoint mutation.
     qualified = {}
+    expectations = {}
     for target in targets:
         item = qualify(source, target)
         expected_rows = [json.loads(raw) for raw in options.expected]
@@ -138,6 +139,7 @@ def remove(options):
                     or "locked" in expected and item.get("locked") != expected["locked"]):
                 raise Refused("observed_identity_changed")
         qualified[target] = item
+        expectations[target] = matches[0] if matches else {}
     for target in targets:
         if options.preview:
             outcomes.append(dict(path=str(target), outcome="would_remove"))
@@ -154,6 +156,21 @@ def remove(options):
                 if qualify(source, target) != qualified[target]:
                     raise Refused("observed_identity_changed")
                 _, metadata = identity(source, target)
+                expected = expectations[target]
+                if "reflog_sha256" in expected:
+                    log = metadata / "logs/HEAD"
+                    if (not re.fullmatch(r"[0-9a-f]{64}", expected["reflog_sha256"])
+                            or not log.is_file() or log.is_symlink()):
+                        raise Refused("race_changed")
+                    records = log.read_bytes().splitlines()
+                    if not records or hashlib.sha256(records[-1]).hexdigest() != expected["reflog_sha256"]:
+                        raise Refused("race_changed")
+                if expected.get("require_clean"):
+                    if (any((metadata / marker).exists() for marker in
+                            ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"))
+                            or git(target, "status", "--porcelain=v1", "-z", "--untracked-files=all",
+                                   "--ignore-submodules=none").stdout):
+                        raise Refused("race_changed")
                 resumed = interrupted_removal(target, metadata)
                 if resumed:
                     # The earlier removal verified this snapshot clean before native

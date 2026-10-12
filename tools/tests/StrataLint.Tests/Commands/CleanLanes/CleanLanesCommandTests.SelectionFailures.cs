@@ -44,6 +44,28 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void BlankReflogCommitterCannotCertifyWork(string name)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/blank-identity");
+        var log = Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD");
+        var lines = File.ReadAllLines(log);
+        var parts = lines[^1].Split('\t', 2);
+        var fields = parts[0].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        lines[^1] = $"{fields[0]} {fields[1]} {name} <test@example.invalid> {fields[^2]} {fields[^1]}\t{parts[1]}";
+        File.WriteAllLines(log, lines);
+
+        var result = fixture.Run("--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("work_witness_unknown", ReasonFor(result.Output, lane));
+        AssertItemProperty(ReadItems(result.Output), "path", lane, "work_witness_reason", "reflog_invalid");
+        Assert.True(Directory.Exists(lane));
+    }
+
+    [Theory]
     [InlineData("status", "unreadable")]
     [InlineData("commit", "work_witness_unknown")]
     public void UnreadableShortcutPrerequisitesRetainLane(string failure, string reason)

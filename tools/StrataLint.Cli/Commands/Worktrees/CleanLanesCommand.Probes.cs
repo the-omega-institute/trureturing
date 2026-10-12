@@ -1,5 +1,6 @@
 using StrataLint.Runtime;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -102,6 +103,29 @@ internal static partial class CleanLanesCommand
             character is >= '0' and <= '9'
                 or >= 'a' and <= 'f'
                 or >= 'A' and <= 'F');
+
+    private static bool TryParseHeadLogRecord(string line, out HeadLogRecord? record)
+    {
+        // The message separator follows the complete identity, timestamp and
+        // timezone; a committer name can itself contain a TAB.
+        var match = Regex.Match(line,
+            @"^(?<old>[0-9a-fA-F]+) (?<new>[0-9a-fA-F]+) (?<name>[^<>]+) <[^<>]*> (?<time>[0-9]+) (?<zone>[+-][0-9]{4})(?:\t(?<message>.*))?$",
+            RegexOptions.CultureInvariant);
+        var oldHead = match.Groups["old"].Value;
+        var newHead = match.Groups["new"].Value;
+        record = null;
+        if (!match.Success || !IsObjectOid(oldHead) || !IsObjectOid(newHead)
+            || oldHead.Length != newHead.Length
+            || string.IsNullOrWhiteSpace(match.Groups["name"].Value)
+            || !match.Groups["message"].Success && oldHead.Any(static c => c != '0')
+            || !long.TryParse(match.Groups["time"].Value, NumberStyles.None,
+                CultureInfo.InvariantCulture, out var timestamp)
+            || !IsTimezone(match.Groups["zone"].Value)) return false;
+        record = new(oldHead, newHead, timestamp, match.Groups["message"].Value);
+        return true;
+    }
+
+    private sealed record HeadLogRecord(string OldHead, string NewHead, long Updated, string Message);
 
     private static bool IsTimezone(string value) =>
         value.Length == 5

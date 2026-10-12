@@ -211,6 +211,123 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("race_changed", ReasonFor(result.Output, lane));
     }
 
+    [Theory]
+    [InlineData("commit-read", "reset")]
+    [InlineData("status-return", "reset")]
+    [InlineData("status-return", "untracked")]
+    [InlineData("preservation-entry", "reset")]
+    [InlineData("preservation-entry", "cooperative-reset")]
+    [InlineData("preservation-entry", "untracked")]
+    [InlineData("preservation-entry", "tracked")]
+    [InlineData("preservation-entry", "operation")]
+    public void ShortcutRetainsLateChangesBeforeCheckpoint(string boundary, string change)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/late-shortcut-race");
+        var head = fixture.Head(lane);
+        var reads = 0;
+        var injected = false;
+        var production = new ProductionWorktreeProcessRunner();
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            var trigger = boundary switch
+            {
+                "commit-read" => IsLaneGit(file, args, directory, lane, "cat-file", "-t", head),
+                "status-return" => file == "git" && directory == lane && args[0] == "status",
+                _ => file == "python3" && args.Contains("remove") && args.Contains(lane),
+            };
+            if (!trigger || injected || boundary != "preservation-entry" && ++reads != 2) return null;
+            var observed = boundary == "status-return"
+                ? production.Run(file, args, directory, TimeSpan.FromSeconds(120)) : null;
+            injected = true;
+            if (change == "reset") CleanLanesFixture.Git(lane, "reset", "--hard", "HEAD");
+            else if (change == "cooperative-reset")
+            {
+                var reset = WorktreeProtocolCommand.Run(fixture.RepositoryWorkingDirectory,
+                    ["with", "--path", lane, "--git", "--", "git", "reset", "--hard", "HEAD"], production);
+                Assert.True(reset.Success, reset.Error);
+            }
+            else if (change == "operation")
+                File.WriteAllText(Path.Combine(fixture.WorktreeGitDirectory(lane), "MERGE_HEAD"), head + "\n");
+            else File.WriteAllText(Path.Combine(lane, change == "tracked" ? "README.md" : "new-task.txt"), "new task\n");
+            return observed;
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(injected);
+        Assert.Equal("race_changed", ReasonFor(result.Output, lane));
+        Assert.True(Directory.Exists(lane));
+        Assert.Equal(head, fixture.Head(lane));
+        Assert.Equal(head, CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
+            "rev-parse", "harness/late-shortcut-race").Trim());
+        if (change is "tracked" or "untracked")
+            Assert.Equal("new task\n", File.ReadAllText(Path.Combine(lane,
+                change == "tracked" ? "README.md" : "new-task.txt")));
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void TabbedCommitterUsesSharedWitnessAndAgeParsing(bool landed)
+    {
+        using var fixture = new CleanLanesFixture();
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "config", "user.name", "A\tTabbed");
+        var lane = fixture.AddWorkedLane("harness/tabbed-committer", landed);
+        if (!landed) fixture.AdvanceBase(300);
+
+        var result = fixture.Run("--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(landed ? "merged_to_dev" : "stale_behind", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+    }
+
+    [Theory]
+    [InlineData("unmerged", "head-read")]
+    [InlineData("unmerged", "preservation-entry")]
+    [InlineData("no-witness", "head-read")]
+    [InlineData("no-witness", "preservation-entry")]
+    [InlineData("dirty", "head-read")]
+    [InlineData("dirty", "preservation-entry")]
+    public void OriginalSelectorsCheckpointLateOrdinaryChanges(string shape, string boundary)
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "harness/original-selector-race";
+        var lane = shape == "no-witness" ? fixture.AddMergedLane(branch)
+            : fixture.AddWorkedLane(branch, landed: shape == "dirty");
+        if (shape == "dirty") File.WriteAllText(Path.Combine(lane, "new-task.txt"), "earlier task\n");
+        fixture.AdvanceBase(300);
+        var head = fixture.Head(lane);
+        var injected = false;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            var trigger = boundary == "head-read"
+                ? IsLaneGit(file, args, directory, lane, "rev-parse", "--verify", "HEAD^{commit}")
+                : file == "python3" && args.Contains("remove") && args.Contains(lane);
+            if (trigger && !injected)
+            {
+                injected = true;
+                File.WriteAllText(Path.Combine(lane, "new-task.txt"), "latest task\n");
+                File.WriteAllText(Path.Combine(lane, "README.md"), "latest tracked task\n");
+            }
+            return null;
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(injected);
+        Assert.Equal("stale_behind", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+        Assert.NotEqual(head, CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "rev-parse", branch).Trim());
+        Assert.Equal("latest task\n", CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
+            "show", branch + ":new-task.txt"));
+        Assert.Equal("latest tracked task\n", CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
+            "show", branch + ":README.md"));
+    }
+
     [Fact]
     public void DevCommitIsFixedBeforeSelectionEvenIfTrackingRefMoves()
     {

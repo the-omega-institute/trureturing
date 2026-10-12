@@ -1,6 +1,5 @@
-using System.Globalization;
 using System.Security.Cryptography;
-using System.Text.RegularExpressions;
+using System.Text;
 
 namespace StrataLint.Cli;
 
@@ -37,17 +36,16 @@ internal static partial class CleanLanesCommand
 
         var selectionReason = merged.Value && witnessReason is not null
             ? "merged_without_work_witness" : "original_selectors";
-        WorktreeState? state = null;
         if (merged.Value && witnessReason is null)
         {
-            state = ReadWorktreeState(item, runner);
-            if (state is null) return new("unreadable", "unreadable", null, log.Fingerprint);
-            if (state.Clean)
-                return new(null, "merged_to_dev", null, log.Fingerprint, state, LockModifiedTicks(item));
+            var clean = ReadWorktreeClean(item, runner);
+            if (clean is null) return new("unreadable", "unreadable", null, log.Fingerprint);
+            if (clean.Value)
+                return new(null, "merged_to_dev", null, log.Fingerprint, LockModifiedTicks(item));
         }
 
         var reason = OriginalReclaimBlockReason(item, baseCommit!, log.Updated!.Value, runner, now);
-        return new(reason, selectionReason, witnessReason, log.Fingerprint, state, LockModifiedTicks(item));
+        return new(reason, selectionReason, witnessReason, log.Fingerprint, LockModifiedTicks(item));
     }
 
     private static long? LockModifiedTicks(RegisteredWorktree item) => item.Locked
@@ -90,7 +88,7 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static WorktreeState? ReadWorktreeState(RegisteredWorktree item, IWorktreeProcessRunner runner)
+    private static bool? ReadWorktreeClean(RegisteredWorktree item, IWorktreeProcessRunner runner)
     {
         try
         {
@@ -99,8 +97,7 @@ internal static partial class CleanLanesCommand
             var status = RunGit(item.Path,
                 ["status", "--porcelain=v1", "-z", "--untracked-files=all", "--ignore-submodules=none"],
                 runner, "could not inspect worktree changes").StandardOutput;
-            return new(status.Length == 0 && operations.Length == 0,
-                Convert.ToHexString(SHA256.HashData(status)), string.Join(',', operations));
+            return status.Length == 0 && operations.Length == 0;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -122,27 +119,21 @@ internal static partial class CleanLanesCommand
             string? oldHead = null;
             string? newHead = null;
             string? message = null;
+            string? lastLine = null;
             while (reader.ReadLine() is { } line)
             {
-                var tab = line.IndexOf('\t');
-                var record = tab < 0 ? line : line[..tab];
-                var fields = record.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                if (fields.Length < 6 || !IsObjectOid(fields[0]) || !IsObjectOid(fields[1])
-                    || fields[0].Length != fields[1].Length
-                    || tab < 0 && fields[0].Any(static c => c != '0')
-                    || !Regex.IsMatch(record, @"^[0-9a-fA-F]+ [0-9a-fA-F]+ [^<>]+ <[^<>]*> [0-9]+ [+-][0-9]{4}$",
-                        RegexOptions.CultureInvariant)
-                    || !long.TryParse(fields[^2], NumberStyles.None, CultureInfo.InvariantCulture,
-                        out var timestamp) || !IsTimezone(fields[^1])) return new(Error: "reflog_invalid");
-                updated = Math.Max(updated ?? timestamp, timestamp);
-                oldHead = fields[0];
-                newHead = fields[1];
-                message = tab < 0 ? string.Empty : line[(tab + 1)..];
+                if (!TryParseHeadLogRecord(line, out var record)) return new(Error: "reflog_invalid");
+                updated = Math.Max(updated ?? record!.Updated, record!.Updated);
+                oldHead = record.OldHead;
+                newHead = record.NewHead;
+                message = record.Message;
+                lastLine = line;
             }
             if (updated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))
                 return new(Error: "reflog_head_mismatch");
-            return new(updated, oldHead, message, Convert.ToHexString(SHA256.HashData(bytes)));
+            return new(updated, oldHead, message,
+                Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(lastLine!))).ToLowerInvariant());
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -153,10 +144,8 @@ internal static partial class CleanLanesCommand
     private sealed record HeadLog(long? Updated = null, string? OldHead = null,
         string? Message = null, string? Fingerprint = null, string? Error = null);
 
-    private sealed record WorktreeState(bool Clean, string StatusFingerprint, string Operations);
-
     private sealed record ReclaimSelection(string? BlockReason, string Reason,
-        string? WitnessReason = null, string? ReflogFingerprint = null, WorktreeState? State = null,
+        string? WitnessReason = null, string? ReflogFingerprint = null,
         long? LockModifiedTicks = null)
     {
         internal string RemovalReason(bool locked = false) =>

@@ -95,12 +95,18 @@ internal static partial class CleanLanesCommand
         {
             var arguments = new List<string> { "remove", "--path", item.Path };
             arguments.Add("--expected");
-            arguments.Add(System.Text.Json.JsonSerializer.Serialize(new
+            var expected = new Dictionary<string, object?>
             {
-                path = item.Path, head = item.Head,
-                branch = item.Branch is null ? null : "refs/heads/" + item.Branch,
-                locked = item.Locked ? item.LockReason ?? "" : null,
-            }));
+                ["path"] = item.Path, ["head"] = item.Head,
+                ["branch"] = item.Branch is null ? null : "refs/heads/" + item.Branch,
+                ["locked"] = item.Locked ? item.LockReason ?? "" : null,
+            };
+            if (selection.Reason == "merged_to_dev")
+            {
+                expected["reflog_sha256"] = selection.ReflogFingerprint;
+                expected["require_clean"] = true;
+            }
+            arguments.Add(System.Text.Json.JsonSerializer.Serialize(expected));
             var removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
             System.Text.Json.JsonElement? outcome = null;
             if (removal.Output.Length > 0)
@@ -119,6 +125,8 @@ internal static partial class CleanLanesCommand
             }
             if (!removal.Success)
             {
+                if (outcome?.TryGetProperty("error", out var error) == true
+                    && error.GetString() == "race_changed") return Refused("race_changed");
                 if (removal.ExitCode is 68 or 73)
                     return Refused(removal.Error.Contains("observed_identity_changed", StringComparison.Ordinal)
                         || removal.Error.Contains("observed_path_changed", StringComparison.Ordinal)
