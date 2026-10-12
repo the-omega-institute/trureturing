@@ -170,6 +170,28 @@ a positive GENERALIZED length realization. Its only nongeometric tetrahedra
 these flat tetrahedra in the maximum is the missing full-eight existence
 step; positive angle feasibility or energy monotonicity does not exclude them.
 
+## Same-body metric segments for the section 66 prerequisite
+
+`D5/S3/Geometry/Hyperideal/LengthGramMetricSegments.same_body_metric_segments`
+keeps the original positive six-length vector, cut body, radial map, frame
+matrix and injective realization map into `HyperbolicThreeSpace`. For any
+witnesses satisfying its exact future-unit-sheet coordinate contract and any
+two points of that same body, it supplies an isometry from the closed real
+interval of their hyperbolic distance. Its range is both the image of the
+original affine segment and the set of all ambient metric-between points.
+Coincident endpoints and boundary points are included. The frozen body and
+polytope results are unchanged.
+
+The corresponding Blueprint gives the complete formulas and argument.
+`Library/Geometry/cannonfloydkenyonparry1997hyperbolic.md` identifies the
+classical hyperbolic-geodesic, projective-model and Lorentz-distance inputs;
+the exact custom same-body theorem is repository-derived, with no novelty
+claim. This is a local prerequisite to the original section 66 realization,
+not its completion. The full-source application retains all six strict
+cosine inequalities. The remaining halfspace, interior, incidence,
+prescribed-length and angle, rigidity, volume and gluing obligations are
+not discharged by this segment result.
+
 ## Finite verification boundary
 
 The derivative numerator identity, seven displayed cosine evaluations, the
