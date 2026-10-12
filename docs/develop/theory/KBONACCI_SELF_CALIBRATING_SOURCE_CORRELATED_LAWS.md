@@ -2776,3 +2776,488 @@ The complete separable range supplies the metric stabilization and clopen contin
 The general prescribed positive-proposal/profile and arbitrary-consumer endpoint classifications likewise remain unresolved beyond the all-source correct-mass obstruction of Section 61 and the explicitly restricted criteria above. The results preserve the original event-TV convention, sharp quantifier order and every actual source. Their common seeds and tables establish measurable law existence with sourcewise almost-sure finite execution; they imply no finite-description or effective sampler, finite seed support, common finite horizon, physical realization or kernel guarantee. The substantive deductions are the lossless target-density reduction with its operational bridge and the local correct-mass depletion bound. Countable refinement, finite-index attainment, common-submeasure acquisition and the endpoint examples are reused results, and the measure-theoretic ingredients are classical. No literature-priority assertion is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 63. Target-fixed positive transfers cannot shrink the likelihood range
+
+**Definition 63.1 (The common positive-transfer class).** Keep the entire labeled source (59.1), the original measurable tape carrier, consumer and target family fixed. Use the tape mixture $\sigma$, likelihood sigma algebra $\mathcal G$ and original-tape range $P_{\mathcal G}$ of (59.2). Let $\mathsf M_+(\Theta,\mathcal F)$ be the cone of finite positive countably additive measures, and let $\mathsf M_{\mathbb R}(\Theta,\mathcal F)$ be the real vector space of finite signed measures with variation norm $\|\lambda\|_{\mathrm{var}}=|\lambda|(\Theta)$. A transfer in this section is one map
+
+$$
+T:\mathsf M_+(\Theta,\mathcal F)\longrightarrow\mathsf M_+(\Theta,\mathcal F)
+\tag{63.1}
+$$
+
+which is additive, positively homogeneous for every real scalar $t\ge0$, mass-preserving on every finite positive measure, and target-fixed: $T\mu_y=\mu_y$ for every original label $y$. The same map acts on all measures, rather than being chosen separately by source, cap or cylinder. No idempotence is assumed. This is a mathematical operation on laws; a measurable tape map or a sampling implementation of $T$ is not part of the hypothesis.
+
+**Theorem 63.2 (Forced likelihood range and the finite-atom boundary).** Every transfer (63.1) has a unique real-linear signed extension $\widetilde T$ which is a variation-norm contraction. It fixes every real integrable likelihood density:
+
+$$
+\widetilde T(g\sigma)=g\sigma
+\qquad\bigl(g\in L^1(\sigma|_{\mathcal G};\mathbb R)\bigr).
+\tag{63.2}
+$$
+
+In particular its positive probability image contains $P_{\mathcal G}$. This forced range is sharp: the already defined $\Pi$ of (59.3) is in the transfer class and has probability image exactly $P_{\mathcal G}$.
+
+The following three existence statements are equivalent:
+
+1. Some transfer in this class has its probability image contained in a finite-dimensional real subspace of $\mathsf M_{\mathbb R}(\Theta,\mathcal F)$.
+2. Some transfer in this class has a relatively TV-compact probability image on the original tapes.
+3. Modulo $\sigma$-null sets, $\mathcal G$ has a finite partition into positive-mass atoms, that is, (60.1) holds with finite $J$.
+
+Thus countably infinitely atomic likelihood information, as well as any likelihood information with a nonatomic part, prevents both proposed kinds of positive target-fixed reduction. The finite atoms here are atoms of $\mathcal G$ under $\sigma$, and need not be point tapes or atoms of $\mathcal F$.
+
+**Proof.** For positive $\alpha,\beta$ define $\widetilde T(\alpha-\beta)=T\alpha-T\beta$. If $\alpha-\beta=\alpha'-\beta'$, then $\alpha+\beta'=\alpha'+\beta$; additivity makes the definition independent of the representation. Additivity and homogeneity give the unique real-linear extension. Positivity gives
+
+$$
+|\widetilde T\lambda|\le T|\lambda|,
+\qquad
+\|\widetilde T\lambda\|_{\mathrm{var}}
+\le T|\lambda|(\Theta)=\|\lambda\|_{\mathrm{var}}.
+\tag{63.3}
+$$
+
+For example the first inequality follows by applying positivity to $-|\lambda|\le\lambda\le|\lambda|$ and taking the least positive measure dominating both signs. Consequently the fixed space $V=\{\lambda:\widetilde T\lambda=\lambda\}$ is norm closed. It is a vector sublattice: for $\lambda\in V$, (63.3) gives $|\lambda|\le T|\lambda|$, and the two finite positive measures have the same mass, hence are equal. Absolute values and linear combinations give lattice minima and maxima in $V$.
+
+This fixed-sublattice fact is the classical input of Douglas, [*Contractive projections on an $L^1$ space*, Proposition 13, printed p. 460](https://msp.org/pjm/1965/15-2/pjm-v15-n2-p06-s.pdf), *Pacific Journal of Mathematics* **15** (1965), 443--462. Proposition 13 expressly includes positive contractions on the space of finite measures and requires no projection assumption. The preceding argument verifies its hypotheses and its real-measure consequence here; no classification of conditional expectations is invoked.
+
+Every $f_i\sigma=\mu_{x_i}$ belongs to $V$. Variation-norm convergence of the positive mixture gives $\sigma\in V$, since its finite partial sums are fixed and their omitted masses tend to zero. For rational $t$, lattice closure therefore puts $(f_i-t)_+\sigma$ and
+
+$$
+\min\{n(f_i-t)_+,1\}\sigma\quad(n\ge1)
+\tag{63.4}
+$$
+
+in $V$. These bounded densities converge in $L^1(\sigma)$ to $\mathbf1_{\{f_i>t\}}$. Thus $V$ contains the indicator measure of each rational likelihood superlevel set.
+
+The sets $B\in\mathcal F$ whose indicator measures $\mathbf1_B\sigma$ belong to $V$ form a sigma algebra: complements use $\sigma\in V$, finite intersections use lattice minima, and countable unions follow from finite unions and norm convergence of their increasing indicator measures under the finite measure $\sigma$. This sigma algebra contains every generator of $\mathcal G$. Hence $V$ contains all $\mathcal G$-simple signed density measures. Their $L^1$ density and closedness of $V$ prove (63.2), including unbounded integrable real densities. The properties and exact image of $\Pi$ needed for sharpness are those already proved in Theorem 59.2.
+
+For the compactness boundary, disjoint positive-mass sets $A_1,\ldots,A_k\in\mathcal G$ give probability measures
+
+$$
+v_j=\frac{\mathbf1_{A_j}}{\sigma(A_j)}\sigma\in P_{\mathcal G},
+\qquad \operatorname{TV}(v_i,v_j)=1\quad(i\ne j).
+\tag{63.5}
+$$
+
+They all belong to every transfer's probability image by (63.2). Relative compactness implies total boundedness, so a finite cover by balls of radius less than $1/2$ bounds the number of such disjoint sets. There is consequently a largest possible finite cardinality $k$ of a disjoint positive-mass collection. Choose a collection of that cardinality. Its complement is null, since otherwise it could be adjoined; each member is an atom, since otherwise it could be split into two positive-mass measurable sets. This is exactly the finite partition in statement 3. This argument also proves that failure of statement 3 supplies arbitrarily large finite sets of probability measures separated as in (63.5), without any topology on tapes.
+
+A probability image contained in a finite-dimensional real subspace is bounded in variation norm, since every probability has norm one. Its closure there is compact; the probability measures form a closed subset in variation norm, and event-TV on them is half that norm. Thus statement 1 implies statement 2. Conversely, under statement 3 the original-tape identification (60.4)--(60.6) makes $P_{\mathcal G}$ the compact finite simplex of mixtures of the fixed measures $\kappa_j$. Choosing $T=\Pi$ establishes statements 1 and 2. This proves the equivalence. $\square$
+
+The same rigidity acts directly on the proposed order repair. If a reduced cap family has laws $\lambda_q=g_q\sigma\in P_{\mathcal G}$, then $T\lambda_q=\lambda_q$ for all actual signatures. Its cylinder common submeasures are also fixed, since their densities $\inf_{q'\in U_m(q)}g_{q'}$ are nonnegative integrable $\mathcal G$-measurable functions. Thus neither that family nor its common-submeasure masses can change under this transfer class. In particular the already reduced continuous optimum in Section 62, supplied by Theorem 57.1, retains its published mass deficit under every such transfer; its example is not reconstructed here. The obstruction concerns a common additive, positively homogeneous, mass-preserving, target-fixed operation on all finite positive original-tape measures. It does not exclude nonlinear cap-specific selections, transfers that fail these hypotheses, or a different selection within the original cap constraints.
+
+## 64. A finite-dimensional order envelope for original-tape caps
+
+**Definition 64.1 (A fixed target-specified density space).** Retain the original inputs of Definition 59.1 and the actual signature space $Q$ of (50.2). As an additional supplier hypothesis, specify from these fixed targets and their measurable structure one finite-dimensional real linear subspace
+
+$$
+E\subseteq L^1(\sigma|_{\mathcal G};\mathbb R),
+\qquad
+P_E=\left\{g\in E:g\ge0\ \sigma\text{-almost everywhere},\ \int g\,d\sigma=1\right\}\ne\varnothing.
+\tag{64.1}
+$$
+
+The specification of $E$ is fixed before choosing the preparation; it is not an unknown prepared family. It need not contain any or all of the target densities. Identify $g\in P_E$ with its law $g\sigma$ on the entire original $\mathcal F$, and give $P_E$ the event-TV metric $d_E(g,k)=\frac12\|g-k\|_1$.
+
+For $\eta\in[0,1]$ the initial fibers are
+
+$$
+K_{0,E}^{\eta}(q)=\bigcap_{y\in X:\,[y]=q}
+ \left\{g\in P_E:\operatorname{TV}(g\sigma,\mu_y)\le\eta\right\}.
+\tag{64.2}
+$$
+
+Use exactly the distance refinement and countable-ordinal intersections (54.4)--(54.5), with range $P_E$, metric $d_E$ and neighborhoods $U_m(q)$. Write $K_{\infty,E}^{\eta}$ for the stabilized fibers. Every original label occurs in (64.2); even if two labels have identical complete prime observations, neither of their possibly different targets is dropped.
+
+**Theorem 64.2 (Integrable order-envelope cap certificate).** If
+
+$$
+K_{\infty,E}^{\eta}(q)\ne\varnothing\qquad(q\in Q),
+\tag{64.3}
+$$
+
+then a lawful preparation on the original tapes achieves uniform error at most $\eta$, with prepared laws in $\{g\sigma:g\in P_E\}$. The preparation has one source-independent product seed, uses only actual prime answers, and hands its tape to the unchanged consumer on the same static source after sourcewise almost-sure finite execution.
+
+The additional order assertion is the following. Every TV-continuous map $q\mapsto g_q\in P_E$ has cylinder greatest common submeasures
+
+$$
+\ell_{C_m(x)}(A)=\int_A\inf_{q'\in U_m([x])}g_{q'}\,d\sigma
+\quad(A\in\mathcal F)
+\tag{64.4}
+$$
+
+whose masses increase to one at every original source $x$. More precisely, a measurable basis envelope $w\in L^1_+(\sigma|_{\mathcal G})$, independent of $q$, supplies for every $q$ and every $\delta>0$ some finite $m$ such that
+
+$$
+\ell_{C_m(q)}(\Theta)\ge1-\delta\int w\,d\sigma.
+\tag{64.5}
+$$
+
+Here $C_m(q)=\{y:[y]\in U_m(q)\}$, as in (54.2). The source-dependent depth in (64.5) need not be uniform on $Q$.
+
+**Proof.** Choose a real basis $e_1,\ldots,e_d$ of $E$, with finite measurable integrable representatives; nonemptiness of $P_E$ ensures $d\ge1$. For $c\in\mathbb R^d$ set $Jc=\sum_jc_je_j$. On the compact coordinate sphere $\|c\|_\infty=1$, the continuous function $c\mapsto\|Jc\|_1$ has a strictly positive minimum: a zero minimum would give a nonzero coordinate vector representing zero in $E$, contrary to linear independence. Homogeneity therefore gives a constant $A<\infty$ with
+
+$$
+\|c\|_\infty\le A\|Jc\|_1,
+\qquad
+|Jc(\theta)|\le\|c\|_\infty w(\theta),
+\qquad
+w=\sum_{j=1}^d|e_j|,\quad \int w\,d\sigma<\infty.
+\tag{64.6}
+$$
+
+The elementary upper bound $\|Jc\|_1\le\sum_j|c_j|\|e_j\|_1$ and (64.6) show that the coordinate and $L^1$ norms are equivalent. Thus $E$ is complete and separable, and closed in the surrounding $L^1$ space. Nonnegativity and integral one are closed conditions, so $P_E$ is complete and separable in $d_E$. Every initial fiber (64.2) is closed, because TV distance to each fixed original target is continuous in this metric. The metric stabilization and clopen selection portions of Theorem 54.2 consequently apply: they use countability of $Q$, a countable basis in the range, closed values and completeness. The domain retains its countable clopen prefix basis. Under (64.3) they supply a TV-continuous selection $g_q\in K_{\infty,E}^{\eta}(q)\subseteq K_{0,E}^{\eta}(q)$. This invokes those proved portions only, rather than their countable-tape acquisition step.
+
+We now prove the order assertion, for any TV-continuous $P_E$-valued selection. Write $g_q=\sum_j c_j(q)e_j$ using the same representatives. Since $Q$ is countable, remove one measurable $\sigma$-null set so that all these densities are nonnegative and finite simultaneously. On that null set set all basis representatives, and therefore all $g_q$ and $w$, to zero. This changes no density measure. Equation (64.6) makes every coefficient $c_j(q)$ continuous. For fixed $q$ and $\delta>0$, choose an actual prefix neighborhood such that
+
+$$
+\max_j|c_j(q')-c_j(q)|<\delta
+\qquad(q'\in U_m(q)).
+\tag{64.7}
+$$
+
+The same envelope then controls all its densities pointwise, simultaneously:
+
+$$
+\inf_{q'\in U_m(q)}g_{q'}
+ \ge (g_q-\delta w)_+,
+\qquad
+\int\inf_{q'\in U_m(q)}g_{q'}\,d\sigma
+ \ge\int g_q\,d\sigma-\delta\int w\,d\sigma
+ =1-\delta\int w\,d\sigma.
+\tag{64.8}
+$$
+
+The infimum is measurable because $Q$ is countable. It defines the greatest common submeasure of all the selected laws in the cylinder, by the same countable-density comparison used in Theorem 46.4. Refining a cylinder increases its infimum; since the cylinder includes $q$, these densities are bounded above by $g_q$, and their masses are at most one. Arbitrary $\delta>0$ in (64.8) proves increasing convergence of their masses to one. This is the pointwise order estimate missing from a general $L^1$-continuous selection: finite-dimensional coordinate continuity gives a single integrable bound for every neighbor in a sufficiently small actual cylinder.
+
+To check the original-tape correspondence, apply the positive-increment realization of Theorem 46.4 to these selected laws. More explicitly, for each occupied prefix node $C$, with parent $C^-$, set $\Delta_C=\ell_C-\ell_{C^-}$, and use $\Delta_X=\ell_X$ at depth zero. Cylinder monotonicity makes each increment a positive measure on the original $(\Theta,\mathcal F)$, of mass $a_C-a_{C^-}$, where $a_C=\ell_C(\Theta)$. Give its coordinate $W_C$ the normalized probability law $\Delta_C/(a_C-a_{C^-})$ when this mass is positive, and a fixed original tape law $\delta_{\theta_0}$ when it is zero. There are countably many nodes. Their probability coordinates and an independent $U$ uniform on $(0,1)$ form one common product seed, fixed for every source. No standard-Borel or measurable-singleton hypothesis on the tape carrier is needed for this product or the point evaluation $\delta_{\theta_0}$.
+
+The shared rules and thresholds are exactly the existing realization: at the reached node $C$, hand over $W_C$ when $U<a_C$, and otherwise query the next actual prime. At a non-root node the reached seed already satisfies $U\ge a_{C^-}$, so for every original measurable tape event $A$ the unconditional output measure at that node is
+
+$$
+\mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}
+   =\Delta_C(A).
+\tag{64.9}
+$$
+
+The root uses lower threshold zero. The accumulated measures telescope along source $x$ to $\ell_{C_m(x)}\le g_{[x]}\sigma$. By (64.8) the probability of no handoff through depth $m$ is $1-a_{C_m(x)}\to0$. Thus the actual handoff is finite almost surely at every source, and its output measure is precisely $g_{[x]}\sigma$, not a conditional version of that law. Finite-record and output-event preimages are measurable interval and coordinate events or countable unions of them. Each reached depth uses finitely many actual prime queries and the fixed tables. The handoff supplies only the original tape, after which the same consumer runs on the same static source. Membership in (64.2) proves the cap against every original target. This is the supplier correspondence for Theorem 46.4, with no new acquisition algorithm. $\square$
+
+Conversely, if an all-source lawful cap preparation has all its laws in $P_E$, Lemma 45.3 makes its density map a TV-continuous selection of (64.2), and the survival argument (54.8) puts it in every refinement stage. Thus (64.3) characterizes feasibility within this fixed density space. It is only a sufficient certificate for unrestricted feasibility: emptiness of a restricted stable fiber excludes $E$-valued preparations and says nothing by itself about other original-tape preparations.
+
+In particular set $\eta$ equal to the independently defined original $R_\mu$ of (50.1), whose centers range over all original-tape probabilities. If (64.3) holds at this value, the theorem and the lower bound in Theorem 50.2 prove attainment of that original sharp value. No equality between an $E$-restricted radius and $R_\mu$ is asserted. Nonemptiness of $P_E$ does not imply nonempty initial or stable cap fibers, either at the endpoint or at another cap. Targets outside $E$ still occur in every required original target ball.
+
+The norm and product ingredients are established mathematics; finite-dimensional completeness and closedness are also recorded as `FiniteDimensional.complete` and `Submodule.closed_of_finiteDimensional` in [pinned Mathlib, Normed/Module/FiniteDimension](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Normed/Module/FiniteDimension.lean), while the common product is the `Measure.infinitePi` interface already cited in Theorem 46.4. The basis argument and (64.8) supply their ordinary mathematical application to order exhaustion here. No compactness-only transfer, common finite tape support, common finite horizon, effective refinement test or real-sampling procedure follows. This certificate can be posed with nonatomic $\mathcal G$ and a proper finite-dimensional $E$; its all-source cap hypothesis remains an explicit additional obligation, rather than an automatic supplier.
+
+## 65. Finite TV covers of positive-proposal target tails
+
+**Definition 65.1 (A target-tail finite-cover radius).** Use the original consumer events $H_y,F_y$ of (40.1), original target probabilities $h_y,e_y$, and the occupied high-target tail $D=D(C,K)$ of (61.2). This tail is nonempty. Put
+
+$$
+a=\inf_{y\in D}h_y,\qquad b=\sup_{y\in D}e_y,
+\qquad
+\chi_{\mathrm{TV}}(D)=
+\inf_{\substack{n\ge1\\\nu_1,\ldots,\nu_n\in\mathcal P(\Theta,\mathcal F)}}
+ \sup_{y\in D}\min_{1\le j\le n}\operatorname{TV}(\mu_y,\nu_j).
+\tag{65.1}
+$$
+
+Here $b$ is a scalar false-proposal bound on this tail, distinct from the prescribed profile function in (44.2). The centers are arbitrary probability measures on the entire original tape sigma algebra. They need not be targets, lie in $P_{\mathcal G}$, satisfy a row, or be lawfully acquired. The infimum concerns finite covers of the original targets, rather than the local single-center radii in (50.1).
+
+**Theorem 65.2 (Persistent-source finite-cover obstruction).** For any finite family of such centers and any $\delta\ge0$ satisfying
+
+$$
+\min_j\operatorname{TV}(\mu_y,\nu_j)\le\delta
+\qquad(y\in D),
+\tag{65.2}
+$$
+
+one has
+
+$$
+a\le b+2\delta,
+\qquad
+\chi_{\mathrm{TV}}(D)\ge\frac{(a-b)_+}{2}.
+\tag{65.3}
+$$
+
+In particular $a>b$ prevents TV total boundedness and relative TV compactness of this target tail on any measurable tape carrier.
+
+**Proof.** Assign each $y\in D$ the least index $j$ for which (65.2) holds, and give every source outside $D$ color zero. This is a finite coloring $c:X\to\{0,1,\ldots,n\}$. It is only a proof object; neither the consumer nor any preparation is given this color. Apply [Boundaries, Theorem 37.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#37-finite-valued-advice-and-persistent-obstruction-to-adaptive-upper-calibration) to this finite partition and the occupied finite probe cylinder $C$. It gives one actual $x\in C$ with $\Omega(x)>K$ which is persistent for $c$: in every finite further probe menu, sources with the same answers and color as $x$ have unbounded $\Omega$. Thus $x\in D$ and $c(x)=j\ge1$. Every same-color comparison source $y$ belongs to $D$ and obeys
+
+$$
+\operatorname{TV}(\mu_x,\mu_y)
+\le\operatorname{TV}(\mu_x,\nu_j)+\operatorname{TV}(\nu_j,\mu_y)
+\le2\delta.
+\tag{65.4}
+$$
+
+This use of Theorem 37.2 is its finite-color persistence conclusion, not an alteration of the supplied zero advice.
+
+Let $A_m(x)\subseteq\Theta$ be the original consumer's measurable event of a finite proposal within $m$ transitions, querying only primes in $P_m$, with terminal real proposal at most $m$. These events increase to $H_x$: each actual finite proposal has a finite execution length, a finite prime menu and a finite real value. Hence
+
+$$
+\mu_x(A_m(x))\uparrow h_x.
+\tag{65.5}
+$$
+
+For each $m$ large enough to include the prefix defining $C$ and the threshold $K$, persistence at this same $x$ supplies an actual $y_m$ of color $j$, agreeing with $x$ on $P_m$, with $\Omega(y_m)>m$. This is one source for the whole event $A_m(x)$, selected before quantifying over its tapes. For each tape in that event, deterministic finite-record replay on the matching actual prime answers preserves every consumer transition and its final real proposal. The proposal is at most $m<\Omega(y_m)$ and is therefore false at $y_m$. Consequently $A_m(x)\subseteq F_{y_m}$ and event-TV gives
+
+$$
+\mu_x(A_m(x))
+ \le\mu_{y_m}(A_m(x))+2\delta
+ \le e_{y_m}+2\delta
+ \le b+2\delta.
+\tag{65.6}
+$$
+
+Only continuity from below at the fixed original source $x$ is used in passing to the limit; no convergence of the comparison sources or their measures is assumed. Equations (65.5)--(65.6) yield $a\le h_x\le b+2\delta$. For any chosen finite centers their supremal covering error supplies a $\delta$ in (65.2), so taking the infimum over all finite center families proves the second bound in (65.3). If $a>b$, no finite cover of radius below $(a-b)/2$ exists, which excludes total boundedness and hence relative compactness. $\square$
+
+For the all-source truthful positive row $h_y=h>0$, $e_y=0$, every occupied high-target tail has $a=h$, $b=0$, so its finite-cover radius is at least $h/2$. This is a restriction on the target laws themselves, including on countable carriers; it does not prohibit compact selected prepared-law ranges. Preparation can change the original consumer's row, as already required by the fixed-family contract. Section 61 remains the separate reused correct-mass bound on the unchanged acquisition value. Neither (65.3) nor failure of target precompactness determines cap attainment, identifies $\chi_{\mathrm{TV}}$ with $R_\mu$, or classifies general nonzero-error or divergence profiles.
+
+The three results leave the general nonatomic endpoint problem open. A target-intrinsic necessary-and-sufficient order-exhaustion criterion, or an original-target-defined nonlinear supplier at the unchanged $R_\mu$, is still required beyond the stated subclasses. Necessity and endpoint nonemptiness of the finite-dimensional certificate are not established for unrestricted preparations. General positive-proposal, prescribed error/divergence and arbitrary-consumer endpoint classifications remain unresolved beyond the existing bounds and subclasses. Infimum, attained cap, exact acquisition, metric continuity and common-submeasure exhaustion remain separate, as do local and uniform conclusions and sourcewise finite and common finite stopping. The proofs use original-tape measures, the actual labeled prime-divisibility source and the stipulated measurable common rules; they supply no source probability, extra observation, source selection operation, reset, failure conditioning, effectiveness or resource guarantee. These are ordinary mathematical results with the cited classical inputs and no literature-priority or formal-verification assertion.
+
+## 追加锚（本行以下为增补区）
+
+## 66. A nonlinear common-order cap supplier on the original nonatomic tapes
+
+**Definition 66.1 (Original-target common monotone rank).** Fix the entire labeled source, zero advice, common consumer, original nonempty measurable tape carrier $(\Theta,\mathcal F)$ and all original target laws exactly as in Definitions 50.1 and 59.1. As an additional input condition, designate one actual label $x_\circ$, put $\tau=\mu_{x_\circ}$, and specify a measurable map
+
+$$
+ t:\Theta\longrightarrow I=(0,1),\qquad t_*\tau=\lambda,
+\tag{66.1}
+$$
+
+where $\lambda$ is Lebesgue probability. Require every original target to satisfy
+
+$$
+ \mu_y\ll\tau,\qquad
+ \frac{d\mu_y}{d\tau}=f_y\circ t,\qquad
+ f_y\ge0,\quad \int_I f_y\,d\lambda=1,
+\tag{66.2}
+$$
+
+with a nondecreasing representative $f_y$. Thus $f_{x_\circ}=1$ almost everywhere. The anchor and rank are fixed from the original target input and measurable structure before varying the preparation; they are not chosen from an unknown prepared family. The rank is a function on tapes, not an observation of the source. This is an explicit subclass condition on the entire original family, and does not follow from countability of $X$, separability of a likelihood range or nonatomicity alone. All original labels remain, and equal complete prime signatures may still have different prescribed $f_y$. The full $\mathcal F$ need not be countably generated. A countable tape carrier cannot satisfy (66.1), since its rank image is countable whereas $\lambda$ gives every countable set mass zero.
+
+Let $\mathcal M$ be the set of $L^1(\lambda)$ classes with a nonnegative nondecreasing representative and integral one. Choose their right-continuous representatives on $I$ when evaluating them pointwise. Such representatives are finite at every $u<1$: normalization and monotonicity give $g(u)\le(1-u)^{-1}$. Define
+
+$$
+ \iota(g)(A)=\int_A g(t(\theta))\,d\tau(\theta)
+ \quad(A\in\mathcal F),\qquad
+ d_{\mathcal M}(g,k)=\frac12\|g-k\|_1.
+\tag{66.3}
+$$
+
+These are laws on the entire original $\mathcal F$, not laws only on the rank sigma algebra. Their event-TV distance is $d_{\mathcal M}(g,k)$ by (59.7) and $t_*\tau=\lambda$.
+
+For $a\in L^1_+(\lambda)$, let $a^\uparrow$ be its increasing rearrangement: the quantile of the distribution of $a$ under $\lambda$, with the same right-continuous convention. Changes at the countably many quantile discontinuities do not change the density class. For a finite positive measure $\nu$ on the original tapes, write
+
+$$
+ \nu=h_\nu\tau+\nu_\perp,
+ \qquad
+ \mathsf E_\tau[h_\nu\mid\sigma(t)]=\bar h_\nu\circ t,
+ \qquad
+ a_\nu=\bar h_\nu+\nu_\perp(\Theta),
+ \qquad
+ \mathfrak R\nu=(a_\nu^\uparrow\circ t)\tau.
+\tag{66.4}
+$$
+
+The conditional expectation is taken on tapes, and its $\sigma(t)$-measurable version factors through the real-valued rank. This factorization follows by measurable simple-function approximation; it uses no conditional sampling kernel or disintegration. Its class in $L^1(\lambda)$ is unique. Rearrangement depends only on that class, so $\mathfrak R$ is well-defined as a map on measures.
+
+**Theorem 66.2 (Nonlinear lossless original-radius reduction).** Under Definition 66.1, $\mathfrak R$ preserves positive mass, is order-preserving and positively homogeneous, and its probability image is exactly $\iota(\mathcal M)$. It fixes every law in this image, including every original target. For any original-tape probabilities $v,w$,
+
+$$
+ \operatorname{TV}(\mathfrak Rv,\mathfrak Rw)
+ \le\operatorname{TV}(v,w),\qquad
+ \operatorname{TV}(\mathfrak Rv,\mu_y)
+ \le\operatorname{TV}(v,\mu_y)\quad(y\in X).
+\tag{66.5}
+$$
+
+For every occupied actual cylinder $C$,
+
+$$
+ \inf_{g\in\mathcal M}\sup_{y\in C}
+       \operatorname{TV}(\iota(g),\mu_y)=\rho_\mu(C).
+\tag{66.6}
+$$
+
+In particular the unchanged original sharp value is
+
+$$
+ R_\mu=\sup_{x\in X}\inf_{m\ge0}\inf_{g\in\mathcal M}
+       \sup_{y\in C_m(x)}\operatorname{TV}(\iota(g),\mu_y).
+\tag{66.7}
+$$
+
+The transfer is not additive, so it is outside the transfer class of Definition 63.1.
+
+**Proof.** First consider the unsorted measure $P\nu=(a_\nu\circ t)\tau$. The conditional-expectation and singular-mass argument of Theorem 59.2 applies with reference $\tau$ and subalgebra $\sigma(t)$: these are a probability measure and a sub-sigma algebra, all targets have measurable densities there, and $P$ is positive, additive, homogeneous, mass-preserving and target-fixed. Conditional expectation exists by Radon--Nikodym on $(\Theta,\sigma(t),\tau|_{\sigma(t)})$, without regularity of the full tape space. For completeness, if $\rho$ is the greatest common submeasure of probabilities $v,w$, positivity gives $P\rho\le Pv,Pw$ and $P\rho(\Theta)=\rho(\Theta)$. Equation (59.7) then gives $\operatorname{TV}(Pv,Pw)\le1-\rho(\Theta)=\operatorname{TV}(v,w)$. Since the two output laws have densities $a_v\circ t,a_w\circ t$, this bounds $\frac12\|a_v-a_w\|_1$.
+
+The classical rearrangement step has the following layer-cake proof for the nonnegative integrable functions needed here. For such an $a$, its distribution function $F_a(s)=\lambda\{a\le s\}$ increases to one as $s\to\infty$. Its quantile is therefore finite at every rank in $I$. The quantile definition and right continuity of $F_a$ give $\lambda\{a^\uparrow>s\}=1-F_a(s)=\lambda\{a>s\}$ for every $s\ge0$; changing the quantile at its countably many discontinuities preserves this identity. This proves the required equimeasurability even for unbounded $L^1$ densities. Write $A_s=\{u:a(u)>s\}$ and $B_s=\{u:b(u)>s\}$. Their rearranged superlevel sets are upper intervals $A_s^\uparrow,B_s^\uparrow$ with the same respective lengths, up to null sets. Consequently
+
+$$
+ \begin{aligned}
+ \|a^\uparrow-b^\uparrow\|_1
+ &=\int_0^\infty\lambda(A_s^\uparrow\mathbin\triangle B_s^\uparrow)\,ds\\
+ &=\int_0^\infty|\lambda(A_s)-\lambda(B_s)|\,ds\\
+ &\le\int_0^\infty\lambda(A_s\mathbin\triangle B_s)\,ds
+ =\|a-b\|_1.
+ \end{aligned}
+\tag{66.8}
+$$
+
+Tonelli applies to the nonnegative indicator differences, and integrability makes the final expressions finite. In particular when $b=f_y$ its rearrangement is $f_y$ itself. This is the usual monotone-rearrangement contraction, not a new general rearrangement theorem. Chernozhukov, Fernandez-Val and Galichon, [*Improving Point and Interval Estimates of Monotone Functions by Rearrangement*, Proposition 1 and equation (2.1)](https://arxiv.org/html/0806.4730v3), [*Biometrika* **96** (2009), 559--575](https://doi.org/10.1093/biomet/asp030), state the bounded-function version and relate it to Lorentz's rearrangement inequality. Here (66.8) supplies the required nonnegative $L^1$ extension inside the original-source deduction; no statistical sampling assumption is used.
+
+Equimeasurability preserves $\int a_\nu=\nu(\Theta)$. If $a\le b$ almost everywhere, then $\lambda\{a>s\}\le\lambda\{b>s\}$ for every $s$, so their quantiles satisfy $a^\uparrow\le b^\uparrow$ almost everywhere. Thus sorting preserves order, and scaling a nonnegative function scales its quantile. These facts prove the asserted order and homogeneity properties of $\mathfrak R$. Every $g\in\mathcal M$ is fixed by both $P$ and sorting; normalization identifies the probability image. Combining the $P$ contraction with (66.8) proves (66.5).
+
+Applying (66.5) to each unrestricted center gives one inequality in (66.6); inclusion of $\iota(\mathcal M)$ in all original-tape probabilities gives the other. No cylinder center is assumed to attain its infimum. Taking the same $\sup_x\inf_m$ proves (66.7), without exchanging extrema. Finally the two probabilities with rank densities $2\mathbf1_{(0,1/2)}$ and $2\mathbf1_{(1/2,1)}$ both sort to $2\mathbf1_{(1/2,1)}$, whereas their average sorts to the constant density $1$. Hence $\mathfrak R$ does not preserve averages and is not additive. $\square$
+
+**Theorem 66.3 (Simultaneous integrable lower envelopes and original-tape realization).** Under Definition 66.1, let $Q$ be exactly the actual signature space (50.2), and let $q\mapsto g_q\in\mathcal M$ be continuous in $d_{\mathcal M}$. For its canonical increasing representatives define
+
+$$
+ h_m^q(u)=\inf_{q'\in U_m(q)}g_{q'}(u),
+ \qquad
+ \ell_{C_m(q)}(A)=\int_A h_m^q(t(\theta))\,d\tau(\theta)
+ \quad(A\in\mathcal F).
+\tag{66.9}
+$$
+
+These are the greatest common submeasures of the selected original-tape laws in the indicated actual cylinders. Their masses increase to one at every actual $q$. More precisely, for every $q$, $0<\delta<1$ and $\epsilon>0$, any depth $m$ with
+
+$$
+ \|g_{q'}-g_q\|_1<\epsilon\quad(q'\in U_m(q))
+\tag{66.10}
+$$
+
+gives the simultaneous lower bound
+
+$$
+ h_m^q(u)\ge e_{q,\delta,\epsilon}(u)
+ :=\begin{cases}
+       \left(g_q(u-\delta)-\frac\epsilon\delta\right)_+,&\delta<u<1,\\
+       0,&0<u\le\delta.
+    \end{cases}
+\tag{66.11}
+$$
+
+The envelopes are measurable and integrable, with $0\le e_{q,\delta,\epsilon}\le g_q$. Along $\delta_n=2^{-n}$ and $\epsilon_n=\delta_n^2$, their masses increase to one. The depths that certify them are source-dependent. Thus the laws $\iota(g_{[y]})$ have an exact lawful preparation on the entire original carrier, using one source-independent common seed and actual finite-prime execution almost surely at every original source. No common integrable upper envelope of the whole selection is assumed.
+
+**Proof.** For increasing densities $g,k$ and $u>\delta$, monotonicity gives, for almost every $v\in(u-\delta,u)$,
+
+$$
+ g(v)\ge g(u-\delta),\qquad k(v)\le k(u),\qquad
+ \|g-k\|_1\ge\delta\bigl(g(u-\delta)-k(u)\bigr)_+.
+\tag{66.12}
+$$
+
+Apply this to every $k=g_{q'}$ in (66.10). The same shifted density and the same error bound work for all these neighbors, proving (66.11). This is a simultaneous pointwise bound, rather than separate exceptional sets or separate optimizers for each neighbor.
+
+With the displayed $\delta_n,\epsilon_n$, the lower envelopes are increasing in $n$: the shifted argument increases, the subtracted $\delta_n$ decreases and the indicator expands. They are bounded by $g_q$. At every continuity point of $g_q$ they converge to $g_q$, and an increasing finite function on $I$ has only countably many discontinuities. Dominated convergence under the single integrable density $g_q$ gives $\int_I e_{q,\delta_n,\epsilon_n}\,d\lambda\to1$. Continuity of the selection supplies a finite depth for each such tolerance; choose these depths increasing. Since $h_m^q$ increases with $m$ and is bounded above by $g_q$ because $q\in U_m(q)$, (66.11) proves
+
+$$
+ \int_I h_m^q\,d\lambda\uparrow1,
+ \qquad
+ h_m^q\uparrow g_q\quad\lambda\text{-almost everywhere}.
+\tag{66.13}
+$$
+
+The infima in (66.9) are measurable because $Q$ is countable. Any positive measure dominated by all the selected laws in a cylinder is absolutely continuous with respect to $\tau$; its density is bounded by all their densities after one countable union of null sets, hence by their infimum. This proves greatestness on the entire $\mathcal F$, including for competing submeasure densities that do not factor through $t$. Countability of $Q$ also allows (66.13) to hold for every actual $q$ outside one common tape null set. The domination used for convergence is local to $q$ and does not introduce a uniform neighborhood size or a global upper bound.
+
+Equations (66.9)--(66.13) discharge exactly the order-exhaustion hypothesis of Theorem 46.4, whose positive-increment realization is reused. To specify its correspondence, include the depth-zero occupied node $X$ and give it fictitious parent mass zero. At a node $C$ with parent $C^-$, set $\Delta_C=\ell_C-\ell_{C^-}$ and $a_C=\ell_C(\Theta)$; at the root use $\Delta_X=\ell_X$. These are positive measures on the original tapes. Preload, for each of the countably many nodes with positive increment mass, a coordinate $W_C$ with law $\Delta_C/(a_C-a_{C^-})$, and use a fixed original tape at zero-mass nodes. Take all these coordinates and an independent uniform $U\in(0,1)$ under one product probability measure, the same at every source.
+
+At a reached node $C$, the common deterministic rule emits $W_C$ if $U<a_C$ and otherwise queries the next actual prime and follows its answer. Reaching a non-root node implies $U\ge a_{C^-}$, so its unconditional output submeasure is
+
+$$
+ \mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}=\Delta_C(A)
+ \quad(A\in\mathcal F).
+\tag{66.14}
+$$
+
+Along each actual source, the output submeasures telescope to $\ell_{C_m(x)}$. By (66.13), the probability of no handoff through that finite depth is $1-a_{C_m(x)}\to0$, and the full output law is $\iota(g_{[x]})$. Finite record events and output preimages are measurable interval and coordinate events or countable unions of them. The original consumer receives only this original tape and then runs on the same static source. There is no source sampling, source label, target input, additional probe, reset or failure conditioning.
+
+The product theorem used by Theorem 46.4 has arbitrary measurable probability spaces as coordinates; only countably many are needed here. Its cylinder formula is also the `Measure.infinitePi` result in [pinned Mathlib, Probability/ProductMeasure](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/ProductMeasure.lean). It provides the seed measure directly, and does not assert that these coordinate laws can be sampled effectively from a real uniform variable. No standard-Borel assumption, measurable-singleton assumption, disintegration or finite-description rule is needed. This construction supplies sourcewise almost-sure finite execution, not a common finite horizon or a bound on seed support. $\square$
+
+**Definition 66.4 (Original-target common-order cap fibers).** Under Definition 66.1, for a cap $\eta\in[0,1]$ put
+
+$$
+ K_{0,\uparrow}^{\eta}(q)
+ =\bigcap_{y\in X:\,[y]=q}
+       \{g\in\mathcal M:d_{\mathcal M}(g,f_y)\le\eta\}.
+\tag{66.15}
+$$
+
+Use exactly the distance-neighborhood refinement (54.4) and countable-ordinal intersections (54.5), with range $\mathcal M$, metric $d_{\mathcal M}$ and unchanged occupied neighborhoods $U_m(q)$. Denote the stable values by $K_{\infty,\uparrow}^{\eta}(q)$. These fibers are defined only by the fixed original targets, rank and actual occupied cylinders; they do not take a candidate prepared family as input. In particular all original labels with one signature occur in the intersection (66.15).
+
+**Theorem 66.5 (Intrinsic lawful cap criterion in the common-order subclass).** The fibers of Definition 66.4 stabilize at a countable ordinal. The following are equivalent:
+
+$$
+ \begin{aligned}
+ &\text{an original-tape lawful preparation has uniform error at most }\eta;\\
+ &\text{such a preparation exists with every law in }\iota(\mathcal M);\\
+ &K_{\infty,\uparrow}^{\eta}(q)\ne\varnothing
+       \quad\text{for every actual }q\in Q.
+ \end{aligned}
+\tag{66.16}
+$$
+
+In particular attainment at the independently defined original $R_\mu$ is equivalent to nonemptiness of all the fibers at cap $R_\mu$. Cap zero is exact acquisition, not merely an infimum statement. Neither initial nor stable fiber nonemptiness is automatic from the rank hypothesis. The criterion does not require a global integrable upper envelope, finite-dimensional density space or compact set of laws.
+
+**Proof.** The space $\mathcal M$ is closed in $L^1(\lambda)$. Indeed from an $L^1$-convergent sequence choose an almost-everywhere convergent subsequence. On a common full-measure subset of $I$ its limit is nonnegative and ordered in the argument. This set is dense; the ordered limit extends to an increasing function on $I$, agreeing with the original limit except possibly at its countably many jumps. Right-continuous modification gives the chosen representative. Integral one passes to the limit in $L^1$. Hence $\mathcal M$ is complete, and is separable as a subspace of separable $L^1(\lambda)$. Each initial fiber is closed because it is an intersection of closed metric balls in this space.
+
+The metric stabilization and clopen selection portions of Theorem 54.2 therefore apply with their exact hypotheses: $Q$ is countable, its prefix neighborhoods form a countable clopen basis, the range is complete and separable, and the values are closed. Strict successor losses use distinct elements of $Q$ times a countable range basis, giving countable stabilization. Nonempty stable values are lower semicontinuous, and the disjoint-clopen-refinement construction (54.9)--(54.10) produces a continuous selection in a complete range. No countable-tape assumption is used in these portions, and their inverse cumulative sampling step is not invoked.
+
+If a lawful preparation has laws $\lambda_y$ within cap $\eta$, Lemma 45.3 makes those laws factor through $Q$ as a TV-continuous map. Apply $\mathfrak R$ pointwise. Theorem 66.2 gives a continuous $\mathcal M$-valued map $g_q$ whose laws are within the same cap against every original $\mu_y$. Thus it selects (66.15). The survival induction (54.8), with its limit intersections, puts $g_q$ in every refinement stage, proving nonemptiness of every stable fiber. Theorem 66.3 additionally realizes this reduced family lawfully on the original tapes; this is the operational cap-preservation assertion, rather than an assumption that the nonlinear law map is itself a tape map.
+
+Conversely, nonempty stable values supply a continuous selection $g_q\in K_{\infty,\uparrow}^{\eta}(q)\subseteq K_{0,\uparrow}^{\eta}(q)$. Theorem 66.3 supplies its exhausting common submeasures and lawful original-tape realization. Membership in (66.15) proves the cap at every original label. Inclusion of these preparations in all original-tape preparations proves the remaining implication in (66.16). Theorem 50.2 identifies the unrestricted acquisition infimum with $R_\mu$; (66.6)--(66.7) keep that original value and its quantifier order. At cap $R_\mu$, any feasible preparation therefore attains it.
+
+This deduction concerns the explicit common-rank input subclass. For original families without such a target-specified rank and dominating anchor, the nonlinear selection/exhaustion question of Section 62 remains unresolved. In particular this criterion does not classify all positive-proposal rows, all prescribed profiles or arbitrary fixed-consumer endpoint constraints. It preserves any such conditions already imposed on the original target family, while imposing no matching profile condition on prepared laws. $\square$
+
+**Proposition 66.6 (The target-mixture reference collapses a common monotone family).** Suppose instead that the reference in (66.1)--(66.2) is the positive target mixture $\sigma=\sum_i w_i\mu_{x_i}$, where $w_i>0$ and $\sum_iw_i=1$. If $t_*\sigma=\lambda$ and every $d\mu_{x_i}/d\sigma=f_i\circ t$ has one common nondecreasing rank, then every original target equals $\sigma$.
+
+**Proof.** Radon--Nikodym uniqueness gives $\sum_iw_i f_i=1$ almost everywhere on $I$. Choose a common full-measure set where this equality holds and all $f_i$ have their increasing representatives. For $s<u$ in that set, each $f_i(u)-f_i(s)$ is nonnegative. The positively weighted sum of these differences is zero, because both sums equal one. Thus every difference is zero. Each $f_i$ is constant almost everywhere, and normalization makes that constant one. Therefore $\mu_{x_i}=\sigma$ for all $i$. This proves that the mixture in Section 59 cannot supply the common rank for a nonconstant family by itself; the anchor-reference condition in Definition 66.1 is a substantive restriction. $\square$
+
+**Proposition 66.7 (Nonatomic infinite-dimensional full-source positive-profile input).** There is a full original-source family in Definition 66.1 with nonatomic likelihood information, infinite-dimensional target-density span, positive proposal probability at every source and an attained positive original value. Fix $0<c<1$, let $\Theta=I$ with its Borel sigma algebra, $\tau=\lambda$ and $t(u)=u$, and prescribe
+
+$$
+ \mu_y=f_{\Omega(y)}\lambda,\qquad
+ f_k(u)=c+(1-c)k u^{k-1}\quad(k\ge1).
+\tag{66.17}
+$$
+
+Fix the consumer that immediately proposes $\lfloor(1-u)^{-1}\rfloor$. Every original label is assigned its displayed target law. The target rows satisfy
+
+$$
+ h_y=1,\qquad d_y=z_y=0,\qquad
+ e_y=c(1-1/k)+(1-c)(1-1/k)^k
+ \quad(k=\Omega(y)),
+\tag{66.18}
+$$
+
+so the allowed constant profile $b(k)=c+(1-c)\exp(-1)<1$ holds. Every occupied cylinder has $\rho_\mu(C)=1-c$, and $R_\mu=1-c$ is attained by handing over a common $\lambda$ tape without querying the source.
+
+**Proof.** All $f_k$ are nonnegative, increasing and normalized. The actual anchor $x_*=(7,2)$ has $\Omega(x_*)=1$, so $f_1=1$ and $\mu_{x_*}=\tau$ as required. The common consumer is a measurable finite real-output rule on every tape in $I$, has no source input and terminates in one transition. Its false event at target $k$ is $u<1-1/k$. Integrating (66.17) over this event gives (66.18). The inequality $(1-1/k)^k\le\exp(-1)$, with the zero value at $k=1$, proves the profile bound. These are target laws and consumer events, not a target-dependent execution rule.
+
+Every occupied actual cylinder contains sources whose $k=\Omega(y)$ tend to infinity, by the exact finite prime-pattern theorem 35.2. For $A_a=(1-a,1)$, $0<a<1$, these targets satisfy
+
+$$
+ \mu_y(A_a)=ca+(1-c)\bigl(1-(1-a)^k\bigr)
+ \longrightarrow ca+1-c.
+\tag{66.19}
+$$
+
+For any original-tape probability center $v$, the event discrepancy therefore gives $\sup_{y\in C}\operatorname{TV}(v,\mu_y)\ge ca+1-c-v(A_a)$. Since $A_a\downarrow\varnothing$ as $a\downarrow0$ on the declared open carrier $I$, continuity from above gives $v(A_a)\to0$. Hence every cylinder radius is at least $1-c$. Conversely $\operatorname{TV}(\lambda,\mu_y)=(1-c)\operatorname{TV}(\lambda,k u^{k-1}\lambda)\le1-c$ for every source. This proves the asserted local radii, unchanged original value and zero-query attainment. The constant seed law is fixed independently of the source and the consumer remains unchanged.
+
+Unboundedly many actual $k$ give polynomials of arbitrarily large distinct degrees $k-1$; comparing highest degrees in each finite linear relation proves that their density span is infinite-dimensional. No claim that every positive integer $k$ is attained is needed. To verify that this is also nonatomic likelihood information in the sense of Section 59, form its positive target mixture $\sigma=s\lambda$. The anchor term gives $s\ge w_*>0$ almost everywhere, and integrability makes $s$ finite almost everywhere. Its likelihood densities include $1/s$ and $f_k/s$ for some actual $k>1$. Their ratio recovers the strictly increasing function $f_k(u)$, whose measurable inverse recovers $u$. Thus the likelihood sigma algebra is the full Borel sigma algebra modulo null sets; conversely every density is Borel. The equivalent probability $\sigma$ is nonatomic, so this family lies outside the atomic subclass of Section 60. The target-density span is infinite-dimensional, although Section 64 can also certify this example's constant optimum using the one-dimensional space $E=\operatorname{span}\{1/s\}$ in its $\sigma$-density coordinates. The example establishes nonvacuity of the common-rank input, not failure of that separate finite-dimensional certificate. It witnesses one allowed nonzero-error positive profile, without classifying other original profiles or rows. $\square$
+
+**Proposition 66.8 (A positive cap need not have an integrable upper envelope).** Even for the full-source family $\mu_y=\tau=\lambda$ on $I$, with the always-unknown consumer and identity rank, every positive cap $\eta$ has an initial fiber (66.15) whose canonical densities have a nonintegrable pointwise supremum. Thus integrability of the supremum of all initial cap-fiber densities is not a necessary condition for lawful cap feasibility, and is not a consequence of Definition 66.1.
+
+**Proof.** Choose $0<d\le\eta$ with $d<1$. For every integer $n\ge2$, the increasing normalized density
+
+$$
+ g_n(u)=1-d+dn\mathbf1_{[1-1/n,1)}(u)
+\tag{66.20}
+$$
+
+has $\operatorname{TV}(g_n\lambda,\lambda)=d(1-1/n)\le\eta$. Since all original targets are $\lambda$, every $g_n$ belongs to every initial fiber. For $u$ sufficiently close to one choose $n=\lfloor(1-u)^{-1}\rfloor\ge2$. Then $u\ge1-1/n$ and $n\ge[2(1-u)]^{-1}$, so $\sup_n g_n(u)\ge d/[2(1-u)]$. The pointwise supremum of all the fiber densities is measurable because it is nondecreasing, and its integral is infinite. Nevertheless the constant law $\lambda$ is an exact zero-query preparation of this full-source input. The integrable envelopes of Theorem 66.3 are simultaneous lower bounds in sourcewise shrinking cylinders, bounded by the density at that source; they do not assert this stronger upper domination. $\square$
+
+## 追加锚（本行以下为增补区）

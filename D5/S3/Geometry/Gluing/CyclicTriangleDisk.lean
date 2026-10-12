@@ -157,7 +157,7 @@ private theorem radius_nonneg {n : ℕ} (x : Point n) : 0 ≤ radius x :=
   add_nonneg x.2.property.1 x.2.property.2.1
 
 /-- The radial image norm is the sum of the triangle coordinates. -/
-private theorem radial_norm {n : ℕ} [NeZero n] (x : Point n) :
+theorem radial_norm {n : ℕ} [NeZero n] (x : Point n) :
     ‖radial x‖ = radius x := by
   classical
   by_cases hr : radius x = 0

@@ -81,6 +81,11 @@ internal sealed class CyclicTriangleDiskDocument : IScribeDocumentDefinition
             Definition("radial", "The complex radial expression", RadialFormula(),
                 "At radius zero the value is zero. At positive radius the complex "
                 + "exponential gives the prescribed angle and preserves the radius."),
+            Theorem("radial_norm", "The original exact radial norm", Positive(X(
+                Eq(Call("norm", Call("radial", F.Id("x"))), Radius()))),
+                "This is the existing radius identity, now public with its statement and proof unchanged. "
+                + "The actual affine-link strict chart consumes it to identify the preimage of the open unit disk with a+b<1. "
+                + "This API exposure is not a new mathematical theorem."),
             Theorem("radial_eq_iff_related", "Exact fibers of the radial map", Positive(XY(
                 Iff(Eq(Call("radial", F.Id("x")), Call("radial", F.Id("y"))),
                     Call("Related", F.Id("x"), F.Id("y"))))),
