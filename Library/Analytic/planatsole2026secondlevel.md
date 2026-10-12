@@ -108,3 +108,11 @@ That entry contains the source correspondence, analytic truncation bounds,
 executable certificate and its result. It tests a stronger condition than
 the original neighboring-row estimate and is not a theorem attributed to
 this preprint or a Lean proof of the target estimate.
+
+The separate [square-variable derivative-Hankel certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/e02b1d2936b9e3207939677807a76d611025f699/experiments/theta-square-hankel-obstruction)
+investigates the stronger full alternating determinant hierarchy for
+the actual $S(T)$. It computes $T$ derivatives directly with analytic
+remainder bounds, rather than transferring an original-variable
+counterexample. The experiment's conclusion concerns that sufficient
+hierarchy; it neither changes this preprint's finite-order statement
+nor supplies or refutes the original prescribed-node scalar estimate.
