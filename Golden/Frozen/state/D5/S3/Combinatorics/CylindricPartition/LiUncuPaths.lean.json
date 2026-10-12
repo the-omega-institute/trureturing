@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2a8560a3fd29643fb0891da8ca75d4420f76305bee48e47a6349deb95309fbbc"}
+{"statement_id":"sha256:2a8560a3fd29643fb0891da8ca75d4420f76305bee48e47a6349deb95309fbbc","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),18:CylindricPartition),6:LiUncu),14:pathPolynomial)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),18:CylindricPartition),6:LiUncu),25:path_last_edge_recurrence)","kind":"theorem"}]}

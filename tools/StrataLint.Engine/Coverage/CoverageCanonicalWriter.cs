@@ -67,7 +67,6 @@ public static class CoverageCanonicalWriter
         builder.Append("TOWER_BOOTSTRAP id=").Append(bootstrap.Id)
             .Append(" judge=").Append(bootstrap.Judge)
             .Append(" reason=").Append(Quote(bootstrap.Reason))
-            .Append(" genesis_event=").Append(bootstrap.GenesisEvent)
             .Append(" commit=").Append(bootstrap.Commit)
             .Append(" pull_request=").Append(bootstrap.PullRequest)
             .Append(" verification=").Append(bootstrap.Verification).Append('\n');
@@ -153,7 +152,6 @@ public static class CoverageCanonicalWriter
                 bootstrap = new
                 {
                     commit = tower.Syntax.Bootstrap.Commit,
-                    genesis_event = tower.Syntax.Bootstrap.GenesisEvent,
                     id = tower.Syntax.Bootstrap.Id,
                     judge = tower.Syntax.Bootstrap.Judge,
                     pull_request = tower.Syntax.Bootstrap.PullRequest,

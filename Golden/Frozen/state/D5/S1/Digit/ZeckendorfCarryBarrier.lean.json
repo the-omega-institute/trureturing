@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ea8a899189d2e4774d88659058663a63e0461381a8c19bd2f2748bb8383724f6"}
+{"statement_id":"sha256:ea8a899189d2e4774d88659058663a63e0461381a8c19bd2f2748bb8383724f6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Digit),22:ZeckendorfCarryBarrier),27:lower_support_carry_barrier)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Digit),22:ZeckendorfCarryBarrier),28:instIsTransNatLeHAddOfNat_d5)","kind":"theorem"}]}

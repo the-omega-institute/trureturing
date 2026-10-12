@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9f35c883d27725d780f62cb921903547cb33f7e432f585eaa03d5468d72b3cf3"}
+{"statement_id":"sha256:9f35c883d27725d780f62cb921903547cb33f7e432f585eaa03d5468d72b3cf3","declarations":[{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),13:SLnRootAction),23:root_commutator_compose)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),13:SLnRootAction),30:sl_bare_root_graph_coordinates)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),14:PSLnRootAction),31:psl_bare_root_graph_coordinates)","kind":"theorem"}]}

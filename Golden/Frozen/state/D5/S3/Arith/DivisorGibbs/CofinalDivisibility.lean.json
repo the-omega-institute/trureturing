@@ -1,1 +1,1 @@
-{"statement_id":"sha256:22151ba523f0167766876876e7e98a2f1c528f4657d36d8c4635e39d359cda16"}
+{"statement_id":"sha256:22151ba523f0167766876876e7e98a2f1c528f4657d36d8c4635e39d359cda16","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),12:DivisorGibbs),19:CofinalDivisibility),27:cofinal_divisibility_ladder)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4f065029005858e1cf0210f14fe685c934be616953487b23780841b33ca21413"}
+{"statement_id":"sha256:4f065029005858e1cf0210f14fe685c934be616953487b23780841b33ca21413","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),10:Congruence),28:DivisorCountPrimeFactorBound),15:wiseman_a328959)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),10:Congruence),28:DivisorCountPrimeFactorBound),1:a)","kind":"def"}]}
