@@ -8644,6 +8644,33 @@ e^{-2Kt}F_Q(\rho_0;X_0).
 
 
 
+
+
+### 推论 53.9（多参数 Fisher 矩阵的 Loewner 收缩）
+
+令 \(J_{\mathrm{out}}\) 为输出态关于 \((\theta_{AB},\theta_{BC},\theta_{CA})\) 的 SLD Fisher 矩阵，令 \(J_e\) 为边源的标量 SLD Fisher 信息。则
+\[
+\boxed{
+J_{\mathrm{out}}
+\preceq
+\operatorname{diag}(J_{AB},J_{BC},J_{CA}).
+}
+\]
+
+#### 证明
+
+对任意实方向 \(v=(v_{AB},v_{BC},v_{CA})\)，定理 53.6 应用于参数速度 \(v\) 给出
+\[
+v^\mathsf T J_{\mathrm{out}}v
+\le
+\sum_{e\in E}v_e^2J_e
+=
+v^\mathsf T\operatorname{diag}(J_e)v.
+\]
+有限维对称矩阵的 Loewner 序由全部实二次型比较刻画，故得结论。证毕。
+
+该矩阵版本可以接到多参数量子 Cramér--Rao 界，但是否达到可观测性最优还取决于测量兼容性、秩条件和先验选择。2026 年的 Bayesian monotone-metric 工作把这类多参数几何推广到 Petz 单调度量，但它不改变本节的 SLD 定理边界。
+
 ## 54. 有限 Dirichlet 数据到 metric-measure/Mosco 极限的严格顺序
 
 本节把有限 \(CD_G\)、\(QCD\) 和图 Dirichlet 数据进一步分解为四个不可互换的层次：度量测度紧性、二次型 Mosco 收敛、局部性、曲率证书的极限稳定性。
