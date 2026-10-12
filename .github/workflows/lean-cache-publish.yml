@@ -42,7 +42,7 @@ jobs:
       contents: write
       actions: write
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.ref == 'refs/heads/dev')
-    runs-on: ${{ github.event_name == 'workflow_dispatch' && inputs.runner == 'x64' && 'ubuntu-24.04' || github.event_name == 'workflow_dispatch' && inputs.runner == 'self-hosted' && 'omega-m3-ultra-runner' || 'ubuntu-24.04-arm' }}
+    runs-on: ${{ github.event_name == 'workflow_dispatch' && inputs.runner == 'x64' && 'ubuntu-24.04' || github.event_name == 'workflow_dispatch' && inputs.runner == 'self-hosted' && 'omega-m3-ultra' || 'ubuntu-24.04-arm' }}
     timeout-minutes: ${{ github.event_name == 'workflow_dispatch' && 360 || 120 }}
     env:
       STRATALINT_CACHE_WRITES: ${{ github.event_name == 'workflow_dispatch' && inputs.runner != 'x64' && inputs.runner != 'self-hosted' && 'true' || 'false' }}
