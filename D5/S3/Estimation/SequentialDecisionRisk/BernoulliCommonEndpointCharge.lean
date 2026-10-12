@@ -344,6 +344,7 @@ private lemma bernoulli_factory_local_window (p₀ : unitInterval)
     (hρwindow : (2 * m + 1 : ℕ) * ρ ≤ (1 - (p₀ : ℝ)) * θ)
     (h : ℝ) (hh : h ∈ Set.Icc (ρ / Real.sqrt (n : ℝ))
       ((2 * m + 1 : ℕ) * (ρ / Real.sqrt (n : ℝ)))) :
+    h ∈ Set.Icc 0 (1 / 4 : ℝ) ∧
     (0 < (p₀ : ℝ) + h * (-(p₀ : ℝ) / C) ∧
       (p₀ : ℝ) + h * (-(p₀ : ℝ) / C) < 1) ∧
     (|(-(p₀ : ℝ) / C) /
@@ -370,7 +371,7 @@ private lemma bernoulli_factory_local_window (p₀ : unitInterval)
   have hp1 : p < 1 := hple.trans_lt h₁
   have hp : (Rate p₀ (-(p₀ : ℝ) / C) h : ℝ) = p :=
     congrArg Subtype.val (Set.projIcc_of_mem (h := zero_le_one) ⟨hp0.le, hp1.le⟩)
-  refine ⟨⟨hp0, hp1⟩, ?_, ?_⟩
+  refine ⟨⟨hh0, hh1⟩, ⟨hp0, hp1⟩, ?_, ?_⟩
   · rw [hp, abs_div, abs_div, abs_neg, abs_of_nonneg h₀.le, abs_of_nonneg hC0.le,
       abs_of_nonneg (mul_pos hp0 (sub_pos.mpr hp1)).le]
     apply (div_le_iff₀ (mul_pos hp0 (sub_pos.mpr hp1))).mpr
@@ -406,7 +407,7 @@ private lemma bernoulli_factory_local_window (p₀ : unitInterval)
 /-- A uniform family of resolvable stopped-output windows gives a logarithmic
 lower bound on the common endpoint fractional cost. The finite-difference
 and output approximation contracts remain explicit hypotheses. -/
-theorem bernoulli_logarithmic_common_endpoint_charge
+private theorem logarithmic_charge_of_output_windows
     (ν : Measure Seed) [IsProbabilityMeasure ν]
     (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
     (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
@@ -448,8 +449,8 @@ theorem bernoulli_logarithmic_common_endpoint_charge
       |((Rate p₀ γ h : ℝ) - (p₀ : ℝ)) / ((p₀ : ℝ) * (1 - (p₀ : ℝ)))| *
         Real.sqrt ((2 ^ j : ℕ) : ℝ) ≤ (2 * MomentC m + 1)⁻¹ := by
     intro j h hh
-    exact bernoulli_factory_local_window p₀ h₀ h₁ C ρ _ hC hρ hθ m (2 ^ j)
-      (by positivity) hρsmall hρwindow h hh
+    exact (bernoulli_factory_local_window p₀ h₀ h₁ C ρ _ hC hρ hθ m (2 ^ j)
+      (by positivity) hρsmall hρwindow h hh).2
   let T := min (1 / 2 : ℝ) (S / (2 : ℝ) ^ (2 * m + 1))
   let J := Nat.floor (Real.log (T / δ) / (a * Real.log 2)) + 1
   let A := 2 * DerivC m σ * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1)
@@ -486,5 +487,94 @@ theorem bernoulli_logarithmic_common_endpoint_charge
       (ENNReal.ofReal_mul hG.le).symm
     _ ≤ ENNReal.ofReal ((J : ℝ) * z) := ENNReal.ofReal_le_ofReal hcompare
     _ ≤ _ := hbudget
+
+private lemma truncated_output_measurable
+    (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
+    (s : Set (Seed × (ℕ → Bool))) (hs : MeasurableSet[hM.measurableSpace] s) (n : ℕ) :
+    MeasurableSet[(truncation_stopping hM n).measurableSpace]
+      (s ∩ {ω | M ω ≤ (n : WithTop ℕ)}) := by
+  have hh := (hM.measurableSet_inter_le_const_iff s n).mp
+    (hs.inter (hM.measurableSet_le' n))
+  simpa only [IsStoppingTime.measurableSet, truncation_cast] using hh
+
+private lemma truncated_output_error
+    {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (M : Ω → WithTop ℕ) (hM : Measurable M) (s : Set Ω) (hs : MeasurableSet s)
+    (n : ℕ) (G δ : ℝ) (herror : |G - μ.real s| ≤ δ) :
+    |G - ∫ ω, (s ∩ {ω | M ω ≤ (n : WithTop ℕ)}).indicator (fun _ => (1 : ℝ)) ω ∂μ| ≤
+      δ + μ.real {ω | (n : WithTop ℕ) < M ω} := by
+  let t := {ω | M ω ≤ (n : WithTop ℕ)}
+  have ht : MeasurableSet t := measurableSet_le hM measurable_const
+  change |G - ∫ ω, (s ∩ t).indicator (1 : Ω → ℝ) ω ∂μ| ≤ _
+  rw [integral_indicator_one (hs.inter ht)]
+  have hpartition := measureReal_inter_add_sdiff (μ := μ) (s := s) ht
+  have hdiff : μ.real (s \ t) ≤ μ.real {ω | (n : WithTop ℕ) < M ω} :=
+    measureReal_mono (by intro ω hω; exact lt_of_not_ge hω.2)
+  have hnonneg : 0 ≤ μ.real (s \ t) := measureReal_nonneg
+  calc
+    _ = |(G - μ.real s) + μ.real (s \ t)| := by congr 1; linarith
+    _ ≤ |G - μ.real s| + |μ.real (s \ t)| := abs_add_le _ _
+    _ ≤ δ + μ.real {ω | (n : WithTop ℕ) < M ω} := by
+      rw [abs_of_nonneg hnonneg]
+      exact add_le_add herror hdiff
+
+/-- One stopped output event, accurate under every parameter law, yields
+logarithmic cost at the common zero-perturbation endpoint. The positive
+signal and finite-difference calculus contracts are explicit interfaces. -/
+theorem bernoulli_logarithmic_common_endpoint_charge
+    (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (p₀ : unitInterval) (h₀ : 0 < (p₀ : ℝ)) (h₁ : (p₀ : ℝ) < 1)
+    (M : Seed × (ℕ → Bool) → WithTop ℕ) (hM : IsStoppingTime seededFiltration M)
+    (m : ℕ) (a ρ C δ S : ℝ) (ha : 0 < a) (ham : a < (m : ℝ))
+    (hC : 1 ≤ C) (hρ : 0 < ρ) (hS : 0 < S)
+    (hρsmall : (2 * m + 1 : ℕ) * ρ ≤ (1 / 4 : ℝ))
+    (hρwindow : (2 * m + 1 : ℕ) * ρ ≤ (1 - (p₀ : ℝ)) * (2 * MomentC m + 1)⁻¹)
+    (hδ0 : 0 < δ)
+    (hδsmall : δ < (min (1 / 2 : ℝ) (S / (2 : ℝ) ^ (2 * m + 1))) ^ 2)
+    (s : Set (Seed × (ℕ → Bool))) (hs : MeasurableSet[hM.measurableSpace] s)
+    (G : ℝ → ℝ)
+    (haccuracy : ∀ h ∈ Set.Icc 0 (1 / 4 : ℝ),
+      |G h - (Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)).real s| ≤ δ)
+    (hsignal : ∀ j, S * ((2 ^ j : ℕ) : ℝ) ^ (-a) ≤
+      |Diff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) G|)
+    (hcalculus : ∀ j, ∀ U : ℝ, 0 ≤ U →
+      (∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+        ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+        |iteratedDeriv (2 * m) (fun x : ℝ => ∫ ω,
+          (s ∩ {ω | M ω ≤ ((2 ^ j : ℕ) : WithTop ℕ)}).indicator (fun _ => (1 : ℝ)) ω
+          ∂Law ν (Rate p₀ (-(p₀ : ℝ) / C) x)) h| ≤ U) →
+      |Diff (2 * m) (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) (fun x : ℝ => ∫ ω,
+        (s ∩ {ω | M ω ≤ ((2 ^ j : ℕ) : WithTop ℕ)}).indicator (fun _ => (1 : ℝ)) ω
+        ∂Law ν (Rate p₀ (-(p₀ : ℝ) / C) x))| ≤
+        (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ)) ^ (2 * m) * U)
+    : ENNReal.ofReal ((S /
+      (4 * (2 * DerivC m (4 / (1 - (p₀ : ℝ))) * ρ ^ (2 * m) + (2 : ℝ) ^ (2 * m + 1)) *
+        GeoBudget a m * a * Real.log 2)) * Real.log δ⁻¹) ≤
+      ∫⁻ ω, EndpointCost a (M ω) ∂Law ν p₀ := by
+  classical
+  let f := fun (j : ℕ) =>
+    (s ∩ {ω | M ω ≤ ((2 ^ j : ℕ) : WithTop ℕ)}).indicator (fun _ => (1 : ℝ))
+  have hf : ∀ j, StronglyMeasurable[(truncation_stopping hM (2 ^ j)).measurableSpace] (f j) :=
+    fun j => stronglyMeasurable_const.indicator (truncated_output_measurable M hM s hs (2 ^ j))
+  have hfb : ∀ j ω, |f j ω| ≤ 1 := by
+    intro j ω
+    dsimp [f]
+    by_cases hω : ω ∈ s ∩ {ω | M ω ≤ ((2 ^ j : ℕ) : WithTop ℕ)}
+    · rw [Set.indicator_of_mem hω]; norm_num
+    · rw [Set.indicator_of_notMem hω]; norm_num
+  have hmeas := hM.measurable.mono hM.measurableSpace_le le_rfl
+  have herr : ∀ j, ∀ h ∈ Set.Icc (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))
+      ((2 * m + 1 : ℕ) * (ρ / Real.sqrt ((2 ^ j : ℕ) : ℝ))),
+      |G h - ∫ ω, f j ω ∂Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)| ≤
+        δ + (Law ν (Rate p₀ (-(p₀ : ℝ) / C) h)).real
+          {ω | ((2 ^ j : ℕ) : WithTop ℕ) < M ω} := by
+    intro j h hh
+    have hlocal := bernoulli_factory_local_window p₀ h₀ h₁ C ρ
+      ((2 * MomentC m + 1)⁻¹) hC hρ (by positivity) m (2 ^ j)
+      (by positivity) hρsmall hρwindow h hh
+    exact truncated_output_error _ M hmeas s (hM.measurableSpace_le _ hs) (2 ^ j)
+      (G h) δ (haccuracy h hlocal.1)
+  exact logarithmic_charge_of_output_windows ν p₀ h₀ h₁ M hM m a ρ C δ S ha ham
+    hC hρ hS hρsmall hρwindow hδ0 hδsmall f hf hfb G herr hsignal hcalculus
 
 end D5.S3.Estimation.SequentialDecisionRisk.BernoulliCommonEndpointCharge

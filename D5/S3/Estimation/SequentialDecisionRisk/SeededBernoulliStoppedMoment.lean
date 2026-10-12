@@ -425,17 +425,18 @@ local notation "Trunc" => fun (t : WithTop ℕ) (n : ℕ) => (min t (n : WithTop
 local notation "EndpointCost" => fun (a : ℝ) (t : WithTop ℕ) =>
   if t = ⊤ then (⊤ : ℝ≥0∞) else ENNReal.ofReal (((t.untopD 0 : ℕ) : ℝ) ^ a)
 
+omit [MeasurableSpace Seed] in
+lemma truncation_cast (M : Seed × (ℕ → Bool) → WithTop ℕ) (n : ℕ)
+    (ω : Seed × (ℕ → Bool)) :
+    (Trunc (M ω) n : WithTop ℕ) = min (M ω) (n : WithTop ℕ) := by
+  cases M ω with
+  | top => simp
+  | coe t => rfl
+
 lemma truncation_stopping {M : Seed × (ℕ → Bool) → WithTop ℕ}
     (hM : IsStoppingTime seededFiltration M) (n : ℕ) :
     IsStoppingTime seededFiltration (fun ω => (Trunc (M ω) n : WithTop ℕ)) := by
-  have heq : (fun ω => (Trunc (M ω) n : WithTop ℕ)) =
-      (fun ω => min (M ω) (n : WithTop ℕ)) := by
-    funext ω
-    cases M ω with
-    | top => simp
-    | coe t => rfl
-  rw [heq]
-  exact hM.min_const n
+  simpa only [truncation_cast] using hM.min_const n
 
 lemma truncation_le (t : WithTop ℕ) (n : ℕ) : Trunc t n ≤ n := by
   cases t with
