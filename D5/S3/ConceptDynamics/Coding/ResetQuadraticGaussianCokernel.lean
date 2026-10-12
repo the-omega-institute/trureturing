@@ -20,8 +20,6 @@ open D5.S3.ConceptDynamics.Coding.ResetFiniteIntegralDefect
 open D5.S3.ConceptDynamics.Coding.InertGroupBlockConjugacy
   (VertexModule transition DimensionGroup)
 open D5.S1.Recurrence.QuadraticCompanionDefect
-open private flip_twice from D5.S3.ConceptDynamics.Coding.ResetNativeIntegralDefect
-open private flip_coeff sign_cases from D5.S3.ConceptDynamics.Coding.ResetFiniteIntegralDefect
 
 private abbrev RingRow := MonoidAlgebra ℤ Sign
 private abbrev tau : Sign := ofAdd true
@@ -38,8 +36,10 @@ private def difference : RingRow →+ ℤ where
 
 private theorem difference_sum_flip (x : RingRow) : difference (x + resetFlip x) = 0 := by
   have ht : tau * tau = (1 : Sign) := by decide
-  simp only [difference, AddMonoidHom.coe_mk, ZeroHom.coe_mk, MonoidAlgebra.coeff_add,
-    Finsupp.add_apply, flip_coeff, one_mul, ht]
+  simp only [difference, resetFlip, AddMonoidHom.coe_mk, ZeroHom.coe_mk,
+    MonoidAlgebra.coeff_add, Finsupp.add_apply,
+    MonoidAlgebra.coeff_mul_single_apply, show tau⁻¹ = tau from (by decide),
+    mul_one, one_mul, ht]
   ring
 
 private theorem sum_flip_image (y : RingRow) :
@@ -50,11 +50,20 @@ private theorem sum_flip_image (y : RingRow) :
     have hh : y.coeff 1 = y.coeff tau := sub_eq_zero.mp hy
     refine ⟨MonoidAlgebra.single 1 (y.coeff 1), ?_⟩
     ext h
-    have ht : tau * tau = (1 : Sign) := by decide
     have hn : tau ≠ (1 : Sign) := by decide
-    rcases sign_cases h with rfl | rfl <;>
-      simp [MonoidAlgebra.coeff_add, flip_coeff, MonoidAlgebra.coeff_single, hh,
-        ht, hn, Ne.symm hn]
+    change (MonoidAlgebra.single 1 (y.coeff 1) +
+      MonoidAlgebra.single 1 (y.coeff 1) * MonoidAlgebra.single tau 1).coeff h = y.coeff h
+    simp only [MonoidAlgebra.coeff_add, Finsupp.add_apply, MonoidAlgebra.coeff_mul_single_apply,
+      show tau⁻¹ = tau from (by decide), mul_one]
+    cases h with
+    | false =>
+        change (MonoidAlgebra.single 1 (y.coeff 1)).coeff 1 +
+          (MonoidAlgebra.single 1 (y.coeff 1)).coeff tau = y.coeff 1
+        simp [MonoidAlgebra.coeff_single, hn, Ne.symm hn]
+    | true =>
+        change (MonoidAlgebra.single 1 (y.coeff 1)).coeff tau +
+          (MonoidAlgebra.single 1 (y.coeff 1)).coeff 1 = y.coeff tau
+        simp [MonoidAlgebra.coeff_single, hh, hn, Ne.symm hn]
 
 private theorem transition_sum (n : ℕ) (v : VertexModule Sign (n + 2)) :
     (∑ i, transition (resetMatrix (n + 2)) v i) =
@@ -89,7 +98,17 @@ private theorem residual_eliminate (m : ℕ) (v : VertexModule Sign (4 * m + 3))
           resetFlip (v 0 + v (0 : Fin (4 * m + 2)).succ),
         v (0 : Fin (4 * m + 2)).succ + resetFlip (v (0 : Fin (4 * m + 2)).succ)),
         (domainEquiv (4 * m + 1) v).2) := by
-  rw [two_step_companion, eliminate, boundary_three_mod_four resetFlip flip_twice]
+  have hinv (x : RingRow) : resetFlip (resetFlip x) = x := by
+    have h := LinearMap.congr_fun
+      (D5.S3.ConceptDynamics.Coding.ResetNativeIntegralDefect.reset_transition_inverse
+        1 (by decide)).1 (fun _ : Fin 1 => x)
+    have hzero := congrArg (fun v : VertexModule Sign 1 => v 0) h
+    change resetFlip (transition (resetMatrix 1) (fun _ : Fin 1 => x) 0) -
+      (∑ _ : Fin 0, x) = x at hzero
+    rw [transition_zero, Fin.sum_univ_one] at hzero
+    change resetFlip (resetFlip x) - (∑ _ : Fin 0, x) = x at hzero
+    simpa using hzero
+  rw [two_step_companion, eliminate, boundary_three_mod_four resetFlip hinv]
 
 /-- Two primitive integral obstructions read the independent residual heads.
 They retain both original sign coefficients and all original suffix coordinates. -/
