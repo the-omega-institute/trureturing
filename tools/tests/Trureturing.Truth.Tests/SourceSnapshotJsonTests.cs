@@ -9,7 +9,7 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
 {
     private const string ValidSnapshot = """
         {
-          "schema": "source-snapshot.v2",
+          "schema": "source-snapshot",
           "source_repo": "the-omega-institute/trureturing",
           "source_commit": "1111111111111111111111111111111111111111",
           "source_tree": "2222222222222222222222222222222222222222",
@@ -19,27 +19,32 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
           "truth_graph_sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
           "raw_lean_report_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
           "dag_md_sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
-          "declarations_sha256": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
-          "frozen_ledger_head_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "frozen_ledger_sequence": 42
+          "declarations_sha256": "sha256:9999999999999999999999999999999999999999999999999999999999999999"
         }
         """;
 
+    private const string LastProperty =
+        "\"declarations_sha256\": \"sha256:9999999999999999999999999999999999999999999999999999999999999999\"";
+
     [Fact]
-    public void ReadsTheExactV2SnapshotShape()
+    public void ReadsTheExactSnapshotShape()
     {
         var snapshot = SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(ValidSnapshot));
 
+        Assert.Equal("source-snapshot", snapshot.Schema);
         Assert.Equal("1111111111111111111111111111111111111111", snapshot.SourceCommit);
         Assert.Equal("2222222222222222222222222222222222222222", snapshot.SourceTree);
         Assert.Equal(
             "sha256:5555555555555555555555555555555555555555555555555555555555555555",
             snapshot.TruthGraphSha256);
-        Assert.Equal(42, snapshot.FrozenLedgerSequence);
+        Assert.Equal(
+            "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+            snapshot.DeclarationsSha256);
     }
 
     [Theory]
-    [InlineData("\"source-snapshot.v2\"", "\"source-snapshot.v1\"")]
+    [InlineData("\"source-snapshot\"", "\"source-snapshot.v2\"")]
+    [InlineData("\"source-snapshot\"", "\"source-snapshot.v1\"")]
     [InlineData("\"source_commit\": \"1111111111111111111111111111111111111111\"", "\"source_commit\": \"not-a-git-id\"")]
     [InlineData("\"truth_graph_sha256\": \"sha256:5555555555555555555555555555555555555555555555555555555555555555\"", "\"truth_graph_sha256\": \"sha256:bad\"")]
     public void RejectsInvalidSchemaAndIdentityFormats(string original, string replacement)
@@ -63,8 +68,21 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
     public void RejectsAdditionalProperties()
     {
         var json = ValidSnapshot.Replace(
-            "\"frozen_ledger_sequence\": 42",
-            "\"frozen_ledger_sequence\": 42, \"extra\": true",
+            LastProperty,
+            LastProperty + ", \"extra\": true",
+            StringComparison.Ordinal);
+
+        Assert.Throws<FormatException>(() => SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(json)));
+    }
+
+    [Theory]
+    [InlineData("\"frozen_ledger_head_hash\": \"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"")]
+    [InlineData("\"frozen_ledger_sequence\": 42")]
+    public void RejectsRetiredFrozenLedgerFields(string retiredProperty)
+    {
+        var json = ValidSnapshot.Replace(
+            LastProperty,
+            LastProperty + ", " + retiredProperty,
             StringComparison.Ordinal);
 
         Assert.Throws<FormatException>(() => SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(json)));
@@ -74,9 +92,8 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
     public void RejectsADigestionDigestInTheSourceSnapshotContract()
     {
         var json = ValidSnapshot.Replace(
-            "\"frozen_ledger_sequence\": 42",
-            "\"frozen_ledger_sequence\": 42, \"residual_frontier_sha256\": \"sha256:"
-                + new string('8', 64) + "\"",
+            LastProperty,
+            LastProperty + ", \"residual_frontier_sha256\": \"sha256:" + new string('8', 64) + "\"",
             StringComparison.Ordinal);
 
         Assert.Throws<FormatException>(() => SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(json)));
@@ -97,8 +114,8 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
     public void RejectsDuplicateProperties()
     {
         var json = ValidSnapshot.Replace(
-            "\"frozen_ledger_sequence\": 42",
-            "\"frozen_ledger_sequence\": 42, \"source_commit\": \"1111111111111111111111111111111111111111\"",
+            LastProperty,
+            LastProperty + ", \"source_commit\": \"1111111111111111111111111111111111111111\"",
             StringComparison.Ordinal);
 
         Assert.Throws<FormatException>(() => SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(json)));
