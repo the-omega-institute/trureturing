@@ -4473,3 +4473,245 @@ coding dimension, native operator transport or physical clock transport
 is inferred; the §52/§55 propagation contracts retain their own premises.
 
 ## 90.99 追加锚（本行以下为增补区）
+
+## 91. Native prefix certificates for the same screened root response
+
+### 91.1. The original table and the owned scalar
+
+For a nonempty finite ordered native tree $t$, retain every actual occurrence, its
+left/right address and its \(\alpha/\beta\) leaf label. For $h\geq0$, define the
+inclusive four-reply table
+
+$$
+p_h(t)(a)=
+\begin{cases}
+\alpha,\ \beta,&a\text{ is an actual leaf occurrence},\\
+\mathsf{branch},&a\text{ is an actual pair occurrence},\\
+\mathsf{absent},&a\text{ is not an occurrence},
+\end{cases}
+\qquad |a|\leq h .
+\tag{91.1}
+$$
+
+The root, early terminals and all absent strict extensions are part of this table. Let
+$L_t$ be the closed finite $N$ combinatorial Laplacian of §52.1–§52.7: every
+parent–child seam has unit conductance, counting measure is used, and the root has no
+outgoing killing seam. Put
+
+$$
+P_t=I-L_t/3,\qquad
+G_\lambda(t)=\langle\delta_r,(L_t+\lambda I)^{-1}\delta_r\rangle,\qquad
+q_\lambda=\frac3{3+\lambda}\quad(\lambda>0).
+\tag{91.2}
+$$
+
+The native source and the immutable \(\mathrm{INITIAL}\) are the same object in
+\(p_h(t)\) and \(G_\lambda(t)\); a later current register is not substituted for either.
+The native substitution \(\rho\) is unchanged; \(P_t\) is only the declared comparison
+law on the retained actual occurrences.
+Because $L_t=3(I-P_t)$,
+
+$$
+G_\lambda(t)=\frac1{3+\lambda}
+ \sum_{n\geq0}q_\lambda^n\mu_n(t),qquad
+\mu_n(t):=\langle\delta_r,P_t^n\delta_r\rangle .
+\tag{91.3}
+$$
+
+For $n\leq2h+2$, define $\mu_n(p)$ to be $\mu_n(t)$ for any finite native
+tree with $p_h(t)=p$, and set
+
+$$
+S_h(p)=\frac1{3+\lambda}\sum_{n=0}^{2h+2}q_\lambda^n\mu_n(p).
+\tag{91.4}
+$$
+
+### 91.2. Prefix locality and a uniform certificate
+
+**Lemma 91.1 (closed-walk locality).** The quantities $\mu_n(p)$ in (91.4) are
+well-defined. If $p_h(t)=p_h(u)$, then
+
+$$
+\mu_n(t)=\mu_n(u)\quad(0\leq n\leq2h+2).
+\tag{91.5}
+$$
+
+**Proof.** The matrix $P_t$ is nonnegative and stochastic: an edge step has weight
+$1/3$, while a hold at $x$ has weight $1-\deg(x)/3$. Expand $\mu_n(t)$ as the
+sum of weights of length-$n$ walks which start and end at the root, allowing holds.
+A walk which reaches depth $d$ and returns has at least $2d$ edge steps. Thus, for
+$n\leq2h+2$, it cannot use a vertex below depth $h+1$. The table gives every
+vertex and every edge through depth $h$, and it gives the number of children of every
+branch at depth $h$. A newly exposed depth-$h+1$ vertex can only be an immediate
+turning point at this length, so its hold weight and its children are not used. Hence
+each walk has the same weight in any two trees with the same table. This includes a
+singleton, an early terminal leaf and every absent address. The sum is therefore
+independent of the realizing tree, proving (91.5). This is the finite-tree instance of
+the sparse-matrix locality viewpoint of Benzi–Boito–Razouk, [BBR](https://arxiv.org/abs/1203.3953); no general decay theorem is invoked. \(\square\)
+
+**Theorem 91.2 (same-operator prefix approximation).** For every finite native ordered
+tree $t$, every $h\geq0$ and every $\lambda>0$,
+
+$$
+0\leq G_\lambda(t)-S_h(p_h(t))
+ \leq \lambda^{-1}q_\lambda^{\,2h+3}.
+\tag{91.6}
+$$
+
+Consequently, if $p_h(t)=p_h(u)$, then
+
+$$
+|G_\lambda(t)-G_\lambda(u)|
+ \leq \lambda^{-1}q_\lambda^{\,2h+3}.
+\tag{91.7}
+$$
+
+There is no factor $2$ in (91.7). At $\lambda=1$, $G_1(t)$ is exactly the
+closed INITIAL response $F_{\mathrm{spec}}(t)$ of §52.21.
+
+**Proof.** By Lemma 91.1, (91.4) is the initial segment of (91.3). Every
+$\mu_n(t)$ is nonnegative and at most one because $P_t$ is stochastic. Therefore
+
+$$
+0\leq G_\lambda(t)-S_h(p_h(t))
+\leq\frac1{3+\lambda}\sum_{n\geq2h+3}q_\lambda^n
+=\lambda^{-1}q_\lambda^{2h+3}.
+$$
+
+If the two tables agree, both responses lie in the same interval
+$[S_h,S_h+\lambda^{-1}q_\lambda^{2h+3}]$, which proves (91.7). The identity at
+$\lambda=1$ is $L_t+I=\mathcal H_t^{(0)}+2I$ by §52.21. \(\square\)
+
+### 91.3. All-depth native witnesses and sharpness
+
+Let $t_{\mathrm{bal}}$ and $t_{\mathrm{comb}}$ be the two actual fifteen-node trees
+with common word
+
+$$
+\omega=\alpha\beta\beta\alpha\beta\alpha\alpha\beta
+$$
+
+and the balanced and left-comb bracketings displayed in §52.19–§52.20. For
+$h\geq0$, define actual finite sources
+
+$$
+W_0(t)=t,\qquad W_{h+1}(t)=\langle W_h(t),\alpha\rangle .
+\tag{91.8}
+$$
+
+**Lemma 91.3 (common native data).** For every $h$, the two sources
+$W_h(t_{\mathrm{bal}})$ and $W_h(t_{\mathrm{comb}})$ have the same leaf word
+$\omega\alpha^h$, composition $(4+h,4)$, $15+2h$ occurrences, and root
+cross-product value $q_0=0$. They also satisfy
+
+$$
+p_h(W_h(t_{\mathrm{bal}}))=p_h(W_h(t_{\mathrm{comb}})).
+\tag{91.9}
+$$
+
+**Proof.** The first three assertions follow by appending one $\alpha$ leaf and its
+parent at each step. §52.20 gives the common word, composition and \(q_0=0\) at
+\(h=0\); the parent rule \(q\langle x,y\rangle=q(x)\times q(y)\) preserves zero.
+If a fixed leaf cap $H$ is imposed, the source has $8+h$ leaves and therefore
+requires $H\geq8+h$; this is a per-source cap condition, not free cap growth.
+At depth at most $h$, a table address either meets the added left spine or the
+right $\alpha$ leaf, or reaches the root of the original fifteen-node tree exactly
+at depth $h$. That root is a branch in both sources; the first differing descendants
+are below the observed depth. Thus all four replies, including absence, agree. \(\square\)
+
+Put $g_h(t)=G_1(W_h(t))$ and
+
+$$
+f(g)=\frac{2(1+g)}{5+3g}.
+\tag{91.10}
+$$
+Here $f^0$ is the identity and $f^{h+1}=f\circ f^h$.
+
+**Theorem 91.4 (all-depth response ambiguity).** For every $h\geq0$,
+
+$$
+g_h(t_{\mathrm{bal}})=f^h\!\left(\frac5{12}\right),\qquad
+g_h(t_{\mathrm{comb}})=f^h\!\left(\frac{62614}{136883}\right),
+\tag{91.11}
+$$
+
+and the second value is strictly larger. Hence every scalar estimator depending only
+on $p_h$ has two-source worst-case error at least
+
+$$
+\frac12\left[f^h\!\left(\frac{62614}{136883}\right)-
+f^h\!\left(\frac5{12}\right)\right]>0.
+\tag{91.12}
+$$
+
+**Proof.** If a rooted tree has response $g$, attaching one parent seam changes the
+child-root response to $g/(1+g)$ by the rank-one Schur complement. In
+$W_{h+1}$, the other child is a leaf with attached response $1/2$, while the new
+root diagonal of $L+I$ is $3$. Therefore
+
+$$
+g_{h+1}=\frac1{3-g_h/(1+g_h)-1/2}=f(g_h).
+$$
+
+The initial values are exactly §52.21–§52.22. Since
+$f'(g)=4/(5+3g)^2>0$, strict inequality persists under every iterate. Any common
+$p_h$-based estimate has the same output on the pair in (91.9); the elementary
+two-point midpoint bound gives (91.12). \(\square\)
+
+**Theorem 91.5 (sharp moment horizon, not a rate claim).** With
+$\mu_n^{\mathrm{bal}}=\mu_n(W_h(t_{\mathrm{bal}}))$ and
+$\mu_n^{\mathrm{comb}}=\mu_n(W_h(t_{\mathrm{comb}}))$,
+
+$$
+\mu_n^{\mathrm{comb}}-\mu_n^{\mathrm{bal}}=0\quad(0\leq n\leq2h+2),
+\qquad
+\mu_{2h+3}^{\mathrm{comb}}-\mu_{2h+3}^{\mathrm{bal}}
+=\frac2{3^{\,2h+3}}.
+\tag{91.13}
+$$
+
+**Proof.** The first equality is Lemma 91.1. At the original root, the comb has a
+right $\beta$ leaf and the balanced tree has a right branch. After the common left
+spine of length $h$, these are the only newly visible vertices whose hold weight can
+differ at length $2h+3$: the leaf has diagonal $1-1/3=2/3$, whereas the
+non-root branch has diagonal $1-3/3=0$. The unique differing walk goes down the
+spine and to that right child, holds once, and returns. Its two edge traversals have
+weight $3^{-(2h+2)}$, so the difference is
+$3^{-(2h+2)}(2/3)=2/3^{2h+3}$. Every other walk of this length either stays within
+the common table or reaches the new level without a hold and has equal weight. This
+proves (91.13). It identifies the first missing moment; it does not assert an optimal
+resolvent constant or approximation rate. \square
+
+### 91.4. Lawful prefix supply and limits
+
+**Assumption 91.6 (conditional prefix supply).** A certified even epoch $N=2k\geq2$
+may supply $p_h(t)$ through the original-root, same-source ordered support/address
+service of [ABT §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
+with its source/version authentication, epoch certification, refusal and absorbing
+Stop rules. Under the paid presence-only service of [FFM §§10–11]
+(RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md), the supplied prefix has
+
+$$
+q\leq2(2^{h+1}-1),\qquad \max|a|\leq h+k+1,qquad a_{\mathrm{post}}=0.
+\tag{91.14}
+$$
+
+These are premises of the cited services, not consequences of a numerical response
+catalog, old $q/c/\text{word}$ replies, a CE post-cut state or mathematical existence
+of a decoder.
+
+**Corollary 91.7 (conditional original target estimate).** Under Assumption 91.6,
+the actual original $G_\lambda(t)$ admits the certified output $S_h(p_h(t))$ with
+the uniform error (91.6). The corollary concerns fixed positive screening and the
+scalar root response of the same closed operator. It supplies no full-spectrum or
+multiplicity recovery, no operator-factor or physical-dimension statement, no clock or
+metric transport, no native symmetric-transport permission, no unrestricted sensor,
+and no infinite-completion correspondence. Native realization, acquisition, clock,
+source-state versus spatial-position, and operator/boundary permissions remain
+separate hypotheses; the exclusions of §§55, 81, 89 and 90 continue to apply.
+
+The witnesses and estimate are ordinary finite-source mathematics on the original
+counting-measure operator. They do not identify a physical space dimension or complete
+the broader why-three programme.
+
+## 91.99 追加锚（本行以下为增补区）
