@@ -7,23 +7,15 @@
    digest: Nonuniformity of the recycled-coin walk at a nonexceptional memory parameter. -/
 
 import D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
-import Mathlib.Logic.Function.Iterate
 import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.style.longLine false
 
 noncomputable section
-open scoped BigOperators Topology
+open scoped BigOperators Topology Matrix
 namespace D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
 
 
@@ -203,5 +195,98 @@ private theorem chi_sum : ∑ n : ZMod 12, chi n = 0 :=
 private theorem chi_neg_one : chi (-1) = starRingEnd ℂ z := by
   rw [chi.map_neg_eq_inv]
   exact Complex.inv_eq_conj z_norm
+
+private def lam : ℂ := ((a : ℂ) + (c : ℂ)) * z - (c : ℂ)
+
+private theorem resonance : lam * starRingEnd ℂ lam = 1 ∧
+    lam ^ 2 + ((c : ℂ) - (a : ℂ)) * lam + 1 = 0 ∧
+    lam * ((c : ℂ) + (a : ℂ) * z) = z - 1 := by
+  have ha : 2 * (a : ℂ) ^ 2 = 1 := by exact_mod_cast a_facts.1
+  have hc := congrArg Complex.ofReal scalar_resonance
+  simp only [Complex.ofReal_add, Complex.ofReal_mul, Complex.ofReal_pow,
+    Complex.ofReal_div, Complex.ofReal_one, Complex.ofReal_ofNat] at hc
+  constructor
+  · unfold lam
+    simp only [map_sub, map_mul, map_add, Complex.conj_ofReal, z_conj]
+    linear_combination -((a : ℂ) + (c : ℂ)) ^ 2 * z_poly + (1 / 2 : ℂ) * ha + hc
+  constructor
+  · unfold lam
+    linear_combination ((a : ℂ) + (c : ℂ)) ^ 2 * z_poly - (1 / 2 : ℂ) * ha - hc
+  · unfold lam
+    linear_combination (a : ℂ) * ((a : ℂ) + (c : ℂ)) * z_poly +
+      ((z - 1) / 2) * ha + (z - 1) * hc
+
+private def B (q : ℂ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+  fun i j => if i.1 = 0 then
+    if i.2 = 0 then if j.1 = 0 then (a : ℂ) * q else 0
+    else if j.1 = 0 then 0 else if j.2 = 0 then (c : ℂ) * q else (s : ℂ) * q
+  else if i.2 = 0 then
+    if j.1 = 0 then
+      if j.2 = 0 then (a : ℂ) * starRingEnd ℂ q else -(a : ℂ) * starRingEnd ℂ q
+    else 0
+  else if j.1 = 0 then 0
+  else if j.2 = 0 then (s : ℂ) * starRingEnd ℂ q else -(c : ℂ) * starRingEnd ℂ q
+
+private theorem B_apply (q : ℂ) (u : Fin 2 × Fin 2 → ℂ) (i : Fin 2 × Fin 2) :
+    (B q *ᵥ u) i =
+      if i.1 = 0 then
+        if i.2 = 0 then (a : ℂ) * q * (u (0, 0) + u (0, 1))
+        else q * ((c : ℂ) * u (1, 0) + (s : ℂ) * u (1, 1))
+      else if i.2 = 0 then (a : ℂ) * starRingEnd ℂ q * (u (0, 0) - u (0, 1))
+      else starRingEnd ℂ q * ((s : ℂ) * u (1, 0) - (c : ℂ) * u (1, 1)) := by
+  rcases i with ⟨i, j⟩
+  fin_cases i <;> fin_cases j
+  all_goals
+    unfold Matrix.mulVec dotProduct
+    rw [Fintype.sum_prod_type]
+    simp only [Fin.sum_univ_two]
+    dsimp only [B]
+    simp only [Fin.ext_iff, Fin.val_zero, one_ne_zero, ite_true, ite_false]
+    ring
+
+private theorem mode_step (η : AddChar (ZMod 12) ℂ)
+    (hη : η (-1) = starRingEnd ℂ (η 1)) (u : Fin 2 × Fin 2 → ℂ) :
+    U phiStar (fun n i => η n * u i) = fun n i => η n * (B (η 1) *ᵥ u) i := by
+  funext n i
+  rcases i with ⟨i, j⟩
+  fin_cases i <;> fin_cases j
+  all_goals
+    rw [B_apply]
+    unfold U swap shift coinFlip
+    rw [Fin.sum_univ_two]
+  · change (Real.cos (Real.pi / 4) : ℂ) * (η (n + 1) * u (0, 0)) +
+      (Real.sin (Real.pi / 4) : ℂ) * (η (n + 1) * u (0, 1)) =
+        η n * ((a : ℂ) * η 1 * (u (0, 0) + u (0, 1)))
+    rw [show Real.cos (Real.pi / 4) = a from Real.cos_pi_div_four,
+      show Real.sin (Real.pi / 4) = a from Real.sin_pi_div_four, η.map_add_eq_mul]
+    ring
+  · change (Real.cos (Real.pi * (1 + phiStar) / 4) : ℂ) * (η (n + 1) * u (1, 0)) +
+      (Real.sin (Real.pi * (1 + phiStar) / 4) : ℂ) * (η (n + 1) * u (1, 1)) =
+        η n * (η 1 * ((c : ℂ) * u (1, 0) + (s : ℂ) * u (1, 1)))
+    rw [phi_facts.2.2, theta_facts.2.2, show Real.sin theta = s from rfl,
+      η.map_add_eq_mul]
+    ring
+  · change (Real.sin (Real.pi / 4) : ℂ) * (η (n + -1) * u (0, 0)) +
+      ((-Real.cos (Real.pi / 4) : ℝ) : ℂ) * (η (n + -1) * u (0, 1)) =
+        η n * ((a : ℂ) * starRingEnd ℂ (η 1) * (u (0, 0) - u (0, 1)))
+    rw [show Real.sin (Real.pi / 4) = a from Real.sin_pi_div_four,
+      show Real.cos (Real.pi / 4) = a from Real.cos_pi_div_four,
+      Complex.ofReal_neg, η.map_add_eq_mul, hη]
+    ring
+  · change (Real.sin (Real.pi * (1 + phiStar) / 4) : ℂ) * (η (n + -1) * u (1, 0)) +
+      ((-Real.cos (Real.pi * (1 + phiStar) / 4) : ℝ) : ℂ) * (η (n + -1) * u (1, 1)) =
+        η n * (starRingEnd ℂ (η 1) * ((s : ℂ) * u (1, 0) - (c : ℂ) * u (1, 1)))
+    rw [phi_facts.2.2, theta_facts.2.2, show Real.sin theta = s from rfl,
+      Complex.ofReal_neg, η.map_add_eq_mul, hη]
+    ring
+
+private theorem character_mode (u : Fin 2 × Fin 2 → ℂ) :
+    U phiStar (fun n i => chi n * u i) = fun n i => chi n * (B z *ᵥ u) i :=
+  mode_step chi chi_neg_one u
+
+private theorem trivial_mode (u : Fin 2 × Fin 2 → ℂ) :
+    U (d := 12) phiStar (fun _ i => u i) = fun _ i => (B 1 *ᵥ u) i := by
+  simpa only [AddChar.one_apply, one_mul] using
+    mode_step (1 : AddChar (ZMod 12) ℂ) (by simp only [AddChar.one_apply, map_one]) u
 
 end D5.S3.Quantum.Dynamics.KrawecRecycledCoinNonUniformity
