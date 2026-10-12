@@ -641,18 +641,31 @@ theorem all_r_flat_geometry (r : ℝ) (hr : 0 < r) (hlo : 1/2 < r^2) (hhi : r^2 
       -2*(u 0*star (u 1)).im,spinorZ u]
     have un : Complex.normSq (u 0)+Complex.normSq (u 1) = 1 := by
       simpa only [UnitSpinor,Fin.sum_univ_two] using hu
-    refine ⟨a,?_,?_,rfl⟩
-    · have asq : ‖a‖^2 = 1 := by
-        rw [EuclideanSpace.real_norm_sq_eq]
-        have un2 := congrArg (fun t : ℝ => t^2) un
-        simp [a,spinorZ,Fin.sum_univ_succ,Complex.star_def,Complex.normSq_apply] at ⊢ un un2
-        nlinarith
-      nlinarith [norm_nonneg a]
-    · ext i j
-      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-        simp [rho,D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-          Matrix.vecMulVec,a,spinorZ,Complex.star_def,Complex.normSq_apply] at ⊢ un <;>
-        nlinarith
+    have ht : Matrix.trace (Matrix.vecMulVec u (star u)) = 1 := by
+      apply Complex.ext <;>
+        simp [Matrix.trace, Matrix.vecMulVec, Fin.sum_univ_two,
+          Complex.mul_re, Complex.mul_im, Complex.normSq_apply] at ⊢ un <;> nlinarith
+    have hn : star u ⬝ᵥ u = (1 : ℂ) := by
+      rw [dotProduct_comm, ← Matrix.trace_vecMulVec]
+      exact ht
+    have hp : Matrix.vecMulVec u (star u) * Matrix.vecMulVec u (star u) =
+        Matrix.vecMulVec u (star u) := by
+      rw [Matrix.vecMulVec_mul_vecMulVec, hn, one_smul]
+    have hb : D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch
+        (Matrix.vecMulVec u (star u)) = a := by
+      ext i
+      fin_cases i <;>
+        simp [a, spinorZ, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+          Matrix.vecMulVec, Complex.normSq_apply]
+    have hh : (Matrix.vecMulVec u (star u)).IsHermitian := by
+      apply Matrix.IsHermitian.ext
+      intro i j
+      simp [Matrix.vecMulVec_apply, mul_comm]
+    have hg := D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+      (Matrix.vecMulVec u (star u)) hh
+    refine ⟨a, ?_, ?_, rfl⟩
+    · simpa only [hb] using hg.2 ht hp
+    · simpa only [ht, Complex.one_re, hb, rho] using hg.1.symm
   have matrixSpinors (a b : Bloch) (u v : Fin 2 → ℂ)
       (ha : rho a = Matrix.vecMulVec u (star u))
       (hb : rho b = Matrix.vecMulVec v (star v)) (i : Fin 5) :
@@ -674,30 +687,36 @@ theorem all_r_flat_geometry (r : ℝ) (hr : 0 < r) (hlo : 1/2 < r^2) (hhi : r^2 
       dsimp [Matrix.kronecker,Matrix.kroneckerMap,Matrix.vecMulVec,Complex.star_def]
       ring
     exact congrArg Complex.re full
+  have projector_bloch (w : Fin 2 → ℂ) :
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch
+          (Matrix.vecMulVec w (star w)) =
+        WithLp.toLp 2 ![2*(w 0*star (w 1)).re,-2*(w 0*star (w 1)).im,spinorZ w] := by
+    ext i
+    fin_cases i
+    all_goals simp [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+      Matrix.vecMulVec, spinorZ, Complex.normSq_apply]
+  have projector_coordinates (c : Bloch) (w : Fin 2 → ℂ)
+      (hc : rho c = Matrix.vecMulVec w (star w)) :
+      c = WithLp.toLp 2 ![2*(w 0*star (w 1)).re,-2*(w 0*star (w 1)).im,spinorZ w] := by
+    calc
+      c = D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch
+          (Matrix.vecMulVec w (star w)) := by
+        have h := congrArg D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch hc
+        dsimp only [rho] at h
+        rw [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_blochMatrix] at h
+        exact h
+      _ = _ := projector_bloch w
   have defectSpinors (a b : Bloch) (u v : Fin 2 → ℂ)
       (hu : UnitSpinor u) (hv : UnitSpinor v)
       (ha : rho a = Matrix.vecMulVec u (star u))
       (hb : rho b = Matrix.vecMulVec v (star v)) :
       defect a b = antisymmetricWeight u v := by
     have az : ∀ k, a k = (![2*(u 0*star (u 1)).re,-2*(u 0*star (u 1)).im,spinorZ u]) k := by
-      -- Recover the fixed Bloch coordinates from the actual projector entries.
       intro k
-      have h00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re) ha
-      have h11 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 1 1).re) ha
-      have h01 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 1).re) ha
-      have h01i := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 1).im) ha
-      simp [rho,D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-        Matrix.vecMulVec,Complex.star_def,spinorZ,Complex.normSq_apply] at h00 h11 h01 h01i
-      fin_cases k <;> simp [spinorZ,Complex.normSq_apply] <;> linarith
+      exact congrArg (fun z : Bloch => z k) (projector_coordinates a u ha)
     have bz : ∀ k, b k = (![2*(v 0*star (v 1)).re,-2*(v 0*star (v 1)).im,spinorZ v]) k := by
       intro k
-      have h00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re) hb
-      have h11 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 1 1).re) hb
-      have h01 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 1).re) hb
-      have h01i := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 1).im) hb
-      simp [rho,D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-        Matrix.vecMulVec,Complex.star_def,spinorZ,Complex.normSq_apply] at h00 h11 h01 h01i
-      fin_cases k <;> simp [spinorZ,Complex.normSq_apply] <;> linarith
+      exact congrArg (fun z : Bloch => z k) (projector_coordinates b v hb)
     simp only [UnitSpinor,Fin.sum_univ_two] at hu hv
     have uv : (Complex.normSq (u 0)+Complex.normSq (u 1)) *
         (Complex.normSq (v 0)+Complex.normSq (v 1)) = 1 := by rw [hu,hv]; norm_num
@@ -719,15 +738,11 @@ theorem all_r_flat_geometry (r : ℝ) (hr : 0 < r) (hlo : 1/2 < r^2) (hhi : r^2 
         hab.2.2 i,hab.2.2 0]
     obtain ⟨resp,anti,polar,pheight⟩ := prodgeom u v hu hv flat
     have a2 : a 2 = spinorZ u := by
-      have h00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re-(M 1 1).re) ha
-      simp [rho,D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-        Matrix.vecMulVec,Complex.star_def,spinorZ,Complex.normSq_apply] at h00 ⊢
-      linarith
+      have h := projector_coordinates a u ha
+      simpa using congrArg (fun z : Bloch => z 2) h
     have b2 : b 2 = spinorZ v := by
-      have h00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (M 0 0).re-(M 1 1).re) hb
-      simp [rho,D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
-        Matrix.vecMulVec,Complex.star_def,spinorZ,Complex.normSq_apply] at h00 ⊢
-      linarith
+      have h := projector_coordinates b v hb
+      simpa using congrArg (fun z : Bloch => z 2) h
     exact ⟨by rw [a2,b2]; exact polar,by rw [a2]; exact pheight,
       (defectSpinors a b u v hu hv ha hb).trans anti⟩
 end D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry

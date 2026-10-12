@@ -19,7 +19,7 @@ open D5.S3.Arith.GoldenResourceOptimalInteger
 open D5.S3.Arith.GoldenLayerMarginalDecay
 open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 
-private lemma price_strictAnti {x y : ℝ} (hx : 1 < x) (hxy : x < y) :
+lemma price_strictAnti {x y : ℝ} (hx : 1 < x) (hxy : x < y) :
     1 / (y * Real.log y) < 1 / (x * Real.log x) := by
   have hx0 : 0 < x := by linarith
   have hl := Real.log_pos hx
