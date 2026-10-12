@@ -609,3 +609,106 @@ def canonical_high_fixed_finite_tail_registration :
 #print axioms canonical_high_fixed_finite_tail_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal21
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal24
+noncomputable section
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.CanonicalGeometry
+
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun _ => Bool → List Label) (fun _ => ℝ)
+
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => phi + 1) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (s : Guard) (U : Bool → List Label)
+    (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
+    (hlegal : ∀ i, LegalWord s s (U i)),
+    ∃ imin imax : Bool,
+      compose (U imin) 0 = min (compose (U false) 0) (compose (U true) 0) ∧
+      compose (U imax) 0 = max (compose (U false) 0) (compose (U true) 0) ∧
+      PeriodicTail s (if 0 < (-g)^L then U imin else U imin ++ U imax)
+        (r.readout () L U) ∧
+      PeriodicTail s (if 0 < (-g)^L then U imax else U imax ++ U imin)
+        (canonicalReturnHi U L)
+
+theorem source_bridge :
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_periodic_endpoints) ↔
+      sourceArena.Law actual := Iff.rfl
+
+theorem positive_law : sourceArena.Law actual :=
+  @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_periodic_endpoints
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨imin, imax, _, _, lower, _⟩ := h .G0 (fun _ => [.L0]) 1
+    (by decide) (by intro i; rfl)
+    (fun _ => CanonicalGeometry.ExactOriginal47.witness_returns_legal.1)
+  obtain ⟨a, x, path, h0, hx0, _, support, _⟩ := lower
+  have upper := (support 0).2
+  rw [h0, hx0] at upper
+  change phi + 1 ≤ phi at upper
+  linarith
+
+theorem sensitivity : Sensitivity sourceArena actual :=
+  Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+
+/-- The reused witnesses have L = 1 and constant L0/L2 return families; both
+meet every original premise at G0. The typed carrier also retains other states. -/
+theorem actual_dependence : ObservationalDependence observationSignature actual :=
+  CanonicalGeometry.ExactOriginal47.actual_dependence
+
+def evidence : Registration sourceArena
+    (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_periodic_endpoints) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨positive_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := actual_dependence
+
+def canonical_periodic_endpoints_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.canonical_periodic_endpoints)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal24.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal24.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ L U => canonicalReturnLo U L) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms canonical_periodic_endpoints_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal24
