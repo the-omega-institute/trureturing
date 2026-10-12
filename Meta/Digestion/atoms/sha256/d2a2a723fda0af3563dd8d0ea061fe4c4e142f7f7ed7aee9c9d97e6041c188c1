@@ -1,0 +1,72 @@
+**定理 35.40（联合值的有限有理仿射包络）。** 令 $\Pi_M$ 是定义35.20全部确定性驻定合法动作表的有限集合；每张表在每个状态选择一个动作。令 $P_f$ 每行仅在所选后继列取一，$\boldsymbol r(r,e)=r$，$\boldsymbol\beta_f(r,e)$ 为所选锚位。定义
+
+$$
+\boldsymbol C^f=(\mathrm{Id}-P_f/2)^{-1}\boldsymbol r,\qquad
+\boldsymbol t^f=(\mathrm{Id}-P_f/2)^{-1}(\boldsymbol\beta_f/2).
+\tag{35.12}
+$$
+
+这些向量均为有理向量。另记 $B_1(\lambda)=1$。对每个整数 $M\ge1$ 和每个实数 $\lambda>0$，弱、强联合值相同且达到；其锐值是
+
+$$
+\boxed{\mathcal V_1^{\mathrm w}(\lambda)=\mathcal V_1^{\mathrm s}(\lambda)=3,}
+\tag{35.13}
+$$
+
+以及对 $M\ge2$，
+
+$$
+\boxed{
+\mathcal V_M^{\mathrm w}(\lambda)=\mathcal V_M^{\mathrm s}(\lambda)
+=2+B_M(\lambda),\qquad
+B_M(\lambda)=\min\left\{1,\ \min_{f\in\Pi_M}
+\bigl[\boldsymbol t^f(o)+\lambda\boldsymbol C^f(o)\bigr]\right\}.}
+\tag{35.14}
+$$
+
+这是明确有限状态、有限动作、有限表集合上的精确式，对全部实律比较成立。它不是仅把答案重写成无限律域下确界，也不只优化均匀律。
+
+证明。$M=1$ 时只有点返回律，式（35.4）给下界三；根零位返回并接原确定性最优策略给等号。设 $M\ge2$。有限图上的算子
+
+$$
+(T_\lambda v)(r,e)=\lambda r+\frac{1}{2}
+\min_{a\in\mathcal A_M(r,e)}[\beta(a)+v(s'(a))]
+\tag{35.15}
+$$
+
+是单调的上确界范数 $1/2$ 收缩，故有唯一固定点 $W_\lambda$。在每个状态选择达到动作最小值的一项，得到驻定表 $f$。对任意根路径，固定点不等式沿路展开，得
+
+$$
+W_\lambda(o)\le
+\sum_{d=0}^{D-1}2^{-d}
+\left[\lambda r_d+\frac12\beta_{d+1}\right]
++2^{-D}W_\lambda(s_D).
+$$
+
+有限向量的末项趋零，故 $W_\lambda(o)\le\lambda C_\gamma+t_\gamma$；所选表沿路每步等号，故取得全部路径的最小值。每张表的 $\|P_f/2\|_\infty=1/2$，逆矩阵存在且为有理矩阵；展开其几何级数给式（35.12）的两个根路径坐标。因此
+
+$$
+W_\lambda(o)=\min_\gamma[\lambda C_\gamma+t_\gamma]
+=\min_{f\in\Pi_M}[\lambda\boldsymbol C^f(o)+\boldsymbol t^f(o)].
+\tag{35.16}
+$$
+
+这一步的有限折扣收缩、贪心驻定取得和有理表求值使用白盒定理71.40、71.50所用的成熟方法；目标是式（35.15）的最大原子加法账单。
+
+令 $F_M(\lambda)=\inf_{p\in\Delta_M}[t(p)+\lambda L(p)]$。每个非点律由引理35.21给成本完全相同的规范路径，点律给图外候选一，故 $B_M\le F_M$。反向，每个路径由引理35.30给自己的实际律，其路径成本至少为该律的 $t+\lambda L$，所以每个图候选不小于 $F_M$；点候选也不小于它。故
+
+$$
+F_M(\lambda)=B_M(\lambda).
+\tag{35.17}
+$$
+
+当点分支最小时用根零位返回。若图分支最小且 $W_\lambda(o)\le1$，选一张取得式（35.16）的表，令其引理35.30的实际返回律为 $p^f$。根路径的 $C^f(o)\ge1$，所以该律不能是点律：否则其路径账单至少为 $1+\lambda>1$。两向比较在这个同一实际律上给
+
+$$
+B_M\le t(p^f)+\lambda L(p^f)
+\le\boldsymbol t^f(o)+\lambda\boldsymbol C^f(o)=B_M.
+\tag{35.18}
+$$
+
+由 $\lambda>0$，该实际树必满足 $\boldsymbol C^f(o)=L(p^f)$。这才建立选中路径的费用等号，没有假定一般路径规范。最后接定理34.3的原可测强达到族，式（35.4）等号成立，得到式（35.14）的弱、强实际达到。对任意原初始化器先用固定律下界，再嵌入其律的规范路径；无需把冗余原程序本身正规化为有界宽度图。因而竞争域中的无界状态、额外内部停滞及任意实律都没有被删去。∎
+

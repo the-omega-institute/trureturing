@@ -1,0 +1,15 @@
+**Proof.**
+Put $G_s(x)=x^{-1}e^{-s/x}$ for $x>0$ and $G_s(0)=0$.
+It is continuous on $[0,M_*]$, and
+$k_n(s)=\langle v_n,G_s(\Sigma_n)v_n\rangle$.
+A finite net and the bound
+$|\partial_sG_s(x)|=x^{-2}e^{-s/x}\le4/(e^2\epsilon^2)$
+give (104.9). Its limit is (104.2), since the kernel part contributes
+zero. This also proves the positive finite sequence statement.
+For unbounded times use $k_n(s)\le V_*/(es)$.
+For zero times, $k_n$ is nonincreasing on $[0,\infty)$.
+For every fixed $\epsilon>0$, eventually
+$k_n(s_n)\ge k_n(\epsilon)$. Take the lower limit and then
+$\epsilon\downarrow0$ in Theorem 105.1. This proves divergence
+without asserting an endpoint rate. $\square$
+

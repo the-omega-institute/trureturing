@@ -1,0 +1,11 @@
+**Assumption 102.1 (the supplied data for response estimation).**
+Fix $h\ge0$. An original source is promised to be some $T_n$,
+and the supplied data are precisely $p_h(T_n)$ of (95.2) and
+a declared positive screening parameter $\lambda$.
+No source index, node count or observation of a prepared
+comparison family is additionally supplied.
+An estimator may be any family of real-valued functions
+$E_{h,\lambda}$ on the Fibonacci prefix image.
+Separate input instances have separate immutable originals;
+they are not substitutions within one execution.
+

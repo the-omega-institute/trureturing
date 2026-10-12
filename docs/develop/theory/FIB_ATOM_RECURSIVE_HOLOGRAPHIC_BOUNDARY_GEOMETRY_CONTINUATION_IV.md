@@ -721,3 +721,2062 @@ admissibility of the additional realization remain a separate
 mathematical bridge.
 
 ## 97.99 追加锚（本行以下为增补区）
+
+## 98. The all-occurrence measure and its addressed boundary trace
+
+**Definition 98.1 (one address-edge space and the source measures).**
+Retain precisely $T_n$, $N_n$, $L_n$ and $R_\lambda(T_n)$ of
+Definitions 92.1–92.2. Each $T_n$ is a separately supplied original
+finite source. Let $\mathcal E=\{L,R\}^{+}$: a nonempty word $p$
+indexes the edge from $p^{-}$ to $p$, when that edge occurs.
+All edge Hilbert spaces below are subspaces of the single real
+$\mathscr H=\ell^2(\mathcal E)$, by extension by zero. Put
+
+$$
+s(p)=\#_L(p)+2\#_R(p),\qquad
+a=\varphi^{-1},\quad b=\varphi^{-2},\quad a+b=1,
+\qquad s(\varnothing)=0.
+\tag{98.1}
+$$
+
+Let $\mu_n$ assign mass $1/N_n$ to every occurrence address in
+$V_{T_n}$, including the root, every internal node and every terminal.
+For a nonempty address $p$ define its reached-descendant mass by
+$m_n(p)=\mu_n\{x:p\preceq x\}$; set $m_n(\varnothing)=1$.
+Define the root-path increment map, with missing edges ignored, by
+
+$$
+J_n:\mathscr H\longrightarrow L^2(V_{T_n},\mu_n),\qquad
+(J_nz)(x)=\sum_{\varnothing\ne p\preceq x}z_p.
+\tag{98.2}
+$$
+
+The sum uses only actual edges of $T_n$. In particular $J_nz$ is
+zero at the root. Set
+$v_n=J_n^*\mathbf1$, $B_n=J_n^*J_n$ and
+$\Sigma_n=B_n-v_n\otimes v_n$, where
+$(u\otimes u)z=\langle u,z\rangle u$.
+These operators act on $\mathscr H$; their node-space codomains
+in (98.2) are not identified with one another.
+
+Let $\Omega=\{L,R\}^{\mathbb N}$ and let $M$ be the Bernoulli
+probability law with probabilities $(a,b)$, so its cylinders satisfy
+
+$$
+M([p])=a^{\#_L(p)}b^{\#_R(p)}=\varphi^{-s(p)}=:m(p).
+\tag{98.3}
+$$
+
+For finitely supported $z\in\mathscr H$, define
+$(Jz)(\omega)=\sum_{p\preceq\omega}z_p$.
+Whenever this map has a bounded extension into $L^2(\Omega,M)$,
+use $v=J^*\mathbf1$, $B=J^*J$ and
+$\Sigma=B-v\otimes v$.
+
+**Theorem 98.2 (source masses, compact trace and covariance convergence).**
+For a nonempty $p$, put $d=n-s(p)$. The address is reached exactly
+when $d\ge0$ and $n-s(p^{-})\ge2$. In that case its entire descendant
+source is $T_d$, and
+
+$$
+m_n(p)=\frac{N_d}{N_n}.
+\tag{98.4}
+$$
+
+Otherwise $m_n(p)=0$. A reached $d=0$ is an alpha terminal, a reached
+$d=1$ is a beta terminal, and a reached $d\ge2$ is a branch.
+Each reached node has point mass $1/N_n$; a terminal has no strict
+descendant addresses. At the root the same label classification uses
+$d=n$, including the singletons $n=0,1$.
+
+For every fixed $p$, $m_n(p)\to m(p)$. There is a uniform bound
+$m_n(p)\le K a^{|p|}$ with $K=2\varphi$, and $m(p)\le a^{|p|}$.
+If $P_h$ is the coordinate projection onto $1\le |p|\le h$, then
+
+$$
+\begin{aligned}
+\|J_n(I-P_h)\|&\le
+ \left(\frac{K a^{h+1}}{1-a}\right)^{1/2},\\
+\|J(I-P_h)\|&\le
+ \left(\frac{a^{h+1}}{1-a}\right)^{1/2}.
+\end{aligned}
+\tag{98.5}
+$$
+
+Consequently $J$ has a unique bounded compact extension,
+and, on the specified common edge space,
+
+$$
+v_n\longrightarrow v\text{ in }\ell^2,\qquad
+B_n\longrightarrow B,\quad \Sigma_n\longrightarrow\Sigma
+       \text{ in operator norm}.
+\tag{98.6}
+$$
+
+For the actual counting-measure screening, including $n=0,1$,
+
+$$
+R_\lambda(T_n)
+ =\left\langle v_n,(I+N_n\lambda\Sigma_n)^{-1}v_n\right\rangle
+ \qquad(\lambda>0).
+\tag{98.7}
+$$
+
+**Proof.**
+Every left descent subtracts one from the residual source index;
+every right descent subtracts two. A descent is permitted only from
+an index at least two. The last parent has the smallest residual
+index among the proper prefixes, so its branch condition, together
+with nonnegative final index, is necessary and sufficient for the
+whole path. This proves the reached-address criterion and (98.4).
+Equivalently, a last left edge requires $d\ge1$, while a last right
+edge permits $d=0$. This distinction accounts for early alpha
+terminals and their absent extensions.
+
+By (92.12), for fixed $s(p)$ the ratio in (98.4) tends to
+$\varphi^{-s(p)}$; the address is eventually reached and is then
+a branch. Its point mass tends to zero. For every integer $h\ge1$,
+
+$$
+\mu_n\{x:|x|<h\}\le\frac{2^h-1}{N_n}\longrightarrow0.
+\tag{98.8}
+$$
+
+This bound includes any terminals at these depths. The first terminal
+depth is $\lfloor n/2\rfloor$, as in Theorem 97.2, so fixed-depth
+terminals eventually disappear. Thus (98.3) is the limiting law of
+all-node descendant cylinders, not an assertion that $\mu_n$ was a
+leaf measure or that it already lived on $\Omega$.
+
+The elementary count bounds
+$N_j\ge\varphi^{j-1}$ and $N_j\le2\varphi^j$ hold for $j=0,1$ and
+then by the count recurrence and $F_{j+1}\le\varphi^j$.
+For a reached address, they give
+$N_{n-s(p)}/N_n\le2\varphi\,\varphi^{-s(p)}
+ \le K a^{|p|}$; an absent address satisfies the same inequality.
+
+The path-sum operator and its descendant-mass adjoint are the
+classical tree Hardy operators; see
+[*Potential theory on trees, graphs and Ahlfors-regular metric
+spaces*, §5.1, (41)](https://arxiv.org/html/1010.4788v3),
+with the root coordinate omitted here because the variables are
+edge increments. Theorem 32 there supplies the general weighted
+trace framework. The fair dyadic-law trace criterion in
+[Bernicot–Maury–Salort, *A 2-adic approach of the human respiratory
+tree*, Proposition 1](https://arxiv.org/html/1005.0445v1)
+uses Haar cylinder masses $2^{-|p|}$; it does not identify that law
+with the biased $M$ in (98.3).
+For the present source law the required estimate follows directly.
+
+At depth $k$, descendant sets of distinct reached addresses are
+disjoint. For $z^{(k)}$ supported at that depth,
+
+$$
+\|J_n z^{(k)}\|_{L^2(\mu_n)}^2
+ =\sum_{|p|=k}m_n(p)|z_p|^2
+ \le K a^k\|z^{(k)}\|^2.
+\tag{98.9}
+$$
+
+The analogous bound for $J$ has $K=1$, because its depth-$k$
+cylinders partition $\Omega$. The triangle inequality followed
+by Cauchy–Schwarz gives
+
+$$
+\left\|\sum_{k>h}J_nz^{(k)}\right\|
+ \le\sum_{k>h}(K a^k)^{1/2}\|z^{(k)}\|
+ \le\left(\sum_{k>h}K a^k\right)^{1/2}\|z\|.
+\tag{98.10}
+$$
+
+This proves (98.5), including $h=0$ and the corresponding bound
+for $J$. It establishes the bounded extension by completion.
+Since $JP_h$ has finite rank and its norm distance to $J$ tends
+to zero, $J$ is compact. This is an $L^2(M)$ trace; pointwise
+continuity of arbitrary finite-energy traces has not been used.
+
+Taking adjoints on individual coordinates gives
+
+$$
+(v_n)_p=m_n(p),\quad v_p=m(p),\qquad
+(B_n)_{pq}=
+ \begin{cases}
+ m_n(q),&p\preceq q,\\
+ m_n(p),&q\preceq p,\\
+ 0,&p,q\text{ incomparable}.
+ \end{cases}
+\tag{98.11}
+$$
+
+The formula for $B$ replaces $m_n$ by $m$.
+It also holds when one address is absent, since its descendant
+set is empty. Every fixed finite block therefore converges.
+Uniform boundedness of $J_n$ and (98.5) imply
+
+$$
+\|B_n-P_hB_nP_h\|
+ \le2\|J_n\|\|J_n(I-P_h)\|,\qquad
+\|(I-P_h)v_n\|\le\|J_n(I-P_h)\|.
+\tag{98.12}
+$$
+
+The same estimates hold for $B,v$.
+First choose $h$ to make the uniform tails small, then use the
+finite-block convergence. This proves the first two limits in
+(98.6). The third follows from convergence of the rank-one
+operators $v_n\otimes v_n$. No identification of changing node
+$L^2$ spaces is required. Positivity follows from
+
+$$
+\langle z,\Sigma_n z\rangle
+ =\operatorname{Var}_{\mu_n}(J_nz),\qquad
+\langle z,\Sigma z\rangle
+ =\operatorname{Var}_{M}(Jz).
+\tag{98.13}
+$$
+
+Finally the finite quadratic variational identity for a
+positive definite matrix $A$:
+$\langle e,A^{-1}e\rangle
+ =\sup_f(2\langle e,f\rangle-\langle f,Af\rangle)$,
+obtained by completing the square at $f=A^{-1}e$.
+On a finite tree every function is uniquely $f=c\mathbf1-J_nz$
+on its actual edges, and its unit-edge energy is $\|z\|^2$.
+Write $\tau=N_n\lambda$. The root resolvent is thus the supremum of
+
+$$
+2c-\|z\|^2-\tau
+ \left(c^2-2c\langle v_n,z\rangle+\langle z,B_nz\rangle\right).
+\tag{98.14}
+$$
+
+Maximizing over $c$ gives
+$\tau^{-1}+2\langle v_n,z\rangle
+ -\|z\|^2-\tau\langle z,\Sigma_nz\rangle$.
+A second completion of the square proves (98.7), with the exact
+constant-mode subtraction $\tau^{-1}$ of (92.2).
+Coordinates of absent edges contribute only $-\|z\|^2$, so the
+same maximization is valid on $\mathscr H$. For $n=0,1$ there
+are no edges: $J_n=v_n=B_n=\Sigma_n=0$,
+$G_\lambda=1/\lambda$ and $R_\lambda=0$.
+The multiplier $N_n$ in (98.7) restores counting screening from
+the uniform all-node normalization. $\square$
+
+## 99. The constant-trace projection for the biased source law
+
+**Theorem 99.1 (zero-variance constraints and the retained component).**
+For the source-derived $J,v,\Sigma$ of §98, define
+
+$$
+q_p=2^{-|p|},\qquad w=v-q.
+\tag{99.1}
+$$
+
+Then
+
+$$
+Jq=\mathbf1,\qquad \|q\|^2=1,\qquad
+P_{\ker\Sigma}v=q,\qquad
+\|w\|^2=\frac{\sqrt5}{2}-1>0.
+\tag{99.2}
+$$
+
+More precisely, for $z\in\mathscr H$ let
+$S_p=\sum_{\varnothing\ne u\preceq p}z_u$.
+For a prefix $p$, let $z^p$ be its strict-descendant increment
+vector, reindexed by nonempty suffixes. If $Jz=c$ $M$-almost
+everywhere, then for every finite prefix $p$,
+
+$$
+Jz^p=c-S_p\quad M\text{-almost everywhere},\qquad
+\langle v,z^p\rangle=c-S_p,\qquad
+\langle z^p,\Sigma z^p\rangle=0.
+\tag{99.3}
+$$
+
+All such $z$ obey
+
+$$
+\sum_{|p|=k}|c-S_p|^2
+ \le\|J\|^2\sum_{|u|>k}|z_u|^2\longrightarrow0.
+\tag{99.4}
+$$
+
+Conversely, (99.4)'s convergence to zero for some $c$ implies
+$Jz=c$ $M$-almost everywhere. In particular,
+$z\in\ker\Sigma$ exactly when this condition holds for some $c$,
+and then $\langle q,z\rangle=\langle v,z\rangle=c$.
+
+**Proof.**
+The covariance identity (98.13) says that $z\in\ker\Sigma$ if
+and only if $Jz$ is almost everywhere constant. Indeed
+$\Sigma=J^*(I-\mathbf1\otimes\mathbf1)J$, with the middle factor
+the orthogonal projection in the probability space $L^2(M)$.
+Every cylinder has positive $M$ mass. Conditional on $[p]$,
+the suffix law is again $M$, and the trace restricted to that
+cylinder is $S_p+Jz^p$. This equality first holds for finite
+partial sums and then in conditional $L^2$, by boundedness of
+restriction to each fixed positive-mass cylinder. It proves
+(99.3), rather than inferring trace continuity from full support.
+
+Since $\|Jz^p\|=|c-S_p|$, boundedness of $J$ bounds its square
+by $\|J\|^2\|z^p\|^2$. The strict-descendant sets of the
+depth-$k$ prefixes partition all edges deeper than $k$,
+so summation proves (99.4).
+Conversely, the depth-$k$ path sum $JP_kz$ takes value $S_p$
+on $[p]$, hence
+
+$$
+\|JP_kz-c\|_{L^2(M)}^2
+ =\sum_{|p|=k}m(p)|S_p-c|^2
+ \le\sum_{|p|=k}|S_p-c|^2\longrightarrow0.
+\tag{99.5}
+$$
+
+As $JP_kz\to Jz$ in $L^2(M)$, the asserted converse follows.
+
+For any such constant trace, the fair averages of the finite
+level values satisfy
+
+$$
+2^{-k}\sum_{|p|=k}S_p
+ =\sum_{j=1}^{k}2^{-j}\sum_{|u|=j}z_u
+ =\langle P_kq,z\rangle.
+\tag{99.6}
+$$
+
+By (99.4), their difference from $c$ is at most
+$2^{-k/2}(\sum_{|p|=k}|S_p-c|^2)^{1/2}$ and tends to zero.
+The vector $q$ lies in $\ell^2$, with
+$\|q\|^2=\sum_{j\ge1}2^j4^{-j}=1$; thus (99.6) gives
+$\langle q,z\rangle=c$. Independently
+$\langle v,z\rangle=\int Jz\,dM=c$.
+This calculation compares finite sums, not almost-everywhere
+traces under two mutually different probability laws.
+
+Along every infinite path,
+$\sum_{j\ge1}2^{-j}=1$, so $Jq=\mathbf1$ and $q\in\ker\Sigma$.
+The preceding equality shows that $v-q$ is orthogonal to the
+entire kernel, proving the projection assertion.
+The source cylinder formula gives, with $s=a^2+b^2=5-2\sqrt5$,
+
+$$
+\|v\|^2
+ =\sum_{j\ge1}\sum_{|p|=j}m(p)^2
+ =\sum_{j\ge1}s^j=\frac{s}{1-s}=\frac{\sqrt5}{2}.
+\tag{99.7}
+$$
+
+Orthogonal decomposition now yields the stated norm of $w$.
+The equal-split vector $q$ is also the classical unit-resistance
+binary-tree flow: its outgoing values add to its incoming value
+and its energy is one. The conditional trace calculation above establishes the projection
+for this particular biased trace law independently of an electrical
+boundary identification.
+$\square$
+
+## 100. The simultaneous source-size and screening crossover
+
+**Definition 100.1 (the joint centered profile).**
+For $0\le\tau<\infty$ set
+
+$$
+H(\tau)=\langle v,(I+\tau\Sigma)^{-1}v\rangle,
+\qquad H(\infty)=1.
+\tag{100.1}
+$$
+
+**Theorem 100.2 (every simultaneous sequence, including the unbounded
+parameter).**
+For every sequence $n\to\infty$, $\lambda_n>0$,
+$\lambda_n\to0$ and $\tau_n=N_n\lambda_n\to\tau\in[0,\infty]$,
+
+$$
+R_{\lambda_n}(T_n)\longrightarrow H(\tau).
+\tag{100.2}
+$$
+
+For every finite $T\ge0$, with the value at zero interpreted as
+$R_0(T_n)=C_n$,
+
+$$
+\sup_{0\le t\le T}
+ \left|R_{t/N_n}(T_n)-H(t)\right|\longrightarrow0.
+\tag{100.3}
+$$
+
+The profile has the source-specific decomposition
+
+$$
+H(\tau)=1+\langle w,(I+\tau\Sigma)^{-1}w\rangle,\qquad
+H(0)=\frac{\sqrt5}{2},\qquad
+\lim_{\tau\to\infty}H(\tau)=1.
+\tag{100.4}
+$$
+
+It is continuous, strictly decreasing, and $H(\tau)>1$ for every
+finite $\tau\ge0$. The retained amount at zero joint parameter is
+$\|w\|^2=\sqrt5/2-1$, and the nonconstant term in (100.4) is
+strictly positive at every finite joint parameter.
+
+**Proof.**
+All the covariance operators are positive, so their resolvent
+norms are at most one. For finite $t$, the resolvent identity gives
+
+$$
+\|(I+t\Sigma_n)^{-1}-(I+t\Sigma)^{-1}\|
+ \le t\|\Sigma_n-\Sigma\|.
+\tag{100.5}
+$$
+
+Together with (98.6), this proves uniform convergence on every
+bounded $t$ interval. At $t=0$, (92.9) and (98.11) give
+$C_n=\|v_n\|^2$, including the singletons. This proves (100.3)
+and (100.2) when the joint parameter has a finite limit.
+
+The orthogonal decomposition in Theorem 99.1 is invariant under
+$\Sigma$, which vanishes on its kernel. It yields (100.4)'s
+decomposition and its value at zero. Since $w\perp\ker\Sigma$,
+$w$ is in the closure of the range of $\Sigma$:
+the orthogonal complement of that range is exactly its kernel.
+For a vector $\Sigma x$,
+
+$$
+\|(I+t\Sigma)^{-1}\Sigma x\|
+ \le\frac{2}{t}\|x\|\quad(t>0),
+\tag{100.6}
+$$
+
+by $t(I+t\Sigma)^{-1}\Sigma=I-(I+t\Sigma)^{-1}$.
+Approximation by range vectors and the contraction bound prove
+$(I+t\Sigma)^{-1}w\to0$. This establishes the endpoint of $H$.
+
+For finite $t$ the inverse is positive definite and satisfies
+$(I+t\Sigma)^{-1}\ge(1+t\|\Sigma\|)^{-1}I$.
+Consequently the nonconstant term is positive because $w\ne0$.
+Differentiating the bounded-operator inverse gives
+
+$$
+H'(t)=-\langle u_t,\Sigma u_t\rangle<0,\qquad
+u_t=(I+t\Sigma)^{-1}w.
+\tag{100.7}
+$$
+
+The inequality is strict: if its quadratic form vanished,
+(98.13) would imply $u_t\in\ker\Sigma$, and then
+$w=(I+t\Sigma)u_t=u_t$ would lie in that kernel, a contradiction.
+This also gives continuity at finite parameters.
+
+It remains to prove (100.2) for actual sequences
+$\tau_n\to\infty$; (100.5) alone does not control them.
+For any fixed $T>0$, monotonicity of the quadratic variational
+supremum in (98.14), after subtracting $\tau_n^{-1}$, gives
+eventually
+
+$$
+R_{\lambda_n}(T_n)
+ \le\langle v_n,(I+T\Sigma_n)^{-1}v_n\rangle.
+\tag{100.8}
+$$
+
+Its upper limit is at most $H(T)$, hence at most one after
+$T\to\infty$.
+
+For the lower bound fix a positive integer $d$ and use
+$q^{[d]}=P_dq$ in that same variational supremum.
+On every actual node $x$,
+
+$$
+(J_nq^{[d]})(x)=1-2^{-\min(|x|,d)},\qquad
+\|q^{[d]}\|^2=1-2^{-d}.
+\tag{100.9}
+$$
+
+All nodes of depth at least $d$ have the same displayed value;
+this statement also respects terminals before depth $d$.
+There are at most $2^d-1$ earlier nodes, each of mass $1/N_n$.
+Using $1-2^{-d}$ as a comparison constant therefore gives
+
+$$
+\operatorname{Var}_{\mu_n}(J_nq^{[d]})
+ \le\frac{2^d-1}{N_n},\qquad
+\tau_n\operatorname{Var}_{\mu_n}(J_nq^{[d]})
+ \le(2^d-1)\lambda_n\longrightarrow0.
+\tag{100.10}
+$$
+
+Moreover (98.6) and the cylinder partition at each depth give
+
+$$
+\langle v_n,q^{[d]}\rangle
+ \longrightarrow\sum_{j=1}^{d}2^{-j}\sum_{|p|=j}m(p)
+ =1-2^{-d}.
+\tag{100.11}
+$$
+
+The variational formula now yields
+$\liminf_n R_{\lambda_n}(T_n)\ge1-2^{-d}$.
+Letting $d\to\infty$ proves the lower bound one, completing
+the unbounded-parameter sequence proof. The condition
+$\lambda_n\to0$ was used in (100.10), separately from
+$\tau_n\to\infty$. No endpoint rate or whole-spectrum
+description is asserted. $\square$
+
+## 101. The inherited capacity profile
+
+**Definition 101.1 (uncentered response and capacity).**
+For $0<\tau<\infty$ define
+
+$$
+U(\tau)=\frac1\tau+H(\tau),\qquad
+Y(\tau)=\frac1{U(\tau)}
+       =\frac{\tau}{1+\tau H(\tau)}.
+\tag{101.1}
+$$
+
+Use the extended endpoints
+$U(0)=+\infty$, $Y(0)=0$, $U(\infty)=Y(\infty)=1$.
+On a finite original source write
+$Y_n(\lambda)=G_\lambda(T_n)^{-1}$.
+
+**Theorem 101.2 (capacity endpoints and the source-inherited
+branch relation).**
+Under the sequence hypotheses of Theorem 100.2,
+
+$$
+G_{\lambda_n}(T_n)\longrightarrow U(\tau),\qquad
+Y_n(\lambda_n)\longrightarrow Y(\tau),
+\tag{101.2}
+$$
+
+with the first limit extended-valued when $\tau=0$.
+For every $0\le\tau\le\infty$,
+
+$$
+Y(\tau)=\frac{Y(a\tau)}{1+Y(a\tau)}
+       +\frac{Y(b\tau)}{1+Y(b\tau)},
+\tag{101.3}
+$$
+
+where $a\infty=b\infty=\infty$.
+For finite $\tau$ it also has the boundary variational expression
+
+$$
+Y(\tau)=
+ \inf_{z\in\mathscr H}
+ \left\{\|z\|^2+\tau\|\mathbf1-Jz\|_{L^2(M)}^2\right\}.
+\tag{101.4}
+$$
+
+In particular $H(0)=\sqrt5/2$ is a centered finite part, whereas
+the uncentered endpoint is $+\infty$ and its capacity is zero.
+For $0<\tau<\infty$, $0<Y(\tau)<1$.
+
+**Proof.**
+The exact decomposition (92.2), followed by Theorem 100.2, gives
+(101.2) at positive finite and infinite parameters. At zero,
+$\tau_n^{-1}\to+\infty$ and $R_{\lambda_n}\ge0$, proving the
+extended uncentered limit and hence the zero capacity endpoint.
+
+The finite root-pinned energy minimum equals reciprocal root
+Green response by completing the same positive quadratic form
+with the constraint $f(r)=1$. Writing $f=\mathbf1-J_nz$ gives
+
+$$
+Y_n(\lambda)
+ =\inf_z\{\|z\|^2+N_n\lambda\|\mathbf1-J_nz\|_{L^2(\mu_n)}^2\}.
+\tag{101.5}
+$$
+
+For $\lambda=\tau/N_n$, completion of the square makes this
+$\tau-\tau^2\langle v_n,(I+\tau B_n)^{-1}v_n\rangle$.
+By (98.6), it converges to
+$\tau-\tau^2\langle v,(I+\tau B)^{-1}v\rangle$,
+the infimum in (101.4); (101.2) identifies it with $Y(\tau)$.
+At $\tau=0$ both the infimum and $Y(0)$ are zero.
+For positive finite $\tau$ it is positive by (101.1).
+Testing (101.4) with $z=tq$ gives
+$t^2+\tau(1-t)^2$, whose minimum is $\tau/(1+\tau)<1$.
+This proves the strict upper bound without imposing a new
+boundary law on the finite matrices.
+
+The finite Schur complement (93.3) says exactly
+
+$$
+Y_n(\lambda)=\lambda+
+ \frac{Y_{n-1}(\lambda)}{1+Y_{n-1}(\lambda)}
+ +\frac{Y_{n-2}(\lambda)}{1+Y_{n-2}(\lambda)}
+ \quad(n\ge2),\qquad Y_0(\lambda)=Y_1(\lambda)=\lambda.
+\tag{101.6}
+$$
+
+Fix $0<\tau<\infty$ and take $\lambda_n=\tau/N_n$.
+The two child joint parameters tend to $a\tau$ and $b\tau$,
+since $N_{n-1}/N_n\to a$ and $N_{n-2}/N_n\to b$.
+Theorem 100.2 and (101.2) apply to each child sequence.
+Letting $n\to\infty$ in (101.6) proves (101.3).
+At zero the relation is $0=0+0$; at infinity it is
+$1=1/2+1/2$, using the separately proved endpoint limits.
+Thus the relation is inherited from the actual finite source
+after convergence; no uniqueness assertion for its solutions
+is needed. $\square$
+
+## 102. Joint screening distinguishes originals with the same local reply
+
+**Assumption 102.1 (the supplied data for response estimation).**
+Fix $h\ge0$. An original source is promised to be some $T_n$,
+and the supplied data are precisely $p_h(T_n)$ of (95.2) and
+a declared positive screening parameter $\lambda$.
+No source index, node count or observation of a prepared
+comparison family is additionally supplied.
+An estimator may be any family of real-valued functions
+$E_{h,\lambda}$ on the Fibonacci prefix image.
+Separate input instances have separate immutable originals;
+they are not substitutions within one execution.
+
+**Theorem 102.2 (a finite-parameter separation and a uniform
+vanishing-screening obstruction on the promised family).**
+For every fixed $h\ge0$, $\tau>0$ and integer $k\ge1$,
+put $\lambda_j=\tau/N_j$. For all sufficiently large $j$,
+
+$$
+p_h(T_j)=p_h(T_{j+k}),\qquad
+R_{\lambda_j}(T_j)-R_{\lambda_j}(T_{j+k})
+ \longrightarrow H(\tau)-H(\varphi^k\tau)>0.
+\tag{102.1}
+$$
+
+Thus even at a common declared $\lambda_j$, the identical local
+table misses a nonzero difference of the global response.
+More strongly, every estimator family of Assumption 102.1 obeys
+
+$$
+\limsup_{\lambda\downarrow0}
+ \sup_{n\ge0}
+ \left|E_{h,\lambda}(p_h(T_n))-R_\lambda(T_n)\right|
+ \ge\frac12\left(\frac{\sqrt5}{2}-1\right).
+\tag{102.2}
+$$
+
+The bound holds for every fixed $h$; it is compatible with
+Theorem 97.2's exact identification when $n\le2h+1$,
+its uniform approximation to $C_n$ as $h\to\infty$, and its
+uniform approximation to $R_\lambda(T_n)$ as $h\to\infty$
+for each fixed $\lambda>0$.
+
+**Proof.**
+For $j\ge2h+2$, both local tables consist entirely of branches,
+by Theorem 97.2. From (92.12),
+$N_{j+k}/N_j\to\varphi^k$.
+The common $\lambda_j$ tends to zero, with joint parameters
+$\tau$ and $\varphi^k\tau$ on the two original sources.
+Theorem 100.2 and strict decrease of $H$ prove (102.1).
+The estimator has the same real value on the two data sets,
+so at least one of its absolute errors is at least half their
+response difference.
+
+For the full bound use instead the actual original pair
+$T_j,T_{2j}$ and the common declared parameter
+
+$$
+\lambda_j=(N_jN_{2j})^{-1/2},\qquad
+N_j\lambda_j=\sqrt{N_j/N_{2j}}\longrightarrow0,\qquad
+N_{2j}\lambda_j=\sqrt{N_{2j}/N_j}\longrightarrow\infty.
+\tag{102.3}
+$$
+
+Binet's formula proves both ratio limits and $\lambda_j\to0$.
+Theorem 100.2 gives response limits $\sqrt5/2$ and one.
+Their tables agree eventually at every fixed $h$.
+Writing $e_j$ for the estimator's common value, the triangle
+inequality gives
+
+$$
+\max\{|e_j-R_{\lambda_j}(T_j)|,\,
+       |e_j-R_{\lambda_j}(T_{2j})|\}
+ \ge\frac12|R_{\lambda_j}(T_j)-R_{\lambda_j}(T_{2j})|.
+\tag{102.4}
+$$
+
+Taking the lower limit along this sequence yields (102.2).
+The counts used to specify the mathematical counterexample
+parameter in (102.3) are not data available to the estimator.
+
+The retained vector $w$ in (100.4), determined by the limiting
+all-node cylinder masses, supplies the positive finite-parameter
+difference in (102.1). It records a global source contribution
+left after removal of the constant trace; it is not obtained by
+postprocessing the common fixed-depth table.
+Neither (102.1) nor (102.2) changes the Fibonacci domain promise
+or the quantifiers in (97.2) and (97.4): a fixed positive
+$\lambda$ and a common range including $\lambda\downarrow0$
+are different approximation problems. $\square$
+
+**Assumption 102.3 (an additional same-source propagation realization).**
+To interpret the comparison carrier as spatial or native
+propagation, assume for each original $t$ the additional maps,
+measure and edge-law compatibility, operator and boundary
+correspondence, permitted source actions and lawful clock of
+Assumption 97.3, all on that same immutable original.
+A physically installed screening law and any source acquisition
+cost must also have their own specified realization and bounds.
+A scalar declared $\lambda$ by itself supplies none of those
+maps, actions, clocks, costs or sensors.
+
+Theorems 98.2–102.2 assume only the closed unit-edge counting
+operator on occurrences and the stated input promises.
+Their boundary is an addressed $L^2(M)$ trace of that comparison
+carrier. They do not furnish a correspondence with complete
+successive source states or observation quotients, a spatial
+metric or dimension, a native transport law, a lawful acquired
+clock, physical screening installation, or a reconstruction of
+the entire spectrum. The existence and admissibility of a
+realization satisfying this assumption remain unresolved
+additional mathematical obligations.
+
+## 102.99 追加锚（本行以下为增补区）
+
+## 103. Complete finite occurrence states on the common edge carrier
+
+**Definition 103.1 (the finite gradient transport).**
+Retain exactly the ordered sources, all occurrences, counts and closed
+unit-edge counting operators of Definitions 92.1–92.2. Let
+$\mathcal V_n=\ell^2(V_{T_n})$ with counting inner product, let
+$\mathscr E_n\subset\mathscr H$ consist of the actual edge coordinates,
+and write $Q_n$ for the orthogonal projection onto $\mathscr E_n$.
+Orient every edge away from the root and put
+
+$$
+(D_nf)_p=f(p)-f(p^-),\qquad L_n=D_n^*D_n,
+\qquad K_n=D_nD_n^*\big|_{\mathscr E_n}.
+\tag{103.1}
+$$
+
+Let $P_n=I-N_n^{-1}\mathbf1\otimes\mathbf1$ on $\mathcal V_n$,
+$e_{n,0}=N_n^{-1/2}\mathbf1$, and $g_n=P_n\delta_r$. Define
+
+$$
+U_n=-D_nL_n^{+1/2}:P_n\mathcal V_n\longrightarrow\mathscr E_n,
+\tag{103.2}
+$$
+
+where $L_n^{+1/2}$ is the positive square root of its pseudoinverse.
+Extend $U_n$ by zero on constants and its adjoint by zero on
+$\mathscr E_n^\perp$. Inverses of $\Sigma_n$ below mean inverses
+on $\mathscr E_n$, extended by zero elsewhere. For $n=0,1$ these
+are the unique maps on the zero-dimensional edge space.
+
+**Theorem 103.2 (the complete finite operator and root weights).**
+For $n\ge2$, $U_n$ is unitary between the displayed mean-zero node
+and actual edge spaces, and
+
+$$
+\Sigma_n\big|_{\mathscr E_n}=\frac1{N_n}K_n^{-1},\qquad
+U_nL_nU_n^*=K_n=\frac1{N_n}\Sigma_n^{-1}.
+\tag{103.3}
+$$
+
+Every positive eigenvalue $x$ of $\Sigma_n$ corresponds to the
+positive eigenvalue $(N_nx)^{-1}$ of $L_n$ with the same entire
+eigenspace dimension. The complete state correspondence is
+
+$$
+f=c e_{n,0}+U_n^*z
+\longleftrightarrow(c,z)\in\mathbb R\oplus\mathscr E_n,
+\qquad L_n\longleftrightarrow0\oplus K_n.
+\tag{103.4}
+$$
+
+Let $E_{n,\lambda}$ be the full projection onto the $\lambda$-eigenspace
+of $L_n$, $d_{n,\lambda}=\operatorname{rank}E_{n,\lambda}$, and
+$\rho_{n,\lambda}=\|E_{n,\lambda}\delta_r\|^2$. For every $t\ge0$
+and every $f\in\mathcal V_n$,
+
+$$
+\begin{aligned}
+e^{-tL_n}f
+ &=\langle e_{n,0},f\rangle e_{n,0}
+   +\sum_{\lambda>0}e^{-t\lambda}E_{n,\lambda}f,\\
+(e^{-tL_n}f)(r)
+ &=\frac1{N_n}\sum_xf(x)
+   +\sum_{\lambda>0}e^{-t\lambda}
+       \langle E_{n,\lambda}\delta_r,f\rangle,\\
+p_n(t):=\langle\delta_r,e^{-tL_n}\delta_r\rangle
+ &=\frac1{N_n}+\sum_{\lambda>0}\rho_{n,\lambda}e^{-t\lambda}.
+\end{aligned}
+\tag{103.5}
+$$
+
+The root-invisible subspace in the $\lambda$-eigenspace has dimension
+$d_{n,\lambda}-\mathbf1_{\{\rho_{n,\lambda}>0\}}$. These directions
+remain in the full operator, including when absent from the scalar
+root spectral measure. For $n=0,1$, $L_n=0$, $p_n(t)=1$ and all
+positive sums are empty; the labels remain respectively alpha and beta.
+
+**Proof.**
+Connectedness gives $\ker L_n=\mathbb R\mathbf1$. On actual edges
+$D_nJ_nz=z$. With counting inner products on both spaces, set
+$C_n^{\rm path}=P_nJ_n:\mathscr E_n\to P_n\mathcal V_n$.
+Subtracting a constant changes no gradient, and
+$P_nJ_nD_nu=u$ for mean-zero $u$. Thus $C_n^{\rm path}=D_n^{-1}$
+between spaces of dimension $N_n-1$, and
+
+$$
+(C_n^{\rm path})^*C_n^{\rm path}
+=K_n^{-1}=N_n\Sigma_n\big|_{\mathscr E_n}.
+\tag{103.6}
+$$
+
+The last factor comes from the node inner product in §98 being
+$N_n^{-1}$ times the counting inner product.
+Also $U_n^*U_n=L_n^{+1/2}L_nL_n^{+1/2}=P_n$.
+Equal dimensions give unitarity; $D_nL_n=K_nD_n$ gives (103.3).
+Finite spectral calculus gives (103.4)–(103.5).
+On one eigenspace the root functional has rank one precisely when
+$E_{n,\lambda}\delta_r\ne0$, proving its invisible dimension.
+
+Spectral and polar calculus are mature intermediate supplies; see
+[Teschl, *Mathematical Methods in Quantum Mechanics*, §3.1,
+Theorem 3.7 and Problem 3.11, and §6.2, Theorem 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The scalar-versus-complete-spectrum distinction is retained in
+[the boundary geometry, §52.4](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md).
+Equation (103.6) connects those supplies to the closed counting
+operator and source covariance of §98. $\square$
+
+**Theorem 103.3 (relaxation scale and all transported positive states).**
+Let $\mathscr K=(\ker\Sigma)^\perp$. For $s>0$ put
+$F_s(x)=e^{-s/x}$ for $x>0$, $F_s(0)=0$, and
+$\mathcal T(s)=F_s(\Sigma)$. Then, as operators on $\mathscr H$,
+
+$$
+\mathcal T_n(s):=U_ne^{-N_nsL_n}U_n^*
+=F_s(\Sigma_n)\longrightarrow\mathcal T(s)
+\quad\text{in operator norm}.
+\tag{103.7}
+$$
+
+Convergence is uniform on compact subintervals of $(0,\infty)$.
+If $c_n\to c$ and $z_n\in\mathscr E_n$ converge in $\mathscr H$ to $z$,
+the complete states initialized at $c_ne_{n,0}+U_n^*z_n$ have
+transported states at scaled time $s>0$ converging to
+$(c,\mathcal T(s)z)$ in $\mathbb R\oplus\mathscr H$.
+This includes arbitrary root-invisible modes.
+
+For the smallest positive eigenvalue $\gamma_n$ of $L_n$,
+
+$$
+\gamma_n^{-1}=N_n\|\Sigma_n\|,\qquad
+\frac{\gamma_n^{-1}}{N_n}\longrightarrow\|\Sigma\|>0.
+\tag{103.8}
+$$
+
+The full comparison relaxation time is therefore asymptotic to a
+positive constant times the actual source size.
+On $\mathscr K$, $\mathcal T(s)=e^{-sA}$ is a strongly continuous
+contraction semigroup, where $A=(\Sigma|_{\mathscr K})^{-1}$ is
+positive self-adjoint on the dense domain
+$\operatorname{ran}(\Sigma|_{\mathscr K})$; its generator is $-A$.
+On the entire common space,
+
+$$
+\operatorname*{s-lim}_{s\downarrow0}\mathcal T(s)=P_{\mathscr K},
+\qquad
+\operatorname*{s-lim}_{n\to\infty}\mathcal T_n(0)
+=\operatorname*{s-lim}_{n\to\infty}Q_n=I.
+\tag{103.9}
+$$
+
+The two limits differ, since $q\ne0$ belongs to $\ker\Sigma$.
+An identity-at-zero extension on all of $\mathscr H$ is false.
+
+**Proof.**
+Equation (103.3) gives the exact identity in (103.7).
+By (98.6), choose $M_*>0$ bounding $\|\Sigma_n\|$ and $\|\Sigma\|$
+for every $n$. For fixed $s>0$, $F_s$ is continuous on $[0,M_*]$;
+polynomial approximation and covariance norm convergence prove
+(103.7). Uniformity on $[\epsilon,S]$ follows from a finite parameter
+net and $|\partial_sF_s(x)|\le(e\epsilon)^{-1}$.
+Apply this operator limit to the convergent initial vectors.
+Reciprocal extreme eigenvalues give (103.8).
+The covariance is nonzero because the increment at $L$ has
+variance $a(1-a)>0$.
+
+Spectral calculus gives the inverse generator on $\mathscr K$.
+Dominated convergence of its multipliers proves the first limit
+in (103.9). Every fixed address is an actual edge for all sufficiently
+large $n$ by (98.4), proving $Q_n\to I$ strongly.
+Theorem 99.1 supplies the nonzero kernel vector $q$.
+Changing node spaces have been transported only by the finite maps
+specified in Definition 103.1. $\square$
+
+**Corollary 103.4 (the root initial carrier and its positive-time state).**
+Set
+
+$$
+\xi_n=\sqrt{N_n}\,U_ng_n=\Sigma_n^{-1/2}v_n,\qquad
+h_n(s)=\sqrt{N_n}\,U_ne^{-N_nsL_n}g_n.
+\tag{103.10}
+$$
+
+For $s>0$, define $f_s(x)=x^{-1/2}e^{-s/x}$ on $x>0$ and $f_s(0)=0$.
+Then
+
+$$
+h_n(s)=f_s(\Sigma_n)v_n\longrightarrow
+h(s)=f_s(\Sigma)v=f_s(\Sigma)w
+\quad\text{in }\mathscr H,
+\tag{103.11}
+$$
+
+and the exact root return obeys
+
+$$
+N_n[p_n(N_ns)-N_n^{-1}]=\|h_n(s/2)\|^2.
+\tag{103.12}
+$$
+
+The root initial data are $g_n\in P_n\mathcal V_n$.
+Their normalized transports satisfy $\|\xi_n\|^2=N_n-1\to\infty$,
+so they have no vector limit in $\mathscr H$. The positive-time root
+limit cannot be extended to zero by declaring an initial vector $v$
+or by applying the identity to a limiting $\xi_n$.
+
+**Proof.**
+For $u=L_n^+\delta_r$, the flux calculation (92.9) gives $D_nu=-v_n$.
+Since $U_n=-D_nL_n^{+1/2}$ and
+$U_nL_n^{+1/2}=K_n^{-1/2}U_n$,
+$K_n^{-1/2}U_ng_n=v_n$, giving (103.10) with its sign.
+Continuity of $f_s$ on $[0,M_*]$ and (98.6) prove (103.11).
+The semigroup identity and unitarity give
+$\|h_n(s/2)\|^2=N_n\langle g_n,e^{-N_nsL_n}g_n\rangle$.
+Finally $\|g_n\|^2=1-N_n^{-1}$. $\square$
+
+## 104. Time measures, densities and simultaneous limits
+
+**Definition 104.1 (scaled centered return and spectral mixtures).**
+For $s\ge0$ define
+
+$$
+k_n(s)=N_n[p_n(N_ns)-N_n^{-1}],\qquad \nu_n(ds)=k_n(s)\,ds.
+\tag{104.1}
+$$
+
+Let $\eta_n$ be the spectral measure of $\Sigma_n$ generated by $v_n$
+and $\eta_w$ that of $\Sigma$ generated by $w$. Then
+$\eta_n(\{0\})=0$, including the zero measure for the singletons.
+By Theorem 99.1 the spectral measure generated by $v=q+w$ is
+$\delta_0+\eta_w$, where $\eta_w(\{0\})=0$.
+With the uniform spectral bound $M_*$ of Theorem 103.3, define
+
+$$
+k(s)=\int_{(0,M_*]}x^{-1}e^{-s/x}\,d\eta_w(x)\quad(s>0).
+\tag{104.2}
+$$
+
+**Theorem 104.2 (the complete scaled time measure).**
+The complete finite spectral projections of Theorem 103.2 give
+
+$$
+\begin{aligned}
+k_n(s)
+ &=\sum_{\lambda>0}N_n\rho_{n,\lambda}e^{-N_n\lambda s}
+ =\int x^{-1}e^{-s/x}\,d\eta_n(x)\quad(s>0),\\
+\nu_n([0,\infty))&=C_n=\|v_n\|^2,\\
+\int_0^\infty e^{-\tau s}\,d\nu_n(s)
+ &=R_{\tau/N_n}(T_n)\quad(\tau>0).
+\end{aligned}
+\tag{104.3}
+$$
+
+As finite Borel measures on $[0,\infty)$,
+
+$$
+\nu_n\Longrightarrow\nu:=\delta_0+k(s)\,ds.
+\tag{104.4}
+$$
+
+The slow density is finite and strictly positive for every $s>0$, and
+
+$$
+\int_0^\infty k(s)\,ds=\frac{\sqrt5}{2}-1,\qquad
+\nu(\{0\})=1,\qquad \nu([0,\infty))=\frac{\sqrt5}{2}.
+\tag{104.5}
+$$
+
+No mass escapes to infinite scaled time. More precisely, for
+$V_*=\sup_n\|v_n\|^2<\infty$,
+
+$$
+\nu_n([S,\infty))\le V_*e^{-S/M_*}\quad(S>0).
+\tag{104.6}
+$$
+
+**Proof.**
+Equations (103.5) and (103.10)–(103.12) give the first identity
+in (104.3); integrate its nonnegative terms for the other identities.
+For $n=0,1$ all centered terms vanish.
+The heat interpretation uses exactly $-L_n$: off-diagonal
+conductance rates are one on existing edges, diagonal rates are
+minus the degree, and the stationary distribution is uniform.
+This is the fluid model, not the degree-normalized continuization,
+of [Aldous–Fill, *Reversible Markov Chains and Random Walks on Graphs*,
+Chapter 3, §2, equation (3.16)](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch3.S2.html).
+It provides mathematical comparison time, not a native clock.
+
+For a bounded continuous function $\phi$ on $[0,\infty)$ put
+
+$$
+\Psi_\phi(x)=\int_0^\infty e^{-u}\phi(xu)\,du
+\quad(0\le x\le M_*).
+\tag{104.7}
+$$
+
+Dominated convergence makes $\Psi_\phi$ continuous, with
+$\Psi_\phi(0)=\phi(0)$. Changing variables $s=xu$ in the positive
+mixtures and using continuous functional calculus yields
+
+$$
+\begin{aligned}
+\int\phi\,d\nu_n
+ &=\langle v_n,\Psi_\phi(\Sigma_n)v_n\rangle\\
+ &\longrightarrow\langle v,\Psi_\phi(\Sigma)v\rangle
+ =\phi(0)+\int_0^\infty\phi(s)k(s)\,ds.
+\end{aligned}
+\tag{104.8}
+$$
+
+This proves weak convergence against all bounded continuous tests,
+including the constant one. Tonelli gives
+$\int k=\eta_w((0,M_*])=\|w\|^2$.
+The bound $x^{-1}e^{-s/x}\le(es)^{-1}$ proves finiteness at positive
+time; $w\ne0$ and $\eta_w(\{0\})=0$ prove strict positivity.
+The mass-one atom comes precisely from $q$, by (99.2).
+Finally integrating the mixtures over $[S,\infty)$ gives
+$\int e^{-S/x}\,d\eta_n(x)\le\|v_n\|^2e^{-S/M_*}$,
+proving the uniform no-escape bound. Spectral calculus and the
+positive exponential-mixture construction are intermediate supplies
+in this source-specific limit. $\square$
+
+**Theorem 104.3 (density convergence and all three time regimes).**
+For every $0<\epsilon<S<\infty$,
+
+$$
+\sup_{\epsilon\le s\le S}|k_n(s)-k(s)|\longrightarrow0.
+\tag{104.9}
+$$
+
+For any sequence $s_n\ge0$ tending to a positive finite $s$,
+$k_n(s_n)\to k(s)$. If $s_n\to\infty$, then $k_n(s_n)\to0$.
+If $s_n\to0$, then $k_n(s_n)\to+\infty$, using the biased-source
+endpoint of Theorem 105.1; this includes $k_n(0)=N_n-1$.
+Weak measure convergence (104.4) and density convergence (104.9)
+are different statements. There is no finite density at zero
+representing the mass-one limiting atom.
+
+**Proof.**
+Put $G_s(x)=x^{-1}e^{-s/x}$ for $x>0$ and $G_s(0)=0$.
+It is continuous on $[0,M_*]$, and
+$k_n(s)=\langle v_n,G_s(\Sigma_n)v_n\rangle$.
+A finite net and the bound
+$|\partial_sG_s(x)|=x^{-2}e^{-s/x}\le4/(e^2\epsilon^2)$
+give (104.9). Its limit is (104.2), since the kernel part contributes
+zero. This also proves the positive finite sequence statement.
+For unbounded times use $k_n(s)\le V_*/(es)$.
+For zero times, $k_n$ is nonincreasing on $[0,\infty)$.
+For every fixed $\epsilon>0$, eventually
+$k_n(s_n)\ge k_n(\epsilon)$. Take the lower limit and then
+$\epsilon\downarrow0$ in Theorem 105.1. This proves divergence
+without asserting an endpoint rate. $\square$
+
+**Corollary 104.4 (screening parameters remain distinct from times).**
+If $\tau_n\ge0$, $\tau_n/N_n\to0$ and
+$\tau_n\to\tau\in[0,\infty]$, then
+
+$$
+\int e^{-\tau_ns}\,d\nu_n(s)\longrightarrow
+\begin{cases}
+\sqrt5/2,&\tau=0,\\
+H(\tau),&0<\tau<\infty,\\
+1,&\tau=\infty.
+\end{cases}
+\tag{104.10}
+$$
+
+Here $\tau_n$ is a Laplace parameter, not the time $s_n$
+of Theorem 104.3. The finite-source value at zero is $C_n$.
+
+**Proof.**
+For positive $\tau_n$ use (104.3) and Theorem 100.2 with
+$\lambda_n=\tau_n/N_n$. At zero or on zero subsequences use
+(92.5) and the uniform bounded-parameter assertion (100.3).
+The simultaneous condition $\tau_n/N_n\to0$ is retained at the
+unbounded Laplace endpoint; it is not needed for the density
+statements. $\square$
+
+## 105. The biased source forces an infinite slow-density endpoint
+
+**Theorem 105.1 (the integrable singularity for the actual source law).**
+For precisely $m(p)=a^{\#_L(p)}b^{\#_R(p)}$ with
+$a=\varphi^{-1}$ and $b=\varphi^{-2}$, the density (104.2) satisfies
+
+$$
+\lim_{s\downarrow0}k(s)=+\infty,\qquad
+\int_0^\infty k(s)\,ds=\frac{\sqrt5}{2}-1<\infty.
+\tag{105.1}
+$$
+
+The endpoint conclusion imposes no power law or exponent and does
+not identify a spatial or spectral dimension.
+
+**Proof.**
+Monotone convergence gives
+
+$$
+\lim_{s\downarrow0}k(s)=\int_{(0,M_*]}x^{-1}\,d\eta_w(x).
+\tag{105.2}
+$$
+
+Let $A=(I-\mathbf1\otimes\mathbf1)J:\mathscr H\to L^2_0(M)$,
+so $A^*A=\Sigma$. If (105.2) were finite, spectral calculus would
+define $z=\Sigma^{-1/2}w\in\mathscr K$.
+In the polar decomposition $A=V\Sigma^{1/2}$, set $h=Vz$.
+Then $h\in L^2_0(M)$ and
+$A^*h=\Sigma^{1/2}V^*Vz=w$.
+Since $h$ has mean zero, $A^*h=J^*h$.
+On each nonempty cylinder the adjoint relation and (99.1) give
+
+$$
+\int_{[p]}h\,dM=m(p)-2^{-|p|},\qquad
+\mathbb E_M[h\mid[p]]=1-\frac{2^{-|p|}}{m(p)}.
+\tag{105.3}
+$$
+
+For the depth-$d$ cylinder partition $\mathcal F_d$, conditional
+expectation is an $L^2(M)$ contraction, but (105.3) would imply
+
+$$
+\begin{aligned}
+\|\mathbb E_M[h\mid\mathcal F_d]\|_2^2
+ &=\sum_{|p|=d}m(p)
+       \left(1-\frac{2^{-d}}{m(p)}\right)^2\\
+ &=4^{-d}\sum_{|p|=d}\frac1{m(p)}-1
+ =\left(\frac1{4a}+\frac1{4b}\right)^d-1
+ =\left(\frac1{4ab}\right)^d-1.
+\end{aligned}
+\tag{105.4}
+$$
+
+Because $a+b=1$ and $a\ne b$, $ab<1/4$, so this expression
+diverges. It cannot be bounded by the fixed $\|h\|_2^2$.
+This contradiction proves the infinite endpoint.
+Integrability was proved separately in (104.5). In particular,
+$\|h(s)\|^2=k(2s)\to\infty$ as $s\downarrow0$, by (103.11)
+and (104.2), so the limiting root orbit itself has no strong
+initial vector in $\mathscr H$.
+The polar decomposition is the mature supply cited in Theorem 103.2;
+the cylinder adjoint is the tree Hardy relation in
+[Arcozzi et al., *Potential theory on trees, graphs and Ahlfors-regular
+metric spaces*, §5.1, equation (41)](https://arxiv.org/html/1010.4788v3),
+already instantiated in (98.11).
+The divergence (105.4) uses the actual biased all-occurrence law.
+Replacing it by the fair dyadic law changes its base to one and
+removes this contradiction. $\square$
+
+## 106. A comparison boundary-response consumer and its acquisition boundary
+
+**Assumption 106.1 (forcing, centered readout and initial data).**
+Let $f\in C_c([0,\infty))$ be a supplied scalar forcing.
+On the declared scaled comparison clock initialize
+$u_n(0)=0\in P_n\mathcal V_n$ and solve
+
+$$
+\frac{d}{dt}u_n(t)=-N_nL_nu_n(t)+N_nf(t)g_n,\qquad
+y_n(t)=\langle g_n,u_n(t)\rangle=u_n(t)(r).
+\tag{106.1}
+$$
+
+The input is the centered comparison root port $g_n$ and the
+output its conjugate root readout. This specifies a mathematical
+input-output experiment on the retained occurrence operator.
+A native actuator, physical positions or physical clock require
+the additional realization of Assumptions 97.3 and 102.3.
+No such realization is assumed.
+
+**Theorem 106.2 (the zero-initial limiting boundary response).**
+Under Assumption 106.1, for every $t\ge0$,
+
+$$
+y_n(t)=\int_0^t k_n(s)f(t-s)\,ds.
+\tag{106.2}
+$$
+
+At every fixed $t>0$,
+
+$$
+y_n(t)\longrightarrow y(t)
+=f(t)+\int_0^t k(s)f(t-s)\,ds.
+\tag{106.3}
+$$
+
+If $f(0)=0$, define $y(0)=0$; convergence is then uniform on
+every compact interval $[0,T]$. In general convergence is uniform
+on each $[\epsilon,T]\subset(0,\infty)$ and $y(0+)=f(0)$.
+A continuous zero initial readout is compatible with the limiting
+contract exactly when $f(0)=0$.
+If $f(0)\ne0$, the limiting response has initial feedthrough $f(0)$,
+while every finite zero-initial response has $y_n(0)=0$.
+A nonzero prescribed initial state requires a separately retained
+homogeneous root term.
+
+**Proof.**
+Variation of constants gives
+$u_n(t)=N_n\int_0^te^{-N_nsL_n}g_nf(t-s)\,ds$.
+Taking the readout and using (103.12) proves (106.2).
+For fixed $t>0$, the bounded test
+$\phi_t(s)=f(t-s)\mathbf1_{[0,t]}(s)$ has at most a discontinuity
+at $s=t$, where $\nu$ has no atom.
+Weak convergence (104.4) gives (106.3), with $f(t)$ supplied by
+the mass-one atom at zero.
+
+When $f(0)=0$, extend $f$ by zero to negative times.
+The tests $s\mapsto f(t-s)$ for $t\in[0,T]$ form a uniformly
+bounded equicontinuous family supported in $[0,T]$.
+A finite time net, weak convergence and bounded measure masses
+give uniform convergence of their integrals.
+Otherwise split $f(u)=f(0)+(f(u)-f(0))$ on $[0,T]$.
+The second part satisfies the preceding argument.
+For the first use convergence of the distribution functions
+$\nu_n([0,t])$ to $\nu([0,t])$ on $[\epsilon,T]$:
+monotonicity and continuity of the limiting distribution there
+give uniform convergence by a finite partition.
+The slow convolution tends to zero as $t\downarrow0$ by
+integrability of $k$, while $f(t)\to f(0)$.
+A nonzero initial state adds
+$\langle g_n,e^{-N_ntL_n}u_n(0)\rangle$ to (106.2);
+the zero-initial assumption is precisely what omits it. $\square$
+
+**Assumption 106.3 (original-reply acquisition and distinct times).**
+When a native execution supplies an original reply or exact index
+to this consumer, retain the existing authenticated stationary epoch,
+original-presence guard, chronological original-address reads and
+absorbing Stop conditions of Assumption 97.1 and
+[Continuation III, Assumption 91.6](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md).
+The existing guarded original-reply/index suppliers are used only
+under their own original-source, guard and resource contracts:
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean),
+[Atomic Boundary Trichotomy, §§12–17](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
+[Acquired Intrinsic Depth Calibration, §6](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_INTRINSIC_DEPTH_CALIBRATION.md)
+and [Finite Frame Memory](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md),
+together with
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+Actual address length, distinct-address fees, retained full control
+memory, installed data, preparation, arithmetic and output remain
+separate resources. Defining (104.1) grants no observation of $N_n$.
+
+Comparison time in (106.1), source-substitution epoch, acquisition
+chronology and physical time remain distinct.
+Neither a duplicate search or decoder, a pointer walk nor an added
+Poisson clock supplies a native occurrence-transport correspondence.
+An optional acquired-query sampling law is an additional unverified
+premise. The native occurrence actuator and physical-time realization
+remain outside Assumption 106.1.
+
+## 106.99 追加锚（本行以下为增补区）
+
+## 107. Root readout, action closure and future memory
+
+The preceding sections distinguish the complete finite occurrence state from
+the scalar root response. This section makes the corresponding memory
+boundary explicit. It is an ordinary finite-dimensional linear result. The
+actions below are an abstract contract; they are not claimed to be native
+original-root queries unless a separate realization supplies them.
+
+**Definition 107.1 (multi-port future response).**
+Let $V$ be a finite-dimensional real vector space, let
+$A:V\to V$ be a linear evolution, let ${C_\ell:V\to Y_\ell\}_{\ell\in L}$ be
+a finite family of linear readout ports, and let ${T_a:V\to V\}_{a\in A_0}$
+be a finite family of admissible interventions. For a word
+$w=a_1\cdots a_m$ put
+
+$$
+T_w=T_{a_m}\cdots T_{a_1},
+\qquad T_\varepsilon=I.
+$$
+
+The unacted hidden subspace and the action-closed hidden subspace are
+
+$$
+\begin{aligned}
+K_{\mathrm{stat}}
+  &=\bigcap_{\ell\in L}\bigcap_{j\ge0}
+      \ker(C_\ell A^j),\\
+K_{\mathrm{fut}}
+  &=\bigcap_{w\in A_0^*}\bigcap_{\ell\in L}\bigcap_{j\ge0}
+      \ker(C_\ell A^jT_w).
+\end{aligned}
+\tag{107.1}
+$$
+
+The first space contains perturbations invisible to every declared port under
+the passive evolution. The second contains perturbations invisible after every
+finite intervention word as well.
+
+**Theorem 107.2 (the maximal action-closed hidden subspace).**
+
+The subspace $K_{\mathrm{fut}}$ satisfies
+
+$$
+K_{\mathrm{fut}}\subseteq K_{\mathrm{stat}},
+\qquad
+T_aK_{\mathrm{fut}}\subseteq K_{\mathrm{fut}}
+\quad(a\in A_0).
+\tag{107.2}
+$$
+
+Moreover, if $M\subseteq K_{\mathrm{stat}}$ is a linear subspace with
+
+$$
+T_aM\subseteq M\quad(a\in A_0),
+\tag{107.3}
+$$
+
+then $M\subseteq K_{\mathrm{fut}}$. Consequently $K_{\mathrm{fut}}$ is the
+largest subspace that is both passively invisible and closed under every
+declared intervention.
+
+### Proof
+
+The empty word belongs to $A_0^*$, so the second intersection is contained
+in the first. If $x\in K_{\mathrm{fut}}$, $a\in A_0$, and
+$w\in A_0^*$, then
+
+$$
+C_\ell A^jT_w(T_ax)=C_\ell A^jT_{aw}x=0,
+$$
+
+where $aw$ denotes the word obtained by prefixing $a$, so
+$T_{aw}=T_wT_a$. Hence $T_ax$ lies in
+every factor of the second intersection, proving invariance.
+
+Now let $x\in M$. By (107.3), $T_wx\in M$ for every word $w$. Since
+$M\subseteq K_{\mathrm{stat}}$, each vector $T_wx$ is killed by every
+$C_\ell A^j$. Thus $x$ belongs to every factor in the definition of
+$K_{\mathrm{fut}}$. The maximality statement follows. $\square$
+
+**Corollary 107.3 (when the static quotient is already safe).**
+
+The following are equivalent:
+
+$$
+K_{\mathrm{fut}}=K_{\mathrm{stat}},
+$$
+
+and
+
+$$
+T_aK_{\mathrm{stat}}\subseteq K_{\mathrm{stat}}
+\quad\text{for every }a\in A_0.
+\tag{107.4}
+$$
+
+### Proof
+
+If the spaces are equal, (107.2) gives invariance of $K_{\mathrm{stat}}$.
+Conversely, if $K_{\mathrm{stat}}$ is invariant under every intervention,
+it satisfies the hypotheses for $M$ in Theorem 107.2, so
+$K_{\mathrm{stat}}\subseteq K_{\mathrm{fut}}$. The reverse inclusion was
+already proved. $\square$
+
+Thus a static observation quotient can be used as a future quotient exactly
+when its hidden fiber is closed under all later actions. A current scalar
+response does not acquire this property merely because it is exact for the
+passive evolution.
+
+**Proposition 107.4 (a two-dimensional leakage witness).**
+
+Let $V=\mathbb R^2$,
+
+$$
+A=\begin{pmatrix}1&0\\0&2\end{pmatrix},
+\qquad
+C(x_1,x_2)=x_1,
+\qquad
+T(x_1,x_2)=(x_2,x_1).
+\tag{107.5}
+$$
+
+Then
+
+$$
+K_{\mathrm{stat}}=\mathbb R(0,1),
+\qquad
+K_{\mathrm{fut}}=\{0\}.
+\tag{107.6}
+$$
+
+In fact $q=(0,1)$ is invisible to every passive response,
+
+$$
+C e^{-tA}q=0\quad(t\ge0),
+$$
+
+but after one intervention it is visible:
+
+$$
+C e^{-tA}Tq=e^{-t}\ne0.
+\tag{107.7}
+$$
+
+### Proof
+
+For the passive evolution,
+$C A^j(x_1,x_2)=x_1$ for every $j$, so its common kernel is
+$\mathbb R(0,1)$. The swap sends $(0,1)$ to $(1,0)$, which the port sees;
+therefore no nonzero vector in $K_{\mathrm{stat}}$ is action-closed. The
+displayed exponential formulas give the same conclusion directly. $\square$
+
+**Corollary 107.5 (the spectral boundary response is not by itself a
+future memory state).**
+
+For the occurrence carriers of §§103–106, the root scalar response and the
+root spectral weights are passive-port data. The root-invisible directions in
+Theorem 103.2 therefore belong to a static hidden fiber whenever they are
+annihilated by that port. If a separately declared intervention or another
+port acts nontrivially on such a direction, the correct memory quotient is
+$K_{\mathrm{fut}}$, not $K_{\mathrm{stat}}$; the scalar quantity
+$p_n(t)$, $R_\lambda(T_n)$, or their limiting analogues cannot serve as the
+complete future state.
+
+This is a statement about the declared linear comparison contract. It does
+not install an actuator, identify an original-root query with $T_a$, or
+provide a physical time, reset, or cost. A native FIB realization must still
+prove that the proposed action and port are available on the same immutable
+source and that their response-successor-cost kernel descends.
+
+**Theorem 107.6 (finite-horizon stabilization of each fixed action family).**
+
+Let $d=\dim V$. For every fixed intervention word $w$ and port $C_\ell$,
+
+$$
+\bigcap_{j\ge0}\ker(C_\ell A^jT_w)
+=
+\bigcap_{0\le j<d}\ker(C_\ell A^jT_w).
+\tag{107.8}
+$$
+
+Consequently, the infinite time index in (107.1) is not the source of an
+infinite-dimensional carrier; any non-finiteness of the exact future quotient
+comes from the unbounded family of action words or from an unbounded source
+family.
+
+### Proof
+
+By Cayley–Hamilton, every $A^j$ with $j\ge d$ is a linear combination of
+$I,A,\ldots,A^{d-1}$. A vector annihilated by the first $d$ composed maps is
+therefore annihilated by every later $C_\ell A^jT_w$. The reverse inclusion is
+immediate. $\square$
+
+The distinction is useful for the latest FIB boundary results. Under the
+promised family $T_n$ and a fixed positive screening parameter, a finite prefix
+can support a uniform approximation as in Theorem 97.2. Once the screening
+parameter is allowed to scale toward zero with the source size, Theorem 102.2
+shows that the same fixed-depth table can miss a nonzero response gap. The
+obstruction is therefore a joint source–parameter boundary, not a failure of
+the finite-dimensional spectral algebra.
+
+## 107.99 追加锚（本行以下为增补区）
+
+## 108. An all-source occupation clock for literal rho renewal
+
+**Definition 108.1 (the closed successor and its old-set clock).**
+Retain the free finite ordered sources, actual occurrence addresses and
+closed unit-edge counting Laplacians of Definitions 92.1–92.2. For every
+original $`t\in\mathcal T`$ and $`n\ge0`$, write
+
+```math
+s(t,n)=\rho^nt,\quad V(t,n)=V_{s(t,n)},\quad
+N(t,n)=|V(t,n)|,\quad L(t,n)=L_{s(t,n)},\quad
+r(t,n)=\frac{N(t,n+1)}{N(t,n)}.
+\tag{108.1}
+```
+
+The old vertices keep their addresses. Exactly two new degree-one children
+are attached to each actual old beta leaf; no other vertex or edge is born.
+Let $`X_b`$ be the continuous-time comparison chain on $`V(t,n+1)`$ with
+generator $`-L(t,n+1)`$, initially at any old vertex $`x\in V(t,n)`$. Its
+rates are one on existing edges, rather than a degree-normalized walk.
+Define old-set occupation time and its right-continuous inverse by
+
+```math
+B(b)=\int_0^b\mathbf1_{V(t,n)}(X_v)\,dv,\qquad
+A(t,n)(a)=\inf\{b\ge0:B(b)>a\},\qquad
+Y_a=X_{A(t,n)(a)}.
+\tag{108.2}
+```
+
+The infimum equals $`\sup\{b:B(b)\le a\}`$. Finite recurrence gives
+$`B(b)\to\infty`$ almost surely, so this inverse is finite at every finite
+$`a`$. At a plateau value it selects the return endpoint of the entire
+new-child excursion. At zero it equals zero almost surely because the
+initial old holding time is strictly positive. The trace $`Y`$ has generator
+$`-L(t,n)`$; the singleton trace is the constant chain. All these laws are
+conditional mathematical comparisons on the specified finite sources.
+The variable $`a`$ is old-set trace time, and $`b`$ is successor comparison
+time. Neither is a duration assigned to a native substitution.
+
+**Theorem 108.2 (uniform source-size clock fidelity and the uniform golden ratio).**
+Put $`\varphi=(1+\sqrt5)/2`$, $`c=\varphi^{-1}`$ and
+$`D_n=2F_{n+1}-1`$. Then
+
+```math
+\sup_{t\in\mathcal T}|r(t,n)-\varphi|
+\le e_n:=\frac{c+2c^{n+1}}{D_n}\longrightarrow0.
+\tag{108.3}
+```
+
+For every finite $`S\ge0`$ and every $`\varepsilon>0`$,
+
+```math
+\lim_{n\to\infty}\sup_{t\in\mathcal T}\sup_{x\in V(t,n)}
+\mathbb P_x\!\left\{
+\sup_{0\le u\le S}\left|
+\frac{A(t,n)(N(t,n)u)}{N(t,n)}-r(t,n)u
+\right|>\varepsilon\right\}=0.
+\tag{108.4}
+```
+
+The same conclusion holds for every initial probability on the old set,
+including probabilities depending on $`t,n`$. More explicitly, for $`n\ge2`$
+and $`\eta>0`$, set
+
+```math
+d_n(S)=\frac{c+4(n+1)}{D_n}+2Sc^{n+1}+Se_n,
+\qquad m_n=\lfloor n/2\rfloor.
+\tag{108.5}
+```
+
+The probability in (108.4), with threshold $`d_n(S)+2\eta`$, is at most
+
+```math
+\frac{128S}{\eta^2D_n}
++\frac{c}{\eta}\left(\frac1{D_n}+S2^{-m_n}\right).
+\tag{108.6}
+```
+
+Replacing the inverse in (108.2) by $`\inf\{b:B(b)\ge a\}`$, with value
+zero at zero, preserves (108.4). The two conventions differ only by
+complete excursion lengths at their corresponding plateau values.
+
+**Proof.**
+The literal birth identity is the same source identity used in
+[Continuation I, §58.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+Its grounded Hamiltonian and missing-child diagonals are not used here.
+In the present closed operator, if $`\mathcal B`$ is the old beta-leaf set,
+$`H_{\mathcal B}`$ its coordinate projection and $`C`$ has one column
+$`\delta_p`$ for each of the two children born at each $`p\in\mathcal B`$,
+the actual old/new blocks are
+
+```math
+L(t,n+1)=
+\begin{pmatrix}L(t,n)+2H_{\mathcal B}&-C\\-C^*&I\end{pmatrix},
+\qquad CC^*=2H_{\mathcal B}.
+\tag{108.7}
+```
+
+The zero-parameter Schur complement is exactly $`L(t,n)`$. Equivalently,
+every deleted excursion returns to its very own beta parent, so deletion
+adds no old-to-old transition. This is the standard reversible trace
+construction: Beltrán–Landim,
+[*Tunneling and Metastability of Continuous Time Markov Chains*,
+§6.1, Propositions 6.1 and 6.3](https://arxiv.org/abs/0910.4088).
+Their nonempty-support, irreducibility and recurrence hypotheses hold
+on each finite successor, with time-change weight $`\mathbf1_{V(t,n)}`$.
+The inverse convention is theirs. A singleton old set has no off-diagonal
+trace rate and is included directly. Counting measure on the successor
+restricts to counting measure on the trace. The use of conductance rates
+with counting mass is also precisely the fluid model in
+[Aldous–Fill, Chapter 3, §2, (3.16)](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch3.S2.html).
+
+In trace time, each beta parent has two excursion clocks of rate one.
+Their independent marks $`E_i`$ are the new-child holding times, each with
+law $`\operatorname{Exp}(1)`$, mean one and second moment two. Old-edge
+clocks and the excursion clocks can be constructed independently while
+the chain is at each old vertex. Consequently, with $`\theta_i`$ the
+excursion times on the trace clock,
+
+```math
+\begin{aligned}
+A(t,n)(a)&=a+\sum_{\theta_i\le a}E_i,\\ {}
+M^{\rm exc}_a
+&=\sum_{\theta_i\le a}E_i
+  -\int_0^a2\mathbf1_{\mathcal B}(Y_v)\,dv,\\ {}
+\langle M^{\rm exc}\rangle_a
+&=\int_0^a4\mathbf1_{\mathcal B}(Y_v)\,dv\le4a.
+\end{aligned}
+\tag{108.8}
+```
+
+The formula includes the entire terminal excursion when $`a`$ is a
+plateau value. It is a marked-clock representation of this exact
+successor chain, not an additional law imposed on a source action.
+
+It remains to control the beta occupation uniformly without assuming
+uniform mixing of arbitrary source skeletons. Let $`a_0,b_0`$ be the
+numbers of original alpha and beta leaves and $`\ell=a_0+b_0\ge1`$.
+The original skeleton has $`\ell-1`$ internal vertices. Each original alpha
+leaf carries its literal $`T_n`$ block after expansion, and each original
+beta leaf its literal $`T_{n+1}`$ block. The source recurrence of
+Definition 92.2 therefore gives
+
+```math
+\begin{aligned}
+N:=N(t,n)&=2(a_0F_{n+1}+b_0F_{n+2})-1\ge D_n\ell,\\ {}
+|\mathcal B|&=a_0F_n+b_0F_{n+1}.
+\end{aligned}
+\tag{108.9}
+```
+
+These formulas include $`n=0`$ and both singleton labels. On $`T_k`$, set
+$`f_k=2\mathbf1_{\{\text{beta leaf}\}}-c`$. Its total charge is
+
+```math
+q_k:=\sum_{T_k}f_k
+=2F_k-c(2F_{k+1}-1)
+=c-2c(-c)^k=:c+\delta_k,
+\qquad |q_k|\le2,\quad |\delta_k|=2c^{k+1}.
+\tag{108.10}
+```
+
+The last equality is the exact Fibonacci identity
+$`F_k-cF_{k+1}=-c(-c)^k`$, obtained from (92.12).
+Summing $`f=2\mathbf1_{\mathcal B}-c`$ on the whole old source, including
+its internal original skeleton, yields
+
+```math
+\sum_{V(t,n)}f=c+a_0\delta_n+b_0\delta_{n+1},\qquad
+r(t,n)-\varphi=\frac{c+a_0\delta_n+b_0\delta_{n+1}}N.
+\tag{108.11}
+```
+
+Equations (108.9)–(108.11) prove (108.3) for the whole source domain,
+not only for the orbit $`T_n`$.
+
+Construct a corrector $`h`$ on this same old tree. At each original
+skeleton vertex $`p`$, including its original leaves, set $`h(p)=c|p|`$.
+Within a block rooted at an original leaf, set its root value by this
+rule and give each downward edge increment the total $`f`$-charge of
+its actual below-edge subtree. That subtree is some $`T_k`$, so the
+increment is exactly $`q_k`$ from (108.10). The elementary tree Poisson
+flux calculation already used in (92.9) then gives, on a block rooted
+at $`p`$, $`L_{\rm block}h=f-q_k\delta_p`$.
+An original nonroot block root receives the additional parent-edge
+contribution $`c`$; an original internal nonroot skeleton vertex has
+$`Lh=-c=f`$; the original root, when internal, has $`Lh=-2c=f-c`$.
+For a singleton original skeleton the block root has no parent edge.
+Thus all cases give the single identity
+
+```math
+f=L(t,n)h+c\delta_r+e,\qquad
+e=\sum_{p\text{ original alpha leaf}}\delta_n\delta_p
+  +\sum_{p\text{ original beta leaf}}\delta_{n+1}\delta_p,
+\quad \|e\|_\infty\le2c^{n+1}.
+\tag{108.12}
+```
+
+Every edge increment of $`h`$ has modulus at most two. Every block has
+height at most $`n+1`$, while the maximum original depth is at most
+$`\ell-1`$. Therefore
+
+```math
+\frac{\operatorname{osc}h}{N}
+\le\frac{c(\ell-1)+4(n+1)}N
+\le\frac{c+4(n+1)}{D_n},\qquad
+\sum_{y\sim x}|h(y)-h(x)|^2\le12.
+\tag{108.13}
+```
+
+Large or highly unbalanced original skeletons are retained in these
+bounds. Their depth is divided by their actual expanded size, rather
+than bounded by the orbit depth.
+
+For the trace generator $`Q=-L(t,n)`$, the finite-chain Dynkin martingale is
+
+```math
+M^h_a=h(Y_a)-h(x)+\int_0^a L(t,n)h(Y_v)\,dv,
+\qquad \langle M^h\rangle_a\le12a.
+\tag{108.14}
+```
+
+The bracket follows by summing rate times squared jump increment.
+The usual $`L^2`$ maximal inequality gives
+$`\mathbb E_x\sup_{v\le a}|M^h_v|^2\le48a`$ and, from (108.8),
+$`\mathbb E_x\sup_{v\le a}|M^{\rm exc}_v|^2\le16a`$.
+For reference, the discrete-time inequality is Durrett,
+[*Probability: Theory and Examples*, fifth edition, Theorem 4.4.4](https://sites.math.duke.edu/~rtd/PTE/PTE5_011119.pdf).
+Apply it on successively finer deterministic time grids to these
+square-integrable càdlàg martingales and use monotone convergence to
+obtain the stated continuous-time bounds. No stationary initial law
+is needed.
+
+The root term in (108.12) also admits a source-uniform bound.
+The minimum leaf depth of $`T_k`$ is $`\lfloor k/2\rfloor`$, directly by
+the literal recursion. Every old source therefore contains the entire
+binary tree through depth $`m=m_n`$. Put
+$`b_m(p)=2^{-\min(|p|,m)}`$. At the actual root, internal vertices and
+depth-$`m`$ vertices, respectively, direct application of the closed
+Laplacian gives
+
+```math
+L(t,n)b_m=\delta_r-2^{-m}\mathbf1_{\{|p|=m\}}.
+\tag{108.15}
+```
+
+Below depth $`m`$ it is zero. Since $`0\le b_m\le1`$, Dynkin's identity,
+from every starting vertex, implies
+
+```math
+\mathbb E_x\int_0^{NS}\mathbf1_{\{r\}}(Y_v)\,dv
+\le1+NS2^{-m}.
+\tag{108.16}
+```
+
+Combine (108.8), (108.12) and (108.14), and use $`\varphi=1+c`$:
+
+```math
+\begin{aligned}
+\sup_{0\le a\le NS}\frac{|A(t,n)(a)-\varphi a|}{N}
+\le {}&\frac{\operatorname{osc}h}{N}+2Sc^{n+1}
+ +\frac{\sup_{a\le NS}|M^h_a+M^{\rm exc}_a|}{N}\\ {}
+&+\frac cN\int_0^{NS}\mathbf1_{\{r\}}(Y_v)\,dv.
+\end{aligned}
+\tag{108.17}
+```
+
+The two separate maximal bounds and $`|u+v|^2\le2|u|^2+2|v|^2`$
+give expectation at most $`128NS`$ for the squared martingale supremum.
+Chebyshev's inequality, (108.16), Markov's inequality and $`N\ge D_n`$
+give (108.6), after adding $`S|r(t,n)-\varphi|\le Se_n`$.
+Every displayed bound is independent of $`t,x`$. For $`S>0`$, choose
+$`\eta=\varepsilon/3`$ and then $`n`$ with $`d_n(S)\le\varepsilon/3`$;
+the right side of (108.6) tends to zero. For $`S=0`$ the claim is immediate.
+Mixtures over starting vertices preserve the same bounds.
+
+Finally, the two inverse conventions differ by at most the largest
+excursion mark with $`\theta_i\le NS`$. The compensator in (108.8) is
+continuous, so each mark is a jump of $`M^{\rm exc}`$ and is at most
+$`2\sup_{a\le NS}|M^{\rm exc}_a|`$. Its size divided by $`N`$ tends to zero
+uniformly in probability by the same maximal bound. This proves the
+endpoint assertion. $`\square`$
+
+## 109. A persistent centered defect for actual ancestry transport
+
+**Definition 109.1 (ancestry in the original counting spaces).**
+On the orbit $`T_n=\rho^n\alpha`$ only, let $`\pi_n:V_{T_{n+1}}\to V_{T_n}`$
+fix every old vertex and send each new child to its actual old beta
+parent. In this section $`J_n`$ denotes its ancestry pullback,
+$`(J_nf)(y)=f(\pi_n(y))`$, rather than the path-summation map in §103.
+Keep the same counting spaces $`\mathcal V_n`$, closed $`L_n`$ and centered
+projections $`P_n=I-N_n^{-1}\mathbf1\mathbf1^*`$ as in Definition 103.1.
+Put
+
+```math
+\begin{aligned}
+\mathcal A_n&=\sqrt{\frac{N_n}{N_{n+1}}}\,P_{n+1}J_nP_n,\\ {}
+\Delta_n(s)&=\left\|
+e^{-N_{n+1}sL_{n+1}}\mathcal A_n
+-\mathcal A_ne^{-N_nsL_n}\right\|_{\mathcal V_n\to\mathcal V_{n+1}}
+\qquad(s>0).
+\end{aligned}
+\tag{109.1}
+```
+
+The notation $`\mathcal A_n`$ distinguishes this comparison map from the
+scalar $`A_n`$ of Definition 92.2 and the random inverse in §108.
+The constant mode is removed on both sides. The norms are the original
+counting norms; no leaf-only or degree-weighted space is substituted.
+An old beta fibre has size three and every other fibre size one, so
+$`J_n^*J_n=I+2H_{\mathcal B_n}`$ and
+$`\|\mathcal A_n\|\le\sqrt{3N_n/N_{n+1}}`$.
+
+**Theorem 109.2 (a fixed-positive-time full-state obstruction).**
+With $`c=\varphi^{-1}`$ and $`\kappa=c(2-c)`$, for every fixed $`s>0`$,
+
+```math
+\liminf_{n\to\infty}\Delta_n(s)
+\ge c\sqrt{\kappa}
+-\sqrt{s\sqrt5\,c(3-c)}.
+\tag{109.2}
+```
+
+In particular this is a strictly positive lower bound whenever
+
+```math
+0<s<\frac{c^2(2-c)}{\sqrt5(3-c)}.
+\tag{109.3}
+```
+
+It also proves the nominated, weaker bound
+
+```math
+\liminf_{n\to\infty}\Delta_n(s)
+\ge\varphi^{-3/2}
+-\sqrt{\frac{2s\sqrt5}{\varphi}}>0,
+\qquad 0<s<\frac1{2\sqrt5\varphi^2}.
+\tag{109.4}
+```
+
+At the $`n`$-independent time $`s=1/100`$, the exact bound in (109.2)
+is greater than $`0.389`$. Thus full-state ancestry transport fails at
+a strictly positive source-size-scaled comparison time, despite the
+all-source occupation-clock theorem.
+
+**Proof.**
+The witness will be centered before transport and detected by a centered
+unit successor test. It uses the actual beta mask, rather than a
+constant-mode mismatch. For $`n\ge3`$, the old left and right root
+subtrees are $`T_{n-1}`$ and $`T_{n-2}`$. Write their sizes as
+$`M_L=N_{n-1}`$ and $`M_R=N_{n-2}`$, and $`N=N_n=1+M_L+M_R`$.
+Define a real root contrast $`z_n`$ to be zero at the root and constant
+on these two entire subtrees, with values
+
+```math
+\alpha_n=\sqrt{\frac{NM_R}{M_L(N-1)}},\qquad
+\beta_n=-\sqrt{\frac{NM_L}{M_R(N-1)}}.
+\tag{109.5}
+```
+
+Then $`\sum z_n=0`$, $`\|z_n\|^2=N`$ and its two constants stay bounded.
+Define $`w_{n+1}`$ by the identical prescription on the successor's
+actual subtrees $`T_n,T_{n-1}`$, and put
+$`g_{n+1}=w_{n+1}/\sqrt{N_{n+1}}`$. This is a centered unit vector.
+Only the two root edges contribute to its energy; hence, with
+$`N'=N_{n+1}`$,
+
+```math
+N'\langle g_{n+1},L_{n+1}g_{n+1}\rangle
+=\alpha_{n+1}^2+\beta_{n+1}^2
+\longrightarrow\varphi+\varphi^{-1}=\sqrt5.
+\tag{109.6}
+```
+
+Here and below the values of $`w_{n+1}`$ on old vertices are its actual
+successor values. Every ancestry fibre stays in its own root subtree,
+and the root fibre is just the root for $`n\ge3`$.
+
+On the old vertices set
+
+```math
+f_n=2\mathbf1_{\mathcal B_n}-c,\qquad
+d_n=\|P_n(z_nf_n)\|,\qquad
+v_n=d_n^{-1}P_n(z_nf_n).
+\tag{109.7}
+```
+
+Products in this proof are pointwise. On each actual $`T_k`$ block the
+sum of $`f_n`$ is $`q_k=c+\delta_k`$ from (108.10). In particular,
+$`\sum z_nf_n=\alpha_nq_{n-1}+\beta_nq_{n-2}`$ is bounded independently
+of $`n`$. The fraction of beta leaves in either large subtree tends to
+$`c/2`$. The two possible values of $`f_n`$ are $`2-c`$ and $`-c`$, so
+
+```math
+\begin{aligned}
+\kappa&=\frac c2(2-c)^2+\left(1-\frac c2\right)c^2=c(2-c)>0,\\ {}
+\frac{d_n^2}{N}&\longrightarrow\kappa.
+\end{aligned}
+\tag{109.8}
+```
+
+The centering subtraction has squared norm
+$`N^{-1}(\sum z_nf_n)^2=O(N^{-1})`$ and does not affect this limit.
+Consequently $`d_n>0`$ for all sufficiently large $`n`$, and $`v_n`$ is a
+centered unit vector on the original counting space.
+
+Its old heat state vanishes at every fixed scaled positive time. To
+prove this rather than assume local equilibrium, on each of the two
+root subtrees take the block corrector from the proof of (108.12),
+with value zero at that subtree's root. Multiply it by its corresponding
+constant $`\alpha_n`$ or $`\beta_n`$, and extend by zero at the global root.
+Call the resulting vector $`H_n`$. The zero values at the two subtree
+roots make the exterior root seams contribute zero. The exact identity
+is therefore
+
+```math
+z_nf_n=L_nH_n+R_n,\qquad
+R_n=\alpha_nq_{n-1}\delta_L+\beta_nq_{n-2}\delta_R,
+\qquad \|R_n\|=O(1),\quad \|H_n\|=O(n\sqrt N).
+\tag{109.9}
+```
+
+The corrector bounds use $`|q_k|\le2`$ and block height at most $`n`$.
+Since $`P_nL_n=L_n`$ and positive spectral calculus gives
+$`\|e^{-tL_n}L_n\|\le1/(et)`$, for fixed $`s>0`$,
+
+```math
+\|e^{-NsL_n}v_n\|
+\le\frac{\|H_n\|}{eNs\,d_n}+\frac{\|R_n\|}{d_n}
+=O\!\left(\frac n{Ns}+\frac1{\sqrt N}\right)
+\longrightarrow0.
+\tag{109.10}
+```
+
+This uses the finite spectral calculus already supplied in §103; it
+requires no uniform gap over arbitrary sources.
+
+Now compute how the same state couples through authentic ancestry
+to the successor's low-energy root contrast. Write
+$`m_n=1+2\mathbf1_{\mathcal B_n}=\varphi+f_n`$ for its actual fibre
+multiplicity. Within either root subtree $`T_k`$, direct summation gives
+
+```math
+\begin{aligned}
+\sum_{T_k}m_nf_n&=\kappa N_k+(3-c)q_k,\\ {}
+\frac1{N_k}\sum_{T_k}m_nf_n^2
+&\longrightarrow\kappa(3-c).
+\end{aligned}
+\tag{109.11}
+```
+
+For the first identity use $`2|\mathcal B(T_k)|=cN_k+q_k`$.
+For the second, its two values and their actual limiting fractions give
+
+```math
+3\frac c2(2-c)^2+\left(1-\frac c2\right)c^2
+=\kappa+c(2-c)^2=\kappa(3-c).
+\tag{109.12}
+```
+
+The successor contrast is centered, so
+$`\sum_{V_{T_n}}m_nw_{n+1}=\sum_{V_{T_{n+1}}}w_{n+1}=0`$ exactly.
+Thus both centering projections disappear from the pairing, including
+the mean subtraction in (109.7), and
+
+```math
+\langle g_{n+1},\mathcal A_nv_n\rangle
+=\frac{\sqrt{N/N'}}{\sqrt{N'}d_n}
+ \sum_{V_{T_n}}w_{n+1}z_nm_nf_n
+\longrightarrow c\sqrt{\kappa}.
+\tag{109.13}
+```
+
+Indeed both pairs of root-contrast constants tend to the same limits:
+their left squared value tends to $`\varphi^{-1}`$ and their right
+squared value to $`\varphi`$. Therefore
+$`N^{-1}\sum w_{n+1}z_n\to1`$, and (109.11) makes the numerator sum
+$`\kappa N+o(N)`$. Equations (109.8), $`N'/N\to\varphi`$ and the displayed
+normalization yield (109.13), including its positive sign.
+
+The norm of this actual transported state has the limit
+
+```math
+\|\mathcal A_nv_n\|^2\longrightarrow c(3-c).
+\tag{109.14}
+```
+
+To verify all mass and projection terms, set
+$`b_n=N^{-1}\sum z_nf_n=O(N^{-1})`$, so
+$`v_n=(z_nf_n-b_n)/d_n`$. Then
+$`\|J_nv_n\|^2=d_n^{-2}\sum m_n(z_nf_n-b_n)^2\to3-c`$
+by (109.11)–(109.12), bounded multiplicities and
+$`\sum z_n^2=N`$. Moreover
+
+```math
+\sum J_nv_n
+=\frac{(3-c-r(T_0,n))\sum z_nf_n}{d_n}=O(N^{-1/2}).
+\tag{109.15}
+```
+
+Here (109.11) and $`\sum z_n=0`$ give
+$`\sum m_nz_nf_n=(3-c)\sum z_nf_n`$, while $`\sum m_n=N'`$.
+The successor projection subtracts squared norm
+$`N'^{-1}(\sum J_nv_n)^2`$, which tends to zero. Multiplication by
+$`N/N'\to c`$ proves (109.14). No counting mass has been discarded.
+
+For a positive self-adjoint finite $`L`$, the ordinary spectral inequality
+$`(1-e^{-u})^2\le u`$ for $`u\ge0`$ gives
+
+```math
+\|(e^{-tL}-I)g\|^2\le t\langle g,Lg\rangle.
+\tag{109.16}
+```
+
+Apply it to the centered unit $`g_{n+1}`$ and use self-adjointness of
+the successor heat operator. Evaluation of the operator difference
+on $`v_n`$ and pairing with $`g_{n+1}`$ yields
+
+```math
+\begin{aligned}
+\Delta_n(s)\ge{}&\langle g_{n+1},\mathcal A_nv_n\rangle
+-\sqrt{N's\langle g_{n+1},L_{n+1}g_{n+1}\rangle}
+  \|\mathcal A_nv_n\|\\ {}
+&-\sqrt{3N/N'}\,\|e^{-NsL_n}v_n\|.
+\end{aligned}
+\tag{109.17}
+```
+
+Taking the lower limit in (109.6), (109.10), (109.13) and (109.14)
+proves (109.2). Squaring its two positive terms gives (109.3).
+For (109.4), let $`s_0=c^2/(2\sqrt5)`$. Since $`0<c<1`$,
+
+```math
+\sqrt{2-c}>\sqrt{(3-c)/2}>1.
+\tag{109.18}
+```
+
+For $`0<s\le s_0`$, the excess of the bound in (109.2) over
+$`c^{3/2}-\sqrt{2s\sqrt5c}`$ is at least
+
+```math
+c^{3/2}\left(\sqrt{2-c}-\sqrt{(3-c)/2}\right)>0.
+\tag{109.19}
+```
+
+This proves the nominated constants, rather than replacing that
+conjecture by a derivative or a sequence of shrinking times.
+For the stated decimal lower bound at $`s=1/100`$, elementary squared
+rational comparisons give
+$`0.61803398<c<0.61803399`$ and $`2.23606797<\sqrt5<2.23606798`$.
+They imply $`c\sqrt{c(2-c)}>0.571`$ and
+$`\sqrt{\sqrt5c(3-c)/100}<0.182`$; hence the exact difference exceeds
+$`0.389`$. Its rounded value is $`0.3897393\ldots`$.
+
+The state $`v_n`$ has rapidly alternating beta-multiplicity charge
+within each entire root subtree. Old scaled heat erases it by
+(109.9)–(109.10), while ancestry's three-versus-one fibres give it
+the nonzero successor contrast (109.13). Successor heat cannot erase
+that contrast on these fixed positive windows, by (109.6) and (109.16).
+Both state and test have mean zero. This explains why the obstruction
+coexists with (108.4): an inverse occupation clock compares time along
+the old trace, whereas $`J_n`$ copies a function to every ancestry fibre.
+They are different state comparisons. The norm-convergent transport
+of §103 uses the gradient/polar maps $`U_n`$, and is consistent with
+this failure of the expressly different ancestry maps. $`\square`$
+
+**Assumption 109.3 (the separate operation-and-readout correspondence).**
+To interpret either comparison as native propagation, one would additionally
+need the same original source and actual accepted update, an available
+occurrence-state preparation, an allowed actuator with generator $`-L`$,
+the stated readouts and state-transfer map, and a verified conversion
+from actual supplied durations to the respective comparison times.
+An execution subject to a cap or refusal retains its original guard,
+history and absorbing Stop; it is not enlarged by the mathematical
+family $`\rho^nt`$. Source sizes in (108.1) and (109.1) are mathematical
+parameters, not acquired size or index advice. These additional
+correspondences are not premises proved by Theorems 108.2 and 109.2.
+
+The original-source and permission conditions remain those of
+[Continuation I, Definition 58.1 and §62](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md),
+Assumptions 97.1, 102.3 and 106.3, and
+[native leaf-depth/contact, Assumptions 1.2 and Definition 1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md).
+A joint stochastic interpretation must keep one common realization,
+as in [common-source positivity, Definition C-30.1](AURIC_FIB_ATOM_COMMON_SOURCE_POSITIVITY_AND_HISTORICAL_PREFIXES.md),
+[local-clock seam, Assumption 18 and Theorem 22](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md)
+and [pyramid correlation, Definition 21.10](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md).
+The marked-output acquisition laws of
+[Kbonacci acquisition, §§77–82](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md)
+retain their own target and consumer; by their Theorem 82.1 they do not
+recover the unchanged original target, and supply none of the occurrence
+actuators here. A physical clock, physical spatial realization or a claim
+of three spatial dimensions would require its own correspondence beyond
+these assumptions.
+
+## 109.99 追加锚（本行以下为增补区）
