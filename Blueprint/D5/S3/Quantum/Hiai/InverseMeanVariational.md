@@ -4,7 +4,19 @@
 
 An inverse-mean trace variational formula in every finite complex dimension.
 
-**Theorem 1.1 (Universal bound and explicit optimizer).**
+**Theorem 1.1 (Shared column Gram spectral trace).**
+
+$$\forall u: \operatorname{Level}(), d: \operatorname{Type}(u), [\operatorname{Fintype}(d)], [\operatorname{DecidableEq}(d)],\ A: \operatorname{Matrix}(d, d, \mathbb{C}), r: \mathbb{R}, 0<r\implies\ \operatorname{rpow}(\operatorname{schattenNorm}(A, r), r)=\operatorname{tracePower}(\frac{r}{2}, \operatorname{adjoint}(A)A)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Hiai/InverseMeanVariational.norm_rpow_gram` (`✓ std3`). ∎
+
+*Citation.* Haonan Zhang (2020). *From Wigner-Yanase-Dyson conjecture to Carlen-Frank-Lieb conjecture*. URL: <https://arxiv.org/abs/1811.01205v2>.
+
+*Commentary.*
+
+For every finite complex square matrix A and r > 0, the Schatten r expression to exponent r equals tracePower (r/2) of A* A. This original proof is consumed by both the inverse-mean variational bound and reverse trace Young. It also includes empty dimension and singular A. The audit remains unfinished under #5214: no faithful enrolled template supplies the full matrix telescope with rigid universe reconstruction and sensitivity evidence.
+
+**Theorem 1.2 (Universal bound and explicit optimizer).**
 
 $$\forall u: \operatorname{Level}(),\ d: \operatorname{Type}(u), [\operatorname{Fintype}(d)], [\operatorname{DecidableEq}(d)],\ X, M: \operatorname{Matrix}(d, d, \mathbb{C}),\ r: \mathbb{R},\ \operatorname{PosDef}(X)\land \operatorname{PosDef}(M)\land 0<r\implies\ \exists Z: \operatorname{Matrix}(d, d, \mathbb{C}),\ \operatorname{IsUnit}(Z)\land Z=\operatorname{inverse}(M)X\land \operatorname{objective}(r, X, M, Z)=\operatorname{tracePower}(r, X\operatorname{inverse}(M)X)\land(\forall W: \operatorname{Matrix}(d, d, \mathbb{C}),\ \operatorname{objective}(r, X, M, W)\le\operatorname{tracePower}(r, X\operatorname{inverse}(M)X))$$
 
@@ -26,5 +38,6 @@ This is a concrete specialization of Zhang's variational method, not a claim of 
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Hiai/InverseMeanVariational.norm_rpow_gram`
 - Truth anchor: `D5/S3/Quantum/Hiai/InverseMeanVariational.variational_bound_and_attainment`
 - Dependency: [D5/S3/Quantum/Schatten/Holder](../Schatten/Holder.md)

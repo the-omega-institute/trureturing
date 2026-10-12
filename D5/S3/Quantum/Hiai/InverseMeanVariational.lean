@@ -29,7 +29,8 @@ private lemma tracePower_eq_sum {A : Matrix d d ℂ} (hA : A.PosSemidef) (r : �
   rw [tracePower, CFC.rpow_eq_cfc_real hA.nonneg, hA.isHermitian.cfc_eq]
   simp [Matrix.IsHermitian.cfc, Matrix.trace_mul_comm, Matrix.mul_assoc]
 
-private lemma norm_rpow_gram (A : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
+/-- Schatten powers are spectral traces of the column Gram matrix, including empty dimension. -/
+lemma norm_rpow_gram (A : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
     schattenNorm A r ^ r = tracePower (r / 2) (Aᴴ * A) := by
   rw [schattenNorm_rpow_eq_sum_singularValues A hr,
     tracePower_eq_sum (Matrix.posSemidef_conjTranspose_mul_self A)]

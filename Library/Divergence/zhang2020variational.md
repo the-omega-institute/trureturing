@@ -32,6 +32,18 @@ Hiai Problem 5.18, arXiv:2510.04691v3. It does not prove that problem's two
 outer-power trace curvature suppliers, the inverse geometric-mean identity,
 or the support-constrained semidefinite boundary extension.
 
+For positive definite M and W and every real a >= 1, the reverse trace Young
+bound is a Re Tr(M to exponent 1/a) <= Re Tr(M W to exponent 1-a)
++ (a-1) Re Tr W. The minimum over positive definite W is attained at
+W = M to exponent 1/a. For a > 1, factor M to exponent one half as
+U V with U = M to exponent one half W to exponent (1-a)/2 and
+V = W to exponent (a-1)/2. Schatten Holder at (2/a, 2, 2/(a-1)) and
+weighted scalar AM-GM give the bound. Gram traces prove nonnegativity
+even though the mixed product need not be selfadjoint. At a=1 the
+objective is independent of W. Empty matrix dimension remains in scope.
+This is a classical supplier, not a new mathematical inequality. It does
+not assert an attained positive definite optimizer for singular M.
+
 ## Verified locator
 
 https://arxiv.org/abs/1811.01205v2

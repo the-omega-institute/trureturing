@@ -9,6 +9,19 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An inverse-mean trace variational formula in every finite complex dimension.",
         H("InverseMeanVariational"), Blocks(
+            Describe.Lean(DescribeId.Create("norm-rpow-gram"),
+                DeclarationHandle.Create("D5/S3/Quantum/Hiai/InverseMeanVariational.norm_rpow_gram"),
+                H("Shared column Gram spectral trace"), StatementSource.FromAuthor(Gram()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Divergence/zhang2020variational")),
+                Blocks(Paragraph(Text("For every finite complex square matrix A and r > 0, "
+                    + "the Schatten r expression to exponent r equals tracePower (r/2) "
+                    + "of A* A. This original proof is consumed by both the inverse-mean "
+                    + "variational bound and reverse trace Young. It also includes empty "
+                    + "dimension and singular A. The audit remains unfinished under #5214: "
+                    + "no faithful enrolled template supplies the full matrix telescope "
+                    + "with rigid universe reconstruction and sensitivity evidence."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("variational-bound-attainment"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Hiai/InverseMeanVariational.variational_bound_and_attainment"),
@@ -47,6 +60,7 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
                     + "Neither curvature supplier is assumed by this theorem."))),
                 DescribeRole.Theorem))));
 
+    private static Formula Frac(Formula x, Formula y) => new Formula.Fraction(x, y);
     private static Formula Call(string name, params Formula[] args)
     {
         var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
@@ -57,6 +71,19 @@ internal sealed class InverseMeanVariationalDocument : IScribeDocumentDefinition
         }
         items.Add(Close);
         return Seq([.. items]);
+    }
+    private static Formula Gram()
+    {
+        var d = F.Id("d"); var a = F.Id("A"); var r = F.Id("r");
+        var matrix = Call("Matrix", d, d, Seq(Mathbb, Grp(F.Id("C"))));
+        return Seq(Forall, Sp, F.Id("u"), Colon, Sp, Call("Level"), Comma, Sp,
+            d, Colon, Sp, Call("Type", F.Id("u")), Comma, Sp,
+            OpenBracket, Call("Fintype", d), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", d), CloseBracket, Comma, Esc,
+            a, Colon, Sp, matrix, Comma, Sp, r, Colon, Sp,
+            Seq(Mathbb, Grp(F.Id("R"))), Comma, Sp, D(0), Lt, r, Implies, Esc,
+            Call("rpow", Call("schattenNorm", a, r), r), Eq,
+            Call("tracePower", Frac(r, D(2)), Seq(Call("adjoint", a), a)));
     }
     private static Formula Endpoint()
     {
