@@ -99,23 +99,4 @@ theorem compatible_stage_classification
         z * (continuation * z⁻¹) = continuation * (z * z⁻¹) := by ac_rfl
         _ = continuation := by rw [ENNReal.mul_inv_cancel hz hz_top, mul_one]
 
-/-! A common table is chosen once for all parameters.  Its rows are indexed by
-the batch level, rather than by the unknown Bernoulli rates. -/
-
-def commonStageTable (z : ℕ → ℝ≥0∞) (delta : ℕ → E → ℝ≥0∞)
-    (continuation : ℕ → ℝ≥0∞) (hmass : ∀ k, (∑ e, delta k e) + continuation k = z k)
-    (hz_top : ∀ k, z k ≠ ∞) : ℕ → PMF (Option E) :=
-  fun k => stageRow (z k) (delta k) (continuation k) (hmass k) (hz_top k)
-
-theorem commonStageTable_classification
-    (z : ℕ → ℝ≥0∞) (delta : ℕ → E → ℝ≥0∞)
-    (continuation : ℕ → ℝ≥0∞)
-    (hmass : ∀ k, (∑ e, delta k e) + continuation k = z k)
-    (hz_top : ∀ k, z k ≠ ∞) :
-    ∀ k, (∀ e, z k * commonStageTable z delta continuation hmass hz_top k (some e) = delta k e) ∧
-      z k * commonStageTable z delta continuation hmass hz_top k none = continuation k := by
-  intro k
-  exact compatible_stage_classification (z k) (delta k) (continuation k)
-    (hmass k) (hz_top k)
-
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
