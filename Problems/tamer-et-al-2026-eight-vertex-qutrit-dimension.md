@@ -58,7 +58,7 @@ Issue #16223 records the literature check before any Lean:
 
 ## Falsifier
 
-The settlement would fail if η_d were taken over complex vectors and a complex qutrit realization exceeded 3, if the edge lists differed from Table VI, or if Eq. (13) imposed conditions beyond unit norm and edge orthogonality. The module follows Eq. (13): real unit vectors, orthogonal on edges, nothing else. Coincident rays and non-orthogonal non-edges are allowed. The ℝ³ argument uses only orthogonal complements, Parseval and Bessel, which hold verbatim over ℂ³. So the bound holds for complex qutrit realizations too (not formalized).
+The settlement would fail if η_d were taken over complex vectors and a complex qutrit realization exceeded 3, if the edge lists differed from Table VI, or if Eq. (13) imposed conditions beyond unit norm and edge orthogonality. The module follows Eq. (13): real unit vectors, orthogonal on edges, nothing else. Coincident rays and non-orthogonal non-edges are allowed. The ℝ³ argument uses only orthogonal complements, Parseval and Bessel. Over ℂ³ it applies with rays identified up to a unit-modulus phase and overlaps |⟨ψ, v⟩|², so the bound holds for complex qutrit realizations too (not formalized).
 
 ## Evidence
 
@@ -95,13 +95,14 @@ Every other declaration is a definition used by `claim` or a private helper on t
 
 **Established inside the proof.**
 - The square lemma in ℝ³.
-- Every real qutrit realization of W or G₅ has witness operator 2I + P_x + P_y, with x ⊥ y unit vectors on an edge. Its spectrum is therefore {3, 3, 2}.
+- For every real qutrit realization of W or G₅ there is an edge (i, j) with Σ_k ⟨ψ, v_k⟩² = 2‖ψ‖² + ⟨ψ, v_i⟩² + ⟨ψ, v_j⟩² for every ψ, and v_i ⊥ v_j.
 - The exact four-dimensional values 49449/15625 (W) and 846537181/276109725 (G₅).
 
 **Argued, not formalized.**
 - *The mechanism.* In three dimensions every four-cycle of an exclusivity graph collapses: either its two diagonals coincide as rays, or the other two do. W and G₅ are covered so densely by four-cycles (and, for G₅, a triangle) that every realization is rigidly a doubled orthonormal basis plus one orthogonal pair. The witness operator is then 3I − R with R of rank one, so its top eigenvalue is exactly the classical bound. In four dimensions a four-cycle no longer collapses, which is where the CHSH violation of W, 2 + √2, lives.
-- *Complex qutrits.* The same proof works verbatim over ℂ³ (orthogonal complements, Parseval and Bessel are unchanged), so η₃ = 3 also for complex realizations. The ℂ³ case is not formalized.
-- *Rigidity.* Since every real qutrit realization has spectrum {3, 3, 2}, every one of them attains η₃ = 3, on a two-dimensional eigenspace. No realization falls below the classical bound, so the qutrit value of these witnesses is the same for all realizations.
+- *The witness operator.* The decomposition says that the witness operator Σ_k |v_k⟩⟨v_k| equals 2I + P_x + P_y with x ⊥ y unit vectors, so its spectrum is {3, 3, 2}. The module states the quadratic-form identity, not a spectrum.
+- *Complex qutrits.* Over ℂ³ the same argument applies once rays are identified up to a unit-modulus phase and overlaps are taken as |⟨ψ, v⟩|². The square lemma, the forced third ray, Parseval and Bessel then hold with these changes, so η₃ = 3 also for complex realizations. The ℂ³ case is not formalized.
+- *Rigidity.* Since the witness operator of every real qutrit realization has spectrum {3, 3, 2}, every one of them attains η₃ = 3, on a two-dimensional eigenspace. No realization falls below the classical bound, so the qutrit value of these witnesses is the same for all realizations.
 
 **Open.**
 - The exact η₃ values 1 + √5 that the paper reports numerically for the graphs ranked 2 and 4.
