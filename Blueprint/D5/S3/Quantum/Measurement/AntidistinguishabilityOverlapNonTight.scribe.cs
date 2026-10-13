@@ -27,7 +27,10 @@ internal sealed class AntidistinguishabilityOverlapNonTightDocument : IScribeDoc
             Describe.Lean(DescribeId.Create("result"),
                 DeclarationHandle.Create(Owner + ".result"), H("result"),
                 StatementSource.FromAuthor(Disp(Formula3())), AssessedProvenance.FromRepo(Paper),
-                Blocks(Paragraph(Text("The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("johnston-russo-sikora-2025-antidistinguishability-tightness"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Formula0() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, F.Id("IsTight"), Sp, F.Id("n"), Sp, Eq, Sp, Forall, Sp, Varepsilon, Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))), Sp, Comma, Sp, Varepsilon, Sp, Gt, Sp, D(0), Sp, To, Sp, Exists, Sp, Parenthesized(Seq(F.Id("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(Psi, Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"), Sp, To, Sp, F.Id("EuclideanSpace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("d"))))), Sp, Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, Vert, Sp, Psi, Sp, F.Id("i"), Sp, Vert, Sp, Eq, Sp, D(1))), Sp, Land, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, F.Id("j"), Sp, Colon, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Comma, Sp, F.Id("i"), Sp, Neq, Sp, F.Id("j"), Sp, To, Sp, Vert, Sp, F.Id("inner"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(Psi, Sp, F.Id("i"))), Sp, Parenthesized(Seq(Psi, Sp, F.Id("j"))), Sp, new Formula.Power(Vert, D(2)), Sp, Leq, Sp, F.Id("cSq"), Sp, F.Id("n"), Sp, Plus, Sp, Varepsilon)), Sp, Land, Sp, Neg, Sp, F.Id("IsAntidistinguishable"), Sp, Psi);
