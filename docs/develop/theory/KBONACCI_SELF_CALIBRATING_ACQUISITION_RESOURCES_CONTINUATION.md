@@ -3297,3 +3297,1413 @@ with actual original tapes and counted queries; it does not change
 the original consumer or its nonatomic target laws.
 
 ## 追加锚（本行以下为增补区）
+
+## 130. The complete adjacent C3-saturated five-active domain
+
+**Definition 130.1 (Original contract and adjacent domain).** Retain
+Definitions 108.1--108.2 and 110.1, and Acquisition Resources,
+Definitions 71.1, 73.1 and 90.1. In particular the actual source is
+$X=\{(r,g):r\text{ prime},\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\}$,
+with integer $g$, static $N(r,g)=1+F_rg$,
+$q_i(x)=\mathbf1_{p_i\mid N(x)}$ and first absence $n(x)$.
+Every finite answer pattern is occupied by Boundaries, Theorem 35.2.
+There is no source distribution and no infinite all-positive actual source.
+The full original measurable tape carrier is
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$,
+with each block a copy of $(0,1)$ and its disjoint-union Borel sigma algebra.
+The marks remain $\theta_j=(B_1,1/(j+2))$.
+The separately selected law is
+$\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}}$;
+the original consumer and nonatomic targets $\mu_x$ remain those of
+Source-Correlated Laws, Theorem 67.5.
+
+Both original classes use zero advice, one source-independent seed,
+measurable records and output, and actual sourcewise almost-sure finite
+handoff. Once the seed is fixed there is one deterministic rule for all
+sources. $\mathcal N_2$ preselects and acquires at most two requests;
+$\mathcal O_2$ preselects an increasing schedule of length at most two
+and stops at its first queried zero or exhaustion. All actual requests,
+including repetitions and ignored completion replies, count. Competitors
+may choose arbitrary addresses and any tape in $\Theta$. This hard count
+is not a maximum address, depth, processing time or mean count.
+
+For every full prescribed sequence $1\ge a_1\ge a_2\ge\cdots>0$
+tending to zero and cap $\varepsilon>0$, put
+
+$$
+\begin{aligned}
+\delta&=1-a_2,&h&=a_1-a_2,&S&=a_3+a_4+a_5,&M&=5a_3-a_4-a_5,\\
+\kappa_3&=29\varepsilon-2a_2-4a_3-5a_4-5a_5+2,\\
+\sigma&=18\varepsilon-2a_2-3S+2.
+\end{aligned}
+\tag{130.1}
+$$
+
+The strict adjacent domain $\mathcal D_{\rm adj}$ consists of precisely
+
+$$
+\begin{gathered}
+1\ge a_1\ge a_2\ge a_3\ge a_4\ge a_5>\varepsilon>0,
+\qquad a_6\le\varepsilon,\qquad \kappa_3=0,\quad\sigma>0,\\
+3\varepsilon<D_3(a,\varepsilon)\le3\varepsilon+1-a_1,
+\qquad D_3=\sum_{n\ge3}(a_n-\varepsilon)_+=S-3\varepsilon.
+\end{gathered}
+\tag{130.2}
+$$
+
+All actual positive vanishing tails are retained. Their residuals vanish;
+the amplitudes themselves do not. Define the five affine cuts
+
+$$
+\begin{aligned}
+F_1&=35a_3-7a_4-7a_5-32\delta,\\
+F_2&=a_3-6a_4+23a_5-15\delta,\\
+F_3&=6a_4+6a_5-a_3-14\delta,\\
+F_4&=18a_3+8a_4-21a_5-9\delta,\\
+F_5&=27a_4-19a_3-2a_5-5\delta.
+\end{aligned}
+\tag{130.3}
+$$
+
+On $B_5=\{0,1\}^5$ use all six labels $J_5=\{0,\ldots,5\}$.
+For a word with first zero $n$, its finite target is
+$\eta_b=(1-a_n)e_0+a_ne_n$, and $\eta_{11111}=e_0$.
+The cap slice $\mathcal F_N$ and coefficient region $\mathscr C_5$
+are exactly Definitions 110.1 and 108.2. The cap has 94 separate rows:
+three for each of the 31 zero words, and one for $11111$.
+Indeed the supplied identity (84.2) is
+
+$$
+\operatorname{TV}(p,\eta_b)
+=\max\{0,1-a_n-p(0),a_n-p(n),1-p(0)-p(n)\}.
+\tag{130.4}
+$$
+
+Thus the union row $p(0)+p(n)\ge1-\varepsilon$ is a separate
+constraint; adding the two singleton demands does not replace it.
+
+**Theorem 130.2 (Complete adjacent existential cap equivalence).**
+For every original sequence and cap in $\mathcal D_{\rm adj}$,
+
+$$
+\begin{aligned}
+\exists N\in\mathcal N_2:\ e_a(N)\le\varepsilon
+&\ \Longleftrightarrow\ \exists O\in\mathcal O_2:\ e_a(O)\le\varepsilon\\
+&\ \Longleftrightarrow\ \mathcal F_N(a,\varepsilon)\cap\mathscr C_5\ne\varnothing\\
+&\ \Longleftrightarrow\ F_i\ge0\quad(1\le i\le5).
+\end{aligned}
+\tag{130.5}
+$$
+
+When feasible, one continuous finite-law construction attains the cap
+exactly on every actual tail and supplies $O$ and its completed $N$
+with one common seed and identical laws. This replaces the whole law;
+it need not preserve an input $N$ law. Sections 131--136 prove the claim.
+
+**Lemma 130.3 (Head and residual identities).** At $\kappa_3=0$,
+
+$$
+\begin{aligned}
+29(S-6\varepsilon)&=12\delta+M,&29\sigma&=22\delta-3M,\\
+S-6\varepsilon&=(2\delta-\sigma)/3,&
+H_{\rm head}&=(17\delta-M)/29=(\delta+\sigma)/3.
+\end{aligned}
+\tag{130.6}
+$$
+
+The sign of $M$ in the first identity is positive. On the feasible strict
+domain, $\delta>0$ and
+
+$$
+\begin{gathered}
+0<\sigma\le2\delta/7,\qquad
+0\le h\le H_{\rm head},\qquad
+\delta/3<H_{\rm head}\le3\delta/7,\\
+4\delta/7\le S-6\varepsilon<2\delta/3,\qquad
+6\varepsilon<S\le7\varepsilon.
+\end{gathered}
+\tag{130.7}
+$$
+
+**Proof.** Substitute
+$29\varepsilon=-2\delta+4a_3+5a_4+5a_5$ to obtain (130.6).
+The retained upper residual condition, or the necessary supplier 113.2,
+is $S-6\varepsilon\le\delta-h$, equivalent to $h\le H_{\rm head}$.
+The cut $F_1\ge0$ says $M\ge32\delta/7$; $\sigma>0$ says
+$M<22\delta/3$. These give the residual interval and sigma bound.
+The cut $F_3\ge0$ is equivalent on this hyperplane to $S\le7\varepsilon$.
+If $\delta=0$, order gives $M=3a_5+4(a_4-a_5)+5(a_3-a_4)>0$,
+contradicting $29\sigma=-3M>0$. Hence $\delta>0$.
+The head bounds follow from its identity. $\square$
+
+## 131. Full schedule saturation and five shared-budget cuts
+
+**Definition 131.1 (Literal events and scores).** Number the following
+16 rows by $r=1,\ldots,16$. Coincident words with different events are
+different rows. $C_3,J_1,\ldots,J_5,K_5$ denote the scores obtained by
+weighting the event probabilities, with $K_5=C_3+J_5$.
+
+| Row | Word | Event | C3 | J1 | J2 | J3 | J4 | J5 | K5 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 00100 | {0,1} | 1 | 0 | 1 | 0 | 0 | 1 | 2 |
+| 2 | 00110 | {0,1} | 1 | 2 | 0 | 0 | 1 | 0 | 1 |
+| 3 | 01000 | {0,1} | 1 | 1 | 1 | 0 | 0 | 1 | 2 |
+| 4 | 01010 | {0,1} | 1 | 2 | 1 | 1 | 1 | 1 | 2 |
+| 5 | 01100 | {0,1} | 1 | 3 | 1 | 1 | 1 | 0 | 1 |
+| 6 | 10000 | {0,2} | 1 | 1 | 1 | 1 | 0 | 1 | 2 |
+| 7 | 10010 | {0,2} | 1 | 2 | 1 | 0 | 1 | 1 | 2 |
+| 8 | 10100 | {2} | 1 | 0 | 1 | 0 | 0 | 1 | 2 |
+| 9 | 10100 | {0,2} | 1 | 3 | 1 | 0 | 1 | 0 | 1 |
+| 10 | 10110 | {2} | 1 | 2 | 0 | 0 | 1 | 0 | 1 |
+| 11 | 11000 | {3} | 2 | 2 | 1 | 0 | 0 | 1 | 3 |
+| 12 | 11000 | {0,3} | 1 | 2 | 1 | 0 | 1 | 0 | 1 |
+| 13 | 11010 | {3} | 2 | 3 | 2 | 1 | 2 | 2 | 4 |
+| 14 | 11100 | {4} | 5 | 8 | 4 | 1 | 3 | 2 | 7 |
+| 15 | 11110 | {5} | 5 | 8 | 3 | 1 | 4 | 3 | 8 |
+| 16 | 11111 | {0} | 4 | 6 | 3 | 1 | 3 | 3 | 7 |
+
+For any score with weights $k_r$, any canonical schedule $Q$, its cell
+$z$, and any label $j\in J_5$, define
+
+$$
+g^k_{Qz}(j)=\sum_{r:b^r|_Q=z}k_r\mathbf1_{j\in E_r},\qquad
+M^k_{Qz}=\max_{j\in J_5}g^k_{Qz}(j),\qquad
+B^k_Q=\sum_zM^k_{Qz}.
+\tag{131.1}
+$$
+
+This literal formula reconstructs every label score, including zeros.
+Canonical schedules are empty, the five singletons and all ten distinct
+increasing pairs. For a singleton cells are $0,1$; for a pair they
+remain separately $00,01,10,11$. Reverse pairs reorder these cells.
+A repeated request has only cells $00,11$ and singleton information;
+its original actual request cost is still two. The full C3 maxima and
+maximizer-label sets are as follows, before any support reduction.
+
+| Schedule | Cell maxima | Maximizer sets in cell order | Sum |
+| --- | --- | --- | --- |
+| empty | (13) | {0} | 13 |
+| 1 | (5,8) | {0,1}; {0} | 13 |
+| 2 | (5,8) | {0,2}; {0} | 13 |
+| 3 | (5,8) | {0,3}; {0} | 13 |
+| 4 | (6,7) | {0}; {0} | 13 |
+| 5 | (9,4) | {0}; {0} | 13 |
+| 12 | (2,3,5,5) | {0,1}; {0,1}; {2}; {0,3,4,5} | 15 |
+| 13 | (2,3,5,5) | {0,1}; {0,1}; {3}; {0,4,5} | 15 |
+| 14 | (3,2,5,5) | {0,1}; {0,1}; {4}; {0,5} | 15 |
+| 15 | (5,0,5,4) | {0,1}; {0,1,2,3,4,5}; {2,3,4,5}; {0} | 14 |
+| 23 | (2,3,5,5) | {0,2}; {0,2}; {3}; {0,4,5} | 15 |
+| 24 | (3,2,5,5) | {0,2}; {0,2}; {4}; {0,5} | 15 |
+| 25 | (5,0,5,4) | {0,2}; {0,1,2,3,4,5}; {3,4,5}; {0} | 14 |
+| 34 | (3,2,5,5) | {0,3}; {0,3}; {4}; {0,5} | 15 |
+| 35 | (5,0,5,4) | {0,3}; {0,1,2,3,4,5}; {4,5}; {0} | 14 |
+| 45 | (6,0,5,4) | {0}; {0,1,2,3,4,5}; {5}; {0} | 15 |
+
+**Lemma 131.2 (Saturation from the entire N5 class).** Every finite
+$\mathscr N_5$ kernel has $C_3(p)\le15$. At a feasible
+$\kappa_3=0$ cap, all 16 C3 events are tight and a representation has
+support only on pairs $12,13,14,23,24,34,45$, using precisely the
+maximizer-label restrictions in the preceding table.
+
+**Proof.** A common terminal-mass representation gives schedule weight
+$w_Q$ and nonnegative cell masses $T_{Qz}(j)$, with
+$\sum_jT_{Qz}(j)=w_Q$ for every cell and $\sum_Qw_Q=1$.
+The schedule and all deterministic cell outputs are fixed by one seed.
+Its score is at most $B^{C_3}_Q\le15$; integrating proves the bound.
+For the target, the table gives
+
+$$
+C_3(\eta)=13+2a_2+4a_3+5a_4+5a_5,\qquad
+\sum_r k^{C_3}_r=29.
+\tag{131.2}
+$$
+
+Each event obeys $p_{b^r}(E_r)\ge\eta_{b^r}(E_r)-\varepsilon$,
+so $C_3(p)\ge15-\kappa_3$. At $\kappa_3=0$ equality follows.
+The exact nonnegative loss decomposition is
+
+$$
+15-C_3(p)=\sum_Q(15-B^{C_3}_Q)w_Q+
+ \sum_{Q,z,j}(M^{C_3}_{Qz}-g^{C_3}_{Qz}(j))T_{Qz}(j).
+\tag{131.3}
+$$
+
+Every summand must vanish. Empty and singleton schedules, thus also
+repeated-coordinate schedules, and pairs $15,25,35$ have zero weight.
+All remaining positive masses use C3 maximizers. Separately, the weighted
+sum of nonnegative event gaps
+$p_{b^r}(E_r)-\eta_{b^r}(E_r)+\varepsilon$ is zero; all C3 weights
+are positive, so every event is tight. The $00,01$ masses remain distinct
+N vectors even when their allowed sets agree. Pair $45/01$ has score
+zero for all six labels and keeps all six labels and its full-word rows.
+For original necessity first apply 110.2 to the unrestricted
+arbitrary-address/full-carrier competitor. This deduction concerns its
+finite feasible representative, without restricting the original rule's
+addresses, tapes or exact laws. $\square$
+
+**Lemma 131.3 (Five-cut elimination on the saturated representation).**
+Every feasible saturated representation satisfies (130.3).
+
+**Proof.** Maximize each J score over the allowed sets of Lemma 131.2,
+separately on all four N cells. The resulting complete tables are:
+
+| Pair | J1 maxima | J2 maxima | J3 maxima | J4 maxima | J5 maxima |
+| --- | --- | --- | --- | --- | --- |
+| 12 | (2,6,8,8) | (1,3,4,4) | (0,2,1,1) | (1,2,3,4) | (1,2,3,3) |
+| 13 | (3,5,7,9) | (2,2,4,4) | (1,1,1,1) | (1,2,3,4) | (2,1,3,3) |
+| 14 | (4,4,8,8) | (3,1,4,4) | (1,1,1,1) | (1,2,3,4) | (2,1,2,4) |
+| 23 | (3,5,7,9) | (2,2,4,4) | (1,0,1,2) | (1,2,3,4) | (2,1,3,3) |
+| 24 | (4,4,8,8) | (3,1,4,4) | (1,0,1,2) | (1,2,3,4) | (2,1,2,4) |
+| 34 | (4,4,8,8) | (3,2,4,3) | (1,1,1,1) | (1,2,3,4) | (2,2,2,3) |
+| 45 | (10,0,8,6) | (6,0,3,3) | (2,0,1,1) | (3,0,4,3) | (3,0,3,3) |
+
+The sums on each permitted pair are respectively $24,12,4,10,9$.
+This is one budget: summing the cell bounds gives these same bounds
+multiplied by $\sum_Qw_Q=1$. No cell is assigned a separate unit budget.
+In particular $45/01$ contributes zero for every allowed label.
+The exact target score and row-weight sums are:
+
+| Score | Target score | Weight sum | Saturated upper |
+| --- | --- | --- | --- |
+| J1 | $22+2a_2+5a_3+8a_4+8a_5$ | 45 | 24 |
+| J2 | $11+a_2+3a_3+4a_4+3a_5$ | 22 | 12 |
+| J3 | $4+S$ | 7 | 4 |
+| J4 | $9+a_2+2a_3+3a_4+4a_5$ | 19 | 10 |
+| J5 | $8+a_2+3a_3+2a_4+3a_5$ | 17 | 9 |
+
+The lower bound is target score minus the displayed weight sum times
+$\varepsilon$, including every union event with one cap subtraction.
+Substituting the C3 hyperplane, 29 times upper minus this lower bound
+is exactly $F_1,\ldots,F_5$ respectively. Thus all five cuts are
+necessary. The event and maximum tables are integer certificates for
+all labels and cells via (131.1), not scalar tests on selected inputs
+or separate optimizations of incompatible terminal laws. $\square$
+
+## 132. Compact ratio geometry and conforming continuous weights
+
+**Definition 132.1 (The eight-facet ratio polytope).** Let $P\subset\mathbb R^3$
+be the intersection $N_f\cdot(t,u,v)\le b_f$ of these eight half-spaces;
+facet indices and vertex indices start at zero.
+
+| Facet f | Normal N_f | Upper b_f |
+| --- | --- | --- |
+| 0 | (-1,1,0) | 0 |
+| 1 | (0,-1,1) | 0 |
+| 2 | (-35,7,7) | -32 |
+| 3 | (-1,6,-23) | -15 |
+| 4 | (1,-6,-6) | -14 |
+| 5 | (-18,-8,21) | -9 |
+| 6 | (19,-27,2) | -5 |
+| 7 | (15,-3,-3) | 22 |
+
+Its nine vertices and their active facets are:
+
+| Vertex | (t,u,v) | Active facets |
+| --- | --- | --- |
+| R0 | (10/7,9/7,9/7) | (1,2,4,5,6) |
+| R1 | (10/7,10/7,8/7) | (0,2,4) |
+| R2 | (3/2,3/2,10/7) | (0,2,5) |
+| R3 | (8/5,8/5,1) | (0,3,4) |
+| R4 | (9/5,9/5,9/5) | (0,1,5) |
+| R5 | (2,5/3,1) | (3,4,6,7) |
+| R6 | (19/9,19/9,10/9) | (0,3,7) |
+| R7 | (20/9,17/9,17/9) | (1,6,7) |
+| R8 | (22/9,22/9,22/9) | (0,1,7) |
+
+**Lemma 132.2 (Exact compact coverage).** $P$ is precisely the convex
+hull of these nine vertices. The following is the complete classification
+of the 56 three-facet systems. An infeasible row gives its exact solution,
+a violated facet and its positive violation. A singular row has zero
+determinant; a feasible row names its vertex.
+
+| Facets | Type | Solution or vertex | Violated facet | Positive gap |
+| --- | --- | --- | --- | --- |
+| (0,1,2) | infeasible | (32/21,32/21,32/21) | 5 | 29/21 |
+| (0,1,3) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (0,1,4) | infeasible | (14/11,14/11,14/11) | 2 | 58/11 |
+| (0,1,5) | feasible | R4 | — | — |
+| (0,1,6) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (0,1,7) | feasible | R8 | — | — |
+| (0,2,3) | infeasible | (29/21,29/21,20/21) | 4 | 29/21 |
+| (0,2,4) | feasible | R1 | — | — |
+| (0,2,5) | feasible | R2 | — | — |
+| (0,2,6) | singular | — | — | — |
+| (0,2,7) | singular | — | — | — |
+| (0,3,4) | feasible | R3 | — | — |
+| (0,3,5) | infeasible | (18/17,18/17,15/17) | 2 | 145/17 |
+| (0,3,6) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (0,3,7) | feasible | R6 | — | — |
+| (0,4,5) | infeasible | (4/3,4/3,11/9) | 2 | 29/9 |
+| (0,4,6) | infeasible | (1,1,3/2) | 1 | 1/2 |
+| (0,4,7) | infeasible | (2,2,2/3) | 3 | 29/3 |
+| (0,5,6) | infeasible | (3/4,3/4,1/2) | 2 | 29/2 |
+| (0,5,7) | infeasible | (5/2,5/2,8/3) | 1 | 1/6 |
+| (0,6,7) | singular | — | — | — |
+| (1,2,3) | infeasible | (26/21,17/21,17/21) | 4 | 116/21 |
+| (1,2,4) | feasible | R0 | — | — |
+| (1,2,5) | feasible | R0 | — | — |
+| (1,2,6) | feasible | R0 | — | — |
+| (1,2,7) | singular | — | — | — |
+| (1,3,4) | infeasible | (-2,1,1) | 0 | 3 |
+| (1,3,5) | infeasible | (12/11,9/11,9/11) | 2 | 58/11 |
+| (1,3,6) | infeasible | (5/6,5/6,5/6) | 2 | 29/2 |
+| (1,3,7) | infeasible | (16/9,7/9,7/9) | 4 | 58/9 |
+| (1,4,5) | feasible | R0 | — | — |
+| (1,4,6) | feasible | R0 | — | — |
+| (1,4,7) | infeasible | (2,4/3,4/3) | 6 | 29/3 |
+| (1,5,6) | feasible | R0 | — | — |
+| (1,5,7) | infeasible | (8/3,3,3) | 0 | 1/3 |
+| (1,6,7) | feasible | R7 | — | — |
+| (2,3,4) | infeasible | (10/7,11/7,1) | 0 | 1/7 |
+| (2,3,5) | infeasible | (8/7,3/7,5/7) | 1 | 2/7 |
+| (2,3,6) | infeasible | (4/3,25/21,19/21) | 4 | 58/21 |
+| (2,3,7) | singular | — | — | — |
+| (2,4,5) | feasible | R0 | — | — |
+| (2,4,6) | feasible | R0 | — | — |
+| (2,4,7) | singular | — | — | — |
+| (2,5,6) | feasible | R0 | — | — |
+| (2,5,7) | singular | — | — | — |
+| (2,6,7) | singular | — | — | — |
+| (3,4,5) | infeasible | (1,3/2,1) | 0 | 1/2 |
+| (3,4,6) | feasible | R5 | — | — |
+| (3,4,7) | feasible | R5 | — | — |
+| (3,5,6) | infeasible | (16/15,1,13/15) | 2 | 116/15 |
+| (3,5,7) | infeasible | (4/3,-1,1/3) | 1 | 4/3 |
+| (3,6,7) | feasible | R5 | — | — |
+| (4,5,6) | feasible | R0 | — | — |
+| (4,5,7) | infeasible | (2,1,5/3) | 1 | 2/3 |
+| (4,6,7) | feasible | R5 | — | — |
+| (5,6,7) | infeasible | (7/3,2,7/3) | 1 | 1/3 |
+
+**Proof.** Put $x=t-u\ge0$, $y=u-v\ge0$ and
+$m=5t-u-v=3v+4y+5x$. Facets 2 and 7 give
+$32/7\le m\le22/3$. Facet 3 is $18v-5y+x\ge15$;
+substitution gives $29(x+y)\le6m-15\le29$. Thus $x,y$ are
+bounded between zero and one and $v=(m-4y-5x)/3$ is bounded.
+Hence $P$ is closed and bounded. The arithmetic centroid
+
+$$
+C=(10417/5670,9907/5670,4127/2835)=\frac19\sum_{j=0}^8R_j
+\tag{132.1}
+$$
+
+satisfies every inequality strictly, proving nonempty interior.
+The literal systems above give eight singular, 27 infeasible and 21
+feasible bases with exactly the nine displayed solutions.
+If active normals fail to span $\mathbb R^3$, a nonzero annihilating
+displacement preserves their equalities and, for a sufficiently small
+movement in both directions, every inactive inequality. The point is
+not extreme. Thus every vertex has an independent active triple and
+appears in the table; conversely every listed vertex has such a triple.
+For any other point in its minimal face, a nonzero tangent displacement
+extends by compactness to a chord with endpoints on proper subfaces.
+The point is a convex mixture of those endpoints. Induction on face
+dimension terminates at vertices and proves the whole convex-hull
+identity, rather than inferring continuum coverage from an endpoint scan.
+$\square$
+
+**Lemma 132.3 (A conforming fourteen-tetrahedron interpolation).** The
+following facet cycles and their fans triangulate the entire boundary.
+
+| Facet | Cyclic vertex indices | Fan triangles |
+| --- | --- | --- |
+| 0 | (1,2,4,8,6,3) | (1,2,4); (1,4,8); (1,8,6); (1,6,3) |
+| 1 | (0,4,8,7) | (0,4,8); (0,8,7) |
+| 2 | (0,1,2) | (0,1,2) |
+| 3 | (3,5,6) | (3,5,6) |
+| 4 | (0,1,3,5) | (0,1,3); (0,3,5) |
+| 5 | (0,2,4) | (0,2,4) |
+| 6 | (0,5,7) | (0,5,7) |
+| 7 | (5,6,8,7) | (5,6,8); (5,8,7) |
+
+For each of the fourteen listed triangles $(i,j,k)$ use the tetrahedron
+$(C,R_i,R_j,R_k)$. These tetrahedra cover $P$ with disjoint interiors.
+There are continuous nonnegative functions $\mu_0,\ldots,\mu_8$ on
+$P$ satisfying
+
+$$
+\sum_j\mu_j(q)=1,\qquad q=\sum_j\mu_j(q)R_j.
+\tag{132.2}
+$$
+
+**Proof.** The cycles contain exactly the vertices on each facet;
+consecutive edges support their convex polygons. The fans cover those
+polygons with disjoint interiors. Along two facets' common original
+edge the triangulations agree. The fourteen boundary triangles have
+21 edges, each in two triangles. A ray from the strictly interior $C$
+meets the compact convex boundary in exactly one point. Coning each
+triangle to $C$ therefore covers $P$; intersections of tetrahedra are
+cones over common boundary faces, or just $C$. Each determinant is
+nonzero since $C$ is outside its facet plane.
+Assign nodal data $\mu(R_j)=e_j^{\rm vert}$ and
+$\mu(C)=(1/9,\ldots,1/9)$ in $\mathbb R^9$.
+On each tetrahedron solve the nonsingular barycentric system with
+columns $(C,1),(R_i,1),(R_j,1),(R_k,1)$. For barycentric coordinates
+$\alpha_C,\alpha_i,\alpha_j,\alpha_k$, set
+
+$$
+\mu_l=\alpha_C/9+\alpha_i\mathbf1_{l=i}
+                   +\alpha_j\mathbf1_{l=j}+\alpha_k\mathbf1_{l=k}.
+\tag{132.3}
+$$
+
+Inside the tetrahedron these are nonnegative, sum to one and recover
+$q$ by (132.1). On a common face each opposite coordinate vanishes
+and the remaining nodal data agree. Thus formulas agree on every
+overlap and are globally continuous. $\square$
+
+## 133. Nineteen exact stopped endpoint laws and all-word certificates
+
+**Definition 133.1 (Normalized ray/head endpoints).** For $R_j=(t_j,u_j,v_j)$
+of Section 132 put $\delta_j=1/(1+t_j)$ and
+
+$$
+\begin{aligned}
+a_2^j=a_3^j&=\delta_jt_j,&a_4^j&=\delta_ju_j,&a_5^j&=\delta_jv_j,\\
+\varepsilon_j&=\delta_j(-2+4t_j+5u_j+5v_j)/29,\\
+H_j&=\delta_j(17-5t_j+u_j+v_j)/29.
+\end{aligned}
+\tag{133.1}
+$$
+
+The endpoints $V_j^-$ and $V_j^+$ have these same five coordinates,
+and respectively $a_1^j=a_2^j$ and $a_1^j=a_2^j+H_j$.
+The auxiliary base is $V_{\rm base}=(1,1,0,0,0,0)$.
+In the following table divide every profile numerator by its denominator
+$d$. The coordinate order is $(a_1,a_2,a_3,a_4,a_5,\varepsilon)$.
+
+| Endpoint | d | Profile numerator |
+| --- | --- | --- |
+| Vbase | 1 | (1,1,0,0,0,0) |
+| V0- | 17 | (10,10,10,9,9,4) |
+| V0+ | 17 | (13,10,10,9,9,4) |
+| V1- | 17 | (10,10,10,10,8,4) |
+| V1+ | 17 | (13,10,10,10,8,4) |
+| V2- | 35 | (21,21,21,21,20,9) |
+| V2+ | 35 | (27,21,21,21,20,9) |
+| V3- | 13 | (8,8,8,8,5,3) |
+| V3+ | 13 | (10,8,8,8,5,3) |
+| V4- | 14 | (9,9,9,9,9,4) |
+| V4+ | 14 | (11,9,9,9,9,4) |
+| V5- | 9 | (6,6,6,5,3,2) |
+| V5+ | 9 | (7,6,6,5,3,2) |
+| V6- | 28 | (19,19,19,19,10,7) |
+| V6+ | 28 | (22,19,19,19,10,7) |
+| V7- | 29 | (20,20,20,17,17,8) |
+| V7+ | 29 | (23,20,20,17,17,8) |
+| V8- | 31 | (22,22,22,22,22,10) |
+| V8+ | 31 | (25,22,22,22,22,10) |
+
+The complete joint terminal data follow. For each row divide all three
+vectors and $w$ by the same endpoint denominator. Omitted pairs have
+weight and all vectors zero. Within a listed pair the three vectors each
+have mass $w$; pair weights sum to $d$. The cell $0$ means first queried
+zero, equally for $00$ and $01$; cells $10,11$ are distinct.
+Labels in a vector indicate its actual support, not a choice of a new
+budget or seed. The expanded nineteen tables contain 127 pair rows and
+381 terminal vectors.
+
+| Endpoint | Pair | w numerator | T0 numerator | T10 numerator | T11 numerator |
+| --- | --- | --- | --- | --- | --- |
+| Vbase | 12 | 1 | $e_1$ | $e_2$ | $e_0$ |
+| V0- | 12 | 5 | $5e_1$ | $5e_2$ | $3e_0+2e_5$ |
+| V0- | 13 | 3 | $2e_0+e_1$ | $3e_3$ | $3e_0$ |
+| V0- | 14 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V0- | 23 | 3 | $2e_0+e_2$ | $3e_3$ | $3e_0$ |
+| V0- | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V0- | 34 | 3 | $3e_0$ | $3e_4$ | $e_0+2e_5$ |
+| V0- | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V0+ | 12 | 5 | $5e_1$ | $5e_2$ | $3e_0+2e_5$ |
+| V0+ | 13 | 3 | $3e_1$ | $3e_3$ | $3e_0$ |
+| V0+ | 14 | 1 | $e_1$ | $e_4$ | $e_0$ |
+| V0+ | 23 | 3 | $2e_0+e_2$ | $3e_3$ | $3e_0$ |
+| V0+ | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V0+ | 34 | 3 | $3e_0$ | $3e_4$ | $e_0+2e_5$ |
+| V0+ | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V1- | 12 | 5 | $5e_1$ | $5e_2$ | $3e_0+e_4+e_5$ |
+| V1- | 13 | 3 | $3e_1$ | $3e_3$ | $3e_0$ |
+| V1- | 14 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V1- | 23 | 3 | $2e_0+e_2$ | $3e_3$ | $3e_0$ |
+| V1- | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V1- | 34 | 3 | $3e_0$ | $3e_4$ | $e_0+2e_5$ |
+| V1- | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V1+ | 12 | 5 | $5e_1$ | $5e_2$ | $3e_0+e_4+e_5$ |
+| V1+ | 13 | 3 | $3e_1$ | $3e_3$ | $3e_0$ |
+| V1+ | 14 | 1 | $e_1$ | $e_4$ | $e_0$ |
+| V1+ | 23 | 3 | $2e_0+e_2$ | $3e_3$ | $3e_0$ |
+| V1+ | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V1+ | 34 | 3 | $3e_0$ | $3e_4$ | $e_0+2e_5$ |
+| V1+ | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V2- | 12 | 9 | $9e_1$ | $9e_2$ | $6e_0+3e_5$ |
+| V2- | 13 | 6 | $6e_1$ | $6e_3$ | $6e_0$ |
+| V2- | 14 | 3 | $3e_0$ | $3e_4$ | $2e_0+e_5$ |
+| V2- | 23 | 6 | $3e_0+3e_2$ | $6e_3$ | $6e_0$ |
+| V2- | 24 | 3 | $3e_0$ | $3e_4$ | $2e_0+e_5$ |
+| V2- | 34 | 6 | $6e_0$ | $6e_4$ | $2e_0+4e_5$ |
+| V2- | 45 | 2 | $2e_0$ | $2e_5$ | $2e_0$ |
+| V2+ | 12 | 9 | $9e_1$ | $9e_2$ | $6e_0+3e_5$ |
+| V2+ | 13 | 6 | $6e_1$ | $6e_3$ | $6e_0$ |
+| V2+ | 14 | 3 | $3e_1$ | $3e_4$ | $2e_0+e_5$ |
+| V2+ | 23 | 6 | $3e_0+3e_2$ | $6e_3$ | $6e_0$ |
+| V2+ | 24 | 3 | $3e_0$ | $3e_4$ | $2e_0+e_5$ |
+| V2+ | 34 | 6 | $6e_0$ | $6e_4$ | $2e_0+4e_5$ |
+| V2+ | 45 | 2 | $2e_0$ | $2e_5$ | $2e_0$ |
+| V3- | 12 | 4 | $4e_1$ | $4e_2$ | $2e_0+e_3+e_4$ |
+| V3- | 13 | 2 | $2e_1$ | $2e_3$ | $2e_0$ |
+| V3- | 14 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V3- | 23 | 2 | $e_0+e_2$ | $2e_3$ | $2e_0$ |
+| V3- | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V3- | 34 | 2 | $2e_0$ | $2e_4$ | $e_0+e_5$ |
+| V3- | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V3+ | 12 | 4 | $4e_1$ | $4e_2$ | $2e_0+e_3+e_4$ |
+| V3+ | 13 | 2 | $2e_1$ | $2e_3$ | $2e_0$ |
+| V3+ | 14 | 1 | $e_1$ | $e_4$ | $e_0$ |
+| V3+ | 23 | 2 | $e_0+e_2$ | $2e_3$ | $2e_0$ |
+| V3+ | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V3+ | 34 | 2 | $2e_0$ | $2e_4$ | $e_0+e_5$ |
+| V3+ | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V4- | 12 | 4 | $4e_1$ | $4e_2$ | $2e_0+2e_5$ |
+| V4- | 13 | 2 | $2e_1$ | $2e_3$ | $2e_0$ |
+| V4- | 14 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V4- | 23 | 2 | $e_0+e_2$ | $2e_3$ | $2e_0$ |
+| V4- | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V4- | 34 | 3 | $2e_0+e_3$ | $3e_4$ | $e_0+2e_5$ |
+| V4- | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V4+ | 12 | 4 | $4e_1$ | $4e_2$ | $2e_0+2e_5$ |
+| V4+ | 13 | 2 | $2e_1$ | $2e_3$ | $2e_0$ |
+| V4+ | 14 | 1 | $e_1$ | $e_4$ | $e_0$ |
+| V4+ | 23 | 2 | $e_0+e_2$ | $2e_3$ | $2e_0$ |
+| V4+ | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V4+ | 34 | 3 | $2e_0+e_3$ | $3e_4$ | $e_0+2e_5$ |
+| V4+ | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V5- | 12 | 3 | $3e_1$ | $3e_2$ | $e_0+2e_3$ |
+| V5- | 13 | 1 | $e_1$ | $e_3$ | $e_0$ |
+| V5- | 14 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V5- | 23 | 1 | $e_2$ | $e_3$ | $e_0$ |
+| V5- | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V5- | 34 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V5- | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V5+ | 12 | 3 | $3e_1$ | $3e_2$ | $e_0+2e_3$ |
+| V5+ | 13 | 1 | $e_1$ | $e_3$ | $e_0$ |
+| V5+ | 14 | 1 | $e_1$ | $e_4$ | $e_0$ |
+| V5+ | 23 | 1 | $e_2$ | $e_3$ | $e_0$ |
+| V5+ | 24 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V5+ | 34 | 1 | $e_0$ | $e_4$ | $e_0$ |
+| V5+ | 45 | 1 | $e_0$ | $e_5$ | $e_0$ |
+| V6- | 12 | 8 | $8e_1$ | $8e_2$ | $3e_0+4e_3+e_4$ |
+| V6- | 13 | 4 | $4e_1$ | $4e_3$ | $3e_0+e_4$ |
+| V6- | 14 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V6- | 23 | 4 | $4e_2$ | $4e_3$ | $3e_0+e_4$ |
+| V6- | 24 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V6- | 34 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V6- | 45 | 3 | $3e_0$ | $3e_5$ | $3e_0$ |
+| V6+ | 12 | 8 | $8e_1$ | $8e_2$ | $3e_0+4e_3+e_4$ |
+| V6+ | 13 | 4 | $4e_1$ | $4e_3$ | $3e_0+e_4$ |
+| V6+ | 14 | 3 | $3e_1$ | $3e_4$ | $3e_0$ |
+| V6+ | 23 | 4 | $4e_2$ | $4e_3$ | $3e_0+e_4$ |
+| V6+ | 24 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V6+ | 34 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V6+ | 45 | 3 | $3e_0$ | $3e_5$ | $3e_0$ |
+| V7- | 12 | 7 | $7e_1$ | $7e_2$ | $3e_0+2e_3+2e_5$ |
+| V7- | 13 | 5 | $5e_1$ | $5e_3$ | $3e_0+2e_5$ |
+| V7- | 14 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V7- | 23 | 5 | $5e_2$ | $5e_3$ | $3e_0+2e_5$ |
+| V7- | 24 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V7- | 34 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V7- | 45 | 3 | $3e_0$ | $3e_5$ | $3e_0$ |
+| V7+ | 12 | 7 | $7e_1$ | $7e_2$ | $3e_0+2e_3+2e_5$ |
+| V7+ | 13 | 5 | $5e_1$ | $5e_3$ | $3e_0+2e_5$ |
+| V7+ | 14 | 3 | $3e_1$ | $3e_4$ | $3e_0$ |
+| V7+ | 23 | 5 | $5e_2$ | $5e_3$ | $3e_0+2e_5$ |
+| V7+ | 24 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V7+ | 34 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V7+ | 45 | 3 | $3e_0$ | $3e_5$ | $3e_0$ |
+| V8- | 12 | 8 | $8e_1$ | $8e_2$ | $3e_0+e_3+4e_5$ |
+| V8- | 13 | 4 | $4e_1$ | $4e_3$ | $3e_0+e_5$ |
+| V8- | 14 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V8- | 23 | 4 | $4e_2$ | $4e_3$ | $3e_0+e_5$ |
+| V8- | 24 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V8- | 34 | 6 | $3e_0+3e_3$ | $6e_4$ | $3e_0+3e_5$ |
+| V8- | 45 | 3 | $3e_0$ | $3e_5$ | $3e_0$ |
+| V8+ | 12 | 8 | $8e_1$ | $8e_2$ | $3e_0+e_3+4e_5$ |
+| V8+ | 13 | 4 | $4e_1$ | $4e_3$ | $3e_0+e_5$ |
+| V8+ | 14 | 3 | $3e_1$ | $3e_4$ | $3e_0$ |
+| V8+ | 23 | 4 | $4e_2$ | $4e_3$ | $3e_0+e_5$ |
+| V8+ | 24 | 3 | $3e_0$ | $3e_4$ | $3e_0$ |
+| V8+ | 34 | 6 | $3e_0+3e_3$ | $6e_4$ | $3e_0+3e_5$ |
+| V8+ | 45 | 3 | $3e_0$ | $3e_5$ | $3e_0$ |
+
+**Lemma 133.2 (All 32 words and all 94 independent rows at each endpoint).**
+Each table defines a stopped probability-vector kernel at its exact
+closed finite cap. It has $p_{11111}(0)=1-\varepsilon$.
+
+**Proof.** For each of the 32 words use the literal sum
+
+$$
+p_b^V=\sum_{i<j}\big[(1-b_i)T_{ij}^{0,V}
+       +b_i(1-b_j)T_{ij}^{10,V}+b_ib_jT_{ij}^{11,V}\big].
+\tag{133.2}
+$$
+
+Every vector is nonnegative with its common pair mass, and pair masses
+sum to one, so this is a probability vector on every word.
+For each first-zero class $n$, define three separate minima
+
+$$
+B_{V,n}=\min_{b:n(b)=n}p_b^V(0),\quad
+C_{V,n}=\min_{b:n(b)=n}p_b^V(n),\quad
+P_{V,n}=\min_{b:n(b)=n}[p_b^V(0)+p_b^V(n)].
+\tag{133.3}
+$$
+
+The next table gives their exact numerator triples, divided by the same
+$d$ as the profile and terminal rows. Each minimum ranges over every
+free suffix, including all multiple-zero words. The union minimum is
+computed from the union itself, never by splitting it into two minima.
+The last column gives the all-positive base numerator.
+
+| Endpoint | n1 (B,C,P) | n2 (B,C,P) | n3 (B,C,P) | n4 (B,C,P) | n5 (B,C,P) | Positive base |
+| --- | --- | --- | --- | --- | --- | --- |
+| Vbase | (0,1,1) | (0,1,1) | (1,0,1) | (1,0,1) | (1,0,1) | 1 |
+| V0- | (7,6,13) | (7,6,13) | (7,6,13) | (10,5,15) | (12,5,17) | 13 |
+| V0+ | (4,9,13) | (7,6,13) | (7,6,13) | (10,5,15) | (12,5,17) | 13 |
+| V1- | (5,8,13) | (7,6,13) | (7,6,13) | (10,6,16) | (12,4,16) | 13 |
+| V1+ | (4,9,13) | (7,6,13) | (7,6,13) | (10,6,16) | (12,4,16) | 13 |
+| V2- | (11,15,26) | (14,12,26) | (14,12,26) | (20,12,32) | (24,11,35) | 26 |
+| V2+ | (8,18,26) | (14,12,26) | (14,12,26) | (20,12,32) | (24,11,35) | 26 |
+| V3- | (4,6,10) | (5,5,10) | (5,5,10) | (7,5,12) | (9,2,11) | 10 |
+| V3+ | (3,7,10) | (5,5,10) | (5,5,10) | (7,5,12) | (9,2,11) | 10 |
+| V4- | (4,6,10) | (5,5,10) | (5,5,10) | (7,5,12) | (9,5,14) | 10 |
+| V4+ | (3,7,10) | (5,5,10) | (5,5,10) | (7,5,12) | (9,5,14) | 10 |
+| V5- | (3,4,7) | (3,4,7) | (3,4,7) | (4,3,7) | (6,1,7) | 7 |
+| V5+ | (2,5,7) | (3,4,7) | (3,4,7) | (4,3,7) | (6,1,7) | 7 |
+| V6- | (9,12,21) | (9,12,21) | (9,12,21) | (12,12,24) | (18,3,21) | 21 |
+| V6+ | (6,15,21) | (9,12,21) | (9,12,21) | (12,12,24) | (18,3,21) | 21 |
+| V7- | (9,12,21) | (9,12,21) | (9,12,21) | (12,9,21) | (18,9,27) | 21 |
+| V7+ | (6,15,21) | (9,12,21) | (9,12,21) | (12,9,21) | (18,9,27) | 21 |
+| V8- | (9,12,21) | (9,12,21) | (9,12,21) | (12,12,24) | (18,12,30) | 21 |
+| V8+ | (6,15,21) | (9,12,21) | (9,12,21) | (12,12,24) | (18,12,30) | 21 |
+
+Substitution in (133.2) yields every entry of (133.3). For example at
+$V_0^-$, the word $00100$ has numerator $(7,6,1,0,3,0)$,
+whereas $00110$ has $(7,6,1,0,0,3)$; both have first zero one
+and union numerator 13. The minima are over all 16 such suffixes,
+not just these two. To reconstruct the complete finite certificate,
+enumerate $b=00000,00001,\ldots,11111$ lexicographically, take the
+sum (133.2), and, for each zero word with first zero $n$, subtract
+$(1-a_n-\varepsilon,a_n-\varepsilon,1-\varepsilon)$ from
+$(p_b(0),p_b(n),p_b(0)+p_b(n))$. For $11111$ subtract
+$1-\varepsilon$ from $p_b(0)$. All inputs to these sums are literal
+rational entries above. Equivalently, the minima table has
+
+$$
+B_{V,n}\ge1-a_n^V-\varepsilon_V,\qquad
+C_{V,n}\ge a_n^V-\varepsilon_V,\qquad
+P_{V,n}\ge1-\varepsilon_V.
+\tag{133.4}
+$$
+
+The all-positive entries equal $d(1-\varepsilon_V)$.
+Thus all 608 word laws and 1,786 separate TV rows across the nineteen
+profiles are determined and certified by these joint tables and the
+three separate minima. This finite arithmetic establishes endpoints;
+the continuum follows from the analytical construction in Section 134.
+$\square$
+
+## 134. One continuous mixture for every amplitude and every law
+
+**Theorem 134.1 (All-domain stopped construction).** In the closed ambient
+region
+
+$$
+\begin{gathered}
+1\ge a_1\ge a_2\ge a_3\ge a_4\ge a_5\ge\varepsilon\ge0,
+\quad\kappa_3=0,\quad\sigma\ge0,\\
+0\le h\le H_{\rm head},\qquad F_i\ge0\quad(1\le i\le5),
+\end{gathered}
+\tag{134.1}
+$$
+
+one continuous nineteen-weight mixture recovers the entire amplitude-cap
+profile and gives one common-budget kernel obeying all 94 cap rows,
+with $p_{11111}(0)=1-\varepsilon$, $c=H$ and $\beta=1$.
+
+**Proof.** Write $x=a_3-a_4\ge0$, $y=a_4-a_5\ge0$.
+Since $M=3a_5+4y+5x\ge0$, $\delta=0$ and
+$29\sigma=-3M\ge0$ force $a_3=a_4=a_5=0$.
+The hyperplane then gives $\varepsilon=0$, and the head bound gives
+$h=0$. This unique point is $V_{\rm base}$, only auxiliary finite data.
+Otherwise $\delta>0$. The ratio
+$q=(a_3,a_4,a_5)/\delta$ belongs to $P$: its eight inequalities
+are order of the late amplitudes, the five cuts, and $\sigma\ge0$.
+The scale and head conditions are
+$\delta(1+t)\le1$ and $0\le h\le\delta(17-5t+u+v)/29$.
+Use the continuous nodal functions $\mu_j(q)$ of (132.3) and define
+
+$$
+\lambda_j=\delta\mu_j(q)/\delta_j
+         =\delta\mu_j(q)(1+t_j),\qquad
+\lambda_{\rm base}=a_2-a_3.
+\tag{134.2}
+$$
+
+They are nonnegative, and
+
+$$
+\sum_j\lambda_j=\delta+a_3,\quad
+\lambda_{\rm base}+\sum_j\lambda_j=1,\quad
+\sum_j\lambda_j\delta_j=\delta,\quad
+\sum_j\lambda_j(a_3^j,a_4^j,a_5^j)=(a_3,a_4,a_5).
+\tag{134.3}
+$$
+
+The same linear function of these four coordinates recovers
+$\varepsilon$. Together with the base profile and total weight one,
+this also recovers $a_2$. Since $m\le22/3$,
+$H_{\rm head}\ge\delta/3>0$. Set $s=h/H_{\rm head}\in[0,1]$,
+and split the ray weights into
+
+$$
+\lambda_{j,-}=(1-s)\lambda_j,\qquad
+\lambda_{j,+}=s\lambda_j.
+\tag{134.4}
+$$
+
+The identity $\sum_j\lambda_jH_j=H_{\rm head}$ implies the head
+contribution is exactly $sH_{\rm head}=h$; hence these nineteen
+weights recover all six coordinates simultaneously. Every equality
+case is included: zero weights, $a_2=a_3$, and either head endpoint.
+At the base point give it weight one and all other weights zero.
+Because $P$ is compact and $0\le\lambda_j\le\delta(1+t_j)$,
+all ray and split weights tend uniformly to zero as $\delta\to0$.
+Thus this is a continuous origin extension despite the undefined ratio.
+
+Mix all three terminal vectors and pair weights with these same weights,
+so $T_{ij}^{\tau}=\sum_V\lambda_VT_{ij}^{\tau,V}$ and
+$w_{ij}=\sum_V\lambda_Vw_{ij}^V$. The common cell-mass identities
+and $\sum_{i<j}w_{ij}=1$ persist. Equation (133.2) gives
+$p_b=\sum_V\lambda_Vp_b^V$. For any fixed first-zero word,
+
+$$
+(1-a_n)e_0+a_ne_n
+ =\sum_V\lambda_V[(1-a_n^V)e_0+a_n^Ve_n].
+\tag{134.5}
+$$
+
+This uses the same first-zero label even when an endpoint amplitude
+is zero or equals its cap. Each separate row slack in (130.4) is
+therefore the same convex mixture of its endpoint slacks. All 94 rows
+hold at once, with every suffix and the union row preserved.
+At $11111$, $p(0)=\sum_V\lambda_V(1-\varepsilon_V)=1-\varepsilon$.
+No separate mixture is chosen for an amplitude, word, event or row.
+
+For coefficients, the support property in every literal table is stable
+across endpoints: $T_{ij}^{10}$ is supported only at label $j$, whereas
+$T_{ij}^{11}(j)=0$. It persists after mixing. Put
+$A_i=\sum_{j>i}T_{ij}^0$, $B_i=\sum_{j>i}T_{ij}^{10}$.
+The expansion of (133.2) gives
+
+$$
+\begin{aligned}
+c&=\sum_iA_i,&\ell_i&=B_i-A_i,&Q_{ij}&=T_{ij}^{11}-T_{ij}^{10},\\
+(-Q_{ij})_+&=T_{ij}^{10},&V_i&=B_i,&(V_i-\ell_i)_+&=A_i,\\
+H&=\sum_iA_i=c,&
+\mathfrak m(A_i)&=\mathfrak m(B_i)=\sum_{j>i}w_{ij},&\beta&=1.
+\end{aligned}
+\tag{134.6}
+$$
+
+Here $H$ is the vector of Definition 108.2, distinct from $H_{\rm head}$.
+The fixed supports, rather than mere endpointwise disjointness, justify
+the mixed positive-part identity. The kernel has degree at most two
+and lies at the closed boundary $c=H$, $\beta=1$ of $\mathscr C_5$.
+Theorem 109.1 gives its stopped interpretation in its established scope.
+$\square$
+
+## 135. Actual sources, one seed and every prescribed tail
+
+**Theorem 135.1 (Original realization with exact tail error).** For every
+full original sequence in (130.2) satisfying the five cuts, the kernel
+of Theorem 134.1 has original $O\in\mathcal O_2$ and
+$N\in\mathcal N_2$ realizations using the same seed, with identical
+handed-tape laws at every source and $e_a(O)=e_a(N)=\varepsilon$.
+
+**Proof.** Use one $U$ uniform on $[0,1)$, independent of the source.
+In a fixed order partition it into nineteen intervals of weights
+$\lambda_V$, omitting zero intervals. Within a positive interval
+rescale its local coordinate to $[0,1)$ and partition it by that
+endpoint's rational pair weights. Within a positive pair interval
+rescale the same coordinate again to $v\in[0,1)$.
+For each of the three cells predeclare a partition of this same $v$
+by the rational probabilities $T_{ij}^{\tau,V}/w_{ij}^V$.
+Thus $U$ fixes the pair and every possible terminal label before replies;
+there is no independent seed at handoff or separate sourcewise choice.
+Use half-open intervals in fixed label order with a specified boundary
+convention. If the carrier is $[0,1]$, specify any valid pair/table
+at the null endpoint one. All executions then have finite case selection.
+
+The stopped rule actually queries the chosen original prime $i$.
+If its static answer is zero it emits the cell-$0$ original mark.
+Otherwise it actually queries prime $j>i$ and emits the cell-$10$ or
+cell-$11$ mark. Its actual count is $K_O=1+q_i(x)\in\{1,2\}$.
+The completed rule preselects exactly this same pair from this same $U$,
+actually obtains both replies, reconstructs the same stopped cell and
+emits the identical mark. If $q_i=0$ its second reply is ignored but
+that actual request still counts, so $K_N=2$. This is precisely the
+completion of Acquisition Resources, Proposition 90.2. Both hand off
+finitely at every seed/source and have zero advice. Original competitors'
+arbitrary addresses and repetitions remain covered by 110.2; the
+bounded pairs describe these attainers only.
+
+A source with $n(x)\le5$ has one of the 31 checked low words, regardless
+of all higher replies and additional zeros. Its selected target is the
+one used in (134.5). For every actual $n(x)>5$ its low word is $11111$.
+The common output is supported on $\theta_0,\ldots,\theta_5$ with
+base mass $1-\varepsilon$ and no mass at the distinct $\theta_{n(x)}$.
+The exact supplied identity (110.9) gives
+
+$$
+\operatorname{TV}(\widehat\lambda_{O,x},\lambda_x^a)
+=\operatorname{TV}(\widehat\lambda_{N,x},\lambda_x^a)
+=\max\{\varepsilon,a_{n(x)}\}=\varepsilon.
+\tag{135.1}
+$$
+
+Monotonicity and $a_6\le\varepsilon$ give the last equality, including
+$a_6=\varepsilon$. Every retained tail amplitude remains positive and
+unaltered. Each tail cylinder is occupied by Boundaries 35.2; the actual
+pattern $111110$ already attains the supremum. No infinite all-positive
+source is added. Thus the uniform selected-law error is exactly the cap.
+Theorem 110.2 supplies the original correspondence; it is not a new
+transport theorem or a restriction of the necessity class.
+
+All constructed tapes lie in $B_1$. The unchanged consumer returns
+unknown there. Their laws are finite atomic laws, whose TV distance
+from each unchanged original nonatomic $\mu_x$ is one, as in
+Acquisition Resources 82.1. The selected-law acquisition result therefore
+makes no improvement claim for that consumer or those original targets.
+$\square$
+
+**Proposition 135.2 (Continuous laws and measurable realization).** The
+constructed finite-law family is continuous in the finite profile,
+including its auxiliary base extension. On the fixed original source
+its handed-law family is continuous for the metric
+$\sup_{x\in X}\operatorname{TV}(\nu_x,\nu'_x)$.
+The interval realization is jointly measurable in profile and seed.
+
+**Proof.** Each finite terminal mass is a continuous mixture of fixed
+rational vectors. There are only 32 low-word laws, so their maximal TV
+variation tends to zero. Every actual source uses one of those laws,
+including the same low all-positive law for every tail. The supremum
+metric statement follows and is independent of how legal tails vary.
+In the fixed hierarchical order a global cut is a branch start plus
+$\lambda_V$ times a fixed rational pair/cell cut; each cut is continuous
+even when a branch weight becomes zero. Comparisons of $U$ with finitely
+many such cuts are Borel measurable. Null boundary conventions and
+omitted zero intervals preserve this property. Discrete output labels
+need not be pointwise continuous across a cut. These are exact
+measurable-existence claims for arbitrary real parameters, with no
+effective arbitrary-real arithmetic or exact-real sampling guarantee,
+and no processing-time bound. $\square$
+
+**Proof of Theorem 130.2.** Starting from any original $N$ at the cap,
+110.2 gives a feasible $\mathscr N_5$ representative; Lemmas 131.2--131.3
+give all five cuts. Conversely the retained domain and those cuts imply
+(134.1) by (130.6) and the upper residual condition. Theorem 134.1 gives
+a point of $\mathcal F_N\cap\mathscr C_5$, 109.1 and 110.2 give
+stopped original feasibility, and Theorem 135.1 gives explicit same-seed
+attainers. Proposition 90.2 supplies the reverse stopped-to-preselected
+implication. This proves every equivalence in (130.5). $\square$
+
+## 136. The auxiliary R6 projection and strict original-source density
+
+**Definition 136.1 (Closed finite ambient projection).** Let
+$\overline P\subset\mathbb R^6$, in the amplitude-cap coordinate
+order of Definition 133.1, be exactly (134.1), including order, cap
+nonnegativity, normalization, C3 equality, sigma nonnegativity, head
+bound and all five cuts. Let $R_N,R_O$ be the six-coordinate projections
+of feasible original profiles in $\mathcal D_{\rm adj}$, allowing every
+prescribed positive monotone vanishing tail satisfying $a_6\le\varepsilon$.
+
+**Theorem 136.2 (Exact closed projection, nineteen vertices and density).**
+Within the finite ambient order domain with $\kappa_3=0$, $\sigma\ge0$,
+$\overline P$ is exactly the common $\mathscr N_5/\mathscr O_5$
+cap-feasible projection. Its extreme points are exactly the nineteen
+profiles of Definition 133.1. Moreover
+
+$$
+R_N=R_O=\overline P\cap\{a_5>\varepsilon>0,\ \sigma>0\},\qquad
+\overline{R_N}=\overline{R_O}=\overline P
+\quad\text{in }\mathbb R^6.
+\tag{136.1}
+$$
+
+**Proof.** Finite score necessity gives the five cuts. The finite
+chain-score bound (113.4), applied on $B_5$ with the cap rows, gives
+$a_1+2+S-6\varepsilon\le3$, including nonpositive singleton lower
+bounds. Thus $h\le H_{\rm head}$. This uses finite rows at cap zero;
+it does not invoke positive-cap original transport at the base point.
+Theorem 134.1 supplies finite stopped sufficiency throughout
+$\overline P$. Its same mixture expresses every profile as a convex
+combination of the nineteen endpoints, each of which lies in this
+ambient set. Hence their convex hull is exactly $\overline P$.
+For a nonbase endpoint, three independent ratio facets determine its
+ray, $a_2=a_3$ fixes its scale, and $h=0$ or $h=H_{\rm head}$
+fixes its head. These are five independent affine active equalities
+within the five-dimensional C3 hyperplane, so the endpoint is extreme.
+The base is the unique point with the nonnegative affine coordinate
+$\delta=0$, so it too is extreme. The convex-hull identity leaves no
+other extreme point.
+
+For strict density take
+
+$$
+q_*=(17369/18900,\ 9/10,\ 10417/56700,\ 9907/56700,
+                         \ 4127/28350,\ 4177/56700).
+\tag{136.2}
+$$
+
+It has $\delta=1/10$, ratio $C$, $\kappa_3=0$,
+$\sigma=22/1575$, $h=359/18900=H_{\rm head}/2$.
+Its margins $1-a_1,a_1-a_2,a_2-a_3,a_3-a_4,a_4-a_5,
+a_5-\varepsilon,\varepsilon$ are respectively
+
+$$
+(1531/18900,359/18900,40613/56700,17/1890,551/18900,
+151/2100,4177/56700),
+\tag{136.3}
+$$
+
+and its five cut slacks are
+
+$$
+(667/675,18589/18900,19169/56700,21199/28350,2059/4725).
+\tag{136.4}
+$$
+
+All are positive, as are sigma and both head margins.
+For any $p\in\overline P$ and $0<t\le1$, $p_t=(1-t)p+tq_*$
+stays in $\overline P$ by affine convexity, with all these strict
+margins positive. The positive-sign identity and $F_1\ge0$ give
+$S_t-6\varepsilon_t\ge4\delta_t/7>0$; the head bound gives
+$S_t-6\varepsilon_t\le1-a_{1,t}$. Thus it satisfies the precise
+adjacent residual window. Attach the actual tail
+
+$$
+a_{5+k,t}=\varepsilon_t/2^{k-1}\qquad(k\ge1).
+\tag{136.5}
+$$
+
+It is positive, monotone, vanishes, and has $a_{6,t}=\varepsilon_t<a_{5,t}$.
+Theorem 130.2 supplies original attainers at each $p_t$, and
+$p_t\to p$ as $t\downarrow0$. This proves the closure claim; the
+reverse containment follows from necessity and closedness.
+The strict projection equality follows from (130.6), since its lower
+residual condition is automatic from $F_1$ and its upper condition
+from the head bound. Feasibility holds for every allowed attached tail,
+not just the illustrative geometric tail.
+Zero-cap or nonpositive-amplitude endpoints are finite synthesis and
+closure points only. In particular $V_{\rm base}$ is not an original
+positive sequence, and original positive-cap transport is never applied
+to it. Strict profiles are attained directly, without a limit sampler.
+$\square$
+
+## 137. Five necessary bounds without saturation or active-length assumptions
+
+**Theorem 137.1 (Unrestricted original necessary cap bounds).** For every
+full sequence $1\ge a_1\ge a_2\ge\cdots>0$ tending to zero, every
+$\varepsilon>0$, and every original $A\in\mathcal N_2$ with
+$e_a(A)\le\varepsilon$, the following five bounds hold:
+
+$$
+\begin{aligned}
+45\varepsilon&\ge2a_2+5a_3+8a_4+8a_5-2,\\
+22\varepsilon&\ge a_2+3a_3+4a_4+3a_5-1,\\
+7\varepsilon&\ge a_3+a_4+a_5,\\
+19\varepsilon&\ge a_2+2a_3+3a_4+4a_5-1,\\
+46\varepsilon&\ge3a_2+7a_3+7a_4+8a_5-3.
+\end{aligned}
+\tag{137.1}
+$$
+
+They also hold for original $\mathcal O_2$ cap attainers. Addresses,
+repetitions, output tapes, actual tails, zero advice, common seed and
+finite handoff have the full original scope of Definition 130.1.
+There is no saturation, support-mask, five-active or tail-cut premise.
+These are necessary conditions, without a sufficiency claim.
+
+**Proof.** First work on full $\mathscr N_5$ with all 32 input words
+and arbitrary six-label terminal tables. Use the literal event rows of
+Definition 131.1, with scores $J_1,J_2,J_3,J_4,K_5=C_3+J_5$.
+Maximize (131.1) over all six labels, with no C3 maximizer restriction.
+The complete 16-schedule maximum-cell table is:
+
+| Schedule | J1 | J2 | J3 | J4 | K5 |
+| --- | --- | --- | --- | --- | --- |
+| empty | (22) | (11) | (4) | (9) | (21) |
+| 1 | (8,14) | (4,7) | (2,2) | (3,6) | (8,13) |
+| 2 | (8,14) | (4,7) | (1,3) | (3,6) | (8,13) |
+| 3 | (8,14) | (5,6) | (2,2) | (3,6) | (9,12) |
+| 4 | (10,12) | (6,5) | (2,2) | (3,6) | (9,12) |
+| 5 | (16,6) | (8,3) | (3,1) | (6,3) | (14,7) |
+| 12 | (2,6,8,8) | (1,3,4,4) | (0,2,1,1) | (1,2,3,4) | (3,5,8,8) |
+| 13 | (3,5,7,9) | (2,2,4,4) | (1,1,1,1) | (1,2,3,4) | (4,4,8,8) |
+| 14 | (4,4,8,8) | (3,1,4,4) | (1,1,1,1) | (1,2,3,4) | (5,3,7,9) |
+| 15 | (8,0,8,6) | (4,0,4,3) | (2,0,1,1) | (3,0,4,3) | (8,0,8,7) |
+| 23 | (3,5,7,9) | (2,2,4,4) | (1,0,1,2) | (1,2,3,4) | (4,4,8,8) |
+| 24 | (4,4,8,8) | (3,1,4,4) | (1,0,1,2) | (1,2,3,4) | (5,3,7,9) |
+| 25 | (8,0,8,6) | (4,0,4,3) | (1,0,2,1) | (3,0,4,3) | (8,0,8,7) |
+| 34 | (4,4,8,8) | (3,2,4,3) | (1,1,1,1) | (1,2,3,4) | (5,4,7,8) |
+| 35 | (8,0,8,6) | (5,0,4,3) | (2,0,1,1) | (3,0,4,3) | (9,0,8,7) |
+| 45 | (10,0,8,6) | (6,0,3,3) | (2,0,1,1) | (3,0,4,3) | (9,0,8,7) |
+
+Every entry is the maximum of all six integer label scores obtained
+from the literal 16-row formula (131.1); the 51 cells and 306 scores
+for each column are reconstructible without any omitted inputs.
+Cell orders are empty, $0,1$, or $00,01,10,11$ as appropriate.
+The sums are bounded respectively by $24,12,4,10,24$ for every
+schedule. Reverse order swaps $01,10$; a repeated coordinate has the
+singleton's reachable $00,11$ information; thus all 31 ordered schedules
+of length at most two are covered too. Outputs outside the event labels
+would score zero. One seed fixes both schedule and every cell label,
+so these pointwise score bounds integrate under one common distribution.
+No separate cell budgets or saturation assumptions are used.
+
+The first four target scores and weights are in Lemma 131.3. The fifth is
+
+$$
+K_5(\eta)=21+3a_2+7a_3+7a_4+8a_5,\qquad
+\sum_r k^{K_5}_r=46.
+\tag{137.2}
+$$
+
+TV at cap $\varepsilon$ gives each event lower bound
+$p_b(E)\ge\eta_b(E)-\varepsilon$. Summing with nonnegative weights
+and comparing with the unrestricted score uppers gives exactly (137.1).
+Union rows use one event bound and one cap subtraction, not two singleton
+subtractions. This argument holds at every real finite profile with the
+appropriate targets; it is not an extrapolation from amplitude scans.
+
+For original $0<\varepsilon\le1$, set the actual active length
+$L=\max(\{i:a_i>\varepsilon\}\cup\{0\})$. Theorem 110.2 supplies a
+cap-feasible common-seed $\mathscr N_L$ kernel at this exact closed cap,
+from any original arbitrary-address/full-carrier competitor.
+If $L\ge5$, restrict its inputs to $b'=(b,0,\ldots,0)$ with
+$b\in B_5$, and send labels $6,\ldots,L$ to zero, fixing labels
+$0,\ldots,5$. A low-zero target is fixed; at $b=11111$ and $L>5$
+the first zero of $b'$ is six, whose target projects to $e_0$.
+For $L=5$ use the existing all-positive row. TV contracts under this
+projection. For each fixed seed, high answers in the restricted finite
+table are constants zero; deleting those observations and composing the
+output with these constants leaves a preselected at-most-two low-coordinate
+table under the same seed. It is an algebraic restriction of the
+transported representation, not free high observations at an actual
+source. In particular when $a_6>\varepsilon$ this comparison kernel is
+not claimed to be a low-five original attainer on its actual tails.
+
+If $L<5$, extend the kernel to $B_5$ by ignoring new coordinates and
+including labels $J_L$ into $J_5$. For first zero $n\le L$ the old
+cap holds. For $n>L$, the law is $p_{1^L}$ with no mass at $n$, and
+$a_n\le\varepsilon$. The exact supplied identity (110.9) gives
+
+$$
+\operatorname{TV}(p_{1^L},(1-a_n)e_0+a_ne_n)
+ =\max\{1-p_{1^L}(0),a_n\}\le\varepsilon.
+\tag{137.3}
+$$
+
+The all-positive row is preserved. This includes $L=0$, closed
+$a_n=\varepsilon$ and all multiple-zero suffixes. The schedule and seed
+are unchanged. Thus the full finite argument applies for every actual
+active length. Every original amplitude and tail remains in the original
+premise, with no summability or extra source-law assumption.
+For $\varepsilon\ge1$ the five right sides are at most
+$21,10,3,9,22$ while their left sides are at least $45,22,7,19,46$,
+so the bounds are trivial; the endpoint one is included.
+Finally complete any original stopped rule using Proposition 90.2 with
+the same seed and law and at most two actual requests. The original
+$N$ necessity therefore applies to it. $\square$
+
+**Corollary 137.2 (A full-class error lower bound).** Every original
+$A\in\mathcal N_2\cup\mathcal O_2$ obeys
+
+$$
+\begin{aligned}
+e_a(A)\ge\max\bigg\{0,&\frac{2a_2+5a_3+8a_4+8a_5-2}{45},
+ \frac{a_2+3a_3+4a_4+3a_5-1}{22},\frac{S}{7},\\
+&\frac{a_2+2a_3+3a_4+4a_5-1}{19},
+ \frac{3a_2+7a_3+7a_4+8a_5-3}{46}\bigg\}.
+\end{aligned}
+\tag{137.4}
+$$
+
+**Proof.** For positive error use $\varepsilon=e_a(A)\le1$ in
+137.1; for error zero apply it at every positive cap and let the cap
+decrease to zero. This does not assert an attained optimal acquisition.
+$\square$
+
+**Proposition 137.3 (Sharp compensation for the fifth score).** On full
+$\mathscr N_5$, $C_3+J_5\le24$, hence
+$J_5\le9+(15-C_3)$. The coefficient one in this compensation is sharp
+for this fixed score. The raw assertion $J_5\le9$ is false off saturation.
+
+**Proof.** The unrestricted maximum table proves the combined bound.
+The deterministic pair $35$, with terminal labels $(0,0,5,0)$ on
+$(00,01,10,11)$, has C3 cell scores $(5,0,5,4)$ and J5 cell scores
+$(4,0,3,3)$, so $C_3=14$, $J_5=10$ and their sum is 24.
+It is realized by an original rule preselecting actual primes three and
+five, obtaining both replies and emitting $\theta_5$ precisely for
+$10$, otherwise $\theta_0$. A source-independent uniform seed may be
+ignored; all executions have two actual requests and finite handoff.
+It is only a score witness. If the compensation coefficient were
+$\alpha$, this table would require $10\le9+\alpha$, so $\alpha\ge1$.
+The combined bound proves one sufficient. This is not a claim of an
+optimal universal cap projection, cap attainment or an N/O separator.
+Since feasible laws satisfy $C_3\ge15-\kappa_3$, they obey
+$\kappa_3\ge0$ and $J_5\le9+\kappa_3$. $\square$
+
+**Proposition 137.4 (Lifted facets and the unsaturated identities).**
+Let $E_i$ be the left side minus right side of the corresponding bound
+(137.1), and $W=(45,22,7,19,46)$. For arbitrary amplitude-cap profiles,
+
+$$
+\begin{aligned}
+29E_i&=F_i+W_i\kappa_3\quad(1\le i\le5),\\
+2\delta+9\kappa_3-7\sigma&=3E_1,\\
+29\sigma&=22\delta-3M+18\kappa_3,\\
+29(S-6\varepsilon)&=12\delta+M-6\kappa_3.
+\end{aligned}
+\tag{137.5}
+$$
+
+Thus original feasibility requires $F_i+W_i\kappa_3\ge0$ and
+$7\sigma\le2\delta+9\kappa_3$. At $\kappa_3=0$ these recover
+the five adjacent cuts and $\sigma\le2\delta/7$.
+At positive $\kappa_3$ they neither force the seven-pair saturation
+mask nor establish stopped sufficiency.
+
+**Proof.** Expand (130.1), (130.3) and the five affine slacks. Every
+identity holds on the constant coordinate and each amplitude/cap
+coordinate separately. The necessity follows from 137.1. The residual
+identity still has positive $M$, with the unsaturated correction shown.
+$\square$
+
+## 138. A positive-kappa profile excluded by the new first bound
+
+**Definition 138.1 (Original interior infeasibility profile).** Fix the
+entire sequence and cap
+
+$$
+\begin{gathered}
+a_1=a_2=61/103,\quad a_3=60/103,\quad a_4=59/103,
+\quad a_5=54/103,\quad\varepsilon=1443/5974,\\
+a_{6+j}=\varepsilon/2^j\qquad(j\ge0).
+\end{gathered}
+\tag{138.1}
+$$
+
+Every amplitude is positive, nonincreasing, bounded by one and tends
+to zero. Here $a_6=\varepsilon$ and
+$a_5-\varepsilon=1689/5974>0$, so the active length is exactly five.
+The actual source, carrier, marked targets and all original competitors
+remain as in Definition 130.1.
+
+**Theorem 138.2 (Full original exclusion and bounded nonredundancy).**
+At (138.1), both original classes have
+
+$$
+e_a(A)\ge224/927=\varepsilon+5/53766>\varepsilon
+\qquad(A\in\mathcal N_2\cup\mathcal O_2).
+\tag{138.2}
+$$
+
+This exclusion is not implied by the independently checked residual
+113.2, C3/C4/C5 scalar bounds of Section 122, or any of the prefix
+scalar bounds 117.2: all of those have strictly positive slack here.
+This is nonredundancy relative only to those specified inequalities.
+It is neither an N/O separator nor an assertion that every other
+published obstruction misses this profile.
+
+**Proof.** Direct rational substitution gives
+
+$$
+\begin{gathered}
+\delta=42/103,\quad S=173/103,\quad M=187/103,\quad
+\kappa_3=1/206>0,\quad\sigma=372/2987>0,\\
+(F_1,F_2,F_3,F_4,F_5)=(-35,318,30,40,135)/103,\\
+(E_1,E_2,E_3,E_4,E_5)
+=(-25/5974,329/2987,67/5974,99/5974,158/2987).
+\end{gathered}
+\tag{138.3}
+$$
+
+The first bound in (137.4) is $224/927$, giving (138.2).
+Its lifted slack is $F_1+45\kappa_3=-25/206$ and its equivalent
+sigma slack $2\delta+9\kappa_3-7\sigma=-75/5974$.
+The residual values and earlier scalar slacks are
+
+$$
+\begin{aligned}
+D_3&=5705/5974,&3\varepsilon&=4329/5974,&S-6\varepsilon&=688/2987,\\
+1-a_1-(S-6\varepsilon)&=530/2987,&\kappa_3&=1/206,\\
+52\varepsilon-4a_2-9a_3-7a_4-9a_5+4&=659/2987,\\
+22\varepsilon-2a_2-4a_3-4a_4-2a_5+2&=1373/2987.
+\end{aligned}
+\tag{138.4}
+$$
+
+Thus the profile lies strictly in the residual strip, while the older
+three scalar certificates do not exclude it. The sigma value is the
+$m=5$ prefix slack; no sigma-zero support theorem is applied.
+For every integer $m\ge4$, the cap slack of Theorem 117.2 is
+
+$$
+R_m=(m-2)(m+1)\varepsilon-(m-3)a_2
+          -(m-2)\sum_{n=3}^m a_n+(m-3).
+\tag{138.5}
+$$
+
+At $m=4,5,6$ it equals respectively $1531/2987,372/2987,902/2987$.
+For $m\ge6$, the actual geometric tail sums to
+$\sum_{n=6}^m a_n=2\varepsilon(1-2^{-(m-5)})$, giving
+
+$$
+\begin{aligned}
+R_m&=\frac{P(m)+2886(m-2)/2^{m-5}}{5974},\\
+P(m)&=1443(m-2)(m-1)+2436(m-3)-10034(m-2)\\
+ &=1443m^2-11927m+15646.
+\end{aligned}
+\tag{138.6}
+$$
+
+For $m\ge7$, $P(7)=2864>0$ and
+$P(m+1)-P(m)=2886(m-1)-7598\ge9718>0$; the tail correction is
+positive. Hence every remaining prefix scalar test has positive slack,
+by an all-$m$ argument retaining the actual tail, not a finite scan.
+There is no $N$ attainer at this cap, so this example excludes both
+classes and cannot refute their existential comparison. $\square$
+
+**Lemma 138.3 (Alternative integer validation of the older C4/C5 scalars).**
+The following event arrays certify precisely the older inequalities
+
+$$
+52\varepsilon\ge4a_2+9a_3+7a_4+9a_5-4,\qquad
+22\varepsilon\ge2a_2+4a_3+4a_4+2a_5-2.
+\tag{138.7}
+$$
+
+They are alternative proof data for those existing scalar bounds,
+not additional cap conditions or the new advance in 137.1.
+
+| Word | Event | C4 weight | C5 weight |
+| --- | --- | --- | --- |
+| 00100 | {0,1} | 3 | 2 |
+| 00110 | {0,1} | 1 | 0 |
+| 01000 | {0,1} | 2 | 2 |
+| 01001 | {0,1} | 1 | 0 |
+| 01010 | {0,1} | 2 | 0 |
+| 10000 | {0,2} | 3 | 2 |
+| 10010 | {0,2} | 2 | 0 |
+| 10100 | {2} | 3 | 2 |
+| 10110 | {2} | 1 | 0 |
+| 11000 | {3} | 6 | 4 |
+| 11010 | {3} | 3 | 0 |
+| 11100 | {0,4} | 1 | 0 |
+| 11100 | {4} | 7 | 4 |
+| 11110 | {5} | 9 | 2 |
+| 11111 | {0} | 8 | 4 |
+
+**Proof.** Use (131.1) on these literal arrays, over all six labels
+without saturation. The full schedule maxima are:
+
+| Schedule | C4 cell maxima | C5 cell maxima |
+| --- | --- | --- |
+| empty | (23) | (10) |
+| 1 | (9,14) | (4,6) |
+| 2 | (9,14) | (4,6) |
+| 3 | (10,13) | (4,6) |
+| 4 | (10,13) | (6,4) |
+| 5 | (14,9) | (6,4) |
+| 12 | (4,5,9,9) | (2,2,4,4) |
+| 13 | (5,4,9,9) | (2,2,4,4) |
+| 14 | (6,3,8,10) | (4,0,4,4) |
+| 15 | (8,1,9,8) | (4,0,4,4) |
+| 23 | (5,4,9,9) | (2,2,4,4) |
+| 24 | (6,3,8,10) | (4,0,4,4) |
+| 25 | (9,0,9,9) | (4,0,4,4) |
+| 34 | (6,4,8,9) | (4,0,4,4) |
+| 35 | (9,1,9,8) | (4,0,4,4) |
+| 45 | (9,1,9,8) | (6,0,2,4) |
+
+Their unrestricted uppers are 27 and 12, their weight sums 52 and 22,
+and target scores respectively
+$23+4a_2+9a_3+7a_4+9a_5$ and $10+2a_2+4a_3+4a_4+2a_5$.
+The same common-budget event proof gives (138.7). The all-length
+restriction/extension proof of 137.1 applies unchanged to each array.
+For caps at least one, their right sides are at most 25 and 10 while
+the left sides are at least 52 and 22. Thus this validation has full
+original scope. It supplies an independent integer justification for
+the named older scalar comparisons in (138.4), without strengthening
+or replacing their conditions. $\square$
+
+## 139. Supplier attribution and the unchanged universal obligation
+
+**Definition 139.1 (Mathematical responsibility and sources).** The strict
+adjacent classification is repo-derived ordinary theory: its added
+content is the five saturated cuts, compact ratio geometry, full
+nineteen-endpoint common-law construction and exact projection. The
+unrestricted theorem is a distinct logical strength derived from the
+same event data: five necessary all-length bounds, sharp fixed-score
+compensation and the explicit positive-kappa exclusion. Its positive-kappa
+necessity does not inherit the saturated support restrictions or
+constructive sufficiency.
+
+Theorem 109.1 supplies the probability-vector stopped coefficient
+criterion; Theorem 110.2 supplies exact closed-cap feasibility transport
+with arbitrary original addresses and full-carrier outputs. Proposition
+90.2 in Acquisition Resources supplies the same-seed completion and
+counted containment. They are reused within their original scopes.
+Theorem 113.2 supplies the residual head bound, Theorem 117.2 the all-$m$
+second-head scalars, and Sections 118--129 the sharp sigma-zero family,
+score-loss reduction and complete predecessor face. The exact-law
+obstruction 112.2 does not preclude a different stopped law at the
+same cap. The new existential result concerns such replacements.
+The alternative C4/C5 arrays in 138.3 validate existing scalar suppliers;
+those inequalities are not counted as additional progress.
+
+Kaniewski, Lee and de Wolf, [*Query complexity in expectation*,
+Definition 8 and Theorem 9](https://arxiv.org/html/1411.7280v1), characterize
+nonnegative scalar expected outputs by nonnegative literal degree.
+Their reverse construction samples a literal monomial and emits a
+scaled indicator. It does not give jointly normalized output-vector
+terminal budgets or an increasing first-zero-stop replacement at a TV cap.
+Hellerstein, Kletenik, Liu and Witter, [*Adaptivity Gaps for the Stochastic
+Boolean Function Evaluation Problem*, Section 1](https://arxiv.org/html/2208.03810v1),
+study Boolean evaluation with independent random input bits and expected
+testing costs. Those objectives and resources differ from uniform law
+generation on every actual source with a hard actual-request bound.
+The common-seed weighted-event method also has the internal antecedents
+in Acquisition Resources, Sections 91, 97, 104, and Section 117 here.
+These are bounded source attributions, with no exhaustive overlap,
+literary priority or external open-problem-resolution claim.
+
+**Definition 139.2 (Remaining original comparison).** The universal
+obligation remains exactly (110.14): for every full original monotone
+positive vanishing sequence and every positive closed cap, either prove
+$\mathcal F_N\ne\varnothing\Rightarrow\mathcal F_N\cap\mathscr C_L\ne\varnothing$
+at its actual active length, or exhibit an original common-seed $N_2$
+cap attainer together with a uniform lower certificate against every
+original full-carrier arbitrary-address $O_2$ competitor. Caps at least
+one have trivial feasibility. The remaining nontrivial work includes
+five-active positive-$\kappa_3$ profiles satisfying the known necessary
+bounds and the $L\ge6$ comparison. Theorem 130.2 settles its entire
+specified adjacent saturated region; Theorem 137.1 shrinks the remaining
+feasible intersection gap but supplies no general replacement theorem.
+The infeasible profile 138.1 excludes both classes and does not supply
+a separator. These are ordinary mathematical statements relative to
+ordinary suppliers, without Lean/kernel certification. Real-parameter
+existence, continuity and measurability do not assert effective exact
+computation or sampling for arbitrary real inputs. The selected marked
+laws remain distinct from the unchanged original consumer targets.
+
+## 追加锚（本行以下为增补区）
