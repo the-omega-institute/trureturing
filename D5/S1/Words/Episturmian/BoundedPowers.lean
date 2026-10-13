@@ -19,9 +19,9 @@
    proof_shape: dio_finite_implies_boundedPQ: content; escape_witness: D5.S1.Words.Episturmian.DensePowerWindow.powerChunks_cover; consumer: DiophantineExponentCriterion.result
    proof_shape: morphicImage_block_get: bind-only; consumer: BoundedPowers.morphicImage_block_position
    proof_shape: morphicImage_block_position: bind-only; consumer: BoundedPowers.morphic_periodic_factor_bound
-   proof_shape: Hword_prefix_decode: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: BoundedPowers.Hword_prefix_reflect
-   proof_shape: Hword_prefix_reflect: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: BoundedPowers.Hword_period_desubstitute
-   proof_shape: Hword_period_desubstitute: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: BoundedPowers.extendedMu_period_lift
+   proof_shape: Hword_prefix_decode: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_suffix_decode; consumer: BoundedPowers.Hword_prefix_reflect
+   proof_shape: Hword_prefix_reflect: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: BoundedPowers.Hword_period_desubstitute
+   proof_shape: Hword_period_desubstitute: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: BoundedPowers.extendedMu_period_lift
    definition: extendedMu; consumer: BoundedPowers.extendedMu_shift
    proof_shape: muWord_shift: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.mu_shift; consumer: BoundedPowers.extendedMu_shift
    proof_shape: extendedMu_shift: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: BoundedPowers.central_prefix_extendedMu

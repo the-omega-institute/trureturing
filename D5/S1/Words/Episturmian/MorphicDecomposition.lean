@@ -24,23 +24,23 @@
    definition: Lword; consumer: MorphicDecomposition.Hword
    definition: Hword; consumer: MorphicDecomposition.Hword_reverse
    proof_shape: letterImage_conjugacy: bind-only; consumer: MorphicDecomposition.Hword_reverse
-   proof_shape: Hword_reverse: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palindrome_iff
+   proof_shape: Hword_reverse: bind-only; consumer: MorphicDecomposition.Hword_palindrome_iff
    proof_shape: Hword_starts: bind-only; consumer: MorphicDecomposition.Hword_injective
    proof_shape: Hword_cons: bind-only; consumer: MorphicDecomposition.Hword_injective
    proof_shape: Hword_injective: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: MorphicDecomposition.Hword_palindrome_iff
-   proof_shape: Hword_palindrome_iff: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palCut
+   proof_shape: Hword_palindrome_iff: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: MorphicDecomposition.Hword_palCut
    proof_shape: Lword_append: bind-only; consumer: MorphicDecomposition.Lword_prefix
    proof_shape: Lword_prefix: bind-only; consumer: MorphicDecomposition.Hword_palCut
    proof_shape: Hword_suffix_decode: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_suffix_decode; consumer: MorphicDecomposition.Hword_palCut
-   proof_shape: palindrome_suffix_Hword_starts: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palCut
-   proof_shape: Hword_palCut: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_palClosure
-   proof_shape: Hword_palClosure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Lword_palClosure
+   proof_shape: palindrome_suffix_Hword_starts: bind-only; consumer: MorphicDecomposition.Hword_palCut
+   proof_shape: Hword_palCut: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: MorphicDecomposition.Hword_palClosure
+   proof_shape: Hword_palClosure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: MorphicDecomposition.Lword_palClosure
    proof_shape: Lword_suffix_nonx: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Lword_suffix_nonx; consumer: MorphicDecomposition.Lword_palClosure
    proof_shape: palindrome_suffix_last_starts: bind-only; consumer: MorphicDecomposition.Lword_palClosure
    proof_shape: palCut_le_of_suffix: bind-only; consumer: MorphicDecomposition.Lword_palClosure
-   proof_shape: Lword_palClosure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.Hword_append_letter_closure
+   proof_shape: Lword_palClosure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: MorphicDecomposition.Hword_append_letter_closure
    proof_shape: palClosure_of_palindrome: bind-only; consumer: MorphicDecomposition.central_Justin
-   proof_shape: Hword_append_letter_closure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_reverse; consumer: MorphicDecomposition.central_Justin
+   proof_shape: Hword_append_letter_closure: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.Hword_injective; consumer: MorphicDecomposition.central_Justin
    proof_shape: central_Justin: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: MorphicDecomposition.central_Justin_shift
    proof_shape: central_Justin_shift: content; escape_witness: D5.S1.Words.Episturmian.MorphicDecomposition.central_Justin; consumer: MorphicDecomposition.central_morphic_finite
    definition: muWord; consumer: MorphicDecomposition.central_morphic_finite
