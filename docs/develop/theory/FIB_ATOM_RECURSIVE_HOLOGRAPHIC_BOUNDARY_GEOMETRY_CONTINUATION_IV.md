@@ -3787,510 +3787,693 @@ source-operation authority follows from (111.8).
 
 ## 111.99 追加锚（本行以下为增补区）
 
-## 112. Coherent all-epoch coarse occurrence and the unchanged INITIAL equality bill
+## 112. Exact native occurrence transport, coarse Apply nonclosure, and the INITIAL equality bill
 
-This section fixes one actual original service and separates its exact occurrence
-relation from a deliberately coarse response used by a propagation consumer. The
-consumer sees a coherent all-epoch count/port trace and all of its well-typed
-mixed words. The original service still owns a complete INITIAL whole-row
-equality task. The two objects are joined on one source and one chronological
-history; no source swap or free equality operation is introduced.
+This section fixes one complete acquired input on the full original branch
+domain. It relates the actual source operations to their source-indexed
+all-node occurrence objects, and distinguishes this relation from an
+observer update on a coarse count/port response. The original task remains
+the entire INITIAL row. Common-source lower bounds and paid epoch-zero
+recovery compare actual read and literal-address coordinates on one run.
 
-### 112.1 The service, its target, and the fixed ports
+### 112.1 The complete acquired service, original row, and permission contract
 
-**Definition 112.1 (the complete branch service).** Let
-\(\mathcal T\), \(\rho\), and the four native replies be as in
-[Native Leaf Depth Contact, Definitions 1.1--1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md).
-Put
+**Definition 112.1 (the complete branch service).** Use the finite free ordered
+source algebra and substitution of
+[Native Leaf Depth Contact, Definitions 1.1--1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md):
 \[
-\mathcal B=\{u\in\mathcal T:u=\langle u_L,u_R\rangle\}.
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
 \]
-The service has the original cut \(P=\{\varepsilon\}\), the old row
-\(R_P(u)=(\mathsf{branch})\), empty literal and signed histories, and
-authentic entry epoch \(N=0\). Thus its complete acquired source set is
+The original root cut is \(P=\{\varepsilon\}\). Its actual complete row on
+**every** \(u\in\mathcal T\) has reached list \((\varepsilon)\), exterior
+\(\square_1\), and singleton partition \(\{\{1\}\}\). Denote this constant
+row by \(R\). A root reply is a different object from this row.
+
+Before entry, a public producer makes exactly one actual epoch-zero
+\(\mathsf{Read}(\varepsilon)\) on every finite source and retains its literal
+record. Consider its acquired output
 \[
-D=\{u:R_P(u)=(\mathsf{branch})\}=\mathcal B.
+H_0=[(0,\varepsilon,\mathsf{branch})],\qquad H_{\rm rel}=[],\qquad N=0.
+\]
+The old row \(R\) is known from the root-cut definition and nonemptiness;
+no whole-tree traversal is required to compute it. The producer's other
+root outcomes retain alpha or beta rather than report branch. Under the
+complete-cut premise of
+[Acquired Relation History, Assumption 1.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md),
+the entire entry state is a fixed recoverable encoding of
+\((P,R,H_0,H_{\rm rel},N)\), common code and parameters. No source-bearing
+cache, timing, address, length, count, control position, archive, permission,
+or handle is omitted. The same original-root register is still at epoch zero.
+Authentic entry and this complete access cut are premises, not a physical
+erasure or preparation result.
+
+Its exact original-source fiber is
+\[
+D=\{u\in\mathcal T:R_P(u)=R,\ r_u(\varepsilon)=\mathsf{branch}\}
+ =\mathcal B:=\{\langle x,y\rangle:x,y\in\mathcal T\}.
 \tag{112.1}
 \]
-The target cut is \(Q=\{L,R\}\). Its row is
+Both directions hold: a source producing this retained output has branch
+root; every branch source executes the same one-read schedule, gives that
+output, and, conditional on the complete cut, has that same entry state.
+There is no witness-family restriction or acquired size/index selector.
+The pre-cut raw bill is one Read, zero updates and zero literal-address
+length; its supplier paid-address set is \(\{\varepsilon\}\). Preparation,
+certification, installation and access-cut prices are unspecified.
+
+The original target cut is \(Q=\{L,R\}\). The entire target row is
 \[
-\mathsf{Row}(u)=
-\bigl(\mathsf{branch};
-       u|_L,u|_R;
-       \mathsf{Eq}(u)\bigr),
-\qquad
-\mathsf{Eq}(u)=
+\mathsf{Row}(u)=R_Q(u)
+ =\bigl((L,R),\ \langle\square_1,\square_2\rangle,\ \pi_Q(u)\bigr),
+\quad
+\pi_Q(u)=
 \begin{cases}
-\{\{L,R\}\},&u|_L=u|_R,\\
-\{\{L\},\{R\}\},&u|_L\ne u|_R.
+\{\{1,2\}\},&u|_L=u|_R,\\
+\{\{1\},\{2\}\},&u|_L\ne u|_R.
 \end{cases}
 \tag{112.2}
 \]
-The first component is the concrete exterior at the old root, the next two
-components are the reached numbered holes in their fixed order, and the last
-component is the complete whole-subtree equality partition. Every source in
-\(D\) has both holes reached. This is the full branch service, rather than a
-promise restricted to either witness family below.
+Both addresses are reached on all of \(D\). The exterior has distinct
+numbered holes in this reached order; the partition records equality of
+their **entire ordered subtrees**. Subtree descriptions are possible acquired
+evidence, not additional target fields. This is the full original row of
+Acquired Relation History, Definition 1.1, equivalently the independent
+exterior/partition record of `Observer.ActualCutPartitionDecoder` after
+numbering its addresses. Absence supplies no fictitious hole.
+The target is evaluated on INITIAL \(u\), after any later action too.
 
-The controller contract is exactly Definition 1.3 of the cited source:
-a deterministic controller may issue a finite-word original-root
-\(\mathsf{Read}(p)\), a forward same-register \(\mathsf{Apply}\rho\), or
-absorbing \(\mathsf{Stop}\). A reply is
-\(\alpha,\beta,\mathsf{branch},\mathsf{absent}\); repeated and absent reads
-are real calls. A permission or refusal is part of the actual action record.
-No equality, reset, source-index, clone, backward action, or limit-read port is
-added. The target in (112.2) remains the INITIAL row at epoch zero after every
-later action.
+**Contract 112.1a (native actions and observed permissions).** The original
+uncapped native contract, denoted \(G_{\rm nat}\), allows any finite-word
+original-root \(\mathsf{Read}(p)\), serial same-register
+\(\mathsf{Apply}\rho\), and absorbing \(\mathsf{Stop}\). Every Apply is
+accepted and replaces the current register by its actual \(\rho\)-successor.
+The four Read replies are alpha, beta, branch and absent; repeated and absent
+Reads remain actual calls. This is the uncapped service of Native Leaf Depth
+Contact, Definition 1.3, and Acquired Relation History, Assumption 1.3;
+no refusal capability is inferred from that menu.
+
+For a separately declared common guarded extension, fix a total effective
+function
+\[
+G(\gamma,e,H)\in\{\mathsf{accepted},\mathsf{refused}\}.
+\tag{112.2a}
+\]
+Here \(\gamma\) is a common source-independent parameter, \(e\) counts
+actual accepted post-entry updates, and \(H\) is the complete chronological
+native history of action addresses, four-valued replies, Apply statuses and
+Stop. Every Apply attempt evaluates this function, logs its status as an
+observation, and either executes exactly \(\rho\) and increases \(e\) by one,
+or changes no register/epoch on refusal. Reads always return their actual
+reply; Stop logs terminal and no suffix is executed. There are no other
+status bits, source-dependent implementation/timing outputs or unlisted
+scheduler states. In particular equal \((\gamma,e,H)\) entails equal status;
+\(G\) has no access to the source or the mathematical occurrence object.
+The all-accepted function is \(G_{\rm nat}\). A public fixed-cap guard
+\(G_K=\mathsf{accepted}\) iff \(e<K\), including \(K=0\), is one extension;
+it does not impose a cap on the original native contract. A history-dependent
+guard may use already observed replies, and those replies remain observations.
+
+The statements below hold for every fixed \(G\) satisfying this contract,
+and therefore for the full original uncapped menu. They do not cover an
+undisclosed source-dependent permission oracle. No original legal controller
+is removed: a native controller sees acceptance on every actual Apply;
+guarded controllers and their refusal observations have the separate scope
+just declared. Local computation uses only common entry and actual history;
+there is no equality, reset, clone, backward action, source-index, or limit
+Read. The source-bearing occurrence metadata below is not free controller
+advice.
 
 The fixed coarse port set is
 \[
 \mathcal P=\{\varepsilon,L,R\}.
 \tag{112.3}
 \]
-It is fixed by the service \(D=\mathcal B\): these three addresses are reached
-at entry and remain reached under every forward \(\rho\)-epoch. The port set
-does not depend on a chosen source, an acquired size, or a controller's
-history. A coarse consumer may read only these declared ports; it may not
-silently enlarge \(\mathcal P\) to an equality test.
+These addresses are reached on all of \(D\) and remain reached. The coarse
+word scope uses exactly these three ports. The native equality controller
+scope allows every finite address, including absent ones.
 
-### 112.2 The exact all-node relation and its mixed words
+### 112.2 Exact all-node transport and the failure of coarse action descent
 
-**Definition 112.2 (the occurrence object and birth maps).** For \(u\in D\) and
-\(e\ge0\), write
+**Definition 112.2 (the source-indexed occurrence object).** For \(u\in D\)
+and every integer \(e\ge0\), put
 \[
-s_e(u)=\rho^e u,\quad
-V_e(u)=V_{s_e(u)},\quad
-E_e(u)=E_{s_e(u)},\quad
-\lambda_e(p)=s_e(u)|_p,\quad
-N_e(u)=|V_e(u)|.
+s_e(u)=\rho^eu,\quad V_e(u)=V_{s_e(u)},\quad E_e(u)=E_{s_e(u)},
+\quad \lambda_e(p)=s_e(u)|_p,\quad N_e(u)=|V_e(u)|.
 \]
-The occurrence object is
+Every repeated occurrence is a distinct vertex. The exact object is
 \[
-\mathsf O_e(u)=\bigl(V_e(u),E_e(u),\lambda_e,N_e(u),L_e(u),
-                    \operatorname{port}_e(u)\bigr),
+\mathsf O_e(u)=\bigl(V_e,E_e,\lambda_e,N_e,L_e,\operatorname{port}_e\bigr).
 \tag{112.4}
 \]
-where \(L_e=D_e^*D_e\) is the closed unit-edge counting operator of
-§§92, 103, and 108, and
+Use counting inner products and the closed unit-edge operator
+\(L_e=D_e^*D_e\) of §§92, 103 and 108. Let
+\(R_e:\ell^2(V_e)\to\mathbb R^{\mathcal P}\) be restriction to the ordered
+ports \((\varepsilon,L,R)\); \(R_e^*\) is zero extension from them. Define
 \[
-\operatorname{port}_e(u)=
- \bigl(P_{\mathcal P}L_e(u)P_{\mathcal P},
-       (\deg_{E_e}(p))_{p\in\mathcal P},
-       (\mathbf 1_{\{p\in V_e(u)\}})_{p\in\mathcal P}\bigr)
+\operatorname{port}_e=
+ \bigl(K_e:=R_eL_eR_e^*,\ (\deg_{E_e}(p))_{p\in\mathcal P},\ (1,1,1)\bigr).
 \tag{112.4a}
 \]
-is the typed finite restriction of the actual operator to the declared
-ports. The old-vertex ancestry map is
+This is the actual principal compression, retaining degrees from **all**
+edges, including edges leaving the port set. For every \(u\in D\),
 \[
-\iota_e:V_e(u)\longrightarrow V_{e+1}(u),\qquad \iota_e(p)=p.
+K_e=
+\begin{pmatrix}
+2&-1&-1\\
+-1&1+2\mathbf1_{\{r_{s_e}(L)=\mathsf{branch}\}}&0\\
+-1&0&1+2\mathbf1_{\{r_{s_e}(R)=\mathsf{branch}\}}
+\end{pmatrix}.
+\tag{112.4b}
+\]
+A reached nonroot leaf has degree one, a nonroot branch degree three,
+and the branch root degree two. This compression is neither an induced
+three-node star Laplacian nor a grounded or degree-normalized operator.
+
+Old vertices retain their literal addresses:
+\[
+\iota_e:V_e\to V_{e+1},\quad p\mapsto p.
 \tag{112.5}
 \]
-The birth set and its parent map are
+Distinguish the beta-**parent** set \(M_e\) from the born-**child** set \(B_e\):
 \[
-B_e(u)=\{pL,pR:p\in V_e(u),\ \lambda_e(p)=\beta\},
-\qquad \operatorname{par}_e(p\sigma)=p.
+M_e=\{p\in V_e:\lambda_e(p)=\beta\},\quad
+B_e=\{pL,pR:p\in M_e\},\quad \operatorname{par}_e(p\sigma)=p.
 \tag{112.6}
 \]
-Then
+The actual disjoint unions are
 \[
-V_{e+1}(u)=\iota_e(V_e(u))\sqcup B_e(u),
-\quad
-E_{e+1}(u)=\iota_e(E_e(u))
- \sqcup\{(p,p\sigma):p\sigma\in B_e(u)\}.
+V_{e+1}=\iota_e(V_e)\sqcup B_e,\qquad
+E_{e+1}=\iota_e^E(E_e)\sqcup\{(p,p\sigma):p\sigma\in B_e\}.
 \tag{112.7}
 \]
-The map \(\iota_e\) is an address map, not a claim that an old label is
-unchanged: \(\lambda_{e+1}(p)\) is obtained by the native rule for \(\rho\).
-In particular, the child births in (112.6) are exactly the actual beta-leaf
-births, including births after a previous forward action.
-
-For a node field \(f\in\ell^2(V_e(u))\), let \(J_ef\) be zero extension along
-\(\iota_e\). Orient every edge away from the root. The exact gradient square is
+The old labels are not asserted unchanged: even an old leaf can become a
+branch. Let \(J_e:\ell^2(V_e)\to\ell^2(V_{e+1})\) be zero extension;
+\(J_e^*\) is old-coordinate restriction. Let \(I_e^E\) be old-edge zero
+extension and \(T_e:\ell^2(B_e)\to\ell^2(E_{e+1})\) send a child coordinate
+to its new parent-child edge. Orient edges away from the root. Let
+\(H_e\) project onto \(M_e\), and
+\(C_e:\ell^2(B_e)\to\ell^2(V_e)\) sum each child's value at its parent.
+Thus \((C_e^*f)(p\sigma)=f(p)\). The typed gradient and adjoint squares are
 \[
-D_{e+1}J_ef
- =\iota_e^E(D_ef)
-  -\sum_{p:\lambda_e(p)=\beta}
-       f(p)\bigl(\mathbf e_{pL}+\mathbf e_{pR}\bigr).
+D_{e+1}J_e=I_e^ED_e-T_eC_e^*,\qquad
+J_e^*D_{e+1}^*=D_e^*(I_e^E)^*-C_eT_e^*.
 \tag{112.8}
 \]
-With \(H_e\) the projection onto beta-leaf coordinates and \(C_e\) the
-old-by-new matrix having a column \(\delta_p\) for each born child \(pL,pR\), this is
-equivalent to the exact closed-operator block relation
+In the exact orders \(V_e\sqcup B_e\) and \(E_e\sqcup B_e\),
 \[
+D_{e+1}=
+\begin{pmatrix}D_e&0\\-C_e^*&I\end{pmatrix},\quad
 L_{e+1}=
-\begin{pmatrix}
- L_e+2H_e&-C_e\\
- -C_e^*&I
-\end{pmatrix}
-\quad\text{in the order }V_e(u)\sqcup B_e(u),
-\qquad C_eC_e^*=2H_e.
+\begin{pmatrix}L_e+2H_e&-C_e\\-C_e^*&I\end{pmatrix},
+\quad C_eC_e^*=2H_e.
 \tag{112.9}
 \]
-The trace-time Schur complement of (112.9) is the old \(L_e\), exactly as in
-§108. No replacement by a degree-normalized walk is made.
+The zero-parameter old-set Schur complement is \(L_e\). If \(B_e\) is empty,
+its identity block is the identity on the zero-dimensional space and the
+same formulas hold. Likewise \(J_e^*J_e=I\) and \(R_{e+1}J_e=R_e\).
+They do not say \(L_{e+1}J_e=J_eL_e\) or that ancestry intertwines heat.
 
-**Definition 112.3 (well-typed mixed words and the exact joint map).** A word
-\(w\) is generated from the current pair \((e,\mathsf{alive})\) by the
-actions
+**Definition 112.3 (words, exact execution, and coarse observation).** A finite
+word has actions
 \[
-\mathsf{Read}(p)\ (p\in\mathcal P),\qquad
-\mathsf{Apply}\rho,\qquad
+\mathsf{Read}(p)\ (p\in\mathcal P),\quad \mathsf{Apply}\rho,\quad
 \mathsf{Stop}.
 \tag{112.10}
 \]
-A read is well typed when \(p\in V_e(u)\); this holds for every declared
-coarse port. An Apply either advances to \(e+1\), or records the supplied
-permission/refusal and leaves \(e\) unchanged. Stop enters an absorbing
-terminal. The native run
+The word specifies an attempt, not its acceptance outcome. Execute from
+\((0,\mathsf{alive},[])\) using Contract 112.1a; a suffix after Stop is
+ignored. For the native unrestricted run replace \(p\in\mathcal P\) by any
+finite address, with absent replies allowed. The chronological record is
 \[
-\mathsf{Run}_u(w)=
- \bigl(e,\text{every actual reply, permission/refusal, and terminal record}\bigr)
+\mathsf{Run}_{u,G}(w)=(H,e,\mathsf{alive/terminal}),
 \tag{112.11}
 \]
-is defined only for finite words produced by this recursion. The exact joint
-map sends the run to the occurrence object at its current epoch and to the
-birth/ancestry maps of every preceding epoch.
+including repeated calls, literal addresses, replies and every Apply status.
+The **source-indexed** execution \((u,G,w)\) also determines \(\mathsf O_e(u)\)
+and all birth/ancestry maps through accepted epochs. This is not a function
+recovering \(u\) or \(\mathsf O_e(u)\) from \(H\) alone.
 
-The coarse response is the projection
+The endpoint coarse snapshot is
 \[
-\mathsf c_u(w)=
- \bigl(e,\ N_e(u),\ |B_e(u)|,\
-       \operatorname{port}_e(u),\
-       \text{permission/refusal and stop flags}\bigr),
+\mathsf c_{u,G}(w)=
+\bigl(e,N_e(u),|B_e(u)|,\operatorname{port}_e(u),
+       \text{chronological Apply statuses and terminal flag}\bigr).
 \tag{112.12}
 \]
-and deliberately discards the native label at a port and the INITIAL row
-partition. It still records repeated calls, absent replies at any auxiliary
-declared port, refusals, and the absorbing terminal flag whenever those are
-part of the supplied word. The current coarse object is therefore a response
-projection of the exact relation, not a second source.
+The complete coarse trace retains the entry snapshot, action tags/addresses
+and this snapshot after each executed event; it erases the four-valued Read
+labels and the INITIAL partition. In this three-port scope no absent reply
+occurs. It retains repetitions and every acceptance, refusal and Stop.
+Counts and operator snapshots are mathematical comparison observations;
+no native count, operator, amplitude or extra address port is installed.
 
-**Theorem 112.4 (all-epoch and mixed-word correspondence).** For every
-\(u\in D\), \(e\ge0\), and finite well-typed mixed word \(w\),
-the exact joint map satisfies (112.5)--(112.11). In particular:
-
-1. every old node and old edge has the displayed actual address image;
-2. every new node is one of the two children of one actual beta leaf;
-3. \(N_{e+1}=N_e+2|B_e|\), and all node and edge coordinates in \(L_{e+1}\)
-   are those in (112.9);
-4. the port map in (112.4), every actual reply, every permission/refusal,
-   every successor epoch, and the absorbing Stop record are the images of the
-   same native run; and
-5. applying the coarse projection after a mixed word equals applying the
-   corresponding count/birth/port update to the previous coarse object.
-
-**Proof.** The three clauses of the native definition of \(\rho\) give
-(112.6)--(112.7) by induction on the source tree. The old edge differences
-are unchanged under zero extension, while a new child has value zero and its
-old beta parent has value \(f(p)\); this gives (112.8). Multiplying the
-gradient square by its adjoint gives (112.9), including the two new
-degree-one rows and the \(2H_e\) old diagonal increment. The count formula
-is the cardinality of (112.7).
-
-For a word, read the native action in order. A Read returns the literal
-reply at the actual current epoch, an Apply either uses the common
-successor map or the recorded refusal, and Stop prevents all later events.
-The same induction carries the exact occurrence object and the coarse
-projection. It also covers repeated and absent responses: neither is removed
-from the run, and neither creates a new successor. The induction does not
-factor separate marginal operators or separately chosen sources. The
-Schur-complement trace assertion is the finite reversible trace statement
-already used in §108; it is a consequence of this same block matrix, not an
-additional source operation. \(\square\)
-
-The theorem is the required joint relation. A scalar root response, a count
-limit, or a separately matched spectrum is only a further projection of
-(112.4); it cannot be substituted for the actual row and word map.
-
-### 112.3 An all-epoch coarse separation with an unchanged INITIAL row
-
-**Theorem 112.5 (coherent coarse responses miss a whole-row equality).** Put
+**Theorem 112.4 (source-indexed all-epoch and word correspondence).** For every
+\(u\in D\), every \(e\ge0\), every fixed lawful \(G\), and every finite word,
+(112.4)--(112.11) use precisely the actual same-source carrier and operations.
+In particular, writing \(a_0,b_0\) for original alpha/beta leaf counts,
 \[
-a=\langle\alpha,\beta\rangle,\qquad
-b=\langle\beta,\alpha\rangle,\qquad
-u^\star=\langle a,a\rangle,\qquad
-v^\star=\langle a,b\rangle.
+\begin{aligned}
+N_e&=2(a_0F_{e+1}+b_0F_{e+2})-1,\\
+|M_e|&=a_0F_e+b_0F_{e+1},\qquad |B_e|=2|M_e|,\\
+N_{e+1}&=N_e+|B_e|,\qquad |E_e|=N_e-1,\qquad |B_{e+1}|=N_e+1.
+\end{aligned}
+\tag{112.12a}
+\]
+All transport squares have the literal domains and adjoints displayed above;
+projecting after an actual execution gives (112.12). No autonomous update
+from the preceding coarse snapshot is asserted.
+
+**Proof.** The three clauses of \(\rho\), by structural induction, retain
+each branch edge and attach exactly the two children of each beta leaf.
+Alpha becomes beta without a birth. Different leaf parents have disjoint
+child addresses. This proves (112.5)--(112.7) at every finite iterate.
+Old-edge differences of \(J_ef\) equal those of \(f\); on a new edge the
+difference is \(-f(\operatorname{par}_e(p\sigma))\). This proves (112.8),
+and taking adjoints proves its second square. On an arbitrary old/new field
+\((f,g)\), the full incidence is \((D_ef,g-C_e^*f)\). Its adjoint product
+is (112.9). Each beta parent has two columns of \(C_e\), hence
+\(C_eC_e^*=2H_e\), and subtracting the new identity-block contribution
+leaves \(L_e\). Degree counting gives (112.4b) without discarding edges.
+
+The all-source leaf-block identities (108.9) give the first two counts,
+including epoch zero and both singleton labels. The disjoint union gives
+\(N_{e+1}=N_e+|B_e|\). A finite full binary tree has \((N_e+1)/2\) leaves;
+each alpha or beta leaf produces exactly one beta leaf at the next epoch,
+so \(|B_{e+1}|=N_e+1\). Connected tree edges number \(N_e-1\).
+These structural facts also hold on singleton sources outside the service.
+
+Induct on executed events of a word. Read records the actual current reply;
+accepted Apply uses these source-indexed birth blocks and advances one epoch;
+refused Apply leaves the object unchanged and logs refusal. Stop logs terminal
+and executes no further suffix. Restricting the resulting actual object gives
+the stated coarse trace. This induction carries the original source as a
+parameter, not an inferred state supplied by the transcript. The finite
+reversible old-set trace of §108 has this same Schur complement: every
+new-child excursion returns to its own parent and adds no old-to-old edge.
+Its time parameter is a comparison occupation clock, not native Apply duration.
+\(\square\)
+
+**Proposition 112.4a (faithful coarse Apply nonclosure).** On the unchanged
+full \(D\) and uncapped \(G_{\rm nat}\), no function of (112.12) and an
+accepted Apply determines its next coarse snapshot. Indeed take
+\(x=\langle\alpha,\beta\rangle\), \(y=\langle\beta,\alpha\rangle\).
+At entry they have the same \((e,N_e,|B_e|)=(0,3,2)\), degree vector
+\((2,1,1)\), and matrix
+\[
+K_0(x)=K_0(y)=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix}.
+\]
+The same one accepted Apply has epoch/count/birth coordinates \((1,5,4)\)
+on both, but the successor port diagonals are \((2,1,3)\) and \((2,3,1)\),
+respectively. Both have the same observed accepted status. Thus one coarse
+fiber splits under a genuine original operation. The same counterexample
+works for a common guard accepting that attempt.
+
+**Proof.** Alpha becomes a degree-one beta leaf; beta becomes a nonroot
+branch with its parent and two children. Formula (112.4b) gives the two
+different successor matrices. Equal inputs to a proposed function would
+have to give equal outputs, a contradiction. The count pair alone does have
+the update in (112.12a); its success does not repair the lost port labels.
+A beta-port mask or source description could resolve the loss, but neither
+belongs to (112.12) or is granted as an original operation. \(\square\)
+
+### 112.3 All-word witness separation and its exact operator symmetry
+
+**Theorem 112.5 (coarse traces miss the entire INITIAL equality row).** Put
+\[
+a=\langle\alpha,\beta\rangle,\quad b=\langle\beta,\alpha\rangle,
+\quad u^\star=\langle a,a\rangle,\quad v^\star=\langle a,b\rangle.
 \tag{112.13}
 \]
-Both \(u^\star,v^\star\) are members of the complete service \(D\). They have
-the same initial alpha and beta leaf counts, namely two of each, but
+These are actual members of the full fiber (112.1), with two leaves of each
+label. Their target reached list and numbered exterior agree, but
 \[
-\mathsf{Eq}(u^\star)=\{\{L,R\}\},\qquad
-\mathsf{Eq}(v^\star)=\{\{L\},\{R\}\}.
+\pi_Q(u^\star)=\{\{1,2\}\},\qquad
+\pi_Q(v^\star)=\{\{1\},\{2\}\}.
 \tag{112.14}
 \]
-For every \(e\ge0\),
+For all \(e\ge0\),
 \[
-N_e(u^\star)=N_e(v^\star)
- =4(F_{e+1}+F_{e+2})-1,
-\qquad
-|B_e(u^\star)|=|B_e(v^\star)|
- =2(F_e+F_{e+1}).
+N_e(u^\star)=N_e(v^\star)=4(F_{e+1}+F_{e+2})-1,\qquad
+|B_e(u^\star)|=|B_e(v^\star)|=4(F_e+F_{e+1}),
 \tag{112.15}
 \]
-Consequently every finite word over the fixed ports \(\mathcal P\), Apply,
-permission/refusal, and Stop has the same coarse response on the two actual
-sources. The native replies at \(\varepsilon,L,R\) themselves are all
-\(\mathsf{branch}\), so the complete word-level coarse transcript is common.
-The INITIAL equality target remains different.
-
-**Proof.** The two sources have the same ordered number of alpha and beta
-leaves. A native alpha leaf contributes the literal block \(\rho^e\alpha=T_e\)
-and a beta leaf contributes \(T_{e+1}\). The node and beta-leaf counts are
-therefore the all-source identities (108.9), giving (112.15). Their roots and
-the two child roots are branch at every epoch, so all declared ports are
-reached and return branch. Their typed three-port compressions in (112.4a)
-are the same rooted three-vertex star (each port has degree two and the two
-root-to-child entries are the only off-diagonal entries). The permission
-contract is source independent.
-Induction on any finite mixed word now gives the same projection
-(112.12), while (112.14) is an unchanged comparison of the two INITIAL
-subtrees. The all-node operators \(L_e(u^\star)\) and \(L_e(v^\star)\) are
-still retained separately by Theorem 112.4; equality of the count/port
-projection does not assert equality of those operators. \(\square\)
-
-This is a joint source/operation separation. The two sources are not
-independently selected marginal realizations: one word is run on either
-actual source, with the same source-independent initial controller and the
-same legal action contract. The coarse quotient has no authority to
-exchange \(u^\star\) and \(v^\star\), and no abstract propagation response
-can silently turn their different INITIAL rows into one row.
-
-### 112.4 The same-source native equality bill
-
-**Definition 112.6 (leaf cones and coverage).** Let \(B_h\) be the perfect
-ordered binary tree of depth \(h\), with every internal node a branch and
-every leaf \(\alpha\), and set
+and their exact principal port matrix and degrees are
 \[
-U_h=\langle B_h,B_h\rangle.
+K_e=\begin{pmatrix}2&-1&-1\\-1&3&0\\-1&0&3\end{pmatrix},
+\qquad (\deg(\varepsilon),\deg(L),\deg(R))=(2,3,3).
+\tag{112.15a}
+\]
+For every fixed \(G\) of Contract 112.1a and every finite word (112.10),
+their native histories and entire coarse traces coincide. This includes
+repeated Reads, accepted and refused Apply attempts and terminal prefixes.
+Their INITIAL rows remain different.
+
+**Proof.** Apply (112.12a) with \(a_0=b_0=2\). Root and both child roots
+remain branches, each nonroot child root having its parent and two children.
+This gives (112.15a), retaining the exterior-edge degree contributions.
+All three native Read replies are branch. Induct on events: common histories
+and epochs give identical statuses by (112.2a); acceptance advances both,
+refusal neither. Counts and matrices coincide at either resulting epoch.
+Stop suppresses both suffixes. This proves all finite words, not merely a
+fixed number of updates. The different original subtrees in (112.13) prove
+(112.14). The statement is a witness separation, not the false all-domain
+coarse successor law refuted by Proposition 112.4a. \(\square\)
+
+There is also a genuine source-indexed comparison symmetry. At each epoch
+let \(\psi_e:V_e(u^\star)\to V_e(v^\star)\) fix the ports and every
+left-subtree address, and exchange \(RLs\) with \(RRs\) for each suffix
+\(s\). The actual leaf expansions below those two prefixes are exchanged,
+so this is a bijection preserving native root replies, oriented edges,
+counting mass and unit conductance. It need not preserve the order at \(R\)
+or the whole ordered subtree \(\lambda_e(R)\). Let \(S_e\) be its node
+permutation, \(S_e^E\) its edge permutation, and \(W_e\) its born-child
+permutation. Directly from unchanged suffixes and parents,
+\[
+\begin{aligned}
+D_e(v^\star)S_e&=S_e^ED_e(u^\star),&
+L_e(v^\star)S_e&=S_eL_e(u^\star),\\
+S_{e+1}J_e(u^\star)&=J_e(v^\star)S_e,&
+S_eC_e(u^\star)&=C_e(v^\star)W_e,\\
+R_e(v^\star)S_e&=R_e(u^\star).&&
+\end{aligned}
+\tag{112.15b}
+\]
+For example a born child of a beta parent maps to the same suffix child of
+the exchanged beta parent, which proves the parent and birth square; edges
+prove the gradient square. Taking adjoints and products gives the operator
+square. Finite matrix power series then give
+\(e^{-tL_e(v^\star)}S_e=S_ee^{-tL_e(u^\star)}\) for every comparison
+\(t\ge0\), including \(t=0\). This retains all-node states and masses.
+It does not identify \(e^{-tK_e}\) with \(R_ee^{-tL_e}R_e^*\), give an
+ancestry heat intertwiner, or add heat to the native alphabet.
+
+This permutation is a mathematical witness, never a legal swap of ordered
+sources. In particular the original \(\mathsf{Read}(RL)\) at epoch zero
+distinguishes the two sources. Three-port indistinguishability does not
+hold for all native addresses, nor acquire the exact operator from a run.
+
+### 112.4 The universal same-run native equality bill
+
+**Definition 112.6 (INITIAL leaf cones and coverage).** Let \(B_h\) be the
+perfect ordered binary tree of depth \(h\), with every leaf alpha, and put
+\[
+U_h=\langle B_h,B_h\rangle,\qquad h\ge0.
 \tag{112.16}
 \]
-Its INITIAL equality row is the first case of (112.2). A current address
-at epoch \(e\) lies in the expansion cone of an INITIAL vertex \(x\) when
-the local recursive construction of \(\rho^e\) reaches that address from
-\(x\). A Read covers an INITIAL leaf \(x\) only when its address lies in that
-leaf's cone. Expansion cones of distinct INITIAL leaves are disjoint.
-The cone relation includes a terminal absent response: an absent address
-whose first missing ancestor is in the cone is charged to that ancestor,
-and hence covers at most one INITIAL leaf.
+The symbol \(B_h\) here is a tree, distinct from the epoch-indexed child set
+\(B_e(u)\). Its INITIAL leaves have length \(h+1\). For any initial leaf
+address \(x\), define its address cone as every finite word with prefix
+\(x\), whether or not reached at the current epoch. A Read covers \(x\)
+iff its literal requested address has that prefix. Distinct INITIAL leaf
+cones are disjoint. An absent reply inside one cone still covers at most
+that one leaf; it is not a fictional subtree.
 
-**Lemma 112.7 (one legal reply covers at most one INITIAL leaf).** For every
-finite epoch \(e\) and address \(p\), the reply at \(p\) is determined by the
-fixed path above the first terminal source vertex and by the label of at
-most one INITIAL vertex. In particular a Read covers at most one INITIAL
-leaf.
+**Lemma 112.7 (one-address locality).** For every finite original source,
+initial leaf \(x\), every \(e\ge0\) and address \(p\) not prefixed by \(x\),
+flipping the label at \(x\) leaves \(r_{\rho^eu}(p)\) unchanged. Each literal
+address belongs to at most one INITIAL leaf cone.
 
-**Proof.** Induct on \(e\). At epoch zero the claim is immediate. Under one
-\(\rho\), a node is either a fixed branch pair whose two children are
-handled independently, or a leaf whose successor is determined by that
-single leaf label. Following a requested address therefore enters at most
-one child cone; if it exits a leaf block the absent reply is determined by
-that same leaf. Iterating gives the claim. The argument is about the actual
-address and does not identify an absent reply with a fictional tree. \(\square\)
+**Proof.** Expansion acts independently below each original leaf, preserving
+all original branch brackets and addresses. More explicitly \(\rho^eu\)
+is the original branch skeleton with the leaf at \(z\) replaced by
+\(\rho^e\alpha\) or \(\rho^e\beta\) at the same prefix \(z\); induction on
+\(e\) proves this substitution description. A path strictly above \(x\)
+ends at a fixed original branch; a path outside its cone follows another
+fixed branch or another leaf block. If it exits that other block its absent
+reply is fixed by that block too. Thus none depends on the flipped label.
+Prefix-freedom of original leaves proves disjointness. \(\square\)
 
-**Theorem 112.8 (universal same-equality-source lower bounds).** Let \(A\) be
-any deterministic adaptive legal controller that is source-total, terminates,
-and returns the exact row (112.2) on every \(u\in D\). For every integer
-\(h\ge0\), on the one fixed actual equality source \(U_h\),
+**Theorem 112.8 (universal same-equality-source lower bounds).** Fix any \(G\)
+of Contract 112.1a. For **every** deterministic effective adaptive controller
+\(A\) using the complete entry and unrestricted native address menu, if it
+terminates with the exact full row (112.2) on every \(u\in D\), then, for
+every integer \(h\ge0\), its one actual terminal run on \(U_h\) satisfies
 \[
-q_A(U_h)\ge 2^{h+1},
-\qquad
-\ell_A(U_h)\ge (h+1)\,2^{h+1}.
+q_A(U_h)\ge2^{h+1},\qquad
+\ell_A(U_h)\ge(h+1)2^{h+1}.
 \tag{112.17}
 \]
-Here \(q_A\) counts every actual Read, including repetitions and absent reads,
-and \(\ell_A\) is the sum of the literal lengths of those actual addresses.
-The inequalities include arbitrary forward epochs, reply-dependent
-successors, permission/refusal branches, and absorbing Stop.
+Here \(q_A\) counts all post-entry raw Reads, repeated and absent included;
+\(\ell_A\) sums their literal lengths. The pre-cut root Read is accounted
+separately and covers no INITIAL leaf. Apply attempts, statuses, accepted
+updates and local computation are not Reads. This includes the uncapped
+original contract without imposing any uniform finite update or work bound.
 
-**Proof.** Run \(A\) on \(U_h\) and mark the INITIAL leaves covered by its
-actual Reads. Suppose a leaf \(x\) is unmarked. Replace only that INITIAL
-\(\alpha\) by \(\beta\), obtaining a source \(V_{h,x}\in D\). The root remains
-branch, so this is an actual source in the same service; its right or left
-subtree is no longer equal to its mate, and its target row differs.
+**Proof.** Fix the finite actual terminal run on \(U_h\). If some initial
+leaf \(x\) is uncovered, flip only its alpha label to beta, giving
+\(V_{h,x}\in D\). Its root reply and complete retained entry are the same;
+exactly one of the two original subtrees differs from its mate, so its
+INITIAL target partition differs from that of \(U_h\).
 
-By Lemma 112.7 every queried reply on \(U_h\) is unchanged on
-\(V_{h,x}\), because no queried address lies in \(x\)'s expansion cone.
-An Apply has the same successor permission and the same next epoch on the
-two runs; a refusal records the same refusal and leaves the source register
-unchanged. Computation is source independent between actions. Repeated Reads
-and absent Replies contribute no extra covered leaf. Stop is absorbing, so if
-\(A\) stops before covering \(x\), it produces the same terminal output on
-both sources and is wrong on one of them. Source-total correctness therefore
-forces every one of the \(2^{h+1}\) INITIAL leaves to be covered, proving the
-Read bound.
+Induct on the actual transcript. The same common entry and equal histories
+make deterministic computation choose the same next operation and address.
+For any Read in this run, no requested address has prefix \(x\), so Lemma
+112.7 gives the same reply at the common accepted epoch, even for repeated
+or absent calls. Contract (112.2a), using these identical histories, gives
+the same status on each Apply attempt. Both registers therefore advance
+one actual epoch or neither does, and the status observations agree. Stop
+has the same output and no executed suffix. This replays the whole finite
+run on \(V_{h,x}\), contradicting correctness on both different rows.
+There is no intervention executed on \(U_h\): the flipped tree is a second
+actual member of the original competitor domain.
 
-Every address in the cone of a leaf at depth \(h+1\) has that leaf's
-length-\((h+1)\) prefix, because \(\rho\) only adds descendants and never
-shortens an original prefix. Each covering Read thus has literal length at
-least \(h+1\). Summing over the required leaves proves the second bound.
-This is a same-run adversary on the actual equality source \(U_h\), not a
-pairing of independently attained maxima and not a finite sampled
-controller class. \(\square\)
+Every INITIAL leaf must consequently be covered on that one run. One Read
+covers at most one leaf; all \(2^{h+1}\) leaves require distinct covering
+addresses. Each such address has literal length at least \(h+1\). Sum their
+costs within that same run to obtain both bounds, simultaneously. No freely
+supplied count, source index, epoch advice, source-dependent permission,
+inverse action, or separately selected coordinate maximizer is used.
+\(\square\)
 
-The constants in (112.17) hold at both parity endpoints \(h\) even and \(h\)
-odd, including \(h=0\). They are lower bounds on separate raw-read and
-literal-address coordinates. They do not count a computation, installation,
-memory, authentication, output, or physical duration as a Read.
+The endpoints include \(h=0\) and both parities. The original uncapped
+claim quantifies over all its lawful controllers, not a sampled family.
+The guarded-extension claim is conditional on its explicitly observed
+history-only statuses; an unspecified physical guard is not certified here.
 
-### 112.5 Paid sourcewise acquisition and matching recovery
+### 112.5 Epoch-zero acquisition, supplier attribution, and exact resource endpoints
 
-**Definition 112.9 (the reused paid supplier and its bill).** Use the actual
-immutable-source address supplier ActualTreeReadoutAcquisition described in
-[Continuation I, §58.11](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md)
-under [Native Leaf Depth Contact, Assumption 1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md).
-Its original replies are \(\alpha,\beta,\mathsf{branch},\mathsf{absent}\), its
-queries are actual literal addresses on the authentic root register, and its
-source/archive, epoch, permission, and record fees remain those of that
-supplier. For the service (112.1) use its legitimate empty pre-cut history
-at authentic \(N=0\). No later current register is relabelled as INITIAL.
-
-The sourcewise recovery schedule starts with the actual root Read and performs
-a depth-first stack traversal. A branch reply appends its two actual child
-addresses; a terminal alpha or beta reply closes that node. It never queries
-an address whose parent was absent. At completion it retains the ordered
-records
+**Definition 112.9 (the immutable supplier and its separate consumer).**
+Reuse `ActualTreeReadoutAcquisition` only for its four-valued immutable
+address readout, history-only `acquisitionStep`/`frontier`, actual
+`acquisitionTrace`, report-only `restore`, and distinct-address charge
 \[
-\mathsf{Hist}(u)=((p,\mathsf{reply}_u(p)):p\in V_0(u))
+\operatorname{paid}(h)=\{p:(p,r)\text{ occurs in }h\},\qquad
+k(h)=|\operatorname{paid}(h)|.
+\tag{112.18a}
+\]
+Its original `Policy` returns an address or a Boolean, and its `Strategy`
+task is membership in the third actual substitution image. That Boolean
+task, immutable source and payment rule remain unchanged. The acquisition
+phase can be consumed separately under the native controller contract;
+the equality row consumer below is not a supplier `Strategy` for a changed
+task. No Apply, refusal, authentication or physical-duration supplier is
+inferred from that immutable-query API. See also
+[Continuation I, §58.11](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+
+At the authentic \(N=0\) entry of Definition 112.1, keep the register static.
+Start the supplier acquisition frontier from its **own empty phase history**
+and pending root. Request the actual root, pop each requested address, and
+push its left then right children only after an actual branch reply. Thus
+the root is an actual later raw Read even though the pre-cut branch reply
+is retained. Use the same reply-driven DFS preorder as `acquisitionTrace`;
+no unacquired size, fuel or tree description is supplied to the controller.
+At completion the phase history is
+\[
+\mathsf{Hist}(u)=((p,r_u(p)):p\in V_0(u)\text{ in preorder}).
 \tag{112.18}
 \]
-and compares the two retained subrecords below \(L\) and \(R\), producing
-(112.2). The traversal is a consumer of the supplier's paid records; it is
-not a free equality port and it does not replace the supplier's acquisition
-contract.
+Restore the description solely from these acquired reports, compare the
+two finite ordered descriptions below \(L,R\), and return exactly (112.2).
+This local comparison is purchased evidence, not an unknown equality port.
 
-For this schedule define
+Put
 \[
-S(u)=|V_0(u)|,\qquad
-\Lambda(u)=\sum_{p\in V_0(u)}|p|.
+S(u)=|V_0(u)|,\qquad \Lambda(u)=\sum_{p\in V_0(u)}|p|.
 \tag{112.19}
 \]
-Its separated cost vector is
+The actual native post-entry coordinates and the supplier phase charge are
 \[
-\mathbf C(u)=
-\bigl(
- C_{\rm pre}(u),\
- C_{\rm read}=S(u),\
- C_{\rm update}=0,\
- C_{\rm lit}=\Lambda(u),\
- C_{\rm install}=S(u),\
- C_{\rm arith}=C_{\rm stack}(u)+C_{\rm cmp}(u),\
- C_{\rm retain}=S(u),\
- C_{\rm auth}=C_{\rm auth}^{\rm sup}(u),\
- C_{\rm out}=C_{\rm row}(u)
-\bigr).
+(q,a,\ell,k_{\rm phase})(u)=(S(u),0,\Lambda(u),S(u)).
 \tag{112.20}
 \]
-Here \(C_{\rm pre}\) is the supplier's charged preparation and pre-cut
-acquisition work, \(C_{\rm auth}^{\rm sup}\) is its authentic root/epoch and
-archive authentication cost, and \(C_{\rm row}\) is the final exterior,
-hole-pointer, and equality-partition output cost. The stack transitions,
-record installation, arithmetic comparison, retention, authentication, and
-output are distinct coordinates. In the simple one-record-per-node
-accounting, \(C_{\rm install}=C_{\rm retain}=S\), while
-\(C_{\rm stack}\le2S+1\) and \(C_{\rm cmp}\le S\); these are bounds for this
-consumer's bookkeeping and do not overwrite the supplier's own fees.
-Source preparation, archive protection, and physical duration remain in
-\(C_{\rm pre}\) and the supplier's declared resource vector.
+Here \(a=0\) means no Apply attempt or accepted update. All phase addresses
+are fresh within that phase; this is why its distinct charge equals its raw
+Read count. For arbitrary native repeated calls those coordinates differ,
+and (112.17) is about raw calls and literal lengths, not the supplier's
+original Boolean strategy cost.
 
-**Theorem 112.10 (full-domain termination and matching paid order).** The
-schedule of Definition 112.9 terminates for every \(u\in D\), preserves every
-reached-address and authentic-epoch guard, and returns the exact full row
-(112.2). On the comparison family \(U_h\),
+Cache scope at the pre-cut/post-entry boundary is explicit. Let
+\(h_{\rm pre}=[(\varepsilon,\mathsf{branch})]\) and
+\(h_{\rm post}=\mathsf{Hist}(u)\). Then
 \[
 \begin{aligned}
- S(U_h)&=2^{h+2}-1,\\
- \Lambda(U_h)&=h\,2^{h+2}+2.
+q_{\rm pre}=1,&\quad q_{\rm post}=S,\quad q_{\rm total}=S+1,\\
+\ell_{\rm pre}=0,&\quad \ell_{\rm post}=\ell_{\rm total}=\Lambda,\\
+k(h_{\rm pre})=1,&\quad k(h_{\rm post})=S,\quad
+k(h_{\rm pre}\mathbin{+\!+}h_{\rm post})=S.
 \end{aligned}
+\tag{112.20a}
+\]
+If one immutable-source paid-address cache spans both phases, the incremental
+post-entry distinct charge is therefore \(S-1\), and the cumulative charge
+is \(S\). If fees are assessed separately on the two empty logical phase
+ledgers, the two phase charges are \(1,S\), totaling \(S+1\). These are
+the two declared history scopes of the same paid-set formula, not a promise
+of a supplier cache reset, refund, or interphase tariff. The supplier alone
+does not choose between them. The retained pre-cut root report and the
+later raw root call count twice as raw events in either scope. A cache hit
+does not invent a second paid address; a locally simulated cache lookup is
+not a raw native Read. Such a lookup could save that raw call, but is not
+the root-first schedule being compared here. These scopes are lawful only
+on the same authentic immutable \(N=0\) source; an old-version report is
+not a cache for a later substituted version.
+
+Post-entry record counts are \(S\) phase events. Retaining both complete
+chronologies gives \(S+1\) events with the repeated root; a deduplicated
+address-value archive has \(S\) entries. In the declared bookkeeping unit
+of one push or pop per address, DFS makes \(2S\) stack operations including
+the initial push; comparing paired constructors uses at most \(S\) visits.
+These are record/operation counts, not byte, instruction, duration or monetary
+prices. Source preparation, root/epoch authentication, access cut, archive
+bytes/protection, address generation, local computation, output encoding,
+physical duration and amplitude/actuator preparation remain **unpriced**
+unless an actual separate supplier defines them. No matched physical resource
+vector or clock follows from naming those quantities.
+
+**Theorem 112.10 (full-domain recovery and matching read/address order).**
+For every \(u\in D\) and every \(G\) of Contract 112.1a, the static schedule
+of Definition 112.9 terminates, queries only reached nodes at authentic epoch
+zero, and returns the entire original row (112.2). On the same sources
+\(U_h\), for all \(h\ge0\),
+\[
+S(U_h)=2^{h+2}-1,\qquad \Lambda(U_h)=h\,2^{h+2}+2.
 \tag{112.21}
 \]
-Consequently
+For every controller \(A\) satisfying Theorem 112.8 under that same entry,
+target and contract,
 \[
 \begin{aligned}
-2^{h+1}&\le q_A(U_h)\quad\text{for every controller \(A\)},&
-S(U_h)&<2\cdot2^{h+1},\\
-(h+1)2^{h+1}&\le\ell_A(U_h)\quad\text{for every controller \(A\)},&
+2^{h+1}&\le q_A(U_h),& S(U_h)&<2\cdot2^{h+1},\\
+(h+1)2^{h+1}&\le\ell_A(U_h),&
 \Lambda(U_h)&\le2(h+1)2^{h+1}.
 \end{aligned}
 \tag{112.22}
 \]
-Thus the reused paid recovery has the same \(\Theta(2^h)\) raw-read and
-\(\Theta(h2^h)\) literal-address orders as the universal lower bounds,
-with explicit constants. Its update count is zero because the authentic
-entry epoch is \(N=0\); an implementation choosing later forward epochs
-must pay those actual updates and authenticate the reached epoch separately.
+Thus the native upper schedule matches the universal lower orders in the
+post-entry raw-read and literal-address coordinates, respectively
+\(\Theta(2^h)\) and \(\Theta((h+1)2^h)\). No matching assertion is made
+about unpriced coordinates or the supplier's different Boolean task.
 
-**Proof.** Every finite native tree has a finite set of nodes. The stack
-traversal visits each node once, never descends below an absent address, and
-therefore terminates sourcewise. Its retained records reconstruct both
-complete subtrees and their equality partition, while the root record gives
-the concrete exterior. The supplier's original chronology and epoch are
-unchanged. For \(U_h\), the total depth is \(h+1\), so
+**Proof.** Structural induction on a finite tree proves the history-only
+frontier visits root, then the whole left subtree, then the whole right,
+with each node exactly once. Only branches add children, so every queued
+node is reached. The same induction shows that `restore` reads the retained
+leaf labels and pairs the restored children to reconstruct the exact ordered
+syntax. A depth/fuel bound may be calculated from acquired history length
+for this restoration; it is not initial advice. Each node is pushed and
+popped once, giving \(2S\) stack operations in the stated unit. The ordered
+comparator visits each pair at a common relative address at most once,
+stopping at the first label or constructor mismatch. Its visits are at most
+\(\min(|V_{u|_L}|,|V_{u|_R}|)\le S\). Local comparison produces precisely
+the partition, and the two reached holes and numbered exterior are unchanged.
+Since no Apply is issued, the epoch-zero immutable supplier
+and INITIAL native register are the same source throughout, independently
+of any lawful guard. The finite histories give (112.19)--(112.20a).
+
+The perfect tree \(U_h\) has nodes at depths \(0,\ldots,h+1\), hence
 \[
-|V_0(U_h)|=\sum_{j=0}^{h+1}2^j=2^{h+2}-1,\qquad
-\sum_{j=0}^{h+1}j2^j=h2^{h+2}+2.
+S(U_h)=\sum_{j=0}^{h+1}2^j=2^{h+2}-1,\qquad
+\Lambda(U_h)=\sum_{j=0}^{h+1}j2^j=h2^{h+2}+2.
 \]
-The first inequalities in (112.22) are Theorem 112.8; the second ones follow
-from these exact sums. The factors compare separate coordinates and make no
-claim about a scalarized price. \(\square\)
+The depth sum follows by induction, including \(h=0\). The lower sides
+of (112.22) are the same-run law (112.17). The upper Read ratio is
+\(2-2^{-(h+1)}\); the literal ratio is
+\(2h/(h+1)+2/((h+1)2^{h+1})\le2\), including the value one at \(h=0\).
+For that endpoint the lower bill is \((2,2)\), DFS post-entry bill \((3,2)\),
+total raw bill four, phase distinct charge three, and cumulative cached
+charge three with post-entry increment two. The arithmetic compares the
+same original source and preserves each unit separately. \(\square\)
 
-This sourcewise termination does not give a uniform finite resource profile:
-\(\sup_{u\in D}S(u)=\sup_{u\in D}\Lambda(u)=\infty\). It gives no free source
-size, index, epoch, or equality-port advice. It also supplies no native heat
-actuator; the occurrence operator \(L_e\) is a mathematical comparison
-operator and has not been installed as an original action.
+Sourcewise termination is not a uniform finite profile:
+\(\sup_{u\in D}S(u)=\sup_{u\in D}\Lambda(u)=\infty\), as (112.21) shows.
+Neither comparison counts nor post-acquisition syntax grants free entry
+advice or a native heat actuator.
 
-### 112.6 Bounded executable checks and mathematical standing
+### 112.6 Finite verification scope, reused owners, and remaining bridges
 
-The following standalone finite check was run outside the repository:
-\[
-\texttt{python3 /tmp/check112.py}
-\]
-and exited zero. Its bounded ranges were:
+Finite exact checks of these literal definitions have the following scope:
 
-- 278 generated labelled sources from depth caps \(0,1,2,3\);
-- five successor epochs \(e=0,\ldots,4\) for every generated source;
-- the pair \(u^\star,v^\star\) through epochs \(e=0,\ldots,8\);
-- all \(1+5+\cdots+5^6=19\,531\) mixed words of lengths \(0,\ldots,6\) over
-  \(\{\mathsf{Read}(\varepsilon),\mathsf{Read}(L),\mathsf{Read}(R),
-    \mathsf{Apply}\rho,\mathsf{Stop}\}\);
-- equality-witness depths \(h=0,\ldots,6\), containing both even and odd
-  endpoints.
+- All 1,446 labelled trees of maximum INITIAL depth at most three, including
+  both singleton leaves and all 1,444 branch sources: both input-fiber
+  directions, full numbered-hole rows, actual DFS histories and restoration.
+  Epochs zero through four give 7,230 successor cases, checking actual node
+  and child sets, all 280,264 old-coordinate gradient/adjoint columns and
+  degree entries, the full incidence/closed block, Schur complement and
+  typed port squares, including empty born blocks.
+- The witness pair at epochs zero through eight: nine full graph/operator,
+  old-inclusion and birth-parent squares, with full-operator port moments
+  of orders zero through four. All 19,531 action words of lengths zero
+  through six over the exact five-letter alphabet (112.10) are checked
+  under five fixed guards: all-accepted, caps zero and two, acceptance on
+  an even number of prior Apply attempts, and refusal iff the last native
+  event is a Read with branch reply. These are 97,655 paired word/guard
+  executions, with statuses as outputs; 6,928 contain both acceptance and
+  refusal, 63,525 have suppressed terminal suffixes and 41,775 have repeated
+  Reads. The all-domain nonclosure example is checked separately.
+- For every one-leaf flip of \(U_h\), \(h=0,\ldots,5\), epochs
+  zero through six and all addresses of lengths zero through \(h+4\):
+  126 competitors and 610,638 address/epoch/flip cases, including absent
+  replies. Each competitor has the same entry and a different INITIAL row;
+  every requested address outside its flipped cone has unchanged reply.
+- Exact DFS/read/address/cache endpoints on \(U_h\), \(h=0,\ldots,10\),
+  including both parities and the repeated pre/post-cut root. In addition,
+  420 executions of two history-driven sample controllers use repeated
+  and absent Reads, static or common capped Apply, and report-only recovery.
+  These sample controllers do not enumerate the universal controller class.
 
-The checker independently verified the count and beta-birth identities,
-the ancestry set, the gradient square (112.8), the reordered block matrix
-(112.9), the identical coarse traces, and the complete opposite-equality
-witness record for every declared leaf. It returned no failed case. The
-script was temporary and outside the repository; no experiment or test
-source was added to the project.
+The executed finite assertions have no failed case. The arithmetic bindings
+for the general and witness counts and DFS sums are extracted from the
+literal formulas (112.12a), (112.15) and (112.21); actual recursive sources,
+edge incidences and report histories supply the comparison values. The
+standalone check program is outside all repositories. Finite verification
+is not a kernel certificate or a physical permission realization.
 
-The ordinary proofs above are quantified over every finite source, every
-legal deterministic adaptive controller, every finite mixed word, and all
-\(h\ge0\); the bounded execution is only a finite arithmetic check of those
-formulas and witness records. The source/operation relation is the exact
-relation in Theorem 112.4. The coarse quotient in Theorem 112.5 is not a
-proof of full-spectrum recovery, and its equality failure is not a
-replacement for the original service.
+The general statements rely on the ordinary structural and same-run proofs
+above: all finite sources/epochs in Theorem 112.4, all finite three-port
+words for every fixed lawful guard in Theorem 112.5, all effective total
+adaptive original controllers under the named entry/status contract in
+Theorem 112.8, and all branch sources in Theorem 112.10. Finite tests do
+not establish those universal quantifiers or a physical permission scheduler.
 
-The paid acquisition attribution is to the inspected
-ActualTreeReadoutAcquisition contract and its sourcewise records in
-Continuation I §58.11, with the all-source occurrence and trace identities
-of owning §§92, 103, and 108. The block/trace comparison uses the
-finite reversible trace argument already cited there to Beltrán--Landim,
-*Tunneling and Metastability of Continuous Time Markov Chains*, §6.1,
-and the conductance convention cited there to Aldous--Fill, Chapter 3,
-§2. These sources supply their stated intermediate trace facts; the
-same-service equality separation, the all-controller same-source bill, and
-the matching paid vector (112.17)--(112.22) are the present ordinary
-synthesis.
+The row/service owners are Native Leaf Depth Contact and Acquired Relation
+History. The immutable acquisition/frontier/restore and distinct-address
+payment owner is ActualTreeReadoutAcquisition, with its original Boolean
+task unchanged. The all-source occurrence/count/trace owners are §§92, 103
+and 108. The reversible trace/conductance intermediates remain the cited
+Beltrán--Landim, *Tunneling and Metastability of Continuous Time Markov
+Chains*, §6.1, Propositions 6.1/6.3, and Aldous--Fill, Chapter 3, §2,
+equation (3.16), with finite connected recurrent successors, nonempty old
+support, unit edge rates and restricted counting mass. No independent
+reproof, new literature priority or broader physical supply is attributed
+to those intermediates.
+
+The substantive ordinary synthesis is the source-indexed native occurrence
+relation together with the faithful coarse Apply nonclosure, all-word
+three-port equality separation, same-run adaptive INITIAL equality bill,
+and its authentic epoch-zero read/address matching upper route. The exact
+source-indexed projection is available only with its actual source parameter;
+a coarse response fiber cannot silently supply that parameter. General
+signed-fiber lifting, acquired full-state propagation and a native heat
+operation remain separate missing bridges.
 
 No Lean, Blueprint, Reg, ingestion, registration, freezing, judge, CI,
-spatial dimension, stable matter, preparation/actuator realization, physical
-clock, full-spectrum recovery, global novelty, or kernel verification is
-claimed. Source size/index, comparison time \(e\) and the scaled operator
-parameter, paid acquisition chronology, and physical duration remain
-separate. General signed-fiber lifting, an arbitrary equality port, and a
-native heat-operation bridge remain unresolved. The complete through-2027
-why-three programme is therefore still active.
+spatial dimension, stable matter, physical preparation/actuation, clock,
+full-spectrum acquisition, global novelty or kernel truth is claimed.
+The accepted source-step count \(e\), semigroup and occupation comparison
+time, paid acquisition chronology and physical duration remain distinct.
+The complete through-2027 why-three programme remains active; this finite
+repair is not its completion criterion.
 
 ## 112.99 追加锚（本行以下为增补区）
