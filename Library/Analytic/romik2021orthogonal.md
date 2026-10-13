@@ -10800,3 +10800,134 @@ the FIB arithmetic bridge remain unresolved. Ordinary source
 applications and existence continuity are distinguished from the
 finite exact compact-source computations; no Lean or priority claim
 is made.
+
+## Exact theta testing and the limit of a linear positive lift
+
+The original source remains
+$F(z)=\Xi(\sqrt z)/\Xi(0)$ and
+$dP_\Phi(x)=\Phi(x)\,dx/\Xi(0)$ from Romik (1.6)--(1.11).
+Use $\mathbb E=\mathbb E_\Phi$ and define, on this same full source,
+
+$$
+h(x)=-x\Phi'(x)/\Phi(x),\quad
+k(x)=\Phi''(x)/\Phi(x),\quad
+\tau(x)=\frac{\int_{|x|}^\infty y\Phi(y)\,dy}{\Phi(x)}.
+\tag{LC423}
+$$
+
+For the unchanged $n\ge1,t>0,\mathscr T_n$, let
+
+$$
+B_{n,t}(x)=
+\sum_{j=0}^n\frac{(-1)^j(n)_{\underline j}}{n^j(2j)!}t^jx^{2j}
+={}_1F_1(-n;1/2;tx^2/(4n)).
+\tag{LC424}
+$$
+
+Finite coefficient extraction, Fubini and integration by parts give
+
+$$
+J_n(t)=\mathbb EB_{n,t},\quad
+G_n(t)=-\tfrac12\mathbb E[\tau B_{n,t}],\quad
+2tJ_n'(t)=\mathbb E[(h-1)B_{n,t}].
+\tag{LC425}
+$$
+
+Indeed
+$\mathbb E[\tau X^{2j}]=\mathbb E[X^{2j+2}]/(2j+1)$;
+combine this with
+$(j+1)/(2j+2)!=1/[2(2j+1)(2j)!]$ for $G_n$.
+Also $x\partial_xB=2t\partial_tB$.
+These identities use $G_n=\mathscr T_nF'$, not $G_n=J_n'$.
+The exact Laguerre differential equation, with
+$\alpha_t=t/(2n)$, is
+$B''-\alpha_t xB'+tB=0$.
+At an actual node $\mathbb EB=0$, it yields
+$\mathbb E[(k-\alpha_t h)B]=0$, and
+
+$$
+J_n'(t)G_n(t)
+=-\frac1{4t}\mathbb E[hB_{n,t}]\mathbb E[\tau B_{n,t}].
+\tag{LC426}
+$$
+
+All boundary terms vanish by the original theta tail. This is an
+exact parameter correspondence: $\alpha_t=(t/T^2)\rho^2/(2\nu)$
+in the existing local height variables. At the real actual nodes of
+LC378, its signed cofactor product is precisely the last expression
+divided by $\widehat H(t)^2$. No exterior, multiplicity, nonreal
+core zero or response is discarded. The representation itself pays
+no new sign bound.
+
+It does, however, permit a source-faithful test of a proposed *linear*
+positive lift. For any fixed finite $\alpha>0$, let
+
+$$
+\mathcal V_\alpha=
+\{b\in L^2_{\mathrm{even}}(P_\Phi;\mathbb R):
+\mathbb Eb=0,\ \mathbb E[(k-\alpha h)b]=0\},
+\quad
+\mathcal Q_\Phi(b)=-\mathbb E[hb]\mathbb E[\tau b].
+\tag{LC427}
+$$
+
+The form $\mathcal Q_\Phi$ on this actual-source space has both
+strictly positive and strictly negative directions. To see this,
+the complete original series and its first-summand tail give
+
+$$
+h(x)\sim2\pi xe^{2x},\qquad
+k(x)\sim4\pi^2e^{4x},\qquad
+\tau(x)\sim x/(2\pi e^{2x})\to0
+\quad(x\to+\infty).
+\tag{LC428}
+$$
+
+For the first two expressions, differentiate the normally convergent
+original theta series, retaining the exponentially smaller summands;
+do not differentiate an unbounded asymptotic remainder. For the
+third, compare the tail integral with
+$x\Phi(x)/(2\pi e^{2x})$ by the derivative-ratio limit.
+The same tail shows these three functions belong to $L^2(P_\Phi)$.
+They are smooth, $\tau>0$, and
+$1,h,k,\tau$ are linearly independent: successively compare the
+$e^{4x}$, $xe^{2x}$, constant and vanishing positive terms.
+Almost-everywhere equality here becomes pointwise equality because
+the actual density is positive and the functions are continuous.
+
+Let $P_\alpha$ be orthogonal projection onto $\mathcal V_\alpha$,
+$u=P_\alpha h$, $v=P_\alpha\tau$. Independence implies
+$u,v$ are nonzero and independent: any relation would put
+a combination of $h,\tau$ in
+$\operatorname{span}\{1,k-\alpha h\}$.
+Set $\zeta=\langle u,v\rangle/(\|u\|\|v\|)\in(-1,1)$ and
+$b_\pm=u/\|u\|\pm v/\|v\|$. Then
+
+$$
+\mathcal Q_\Phi(b_+)=-\|u\|\|v\|(1+\zeta)^2<0,\qquad
+\mathcal Q_\Phi(b_-)=\|u\|\|v\|(1-\zeta)^2>0.
+\tag{LC429}
+$$
+
+Thus no linear lifting $L$ and positive operator $A$ can
+represent this exact form as
+$\langle Lb,ALb\rangle$ for *every*
+$b\in\mathcal V_\alpha$. The common kernel of the two response
+functionals inside this infinite-dimensional space also contains
+nonzero vectors. This stronger linear relaxation supplies neither
+strict sign nor common-zero exclusion.
+
+These are classical integration, Laguerre and projection suppliers
+applied to the actual theta source. The added inference excludes only
+the proposed lift on the whole linear root-and-curvature constraint
+space. It is not a negative actual Jensen-node witness: the displayed
+$b_+$ need not be $B_{n,t}$ or satisfy its full differential
+equation/coefficient recurrence. Those nonlinear actual-test
+restrictions and all previous-row real-root conditions must still
+be used. No implication about the sign on those actual tests is
+inferred from indefiniteness of their larger containing space.
+
+The same first-defect source, moving-band localization, actual
+cofactor/common-zero control and Robin's complete same-clock signed
+response remain unpaid. No Lean, original-source node counterexample,
+mathematical-priority, RH or strict all-integer Robin claim is made.
