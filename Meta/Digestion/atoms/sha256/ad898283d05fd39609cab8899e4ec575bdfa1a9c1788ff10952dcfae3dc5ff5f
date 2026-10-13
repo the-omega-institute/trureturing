@@ -1,0 +1,14 @@
+**Convention 58.17 (mathematical scope and provenance).** The fixed-point and
+deterministic residual-minimization principles are standard background, as
+are the Radon--Nikodym description of the meet of finite measures and the
+Presburger/Dickson tools invoked conditionally from Continuation IV.
+Their application here specifies the missing FIB action, source, residual,
+and aggregation interfaces; the counterexamples delimit these interfaces.
+No priority claim is made for the background methods or their combination.
+All statements in §58 are ordinary mathematical definitions and arguments.
+Neither the stochastic comparison in §55.3 nor a reference to results in
+the development branch certifies an exact Lean application of this contract.
+No Lean/kernel-verification claim is made. Construction and effective
+presentation of an appropriate action-closed interface for a general signed
+FIB fibre remain separate unresolved obligations, as in §57.
+
