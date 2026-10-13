@@ -1,3 +1,4 @@
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
 import Reg.Support.SingleDependentReadout
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
 import LeanInformationAuditInterface.Contract.Registration
@@ -461,3 +462,266 @@ def uniform_guard_lower_memory_registration :
 #print axioms uniform_guard_lower_memory_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal136
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal133
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℕ
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature
+    (fun _ K b => b -
+      _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost K)
+    (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ)
+    (hK : 2 ≤ K)
+    (hqb : lam-g^2*chi^K*hSide .high < b)
+    (hbp : b < lam-g^2*chi^K*(aSide .high/(1-rho*chi^K))),
+    ∃ R : Return, R.r = 1 ∧
+    (max (max (xSide .high) (ySide .high)) ((lam-b)/g^2/chi^K) <
+      hSide .high-rho^R.m*(hSide .high-chi*aSide .high)) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+    let d := (lam-b)/g^2/chi^K
+    let B := hSide .high-rho^R.m*(hSide .high-chi*aSide .high)
+    let delta := B-initial .high sourceModel
+    let gamma := delta*g^N
+    let V := {xs : List Return //
+      GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs=N}
+    0 < delta ∧ 0 < gamma ∧
+    0 < min (r.readout () K b) (g^2*chi^K*gamma)/2 ∧
+    (∀ (targetModel : Model) (words : List V),
+      let execution := resetConcatenation R (words.map Subtype.val)
+      GuardTrace K (d+gamma) false .high execution (initial .high targetModel) ∧
+      ActualPairSupply targetModel o
+        (b-min (b-actualAutomaticCost K) (g^2*chi^K*gamma)/2) .strict execution) ∧
+    (∃ n : ℕ, K ≤ n ∧ hSide .high*rho^n < chi^(K-1)*gamma) ∧
+    (∀ choices : ℤ → V,
+      let W := fun j => executionWord (R::(choices j).val)
+      blockCut W 0 = 0 ∧
+      (∀ j, blockCut W (j+1)=blockCut W j+(W j).length) ∧
+      StrictMono (blockCut W) ∧
+      ∃ ω : ℤ → CuLetter, ∀ j (k : Fin (W j).length),
+        ω (blockCut W j+(k : ℕ))=(W j)[k])
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨b, hqb, hbp⟩ :=
+    _root_.Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.SupplyWitnesses.record_interval_nonempty
+  obtain ⟨R, _, _, family⟩ := h (fun _ => false) b 2 (by decide) hqb hbp
+  have positive := (family .original 1 (by decide)).2.2.1
+  dsimp only [rejected, realize] at positive
+  exact (not_lt_of_ge (div_nonpos_of_nonpos_of_nonneg
+    (min_le_left (0 : ℝ) _) (by norm_num))) positive
+
+def evidence : Registration sourceArena (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.reset_codebook_construction) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.reset_codebook_construction, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    obtain ⟨_, x, y, different⟩ :=
+      _root_.Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence i
+    change x ≠ y at different
+    refine ⟨2, x, y, ?_⟩
+    change x - actualAutomaticCost 2 ≠ y - actualAutomaticCost 2
+    exact fun equal => different (sub_left_inj.mp equal)
+
+def reset_codebook_construction_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.reset_codebook_construction)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ K b => b -
+          _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost K)
+        (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal133.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal133.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ K b => b -
+      _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost K)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms reset_codebook_construction_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal133
+
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal137
+noncomputable section
+
+abbrev observationSignature : Signature.{0,0,0,0,0} where
+  Params := ℕ
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ := fun _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization observationSignature :=
+  realize.{0,0,0,0,0} observationSignature
+    (fun _ K b => b -
+      _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost K)
+    (fun e => nomatch e)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ)
+    (hK : 2 ≤ K)
+    (hqb : lam-g^2*chi^K*hSide .high < b)
+    (hbp : b < lam-g^2*chi^K*(aSide .high/(1-rho*chi^K))),
+    ∃ R : Return, R.r=1 ∧
+    (max (max (xSide .high) (ySide .high)) ((lam-b)/g^2/chi^K) <
+      hSide .high-rho^R.m*(hSide .high-chi*aSide .high)) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+    let d := (lam-b)/g^2/chi^K
+    let B := hSide .high-rho^R.m*(hSide .high-chi*aSide .high)
+    let delta := B-initial .high sourceModel
+    let gamma := delta*g^N
+    let V := {xs : List Return //
+      GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs=N}
+    0 < delta ∧ 0 < gamma ∧
+    0 < min (r.readout () K b) (g^2*chi^K*gamma)/2 ∧
+    (∀ (targetModel : Model) (words : List V),
+      let execution := resetConcatenation R (words.map Subtype.val)
+      GuardTrace K (d+gamma) false .high execution (initial .high targetModel) ∧
+      ActualPairSupply targetModel o
+        (b-min (b-actualAutomaticCost K) (g^2*chi^K*gamma)/2) .strict execution) ∧
+    ∃ n : ℕ, K ≤ n ∧
+      hSide .high*rho^n < chi^(K-1)*gamma ∧
+      ∀ choices : ℤ → V,
+        let W := fun j => executionWord (R::(choices j).val)
+        ∃ ω : ℤ → CuLetter,
+          ω ∈ AuxiliaryLanguage K (d+gamma) ∧ ω ∈ LowerMemoryLanguage n K d ∧
+          (∀ j (k : Fin (W j).length), ω (blockCut W j+(k : ℕ))=(W j)[k]) ∧
+          (∀ j, GuardTrace K (d+gamma) false .high (R::(choices j).val)
+            (pastState ω (blockCut W j)))
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨b, hqb, hbp⟩ :=
+    _root_.Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.SupplyWitnesses.record_interval_nonempty
+  obtain ⟨R, _, _, family⟩ := h (fun _ => false) b 2 (by decide) hqb hbp
+  have positive := (family .original 1 (by decide)).2.2.1
+  dsimp only [rejected, realize] at positive
+  exact (not_lt_of_ge (div_nonpos_of_nonpos_of_nonneg
+    (min_le_left (0 : ℝ) _) (by norm_num))) positive
+
+def evidence : Registration sourceArena (type_of% @_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.bilateral_reset_codebook) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.bilateral_reset_codebook, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    sourceArena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    obtain ⟨_, x, y, different⟩ :=
+      _root_.Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence i
+    change x ≠ y at different
+    refine ⟨2, x, y, ?_⟩
+    change x - actualAutomaticCost 2 ≠ y - actualAutomaticCost 2
+    exact fun equal => different (sub_left_inj.mp equal)
+
+def bilateral_reset_codebook_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.bilateral_reset_codebook)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ K b => b -
+          _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost K)
+        (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal137.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal137.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ K b => b -
+      _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.actualAutomaticCost K)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms bilateral_reset_codebook_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.ExactOriginal137
