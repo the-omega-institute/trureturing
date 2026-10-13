@@ -99,8 +99,8 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
             Sub(Mul(D(2), Call("Complex.re", Apply(a, D(0), D(0)))), D(1)), CloseBracket);
         var matrix = Call("D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix",
             D(1), Call("WithLp.toLp", D(2), coordinates));
-        return Disp(All("A", QubitMatrix(), All("h", Hermitian(a),
-            All("ht", Eq(Call("Matrix.trace", a), D(1)), Eq(a, matrix)))));
+        return Disp(All("A", QubitMatrix(), Implies(Hermitian(a),
+            Implies(Eq(Call("Matrix.trace", a), D(1)), Eq(a, matrix)))));
     }
     private static Formula StarMatrix(Formula x) => Call("Matrix.conjTranspose", x);
     private static Formula Smul(Formula scalar, Formula matrix) => Call("SMul.smul", scalar, matrix);
