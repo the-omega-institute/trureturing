@@ -125,6 +125,24 @@ internal sealed class NormalizedJensenDegreeLoweringDocument : IScribeDocumentDe
                     + "falling-factorial recurrence, including the top index k=d and all "
                     + "indices beyond d. The degree bound makes both d and d-1 nonzero.")),
                     Paragraph(Text(
+                    "For the literal xiSquareSource F, retain b(k)=Re(F^(k)(0))/k!, "
+                    + "J_n=T_n F and G_n=T_n(F'). Actual xi conjugation, iterated through "
+                    + "the total derivative-conjugation identity, makes every actual source "
+                    + "jet real. Thus J_n is normalizedJensen b n and G_n uses the exact "
+                    + "shifted coefficients b_prime(k)=(k+1)b(k+1). G_n extracts the source "
+                    + "derivative and is distinct from the polynomial derivative J_n'. "
+                    + "No theta-moment-to-xi-jet identity is assumed.")),
+                    Paragraph(Text(
+                    "For every n>=2 and complex t!=0, the complete finite recurrence gives "
+                    + "J_(n+1)((n+1)t/n)=J_n(t)+(t/n)G_n(t) and "
+                    + "J_n(t)-(t/n)J_n'(t)=J_(n-1)((n-1)t/n). Every top coefficient "
+                    + "and every zero tail coefficient is included. At an actual J_n node, "
+                    + "J_n'(t)G_n(t)=-(n/t)^2 J_(n-1)((n-1)t/n) J_(n+1)((n+1)t/n). "
+                    + "At a positive real simple node, the preceding row is exactly "
+                    + "-(t/n)J_n'. The next actual row's relative orientation remains "
+                    + "unpaid; previous/current hyperbolicity does not by itself supply "
+                    + "a favorable response sign.")),
+                    Paragraph(Text(
                     "A same-source analytic application uses T_n f with coefficients "
                     + "((n)_k/n^k) f^(k)(0)/k!, for n nonzero and k from zero through n. "
                     + "For a complex smooth source preserving the real axis, derivative "
