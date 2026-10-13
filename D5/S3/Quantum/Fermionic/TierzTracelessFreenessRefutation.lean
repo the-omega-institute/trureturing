@@ -62,16 +62,16 @@ private def fromCoords : (Fin 15 → ℂ) →ₗ[ℂ] V where
   toFun x := ⟨coordMat x, by
     change Matrix.trace (coordMat x) = 0
     rw [Matrix.trace]
-    simp [Fin.sum_univ_succ, coordMat]
+    simp [Fin.sum_univ_succ, coordMat.eq_1]
     ring⟩
   map_add' x y := by
     apply Subtype.ext
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [coordMat] <;> ring
+    fin_cases i <;> fin_cases j <;> simp [coordMat.eq_1] <;> ring
   map_smul' r x := by
     apply Subtype.ext
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [coordMat] <;> ring
+    fin_cases i <;> fin_cases j <;> simp [coordMat.eq_1] <;> ring
 
 private def toCoords : V →ₗ[ℂ] (Fin 15 → ℂ) where
   toFun X := ![X.1 0 0 - X.1 3 3, X.1 1 1 - X.1 3 3, X.1 2 2 - X.1 3 3,
@@ -93,12 +93,12 @@ private def coordinates : (Fin 15 → ℂ) ≃ₗ[ℂ] V :=
         simpa [Matrix.diag, Fin.sum_univ_succ] using ht
       ext i j
       fin_cases i <;> fin_cases j <;>
-        simp [fromCoords, toCoords, coordMat] <;> linear_combination -ht / 4)
+        simp [fromCoords.eq_1, toCoords.eq_1, coordMat.eq_1] <;> linear_combination -ht / 4)
     (by
       apply LinearMap.ext
       intro x
       funext i
-      fin_cases i <;> simp [fromCoords, toCoords, coordMat] <;> ring)
+      fin_cases i <;> simp [fromCoords.eq_1, toCoords.eq_1, coordMat.eq_1] <;> ring)
 
 private def coordBasis : Module.Basis (Fin 15) ℂ V :=
   (Pi.basisFun ℂ (Fin 15)).map coordinates
@@ -117,7 +117,7 @@ private theorem coordBasis_eq (k : Fin 15) :
   apply Subtype.ext
   ext i j
   fin_cases k <;> fin_cases i <;> fin_cases j <;>
-    norm_num [fromCoords, coordMat, creatorVec, ij, Pi.single_apply,
+    norm_num [fromCoords.eq_1, coordMat.eq_1, creatorVec.eq_1, ij.eq_1, Pi.single_apply,
       Matrix.single_apply, Matrix.one_apply, Fin.ext_iff]
 
 private def g (k : Fin 15) : E := ExteriorAlgebra.ι ℂ (coordBasis k)
@@ -128,11 +128,11 @@ private theorem A_coordinates :
   have hd : creatorVec 3 3 = -creatorVec 0 0 - creatorVec 1 1 - creatorVec 2 2 := by
     apply Subtype.ext
     ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [creatorVec, Matrix.single_apply,
+    fin_cases i <;> fin_cases j <;> norm_num [creatorVec.eq_1, Matrix.single_apply,
       Matrix.one_apply, Fin.ext_iff]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [A, g, coordBasis_eq, ij, hd, map_sub, map_neg]
+    simp [A.eq_1, g.eq_1, coordBasis_eq, ij.eq_1, hd, map_sub, map_neg]
 
 variable {U : Type*} [AddCommGroup U] [Module ℂ U]
 private def word (n : ℕ) : (ℕ → U) → ℕ → ExteriorAlgebra ℂ U :=
@@ -158,7 +158,7 @@ private theorem word_comm (n : ℕ) (v : ℕ → U) (s : ℕ) (u : U) :
     word n v s * ExteriorAlgebra.ι ℂ u =
       parity n s • (ExteriorAlgebra.ι ℂ u * word n v s) := by
   induction n generalizing s v with
-  | zero => simp [word, parity]
+  | zero => simp [word.eq_1, parity.eq_1]
   | succ n ih =>
     rw [word_succ, parity_succ]
     by_cases hs : s % 2 = 1
@@ -170,7 +170,7 @@ private theorem word_comm (n : ℕ) (v : ℕ → U) (s : ℕ) (u : U) :
 private theorem word_mul (n : ℕ) (v : ℕ → U) (s t : ℕ) :
     word n v s * word n v t = sg n s t • word n v (s ||| t) := by
   induction n generalizing v s t with
-  | zero => simp [word, sg]
+  | zero => simp [word.eq_1, sg.eq_1]
   | succ n ih =>
     have hor : (s ||| t) % 2 = 1 ↔ s % 2 = 1 ∨ t % 2 = 1 := Nat.or_mod_two_eq_one
     rw [word_succ, word_succ, word_succ, sg_succ]
@@ -201,7 +201,7 @@ private theorem word_projection (n : ℕ) (v : ℕ → U) (s k : ℕ)
       if k.testBit i then ExteriorAlgebra.ι ℂ (v i) else 0) :
     π (word n v s) = if allowed n s k then word n v s else 0 := by
   induction n generalizing v s k with
-  | zero => simp [word,allowed]
+  | zero => simp [word.eq_1,allowed.eq_1]
   | succ n ih =>
     have hv0 := hv 0 (Nat.zero_lt_succ _)
     have hvt : ∀ i < n, π (ExteriorAlgebra.ι ℂ (v (i+1))) =
@@ -220,7 +220,7 @@ private theorem word_zero_mask (n : ℕ) (v : ℕ → U) : word n v 0=1 := by
   induction n generalizing v with
   | zero => rfl
   | succ n ih => rw [word_succ]; simpa using ih (fun i => v (i+1))
-private theorem word_single (n k : ℕ) (hk : k<n) (v : ℕ → U) :
+private theorem word_single (n k : ℕ) (hk : k < n) (v : ℕ → U) :
     word n v (2^k) = ExteriorAlgebra.ι ℂ (v k) := by
   induction n generalizing k v with
   | zero => omega
@@ -271,7 +271,7 @@ private def normalize (p : Poly) : Poly :=
 private theorem eval_mergeTerm (t : Mask × ℤ) (p : Poly) :
     eval (mergeTerm t p) = t.2 • mono t.1 + eval p := by
   induction p with
-  | nil => simp [mergeTerm, eval]
+  | nil => simp [mergeTerm.eq_1, eval.eq_1]
   | cons u us ih =>
     change eval (if t.1 = u.1 then (u.1, t.2 + u.2) :: us else u :: mergeTerm t us) = _
     by_cases h : t.1 = u.1
@@ -307,7 +307,7 @@ private def add (p q : Poly) : Poly := normalize (p ++ q)
 
 private theorem eval_add (p q : Poly) : eval (add p q) = eval p + eval q := by
   rw [add, eval_normalize]
-  simp only [eval, List.map_append, List.sum_append]
+  simp only [eval.eq_1, List.map_append, List.sum_append]
 
 private def termMul (t u : Mask × ℤ) : Mask × ℤ :=
   (join t.1 u.1, (t.2 * u.2) * sign t.1 u.1)
@@ -324,29 +324,29 @@ private theorem eval_termMul (t u : Mask × ℤ) :
 private theorem eval_mul_row (t : Mask × ℤ) (q : Poly) :
     eval (q.map (termMul t)) = (t.2 • mono t.1) * eval q := by
   induction q with
-  | nil => simp [eval]
+  | nil => simp [eval.eq_1]
   | cons u q ih =>
-    simp only [List.map_cons, eval, List.map_cons, List.sum_cons] at ih ⊢
+    simp only [List.map_cons, eval.eq_1, List.map_cons, List.sum_cons] at ih ⊢
     rw [eval_termMul, ih, mul_add]
 
 private theorem eval_mul (p q : Poly) : eval (mul p q) = eval p * eval q := by
   rw [mul, eval_normalize]
   induction p with
-  | nil => simp [eval]
+  | nil => simp [eval.eq_1]
   | cons t p ih =>
-    simp only [List.flatMap_cons, eval, List.map_append, List.sum_append]
+    simp only [List.flatMap_cons, eval.eq_1, List.map_append, List.sum_append]
     change eval (q.map (termMul t)) + eval (p.flatMap _) = _
     rw [eval_mul_row, ih]
-    simp only [eval, List.map_cons, List.sum_cons, add_mul]
+    simp only [eval.eq_1, List.map_cons, List.sum_cons, add_mul]
 
 private theorem mono_empty : mono 0 = 1 := word_zero_mask 15 basisSeq
 private def singletonMask (k : Fin 15) : Mask :=
   ⟨2^k.val, Nat.pow_lt_pow_right (by decide) k.isLt⟩
 private theorem mono_singleton (k : Fin 15) : mono (singletonMask k) = g k := by
-  exact (word_single 15 k.val k.isLt basisSeq).trans (by simp [basisSeq,g,Nat.mod_eq_of_lt k.isLt])
+  exact (word_single 15 k.val k.isLt basisSeq).trans (by simp [basisSeq.eq_1,g.eq_1,Nat.mod_eq_of_lt k.isLt])
 private def varData (k : Fin 15) : Poly := [(singletonMask k, 1)]
 private theorem eval_varData (k : Fin 15) : eval (varData k) = g k := by
-  simp only [varData, eval, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil,
+  simp only [varData.eq_1, eval.eq_1, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil,
     one_smul, add_zero, mono_singleton]
 
 private def matrixEval (X : Matrix (Fin 4) (Fin 4) Poly) : Matrix (Fin 4) (Fin 4) E :=
@@ -360,7 +360,7 @@ private def matrixMul (X Y : Matrix (Fin 4) (Fin 4) Poly) :
 private theorem eval_matrix_mul (X Y : Matrix (Fin 4) (Fin 4) Poly) :
     matrixEval (matrixMul X Y) = matrixEval X * matrixEval Y := by
   ext i j
-  simp only [matrixEval, matrixMul, eval_add, eval_mul, Matrix.mul_apply,
+  simp only [matrixEval.eq_1, matrixMul.eq_1, eval_add, eval_mul, Matrix.mul_apply,
     Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
   exact add_assoc _ _ _
 
@@ -370,7 +370,7 @@ private def matrixOne : Matrix (Fin 4) (Fin 4) Poly :=
 private theorem eval_matrix_one : matrixEval matrixOne = 1 := by
   ext i j
   by_cases h : i = j <;>
-    simp [matrixEval, matrixOne, h, eval, mono_empty, Matrix.one_apply]
+    simp [matrixEval.eq_1, matrixOne.eq_1, h, eval.eq_1, mono_empty, Matrix.one_apply]
 
 private def matrixPow (X : Matrix (Fin 4) (Fin 4) Poly) (n : ℕ) :
     Matrix (Fin 4) (Fin 4) Poly :=
@@ -391,7 +391,7 @@ private def tracePow (X : Matrix (Fin 4) (Fin 4) Poly) (n : ℕ) : Poly :=
 private theorem eval_tracePow (X : Matrix (Fin 4) (Fin 4) Poly) (n : ℕ) :
     eval (tracePow X n) = Matrix.trace (matrixEval X ^ n) := by
   rw [← eval_matrix_pow, Matrix.trace]
-  simp only [tracePow, eval_add, Matrix.diag, matrixEval,
+  simp only [tracePow.eq_1, eval_add, Matrix.diag, matrixEval.eq_1,
     Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
   exact add_assoc _ _ _
 
@@ -405,7 +405,7 @@ private theorem eval_AData : matrixEval AData = A := by
   rw [A_coordinates]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [matrixEval, AData, eval_varData, eval_cons, eval_nil, mono_singleton,
+    simp [matrixEval.eq_1, AData.eq_1, eval_varData, eval_cons, eval_nil, mono_singleton,
       sub_eq_add_neg, add_assoc]
 
 private theorem Q_eq_eval : Q = eval (tracePow AData 5) := by
@@ -470,7 +470,7 @@ private theorem free_creator_exact
 private theorem projection_obstruction (q y : ExteriorAlgebra ℂ U) (u : U)
     (φ : U →ₗ[ℂ] ℂ) (hφ : φ u = 1)
     (π : ExteriorAlgebra ℂ U →ₐ[ℂ] ExteriorAlgebra ℂ U)
-    (hql : π (q*ExteriorAlgebra.ι ℂ u)=0) (hqy : π (q*y)≠0) :
+    (hql : π (q * ExteriorAlgebra.ι ℂ u) = 0) (hqy : π (q * y) ≠ 0) :
     ¬ ∃ x : ExteriorAlgebra ℂ U, q*x=0 ∧ ExteriorAlgebra.ι ℂ u*x=ExteriorAlgebra.ι ℂ u*y := by
   rintro ⟨x,hx,hxy⟩
   have hz : ExteriorAlgebra.ι ℂ u*(x-y)=0 := by rw [mul_sub,hxy,sub_self]
@@ -507,10 +507,6 @@ abbrev R := ExteriorAlgebra ℂ H
 /-- The exterior algebra map induced by the diagonal inclusion. -/
 def actionMap : R →ₐ[ℂ] E := ExteriorAlgebra.map H.subtype
 instance : Module R E := actionMap.toRingHom.toModule
-instance : IsScalarTower ℂ R E where
-  smul_assoc c r x := by
-    change actionMap (c • r)*x = c • (actionMap r*x)
-    rw [map_smul,smul_mul_assoc]
 /-- Right multiplication by the source's differential element. -/
 def dR : E →ₗ[R] E where
   toFun x := x*Q
@@ -526,8 +522,6 @@ def dToCycle : E →ₗ[R] Cycles := dR.codRestrict Cycles (fun x => by
 def B0 := Cycles ⧸ LinearMap.range dToCycle
 instance : AddCommGroup B0 := inferInstanceAs (AddCommGroup (Cycles ⧸ LinearMap.range dToCycle))
 instance : Module R B0 := inferInstanceAs (Module R (Cycles ⧸ LinearMap.range dToCycle))
-instance : Module ℂ B0 := inferInstanceAs (Module ℂ (Cycles ⧸ LinearMap.range dToCycle))
-instance : IsScalarTower ℂ R B0 := inferInstanceAs (IsScalarTower ℂ R (Cycles ⧸ LinearMap.range dToCycle))
 /-- Freeness of the source cohomology over the diagonal exterior algebra. -/
 def claim : Prop := Module.Free R B0
 private theorem right_left (x : E) : x*Q = -CliffordAlgebra.involute (Q*x) := by
@@ -549,9 +543,9 @@ private theorem degree_four_boundary (t : E) : proj 4 (t*Q)=0 := by
   obtain ⟨u,hu⟩ := (range_left (t*Q)).mp ⟨t,rfl⟩
   rw [←hu]
   exact DirectSum.coe_decompose_mul_of_left_mem_of_not_le (fun i => Edeg i) Q_hom (by decide)
-private theorem free_lift (u : H) (hu : u≠0) (z : E)
-    (hz : z ∈ Edeg 4) (hcycle : z*Q=0)
-    (hkill : ExteriorAlgebra.ι ℂ (u:V)*z=0) (hfree : claim) :
+private theorem free_lift (u : H) (hu : u ≠ 0) (z : E)
+    (hz : z ∈ Edeg 4) (hcycle : z * Q = 0)
+    (hkill : ExteriorAlgebra.ι ℂ (u : V) * z = 0) (hfree : claim) :
     ∃ x : Edeg 3, Q*(x:E)=0 ∧ ExteriorAlgebra.ι ℂ (u:V)*(x:E)=z := by
   let : Module.Free R B0 := hfree
   let zc : Cycles := ⟨z,hcycle⟩
@@ -592,7 +586,7 @@ private theorem free_lift (u : H) (hu : u≠0) (z : E)
   rw [map_zero] at hp
   exact (DirectSum.coe_decompose_mul_add_of_left_mem (fun i => Edeg i) (i := 5) (j := 3) Q_hom).symm.trans hp
 private theorem eval_hom (p : Poly) (n : ℕ)
-    (hp : ∀ t ∈ p, weight 15 t.1.val=n) : eval p ∈ Edeg n := by
+    (hp : ∀ t ∈ p, weight 15 t.1.val = n) : eval p ∈ Edeg n := by
   induction p with
   | nil => exact Submodule.zero_mem _
   | cons t p ih =>
@@ -605,11 +599,11 @@ private theorem eval_hom (p : Poly) (n : ℕ)
 private def ellH : H := ⟨creatorVec 0 0+creatorVec 1 1,
   Submodule.add_mem _ (Submodule.subset_span ⟨0,rfl⟩) (Submodule.subset_span ⟨1,rfl⟩)⟩
 private theorem ellH_coords : (ellH : V)=coordBasis 0+coordBasis 1 := by
-  simp only [ellH,coordBasis_eq,ij,Matrix.cons_val_zero,Matrix.cons_val_one]
+  simp only [ellH.eq_1,coordBasis_eq,ij.eq_1,Matrix.cons_val_zero,Matrix.cons_val_one]
 private def φ : V →ₗ[ℂ] ℂ := coordBasis.coord 0
 private theorem φ_ell : φ (ellH : V)=1 := by
   rw [ellH_coords]
-  simp [φ,Module.Basis.coord_apply]
+  simp [φ.eq_1,Module.Basis.coord_apply]
 private theorem ellH_ne : ellH≠0 := by
   intro h
   have ht := φ_ell
@@ -627,7 +621,7 @@ private theorem mono_projection (s : Mask) :
     π (mono s)=if allowed 15 s.val 5467 then mono s else 0 := by
   apply word_projection 15 basisSeq s.val 5467 π
   intro i hi
-  simp only [π,ExteriorAlgebra.map_apply_ι,P,basisSeq,Module.Basis.constr_basis,
+  simp only [π.eq_1,ExteriorAlgebra.map_apply_ι,P.eq_1,basisSeq.eq_1,Module.Basis.constr_basis,
     Nat.mod_eq_of_lt hi]
   split_ifs <;> simp only [map_zero]
 private theorem eval_projection (p : Poly) : π (eval p)=eval (projectData p) := by
@@ -645,6 +639,7 @@ private theorem eval_projection (p : Poly) : π (eval p)=eval (projectData p) :=
 
 set_option maxRecDepth 8192 in
 set_option maxHeartbeats 1200000 in
+-- The three bounded integer certificates share this theorem's elaboration budget.
 /-- The traceless cohomology at (p,N)=(5,4) fails diagonal freeness. -/
 theorem result : ¬ claim := by
   intro hfree
