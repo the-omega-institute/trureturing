@@ -18,6 +18,7 @@ H. Fukś and N. Fatès, *Analysis of the asymptotic density of endogamous diploi
 
 ## Verified locator
 
+DOI: 10.1140/epjs/s11734-026-02447-z (Eur. Phys. J. Spec. Top., published 2026; the journal full text was not read).
 Primary version read: https://arxiv.org/abs/2607.01917v1 (the only arXiv version).
 Source: https://arxiv.org/pdf/2607.01917v1 (text read from the PDF):
 - §2, Eqs. (1)–(3) and the definitions of d_t and d∞;
@@ -25,7 +26,6 @@ Source: https://arxiv.org/pdf/2607.01917v1 (text read from the PDF):
 - §4.1, the solvable family;
 - §5, the closing open problems.
 
-The journal version's full text was not read.
 
 ## Source statements
 
