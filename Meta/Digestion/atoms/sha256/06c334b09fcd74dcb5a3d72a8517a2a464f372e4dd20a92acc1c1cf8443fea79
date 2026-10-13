@@ -1,0 +1,28 @@
+**Definition 1.1 (fixed-length source and actual prefixes).** Fix a finite
+nonempty alphabet $A$, put $q=|A|$, and fix $n\ge0$ and a nonempty relation
+$C\subseteq A^n$. Concatenation is ordered, and $\epsilon$ is the empty word.
+At cut $0\le k\le n$ let
+
+$$
+P_k=\{u\in A^k:\exists f\in A^{n-k},\ uf\in C\},\qquad
+R(u)=\{f\in A^{n-k}:uf\in C\},\qquad
+\mathcal R_k=\{R(u):u\in P_k\}.
+$$
+
+Thus $P_0=\{\epsilon\}$, $P_n=C$, $R(\epsilon)=C$, and every member of
+$\mathcal R_k$ is nonempty. For a language $S$ and word $t$ define
+
+$$
+\partial_tS=\{f:tf\in S\},\qquad
+\operatorname{Pref}_d(S)=\{t\in A^d:\partial_tS\ne\varnothing\}.
+$$
+
+In particular $\partial_\epsilon S=S$ and
+$\partial_{ta}S=\partial_a(\partial_tS)$. If $u=vt$ is an actual prefix,
+then $R(u)=\partial_tR(v)$. All residuals and derivatives refer to this
+same $C$. The forward ingredient is the usual right-language description
+of a finite prefix automaton, as in Daciuk, Mihov, Watson and Watson,
+[*Incremental construction of minimal acyclic finite state automata*,
+§§2–3](https://aclanthology.org/J00-1002.pdf). Its use here does not add
+the deletion actions defined below.
+

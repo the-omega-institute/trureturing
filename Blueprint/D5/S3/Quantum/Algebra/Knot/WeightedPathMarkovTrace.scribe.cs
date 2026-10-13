@@ -22,7 +22,15 @@ internal sealed class WeightedPathMarkovTraceDocument : IScribeDocumentDefinitio
                 Paragraph(Text("In the displayed statement, FinitePerronData denotes precisely the hypotheses above. DistinctLegalPredecessors(t,v,u) means t differs from v and both R(t,u) and R(v,u) hold. Adjoint is conjugate transpose, block(Y,u) is Y(u), and appendSubmatrix(Y,t,u) has entry Y(u)(a(t,u)(x),a(t,u)(y)). UnitalInjectiveStarAlgebraInclusion means an injective complex-linear algebra homomorphism preserving one and adjoint. Positive(n) means zero is less than n.")),
                 Paragraph(Text("The local Temperley-Lieb relations are reused from weighted_legal_path_temperley_lieb. Trace compatibility requires the additional finite predecessor-fiber reindexing and Perron equality. The tower and trace begin at n=0; the last-generator identity begins at n=1. No connectedness or nonempty-fiber assumption is made.")),
                 Paragraph(Text("This is classical path-model background. Aharonov, Jones and Landau, A Polynomial Quantum Algorithm for Approximating the Jones Polynomial, arXiv:quant-ph/0511096v2, Definition 3.3 and Claim 3.6, give the explicit line-graph endpoint trace and its local Markov calculation. AJL uses unnormalized Temperley-Lieb generators with Markov coefficient one over delta. Multiplying the present literal projection by delta recovers that normalization, so its Markov coefficient is one over delta squared. Here the statement treats arbitrary finite positive Perron data and the entire endpoint-block algebra. This tower does not construct a geometric closure map, prove geometric Markov equivalence, or produce a knot with a prescribed Jones polynomial."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weighted-path-tau-scalar-linearity"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.tau_smul"),
+                H("Scalar linearity of the same endpoint trace"),
+                StatementSource.FromAuthor(ScalarStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite decidable L, arbitrary relation R, real weights d and real delta, every n and start s, every complex c and every X in C(R,n,s), tau(c times X) equals c tau(X). Positivity, symmetry and the Perron equality are not needed for this scalar identity. The Artin and signed Markov proofs consume this scalar-linearity helper at its source owner. It follows from matrix-trace scalar linearity and finite-sum distribution; it is a consumed helper rather than new independent mathematical content."))),
+                DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);
@@ -30,6 +38,14 @@ internal sealed class WeightedPathMarkovTraceDocument : IScribeDocumentDefinitio
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula All(string x, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), type, body);
+    private static Formula ScalarStatement()
+    {
+        Formula n = F.Id("n"), s = F.Id("s"), c = F.Id("c"), x = F.Id("X");
+        Formula law = EqTo(Call("tau", n, s, Call("SMul", c, x)),
+            Mul(c, Call("tau", n, s, x)));
+        return Disp(All("n", Seq(Mathbb, Grp(F.Id("N"))), All("s", F.Id("L"),
+            All("c", Seq(Mathbb, Grp(F.Id("C"))), All("X", Call("C", n, s), law)))));
+    }
     private static Formula Statement()
     {
         Formula n = F.Id("n"), s = F.Id("s"), x = F.Id("X"), y = F.Id("Y"), a = F.Id("A"), b = F.Id("B"), delta = F.Id("delta");
