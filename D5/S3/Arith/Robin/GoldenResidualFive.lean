@@ -4,8 +4,9 @@
    mirror-E: none(waiver:universal-inequality)
    anchors: []
    utility: none
-   digest: The 5040 congruence branch satisfies strict Robin with at most five residual primes. -/
+   digest: The 5040 congruence branch satisfies strict Robin with at most thirty-nine distinct primes. -/
 
+import Mathlib.Order.Interval.Finset.Nat
 import D5.S3.Arith.Robin.FibonacciPrimeSupport
 import D5.S3.Arith.GoldenResource.GoldenCell5040Shape
 import D5.S3.Arith.GoldenResource.GoldenCell5040SmallPrimeExclusion
@@ -130,6 +131,15 @@ private theorem core_support_card (a b r : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b)
     core_primeFactors a b ha hb]
   norm_num
 
+private theorem core_ge_5040 (a b : ℕ) (ha4 : 4 ≤ a) (hb2 : 2 ≤ b) :
+    5040 ≤ 2 ^ a * 3 ^ b * 5 * 7 := by
+  have h2 := Nat.pow_le_pow_right (by norm_num : 0 < (2 : ℕ)) ha4
+  have h3 := Nat.pow_le_pow_right (by norm_num : 0 < (3 : ℕ)) hb2
+  have h := Nat.mul_le_mul (Nat.mul_le_mul h2 h3) (le_refl 5)
+  have h' := Nat.mul_le_mul h (le_refl 7)
+  norm_num at h'
+  exact h'
+
 private theorem core_ratio_bound (a b : ℕ) (ha4 : 4 ≤ a) (ha6 : a ≤ 6)
     (hb2 : 2 ≤ b) (hb3 : b ≤ 3) :
     (ArithmeticFunction.sigma 1 (2 ^ a * 3 ^ b * 5 * 7) : ℝ) /
@@ -191,13 +201,7 @@ theorem robin_of_core_residual_le_five (a b r : ℕ)
     have hl := hprimes.1
     norm_num [roughPrimes] at hl
     exact hl.trans (Nat.le_of_dvd (Nat.pos_of_ne_zero hr) (Nat.prod_primeFactors_dvd r))
-  have hcore : 5040 ≤ 2 ^ a * 3 ^ b * 5 * 7 := by
-    have h2 := Nat.pow_le_pow_right (by norm_num : 0 < (2 : ℕ)) ha4
-    have h3 := Nat.pow_le_pow_right (by norm_num : 0 < (3 : ℕ)) hb2
-    have h := Nat.mul_le_mul (Nat.mul_le_mul h2 h3) (le_refl 5)
-    have h' := Nat.mul_le_mul h (le_refl 7)
-    norm_num at h'
-    exact h'
+  have hcore := core_ge_5040 a b ha4 hb2
   have hsize : 2 ^ 33 ≤ 2 ^ a * 3 ^ b * 5 * 7 * r := by
     have h := Nat.mul_le_mul hcore hrad
     norm_num at h ⊢
@@ -250,6 +254,186 @@ theorem robin_of_modEq_2241_card_le_nine {n : ℕ} (hn : 5040 < n)
   rw [hshape] at hn ⊢
   exact robin_of_core_residual_le_five a b r ha4 ha6 hb2 hb3 hc h11r hcardr hn
 
+/-- Distinct integers above a cutoff have a telescoping Euler-product bound. -/
+private theorem integer_euler_product_bound (m : ℕ) (hm : 0 < m) :
+    ∀ k (S : Finset ℕ), (∀ p ∈ S, m + 1 ≤ p) → S.card = k →
+      (∏ p ∈ S, eulerFactor p) ≤ ((m + k : ℕ) : ℝ) / m := by
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  intro k
+  induction k with
+  | zero =>
+    intro S _ hcard
+    simp [Finset.card_eq_zero.mp hcard, hmR.ne']
+  | succ k ih =>
+    intro S hcut hcard
+    have hne : S.Nonempty := Finset.card_pos.mp (by omega)
+    have hqS : S.max' hne ∈ S := S.max'_mem hne
+    have hcard' : (S.erase (S.max' hne)).card = k := by
+      rw [Finset.card_erase_of_mem hqS, hcard]
+      rfl
+    have hIH := ih (S.erase (S.max' hne))
+      (fun p hp => hcut p (Finset.mem_of_mem_erase hp)) hcard'
+    have hq : m + k + 1 ≤ S.max' hne := by
+      have hsub : S ⊆ Finset.Icc (m + 1) (S.max' hne) := by
+        intro p hp
+        exact Finset.mem_Icc.mpr ⟨hcut p hp, S.le_max' p hp⟩
+      have hcount := Finset.card_le_card hsub
+      rw [hcard, Nat.card_Icc] at hcount
+      omega
+    have hkR : (0 : ℝ) ≤ k := Nat.cast_nonneg _
+    have hqR : (m : ℝ) + k + 1 ≤ S.max' hne := by exact_mod_cast hq
+    have hmkR : (0 : ℝ) < (m : ℝ) + k := by linarith
+    have hqone : (1 : ℝ) < S.max' hne := by linarith
+    have hEuler : eulerFactor (S.max' hne) ≤
+        ((m : ℝ) + k + 1) / ((m : ℝ) + k) := by
+      unfold eulerFactor
+      apply (div_le_div_iff₀ (by linarith) hmkR).2
+      nlinarith
+    have hqnonneg : 0 ≤ eulerFactor (S.max' hne) := by
+      unfold eulerFactor
+      exact div_nonneg (by positivity) (by linarith)
+    simp only [Nat.cast_add, Nat.cast_one, Nat.cast_succ] at hIH ⊢
+    calc
+      _ = (∏ p ∈ S.erase (S.max' hne), eulerFactor p) * eulerFactor (S.max' hne) := by
+        rw [← Finset.mul_prod_erase S eulerFactor hqS]
+        ring
+      _ ≤ (((m : ℝ) + k) / m) * (((m : ℝ) + k + 1) / ((m : ℝ) + k)) :=
+        mul_le_mul hIH hEuler hqnonneg (div_nonneg (by linarith) hmR.le)
+      _ = ((m : ℝ) + k + 1) / m := by
+        field_simp [hmR.ne', hmkR.ne'] <;> ring
+      _ = ((m : ℝ) + ((k : ℝ) + 1)) / m := by ring
+
+/-- Every residual prime in this branch lies above the excluded small-prime interval. -/
+private theorem residual_primes_ge_forty_seven {n r : ℕ}
+    (h5040 : 5040 ∣ n) (hmod : Nat.ModEq n (3 ^ n) 2241)
+    (hc : r.Coprime 210) (hrdvd : r ∣ n) : ∀ p ∈ r.primeFactors, 47 ≤ p := by
+  have h11n : ¬11 ∣ n :=
+    modEq_2241_small_prime_not_dvd h5040 hmod (by decide) (by decide) (by decide)
+  have h11r : ¬11 ∣ r := fun hd => h11n (hd.trans hrdvd)
+  intro p hp
+  have hprime := Nat.prime_of_mem_primeFactors hp
+  have hp13 := residual_primes_ge_thirteen hc h11r hp
+  by_contra hlt
+  have hnotdvd : ¬p ∣ n :=
+    modEq_2241_small_prime_not_dvd h5040 hmod hprime (by omega) (by omega)
+  exact hnotdvd ((Nat.dvd_of_mem_primeFactors hp).trans hrdvd)
+
+/-- A cutoff and a support count bound the residual radical and hence the residual itself. -/
+private theorem radical_lower_bound (m r k : ℕ) (hm : 0 < m) (hr : r ≠ 0)
+    (hcut : ∀ p ∈ r.primeFactors, m ≤ p) (hk : k ≤ r.primeFactors.card) :
+    m ^ k ≤ r := by
+  calc
+    _ ≤ m ^ r.primeFactors.card := Nat.pow_le_pow_right hm hk
+    _ = ∏ p ∈ r.primeFactors, m := by simp
+    _ ≤ ∏ p ∈ r.primeFactors, p := Finset.prod_le_prod' (fun p hp => hcut p hp)
+    _ ≤ r := Nat.le_of_dvd (Nat.pos_of_ne_zero hr) (Nat.prod_primeFactors_dvd r)
+
+private theorem loglog_two_pow_eighty_four : (4 : ℝ) < Real.log (Real.log (2 ^ 84)) :=
+  loglog_of (2 ^ 84) 58 4 1 (29 / 16) 84 5
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num [atanhPartial, Finset.sum_range_succ])
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num [atanhPartial, Finset.sum_range_succ]) (by norm_num)
+
+/-- Small-prime exclusion and two size certificates close total support through thirty-nine. -/
+theorem robin_of_modEq_2241_card_le_thirty_nine {n : ℕ} (hn : 5040 < n)
+    (h5040 : 5040 ∣ n) (hmod : Nat.ModEq n (3 ^ n) 2241)
+    (hcard : n.primeFactors.card ≤ 39) :
+    (ArithmeticFunction.sigma 1 n : ℝ) / n <
+      Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : ℝ)) := by
+  by_cases hsmall : n.primeFactors.card ≤ 9
+  · exact robin_of_modEq_2241_card_le_nine hn h5040 hmod hsmall
+  obtain ⟨a, b, r, hshape, ha4, ha6, hb2, hb3, hc83⟩ := modEq_2241_shape h5040 hmod
+  have hr : r ≠ 0 := by intro hz; rw [hshape, hz, mul_zero] at hn; omega
+  have hc : r.Coprime 210 := hc83.coprime_dvd_right (by decide)
+  have hcardeq : n.primeFactors.card = 4 + r.primeFactors.card := by
+    rw [hshape, core_support_card a b r (by omega) (by omega) hr hc]
+  have hrescap : r.primeFactors.card ≤ 35 := by omega
+  have hresfive : 5 ≤ r.primeFactors.card := by omega
+  have hrdvd : r ∣ n := by
+    rw [hshape]
+    exact dvd_mul_of_dvd_right (dvd_refl r) _
+  have h47 := residual_primes_ge_forty_seven h5040 hmod hc hrdvd
+  have hrad : ∀ j ≤ r.primeFactors.card, 47 ^ j ≤ r :=
+    fun j hj => radical_lower_bound 47 r j (by decide) hr h47 hj
+  have hEuler := integer_euler_product_bound 46 (by decide)
+    r.primeFactors.card r.primeFactors (fun p hp => h47 p hp) rfl
+  have hres := (ratio_le_prod r hr).trans hEuler
+  have hratio : (ArithmeticFunction.sigma 1 n : ℝ) / n ≤
+      (254 / 63 : ℝ) * ((46 + (r.primeFactors.card : ℝ)) / 46) := by
+    rw [hshape, normalized_sigma_mul (core_coprime a b r hc)]
+    simpa only [Nat.cast_add, Nat.cast_ofNat] using
+      mul_le_mul (core_ratio_bound a b ha4 ha6 hb2 hb3) hres
+        (div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)) (by norm_num)
+  by_cases hshort : r.primeFactors.card ≤ 14
+  · have hcountR : (r.primeFactors.card : ℝ) ≤ 14 := by exact_mod_cast hshort
+    have hratioCap : (ArithmeticFunction.sigma 1 n : ℝ) / n ≤ 2540 / 483 := by
+      apply hratio.trans
+      nlinarith
+    have hsize : 2 ^ 33 ≤ n := by
+      rw [hshape]
+      have h := Nat.mul_le_mul (core_ge_5040 a b ha4 hb2) (hrad 5 hresfive)
+      norm_num at h ⊢
+      omega
+    have hsizeR : (2 : ℝ) ^ 33 ≤ n := by exact_mod_cast hsize
+    have hloglog : (3 : ℝ) < Real.log (Real.log (n : ℝ)) := by
+      apply loglog_two_pow_thirty_three.trans_le
+      exact Real.log_le_log (Real.log_pos (by norm_num))
+        (Real.log_le_log (by norm_num) hsizeR)
+    have hcapacity : (267 / 50 : ℝ) < Real.exp Real.eulerMascheroniConstant *
+        Real.log (Real.log (n : ℝ)) := by
+      calc
+        _ = (89 / 50 : ℝ) * 3 := by norm_num
+        _ < Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : ℝ)) :=
+          mul_lt_mul exp_gamma_lower hloglog.le (by norm_num) (Real.exp_pos _).le
+    exact hratioCap.trans_lt ((by norm_num : (2540 / 483 : ℝ) < 267 / 50).trans hcapacity)
+  · have hcountR : (r.primeFactors.card : ℝ) ≤ 35 := by exact_mod_cast hrescap
+    have hratioCap : (ArithmeticFunction.sigma 1 n : ℝ) / n ≤ 1143 / 161 := by
+      apply hratio.trans
+      nlinarith
+    have hsize : 2 ^ 84 ≤ n := by
+      rw [hshape]
+      have h := Nat.mul_le_mul (core_ge_5040 a b ha4 hb2) (hrad 13 (by omega))
+      norm_num at h ⊢
+      omega
+    have hsizeR : (2 : ℝ) ^ 84 ≤ n := by exact_mod_cast hsize
+    have hloglog : (4 : ℝ) < Real.log (Real.log (n : ℝ)) := by
+      apply loglog_two_pow_eighty_four.trans_le
+      exact Real.log_le_log (Real.log_pos (by norm_num))
+        (Real.log_le_log (by norm_num) hsizeR)
+    have hcapacity : (178 / 25 : ℝ) < Real.exp Real.eulerMascheroniConstant *
+        Real.log (Real.log (n : ℝ)) := by
+      calc
+        _ = (89 / 50 : ℝ) * 4 := by norm_num
+        _ < Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : ℝ)) :=
+          mul_lt_mul exp_gamma_lower hloglog.le (by norm_num) (Real.exp_pos _).le
+    exact hratioCap.trans_lt ((by norm_num : (1143 / 161 : ℝ) < 178 / 25).trans hcapacity)
+
+/-- Every strict-Robin counterexample in this congruence branch lies above an explicit threshold. -/
+theorem counterexample_size_lower_bound {n : ℕ} (hn : 5040 < n)
+    (h5040 : 5040 ∣ n) (hmod : Nat.ModEq n (3 ^ n) 2241)
+    (hbad : Real.exp Real.eulerMascheroniConstant * Real.log (Real.log (n : ℝ)) ≤
+      (ArithmeticFunction.sigma 1 n : ℝ) / n) : 5040 * 47 ^ 36 ≤ n := by
+  have hsupport : 40 ≤ n.primeFactors.card := by
+    by_contra hnot
+    have hcard : n.primeFactors.card ≤ 39 := by omega
+    exact (not_lt_of_ge hbad) (robin_of_modEq_2241_card_le_thirty_nine hn h5040 hmod hcard)
+  obtain ⟨a, b, r, hshape, ha4, ha6, hb2, hb3, hc83⟩ := modEq_2241_shape h5040 hmod
+  have hr : r ≠ 0 := by intro hz; rw [hshape, hz, mul_zero] at hn; omega
+  have hc : r.Coprime 210 := hc83.coprime_dvd_right (by decide)
+  have hres : 36 ≤ r.primeFactors.card := by
+    rw [hshape, core_support_card a b r (by omega) (by omega) hr hc] at hsupport
+    omega
+  have hrdvd : r ∣ n := by
+    rw [hshape]
+    exact dvd_mul_of_dvd_right (dvd_refl r) _
+  have h47 := residual_primes_ge_forty_seven h5040 hmod hc hrdvd
+  have hrad := radical_lower_bound 47 r 36 (by decide) hr h47 hres
+  rw [hshape]
+  exact Nat.mul_le_mul (core_ge_5040 a b ha4 hb2) hrad
+
+#print axioms counterexample_size_lower_bound
+#print axioms robin_of_modEq_2241_card_le_thirty_nine
 #print axioms robin_of_core_residual_le_five
 #print axioms robin_of_modEq_2241_card_le_nine
 
