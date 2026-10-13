@@ -8,7 +8,7 @@ The one-mode Hilbert space consists of square-summable complex sequences. The ou
 
 **Definition 1.1 (The one-mode Fock space).**
 
-$$\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.H} = \operatorname{lp}\left(\lambda (\mathord{\cdot}: \mathbb{N}) \mapsto (\mathbb{C}), 2\right)$$
+$$\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.H} = \operatorname{D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.FockSpace}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/PureLossIncompatibility.H` (`✓ std3`).
 
@@ -42,19 +42,7 @@ $$\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op} = \operato
 
 These are continuous complex-linear endomorphisms of the one-mode Hilbert space.
 
-**Definition 1.4 (Transmissivity in the closed unit interval).**
-
-$$\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Loss} = \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)$$
-
-*Formalization.* `D5/S3/Quantum/Measurement/PureLossIncompatibility.Loss` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A transmissivity includes a real value and the condition that this value lies between zero and one, with both endpoints included.
-
-**Definition 1.5 (An operator acting in every environment coordinate).**
+**Definition 1.4 (An operator acting in every environment coordinate).**
 
 $$\forall (M: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), (\forall (w: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.K}), (\forall (k: \mathbb{N}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.amplify}\left(M\right)\left(w\right)\left(k\right) = M\left(w\left(k\right)\right))))$$
 
@@ -64,9 +52,9 @@ $$\forall (M: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op
 
 *Commentary.*
 
-Amplification applies the same retained-mode operator to each environment coordinate. The equation characterizes its action on every vector.
+Amplification uses lp.mapCLM to apply the same retained-mode operator to each environment coordinate. The equation characterizes its action on every vector.
 
-**Definition 1.6 (Embedding with a vacuum environment).**
+**Definition 1.5 (Embedding with a vacuum environment).**
 
 $$\forall (v: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.H}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.vacuumEmbedding}\left(v\right) = \operatorname{lp.single}\left(2, 0, v\right))$$
 
@@ -78,9 +66,9 @@ $$\forall (v: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.H}
 
 The retained vector occupies environment coordinate zero. All other environment coordinates vanish; lp.single has exponent two and values in the retained-mode Hilbert space.
 
-**Definition 1.7 (The beam-splitter dilation).**
+**Definition 1.6 (The beam-splitter dilation).**
 
-$$\forall (tau: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Loss}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right) = \operatorname{ContinuousLinearMap.comp}\left(\operatorname{LinearIsometry.toContinuousLinearMap}\left(\operatorname{LinearIsometryEquiv.toLinearIsometry}\left(\operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.beamSplitter}\left(\operatorname{Subtype.val}\left(tau\right), \operatorname{Subtype.property}\left(tau\right)\right)\right)\right), \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.vacuumEmbedding}\right))$$
+$$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right) = \operatorname{ContinuousLinearMap.comp}\left(\operatorname{LinearIsometry.toContinuousLinearMap}\left(\operatorname{LinearIsometryEquiv.toLinearIsometry}\left(\operatorname{D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.beamSplitter}\left(\operatorname{Subtype.val}\left(tau\right), \operatorname{Subtype.property}\left(tau\right)\right)\right)\right), \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.vacuumEmbedding}\right))$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/PureLossIncompatibility.stinespring` (`✓ std3`).
 
@@ -90,9 +78,9 @@ $$\forall (tau: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.
 
 First place the environment in the vacuum, then apply the full two-mode beam splitter. Subtype.val supplies the transmissivity and Subtype.property supplies its interval condition. The isometry is viewed as a continuous linear map.
 
-**Definition 1.8 (The dual pure-loss action on effects).**
+**Definition 1.7 (The dual pure-loss action on effects).**
 
-$$\forall (tau: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Loss}), (\forall (M: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.dualLoss}\left(tau, M\right) = \operatorname{ContinuousLinearMap.comp}\left(\operatorname{ContinuousLinearMap.adjoint}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right)\right), \operatorname{ContinuousLinearMap.comp}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.amplify}\left(M\right), \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right)\right)\right)))$$
+$$\forall (tau: \operatorname{Set.Icc}\left((0: \mathbb{R}), 1\right)), (\forall (M: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.dualLoss}\left(tau, M\right) = \operatorname{ContinuousLinearMap.comp}\left(\operatorname{ContinuousLinearMap.adjoint}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right)\right), \operatorname{ContinuousLinearMap.comp}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.amplify}\left(M\right), \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.stinespring}\left(tau\right)\right)\right)))$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/PureLossIncompatibility.dualLoss` (`✓ std3`).
 
@@ -102,7 +90,7 @@ $$\forall (tau: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.
 
 The paragraph The loss channel describes a beam splitter with a vacuum second input and a discarded second output. Its dual action, used in Result 2, pulls the amplified effect back along the dilation. ContinuousLinearMap.adjoint is the Hilbert-space adjoint, and ContinuousLinearMap.comp is composition.
 
-**Definition 1.9 (A binary positive operator-valued measurement).**
+**Definition 1.8 (A binary positive operator-valued measurement).**
 
 $$\forall (M: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), ((\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.IsBinaryPOVM}\left(M\right)) \Leftrightarrow ((\forall (b: \operatorname{Fin}\left(2\right)), (\operatorname{ContinuousLinearMap.IsPositive}\left(M\left(b\right)\right))) \land (M\left(0\right) + M\left(1\right) = (1: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}))))$$
 
@@ -114,7 +102,7 @@ $$\forall (M: \operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.M
 
 Both effects are positive and their sum is the identity. The outcomes are labelled zero and one. Positivity is ContinuousLinearMap.IsPositive.
 
-**Definition 1.10 (A parent with all binary-string marginals).**
+**Definition 1.9 (A parent with all binary-string marginals).**
 
 $$\forall (m: \mathbb{N}), (\forall (F: \operatorname{Fin}\left(m\right) \to \left(\operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}\right)), ((\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.HasParent}\left(F\right)) \Leftrightarrow (\exists (G: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right)) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}), ((\forall (a: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right))), (\operatorname{ContinuousLinearMap.IsPositive}\left(G\left(a\right)\right))) \land ((\sum_{(a: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right)))} (G\left(a\right)) = (1: \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op})) \land (\forall (j: \operatorname{Fin}\left(m\right)), (\forall (b: \operatorname{Fin}\left(2\right)), (\sum_{a \in \operatorname{Finset.filter}\left(\lambda (a: (\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right))) \mapsto (a\left(j\right) = b), (\operatorname{Finset.univ}: \operatorname{Finset}\left((\operatorname{Fin}\left(m\right) \to \operatorname{Fin}\left(2\right))\right))\right)} (G\left(a\right)) = F\left(j, b\right)))))))))$$
 
@@ -126,7 +114,7 @@ $$\forall (m: \mathbb{N}), (\forall (F: \operatorname{Fin}\left(m\right) \to \le
 
 The parent assigns a positive effect to every function from Fin m to Fin 2, and the effects sum to the identity. For each setting j and outcome b, sum over all strings whose j-th outcome is b. Equality with F(j,b) is the joint-measurability condition of Result 2 and Eq. (3). No outcome string is omitted.
 
-**Definition 1.11 (The admissible reciprocal transmissivity).**
+**Definition 1.10 (The admissible reciprocal transmissivity).**
 
 $$\forall (n: \mathbb{N}), (\forall (hn: 1 \le n), (\operatorname{Subtype.val}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.inverseTransmissivity}\left(n, hn\right)\right) = \frac{1}{(n: \mathbb{R})}))$$
 
@@ -138,7 +126,7 @@ $$\forall (n: \mathbb{N}), (\forall (hn: 1 \le n), (\operatorname{Subtype.val}\l
 
 For n at least one, the reciprocal real value belongs to the closed unit interval. The parameter hn expresses this lower bound on n.
 
-**Definition 1.12 (Incompatibility at reciprocal integer transmissivity).**
+**Definition 1.11 (Incompatibility at reciprocal integer transmissivity).**
 
 $$(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.claim}) \Leftrightarrow (\forall (n: \mathbb{N}), (\forall (hn: 1 \le n), (\exists (M: \operatorname{Fin}\left(n + 1\right) \to \left(\operatorname{Fin}\left(2\right) \to \operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.Op}\right)), ((\forall (j: \operatorname{Fin}\left(n + 1\right)), (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.IsBinaryPOVM}\left(M\left(j\right)\right))) \land (\neg (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.HasParent}\left(\lambda (j: \operatorname{Fin}\left(n + 1\right)) \mapsto (\lambda (b: \operatorname{Fin}\left(2\right)) \mapsto (\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.dualLoss}\left(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.inverseTransmissivity}\left(n, hn\right), M\left(j, b\right)\right)))\right)))))))$$
 
@@ -150,7 +138,7 @@ $$(\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.claim}) \Left
 
 Result 3 asserts the existence of n+1 measurements that remain incompatible at transmissivity 1/n. Here the measurements are binary POVMs on the completed Fock space, and incompatibility means that their dual-loss effects have no parent with the displayed marginals. Every natural n at least one is included, also n=1.
 
-**Theorem 1.13 (Incompatible binary measurements for every n).**
+**Theorem 1.12 (Incompatible binary measurements for every n).**
 
 $$\operatorname{D5.S3.Quantum.Measurement.PureLossIncompatibility.claim}$$
 
@@ -178,7 +166,6 @@ The quadratic-form bound for a common subeffect of settings i and j gives its lo
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.HasParent`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.IsBinaryPOVM`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.K`
-- Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.Loss`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.Op`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.amplify`
 - Truth anchor: `D5/S3/Quantum/Measurement/PureLossIncompatibility.claim`
