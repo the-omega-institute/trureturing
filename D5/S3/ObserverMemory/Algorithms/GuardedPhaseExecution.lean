@@ -69,7 +69,7 @@ def PhasePaths (prog : Q → Instruction Q A R) (x : Q) (a : Nat) (h : Q) (J : N
   | (b, reply) :: next :: rest =>
       ∃ y, Crossing prog reply x y (b - a) ∧ PhasePaths prog y b h J (next :: rest)
 
-private theorem run_epochs {prog : Q → Instruction Q A R} {obs : Nat → A → R}
+theorem run_epochs {prog : Q → Instruction Q A R} {obs : Nat → A → R}
     {x y : Q} {a b : Nat} (path : Run prog obs x a y b) : a ≤ b := by
   induction path with
   | refl => exact le_rfl

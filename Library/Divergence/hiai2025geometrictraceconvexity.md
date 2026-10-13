@@ -3,7 +3,7 @@ bibkey: hiai2025geometrictraceconvexity
 authors: Fumio Hiai
 year: 2026
 title: Log-majorizations between quasi-geometric type means for matrices
-doi: 10.1016/j.laa.2026.01.003
+doi: null
 url: https://arxiv.org/abs/2510.04691v3
 claim: Equations (2.1)/(2.2) identify the original geometric trace; Problem 5.18 asks its joint convexity on the interior parameter rectangle.
 strata_touched:
@@ -13,6 +13,11 @@ triage: anchor
 ---
 
 # Original geometric trace and support extension
+
+The canonical DOI-bearing bibliography entry for this same article is
+[`hiai2025logmajorizationle`](hiai2025logmajorizationle.md). This note
+records its distinct Problem 5.18 application and preserves the verified
+published DOI and source locators below.
 
 The author-deposited v3 is explicitly labelled “Final print version” in the
 arXiv metadata, updated 20 January 2026, and associated with the published
