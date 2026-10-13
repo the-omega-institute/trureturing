@@ -31,6 +31,10 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             OwnerNode("choi", "D5/S3/Quantum/Foundation/FiniteKrausRepresentation.choi_matrix", "Input-first Choi matrix", Choi(),
                 "MatrixMap.choi_matrix supplies the displayed output-first coordinate expression; submatrix Prod.swap Prod.swap puts the input factor first. Applying Phi to the matrix unit Matrix.single a.1 b.1 1 gives its entry at output indices a.2 and b.2. The canonical Kraus Choi matrix places output first; Prod.swap relates the two tensor orders.",
                 DescribeRole.Definition, Lit()),
+            OwnerNode("choi-psd-of-cp", Prefix + "choi_psd_of_cp",
+                "Complete positivity gives Choi positivity", ChoiPositive(),
+                "For every RCLike scalar field K and all natural dimensions n and m, a completely positive K-linear map Phi from n by n matrices to m by m matrices has a positive semidefinite input-first Choi matrix. The input-first matrix is MatrixMap.choi_matrix Phi with both indices composed with Prod.swap. The IPT-to-PPT implication uses this positivity, and swapping the tensor factors again gives the output-first positivity used for qubit channels.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("ptFirst", "Partial transpose on the first factor", PartialTranspose(),
                 "The first coordinates are exchanged and the second coordinates retained. This is τₙ tensor idₘ in Section 9.1, PDF p. 21; it is an ordinary transpose without complex conjugation.",
                 DescribeRole.Definition, Lit()),
@@ -158,6 +162,9 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             Fun("b", ProdOf(FinOf(V("n")), FinOf(V("m"))), App(App(V("Phi"), unit), Component("a", 2), Component("b", 2))));
         return Disp(Generic(All("Phi", MapOf(V("K")), EqTo(SourceChoi(V("Phi")), body))));
     }
+
+    private static Formula ChoiPositive() => Disp(Generic(All("Phi", MapOf(V("K")),
+        Imp(App(Qualified("MatrixMap", "IsCompletelyPositive"), V("Phi")), Psd(SourceChoi(V("Phi")))))));
 
     private static Formula PartialTranspose()
     {
