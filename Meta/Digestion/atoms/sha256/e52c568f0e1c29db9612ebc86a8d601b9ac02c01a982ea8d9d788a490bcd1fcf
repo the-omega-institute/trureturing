@@ -1,0 +1,8 @@
+**定义 62.10（双无限辅助语言）。** 对 $\omega\in\{\mathsf u,\mathsf c\}^{\mathbb Z}$，定义转移前状态
+
+$$
+x_i(\omega)=\lim_{n\to\infty}
+f_{\omega_{i-1}}\circ\cdots\circ f_{\omega_{i-n}}(0).
+\tag{62.23}
+$$
+
