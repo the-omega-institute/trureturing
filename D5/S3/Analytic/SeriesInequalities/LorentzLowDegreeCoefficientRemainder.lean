@@ -183,7 +183,7 @@ private lemma polynomial_iterated_deriv (P : ℂ[X]) (n : ℕ) :
     ext z
     rw [Polynomial.deriv, Function.iterate_succ_apply']
 
-private lemma coefficient_cauchy_bound (P : ℂ[X]) (n : ℕ) {R M : ℝ}
+lemma coefficient_cauchy_bound (P : ℂ[X]) (n : ℕ) {R M : ℝ}
     (hR : 0 < R) (hM : ∀ z : ℂ, ‖z‖ = R → ‖P.eval z‖ ≤ M) :
     ‖P.coeff n‖ ≤ M / R ^ n := by
   have h := Complex.norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le
@@ -490,7 +490,7 @@ private lemma bernstein_coefficient_sum {ι : Type*} (s : Finset ι)
   simp only [bernsteinCoefficient, finsetSum_coeff, sum_mul, sum_div]
   rw [sum_comm]
 
-private lemma bernstein_coefficient_C_mul (D J : ℕ) (a : ℂ) (P : ℂ[X]) :
+lemma bernstein_coefficient_C_mul (D J : ℕ) (a : ℂ) (P : ℂ[X]) :
     bernsteinCoefficient D J (C a * P) = a * bernsteinCoefficient D J P := by
   simp only [bernsteinCoefficient, coeff_C_mul, mul_sum, mul_div_assoc, mul_assoc]
 
@@ -800,7 +800,7 @@ private lemma bernstein_monomial_reconstruction {D k : ℕ} (hk : k ≤ D) :
     _ = X ^ k * ∑ j ∈ range (D-k+1), bernsteinPolynomial ℂ (D-k) j := by rw [mul_sum]
     _ = X ^ k := by rw [bernsteinPolynomial.sum, mul_one]
 
-private lemma bernstein_reconstruction (P : ℂ[X]) (D : ℕ) (hdeg : P.natDegree ≤ D) :
+lemma bernstein_reconstruction (P : ℂ[X]) (D : ℕ) (hdeg : P.natDegree ≤ D) :
     (∑ J ∈ range (D+1), C (bernsteinCoefficient D J P) * bernsteinPolynomial ℂ D J) = P := by
   simp only [bernsteinCoefficient, map_sum, sum_mul]
   rw [sum_comm]
