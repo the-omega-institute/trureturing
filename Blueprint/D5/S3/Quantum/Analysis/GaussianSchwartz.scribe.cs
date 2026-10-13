@@ -14,7 +14,7 @@ internal sealed class GaussianSchwartzDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Quantum/Analysis/GaussianSchwartz.exists_gaussian_schwartz"),
             H("A Gaussian Schwartz map on every real inner product space"),
             StatementSource.FromAuthor(TheoremFormula()),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Analytic/loges2026gaussianschwartz")),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/loges2026gaussianschwartz")),
             Blocks(
                 Paragraph(Text("Let E be a real normed inner product space. There is a real "
                     + "Schwartz map f on E whose value at each x is exp(-norm(x) squared / 2). "

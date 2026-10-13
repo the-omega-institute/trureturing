@@ -59,7 +59,7 @@ def classList (C : LiteralRow) : List (Classes C) :=
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem class_complete (C : LiteralRow) (b : Classes C) : b ∈ classList C := by
+theorem class_complete (C : LiteralRow) (b : Classes C) : b ∈ classList C := by
   apply List.mem_map.mpr
   refine ⟨⟨b.val, (Finset.mem_sort _).mpr b.property⟩, by simp, ?_⟩
   rfl
@@ -69,7 +69,7 @@ def variableList {C : LiteralRow} {d : Nat} (η : Patterns C d) : List (Variable
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem variable_complete {C : LiteralRow} {d : Nat} (η : Patterns C d)
+theorem variable_complete {C : LiteralRow} {d : Nat} (η : Patterns C d)
     (x : Variables η) : x ∈ variableList η := by
   rw [variableList, List.mem_dedup]
   exact List.mem_flatMap.mpr ⟨x.1, class_complete C x.1,

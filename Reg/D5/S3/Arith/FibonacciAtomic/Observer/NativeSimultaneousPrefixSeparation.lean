@@ -196,3 +196,84 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{1,2
 
 #print axioms proof
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation.Shift
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation.Bind
+
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativePrefixIdentityReflection (MixedExpr eval)
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation (bind eval_bind)
+
+abbrev signature : Signature where
+  Params := Σ ι : Type, Σ κ : Type, Σ _contexts : ι → MixedExpr κ, ι
+  State p := p.2.1 → Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Source
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p z => eval z (p.2.2.1 p.2.2.2)) (fun e => nomatch e)
+
+def bad : Realization signature := realize signature (fun _ _ _ => .of false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {ι κ : Type} (contexts : ι → MixedExpr κ) (z : κ → Source) (E : MixedExpr ι),
+    eval z (bind contexts E) = eval (fun i => R.readout () ⟨ι,κ,contexts,i⟩ z) E
+
+private theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  have h := law (fun _ : Unit => (.ground (.of true) : MixedExpr Unit))
+    (fun _ => .of true) (.residual 0 ())
+  change FreeMagma.of true = FreeMagma.of false at h
+  cases h
+
+def proof : Registration arena (type_of% (@eval_bind)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@eval_bind,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,bad_law⟩,fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨⟨Unit,Unit,(fun _ => .residual 0 ()),()⟩,
+      (fun _ => .of true),(fun _ => .of false),?_⟩
+    intro h
+    change FreeMagma.of true = FreeMagma.of false at h
+    cases h
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{1,2,1,0,0,0,1,0,0,0,0,0}
+    (@eval_bind) (Realization signature) (Type 1) Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation.Bind.eval_bind
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation.Bind.proof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨proof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p z => eval z (p.2.2.1 p.2.2.2)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation
+    definition := none
+    coordinates := #[0,1,2,5]
+    readouts := #[{
+      path := #["body","body","body","body","body","arg","fn","arg","body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn","arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms proof
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation.Bind

@@ -26,6 +26,21 @@ internal sealed class GeometryEntranceRatioDocument : IScribeDocumentDefinition
             Def("Linv", "Inverse candidate", "Linv(u,v,d,e,f)=(v-u,u,-d-u,u+3d+e-f,u-e). This is an inverse on the ambient coordinates; membership still requires an actual word or tree."),
             Def("letter", "Letter substitution", "letter(true)=[false], and letter(false)=[false,true]."),
             Def("sigma", "Actual word substitution", "sigma(w) is the concatenation of letter(c) for every letter occurrence c of w, in order."),
+            Describe.Lean(DescribeId.Create("geometry-tree-length"),
+                DeclarationHandle.Create(Prefix + "tree_length"), H("Length on Every Actual Geometry Fiber"),
+                StatementSource.FromAuthor(All("g", Call("Five"),
+                    All("t", Call("TreeFiber", V("g")),
+                        EqOf(Call("ell", Call("val", V("t"))), Call("N", V("g")))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Every actual source in the "
+                    + "entire geometry fiber has leaf count N(g). The statement includes every ordered "
+                    + "shape and word with that exact G; an empty fiber has no members."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("geometry-word-substitution"),
+                DeclarationHandle.Create(Prefix + "wd_substitution"), H("Exact Whole-Word Substitution"),
+                StatementSource.FromAuthor(All("t", Call("Source"),
+                    EqOf(Call("wd", Call("rho", V("t"))), Call("sigma", Call("wd", V("t")))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The literal ordered word of "
+                    + "each substituted actual source is sigma of its complete original labelled word. "
+                    + "Here ell is FreeMagma.length and Source is the actual FreeMagma Bool carrier."))), DescribeRole.Theorem),
             Def("m", "Word cardinality", "m(g)=Nat.card(WordFiber(g)). The actual word carrier is proved finite before this definition."),
             Def("M", "Tree cardinality", "M(g)=Nat.card(TreeFiber(g)). The actual ordered tree carrier is proved finite before this definition."),
             Def("H", "Entrance cardinality", "H(g)=Nat.card(EntranceFiber(g)). Finiteness follows from a proved cutoff k<2N(g) for every legal entrance, together with finite current trees and finite possible source trees."),

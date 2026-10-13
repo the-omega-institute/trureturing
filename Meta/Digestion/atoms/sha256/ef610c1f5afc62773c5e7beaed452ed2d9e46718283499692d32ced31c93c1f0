@@ -1,0 +1,69 @@
+**Definition 58.4 (completed fixed-policy residual).** Fix one deterministic
+policy $\pi$ with source-independent visible-history updates. Fix one common
+visible response alphabet $V$, including a symbol for every silent event, and
+the common continuation carrier $V^{\ast}$. Responses index possible
+successors; the controller does not choose the actual response.
+
+A completed deterministic transducer has a state set $K_\pi^{\mathrm c}$,
+a total response-indexed transition
+$\delta_\pi:K_\pi^{\mathrm c}\times V\to K_\pi^{\mathrm c}$,
+a state label $L_\pi$, and an edge label $B_\pi$. These contain:
+
+1. a state status in
+   $\{\mathsf{pending},\mathsf{halt},\mathsf{deadlock},
+     \mathsf{illegal},\mathsf{undefined}\}$;
+2. the selected primitive action, or the distinct instruction
+   $\mathsf{halt}$ or $\mathsf{none}$;
+3. the complete terminal output, absent outside a halt, and every contracted
+   initial/final resource or accumulator label;
+4. for each response $o$, an edge label $B_\pi(k,o)$ distinguishing admitted,
+   illegal, and undefined continuations and recording every contracted
+   event-resource label, together with the response-indexed successor
+   $\delta_\pi(k,o)$. Successor state names are not output labels: their
+   residuals are compared recursively.
+
+A response outside the admitted response set goes to the labelled illegal
+sink; an unspecified operation goes to a distinct undefined sink.
+Additional responses after a halt or deadlock are tagged illegal. Sinks have
+total absorbing transitions, no selected executable action, and no additional
+resource contribution. These completion steps are mathematical padding, not
+actual actions or additional legal traces. A selected action that is itself
+illegal or undefined is marked as such before any response. On every admitted
+branch, the actual next controller state must equal $\delta_\pi(k,o)$ for
+every compatible source; separately chosen hidden-source successors do not
+supply this factorization.
+
+Every field being compared must have the stated deterministic factorization.
+If a source-dependent field does not factor through the controller boundary,
+it cannot silently be assigned a scalar value there. Either the contract
+supplies the required factorization, or its semantic label retains the
+whole source-indexed field, including its domain and absent cases, and equality
+of that label is pointwise on the same sources. Such labels supply no new
+online source-identity input. A proposed finite transducer with neither
+representation does not satisfy this definition.
+
+For $w=o_1\cdots o_n$, put $k_0=k$ and
+$k_{i+1}=\delta_\pi(k_i,o_{i+1})$, and define the total trace function
+
+$
+F^\pi_k(w)=
+\bigl((L_\pi(k_i))_{i=0}^{n},
+      (B_\pi(k_i,o_{i+1}))_{i=0}^{n-1}\bigr).
+$
+
+Let $D^\pi_k\subseteq V^{\ast}$ be the prefix-closed domain of words all of
+whose edges are admitted, including the empty word. The completed residual is
+
+$
+\mathcal R^\pi_k=(D^\pi_k,F^\pi_k),\qquad
+k\equiv_\pi k'
+\quad\Longleftrightarrow\quad
+D^\pi_k=D^\pi_{k'}\ \text{and}\
+F^\pi_k(w)=F^\pi_{k'}(w)\ \text{for every }w\in V^{\ast}.
+$
+
+Equality includes the admissible domains, all failure and termination tags,
+selected actions, full terminal outputs, and the resource labels specified
+by $\Gamma$. It never means comparison only on an intersection of
+compatible-source continuation domains.
+
