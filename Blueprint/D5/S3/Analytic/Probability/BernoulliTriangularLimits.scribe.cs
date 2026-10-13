@@ -87,7 +87,7 @@ internal sealed class BernoulliTriangularLimitsDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/BernoulliTriangularLimits.normalCDF"),
                 H("normalCDF"),
                 StatementSource.FromAuthor(Disp(All("t", Real, Equal(Call("normalCDF", V("t")), Multiply(new Formula.Power(Parenthesized(new Formula.Apply(Qualified("Real", "sqrt"), [Multiply(D(2), Pi)])), new Formula.Negate(D(1))), IntegralIic(V("t")))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Asymptotics/zhangzhao2024speyer")),
                 Blocks(Paragraph(Text("The standard normal cumulative distribution is the inverse square root of 2π multiplied by the exponential integral over Set.Iic(t)."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -95,7 +95,7 @@ internal sealed class BernoulliTriangularLimitsDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/BernoulliTriangularLimits.normalPDF"),
                 H("normalPDF"),
                 StatementSource.FromAuthor(Disp(All("t", Real, Equal(Call("normalPDF", V("t")), Multiply(new Formula.Power(Parenthesized(new Formula.Apply(Qualified("Real", "sqrt"), [Multiply(D(2), Pi)])), new Formula.Negate(D(1))), Call("exp", new Formula.Negate(new Formula.Fraction(new Formula.Power(Parenthesized(V("t")), D(2)), D(2)))))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Asymptotics/zhangzhao2024speyer")),
                 Blocks(Paragraph(Text("The standard normal density is the inverse square root of 2π multiplied by exp(-t²/2)."))),
                 DescribeRole.Definition),
             Describe.Lean(

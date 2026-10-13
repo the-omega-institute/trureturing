@@ -91,8 +91,6 @@ import Mathlib.Probability.CDF
 import Mathlib.Probability.Distributions.Gaussian.Real
 import Mathlib.MeasureTheory.Measure.LevyConvergence
 import D5.S3.Zeros.Endpoints.BernoulliBridgeVariance
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Analysis.Calculus.Taylor
 
 noncomputable section
 open Filter Real Topology Set MeasureTheory ProbabilityTheory

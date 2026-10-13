@@ -128,7 +128,7 @@ namespace D5.S3.Combinatorics.Matroids.SpeyerUniformNormality
 
 open D5.S3.Analytic.Probability.UniformCDFConvergence
 open D5.S3.Analytic.Probability.BernoulliTriangularLimits
-private def g (n d : ℕ) : ℝ[X] := ∑ i ∈ Finset.Icc 1 (min d (n - d)),
+def g (n d : ℕ) : ℝ[X] := ∑ i ∈ Finset.Icc 1 (min d (n - d)),
   C (((n - i - 1).factorial : ℝ) /
     ((d - i).factorial * (n - d - i).factorial * (i - 1).factorial)) * X ^ i
 
