@@ -1,14 +1,14 @@
-> **Source and evidence boundary.** This continuation is ordinary mathematical reference input in the repository's `generic-v1` format.
-> It preserves the candidate source statements, proofs, caveats, citations, historical Lean-shaped references, and source links without adding a formalization claim.
-> Nothing here is current Lean-kernel, compiler, audit, or closed-theorem evidence; authorship, model involvement, priority, and license are not inferred.
+> **Mathematical scope.** This continuation concerns finite quantum networks, CPTP maps, information geometry, and predictive observation quotients.
+> Its mathematical source is commit `a2f195ceb64aaaea7eeb8a6bdea479ca2c3c7430`; individual source attributions and applicability limits accompany the corresponding statements.
+> Finite constructions retain their stated hypotheses; physical interpretations, general source compatibility, and RH identifications require the additional bridges specified in the text.
 >
 > **Navigation.** This volume carries the original sections 27–48, following [the original volume](AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE.md).
 > The original source heading `后续严格补充` and sections 49–65 continue in [the second continuation](AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION_II.md).
-> The body after this boundary is the next byte-preserving slice of candidate source commit `a2f195ceb64aaaea7eeb8a6bdea479ca2c3c7430`.
+> Statements attributed to other sources retain those sources’ explicit hypotheses and limits.
 
-## 27. 本节的形式化边界
+## 27. 有限结构与外部桥接的边界
 
-本节新增的可直接形式化内容为：
+本节涉及的有限对象与结论为：
 
 1. 有限图概率场 \(\mathcal C_G\)；
 2. 节点势与边耦合能量；
@@ -81,7 +81,7 @@
 
 ## 28. 有限量子载体与 CPTP 组合子
 
-本节把量子网络限定为有限维线性代数。所有量子对象均可编码为有限复矩阵，因此这一层原则上可以进入 Lean、Isabelle 或其他证明助手。这里不把“量子”解释为额外物理本体，只使用正半定性、迹、张量积和线性映射。
+本节把量子网络限定为有限维线性代数，所有量子对象均表示为有限复矩阵。这里不把“量子”解释为额外物理本体，只使用正半定性、迹、张量积和线性映射。
 
 ### 定义 28.1（有限量子状态）
 
@@ -767,7 +767,7 @@ D(\rho\|\sigma).
 }
 \]
 
-这是有限维量子相对熵的数据处理定理。其形式化证明可以沿以下闭合路径展开：先用 Stinespring 表示将 \(\mathcal E\) 写成等距嵌入后偏迹，再证明偏迹下相对熵单调，最后使用等距共轭下相对熵不变。当前文件把它登记为外部有限维定理输入。若将其纳入 Lean，必须分别形式化矩阵对数、支撑条件、偏迹和 Klein 不等式。
+这是作为外部有限维结果使用的量子相对熵数据处理定理。其证明依赖 Stinespring 表示将 $\mathcal E$ 分解为等距嵌入后偏迹、偏迹下相对熵单调性及等距共轭下相对熵不变性；这些依赖涉及矩阵对数、支撑条件、偏迹和 Klein 不等式。本节未给出这些中间结果的证明。
 
 该定理的语义边界是明确的：它证明量子信道不能增加相对熵区分度，不直接给出引力、时空或物理热力学定律。
 
@@ -1242,7 +1242,7 @@ Smith、Wolfe 和 Spekkens 的 *Fully quantum inflation: quantum marginal proble
 \text{量子 triangle-network 输出}.
 \]
 
-它也给出下一步的形式化方向：在定义 30.1--30.2 的有限源状态和局部 CPTP 映射后，构造复制网络的量子边缘约束。当前文件尚未完成该 inflation 证书，因此不能从有限 CPTP 定义直接推出量子三角兼容性判定。
+相应的量子 inflation 证书依赖定义 30.1--30.2 的有限源状态、局部 CPTP 映射以及复制网络的量子边缘约束。后者及其证书在此尚未给出，因此不能从有限 CPTP 定义直接推出量子三角兼容性判定。
 
 ### 锚点 36.2（三角网络量子非局域性的实验语义）
 
@@ -1325,7 +1325,7 @@ Arrighi、Durbec 和 Wilson 的 *Quantum networks theory*（Quantum 8, 1508, 202
 \mathbb C^{\mathcal G}\otimes H_{\mathrm{field}}
 \]
 
-上定义 CPTP 映射。当前 PR 只处理固定图和固定层间 bonding，因此不包含量子叠加拓扑。该扩展必须先定义图标签的状态空间、重连信道和逆极限相容性，不能从现有 holonomy 定义直接推导。
+上定义 CPTP 映射。上述构造限于固定图和固定层间 bonding，因此不包含量子叠加拓扑。该扩展必须先定义图标签的状态空间、重连信道和逆极限相容性，不能从现有 holonomy 定义直接推导。
 
 
 
@@ -2219,7 +2219,7 @@ one obtains
 \tag{41.4}
 \]
 
-Equations (41.1)–(41.4) are the mathematical core of the user's decomposition: dynamics is the generator and its trajectory, thermodynamics is a reference-dependent monotone functional, and current or forcing enters through a port. The same algebra supports classical, graph, and finite quantum realizations. It does not by itself identify their physical units or continuum limits.
+Equations (41.1)–(41.4) express the following mathematical decomposition: dynamics is the generator and its trajectory, thermodynamics is a reference-dependent monotone functional, and current or forcing enters through a port. The same algebra supports classical, graph, and finite quantum realizations. It does not by itself identify their physical units or continuum limits.
 
 The GENERIC interpretation of dissipative electromagnetism has been developed explicitly by coarse-graining microscopic Maxwell dynamics and writing macroscopic Maxwell equations in the reversible-irreversible form. This is a useful external anchor for the present typed interface. See Jelić, Hütter, and Öttinger, arXiv:1001.0899.
 
@@ -2522,7 +2522,7 @@ gives a decaying mode, and
 
 gives a conserved, neutral, or critical direction subject to the nonlinear stability conditions.
 
-This makes the user's light and sound intuition precise. Light and sound are candidate normal-mode families of the same field architecture, with different observable ports and constitutive blocks:
+Light and sound are candidate normal-mode families of the same field architecture, with different observable ports and constitutive blocks:
 
 - an electromagnetic port uses a gauge connection, field curvature, and Maxwell constitutive map;
 - an acoustic port uses density, momentum, pressure, and a medium constitutive map.
@@ -2556,18 +2556,18 @@ Thus:
 
 The project's gravitational candidate belongs one level higher. A graph Dirichlet form, Fisher Hessian, effective resistance, or holonomy defect can produce a metric-like structure. To identify it with physical gravity, one still needs a continuum limit, a diffeomorphism-covariant field equation, a stress-energy coupling, and observable predictions. The present finite results define a geometry interface and a closure residual. They do not yet prove an Einstein or Ricci realization.
 
-## 47. Formalization ledger and next theorem chain
+## 47. Mathematical dependencies and conditional theorem chain
 
-The most direct formalization sequence is now:
+The finite mathematical relationships and their additional assumptions are:
 
-1. define a finite StructurePreservingGenerator record containing the state carrier, energy, entropy, skew operator, positive operator, reference state, observation map, and closure residual;
-2. prove (41.2) and (41.4) from skew-symmetry, positivity, and degeneracy alone;
-3. define a finite graph current with \(\dot q=-Bj\), prove charge conservation, and connect it to the existing graph Dirichlet energy;
-4. define \(\mathsf O_{\mathrm{FIB}}\) and prove that \(\mathcal R_{\mathsf O}=0\) is equivalent to generator invariance of the \(\kappa\)-fibers;
-5. instantiate the quantum closure residual with the existing commutator-orbit and Hamiltonian-effect theorems;
-6. instantiate the electromagnetic cochain \(A\mapsto F=dA\) and prove the homogeneous constraint from \(d^2=0\);
-7. define light and sound as labeled spectral subspaces of \(D\mathsf G_{\Phi_*}\), with the label carried by the observation port and constitutive block;
-8. only after these steps introduce continuum, physical units, or gravitational interpretation.
+1. a finite StructurePreservingGenerator consists of the state carrier, energy, entropy, skew operator, positive operator, reference state, observation map, and closure residual;
+2. (41.2) and (41.4) depend only on skew-symmetry, positivity, and degeneracy;
+3. a finite graph current satisfies $\dot q=-Bj$; its charge conservation and relation to the graph Dirichlet energy require the corresponding incidence and constitutive conditions;
+4. for $\mathsf O_{\mathrm{FIB}}$, the equality $\mathcal R_{\mathsf O}=0$ is equivalent to generator invariance of the $\kappa$-fibers;
+5. the quantum closure residual is related to the commutator-orbit and Hamiltonian-effect theorems under their respective hypotheses;
+6. for the electromagnetic cochain $A\mapsto F=dA$, the homogeneous constraint follows from $d^2=0$;
+7. light and sound denote labeled spectral subspaces of $D\mathsf G_{\Phi_*}$, with the label carried by the observation port and constitutive block;
+8. continuum limits, physical units, and gravitational interpretation require additional assumptions beyond these finite relationships.
 
 The resulting theorem hierarchy is:
 
@@ -2585,7 +2585,7 @@ The resulting theorem hierarchy is:
 \end{aligned}
 \]
 
-This is the strict mathematical content of a unified-field program in the current trureturing architecture. The commonality lies in the typed state, conservation law, generator, observation map, and defect functional. Maxwell theory, stochastic thermodynamics, finite quantum dynamics, FIB geometry, and triangle-source networks are distinct realizations connected by explicit maps. A physical identification requires proving those maps and their limiting laws.
+This hierarchy specifies the finite mathematical scope of the unified-field relationships. The commonality lies in the typed state, conservation law, generator, observation map, and defect functional. Maxwell theory, stochastic thermodynamics, finite quantum dynamics, FIB geometry, and triangle-source networks are distinct realizations connected by explicit maps. A physical identification requires proving those maps and their limiting laws.
 
 ### External anchors for this extension
 
@@ -2811,7 +2811,7 @@ Therefore a seam can be invisible to the instantaneous visible derivative while 
 \text{minimal predictive quotient}.
 \]
 
-The result supplies the missing bridge between the FIB hidden coordinate and the predictive-sufficiency theory already present on dev. It also gives a concrete formalization target: the Lean object is the finite observability family
+The result relates the FIB hidden coordinate to predictive sufficiency through the observability family
 
 \[
 \{OA_wd:w\in\mathcal A^\ast\},

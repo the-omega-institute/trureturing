@@ -1,11 +1,11 @@
-> **Source and evidence boundary.** This volume is ordinary mathematical reference input in the repository's `generic-v1` format.
-> Its Lean-shaped contracts, historical Lean references, finite checks, proofs, caveats, citations, and source links are preserved input.
-> They do not assert current Lean-kernel truth, a compiler result, an audit result, a closed theorem, authorship, model involvement, priority, or a license.
+> **Mathematical scope.** This volume concerns finite five-state probability, observation fibers, graph geometry, and conditional arithmetic, triangle-network, and RH bridges.
+> Its mathematical source is commit `a2f195ceb64aaaea7eeb8a6bdea479ca2c3c7430`; individual source attributions and applicability limits accompany the corresponding statements.
+> Bridge data and hypotheses do not by themselves establish their existence or identify finite models with physical fields or zeta zeros.
 >
 > **Navigation.** This volume contains the original title and sections 0–26.
 > Sections 27–48 continue in [the first continuation](AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION.md).
 > The source heading `后续严格补充` and sections 49–65 continue in [the second continuation](AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION_II.md).
-> The body after this boundary is a byte-preserving slice of candidate source commit `a2f195ceb64aaaea7eeb8a6bdea479ca2c3c7430`.
+> Sections 12–14 give the five-state and finite-triangle contracts as mathematical definitions and propositions; Proposition 14.6 refutes the unconditional probability implication and states the corrected pushforward conditional.
 
 # Auric FIB ATOM：类型化桥接、算术驱动、三角网络与 RH 管线
 
@@ -19,7 +19,7 @@
 4. Fibonacci 支持图的动态边界与环流；
 5. 算术驱动、triangle-local 提升以及 RH-Cayley 单元。
 
-本文只使用显式定义的映射和概率核。没有定义的映射不被视为存在。特别是，素数分类到五态模式的编码、FIB 到三个独立源的提升、FIB 缺陷到 zeta 零点的映射，均在本文中作为待实现桥接接口，而不是已经证明的等价。
+本文只使用显式定义的映射和概率核。没有定义的映射不被视为存在。特别是，素数分类到五态模式的编码、FIB 到三个独立源的提升、FIB 缺陷到 zeta 零点的映射，均在本文中作为尚缺具体构造的桥接条件，而不是已经证明的等价。
 
 基础公式、隐藏关系、局部读出几何和静态 seam 的既有结果分别见：
 
@@ -684,13 +684,13 @@ c(\rho)=\frac{\rho-1}{\rho}.
    \]
 4. 一个证明，说明 FIB 的闭环条件等价于 Cayley 算子的等距或酉条件。
 
-当前仓库已经形式化了 Cayley 单元本身，但没有定义上述 FIB 到零点空间的映射。因此，\(\Delta=0\) 与 RH 的临界线条件目前仍是结构类比。
+Cayley 单元的数学关系见定义 10.1 和第 17.4.3 节所引来源；上述 FIB 到零点空间的映射仍未给定。因此，$\Delta=0$ 与 RH 的临界线条件仍是结构类比。
 
 ---
 
-## 11. 形式化目标
+## 11. 数学对象与依赖条件
 
-下一步可直接形式化的对象按依赖顺序排列如下：
+下列名称对应本卷的数学对象与命题，按依赖顺序排列：
 
 1. FiveModeLaw：五态概率律；
 2. VisibleCoordinates：\(X,Y,Z\)；
@@ -708,248 +708,222 @@ c(\rho)=\frac{\rho-1}{\rho}.
 14. TriangleLocalPushforward；
 15. RHBridgeAxiom。
 
-前十二项是有限维代数、凸几何、信息几何和图论命题。第十三至十五项是桥接接口，需要新的具体构造才能升级为定理。
+前十二项属于有限维代数、凸几何、信息几何和图论，适用条件见各对应条目。第十三至十五项是桥接条件；相关结论仍依赖尚未给出的具体构造。
 
 
 ---
 
-## 12. Lean 形状的形式化契约
+## 12. 五态代数与条件桥接
 
-本节给出直接进入 Lean 文件时应采用的类型边界。以下代码是接口草图，不宣称已经编译。每个定理的数学内容已经在前文证明或由前文的有限维计算给出。
+### 定义 12.1（五态实函数与概率条件）
 
-~~~lean
-namespace AuricFIB
+沿用定义 1.1 的有序五态集合 $\Sigma=(0,2,3,5,25)$，令 $\mathcal L=\mathbb R^\Sigma$。五态两两可判别且可穷举；$p\in\mathcal L$ 只表示实函数，概率条件另为
 
-inductive Mode
-| zero | two | three | five | twentyFive
-deriving DecidableEq, Fintype
+$$
+\operatorname{Prob}(p)\ \Longleftrightarrow\
+(\forall s\in\Sigma,\ p_s\ge0)\ \land\ \sum_{s\in\Sigma}p_s=1.
+$$
 
-abbrev Law := Mode → ℝ
+令 $x=\mathbf1_{\{2,25\}}$、$y=\mathbf1_{\{5,25\}}$、$z=\mathbf1_{\{3\}}$，并对所有 $p\in\mathcal L$ 定义
 
-def IsProbability (p : Law) : Prop :=
-  (∀ s, 0 ≤ p s) ∧ (∑ s, p s = 1)
+$$
+V(p)=(X(p),Y(p),Z(p))
+=\left(\sum_s p_sx(s),\sum_s p_sy(s),\sum_s p_sz(s)\right),
+\qquad \kappa(p)=p_{25},\qquad d=(1,-1,0,-1,1).
+$$
 
-def x : Mode → ℝ
-  | .two | .twentyFive => 1
-  | _ => 0
+### 定义 12.2（重构与可见纤维）
 
-def y : Mode → ℝ
-  | .five | .twentyFive => 1
-  | _ => 0
+对任意 $X,Y,Z,\kappa\in\mathbb R$，按上述状态顺序定义
 
-def z : Mode → ℝ
-  | .three => 1
-  | _ => 0
+$$
+R(X,Y,Z,\kappa)=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad
+\mathcal F_{X,Y,Z}=\{p\in\mathcal L:\operatorname{Prob}(p),\ V(p)=(X,Y,Z)\}.
+$$
 
-def visible (p : Law) : ℝ × ℝ × ℝ :=
-  (∑ s, p s * x s, ∑ s, p s * y s, ∑ s, p s * z s)
+### 命题 12.3（合法重构的充分条件）
 
-def kappa (p : Law) : ℝ :=
-  p .twentyFive
+对任意实数 $X,Y,Z,\kappa$，若 $X,Y,Z\ge0$、$X+Z\le1$、$Y+Z\le1$ 且
 
-def seam : Law :=
-  fun s =>
-    match s with
-    | .zero => 1
-    | .two => -1
-    | .three => 0
-    | .five => -1
-    | .twentyFive => 1
+$$
+\max(0,X+Y-(1-Z))\le\kappa\le\min(X,Y),
+$$
 
-def reconstruct (X Y Z κ : ℝ) : Law :=
-  fun s =>
-    match s with
-    | .zero => 1 - X - Y - Z + κ
-    | .two => X - κ
-    | .three => Z
-    | .five => Y - κ
-    | .twentyFive => κ
+则 $\operatorname{Prob}(R(X,Y,Z,\kappa))$ 成立。
 
-def Fiber (X Y Z : ℝ) : Set Law :=
-  {p | IsProbability p ∧ visible p = (X, Y, Z)}
+证明：上述界逐项保证五个质量非负；五项之和为 $1$，即定理 1.3 的反向构造。证毕。
 
-theorem reconstruct_visible
-    (hX : 0 ≤ X) (hY : 0 ≤ Y) (hZ : 0 ≤ Z)
-    (hXZ : X + Z ≤ 1) (hYZ : Y + Z ≤ 1)
-    (hκ : max 0 (X + Y - (1 - Z)) ≤ κ)
-    (hκ' : κ ≤ min X Y) :
-    IsProbability (reconstruct X Y Z κ) := by
-  sorry
+### 命题 12.4（概率律的纤维等价）
 
-theorem fiber_parametric
-    (p : Law) (hp : IsProbability p) :
-    p ∈ Fiber X Y Z ↔
-      ∃ κ, p = reconstruct X Y Z κ := by
-  sorry
+对任意 $X,Y,Z\in\mathbb R$ 及满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$，
 
-def fourCorner (f : Mode → ℝ) : ℝ :=
-  f .twentyFive - f .two - f .five + f .zero
+$$
+p\in\mathcal F_{X,Y,Z}
+\ \Longleftrightarrow\
+\exists\kappa\in\mathbb R,\ p=R(X,Y,Z,\kappa).
+$$
 
-theorem expectation_decomposition
-    (p : Law) (hp : IsProbability p) (f : Mode → ℝ) :
-    (∑ s, p s * f s)
-      =
-      f .zero
-      + (f .two - f .zero) * (visible p).1
-      + (f .five - f .zero) * (visible p).2.1
-      + (f .three - f .zero) * (visible p).2.2
-      + fourCorner f * kappa p := by
-  sorry
+证明：正向取 $\kappa=p_{25}$，用定理 1.2。反向将重构式代入 $V$ 得 $(X,Y,Z)$，再用已假定的 $\operatorname{Prob}(p)$。右侧未另加 $\kappa$ 的区间假设；其合法界已由 $p$ 的非负性推出。证毕。
 
-def numeric (s : Mode) : ℝ :=
-  match s with
-  | .zero => 0
-  | .two => 2
-  | .three => 3
-  | .five => 5
-  | .twentyFive => 7
+### 定义 12.5（四角差）
 
-theorem second_moment_recovers_kappa
-    (p : Law) (hp : IsProbability p) :
-    kappa p =
-      ((∑ s, p s * (numeric s)^2)
-       - (∑ s, p s * numeric s)^2
-       + (2 * (visible p).1 + 3 * (visible p).2.2
-          + 5 * (visible p).2.1)^2
-       - 4 * (visible p).1
-       - 9 * (visible p).2.2
-       - 25 * (visible p).2.1) / 20 := by
-  sorry
+对任意 $f:\Sigma\to\mathbb R$，令 $J_f=f_{25}-f_2-f_5+f_0$。
 
-def delta (p : Law) : ℝ :=
-  (1 - (visible p).2.2) * kappa p
-    - (visible p).1 * (visible p).2.1
+### 命题 12.6（期望分解）
 
-theorem determinant_defect
-    (p : Law) (hp : IsProbability p) :
-    p .zero * p .twentyFive - p .two * p .five = delta p := by
-  sorry
+对每个满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$ 和每个 $f:\Sigma\to\mathbb R$，
 
-structure ArithmeticBridge (C : Type) where
-  encode : C → Law
-  preserves_probability : ∀ c, IsProbability (encode c)
-  driver : C → Type
+$$
+\sum_s p_sf_s=f_0+(f_2-f_0)X(p)+(f_5-f_0)Y(p)+(f_3-f_0)Z(p)+J_f\kappa(p).
+$$
 
-structure TriangleLift (Λα Λβ Λγ : Type) where
-  source_product :
-    Measure Λα → Measure Λβ → Measure Λγ → Measure (Λα × Λβ × Λγ)
-  response :
-    Λβ × Λγ → Measure Bool
-  local_pushforward :
-    Law → Prop
+证明：定理 2.2 的唯一函数展开乘以 $p_s$ 后求和，常数项使用 $\sum_s p_s=1$。证毕。
 
-structure RHBridge (C : Type) where
-  zeroSpace : Type
-  mapToZero : C → zeroSpace
-  fibDefect : C → ℝ
-  cayleyDefect : zeroSpace → ℝ
-  defect_transport :
-    ∀ c, fibDefect c = cayleyDefect (mapToZero c)
+### 定义 12.7（数值读出）
 
-end AuricFIB
-~~~
+令 $W:\Sigma\to\mathbb R$ 的五态值为 $(0,2,3,5,7)$，即 $W=2x+3z+5y$；状态 $25$ 的值为 $7$。
 
-其中 ArithmeticBridge、TriangleLift 和 RHBridge 的目的不同：
+### 命题 12.8（二阶矩恢复）
 
-- ArithmeticBridge 负责把素数窗口、模类或 Fibonacci 支持编码成合法概率律；
-- TriangleLift 负责证明该律来自三个独立源和两边响应；
-- RHBridge 才有资格讨论 FIB 缺陷是否能被传送为 Cayley 缺陷。
+对任意满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$，记 $(X,Y,Z)=V(p)$，则
 
-如果没有 encode、local_pushforward 或 defect_transport 的具体构造，后续结论只能停留在接口层。
+$$
+\kappa(p)=\frac{\sum_s p_sW(s)^2-\left(\sum_s p_sW(s)\right)^2
++(2X+3Z+5Y)^2-4X-9Z-25Y}{20}.
+$$
 
-## 13. 形式化依赖顺序
+证明：由定理 3.2，$W^2=4x+9z+25y+20xy$、$\sum_s p_sW(s)=2X+3Z+5Y$、$\sum_s p_sW(s)^2=4X+9Z+25Y+20\kappa(p)$。代入即得；分子前两项正是方差。证毕。
 
-建议按以下顺序实现：
+### 定义 12.9（行列式缺陷）
 
-1. 枚举 Mode，证明 Fintype 和有限求和化简；
-2. 定义 Law、IsProbability、visible 和 kappa；
-3. 证明 reconstruct_visible；
-4. 证明 fiber_parametric；
-5. 定义 fourCorner，证明 expectation_decomposition；
-6. 定义 numeric，证明 second_moment_recovers_kappa；
-7. 定义 delta，证明 determinant_defect；
-8. 在正内部条件下定义 Fisher 线元；
-9. 单独定义有限状态边图和短正合列；
-10. 再定义算术编码、三角提升和 RH 缺陷传送。
+对任意 $p\in\mathcal L$，令 $\Delta(p)=(1-Z(p))\kappa(p)-X(p)Y(p)$。
 
-这样可以把有限五态代数与尚未完成的外部桥接分开，避免 bridge-only 定义污染基础定理。
+### 命题 12.10（缺陷恒等式）
 
+对任意满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$，有 $p_0p_{25}-p_2p_5=\Delta(p)$。
 
-## 14. 有限三角提升的精确契约
+证明：用定理 1.2 写成 $(1-X-Y-Z+\kappa)\kappa-(X-\kappa)(Y-\kappa)=(1-Z)\kappa-XY$，与定义 4.1 一致。此恒等式不要求 $1-Z>0$；条件独立的解释仍受第 4 节的条件限制。证毕。
 
-上一节的 TriangleLift 是桥接占位。对当前五态理论，较小且可形式化的版本应先固定为有限源空间。
+### 定义 12.11（算术桥接数据）
 
-~~~lean
-abbrev FiniteDist (α : Type) [Fintype α] := α → ℝ
+对任意输入集合 $C$，一组算术桥接数据由映射 $e:C\to\mathcal L$、条件 $\forall c\in C,\operatorname{Prob}(e(c))$ 及由 $C$ 索引的类型族 $(D_c)_{c\in C}$ 组成。这里的驱动数据是类型族，未指定其元素、数值或与 $e$ 的关系。素数窗口、模类或 Fibonacci 支持只有在给定这样的 $e$ 后才成为概率律的输入。
 
-def IsFiniteDist (μ : FiniteDist α) : Prop :=
-  (∀ a, 0 ≤ μ a) ∧ (∑ a, μ a = 1)
+### 定义 12.12（一般三角桥接数据及其边界）
 
-structure LocalKernel (Ω Out : Type) [Fintype Out] where
-  prob : Ω → Out → ℝ
-  nonnegative : ∀ ω o, 0 ≤ prob ω o
-  normalized : ∀ ω, ∑ o, prob ω o = 1
+对任意三个源集合 $\Lambda_\alpha,\Lambda_\beta,\Lambda_\gamma$，记 $\mathsf M(\Lambda)$ 为相应测度空间，$\mathbb B=\{0,1\}$。一般三角桥接数据仅由下列三个对象组成：
 
-structure TriangleLiftFinite
-    (Λα Λβ Λγ : Type)
-    [Fintype Λα] [Fintype Λβ] [Fintype Λγ] where
-  μα : FiniteDist Λα
-  μβ : FiniteDist Λβ
-  μγ : FiniteDist Λγ
-  μα_prob : IsFiniteDist μα
-  μβ_prob : IsFiniteDist μβ
-  μγ_prob : IsFiniteDist μγ
-  A : LocalKernel (Λβ × Λγ) Bool
-  B : LocalKernel (Λγ × Λα) Bool
-  C : LocalKernel (Λα × Λβ) Bool
+$$
+\begin{aligned}
+S&:\mathsf M(\Lambda_\alpha)\to\mathsf M(\Lambda_\beta)\to\mathsf M(\Lambda_\gamma)
+\to\mathsf M(\Lambda_\alpha\times\Lambda_\beta\times\Lambda_\gamma),\\
+H&:\Lambda_\beta\times\Lambda_\gamma\to\mathsf M(\mathbb B),\\
+L&\subseteq\mathcal L.
+\end{aligned}
+$$
 
-def triangleObserved
-    (T : TriangleLiftFinite Λα Λβ Λγ) :
-    Bool × Bool × Bool → ℝ
-  | (a, b, c) =>
-    ∑ α, ∑ β, ∑ γ,
-      T.μα α * T.μβ β * T.μγ γ
-        * T.A.prob (β, γ) a
-        * T.B.prob (γ, α) b
-        * T.C.prob (α, β) c
+$L$ 表示关于五态实函数的谓词。这些数据没有附加 $S(\mu_\alpha)(\mu_\beta)(\mu_\gamma)=\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma$、$H$ 为概率核或 $L$ 与 $S,H$ 相容的条件。测度记号所需的可测结构也须给定，仅三个源集合并未指定它们。因而不能仅据此推出第 9 节的独立源分解或某个律属于 $L$；其有限概率版本见第 14 节。
 
-theorem triangleObserved_probability
-    (T : TriangleLiftFinite Λα Λβ Λγ)
-    : IsFiniteDist (triangleObserved T) := by
-  sorry
+### 定义 12.13（RH 缺陷传送数据）
 
-def LocalPushforward
-    (T : TriangleLiftFinite Λα Λβ Λγ)
-    (q : Law) : Prop :=
-  ∃ f : Bool × Bool × Bool → Mode,
-    q = fun s =>
-      ∑ abc, if f abc = s then triangleObserved T abc else 0
+对任意输入集合 $C$，此类数据包括一个集合 $\mathcal Z$、映射 $m:C\to\mathcal Z$、函数 $\delta_F:C\to\mathbb R$ 和 $\delta_C:\mathcal Z\to\mathbb R$，以及条件
 
-structure ArithmeticEncoding (C : Type) where
-  encode : C → Law
-  valid : ∀ c, IsProbability (encode c)
-  visible_driver : C → ℝ × ℝ × ℝ
-  visible_correct :
-    ∀ c, visible (encode c) = visible_driver c
-~~~
+$$
+\forall c\in C,\qquad \delta_F(c)=\delta_C(m(c)).
+$$
 
-这个有限版本把三件事分开：
+该条件只规定给定数据的缺陷传送；$\mathcal Z$ 尚未被识别为 zeta 零点空间，$\delta_F,\delta_C$ 也尚未被识别为实际的 FIB、Cayley 缺陷。第 10 节的对应、穷尽性及等距或酉条件仍须另外证明。定义 12.11–12.13 均不断言所需桥接数据存在。
 
-1. \(\mu_\alpha\mu_\beta\mu_\gamma\) 的独立源乘积；
-2. 每个观察者只读取相邻的两个源；
-3. FIB 五态律是最终输出的有限事件推前。
+## 13. 数学依赖顺序
 
-因此可以单独证明：
+### 定义 13.1（基础对象与外部条件的依赖次序）
 
-\[
-\text{TriangleLiftFinite}
-\Longrightarrow
-\text{IsProbability}(q),
-\]
+本卷相关对象和结论采用下列依赖次序；编号指向相应数学条目：
 
-再研究 \(q\) 的 \((X,Y,Z,\kappa)\) 坐标。若要研究非二值输出，只需把 Bool 替换为有限输出类型。
+1. 五态集合的枚举、相等判别和有限求和（定义 1.1、12.1）；
+2. 实函数空间、概率条件、可见坐标和纤维坐标（定义 12.1）；
+3. 合法重构（命题 12.3）；
+4. 概率律的纤维等价（命题 12.4）；
+5. 四角差与期望分解（定义 12.5、命题 12.6）；
+6. 数值读出与二阶恢复（定义 12.7、命题 12.8）；
+7. 行列式缺陷及其恒等式（定义 12.9、命题 12.10）；
+8. 正内部条件下的 Fisher 线元（定义 4.3、定理 4.4）；
+9. 有限状态边图和短正合列（第 6 节）；
+10. 算术编码、三角提升及 RH 缺陷传送的额外数据（第 8–10 节、定义 12.11–12.13 及第 14 节）。
 
-对素数驱动，直接使用上面的 ArithmeticEncoding。这样可以把“算术输入改变哪一个 FIB 模式质量”作为一个可计算函数，而不是用模式名称相似性代替编码定义。
+前七项的证明见第 1–4 节及上述对应条目；Fisher 与图论各保留自己的假设。外部桥接数据的存在不作为这些五态代数恒等式的前提，也不由这些恒等式推出。
+
+## 14. 有限三角提升的精确条件
+
+### 定义 14.1（有限分布与局部概率核）
+
+对任意有限集合 $E$，令 $\mathcal D(E)=\mathbb R^E$，并定义
+
+$$
+\operatorname{Dist}_E(\mu)\ \Longleftrightarrow\
+(\forall a\in E,\ \mu(a)\ge0)\ \land\ \sum_{a\in E}\mu(a)=1.
+$$
+
+对任意集合 $\Omega$ 和任意有限输出集合 $O$，局部概率核是函数 $K:\Omega\times O\to\mathbb R$，满足 $\forall\omega\in\Omega\ \forall o\in O,\ K(\omega,o)\ge0$ 及 $\forall\omega\in\Omega,\ \sum_{o\in O}K(\omega,o)=1$。这里不要求 $\Omega$ 有限。
+
+### 定义 14.2（有限独立源三角数据）
+
+给定任意有限集合 $\Lambda_\alpha,\Lambda_\beta,\Lambda_\gamma$，一组数据 $T$ 包括 $\mu_\alpha\in\mathcal D(\Lambda_\alpha)$、$\mu_\beta\in\mathcal D(\Lambda_\beta)$、$\mu_\gamma\in\mathcal D(\Lambda_\gamma)$，分别满足 $\operatorname{Dist}_{\Lambda_\alpha}(\mu_\alpha)$、$\operatorname{Dist}_{\Lambda_\beta}(\mu_\beta)$、$\operatorname{Dist}_{\Lambda_\gamma}(\mu_\gamma)$，以及定义 14.1 的三个二值输出概率核
+
+$$
+A:\Lambda_\beta\times\Lambda_\gamma\times\mathbb B\to\mathbb R,\qquad
+B:\Lambda_\gamma\times\Lambda_\alpha\times\mathbb B\to\mathbb R,\qquad
+C:\Lambda_\alpha\times\Lambda_\beta\times\mathbb B\to\mathbb R.
+$$
+
+每个观察者仅依赖所列的两个相邻源；三个源的联合质量是 $\mu_\alpha(\alpha)\mu_\beta(\beta)\mu_\gamma(\gamma)$。这里未额外假定源集合非空；若其中一个为空，对应归一化条件不能成立。
+
+### 定义 14.3（三角输出分布）
+
+对每组定义 14.2 的数据 $T$，定义 $P_T:\mathbb B^3\to\mathbb R$ 为
+
+$$
+P_T(a,b,c)=\sum_{\alpha\in\Lambda_\alpha}\sum_{\beta\in\Lambda_\beta}\sum_{\gamma\in\Lambda_\gamma}
+\mu_\alpha(\alpha)\mu_\beta(\beta)\mu_\gamma(\gamma)
+A(\beta,\gamma,a)B(\gamma,\alpha,b)C(\alpha,\beta,c).
+$$
+
+### 命题 14.4（输出的非负性与归一化）
+
+对每组定义 14.2 的数据 $T$，有 $\operatorname{Dist}_{\mathbb B^3}(P_T)$。
+
+证明：每个求和项为非负因子的乘积。交换有限求和并依次使用三个核的归一化，得
+
+$$
+\sum_{a,b,c\in\mathbb B}P_T(a,b,c)
+=\sum_{\alpha,\beta,\gamma}\mu_\alpha(\alpha)\mu_\beta(\beta)\mu_\gamma(\gamma)
+=\left(\sum_\alpha\mu_\alpha(\alpha)\right)\left(\sum_\beta\mu_\beta(\beta)\right)\left(\sum_\gamma\mu_\gamma(\gamma)\right)=1.
+$$
+
+证毕。
+
+### 定义 14.5（五态事件推前关系）
+
+对任意上述 $T$ 和任意 $q\in\mathcal L$，称 $q$ 是 $T$ 的五态事件推前，当且仅当
+
+$$
+\exists f:\mathbb B^3\to\Sigma,\quad
+\forall s\in\Sigma,\qquad q_s=\sum_{(a,b,c)\in\mathbb B^3:\ f(a,b,c)=s}P_T(a,b,c).
+$$
+
+这里 $f$ 是整个输出三元组上的任意函数，未要求满射，也未加局部依赖限制；局部邻接条件仅施于 $A,B,C$。这是一条关于给定 $T,q$ 的存在条件，不断言任意合法 $q$ 都有这样的表示。
+
+### 命题 14.6（给定事件推前的概率性）
+
+若 $T$ 满足定义 14.2 且 $q$ 满足定义 14.5 的存在条件，则 $\operatorname{Prob}(q)$，从而可取其 $(X,Y,Z,\kappa)$ 坐标。
+
+证明：各纤维的质量非负，且 $f$ 的五个纤维分割 $\mathbb B^3$，故 $\sum_s q_s=\sum_{a,b,c}P_T(a,b,c)=1$。仅有三角数据而未将 $q$ 约束为其推前，不能推出 $q$ 是概率律；省略这一条件的蕴含式不成立，例如三个源均取单点、三个响应均确定输出 $0$ 而令 $q=0$，则 $\sum_s q_s=0$。这与命题 9.2 的单向边缘结论一致，反向独立源提升仍未得到。证毕。
+
+### 定义 14.7（算术编码与可见驱动）
+
+对任意输入集合 $C$，算术编码数据为 $e:C\to\mathcal L$ 与 $v:C\to\mathbb R^3$，满足 $\forall c\in C,\operatorname{Prob}(e(c))$ 及 $\forall c\in C, V(e(c))=v(c)$。这里 $v$ 是可见驱动，区别于定义 12.11 的类型族 $(D_c)$。素数驱动须给定这样的编码，才能以 $c\mapsto e(c)_s$ 指定各模式质量的变化；模式名称的相似性不确定这些函数。其可计算性还需输入表示与有效求值条件，仅上述数据并未给出这些条件。
+
+定义 14.2–14.6 区分独立源乘积、仅相邻两源的局部响应及最终有限事件推前。非二值情形可将各个 $\mathbb B$ 换为相应有限输出集合，并保留每个核的非负性、归一化及同一推前条件；命题 14.4、14.6 的有限求和证明不变。
 
 
 ---
@@ -1263,20 +1237,20 @@ C_Z=(R-I)R^{-1}
 
 在没有 \(U\)、行列式恒等式或同等强度的谱对应定理前，FIB 的 \(\Delta=0\)、树场的束缚态和 RH 临界线只是具有共同形式的约束，不能互相推出。
 
-### 15.11 形式化义务清单
+### 15.11 统一场解释的依赖条件
 
-为把本卷升级为可检查的统一场理论，需依次补齐：
+本卷的统一场解释依次依赖下列对象与条件：
 
-1. 选择配置空间 \(\mathcal C\)、规范群和规范固定切空间；
-2. 给出 \(\mathcal E\) 及其二阶 Hessian \(K_*\)，证明静态背景存在与稳定性；
-3. 构造五个事件分区 \(e_s\)，证明 \(\Pi\) 保持概率；
-4. 构造 \(v_\kappa\)，并区分 \(D(P\circ\Pi)\) 的读出核和 \(K_*\) 的曲率核；
-5. 为耗散迁移率 \(M\)、辛结构 \(J\)、FIB 质量 \(m_\kappa\) 给出公理；
-6. 明确定义树场与 FIB 的乘积空间、桥接算子以及 Schur 补；
-7. 在三角网络中证明独立源乘积和局部推前；
-8. 最后给出统一场到 RH 零空间的 \(U\) 或正则化行列式证明。
+1. 配置空间 $\mathcal C$、规范群和规范固定切空间；
+2. $\mathcal E$ 及其二阶 Hessian $K_*$，以及静态背景的存在性与稳定性；
+3. 五个事件分区 $e_s$，以及 $\Pi$ 保持概率的条件；
+4. $v_\kappa$，以及 $D(P\circ\Pi)$ 的读出核与 $K_*$ 的曲率核的区分；
+5. 耗散迁移率 $M$、辛结构 $J$、FIB 质量 $m_\kappa$ 所需的公理；
+6. 树场与 FIB 的乘积空间、桥接算子以及 Schur 补；
+7. 三角网络中的独立源乘积和局部推前关系；
+8. 统一场到 RH 零空间的 $U$ 或正则化行列式所需的对应关系。
 
-目前 1 至 5 可在有限维近似中直接形式化，6 至 8 是真正的外部桥接目标。上述边界保证任何尚未实现的算术、三角或 RH 结论都不会被误写成已有定理。
+第 1 至 5 项的对象与条件可在有限维近似中表述，相关存在性和稳定性仍须各自的假设与证明；第 6 至 8 项依赖额外的外部桥接。尚缺这些条件时，相应的算术、三角或 RH 结论仍未成立。
 
 ---
 
@@ -1533,17 +1507,17 @@ M^+\models T.
 
 证明：第一句是形式证明在模型解释下的保真性。第二句是定义扩张的保守性：Derived 符号可逐项展开回 \(\mathsf L_0\)，而未列入 \(\mathsf H\) 的 Bridge 符号不存在解释义务。故任何遗漏的物理或 RH 假设都不能由语法推导出来。证毕。
 
-### 16.6 形式化顺序与桥接义务
+### 16.6 有限数学与外部桥接的依赖分层
 
-建议把 Lean 形式化分成两层。
+本卷的对象与条件分为以下两层。
 
 **L0，原生有限数学：**
 
-1. 定义 Mode、\(\mathcal A_0=\mathbb R^\Sigma\)、概率单纯形和有限求和；
-2. 定义 visible、\(\kappa\)、seam，证明重构式、合法纤维和 \(\ker DP_0=\mathbb Rd\)；
-3. 定义 Shannon 熵、负熵 Hessian 和 Fisher 线元，证明定理 16.4；
-4. 定义有限图的边空间、\(B_j,A_j\)、循环核和 \(L_j=B_jB_j^*\)；
-5. 定义有限载体 \(C_j\)、兼容压缩 \(q_{j+1,j}\) 和逆极限 \(\mathfrak F\)。
+1. Mode、$\mathcal A_0=\mathbb R^\Sigma$、概率单纯形和有限求和；
+2. visible、$\kappa$、seam，以及重构式、合法纤维和 $\ker DP_0=\mathbb Rd$；
+3. Shannon 熵、负熵 Hessian 和 Fisher 线元，以及定理 16.4；
+4. 有限图的边空间、$B_j,A_j$、循环核和 $L_j=B_jB_j^*$；
+5. 有限载体 $C_j$、兼容压缩 $q_{j+1,j}$ 和逆极限 $\mathfrak F$。
 
 **L1+，外部桥接义务：**
 
@@ -1594,7 +1568,7 @@ M^+\models T.
 
 Gigli、Mondino 和 Savaré 的论文 [Convergence of pointed non-compact metric measure spaces and stability of Ricci curvature bounds and heat flows](https://arxiv.org/abs/1311.4907) 在 pointed metric-measure 收敛框架中证明了 RCD 类型曲率条件、热流和 Cheeger 能量的稳定性。对于满足适当紧性、有界性或正的 RCD 曲率下界的空间，Cheeger energies 以适配的 \(\Gamma\)-Mosco 方式收敛，相关 Laplacian 谱也具有稳定性。
 
-可接入 trureturing 的接口是：
+相应的数学依赖关系是：
 
 \[
 \mathrm{GraphEnergySequence}
@@ -1618,7 +1592,7 @@ Q_j(\phi)=\langle\phi,L_j\phi\rangle
 
 Ambrosio 和 Honda 的 [New stability results for sequences of metric measure spaces with uniform Ricci bounds from below](https://arxiv.org/abs/1605.07908) 采用 extrinsic common-host 方法处理 measured-Gromov–Hausdorff 收敛。在统一 Ricci 下界等条件下，他们证明 Cheeger energies 的 Mosco 收敛，并建立 Sobolev、Hessian、\(W^{2,2}\) 和 Bakry–Émery/Ricci 条件的稳定性。
 
-对本项目的精确启发是：若要把有限层 Fibonacci 图的场推进到几何极限，必须在桥接对象中显式加入：
+有限层 Fibonacci 图的场若要具有所述几何极限，桥接条件必须显式包含：
 
 \[
 \iota_j:\Phi_j\hookrightarrow \mathcal H,
@@ -1640,7 +1614,7 @@ Ambrosio 和 Honda 的 [New stability results for sequences of metric measure sp
 
 Alonso Ruiz 和 Baudoin 的 [Dirichlet forms on metric measure spaces as Mosco limits of Korevaar–Schoen energies](https://arxiv.org/abs/2301.08273) 给出 Korevaar–Schoen 型非局部能量的 Mosco 极限充分条件，并使用 Rellich–Kondrachov 型紧性。该结果适用于 Cheeger spaces，也包括部分 fractal-like metric-measure spaces。
 
-因此，trureturing 可以先定义非局部图能量
+相应的非局部图能量为
 
 \[
 \mathcal Q_{j,\varepsilon}(u)
@@ -1651,7 +1625,7 @@ Alonso Ruiz 和 Baudoin 的 [Dirichlet forms on metric measure spaces as Mosco l
 |u_v-u_w|^2\mu_j(v)\mu_j(w),
 \]
 
-然后把 Mosco 收敛作为显式证明目标。该路线不预设极限必须是流形。若最终需要黎曼流形，仍要增加一个独立的光滑化或流形识别定理。
+其 Mosco 收敛是额外的待证条件；极限不预设为流形。若最终需要黎曼流形，仍要增加一个独立的光滑化或流形识别定理。
 
 #### 17.1.5 随机几何图谱收敛
 
@@ -1681,7 +1655,7 @@ Inagaki 的 [Spectral convergence of graph Laplacians with Ricci curvature bound
 
 Bungert 和 Slepčev 的 [Convergence of graph Dirichlet energies and graph Laplacians on intersecting manifolds of varying dimensions](https://arxiv.org/abs/2509.24458) 研究不同内维流形相交的情形。其结论显示，非归一化图能量可能只看见最高维 sector，归一化能量才得到适应多个维度的 tensorized Dirichlet energy。
 
-这直接对应金字塔层级的一个形式化义务：
+金字塔层级的极限因此依赖以下归一化条件：
 
 \[
 \mathrm{LayerNormalization}
@@ -1812,7 +1786,7 @@ Erbar 和 Maas 的 [Ricci curvature of finite Markov chains via convexity of the
 
 Li 和 Lu 的 [Mean field information Hessian matrices on graphs](https://arxiv.org/abs/2203.06307) 在有限图概率单纯形上，对熵、线性能量和相互作用能量推导 mean-field information Hessian，并以最小特征值定义图上的离散曲率下界。
 
-这为本项目提供一个类型正确的有限层对象：
+相应的有限层对象为：
 
 \[
 \Pi_j=(\Delta(\Sigma))^{V_j},
@@ -1836,7 +1810,7 @@ K_j=D^2\mathcal V_j.
 
 Amari、Karakida 和 Oizumi 的 [Information Geometry Connecting Wasserstein Distance and Kullback–Leibler Divergence via the Entropy-Relaxed Transportation Problem](https://arxiv.org/abs/1709.10219) 在离散概率单纯形上区分 Fisher 几何、Wasserstein transport 和 KL divergence，并通过 entropy-relaxed transport 建立它们之间的关系。
 
-对 trureturing 的直接约束是：
+这里须区分两种度量：
 
 \[
 g_F
@@ -1914,7 +1888,7 @@ Gitton 和 Renner 的 [The Elegant Joint Measurement is Non-Classical in the Tri
 - floating-point feasible inflation law，只能作为数值候选，不能证明兼容性；
 - inflation size 增大时外逼近收紧，但变量规模大约按 \(n_o^N\) 增长。
 
-这为本项目的 Lean 接口提供了一个清晰对象。将指定 inflation 的约束编码为
+指定 inflation 的约束可写为
 \[
 A_Nq=b_N(p),\qquad q\ge0,
 \]
@@ -1935,7 +1909,7 @@ y^{\mathsf T}b_N(p)<0.
 
 Smith、Wolfe 和 Spekkens 的 [Fully quantum inflation: quantum marginal problem constraints in the service of causal inference](https://arxiv.org/abs/2501.12320)，已在 2026 年发表于 [PRX Quantum](https://journals.aps.org/prxquantum/abstract/10.1103/244y-nh5n)。该方法把 inflation 推广到 quantum marginal problem，并对纯三量子比特态给出 triangle compatibility 的完整分类。
 
-若要接入量子 triangle，trureturing 必须把 classical probability carrier 扩展为：
+量子 triangle 的载体在 classical probability carrier 之外还需要满足下列条件的密度矩阵：
 
 \[
 \rho\succeq0,
@@ -1951,7 +1925,7 @@ Smith、Wolfe 和 Spekkens 的 [Fully quantum inflation: quantum marginal proble
 
 Berry 和 Keating 的 [The Riemann zeros and eigenvalue asymptotics](https://epubs.siam.org/doi/10.1137/S0036144598347497) 提出零点虚部的计数函数与某个未知 Hermitian operator 的半经典能级计数具有相似性。这是谱启发和渐近证据，论文没有构造满足零点完整谱的自伴算子。
 
-Connes 的 [Trace formula in noncommutative geometry and the zeros of the Riemann zeta function](https://arxiv.org/abs/math/9811068) 给出临界零点的谱解释和显式公式的 trace-formula 解释。对本项目而言，任何声称统一场产生 RH 谱的构造至少要记录一个 trace identity 或等价的正规化行列式关系。
+Connes 的 [Trace formula in noncommutative geometry and the zeros of the Riemann zeta function](https://arxiv.org/abs/math/9811068) 给出临界零点的谱解释和显式公式的 trace-formula 解释。任何统一场与 RH 谱的对应至少依赖一个 trace identity 或等价的正规化行列式关系。
 
 #### 17.4.2 已有算子构造的边界
 
@@ -1959,7 +1933,7 @@ Bender、Brody 和 Müller 的 [Hamiltonian for the zeros of the Riemann zeta fu
 
 Li 的 [On the spectrum of a differential operator on a Hilbert–Pólya space](https://arxiv.org/abs/2404.11902) 在特定测试函数商空间上构造微分算子，并陈述零点与特征值之间的等价。该结果把“谱实现”与“自伴性”分开，不能单独推出 RH。
 
-因此本项目必须分开记录：
+因此须区分下列数学条件：
 
 \[
 \mathrm{ZeroSpectrumRealization}
@@ -1991,7 +1965,7 @@ U\text{ unitary}.
 
 谱通过 Möbius 变换对应。可参考 [Encyclopedia of Mathematics: Cayley transform](https://encyclopediaofmath.org/index.php?title=Cayley_transform) 和仓库中的 [ZeroHilbertCayleyUnitarity.lean](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.lean)。
 
-该定理的可形式化接口必须包含：
+该定理的适用条件与对象必须包含：
 
 - Hilbert space；
 - operator domain；
@@ -2203,7 +2177,7 @@ H_{\mathrm{field}}\psi_\rho=-i(\rho-\tfrac12)\psi_\rho
 7. **数值与精确检查。** 浮点可行性不能替代有理证书、形式证明或算子恒等式。
 8. **物理语义检查。** 任何能量、质量、时间和量子化术语都必须绑定到新增的数学结构。
 
-本账本将外部研究转化为可追踪的形式化义务。它不增加未证明的统一场结论，而是规定从 Auric FIB 有限结构走向 Dirichlet 极限、信息梯度流、triangle inflation 和 RH 自伴谱时，每一步必须补充什么。
+这些外部结果给出了从 Auric FIB 有限结构到 Dirichlet 极限、信息梯度流、triangle inflation 和 RH 自伴谱所需的额外假设；缺少相应假设时，统一场结论仍未得到。
 
 
 ---
@@ -2613,7 +2587,7 @@ c_j^2\lambda_j\|f\|_{\mu_{j+1}}^{\,2}.
 \end{cases}
 \]
 
-以下三条是把图二次型推进到 Dirichlet 极限所需的最小形式化账本：
+图二次型的 Dirichlet 极限依赖以下三条条件：
 
 \[
 \tag{M1}
@@ -4616,7 +4590,7 @@ L_ep_u-R_ep_v
 
 ## 25. \(1\to2\to3\to5\) 的精确组合解释
 
-用户提出的“一个、镜像成二、二生三、三开始出现无限可能、\(2+3=5\)”可以分解成三个可以分别形式化的命题：反向读取产生镜像，局部合法支持数满足 Fibonacci 递推，三坐标投影的五态载体具有二维不可见部分。
+“一个、镜像成二、二生三、三开始出现无限可能、$2+3=5$”在此对应三个分别陈述的命题：反向读取产生镜像，局部合法支持数满足 Fibonacci 递推，三坐标投影的五态载体具有二维不可见部分。
 
 ### 定义 25.1（无相邻支持场）
 
@@ -4962,7 +4936,7 @@ A_{\mathrm{Fib}}
 
 这解释了黄金比例首先出现在支持计数和局部传输谱中。它提供的是 field-side transfer spectrum。
 
-若要把这个结构提升为 Hilbert–Pólya 型算子，必须增加一个算术边界结构。一个可形式化的目标是寻找：
+若要把这个结构提升为 Hilbert–Pólya 型算子，必须增加一个算术边界结构。所需的算术边界数据与条件是：
 
 1. 每个素数或 sector 的局部传输块 \(G_{p,\pi}\)；
 2. 由 Fibonacci/FIB 支持给出的隐藏 fiber 和 holonomy；

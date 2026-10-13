@@ -1,10 +1,10 @@
-> **Source and evidence boundary.** This continuation is ordinary mathematical reference input in the repository's `generic-v1` format.
-> It preserves the candidate source heading and sections 49–65, including all source statements, proofs, caveats, citations, historical Lean-shaped references, and source links.
-> Nothing here is current Lean-kernel, compiler, audit, or closed-theorem evidence; authorship, model involvement, priority, and license are not inferred.
+> **Mathematical scope.** This continuation concerns Fisher–Dirichlet spectra, triangle information budgets, geometric limits, bounded observation, and conditional RH relationships.
+> Its mathematical source is commit `a2f195ceb64aaaea7eeb8a6bdea479ca2c3c7430`; individual source attributions and applicability limits accompany the corresponding statements.
+> Finite constructions retain their stated hypotheses; physical interpretations, general source compatibility, and RH identifications require the additional bridges specified in the text.
 >
 > **Navigation.** This volume follows [the original volume](AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE.md) and [the first continuation](AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION.md).
 > It carries the original source heading `后续严格补充` and sections 49–65 exactly once; no new mathematical section is introduced.
-> The body after this boundary is the final byte-preserving slice of candidate source commit `a2f195ceb64aaaea7eeb8a6bdea479ca2c3c7430`.
+> Statements attributed to other sources retain those sources’ explicit hypotheses and limits.
 
 ## 后续严格补充
 
@@ -460,29 +460,29 @@ B^*B&0\\
 
 ---
 
-## 52. 下一轮可证伪的有限计算
+## 52. 有限谱与统计量的依赖条件
 
-为了让上述路线继续推进，下一轮应固定有限输入并输出可复核数据，而不是扩大物理解读。
+下列有限对象依赖各自指定的输入；其谱、统计量与收敛性质不提供额外的物理解读。
 
-1. 选取 \(q=(q_0,r,q_3,r,q_{25})\)，在偶基
+1. 对给定的 $q=(q_0,r,q_3,r,q_{25})$，Fisher Gram 矩阵及镜像不变势的二阶型采用下列偶基
    \[
    (1,0,0,0,-1),\quad
    (0,1,0,1,-2),\quad
    (0,0,1,0,-1)
    \]
-   和奇基 \(o=(0,1,0,-1,0)\) 下，计算 Fisher Gram 矩阵、给定镜像不变势的 \(3\times3\) 偶块与 \(1\times1\) 奇块。
+   和奇基 $o=(0,1,0,-1,0)$；给定镜像不变势的二阶型相应分为 $3\times3$ 偶块与 $1\times1$ 奇块。
 
-2. 在有限节点图上验证 \(B=L_G\otimes K\) 时的乘积谱 \(\mu_a\lambda_b\)，并记录图常数零模、内部隐藏核和镜像奇模态分别来自哪一个因子。
+2. 有限节点图上 $B=L_G\otimes K$ 的乘积谱 $\mu_a\lambda_b$，以及图常数零模、内部隐藏核和镜像奇模态各自所属的因子。
 
-3. 对有限 \(N,Q\) 计算 \(\mu_{H,q}^{N}\)、\(D_{H,q}^2\)、\(\Theta_{q'\to q}\) 和 \(K_H(q)\)，同时报告 \(T_H(N)=0\) 时统计量未定义的边界。把 \(H=\{0,2,6\}\) 与其他可容许三点模式分开比较。
+3. 对有限 $N,Q$，$\mu_{H,q}^{N}$、$D_{H,q}^2$、$\Theta_{q'\to q}$ 和 $K_H(q)$ 的定义保留 $T_H(N)=0$ 时统计量未定义的边界；$H=\{0,2,6\}$ 与其他可容许三点模式对应不同的输入。
 
-4. 构造有限 \(H_N\) 的
+4. 有限 $H_N$ 的特征多项式为
    \[
    \det(H_N-zI)
    \]
-   只检查反射奇偶、实谱、正定性和截断收敛。除非之后证明 (51.1) 的完成函数恒等式，否则不得把这些 toy 零点称为 zeta 零点。
+   其反射奇偶、实谱、正定性和截断收敛性质分别依赖相应假设；在缺少 (51.1) 的完成函数恒等式时，这些 toy 零点不能被识别为 zeta 零点。
 
-这四项计算可以把“场产生能量、能量产生轨迹、观察产生三维投影、算术局部场产生尺度缺陷”转化为可审计的有限数学对象；它们仍然保留从有限结构到 RH 的行列式与显式公式门槛。
+这四类对象分别表达“场产生能量、能量产生轨迹、观察产生三维投影、算术局部场产生尺度缺陷”的有限数学关系；从有限结构到 RH 仍需行列式与显式公式条件。
 
 
 ## 53. CPTP Fisher 收缩与 triangle 网络的信息预算
@@ -840,7 +840,7 @@ e^{-2Kt}F_Q(\rho_0;X_0).
 
 ### 结论 53.9（量子层的严格闭环）
 
-当前量子层可以按以下可形式化链条闭合：
+在各条相应假设下，量子层具有以下有限维关系：
 
 \[
 \begin{aligned}
@@ -1470,7 +1470,7 @@ c\,a_hd_h^A\le b_hd_h^E\le C\,a_hd_h^A
 \]
 为按 native substitution iterates 构造的有限 tuple。
 
-### 定理 58.2（bounded identity reflection，Lean）
+### 定理 58.2（bounded identity reflection）
 
 若 \(A,B\) 的 weight 不超过 \(M\)，decoration 不超过 \(d\)，则
 \[
@@ -1483,13 +1483,13 @@ c\,a_hd_h^A\le b_hd_h^E\le C\,a_hd_h^A
 \forall z:\mathrm{Fin}\ m\to\mathrm{Source},\quad
 \operatorname{eval}(z,A)=\operatorname{eval}(z,B).
 \]
-Lean 真源为 NativeUniformResidualRealization.bounded_identity_reflection，dev commit cdb23e4374，状态 std3。
+本陈述对应来源中的 NativeUniformResidualRealization.bounded_identity_reflection（commit cdb23e4374）；来源链接见定理 58.3。
 
 ### 定理 58.3（rank instantiation 与统一有限分离）
 
 对 RankedExpr(k,m)，instantiation 保持 native evaluation。对任意有限 pair-list \(L\)，同一个 uniformSeparator(L) 对所有无界 rank vectors \(n\) 同时满足：每个 pair 在 separator 下相等，当且仅当该 pair 在全部 residual valuations \(z\) 下相等。若列表中每个 pair 各自存在 residual valuation 使其不等，则同一个 separator 同时使所有 pair 不等。
 
-对应 Lean anchors 为 instantiate_eval、uniform_residual_reflection、simultaneous_completion。该机器检查结果限于有界语法类，不能外推到所有 source、无限 rank、物理读权限、资源最优性或 RH。来源：[Native Uniform Residual Realization](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.md)，dev commit cdb23e4374。
+对应来源条目为 instantiate_eval、uniform_residual_reflection、simultaneous_completion。上述陈述限于所指定的有界语法类；其中对无界 rank vectors 的量化不等于覆盖所有 source 或无限 rank 表达式，也不涉及物理读权限、资源最优性或 RH。来源：[Native Uniform Residual Realization](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.md)，dev commit cdb23e4374。
 
 ## 59. 最新外部研究锚点与管线位置
 
@@ -1544,7 +1544,7 @@ L(\ker P)\subseteq\ker P.
 该定理只涉及有限维线性代数和矩阵指数。它不把 \(P\) 解释为物理测量，也不推出引力或 RH。相关行为商的最大不动点版本见 dev 的 [COMPUTATIONAL BEHAVIOR REPRESENTATION THEORY](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md)。
 
 
-## 61. 五模式预测律几何的机器证明
+## 61. 五模式预测律几何及其适用范围
 
 ### 定义 61.1（预测律场）
 
@@ -1559,11 +1559,11 @@ p\sim_{\mathrm{pred}}q
 \mathcal P_\infty(p)=\mathcal P_\infty(q).
 \]
 
-### 定理 61.2（五模式的有限预测几何，Lean 锚点）
+### 定理 61.2（五模式的有限预测几何）
 
-在该明确的 Fin5 source/admissibility 模型中，dev 的 Lean 文件
+在该明确的 Fin5 source/admissibility 模型中，来源
 [FiveModePredictiveLawGeometry](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/ObserverMemory/Prediction/FiveModePredictiveLawGeometry.md)
-机器证明了：
+给出的数学陈述为：
 
 1. 对 coherent mixture law，有限 horizon 的总变差距离满足
    \[
@@ -1601,14 +1601,14 @@ p\sim_{\mathrm{pred}}q
 \]
 除非另行证明读出对全部 future profiles 是完备的。该推论与定理 48.2 的最大预测商、定理 55.2 的 hidden-memory 缺陷以及定理 60.1 的自治闭合条件相接。
 
-这些结论是指定 Fin5 合约下的 Lean 机器证明，不能外推到一般五态量子网络、物理能级、引力或 RH。它们为“能级”提供的严格对象只是预测律商上的距离和有限截断谱，不是物理 Hamiltonian 能级。
+这些结论限于指定 Fin5 source/admissibility 条件，不能外推到一般五态量子网络、物理能级、引力或 RH。它们为“能级”提供的严格对象只是预测律商上的距离和有限截断谱，不是物理 Hamiltonian 能级。
 
 
 ---
 
 ## 62. 三层维数账本与不可约三体算术场
 
-用户提出的“二生三，三开始有无限可能”需要把线性载体、概率流形和可见商分开。对未归一化五态向量空间 \(E=\mathbb R^\Sigma\)，可见投影 \(P:E\to\mathbb R^3\) 满秩，且
+“二生三，三开始有无限可能”的数学解释需要把线性载体、概率流形和可见商分开。对未归一化五态向量空间 \(E=\mathbb R^\Sigma\)，可见投影 \(P:E\to\mathbb R^3\) 满秩，且
 
 \[
 \ker P=\operatorname{span}\{e_0,d\},
@@ -1936,7 +1936,7 @@ u_\rho\mapsto-u_\rho.
 
 证明：由 (63.7)，RH 等价于所有右端项为零；由 (63.2)，\(\eta=0\) 等价于 \(p_2=p_5\)，即属于 \(\operatorname{Fix}(\tau)\)。证毕。
 
-这个定理本身是可形式化的。真正未解决的问题是从已有的 FIB、prime local field 或 Weil 二次型自然构造 \(\Phi\)，不能事先任意指定它。
+该条件定理仍缺少从已有的 FIB、prime local field 或 Weil 二次型自然构造 $\Phi$ 的桥接；任意指定映射并不提供这种来源关系。
 
 ### 63.5 四阶矩是同一个场的另一种读出
 
@@ -2014,7 +2014,7 @@ Nakamura 定义
 \mathrm{RH}.
 \]
 
-当前理论卷已经有有限 Fisher 场、正定二次型、粗粒化和局部素数场。下一步应尝试定义有限截断的 characteristic-function field，并证明其 Toeplitz moment matrix 半正定。然后才研究截断到全局 \(\Xi_\sigma\) 的极限。
+有限 Fisher 场、正定二次型、粗粒化和局部素数场尚未给出有限截断的 characteristic-function field；该桥还依赖其 Toeplitz moment matrix 的半正定性，以及截断到全局 $\Xi_\sigma$ 的极限关系。
 
 ### 63.7 与 Hilbert–Pólya 的 Cayley 连接
 
@@ -2069,7 +2069,7 @@ z_\rho=1-\frac1\rho
 
 ## 64. 四面体、四维概率金字塔与三维方金字塔
 
-本节把“金字塔”“四面体”和“5 \(\to\) 4 \(\leftrightarrow\) 3\)”放入同一个仿射结构。先区分三种对象：
+本节把“金字塔”“四面体”和“5 \(\to\) 4 \(\leftrightarrow\) 3”放入同一个仿射结构。先区分三种对象：
 
 1. 三角形上的锥是四面体；
 2. 五态概率律的全体是四维单纯形；
@@ -2483,7 +2483,7 @@ p_0p_{25}=p_2p_5,
 
 这给出“临时动态”的严格版本。四维状态 \((X,Y,Z,\kappa)\) 是带隐藏联合坐标的增广状态；在熵松弛足够快且三维生成元满足自治闭合时，轨迹被吸引到 \(\Delta_{\det}=0\) 的三维截面，\(\kappa\) 可以被消去。若素数场或 RH 候选场持续驱动 \(\kappa\) 偏离该截面，则三维观察会留下记忆，四维增广状态不能被静态补全取代。
 
-所以用户所写的箭头更准确地记为
+因此归一化与纤维回填的方向记为
 \[
 5\longrightarrow4\longleftarrow3:
 \]
