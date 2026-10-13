@@ -8,6 +8,8 @@
 
 import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Data.ENNReal.Real
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Tactic.GCongr
 import Mathlib.Tactic.Linarith
@@ -17,7 +19,7 @@ import Mathlib.Tactic.Ring
 
 noncomputable section
 open Filter Finset
-open scoped BigOperators Topology
+open scoped BigOperators ENNReal Topology
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -146,5 +148,84 @@ theorem exists_ratio_preserving_improvement {η : ℕ → ℝ} {R ε : ℝ}
         rw [sum_congr rfl heq]
         simp only [sum_const, card_range, nsmul_eq_mul]
       _ ≤ θ k := (hcols.1 k).sum_le_tsum (range J) (fun j _ => (hfpos j k).le)
+
+/-- The extended nonnegative power profile allows an infinite supremum. -/
+def powerProfile (η w : ℕ → ℝ) (s : ℝ) : ℝ≥0∞ :=
+  ⨆ k, ENNReal.ofReal (w k * η k ^ (-s))
+
+/-- The same improved floor controls an entire positive exponent interval.
+For each tail amplification `H`, the finite-prefix constant is independent
+of the exponent and of every choice of weights in `[0,1]`. -/
+theorem exists_uniform_profile_improvement {η : ℕ → ℝ} {R ε : ℝ}
+    (hR : 1 ≤ R) (hpos : ∀ k, 0 < η k) (hanti : Antitone η)
+    (hs : Summable η) (hratio : ∀ k, η k ≤ R * η (k + 1))
+    (hε : 0 < ε) (hεone : ε ≤ 1) :
+    ∃ θ : ℕ → ℝ,
+      (∀ k, 0 < θ k) ∧ Antitone θ ∧ Summable θ ∧
+      (∑' k, θ k) ≤ ε ∧ (∀ k, θ k ≤ ε) ∧
+      (∀ k, θ k ≤ R * θ (k + 1)) ∧
+      (∃ c₀ : ℝ, 0 < c₀ ∧ ∀ k, c₀ * η k ≤ θ k) ∧
+      (∀ B : ℝ, 0 < B → ∃ L : ℕ, ∀ k, L ≤ k → B * η k ≤ θ k) ∧
+      (∀ a sLo : ℝ, 0 < sLo → sLo ≤ a → ∀ H : ℝ, 1 ≤ H →
+        ∃ C : ℝ, 0 < C ∧ ∀ s : ℝ, sLo ≤ s → s ≤ a →
+          ∀ w : ℕ → ℝ, (∀ k, 0 ≤ w k ∧ w k ≤ 1) →
+            powerProfile θ w s ≤
+              max (ENNReal.ofReal C)
+                (ENNReal.ofReal (H ^ (-sLo)) * powerProfile η w s)) := by
+  classical
+  obtain ⟨θ, hθpos, hθanti, hθsum, hθmass, hθle, hθratio, hθglobal, hθtail⟩ :=
+    exists_ratio_preserving_improvement hR hpos hanti hs hratio hε
+  refine ⟨θ, hθpos, hθanti, hθsum, hθmass, hθle, hθratio, hθglobal, hθtail, ?_⟩
+  intro a sLo hsLo _ H hH
+  have hHpos : 0 < H := zero_lt_one.trans_le hH
+  obtain ⟨L, hL⟩ := hθtail H hHpos
+  let C : ℝ := 1 + ∑ k ∈ range L, θ k ^ (-a)
+  have hC : 0 < C := by
+    have hsum := sum_nonneg (fun k (_ : k ∈ range L) =>
+      (Real.rpow_pos_of_pos (hθpos k) (-a)).le)
+    dsimp [C]
+    linarith
+  refine ⟨C, hC, fun s hslo hshi w hw => ?_⟩
+  refine iSup_le fun k => ?_
+  by_cases hk : k < L
+  · have hexp : θ k ^ (-s) ≤ θ k ^ (-a) :=
+      Real.rpow_le_rpow_of_exponent_ge (hθpos k) ((hθle k).trans hεone)
+        (neg_le_neg hshi)
+    have hterm : θ k ^ (-a) ≤ ∑ i ∈ range L, θ i ^ (-a) :=
+      single_le_sum (fun i _ => (Real.rpow_pos_of_pos (hθpos i) (-a)).le)
+        (mem_range.mpr hk)
+    have hpre : w k * θ k ^ (-s) ≤ C := by
+      calc
+        w k * θ k ^ (-s) ≤ θ k ^ (-s) :=
+          mul_le_of_le_one_left (Real.rpow_pos_of_pos (hθpos k) (-s)).le (hw k).2
+        _ ≤ θ k ^ (-a) := hexp
+        _ ≤ C := by dsimp [C]; linarith
+    exact (ENNReal.ofReal_le_ofReal hpre).trans (le_max_left _ _)
+  · have hscale : θ k ^ (-s) ≤ H ^ (-sLo) * η k ^ (-s) := by
+      calc
+        θ k ^ (-s) ≤ (H * η k) ^ (-s) :=
+          Real.rpow_le_rpow_of_nonpos (mul_pos hHpos (hpos k))
+            (hL k (Nat.le_of_not_gt hk)) (by linarith)
+        _ = H ^ (-s) * η k ^ (-s) := Real.mul_rpow hHpos.le (hpos k).le
+        _ ≤ H ^ (-sLo) * η k ^ (-s) :=
+          mul_le_mul_of_nonneg_right
+            (Real.rpow_le_rpow_of_exponent_le hH (neg_le_neg hslo))
+            (Real.rpow_pos_of_pos (hpos k) (-s)).le
+    have hweighted : w k * θ k ^ (-s) ≤ H ^ (-sLo) * (w k * η k ^ (-s)) := by
+      calc
+        w k * θ k ^ (-s) ≤ w k * (H ^ (-sLo) * η k ^ (-s)) :=
+          mul_le_mul_of_nonneg_left hscale (hw k).1
+        _ = H ^ (-sLo) * (w k * η k ^ (-s)) := by ring
+    calc
+      ENNReal.ofReal (w k * θ k ^ (-s)) ≤
+          ENNReal.ofReal (H ^ (-sLo) * (w k * η k ^ (-s))) :=
+        ENNReal.ofReal_le_ofReal hweighted
+      _ = ENNReal.ofReal (H ^ (-sLo)) * ENNReal.ofReal (w k * η k ^ (-s)) :=
+        ENNReal.ofReal_mul (Real.rpow_pos_of_pos hHpos (-sLo)).le
+      _ ≤ ENNReal.ofReal (H ^ (-sLo)) * powerProfile η w s :=
+        mul_le_mul le_rfl (le_iSup (fun i => ENNReal.ofReal (w i * η i ^ (-s))) k)
+          zero_le zero_le
+      _ ≤ max (ENNReal.ofReal C)
+          (ENNReal.ofReal (H ^ (-sLo)) * powerProfile η w s) := le_max_right _ _
 
 end D5.S3.Analytic.SeriesInequalities.RatioPreservingFloorImprovement
