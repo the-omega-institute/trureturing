@@ -130,7 +130,7 @@ private lemma ellipse_disk_bound {p R : ℝ} (hp : p ∈ Set.Icc (0 : ℝ) 1)
 def derivativeRadius (d ℓ : ℕ) (p : ℝ) : ℝ :=
   max (Real.sqrt ((ℓ : ℝ) * (p * (1 - p)) / d)) ((ℓ : ℝ) / d)
 
-private lemma radius_properties {d ℓ : ℕ} (hd : 0 < d) (hℓ : 0 < ℓ)
+lemma radius_properties {d ℓ : ℕ} (hd : 0 < d) (hℓ : 0 < ℓ)
     {p : ℝ} (hp : p ∈ Set.Icc (0 : ℝ) 1) :
     0 < derivativeRadius d ℓ p ∧
       (derivativeRadius d ℓ p) ^ 2 / (p * (1 - p) + derivativeRadius d ℓ p)
@@ -151,7 +151,7 @@ private lemma radius_properties {d ℓ : ℕ} (hd : 0 < d) (hℓ : 0 < ℓ)
   · rw [max_eq_left h]
     nlinarith [Real.sqrt_nonneg (ε * v)]
 
-private lemma bernstein_disk_bound {d ℓ : ℕ} (hd : 0 < d) (hℓ : 0 < ℓ)
+lemma bernstein_disk_bound {d ℓ : ℕ} (hd : 0 < d) (hℓ : 0 < ℓ)
     (c : Fin (d + 1) → ℂ) {B p : ℝ} (hc : ∀ i, ‖c i‖ ≤ B)
     (hp : p ∈ Set.Icc (0 : ℝ) 1) {z : ℂ}
     (hz : ‖z - (p : ℂ)‖ ≤ derivativeRadius d ℓ p) :
@@ -174,7 +174,7 @@ private lemma bernstein_disk_bound {d ℓ : ℕ} (hd : 0 < d) (hℓ : 0 < ℓ)
     (mul_le_mul_of_nonneg_left
       ((pow_le_pow_left₀ (by positivity) hs d).trans he) hB)
 
-private lemma polynomial_iterated_deriv (P : ℂ[X]) (n : ℕ) :
+lemma polynomial_iterated_deriv (P : ℂ[X]) (n : ℕ) :
     iteratedDeriv n (fun z : ℂ => P.eval z) = fun z => (derivative^[n] P).eval z := by
   induction n with
   | zero => simp
@@ -484,7 +484,7 @@ of degree at most `D`. -/
 def bernsteinCoefficient (D J : ℕ) (P : ℂ[X]) : ℂ :=
   ∑ k ∈ range (D + 1), P.coeff k * (J.choose k : ℂ) / (D.choose k : ℂ)
 
-private lemma bernstein_coefficient_sum {ι : Type*} (s : Finset ι)
+lemma bernstein_coefficient_sum {ι : Type*} (s : Finset ι)
     (P : ι → ℂ[X]) (D J : ℕ) :
     bernsteinCoefficient D J (∑ i ∈ s, P i) = ∑ i ∈ s, bernsteinCoefficient D J (P i) := by
   simp only [bernsteinCoefficient, finsetSum_coeff, sum_mul, sum_div]
@@ -603,7 +603,7 @@ private lemma centered_coefficient_identity {D J ℓ : ℕ} (hJ : J ≤ D) (hℓ
   field_simp
   linear_combination ((J.choose k : ℂ) * (-(J : ℂ) / D) ^ (ℓ-k)) * hbin
 
-private lemma realization_degree (d : ℕ) (c : Fin (d + 1) → ℂ) :
+lemma realization_degree (d : ℕ) (c : Fin (d + 1) → ℂ) :
     (bernsteinRealization d c).natDegree ≤ d := by
   apply natDegree_sum_le_of_forall_le
   intro i hi
@@ -635,7 +635,7 @@ private lemma realization_degree (d : ℕ) (c : Fin (d + 1) → ℂ) :
 def truncatedTaylor (P : ℂ[X]) (p : ℂ) (r : ℕ) : ℂ[X] :=
   ∑ ℓ ∈ range (r + 1), C ((P.taylor p).coeff ℓ) * (X - C p) ^ ℓ
 
-private lemma taylor_expansion_up_to (P : ℂ[X]) (p : ℂ) {d : ℕ}
+lemma taylor_expansion_up_to (P : ℂ[X]) (p : ℂ) {d : ℕ}
     (hdeg : P.natDegree ≤ d) :
     P = ∑ ℓ ∈ range (d + 1), C ((P.taylor p).coeff ℓ) * (X - C p) ^ ℓ := by
   have h := (P.taylor p).as_sum_range_C_mul_X_pow' (n := d + 1)
@@ -647,7 +647,7 @@ private lemma taylor_expansion_up_to (P : ℂ[X]) (p : ℂ) {d : ℕ}
   rw [hleft] at h
   simpa [Polynomial.sum_comp] using h
 
-private lemma taylor_remainder_expansion (P : ℂ[X]) (p : ℂ) {d r : ℕ}
+lemma taylor_remainder_expansion (P : ℂ[X]) (p : ℂ) {d r : ℕ}
     (hdeg : P.natDegree ≤ d) (hr : r ≤ d) :
     P - truncatedTaylor P p r =
       ∑ ℓ ∈ Ico (r + 1) (d + 1), C ((P.taylor p).coeff ℓ) * (X - C p) ^ ℓ := by
@@ -699,7 +699,7 @@ private lemma taylor_coefficient_remainder_geometric {d D J r : ℕ} (hd : 0 < d
       nlinarith [mul_nonneg hb (show 0 ≤ 1/2-q by linarith)]
 
 /-- A Taylor truncation of a polynomial of degree at most `r` is exact. -/
-private lemma truncated_taylor_exact (P : ℂ[X]) (p : ℂ) {r : ℕ}
+lemma truncated_taylor_exact (P : ℂ[X]) (p : ℂ) {r : ℕ}
     (hdeg : P.natDegree ≤ r) : truncatedTaylor P p r = P :=
   (taylor_expansion_up_to P p hdeg).symm
 
@@ -822,7 +822,7 @@ lemma bernstein_reconstruction (P : ℂ[X]) (D : ℕ) (hdeg : P.natDegree ≤ D)
       rw [bernstein_monomial_reconstruction (by have := mem_range.mp hk; omega)]
     _ = P := (P.as_sum_range_C_mul_X_pow' (by omega : P.natDegree < D+1)).symm
 
-private lemma truncated_taylor_degree (P : ℂ[X]) (p : ℂ) (r : ℕ) :
+lemma truncated_taylor_degree (P : ℂ[X]) (p : ℂ) (r : ℕ) :
     (truncatedTaylor P p r).natDegree ≤ r := by
   apply natDegree_sum_le_of_forall_le
   intro ℓ hℓ
