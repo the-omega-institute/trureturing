@@ -1650,3 +1650,300 @@ interpretation leave Open Problem 7.2 unchanged.
 [BCaves8]: https://doi.org/10.1103/PhysRevLett.72.3439
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Activity-matched phase information and the legal quantum parent
+
+### 9.1. A common law and a recorded site distribution
+
+**Definition 9.1 (Activity law and normalized local terms).** Let $n\ge1$,
+use the open-boundary legal words $B_n$ and Hilbert space $\mathcal K_n$
+of §8, and fix $a_i>0$. For the occupied set $I(u)=\{i:u_i=1\}$ put
+
+$$
+p_u=\mathcal Z^{-1}\prod_{i\in I(u)}a_i,\qquad
+|\psi_+\rangle=\sum_{u\in B_n}\sqrt{p_u}|u\rangle,\qquad
+D=\operatorname{diag}(\sqrt p).
+\tag{9.1}
+$$
+
+Take the local parent of [Boundary Calculus, Definition 15.22][BC8]:
+
+$$
+\begin{aligned}
+v_i&=\sqrt{a_i}|0\rangle_i-|1\rangle_i,\\
+h_i&=P_{i-1}|v_i\rangle\langle v_i|P_{i+1},\\
+K_i&=(1+a_i)^{-1}h_i,\qquad H_{\rm loc}=\sum_i h_i.
+\end{aligned}
+\tag{9.2}
+$$
+
+All operators in (9.2) are restricted to $\mathcal K_n$;
+$P_0=P_{n+1}=I$. The other tensor factors carry the identity.
+In particular $K_i^2=K_i$, whereas $h_i^2=(1+a_i)h_i$.
+By Boundary Calculus, Proposition 15.23, their common zero space is
+$\mathbb C\psi_+$.
+
+**Definition 9.2 (Calibrated experiment with a recorded site).** Choose
+$i$ independently of the signal with probability $\omega_i\ge0$,
+$\sum_i\omega_i=1$, and retain both $i$ and the complete output word.
+Use the same-phase reference, basis phase $\alpha=\pi/2$ and pulse of
+Theorem 8.11. Equivalently, the Hamiltonian convention of (8.6) has
+$\beta=-\pi$ and pulse duration $\tau=\pi/4$. The signal family is
+
+$$
+|\psi_\theta\rangle
+=\sum_u\sqrt{p_u}e^{-i\theta f_u}|u\rangle,\qquad f:B_n\to\mathbb R.
+\tag{9.3}
+$$
+
+The unknown signal $\theta$ and the supplied pulse duration $\tau$ are
+different parameters. Write $J_\omega[f]$ for the classical Fisher
+information at $\theta=0$, and write $\mathcal Q_p[f]$ for the pure-state
+quantum Fisher information of (9.3). Set
+
+$$
+\mathcal E_i(f,f)=
+\sum_{\substack{\{u,v\}\in E(\Gamma_n)\\u,v\text{ differ at }i}}
+\frac{p_up_v}{p_u+p_v}(f_u-f_v)^2.
+\tag{9.4}
+$$
+
+### 9.2. Matching the experiment to the parent spectrum
+
+**Theorem 9.3 (Activity-matched information spectrum).** Under
+Definitions 9.1–9.2, let
+
+$$
+H_\omega=\sum_i\omega_iK_i,\qquad
+\bar f=\sum_up_uf_u,\qquad
+g=D(f-\bar f\,\mathbf 1).
+\tag{9.5}
+$$
+
+For every real $f$,
+
+$$
+J_\omega[f]=4\langle g,H_\omega g\rangle,\qquad
+\mathcal Q_p[f]=4\|g\|^2.
+\tag{9.6}
+$$
+
+In particular, choose
+
+$$
+R=\sum_i(1+a_i),\qquad
+\omega_i=\frac{1+a_i}{R}.
+\tag{9.7}
+$$
+
+Then, writing $\Delta_{\rm loc}$ for the lowest eigenvalue of
+$H_{\rm loc}$ on $\psi_+^\perp$,
+
+$$
+\inf_{\mathcal Q_p[f]>0}\frac{J_\omega[f]}{\mathcal Q_p[f]}
+=\frac{\Delta_{\rm loc}}{R}.
+\tag{9.8}
+$$
+
+For the same choice (9.7), the entire generalized spectrum of the pair of
+information forms $(J_\omega,\mathcal Q_p)$ after quotienting the
+constant phase is the spectrum of $H_{\rm loc}|_{\psi_+^\perp}/R$.
+
+Proof. Orient an insertion edge at $i$ as $u_i=0,v_i=1$. The same law
+(9.1) supplies $p_v=a_ip_u$. On its two-dimensional block,
+
+$$
+K_i|_{\{u,v\}}
+=\frac1{p_u+p_v}
+\begin{pmatrix}
+p_v&-\sqrt{p_up_v}\\
+-\sqrt{p_up_v}&p_u
+\end{pmatrix}.
+\tag{9.9}
+$$
+
+The blocks at fixed $i$ are disjoint, and blocked words contribute zero.
+This proves the normalization in (9.2) and gives
+
+$$
+\langle Df,K_iDf\rangle=\mathcal E_i(f,f).
+\tag{9.10}
+$$
+
+The two resolved outcomes on this edge have, at the reference, masses
+$(p_u+p_v)/2$ and opposite derivatives
+$\sqrt{p_up_v}(f_v-f_u)$. Their total Fisher contribution is
+$4p_up_v(f_v-f_u)^2/(p_u+p_v)$, exactly as in Theorem 8.11.
+The recorded, signal-independent site label weights this contribution
+by $\omega_i$, so $J_\omega[f]=4\sum_i\omega_i\mathcal E_i(f,f)$.
+The pure-state formula used in Proposition 8.14 gives
+$\mathcal Q_p[f]=4\operatorname{Var}_p(f)$.
+
+Each $K_i$ annihilates $\psi_+$, so centering $f$ does not change the
+energy. This proves (9.6). The map $f\mapsto Df$ sends the real subspace
+$\{f:\sum_up_uf_u=0\}$ bijectively onto the real part of
+$\psi_+^\perp$, and $\|Df\|^2=\operatorname{Var}_p(f)$ there.
+For (9.7), $H_\omega=H_{\rm loc}/R$. The Rayleigh principle proves
+(9.8), and this same invertible change of variables proves the full
+generalized-spectrum statement. The parent is real symmetric, so its
+restriction has a real eigenbasis; restricting $f$ to real directions
+loses none of these eigenvalues. $\square$
+
+Theorem 9.3 is a concrete synthesis of the resolved experiment of §8
+and the activity parent of Boundary Calculus §15.9. Its general tools
+are the classical stochastic-matrix-form correspondence below and the
+pure-state Fisher formula already attributed in §8.13. The choice
+(9.7) matches the parent; it does not assert optimality among site
+distributions.
+
+### 9.3. The resampling clock and the energy curvature
+
+**Corollary 9.4 (Unit refresh, parent refresh and phase curvature).**
+For the same activity law, let $\mathscr L_p$ be the function generator
+of Proposition 8.13, with one unit refresh rate at each site, and let
+$\gamma(p)$ be its variational gap. Define $H_{\rm hb}=\sum_iK_i$.
+Then
+
+$$
+H_{\rm hb}=-D\mathscr L_pD^{-1},\qquad
+\operatorname{gap}(H_{\rm hb})=\gamma(p).
+\tag{9.11}
+$$
+
+Consequently
+
+$$
+\min_i(1+a_i)\gamma(p)
+\le\Delta_{\rm loc}
+\le\max_i(1+a_i)\gamma(p).
+\tag{9.12}
+$$
+
+For uniform activity $a_i=a$, $H_{\rm loc}=(1+a)H_{\rm hb}$.
+For the matched experiment (9.7),
+
+$$
+J_\omega[f]=\frac2R
+\left.\frac{d^2}{d\theta^2}
+\langle\psi_\theta|H_{\rm loc}|\psi_\theta\rangle
+\right|_{\theta=0}.
+\tag{9.13}
+$$
+
+Proof. The edge block of $-\mathscr L_p$ is
+$(p_u+p_v)^{-1}\begin{pmatrix}p_v&-p_v\\-p_u&p_u\end{pmatrix}$.
+Conjugating by $D$ gives (9.9). Summing each unordered edge once proves
+the first equality in (9.11), without an extra factor $1/2$.
+This is the stochastic-matrix-form transform of
+Castelnovo–Chamon–Mudry–Pujol, equations (19b), (22a–e) and (26a–c),
+with their column generator equal to $\mathscr L_p^{\mathsf T}$;
+see the [source note][SMF9].
+The graph $\Gamma_n$ is connected because every occupied word can
+delete bits to reach $0^n$. The common zero ray is therefore simple,
+and similarity proves the gap equality.
+
+The positive terms $K_i$ give
+$\min_i(1+a_i)H_{\rm hb}\preceq H_{\rm loc}
+\preceq\max_i(1+a_i)H_{\rm hb}$. All three operators have the same
+zero ray. The Rayleigh principle on its orthogonal complement gives
+(9.12). Equivalently, $H_{\rm loc}$ is the transform of the reversible
+chain having insertion rate $a_i$ and deletion rate $1$ at site $i$:
+it uses site refresh rate $1+a_i$.
+
+On a phase-rotated edge, the $K_i$ energy is
+$2p_up_v[1-\cos(\theta(f_u-f_v))]/(p_u+p_v)$.
+Its second derivative at zero is twice the edge contribution in (9.4).
+Summing with coefficients $1+a_i$ and using (9.7) proves (9.13).
+$\square$
+
+In matrix coordinates, (9.6) reads
+$J_\omega=4DH_\omega D$ and
+$\mathbf Q_p=4(D^2-pp^{\mathsf T})$.
+Thus the ordinary Fisher matrix is related by congruence to the
+parent. Its ordinary eigenvalues are not the parent energies.
+The comparison in Theorem 9.3 is a generalized spectrum, or equivalently
+a Rayleigh quotient normalized by quantum Fisher information.
+The semigroup identity from (9.11) is
+$e^{-sH_{\rm hb}}=De^{s\mathscr L_p}D^{-1}$ for $s\ge0$;
+it concerns imaginary-time evolution, rather than real-time unitary
+motion. Multiplying every refresh rate by $r$ scales classical gaps by
+$r$; multiplying the Hamiltonian by an energy unit $\varepsilon$
+scales energy gaps by $\varepsilon$.
+
+### 9.4. Exact finite boundaries
+
+**Proposition 9.5 (A parent gap alone does not bound local sensitivity).**
+For $n=2$, uniform $a>0$ and the uniform recorded-site experiment,
+
+$$
+\operatorname{spec}H_{\rm loc}=\{0,1,1+2a\},\qquad
+\inf_{\mathcal Q_p[f]>0}\frac{J_p[f]}{\mathcal Q_p[f]}
+=\frac1{2(1+a)}.
+\tag{9.14}
+$$
+
+Proof. In the ordered basis $(00,10,01)$ the parent is
+$\begin{pmatrix}2a&-\sqrt a&-\sqrt a\\-\sqrt a&1&0\\
+-\sqrt a&0&1\end{pmatrix}$.
+Its ground vector is proportional to $(1,\sqrt a,\sqrt a)$;
+$(0,1,-1)$ has eigenvalue $1$, and
+$(-2\sqrt a,1,1)$ has eigenvalue $1+2a$.
+These nonzero mutually orthogonal vectors form a basis.
+Uniform sampling is the matched choice, with $R=2(1+a)$,
+so Theorem 9.3 gives (9.14). The parent gap remains $1$ while the
+information ratio tends to zero as $a\to\infty$. $\square$
+
+**Proposition 9.6 (Known product phases preserve the calibrated identity).**
+Let
+$U_\varphi=\bigotimes_i\operatorname{diag}(1,e^{i\varphi_i})$.
+Replace the reference and parent by $U_\varphi\psi_+$ and
+$U_\varphi H_{\rm loc}U_\varphi^\dagger$, and use pulse phase
+$\beta_i=\varphi_i-\pi$ at site $i$. Then Theorem 9.3 and (9.13)
+hold with these replacements.
+
+Proof. The diagonal unitary preserves $\mathcal K_n$, commutes with
+the diagonal signal generator and leaves complete-word outcome
+probabilities invariant. Direct conjugation of (8.6) gives
+$U_\varphi H_i(\beta)U_\varphi^\dagger=H_i(\beta+\varphi_i)$.
+Hence the entire calibrated experiment has the original joint outcome
+law, while parent spectra and energies are unchanged. $\square$
+
+**Proposition 9.7 (Reference, support and locality boundaries).** The
+reference information identity need not hold away from its calibrated
+phase. The legal-space restriction and positive-support restriction
+cannot be dropped from the spectral correspondence. Arbitrary positive
+laws need not give parents on three consecutive tensor positions.
+
+Proof. To test the reference condition,
+take $n=1$, $p=(1/3,2/3)$, $f=(0,1)$ and keep the fixed reference pulse.
+The two probabilities along (9.3) are
+$q_\pm(\theta)=1/2\pm(\sqrt2/3)\sin\theta$.
+At $\theta=\pi/2$ both are positive but their derivatives vanish;
+classical information is zero, although $\mathcal Q_p[f]=8/9$.
+Thus (9.6) is local at the calibrated reference.
+
+For $n=1$ the spectra are $\{0,1\}$ for $H_{\rm hb}$ and
+$\{0,1+a_1\}$ for $H_{\rm loc}$, so the matched information ratio is
+$1$. On the unrestricted tensor space, $n=2$ has the additional zero
+vector $|11\rangle$; the legal-space restriction cannot be omitted.
+If a law has zero masses, the invertible transform applies only after
+restricting to its positive support. Disconnected support has
+zero global variance-normalized gap; this is different from its
+smallest strictly positive energy above a degenerate zero space.
+Singleton support has no positive-variance phase direction.
+
+The three-position locality in (9.2) uses the activity insertion ratio.
+An arbitrary positive law need not have that locality. On $B_4$, for
+$p(u)\propto e^{\kappa u_1u_4}$ with $\kappa>0$, the insertion ratio at
+site $1$ is $1$ or $e^\kappa$ according to $u_4$. Its normalized
+off-diagonal coefficient has magnitude respectively
+$1/2$ or $e^{\kappa/2}/(1+e^\kappa)<1/2$.
+No sum of terms on at most three consecutive sites can reproduce
+these site-$1$ matrix elements: every term that changes site $1$
+has identical action for the two remote values of site $4$.
+The matrix transform survives, but the stated tensor locality does not.
+$\square$
+
+[SMF9]: ../../../Library/Quantum/castelnovo2005stochasticmatrixform.md
+
+## 追加锚（本行以下为增补区）
