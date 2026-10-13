@@ -115,7 +115,10 @@ internal sealed class TierzTracelessFreenessRefutationDocument : IScribeDocument
                             + "This disproves freeness even without a grading, and therefore also the "
                             + "graded freeness proposed in v1 §5 and v2 §6.3. "
                             + "The separate Hilbert-series divisibility question is not settled by this result."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tierz-2026-traceless-bps-freeness-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
