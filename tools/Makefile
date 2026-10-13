@@ -12,6 +12,8 @@ CLEAN_SSHX_HOME ?= $(if $(SSHX_HOME),$(SSHX_HOME),$(HOME)/.sshx)
 CLEAN_TMP_ROOT ?=
 FORCE ?= 0
 VERBOSE ?= 0
+# .NET processes started from these targets create no diagnostic pipes or sockets.
+export DOTNET_EnableDiagnostics ?= 0
 XI_MODE ?= mps
 XI_FIRST ?= 1
 XI_LAST ?= 1399999
@@ -43,7 +45,7 @@ FILEMAP_SCOPE ?=
 FILEMAP_PRODUCER ?=
 SEED_EXPORT ?= automatic
 INHERITED_DOTNET_ROOT := $(DOTNET_ROOT)
-RESOLVED_DOTNET_ROOT = $(if $(strip $(INHERITED_DOTNET_ROOT)),$(INHERITED_DOTNET_ROOT),$(shell sdk_version="$$(cd "$(REPOSITORY)" && dotnet --version)"; dotnet --list-sdks | awk -v version="$$sdk_version" '$$1 == version { path = $$0; sub(/^[^[]*\[/, "", path); sub(/\]$$/, "", path); sub(/\/sdk$$/, "", path); print path; exit }'))
+RESOLVED_DOTNET_ROOT = $(if $(strip $(INHERITED_DOTNET_ROOT)),$(INHERITED_DOTNET_ROOT),$(shell export DOTNET_EnableDiagnostics="$(DOTNET_EnableDiagnostics)"; sdk_version="$$(cd "$(REPOSITORY)" && dotnet --version)"; dotnet --list-sdks | awk -v version="$$sdk_version" '$$1 == version { path = $$0; sub(/^[^[]*\[/, "", path); sub(/\]$$/, "", path); sub(/\/sdk$$/, "", path); print path; exit }'))
 CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.WorkflowScript.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
 .PHONY: help settle-batch dotnet check-fast test selftest compile-proof filemap-conform capacity-audit update-renderer-contract clean-lanes clean-all xi-quantization xi-quantization-test prime-slab-search prime-slab-test prime-slab-device-test prime-slab-verify prime-slab-mutation-test prime-slab-cpu prime-slab-cpu-test prime-slab-cpu-mutation-test
 
