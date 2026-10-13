@@ -20,6 +20,9 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Entry("amplitude", "graphAmp", "The binary graph amplitude", Amplitude(),
                 "Each edge contributes its binary quadratic monomial. The ordered upper-triangular sum is normalExponent; graphAmp is the complexSign value of that exponent, equivalently −1 raised to its natural representative. This definition accepts every binary matrix, without a symmetry or diagonal hypothesis.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(GraphStates)),
+            Entry("tensor-adjoint", "tensor_adj", "Adjoints of tensor products", TensorAdjoint(),
+                "The conjugate transpose of a tensor product is the tensor product of the conjugate transposes of its factors.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("normal-form", "stabilizer_graph_normal_form", "A graph amplitude for every stabilizer line", NormalForm(),
                 "The Pauli stabilizers of a nonzero common eigenline span a binary Lagrangian subspace. Coordinate swaps and a diagonal shear express that subspace as the graph of a symmetric matrix with zero diagonal. Hadamard and phase gates implement these transformations, and Pauli signs identify the remaining line with the quadratic amplitude. Taking the inverse gates gives the unitaries U and the scalar c in the displayed equation; SMul.smul denotes scalar action on the amplitude vector.",
                 DescribeRole.Theorem, AssessedProvenance.FromLiterature(GraphStates)))));
@@ -33,6 +36,16 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Equal(Call("graphAmp", Gamma, V("x")),
                 Pow(Typed(Seq(Minus, D(1)), Complex),
                     Property(Call("normalExponent", Gamma, Typed(V("x"), Arrow(Fin(V("N")), Binary))), "val"))))));
+
+    private static Formula TensorAdjoint() => All(V("N"), Nat,
+        All(V("A"), Arrow(Fin(V("N")), Matrix(Fin(D(2)), Complex)),
+            Equal(Qualified("Matrix", "conjTranspose", TensorOperator(V("A"))),
+                TensorOperator(Seq(LambdaLower, Sp, Typed(V("i"), Fin(V("N"))), Sp, Mapsto, Sp,
+                    Qualified("Matrix", "conjTranspose", Apply(V("A"), V("i"))))))));
+
+    private static Formula TensorOperator(Formula a) => Seq(V("D5"), Dot, V("S3"), Dot,
+        V("Quantum"), Dot, V("Information"), Dot,
+        V("StabilizerPairLocalUnitaryInequivalence"), Dot, Call("tensorOp", a));
 
     private static Formula NormalForm() => All(V("N"), Nat,
         All(Psi, Arrow(Arrow(Fin(V("N")), Fin(D(2))), Complex),

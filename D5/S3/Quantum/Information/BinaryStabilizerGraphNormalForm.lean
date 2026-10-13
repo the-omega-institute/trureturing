@@ -472,7 +472,7 @@ private lemma tensor_one {N : ℕ} :
     rw [if_neg h]
     exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
 
-private lemma tensor_adj {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
+lemma tensor_adj {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
     (tensorOp A)ᴴ = tensorOp (fun i => (A i)ᴴ) := by
   ext x y
   simp [tensorOp, Matrix.conjTranspose_apply]

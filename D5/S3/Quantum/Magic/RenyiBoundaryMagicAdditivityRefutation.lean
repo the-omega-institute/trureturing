@@ -108,7 +108,8 @@ private lemma sigma_C_square_trace : tr (sigma * (C * C)) = Q := by
     change sigma.trace.re = 1
     exact congrArg Complex.re hs.1.2
   rw [C_square]
-  unfold tr Q
+  unfold tr RHLinalg.rtrace Q
+  simp only [RCLike.re_eq_complex_re]
   simp only [Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul,
     Matrix.trace_add, Complex.smul_re]
   change sigma.trace.re = 1 at htr
@@ -139,7 +140,8 @@ private lemma completed_square_identity (X Y η : Op 3) (hη : η.PosDef)
   letI := hη.isUnit.invertible
   have hi : η⁻¹ * η = (1 : Op 3) := Matrix.inv_mul_of_invertible η
   have hj : η * η⁻¹ = (1 : Op 3) := Matrix.mul_inv_of_invertible η
-  unfold tr
+  unfold tr RHLinalg.rtrace
+  simp only [RCLike.re_eq_complex_re]
   rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_mul, hr, hη.isHermitian, hc,
     Matrix.sub_mul, Matrix.mul_sub]
   simp only [Matrix.mul_assoc, hj, Matrix.mul_one]
@@ -196,7 +198,8 @@ private lemma Daz_two_one_supported {n : ℕ} (ρ η : Op n)
   rw [spectralPow_one ρ hρ.1.isHermitian, spectralPow_inv η hη,
     spectralPow_one _ hh]
   apply congrArg log2
-  unfold tr
+  unfold tr RHLinalg.rtrace
+  simp only [RCLike.re_eq_complex_re]
   rw [Matrix.trace_mul_cycle, Matrix.trace_mul_comm]
 private lemma Daz_two_one_outside {n : ℕ} (ρ σ : Op n)
     (h : ¬ SupportLE ρ σ) : Daz 2 1 ρ σ = ⊤ := by
@@ -207,7 +210,8 @@ private lemma C_square_expectation_bound (η : Op 3) (hη : η ∈ STAB 3) :
   rw [actual_consumption]
   have hp := polar_consumption η hη
   have hQ : (0 : ℝ) < Q := by unfold Q; norm_num
-  unfold tr at hp ⊢
+  unfold tr RHLinalg.rtrace at hp ⊢
+  simp only [RCLike.re_eq_complex_re] at hp ⊢
   simp only [Matrix.mul_smul]
   norm_num at hp ⊢
   nlinarith
@@ -271,7 +275,8 @@ private lemma bar_transpose {n : ℕ} (A : Op n) (hA : A.IsHermitian) :
   change Aᴴᵀ = Aᵀ
   rw [hA]
 private lemma bar_trace {n : ℕ} (A : Op n) : tr (conjugate A) = tr A := by
-  unfold tr conjugate
+  unfold tr RHLinalg.rtrace conjugate
+  simp only [RCLike.re_eq_complex_re]
   change (A.map (starRingEnd ℂ)).trace.re = A.trace.re
   rw [← AddMonoidHom.map_trace (starRingEnd ℂ)]
   rfl
@@ -311,7 +316,8 @@ private lemma conjugate_marginal_lower (η : Op 3) (hη : η ∈ STAB 3)
   have hw := (hp η hη).2
   have hb : tr (η * (conjugate C * conjugate C)) ≤ Q := by
     rw [hcc]
-    unfold tr
+    unfold tr RHLinalg.rtrace
+    simp only [RCLike.re_eq_complex_re]
     simp only [Matrix.mul_smul, Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
     have hQ : 0 < Q := by unfold Q; norm_num
     exact (mul_le_mul_of_nonneg_left hw hQ.le).trans_eq (mul_one Q)
@@ -817,7 +823,8 @@ private lemma base_bell_trace : tr (bell * baseInv) = 896 / 9 := by
   rw [sub_eq_add_neg]
   simp only [← neg_smul]
   rw [two_coeff_mul]
-  unfold tr
+  unfold tr RHLinalg.rtrace
+  simp only [RCLike.re_eq_complex_re]
   simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
     source_certificate.2.2.2.2]
   norm_num
@@ -873,7 +880,8 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
       change barAlg rho * barAlg rho * barAlg sigmaInv = barAlg (rho * C)
       rw [← map_mul, ← map_mul, Matrix.mul_assoc, C_relation]
     rw [he]
-    unfold tr
+    unfold tr RHLinalg.rtrace
+    simp only [RCLike.re_eq_complex_re]
     rw [tensor_trace, ht]
     change ((Q : ℂ) * ((rho * C).map (starRingEnd ℂ)).trace).re = _
     rw [← AddMonoidHom.map_trace (starRingEnd ℂ), ht]
@@ -889,7 +897,8 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
     rfl
   have hv : tr (joint * joint * (baseInv * bell * baseInv)) =
       Q ^ 2 * (198983 / 189225 : ℝ) := by
-    unfold tr
+    unfold tr RHLinalg.rtrace
+    simp only [RCLike.re_eq_complex_re]
     have he : (joint * joint * (baseInv * bell * baseInv)).trace =
         (bell * (baseInv * (joint * joint) * baseInv)).trace := by
       calc
@@ -912,7 +921,8 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
     rw [map_smul]
     have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
     rcases h with ⟨_, _, _, _, _, _, _, _, _, _, htW, _⟩
-    unfold tr at htW ⊢
+    unfold tr RHLinalg.rtrace at htW ⊢
+    simp only [RCLike.re_eq_complex_re] at htW ⊢
     simp only [smul_smul, Matrix.mul_smul, Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
     change Q * Q * (bell * tensor (W (119 / 316 : ℝ))
       (conjugate (W (119 / 316 : ℝ)))).trace.re = _
@@ -921,7 +931,8 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
   rw [joint_inverse]
   unfold jointInv
   simp only [Matrix.mul_smul, Matrix.mul_sub]
-  unfold tr at hb hv ⊢
+  unfold tr RHLinalg.rtrace at hb hv ⊢
+  simp only [RCLike.re_eq_complex_re] at hb hv ⊢
   simp only [Matrix.trace_sub, Matrix.trace_smul, Complex.sub_re, Complex.smul_re, smul_eq_mul]
   rw [hb, hv]
   unfold Q F

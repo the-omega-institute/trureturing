@@ -8,6 +8,8 @@
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Entanglement.NandiMutualPredictabilityLOCCRefutation
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
+import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
+import D5.S3.Weil.ZetaLinear.PosIndex
 set_option autoImplicit false
 noncomputable section
 open Matrix
@@ -24,7 +26,7 @@ abbrev Bits (n : ℕ) := Fin n → Fin 2
 abbrev Op (n : ℕ) := Operator n
 def IsState {n : ℕ} (ρ : Op n) : Prop :=
   D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity ρ
-def tr {n : ℕ} (A : Op n) : ℝ := A.trace.re
+def tr {n : ℕ} (A : Op n) : ℝ := RHLinalg.rtrace A
 def conjugate {n : ℕ} (A : Op n) : Op n := A.map star
 private def splitBits (n m : ℕ) (x : Bits (n + m)) : Bits n × Bits m :=
   (fun i => x (Fin.castAdd m i), fun j => x (Fin.natAdd n j))
@@ -61,10 +63,6 @@ def bell : Op 6 := bellMatrix
 def W (s : ℝ) : Op 3 := (1 / (1 + s) : ℝ) • ((1 : Op 3) + s • S)
 private lemma word_square {n : ℕ} (w : Fin n → Pauli) : wordOp w * wordOp w = 1 :=
   (wordUnit w).val_inv
-private lemma tensor_adjoint {n : ℕ} (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) :
-    (tensorOp M)ᴴ = tensorOp (fun i => (M i)ᴴ) := by
-  ext x y
-  simp [tensorOp, Matrix.conjTranspose_apply, star_prod]
 private lemma gamma_anticommute (i j : Fin 7) (h : i ≠ j) :
     wordOp (gammaWords i) * wordOp (gammaWords j) =
       -(wordOp (gammaWords j) * wordOp (gammaWords i)) := by
@@ -132,7 +130,7 @@ private lemma phase_mul {c d : ℂ} (hc : Phase c) (hd : Phase d) : Phase (c * d
 private lemma local_adjoint {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     (localOp i A)ᴴ = localOp i Aᴴ := by
   unfold localOp
-  rw [tensor_adjoint]
+  rw [D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_adj]
   congr 1
   funext j
   by_cases h : j = i <;> simp [h]
@@ -451,8 +449,12 @@ private lemma anticommuting_support {n k : ℕ} (G : Fin k → Op n)
     (ha : ∀ i j, i ≠ j → G i * G j = -(G j * G i)) :
     ∀ ρ ∈ STAB n, tr (ρ * ∑ i, G i) ≤ 1 := by
   have hc : Convex ℝ {ρ : Op n | tr (ρ * ∑ i, G i) ≤ 1} :=
-    convex_halfSpace_le ⟨fun A B => by dsimp only [tr] ; simp [Matrix.add_mul, Matrix.trace_add],
-      fun r A => by dsimp only [tr] ; simp [Matrix.trace_smul]⟩ 1
+    convex_halfSpace_le ⟨fun A B => by
+      dsimp only [tr, RHLinalg.rtrace, RCLike.re_eq_complex_re]
+      simp [Matrix.add_mul, Matrix.trace_add],
+      fun r A => by
+        dsimp only [tr, RHLinalg.rtrace, RCLike.re_eq_complex_re]
+        simp [Matrix.trace_smul]⟩ 1
   apply convexHull_min (t := {ρ : Op n | tr (ρ * ∑ i, G i) ≤ 1}) ?_ hc
   rintro ρ ⟨U, hu, rfl⟩
   let ρ : Op n := U * vacuum n * Uᴴ
@@ -485,7 +487,8 @@ private lemma anticommuting_support {n k : ℕ} (G : Fin k → Op n)
       exact CharZero.eq_neg_self_iff.mp (congrFun hh x)
     exact (smul_eq_zero.mp hz).elim (mul_ne_zero h.1 h.2) hψ
   have ht : tr (ρ * ∑ i, G i) = (∑ i, e i).re := by
-    unfold tr
+    unfold tr RHLinalg.rtrace
+    simp only [RCLike.re_eq_complex_re]
     rw [Matrix.mul_sum, Matrix.trace_sum]
     congr 1
     exact Finset.sum_congr rfl (fun i _ => Matrix.trace_mul_comm _ _)
@@ -683,7 +686,8 @@ private lemma bell_trace (A B : Op 3) :
       Matrix.conjTranspose_apply]
     congr 1
     rw [Finset.sum_comm]
-  unfold tr
+  unfold tr RHLinalg.rtrace
+  simp only [RCLike.re_eq_complex_re]
   rw [ht]
   simp [Complex.mul_re, div_eq_mul_inv, mul_comm]
 private lemma conjugate_linear {n : ℕ} (a b : ℝ) (T : Op n) :
@@ -719,7 +723,8 @@ private lemma polar_support (T : Op 3) (s : ℝ) (hs : 0 ≤ s)
   have ht := (stab_state hη).2
   have he : tr (η * ((1 / (1 + s) : ℝ) • (1 + s • T))) =
       (1 + s * tr (η * T)) / (1 + s) := by
-    dsimp only [tr] ; simp only [Matrix.mul_smul, Matrix.mul_add, Matrix.mul_one,
+    dsimp only [tr, RHLinalg.rtrace, RCLike.re_eq_complex_re]
+    simp only [Matrix.mul_smul, Matrix.mul_add, Matrix.mul_one,
       Matrix.trace_smul, Matrix.trace_add, ht, Complex.smul_re, Complex.add_re, Complex.one_re,
       smul_eq_mul]
     ring
@@ -745,7 +750,7 @@ private lemma sigma_state_support : IsState sigma ∧ tr (sigma * S) = 1 := by
     simp only [Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, S_trace,
       Fintype.card_fun, Fintype.card_fin]
     norm_num
-  · dsimp only [sigma, sigmaMatrix, tr]
+  · dsimp only [sigma, sigmaMatrix, tr, RHLinalg.rtrace, RCLike.re_eq_complex_re]
     rw [Matrix.smul_mul, Matrix.add_mul, Matrix.smul_mul, Matrix.one_mul, S_square_real]
     simp only [Matrix.trace_smul, Matrix.trace_add, Matrix.trace_one, S_trace,
       Fintype.card_fun, Fintype.card_fin]
@@ -764,7 +769,8 @@ private lemma W_bell (s : ℝ) :
   rw [he]
   have ht : (1 : Op 3).trace = (8 : ℂ) := by
     simp [Matrix.trace_one]
-  dsimp only [tr] ; simp only [Matrix.trace_smul, Matrix.trace_add, S_trace, ht, smul_zero,
+  dsimp only [tr, RHLinalg.rtrace, RCLike.re_eq_complex_re]
+  simp only [Matrix.trace_smul, Matrix.trace_add, S_trace, ht, smul_zero,
     add_zero, Complex.smul_re, smul_eq_mul]
   change (1 / (1 + s)) ^ 2 * ((1 + 7 * s ^ 2) * 8) / 8 = _
   simp only [div_pow, one_pow]
