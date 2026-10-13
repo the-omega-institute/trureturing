@@ -720,6 +720,7 @@ jobs:
           fi
           compatibility_roots=(
             D5.S3.Combinatorics.Orthogonality.ThetaRepresentationNonconvex
+            D5.S3.Estimation.SequentialDecisionRisk.NativeBernoulliFactoryCriticalMoment
             D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelFiniteCompleteObstruction
             D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelFiniteProducts
             D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelKilledPaths

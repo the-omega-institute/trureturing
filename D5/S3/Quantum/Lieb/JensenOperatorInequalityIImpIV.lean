@@ -27,6 +27,8 @@ public import D5.S3.Quantum.Lieb.BlockDiagonal
 public import D5.S3.Quantum.Lieb.LownerHeinzTheorem
 public import Mathlib.Analysis.CStarAlgebra.Unitary.Span
 public import Mathlib.Algebra.Star.UnitaryStarAlgAut
+public import Mathlib.Algebra.Algebra.Spectrum.Pi
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Pi
 
 @[expose] public section
 
@@ -255,7 +257,8 @@ private lemma cfcR_conj_unitary_on (s : Set ℝ) (f : ℝ → ℝ) (hcont : Cont
     {A : L ℋ} (hAs : spectrum ℝ A ⊆ s)
     (u : unitary (L ℋ)) (hA : IsSelfAdjoint A) :
     cfcR (ℋ := ℋ) f (star u * A * u) = star u * cfcR (ℋ := ℋ) f A * u := by
-  let φ : L ℋ →⋆ₐ[ℝ] L ℋ := Unitary.conjStarAlgAut ℝ (L ℋ) (star u)
+  let φ : L ℋ →⋆ₐ[ℝ] L ℋ :=
+    (Unitary.conjStarAlgAut ℝ (L ℋ) (star u)).toStarAlgHom
   have hφ : Continuous φ := by
     have h1 : Continuous (fun x : L ℋ => (star u : L ℋ) * x * (u : L ℋ)) := by
       fun_prop
