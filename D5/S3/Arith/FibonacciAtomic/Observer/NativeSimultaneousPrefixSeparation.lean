@@ -32,7 +32,7 @@ def bind {ι κ : Type} (contexts : ι → MixedExpr κ) : MixedExpr ι → Mixe
   | .residual a i => shift a (contexts i)
   | .pair A B => .pair (bind contexts A) (bind contexts B)
 
-private theorem eval_shift {ι : Type} (a : Nat) (z : ι → Source) (E : MixedExpr ι) :
+theorem eval_shift {ι : Type} (a : Nat) (z : ι → Source) (E : MixedExpr ι) :
     eval z (shift a E) = substitution^[a] (eval z E) := by
   induction E with
   | ground g => rfl
