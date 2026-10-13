@@ -33,7 +33,7 @@ def pathThreshold : Address → Nat
   | [] => 0
   | b :: p => max 2 ((if b then 2 else 1) + pathThreshold p)
 
-private theorem atomic_navigation (p : Address) (t : Nat) (u : Source) :
+theorem atomic_navigation (p : Address) (t : Nat) (u : Source) :
     subtree p (substitution^[t] (.of true)) = some u ↔
       ∃ r : Nat, pathThreshold p ≤ t ∧ t = r + pathCost p ∧
         substitution^[r] (.of true) = u := by

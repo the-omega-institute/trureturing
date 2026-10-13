@@ -9,7 +9,7 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Graph/PrefixReversal/NativeCircleOwnership.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual native circle domains from distinct insertion gaps are disjoint.",
+        "The actual two T supplier stars intersect in exactly two core circles and their union has a unique complete circle owner.",
         H("Native Circle Ownership"),
         Blocks(
             Paragraph(Text(
@@ -42,6 +42,29 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
                     + "domains. At the label m, the lower neighbours are 1 and m-1, whereas the upper "
                     + "neighbours are j+2 and either 1 or j+1; the unordered-neighbour invariant then "
                     + "gives the arithmetic contradiction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("t-core-intersection"),
+                DeclarationHandle.Create(Prefix + "native_t_core_intersection"),
+                H("The Two Complete Supplier Stars Intersect Exactly in Their Core Circles"),
+                StatementSource.FromAuthor(CoreFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The two stars are defined independently by actual deletion of the label in the last position "
+                    + "of a*c or swap(0,last)*a*c. Their intersection consists precisely of the complete circles "
+                    + "based at the identity and swap(0,last). The two final insertion gaps are computed pointwise; "
+                    + "all other shared ownership is excluded by the actual cross-circle theorem. This supplies "
+                    + "the two core domains required by the F2 splice, without assuming a path partition."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("t-circle-partition"),
+                DeclarationHandle.Create(Prefix + "native_t_circle_partition"),
+                H("The Full Two-Star Union Has Exactly One Complete Circle Owner"),
+                StatementSource.FromAuthor(PartitionFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The cut-owner index is Fin(m) plus Fin(m-2). Its first family comprises all lower insertion "
+                    + "gaps, including the two shared cores; its second family comprises just the upper noncore "
+                    + "ports. Every actual vertex in the independently specified union belongs to exactly one "
+                    + "complete indexed circle. Full gap exhaustion supplies existence, and the earned core "
+                    + "classification and disjointness supply uniqueness. This is a support partition; actual "
+                    + "F2 path splicing and the higher marked-path induction remain separate obligations."))),
                 DescribeRole.Theorem))));
 
     private static Formula Formula()
@@ -80,6 +103,38 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
         Formula fin = Call("Fin", Call("sub", m, D(2)));
         Formula sets = All("i", fin, All("j", fin, body));
         return Disp(All("m", Call("Nat"), Implies(Le(D(4), m), sets)));
+    }
+
+    private static Formula CoreFormula()
+    {
+        Formula m = F.Id("m"), v = F.Id("v");
+        Formula ac = Call("mul", Call("a", m), Call("c", m));
+        Formula swap = Call("swap", D(0), Call("last", m));
+        Formula upper = Call("mul", swap, ac);
+        Formula star(Formula z) => Call("Star", Call("apply", z, Call("last", m)),
+            Call("residualList", z), v);
+        Formula common = And(star(ac), star(upper));
+        Formula cores = Or(Call("Circle", D(1), v), Call("Circle", swap, v));
+        Formula body = new Formula.Logic(common, FormulaLogicOperator.Iff, cores);
+        return Disp(All("m", Call("Nat"), Implies(Le(D(4), m),
+            All("v", Call("Configuration", m), body))));
+    }
+
+    private static Formula PartitionFormula()
+    {
+        Formula m = F.Id("m"), v = F.Id("v"), p = F.Id("p"), q = F.Id("q");
+        Formula ac = Call("mul", Call("a", m), Call("c", m));
+        Formula swap = Call("swap", D(0), Call("last", m));
+        Formula upper = Call("mul", swap, ac);
+        Formula star(Formula z) => Call("Star", Call("apply", z, Call("last", m)),
+            Call("residualList", z), v);
+        Formula owners = Call("Sum", Call("Fin", m), Call("Fin", Call("sub", m, D(2))));
+        Formula owns(Formula x) => Call("Circle", Call("tCircleAnchor", x), v);
+        Formula unique = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("p"),
+            owners, And(owns(p), All("q", owners, Implies(owns(q), Eq(q, p)))));
+        Formula body = new Formula.Logic(Or(star(ac), star(upper)), FormulaLogicOperator.Iff, unique);
+        return Disp(All("m", Call("Nat"), Implies(Le(D(4), m),
+            All("v", Call("Configuration", m), body))));
     }
 
     private static Formula Call(string name, params Formula[] args) =>
