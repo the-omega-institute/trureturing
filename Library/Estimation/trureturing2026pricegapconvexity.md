@@ -2376,3 +2376,123 @@ zero. Even in this paid parameter range, phases, amplitude weights,
 zero multiplicities and actual individual masks remain jointly constrained
 in SM5. Neither SC4 nor mass decay supplies the signed finite-head bound
 with the strict coefficient $C_0<d(1-\kappa)/16$. Robin/RH remain unproved.
+
+## The paid clock ceiling removes a lower real-part sector of the finite head
+
+Keep the original RH-failure suppliers, fixed $\Theta,\eta,d$, every
+qualifying full window, every maximizing tie and CR45--CR47's fixed
+$0<a<5\kappa/8$. In particular the original $\eta$ is not replaced.
+The following application uses SC2 and the exact-coefficient majorants
+already used in MB2 and the zero-free-strip comparison. It adds no
+zero-density, zero-free or generic summation theorem.
+
+For a fixed $\sigma\ge1/2$, define a subhead at the same actual height
+by restricting the existing finite sum:
+
+$$
+H^{\le\sigma}_{B,a}(T)=2\operatorname{Re}
+\sum_{\substack{0<\operatorname{Im}\rho\le T\\
+                  \operatorname{Re}\rho\le\sigma}}
+m_\rho\left[s_BF_B(\rho)-\frac{aB^\rho}{\sqrt B\,\rho}\right].
+$$
+
+Let $H^{>\sigma}_{B,a}(T)$ be its complementary subhead. Thus
+$H_{B,a}(T)=H^{\le\sigma}_{B,a}(T)+H^{>\sigma}_{B,a}(T)$ exactly.
+All actual real parts, multiplicities, labels and height masks remain;
+the already paid suffix and compensation change are not reapplied to
+either subhead separately.
+
+### Apply the existing coefficient bounds to the retained submultiset
+
+MB2 already uses
+$|s_BF_B(\rho)|\le(1+1/\log B)B^{\beta-1/2}/\gamma^2$
+and $\sum_{\gamma>0}m_\rho/\gamma^2<\infty$. The existing zero-count
+consequence also gives
+$\sum_{0<\gamma\le T}m_\rho/|\rho|=O(1+\log^2T)$.
+For $\beta\le\sigma$, $B\ge e^2$ and the original
+$\tau_B\asymp\sqrt B$, these bounds directly supply
+
+$$
+\left|H^{\le\sigma}_{B,a}(\tau_B)\right|
+\le C_a B^{\sigma-1/2}(1+\log^2 B).
+\tag{SR1}
+$$
+
+The constant is independent of the original labels, ties and legal
+heights. This is the owner's existing absolute majorant applied to a
+submultiset, not a new estimate for the zeros.
+
+Put $M_X=X^{1/2-\eta}\log X$ and
+$S_X^{\le\sigma}=\sum_{i<m}\delta_i
+H^{\le\sigma}_{B_i,a}(\tau_{B_i})$. Suppose first that
+$\Delta=1-\Theta>0$. With $h=\sigma-1/2\ge0$, SC2 gives
+$B_{\max,X}^{h}\ll X^{\eta h/\Delta}(\log X)^{-h/\Delta}$
+and $1+\log^2 B_{\max,X}\ll(\log X)^2$. Since all original
+$\delta_i$ are positive and sum to $L_X$, the quantitative consequence is
+
+$$
+\boxed{
+\frac{|S_X^{\le\sigma}|}{M_XL_X}
+\ll_{\Theta,\eta,d,a,\sigma}
+X^{-\varepsilon_\sigma}
+(\log X)^{1-(\sigma-1/2)/(1-\Theta)},\qquad
+\varepsilon_\sigma=
+\frac12-\eta-\frac{\eta(\sigma-1/2)}{1-\Theta}.}
+\tag{SR2}
+$$
+
+This bound retains the negative logarithmic power in SC2. Therefore,
+with all parameters fixed as supplied,
+
+$$
+\boxed{
+\frac12\le\sigma<\sigma_{\rm safe}:=
+\frac12+\frac{(1-\Theta)(1/2-\eta)}{\eta}
+\quad\Longrightarrow\quad
+|S_X^{\le\sigma}|=o(M_XL_X).}
+\tag{SR3}
+$$
+
+At $\sigma=\sigma_{\rm safe}$ the remaining logarithmic power is
+$2-1/(2\eta)$. Hence this endpoint also obeys SR3 when the original
+$\eta<1/4$. For $\eta\ge1/4$ SR2 alone does not supply the endpoint
+little-$o$ conclusion; it does not prove that the actual sector is large.
+No SC4 atom-decay hypothesis or cross-label phase cancellation is used.
+
+### Retain the spectral range and the strict remaining margin
+
+The original $\eta>1-\Theta$ gives
+
+$$
+\Theta-\sigma_{\rm safe}
+=\frac{\eta-(1-\Theta)}{2\eta}>0.
+\tag{SR4}
+$$
+
+Thus SR3 leaves a nonempty possible real-part range below the actual
+zero-real-part supremum. It neither proves that no zeros remain nor
+bounds their signed aggregate. For any allowed fixed cut, the original
+target with a constant strictly below $d(1-\kappa)/16$ is equivalent
+to the same target for $S_X^{>\sigma}$, allowing an arbitrarily small
+fixed loss of margin: the absolute difference is $o(M_XL_X)$ uniformly
+over the original windows, all ties and admissible heights.
+
+When $\Theta=1$, SC2 is unavailable. For the sector $\sigma=1/2$ only,
+the original ceiling $B_i\le R$ with
+$\log R\asymp X^{\eta/2}$ instead gives
+
+$$
+\frac{|S_X^{\le1/2}|}{M_XL_X}
+\ll_a\frac{X^{2\eta-1/2}}{\log X}.
+\tag{SR5}
+$$
+
+Consequently this sector is negligible when the original
+$0<\eta\le1/4$, including equality. No positive-width sector above
+$1/2$ is removed by this argument when $\Theta=1$.
+
+SR1--SR5 are source-specific paper applications of the already paid
+clock and coefficient estimates. They narrow an unpaid spectral range;
+they do not supply its signed bound, replace an original mask, establish
+literature originality or constitute Lean verification. The full Robin
+comparison and RH remain unproved.
