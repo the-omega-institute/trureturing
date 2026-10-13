@@ -536,12 +536,49 @@ private theorem common_subeffect_bound
   let q : Fin 2 → ℂ := zj • schurVector a b zj
   have hscale (z : ℂ) (v : Fin 2 → ℂ) (hz : ‖z‖ = 1) :
       quad H (z • v) = quad H v := by
+    have hz' : starRingEnd ℂ z * z = 1 := by
+      rw [RCLike.conj_mul, hz]
+      norm_num
+    have hz'' : star z * z = 1 := by simpa only [starRingEnd_apply] using hz'
+    have hc : star (z • v) ⬝ᵥ (H *ᵥ (z • v)) =
+        star v ⬝ᵥ (H *ᵥ v) := by
+      simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.smul_apply,
+        StarModule.star_smul, smul_eq_mul]
+      ring_nf
+      have h1 : star z * star v 0 * H 0 0 * z * v 0 =
+          star v 0 * H 0 0 * v 0 := by
+        calc
+          _ = (star z * z) * (star v 0 * H 0 0 * v 0) := by ring
+          _ = _ := by rw [hz'']; simp
+      have h2 : star z * star v 0 * z * H 0 1 * v 1 =
+          star v 0 * H 0 1 * v 1 := by
+        calc
+          _ = (star z * z) * (star v 0 * H 0 1 * v 1) := by ring
+          _ = _ := by rw [hz'']; simp
+      have h3 : v 0 * star z * z * star v 1 * H 1 0 =
+          v 0 * star v 1 * H 1 0 := by
+        calc
+          _ = (star z * z) * (v 0 * star v 1 * H 1 0) := by ring
+          _ = _ := by rw [hz'']; simp
+      have h4 : v 1 * star z * z * star v 1 * H 1 1 =
+          v 1 * star v 1 * H 1 1 := by
+        calc
+          _ = (star z * z) * (v 1 * star v 1 * H 1 1) := by ring
+          _ = _ := by rw [hz'']; simp
+      have h5 : star z * z * v 0 * star v 1 * H 1 0 =
+          v 0 * star v 1 * H 1 0 := by
+        calc
+          _ = (star z * z) * (v 0 * star v 1 * H 1 0) := by ring
+          _ = _ := by rw [hz'']; simp
+      have h6 : star z * z * v 1 * star v 1 * H 1 1 =
+          v 1 * star v 1 * H 1 1 := by
+        calc
+          _ = (star z * z) * (v 1 * star v 1 * H 1 1) := by ring
+          _ = _ := by rw [hz'']; simp
+      rw [h1, h2, h3, h4, h5, h6]
+      ring
     dsimp [quad]
-    simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.smul_apply,
-      StarModule.star_smul, smul_eq_mul]
-    rw [RCLike.mul_conj, hz]
-    norm_num
-    ring
+    exact congrArg Complex.re hc
   have hp : quad H p ≤ x := by
     dsimp [p]
     rw [hscale zi _ hzi]
@@ -551,10 +588,21 @@ private theorem common_subeffect_bound
     rw [hscale zj _ hzj]
     exact hqj
   have hpar : quad H (p - q) = 2 * quad H p + 2 * quad H q - quad H (p + q) := by
+    have hh : star (p - q) ⬝ᵥ (H *ᵥ (p - q)) =
+        (2 : ℂ) * (star p ⬝ᵥ (H *ᵥ p)) +
+            (2 : ℂ) * (star q ⬝ᵥ (H *ᵥ q)) -
+            star (p + q) ⬝ᵥ (H *ᵥ (p + q)) := by
+      have hs : star (p - q) = star p - star q := by
+        funext k
+        simp
+      have hs' : star (p + q) = star p + star q := by
+        funext k
+        simp
+      rw [hs, hs']
+      simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.sub_apply, Pi.add_apply]
+      ring
     dsimp [quad]
-    change (star (p - q) ⬝ᵥ (H *ᵥ (p - q))).re = _
-    simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.sub_apply, Pi.add_apply]
-    ring
+    simpa [map_mul, map_sub] using congrArg Complex.re hh
   have hnon : 0 ≤ quad H (p + q) := by
     exact (Complex.le_def.mp (hH.dotProduct_mulVec_nonneg (p + q))).1
   have hbound : quad H (p - q) ≤ 4 * x := by
@@ -597,5 +645,55 @@ private theorem common_subeffect_bound
     have : 0 < ‖zi - zj‖ := norm_pos_iff.mpr (sub_ne_zero.mpr hne)
     positivity
   exact (le_div_iff₀ hdist).2 (by linarith)
+
+private theorem choose_count_bound (k : ℕ) :
+    (k : ℝ) ≤ 1 + (Nat.choose k 2 : ℝ) := by
+  induction k with
+  | zero => norm_num
+  | succ k ih =>
+      rw [Nat.choose_succ_succ, Nat.choose_one_right]
+      norm_num at ih ⊢
+      linarith
+
+private theorem weighted_counting_bound {m : ℕ} (c x : ℝ)
+    (g : (Fin m → Fin 2) → ℝ) (k : (Fin m → Fin 2) → ℕ)
+    (p q : Fin m → Fin m → ℝ)
+    (hg : ∀ a, 0 ≤ g a) (hsum : ∑ a, g a = 1)
+    (hmc : (m : ℝ) * c = ∑ a, (k a : ℝ) * g a)
+    (hpairs : ∑ a, (Nat.choose (k a) 2 : ℝ) * g a =
+      ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), p i j)
+    (hp : ∀ (i j : Fin m), j ∈ Finset.univ.filter (fun j : Fin m => i < j) →
+      p i j ≤ 4 * x * q i j)
+    (hQ : ∑ i : Fin m, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), q i j = 1) :
+    (m : ℝ) * c ≤ 1 + 4 * x := by
+  have hweighted : ∑ a, (k a : ℝ) * g a ≤
+      ∑ a, (1 + (Nat.choose (k a) 2 : ℝ)) * g a := by
+    apply Finset.sum_le_sum
+    intro a ha
+    exact mul_le_mul_of_nonneg_right (choose_count_bound (k a)) (hg a)
+  have hpair : ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), p i j ≤ 4 * x := by
+    calc
+      _ ≤ ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j),
+          4 * x * q i j := by
+        apply Finset.sum_le_sum
+        intro i hi
+        apply Finset.sum_le_sum
+        intro j hj
+        exact hp i j hj
+      _ = 4 * x * (∑ i : Fin m,
+          ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), q i j) := by
+        simp_rw [← Finset.mul_sum]
+      _ = 4 * x := by rw [hQ]; ring
+  rw [hmc]
+  calc
+    ∑ a, (k a : ℝ) * g a ≤
+        ∑ a, (1 + (Nat.choose (k a) 2 : ℝ)) * g a := hweighted
+    _ = ∑ a, g a + ∑ a, (Nat.choose (k a) 2 : ℝ) * g a := by
+      simp_rw [add_mul]
+      rw [Finset.sum_add_distrib]
+    _ = 1 + ∑ a, (Nat.choose (k a) 2 : ℝ) * g a := by rw [hsum]
+    _ = 1 + ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), p i j := by
+      exact congrArg (fun r : ℝ => 1 + r) hpairs
+    _ ≤ 1 + 4 * x := by linarith
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
