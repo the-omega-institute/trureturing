@@ -72,7 +72,7 @@ private theorem tp_budget (Γ : Instrument) (i k : Qubit) : (∑ j, (choi Γ j (
   have h := Γ.trace_preserving 0 (unit i k)
   fin_cases i <;> fin_cases k <;>
     simpa [Matrix.trace,Matrix.diag,Fin.sum_univ_two,choi,unit,Matrix.single] using h
-private theorem diagonal_bounds (Γ : Instrument) (j : Qubit) (p : Qubit × Qubit) : 0 ≤ (choi Γ j p p).re ∧ (choi Γ j p p).re ≤ 1 := by
+theorem diagonal_bounds (Γ : Instrument) (j : Qubit) (p : Qubit × Qubit) : 0 ≤ (choi Γ j p p).re ∧ (choi Γ j p p).re ≤ 1 := by
   have hn (j : Qubit) (a : Qubit) : 0 ≤ (choi Γ j (p.1,a) (p.1,a)).re :=
     (Complex.nonneg_iff.mp (choi_positive Γ j).diag_nonneg).1
   have hb := congrArg Complex.re (tp_budget Γ p.1 p.1); simp only [Fin.sum_univ_two,Complex.add_re,ite_true,Complex.one_re] at hb
@@ -541,7 +541,7 @@ private theorem sum_N_bound (Γ : Instrument) : ‖N Γ 0 + N Γ 1‖ ≤ Real.s
     linarith
   have hsq := Real.sq_sqrt hc0; rw [Complex.normSq_eq_norm_sq] at hgram
   nlinarith [mul_nonneg hc0 (sub_nonneg.mpr hd1),Real.sqrt_nonneg (C Γ 0 + C Γ 1),norm_nonneg (P Γ 0 + P Γ 1)]
-private theorem current_A_bound (p : Parameters) (x : CoupledPoint p) (Γ : Instrument) (j : Qubit) : |A (symInstrument Γ) j - 1 / 2| ≤ (x.c Γ + |x.d Γ| + x.eps * Lbar p) / 2 := by
+theorem current_A_bound (p : Parameters) (x : CoupledPoint p) (Γ : Instrument) (j : Qubit) : |A (symInstrument Γ) j - 1 / 2| ≤ (x.c Γ + |x.d Γ| + x.eps * Lbar p) / 2 := by
   have hbud := (moment_budgets (symInstrument Γ)).1; have hL := L_sum_bound (symInstrument Γ) (gamma := p.gamma) p.beta_pos p.R_gt_one; change |L (symInstrument Γ) p.beta p.gamma p.R 0| +
     |L (symInstrument Γ) p.beta p.gamma p.R 1| ≤ Lbar p at hL
   let ld := L (symInstrument Γ) p.beta p.gamma p.R 0 - L (symInstrument Γ) p.beta p.gamma p.R 1; have hLd : |ld| ≤ Lbar p := (abs_sub _ _).trans hL; have hd : x.d Γ = A (symInstrument Γ) 0 - A (symInstrument Γ) 1 + x.eps * ld := by
