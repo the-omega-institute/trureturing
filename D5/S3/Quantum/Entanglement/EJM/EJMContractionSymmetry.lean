@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMContractionSymmetry
    mirror-E: none(waiver:exact-local-tail-contractions)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry]
+   anchors: []
    utility: none
    digest: Actual local coordinate and outcome symmetries preserve exact tail contractions. -/
 

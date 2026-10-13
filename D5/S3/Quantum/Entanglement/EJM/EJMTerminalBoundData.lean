@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMTerminalBoundData
    mirror-E: none(waiver:exact-ejm-terminal-proof-data)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport, D5/S3/Quantum/Entanglement/EJM/EJMContractionData]
+   anchors: []
    utility: none
    digest: Untrusted complete-row witnesses retain the actual outcome and coordinate transport to exact contraction representatives. -/
 

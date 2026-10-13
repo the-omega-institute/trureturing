@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMGlobalScoreSymmetry
    mirror-E: none(waiver:actual-global-inflation-replay)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry, D5/S0/Certificates/FiniteSymmetryBoundReplay]
+   anchors: []
    utility: none
    digest: The actual 192 by 24 EJM actions preserve the centered score and checked partial cuts strictly decrease finite lexicographic rank. -/
 

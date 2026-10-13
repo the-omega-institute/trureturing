@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMContractionData
    mirror-E: none(waiver:exact-ejm-contraction-proof-data)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMContractionSymmetry]
+   anchors: []
    utility: none
    digest: Explicit ninety-five and three-hundred-thirty-two representative tail contractions bind the exact EJM dual without repeated arithmetic. -/
 

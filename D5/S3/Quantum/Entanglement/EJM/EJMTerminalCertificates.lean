@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates
    mirror-E: none(waiver:actual-exact-certificate-premise)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMTerminalBoundData]
+   anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_tags,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_tags
    digest: Actual terminal events, contraction witnesses and scaled integer comparisons pass their checks. -/
 

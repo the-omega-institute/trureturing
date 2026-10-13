@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMContractionCertificates
    mirror-E: none(waiver:actual-exact-certificate-premise)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMContractionData]
+   anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.triangle_contractions,D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.singleton_contractions
    digest: All original weighted tail contractions match their exact stored integers. -/
 

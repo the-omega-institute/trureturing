@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData
    mirror-E: none(waiver:literal-global-inflation-proof-data)
-   anchors: [D5/S0/Certificates/FiniteSymmetryDAGReplay, D5/S3/Quantum/Entanglement/EJM/EJMGlobalScoreSymmetry]
+   anchors: []
    utility: none
    digest: Literal shared branch shapes retain every child and are decoded in each reached actual partial context. -/
 

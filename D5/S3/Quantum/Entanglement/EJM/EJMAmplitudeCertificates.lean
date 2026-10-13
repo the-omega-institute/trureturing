@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMAmplitudeCertificates
    mirror-E: none(waiver:exact-coefficient-amplitude-receipts)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMCoefficientTreeBounds]
+   anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMNoiseRegion.actual_noise_box; premises=D5/S3/Quantum/Entanglement/EJM/EJMAmplitudeCertificates.actual_F1_abs_bound,D5/S3/Quantum/Entanglement/EJM/EJMAmplitudeCertificates.actual_F1_real_abs_bound
    digest: The original full EJM triangle coefficient tree earns its uniform integer and real amplitude bound. -/
 

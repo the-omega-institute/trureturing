@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMExactCertificate
    mirror-E: none(waiver:exact-triangle-nonlocality-refutation)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMGlobalBoundReplay, D5/S3/Quantum/Entanglement/EJM/EJMLocalBoundAcceptance]
+   anchors: []
    utility: kind=checker; basis=refutes=gid:D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.claim; result=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; claim=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.claim
    digest: The actual complete context-specific certificate refutes locality of the original EJM distribution. -/
 

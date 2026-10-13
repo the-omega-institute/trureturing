@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport
    mirror-E: none(waiver:exact-local-partial-state-transport)
-   anchors: [D5/S0/Certificates/FinitePartialBoundDAG, D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry]
+   anchors: []
    utility: none
    digest: Actual local symmetries transport partial events and preserve centered EJM scores. -/
 

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMStructureCertificates
    mirror-E: none(waiver:actual-exact-certificate-premise)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport]
+   anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates.triangle_structure,D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates.singleton_structure
    digest: Every actual local row passes the exact structural check. -/
 

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMGlobalBoundReplay
    mirror-E: none(waiver:actual-global-inflation-bound-replay)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundLookup, D5/S3/Quantum/Entanglement/EJM/EJMGlobalDAGData]
+   anchors: []
    utility: none
    digest: Actual local lookup bounds sum to a valid global score bound and earned context-specific replay acceptance excludes the original EJM local model. -/
 

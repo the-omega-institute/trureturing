@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMPartialBoundLookup
    mirror-E: none(waiver:actual-local-bound-lookup)
-   anchors: [D5/S0/Certificates/FinitePartialBoundDAG, D5/S3/Quantum/Entanglement/EJM/EJMPartialBoundTransport]
+   anchors: []
    utility: none
    digest: Local row selectors propose normalized symmetry representatives whose lower bounds are used only after checking exact assignment transport. -/
 
@@ -13,6 +13,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option linter.style.longLine false
+set_option linter.style.whitespace false
 
 namespace D5.S3.Quantum.Entanglement.EJM.EJMPartialBoundLookup
 open D5.S0.Certificates.FiniteSymmetryBoundReplay
@@ -598,7 +599,7 @@ def triangleLower (p : Partial (Fin 10) (Fin 4)) : ℤ :=
   checkedLookupLower trianglePartialAct triangleRows (41293 : Fin 41294) triangleSelect p
 
 theorem triangle_root_assignment :
-    (triangleRows (41293 : Fin 41294)).assignment = (fun _ => none) := by decide
+    (triangleRows (41293 : Fin 41294)).assignment = (fun _ => none) := by decide +kernel
 
 theorem triangle_lower_bound
     (accepted : ∀ j, checkRow (triangleCentered F1)
@@ -753,7 +754,7 @@ def singletonLower (p : Partial (Fin 9) (Fin 4)) : ℤ :=
   checkedLookupLower singletonPartialAct singletonRows (8688 : Fin 8689) singletonSelect p
 
 theorem singleton_root_assignment :
-    (singletonRows (8688 : Fin 8689)).assignment = (fun _ => none) := by decide
+    (singletonRows (8688 : Fin 8689)).assignment = (fun _ => none) := by decide +kernel
 
 theorem singleton_lower_bound
     (accepted : ∀ j, checkRow (singletonCentered F2)

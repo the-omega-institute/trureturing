@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMTerminalBoundSoundness
    mirror-E: none(waiver:actual-exact-certificate-premise)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMTerminalBoundData]
+   anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.triangle_contractions,D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.singleton_contractions,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_tags,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_tags
    digest: Actual terminal checks and earned contractions imply the required centered-score bounds. -/
 
@@ -124,7 +124,6 @@ theorem triangle_all_terminal_bounds
   · have he : e = triangleTerminalEvent ⟨j.val, hj⟩ := of_decide_eq_true checked
     rw [he]
     exact triangle_terminal_sound contractions ⟨j.val, hj⟩ (terminalChecks _)
-  · cases checked
 
 theorem singleton_all_terminal_bounds
     (contractions : ∀ i, singletonContraction F2 (EJMContractionData.singletonTail i) =
@@ -140,7 +139,6 @@ theorem singleton_all_terminal_bounds
   · have he : e = singletonTerminalEvent ⟨j.val, hj⟩ := of_decide_eq_true checked
     rw [he]
     exact singleton_terminal_sound contractions ⟨j.val, hj⟩ (terminalChecks _)
-  · cases checked
 
 #print axioms triangle_all_terminal_bounds
 #print axioms singleton_all_terminal_bounds

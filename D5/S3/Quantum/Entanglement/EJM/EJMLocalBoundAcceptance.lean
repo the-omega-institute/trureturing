@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMLocalBoundAcceptance
    mirror-E: none(waiver:actual-exact-certificate-premise)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates, D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates, D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates, D5/S3/Quantum/Entanglement/EJM/EJMTerminalBoundSoundness]
+   anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMExactCertificate.result; premises=D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates.triangle_structure,D5/S3/Quantum/Entanglement/EJM/EJMStructureCertificates.singleton_structure,D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.triangle_contractions,D5/S3/Quantum/Entanglement/EJM/EJMContractionCertificates.singleton_contractions,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.triangle_tags,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_terminals,D5/S3/Quantum/Entanglement/EJM/EJMTerminalCertificates.singleton_tags
    digest: All actual local coefficient-bound rows earn complete checkRow acceptance. -/
 

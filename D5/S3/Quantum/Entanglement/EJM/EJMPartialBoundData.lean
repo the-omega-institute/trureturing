@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMPartialBoundData
    mirror-E: none(waiver:exact-inflation-local-proof-data)
-   anchors: [D5/S0/Certificates/FinitePartialBoundDAG]
+   anchors: []
    utility: none
    digest: Explicit untrusted local DAG rows retain every branch and actual partial context for the exact EJM dual score. -/
 

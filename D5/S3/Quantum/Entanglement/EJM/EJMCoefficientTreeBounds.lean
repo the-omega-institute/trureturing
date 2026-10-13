@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMCoefficientTreeBounds
    mirror-E: none(waiver:actual-coefficient-tree-interpreter)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMCertificateData]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMAmplitudeCertificates.actual_F1_abs_bound; instance=D5/S3/Quantum/Entanglement/EJM/EJMCertificateData.triangleCoefficients
    digest: A recursive coefficient-tree check bounds every actual lookup, including missing keys. -/
 
