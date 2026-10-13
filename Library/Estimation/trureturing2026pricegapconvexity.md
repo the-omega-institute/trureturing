@@ -3401,3 +3401,139 @@ generic density or sampling theorem, literature-priority claim, Lean
 declaration or kernel verification. The signed common-head comparison,
 the complete original target and RH remain unproved. Outside DH1,
 including $\Theta=1$, this reduction has not been established.
+
+
+## Existing bounded-variation quadrature transports every original core tie
+
+Reuse N1--N2, PG1 and the actual real-parameter finite envelope from
+[the original full-window source](../ArithSums/trureturing2026extrawindowpairing.md).
+PT9 already applies bounded-variation quadrature to the original price-tent
+readout at the total clock. Its supplier is S. S. Dragomir, *The Ostrowski
+integral inequality for mappings of bounded variation*, Corollary 7,
+equations (5.16)--(5.17), printed p.507,
+[DOI 10.1017/S0004972700036662](https://doi.org/10.1017/S0004972700036662),
+also cited in the [Nicolas comparison note](../ArithSums/nicolas2025comparison.md).
+The published mesh-times-variation bound is reused here for the different
+core-clock readout. No generic quadrature theorem is proved anew.
+
+Keep the original fixed $\Theta,\eta,d,a$, the full prime-label list,
+$t_i=\log p_i$, every outgoing $\delta_i=t_{i+1}-t_i$ for $i<m$, and
+its actual boundary $t_m$. Write the original coarse ceiling as
+$R_X=\exp(c_RX^{\eta/2})$, where $c_R>0$ is fixed, and reuse the paid
+label mesh
+
+$$
+\max_{i<m}\delta_i\le\varepsilon_X^{\rm lab}:=
+\exp(-5\ell_X/12),\qquad
+\ell_X=(d/8)X^{1-\eta}\log X,\qquad L_X=t_m-t_0\sim\ell_X.
+$$
+
+For the same finite integer-core domain $\mathcal C_X$, put
+
+$$
+\mathcal B_X(t)=\log u_{\min}(t)=\mathcal A_X(t)-t,
+\qquad t\in[t_0,t_m].
+$$
+
+This is the existing least-core selector, observed at its core clock
+rather than its total clock. Real $t$ is an interpolation parameter;
+$e^t$ is not declared a new prime label or an actual integer source.
+
+### The actual nested integer chain bounds the number of switches
+
+Let $\mathscr U_X$ be the finite set of all cores active anywhere on
+$[t_0,t_m]$, including cores active only at a multiple tie. N2 orders all
+choices at distinct parameters. PG1 identifies each active core as the
+literal strict inventory at its own clock $t+\log u$. At one parameter,
+ordering two different cores orders those clocks as well. Inventory
+nesting therefore puts the whole set in one divisibility chain:
+
+$$
+V_0\mid V_1\mid\cdots\mid V_{J_X},\qquad
+V_0<V_1<\cdots<V_{J_X}.
+$$
+
+Every successive quotient is an integer at least two. Hence
+
+$$
+\boxed{J_X\log2\le\log V_{J_X}-\log V_0\le R_X.}
+\tag{CQ1}
+$$
+
+Each genuine envelope switch moves to a strictly larger core, so there
+are at most $J_X$ such switches. A switch at $t_0$ is included and one
+at $t_m$ is excluded for the outgoing quadrature. Simultaneous activation
+masses and intermediate tied cores remain in the chain; they are not
+counted as independent prime labels or discarded as exceptional sources.
+The least-core clock $\mathcal B_X$ is constant between these switches.
+
+### Apply the existing quadrature bound with every original tie tag
+
+Let $\mathscr B_X=\{\log V_j:0\le j\le J_X\}$ and let
+$g:\mathscr B_X\to\mathbb R$ be any bounded readout, with
+$F_g=\max_{B\in\mathscr B_X}|g(B)|$. Fix an arbitrary original
+maximizing-tie assignment $\mathcal T=(U_i)_{i=0}^m$, and put
+$B_i=\log U_i$ as before. Start with the step function
+$g(\mathcal B_X(t))$ and, at each original weighted tag $t_i$, assign
+it the value $g(B_i)$. Call the resulting function $h_{\mathcal T}$.
+It differs from the least-core readout only at finitely many tie points,
+so its ordinary integral is unchanged.
+
+There is no variation between switches. At a switch, the two one-sided
+values and the assigned value are all bounded by $F_g$; their two jumps
+have total size at most $4F_g$. The left boundary needs at most one
+such jump, and the unsampled right boundary retains the least-core value.
+Thus $\operatorname{Var}_{[t_0,t_m]}h_{\mathcal T}\le4J_XF_g$.
+Apply Dragomir's existing arbitrary-partition result to the original
+partition $(t_i)$ and its left tags. This gives, uniformly in all ties,
+
+$$
+\boxed{
+\left|\sum_{i<m}\delta_i g(B_i)
+-\int_{t_0}^{t_m}g(\mathcal B_X(t))\,dt\right|
+\le4\varepsilon_X^{\rm lab}J_XF_g
+\le\frac4{\log2}\varepsilon_X^{\rm lab}R_XF_g.}
+\tag{CQ2}
+$$
+
+For a complex readout, applying the same supplier to its real and
+imaginary parts gives the same bound with $4$ replaced by $8$.
+This treatment includes a label lying exactly at a multiple switch.
+The last original weight still uses $t_m$; no prime tag is removed,
+no arbitrary shortened window is introduced, and no favorable tie is
+chosen. The continuous integral records occupation of the same actual
+finite integer-core envelope. Its pushforward in the core clock is
+still atomic, rather than Lebesgue measure in $B$ or an independent
+sampling law.
+
+### Core Mellin readouts have no frequency derivative loss in this transport
+
+For $1/2\le\sigma\le1$ and any $\gamma\in\mathbb R$, take
+$g(B)=B^{\sigma-1/2+i\gamma}$. All active core clocks are eventually
+greater than one: the original all-tie lower endpoint tends to infinity,
+and N2 orders every intervening active core above it. Since $B\le R_X$,
+$|g(B)|=B^{\sigma-1/2}\le\sqrt{R_X}$. Consequently
+
+$$
+\boxed{
+\sup_{\mathcal T}\sup_{\substack{1/2\le\sigma\le1\\\gamma\in\mathbb R}}
+\left|\sum_{i<m}\delta_i B_i^{\sigma-1/2+i\gamma}
+-\int_{t_0}^{t_m}\mathcal B_X(t)^{\sigma-1/2+i\gamma}\,dt\right|
+\le\frac8{\log2}\varepsilon_X^{\rm lab}R_X^{3/2}=o_X(1).}
+\tag{CQ3}
+$$
+
+Indeed the logarithm of the last scale is
+$-5\ell_X/12+(3/2)c_RX^{\eta/2}\to-\infty$, because the unchanged
+$\eta<1/2$ implies $1-\eta>\eta/2$. The bound uses only the readout's
+magnitude, not a derivative in $\gamma$. It is therefore uniform in
+frequency and retains actual real parts and phases.
+
+CQ3 controls only transport error. It does not make the continuous
+Mellin integral small or impose a favorable phase distribution. A uniform
+error for one readout cannot be summed over an infinite zero family
+without a separately paid coefficient sum. CQ1--CQ3 are applications of
+the existing actual-source and quadrature suppliers, without a new
+sampling theorem, literature-priority claim or Lean verification.
+No $\Theta<1$, SI1, SC4 or DH1 condition is needed for this transport;
+the original signed comparison and RH remain unproved.
