@@ -1,3 +1,26 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/EJMNoiseRegion
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMNoiseRegion
+   mirror-E: none(waiver:actual-independent-quantum-source-noise-region)
+   anchors: []
+   utility: none
+   digest: The earned exact EJM margin and coefficient amplitude give a strictly nonlocal box for the original independent quantum-source Born law. -/
+
+/-
+admission_basis: escape-witness
+actual_noise_box: proof_shape: content after inlining the same-delivery
+actual certificate, coefficient-tree soundness and physical-noise perturbation
+bound. The real normalization of the explicit radius supplies no separate
+escape and is consumed by the full source-law nonlocality conclusion.
+Every margin, amplitude and physical-source hypothesis is discharged by
+canonical proofs in this delivery. There is no external producer acceptance
+premise, uniform-output noise substitution or asserted optimal threshold.
+The exact global check and the complete actual local receipts remain pending
+until their real kernel build succeeds; this source is not a delivered claim
+before that acceptance. Four-slot source registration remains unfinished
+under issue #16309.
+-/
+
 import D5.S3.Quantum.Entanglement.EJM.EJMAmplitudeCertificates
 import D5.S3.Quantum.Entanglement.EJM.EJMExactCertificate
 import D5.S3.Quantum.Entanglement.ElegantJointMeasurementNoiseRobustness

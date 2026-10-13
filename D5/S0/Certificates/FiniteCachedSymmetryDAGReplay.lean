@@ -65,6 +65,7 @@ theorem checked_forces_smaller_bad_event
       lower cache ≤ score e)
     (hstep : ∀ fuel index cache p i children,
       nodes (fuel + 1) index = .split i children →
+      0 < fuel →
       valid (fuel + 1) cache p → ∀ a,
         valid fuel (step cache i a) (Function.update p i (some a)))
     (hscore : ∀ s e, score (act s e) = score e)
@@ -91,10 +92,16 @@ theorem checked_forces_smaller_bad_event
     | split i children =>
       simp only [check, hn] at accepted
       have all := of_decide_eq_true accepted
-      exact ih (children (e i)) (step cache i (e i))
-        (Function.update p i (some (e i))) (all (e i))
-        (hstep fuel index cache p i children hn hvalid (e i))
-        (compatible_update p e hp i)
+      cases fuel with
+      | zero =>
+        have impossible := all (e i)
+        simp only [check, Bool.false_eq_true] at impossible
+      | succ fuel =>
+        exact ih (children (e i)) (step cache i (e i))
+          (Function.update p i (some (e i))) (all (e i))
+          (hstep (fuel + 1) index cache p i children hn (Nat.zero_lt_succ _)
+            hvalid (e i))
+          (compatible_update p e hp i)
 
 /-- Actual full replay acceptance and a proved cache invariant preserve the
 complete global lower bound. Symmetry cuts remain protected by rank descent. -/
@@ -109,6 +116,7 @@ theorem checked_global_lower_bound
       lower cache ≤ score e)
     (hstep : ∀ fuel index cache p i children,
       nodes (fuel + 1) index = .split i children →
+      0 < fuel →
       valid (fuel + 1) cache p → ∀ a,
         valid fuel (step cache i a) (Function.update p i (some a)))
     (hscore : ∀ s e, score (act s e) = score e)
