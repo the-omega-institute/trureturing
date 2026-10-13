@@ -228,36 +228,6 @@ $$
 
 **证明。** CCR 对二次对称乘积的交换子给出 $\partial_t\widehat z=JS\widehat z$，再用 $OA=KO$。$NJO^T=0$ 使隐藏与可见线性算子对易。$\operatorname{im}L$ 与 $\ker O$ 辛正交，各自非退化；在两块选 Darboux 基，能量交叉项仍为零。有限模 metaplectic 协变性和 Williamson 对角化给出两个张量因子与振子谱；几何级数证明热迹收敛。对 $X=\sum_jc_j(\widehat y_j-\langle\widehat y_j\rangle)$ 用 $\langle X^\dagger X\rangle\ge0$ 得不确定性式；$KJ_r+J_rK^T=0$ 保证其合同保持。证毕。[W12, ZGPG18, ZLDP23]
 
-**相容坐标的显式关系。** 上述有限维代数构造只需 $S\succ0$、$O$ 满行秩、$OA=KO$ 及物理约定 $J=\left(\begin{smallmatrix}0&I\\-I&0\end{smallmatrix}\right)$。设 $0<r<2n$。由 $P\succ0$、$OL=I$ 及 $A=JS$ 可逆，
-$$
-K(OA^{-1}L)=OA A^{-1}L=I.
-$$
-所以 $K$ 可逆，结合 $KP=J_r$ 得到 $J_r$ 可逆。这里 $J_r$ 的非退化性是结论。第 2.2 节的矩阵恒等式进一步给出
-$$
-L^TS=P^{-1}O,\qquad L^TJ=-J_r^{-1}O,
-\qquad L^TSL=P^{-1},\qquad L^TJL=-J_r^{-1}.
-$$
-令 $U=\operatorname{im}L$、$V=\ker O$。每个 $z$ 唯一分解为 $LOz+(z-LOz)$，两项分别属于 $U,V$；上式同时证明两块的 $S$ 正交性和 $J$ 正交性。更精确地，$z\in U^{\perp_J}$ 等价于 $L^TJz=0$，继而等价于 $Oz=0$，故 $U^{\perp_J}=V$。由直和与全空间辛形式非退化，两块限制形式均非退化。
-
-在 $U,V$ 上应用 [Darboux 基构造](../../../D5/S3/QuadraticForms/SymplecticBasis.lean)，得到维数 $2k,2h$ 及基矩阵 $T_v,T_h$，其中 $r=2k$、$n=k+h$、$k,h>0$。记 $J_k,J_h$ 为同一物理符号约定的标准矩阵，$T=[T_v\ T_h]$，则
-$$
-T^TJT=J_b:=\operatorname{diag}(J_k,J_h),\qquad
-T_v^TST_h=0.
-$$
-$O|_U$ 以 $L$ 为逆，因此 $B:=OT_v$ 可逆，且
-$$
-OT_h=0,\qquad T_v=LB,\qquad OT=[B\ 0].
-$$
-基矩阵 $T$ 可逆，由 $T^TJT=J_b$ 及 $J^2=J_b^2=-I$ 得 $TJ_bT^T=J$。所以同一组坐标满足
-$$
-J_r=BJ_kB^T,\qquad
-S_v:=T_v^TST_v=B^TP^{-1}B,\qquad
-KB=BJ_kS_v.
-$$
-最后一式由 $K=J_rP^{-1}$ 直接代入。$S_v$ 与 $S_h:=T_h^TST_h$ 都正定，故可分别应用 [正定 Williamson 定理](../../../D5/S3/QuadraticForms/PositiveDefiniteWilliamson.lean)。这两个库构造均允许零维空间；这里的严格维数范围只负责排除空的可见块与隐藏块。
-
-总坐标的次序须与块次序一同记录。$T$ 的列按 $(q_v,p_v,q_h,p_h)$ 排列，而全空间标准次序是 $(q_v,q_h,p_v,p_h)$。令置换矩阵 $\Pi$ 把后者重排为前者，则 $\Pi^TJ_b\Pi=J$，实际的全空间辛矩阵为 $T_{\mathrm{paired}}=T\Pi$，满足 $T_{\mathrm{paired}}^TJT_{\mathrm{paired}}=J$。这一步保留了全局位置、动量配对与可见、隐藏分块的区别。
-
 有限模不等于有限 Hilbert 维数；有限维矩阵不能承担非零常数 CCR。均值闭合不认领一般量子态的完整恢复。
 
 ### 2.4 有限误差的预测与辛结构余量
@@ -3396,3 +3366,37 @@ $$
 GNS、Riesz 表示、正平方根、Hilbert 基、Parseval、有限投影展开与可数支集提供上述各个基础步骤。这里从实际泛函构造 $\rho$ 与向量族，由所给有限秩紧性确定其总质量，再由压缩误差极限确定整个有界算子泛函。本条件定理没有从原定理 2.4 的位置或动量上界推出有限秩紧性，也没有识别一阶算子域、建立协方差或完成原定理 2.4。
 
 ## 追加锚（本行以下为增补区）
+
+## 34. 原始闭合假设下的 O-适配正则坐标
+
+本节展开第 2.3 节定理 2.4 所用的有限维代数构造，保留同一物理辛符号与观测映射。
+
+**相容坐标的显式关系。** 上述有限维代数构造只需 $S\succ0$、$O$ 满行秩、$OA=KO$ 及物理约定 $J=\left(\begin{smallmatrix}0&I\\-I&0\end{smallmatrix}\right)$。设 $0<r<2n$。由 $P\succ0$、$OL=I$ 及 $A=JS$ 可逆，
+$$
+K(OA^{-1}L)=OA A^{-1}L=I.
+$$
+所以 $K$ 可逆，结合 $KP=J_r$ 得到 $J_r$ 可逆。这里 $J_r$ 的非退化性是结论。第 2.2 节的矩阵恒等式进一步给出
+$$
+L^TS=P^{-1}O,\qquad L^TJ=-J_r^{-1}O,
+\qquad L^TSL=P^{-1},\qquad L^TJL=-J_r^{-1}.
+$$
+令 $U=\operatorname{im}L$、$V=\ker O$。每个 $z$ 唯一分解为 $LOz+(z-LOz)$，两项分别属于 $U,V$；上式同时证明两块的 $S$ 正交性和 $J$ 正交性。更精确地，$z\in U^{\perp_J}$ 等价于 $L^TJz=0$，继而等价于 $Oz=0$，故 $U^{\perp_J}=V$。由直和与全空间辛形式非退化，两块限制形式均非退化。
+
+在 $U,V$ 上应用 [Darboux 基构造](../../../D5/S3/QuadraticForms/SymplecticBasis.lean)，得到维数 $2k,2h$ 及基矩阵 $T_v,T_h$，其中 $r=2k$、$n=k+h$、$k,h>0$。记 $J_k,J_h$ 为同一物理符号约定的标准矩阵，$T=[T_v\ T_h]$，则
+$$
+T^TJT=J_b:=\operatorname{diag}(J_k,J_h),\qquad
+T_v^TST_h=0.
+$$
+$O|_U$ 以 $L$ 为逆，因此 $B:=OT_v$ 可逆，且
+$$
+OT_h=0,\qquad T_v=LB,\qquad OT=[B\ 0].
+$$
+基矩阵 $T$ 可逆，由 $T^TJT=J_b$ 及 $J^2=J_b^2=-I$ 得 $TJ_bT^T=J$。所以同一组坐标满足
+$$
+J_r=BJ_kB^T,\qquad
+S_v:=T_v^TST_v=B^TP^{-1}B,\qquad
+KB=BJ_kS_v.
+$$
+最后一式由 $K=J_rP^{-1}$ 直接代入。$S_v$ 与 $S_h:=T_h^TST_h$ 都正定，故可分别应用 [正定 Williamson 定理](../../../D5/S3/QuadraticForms/PositiveDefiniteWilliamson.lean)。这两个库构造均允许零维空间；这里的严格维数范围只负责排除空的可见块与隐藏块。
+
+总坐标的次序须与块次序一同记录。$T$ 的列按 $(q_v,p_v,q_h,p_h)$ 排列，而全空间标准次序是 $(q_v,q_h,p_v,p_h)$。令置换矩阵 $\Pi$ 把后者重排为前者，则 $\Pi^TJ_b\Pi=J$，实际的全空间辛矩阵为 $T_{\mathrm{paired}}=T\Pi$，满足 $T_{\mathrm{paired}}^TJT_{\mathrm{paired}}=J$。这一步保留了全局位置、动量配对与可见、隐藏分块的区别。
