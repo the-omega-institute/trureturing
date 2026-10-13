@@ -51,7 +51,10 @@ internal sealed class DelayedRemoteControlDimensionWitnessDocument : IScribeDocu
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For a Euclidean-unit data vector d, choose β = 0, δ = −arg(conj(d₀)·d₁), γ₀ = π/2 and γ₁ = π. The vectors A d and e^{iδ} B d are orthonormal, including when either coordinate of d vanishes. Take b = cos(π/8)·A d + sin(π/8)·e^{iδ} B d. This vector is Euclidean-unit. Every preparation then has probability 1/4. In the order (0,0), (0,1), (1,0), (1,1), (2,0), (2,1), (3,0), (3,1), the correlators are √2/2 times the signs plus, minus, minus, plus, minus, minus, plus, plus. Consequently S = 4√2 > 4 for every pure data qubit."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lin-wang-liu-huang-2026-delayed-rcqc-dimension-witness"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
