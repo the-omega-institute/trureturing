@@ -12,6 +12,8 @@ CLEAN_SSHX_HOME ?= $(if $(SSHX_HOME),$(SSHX_HOME),$(HOME)/.sshx)
 CLEAN_TMP_ROOT ?=
 FORCE ?= 0
 VERBOSE ?= 0
+# .NET processes started from these targets create no diagnostic pipes or sockets.
+export DOTNET_EnableDiagnostics ?= 0
 XI_MODE ?= mps
 XI_FIRST ?= 1
 XI_LAST ?= 1399999

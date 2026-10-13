@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import socket
 import stat
 import subprocess
 import sys
@@ -184,11 +185,12 @@ class HostReclaimTests(unittest.TestCase):
         registrations = cleanup.registered_worktrees
         with patch.object(cleanup, "clean_worktrees", return_value=0), \
              (patch.object(cleanup, "active_paths", wraps=cleanup.active_paths) if active is None
-              else patch.object(cleanup, "active_paths", return_value=set(active))), \
+              else patch.object(cleanup, "active_paths", return_value=set(active))) as activity, \
              patch.object(cleanup, "registered_worktrees", side_effect=lambda source:
-                 [self.main, *trees] if source.resolve() == self.main else registrations(source)), \
+                 [self.main, *trees] if source.resolve() == self.main else registrations(source)) as listed, \
              contextlib.redirect_stdout(output):
             self.assertEqual(expected_exit, cleanup.run_clean(options), output.getvalue())
+        self.sweep_calls = (listed.call_count, activity.call_count)
         return [json.loads(line) for line in output.getvalue().splitlines()]
 
     def test_artifact_root_inside_cache_uses_guarded_owners(self):
@@ -336,13 +338,61 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue(skeleton.exists())
         self.assertTrue(fifo.exists())
 
-    def test_temporary_special_entries_keep_baseline_result(self):
-        fifo = self.root / "temporary-fifo"
+    def test_old_temporary_fifo_and_socket_are_removed(self):
+        artifacts = self.root / "artifacts"
+        artifacts.mkdir()
+        fifo = artifacts / "clr-debug-pipe-1-1-in"
         os.mkfifo(fifo)
-        self.age(self.root)
-        result = self.clean(fifo)
-        self.assertEqual(("kept", "special_file"), (result["action"], result["reason"]))
-        self.assertTrue(fifo.exists())
+        endpoint = artifacts / "dotnet-diagnostic-1-1-socket"
+        previous = os.getcwd()
+        os.chdir(artifacts)
+        try:
+            with socket.socket(socket.AF_UNIX) as listener:
+                listener.bind(endpoint.name)
+        finally:
+            os.chdir(previous)
+        self.age(artifacts)
+        recent = artifacts / "recent-fifo"
+        os.mkfifo(recent)
+        rows = self.run_sweep()
+        reasons = {row.get("path"): (row.get("action"), row.get("reason")) for row in rows}
+        self.assertFalse(os.path.lexists(fifo) or os.path.lexists(endpoint),
+                         "[FAIL] old_temporary_special_entries_removed: " + str(reasons))
+        self.assertEqual(("kept", "recent"), reasons.get(str(recent)))
+        self.assertTrue(os.path.lexists(recent))
+
+    def test_temporary_sweep_reads_registrations_and_activity_once(self):
+        calls = []
+        for count in (1, 5):
+            artifacts = self.root / ("artifacts-" + str(count))
+            artifacts.mkdir()
+            for index in range(count):
+                (artifacts / ("old-" + str(index))).write_text("artifact")
+            self.age(artifacts)
+            self.run_sweep(artifact_root=artifacts)
+            self.assertEqual([], list(artifacts.iterdir()))
+            calls.append(self.sweep_calls)
+        self.assertEqual(calls[0], calls[1], "[FAIL] temporary_checks_scale_with_candidates")
+
+    def test_registered_worktree_under_temporary_root_stays_protected(self):
+        target = self.root / "artifacts/registered"
+        self.git(self.main, "worktree", "add", "-b", "registered", target)
+        (target / "source").write_text("uncommitted work")
+        self.age(target)
+        rows = self.run_sweep(trees=(target,))
+        self.assertEqual("uncommitted work", (target / "source").read_text())
+        self.assertIn((str(target), "kept", "protected"),
+                      {(row.get("path"), row.get("action"), row.get("reason")) for row in rows})
+
+    def test_temporary_artifact_active_at_sweep_start_is_retained(self):
+        held = self.root / "artifacts/held"
+        held.mkdir(parents=True)
+        (held / "log").write_text("open")
+        self.age(held.parent)
+        rows = self.run_sweep(active={held / "log"})
+        self.assertTrue((held / "log").exists(), rows)
+        self.assertIn((str(held), "kept", "protected"),
+                      {(row.get("path"), row.get("action"), row.get("reason")) for row in rows})
 
     def test_lsof_observation_preserves_warning_handling(self):
         endpoint = self.root / "observed"
