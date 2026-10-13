@@ -18,7 +18,7 @@ An n-qubit computational basis index assigns a bit in Fin 2 to every coordinate 
 
 **Definition 1.2 (Complex operators).**
 
-$$\forall n \in \mathbb{N},\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right) = \operatorname{Matrix}\left(\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Bits}\left(n\right), \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Bits}\left(n\right), \mathbb{C}\right)$$
+$$\forall n \in \mathbb{N},\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right) = \operatorname{D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.Operator}\left(n\right)$$
 
 *Formalization.* `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.Op` (`✓ std3`).
 
@@ -26,11 +26,11 @@ $$\forall n \in \mathbb{N},\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabil
 
 *Commentary.*
 
-Operators are complex square matrices indexed by the computational basis.
+Op refers to D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.Operator: complex square matrices indexed by the computational basis.
 
 **Definition 1.3 (Density matrices).**
 
-$$\forall n \in \mathbb{N},\; \forall rho \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right),\; (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.IsState}\left(rho\right)) \Leftrightarrow ((\operatorname{Matrix.PosSemidef}\left(rho\right)) \land (\operatorname{Matrix.trace}\left(rho\right) = (1: \mathbb{C})))$$
+$$\forall n \in \mathbb{N},\; \forall rho \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right),\; (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.IsState}\left(rho\right)) \Leftrightarrow (\operatorname{D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity}\left(rho\right))$$
 
 *Formalization.* `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.IsState` (`✓ std3`).
 
@@ -38,7 +38,7 @@ $$\forall n \in \mathbb{N},\; \forall rho \in \operatorname{D5.S3.Quantum.Magic.
 
 *Commentary.*
 
-A quantum state is positive semidefinite and has complex trace one, as in §2.
+IsState refers to D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity: positive semidefiniteness and complex trace one, as in §2.
 
 **Definition 1.4 (Real part of the trace).**
 
@@ -292,5 +292,6 @@ For 1/3 < s and 7s² < 1, the two positive definite three-qubit operators each h
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.tensor`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.tr`
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.vacuum`
+- Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../Entanglement/GHZMeasureBiseparableBound.md)
 - Dependency: [D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation](../Entanglement/NandiMutualPredictabilityLOCCRefutation.md)
 - Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](../Measurement/StabilizerPovmMaximalEntanglementRefutation.md)

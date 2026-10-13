@@ -63,13 +63,13 @@ The canonical sources are two modules.
 - The escape registrations in `Reg/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (three, one per public theorem of the first module) are `declared_validated`.
 
 Frozen states:
-- `Golden/Frozen/state/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean.json`, statement `sha256:03e8fb61a553bbba6d9314bbcefc8e7bdc14a87110935b26bf7a9db3817ee9a5`;
-- `Golden/Frozen/state/D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean.json`, statement `sha256:f8bf48be8b857b73f5a1ef36adecd8756acb8c2cc09c4bde9dcccf4516e1f9d6`.
+- `Golden/Frozen/state/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean.json`, statement `sha256:a47b8fde1663efc10a3a509e5fcebe477cfa2e9af8d8e6a1ebe656aad89c9a87`;
+- `Golden/Frozen/state/D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean.json`, statement `sha256:4f9bfe6e45ec46f840c55f62eef18068be848c824e193ea8dbb4c5f2a9f34bd3`.
 
 Declaration statements:
 - `result`: `sha256:85b461556b71c65f84900a8d5d3fd3031093ad22faabc6e07085d93b35d48327`;
 - `claim`: `sha256:182025dea3036be449a81b97d6bd69879f6393e4a7495785e22cc52ae775e5fd`;
-- `stabilizer_polar_tensor_escape`: `sha256:8d6b6714611380a9d0bffa0c12f03f797b115ab316c9b26607fab4d6265ce600`.
+- `stabilizer_polar_tensor_escape`: `sha256:e317cec588dace5e27d36f347e4cb1221b4aa8c31f7052fd36fee57f57899fff`.
 
 ## Triage
 
@@ -80,7 +80,7 @@ Tier 1 question of a 2024 paper, preregistered in issue #15943 before any Lean.
 | --- | --- | --- | --- |
 | stabilizer_polar_tensor_escape | content | the stabilizer expectation bound and the anticommuting-support exclusion | escape-witness |
 | local_identity, local_product | bind-only (consumed by the second module) | none | consumed helpers |
-| result | bind-only | none | open-problem-resolution |
+| result | content | the stabilizer polar bound of the first module (pure-stabilizer expectations in {0, ±1}, the anticommuting-support exclusion), first frozen in the same delivery and consumed through `stabilizer_polar_tensor_escape` | open-problem-resolution |
 
 Every other declaration is a definition used by a public statement or a private helper on the proof path of a public theorem (CLAUDE.md §3.2 「有消费的辅助声明」). The second module's utility is `certified-instance` with basis `refutes` of `claim`; the first module's is `none`. There is no digestion atom.
 
