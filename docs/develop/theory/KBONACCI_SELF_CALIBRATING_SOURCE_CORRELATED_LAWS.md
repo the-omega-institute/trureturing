@@ -4237,3 +4237,462 @@ assertion. These conditional results do not settle Question 62.1 on unrestricted
 measurable inputs and do not provide an effective sampler or modulus algorithm.
 
 ## 追加锚（本行以下为增补区）
+
+## 70. Intrinsic uniform calibration and the exact cap versus query-tail frontier
+
+**Definition 70.1 (Actual request cost and intrinsic selected-law modulus).**
+Retain exactly the countable labeled source $X$, static integer $N(x)$,
+prime enumeration $(p_i)$, zero advice and original-tape handoff semantics of
+Definition 45.1 and Theorem 69.2. Only signatures of actual sources are
+present. Write $C_m(x)$ for the occupied depth-$m$ prime-prefix cylinder,
+including $C_0(x)=X$. A lawful preparation $A$ may choose arbitrary prime
+addresses adaptively from its one shared seed and the actual preceding answers.
+Let $K_{A,x}$ be the number of prime requests before finite handoff at $x$,
+counting repetitions, and put $K_{A,x}=\infty$ on every nonhandoff branch,
+even if that branch makes only finitely many requests. Define
+
+$$
+T_A(k)=\sup_{x\in X}\mathsf P\{K_{A,x}>k\},\qquad k\in\mathbb N_0.
+\tag{70.1}
+$$
+
+Uniform tightness of actual request counts means $T_A(k)\to0$. It supplies
+no deterministic ceiling on preparation transitions or requested prime indices.
+The seed law has no dependence on the actual source.
+
+For any selected family of probabilities $(\lambda_x)_{x\in X}$ on the
+unchanged nonempty measurable tape carrier $(\Theta,\mathcal F)$, enumerate
+the actual labels without repetitions and put
+
+$$
+\begin{aligned}
+\tau_\lambda&=\sum_{i\ge1}2^{-i}\lambda_{x_i},
+& f_x^\lambda&=\frac{d\lambda_x}{d\tau_\lambda},\\
+\ell_C^\lambda&=\left(\inf_{x\in C}f_x^\lambda\right)\tau_\lambda,
+& a_C^\lambda&=\ell_C^\lambda(\Theta),\\
+\Omega_\lambda(m)&=\sup_{x\in X}\left(1-a_{C_m(x)}^\lambda\right).
+\end{aligned}
+\tag{70.2}
+$$
+
+Here $C$ is a nonempty occupied prefix cylinder; choose nonnegative measurable
+versions of all the densities. The finite-measure
+Radon--Nikodym and countable-infimum argument of Theorem 46.4 makes
+$\ell_C^\lambda$ the intrinsic greatest common submeasure of
+$\{\lambda_x:x\in C\}$. Thus its measure and mass do not depend on the
+enumeration or density versions. This is the selected family's own tape
+mixture, not a law on sources and not the original-target mixture $\sigma$.
+In particular no assumption $\lambda_x\ll\sigma$ is imposed. Uniform order
+calibration means $\Omega_\lambda(m)\to0$; when the selected laws satisfy
+Definition 69.1 it is exactly its representative-independent modulus.
+
+**Theorem 70.2 (Lawful adaptive uniform tightness and intrinsic order calibration).**
+Use the measurable finite-record and output-event semantics of Definition
+45.1, including a deterministic common rule after fixing the shared seed.
+For the constructive direction retain the fixed shared tables and countable
+product seed spaces permitted by Theorem 46.4.
+For a lawful exact acquisition $A$ of $(\lambda_x)$, let
+$I_{A,x,j}(s)$ be the prime index of its $j$th request, with value zero if
+that request is never made. The value is defined by actual finite execution,
+also on nonhandoff branches. For $k,m\in\mathbb N_0$ put
+
+$$
+J_{A,k,m}=\bigcup_{x\in X}\ \bigcup_{1\le j\le k}
+                  \{s:I_{A,x,j}(s)>m\}.
+\tag{70.3}
+$$
+
+This is one common measurable seed event, and for every fixed finite $k$
+
+$$
+J_{A,k,m}\downarrow\varnothing,\qquad
+\mathsf P(J_{A,k,m})\longrightarrow0\quad(m\to\infty).
+\tag{70.4}
+$$
+
+For every actual $x$ the finite measure obtained from its output on
+$\{K_{A,x}\le k\}\setminus J_{A,k,m}$ is dominated by all
+$\lambda_y$, $y\in C_m(x)$. Consequently
+
+$$
+\boxed{\Omega_\lambda(m)\le T_A(k)+\mathsf P(J_{A,k,m})}
+\qquad(k,m\in\mathbb N_0).
+\tag{70.5}
+$$
+
+For an arbitrary selected probability family on the original carrier, the
+following two properties are equivalent: it has a lawful exact acquisition
+with uniformly tight actual request counts; it is uniformly order-calibrated.
+The constructive direction uses the positive-increment acquisition of
+Theorem 46.4 and the tail calculation of Theorem 69.2, applied to the
+selected family's own mixture (70.2). In that particular
+acquisition the actual request count $L_x$ is a sequential prefix depth and
+
+$$
+\mathsf P\{L_x>m\}=1-a_{C_m(x)}^\lambda,\qquad
+\sup_x\mathsf P\{L_x>m\}=\Omega_\lambda(m).
+\tag{70.6}
+$$
+
+Uniform order calibration implies TV total boundedness of the selected range.
+Total boundedness alone does not imply it, even for a lawfully acquired
+finite range on the exact sources and tapes of Theorem 67.5. Summability of
+$\Omega_\lambda$ supplies the uniform mean bound (69.5) for (70.6), but
+is not necessary for a finite uniform mean of a different adaptive
+acquisition. Actual request count and prefix depth therefore remain distinct.
+
+**Proof.** For each $x,j,i\ge1$, the event that the $j$th request has index
+$i$ is a countable union over its finite transition times and finite
+prime-answer words of measurable finite-record events. This proves the
+measurability of $I_{A,x,j}$, and countability of the actual $X$ proves that
+of (70.3). Likewise $\{K_{A,x}\le k\}$ is the countable union of the
+measurable finite-handoff events with at most $k$ requests.
+
+Fix a seed $s$. Before the first request all actual sources have identical
+processing, since the seed and zero advice are the only inputs. After a
+request there are at most two answer branches. Between requests the common
+rule has one determined continuation for each preceding answer word;
+termination or infinite processing without another request adds no query
+node. The possible $j$th requests across actual sources thus occupy at most
+$2^{j-1}$ nodes, and their first $k$ requests use at most $2^k-1$ addresses.
+Repetitions can only decrease the number of distinct addresses. This finite
+set has a finite largest prime index, or is empty. Hence this seed belongs
+to no $J_{A,k,m}$ once $m$ exceeds that index. This proves the setwise
+decrease in (70.4), and continuity from above of the seed probability proves
+its probability limit. Only branches followed by actual sources were used;
+no infinite signature was made into an additional source.
+
+The elementary fixed-seed binary-tree description is the decision-tree
+background in Buhrman and de Wolf, [*Complexity Measures and Decision Tree
+Complexity: A Survey*, Sections 3.1--3.2, Theoretical Computer Science
+288(1), 21--43](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf).
+The argument above uses finite branching through a fixed number of requests,
+not their finite-Boolean-input complexity theorems. Random addresses and
+unbounded processing between requests are retained.
+
+On $E=\{K_{A,x}\le k\}\setminus J_{A,k,m}$ the actual finite execution at
+$x$ uses only $P_m$. Every $y\in C_m(x)$ therefore follows exactly that
+execution, with the same seed, and hands over exactly the same tape. This
+is the whole-event induction of Lemma 45.3, with a request-count cutoff in
+place of its joint transition/menu cutoff. For each $B\in\mathcal F$,
+
+$$
+\rho_{x,k,m}(B)=\mathsf P(E\cap\phi_x^{-1}(B))\le\lambda_y(B)
+\quad(y\in C_m(x)),
+\qquad
+\rho_{x,k,m}(\Theta)\ge1-T_A(k)-\mathsf P(J_{A,k,m}).
+\tag{70.7}
+$$
+
+The measurable output-event argument needs no measurable equality diagonal
+on an arbitrary tape carrier. Greatestness of $\ell_{C_m(x)}^\lambda$ gives
+(70.5). If $T_A(k)\to0$, choose $k$ first and then use (70.4) to obtain
+$\Omega_\lambda(m)\to0$.
+
+Conversely the last limit gives $a_{C_m(x)}^\lambda\uparrow1$ at every
+actual $x$. Apply Theorem 46.4 to the family itself. Its positive node
+increments $\ell_C^\lambda-\ell_{C^-}^\lambda$, a zero parent at the
+depth-zero root, their normalized original-tape coordinates and an
+independent uniform coordinate form one shared countable product seed.
+The handoff thresholds and measurability are precisely those proved there
+and in Theorem 69.2; their telescoping identity gives (70.6). Equal complete
+signatures consequently have equal selected laws, whether or not that
+equality was assumed initially. Every actual source has finite handoff
+almost surely, with its original consumer on the same static source.
+
+As an intermediate consequence, there are at most $2^m$ occupied
+depth-$m$ cylinders. Select one actual representative $x_C$ in each.
+For $y\in C$, both $\lambda_y$ and $\lambda_{x_C}$ dominate $\ell_C^\lambda$.
+Subtracting this measure leaves two positive measures of the same mass
+$1-a_C^\lambda$, so the event definition of TV gives
+
+$$
+\operatorname{TV}(\lambda_y,\lambda_{x_C})\le1-a_C^\lambda
+\le\Omega_\lambda(m).
+\tag{70.8}
+$$
+
+Thus these at most $2^m$ centers give a finite-prefix TV cover. This is the
+common-submeasure/TV step of Lemma 45.3 and Theorem 46.4, not an optimal
+coupling assertion on an arbitrary measurable carrier. A vanishing modulus
+makes (70.8) a cover at every positive tolerance, proving total boundedness.
+
+For the converse boundary take the unchanged tapes of Theorem 67.5 and
+two distinct points $\theta_0,\theta_1\in B_1$. Set
+$\lambda_x=\delta_{\theta_{n(x)\bmod2}}$, using its $n(x)$ from (67.15).
+The deterministic preparation queries primes increasingly until the first
+negative answer and then emits the indicated tape. Every actual integer
+has finite prime support, so the handoff uses exactly $n(x)<\infty$
+requests. The range consists of two probabilities and is totally bounded.
+For each $m$, the cylinder whose first $m$ answers are positive contains
+actual sources in both $D_{m+1}$ and $D_{m+2}$ by
+[Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows). Its two
+distinct point laws have zero common submeasure. Therefore
+$\Omega_\lambda(m)=1$ for every $m$, and (70.5) excludes a uniformly
+tight exact acquisition of this same finite family. This example preserves
+the original tapes and consumer, and prescribes no new target problem.
+
+For the mean boundary, retain these same two original tapes and put
+$w_i=1/(i(i+1))$, $i\ge1$. One shared integer seed $I$ with probabilities
+$w_i$ selects an actual prime $p_I$. Query it once and hand over
+$\theta_{q_I(x)}$, where $q_i(x)=\mathbf1_{p_i\mid N(x)}$. This is the
+single random-prime mechanism already used in (48.8)--(48.10), here with
+the declared weights and two outputs. Its laws are
+
+$$
+\lambda_x=(1-u_x)\delta_{\theta_0}+u_x\delta_{\theta_1},
+\qquad u_x=\sum_{i\ge1}w_iq_i(x),
+\qquad K_{A,x}=1.
+\tag{70.9}
+$$
+
+In a depth-$m$ cylinder set $c=\sum_{i\le m}w_iq_i(x)$ and
+$r_m=\sum_{i>m}w_i=1/(m+1)$. The infimum of $u_y$ in that cylinder is
+$c$, and its supremum is $c+r_m$. Indeed Theorem 35.2 realizes the fixed
+prefix together with every finite subsequent all-negative or all-positive
+answer word, and the remaining weight tends to zero. These are limits of
+actual finite-pattern realizations, not assumed actual infinite words.
+The greatest common submeasure therefore has masses $c$ on $\theta_1$
+and $1-c-r_m$ on $\theta_0$, giving
+
+$$
+\Omega_\lambda(m)=r_m=\frac1{m+1}\longrightarrow0,
+\qquad \sum_{m\ge0}\Omega_\lambda(m)=\infty.
+\tag{70.10}
+$$
+
+Every source nevertheless has expected actual request count one in (70.9).
+For the specified prefix acquisition (70.6), every source instead has
+infinite expected depth by Tonelli's tail-sum identity. Thus summability is
+an additional sufficient mean condition for that prefix acquisition,
+not a necessary condition for uniform finite mean under adaptive queries.
+No source law, advice, reset or selection of a source enters either example.
+The intrinsic/adaptive correspondence combines the cited finite-record and
+lower-envelope ingredients in the prescribed source model; it asserts no
+effective evaluation of cylinder tables or sampling of arbitrary tape laws
+from a single real random variable. $\square$
+
+**Theorem 70.3 (Exact original-input cap versus actual query-tail frontier).**
+Fix any $h\in(0,1)$ and allowed profile $b$, and take exactly the source,
+carrier, consumer and target laws (67.15)--(67.18) of Theorem 67.5. Let
+$\mathcal A_\eta$ consist of all lawful preparations of Definition 45.1
+whose prepared laws $\lambda_x$ satisfy
+$\sup_x\operatorname{TV}(\lambda_x,\mu_x)\le\eta$.
+No target-row, support, density, likelihood-algebra or proportional-containment
+condition is imposed on these prepared laws. Then $\mathcal A_\eta$ is empty
+for $0\le\eta<h$, and for every $\eta\in[h,1]$ and finite $k\ge0$
+
+$$
+\boxed{\min_{A\in\mathcal A_\eta}\ \sup_{x\in X}
+                  \mathsf P\{K_{A,x}>k\}=1-\eta.}
+\tag{70.11}
+$$
+
+For each $\eta$ one preparation attains (70.11) simultaneously at every
+finite horizon. More quantitatively, for every $A\in\mathcal A_\eta$,
+$k\ge0$, integer $r\ge2$ and $\delta>0$, there are $r$ actual sources
+$x_j\in D_{n_j}$, with distinct $n_j>m$ for some finite $m$, all having
+positive answers on the first $m$ primes, such that
+
+$$
+\boxed{\max_{1\le j\le r}\mathsf P\{K_{A,x_j}>k\}
+       \ge1-\frac{r\eta}{r-1}-\delta.}
+\tag{70.12}
+$$
+
+One may use any $m$ with $\mathsf P(J_{A,k,m})<\delta$, then any distinct
+$n_j>m$ and actual representatives of their occupied $D_{n_j}$.
+For every lawful cap-$\eta$ family its intrinsic modulus also satisfies
+
+$$
+\Omega_\lambda(m)\ge1-\eta\qquad(m\in\mathbb N_0).
+\tag{70.13}
+$$
+
+When $\eta<1$, every $A\in\mathcal A_\eta$ has
+$\sup_x\mathbb E[K_{A,x}]=\infty$. An attainer $A_\eta$ can nevertheless
+have finite expectations separately at every actual source, with
+
+$$
+(1-\eta)n(x)\le\mathbb E[K_{A_\eta,x}]
+\le(1-\eta)\left(n(x)+\frac32\,3^{-n(x)}\right)<\infty.
+\tag{70.14}
+$$
+
+At $\eta=1$ this attainer uses zero requests. The minimization and the
+universal lower bounds count actual adaptive requests, including repetitions;
+they do not require competitors to query a sequential prefix.
+For this attainer equality holds in (70.13) at every depth.
+
+**Proof.** First extend the whole-event argument in the last part of
+Theorem 67.5 to an arbitrary cap $\eta$. Fix $x\in D_n$. For every
+$\ell\ge n$, Theorem 35.2 supplies an actual
+$y_\ell\in C_\ell(x)$ with $j_\ell=\Omega(y_\ell)>\ell$.
+Lemma 45.3 gives $\lambda_{y_\ell}\to\lambda_x$ in TV.
+Since the original target at $y_\ell$ assigns mass one to
+$B_n\sqcup P_{j_\ell}$, the cap gives
+
+$$
+\lambda_{y_\ell}(B_n)+\lambda_{y_\ell}(P_{j_\ell})\ge1-\eta.
+\tag{70.15}
+$$
+
+For the fixed probability $\lambda_x$, disjointness of the $P_j$ implies
+$\lambda_x(P_j)\to0$ as $j\to\infty$. The TV comparison therefore makes
+the second term of (70.15) tend to zero and gives
+
+$$
+\lambda_x(B_{n(x)})\ge1-\eta\qquad(x\in X).
+\tag{70.16}
+$$
+
+This argument compares measurable events and finite-record submeasures only;
+it includes singular prepared laws. Testing the separate event $P_{j_\ell}$
+also gives $\lambda_{y_\ell}(P_{j_\ell})\ge h-\eta$. Its limit zero forces
+$\eta\ge h$, in agreement with the original $R_\mu=h$ of Theorem 67.5.
+Thus smaller caps are infeasible without any change of input or consumer.
+
+For the finite-source bound fix $A,k,r,\delta$ and choose $m$ by (70.4).
+Let $C$ be the actual cylinder with its first $m$ answers positive.
+Choose distinct $n_1,\ldots,n_r>m$ and actual $x_j\in D_{n_j}$ by
+Theorem 35.2; each belongs to $C$. On $J_{A,k,m}^c$, induction over
+the common execution shows that all these sources either hand off within
+$k$ requests with the same tape or all fail to hand off within $k$ requests.
+In the former case the entire finite record uses only $P_m$.
+Let $E$ be this common handoff event intersected with $J_{A,k,m}^c$, and
+let $\rho$ be its output submeasure of mass $p=\mathsf P(E)$.
+It is dominated by every $\lambda_{x_j}$, as in (70.7). By (70.16),
+
+$$
+\rho(\Theta\setminus B_{n_j})\le\eta\quad(1\le j\le r),
+\qquad
+(r-1)p\le\sum_{j=1}^r\rho(\Theta\setminus B_{n_j})\le r\eta.
+\tag{70.17}
+$$
+
+The middle inequality holds because the disjoint $B_{n_j}$ contain any tape
+at most once. For each $j$, handoff within $k$ on $J_{A,k,m}^c$ has mass
+$p$, so
+
+$$
+\mathsf P\{K_{A,x_j}>k\}\ge1-p-\mathsf P(J_{A,k,m})
+\ge1-\frac{r\eta}{r-1}-\delta.
+$$
+
+This proves (70.12), using only finitely many actual comparison sources.
+Let $r\to\infty$ and $\delta\downarrow0$ in the supremal bound to obtain
+$T_A(k)\ge1-\eta$ for each finite $k$. No source was chosen after
+observing an individual seed.
+
+The same finite sum applies to the intrinsic meet $\ell_C^\lambda$ on
+the first-$m$-positive cylinder, using the chosen actual sources for every
+$r\ge2$. It gives $a_C^\lambda\le r\eta/(r-1)$ for all $r$, hence
+$a_C^\lambda\le\eta$. This proves (70.13). In particular no cap below one
+permits uniform order calibration. It is also consistent with (70.5):
+fixing $k$ and letting $m\to\infty$ there recovers the same cost lower
+bound. The finite-event proof above additionally gives the actual witnesses
+and quantitative estimate (70.12).
+
+For attainment, use the original nonproposal block laws $\nu_x$ from
+(67.17)--(67.18), without reading the infinite parameter $t(x)$ as input.
+Let $a_C^\nu$ be their intrinsic common masses. If $m<n(x)$, the
+cylinder $C_m(x)$ has only positive prefix answers and contains actual
+sources in two distinct $D_n$. Their $\nu$ laws lie on disjoint original
+blocks, so $a_{C_m(x)}^\nu=0$. If $m\ge n(x)$, that block is fixed and
+(67.19)--(67.20) give
+
+$$
+a_{C_m(x)}^\nu\ge e^{-3^{-m}},\qquad
+1-a_{C_m(x)}^\nu\le1-e^{-3^{-m}}\le3^{-m}.
+\tag{70.18}
+$$
+
+Thus these masses exhaust one at each actual source. The positive-increment
+preparation of Theorem 46.4, with the tail identity recalled in (70.6),
+acquires $\nu_x$ exactly. Write $L_x$ for its number of actual prefix
+requests. It has $\mathsf P\{L_x>m\}=1$ for $m<n(x)$ and the bound
+(70.18) thereafter. For each finite $k$, an actual source in $D_{k+1}$
+has $\mathsf P\{L_x>k\}=1$, and hence
+
+$$
+\sup_x\mathsf P\{L_x>k\}=1,\qquad
+n(x)\le\mathbb E[L_x]\le
+n(x)+\sum_{m\ge n(x)}3^{-m}
+=n(x)+\frac32\,3^{-n(x)}.
+\tag{70.19}
+$$
+
+The expectation bounds use Tonelli's tail-sum identity, not an interchange
+of supremum and infinite sum.
+
+Choose one fixed original tape $\theta_0\in B_1$ and extend the same
+product seed by one independent uniform coordinate $V\in(0,1)$.
+For $V<\eta$ hand over $\theta_0$ immediately; otherwise use the preceding
+exact acquisition of $\nu_x$. This is one seed and one common rule at
+every actual source. Its law is
+
+$$
+\lambda_x^\eta=(1-\eta)\nu_x+\eta\delta_{\theta_0}.
+\tag{70.20}
+$$
+
+For $\eta\ge h$, subtract the common measure $(1-\eta)\nu_x$ from
+both (70.20) and the original target
+$\mu_x=(1-h)\nu_x+h\pi_{\Omega(x)}$. The remaining positive measures
+are $\eta\delta_{\theta_0}$ and
+$(\eta-h)\nu_x+h\pi_{\Omega(x)}$, each of mass $\eta$.
+Their discrepancy on every event is at most $\eta$. On the measurable
+singleton $\{\theta_0\}$ it equals $\eta$, since all original targets
+and $\nu_x$ are nonatomic. Consequently the cap is exactly $\eta$.
+This also exhibits a lawful singular competitor: for $\eta>0$ its atom
+has positive mass, while the original-target mixture gives that singleton
+mass zero. Original-mixture domination was neither assumed nor manufactured.
+
+The atom $\delta_{\theta_0}$ is singular to every $\nu_x$, so its cylinder
+common measures are
+$\ell_C^{\lambda^\eta}=\eta\delta_{\theta_0}+(1-\eta)\ell_C^\nu$.
+Indeed the common atom has that mass in every law, and the remaining
+nonatomic part must be dominated by every $(1-\eta)\nu_x$.
+By independence and (70.19), the request tail and intrinsic modulus are
+
+$$
+\mathsf P\{K_{A_\eta,x}>k\}=(1-\eta)\mathsf P\{L_x>k\},
+\qquad
+T_{A_\eta}(k)=\Omega_{\lambda^\eta}(k)=1-\eta\quad(k\ge0).
+\tag{70.21}
+$$
+
+This proves the attained minimum at all horizons simultaneously, and
+(70.19) proves (70.14). At $\eta=1$ only the zero-query branch has mass.
+Every positive-mass tape coordinate in the other branch is an original-tape
+increment law from Theorem 46.4. Its finite records and output-event
+preimages are measurable; adjoining the independent interval event in $V$
+preserves this property. Handoff is finite almost surely separately at
+every actual source. The unchanged consumer receives only that original
+tape and runs on the unchanged static source. No $n(x)$, $t(x)$,
+$\Omega(x)$, source label, magnitude promise, source sampling, restart or
+failure conditioning is supplied to the preparation.
+
+Finally, for every $A\in\mathcal A_\eta$ and finite $k$, the universal
+lower bound and the elementary nonnegative-cost inequality give
+
+$$
+\sup_x\mathbb E[K_{A,x}]\ge(k+1)\sup_x\mathsf P\{K_{A,x}>k\}
+\ge(k+1)(1-\eta).
+\tag{70.22}
+$$
+
+When $\eta<1$ this diverges as $k\to\infty$, proving the asserted
+infinite supremal mean even though (70.14) is finite at every fixed source.
+The cap/count synthesis (70.11)--(70.22) and the adaptive/intrinsic
+correspondence use the exact previously specified input and the mature
+common-measure, finite-branching and tail-sum steps cited above. They are
+repository-relative deductions, not a literature-priority claim. The
+source-specific likelihood specification and sharp cap are reused from
+Theorem 67.5, not introduced as another example. Neither these cost
+identities nor their measurable common-seed realizations settle Question
+62.1 for unrestricted original measurable inputs, or assert an effective
+sampler, a computable modulus or a bound on all preparation transitions.
+$\square$
+
+## 追加锚（本行以下为增补区）

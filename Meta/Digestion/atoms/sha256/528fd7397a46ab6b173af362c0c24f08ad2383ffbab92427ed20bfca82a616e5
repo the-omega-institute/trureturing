@@ -1,0 +1,29 @@
+**Proof.**
+For fixed $\lambda>0$, $N_n\to\infty$, so
+$1/(N_n\lambda)\to0$. Theorem 93.2 consequently gives
+$\lim_nR_\lambda(T_n)=b_\lambda$. Directly from (93.1),
+$\lim_{\lambda\downarrow0}b_\lambda=1$.
+In the reverse order the fixed-tree spectral calculation (92.7) gives
+$\lim_{\lambda\downarrow0}R_\lambda(T_n)=C_n$ for each $n$,
+including the two singleton sources. Theorem 92.3 then gives the
+second limit in (94.1).
+
+For fixed positive $\lambda$, (92.8) shows that the absolute
+difference in (94.2) is $C_n-R_\lambda(T_n)\ge0$.
+Its limit as $n\to\infty$ is $\sqrt5/2-b_\lambda$.
+Every supremum is at least this limit, proving (94.2).
+The supremum is finite, since $R_\lambda(T_n)\le C_n\le2$.
+Also $b_\lambda<1$ for positive $\lambda$, so the limiting gap
+is strictly positive. No uniform centered passage follows from (92.8),
+and the fixed-positive estimates (91.6)–(91.7) are preserved.
+Their parameter domain excludes $\lambda=0$.
+
+The centering is essential to the statement: at each fixed $n$,
+$G_\lambda(T_n)$ itself diverges like $1/(N_n\lambda)$.
+The finite part solves a centered Poisson equation
+$L_tu=\delta_r-N_t^{-1}\mathbf1$, as in the proof of Theorem 92.3.
+It is not a solution of $L_tu=\delta_r$, whose right side has
+nonzero total mass whereas every $L_tu$ has total mass zero.
+Nor is it an isolated unscreened Green function on an unspecified
+infinite source. $\square$
+

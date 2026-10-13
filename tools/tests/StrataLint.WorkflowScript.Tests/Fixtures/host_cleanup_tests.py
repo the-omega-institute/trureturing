@@ -98,11 +98,9 @@ class HostCleanupTests(unittest.TestCase):
                     self.assertEqual(0, cleanup.run_clean(options))
                 rows = [json.loads(line) for line in output.getvalue().splitlines()]
                 actions = {row["path"]: row["action"] for row in rows if "path" in row}
-                for path in (ordinary.parent, regular):
+                for path in (ordinary.parent, regular, repository.parent):
                     self.assertEqual("removed" if delete else "would_remove", actions[str(path)])
                     self.assertEqual(not delete, path.exists())
-                self.assertEqual("kept", actions[str(repository.parent)])
-                self.assertTrue(repository.exists())
 
     def test_active_path_keeps_entire_candidate(self):
         artifact = self.old_file(self.root / "flight" / "worker.log")
@@ -119,10 +117,10 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual("symlink", result["reason"])
         self.assertTrue(target.exists())
 
-    def test_unregistered_repository_is_preserved(self):
+    def test_codex_repository_is_preserved(self):
         artifact = self.old_file(self.root / "repository" / ".git")
         os.utime(artifact.parent, (self.cutoff - 10, self.cutoff - 10))
-        result = cleanup.clean_candidate(artifact.parent, self.cutoff, [], delete=True)
+        result = cleanup.clean_candidate(artifact.parent, self.cutoff, [], delete=True, reclaim=False)
         self.assertEqual("repository", result["reason"])
         self.assertTrue(artifact.exists())
 
@@ -255,7 +253,8 @@ class HostCleanupTests(unittest.TestCase):
              patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(output):
             result = cleanup.run_clean(options)
         self.assertEqual(0, result, output.getvalue())
-        activity.assert_called_once_with(options.codex_home)
+        self.assertEqual(1, activity.call_count)
+        self.assertTrue(all(call.args == (options.codex_home,) for call in activity.call_args_list))
         summary = json.loads(output.getvalue().splitlines()[-1])
         self.assertEqual("succeeded", summary["status"])
         self.assertEqual(0, summary["worktree_exit"])

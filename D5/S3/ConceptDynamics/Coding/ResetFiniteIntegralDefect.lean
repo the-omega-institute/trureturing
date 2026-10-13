@@ -38,12 +38,12 @@ def resetFlip : RingRow →+ RingRow where
 def resetDefect (q : ℕ) : Module.End ℤ (VertexModule Sign q) :=
   LinearMap.id + transition (resetMatrix q)
 
-private theorem flip_coeff (x : RingRow) (h : Sign) :
+theorem flip_coeff (x : RingRow) (h : Sign) :
     (resetFlip x).coeff h = x.coeff (h * tau) := by
   change (x * MonoidAlgebra.single tau 1).coeff h = _
   simp only [MonoidAlgebra.coeff_mul_single_apply, mul_one, tau_inv]
 
-private theorem sign_cases (h : Sign) : h = 1 ∨ h = tau := by
+theorem sign_cases (h : Sign) : h = 1 ∨ h = tau := by
   rcases Bool.dichotomy (toAdd h) with hb | hb
   · exact Or.inl (congrArg (fun b : Bool => (ofAdd b : Sign)) hb)
   · exact Or.inr (congrArg (fun b : Bool => (ofAdd b : Sign)) hb)

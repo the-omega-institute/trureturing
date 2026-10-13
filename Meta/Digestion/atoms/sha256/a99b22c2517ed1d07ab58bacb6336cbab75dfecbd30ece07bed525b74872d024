@@ -1,0 +1,72 @@
+**定义 34.1（原探针合同上的有限初始化）。** 取 $I=[0,1]$、$\mathbb B=\{0,1\}$，实际来源、任务与响应为
+
+$$
+S=I\times\mathbb B,\qquad \tau(x,b)=b,\qquad
+O_a(x,b)=b\oplus\mathbf1_{\{a=x\}},\quad a\in I.
+$$
+
+这是[尺度读出与逆许可的定义 22.3、定理 22.3](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md#22-可数只读记录的有声返回与终止精确探针许可的分界)的同一个精确探针接口。所有 $a\in I$ 始终合法；探针只读，不改变来源。共同初始化不提供实际坐标、标签、身份、来源先验或来源相关许可。来源域始终包含整个闭区间与两个标签；不以有限种子数截断来源。没有后续独立随机源、重置或额外观察。
+
+历史为有限有序记录 $h=((a_1,r_1),\ldots,(a_n,r_n))$，包括空历史 $\varepsilon$。固定种子的策略为任意历史到不交和的控制
+
+$$
+\pi_\omega:H\longrightarrow I\sqcup\mathbb B;
+$$
+
+左支选择下一个精确参数，右支返回标签。执行直接采用 [`PassivePolicyNormalization.execute`](../../../D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.lean)。其普通数学含义是：燃料零时不返回；燃料 $n+1$ 时，右支返回空的追加记录与该标签，左支把实际参数—响应对追加到已有历史，再用燃料 $n$ 继续执行，并把这次查询接在所返回的追加记录之前。记
+
+$$
+\operatorname{Run}(\pi_\omega,s;t,r)
+\quad\Longleftrightarrow\quad
+\exists n\in\mathbb N:\operatorname{execute}(O,\pi_\omega,n,\varepsilon,s)=\operatorname{some}(t,r).
+$$
+
+右边的等式表示一次成功的有限返回。`execute_mono` 保证增加燃料不改变已经返回的记录和标签；因而同一策略、同一来源的有限返回唯一。这里要求的燃料是各运行自己的存在见证，不给整个竞争族、一个策略或全部来源预设统一燃料上界。允许自适应、任意重复和任意长的有限历史。原合同的内部停滞沿用供应报告中的对应：在首次停滞前缀后永远查询而不返回，保留全部有限返回、错误事件与费用；反向把不交和控制嵌入允许停滞的控制。因此下面的比较也保留原停滞语义。
+
+令 $P(t)=\{a:(a,r)\text{ 出现在 }t\}$。原费用为
+
+$$
+C_\pi(\omega;s)=
+\begin{cases}
+|P(t)|,&\text{存在有限返回 }\operatorname{Run}(\pi_\omega,s;t,r),\\
++\infty,&\text{没有有限返回}.
+\end{cases}
+$$
+
+错误的有限返回仍按其不同参数数收费；正确性另行约束。即使只永远重复一个参数或内部计算永远停滞，未终止费用仍是 $+\infty$。历史长度、重复调用次数与不同参数数不是同一指标。
+
+先令声明种子集 $\Omega$ 非空有限，每个名字的单点可测，故种子 $\sigma$ 代数为 $2^\Omega$。固定一个与来源无关的概率律 $\mu$，写
+
+$$
+p_\omega=\mu\{\omega\},\qquad
+\Omega_+=\{\omega:p_\omega>0\},\qquad
+\sum_{\omega\in\Omega}p_\omega=1,\qquad
+p_* =\max_{\omega\in\Omega_+}p_\omega.
+$$
+
+这是整个初始概率律，不含另一个未列出的无原子部分。不同种子所选策略可以相同，也可以共享查询参数；不假定策略独立或两两不同。
+
+沿用 [`ExactRealProbeCosts.MeasurableStrategy`](../../../D5/S3/ConceptDynamics/Decision/ExactRealProbeCosts.lean)：在每个记录长度上，控制对 $\Omega\times(I\times\mathbb B)^n$ 到 $I\sqcup\mathbb B$ 的乘积 Borel 结构可测；对每个固定来源，扩展非负费用、有限返回事件与错误返回事件可测。来源取积 Borel 结构，响应的联合可测性沿用原供应结果。令
+
+$$
+\begin{aligned}
+\operatorname{Correct}(\pi_\omega)
+&\Longleftrightarrow\forall s\in S\;\exists t:\operatorname{Run}(\pi_\omega,s;t,\tau(s)),\\
+\operatorname{Weak}_\mu(\pi)
+&\Longleftrightarrow\forall s\in S:\quad
+\mu\{\omega:\nexists t\;\operatorname{Run}(\pi_\omega,s;t,\tau(s))\}=0,\\
+\operatorname{Strong}(\pi)
+&\Longleftrightarrow\forall\omega\in\Omega:\operatorname{Correct}(\pi_\omega).
+\end{aligned}
+$$
+
+强合同包括全部声明的零质量名字。固定来源的期望只对这一个 $\mu$ 取非负扩展积分，定义
+
+$$
+J_\mu(\pi)=\sup_{s\in S}\int_\Omega C_\pi(\omega;s)\,d\mu(\omega),\qquad
+V_\mu^{\mathrm w}=\inf_{\substack{\pi\text{ 可测}\\\operatorname{Weak}_\mu(\pi)}}J_\mu(\pi),\qquad
+V_\mu^{\mathrm s}=\inf_{\substack{\pi\text{ 可测}\\\operatorname{Strong}(\pi)}}J_\mu(\pi).
+$$
+
+先固定来源再取期望，然后取来源上确界；不是先对每个种子挑一个最坏来源后平均。可测性仍约束零质量种子的控制；零质量只解除弱合同中的正确终止义务。
+

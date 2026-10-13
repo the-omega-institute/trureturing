@@ -4,6 +4,8 @@
 
 Native finite whole-row criterion and lawful source fibers
 
+On the complete nonempty ActualFiber P old H, failure of analyze at any old row equal to an actual canonicalRow supplies two lawful sources at every inclusive original depth. A witnessing base is used only to rewrite the retained row in the proof. If any permitted original effective serial service at a certified N had one common finite raw bound and correct complete rowWord output, original_whole_row_implies_depth_and_image would provide such a determining depth, contradicting the pair at that depth. This excludes all permitted serial services for every N; it does not restrict their workspace, local computation, address lengths or update counts to those of a finite table. The stationary positive construction and exact operational realization are described in NativeWholeRowService and NativePassiveServiceRealization. Uniform encoded common-input materializer computability remains an additional effectiveness assertion.
+
 **Definition 1.1 (unarySpecialize).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteBudgetClassification.unarySpecialize`

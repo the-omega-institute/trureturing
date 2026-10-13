@@ -11,6 +11,20 @@ internal sealed class FiniteMemoryHistoryCapacityDocument : IScribeDocumentDefin
         H("Finite Memory History Capacity"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("finite-memory-zero-trace-product"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero"),
+                H("Zero trace pairing forces zero product"),
+                StatementSource.FromAuthor(ZeroTraceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any finite dimension d, positive semidefinite matrices E and rho "
+                        + "with Tr(E rho) = 0 satisfy E rho = 0. Factoring each positive "
+                        + "matrix as an adjoint times itself reduces the trace pairing to "
+                        + "a squared matrix norm. The capacity theorem uses this product "
+                        + "identity to place state ranges in effect kernels."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("finite-memory-history-capacity"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity."
@@ -41,6 +55,22 @@ internal sealed class FiniteMemoryHistoryCapacityDocument : IScribeDocumentDefin
                             + "and Croke provide the literature context for discrimination "
                             + "and orthogonal supports; the cited note identifies the scope."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ZeroTraceFormula()
+    {
+        Formula d = F.Id("d"), e = F.Id("E"), rho = F.Id("rho");
+        Formula coordinates = Call("Fin", d);
+        Formula matrices = Call("Matrix", coordinates, coordinates, Seq(Mathbb, Grp(F.Id("C"))));
+        Formula product = Seq(e, Sp, Cdot, Sp, rho);
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, d, Colon, Sp, F.Id("Nat"), Comma),
+            Seq(Forall, Sp, e, Comma, Sp, rho, Colon, Sp, matrices, Comma),
+            Seq(Call("PosSemidef", e), Sp, Rightarrow,
+                Call("PosSemidef", rho), Sp, Rightarrow),
+            Seq(Call("Tr", product), Sp, Eq, Sp, D(0), Sp, Rightarrow, Sp,
+                product, Sp, Eq, Sp, D(0)),
+        ]));
+    }
 
     private static Formula TheoremFormula()
     {
