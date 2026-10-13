@@ -6,6 +6,7 @@
    utility: none
    digest: Complete native-circle complements supply actual a/b cut pieces. -/
 import D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 
 set_option autoImplicit false
 
@@ -338,5 +339,101 @@ theorem native_a_complement {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) :
 #print axioms circleEquiv
 #print axioms native_b_complement
 #print axioms native_a_complement
+
+private theorem native_a_ne_b {m : ℕ} (hm : 3 ≤ m) : a m ≠ b m := by
+  intro h
+  have he := congrArg (fun z : Configuration m => (z (Fin.last m)).val) h
+  simp only [a_apply, Fin.val_rev, Fin.val_last, b_apply,
+    Nat.sub_self, lt_self_iff_false, if_false] at he
+  omega
+
+private theorem native_b_sq (m : ℕ) : b m * b m = 1 := by
+  apply Equiv.ext
+  intro i
+  exact PrefixReversalTripleOddNonGeneration.reverseIndex_involutive
+    (L := m) (by omega) i
+
+private theorem native_adj_neighbors {m : ℕ} (x y : Configuration m)
+    (h : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Adj x y) :
+    y = x * a m ∨ y = x * b m := by
+  rw [SimpleGraph.mulCayley_adj'] at h
+  obtain ⟨_, g, hg, he⟩ := h
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hg
+  rcases hg with rfl | rfl
+  · left
+    rcases he with he | he
+    · exact he.symm
+    · have hh := congrArg (· * a m) he
+      simpa only [mul_assoc, a_sq, mul_one] using hh.symm
+  · right
+    rcases he with he | he
+    · exact he.symm
+    · have hh := congrArg (· * b m) he
+      simpa only [mul_assoc, native_b_sq, mul_one] using hh.symm
+
+private theorem native_cycle_retains_edges {m : ℕ} (hm : 3 ≤ m)
+    {z : Configuration m}
+    (w : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Walk z z)
+    (hw : w.IsCycle) (x : Configuration m) (hx : x ∈ w.support) :
+    s(x, x * a m) ∈ w.edges ∧ s(x, x * b m) ∈ w.edges := by
+  have hsubset : w.toSubgraph.neighborSet x ⊆ {x * a m, x * b m} := by
+    intro y hy
+    exact (native_adj_neighbors x y hy.adj_sub).elim Or.inl Or.inr
+  have hne : x * a m ≠ x * b m := fun h => native_a_ne_b hm (mul_left_cancel h)
+  have he := Set.eq_of_subset_of_ncard_le hsubset (by
+    rw [Set.ncard_pair hne, hw.ncard_neighborSet_toSubgraph_eq_two hx])
+  constructor
+  · apply SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges.mp
+    change x * a m ∈ w.toSubgraph.neighborSet x
+    rw [he]
+    exact Or.inl rfl
+  · apply SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges.mp
+    change x * b m ∈ w.toSubgraph.neighborSet x
+    rw [he]
+    exact Or.inr rfl
+
+/-- Every genuine full native circle complement contains exactly all other
+native a/b edges. In particular, the b edge at a later insertion contact is
+retained whenever it differs from this complement's actual deleted edge. -/
+theorem native_complement_edge_inventory {m : ℕ} (hm : 3 ≤ m)
+    (z g : Configuration m) (hg : g = a m ∨ g = b m)
+    (w : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Walk z (z * g))
+    (hp : w.IsPath) (hl : w.length = 2 * (m + 1) - 1)
+    (hs : ∀ x, x ∈ w.support ↔ Circle z x)
+    (x h : Configuration m) (hx : Circle z x) (hh : h = a m ∨ h = b m) :
+    s(x, x * h) ∈ w.edges ↔ s(x, x * h) ≠ s(z, z * g) := by
+  have hg1 : g ≠ 1 := hg.elim (fun h => h ▸ a_ne_one hm)
+    (fun h => h ▸ b_ne_one hm)
+  have hadj : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Adj z (z * g) := by
+    rw [SimpleGraph.mulCayley_adj']
+    refine ⟨?_, g, by simpa using hg, Or.inl rfl⟩
+    intro he
+    exact hg1 (mul_left_cancel (by simpa only [mul_one] using he.symm))
+  have hmissing : s(z, z * g) ∉ w.edges := by
+    intro he
+    have heq := hp.length_eq_one_of_mem_edges he
+    omega
+  let q := w.reverse.cons hadj
+  have hq : q.IsCycle := by
+    apply (SimpleGraph.Walk.cons_isCycle_iff w.reverse hadj).mpr
+    refine ⟨hp.reverse, ?_⟩
+    simpa only [SimpleGraph.Walk.edges_reverse, List.mem_reverse] using hmissing
+  have hxq : x ∈ q.support := by
+    simp only [q, SimpleGraph.Walk.support_cons, SimpleGraph.Walk.support_reverse,
+      List.mem_cons, List.mem_reverse]
+    exact Or.inr ((hs x).mpr hx)
+  have hedge : s(x, x * h) ∈ q.edges := by
+    rcases hh with rfl | rfl
+    · exact (native_cycle_retains_edges hm q hq x hxq).1
+    · exact (native_cycle_retains_edges hm q hq x hxq).2
+  simp only [q, SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_reverse,
+    List.mem_cons, List.mem_reverse] at hedge
+  constructor
+  · intro he hsame
+    exact hmissing (hsame ▸ he)
+  · intro hne
+    exact hedge.resolve_left hne
+
+#print axioms native_complement_edge_inventory
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
