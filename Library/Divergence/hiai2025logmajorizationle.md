@@ -3,7 +3,7 @@ bibkey: hiai2025logmajorizationle
 authors: Fumio Hiai
 year: 2026
 title: "Log-majorizations between quasi-geometric type means for matrices"
-doi: 10.1016/j.laa.2026.01.003
+doi: null
 url: https://arxiv.org/abs/2510.04691v3
 claim: "Problem 3.20. The case remaining open is whether SGα,p ≺log LEα for α > 1. Note that this is affirmative if SGα,p ≺log SGα,q if α > 1 and p ≥ q (see Problem 3.12)."
 strata_touched:
@@ -13,6 +13,8 @@ triage: anchor
 ---
 
 ## Locator
+
+Canonical publication metadata: [original geometric trace and support extension](hiai2025geometrictraceconvexity.md).
 
 Author text: <https://arxiv.org/abs/2510.04691v3>.
 - DOI: https://doi.org/10.1016/j.laa.2026.01.003
