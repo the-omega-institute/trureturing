@@ -305,6 +305,21 @@ internal sealed class NormalizedJensenDegreeLoweringDocument : IScribeDocumentDe
                     + "coordinate analyticity or conjugation premise is needed. The real source realization "
                     + "and the numerical source budgets remain explicit conditions.")),
                     Paragraph(Text(
+                    "For a monic complex polynomial P of degree q, supply the literal finite Appell equation "
+                    + "s P''-z P'+q P=sum_{m=0}^q g_m P^(m+1), with s!=0 and g_0=g_1=0. At an actual "
+                    + "root beta, retain a>0, |beta/(s a)|<=3/8, |(q-k)/(s a^2)|<=1/64 for k+2<=q, "
+                    + "and sum_{m=0}^q |g_m a^(m-1)/s|<=1/16. Iterated polynomial differentiation supplies "
+                    + "the literal root-jet recurrence, and exact division supplies its normalized recurrence. "
+                    + "The finite maximum argument bounds every normalized jet d_k=P^(k)(beta)/a^k "
+                    + "in magnitude by d_1: the higher recurrence terms cost at most (3/8+1/64+1/16) times the maximum, "
+                    + "while monicity makes the top derivative nonzero. Thus, under those same conditions, "
+                    + "P'(beta)!=0 and |P^(m)(beta)/P'(beta)|<=a^(m-1) for every m>=1. The literal "
+                    + "finite differential operator Phi(D)P at that same root consequently satisfies "
+                    + "|Phi(D)P(beta)/P'(beta)|<=sum_{m=1}^q |phi_m| a^(m-1). Its constant term vanishes "
+                    + "at the root. Instantiating the actual complete kernel equation, its coarse root "
+                    + "location and full coefficient majorant remains separate from this checked application; "
+                    + "original-node transmission still requires its own signed cofactor information.")),
+                    Paragraph(Text(
                     "These applications use standard pinned complex analytic, implicit-function, zero-count, "
                     + "mean-value and set-cardinality results. They are bind-only with admission_basis none and "
                     + "are recorded here as source-derived applications rather than new retained D5 declarations. "
