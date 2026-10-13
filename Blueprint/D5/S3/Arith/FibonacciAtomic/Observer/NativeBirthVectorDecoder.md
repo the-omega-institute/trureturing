@@ -8,7 +8,7 @@ Address is the finite binary-word type and Source is the existing native source 
 
 **Theorem 1.1 (Native birth vectors are pattern vectors).**
 
-$$\forall d \in Nat, \forall u \in Source, \operatorname{birthVector}\left(d, u\right) = \operatorname{patternVector}\left(d, \operatorname{decompose}\left(d, u\right)\right)$$
+$$\forall d \in Nat, \forall u \in Source, \operatorname{birthVector}\left(d, u\right) = \operatorname{patternVector}\left(d, \operatorname{decompose}\left(d, u\right).1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeBirthVectorDecoder.birthVector_decompose` (`✓ std3`). ∎
 

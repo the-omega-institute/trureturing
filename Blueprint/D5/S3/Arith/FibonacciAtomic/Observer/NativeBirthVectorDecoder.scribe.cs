@@ -27,7 +27,8 @@ internal sealed class NativeBirthVectorDecoderDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(Seq(Forall, Sp, V("d"), Sp, InMacro, Sp, V("Nat"), Comma, Sp,
                     Forall, Sp, V("u"), Sp, InMacro, Sp, V("Source"), Comma, Sp,
                     Call("birthVector", V("d"), V("u")), Sp, Eq, Sp,
-                    Call("patternVector", V("d"), Call("decompose", V("d"), V("u"))))),
+                    Call("patternVector", V("d"),
+                        Seq(Call("decompose", V("d"), V("u")), Dot, D(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The address recursion follows the root constructor. An atomic root uses "
                     + "the path threshold (or its predecessor for beta), while a pair root selects the child block "
