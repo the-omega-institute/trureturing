@@ -554,4 +554,49 @@ theorem all_history_count_fiber_reach
   simpa only [reachedHistory, List.length_ofFn] using
     actual_history_reach_law table S p q (List.ofFn w)
 
+/-- Aggregating full acquired records preserves the next fresh-answer kernel;
+the selected set can constrain both sources and both success counters. -/
+theorem aggregate_native_next_answer_kernel
+    {Seed : Type} [MeasurableSpace Seed] (π : Seed → Bool → History → Action)
+    (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool)
+    (ν : Measure Seed) [IsProbabilityMeasure ν] (p q : unitInterval)
+    (n : ℕ) (F : Set History) (source b : Bool) :
+    let E := {ω | (nativeHistory π S p q n ω).length = n ∧
+      nativeHistory π S p q n ω ∈ F ∧ nativeAction π S p q n ω = .inl source}
+    rawLaw ν (E ∩ {ω | sourceRead p q source n ω.2 = b}) =
+      rawLaw ν E * (bernoulliMeasure true false (if source then q else p)) {b} := by
+  classical
+  dsimp only
+  let H := nativeHistory π S p q n
+  let B : Set (Seed × Tape) := {ω | nativeAction π S p q n ω = .inl source}
+  let R : Set (Seed × Tape) := {ω | sourceRead p q source n ω.2 = b}
+  have hm := native_execution_measurable π hπ S p q
+  have hB : MeasurableSet B := (hm.2.1 n) (action_singleton_measurable _)
+  have hR : MeasurableSet R :=
+    ((NativeBernoulliFactoryCriticalMoment.coin_measurable (if source then q else p)).comp
+      ((measurable_pi_apply n).comp measurable_snd)) (measurableSet_singleton b)
+  have he : {ω | (nativeHistory π S p q n ω).length = n ∧
+      nativeHistory π S p q n ω ∈ F ∧ nativeAction π S p q n ω = .inl source} =
+      {ω | (H ω).length = n ∧ H ω ∈ F} ∩ B := by
+    ext ω
+    change (_ ∧ _ ∧ _) ↔ (_ ∧ _) ∧ _
+    tauto
+  rw [he]
+  change rawLaw ν (({ω | (H ω).length = n ∧ H ω ∈ F} ∩ B) ∩ R) = _
+  rw [Set.inter_assoc, measure_history_fibers (rawLaw ν) H (hm.1 n) n F
+    (B ∩ R) (hB.inter hR), measure_history_fibers (rawLaw ν) H (hm.1 n) n F B hB,
+    Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro w _
+  have hk := NativeBernoulliFactoryCriticalMoment.native_source_conditional_kernel
+    π hπ S ν p q (extendHistory (List.ofFn w)) n source b Set.univ MeasurableSet.univ
+  have hpref : wordPrefix (extendHistory (List.ofFn w)) n = List.ofFn w := by
+    simpa only [List.length_ofFn] using prefix_extend_history (List.ofFn w)
+  change rawLaw ν (((nativeTrace π S p q (extendHistory (List.ofFn w)) n ∩ B) ∩
+      Prod.fst ⁻¹' (Set.univ : Set Seed)) ∩ R) =
+    rawLaw ν ((nativeTrace π S p q (extendHistory (List.ofFn w)) n ∩ B) ∩
+      Prod.fst ⁻¹' (Set.univ : Set Seed)) * _ at hk
+  simpa only [Set.preimage_univ, Set.inter_univ, trace_iff_exact_acquired_history,
+    hpref, Set.inter_assoc] using hk
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
