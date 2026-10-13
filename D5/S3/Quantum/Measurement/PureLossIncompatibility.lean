@@ -467,4 +467,50 @@ private theorem compressed_click (τ : Loss) (x : ℝ) (hx : 0 < x)
   ext i j
   fin_cases i <;> fin_cases j <;> simp [clickMatrix]
 
+private theorem scalar_bounds (τ : Loss) (x : ℝ) (hx : 0 < x) :
+    let A := Real.exp (-x)
+    let a := 1 - A
+    let b := Real.sqrt τ.1 * A * Real.sqrt x
+    let c := 1 - A * (1 - τ.1 + τ.1 * x)
+    0 < a ∧ a ≤ x ∧ c - b ^ 2 / a ≤ x ∧ τ.1 - x ≤ c := by
+  dsimp
+  have hτ0 : (0 : ℝ) ≤ τ.1 := τ.2.1
+  have hτ1 : τ.1 ≤ 1 := τ.2.2
+  have hA0 : 0 < Real.exp (-x) := Real.exp_pos _
+  have hA1 : Real.exp (-x) < 1 := by
+    rw [Real.exp_lt_one_iff]
+    linarith
+  have hAle : Real.exp (-x) ≤ 1 := hA1.le
+  have ha : 0 < 1 - Real.exp (-x) := by linarith
+  have hax : 1 - Real.exp (-x) ≤ x := by
+    linarith [Real.one_sub_le_exp_neg x]
+  have hsq : (Real.sqrt x) ^ 2 = x := Real.sq_sqrt hx.le
+  have hτsq : (Real.sqrt τ.1) ^ 2 = τ.1 := Real.sq_sqrt hτ0
+  have hδa :
+      1 - Real.exp (-x) * (1 - τ.1 + τ.1 * x) -
+          (Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x) ^ 2 /
+            (1 - Real.exp (-x)) ≤ 1 - Real.exp (-x) := by
+    have hfac : 0 ≤ τ.1 * Real.exp (-x) / (1 - Real.exp (-x)) :=
+      div_nonneg (mul_nonneg hτ0 hA0.le) ha.le
+    have hid :
+        (1 - Real.exp (-x) * (1 - τ.1 + τ.1 * x) -
+            (Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x) ^ 2 /
+              (1 - Real.exp (-x))) - (1 - Real.exp (-x)) =
+          (τ.1 * Real.exp (-x) / (1 - Real.exp (-x))) *
+            ((1 - Real.exp (-x)) - x) := by
+      field_simp
+      rw [hτsq, hsq]
+      ring
+    rw [← sub_nonpos, hid]
+    exact mul_nonpos_of_nonneg_of_nonpos hfac (sub_nonpos.mpr hax)
+  have hc : τ.1 - x ≤ 1 - Real.exp (-x) * (1 - τ.1 + τ.1 * x) := by
+    have hτA : τ.1 * Real.exp (-x) ≤ 1 :=
+      calc
+          τ.1 * Real.exp (-x) ≤ 1 * Real.exp (-x) :=
+          mul_le_mul_of_nonneg_right hτ1 hA0.le
+        _ ≤ 1 := by simpa using hAle
+    nlinarith [mul_nonneg (sub_nonneg.mpr hτ1) ha.le,
+      mul_nonneg hx.le (sub_nonneg.mpr hτA)]
+  exact ⟨ha, hax, hδa.trans hax, hc⟩
+
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
