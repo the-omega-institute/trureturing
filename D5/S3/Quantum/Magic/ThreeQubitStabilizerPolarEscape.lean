@@ -61,8 +61,6 @@ private def bellMatrix : Op 6 := Matrix.of fun x y =>
       (splitBits 3 3 y).1 = (splitBits 3 3 y).2 then (1 / 8 : ℂ) else 0
 def bell : Op 6 := bellMatrix
 def W (s : ℝ) : Op 3 := (1 / (1 + s) : ℝ) • ((1 : Op 3) + s • S)
-private lemma word_square {n : ℕ} (w : Fin n → Pauli) : wordOp w * wordOp w = 1 :=
-  (wordUnit w).val_inv
 private lemma gamma_anticommute (i j : Fin 7) (h : i ≠ j) :
     wordOp (gammaWords i) * wordOp (gammaWords j) =
       -(wordOp (gammaWords j) * wordOp (gammaWords i)) := by
@@ -112,7 +110,8 @@ private lemma S_square : S * S = (7 : ℂ) • (1 : Op 3) := by
     · simp only [h, Ne.symm h, ite_false, ite_true, ne_eq, not_false_eq_true,
         zero_add]
   rw [hd, hz, add_zero]
-  simp only [G, word_square, Finset.sum_const, Finset.card_univ, Fintype.card_fin]
+  simp only [G, show ∀ w : Fin 3 → Pauli, wordOp w * wordOp w = 1 from
+    fun w => (wordUnit w).val_inv, Finset.sum_const, Finset.card_univ, Fintype.card_fin]
   ext x y
   simp [Matrix.one_apply]
 private lemma S_trace : S.trace = 0 := by
@@ -127,7 +126,7 @@ private lemma phase_mul {c d : ℂ} (hc : Phase c) (hd : Phase d) : Phase (c * d
   dsimp only [Phase] at hc hd ⊢
   rcases hc with rfl | rfl | rfl | rfl <;> rcases hd with rfl | rfl | rfl | rfl <;>
     simp [Complex.I_mul_I]
-private lemma local_adjoint {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma local_adjoint {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     (localOp i A)ᴴ = localOp i Aᴴ := by
   unfold localOp
   rw [D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_adj]
@@ -301,11 +300,6 @@ private lemma local_normalizes {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2)
     localOp i A * wordOp w * (localOp i A)ᴴ ∈ PauliGroup n := by
   obtain ⟨c, q, hc, hq⟩ := local_table A ha (w i)
   exact ⟨c, hc, Function.update w i q, local_word i A w c q hq⟩
-private lemma H_adjoint : gateHᴴ = gateH := by
-  ext i j; fin_cases i <;> fin_cases j <;>
-    dsimp only [pauliMatrix, gateH,
-      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard, s2,
-      qubitX, qubitZ] <;> simp
 private lemma gates_data {n : ℕ} {U : Op n}
     (hu : U ∈ gates n ∪ (fun A : Op n => Aᴴ) '' gates n) :
     U ∈ Matrix.unitaryGroup (Bits n) ℂ ∧
@@ -319,7 +313,11 @@ private lemma gates_data {n : ℕ} {U : Op n}
     · exact ⟨(cnot_unitary c t h).1, cnot_normalizes c t h⟩
   · dsimp only
     rcases hv with ⟨i, rfl⟩ | ⟨i, rfl⟩ | ⟨c, t, h, rfl⟩
-    · rw [local_adjoint, H_adjoint]
+    · rw [local_adjoint]
+      have hH : gateH.IsHermitian :=
+        ((pauli_hermitian .X).add (pauli_hermitian .Z)).smul
+          (show IsSelfAdjoint s2 from by simp [s2, IsSelfAdjoint])
+      rw [hH]
       exact ⟨local_unitary i _ hh, local_normalizes i _ (Or.inl rfl)⟩
     · rw [local_adjoint]
       exact ⟨local_unitary i _ (Unitary.star_mem hs),
@@ -359,7 +357,8 @@ private lemma pauli_real {n : ℕ} {P : Op n} (hp : P ∈ PauliGroup n) (hh : P�
   obtain ⟨c, hc, w, rfl⟩ := hp
   have he := congrArg (fun M : Op n => (M * wordOp w) 0 0) hh
   have hr : star c = c := by
-    simpa only [Matrix.conjTranspose_smul, word_hermitian, Matrix.smul_mul, word_square,
+    simpa only [Matrix.conjTranspose_smul, word_hermitian, Matrix.smul_mul,
+      show wordOp w * wordOp w = 1 from (wordUnit w).val_inv,
       Matrix.smul_apply, smul_eq_mul, Matrix.one_apply, ite_true, mul_one] using he
   refine ⟨c, w, ?_, rfl⟩
   rcases hc with h | h | h | h
@@ -524,14 +523,6 @@ private lemma word_conjugate {n : ℕ} (w : Fin n → Pauli) :
   ext x y
   dsimp only [conjugate] ; simp only [Matrix.map_apply, wordOp, tensorOp, Matrix.of_apply,
     Matrix.smul_apply, smul_eq_mul, star_prod, he, Finset.prod_mul_distrib]
-private lemma conjugate_product {n : ℕ} (A B : Op n) :
-    conjugate (A * B) = conjugate A * conjugate B := by
-  change (A * B).map (starRingEnd ℂ) = A.map (starRingEnd ℂ) * B.map (starRingEnd ℂ)
-  exact Matrix.map_mul
-private lemma conjugate_adjoint {n : ℕ} (A : Op n) :
-    (conjugate A)ᴴ = conjugate Aᴴ := by ext x y; rfl
-private lemma conjugate_neg {n : ℕ} (A : Op n) : conjugate (-A) = -conjugate A := by
-  ext x y; exact star_neg _
 private lemma conjugate_S_support {ρ : Op 3} (hρ : ρ ∈ STAB 3) :
     tr (ρ * conjugate S) ≤ 1 := by
   have hs : conjugate S = ∑ i : Fin 7, conjugate (wordOp (gammaWords i)) := by
@@ -543,10 +534,17 @@ private lemma conjugate_S_support {ρ : Op 3} (hρ : ρ ∈ STAB 3) :
   · intro i
     obtain ⟨c, hc, he⟩ := word_conjugate (gammaWords i)
     refine ⟨⟨c, hc, gammaWords i, he⟩, ?_⟩
-    rw [conjugate_adjoint, word_hermitian]
+    exact (show (wordOp (gammaWords i)).IsHermitian from word_hermitian _).map
+      star (fun _ => rfl)
   · intro i j h
     have he := congrArg conjugate (gamma_anticommute i j h)
-    simpa only [conjugate_product, conjugate_neg] using he
+    change Complex.conjAe.mapMatrix (wordOp (gammaWords i) * wordOp (gammaWords j)) =
+      Complex.conjAe.mapMatrix (-(wordOp (gammaWords j) * wordOp (gammaWords i))) at he
+    change Complex.conjAe.mapMatrix (wordOp (gammaWords i)) *
+      Complex.conjAe.mapMatrix (wordOp (gammaWords j)) =
+      -(Complex.conjAe.mapMatrix (wordOp (gammaWords j)) *
+        Complex.conjAe.mapMatrix (wordOp (gammaWords i)))
+    simpa only [map_mul, map_neg] using he
 
 private lemma vacuum_vec (n : ℕ) :
     vacuum n = Matrix.vecMulVec (Pi.single 0 1) (star (Pi.single 0 1)) := by
@@ -554,27 +552,21 @@ private lemma vacuum_vec (n : ℕ) :
   ext x y
   simp [Matrix.single_apply, Matrix.vecMulVec_apply, Pi.single_apply, eq_comm]
   by_cases hx : x = 0 <;> by_cases hy : y = 0 <;> simp [hx, hy]
-private lemma vacuum_psd (n : ℕ) : (vacuum n).PosSemidef := by
-  rw [vacuum_vec]
-  exact Matrix.posSemidef_vecMulVec_self_star _
-
-private lemma vacuum_trace (n : ℕ) : (vacuum n).trace = 1 := by
-  change (Matrix.single (0 : Bits n) 0 (1 : ℂ) : Op n).trace = 1
-  exact Matrix.trace_single_eq_same _ _
-
 private lemma pure_state {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
     IsState (U * vacuum n * Uᴴ) := by
   have hu := clifford_data hU
   refine ⟨?_, ?_⟩
-  · simpa only [Matrix.conjTranspose_conjTranspose] using
-      (vacuum_psd n).conjTranspose_mul_mul_same Uᴴ
+  · rw [vacuum_vec]
+    simpa only [Matrix.conjTranspose_conjTranspose] using
+      (Matrix.posSemidef_vecMulVec_self_star
+        (Pi.single (0 : Bits n) (1 : ℂ))).conjTranspose_mul_mul_same Uᴴ
   · rw [Matrix.trace_mul_cycle, Matrix.trace_mul_cycle]
     have hleft : Uᴴ * U = 1 := by
       simpa only [Matrix.star_eq_conjTranspose] using Matrix.mem_unitaryGroup_iff'.mp hu.1
     calc
       (vacuum n * Uᴴ * U).trace = (vacuum n * (Uᴴ * U)).trace := by
         rw [Matrix.mul_assoc]
-      _ = 1 := by rw [hleft, Matrix.mul_one, vacuum_trace]
+      _ = 1 := by rw [hleft, Matrix.mul_one]; exact Matrix.trace_single_eq_same _ _
 
 private lemma stab_state {n : ℕ} {η : Op n} (hη : η ∈ STAB n) : IsState η := by
   refine convexHull_min (t := {A : Op n | IsState A}) ?_ ?_ hη
@@ -738,7 +730,9 @@ private lemma S_square_real : S * S = (7 : ℝ) • (1 : Op 3) := by
   ext x y
   simp [Algebra.smul_def]
 private lemma conjugate_S_square : conjugate S * conjugate S = (7 : ℝ) • (1 : Op 3) := by
-  rw [← conjugate_product, S_square_real]
+  change S.map (starRingEnd ℂ) * S.map (starRingEnd ℂ) = _
+  rw [← Matrix.map_mul, S_square_real]
+  change conjugate ((7 : ℝ) • (1 : Op 3)) = _
   have he := conjugate_linear (7 : ℝ) 0 S
   simpa using he
 private lemma sigma_state_support : IsState sigma ∧ tr (sigma * S) = 1 := by
@@ -795,7 +789,8 @@ theorem stabilizer_polar_tensor_escape (s : ℝ) (hl : 1 / 3 < s) (hu : 7 * s ^ 
     bell_trace, bell_mem, (linear_posDef S S_adjoint S_square_real s hu).smul (by positivity),
     ?_, ?_, W_bell s, ?_⟩
   · rw [hc]
-    exact (linear_posDef (conjugate S) (by rw [conjugate_adjoint, S_adjoint])
+    exact (linear_posDef (conjugate S)
+      ((show S.IsHermitian from S_adjoint).map star (fun _ => rfl)).eq
       conjugate_S_square s hu).smul (by positivity)
   · intro η hη
     rw [hc]

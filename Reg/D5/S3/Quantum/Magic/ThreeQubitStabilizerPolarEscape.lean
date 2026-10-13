@@ -242,6 +242,68 @@ noncomputable def registration :
   options := #[] }
 
 end Product
+
+namespace Adjoint
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ),
+    (localOp i A)ᴴ = R.readout () ⟨n, i⟩ Aᴴ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (0 : Fin 1) 1
+  change (localOp (0 : Fin 1) 1)ᴴ = (0 : Op 1) at he
+  rw [local_identity, Matrix.conjTranspose_one] at he
+  exact one_ne_zero he
+
+def source_registration : Registration arena (type_of% @local_adjoint) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨local_adjoint, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.local_adjoint)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.LocalGates.Adjoint.unit,
+  realizationName :=
+    `Reg.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.LocalGates.Adjoint.source_registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨source_registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ p A => localOp p.2 A) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape,
+    definition := none,
+    coordinates := #[0, 1],
+    readouts := #[{
+      path := #["body", "body", "body", "arg"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end Adjoint
+
+#print axioms Adjoint.source_registration
+#print axioms Adjoint.registration
 end LocalGates
 
 #print axioms source_registration

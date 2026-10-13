@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim; result=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.result; claim=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim
    digest: Boundary alpha-z magic additivity is refuted by a three-qubit marginal certificate. -/
 import D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
+import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 set_option linter.style.longLine false
 set_option maxRecDepth 4096
 set_option autoImplicit false
@@ -533,11 +534,9 @@ private def localHom {n : ℕ} (i : Fin n) : Matrix (Fin 2) (Fin 2) ℂ →* Op 
   toFun := localOp i
   map_one' := local_identity i
   map_mul' A B := (local_product i A B).symm
-private lemma hadamard_coeff_sq : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
-  rw [pow_two, Real.sqrt_div_self]
-  simpa only [one_div] using TsirelsonInequality.sqrt_two_inv_mul_self
 private lemma X_circuit : D5.S3.Quantum.FiniteDimensional.qubitX = gateH * gateS ^ 2 * gateH := by
-  have hs := hadamard_coeff_sq
+  have hs := TsirelsonInequality.sqrt_two_inv_mul_self
+  rw [← Real.sqrt_div_self, ← pow_two, ← one_div] at hs
   ext i j; fin_cases i <;> fin_cases j
   all_goals simp only [pow_two, Matrix.mul_apply, Fin.sum_univ_two]
   all_goals dsimp only [gateH, gateS,
@@ -582,7 +581,8 @@ private lemma singlePrep_projector (p : Pauli) (b : Fin 2) :
     singlePrep p b * Matrix.single (0 : Fin 2) 0 (1 : ℂ) * (singlePrep p b)ᴴ =
       (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) +
         (if b = 0 then (1 : ℂ) else -1) • pauliMatrix (if p = .I then .Z else p)) := by
-  have hs := hadamard_coeff_sq
+  have hs := TsirelsonInequality.sqrt_two_inv_mul_self
+  rw [← Real.sqrt_div_self, ← pow_two, ← one_div] at hs
   cases p <;> fin_cases b
   all_goals ext i j; fin_cases i <;> fin_cases j
   all_goals dsimp only [singlePrep, gateS, gateH,
@@ -605,12 +605,9 @@ private lemma productPrep_projector (w : Fin 3 → Pauli) (b : Bits 3) :
     simp only [Matrix.single_apply, tensorOp, Matrix.of_apply]
     simp only [Fintype.prod_boole, forall_and, ← funext_iff]
     rfl
-  have ha : (productPrep w b)ᴴ = tensorOp (fun i => (singlePrep (w i) (b i))ᴴ) := by
-    ext x y
-    unfold productPrep
-    simp only [Matrix.conjTranspose_apply, tensorOp, Matrix.of_apply, star_prod]
-  rw [hv, ha]
+  rw [hv]
   unfold productPrep
+  rw [D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_adj]
   rw [tensor_mul, tensor_mul]
   congr 1
   funext i
@@ -705,16 +702,10 @@ private lemma clifford_bar {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
     rintro A (⟨i, rfl⟩ | ⟨i, rfl⟩ | ⟨c, t, h, rfl⟩)
     · change barAlg (localHom i gateH) ∈ _
       rw [hl, hh]; exact Or.inl (Or.inl ⟨i, rfl⟩)
-    · have he : localHom i gateSᴴ = (localHom i gateS)ᴴ := by
-        ext x y
-        change (localOp i gateSᴴ) x y = star ((localOp i gateS) y x)
-        dsimp only [localOp, tensorOp, Matrix.of_apply]
-        rw [star_prod]
-        apply Finset.prod_congr rfl
-        intro j _
-        by_cases hj : j = i <;> simp [hj, Matrix.one_apply, eq_comm]
-      change barAlg (localHom i gateS) ∈ _
-      rw [hl, hs, he]
+    · change barAlg (localHom i gateS) ∈ _
+      rw [hl, hs]
+      change localOp i gateSᴴ ∈ _
+      rw [← local_adjoint]
       exact Or.inr ⟨localHom i gateS, Or.inr (Or.inl ⟨i, rfl⟩), rfl⟩
     · have he : barAlg (gateCNOT c t) = gateCNOT c t := by
         ext x y; change star (if _ then (1 : ℂ) else 0) = if _ then 1 else 0
@@ -833,10 +824,9 @@ private lemma base_bell_sandwich : bell * baseInv * bell = (896 / 9 : ℝ) • b
     rcases h with ⟨hstates, _, _, _, _, _, hbell, _, _, _, _, _⟩
     exact (hstates 6 bell hbell).1.isHermitian
   have hr : ((bell * baseInv).trace.re : ℂ) = (bell * baseInv).trace :=
-    Complex.conj_eq_iff_re.mp (by
-      change star (bell * baseInv).trace = _
-      rw [← Matrix.trace_conjTranspose, Matrix.conjTranspose_mul,
-        hb, baseInv_hermitian, Matrix.trace_mul_comm])
+    Complex.ext rfl
+      (D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow.trace_hermitian_product_real
+        bell baseInv hb baseInv_hermitian).symm
   rw [← hr]
   change ((tr (bell * baseInv) : ℝ) : ℂ) • bell = _
   rw [base_bell_trace]

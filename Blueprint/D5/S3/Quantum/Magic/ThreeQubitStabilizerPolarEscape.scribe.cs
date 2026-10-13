@@ -79,6 +79,9 @@ internal sealed class ThreeQubitStabilizerPolarEscapeDocument : IScribeDocumentD
                 Equal(Name("gammaWords"), GammaWordsFormula()),
                 "The seven three-qubit words are XII, YII, ZXI, ZYI, ZZX, ZZY and ZZZ.",
                 DescribeRole.Definition),
+            Node("local-adjoint", "Adjoints of local gates", "local_adjoint", LocalAdjointFormula(),
+                "Taking the adjoint commutes with embedding a single-qubit operator at a fixed coordinate.",
+                DescribeRole.Theorem),
             Node("local-product", "Local gates preserve products", "local_product", LocalProductFormula(),
                 "Embedding two single-qubit operators at the same coordinate preserves their product.",
                 DescribeRole.Theorem),
@@ -149,6 +152,9 @@ internal sealed class ThreeQubitStabilizerPolarEscapeDocument : IScribeDocumentD
         PauliWord("X", "I", "I"), PauliWord("Y", "I", "I"),
         PauliWord("Z", "X", "I"), PauliWord("Z", "Y", "I"),
         PauliWord("Z", "Z", "X"), PauliWord("Z", "Z", "Y"), PauliWord("Z", "Z", "Z"));
+
+    private static Formula LocalAdjointFormula() => All("n", Naturals(), All("i", Fin(X("n")),
+        All("A", QubitOp(), Equal(Adjoint(LocalOp(X("i"), X("A"))), LocalOp(X("i"), Adjoint(X("A")))))));
 
     private static Formula LocalProductFormula() => All("n", Naturals(), All("i", Fin(X("n")),
         All("A", QubitOp(), All("B", QubitOp(),
