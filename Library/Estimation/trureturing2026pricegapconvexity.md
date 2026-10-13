@@ -2787,3 +2787,158 @@ count and existing inventory/source contracts. The prime estimate
 belongs to BHP; no sieve improvement, literature-priority claim, new
 Lean declaration or kernel-verification claim is made. The remaining
 signed Robin estimate and RH are unproved.
+
+## The same lower count sharpens both retained stock costs
+
+Keep the complete actual sources, all ties and the original fixed
+parameters of CR40--CR47 and LO1--LO5. Write, for an actual label,
+
+$$
+A=B+t,\qquad D=B-K(B),\qquad
+J=\int_{[B,A)}(v-B)\,dK(v).
+$$
+
+Fix $c>4$ and use CR40's constant $H_c$. Put
+$h_c=H_c\sqrt B$, $e_B=b_0(1+A^\vartheta)$ and
+$\mathfrak r_B=w(B)/w(A)$, with the same $b_0=9/100$ and
+$\vartheta=21/40$. The symbol $e_B$ here is a lower-increment
+allowance, not HC1's CHJ truncation error $e_B(T)$.
+
+### Keep both envelopes on the same terminal layer interval
+
+Translate the complete layer measure on $[B,A)$ to $\mu$ on $[0,t)$.
+Its mass is $D$, and the existing finite layer identity is
+$J=\int_0^t\mu([z,t))\,dz$. Since $t/B\to0$, eventually $t\le B/2$.
+CR40's upper prefix bound and LO1's lower terminal bound give,
+for $0\le z\le t$,
+
+$$
+\begin{aligned}
+\mu([z,t))&\ge D-h_c-cz,\\
+\mu([z,t))=K(A)-K(B+z)&\ge b_0(t-z)-e_B.
+\end{aligned}
+$$
+
+The second line at $z=t$ is trivial; at every other $z$ it is the
+weaker linear form of LO1. The intervals and strict endpoints are
+those of the same actual inventory. Combining the bounds yields
+
+$$
+\mu([z,t))\ge b_0(t-z)
++[D-h_c-b_0t-(c-b_0)z]_+-e_B.
+$$
+
+CR40 also gives $D-h_c\le ct$, so the positive-part term has its
+entire support in $[0,t]$. Integration gives
+
+$$
+\boxed{J\ge\frac{b_0t^2}{2}
++\frac{(D-h_c-b_0t)_+^2}{2(c-b_0)}-e_Bt.}
+\tag{ST1}
+$$
+
+Now reuse both costs in CR41, $2J+(t-D)^2\le\mathfrak r_Bt^2$.
+Substitution gives the actual-source constraint
+
+$$
+\boxed{b_0t^2+\frac{(D-h_c-b_0t)_+^2}{c-b_0}
++(t-D)^2\le\mathfrak r_Bt^2+2e_Bt.}
+\tag{ST2}
+$$
+
+No separately optimal prefix and suffix measures are combined: both
+envelopes constrain the same $\mu$, and both curvature costs belong
+to the same legal integer competitor. Neither the witness height nor
+the prime-power reserve is spent in this calculation. ST1--ST2 hold
+beyond a common source start also when $\Theta=1$.
+
+### A strictly smaller coefficient in the unchanged SC4 region
+
+Assume precisely SC4's original fixed-parameter region, displayed
+before LO5. Its uniform clock estimate and $t_i\ge\ell_X\sim L_X$
+give
+
+$$
+\frac{e_{B_i}}{t_i}\to0,\qquad
+\frac{h_c}{t_i}\to0,\qquad \mathfrak r_{B_i}\to1
+$$
+
+uniformly over all original labels and maximizing ties. LO1 also
+gives $D_i/t_i\ge b_0-e_{B_i}/t_i$. CR41 bounds these ratios above
+by $1+\sqrt{\mathfrak r_{B_i}}$, since $J\ge0$.
+
+For any limiting ratio $z\ge b_0$, divide ST2 by $t^2$ to get
+
+$$
+b_0+\frac{(z-b_0)^2}{c-b_0}+(1-z)^2\le1,
+$$
+
+equivalently
+$(c+1-b_0)z^2-2cz+cb_0\le0$. Its upper root is
+$[c+\sqrt{c(1-b_0)(c-b_0)}]/(c+1-b_0)$.
+Taking $c\downarrow4$ yields
+
+$$
+\boxed{b_0-o_X(1)\le\frac{D_i}{t_i}
+\le\xi_*+o_X(1),\qquad
+\xi_*=
+\frac{4+\sqrt{4(1-b_0)(4-b_0)}}{5-b_0}
+=\frac{400+2\sqrt{35581}}{491}.}
+\tag{ST3}
+$$
+
+The uniform upper claim means that for every fixed $\varepsilon>0$
+there is one common source start with $D_i/t_i\le\xi_*+\varepsilon$
+for every original label and tie. First fix $c>4$ with its upper root
+below $\xi_*+\varepsilon/2$, then use the uniform vanishing errors.
+This does not assert a numerical start or an explicit convergence rate.
+
+Here $\xi_*\approx1.58301<8/5$. Indeed the limiting quadratic at
+$z=8/5$ is
+
+$$
+(5-b_0)\frac{64}{25}-8\frac85+4b_0
+=\frac{36b_0}{25}>0,
+$$
+
+and $8/5$ is to the right of its vertex. Thus ST3 strictly improves
+CR43's asymptotic stock coefficient in this parameter region.
+It neither changes the original $\eta$ nor strengthens CR43 outside
+SC4; there the finite allowance $e_Bt$ in ST2 is retained.
+
+### Transfer the improved cost to the same local prime comparison
+
+Reuse CR44's exact common-source identities
+
+$$
+E(B)=D+Q(B),\qquad
+\psi(A)-\psi(B)-t=D-t+Q(B)-Q(A).
+$$
+
+The existing $Q(x)=O(\sqrt x)$ and $A/B\to1$ pay the endpoint
+corrections. Hence in SC4, for every fixed $\varepsilon>0$ beyond
+one common source start,
+
+$$
+\begin{aligned}
+E(B_i)&\le(\xi_*+\varepsilon)t_i+O(\sqrt{B_i}),\\
+\boxed{\sum_{i<m}\delta_i
+\frac{\psi(A_i)-\psi(B_i)-t_i}{\sqrt{B_i}}
+\le(\xi_*-1+\varepsilon)V_X^{\rm lag}+O(L_X).}
+\end{aligned}
+\tag{ST4}
+$$
+
+The lag weight is the original
+$V_X^{\rm lag}=\sum_{i<m}\delta_it_i/\sqrt{B_i}$.
+All original positive weights, their last outgoing endpoint and all
+ties are retained. The coefficient $\xi_*-1\approx0.58301$ is
+strictly below CR44's $3/5$ only under the stated SC4 condition.
+The fixed comparison parameter $a$ has not been reselected.
+
+ST1--ST4 apply the published BHP count and both existing competitor
+costs to the same actual layer measure. They are paper applications,
+without a new prime theorem, literature-priority or Lean-verification
+claim. This stronger local $B$--$A$ comparison does not bound HC3's
+future-deficit average minus $aE(B)$. The original signed-head upper
+estimate with $C_0<d(1-\kappa)/16$ and RH remain unproved.
