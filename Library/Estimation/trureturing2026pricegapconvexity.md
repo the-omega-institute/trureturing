@@ -3679,3 +3679,167 @@ quadrature and spectral suppliers. They supply no new PNT, generic
 sampling theorem, literature-priority claim, Lean declaration or kernel
 verification. The actual continuous signed estimate, original Robin
 comparison and RH remain unproved.
+
+
+## The existing PNT modulus bounds original clocks also at supremum one
+
+Work conditionally under the original H1 source hypotheses. Assume RH
+failure, retain the actual zero-real-part supremum and supplied parameters
+
+$$
+\Theta\in(1/2,1],\qquad 1-\Theta<\eta<1/2,\qquad d>0,
+\qquad 0<\kappa<1,\qquad 0<a<5\kappa/8.
+$$
+
+Here $\eta$ is the original H1/CR19 exponent denoted $b$ there;
+$a$ is CR45--CR47's fixed compensation parameter. Keep all original
+labels $t_i=\log p_i$, $i=0,\ldots,m$, their full window and every
+maximizing tie. Reuse the original unabridged CR19 height and
+[Trudgian's all-prime-power PNT modulus](../Weil/trudgian2014pnt.md),
+Theorem 1 of arXiv:1401.2689v2. Write
+
+$$
+r_{\rm PNT}=6.455,\qquad
+ a_{\rm PNT}=\sqrt{\frac8{17\pi}},\qquad
+b(y)=a_{\rm PNT}(y/r_{\rm PNT})^{1/4}
+ e^{-\sqrt{y/r_{\rm PNT}}}.
+$$
+
+These are the supplier's constants; $a_{\rm PNT}$ is unrelated to the
+original compensation parameter $a$. Its bound is
+$|\psi(v)-v|/v\le b(\log v)$ for every real $v\ge23$.
+Keep N1/N2's exact ceiling $R$ and common finite source domain
+
+$$
+\mathcal C_X=\{u\in\mathbb N_{>0}:5040\mid u,\ \log u\le R,
+\ \text{every prime divisor of }u\text{ is at most }R\},
+\qquad h\in[\ell_X,2\ell_X].
+$$
+
+This is the original finite integer-core domain, not a real relaxation.
+Let $\mathcal U_i$ be its entire set of active cores at $h=t_i$ and put
+
+$$
+B^{\rm end}_{\max,X}
+=\max_{0\le i\le m}\ \max_{u\in\mathcal U_i}\log u.
+$$
+
+This maximum includes the terminal label and all its ties. The existing
+weighted-label maximum $B_{\max,X}=\max_{i<m}B_i$ for any original
+tie assignment is at most $B^{\rm end}_{\max,X}$.
+All original core clocks tend uniformly to infinity. Choose one common
+existential source start for N1/N2, every original label and endpoint tie,
+all intervening active cores, CR19's nonnegative removal term, $B\ge23$,
+$B\ge e^2$, $L=\log B>1$ and, in CP3, $\sigma_X\le1$.
+No numeric start is supplied. No additional $\Theta<1$ supplier or
+short-interval hypothesis is used; the inherited source hypotheses remain.
+
+### Consume the complete integral and the retained height once
+
+In the original improper integral, the change $v=e^y$ gives
+
+$$
+|I_\psi(B)|\le\int_L^\infty b(y)\frac{1+y}{y^2}\,dy
+\le2a_{\rm PNT}r_{\rm PNT}^{-1/4}
+ \int_L^\infty y^{-3/4}e^{-\sqrt{y/r_{\rm PNT}}}\,dy.
+$$
+
+With $z=\sqrt{y/r_{\rm PNT}}$, this is at most
+
+$$
+4a_{\rm PNT}\int_{\sqrt{L/r_{\rm PNT}}}^\infty z^{-1/2}e^{-z}\,dz
+\le4a_{\rm PNT}r_{\rm PNT}^{1/4}L^{-1/4}
+ e^{-\sqrt{L/r_{\rm PNT}}}.
+$$
+
+For each original label and tie, every future endpoint, prime power
+and complete coefficient of the original integral remains. CR19's nonnegative second term may be dropped
+from its lower bound, yielding $-I_\psi(B)\ge(d/2)X^{-\eta}$.
+The same response therefore satisfies
+
+$$
+\sqrt{L/r_{\rm PNT}}+\frac14\log L
+\le\eta\log X+
+\log\frac{8a_{\rm PNT}r_{\rm PNT}^{1/4}}d.
+$$
+
+Put $C_d=\max\{0,\log(8a_{\rm PNT}r_{\rm PNT}^{1/4}/d)\}$.
+Since $L>1$, this proves uniformly in every original label and tie
+
+$$
+\boxed{
+\log B^{\rm end}_{\max,X}\le r_{\rm PNT}(\eta\log X+C_d)^2.}
+\tag{CP1}
+$$
+
+This is a necessary bound on the same actual cores, obtained by comparing
+the already retained height with an existing unconditional integral
+majorant. It creates no second positive reserve. The original finite
+domain $\mathcal C_X$, parameter range $[\ell_X,2\ell_X]$ and exact
+ceiling $R$ are unchanged; CP1 bounds the clocks selected inside them. N2 also puts all intervening real-parameter active
+cores below the largest original endpoint core, so the same bound
+applies to their clocks. Where $\Theta<1$, SC2's stronger polynomial
+ceiling remains available. CP1 additionally covers $\Theta=1$.
+
+### The whole critical-line subhead is below scale for every original exponent
+
+At the original individual legal heights, reuse SR1 with $\sigma=1/2$.
+Positive original weights and CP1 give
+
+$$
+\boxed{
+\frac{|S_X^{\le1/2}|}{M_XL_X}
+\ll_{\eta,d,a}
+X^{-(1/2-\eta)}(\log X)^3\longrightarrow0,
+\qquad M_X=X^{1/2-\eta}\log X.}
+\tag{CP2}
+$$
+
+All ties, real parts, multiplicities and original masks remain.
+This holds throughout the inherited range $1-\Theta<\eta<1/2$;
+when $\Theta=1$ that range is $0<\eta<1/2$. It extends the
+critical-line conclusion that SR5 alone supplied only
+for $\eta\le1/4$. It uses neither SC2 nor an assumed phase cancellation.
+
+### A shrinking real-part band also has a paid bound
+
+Fix a constant
+
+$$
+0<\zeta<\frac{1/2-\eta}{r_{\rm PNT}\eta^2},\qquad
+\sigma_X=\frac12+\frac\zeta{\log X},\qquad
+\epsilon_\zeta=\frac12-\eta-r_{\rm PNT}\eta^2\zeta>0.
+$$
+
+The proof of SR1 uses the full reciprocal-square sum and the full
+reciprocal-height partial sum. Its constant is independent of the
+real-part threshold: for $B\ge e^2$, simply bound every retained
+$B^{\beta-1/2}$ by $B^{\sigma_X-1/2}$. Thus it may be applied at this
+moving cut without a uniform moving-parameter density theorem.
+Since $B_{\max,X}\le B^{\rm end}_{\max,X}$, CP1 gives
+$B_{\max,X}^{\sigma_X-1/2}\ll_{\eta,d,\zeta}
+X^{r_{\rm PNT}\eta^2\zeta}$ and
+$1+\log^2 B_{\max,X}=O_{\eta,d}((\log X)^4)$.
+Consequently the same original subhead satisfies
+
+$$
+\boxed{
+\frac{|S_X^{\le\sigma_X}|}{M_XL_X}
+\ll_{\eta,d,a,\zeta}
+X^{-\epsilon_\zeta}(\log X)^3\longrightarrow0.}
+\tag{CP3}
+$$
+
+This conclusion retains all original legal height assignments and holds
+also when $\Theta=1$. No endpoint atom is moved: the sector is defined
+by the inclusive actual condition $\beta\le\sigma_X$ and its complement
+is retained. The extra band above the critical line shrinks to it. Every fixed actual
+zero with $\beta>1/2$ eventually remains outside the retained sector;
+zeros with $\beta<1/2$ remain included. CP3 supplies no fixed-width
+zero-free region or signed bound for the remaining head.
+
+CP1--CP3 are applications of the existing PNT, complete-height and
+coefficient suppliers to the original selected source. They introduce
+no PNT or density theorem, literature-priority claim, Lean declaration
+or kernel verification. The complementary signed comparison and RH
+remain unproved.
