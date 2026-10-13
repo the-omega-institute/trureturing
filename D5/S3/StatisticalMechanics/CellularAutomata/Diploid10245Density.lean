@@ -96,16 +96,6 @@ private theorem w_nonneg (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1)
   all_goals simp [Bool.toNat_true, Bool.toNat_false]
   all_goals linarith
 
-private theorem sum_cons (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
-    (∑ a, F a) = ∑ c : Bool, ∑ b : Fin n → Bool, F (Fin.cons c b) := by
-  rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp F]
-  exact Fintype.sum_prod_type _
-
-private theorem sum_snoc (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
-    (∑ a, F a) = ∑ c : Bool, ∑ b : Fin n → Bool, F (Fin.snoc b c) := by
-  rw [← (Fin.snocEquiv (fun _ : Fin (n + 1) => Bool)).sum_comp F]
-  exact Fintype.sum_prod_type _
-
 /-- Conditional probability of an output block given its entire parent block. -/
 private def K (lam : ℝ) (n : ℕ) (b : Fin n → Bool) (a : Fin (n + 2) → Bool) : ℝ :=
   ∏ j : Fin n, w lam (b j) (a j.castSucc.castSucc)
@@ -138,7 +128,9 @@ private theorem marginal_snoc (lam : ℝ) (t n : ℕ) (b : Fin n → Bool) :
       ∑ a : Fin (n + 2) → Bool, K lam n b a * P lam t (n + 2) a
     rw [Finset.sum_comm]
     simp_rw [← Finset.sum_mul, K_snoc_sum]
-    rw [sum_snoc (n + 2), Finset.sum_comm]
+    rw [← Equiv.sum_comp (Fin.snocEquiv (fun _ : Fin (n + 3) => Bool)),
+      Fintype.sum_prod_type, Finset.sum_comm]
+    dsimp only [Fin.snocEquiv, Equiv.coe_fn_mk]
     apply Finset.sum_congr rfl
     intro a _
     simp only [Fin.init_snoc]
@@ -155,7 +147,9 @@ private theorem marginal_cons (lam : ℝ) (t n : ℕ) (b : Fin n → Bool) :
       ∑ a : Fin (n + 2) → Bool, K lam n b a * P lam t (n + 2) a
     rw [Finset.sum_comm]
     simp_rw [← Finset.sum_mul, K_cons_sum]
-    rw [sum_cons (n + 2), Finset.sum_comm]
+    rw [← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin (n + 3) => Bool)),
+      Fintype.sum_prod_type, Finset.sum_comm]
+    dsimp only [Fin.consEquiv, Equiv.coe_fn_mk]
     apply Finset.sum_congr rfl
     intro a _
     simp only [Fin.tail_cons]
@@ -166,7 +160,9 @@ private theorem total_mass (lam : ℝ) (t n : ℕ) :
   induction n with
   | zero => exact Fintype.sum_subsingleton _ Fin.elim0
   | succ n ih =>
-    rw [sum_snoc n, Finset.sum_comm]
+    rw [← Equiv.sum_comp (Fin.snocEquiv (fun _ : Fin (n + 1) => Bool)),
+      Fintype.sum_prod_type, Finset.sum_comm]
+    dsimp only [Fin.snocEquiv, Equiv.coe_fn_mk]
     simp_rw [marginal_snoc]
     exact ih
 
@@ -202,23 +198,29 @@ private theorem cylinder_law (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1) :
 private theorem weighted_init (lam : ℝ) (t n : ℕ) (F : (Fin n → Bool) → ℝ) :
     (∑ a : Fin (n + 1) → Bool, F (Fin.init a) * P lam t (n + 1) a) =
       ∑ b : Fin n → Bool, F b * P lam t n b := by
-  rw [sum_snoc n, Finset.sum_comm]
+  rw [← Equiv.sum_comp (Fin.snocEquiv (fun _ : Fin (n + 1) => Bool)),
+    Fintype.sum_prod_type, Finset.sum_comm]
+  dsimp only [Fin.snocEquiv, Equiv.coe_fn_mk]
   simp only [Fin.init_snoc]
   simp_rw [← Finset.mul_sum, marginal_snoc]
 
 private theorem weighted_tail (lam : ℝ) (t n : ℕ) (F : (Fin n → Bool) → ℝ) :
     (∑ a : Fin (n + 1) → Bool, F (Fin.tail a) * P lam t (n + 1) a) =
       ∑ b : Fin n → Bool, F b * P lam t n b := by
-  rw [sum_cons n, Finset.sum_comm]
+  rw [← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin (n + 1) => Bool)),
+    Fintype.sum_prod_type, Finset.sum_comm]
+  dsimp only [Fin.consEquiv, Equiv.coe_fn_mk]
   simp only [Fin.tail_cons]
   simp_rw [← Finset.mul_sum, marginal_cons]
 
 private theorem q_sum (lam : ℝ) (t : ℕ) :
     q lam t = ∑ a : Fin 3 → Bool, A (a 0) (a 2) * P lam t 3 a := by
-  rw [sum_cons 2]
-  simp_rw [sum_cons 1, sum_cons 0]
+  rw [← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin 3 => Bool)), Fintype.sum_prod_type]
+  simp_rw [← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin 2 => Bool)),
+    Fintype.sum_prod_type, ← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin 1 => Bool)),
+    Fintype.sum_prod_type]
   have h2 : (2 : Fin 3) = (0 : Fin 1).succ.succ := rfl
-  dsimp only [q, A]
+  dsimp only [Fin.consEquiv, Equiv.coe_fn_mk, q, A]
   simp only [Fintype.sum_unique, Fintype.sum_bool, h2, Fin.cons_zero, Fin.cons_succ,
     Bool.toNat_true, Bool.toNat_false]
   norm_num
