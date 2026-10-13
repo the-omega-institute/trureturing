@@ -2656,7 +2656,7 @@ $$
 时间网格变细本身不选择非零弛豫率。
 [Ciccarello、Lorenzo、Giovannetti、Palma][PM-CM] 的
 *Quantum collision models: open system dynamics from repeated interactions*，
-§17、§19 区分粗粒化与发散耦合的严格连续极限；
+§5.6、§5.8 区分粗粒化与发散耦合的严格连续极限；
 其一般主方程还有第一阶 Hamiltonian 等条件。
 此处极限由准确标量递推证明，未借该综述省略模型条件。证毕。
 
@@ -2727,7 +2727,7 @@ $$
 缺失底格的亲和力不定义；$r=0$ 的顶点同理。
 
 [Rao–Esposito][PM-RE] 的 *Nonequilibrium Thermodynamics of Chemical Reaction Networks:
-Wisdom from Stochastic Thermodynamics*，§III.5.2、式 (74)–(77)，
+Wisdom from Stochastic Thermodynamics*，§III.E.2、式 (74)–(77)，
 在质量作用、闭合详细平衡网络中给自由能差与广义相对熵的 Lyapunov 关系。
 此处标量通量 $a_+-a_-$ 与对数亲和力的非负乘积使用同一熵方法，
 但概率始终归一化，证明直接如上；没有从该化学模型输入温度、热、功或物理实现。证毕。
@@ -3068,8 +3068,8 @@ $L(0)=L(1)=\infty,L(2)=6,L(k)=5$（每个有限 $k\ge3$）。
 | Wainwright–Jordan，*Graphical Models, Exponential Families, and Variational Inference*，§§3.5–3.6、Theorems 3.3–3.4 | 有限计数测度，状态 $I$，低阶包含指标作为统计量；16.19 完整给出正最大者、对数仿射和熵缺口桥 | 有全正可行点时用整个 $\Gamma_n$；否则只在已证明的活支撑 $\mathcal J$ 上用对数 |
 | Groisman–Popescu–Winter，quant-ph/0410091v2，§II、Theorem II.3 | 标准量子互信息与总相关含义；自然对数统一单位；16.8、16.20 展开有限维支撑和迹恒等式 | 原操作率定理为渐近多副本局域随机酉去关联，不等于本章联合碰撞或制备成本 |
 | [Şenyaşa、Kesgin、Karpat、Çakmak，*Entropy production in non-Markovian collision models: Information backflow vs system-environment correlations*][PM-SC]，2204.09522v2，§II 式 (2)–(5) | 保留或丢弃已建联合相关的操作区别，与 16.12 的明示重新配对条件对照 | 原文为 qubit 系统—环境及环境间 partial SWAP；本章 $K$ 不是子系统 SWAP，率符号不从该例直接移植 |
-| Ciccarello、Lorenzo、Giovannetti、Palma，2106.11974v2，§17、§19 | 碰撞时长与耦合强度分开；本章用 $h=\tau/n,u_h=gh$ 或 $\sqrt{\nu h}$ | 这里只证明复位边缘的网格极限；一般主方程的附加假设保持在供应者范围 |
-| Rao–Esposito，1602.07257v3，§III.5.2、式 (74)–(77) | 相对熵 Lyapunov 与通量—亲和力方法；本章为 $\Delta\ln(a_+/a_-)$ | 原文质量作用及详细平衡化学条件不能自动赋予概率模型热力学量；16.15 直接证明所需符号 |
+| Ciccarello、Lorenzo、Giovannetti、Palma，2106.11974v2，§5.6、§5.8 | 碰撞时长与耦合强度分开；本章用 $h=\tau/n,u_h=gh$ 或 $\sqrt{\nu h}$ | 这里只证明复位边缘的网格极限；一般主方程的附加假设保持在供应者范围 |
+| Rao–Esposito，1602.07257v3，§III.E.2、式 (74)–(77) | 相对熵 Lyapunov 与通量—亲和力方法；本章为 $\Delta\ln(a_+/a_-)$ | 原文质量作用及详细平衡化学条件不能自动赋予概率模型热力学量；16.15 直接证明所需符号 |
 | NativeContinuation Assumption 21.1、Definition 21.2、Theorem 23.2 | 同十五历史、完整滞后目标、原生 Read 与完整可变词合同，$L(2)=6,L(k\ge3)=5$ | 独立的离散观察及写入任务；不识别为 $(p,b,j)$ 的连续编码 |
 
 本章的论域是所列有限维态、允许操作、概率纤维及校准映射；
