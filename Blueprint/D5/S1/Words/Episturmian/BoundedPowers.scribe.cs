@@ -8,7 +8,7 @@ internal sealed class BoundedPowersDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Episturmian/BoundedPowers.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/peltomaki2024episturmian");
-    private static readonly LibraryNoteRef ClassicalSource = LibraryNoteRef.Create("D5/L/Words/justinpirillo2002episturmian");
+    private static readonly LibraryNoteRef ClassicalSource = LibraryNoteRef.Create("D5/L/Rewriting/justinpirillo2002episturmian");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Episturmian words: BoundedPowers.", H("BoundedPowers"),

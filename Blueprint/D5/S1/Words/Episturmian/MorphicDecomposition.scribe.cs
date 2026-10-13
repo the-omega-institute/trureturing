@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Episturmian;
 internal sealed class MorphicDecompositionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Episturmian/MorphicDecomposition.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/justinpirillo2002episturmian");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Rewriting/justinpirillo2002episturmian");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Episturmian words: MorphicDecomposition.", H("MorphicDecomposition"),
