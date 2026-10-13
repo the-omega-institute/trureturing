@@ -1164,3 +1164,67 @@ instantiation for this task only; it does not establish a native $SO(3)$
 action, metric transport, or physical ambient dimension for FIB.
 
 ## 11.99 追加锚（本行以下为增补区）
+
+## 12. The common-realization gate
+
+The joint Gram construction in Section 10 has a source-level prerequisite
+that is easy to lose under conditioning. A jointly realized path family
+consists of one source set $S$, one state map $z:S\to\mathcal V$, and one
+legal continuation/readout contract such that every path response factors
+through that same $z$. If a path uses a separately chosen state map after
+conditioning on a complement $\eta$, a joint lift to one $z$ must be supplied
+before its Gram operator can be added to the other paths.
+
+**Definition 12.1 (Joint-realization gate).** A collection of finite
+responses $\{\mathscr R_w\}_{w\in\mathcal W}$ passes the gate when there are
+a single source domain $S$, a single boundary map $z:S\to\mathcal V$, and
+linear maps $L_w$ such that
+
+$$
+\mathscr R_w=L_w\circ z
+\qquad(w\in\mathcal W),
+\tag{12.1}
+$$
+
+with all $L_w$ using the same source coordinates and the same declared
+continuation domain. The maps may have different output spaces, but their
+inputs are one common realized state.
+
+**Proposition 12.2 (Independent local fits do not pass the gate).** Local
+conditional minimizers do not by themselves establish (12.1). In particular,
+the stationary common-matrix comparison law in the latest
+[DEV global/local rank result](FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md)
+has, for every fixed block length $m$, independently minimized
+conditional defects whose total tends to zero, while every one global
+rank-two candidate obeys
+
+$$
+\mathscr R_{2,n}(\mu_n)
+\ge
+(n-4)\left[
+v-2\exp\!\left(-\frac{(n-1)\Delta^2}{64}\right)
+\right],
+\qquad v>0.
+\tag{12.2}
+$$
+
+Thus the local minimizers cannot be slices of a common global candidate with
+the same rank constraint. Consequently they cannot be used as the individual
+summands of a joint response Gram operator without an additional common lift.
+
+**Proof.** The lower bound and the vanishing fixed-block sums are the two
+conclusions of the cited comparison law. If the independently selected
+conditional minimizers had a common lift satisfying the same global rank-two
+constraint, that lift would be an admissible global candidate and would
+inherit the vanishing total discrepancy, contradicting (12.2). The failure is
+therefore a failure of joint realization, not a failure of either local
+conditional calculation. $\square$
+
+This proposition is an obstruction to an inference, not a claim that the
+comparison law itself satisfies the $SO(3)$ interface of Section 9. It says
+that even before asking for three equivariant channels, one must preserve the
+common source, continuation legality, and cross-path correlations. A
+three-component local response can remain efficient while the global boundary
+requires additional memory or multiplicity to represent the same source.
+
+## 12.99 追加锚（本行以下为增补区）
