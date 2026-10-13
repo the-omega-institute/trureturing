@@ -10,6 +10,7 @@
 
 import D5.S3.Estimation.SequentialDecisionRisk.NativeBernoulliFactoryCriticalMoment
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
+import Mathlib.Probability.Distributions.Binomial
 
 noncomputable section
 
@@ -598,5 +599,60 @@ theorem aggregate_native_next_answer_kernel
       Prod.fst ⁻¹' (Set.univ : Set Seed)) * _ at hk
   simpa only [Set.preimage_univ, Set.inter_univ, trace_iff_exact_acquired_history,
     hpref, Set.inter_assoc] using hk
+
+def binomialMass (n i : ℕ) (p : unitInterval) : ℝ≥0∞ := binomial n p {i}
+
+def bernoulliMass (p : unitInterval) (b : Bool) : ℝ≥0∞ :=
+  bernoulliMeasure true false p {b}
+
+private theorem bernoulli_mass_eq (p : unitInterval) (b : Bool) :
+    bernoulliMass p b = ENNReal.ofReal (if b then (p : ℝ) else 1 - p) := by
+  cases b
+  · rw [bernoulliMass, bernoulliMeasure_apply p (measurableSet_singleton false)]
+    simp only [Set.mem_singleton_iff, Bool.true_eq_false, ↓reduceIte]
+    exact ENNReal.ofReal_coe_nnreal.symm
+  · rw [bernoulliMass, bernoulliMeasure_apply p (measurableSet_singleton true)]
+    simp only [Set.mem_singleton_iff, Bool.false_eq_true, ↓reduceIte]
+    exact ENNReal.ofReal_coe_nnreal.symm
+
+/-- Binomial singleton masses have full finite support and Pascal recursion,
+without excluding either endpoint source rate. -/
+theorem binomial_mass_support_and_pascal (p : unitInterval) :
+    (∀ n, ∑ i : Fin (n + 1), binomialMass n i.val p = 1) ∧
+    (∀ n i, n < i → binomialMass n i p = 0) ∧
+    (∀ n, binomialMass (n + 1) 0 p = binomialMass n 0 p * bernoulliMass p false) ∧
+    (∀ n i, binomialMass (n + 1) (i + 1) p =
+      binomialMass n (i + 1) p * bernoulliMass p false +
+        binomialMass n i p * bernoulliMass p true) := by
+  have hp : 0 ≤ (p : ℝ) := p.2.1
+  have hq : 0 ≤ 1 - (p : ℝ) := sub_nonneg.mpr p.2.2
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro n
+    rw [Fin.sum_univ_eq_sum_range (fun i => binomialMass n i p) (n + 1)]
+    have h := congrArg (fun μ : Measure ℕ => μ Set.univ) (binomial_eq_sum_dirac n p)
+    simpa [binomialMass, binomial_singleton,
+      Nat.range_succ_eq_Iic, Measure.finsetSum_apply] using h.symm
+  · intro n i hi
+    simp [binomialMass, binomial_singleton, Nat.choose_eq_zero_of_lt hi]
+  · intro n
+    simp only [binomialMass, binomial_singleton, bernoulli_mass_eq, Bool.false_eq_true,
+      ↓reduceIte, Nat.choose_zero_right, Nat.cast_one, pow_zero, mul_one, one_mul,
+      Nat.sub_zero]
+    rw [← ENNReal.ofReal_mul (pow_nonneg hq n), pow_succ]
+  · intro n i
+    simp only [binomialMass, binomial_singleton, bernoulli_mass_eq, Bool.false_eq_true,
+      ↓reduceIte]
+    rw [← ENNReal.ofReal_mul (by positivity), ← ENNReal.ofReal_mul (by positivity),
+      ← ENNReal.ofReal_add (by positivity) (by positivity)]
+    apply congrArg ENNReal.ofReal
+    rcases lt_trichotomy i n with hi | rfl | hi
+    · have he : n - i = n - (i + 1) + 1 := by omega
+      simp only [Nat.choose_succ_succ', Nat.cast_add, Nat.add_sub_add_right,
+        he, pow_succ]
+      ring
+    · simp [pow_succ]
+    · simp [Nat.choose_eq_zero_of_lt hi,
+        Nat.choose_eq_zero_of_lt (by omega : n < i + 1),
+        Nat.choose_eq_zero_of_lt (Nat.add_lt_add_right hi 1)]
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
