@@ -39,13 +39,13 @@ def nativeEquiv (q : ℕ) (hq : 0 < q) :
   ((beamRowEquiv (ResetGraph q) (Alternating.reset_expanded_essential q hq)).toAddEquiv.trans
     (resetRowLimitEquiv q).toAddEquiv).toIntLinearEquiv
 
-private def nativeStage (q N : ℕ) : VertexModule Sign q →ₗ[ℤ] DimensionGroup (resetMatrix q) :=
+def nativeStage (q N : ℕ) : VertexModule Sign q →ₗ[ℤ] DimensionGroup (resetMatrix q) :=
   (stage (transition (resetMatrix q)) N).toAddMonoidHom.toIntLinearMap
 
-private theorem nativeStage_apply (q N : ℕ) (z : VertexModule Sign q) :
+theorem nativeStage_apply (q N : ℕ) (z : VertexModule Sign q) :
     nativeStage q N z = stage (transition (resetMatrix q)) N z := rfl
 
-private theorem native_hom_ext (q : ℕ) {f g : Module.End ℤ (DimensionGroup (resetMatrix q))}
+theorem native_hom_ext (q : ℕ) {f g : Module.End ℤ (DimensionGroup (resetMatrix q))}
     (h : ∀ N : ℕ, f.comp (nativeStage q N) = g.comp (nativeStage q N)) : f = g := by
   apply LinearMap.ext
   intro x

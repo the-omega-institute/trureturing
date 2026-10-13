@@ -131,7 +131,9 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
             return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
-        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)):
+        # FIFOs and sockets hold no data; reclaimable trees treat them like empty files.
+        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)
+                or reclaim and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))):
             return dict(reason="special_file")
         if info.st_mtime > cutoff:
             return dict(reason="recent")
@@ -400,20 +402,30 @@ def containing_repository(path):
     return None
 
 
-def artifact_lakes(path, protected, worktrees):
-    """Find private cache roots without splitting ordinary siblings or entering Git metadata."""
-    device, pending = path.lstat().st_dev, [path]
+def artifact_lakes(path, protected, worktrees, unobservable):
+    """Find private cache roots without splitting ordinary siblings or entering Git metadata.
+
+    An entry that vanished or cannot be read is reported and skipped; it holds no reachable staging.
+    """
+    device, pending = None, [path]
     while pending:
         entry = pending.pop()
-        info = entry.lstat()
-        if (not stat.S_ISDIR(info.st_mode) or info.st_dev != device or info.st_uid != os.getuid()
-                or getattr(info, "st_flags", 0) & PROTECTED_FLAGS
-                or entry in protected or any(tree == entry or tree in entry.parents for tree in worktrees)):
+        try:
+            info = entry.lstat()
+            device = info.st_dev if device is None else device
+            if (not stat.S_ISDIR(info.st_mode) or info.st_dev != device or info.st_uid != os.getuid()
+                    or getattr(info, "st_flags", 0) & PROTECTED_FLAGS
+                    or entry in protected or any(tree == entry or tree in entry.parents for tree in worktrees)):
+                continue
+            if entry.name == ".lake":
+                found = containing_repository(entry.parent) is not None
+            else:
+                pending.extend(child for child in entry.iterdir() if child.name != ".git")
+                continue
+        except (FileNotFoundError, PermissionError) as error:
+            unobservable(entry, error)
             continue
-        if entry.name == ".lake":
-            yield entry, containing_repository(entry.parent) is not None
-        else:
-            pending.extend(child for child in entry.iterdir() if child.name != ".git")
+        yield entry, found
 
 
 def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
@@ -497,6 +509,11 @@ def clean_from_anchor(options, caller, disk_descriptor):
         if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
             emit("host_cleanup_item", category=category, **result)
 
+    def unobservable(path, error):
+        reason = "vanished" if isinstance(error, FileNotFoundError) else "unreadable"
+        record("lean_staging", dict(path=str(path), action="kept", reason=reason, detail=str(error),
+                                    apparent_bytes=0))
+
     def fresh_protection():
         return active_paths(codex) | set(registered_worktrees(main_checkout)) | {caller}
 
@@ -527,13 +544,15 @@ def clean_from_anchor(options, caller, disk_descriptor):
                 clean_staging(lake)
                 result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
             else:
+                # Temporary candidates rely on the registrations and activity read at sweep start.
+                refresh = category != "tmp"
                 result = clean_candidate(path, cutoff, protections[category], options.delete,
-                                         repository=None if category == "codex" else main_checkout,
-                                         activity=fresh_protection, reclaim=category != "codex",
-                                         refresh_activity=True)
+                                         repository=main_checkout if category == "sshx" else None,
+                                         activity=fresh_protection if refresh else None,
+                                         reclaim=category != "codex", refresh_activity=refresh)
             record(category, result)
             if category != "codex" and result["action"] == "kept" and result["reason"] == "recent":
-                for lake, repository in artifact_lakes(path, protections[category], worktrees):
+                for lake, repository in artifact_lakes(path, protections[category], worktrees, unobservable):
                     if repository:
                         clean_staging(lake)
     except OSError as error:

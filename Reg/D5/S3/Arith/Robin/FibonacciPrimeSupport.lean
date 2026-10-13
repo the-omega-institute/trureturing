@@ -191,6 +191,62 @@ def robinAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+/-- The same divisor-sum readout, for the general support Euler-product bound. -/
+abbrev ratioArena : Arena where
+  signature := sigmaSignature
+  Law R := ∀ n : ℕ, n ≠ 0 → ((R.readout () () n : ℕ) : ℝ) / n ≤
+    ∏ p ∈ n.primeFactors, (p : ℝ) / ((p : ℝ) - 1)
+
+/-- At one, the empty Euler product is one and the replacement divisor sum is five. -/
+theorem ratio_rejected_law : ¬ ratioArena.Law sigmaRejected := by
+  intro h
+  have hbad := h 1 one_ne_zero
+  change ((5 : ℕ) : ℝ) / ((1 : ℕ) : ℝ) ≤
+    ∏ p ∈ (1 : ℕ).primeFactors, (p : ℝ) / ((p : ℝ) - 1) at hbad
+  norm_num at hbad
+
+def ratioRegistration : Registration ratioArena (type_of% ratio_le_prod) where
+  actual := sigmaActual
+  bridge := Iff.rfl
+  variation := ⟨ratio_le_prod, sigmaRejected, ratio_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨sigmaRejected, fun j h => (h (Subsingleton.elim j i)).elim,
+    funext (fun e => nomatch e), ratio_rejected_law⟩, fun i => nomatch i⟩
+  dependence := sigma_dependence
+
+def ratioAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@ratio_le_prod)
+    (type_of% (realize.{0, 0, 0, 0, 0} sigmaSignature
+      (fun _ _ m => ArithmeticFunction.sigma 1 m) (fun e => nomatch e))) Unit Unit where
+  unitName := `D5.S3.Arith.Robin.FibonacciPrimeSupport.ratio_le_prod.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.FibonacciPrimeSupport.ratioRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨ratioArena⟩
+  objectArena := .source ⟨ratioArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source ratioArena ⟨ratioRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0, 0, 0, 0, 0} sigmaSignature
+    (fun _ _ m => ArithmeticFunction.sigma 1 m) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.FibonacciPrimeSupport
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end
 
 end Reg.D5.S3.Arith.Robin.FibonacciPrimeSupport

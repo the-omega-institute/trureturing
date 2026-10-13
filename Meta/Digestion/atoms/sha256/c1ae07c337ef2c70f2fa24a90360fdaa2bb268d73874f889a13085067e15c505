@@ -1,0 +1,14 @@
+**Theorem 46.2 (corrected realizability implication).** Theorem 43.3 remains
+valid after replacing its reply-factorization hypothesis by Definition 46.1.
+In particular, a silent passive or intervention action cannot select two
+different halt positions merely because two hidden sources share the same
+visible boundary. Conversely, a source/action factorization is a controller
+witness only when it includes a finite position set, the all-action maps
+$\delta_{e,a}$, and a fixed instruction at each position. An arbitrary policy
+or a list of source-indexed words is not by itself a finite controller.
+
+The proof is the same induction on ordered events, now applied to every
+action. The source-independent map $\delta_{e,a}$ supplies the unique next
+instruction; same-source evaluation supplies the physical successor and full
+terminal row; the rank excludes infinite event sequences.
+

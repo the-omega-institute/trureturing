@@ -15,7 +15,7 @@ internal sealed class GaussianPolynomialTotalityDocument : IScribeDocumentDefini
                 "D5/S3/Quantum/Analysis/Hermite/GaussianPolynomialTotality.gaussian_polynomial_totality"),
             H("Every positive Gaussian width gives a total polynomial test family"),
             StatementSource.FromAuthor(TheoremFormula()),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Analytic/tauceti2026gaussianpolynomial")),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/tauceti2026gaussianpolynomial")),
             Blocks(
                 Paragraph(Text("Let b be strictly positive and let g be a complex square-integrable "
                     + "function on the real line with Lebesgue volume. If the integral of "

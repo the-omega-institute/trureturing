@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.AuricFib
 import Reg.Support.DependentFamily
 import Reg.Support.FiniteHistoryFamily
 
@@ -40,6 +41,29 @@ noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
+/-- The full thirteen-binder source, including both rigid universes, dependent
+history types, implicit parameters, instances and proof premises, reuses the
+ordinary registration's actual family. No ordinary obligation is removed. -/
+def analysisSource : Analysis.Source
+    (@history_law_conditional_expectation.{u,v}) :=
+  Analysis.Source.ofRegistration _ registration .exact {
+    owner := `D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
+    definition := none
+    coordinates := #[0, 1, 11]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "arg", "fn", "arg",
+        "body", "body", "body", "fn", "arg", "arg", "body", "arg", "arg"]
+      stateBinder := 16, functionOperand := false, stateOperand := none,
+      booleanPredicate := false }] }
+
+def analysis : AuricFib.Contract.Application.{max (u+1) (v+1),max u v,0,v,0,0}
+    (@history_law_conditional_expectation.{u,v}) where
+  evidence := .typed {
+    source := analysisSource
+    plan := { task := (), initial := [], additions := [[()], []] }
+    acquisition := .unavailable "Dependent history family: finite fiber unacquired" }
 
 
 end Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation

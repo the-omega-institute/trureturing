@@ -1,0 +1,9 @@
+**Proposition 2.3 (horizon and endpoints).** Every legal step decreases
+
+$$
+V(k,d)=n-k+2d
+$$
+
+by exactly one. The longest legal action word from every state has
+length $V(k,d)$, and the separators in Theorem 2.2 have length at most
+this number. 

@@ -1,0 +1,8 @@
+**定理 6.1（单字符两侧界）。** 设 $n\ge3$ 为奇数,$\mathtt q\ge2$,$\Gamma$ 与 $\mathrm{col}$ 任意,$t\in G$。则
+
+$$
+\rho_t\le\min\{\,2\,r(\pi_t),\ 2\,\nu(H_t)\,\},\qquad r(\pi_t)\le2\,\nu(H_t),
+$$
+
+并且当 $H_t$ 有边时 $\rho_t\ge2$、$r(\pi_t)\ge2$。上界 $\rho_t=2r(\pi_t)$ 可以达到:当 $n\ge5$、$\mathtt q\ge4$ 时,取 $N=4$、$\Gamma$ 为四圈、四个量子比特位于四个不同的方,且 $f_t$ 在这四个方上取四个两两不同的值,则 $\rho_t=4$、$r(\pi_t)=2$。下界 $\rho_t=2$ 可以与 $r(\pi_t)=2\lfloor k/2\rfloor$ 同时出现,其中 $k\le\min(n,\mathtt q)$ 可取到 $\min(n,\mathtt q)$(定理 6.2);故允许 $n$ 与 $\mathtt q$ 增大时,比值 $\rho_t/r(\pi_t)$ 没有正的下界。
+
