@@ -530,10 +530,4 @@ theorem spectral_reduction (k : ℕ)
   dsimp only [P]
   rw [packed_purity, Complex.ofReal_re]
 
-#print axioms spectral_reduction
-#check bell
-#check extendedBell
-#check extendUnitary
-#check permutationU
-#check swapU
 end D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
