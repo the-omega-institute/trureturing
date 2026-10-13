@@ -870,14 +870,9 @@ private theorem projection_prim : Primrec₂ projection := by
         (Primrec.option_isSome.comp (Primrec.listLookup.comp Primrec.snd (Primrec.snd.comp Primrec.fst)))
         (Primrec.option_some.comp Primrec.snd) (Primrec.const none)).to₂)
     exact h.of_eq (fun p => by
-      have he : ∀ L : List Nat,
-          L.filterMap (fun x => bif (p.2.lookup x).isSome then some x else none) =
-          L.filter (fun x => (p.2.lookup x).isSome) := by
-        intro L
-        induction L with
-        | nil => rfl
-        | cons x xs ih => cases hb : (p.2.lookup x).isSome <;> simp [hb,ih]
-      exact he _)
+      simpa only [Option.guard, Bool.cond_eq_ite] using
+        congrFun (List.filterMap_eq_filter
+          (p := fun x => (p.2.lookup x).isSome)) (List.range p.1))
   change Primrec (fun p : Nat × Store => projection p.1 p.2)
   unfold projection
   refine Primrec.list_map filtered ?_
