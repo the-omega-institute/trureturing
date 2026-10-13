@@ -51,26 +51,20 @@
    qAB_logderivative_zero: proof_shape: bind-only; escape_witness: none;
      consumers: speyer_variance_bound.
    splits_derivative: proof_shape: bind-only; escape_witness: none;
-     consumers: iterated_derivative_splits_Icc.
-   derivative_roots_Icc: proof_shape: bind-only; escape_witness: none;
-     consumers: iterated_derivative_splits_Icc.
-   iterated_derivative_splits_Icc: proof_shape: bind-only; escape_witness: none;
-     consumers: H_splits_roots.
+     consumers: iterated_derivative_splits.
+   iterated_derivative_splits: proof_shape: bind-only; escape_witness: none;
+     consumers: H_splits.
    H: proof_shape: bind-only; escape_witness: none;
-     consumers: rodrigues_identity, H_eval_zero, H_eval_one, H_eval_one_ne, H_splits_roots, H_degree_le, H_reflect_transport, qAB_splits.
+     consumers: rodrigues_identity, H_eval_zero, H_splits, H_degree_le, H_reflect_transport, qAB_splits.
    derivative_one_sub_pow: proof_shape: bind-only; escape_witness: none;
      consumers: rodrigues_identity.
    descFactorial_balance: proof_shape: bind-only; escape_witness: none;
      consumers: rodrigues_identity.
    rodrigues_identity: proof_shape: bind-only; escape_witness: none;
-     consumers: H_splits_roots.
+     consumers: H_splits.
    H_eval_zero: proof_shape: bind-only; escape_witness: none;
-     consumers: H_splits_roots.
-   H_eval_one: proof_shape: bind-only; escape_witness: none;
-     consumers: H_eval_one_ne.
-   H_eval_one_ne: proof_shape: bind-only; escape_witness: none;
-     consumers: H_splits_roots.
-   H_splits_roots: proof_shape: bind-only; escape_witness: none;
+     consumers: H_splits.
+   H_splits: proof_shape: bind-only; escape_witness: none;
      consumers: qAB_splits.
    splits_reverse: proof_shape: content; escape_witness: splits_reverse;
      consumers: splits_reflect.
@@ -121,7 +115,6 @@
 -/
 
 import D5.S3.Analytic.Probability.BernoulliTriangularLimits
-import Mathlib.Analysis.Complex.Polynomial.GaussLucas
 import Mathlib.Analysis.Calculus.LocalExtr.Polynomial
 
 noncomputable section
@@ -364,47 +357,14 @@ private lemma splits_derivative {p : ℝ[X]} (hp : p.Splits) : p.derivative.Spli
   rw [natDegree_derivative] at hd ⊢
   omega
 
-private lemma derivative_roots_Icc {p : ℝ[X]} {A B : ℝ} (hp : p.Splits)
-    (hroots : ∀ z ∈ p.roots, z ∈ Set.Icc A B) :
-    ∀ x ∈ p.derivative.roots, x ∈ Set.Icc A B := by
-  intro x hx
-  have hdne : p.derivative ≠ 0 := ne_zero_of_mem_roots hx
-  have hpne : p ≠ 0 := by intro h; simp [h] at hdne
-  have hdeg : 0 < p.degree := by
-    rw [← natDegree_pos_iff_degree_pos]
-    by_contra h
-    exact hdne (derivative_eq_zero.mpr (Nat.eq_zero_of_not_pos h))
-  let P := p.map (algebraMap ℝ ℂ)
-  have hpP : P ≠ 0 := by simpa [P] using hpne
-  have hdegP : 0 < P.degree := by simpa [P] using hdeg
-  have heq : P.rootSet ℂ = p.rootSet ℂ := by simp [P,rootSet_def,aroots_def]
-  have him : (algebraMap ℝ ℂ) '' p.rootSet ℝ = P.rootSet ℂ := by
-    rw [heq]
-    exact (show (p.map (algebraMap ℝ ℝ)).Splits by simpa using hp).image_rootSet_algebraMap
-  have hsub : P.rootSet ℂ ⊆ Complex.reLm ⁻¹' Icc A B := by
-    rw [← him]
-    rintro z ⟨y,hy,rfl⟩
-    simpa using hroots y (by simpa [rootSet_def,aroots_def] using hy)
-  have hxP : (x : ℂ) ∈ P.derivative.rootSet ℂ := by
-    rw [mem_rootSet, coe_aeval_eq_eval]
-    constructor
-    · simpa [P,derivative_map] using hdne
-    · dsimp [P]
-      rw [derivative_map]
-      change (p.derivative.map (algebraMap ℝ ℂ)).eval ((algebraMap ℝ ℂ) x) = 0
-      rw [eval_map_apply, (isRoot_of_mem_roots hx).eq_zero, map_zero]
-  have hconv := convexHull_min hsub ((convex_Icc A B).linear_preimage Complex.reLm)
-  have hmem := hconv (P.rootSet_derivative_subset_convexHull_rootSet hdegP hxP)
-  simpa using hmem
 
-private lemma iterated_derivative_splits_Icc {p : ℝ[X]} {A B : ℝ} (hp : p.Splits)
-    (hroots : ∀ z ∈ p.roots, z ∈ Set.Icc A B) (k : ℕ) :
-    (derivative^[k] p).Splits ∧ ∀ z ∈ (derivative^[k] p).roots, z ∈ Set.Icc A B := by
+private lemma iterated_derivative_splits {p : ℝ[X]} (hp : p.Splits) (k : ℕ) :
+    (derivative^[k] p).Splits := by
   induction k with
-  | zero => exact ⟨hp,hroots⟩
+  | zero => exact hp
   | succ k ih =>
     rw [Function.iterate_succ_apply']
-    exact ⟨splits_derivative ih.1, derivative_roots_Icc ih.1 ih.2⟩
+    exact splits_derivative ih
 open Polynomial Finset Filter Real
 open scoped BigOperators
 
@@ -451,40 +411,15 @@ private lemma H_eval_zero (a b : ℕ) : (H a b).eval 0 = 1 := by
     simp [zero_pow (by omega : j ≠ 0)]
   · simp
 
-private lemma H_eval_one (a b : ℕ) : (H a b).eval 1 = (-1:ℝ)^a * b.choose a := by
-  simp only [H, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_neg, eval_X,
-    eval_sub, eval_one, sub_self]
-  rw [sum_eq_single a]
-  · simp [mul_comm]
-  · intro j hj hja
-    have h : a-j ≠ 0 := by have := mem_range.mp hj; omega
-    simp [zero_pow h]
-  · simp
 
-private lemma H_eval_one_ne (a b : ℕ) (hab : a ≤ b) : (H a b).eval 1 ≠ 0 := by
-  rw [H_eval_one]
-  exact mul_ne_zero (pow_ne_zero _ (by norm_num)) (by exact_mod_cast (Nat.choose_pos hab).ne')
-
-private lemma H_splits_roots (a b : ℕ) (hab : a ≤ b) :
-    (H a b).Splits ∧ ∀ x ∈ (H a b).roots, x ∈ Set.Ioo (0:ℝ) 1 := by
+private lemma H_splits (a b : ℕ) (hab : a ≤ b) :
+    (H a b).Splits := by
   have hp : ((X:ℝ[X])^a * (1-X)^b).Splits := by
     apply Splits.mul (Splits.X.pow a)
     have hlin : (1-X:ℝ[X]).Splits := by
       simpa only [neg_sub, C_1] using (Splits.X_sub_C (1:ℝ)).neg
     exact hlin.pow b
-  have hr : ∀ z ∈ ((X:ℝ[X])^a * (1-X)^b).roots, z ∈ Set.Icc (0:ℝ) 1 := by
-    intro z hz
-    have hz0 := (isRoot_of_mem_roots hz).eq_zero
-    simp only [eval_mul, eval_pow, eval_X, eval_sub, eval_one, mul_eq_zero] at hz0
-    rcases hz0 with hz0 | hz1
-    · have := eq_zero_of_pow_eq_zero hz0
-      subst z
-      norm_num
-    · have := eq_zero_of_pow_eq_zero hz1
-      have : z = 1 := by linarith
-      subst z
-      norm_num
-  have hi := iterated_derivative_splits_Icc hp hr a
+  have hi := iterated_derivative_splits hp a
   have h0 : derivative^[a] ((X:ℝ[X])^a * (1-X)^b) ≠ 0 := by
     intro he
     have he0 := congrArg (fun p : ℝ[X] => p.eval 0) he
@@ -493,17 +428,7 @@ private lemma H_splits_roots (a b : ℕ) (hab : a ≤ b) :
   have hdvd : H a b ∣ derivative^[a] ((X:ℝ[X])^a * (1-X)^b) := by
     rw [rodrigues_identity a b hab]
     exact dvd_mul_left _ _
-  refine ⟨hi.1.of_dvd h0 hdvd, ?_⟩
-  intro x hx
-  have hx' := hi.2 x (Multiset.mem_of_le (roots.le_of_dvd h0 hdvd) hx)
-  have hx0 : x ≠ 0 := by
-    intro he; subst x
-    have := (isRoot_of_mem_roots hx).eq_zero
-    simpa [H_eval_zero] using this
-  have hx1 : x ≠ 1 := by
-    intro he; subst x
-    exact H_eval_one_ne a b hab (isRoot_of_mem_roots hx).eq_zero
-  exact ⟨lt_of_le_of_ne hx'.1 (Ne.symm hx0), lt_of_le_of_ne hx'.2 hx1⟩
+  exact hi.of_dvd h0 hdvd
 open Polynomial Finset Filter Real
 open scoped BigOperators
 
@@ -594,7 +519,7 @@ private lemma qAB_splits (a b : ℕ) (hab : a ≤ b) : (qAB a b).Splits := by
       _ ≤ a := by
         rw [natDegree_X_add_C, mul_one]
         exact H_degree_le a b
-  have hs := splits_reflect ((H_splits_roots a b hab).1.comp_X_add_C 1) a hdeg
+  have hs := splits_reflect ((H_splits a b hab).comp_X_add_C 1) a hdeg
   simp only [C_1] at hs
   rw [H_reflect_transport] at hs
   exact (splits_mul_iff_right (by simp : C ((-1:ℝ)^a) ≠ 0) (Splits.C _)).mp hs

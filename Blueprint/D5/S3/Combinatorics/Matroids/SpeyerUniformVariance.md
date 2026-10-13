@@ -52,7 +52,7 @@ $$\forall (n: \mathbb{N}), \forall (d: \mathbb{N}), ((2 \le d) \land (2 \cdot d 
 
 *Commentary.*
 
-The normalized Speyer polynomial is X times a product of Bernoulli probability-generating polynomials, with every parameter strictly between zero and one. This Speyer specialization is derived here from its negative real roots; Harper is cited for the Bernoulli method.
+The normalized Speyer polynomial is X times a product of Bernoulli probability-generating polynomials, with every parameter strictly between zero and one. Repeated differentiation in the Rodrigues identity gives the splitting of H. Reflection and reversal give the splitting of qAB, and positivity on [-1, infinity) puts its real roots below -1. Normalizing those factors gives the Bernoulli product; Harper is cited for the Bernoulli method.
 
 ## References
 
