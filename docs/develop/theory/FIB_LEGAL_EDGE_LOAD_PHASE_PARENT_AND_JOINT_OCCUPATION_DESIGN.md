@@ -3201,3 +3201,475 @@ the same state, with different readout roles.
 [PTH8]: https://github.com/the-omega-institute/trureturing/blob/9fb5243e1b84656137d2604a8db80f06c0ae8d59/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Collective occupation cylinders and an all-length parity family
+
+### 9.1. A cut on the original legal carrier
+
+**Definition 9.1 (Zero cylinders).** Keep the positive activity law,
+open path, site weights and operators of Chapter 7. Let $Z_T$ denote
+the activity partition function with the vertices in $T$ deleted,
+so $Z_\varnothing=Z$. For a nonempty set $T\subseteq[n]$, put
+
+$$
+A_T=\{s\in B_n:s_i=0\text{ for every }i\in T\},
+\qquad \alpha_T=p(A_T)=\frac{Z_T}{Z}.
+\tag{9.1}
+$$
+
+Deletion evaluates an event in the original law. It does not replace
+the generator by a chain on a smaller graph, rescale its weights, or
+remove a tangent coordinate. Write $N(i)$ for the actual open-path
+neighbors of $i$. Define
+
+$$
+\kappa_T=
+\frac{Z\displaystyle\sum_{i\in T}\omega_iq_iZ_{T\cup N(i)}}
+{Z_T(Z-Z_T)},
+\qquad
+\kappa_* = \min_{\varnothing\ne T\subseteq[n]}\kappa_T.
+\tag{9.2}
+$$
+
+The vacuum belongs to $A_T$, and a singleton occupation at any site
+in $T$ lies outside it. Positive activities therefore give
+$0<\alpha_T<1$.
+
+**Theorem 9.2 (Collective cylinder certificate).** For every $n\ge2$,
+every positive activity vector, and every nonnegative normalized
+site distribution,
+
+$$
+\gamma\le\kappa_*\le U.
+\tag{9.3}
+$$
+
+For any nonempty $T$ and physical-path matching $\mathcal M$,
+$\kappa_T\le D_{\mathcal M}$ is sufficient for
+$\gamma+\Lambda\le1$.
+
+Proof. For any real observable $f$ the insertion-edge Dirichlet form is
+
+$$
+\mathcal E_\omega(f,f)=
+\sum_{\substack{s\in B_n,\ i\in[n]\\
+s_i=0,\ s+e_i\in B_n}}
+p(s)\omega_iq_i\bigl(f(s)-f(s+e_i)\bigr)^2.
+\tag{9.4}
+$$
+
+Each undirected edge is counted once from its empty endpoint.
+Take $f_T=\mathbf1_{A_T}-\alpha_T$. Its variance is
+$\alpha_T(1-\alpha_T)$. An insertion crosses this cut exactly when
+$i\in T$ and the original word has every site in $T\cup N(i)$ empty.
+The empty-side mass of these words is $Z_{T\cup N(i)}/Z$. Thus
+
+$$
+\mathcal E_\omega(f_T,f_T)
+=\frac1Z\sum_{i\in T}\omega_iq_iZ_{T\cup N(i)}.
+\tag{9.5}
+$$
+
+Its Rayleigh quotient is (9.2), giving the first inequality in (9.3).
+For $T=\{i\}$, the centered zero indicator differs by sign from the
+centered occupation $s_i-\rho_i$. Equation (7.10) gives
+$\kappa_{\{i\}}=b_i/(1-\rho_i)$. Taking a minimum over all subsets
+includes these singleton tests, proving $\kappa_*\le U$.
+Finally combine $\gamma\le\kappa_T$ with $\delta\ge D_{\mathcal M}$
+and $\delta=1-\Lambda$. $\square$
+
+The variational use of a cut is established Markov-chain mathematics.
+Blanca--Galvin--Randall--Tetali [BGRT12], Section 4.1 and Theorem 4.1,
+use conductance for hard-core Metropolis dynamics on two-dimensional
+regions. Their rates and lattice conclusions are not imported into
+(9.4). The flux (9.5) is computed here for the stipulated weighted
+heat-bath path, with its original endpoints and activity law.
+
+**Corollary 9.3 (A rational sufficient certificate).** Put
+
+$$
+r_{ij}=\frac{\omega_i\omega_j(1-q_iq_j)}{\omega_i+\omega_j},
+\tag{9.6}
+$$
+
+with value zero when both weights vanish. Then $r_{ij}\le d_{ij}$.
+Consequently $\kappa_T\le\sum_{ij\in\mathcal M}r_{ij}$ is sufficient
+for the same two-edge comparison. It is entirely rational when the
+activities and weights are rational.
+
+Proof. The smaller root $d=d_{ij}$ satisfies
+$d(\omega_i+\omega_j-d)=\omega_i\omega_j(1-q_iq_j)$ and
+$0\le d\le\min(\omega_i,\omega_j)$. If the weight sum is positive,
+division by $\omega_i+\omega_j-d\le\omega_i+\omega_j$ proves (9.6).
+Zero weights give the stated zero cases. $\square$
+
+Every deleted partition function is evaluated by multiplying the
+partition functions of its undeleted intervals. Within an interval,
+
+$$
+Z_{[a,b]}=Z_{[a,b-1]}+\lambda_bZ_{[a,b-2]},
+\qquad Z_\varnothing=1,
+\qquad Z_{[a,a]}=1+\lambda_a.
+\tag{9.7}
+$$
+
+### 9.2. A strict enlargement beyond singleton probes
+
+**Proposition 9.4 (A seven-site collective certificate).** Take
+$\lambda_i=100$ and
+
+$$
+\omega=\frac1{304}(1,100,1,100,1,100,1),
+\qquad T=\{1,3,5,7\},
+\qquad \mathcal M=\{12,34,56\}.
+\tag{9.8}
+$$
+
+Then the collective certificate succeeds, while every certificate
+of the form $U\le D_{\mathcal M'}$ fails.
+
+Proof. Recurrence (9.7) gives
+
+$$
+Z=110150701,\qquad Z_T=1030301,
+\qquad
+\kappa_T=\frac{55620651}{845984272304}<\frac1{15000},
+\tag{9.9}
+$$
+
+and direct substitution in (9.6) gives
+
+$$
+\sum_{ij\in\mathcal M}r_{ij}
+=\frac{15075}{78302876}>\frac1{6000}.
+\tag{9.10}
+$$
+
+Hence $\gamma<\delta$ and $\gamma+\Lambda<1$. On the other hand,
+the actual constrained marginals give
+
+$$
+U=\frac{1090601}{1857622704}>\frac1{2000}.
+\tag{9.11}
+$$
+
+All adjacent edges have the same $d$. Its root identity and
+$d\le1/304$ imply
+$d\le(1/304)(1-(100/101)^2)=201/3101104$.
+Every matching has at most three edges, so
+
+$$
+\max_{\mathcal M'}D_{\mathcal M'}
+\le\frac{603}{3101104}<\frac1{5000}<U.
+\tag{9.12}
+$$
+
+There is also no equal-weight adjacent pair. Thus the sufficient
+tests of Theorem 7.3 do not establish this instance, whereas
+Theorem 9.2 does. $\square$
+
+All separations in this proof are strict. The partition functions,
+$U$, $\kappa_T$ and the finitely many matching bounds are continuous
+on positive activities and the interior weight simplex. Therefore
+a nonempty relatively open neighborhood of (9.8) has the same
+strict separation. It contains fully nonuniform activity and
+weight vectors. This is an enlargement of sufficient conditions
+for the conjecture, not a violation of the conjecture.
+
+### 9.3. Homogeneous activities and arbitrary parity imbalance
+
+**Theorem 9.5 (All lengths with alternating site weights).** For every
+$n\ge2$ and $t>0$, let $\lambda_i=t$. Set $\omega_i=a$ on odd sites
+and $\omega_i=b$ on even sites, where $a,b>0$ and
+$\lceil n/2\rceil a+\lfloor n/2\rfloor b=1$. Then
+
+$$
+\gamma+\Lambda\le1,
+\qquad \Gamma(r,\omega)=r\gamma\quad(0\le r\le1).
+\tag{9.13}
+$$
+
+There is no restriction on $t$ or on $a/b$.
+
+Proof. Lengths through six follow from Theorem 7.2. Assume $n\ge7$,
+and put $m=\lfloor n/2\rfloor$, $h=1+t$, $q=t/h$ and $c=\min(a,b)$.
+A matching of $m$ adjacent edges gives
+
+$$
+\delta\ge\frac{mc}{h}.
+\tag{9.14}
+$$
+
+Indeed $d(a,b)\ge c(1-q)=c/h$. When $a\le b$, the required
+square-root comparison follows from
+
+$$
+(b-a+2aq)^2-\bigl((b-a)^2+4abq^2\bigr)
+=4a(b-a)q(1-q)\ge0.
+\tag{9.15}
+$$
+
+The other ordering is symmetric. If $t\le1$, conditional exclusion
+gives $\rho_i\le q$, so $U\le c$. Since $m\ge3$ and $h\le2$,
+$\gamma\le U\le c\le mc/h\le\delta$.
+
+Now let $t\ge1$ and let $T$ be the lighter-weight parity. More
+generally, for either entire parity under homogeneous activity, write
+$W_T=\sum_{i\in T}\omega_i$ and
+$E_T=\sum_{i\in T\cap\{1,n\}}\omega_i$. Its complement has no
+internal path edges. Formula (9.2) therefore simplifies to
+
+$$
+\alpha_T=\frac{h^{n-|T|}}{Z_n},
+\qquad
+\kappa_T=\frac{t(W_T+tE_T)}{h^3(1-\alpha_T)}.
+\tag{9.16}
+$$
+
+An interior insertion blocks two opposite-parity sites; an endpoint
+insertion blocks one. This is the source of $E_T$, which cannot be
+discarded for the open chain.
+
+The homogeneous recurrence gives
+$Z_{k+2}=hZ_k+tZ_{k-1}>hZ_k$ for $k\ge1$.
+Also $Z_4-2h^2=t^2-1\ge0$. Hence for $n=2m$,
+$\alpha_T\le1/2$. Each parity has $m$ sites and one endpoint, so
+
+$$
+\kappa_T\le\frac{2ct(m+t)}{h^3}\le\frac{mc}{h}.
+\tag{9.17}
+$$
+
+The final comparison is equivalent to $(m-2)t^2+m\ge0$.
+
+For $n=2m+1$ and the odd parity lighter, $T$ has $m+1$ sites and
+both endpoints. Put $x=t-1\ge0$. Direct expansion gives
+
+$$
+Z_7-4h^3=x^4+10x^3+27x^2+23x+2>0.
+\tag{9.18}
+$$
+
+The same recurrence propagates this strict bound to every odd
+length at least seven. Thus $\alpha_T<1/4$ and
+
+$$
+\kappa_T<\frac{4ct(m+1+2t)}{3h^3}\le\frac{mc}{h}.
+\tag{9.19}
+$$
+
+The last comparison is equivalent to
+$(3m-8)t^2+(2m-4)t+3m\ge0$, valid for $m\ge3$.
+
+For $n=2m+1$ and the even parity lighter, $T$ has $m$ sites and no
+endpoints. The configurations with zero occupied even sites have
+total mass $h^{m+1}$. Those with exactly one occupied even site have
+mass $mt h^{m-1}$: its two odd neighbors are blocked and the
+remaining $m-1$ odd sites are free. These disjoint classes give
+
+$$
+Z_{2m+1}\ge h^{m+1}+mt h^{m-1},
+\qquad
+\alpha_T\le\frac{h^2}{h^2+mt}.
+\tag{9.20}
+$$
+
+Consequently
+
+$$
+\kappa_T\le\frac{c(h^2+mt)}{h^3}\le\frac{mc}{h}.
+\tag{9.21}
+$$
+
+The last comparison is equivalent to
+$(m-1)t^2+(m-2)t+(m-1)\ge0$. All cases now give
+$\gamma\le\kappa_T\le mc/h\le\delta$. Equation (5.8) proves
+the Fisher statement. $\square$
+
+This theorem extends the uniform-site case along an unrestricted
+parity imbalance at homogeneous activity. The universal statement
+with arbitrary positive activities and arbitrary positive weights
+at $n\ge7$ remains unresolved outside the preceding certificate
+domains. Failure of every cylinder certificate is a necessary
+condition for a counterexample candidate, not a sufficient one.
+
+[BGRT12]: ../../../Library/StatisticalMechanics/blancagalvinrandalltetali2012slowmixing.md
+
+## 10. A joint occupation phase escapes every linear occupation probe
+
+### 10.1. The same positive law and the same insertion form
+
+**Definition 10.1 (Five-site probe sufficiency).** In (9.4), take
+
+$$
+\lambda=(100,1,100,1,100),\qquad
+\omega=\left(\frac{368}{2565},\frac{5101}{17955},\frac{289}{1995},
+\frac{5101}{17955},\frac{368}{2565}\right).
+\tag{10.1}
+$$
+
+With site one the least significant bit, the complete legal word
+list is $0,1,2,4,5,8,9,10,16,17,18,20,21$. The product-activity
+partition function is $Z=1030504$. Let
+$L_c(s)=\sum_{i=1}^5c_is_i$ for real $c$. The probe sufficiency
+assertion is the implication
+
+$$
+\left[\forall c\in\mathbb R^5,\quad
+\mathcal E_\omega(L_c,L_c)\ge\frac1{10}\operatorname{Var}_p(L_c)\right]
+\Longrightarrow
+\left[\forall f:B_5\to\mathbb R,\quad
+\mathcal E_\omega(f,f)\ge\frac1{10}\operatorname{Var}_p(f)\right].
+\tag{10.2}
+$$
+
+This is a question about the sufficiency of a restricted probe family.
+The earlier chapters do not assert (10.2).
+
+**Theorem 10.2 (Linear occupation probe insufficiency).** Implication
+(10.2) is false for the actual positive law and normalized weights
+(10.1). The function
+
+$$
+f(s)=(1-s_1)(1-s_3)+s_2
+=1-s_1-s_3+s_1s_3+s_2
+\tag{10.3}
+$$
+
+has a smaller quotient than the lower bound obeyed by every linear
+occupation phase.
+
+Proof. Write $C_{ij}=\mathbb E_p(s_is_j)-\rho_i\rho_j$ and
+$D=\operatorname{diag}(\omega_i\rho_i/(1+\lambda_i))$. Along a
+site-$i$ edge the change in $L_c$ is $c_i$, so
+
+$$
+\operatorname{Var}_p(L_c)=c^TCc,
+\qquad \mathcal E_\omega(L_c,L_c)=c^TDc.
+\tag{10.4}
+$$
+
+For $P=D-C/10$ put $S=962888835832892640$. Direct product-law
+moment evaluation gives $SP=M$, where
+
+$$
+M=\begin{pmatrix}
+400935678147200&9435442634100&-9341106705000&91579477500&-90672750000\\
+9435442634100&4008578567811&9434517772050&-92495272275&91579477500\\
+-9341106705000&9434517772050&404787065336100&9434517772050&-9341106705000\\
+91579477500&-92495272275&9434517772050&4008578567811&9435442634100\\
+-90672750000&91579477500&-9341106705000&9435442634100&400935678147200
+\end{pmatrix}.
+\tag{10.5}
+$$
+
+Let $A=\operatorname{diag}(1,10,1,10,1)$ and $B=AMA$.
+The diagonal-dominance remainders
+$r_i=B_{ii}-\sum_{j\ne i}|B_{ij}|$ are
+
+$$
+r=(296233677576200,201992930717100,197414496485100,
+201992930717100,296233677576200).
+\tag{10.6}
+$$
+
+They are all positive. For $y=A^{-1}c$ the exact square decomposition is
+
+$$
+c^TPc=\frac1S\left[
+\sum_i r_i y_i^2+
+\sum_{i<j}|B_{ij}|\bigl(y_i+\operatorname{sgn}(B_{ij})y_j\bigr)^2
+\right].
+\tag{10.7}
+$$
+
+Thus $P$ is positive definite, and the antecedent of (10.2) holds
+for the entire real coefficient family, not merely a finite sample.
+For (10.3), evaluating the same insertion edges and the same law gives
+
+$$
+\mathcal E_\omega(f,f)=\frac{8757839}{207641403480},
+\qquad
+\operatorname{Var}_p(f)=\frac{131365851}{265484623504},
+\tag{10.8}
+$$
+
+and hence
+
+$$
+\frac{\mathcal E_\omega(f,f)}{\operatorname{Var}_p(f)}
+=\frac{132720413542}{1557033067485}<\frac1{10}.
+\tag{10.9}
+$$
+
+This disproves the consequent. $\square$
+
+The joint term is necessary for this function. On the four legal
+words $0,1,4,5$, its mixed difference
+$f(0)+f(5)-f(1)-f(4)$ equals one. Every affine linear occupation
+function has mixed difference zero on these same four words.
+The failure is therefore a loss of an actual joint-occupation
+direction, with no alteration of the probability law or rates.
+
+### 10.2. A precise quantum phase interpretation
+
+**Mathematical application 10.3 (Diagonal joint phases).** On the
+legal-word Hilbert space let
+$\psi_s=\sqrt{p(s)}$ and let $\hat n_i$ be the diagonal occupation
+projections. A real phase function $f$ defines
+
+$$
+\psi(\theta)_s=e^{i\theta f(s)}\psi_s,
+\qquad
+v_f(s)=\psi_s\bigl(f(s)-\mathbb E_pf\bigr).
+\tag{10.10}
+$$
+
+All occupation probabilities remain fixed along this curve.
+The common-phase component has been removed, giving
+$v_f\perp\psi$ and $\|v_f\|^2=\operatorname{Var}_p(f)$.
+On a legal edge the projector matrix (7.5) has ground amplitudes
+in the ratio $\sqrt{\lambda_i}$. Its quadratic form on $v_f$ is
+exactly that edge's summand in (9.4). Therefore
+
+$$
+\langle v_f,H_{\lambda,\omega}v_f\rangle
+=\mathcal E_\omega(f,f),
+\qquad
+\frac{\langle v_f,H_{\lambda,\omega}v_f\rangle}{\|v_f\|^2}
+=\frac{\mathcal E_\omega(f,f)}{\operatorname{Var}_p(f)}.
+\tag{10.11}
+$$
+
+Linear occupation phases are generated by $\sum_i c_i\hat n_i$.
+Function (10.3) instead uses the diagonal Hermitian generator
+
+$$
+\hat F=(I-\hat n_1)(I-\hat n_3)+\hat n_2
+=I-\hat n_1-\hat n_3+\hat n_1\hat n_3+\hat n_2.
+\tag{10.12}
+$$
+
+It contains a joint phase operation on sites one and three.
+Theorem 10.2 shows a phase direction of smaller parent quadratic
+form than every nonzero linear occupation direction. It explains
+why a linear occupation covariance calculation cannot provide
+a lower bound for the entire phase sector by itself.
+
+The diagonal statistic $\langle\hat n_1\hat n_3\rangle$ and the
+phase generator $\hat n_1\hat n_3$ use the same occupation operator
+in different roles. The former is a probability; exponentiating
+the latter changes relative phases while preserving those
+probabilities. Neither role identifies it with an exchange
+coherence $\langle\hat a_1^\dagger\hat a_3\rangle$, a gauge
+curvature, or a physical energy. The parent operator in (10.11)
+is dimensionless; a unitful Hamiltonian and realization require
+additional choices.
+
+Theorem 10.2 refutes probe sufficiency. It does not refute
+$\gamma+\Lambda\le1$, which holds at this length by Theorem 7.2.
+Nor does it establish a uniformly bounded polynomial degree
+that captures the slowest phase for every length and every
+positive activity law.
+
+## 追加锚（本行以下为增补区）
