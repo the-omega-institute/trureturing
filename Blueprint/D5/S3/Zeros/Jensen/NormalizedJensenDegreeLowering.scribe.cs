@@ -178,7 +178,99 @@ internal sealed class NormalizedJensenDegreeLoweringDocument : IScribeDocumentDe
                     + "correspondence, the local all-critical premise, exterior response "
                     + "estimates and central total multiplicity at most two. It does not "
                     + "establish arbitrary growing-core positivity, all-height exclusion, "
-                    + "RH or strict Robin for every integer above 5040."))),
+                    + "RH or strict Robin for every integer above 5040.")),
+                    Paragraph(Text(
+                    "The same-source application also treats a core of exactly three "
+                    + "real source roots a_1,a_2,a_3, including repeated roots. Retain "
+                    + "Ahat=A Qfar with no degree restriction on Qfar, and extract "
+                    + "f=(z-a_3)(z-a_2)(z-a_1) Ahat. Three applications of L_a give "
+                    + "J=L_a3 L_a2 L_a1 Hhat. Source differentiation gives "
+                    + "G=L_a2 L_a1 Hhat+L_a3(L_a1 Hhat+L_a2(Hhat+L_a1 Vhat)); "
+                    + "it is the extraction of f', with the same exterior and far factor.")),
+                    Paragraph(Text(
+                    "Put m=(a_1+a_2+a_3)/3, beta_i=a_i-m, "
+                    + "a=sum(beta_i^2)/6 and b=beta_1 beta_2 beta_3. The real-source "
+                    + "discriminant gives a>=0 and |b|<=2a sqrt(a), even when roots "
+                    + "coincide. Set x=chi-m, U=v chi', V_3=v U', "
+                    + "Z_3=v(v eta')' and M_3=3(x^2-a-U). Quotient and product "
+                    + "differentiation of the actual Hhat,Vhat yields "
+                    + "p_3=x^3-3(a+U)x-b+V_3, "
+                    + "p_3'=chi' M_3-3U' x+V_3' and "
+                    + "w_3=eta M_3-3v eta' x+Z_3. Thus "
+                    + "J=Hhat p_3 and G=Hhat(s p_3+w_3). Both V_3 and Z_3 "
+                    + "retain the noncommuting derivative terms.")),
+                    Paragraph(Text(
+                    "For a>=0, u>0, |b|<=2a sqrt(a) and |e|<=u sqrt(u), an "
+                    + "actual real root x of C(z)=z^3-3(a+u)z-b+e satisfies "
+                    + "|C'(x)|>=(3/2)sqrt(u)(|x|+sqrt(a+u))>=(3/2)u. "
+                    + "Indeed, with h=sqrt(a+u) and y=|x|, the source bounds give "
+                    + "|b-e|<=2h^3-u h. The root equation forces y<2h and "
+                    + "(y-h)^2(y+2h)>=u h, hence |y-h|>=sqrt(u)/2. "
+                    + "Factoring |C'(x)|=3|y-h|(y+h) gives the stated margin. "
+                    + "This pointwise comparison does not assume the roots have "
+                    + "already been labeled or analytically continued.")),
+                    Paragraph(Text(
+                    "At an actual real J-node, assume H and Hhat nonzero, v>0, "
+                    + "sigma>0, |U-sigma^2|<sigma^2/32, |V_3|<sigma^3/32, "
+                    + "|chi'-1|<1/64 and |eta-1|<=1/128. Also assume "
+                    + "|U'|<sigma/256, |V_3'|<sigma^2/256, "
+                    + "|v eta'|<sigma/256 and |Z_3|<sigma^2/256. Applying the "
+                    + "cubic slope bound at u=U,e=V_3 yields "
+                    + "sigma |x|<=|M_3| and sigma^2<2|M_3|. Each response "
+                    + "correction has magnitude below 5|M_3|/256. Consequently "
+                    + "p_3'/M_3 and w_3/M_3 exceed 1/2, and "
+                    + "p_3'w_3>M_3^2/4>v^2/4. The original identity "
+                    + "H^2 P'S=J'G=Hhat^2 p_3'w_3 therefore gives "
+                    + "P'S>(1/4)(Hhat/H)^2 v^2>0.")),
+                    Paragraph(Text(
+                    "This cubic real-node application remains conditional on the "
+                    + "complete exterior jet estimates, actual xi factorization and "
+                    + "jet correspondence, the local all-critical premise and central "
+                    + "total multiplicity exactly three. It does not prove moving "
+                    + "complex-root branches, target-disc node counts, endpoint "
+                    + "existence criteria or uniform growing-core control. Those "
+                    + "interfaces, all-height exclusion, RH and strict Robin above "
+                    + "5040 remain unresolved by this application.")),
+                    Paragraph(Text(
+                    "For the fixed reference cubic Cstar(z)=z^3-3(a+sigma^2)z-b, "
+                    + "assume a>=0, sigma>0 and |b|<=2a sqrt(a). Writing "
+                    + "h=sqrt(a+sigma^2), the endpoint signs and the intermediate "
+                    + "value theorem construct roots in (-2h,-h), (-h,h) and "
+                    + "(h,2h). The preceding slope comparison gives distance at "
+                    + "least sigma/2 from either adjacent critical point, hence "
+                    + "both adjacent reference-root gaps are at least sigma. "
+                    + "No root labels are imposed as hypotheses.")),
+                    Paragraph(Text(
+                    "For each fixed complex U and V_3 with "
+                    + "|U-sigma^2|<sigma^2/32 and |V_3|<sigma^3/32, compare "
+                    + "C(z)=z^3-3(a+U)z-b+V_3 with Cstar on the fixed square "
+                    + "around each reference root, of halfwidth sigma/12. "
+                    + "The square lies strictly inside the sigma/8 disc, and "
+                    + "its border is at distance at least sigma/12 from the "
+                    + "center. Factoring Cstar and using the reference slope "
+                    + "gives the border lower bound "
+                    + "(147/1536)sigma^2(|lambda|+h), strictly exceeding the "
+                    + "original perturbation budget (3/32)sigma^2(|lambda|+h). "
+                    + "The existing rectangle Rouche zero-count supplier "
+                    + "therefore gives one unique simple C-zero in each square.")),
+                    Paragraph(Text(
+                    "These three zeros are distinct and satisfy "
+                    + "|s_j-lambda_j|<sigma/8. Their actual root equations imply "
+                    + "the complete identity C(z)=(z-s_1)(z-s_2)(z-s_3) at "
+                    + "every complex z. This is a pointwise construction for "
+                    + "every allowed pair U,V_3; neither the zeros nor the "
+                    + "factorization are assumed. It reuses the same scalar "
+                    + "comparison and existing complex analytic zero count.")),
+                    Paragraph(Text(
+                    "The pointwise cubic construction does not yet construct "
+                    + "analytic parameter labels on a neighborhood of the closed "
+                    + "target disc. Label gluing, the implicit speed bound, full "
+                    + "complex binding to the actual J and source-derivative "
+                    + "response, conjugation and injectivity, and inclusive "
+                    + "endpoint criteria remain separate obligations. Uniform "
+                    + "actual-source estimates, growing-core geometry, removal "
+                    + "of local all-critical premises, RH and strict Robin for "
+                    + "every integer above 5040 remain unresolved."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-jensen-canonical-bridge"),
