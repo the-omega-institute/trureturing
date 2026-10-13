@@ -6,6 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim; result=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.result; claim=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim
    digest: Boundary alpha-z magic additivity is refuted by a three-qubit marginal certificate. -/
 import D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
+import Mathlib.Algebra.Star.CHSH
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 set_option linter.style.longLine false
 set_option maxRecDepth 4096
 set_option autoImplicit false
@@ -60,7 +62,7 @@ private lemma source_certificate :
 private lemma S_square_real : S * S = (7 : ℝ) • (1 : Op 3) := by
   rw [source_certificate.2.2.2.1]
   ext i j
-  simp [Algebra.smul_def]
+  simp only [Matrix.smul_apply, smul_eq_mul, Complex.real_smul, Complex.ofReal_ofNat]
 private lemma two_coeff_mul (a b c d : ℝ) :
     ((a : ℝ) • (1 : Op 3) + b • S) * (c • 1 + d • S) =
       (a * c + 7 * b * d) • (1 : Op 3) + (a * d + b * c) • S := by
@@ -173,26 +175,10 @@ private lemma spectralPow_one {n : ℕ} (A : Op n) (hA : A.IsHermitian) :
 private lemma spectralPow_inv {n : ℕ} (A : Op n) (hA : A.PosDef) :
     spectralPow A (-1) = A⁻¹ := by
   unfold spectralPow
-  rw [dif_pos hA.isHermitian]
-  apply Eq.symm
-  apply Matrix.inv_eq_left_inv
-  conv_lhs => rhs; rw [hA.isHermitian.spectral_theorem]
-  unfold Matrix.IsHermitian.cfc
-  rw [← map_mul]
-  have hd : Matrix.diagonal (RCLike.ofReal ∘ (fun t : ℝ => t ^ (-1 : ℝ)) ∘
-      hA.isHermitian.eigenvalues) *
-      Matrix.diagonal (RCLike.ofReal ∘ hA.isHermitian.eigenvalues) = (1 : Op n) := by
-    rw [Matrix.diagonal_mul_diagonal]
-    ext i j
-    by_cases hij : i = j
-    · subst j
-      simp only [Matrix.diagonal_apply_eq, Matrix.one_apply_eq, Function.comp_apply]
-      rw [Real.rpow_neg_one]
-      norm_cast
-      rw [inv_mul_cancel₀ (ne_of_gt (hA.eigenvalues_pos i))]
-      rfl
-    · simp only [Matrix.diagonal_apply_ne _ hij, Matrix.one_apply_ne hij]
-  rw [hd, map_one]
+  rw [dif_pos hA.isHermitian, ← hA.isHermitian.cfc_eq,
+    ← CFC.rpow_eq_cfc_real hA.posSemidef.nonneg,
+    ← CFC.inverse_eq_rpow_neg_one hA.isStrictlyPositive,
+    ← Matrix.nonsing_inv_eq_ringInverse]
 private lemma Daz_two_one_supported {n : ℕ} (ρ η : Op n)
     (hρ : IsState ρ) (hη : η.PosDef) :
     Daz 2 1 ρ η = ((log2 (tr (ρ * ρ * η⁻¹)) : ℝ) : EReal) := by
@@ -543,19 +529,13 @@ private lemma stab_tensor {n m : ℕ} {A : Op n} {B : Op m}
     ((convex_convexHull ℝ _).linear_preimage (tensorRight B)) hA
 private def localHom {n : ℕ} (i : Fin n) : Matrix (Fin 2) (Fin 2) ℂ →* Op n where
   toFun := localOp i
-  map_one' := by
-    unfold localOp
-    rw [Function.update_eq_self_iff.mpr rfl]
-    exact D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.tensor_one
-  map_mul' A B := by
-    unfold localOp
-    rw [tensor_mul]
-    congr 1
-    funext j
-    by_cases h : j = i <;> simp [h]
+  map_one' := local_identity i
+  map_mul' A B := (local_product i A B).symm
+private lemma hadamard_coeff_sq : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
+  rw [pow_two, Real.sqrt_div_self]
+  simpa only [one_div] using TsirelsonInequality.sqrt_two_inv_mul_self
 private lemma X_circuit : D5.S3.Quantum.FiniteDimensional.qubitX = gateH * gateS ^ 2 * gateH := by
-  have hs : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
-    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have hs := hadamard_coeff_sq
   ext i j; fin_cases i <;> fin_cases j
   all_goals simp only [pow_two, Matrix.mul_apply, Fin.sum_univ_two]
   all_goals dsimp only [gateH, gateS,
@@ -600,8 +580,7 @@ private lemma singlePrep_projector (p : Pauli) (b : Fin 2) :
     singlePrep p b * Matrix.single (0 : Fin 2) 0 (1 : ℂ) * (singlePrep p b)ᴴ =
       (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) +
         (if b = 0 then (1 : ℂ) else -1) • pauliMatrix (if p = .I then .Z else p)) := by
-  have hs : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
-    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have hs := hadamard_coeff_sq
   cases p <;> fin_cases b
   all_goals ext i j; fin_cases i <;> fin_cases j
   all_goals dsimp only [singlePrep, gateS, gateH,
@@ -634,31 +613,28 @@ private lemma productPrep_projector (w : Fin 3 → Pauli) (b : Bits 3) :
   congr 1
   funext i
   exact singlePrep_projector (w i) (b i)
-private def words : Fin 7 → Fin 3 → Pauli :=
-  ![![.X, .I, .I], ![.Y, .I, .I], ![.Z, .X, .I], ![.Z, .Y, .I],
-    ![.Z, .Z, .X], ![.Z, .Z, .Y], ![.Z, .Z, .Z]]
 private def parityBits (w : Fin 3 → Pauli) (b : Fin 2 × Fin 2) : Bits 3 :=
   ![(if w 1 = .I then 0 else b.1) + (if w 2 = .I then 0 else b.2), b.1, b.2]
 set_option maxHeartbeats 2000000 in
 -- The seven Pauli identities reduce four tensor projectors at a time.
 private lemma halfspace_prepared (j : Fin 7) :
-    (1 / 8 : ℝ) • ((1 : Op 3) + wordOp (words j)) =
+    (1 / 8 : ℝ) • ((1 : Op 3) + wordOp (gammaWords j)) =
       ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) •
-        (productPrep (words j) (parityBits (words j) b) * vacuum 3 *
-          (productPrep (words j) (parityBits (words j) b))ᴴ) := by
+        (productPrep (gammaWords j) (parityBits (gammaWords j) b) * vacuum 3 *
+          (productPrep (gammaWords j) (parityBits (gammaWords j) b))ᴴ) := by
   have hi := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.tensor_one
     (n := 3)
   rw [← hi]
   simp only [productPrep_projector]
   fin_cases j
   all_goals first
-    | erw [show words 0 = ![.X, .I, .I] from rfl]
-    | erw [show words 1 = ![.Y, .I, .I] from rfl]
-    | erw [show words 2 = ![.Z, .X, .I] from rfl]
-    | erw [show words 3 = ![.Z, .Y, .I] from rfl]
-    | erw [show words 4 = ![.Z, .Z, .X] from rfl]
-    | erw [show words 5 = ![.Z, .Z, .Y] from rfl]
-    | erw [show words 6 = ![.Z, .Z, .Z] from rfl]
+    | erw [show gammaWords 0 = ![.X, .I, .I] from rfl]
+    | erw [show gammaWords 1 = ![.Y, .I, .I] from rfl]
+    | erw [show gammaWords 2 = ![.Z, .X, .I] from rfl]
+    | erw [show gammaWords 3 = ![.Z, .Y, .I] from rfl]
+    | erw [show gammaWords 4 = ![.Z, .Z, .X] from rfl]
+    | erw [show gammaWords 5 = ![.Z, .Z, .Y] from rfl]
+    | erw [show gammaWords 6 = ![.Z, .Z, .Z] from rfl]
   all_goals ext x y
   all_goals simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.add_apply,
     tensorOp, wordOp, Matrix.of_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
@@ -674,17 +650,17 @@ private lemma halfspace_prepared (j : Fin 7) :
   all_goals with_unfolding_all norm_num
   all_goals split_ifs <;> ring
 private lemma sigma_mem : sigma ∈ STAB 3 := by
-  have hj (j : Fin 7) : (1 / 8 : ℝ) • ((1 : Op 3) + wordOp (words j)) ∈ STAB 3 := by
+  have hj (j : Fin 7) : (1 / 8 : ℝ) • ((1 : Op 3) + wordOp (gammaWords j)) ∈ STAB 3 := by
     rw [halfspace_prepared]
     apply (convex_convexHull ℝ (PureStabilizer 3)).sum_mem (fun _ _ => by norm_num)
       (by norm_num)
     intro b _
     exact subset_convexHull ℝ (PureStabilizer 3)
-      ⟨productPrep (words j) (parityBits (words j) b), productPrep_mem _ _, rfl⟩
+      ⟨productPrep (gammaWords j) (parityBits (gammaWords j) b), productPrep_mem _ _, rfl⟩
   have he : sigma = ∑ j : Fin 7, (1 / 7 : ℝ) •
-      ((1 / 8 : ℝ) • ((1 : Op 3) + wordOp (words j))) := by
+      ((1 / 8 : ℝ) • ((1 : Op 3) + wordOp (gammaWords j))) := by
     rw [sigma_expanded]
-    have hw : S = ∑ j : Fin 7, wordOp (words j) := rfl
+    have hw : S = ∑ j : Fin 7, wordOp (gammaWords j) := rfl
     rw [hw]
     simp only [smul_add, smul_smul, Finset.sum_add_distrib, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul, ← Finset.smul_sum]

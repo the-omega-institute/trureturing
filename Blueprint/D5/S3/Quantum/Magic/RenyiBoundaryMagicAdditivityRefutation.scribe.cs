@@ -18,7 +18,7 @@ internal sealed class RenyiBoundaryMagicAdditivityRefutationDocument : IScribeDo
                 DescribeRole.Definition),
             Node("log-two", "Base-two logarithms", "log2",
                 All("x", Reals(), Equal(Local("log2", X("x")),
-                    Fraction(At(Qualified("Real", "log"), X("x")), At(Qualified("Real", "log"), Typed(Num(2), Reals()))))),
+                    Fraction(At(Qualified("Real", "log"), X("x")), At(Qualified("Real", "log"), RealTwo())))),
                 "The logarithm is Real.log x divided by Real.log 2. The quantum relative entropies of §2 are measured with base-two logarithms.",
                 DescribeRole.Definition),
             Node("dpi", "The data-processing region", "DPI", DpiFormula(),
@@ -56,16 +56,16 @@ internal sealed class RenyiBoundaryMagicAdditivityRefutationDocument : IScribeDo
         Formula alpha = X("alpha"), z = X("z");
         Formula below = And(LT(Num(0), alpha), And(LT(alpha, Num(1)),
             LE(Call("max", alpha, Sub(Num(1), alpha)), z)));
-        Formula middle = And(LT(Num(1), alpha), And(LE(alpha, Num(2)),
-            And(LE(Fraction(alpha, Num(2)), z), LE(z, alpha))));
-        Formula above = And(LE(Num(2), alpha), And(LE(Sub(alpha, Num(1)), z), LE(z, alpha)));
+        Formula middle = And(LT(Num(1), alpha), And(LE(alpha, RealTwo()),
+            And(LE(Fraction(alpha, RealTwo()), z), LE(z, alpha))));
+        Formula above = And(LE(RealTwo(), alpha), And(LE(Sub(alpha, Num(1)), z), LE(z, alpha)));
         return All("alpha", Reals(), All("z", Reals(), IffOf(Local("DPI", alpha, z),
             And(LT(Num(0), z), Or(below, Or(Equal(alpha, Num(1)), Or(middle, above)))))));
     }
 
     private static Formula QazFormula()
     {
-        Formula rhoPower = HermitianPower(X("rho"), Fraction(X("alpha"), Mul(Num(2), X("z"))));
+        Formula rhoPower = HermitianPower(X("rho"), Fraction(X("alpha"), Mul(RealTwo(), X("z"))));
         Formula sigmaPower = HermitianPower(X("sigma"), Fraction(Sub(Num(1), X("alpha")), X("z")));
         Formula product = Mul(Mul(rhoPower, sigmaPower), rhoPower);
         return Operators(Equal(Local("Qaz", X("alpha"), X("z"), X("rho"), X("sigma")),
@@ -79,7 +79,7 @@ internal sealed class RenyiBoundaryMagicAdditivityRefutationDocument : IScribeDo
             NE(Mul(X("rho"), X("sigma")), Typed(Num(0), Op(X("n"))))), supported);
         Formula umegaki = ToEReal(Fraction(Abstract("tr", Mul(X("rho"),
             Sub(HermitianLog(X("rho")), HermitianLog(X("sigma"))))),
-            At(Qualified("Real", "log"), Typed(Num(2), Reals()))));
+            At(Qualified("Real", "log"), RealTwo())));
         Formula renyi = ToEReal(Fraction(Local("log2", Local("Qaz", X("alpha"), X("z"), X("rho"), X("sigma"))),
             Sub(X("alpha"), Num(1))));
         Formula body = Call("ite", Equal(X("alpha"), Num(1)),
@@ -138,6 +138,7 @@ internal sealed class RenyiBoundaryMagicAdditivityRefutationDocument : IScribeDo
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Naturals() => Seq(Mathbb, Grp(X("N")));
     private static Formula Reals() => Seq(Mathbb, Grp(X("R")));
+    private static Formula RealTwo() => Typed(At(Qualified("Nat", "cast"), Typed(Num(2), Naturals())), Reals());
     private static Formula Complexes() => Seq(Mathbb, Grp(X("C")));
     private static Formula EReals() => Qualified("EReal");
     private static Formula Bits(Formula n) => Abstract("Bits", n);
