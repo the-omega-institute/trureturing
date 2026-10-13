@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2410.00416v2
 claim: "Section 6, Problem 22 asks whether every L∞-bounded analytic semigroup in the sectorial-form setting admits a bounded strictly positive weight with bounded inverse making it L∞-contractive."
 strata_touched:
   - D5/S3/Quantum/Semigroups/LinftyWeightContraction
+  - D5/S3/Quantum/Semigroups/InteractionPictureAsymptotics
 license: citation-only
 triage: anchor
 ---
@@ -17,6 +18,7 @@ triage: anchor
 Author text: <https://arxiv.org/abs/2410.00416v2>.
 - DOI: https://doi.org/10.48550/arXiv.2410.00416
 F. Madou, I. Remizov, M. Vafadar (eds.), *Open problems in one-parameter operator semigroups theory*, arXiv:2410.00416v2, §6 “L∞-bounds”, Problems 21–24, specifically Problem 22 and equations (1), (3).
+The same list states Problem 29 (A. E. Teretenkov) on p. 21, on interaction-picture asymptotics for perturbed semigroups.
 
 ## The weight question
 

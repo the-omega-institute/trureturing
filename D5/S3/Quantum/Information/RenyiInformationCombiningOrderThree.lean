@@ -215,6 +215,7 @@ proof_shape: output_entropy_exp: bind-only; escape_witness: none
   consumers (result): none
 -/
 
+import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound

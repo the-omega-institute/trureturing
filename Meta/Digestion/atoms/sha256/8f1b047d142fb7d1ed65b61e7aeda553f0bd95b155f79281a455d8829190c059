@@ -1,0 +1,16 @@
+**Corollary 107.3 (when the static quotient is already safe).**
+
+The following are equivalent:
+
+$$
+K_{\mathrm{fut}}=K_{\mathrm{stat}},
+$$
+
+and
+
+$$
+T_aK_{\mathrm{stat}}\subseteq K_{\mathrm{stat}}
+\quad\text{for every }a\in A_0.
+\tag{107.4}
+$$
+

@@ -1,0 +1,20 @@
+**引理 26.4（路径项与控制项的精确退化）。** 令
+$$
+c=\frac{h_Lh_R}{h_L+h_R},\qquad A=g_L+c,\qquad B=g_R+c,
+$$
+对 $s,t\ge0$，令 $r(s,t)$ 表示
+$K(g_L+s,g_T,g_R+t;h)^{-1}$ 的 $LR$ 元素。则
+$$
+r(s,t)=\frac{c}{(A+s)(B+t)-c^2}.
+$$
+$K_2^{-1}$ 的 $LR$ 元素等于 $r(0,0)$。因此四角系数
+$$
+\Gamma=r(\lambda,\mu)-r(\lambda,0)-r(0,\mu)+r(0,0)
+$$
+满足
+$$
+\Gamma>0\iff h_Lh_R\lambda\mu>0.
+$$
+若 $h_L=0$ 或 $h_R=0$，路径在 $L,R$ 间断开且 $\Gamma=0$；若
+$\lambda=0$ 或 $\mu=0$，没有两个独立控制宽度且 $\Gamma=0$。
+
