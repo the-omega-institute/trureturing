@@ -151,7 +151,7 @@ theorem acquiredHistory_source_counts_sum_before_return
         (Set.range (fun cell : Bool × Bool => (Sum.inr cell : Bool ⊕ (Bool × Bool)))) 0 ω) :
     sourceCount true (acquiredHistory π S answer n ω) +
         sourceCount false (acquiredHistory π S answer n ω) = n := by
-  rw [sourceCount_partition]
+  rw [acquiredHistory_sourceCount_partition]
   exact acquired_history_length_before_return π S answer ω n hn
 
 theorem acquiredHistory_source_counts_sum_at_return
