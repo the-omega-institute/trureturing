@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseBounds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Entanglement/ElegantJointMeasurementSourceNoise]
+   anchors: []
    utility: none
    digest: Uniform marginals and total-variation control of physical EJM source noise. -/
 
