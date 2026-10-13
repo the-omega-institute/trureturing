@@ -7337,3 +7337,166 @@ selected multiplicity. A heat route must also pay the evolving
 barriers and the finite-extraction comparison. Equations (LC263)--
 (LC265) provide initial data for that task, not its solution.
 RH and strict Robin for every integer $H>5040$ remain unresolved.
+
+
+## Conditional exterior nonvanishing at sufficiently large finite degree
+
+Under the local critical-zero and complete-removal premises in (LC263),
+its original-source mass bound and the drift bound in (LC205) supply a
+zero-free certificate for the finite extraction of the complete exterior
+factor at the sufficiently large degree specified in (LC270). This is a repo-derived
+analytical application of the existing genus-zero product, coefficient
+circle (LC176) and exponential tilt (LC202). These suppliers are reused,
+not new factorization or depoissonization theorems. The certificate is
+for $\mathscr T_nA$, not $\mathscr T_n(AQ)$; it carries neither Lean
+certification nor an originality claim.
+
+The real transport chart and empty-selection real-node exclusion were
+already documented in (LC236)--(LC246). The additional application here
+is the complete exterior-product estimate on the full coefficient circle
+and nonvanishing throughout the actual complex target disc.
+
+Retain every hypothesis and parameter of (LC263), in particular the
+conditional critical-line premise for every zero in the closed selected
+source disc and its complete removal in $Q$. Put $D=T\rho$, so the
+working disc in (LC263) has radius $D/4$. The $D$ here is not the
+clearance $3T\rho$ used in (LC264). All exterior zeros and their
+multiplicities remain in $A=F/Q$.
+For an entire function $H(z)=\sum_{k\ge0}h_kz^k$, the same finite
+extraction is $\mathscr T_nH(z)=\sum_{k=0}^n(n)_{\underline k}n^{-k}h_kz^k$.
+This extends the existing coefficient definition, without changing the
+operator or introducing a coefficient shift.
+
+### A global remainder pays the full coefficient circle
+
+For $A(a)\ne0$ write
+$b_a=A'(a)/A(a)$, $K_a=\sum_{\zeta\in Z(A)}|a-\zeta|^{-2}$ and
+$g_a(z)=A(z)/(A(a)e^{b_a(z-a)})$.
+The order-less-than-one canonical product used in (LC264) gives
+$g_a(a+w)=\prod_{\zeta\in Z(A)}E(w/(a-\zeta))$, where
+$E(u)=(1+u)e^{-u}$. Reuse its absolute convergence; no finite-tail
+replacement is made. The elementary inequalities
+$|E(u)|\le e^{|u|^2/2}$ and
+$E(u)-1=-u^2\int_0^1s e^{-su}\,ds$ give
+
+$$
+|g_a(a+w)-1|
+\le (\sqrt e-1)K_a|w|^2e^{K_a|w|^2/2}
+\quad(w\in\mathbb C).
+\tag{LC267}
+$$
+
+Indeed $s|u|\le(|u|^2+s^2)/2$ bounds the scalar remainder by
+$(\sqrt e-1)|u|^2e^{|u|^2/2}$. Telescope finite products using the
+bound on $|E|$, and then take their locally uniform limit.
+Unlike the logarithm in (LC265), this estimate is valid even beyond
+the initial zero-free disc, and so pays every arc of the exact circle.
+
+For a positive integer $n$, put $k_a=|a|^2K_a/n$ and suppose $k_a<1$.
+Apply (LC176) to the entire function $g_a$ and subtract its application
+to $1$. With $c_n=n!e^n/n^n$ the complete circle gives
+
+$$
+\begin{aligned}
+|\mathscr T_ng_a(a)-1|
+&\le \frac{(\sqrt e-1)|a|^2K_ac_n}{\pi}
+ \int_{-\pi}^{\pi}(1-\cos\theta)
+ e^{-n(1-k_a)(1-\cos\theta)}\,d\theta\\
+&\le C_{\rm fin}\frac{k_a}{(1-k_a)^{3/2}},\qquad
+C_{\rm fin}=\frac{\pi^3(\sqrt e-1)e^{1/12}}8<3.
+\end{aligned}
+\tag{LC268}
+$$
+
+The last step uses
+$2\theta^2/\pi^2\le1-\cos\theta\le\theta^2/2$ on this circle,
+the classical Stirling upper bound $c_n\le\sqrt{2\pi n}e^{1/12}$,
+and the full real Gaussian second moment. In particular $k_a\le1/16$
+makes the error strictly less than $1/4$. The conclusion is uniform
+for complex $a$ and retains the infinite original exterior product.
+
+### Keep the exact drift and its nonzero amplitude
+
+Set $d_n(a)=1-ab_a/n$ and $\Theta_n(a)=a/d_n(a)$ when $d_n(a)\ne0$.
+The exponential-tilt identity (LC202), with the fixed scalar $b_a$
+and entire remainder $g_a$ in place of its polynomial input, yields
+
+$$
+\mathscr T_nA(\Theta_n(a))
+=A(a)e^{-ab_a}d_n(a)^{-n}(1+\epsilon_n(a)),\qquad
+|\epsilon_n(a)|\le3\frac{k_a}{(1-k_a)^{3/2}}.
+\tag{LC269}
+$$
+
+This substitution is an application of the same coefficient identity;
+$b_a$ is held fixed inside each extraction. The large exponential
+amplitude is retained exactly. For real $a$, $d_n(a)>0$ and
+$k_a\le1/16$, the displayed ratio lies in $(3/4,5/4)$.
+This is not a tangent-relative derivative comparison for the full source.
+
+### Cover the actual target disc rather than only transported points
+
+Let $C_b$ be a fixed original-source constant for
+$|b_c|\le C_bL/D$ in (LC205), and let $C_{\rm abs}$ be the fixed
+constant in (LC263). Take
+$S=C_{\rm abs}+C_b+1$ and $C_*=32S$.
+For every positive integer $n$ with $\nu\ge C_*L$, the consequence is
+
+$$
+\mathscr T_nA(t)\ne0\quad(|t-c|\le D/8),\qquad
+\operatorname{sgn}\mathscr T_nA(t)=\operatorname{sgn}A(c)
+\quad(t\in\mathbb R,\ |t-c|\le D/8).
+\tag{LC270}
+$$
+
+Here is the source correspondence and coverage proof. On
+$U=\{a:|a-c|\le D/4\}$, (LC263) gives
+$K_a\le C_{\rm abs}L/D^2$. The complete differentiated product gives
+$|b'_a|\le K_a$, and integration from $c$ shows
+$|b_a|\le BL/D$ with $B=C_b+C_{\rm abs}/4\le S$.
+With $e_0=D/(4c)=\rho/(4T)\le1/1024$, these imply
+
+$$
+k_a\le(1+e_0)^2\frac{C_{\rm abs}L}{\nu}<1/16,
+\qquad
+q:=\sup_U|ab_a/n|
+\le\frac{(1+e_0)D}{32c}<1/4096,
+\qquad
+|\Theta_n(a)-a|
+\le\frac{(1+e_0)^2B}{32S(1-q)}D<D/16.
+\tag{LC271}
+$$
+
+The exterior clearance makes $A$ zero-free in a neighborhood of $U$;
+the bound on $q$ does the same for $d_n$. Thus $\Theta_n$ is holomorphic
+there, and (LC269) is nonzero at every image point.
+For any actual target $|t-c|\le D/8$, on $\partial U$ one has
+$|a-t|\ge D/8>|\Theta_n(a)-a|$. The classical Rouché theorem applied
+to $(a-t)+(\Theta_n(a)-a)$ supplies exactly one preimage in the
+interior of $U$, counting multiplicity. This proves the first part of
+(LC270) at the actual target. For real $t$, reality of $A$ and uniqueness
+make the preimage real. Its $d_n(a)>0$, and $A(a)$ has the sign of
+$A(c)$ throughout the real diameter. The ratio following (LC269)
+proves the sign assertion.
+
+The degree condition is $n\ge C_*T^2\log(T+2)/\rho^2$, with constants
+from the unchanged original source. It has no denominator involving
+the initial spacing or any selected zero's derivative. The empty
+selection $Q=1$ is also allowed: if the entire selected source disc
+is zero-free, (LC270) certifies that $J=\mathscr T_nF$ is zero-free
+on the actual smaller target disc.
+The pole-removal bounds in (LC204)--(LC205) also hold for selections of
+degree zero or one: their degree-at-least-two proviso concerns the
+preceding cluster model, not the analytic pole-removal argument.
+
+For a nonempty selection, (LC270) instead certifies only the extracted
+complete exterior factor. Finite extraction does not commute with
+factorization: $\mathscr T_n(AQ)$ is generally different from
+$(\mathscr T_nA)(\mathscr T_nQ)$. Consequently this certificate alone
+does not control the coupled selected roots, their actual-node responses
+$J'(t)G(t)$ or the evolving exterior divisor of a heat flow. The
+unpaid task is the joint finite extraction of that same $A$ and $Q$,
+with all growing-multiplicity coupling terms retained. The local
+critical-line premise also remains conditional. Original-source
+all-node signs, RH and strict Robin for every integer $H>5040$ remain
+unresolved.
