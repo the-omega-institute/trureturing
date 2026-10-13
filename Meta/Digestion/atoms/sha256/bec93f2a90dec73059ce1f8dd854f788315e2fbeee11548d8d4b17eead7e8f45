@@ -1,0 +1,15 @@
+**Definition 44.1 (resource frontier).** Assume $D\ne\varnothing$. Let
+$\mathcal C_K$ be the controllers with at most $K$ positions that are legal,
+finite-terminating and correct on every source in $D$. For $C\in\mathcal C_K$,
+let $c_C(s)\in\mathbb N^d$ be its full vector of actual event costs on source
+$s$, and put
+
+$$
+b(C)=\sup_{s\in D}c_C(s),
+\qquad
+\mathcal F_K=\{B\in\mathbb N^d:\exists C\in\mathcal C_K,\ b(C)\le B\}.
+$$
+
+The supremum is coordinatewise. A same-run weighted objective is defined
+separately below.
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:425aaeb73d4f566bed1f98e850962166b03d96a3d34a9ea534b08fd475286455"}
+{"statement_id":"sha256:425aaeb73d4f566bed1f98e850962166b03d96a3d34a9ea534b08fd475286455","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),10:Completion),33:ReadoutCompletionLawCompatibility),33:readoutTargetLaw_eq_completionLaw)","kind":"theorem"}]}

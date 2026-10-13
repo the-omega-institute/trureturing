@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a5053470e0938f46f29f93b965e74b936f5df30d2a2391cf1cbf3826df522649"}
+{"statement_id":"sha256:a5053470e0938f46f29f93b965e74b936f5df30d2a2391cf1cbf3826df522649","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),13:Reversibility),25:WaitingValueReversibility),54:waiting_value_from_information_and_option_preservation)","kind":"theorem"}]}

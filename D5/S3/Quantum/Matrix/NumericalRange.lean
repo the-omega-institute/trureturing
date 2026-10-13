@@ -96,12 +96,17 @@ private theorem convex_bloch_sphere_image (L : EuclideanSpace ℝ (Fin 3) →ₗ
   exact convex_sphere_image L k hk hLk
 
 private theorem blochPure_norm (v : (EuclideanSpace ℂ (Fin 2))) (hv : ‖v‖ = 1) : ‖(fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v‖ = 1 := by
-  have hsq : ‖(fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v‖^2 = (‖v‖^2)^2 := by
-    rw [EuclideanSpace.real_norm_sq_eq,EuclideanSpace.norm_sq_eq]
-    simp [bloch,Matrix.vecMulVec,Fin.sum_univ_succ,Complex.sq_norm,Complex.normSq_apply]
-    ring
-  rw [hv] at hsq
-  nlinarith [norm_nonneg ((fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v)]
+  have hn : star v.ofLp ⬝ᵥ v.ofLp = (1 : ℂ) := by
+    calc
+      star v.ofLp ⬝ᵥ v.ofLp = inner ℂ v v := dotProduct_comm _ _
+      _ = 1 := by rw [inner_self_eq_norm_sq_to_K, hv]; norm_num
+  have ht : Matrix.trace (Matrix.vecMulVec v.ofLp (star v.ofLp)) = 1 := by
+    rw [Matrix.trace_vecMulVec, dotProduct_comm, hn]
+  have hp : Matrix.vecMulVec v.ofLp (star v.ofLp) *
+      Matrix.vecMulVec v.ofLp (star v.ofLp) = Matrix.vecMulVec v.ofLp (star v.ofLp) := by
+    rw [Matrix.vecMulVec_mul_vecMulVec, hn, one_smul]
+  exact (bloch_geometry_of_isHermitian _
+    (Matrix.posSemidef_vecMulVec_self_star v.ofLp).isHermitian).2 ht hp
 
 private theorem blochPure_surjective (r : (EuclideanSpace ℝ (Fin 3))) (hr : ‖r‖ = 1) :
     ∃ v : (EuclideanSpace ℂ (Fin 2)), ‖v‖ = 1 ∧ (fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v = r := by

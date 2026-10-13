@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c262788e63dee36c7fa2d0a59421db8e0e2faa66bdae7ad3d38fc125922b68c1"}
+{"statement_id":"sha256:c262788e63dee36c7fa2d0a59421db8e0e2faa66bdae7ad3d38fc125922b68c1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),32:GoldenFiniteSupportStrideMasking),36:golden_finite_support_stride_masking)","kind":"theorem"}]}

@@ -1,0 +1,32 @@
+**Definition 58.12 (measurable terminated record laws).** Fix one probability
+space $(U,\mathcal U,\mu)$ and one common deterministic visible-response rule
+after fixing the seed $u$. For each source $s$, let
+$T_s:U\to\mathbb N\cup\{\infty\}$ be its measurable termination time and let
+$X_s$ be its measurable complete record on $\{T_s<\infty\}$, taking values in
+one declared measurable carrier $(X,\mathcal X)$. The carrier specifies every
+field being compared, including selected actions, ordered addresses, status,
+output, and resource values when these are part of the contract.
+
+The measurability of $T_s$ and the complete $X_s$ is an assumption of this
+record-law extension. Deterministic source-uniform execution does not supply
+it on an arbitrary seed space. Likewise, per-source measurable null
+wrong-return and divergence events and a measurable extended cost do not
+by themselves assert measurable complete transcripts or factorization of
+every source-dependent record field through the visible history.
+
+A probability law on finite complete records requires $T_s<\infty$
+almost surely for every admitted $s$. If nontermination is permitted, either
+use the subprobability law
+
+$$
+K_s(B)=\mu\{u:T_s(u)<\infty,\ X_s(u)\in B\}
+\quad(B\in\mathcal X),
+$$
+
+or extend the carrier by a measurable cemetery divergence record $\dagger$
+and put $\widetilde X_s=\dagger$ on $\{T_s=\infty\}$. The latter convention
+must declare which divergent fields are discarded or retained; it does not
+assign a finite completed cost to an infinite trace. Almost-sure finite
+termination gives neither a uniform finite horizon nor a finite expected
+resource value.
+

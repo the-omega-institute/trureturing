@@ -1,0 +1,54 @@
+**Theorem 97.2 (finite-index identification and uniform promised-tail response).**
+Under Assumption 97.1, $p_h(T_n)$ determines the exact index whenever
+$n\le2h+1$, and otherwise determines the alternative $n\ge2h+2$.
+The following real-valued estimate is therefore well-defined on the
+actual Fibonacci prefix image:
+
+$$
+\widehat C_h(p_h(T_n))=
+\begin{cases}
+C_n,&n\le2h+1,\\
+\sqrt5/2,&n\ge2h+2.
+\end{cases}
+\tag{97.1}
+$$
+
+It obeys
+
+$$
+\sup_{n\ge0}|\widehat C_h(p_h(T_n))-C_n|
+ =\epsilon_h:=
+  \sup_{n\ge2h+2}|C_n-\sqrt5/2|,
+\qquad
+\lim_{h\to\infty}\epsilon_h=0.
+\tag{97.2}
+$$
+
+For each fixed $\lambda>0$ there is also a well-defined
+positive-screening centered-residual estimate
+
+$$
+\widehat R_{h,\lambda}(p_h(T_n))=
+\begin{cases}
+R_\lambda(T_n),&n\le2h+1,\\
+b_\lambda,&n\ge2h+2,
+\end{cases}
+\tag{97.3}
+$$
+
+with the explicit bound
+
+$$
+\sup_{n\ge0}
+ |\widehat R_{h,\lambda}(p_h(T_n))-R_\lambda(T_n)|
+ \le\frac1\lambda\left[
+ \left(\frac3{3+\lambda}\right)^{2h+3}
+ +\frac1{2F_{2h+3}-1}\right]\longrightarrow0
+ \quad(h\to\infty,\ \lambda>0\text{ fixed}).
+\tag{97.4}
+$$
+
+These are response approximations under the domain promise.
+They do not establish a new lawful acquisition operation, and
+(97.4) asserts no uniformity as $\lambda\downarrow0$.
+

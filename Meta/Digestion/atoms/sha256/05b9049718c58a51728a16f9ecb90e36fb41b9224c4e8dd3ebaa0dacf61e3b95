@@ -1,0 +1,34 @@
+**命题 16.3（同一实现的线性尺度与非线性经过时间）。** 令 $\mu_0=\mu(\kappa_0)$、$N_0=N(\kappa_0)$，则
+
+$$
+H_0=\mathcal A''(\kappa_0)
+=\frac{r^3}{XY(r-X)(r-Y)}.
+$$
+
+定理 16.2 的平衡线性变分 $z$ 满足
+
+$$
+\frac{dz}{d\lambda}=-\mu_0H_0z,\qquad
+\frac{dz}{d\tau}=-\frac{\mu_0H_0}{N_0}z.
+$$
+
+它的指数衰减尺度分别为 $1/(\mu_0H_0)$、$N_0/(\mu_0H_0)$；这使用[《响应三角形与内部记忆》定理 9.1–9.2](AURIC_FIB_ATOM_RESPONSE_TRIANGLE_AND_INTERNAL_MEMORY.md)中线性松弛的指数求解机制，只应用于这里的线性变分。以 $\kappa(\tau)$ 表示经共同参数逆函数重参数后的轨迹，非平衡解从 $\tau_i$ 到 $\tau>\tau_i$ 的实际经过时间为
+
+$$
+\tau-\tau_i=\int_{\kappa(\tau)}^{\kappa(\tau_i)}
+\frac{N(u)}{\mu(u)\mathcal A'(u)}\,du,
+$$
+
+两端位于平衡同一侧；该有向积分在上、下两侧均为正。它不把线性变分的指数公式当作原非线性解。沿该共同钟律的钟率变化是
+
+$$
+\frac{d^2\tau}{d\lambda^2}
+=-N'(\kappa)\mu(\kappa)\mathcal A'(\kappa),
+$$
+
+需要另给 $N'$，不能仅从 $H_0$ 推出。
+
+证明。独立点的四格为 $(r-X)(r-Y)/r$、$X(r-Y)/r$、$(r-X)Y/r$、$XY/r$。将其倒数相加得 $H_0$。漂移对 $\kappa$ 求导时含 $\mu'\mathcal A'$ 的项在平衡消失；换元后的漂移为 $-(\mu/N)\mathcal A'$，同理得到第二个线性方程。分离原方程 $d\kappa/d\tau=-(\mu/N)\mathcal A'$ 给积分式，正则唯一性使非平衡解在有限参数内不会穿越或到达平衡。
+
+例如 $X=Y=2/5,Z=1/5,\kappa=3/10$ 时，$\kappa_0=1/5$、$H_0=20$，真实 $\mathcal A'=2\log3$，而 $H_0(\kappa-\kappa_0)=2$。两者不同，故以同一正迁移率代入也给不同瞬时速度。最后的钟率式由假设 16.1 链式求导。它和活动式共同区分了 KL 下降、钟率变化与可自由增加的循环跳数；这些都是规定参数的量。∎
+

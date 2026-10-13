@@ -6,6 +6,7 @@
    utility: none
    digest: Spectral Fisher lower bounds and the rank alternative for pure-qubit readouts. -/
 
+import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 open scoped InnerProductSpace ComplexOrder Matrix.Norms.Elementwise Topology
 open Matrix Set Filter Finset
@@ -339,34 +340,8 @@ theorem actual_rank_alternative : ∀ {m : ℕ}
   have matrix_bloch_geometry (M : Matrix (Fin 2) (Fin 2) ℂ)
       (hM : M.IsHermitian) :
       M = blochMatrix (Matrix.trace M).re (bloch M) ∧
-      (Matrix.trace M = 1 → M * M = M → ‖bloch M‖ = 1) := by
-    have h00 : (M 0 0).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 0 0)
-      simp at h
-      linarith
-    have h11 : (M 1 1).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 1 1)
-      simp at h
-      linarith
-    have h10r : (M 1 0).re = (M 0 1).re := by
-      have h := congrArg Complex.re (hM.apply 1 0)
-      simpa using h.symm
-    have h10i : (M 1 0).im = -(M 0 1).im := by
-      have h := congrArg Complex.im (hM.apply 1 0)
-      simpa using h.symm
-    constructor
-    · ext i j
-      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-        simp [blochMatrix, bloch, Matrix.trace, Fin.sum_univ_two, h00, h11, h10r, h10i] <;> ring
-    · intro ht hp
-      have htr := congrArg Complex.re ht
-      have hsq := congrArg (fun X : Matrix (Fin 2) (Fin 2) ℂ => (Matrix.trace X).re) hp
-      simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, h00, h11, h10r, h10i] at htr hsq
-      have hnorm : ‖bloch M‖ ^ 2 = 1 := by
-        rw [EuclideanSpace.real_norm_sq_eq]
-        simp [bloch, Fin.sum_univ_succ]
-        nlinarith [hsq, sq_nonneg ((M 0 0).re - (M 1 1).re)]
-      nlinarith [norm_nonneg (bloch M)]
+      (Matrix.trace M = 1 → M * M = M → ‖bloch M‖ = 1) :=
+    bloch_geometry_of_isHermitian M hM
 
   have trace_bloch_pairing (M N : Matrix (Fin 2) (Fin 2) ℂ)
       (hM : M.IsHermitian) (hN : N.IsHermitian) :
@@ -459,11 +434,8 @@ theorem actual_rank_alternative : ∀ {m : ℕ}
       apply Matrix.IsHermitian.ext
       intro i j
       fin_cases i <;> fin_cases j <;> apply Complex.ext <;> simp [blochMatrix]
-    have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := by
-      apply Complex.ext <;> simp [blochMatrix, Matrix.trace, Fin.sum_univ_two] <;> ring
-    have hb : bloch (blochMatrix a r) = r := by
-      ext i
-      fin_cases i <;> simp [bloch, blochMatrix] <;> ring
+    have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := blochMatrix_trace a r
+    have hb : bloch (blochMatrix a r) = r := bloch_blochMatrix a r
     have hd : (Matrix.det (blochMatrix a r)).re = (a^2 - ‖r‖^2)/4 := by
       rw [EuclideanSpace.real_norm_sq_eq]
       simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three]
@@ -471,12 +443,8 @@ theorem actual_rank_alternative : ∀ {m : ℕ}
     refine ⟨hh, ht, hb, hd, ?_⟩
     constructor
     · intro hp
-      have htpos := (Complex.nonneg_iff.mp hp.trace_nonneg).1
-      have hdpos := (Complex.nonneg_iff.mp hp.det_nonneg).1
-      rw [ht] at htpos
-      rw [hd] at hdpos
-      simp only [Complex.ofReal_re] at htpos
-      nlinarith [norm_nonneg r]
+      simpa only [ht, hb, Complex.ofReal_re] using
+        norm_bloch_le_trace_of_posSemidef (blochMatrix a r) hp
     · intro hbound
       apply hh.posSemidef_iff_eigenvalues_nonneg.mpr
       have hs := congrArg Complex.re hh.trace_eq_sum_eigenvalues

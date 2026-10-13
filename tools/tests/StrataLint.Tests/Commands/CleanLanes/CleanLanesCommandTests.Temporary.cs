@@ -47,6 +47,8 @@ public sealed partial class CleanLanesCommandTests
         var parent = fixture.AddGitlessJudgeSnapshot("trureturing-parent");
         var nested = fixture.AddNestedWorktree(parent);
         var registered = fixture.AddDetachedJudge("trureturing-registered");
+        CleanLanesFixture.Git(nested, "commit", "--allow-empty", "-m", "nested work");
+        CleanLanesFixture.Git(registered, "commit", "--allow-empty", "-m", "detached work");
         fixture.AddGitlessJudgeSnapshot("trureturing-registered");
         var alias = Path.Combine(Path.GetDirectoryName(parent)!, "trureturing-alias");
         Directory.CreateSymbolicLink(alias, foreign);

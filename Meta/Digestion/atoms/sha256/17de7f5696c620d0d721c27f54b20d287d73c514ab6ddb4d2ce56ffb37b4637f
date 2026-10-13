@@ -1,0 +1,46 @@
+**Definition 92.1 (one finite native source and its centered response).**
+Let $\mathcal T$ be the free nonempty finite ordered source algebra
+$t::=\alpha\mid\beta\mid\langle t,t\rangle$ of
+[FIB relational continuation, Definition 1.1](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md).
+An occurrence is an actual node at its left/right address, not a subtree value;
+equal subtrees at different addresses remain different vertices. For each
+$t\in\mathcal T$, let $V_t$ be its occurrence vertices, $r$ its root,
+$E_t$ its parent–child edges, and $N_t=|V_t|$. Use precisely the closed
+counting-measure, unit-conductance comparison operator of
+[the boundary geometry, §52](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md)
+and [Continuation III, §91](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md):
+
+$$
+(L_t f)(x)=\sum_{y\sim x}(f(x)-f(y)),\qquad
+\langle f,L_t f\rangle=\sum_{\{x,y\}\in E_t}|f(x)-f(y)|^2.
+\tag{92.1}
+$$
+
+There is no root killing term. Labels, order and every occurrence remain part
+of the source even though this operator gives the same unit conductance to
+every existing edge. For $\lambda>0$, set
+
+$$
+\begin{aligned}
+G_\lambda(t)&=\langle\delta_r,(L_t+\lambda I)^{-1}\delta_r\rangle,\\
+C(t)&=\langle\delta_r,L_t^+\delta_r\rangle,\\
+R_\lambda(t)&=G_\lambda(t)-\frac1{N_t\lambda},\qquad
+A(t)=N_t^2 C(t).
+\end{aligned}
+\tag{92.2}
+$$
+
+Here $L_t^+$ is zero on constants and is the inverse of $L_t$ on the
+mean-zero subspace. Thus $C$ is the centered finite part, and $R_\lambda$
+is the centered residual at positive screening. The term $1/(N_t\lambda)$
+is the exact root weight of the constant mode, not $1/\lambda$.
+These definitions specify mathematical functionals; evaluating the
+subtraction from supplied observations additionally requires knowledge of
+$N_t$. The definition grants no node-count observation.
+
+For an edge $e$, orient it away from $r$ and let $N_e$ be the number of
+occurrences in the component below $e$ after deleting it. Every occurrence,
+edge, mass, operator and response in (92.1)–(92.2) belongs to the same
+original $t$. In an execution with immutable $\mathrm{INITIAL}=t$, none
+of these symbols is evaluated on a substituted current register.
+

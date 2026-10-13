@@ -83,7 +83,7 @@ private theorem word_length (g : Five) (w : WordFiber g) : w.val.length = N g :=
   unfold N
   rw [he.1, he.2, ← Nat.cast_add, binary_letter_counts_length, Nat.floor_natCast]
 
-private theorem tree_length (g : Five) (t : TreeFiber g) : t.val.length = N g := by
+theorem tree_length (g : Five) (t : TreeFiber g) : t.val.length = N g := by
   rw [← wd_length]
   exact word_length g ⟨wd t.val, wd_nonempty _, t.property⟩
 
@@ -213,7 +213,7 @@ private theorem sigma_geometry (w : List Bool) : G (sigma w) = L (G w) := by
   have hz : L zeroFive = zeroFive := by apply Five.ext <;> simp [L,zeroFive]
   simpa only [hz] using h
 
-private theorem wd_substitution (t : Source) : wd (substitution t) = sigma (wd t) := by
+theorem wd_substitution (t : Source) : wd (substitution t) = sigma (wd t) := by
   induction t with
   | of b => cases b <;> rfl
   | mul s t hs ht =>
@@ -867,6 +867,9 @@ theorem sharp_geometry_entrance_ratio :
 #check actual_fiber_counting
 #check uniform_actual_entrance_estimate
 #check sharp_geometry_entrance_ratio
+#print axioms tree_length
+#print axioms wd_substitution
+
 #print axioms actual_fiber_counting
 #print axioms uniform_actual_entrance_estimate
 #print axioms sharp_geometry_entrance_ratio

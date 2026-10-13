@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -22,6 +23,16 @@ internal static class RawLeanReportArtifact
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);
         return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials, scope: null);
+    }
+
+    /// Reads the report once and returns the exact bytes that were validated.
+    internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot, out ImmutableArray<byte> bytes)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        var fullPath = Path.GetFullPath(path);
+        var read = File.ReadAllBytes(fullPath);
+        bytes = ImmutableCollectionsMarshal.AsImmutableArray(read);
+        return Read(read, snapshot, MaterialsPath(fullPath), validateMaterials: false, scope: null);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
@@ -106,6 +117,7 @@ internal static class RawLeanReportArtifact
         {
             var moduleProperties = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
             if (moduleElement.TryGetProperty("information_templates", out _)) moduleProperties.Add("information_templates");
+            if (moduleElement.TryGetProperty("fib_analysis", out _)) moduleProperties.Add("fib_analysis");
             if (moduleElement.TryGetProperty("utility_refutation", out _)) moduleProperties.Add("utility_refutation");
             if (moduleElement.TryGetProperty("information_registration_errors", out _)) moduleProperties.Add("information_registration_errors");
             RequireProperties(moduleElement, moduleProperties, "raw Lean module");
@@ -150,6 +162,8 @@ internal static class RawLeanReportArtifact
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
                     InformationTemplates = moduleElement.TryGetProperty("information_templates", out var templates)
                         ? templates.Clone() : null,
+                    FibAnalysis = moduleElement.TryGetProperty("fib_analysis", out var fib)
+                        ? fib.Clone() : null,
                     InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
                         ? ReadSortedStrings(RequiredArray(moduleElement, "information_registration_errors"), "information_registration_errors")
                         : null,
@@ -228,6 +242,7 @@ internal static class RawLeanReportArtifact
                                 statement_id = DeclarationStatementId(item.Value.Path, declaration),
                                 type_sha256 = declaration.StatementTypeAddress,
                             }),
+                        fib_analysis = fileReport.FibAnalysis,
                         imports = fileReport.Imports
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal),

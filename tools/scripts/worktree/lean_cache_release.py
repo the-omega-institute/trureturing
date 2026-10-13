@@ -11,6 +11,7 @@ import pathlib
 import re
 import shlex
 import shutil
+import stat
 import subprocess
 import sys
 import tarfile
@@ -389,6 +390,124 @@ def cache_guard(root, shared=False):
         yield
 
 
+def staging_candidates(lake):
+    """List only direct extraction directories, excluding rollback backups and links."""
+    if lake.is_symlink() or not lake.is_dir():
+        return
+    for path in sorted(lake.iterdir()):
+        if (not re.fullmatch(r"\.release-[A-Za-z0-9_-]+", path.name)
+                or path.name.startswith(".release-backup-")):
+            continue
+        try:
+            directory = stat.S_ISDIR(path.lstat().st_mode)
+        except OSError:
+            # The guarded observation reports unavailable matching entries.
+            directory = True
+        if directory:
+            yield path
+
+
+def staging_snapshot(path, cutoff):
+    """An extraction residue is empty or contains only an owned, old build tree."""
+    if path.parent.is_symlink() or not stat.S_ISDIR(path.lstat().st_mode):
+        return dict(reason="symlink")
+    names = list(path.iterdir())
+    if names and (len(names) != 1 or names[0].name != "build"
+                  or not stat.S_ISDIR(names[0].lstat().st_mode)):
+        return dict(reason="staging_shape")
+    parent = path.parent.lstat()
+    device = parent.st_dev
+    if device != path.parent.parent.stat().st_dev:
+        return dict(reason="mount")
+    flags = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
+             stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
+    if parent.st_uid != os.getuid():
+        return dict(reason="not_owned")
+    if getattr(parent, "st_flags", 0) & flags:
+        return dict(reason="protected_flag")
+    digest, size, pending = hashlib.sha256(), 0, [path]
+    digest.update(str((parent.st_dev, parent.st_ino, parent.st_mode, parent.st_ctime_ns)).encode())
+    while pending:
+        entry = pending.pop()
+        info = entry.lstat()
+        if info.st_uid != os.getuid():
+            return dict(reason="not_owned")
+        if info.st_dev != device:
+            return dict(reason="mount")
+        if getattr(info, "st_flags", 0) & flags:
+            return dict(reason="protected_flag")
+        if "\n" in str(entry) or "\r" in str(entry):
+            return dict(reason="unrepresentable_path")
+        if info.st_mtime > cutoff:
+            return dict(reason="recent")
+        if not (stat.S_ISDIR(info.st_mode) or stat.S_ISREG(info.st_mode)):
+            return dict(reason="staging_shape")
+        digest.update(os.fsencode(str(entry.relative_to(path))))
+        digest.update(str((info.st_dev, info.st_ino, info.st_mode, info.st_size,
+                           info.st_mtime_ns, info.st_ctime_ns)).encode())
+        if stat.S_ISDIR(info.st_mode):
+            pending.extend(sorted(entry.iterdir()))
+        else:
+            size += info.st_size
+    return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=size)
+
+
+def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=False, *, now):
+    """Check twice and remove extraction residue under the physical lake's exclusive guard."""
+    lake = pathlib.Path(lake)
+    cutoff = min(now - 24 * 3600, cutoff) if cutoff is not None else now - 24 * 3600
+    results = []
+    try:
+        candidates = list(staging_candidates(lake))
+    except OSError as error:
+        return [dict(path=str(lake), action="kept", reason="unreadable",
+                     detail=str(error), apparent_bytes=0)]
+    for path in candidates:
+        result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
+        results.append(result)
+        removal_started = False
+        try:
+            with contextlib.nullcontext() if guard_owned else cache_guard(lake.parent):
+                def observe():
+                    snapshot = staging_snapshot(path, cutoff)
+                    if snapshot["reason"] is None and inspect:
+                        checked = inspect(path)
+                        if checked["reason"] is not None:
+                            return checked
+                        snapshot["activity_fingerprint"] = checked["fingerprint"]
+                    return snapshot
+                before = observe()
+                result.update({key: before[key] for key in ("reason", "apparent_bytes") if key in before})
+                if before["reason"] is not None:
+                    continue
+                if not delete:
+                    result["action"] = "would_remove"
+                    continue
+                if observe() != before:
+                    result["reason"] = "changed"
+                    continue
+                removal_started = True
+                for directory, _, _ in os.walk(path):
+                    os.chmod(directory, stat.S_IMODE(os.lstat(directory).st_mode) | stat.S_IRWXU)
+                shutil.rmtree(path)
+                result["action"] = "removed"
+        except BlockingIOError:
+            result["reason"] = "cache_busy"
+        except FileNotFoundError as error:
+            result.update(action="failed" if removal_started else "kept", reason="vanished", detail=str(error))
+        except (OSError, ValueError) as error:
+            result.update(action="failed" if removal_started else "kept", reason="unreadable", detail=str(error))
+    return results
+
+
+def fetch_staging_cleanup(root, *, now):
+    """Report extraction-residue outcomes while the fetch caller owns the cache guard."""
+    results = clean_staging(root / ".lake", now=now, guard_owned=True)
+    if results:
+        receipt("fetch", "staging-cleanup", items=results)
+    return results
+
+
 def publish(root, partition, verification=None):
     # Build/content failures remain failures. Production transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
@@ -643,6 +762,7 @@ def fetch_verification(root, partition, identity):
     try:
         deadline = operation_deadline()
         with cache_guard(root), tempfile.TemporaryDirectory(prefix="lean-fetch-verify-") as temporary:
+            fetch_staging_cleanup(root, now=time.time())
             restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline, identity, cache_key=cache_key)
         return 0
     except RollbackFailed as error:
@@ -698,6 +818,7 @@ def snapshot_candidates(root, partition, deadline, cache_key):
 
 
 def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=None, approved_producer=None):
+    fetch_staging_cleanup(root, now=time.time())
     reason = "no published snapshot in this partition"
     cache_key = release_key(root)
     try:

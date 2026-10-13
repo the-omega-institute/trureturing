@@ -1,0 +1,17 @@
+**定义 26.13（保留内部的 OU 记忆合同）。** 对定义 26.2 的一个固定模式
+$K=K_s>0$，给定 $T>0$、确定的 $u\in C^1([0,T];\mathbb R^m)$、矩阵
+$V\in\mathbb R^{m\times4}$、$A\in\mathbb R^{m\times m}$ 及校准的 $\gamma>0$，声明
+$$
+d\xi_t=-\gamma^{-1}(K\xi_t+V^{\mathsf T}u(t))dt
++\sqrt{2\vartheta/\gamma}\,dW_t,
+\qquad
+j(t)=Au(t)+V\xi_t.
+$$
+初态取
+$$
+\xi_0\sim\mathcal N(-K^{-1}V^{\mathsf T}u(0),\vartheta K^{-1}),
+$$
+并与 $\{W_t-W_0:t\ge0\}$ 独立；$W$ 是本合同声明的标准 Wiener
+过程。若输入只有绝对连续正则性，积分式须按相应弱导数解释；没有输入、
+初态、噪声律和 $\gamma$ 的这些数据，静态 $K,\vartheta$ 不决定时间律。
+

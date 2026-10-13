@@ -120,6 +120,7 @@ default_targets = [
     "leanInspector/reportInspector",
     "leanInspectorInterface/LeanInformationAuditInterface",
     "reg/Reg",
+    "regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main",
 ]
 targets = json.loads(os.environ['STRATALINT_LEAN_BUILD_TARGETS']) if 'STRATALINT_LEAN_BUILD_TARGETS' in os.environ else default_targets
 if (not isinstance(targets, list)
