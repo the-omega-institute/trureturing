@@ -18,7 +18,7 @@ Every vector annihilated by sigma is annihilated by rho. For positive matrices t
 
 **Definition 1.2 (Base-two logarithms).**
 
-$$\forall x \in \mathbb{R},\; \operatorname{D5.S3.Quantum.Magic.RenyiBoundaryMagicAdditivityRefutation.log2}\left(x\right) = \frac{\operatorname{Real.log}\left(x\right)}{\operatorname{Real.log}\left((\operatorname{Nat.cast}\left((2: \mathbb{N})\right): \mathbb{R})\right)}$$
+$$\forall x \in \mathbb{R},\; \operatorname{D5.S3.Quantum.Magic.RenyiBoundaryMagicAdditivityRefutation.log2}\left(x\right) = \operatorname{Real.logb}\left((\operatorname{Nat.cast}\left((2: \mathbb{N})\right): \mathbb{R}), x\right)$$
 
 *Formalization.* `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.log2` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\forall x \in \mathbb{R},\; \operatorname{D5.S3.Quantum.Magic.RenyiBoundaryMag
 
 *Commentary.*
 
-The logarithm is Real.log x divided by Real.log 2. The quantum relative entropies of §2 are measured with base-two logarithms.
+The logarithm is Real.logb with base 2. The quantum relative entropies of §2 are measured with base-two logarithms.
 
 **Definition 1.3 (The data-processing region).**
 
