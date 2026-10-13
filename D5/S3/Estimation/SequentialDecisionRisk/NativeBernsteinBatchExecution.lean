@@ -458,4 +458,100 @@ theorem actual_history_reach_law (table : (Bool × History) → PMF Action) (S :
         simpa only [tsum_fintype] using (table (S, h)).tsum_coe
       rw [hn, mul_one]
 
+def successCount (source : Bool) (h : History) : ℕ :=
+  (h.filter (fun v => v.1 = source ∧ v.2 = true)).length
+
+def countFiber (n N M i j : ℕ) : Finset (Fin n → Bool × Bool) :=
+  Finset.univ.filter (fun w => sourceCount false (List.ofFn w) = N ∧
+    sourceCount true (List.ofFn w) = M ∧ successCount false (List.ofFn w) = i ∧
+    successCount true (List.ofFn w) = j)
+
+private theorem measure_history_fibers {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (H : Ω → History) (hH : @Measurable Ω History _ ⊤ H)
+    (n : ℕ) (F : Set History) [DecidablePred (· ∈ F)]
+    (E : Set Ω) (hE : MeasurableSet E) :
+    μ ({ω | (H ω).length = n ∧ H ω ∈ F} ∩ E) =
+      ∑ w ∈ Finset.univ.filter (fun w : Fin n → Bool × Bool => List.ofFn w ∈ F),
+        μ ({ω | H ω = List.ofFn w} ∩ E) := by
+  classical
+  let : MeasurableSpace History := ⊤
+  have he : {ω | (H ω).length = n ∧ H ω ∈ F} ∩ E =
+      ⋃ w ∈ Finset.univ.filter (fun w : Fin n → Bool × Bool => List.ofFn w ∈ F),
+        {ω | H ω = List.ofFn w} ∩ E := by
+    ext ω
+    simp only [Set.mem_inter_iff, Set.mem_ofPred_eq, Set.mem_iUnion,
+      Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨⟨hlen, hF⟩, hE⟩
+      subst n
+      exact ⟨(H ω).get, by simpa using hF, (List.ofFn_get _).symm, hE⟩
+    · rintro ⟨w, hF, hw, hE⟩
+      exact ⟨⟨by rw [hw, List.length_ofFn], by simpa only [hw] using hF⟩, hE⟩
+  rw [he]
+  apply measure_biUnion_finset
+  · intro w _ v _ hne
+    apply Set.disjoint_left.mpr
+    intro ω hw hv
+    exact hne (List.ofFn_injective (hw.1.symm.trans hv.1))
+  · intro w _
+    exact (hH (measurableSet_singleton _)).inter hE
+
+/-- Each ordered labelled history keeps its own private policy weight in a
+count fiber, even when source choices are adaptive. -/
+theorem all_history_count_fiber_aggregation
+    (table : (Bool × History) → PMF Action) (S : Bool) (p q : unitInterval)
+    (n N M i j : ℕ) (a : Action) :
+    rawLaw (rowLaw table) {ω |
+      (nativeHistory tablePolicy S p q n ω).length = n ∧
+      sourceCount false (nativeHistory tablePolicy S p q n ω) = N ∧
+      sourceCount true (nativeHistory tablePolicy S p q n ω) = M ∧
+      successCount false (nativeHistory tablePolicy S p q n ω) = i ∧
+      successCount true (nativeHistory tablePolicy S p q n ω) = j ∧
+      nativeAction tablePolicy S p q n ω = a} =
+      ∑ w ∈ countFiber n N M i j,
+        (historyPathWeight table S (List.ofFn w) * table (S, List.ofFn w) a) *
+          historyLikelihood p q (List.ofFn w) := by
+  classical
+  have hm := native_execution_measurable tablePolicy
+    (fun S h => measurable_pi_apply (S, h)) S p q
+  have hf := measure_history_fibers (rawLaw (rowLaw table))
+    (nativeHistory tablePolicy S p q n) (hm.1 n) n
+    {h | sourceCount false h = N ∧ sourceCount true h = M ∧
+      successCount false h = i ∧ successCount true h = j}
+    {ω | nativeAction tablePolicy S p q n ω = a}
+    ((hm.2.1 n) (action_singleton_measurable a))
+  simp only [Set.mem_ofPred_eq, ← Set.ofPred_and, and_assoc] at hf
+  rw [hf]
+  apply Finset.sum_congr rfl
+  intro w _
+  simpa only [reachedHistory, List.length_ofFn, ← Set.ofPred_and] using
+    actual_history_leaf_law table S p q (List.ofFn w) a
+
+/-- Arrival mass is the sum of the complete ordered-history weights in the
+same count fiber. -/
+theorem all_history_count_fiber_reach
+    (table : (Bool × History) → PMF Action) (S : Bool) (p q : unitInterval)
+    (n N M i j : ℕ) :
+    rawLaw (rowLaw table) {ω |
+      (nativeHistory tablePolicy S p q n ω).length = n ∧
+      sourceCount false (nativeHistory tablePolicy S p q n ω) = N ∧
+      sourceCount true (nativeHistory tablePolicy S p q n ω) = M ∧
+      successCount false (nativeHistory tablePolicy S p q n ω) = i ∧
+      successCount true (nativeHistory tablePolicy S p q n ω) = j} =
+      ∑ w ∈ countFiber n N M i j,
+        historyPathWeight table S (List.ofFn w) * historyLikelihood p q (List.ofFn w) := by
+  classical
+  have hm := native_execution_measurable tablePolicy
+    (fun S h => measurable_pi_apply (S, h)) S p q
+  have hf := measure_history_fibers (rawLaw (rowLaw table))
+    (nativeHistory tablePolicy S p q n) (hm.1 n) n
+    {h | sourceCount false h = N ∧ sourceCount true h = M ∧
+      successCount false h = i ∧ successCount true h = j} Set.univ MeasurableSet.univ
+  simp only [Set.mem_ofPred_eq, Set.inter_univ] at hf
+  rw [hf]
+  apply Finset.sum_congr rfl
+  intro w _
+  simpa only [reachedHistory, List.length_ofFn] using
+    actual_history_reach_law table S p q (List.ofFn w)
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
