@@ -10127,9 +10127,9 @@ radius-$4\rho$ source selection. Thus $r=q=2$, all exterior zeros
 remain in $A=B_\epsilon/C$, and the actual simple bad node lies in
 the closed $D/16$ chart.
 
-For these fixed parameters, $A$ and every finite extraction of $A$
-converge locally uniformly to $1/C$ as $\epsilon\downarrow0$.
-The extraction of $A\prime$ converges to zero, while
+For these fixed parameters and each fixed $k$, $A\to1/C$,
+$\mathscr T_kA\to1/C$ and $\mathscr T_kA\prime\to0$
+locally uniformly as $\epsilon\downarrow0$, while
 $J_k\to\mathscr T_k(Q/C)$. On a larger closed
 parameter disc their amplitudes are consequently nonzero, and Cauchy
 estimates give convergence of the complete analytic jets with their
@@ -10168,3 +10168,44 @@ additional relation specific to the actual theta coefficients of $\Xi$,
 its finite extraction and its complete local/exterior factors. Such a
 relation, the actual witness-location bridge and all-node coverage remain
 unproved. No RH, FIB arithmetic or all-integer Robin conclusion follows.
+
+### The model fails an unused positive-theta moment constraint
+
+The actual normalized source has the original positive even theta measure
+$d\mu(x)=\Phi(x)\,dx/\Xi(0)$, with the original normalization
+$\Xi(t)=\int_{\mathbb R}\Phi(x)e^{itx}\,dx$ and
+$F(z)=\Xi(\sqrt z)/\Xi(0)$. Its super-exponential tail permits
+coefficient integration. If $F(-z)=\sum_{j\ge0}a_jz^j$, then
+
+$$
+\mu_j:=(2j)!a_j=\int_{\mathbb R}x^{2j}\,d\mu(x),\qquad
+\mu_2^2\le\mu_1\mu_3.
+\tag{LC392}
+$$
+
+The inequality directly reuses Cauchy--Schwarz for $x$ and $x^3$
+in $L^2(\mu)$. Equivalently, these are moments of the pushforward
+positive measure under $x\mapsto x^2$; no new moment theorem is claimed.
+For the model (LC379)--(LC380), define its coefficient numbers by the
+same factorial normalization, without asserting a positive measure.
+At the strict limit $\epsilon=0$ they give
+
+$$
+\mu_1=4c/C,\qquad\mu_2=24/C,\qquad\mu_3=0,\qquad
+\mu_1\mu_3-\mu_2^2=-576/C^2<0.
+\tag{LC393}
+$$
+
+The first three coefficients are continuous in $\epsilon$ by (LC380).
+For fixed $N,c$, every sufficiently small positive $\epsilon$ therefore
+still violates (LC392). This requirement can be imposed together with
+all the strict smallness conditions above. Thus this obstruction does
+not preserve the actual positive-theta measure's joint moment constraints.
+
+This diagnoses an additional source relation absent from the proposed
+universal bootstrap; it does not supply the missing signed-cofactor
+estimate. Neither this low-order constraint nor ordinary positive-measure
+moment conditions have been shown to force the required sign when combined
+with the actual first-defect and kernel hypotheses. The latter combined
+implication remains a separate research question, with the complete
+original source, its tails and every node retained.
