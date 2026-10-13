@@ -674,7 +674,7 @@ private lemma weight_eq_zero {N K n k : ℕ} (h : K < k ∨ N - K < n - k) :
     weight N K n k = 0 := by
   rcases h with h | h <;> simp [weight, Nat.choose_eq_zero_of_lt h]
 
-private lemma weight_sum {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) :
+lemma weight_sum {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) :
     ∑ k ∈ range (n + 1), weight N K n k = 1 := by
   have h : ∑ k ∈ range (n + 1), K.choose k * (N - K).choose (n - k) =
       N.choose n := by

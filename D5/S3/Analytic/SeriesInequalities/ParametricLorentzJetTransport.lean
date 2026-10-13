@@ -8,6 +8,8 @@
 
 import D5.S3.Analytic.SeriesInequalities.HNPCorrectionLiftAdvantage
 import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Analysis.SpecialFunctions.SmoothTransition
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 noncomputable section
 open Polynomial Finset Filter
@@ -545,5 +547,380 @@ theorem reference_center_mixed_scales {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞
       _ ≤ C*s^(-(m : ℝ)-ρ)*delta (τ*b^k) q^(ρ-(ell : ℝ)) :=
         mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right hEC (by positivity))
           (Real.rpow_nonneg (delta_pos (by positivity) q).le _)
+
+
+/-- A compact smooth profile supported strictly inside `(-1,1)`. -/
+def scaleBump (z : ℝ) : ℝ := expNegInvGlue (9/16-z^2)
+
+private lemma bump_smooth : ContDiff ℝ ∞ scaleBump :=
+  expNegInvGlue.contDiff.comp (contDiff_const.sub (contDiff_id.pow 2))
+
+private lemma bump_nonneg (z : ℝ) : 0 ≤ scaleBump z := expNegInvGlue.nonneg _
+
+private lemma bump_zero {z : ℝ} (h : z ≤ -1 ∨ 1 ≤ z) : scaleBump z = 0 := by
+  apply expNegInvGlue.zero_of_nonpos
+  rcases h with h | h <;> nlinarith [sq_nonneg (z+1),sq_nonneg (z-1)]
+
+private lemma bump_pos {z : ℝ} (hl : -1/2 ≤ z) (hu : z ≤ 1/2) : 0 < scaleBump z := by
+  apply expNegInvGlue.pos_of_pos
+  nlinarith [mul_nonneg (by linarith : 0 ≤ z+1/2) (by linarith : 0 ≤ 1/2-z)]
+
+/-- The natural translated denominator in the smooth proportional partition. -/
+def scaleDenominator (z : ℝ) : ℝ := ∑' i : ℕ, scaleBump (z-i)
+
+private lemma bump_tail {z : ℝ} {K i : ℕ} (hz : z+1 < K) (hi : K ≤ i) :
+    scaleBump (z-i) = 0 := by
+  apply bump_zero (Or.inl _)
+  have : (K : ℝ) ≤ i := by exact_mod_cast hi
+  linarith
+
+private lemma denominator_finite {z : ℝ} {K : ℕ} (hz : z+1 < K) :
+    scaleDenominator z = ∑ i ∈ range K, scaleBump (z-i) := by
+  apply tsum_eq_sum
+  intro i hi
+  exact bump_tail hz (by simpa using hi)
+
+private lemma denominator_smooth (z : ℝ) : ContDiffAt ℝ ∞ scaleDenominator z := by
+  obtain ⟨K,hK⟩ := exists_nat_gt (z+2)
+  have he : scaleDenominator =ᶠ[𝓝 z] fun y => ∑ i ∈ range K, scaleBump (y-i) := by
+    filter_upwards [Iio_mem_nhds (by linarith : z < (K : ℝ)-1)] with y hy
+    exact denominator_finite (by have hy' : y < (K : ℝ)-1 := hy; linarith)
+  apply ContDiffAt.congr_of_eventuallyEq _ he
+  exact (ContDiff.sum (fun i _ => bump_smooth.comp (contDiff_id.sub contDiff_const))).contDiffAt
+
+private lemma denominator_positive {z : ℝ} (hz : 0 ≤ z) : 0 < scaleDenominator z := by
+  obtain ⟨K,hK⟩ := exists_nat_gt (z+2)
+  rw [denominator_finite (by linarith : z+1 < K)]
+  let j := ⌊z+1/2⌋₊
+  have hjl := Nat.floor_le (show 0 ≤ z+1/2 by linarith)
+  have hju := Nat.lt_floor_add_one (z+1/2)
+  have hj : j ∈ range K := by
+    apply mem_range.mpr
+    change ⌊z+1/2⌋₊ < K
+    exact_mod_cast (show (⌊z+1/2⌋₊ : ℝ) < K by linarith)
+  exact (bump_pos (by dsimp [j]; linarith) (by dsimp [j]; linarith)).trans_le
+    (single_le_sum (fun i _ => bump_nonneg _) hj)
+
+/-- Smooth logarithmic scale coordinate. -/
+def scaleCoordinate (xstar : ℝ) (b : ℕ) (x : ℝ) : ℝ :=
+  2*Real.log (xstar/x)/Real.log b
+
+/-- The original normalized smooth weights, before finite stage truncation. -/
+def scaleWeight (xstar : ℝ) (b j : ℕ) (x : ℝ) : ℝ :=
+  scaleBump (scaleCoordinate xstar b x-j)/scaleDenominator (scaleCoordinate xstar b x)
+
+private lemma coordinate_nonneg {xstar x : ℝ} {b : ℕ}
+    (hx : 0 < x) (hxx : x ≤ xstar) (hb : 1 < b) :
+    0 ≤ scaleCoordinate xstar b x := by
+  have hbR : (1 : ℝ) < b := by exact_mod_cast hb
+  apply div_nonneg _ (Real.log_pos hbR).le
+  exact mul_nonneg (by norm_num) (Real.log_nonneg ((le_div_iff₀ hx).mpr (by linarith)))
+
+private lemma weight_smooth {xstar x : ℝ} {b : ℕ}
+    (hxstar : 0 < xstar) (hx : 0 < x) (hxx : x ≤ xstar) (hb : 1 < b) (j : ℕ) :
+    ContDiffAt ℝ ∞ (scaleWeight xstar b j) x := by
+  have hz : ContDiffAt ℝ ∞ (scaleCoordinate xstar b) x := by
+    exact (contDiffAt_const.mul ((contDiffAt_const.div contDiffAt_id hx.ne').log
+      (div_ne_zero hxstar.ne' hx.ne'))).div_const _
+  exact ((bump_smooth.contDiffAt.comp x (hz.sub contDiffAt_const)).div
+    ((denominator_smooth _).comp x hz)
+    (denominator_positive (coordinate_nonneg hx hxx hb)).ne')
+
+private lemma weight_mass {xstar x : ℝ} {b : ℕ}
+    (hx : 0 < x) (hxx : x ≤ xstar) (hb : 1 < b) (k : ℕ) :
+    (∀ j, 0 ≤ scaleWeight xstar b j x) ∧
+      ∑ j ∈ range (k+1), scaleWeight xstar b j x ≤ 1 := by
+  have hz := coordinate_nonneg hx hxx hb
+  have hp := denominator_positive hz
+  constructor
+  · intro j
+    exact div_nonneg (bump_nonneg _) hp.le
+  · obtain ⟨K,hK⟩ := exists_nat_gt (scaleCoordinate xstar b x+2)
+    have hs : Summable (fun j : ℕ => scaleBump (scaleCoordinate xstar b x-j)) :=
+      (hasSum_sum_of_ne_finset_zero (s := range K) (fun i hi =>
+        bump_tail (by linarith) (by simpa using hi))).summable
+    simp only [scaleWeight,← sum_div]
+    exact (div_le_one hp).mpr (hs.sum_le_tsum _ (fun i _ => bump_nonneg _))
+
+private lemma active_ring {xstar x : ℝ} {b j : ℕ}
+    (hxstar : 0 < xstar) (hx : 0 < x) (hb : 1 < b)
+    (hw : scaleWeight xstar b j x ≠ 0) : ringScale xstar b j / Real.sqrt b ≤ x := by
+  have hbR : (1 : ℝ) < b := by exact_mod_cast hb
+  have hb0 := lt_trans zero_lt_one hbR
+  have hlog := Real.log_pos hbR
+  have hz : scaleCoordinate xstar b x-j < 1 := by
+    by_contra h
+    exact hw (by simp [scaleWeight,bump_zero (Or.inr (le_of_not_gt h))])
+  have hsqrt : Real.sqrt b = (b : ℝ)^(1/2 : ℝ) := Real.sqrt_eq_rpow _
+  have hscale : ringScale xstar b j / Real.sqrt b =
+      xstar*(b : ℝ)^(-((j : ℝ)+1)/2) := by
+    rw [ringScale,hsqrt,mul_div_assoc,← Real.rpow_sub hb0]
+    congr 2
+    ring
+  rw [hscale]
+  have hxexp : xstar/x = Real.exp (Real.log (xstar/x)) := (Real.exp_log (div_pos hxstar hx)).symm
+  have hexp : (b : ℝ)^(-((j : ℝ)+1)/2) ≤ x/xstar := by
+    rw [Real.rpow_def_of_pos hb0,← Real.exp_log (div_pos hx hxstar)]
+    apply Real.exp_le_exp.mpr
+    rw [Real.log_div hx.ne' hxstar.ne']
+    dsimp [scaleCoordinate] at hz
+    have hh := (div_lt_iff₀ hlog).mp (show 2*Real.log (xstar/x)/Real.log b < j+1 by linarith)
+    rw [Real.log_div hxstar.ne' hx.ne'] at hh
+    nlinarith
+  calc
+    xstar*(b : ℝ)^(-((j : ℝ)+1)/2) ≤ xstar*(x/xstar) := mul_le_mul_of_nonneg_left hexp hxstar.le
+    _ = x := by field_simp
+
+/-- The original finite lower array, with inactive rings represented by zero. -/
+def publicLower (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
+    (b N : ℕ) (D xstar W β : ℝ) (k t : ℕ) (x : ℝ) : ℝ :=
+  (1-W*x^β)/2+W*x^β*∑ j ∈ range (k+1), scaleWeight xstar b j x*
+    ringLower (N*b^j) b r ρ θ (D*(ringScale xstar b j)^(-ρ))
+      (fun q => (reference φ η a d x q : ℂ)) (k-j) t
+
+/-- The original finite upper array, including the unstarted tail mass. -/
+def publicUpper (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
+    (b N : ℕ) (D xstar W β : ℝ) (k t : ℕ) (x : ℝ) : ℝ :=
+  (1+W*x^β)/2-W*x^β*∑ j ∈ range (k+1), scaleWeight xstar b j x*
+    (1-ringUpper (N*b^j) b r ρ θ (D*(ringScale xstar b j)^(-ρ))
+      (fun q => (reference φ η a d x q : ℂ)) (k-j) t)
+
+
+private lemma coefficient_smooth {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
+    {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ) (η a d : ℝ) (r k D t : ℕ)
+    {x : ℝ} (hx : 0 < x) : ContDiffAt ℝ ∞
+      (fun y => bernsteinCoefficient D t
+        (center τ b r (fun q => (reference φ η a d y q : ℂ)) k)) x := by
+  let V : ℝ → Sample τ b r k → ℂ := fun y z => samples τ b
+    (fun q => (reference φ η a d y q : ℂ)) z.1.val z.2.1.val z.2.2.val
+  have hV : ContDiffAt ℝ ∞ V x := by
+    apply contDiffAt_pi.mpr
+    intro z
+    have hz : (z.2.2.val : ℝ)/(τ*b^z.1.val) ∈ Set.Icc (0 : ℝ) 1 :=
+      ⟨by positivity,(div_le_one (by positivity)).mpr (by exact_mod_cast (show z.2.2.val ≤ τ*b^z.1.val by omega))⟩
+    change ContDiffAt ℝ ∞ (fun y => iteratedDerivWithin z.2.1.val
+      (fun q => (reference φ η a d y q : ℂ)) (Set.Icc 0 1) ((z.2.2.val : ℝ)/(τ*b^z.1.val))) x
+    simp_rw [complex_jet (reference_smooth hφ η a d _) _ hz]
+    exact Complex.ofRealCLM.contDiff.contDiffAt.comp x (qjet_scale_smooth hφ η a d _ hx.ne' _)
+  apply ContDiffAt.congr_of_eventuallyEq
+    ((coefficientFunctional τ b r k D t).contDiff.contDiffAt.comp x hV)
+  filter_upwards [Ioi_mem_nhds hx] with y hy
+  exact (functional_eq hτ hb r k D t
+    ((Complex.ofRealCLM.contDiff.comp (reference_smooth hφ η a d y)).contDiffOn.of_le
+      (by exact_mod_cast (le_top : (r : ℕ∞) ≤ ⊤)))).symm
+
+private lemma lift_mixture {n d t : ℕ} (hd : d ≤ n) (ht : t ≤ n)
+    (a w : ℝ) (s : Finset ℕ) (v : ℕ → ℝ) (f : ℕ → ℕ → ℝ) :
+    HNPCorrectionLiftAdvantage.lift n d t (fun i => a+w*∑ j ∈ s, v j*f j i) =
+      a+w*∑ j ∈ s, v j*HNPCorrectionLiftAdvantage.lift n d t (f j) := by
+  have hw := HNPCorrectionLiftAdvantage.weight_sum hd ht
+  unfold HNPCorrectionLiftAdvantage.lift
+  simp only [mul_add,sum_add_distrib]
+  rw [← sum_mul,hw,one_mul]
+  congr 1
+  simp only [mul_assoc,Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply sum_congr rfl
+  intro j _
+  apply sum_congr rfl
+  intro i _
+  ring
+
+private lemma lift_complement {n d t : ℕ} (hd : d ≤ n) (ht : t ≤ n) (f : ℕ → ℝ) :
+    HNPCorrectionLiftAdvantage.lift n d t (fun i => 1-f i) =
+      1-HNPCorrectionLiftAdvantage.lift n d t f := by
+  unfold HNPCorrectionLiftAdvantage.lift
+  simp only [mul_sub,mul_one,sum_sub_distrib,HNPCorrectionLiftAdvantage.weight_sum hd ht]
+
+/-- One initialization yields the original uninflated public arrays with smooth
+positive-scale coefficients and a uniform probability margin. The common
+weights are the normalized compact bumps, including their unstarted tail.
+No differentiability at the zero scale is asserted. -/
+theorem reference_public_array_regular {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞ χ)
+    (hcχ : HasCompactSupport χ) {T β : ℝ} (hT : 0 < T) (hβ : 0 ≤ β)
+    (hsχ : tsupport χ ⊆ Set.Ioo 0 T) (hχrange : ∀ t, 0 ≤ χ t ∧ χ t ≤ 1)
+    (a d : ℝ) (r : ℕ) (ρ θ : ℝ) (hρ : (r : ℝ) < ρ)
+    (hρ1 : ρ < (r : ℝ)+1) (hρ2 : 2 ≤ ρ) (hθ : 0 < θ) :
+    ∃ B : ℕ, 16 ≤ B ∧ ∀ b : ℕ, B ≤ b →
+      ∀ xstar : ℝ, 0 < xstar → xstar ≤ 1 → ∃ D : ℝ, 0 < D ∧
+      ∃ N : ℕ, 3*r+2 ≤ N ∧ ∀ W : ℝ, 0 ≤ W → W*xstar^β ≤ 15/16 →
+      let lower := publicLower (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D xstar W β
+      let upper := publicUpper (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D xstar W β
+      (∀ k : ℕ, ∀ x : ℝ, 0 < x → x ≤ xstar →
+        (∀ t ≤ N*b^k+r, ContDiffAt ℝ ∞ (lower k t) x ∧ ContDiffAt ℝ ∞ (upper k t) x ∧
+          (1/32 : ℝ) ≤ lower k t x ∧ lower k t x ≤ upper k t x ∧ upper k t x ≤ 31/32 ∧
+          |lower k t x-1/2| ≤ W*x^β/2 ∧ |upper k t x-1/2| ≤ W*x^β/2) ∧
+        (∀ t ≤ N*b^(k+1)+r,
+          HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t (fun i => lower k i x) ≤ lower (k+1) t x ∧
+          upper (k+1) t x ≤ HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t (fun i => upper k i x))) ∧
+      (0 < β → ∀ k t : ℕ, t ≤ N*b^k+r →
+        ContinuousOn (lower k t) (Set.Icc 0 xstar) ∧
+        ContinuousOn (upper k t) (Set.Icc 0 xstar)) := by
+  obtain ⟨B,hB,hb⟩ := reference_ring_envelopes hχ hcχ hT hβ hsχ hχrange
+    a d r ρ θ hρ hρ1 hρ2 hθ
+  refine ⟨B,hB,?_⟩
+  intro b hBb xstar hxstar hxstar1
+  obtain ⟨D,hD,N,hN,hr⟩ := hb b hBb xstar hxstar
+  refine ⟨D,hD,N,hN,?_⟩
+  intro W hW hW1
+  let lower := publicLower (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D xstar W β
+  let upper := publicUpper (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D xstar W β
+  have hpos :
+      ∀ k : ℕ, ∀ x : ℝ, 0 < x → x ≤ xstar →
+        (∀ t ≤ N*b^k+r, ContDiffAt ℝ ∞ (lower k t) x ∧ ContDiffAt ℝ ∞ (upper k t) x ∧
+          (1/32 : ℝ) ≤ lower k t x ∧ lower k t x ≤ upper k t x ∧ upper k t x ≤ 31/32 ∧
+          |lower k t x-1/2| ≤ W*x^β/2 ∧ |upper k t x-1/2| ≤ W*x^β/2) ∧
+        (∀ t ≤ N*b^(k+1)+r,
+          HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t (fun i => lower k i x) ≤ lower (k+1) t x ∧
+          upper (k+1) t x ≤ HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t (fun i => upper k i x)) := by
+    intro k x hx hxx
+    constructor
+    · intro t ht
+      have hb1 : 1 < b := by omega
+      have hb0 : 0 < b := by omega
+      have hN0 : 0 < N := by omega
+      have hφ := cutoff_smooth hχ (fun y hy => (hsχ hy).1) β
+      let η := 2/(5*T^β)
+      let low (j : ℕ) (y : ℝ) := ringLower (N*b^j) b r ρ θ
+        (D*(ringScale xstar b j)^(-ρ)) (fun q => (reference (cutoff χ β) η a d y q : ℂ)) (k-j) t
+      let upp (j : ℕ) (y : ℝ) := ringUpper (N*b^j) b r ρ θ
+        (D*(ringScale xstar b j)^(-ρ)) (fun q => (reference (cutoff χ β) η a d y q : ℂ)) (k-j) t
+      have hsm (j : ℕ) : ContDiffAt ℝ ∞ (low j) x ∧ ContDiffAt ℝ ∞ (upp j) x := by
+        have hc := Complex.reCLM.contDiff.contDiffAt.comp x
+          (coefficient_smooth (by positivity : 0 < N*b^j) hb0 hφ η a d r (k-j) ((N*b^j)*b^(k-j)+r) t hx)
+        exact ⟨hc.sub contDiffAt_const,hc.add contDiffAt_const⟩
+      have hwsm : ContDiffAt ℝ ∞ (fun y : ℝ => W*y^β) x :=
+        contDiffAt_const.mul (contDiffAt_id.rpow_const_of_ne hx.ne')
+      refine ⟨?_,?_,?_⟩
+      · exact ((contDiffAt_const.sub hwsm).div_const 2).add
+          (hwsm.mul (ContDiffAt.sum (fun j _ => (weight_smooth hxstar hx hxx hb1 j).mul (hsm j).1)))
+      · exact ((contDiffAt_const.add hwsm).div_const 2).sub
+          (hwsm.mul (ContDiffAt.sum (fun j _ => (weight_smooth hxstar hx hxx hb1 j).mul
+            (contDiffAt_const.sub (hsm j).2))))
+      have hm := weight_mass hx hxx hb1 k
+      have hpair (j : ℕ) (hj : j ∈ range (k+1)) :
+          0 ≤ scaleWeight xstar b j x*low j x ∧
+          0 ≤ scaleWeight xstar b j x*(1-upp j x) ∧
+          scaleWeight xstar b j x*low j x+scaleWeight xstar b j x*(1-upp j x) ≤ scaleWeight xstar b j x := by
+        by_cases hw : scaleWeight xstar b j x = 0
+        · simp [hw]
+        have hjk : j ≤ k := by have := mem_range.mp hj; omega
+        have he : (N*b^j)*b^(k-j)+r = N*b^k+r := by
+          rw [mul_assoc,← pow_add,Nat.add_sub_of_le hjk]
+        have ht' : t ≤ (N*b^j)*b^(k-j)+r := by rwa [he]
+        have hh := (hr j x hx (hxx.trans hxstar1) (active_ring hxstar hx hb1 hw) (k-j)).1 t ht'
+        change (9/20 : ℝ) ≤ low j x ∧ low j x ≤ upp j x ∧ upp j x ≤ 19/20 at hh
+        refine ⟨mul_nonneg (hm.1 j) (by linarith),mul_nonneg (hm.1 j) (by linarith),?_⟩
+        nlinarith [mul_nonneg (hm.1 j) (sub_nonneg.mpr hh.2.1)]
+      have hSL := sum_nonneg (fun j hj => (hpair j hj).1)
+      have hSU := sum_nonneg (fun j hj => (hpair j hj).2.1)
+      have hsum : (∑ j ∈ range (k+1), scaleWeight xstar b j x*low j x)+
+          (∑ j ∈ range (k+1), scaleWeight xstar b j x*(1-upp j x)) ≤ 1 := by
+        rw [← sum_add_distrib]
+        exact (sum_le_sum (fun j hj => (hpair j hj).2.2)).trans hm.2
+      have hw0 : 0 ≤ W*x^β := mul_nonneg hW (Real.rpow_nonneg hx.le _)
+      have hw1 : W*x^β ≤ 15/16 := (mul_le_mul_of_nonneg_left (Real.rpow_le_rpow hx.le hxx hβ) hW).trans hW1
+      change (1/32 : ℝ) ≤ (1-W*x^β)/2+W*x^β*(∑ j ∈ range (k+1), scaleWeight xstar b j x*low j x) ∧
+        (1-W*x^β)/2+W*x^β*(∑ j ∈ range (k+1), scaleWeight xstar b j x*low j x) ≤
+          (1+W*x^β)/2-W*x^β*(∑ j ∈ range (k+1), scaleWeight xstar b j x*(1-upp j x)) ∧
+        (1+W*x^β)/2-W*x^β*(∑ j ∈ range (k+1), scaleWeight xstar b j x*(1-upp j x)) ≤ 31/32 ∧
+      |(1-W*x^β)/2+W*x^β*(∑ j ∈ range (k+1), scaleWeight xstar b j x*low j x)-1/2| ≤ W*x^β/2 ∧
+      |(1+W*x^β)/2-W*x^β*(∑ j ∈ range (k+1), scaleWeight xstar b j x*(1-upp j x))-1/2| ≤ W*x^β/2
+      constructor
+      · nlinarith [mul_nonneg hw0 hSL]
+      constructor
+      · nlinarith [mul_nonneg hw0 (sub_nonneg.mpr hsum)]
+      constructor
+      · nlinarith [mul_nonneg hw0 hSU]
+      constructor <;> rw [abs_le] <;> constructor <;>
+        nlinarith [mul_nonneg hw0 hSL,mul_nonneg hw0 hSU,mul_nonneg hw0 (sub_nonneg.mpr hsum)]
+  
+    · intro t ht
+      have hb0 : 0 < b := by omega
+      have hb1 : 1 < b := by omega
+      have hd : N*b^k+r ≤ N*b^(k+1)+r := Nat.add_le_add_right
+        (Nat.mul_le_mul_left N (Nat.pow_le_pow_right hb0 (by omega))) r
+      let old := N*b^k+r
+      let next := N*b^(k+1)+r
+      let v := fun j => scaleWeight xstar b j x
+      let f := fun q => (reference (cutoff χ β) (2/(5*T^β)) a d x q : ℂ)
+      let lo (j l i : ℕ) := ringLower (N*b^j) b r ρ θ (D*(ringScale xstar b j)^(-ρ)) f (l-j) i
+      let up (j l i : ℕ) := ringUpper (N*b^j) b r ρ θ (D*(ringScale xstar b j)^(-ρ)) f (l-j) i
+      have hm := weight_mass hx hxx hb1 k
+      have hjoint (j : ℕ) (hj : j ∈ range (k+1)) :
+          v j*HNPCorrectionLiftAdvantage.lift next old t (lo j k) ≤ v j*lo j (k+1) t ∧
+          v j*HNPCorrectionLiftAdvantage.lift next old t (fun i => 1-up j k i) ≤ v j*(1-up j (k+1) t) := by
+        by_cases hv : v j = 0
+        · simp [hv]
+        have hjk : j ≤ k := by have := mem_range.mp hj; omega
+        have hko : (N*b^j)*b^(k-j)+r = old := by
+          dsimp [old]; rw [mul_assoc,← pow_add,Nat.add_sub_of_le hjk]
+        have hkn : (N*b^j)*b^(k-j+1)+r = next := by
+          dsimp [next]; rw [mul_assoc,← pow_add,show j+(k-j+1)=k+1 by omega]
+        have hh := (hr j x hx (hxx.trans hxstar1) (active_ring hxstar hx hb1 hv) (k-j)).2 t (by rwa [hkn])
+        have hs : k-j+1=k+1-j := by omega
+        rw [hko,hkn,hs] at hh
+        change HNPCorrectionLiftAdvantage.lift next old t (lo j k) ≤ lo j (k+1) t ∧
+          up j (k+1) t ≤ HNPCorrectionLiftAdvantage.lift next old t (up j k) at hh
+        refine ⟨mul_le_mul_of_nonneg_left hh.1 (hm.1 j),?_⟩
+        rw [lift_complement hd ht]
+        exact mul_le_mul_of_nonneg_left (sub_le_sub_left hh.2 1) (hm.1 j)
+      have hnew : 0 ≤ v (k+1)*lo (k+1) (k+1) t ∧ 0 ≤ v (k+1)*(1-up (k+1) (k+1) t) := by
+        by_cases hv : v (k+1) = 0
+        · simp [hv]
+        have hh := (hr (k+1) x hx (hxx.trans hxstar1) (active_ring hxstar hx hb1 hv) 0).1 t (by simpa using ht)
+        have hh' : (9/20 : ℝ) ≤ lo (k+1) (k+1) t ∧ lo (k+1) (k+1) t ≤ up (k+1) (k+1) t ∧ up (k+1) (k+1) t ≤ 19/20 := by
+          simpa only [lo,up,Nat.sub_self,f] using hh
+        rcases hh' with ⟨ha,hab,hb⟩
+        exact ⟨mul_nonneg (hm.1 _) (by linarith),mul_nonneg (hm.1 _) (by linarith)⟩
+      have hLS : (∑ j ∈ range (k+1), v j*HNPCorrectionLiftAdvantage.lift next old t (lo j k)) ≤
+          ∑ j ∈ range (k+1+1), v j*lo j (k+1) t := by
+        rw [sum_range_succ (n := k+1)]
+        exact (sum_le_sum (fun j hj => (hjoint j hj).1)).trans (le_add_of_nonneg_right hnew.1)
+      have hUS : (∑ j ∈ range (k+1), v j*HNPCorrectionLiftAdvantage.lift next old t (fun i => 1-up j k i)) ≤
+          ∑ j ∈ range (k+1+1), v j*(1-up j (k+1) t) := by
+        rw [sum_range_succ (n := k+1)]
+        exact (sum_le_sum (fun j hj => (hjoint j hj).2)).trans (le_add_of_nonneg_right hnew.2)
+      have hw : 0 ≤ W*x^β := mul_nonneg hW (Real.rpow_nonneg hx.le _)
+      constructor
+      · change HNPCorrectionLiftAdvantage.lift next old t
+          (fun i => (1-W*x^β)/2+W*x^β*∑ j ∈ range (k+1), v j*lo j k i) ≤ _
+        rw [lift_mixture hd ht]
+        exact add_le_add le_rfl (mul_le_mul_of_nonneg_left hLS hw)
+      · change _ ≤ HNPCorrectionLiftAdvantage.lift next old t
+          (fun i => (1+W*x^β)/2-W*x^β*∑ j ∈ range (k+1), v j*(1-up j k i))
+        simp_rw [sub_eq_add_neg,← neg_mul]
+        rw [lift_mixture hd ht]
+        simpa only [upper,publicUpper,sub_eq_add_neg,neg_mul,up,v,f,old,next] using
+        add_le_add (le_refl ((1+W*x^β)/2)) (mul_le_mul_of_nonpos_left hUS (neg_nonpos.mpr hw))
+
+  refine ⟨hpos,?_⟩
+  intro hβ0 k t ht
+  have hzL : lower k t 0 = 1/2 := by simp [lower,publicLower,Real.zero_rpow hβ0.ne']
+  have hzU : upper k t 0 = 1/2 := by simp [upper,publicUpper,Real.zero_rpow hβ0.ne']
+  have hc0 (A : ℝ → ℝ) (hA0 : A 0 = 1/2)
+      (hA : ∀ x : ℝ, 0 < x → x ≤ xstar → |A x-1/2| ≤ W*x^β/2) :
+      ContinuousWithinAt A (Set.Icc 0 xstar) 0 := by
+    rw [ContinuousWithinAt,hA0,tendsto_iff_norm_sub_tendsto_zero]
+    have hbnd : Tendsto (fun x : ℝ => W*x^β/2) (𝓝[Set.Icc 0 xstar] 0) (𝓝 0) := by
+      have hc : ContinuousAt (fun x : ℝ => W*x^β/2) 0 :=
+        (continuousAt_const.mul (Real.continuousAt_rpow_const _ _ (Or.inr hβ0.le))).div_const 2
+      simpa [Real.zero_rpow hβ0.ne'] using hc.tendsto.mono_left nhdsWithin_le_nhds
+    apply squeeze_zero' (Eventually.of_forall (fun x => norm_nonneg _)) _ hbnd
+    filter_upwards [self_mem_nhdsWithin] with x hx
+    rw [Real.norm_eq_abs]
+    rcases eq_or_lt_of_le hx.1 with he | he
+    · subst x
+      simp [hA0,Real.zero_rpow hβ0.ne']
+    · exact hA x he hx.2
+  have hLc := hc0 _ hzL (fun x hx hxx => ((hpos k x hx hxx).1 t ht).2.2.2.2.2.1)
+  have hUc := hc0 _ hzU (fun x hx hxx => ((hpos k x hx hxx).1 t ht).2.2.2.2.2.2)
+  constructor <;> intro x hx
+  · rcases eq_or_lt_of_le hx.1 with he | he
+    · simpa [← he] using hLc
+    · exact (((hpos k x he hx.2).1 t ht).1).continuousAt.continuousWithinAt
+  · rcases eq_or_lt_of_le hx.1 with he | he
+    · simpa [← he] using hUc
+    · exact (((hpos k x he hx.2).1 t ht).2.1).continuousAt.continuousWithinAt
 
 end D5.S3.Analytic.SeriesInequalities.ParametricLorentzJetTransport
