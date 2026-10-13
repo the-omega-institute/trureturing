@@ -6482,3 +6482,275 @@ lower bound on off-line distance or a complex-root trajectory.
 The source-realness premises, all-height coverage, first-defect
 closure, full RH and strict Robin for every integer $H>5040$ remain
 unresolved. No unconditional height-uniform RH margin is claimed.
+
+
+## Freeze at the source-circle center before transporting the actual node
+
+The exponential-tilt identity (LC202), its signed generating-family
+application (LC226)--(LC229), and the source and model bounds in
+(LC209)--(LC235) are reused. The original $F$, coefficient shift zero,
+$\mathscr T_n$, $\mathcal J_n$, $\mathcal G_n$ and the explicit
+closed-$4\rho$-disc source-realness premise remain unchanged.
+This source-specific application removes a linear-drift normalization
+condition; it introduces no new generic exponential-tilt theorem.
+It is ordinary analysis, with no Lean, numerical-constant or
+originality certification.
+
+The earlier tangent was fixed at its transported node $c_i$.
+Instead fix it at the center of the source circle. The exponential
+factor can then be removed exactly, before any endpoint, derivative
+or adjacent-response estimate. Its amplitude need not be compared
+with the source amplitude by a fixed constant.
+
+### The source-to-node chart needs only $\nu$ proportional to $L$
+
+Keep $B,K,R,\tau,\sigma,L,\nu$ from (LC212), (LC221).
+For real $x$ in $[\tau-R/2,\tau+R/2]$ define
+
+$$
+b(x)=A'(x)/A(x),\qquad
+h(x)=\frac{x}{1-b(x)x/n}.
+\tag{LC236}
+$$
+
+For $\nu\ge C L$ with a sufficiently large fixed source constant,
+$B\tau/n\le CL\rho/(T\nu)$ and $K\sigma^2\le CL/\nu$ are small.
+The denominator is positive, and direct differentiation gives
+
+$$
+h'(x)=\frac{1+b'(x)x^2/n}{(1-b(x)x/n)^2}\in[1/2,2],
+\qquad
+|h(x)-x|\le CB\sigma^2\le CT\rho L/\nu.
+\tag{LC237}
+$$
+
+Enlarge $C$ so the last displacement is at most $R/100$.
+Then the chart covers all $|t-\tau|\le R/16$ and its inverse lies
+in $|x-\tau|\le R/8$. These conditions do not require $B\sigma$
+to be small; $B\sigma=O(L/\sqrt\nu)$ may grow.
+
+For every selected model root $\beta_i\in[\tau-R/4,\tau+R/4]$,
+put $b_i=b(\beta_i)$, $a_i=A(\beta_i)$, and
+
+$$
+g_i(z)=\frac{A(z)}{a_i e^{b_i(z-\beta_i)}},\qquad
+W_i=Qg_i,\qquad
+\widehat J_i=\mathscr T_n W_i,\qquad
+\widehat G_i=\mathscr T_n W_i',\qquad
+h_i(x)=\frac{x}{1-b_ix/n}.
+\tag{LC238}
+$$
+
+The quotient $A=F/Q$ is entire after removal of the selected zeros,
+so $W_i=e^{-b_i(z-\beta_i)}F/a_i$ is entire. Its definition is an
+auxiliary exact factorization of the original source. Here
+$g_i(\beta_i)=1$, $g_i'(\beta_i)=0$.
+The node center is $t_i=h(\beta_i)=h_i(\beta_i)$.
+All $a_i,b_i,\beta_i$ are frozen when the auxiliary functions are
+differentiated.
+
+### Transport all three responses before taking any absolute value
+
+For fixed $i$, set $d_i(t)=1+b_it/n$,
+$y_i(t)=t/d_i(t)$ and $E_i(t)=e^{-b_i\beta_i}d_i(t)^n$.
+The exact tilt already established in (LC202), applied to $W_i$,
+gives
+
+$$
+\begin{aligned}
+\mathcal J_n(t)&=a_iE_i(t)\widehat J_i(y_i(t)),\\
+\mathcal J_n'(t)&=a_iE_i(t)
+ \left[\frac{b_i}{d_i(t)}\widehat J_i(y_i(t))
+       +\frac{\widehat J_i'(y_i(t))}{d_i(t)^2}\right],\\
+\mathcal G_n(t)&=a_iE_i(t)
+ \left[b_i\widehat J_i(y_i(t))+\widehat G_i(y_i(t))\right].
+\end{aligned}
+\tag{LC239}
+$$
+
+The derivative is taken with fixed tangent parameters.
+On this chart $d_i>0$ and $E_i>0$, regardless of the size of
+$B\sigma$. At an actual original node the two extra multiples of
+$\widehat J_i$ vanish exactly. Consequently
+
+$$
+\mathcal J_n(t)=0
+\quad\Longrightarrow\quad
+\mathcal J_n'(t)\mathcal G_n(t)
+=\frac{a_i^2E_i(t)^2}{d_i(t)^2}
+  \widehat J_i'(y_i(t))\widehat G_i(y_i(t)).
+\tag{LC240}
+$$
+
+Thus the sign task and repeated-node exclusion can be paid in the
+source coordinate without estimating the size of $E_i$.
+No assertion that a moving choice of tangent commutes with
+differentiation is used.
+
+### Reuse the signed factor budget with zero linear drift
+
+Take $P=(r+1)[1+\log(r+2)]^2$ and
+$q=c_*\sigma/\sqrt P$, as in (LC221)--(LC222).
+For $r\ge1$ put $J_i=[\beta_i-4q,\beta_i+4q]$ and
+$I_i=h_i(J_i)$. The same harmonic product and bounded residues
+supply
+
+$$
+|H|\ge cD_iq\ \text{at both endpoints of }J_i,\qquad
+|H'|,|V|\ge cD_i,\quad H'V>0\ \text{on }J_i.
+\tag{LC241}
+$$
+
+Since $t_i=h(\beta_i)$ and $h'\ge1/2$, the centers retain the
+model mesh up to a fixed factor. Also $h_i'$ is bounded above
+and below on its interval. Choosing $c_*$ sufficiently small makes
+the $I_i$ disjoint and inside the source chart.
+
+The expansion of $g_i$ about $\beta_i$ uses exactly (LC223)--(LC225):
+$R_A=aT\rho/\sqrt L$, $U=R_A/\sigma$, $N=\lceil D(r+1)\rceil$,
+$|[ (z-\beta_i)^m ]g_i|\le CKR_A^{2-m}$ for $m\ge2$.
+The exact signed moments (LC228)--(LC229) now have tangent parameters
+$a=1$, $b=0$, $c=\beta_i$ and query variable $x\in J_i$.
+Therefore their proof requires no condition on the original $B\sigma$.
+Its local contribution and the high remainder are again bounded by
+$CK\sigma^2P$, once $n\ge CN$ and $U^2\ge CP$.
+The intermediate source arc is bounded by
+$|W_i(z)|\le|Q(z)|e^{K|z-\beta_i|^2/2}$.
+The entire model Taylor-polynomial tail uses the coefficient bound
+(LC231). Both tails cost $C\exp[-c\nu/L+Cr]$.
+There is no linear exponential left in either auxiliary model.
+
+On the complete remote source arc the auxiliary source instead obeys
+
+$$
+|W_i(xe^{i\theta})|
+\le\frac{|F(xe^{i\theta})|}{|a_i|}
+ \exp\{B|x-\beta_i|+Bx(1-\cos\theta)\}.
+\tag{LC242}
+$$
+
+This retains the whole original source. The term $Bx\theta^2/2$
+is absorbed into the kernel Gaussian since $B\tau/n$ is small.
+The constant term on $J_i$ costs
+$CBq\le CL/(\sqrt\nu\sqrt P)$; it is not discarded.
+The original source's linear angular growth and the independent
+factor floor are still paid as in (LC232).
+The three exact weights, including the $n+1$ adjacent offset,
+apply to the same auxiliary remainder $W_i-QP_{N,i}$.
+Thus
+
+$$
+\begin{aligned}
+\max\left\{
+\frac{\|\widehat J_i-H\|_{J_i}}{D_iq},
+\frac{\|\widehat J_i'-H'\|_{J_i}}{D_i},
+\frac{\|\widehat G_i-V\|_{J_i}}{D_i}
+\right\}
+\le{}&\frac{CLP}{\nu}+Ce^{-c\nu/L+Cr}\\
+&+C\exp\!\left[-c\nu+C\left\{
+ r+L(1+\log(1/\rho))+r\log(2+\nu)
+ +\frac{\rho^2L^2}{\nu}+\frac{L}{\sqrt\nu\sqrt P}
+\right\}\right].
+\end{aligned}
+\tag{LC243}
+$$
+
+The assumptions here are $n\ge CN$, $\nu\ge CL$ and
+$U^2\ge CP$; no $B\sigma$ smallness or source derivative floor
+has been used. If the bound is a sufficiently small fixed constant,
+$\widehat J_i$ has exactly one simple real node in $J_i$, and
+$\widehat J_i'\widehat G_i>0$ there by (LC241).
+Equation (LC240) transports the same conclusion to $I_i$.
+
+### Query-centered exclusion retains every actual central real node
+
+For a central original query $t$, let $x=h^{-1}(t)$, freeze
+$b=b(x)$, $a=A(x)$ at this physical source coordinate, and set
+$g_x(z)=A(z)/(a e^{b(z-x)})$.
+The value identity (LC239) uses $y(t)=x$ and
+$\widehat J_x=\mathscr T_n(Qg_x)$.
+This is only a pointwise value comparison; no moving tangent is
+differentiated.
+If $\operatorname{dist}(x,\{\beta_i\})\ge q$, the reciprocal-root
+sum and the direct full-circle $Q/H(x)$ product comparison proved
+following (LC233) apply at this $x$. The signed factor sum, high
+remainder, intermediate arc and entire polynomial-model tail have
+the same relative value bounds as (LC243).
+For the remote source (LC242) its constant term is now zero because
+the circle center and tangent center are both $x$.
+The factorial floor for $|H(x)|$ is unchanged. Hence such a query
+cannot be an original node when (LC243) is below $1/2$.
+
+Every remaining actual central node has $|x-\beta_i|<q$ for a
+selected central root. Its center is $t_i=h(\beta_i)$, so
+$|t-t_i|\le2q$ by (LC237). More explicitly
+
+$$
+|h(x)-h_i(x)|\le C\sigma^2K|x-\beta_i|,
+\tag{LC244}
+$$
+
+using $|b(x)-b_i|\le K|x-\beta_i|$ and the two bounded
+denominators. Thus $t=h(x)$ lies inside the image $I_i=h_i(J_i)$
+when $K\sigma^2$ is small: the inverse $y_i$ has bounded derivative,
+so $|y_i(t)-\beta_i|<4q$.
+This places every actual central node in its certified interval.
+For $r=1$, the same statements use the empty other-root product.
+For $r=0$ use $H=Q=1$ and the nonzero query model; the relative
+value bound excludes all central actual nodes without a mesh or $D_i$.
+
+### A source-count-adaptive sufficient degree
+
+A sufficiently large fixed source constant $C_4$ pays every initial
+condition and every term of (LC243) when
+
+$$
+n\ge C_4(r+1),\qquad
+\nu\ge C_4\left[
+ L(r+1)[1+\log(r+2)]^2+L(1+\log(1/\rho))\right].
+\tag{LC245}
+$$
+
+The first term pays the signed local error, $U^2\ge CP$, the
+intermediate exponent and all finite Taylor-order conditions.
+It implies $\nu\ge CL$, so it pays chart clearance and
+$K\sigma^2$, $B\tau/n$ smallness.
+For the remote exponent use
+$r\log(2+\nu)\le\eta\nu+C_\eta r\log(2+r)$.
+Its last term is dominated by $LP$; the independent factor floor
+is paid by the second term of (LC245).
+Also $\rho^2L^2/\nu\le CL/P$ and
+$L/(\sqrt\nu\sqrt P)\le C\sqrt L/P$; both are absorbed by
+$-c\nu$ after enlarging $C_4$.
+All bounds remain controlled for every larger degree, rather than
+only at the threshold. Under the explicitly unchanged local
+all-critical-source premise, they therefore give
+
+$$
+\left[\ |t-T^2|\le T\rho/64,\quad\mathcal J_n(t)=0\ \right]
+\quad\Longrightarrow\quad
+\mathcal J_n'(t)\mathcal G_n(t)>0
+\qquad\text{whenever (LC245) holds}.
+\tag{LC246}
+$$
+
+For independently bounded $r\le\bar r$, this sufficient degree,
+with fixed $\rho$, has order $T^2\log T$, with constants depending
+on $\bar r$ and $\rho$. More generally (LC245) keeps the actual
+source count in the budget. No uniform bounded source count is
+asserted at all heights or supplied by the local realness premise.
+An independently certified upper bound for all source multiplicities
+in the disc may replace $r$ before a bad-node inverse test.
+The universal count $r\le C_0L$ recovers the earlier worst-case
+$T^2\log^2T[1+\log\log T]^2$ sufficient order.
+
+The linear-drift cost is therefore removable by exact source-centered
+transport. The growing-cluster curvature cost $K\sigma^2P$ remains;
+it has not been removed by renaming the auxiliary source or by
+bounding $E_i$. A quadratic or more accurate local model would still
+need its own actual-node margins, all-response finite extraction
+comparison, complete tails and query exclusion.
+The whole unpaid moving band, source-realness certification,
+first-defect closure, RH and strict Robin for every integer $H>5040$
+remain unresolved. This application asserts no global Jensen-root
+matching or numerical degree.
