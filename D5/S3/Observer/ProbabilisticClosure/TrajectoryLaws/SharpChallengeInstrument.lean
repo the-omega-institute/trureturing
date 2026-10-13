@@ -316,11 +316,12 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
             all_goals
               apply Finset.sum_congr rfl
               intro u _
-              by_cases hq : q =
-                  (State.awaiting z ⟨n-(j+1), by omega⟩ u,
-                    liveRecord a j (a (j+1)), a (j+1), Output.challenge u)
-              · simp only [if_pos hq]
-              · simp only [if_neg hq]
+              exact congrArg
+                (fun d : Decidable (q =
+                    (State.awaiting z ⟨n-(j+1), by omega⟩ u,
+                      liveRecord a j (a (j+1)), a (j+1), Output.challenge u)) =>
+                  @ite ℝ≥0∞ _ d ((Fintype.card A : ℝ≥0∞)⁻¹) 0)
+                (Subsingleton.elim _ _)
           · simp [instrument, hr, PMF.pure_map, PMF.pure_apply]
         change ((execute (instrument n) (fixedPolicy a) (PMF.pure (.start z)) (j+1)).bind
           (fun sh => (PMF.pure (a (j+1))).bind fun b =>
