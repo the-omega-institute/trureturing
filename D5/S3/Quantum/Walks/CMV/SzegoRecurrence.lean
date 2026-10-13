@@ -749,8 +749,11 @@ theorem normalized_star_inverse (n : ℕ) :
   have hn : gramNorm n≠0 := ne_of_gt (gramNorm_pos n)
   have hr2 : (D5.S3.Weil.Szego.CanonicalTransfer.szegoRho (verblunsky n : ℂ))^2=1-verblunsky n^2 :=
     by
-      simpa only [D5.S3.Weil.Szego.CanonicalTransfer.szegoRho, Complex.normSq_ofReal, ← pow_two] using
-        (Real.sq_sqrt (by linarith [verblunsky_sq_lt_one n]) : Real.sqrt (1-verblunsky n^2)^2=1-verblunsky n^2)
+      have hAlpha : ‖(verblunsky n : ℂ)‖ < 1 := by
+        rw [Complex.norm_real, Real.norm_eq_abs]
+        exact (sq_lt_one_iff_abs_lt_one _).mp (verblunsky_sq_lt_one n)
+      simpa only [Complex.normSq_ofReal, ← pow_two] using
+        D5.S3.Weil.Szego.CanonicalTransfer.szego_rho_sq hAlpha
   rw [normalizedPhiStar,normalizedPhiStar,normalizedPhi,hs,gramNorm_succ]
   simp only [smul_sub,smul_smul]
   congr 1

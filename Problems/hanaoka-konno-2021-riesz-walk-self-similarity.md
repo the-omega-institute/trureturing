@@ -55,8 +55,11 @@ equations corresponding to the Schur definition and Schur step are proved by
 schur0_spec and schurStep_spec; this is the convention repair recorded in
 issue #15758.
 
-Every newly authored public theorem remains under the unfinished escape audit
-issue #15854. No declaration is reported as declared_validated.
+Every newly authored public theorem, including the public Szego rho-square
+owner `D5/S3/Weil/Szego/CanonicalTransfer.szego_rho_sq`
+(declaration statement_id: `sha256:0c7e849be0a2d5c52755ddb652d3be5c71965267f3356f6b4e69cbbeb8141df6`), remains under the unfinished
+escape audit [issue #15854](https://github.com/the-omega-institute/trureturing/issues/15854).
+No declaration is reported as declared_validated.
 
 ## Route
 
@@ -87,7 +90,7 @@ https://github.com/the-omega-institute/trureturing-experiments/tree/cc6202d7269e
 was run as python3 check.py, exit 0, and has SHA-256
 54eca0560bd45517bdd5010d7540b01b5bf8360a23024434e7fff3b9406cb007.
 It checks the literal Section 2 construction for t=1,...,32 (times up to 256),
-with worst discrepancy 4e-61, and the factor-two control fails in 104
+with worst discrepancy $4.28 \times 10^{-61}$, and the factor-two control fails in 104
 instances. These are finite computed readings.
 
 ## Triage
@@ -99,9 +102,14 @@ open-problem-resolution (#15758; Proved); utility is none.
 ### What the settlement shows
 
 - Kernel-checked: result proves the stated block equality. The decisive
-  mechanism is the cumulative projection identity assembled from the CMV
-  spectral representation, the Geronimus equality, and the parity-weighted
-  fourth-power decimation.
+  mechanism is CMV.Representation.SpectralReduction.cumulative_projection,
+  CMV.Geronimus.schur_equals_gram, Riesz.Moments.Forms.tau_density,
+  Riesz.Moments.Forms.riesz_residue_orthogonality,
+  Riesz.Decimation.Parity.parity_weighted_projection, and
+  RieszWalkSelfSimilarity.Scaling.cumulative_scale_four. These identify
+  cumulative probabilities with Laurent-window projection norms, express
+  fourth-power decimation with density $1 + \operatorname{Re} w$ and invariance
+  under $z \mapsto iz$, and give $F_{2t}(2x) = F_{8t}(8x)$.
 - Kernel-checked: the supporting content witnesses are
   Riesz.Moments.product_independent, CMV.SzegoRecurrence.OPUCRecurrence.monic_szego,
   CMV.Geronimus.schur_equals_gram, CMV.Representation.WalkCore.mu_outside, and

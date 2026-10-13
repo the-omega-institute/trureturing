@@ -4,6 +4,10 @@
 
 Finite Riesz moments, orthogonal Laurent polynomials and scale-four projection identities.
 
+The CMV blocks use the positive Szego normalization at each real Schur parameter.
+
+$\forall (k : \mathbb{N}) , \rho_{k} = \operatorname{D5.S3.Weil.Szego.CanonicalTransfer.szegoRho} (\alpha_{k} : \mathbb{C}) = \sqrt{1 - \lvert \alpha_{k}\rvert^{2}}$
+
 **Definition 1.1 (R).**
 
 $$\forall (x : \mathbb{N}) , \operatorname{R} x = \operatorname{if} x = 0 \operatorname{then} \begin{pmatrix}\operatorname{alpha} 0&\operatorname{D5.S3.Weil.Szego.CanonicalTransfer.szegoRho} \operatorname{Complex.ofReal}\left((\operatorname{alpha} 0)\right)\\\operatorname{D5.S3.Weil.Szego.CanonicalTransfer.szegoRho} \operatorname{Complex.ofReal}\left((\operatorname{alpha} 0)\right) \cdot \operatorname{alpha} 1&- \operatorname{alpha} 0 \cdot \operatorname{alpha} 1\end{pmatrix} \operatorname{else} \begin{pmatrix}- \operatorname{alpha} (2 \cdot x - 1) \cdot \operatorname{alpha} (2 \cdot x)&- \operatorname{alpha} (2 \cdot x - 1) \cdot \operatorname{D5.S3.Weil.Szego.CanonicalTransfer.szegoRho} \operatorname{Complex.ofReal}\left((\operatorname{alpha} (2 \cdot x))\right)\\\operatorname{D5.S3.Weil.Szego.CanonicalTransfer.szegoRho} \operatorname{Complex.ofReal}\left((\operatorname{alpha} (2 \cdot x))\right) \cdot \operatorname{alpha} (2 \cdot x + 1)&- \operatorname{alpha} (2 \cdot x) \cdot \operatorname{alpha} (2 \cdot x + 1)\end{pmatrix}$$
