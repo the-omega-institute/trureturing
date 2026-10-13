@@ -58,7 +58,7 @@ internal sealed class IntegralDiscriminantDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "discriminantCoefficient(n) computes the exact quotient C_n and finite convolution coefficients for 100U^2-147V^2+8000U^3. Each convolution sums i from 0 through n. Nested convolution computes the cube. The function uses integer arithmetic and finite divisor sets, with no analytic coefficient evaluation or selected inverse. For every n its integer output, embedded in the complex numbers, equals coefficient n of the actual analytic discriminant.")),
                     Paragraph(Text(
-                    "At every natural precision N, PowerSeries.trunc_apply and Fin.sum_univ_eq_sum_range turn this coefficient theorem into equality between the analytic truncation and the polynomial of integer outputs at indices n<N. This application is checked transiently rather than retained as a separate theorem. Precision pm+1 includes coefficient pm; the full Miller basis and Hecke matrix algorithm remain to be constructed."))),
+                    "At every natural precision N, PowerSeries.trunc_apply and Fin.sum_univ_eq_sum_range turn this coefficient theorem into equality between the analytic truncation and the polynomial of integer outputs at indices n<N. This application is checked transiently rather than retained as a separate theorem. Precision pm+1 includes coefficient pm. IntegralMillerBasis constructs the normalized integral basis and full coefficient lattice for m>=1 and s in 0,4,6,8,10,14 at weight 12m+s. The actual Hecke matrix and finite-array precision correctness remain to be proved."))),
                 DescribeRole.Theorem))));
 
 
