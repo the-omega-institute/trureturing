@@ -24,7 +24,7 @@ abbrev K := lp (fun _ : ℕ => H) 2
 abbrev Op := H →L[ℂ] H
 abbrev Loss := Set.Icc (0 : ℝ) 1
 
-def e (k : ℕ) : H :=
+private def e (k : ℕ) : H :=
   lp.single (E := fun _ : ℕ => ℂ) 2 k (1 : ℂ)
 
 private theorem lift_exists (M : Op) :
@@ -122,33 +122,21 @@ def onOff (μ : ℂ) (b : Fin 2) : Op :=
     1 - InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)
 
 private theorem coherent_norm (μ : ℂ) : ‖coherent μ‖ = 1 := by
-  have h_FockAttProbe_coherent_norm_sq (α : ℂ) (n : ℕ) :
-      ‖coherentCoeff α n‖ ^ 2 =
-        Real.exp (-‖α‖ ^ 2 / 2) ^ 2 * (‖α‖ ^ 2) ^ n / (n.factorial : ℝ) := by
-    rw [coherentCoeff, norm_div, norm_mul, norm_pow]
-    simp only [Complex.norm_real, Real.norm_eq_abs, Real.abs_exp,
-      abs_of_nonneg (Real.sqrt_nonneg _), div_pow, mul_pow,
-      Real.sq_sqrt (Nat.cast_nonneg n.factorial), pow_right_comm ‖α‖ n 2]
-  have h_FockAttProbe_coherent_hasSum (α : ℂ) :
-      HasSum (fun n : ℕ => ‖coherentCoeff α n‖ ^ 2) 1 := by
-    have hseries : HasSum (fun n : ℕ => (‖α‖ ^ 2) ^ n / (n.factorial : ℝ))
-        (Real.exp (‖α‖ ^ 2)) := by
-      simpa only [Real.exp_eq_exp_ℝ] using
-        (NormedSpace.expSeries_div_hasSum_exp (‖α‖ ^ 2))
-    have hs := hseries.mul_left (Real.exp (-‖α‖ ^ 2 / 2) ^ 2)
-    have he : Real.exp (-‖α‖ ^ 2 / 2) ^ 2 * Real.exp (‖α‖ ^ 2) = 1 := by
-      rw [sq, ← Real.exp_add, ← Real.exp_add]
-      ring_nf
-      exact Real.exp_zero
-    have hs' : HasSum (fun n : ℕ => ‖coherentCoeff α n‖ ^ 2)
-        (Real.exp (-‖α‖ ^ 2 / 2) ^ 2 * Real.exp (‖α‖ ^ 2)) :=
-      HasSum.congr_fun hs (fun n => by rw [h_FockAttProbe_coherent_norm_sq]; ring)
-    rwa [he] at hs'
-  have hn := lp.norm_rpow_eq_tsum (p := (2 : ℝ≥0∞)) (by norm_num) (coherent μ)
-  simp only [ENNReal.toReal_ofNat, Real.rpow_two] at hn
-  have hs : ‖coherent μ‖ ^ 2 = 1 := hn.trans (h_FockAttProbe_coherent_hasSum μ).tsum_eq
+  have ht := (coherentDensity μ).trace_one
+  change HasSum (fun n : ℕ =>
+    (inner ℂ (e n) (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ) (e n))).re) 1 at ht
+  have hc : ∀ n : ℕ,
+      (inner ℂ (e n) (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ) (e n))).re =
+        ‖coherent μ n‖ ^ 2 := by
+    intro n
+    simp only [InnerProductSpace.rankOne_apply, inner_smul_right, e,
+      lp.inner_single_left, lp.inner_single_right, RCLike.inner_apply,
+      map_one, one_mul, mul_one, RCLike.conj_mul]
+    norm_cast
+  have hs := lp.hasSum_norm (p := (2 : ℝ≥0∞)) (by norm_num) (coherent μ)
+  simp only [ENNReal.toReal_ofNat, Real.rpow_two] at hs
+  have hn : ‖coherent μ‖ ^ 2 = 1 := hs.unique (ht.congr_fun (fun n => (hc n).symm))
   nlinarith [norm_nonneg (coherent μ)]
-
 
 private theorem rankOne_complement_pos (v : H) (hv : ‖v‖ = 1) :
     (1 - InnerProductSpace.rankOne ℂ v v).IsPositive := by
@@ -156,7 +144,7 @@ private theorem rankOne_complement_pos (v : H) (hv : ‖v‖ = 1) :
   constructor
   · exact LinearMap.IsSymmetric.one.sub (InnerProductSpace.isSymmetric_rankOne_self v)
   · intro x
-    simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.one_apply,
+    simp only [_root_.sub_apply, one_apply_eq_self,
       InnerProductSpace.rankOne_apply, inner_sub_left, inner_smul_left]
     have hi := (norm_inner_le_norm (𝕜 := ℂ) (E := H) v x)
     have hi0 : ‖inner ℂ v x‖ ≤ ‖x‖ := by simpa [hv] using hi
@@ -190,8 +178,8 @@ private theorem amplify_add (M N : Op) : amplify (M + N) = amplify M + amplify N
   apply lp.ext
   funext k
   change (amplify (M + N) w) k = ((amplify M + amplify N) w) k
-  rw [amplify_apply, ContinuousLinearMap.add_apply]
-  rw [ContinuousLinearMap.add_apply]
+  rw [amplify_apply, _root_.add_apply]
+  rw [_root_.add_apply]
   rw [show ((amplify M) w + (amplify N) w).1 k =
       (amplify M w) k + (amplify N w) k by rfl]
   rw [amplify_apply, amplify_apply]
@@ -256,7 +244,7 @@ private theorem dualLoss_add (τ : Loss) (M N : Op) :
   change (stinespring τ).adjoint ((amplify M + amplify N) (stinespring τ x)) =
     (stinespring τ).adjoint (amplify M (stinespring τ x)) +
       (stinespring τ).adjoint (amplify N (stinespring τ x))
-  rw [ContinuousLinearMap.add_apply]
+  rw [_root_.add_apply]
   exact (stinespring τ).adjoint.map_add _ _
 
 private theorem dualLoss_one (τ : Loss) : dualLoss τ 1 = 1 := by
@@ -293,7 +281,7 @@ private theorem compress_pos (X : Op) (hX : X.IsPositive) : (compress X).PosSemi
     have hq := hX.inner_nonneg_right (embed v)
     rw [show star v ⬝ᵥ (compress X) *ᵥ v = inner ℂ (embed v) (X (embed v)) by
       simp [dotProduct, Matrix.mulVec, compress, embed, Fin.sum_univ_two,
-        inner_smul_left, inner_smul_right]
+         ]
       ring]
     exact hq
 
@@ -301,14 +289,12 @@ private theorem compress_one : compress (1 : Op) = (1 : Matrix (Fin 2) (Fin 2) �
   ext i j
   by_cases h : i = j
   · subst j
-    simp [compress, e, lp.inner_single_left, lp.inner_single_right, Pi.single_apply,
-      Matrix.one_apply]
+    simp [compress, e]
   · have hv : (j : ℕ) ≠ i := by
       intro hj
       apply h
       exact Fin.ext hj.symm
-    simp [compress, e, lp.inner_single_left, lp.inner_single_right, Pi.single_apply,
-      Matrix.one_apply, h, hv]
+    simp [compress, e, lp.inner_single_right, h, hv]
 
 private theorem compress_add (X Y : Op) : compress (X + Y) = compress X + compress Y := by
   ext i j
@@ -346,5 +332,178 @@ private theorem compressed_parent {m : ℕ} (F : Fin m → Fin 2 → Op)
     change s.sum (fun a => compress (G a)) = compress (F j b)
     rw [← compress_finset_sum s G]
     exact congrArg compress (hGmarg j b)
+
+
+private theorem dual_inner (τ : Loss) (M : Op) (u v : H) :
+    inner ℂ u (dualLoss τ M v) =
+      ∑' k : ℕ, inner ℂ ((stinespring τ u) k)
+        (M ((stinespring τ v) k)) := by
+  unfold dualLoss
+  change inner ℂ u
+      ((stinespring τ).adjoint (amplify M (stinespring τ v))) = _
+  rw [ContinuousLinearMap.adjoint_inner_right, lp.inner_eq_tsum]
+  apply tsum_congr
+  intro k
+  change inner ℂ ((stinespring τ u) k)
+      ((amplify M (stinespring τ v)) k) = _
+  rw [amplify_apply]
+
+private theorem dual_rankOne_inner (τ : Loss) (μ : ℂ) (u v : H) :
+    inner ℂ u (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)) v) =
+      ∑' k : ℕ, inner ℂ ((stinespring τ u) k) (coherent μ) *
+        inner ℂ (coherent μ) ((stinespring τ v) k) := by
+  rw [dual_inner]
+  apply tsum_congr
+  intro k
+  simp only [InnerProductSpace.rankOne_apply, inner_smul_right]
+  ring
+
+private theorem fock_slice (m n k : ℕ) :
+    fockPair m n k = if k = n then e m else 0 := by
+  simp only [fockPair, tensor, e, lp.single_apply, Pi.single_apply]
+  split_ifs <;> simp_all
+
+private theorem pair_inner (m n k : ℕ) (μ : ℂ) :
+    inner ℂ (fockPair m n k) (coherent μ) =
+      if k = n then inner ℂ (e m) (coherent μ) else 0 := by
+  rw [fock_slice]
+  split_ifs <;> simp
+
+private theorem vacuum_fock (n : ℕ) : vacuumEmbedding (e n) = fockPair n 0 := by
+  apply lp.ext
+  funext k
+  simp only [vacuumEmbedding, lp.singleContinuousLinearMap_apply, fockPair, tensor]
+  apply lp.ext
+  funext l
+  simp [e, lp.single_apply, Pi.single_apply]
+
+private theorem split_zero (τ : Loss) : stinespring τ (e 0) = fockPair 0 0 := by
+  unfold stinespring
+  change (beamSplitter τ.1 τ.2).toLinearIsometry.toContinuousLinearMap
+      (vacuumEmbedding (e 0)) = _
+  rw [vacuum_fock]
+  have hτ : (Real.sqrt τ.1)^2 + (Real.sqrt (1 - τ.1))^2 = 1 := by
+    rw [Real.sq_sqrt τ.2.1, Real.sq_sqrt (by linarith [τ.2.2])]
+    ring
+  change beamUnitary (Real.sqrt τ.1) (Real.sqrt (1 - τ.1)) hτ
+      (fockPair 0 0) = _
+  rw [beamUnitary_fock]
+  simp [fockExpansion, fockPair, tensor, lp.single_apply, Pi.single_apply]
+
+private theorem split_one (τ : Loss) : stinespring τ (e 1) =
+    (Real.sqrt τ.1 : ℂ) • fockPair 1 0 +
+      (Real.sqrt (1-τ.1) : ℂ) • fockPair 0 1 := by
+  unfold stinespring
+  change (beamSplitter τ.1 τ.2).toLinearIsometry.toContinuousLinearMap
+      (vacuumEmbedding (e 1)) = _
+  rw [vacuum_fock]
+  have hτ : (Real.sqrt τ.1)^2 + (Real.sqrt (1 - τ.1))^2 = 1 := by
+    rw [Real.sq_sqrt τ.2.1, Real.sq_sqrt (by linarith [τ.2.2])]
+    ring
+  change beamUnitary (Real.sqrt τ.1) (Real.sqrt (1 - τ.1)) hτ
+      (fockPair 1 0) = _
+  rw [beamUnitary_fock]
+  simp [fockExpansion, fockPair, tensor, lp.single_apply, Pi.single_apply]
+  ac_rfl
+
+private theorem split_zero_coord (τ : Loss) (k : ℕ) :
+    (stinespring τ (e 0)) k = if k = 0 then e 0 else 0 := by
+  rw [split_zero, fock_slice]
+
+private theorem split_one_coord (τ : Loss) (k : ℕ) :
+    (stinespring τ (e 1)) k =
+      if k = 0 then (Real.sqrt τ.1 : ℂ) • e 1
+      else if k = 1 then (Real.sqrt (1 - τ.1) : ℂ) • e 0 else 0 := by
+  rw [split_one]
+  simp only [lp.coeFn_add, lp.coeFn_smul, Pi.add_apply, Pi.smul_apply, fock_slice]
+  split_ifs <;> simp_all
+
+private theorem rank_entry00 (τ : Loss) (μ : ℂ) :
+    inner ℂ (e 0)
+      (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)) (e 0)) =
+      inner ℂ (e 0) (coherent μ) * inner ℂ (coherent μ) (e 0) := by
+  rw [dual_rankOne_inner]
+  have h0 : ∀ k : ℕ, inner ℂ ((stinespring τ (e 0)) k) (coherent μ) *
+      inner ℂ (coherent μ) ((stinespring τ (e 0)) k) =
+      if k = 0 then inner ℂ (e 0) (coherent μ) *
+        inner ℂ (coherent μ) (e 0) else 0 := by
+    intro k
+    rw [split_zero_coord]
+    by_cases h : k = 0
+    · subst k; simp
+    · simp [h]
+  simp_rw [h0]
+  rw [tsum_eq_single 0]
+  · simp
+  · intro k hk
+    simp [hk]
+
+private theorem rank_entry01 (τ : Loss) (μ : ℂ) :
+    inner ℂ (e 0)
+      (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)) (e 1)) =
+      (Real.sqrt τ.1 : ℂ) * inner ℂ (e 0) (coherent μ) *
+        inner ℂ (coherent μ) (e 1) := by
+  rw [dual_rankOne_inner]
+  have h0 : ∀ k : ℕ, inner ℂ ((stinespring τ (e 0)) k) (coherent μ) *
+      inner ℂ (coherent μ) ((stinespring τ (e 1)) k) =
+      if k = 0 then (Real.sqrt τ.1 : ℂ) * inner ℂ (e 0) (coherent μ) *
+        inner ℂ (coherent μ) (e 1) else 0 := by
+    intro k
+    rw [split_zero_coord, split_one_coord]
+    split_ifs <;> simp
+    ring
+  simp_rw [h0]
+  rw [tsum_eq_single 0]
+  · simp
+  · intro k hk
+    simp [hk]
+
+private theorem rank_entry10 (τ : Loss) (μ : ℂ) :
+    inner ℂ (e 1)
+      (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)) (e 0)) =
+      (Real.sqrt τ.1 : ℂ) * inner ℂ (e 1) (coherent μ) *
+        inner ℂ (coherent μ) (e 0) := by
+  rw [dual_rankOne_inner]
+  have h0 : ∀ k : ℕ, inner ℂ ((stinespring τ (e 1)) k) (coherent μ) *
+      inner ℂ (coherent μ) ((stinespring τ (e 0)) k) =
+      if k = 0 then (Real.sqrt τ.1 : ℂ) * inner ℂ (e 1) (coherent μ) *
+        inner ℂ (coherent μ) (e 0) else 0 := by
+    intro k
+    rw [split_one_coord, split_zero_coord]
+    split_ifs <;> simp
+  simp_rw [h0]
+  rw [tsum_eq_single 0]
+  · simp
+  · intro k hk
+    simp [hk]
+
+private theorem rank_entry11 (τ : Loss) (μ : ℂ) :
+    inner ℂ (e 1)
+      (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)) (e 1)) =
+      (τ.1 : ℂ) * inner ℂ (e 1) (coherent μ) * inner ℂ (coherent μ) (e 1) +
+        ((1 - τ.1 : ℝ) : ℂ) * inner ℂ (e 0) (coherent μ) *
+          inner ℂ (coherent μ) (e 0) := by
+  rw [dual_rankOne_inner]
+  have h0 : ∀ k : ℕ, inner ℂ ((stinespring τ (e 1)) k) (coherent μ) *
+      inner ℂ (coherent μ) ((stinespring τ (e 1)) k) =
+      if k = 0 then (τ.1 : ℂ) * inner ℂ (e 1) (coherent μ) *
+          inner ℂ (coherent μ) (e 1)
+      else if k = 1 then ((1 - τ.1 : ℝ) : ℂ) * inner ℂ (e 0) (coherent μ) *
+          inner ℂ (coherent μ) (e 0) else 0 := by
+    intro k
+    rw [split_one_coord]
+    split_ifs <;> simp
+    · ring_nf
+      rw [← Complex.ofReal_pow, Real.sq_sqrt τ.2.1]
+      ring
+    · ring_nf
+      rw [← Complex.ofReal_pow, Real.sq_sqrt (by linarith [τ.2.2]), Complex.ofReal_sub, Complex.ofReal_one]
+      ring
+  simp_rw [h0]
+  rw [tsum_eq_sum (s := {0, 1})]
+  · simp
+  · intro k hk
+    simp only [Finset.mem_insert, Finset.mem_singleton, not_or] at hk
+    simp [hk.1, hk.2]
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
