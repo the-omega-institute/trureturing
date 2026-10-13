@@ -704,3 +704,289 @@ cross-model cost equivalence is part of these deductions.
 [SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Stationary interval reading with a zero origin
+
+**Definition 8.1 (unknown age and the two new prices).** Use the native
+finite ordered trees and actual constructor port of Assumption 1.1,
+and $T_n=\rho^n\alpha$ of Definition 2.1. This section has a separate
+entry contract: the source is one unknown $T_n$ with public finite
+integer endpoints $0\le L\le n\le U$. The reader initially knows only
+those endpoints and common controls. It must output $n$ correctly on
+every source in $[L,U]$ using stationary literal $\mathsf{Read}$ alone.
+There is no certified current age, acquired distinguishing history,
+subtree or epoch oracle, and no source update. Every submitted finite
+$L/R$ word costs one chronological call, including repetitions and the
+root word $\varepsilon$. A nonempty suffix at a leaf returns $\bot$.
+
+For a deterministic reader $A$ terminating on this entire finite interval,
+let $q_A(n)$ be its chronological calls and let $p_A(n)$ be the maximum
+submitted relative word length, with value zero for no submissions. Set
+
+$$
+K(L,U)=\min_A\max_{L\le n\le U}q_A(n),\qquad
+M(L,U)=\min_A\max_{L\le n\le U}p_A(n).
+\tag{AOF.23}
+$$
+
+These are separate worst-case coordinates on the same source domain.
+Their maxima need not occur on the same source. The peak in (AOF.23)
+is not the sum $\ell$ in (AOF.2); no expected, randomized, total-length,
+workspace or physical-time objective is imposed. Acquisition and local
+work are not source queries supplied by this interval contract.
+
+**Definition 8.2 (notation for the supplied actual queries).** Reuse the
+guarded navigation (ARH.4.3), the constructor table (AOF.8), shortest
+words (AOF.9) and [JRF, Definition 2.1][JRF]. Write $E$ for the root
+query, $P_t$ for a nonempty word of weight $t$ ending in $R$, and $S_t$
+for a word of weight $t-1$ ending in $L$, where $t\ge2$. Their actual
+response functions in the current-age coordinate are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\
+\hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t&n<t&n=t&n=t+1&n\ge t+2\\
+S_t&n<t&\text{never}&n=t&n\ge t+1.
+\end{array}
+\tag{AOF.24}
+$$
+
+For a nonempty word $p$, (ARH.4.3) requires
+$n\ge w(p^-)+2$, not just $n-w(p)\ge0$. The final edge converts that
+guard into the displayed $P$ or $S$ threshold, also at ages zero and
+one. Thus every actual word has one of these response functions. The
+supplied shortest representatives have length $\lceil t/2\rceil$:
+for $s\ge1$, use $R^s,LR^s$ for $P_{2s},P_{2s+1}$ and
+$R^{s-1}L,R^{s-1}LL$ for $S_{2s},S_{2s+1}$. Every power denotes the
+fully materialized finite word submitted to the port. There is no
+$P_1$: an $R$-ending word has weight at least two, while the weight-one
+word $L$ realizes $S_2$. This is supplier notation within the new
+contract, not a new navigation or shortest-word result.
+
+**Theorem 8.3 (the zero boundary and exact native interval calls).** Put
+$N=U-L+1$ and reuse the positive ordered-search capacity of [SLH,
+Theorem 6.2][SLH], as applied in (AOF.17)--(AOF.19):
+
+$$
+C_k=3\cdot2^k-2\quad(k\ge0),\qquad
+A_0=1,\quad A_k=3\cdot2^k-3\quad(k\ge1).
+\tag{AOF.25}
+$$
+
+Under Definition 8.1, an interval is recoverable in at most $k$ actual
+calls exactly when $N\le C_k$ for $L\ge1$, or $N\le A_k$ for $L=0$.
+Consequently
+
+$$
+K(L,U)=
+\begin{cases}
+0,&N=1,\\
+K_+(N):=\left\lceil\log_2\dfrac{N+2}{3}\right\rceil,
+ &N\ge2,\ L\ge1,\\
+K_0(N):=\left\lceil\log_2\dfrac{N+3}{3}\right\rceil,
+ &N\ge2,\ L=0.
+\end{cases}
+\tag{AOF.26}
+$$
+
+Define $K_+(1)=K_0(1)=0$. There is a finite actual adaptive literal
+reader attaining this bound. Every smaller call budget has a failure
+witness consisting of two actual ages in the interval with the same
+complete reply transcript and different required outputs.
+
+**Proof.** Every actual response cell in (AOF.24), intersected with a
+surviving interval, is an interval or singleton. Thus truthful histories
+leave intervals or singletons, and zero calls can identify only one
+candidate. On a positive interval the supplied two-tail/two-singleton
+argument gives $C_0=1$ and $C_k=2C_{k-1}+2$: each of the at most two
+nonsingleton tails remains positive and has capacity $C_{k-1}$.
+Root and $S$ queries have no larger capacity. To verify the construction
+in this unknown-age contract, on $[l,l+C_k-1]$, $l\ge1,k\ge1$, set
+$c=C_{k-1}$ and submit the shortest actual $P_{l+c}$ representative.
+The threshold $l+c\ge2$ is legal. Its absent and branch tails each
+have $c$ ages; its alpha and beta replies identify $l+c,l+c+1$ and
+halt. The two tails use the supplied recursive reader with budget
+$k-1$. This is the native parameter correspondence to the positive
+supplier, with no certified epoch added.
+
+At zero, a nonempty word merges ages zero and one into absence. The
+root merges ages two and three into branch. Hence no one-call reader
+can distinguish $[0,3]$, while the one paid root call distinguishes
+$[0,2]$. Therefore $A_1=3$, and the positive value $C_1=4$ cannot be
+used here. For $k\ge2$, a first $P_t$ query leaves one zero-origin
+absent tail, at most two singleton replies and one positive branch
+tail. Their total capacity is at most $A_{k-1}+2+C_{k-1}$. An $S_t$
+query has only one singleton, and the root has two singleton replies
+and one positive tail, no more than this bound. Empty, truncated and
+constant cells also obey these bounds. Thus
+
+$$
+A_k\le A_{k-1}+C_{k-1}+2\quad(k\ge2).
+\tag{AOF.27}
+$$
+
+For attainment on $[0,A_k-1]$, $k\ge2$, submit the actual shortest
+$P_{A_{k-1}}$ word. Its threshold is at least three. Its absent tail
+has $A_{k-1}$ ages, its branch tail has $C_{k-1}$ ages, and its two
+singleton replies halt. Recurse with the respective zero-origin and
+positive readers. At $k=1$ use the root as above; at $k=0$ halt at the
+sole candidate. Equality in (AOF.27), starting with $A_1=3$, gives
+$A_k=3\cdot2^k-3$. The recurrence starts at $k=2$; applying it at
+$k=1$ would incorrectly count four ages.
+
+For any shorter interval, restrict the appropriate full-capacity tree
+to the public interval. Delete impossible branches and halt as soon
+as its surviving interval is a singleton. All thresholds depend only
+on public data and previous actual replies, and every continuing
+branch decreases its finite call budget. Thus this is an actual
+terminating reader using materialized words, not an age oracle.
+
+For a purported reader on a capacity-exceeding interval, its first
+query has a truthful response cell exceeding the capacity appropriate
+to the remaining budget. Select such a cell and continue. At a
+zero-origin one-call node use the explicit collision zero/one for a
+nonempty word or two/three for the root. At budget zero at least two
+distinct ages remain. If the reader halts earlier, any two remaining
+ages already witness failure. The chosen surviving sets are nested;
+choose the two ages at the end. Each of their fixed actual $T_n$
+sources produces the entire selected transcript, by deterministic
+control and (AOF.24). No source is changed midway through a run. They
+require different outputs and cannot both be correct at that leaf.
+This supplies the lower bound and failure witnesses. Inverting (AOF.25)
+gives (AOF.26). $\square$
+
+## 9. One literal reader attaining both minimum prices
+
+**Theorem 9.1 (bounded-domain simulation of each actual query).** For
+$U\ge1$ put $m=\lfloor(U-1)/2\rfloor$. For every finite literal word
+$p$ there are a source-independent actual word $q_p$ and a finite
+reply map $\phi_p:\mathcal A\to\mathcal A$ such that
+
+$$
+|q_p|\le\min(|p|,m),\qquad
+r_{T_n}(p)=\phi_p(r_{T_n}(q_p))\quad(0\le n\le U).
+\tag{AOF.28}
+$$
+
+One paid query at $q_p$ suffices for this simulation; a length-zero
+replacement still costs that call. The decoded value is local control
+data, not an actual receipt at $p$.
+
+**Proof.** If $U\le2$, choose $q_p=\varepsilon$. Its replies distinguish
+every age in $[0,U]$. Map its alpha, beta and branch replies to the
+supplied table's value for $p$ at ages zero, one and two respectively;
+assign any unreachable input arbitrarily. This proves (AOF.28) with
+$m=0$, including $U=1$.
+
+If $U\ge3$, then $m\ge1$ and $U\in\{2m+1,2m+2\}$. First replace
+$p$ by the shortest globally reply-equivalent $E,P_t$ or $S_t$
+representative of Definition 8.2. This does not increase its length.
+If that length is at most $m$, use that word and the identity map.
+Otherwise its shortest length $\lceil t/2\rceil$ exceeds $m$, hence
+$t\ge2m+1$. Use $q_p=R^m=P_{2m}$. On $[0,U]$ its reply cells are
+$[0,2m-1]$, $\{2m\}$, $\{2m+1\}$ and, when present, $\{2m+2\}$.
+The old query is constantly absent on the first cell, and every other
+cell is a singleton. Substitution in (AOF.24) gives all six maps:
+
+| Original query | $\phi_p(\bot)$ | $\phi_p(\alpha)$ | $\phi_p(\beta)$ | $\phi_p(\mathsf b)$ |
+| --- | --- | --- | --- | --- |
+| $P_{2m+1}$ | $\bot$ | $\bot$ | $\alpha$ | $\beta$ |
+| $P_{2m+2}$ | $\bot$ | $\bot$ | $\bot$ | $\alpha$ |
+| $P_t$, $t\ge2m+3$ | $\bot$ | $\bot$ | $\bot$ | $\bot$ |
+| $S_{2m+1}$ | $\bot$ | $\bot$ | $\beta$ | $\mathsf b$ |
+| $S_{2m+2}$ | $\bot$ | $\bot$ | $\bot$ | $\beta$ |
+| $S_t$, $t\ge2m+3$ | $\bot$ | $\bot$ | $\bot$ | $\bot$ |
+
+For $U=2m+1$ the branch column is unreachable. Since a replaced
+representative had length greater than $m$, the new length is also
+at most the original $|p|$. Normalization must precede this argument:
+an arbitrary overlong word can have a short equivalent representative.
+The displayed refinement proves (AOF.28) on every declared age. $\square$
+
+**Theorem 9.2 (joint call and peak attainment).** Under Definition 8.1,
+singletons have $K(L,L)=M(L,L)=0$. For $L<U$,
+
+$$
+M(L,U)=\left\lfloor\frac{U-1}{2}\right\rfloor,
+\tag{AOF.29}
+$$
+
+and one finite reader simultaneously attains (AOF.26) and (AOF.29).
+For a nonsingleton interval, call budget $k$ and peak budget $d$ are
+jointly feasible precisely when $U\le2d+2$ and the appropriate
+capacity inequality of Theorem 8.3 holds.
+
+**Proof.** By the supplied guarded table, any word of length at most
+$d$ gives branch on every age $n\ge2d+2$: its weight is at most $2d$,
+and its last-edge guard and branch threshold have already been crossed.
+The root has the same property, including $d=0$. If
+$d<\lfloor(U-1)/2\rfloor$, both $U-1$ and $U$ lie in this common
+branch tail. Deterministic adaptive queries of length at most $d$
+therefore choose the same subsequent words and receive identical
+histories on these two fixed sources, however many calls are allowed.
+They cannot output both ages correctly. This proves the peak lower bound.
+
+Apply Theorem 9.1 at every node of the actual call-optimal finite tree
+of Theorem 8.3. For each old query, submit the replacement literal
+word once and feed its mapped reply into the old control. Induction
+on a run on each fixed $T_n$ proves the same simulated replies,
+choices and final output; neither the source nor its age changes.
+Calls do not increase, and every submitted word has length at most
+$m=\lfloor(U-1)/2\rfloor$. The independent call and peak lower bounds
+force this one reader's two worst coordinates to be exactly $K$ and
+$M$. For $U\le2$ a nonsingleton is separated by one paid root call
+with peak zero. A singleton outputs its public age without a query.
+The joint-budget characterization follows from the two lower bounds
+and their common attaining reader, since $M\le d$ is equivalent to
+$U\le2d+2$.
+
+In particular, $[0,3]$ needs two calls while $[1,4]$ needs one.
+On $[2,5]$, the mixed literal word $LR=P_3$ gives the four different
+replies in one call. A pure-right one-call reader cannot do so: the
+root is constant, $R$ merges four/five, $RR$ merges two/three, and
+$R^s$ for $s\ge3$ is constantly absent. Two pure-right calls suffice
+by $R$ and then $RR$ on branch. Thus the allowed mixed query is a
+real resource distinction. $\square$
+
+**Theorem 9.3 (finite-domain and literal-length boundaries).** The
+simulation (AOF.28) need not preserve replies beyond its declared
+upper endpoint. Positive intervals of any fixed size $N\ge2$ retain
+the same optimal call price under translation while their necessary
+peak length is unbounded. Embedding the interval reader at a reached
+fixed slot prefix $w_0$ of length $D$ gives an upper bound $D+M(L,U)$
+for a nonsingleton, with the same $K(L,U)$ calls; a singleton submits
+no word. This embedding alone gives no whole-tree-reader lower bound.
+
+**Proof.** With $m=1,U=4$, the map for $P_3$ reads $R$ and decodes
+its branch as beta. At age five, $LR=P_3$ actually returns branch
+but that map still gives beta. The endpoint restriction is therefore
+essential. For translated positive intervals (AOF.26) depends only on
+$N$, whereas (AOF.29) diverges with $U$. Every actual submitted word
+$w_0p$ has length $D+|p|$ and at a reached slot returns its actual
+relative reply. This proves the embedding upper bound. Other whole-tree
+addresses could carry information; their exclusion needs a separate
+consumer correspondence. A product $K(D+M)$ would merely upper-bound
+summed submitted lengths, not optimize that sum. $\square$
+
+**Mathematical citation 9.4 (suppliers and bounded comparison).**
+The navigation, shortest words and positive capacity are the suppliers
+specified in Definition 8.2 and Theorem 8.3. In particular [SLH,
+Definition 6.1 and Theorem 6.2][SLH] concern arbitrary original trees
+with certified $M\ge4$; (AOF.19) likewise uses its own epoch-one
+coordinate. Those epoch inputs do not supply a physical $P_1$ or an
+unknown-age oracle in Definition 8.1. The zero-origin correction,
+bounded-query simulation and joint peak result are `repo-derived`
+ordinary deductions; the earlier summed-length and general finite
+optimization results retain their stated contracts.
+
+Compare R. D. Nowak, *The Geometry of Generalized Binary Search*,
+[arXiv:0910.4397v5, §§II-A and V-A](https://arxiv.org/html/0910.4397v5).
+Its response-cell formulation and its disjoint-interval example distinguish
+point queries from added dyadic-subinterval tests. That comparison supports
+using the actual permitted query language here; its binary GBS bounds
+provide neither (AOF.25)'s zero correction nor (AOF.29)'s literal peak.
+This bounded comparison makes no worldwide novelty or priority claim.
+
+## 追加锚（本行以下为增补区）
