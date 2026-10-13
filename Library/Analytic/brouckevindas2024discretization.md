@@ -64,3 +64,110 @@ and its refinement to Zhang. This attribution was read in the
 Broucke–Vindas primary; those predecessor proofs are not
 independently verified here. Reuse Theorem 1.2 for realization rather
 than reproducing any of these discretization constructions.
+
+## Parameter correspondence for the existing FIB pulse source
+
+Use the already constructed differentiable cumulative function $B$
+of [FIB §261](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#261-精确-fibonacci-采样的相位盲区与单调脉冲模型),
+before its integer-part projection $M=\lfloor B\rfloor$.
+The source gives $B'(u)=1+O(u^{-1/4})$ and eventual positivity.
+Choose $X>1$ in that eventual range and set
+
+$$
+F_B(x)=\begin{cases}
+0,&1\le x\le X,\\
+\displaystyle\int_X^x\frac{B'(u)}{\log u}\,du,&x>X.
+\end{cases}
+\tag{BV2}
+$$
+
+This $F_B$ is continuous, nondecreasing and unbounded, with
+$F_B(1)=0$ and $F_B(x)\ll x/\log x$.
+Apply Theorem 1.2 directly. Its strictly increasing generalized-prime
+sequence has unit count atoms and $|\pi_{\mathcal P}-F_B|\le1$.
+The realization is supplied by the literature theorem; neither the
+pulse construction nor the random discretization is reproduced here.
+
+Write $e(x)=\pi_{\mathcal P}(x)-F_B(x)$ and
+$\vartheta_{\mathcal P}(x)=\sum_{q_j\le x}\log q_j$.
+Stieltjes integration by parts gives, for $x\ge X$,
+
+$$
+\begin{aligned}
+\vartheta_{\mathcal P}(x)-[B(x)-B(X)]
+&=\log x\,e(x)-\int_1^x\frac{e(u)}u\,du,\\
+\left|\vartheta_{\mathcal P}(x)-[B(x)-B(X)]\right|
+&\le2\log x.
+\end{aligned}
+\tag{BV3}
+$$
+
+The lower boundary has zero logarithm; the constant $B(X)$ remains.
+Thus the same existing continuous source has a published discrete
+realization with logarithmically weighted prime mass accurate to
+$O(\log x)$. This is stronger source information than a count made
+from fractional atoms of weight $1/\log u$. The primes remain real
+generalized primes, with no assertion that they are ordinary primes.
+
+## Transport of the already computed forward response
+
+For the original positive decreasing kernel
+$w(u)=(1+\log u)/(u^2\log^2u)$, let
+
+$$
+\mathcal T_Y(A,h)=\int_0^h
+[Y(A+r)-Y(A)-r]\frac{w(A+r)}{w(A)}\,dr.
+\tag{BV4}
+$$
+
+The [versioned forward application](https://github.com/the-omega-institute/trureturing/blob/894bfc768450f651bc0de4a0bc748f4d0c0c240f/Library/Analytic/guthmaynard2024largevalues.md#reuse-the-existing-pulse-model-for-the-forward-limitation),
+(F7)–(F11), already computes this response for the same
+$M=\lfloor B\rfloor$. Its source, Fibonacci phase calculation and
+subsequence are reused. Equation (BV3) and $|M-B|<1$ give, uniformly
+for $A\ge X$ and $0<h\le A$,
+
+$$
+\mathcal T_{\vartheta_{\mathcal P}}(A,h)
+=\mathcal T_M(A,h)+O(h\log(2A)).
+\tag{BV5}
+$$
+
+Indeed, subtract the two cumulative increments. The constant $B(X)$
+cancels; their difference is $O(\log(2A))$ throughout the window,
+and $0<w(A+r)/w(A)\le1$.
+At the already used $h=A^{4/5}$ the normalized transport error is
+
+$$
+\frac{O(h\log(2A))}{A^{11/10}}
+=O(A^{-3/10}\log(2A))\longrightarrow0.
+\tag{BV6}
+$$
+
+Consequently the existing divergence to $-\infty$ along
+$A_j=F_{2j}$ transfers to $\mathcal T_{\vartheta_{\mathcal P}}$.
+This is a paper application of the published supplier and the
+previously computed response, with no new phase calculation or
+Lean-certified refutation. It concerns generalized prime mass
+$\vartheta_{\mathcal P}$; it does not establish the same conclusion
+for ordinary $\vartheta$, ordinary $\psi$, or even generalized
+$\psi_{\mathcal P}$, whose higher-power increments were not included
+in (BV5).
+
+## Remaining arithmetic interfaces
+
+Theorem 1.2 supplies count realization and (BV1). It does not supply
+CA own-price self-matching, selection by global Robin maximality,
+a signed estimate for the complete prime-power response, or the
+full Euler-layer tail at those selected sources. Those would require
+separate joint estimates on the same generalized source; they are
+not conclusions of the quoted theorem or (BV5).
+
+For the original Robin task, the required source is an actual ordinary
+integer with the stated selection and price conditions. The theorem
+gives no map from the generalized-prime system to such a source,
+no ordinary zeta functional equation, no Euler–Mascheroni
+normalization for its generalized Euler product, and no effective
+finite cutoff for the original consumer in
+[CW4–CW5](../ArithSums/nicolas2025comparison.md#the-exact-forward-successor-on-the-same-original-integer).
+These source obligations remain intact. Neither the generalized
+realization nor a FIB re-encoding is an RH or Robin counterexample.
