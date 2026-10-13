@@ -32,15 +32,9 @@ abbrev arena : Arena where
       ¬ HasParent (fun j b =>
         dualLoss (inverseTransmissivity n hn) (R.readout () b (M j)))
 
-theorem dual_loss_scalar_identity (τ : Loss) (c : ℂ) :
+theorem dual_loss_scalar_identity (τ : Set.Icc (0 : ℝ) 1) (c : ℂ) :
     dualLoss τ (c • (1 : Op)) = c • (1 : Op) := by
-  have ha (M : Op) (w : K) (k : ℕ) : (amplify M w) k = M (w k) := by
-    have h : ∃ T : K →L[ℂ] K, ∀ (u : K) (l : ℕ), (T u) l = M (u l) := by
-      refine ⟨lp.mapCLM 2 (fun _ : ℕ => M) (norm_nonneg M) (fun _ => le_rfl), ?_⟩
-      intro u l
-      rfl
-    unfold amplify
-    exact Classical.choose_spec h w k
+  have ha (M : Op) (w : K) (k : ℕ) : (amplify M w) k = M (w k) := rfl
   have hamplify : amplify (c • (1 : Op)) = c • (1 : K →L[ℂ] K) := by
     apply ContinuousLinearMap.ext
     intro w
@@ -80,7 +74,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   apply hno
   change HasParent (fun (_ : Fin 2) (_ : Fin 2) =>
     dualLoss (inverseTransmissivity 1 (by norm_num)) ((1 / 2 : ℂ) • (1 : Op)))
-  simp_rw [dual_loss_scalar_identity]
+  rw [dual_loss_scalar_identity]
   exact fair_parent
 
 theorem dependence : ObservationalDependence signature actual := by

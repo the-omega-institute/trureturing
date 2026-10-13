@@ -23,33 +23,26 @@ open D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtre
 
 namespace D5.S3.Quantum.Measurement.PureLossIncompatibility
 
-abbrev H := lp (fun _ : ℕ => ℂ) 2
+abbrev H := D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation.FockSpace
 abbrev K := lp (fun _ : ℕ => H) 2
 abbrev Op := H →L[ℂ] H
-abbrev Loss := Set.Icc (0 : ℝ) 1
 
 -- Amplification acts on the retained vector at each environment coordinate.
-private theorem lift_exists (M : Op) :
-    ∃ T : K →L[ℂ] K, ∀ (w : K) (k : ℕ), (T w) k = M (w k) := by
-  refine ⟨lp.mapCLM 2 (fun _ : ℕ => M) (norm_nonneg M) (fun _ => le_rfl), ?_⟩
-  intro w k
-  rfl
-
 def amplify (M : Op) : K →L[ℂ] K :=
-  Classical.choose (lift_exists M)
+  lp.mapCLM 2 (fun _ : ℕ => M) (norm_nonneg M) (fun _ => le_rfl)
 
 private theorem amplify_apply (M : Op) (w : K) (k : ℕ) :
     (amplify M w) k = M (w k) :=
-  Classical.choose_spec (lift_exists M) w k
+  rfl
 
 def vacuumEmbedding : H →L[ℂ] K :=
   lp.singleContinuousLinearMap
     (𝕜 := ℂ) (E := fun _ : ℕ => H) (p := 2) 0
 
-def stinespring (τ : Loss) : H →L[ℂ] K :=
+def stinespring (τ : Set.Icc (0 : ℝ) 1) : H →L[ℂ] K :=
   (beamSplitter τ.1 τ.2).toLinearIsometry.toContinuousLinearMap ∘L vacuumEmbedding
 
-def dualLoss (τ : Loss) (M : Op) : Op :=
+def dualLoss (τ : Set.Icc (0 : ℝ) 1) (M : Op) : Op :=
   (stinespring τ).adjoint ∘L amplify M ∘L stinespring τ
 
 def IsBinaryPOVM (M : Fin 2 → Op) : Prop :=
@@ -63,7 +56,7 @@ def HasParent {m : ℕ} (F : Fin m → Fin 2 → Op) : Prop :=
       (∑ a ∈ Finset.univ.filter
         (fun a : Fin m → Fin 2 => a j = b), G a) = F j b
 
-def inverseTransmissivity (n : ℕ) (hn : 1 ≤ n) : Loss :=
+def inverseTransmissivity (n : ℕ) (hn : 1 ≤ n) : Set.Icc (0 : ℝ) 1 :=
   ⟨1 / (n : ℝ), by
     have hnR : (1 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
     have hn0 : (0 : ℝ) < (n : ℝ) := lt_of_lt_of_le zero_lt_one hnR
@@ -149,20 +142,20 @@ private theorem vacuum_norm (v : H) : ‖vacuumEmbedding v‖ = ‖v‖ := by
 private def vacuumIso : H →ₗᵢ[ℂ] K :=
   LinearIsometry.mk vacuumEmbedding.toLinearMap vacuum_norm
 
-private def stinespringIso (τ : Loss) : H →ₗᵢ[ℂ] K :=
+private def stinespringIso (τ : Set.Icc (0 : ℝ) 1) : H →ₗᵢ[ℂ] K :=
   (beamSplitter τ.1 τ.2).toLinearIsometry.comp vacuumIso
 
-private theorem stinespring_eq_iso (τ : Loss) :
+private theorem stinespring_eq_iso (τ : Set.Icc (0 : ℝ) 1) :
     stinespring τ = (stinespringIso τ).toContinuousLinearMap := by
   ext v k
   rfl
 
-private theorem dualLoss_add (τ : Loss) (M N : Op) :
+private theorem dualLoss_add (τ : Set.Icc (0 : ℝ) 1) (M N : Op) :
     dualLoss τ (M + N) = dualLoss τ M + dualLoss τ N := by
   unfold dualLoss
   simp only [amplify_add, ContinuousLinearMap.comp_add, ContinuousLinearMap.add_comp]
 
-private theorem dualLoss_one (τ : Loss) : dualLoss τ 1 = 1 := by
+private theorem dualLoss_one (τ : Set.Icc (0 : ℝ) 1) : dualLoss τ 1 = 1 := by
   unfold dualLoss
   rw [stinespring_eq_iso, amplify_one]
   rw [show (1 : K →L[ℂ] K) = ContinuousLinearMap.id ℂ K from rfl,
@@ -246,7 +239,7 @@ private theorem compressed_parent {m : ℕ} (F : Fin m → Fin 2 → Op)
     rw [← compress_finset_sum s G]
     exact congrArg (compression (N := 1)) (hGmarg j b)
 
-private theorem dual_inner (τ : Loss) (M : Op) (u v : H) :
+private theorem dual_inner (τ : Set.Icc (0 : ℝ) 1) (M : Op) (u v : H) :
     inner ℂ u (dualLoss τ M v) =
       ∑' k : ℕ, inner ℂ ((stinespring τ u) k)
         (M ((stinespring τ v) k)) := by
@@ -260,7 +253,7 @@ private theorem dual_inner (τ : Loss) (M : Op) (u v : H) :
       ((amplify M (stinespring τ v)) k) = _
   rw [amplify_apply]
 
-private theorem dual_rankOne_inner (τ : Loss) (μ : ℂ) (u v : H) :
+private theorem dual_rankOne_inner (τ : Set.Icc (0 : ℝ) 1) (μ : ℂ) (u v : H) :
     inner ℂ u (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)) v) =
       ∑' k : ℕ, inner ℂ ((stinespring τ u) k) (coherent μ) *
         inner ℂ (coherent μ) ((stinespring τ v) k) := by
@@ -282,7 +275,7 @@ private theorem vacuum_fock (n : ℕ) : vacuumEmbedding (e n) = fockPair n 0 := 
   rw [vacuum_tensor]
   rfl
 
-private theorem split_zero (τ : Loss) : stinespring τ (e 0) = fockPair 0 0 := by
+private theorem split_zero (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 0) = fockPair 0 0 := by
   unfold stinespring
   change (beamSplitter τ.1 τ.2).toLinearIsometry.toContinuousLinearMap
       (vacuumEmbedding (e 0)) = _
@@ -296,7 +289,7 @@ private theorem split_zero (τ : Loss) : stinespring τ (e 0) = fockPair 0 0 := 
   unfold fockExpansion fockPair tensor
   simp [lp.single_apply, Pi.single_apply]
 
-private theorem split_one (τ : Loss) : stinespring τ (e 1) =
+private theorem split_one (τ : Set.Icc (0 : ℝ) 1) : stinespring τ (e 1) =
     (Real.sqrt τ.1 : ℂ) • fockPair 1 0 +
       (Real.sqrt (1-τ.1) : ℂ) • fockPair 0 1 := by
   unfold stinespring
@@ -313,7 +306,7 @@ private theorem split_one (τ : Loss) : stinespring τ (e 1) =
   simp [lp.single_apply, Pi.single_apply]
   ac_rfl
 
-private theorem split_zero_coord (τ : Loss) (k : ℕ) :
+private theorem split_zero_coord (τ : Set.Icc (0 : ℝ) 1) (k : ℕ) :
     (stinespring τ (e 0)) k = if k = 0 then e 0 else 0 := by
   rw [split_zero]
   apply lp.ext
@@ -321,7 +314,7 @@ private theorem split_zero_coord (τ : Loss) (k : ℕ) :
   simp only [fockPair_apply]
   split_ifs <;> simp_all [e, lp.single_apply]
 
-private theorem split_one_coord (τ : Loss) (k : ℕ) :
+private theorem split_one_coord (τ : Set.Icc (0 : ℝ) 1) (k : ℕ) :
     (stinespring τ (e 1)) k =
       if k = 0 then (Real.sqrt τ.1 : ℂ) • e 1
       else if k = 1 then (Real.sqrt (1 - τ.1) : ℂ) • e 0 else 0 := by
@@ -353,7 +346,7 @@ private theorem split_one_coord (τ : Loss) (k : ℕ) :
       simp [hk, hk']
 
 -- These input occupations populate only environment sectors zero and one.
-private theorem rank_entry (τ : Loss) (μ : ℂ) (i j : Fin 2) :
+private theorem rank_entry (τ : Set.Icc (0 : ℝ) 1) (μ : ℂ) (i j : Fin 2) :
     compression (N := 1) (dualLoss τ (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ))) i j =
       ∑ k ∈ ({0, 1} : Finset ℕ), inner ℂ ((stinespring τ (e i.val)) k) (coherent μ) *
         inner ℂ (coherent μ) ((stinespring τ (e j.val)) k) := by
@@ -386,7 +379,7 @@ private theorem coherent_entries (x : ℝ) (hx : 0 < x) (z : ℂ) (hz : ‖z‖ 
     ring
 
 -- The upper-right entry conjugates the phase in the first inner-product argument.
-private theorem compressed_rankOne (τ : Loss) (x : ℝ) (hx : 0 < x)
+private theorem compressed_rankOne (τ : Set.Icc (0 : ℝ) 1) (x : ℝ) (hx : 0 < x)
     (z : ℂ) (hz : ‖z‖ = 1) :
     compression (N := 1) (dualLoss τ (InnerProductSpace.rankOne ℂ
       (coherent ((Real.sqrt x : ℂ) * z)) (coherent ((Real.sqrt x : ℂ) * z)))) =
@@ -448,14 +441,14 @@ private theorem compressed_rankOne (τ : Loss) (x : ℝ) (hx : 0 < x)
           Complex.ofReal_add, Complex.ofReal_mul]
         ring
 
-private def clickMatrix (τ : Loss) (x : ℝ) (z : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+private def clickMatrix (τ : Set.Icc (0 : ℝ) 1) (x : ℝ) (z : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
   let A := Real.exp (-x)
   let a := 1 - A
   let b := Real.sqrt τ.1 * A * Real.sqrt x
   let c := 1 - A * (1 - τ.1 + τ.1 * x)
   !![(a : ℂ), -(b : ℂ) * starRingEnd ℂ z; -(b : ℂ) * z, (c : ℂ)]
 
-private theorem dualLoss_sub (τ : Loss) (M N : Op) :
+private theorem dualLoss_sub (τ : Set.Icc (0 : ℝ) 1) (M N : Op) :
     dualLoss τ (M - N) = dualLoss τ M - dualLoss τ N := by
   have h := dualLoss_add τ (M - N) N
   rw [sub_add_cancel] at h
@@ -469,7 +462,7 @@ private theorem compress_sub (X Y : Op) :
   exact eq_sub_iff_add_eq.mpr h.symm
 
 -- The click effect complements the coherent no-click effect.
-private theorem compressed_click (τ : Loss) (x : ℝ) (hx : 0 < x)
+private theorem compressed_click (τ : Set.Icc (0 : ℝ) 1) (x : ℝ) (hx : 0 < x)
     (z : ℂ) (hz : ‖z‖ = 1) :
     compression (N := 1) (dualLoss τ (onOff ((Real.sqrt x : ℂ) * z) 1)) = clickMatrix τ x z := by
   change compression (N := 1) (dualLoss τ (1 - InnerProductSpace.rankOne ℂ
@@ -479,7 +472,7 @@ private theorem compressed_click (τ : Loss) (x : ℝ) (hx : 0 < x)
   ext i j
   fin_cases i <;> fin_cases j <;> simp
 
-private theorem scalar_bounds (τ : Loss) (x : ℝ) (hx : 0 < x) :
+private theorem scalar_bounds (τ : Set.Icc (0 : ℝ) 1) (x : ℝ) (hx : 0 < x) :
     let A := Real.exp (-x)
     let a := 1 - A
     let b := Real.sqrt τ.1 * A * Real.sqrt x
@@ -807,10 +800,10 @@ private theorem phaseQ_pos {m : ℕ} (hm : 2 ≤ m) (z : Fin m → ℂ)
   refine ⟨j, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hij⟩, ?_⟩
   exact inv_pos.mpr (pow_pos (norm_pos_iff.mpr (sub_ne_zero.mpr hne)) _)
 
-private def chosenX {m : ℕ} (τ : Loss) (z : Fin m → ℂ) : ℝ :=
+private def chosenX {m : ℕ} (τ : Set.Icc (0 : ℝ) 1) (z : Fin m → ℂ) : ℝ :=
   ((m : ℝ) * τ.1 - 1) / (2 * ((m : ℝ) + 4 * phaseQ z))
 
-private theorem stronger {m : ℕ} (hm : 2 ≤ m) (τ : Loss) (hτ : 0 < τ.1)
+private theorem stronger {m : ℕ} (hm : 2 ≤ m) (τ : Set.Icc (0 : ℝ) 1) (hτ : 0 < τ.1)
     (hgap : 1 < (m : ℝ) * τ.1) (z : Fin m → ℂ)
     (hz : ∀ i, ‖z i‖ = 1) (hinj : Function.Injective z) :
     (∀ j, IsBinaryPOVM (onOff ((Real.sqrt (chosenX τ z) : ℂ) * z j))) ∧

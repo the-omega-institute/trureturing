@@ -29,12 +29,9 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
             Node("op", "Bounded operators on the retained mode", "Op", OpFormula(),
                 "These are continuous complex-linear endomorphisms of the one-mode Hilbert space.",
                 AssessedProvenance.FromRepo()),
-            Node("loss", "Transmissivity in the closed unit interval", "Loss", LossFormula(),
-                "A transmissivity includes a real value and the condition that this value lies between zero and one, with both endpoints included.",
-                AssessedProvenance.FromRepo()),
             Node("amplify", "An operator acting in every environment coordinate", "amplify",
                 AmplifyFormula(),
-                "Amplification applies the same retained-mode operator to each environment coordinate. The equation characterizes its action on every vector.",
+                "Amplification uses lp.mapCLM to apply the same retained-mode operator to each environment coordinate. The equation characterizes its action on every vector.",
                 AssessedProvenance.FromRepo()),
             Node("vacuum-embedding", "Embedding with a vacuum environment", "vacuumEmbedding",
                 VacuumEmbeddingFormula(),
@@ -104,7 +101,7 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula HFormula() => Equal(Local("H"),
-        At(Qualified("lp"), LambdaIgnored(Naturals(), Complexes()), D(2)));
+        Qualified("D5", "S3", "Estimation", "TransmissivityBetaPriorProbeRefutation", "FockSpace"));
 
     private static Formula KFormula() => Equal(Local("K"),
         At(Qualified("lp"), LambdaIgnored(Naturals(), Local("H")), D(2)));
@@ -113,8 +110,8 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
         At(Qualified("ContinuousLinearMap"), At(Qualified("RingHom", "id"), Complexes()),
             Local("H"), Local("H")));
 
-    private static Formula LossFormula() => Equal(Local("Loss"),
-        At(Qualified("Set", "Icc"), Typed(D(0), Reals()), D(1)));
+    private static Formula LossType() =>
+        At(Qualified("Set", "Icc"), Typed(D(0), Reals()), D(1));
 
     private static Formula AmplifyFormula() => All("M", Local("Op"),
         All("w", Local("K"), All("k", Naturals(),
@@ -134,7 +131,7 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
             At(Qualified("Subtype", "property"), X("tau")));
         Formula unitary = At(Qualified("LinearIsometry", "toContinuousLinearMap"),
             At(Qualified("LinearIsometryEquiv", "toLinearIsometry"), beamSplitter));
-        return All("tau", Local("Loss"), Equal(LocalCall("stinespring", X("tau")),
+        return All("tau", LossType(), Equal(LocalCall("stinespring", X("tau")),
             Compose(unitary, Local("vacuumEmbedding"))));
     }
 
@@ -142,7 +139,7 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
     {
         Formula dilation = LocalCall("stinespring", X("tau"));
         Formula adjoint = At(Qualified("ContinuousLinearMap", "adjoint"), dilation);
-        return All("tau", Local("Loss"), All("M", Local("Op"),
+        return All("tau", LossType(), All("M", Local("Op"),
             Equal(LocalCall("dualLoss", X("tau"), X("M")),
                 Compose(adjoint, Compose(LocalCall("amplify", X("M")), dilation)))));
     }
