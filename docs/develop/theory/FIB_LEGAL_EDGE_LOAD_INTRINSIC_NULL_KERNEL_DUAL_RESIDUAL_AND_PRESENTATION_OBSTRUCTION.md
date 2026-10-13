@@ -2656,3 +2656,493 @@ from $a^2$.
 [BDX11]: ../../../Library/Quantum/boyddiaconisxiao2004fastestmixing.md
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Independent joint occupation and a change of the active phase sector
+
+### 12.1. One actual law and the two square-sector eigenvalues
+
+Allow the joint occupation weight to vary independently. Fix $a,b,c>0$
+and put
+
+$$
+T=1+2a+c,\qquad Z=T+b,\qquad
+p=\frac{(1,a,b,a,c)}Z,\qquad
+\psi=\frac{(1,\sqrt a,\sqrt b,\sqrt a,\sqrt c)}{\sqrt Z}.
+\tag{12.1}
+$$
+
+The state order and the recorded-site reference-phase experiment remain
+those of §8. This enlarges the activity family of §11, recovered when
+$c=a^2$. It does not change the definition of its site budget. The
+information projectors of the same actual law are
+
+$$
+\begin{aligned}
+K_1&=\frac{(\sqrt a\,e_0-e_1)(\sqrt a\,e_0-e_1)^{\mathsf T}}{1+a}
++\frac{(\sqrt c\,e_3-\sqrt a\,e_{13})
+(\sqrt c\,e_3-\sqrt a\,e_{13})^{\mathsf T}}{a+c},\\
+K_2&=\frac{(\sqrt b\,e_0-e_2)(\sqrt b\,e_0-e_2)^{\mathsf T}}{1+b},\\
+K_3&=\frac{(\sqrt a\,e_0-e_3)(\sqrt a\,e_0-e_3)^{\mathsf T}}{1+a}
++\frac{(\sqrt c\,e_1-\sqrt a\,e_{13})
+(\sqrt c\,e_1-\sqrt a\,e_{13})^{\mathsf T}}{a+c}.
+\end{aligned}
+\tag{12.2}
+$$
+
+They are orthogonal projections annihilating $\psi$. Define
+$H_\omega=\sum_i\omega_iK_i$ and
+$\gamma(\omega)=\lambda_{\min}(H_\omega|_{\psi^\perp})$.
+All phase coordinates in this optimization are real.
+
+**Definition 12.1 (Square-sector and center-overlap parameters).** Set
+
+$$
+U=ac+2c+a,\qquad
+d=\frac1{1+a}+\frac c{a+c}=\frac U{(1+a)(a+c)},\qquad
+q=2-d=\frac{aT}{(1+a)(a+c)}.
+\tag{12.3}
+$$
+
+Thus $0<d,q<2$. Define positive coefficients summing to one by
+
+$$
+C_0=\frac Z{T(1+b)},\qquad
+C_1=\frac{2b(a+c)^2}{TU(1+b)},\qquad
+C_2=\frac{acb}{U(1+b)}.
+\tag{12.4}
+$$
+
+For $0<t<q$, write
+
+$$
+F(t)=\frac{C_0}t-\frac{C_1}{q-t}-\frac{C_2}{2-t},
+\qquad
+R(t)=\sqrt{\frac{qC_1}{2(q-t)^2}+\frac{C_2}{(2-t)^2}}.
+\tag{12.5}
+$$
+
+Let $t_0\in(0,q)$ be the unique zero of $F$. Let
+$\widehat t\in(0,t_0)$ be the unique solution of $F(t)=R(t)$,
+and put $t_*=\min\{\widehat t,d\}$.
+
+These parameters have exact algebraic specifications. With
+$B=q+2C_0+(2-q)C_1$,
+
+$$
+N(t)=t^2-Bt+2qC_0,\qquad
+F(t)=\frac{N(t)}{t(q-t)(2-t)}.
+\tag{12.6}
+$$
+
+Since $N(0)>0$ and $N(q)=-q(2-q)C_1<0$,
+$t_0$ is its smaller root. The selected $\widehat t$ is the
+unique root in $(0,t_0)$ of
+
+$$
+2N(t)^2-t^2\bigl[qC_1(2-t)^2+2C_2(q-t)^2\bigr]=0.
+\tag{12.7}
+$$
+
+Indeed $F$ is strictly decreasing and $R$ strictly increasing
+there, with $F-R$ positive near zero and negative at $t_0$.
+The interval excludes roots created by squaring.
+
+### 12.2. The complete finite positive design
+
+**Theorem 12.2 (Joint-weight optimum and branch classification).**
+For every $a,b,c>0$, the unique globally optimal distribution is
+
+$$
+\boxed{
+\omega^*=\frac{(F_*,1,F_*)}{1+2F_*},\qquad
+\gamma^*=\frac{t_*F_*}{1+2F_*},\qquad F_*=F(t_*).
+}
+\tag{12.8}
+$$
+
+If $\widehat t<d$, the gap is a simple reflection-even mode.
+If $\widehat t=d$, the reflection-even and reflection-odd modes
+meet, while an even rank-one real certificate still suffices.
+If $\widehat t>d$, the optimal gap has exactly those two active
+modes and admits a rank-two real certificate.
+
+Proof. Put $e_+=(e_1+e_3)/\sqrt2$ and
+$o=(e_1-e_3)/\sqrt2$. Define
+
+$$
+\begin{aligned}
+g&=\frac{e_0+\sqrt{2a}\,e_++\sqrt c\,e_{13}}{\sqrt T},\\
+h&=\frac{\sqrt2(a+c)e_0+\sqrt a(c-1)e_+
+-\sqrt{2c}(1+a)e_{13}}{\sqrt{TU}},\\
+k&=\sqrt{\frac{ac}U}e_0-\sqrt{\frac{2c}U}e_+
++\sqrt{\frac aU}e_{13},\\
+u&=\frac{\sqrt b\,g-\sqrt T\,e_2}{\sqrt Z}.
+\end{aligned}
+\tag{12.9}
+$$
+
+Then $(\psi,u,h,k,o)$ is orthonormal and
+$\psi=(\sqrt T\,g+\sqrt b\,e_2)/\sqrt Z$. Direct substitution
+in (12.2), with $A=K_1+K_3$ and $\Delta=K_1-K_3$, gives
+
+$$
+A|_{\psi^\perp}=\operatorname{diag}(0,q,2,d)
+\quad\text{in the order }(u,h,k,o),
+\tag{12.10}
+$$
+
+$$
+\Delta u=\Delta k=0,\qquad
+\Delta h=-\sqrt{dq}\,o,\qquad
+\Delta o=-\sqrt{dq}\,h,
+\tag{12.11}
+$$
+
+$$
+K_2=ww^{\mathsf T},\qquad
+w=\sqrt{C_0}\,u+\sqrt{C_1}\,h+\sqrt{C_2}\,k.
+\tag{12.12}
+$$
+
+Thus positive symmetric weights $(x,y,x)$ give the odd
+eigenvalue $dx$ and the even matrix
+
+$$
+M(x)=\operatorname{diag}(0,qx,2x)+y\,CC^{\mathsf T},
+\qquad C=(\sqrt{C_0},\sqrt{C_1},\sqrt{C_2})^{\mathsf T}.
+\tag{12.13}
+$$
+
+Its strictly increasing secular function has one root in each
+of $(0,qx)$, $(qx,2x)$ and $(2x,\infty)$, by the same pole
+argument as §11.2. In particular the lowest even eigenvalue is
+simple. Writing it as $xt$, its secular equation gives
+
+$$
+x=\frac{F(t)}{1+2F(t)},\qquad
+y=\frac1{1+2F(t)},\qquad
+\gamma(x)=x\min\{t,d\}.
+\tag{12.14}
+$$
+
+The interval $0<t<t_0$ parameterizes all $0<x<1/2$.
+The even branch $tF(t)/(1+2F(t))$ has derivative with sign
+$F(t)-R(t)$, since its numerator is
+
+$$
+2F(t)^2-\frac{qC_1}{(q-t)^2}-\frac{2C_2}{(2-t)^2}
+=2(F(t)-R(t))(F(t)+R(t)).
+\tag{12.15}
+$$
+
+It increases until $\widehat t$ and decreases afterward.
+Where $t>d$, the odd branch is $dF(t)/(1+2F(t))$,
+strictly decreasing in $t$. Therefore the unique symmetric
+maximizer is $t_*=\min\{\widehat t,d\}$.
+
+For global certificates, use the even vector
+
+$$
+v=\frac{\sqrt{C_0}}{t_*}u
+-\frac{\sqrt{C_1}}{q-t_*}h
+-\frac{\sqrt{C_2}}{2-t_*}k,\qquad
+L=v^{\mathsf T}v,\qquad \bar v=v/\sqrt L.
+\tag{12.16}
+$$
+
+It satisfies $H_{\omega^*}v=\gamma^*v$.
+Its normalized endpoint and center energies are
+
+$$
+E=\bar v^{\mathsf T}K_1\bar v
+=\bar v^{\mathsf T}K_3\bar v=\frac{R(t_*)^2}L,\qquad
+G=\bar v^{\mathsf T}K_2\bar v=\frac{F_*^2}L.
+\tag{12.17}
+$$
+
+If $t_*=\widehat t$, then $E=G=\gamma^*$ and
+$Y_*=\bar v\bar v^{\mathsf T}$ supplies the common Rayleigh
+upper bound for all distributions as in (11.20).
+
+If $t_*=d<\widehat t$, then $G>E$. The odd vector has
+site energies $(d/2,0,d/2)$. Define
+
+$$
+\eta=\frac d{d+2(G-E)}\in(0,1),\qquad
+Y_*=\eta\bar v\bar v^{\mathsf T}+(1-\eta)oo^{\mathsf T}.
+\tag{12.18}
+$$
+
+This is positive semidefinite, has trace one, and annihilates
+$\psi$. The eigenvector identity gives
+$\gamma^*=2xE+yG=dx$ and $x/y=F_*$, hence
+$G=F_*(d-2E)$ and
+
+$$
+\eta G=\frac{dF_*}{1+2F_*}=\gamma^*,\qquad
+\operatorname{Tr}(Y_*K_i)=\gamma^*\quad(i=1,2,3).
+\tag{12.19}
+$$
+
+For every distribution, its smallest eigenvalue is at most the
+trace against this same trace-one certificate. Thus
+$\gamma(\omega)\le\operatorname{Tr}(Y_*H_\omega)=\gamma^*$.
+The candidate attains the bound by the even and odd spectra.
+
+For uniqueness, an optimal distribution makes
+$H_\omega-\gamma^*(I-\psi\psi^{\mathsf T})$ positive
+semidefinite. Its zero trace against $Y_*$ forces
+$H_\omega v=\gamma^*v$; the coefficient of the even vector in
+the certificate is positive in both cases. Write
+$x=(\omega_1+\omega_3)/2$ and
+$\delta=(\omega_1-\omega_3)/2$. Its odd component is
+$-\delta\sqrt{dq}\,v_h o$. Since
+$v_h=-\sqrt{C_1}/(q-t_*)\ne0$, $\delta=0$.
+The $u$ coordinate fixes
+$(1-2x)F_*=\gamma^*/t_*$, and therefore fixes the candidate
+weights. Every zero-weight boundary disconnects the positive
+legal graph, so its gap is zero. $\square$
+
+The crossing branch can be selected without solving an eigenvalue
+problem. It occurs precisely when
+
+$$
+d<q,\qquad F(d)>0,\qquad F(d)>R(d).
+\tag{12.20}
+$$
+
+Equality in the last comparison is the meeting surface.
+If $d\ge q$, or $F(d)\le0$ when $d<q$, the crossing branch
+is absent. For rational parameters all comparisons in (12.20)
+are rational after squaring the last one under $F(d)>0$.
+
+The general spectral certificate mechanism retains the ownership
+documented in [DG11]. The result here concerns the explicit
+three-parameter projectors (12.2), their two sectors, selected
+root and all-weight equality conditions.
+
+### 12.3. Real certificate rank and sampling conditions
+
+**Theorem 12.3 (Real rank and the exact sampling tests).**
+In the strict crossing branch of (12.20), no real rank-one
+optimal spectral certificate exists. A complex Hermitian
+rank-one matrix can encode the same two real active directions.
+For every branch, the center has more samples than either
+endpoint exactly when $F_*<1$. The entire strict interval
+pattern (11.22) holds exactly when $1/2<F_*<1$.
+
+Proof. In the strict crossing branch the minimum eigenspace is
+exactly the real span of $\bar v,o$, by the secular intervals.
+Any optimal real certificate is supported there. A real unit
+vector in it is $z=\alpha\bar v+\beta o$. Its endpoint-energy
+difference is
+
+$$
+z^{\mathsf T}(K_1-K_3)z
+=-2\alpha\beta\sqrt{dq}\,\bar v_h.
+\tag{12.21}
+$$
+
+The coefficients $\sqrt{dq}$ and $\bar v_h$ are nonzero.
+Since all three optimal site weights are positive, an optimal
+certificate must have all three site energies equal. Thus
+$\alpha\beta=0$. The pure odd vector has center energy zero
+and endpoint energy $d/2>0$. The pure even vector has
+$G>E$. Neither gives an optimal rank-one real certificate.
+
+On the complexified space, instead set
+$z_{\mathbb C}=\sqrt\eta\,\bar v+i\sqrt{1-\eta}\,o$.
+It has norm one, and each real symmetric $K_i$ satisfies
+
+$$
+z_{\mathbb C}^\dagger K_i z_{\mathbb C}
+=\eta\bar v^{\mathsf T}K_i\bar v+(1-\eta)o^{\mathsf T}K_i o
+=\gamma^*.
+\tag{12.22}
+$$
+
+The imaginary cross terms cancel. This is a complex rank-one
+certificate, whose real part is (12.18); it packages two real
+phase directions and is not one real phase perturbation.
+
+Finally (12.8) gives
+$y>x\iff1>F_*$,
+$x>1/4\iff F_*>1/2$,
+$x<1/3\iff F_*<1$, and
+$y<1/2\iff F_*>1/2$. These are the stated necessary and
+sufficient tests. $\square$
+
+Thus rank assertions require the coefficient field and parameter
+space. Neither certificate rank counts quantum memory dimension,
+independent preparations or physical particles.
+
+### 12.4. A fully positive rational counterexample to the center premium
+
+**Theorem 12.4 (A two-direction optimum with a smaller center budget).**
+For the actual law
+
+$$
+p=\frac{(1,9,1,9,1)}{21},
+\tag{12.23}
+$$
+
+the unique optimum is
+
+$$
+\boxed{
+\omega^*=(75/182,\ 16/91,\ 75/182),\qquad
+\gamma^*=15/182.
+}
+\tag{12.24}
+$$
+
+In particular the center weight is smaller than either endpoint
+weight, although every occupation probability is positive.
+
+Proof. Here $a=9,b=c=1$, so
+$d=1/5$, $q=9/5$ and
+$(C_0,C_1,C_2)=(21/40,1/4,9/40)$.
+At $t=d$,
+
+$$
+F(d)=75/32,\qquad
+R(d)^2=725/4608,\qquad F(d)>R(d).
+\tag{12.25}
+$$
+
+Thus (12.20) holds and (12.8) gives (12.24).
+
+There is also an entirely rational primal and dual certificate.
+Use the unnormalized vectors
+
+$$
+\psi_0=(1,3,1,3,1)^{\mathsf T},\quad
+v=(-1,8/3,-16,8/3,1)^{\mathsf T},\quad
+o_0=(0,1,0,-1,0)^{\mathsf T}.
+\tag{12.26}
+$$
+
+Then $\psi=\psi_0/\sqrt{21}$,
+$v\perp\psi_0$, $o_0\perp\psi_0$, $v\perp o_0$,
+$v^{\mathsf T}v=2450/9$ and $o_0^{\mathsf T}o_0=2$.
+For the candidate $H$,
+
+$$
+Hv=(15/182)v,\qquad Ho_0=(15/182)o_0.
+\tag{12.27}
+$$
+
+Set
+
+$$
+Y=\frac1{1365}vv^{\mathsf T}
++\frac{281}{702}o_0o_0^{\mathsf T}.
+\tag{12.28}
+$$
+
+It is positive semidefinite, has trace one, annihilates $\psi_0$
+and has $\operatorname{Tr}(YK_i)=15/182$ for every site.
+Its normalized even weight is $70/351$, with the remaining
+$281/351$ on the odd direction.
+
+An explicit primal factorization is
+
+$$
+H-\frac{15}{182}\left(I-\frac{\psi_0\psi_0^{\mathsf T}}{21}\right)
+=\frac{957}{1274}rr^{\mathsf T}
++\frac{4335}{232232}ss^{\mathsf T},
+\tag{12.29}
+$$
+
+$$
+r=(1,-95/638,-107/957,-95/638,5/957)^{\mathsf T},\qquad
+s=(0,1,-2/51,1,-304/51)^{\mathsf T}.
+\tag{12.30}
+$$
+
+Both coefficients are positive. The factorization proves the
+primal lower bound, while (12.28) proves the all-weight upper
+bound. Theorem 12.2 supplies uniqueness. $\square$
+
+### 12.5. The pair determinant and an unchanged-marginal comparison
+
+For the reflected law write
+$X=p_1+p_{13}=p_3+p_{13}$, $z=p_2$ and $\kappa=p_{13}$.
+Its pair determinant and unconditional covariance are different:
+
+$$
+\Delta=p_0p_{13}-p_1p_3
+=\frac{c-a^2}{Z^2}
+=(1-z)\kappa-X^2,\qquad
+\operatorname{Cov}_p(n_1,n_3)=\kappa-X^2=\Delta+z\kappa.
+\tag{12.31}
+$$
+
+The determinant is the same diagonal quantity used in the
+conserved two-copy exchange of
+[Circulation and Control, §24.4][CC12], with its $Z$ coordinate
+mapped to $z$ here. This parameter identification does not identify
+the two-copy exchange with one-copy site readout.
+
+Directly from (12.3),
+
+$$
+d-1=
+\frac{\Delta}{(p_0+p_1)(p_1+p_{13})}.
+\tag{12.32}
+$$
+
+Thus the sign of the conditional endpoint relation determines
+which square-sector eigenvalue is smaller. It does not by itself
+select the final active gap: the center-overlap coefficients and
+the comparison (12.20) are still required.
+
+At fixed $X,z$, with $0<X<1-z$, the positive occupation fiber is
+
+$$
+p_\kappa=(1-2X-z+\kappa,\ X-\kappa,\ z,\ X-\kappa,\ \kappa),
+\quad
+\max\{0,2X+z-1\}<\kappa<X.
+\tag{12.33}
+$$
+
+The threshold $\kappa_0=X^2/(1-z)$ lies strictly inside this
+interval. Indeed $\kappa_0<X$,
+$\kappa_0>0$, and
+
+$$
+\kappa_0-(2X+z-1)=\frac{(X-(1-z))^2}{1-z}>0.
+\tag{12.34}
+$$
+
+Consequently identical endpoint and center means permit both
+signs of $\Delta$. For example (12.23) and
+
+$$
+p'=(5,5,1,5,5)/21
+\tag{12.35}
+$$
+
+share $X=10/21$ and $z=1/21$, but have
+$\kappa=1/21$ and $5/21$. The second is the activity law
+$a=1,b=1/5,c=1$, so its optimal center weight exceeds either
+endpoint by Theorem 11.3; the first has the opposite strict
+ordering by Theorem 12.4. The common marginal readings therefore
+do not determine the optimal site distribution.
+
+The pair weight can be interpreted conditionally as
+$c/a^2=e^{-\beta J}$ after supplying a diagonal Gibbs Hamiltonian
+with inverse temperature $\beta>0$. No temperature, physical
+coupling, apparatus or energy scale is supplied by the probability
+law alone. In particular $\Delta$, $\kappa$ and the sampling gap
+are not complex coherence or physical energy.
+
+The entire chapter concerns positive finite laws and real
+reference-phase directions within the fixed recorded-site menu.
+Zero-support restriction, arbitrary quantum measurements,
+longer-chain locality and physical preparation require separate
+arguments.
+
+[CC12]: AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md
+
+## 追加锚（本行以下为增补区）
