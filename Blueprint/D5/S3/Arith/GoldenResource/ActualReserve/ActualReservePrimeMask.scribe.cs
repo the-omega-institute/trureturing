@@ -71,27 +71,27 @@ internal sealed class ActualReservePrimeMaskDocument : IScribeDocumentDefinition
                         + "The full RH/Robin/5040 goal is active and unproved. The later Chebyshev/dyadic "
                         + "budget and unbounded PNT formalization are separate from this finite step."))), DescribeRole.Theorem))));
 
-    private static Formula Hypotheses() => Seq(F.Id("x"), Gt, D(1), Land,
-        Call("PrimeMask", F.Id("x"), F.Id("S")), Land, F.Id("n"), Ge, D(1));
+    private static Formula Hypotheses() => Seq(F.Id("x"), Gt, Sp, D(1), Land, Sp,
+        Call("PrimeMask", F.Id("x"), F.Id("S")), Land, Sp, F.Id("n"), Ge, Sp, D(1));
 
-    private static Formula Quantifiers() => Seq(Forall, Sp, F.Id("x"), InMacro,
-        Mathbb, Grp(F.Id("R")), Comma, F.Id("S"), InMacro, Call("Finset", F.Id("N")),
-        Comma, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma);
+    private static Formula Quantifiers() => Seq(Forall, Sp, F.Id("x"), InMacro, Sp,
+        Mathbb, Grp(F.Id("R")), Comma, F.Id("S"), InMacro, Sp, Call("Finset", F.Id("N")),
+        Comma, F.Id("n"), InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma);
 
-    private static Formula DecompositionFormula() => Disp(Seq(Quantifiers(), Hypotheses(), Rightarrow,
+    private static Formula DecompositionFormula() => Disp(Seq(Quantifiers(), Hypotheses(), Rightarrow, Sp,
         Grp(Seq(Call("F", F.Id("x")), Minus, Call("J", F.Id("x"), F.Id("n")), Eq,
             Call("B", F.Id("S")), Plus, Call("A", F.Id("x"), F.Id("S"), F.Id("n")), Plus,
-            Call("K", F.Id("x"), F.Id("S"), F.Id("n")))), Land,
-        D(0), Le, Call("A", F.Id("x"), F.Id("S"), F.Id("n")), Land,
-        D(0), Le, Call("K", F.Id("x"), F.Id("S"), F.Id("n")), Land,
-        Call("C", F.Id("S")), Le, Call("B", F.Id("S"))));
+            Call("K", F.Id("x"), F.Id("S"), F.Id("n")))), Land, Sp,
+        D(0), Le, Sp, Call("A", F.Id("x"), F.Id("S"), F.Id("n")), Land, Sp,
+        D(0), Le, Sp, Call("K", F.Id("x"), F.Id("S"), F.Id("n")), Land, Sp,
+        Call("C", F.Id("S")), Le, Sp, Call("B", F.Id("S"))));
 
-    private static Formula ReserveFormula() => Disp(Seq(Quantifiers(), Hypotheses(), Rightarrow,
-        Call("C", F.Id("S")), Le, Call("B", F.Id("S")), Le, Call("Res", F.Id("x")), Land,
-        D(0), Le, Call("d", F.Id("x"), F.Id("n")), Land,
+    private static Formula ReserveFormula() => Disp(Seq(Quantifiers(), Hypotheses(), Rightarrow, Sp,
+        Call("C", F.Id("S")), Le, Sp, Call("B", F.Id("S")), Le, Sp, Call("Res", F.Id("x")), Land, Sp,
+        D(0), Le, Sp, Call("d", F.Id("x"), F.Id("n")), Land, Sp,
         Call("F", F.Id("x")), Minus, Call("J", F.Id("x"), F.Id("n")), Eq,
-        Call("Res", F.Id("x")), Plus, Call("d", F.Id("x"), F.Id("n")), Land,
-        Call("B", F.Id("S")), Le, Call("Res", F.Id("x")), Plus, Call("d", F.Id("x"), F.Id("n"))));
+        Call("Res", F.Id("x")), Plus, Call("d", F.Id("x"), F.Id("n")), Land, Sp,
+        Call("B", F.Id("S")), Le, Sp, Call("Res", F.Id("x")), Plus, Call("d", F.Id("x"), F.Id("n"))));
 
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);
 }

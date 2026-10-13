@@ -57,26 +57,28 @@ internal sealed class HarmonicReferenceDocument : IScribeDocumentDefinition
                     + "beyond the reference cutoff are retained in the complement."))), DescribeRole.Theorem))));
 
     private static Formula CutoffFormula() => Disp(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("p"), Comma,
-        F.Id("k"), Comma, Sp, F.Id("x"), Gt, D(1), Land, Call("Prime", F.Id("p")), Rightarrow,
-        Grp(Seq(F.Id("k"), Le, Call("v", F.Id("x"), F.Id("p")), Iff,
-            new Formula.Power(F.Id("p"), F.Id("k")), Le, F.Id("x")))));
+        F.Id("k"), Comma, Sp, F.Id("x"), Gt, Sp, D(1), Land, Sp, Call("Prime", F.Id("p")), Rightarrow, Sp,
+        Open, F.Id("k"), Le, Sp, Call("v", F.Id("x"), F.Id("p")), Iff, Sp,
+        new Formula.Power(F.Id("p"), F.Id("k")), Le, Sp, F.Id("x"), Close));
 
     private static Formula SignFormula() => Disp(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("p"), Comma,
-        F.Id("k"), Comma, Sp, F.Id("x"), Gt, D(1), Land, Call("Prime", F.Id("p")), Land,
-        F.Id("k"), Ge, D(1), Rightarrow, Grp(Seq(D(0), Le,
+        F.Id("k"), Comma, Sp, F.Id("x"), Gt, Sp, D(1), Land, Sp, Call("Prime", F.Id("p")), Land, Sp,
+        F.Id("k"), Ge, Sp, D(1), Rightarrow, Sp,
+        Open, D(0), Le, Sp,
             new Formula.Fraction(D(1), Seq(F.Id("k"), new Formula.Power(F.Id("p"), F.Id("k")))),
-            Minus, Seq(F.Id("lambda"), Call("log", F.Id("p"))), Iff,
-            new Formula.Power(F.Id("p"), F.Id("k")), Le, F.Id("x")))));
+            Minus, new Formula.Binary(Call("lambda", F.Id("x")), FormulaBinaryOperator.Multiply,
+                Call("log", F.Id("p"))), Iff, Sp,
+        new Formula.Power(F.Id("p"), F.Id("k")), Le, Sp, F.Id("x"), Close));
 
     private static Formula MaximumFormula(bool actual) => Disp(Seq(Forall, Sp,
         F.Id("x"), Comma, F.Id("p"), Comma, F.Id("a"), Comma, Sp,
-        F.Id("x"), Gt, D(1), Land, Call("Prime", F.Id("p")), Rightarrow,
-        Call(actual ? "u" : "H", F.Id("x"), F.Id("p"), F.Id("a")), Le,
+        F.Id("x"), Gt, Sp, D(1), Land, Sp, Call("Prime", F.Id("p")), Rightarrow, Sp,
+        Call(actual ? "u" : "H", F.Id("x"), F.Id("p"), F.Id("a")), Le, Sp,
         Call("H", F.Id("x"), F.Id("p"), Call("v", F.Id("x"), F.Id("p")))));
 
     private static Formula SumFormula() => Disp(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("U"), Comma, Sp,
-        F.Id("x"), Gt, D(1), Land, Call("ActualPrimeSuperset", F.Id("U"), Call("T", F.Id("x"))),
-        Rightarrow, Call("F", F.Id("x")), Eq, Sum, Underscore, Grp(Seq(F.Id("p"), InMacro, F.Id("U"))),
+        F.Id("x"), Gt, Sp, D(1), Land, Sp, Call("ActualPrimeSuperset", F.Id("U"), Call("T", F.Id("x"))),
+        Rightarrow, Sp, Call("F", F.Id("x")), Eq, Sum, Underscore, Grp(Seq(F.Id("p"), InMacro, Sp, F.Id("U"))),
         Sp, Call("H", F.Id("x"), F.Id("p"), Call("v", F.Id("x"), F.Id("p")))));
 
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name), [.. args]);

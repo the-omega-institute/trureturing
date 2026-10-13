@@ -16,7 +16,7 @@ internal sealed class GoldenResourceSupremumDocument : IScribeDocumentDefinition
                 DescribeId.Create("golden-prime-local-original-layer-sum"),
                 DeclarationHandle.Create(Prefix + "local_eq_layer_sum"),
                 H("Original prime-local telescoping identity"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(LocalLayerSumFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The original generic private proof is exposed in place for "
                     + "ActualReservePrimeMask. For every real price, actual prime and natural exponent, "
@@ -124,6 +124,21 @@ internal sealed class GoldenResourceSupremumDocument : IScribeDocumentDefinition
                         + "of that layer. This companion is a direct application of the frozen "
                         + "single-layer delta to the equality-price clause."))),
                 DescribeRole.Theorem))));
+
+    private static Formula LocalLayerSumFormula()
+    {
+        Formula lambda = F.Id("lambda");
+        Formula p = F.Id("p");
+        Formula a = F.Id("a");
+        Formula k = F.Id("k");
+        Formula sum = Seq(Sum, Underscore,
+            Grp(Seq(k, InMacro, Sp, Call("Icc", D(1), a))), Sp,
+            Product(Call("log", p), Seq(Open, Subtract(Marginal(p, k), lambda), Close)));
+        return Disp(ForAll(
+            [Bound("lambda", Reals()), Bound("p", Naturals()), Bound("a", Naturals())],
+            Implies(Call("Prime", p),
+                Equal(Call("goldenPrimeLocalObjective", lambda, p, a), sum))));
+    }
 
     private static Formula ActiveSum(Formula lambda)
     {
