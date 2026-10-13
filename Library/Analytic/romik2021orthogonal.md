@@ -7696,3 +7696,542 @@ is a uniform high-order sign and boundary estimate for this exact
 coupled recurrence on the actual original source. The local
 all-critical premise, all-height exclusion, RH and strict Robin for
 all integers $H>5040$ remain unresolved.
+
+
+## Joint source response and a gap-free two-zero application
+
+Retain the original source, every conditional local-critical and complete-removal
+premise in (LC263), all exterior zeros in $A$, and the fixed constants and
+parameters of (LC267)--(LC279). Set $R=C_1L$, $C_1=128S$ and
+$M_R=32R+R^2/2$. The additional bounds below are ordinary analytical
+applications of the existing finite multiplier and (LC276), not new
+factorization, degree-lowering or root-preservation theorems. They have
+no Lean certification or originality certification.
+
+### The two responses inherit an exact linkage
+
+For $H=\mathscr T_nA$ and $V=\mathscr T_nA'$, the same falling-factorial
+coefficient rule gives
+
+$$
+H'=V-\frac tnV',\qquad
+\ell-s=-\frac tn(s'+s\ell).
+\tag{LC280}
+$$
+
+This is a reused multiplier identity. In particular, the coefficient of
+$t^n$ in $V-(t/n)V'$ cancels; no missing top-degree term is discarded.
+It is also the normalization mechanism of the universal degree-lowering
+supplier in `Blueprint/D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.md`.
+The source-specific estimate comes from combining that linkage with the
+complete exterior response bound, rather than treating $\ell$ and $s$
+as unrelated functions. Since $1/n=D^2/(\nu c^2)$ and $|t|\le2c$,
+(LC276) and $|s\ell|\le(|s|+|\ell|)^2/4$ give
+
+$$
+\begin{aligned}
+|\ell-s|&\le\frac{M_R}{\nu c}
+&&(|t-c|\le D/16),\\
+|(\ell-s)'|&\le\frac{32M_R}{\nu cD}
+&&(|t-c|\le D/32).
+\end{aligned}
+\tag{LC281}
+$$
+
+Both are complex-disc estimates. The second applies Cauchy's estimate
+on a circle of radius $D/32$ inside the first disc. Consequently
+
+$$
+\begin{aligned}
+\eta-\chi'&=v'\ell+v(\ell-s)',\\
+|\eta-\chi'|&\le\frac Dc
+ \left(\frac{4R}{\nu}+\frac{128M_R}{\nu^2}\right)
+ <\frac{D}{32c}=\frac{\rho}{32T}
+\quad(|t-c|\le D/32,\ \nu\ge256R).
+\end{aligned}
+\tag{LC282}
+$$
+
+For the strict inequality, $R=128S\log(T+2)>384$ and
+$4R/\nu+128M_R/\nu^2\le1/64+1/(16R)+1/1024<1/32$.
+The constants $C_{\rm abs},C_b$ remain fixed source constants without a
+numerical instantiation. This is a stronger joint bound than separately
+estimating $|\chi'-1|$ and $|\eta-1|$ by $O(R/\nu)$.
+
+### The derivative discrepancy retains a separate forcing term
+
+For the unchanged recurrence (LC278), put $W_j=S_j-P_j'$. Differentiating
+its first equation and subtracting gives the exact bookkeeping
+
+$$
+W_j=(\mathcal B-\alpha_j)W_{j-1}
+       +v'P_{j-1}'+(\eta-\chi')P_{j-1},\qquad W_0=0.
+\tag{LC283}
+$$
+
+This identity is reuse, not a propagation estimate. In particular,
+$|v'|\le4\rho^2/\nu$ has no additional $1/T$ factor. A small coefficient
+in (LC282) does not bound $W_r/P_r'$ at a node with a small slope.
+
+### A core of at most two zeros permits growing total selection
+
+Let the unchanged full selection have $r\le C_0L$ factors and put
+$q=\#\{j:|\alpha_j-c|\le D\}$, counting every multiplicity.
+Assume only $q\le2$ in addition to the existing conditional source
+premises. The total selected degree $r$ may still grow; the new
+restriction is on its central core, not on its distant selected roots.
+Factor $Q=Q_{\rm core}Q_{\rm far}$ inside the proof and set
+$\widehat A=AQ_{\rm far}=F/Q_{\rm core}$.
+This auxiliary regrouping leaves the original $F,Q,P_r,S_r,J,G$
+unchanged. No multiplicativity of $\mathscr T_n$ is used.
+
+For $|a-c|\le D/4$, every added far root has $|a-\alpha_j|>3D/4$.
+The complete product mass and central drift therefore obey
+
+$$
+K_{\widehat A}(a)\le(C_{\rm abs}+2C_0)\frac L{D^2},\qquad
+\left|\frac{\widehat A'}{\widehat A}(c)\right|
+ \le(C_b+C_0)\frac LD.
+\tag{LC284}
+$$
+
+All original infinite exterior zeros and the actual far selected factors
+remain in $\widehat A$. It is nonzero throughout this working disc.
+Thus the full-product and coefficient-circle proofs in (LC267)--(LC277)
+apply with $S_*=S+3C_0$, $E=128S_*L$ and the stronger threshold
+
+$$
+\nu\ge256E=32768(S+3C_0)L.
+\tag{LC285}
+$$
+
+This reapplies their analytic inputs; it does not claim that removing
+only the core meets the original definition of a complete selection.
+In particular, $\widehat H=\mathscr T_n\widehat A$ is nonzero on
+$|t-c|\le D/8$. Define $\widehat\ell,\widehat s,\widehat\chi,
+\widehat\eta$ exactly as in (LC274)--(LC277), with $\widehat A$ replacing
+$A$. Their complex derivative bounds use $E$ in place of $R$.
+
+### The quadratic core has a forced nonzero node amplitude
+
+In the complex disc $\mathcal D=\{|t-c|\le D/16\}$ those bounds give
+
+$$
+|\widehat\chi''|,\ |\widehat\eta'|
+ <\frac{2200E}{\nu D}.
+\tag{LC286}
+$$
+
+Indeed $\widehat\chi''=-v''\widehat\ell-2v'\widehat\ell'
+-v\widehat\ell''$ and
+$\widehat\eta'=-v'\widehat s'-v\widehat s''$.
+Use $|v|\le4D^2/\nu$, $|v'|\le4D/\nu$, $|v''|\le2/\nu$ and (LC276);
+the resulting constants are $2178$ and $2112$, respectively.
+On the real diameter $I=[c-D/16,c+D/16]$, put
+$U=v\widehat\chi'>0$. Since $v'/\sqrt v=2/\sqrt n$, (LC286) gives
+
+$$
+\frac{|U'|}{\sqrt v}\le\frac3{\sqrt n}
+ +\frac{4400E}{\nu^{3/2}}<\frac18,\qquad
+\frac{|v\widehat\eta'|}{\sqrt v}
+ <\frac{4400E}{\nu^{3/2}}<\frac18.
+\tag{LC287}
+$$
+
+Here $E>384$, $\nu\ge256E$, $n\ge\nu$ and $\sqrt\nu>256$;
+$(6+4400/256)/256<1/8$ already bounds the larger complex comparison
+used below. No sign of $\widehat\eta'$ is imposed.
+
+When $q=2$, write its two real roots as $a_1,a_2$, allowing equality,
+and set $m=(a_1+a_2)/2$, $\delta=(a_1-a_2)/2$ and
+$x=\widehat\chi-m$. Apply the exact coupled recurrence only to this
+auxiliary core, writing its responses as $p_q,w_q$. Thus the same full
+source has $J=\widehat Hp_q$ and
+$G=\widehat H(\widehat sp_q+w_q)$. For $q=2$,
+
+$$
+p_2=x^2-\delta^2-U,\qquad
+p_2'=2x\widehat\chi'-U',\qquad
+w_2=2\widehat\eta x-v\widehat\eta'.
+\tag{LC288}
+$$
+
+At every real actual node, $x^2=\delta^2+v\widehat\chi'\ge v/2$,
+so $x\ne0$. Equation (LC287) bounds both derivative errors by
+$\sqrt2|x|/8<|x|/4$, while both leading terms have magnitude greater
+than $|x|$. The two responses consequently have the sign of $x$ and
+magnitude greater than $3|x|/4$. Returning to the original responses,
+
+$$
+P_r'(t)S_r(t)>\frac14
+ \left(\frac{\widehat H(t)}{H(t)}\right)^2
+ \begin{cases}
+ 1,&q=1,\\
+ v(t),&q=2,
+ \end{cases}
+\quad(t\in I,\ J(t)=0).
+\tag{LC289}
+$$
+
+For $q=1$, use $p_1=\widehat\chi-a_1$ and $w_1=\widehat\eta$.
+For $q=2$, $p_2'w_2>x^2/2\ge v/4$. In both cases the exact equality
+$H^2P_r'S_r=J'G=\widehat H^2p_q'w_q$ proves (LC289), retaining the
+complete nonzero source amplitude. Every such node is simple. For
+$q=0$, $J=\widehat H$ has no node in the disc.
+
+### The entire inner complex disc has at most two real simple zeros
+
+This assertion does not presume that the actual nodes are already real.
+For $q=2$, put $\sigma_0=c/\sqrt n=D/\sqrt\nu$. Throughout $\mathcal D$,
+$|t/c-1|\le1/4096$, so
+
+$$
+\left|\frac v{\sigma_0^2}-1\right|<\frac1{1024},\qquad
+|\widehat\chi'-1|\le\frac{17}{64},\qquad
+\left|\frac U{\sigma_0^2}-1\right|<\frac12.
+\tag{LC290}
+$$
+
+In particular $\Re U>\sigma_0^2/2$. The analytic square root
+$R_2(t)=\sqrt{\delta^2+U(t)}$, positive on the real diameter,
+satisfies $|R_2|>\sigma_0/\sqrt2$. Here $|v|<2\sigma_0^2$ and (LC286)
+give $|U'|/\sigma_0\le6/\sqrt n+4400E/\nu^{3/2}<1/8$.
+Consequently $|R_2'|<1/8$. The two analytic branches
+
+$$
+f_+=\widehat\chi-m-R_2,\qquad
+f_-=\widehat\chi-m+R_2,
+\qquad p_2=f_+f_-,\qquad
+|f_\pm'-1|<\frac12
+\tag{LC291}
+$$
+
+are each injective: integrate their derivative difference along the
+line segment between any two points of the convex disc. They each
+preserve complex conjugation. A nonreal zero would therefore produce
+two zeros of the same injective branch. Their zeros cannot coincide,
+since $R_2\ne0$, and their derivatives do not vanish. It follows that
+$\mathcal D$, including its boundary, contains at most two zeros of
+$J$, all real and simple. At $q=1$, the same argument applies to
+$\widehat\chi-a_1$; at $q=0$, nonvanishing was already established.
+
+Let $t_\pm=c\pm D/16$. Since each branch is strictly increasing on $I$,
+its complete node-existence criterion is
+
+$$
+f_\pm(t_-)\le0\le f_\pm(t_+).
+\tag{LC292}
+$$
+
+Each satisfied branch criterion gives exactly one node. No complete
+interlacing chain or membership of all selected source roots in $I$
+is assumed. For $q=2$, the upper and lower branch nodes, when present,
+lie within $\Delta=4ED/\nu+\sqrt6D/\sqrt\nu$ of
+$a_{\max}=m+|\delta|$ and $a_{\min}=m-|\delta|$, respectively.
+This follows from $|\widehat\chi-t|\le4ED/\nu$ and
+$0\le R_2-|\delta|\le\sqrt U\le\sqrt6D/\sqrt\nu$ on the real diameter.
+Containment of the corresponding closed $\Delta$-neighborhood in $I$
+is a sufficient node-existence condition, as direct endpoint evaluation
+of (LC291) shows.
+
+The core regrouping and node-sign application use the individual
+derivative bounds in (LC276); they do not assert that (LC282) alone
+proves positivity. They allow growing total selection and retain every
+actual exterior factor, but require central total multiplicity $q\le2$.
+Removing that restriction, controlling arbitrary growing-core nodes
+and their boundary crossings, and discharging the local all-critical
+premise remain unpaid. RH and strict Robin for every integer $H>5040$
+remain unresolved.
+
+
+## Three core zeros at a fixed linear logarithmic budget
+
+Retain the same original $F(z)=\Xi(\sqrt z)/\xi(1/2)$, multiplier,
+$J,G,H,P_r,S_r$, and every local-critical and complete-removal premise
+in (LC263). In particular, every actual source zero, with multiplicity,
+in the closed radius-$4\rho$ disc centered at $1/2+iT$ is assumed
+critical and removed in the full $Q$. The complete exterior $A=F/Q$
+retains every other zero, possibly nonreal. Keep $T\ge32$,
+$L=\log(T+2)$, $0<\rho\le1/8$, $c=T^2$, $D=T\rho$,
+$\nu=n\rho^2/T^2$ and $r\le C_0L$, with positive integer $n$.
+
+Reuse the regrouping $Q=Q_{\rm core}Q_{\rm far}$ and
+$\widehat A=AQ_{\rm far}$ from (LC284). Its mass and drift estimates
+use the far-root distances and total count, without a $q\le2$
+restriction. Thus the zero-free $\widehat H=\mathscr T_n\widehat A$
+and complete exterior jets in (LC276)--(LC277) apply to a core of
+three, with $E=128(S+3C_0)L$ and $S=C_{\rm abs}+C_b+1$.
+Removing only the core is not asserted to satisfy the original
+complete-removal premise. No multiplicativity of $\mathscr T_n$
+is used, and no exterior factor or theta tail is discarded.
+
+Assume the core count, including multiplicity, is exactly $q=3$.
+Write its actual real roots as $\alpha_1,\alpha_2,\alpha_3$, each
+with $|\alpha_i-c|\le D$. Put
+
+$$
+\begin{gathered}
+\mathcal D=\{t\in\mathbb C:|t-c|\le D/16\},\qquad
+I=[t_-,t_+],\quad t_\pm=c\pm D/16,\\
+\sigma=c/\sqrt n=D/\sqrt\nu,\qquad
+\nu\ge8192E=2^{20}(S+3C_0)L.
+\end{gathered}
+\tag{LC293}
+$$
+
+Under these conditional inputs, every $J$-zero in the closed
+$\mathcal D$ is real and simple, and there are at most three.
+Every actual node satisfies the original-response bound
+$P_r'S_r>(\widehat H/H)^2v^2/4$, where $v(t)=t^2/n$.
+The argument below supplies the joint amplitude, complex branches
+and endpoint criteria. This is an ordinary analytical application;
+no Lean verification or originality certification is supplied.
+
+### The exact cubic retains both complete exterior responses
+
+Use hats throughout for the auxiliary complete exterior quantities.
+Define
+
+$$
+\begin{gathered}
+m=(\alpha_1+\alpha_2+\alpha_3)/3,\qquad \beta_i=\alpha_i-m,\\
+a=\frac16\sum_{i=1}^3\beta_i^2,\qquad b=\beta_1\beta_2\beta_3,\\
+Q_{\rm core}(m+z)=z^3-3az-b,\qquad
+ a\ge0,\quad |b|\le2a^{3/2},\\
+x=\widehat\chi-m,\qquad U=v\widehat\chi',\qquad
+V_3=vU',\qquad Z_3=v(v\widehat\eta')',\qquad
+M_3=3(x^2-a-U).
+\end{gathered}
+\tag{LC294}
+$$
+
+The invariant inequality follows from the real-source discriminant
+$108a^3-27b^2=\prod_{i<j}(\beta_i-\beta_j)^2\ge0$.
+Source roots may coincide, including an initial triple root.
+For the same exact recurrence (LC278), use auxiliary responses
+$p_3,w_3$ so that $J=\widehat Hp_3$ and
+$G=\widehat H(\widehat s p_3+w_3)$. Applying
+$\mathcal C=x-v\partial_t$ gives
+$\mathcal C^21=x^2-U$ and
+$\mathcal C^31=x^3-3Ux+vU'$. The coupled recurrence therefore gives
+
+$$
+\begin{aligned}
+p_3&=x^3-3(a+U)x-b+V_3,\\
+p_3'&=\widehat\chi'M_3-3U'x+V_3',\\
+w_3&=\widehat\eta M_3-3v\widehat\eta'x+Z_3.
+\end{aligned}
+\tag{LC295}
+$$
+
+In particular $Z_3=vv'\widehat\eta'+v^2\widehat\eta''$.
+All noncommuting derivative terms remain present. The polynomial
+in an independent variable $z$ with these coefficients will be used
+for comparison; $p_3$ is not asserted to be a cubic polynomial in $t$.
+
+### A uniform complex jet budget
+
+Put $\epsilon=E/\nu\le1/8192$. On the full closed $\mathcal D$,
+reuse (LC276), with $E$ replacing $C_1L$, and (LC286). They give
+$|\widehat\chi'-1|\le68\epsilon$,
+$|\widehat\eta-1|\le64\epsilon$ and
+$\max\{|\widehat\chi''|,|\widehat\eta'|\}<2200\epsilon/D$.
+For one further derivative use
+$\widehat\chi'''=-3v''\widehat\ell'-3v'\widehat\ell''-v\widehat\ell'''$
+and
+$\widehat\eta''=-v''\widehat s'-2v'\widehat s''-v\widehat s'''$.
+The $m=1,2,3$ constants from (LC276) give respectively $104544$ and
+$102432$, so
+
+$$
+\max\{|\widehat\chi'''|,|\widehat\eta''|\}
+ <110000\epsilon/D^2.
+\tag{LC296}
+$$
+
+Since $D/c=\rho/T\le1/256$ and $|t/c-1|\le1/4096$, we have
+$|v/\sigma^2-1|<1/1024$,
+$|v|\le2\sigma^2$, $|v'|\le3\sigma^2/D$ and
+$|v''|\le2\sigma^2/D^2$. Product differentiation consequently gives
+
+$$
+\begin{aligned}
+|U'|&\le6\sigma^2/D,& |U''|&\le32\sigma^2/D^2,\\
+|V_3|&\le12\sigma^4/D,& |V_3'|&\le82\sigma^4/D^2,\\
+|v\widehat\eta'|&\le\sigma^2/D,& |Z_3|&\le56\sigma^4/D^2.
+\end{aligned}
+\tag{LC297}
+$$
+
+For example the $U''$ coefficient is bounded by
+$3+233200\epsilon<32$, while the $Z_3$ coefficient is
+$453200\epsilon<56$. Here $S+3C_0>1$ and $L>3$ imply $E>384$,
+so $\nu>8192\cdot384$. The estimates actually needed below are
+
+$$
+\begin{gathered}
+|U-\sigma^2|<\sigma^2/32,\qquad |V_3|<\sigma^3/32,\\
+\max\left\{\frac{|U'|}{\sigma},
+\frac{|V_3'|}{\sigma^2},\frac{|v\widehat\eta'|}{\sigma},
+\frac{|Z_3|}{\sigma^2}\right\}<1/256,\\
+|\widehat\chi'-1|<1/64,\qquad |\widehat\eta-1|\le1/128.
+\end{gathered}
+\tag{LC298}
+$$
+
+These hold on $D/16$ directly from the individual jets. No joint
+mismatch estimate confined to the smaller $D/32$ disc is used.
+
+### A cubic amplitude estimate and the original node margin
+
+The following elementary comparison controls repeated initial roots.
+For $a\ge0$, $|b|\le2a^{3/2}$, $u>0$, $e\in\mathbb R$ with
+$|e|\le u^{3/2}$, set
+$C(z)=z^3-3(a+u)z-b+e$ and $h=\sqrt{a+u}$.
+Since $h^3-a^{3/2}=uh+a(h-\sqrt a)\ge uh$,
+$2h^3-|b-e|\ge2uh-u^{3/2}\ge uh>0$.
+Signs at $-2h,-h,h,2h$ put one distinct real root in each of
+$(-2h,-h)$, $(-h,h)$ and $(h,2h)$.
+For any root $\lambda$, put $y=|\lambda|\le2h$. Its equation gives
+$(y-h)^2(y+2h)\ge2h^3-|b-e|\ge uh$.
+Thus $|y-h|\ge\sqrt u/2$. Adjacent roots have gap at least $\sqrt u$,
+and
+
+$$
+|C'(\lambda)|\ge\frac32\sqrt u\,(|\lambda|+h)
+ \ge\frac32u.
+\tag{LC299}
+$$
+
+At a real actual node $t\in I$, $p_3(t)=0$ and (LC298) gives
+$U>\sigma^2/2$ and $|V_3|<U^{3/2}$. Apply (LC299) with
+$u=U,e=V_3$ at the root $x(t)$.
+It yields $|x|/|M_3|<1/\sigma$ and $1/|M_3|<2/\sigma^2$.
+Using (LC295) and (LC298), each of
+$|(p_3'-\widehat\chi'M_3)/M_3|$ and
+$|(w_3-\widehat\eta M_3)/M_3|$ is less than $5/256$.
+Both real ratios $p_3'/M_3$ and $w_3/M_3$ exceed $1/2$.
+Since $U=v\widehat\chi'>3v/4$ on $I$, the same original-node
+identity (LC279) gives
+
+$$
+\begin{gathered}
+p_3'w_3>\frac14M_3^2\ge\frac9{16}U^2
+ >\frac{81}{256}v^2>\frac14v^2,\\
+H^2P_r'S_r=J'G=\widehat H^{\,2}p_3'w_3,\qquad
+P_r'S_r>\frac14\left(\frac{\widehat H}{H}\right)^2v^2>0.
+\end{gathered}
+\tag{LC300}
+$$
+
+Both nonzero amplitudes are real on $I$, so the returned margin
+retains their squared ratio. This proves a relative node bound;
+positivity of $\widehat\chi'$ and $\widehat\eta$ alone is insufficient.
+
+### Complex branches on the entire closed target disc
+
+Define $C_t(z)=z^3-3(a+U(t))z-b+V_3(t)$ and the fixed
+$C_*(z)=z^3-3(a+\sigma^2)z-b$.
+The latter has distinct real roots
+$\lambda_1^0<\lambda_2^0<\lambda_3^0$, with gaps at least $\sigma$,
+by (LC299). Put $h_0=\sqrt{a+\sigma^2}$.
+On each fixed circle $|z-\lambda_j^0|=\sigma/8$,
+
+$$
+\begin{aligned}
+|C_*(z)|&\ge\frac{\sigma}{8}\left(\frac78\right)^2
+ |C_*'(\lambda_j^0)|
+ \ge\frac{147}{1024}\sigma^2(|\lambda_j^0|+h_0),\\
+|C_t(z)-C_*(z)|&\le3|U-\sigma^2||z|+|V_3|
+ <\frac3{32}\sigma^2(|\lambda_j^0|+h_0)
+ <|C_*(z)|.
+\end{aligned}
+\tag{LC301}
+$$
+
+For the perturbation bound use $|z|\le|\lambda_j^0|+\sigma/8$
+and $h_0\ge\sigma$. Rouché gives exactly one simple moving root
+$\lambda_j(t)$ in each fixed disc, for every $t\in\mathcal D$.
+The roots have analytic labels on a neighborhood of the closed
+parameter disc and preserve conjugation by uniqueness. In particular
+$|\lambda_j(t)-\lambda_j^0|<\sigma/8$.
+Each pairwise distance loses at most $\sigma/4$, giving
+$|\partial_z C_t(\lambda_j)|\ge(9/16)|C_*'(\lambda_j^0)|$.
+Implicit differentiation, rather than a Cauchy estimate on a smaller
+disc, now gives
+
+$$
+\begin{gathered}
+\lambda_j'=\frac{3U'\lambda_j-V_3'}{3(\lambda_j^2-a-U)},\qquad
+|\lambda_j'|\le\frac{32}{9}\frac{|U'|}{\sigma}
+ +\frac{32}{27}\frac{|V_3'|}{\sigma^2}
+ <\frac1{54}<\frac1{32},\\
+f_j(t)=\widehat\chi(t)-m-\lambda_j(t),\qquad
+p_3=f_1f_2f_3,\quad J=\widehat Hf_1f_2f_3,\qquad
+|f_j'-1|<\frac3{64}<\frac12.
+\end{gathered}
+\tag{LC302}
+$$
+
+Here $|\lambda_j|\le|\lambda_j^0|+\sigma/8
+\le|\lambda_j^0|+h_0$ pays the numerator bound.
+Line-segment integration in the convex closed $\mathcal D$ gives
+$|f_j(t)-f_j(u)-(t-u)|\le(3/64)|t-u|$, so each branch is injective.
+A nonreal zero would supply its distinct conjugate in the same branch,
+contradicting injectivity. Branches cannot share a node because their
+$\lambda_j(t)$ lie in disjoint fixed discs. The derivative bound and
+zero-free $\widehat H$ imply simplicity, also at the target boundary.
+This proves realness and at most three actual nodes on all of
+$\mathcal D$, without deducing it merely from the reference cubic.
+
+On $I$ each branch is real and strictly increasing, so its exact
+existence criterion, including endpoint equality, and localization are
+
+$$
+\begin{gathered}
+f_j(t_-)\le0\le f_j(t_+),\qquad
+N_J(\mathcal D)=\sum_{j=1}^3
+\mathbf1_{\{f_j(t_-)\le0\le f_j(t_+)\}},\\
+b_j^*=m+\lambda_j^0,\qquad
+\Delta_3=4ED/\nu+\sigma/8,\qquad
+|f_j(t)-(t-b_j^*)|\le\Delta_3\quad(t\in I).
+\end{gathered}
+\tag{LC303}
+$$
+
+Every existing branch node lies within $\Delta_3$ of $b_j^*$.
+Containment of $[b_j^*-\Delta_3,b_j^*+\Delta_3]$ in $I$ is sufficient
+for existence; it is not a necessary condition. No three-node
+existence, complete interlacing chain or membership of all original
+selected roots in the target interval is asserted.
+
+### Reused comparison and remaining interfaces
+
+Nakano, Trinh and Wang, [*Beta Ensembles in the Freezing Regime and
+Finite Free Convolutions*, arXiv:2603.01356v1](https://arxiv.org/html/2603.01356v1),
+Theorem 3.1 and Lemma 3.9, supply the fixed finite-$N$ Hermite
+finite-free comparison with real ordered initial data, allowing repeats.
+For $N=3$, initial roots $\beta_i$ and time $\tau=\sigma^2$, their
+probabilist-Hermite normalization identifies
+$e^{-(\sigma^2/2)\partial_z^2}(z^3-3az-b)=C_*(z)$.
+This finite comparison is reused literature, not a theorem for the
+complete $J,G$ pair or its possibly nonreal infinite exterior.
+The complete-source perturbation, joint amplitude and branch-speed
+estimates above supply that restricted application interface.
+
+The arbitrary-multiplicity real-node sign at the larger polynomial
+budget (LC218) is also reused. The application here concerns a fixed
+linear logarithmic $\nu$ budget with complex-node and boundary control.
+At the stronger threshold (LC293), combine this three-core result with
+(LC289)--(LC292) for $q\le2$: there are at most $q$ target nodes, all
+real and simple, and for $1\le q\le3$ the node margin is
+$P_r'S_r>(\widehat H/H)^2v^{q-1}/4$.
+Repeated core roots are allowed subject to $q\le3$, while the total
+selected multiplicity may grow to $C_0L$.
+
+The fixed source constants remain numerically uninstantiated.
+Uniform growing-core estimates for $q\le C_0L$ at $\nu=C_*L$, their
+complex branches and boundary crossings, and discharge of the local
+all-critical premise remain unresolved. No FIB ATOM bridge to these
+signed complete-source estimates is supplied. RH and strict Robin
+for every integer $H>5040$ remain unproved.

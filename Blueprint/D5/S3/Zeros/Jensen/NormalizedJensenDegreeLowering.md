@@ -100,6 +100,18 @@ $$\begin{aligned}\forall b:\mathbb{N}\to\mathbb{R}, \forall d\in\mathbb{N}, 2\le
 
 This is an equality of complex polynomials for every real sequence b. The prime denotes Polynomial.derivative and the circle denotes polynomial composition. Comparing coefficients reduces it to the falling-factorial recurrence, including the top index k=d and all indices beyond d. The degree bound makes both d and d-1 nonzero.
 
+A same-source analytic application uses T_n f with coefficients ((n)_k/n^k) f^(k)(0)/k!, for n nonzero and k from zero through n. For a complex smooth source preserving the real axis, derivative uniqueness identifies these complex jets with the embedded jets of its real restriction. The preceding canonical normalization theorem therefore identifies T_n f with normalizedJensen at that exact jet sequence. This identification does not assert that the fixed theta-density moments above already equal the jets of the actual xi source.
+
+The same coefficient recurrence gives T_n(zf) = t T_n f - (t^2/n)(T_n f)' and (T_n f)' = T_n(f') - (t/n)(T_n(f'))'. The top coefficient cancels in the second identity. Consequently, multiplication by z-a acts by L_a P = (t-a)P - (t^2/n)P'. Applying this exact operator twice extracts f(z) = (z-a_2)(z-a_1) Ahat(z), while source differentiation gives T_n(f') = L_a1 Hhat + L_a2(Hhat + L_a1 Vhat). Here Hhat = T_n Ahat and Vhat = T_n(Ahat'); the second response extracts the source derivative and is distinct from the derivative of the first response.
+
+For the original selection, regroup Q = Qfar Qcore and Ahat = A Qfar, with Qcore(z) = (z-a_1)(z-a_2). The far polynomial may have arbitrary degree and the real roots a_1 and a_2 may coincide, so both multiplicities remain present. The complete original source is f = A Qfar Qcore. Put J = T_n f, G = T_n(f'), H = T_n A and V = T_n(A'). On H nonzero, retain the original responses P = J/H and S = G/H - (V/H)P.
+
+On Hhat nonzero, set v = t^2/n, ell = Hhat'/Hhat, s = Vhat/Hhat, chi = t-v ell and eta = 1-v s'. These are derived from the same extracted source. With m = (a_1+a_2)/2, delta = (a_1-a_2)/2, x = chi-m and U = v chi', the exact core identities are p = x^2-delta^2-U, p' = 2x chi'-U' and w = 2 eta x-v eta'. Thus J = Hhat p and G = Hhat(s p+w).
+
+At a real actual node J(t)=0, assume H and Hhat nonzero, v>0, chi'>1/2, eta>1/2, |U'|<sqrt(v)/8 and |v eta'|<sqrt(v)/8. The node forces x^2 = delta^2+v chi' >= v/2. Both core responses have the sign of x and magnitude greater than 3|x|/4, which gives p'w > x^2/2 >= v/4. The exact original amplitude identity is H^2 P'S = J'G = Hhat^2 p'w, hence P'S > (1/4)(Hhat/H)^2 v. In the complex source application the same real-node product has zero imaginary part and positive real part; the node is simple.
+
+This conditional quadratic-core application uses the existing normalization, iterated derivative product rule, quotient rule and ordered-field estimates. It introduces no independent root-preservation or convolution theorem. Applying it to the actual xi source still requires its analytic factorization and jet correspondence, the local all-critical premise, exterior response estimates and central total multiplicity at most two. It does not establish arbitrary growing-core positivity, all-height exclusion, RH or strict Robin for every integer above 5040.
+
 **Theorem 1.9 (Source and canonical polynomial equality).**
 
 $$\forall d\in\mathbb{N}, 1\leq d\Rightarrow P_{d}=N\left(a, d\right)$$
