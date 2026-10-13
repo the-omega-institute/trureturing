@@ -1934,3 +1934,924 @@ $D_N(0)$ 中非零商、完整终端胞支持和同一归一预算的普遍提�
 (198.33) 的未决义务，不声称普遍成功、完整分类或新的原始 $O$ 概率核。
 
 ## 追加锚（本行以下为增补区）
+## 199. 完整事件锥的有符号替代、零成本闭包与剩余原始比较
+
+本节的锥与商固定 $L\ge3$，定义 199.9 的原始帽切片允许全部活跃长度 $L\ge0$。
+沿用定义 190.1、164.1、165.1 的完整事件行、完整 $N$ 与
+$O$ 目录以及
+$$
+H=H_L=\{b=(b_1,\ldots,b_L;e):1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+\ b_2=b_3,\ (L+1)e\le\sum_{n=3}^Lb_n,\ b_1+\sum_{n=3}^Lb_n-(L+1)e\le1\}.
+$$
+记 $\alpha=(1,1,0,\ldots,0;0)$、$\mathbf r=d(\alpha)$。所有不等式均为闭不等式，
+所有目录均包含空表、单日程、双日程、全部输出标签、多零字、独立 pair 行和全正字行。
+
+完整目录 $\mathcal D_C$ ($C=N,O$) 指所有空、单点和双点终端胞的完整表；事件行总数为
+$3(2^L-1)+1$。对 $w\in\Omega_n$，基行、正确行、独立 pair 行的需求分别为
+$1-b_n-e$、$b_n-e$、$1-e$，全正字 $1^L$ 的基行需求为 $1-e$；负的单点需求和
+多零字均保留。这些行的需求向量记为 $d(b)$，并令 $h(b)=d(b)-\mathbf r$。因而
+$z_D$ 与 $G_C$ 都同时编码全部 Boolean 字、独立 pair TV 行、零权重的行和全正行，
+而不是只编码当前评分的非零坐标。
+
+**定义 199.1（完整事件行、目录矩阵与有符号商）。** 对每个完整表 $D$，令
+$z_D$ 为它在全部事件行上的事件指示向量，并令
+$$
+a_D=z_D-\mathbf r.
+$$
+对 $C\in\{N,O\}$，令 $G_C$ 是列为所有 $a_D$ 的完整矩阵。因锚表 $R$ 在两个完整目录中均有
+$a_R=0$，对任意非负事件评分
+$$
+y=(A_w,C_w,P_w)_{w\ne1^L}\ ,\quad T\ge0
+$$
+定义
+$$
+\beta_n=\sum_{w\in\Omega_n}(C_w-A_w),\qquad
+K_y=\sum_{w\ne1^L}(A_w+C_w+P_w)+T,
+$$
+并置 $Q(y)=(\beta_1,\ldots,\beta_L,K_y)$。对任意有符号对
+$q=(\beta_1,\ldots,\beta_L,K)\in\mathbb R^{L+1}$，置
+$$
+F_q(b)=\sum_{n=1}^L\beta_n(b_n-\alpha_n)-Ke,
+\qquad
+\sigma_H(q)=\max_{b\in H}F_q(b).
+\tag{199.1}
+$$
+于是 $F_{Q(y)}(b)=y\!\cdot h(b)$；简记 $F_y=F_{Q(y)}$。评分 $y$ 和下文的评分
+$V$ 始终逐行非负，而商差 $q-q'$ 可以是任意有符号向量。比如
+$(0,-1,1,0,\ldots,0;0)$ 在 $H$ 上表示常数一，因为 $b_2=b_3$；它不是任何
+非负评分的代表，这不改变有符号商的定义。
+
+**定义 199.2（预算像、有序锥、有限方向和完整证书集）。** 对 $C\in\{N,O\}$ 和
+$t\ge0$，置
+$$
+\Delta_C(y)=\max_{D\in\mathcal D_C}a_D\!\cdot y\ge0,
+\qquad
+D_C(t)=\{Q(y):y\ge0,\ \Delta_C(y)\le t\}.
+\tag{199.2}
+$$
+令
+$$
+P_H=\{q:F_q(b)\le0\ \text{对所有 }b\in H\},
+\qquad q\preceq_Hq'\ \Longleftrightarrow\ q-q'\in P_H,
+\tag{199.3}
+$$
+并记 $\rho_C$ 为定义 166.1 的完整目录锥质量；定义 190.3 定义受限成本并保留这一
+完整成本记号，此处始终使用完整目录。令
+$$
+H_C=\{b\in H:\rho_C(b)<\infty\}.
+$$
+定义完整 $N$ 证书集
+$$
+E_N=\left\{q:\begin{array}{l}
+\exists V\ge0\ \exists\theta\in[0,1],\\
+\Delta_N(V)\le1-\theta\ \text{且}\ \sigma_H(q-Q(V))\le\theta
+\end{array}\right\}.
+\tag{199.4}
+$$
+特别地，当 $\theta=1$ 时允许每一个满足 $V\ge0$、$\Delta_N(V)=0$ 的非零
+$V$；零评分、零预算和 $\theta=0$ 也不被删除。
+
+**定理 199.3（任意有符号商的完整单预算替代）。** 对任意固定
+$q\in\mathbb R^{L+1}$，恰有一项成立：
+
+* (I) $q\in E_N$；
+* (II) 存在 $b\in H$ 以及完整 $N$ 目录上的有限向量
+  $\lambda=(\lambda_D)_{D\in\mathcal D_N}\ge0$，使
+  $$
+  G_N\lambda\ge h(b),\qquad
+  M=\sum_{D\in\mathcal D_N}\lambda_D\ge1,
+  \qquad F_q(b)>M.
+  \tag{199.5}
+  $$
+
+**证明。** 取定理 198.5 给出的 $H$ 的有限顶点表示
+$H=\operatorname{conv}\{v^1,\ldots,v^m\}$，其中 $m=2L-2$。由于 $F_q-F_{Q(V)}$
+关于 $b$ 仿射，(I) 等价于非负变量 $(V,\theta)$ 的有限系统
+$$
+\begin{cases}
+ a_D\!\cdot V+\theta\le1,&D\in\mathcal D_N,\\
+ -h(v^j)\!\cdot V-\theta\le-F_q(v^j),&1\le j\le m,\\
+ V\ge0,\quad\theta\ge0.
+\end{cases}
+\tag{199.6}
+$$
+第一组中 $D=R$ 的列为零，所以它同时给出 $\theta\le1$；闭端点没有被删去。
+
+对形如 $Mx\le d, x\ge0$ 的系统应用等式形 Farkas 替代：系统不可行当且仅当
+存在乘子 $w\ge0$ 使 $M^{\mathsf T}w\ge0$ 且 $d\!\cdot w<0$。这是把非负松弛并入
+有限生成锥后的形式，见 Volker Kaibel, *Basic Polyhedral Theory*,
+[arXiv:1001.2161v1, Theorem 1(ii)](https://arxiv.org/abs/1001.2161)；有限锥闭性
+和点—射线表示亦见该文 Theorems 7、8、10。将目录行乘子记为
+$\lambda_D\ge0$，顶点行乘子记为 $\mu_j\ge0$，不可行性给出
+$$
+G_N\lambda\ge\sum_j\mu_jh(v^j),\qquad
+S:=\sum_D\lambda_D\ge u:=\sum_j\mu_j,\qquad
+\sum_j\mu_jF_q(v^j)>S.
+\tag{199.7}
+$$
+严格不等式迫使 $u>0$；若 $u=0$，则最后一式变成 $0>S\ge0$。置
+$$
+\bar b=\frac1u\sum_j\mu_jv^j\in H,
+\qquad \bar\lambda=\lambda/u,
+\qquad M=\sum_D\bar\lambda_D=S/u.
+$$
+由 $h$ 与 $F_q$ 的仿射性，(199.7) 变为
+$$
+G_N\bar\lambda\ge h(\bar b),\qquad M\ge1,\qquad F_q(\bar b)>M,
+$$
+即 (II)。
+
+反过来若 (I)、(II) 同时成立，则对 (II) 中的 $b,\lambda$，由
+$V\ge0$、$G_N\lambda\ge h(b)$ 及弱对偶性得
+$$
+\begin{aligned}
+F_q(b)&\le F_{Q(V)}(b)+\theta
+       =V\!\cdot h(b)+\theta\\
+&\le V\!\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\\
+&\le M(1-\theta)+\theta\le M,
+\end{aligned}
+$$
+最后一步用 $M\ge1$ 与 $\theta\ge0$。这与 $F_q(b)>M$ 矛盾，故两项互斥；
+Farkas 替代又保证其中一项必有，结论涵盖 $M=1$、$\theta=0,1$ 和所有零权重。取
+$q=Q(y)$ 即得全部非负事件评分的结论；这只是本定理在非负评分像上的特例，不另立
+第二个替代定理。$\square$
+
+**推论 199.4（精确成员判据与原始截断比较）。** 对任意有符号 $q$，
+$$
+q\in E_N
+\quad\Longleftrightarrow\quad
+F_q(b)\le\max\{1,\rho_N(b)\}
+\quad\text{对所有 }b\in H_N.
+\tag{199.8}
+$$
+因而
+$$
+D_O(1)\subseteq E_N
+\quad\Longleftrightarrow\quad
+\rho_O(b)\le\max\{1,\rho_N(b)\}
+\quad\text{对所有 }b\in H_N.
+\tag{199.9}
+$$
+这里的左侧是完整的证书存在性断言，右侧是原始完整目录的 clipped comparison，
+所以 (199.9) 是等价式而不是实际包含性的证明。
+
+**证明。** 若 $q\in E_N$ 且 $b\in H_N$，取达到 $\rho_N(b)$ 的完整配置；若其质量
+小于一，则在零列 $R$ 上补足到质量一。定理 199.3 的互斥性给出
+$F_q(b)\le\max\{1,\rho_N(b)\}$。反之，若该点态界成立而 $q\notin E_N$，
+(II) 给出 $F_q(b)>M\ge1$ 且 $\rho_N(b)\le M$，从而
+$F_q(b)>\max\{1,\rho_N(b)\}$，矛盾。
+
+令 $q=Q(y)$ 并对所有 $y\ge0$、$\Delta_O(y)\le1$ 取上确界。完整目录的
+有限锥对偶（定理 166.2）给出该上确界为 $\rho_O(b)$，包括无穷值，故得到
+(199.9)。饱和约化只能在这个不受限制的线性替代完成以后使用：定理 198.1 的
+输入、输出饱和保持证书的存在性，但此处没有把饱和误作凸约束或加法，也没有由此
+声称 (199.9) 的左侧已经成立。$\square$
+
+**定理 199.5（零成本有序闭包）。** 对 $C=N,O$，有精确恒等式
+$$
+D_C(0)+P_H
+=\{q:F_q(b)\le0\ \text{对所有 }b\in H_C\}.
+\tag{199.10}
+$$
+特别地，
+$$
+D_O(0)\subseteq D_N(0)+P_H
+\quad\Longleftrightarrow\quad H_N\subseteq H_O.
+\tag{199.11}
+$$
+由于 $O$ 是 $N$ 的子类而 $H_O\subseteq H_N$，(199.11) 等价于
+$H_N=H_O$，也等价于
+$D_O(0)+P_H=D_N(0)+P_H$。这里不需要、也不声称
+$D_O(0)=D_N(0)$，更不声称两个原始商集严格不同。
+
+**证明。** 先取 $q=Q(V_0)+p$，其中 $V_0\ge0$、$\Delta_C(V_0)=0$、$p\in P_H$。
+若 $b\in H_C$，取有限配置 $\lambda\ge0$ 使 $G_C\lambda\ge h(b)$，则
+$$
+F_q(b)\le V_0\!\cdot h(b)
+ \le V_0\!\cdot G_C\lambda
+ =\sum_D\lambda_D(a_D\!\cdot V_0)\le0.
+$$
+反向设 $F_q\le0$ 在 $H_C$ 上成立。要求 $V_0\ge0$ 同时满足
+$$
+ a_D\!\cdot V_0\le0\ (D\in\mathcal D_C),
+ \qquad -h(v^j)\!\cdot V_0\le-F_q(v^j)\ (1\le j\le m).
+\tag{199.12}
+$$
+若该系统不可行，应用同一 Farkas 替代，得到 $\lambda_D,\mu_j\ge0$ 且
+$$
+G_C\lambda\ge\sum_j\mu_jh(v^j),\qquad
+\sum_j\mu_jF_q(v^j)>0.
+$$
+此时 $u=\sum_j\mu_j>0$，否则严格式不可能成立。以 $u$ 归一的仿射重心
+$b=\sum_j\mu_jv^j/u$ 属于 $H$，且
+$G_C(\lambda/u)\ge h(b)$、$F_q(b)>0$，所以 $b\in H_C$，与假设矛盾。
+因此 (199.12) 有解；其第一组给 $\Delta_C(V_0)=0$，第二组给
+$q-Q(V_0)\in P_H$，从而得到 (199.10)。
+
+若 (199.11) 左侧成立，任取 $b\in H_N$ 和任意
+$Q(y_0)\in D_O(0)$。由 (199.10) 的 $N$ 侧恒等式，
+$F_{Q(y_0)}(b)\le0$。定理 166.2 证明中以“Cone feasibility is”开头的段落
+对一般 $C$ 给出极性可行性判据：取 $C=O$，上述所有零成本非负评分的不等式
+恰保证存在 $\lambda\ge0$ 使 $G_O\lambda\ge h(b)$，所以
+$\rho_O(b)<\infty$，即 $b\in H_O$。反之若 $H_N\subseteq H_O$，任取
+$q\in D_O(0)$，由 $O$ 侧 (199.10) 得 $F_q\le0$ 在 $H_O$ 上，因而也在
+$H_N$ 上；再用 $N$ 侧 (199.10) 得 $q\in D_N(0)+P_H$。这证明 (199.11) 及其等价形式。
+$\square$
+
+**定理 199.6（闭多面体的衰退锥与零成本吸收）。** 对 $t\ge0$ 及
+$C=N,O$，
+$$
+\operatorname{rec}D_C(t)=D_C(0),
+\tag{199.13}
+$$
+并且
+$$
+\operatorname{rec}E_N=D_N(0)+P_H.
+\tag{199.14}
+$$
+因此对 $q_0\in D_O(0)$，射线
+$\{s q_0:s\ge0\}$ 全部属于 $E_N$ 当且仅当存在
+$V_0\ge0$ 使 $\Delta_N(V_0)=0$ 且
+$q_0-Q(V_0)\in P_H$。若 $Q(y)$ 已由 $(V,\theta)$ 证实，且
+$Q(y_0)=q_0$ 有上述零成本提升，则对任意 $s\ge0$，同一 $\theta$ 由
+$V+sV_0$ 证实 $Q(y+s y_0)$。
+
+**证明。** 评分多面体
+$$
+Y_C(t)=\{y\ge0:a_D\!\cdot y\le t\ (D\in\mathcal D_C)\}
+$$
+非空，其衰退系统为 $Y_C(0)$。有限维多面体的线性像仍为闭多面体，且
+$\operatorname{rec}(Q(Y_C(t)))=Q(\operatorname{rec}Y_C(t))$；这是 Kaibel
+上述文献 Theorems 7、8、10 的有限锥表示的直接应用，故得 (199.13)。
+
+把 $E_N$ 写成变量 $(q,V,\theta)$ 的有限投影：$V\ge0$、
+$a_D\!\cdot V+\theta\le1$、$0\le\theta\le1$ 以及
+$F_{q-Q(V)}(v^j)\le\theta$。衰退方向的 $\theta$ 分量必须为零，且
+$V_0\ge0$、$a_D\!\cdot V_0\le0$，并满足
+$F_{q_0-Q(V_0)}(v^j)\le0$。故其 $q$ 投影正是
+$D_N(0)+P_H$；反向将任意这两个分量代入上述齐次系统即得 (199.14)。
+
+$0\in E_N$，取 $V=0,\theta=0$ 即可。对闭凸集，零点出发的整条射线在该集内当且仅当其方向属于衰退锥：必要性可由任意
+$z\in E_N$、$t\ge0$ 和
+$(1-\varepsilon)z+\varepsilon(t/\varepsilon)q_0\in E_N$，令
+$\varepsilon\downarrow0$ 并用闭性得到 $z+tq_0\in E_N$。于是射线判据由
+(199.14) 得出。
+
+最后，若 $Q(y)$ 有 $(V,\theta)$ 证书，则
+$$
+\Delta_N(V+sV_0)\le\Delta_N(V)+s\Delta_N(V_0)\le1-\theta,
+$$
+且对每个 $b\in H$，
+$$
+F_{Q(y+s y_0)-Q(V+sV_0)}(b)
+=F_{Q(y)-Q(V)}(b)+sF_{q_0-Q(V_0)}(b)\le\theta.
+\tag{199.15}
+$$
+这里用的是已建立的零成本增量；没有把任意 $O$ 评分的预算误拆成各分量预算，
+也没有由零衰退控制推出正预算结论。$\square$
+
+**命题 199.7（完整证书失败产生有限概率见证）。** 设 $y\ge0$、
+$\Delta_O(y)\le1$ 且 $Q(y)\notin E_N$。则存在 $b\in H$、完整 $N$ 配置
+$\lambda\ge0$ 及 $M=\sum_D\lambda_D\ge1$，令
+$$
+x=(1-M^{-1})\alpha+M^{-1}b,
+$$
+则 $x\in Q_L$，配置 $\lambda/M$ 是质量一的完整 $N$ 概率向量，并且
+$$
+G_N(\lambda/M)\ge h(x),
+\qquad y\!\cdot d(x)>y\!\cdot\mathbf r+1\ge
+ y\!\cdot\mathbf r+\Delta_O(y).
+\tag{199.16}
+$$
+所以所有完整 $O$ 概率配置都被同一评分的严格 support gap 排除。
+
+**证明。** 由定理 199.3 的 (II) 取 $b,\lambda,M$。凸性给
+$x\in Q_L$，且
+$$
+\mathbf r+M^{-1}G_N\lambda\ge
+\mathbf r+M^{-1}h(b)=d(x).
+$$
+因为 $F_y(b)>M$，
+$$
+ y\!\cdot d(x)=y\!\cdot\mathbf r+M^{-1}F_y(b)
+ >y\!\cdot\mathbf r+1
+ \ge y\!\cdot\mathbf r+\Delta_O(y).
+$$
+右端是完整 $O$ 目录在评分 $y$ 下的最大值，故严格支撑间隔排除了任意完整
+$O$ 概率配置。若 $x$ 位于辅助零容量或非活跃坐标边界，沿用定理 168.1 的
+正闭帽平台和定理 110.2 的原始运输；该平台的每个活跃幅严格高于正帽，证明不需要
+所有确定表有正质量，也不需要所有事件行严格松弛。内部方向的定量间隔沿用定理
+169.2。此命题是由证书失败推出见证的条件命题，不反向声称存在失败评分。$\square$
+
+**定理 199.8（按目录实现的共同种子与原始边界）。** 保留定义 110.1 的实际源
+$$
+X=\{(r,g):r\text{ 为素数},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},
+\qquad N(r,g)=1+F_rg,
+$$
+以及静态素数回答、实际有限首缺 $n(x)$ 和每个有限布尔字的实际源见证。纸带仍为
+完整不交并 Borel 载体 $\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$，
+标记仍为 $\theta_j=(B_1,1/(j+2))$；原消费者在同一源和交付的原纸带上运行，
+原非原子目标不变。另行选定的标记律为
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad 1\ge a_1\ge a_2\ge\cdots>0,\quad a_i\to0.
+\tag{199.17}
+$$
+对每个 $C\in\{N,O\}$，任取完整目录 $\mathcal D_C$ 上的概率向量
+$w=(w_D)_{D\in\mathcal D_C}$，其中 $w_D\ge0$、$\sum_Dw_D=1$。用一个
+来源无关的 $U\sim\operatorname{Unif}[0,1)$，在回答前选定整张表及全部终端标签：
+$\mathcal D_N$ 上的混合实现原始 $\mathcal N_2$ 规则，取得预选日程的全部回答；
+$\mathcal D_O$ 上的混合实现原始 $\mathcal O_2$ 规则，在递增日程的首个实际查询零
+或耗尽时停止。对后一规则，按命题 90.2 取得全部预选回答并忽略首零之后的回答，
+得到保持每个源的输出律及同一个 $U$ 的 $\mathcal N_2$ 补全；额外取得而忽略的
+实际请求仍全部计数。
+
+这些实现零建议、有限交接，硬预算为至多两次实际请求，重复请求也计数。完整目录
+按定义 164.2 用静态回答消去重复并规范日程，只用于表示律，不断言平均次数不变。
+原始竞争者仍可使用任意地址、重复请求（在 $\mathcal N_2$ 中）和完整载体输出；
+不加入源律、源标签、$N(x)$、首缺值、额外观察、第二种子、运行时间界或地址界。
+
+乘子有两个不同的指标域：$\mu_j/u$ 对辅助顶点 $v^j\in H_L$ 取重心；
+命题 199.7 的 $w_D=\lambda_D/M$ 对完整 $N$ 表取概率混合。在式 (199.7) 的
+未归一乘子记号下，后一个操作为
+$$
+\bar b=\sum_j\frac{\mu_j}{u}v^j,\qquad
+w_D=\frac{\bar\lambda_D}{M}
+    =\frac{\lambda_D/u}{S/u}=\frac{\lambda_D}{S},
+\qquad u=\sum_j\mu_j>0,\quad S=\sum_D\lambda_D\ge u.
+$$
+命题 199.7 将 $\bar\lambda$ 重新记为 $\lambda$。将式 (199.7) 的全部乘子同时
+乘以任一正数，两个归一操作都不变；它们均不是对实际源取平均。
+
+表混合的实现本身不蕴含帽可行性。若它还满足完整向量不等式 $Z_Cw\ge d(x)$，
+才得到该有限剖面的全部闭帽行；所有布尔字、多零字、每个独立 pair TV 行和全正行
+均在其中，评分为零的行也不删除。在正帽及其实际活跃长度上，由定理 110.2
+得到同类原始规则的闭帽可行性，并保留任意地址、完整载体竞争者的必要方向。
+因此命题 199.7 的配置只供应 $N$ 实现；对 $O$ 的排除仍由完整 $O$ 支撑间隔及
+定理 168.1、110.2 给出。
+
+对任意有限标记核及实际首零 $n>L$，精确尾误差仍为
+$$
+\max\{1-p_{1^L}(0),a_n\}.
+\tag{199.18}
+$$
+凡 $p_{1^L}(0)\ge1-\varepsilon$ 且 $a_n\le\varepsilon$，上式即不超过
+$\varepsilon$，包括 $a_n=\varepsilon$。全正有限字只记录实际尾部，不是无限全正源。
+在归一概率向量核上，式 (108.4) 给出标量
+$\beta=\mathfrak m(H)$，故 $c\ge H$ 自动蕴含 $\beta\le1$；定理 109.1
+保留这两个条件。这里的 $H$ 是系数向量，$\mathfrak m$ 对输出标签求和；
+该无下标调度总质量 $\beta$ 不同于定义 199.1 的有符号商坐标 $\beta_n$。
+定理 170.1 对整个实际幅序列使用同一正径向因子，每个幅仍在原标记上，保持
+正性、单调性、趋零性、实际活跃长度以及相应缩放后的精确闭帽。辅助 $e=0$ 点
+不是原始正尾实现者；边界运输仍仅使用定理 168.1 和 110.2。
+
+**证明。** 对所选类别的全部表排序为 $D_1,\ldots,D_k$，将 $[0,1)$ 划为
+$$
+I_{D_i}=\left[\sum_{j<i}w_{D_j},\ \sum_{j\le i}w_{D_j}\right),
+\qquad 1\le i\le k.
+$$
+这些区间长度均按完整表指标 $D$ 归一，零质量区间为空。在 $U\in I_D$ 时选表
+$D$；此选择与实际源无关且先于回答。$N$ 表在双日程上有 $00,01,10,11$ 四胞，
+$O$ 表有 $0,10,11$ 三胞；分别按各自转录输出，便实现相应类别的混合核。
+有限日程和静态回答保证有限交接。补全 $O$ 表时，将其首零标签同时赋给 $N$ 表的
+$00,01$ 胞，沿用原区间及原 $U$，故逐源、逐种子输出相同，新增忽略请求照计。
+
+反向不能由种子划分推出：对固定双日程及固定种子，停止于第一查询零后，$00$ 与
+$01$ 是同一可观察胞；在它们上取不同标签的 $N$ 表不是这个停止转录的可测函数。
+这一区别适用于定义 164.2 的全部完整表。定理 112.2 进一步给出实际帽可行核
+$p^N\notin\mathscr C_L$，其三个字的事件概率 $0,\gamma,0$ 违反式 (112.1)，
+而另一核 $p^P$ 属于同一帽切片与 $\mathscr C_L$ 的交。因此此处没有任意
+$N$ 律到 $O$ 律的同律运输。
+
+顶点重心与表概率分别由 $\sum_j\mu_j/u=1$ 和 $\sum_D\lambda_D/M=1$
+归一；后式使用命题 199.7 的配置记号。两者的指标不同，也都不在 $X$ 上选源。
+若 $Z_Cw\ge d(x)$，每行事件概率恰为同一表混合的对应坐标，故全部闭帽行同时成立。
+式 (199.18) 是定理 110.2 的实际尾标记与有限标记律的精确全变差式 (110.9)，
+其必要方向继续覆盖任意地址与任意原纸带。式 (108.4) 的归一恒等式和定理 170.1
+的整序列径向恒等式分别给出标量预算与全部正尾的保持。$\square$
+
+**定义 199.9（原始比较的未决精确命题）。** 任取满足
+$1\ge a_1\ge a_2\ge\cdots>0$、$a_i\to0$ 的整个原始幅序列以及
+$0<\varepsilon\le1$，实际活跃长度为
+$$
+L=\max\bigl(\{i:a_i>\varepsilon\}\cup\{0\}\bigr).
+$$
+令 $B_L=\{0,1\}^L$、$J_L=\{0,\ldots,L\}$，共同核载体为
+$$
+\mathscr P_L=\prod_{w\in B_L}\Delta(J_L),\qquad
+\Delta(J_L)=\left\{v\in\mathbb R_{\ge0}^{J_L}:\sum_{r\in J_L}v(r)=1\right\}.
+$$
+沿用定义 108.1 的 $\mathscr N_L\subseteq\mathscr P_L$，$e_r$ 为标签 $r$ 的单位
+概率向量。对含零字置
+$n_L(w)=\min\{i\le L:w_i=0\}$，并置
+$$
+\eta_w=(1-a_{n_L(w)})e_0+a_{n_L(w)}e_{n_L(w)}\quad(w\ne1^L),
+\qquad \eta_{1^L}=e_0.
+$$
+定义 110.1 的式 (110.5) 所给的帽可行核切片是
+$$
+\mathcal F_N(a,\varepsilon)
+=\{p\in\mathscr N_L:\operatorname{TV}(p_w,\eta_w)\le\varepsilon
+                       \text{ 对每个 }w\in B_L\}.
+$$
+这些是式 (110.6) 的全部闭帽行，包括独立 pair 行和全正行。由于实际 $L$ 的
+定义，所有 $n>L$ 都满足 $a_n\le\varepsilon$，故尾部使用式 (199.18)。
+
+在同一归一核载体上，沿用定义 108.2 的唯一多线性系数，正部与向量不等式均逐坐标
+解释。对次数至多二的核写
+$$
+p_w=c+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j,
+\qquad
+V_i=\sum_{j>i}(-Q_{ij})_+,\quad h_i=(V_i-\ell_i)_+,
+$$
+并记系数向量 $H(p)=\sum_i h_i$ 和无下标标量
+$$
+\beta(p)=\sum_i\max\{\mathfrak m(V_i),\mathfrak m(h_i)\},
+\qquad \mathfrak m(v)=\sum_{r\in J_L}v(r)\quad(v\ge0).
+$$
+此处 $H(p)$ 不同于辅助剖面域 $H_L$。系数定义的停止核类为
+$$
+\mathscr C_L
+=\{p\in\mathscr P_L:\deg p\le2,\ c\ge H(p),\ \beta(p)\le1\}
+=\mathscr O_L\subseteq\mathscr N_L,
+$$
+最后的等式由定理 109.1 给出。核归一使
+$\mathfrak m(h_i)\ge\mathfrak m(V_i)$，所以式 (108.4) 给出
+$\beta(p)=\mathfrak m(H(p))\le\mathfrak m(c)=1$，其中最后一步使用
+$c\ge H(p)$。$\mathscr C_L$ 的条件独立于所选帽，不能用帽行替代。
+
+原始比较要求对上述每个整个序列及每个正闭帽成立
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\tag{199.19}
+$$
+由定理 110.2，后件恰为原始 $\mathcal O_2$ 帽可行性；其中的核可以不同于前件
+所给的任何核，不要求保留其律。定理 112.2 的 $p^N$ 仍在帽切片内而不在
+$\mathscr C_L$ 内，$p^P$ 则见证其交非空。
+
+这些核定义包含 $L=0,1,2$，空和按零计；$\varepsilon=1$ 时 $L=0$，即刻基点
+输出可行，更大的帽也由同一规则处理。小活跃长度及既有残差充分范围沿用
+定义 110.3 与定理 168.1 所列供应者。对其余范围，定理 110.2、167.2 和 168.1
+把普遍的式 (199.19) 等价地化为完整有限方向命题
+$$
+\forall L\ge3\ \forall b\in H_L,\qquad
+\rho_N(b)<\infty\ \Longrightarrow
+\rho_O(b)\le\max\{1,\rho_N(b)\}.
+\tag{199.20}
+$$
+其中 $H_L$ 的零帽或非活跃坐标边界属于辅助闭域；定理 168.1 将该闭域中的失败
+运输到正帽、实际活跃长度及所有允许的正单调趋零尾部，不把边界本身当作原始实现。
+由推论 199.4，式 (199.20) 又等价于每个 $L\ge3$ 的完整包含
+$D_O(1)\subseteq E_N$。式 (199.19)—(199.20) 仍为未决命题；零成本有序包含的
+等价刻画和条件性的证书失败推论均不判定这一正预算包含。
+
+## 追加锚（本行以下为增补区）
+
+## 200. 较早零守卫的加权缺陷与完整证书的实际切片
+
+本节保留[定义 110.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)的实际可数带标签来源：
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ 为素数},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\}.
+\end{aligned}
+$$
+
+这里 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$，$p_i$ 是递增的素数序列；回答静态，
+每个有限回答字都有实际来源见证，实际 $n(x)$ 总有限。完整可测纸带载体、原标记
+$\theta_j$、消费者和非原子原目标 $\mu_x$ 不变。所讨论的目标是另行选定的
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_i\longrightarrow0.
+$$
+
+资源严格采用[获取资源定义 90.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions)：
+零建议，一个与来源无关的共同种子，实际源上几乎处处有限交接，至多两次实际请求，
+包括重复请求及取得后忽略的请求。$N_2$ 预选日程并取得全部回答；$O_2$ 预选严格
+递增日程并在首个被查询的零或耗尽时停止。竞争者可用任意地址和完整载体内任意输出；
+误差是所有实际来源上的 TV 上确界，不引入来源概率律。辅助有限剖面的零帽和零幅
+仅用于以下几何，原始幅序列仍严格正且趋零。
+
+**定义 200.1（完整评分、带符号支持与证书域）。** 固定任意整数 $L\ge3$，令
+$B_L=\{0,1\}^L$、$J_L=\{0,\ldots,L\}$，对每个含零字记
+$n(w)=\min\{i:w_i=0\}$、$\Omega_n=\{w:n(w)=n\}$。
+沿用[定义 164.1—164.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#164-complete-deterministic-catalogs-and-event-demands)的完整目录
+$\mathcal D_N,\mathcal D_O$：空日程、单日程 $(i)$ 和双日程 $(i,j)$，$i<j$，
+每个终端胞允许全部 $J_L$ 标签。$N$ 的双日程胞是 $00,01,10,11$，$O$ 的胞是
+$0,10,11$，其中首胞合并 $00,01$。静态回答允许用这些代表描述重复或反序日程的
+输出函数，不把原执行中重复的实际请求免计。
+
+对每个 $w\in\Omega_n$ 保留基行 $\{0\}$、正确行 $\{n\}$ 和独立 pair 行
+$\{0,n\}$，在剖面 $b=(b_1,\ldots,b_L;e)$ 上的需求分别为
+
+$$
+1-b_n-e,\qquad b_n-e,\qquad1-e.
+\tag{200.1}
+$$
+
+全正字 $1^L$ 的基行需求为 $1-e$。这些共 $3(2^L-1)+1$ 行组成 $d(b)$；
+负的单点需求也原样保留。所有多零字都在系统中，任何评分的零权重不删除对应约束。
+令 $z_D$ 为完整表的联合事件向量；对共同概率混合 $U$，$z_U$ 是同一混合在全部
+事件行上的概率向量。置
+
+$$
+R=(1,2;1,2,0),\qquad \alpha=(1,1,0,\ldots,0;0),\qquad
+\mathbf r=z_R=d(\alpha),\qquad h(b)=d(b)-\mathbf r.
+$$
+
+$R$ 的三个标签依次对应停止胞 $0,10,11$。令 $G_C$ 的列为全部
+$z_D-\mathbf r$，$D\in\mathcal D_C$。取任意逐行非负评分
+$y=((A_w,C_w,P_w)_{w\ne1^L},T)$，其中正确权重 $C_w$ 和正字权重 $T$ 均任意。
+定义
+
+$$
+\begin{aligned}
+B_C(y)&=\max_{D\in\mathcal D_C}y\cdot z_D,&
+\Delta_C(y)&=B_C(y)-y\cdot\mathbf r\ge0\quad(C=N,O),\\
+\beta_n(y)&=\sum_{w\in\Omega_n}(C_w-A_w),&
+K_y&=\sum_{w\ne1^L}(A_w+C_w+P_w)+T,\\
+Q(y)&=(\beta_1(y),\ldots,\beta_L(y);K_y).&&
+\end{aligned}
+\tag{200.2}
+$$
+
+非负性来自两个目录都含 $R$。对任意有符号 $q=(\beta_1,\ldots,\beta_L;K)$，令
+
+$$
+F_q(b)=\sum_{n=1}^L\beta_n(b_n-\alpha_n)-Ke,
+\qquad F_y=F_{Q(y)}=y\cdot h.
+\tag{200.3}
+$$
+
+定义 199.1—199.2 的完整闭域及证书记为
+
+$$
+\begin{aligned}
+H=H_L=\{b:\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{n=3}^Lb_n,\quad
+ b_1+\sum_{n=3}^Lb_n-(L+1)e\le1\},\\
+\sigma_H(q)&=\max_{b\in H}F_q(b),\qquad
+P_H=\{q:\sigma_H(q)\le0\},\\
+D_C(t)&=\{Q(V):V\ge0,\ \Delta_C(V)\le t\}\quad(t\ge0),\\
+E_N&=\{q:\exists V\ge0\ \exists\theta\in[0,1],\
+\Delta_N(V)\le1-\theta,\ \sigma_H(q-Q(V))\le\theta\}.
+\end{aligned}
+\tag{200.4}
+$$
+
+$D_C(t)$ 是评分的商像，不是评分集合。$V$ 必须逐行非负，而残差
+$F_{Q(y)-Q(V)}$ 允许全部符号；$\theta=1$ 时仍允许非零的 $\Delta_N(V)=0$ 评分。
+以下使用定理 198.5 的完整顶点表示
+
+$$
+\begin{aligned}
+H&=\operatorname{conv}\{o,p,u_k,v_k:3\le k\le L\},\\
+o&=(0,\ldots,0;0),\qquad p=(1,0,\ldots,0;0),\\
+u_k&=(\underbrace{c_k,\ldots,c_k}_{k},0,\ldots,0;0),
+       \qquad c_k=\frac1{k-1},\\
+v_k&=(\underbrace{1,\ldots,1}_{k},
+       \underbrace{e_k,\ldots,e_k}_{L-k};e_k),
+       \qquad e_k=\frac{k-2}{k+1}.
+\end{aligned}
+\tag{200.5}
+$$
+
+具体地，对任意有符号 $q$，记 $B=\beta_1+\beta_2$、$S_k=\sum_{n=1}^k\beta_n$、
+$\kappa=K-S_L$，则其支持是全部下列值的最大值：
+
+$$
+F_q(o)=-B,\quad F_q(p)=-\beta_2,\quad
+F_q(u_k)=\frac{S_k}{k-1}-B,\quad
+F_q(v_k)=\frac{3S_k-(k-2)\kappa}{k+1}-B.
+\tag{200.6}
+$$
+
+这里不删去 $o,p$ 或任何一个 $u_k,v_k$，也不对带符号商加非负条件。
+
+**定义 200.2（较早零守卫及代表相关的冲突量）。** 写 $x_w=A_w+P_w$。
+对 $3\le j\le L$、$1\le i<j$ 定义
+
+$$
+\begin{aligned}
+\kappa_j(i;y)&=\sum_{\substack{w\ne1^L:\ n(w)<j,\ w_j=0,\ w_i=1}}x_w,\\
+c_j(y)&=\min_{1\le i<j}\kappa_j(i;y),\\
+\Gamma_k(y)&=\frac1{k-1}\sum_{j=3}^kc_j(y),\qquad
+\Gamma(y)=\max_{3\le k\le L}\Gamma_k(y).
+\end{aligned}
+\tag{200.7}
+$$
+
+这些是有限非负和与达到的有限最小值。每个 $j$ 选一个最小化地址 $i_j<j$，
+选择只依赖固定的整个评分，在任何来源回答之前完成。令
+
+$$
+J_{i,j}=(i,j;0,j,0),\qquad
+U_k=\frac1{k-1}\left(R+\sum_{j=3}^kJ_{i_j,j}\right).
+\tag{200.8}
+$$
+
+$J_{i,j}$ 先查询 $i$，零时输出 $0$；正时查询 $j$，在零时输出 $j$，否则输出 $0$。
+它属于定义 190.2 的 $S_O$，从而属于完整 $\mathcal D_O$。
+$U_k$ 是 $k-1$ 个完整停止表的等权概率混合；这些表不连续执行。
+$\Gamma$ 依赖评分代表 $y$，不定义为仅依赖 $Q(y)$ 的函数。
+这里的最小化只比较所显示的各 $j$ 独立选守卫的混合族，不是完整 $O$ 类的最优性断言。
+
+**引理 200.3（全部字上的概率与精确加权缺陷）。** 对任意所选守卫、任意
+$3\le k\le L$ 和首零 $n=n(w)\le k$ 的字，令
+
+$$
+m_k(w)=\#\{j:3\le j\le k,\ n<j,\ w_{i_j}=1,\ w_j=0\}.
+$$
+
+则 $U_k(w)$ 的全部非零概率为
+
+$$
+\begin{aligned}
+U_k(w)(n)&=c_k,\\
+U_k(w)(j)&=c_k\mathbf1_{\{w_{i_j}=1,\ w_j=0\}}
+       &&(3\le j\le k,\ j>n),\\
+U_k(w)(0)&=1-c_k(1+m_k(w)),\\
+U_k(w)(\{0,n\})&=1-c_km_k(w),
+\end{aligned}
+\tag{200.9}
+$$
+
+其余正标签的质量为零。对首零 $n>k$ 的每个字以及 $1^L$，$U_k(w)=\delta_0$。
+因此，使用最小化守卫时，联合事件向量满足精确恒等式
+
+$$
+y\cdot\bigl(d(u_k)-z_{U_k}\bigr)
+ =c_k\sum_{\substack{w\ne1^L:\ n(w)\le k}}x_wm_k(w)
+ =\frac1{k-1}\sum_{j=3}^k\kappa_j(i_j;y)
+ =\Gamma_k(y).
+\tag{200.10}
+$$
+
+**证明。** 当 $n=1,2$ 时，恰由 $R$ 输出正确标签 $n$；当 $3\le n\le k$ 时，
+$R$ 输出 $0$，且 $i_n<n$ 保证 $J_{i_n,n}$ 先收到一再收到零，恰输出 $n$。
+所有 $j<n$ 的守卫表都收到两个正回答并输出 $0$。每个 $j>n$ 的守卫表恰在
+$w_{i_j}=1,w_j=0$ 时输出错误标签 $j$，其余情形输出 $0$。于是正确标签由一个表
+贡献，错误正标签由所计的 $m_k(w)$ 个表各贡献一次；表数为 $k-1$，故得到
+(200.9)，所有概率非负且总和为一。若 $n>k$ 或 $w=1^L$，所有被查询位都为正，
+每个表都输出 $0$。这覆盖任意多个后继零，并未把同一首零类缩为单一字。
+
+在 $u_k$，当 $n\le k$ 时，基、正确、pair 三行的需求为 $1-c_k,c_k,1$。
+由 (200.9)，需求减事件概率依次为
+
+$$
+c_km_k(w),\qquad0,\qquad c_km_k(w).
+\tag{200.11}
+$$
+
+当 $n>k$ 时三行需求为 $1,0,1$，全正字的需求为 $1$，都恰好达到。
+故正确行和正字行虽有任意 $C_w,T$，在该缺陷恒等式中贡献零；基与 pair 权重
+则以 $x_w$ 相加。交换有限求和得 (200.10)。对非最小化守卫，同一公式的倒数
+第二项仍成立。各 $j$ 的选择独立，任何选择都逐项不小于 $c_j(y)$，而同时取
+最小化地址便同时最小化每个 $k$ 的加权缺陷及它们的最大值。该结论仅属于
+(200.8) 的混合族。$\square$
+
+$U_k$ 是供支持计算使用、带有上述公式所列缺陷的归一合法 $O$ 概率见证；
+它不是一个零帽可行实现者。即使 $\Gamma(y)=0$，也只保证被该评分计权的总缺陷
+为零，不能删除零权重行上的缺陷或宣称 $z_{U_k}\ge d(u_k)$。
+
+**定理 200.4（完整目录的加权守卫界）。** 对每个 $L\ge3$ 和全部非负评分
+$y=((A_w,C_w,P_w),T)$，令 $\delta=\Delta_O(y)$。则
+
+$$
+\sigma_H(Q(y))\le\delta+\Gamma(y).
+\tag{200.12}
+$$
+
+不要求饱和评分、共同马尔可夫表示或任何分量预算；$B_O$ 始终取完整目录的支持。
+
+**证明。** $z_{U_k}$ 是完整 $O$ 表事件向量的概率混合，所以
+$y\cdot z_{U_k}\le B_O(y)$。结合 (200.10)，
+
+$$
+F_y(u_k)=y\cdot(d(u_k)-z_{U_k})+y\cdot z_{U_k}-y\cdot\mathbf r
+       \le\Gamma_k(y)+\delta.
+\tag{200.13}
+$$
+
+其余顶点可用既有合法概率核控制。$o$ 由空日程立即输出 $0$ 恰好实现；$p$ 由
+查询地址 $1$、零时输出 $1$、正时输出 $0$ 恰好实现。故 $F_y(o),F_y(p)\le\delta$。
+对 $v_k$，用[定理 87.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#87-unit-leading-plateaus-and-unbounded-address-to-count-ratios)的子集核 $P_{k,2}$：
+在有序标签集 $\{1,\ldots,k,\infty\}$ 中均匀选三个标签，查询前两个最小数值标签，
+遇零时输出该数值标签，否则耗尽后输出第三标签；$\infty$ 解释为 $0$，从不查询。
+这是一族完整的递增停止表，其全行计算也用于
+[定理 168.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#168-closed-auxiliary-boundaries-and-the-original-positive-domain)。
+
+记 $s_k=3/(k+1)=1-e_k$。若 $n\le k$，恰在所选三元子集包含 $n$ 时输出 $n$，
+概率为 $s_k$，不依赖其后的零模式。因此正确行达到需求 $1-e_k$，pair 概率至少
+$s_k$，基概率至少零，满足其可能为负的需求 $-e_k$。若 $n>k$，所有所选数值位
+均为正，输出 $0$ 的概率为 $s_k$，输出 $n$ 的概率为零；此时需求分别为
+
+$$
+1-2e_k,\qquad0,\qquad1-e_k,
+\tag{200.14}
+$$
+
+故基行有余量 $e_k$，正确与 pair 行恰好达到。全正字的基需求是 $1-e_k$，
+同样恰好达到，不能将其与 (200.14) 的基需求混同。由 $y\ge0$ 可得
+$y\cdot d(v_k)\le y\cdot z_{P_{k,2}}\le B_O(y)$，于是 $F_y(v_k)\le\delta$。
+最后 $F_y$ 关于 $b$ 仿射，(200.5) 的全部顶点已受控，取最大值得 (200.12)。
+这只使用合法核给完整支持作下界，不把支持换成受限目录的值。$\square$
+
+**定理 200.5（零冲突的精确支持判据）。** 对每个 $3\le j\le L$，令
+
+$$
+W_j(y)=\{w:n(w)<j,\ w_j=0,\ A_w+P_w>0\},\qquad
+Z_{<j}(w)=\{i<j:w_i=0\}.
+$$
+
+空族的交集约定为 $\{1,\ldots,j-1\}$。则
+
+$$
+\Gamma(y)=0
+\quad\Longleftrightarrow\quad
+\bigcap_{w\in W_j(y)}Z_{<j}(w)\ne\varnothing
+\quad\text{对每个 }3\le j\le L.
+\tag{200.15}
+$$
+
+**证明。** 因为 $\kappa_j(i;y)$ 是非负有限和，它为零恰好表示每个
+$w\in W_j(y)$ 都有 $w_i=0$。所以 $c_j(y)=0$ 等价于该交集非空。
+所有 $c_j\ge0$ 且 $\Gamma_L$ 包含每个 $c_j$，故 $\Gamma=0$ 等价于所有
+$c_j=0$，得到 (200.15)。$\square$
+
+例如，若全部正基权重和 pair 权重只支持于一个首零类 $\Omega_n$，则每个非空
+$W_j$ 有 $j>n$，可取共同守卫 $i_j=n$。若这些权重支持的每个字的零位置构成一个
+连续区间，则每个 $W_j$ 中的字在 $j-1$ 处均为零，可取 $i_j=j-1$。
+更一般地，不同 $j$ 可有不同的共同较早零地址。这些情形均允许全部正确权重
+$C_w$ 和 $T$ 任意，并保留所有未计权行。定理 198.1 的饱和操作保持
+$A_w+P_w$ 及全部表奖励与锚不变，因而保持 $\kappa_j,c_j,\Gamma,\delta$；
+本判据本身无需先作饱和。
+
+**推论 200.6（实际的零评分证书切片）。** 有如下完整商像的包含：
+
+$$
+\{Q(y):y\ge0,\ \Delta_O(y)+\Gamma(y)\le1\}\subseteq E_N.
+\tag{200.16}
+$$
+
+其明确证书为 $V=0$、$\theta=\Delta_O(y)+\Gamma(y)$。特别地，
+
+$$
+\{Q(y):y\ge0,\ \Delta_O(y)=0,\ \Gamma(y)=0\}
+ \subseteq P_H\subseteq D_N(0)+P_H.
+\tag{200.17}
+$$
+
+若 $\Gamma(y)=0$ 且 $\Delta_O(y)\le1$，可取 $V=0$、$\theta=\Delta_O(y)$。
+
+**证明。** $\delta,\Gamma\ge0$，故 (200.16) 的假设给 $0\le\theta\le1$。
+$V=0$ 满足 $V\ge0$、$\Delta_N(V)=0\le1-\theta$，而定理 200.4 给
+
+$$
+F_{Q(y)-Q(V)}(b)=F_y(b)\le\theta\qquad(b\in H).
+$$
+
+这正是定义 199.2 的完整证书。若 $\delta=\Gamma=0$，则 $Q(y)\in P_H$；
+又 $Q(0)\in D_N(0)$，故得到 (200.17)。所有选择都达到，论证包含零权重和
+$\theta=0,1$ 的闭端点。这里给出的 $V=0$ 只是一类证书，未缩减 $E_N$：在
+$\theta=1$，完整定义依然允许所有非零零成本 $N$ 评分。$\square$
+
+**命题 200.7（真正失败必须具有的守卫冲突）。** 以下均使用完整目录评分。
+
+1. 若 $y\ge0$、$\Delta_O(y)=0$ 且 $Q(y)\notin D_N(0)+P_H$，则存在
+   $3\le j\le L$ 使 $c_j(y)>0$。
+2. 若 $y\ge0$、$\delta=\Delta_O(y)\le1$ 且 $Q(y)\notin E_N$，则对定理
+   199.3 给出的任意 $b\in H$、完整 $N$ 配置 $\lambda\ge0$ 和质量
+   $M=\sum_D\lambda_D\ge1$，其中 $G_N\lambda\ge h(b)$、$F_y(b)>M$，有
+   $$
+   \Gamma(y)>M-\delta\ge1-\delta.
+   \tag{200.18}
+   $$
+3. 在[定义 165.1 与定理 165.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#165-a-unique-radial-direction-away-from-the-first-two-prefix)的闭域
+   $Q_L$ 内，设 $x=(1-t)\alpha+tb$，$b\in H$、$0<t\le1$，且某非负评分的
+   完整停止支持间隔 $g_{\rm sep}=y\cdot d(x)-B_O(y)>0$。则
+   $$
+   g_{\rm sep}=tF_y(b)-\delta
+      \le t\Gamma(y)-(1-t)\delta,\qquad
+   \Gamma(y)\ge\frac{g_{\rm sep}+(1-t)\delta}{t}>0.
+   \tag{200.19}
+   $$
+
+**证明。** 第一项是 (200.17) 的逆否命题。第二项将
+$M<F_y(b)\le\delta+\Gamma(y)$ 移项即可；所用 $b,\lambda,M$ 的存在性来自
+定理 199.3，不在此假定存在一个实际失败评分。第三项由
+$d(x)-\mathbf r=t(d(b)-\mathbf r)$ 和定理 200.4 直接得到 (200.19)。
+该计算只对所显示的 $Q_L$ 径向表示使用，$t=0$ 不作除法。
+
+上述每一种失败都强制 $\Gamma(y)>0$，从而某个 $c_j(y)>0$。这等价于：对每个
+候选较早地址 $i<j$，都有一个字 $w\in W_j(y)$ 在 $i$ 处回答一。这样的正基或
+pair 支持必涉及至少两个不同首零类，否则该单一首零位置本身就是共同守卫，与
+$c_j>0$ 矛盾。这是必要条件，不是分离的充分条件。$\square$
+
+将第三项解释为原始有限帽分离时，还必须有完整 $N$ 概率可行见证，并使用既有
+[定理 167.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#167-exact-radial-intervals-and-the-missing-budget-exchange)的径向概率区间、
+[定理 168.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#168-closed-auxiliary-boundaries-and-the-original-positive-domain)的残差范围与正闭帽运输，以及定理 110.2 的原始类保持运输。
+辅助方向的支持间隔本身不提供这样的原始实现；命题 199.7 则给出完整证书失败时
+取得有限概率见证的既有条件结论。
+
+**例 200.8（既有非零零成本评分的锐性与边界）。** 取定理 198.7 的评分：在
+$010,100$ 上各置单位 pair 权重，在 $110$ 上置单位正确权重，在 $111$ 上置
+$T=1$；当 $L>3$ 时所有显示字追加 $1^{L-3}$，其余行权重为零。其已有完整支持为
+
+$$
+B_N(y)=B_O(y)=y\cdot\mathbf r=3,\qquad
+Q(y)=(0,0,1,0,\ldots,0;4).
+$$
+
+于是 $\delta=\Delta_N(y)=0$，$Q(y)\in D_N(0)$。在本节的守卫量中，
+
+$$
+\kappa_3(1;y)=\kappa_3(2;y)=1,\qquad c_j(y)=0\ (j>3),\qquad
+\Gamma(y)=\frac12.
+$$
+
+又 $F_y(u_3)=1/2$，结合 (200.12) 得
+$\sigma_H(Q(y))=\delta+\Gamma(y)=1/2$，所以守卫界在这个既有评分上达到等号。
+然而可直接取 $V=y,\theta=0$：$\Delta_N(V)=0$ 且残差恒零。因此正 $\Gamma$
+并不推出证书失败，也不推出任何原始帽分离。这个例子的目录支持和非零零成本商
+归属定理 198.7；这里仅计算其守卫量以说明 (200.12) 的锐性。该辅助点 $u_3$
+没有有限 $N$ 锥配置：否则 $G_N\lambda\ge h(u_3)$、$\lambda\ge0$ 会给出
+$1/2=F_y(u_3)\le y\cdot G_N\lambda\le0$，矛盾。它不被用作原始零帽目标。
+
+**命题 200.9（共同种子实现与实际尾部范围）。** 以上守卫核可在原始来源上用一个
+与来源无关的 $U\in[0,1)$ 实现，且零建议、硬两实际请求及实际有限交接均保持。
+把 $[0,1)$ 分成 $k-1$ 个等长区间，预先选定 $R$ 或某个 $J_{i_j,j}$，只执行
+该表，输出标签 $r$ 时交接原标记 $\theta_r$。选择、全部终端标签及守卫地址在
+回答前已定；同一个 $U$ 对全部实际来源使用。每条分支递增且在首个查询零或耗尽
+时停止，至多两次实际请求，在每个来源和种子上有限交接。子集核也用同一个
+区间种子选择其整个三元子集，无需额外随机源。完成整个预选日程而忽略首次零之后
+的回答，给出相同种子的 $N$ 实现，忽略的实际请求仍计数；这是命题 90.2 的方向。
+
+对每个实际首零 $n(x)>k$，守卫核输出 $\theta_0$，故对选定标记目标的 TV 误差
+恰为 $a_{n(x)}$。一般有限标记混合在实际活跃长度 $L$ 之后仍使用定理 110.2 的
+精确尾式
+
+$$
+\operatorname{TV}\left(\sum_{r=0}^Lp_{1^L}(r)\delta_{\theta_r},
+                \lambda_x^a\right)
+       =\max\{1-p_{1^L}(0),a_{n(x)}\}\qquad(n(x)>L).
+\tag{200.20}
+$$
+
+原始活跃长度由 $a_i>\varepsilon$ 定义，故全部实际尾部 $a_n\le\varepsilon$
+仍严格正且趋零；等号 $a_n=\varepsilon$ 保留。全正有限字只用于这些实际尾源的
+计算，不添加无限全正源。需要径向解释时，复用
+[定理 170.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#170-every-original-tail-under-the-same-radial-law-identity)对整个实际序列的同一缩放及律恒等式。
+原始竞争者的任意地址与全载体输出仍由定理 110.2 覆盖，不由守卫核的有限地址
+范围限制。这里实现的是用于支持计算的特定合法核及其所列误差，不是把任意
+$N$ 律转换为 $O$ 律，也不把 (200.10) 的辅助零帽缺陷当作原始可行性。
+
+**200.10（剩余的联合补偿义务与来源边界）。** 对 $\delta=\Gamma=0$ 的评分，(200.17)
+确实给出有序零预算包含；对 $\delta+\Gamma\le1$ 的评分，(200.16) 确实给出完整
+$E_N$ 证书。但对一般评分，仍须解决
+
+$$
+D_O(0)\subseteq D_N(0)+P_H,\qquad D_O(1)\subseteq E_N.
+\tag{200.21}
+$$
+
+前一包含尚需吸收有 $c_j>0$ 的守卫冲突；后一包含还须处理 $\delta+\Gamma>1$
+的评分，并在同一个预算内寻找非负 $N$ 评分 $V$ 与 $\theta\in[0,1]$，同时满足
+
+$$
+\Delta_N(V)\le1-\theta,\qquad
+F_{Q(y)-Q(V)}(b)\le\theta\quad\text{对全部 }b\in H.
+\tag{200.22}
+$$
+
+具体缺口是把不相容的较早零守卫要求重组为 $V$ 的补偿，同时控制包括全部 $v_k$
+在内的残差顶点和 $\Delta_N(V)$ 的共同预算。逐字另选守卫不再是同一预选规则；
+分别计量冲突分量不能从混合评分的共同支持最大值推出各分量预算。即使零预算
+冲突全能吸收，正预算部分的联合控制仍需证明。由推论 199.4、定义 199.9 和
+定理 110.2，这一未决部分仍对应每个原始正单调趋零序列及每个正闭帽的
+$\mathcal F_N\ne\varnothing\Rightarrow\mathcal F_N\cap\mathscr C_L\ne\varnothing$；
+本节没有证明该普遍比较，没有给出原始分离者，也没有改变其完成条件。
+
+定理 198.5 的带符号凸包、定理 199.3 的替代、定理 199.5 的零成本有序闭包、
+定义 190.2 的停止
+见证、定理 87.1 的子集核和定理 110.2、167.2、168.1、170.1 的运输各按原范围复用。
+本节的结果是 (200.10) 的加权守卫缺陷、(200.12) 的全评分界、(200.15) 的支持
+交集判据及其证书切片和失败必要条件。成熟的随机查询混合与标量非负文字式框架
+见 Jędrzej Kaniewski、Troy Lee、Ronald de Wolf，
+[*Query complexity in expectation*, arXiv:1411.7280v1, Definition 8、Theorem 9](https://arxiv.org/abs/1411.7280v1)。
+该文的标量期望框架不供应这里的归一概率向量核或原始停止获取比较；本节的
+联合行缺陷由显式完整表混合计算。有限多面体支持与分离背景见 Volker Kaibel，
+[*Basic Polyhedral Theory*, arXiv:1001.2161v1, Theorems 1、7、8、10](https://arxiv.org/abs/1001.2161v1)，
+其在完整证书替代中的具体应用归属定理 199.3。本节只给普通数学定义、证明和范围，
+不作文献优先权或内核验证声明。
+
+## 追加锚（本行以下为增补区）
