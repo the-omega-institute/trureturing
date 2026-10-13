@@ -22,7 +22,7 @@ ROW_FIELDS = {"application", "owner", "target", "target_module", "target_type_id
 
 def validate(value, *, complete=True):
     if (not isinstance(value, dict) or set(value) != {"schema_version", "applications"}
-            or value["schema_version"] != 1 or not isinstance(value["applications"], list)):
+            or value["schema_version"] != 2 or not isinstance(value["applications"], list)):
         raise ValueError("fib.invalid_partition")
     previous = None
     for row in value["applications"]:
@@ -164,7 +164,9 @@ def produce(row, previous_artifact, analyzer):
                 raise ValueError('fib.previous_module_binding')
             publication.check_origin(publication.read_json(
                 artifact.read('raw-lean-report.json.provenance.json')), old)
-        if "fib_analysis" in old:
+        # The versioned partition owns reading semantics. Retired formats are
+        # reissued from current compiled input, never read as compatible leaves.
+        if old.get("fib_analysis", {}).get("schema_version") == 2:
             validate(old["fib_analysis"])
             previous = {x["application"]: x for x in old["fib_analysis"]["applications"]}
     pending = []
@@ -231,7 +233,7 @@ def consume(report, targets=()):
         if found != set(targets):
             raise ValueError("fib.requested_declaration_not_in_report")
         records = selected
-    return {"schema_version": 1, "applications": records,
+    return {"schema_version": 2, "applications": records,
             "authority": "downstream analysis; proof and admission fields unchanged"}
 
 

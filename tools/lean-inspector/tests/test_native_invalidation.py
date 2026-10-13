@@ -186,7 +186,7 @@ def main (args : List String) : IO Unit := do
         self.assertTrue(result['unchanged_oleans'])
 
     def test_native_format_preimage(self):
-        self.assertEqual(materials.REPORT_SCHEMA, publication.selection.REPORT_FORMAT)
+        self.assertEqual(materials.REPORT_SCHEMA + '-fib-v2', publication.selection.REPORT_FORMAT)
         expected = hashlib.sha256(('schema=' + publication.selection.REPORT_FORMAT + '\n').encode('ascii')).hexdigest()
         self.assertEqual(publication.selection.Selection(self.root).compatibility(), expected)
 

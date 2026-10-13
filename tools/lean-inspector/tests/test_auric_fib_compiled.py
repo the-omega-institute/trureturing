@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'tools/lean-inspector'))
 import fib_analysis
 import publication
+from test_auric_fib_analysis import assert_layer_partition, assert_layer_limit
 
 MODULE = 'Reg.Support.AuricFibCompiledFixture'
 SOURCE_MODULE = 'Reg.Support.AuricFibCompiledSource'
@@ -216,6 +217,17 @@ class CompiledFibIntegration(unittest.TestCase):
         self.assertEqual(report['layered_spectrum']['partition_count'], 20)
         self.assertIsNone(self.first['absent']['reading']['pyramid_coordinates'])
         self.assertEqual(self.first['absent']['reading']['arena']['cardinality'], 5)
+        absent = self.first['absent']
+        self.assertEqual(absent['request']['initial_readouts'], [])
+        self.assertEqual(absent['request']['layers'], ['seam', 'guard'])
+        self.assertEqual(absent['request']['binding']['occurrence']['source_name'],
+                         'D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution')
+        self.assertEqual(absent['reading']['source_contract']['binding'], absent['request']['binding'])
+        self.assertEqual(absent['reading']['disposition']['readings']['source_contract']['kind'], 'available')
+        partial = assert_layer_partition(self, absent['reading'], [], ['seam', 'guard'])
+        self.assertEqual([layer['count'] for layer in partial['layers']], [0, 12, 0])
+        self.assertEqual(partial['unresolved']['count'], 8)
+        self.assertEqual(q(partial['unresolved']['rate']), Fraction(2, 5))
         self.assertEqual(self.first['empirical']['reading']['source_contract']['kind'], 'empirical-archive')
         self.assertFalse(report['source_contract']['physical_law_certified'])
         self.assertFalse(report['disposition']['is_lean_proof'])
@@ -230,7 +242,10 @@ class CompiledFibIntegration(unittest.TestCase):
         self.assertIsNone(self.first['wrongTarget']['reading']['escape_rate'])
         self.assertIsNone(self.first['parameterized']['reading']['escape_rate'])
         self.assertEqual(self.first['parameterized']['unavailable_reason'], 'fib.unsupported_application_type')
-        self.assertEqual(self.first['rejected']['reading']['disposition']['status'], 'refuted')
+        limited = self.first['layerLimited']
+        self.assertEqual(len(limited['request']['layers']), 65)
+        self.assertEqual(limited['reading']['source_contract']['binding'], limited['request']['binding'])
+        assert_layer_limit(self, limited['reading'], self.first['absent']['reading'], same_source=False)
         for name in ('apex', 'zeroCondition', 'empirical'):
             self.assertEqual(self.first[name]['reading']['arena']['cardinality'], 5)
             self.assertEqual(self.first[name]['reading']['arena']['ordered_pair_denominator'], 20)
@@ -242,7 +257,7 @@ class CompiledFibIntegration(unittest.TestCase):
         replay = subprocess.run(['bash', 'tools/scripts/auric-fib-analysis.sh', '--batch'],
             cwd=ROOT, env=self.env, input=json.dumps([x['request'] for x in records]),
             text=True, capture_output=True, check=False)
-        self.assertEqual(replay.returncode, 2, replay.stdout + replay.stderr)
+        self.assertEqual(replay.returncode, 0, replay.stdout + replay.stderr)
         raw = json.loads(replay.stdout)
         self.assertEqual(len(raw), len(records))
         for record, reading in zip(records, raw):
