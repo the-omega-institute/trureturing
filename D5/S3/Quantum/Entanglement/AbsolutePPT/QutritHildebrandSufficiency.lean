@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QutritHildebrandSufficiency
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality.Extremality.six_level_attainment; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritHildebrandSufficiency.HildebrandCore.bell_unitary,D5/S3/Quantum/Entanglement/AbsolutePPT/QutritHildebrandSufficiency.PureSpectrum.orderEquiv
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality.six_level_attainment; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritHildebrandSufficiency.bell_unitary,D5/S3/Quantum/Entanglement/AbsolutePPT/QutritHildebrandSufficiency.orderEquiv
    digest: Hildebrand sufficiency from ordered Schmidt and trace pairings. -/
 
 /-

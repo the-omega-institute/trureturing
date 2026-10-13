@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels.result; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality.AttainmentCertificates.A1_ldl,D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality.AttainmentCertificates.A2_ldl
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels.result; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality.A1_ldl,D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality.A2_ldl
    digest: A supporting functional forces extremality of a six-level qutrit state. -/
 
 /-
