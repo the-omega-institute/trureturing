@@ -89,8 +89,6 @@ def parseSchedule (request : Json) : Except String ScheduleInput := do
   let layers ← match (request.getObjVal? "layers").toOption with
     | none => pure [1, 2, 3, 0] | some value => parseNames value
   unless layers.length ≤ 64 do throw "at most 64 finite successor layers are supported"
-  unless initial.toFinset ∪ layers.toFinset = nativeCatalog.fullIndexSet do
-    throw "the complete atom,seam,guard,reply bundle must remain in the final layer"
   return ⟨initial.toFinset, layers⟩
 
 def selectedAt (schedule : ScheduleInput) (position : Nat) : Finset (Fin 4) :=

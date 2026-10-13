@@ -35,7 +35,7 @@ def declared : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.nativ
 
 def absent : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
   evidence := .native { reconstruction := .exact } bridge (.absent "unacquired compiled source")
-    [] [.seam, .guard, .reply, .atom]
+    [] [.seam, .guard]
 
 def empirical : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
   evidence := .native { reconstruction := .exact } bridge (.empirical "compiled archive" [.zero, .ends, .middle])
@@ -57,7 +57,16 @@ def unsupported : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.na
   evidence := .unsupported "unbounded history source has no supported finite arena"
 
 def rejected : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
-  evidence := .native { reconstruction := .exact } bridge (.absent "incomplete readout contract") [] [.seam]
+  evidence := .native { reconstruction := .exact } bridge (.absent "overlength layer contract") []
+    [.seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
+     .seam]
 
 theorem noise : True := trivial
 

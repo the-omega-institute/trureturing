@@ -59,6 +59,69 @@ NATIVE_METADATA_REQUESTS = [dict(request, binding=NATIVE_BINDING,
     for kind in ("available", "unavailable", "not-applicable")]
 
 
+LAYER_CASES = [
+    ([], ["seam", "guard"]),
+    ([], []),
+    (["seam"], []),
+    ([], ["seam", "seam", "guard", "guard"]),
+    (["reply", "reply"], ["reply", "guard"]),
+    ([], ["seam"] * 64),
+]
+NATIVE_READOUTS = {
+    "atom": ["null", "2", "5", "25", "3"],
+    "seam": [False, True, False, True, False],
+    "guard": [True, False, True, False, True],
+    "reply": ["5", None, "26", None, "18"],
+}
+
+
+def assert_layer_partition(test, report, initial, schedule):
+    """Reference ordered pairs from fixed native outputs, independently of kernels."""
+    test.assertEqual(report["arena"]["cardinality"], 5)
+    test.assertEqual(report["arena"]["ordered_pair_denominator"], 20)
+    rows = report["atom_readout"]["states"]
+    for name, field in (("atom", "mode"), ("seam", "seam"),
+                        ("guard", "guard_accepts"), ("reply", "suffix_reply")):
+        test.assertEqual([row[field] for row in rows], NATIVE_READOUTS[name])
+    spectrum = report["layered_spectrum"]
+    test.assertEqual(spectrum["initial_readouts"],
+                     [name for name in NATIVE_READOUTS if name in initial])
+    test.assertEqual(spectrum["schedule"], schedule)
+    test.assertEqual(len(spectrum["layers"]), len(schedule) + 1)
+    pairs = [(i, j) for i in range(5) for j in range(5) if i != j]
+    surviving, selected, addresses, partition = pairs, set(initial), {}, []
+    for position, layer in enumerate(spectrum["layers"]):
+        if position:
+            selected.add(schedule[position - 1])
+        remaining = [pair for pair in surviving if all(
+            NATIVE_READOUTS[name][pair[0]] == NATIVE_READOUTS[name][pair[1]]
+            for name in selected)]
+        captured = [pair for pair in surviving if pair not in remaining]
+        test.assertEqual(layer["position"], position)
+        test.assertEqual(layer["readouts"], [name for name in NATIVE_READOUTS if name in selected])
+        test.assertEqual(layer["pairs"], [list(pair) for pair in captured])
+        test.assertEqual(layer["count"], len(captured))
+        test.assertEqual(q(layer["rate"]), Fraction(len(captured), 20))
+        test.assertEqual(layer["collapsed"], position > 0 and remaining == surviving)
+        addresses.update((pair, position) for pair in captured)
+        partition.extend(captured)
+        surviving = remaining
+    unresolved = spectrum["unresolved"]
+    test.assertEqual(unresolved["pairs"], [list(pair) for pair in surviving])
+    test.assertEqual(unresolved["count"], len(surviving))
+    test.assertEqual(q(unresolved["rate"]), Fraction(len(surviving), 20))
+    partition.extend(surviving)
+    test.assertEqual(len(partition), len(set(partition)))
+    test.assertEqual(set(partition), set(pairs))
+    test.assertEqual(spectrum["partition_count"], 20)
+    test.assertEqual(spectrum["ordered_pair_denominator"], 20)
+    test.assertEqual(sum(q(layer["rate"]) for layer in spectrum["layers"]) +
+                     q(unresolved["rate"]), 1)
+    test.assertEqual(spectrum["first_capture"],
+                     [{"pair": list(pair), "first_layer": addresses.get(pair)} for pair in pairs])
+    return spectrum
+
+
 class FiniteAnalysisContract(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -72,9 +135,14 @@ class FiniteAnalysisContract(unittest.TestCase):
                      law([f"{LARGE_DENOMINATOR-1}/{LARGE_DENOMINATOR}",
                           f"1/{LARGE_DENOMINATOR}", "0", "0", "0"])]
         accepted += [law([f"{x}/4" for x in masses]) for masses in GRID]
+        accepted += [law(["1/5"] * 5, initial_readouts=initial, layers=layers)
+                     for initial, layers in LAYER_CASES]
         accepted += NATIVE_METADATA_REQUESTS
         rejected = source_validation_requests() + [
-            law(["1/5"] * 5, layers=["seam", "guard"]),
+            law(["1/5"] * 5, layers=["seam"] * 65),
+            law(["1/5"] * 5, layers=["delta"]),
+            law(["1/5"] * 5, layers="seam"),
+            law(["1/5"] * 5, initial_readouts=[1]),
             law(["1/5"] * 5, initial_readouts=["delta"]),
             {"law": ["1", "0", "0", "0", "0"]}]
         rejected += [{"source_contract": EMPIRICAL, "archive": bad} for bad in BAD_ARCHIVES]
@@ -281,7 +349,18 @@ class FiniteAnalysisContract(unittest.TestCase):
         initial = self.execute(law(["1/5"] * 5, initial_readouts=["seam"],
                                   layers=["guard", "reply", "atom"]))
         self.assertEqual([x["count"] for x in initial["layered_spectrum"]["layers"]], [12, 0, 6, 2])
-        self.invalid(law(["1/5"] * 5, layers=["seam", "guard"]))
+        for initial_readouts, schedule in LAYER_CASES:
+            with self.subTest(initial=initial_readouts, schedule=schedule):
+                report = self.execute(law(["1/5"] * 5, initial_readouts=initial_readouts,
+                                          layers=schedule))
+                assert_layer_partition(self, report, initial_readouts, schedule)
+        partial = self.execute(law(["1/5"] * 5, initial_readouts=[], layers=["seam", "guard"]))
+        self.assertEqual([layer["count"] for layer in partial["layered_spectrum"]["layers"]],
+                         [0, 12, 0])
+        self.assertEqual(partial["layered_spectrum"]["unresolved"]["count"], 8)
+        for malformed in (dict(layers=["seam"] * 65), dict(layers=["delta"]),
+                          dict(layers="seam"), dict(initial_readouts=[1])):
+            self.invalid(law(["1/5"] * 5, **malformed))
         self.invalid(law(["1/5"] * 5, initial_readouts=["delta"]))
 
     def test_empirical_legal_pushforward_and_empty_archive(self):

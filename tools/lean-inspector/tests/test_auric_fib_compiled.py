@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'tools/lean-inspector'))
 import fib_analysis
 import publication
+from test_auric_fib_analysis import assert_layer_partition
 
 MODULE = 'Reg.Support.AuricFibCompiledFixture'
 SOURCE_MODULE = 'Reg.Support.AuricFibCompiledSource'
@@ -216,6 +217,17 @@ class CompiledFibIntegration(unittest.TestCase):
         self.assertEqual(report['layered_spectrum']['partition_count'], 20)
         self.assertIsNone(self.first['absent']['reading']['pyramid_coordinates'])
         self.assertEqual(self.first['absent']['reading']['arena']['cardinality'], 5)
+        absent = self.first['absent']
+        self.assertEqual(absent['request']['initial_readouts'], [])
+        self.assertEqual(absent['request']['layers'], ['seam', 'guard'])
+        self.assertEqual(absent['request']['binding']['occurrence']['source_name'],
+                         'D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution')
+        self.assertEqual(absent['reading']['source_contract']['binding'], absent['request']['binding'])
+        self.assertEqual(absent['reading']['disposition']['readings']['source_contract']['kind'], 'available')
+        partial = assert_layer_partition(self, absent['reading'], [], ['seam', 'guard'])
+        self.assertEqual([layer['count'] for layer in partial['layers']], [0, 12, 0])
+        self.assertEqual(partial['unresolved']['count'], 8)
+        self.assertEqual(q(partial['unresolved']['rate']), Fraction(2, 5))
         self.assertEqual(self.first['empirical']['reading']['source_contract']['kind'], 'empirical-archive')
         self.assertFalse(report['source_contract']['physical_law_certified'])
         self.assertFalse(report['disposition']['is_lean_proof'])
