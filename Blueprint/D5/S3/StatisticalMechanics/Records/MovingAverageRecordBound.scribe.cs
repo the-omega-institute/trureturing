@@ -25,17 +25,22 @@ internal sealed class MovingAverageRecordBoundDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The density statement follows", Disp(F.Id("claim")),
                 "A law obtained from Lebesgue measure by withDensity is atomless. Applying the atomless-law bound therefore proves claim. The continuity, nonnegativity and positive-support assumptions express the source's setting; the atomless estimate needs only the probability law.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), null,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("godreche-luck-2020-moving-average-record-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance, Formula? sourceFormula = null) =>
+        string prose, DescribeRole role, AssessedProvenance provenance, Formula? sourceFormula = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("moving-average-" + (declaration switch
             { "recordProb" => "record-prob", "movingAverage_record_bound" => "atomless-bound", _ => declaration })),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance,
             sourceFormula is null ? Blocks(Paragraph(Text(prose))) :
-                Blocks(Paragraph(Text(prose)), Paragraph(Text("In the source notation, "), Math(sourceFormula), Text("."))), role);
+                Blocks(Paragraph(Text(prose)), Paragraph(Text("In the source notation, "), Math(sourceFormula), Text("."))), role,
+            resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));

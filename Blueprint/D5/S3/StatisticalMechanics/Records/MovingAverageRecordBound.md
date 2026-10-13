@@ -50,6 +50,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Records/MovingAverageRecordBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/godreche-luck-2020-moving-average-record-bound` (proved) by `D5/S3/StatisticalMechanics/Records/MovingAverageRecordBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"godreche-luck-2020-moving-average-record-bound","declaration_gid":"D5/S3/StatisticalMechanics/Records/MovingAverageRecordBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Godrèche and J.-M. Luck (2020). *Records for the moving average of a time series*. DOI: [10.1088/1742-5468/ab5d08](https://doi.org/10.1088/1742-5468/ab5d08). URL: <https://arxiv.org/abs/1907.07598>.

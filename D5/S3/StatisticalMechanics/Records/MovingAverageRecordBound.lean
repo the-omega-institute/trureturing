@@ -11,6 +11,7 @@ admission_basis: open-problem-resolution (#15864; Proved)
 escape_witness: none (open-problem-resolution basis)
 Direct frozen dependencies: none (pinned Mathlib only).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16029.
+DTR reading: movingAverage_record_bound and result each report DTR-Unregistered (Observe).
 proof_shape: eval_eq_graph_null: bind-only; consumer(s): edge_sum_eq_null; escape_witness: none.
 proof_shape: edge_sum_eq_null: bind-only; consumer(s): cyclic_sum_pair_null; escape_witness: none.
 proof_shape: finRotate_two_cycle_false: bind-only; consumer(s): cyclic_sum_pair_null;
