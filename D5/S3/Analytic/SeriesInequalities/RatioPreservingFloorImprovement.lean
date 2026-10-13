@@ -9,6 +9,8 @@
 import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
 import Mathlib.Data.ENNReal.Real
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Tactic.GCongr
@@ -227,5 +229,130 @@ theorem exists_uniform_profile_improvement {η : ℕ → ℝ} {R ε : ℝ}
           zero_le zero_le
       _ ≤ max (ENNReal.ofReal C)
           (ENNReal.ofReal (H ^ (-sLo)) * powerProfile η w s) := le_max_right _ _
+
+/-- The numerical near-critical profile on one fixed grid. This definition
+does not assert any relation to the costs of an actual sampling procedure. -/
+def geometricProfile (η n : ℕ → ℝ) (a u : ℝ) : ℝ≥0∞ :=
+  powerProfile η (fun k => n k ^ (-u)) (a - u)
+
+private lemma geometricProfile_toReal_tendsto_atTop {η n : ℕ → ℝ} {a : ℝ}
+    (hpos : ∀ k, 0 < η k) (hs : Summable η)
+    (hn : ∀ k, 1 ≤ n k) (ha : 0 < a)
+    (hfinite : ∀ᶠ u in 𝓝[>] (0 : ℝ), geometricProfile η n a u ≠ ⊤) :
+    Tendsto (fun u => (geometricProfile η n a u).toReal) (𝓝[>] (0 : ℝ)) atTop := by
+  have hη : Tendsto η atTop (𝓝[>] (0 : ℝ)) :=
+    tendsto_nhdsWithin_iff.2 ⟨hs.tendsto_atTop_zero, Eventually.of_forall hpos⟩
+  have hpow : Tendsto (fun k => η k ^ (-a)) atTop atTop :=
+    (tendsto_rpow_neg_nhdsGT_zero (neg_lt_zero.mpr ha)).comp hη
+  have hu : Tendsto (fun u : ℝ => u) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  refine tendsto_atTop.2 fun B => ?_
+  obtain ⟨k, hk⟩ := (tendsto_atTop.1 hpow (B + 1)).exists
+  have hnpos : 0 < n k := zero_lt_one.trans_le (hn k)
+  have hterm : Tendsto (fun u : ℝ => n k ^ (-u) * η k ^ (-(a - u)))
+      (𝓝[>] (0 : ℝ)) (𝓝 (η k ^ (-a))) := by
+    have h₁ := (tendsto_const_nhds : Tendsto (fun _ : ℝ => n k)
+      (𝓝[>] (0 : ℝ)) (𝓝 (n k))).rpow hu.neg (Or.inl hnpos.ne')
+    have hexp : Tendsto (fun u : ℝ => -(a - u)) (𝓝[>] (0 : ℝ)) (𝓝 (-a)) := by
+      simpa using ((tendsto_const_nhds : Tendsto (fun _ : ℝ => a)
+        (𝓝[>] (0 : ℝ)) (𝓝 a)).sub hu).neg
+    have h₂ := (tendsto_const_nhds : Tendsto (fun _ : ℝ => η k)
+      (𝓝[>] (0 : ℝ)) (𝓝 (η k))).rpow hexp (Or.inl (hpos k).ne')
+    simpa using h₁.mul h₂
+  have hlarge : ∀ᶠ u in 𝓝[>] (0 : ℝ), B < n k ^ (-u) * η k ^ (-(a - u)) :=
+    (tendsto_order.1 hterm).1 B (by linarith)
+  filter_upwards [hfinite, hlarge] with u hfin hlarge
+  have hnonneg : 0 ≤ n k ^ (-u) * η k ^ (-(a - u)) :=
+    (mul_pos (Real.rpow_pos_of_pos hnpos _) (Real.rpow_pos_of_pos (hpos k) _)).le
+  have hle : ENNReal.ofReal (n k ^ (-u) * η k ^ (-(a - u))) ≤
+      geometricProfile η n a u := le_iSup
+        (fun i => ENNReal.ofReal (n i ^ (-u) * η i ^ (-(a - u)))) k
+  exact hlarge.le.trans (by
+    simpa only [ENNReal.toReal_ofReal hnonneg] using ENNReal.toReal_mono hfin hle)
+
+/-- One improved floor works for every fixed grid and every near-critical
+exponent. Whenever the old numerical profile is eventually finite, so is
+the new one, and their ratio tends to zero with a positive finite denominator.
+The construction is independent of the grid, the exponent, and the limit parameter. -/
+theorem exists_strict_profile_improvement {η : ℕ → ℝ} {R ε : ℝ}
+    (hR : 1 ≤ R) (hpos : ∀ k, 0 < η k) (hanti : Antitone η)
+    (hs : Summable η) (hratio : ∀ k, η k ≤ R * η (k + 1))
+    (hε : 0 < ε) (hεone : ε ≤ 1) :
+    ∃ θ : ℕ → ℝ,
+      (∀ k, 0 < θ k) ∧ Antitone θ ∧ Summable θ ∧
+      (∑' k, θ k) ≤ ε ∧ (∀ k, θ k ≤ ε) ∧
+      (∀ k, θ k ≤ R * θ (k + 1)) ∧
+      (∃ c₀ : ℝ, 0 < c₀ ∧ ∀ k, c₀ * η k ≤ θ k) ∧
+      (∀ B : ℝ, 0 < B → ∃ L : ℕ, ∀ k, L ≤ k → B * η k ≤ θ k) ∧
+      (∀ n : ℕ → ℝ, (∀ k, 1 ≤ n k) → ∀ a : ℝ, 0 < a →
+        (∀ᶠ u in 𝓝[>] (0 : ℝ), geometricProfile η n a u ≠ ⊤) →
+          (∀ᶠ u in 𝓝[>] (0 : ℝ), geometricProfile θ n a u ≠ ⊤) ∧
+          (∀ᶠ u in 𝓝[>] (0 : ℝ), 0 < (geometricProfile η n a u).toReal) ∧
+          Tendsto (fun u => (geometricProfile θ n a u).toReal /
+            (geometricProfile η n a u).toReal) (𝓝[>] (0 : ℝ)) (𝓝 0)) := by
+  obtain ⟨θ, hθpos, hθanti, hθsum, hθmass, hθle, hθratio, hθglobal, hθtail, hprof⟩ :=
+    exists_uniform_profile_improvement hR hpos hanti hs hratio hε hεone
+  refine ⟨θ, hθpos, hθanti, hθsum, hθmass, hθle, hθratio, hθglobal, hθtail, ?_⟩
+  intro n hn a ha hfinite
+  have hu : Tendsto (fun u : ℝ => u) (𝓝[>] (0 : ℝ)) (𝓝 0) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have hsmall : ∀ᶠ u in 𝓝[>] (0 : ℝ), 0 < u ∧ u < a / 2 := by
+    filter_upwards [self_mem_nhdsWithin,
+      (tendsto_order.1 hu).2 (a / 2) (half_pos ha)] with u hupos hult
+    exact ⟨hupos, hult⟩
+  have hweights (u : ℝ) (hupos : 0 < u) (k : ℕ) :
+      0 ≤ n k ^ (-u) ∧ n k ^ (-u) ≤ 1 :=
+    ⟨Real.rpow_nonneg (zero_le_one.trans (hn k)) _,
+      Real.rpow_le_one_of_one_le_of_nonpos (hn k) (neg_nonpos.mpr hupos.le)⟩
+  have hdiverge := geometricProfile_toReal_tendsto_atTop hpos hs hn ha hfinite
+  have hdenpos : ∀ᶠ u in 𝓝[>] (0 : ℝ), 0 < (geometricProfile η n a u).toReal := by
+    filter_upwards [tendsto_atTop.1 hdiverge 1] with u huone
+    exact zero_lt_one.trans_le huone
+  obtain ⟨C₁, hC₁, hbound₁⟩ := hprof a (a / 2) (half_pos ha) (by linarith) 1 le_rfl
+  have hnewfinite : ∀ᶠ u in 𝓝[>] (0 : ℝ), geometricProfile θ n a u ≠ ⊤ := by
+    filter_upwards [hsmall, hfinite] with u hu hfin
+    have hbound := hbound₁ (a - u) (by linarith [hu.2]) (by linarith [hu.1])
+      (fun k => n k ^ (-u)) (hweights u hu.1)
+    have hmax : max (ENNReal.ofReal C₁) (geometricProfile η n a u) ≠ ⊤ :=
+      lt_top_iff_ne_top.1 (max_lt ENNReal.ofReal_lt_top (lt_top_iff_ne_top.2 hfin))
+    exact ne_top_of_le_ne_top hmax
+      (by simpa only [geometricProfile, Real.one_rpow, ENNReal.ofReal_one, one_mul]
+        using hbound)
+  refine ⟨hnewfinite, hdenpos, tendsto_order.2 ⟨?_, ?_⟩⟩
+  · intro b hb
+    exact Eventually.of_forall fun u => hb.trans_le
+      (div_nonneg ENNReal.toReal_nonneg ENNReal.toReal_nonneg)
+  · intro β hβ
+    have hHsmall : ∀ᶠ H : ℝ in atTop, H ^ (-(a / 2)) < β / 2 :=
+      (tendsto_order.1 (tendsto_rpow_neg_atTop (half_pos ha))).2 (β / 2) (half_pos hβ)
+    obtain ⟨H, hH, hHpow⟩ := (eventually_ge_atTop 1).and hHsmall |>.exists
+    obtain ⟨C, hC, hbound⟩ := hprof a (a / 2) (half_pos ha) (by linarith) H hH
+    have hHpos : 0 < H := zero_lt_one.trans_le hH
+    filter_upwards [hsmall, hfinite, hnewfinite, hdenpos,
+      tendsto_atTop.1 hdiverge (2 * C / β)] with u hu hfin hnew hden hlarge
+    have hcost : C ≤ (β / 2) * (geometricProfile η n a u).toReal := by
+      have := (div_le_iff₀ hβ).1 hlarge
+      nlinarith
+    have hboundu := hbound (a - u) (by linarith [hu.2]) (by linarith [hu.1])
+      (fun k => n k ^ (-u)) (hweights u hu.1)
+    have hprod : ENNReal.ofReal (H ^ (-(a / 2))) * geometricProfile η n a u ≠ ⊤ :=
+      ENNReal.mul_ne_top ENNReal.ofReal_ne_top hfin
+    have hmax : max (ENNReal.ofReal C)
+        (ENNReal.ofReal (H ^ (-(a / 2))) * geometricProfile η n a u) ≠ ⊤ :=
+      lt_top_iff_ne_top.1 (max_lt ENNReal.ofReal_lt_top (lt_top_iff_ne_top.2 hprod))
+    have hreal : (geometricProfile θ n a u).toReal ≤
+        (β / 2) * (geometricProfile η n a u).toReal := by
+      calc
+        (geometricProfile θ n a u).toReal ≤
+            (max (ENNReal.ofReal C)
+              (ENNReal.ofReal (H ^ (-(a / 2))) * geometricProfile η n a u)).toReal :=
+          ENNReal.toReal_mono hmax hboundu
+        _ = max C (H ^ (-(a / 2)) * (geometricProfile η n a u).toReal) := by
+          rw [ENNReal.toReal_max ENNReal.ofReal_ne_top hprod,
+            ENNReal.toReal_ofReal hC.le, ENNReal.toReal_mul,
+            ENNReal.toReal_ofReal (Real.rpow_pos_of_pos hHpos _).le]
+        _ ≤ (β / 2) * (geometricProfile η n a u).toReal :=
+          max_le hcost (mul_le_mul_of_nonneg_right hHpow.le ENNReal.toReal_nonneg)
+    exact ((div_le_iff₀ hden).2 hreal).trans_lt (by linarith)
 
 end D5.S3.Analytic.SeriesInequalities.RatioPreservingFloorImprovement
