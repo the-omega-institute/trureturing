@@ -118,6 +118,23 @@ private theorem iota_append (R : L → L → Prop) (n : ℕ) (s t u : L)
   classical
   simp only [iota, Matrix.submatrix_apply, split_append, Matrix.blockDiagonal'_apply_eq]
 
+/-- The original split/append coordinates, exposed for the returning-block consumer. -/
+theorem split_append_coordinates (R : L → L → Prop) (n : ℕ) (s t u : L)
+    (h : R t u) (x : LegalPath R n s t) :
+    splitPath R n s u (append R n s t u h x) = ⟨⟨t, h⟩, x⟩ :=
+  split_append R n s t u h x
+
+/-- The original injectivity proof, exposed without removing its frozen private identity. -/
+theorem append_isInjective (R : L → L → Prop) (n : ℕ) (s t u : L)
+    (h : R t u) : Function.Injective (append R n s t u h) :=
+  append_injective R n s t u h
+
+/-- The original inclusion coordinates, exposed for the returning-block consumer. -/
+theorem iota_append_entry (R : L → L → Prop) (n : ℕ) (s t u : L)
+    (h : R t u) (X : C R n s) (x y : LegalPath R n s t) :
+    iota R n s X u (append R n s t u h x) (append R n s t u h y) = X t x y :=
+  iota_append R n s t u h X x y
+
 /-- The coordinate inclusion as an actual unital complex star algebra homomorphism. -/
 def iotaHom (R : L → L → Prop) (n : ℕ) (s : L) : C R n s →⋆ₐ[ℂ] C R (n + 1) s := by
   classical
