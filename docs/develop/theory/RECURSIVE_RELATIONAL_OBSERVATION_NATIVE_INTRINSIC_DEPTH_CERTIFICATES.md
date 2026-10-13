@@ -334,3 +334,274 @@ $Q$ 所用单孔代入同余的成熟背景是 Dexter Kozen, *On the Myhill–Ne
 [Kozen]: https://www.cs.cornell.edu/~kozen/Papers/mn.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 8. 深度余数语境与插入常数的材料
+
+**定义 8.1（原来源上的坐标供应）。** 沿用定义1.1的全部非空有限自由有序树、同一个 $\rho$、唯一原始端点 $P(t)$ 及深度 $\nu(t)$。置
+
+$$
+T_j=\rho^j\alpha,\qquad
+e(t)=\mathbf 1_{\{P(t)=\alpha\}},\qquad Q(t)=(\nu(t),e(t)).
+$$
+
+标志一的深度 $j$ 来源恰为实际树 $T_j$；标志零称为非射线来源。使用 [JM §§36、49–50][JM] 的原定义及 [IntrinsicSubstitutionCoordinates 的 all_source_coordinate_law][ISC]，若 $Q(s)=(a,e)$、$Q(t)=(b,f)$，则
+
+$$
+\begin{aligned}
+Q(\rho t)&=(\nu(t)+1,e(t)),\\
+Q((s,t))&=
+\begin{cases}
+(b+2,1),&e=f=1\ \text{且}\ a=b+1,\\
+(\min(a,b),0),&\text{其他情形}.
+\end{cases}
+\end{aligned}
+\tag{NIC.21}
+$$
+
+称第一种配对为例外配对。两个叶的坐标分别为 $(0,1)$、$(1,1)$；标志不是当前叶标签。记 $\ell(t)=N(t)$，并沿用 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。[JM 命题37.4][JM] 的组成运输同时供应
+
+$$
+\ell(T_j)=F_{j+1},\qquad
+\nu(c)=j\Longrightarrow\ell(c)\ge F_{j+1}.
+\tag{NIC.22}
+$$
+
+这些是本节的已有前提，不另立原始射线、配对律或 Fibonacci 增长定理。
+
+**定义 8.2（单孔语境与三项资源）。** 语境仍取 [JM 定义50.1][JM] 的原语法
+
+$$
+C::=\square\mid\rho C\mid(C,c)\mid(c,C),\qquad c\in\mathcal T.
+\tag{NIC.23}
+$$
+
+孔出现一次。每个 $c$ 是完整实例化的实际有限原树，其全部叶出现、左右次序与括号均保留。定义孔路径配对数 $b(C)$、插入材料 $\mu(C)$ 及常数深度上界 $M(C)$：
+
+$$
+\begin{aligned}
+b(\square)&=0,&\mu(\square)&=0,&M(\square)&=0,\\
+b(\rho C)&=b(C),&\mu(\rho C)&=\mu(C),&M(\rho C)&=M(C),\\
+b((C,c))&=b((c,C))=b(C)+1,\\
+\mu((C,c))&=\mu((c,C))=\mu(C)+\ell(c),\\
+M((C,c))&=M((c,C))=\max(M(C),\nu(c)).
+\end{aligned}
+\tag{NIC.24}
+$$
+
+$b$ 不数常数内部的配对，$\mu$ 则数每次插入的完整常数树的全部叶。同一树写在两个常数位置就计两次；没有共享商。$M=0$ 的无常数语境与只有深度零常数的语境可由 $b$ 区分。
+
+在不含一元 $\rho$ 的语境上，$\mu$ 正是 [ActualLeafHistoryRigidity 的 OutputContext.outsideLeaves][ALHR]：孔路径上实际旁支的叶数之和。含 $\rho$ 时，(NIC.24) 只记各常数插入时的材料，不记其后外层替换增加的叶数；它不是最终树的孔外叶数、替换次数、压缩描述长度、地址费用或运算费用。这一定义没有把一元替换定价为免费。
+
+**定义 8.3（余数分离与有界配对测试）。** 固定整数 $m\ge2$，终端观察为
+
+$$
+o_m(t)=\nu(t)\bmod m.
+$$
+
+若 $o_m(C[s])\ne o_m(C[t])$，称 $C$ 分离 $s,t$。记
+
+$$
+s\sim_{m,k}t
+\quad\Longleftrightarrow\quad
+\forall C\text{ 满足 (NIC.23) 且 }b(C)\le k,
+\quad o_m(C[s])=o_m(C[t]).
+\tag{NIC.25}
+$$
+
+$\sim_{m,\infty}$ 表示对全部有限语境量化，没有无穷表达式。每个比较都将同一个语境、相同实际常数与相同运算次序代入两来源。对 $b$ 的限制不限制常数尺寸、常数内部配对或一元替换次数。
+
+模数条件保留 $m\ge2$；若 $m=1$，则全部来源及全部语境的终端余数按定义恒为零，没有分离语境。
+
+## 9. 同深度相反标志的尖锐分离费用
+
+**定理 9.1（首次配对的全部存活情形）。** 设 $Q(s)=(n,1)$、$Q(t)=(n,0)$。沿任一分离语境的孔路径从孔向外计算。首次配对前若经过 $v$ 次 $\rho$，置 $j=n+v$。首次配对必须属于且只可能属于下列两类；表中坐标顺序为 $s,t$：
+
+$$
+\begin{array}{c|c|c}
+\text{首次配对}&\text{必要实际常数}&\text{配对后坐标}\\\hline
+(\rho^v\square,c)&c=T_{j-1},\ j\ge1&(j+1,1),\ (j-1,0)\\
+(c,\rho^v\square)&c=T_{j+1}&(j+2,1),\ (j,0)
+\end{array}
+\tag{NIC.26}
+$$
+
+其余首次配对都会使两个 $Q$ 坐标相同，后续任意有限语境均无法再分离。只有一次孔路径配对的语境在这两个输入上总给相同奇偶深度。
+
+证明。首次配对前，(NIC.21) 给 $(j,1),(j,0)$。非射线输入不能作例外配对，其结果总为 $(\min(j,\nu(c)),0)$。若射线输入也不作例外配对，两个结果完全相同；[JM 定理50.2证明中的坐标稳定性][JM] 或 (NIC.21) 的直接逐构造应用说明，全部后续操作保持这种相同。
+
+所以射线输入必须作例外配对，且 $e(c)=1$。孔在左边时要求 $j=\nu(c)+1$，故 $j\ge1,c=T_{j-1}$；孔在右边时要求 $\nu(c)=j+1$，故 $c=T_{j+1}$。(NIC.21) 分别给出 (NIC.26)。无配对语境只在相同深度上加相同整数。一次配对语境在表列存活情形的深度差恰为二，外层任意次数 $\rho$ 不改变该差；其他情形深度差为零。因此全部这类奇偶测试相同。$\square$
+
+**定理 9.2（相反标志的最小配对数与最小材料）。** 设 $Q(s)=(n,1)$、$Q(t)=(n,0)$，其中 $n\ge0$。在全部分离语境中，两项最小值如下，而且每一行的两个最小值由同一个语境同时达到：
+
+$$
+\begin{array}{c|c|c|c}
+\text{终端观察}&\text{深度范围}&\min b(C)&\min\mu(C)\\\hline
+o_2&n\ge1&2&F_{n+2}\\
+o_2&n=0&2&2\\
+o_m,\ m\ge3&n\ge1&1&F_n\\
+o_m,\ m\ge3&n=0&1&1
+\end{array}
+\tag{NIC.27}
+$$
+
+下界允许任意多后续配对、任意实际常数以及任意位置、任意次数的一元替换。
+
+证明配对数及非奇偶材料下界。无配对不能分离相同深度。定理9.1使奇偶分离至少需要两次配对。若 $n\ge1$，(NIC.26) 第一类首次常数有 $F_j$ 叶，第二类有 $F_{j+2}$ 叶；$j\ge n$ 与 (NIC.22) 给任何分离语境 $\mu(C)\ge F_n$。$n=0$ 时至少一次配对插入非空常数，故 $\mu(C)\ge1$。这些下界不以恰一次配对为前提。
+
+证明奇偶材料下界。先设 $n\ge1$。若首次配对属于 (NIC.26) 第二类，仅该常数已花费 $F_{j+2}\ge F_{n+2}$ 叶。若属于第一类，首次常数花费 $F_j$ 叶，所得坐标为 $(j+1,1),(j-1,0)$。奇偶尚未分离，故分离语境必须存在第二次配对。两次配对之间若作 $r\ge0$ 次替换，则第二次配对前的坐标为
+
+$$
+(j+1+r,1),\qquad(j-1+r,0).
+\tag{NIC.28}
+$$
+
+设第二个常数深度为 $q$。若 $q<j+r$，因深度为整数，$q\le j-1+r$。无论常数在左还是在右，射线输入都不能作例外配对：孔在左所需常数深度是 $j+r$，孔在右所需常数深度是 $j+2+r$。于是两个输入都得到 $(q,0)$，此后永久合并，不能分离。因此任何分离语境必须有 $q\ge j+r$；(NIC.22) 给第二常数至少 $F_{j+r+1}$ 叶，故
+
+$$
+\mu(C)\ge F_j+F_{j+r+1}
+\ge F_n+F_{n+1}=F_{n+2}.
+\tag{NIC.29}
+$$
+
+后续常数只增加非负材料。$n=0$ 时，所需至少两次配对各插入一棵非空树，所以 $\mu(C)\ge2$。
+
+证明同时达到。对 $n\ge1$，取两个实际语境
+
+$$
+E_n[z]=(z,T_{n-1}),\qquad
+C_n[z]=(T_n,E_n[z]).
+\tag{NIC.30}
+$$
+
+在 $s,t$ 上，(NIC.21) 给
+
+$$
+\begin{aligned}
+Q(E_n[s])&=(n+1,1),&Q(E_n[t])&=(n-1,0),\\
+Q(C_n[s])&=(n,0),&Q(C_n[t])&=(n-1,0).
+\end{aligned}
+\tag{NIC.31}
+$$
+
+第一行深度差二，对所有 $m\ge3$ 分离；$E_n$ 的配对数一、材料 $\ell(T_{n-1})=F_n$。第二行深度差一，特别分离奇偶；$C_n$ 的配对数二、材料 $F_{n+1}+F_n=F_{n+2}$。
+
+在 $n=0$ 时取
+
+$$
+E_0[z]=(\beta,z),\qquad C_0[z]=(\beta,(\beta,z)).
+$$
+
+前者在 $s,t$ 上给坐标 $(2,1),(0,0)$，后者给 $(1,0),(0,0)$。它们分别有一、二次配对及一、二片插入叶，给 (NIC.27) 的两个零深度达到。两处 $\beta$ 是两个实际叶出现。全部构造保持原括号及左右次序，不使用共享或重结合。$\square$
+
+## 10. 同余非射线深度的精确材料阈值
+
+**定理 10.1（首次配对强制的常数深度与叶数）。** 固定 $m\ge2$。设实际来源 $s,t$ 满足
+
+$$
+Q(s)=(a,0),\qquad Q(t)=(d,0),\qquad
+a<d,\qquad a\equiv d\pmod m.
+\tag{NIC.32}
+$$
+
+在全部分离语境中，三个分别最小的资源坐标恰为
+
+$$
+\min b(C)=1,\qquad
+\min M(C)=a+1,\qquad
+\min\mu(C)=F_{a+2}.
+\tag{NIC.33}
+$$
+
+三项由同一个实际语境达到。等价地，对整数预算 $K,H,L\ge0$，存在同时满足 $b(C)\le K,M(C)\le H,\mu(C)\le L$ 的分离语境，当且仅当
+
+$$
+K\ge1,\qquad H\ge a+1,\qquad L\ge F_{a+2}.
+\tag{NIC.34}
+$$
+
+证明下界。非射线标志在 $\rho$ 下保持零，任何与它配对的结果也为零。无配对时，两深度只加相同整数，同余仍成立，不能分离。
+
+首次配对前若经过 $v\ge0$ 次替换，两坐标为 $(a+v,0),(d+v,0)$。设首次常数 $c$ 的深度为 $q$。若 $q\le a+v$，(NIC.21) 在任一左右位置均把两个输入送往 $(q,0)$。以后任意嵌套操作保持坐标相同。故分离必须有
+
+$$
+q\ge a+v+1\ge a+1.
+$$
+
+于是 $M(C)\ge a+1$；(NIC.22) 使该次常数至少有 $F_{q+1}\ge F_{a+2}$ 叶，故 $\mu(C)\ge F_{a+2}$。这处理了任意深的语境及所有后续常数。
+
+证明达到。取
+
+$$
+G_a[z]=(z,T_{a+1}).
+\tag{NIC.35}
+$$
+
+两个孔输入的标志零排除例外配对，故输出坐标分别为 $(a,0),(a+1,0)$，因为 $d\ge a+1$。相邻深度在任意 $m\ge2$ 下余数不同。唯一常数深度 $a+1$，有 $F_{a+2}$ 叶；因此 $G_a$ 同时达到 (NIC.33)。逐项必要性及这个共同达到证明 (NIC.34)，没有将不同语境的边缘最优值拼合。$\square$
+
+## 11. 材料定理所支持的余数测试层级
+
+**推论 11.1（零、一次、二次配对的完整区别）。** 对全部实际来源 $s,t$ 与 $m\ge2$，定义8.3满足
+
+$$
+\begin{aligned}
+s\sim_{m,0}t
+&\Longleftrightarrow \nu(s)\equiv\nu(t)\pmod m,\\
+s\sim_{2,1}t
+&\Longleftrightarrow \nu(s)=\nu(t),\\
+s\sim_{m,1}t\quad(m\ge3)
+&\Longleftrightarrow Q(s)=Q(t),\\
+s\sim_{m,k}t\quad(k\ge2)
+&\Longleftrightarrow Q(s)=Q(t),\\
+s\sim_{m,\infty}t
+&\Longleftrightarrow Q(s)=Q(t).
+\end{aligned}
+\tag{NIC.36}
+$$
+
+证明。零配对语境恰为 $\rho^v\square$，深度加共同整数，第一式成立。相同 $Q$ 在全部语境中保持相同，是 [JM 定理50.2][JM] 的已有稳定性，不需新的同余证明。
+
+若 $\nu(s)=a<d=\nu(t)$，取已有分离常数所给语境 $H_a[z]=(T_{a+1},z)$。深度较大的输入不满足例外条件，输出深度 $a+1$。深度较小的输入标志一时输出深度 $a+2$，标志零时输出深度 $a$。两种情况与 $a+1$ 均相差一，所以一次配对对所有 $m\ge2$ 区分不同深度，无须对输入标志作许诺。
+
+相同深度而相反标志时，定理9.1证明全部至多一次配对的奇偶测试都相同；定理9.2的 $E_n$ 对所有 $m\ge3$ 用一次配对分离，$C_n$ 对所有 $m\ge2$ 用二次配对分离，包括 $n=0$。这给其余各式。$\square$
+
+本推论只识别这个来源与余数读数下的测试关系。单孔测试给最大相容同余的通用机制，沿用 [StrictOneHoleContexts.contextual_equivalence_is_greatest][SOHC] 及 [上下文几何 §§1–3][CG]；准确深度观察的 $Q$ 商沿用 [JM §50][JM]。这里的承重增量是 (NIC.27)、(NIC.33) 的全语境下界和实际共同达到，而非另立通用商定理。
+
+**命题 11.2（零深度的奇偶边界与模数条件）。** 取实际来源 $s=\alpha,t=(\alpha,\alpha)$。其坐标分别为 $(0,1),(0,0)$，任何至多一次配对的语境都不能以奇偶区分，$C_0[z]=(\beta,(\beta,z))$ 则以深度一与零区分，并达到两叶材料下界。另取 $u=(\alpha,\alpha),w=\rho^2u$，它们的坐标为 $(0,0),(2,0)$；$G_0[z]=(z,\beta)$ 以深度零与一区分，达到常数深度一、材料一的阈值。若改取 $m=1$，任何来源和任何语境的终端余数皆为零，以上分离结论不成立。
+
+证明。$(\alpha,\alpha)$ 不满足 (NIC.21) 的例外条件，故坐标 $(0,0)$；迭代更新给 $Q(w)=(2,0)$。定理9.1、9.2与10.1给所述下界与达到；模一的余数恒为零。$\square$
+
+## 12. 语义、取得、历史与归属边界
+
+**定义 12.1（实际执行的附加合同）。** (NIC.23) 规定数学来源间的代入测试。若把一次测试解释为实际取得，另须供应绑定同一来源及纪元的合法有序拼接和前向替换操作、每个常数的真实取得或准备、终端余数的真实读出以及消费者可访问的实际历史。取得次序、常数准备、替换、拼接、记录保持、访问、本地计算与输出分别计价。仅有假设1.3的 $\mathrm{Read}(q)$ 口时，允许动作仍只有原地址读取、声明的本地计算与普通停止；(NIC.23) 的数学语法没有增加操作权限。
+
+定理9.2与10.1优化的是给定比较来源后的静态语境。达到常数依赖 $n$ 或 $a$，因此这些量词不是一个仅依据未知来源的已取得历史选择常数的共同策略。两个孔路径配对不能给有限常数菜单、控制状态、地址长度、总查询数、峰值存储或持续时间的界。$\mu$ 不计共享描述的长度，也不计外层 $\rho$ 后的展开材料；$M$ 是常数的内在解生成深度，不是其树高。若实际合同按另一资源计价，须证明对应的资源运输。
+
+**约定 12.2（当前投影与真实入口域）。** 本节测试的自变量是当前树，不是 [JM 定义37.1][JM] 的联合入口输入 $(x,k,y)$。其当前树 $\beta$ 的既有不可区分输入 $(\alpha,1,\beta)$、$(\beta,0,\beta)$，对每个共同语境都代入同一树，对每个共同当前地址也给同一回复，入口和次数却不同。这里直接沿用 [JM 定理37.3][JM]：取得当前 $Q$ 或全部当前投影测试值，不补回被擦去的真实入口选择。
+
+**约定 12.3（数学引用与适用范围）。** (NIC.27)、(NIC.33) 及其匹配构造为 repo-derived 普通数学推导。坐标与全部叶的例外配对供应由 [IntrinsicSubstitutionCoordinates][ISC] 及其[对应 Blueprint][ISCB]给出；唯一原始射线、Fibonacci 叶数、准确深度语境商分别归 [JM §§36、37.4、49–50][JM]。字面无替换语境的孔外材料归 [ActualLeafHistoryRigidity][ALHR]；本节只按 (NIC.24) 扩展这一资源，区别插入时材料与最终展开材料。
+
+单孔项代入与树同余的成熟背景属 literature-attested，引用 Dexter Kozen, *On the Myhill–Nerode Theorem for Trees*，作者[原文][Kozen]第2–3页的 ranked ground terms 与第3–5页的单变量一次出现代入和同余论证。第1–2页将此背景追溯至 Brainerd、Eilenberg–Wright、Arbib–Give'on；不把通用树同余归为本节的新结果。其有限 ranked 项语法可用两个零元符号、一个二元配对符号和一个一元符号表述 (NIC.23)，但本节的一元符号解释为既有 $\rho$，不是原树上的新自由构造。余数值观察可逐余数取原像语言后使用同一代入框架。该背景不提供 (NIC.26) 的来源特定例外、插入叶数最优值或原地址取得费用。本节不作外部优先权或穷尽文献缺失的断言。
+
+[已取得行的深度恢复 §§3–7][RDR]、[已保留字面根深度 §§3–5][LRD]及[已取得内在深度校准 §§5–8][IDC]处理完整取得行、后继原地址或未知前向滞后合同；本节 (NIC.23) 不替换这些任务和资源。[Native Ambient Contact Decision 定义1.2与定理6.1][NAC]在其整个有限覆盖来源类上供应联合接触分类，[NativeCompletionSupportClosure.support_closure_iff][NSC]供应完整同时 signed support；本节不重开其已解决范围。[KBONACCI Acquisition Resources §§96–101][KAR]的指定四振幅律区域与[FIB Fiber Calculus Continuation V 定理59.3][FCV]的指定热曲线精度转移也属于不同观察合同。它们不供应本节的余数语境材料价格，本节也不取得它们的 native 实现桥。
+
+[Nonlinear Recut Memory 定义1.1–1.2及7.3][NRM]的来源是固定长度关系与已声明的 echo、deletion、recut 动作，其 native 来源对应另列为桥接条件。保持这种来源与操作区别，不能将其中的前驱上下文或保留宽度换成本节的原树配对权限。以上归属划分保留共同来源、真实历史、观察和费用的各自变量。
+
+[NativeRotationDepthGap.native_rotation_depth_gap][NRG]供应实际单次局部旋转的深度差、整个 Fibonacci 叶词与几何纤维的深度极值以及共同前向迭代；(NIC.23) 的孔外构造保留括号，不包含旋转动作。[NativeRankedEqualityCompiler.ranked_equality_compilation 与 support_compilation][NREC]供应固定有限残余下的精确 scalar 等式及整份负条件的可行秩支持。它们的来源范围和供应结论继续使用，但不将其原生等式判定或旋转距离换成 (NIC.27)、(NIC.33) 的语境材料最优值。
+
+[ISC]: ../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean
+[ISCB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.scribe.cs
+[ALHR]: ../../../D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean
+[SOHC]: ../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean
+[CG]: RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md
+[RDR]: RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_ROW_DEPTH_RECOVERY.md
+[LRD]: RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md
+[IDC]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_INTRINSIC_DEPTH_CALIBRATION.md
+[NAC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_AMBIENT_CONTACT_DECISION.md
+[NSC]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCompletionSupportClosure.lean
+[KAR]: KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md
+[FCV]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_V.md
+[NRM]: https://github.com/the-omega-institute/trureturing/blob/176edc1f6ea512f5ba55a86ba2e40ae50e7c0364/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NONLINEAR_RECUT_MEMORY.md
+[NRG]: https://github.com/the-omega-institute/trureturing/blob/fbd824520b6ad2885dc25fe88387899f88078e8f/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/NativeRotationDepthGap.lean
+[NREC]: https://github.com/the-omega-institute/trureturing/blob/fbd824520b6ad2885dc25fe88387899f88078e8f/D5/S3/Arith/FibonacciAtomic/Observer/NativeRankedEqualityCompiler.lean
+
+## 追加锚（本行以下为增补区）
