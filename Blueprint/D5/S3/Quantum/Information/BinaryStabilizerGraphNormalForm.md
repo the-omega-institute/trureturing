@@ -28,7 +28,19 @@ $$\forall (N : \mathbb{N}), \forall (\Gamma : \operatorname{Matrix}\left(\operat
 
 Each edge contributes its binary quadratic monomial. The ordered upper-triangular sum is normalExponent; graphAmp is the complexSign value of that exponent, equivalently −1 raised to its natural representative. This definition accepts every binary matrix, without a symmetry or diagonal hypothesis.
 
-**Theorem 1.3 (A graph amplitude for every stabilizer line).**
+**Lemma 1.3 (Adjoints of tensor products).**
+
+$$\forall (N : \mathbb{N}), \forall (A : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), Matrix.\operatorname{conjTranspose}\left(D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(A\right)\right) = D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(\lambda (i : \operatorname{Fin}\left(N\right)) \mapsto Matrix.\operatorname{conjTranspose}\left(A(i)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_adj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The conjugate transpose of a tensor product is the tensor product of the conjugate transposes of its factors.
+
+**Theorem 1.4 (A graph amplitude for every stabilizer line).**
 
 $$\forall (N : \mathbb{N}), \forall (\psi : ((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)) \to \mathbb{C})), \operatorname{StabilizedBy}\left(pauliSet, \psi\right) \Rightarrow (\exists (U : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), \exists (\Gamma : \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \operatorname{ZMod}\left(2\right)\right)), \exists (c : \mathbb{C}), (\forall (i : \operatorname{Fin}\left(N\right)), \operatorname{U}\left(i\right) \in \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \land ((\Gamma).IsSymm \land ((\forall (i : \operatorname{Fin}\left(N\right)), \Gamma(i, i) = 0) \land (\psi = SMul.\operatorname{smul}\left(c, (\operatorname{tensorOp}\left(U\right) *_{v} \operatorname{graphAmp}\left(\Gamma\right))\right)))))$$
 
@@ -45,6 +57,7 @@ The Pauli stabilizers of a nonzero common eigenline span a binary Lagrangian sub
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.complex_sign_val`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.graphAmp`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.stabilizer_graph_normal_form`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_adj`
 - Dependency: [D5/S3/Quantum/Information/BinaryLagrangianGraphForm](BinaryLagrangianGraphForm.md)
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](BinaryStabilizerLocalInequivalence.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](../../VertexAlgebra/LatticeTwistedGroundRealization.md)

@@ -54,16 +54,16 @@ The refutation would fail if the source's stabilizer set were smaller than the c
 ## Evidence
 
 The canonical sources are two modules.
-- `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (795 lines):
+- `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (803 lines):
   - definitions of qubit registers, tensor products, the generated Clifford group, pure stabilizer states, `STAB`, `S`, `sigma`, `bell`, `W` and `gammaWords`;
   - the public theorem `stabilizer_polar_tensor_escape`, and the public local-gate laws `local_identity` and `local_product`, which the second module consumes.
-- `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean` (962 lines): the definitions `SupportLE`, `log2`, `DPI`, `Qaz`, `Daz` and `magic`; `claim` and `result`.
-- They reuse the frozen `StabilizerPairLocalUnitaryInequivalence` Pauli words and local operators, the frozen Hadamard of `NandiMutualPredictabilityLOCCRefutation`, and Mathlib's Hermitian functional calculus, `CFC.inverse_eq_rpow_neg_one`, convex hulls and Kronecker products.
+- `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean` (973 lines): the definitions `SupportLE`, `log2`, `DPI`, `Qaz`, `Daz` and `magic`; `claim` and `result`.
+- They reuse the frozen `StabilizerPairLocalUnitaryInequivalence` Pauli words and local operators, the frozen `Operator` of `StabilizerPovmMaximalEntanglementRefutation`, `IsDensity` of `GHZMeasureBiseparableBound`, `RHLinalg.rtrace`, `tensor_adj` of `BinaryStabilizerGraphNormalForm` (made public here), the frozen Hadamard of `NandiMutualPredictabilityLOCCRefutation`, and Mathlib's Hermitian functional calculus, `CFC.inverse_eq_rpow_neg_one`, convex hulls and Kronecker products.
 - Both use only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registrations in `Reg/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (three, one per public theorem of the first module) are `declared_validated`.
 
 Frozen states:
-- `Golden/Frozen/state/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean.json`, statement `sha256:a47b8fde1663efc10a3a509e5fcebe477cfa2e9af8d8e6a1ebe656aad89c9a87`;
+- `Golden/Frozen/state/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean.json`, statement `sha256:ba7ce0842886756516f6810c87e56810ed1c38403925120ef9b368724e8cf0a7`;
 - `Golden/Frozen/state/D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean.json`, statement `sha256:4f9bfe6e45ec46f840c55f62eef18068be848c824e193ea8dbb4c5f2a9f34bd3`.
 
 Declaration statements:
@@ -80,9 +80,10 @@ Tier 1 question of a 2024 paper, preregistered in issue #15943 before any Lean.
 | --- | --- | --- | --- |
 | stabilizer_polar_tensor_escape | content | the stabilizer expectation bound and the anticommuting-support exclusion | escape-witness |
 | local_identity, local_product | bind-only (consumed by the second module) | none | consumed helpers |
+| polar_consumption, C_square_expectation_bound, marginal_lower_bound, magic_two_one_lower, conjugate_marginal_lower, magic_conjugate_lower (second module, private) | content | the same polar bound, through `stabilizer_polar_tensor_escape` | consumed helpers |
 | result | content | the stabilizer polar bound of the first module (pure-stabilizer expectations in {0, ±1}, the anticommuting-support exclusion), first frozen in the same delivery and consumed through `stabilizer_polar_tensor_escape` | open-problem-resolution |
 
-Every other declaration is a definition used by a public statement or a private helper on the proof path of a public theorem (CLAUDE.md §3.2 「有消费的辅助声明」). The second module's utility is `certified-instance` with basis `refutes` of `claim`; the first module's is `none`. There is no digestion atom.
+Every other declaration is a definition used by a public statement or a bind-only private helper on the proof path of a public theorem (CLAUDE.md §3.2 「有消费的辅助声明」). The second module's utility is `certified-instance` with basis `refutes` of `claim`; the first module's is `none`. There is no digestion atom.
 
 ### What the settlement shows
 

@@ -42,7 +42,7 @@ IsState refers to D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensit
 
 **Definition 1.4 (Real part of the trace).**
 
-$$\forall n \in \mathbb{N},\; \forall A \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right),\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(A\right) = \operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(A\right)\right)$$
+$$\forall n \in \mathbb{N},\; \forall A \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right),\; \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.tr}\left(A\right) = \operatorname{RHLinalg.rtrace}\left(A\right)$$
 
 *Formalization.* `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.tr` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$\forall n \in \mathbb{N},\; \forall A \in \operatorname{D5.S3.Quantum.Magic.Th
 
 *Commentary.*
 
-This real-valued trace is the real part of Matrix.trace. It is defined for every operator.
+The real-valued trace refers to RHLinalg.rtrace, the real part of Matrix.trace. It is defined for every operator.
 
 **Definition 1.5 (Entrywise complex conjugation).**
 
@@ -294,4 +294,5 @@ For 1/3 < s and 7s² < 1, the two positive definite three-qubit operators each h
 - Truth anchor: `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.vacuum`
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../Entanglement/GHZMeasureBiseparableBound.md)
 - Dependency: [D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation](../Entanglement/NandiMutualPredictabilityLOCCRefutation.md)
+- Dependency: [D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm](../Information/BinaryStabilizerGraphNormalForm.md)
 - Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](../Measurement/StabilizerPovmMaximalEntanglementRefutation.md)
