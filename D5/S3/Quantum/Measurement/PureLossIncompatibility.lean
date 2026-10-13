@@ -618,7 +618,7 @@ private theorem common_subeffect_bound
             (b / a : ℝ) * (zj * starRingEnd ℂ zj) := by ring
         _ = 0 := by rw [hzi', hzj']; ring
     · dsimp [p, q, schurVector]
-      simp [smul_eq_mul]
+      simp
   have hdiag : (H 1 1).im = 0 := by
     have hh := (Matrix.IsHermitian.ext_iff.mp hH.isHermitian)
       (1 : Fin 2) (1 : Fin 2)
@@ -631,12 +631,12 @@ private theorem common_subeffect_bound
     dsimp [quad]
     simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Matrix.cons_val_zero,
       Matrix.cons_val_one]
-    simp only [map_zero, zero_mul, zero_add, mul_zero, add_zero]
+    simp only [zero_mul, mul_zero]
     rw [show H (1 : Fin 2) (1 : Fin 2) =
         ((H (1 : Fin 2) (1 : Fin 2)).re : ℂ) by
       apply Complex.ext
       · rfl
-      · simpa [hdiag]]
+      · simp [hdiag]]
     simp [Complex.sq_norm, Complex.normSq, Complex.mul_re]
     ring
   rw [hpq, hentry] at hbound
@@ -673,8 +673,7 @@ private theorem residual_quad_le (a b c x : ℝ) (ha : 0 < a)
         rw [← Complex.sq_norm, hz]
         norm_num
       simpa [Complex.normSq, pow_two] using ht
-    simp [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Complex.mul_re,
-      Complex.sq_norm]
+    simp [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Complex.mul_re]
     field_simp
     ring_nf at hzn ⊢
     linear_combination (-b ^ 2 * a) * hzn
