@@ -66,7 +66,7 @@ theorem szego_rho_pos {alpha : ℂ} (hAlpha : ‖alpha‖ < 1) :
     0 < szegoRho alpha := by
   exact Real.sqrt_pos.2 (sub_pos.mpr (normSq_lt_one_of_norm_lt_one hAlpha))
 
-private theorem szego_rho_sq {alpha : ℂ} (hAlpha : ‖alpha‖ < 1) :
+theorem szego_rho_sq {alpha : ℂ} (hAlpha : ‖alpha‖ < 1) :
     szegoRho alpha ^ 2 = 1 - Complex.normSq alpha := by
   exact Real.sq_sqrt (sub_nonneg.mpr (normSq_lt_one_of_norm_lt_one hAlpha).le)
 
