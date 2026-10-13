@@ -1,0 +1,9 @@
+## 46. Execution-boundary corrections
+
+The preceding sections are read with the following corrections. They close
+three independent gaps: silent actions must not carry a hidden source-dependent
+controller successor, a mixed budget must not turn an unbounded worst
+coordinate into a finite frontier point, and a finite path enumeration must
+prove source-total termination rather than enumerate only runs already known
+to succeed.
+

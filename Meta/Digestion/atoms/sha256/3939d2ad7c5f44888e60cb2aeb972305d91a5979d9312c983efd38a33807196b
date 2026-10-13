@@ -1,0 +1,16 @@
+**Theorem 47.3 (sound corrected feasibility statement).** Theorem 46.6 is
+sound after requiring both a bounded-profile certificate and either a uniform
+finite horizon or the full exact acceleration of Definition 47.2. The
+Presburger decision then ranges over controller graphs, $x\in\mathbb N^d$,
+and the universal source/response coverage formula. The mixed-box test uses
+$\operatorname{Feas}^{\mathrm{fin}}_K$ and therefore cannot be witnessed by a
+controller whose worst profile is infinite in any coordinate.
+
+When history affects a future response, the arguments of
+$\operatorname{Reply}_{e,a}$ and $\operatorname{Next}_{e,a}$ in Definition
+46.1 are understood to include the complete current boundary, including the
+ordered history $H$ (or an exact sufficient history state). The factorization
+requirement is unchanged: after that complete state is fixed, the controller
+position successor still factors only through the declared visible response,
+including $\bot$ for a silent action.
+
