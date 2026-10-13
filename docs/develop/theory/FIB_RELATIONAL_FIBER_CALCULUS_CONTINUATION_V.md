@@ -34,8 +34,12 @@ Neither linear contract transports resource tails. This volume first treats
 deterministic finite contracts, then states a source-uniform record-law
 extension under additional measurability and field-factorization assumptions.
 Section 59 uses the source-specific signed occurrence states and fixed-time
-root-readout gap of Holographic IV §110 to derive a necessary noise and
-absolute-precision boundary for predicting that comparison future.
+root-readout gap of Holographic IV §110, with the exact old root-neighbor
+residual of its (109.9), to derive an $O(n/N_n)$ old-curve separation bound
+and a necessary noise and absolute-precision boundary for predicting that
+comparison future. Its risk for full adversarial report balls on the two
+preparations is determined exactly; neither exponent optimality nor a native
+recovery procedure is supplied.
 
 ## 51. Complete action systems
 
@@ -1214,6 +1218,8 @@ unconditional general signed-fiber construction. ∎
 ## 59. Future root prediction from noisy old passive curves
 
 **Definition 59.1 (the original source and the two comparison preparations).**
+In this section Holographic IV denotes the
+[immutable supplier text, §§109--110](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#109-a-persistent-centered-defect-for-actual-ancestry-transport).
 Use the original ordered substitution sources $T_n=\rho^n(\alpha)$ and all
 occurrence vertices of each source, with
 
@@ -1225,9 +1231,9 @@ $$
 On the real counting space $\mathcal V_n=\ell^2(V_{T_n})$, let $L_n$ be the
 closed unit-edge Laplacian, without a root killing term, and let $P_n$ be
 orthogonal projection onto the zero-counting-mean subspace. Retain precisely
-[Holographic IV, Definitions 109.1 and 110.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#110-root-visible-ancestry-memory-of-homogeneous-occurrence-states)'s
-actual ancestry pullback $J_n$, which fixes old vertices and copies each old
-beta parent's value to both its new children. Write
+the actual ancestry pullback $J_n$ of Holographic IV, Definitions 109.1
+and 110.1, which fixes old vertices and copies each old beta parent's value
+to both its new children. Write
 
 $$
 S_n(a)=e^{-N_naL_n},\qquad
@@ -1238,7 +1244,10 @@ $$
 The operators and norms use every occurrence and counting measure. In
 particular $\mathcal C_n$ and $\mathcal A_n$ are the normalized port and
 ancestry comparison map, not the scalar finite-part quantities of
-Holographic IV §92. Let $x_n\in P_n\mathcal V_n$, $n\ge2$, be the centered
+Holographic IV §92. Every root or root-neighbor smoothing norm below
+restricts its input to $P_n\mathcal V_n$; the full closed counting
+Laplacian and all occurrence vertices are retained.
+Let $x_n\in P_n\mathcal V_n$, $n\ge2$, be the centered
 unit vectors supplied by its Definition 110.1. The two preparations in this
 section are $0$ and $x_n$ on the **same** deterministic old source $T_n$;
 there is no probability law or mixture over sources or preparations.
@@ -1308,18 +1317,22 @@ is adversarial absolute error, not a stochastic noise model.
 
 **Theorem 59.3 (the FIB future-readout noise and precision transfer).**
 For the preparations, fixed times, normalization, and common report channel
-of Definitions 59.1--59.2, there are $K>0$ and $n_0\ge2$, independent of
-$n$, such that
+of Definitions 59.1--59.2, there are $K_{\rm sharp}>0$ and $n_0\ge3$,
+independent of $n$, such that
 
 $$
-a_n\le\frac{K}{\sqrt{N_n}}\quad(n\ge n_0).
+a_n\le\frac{K_{\rm sharp}n}{N_n}\quad(n\ge n_0).
 \tag{59.1}
 $$
 
-For every $n\ge2$ and $E\ge0$ with $2E\ge a_n$,
+For every $n\ge2$ and $E\ge0$, the exact risk on these two preparations is
 
 $$
-R_n(E)\ge\frac{q_n}{2}.
+R_n(E)=
+\begin{cases}
+0,&2E<a_n,\\
+q_n/2,&2E\ge a_n.
+\end{cases}
 \tag{59.2}
 $$
 
@@ -1327,27 +1340,27 @@ Consequently, the vanishing choice $E_n=a_n/2$ satisfies
 
 $$
 E_n\longrightarrow0,\qquad
-\liminf_{n\to\infty}R_n(E_n)\ge\frac{|D(s)|}{2}>0.
+R_n(E_n)\longrightarrow\frac{|D(s)|}{2}>0.
 \tag{59.3}
 $$
 
-Every radius sequence with $E_n\ge K/(2\sqrt{N_n})$ for all sufficiently
-large $n$ has the same lower bound on its limiting inferior risk.
+Every radius sequence with $E_n\ge K_{\rm sharp}n/(2N_n)$ for all
+sufficiently large $n$ has the same limiting risk.
 
 If $0\le\delta<|D(s)|/2$, any family of predictors guaranteeing worst error
 at most $\delta$ on both preparations and every allowed report for all
 sufficiently large $n$ must satisfy, eventually,
 
 $$
-2E_n<a_n\le\frac{K}{\sqrt{N_n}}.
+2E_n<a_n\le\frac{K_{\rm sharp}n}{N_n}.
 \tag{59.4}
 $$
 
 In particular, for the dyadic absolute-error radius $E_n=2^{-p_n}$,
 
 $$
-p_n>\frac12\log_2N_n+1-\log_2K,\qquad
-\liminf_{n\to\infty}\frac{p_n}{n}\ge\frac12\log_2\varphi,
+p_n>\log_2N_n-\log_2n+1-\log_2K_{\rm sharp},\qquad
+\liminf_{n\to\infty}\frac{p_n}{n}\ge\log_2\varphi,
 \quad \varphi=\frac{1+\sqrt5}{2}.
 \tag{59.5}
 $$
@@ -1355,56 +1368,137 @@ $$
 The overlap bounds also hold for any supplied finite bank in Definition
 59.1 under its common maximum-norm error contract, since the bank separation
 is no greater than $a_n$. Thus (59.5) remains a necessary condition for such
-a bank to give the same guarantee; the bank can require still finer error.
+a bank to give the same guarantee; the bank can require still finer error
+or have zero separation and prevent the guarantee even at zero radius.
 
-Proof. The source-specific input is Holographic IV (110.16), which gives at
-the fixed time $a_0/2$ constants $M>0$ and $n_0\ge2$ such that
+Proof. Retain the exact old-field identity of Holographic IV (109.9),
+with the witness normalization (109.7)--(109.8) and (110.2). For all
+sufficiently large $n\ge3$, it says
 
 $$
-\|S_n(a_0/2)x_n\|
- \le M\left(\frac{2n}{a_0N_n}+\frac1{\sqrt{N_n}}\right)
- \quad(n\ge n_0).
-\tag{59.6}
+\begin{aligned}
+x_n&=\frac{L_nH_n+P_nR_n^{\rm old}}{d_n},\\
+R_n^{\rm old}
+ &=u_{n,L}\delta_{v_{n,L}}+u_{n,R}\delta_{v_{n,R}},\\
+\|H_n\|&\le h n\sqrt{N_n},\qquad
+d_n\ge d_*\sqrt{N_n},\qquad
+|u_{n,L}|+|u_{n,R}|\le U,
+\end{aligned}
 $$
 
-For the root port, its (110.11) supplies the finite uniform constant
+for constants $h,d_*,U>0$ independent of $n$. Here $v_{n,L}$ and
+$v_{n,R}$ are the two actual old root neighbors, and their deltas are
+**node** point masses, not edge coordinates or successor vertices.
+In the supplier's notation the coefficients are
+$u_{n,L}=\alpha_nQ_{n-1}$ and $u_{n,R}=\beta_nQ_{n-2}$, where $Q_k$
+denotes its block beta-charge sum $q_k$ from (108.10), with $|Q_k|\le2$;
+this $Q_k$ is distinct from the future target gap $q_n$ here.
+The contrast constants $\alpha_n,\beta_n$ are bounded by (109.5), and
+$d_n/\sqrt{N_n}\to\sqrt{\kappa}>0$ by (109.8), where
+$\kappa=c(2-c)$ and $c=\varphi^{-1}$. The corrector is zero
+at the global root and both old subtree roots, so the two exterior root
+seams contribute zero. Thus the two-neighbor support is an exact identity
+on the old source, available eventually with $n_0\ge3$.
+Choose $n_0$ so that all displayed bounds hold for every $n\ge n_0$.
+Applying $P_n$ to (109.9) retains $P_nR_n^{\rm old}$ and uses
+$P_nL_n=L_n$; the raw residual need not be centered.
+
+Set $t=a_0/2$. The root port bound (110.11) gives
 
 $$
 \|\mathcal C_nS_n(t)\|\le B_t=\frac{V}{\sqrt{2et}},\qquad
 V=\sup_j\|v_j^{\mathrm e}\|<\infty\quad(t>0),
 $$
 
-where $v_j^{\mathrm e}$ is the supplier's common-edge-carrier vector. The
-positive semidefinite closed Laplacian makes $S_n$ a contraction on the
-centered counting space. For every $a\ge a_0$, split the heat at $a_0/2$:
+where $v_j^{\mathrm e}$ is the supplier's common-edge-carrier vector.
+For either actual root neighbor $v$, write
+$\mathcal C_{n,v}u=\sqrt{N_n}\,u(v)$ on $P_n\mathcal V_n$.
+The unit-edge energy identity $L_n=D_n^*D_n$ of (103.1) gives, for
+every centered $u$,
+
+$$
+|u(v)-u(r)|^2
+ \le\sum_{\{w,w'\}\in E(T_n)}|u(w)-u(w')|^2
+ =\|L_n^{1/2}u\|^2.
+$$
+
+Finite spectral calculus, on this same counting space, gives
+
+$$
+\sqrt{N_n}\,\|L_n^{1/2}S_n(t)\|
+ \le\sqrt{N_n}\sup_{\lambda\ge0}
+           \sqrt\lambda\,e^{-N_nt\lambda}
+ =\frac1{\sqrt{2et}}.
+$$
+
+Consequently both neighbor ports satisfy
+
+$$
+\|\mathcal C_{n,v}S_n(t)\|
+ \le B_t+\frac1{\sqrt{2et}}
+ =\frac{V+1}{\sqrt{2et}}=:J_t.
+$$
+
+The representing vector of $\mathcal C_{n,v}$ on the centered subspace
+is $\sqrt{N_n}P_n\delta_v$. Self-adjointness of $S_n(t)$ on that
+subspace therefore yields
+
+$$
+\|S_n(t)P_n\delta_v\|
+ =\frac{\|\mathcal C_{n,v}S_n(t)\|}{\sqrt{N_n}}
+ \le\frac{J_t}{\sqrt{N_n}},\qquad
+\|S_n(t)P_nR_n^{\rm old}\|
+ \le\frac{UJ_t}{\sqrt{N_n}}.
+$$
+
+Keeping the support before smoothing supplies this extra
+$N_n^{-1/2}$ factor. Bounding only $\|R_n^{\rm old}\|$ as in (109.10)
+loses it. With $\|L_nS_n(t)\|\le1/(eN_nt)$, the exact field identity
+now gives
+
+$$
+\|S_n(t)x_n\|
+ \le\frac{\|L_nS_n(t)H_n\|
+             +\|S_n(t)P_nR_n^{\rm old}\|}{d_n}
+ \le\frac1{d_*N_n}
+           \left(\frac{hn}{et}+UJ_t\right)
+ \quad(n\ge n_0).
+\tag{59.6}
+$$
+
+The positive semidefinite closed Laplacian makes $S_n$ a contraction
+on the centered counting space. For every $a\ge a_0=2t$, split the heat:
 
 $$
 \begin{aligned}
 |\mathcal C_nS_n(a)x_n|
- &\le \|\mathcal C_nS_n(a_0/2)\|\,
-         \|S_n(a-a_0/2)x_n\|\\
- &\le B_{a_0/2}\,\|S_n(a_0/2)x_n\|\\
- &\le \frac{B_{a_0/2}M}{\sqrt{N_n}}
-          \left(1+\frac{2n}{a_0\sqrt{N_n}}\right).
+ &\le\|\mathcal C_nS_n(t)\|\,\|S_n(a-t)x_n\|\\
+ &\le B_t\,\|S_n(t)x_n\|\\
+ &\le\frac{B_t}{d_*N_n}
+          \left(\frac{hn}{et}+UJ_t\right)
+ \le\frac{K_{\rm sharp}n}{N_n}.
 \end{aligned}
 \tag{59.7}
 $$
 
 The second inequality uses
-$S_n(a-a_0/2)=S_n(a-a_0)S_n(a_0/2)$ and $a-a_0\ge0$.
+$S_n(a-t)=S_n(a-2t)S_n(t)$ and $a-2t\ge0$.
 It therefore covers the entire unbounded interval $[a_0,\infty)$, without
 assuming that the supplier's compact-interval convergence is already
-uniform there. Binet's formula and $N_n=2F_{n+1}-1$ give
+uniform there. Choose any positive
 
 $$
-H:=\sup_{n\ge n_0}\frac{n}{\sqrt{N_n}}<\infty,
-\qquad \frac{\log_2N_n}{n}\longrightarrow\log_2\varphi.
+K_{\rm sharp}\ge\frac{B_t}{d_*}
+              \left(\frac h{et}+\frac{UJ_t}{n_0}\right).
 $$
 
-Choose any positive $K\ge B_{a_0/2}M(1+2H/a_0)$ and take the supremum
-in (59.7). Since $\eta_n(0)=0$, this proves (59.1), derived from the
-supplier's state relaxation and root smoothing rather than assumed.
-The constant depends on $a_0$ and the fixed supplier family, not on $n$.
+Taking the supremum in (59.7) proves (59.1), since $\eta_n(0)=0$.
+The constants depend on $a_0$ and the fixed supplier family, not on $n$.
+These root and neighbor smoothing bounds do not hold on the full space:
+$S_n(t)$ fixes the constant mode, and the normalized ports take value $1$
+on $N_n^{-1/2}\mathbf1$. Their full-space norms are therefore at least
+$1$ for every $t$, whereas $B_t,J_t\to0$ as $t\to\infty$.
+The projection $P_n$ and centered operator domains are essential.
 
 For the noise step, the bounded continuous midpoint curve
 
@@ -1423,7 +1517,18 @@ q_n\le |z-g_{n,s}(0)|+|z-g_{n,s}(x_n)|
 $$
 
 Taking the allowed-report supremum and then the infimum over predictor maps
-proves (59.2). This midpoint/radius-of-information step is a classical
+proves $R_n(E)\ge q_n/2$ whenever $2E\ge a_n$.
+The constant target-midpoint predictor
+$\widehat g_n(y)=[g_{n,s}(0)+g_{n,s}(x_n)]/2$ has error exactly
+$q_n/2$ on both preparations for every report, proving equality in this
+branch. When $2E<a_n$, the two full closed report balls are disjoint:
+a point in their intersection would give $a_n\le2E$ by the triangle
+inequality. On their union, assign to each report the target of its unique
+compatible preparation, and assign any value outside the union. This
+arbitrary predictor has zero error. These two branches prove (59.2)
+as an elementary classical intermediate for this source comparison;
+the decoder is not claimed measurable or effective.
+The shared-report midpoint/radius-of-information step is a classical
 optimal-recovery ingredient; see Micchelli and Rivlin, *A Survey of Optimal
 Recovery*, in *Optimal Estimation in Approximation Theory*,
 [doi:10.1007/978-1-4684-2388-4_1](https://doi.org/10.1007/978-1-4684-2388-4_1),
@@ -1439,28 +1544,46 @@ Only that lower-bound ingredient is used: no sufficient recovery theorem,
 Hilbert-space regularization rule, or Hölder-model hypothesis is transferred
 to the curve carrier. The displayed argument proves the needed step directly.
 
-Equation (59.1) implies $a_n\to0$, whereas the supplier's fixed-$s$ limit
-gives $q_n\to|D(s)|>0$. Substituting $E_n=a_n/2$ proves (59.3).
-If $E_n\ge K/(2\sqrt{N_n})$, (59.1) also implies $2E_n\ge a_n$.
+Binet's formula and $N_n=2F_{n+1}-1$ give
+
+$$
+\frac n{N_n}\longrightarrow0,\qquad
+\frac{\log_2N_n}{n}\longrightarrow\log_2\varphi,\qquad
+\frac{\log_2n}{n}\longrightarrow0.
+$$
+
+Thus (59.1) implies $a_n\to0$, whereas the supplier's fixed-$s$ limit
+gives $q_n\to|D(s)|>0$. By (59.2), substituting $E_n=a_n/2$ gives
+$R_n(E_n)=q_n/2$, proving (59.3).
+If $E_n\ge K_{\rm sharp}n/(2N_n)$, (59.1) also implies $2E_n\ge a_n$,
+so the same exact risk and limit hold eventually.
 For a fixed $\delta<|D(s)|/2$, eventually $q_n>2\delta$.
 Then overlapping report balls would contradict a worst-error guarantee of
 $\delta$ by (59.2), proving (59.4). With $E_n=2^{-p_n}$, (59.4) gives
-$2^{1-p_n}<K/\sqrt{N_n}$. Taking logarithms of these positive quantities,
-then using the Fibonacci growth limit, proves (59.5).
+$2^{1-p_n}<K_{\rm sharp}n/N_n$. Taking logarithms of these positive
+quantities and using the displayed growth limits proves (59.5).
 For a finite bank its projected midpoint is again allowed at both
 preparations, and its separation is bounded by the full-curve separation;
 the same argument applies. $\square$
 
 **Convention 59.4 (scope, degeneracies, and provenance).** If $a_n=0$ at
 some finite $n$ with $q_n>0$, even the zero-radius report is shared and
-$R_n(0)\ge q_n/2$. The theorem takes no logarithm of $a_n$, presumes no
-strictly positive finite-$n$ old curve gap, and supplies no noiseless
-reconstruction algorithm.
+$R_n(0)=q_n/2$. If $a_n>0$, however, $E_n=a_n/4$ gives zero two-state
+risk by (59.2); along indices with positive separation these radii also
+tend to zero. In particular, if $a_n>0$ eventually, this is a vanishing
+noise sequence with eventually zero risk, so vanishing noise alone does
+not force failure under that condition.
+The theorem takes no logarithm of $a_n$ and presumes no strictly positive
+finite-$n$ old curve gap. Its arbitrary two-point decoder supplies neither
+recovery on the entire original source or field domain nor a finite
+actual-history acquisition procedure.
 
 The exponent in (59.5) is necessary for the declared dyadic **absolute-error
-radius** under this common channel. It is not a sufficient precision
-algorithm or a storage optimum: it counts neither representations of an
-entire curve nor acquired index metadata. It supplies no physical energy or
+radius** under this common channel. No matching lower bound on $a_n$ or
+general-domain recovery upper bound is supplied, so this exponent is not
+claimed optimal. It is not a sufficient precision algorithm or a storage
+optimum: it counts neither representations of an entire curve nor acquired
+index metadata. It supplies no physical energy or
 duration law. The observation cutoff $a_0$ and successor readout time $s$
 are fixed positive comparison times; the proof supplies no uniform bound
 as $a_0\downarrow0$, and no conclusion is drawn for observation times tending
@@ -1475,8 +1598,9 @@ $\sqrt{N_n}x_n$ changes the input scale and its noise contract; it is not
 an unchanged precision claim.
 
 This is `repo-derived` source-specific composition of Holographic IV
-§§110.3--110.5 with the cited `literature-attested` optimal-recovery
-ingredient; no claim of originality is made for the composition. The
+(109.7)--(109.10) and §§110.1--110.5, using its unit-edge identity (103.1),
+with the cited `literature-attested` optimal-recovery ingredient;
+no claim of originality is made for the composition. The
 uncertainty here is between signed homogeneous preparations, not between
 two native root-query replies or two separate source-size experiments.
 Native preparation of these signed fields and realization of heat, both
