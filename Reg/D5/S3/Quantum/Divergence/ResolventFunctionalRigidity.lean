@@ -127,7 +127,7 @@ def family : Registration arena.{u,v,w}
     intro h
     exact zero_ne_one (congrFun h (ULift.up 0))
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@finite_resolvent_defects_force_functional_intertwining.{u,v,w})
     (Realization signature.{u}) (Type (u+1)) Unit where
   unitName := `Reg.D5.S3.Quantum.Divergence.ResolventFunctionalRigidity.finiteSamplesUnit

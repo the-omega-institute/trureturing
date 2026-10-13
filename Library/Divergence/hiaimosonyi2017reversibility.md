@@ -8,7 +8,7 @@ url: https://arxiv.org/abs/1604.03089v4
 claim: Standard quantum f-divergence preservation detects reversibility when the support of the representing measure covers the distinct spectral sites of the two relative modular operators.
 strata_touched:
   - D5/S3/Quantum/Divergence/ResolventFunctionalRigidity
-license: null
+license: "not verified; bibliographic attribution only, with no source text or proof code copied"
 triage: anchor
 ---
 
