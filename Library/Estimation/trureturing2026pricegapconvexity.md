@@ -3188,7 +3188,7 @@ every maximizing tie and every original outgoing weight.
 
 ### Conditions on the original parameters and the fixed cuts
 
-Put $\Delta=1-\Theta>0$, $m=1/2-\eta$ and retain SR3's
+Put $\Delta=1-\Theta>0$, $\mu=1/2-\eta$ and retain SR3's
 $\sigma_{\rm safe}=1/2+\Delta(1/2-\eta)/\eta$. Assume
 
 $$
@@ -3216,24 +3216,24 @@ At the already defined safe boundary,
 
 $$
 \mathfrak p_h(\sigma_{\rm safe})
-=m+h[g(\sigma_{\rm safe})-1]<m,
+=\mu+h[g(\sigma_{\rm safe})-1]<\mu,
 $$
 
 while
 
 $$
-\mathfrak p_h(\Theta)-m
+\mathfrak p_h(\Theta)-\mu
 =\frac{\eta-\Delta}{2\Delta}-h[1-g(\Theta)]<0.
 $$
 
 By continuity fix once $3/5<\sigma_0<\sigma_{\rm safe}$ sufficiently
-close to $\sigma_{\rm safe}$ that $\mathfrak p_h(\sigma_0)<m$.
+close to $\sigma_{\rm safe}$ that $\mathfrak p_h(\sigma_0)<\mu$.
 All these cuts depend only on the original fixed parameters.
 Since $g''(\sigma)=1200/(3+5\sigma)^3>0$, the power allowance is
 convex on $[\sigma_0,\Theta]$. Its maximum is at an endpoint. Hence
 
 $$
-\varepsilon_0:=m-
+\varepsilon_0:=\mu-
 \max\{\mathfrak p_h(\sigma_0),\mathfrak p_h(\Theta)\}>0.
 \tag{DH2}
 $$
@@ -3303,7 +3303,7 @@ $$
 Fix $\delta,\epsilon$ small enough that
 $\eta\delta/\Delta+h\epsilon<\varepsilon_0/2$ and
 $g(\sigma_0)+\epsilon<1$. DH2 now bounds the finite bin sum by
-$O(L_XX^{m-\varepsilon_0/2})=o(M_XL_X)$, proving DH3.
+$O(L_XX^{\mu-\varepsilon_0/2})=o(M_XL_X)$, proving DH3.
 Extending the nonnegative absolute sum beyond each actual $\tau_i$ is
 used only as an upper bound for the original masked sector. No actual
 mask, coefficient, phase or multiplicity is replaced.
@@ -3313,3 +3313,91 @@ convergent because $g(\sigma_0)<1$. It does not make the full compensated
 $1/\rho$ series absolutely summable; CR34 and the earlier complete
 compensation obstruction remain unchanged. DH3 pays a specified growing
 high-frequency sector, not the full signed head or RH.
+
+
+## The surviving original head has one common cutoff under DH1
+
+Keep DH1--DH3's fixed cuts and the same original core-selected legal
+heights from CR45. Since $t_i/B_i\to0$ and $t_i\ge\ell_X$,
+one common start has $B_i\ge\ell_X$ uniformly in all labels and ties.
+Every original legal $\tau_i\ge(\sqrt{B_i}-4)/4$ is eventually at least
+$\sqrt{B_i}/8$. Thus
+
+$$
+\frac{H_X}{\min_i\tau_i}
+\ll X^{h-(1-\eta)/2}(\log X)^{-1/2}\longrightarrow0.
+$$
+
+In particular every original head contains the same actual zero set
+with $0<\gamma\le H_X$. Define its unabridged complementary-real-part
+contribution
+
+$$
+\mathcal P_X^{\rm common}
+=2\operatorname{Re}
+\sum_{\substack{0<\gamma\le H_X\\\beta>\sigma_0}}
+m_\rho\sum_{i<m}\delta_i c_{B_i,a}(\rho).
+$$
+
+Finite summation is exchanged only after establishing common membership.
+Every coefficient retains its original $J_{\log B_i}(\rho)-a$,
+real part, phase and multiplicity; the full original outgoing sum,
+including its last endpoint $p_m$, remains inside.
+
+Apply the already proved SR3 directly at the fixed
+$\sigma_0<\sigma_{\rm safe}$, rather than at a moving threshold or an
+unpaid endpoint. It pays the whole lower-real-part subhead at the
+original individual heights. DH3 pays the absolute complementary-real-part
+portion above $H_X$. The resulting exact partition of those original
+heads therefore gives
+
+$$
+\sum_{i<m}\delta_i H_{B_i,a}(\tau_i)
+=\mathcal P_X^{\rm common}+o_X(M_XL_X).
+$$
+
+Finally reuse HC2's original complete height account, with its
+$O_a(L_X)$ discrepancy and $M_X\to\infty$, to obtain
+
+$$
+\boxed{\mathcal G_X
+=\mathcal P_X^{\rm common}+o_X(M_XL_X).}
+\tag{DH4}
+$$
+
+The error is uniform in all original maximizing ties and admissible
+height assignments. Consequently the original cofinal-full-window,
+all-tie upper comparison for $\mathcal G_X$ can be transferred to
+$\mathcal P_X^{\rm common}$, and conversely, with an arbitrarily small
+fixed loss of strict margin below $d(1-\kappa)/16$. No cofinal window is
+created or shortened by the partition.
+
+The cut $H_X$ is a place to split an existing legal head; it is not
+asserted to be an admissible CHJ height, and CHJ is not reapplied there.
+The original heights have not been optimized to buy a leading saving.
+The saving comes from a proved density bound on the original discarded
+sector, together with the already paid SR and HC accounts.
+
+For a nonempty parameter example, if the originally supplied
+$(\Theta,\eta)=(3/4,13/50)$, then
+$\sigma_{\rm safe}=19/26$, $h_*=9/200$ and
+$(1-\eta)/2=37/100$. The fixed cuts $h=1/10$, $\sigma_0=7/10$ obey
+DH1--DH2: $g(\sigma_0)=9/13$,
+$\mathfrak p_h(\sigma_0)=288/1625$,
+$\mathfrak p_h(\Theta)=97/450$, and the endpoint margin below
+$\mu=6/25$ is $11/450$. This is a conditional parameter example; it
+supplies neither an actual value of $\Theta$ nor a replacement for the
+original $\eta$.
+
+The common cutoff still grows. Each fixed actual off-critical zero
+ultimately lies inside it, so the earlier fixed-zero budget obstruction
+is retained. A bound for one fixed zero pair does not bound the growing
+common head without a joint family estimate. DH4 proves no cancellation
+or upper budget for that head.
+
+DH1--DH4 are source-specific paper applications of the existing density,
+coefficient, clock, lower-sector and height suppliers. There is no new
+generic density or sampling theorem, literature-priority claim, Lean
+declaration or kernel verification. The signed common-head comparison,
+the complete original target and RH remain unproved. Outside DH1,
+including $\Theta=1$, this reduction has not been established.
