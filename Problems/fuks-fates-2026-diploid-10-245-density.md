@@ -47,7 +47,7 @@ The settlement would fail if the cylinder hierarchy were not the source's proces
 
 ## Evidence
 
-The canonical source is `D5/S3/StatisticalMechanics/CellularAutomata/Diploid10245Density.lean` (344 lines).
+The canonical source is `D5/S3/StatisticalMechanics/CellularAutomata/Diploid10245Density.lean` (346 lines).
 - Public declarations: the definitions `rule10`, `rule245`, `p`, `w`, `evolve`, `P`, `d` and `CylinderLaw`; `claim` and `result`.
 - It uses Mathlib only: `Bool.toNat`, `Fin.consEquiv`, `Fin.snocEquiv`, `Equiv.sum_comp`, `Fintype.sum_prod_type`, `Fintype.sum_bool` and `tendsto_atTop_of_eventually_const`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
