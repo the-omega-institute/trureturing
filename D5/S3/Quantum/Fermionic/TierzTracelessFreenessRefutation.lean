@@ -7,6 +7,11 @@
    digest: The traceless degree-five complex at matrix size four is not free over diagonal creators. -/
 
 import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
+import Mathlib.LinearAlgebra.CliffordAlgebra.Prod
+import Mathlib.LinearAlgebra.Dual.Lemmas
+import Mathlib.LinearAlgebra.Quotient.Basic
+import Mathlib.Data.Nat.Bitwise
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Basis
@@ -19,7 +24,7 @@ set_option linter.style.longLine false
 
 noncomputable section
 
-namespace TierzTracelessFreenessRefutation
+namespace D5.S3.Quantum.Fermionic.TierzTracelessFreenessRefutation
 
 abbrev Mat4 := Matrix (Fin 4) (Fin 4) ℂ
 
@@ -129,46 +134,139 @@ private theorem A_coordinates :
   fin_cases i <;> fin_cases j <;>
     simp [A, g, coordBasis_eq, ij, hd, map_sub, map_neg]
 
-private abbrev Mask := Finset (Fin 15)
+variable {U : Type*} [AddCommGroup U] [Module ℂ U]
+private def word (n : ℕ) : (ℕ → U) → ℕ → ExteriorAlgebra ℂ U :=
+  Nat.rec (fun _ _ => 1) (fun _ rec v s =>
+    if s % 2 = 1 then ExteriorAlgebra.ι ℂ (v 0) * rec (fun i => v (i+1)) (s/2)
+    else rec (fun i => v (i+1)) (s/2)) n
+private def parity (n : ℕ) : ℕ → ℤ :=
+  Nat.rec (fun _ => 1) (fun _ rec s =>
+    (if s % 2 = 1 then -1 else 1) * rec (s/2)) n
+private def sg (n : ℕ) : ℕ → ℕ → ℤ :=
+  Nat.rec (fun _ _ => 1) (fun k rec s t =>
+    if s % 2 = 1 ∧ t % 2 = 1 then 0 else
+    (if t % 2 = 1 then parity k (s/2) else 1) * rec (s/2) (t/2)) n
+private theorem word_succ (n : ℕ) (v : ℕ → U) (s : ℕ) :
+    word (n+1) v s = if s % 2 = 1 then ExteriorAlgebra.ι ℂ (v 0) *
+      word n (fun i => v (i+1)) (s/2) else word n (fun i => v (i+1)) (s/2) := rfl
+private theorem parity_succ (n s : ℕ) : parity (n+1) s =
+    (if s % 2 = 1 then -1 else 1) * parity n (s/2) := rfl
+private theorem sg_succ (n s t : ℕ) : sg (n+1) s t =
+    if s % 2 = 1 ∧ t % 2 = 1 then 0 else
+    (if t % 2 = 1 then parity n (s/2) else 1) * sg n (s/2) (t/2) := rfl
+private theorem word_comm (n : ℕ) (v : ℕ → U) (s : ℕ) (u : U) :
+    word n v s * ExteriorAlgebra.ι ℂ u =
+      parity n s • (ExteriorAlgebra.ι ℂ u * word n v s) := by
+  induction n generalizing s v with
+  | zero => simp [word, parity]
+  | succ n ih =>
+    rw [word_succ, parity_succ]
+    by_cases hs : s % 2 = 1
+    · simp only [if_pos hs, mul_assoc, ih, mul_smul_comm]
+      rw [← mul_assoc, eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap (v 0) u)]
+      simp [neg_smul, mul_assoc]
+    · simp only [if_neg hs, one_mul]
+      exact ih _ _
+private theorem word_mul (n : ℕ) (v : ℕ → U) (s t : ℕ) :
+    word n v s * word n v t = sg n s t • word n v (s ||| t) := by
+  induction n generalizing v s t with
+  | zero => simp [word, sg]
+  | succ n ih =>
+    have hor : (s ||| t) % 2 = 1 ↔ s % 2 = 1 ∨ t % 2 = 1 := Nat.or_mod_two_eq_one
+    rw [word_succ, word_succ, word_succ, sg_succ]
+    by_cases hs : s % 2 = 1 <;> by_cases ht : t % 2 = 1
+    · simp only [hs, ht, true_and, if_true, zero_smul]
+      rw [mul_assoc, ← mul_assoc (word n _ _) _ _, word_comm]
+      rw [smul_mul_assoc, mul_smul_comm]
+      simp only [mul_assoc]
+      rw [← mul_assoc (ExteriorAlgebra.ι ℂ (v 0)) (ExteriorAlgebra.ι ℂ (v 0)),
+        ExteriorAlgebra.ι_sq_zero, zero_mul, smul_zero]
+    · simp only [hs, ht, and_false, if_false, if_true, one_mul,
+        if_pos (hor.mpr (Or.inl hs)), Nat.or_div_two]
+      rw [mul_assoc, ih, mul_smul_comm]
+    · simp only [hs, ht, false_and, if_false, if_true,
+        if_pos (hor.mpr (Or.inr ht)), Nat.or_div_two]
+      rw [← mul_assoc, word_comm, smul_mul_assoc, mul_assoc, ih, mul_smul_comm, smul_smul]
+    · simp only [hs, ht, false_and, if_false, one_mul,
+        if_neg (fun h => (hor.mp h).elim hs ht), Nat.or_div_two]
+      exact ih _ _ _
+private def allowed (n : ℕ) : ℕ → ℕ → Bool :=
+  Nat.rec (fun _ _ => true) (fun _ rec s k =>
+    (if s % 2 = 1 then decide (k % 2 = 1) else true) && rec (s/2) (k/2)) n
+private theorem allowed_succ (n s k : ℕ) : allowed (n+1) s k =
+    ((if s % 2 = 1 then decide (k % 2 = 1) else true) && allowed n (s/2) (k/2)) := rfl
+private theorem word_projection (n : ℕ) (v : ℕ → U) (s k : ℕ)
+    (π : ExteriorAlgebra ℂ U →ₐ[ℂ] ExteriorAlgebra ℂ U)
+    (hv : ∀ i < n, π (ExteriorAlgebra.ι ℂ (v i)) =
+      if k.testBit i then ExteriorAlgebra.ι ℂ (v i) else 0) :
+    π (word n v s) = if allowed n s k then word n v s else 0 := by
+  induction n generalizing v s k with
+  | zero => simp [word,allowed]
+  | succ n ih =>
+    have hv0 := hv 0 (Nat.zero_lt_succ _)
+    have hvt : ∀ i < n, π (ExteriorAlgebra.ι ℂ (v (i+1))) =
+        if (k/2).testBit i then ExteriorAlgebra.ι ℂ (v (i+1)) else 0 := by
+      intro i hi
+      simpa only [Nat.testBit_div_two] using hv (i+1) (Nat.succ_lt_succ hi)
+    rw [word_succ, allowed_succ]
+    by_cases hs : s % 2 = 1
+    · rw [if_pos hs, map_mul, hv0, ih _ _ _ hvt]
+      rw [Nat.testBit_eq_decide_div_mod_eq] at *
+      by_cases hk : k%2=1 <;> by_cases ha : allowed n (s/2) (k/2) = true <;>
+        simp [hs,hk,ha] at *
+    · rw [if_neg hs, ih _ _ _ hvt]
+      simp [hs]
+private theorem word_zero_mask (n : ℕ) (v : ℕ → U) : word n v 0=1 := by
+  induction n generalizing v with
+  | zero => rfl
+  | succ n ih => rw [word_succ]; simpa using ih (fun i => v (i+1))
+private theorem word_single (n k : ℕ) (hk : k<n) (v : ℕ → U) :
+    word n v (2^k) = ExteriorAlgebra.ι ℂ (v k) := by
+  induction n generalizing k v with
+  | zero => omega
+  | succ n ih =>
+    cases k with
+    | zero => simp [word_succ,word_zero_mask]
+    | succ k =>
+      have hmod : 2^(k+1)%2=0 := by simp [pow_succ]
+      have hdiv : 2^(k+1)/2=2^k := by simp [pow_succ]
+      rw [word_succ,if_neg (by omega),hdiv]
+      exact ih k (by omega) (fun i => v (i+1))
+private def weight (n : ℕ) : ℕ → ℕ :=
+  Nat.rec (fun _ => 0) (fun _ rec s => if s%2=1 then rec (s/2)+1 else rec (s/2)) n
+private theorem word_hom (n : ℕ) (v : ℕ → U) (s : ℕ) :
+    word n v s ∈ ExteriorAlgebra.exteriorPower ℂ (weight n s) U := by
+  induction n generalizing v s with
+  | zero => exact Submodule.algebraMap_mem (R := ℂ) 1
+  | succ n ih =>
+    change word (n+1) v s ∈ LinearMap.range (ExteriorAlgebra.ι ℂ)^
+      (if s%2=1 then weight n (s/2)+1 else weight n (s/2))
+    rw [word_succ]
+    by_cases hs : s%2=1
+    · rw [if_pos hs,if_pos hs,pow_succ']
+      exact Submodule.mul_mem_mul (LinearMap.mem_range_self _ _) (ih _ _)
+    · rw [if_neg hs,if_neg hs]
+      exact ih _ _
+
+private abbrev Mask := Fin (2^15)
 private abbrev Poly := List (Mask × ℤ)
-
-/-- The increasing exterior-basis word indexed by the support mask. -/
-private def mono (s : Mask) : E := coordBasis.ExteriorAlgebra s
-
+private def basisSeq (i : ℕ) : V := coordBasis ⟨i % 15, Nat.mod_lt _ (by decide)⟩
+private def mono (s : Mask) : E := word 15 basisSeq s.val
 private def eval (p : Poly) : E := (p.map fun t => t.2 • mono t.1).sum
-
 private theorem eval_nil : eval [] = 0 := rfl
-
 private theorem eval_cons (t : Mask × ℤ) (p : Poly) :
     eval (t :: p) = t.2 • mono t.1 + eval p := rfl
-
-/-- Signature of the shuffle that sorts the two increasing words; overlap annihilates. -/
-private def sign (s t : Mask) : ℤ :=
-  if h : Disjoint s t then
-    ((Set.powersetCard.permOfDisjoint
-      (s := Set.powersetCard.ofCard (s := s) rfl)
-      (t := Set.powersetCard.ofCard (s := t) rfl) h).sign : ℤ)
-  else 0
-
-private theorem mono_mul (s t : Mask) : mono s * mono t = sign s t • mono (s ∪ t) := by
-  by_cases h : Disjoint s t
-  · have he := ExteriorAlgebra.basis_mul_of_disjoint coordBasis
-      (Set.powersetCard.ofCard (s := s) rfl)
-      (Set.powersetCard.ofCard (s := t) rfl) h
-    unfold Set.powersetCard.disjUnion at he
-    simpa only [mono, sign, dif_pos h, Units.smul_def, Set.powersetCard.val_ofCard,
-      Finset.disjUnion_eq_union] using he
-  · have he := ExteriorAlgebra.basis_mul_of_not_disjoint coordBasis
-      (Set.powersetCard.ofCard (s := s) rfl)
-      (Set.powersetCard.ofCard (s := t) rfl) h
-    simpa only [mono, sign, dif_neg h, zero_smul, Set.powersetCard.val_ofCard] using he
+private def join (s t : Mask) : Mask := ⟨s.val ||| t.val, Nat.or_lt_two_pow s.isLt t.isLt⟩
+private def sign (s t : Mask) : ℤ := sg 15 s.val t.val
+private theorem mono_mul (s t : Mask) : mono s * mono t = sign s t • mono (join s t) :=
+  word_mul 15 basisSeq s.val t.val
 
 private def mergeTerm (t : Mask × ℤ) : Poly → Poly :=
   List.rec [t] (fun u us acc =>
     if t.1 = u.1 then (u.1, t.2 + u.2) :: us else u :: acc)
 
 private def normalize (p : Poly) : Poly :=
-  (p.foldr mergeTerm []).filter (fun t => t.2 != 0)
+  ((p.filter (fun t => t.2 != 0)).foldr mergeTerm []).filter (fun t => t.2 != 0)
 
 private theorem eval_mergeTerm (t : Mask × ℤ) (p : Poly) :
     eval (mergeTerm t p) = t.2 • mono t.1 + eval p := by
@@ -199,12 +297,11 @@ private theorem eval_filter (p : Poly) :
       simp only [List.filter_cons, hb, if_true, eval_cons, ih]
 
 private theorem eval_normalize (p : Poly) : eval (normalize p) = eval p := by
-  rw [normalize, eval_filter]
-  induction p with
-  | nil => rfl
-  | cons t p ih =>
-    rw [List.foldr_cons, eval_mergeTerm, ih]
-    rfl
+  have hf (q : Poly) : eval (q.foldr mergeTerm [])=eval q := by
+    induction q with
+    | nil => rfl
+    | cons t q ih => rw [List.foldr_cons,eval_mergeTerm,ih]; rfl
+  rw [normalize,eval_filter,hf,eval_filter]
 
 private def add (p q : Poly) : Poly := normalize (p ++ q)
 
@@ -213,7 +310,7 @@ private theorem eval_add (p q : Poly) : eval (add p q) = eval p + eval q := by
   simp only [eval, List.map_append, List.sum_append]
 
 private def termMul (t u : Mask × ℤ) : Mask × ℤ :=
-  (t.1 ∪ u.1, (t.2 * u.2) * sign t.1 u.1)
+  (join t.1 u.1, (t.2 * u.2) * sign t.1 u.1)
 
 private def mul (p q : Poly) : Poly :=
   normalize (p.flatMap fun t => q.map (termMul t))
@@ -242,19 +339,12 @@ private theorem eval_mul (p q : Poly) : eval (mul p q) = eval p * eval q := by
     rw [eval_mul_row, ih]
     simp only [eval, List.map_cons, List.sum_cons, add_mul]
 
-private theorem mono_empty : mono ∅ = 1 := by
-  rw [mono, ExteriorAlgebra.basis_apply]
-  exact ExteriorAlgebra.ιMulti_zero_apply _
-
-private theorem mono_singleton (k : Fin 15) : mono {k} = g k := by
-  rw [mono, ExteriorAlgebra.basis_apply_ofCard coordBasis (Finset.card_singleton k),
-    ExteriorAlgebra.ιMulti_family]
-  simp only [ Set.powersetCard.ofFinEmbEquiv_symm_apply,
-    Set.powersetCard.val_ofCard, Finset.orderEmbOfFin_singleton, Function.comp_apply,
-    ExteriorAlgebra.ιMulti_succ_apply, ExteriorAlgebra.ιMulti_zero_apply, mul_one, g]
-
-private def varData (k : Fin 15) : Poly := [({k}, 1)]
-
+private theorem mono_empty : mono 0 = 1 := word_zero_mask 15 basisSeq
+private def singletonMask (k : Fin 15) : Mask :=
+  ⟨2^k.val, Nat.pow_lt_pow_right (by decide) k.isLt⟩
+private theorem mono_singleton (k : Fin 15) : mono (singletonMask k) = g k := by
+  exact (word_single 15 k.val k.isLt basisSeq).trans (by simp [basisSeq,g,Nat.mod_eq_of_lt k.isLt])
+private def varData (k : Fin 15) : Poly := [(singletonMask k, 1)]
 private theorem eval_varData (k : Fin 15) : eval (varData k) = g k := by
   simp only [varData, eval, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil,
     one_smul, add_zero, mono_singleton]
@@ -275,7 +365,7 @@ private theorem eval_matrix_mul (X Y : Matrix (Fin 4) (Fin 4) Poly) :
   exact add_assoc _ _ _
 
 private def matrixOne : Matrix (Fin 4) (Fin 4) Poly :=
-  fun i j => if i = j then [(∅, 1)] else []
+  fun i j => if i = j then [(0, 1)] else []
 
 private theorem eval_matrix_one : matrixEval matrixOne = 1 := by
   ext i j
@@ -309,7 +399,7 @@ private def AData : Matrix (Fin 4) (Fin 4) Poly :=
   !![varData 0, varData 3, varData 4, varData 5;
      varData 6, varData 1, varData 7, varData 8;
      varData 9, varData 10, varData 2, varData 11;
-     varData 12, varData 13, varData 14, [({0}, -1), ({1}, -1), ({2}, -1)]]
+     varData 12, varData 13, varData 14, [(singletonMask 0, -1), (singletonMask 1, -1), (singletonMask 2, -1)]]
 
 private theorem eval_AData : matrixEval AData = A := by
   rw [A_coordinates]
@@ -322,4 +412,287 @@ private theorem Q_eq_eval : Q = eval (tracePow AData 5) := by
   rw [eval_tracePow, eval_AData]
   rfl
 
-end TierzTracelessFreenessRefutation
+variable {U : Type*} [AddCommGroup U] [Module ℂ U]
+private theorem odd_involute {a : ExteriorAlgebra ℂ U}
+    (ha : a ∈ ExteriorAlgebra.exteriorPower ℂ 5 U) : CliffordAlgebra.involute a = -a :=
+  CliffordAlgebra.involute_eq_of_mem_odd
+    (Submodule.mem_iSup_of_mem ⟨5,by decide⟩ ha)
+private theorem odd_comm (a : ExteriorAlgebra ℂ U)
+    (ha : a ∈ ExteriorAlgebra.exteriorPower ℂ 5 U) (x : ExteriorAlgebra ℂ U) :
+    x*a = a*CliffordAlgebra.involute x := by
+  induction x using ExteriorAlgebra.induction with
+  | algebraMap r => rw [AlgHom.commutes, Algebra.commutes]
+  | ι v =>
+    have hoa : a ∈ CliffordAlgebra.evenOdd (0 : QuadraticForm ℂ U) 1 :=
+      Submodule.mem_iSup_of_mem ⟨5,by decide⟩ ha
+    have hov := CliffordAlgebra.ι_mem_evenOdd_one (0 : QuadraticForm ℂ U) v
+    have h := CliffordAlgebra.map_mul_map_eq_neg_of_isOrtho_of_mem_evenOdd_one
+      (QuadraticMap.Isometry.id (0 : QuadraticForm ℂ U))
+      (QuadraticMap.Isometry.id (0 : QuadraticForm ℂ U))
+      (fun _ _ => .all _ _) (ExteriorAlgebra.ι ℂ v) a hov hoa
+    simpa only [CliffordAlgebra.map_id,AlgHom.id_apply,neg_mul,
+      CliffordAlgebra.involute_ι,mul_neg] using h
+  | mul x y hx hy => rw [map_mul, mul_assoc, hy, ← mul_assoc, hx, mul_assoc]
+  | add x y hx hy => rw [map_add, add_mul, hx, hy, mul_add]
+private theorem odd_square (a : ExteriorAlgebra ℂ U)
+    (ha : a ∈ ExteriorAlgebra.exteriorPower ℂ 5 U) : a*a=0 := by
+  have h := odd_comm a ha a
+  have ht := odd_involute ha
+  rw [ht, mul_neg] at h
+  have h2 : (2 : ℂ) • (a*a) = 0 := by
+    rw [two_smul]
+    exact eq_neg_iff_add_eq_zero.mp h
+  exact (smul_eq_zero.mp h2).resolve_left (by norm_num)
+private theorem free_creator_exact
+    {M : Type*} [AddCommGroup M] [Module (ExteriorAlgebra ℂ U) M]
+    [Module.Free (ExteriorAlgebra ℂ U) M]
+    (u : U) (hu : u ≠ 0) (m : M) :
+    ExteriorAlgebra.ι ℂ u • m = 0 ↔ ∃ n : M, ExteriorAlgebra.ι ℂ u • n = m := by
+  constructor
+  · intro hm
+    classical
+    obtain ⟨φ,hφ⟩ := Module.Projective.exists_dual_eq_one ℂ hu
+    let b := Module.Free.chooseBasis (ExteriorAlgebra ℂ U) M
+    let c := CliffordAlgebra.contractLeft (Q := (0 : QuadraticForm ℂ U)) φ
+    let f := (b.repr m).mapRange c c.map_zero
+    refine ⟨b.repr.symm f, b.repr.injective ?_⟩
+    ext i
+    have hi : ExteriorAlgebra.ι ℂ u * b.repr m i = 0 := by
+      have hi := congrArg (fun t => b.repr t i) hm
+      simpa using hi
+    have hc := CliffordAlgebra.contractLeft_ι_mul (Q := (0 : QuadraticForm ℂ U)) φ u (b.repr m i)
+    rw [hi, map_zero, hφ, one_smul] at hc
+    have he : ExteriorAlgebra.ι ℂ u * c (b.repr m i) = b.repr m i := (sub_eq_zero.mp hc.symm).symm
+    simpa [f, Finsupp.mapRange_apply] using he
+  · rintro ⟨n,rfl⟩
+    rw [smul_smul,ExteriorAlgebra.ι_sq_zero,zero_smul]
+
+private theorem projection_obstruction (q y : ExteriorAlgebra ℂ U) (u : U)
+    (φ : U →ₗ[ℂ] ℂ) (hφ : φ u = 1)
+    (π : ExteriorAlgebra ℂ U →ₐ[ℂ] ExteriorAlgebra ℂ U)
+    (hql : π (q*ExteriorAlgebra.ι ℂ u)=0) (hqy : π (q*y)≠0) :
+    ¬ ∃ x : ExteriorAlgebra ℂ U, q*x=0 ∧ ExteriorAlgebra.ι ℂ u*x=ExteriorAlgebra.ι ℂ u*y := by
+  rintro ⟨x,hx,hxy⟩
+  have hz : ExteriorAlgebra.ι ℂ u*(x-y)=0 := by rw [mul_sub,hxy,sub_self]
+  have hc := CliffordAlgebra.contractLeft_ι_mul (Q := (0 : QuadraticForm ℂ U)) φ u (x-y)
+  rw [hz,map_zero,hφ,one_smul] at hc
+  have he : x-y = ExteriorAlgebra.ι ℂ u*CliffordAlgebra.contractLeft φ (x-y) := sub_eq_zero.mp hc.symm
+  have hp := congrArg π (congrArg (q*·) he)
+  rw [mul_sub,hx,zero_sub,←mul_assoc,map_neg, map_mul π (q*ExteriorAlgebra.ι ℂ u), hql,zero_mul] at hp
+  exact hqy (neg_eq_zero.mp hp)
+private theorem matrix_power_hom (n : ℕ) (i j : Fin 4) :
+    (A^n) i j ∈ ExteriorAlgebra.exteriorPower ℂ n V := by
+  induction n generalizing i j with
+  | zero =>
+    by_cases h : i=j
+    · simp only [pow_zero,Matrix.one_apply,if_pos h]
+      exact Submodule.algebraMap_mem (R := ℂ) 1
+    · simp only [pow_zero,Matrix.one_apply,if_neg h]
+      exact Submodule.zero_mem _
+  | succ n ih =>
+    rw [pow_succ,Matrix.mul_apply]
+    apply Submodule.sum_mem
+    intro k hk
+    change _ ∈ LinearMap.range (ExteriorAlgebra.ι ℂ : V →ₗ[ℂ] E) ^ (n+1)
+    rw [pow_succ]
+    exact Submodule.mul_mem_mul (ih i k) (LinearMap.mem_range_self _ _)
+private theorem Q_hom : Q ∈ ExteriorAlgebra.exteriorPower ℂ 5 V := by
+  change Matrix.trace (A^5) ∈ _
+  rw [Matrix.trace]
+  exact Submodule.sum_mem _ (fun i _ => matrix_power_hom 5 i i)
+private theorem Q_sq : Q*Q=0 := odd_square Q Q_hom
+/-- The span of all four traceless diagonal creators. -/
+def H : Submodule ℂ V := Submodule.span ℂ (Set.range (fun i : Fin 4 => creatorVec i i))
+abbrev R := ExteriorAlgebra ℂ H
+/-- The exterior algebra map induced by the diagonal inclusion. -/
+def actionMap : R →ₐ[ℂ] E := ExteriorAlgebra.map H.subtype
+instance : Module R E := actionMap.toRingHom.toModule
+instance : IsScalarTower ℂ R E where
+  smul_assoc c r x := by
+    change actionMap (c • r)*x = c • (actionMap r*x)
+    rw [map_smul,smul_mul_assoc]
+/-- Right multiplication by the source's differential element. -/
+def dR : E →ₗ[R] E where
+  toFun x := x*Q
+  map_add' x y := add_mul x y Q
+  map_smul' r x := mul_assoc (actionMap r) x Q
+/-- The cycles of the degree-five traceless complex. -/
+def Cycles : Submodule R E := LinearMap.ker dR
+/-- The square-zero differential with its codomain restricted to cycles. -/
+def dToCycle : E →ₗ[R] Cycles := dR.codRestrict Cycles (fun x => by
+  change (x*Q)*Q=0
+  rw [mul_assoc,Q_sq,mul_zero])
+/-- The cohomology of the traceless complex, carrying the diagonal action. -/
+def B0 := Cycles ⧸ LinearMap.range dToCycle
+instance : AddCommGroup B0 := inferInstanceAs (AddCommGroup (Cycles ⧸ LinearMap.range dToCycle))
+instance : Module R B0 := inferInstanceAs (Module R (Cycles ⧸ LinearMap.range dToCycle))
+instance : Module ℂ B0 := inferInstanceAs (Module ℂ (Cycles ⧸ LinearMap.range dToCycle))
+instance : IsScalarTower ℂ R B0 := inferInstanceAs (IsScalarTower ℂ R (Cycles ⧸ LinearMap.range dToCycle))
+/-- Freeness of the source cohomology over the diagonal exterior algebra. -/
+def claim : Prop := Module.Free R B0
+private theorem right_left (x : E) : x*Q = -CliffordAlgebra.involute (Q*x) := by
+  have ht := odd_involute Q_hom
+  rw [map_mul,ht,neg_mul,neg_neg]
+  exact odd_comm Q Q_hom x
+private theorem cycle_left (x : E) : x*Q=0 ↔ Q*x=0 := by
+  rw [right_left,neg_eq_zero]
+  exact (map_eq_zero_iff _ CliffordAlgebra.involute_involutive.injective)
+private abbrev Edeg (n : ℕ) := ExteriorAlgebra.exteriorPower ℂ n V
+private def proj (n : ℕ) : E →ₗ[ℂ] E := GradedAlgebra.proj (fun i => Edeg i) n
+private theorem range_left (x : E) : (∃ t : E, t*Q=x) ↔ ∃ t : E, Q*t=x := by
+  constructor
+  · rintro ⟨t,rfl⟩
+    exact ⟨CliffordAlgebra.involute t,(odd_comm Q Q_hom t).symm⟩
+  · rintro ⟨t,rfl⟩
+    exact ⟨CliffordAlgebra.involute t,by rw [odd_comm Q Q_hom,CliffordAlgebra.involute_involute]⟩
+private theorem degree_four_boundary (t : E) : proj 4 (t*Q)=0 := by
+  obtain ⟨u,hu⟩ := (range_left (t*Q)).mp ⟨t,rfl⟩
+  rw [←hu]
+  exact DirectSum.coe_decompose_mul_of_left_mem_of_not_le (fun i => Edeg i) Q_hom (by decide)
+private theorem free_lift (u : H) (hu : u≠0) (z : E)
+    (hz : z ∈ Edeg 4) (hcycle : z*Q=0)
+    (hkill : ExteriorAlgebra.ι ℂ (u:V)*z=0) (hfree : claim) :
+    ∃ x : Edeg 3, Q*(x:E)=0 ∧ ExteriorAlgebra.ι ℂ (u:V)*(x:E)=z := by
+  let : Module.Free R B0 := hfree
+  let zc : Cycles := ⟨z,hcycle⟩
+  let cls : B0 := Submodule.Quotient.mk zc
+  have hk : ExteriorAlgebra.ι ℂ u • cls = 0 := by
+    change Submodule.Quotient.mk (ExteriorAlgebra.ι ℂ u • zc) = 0
+    have he : ExteriorAlgebra.ι ℂ u • zc = 0 := by
+      apply Subtype.ext
+      change actionMap (ExteriorAlgebra.ι ℂ u)*z=0
+      rw [actionMap,ExteriorAlgebra.map_apply_ι]
+      exact hkill
+    rw [he,Submodule.Quotient.mk_zero]
+  obtain ⟨c,hc⟩ := (free_creator_exact u hu cls).mp hk
+  obtain ⟨xc,hxc⟩ := Submodule.Quotient.mk_surjective (LinearMap.range dToCycle) c
+  rw [←hxc] at hc
+  change Submodule.Quotient.mk (ExteriorAlgebra.ι ℂ u • xc) = Submodule.Quotient.mk zc at hc
+  obtain ⟨t,ht⟩ := (LinearMap.mem_range.mp ((Submodule.Quotient.eq _).mp hc))
+  have he : ExteriorAlgebra.ι ℂ (u:V)*xc.val-z=t*Q := by
+    have he := congrArg Subtype.val ht
+    change t*Q = actionMap (ExteriorAlgebra.ι ℂ u)*xc.val-z at he
+    rw [actionMap,ExteriorAlgebra.map_apply_ι] at he
+    exact he.symm
+  let x3 : Edeg 3 := DirectSum.decompose (fun i => Edeg i) xc.val 3
+  let x : E := x3
+  have hul : ExteriorAlgebra.ι ℂ (u:V) ∈ Edeg 1 := by
+    simpa only [Edeg,ExteriorAlgebra.exteriorPower,pow_one] using LinearMap.mem_range_self (ExteriorAlgebra.ι ℂ) (u:V)
+  have hel : ExteriorAlgebra.ι ℂ (u:V)*x=z := by
+    have hp := congrArg (proj 4) he
+    rw [map_sub,degree_four_boundary] at hp
+    have hpz : proj 4 z=z := DirectSum.decompose_of_mem_same (fun i => Edeg i) hz
+    have hpl : proj 4 (ExteriorAlgebra.ι ℂ (u:V)*xc.val)=ExteriorAlgebra.ι ℂ (u:V)*x :=
+      DirectSum.coe_decompose_mul_add_of_left_mem (fun i => Edeg i) (i := 1) (j := 3) hul
+    rw [hpz,hpl] at hp
+    exact sub_eq_zero.mp hp
+  refine ⟨x3,?_,hel⟩
+  have hcq : Q*xc.val=0 := (cycle_left xc.val).mp xc.property
+  have hp := congrArg (proj 8) hcq
+  rw [map_zero] at hp
+  exact (DirectSum.coe_decompose_mul_add_of_left_mem (fun i => Edeg i) (i := 5) (j := 3) Q_hom).symm.trans hp
+private theorem eval_hom (p : Poly) (n : ℕ)
+    (hp : ∀ t ∈ p, weight 15 t.1.val=n) : eval p ∈ Edeg n := by
+  induction p with
+  | nil => exact Submodule.zero_mem _
+  | cons t p ih =>
+    rw [eval_cons]
+    apply Submodule.add_mem
+    · apply Submodule.smul_mem
+      rw [←hp t (by simp only [List.mem_cons, true_or])]
+      exact word_hom 15 basisSeq t.1.val
+    · exact ih (fun t ht => hp t (List.mem_cons_of_mem _ ht))
+private def ellH : H := ⟨creatorVec 0 0+creatorVec 1 1,
+  Submodule.add_mem _ (Submodule.subset_span ⟨0,rfl⟩) (Submodule.subset_span ⟨1,rfl⟩)⟩
+private theorem ellH_coords : (ellH : V)=coordBasis 0+coordBasis 1 := by
+  simp only [ellH,coordBasis_eq,ij,Matrix.cons_val_zero,Matrix.cons_val_one]
+private def φ : V →ₗ[ℂ] ℂ := coordBasis.coord 0
+private theorem φ_ell : φ (ellH : V)=1 := by
+  rw [ellH_coords]
+  simp [φ,Module.Basis.coord_apply]
+private theorem ellH_ne : ellH≠0 := by
+  intro h
+  have ht := φ_ell
+  rw [h] at ht
+  simp at ht
+private theorem eval_ell : eval [(1,1),(2,1)] = ExteriorAlgebra.ι ℂ (ellH:V) := by
+  rw [ellH_coords,map_add]
+  change eval [(singletonMask 0,1),(singletonMask 1,1)] = g 0+g 1
+  rw [eval_cons,eval_cons,eval_nil,one_smul,one_smul,mono_singleton,mono_singleton,add_zero]
+private def P : V →ₗ[ℂ] V :=
+  coordBasis.constr ℂ (fun k => if (5467 : ℕ).testBit k.val then coordBasis k else 0)
+private def π : E →ₐ[ℂ] E := ExteriorAlgebra.map P
+private def projectData (p : Poly) : Poly := p.filter (fun t => allowed 15 t.1.val 5467)
+private theorem mono_projection (s : Mask) :
+    π (mono s)=if allowed 15 s.val 5467 then mono s else 0 := by
+  apply word_projection 15 basisSeq s.val 5467 π
+  intro i hi
+  simp only [π,ExteriorAlgebra.map_apply_ι,P,basisSeq,Module.Basis.constr_basis,
+    Nat.mod_eq_of_lt hi]
+  split_ifs <;> simp only [map_zero]
+private theorem eval_projection (p : Poly) : π (eval p)=eval (projectData p) := by
+  induction p with
+  | nil => exact map_zero _
+  | cons t p ih =>
+    rw [eval_cons,map_add,map_zsmul,mono_projection]
+    change _ = eval (List.filter _ (t::p))
+    by_cases ht : allowed 15 t.1.val 5467 = true
+    · rw [if_pos ht,List.filter_cons_of_pos (p := fun t : Mask × ℤ => allowed 15 t.1.val 5467) ht,eval_cons,ih]
+      rfl
+    · rw [if_neg ht,List.filter_cons_of_neg (p := fun t : Mask × ℤ => allowed 15 t.1.val 5467) ht,smul_zero,zero_add,ih]
+      rfl
+
+
+set_option maxRecDepth 8192 in
+set_option maxHeartbeats 1200000 in
+/-- The traceless cohomology at (p,N)=(5,4) fails diagonal freeness. -/
+theorem result : ¬ claim := by
+  intro hfree
+  let yd : Poly := [(530,-1), (532,1), (648,1), (1104,-1), (1154,1), (1156,1), (4130,-1), (4132,-1), (4360,1), (6160,-1), (8288,-1), (8450,1), (8452,-1), (10368,-1), (16928,1), (17664,1)]
+  let ld : Poly := [(1,1),(2,1)]
+  let y : E := eval yd
+  let ell : E := ExteriorAlgebra.ι ℂ (ellH:V)
+  let z : E := ell*y
+  have hell : eval ld=ell := eval_ell
+  have hy : y ∈ Edeg 3 := eval_hom yd 3 (by decide)
+  have hl : ell ∈ Edeg 1 := by
+    simpa only [Edeg,ExteriorAlgebra.exteriorPower,pow_one] using
+      LinearMap.mem_range_self (ExteriorAlgebra.ι ℂ) (ellH:V)
+  have hz : z ∈ Edeg 4 := SetLike.mul_mem_graded hl hy
+  have hqz : Q*z=0 := by
+    change Q*(ell*eval yd)=0
+    rw [←hell,Q_eq_eval,←eval_mul,←eval_mul]
+    have hc : mul (tracePow AData 5) (mul ld yd)=[] := by decide
+    rw [hc,eval_nil]
+  have hzq : z*Q=0 := (cycle_left z).mpr hqz
+  have hlz : ell*z=0 := by
+    change ell*(ell*y)=0
+    rw [←mul_assoc,ExteriorAlgebra.ι_sq_zero,zero_mul]
+  have hql : π (Q*ell)=0 := by
+    rw [←hell,Q_eq_eval,←eval_mul,eval_projection]
+    have hc : projectData (mul (tracePow AData 5) ld)=[] := by decide
+    rw [hc,eval_nil]
+  have hqy : π (Q*y)=(-20 : ℤ) • mono 5467 := by
+    change π (Q*eval yd)=_
+    rw [Q_eq_eval,←eval_mul,eval_projection]
+    have hc : projectData (mul (tracePow AData 5) yd)=[(5467,-20)] := by decide
+    rw [hc,eval_cons,eval_nil,add_zero]
+  have hm : mono 5467 = coordBasis.ExteriorAlgebra {0,1,3,4,6,8,10,12} := by
+    let c : ({0,1,3,4,6,8,10,12} : Finset (Fin 15)).card=8 := by decide
+    have he : (({0,1,3,4,6,8,10,12} : Finset (Fin 15)).orderEmbOfFin c : Fin 8 → Fin 15) =
+        ![0,1,3,4,6,8,10,12] :=
+      (Finset.orderEmbOfFin_unique c (by decide) (by decide)).symm
+    change word 15 basisSeq 5467=_
+    rw [ExteriorAlgebra.basis_apply_ofCard coordBasis c, ExteriorAlgebra.ιMulti_family,
+      Set.powersetCard.ofFinEmbEquiv_symm_apply]
+    change _ = ExteriorAlgebra.ιMulti ℂ 8 (coordBasis ∘ (Finset.orderEmbOfFin _ c))
+    rw [he,ExteriorAlgebra.ιMulti_apply]
+    rfl
+  have hmn : mono 5467≠0 := by rw [hm]; exact coordBasis.ExteriorAlgebra.ne_zero _
+  have hqyn : π (Q*y)≠0 := by
+    rw [hqy,←Int.cast_smul_eq_zsmul ℂ]
+    exact smul_ne_zero (by norm_num) hmn
+  obtain ⟨x,hx,hxl⟩ := free_lift ellH ellH_ne z hz hzq hlz hfree
+  exact projection_obstruction Q y (ellH:V) φ φ_ell π hql hqyn ⟨x,hx,hxl⟩
+
+end D5.S3.Quantum.Fermionic.TierzTracelessFreenessRefutation
