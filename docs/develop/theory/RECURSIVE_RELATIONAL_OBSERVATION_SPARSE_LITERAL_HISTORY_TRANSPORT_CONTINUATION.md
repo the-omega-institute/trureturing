@@ -1695,3 +1695,621 @@ part of this comparison.
 [NAR-ENTRY]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Unknown-shape parity with polynomial paid acquisition
+
+### 11.1. Source, target and quantitative assertion
+
+**Definition 11.1 (unknown-shape original parity).** Fix public integers
+$h\ge1$ and $T\ge0$. The original $u$ ranges over **all** finite ordered
+full trees with exactly $h$ leaves, each independently labelled
+$\alpha=0$ or $\beta=1$. Its ordered shape is unknown. Entry is
+$y=\rho^t u$ for unknown $0\le t\le T$, and the target is
+$\pi(u)$, the XOR of the original leaf labels. Use Definitions 1.1 and
+1.3's same-source Read, Update and fixed-bit Halt, with a common
+source-independent initial word. Every Read submits an entire finite
+literal from the original root. The four replies remain
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$, and Update returns only
+$\star$. There is no subtree port, old tree, inverse, reset, copy,
+reference leaf, shape, supplied epoch, source identity or source-dependent
+advice. The source promise and its authentication are separate services.
+
+The whole fixed-length no-$11$ word includes instruction selection,
+path, progress, candidate offset, phase, retained reply, counters,
+parity and halts. Each primitive response immediately changes at most
+one bit and is discarded. All routing Reads below are actual paid root
+Reads. The immutable whole-word instruction and typed-response table,
+initialization, selection, literal delivery, primitive execution,
+response writing and output have Definition 1.3's separately supplied
+and charged contracts.
+
+Write $\lambda(n)=\lceil\log_2 n\rceil$ for $n\ge1$, and set
+
+$$
+d=\lambda(h),\qquad c=\lambda(h+1),\qquad
+k(e)=h+3+d+2c+e,\qquad
+\ell(e)=4k(e)+15,\qquad R(e)=2k(e)+7.
+\tag{SLHC.11.1}
+$$
+
+A zero-width field represents its sole value zero. Define the following
+bounds; $H$ counts the intermediate table's source instructions, not
+the final observer's actual instruction count.
+
+| Regime | Candidate bits $e$ | $H$ | Maximum literal length $P$ | Submitted address-sum bound $A_*$ |
+| --- | --- | --- | --- | --- |
+| Every $h$, $T=0$ | $0$ | $2h-1$ | $h-1$ | $(2h-1)(h-1)$ |
+| Even $h$, static $T\ge1$ | $\lambda(T+1)$ | $(T+1)(4h-2)$ | $h-1+\lceil T/2\rceil$ | $(T+1)(4h-2)P$ |
+| Even $h$, active $T\ge1$ | $\lambda(2h)$ | $2B+1+2h(4h-2)$ | $h-1+B/2$ | $(B+1)B/2+2h(4h-2)P$ |
+
+In the last row the source-independent installed integer is
+
+$$
+B=2\left\lceil\frac{T+2h}{2}\right\rceil.
+\tag{SLHC.11.2}
+$$
+
+**Theorem 11.2 (polynomial native acquisition).** In the conditional
+native services of Definition 11.1, each row of the table above has a
+complete observer of width $\ell(e)$, with
+
+$$
+Q+U\le R(e)H,\qquad
+\text{response bit changes}=Q+U,\qquad
+\sum_{\text{actual Reads}}|p|\le A_*,
+\qquad \max_{\text{actual Reads}}|p|\le P.
+\tag{SLHC.11.3}
+$$
+
+The $T=0$ and static rows have $U=0$. In the active row, writing
+$\kappa(\alpha)=0$, $\kappa(\beta)=1$ and
+$\kappa(\langle v,w\rangle)=2+\kappa(w)$, the exact update count is
+
+$$
+U=B-t-\kappa(u),\qquad 1\le U\le B.
+\tag{SLHC.11.4}
+$$
+
+All counts end at the first fixed-bit Halt and include failed trials,
+polling, decoder second Reads, word resets and every bank/phase
+transition. There are no internal instructions or internal writes.
+Thus active complete width is $O(h)$ with
+$Q+U=O(hT+h^3)$; static complete width is
+$O(h+\log_2(T+1))$ with
+$Q=O(h(T+1)(h+\log_2(T+1)))$.
+Both call bounds are polynomial in $h+T$.
+
+The explicit installation below contains exactly
+$2^{2k(e)+8}$ words, including unreachable words and all halts.
+Its immutable table, literals and source-growth costs are stated in
+§11.6. No polynomial immutable-storage or physical-time bound is
+asserted. For odd $h$ and $T\ge1$ the task is impossible; no single
+finite fixed-literal installation solves its unbounded-entry version
+even when $h$ is even. These boundaries use the suppliers in §11.7.
+
+### 11.2. Certified increasing trials on a stationary current tree
+
+**Lemma 11.3 (a bounded trial inside a genuine image).** Suppose, as
+proof data, that the current tree is $y=\rho^\tau u$, where $u$ has
+exactly $h$ leaves. If $0\le N\le\tau$, set
+$v_N=\rho^{\tau-N}u$. A left-first preorder traversal of $v_N$, cut off
+on encountering its $h$th branch, either rejects at that branch or
+finishes the complete tree with exactly $h$ leaves. It visits at most
+$2h-1$ nodes and queries only addresses of depth at most $h-1$.
+Each virtual node reply can be obtained with at most two actual
+stationary Reads on $y$ using SLH §2. The whole trial therefore uses at
+most $4h-2$ actual source Reads before word-routing expansion.
+At $N=\tau$ it finishes. On finishing, the XOR of its leaf replies
+equals $\pi(u)$ whenever $h$ is even.
+
+Proof. The equality $y=\rho^N v_N$ is an actual image witness, not a
+guessed certificate. ABT §9's leaf-growth facts give
+$L(v_N)\ge L(u)=h$. Reuse the source-total producer's preorder of actual
+nodes: read a reached branch before descending, visit its left subtree
+before its right subtree, and never descend from a leaf. This is the
+Read order supplied by
+[NativeFullSourceProducer.native_source_producer][SLHC11-PRODUCER].
+Its full producer also builds subtrees and performs two local steps
+per branch. Those extra outputs and operations are not presumed to fit
+here. The path-only realization below proves this consumer's reduced
+control and pays for every one of its transitions.
+
+After $b$ branch and $l$ leaf visits a proper preorder prefix has
+$1+b-l>0$ pending slots. Before the $h$th branch, $b\le h-1$; immediately
+before that branch, $l\le h-1$. Hence a rejected trial has at most
+$h+(h-1)$ visits. If the traversal finishes first, fullness gives
+$l=b+1\le h$; since the complete $v_N$ has at least $h$ leaves, necessarily
+$l=h$ and $b=h-1$, with $2h-1$ visits. A queried node has one distinct
+previous branch for each strict ancestor, so its depth is at most
+$h-1$. A cutoff branch is not expanded.
+
+For precision, the actual decoder used here is the following
+specialization of SLH Definitions 2.1–2.2. For $N=0$, read $p$ directly.
+For $N>0$ and $p\ne\varepsilon$, first read
+
+$$
+g=p^-R^{\lfloor N/2\rfloor+1}.
+\tag{SLHC.11.5}
+$$
+
+The guard accepts a non-absent reply for even $N$, and a
+$\beta$ or branch reply for odd $N$. Then read
+$pR^{\lceil N/2\rceil}$. At the root omit the guard. At even $N$ the
+second reply is the virtual reply; at odd $N$ use
+
+| Raw second reply | $\mathsf{absent}$ | $\alpha$ | $\beta$ | $\mathsf{branch}$ |
+| --- | --- | --- | --- | --- |
+| Virtual reply | $\alpha$ | $\beta$ | $\mathsf{branch}$ | $\mathsf{branch}$ |
+
+A failed guard or an even-offset absent value enters an error control,
+which never halts. On the actual traversal both are excluded by
+$y=\rho^N v_N$ and reachedness. Even when the two displayed coordinates
+coincide, this implementation performs both Reads and charges both.
+Each literal has length at most $|p|+\lceil N/2\rceil$.
+An absent *raw* odd-offset value is a valid virtual $\alpha$ and is
+not an error.
+
+At $N=\tau$, $v_N=u$, so there is no $h$th branch and the traversal
+finishes. If an earlier trial finishes, the two histories
+$(u,\tau)$ and $(v_N,N)$ have the same current tree and the same
+original leaf count. ABT Theorem 9.2, on its full unknown-shape domain,
+says that they are identical or the same-shape uniform
+$\alpha/\beta$ pair at adjacent epochs. That pair has equal parity for
+even $h$. This invokes the supplied fiber theorem; it does not repeat
+its classification or certify that $N$ was the original epoch.
+$\square$
+
+Start at any certified $N_0\le\tau$ and increase $N$ by one after a
+cutoff. The first trial is licensed. If a licensed trial rejects, it
+cannot have $N=\tau$, because that trial would finish; hence
+$N+1\le\tau$ licenses the next trial. Induction proves that every decoder
+invocation in every actual trial is inside its image. Success occurs
+by $N=\tau$, and no actual trial crosses it. This argument establishes
+image membership before decoding, rather than interpreting finitely
+consistent replies as membership.
+
+For the static observer take $N_0=0$ and try $N=0,1,\ldots$ up to $T$.
+Since $\tau=t\le T$, there are at most $T+1$ trials. For $T=0$ there is
+exactly one direct traversal of $u$ and no decoder guard, for every
+$h$, including odd $h=1$. Its parity is the original parity without
+using a historical-fiber ambiguity.
+
+### 11.3. Active alignment without storing an absolute epoch
+
+**Construction 11.4 (paid alignment and short offset interval).**
+Assume $T\ge1$ and even $h$. Repeatedly read the single installed
+literal $R^{B/2}$. On absent, execute one genuine Update and repeat.
+On $\alpha$, stop updating and start the increasing trials at
+
+$$
+N_0=B-2h+1,\qquad N=N_0+j,\qquad 0\le j\le2h-1.
+\tag{SLHC.11.6}
+$$
+
+The other polling replies enter the nonhalting error control.
+The actual controller retains neither the number of polls nor the
+number of Updates.
+
+Proof of alignment. The rightmost original leaf has depth at most
+$h-1$, whence $0\le\kappa(u)\le2h-1$. SLH §2's right-clock and raw-ray
+laws give
+
+$$
+\kappa(\rho^{t+a}u)=t+a+\kappa(u),\qquad
+r_w(R^{B/2})=
+\begin{cases}
+\mathsf{absent},&\kappa(w)<B,\\
+\alpha,&\kappa(w)=B,\\
+\beta,&\kappa(w)=B+1,\\
+\mathsf{branch},&\kappa(w)\ge B+2.
+\end{cases}
+\tag{SLHC.11.7}
+$$
+
+At entry $t+\kappa(u)\le T+2h-1<B$. Each Update increases this clock
+by exactly one. Therefore the first non-absent poll is precisely
+$\alpha$, after $U=B-t-\kappa(u)$ Updates and $U+1$ polling Reads.
+All routing Reads leave the source unchanged, so they do not affect
+this argument. The stationary tree at the end is $\rho^\tau u$ with
+
+$$
+\tau=t+U=B-\kappa(u)\in[B-2h+1,B].
+\tag{SLHC.11.8}
+$$
+
+Consequently $N_0\le\tau$ and at most $2h$ increasing trials suffice
+by Lemma 11.3. The proof knows $\tau$; the observer only stores $j$.
+The large integer $N_0$ and each expanded literal are fixed installed
+constants. The observed clock threshold certifies this interval, not
+the historical value $t$ or an original reference label. $\square$
+
+### 11.4. The finite parity table before one-bit realization
+
+**Construction 11.5 (all counted fields and source rows).** Encode an
+intermediate control $z$ using the following $k(e)$ ordinary bits in
+the displayed order. Binary integers use a fixed common significance
+order; path bits are $L=0,R=1$, followed by zero padding.
+
+| Field | Bits | Meaning |
+| --- | --- | --- |
+| $p$ | $h-1$ | Current virtual address, padded after its length |
+| $s$ | $d$ | Path length $0\le s<h$ |
+| $b,l$ | $2c$ | Branches and leaves already visited in this trial |
+| $j$ | $e$ | Candidate index |
+| $a$ | $1$ | XOR of leaves already visited |
+| $\mu$ | $3$ | VALUE, GUARD, POLL, UPDATE, HALT0, HALT1, ERROR |
+
+Use mode codes $0,\ldots,6$ in that order. HALT0, HALT1 and ERROR have
+all other fields zero. POLL and UPDATE also have all other fields zero
+and are available only in the active $T\ge1$ case. In the static case
+$N=j$ and $j\le T$; in the active case use (SLHC.11.6) and
+$j\le2h-1$. GUARD requires $N>0$ and $p\ne\varepsilon$.
+Normal fields obey $b<h$, $l\le h$ and the displayed bounds; nonzero
+path padding, code 7 or a violated condition is invalid.
+
+Here is the entire intermediate instruction/response rule, denoted
+by instruction $I(z)$ and successor $\delta(z,r)$. This table is an
+installation specification, not permission to execute wide writes.
+
+- POLL uses Construction 11.4: absent goes to UPDATE, $\alpha$ starts
+  a fresh root VALUE trial with $j=0$, and the other replies go to ERROR.
+  UPDATE executes Update and its $\star$ goes to POLL.
+- GUARD reads (SLHC.11.5); an accepted guard changes only the mode to
+  VALUE. A rejected guard goes to ERROR.
+- VALUE reads $p$ at $N=0$, and $pR^{\lceil N/2\rceil}$ otherwise.
+  Decode by Lemma 11.3. An invalid virtual absent goes to ERROR.
+- On a decoded branch, if $b+1=h$, reject the trial: increment $j$,
+  reset $p,s,b,l,a$ to zero and use root VALUE. If the candidate range
+  would be exceeded, go to ERROR. Otherwise, for $b+1<h$, increment
+  $b$, replace $p$ by $pL$, increment $s$, and use GUARD when $N>0$
+  or VALUE when $N=0$. A path overflow goes to ERROR.
+- On a decoded leaf bit $x$, if $l=h$ go to ERROR; otherwise put
+  $l'=l+1$, $a'=a\oplus x$. If $p$ contains an $L$, take its rightmost
+  $L$, replace it by $R$, and delete everything after it. Set $s$ to
+  the new length and zero the discarded path padding. This is the next
+  preorder node; preserve $b,j$, store $l',a'$, and use GUARD
+  when $N>0$ or VALUE when $N=0$. If $p$ has no $L$, traversal is
+  complete: go to the canonical HALT$a'$ exactly when
+  $l'=h$ and $b=h-1$, and otherwise go to ERROR.
+- HALT0 and HALT1 have the respective fixed-bit Halt instructions.
+  ERROR and every invalid code read $\varepsilon$ and send every
+  raw reply to the canonical ERROR.
+
+These rules specify every typed reply, including replies outside
+actual supports. Every nonhalting intermediate instruction is an
+actual source primitive. The next-address rule is precisely preorder:
+a branch opens its left child; completion of a subtree finds the
+deepest ancestor whose right child is pending. Its pending ancestors
+are encoded by the $L$ positions of $p$, so no stack of subtrees is
+retained. This is a consumer of the published source-total traversal,
+not a claim that its full acquired-tree workspace has width $O(h)$.
+
+The common initial $z$ is root VALUE with zero fields for static or
+$T=0$, and canonical POLL for active $T\ge1$. Every actual transition
+in the preceding proof is one of these rows. The branch cutoff bounds
+every actual path by $h-1$; the counter bounds and the exact completion
+test follow from the pending-slot invariant. Trial resets and the
+possibly long path truncation remain to be implemented and charged.
+
+### 11.5. One word, immediate replies, and paid bitwise routing
+
+**Construction 11.6 (the complete installed word).** For the particular
+table of Construction 11.5 let $k=k(e)$. The logical word has two
+$k$-bit banks $A,B'$, five one-hot reply flags
+$f_\alpha,f_\beta,f_{\mathsf{branch}},f_{\mathsf{absent}},f_\star$,
+and three phase bits. Its logical length is $m=2k+8$.
+The source-independent initial word has phase 000, bank $A=z_{\rm init}$,
+bank $B'=0^k$ and zero flags. No bank, phase or flag exists outside this
+word. The actual physical word is
+
+$$
+J(x_1\cdots x_m)=x_1\,0\,x_2\,0\,\cdots\,0\,x_m,
+\qquad W=J(\{0,1\}^m),\qquad \ell=2m-1=4k+15.
+\tag{SLHC.11.9}
+$$
+
+All $2^m$ such words are installed. The inserted zeros never change.
+The following rows give their fixed instruction and typed responses.
+A deterministic row always executes Read$(\varepsilon)$, ignores
+which of its four raw replies arrived, and makes the single stated
+bit change. It is not an internal instruction. "Least" refers to the
+fixed bit order of the bank.
+
+| Phase and word condition | Instruction | Immediate response action |
+| --- | --- | --- |
+| 000, flags zero, $B'=0$ | $I(A)$ | For Read reply $r$, set $f_r$; for Update acknowledgement, set $f_\star$; a Halt outputs its fixed bit |
+| 000, exactly one flag $f_r$, $r$ typed for $I(A)$ | Root Read | If $B'\ne\delta(A,r)$, flip the least differing bit of $B'$; otherwise change phase to 001 |
+| 001, exactly one flag | Root Read | If $A\ne0$, clear its least one; otherwise change phase to 011 |
+| 011, $A=0$, exactly one flag | Root Read | Clear that flag |
+| 011, $A=0$, flags zero | Root Read | Change phase to 010 |
+| 010, flags zero, $A=0$ | $I(B')$ | For Read reply $r$, set $f_r$; for Update acknowledgement, set $f_\star$; a Halt outputs its fixed bit |
+| 010, exactly one flag $f_r$, $r$ typed for $I(B')$ | Root Read | If $A\ne\delta(B',r)$, flip the least differing bit of $A$; otherwise change phase to 110 |
+| 110, exactly one flag | Root Read | If $B'\ne0$, clear its least one; otherwise change phase to 111 |
+| 111, $B'=0$, exactly one flag | Root Read | Clear that flag |
+| 111, $B'=0$, flags zero | Root Read | Change phase to 101 |
+| 101, $B'=0$, flags zero | Root Read | Change phase to 100 |
+| 100, $B'=0$, flags zero | Root Read | Change phase to 000 |
+| Any remaining installed word | Root Read | Hold the word for each of the four replies |
+
+For a Halt, no reply is typed; its flagged case therefore does not
+match a filling row. The phase cycle is
+
+$$
+000,\ 001,\ 011,\ 010,\ 110,\ 111,\ 101,\ 100,\ 000,
+\tag{SLHC.11.10}
+$$
+
+whose adjacent terms differ in one bit, including the final edge.
+The table treats the letters of $I(z)$ and all values $\delta(z,r)$
+as fixed finite data expanded at installation. In particular,
+$\delta$ and least-bit selection are not an uncharged runtime
+algorithm or a second mutable controller: each entire word has one
+already installed literal instruction and each typed response has one
+already installed hold/flip choice.
+
+To verify a transfer, begin in phase 000 with $(A,B')=(z,0)$ and no
+flag. One actual $I(z)$ response sets exactly one counted flag; the
+raw response is then discarded. The $A$ bank and flag retain precisely
+what selects $\delta(z,r)$ until $B'$ equals that target. Each root
+Read reduces the number of differing destination bits by one. After
+phase 001 clears $A$, phase 011 clears the flag and enters 010.
+The ready state is now $(0,\delta(z,r))$. The reverse transfer follows
+the last half of the table and returns to phase 000 with
+$(\delta(z,r),0)$. All source changes occur only at the selected
+intermediate Update; every extra instruction is a source-preserving
+root Read. No intermediate phase halts.
+
+If $|z|_1$ is a bank's Hamming weight, the exact primitive counts for
+these two transfers, including the original source instruction, are
+
+$$
+c_{A\to B'}(z,r)=|z|_1+|\delta(z,r)|_1+5,\qquad
+c_{B'\to A}(z,r)=|z|_1+|\delta(z,r)|_1+7.
+\tag{SLHC.11.11}
+$$
+
+The constants count the reply-flag setting, phase changes and flag
+clearing. Both are at most $2k+7$. Resetting counters or addresses,
+setting the output, filling a zero target, and erasing a bank are all
+covered by this formula. Every actual nonhalting row changes one
+logical bit, hence one physical bit. Every other typed row either
+holds or changes one bit as well. Zero interleaving proves no-$11$
+for every installed word and every successor, without an assumption
+about which rows are reachable.
+
+The ready-state correspondence, proved transfer by transfer, matches
+Construction 11.5's controls and the actual current source. It yields
+exactly its first Halt and fixed output. Its raw chronology additionally
+contains all the charged root Reads; it is not claimed to equal the
+intermediate chronology. FIB §47's unchanged-instruction finite-prefix
+refinement alone would not give this width or this chronology.
+
+For FIB §§26–27, let $C_w$ contain exactly the pairs
+$(\pi(u),y)$ actually reachable at word $w$ from the promised entries.
+Every actual primitive is legal, the typed rows give same-source
+successor closure, and the two halt instructions have the proved
+original target on their supports. Lemma 11.3 and Construction 11.4
+prove finite intermediate termination, and (SLHC.11.11) proves finite
+routing between ready states. Thus the deterministic future from each
+reachable $(y,w)$ has a finite number of primitive calls left. Take
+that number as the natural rank on $C_w$; it decreases by one at every
+call and is zero at Halt. If two histories yield the same $(y,w)$,
+their futures coincide, so the rank is well defined. Supports and rank
+are proof data, never selector inputs. This supplies the precise
+complete-control obligations of FIB §27.2 and the explicit adjacency
+required by §45, rather than inferring a one-write implementation from
+a count of names.
+
+### 11.6. Full native, installation and source bills
+
+We now complete the resource assertions of Theorem 11.2. The direct
+$T=0$ traversal has exactly $2h-1$ intermediate Reads. Each stationary
+trial has at most $4h-2$, including every guard and second Read.
+The static case has at most $T+1$ trials. The active case has at most
+$2h$ trials, $U+1$ polling Reads and $U$ Updates, hence at most
+
+$$
+2U+1+2h(4h-2)\le2B+1+2h(4h-2)
+\tag{SLHC.11.12}
+$$
+
+intermediate source instructions. Applying (SLHC.11.11) to **every**
+such instruction gives (SLHC.11.3); specifically
+$Q\le RH-U$. There is no free preparation between instructions.
+The only extra Reads have empty addresses. Trial literals obey
+$|p|+\lceil N/2\rceil$, with $|p|\le h-1$; active polling literals
+have length $B/2$. Summing their lengths proves exactly the advertised
+uniform $A_*,P$ bounds, without charging a shortened suffix instead
+of its root-based literal.
+
+Here is one fully explicit, deliberately redundant immutable
+representation. Let
+
+$$
+W_* = 2^{2k+8},\qquad
+g=\lambda(P+1),\qquad q=\lambda(\ell+1).
+\tag{SLHC.11.13}
+$$
+
+There are $W_*$ instruction rows and, if their numbers of Read and
+Update rows are $n_R,n_U$, exactly $4n_R+n_U\le4W_*$ typed-response
+entries. There are exactly four halt rows, two for each fixed output
+across the two ready phases. There are exactly two Update rows in the
+active $T\ge1$ installation and zero in the static or $T=0$ installation;
+all other rows are Reads. Thus $n_R=W_*-4-n_U$. Halt rows have no
+response entry. Store each row with its
+$\ell$-bit word key, a two-bit opcode for Read/Update/Halt0/Halt1, a
+$g$-bit literal length, $P$ bits holding the entire literal with padding,
+and four $q$-bit response slots. A response slot is 0 for hold or a
+physical bit index in $\{1,\ldots,\ell\}$ to flip. Unused opcode fields
+and response slots have fixed zero padding. This gives the explicit
+storage bound
+
+$$
+S_{\rm tab}
+ =W_*(\ell+2+g+P+4q)\ \text{bits}.
+\tag{SLHC.11.14}
+$$
+
+The common initialization word adds $\ell$ immutable bits. There are
+at most $W_*$ installed literal copies, with actual unpadded total
+length at most $W_*P$. Duplication is allowed and fully charged.
+The full table can be produced by enumerating all $m$-bit words and
+the finite cases in Construction 11.6, expanding each literal.
+Table generation and delivery are finite installation services with
+their own costs; (SLHC.11.14) bounds stored bits, not the physical
+time for generating or selecting them. Source-specific information
+is not used to choose a table, initial word or installed literal.
+
+If the run has $n=Q+U$ primitive calls, there are exactly $n+1$
+instruction selections including the final Halt, $Q$ literal
+deliveries (including empty routing literals), $n$ immediate response
+selections/writes, and one output. Initialization occurs once.
+Following FIB §45.2, an appropriate cost vector has the form
+
+$$
+\begin{aligned}
+C={}&C_{\rm promise/auth}+C_{\rm source/entry}
+ +C_{\rm compile/install}+C_{\rm init}\\
+ &+\sum_{i=0}^{n-1}
+   \bigl(C_{\rm select}(w_i)+C_{\rm deliver}(I(w_i))
+       +C_{\rm primitive}(I(w_i),y_i)
+       +C_{\rm response}(w_i,r_i)\bigr)\\
+ &+C_{\rm select}(w_n)+C_{\rm output}(\pi(u)).
+\end{aligned}
+\tag{SLHC.11.15}
+$$
+
+Delivery for Update has no address payload. Immutable storage and
+complete mutable width remain distinct coordinates. Initialization
+can write the whole initial word under its separately supplied
+service; it is not one of the response writes in (SLHC.11.3).
+A physical table lookup or literal-delivery implementation requiring a
+persistent external cursor or latch does not meet Definition 11.1.
+The stated conditional service must implement those selections with
+this word as its entire mutable observer.
+
+For source growth, let $b_\beta$ be the original number of $\beta$
+leaves, and $F_0=0,F_1=1$. The original-cone decomposition of SLH §32
+and $|T_n|_{\rm leaves}=F_{n+1}$ give the exact current node count at
+absolute epoch $s$:
+
+$$
+V(s)=2\bigl((h-b_\beta)F_{s+1}
+                    +b_\beta F_{s+2}\bigr)-1.
+\tag{SLHC.11.16}
+$$
+
+The static source stays at $s=t\le T$, with peak at most
+$2hF_{T+2}-1$ nodes. The active source passes through epochs
+$t,t+1,\ldots,\tau$ with $\tau=B-\kappa(u)\le B$ and has peak
+$V(\tau)\le2hF_{B+2}-1$. The direct $T=0$ source has $2h-1$ nodes.
+For an implementation that traverses the whole materialized source
+once per Update, its node-volume sum is bounded, for example, by
+$(B+1)(2hF_{B+2}-1)$ over the active versions; costs of allocating or
+rewriting nodes belong to that implementation, not to the one-bit
+observer response count. The mathematical model supplies no timing
+observation of these costs. Polynomial **native calls** can coexist
+with exponential source size and an exponentially large installed
+table. These bounds, the preceding correctness proof and the boundary
+argument below prove Theorem 11.2. $\square$
+
+### 11.7. Obstructions, comparisons and supplier correspondence
+
+ABT §§9.2–9.4 already supply the odd-$h$ obstruction: for any one
+$h$-leaf shape, the all-$\beta$ original at lag zero and all-$\alpha$
+original at lag one give the identical entry but opposite original
+parities when $h$ is odd. Every future adaptive native experiment from
+a common initial word has the same replies and same-source successors.
+This excludes $T\ge1$, including $h=1$, while the direct $T=0$ table
+covers both one-leaf labels. The restriction to even $h$ at positive
+$T$ is therefore semantic, not a limit of the alignment construction.
+
+The accepted earlier representative in Lemma 11.3 need not have an
+epoch in the originally promised $[0,T]$ after active Updates. This
+does not assert a new allowed initial history: ABT's unbounded
+same-leaf-count fiber theorem is applied to the two mathematical
+histories at the **current** tree. Its even-parity consequence is
+enough for the actual original target. No template is guessed, no
+finite compatibility check is used as image authentication, and exact
+leaf count is proved by complete traversal or rejected at the
+$h$th branch.
+
+For a concrete failure outside that invariant, let
+$u=\langle\alpha,\beta\rangle$ at lag zero and incorrectly invoke the
+decoder with $N=1$. Its root value at $R$ is $\beta$, decoded as branch;
+the two child guards also accept the reply at $R$. Values at $LR$ and
+$RR$ are absent, both decoded as $\alpha$. The resulting virtual
+two-leaf tree has parity zero, whereas $\pi(u)=1$.
+This is an ordinary wrong-image counterexample; the certified
+increasing runs never make this trial.
+
+The positive quantifier is
+
+$$
+\forall h\ \forall T<\infty\
+ \bigl(T=0\ \text{or }h\text{ even}\bigr)
+ \ \Longrightarrow\ \exists C_{h,T}\ \forall(u,t)
+ \text{ satisfying Definition 11.1}.
+\tag{SLHC.11.17}
+$$
+
+It is not $\exists C_h\ \forall t\ge0$. Restricting unknown shapes
+to any one fixed $h$-leaf shape embeds §9.7's unbounded-entry
+fixed-literal obstruction as a subproblem. Its permanent-saturation
+argument applies to the entire finite installed menu, including
+routing root Reads, and survives adaptive Updates. Thus no finite
+complete fixed-literal installation handles all lags. This does not
+exclude sourcewise termination with growing workspace and literals.
+
+The same fixed-shape restriction permits reuse of §9.6's original-cone
+separation: a successful observer must actually separate each of the
+$h$ independent original labels. Its static installed-union requirement
+of at least $h\lceil(T+1)/3\rceil$ query words, plus two halt words,
+also applies under that section's complete-state, fixed-literal and
+zero-Update hypotheses. An installed-union count is not a lower bound
+on that many queries in every run. Neither supplier establishes
+optimality of the present unknown-shape $O(h)$ widths, and no
+all-shape width catalogue is asserted.
+
+The nonduplicated quantitative content is the combination of a
+source-driven clock alignment, induction-certified branch-cutoff
+trials, and the paid complete table (SLHC.11.9)–(SLHC.11.11).
+The alignment reduces the number of candidate bits without giving
+away an epoch; cutoff makes every failed trial small even when the
+current tree is large; the actual one-bit routes preserve polynomial
+calls when path and counter changes reset many logical bits.
+
+| Supplier | Exact use and retained boundary |
+| --- | --- |
+| [ABT §§9.2–9.4][ABT-ENTRY] | Unknown-shape, fixed-original-leaf-count history fibers and future-experiment indistinguishability. Only the parity consequence and monotone leaf-count facts are consumed; no new fiber classification is claimed. |
+| [SLH §§1–2][SLH] | Same-source literal primitives, right clock, guarded historical decoder, and its image hypothesis. Every actual invocation has the witness $v_N$ proved before decoding. |
+| [SLH §§31–32][SLH] and §§8–9 of this volume | Original-cone transport, parity and complete-response boundaries, Fibonacci growth and static suffix comparisons. A known skeleton or reference is not supplied here. |
+| [NativeFullSourceProducer][SLHC11-PRODUCER] and [NativeEffectiveSourceProducer][SLHC11-EFFECTIVE] | Source-total preorder and the effective selector on acquired control, on their stationary-source contracts. Full subtree output, retained trace and numeric workspace are not free fields in the present observer. The bounded path consumer and its explicit paid rows establish the new resource correspondence. |
+| [DelayedOriginalReadout][SLHC11-DECODER] | The declarations right_clock_iterate, right_clock_readout, original_presence_guard, original_decoder_correct and original_query_bounds use the same source and delayed-image domain. Address false/true means $L/R$; source true/false means $\alpha/\beta$, opposite to the numerical parity convention here. |
+| [FIB §§26–27, 45–47][FIB] | Complete Moore control, exact reachable supports, descending rank and conditional one-bit services. The present explicit table proves adjacency; the unchanged-prefix alternative is not assigned its new width bound. |
+
+[Gray's *Pulse Code Communication*, US2632058A][GRAY-PATH], supplies the
+classical reflected binary code whose adjacent words differ in one
+digit; (SLHC.11.10) explicitly checks the needed three-bit cycle.
+[Cabello, Eppstein and Klavžar, *The Fibonacci Dimension of a Graph*][CEK],
+Proposition 3.1, supplies the zero-interleaving map used in
+(SLHC.11.9). Their proposition is stated for isometric graph embeddings;
+here its displayed map is used directly on binary words, where
+one-coordinate adjacency and no-$11$ follow coordinatewise.
+Their Corollary 3.6 concerns the isometric dimension of finite trees
+and supplies FIB §47's alternative, not a lower bound for this table.
+The Havel–Morávek adjacency formulation is used through the FIB §45
+interface; no induced or isometric encoding is needed.
+
+These are attributed mature suppliers. The parity acquisition and
+resource combination here is repo-derived ordinary conditional
+mathematics. It is not new Lean kernel verification, an assertion of
+worldwide novelty, a general-purpose compiler theorem, or a claim
+that the stated physical services have been constructed.
+
+[SLHC11-PRODUCER]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean
+[SLHC11-EFFECTIVE]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveSourceProducer.lean
+[SLHC11-DECODER]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+
+## 追加锚（本行以下为增补区）
