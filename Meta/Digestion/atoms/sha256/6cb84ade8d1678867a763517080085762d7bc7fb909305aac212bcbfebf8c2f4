@@ -1,0 +1,35 @@
+**Definition 47.1 (bounded-profile certificate).** In addition to the clauses
+of Definition 46.5, a certificate for a finite-profile controller supplies a
+single vector
+
+$$
+x\in\mathbb N^d
+$$
+
+such that
+
+$$
+\forall s\in D,\qquad c_C(s)\le x,
+$$
+
+and, for a requested budget $\bar B$,
+
+$$
+x\le\bar B.
+$$
+
+Thus the finite feasibility sentence is existential in one finite vector and
+universal over sources:
+
+$$
+\exists x\in\mathbb N^d\;\exists C\;\Bigl[
+ x\le\bar B\ \land\ C\text{ is source-total and correct}\ \land
+ \forall s\in D\;c_C(s)\le x\Bigr].
+$$
+
+This is the operational content of $C\in\mathcal C_K^{\mathrm{fin}}$; it
+cannot be inferred from the separate facts that every source run terminates
+and every individual cost is finite. The family with source $n\in\mathbb N$
+and cost $n+1$ is the counterexample: it is source-total but has no such
+finite $x$.
+
