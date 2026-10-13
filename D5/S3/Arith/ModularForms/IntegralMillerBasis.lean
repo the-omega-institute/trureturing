@@ -39,7 +39,7 @@ private def integerPowerCoefficient (c : ℕ → ℤ) : ℕ → ℕ → ℤ
   | 0, n => if n = 0 then 1 else 0
   | e + 1, n => integerConvolution (integerPowerCoefficient c e) c n
 
-private def rawMillerCoefficient (m s j n : ℕ) : ℤ :=
+def rawMillerCoefficient (m s j n : ℕ) : ℤ :=
   integerConvolution (integerPowerCoefficient discriminantCoefficient (j + 1))
     (integerConvolution
       (integerPowerCoefficient eisensteinFourCoefficient
@@ -237,7 +237,7 @@ private lemma rawMillerCoefficient_triangular (m s : ℕ) (hs : MillerResidualWe
   rw [rawMillerForm_coefficient] at h
   split_ifs with he <;> simp only [he, if_true, if_false] at h ⊢ <;> exact_mod_cast h
 
-private lemma millerCoefficientDepth_normalized (m s : ℕ) (hs : MillerResidualWeight s)
+lemma millerCoefficientDepth_normalized (m s : ℕ) (hs : MillerResidualWeight s)
     (d : ℕ) (hd : d < m) (n : ℕ) (hn : 1 ≤ n ∧ n ≤ m) :
     millerCoefficientDepth m s d n = if n = m - d then 1 else 0 := by
   induction d using Nat.strong_induction_on with
@@ -334,7 +334,7 @@ def integralMillerBasis (m s : ℕ) (hm : 1 ≤ m) (hs : MillerResidualWeight s)
   basisOfLinearIndependentOfCardEqFinrank' (millerForm m s hs)
     (millerForm_linearIndependent m s hs) (by simpa using (miller_cusp_finrank m s hm hs).symm)
 
-private lemma integralMillerBasis_apply (m s : ℕ) (hm : 1 ≤ m) (hs : MillerResidualWeight s)
+lemma integralMillerBasis_apply (m s : ℕ) (hm : 1 ≤ m) (hs : MillerResidualWeight s)
     (j : Fin m) : integralMillerBasis m s hm hs j = millerForm m s hs j := by
   simp [integralMillerBasis]
 
