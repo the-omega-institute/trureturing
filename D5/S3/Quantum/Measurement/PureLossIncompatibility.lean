@@ -720,6 +720,7 @@ private theorem weighted_counting_bound {m : ℕ} (c x Q : ℝ)
     _ = 1 + ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), p i j := by
       exact congrArg (fun r : ℝ => 1 + r) hpairs
     _ ≤ 1 + 4 * x * Q := by linarith
+
 private def phaseQ {m : ℕ} (z : Fin m → ℂ) : ℝ :=
   ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), (‖z i - z j‖ ^ 2)⁻¹
 
@@ -831,5 +832,78 @@ private theorem parent_bound {m : ℕ} (a b c x : ℝ) (ha : 0 < a)
     simpa only [div_eq_mul_inv] using
       common_subeffect_bound a b x (z i) (z j) (hz i) (hz j) hne (H i j) (hpos i j) hi hj'
   · rfl
+
+private theorem phaseQ_pos {m : ℕ} (hm : 2 ≤ m) (z : Fin m → ℂ)
+    (hinj : Function.Injective z) : 0 < phaseQ z := by
+  let i : Fin m := ⟨0, by omega⟩
+  let j : Fin m := ⟨1, by omega⟩
+  have hij : i < j := by change (0 : ℕ) < 1; omega
+  have hne : z i ≠ z j := fun h => (ne_of_lt hij) (hinj h)
+  unfold phaseQ
+  apply Finset.sum_pos' (fun _ _ => Finset.sum_nonneg (fun _ _ => by positivity))
+  refine ⟨i, Finset.mem_univ _, ?_⟩
+  apply Finset.sum_pos' (fun _ _ => by positivity)
+  refine ⟨j, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hij⟩, ?_⟩
+  exact inv_pos.mpr (pow_pos (norm_pos_iff.mpr (sub_ne_zero.mpr hne)) _)
+
+private theorem stronger {m : ℕ} (hm : 2 ≤ m) (τ : Loss) (hτ : 0 < τ.1)
+    (hgap : 1 < (m : ℝ) * τ.1) (z : Fin m → ℂ)
+    (hz : ∀ i, ‖z i‖ = 1) (hinj : Function.Injective z) :
+    ∃ M : Fin m → Fin 2 → Op, (∀ j, IsBinaryPOVM (M j)) ∧
+      ¬ HasParent (fun j b => dualLoss τ (M j b)) := by
+  have hQ := phaseQ_pos hm z hinj
+  have hm0 : 0 < (m : ℝ) :=
+    (mul_pos_iff_of_pos_right hτ).mp (lt_trans zero_lt_one hgap)
+  have hden : 0 < (m : ℝ) + 4 * phaseQ z := by linarith
+  let x := ((m : ℝ) * τ.1 - 1) / (2 * ((m : ℝ) + 4 * phaseQ z))
+  have hx : 0 < x := div_pos (sub_pos.mpr hgap) (by positivity)
+  let a := 1 - Real.exp (-x)
+  let b := Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x
+  let c := 1 - Real.exp (-x) * (1 - τ.1 + τ.1 * x)
+  have hs := scalar_bounds τ x hx
+  refine ⟨fun j => onOff ((Real.sqrt x : ℂ) * z j), fun j => onOff_binary _, ?_⟩
+  intro hparent
+  obtain ⟨G, hG, hmarg⟩ := compressed_parent _ hparent
+  have hcount : (m : ℝ) * c ≤ 1 + 4 * x * phaseQ z := by
+    apply parent_bound a b c x hs.1 hs.2.2.1 z hz hinj G hG
+    intro i
+    change (∑ ω ∈ Finset.univ.filter (fun ω : Fin m → Fin 2 => ω i = 1), G ω) =
+      clickMatrix τ x (z i)
+    exact (hmarg i 1).trans (compressed_click τ x hx (z i) (hz i))
+  have hxid : x * (2 * ((m : ℝ) + 4 * phaseQ z)) = (m : ℝ) * τ.1 - 1 :=
+    div_mul_cancel₀ _ (by positivity)
+  have hc : τ.1 - x ≤ c := hs.2.2.2
+  have hmargin : ((m : ℝ) * τ.1 - 1) / 2 ≤ (m : ℝ) * c - 1 - 4 * x * phaseQ z := by
+    nlinarith [mul_le_mul_of_nonneg_left hc hm0.le]
+  linarith
+
+theorem result : claim := by
+  intro n hn
+  have hn0 : 0 < (n : ℝ) := by exact_mod_cast (by omega : 0 < n)
+  have hm0 : 0 < ((n + 1 : ℕ) : ℝ) := by positivity
+  let z (j : Fin (n + 1)) : ℂ :=
+    (Circle.exp (2 * Real.pi * (j.val : ℝ) / ((n + 1 : ℕ) : ℝ)) : ℂ)
+  have hz (j : Fin (n + 1)) : ‖z j‖ = 1 := Circle.norm_coe _
+  have hr (j : Fin (n + 1)) :
+      2 * Real.pi * (j.val : ℝ) / ((n + 1 : ℕ) : ℝ) ∈ Set.Ico 0 (2 * Real.pi) := by
+    refine ⟨div_nonneg (mul_nonneg Real.two_pi_pos.le (Nat.cast_nonneg _)) hm0.le, ?_⟩
+    apply (div_lt_iff₀ hm0).mpr
+    exact mul_lt_mul_of_pos_left (by exact_mod_cast j.isLt) Real.two_pi_pos
+  have hinj : Function.Injective z := by
+    intro i j hij
+    have hangle := Circle.exp_injOn_Ico (a := 0) (b := 2 * Real.pi)
+      (by simp) (hr i) (hr j) (Subtype.ext hij)
+    apply Fin.ext
+    exact_mod_cast mul_left_cancel₀ Real.two_pi_pos.ne' ((div_left_inj' hm0.ne').mp hangle)
+  have hτ : 0 < (inverseTransmissivity n hn).1 := by
+    change 0 < 1 / (n : ℝ)
+    positivity
+  have hgap : 1 < ((n + 1 : ℕ) : ℝ) * (inverseTransmissivity n hn).1 := by
+    change 1 < ((n + 1 : ℕ) : ℝ) * (1 / (n : ℝ))
+    rw [mul_one_div]
+    apply (lt_div_iff₀ hn0).mpr
+    push_cast
+    linarith
+  exact stronger (by omega) (inverseTransmissivity n hn) hτ hgap z hz hinj
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
