@@ -2780,3 +2780,453 @@ of three spatial dimensions would require its own correspondence beyond
 these assumptions.
 
 ## 109.99 追加锚（本行以下为增补区）
+
+## 110. Root-visible ancestry memory of homogeneous occurrence states
+
+**Definition 110.1 (comparison states and the normalized root port).**
+Retain the complete original ordered sources $T_n$, all their occurrence
+vertices, counting spaces $\mathcal V_n$, closed unit-edge operators $L_n$
+and centering projections $P_n$ of §§92 and 103. Retain the actual ancestry
+pullback $J_n$ and the comparison map $\mathcal A_n$ of Definition 109.1;
+$J_n$ here is not the path-summation map of §98. Write
+
+$$
+S_n(s)=e^{-N_nsL_n},\qquad
+\mathcal C_nf=\sqrt{N_n}\,f(r)\quad(f\in P_n\mathcal V_n),
+\qquad c=\varphi^{-1},\quad \kappa=c(2-c),\quad \theta=c\kappa=3-4c.
+\tag{110.1}
+$$
+
+The port $\mathcal C_n$ is distinct from the scalar centered finite part
+$C(T_n)$ of §92. For $n\ge2$, define $z_n$ by (109.5), including its zero
+root value, and put
+
+$$
+\chi_n=2\mathbf1_{\mathcal B_n}-c,\qquad
+ d_n=\|P_n(z_n\chi_n)\|,\qquad
+ x_n=d_n^{-1}P_n(z_n\chi_n).
+\tag{110.2}
+$$
+
+Thus $x_n$ is the witness of (109.7), renamed to avoid confusion with
+the edge vector $v_n$ of §98. Its definition also applies at $n=2$:
+both root subtrees are singletons, $z_n\chi_n$ is zero at the root and
+nonzero in the left subtree, so it is not constant and $d_n>0$.
+The same argument gives $d_n>0$ for every $n\ge2$. Set $x_0=x_1=0$;
+there is no centered unit state on either singleton counting space.
+For $n\ge2$, $\|x_n\|=1$, and (109.8) gives $d_n^2/N_n\to\kappa$.
+
+In formulas involving the common edge carrier, write $v_n^{\mathrm e}$
+for the vector called $v_n$ in §98; retain its limit $v$, the covariance
+$\Sigma_n$ and its limit $\Sigma$. Let
+
+$$
+b_n=\alpha_n\delta_L+\beta_n\delta_R
+ \longrightarrow b=\sqrt c\,\delta_L-c^{-1/2}\delta_R,
+\qquad
+F_s(x)=\begin{cases}e^{-s/x},&x>0,\\0,&x=0,\end{cases}\quad(s>0),
+\tag{110.3}
+$$
+
+where $\alpha_n,\beta_n$ are precisely (109.5). The vectors $\delta_L$
+and $\delta_R$ in (110.3) are edge coordinates; node point masses below
+are indicated by their occurrence addresses.
+
+**Theorem 110.2 (the copied beta charge on every actual descendant).**
+For every $k\ge0$, use the literal ancestry map from $T_k$ to $T_{k+1}$
+and define on the entire successor
+
+$$
+\psi_k=J_k\chi_k-\theta\mathbf1,\qquad
+q_k=\sum_{V_{T_k}}\chi_k=c-2c(-c)^k.
+\tag{110.4}
+$$
+
+There is a real field $H_k$ on $T_{k+1}$, zero at its root, such that
+
+$$
+\psi_k=L_{k+1}H_k+3c q_k\delta_r,\qquad
+\|H_k\|\le K(k+1)\sqrt{N_{k+1}},
+\tag{110.5}
+$$
+
+with one constant $K$ independent of $k$. More precisely, every edge
+increment of $H_k$ is its actual below-edge total $\psi_k$ charge.
+At an old address whose old descendant is $T_j$, this total is $3c q_j$;
+at either newly born leaf it is $\kappa$. These are counting totals,
+including the descendant root and every internal and terminal occurrence.
+
+For $n\ge2$ let $Z_n$ be zero at the successor root and have the old
+constants $\alpha_n,\beta_n$ on its actual entire successor root subtrees
+$T_n,T_{n-1}$, respectively. Then there are fields $\widetilde H_n$ and
+$R_n^{\mathrm{new}}$ on the successor with
+
+$$
+\begin{aligned}
+J_n(z_n\chi_n)&=\theta Z_n+L_{n+1}\widetilde H_n+R_n^{\mathrm{new}},\\
+R_n^{\mathrm{new}}
+ &=3c\bigl(\alpha_nq_{n-1}\delta_L+\beta_nq_{n-2}\delta_R\bigr),\\
+\|\widetilde H_n\|&=O(n\sqrt{N_{n+1}}),\qquad
+\|R_n^{\mathrm{new}}\|=O(1).
+\end{aligned}
+\tag{110.6}
+$$
+
+Here $\delta_L,\delta_R$ in (110.6) are node point masses at the two
+actual successor subtree roots. Both root seams contribute zero to
+the corrector energy flux.
+
+Proof. The exact fibre multiplicity is
+$m_k=1+2\mathbf1_{\mathcal B_k}=\varphi+\chi_k$.
+Thus $N_{k+1}=\varphi N_k+q_k$. The two possible values $2-c,-c$ of
+$\chi_k$ satisfy the pointwise identity
+
+$$
+m_k\chi_k=\kappa+(3-c)\chi_k.
+\tag{110.7}
+$$
+
+For an old descendant $T_j$, literal substitution gives the complete
+successor descendant $T_{j+1}$. Summing (110.7) on its old vertices
+counts every new occurrence once through its own beta-parent fibre.
+Its total copied charge is $\kappa N_j+(3-c)q_j$. Consequently its
+$\psi_k$ charge is
+
+$$
+\kappa N_j+(3-c)q_j-\theta N_{j+1}
+ =\bigl(3-c-\theta\bigr)q_j=3c q_j,
+\tag{110.8}
+$$
+
+because $c\varphi=1$ and $c^2=1-c$. Both new children of an old beta
+parent copy $2-c$, irrespective of their different beta and alpha labels.
+Their successor $\psi_k$ charge is therefore
+$2-c-\theta=\kappa$. No nonexistent descendant is assigned a charge.
+
+This also checks the early sources without a branch approximation.
+At $k=0$ the old alpha singleton becomes a beta singleton and
+$\psi_0=-c-\theta=3c q_0$, with $q_0=-c$ and $H_0=0$.
+At $k=1$ the old beta singleton becomes the three-node ordered source
+$\langle\beta,\alpha\rangle$. Each of its three copied values is $2-c$,
+each residual charge is $\kappa$, and the total is
+$3\kappa=3c q_1$, with $q_1=2-c$. Give each of its two edges increment
+$\kappa$; this gives (110.5) at the root and both new leaves.
+
+For every larger successor, prescribe its root value to be zero and
+its edge increment to be the total residual charge below that edge.
+At a nonroot vertex the parent-edge increment minus the sum of the
+child-edge increments is its own charge; at the root the missing
+parent increment subtracts the entire charge $3c q_k$. This proves
+(110.5) with the closed, rather than grounded, Laplacian. By (108.10),
+$|q_j|\le2$, so every edge increment has modulus at most
+$\max(6c,\kappa)$. Successor height is at most $k+1$, proving the norm
+bound in (110.5).
+
+For (110.6), place $\alpha_nH_{n-1}$ in the successor left subtree and
+$\beta_nH_{n-2}$ in its right subtree, and put zero at the global root.
+The three seam endpoint values of this corrector are all zero.
+The internal subtree Laplacians therefore agree with the restrictions
+of the global Laplacian, including at both subtree roots, and its
+global root Laplacian value is zero. Apply (110.5) separately to these
+two complete blocks. This proves (110.6), also for the old beta and
+alpha singleton subtrees when $n=2$. Boundedness of the contrast
+constants and of $q_k$ gives the displayed norms. $\square$
+
+**Theorem 110.3 (a root-visible limit at fixed positive time).**
+For every fixed $s>0$,
+
+$$
+\begin{aligned}
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nx_n&\longrightarrow D(s),\\
+\mathcal C_{n+1}\mathcal A_nS_n(s)x_n&\longrightarrow0,\\
+\mathcal C_{n+1}\bigl[S_{n+1}(s)\mathcal A_n
+                  -\mathcal A_nS_n(s)\bigr]x_n
+ &\longrightarrow D(s)
+   =-c\sqrt\kappa\,\langle F_s(\Sigma)v,b\rangle.
+\end{aligned}
+\tag{110.9}
+$$
+
+All three convergences are uniform on compact subintervals of
+$(0,\infty)$. Their endpoint, in the stated order of limits, is
+
+$$
+\lim_{s\downarrow0}D(s)
+ =-(c-1/2)\sqrt{2-c}=:-\eta<0.
+\tag{110.10}
+$$
+
+There is an $s_*>0$, independent of $n$, such that
+$D(s)\le-3\eta/4$ for every $0<s\le s_*$. On the fixed closed window
+$[s_*/2,s_*]$, all sufficiently large $n$ have root commutator in
+(110.9) at most $-\eta/2$, uniformly in $s$.
+No value of $s_*$ or bound at $s=1/100$ is asserted.
+For every finite $n$, the commutator at $s=0$ is zero; convergence
+through zero is not uniform.
+
+Proof. Positive-time smoothing is essential because
+$\|\mathcal C_n\|=\sqrt{N_n-1}$ on the centered counting space.
+Let $g_n=P_n\delta_r$ and use $h_n(s)$ of (103.10). Unitarity of
+$U_n$ and (103.11) give the exact bound
+
+$$
+\|\mathcal C_nS_n(s)\|=\|h_n(s)\|
+ \le \frac{V}{\sqrt{2es}}=:B_s,
+\qquad V=\sup_n\|v_n^{\mathrm e}\|<\infty.
+\tag{110.11}
+$$
+
+Indeed $\sup_{x>0}x^{-1/2}e^{-s/x}=(2es)^{-1/2}$, and (98.6)
+bounds the edge vectors. The centered singleton spaces give zero
+on both sides of the norm identity. Thus this is a bound on the
+smoothed root port, not on $\mathcal C_n$ itself.
+
+For the exact smooth root term, denote the path-summation map by
+$\mathscr J_j$ to distinguish it from ancestry. On actual edges,
+(103.3), (103.6) and the polar map give
+
+$$
+U_jP_j\mathscr J_j e
+ =-\sqrt{N_j}\,\Sigma_j^{1/2}e,
+\qquad
+\bigl(S_j(s)P_j\mathscr J_j e\bigr)(r)
+ =-\langle F_s(\Sigma_j)v_j^{\mathrm e},e\rangle.
+\tag{110.12}
+$$
+
+For the first equality use
+$U_j=-K_j^{-1/2}D_j$ and $D_j\mathscr J_j e=e$.
+Pairing it with $h_j(s)=\Sigma_j^{-1/2}F_s(\Sigma_j)v_j^{\mathrm e}$
+proves the second, with inverses restricted to actual edges.
+The omitted coordinates contribute zero. On a singleton the actual
+edge space is zero and the centered equation is also zero.
+
+Here $Z_n=\mathscr J_{n+1}b_n$ exactly: its constants refer to the
+successor's two complete subtrees, not just old vertices. Equation
+(110.12), covariance norm convergence (98.6), vector convergence
+$v_{n+1}^{\mathrm e}\to v$, and $b_n\to b$ imply
+
+$$
+\bigl(S_{n+1}(s)P_{n+1}Z_n\bigr)(r)
+ \longrightarrow-\langle F_s(\Sigma)v,b\rangle.
+\tag{110.13}
+$$
+
+The operator continuity here is the mature continuous functional
+calculus used in Theorem 103.3; its uniformity away from zero is
+already part of that theorem. Spectral and polar calculus are
+`literature-attested` intermediate results; see
+[Teschl, *Mathematical Methods in Quantum Mechanics*, §3.1,
+Theorem 3.7 and Problem 3.11, and §6.2, Theorem 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The source-specific copied-charge correspondence (110.6) supplies
+an initial state to this calculus; it does not follow from a scalar
+root resolvent.
+
+Both centering projections are accounted for before using that
+correspondence. If $\bar u_n=N_n^{-1}\sum z_n\chi_n$, then
+$x_n=(z_n\chi_n-\bar u_n\mathbf1)/d_n$.
+Since $J_n\mathbf1=\mathbf1$, the successor projection removes this
+entire old mean exactly. Therefore
+
+$$
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nx_n
+ =\frac{\sqrt{N_n}}{d_n}
+ \bigl(S_{n+1}(s)P_{n+1}J_n(z_n\chi_n)\bigr)(r).
+\tag{110.14}
+$$
+
+The successor mean of $Z_n$ is retained by $P_{n+1}$; the constants
+$\alpha_n,\beta_n$ are not presumed to center that successor field.
+For the corrector term in (110.6), self-adjointness, a heat split,
+and $\|L_je^{-N_jsL_j/2}\|\le2/(eN_js)$ give
+
+$$
+\begin{aligned}
+\left|\bigl(S_{n+1}(s)L_{n+1}\widetilde H_n\bigr)(r)\right|
+ &\le\frac{B_{s/2}}{\sqrt{N_{n+1}}}
+       \frac{2\|\widetilde H_n\|}{eN_{n+1}s}
+   =O\left(\frac{nB_{s/2}}{N_{n+1}s}\right),\\
+\left|\bigl(S_{n+1}(s)P_{n+1}R_n^{\mathrm{new}}\bigr)(r)\right|
+ &\le\frac{B_s}{\sqrt{N_{n+1}}}\|R_n^{\mathrm{new}}\|.
+\end{aligned}
+\tag{110.15}
+$$
+
+The Laplacian term already has zero counting mean. Both bounds tend
+to zero, uniformly on every compact positive-time interval.
+Since $\sqrt{N_n}/d_n\to\kappa^{-1/2}$, equations (110.6) and
+(110.13)--(110.15) prove the first line of (110.9), with coefficient
+$\theta/\sqrt\kappa=c\sqrt\kappa$ and the displayed negative sign.
+
+For the other order, (109.9)--(109.10) give, for every $a>0$,
+
+$$
+\|S_n(a)x_n\|
+ =O\left(\frac{n}{N_na}+\frac1{\sqrt{N_n}}\right)\longrightarrow0,
+\tag{110.16}
+$$
+
+uniformly for $a$ in compact positive-time intervals. This uses the
+old closed blocks and their zero seam corrector values. It does not
+assume a uniform spectral gap on arbitrary original sources.
+For every centered old field $u$ and $n\ge2$, the actual root fibre
+has size one. Summing all other fibres through $m_n=\varphi+\chi_n$
+and retaining the successor projection gives exactly
+
+$$
+\mathcal C_{n+1}\mathcal A_nu
+ =\mathcal C_nu-\frac{\sqrt{N_n}}{N_{n+1}}\langle\chi_n,u\rangle.
+\tag{110.17}
+$$
+
+The multiplier
+$\sqrt{N_n}\|\chi_n\|/N_{n+1}$ is bounded, since $|\chi_n|\le2$
+and $N_{n+1}\ge N_n$. With $u=S_n(s)x_n$, its second term tends to
+zero by (110.16). Its first term is bounded by
+$B_{s/2}\|S_n(s/2)x_n\|$ and also tends to zero. This proves the
+second and third lines of (110.9) and their positive-time uniformity.
+For $n=0,1$ the centered input is zero, so the exceptional size-three
+root fibre at the beta singleton adds no omitted term.
+
+Finally, Theorems 99.1 and 103.3 give
+$F_s(\Sigma)v\to P_{(\ker\Sigma)^\perp}v=v-q$ strongly as
+$s\downarrow0$, where $q_p=2^{-|p|}$. The two first-edge coordinates
+of $v-q$ are $c-1/2$ and $c^2-1/2=-(c-1/2)$. Thus
+
+$$
+c\sqrt\kappa\,\langle v-q,b\rangle
+ =c\sqrt\kappa(c-1/2)(\sqrt c+c^{-1/2})
+ =(c-1/2)\sqrt{2-c},
+\tag{110.18}
+$$
+
+using $c(1+c)=1$. Strong spectral continuity and (110.18) prove
+(110.10) and give an $s_*>0$ with
+$|D(s)+\eta|\le\eta/4$ for $0<s\le s_*$. Uniform convergence in
+(110.9) on $[s_*/2,s_*]$ then gives the finite lower discrepancy
+$\eta/2$ for all sufficiently large $n$. This is one fixed window,
+not a sequence $s_n\to0$. At $s=0$ each finite heat operator is the
+identity, so each finite commutator vanishes exactly. In particular,
+there cannot be a common finite threshold in $n$ enforcing a nonzero
+bound all the way down to zero. $\square$
+
+**Theorem 110.4 (passive forgetting is unsafe for the mixed comparison word).**
+For uniformly bounded sequences of centered counting states, define
+
+$$
+f\sim_{\mathrm{pass}}g
+ \quad\Longleftrightarrow\quad
+ \forall a>0,\quad\|S_n(a)(f_n-g_n)\|\longrightarrow0.
+\tag{110.19}
+$$
+
+Then $x\sim_{\mathrm{pass}}0$, and for every fixed $a>0$ the sequence
+$\widehat x_n=S_n(a)x_n$ also satisfies
+$x\sim_{\mathrm{pass}}\widehat x$. Nevertheless, for every fixed
+$s>0$,
+
+$$
+\begin{aligned}
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nx_n&\longrightarrow D(s),\\
+\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nS_n(a)x_n&\longrightarrow0.
+\end{aligned}
+\tag{110.20}
+$$
+
+Consequently passive positive-time equivalence does not preserve
+this mixed future root readout, on the fixed window of Theorem 110.3.
+This is an asymptotic statement about homogeneous initial states;
+it does not assert exact finite root blindness or compute an exact
+native mixed-future kernel.
+
+Proof. Equation (110.16) proves $x\sim_{\mathrm{pass}}0$.
+Contraction and the semigroup law give, for every $t>0$,
+
+$$
+\|S_n(t)(x_n-S_n(a)x_n)\|
+ \le\|S_n(t)x_n\|+\|S_n(t+a)x_n\|\longrightarrow0.
+\tag{110.21}
+$$
+
+The first line of (110.20) is Theorem 110.3. For the second, root
+smoothing (110.11) and $\|\mathcal A_n\|\le\sqrt{3N_n/N_{n+1}}$
+give
+
+$$
+\left|\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nS_n(a)x_n\right|
+ \le B_s\sqrt{3N_n/N_{n+1}}\,\|S_n(a)x_n\|\longrightarrow0.
+\tag{110.22}
+$$
+
+Thus the words are, in actual chronological order, renewal then
+successor heat then root readout, and old heat then renewal then
+successor heat then root readout. The intermediate heat cannot be
+moved across renewal under (110.19). The action-language distinctions
+of [Fiber II, Definition 44.5](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md)
+and [Fiber III, Definition 34.1](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_III.md)
+retain their original exact finite scope. Here $x_n$ need not lie in
+$K_{\mathrm{stat}}$ at any finite $n$; (110.19) is the precise weaker
+equivalence refuted by the source-specific witness. $\square$
+
+**Definition 110.5 (normalization and the operation bridge).**
+The discrepancy (110.9) uses unit counting-norm inputs and a
+$\sqrt{N_n}$-normalized root port. Equivalently, the pointwise fields
+$X_n=\sqrt{N_n}x_n$ are uniformly bounded, have counting norm
+$\sqrt{N_n}$, and satisfy
+
+$$
+\bigl(S_{n+1}(s)P_{n+1}J_nP_nX_n
+      -P_{n+1}J_nP_nS_n(s)X_n\bigr)(r)
+ =\mathcal C_{n+1}\bigl[S_{n+1}(s)\mathcal A_n
+                     -\mathcal A_nS_n(s)\bigr]x_n.
+\tag{110.23}
+$$
+
+Uniform pointwise boundedness follows from the bounded constants of
+$z_n$, $|\chi_n|\le2$, and $d_n/\sqrt{N_n}\to\sqrt\kappa>0$.
+The ordinary root discrepancy on $x_n$ with the map $\mathcal A_n$
+is instead (110.9) divided by $\sqrt{N_{n+1}}$, and tends to zero.
+Neither normalization supplies an acquired count or source index.
+
+Theorems 110.2--110.4 are `repo-derived` ordinary source-specific
+mathematics. Their reused intermediate supplies are the beta-charge
+identity of §108, old-state relaxation of §109, full covariance and
+root smoothing of §§98--103, and the spectral calculus cited in the
+proof of Theorem 110.3. The added correspondence is the entire copied
+charge with its new-leaf residual and both actual root seams, which
+makes the full-state defect visible at the root after fixed positive
+successor heat. The result concerns the homogeneous term omitted by
+the zero-initial forcing assumption of §106. It is not a further
+zero-initial convolution or a scalar-spectrum reconstruction.
+
+A native interpretation would require a typed correspondence from the
+complete original-source execution to these prepared signed occurrence
+fields, heat actuators, ancestry transfer and real root ports, preserving
+the same actual source, accepted actions, readouts and mixed order.
+The literal $\mathsf{Read}$, $\mathsf{ApplyRho}$ and absorbing
+$\mathsf{Halt}$ contract supplies none of those occurrence-state ports
+by its definition. The additional correspondence remains unproved.
+In particular, the two centering projections and signed witnesses here
+are not a supplied positivity-preserving probability channel.
+
+Any proposed bridge retains the entire original ordered source domain,
+its immutable original target, one joint actual history, authenticated
+current epoch, reached-address and presence guards, permission and
+refusal rules, full accessible control and cached fields, absorbing
+Stop and the declared vector of preparation, raw-call, address,
+update, arithmetic, memory and output costs. These are the same-source
+and whole-row obligations of
+[Uniform Descriptor Boundary, Definitions 1.2 and Assumptions 1.3--1.5](RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_DESCRIPTOR_BOUNDARY.md)
+and Assumptions 106.3 and 109.3; separate marginal realizations do not
+satisfy them. Only actually allowed mixed words enter a native future
+signature. Source-step, source-size-scaled comparison time, acquired
+experiment chronology and physical duration remain separate parameters
+until their operation-and-time correspondences are proved.
+
+The family $T_n$ is a counterfamily inside the full original domain,
+not a replacement for it. The comparison memory obstruction does not
+supply a spatial metric or dimension, stable physical matter, a physical
+clock, native propagation authority, full-spectrum recovery, or a
+completion criterion for an unbounded source-to-spatial-propagation task.
+
+## 110.99 追加锚（本行以下为增补区）
