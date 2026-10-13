@@ -1,0 +1,42 @@
+**Theorem 107.2 (the maximal action-closed hidden subspace).**
+
+The subspace $K_{\mathrm{fut}}$ satisfies
+
+$$
+K_{\mathrm{fut}}\subseteq K_{\mathrm{stat}},
+\qquad
+T_aK_{\mathrm{fut}}\subseteq K_{\mathrm{fut}}
+\quad(a\in A_0).
+\tag{107.2}
+$$
+
+Moreover, if $M\subseteq K_{\mathrm{stat}}$ is a linear subspace with
+
+$$
+T_aM\subseteq M\quad(a\in A_0),
+\tag{107.3}
+$$
+
+then $M\subseteq K_{\mathrm{fut}}$. Consequently $K_{\mathrm{fut}}$ is the
+largest subspace that is both passively invisible and closed under every
+declared intervention.
+
+### Proof
+
+The empty word belongs to $A_0^*$, so the second intersection is contained
+in the first. If $x\in K_{\mathrm{fut}}$, $a\in A_0$, and
+$w\in A_0^*$, then
+
+$$
+C_\ell A^jT_w(T_ax)=C_\ell A^jT_{aw}x=0,
+$$
+
+where $aw$ denotes the word obtained by prefixing $a$, so
+$T_{aw}=T_wT_a$. Hence $T_ax$ lies in
+every factor of the second intersection, proving invariance.
+
+Now let $x\in M$. By (107.3), $T_wx\in M$ for every word $w$. Since
+$M\subseteq K_{\mathrm{stat}}$, each vector $T_wx$ is killed by every
+$C_\ell A^j$. Thus $x$ belongs to every factor in the definition of
+$K_{\mathrm{fut}}$. The maximality statement follows. $\square$
+

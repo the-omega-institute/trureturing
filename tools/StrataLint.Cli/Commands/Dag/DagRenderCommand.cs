@@ -70,7 +70,7 @@ internal static class DagRenderCommand
         try
         {
             var raw = DagLedgerCommandPreparation.Ask(() => repository.ReadCurrentProjection(
-                TruthReleaseCommand.IsReleaseInput, (path, hash) => contentHashes.Add(path, hash)));
+                IsDagInput, (path, hash) => contentHashes.Add(path, hash)));
             var snapshot = SnapshotDecoder.Decode(raw) switch
             {
                 SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
@@ -156,6 +156,9 @@ internal static class DagRenderCommand
             documentProjection);
         return new CommandResult(exit == 0, output.ToString(), error.ToString());
     }
+
+    private static bool IsDagInput(string path) =>
+        TruthReleaseCommand.IsReleaseInput(path) && !path.StartsWith("Blueprint/", StringComparison.Ordinal);
 
     private static CommandResult Failure(string summary, Exception exception) =>
         new(false, string.Empty, $"dag-render: {summary}: {Innermost(exception).Message}\n");

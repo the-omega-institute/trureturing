@@ -1,0 +1,18 @@
+## 定义 31.3（descriptor 与完整边界）
+
+令 $\Delta$ 为有限 descriptor type 集合，令 $n\in\mathbb N^r$ 为可能无界
+的 descriptor 数值参数。一个 descriptor 是
+
+$$
+\delta=(\tau,n),\qquad \tau\in\Delta.
+$$
+
+在固定最大阶段数 $B$ 下，完整边界记录为
+
+$$
+\operatorname{bd}(e,j,H,v,Y,p),
+$$
+
+其中：
+
+- $e$ 是控制位置；
