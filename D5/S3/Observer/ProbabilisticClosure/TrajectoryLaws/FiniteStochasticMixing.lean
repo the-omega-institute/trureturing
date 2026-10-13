@@ -534,7 +534,7 @@ class Stationary (μ : S → ℝ) (P : Matrix S S ℝ) : Prop where
 
 variable [DecidableEq S]
 
-private lemma multi_step_stationary
+lemma multi_step_stationary
   (μ : S → ℝ) [StochasticVec μ]
   (P : Matrix S S ℝ) [RowStochastic P]
   (n : ℕ) [Stationary μ P] :
@@ -562,7 +562,7 @@ instance : Nonempty ↑(Simplex S) := by
   refine ⟨WithLp.toLp 1 (uniform_distribution (S := S)), ?hf⟩
   infer_instance
 
-private theorem stationary_distribution_exists (P : Matrix S S ℝ) [RowStochastic P]
+theorem stationary_distribution_exists (P : Matrix S S ℝ) [RowStochastic P]
   : ∃ μ : S → ℝ, StochasticVec μ ∧ Stationary μ P := by
   letI : DecidableEq S := Classical.decEq S
   have hP := row_stochastic_mem P
