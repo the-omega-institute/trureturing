@@ -165,7 +165,7 @@ theorem even_image_atCut (q : ℕ) (hq : 0 < q) (he : Even q)
     ray_atCut (ResetGraph q) (Alternating.reset_expanded_essential q hq)
       (resetRayRepresentative q hq alpha n r) n)
 
-private theorem endpointRow_set_congr {V E : Type*} (G : DirectedMultigraph V E)
+theorem endpointRow_set_congr {V E : Type*} (G : DirectedMultigraph V E)
     [Fintype V] [Fintype E] [DecidableEq V] {U W : Set (History G)} (n : ℤ)
     [Finite (Parts G U n)] [Finite (Parts G W n)] (h : U = W) :
     endpointRow G U n = endpointRow G W n := by
