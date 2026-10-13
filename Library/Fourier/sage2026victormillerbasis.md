@@ -14,6 +14,10 @@ triage: anchor
 
 # Classical level-one Miller normalization
 
+## Verified locator
+
+Source: https://doc.sagemath.org/html/en/reference/modfrm/sage/modular/modform/vm_basis.html
+
 The source is the SageMath reference manual's page **The Victor Miller
 basis**, specifically its introductory normalization and the function
 `victor_miller_basis(k, prec=10, cusp_only=False, var='q')`.
