@@ -27,5 +27,7 @@ undecidability claim.
 
 ## Verified locator
 
+https://arxiv.org/abs/1109.5438v1
+
 https://arxiv.org/pdf/1109.5438v1, Lemma 2.2; Boolean-combination inequalities
 preceding Lemma 2.7; Theorem 6.4 and Corollary 6.5(2).
