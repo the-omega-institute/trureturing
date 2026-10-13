@@ -147,18 +147,45 @@ jobs:
         run: |
           set -euo pipefail
           heartbeat_pid=''
+          signal_trace_pid=''
+          kernel_diagnostics() {
+            local kernel_output=''
+            if kernel_output="$(sudo -n dmesg --ctime 2>&1)"; then
+              echo 'RUNNER_KERNEL_LOG available'
+              printf '%s\n' "$kernel_output" | grep -Ei 'out of memory|killed process|oom|shutdown' | tail -20 || true
+            else
+              printf 'RUNNER_KERNEL_LOG unavailable reason=%s\n' "$kernel_output"
+            fi
+          }
           heartbeat() {
             while :; do
               printf 'CACHE_PRODUCER_HEARTBEAT %s\n' "$(date -u +%FT%TZ)"
               free -m || true
               ps -eo pid,ppid,pgid,rss,comm --sort=-rss | head -12 || true
-              sudo -n dmesg --ctime 2>/dev/null | rg -i 'out of memory|killed process|oom|shutdown' | tail -8 || true
+              ps -eo pid,ppid,pgid,comm | awk '$4 != "lean" && $4 != "sleep"' || true
+              pgrep -x lean | while IFS= read -r lean_pid; do
+                printf 'LEAN_PROCESS_MEMORY pid=%s\n' "$lean_pid"
+                awk '/^(Name|VmRSS|RssAnon|RssFile|VmSwap):/' "/proc/$lean_pid/status" 2>/dev/null || true
+              done || true
+              kernel_diagnostics
               sleep 60
             done
           }
           heartbeat &
           heartbeat_pid=$!
-          trap 'kill "$heartbeat_pid" 2>/dev/null || true; wait "$heartbeat_pid" 2>/dev/null || true' EXIT
+          trap 'kernel_diagnostics; kill "$heartbeat_pid" 2>/dev/null || true; wait "$heartbeat_pid" 2>/dev/null || true; if [[ -n "$signal_trace_pid" ]]; then sudo -n kill "$signal_trace_pid" 2>/dev/null || true; fi' EXIT
+          worker_pid="$(pgrep -x Runner.Worker | head -1 || true)"
+          if command -v strace >/dev/null 2>&1 && [[ "$worker_pid" =~ ^[0-9]+$ ]]; then
+            echo "RUNNER_SIGNAL_TRACE attaching worker_pid=$worker_pid"
+            trace_threads=()
+            for thread in /proc/"$worker_pid"/task/[0-9]*; do
+              trace_threads+=(-p "${thread##*/}")
+            done
+            sudo -n strace -tt -e trace=none -e signal=SIGTERM,SIGINT "${trace_threads[@]}" &
+            signal_trace_pid=$!
+          else
+            echo 'RUNNER_SIGNAL_TRACE unavailable'
+          fi
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
             export STRATALINT_LEAN_PRODUCER_DLL="$producer"
