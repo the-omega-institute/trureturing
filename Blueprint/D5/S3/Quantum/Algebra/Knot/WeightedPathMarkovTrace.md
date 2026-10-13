@@ -26,7 +26,20 @@ The local Temperley-Lieb relations are reused from weighted_legal_path_temperley
 
 This is classical path-model background. Aharonov, Jones and Landau, A Polynomial Quantum Algorithm for Approximating the Jones Polynomial, arXiv:quant-ph/0511096v2, Definition 3.3 and Claim 3.6, give the explicit line-graph endpoint trace and its local Markov calculation. AJL uses unnormalized Temperley-Lieb generators with Markov coefficient one over delta. Multiplying the present literal projection by delta recovers that normalization, so its Markov coefficient is one over delta squared. Here the statement treats arbitrary finite positive Perron data and the entire endpoint-block algebra. This tower does not construct a geometric closure map, prove geometric Markov equivalence, or produce a knot with a prescribed Jones polynomial.
 
+**Theorem 1.2 (Scalar linearity of the same endpoint trace).**
+
+$$\forall n \in \mathbb{N},\; \forall s \in L,\; \forall c \in \mathbb{C},\; \forall X \in \operatorname{C}\left(n, s\right),\; \operatorname{tau}\left(n, s, \operatorname{SMul}\left(c, X\right)\right) = c \cdot \operatorname{tau}\left(n, s, X\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.tau_smul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite decidable L, arbitrary relation R, real weights d and real delta, every n and start s, every complex c and every X in C(R,n,s), tau(c times X) equals c tau(X). Positivity, symmetry and the Perron equality are not needed for this scalar identity. The Artin and signed Markov proofs consume this scalar-linearity helper at its source owner. It follows from matrix-trace scalar linearity and finite-sum distribution; it is a consumed helper rather than new independent mathematical content.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.tau_smul`
 - Truth anchor: `D5/S3/Quantum/Algebra/Knot/WeightedPathMarkovTrace.weighted_path_markov_trace`
 - Dependency: [D5/S3/Quantum/Algebra/WeightedLegalPathTemperleyLieb](../WeightedLegalPathTemperleyLieb.md)

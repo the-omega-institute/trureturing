@@ -53,7 +53,7 @@ private theorem sum_cycle_blocks
       push_cast
       ring
 
-private theorem sum_cycle_mod_eq_blocks_remainder
+theorem sum_cycle_mod_eq_blocks_remainder
     {period : Nat} (hperiod : 0 < period)
     (value : Fin period -> Real) (n : Nat) :
     (∑ i ∈ range n,

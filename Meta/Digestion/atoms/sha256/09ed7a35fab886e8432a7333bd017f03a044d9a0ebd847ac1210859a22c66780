@@ -1,0 +1,2 @@
+**证明。** 由定理 3.1(a)(b),只需对每个分支 $C$ 构造 (b) 中的族。若 $\lambda$ 在 $C$ 上只取一个值,则 $C$ 内没有 $H_t$ 的边,取 $\beta_u=1$。若取两个值 $a\ne b$,则 $C$ 内每条边连接取值 $a$ 与取值 $b$ 的顶点,取 $\beta_u=s$,其中 $s\in F^\times$ 满足 $s^2=a+b$(平方映射是 $F$ 的双射)。若取三个值 $a,b,c$,取母卷命题 4.1 证明中的 $\beta_a,\beta_b,\beta_c$,它们满足 $\beta_a\beta_b=a+b$、$\beta_b\beta_c=b+c$、$\beta_a\beta_c=a+c$,并令 $\beta_u=\beta_{\lambda_u}$。在每种情形下 $C$ 内的边 $uv$ 都满足 $\lambda_u\ne\lambda_v$ 与 $\beta_u\beta_v=\lambda_u+\lambda_v$。∎
+
