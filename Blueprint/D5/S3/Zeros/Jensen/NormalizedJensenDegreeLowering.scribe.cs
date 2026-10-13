@@ -262,15 +262,70 @@ internal sealed class NormalizedJensenDegreeLoweringDocument : IScribeDocumentDe
                     + "factorization are assumed. It reuses the same scalar "
                     + "comparison and existing complex analytic zero count.")),
                     Paragraph(Text(
-                    "The pointwise cubic construction does not yet construct "
-                    + "analytic parameter labels on a neighborhood of the closed "
-                    + "target disc. Label gluing, the implicit speed bound, full "
-                    + "complex binding to the actual J and source-derivative "
-                    + "response, conjugation and injectivity, and inclusive "
-                    + "endpoint criteria remain separate obligations. Uniform "
-                    + "actual-source estimates, growing-core geometry, removal "
-                    + "of local all-critical premises, RH and strict Robin for "
-                    + "every integer above 5040 remain unresolved."))),
+                    "For real selected a,b,c, let Ahat(z)=B(z)Qfar(z), F(z)=(z-c)(z-b)(z-a)Ahat(z), H=T_n Ahat, "
+                    + "Vhat=T_n Ahat', J=T_n F, and G=T_n F'. Here n is nonzero, Qfar is an arbitrary complex "
+                    + "polynomial and B is supplied ContDiff over C. These are the actual complete sources of the "
+                    + "finite extraction, not independently chosen responses. At each H(t)!=0 the checked "
+                    + "polynomial identities give J=H P, J'=H' P+H P1 and G=H(S P+W), with all rational jets "
+                    + "taken from this same H,Vhat. The checked jet identities and the open H!=0 neighborhood "
+                    + "prove that the actual chi,U,V3,eta are analytic at t.")),
+                    Paragraph(Text(
+                    "The sigma/12 fixed-box unique roots glue through local implicit uniqueness to three labels "
+                    + "lambda_j of the same cubic for every good complex parameter. The original amplitude "
+                    + "budgets |U-sigma^2|<sigma^2/32 and |V3|<sigma^3/32 imply |lambda_j-l_j|<sigma/8 and exact "
+                    + "cubic factorization for every complex z. Reference gaps and moving gaps give "
+                    + "|lambda'_j|<1/54<1/32 from |U'|<sigma/256 and |V3'|<sigma^2/256; no separate derivative "
+                    + "margin is assumed. Actual U,V3 conjugation identities imply conjugation of these same "
+                    + "constructed labels.")),
+                    Paragraph(Text(
+                    "For a convex conjugation-invariant complex set S, retain H!=0, the original amplitude and "
+                    + "derivative budgets, |chi'-1|<1/64 and the actual-source conjugation identities throughout "
+                    + "S. The actually constructed coordinate branches f_j=chi-m-lambda_j are analytic and "
+                    + "injective on the whole S, including its boundary. Each branch node is real and simple, and "
+                    + "distinct branches share no node. The complete extraction satisfies "
+                    + "J(t)=H(t)f1(t)f2(t)f3(t) on S. Consequently its actual J zero set on S is finite, all its "
+                    + "zeros are real and simple and its cardinality is at most three. Finiteness and this count are "
+                    + "conclusions from the three injective branches, not premises.")),
+                    Paragraph(Text(
+                    "At each t in S, analyticity and the strict original U,V_3 amplitude budgets extend the "
+                    + "same constructed-label factorization to a neighborhood of t. H(t)!=0 also extends "
+                    + "locally, so the complete actual-source identity gives J=H f1 f2 f3 on that neighborhood. "
+                    + "Additivity of analytic order, the simple branch nodes and absence of shared nodes "
+                    + "therefore give analyticOrderNatAt(J,t)=1 at every actual J zero, including a boundary "
+                    + "point of S. No openness of S or additional margin hypothesis is required.")),
+                    Paragraph(Text(
+                    "When the complex source B has a supplied smooth real restriction f, B(x)=f(x) on the real "
+                    + "axis, and Qfar is mapped from a real polynomial, the iterated derivatives at zero agree "
+                    + "with the real-source derivatives by uniqueness. Thus the actual H is the map of the same "
+                    + "real finite extraction. The explicit quotient jets chi,U,V3 commute with conjugation at "
+                    + "every complex parameter, including a zero of H under totalized division. This supplies "
+                    + "all three coordinate conjugation identities used above. Under the same six uniform "
+                    + "nonzero, value and derivative budgets, the same actual J therefore has real simple "
+                    + "zeros and cardinality at most three on the entire closed target S; no separate "
+                    + "coordinate analyticity or conjugation premise is needed. The real source realization "
+                    + "and the numerical source budgets remain explicit conditions.")),
+                    Paragraph(Text(
+                    "For a monic complex polynomial P of degree q, supply the literal finite Appell equation "
+                    + "s P''-z P'+q P=sum_{m=0}^q g_m P^(m+1), with s!=0 and g_0=g_1=0. At an actual "
+                    + "root beta, retain a>0, |beta/(s a)|<=3/8, |(q-k)/(s a^2)|<=1/64 for k+2<=q, "
+                    + "and sum_{m=0}^q |g_m a^(m-1)/s|<=1/16. Iterated polynomial differentiation supplies "
+                    + "the literal root-jet recurrence, and exact division supplies its normalized recurrence. "
+                    + "The finite maximum argument bounds every normalized jet d_k=P^(k)(beta)/a^k "
+                    + "in magnitude by d_1: the higher recurrence terms cost at most (3/8+1/64+1/16) times the maximum, "
+                    + "while monicity makes the top derivative nonzero. Thus, under those same conditions, "
+                    + "P'(beta)!=0 and |P^(m)(beta)/P'(beta)|<=a^(m-1) for every m>=1. The literal "
+                    + "finite differential operator Phi(D)P at that same root consequently satisfies "
+                    + "|Phi(D)P(beta)/P'(beta)|<=sum_{m=1}^q |phi_m| a^(m-1). Its constant term vanishes "
+                    + "at the root. Instantiating the actual complete kernel equation, its coarse root "
+                    + "location and full coefficient majorant remains separate from this checked application; "
+                    + "original-node transmission still requires its own signed cofactor information.")),
+                    Paragraph(Text(
+                    "These applications use standard pinned complex analytic, implicit-function, zero-count, "
+                    + "mean-value and set-cardinality results. They are bind-only with admission_basis none and "
+                    + "are recorded here as source-derived applications rather than new retained D5 declarations. "
+                    + "The canonical xi B/F identity and payment of the uniform actual-source nonvanishing, "
+                    + "amplitude and derivative budgets remain open; no RH, strict Robin beyond 5040 or global "
+                    + "root-reality conclusion follows from this conditional local reduction."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-jensen-canonical-bridge"),

@@ -1421,3 +1421,1117 @@ the expressly acquired/exported supplement and fresh stationary native
 replies after exactly one authenticated update.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Exact class-root experiments on every full actual one-image fiber
+
+### 10.1 The full fiber, root types and actual image admissibility
+
+**Definition 10.1 (fixed complete row and full one-image domain).** Keep the
+finite ordered trees, $\rho$, literal occurrence addresses and four-reply
+native port of Definition 1.1. Fix any finite prefix-free public cut $P$
+and any complete current row $R_*=(C_*,\pi_*)$. Its reached support is
+$H\subseteq P$; its exterior includes every concrete bracket and leaf
+outside those holes, and a strict-prefix blocking leaf for every
+$p\in P\setminus H$. Let $D$ be the finite set of classes of $\pi_*$,
+$k=|D|$, and write $[p]\in D$ for the class of $p\in H$. Fix the first
+occurrence $p_d$ of each class as its representative. Empty cuts, a root
+cut, zero classes and blocked cut members are allowed.
+
+For an injective class valuation $x:D\to\mathcal T$, set
+
+$$
+\mathscr F_*(x)=C_*[(x_{[p]})_{p\in H}],\qquad
+\mathcal X_*=\{x:D\to\mathcal T:
+ (\forall d\ne e,\ x_d\ne x_e)\ \land\ \mathscr F_*(x)\in\mathcal I\},
+\quad \mathcal I=\rho[\mathcal T].
+\tag{NBP.10.1}
+$$
+
+The nonempty comparison domain and whole target are exactly
+
+$$
+\mathcal U_*=\{u\in\mathcal T:R_P(\rho u)=R_*\},\qquad F(u)=R_P(u).
+\tag{NBP.10.2}
+$$
+
+The actual legal-row fiber of Definition 1.2 and the image inverse
+$\delta$ of Transport--Memory Completion (RA.2207) give the bijection
+
+$$
+x\longmapsto u_x=\delta(\mathscr F_*(x)),\qquad
+u\longmapsto x_d=(\rho u)|_{p_d},
+\qquad \mathcal X_*\cong\mathcal U_*.
+\tag{NBP.10.3}
+$$
+
+This retains every repeated occurrence, every different-class disequality
+and every absent-cut guard. All finite origins in (NBP.10.2) remain in the
+domain; there is no bound on source size, rank or hidden history.
+
+For a finite tree $z$, write
+$\operatorname{rt}(z)\in\{\alpha,\beta,\mathsf{br}\}$ for its root
+constructor. A class-root type is a map
+$\theta:D\to\{\alpha,\beta,\mathsf{br}\}$. In the finite exterior term
+$C_*$, replace every hole occurrence by its shared class name. For a
+subterm $e$, let $\operatorname{lit}_\ell^\theta(e)$, with
+$\ell\in\{\alpha,\beta\}$, mean that $e$ is the concrete leaf $\ell$,
+or $e$ is a class name $d$ with $\theta(d)=\ell$. A pair is never a
+literal leaf. Define the finite image predicate by
+
+$$
+\begin{aligned}
+\operatorname{im}^\theta(\alpha)&=\mathsf{false},&
+\operatorname{im}^\theta(\beta)&=\mathsf{true},&
+\operatorname{im}^\theta(d)&\Longleftrightarrow\theta(d)\ne\alpha,\\
+\operatorname{im}^\theta(\langle e,f\rangle)
+&\Longleftrightarrow
+ \bigl(\operatorname{lit}_\beta^\theta(e)\land
+       \operatorname{lit}_\alpha^\theta(f)\bigr)
+ \ \lor\
+ \bigl(\operatorname{im}^\theta(e)\land
+       \operatorname{im}^\theta(f)\bigr).
+\end{aligned}
+\tag{NBP.10.4}
+$$
+
+Its disjuncts are the special block $E=\langle\beta,\alpha\rangle$
+and the general pair of image trees. Define the finite admissible chart
+
+$$
+\Theta_*=\{\theta:
+ \operatorname{im}^\theta(C_*)\ \land\
+ |\theta^{-1}(\alpha)|\le1\ \land\
+ |\theta^{-1}(\beta)|\le1\}.
+\tag{NBP.10.5}
+$$
+
+The two leaf restrictions concern distinct classes, not occurrences.
+They do not impose different values on different residual names that
+could occur in an auxiliary construction.
+
+**Proposition 10.2 (exact type feasibility and exact filling test).**
+For every injective actual finite valuation $x$, with
+$\theta_x(d)=\operatorname{rt}(x_d)$,
+
+$$
+\mathscr F_*(x)\in\mathcal I
+\quad\Longleftrightarrow\quad
+\left(\forall d\text{ with }\theta_x(d)=\mathsf{br},\
+ x_d\in\mathcal I\right)
+\land\operatorname{im}^{\theta_x}(C_*).
+\tag{NBP.10.6}
+$$
+
+Moreover,
+
+$$
+\Theta_*=\{\theta_x:x\in\mathcal X_*\}.
+\tag{NBP.10.7}
+$$
+
+Thus the chart decides whether a prescribed complete class-root assignment
+has an actual-image realization, for any fixed exterior and complete
+partition. Root type alone does not certify image membership of an
+arbitrary branch-valued filling.
+
+**Proof.** Reuse the exact grammar
+$\mathcal I::=\beta\mid E\mid\langle\mathcal I,\mathcal I\rangle$
+and its disjoint parser from (RA.2207). Induction on that grammar shows
+that every subtree of an image is either $\alpha$ or an image:
+the children of $E$ are $\beta,\alpha$, and the children of a general
+image pair are images to which the induction applies. Consequently every
+branch-valued class subtree of an actual image is itself an image.
+A leaf-valued class is exactly its declared literal leaf. Induction on
+the finite exterior then identifies image membership at each visible
+subterm with (NBP.10.4): a pair is $E$ precisely in the first disjunct,
+and otherwise it is an image precisely when both children are images.
+This proves necessity in (NBP.10.6). The same exterior induction gives
+sufficiency when every branch-valued class is an image. Injectivity makes
+at most one distinct class equal to either leaf, proving the inclusion
+from right to left in (NBP.10.7).
+
+For the other inclusion, fix $\theta\in\Theta_*$. Give its leaf-valued
+classes their forced literal leaves. Give its branch-valued classes
+pairwise distinct finite non-atomic image values, obtained simultaneously
+from Retained Literal Root Depth Theorem 2.2 with prescribed intrinsic
+rank one; its construction writes these values as $\rho p_i$ with
+arbitrarily deep leaves. They are branches, mutually distinct, and
+distinct from both leaves. Equation (NBP.10.6) makes the resulting
+injective filling an actual image. The native legal-row fiber and
+$\delta$ then produce an actual finite origin with exactly $R_*$.
+This proves (NBP.10.7), including zero branch classes and zero classes.
+For the last distinction in the statement, take a root hole. Its type
+$\mathsf{br}$ is feasible, but $\langle\alpha,\alpha\rangle$ is a
+branch outside the image: it is neither $E$ nor a pair of images.
+Equation (NBP.10.6) requires the actual branch filling to be an image
+as well as its root assignment to be feasible. $\square$
+
+### 10.2 The whole predecessor target and simultaneous deep actual witnesses
+
+**Definition 10.3 (type target and occurrence mask).** For
+$\theta\in\Theta_*$ let $A_\theta$ be its unique alpha class, or
+$\bot$ when it has none. At a visible root $q$ of $C_*$, use
+$\operatorname{Alpha}_{C_*}(q,A_\theta)$ exactly as in Definition 3.1.
+For a reached nonroot cut occurrence $p=qd$, its parent and sibling
+root are visible: prefix freedom forbids a cut ancestor. Put
+
+$$
+O_\theta=
+ H\setminus\{qd\in H:d\in\{L,R\},\
+             \operatorname{Alpha}_{C_*}(qR,A_\theta)\},
+\qquad
+G_*(\theta)=\operatorname{Back}_P(R_*,O_\theta).
+\tag{NBP.10.8}
+$$
+
+The root, when cut, belongs to $O_\theta$. The public partial decoder
+$\operatorname{Back}_P$ is evaluated only on these attained masks.
+
+**Theorem 10.4 (complete predecessor factorization).** For every
+$x\in\mathcal X_*$ and its actual origin $u_x$,
+
+$$
+H_P(u_x)=O_{\theta_x},\qquad F(u_x)=G_*(\theta_x).
+\tag{NBP.10.9}
+$$
+
+In particular the finite target set is
+$G_*[\Theta_*]=F[\mathcal U_*]$, and its size equals the number of
+attained labels $A_\theta$, as in Theorem 3.2.
+
+**Proof.** Apply Theorem 3.2 directly to the actual image
+$t=\mathscr F_*(x)=\rho u_x$. Its current alpha label is $A_{\theta_x}$,
+so (NBP.3.1) gives exactly the first equality in (NBP.10.9).
+At a visible parent of a reached cut, an alpha right child forces the
+whole parent to be $E$ by the image grammar; its two children were born
+from a predecessor beta leaf. Other reached cut occurrences are old.
+Every currently blocked member of $P\setminus H$ was also absent in
+the predecessor because old positions persist.
+
+Theorem 2.2 applied to this same transition gives
+$\operatorname{Back}_P(R_*,O_{\theta_x})=R_P(u_x)$. Its occurrence
+repair preserves old holes even when an old and a newborn occurrence
+share one current class; it canonically renames the restricted classes
+and retains all their equalities and disequalities. Its inverse exterior
+has the concrete beta parent of every newborn child, hence the complete
+guards for predecessor-blocked cuts, together with the guards for cuts
+already blocked in $C_*$. This is the whole row in the second equality,
+not just its newborn mask or alpha label. Proposition 10.2 makes every
+$\theta$ attained, and Theorem 3.2 supplies the stated target-label
+bijection. $\square$
+
+**Proposition 10.5 (simultaneous image-valued deep padding and query
+correspondence).** For every $L\ge0$ there are actual valuations
+$x^\theta\in\mathcal X_*$, one for every $\theta\in\Theta_*$, such that
+$\theta_{x^\theta}=\theta$ and all their branch-valued classes have
+minimum native leaf depth greater than $L$. Each valuation retains all
+class disequalities and repetitions. Write
+$t^\theta=\mathscr F_*(x^\theta)=\rho u^\theta$.
+
+For every native address $v$ with $|v|\le L$, its reply on these actual
+trees is either constant in $\theta$, or a known function of one
+class-root type. More precisely, if exterior traversal first enters a
+hole $p\in H$, write $v=pw$ and $d=[p]$. Then
+
+$$
+r_{t^\theta}(v)=
+\begin{cases}
+\theta(d),&w=\varepsilon,\\
+\mathsf{absent},&w\ne\varepsilon,\ \theta(d)\in\{\alpha,\beta\},\\
+\mathsf{branch},&w\ne\varepsilon,\ \theta(d)=\mathsf{br}.
+\end{cases}
+\tag{NBP.10.10}
+$$
+
+The symbols $\mathsf{br}$ and $\mathsf{branch}$ denote the same
+constructor reply. If traversal does not enter a hole, the complete
+finite exterior supplies the reply, including every blocking absence.
+
+**Proof.** Apply Retained Literal Root Depth Theorem 2.2 simultaneously
+to the finitely many branch slots $(\theta,d)$. Prescribe intrinsic
+rank one in every slot, minimum leaf depth greater than $L$, and include
+all within-valuation different-branch-class negatives. Its explicit
+construction gives finite non-atomic image values, indeed it can make
+all slots pairwise distinct. Use one value at every repeated occurrence
+of the same class in each valuation, and the forced literals in the
+leaf slots. Proposition 10.2 puts every resulting filling in the
+original full image fiber. No cross-origin relation is required.
+Theorem 10.4 gives precisely $G_*(\theta)$ on each of these origins.
+
+Exterior traversal is independent of the filling until it first reaches
+a hole. If it enters one, native subtree descent is exactly
+$r_{t^\theta}(pw)=r_{x^\theta_d}(w)$. At an empty suffix this is the
+root type. A nonempty suffix at a literal leaf is absent. At a padded
+branch value, $|w|\le|v|\le L$ and the minimum leaf depth is greater
+than $L$, so its endpoint is a reached branch. If no hole is entered,
+the visible endpoint or earlier concrete blocking leaf in $C_*$
+determines the reply. These cases exhaust all finite addresses of the
+stated length, including root, absent addresses, extensions of leaves,
+and repeated-class cones. $\square$
+
+The representatives establish actual feasibility and a bounded-menu
+query correspondence. They do not reconstruct all sources as themselves.
+The root chart and the selected $u^\theta$ are therefore distinct from
+the exact source charts of Symbolic Feedback Synthesis Definition 3.1
+and Proposition 3.2, whose two directions reconstruct each actual
+source. No completed, infinite or rational tree is a source witness here.
+
+### 10.3 The acquired/exported contract and the finite experiment task
+
+**Assumption 10.6 (paid acquisition, actual export and complete entry).**
+Exactly one authenticated genuine $\rho$ update binds the origin
+$u\in\mathcal U_*$ to the stationary current register $t=\rho u$.
+The complete row is lawfully acquired. Before a complete access cut,
+the producer possesses actually acquired same-source, same-version
+finite data: either the lossless current tree or $R_*$ and one acquired
+finite subtree value for every class in $D$. It may perform finite
+local computation and compare these acquired terms, computes the
+supplement, and actually exports its complete value with $R_*$ before
+losing access to the acquired values. Equality in the complete partition
+comes from acquired values, not an unknown-subtree equality service.
+
+A supplied common lawful reader entry exposes exactly $P,R_*$, the
+exported supplement and common source-independent controls, from which
+these inputs are recoverable. Its entire accessible initial state is
+determined by these inputs. No other source-dependent identity, old row,
+alpha label, value, trace, cache, archive, pointer, control, acquisition
+order or count, length, meter, timing or update packet is available.
+A field determined by the retained payload adds no new distinction;
+any further accessible field changes this contract. Authentication
+certifies continuity and the one update without selecting an origin
+inside the fiber.
+
+The same current register stays stationary during fresh reading.
+Every finite address is legal and returns its native four-reply value.
+Every invocation counts, including repeats, absences and addresses
+already used in acquisition. No further update, equality, image,
+provenance, pointer, physical inverse or other source port is supplied.
+The reader must terminate with the whole $F(u)$ for every origin in
+the full fiber. Common installation, lawful new entry after any
+absorbing producer stop, acquisition, local computation, export and
+access isolation are supplied and paid premises, not consequences
+of the row identity. This is Assumption 9.2 for the general row.
+
+For $r\ge1,q\ge0$, define $\mathsf{InvFeas}_*(r,q)$ by joint existence
+of a deterministic acquired/exported supplement with at most $r$
+distinct actual complete values on $\mathcal X_*$ and a deterministic
+reader with at most $q$ fresh invocations on every $u\in\mathcal U_*$.
+The supplement may depend on all acquired values, not just root types.
+
+**Definition 10.7 (finite class-root experiment feasibility).** The
+finite task has input $\theta\in\Theta_*$, whole-row target
+$G_*(\theta)$, and experiment menu $D$. Experiment $d$ returns
+$\theta(d)$ and costs one invocation; repetitions also cost one.
+Let $\mathsf{RootFeas}_*(r,q)$ mean that there exist a finite label
+set $S$ with $1\le|S|\le r$, a coloring $c:\Theta_*\to S$, and, for
+each used $s$, a finite deterministic experiment tree $E_s$ of depth
+at most $q$, such that $E_{c(\theta)}$ returns $G_*(\theta)$ for every
+$\theta\in\Theta_*$. Internal vertices ask one class $d\in D$,
+edges carry the three reached root replies, and leaves carry complete
+row outputs. Early halts are allowed. Impossible edges may halt
+arbitrarily. For zero classes only the no-query tree exists.
+
+This is a finite task, with at most $3^k$ inputs and $k$ experiments.
+It supplies neither an arbitrary subset query nor a class equality
+test. It is a task on root types, not an exact source chart.
+
+### 10.4 Both directions of the same-$r,q$ correspondence
+
+**Theorem 10.8 (exact full-fiber joint feasibility reduction).** Under
+Assumption 10.6, for every integer $r\ge1,q\ge0$,
+
+$$
+\mathsf{InvFeas}_*(r,q)\quad\Longleftrightarrow\quad
+\mathsf{RootFeas}_*(r,q).
+\tag{NBP.10.11}
+$$
+
+Both sides have the same supplement capacity and the same fresh
+invocation upper budget. The left side includes every finite actual
+origin, every legal finite address and every full-value-dependent
+acquired/exported supplement permitted by the contract.
+
+**Proof, from the finite task to the full actual fiber.** Fix a coloring
+and trees witnessing $\mathsf{RootFeas}_*(r,q)$. The producer computes
+$\theta_x$ by inspecting the roots of the already acquired class
+values. No fresh source call is used for this local inspection and
+no unknown value is compared. It exports the complete finite code
+$c(\theta_x)$, using distinct installed finite values for the used
+labels. There are at most $r$ values. Every used type is actually
+attained by Proposition 10.2, so the actual code range is exactly
+the used coloring range.
+
+On entry with that code, the common reader follows its installed
+tree. At experiment $d$ it actually invokes the native port at
+$p_d$. This address is reached on every current source in the fiber,
+and its reply is exactly $\theta_x(d)$. Each traversal of a query
+vertex is one counted invocation, even if that class was queried
+before. Induction on the reply path makes execution agree with
+$E_{c(\theta_x)}$. It stops after at most $q$ calls with
+$G_*(\theta_x)=F(u_x)$ by Theorem 10.4. The output includes all
+exterior syntax, canonical restricted classes, disequalities and
+absence guards. The acquisition/export and common-entry premises
+implement the finite code without adding any source-bearing field.
+
+**Proof, from an arbitrary full-fiber protocol to the finite task.**
+Fix a feasible supplement $\sigma$ and reader; enumerate their $a$
+actually used complete supplement values as $s_1,\ldots,s_a$, where
+$1\le a\le r$. For each value, unroll only reachable native reply
+histories of the reader. At a reachable history its common initial
+state, complete supplement and previous replies determine its next
+local segment, finite query word or halt, and any halt output.
+Some actual origin realizes that history. Source-total termination
+on that origin makes the determined local segment finite. The
+uniform bound $q$ leaves only finitely many reachable histories:
+for each advice value there are at most
+$1+4+\cdots+4^q$ reply words. Replace unreachable children by
+immediate arbitrary halts. Thus there are finitely many fixed
+query words over all these finite trees. This is the bounded
+unrolling used in Native Signed Feasibility Theorem 7.3, with no
+new update and with advice values as finitely many separate entries.
+
+Let $L$ be the maximum length of these query words, taking $L=0$
+if there are none. No source-size bound has been introduced:
+$L$ bounds the finitely many words of this fixed comparator.
+Use Proposition 10.5 at this common $L$, obtaining one actual
+padded origin $u^\theta$ for every $\theta\in\Theta_*$. Define
+$c(\theta)=i$ precisely when the actual export on this origin is
+$\sigma(x^\theta)=s_i$. This coloring is a finite table with at
+most $r$ labels, even though the original $\sigma$ can depend on
+all acquired values and can vary among sources of one root type.
+
+Transform the finite reader tree for $s_i$ into a root-experiment
+tree as follows. A query at $v$ not entering an exterior hole has
+the constant reply determined by $C_*$, so select that child
+without an experiment. A query entering any occurrence of class $d$ with empty suffix
+asks $d$ and forwards its type reply. A query entering an occurrence
+of class $d$ with nonempty suffix asks $d$, forwards
+$\mathsf{absent}$ on either leaf type and $\mathsf{branch}$ on
+branch type. The third case uses (NBP.10.10). Every transformed
+vertex therefore uses zero or one root experiment for one original
+native invocation. All original words are within $L$. The
+transformation is on the finite tree, so its depth is at most $q$;
+retaining repeated questions is legal, and skipping known constants
+only decreases the count.
+
+For $\theta$ with $c(\theta)=i$, induction along the transformed
+tree reproduces exactly the original reader path on the one fixed
+actual origin $u^\theta$ with its truthful acquired/exported value
+$s_i$. Every such path was reachable and hence was included in
+the unrolling. The original reader returns
+$F(u^\theta)=G_*(\theta)$, so the transformed root tree returns
+that complete row. Doing this for every $\theta$ proves
+$\mathsf{RootFeas}_*(r,q)$.
+
+The padded origins are alternative actual sources, each fixed
+through its own run. They are used only for necessity; sufficiency
+above covers all actual origins. Selecting them does not assert
+that an arbitrary prescribed supplement is constant on type cells.
+The new acquired encoder in the first direction can export the
+finite coloring found in the second, rather than preserve the
+original encoder pointwise. This is exactly why joint existence,
+rather than fixed-advice performance, is the invariant. $\square$
+
+The argument is an existence proof of a finite certificate from
+a promised correct bounded comparator. It is not an algorithm
+that extracts all reachable histories or a useful word bound from
+arbitrary program text. No trace, full native behavior, total
+controller state count or physical resource correspondence is
+preserved by the two directions.
+
+### 10.5 Effective finite criterion, endpoints and the numerical application
+
+**Corollary 10.9 (effective joint root-protocol criterion).** From the
+finite input $P,R_*$ with its nonempty actual image fiber and
+integers $r\ge1,q\ge0$, the joint feasibility question is decidable
+and a positive answer supplies a finite acquired encoder and
+stationary native reader under Assumption 10.6. This requires no
+supplied source bound or physical word-length bound.
+
+To express the criterion using the existing finite decision-tree
+supplier, form the finite relation table
+
+$$
+\mathcal J_*=\{(G_*(\theta),(\theta(d))_{d\in D}):
+                         \theta\in\Theta_*\}.
+\tag{NBP.10.12}
+$$
+
+For a coloring $c:\Theta_*\to\{1,\ldots,r\}$, let
+$\mathcal J_{c,i}$ consist of its rows with $c(\theta)=i$. Use
+the existing finite minimax call value $V$ in (SLH.69.17), with
+experiment menu $D$ and four-reply alphabet whose absent classes
+are empty. Then the exact criterion is
+
+$$
+\mathsf{InvFeas}_*(r,q)
+\quad\Longleftrightarrow\quad
+\exists c:\Theta_*\to\{1,\ldots,r\}\quad
+ \max_{i:\mathcal J_{c,i}\ne\varnothing}
+       V(\mathcal J_{c,i},D)\le q.
+\tag{NBP.10.13}
+$$
+
+**Proof.** Enumerate the at most $3^k$ type assignments and test
+(NBP.10.5); Proposition 10.2 makes this an exact finite table of
+attained types. Compute $G_*$ using (NBP.10.8), Theorems 2.2 and
+3.2. Enumerate the finitely many colorings. On each nonempty
+colored subtable, the finite unit-call recurrence (SLH.69.17)
+terminates and gives its exact optimal experiment tree: equal
+complete menu replies give equal type and hence equal target.
+Its constant-target case gives zero calls. Its nonconstant-target
+case chooses an actual class-root experiment splitting the table.
+Thus it supplies exactly the trees of Definition 10.7, not a
+new unrestricted partition action. Theorem 10.8 proves
+(NBP.10.13), and its first direction installs the finite encoder
+and trees on the full actual fiber. The encoder inspects only
+actually acquired terms; the online reader calls only $p_d$.
+There are no source-feasibility or equality queries at run time.
+$\square$
+
+This directly reuses the bounded literal-task, class-coordinate
+and finite protocol methods of Sparse Literal History Transport
+§§69.1--69.4 and its existing minimax recurrence (SLH.69.17);
+Theorem 74.4 supplies the separate whole-row determining-prefix
+framework. The finite unrolling and actual terminal-output
+discipline are the suppliers in Native Signed Feasibility
+§§7.1--7.3. Its supplied-word-length finite-box enumeration by
+itself would not justify (NBP.10.13): it would only test successive
+word bounds. Here Proposition 10.5 and Theorem 10.8 replace
+arbitrary-address joint feasibility by the finite installed menu
+of class roots. This is a source-specific delta with the actual
+consumer (NBP.10.13), not a new generic unbounded-word decision
+method: SLH §69 already owns unrestricted-depth bounded
+literal-task finite decision. The delta is the one-image
+admissibility correspondence, simultaneous actual image padding,
+and joint acquired/exported advice transfer for the whole
+predecessor target.
+
+**Corollary 10.10 (edge cuts, exact zero-query endpoint and constant
+supplement).** Set $m=|G_*[\Theta_*]|=|F[\mathcal U_*]|$, so
+$1\le m\le k+1$. The result includes the following cases.
+
+1. If $P=\varnothing$, the row exposes the entire finite current
+   tree. There is one empty valuation and one actual origin
+   $\delta(C_*)$. Its predecessor row is computable from the
+   acquired current tree with $r=1,q=0$.
+2. If $P=\{\varepsilon\}$, the reached root is always old.
+   The feasible current root types are beta and branch, but
+   both give the same one-hole predecessor row. Thus
+   $r=1,q=0$ is feasible.
+3. If $D=\varnothing$ even for a nonempty blocked cut, the
+   exterior is the entire current tree and the type chart has
+   one empty element. The entire predecessor row and all
+   blocked guards are fixed, so $r=1,q=0$ is feasible.
+4. For arbitrary blocked cut members, $P\setminus H$ remains
+   absent in the predecessor. Members of $H\setminus O_\theta$
+   become predecessor-absent with a beta blocking parent.
+   These guards are part of every installed $G_*(\theta)$.
+5. For $q=0$, feasibility is exactly $r\ge m$. For $r=1$,
+   feasibility is exactly $V(\mathcal J_*,D)\le q$, and some
+   protocol always uses at most $k$ calls by asking each class
+   root once. No acquisition or total-state bound follows
+   from either endpoint.
+
+**Proof.** The first three cases follow from the unique image
+inverse and the root-old criterion, with the empty product
+interpreted literally. The fourth was proved in Theorem 10.4.
+For the fifth, a zero-call leaf must have a constant whole target
+on its export block, and all $m$ attained targets need different
+values. This is the existing finite-answer capacity argument
+used in §6, applied to these actual targets. Conversely, the
+acquired root chart determines the target, so its target index
+can be computed and actually exported using exactly $m$
+complete values. With one value there is the entire finite
+table and its minimax tree. Asking its $k$ reached class roots
+determines the full type and hence the target; every such
+invocation is counted. $\square$
+
+**Corollary 10.11 (the established depth-three frontier as an
+application).** For the row of Definition 9.1, the finite
+criterion gives exactly the previously established frontier
+
+$$
+\mathsf{InvFeas}_*(r,q)\Longleftrightarrow r2^q\ge5.
+\tag{NBP.10.14}
+$$
+
+**Proof.** Proposition 9.3 identifies the attained target rows
+as $R_0,\ldots,R_4$. Its five witnesses are actual entries
+of the chart, with arbitrary branch fillings still in the
+full fiber. Proposition 9.4 restricts every address on those
+witnesses to at most two replies, so the binary protocol-depth
+supplier used in Theorem 9.5 gives the necessity
+$r2^q\ge5$ even for full-value-dependent export. The root
+experiments and acquired block encoders in the full-domain
+attainments of Theorem 9.5 give sufficiency. They are allowed
+trees and colorings in Definition 10.7. Theorem 10.8 carries
+them to and from the complete actual fiber at the same
+$r,q$, giving (NBP.10.14) as an application of the already
+established result. $\square$
+
+This example does not turn the general finite criterion
+into a target-cardinality-only law. Its repeated partner
+classes supply particular experiments; a different
+$\Theta_*$ and menu can have different query geometry.
+
+### 10.6 Suppliers, attribution and the remaining controller boundary
+
+**Mathematical citation 10.12 (ordinary source-specific content
+and bounded attribution).** The native algebra and complete
+row-fiber bijection are the suppliers in §§1--3.
+[Transport--Memory Completion §22](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+owns image grammar, unique inverse and the old/new node criterion.
+[Retained Literal Root Depth Theorem 2.2](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md)
+owns simultaneous prescribed-rank deep finite witnesses
+with all negatives; the use here prescribes rank one and
+keeps the shared class names and full disequalities.
+[Symbolic Feedback Synthesis §§3.1--3.2](RECURSIVE_RELATIONAL_OBSERVATION_SYMBOLIC_FEEDBACK_SYNTHESIS.md) supplies exact
+source reconstruction charts when that stronger object is
+needed. The finite type chart and the padding section here
+have the distinct weaker purpose specified above.
+
+[Sparse Literal History Transport §§69.1--69.4, (SLH.69.17)
+and Theorem 74.4](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md) already supply unrestricted-depth bounded
+literal-task methods, the finite unit-call minimax and
+whole-row prefix checking.
+[Native Signed Feasibility §§7.1--7.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md) supplies finite protocol unrolling and
+supplied-box checking. Those mature methods are reused;
+the ordinary new composition is the actual one-image
+root admissibility, whole predecessor factorization and
+the same-$r,q$ joint supplement transfer. The finite
+criterion consumes precisely that correspondence.
+
+Decision trees and query geometry are mature context,
+with the bounded attribution to Robert Nowak,
+*The Geometry of Generalized Binary Search*,
+[arXiv:0910.4397v5](https://arxiv.org/abs/0910.4397v5),
+§V.A, printed p.14 / PDF p.15, already stated in
+Mathematical citation 9.7. That passage compares
+restricted singleton testing and richer dyadic geometry;
+it supplies neither the native image chart nor this
+acquired/exported predecessor correspondence. This
+section is a repo-derived ordinary mathematical package,
+with no literature-priority or Lean-kernel claim.
+
+The same-budget invariant is joint deterministic
+existence. It preserves neither an arbitrary fixed
+advice map pointwise, all native behavior, complete
+traces, arbitrary total controller states, word lengths,
+workspace, local computation time nor physical costs.
+In particular a padded representative does not supply
+future replies for an arbitrary other source. The
+finite criterion constructs a new allowed protocol
+rather than effectively transform arbitrary promised
+program text.
+
+Complete acquisition, actual export, the full access
+cut, authentication, stationary reading and the lawful
+common entry are supplied premises of Theorem 10.8.
+The producer uses acquired roots to compute the finite
+coloring, actual export carries that value across the
+cut, and the entry and isolation premises make each
+reader segment determined by its payload and replies.
+Source-dependent discarded material must
+remain inaccessible or factor through the declared
+payload; physical erasure is not asserted. Initial
+full traversal, local finite comparisons, row storage,
+code storage, installation, permissions, address
+transmission and outputs remain separate charges.
+Zero fresh calls after the cut is not zero acquisition.
+
+The native alpha-recut volume §12 owns its relative
+epoch result from acquired rows along one actual
+history. No relative-time statement is added here.
+The remaining controller-memory programme must
+separately analyze the cost of its whole common
+controller and retained state. Root-protocol
+feasibility alone is not that state-count theorem
+and does not complete that continuing programme.
+
+## 追加锚（本行以下为增补区）
+## 11. Total stationary Moore states on the repeated-partner inverse fiber
+
+### 11.1 The counted controller and its complete entry record
+
+**Definition 11.1 (stationary finite controller contract).** Use exactly
+$\mathcal U_*$, $F$, $P$, $R_*$, the six classes and the four complete
+predecessor alternatives of Definition 9.1 and Proposition 9.3, together
+with alternative zero. The suppliers are Definitions 9.1, Assumption 9.2,
+Propositions 9.3--9.4, Theorem 9.5 and Mathematical citation 9.7 at the
+immutable revision
+[a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3](https://github.com/the-omega-institute/trureturing/blob/a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#9-repeated-partners-on-a-complete-depth-three-one-image-fiber).
+In particular every finite native origin in that actual inverse fiber
+is allowed, exactly one authenticated update has occurred, and all fresh
+reads concern its stationary current tree $t=\rho u$. Acquisition, actual
+export, the complete access cut and lawful common entry are precisely
+the supplied premises of Assumption 9.2.
+
+A controller has a finite disjoint state set $\mathcal K=Q\sqcup H$,
+where $Q$ consists of running states and $H$ of halting states. Its
+source-independent tables are
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^*,\\
+\operatorname{next}&:Q\times
+ \{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}
+ \longrightarrow\mathcal K,\\
+\operatorname{out}&:H\longrightarrow\mathcal R_P,\\
+\iota&:S\longrightarrow\mathcal K.
+\end{aligned}
+\tag{NBP.11.1}
+$$
+
+Here $\mathcal R_P$ denotes complete native rows at $P$. A producer
+computes a finite-valued supplement $\sigma$ from the genuinely acquired
+current data and actually exports it. The conditional realized alphabet
+is $S=\sigma[\mathcal U_*]$, with $|S|\le r$. The entry state is
+$\iota(\sigma(u))$. This state is the entire mutable accessible state;
+there is no residual payload, address register, reply register, history,
+phase, clock, archive, source-dependent table selection or external
+output decoder. At $k\in Q$ exactly one native call is made at the fixed
+address $\operatorname{addr}(k)$, and its actual four-reply result $z$
+changes the state to $\operatorname{next}(k,z)$. At $k\in H$ the controller
+stops and returns the fixed whole row $\operatorname{out}(k)$. Every call
+counts, including repeats, deep and absent queries. Every running and
+halting state, including an unused state, contributes to
+$K=|\mathcal K|$. Halting needs no further native call.
+
+The interpretation of $\iota$ must respect Assumption 9.2's recoverable
+complete entry record. In a literal realization with the original
+supplement still recoverable from the entry state, $\iota$ is injective
+on $S$. For joint encoder/controller optimization a possibly merging
+initial map is normalized before the cut: the producer instead computes
+and actually exports $\tau(u)=\iota(\sigma(u))$. This uses at most $r$
+values and the same acquired data. The declared supplement is then
+$\tau$, the initial map is its inclusion into $\mathcal K$, and the
+supplement is recoverable from that state. The public $P,R_*$ and common
+tables remain fixed. Lawful entry and the complete cut are supplied for
+this actual export. No later access to the old $\sigma$ is permitted.
+Thus merging does not silently preserve a second accessible field or
+claim a result for a fixed arbitrary encoder.
+
+Let $K_{\min}(r,q)$ be the least $K$ among these jointly chosen acquired
+encoders and controllers which return $F(u)$ for every
+$u\in\mathcal U_*$, with at most $q$ calls on each run. Set
+$K_{\min}(r,q)=+\infty$ when none exists. Throughout $r\ge1$ and $q\ge0$
+are integers and both budgets are upper bounds. The contract optimizes
+only abstract total state cardinality and raw native calls. The addresses
+and fixed tables in (NBP.11.1), their representations, acquisition,
+export, computation and physical realization have separate prices.
+
+### 11.2 The actual five-source state and capacity bounds
+
+**Proposition 11.2 (bounds without a tree-shaped controller assumption).**
+Every successful controller of Definition 11.1 satisfies
+
+$$
+r2^q\ge5,\qquad K\ge5,\qquad K\ge10-r.
+\tag{NBP.11.2}
+$$
+
+**Proof.** Such a controller is an allowed reader in Assumption 9.2.
+Theorem 9.5 therefore gives the first inequality on the original full
+fiber, with the actual exported alphabet and all native invocations
+counted. This is reuse of that joint capacity bound, not an assertion
+that every encoder with the same alphabet size performs equally well.
+
+For the state bounds restrict the one controller, with its actual
+initial states, to the five actual sources $u_0,\ldots,u_4$ of
+(NBP.9.6). Their correct complete rows $R_0,\ldots,R_4$ are distinct.
+Their five terminal states must consequently be different. In particular
+$K\ge5$, even if some initial states are already halting states.
+
+Form the directed union graph of the five finite actual runs. Let $n$
+be its number of running vertices, and let $I$ be its set of distinct
+initial vertices, with $m=|I|\le r$. There are exactly five terminal
+vertices in this union. Proposition 9.4 applies to every state's fixed
+address, however deep or absent, so at most two different replies occur
+there on these sources. Each running vertex has at most two distinct
+successor edges in the union graph. Hence its number $e$ of edges obeys
+$e\le2n$.
+
+Every vertex is reachable from $I$ along an actual run prefix. Choosing
+one incoming edge for each vertex outside $I$ along a shortest path from
+$I$ gives a rooted spanning forest and therefore
+
+$$
+n+5-m\le e\le2n,
+\qquad K\ge n+5\ge10-m\ge10-r.
+\tag{NBP.11.3}
+$$
+
+The rooted spanning-forest count is the existing finite-control graph
+method used in Transport--Memory Completion Theorem 66.3, here applied
+to the five actual binary-response witnesses. It requires neither a
+binary native interface on the full fiber nor an acyclic union graph.
+Converging edges, cycles shared across different runs, repeated queries,
+early halts and initial halting vertices are all included. Other states
+used only on other origins, and unused states, only increase $K$.
+The five halts issue the five complete rows; an uncharged retained label
+cannot supply their missing output distinction. $\square$
+
+### 11.3 Six simultaneous finite witnesses for the three-call obstruction
+
+**Proposition 11.3 (two zero targets with opposite beta placements).**
+Keep $A,C,D_1,\ldots,D_4$ from (NBP.9.6), all distinct branch images.
+Let
+
+$$
+Z=\{0_a,0_c,1,2,3,4\},\qquad
+G_a=\{0_a,1,2\},\qquad G_c=\{0_c,3,4\}.
+\tag{NBP.11.4}
+$$
+
+Define six finite tuples by
+
+$$
+\begin{aligned}
+x_a^{(z)}&=
+ \begin{cases}\beta,&z\in G_a,\\ A,&z\in G_c,\end{cases}\\
+x_c^{(z)}&=
+ \begin{cases}C,&z\in G_a,\\ \beta,&z\in G_c,\end{cases}\\
+x_{b_j}^{(z)}&=
+ \begin{cases}\alpha,&z=j,\\D_j,&z\ne j,\end{cases}
+ \qquad(1\le j\le4).
+\end{aligned}
+\tag{NBP.11.5}
+$$
+
+Then $t_z=\mathscr S(x^{(z)})$ is an actual current image and
+$u_z=\delta(t_z)$ belongs to the full original $\mathcal U_*$. Their
+required outputs are
+
+$$
+F(u_{0_a})=F(u_{0_c})=R_0,\qquad F(u_j)=R_j\quad(1\le j\le4).
+\tag{NBP.11.6}
+$$
+
+On these six simultaneous fixed actual sources, every finite address
+has either constant reply, two replies partitioning $G_a\mid G_c$, or
+two replies isolating exactly one $j\in\{1,2,3,4\}$. More precisely:
+
+| Address location | Possible nonconstant reply partition on $Z$ |
+| --- | --- |
+| At length less than three | None |
+| In either occurrence cone of $a$ | $G_a\mid G_c$ |
+| In either occurrence cone of $c$ | $G_a\mid G_c$ |
+| In the occurrence cone of $b_j$ | $\{j\}\mid(Z\setminus\{j\})$ |
+
+**Proof.** In every tuple exactly one of $a,c$ is beta, the other is
+its fixed branch image, and the remaining four coordinates are distinct
+branch images except for the possible one alpha at $b_j$. The six
+coordinates are pairwise distinct. For $0_a$ and $0_c$ all are images,
+and for $j$ the alpha has exactly its forced beta partner. Proposition
+9.3 supplies the actual finite inverse and the stated complete outputs.
+All six current trees and origins are fixed at once; no run changes its
+source in response to a query.
+
+For every address of length at least three write it uniquely as $pw$
+with $p\in P$. The actual occurrence identity (NBP.9.7) gives
+$r_{t_z}(pw)=r_{x_{[p]}^{(z)}}(w)$. In an $a$ cone the only subtree
+values are beta and $A$, constant on the two groups; in a $c$ cone they
+are $C$ and beta, constant on the same two groups. In a $b_j$ cone the
+only subtree values are alpha at $j$ and $D_j$ otherwise. Evaluating
+these two fixed finite trees at any suffix gives either equal replies
+or the indicated partition. A suffix may continue beyond a leaf or
+beyond the finite subtree; absent is the ordinary native reply and
+changes none of this argument. Shorter addresses are common skeleton
+branches. One address enters one occurrence cone even when a class
+occurs twice. Thus the table covers all finite native addresses without
+restricting the query menu or replacing actual replies by an extra
+experiment port. $\square$
+
+**Theorem 11.4 (constant advice and three calls require ten states).**
+For $r=1$ and $q=3$, every successful controller has at least five
+running states and at least five halting states. In particular
+$K\ge10$.
+
+**Proof.** Restrict it to the six actual sources of Proposition 11.3.
+Constant advice gives one common initial state. Five different required
+outputs exclude an initial halt. At any later state, the fixed address
+has at most two replies on these six sources. Consequently one remaining
+call can distinguish at most two different required outputs, and two
+remaining calls at most four, including early halts. These elementary
+binary-depth bounds are the same decision-tree capacity supplier used
+in Theorem 9.5, applied only to these actual runs.
+
+The first call cannot have constant reply: that would leave all five
+outputs for two calls. It also cannot isolate a single positive index
+$j$. On the other reply its remaining candidates would be
+$Z\setminus\{j\}$, with four distinct required outputs. Any possible
+second call on that set has one of the following forms by Proposition
+11.3. A constant query leaves four outputs for one call. A singleton
+query for another positive index leaves three outputs on its other
+reply. A group query leaves the opposite group, the one not containing
+$j$, intact, with its three different outputs $R_0$ and its two positive
+rows. Each case leaves at least three outputs for one call and is
+impossible. Querying the removed singleton is constant on the remaining
+set, so is included. Halting before the second call cannot resolve its
+four outputs either.
+
+Thus the first call separates $G_a$ from $G_c$ and its running state has
+an address in an $a$ or $c$ occurrence cone. Consider its $G_a$ reply.
+There are exactly the three outputs $R_0,R_1,R_2$ and at most two calls
+left. Both partner-cone queries are now constant, as are skeleton queries
+and singleton queries for $3$ or $4$. The second call must therefore be
+a nonconstant query in a $b_1$ or $b_2$ cone. It isolates that positive
+index. On the other reply the remaining two actual sources are $0_a$
+and the other index in $\{1,2\}$. Their only nonconstant queries are in
+the other right-class cone, so the third call must query that cone.
+Both $b_1$ and $b_2$ cones are therefore queried on actual runs.
+
+The identical argument on $G_c$ forces actual queries in both $b_3$ and
+$b_4$ cones. These four right-class cones and the partner cone of the
+first call are disjoint address locations. Each running state has one
+fixed address, so at least five different running states are necessary.
+No merging of reply histories can change that address requirement. The
+five different whole outputs require five different halting states by
+(NBP.11.6), disjoint from the running states. Early stopping on an
+isolated positive index is allowed in the argument; convergence, cycles
+in a union of runs and unused states cannot remove the five necessary
+address states. Hence $K\ge10$.
+
+This is a direct obstruction on the native finite sources and their
+occurrence cones. It does not use a root simulation, padding reduction,
+or any state-count-preserving consequence of Theorem 10.8. $\square$
+
+### 11.4 Matching controllers on every actual origin
+
+**Proposition 11.5 (full-fiber upper controllers).** The following exact
+numbers of states and worst-case calls are simultaneously attainable.
+Each listed initial distinction is actually exported from the acquired
+data of Assumption 9.2.
+
+| Exported capacity used | Maximum calls | Running states | Halting states | Total states |
+| --- | --- | --- | --- | --- |
+| $1$ | $3$ | $5$ | $5$ | $10$ |
+| $1$ | $4$ | $4$ | $5$ | $9$ |
+| $2$ | $2$ | $3$ | $5$ | $8$ |
+| $3$ | $1$ | $2$ | $5$ | $7$ |
+| $4$ | $1$ | $1$ | $5$ | $6$ |
+| $5$ | $0$ | $0$ | $5$ | $5$ |
+
+**Proof.** Proposition 9.3 makes the acquired right-class terms determine
+$h\in\{0,1,2,3,4\}$, with $h=j$ exactly when $x_{b_j}=\alpha$ and
+$h=0$ when no right-class term is alpha. As in Theorem 9.5, this is a
+pre-cut computation on genuinely acquired finite values. Only the stated
+block index is exported; no term, target marker or previous reply remains
+accessible in addition to the resulting initial state.
+
+In every controller below there are exactly five halts
+$H_0,\ldots,H_4$, with $\operatorname{out}(H_j)=R_j$. These are the
+complete repaired rows of Proposition 9.3: $H_0$ returns $R_*$, while
+$H_j$ for $j>0$ returns the exterior with precisely the pair at $q_j$
+replaced by one concrete beta, its restricted occurrence partition with
+recomputed canonical names, every retained disequality and the resulting
+absent-cut guards. The surviving occurrence of the repeated partner
+remains a hole. Thus $H_j$ is not a label output followed by an uncharged
+source-dependent decoding step.
+
+Write $p_j=q_jR$ for the four right-class root addresses and $p_a=LLL$
+for a root of $a$. A state named $B_j$ always queries $p_j$. In the
+transition descriptions, an alpha reply takes the stated alpha edge;
+every other reply takes the non-alpha edge. This defines the table for
+all four native replies, including formally unreachable replies. Every
+$p_j$ is reached on the entire fiber, and Proposition 9.3 shows that the
+alpha edge is taken exactly for $h=j$.
+
+For the first row of the table, export one constant value and start at
+an additional running state $A_0$ querying $p_a$. Define the transitions
+by
+
+$$
+\begin{array}{c|c|c}
+\text{state}&\text{reply condition}&\text{successor}\\ \hline
+ A_0&\beta&B_1\\
+ A_0&\mathsf{branch}&B_3\\
+ A_0&\alpha\text{ or }\mathsf{absent}&H_0\\
+ B_1&\alpha&H_1\\
+ B_1&\text{non-alpha}&B_2\\
+ B_2&\alpha&H_2\\
+ B_2&\text{non-alpha}&H_0\\
+ B_3&\alpha&H_3\\
+ B_3&\text{non-alpha}&B_4\\
+ B_4&\alpha&H_4\\
+ B_4&\text{non-alpha}&H_0
+\end{array}
+\tag{NBP.11.7}
+$$
+
+The $A_0$ alpha and absent edges never occur on the actual domain.
+If $x_a=\beta$, the target can be only $0,1,2$: a positive target $3$
+or $4$ would also force $x_c=\beta$, violating the retained disequality.
+If $x_a$ is a branch, the target can be only $0,3,4$, since $1,2$ force
+$x_a=\beta$. The subsequent two right-class tests therefore give the
+whole correct target in at most three calls. There are five running
+states and five halts, and both group branches and all halts are attained
+by actual origins.
+
+For the second row, export one constant value and start at $B_1$.
+Use four running states $B_1,\ldots,B_4$; $B_j$ takes its alpha edge to
+$H_j$, and its non-alpha edge to $B_{j+1}$ for $j<4$ or to $H_0$ for
+$j=4$. This checks for the unique possible alpha among all four right
+classes, with at most four calls and nine total states.
+
+For the third row, export the block in
+$\{0,1,2\}\mid\{3,4\}$ and initialize respectively at $B_1$ or $B_3$.
+Use only $B_1,B_2,B_3$. Their alpha edges go to their corresponding
+halts. Their non-alpha edges are respectively $B_2,H_0,H_4$.
+These two initial states, three running states and five halts give
+maximum two calls and total eight states.
+
+For the fourth row, export the block in
+$\{0\}\mid\{1,2\}\mid\{3,4\}$ and initialize at $H_0,B_1,B_3$,
+respectively. The two running states have alpha edges $H_1,H_3$ and
+non-alpha edges $H_2,H_4$, respectively. This gives seven total states
+and at most one call, including a genuine zero-call initial halt.
+
+For the fifth row, export the block in
+$\{0\}\mid\{1\}\mid\{2\}\mid\{3,4\}$ and initialize at
+$H_0,H_1,H_2,B_3$, respectively. The single running state has alpha edge
+$H_3$ and non-alpha edge $H_4$. This gives six states and at most one
+call. For the last row export $h$ itself and initialize at $H_h$. Only
+the five halts are needed, with no fresh call.
+
+Every block in these constructions is nonempty on the full fiber, by
+the actual witnesses of Proposition 9.3. Every named state is reached
+on some actual origin. The maximum call count in the constant-export
+constructions is attained on every target-zero source; for the other
+positive-call rows it is attained in a non-singleton block. Their
+initial distinctions have exactly the alphabet sizes in the table and
+satisfy Definition 11.1's complete-entry normalization.
+
+For explicit coverage of the target-zero cases, all six class values
+are images and are pairwise distinct. Therefore beta can occur in at
+most one of the six classes: it can be at $a$, at $c$, at any $b_j$, or
+nowhere. Every one of these placements is attained, by replacing the
+chosen coordinate in a tuple of six distinct branch orbit images by
+beta, or leaving all six as branches. Proposition 9.3 supplies the
+actual finite inverse in each case. If beta is at $a$, (NBP.11.7) takes
+its first branch and then two non-alpha edges to $H_0$. In all other
+zero placements it takes its branch-reply edge and then two non-alpha
+edges to $H_0$, even when the tested right class itself is beta. The
+sequential four-test controller also returns $H_0$ in all these cases.
+The exported-block controllers either start at $H_0$ or retain zero in
+the first block and test its right classes. No claim that a partner
+query is a target-only group test on the full fiber is required. These
+arguments also cover every other branch filling, regardless of its
+size or internal alpha/beta distribution. $\square$
+
+### 11.5 Exact frontier and resource interpretation
+
+**Theorem 11.6 (minimum total-state frontier on the full actual fiber).**
+Under Definition 11.1, for every integer $r\ge1,q\ge0$,
+
+$$
+K_{\min}(r,q)=
+\begin{cases}
++\infty,&r2^q<5,\\
+10,&(r,q)=(1,3),\\
+\max\{5,10-r\},&r2^q\ge5\text{ and }(r,q)\ne(1,3).
+\end{cases}
+\tag{NBP.11.8}
+$$
+
+Equivalently the finite part is the following table; a dash means no
+successful controller.
+
+| Advice capacity $r$ | $q=0$ | $q=1$ | $q=2$ | $q=3$ | $q\ge4$ |
+| --- | --- | --- | --- | --- | --- |
+| $1$ | -- | -- | -- | $10$ | $9$ |
+| $2$ | -- | -- | $8$ | $8$ | $8$ |
+| $3$ | -- | $7$ | $7$ | $7$ | $7$ |
+| $4$ | -- | $6$ | $6$ | $6$ | $6$ |
+| $r\ge5$ | $5$ | $5$ | $5$ | $5$ | $5$ |
+
+In particular nine total abstract states cannot solve the task in three
+calls with constant advice, while ten can; nine suffice with four calls.
+
+**Proof.** Proposition 11.2 rules out every $r2^q<5$ and gives
+$K\ge\max\{5,10-r\}$ in all feasible cases. Theorem 11.4 strengthens
+this to ten at $(1,3)$. Proposition 11.5 gives ten there, nine for
+$r=1,q\ge4$, eight for $r=2,q\ge2$, seven for $r=3,q\ge1$, six for
+$r=4,q\ge1$, and five for $r\ge5,q\ge0$. These exhaust the integer
+feasible cases. A controller using fewer than $r$ values or fewer than
+$q$ calls satisfies the upper-bound contract; no dummy invocations or
+extra initial distinctions are inserted. Extra unused states are
+charged and cannot defeat either lower proof. If a larger exact state
+cardinality is separately prescribed, unused fixed halting states can
+be adjoined without changing any actual run. $\square$
+
+**Proposition 11.7 (the two optimized resources and their limits).**
+The frontier (NBP.11.8) charges the complete changing finite control
+state, including phase and reply memory, and every fixed whole-row
+halting distinction. It does not identify exported capacity with
+running memory or with physical storage. In particular the nine-state
+and ten-state constant-advice controllers both require four bits in a
+fixed-width injective binary state encoding, although their total state
+cardinalities and three-call feasibility differ.
+
+**Proof.** All later action choices and outputs in (NBP.11.1) depend only
+on the current state and the actual reply. A separately remembered
+phase, payload or response which changes a future action would be an
+additional accessible mutable distinction and would have to be included
+in $\mathcal K$. Distinct fixed complete outputs require distinct halt
+states, as used in both lower proofs. The initial export merely selects
+at most $r$ states; it need not remain separately accessible thereafter.
+For example the constant export has one value while the three-call
+controller visits different partner and right-test states. Conversely
+five exported values can initialize five halts with no running states.
+These are different counted objects.
+
+A binary fixed-width representation of a set of size $K$ needs and
+admits $\lceil\log_2 K\rceil$ bits. Since $8<9<10\le16$, both stated
+controllers have width four under this representation convention.
+This observation counts neither the fixed address/action/transition/
+output tables nor the representation and production of their full row
+outputs. The supplied entry, authentication, producer acquisition,
+finite comparisons, actual export, access cut, installation, local
+computation, address transmission and physical service retain their
+separate costs. An image inverse used to construct a proof witness is
+not a native inverse operation. No further update is available.
+
+Thus (NBP.11.8) settles the history-memory question under this explicit
+stationary finite Moore restriction: every accessible changing
+source-dependent distinction is included in its finite state. An
+arbitrary program with unbounded workspace or a computed address has a
+different contract; identifying its total configurations with finitely
+many states of (NBP.11.1) requires a separate proof. Neither nine versus
+ten states nor three versus four native calls is a universal physical
+memory or time equivalence. $\square$
+
+**Mathematical citation 11.8 (suppliers, mature methods and exact delta).**
+The one-image grammar, injective inverse, actual row fiber and
+occurrence-sensitive repair are the suppliers already cited in
+Definitions 1.1--1.2, Theorems 2.2 and 3.2, and Proposition 9.3.
+Assumption 9.2 supplies acquired/exported entry rather than deriving it
+from a row identity. Propositions 9.3--9.4 supply the fixed five actual
+witnesses and their all-address binary bridge, and Theorem 9.5 supplies
+the joint capacity frontier and the full-fiber root-test strategies.
+The same-$r,q$ existence transfer of §10 supplies no state-cardinality
+invariant and is not a premise of either state lower bound here.
+
+Finite Moore state/output conventions are classical; see Edward F.
+Moore, *Gedanken-Experiments on Sequential Machines*, in *Automata
+Studies* (AM-34), pp.129--153,
+[DOI:10.1515/9781400882618-006](https://doi.org/10.1515/9781400882618-006).
+The rooted reachable-graph edge count is reused in the form of
+[Transport--Memory Completion Theorem 66.3](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM66-T3),
+with its domain and response hypotheses replaced by the actual five
+witnesses in Proposition 11.2, rather than importing its numerical
+source-specific conclusion. Adaptive query geometry and binary-depth
+counting are the mature methods attributed in Mathematical citation
+9.7, including Nowak's *The Geometry of Generalized Binary Search*,
+[arXiv:0910.4397v5, §V.A](https://arxiv.org/abs/0910.4397v5).
+Those methods supply neither the six sources of Proposition 11.3 nor
+its native-cone obstruction. The repo-derived numerical delta is the
+full-fiber total-state charging and the exceptional three-call lower
+bound, together with the matching common finite controllers. It is an
+ordinary mathematical deduction, with no literature-priority claim.
+Quantum terminal-rank minima and stochastic hidden/visible-memory minima
+concern different sources, operations, targets and resources; none is a
+supplier for (NBP.11.8).
+
+## 追加锚（本行以下为增补区）
