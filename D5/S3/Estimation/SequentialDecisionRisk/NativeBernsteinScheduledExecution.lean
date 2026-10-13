@@ -165,4 +165,100 @@ theorem supported_realization (σ : ℕ → Bool) (table : (Bool × History) →
     refine ⟨hh, ha, ?_⟩
     simp only [nativeCalls, hittingAfter, ha]
 
+
+private theorem stageWord_counts (D d : ℕ → ℕ) (hD : StrictMono D) (hd : StrictMono d)
+    (k : ℕ) (source : Bool) :
+    (stageWord D d k).count source = if source then d k else D k := by
+  induction k with
+  | zero => cases source <;> simp [stageWord, block, List.count_replicate]
+  | succ k ih =>
+    rw [stageWord_succ, List.count_append, ih]
+    have hDk : D k ≤ D (k + 1) := hD.monotone (Nat.le_succ k)
+    have hdk : d k ≤ d (k + 1) := hd.monotone (Nat.le_succ k)
+    cases source <;> simp [block, List.count_replicate] <;> omega
+
+private theorem sourceCount_labels (h : History) (source : Bool) :
+    sourceCount source h = (h.map Prod.fst).count source := by
+  rw [List.count_eq_countP, List.countP_map, List.countP_eq_length_filter]
+  unfold sourceCount
+  congr 2
+
+section Landmarks
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+local notation "σ" => fixedSchedule D d hD hd
+local notation "π" => safePolicy σ (batchTable D d a hD hd hc)
+
+private theorem safe_supported_actions (seed : RowSeed) (S : Bool) (h : History) :
+    (∀ s, π seed S h = Sum.inl s → s = σ h.length) ∧
+    (∀ cell, π seed S h = Sum.inr cell → ∃ k, h.length = D k + d k ∧ cell.1 = false) := by
+  classical
+  unfold safePolicy
+  split_ifs with hz
+  · exact ⟨fun s hs => (Sum.inl.inj hs).symm, fun cell he => by cases he⟩
+  · exact batchTable_supported_actions D d a hD hd hc S h _ hz
+
+/-- Every seed and tape follows the same source schedule. Reached landmarks
+have the actual prescribed source counts, and all finite returns are landmarks. -/
+theorem actual_schedule_and_return_landmarks (S : Bool) (p q : unitInterval) (ω : RowSeed × Tape) :
+    (∀ n, Legal σ (nativeHistory π S p q n ω)) ∧
+    ((D 0 + d 0 : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω ∧
+    (∀ k, ((D k + d k : ℕ) : WithTop ℕ) ≤ nativeCalls π S p q ω →
+      sourceCount false (nativeHistory π S p q (D k + d k) ω) = D k ∧
+      sourceCount true (nativeHistory π S p q (D k + d k) ω) = d k) ∧
+    (∀ n : ℕ, nativeCalls π S p q ω = (n : WithTop ℕ) → ∃ k, n = D k + d k) := by
+  have hlegal (n) : Legal σ (nativeHistory π S p q n ω) := by
+    induction n with
+    | zero => rfl
+    | succ n ih =>
+      change Legal σ (acquiredHistory π S (sourceRead p q) (n + 1) ω)
+      rw [acquiredHistory]
+      cases ha : π ω.1 S (acquiredHistory π S (sourceRead p q) n ω) with
+      | inl source =>
+        have hs := (safe_supported_actions D d a hD hd hc ω.1 S
+          (acquiredHistory π S (sourceRead p q) n ω)).1 source ha
+        change Legal σ (acquiredHistory π S (sourceRead p q) n ω ++
+          [(source, sourceRead p q source n ω.2)])
+        change (acquiredHistory π S (sourceRead p q) n ω).map Prod.fst = _ at ih
+        simp only [Legal, List.map_append, List.map_cons, List.map_nil,
+          List.length_append, List.length_singleton, List.ofFn_succ', List.concat_eq_append,
+          Fin.val_cast, Fin.val_castSucc, Fin.val_last]
+        rw [ih, hs]
+        rfl
+      | inr cell => exact ih
+  have hreturn (n : ℕ) (hn : nativeCalls π S p q ω = (n : WithTop ℕ)) :
+      ∃ k, n = D k + d k := by
+    have hmem := hittingAfter_mem_set_of_ne_top
+      (u := nativeAction π S p q) (s := Set.range (fun c : Bool × Bool => (Sum.inr c : Action)))
+      (n := 0) (ω := ω) (show nativeCalls π S p q ω ≠ ⊤ by rw [hn]; simp)
+    change nativeAction π S p q (nativeCalls π S p q ω).untopA ω ∈ _ at hmem
+    rw [hn] at hmem
+    change nativeAction π S p q n ω ∈ _ at hmem
+    obtain ⟨cell, hcell⟩ := hmem
+    have hlen := acquired_history_length_at_return π S (sourceRead p q) ω n hn
+    obtain ⟨k, hk, _⟩ := (safe_supported_actions D d a hD hd hc ω.1 S
+      (nativeHistory π S p q n ω)).2 cell hcell.symm
+    exact ⟨k, hlen ▸ hk⟩
+  refine ⟨hlegal, ?_, ?_, hreturn⟩
+  · cases ht : nativeCalls π S p q ω with
+    | top => exact le_top
+    | coe n =>
+      obtain ⟨k, hk⟩ := hreturn n ht
+      apply WithTop.coe_le_coe.mpr
+      rw [hk]
+      exact Nat.add_le_add (hD.monotone (Nat.zero_le k)) (hd.monotone (Nat.zero_le k))
+  · intro k hk
+    have hlen := acquired_history_length_before_return π S (sourceRead p q) ω (D k + d k) hk
+    change (nativeHistory π S p q (D k + d k) ω).length = D k + d k at hlen
+    have hm : (nativeHistory π S p q (D k + d k) ω).map Prod.fst = stageWord D d k := by
+      calc
+        _ = List.ofFn (fun r : Fin (D k + d k) => σ r.val) := by
+          simpa only [Legal, hlen, Fin.val_cast] using hlegal (D k + d k)
+        _ = stageWord D d k := Classical.choose_spec (construct_fixed_block_schedule D d hD hd) k
+    rw [sourceCount_labels, sourceCount_labels, hm,
+      stageWord_counts D d hD hd k false, stageWord_counts D d hD hd k true]
+    exact ⟨rfl, rfl⟩
+
+end Landmarks
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinScheduledExecution
