@@ -136,9 +136,54 @@ internal sealed class XiSquareExteriorRemainderDocument : IScribeDocumentDefinit
                         + "was also checked by exact Lean compilation; it is local and supplies no global growing-core or "
                         + "all-critical premise.")),
                     Paragraph(Text(
-                        "The hypotheses explicitly include A_s(a) nonzero. The result supplies neither "
-                        + "the growing-multiplicity joint extraction budget nor the signs of the coupled "
-                        + "Jensen responses for a nonempty Q_s. Those signs and the Riemann hypothesis "
-                        + "remain separate mathematical obligations."))),
+                        "The actual exterior also admits a full-height cutoff application of the existing rational "
+                        + "fourth-moment tail. Let T be an integer at least five, and let the finite selected index set s "
+                        + "contain ZeroData.symmetricIndices(T+1), so every actual zero in that spectral ball is selected "
+                        + "with its original multiplicity. For any complex a with norm(a) at most (T+1) squared divided "
+                        + "by two, every unselected gamma has norm(gamma) greater than T+1. The reverse triangle "
+                        + "inequality gives norm(a-gamma squared) at least norm(gamma) squared divided by two. Each "
+                        + "retained linear product factor differs from one by a quantity of norm at most one half and "
+                        + "is nonzero. The existing exterior reciprocal norm summability and Mathlib's "
+                        + "tprod_one_add_ne_zero_of_summable then make the complete exterior A_s(a) nonzero. This "
+                        + "application derives the source nonzero condition under the stated cutoff and radius.")),
+                    Paragraph(Text(
+                        "Write R_T for rationalFourthMomentTail(T) in ExplicitWeilFourthMomentTail. Its exact "
+                        + "fourthMomentSummand is multiplicity divided by (1+realPart(gamma) squared) squared. The "
+                        + "outside-ball ordinate bound gives abs(realPart(gamma)) greater than T, so the complete "
+                        + "exterior reciprocal-distance square summand is at most five times that fourthMomentSummand. "
+                        + "Summing the positive-ordinate exterior indices under the proved complete two-sided "
+                        + "multiplicity tail gives M_s(a) at most 5 R_T. The infinite exterior tail is retained; a factor "
+                        + "four cannot be substituted with this supplier's exact units.")),
+                    Paragraph(Text(
+                        "Consequently, for n positive and 5 R_T norm(a) squared / n at most 1/16, the same actual "
+                        + "absolute-coordinate H_a has norm(T_n H_a(a)-1) less than 1/4, norm(T_n H_a(a)) greater than "
+                        + "3/4 and T_n H_a(a) nonzero. The combined complete actual-source statement passed an exact "
+                        + "Lean compilation with the standard axiom closure and permits a=0. This full-height removal "
+                        + "budget does not establish the local selected-degree C_0 log(T) budget from the growing-core "
+                        + "theory, all-node signs, target-disc coverage or RH.")),
+                    Paragraph(Text(
+                        "A conditional closed-disc Cauchy application controls both original-source responses. For "
+                        + "entire functions H and V, positive D, and H nonzero throughout norm(z-c) at most D/8, write "
+                        + "s(z)=V(z)/H(z) and ell(z)=H'(z)/H(z). Assume separately norm(s(z)) at most 16 S L/D and "
+                        + "norm(ell(z)) at most 112 S L/D on that same closed outer disc, with S and L nonnegative. "
+                        + "For every complex t with norm(t-c) at most D/16 and every m at least zero, the sum of their "
+                        + "m-th derivative norms is at most m!16 to the m times 128 S L / D to the m+1. The closed "
+                        + "circle about t of radius D/16 lies in the closed outer disc, including tangent boundary "
+                        + "points. Entire H and V and the outer nonzero hypothesis give the quotients' differentiability "
+                        + "and continuity on the inner circle and its interior. Applying Mathlib's "
+                        + "Complex.norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le separately with the two budgets "
+                        + "and adding gives the combined constant 128 S.")),
+                    Paragraph(Text(
+                        "For the actual extraction, H=T_n A_s and V=T_n A_s' are entire polynomials. The preceding "
+                        + "Cauchy conclusion is an exact compiled application of the pinned supplier, including m=0 "
+                        + "and the entire inner closed boundary. It retains outer-disc nonzero and the two separate "
+                        + "uniform quotient budgets as hypotheses. The actual target coverage and original-source "
+                        + "uniform mass and drift estimates needed to discharge those hypotheses are not established "
+                        + "here. The full-height cutoff application does not replace those local growing-core premises.")),
+                    Paragraph(Text(
+                        "The general exterior remainder and transported-response results retain A_s(a) nonzero; the "
+                        + "full-height application above derives it under its additional cutoff and radius conditions. "
+                        + "The growing-multiplicity joint extraction budget and the signs of coupled Jensen responses "
+                        + "for a nonempty Q_s remain separate mathematical obligations, as does the Riemann hypothesis."))),
                 DescribeRole.Theorem))));
 }
