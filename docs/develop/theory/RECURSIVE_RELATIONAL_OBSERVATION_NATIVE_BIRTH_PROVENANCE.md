@@ -2050,3 +2050,949 @@ feasibility alone is not that state-count theorem
 and does not complete that continuing programme.
 
 ## 追加锚（本行以下为增补区）
+## 11. Total stationary Moore states on the repeated-partner inverse fiber
+
+### 11.1 The counted controller and its complete entry record
+
+**Definition 11.1 (stationary finite controller contract).** Use exactly
+$\mathcal U_*$, $F$, $P$, $R_*$, the six classes and the four complete
+predecessor alternatives of Definition 9.1 and Proposition 9.3, together
+with alternative zero. The suppliers are Definitions 9.1, Assumption 9.2,
+Propositions 9.3--9.4, Theorem 9.5 and Mathematical citation 9.7 at the
+immutable revision
+[a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3](https://github.com/the-omega-institute/trureturing/blob/a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#9-repeated-partners-on-a-complete-depth-three-one-image-fiber).
+In particular every finite native origin in that actual inverse fiber
+is allowed, exactly one authenticated update has occurred, and all fresh
+reads concern its stationary current tree $t=\rho u$. Acquisition, actual
+export, the complete access cut and lawful common entry are precisely
+the supplied premises of Assumption 9.2.
+
+A controller has a finite disjoint state set $\mathcal K=Q\sqcup H$,
+where $Q$ consists of running states and $H$ of halting states. Its
+source-independent tables are
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^*,\\
+\operatorname{next}&:Q\times
+ \{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}
+ \longrightarrow\mathcal K,\\
+\operatorname{out}&:H\longrightarrow\mathcal R_P,\\
+\iota&:S\longrightarrow\mathcal K.
+\end{aligned}
+\tag{NBP.11.1}
+$$
+
+Here $\mathcal R_P$ denotes complete native rows at $P$. A producer
+computes a finite-valued supplement $\sigma$ from the genuinely acquired
+current data and actually exports it. The conditional realized alphabet
+is $S=\sigma[\mathcal U_*]$, with $|S|\le r$. The entry state is
+$\iota(\sigma(u))$. This state is the entire mutable accessible state;
+there is no residual payload, address register, reply register, history,
+phase, clock, archive, source-dependent table selection or external
+output decoder. At $k\in Q$ exactly one native call is made at the fixed
+address $\operatorname{addr}(k)$, and its actual four-reply result $z$
+changes the state to $\operatorname{next}(k,z)$. At $k\in H$ the controller
+stops and returns the fixed whole row $\operatorname{out}(k)$. Every call
+counts, including repeats, deep and absent queries. Every running and
+halting state, including an unused state, contributes to
+$K=|\mathcal K|$. Halting needs no further native call.
+
+The interpretation of $\iota$ must respect Assumption 9.2's recoverable
+complete entry record. In a literal realization with the original
+supplement still recoverable from the entry state, $\iota$ is injective
+on $S$. For joint encoder/controller optimization a possibly merging
+initial map is normalized before the cut: the producer instead computes
+and actually exports $\tau(u)=\iota(\sigma(u))$. This uses at most $r$
+values and the same acquired data. The declared supplement is then
+$\tau$, the initial map is its inclusion into $\mathcal K$, and the
+supplement is recoverable from that state. The public $P,R_*$ and common
+tables remain fixed. Lawful entry and the complete cut are supplied for
+this actual export. No later access to the old $\sigma$ is permitted.
+Thus merging does not silently preserve a second accessible field or
+claim a result for a fixed arbitrary encoder.
+
+Let $K_{\min}(r,q)$ be the least $K$ among these jointly chosen acquired
+encoders and controllers which return $F(u)$ for every
+$u\in\mathcal U_*$, with at most $q$ calls on each run. Set
+$K_{\min}(r,q)=+\infty$ when none exists. Throughout $r\ge1$ and $q\ge0$
+are integers and both budgets are upper bounds. The contract optimizes
+only abstract total state cardinality and raw native calls. The addresses
+and fixed tables in (NBP.11.1), their representations, acquisition,
+export, computation and physical realization have separate prices.
+
+### 11.2 The actual five-source state and capacity bounds
+
+**Proposition 11.2 (bounds without a tree-shaped controller assumption).**
+Every successful controller of Definition 11.1 satisfies
+
+$$
+r2^q\ge5,\qquad K\ge5,\qquad K\ge10-r.
+\tag{NBP.11.2}
+$$
+
+**Proof.** Such a controller is an allowed reader in Assumption 9.2.
+Theorem 9.5 therefore gives the first inequality on the original full
+fiber, with the actual exported alphabet and all native invocations
+counted. This is reuse of that joint capacity bound, not an assertion
+that every encoder with the same alphabet size performs equally well.
+
+For the state bounds restrict the one controller, with its actual
+initial states, to the five actual sources $u_0,\ldots,u_4$ of
+(NBP.9.6). Their correct complete rows $R_0,\ldots,R_4$ are distinct.
+Their five terminal states must consequently be different. In particular
+$K\ge5$, even if some initial states are already halting states.
+
+Form the directed union graph of the five finite actual runs. Let $n$
+be its number of running vertices, and let $I$ be its set of distinct
+initial vertices, with $m=|I|\le r$. There are exactly five terminal
+vertices in this union. Proposition 9.4 applies to every state's fixed
+address, however deep or absent, so at most two different replies occur
+there on these sources. Each running vertex has at most two distinct
+successor edges in the union graph. Hence its number $e$ of edges obeys
+$e\le2n$.
+
+Every vertex is reachable from $I$ along an actual run prefix. Choosing
+one incoming edge for each vertex outside $I$ along a shortest path from
+$I$ gives a rooted spanning forest and therefore
+
+$$
+n+5-m\le e\le2n,
+\qquad K\ge n+5\ge10-m\ge10-r.
+\tag{NBP.11.3}
+$$
+
+The rooted spanning-forest count is the existing finite-control graph
+method used in Transport--Memory Completion Theorem 66.3, here applied
+to the five actual binary-response witnesses. It requires neither a
+binary native interface on the full fiber nor an acyclic union graph.
+Converging edges, cycles shared across different runs, repeated queries,
+early halts and initial halting vertices are all included. Other states
+used only on other origins, and unused states, only increase $K$.
+The five halts issue the five complete rows; an uncharged retained label
+cannot supply their missing output distinction. $\square$
+
+### 11.3 Six simultaneous finite witnesses for the three-call obstruction
+
+**Proposition 11.3 (two zero targets with opposite beta placements).**
+Keep $A,C,D_1,\ldots,D_4$ from (NBP.9.6), all distinct branch images.
+Let
+
+$$
+Z=\{0_a,0_c,1,2,3,4\},\qquad
+G_a=\{0_a,1,2\},\qquad G_c=\{0_c,3,4\}.
+\tag{NBP.11.4}
+$$
+
+Define six finite tuples by
+
+$$
+\begin{aligned}
+x_a^{(z)}&=
+ \begin{cases}\beta,&z\in G_a,\\ A,&z\in G_c,\end{cases}\\
+x_c^{(z)}&=
+ \begin{cases}C,&z\in G_a,\\ \beta,&z\in G_c,\end{cases}\\
+x_{b_j}^{(z)}&=
+ \begin{cases}\alpha,&z=j,\\D_j,&z\ne j,\end{cases}
+ \qquad(1\le j\le4).
+\end{aligned}
+\tag{NBP.11.5}
+$$
+
+Then $t_z=\mathscr S(x^{(z)})$ is an actual current image and
+$u_z=\delta(t_z)$ belongs to the full original $\mathcal U_*$. Their
+required outputs are
+
+$$
+F(u_{0_a})=F(u_{0_c})=R_0,\qquad F(u_j)=R_j\quad(1\le j\le4).
+\tag{NBP.11.6}
+$$
+
+On these six simultaneous fixed actual sources, every finite address
+has either constant reply, two replies partitioning $G_a\mid G_c$, or
+two replies isolating exactly one $j\in\{1,2,3,4\}$. More precisely:
+
+| Address location | Possible nonconstant reply partition on $Z$ |
+| --- | --- |
+| At length less than three | None |
+| In either occurrence cone of $a$ | $G_a\mid G_c$ |
+| In either occurrence cone of $c$ | $G_a\mid G_c$ |
+| In the occurrence cone of $b_j$ | $\{j\}\mid(Z\setminus\{j\})$ |
+
+**Proof.** In every tuple exactly one of $a,c$ is beta, the other is
+its fixed branch image, and the remaining four coordinates are distinct
+branch images except for the possible one alpha at $b_j$. The six
+coordinates are pairwise distinct. For $0_a$ and $0_c$ all are images,
+and for $j$ the alpha has exactly its forced beta partner. Proposition
+9.3 supplies the actual finite inverse and the stated complete outputs.
+All six current trees and origins are fixed at once; no run changes its
+source in response to a query.
+
+For every address of length at least three write it uniquely as $pw$
+with $p\in P$. The actual occurrence identity (NBP.9.7) gives
+$r_{t_z}(pw)=r_{x_{[p]}^{(z)}}(w)$. In an $a$ cone the only subtree
+values are beta and $A$, constant on the two groups; in a $c$ cone they
+are $C$ and beta, constant on the same two groups. In a $b_j$ cone the
+only subtree values are alpha at $j$ and $D_j$ otherwise. Evaluating
+these two fixed finite trees at any suffix gives either equal replies
+or the indicated partition. A suffix may continue beyond a leaf or
+beyond the finite subtree; absent is the ordinary native reply and
+changes none of this argument. Shorter addresses are common skeleton
+branches. One address enters one occurrence cone even when a class
+occurs twice. Thus the table covers all finite native addresses without
+restricting the query menu or replacing actual replies by an extra
+experiment port. $\square$
+
+**Theorem 11.4 (constant advice and three calls require ten states).**
+For $r=1$ and $q=3$, every successful controller has at least five
+running states and at least five halting states. In particular
+$K\ge10$.
+
+**Proof.** Restrict it to the six actual sources of Proposition 11.3.
+Constant advice gives one common initial state. Five different required
+outputs exclude an initial halt. At any later state, the fixed address
+has at most two replies on these six sources. Consequently one remaining
+call can distinguish at most two different required outputs, and two
+remaining calls at most four, including early halts. These elementary
+binary-depth bounds are the same decision-tree capacity supplier used
+in Theorem 9.5, applied only to these actual runs.
+
+The first call cannot have constant reply: that would leave all five
+outputs for two calls. It also cannot isolate a single positive index
+$j$. On the other reply its remaining candidates would be
+$Z\setminus\{j\}$, with four distinct required outputs. Any possible
+second call on that set has one of the following forms by Proposition
+11.3. A constant query leaves four outputs for one call. A singleton
+query for another positive index leaves three outputs on its other
+reply. A group query leaves the opposite group, the one not containing
+$j$, intact, with its three different outputs $R_0$ and its two positive
+rows. Each case leaves at least three outputs for one call and is
+impossible. Querying the removed singleton is constant on the remaining
+set, so is included. Halting before the second call cannot resolve its
+four outputs either.
+
+Thus the first call separates $G_a$ from $G_c$ and its running state has
+an address in an $a$ or $c$ occurrence cone. Consider its $G_a$ reply.
+There are exactly the three outputs $R_0,R_1,R_2$ and at most two calls
+left. Both partner-cone queries are now constant, as are skeleton queries
+and singleton queries for $3$ or $4$. The second call must therefore be
+a nonconstant query in a $b_1$ or $b_2$ cone. It isolates that positive
+index. On the other reply the remaining two actual sources are $0_a$
+and the other index in $\{1,2\}$. Their only nonconstant queries are in
+the other right-class cone, so the third call must query that cone.
+Both $b_1$ and $b_2$ cones are therefore queried on actual runs.
+
+The identical argument on $G_c$ forces actual queries in both $b_3$ and
+$b_4$ cones. These four right-class cones and the partner cone of the
+first call are disjoint address locations. Each running state has one
+fixed address, so at least five different running states are necessary.
+No merging of reply histories can change that address requirement. The
+five different whole outputs require five different halting states by
+(NBP.11.6), disjoint from the running states. Early stopping on an
+isolated positive index is allowed in the argument; convergence, cycles
+in a union of runs and unused states cannot remove the five necessary
+address states. Hence $K\ge10$.
+
+This is a direct obstruction on the native finite sources and their
+occurrence cones. It does not use a root simulation, padding reduction,
+or any state-count-preserving consequence of Theorem 10.8. $\square$
+
+### 11.4 Matching controllers on every actual origin
+
+**Proposition 11.5 (full-fiber upper controllers).** The following exact
+numbers of states and worst-case calls are simultaneously attainable.
+Each listed initial distinction is actually exported from the acquired
+data of Assumption 9.2.
+
+| Exported capacity used | Maximum calls | Running states | Halting states | Total states |
+| --- | --- | --- | --- | --- |
+| $1$ | $3$ | $5$ | $5$ | $10$ |
+| $1$ | $4$ | $4$ | $5$ | $9$ |
+| $2$ | $2$ | $3$ | $5$ | $8$ |
+| $3$ | $1$ | $2$ | $5$ | $7$ |
+| $4$ | $1$ | $1$ | $5$ | $6$ |
+| $5$ | $0$ | $0$ | $5$ | $5$ |
+
+**Proof.** Proposition 9.3 makes the acquired right-class terms determine
+$h\in\{0,1,2,3,4\}$, with $h=j$ exactly when $x_{b_j}=\alpha$ and
+$h=0$ when no right-class term is alpha. As in Theorem 9.5, this is a
+pre-cut computation on genuinely acquired finite values. Only the stated
+block index is exported; no term, target marker or previous reply remains
+accessible in addition to the resulting initial state.
+
+In every controller below there are exactly five halts
+$H_0,\ldots,H_4$, with $\operatorname{out}(H_j)=R_j$. These are the
+complete repaired rows of Proposition 9.3: $H_0$ returns $R_*$, while
+$H_j$ for $j>0$ returns the exterior with precisely the pair at $q_j$
+replaced by one concrete beta, its restricted occurrence partition with
+recomputed canonical names, every retained disequality and the resulting
+absent-cut guards. The surviving occurrence of the repeated partner
+remains a hole. Thus $H_j$ is not a label output followed by an uncharged
+source-dependent decoding step.
+
+Write $p_j=q_jR$ for the four right-class root addresses and $p_a=LLL$
+for a root of $a$. A state named $B_j$ always queries $p_j$. In the
+transition descriptions, an alpha reply takes the stated alpha edge;
+every other reply takes the non-alpha edge. This defines the table for
+all four native replies, including formally unreachable replies. Every
+$p_j$ is reached on the entire fiber, and Proposition 9.3 shows that the
+alpha edge is taken exactly for $h=j$.
+
+For the first row of the table, export one constant value and start at
+an additional running state $A_0$ querying $p_a$. Define the transitions
+by
+
+$$
+\begin{array}{c|c|c}
+\text{state}&\text{reply condition}&\text{successor}\\ \hline
+ A_0&\beta&B_1\\
+ A_0&\mathsf{branch}&B_3\\
+ A_0&\alpha\text{ or }\mathsf{absent}&H_0\\
+ B_1&\alpha&H_1\\
+ B_1&\text{non-alpha}&B_2\\
+ B_2&\alpha&H_2\\
+ B_2&\text{non-alpha}&H_0\\
+ B_3&\alpha&H_3\\
+ B_3&\text{non-alpha}&B_4\\
+ B_4&\alpha&H_4\\
+ B_4&\text{non-alpha}&H_0
+\end{array}
+\tag{NBP.11.7}
+$$
+
+The $A_0$ alpha and absent edges never occur on the actual domain.
+If $x_a=\beta$, the target can be only $0,1,2$: a positive target $3$
+or $4$ would also force $x_c=\beta$, violating the retained disequality.
+If $x_a$ is a branch, the target can be only $0,3,4$, since $1,2$ force
+$x_a=\beta$. The subsequent two right-class tests therefore give the
+whole correct target in at most three calls. There are five running
+states and five halts, and both group branches and all halts are attained
+by actual origins.
+
+For the second row, export one constant value and start at $B_1$.
+Use four running states $B_1,\ldots,B_4$; $B_j$ takes its alpha edge to
+$H_j$, and its non-alpha edge to $B_{j+1}$ for $j<4$ or to $H_0$ for
+$j=4$. This checks for the unique possible alpha among all four right
+classes, with at most four calls and nine total states.
+
+For the third row, export the block in
+$\{0,1,2\}\mid\{3,4\}$ and initialize respectively at $B_1$ or $B_3$.
+Use only $B_1,B_2,B_3$. Their alpha edges go to their corresponding
+halts. Their non-alpha edges are respectively $B_2,H_0,H_4$.
+These two initial states, three running states and five halts give
+maximum two calls and total eight states.
+
+For the fourth row, export the block in
+$\{0\}\mid\{1,2\}\mid\{3,4\}$ and initialize at $H_0,B_1,B_3$,
+respectively. The two running states have alpha edges $H_1,H_3$ and
+non-alpha edges $H_2,H_4$, respectively. This gives seven total states
+and at most one call, including a genuine zero-call initial halt.
+
+For the fifth row, export the block in
+$\{0\}\mid\{1\}\mid\{2\}\mid\{3,4\}$ and initialize at
+$H_0,H_1,H_2,B_3$, respectively. The single running state has alpha edge
+$H_3$ and non-alpha edge $H_4$. This gives six states and at most one
+call. For the last row export $h$ itself and initialize at $H_h$. Only
+the five halts are needed, with no fresh call.
+
+Every block in these constructions is nonempty on the full fiber, by
+the actual witnesses of Proposition 9.3. Every named state is reached
+on some actual origin. The maximum call count in the constant-export
+constructions is attained on every target-zero source; for the other
+positive-call rows it is attained in a non-singleton block. Their
+initial distinctions have exactly the alphabet sizes in the table and
+satisfy Definition 11.1's complete-entry normalization.
+
+For explicit coverage of the target-zero cases, all six class values
+are images and are pairwise distinct. Therefore beta can occur in at
+most one of the six classes: it can be at $a$, at $c$, at any $b_j$, or
+nowhere. Every one of these placements is attained, by replacing the
+chosen coordinate in a tuple of six distinct branch orbit images by
+beta, or leaving all six as branches. Proposition 9.3 supplies the
+actual finite inverse in each case. If beta is at $a$, (NBP.11.7) takes
+its first branch and then two non-alpha edges to $H_0$. In all other
+zero placements it takes its branch-reply edge and then two non-alpha
+edges to $H_0$, even when the tested right class itself is beta. The
+sequential four-test controller also returns $H_0$ in all these cases.
+The exported-block controllers either start at $H_0$ or retain zero in
+the first block and test its right classes. No claim that a partner
+query is a target-only group test on the full fiber is required. These
+arguments also cover every other branch filling, regardless of its
+size or internal alpha/beta distribution. $\square$
+
+### 11.5 Exact frontier and resource interpretation
+
+**Theorem 11.6 (minimum total-state frontier on the full actual fiber).**
+Under Definition 11.1, for every integer $r\ge1,q\ge0$,
+
+$$
+K_{\min}(r,q)=
+\begin{cases}
++\infty,&r2^q<5,\\
+10,&(r,q)=(1,3),\\
+\max\{5,10-r\},&r2^q\ge5\text{ and }(r,q)\ne(1,3).
+\end{cases}
+\tag{NBP.11.8}
+$$
+
+Equivalently the finite part is the following table; a dash means no
+successful controller.
+
+| Advice capacity $r$ | $q=0$ | $q=1$ | $q=2$ | $q=3$ | $q\ge4$ |
+| --- | --- | --- | --- | --- | --- |
+| $1$ | -- | -- | -- | $10$ | $9$ |
+| $2$ | -- | -- | $8$ | $8$ | $8$ |
+| $3$ | -- | $7$ | $7$ | $7$ | $7$ |
+| $4$ | -- | $6$ | $6$ | $6$ | $6$ |
+| $r\ge5$ | $5$ | $5$ | $5$ | $5$ | $5$ |
+
+In particular nine total abstract states cannot solve the task in three
+calls with constant advice, while ten can; nine suffice with four calls.
+
+**Proof.** Proposition 11.2 rules out every $r2^q<5$ and gives
+$K\ge\max\{5,10-r\}$ in all feasible cases. Theorem 11.4 strengthens
+this to ten at $(1,3)$. Proposition 11.5 gives ten there, nine for
+$r=1,q\ge4$, eight for $r=2,q\ge2$, seven for $r=3,q\ge1$, six for
+$r=4,q\ge1$, and five for $r\ge5,q\ge0$. These exhaust the integer
+feasible cases. A controller using fewer than $r$ values or fewer than
+$q$ calls satisfies the upper-bound contract; no dummy invocations or
+extra initial distinctions are inserted. Extra unused states are
+charged and cannot defeat either lower proof. If a larger exact state
+cardinality is separately prescribed, unused fixed halting states can
+be adjoined without changing any actual run. $\square$
+
+**Proposition 11.7 (the two optimized resources and their limits).**
+The frontier (NBP.11.8) charges the complete changing finite control
+state, including phase and reply memory, and every fixed whole-row
+halting distinction. It does not identify exported capacity with
+running memory or with physical storage. In particular the nine-state
+and ten-state constant-advice controllers both require four bits in a
+fixed-width injective binary state encoding, although their total state
+cardinalities and three-call feasibility differ.
+
+**Proof.** All later action choices and outputs in (NBP.11.1) depend only
+on the current state and the actual reply. A separately remembered
+phase, payload or response which changes a future action would be an
+additional accessible mutable distinction and would have to be included
+in $\mathcal K$. Distinct fixed complete outputs require distinct halt
+states, as used in both lower proofs. The initial export merely selects
+at most $r$ states; it need not remain separately accessible thereafter.
+For example the constant export has one value while the three-call
+controller visits different partner and right-test states. Conversely
+five exported values can initialize five halts with no running states.
+These are different counted objects.
+
+A binary fixed-width representation of a set of size $K$ needs and
+admits $\lceil\log_2 K\rceil$ bits. Since $8<9<10\le16$, both stated
+controllers have width four under this representation convention.
+This observation counts neither the fixed address/action/transition/
+output tables nor the representation and production of their full row
+outputs. The supplied entry, authentication, producer acquisition,
+finite comparisons, actual export, access cut, installation, local
+computation, address transmission and physical service retain their
+separate costs. An image inverse used to construct a proof witness is
+not a native inverse operation. No further update is available.
+
+Thus (NBP.11.8) settles the history-memory question under this explicit
+stationary finite Moore restriction: every accessible changing
+source-dependent distinction is included in its finite state. An
+arbitrary program with unbounded workspace or a computed address has a
+different contract; identifying its total configurations with finitely
+many states of (NBP.11.1) requires a separate proof. Neither nine versus
+ten states nor three versus four native calls is a universal physical
+memory or time equivalence. $\square$
+
+**Mathematical citation 11.8 (suppliers, mature methods and exact delta).**
+The one-image grammar, injective inverse, actual row fiber and
+occurrence-sensitive repair are the suppliers already cited in
+Definitions 1.1--1.2, Theorems 2.2 and 3.2, and Proposition 9.3.
+Assumption 9.2 supplies acquired/exported entry rather than deriving it
+from a row identity. Propositions 9.3--9.4 supply the fixed five actual
+witnesses and their all-address binary bridge, and Theorem 9.5 supplies
+the joint capacity frontier and the full-fiber root-test strategies.
+The same-$r,q$ existence transfer of §10 supplies no state-cardinality
+invariant and is not a premise of either state lower bound here.
+
+Finite Moore state/output conventions are classical; see Edward F.
+Moore, *Gedanken-Experiments on Sequential Machines*, in *Automata
+Studies* (AM-34), pp.129--153,
+[DOI:10.1515/9781400882618-006](https://doi.org/10.1515/9781400882618-006).
+The rooted reachable-graph edge count is reused in the form of
+[Transport--Memory Completion Theorem 66.3](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM66-T3),
+with its domain and response hypotheses replaced by the actual five
+witnesses in Proposition 11.2, rather than importing its numerical
+source-specific conclusion. Adaptive query geometry and binary-depth
+counting are the mature methods attributed in Mathematical citation
+9.7, including Nowak's *The Geometry of Generalized Binary Search*,
+[arXiv:0910.4397v5, §V.A](https://arxiv.org/abs/0910.4397v5).
+Those methods supply neither the six sources of Proposition 11.3 nor
+its native-cone obstruction. The repo-derived numerical delta is the
+full-fiber total-state charging and the exceptional three-call lower
+bound, together with the matching common finite controllers. It is an
+ordinary mathematical deduction, with no literature-priority claim.
+Quantum terminal-rank minima and stochastic hidden/visible-memory minima
+concern different sources, operations, targets and resources; none is a
+supplier for (NBP.11.8).
+
+## 追加锚（本行以下为增补区）
+
+## 12. Exact joint record, total Moore-state and call transfer on every full fiber
+
+### 12.1 The unchanged domain and the two counted shared tables
+
+**Definition 12.1 (full-fiber stationary Moore feasibility).** Fix any
+$P,R_*$ of Definition 10.1 with $\mathcal U_*\ne\varnothing$. Keep
+exactly its actual finite origins, injective class valuations
+$\mathcal X_*$, complete exterior, reached classes $D$ and representative
+occurrences $p_d$. Keep the attained chart $\Theta_*$ of Proposition 10.2
+and the whole predecessor target $G_*$ of Theorem 10.4. Equivalently,
+write $\Phi_C=\Theta_*$ and $G_C=G_*$ for the finite attained class-root
+task. No source-size, depth, intrinsic-rank or selected-witness promise
+is added to $\mathcal U_*$. The source and update remain the finite
+ordered $\alpha/\beta$ trees and homomorphic $\rho$ of Definition 1.1.
+
+Use the acquired/exported, complete-access-cut, authenticated one-update,
+lawful-common-entry and stationary-reading premises of Assumption 10.6.
+Impose the finite Moore restriction of Definition 11.1 on this general
+row: there is one common installed finite set
+$\mathcal K=Q\sqcup Z$ of running and halting states and fixed tables
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^*,\\
+\operatorname{next}&:Q\times\mathcal A\longrightarrow\mathcal K,
+ &\mathcal A&=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\},\\
+\operatorname{out}&:Z\longrightarrow\mathcal R_P.
+\end{aligned}
+\tag{NBP.12.1}
+$$
+
+At a running state $a$ one invocation reads the actual stationary
+$t=\rho u$ at $\operatorname{addr}(a)$; its reply $z$ sets the next
+state to $\operatorname{next}(a,z)$. A halting state returns its fixed
+entire row $\operatorname{out}(a)$ without a call. All installed states
+count, including unused states and distinct halts with equal outputs.
+There is one fixed finite address per running state. Replies, repeated
+queries, exterior queries, arbitrarily deep queries and absence all
+obey the original native contract and each invocation counts.
+
+The actual pre-cut export initializes the current state. After entry,
+that state is the entire accessible source-dependent controller memory:
+there is no separate advice register, pointer, phase, clock, trace,
+archive, decoder, variable address or source-dependent table selection.
+The row, cut and installed tables are common source-independent data.
+In particular every halting output is already a complete predecessor
+row, rather than a label requiring a source-bearing output decoder.
+
+Complete-entry recoverability is retained as in Assumptions 9.2 and
+10.6 and Definition 11.1. If an original export $\sigma$ and entry map
+$\iota$ merge values, the admissible joint normalization is the actual
+pre-cut computation and export
+
+$$
+\tau(u)=\iota(\sigma(u))\in\mathcal K.
+\tag{NBP.12.2}
+$$
+
+The declared exported value is then this initial-state code, its entry
+map is inclusion, and it is recoverable from the initial state. Its
+actual range has at most $|\sigma[\mathcal U_*]|$ elements. The producer
+uses its acquired data, actually exports $\tau$ before the access cut,
+and uses the supplied lawful entry for that export. This is a changed
+encoder when $\iota$ merges; it does not retain the old $\sigma$ as an
+extra accessible field. It grants no pointwise statement for a fixed
+arbitrary encoder. Below the normalized initialization is written
+$\tau:\mathcal U_*\to\mathcal K$ and must be so acquired and exported.
+
+For integers $r\ge1,K\ge1,q\ge0$, let
+$\mathsf{MooreInvFeas}_*(r,K,q)$ mean joint existence of such an actual
+export and table with $|\tau[\mathcal U_*]|\le r$,
+$|\mathcal K|\le K$, and at most $q$ native invocations on each origin,
+terminating with $F(u)=R_P(u)$ on every $u\in\mathcal U_*$. The three
+budgets are upper bounds. Address representation, installed tables,
+fixed whole-output storage, acquisition, export and physical services
+have separate prices; $K$ counts states, not all physical memory.
+
+**Definition 12.2 (attained class-root Moore feasibility).** The root
+task has input $\theta\in\Theta_*\ne\varnothing$ and entire target
+$G_*(\theta)$. It has one finite shared table on
+$\mathcal K=Q\sqcup Z$, with the same fixed complete halting outputs
+and reply-only transition rule as (NBP.12.1), except that
+
+$$
+\operatorname{coord}:Q\longrightarrow D
+\tag{NBP.12.3}
+$$
+
+labels each running state by one actual hidden-class root coordinate.
+One call at that state returns $\theta(\operatorname{coord}(a))$;
+$\mathsf{br}$ in the chart denotes the native $\mathsf{branch}$ reply.
+All coordinates are reached, so absence is impossible, but the fourth
+transition entry may be filled with an arbitrary existing state. Every
+invocation, including a repeated coordinate, costs one. There is no
+constant-query port or free control step. If $D=\varnothing$, the
+coordinate map forces $Q=\varnothing$.
+
+A finite coloring $c:\Theta_*\to\mathcal K$ with
+$|c[\Theta_*]|\le r$ specifies the complete exported initial-state
+code; only that current state remains accessible after entry. No free
+color register is retained. Let $\mathsf{MooreRootFeas}_*(r,K,q)$ mean
+joint existence of this coloring and table with $|\mathcal K|\le K$,
+terminating in at most $q$ calls with $G_*(\theta)$ for every attained
+$\theta$. Installed running and halting states, including unused ones,
+are charged exactly as in Definition 12.1. This is a finite comparison
+task, not an extra observation port supplied to the original register.
+
+### 12.2 A correspondence on shared states, without history unrolling
+
+**Theorem 12.3 (paid root recoding of an arbitrary installed native
+state graph).** Suppose $D\ne\varnothing$ and a table and normalized
+actual export witness $\mathsf{MooreInvFeas}_*(r,K,q)$. There are one
+actual origin $u^\theta\in\mathcal U_*$ for every
+$\theta\in\Theta_*$ and a root table with exactly the same installed
+state set, running/halting partition and halting outputs. Its coloring
+uses at most the original number of exported initial-state values.
+For each $\theta$, its entire state path and call count equal those of
+the native table on that one fixed $u^\theta$. In particular it
+witnesses $\mathsf{MooreRootFeas}_*(r,K,q)$, including shared states,
+converging transitions and unused installed states.
+
+**Proof.** The finite installed native table, rather than its execution
+histories, supplies the finite address menu. Put
+
+$$
+L=\max\bigl(\{0\}\cup
+             \{|\operatorname{addr}(a)|:a\in Q\}\bigr).
+\tag{NBP.12.4}
+$$
+
+This includes unused running states and all arbitrarily long words of
+this particular table. It restricts no allowed comparator and no actual
+source. Proposition 10.5 at this $L$ supplies simultaneously the actual
+finite valuations $x^\theta$, current images
+$t^\theta=\mathscr F_*(x^\theta)=\rho u^\theta$ and origins
+$u^\theta\in\mathcal U_*$. Their branch classes have minimum leaf
+depth greater than $L$, their repeated occurrences share their values,
+and every class disequality and exterior absence guard is retained.
+They realize every attained $\theta$, and
+$F(u^\theta)=G_*(\theta)$ by Theorem 10.4.
+
+For each installed native word $v$, traverse the complete fixed
+exterior. If it never enters a hole, its reply $b_v\in\mathcal A$
+is constant on every $t^\theta$. This includes the root when visible,
+concrete exterior constructors, blocked cut cones, and extensions of
+concrete leaves. If it first enters $p\in H$, write $v=pw$ and
+$d=[p]$. Proposition 10.5 gives the following single state-local
+response function on reached root replies:
+
+$$
+h_v(z)=
+\begin{cases}
+z,&w=\varepsilon,\\
+\mathsf{absent},&w\ne\varepsilon,\quad z\in\{\alpha,\beta\},\\
+\mathsf{branch},&w\ne\varepsilon,\quad z=\mathsf{branch}.
+\end{cases}
+\tag{NBP.12.5}
+$$
+
+Thus $r_{t^\theta}(v)=h_v(\theta(d))$. The same class name is used
+whichever occurrence cone is entered. At a nonempty suffix, both leaf
+roots give absence and every padded branch root gives a reached branch;
+no information from its deeper finite shape is used.
+
+Choose once a genuine $d_0\in D$. For a constant word, set
+$j_v=d_0$ and $h_v(z)=b_v$ for every $z\in\mathcal A$. For a word
+entering a hole, set $j_v=d$ and extend (NBP.12.5) arbitrarily to the
+unreachable argument $\mathsf{absent}$. Consequently every installed
+word, constant or variable, satisfies
+
+$$
+r_{t^\theta}(v)=h_v(\theta(j_v))
+\quad(\theta\in\Theta_*).
+\tag{NBP.12.6}
+$$
+
+Install the root table on the very same $Q\sqcup Z$ by
+
+$$
+\begin{aligned}
+\operatorname{coord}'(a)&=j_{\operatorname{addr}(a)},\\
+\operatorname{next}'(a,z)&=
+ \operatorname{next}\bigl(a,h_{\operatorname{addr}(a)}(z)\bigr),\\
+\operatorname{out}'&=\operatorname{out},\qquad
+c(\theta)=\tau(u^\theta).
+\end{aligned}
+\tag{NBP.12.7}
+$$
+
+The coloring is a finite table into the original installed states and
+$|c[\Theta_*]|\le|\tau[\mathcal U_*]|\le r$. It does not assert that
+$\tau$ is constant on the root-type fibers. Its declared value is the
+initial-state code itself, so initialization has no extra retained
+field or subsequent decoding phase.
+
+Fix $\theta$. Both executions start in $\tau(u^\theta)$. Whenever
+their common current state is running, (NBP.12.6) and (NBP.12.7) make
+the next states equal, with exactly one counted invocation on each
+side. At a constant word the root reader really queries $d_0$ and
+ignores its reply through the constant function $h_v$. That invocation
+is charged; it is neither an artificial native response nor a free
+transition. At a halting state the outputs agree. Induction along this
+one actual source's execution proves the asserted state path and call
+count equality, termination in at most $q$ calls, and whole output
+$F(u^\theta)=G_*(\theta)$.
+
+The recoding depends only on the installed state, not on which history
+reached it. Hence the same next-state rule applies when different
+sources converge at a state; repeated visits by different sources need
+no copies, and unused states remain installed and counted. No tree
+unrolling, cloned state, retained clock or new control phase occurs.
+The actual representatives establish necessity from a full-fiber
+native solution; they do not become a restriction of that solution's
+domain. $\square$
+
+**Theorem 12.4 (exact joint three-budget feasibility transfer).** Under
+the supplied operational premises in Definition 12.1, for every
+nonempty full actual one-image row fiber and every integer
+$r\ge1,K\ge1,q\ge0$,
+
+$$
+\mathsf{MooreInvFeas}_*(r,K,q)
+\quad\Longleftrightarrow\quad
+\mathsf{MooreRootFeas}_*(r,K,q).
+\tag{NBP.12.8}
+$$
+
+The same upper budgets charge actual exported initial distinctions,
+all installed running and halting states, and every invocation. The
+native side retains every actual finite origin and every legal finite
+native address.
+
+**Proof.** First suppose $D\ne\varnothing$. The native-to-root
+direction is Theorem 12.3. For the converse, take a root coloring and
+shared table satisfying Definition 12.2. Install the same state set,
+partition, transition table and whole halting outputs on the native
+register, replacing each coordinate $d$ by the actual native address
+$p_d$. Every $p_d$ is reached on every source of the fixed row fiber.
+For any actual valuation $x\in\mathcal X_*$ its reply is exactly
+$\theta_x(d)$; the absent transition entry is never used at these
+addresses. No bound on hidden branch depth or shape is needed.
+
+The producer inspects the roots of its actually acquired class values,
+computes $\theta_x\in\Theta_*$, and computes the finite-table value
+$c(\theta_x)$. It actually exports this initial-state code before the
+complete access cut and uses the supplied common lawful entry. Local
+inspection of acquired terms is not a fresh native call. The export
+has at most $r$ values and is recoverable from the initial state.
+Proposition 10.2 makes every type attained, so its actual code range
+is exactly $c[\Theta_*]$. Nothing else from acquisition is available
+after entry.
+
+For this arbitrary actual origin, induction on the current state makes
+the native run identical to the root run on $\theta_x$, with one native
+invocation for each root invocation and the same halting state. Thus
+the state cardinality is unchanged, the call bound is $q$, and the
+output is $G_*(\theta_x)=F(u_x)$ by Theorem 10.4. In particular it
+includes the inverse exterior, canonical restricted partition with
+all equalities and disequalities, repeated occurrences and every
+predecessor absence guard. The same installed table works for all
+actual origins; the necessity witnesses are not used for this direction.
+
+If $D=\varnothing$, Proposition 10.2 gives the singleton chart
+containing the empty type. The complete current tree is the exterior,
+and its unique actual predecessor and entire predecessor row are fixed.
+On both sides install one halting state with that row as its fixed
+output and export its one initial-state code. This uses one state, one
+actual value and zero calls, within every stated $r,K,q$. It asks no
+nonexistent coordinate and makes no dummy native invocation. Therefore
+both sides are feasible, proving (NBP.12.8) also for zero classes.
+$\square$
+
+**Proposition 12.5 (stationary per-source paths and cyclic union graphs).**
+Every terminating run of either counted table visits each running
+state at most once. The graph obtained by taking the union of paths
+from different actual sources or different attained types need not be
+acyclic. The transfers of Theorems 12.3--12.4 apply to this shared graph
+without an acyclicity premise.
+
+**Proof.** On a fixed stationary source, the reply to the one address
+of a given state is fixed. If the same running state were revisited,
+the deterministic suffix from it would repeat forever, contradicting
+termination. The root task has the same property for a fixed $\theta$.
+This argument fixes the source; it does not make all transitions from
+a running state use the same successor across different sources.
+
+For an explicit actual-fiber example, take $P=\{\varepsilon\}$ and
+its one-hole current row. There is one class $d$, its attained types
+are $\beta$ and $\mathsf{branch}$, and its whole predecessor row is
+constant by Corollary 10.10. Install running states $a,b$, both querying
+$d$, and a halt $h$ carrying that fixed row. Put
+$\operatorname{next}(a,\beta)=b$,
+$\operatorname{next}(b,\beta)=h$,
+$\operatorname{next}(b,\mathsf{branch})=a$ and
+$\operatorname{next}(a,\mathsf{branch})=h$; let the other replies go to
+$h$. Export initial state $a$ on type $\beta$ and $b$ on type
+$\mathsf{branch}$. This is an actual acquired two-value initialization.
+The paths are $a,b,h$ and $b,a,h$, respectively, and each uses two
+calls. Both types have actual finite origins, for instance current
+images $\beta=\rho\alpha$ and $E=\rho\beta$. The union contains the
+cycle $a\to b\to a$, although no fixed source follows that cycle.
+Replacing $d$ by the actual root address gives the same native example.
+The transfers use a single state-local response rule and preserve the
+corresponding source paths, so such union cycles and convergences
+cause no additional state or call cost. $\square$
+
+### 12.3 Endpoints and the arbitrary-row shared-table consumer
+
+**Corollary 12.6 (complete-output and exact zero-call endpoints).** Put
+$m=|G_*[\Theta_*]|=|F[\mathcal U_*]|\ge1$. Every feasible counted
+table has at least $m$ halting states and hence $K\ge m$. For $q=0$,
+on either side of (NBP.12.8) feasibility is exactly
+
+$$
+r\ge m\quad\text{and}\quad K\ge m.
+\tag{NBP.12.9}
+$$
+
+A constant whole target is feasible with $r=K=1,q=0$, regardless of
+the number of reached classes. Empty cuts, a root cut and zero reached
+classes have this endpoint. Arbitrary blocked members of a nonempty
+cut stay included with their complete predecessor guards. In
+particular $r=1,q=0$ is feasible exactly when $m=1$ and $K\ge1$.
+
+**Proof.** Every attained distinct complete target must be the fixed
+output of some reached halting state. One halting state has only one
+fixed output, giving $|Z|\ge m$. With zero calls, every actual initial
+state is already a halt; two different targets cannot share its code.
+Thus the actual exported range and the installed state set each have
+at least $m$ elements. Conversely install exactly $m$ halts, one with
+each attained whole target, and export the code of the correct halt.
+The acquired class roots determine this target by Theorem 10.4, so the
+producer can actually compute and export the code before the cut.
+The root task uses the identical target coloring. No source-dependent
+output decoder or free after-entry computation is needed.
+
+The cut and constant cases follow from Corollary 10.10 and this
+construction. Its fourth case keeps every already blocked member
+absent and every newly blocked occurrence guarded by its predecessor
+beta parent. Those are parts of the installed full outputs, not omitted
+coordinates. $\square$
+
+**Corollary 12.7 (finite synthesis of shared counted tables on an
+arbitrary row).** Given the finite $P,R_*$ with nonempty actual image
+fiber and integers $r\ge1,K\ge1,q\ge0$, the bounded abstract
+three-budget problem (NBP.12.8) is decidable. A positive answer supplies
+a finite acquired encoder and one stationary fixed-address native
+Moore table satisfying all three upper budgets on the entire original
+fiber under the supplied acquisition, export, isolation and entry
+services. No native address-length bound is an input to this criterion.
+
+**Proof.** Proposition 10.2 computes the exact finite attained chart
+by (NBP.10.5), and Theorem 10.4 computes each entire $G_*(\theta)$.
+Write $Y=G_*[\Theta_*]$. Enumerate state sets
+$\{1,\ldots,n\}$ for $1\le n\le K$, all running/halting partitions,
+all coordinate maps $Q\to D$, all four-reply transitions into that
+same state set, all fixed halt-output maps $Z\to Y$, and all
+initial-state colorings $c:\Theta_*\to\{1,\ldots,n\}$ with image
+size at most $r$. These choices form a finite set. A nonempty input
+chart requires a halt on any successful run. If $D=\varnothing$,
+only partitions with no running states admit a coordinate map.
+
+For each candidate and each attained $\theta$, start at $c(\theta)$.
+If it is a halt, check its complete output. Otherwise query that
+state's coordinate, apply its reply transition and count one call.
+Accept this input only if the correct halt is reached after at most
+$q$ calls; a running state after the $q$th call fails. This is a finite
+check on every input, not a demand that the union graph be a DAG.
+All installed states are counted by $n$ whether visited or not. State
+sharing, converging edges, repeated coordinates, early halts and union
+cycles remain among the enumerated candidates.
+
+Any root table meeting the budgets is isomorphic to one of these
+finite labeled state sets. Every halt reached on an attained input
+has output in $Y$. Replace the output of each unused halt by any
+fixed member of $Y$; this changes neither the state count nor any
+actual run. Consequently restricting the enumerated output alphabet
+to $Y$ loses no feasible table. Conversely a passing candidate is
+exactly a witness to Definition 12.2. Theorem 12.4 proves that these
+candidates decide native joint feasibility and installs a passing one
+by actual native queries at the representatives $p_d$ and actual
+pre-cut export of its initial-state coloring.
+
+The finite enumeration is the consumer of the state-graph transfer,
+not its proof. Section 10's decision-tree criterion alone would not
+justify this state bound: unrolling a shared graph can duplicate
+states. Here Theorem 12.3 first makes the arbitrary finite native
+address menu replaceable on the same installed states, and Theorem
+12.4 then covers every actual origin. Only after that correspondence
+is established does finite shared-table enumeration decide the
+arbitrary-row three-budget question. $\square$
+
+### 12.4 Suppliers, attribution and precise realization boundaries
+
+**Mathematical citation 12.8 (the shared-state delta and its scope).**
+Definitions 10.1--10.3, Proposition 10.2 and Theorem 10.4 supply the
+exact attained chart, actual image admissibility and complete
+predecessor factorization. Proposition 10.5 supplies simultaneous
+actual finite padding only for a specified finite native address menu;
+it retains the full exterior, repeated class values and all
+class disequalities. Its prescribed-rank deep-image supplier is
+[Retained Literal Root Depth Theorem 2.2](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md),
+and the image grammar and unique inverse are
+[Transport--Memory Completion (RA.2207)](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md).
+The immutable source for §10 is
+[revision 3bb8b4fbbc274e21d2de5b0d93a89f6957dc3993](https://github.com/the-omega-institute/trureturing/blob/3bb8b4fbbc274e21d2de5b0d93a89f6957dc3993/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#10-exact-class-root-experiments-on-every-full-actual-one-image-fiber).
+Assumption 10.6 supplies actual acquisition/export and entry rather
+than deriving them from the finite chart. Definition 11.1 supplies the
+counted Moore contract and lawful initial-state-image normalization;
+its numerical lower bounds and frontier are not premises here.
+
+Classical state-associated output terminology is attributed to Edward
+F. Moore, *Gedanken-Experiments on Sequential Machines*, in *Automata
+Studies* (AM-34),
+[DOI:10.1515/9781400882618-006](https://doi.org/10.1515/9781400882618-006).
+This bibliographic attribution imports no external minimization or
+resource-preservation theorem. The bounded source access here supports
+that attribution, not a claim to have verified the full paper; none of
+the transfer proof depends on an unread external passage. Finite table
+enumeration and deterministic state-path induction are ordinary finite
+methods. The native query-geometry and protocol-tree precedents remain
+attributed to Mathematical citations 9.7 and 10.12 and
+[Native Signed Feasibility §§7.1--7.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md).
+Those tree results do not preserve total installed Moore states by
+themselves.
+
+The repo-derived mathematical delta is the state-local paid response
+recoding on one common stationary shared graph, with actual
+full-value-dependent initialization restricted only on truthful padded
+representatives for necessity, and actual acquired root-color export
+for full-fiber sufficiency. Corollary 12.7 is its arbitrary-row
+shared-table synthesis consumer beyond the numerical example of §11.
+No numerical lower bound is rederived here, no decision-tree reduction
+is asserted to have already preserved $K$, and no global novelty or
+Lean-kernel claim is made.
+
+The decided problem is existence of an explicitly bounded abstract
+table under the supplied acquisition, actual export, complete access
+cut, authentication, lawful common entry and stationary native service.
+A finite chart certificate does not extract a finite table, its used
+states or its longest address from arbitrary program text. A program
+with computed addresses or unbounded workspace is not a table of
+(NBP.12.1) until its total configurations and transitions have separately
+been proved to satisfy that contract. No such extraction is asserted.
+
+The same upper $r,K,q$ equivalence does not preserve an arbitrary fixed
+encoder pointwise, every native trace on every original source, native
+address widths, installed table or whole-output storage, total physical
+memory, acquisition/export work, entry implementation or service time.
+For necessity, the exact path comparison is with the selected actual
+$u^\theta$ for this table's menu. For sufficiency, the newly installed
+native reader is correct on all actual finite origins but need not
+imitate the original reader's other traces. A real charged query used
+to recode a constant reply adds no free observation or control phase.
+Zero classes instead use the constant halt, and zero fresh calls do
+not mean zero acquisition. Physical finite-memory realization and
+continued research outside this bounded transfer require their own
+premises and proofs.
+
+## 追加锚（本行以下为增补区）
