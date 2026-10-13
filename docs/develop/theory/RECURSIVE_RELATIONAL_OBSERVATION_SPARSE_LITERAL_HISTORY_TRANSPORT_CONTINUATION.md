@@ -1695,3 +1695,360 @@ part of this comparison.
 [NAR-ENTRY]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Unknown shape: complete parity memory with active thresholding
+
+**Definition 10.1 (the finite unknown-shape family).** Let
+
+$$
+\mathcal U_{h,T}=\{(u,t):u\text{ is an ordered full binary tree with exactly }h\text{ leaves},\quad 0\le t\le T\},
+$$
+
+with each leaf labelled independently by $\alpha$ or $\beta$.  The shape, leaf
+addresses, labels, and entry $t$ are private; only $h$ and $T$ are public.  Put
+$E(u,t)=\rho^t u$ and let $\pi(u)$ be the parity of the number of $\beta$
+leaves.  Reads return $\alpha,\beta,\mathsf{branch},\mathsf{absent}$ at a
+literal address, Update is the same-source operation $v\mapsto\rho v$ with a
+constant acknowledgement, and Halt has one fixed bit output.  Every running
+word, response latch, address selector, phase, candidate index, and output bit
+is part of one fixed no-$11$ word.  A helper Read of $\varepsilon$ is a paid
+source Read.
+
+Let $\mathcal G_h$ be the finite set of all such labelled trees, let
+$C_{h-1}$ be the Catalan number of ordered full shapes with $h$ leaves, and
+write
+
+$$
+M_h=|\mathcal G_h|=2^h C_{h-1},\qquad d_h=\lceil\log_2 M_h\rceil .
+\tag{SLHC.48}
+$$
+
+Every node of an $h$-leaf source has address length at most $h-1$.  For
+$h>1$, every word of length $h-1$ is a leaf of some $h$-leaf source; the root is
+a leaf only when $h=1$.  Thus the depth-$h-1$ comb leaves, rather than the root,
+are the uniform witnesses below.
+
+For a labelled candidate $g\in\mathcal G_h$ and a leaf $p$ of $g$, write
+$b_g(p)=0$ for $\alpha$ and $1$ for $\beta$, and define
+
+$$
+\begin{array}{c|cc}
+ &\mathsf{Read}(pR^s)&\mathsf{Read}(pR^{s+1})\\ \hline
+E_s(g,p),\ b_g(p)=0&\alpha&\mathsf{absent}\\
+E_s(g,p),\ b_g(p)=1&\beta&\mathsf{absent}\\
+O_s(g,p),\ b_g(p)=0&\beta&\mathsf{absent}\\
+O_s(g,p),\ b_g(p)=1&\mathsf{branch}&\alpha
+\end{array}
+$$
+
+and let $P_s(g,p)$ be $(\mathsf{absent},\mathsf{absent})$ for $b_g(p)=0$ and
+$(\alpha,\mathsf{absent})$ for $b_g(p)=1$.  The vectors $P_s(g),E_s(g),O_s(g)$
+are the concatenations in the left-to-right leaf order of $g$.  They are response
+vectors, not stored source data.
+
+**Lemma 10.2 (two-slice parity certificate).** Suppose $h$ is even, $u,g\in
+\mathcal G_h$, $s,N\ge0$, and the two consecutive current response vectors of
+$u$ satisfy either
+
+$$
+V_s(g,\rho^N u)=P_s(g),\quad V_s(g,\rho^{N+1}u)=E_s(g),
+\tag{SLHC.49a}
+$$
+
+or
+
+$$
+V_s(g,\rho^N u)=E_s(g),\quad V_s(g,\rho^{N+1}u)=O_s(g),
+\tag{SLHC.49b}
+$$
+
+where $V_s(g,v)$ records the two literal replies at $pR^s,pR^{s+1}$ for every
+leaf $p$ of $g$.  Then $\pi(g)=\pi(u)$.
+
+**Proof.** The four-valued right-spine law gives, for every present subtree $z$,
+
+$$
+\mathsf{Read}(R^r,z)=\mathsf{absent},\alpha,\beta,\mathsf{branch}
+\quad\Longleftrightarrow\quad
+\operatorname{rightClock}(z)<2r,=2r,=2r+1,\ge2r+2.
+\tag{SLHC.50}
+$$
+
+The first vector in (SLHC.49a) and the second in (SLHC.49b) therefore force the
+right-clock values $2s,2s+1,2s+2$ in the four rows of Definition 10.1.  The
+one-step clock equation and `address_clock_bounds` show that a matched
+prefix either persists as the corresponding original node or is a newly born
+node with clock at most the current epoch.  Following the prefix-free leaf
+cones from the root, a newly born cone can match one of the displayed rows only
+when its parent is the unique shifted leaf cone; otherwise two candidate leaf
+cones occupy one original cone and the $h$-leaf count leaves an unmatched
+original cone.  The latter gives, by (SLHC.50), an absent/branch mismatch in
+one of the two slices.  Induction on the common branch prefixes consequently
+leaves exactly two possibilities: the candidate and the source have the same
+current tree, or they are the pair
+$(A_S,k+1),(B_S,k)$ of the complete history-fiber classification in [ABT9].
+In the first case the original leaf labels agree.  In the second case all $h$
+labels are complemented, and their parities agree because $h$ is even.  This
+proves the claim.  The induction uses the leaf-cone support statements of
+[JM40] only to justify the finite prefix-free cover; it does not assume that
+the candidate epoch is supplied.  $\square$
+
+**Lemma 10.3 (sound finite candidate test).** For $v=\rho^t u$ with
+$u\in\mathcal G_h$, let $D_n(g,v)$ mean that, for every leaf $p$ of $g$,
+
+$$
+\mathsf{Read}\bigl(pR^{\delta(n,b_g(p))},v\bigr)
+ =\operatorname{expected}(n,b_g(p)),
+\qquad
+\delta(n,b)=\lfloor n/2\rfloor+(n\bmod2)(1-b).
+\tag{SLHC.51}
+$$
+
+If $n\le t$ and $D_n(g,v)$ holds, then $\pi(g)=\pi(u)$ whenever $h$ is even.
+Moreover $D_t(u,\rho^t u)$ always holds.
+
+**Proof.** Write $v=\rho^n u'$ with $u'=\rho^{t-n}u$.  The exact
+`DelayedTemplateCertificate` leaf service and its delayed-template theorem
+turn $D_n(g,v)$ into $u'=g$.  If $n=t$, this is $g=u$.  If $n<t$, both $u'$ and
+$g$ have $h$ leaves; the history-fiber classification [ABT9] says that the
+only distinct possibility is $u=A_S$, $g=B_S$, with one extra substitution.
+Their parities agree for even $h$.  The converse is the same service applied
+to $g=u$.  $\square$
+
+**Definition 10.4 (complete one-write field encoding).** A binary field is
+stored in reflected Gray order; a leaf position is stored by one separated
+one-hot token; and a four-valued reply latch is stored by four separated bits.
+Between two logical rows, at most two field bits differ: a Gray successor changes
+one bit, a token move clears one bit and sets one bit, and a reply latch is
+cleared or set one bit at a time.  A phase bit records the second half of a token
+move.  Each such half-step first submits the literal helper Read $\varepsilon$;
+its acknowledgement row performs exactly one bit change.  Every other raw reply
+row either holds the word or changes exactly one latch bit and then discards the
+reply.  Separating every field bit by a permanent zero gives a no-$11$ word.
+
+For $b$ logical binary coordinates, including the phase and latch coordinates,
+this explicit row product has length
+
+$$
+L(b)=4b+2\lceil\log_2(b+1)\rceil+20.
+\tag{SLHC.52}
+$$
+
+The extra binary index is the phase position in a repair chain.  Unused Gray
+codes, unused candidate positions, and unsupported reply/phase combinations
+are all hold rows.  Hence (SLHC.52) is a finite
+complete table, not a contracted transition: every response, helper Read,
+address selector, and output remains a word coordinate or a literal table row.
+More explicitly, the static logical tuple is $(n,j,i,m,c,\phi)$, where $n$
+and $j$ are the Gray indices, $i$ is the one-hot leaf token, $m$ is the
+mismatch flag, $c$ is a four-bit reply latch, and $\phi$ is the repair phase.
+In a read phase its row submits exactly
+$p_i(g_j)R^{\delta(n,b_{g_j}(p_i))}$; the four raw rows set respectively the
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$ latch bit, and the next
+helper row clears that bit after comparing it with the expected reply.  The
+mismatch row advances $i$, or resets $i$ and advances $j,n$ through the explicit
+Gray repair chain.  A matching final leaf row is the only row that halts.
+The active tuple is $(j,i,V^-,V^+,m,\phi)$, with two four-valued pair vectors
+$V^-,V^+$; its read rows submit exactly $p_i(g_j)R^{s_j}$ and
+$p_i(g_j)R^{s_j+1}$.  Raw rows fill the current vector one separated latch bit
+at a time.  The update-acknowledgement row swaps $V^-$ and $V^+$ through the
+same repair chain, and the comparison row accepts precisely $P_s,E_s$ or
+$E_s,O_s$, rejects an all-branch vector, or submits the next literal.  Every
+other one of the four raw symbols and the constant acknowledgement has a hold
+or one-bit row.  Thus the first successful comparison is the first Halt; no
+output or phase is carried outside the word.
+
+**Theorem 10.5 (finite unknown-shape parity comparison).** For every $h\ge1$
+and finite $T$ the following statements hold.
+
+1. If $T=0$, both active and static installations exist.  If $T\ge1$ and $h$
+is odd, neither exists, because for every shape $S$ the histories
+$(A_S,1)$ and $(B_S,0)$ have the same current tree and opposite parity.
+
+2. In the positive regimes $T=0$ or $h$ even, there are universal constants
+$c,C>0$ such that
+
+$$
+ch\le \ell_{\mathrm{act}}^{\min}\le Ch,
+\qquad
+c\bigl(h+\log_2(T+1)\bigr)\le\ell_{\mathrm{stat}}^{\min}
+ \le C\bigl(h+\log_2(T+1)\bigr).
+\tag{SLHC.53}
+$$
+
+Here the active installation may use arbitrarily many genuine Updates on one
+run, while its installed word length is independent of $T$.  The static
+installation executes zero Updates on every promised run.
+
+**Proof.** The odd case is the exact two-point fiber in [ABT9].  For $T=0, Lemma 10.3 with $n=0$ is the static construction and the active
+construction uses that same zero-Update table.  The threshold construction
+below is used for even $h$ and arbitrary finite $T$.
+
+For the static upper bound, enumerate $n=0,\ldots,T$ in increasing order and,
+for each $n$, enumerate all $g\in\mathcal G_h$.  Stream the $h$ rows in (SLHC.51)
+and halt with $\pi(g)$ at the first candidate whose rows match.  The actual
+pair $(t,u)$ matches.  Any earlier match has $n\le t$ and has the same parity by
+Lemma 10.3.  The fields have
+$ b_{\mathrm{stat}}=\lceil\log_2(T+1)\rceil+d_h+h+14$ logical coordinates.
+Definition 10.4 gives $L(b_{\mathrm{stat}})=O(h+\log(T+1))$ because
+$\log_2M_h=\Theta(h)$.
+
+For the active upper bound, order the candidates as $g_0,\ldots,g_{M_h-1}$,
+put
+
+$$
+ s_j=s_0+(h+5)j,\qquad s_0=\left\lceil\frac{T+1}{2}\right\rceil+1,
+\tag{SLHC.54}
+$$
+
+and test candidate $g_j$ as follows.  At one epoch read both $pR^{s_j}$ and
+$pR^{s_j+1}$ for all its leaves, retaining the two response vectors in the
+separated latches.  Submit one genuine Update, repeat the vector, and accept if
+the two vectors are $P_s,E_s$ or $E_s,O_s$.  If every entry of the current vector
+is $\mathsf{branch}$, reject this candidate; otherwise repeat the one-Update
+loop.  At most $2(s_j+h)+7$ Updates are needed to reach that all-branch row:
+all paths of length at most $s_j+h$ in an $h$-leaf source have become branches
+by that epoch, by the Fibonacci right-spine recurrence.  If candidate $j$ rejects, its next start epoch is at most $2s_j+2h+7$;
+while $2s_{j+1}-1=2s_j+2h+9$.  Thus induction gives the start epoch
+$N_j\le2s_j-1$.  The correct candidate $g_j=u$ is therefore encountered at
+epochs $2s_j-1,2s_j$ and satisfies $P_s,E_s$.  A premature acceptance has the correct parity by Lemma 10.2.  Thus
+the first acceptance is correct.  The active fields have
+$ b_{\mathrm{act}}=d_h+9h+16$ logical coordinates (the two pair vectors use
+eight separated bits per leaf).  Definition 10.4 gives the active upper bound
+$L(b_{\mathrm{act}})=O(h)$.
+
+For the active lower bound, flip one original leaf in each of the
+$2^{h-1}$ depth-$h-1$ comb witnesses.  The original-cone separation result in
+[SLH31-32] forces a distinguishing Read on every successful run, even with
+adaptive Updates and arbitrary finite internal work.  Distinct cones require
+distinct installed literal rows, so a no-$11$ word of length $\ell$ must satisfy
+$F_{\ell+2}\ge2^{h-1}+2$, where $F$ is Fibonacci.  Hence
+$\ell_{\mathrm{act}}^{\min}=\Omega(h)$.
+
+For the static lag lower bound, use the same comb witnesses and compare the two
+fillings at every $t=0,\ldots,T$.  Guarded atomic monotonicity in [CAR13]
+says that one installed literal separates at most three adjacent entry values
+for this leaf-flip pair.  Thus
+
+$$
+F_{\ell_{\mathrm{stat}}^{\min}+2}
+ \ge 2^{h-1}\left\lceil\frac{T+1}{3}\right\rceil+2,
+\tag{SLHC.55}
+$$
+
+which is $\Omega(h+\log(T+1))$.  The two upper estimates and
+$\log_\varphi$ of the right sides of (SLHC.55) give (SLHC.53).  $\square$
+
+**Theorem 10.6 (actual resource accounting).** Let
+
+$$
+J=\sum_{j=0}^{M_h-1}\bigl(2(s_j+h)+7\bigr).
+\tag{SLHC.56}
+$$
+
+The active construction has the following worst-case bounds:
+
+$$
+U_{\mathrm{act}}\le J,
+\qquad
+R^{\mathrm{src}}_{\mathrm{act}}\le 2hJ,\qquad R^{\mathrm{tot}}_{\mathrm{act}}\le (L(b_{\mathrm{act}})+2)(2h+1)J,
+\tag{SLHC.57}
+$$
+
+where the factor $2h$ counts the two literal probes per leaf and the factor
+$L(b_{\mathrm{act}})+1$ pays every helper Read used by a one-bit repair.  Its
+submitted-address count and maximum length obey
+
+$$
+\begin{aligned}
+A_{\mathrm{act}}&\le\sum_{j=0}^{M_h-1}(2(s_j+h)+7)\bigl[2h(h-1)+h(2s_j+1)\bigr],\\
+P_{\mathrm{act}}&\le h+s_{M_h-1}+1.
+\end{aligned}
+\tag{SLHC.58}
+$$
+
+The static construction has exact worst-case source counts
+
+$$
+U_{\mathrm{stat}}=0,\qquad R^{\mathrm{src}}_{\mathrm{stat}}\le h(T+1)M_h,\qquad R^{\mathrm{tot}}_{\mathrm{stat}}\le (L(b_{\mathrm{stat}})+2)h(T+1)M_h,\qquad
+A_{\mathrm{stat}}\le (T+1)M_h\bigl[h(h-1)+h(\lceil T/2\rceil+1)\bigr],
+\tag{SLHC.59}
+$$
+
+and $P_{\mathrm{stat}}\le h+\lceil T/2\rceil$.  The superscript $\mathrm{src}$ counts submitted non-helper literal Reads;
+$\mathrm{tot}$ also counts every helper Read of $\varepsilon$.  Every response
+row changes at most one counted bit, so the total response-change counts obey
+$X_{\mathrm{act}}\le R^{\mathrm{tot}}_{\mathrm{act}}+U_{\mathrm{act}}$ and
+$X_{\mathrm{stat}}\le R^{\mathrm{tot}}_{\mathrm{stat}}$.  These are submitted
+source operations; helper Reads have length zero.
+
+The active installed table has at most
+$64M_h(h+1)(L(b_{\mathrm{act}})+1)$ words, and the static table at most
+$64(T+1)M_h(h+1)(L(b_{\mathrm{stat}})+1)$ words, counting unreachable hold rows
+and the four raw reply cases.  If literals are inlined in every row, their total
+address-letter storage is at most the corresponding right side of (SLHC.58) or
+(SLHC.59) multiplied by $4(L(b)+1)$; a shared literal dictionary is a separate
+immutable service and is not free here.  The active source has at most
+$hF_{T+J+2}$ leaves at its peak and the static source at most $hF_{T+2}$ leaves,
+with node count twice the leaf count minus one.
+
+**Proof.** There are at most $J$ polling loops, and each loop has $2h$ source
+probes and at most one genuine Update.  Every raw reply and acknowledgement
+can trigger at most $L(b)+1$ one-bit repair Reads, giving the two $R$ bounds in
+(SLHC.57).  Summing the
+leaf address depths, the two suffixes, and the loop bound gives (SLHC.58).
+The static enumeration has $(T+1)M_h$ candidates and $h$ rows per candidate;
+the displayed address bounds use $|p|\le h-1$ and
+$\delta(n,b)\le\lceil n/2\rceil+1$.  The table bounds are the Cartesian products
+of candidate, leaf, latch, phase, and reply fields; all four raw replies and
+all repair rows are counted.  Each original leaf contributes at most
+$F_{r+2}$ leaves after $r$ substitutions, giving the source-growth bounds.
+No minimum acquisition, physical time, energy, or total-cost optimum is
+asserted.  Initialization, promise establishment, candidate lookup, address
+emission, native table lookup, source preparation, and output delivery remain
+separate services.  $\square$
+
+**Boundary 10.7 (unbounded entry and target changes).** If $t$ is unbounded,
+no one finite fixed-literal installation solves the active task on all entries.
+Let $W$ be the maximum length of an installed literal.  The permanent-saturation
+law gives, for $t\ge W+2$, the reply $\mathsf{branch}$ at every installed address
+on every $h$-leaf source and after every further Update.  Choose two equal-shape
+fillings differing at one leaf.  They have opposite parity and identical
+future replies and acknowledgements, so deterministic complete control either
+halts with the wrong bit on one of them or fails to halt.  The finite result
+above is therefore the quantifier $\forall T\,\exists C_{h,T}$; it does not
+produce one installation for all unbounded entries.
+
+The full-vector target still requires the leaf-cone witnesses and cannot be
+replaced by this one-bit parity calculation.  For even $h$, parity being
+constant on exact current-tree fibers does not recover the original shape,
+entry, source identity, old records, or an inverse Update.  For known shape,
+Section 9 supplies the corresponding original-label benchmark; it supplies a
+shape promise that Definition 10.1 deliberately withholds.  Promise
+certification and parity output remain distinct services.
+
+**Attribution 10.8 (scope and mathematical suppliers).** The history-fiber
+classification and odd-parity collision are [ABT9].  The original-cone leaf
+necessity and comb separation are [SLH31-32]; the complete-control and
+no-$11$ response semantics are [FIB26-27,45-47].  [DelayedOriginalReadout][DELAY-ORIGINAL] supplies the right-clock intervals,
+original-node bounds, and exact one-step relations.  [DelayedTemplateCertificate][DELAY-TEMPLATE]
+supplies the unrestricted one-probe-per-known-leaf certificate consumed in Lemma 10.3.  The finite
+shape/leaf-cone cover uses [FC38] and [JM40].  The static three-entry atomic
+separation is [CAR13].  Catalan enumeration is the standard ordered-full-tree
+count; the Fibonacci recurrence is the standard substitution count.  These
+mature components are cited for their stated interfaces only.  The new
+repo-derived content is the two-slice active certificate, the finite
+unknown-shape candidate compositions, and their resource vectors.  No Lean
+application, ingestion result, physical service certification, or global
+optimality claim is made.
+
+[ABT9]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md
+[SLH31-32]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[FIB26-27,45-47]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+[FC38]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+[JM40]: RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[CAR13]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[DELAY-ORIGINAL]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[DELAY-TEMPLATE]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedTemplateCertificate.lean
+
+## 追加锚（本行以下为增补区）
