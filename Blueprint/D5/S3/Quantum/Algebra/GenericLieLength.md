@@ -22,6 +22,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/GenericLieLength.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jia-capel-2024-generic-lie-length` (proved) by `D5/S3/Quantum/Algebra/GenericLieLength.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jia-capel-2024-generic-lie-length","declaration_gid":"D5/S3/Quantum/Algebra/GenericLieLength.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yifan Jia; Angela Capel (2024). *A generic quantum Wielandt's inequality*. DOI: [10.22331/q-2024-05-02-1331](https://doi.org/10.22331/q-2024-05-02-1331). URL: <https://arxiv.org/abs/2301.08241>.

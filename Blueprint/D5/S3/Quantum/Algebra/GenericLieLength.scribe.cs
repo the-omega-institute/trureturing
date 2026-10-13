@@ -20,7 +20,7 @@ internal sealed class GenericLieLengthDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("jc-genericlielength-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("result"),
                 StatementSource.FromAuthor(Formula1()), AssessedProvenance.FromRepo(Source, Lloyd),
-                Blocks(Paragraph(Text("For each fixed g ≥ 2 the constants c = 1/log(g + 1) and C = 32/log 2 work. The anchored heap produces a spanning pair in 16(1 + Nat.log 2 (n − 1)) letters; the determinant argument gives the same bound almost everywhere. The word-count dimension bound gives the lower estimate. The optimal upper constant and Lloyd–Maity Conjecture III remain open."))), DescribeRole.Theorem)),
+                Blocks(Paragraph(Text("For each fixed g ≥ 2 the constants c = 1/log(g + 1) and C = 32/log 2 work. The anchored heap produces a spanning pair in 16(1 + Nat.log 2 (n − 1)) letters; the determinant argument gives the same bound almost everywhere. The word-count dimension bound gives the lower estimate. The optimal upper constant and Lloyd–Maity Conjecture III remain open."))), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("jia-capel-2024-generic-lie-length"), ResolutionKind.Proved))),
         []));
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
