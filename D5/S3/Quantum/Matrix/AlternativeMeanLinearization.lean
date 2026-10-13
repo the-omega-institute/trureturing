@@ -25,8 +25,10 @@ Per-declaration proof_shape and live consumers:
   half_eq_sqrt: bind-only; consumers=riccati, riccati_unique
   half_inverse: bind-only; consumers=riccati, riccati_unique
   neg_half_pos: bind-only; consumer=riccati
-  riccati: bind-only; consumers=necessary_spectrum_and_commute, linearizable_of_commute_card
-  riccati_unique: bind-only; consumers=rigid_injective, rigid_quotient_injective, rigid_no_collinear
+  riccati: bind-only; consumers=necessary_spectrum_and_commute, linearizable_of_commute_card,
+    Hiai.SpectralNonconcavity.native_riccati, native_reverse, unitary_native
+  riccati_unique: bind-only; consumers=rigid_injective, rigid_quotient_injective, rigid_no_collinear,
+    Hiai.SpectralNonconcavity.native_reverse, unitary_native, diagonal_mean_formula
   spectral_pos: bind-only; consumer=necessary_spectrum_and_commute
   spectral_entries: bind-only; consumer=necessary_spectrum_and_commute
   affine_three: bind-only; consumer=necessary_spectrum_and_commute
@@ -116,7 +118,7 @@ private lemma neg_half_pos {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ}
   rw [← CFC.rpow_eq_cfc_real hA.posSemidef.nonneg]
   exact (hA.isStrictlyPositive.rpow A (-(1 / 2 : ℝ))).posDef
 
-private lemma riccati {n : ℕ} {A B : Matrix (Fin n) (Fin n) ℂ}
+lemma riccati {n : ℕ} {A B : Matrix (Fin n) (Fin n) ℂ}
     (hA : A.PosDef) (hB : B.PosDef) :
     (gmInv A B).PosDef ∧ gmInv A B * A * gmInv A B = B := by
   let S := CFC.sqrt A
@@ -145,7 +147,7 @@ private lemma riccati {n : ℕ} {A B : Matrix (Fin n) (Fin n) ℂ}
       _ = T * (S * B * S) * T := by rw [CFC.sqrt_mul_sqrt_self _ hM.posSemidef.nonneg]
       _ = B := by simp only [mul_assoc, ← mul_assoc T S, hTS, one_mul, hST, mul_one]
 
-private lemma riccati_unique {n : ℕ} {A B Y : Matrix (Fin n) (Fin n) ℂ}
+lemma riccati_unique {n : ℕ} {A B Y : Matrix (Fin n) (Fin n) ℂ}
     (hA : A.PosDef) (hY : Y.PosDef) (h : Y * A * Y = B) : gmInv A B = Y := by
   let S := CFC.sqrt A
   let T := cfc (fun x : ℝ => x ^ (-(1 / 2 : ℝ))) A
