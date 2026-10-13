@@ -30,6 +30,10 @@ Every listed index is divisible by 179. Projecting its power congruence to that 
 
 For the surviving index, lift the frozen congruence at 10080 to any nonzero multiple of its exponent. The residues modulo 32, 5 and 7 are one, and the residue modulo 9 is zero. Coprime CRT combines these with the congruence modulo 179. The large powers stay symbolic; only small certificates and exponent residues are normalized.
 
+A separate application of Fermat and Euler gives finiteness for the whole single residual prime-power branch, without an upper bound on the prime or its exponent. Precisely, let n = c p^e with c = 2^a 3^b 5 7, 4 ≤ a ≤ 6, 2 ≤ b ≤ 3, p prime, 7 < p, and 1 ≤ e, and assume 3^n is congruent to 2241 modulo that same n. Then 5040 ≤ c ≤ 60480. Frobenius modulo p gives 3^(c p^e) = 3^c, so p divides 3^c − 2241. This positive integer is at most B = 3^60480 − 2241, and therefore p ≤ B.
+
+Since p > 7, three is coprime to p. The totient of p^e is p^(e−1)(p−1), which divides n(p−1). Euler's theorem and the original congruence thus give 2241^(p−1) = 1 modulo p^e. Consequently p^e divides the positive integer 2241^(p−1) − 1 and p^e ≤ E = 2241^(B−1) − 1. Hence n ≤ 60480 E: every such index belongs to one finite interval. These enormous bounds stay symbolic and no factorization of them is required. This is an application of existing theorems, rather than another frozen declaration. It neither identifies all primes above 499 nor extends finiteness to several residual prime factors.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/GoldenResource/GoldenCell902160Uniqueness.goldenCell902160_modEq_2241_iff`
