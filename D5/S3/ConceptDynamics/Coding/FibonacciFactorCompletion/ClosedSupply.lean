@@ -60,41 +60,30 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
   have gq : g < 1 / 4 := by nlinarith
   have rp : 0 < rho := pow_pos gp 6
   have cp : 0 < chi := pow_pos gp 20
-  have r1 : rho < 1 := by
-    exact pow_lt_one₀ gp.le (by linarith) (by decide)
-  have c1 : chi < 1 := by
-    exact pow_lt_one₀ gp.le (by linarith) (by decide)
+  have r1 : rho < 1 := by exact pow_lt_one₀ gp.le (by linarith) (by decide)
+  have c1 : chi < 1 := by exact pow_lt_one₀ gp.le (by linarith) (by decide)
   have tg : t = (1 + g) / 2 := by dsimp [g]; ring
   have hp (j : Side) : 0 < hSide j ∧ hSide j < eSide j := by
-    cases j <;> dsimp [hSide, eSide, c0, T2] <;>
-      rw [tg] <;> constructor <;> linarith
+    cases j <;> dsimp [hSide, eSide, c0, T2] <;> rw [tg] <;> constructor <;> linarith
   have g2p : 0 < g ^ 2 := pow_pos gp 2
   have cKp : 0 < chi ^ K := pow_pos cp K
-  have cKle : chi ^ K ≤ chi := by
-    simpa only [pow_one] using
-      pow_le_pow_of_le_one cp.le c1.le (show 1 ≤ K by omega)
-  have chi4 : chi ≤ g ^ 4 :=
-    pow_le_pow_of_le_one gp.le (by linarith) (by decide)
+  have cKle : chi ^ K ≤ chi := by simpa only [pow_one] using pow_le_pow_of_le_one cp.le c1.le (show 1 ≤ K by omega)
+  have chi4 : chi ≤ g ^ 4 := pow_le_pow_of_le_one gp.le (by linarith) (by decide)
   have h1 : hSide .high < 1 := by dsimp [hSide]; linarith
-  have cKh : chi ^ K * hSide .high < chi :=
-    lt_of_lt_of_le (by simpa using mul_lt_mul_of_pos_left h1 cKp) cKle
+  have cKh : chi ^ K * hSide .high < chi := lt_of_lt_of_le (by simpa using mul_lt_mul_of_pos_left h1 cKp) cKle
   have powerId : g ^ 2 * g ^ 4 = rho := by dsimp [rho]; ring
   have costSmall : g ^ 2 * chi ^ K * hSide .high < rho := by
     have x := mul_lt_mul_of_pos_left cKh g2p
-    have y := mul_le_mul_of_nonneg_left chi4 g2p.le
-    rw [powerId] at y
-    nlinarith
+    have y := mul_le_mul_of_nonneg_left chi4 g2p.le; rw [powerId] at y; nlinarith
   have hb : lam - rho < b := by linarith
   have ap (j : Side) : 0 < aSide j := mul_pos (sub_pos.mpr r1) (hp j).1
   have bp : 0 < b := by
     have hr : rho < 1 / 4096 := by
-      have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0)
-      norm_num [rho] at h ⊢; exact h
+      have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0); norm_num [rho] at h ⊢; exact h
     have ht : t = (1 + g) / 2 := by dsimp [g]; ring
     have hl : 3 / 80 < lam := by dsimp [lam, T2]; rw [ht]; linarith
     linarith
-  let condition (j : Side) (D : ℝ) : Prop :=
-    lam - g ^ 2 * D < b ∨ (lam - g ^ 2 * D = b ∧
+  let condition (j : Side) (D : ℝ) : Prop := lam - g ^ 2 * D < b ∨ (lam - g ^ 2 * D = b ∧
       (match j with | .high => o 0 = true | .low => o 1 = false))
   have monoCondition (j : Side) (D E : ℝ) (hDE : D ≤ E)
       (hc : condition j D) : condition j E := by
@@ -107,69 +96,55 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
   have app := literal_source_geometry.2.2.2.2
   have appendSupply (w v : List Label) (cs ds : List Color) (z : ℝ)
       (len : w.length = cs.length) :
-      BlockSupply o b false (w ++ v) (cs ++ ds) z ↔
-        BlockSupply o b false w cs (compose v z) ∧ BlockSupply o b false v ds z := by
+      BlockSupply o b false (w ++ v) (cs ++ ds) z ↔ BlockSupply o b false w cs (compose v z) ∧ BlockSupply o b false v ds z := by
     constructor
     · intro h; constructor
       · intro p hpc
         have hpp : p < (cs ++ ds).length := by simp only [List.length_append]; omega
         obtain ⟨e, he, ho⟩ := h p hpp
         refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop p = w.drop p ++ v := by
-          exact List.drop_append_of_le_length (by omega)
+        have hd : (w ++ v).drop p = w.drop p ++ v := by exact List.drop_append_of_le_length (by omega)
         simpa only [hd, app, List.getElem_append_left hpc] using ho
       · intro p hpd
         have hpp : cs.length + p < (cs ++ ds).length := by simp only [List.length_append]; omega
         obtain ⟨e, he, ho⟩ := h (cs.length + p) hpp
         refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop (cs.length + p) = v.drop p := by
-          rw [List.drop_append, ← len, List.drop_eq_nil_of_le (by omega)]
-          simp
+        have hd : (w ++ v).drop (cs.length + p) = v.drop p := by rw [List.drop_append, ← len, List.drop_eq_nil_of_le (by omega)]; simp
         simpa only [hd, List.getElem_append_right (as := cs) (bs := ds) (i := cs.length + p) (by omega), Nat.add_sub_cancel_left] using ho
     · rintro ⟨hw, hv⟩ p hpc
       by_cases hleft : p < cs.length
       · obtain ⟨e, he, ho⟩ := hw p hleft
         refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop p = w.drop p ++ v :=
-          List.drop_append_of_le_length (by omega)
+        have hd : (w ++ v).drop p = w.drop p ++ v := List.drop_append_of_le_length (by omega)
         simpa only [hd, app, List.getElem_append_left hleft] using ho
       · have hright : p - cs.length < ds.length := by simp only [List.length_append] at hpc; omega
         obtain ⟨e, he, ho⟩ := hv (p - cs.length) hright
         refine ⟨e, he, ?_⟩
-        have hd : (w ++ v).drop p = v.drop (p - cs.length) := by
-          rw [List.drop_append, len, List.drop_eq_nil_of_le (by omega)]; simp
+        have hd : (w ++ v).drop p = v.drop (p - cs.length) := by rw [List.drop_append, len, List.drop_eq_nil_of_le (by omega)]; simp
         simpa only [hd, List.getElem_append_right (as := cs) (bs := ds) (i := p) (by omega)] using ho
   have repeatLength (w : List Label) (n : ℕ) : (repeatWord w n).length = w.length * n := by
     induction n with
     | zero => simp [repeatWord]
     | succ n ih => simp [repeatWord, ih, Nat.mul_add]; omega
-  have repeatAct (j : Side) (n : ℕ) (D : ℝ) :
-      compose (repeatWord (block j) n) (c0 + sign j * D) =
+  have repeatAct (j : Side) (n : ℕ) (D : ℝ) : compose (repeatWord (block j) n) (c0 + sign j * D) =
         c0 + sign j * (hSide j - rho ^ n * (hSide j - D)) := by
     induction n with
     | zero => simp [repeatWord, compose]
     | succ n ih =>
-      rw [repeatWord, app, ih,
-        (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.1]
-      dsimp [aSide]; rw [pow_succ]; ring
-  have repeatCAct (j : Side) (n : ℕ) (D : ℝ) :
-      compose (repeatWord C n) (c0 + sign j * D) = c0 + sign j * (chi ^ n * D) := by
+      rw [repeatWord, app, ih, (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.1]; dsimp [aSide]; rw [pow_succ]; ring
+  have repeatCAct (j : Side) (n : ℕ) (D : ℝ) : compose (repeatWord C n) (c0 + sign j * D) = c0 + sign j * (chi ^ n * D) := by
     induction n with
     | zero => simp [repeatWord, compose]
     | succ n ih =>
-      rw [repeatWord, app, ih,
-        (paired_source_reconstruction j .original []).2.2.2.2.2.2.1]
-      rw [pow_succ]; ring
-  have domain (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      0 ≤ c0 + sign j * D ∧ c0 + sign j * D ≤ T2 := by
+      rw [repeatWord, app, ih, (paired_source_reconstruction j .original []).2.2.2.2.2.2.1]; rw [pow_succ]; ring
+  have domain (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) : 0 ≤ c0 + sign j * D ∧ c0 + sign j * D ≤ T2 := by
     have hE := lt_trans hD.2 (hp j).2
     cases j <;> dsimp [sign, eSide, c0, T2] at * <;> constructor <;> linarith
   have csLength : ∀ n : ℕ, ((List.replicate n colorsD).flatten).length = 6 * n := by
     intro n; induction n with
     | zero => rfl
     | succ n ih => simp [List.replicate_succ, ih, colorsD]; omega
-  have slot (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) :
-      BlockSupply o b false (block j) colorsD (c0 + sign j * D) ↔
+  have slot (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) : BlockSupply o b false (block j) colorsD (c0 + sign j * D) ↔
         condition j D := by
     have hg2 := root
     have hg0 := gp
@@ -180,28 +155,20 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
     have hghi : g < 17 / 72 := by nlinarith
     have hgprecise : 59 / 250 < g := by nlinarith only [hg2, hg0]
     have hrho : rho < 1 / 4096 := by
-      have h := pow_lt_pow_left₀ hgquarter hg0.le (by decide : (6 : ℕ) ≠ 0)
-      norm_num [rho] at h ⊢
-      exact h
+      have h := pow_lt_pow_left₀ hgquarter hg0.le (by decide : (6 : ℕ) ≠ 0); norm_num [rho] at h ⊢; exact h
     have hlam : 3 / 80 < lam := by dsimp [lam, T2]; rw [htg]; linarith
-    have hT : 0 < T2 ∧ T2 < 2 / 5 := by
-      dsimp [T2]; rw [htg]; constructor; all_goals linarith
-    have hE (j : Side) : 0 < eSide j ∧ eSide j < 2 / 5 := by
-      cases j <;> dsimp [eSide, T2, c0] <;> rw [htg] <;> constructor <;> linarith
-    have cuts : cut 0 < cut 1 ∧ cut 1 < cut 2 ∧ cut 2 < cut 3 ∧
-        cut 3 < cut 4 ∧ cut 4 < cut 5 ∧ cut 5 < cut 6 := by
-      refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
-        norm_num [cut, lam, T2, phi] <;> try simp only [htg] <;> linarith
+    have hT : 0 < T2 ∧ T2 < 2 / 5 := by dsimp [T2]; rw [htg]; constructor; all_goals linarith
+    have hE (j : Side) : 0 < eSide j ∧ eSide j < 2 / 5 := by cases j <;> dsimp [eSide, T2, c0] <;> rw [htg] <;> constructor <;> linarith
+    have cuts : cut 0 < cut 1 ∧ cut 1 < cut 2 ∧ cut 2 < cut 3 ∧ cut 3 < cut 4 ∧ cut 4 < cut 5 ∧ cut 5 < cut 6 := by
+      refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num [cut, lam, T2, phi] <;> try simp only [htg] <;> linarith
     have interior (i : Color) (y : ℝ) (hlo : cut i.val < y)
         (hhi : y < cut (i.val + 1)) : observe o y 0 = i := by
       have hs : -1 ≤ y ∧ y ≤ phi := by
-        fin_cases i <;> norm_num [cut, lam, T2, phi] at hlo hhi ⊢ <;>
-          simp only [htg] at hlo hhi ⊢ <;> constructor <;> linarith
+        fin_cases i <;> norm_num [cut, lam, T2, phi] at hlo hhi ⊢ <;> simp only [htg] at hlo hhi ⊢ <;> constructor <;> linarith
       simp only [observe, add_zero, clip, min_eq_right hs.2, max_eq_right hs.1]
       fin_cases i <;> simp only [readout] <;> split_ifs <;> try rfl
       all_goals norm_num at *
-      all_goals linarith [cuts.1, cuts.2.1, cuts.2.2.1, cuts.2.2.2.1,
-          cuts.2.2.2.2.1, cuts.2.2.2.2.2]
+      all_goals linarith [cuts.1, cuts.2.1, cuts.2.2.1, cuts.2.2.2.1, cuts.2.2.2.2.1, cuts.2.2.2.2.2]
     have acquire (i : Color) (x : ℝ) (hlo : cut i.val - b < x)
         (hhi : x < cut (i.val + 1) + b) :
         ∃ error : ℝ, |error| < b ∧ observe o x error = i := by
@@ -231,24 +198,19 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
     have clipq1 : clip (cut 1) = cut 1 := by
       have hlo : -1 ≤ cut 1 := by simpa only [cut] using cuts.1.le
       have hhi : cut 1 ≤ phi := by
-        have hh := le_trans cuts.2.1.le (le_trans cuts.2.2.1.le
-          (le_trans cuts.2.2.2.1.le (le_trans cuts.2.2.2.2.1.le cuts.2.2.2.2.2.le)))
+        have hh := le_trans cuts.2.1.le (le_trans cuts.2.2.1.le (le_trans cuts.2.2.2.1.le (le_trans cuts.2.2.2.2.1.le cuts.2.2.2.2.2.le)))
         simpa only [cut] using hh
       simp only [clip, min_eq_right hhi, max_eq_right hlo]
     have clipq2 : clip (cut 2) = cut 2 := by
       have hlo : -1 ≤ cut 2 := by simpa only [cut] using (le_trans cuts.1.le cuts.2.1.le)
       have hhi : cut 2 ≤ phi := by
-        have hh := le_trans cuts.2.2.1.le (le_trans cuts.2.2.2.1.le
-          (le_trans cuts.2.2.2.2.1.le cuts.2.2.2.2.2.le))
+        have hh := le_trans cuts.2.2.1.le (le_trans cuts.2.2.2.1.le (le_trans cuts.2.2.2.2.1.le cuts.2.2.2.2.2.le))
         simpa only [cut] using hh
       simp only [clip, min_eq_right hhi, max_eq_right hlo]
-    have q1Read : readout o (cut 1) = 1 ↔ o 0 = true := by
-      cases ho : o 0 <;> simp [readout, ho, ne_of_lt cuts.2.1, cuts.2.1]
+    have q1Read : readout o (cut 1) = 1 ↔ o 0 = true := by cases ho : o 0 <;> simp [readout, ho, ne_of_lt cuts.2.1, cuts.2.1]
     have q2Read : readout o (cut 2) = 1 ↔ o 1 = false := by
-      cases ho : o 1 <;> simp [readout, ho, not_lt.mpr cuts.2.1.le,
-        ne_of_gt cuts.2.1, cuts.2.2.1]
-    have clipOne (x error : ℝ) (h : observe o x error = 1) :
-        cut 1 ≤ x + error ∧ x + error ≤ cut 2 := by
+      cases ho : o 1 <;> simp [readout, ho, not_lt.mpr cuts.2.1.le, ne_of_gt cuts.2.1, cuts.2.2.1]
+    have clipOne (x error : ℝ) (h : observe o x error = 1) : cut 1 ≤ x + error ∧ x + error ≤ cut 2 := by
       have hy := colorOne (clip (x + error)) h
       have hq1 : -1 < cut 1 := cuts.1
       have hq2 : cut 2 < phi := lt_trans cuts.2.2.1
@@ -257,12 +219,10 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       constructor
       · by_contra hn
         have hh : x + error < cut 1 := lt_of_not_ge hn
-        have := max_lt hq1 (lt_of_le_of_lt (min_le_right phi (x + error)) hh)
-        linarith
+        have := max_lt hq1 (lt_of_le_of_lt (min_le_right phi (x + error)) hh); linarith
       · by_contra hn
         have hh : cut 2 < x + error := lt_of_not_ge hn
-        have := lt_of_lt_of_le (lt_min hq2 hh) (le_max_right (-1) (min phi (x + error)))
-        linarith
+        have := lt_of_lt_of_le (lt_min hq2 hh) (le_max_right (-1) (min phi (x + error))); linarith
     let pointsU : ℕ → ℝ := fun p => match p with
       | 0 => (-257 / 5) + (1096 / 5) * g
       | 1 => (-121 / 10) + (519 / 10) * g
@@ -287,8 +247,7 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       refine Nat.decreasingInduction' (m := p) (n := n)
         (P := fun k => compose (w.drop k) c0 = points k) ?_ hp ?_
       · intro k hk _ ih
-        rw [List.drop_eq_getElem_cons (by omega : k < w.length), compose, ih]
-        exact (hstep k hk).symm
+        rw [List.drop_eq_getElem_cons (by omega : k < w.length), compose, ih]; exact (hstep k hk).symm
       · rw [List.drop_eq_nil_of_le (by omega), compose, hlast]
     have tableU : ∀ p, p ≤ 6 → compose (U.drop p) c0 = pointsU p := by
       apply suffixTable U 6 pointsU rfl (by simp [pointsU])
@@ -313,11 +272,9 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       exact mul_le_mul (pow_le_pow_left₀ hg0.le hgquarter.le _) hz (abs_nonneg _) (by positivity)
     have nonactive (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j)
         (p : ℕ) (hp : p < 6) (hne : p ≠ 4) :
-        ∃ error : ℝ, |error| < b ∧
-          observe o (compose ((block j).drop p) (c0 + sign j * D)) error = colorsD[p] := by
+        ∃ error : ℝ, |error| < b ∧ observe o (compose ((block j).drop p) (c0 + sign j * D)) error = colorsD[p] := by
       have hDmax : D < 2 / 5 := lt_of_le_of_lt hDE (hE j).2
-      have hz : |c0 + sign j * D - c0| ≤ 2 / 5 := by
-        cases j <;> simp [sign, abs_of_pos hD, abs_of_neg (neg_neg_of_pos hD)] <;> linarith
+      have hz : |c0 + sign j * D - c0| ≤ 2 / 5 := by cases j <;> simp [sign, abs_of_pos hD, abs_of_neg (neg_neg_of_pos hD)] <;> linarith
       have hpert := perturb (block j) p (c0 + sign j * D) hz
       have hlen : (block j).length = 6 := by cases j <;> rfl
       rw [hlen] at hpert
@@ -332,22 +289,17 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
         all_goals try simp only [htg] at hl hu ⊢
         all_goals have hb' := hb; dsimp [lam, T2] at hb'; simp only [htg] at hb'
         all_goals linarith only [hl, hu, hb', hrho, hg0, hglo, hghi, hgprecise, hb0]
-    have activeCoord (j : Side) (D : ℝ) :
-        compose ((block j).drop 4) (c0 + sign j * D) =
+    have activeCoord (j : Side) (D : ℝ) : compose ((block j).drop 4) (c0 + sign j * D) =
           match j with | .high => cut 1 - lam + g ^ 2 * D
                        | .low => cut 2 + lam - g ^ 2 * D := by
       cases j <;> norm_num [block, U, V, compose, branch, shift, cut, lam, T2, sign, c0]
       all_goals rw [htg]; nlinarith [hg2]
-    have costPos (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) :
-        0 < lam - g ^ 2 * D := by
+    have costPos (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) : 0 < lam - g ^ 2 * D := by
       have hDmax : D < 2 / 5 := lt_of_le_of_lt hDE (hE j).2
       have hsq : g ^ 2 < 1 / 16 := by nlinarith
-      have hm := mul_lt_mul_of_pos_left hDmax (sq_pos_of_pos hg0)
-      nlinarith
-    have activeStrict (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) :
-        (∃ error : ℝ, |error| < b ∧
-          observe o (compose ((block j).drop 4) (c0 + sign j * D)) error = 1) ↔
-            lam - g ^ 2 * D < b := by
+      have hm := mul_lt_mul_of_pos_left hDmax (sq_pos_of_pos hg0); nlinarith
+    have activeStrict (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) : (∃ error : ℝ, |error| < b ∧
+          observe o (compose ((block j).drop 4) (c0 + sign j * D)) error = 1) ↔ lam - g ^ 2 * D < b := by
       rw [activeCoord]
       constructor
       · rintro ⟨error, he, hread⟩
@@ -357,10 +309,8 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       · intro hc
         cases j <;> apply acquire (1 : Color) <;> norm_num <;>
           have := costPos _ D hD hDE <;> linarith [cuts.2.1]
-    have activeClosed (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) :
-        (∃ error : ℝ, |error| ≤ b ∧
-          observe o (compose ((block j).drop 4) (c0 + sign j * D)) error = 1) ↔
-            lam - g ^ 2 * D < b ∨ (lam - g ^ 2 * D = b ∧
+    have activeClosed (j : Side) (D : ℝ) (hD : 0 < D) (hDE : D ≤ eSide j) : (∃ error : ℝ, |error| ≤ b ∧
+          observe o (compose ((block j).drop 4) (c0 + sign j * D)) error = 1) ↔ lam - g ^ 2 * D < b ∨ (lam - g ^ 2 * D = b ∧
               (match j with | .high => o 0 = true | .low => o 1 = false)) := by
       rw [activeCoord]
       constructor
@@ -373,27 +323,22 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
         · refine Or.inr ⟨hc, ?_⟩
           cases j
           · have heq : cut 1 - lam + g ^ 2 * D + error = cut 1 := by simp only at hh; linarith
-            simp only [observe, heq, clipq1] at hread
-            exact q1Read.mp hread
+            simp only [observe, heq, clipq1] at hread; exact q1Read.mp hread
           · have heq : cut 2 + lam - g ^ 2 * D + error = cut 2 := by simp only at hh; linarith
-            simp only [observe, heq, clipq2] at hread
-            exact q2Read.mp hread
+            simp only [observe, heq, clipq2] at hread; exact q2Read.mp hread
       · rintro (hc | ⟨hc, ho⟩)
         · obtain ⟨error, he, hread⟩ := (activeStrict j D hD hDE).mpr hc
           exact ⟨error, he.le, by simpa only [activeCoord] using hread⟩
         · cases j
           · refine ⟨b, by simpa [abs_of_pos hb0], ?_⟩
             have heq : cut 1 - lam + g ^ 2 * D + b = cut 1 := by linarith
-            simp only [observe, heq, clipq1]
-            exact q1Read.mpr ho
+            simp only [observe, heq, clipq1]; exact q1Read.mpr ho
           · refine ⟨-b, by simpa [abs_of_pos hb0], ?_⟩
             have heq : cut 2 + lam - g ^ 2 * D + -b = cut 2 := by linarith
-            simp only [observe, heq, clipq2]
-            exact q2Read.mpr ho
+            simp only [observe, heq, clipq2]; exact q2Read.mpr ho
     constructor
     · intro h
-      have hh := h 4 (by norm_num [colorsD])
-      norm_num [colorsD] at hh
+      have hh := h 4 (by norm_num [colorsD]); norm_num [colorsD] at hh
       cases j <;> simpa only [condition] using (activeClosed _ D hD hDE).mp hh
     · intro hc p hp
       have hp6 : p < 6 := by simpa [colorsD] using hp
@@ -401,32 +346,27 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       · subst p; cases j <;> simpa [colorsD, condition] using (activeClosed _ D hD hDE).mpr hc
       · obtain ⟨error, he, hread⟩ := nonactive j D hD hDE p hp6 h4
         exact ⟨error, he.le, hread⟩
-  have six (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b false (repeatWord (block j) n)
+  have six (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) : BlockSupply o b false (repeatWord (block j) n)
         (List.replicate n colorsD).flatten (c0 + sign j * D) ↔
       (0 < n → condition j D) := by
     induction n with
     | zero => simp [repeatWord, BlockSupply]
     | succ n ih =>
       have len : (block j).length = colorsD.length := by cases j <;> rfl
-      rw [repeatWord, List.replicate_succ, List.flatten_cons,
-        appendSupply _ _ _ _ _ len, repeatAct]
-      have dn : 0 < hSide j - rho ^ n * (hSide j - D) ∧
-          hSide j - rho ^ n * (hSide j - D) < hSide j := by
+      rw [repeatWord, List.replicate_succ, List.flatten_cons, appendSupply _ _ _ _ _ len, repeatAct]
+      have dn : 0 < hSide j - rho ^ n * (hSide j - D) ∧ hSide j - rho ^ n * (hSide j - D) < hSide j := by
         have rr := pow_pos rp n
         have rl : rho ^ n ≤ 1 := pow_le_one₀ rp.le r1.le
         have gg := mul_pos rr (sub_pos.mpr hD.2)
         have gl := mul_le_mul_of_nonneg_right rl (sub_pos.mpr hD.2).le
         constructor <;> nlinarith [hD.1]
-      change (BlockSupply o b false (block j) colorsD
-        (c0 + sign j * (hSide j - rho ^ n * (hSide j - D))) ∧
+      change (BlockSupply o b false (block j) colorsD (c0 + sign j * (hSide j - rho ^ n * (hSide j - D))) ∧
         BlockSupply o b false (repeatWord (block j) n)
           (List.replicate n colorsD).flatten (c0 + sign j * D)) ↔ _
       rw [slot j _ dn.1 (le_of_lt (lt_trans dn.2 (hp j).2)), ih]
       have lower : D ≤ hSide j - rho ^ n * (hSide j - D) := by
         have rl : rho ^ n ≤ 1 := pow_le_one₀ rp.le r1.le
-        have gl := mul_le_mul_of_nonneg_right rl (sub_pos.mpr hD.2).le
-        linarith
+        have gl := mul_le_mul_of_nonneg_right rl (sub_pos.mpr hD.2).le; linarith
       have gg : 0 < g ^ 2 := pow_pos gp 2
       constructor
       · rintro ⟨houter, hinner⟩ _
@@ -437,14 +377,12 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
         constructor
         · exact monoCondition j D _ lower (h (by omega))
         · intro _; exact h (by omega)
-  have twenty (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b false (repeatWord C n)
+  have twenty (j : Side) (n : ℕ) (D : ℝ) (hD : 0 < D ∧ D < hSide j) : BlockSupply o b false (repeatWord C n)
         (List.replicate n colorsE).flatten (c0 + sign j * D) := by
     induction n with
     | zero => simp [BlockSupply]
     | succ n ih =>
-      rw [repeatWord, List.replicate_succ, List.flatten_cons,
-        appendSupply _ _ _ _ _ (by rfl), repeatCAct]
+      rw [repeatWord, List.replicate_succ, List.flatten_cons, appendSupply _ _ _ _ _ (by rfl), repeatCAct]
       refine ⟨?_, ih⟩
       have pp := pow_pos cp n
       have pl : chi ^ n ≤ 1 := pow_le_one₀ cp.le c1.le
@@ -464,26 +402,19 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       have hghi : g < 17 / 72 := by nlinarith
       have hgprecise : 59 / 250 < g := by nlinarith only [hg2, hg0]
       have hrho : rho < 1 / 4096 := by
-        have h := pow_lt_pow_left₀ hgquarter hg0.le (by decide : (6 : ℕ) ≠ 0)
-        norm_num [rho] at h ⊢
-        exact h
+        have h := pow_lt_pow_left₀ hgquarter hg0.le (by decide : (6 : ℕ) ≠ 0); norm_num [rho] at h ⊢; exact h
       have hlam : 3 / 80 < lam := by dsimp [lam, T2]; rw [htg]; linarith
-      have hT : 0 < T2 ∧ T2 < 2 / 5 := by
-        dsimp [T2]; rw [htg]; constructor <;> linarith
-      have cuts : cut 0 < cut 1 ∧ cut 1 < cut 2 ∧ cut 2 < cut 3 ∧
-          cut 3 < cut 4 ∧ cut 4 < cut 5 ∧ cut 5 < cut 6 := by
-        refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
-          norm_num [cut, lam, T2, phi] <;> try simp only [htg] <;> linarith
+      have hT : 0 < T2 ∧ T2 < 2 / 5 := by dsimp [T2]; rw [htg]; constructor <;> linarith
+      have cuts : cut 0 < cut 1 ∧ cut 1 < cut 2 ∧ cut 2 < cut 3 ∧ cut 3 < cut 4 ∧ cut 4 < cut 5 ∧ cut 5 < cut 6 := by
+        refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num [cut, lam, T2, phi] <;> try simp only [htg] <;> linarith
       have interior (i : Color) (y : ℝ) (hlo : cut i.val < y)
           (hhi : y < cut (i.val + 1)) : observe o y 0 = i := by
         have hs : -1 ≤ y ∧ y ≤ phi := by
-          fin_cases i <;> norm_num [cut, lam, T2, phi] at hlo hhi ⊢ <;>
-            simp only [htg] at hlo hhi ⊢ <;> constructor <;> linarith
+          fin_cases i <;> norm_num [cut, lam, T2, phi] at hlo hhi ⊢ <;> simp only [htg] at hlo hhi ⊢ <;> constructor <;> linarith
         simp only [observe, add_zero, clip, min_eq_right hs.2, max_eq_right hs.1]
         fin_cases i <;> simp only [readout] <;> split_ifs <;> try rfl
         all_goals norm_num at *
-        all_goals linarith [cuts.1, cuts.2.1, cuts.2.2.1, cuts.2.2.2.1,
-            cuts.2.2.2.2.1, cuts.2.2.2.2.2]
+        all_goals linarith [cuts.1, cuts.2.1, cuts.2.2.1, cuts.2.2.2.1, cuts.2.2.2.2.1, cuts.2.2.2.2.2]
       let pointsC : ℕ → ℝ := fun p => match p with
         | 0 => (1 / 5) + (1 / 5) * g
         | 1 => (1 / 2) + (3 / 10) * g
@@ -515,8 +446,7 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
         refine Nat.decreasingInduction' (m := p) (n := n)
           (P := fun k => compose (w.drop k) c0 = points k) ?_ hp ?_
         · intro k hk _ ih
-          rw [List.drop_eq_getElem_cons (by omega : k < w.length), compose, ih]
-          exact (hstep k hk).symm
+          rw [List.drop_eq_getElem_cons (by omega : k < w.length), compose, ih]; exact (hstep k hk).symm
         · rw [List.drop_eq_nil_of_le (by omega), compose, hlast]
       have tableC : ∀ p, p ≤ 20 → compose (C.drop p) c0 = pointsC p := by
         apply suffixTable C 20 pointsC rfl (by simp [pointsC])
@@ -533,32 +463,23 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
         rw [hh, add_sub_cancel_left, abs_mul, abs_pow, abs_neg, abs_of_pos hg0, List.length_drop]
         exact mul_le_mul (pow_le_pow_left₀ hg0.le hgquarter.le _) hz (abs_nonneg _) (by positivity)
       intro p hp
-      have occurrence : ∃ error : ℝ, |error| < b ∧
-          observe o (compose (C.drop p) z) error = colorsE[p] := by
+      have occurrence : ∃ error : ℝ, |error| < b ∧ observe o (compose (C.drop p) z) error = colorsE[p] := by
         have hp20 : p < 20 := by simpa [colorsE] using hp
         by_cases h19 : p = 19
         · subst p
           refine ⟨0, by simpa using hb0, ?_⟩
-          have hlo : cut 2 < compose (C.drop 19) z := by
-            norm_num [C, compose, branch, shift, cut, lam, T2]
-            rw [htg] at *; nlinarith [hg2]
-          have hhi : compose (C.drop 19) z < cut 3 := by
-            norm_num [C, compose, branch, shift, cut, lam, T2]
-            rw [htg] at *; nlinarith [hg2]
+          have hlo : cut 2 < compose (C.drop 19) z := by norm_num [C, compose, branch, shift, cut, lam, T2]; rw [htg] at *; nlinarith [hg2]
+          have hhi : compose (C.drop 19) z < cut 3 := by norm_num [C, compose, branch, shift, cut, lam, T2]; rw [htg] at *; nlinarith [hg2]
           simpa [colorsE] using interior 2 _ hlo hhi
         · have hzabs : |z - c0| ≤ 2 / 5 := by
             rw [abs_le]; dsimp [c0]; rw [htg]; dsimp [T2] at hzt; rw [htg] at hzt
             constructor <;> linarith
           have hpert := perturb C p z hzabs
-          have hlen : C.length = 20 := rfl
-          rw [hlen, tableC p (by omega)] at hpert
-          have hpow : (1 / 4 : ℝ) ^ (20 - p) ≤ (1 / 4 : ℝ) ^ 2 := by
-            exact pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)
+          have hlen : C.length = 20 := rfl; rw [hlen, tableC p (by omega)] at hpert
+          have hpow : (1 / 4 : ℝ) ^ (20 - p) ≤ (1 / 4 : ℝ) ^ 2 := by exact pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)
           have herr : |pointsC p - compose (C.drop p) z| < b := by
             rw [abs_sub_comm]
-            have hh := mul_le_mul_of_nonneg_right hpow (by norm_num : (0 : ℝ) ≤ 2 / 5)
-            norm_num at hh
-            linarith
+            have hh := mul_le_mul_of_nonneg_right hpow (by norm_num : (0 : ℝ) ≤ 2 / 5); norm_num at hh; linarith
           refine ⟨pointsC p - compose (C.drop p) z, herr, ?_⟩
           have heq : compose (C.drop p) z + (pointsC p - compose (C.drop p) z) = pointsC p := by ring
           have hp' : p ∈ Finset.range 20 := Finset.mem_range.mpr hp20
@@ -571,14 +492,10 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
             all_goals try simp only [htg]
             all_goals linarith only [hg0, hglo, hghi]
           change observe o (compose (C.drop p) z) (pointsC p - compose (C.drop p) z) = colorsE[p]'hp
-          unfold observe
-          rw [heq]
-          simpa only [observe, add_zero] using interior (colorsE[p]'hp) (pointsC p) hlo hhi
-      obtain ⟨e, he, ho⟩ := occurrence
-      exact ⟨e, he.le, ho⟩
+          unfold observe; rw [heq]; simpa only [observe, add_zero] using interior (colorsE[p]'hp) (pointsC p) hlo hhi
+      obtain ⟨e, he, ho⟩ := occurrence; exact ⟨e, he.le, ho⟩
   have returns (j : Side) (a : Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b false (returnWord j a) (returnColors a) (c0 + sign j * D) ↔
-        condition j (chi ^ a.r * D) := by
+      BlockSupply o b false (returnWord j a) (returnColors a) (c0 + sign j * D) ↔ condition j (chi ^ a.r * D) := by
     have len : (repeatWord (block j) a.m).length = (List.replicate a.m colorsD).flatten.length := by
       rw [repeatLength, csLength]; cases j <;> rfl
     rw [returnWord, returnColors, appendSupply _ _ _ _ _ len, repeatCAct]
@@ -588,86 +505,64 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       constructor
       · exact mul_pos pp hD.1
       · exact lt_of_le_of_lt (mul_le_mul_of_nonneg_right pl hD.1.le) (by simpa only [one_mul] using hD.2)
-    rw [six j a.m _ dn]
-    simp only [a.m_pos, forall_const, twenty j a.r D hD, and_true]
-  have extLen (j : Side) (xs : List Return) : (externalWord j xs).length =
-      (xs.reverse.map returnColors).flatten.length := by
+    rw [six j a.m _ dn]; simp only [a.m_pos, forall_const, twenty j a.r D hD, and_true]
+  have extLen (j : Side) (xs : List Return) : (externalWord j xs).length = (xs.reverse.map returnColors).flatten.length := by
     have a := (paired_source_reconstruction j .original xs).2.2.2.2.1
     have b := (paired_source_reconstruction j .original xs).2.2.2.2.2.1
     have st : (stem j).length = 26 := by cases j <;> rfl
     have hd : colorsD.length = 6 := rfl
     have he : colorsE.length = 20 := rfl
-    simp only [observedPrefix, history, List.length_append, anchor, List.length_nil,
-      Nat.add_zero, st, hd, he] at a b
-    omega
+    simp only [observedPrefix, history, List.length_append, anchor, List.length_nil, Nat.add_zero, st, hd, he] at a b; omega
   have boundary := actual_complete_boundary_geometry model execution
   have initialDomain (j : Side) (md : Model) : 0 < initial j md ∧ initial j md < hSide j := by
-    have h := (actual_complete_boundary_geometry md []).1 j 0
-    simp only [List.take_nil, execute] at h
-    exact ⟨lt_trans (ap j) h.1, h.2⟩
-  have runDomain (j : Side) (xs : List Return) (md : Model) :
-      0 < execute j xs (initial j md) ∧ execute j xs (initial j md) < hSide j := by
-    have h := (actual_complete_boundary_geometry md xs).1 j xs.length
-    rw [List.take_length] at h
-    exact ⟨lt_trans (ap j) h.1, h.2⟩
-  have stemSupply (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-      BlockSupply o b false (stem j) (colorsD ++ colorsE) (c0 + sign j * D) ↔
+    have h := (actual_complete_boundary_geometry md []).1 j 0; simp only [List.take_nil, execute] at h; exact ⟨lt_trans (ap j) h.1, h.2⟩
+  have runDomain (j : Side) (xs : List Return) (md : Model) : 0 < execute j xs (initial j md) ∧ execute j xs (initial j md) < hSide j := by
+    have h := (actual_complete_boundary_geometry md xs).1 j xs.length; rw [List.take_length] at h; exact ⟨lt_trans (ap j) h.1, h.2⟩
+  have stemSupply (j : Side) (D : ℝ) (hD : 0 < D ∧ D < hSide j) : BlockSupply o b false (stem j) (colorsD ++ colorsE) (c0 + sign j * D) ↔
         condition j (chi * D) := by
     have h := returns j ⟨1, 1, by decide, by decide⟩ D hD
     simpa only [returnWord, returnColors, repeatWord, List.append_nil,
       List.replicate_succ, List.replicate_zero, List.flatten_cons, List.flatten_nil,
       stem, pow_one] using h
-  have pairErrors : ActualPairSupply model o b .closed execution ↔
-      ∀ j : Side, BlockSupply o b false (observedPrefix j model execution)
+  have pairErrors : ActualPairSupply model o b .closed execution ↔ ∀ j : Side, BlockSupply o b false (observedPrefix j model execution)
         (history model execution) (coordinate (tailPrefix j) 0) := by
-    have lengthEq (j : Side) : (observedPrefix j model execution).length =
-        (history model execution).length := by
-      rw [(paired_source_reconstruction j model execution).2.2.2.2.1,
-        (paired_source_reconstruction j model execution).2.2.2.2.2.1]
-    have coord (j : Side) (p : ℕ) (hp : p < (history model execution).length) :
-        coordinate (sourcePrefix j model execution) p =
+    have lengthEq (j : Side) : (observedPrefix j model execution).length = (history model execution).length := by
+      rw [(paired_source_reconstruction j model execution).2.2.2.2.1, (paired_source_reconstruction j model execution).2.2.2.2.2.1]
+    have coord (j : Side) (p : ℕ) (hp : p < (history model execution).length) : coordinate (sourcePrefix j model execution) p =
         compose ((observedPrefix j model execution).drop p) (coordinate (tailPrefix j) 0) := by
-      rw [coordinate, sourcePrefix, List.drop_append_of_le_length (by rw [lengthEq]; omega), app]
-      rfl
+      rw [coordinate, sourcePrefix, List.drop_append_of_le_length (by rw [lengthEq]; omega), app]; rfl
     constructor
     · intro h j p hp
       obtain ⟨err, herr, hread, hzero, hfuture⟩ := h j
       refine ⟨err p, herr p, ?_⟩
       rw [← coord j p hp]; exact hread p hp
     · intro h j
-      let choice (p : ℕ) (hp : p < (history model execution).length) : ℝ :=
-        Classical.choose (h j p hp)
+      let choice (p : ℕ) (hp : p < (history model execution).length) : ℝ := Classical.choose (h j p hp)
       let err (p : ℕ) : ℝ := if hp : p < (history model execution).length then choice p hp else 0
       refine ⟨err, ?_, ?_, ?_, ?_⟩
       · intro p; dsimp [err]; split_ifs with hp
         · exact (Classical.choose_spec (h j p hp)).1
         · simpa using bp.le
       · intro p hp
-        dsimp [err]; rw [dif_pos hp, coord j p hp]
-        exact (Classical.choose_spec (h j p hp)).2
+        dsimp [err]; rw [dif_pos hp, coord j p hp]; exact (Classical.choose_spec (h j p hp)).2
       · intro p hp; dsimp [err]; rw [dif_neg (by omega)]
       · intro p
-        have hz : err ((observedPrefix j model execution).length + p) = 0 := by
-          dsimp [err]; rw [dif_neg (by rw [lengthEq]; omega)]
+        have hz : err ((observedPrefix j model execution).length + p) = 0 := by dsimp [err]; rw [dif_neg (by rw [lengthEq]; omega)]
         rw [hz, (paired_source_reconstruction j model execution).2.2.1]
-  have costs : ActualPairSupply model o b .closed execution ↔
-      condition .high (chi * execute .high execution (initial .high model)) ∧
+  have costs : ActualPairSupply model o b .closed execution ↔ condition .high (chi * execute .high execution (initial .high model)) ∧
       (model = .anchored → condition .high (chi * xSide .high)) ∧
       ClosedControl .high o b execution (initial .high model) := by
     rw [pairErrors]
 
-    have returnDomain (j : Side) (a : Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
-        0 < returnMap j a D ∧ returnMap j a D < hSide j := by
+    have returnDomain (j : Side) (a : Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) : 0 < returnMap j a D ∧ returnMap j a D < hSide j := by
       have rr := pow_pos rp a.m
       have rl : rho ^ a.m ≤ 1 := pow_le_one₀ rp.le r1.le
       have cc := pow_pos cp a.r
       have cl : chi ^ a.r ≤ 1 := pow_le_one₀ cp.le c1.le
       have cz : 0 < chi ^ a.r * D := mul_pos cc hD.1
-      have ch : chi ^ a.r * D < hSide j :=
-        lt_of_le_of_lt (mul_le_mul_of_nonneg_right cl hD.1.le) (by simpa only [one_mul] using hD.2)
+      have ch : chi ^ a.r * D < hSide j := lt_of_le_of_lt (mul_le_mul_of_nonneg_right cl hD.1.le) (by simpa only [one_mul] using hD.2)
       have gap := mul_pos rr (sub_pos.mpr ch)
-      have low := mul_le_mul_of_nonneg_right rl (sub_pos.mpr ch).le
-      dsimp [returnMap]; constructor <;> nlinarith
+      have low := mul_le_mul_of_nonneg_right rl (sub_pos.mpr ch).le; dsimp [returnMap]; constructor <;> nlinarith
     have extSupply (j : Side) (xs : List Return) (D : ℝ) (hD : 0 < D ∧ D < hSide j) :
         BlockSupply o b false (externalWord j xs) (xs.reverse.map returnColors).flatten
           (c0 + sign j * D) ↔ ClosedControl j o b xs D := by
@@ -680,20 +575,16 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
         change BlockSupply o b false (externalWord j xs ++ returnWord j a)
           ((xs.reverse.map returnColors).flatten ++ returnColors a) (c0 + sign j * D) ↔
           ClosedControl j o b (a :: xs) D
-        rw [appendSupply _ _ _ _ _ (extLen j xs),
-          (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.1,
+        rw [appendSupply _ _ _ _ _ (extLen j xs), (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.1,
           ih _ (returnDomain j a D hD), returns j a D hD]
-        change (ClosedControl j o b xs (returnMap j a D) ∧
-          condition j (chi ^ a.r * D)) ↔
+        change (ClosedControl j o b xs (returnMap j a D) ∧ condition j (chi ^ a.r * D)) ↔
           (condition j (chi ^ a.r * D) ∧ ClosedControl j o b xs (returnMap j a D))
         exact and_comm
-    have anchorTail (j : Side) : compose (anchor j model) (coordinate (tailPrefix j) 0) =
-        c0 + sign j * initial j model := by
+    have anchorTail (j : Side) : compose (anchor j model) (coordinate (tailPrefix j) 0) = c0 + sign j * initial j model := by
       have h := (paired_source_reconstruction j model []).2.2.2.1
       simpa only [externalWord, List.reverse_nil, List.map_nil, List.flatten_nil,
         List.nil_append, coordinate, List.drop_zero, app, execute] using h
-    have anchorSupply (j : Side) (md : Model) :
-        BlockSupply o b false (anchor j md)
+    have anchorSupply (j : Side) (md : Model) : BlockSupply o b false (anchor j md)
           (match md with | .original => [] | .anchored => colorsD ++ colorsE)
           (coordinate (tailPrefix j) 0) ↔
         (md = .anchored → condition j (chi * xSide j)) := by
@@ -701,32 +592,25 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       cases md with
       | original => simp [anchor, BlockSupply]
       | anchored =>
-        simp only [anchor, coordinate, List.drop_zero, tail, true_implies]
-        exact stemSupply j (xSide j) (initialDomain j .original)
-    have wholeSide (j : Side) :
-        BlockSupply o b false (observedPrefix j model execution) (history model execution)
+        simp only [anchor, coordinate, List.drop_zero, tail, true_implies]; exact stemSupply j (xSide j) (initialDomain j .original)
+    have wholeSide (j : Side) : BlockSupply o b false (observedPrefix j model execution) (history model execution)
           (coordinate (tailPrefix j) 0) ↔
         condition j (chi * execute j execution (initial j model)) ∧
         (model = .anchored → condition j (chi * xSide j)) ∧
         ClosedControl j o b execution (initial j model) := by
       have len : (stem j).length = (colorsD ++ colorsE).length := by cases j <;> rfl
-      simp only [observedPrefix, history]
-      rw [List.append_assoc (stem j), List.append_assoc (colorsD ++ colorsE)]
-      rw [appendSupply _ _ _ _ _ len, appendSupply _ _ _ _ _ (extLen j execution),
-        app, anchorTail,
+      simp only [observedPrefix, history]; rw [List.append_assoc (stem j), List.append_assoc (colorsD ++ colorsE)]
+      rw [appendSupply _ _ _ _ _ len, appendSupply _ _ _ _ _ (extLen j execution), app, anchorTail,
         (paired_source_reconstruction j .original []).2.2.2.2.2.2.2.2.2.1,
         stemSupply j _ (runDomain j execution model), extSupply j execution _ (initialDomain j model)]
-      exact ⟨fun h => ⟨h.1, (anchorSupply j model).mp h.2.2, h.2.1⟩,
-        fun h => ⟨h.1, h.2.2, (anchorSupply j model).mpr h.2.1⟩⟩
+      exact ⟨fun h => ⟨h.1, (anchorSupply j model).mp h.2.2, h.2.1⟩, fun h => ⟨h.1, h.2.2, (anchorSupply j model).mpr h.2.1⟩⟩
     have hh : hSide .high < hSide .low := by dsimp [hSide]; linarith
-    have returnOrder (a : Return) (DH DL : ℝ) (ho : DH < DL) :
-        returnMap .high a DH < returnMap .low a DL := by
+    have returnOrder (a : Return) (DH DL : ℝ) (ho : DH < DL) : returnMap .high a DH < returnMap .low a DL := by
       have rr := pow_pos rp a.m
       have rl := pow_lt_one₀ rp.le r1 (Nat.ne_of_gt a.m_pos)
       have cc := pow_pos cp a.r
       have gainH := mul_pos (sub_pos.mpr rl) (sub_pos.mpr hh)
-      have gainD := mul_pos (mul_pos rr cc) (sub_pos.mpr ho)
-      dsimp [returnMap]; nlinarith
+      have gainD := mul_pos (mul_pos rr cc) (sub_pos.mpr ho); dsimp [returnMap]; nlinarith
     have controlOrder (xs : List Return) (DH DL : ℝ) (ho : DH < DL)
         (hc : ClosedControl .high o b xs DH) : ClosedControl .low o b xs DL := by
       induction xs generalizing DH DL with
@@ -737,11 +621,9 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
         have h : lam - g ^ 2 * chi ^ a.r * DH ≤ b := by
           rcases hc.1 with h | ⟨h, _⟩ <;> linarith
         exact Or.inl (by nlinarith)
-    have io : initial .high model < initial .low model := by
-      simpa only [List.take_zero, execute] using boundary.2.1 0
+    have io : initial .high model < initial .low model := by simpa only [List.take_zero, execute] using boundary.2.1 0
     have xo : xSide .high < xSide .low := by
-      simpa only [List.take_nil, execute, initial] using
-        (actual_complete_boundary_geometry .original []).2.1 0
+      simpa only [List.take_nil, execute, initial] using (actual_complete_boundary_geometry .original []).2.1 0
     have eo : execute .high execution (initial .high model) <
         execute .low execution (initial .low model) := by
       simpa only [List.take_length] using boundary.2.1 execution.length
@@ -772,61 +654,43 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
   have Hp : 0 < H := (hp .high).1
   have Ap : 0 < A := ap .high
   have rbound : rho < 1 / 4096 := by
-    have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0)
-    norm_num [rho] at h ⊢; exact h
+    have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0); norm_num [rho] at h ⊢; exact h
   have cbound : chi < 1 / 256 := by
-    have h := pow_lt_pow_left₀ gq gp.le (by decide : (4 : ℕ) ≠ 0)
-    norm_num at h
-    exact lt_of_le_of_lt chi4 h
+    have h := pow_lt_pow_left₀ gq gp.le (by decide : (4 : ℕ) ≠ 0); norm_num at h; exact lt_of_le_of_lt chi4 h
   have gap : chi * H < A := by
     have x := mul_lt_mul_of_pos_right (show chi < 1 - rho by linarith) Hp
     exact x
   have den : 0 < 1 - rho * chi ^ K := by
     have x : chi ^ K ≤ 1 := pow_le_one₀ cp.le c1.le
-    have y := mul_le_mul_of_nonneg_left x rp.le
-    nlinarith
+    have y := mul_le_mul_of_nonneg_left x rp.le; nlinarith
   have AZ : A < Z := by
     apply (lt_div_iff₀ den).mpr
-    have x := mul_pos Ap (mul_pos rp cKp)
-    nlinarith
-  have ZS : chi ^ K * Z < S := by
-    apply (lt_div_iff₀ g2p).mpr
-    dsimp [Z, A] at *
-    nlinarith only [hbp]
-  have Sd : S = chi ^ K * d := by
-    dsimp [d]; field_simp
-  have SH : S < chi ^ K * H := by
-    apply (div_lt_iff₀ g2p).mpr
-    nlinarith only [hqb]
-  have cK2 : chi ^ K ≤ chi ^ 2 :=
-    pow_le_pow_of_le_one cp.le c1.le hK
+    have x := mul_pos Ap (mul_pos rp cKp); nlinarith
+  have ZS : chi ^ K * Z < S := by apply (lt_div_iff₀ g2p).mpr; dsimp [Z, A] at *; nlinarith only [hbp]
+  have Sd : S = chi ^ K * d := by dsimp [d]; field_simp
+  have SH : S < chi ^ K * H := by apply (div_lt_iff₀ g2p).mpr; nlinarith only [hqb]
+  have cK2 : chi ^ K ≤ chi ^ 2 := pow_le_pow_of_le_one cp.le c1.le hK
   have auto (D : ℝ) (hD : A < D) : lam - g ^ 2 * chi * D < b := by
     have x := mul_lt_mul_of_pos_left hD cp
     have y := mul_lt_mul_of_pos_left gap cp
     have z := mul_le_mul_of_nonneg_right cK2 Hp.le
     have small : S < chi * D := by nlinarith
-    have w := (div_lt_iff₀ g2p).mp small
-    nlinarith
-  have returnInterval (a : Return) (D : ℝ) (hD : A < D ∧ D < H) :
-      A < returnMap .high a D ∧ returnMap .high a D < H := by
+    have w := (div_lt_iff₀ g2p).mp small; nlinarith
+  have returnInterval (a : Return) (D : ℝ) (hD : A < D ∧ D < H) : A < returnMap .high a D ∧ returnMap .high a D < H := by
     have Dp : 0 < D := lt_trans Ap hD.1
     have rr := pow_pos rp a.m
     have cc := pow_pos cp a.r
     have cl : chi ^ a.r ≤ 1 := pow_le_one₀ cp.le c1.le
-    have rl : rho ^ a.m ≤ rho := by
-      simpa only [pow_one] using pow_le_pow_of_le_one rp.le r1.le a.m_pos
+    have rl : rho ^ a.m ≤ rho := by simpa only [pow_one] using pow_le_pow_of_le_one rp.le r1.le a.m_pos
     have ch : chi ^ a.r * D < H := by nlinarith
     have upper := mul_pos rr (sub_pos.mpr ch)
     have lower := mul_le_mul_of_nonneg_right rl (sub_pos.mpr ch).le
-    have gain := mul_pos rp (mul_pos cc Dp)
-    dsimp [returnMap, A, H, aSide] at *
+    have gain := mul_pos rp (mul_pos cc Dp); dsimp [returnMap, A, H, aSide] at *
     constructor <;> nlinarith
-  have scalar (a : Return) (D : ℝ) (hD : A < D ∧ D < H) :
-      condition .high (chi ^ a.r * D) ↔
+  have scalar (a : Return) (D : ℝ) (hD : A < D ∧ D < H) : condition .high (chi ^ a.r * D) ↔
       a.r ≤ K ∧ (a.r = K → if !o 0 then d < D else d ≤ D) := by
     have Dp : 0 < D := lt_trans Ap hD.1
-    have criterion : condition .high (chi ^ a.r * D) ↔
-        S < chi ^ a.r * D ∨ (S = chi ^ a.r * D ∧ o 0 = true) := by
+    have criterion : condition .high (chi ^ a.r * D) ↔ S < chi ^ a.r * D ∨ (S = chi ^ a.r * D ∧ o 0 = true) := by
       dsimp [condition]
       have sd : S * g ^ 2 = lam - b := by dsimp [S]; field_simp
       constructor
@@ -843,19 +707,14 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
       have cap : a.r ≤ K := by
         by_contra hcap
         have hkr : K + 1 ≤ a.r := by omega
-        have ckr : chi ^ a.r ≤ chi ^ (K + 1) :=
-          pow_le_pow_of_le_one cp.le c1.le hkr
+        have ckr : chi ^ a.r ≤ chi ^ (K + 1) := pow_le_pow_of_le_one cp.le c1.le hkr
         have xa := mul_lt_mul_of_pos_left gap cKp
         have xz := mul_lt_mul_of_pos_left AZ cKp
         have xd := mul_lt_mul_of_pos_left hD.2 (pow_pos cp a.r)
-        have xx := mul_le_mul_of_nonneg_right ckr Hp.le
-        rw [pow_succ] at xx
-        nlinarith
+        have xx := mul_le_mul_of_nonneg_right ckr Hp.le; rw [pow_succ] at xx; nlinarith
       refine ⟨cap, ?_⟩
-      intro heq
-      rw [heq, Sd] at hc
-      cases ho : o 0 <;> simp only [ho, Bool.not_false, Bool.not_true, Bool.true_eq,
-        if_true, Bool.false_eq_true, if_false] at *
+      intro heq; rw [heq, Sd] at hc
+      cases ho : o 0 <;> simp only [ho, Bool.not_false, Bool.not_true, Bool.true_eq, if_true, Bool.false_eq_true, if_false] at *
       · rcases hc with h | ⟨_, h⟩
         · nlinarith only [h, cKp]
         · contradiction
@@ -863,45 +722,33 @@ theorem actual_closed_record_supply (model : Model) (o : Ownership) (b : ℝ)
     · rintro ⟨hr, hg⟩
       by_cases heq : a.r = K
       · rw [heq, Sd]
-        cases ho : o 0 <;> simp only [ho, Bool.not_false, Bool.not_true, Bool.true_eq,
-          if_true, Bool.false_eq_true, if_false] at hg
+        cases ho : o 0 <;> simp only [ho, Bool.not_false, Bool.not_true, Bool.true_eq, if_true, Bool.false_eq_true, if_false] at hg
         · exact Or.inl (mul_lt_mul_of_pos_left (hg heq) cKp)
         · rcases lt_or_eq_of_le (hg heq) with h | h
           · exact Or.inl (mul_lt_mul_of_pos_left h cKp)
           · exact Or.inr ⟨by rw [h], rfl⟩
       · have rle : a.r ≤ K - 1 := by omega
-        have cr : chi ^ (K - 1) ≤ chi ^ a.r :=
-          pow_le_pow_of_le_one cp.le c1.le rle
-        have pk : chi ^ K = chi ^ (K - 1) * chi := by
-          rw [← pow_succ]; congr 1; omega
+        have cr : chi ^ (K - 1) ≤ chi ^ a.r := pow_le_pow_of_le_one cp.le c1.le rle
+        have pk : chi ^ K = chi ^ (K - 1) * chi := by rw [← pow_succ]; congr 1; omega
         have x := mul_lt_mul_of_pos_left hD.1 (pow_pos cp (K - 1))
         have y := mul_lt_mul_of_pos_left gap (pow_pos cp (K - 1))
-        have z := mul_le_mul_of_nonneg_right cr Dp.le
-        rw [pk] at SH
-        exact Or.inl (by nlinarith)
-  have controlGuard (xs : List Return) (D : ℝ) (hD : A < D ∧ D < H) :
-      ClosedControl .high o b xs D ↔ GuardTrace K d (!o 0) .high xs D := by
+        have z := mul_le_mul_of_nonneg_right cr Dp.le; rw [pk] at SH; exact Or.inl (by nlinarith)
+  have controlGuard (xs : List Return) (D : ℝ) (hD : A < D ∧ D < H) : ClosedControl .high o b xs D ↔ GuardTrace K d (!o 0) .high xs D := by
     induction xs generalizing D with
     | nil => simp [ClosedControl, GuardTrace]
     | cons a xs ih =>
-      change (condition .high (chi ^ a.r * D) ∧
-        ClosedControl .high o b xs (returnMap .high a D)) ↔ _
-      rw [scalar a D hD, ih _ (returnInterval a D hD)]
-      exact and_assoc
-  have fullD : A < execute .high execution (initial .high model) ∧
-      execute .high execution (initial .high model) < H := by
+      change (condition .high (chi ^ a.r * D) ∧ ClosedControl .high o b xs (returnMap .high a D)) ↔ _
+      rw [scalar a D hD, ih _ (returnInterval a D hD)]; exact and_assoc
+  have fullD : A < execute .high execution (initial .high model) ∧ execute .high execution (initial .high model) < H := by
     simpa only [List.take_length] using boundary.1 .high execution.length
-  have startD : A < initial .high model ∧ initial .high model < H := by
-    simpa only [List.take_zero, execute] using boundary.1 .high 0
+  have startD : A < initial .high model ∧ initial .high model < H := by simpa only [List.take_zero, execute] using boundary.1 .high 0
   have tailD : A < xSide .high := by
-    have h := (actual_complete_boundary_geometry .original []).1 .high 0
-    simpa only [List.take_nil, execute, initial] using h.1
+    have h := (actual_complete_boundary_geometry .original []).1 .high 0; simpa only [List.take_nil, execute, initial] using h.1
   rw [costs]
   have hsupply : condition .high (chi * execute .high execution (initial .high model)) :=
     Or.inl (by simpa only [mul_assoc] using auto _ fullD.1)
   have hasupply : condition .high (chi * xSide .high) := Or.inl (by simpa only [mul_assoc] using auto _ tailD)
-  simp only [hsupply, hasupply, implies_true, true_and]
-  exact controlGuard execution _ startD
+  simp only [hsupply, hasupply, implies_true, true_and]; exact controlGuard execution _ startD
 
 set_option maxHeartbeats 1200000 in
 -- Finite reset selection and arbitrary-list strict guard transfer share this proof.
@@ -937,13 +784,10 @@ theorem actual_reset_first_return (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 �
   have rp : 0 < rho := pow_pos gp 6
   have cp : 0 < chi := pow_pos gp 20
   have rb : rho < 1 / 4096 := by
-    have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0)
-    norm_num [rho] at h ⊢; exact h
+    have h := pow_lt_pow_left₀ gq gp.le (by decide : (6 : ℕ) ≠ 0); norm_num [rho] at h ⊢; exact h
   have cb : chi < 1 / 256 := by
     have h20 : chi ≤ g ^ 4 := pow_le_pow_of_le_one gp.le (by linarith) (by decide)
-    have h4 := pow_lt_pow_left₀ gq gp.le (by decide : (4 : ℕ) ≠ 0)
-    norm_num at h4
-    exact lt_of_le_of_lt h20 h4
+    have h4 := pow_lt_pow_left₀ gq gp.le (by decide : (4 : ℕ) ≠ 0); norm_num at h4; exact lt_of_le_of_lt h20 h4
   have r1 : rho < 1 := by linarith
   have c1 : chi < 1 := by linarith
   let H := hSide .high
@@ -952,22 +796,17 @@ theorem actual_reset_first_return (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 �
   have Hp : 0 < H := by dsimp [H, hSide]; linarith
   have Ap : 0 < A := mul_pos (sub_pos.mpr r1) Hp
   have AH : A < H := by
-    have h := mul_pos rp Hp
-    dsimp [A, aSide, H] at *; nlinarith
-  have gap : chi * H < A := by
-    exact mul_lt_mul_of_pos_right (show chi < 1 - rho by linarith) Hp
+    have h := mul_pos rp Hp; dsimp [A, aSide, H] at *; nlinarith
+  have gap : chi * H < A := by exact mul_lt_mul_of_pos_right (show chi < 1 - rho by linarith) Hp
   have cKp : 0 < chi ^ K := pow_pos cp K
   have g2p : 0 < g ^ 2 := pow_pos gp 2
   have dH : d < H := by
     apply (div_lt_iff₀ cKp).mpr
-    apply (div_lt_iff₀ g2p).mpr
-    dsimp [H] at *; nlinarith only [hqb]
+    apply (div_lt_iff₀ g2p).mpr; dsimp [H] at *; nlinarith only [hqb]
   have states (md : Model) : A < initial .high md ∧ initial .high md < H := by
-    simpa only [List.take_nil, execute] using
-      (actual_complete_boundary_geometry md []).1 .high 0
+    simpa only [List.take_nil, execute] using (actual_complete_boundary_geometry md []).1 .high 0
   let L := max (max (xSide .high) (ySide .high)) d
-  have LH : L < H := by
-    exact max_lt (max_lt (states .original).2 (states .anchored).2) dH
+  have LH : L < H := by exact max_lt (max_lt (states .original).2 (states .anchored).2) dH
   have factor : 0 < H - chi * A := by
     have h := mul_lt_mul_of_pos_left AH cp
     have hh : chi * H < H := by simpa only [one_mul] using mul_lt_mul_of_pos_right c1 Hp
@@ -976,22 +815,17 @@ theorem actual_reset_first_return (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 �
   let R : Return := ⟨n + 1, 1, by omega, by decide⟩
   let B := H - rho ^ R.m * (H - chi * A)
   have small : rho ^ R.m < (H - L) / (H - chi * A) := by
-    have hle : rho ^ (n + 1) ≤ rho ^ n :=
-      pow_le_pow_of_le_one rp.le r1.le (by omega)
-    exact lt_of_le_of_lt hle hn
+    have hle : rho ^ (n + 1) ≤ rho ^ n := pow_le_pow_of_le_one rp.le r1.le (by omega); exact lt_of_le_of_lt hle hn
   have LB : L < B := by
-    have h := (lt_div_iff₀ factor).mp small
-    dsimp [B]; linarith
+    have h := (lt_div_iff₀ factor).mp small; dsimp [B]; linarith
   have outputStrict (D : ℝ) (hD : A < D) : B < returnMap .high R D := by
     have h := mul_pos (mul_pos (pow_pos rp R.m) cp) (sub_pos.mpr hD)
     dsimp [returnMap, R, B, H, A] at *; simp only [pow_one] at *; nlinarith
   have outputWeak (D : ℝ) (hD : A ≤ D) : B ≤ returnMap .high R D := by
     have h := mul_nonneg (mul_pos (pow_pos rp R.m) cp).le (sub_nonneg.mpr hD)
     dsimp [returnMap, R, B, H, A] at *; simp only [pow_one] at *; nlinarith
-  have ordered (a : Return) (D E : ℝ) (hDE : D < E) :
-      returnMap .high a D < returnMap .high a E := by
-    have h := mul_pos (mul_pos (pow_pos rp a.m) (pow_pos cp a.r)) (sub_pos.mpr hDE)
-    dsimp [returnMap]; nlinarith
+  have ordered (a : Return) (D E : ℝ) (hDE : D < E) : returnMap .high a D < returnMap .high a E := by
+    have h := mul_pos (mul_pos (pow_pos rp a.m) (pow_pos cp a.r)) (sub_pos.mpr hDE); dsimp [returnMap]; nlinarith
   have improve (xs : List Return) (D E : ℝ) (hDE : D < E)
       (hw : GuardTrace K d false .high xs D) : GuardTrace K d true .high xs E := by
     induction xs generalizing D E with
@@ -999,9 +833,7 @@ theorem actual_reset_first_return (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 �
     | cons a xs ih =>
       refine ⟨hw.1, ?_, ih _ _ (ordered a D E hDE) hw.2.2⟩
       intro heq
-      have h := hw.2.1 heq
-      simp only [Bool.false_eq_true, if_false] at h
-      simp only [if_true]; linarith
+      have h := hw.2.1 heq; simp only [Bool.false_eq_true, if_false] at h; simp only [if_true]; linarith
   refine ⟨R, rfl, LB, outputStrict, outputWeak, ?_, ?_, ?_⟩
   · intro src dst xs hw
     have BD : initial .high src < B := by
@@ -1019,16 +851,12 @@ theorem actual_reset_first_return (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 �
     simp only [listWeight, R]; omega
   · intro m r z hm hr hrK hz
     dsimp only
-    have cr : chi ^ r ≤ chi := by
-      simpa only [pow_one] using pow_le_pow_of_le_one cp.le c1.le hr
-    have ch : chi ^ r * H < A :=
-      lt_of_le_of_lt (mul_le_mul_of_nonneg_right cr Hp.le) gap
+    have cr : chi ^ r ≤ chi := by simpa only [pow_one] using pow_le_pow_of_le_one cp.le c1.le hr
+    have ch : chi ^ r * H < A := lt_of_le_of_lt (mul_le_mul_of_nonneg_right cr Hp.le) gap
     have zp : 0 < z := lt_of_lt_of_le Ap hz
-    have zz : 0 ≤ rho * chi ^ r * z :=
-      (mul_pos (mul_pos rp (pow_pos cp r)) zp).le
+    have zz : 0 ≤ rho * chi ^ r * z := (mul_pos (mul_pos rp (pow_pos cp r)) zp).le
     have brace : 0 < A - chi ^ r * H + rho * chi ^ r * z := by linarith
-    have identity :
-        (H - rho ^ (m + 1) * (H - chi ^ r * z)) -
+    have identity : (H - rho ^ (m + 1) * (H - chi ^ r * z)) -
           (H - rho ^ m * (H - chi ^ r * H)) =
         rho ^ m * (A - chi ^ r * H + rho * chi ^ r * z) := by
       dsimp [A, aSide, H]; rw [pow_succ]; ring
