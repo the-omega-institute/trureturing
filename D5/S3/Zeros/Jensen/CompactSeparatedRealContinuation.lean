@@ -161,7 +161,8 @@ private theorem separated_real_polynomial_family_preserves_root_reality
 
 
 
-private theorem monic_root_bound_by_coefficient_sum
+/-- A monic polynomial root is bounded by the sum of the lower coefficient norms. -/
+theorem monic_root_bound_by_coefficient_sum
     (P : Polynomial ℂ) (hp : P.Monic) (z : ℂ) (hz : P.eval z = 0) :
     ‖z‖ ≤ (∑ i ∈ Finset.range P.natDegree, ‖P.coeff i‖)+1 := by
   have hcb : P.cauchyBound ≤
