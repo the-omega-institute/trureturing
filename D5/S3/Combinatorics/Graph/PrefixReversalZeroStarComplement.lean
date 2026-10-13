@@ -935,7 +935,7 @@ private theorem native_end {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) (j : F
 /-- Cutting any retained b-edge in a zero star gives the specified literal Z_j path.
 The vertex domain is defined by deletion residuals, and every one of its vertices occurs
 exactly once in the actual path. -/
-theorem zeroStar_b_complement_hamiltonian {m : ℕ} (hm : 6 ≤ m)
+theorem zeroStar_b_complement_hamiltonian {m : ℕ} (hm : 3 ≤ m)
     (t : Fin (m + 1)) (W : Cycle (Fin (m + 1))) (v : Configuration m)
     (hv : Star t W v) (j : Fin m) (hj : v j.castSucc = t) :
     ∃ hvb : Star t W (v * b m),

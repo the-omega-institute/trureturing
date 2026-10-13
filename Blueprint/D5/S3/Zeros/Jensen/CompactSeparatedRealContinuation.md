@@ -22,6 +22,19 @@ For positive degree, the finite coefficient sum is continuous and attains a maxi
 
 This is a classical polynomial continuity argument, formalized as a reusable implication. In the Appell route, the intended parameter space is the closed real interval [0,1], with a Hermite polynomial at zero and the actual source polynomial at one. Coefficient continuity, coefficient reality, fixed degree, the Hermite endpoint, and uniform distinct-root separation for that exact family must all be proved separately before this theorem applies. It proves no RH, global Robin inequality, node-sign law or source transmission estimate, and makes no claim of literature originality.
 
+**Theorem 1.2 (The existing Cauchy root-bound helper is reusable).**
+
+Lean statement: `D5/S3/Zeros/Jensen/CompactSeparatedRealContinuation.monic_root_bound_by_coefficient_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/Jensen/CompactSeparatedRealContinuation.monic_root_bound_by_coefficient_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a monic complex polynomial P and a root z, the norm of z is at most one plus the sum of the norms of coefficients below its natural degree. Mathlib's Cauchy root bound is at most this coefficient sum because the maximum lower-coefficient norm is bounded by their sum. This previously private helper is exposed with the same statement and proof for actual use by the root-projection properness theorem. Its public visibility introduces no new mathematical content.
+
 ## References
 
 - Truth anchor: `D5/S3/Zeros/Jensen/CompactSeparatedRealContinuation.compact_separated_real_family`
+- Truth anchor: `D5/S3/Zeros/Jensen/CompactSeparatedRealContinuation.monic_root_bound_by_coefficient_sum`
