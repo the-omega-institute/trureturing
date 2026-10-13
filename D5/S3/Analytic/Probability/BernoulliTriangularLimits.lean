@@ -116,7 +116,7 @@
    bernoulliPGF_eval_one: proof_shape: bind-only; escape_witness: none;
      consumers: bernoulli_product_eval_one, bernoulli_product_mu, bernoulli_product_sigmaSq.
    mu_mul: proof_shape: bind-only; escape_witness: none;
-     consumers: bernoulli_product_mu, factorization_moments.
+     consumers: bernoulli_product_mu, mu_normalized, factorization_moments.
    mu_bernoulliPGF: proof_shape: bind-only; escape_witness: none;
      consumers: bernoulli_product_mu.
    sigmaSq_bernoulliPGF: proof_shape: bind-only; escape_witness: none;
@@ -138,7 +138,7 @@
    bit_sum_le: proof_shape: bind-only; escape_witness: none;
      consumers: factorization_finite_cdf.
    bernoulli_real_event: proof_shape: bind-only; escape_witness: none;
-     consumers: factorization_finite_cdf.
+     consumers: bernoulli_event_mass, factorization_finite_cdf.
    factorization_finite_cdf: proof_shape: bind-only; escape_witness: none;
      consumers: factorization_standardized_cdf.
    factorization_standardized_cdf: proof_shape: bind-only; escape_witness: none;
@@ -636,14 +636,20 @@ lemma sigmaSq_C (c : ℝ) : sigmaSq (C c) = 0 := by
 lemma sigmaSq_X : sigmaSq (X : ℝ[X]) = 0 := by
   simp [sigmaSq, mu]
 
+open scoped Classical in
+private lemma bernoulli_real_event {m : ℕ} (p : Fin m → unitInterval) (s : Set (Fin m → Bool)) :
+    (bernoulliSpace p).real s = ∑ x : Fin m → Bool, if x∈s then bernoulliWeight p x else 0 := by
+  classical
+  have he : s = (univ.filter fun x => x∈s : Finset (Fin m → Bool)) := by ext; simp
+  rw [he,←sum_measureReal_singleton,sum_filter]
+  simp [bernoulli_atom]
+
 private lemma bernoulli_event_mass {m : ℕ} (p : Fin m → unitInterval) (k : ℕ) :
     (bernoulliSpace p).real {x | 1+∑ i, Bool.toNat (x i) = k} =
       ∑ x : Fin m → Bool, if 1+∑ i, Bool.toNat (x i) = k then bernoulliWeight p x else 0 := by
   classical
-  have he : ({x | 1+∑ i, Bool.toNat (x i) = k} : Set (Fin m → Bool)) =
-      (univ.filter fun x => 1+∑ i, Bool.toNat (x i) = k : Finset (Fin m → Bool)) := by ext; simp
-  rw [he, ← sum_measureReal_singleton, sum_filter]
-  simp only [bernoulli_atom]
+  simpa only [Set.mem_setOf_eq] using
+    bernoulli_real_event p {x | 1 + ∑ i, Bool.toNat (x i) = k}
 
 
 private lemma bernoulli_pgf_expansion {m : ℕ} (p : Fin m → unitInterval) :
@@ -771,9 +777,8 @@ private lemma bernoulli_product_sigmaSq {ι : Type*} (s : Finset ι) (p : ι →
       (by rw [bernoulli_product_eval_one]; norm_num),sigmaSq_bernoulliPGF,ih]
 
 private lemma mu_normalized (f : ℝ[X]) (hf : f.eval 1 ≠ 0) : mu (normalized f) = mu f := by
-  unfold normalized mu
-  simp only [derivative_mul,derivative_C,zero_mul,zero_add,eval_mul,eval_C]
-  field_simp
+  rw [normalized, mu_mul _ _ (by simpa using inv_ne_zero hf) hf]
+  simp [mu]
 
 private lemma sigmaSq_normalized (f : ℝ[X]) (hf : f.eval 1 ≠ 0) :
     sigmaSq (normalized f) = sigmaSq f := by
@@ -822,13 +827,6 @@ private lemma bit_sum_le {m : ℕ} (x : Fin m → Bool) : ∑ i, Bool.toNat (x i
   calc
     _ ≤ ∑ i : Fin m, 1 := sum_le_sum (fun i hi => by cases x i <;> simp [Bool.toNat])
     _ = _ := by simp
-
-private lemma bernoulli_real_event {m : ℕ} (p : Fin m → unitInterval) (s : Set (Fin m → Bool)) :
-    (bernoulliSpace p).real s = ∑ x : Fin m → Bool, if x∈s then bernoulliWeight p x else 0 := by
-  classical
-  have he : s = (univ.filter fun x => x∈s : Finset (Fin m → Bool)) := by ext; simp
-  rw [he,←sum_measureReal_singleton,sum_filter]
-  simp [bernoulli_atom]
 
 private lemma factorization_finite_cdf {f : ℝ[X]} {m : ℕ} (p : Fin m → unitInterval)
     (hpgf : normalized f = X*∏ i, bernoulliPGF (p i:ℝ)) (y : ℝ) :
