@@ -16,9 +16,9 @@
    suCoordinateMap: proof_shape: bind-only; escape_witness: none; consumers: ae_rightSpan_eq,suPairMeasure.
    suPairMeasure: proof_shape: bind-only; escape_witness: none; consumers: ae_rightSpan_eq,claim,result.
    layer_one: proof_shape: bind-only; escape_witness: none; consumers: layer_eq_exactWordSpan.
-   RightWord: proof_shape: bind-only; escape_witness: none; consumers: ae_span_top_of_witness,card_words_le,combination_mem,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,eval,eval_boundedPolynomial,eval_spanningPolynomial,eval_wordPolynomial,exactWordSpan,generator_bracket_mem,layer_eq_exactWordSpan,length,length_pos,mem_words,reindexWord,reindex_eval,reindex_length,rightSpan,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_real_le_su,rightSpan_reindex_le,spanningPolynomial,wordPolynomial,word_bracket_mem,word_map,word_mem,word_scaled,word_su_mem,words.
-   length: proof_shape: bind-only; escape_witness: none; consumers: ae_span_top_of_witness,combination_mem,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,eval_boundedPolynomial,eval_spanningPolynomial,exactWordSpan,generator_bracket_mem,layer_eq_exactWordSpan,length_pos,mem_words,reindex_length,rightSpan,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_real_le_su,rightSpan_reindex_le,spanningPolynomial,word_bracket_mem,word_mem,word_scaled.
-   eval: proof_shape: bind-only; escape_witness: none; consumers: ae_span_top_of_witness,combination_mem,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,eval_boundedPolynomial,eval_spanningPolynomial,eval_wordPolynomial,exactWordSpan,generator_bracket_mem,layer_eq_exactWordSpan,reindex_eval,rightSpan,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_real_le_su,rightSpan_reindex_le,word_bracket_mem,word_map,word_mem,word_scaled,word_su_mem.
+   RightWord: proof_shape: bind-only; escape_witness: none; consumers: ae_span_top_of_witness,card_words_le,combination_mem,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,rightWordEval,eval_boundedPolynomial,eval_spanningPolynomial,eval_wordPolynomial,exactWordSpan,generator_bracket_mem,layer_eq_exactWordSpan,rightWordLength,length_pos,mem_words,reindexWord,reindex_eval,reindex_length,rightSpan,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_real_le_su,rightSpan_reindex_le,spanningPolynomial,wordPolynomial,word_bracket_mem,word_map,word_mem,word_scaled,word_su_mem,words.
+   rightWordLength: proof_shape: bind-only; escape_witness: none; consumers: ae_span_top_of_witness,combination_mem,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,eval_boundedPolynomial,eval_spanningPolynomial,exactWordSpan,generator_bracket_mem,layer_eq_exactWordSpan,length_pos,mem_words,reindex_length,rightSpan,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_real_le_su,rightSpan_reindex_le,spanningPolynomial,word_bracket_mem,word_mem,word_scaled.
+   rightWordEval: proof_shape: bind-only; escape_witness: none; consumers: ae_span_top_of_witness,combination_mem,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,eval_boundedPolynomial,eval_spanningPolynomial,eval_wordPolynomial,exactWordSpan,generator_bracket_mem,layer_eq_exactWordSpan,reindex_eval,rightSpan,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_real_le_su,rightSpan_reindex_le,word_bracket_mem,word_map,word_mem,word_scaled,word_su_mem.
    length_pos: proof_shape: bind-only; escape_witness: none; consumers: cumulative_eq_rightSpan,layer_eq_exactWordSpan,mem_words.
    rightSpan: proof_shape: bind-only; escape_witness: none; consumers: ad_pow_mem,adjusted_units_mem,ae_rightSpan_eq,ae_span_top_of_witness,anchor_units_mem,anchored_units_mem,anchored_units_uniform,combination_mem,compactPair_span_top,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,extendedPair_span_top,generator_bracket_mem,lieLength_attained,lieLength_le_of_span,lower_lieLength_of_saturation,lower_log_of_saturation,polynomial_ad_mem,real_full_span,result,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_reindex_le,saturation_count,selector_mem_eight,traceless_full_span,transfer_mem_eight,word_bracket_mem.
    word_mem: proof_shape: bind-only; escape_witness: none; consumers: B_mem,combination_mem,cumulative_eq_rightSpan,rightSpan_le_scaled,rightSpan_reindex_le,word_bracket_mem.
@@ -124,19 +124,33 @@ inductive RightWord (I : Type*)
   | cons : I → RightWord I → RightWord I
   deriving DecidableEq
 
-namespace RightWord
+section
+set_option quotPrecheck false in
+set_option hygiene false in
+local notation "w.length" => rightWordLength w
 
-def length {I : Type*} : RightWord I → ℕ
+def rightWordLength {I : Type*} : RightWord I → ℕ
   | .single _ => 1
   | .cons _ w => w.length + 1
+end
 
-def eval {I M : Type*} [LieRing M]
+section
+set_option quotPrecheck false in
+set_option hygiene false in
+local notation "w.eval" => fun s => rightWordEval s w
+
+def rightWordEval {I M : Type*} [LieRing M]
     (S : I → M) : RightWord I → M
   | .single i => S i
   | .cons i w => ⁅S i, w.eval S⁆
+end
 
-@[simp] private theorem length_pos {I : Type*} (w : RightWord I) : 0 < w.length := by
-  cases w <;> simp [length]
+namespace RightWord
+
+export D5.S3.Quantum.Algebra.GenericLieLengthFiltration (rightWordLength rightWordEval)
+
+@[simp] private theorem length_pos {I : Type*} (w : RightWord I) : 0 < w.rightWordLength := by
+  cases w <;> simp [rightWordLength]
 
 
 end RightWord
@@ -144,10 +158,10 @@ end RightWord
 variable {I K M : Type*} [CommRing K] [LieRing M] [LieAlgebra K M]
 
 def rightSpan (S : I → M) (L : ℕ) : Submodule K M :=
-  Submodule.span K {x | ∃ w : RightWord I, w.length ≤ L ∧ w.eval S = x}
+  Submodule.span K {x | ∃ w : RightWord I, w.rightWordLength ≤ L ∧ w.rightWordEval S = x}
 
-theorem word_mem (S : I → M) (w : RightWord I) (L : ℕ) (h : w.length ≤ L) :
-    w.eval S ∈ rightSpan (K := K) S L :=
+theorem word_mem (S : I → M) (w : RightWord I) (L : ℕ) (h : w.rightWordLength ≤ L) :
+    w.rightWordEval S ∈ rightSpan (K := K) S L :=
   Submodule.subset_span ⟨w, h, rfl⟩
 
 theorem rightSpan_mono (S : I → M) {a b : ℕ} (h : a ≤ b) :
@@ -164,22 +178,22 @@ private theorem generator_bracket_mem (S : I → M) (i : I) {L : ℕ} {x : M}
     apply Submodule.span_le.mpr
     rintro y ⟨w, hw, rfl⟩
     exact Submodule.subset_span ⟨RightWord.cons i w,
-      by simpa only [RightWord.length] using Nat.add_le_add_right hw 1, rfl⟩
+      by simpa only [rightWordLength] using Nat.add_le_add_right hw 1, rfl⟩
   exact h hx
 
 theorem word_bracket_mem (S : I → M) (u v : RightWord I) :
-    ⁅u.eval S, v.eval S⁆ ∈ rightSpan (K := K) S (u.length + v.length) := by
+    ⁅u.rightWordEval S, v.rightWordEval S⁆ ∈ rightSpan (K := K) S (u.rightWordLength + v.rightWordLength) := by
   induction u generalizing v with
   | single i =>
-    exact word_mem S (.cons i v) _ (by simp [RightWord.length, Nat.add_comm])
+    exact word_mem S (.cons i v) _ (by simp [rightWordLength, Nat.add_comm])
   | cons i u ih =>
-    change ⁅⁅S i, u.eval S⁆, v.eval S⁆ ∈ rightSpan (K := K) S ((u.length + 1) + v.length)
+    change ⁅⁅S i, u.rightWordEval S⁆, v.rightWordEval S⁆ ∈ rightSpan (K := K) S ((u.rightWordLength + 1) + v.rightWordLength)
     rw [lie_lie]
-    apply (rightSpan (K := K) S ((u.length + 1) + v.length)).sub_mem
+    apply (rightSpan (K := K) S ((u.rightWordLength + 1) + v.rightWordLength)).sub_mem
     · have h := generator_bracket_mem S i (ih v)
       simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using h
     · have h := ih (.cons i v)
-      simpa [RightWord.eval, RightWord.length, Nat.add_assoc, Nat.add_comm,
+      simpa [rightWordEval, rightWordLength, Nat.add_assoc, Nat.add_comm,
         Nat.add_left_comm] using h
 
 theorem rightSpan_bracket_mem (S : I → M) {r s : ℕ} {x y : M}
@@ -280,7 +294,7 @@ def suLie (n : ℕ) : LieSubalgebra ℝ ((Matrix (Fin n) (Fin n) ℂ)) where
   lie_mem' := fun hX hY => su_bracket_mem _ _ hX hY
 
 private theorem word_su_mem {I : Type*} {n : ℕ} (S : I → (Matrix (Fin n) (Fin n) ℂ))
-    (hS : ∀ i, S i ∈ suSet n) (w : RightWord I) : w.eval S ∈ suSet n := by
+    (hS : ∀ i, S i ∈ suSet n) (w : RightWord I) : w.rightWordEval S ∈ suSet n := by
   induction w with
   | single i => exact hS i
   | cons i w ih => exact su_bracket_mem _ _ (hS i) ih
@@ -387,7 +401,7 @@ attribute [local instance] LieRing.ofAssociativeRing
 
 private def exactWordSpan {I K M : Type*} [CommRing K] [LieRing M] [LieAlgebra K M]
     (S : I → M) (k : ℕ) : Submodule K M :=
-    Submodule.span K {X | ∃ w : RightWord I, w.length = k ∧ w.eval S = X}
+    Submodule.span K {X | ∃ w : RightWord I, w.rightWordLength = k ∧ w.rightWordEval S = X}
 
 private theorem layer_eq_exactWordSpan {g n : ℕ} (S : Fin g → (Matrix (Fin n) (Fin n) ℂ)) (k : ℕ) :
     layer (Finset.univ.image S) k = exactWordSpan (K := ℝ) S k := by
@@ -410,7 +424,7 @@ private theorem layer_eq_exactWordSpan {g n : ℕ} (S : Fin g → (Matrix (Fin n
       rintro X ⟨w, hw, rfl⟩
       cases w with
       | single i => exact Submodule.subset_span (Finset.mem_image.mpr ⟨i, Finset.mem_univ _, rfl⟩)
-      | cons i w => have := w.length_pos; simp only [RightWord.length] at hw; omega
+      | cons i w => have := w.length_pos; simp only [rightWordLength] at hw; omega
   | more k ih ih1 =>
     rw [layer, ih1]
     apply le_antisymm
@@ -420,7 +434,7 @@ private theorem layer_eq_exactWordSpan {g n : ℕ} (S : Fin g → (Matrix (Fin n
       induction hY using Submodule.span_induction with
       | mem Y hY =>
         obtain ⟨w, hw, rfl⟩ := hY
-        exact Submodule.subset_span ⟨.cons i w, by simp [RightWord.length, hw], rfl⟩
+        exact Submodule.subset_span ⟨.cons i w, by simp [rightWordLength, hw], rfl⟩
       | zero => simp
       | add Y Z hY hZ ihY ihZ =>
         simpa [lie_add] using Submodule.add_mem (exactWordSpan (K := ℝ) S (k + 2)) ihY ihZ
@@ -429,10 +443,10 @@ private theorem layer_eq_exactWordSpan {g n : ℕ} (S : Fin g → (Matrix (Fin n
     · apply Submodule.span_le.mpr
       rintro X ⟨w, hw, rfl⟩
       cases w with
-      | single i => simp only [RightWord.length] at hw; omega
+      | single i => simp only [rightWordLength] at hw; omega
       | cons i w =>
         exact Submodule.subset_span ⟨S i, Finset.mem_image.mpr ⟨i, Finset.mem_univ _, rfl⟩,
-          w.eval S, Submodule.subset_span ⟨w, by simpa [RightWord.length] using hw, rfl⟩, rfl⟩
+          w.rightWordEval S, Submodule.subset_span ⟨w, by simpa [rightWordLength] using hw, rfl⟩, rfl⟩
 
 private theorem cumulative_eq_rightSpan {g n : ℕ} (S : Fin g → (Matrix (Fin n) (Fin n) ℂ)) (L : ℕ) :
     (⨆ k ∈ Finset.Icc 1 L, layer (Finset.univ.image S) k) = rightSpan (K := ℝ) S L := by
@@ -447,7 +461,7 @@ private theorem cumulative_eq_rightSpan {g n : ℕ} (S : Fin g → (Matrix (Fin 
     exact word_mem S w L (hw.le.trans (Finset.mem_Icc.mp hk).2)
   · apply Submodule.span_le.mpr
     rintro X ⟨w, hw, rfl⟩
-    apply Submodule.mem_iSup_of_mem w.length
+    apply Submodule.mem_iSup_of_mem w.rightWordLength
     apply Submodule.mem_iSup_of_mem (Finset.mem_Icc.mpr ⟨w.length_pos, hw⟩)
     exact Submodule.subset_span ⟨w, rfl, rfl⟩
 
@@ -465,12 +479,12 @@ private def reindexWord {I J : Type*} (f : I → J) : RightWord I → RightWord 
     | .cons i w => .cons (f i) (reindexWord f w)
 
 private theorem reindex_length {I J : Type*} (f : I → J) (w : RightWord I) :
-    (reindexWord f w).length = w.length := by
-  induction w <;> simp_all [reindexWord, RightWord.length]
+    (reindexWord f w).rightWordLength = w.rightWordLength := by
+  induction w <;> simp_all [reindexWord, rightWordLength]
 
 private theorem reindex_eval {I J M : Type*} [LieRing M] (f : I → J) (S : I → M) (T : J → M)
-    (h : ∀ i, T (f i) = S i) (w : RightWord I) : (reindexWord f w).eval T = w.eval S := by
-  induction w <;> simp_all [reindexWord, RightWord.eval]
+    (h : ∀ i, T (f i) = S i) (w : RightWord I) : (reindexWord f w).rightWordEval T = w.rightWordEval S := by
+  induction w <;> simp_all [reindexWord, rightWordEval]
 
 theorem rightSpan_reindex_le {I J K M : Type*} [CommRing K] [LieRing M] [LieAlgebra K M]
     (f : I → J) (S : I → M) (T : J → M) (h : ∀ i, T (f i) = S i) (L : ℕ) :
@@ -489,12 +503,12 @@ def words (g : ℕ) : ℕ → Finset (RightWord (Fin g))
     | L + 1 => Finset.univ.image RightWord.single ∪
         Finset.univ.biUnion (fun i => (words g L).image (RightWord.cons i))
 
-private theorem mem_words (g L : ℕ) (w : RightWord (Fin g)) : w ∈ words g L ↔ w.length ≤ L := by
+private theorem mem_words (g L : ℕ) (w : RightWord (Fin g)) : w ∈ words g L ↔ w.rightWordLength ≤ L := by
   induction L generalizing w with
   | zero => simp [words, Nat.ne_of_gt w.length_pos]
   | succ L ih =>
     cases w with
-    | single i => simp [words, RightWord.length]
+    | single i => simp [words, rightWordLength]
     | cons i w =>
       simp only [words, Finset.mem_union, Finset.mem_image, Finset.mem_univ,
         true_and, RightWord.cons.injEq, Finset.mem_biUnion]
@@ -506,10 +520,10 @@ private theorem mem_words (g L : ℕ) (w : RightWord (Fin g)) : w ∈ words g L 
       · rintro ⟨j, u, hu, hj, huw⟩
         subst j
         subst u
-        simp only [RightWord.length]
+        simp only [rightWordLength]
         exact Nat.add_le_add_right ((ih w).mp hu) 1
       · intro h
-        exact ⟨i, w, (ih w).mpr (by simpa [RightWord.length] using h), rfl, rfl⟩
+        exact ⟨i, w, (ih w).mpr (by simpa [rightWordLength] using h), rfl, rfl⟩
 
 def wordBudget (g : ℕ) : ℕ → ℕ
     | 0 => 0
@@ -546,7 +560,7 @@ private theorem rightSpan_finrank_le {M : Type*} [LieRing M] [LieAlgebra ℝ M]
     Module.finrank ℝ (rightSpan (K := ℝ) S L) ≤ wordBudget g L := by
   classical
   have he : rightSpan (K := ℝ) S L = Submodule.span ℝ
-      ((words g L).image (fun w => w.eval S) : Set M) := by
+      ((words g L).image (fun w => w.rightWordEval S) : Set M) := by
     unfold rightSpan
     apply congrArg (Submodule.span ℝ)
     ext X

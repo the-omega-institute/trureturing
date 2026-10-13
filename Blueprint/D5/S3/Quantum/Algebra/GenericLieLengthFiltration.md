@@ -88,11 +88,11 @@ $$\begin{aligned}\forall (I : \operatorname{Type} *) , \operatorname{RightWord} 
 
 RightWord is the inductive type with precisely the single and cons constructors. It represents nonempty right-nested brackets.
 
-**Definition 1.8 (RightWord.length).**
+**Definition 1.8 (rightWordLength).**
 
-$$\begin{aligned}\forall (I : \operatorname{Type} *) (i : I) , \operatorname{RightWord} . \operatorname{length} (\operatorname{RightWord} . \operatorname{single} i) = 1\\\forall (I : \operatorname{Type} *) (i : I) (w : \operatorname{RightWord} I) , \operatorname{RightWord} . \operatorname{length} (\operatorname{RightWord} . \operatorname{cons} i w) = \operatorname{RightWord} . \operatorname{length} w + 1\end{aligned}$$
+$$\begin{aligned}\forall (I : \operatorname{Type} *) (i : I) , \operatorname{rightWordLength} (\operatorname{RightWord} . \operatorname{single} i) = 1\\\forall (I : \operatorname{Type} *) (i : I) (w : \operatorname{RightWord} I) , \operatorname{rightWordLength} (\operatorname{RightWord} . \operatorname{cons} i w) = \operatorname{rightWordLength} w + 1\end{aligned}$$
 
-*Formalization.* `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.length` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightWordLength` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -100,11 +100,11 @@ $$\begin{aligned}\forall (I : \operatorname{Type} *) (i : I) , \operatorname{Rig
 
 Length counts generator letters.
 
-**Definition 1.9 (RightWord.eval).**
+**Definition 1.9 (rightWordEval).**
 
-$$\begin{aligned}\forall (I M : \operatorname{Type} *) [ \operatorname{LieRing} M ] (S : I \to M) (i : I) , \operatorname{RightWord} . \operatorname{eval} S (\operatorname{RightWord} . \operatorname{single} i) = S i\\\forall (I M : \operatorname{Type} *) [ \operatorname{LieRing} M ] (S : I \to M) (i : I) (w : \operatorname{RightWord} I) , \operatorname{RightWord} . \operatorname{eval} S (\operatorname{RightWord} . \operatorname{cons} i w) = [ S i , \operatorname{RightWord} . \operatorname{eval} S w ]\end{aligned}$$
+$$\begin{aligned}\forall (I M : \operatorname{Type} *) [ \operatorname{LieRing} M ] (S : I \to M) (i : I) , \operatorname{rightWordEval} S (\operatorname{RightWord} . \operatorname{single} i) = S i\\\forall (I M : \operatorname{Type} *) [ \operatorname{LieRing} M ] (S : I \to M) (i : I) (w : \operatorname{RightWord} I) , \operatorname{rightWordEval} S (\operatorname{RightWord} . \operatorname{cons} i w) = [ S i , \operatorname{rightWordEval} S w ]\end{aligned}$$
 
-*Formalization.* `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.eval` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightWordEval` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -114,7 +114,7 @@ Evaluation uses the right-nested Lie bracket.
 
 **Definition 1.10 (rightSpan).**
 
-$$\forall (I K M : \operatorname{Type} *) [ \operatorname{CommRing} K ] [ \operatorname{LieRing} M ] [ \operatorname{LieAlgebra} K M ] (S : I \to M) (L : \mathbb{N}) , \operatorname{rightSpan} (K := K) S L = \operatorname{Submodule} . \operatorname{span} K \{ x : M \mid \exists (w : \operatorname{RightWord} I) , w . \operatorname{length} \leq L \land \operatorname{RightWord} . \operatorname{eval} S w = x \}$$
+$$\forall (I K M : \operatorname{Type} *) [ \operatorname{CommRing} K ] [ \operatorname{LieRing} M ] [ \operatorname{LieAlgebra} K M ] (S : I \to M) (L : \mathbb{N}) , \operatorname{rightSpan} (K := K) S L = \operatorname{Submodule} . \operatorname{span} K \{ x : M \mid \exists (w : \operatorname{RightWord} I) , w . \operatorname{rightWordLength} \leq L \land \operatorname{rightWordEval} S w = x \}$$
 
 *Formalization.* `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightSpan` (`✓ std3`).
 
@@ -126,7 +126,7 @@ The submodule is spanned by evaluations of words of length at most L.
 
 **Theorem 1.11 (word_mem).**
 
-$$\forall (I K M : \operatorname{Type} *) [ \operatorname{CommRing} K ] [ \operatorname{LieRing} M ] [ \operatorname{LieAlgebra} K M ] (S : I \to M) (w : \operatorname{RightWord} I) (L : \mathbb{N}) , w . \operatorname{length} \leq L \to \operatorname{RightWord} . \operatorname{eval} S w \in \operatorname{rightSpan} (K := K) S L$$
+$$\forall (I K M : \operatorname{Type} *) [ \operatorname{CommRing} K ] [ \operatorname{LieRing} M ] [ \operatorname{LieAlgebra} K M ] (S : I \to M) (w : \operatorname{RightWord} I) (L : \mathbb{N}) , w . \operatorname{rightWordLength} \leq L \to \operatorname{rightWordEval} S w \in \operatorname{rightSpan} (K := K) S L$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.word_mem` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ Increasing the length cutoff enlarges the span.
 
 **Theorem 1.13 (word_bracket_mem).**
 
-$$\forall (I K M : \operatorname{Type} *) [ \operatorname{CommRing} K ] [ \operatorname{LieRing} M ] [ \operatorname{LieAlgebra} K M ] (S : I \to M) (u v : \operatorname{RightWord} I) , [ \operatorname{RightWord} . \operatorname{eval} S u , \operatorname{RightWord} . \operatorname{eval} S v ] \in \operatorname{rightSpan} (K := K) S (u . \operatorname{length} + v . \operatorname{length})$$
+$$\forall (I K M : \operatorname{Type} *) [ \operatorname{CommRing} K ] [ \operatorname{LieRing} M ] [ \operatorname{LieAlgebra} K M ] (S : I \to M) (u v : \operatorname{RightWord} I) , [ \operatorname{rightWordEval} S u , \operatorname{rightWordEval} S v ] \in \operatorname{rightSpan} (K := K) S (u . \operatorname{rightWordLength} + v . \operatorname{rightWordLength})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.word_bracket_mem` (`✓ std3`). ∎
 
@@ -296,9 +296,7 @@ Nat.log 2 is the integer base-two logarithm. The cast encloses the natural expre
 
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.RightWord`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.card_words_le`
-- Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.eval`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.layer`
-- Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.length`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.lieLength`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.lieLength_le_of_span`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.lower_lieLength_of_saturation`
@@ -309,6 +307,8 @@ Nat.log 2 is the integer base-two logarithm. The cast encloses the natural expre
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightSpan_mono`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightSpan_real_le_su`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightSpan_reindex_le`
+- Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightWordEval`
+- Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.rightWordLength`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.suCoordinateMap`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.suLie`
 - Truth anchor: `D5/S3/Quantum/Algebra/GenericLieLengthFiltration.suPairMeasure`

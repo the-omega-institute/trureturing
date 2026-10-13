@@ -88,12 +88,12 @@ private def wordPolynomial (b : Basis (Fin d) ℝ M) : RightWord (Fin g) → Fin
 private theorem eval_wordPolynomial (b : Basis (Fin d) ℝ M) (w : RightWord (Fin g))
     (x : Fin g × Fin d → ℝ) (k : Fin d) :
     MvPolynomial.eval x (wordPolynomial b w k) =
-      b.equivFun (w.eval ((fun i => b.equivFun.symm (fun k => x (i, k))))) k := by
+      b.equivFun (w.rightWordEval ((fun i => b.equivFun.symm (fun k => x (i, k))))) k := by
   induction w generalizing k with
   | single i =>
-    simp only [wordPolynomial, eval_X, RightWord.eval, LinearEquiv.apply_symm_apply]
+    simp only [wordPolynomial, eval_X, rightWordEval, LinearEquiv.apply_symm_apply]
   | cons i w ih =>
-    simp only [wordPolynomial, map_sum, map_mul, eval_C, eval_X, ih, RightWord.eval]
+    simp only [wordPolynomial, map_sum, map_mul, eval_C, eval_X, ih, rightWordEval]
     rw [bracket_coordinate]
     simp only [LinearEquiv.apply_symm_apply]
 
@@ -143,7 +143,7 @@ variable {M : Type*} [LieRing M] [LieAlgebra ℝ M] {g d L : ℕ}
 
 private theorem rightSpan_eq_range (S : Fin g → M) (L : ℕ) :
     rightSpan (K := ℝ) S L = Submodule.span ℝ
-      (Set.range (fun w : {w : RightWord (Fin g) // w.length ≤ L} => w.val.eval S)) := by
+      (Set.range (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => w.val.rightWordEval S)) := by
   unfold rightSpan
   apply congrArg (Submodule.span ℝ)
   ext X
@@ -153,29 +153,29 @@ private theorem rightSpan_eq_range (S : Fin g → M) (L : ℕ) :
   · rintro ⟨w, rfl⟩
     exact ⟨w.val, w.property, rfl⟩
 
-private theorem combination_mem (S : Fin g → M) (c : {w : RightWord (Fin g) // w.length ≤ L} →₀ ℝ) :
-    (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => w.val.eval S) c) ∈ rightSpan (K := ℝ) S L := by
+private theorem combination_mem (S : Fin g → M) (c : {w : RightWord (Fin g) // w.rightWordLength ≤ L} →₀ ℝ) :
+    (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => w.val.rightWordEval S) c) ∈ rightSpan (K := ℝ) S L := by
   rw [Finsupp.linearCombination_apply]
   apply Submodule.sum_mem
   intro w hw
   exact Submodule.smul_mem _ _ (word_mem S w.val L w.property)
 
-private theorem eval_boundedPolynomial (b : Basis (Fin d) ℝ M) (c : {w : RightWord (Fin g) // w.length ≤ L} →₀ ℝ)
+private theorem eval_boundedPolynomial (b : Basis (Fin d) ℝ M) (c : {w : RightWord (Fin g) // w.rightWordLength ≤ L} →₀ ℝ)
     (x : Fin g × Fin d → ℝ) (k : Fin d) :
-    MvPolynomial.eval x ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => wordPolynomial b w.val k) c)) =
-      b.equivFun ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => w.val.eval (fun i => b.equivFun.symm (fun k => x (i, k)))) c)) k := by
+    MvPolynomial.eval x ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => wordPolynomial b w.val k) c)) =
+      b.equivFun ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => w.val.rightWordEval (fun i => b.equivFun.symm (fun k => x (i, k)))) c)) k := by
   simp [Finsupp.linearCombination_apply, Algebra.smul_def, Finsupp.linearCombination_apply, Finsupp.sum, eval_wordPolynomial, map_sum, map_smul]
 
-private def spanningPolynomial (b : Basis (Fin d) ℝ M) (c : Fin d → {w : RightWord (Fin g) // w.length ≤ L} →₀ ℝ) :
+private def spanningPolynomial (b : Basis (Fin d) ℝ M) (c : Fin d → {w : RightWord (Fin g) // w.rightWordLength ≤ L} →₀ ℝ) :
     MvPolynomial (Fin g × Fin d) ℝ :=
-    Matrix.det (fun i j => (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => wordPolynomial b w.val i) (c j)))
+    Matrix.det (fun i j => (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => wordPolynomial b w.val i) (c j)))
 
 private theorem eval_spanningPolynomial (b : Basis (Fin d) ℝ M)
-    (c : Fin d → {w : RightWord (Fin g) // w.length ≤ L} →₀ ℝ) (x : Fin g × Fin d → ℝ) :
+    (c : Fin d → {w : RightWord (Fin g) // w.rightWordLength ≤ L} →₀ ℝ) (x : Fin g × Fin d → ℝ) :
     MvPolynomial.eval x (spanningPolynomial b c) =
-      Matrix.det (fun i j => b.equivFun ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => w.val.eval (fun i => b.equivFun.symm (fun k => x (i, k)))) (c j))) i) := by
+      Matrix.det (fun i j => b.equivFun ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => w.val.rightWordEval (fun i => b.equivFun.symm (fun k => x (i, k)))) (c j))) i) := by
   let P : Matrix (Fin d) (Fin d) (MvPolynomial (Fin g × Fin d) ℝ) :=
-    fun i j => (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => wordPolynomial b w.val i) (c j))
+    fun i j => (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => wordPolynomial b w.val i) (c j))
   change MvPolynomial.eval x P.det = _
   rw [(MvPolynomial.eval x).map_det P]
   congr 1
@@ -183,11 +183,11 @@ private theorem eval_spanningPolynomial (b : Basis (Fin d) ℝ M)
   exact eval_boundedPolynomial b (c j) x i
 
 private theorem determinant_ne_zero_implies_span_top [FiniteDimensional ℝ M]
-    (b : Basis (Fin d) ℝ M) (c : Fin d → {w : RightWord (Fin g) // w.length ≤ L} →₀ ℝ) (S : Fin g → M)
-    (hdet : Matrix.det (fun i j => b.equivFun ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => w.val.eval S) (c j))) i) ≠ 0) :
+    (b : Basis (Fin d) ℝ M) (c : Fin d → {w : RightWord (Fin g) // w.rightWordLength ≤ L} →₀ ℝ) (S : Fin g → M)
+    (hdet : Matrix.det (fun i j => b.equivFun ((Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => w.val.rightWordEval S) (c j))) i) ≠ 0) :
     rightSpan (K := ℝ) S L = ⊤ := by
   have hli := Matrix.linearIndependent_cols_of_det_ne_zero hdet
-  have hli' : LinearIndependent ℝ (fun j => (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => w.val.eval S) (c j))) :=
+  have hli' : LinearIndependent ℝ (fun j => (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => w.val.rightWordEval S) (c j))) :=
     LinearIndependent.of_comp b.equivFun.toLinearMap hli
   have hspan := hli'.span_eq_top_of_card_eq_finrank' (Module.finrank_eq_card_basis b).symm
   apply top_unique
@@ -202,7 +202,7 @@ theorem ae_span_top_of_witness [FiniteDimensional ℝ M]
     ∀ᵐ x : Fin g → Fin d → ℝ,
       rightSpan (K := ℝ) ((fun i => b.equivFun.symm (x i))) L = ⊤ := by
   classical
-  have hex : ∀ j : Fin d, ∃ c : {w : RightWord (Fin g) // w.length ≤ L} →₀ ℝ, (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.length ≤ L} => w.val.eval S0) c) = b j := by
+  have hex : ∀ j : Fin d, ∃ c : {w : RightWord (Fin g) // w.rightWordLength ≤ L} →₀ ℝ, (Finsupp.linearCombination ℝ (fun w : {w : RightWord (Fin g) // w.rightWordLength ≤ L} => w.val.rightWordEval S0) c) = b j := by
     intro j
     apply Finsupp.mem_span_range_iff_exists_finsupp.mp
     rw [← rightSpan_eq_range, hS0]

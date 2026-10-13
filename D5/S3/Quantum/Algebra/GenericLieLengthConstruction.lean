@@ -424,7 +424,7 @@ private theorem complex_edge_gap (n : ℕ) (i j : Fin (n + 2)) (he : heapEdge i.
 private theorem gapSet_card : (gapSet.image (Int.cast : ℤ → ℂ)).card = 8 := by norm_num [gapSet]
 
 private theorem B_mem (n : ℕ) : B n ∈ rightSpan (K := ℂ) (gen n) 1 := by
-  exact word_mem (gen n) (.single 1) 1 (by simp [RightWord.length])
+  exact word_mem (gen n) (.single 1) 1 (by simp [rightWordLength])
 
 private theorem selector_mem_eight (n : ℕ) (d : ℂ) (hd : d ∈ (gapSet.image (Int.cast : ℤ → ℂ))) :
     Polynomial.aeval ((LieAlgebra.ad ℂ (Matrix (Fin (n + 2)) (Fin (n + 2)) ℂ) (Matrix.diagonal (centeredEnergy n)))) (Lagrange.basis (gapSet.image (Int.cast : ℤ → ℂ)) id d) (B n) ∈
@@ -742,11 +742,11 @@ attribute [local instance] LieRing.ofAssociativeRing
 
 private theorem word_scaled {I K M : Type*} [Field K] [LieRing M] [LieAlgebra K M]
     (S : I → M) (c : K) (w : RightWord I) :
-    w.eval (fun i => c • S i) = c ^ w.length • w.eval S := by
+    w.rightWordEval (fun i => c • S i) = c ^ w.rightWordLength • w.rightWordEval S := by
   induction w with
-  | single i => simp [RightWord.eval, RightWord.length]
+  | single i => simp [rightWordEval, rightWordLength]
   | cons i w ih =>
-    simp only [RightWord.eval, ih, smul_lie, lie_smul, smul_smul, RightWord.length]
+    simp only [rightWordEval, ih, smul_lie, lie_smul, smul_smul, rightWordLength]
     simp [pow_succ', mul_comm]
 
 private theorem rightSpan_le_scaled {I K M : Type*} [Field K] [LieRing M] [LieAlgebra K M]
@@ -755,7 +755,7 @@ private theorem rightSpan_le_scaled {I K M : Type*} [Field K] [LieRing M] [LieAl
   apply Submodule.span_le.mpr
   rintro X ⟨w, hw, rfl⟩
   have hh := Submodule.smul_mem (rightSpan (K := K) (fun i => c • S i) L)
-    ((c ^ w.length)⁻¹) (word_mem (fun i => c • S i) w L hw)
+    ((c ^ w.rightWordLength)⁻¹) (word_mem (fun i => c • S i) w L hw)
   rw [word_scaled, smul_smul, inv_mul_cancel₀ (pow_ne_zero _ hc), one_smul] at hh
   exact hh
 
@@ -813,10 +813,10 @@ instance suLieAlgebra (n : ℕ) : LieAlgebra ℝ (suSet n) := inferInstanceAs (L
 
 private theorem word_map {I K M N : Type*} [CommRing K] [LieRing M] [LieAlgebra K M]
     [LieRing N] [LieAlgebra K N] (f : M →ₗ⁅K⁆ N) (S : I → M) (w : RightWord I) :
-    f (w.eval S) = w.eval (fun i => f (S i)) := by
+    f (w.rightWordEval S) = w.rightWordEval (fun i => f (S i)) := by
   induction w with
   | single i => rfl
-  | cons i w ih => simp only [RightWord.eval, LieHom.map_lie, ih]
+  | cons i w ih => simp only [rightWordEval, LieHom.map_lie, ih]
 
 theorem rightSpan_map {I K M N : Type*} [CommRing K] [LieRing M] [LieAlgebra K M]
     [LieRing N] [LieAlgebra K N] (f : M →ₗ⁅K⁆ N) (S : I → M) (L : ℕ) :
@@ -829,7 +829,7 @@ theorem rightSpan_map {I K M N : Type*} [CommRing K] [LieRing M] [LieAlgebra K M
   · rintro ⟨Y, ⟨w, hw, rfl⟩, rfl⟩
     exact ⟨w, hw, (word_map f S w).symm⟩
   · rintro ⟨w, hw, rfl⟩
-    exact ⟨w.eval S, ⟨w, hw, rfl⟩, word_map f S w⟩
+    exact ⟨w.rightWordEval S, ⟨w, hw, rfl⟩, word_map f S w⟩
 
 def compactPair (n : ℕ) (i : Fin 2) : suSet (n + 2) := ⟨iGen n i, iGen_su n i⟩
 

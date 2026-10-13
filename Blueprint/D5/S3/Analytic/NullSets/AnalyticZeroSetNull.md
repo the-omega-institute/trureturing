@@ -10,7 +10,7 @@ $$\forall (n : \mathbb{N}), \forall (f : \left(\operatorname{Fin}\left(n\right) 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/NullSets/AnalyticZeroSetNull.ae_ne_zero_of_analytic` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* B. S. Mityagin (2015). *The zero set of a real analytic function*. DOI: [10.48550/arXiv.1512.07276](https://doi.org/10.48550/arXiv.1512.07276). URL: <https://arxiv.org/abs/1512.07276v1>.
 
 *Commentary.*
 
