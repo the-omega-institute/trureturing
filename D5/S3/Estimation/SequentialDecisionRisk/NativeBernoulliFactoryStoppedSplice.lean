@@ -236,6 +236,73 @@ private theorem sections_of_actual_return {Seed : Type}
     exact ⟨hs, rfl⟩
   exact ⟨⟨fun i => (hstep i).1, hret⟩, fun i => (hstep i).2⟩
 
+/-- The original first-return clock, with infinity for nonreturn. -/
+def returnTime {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) : WithTop ℕ :=
+  hittingAfter (fun i z => π z.1 S (acquiredHistory π S answer i z))
+    (Set.range (fun cell : Cell => (Sum.inr cell : Action))) 0 ω
+
+private theorem stopped_splice_return_time
+    (G : GateSeed → Bool → History → Action)
+    (C : Cell → CoreSeed → Bool → History → Action)
+    (g : GateSeed) (s : CoreSeed) (S : Bool)
+    (answer : Bool → ℕ → Tape → Bool) (tape : Tape) (γ : History) (c : Cell)
+    (hg : g ∈ seedSection G S γ (.inr c)) (ht : tape ∈ tapeSection answer γ) :
+    returnTime (stoppedSplice G C) S answer ((g, s), tape) =
+      (γ.length : WithTop ℕ) +
+        returnTime (C c) S (fun source j t => answer source (γ.length + j) t) (s, tape) := by
+  let coreAnswer := fun source j t => answer source (γ.length + j) t
+  let W := fun i z => stoppedSplice G C z.1 S
+    (acquiredHistory (stoppedSplice G C) S answer i z)
+  let K := fun i z => C c z.1 S (acquiredHistory (C c) S coreAnswer i z)
+  let R : Set Action := Set.range (fun cell : Cell => (Sum.inr cell : Action))
+  have hpre (i : ℕ) (hi : i < γ.length) : W i ((g, s), tape) = .inl (γ.get ⟨i, hi⟩).1 := by
+    have hh := history_of_sections (stoppedSplice G C) S answer (g, s) tape γ
+      (fun j => (splice_before_cut G C g s S γ c hg j j.isLt).trans (hg.1 j)) ht i hi.le
+    change stoppedSplice G C (g, s) S _ = _
+    rw [hh, splice_before_cut G C g s S γ c hg i hi]
+    exact hg.1 ⟨i, hi⟩
+  have hpost (k : ℕ) : W (γ.length + k) ((g, s), tape) = K k (s, tape) :=
+    (acquired_history_stopped_splice G C g s S answer tape γ c hg ht k).2
+  change hittingAfter W R 0 ((g, s), tape) =
+    (γ.length : WithTop ℕ) + hittingAfter K R 0 (s, tape)
+  cases hc : hittingAfter K R 0 (s, tape) with
+  | top =>
+    simp only [add_top]
+    apply hittingAfter_eq_top_iff.mpr
+    intro i hi
+    by_cases hγ : i < γ.length
+    · rw [hpre i hγ]
+      rintro ⟨cell, he⟩
+      contradiction
+    · have he : i = γ.length + (i - γ.length) := by omega
+      rw [he, hpost]
+      exact (hittingAfter_eq_top_iff.mp hc) _ (Nat.zero_le _)
+  | coe m =>
+    change hittingAfter W R 0 ((g, s), tape) = ((γ.length + m : ℕ) : WithTop ℕ)
+    apply le_antisymm
+    · apply hittingAfter_le_of_mem (u := W) (s := R) (n := 0) (i := γ.length + m)
+        (Nat.zero_le _)
+      rw [hpost]
+      have hne : hittingAfter K R 0 (s, tape) ≠ ⊤ := by rw [hc]; exact WithTop.coe_ne_top
+      have hm := hittingAfter_mem_set_of_ne_top hne
+      simpa [hc] using hm
+    · apply le_of_not_gt
+      intro hlt
+      obtain ⟨i, hi, hr⟩ := (hittingAfter_lt_iff (u := W) (s := R) (n := 0)
+        (i := γ.length + m) (ω := ((g, s), tape))).mp hlt
+      have hib : i < γ.length + m := hi.2
+      by_cases hγ : i < γ.length
+      · rw [hpre i hγ] at hr
+        rcases hr with ⟨cell, he⟩
+        contradiction
+      · have he : i = γ.length + (i - γ.length) := by omega
+        rw [he, hpost] at hr
+        have hltcore : ((i - γ.length : ℕ) : WithTop ℕ) < hittingAfter K R 0 (s, tape) := by
+          rw [hc]
+          exact WithTop.coe_lt_coe.mpr (show i - γ.length < m by omega)
+        exact notMem_of_lt_hittingAfter hltcore (Nat.zero_le _) hr
+
 /-- A finite return of the original execution supplies the cut automatically;
 the wrapper then uses global innovations `n + k` for every core step. -/
 theorem acquired_history_at_actual_stop
@@ -250,12 +317,18 @@ theorem acquired_history_at_actual_stop
     let core := acquiredHistory (C c) S (fun source j t => answer source (n + j) t) k (s, tape)
     acquiredHistory (stoppedSplice G C) S answer (n + k) ((g, s), tape) = γ ++ core ∧
       stoppedSplice G C (g, s) S
-        (acquiredHistory (stoppedSplice G C) S answer (n + k) ((g, s), tape)) = C c s S core := by
+        (acquiredHistory (stoppedSplice G C) S answer (n + k) ((g, s), tape)) = C c s S core ∧
+      returnTime (stoppedSplice G C) S answer ((g, s), tape) =
+        (n : WithTop ℕ) + returnTime (C c) S (fun source j t => answer source (n + j) t)
+          (s, tape) := by
   obtain ⟨hg, ht⟩ := sections_of_actual_return G S answer (g, tape) n c hstop hret
   have hl := acquired_history_length_at_return G S answer (g, tape) n hstop
   have hx := acquired_history_stopped_splice G C g s S answer tape
     (acquiredHistory G S answer n (g, tape)) c hg ht k
-  exact ⟨by simpa only [hl] using hx.1, by simpa only [hl] using hx.2⟩
+  have hc := stopped_splice_return_time G C g s S answer tape
+    (acquiredHistory G S answer n (g, tape)) c hg ht
+  exact ⟨by simpa only [hl] using hx.1, by simpa only [hl] using hx.2,
+    by simpa only [hl] using hc⟩
 
 private theorem take_append_at (γ t : History) (j : ℕ) :
     (γ ++ t).take (γ.length + j) = γ ++ t.take j := by
@@ -533,6 +606,11 @@ theorem native_stopped_record_factorization
     [IsProbabilityMeasure νg] [IsProbabilityMeasure νc]
     (S : Bool) (p q : unitInterval) (γ t : History) (c : Cell) (a : Action) :
     (RawLaw (νg.prod νc))
+      (nativeLeaf (stoppedSplice G C) S p q (γ ++ t) a ∩
+        (fun ω => ω.1.1) ⁻¹' seedSection G S γ (.inr c)) =
+      (RawLaw νg) (nativeLeaf G S p q γ (.inr c)) *
+        (RawLaw νc) (nativeLeaf (C c) S p q t a) ∧
+    (RawLaw (νg.prod νc))
       {ω : (GateSeed × CoreSeed) × (ℕ → ℝ) |
         (ω.1.1, ω.2) ∈ nativeLeaf G S p q γ (.inr c) ∧
         (ω.1.2, fun i => ω.2 (γ.length + i)) ∈ nativeLeaf (C c) S p q t a} =
@@ -549,10 +627,15 @@ theorem native_stopped_record_factorization
   have hg := native_leaf_with_seed_law G hG S νg p q γ (.inr c) univ MeasurableSet.univ
   have hc := native_leaf_with_seed_law (C c) (hC c) S νc p q t a univ MeasurableSet.univ
   simp only [Set.preimage_univ, Set.inter_univ] at hg hc
-  rw [← (native_stopped_leaf_cut G C S p q γ t c a).1]
-  rw [hw, hg, hc, Set.inter_comm, stopped_seed_section_product,
-    Measure.prod_prod, source_likelihood_append]
-  ac_rfl
+  have hprod : (RawLaw (νg.prod νc))
+      (nativeLeaf (stoppedSplice G C) S p q (γ ++ t) a ∩
+        (fun ω => ω.1.1) ⁻¹' seedSection G S γ (.inr c)) =
+      (RawLaw νg) (nativeLeaf G S p q γ (.inr c)) *
+        (RawLaw νc) (nativeLeaf (C c) S p q t a) := by
+    rw [hw, hg, hc, Set.inter_comm, stopped_seed_section_product,
+      Measure.prod_prod, source_likelihood_append]
+    ac_rfl
+  exact ⟨hprod, by rw [← (native_stopped_leaf_cut G C S p q γ t c a).1]; exact hprod⟩
 
 /-- A one-source gate uses `none` to request another answer and `some v`
 to return. The first actual answer is retained separately from the gate bit. -/
