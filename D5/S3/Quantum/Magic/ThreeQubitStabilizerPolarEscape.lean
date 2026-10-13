@@ -7,6 +7,7 @@
    digest: Seven anticommuting Paulis support a three-qubit stabilizer polar escape. -/
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Entanglement.NandiMutualPredictabilityLOCCRefutation
+import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 set_option autoImplicit false
 noncomputable section
 open Matrix
@@ -16,12 +17,13 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (Pauli pauliMatrix tensorOp wordOp localOp tensor_mul sgn anticomm)
 open D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence (s2)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-  (Phase letterProduct letterPhase word_mul word_comm_sign tensor_one wordUnit word_one tensor_trace
-    word_hermitian pauli_hermitian word_trace_pair)
+  (Operator Phase letterProduct letterPhase word_mul word_comm_sign tensor_one wordUnit word_one
+    tensor_trace word_hermitian pauli_hermitian word_trace_pair)
 namespace D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
 abbrev Bits (n : ℕ) := Fin n → Fin 2
-abbrev Op (n : ℕ) := Matrix (Bits n) (Bits n) ℂ
-def IsState {n : ℕ} (ρ : Op n) : Prop := ρ.PosSemidef ∧ ρ.trace = 1
+abbrev Op (n : ℕ) := Operator n
+def IsState {n : ℕ} (ρ : Op n) : Prop :=
+  D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity ρ
 def tr {n : ℕ} (A : Op n) : ℝ := A.trace.re
 def conjugate {n : ℕ} (A : Op n) : Op n := A.map star
 private def splitBits (n m : ℕ) (x : Bits (n + m)) : Bits n × Bits m :=

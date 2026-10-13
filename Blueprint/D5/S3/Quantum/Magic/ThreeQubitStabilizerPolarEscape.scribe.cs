@@ -18,14 +18,15 @@ internal sealed class ThreeQubitStabilizerPolarEscapeDocument : IScribeDocumentD
                 "An n-qubit computational basis index assigns a bit in Fin 2 to every coordinate in Fin n.",
                 DescribeRole.Definition),
             Node("op", "Complex operators", "Op",
-                All("n", Naturals(), Equal(Op(X("n")), Call("Matrix", Bits(X("n")), Bits(X("n")), Complexes()))),
-                "Operators are complex square matrices indexed by the computational basis.",
+                All("n", Naturals(), Equal(Op(X("n")), At(Qualified("D5", "S3", "Quantum", "Measurement",
+                    "StabilizerPovmMaximalEntanglementRefutation", "Operator"), X("n")))),
+                "Op refers to D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.Operator: complex square matrices indexed by the computational basis.",
                 DescribeRole.Definition),
             Node("is-state", "Density matrices", "IsState",
                 All("n", Naturals(), All("rho", Op(X("n")),
-                    IffOf(Local("IsState", X("rho")), And(PSD(X("rho")),
-                        Equal(Trace(X("rho")), Typed(Num(1), Complexes())))))),
-                "A quantum state is positive semidefinite and has complex trace one, as in §2.",
+                    IffOf(Local("IsState", X("rho")), At(Qualified("D5", "S3", "Quantum", "Entanglement",
+                        "GHZMeasureBiseparableBound", "IsDensity"), X("rho"))))),
+                "IsState refers to D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity: positive semidefiniteness and complex trace one, as in §2.",
                 DescribeRole.Definition, Literature()),
             Node("tr", "Real part of the trace", "tr",
                 All("n", Naturals(), All("A", Op(X("n")),
@@ -234,7 +235,6 @@ internal sealed class ThreeQubitStabilizerPolarEscapeDocument : IScribeDocumentD
     private static Formula Identity(long n) => Typed(Num(1), Op(Num(n)));
     private static Formula Trace(Formula value) => At(Qualified("Matrix", "trace"), value);
     private static Formula Adjoint(Formula value) => At(Qualified("Matrix", "conjTranspose"), value);
-    private static Formula PSD(Formula value) => At(Qualified("Matrix", "PosSemidef"), value);
     private static Formula Arrow(Formula domain, Formula codomain) => new Formula.TypeArrow(domain, codomain);
     private static Formula Pair(Formula left, Formula right) => Parenthesized(Seq(left, Comma, Sp, right));
     private static Formula Vector(params Formula[] entries)
