@@ -66,4 +66,3 @@ The formula states the complete estimate or implication. Matrix entries, finite 
 - Truth anchor: `D5/S3/Quantum/Measurement/AntidistinguishabilityOverlapNonTight.result`
 - Dependency: [D5/S3/Quantum/Measurement/AntidistinguishabilitySpectrum](AntidistinguishabilitySpectrum.md)
 - Dependency: [D5/S3/Quantum/Measurement/OverlapLowRankDistance](OverlapLowRankDistance.md)
-- Dependency: [D5/S3/Quantum/Measurement/OverlapSpectralTruncation](OverlapSpectralTruncation.md)

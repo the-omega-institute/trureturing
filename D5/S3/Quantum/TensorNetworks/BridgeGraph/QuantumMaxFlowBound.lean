@@ -7,7 +7,7 @@
    digest: QuantumMaxFlowBound for width-three bridge flow. -/
 
 /-
-proof_shape: rank_map_algebraMap: bind-only; consumer: OverlapSpectralTruncation.norm_square_gram_rank
+proof_shape: rank_map_algebraMap: bind-only; consumer: AntidistinguishabilityOverlapNonTight.norm_square_gram_rank
 escape_witness: rank_map_algebraMap: none
 proof_shape: QMaxFlow_attained: bind-only; consumer: CastlingDeficit.concise_maximizer
 escape_witness: QMaxFlow_attained: none

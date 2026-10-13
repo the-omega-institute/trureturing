@@ -22,7 +22,7 @@ proof_shape: blockNorm_domination: bind-only; consumer: block_frobenius_bound; e
 proof_shape: block_frobenius_bound: bind-only; consumer: translation_from_block; escape_witness: none
 proof_shape: translation_from_block: bind-only; consumer: translation_gap; escape_witness: none
 proof_shape: frobSq_unitary_right: bind-only; consumer: maximizing_block_frame, translation_gap, unitary_pencil_bound; escape_witness: none
-proof_shape: frobSq_unitary_left: bind-only; consumer: maximizing_block_frame, translation_gap, OverlapSpectralTruncation.indexSpectral_frobSq; escape_witness: none
+proof_shape: frobSq_unitary_left: bind-only; consumer: maximizing_block_frame, translation_gap, AntidistinguishabilityOverlapNonTight.indexSpectral_frobSq; escape_witness: none
 proof_shape: opSq_le_frobSq: bind-only; consumer: projection_K_quadratic, projection_adjoint_bound; escape_witness: none
 proof_shape: commutator_norm_bound_of_pure: bind-only; consumer: maximizing_block_frame; escape_witness: none
 proof_shape: pure_first_variance: bind-only; consumer: maximizing_block_frame; escape_witness: none

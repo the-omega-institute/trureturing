@@ -11,7 +11,6 @@ strata_touched:
   - D5/S3/Quantum/Measurement/IncoherentCone
   - D5/S3/Quantum/Measurement/LocallyPositiveSpectrum
   - D5/S3/Quantum/Measurement/AntidistinguishabilitySpectrum
-  - D5/S3/Quantum/Measurement/OverlapSpectralTruncation
   - D5/S3/Quantum/Measurement/OverlapLowRankDistance
   - D5/S3/Quantum/Measurement/AntidistinguishabilityOverlapNonTight
 license: citation-only
