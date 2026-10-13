@@ -559,11 +559,12 @@ private lemma coeff_logderiv_of_one_sub (F G : PS)
 private lemma prod_monomial (s : Multiset ℕ) (f : ℕ → ℂ) :
     (s.map (fun k => PowerSeries.monomial k (f k))).prod =
       PowerSeries.monomial s.sum (s.map f).prod := by
-  induction s using Multiset.induction_on with
-  | empty => simp
-  | @cons a s ih =>
-    simp only [Multiset.map_cons, Multiset.prod_cons, Multiset.sum_cons, ih,
-      PowerSeries.monomial_mul_monomial]
+  classical
+  simpa only [Fin.prod_univ_fun_getElem s.toList (fun k => PowerSeries.monomial k (f k)),
+    Fin.prod_univ_fun_getElem s.toList f, Fin.sum_univ_getElem,
+    Multiset.prod_map_toList, Multiset.sum_toList] using
+    (PowerSeries.prod_monomial (fun i : Fin s.toList.length => s.toList[i.1])
+      (fun i => f s.toList[i.1]) Finset.univ)
 
 private lemma coeff_pow_eq_partition_sum (F : PS) (hF : PowerSeries.coeff 0 F = 0)
     (m j : ℕ) :
@@ -572,28 +573,17 @@ private lemma coeff_pow_eq_partition_sum (F : PS) (hF : PowerSeries.coeff 0 F = 
         (π.parts.map (fun k => PowerSeries.coeff k F)).prod else 0 := by
   classical
   let Q : PS := ∑ k ∈ Finset.Icc 1 m, PowerSeries.monomial k (PowerSeries.coeff k F)
-  have hQ (n : ℕ) (hn : n ≤ m) : PowerSeries.coeff n Q = PowerSeries.coeff n F := by
-    dsimp only [Q]
-    rw [map_sum]
-    by_cases hn0 : n = 0
-    · subst n
-      rw [hF]
-      apply Finset.sum_eq_zero
-      intro k hk
-      rw [PowerSeries.coeff_monomial, if_neg (by have := Finset.mem_Icc.mp hk; omega)]
-    · rw [Finset.sum_eq_single n]
-      · exact PowerSeries.coeff_monomial_same _ _
-      · intro b _ hbn; rw [PowerSeries.coeff_monomial, if_neg hbn.symm]
-      · intro hnmem; exact (hnmem (Finset.mem_Icc.mpr (by omega))).elim
+  have htrunc : (PowerSeries.trunc (m + 1) F : PS) = Q := by
+    change Polynomial.coeToPowerSeries.ringHom (PowerSeries.trunc (m + 1) F) = Q
+    rw [PowerSeries.trunc_apply, map_sum]
+    simp only [Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_monomial]
+    rw [Finset.sum_eq_sum_Ico_succ_bot (Nat.succ_pos m)]
+    simp only [hF, map_zero, zero_add]
+    rfl
   have hpow : PowerSeries.coeff m (F ^ j) = PowerSeries.coeff m (Q ^ j) := by
-    have hx : (PowerSeries.X : PS) ^ (m + 1) ∣ F - Q := by
-      apply PowerSeries.X_pow_dvd_iff.mpr
-      intro n hn
-      rw [map_sub, hQ n (by omega), sub_self]
-    have hc := PowerSeries.X_pow_dvd_iff.mp
-      (hx.trans (sub_dvd_pow_sub_pow F Q j)) m (by omega)
-    rw [map_sub] at hc
-    exact sub_eq_zero.mp hc
+    have ht := congrArg (fun p : Polynomial ℂ => p.coeff m)
+      (PowerSeries.trunc_trunc_pow F (m + 1) j)
+    simpa only [PowerSeries.coeff_trunc, Nat.lt_succ_self, if_true, htrunc] using ht.symm
   rw [hpow]
   dsimp only [Q]
   rw [Finset.sum_pow, map_sum]
