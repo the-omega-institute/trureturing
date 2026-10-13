@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Hiai;
 internal sealed class TildeSpectralNonconcavityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Off-midpoint nonconcavity of the tilde spectral trace.",
+        "Joint-concavity classification of the tilde spectral trace.",
         H("TildeSpectralNonconcavity"), Blocks(
             Describe.Lean(DescribeId.Create("strict-first-variable-jensen-violation"),
                 DeclarationHandle.Create("D5/S3/Quantum/Hiai/TildeSpectralNonconcavity.strict_first_variable_jensen_violation"),
@@ -36,6 +36,37 @@ internal sealed class TildeSpectralNonconcavityDocument : IScribeDocumentDefinit
                         + "Continuity of positive matrix powers at the three fixed SPD first inputs "
                         + "preserves that gap for one common SPD B=P+epsilon I. "
                         + "No negative power is applied to the singular projector."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("joint-concavity-classification"),
+                DeclarationHandle.Create("D5/S3/Quantum/Hiai/TildeSpectralNonconcavity.joint_concavity_classification"),
+                H("All-dimension SPD classification"),
+                StatementSource.FromAuthor(Classification()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/hiai2026quasigeometric")),
+                Blocks(
+                    Paragraph(Text("Under 0 < alpha < 1 and p > 0, joint concavity on SPD complex matrix pairs "
+                        + "simultaneously in every Fin n dimension is equivalent to alpha=1/2 and p<=1. "
+                        + "The necessary direction uses strict Fin2 SPD witnesses; the equivalence is "
+                        + "not asserted separately for each dimension.")),
+                    Paragraph(Text("At alpha=1/2 put C=A^(p/2) B^p A^(p/2) and L=A^(-p)#_(1/2)B^p. "
+                        + "The actual Riccati identity A^(p/2)L A^(p/2)=C^(1/2) and equal Gram spectral "
+                        + "traces prove T=ReTr(C^(1/(2p))). Every power is CFC.rpow.")),
+                    Paragraph(Text("At theta=0 the existing PsiMeanTraceConcavity.psi_jointly_concave supplies "
+                        + "fixed-congruence Epstein concavity for 0<p<=1. The existing Gram and Holder/Young "
+                        + "suppliers give F_p(A,B)<=(E_A(Z)+E_B((Z^(-1))*))/2 for every invertible Z. "
+                        + "The optimizer Z=A^(-p/2)C^(1/4) attains equality. Selecting it at the mixed SPD "
+                        + "pair and applying the fixed-Z inequalities proves generic joint concavity.")),
+                    Paragraph(Text("For p>1 the positive-power Gram functional has endpoint values "
+                        + "2^(-1/(2p)) at (Q,P) and (I-Q,P), and middle value 2^(-1/2) at (I/2,P), "
+                        + "where Q=diag(1,0) and P is the balanced rank-one projector. Positive-power "
+                        + "continuity preserves the strict gap for A0=diag(1-s,s), A1=diag(s,1-s), "
+                        + "and B=(1-s)P+s(I-P), with common s in (0,1/2). The actual TILDE identity "
+                        + "is used only at the SPD inputs. The middle Gram value is "
+                        + "2^(-1/2)(sqrt(1-s)+sqrt(s)).")),
+                    Paragraph(Text("Midpoint sufficiency is classical, including Zhang1811.01205v2. "
+                        + "The retained content is the consumed formal assembly into the actual functional "
+                        + "classification and the all-off-midpoint witnesses. Supported-PSD extensions, "
+                        + "UNTILDE and Problem 5.18 are separate obligations. Source comparisons are "
+                        + "bounded to inspected manuscripts and the pinned repository suppliers."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
@@ -52,6 +83,21 @@ internal sealed class TildeSpectralNonconcavityDocument : IScribeDocumentDefinit
 
     private static Formula Conditions(Formula alpha, Formula p) =>
         Seq(D(0), Lt, alpha, Land, Sp, alpha, Lt, D(1), Land, Sp, D(0), Lt, p);
+
+
+    private static Formula Classification()
+    {
+        var alpha = F.Id("alpha"); var p = F.Id("p"); var n = F.Id("n");
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var natural = Seq(Mathbb, Grp(F.Id("N")));
+        var matrix = Call("Matrix", Call("Fin", n), Call("Fin", n), Seq(Mathbb, Grp(F.Id("C"))));
+        var spd = Call("SPD", matrix);
+        var left = Seq(Forall, Sp, n, Colon, Sp, natural, Comma, Sp,
+            Call("JointlyConcaveOn", spd, spd, Call("tildeTrace", alpha, p)));
+        var right = Seq(alpha, Eq, new Formula.Fraction(D(1), D(2)), Land, Sp, p, Le, D(1));
+        return Seq(Forall, Sp, alpha, Comma, Sp, p, Colon, Sp, real, Comma, Esc,
+            Conditions(alpha, p), Implies, Esc, Open, left, Close, Sp, Iff, Sp, Open, right, Close);
+    }
 
     private static Formula Endpoint()
     {
