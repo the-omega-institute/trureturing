@@ -1,0 +1,48 @@
+**Assumption 58.11 (conditional fixed-budget synthesis).** The
+fixed-budget feasibility argument from
+[FIB Relational Fiber Calculus · Continuation IV, §§41--44](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md)
+requires the following hypotheses, in addition to
+the tagged, completed, observation-based, and $\Gamma$-preserving contracts
+above.
+
+1. There is a nonempty source-total domain covered by the specified finitely
+   many chart types, with Presburger-definable parameter admission. Fix a
+   finite controller-size bound $K$, finite action and response types, and a
+   finite effectively enumerable family of controller tables, including the
+   allowed instruction and terminal-output choices. A claim covering all
+   controllers of size at most $K$ requires completeness of this enumeration.
+2. Common-boundary legality, source-independent response-indexed control
+   updates, and exact same-source semantics hold for the full ordered action
+   language, including passive actions, interventions, and silent events.
+   Complete target-row equality and correctness are preserved.
+3. For each requested finite budget $B$, or mixed budget in
+   $(\mathbb N\cup\{\infty\})^d$ with a constrained coordinate, an independently
+   certified effective raw-event horizon $T_K(B)$ covers every successful
+   budget-feasible candidate. Alternatively, supply the certified regular
+   history encoding of Continuation IV §42.2 with an effective rank or exact
+   acceleration procedure deciding termination, complete terminal rows, and
+   resource maxima. Response-phase bounds and plain regularity are insufficient.
+4. Admission, replies, legality, definedness, successors, epoch updates,
+   exact event costs, complete-row equality, and the pathwise resource
+   thresholds for the chosen $\Gamma$ are effectively Presburger-definable,
+   or the certified alternative supplies the same exact decisions.
+5. All finite path predicates describe actual deterministic executions from
+   the original source, and include every raw event through the halt.
+   Source-total success means that every admitted source has such a legal,
+   defined, correct terminal path. Separate existential witnesses on
+   different source fibers do not supply this universal condition.
+
+These assumptions decide the stated fixed-budget feasibility by the
+finite path argument in 58.21. They do not establish the effective-frontier
+conclusion of Continuation IV §44.2. In that proof the existence of a finite
+feasible vector outside an upward closure is incorrectly identified with
+ordinary mixed-box feasibility; 58.19 supplies a counterexample even with a
+finite uniform seed. For effective finite-family extraction, additionally
+decide each candidate's source-total success, decide uniform boundedness of
+every coordinate, and extract exact finite bounds as in 58.20. The budget
+horizons $T_K(B)$ alone do not supply a budget-independent family horizon
+or these boundedness decisions. Neither finite alphabets, a
+semantic greatest quotient, nor existence of a finite residual quotient
+alone proves effective synthesis, effective quotient computation, or an
+unconditional decidability theorem.
+
