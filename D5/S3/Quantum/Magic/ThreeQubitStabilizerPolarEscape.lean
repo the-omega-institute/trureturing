@@ -144,13 +144,10 @@ private lemma cnot_involutive {n : ℕ} (c t : Fin n) (h : c ≠ t) :
 private lemma cnot_action {n : ℕ} (c t : Fin n) (h : c ≠ t) (A : Op n) :
     gateCNOT c t * A * gateCNOT c t = A.submatrix (cnotBits c t) (cnotBits c t) := by
   have hi := cnot_involutive c t h
-  ext x y
-  have he (z : Bits n) : x = cnotBits c t z ↔ z = cnotBits c t x :=
-    eq_comm.trans hi.eq_iff
-  change (∑ j, (∑ k, (if x = cnotBits c t k then 1 else 0) * A k j) *
-    (if j = cnotBits c t y then 1 else 0)) = A (cnotBits c t x) (cnotBits c t y)
-  simp only [he, ite_mul, one_mul, zero_mul, mul_ite, mul_one, mul_zero]
-  simp
+  change (1 : Op n).submatrix id hi.toPerm * A *
+    (1 : Op n).submatrix (Equiv.refl (Bits n)) hi.toPerm = _
+  rw [Matrix.one_submatrix_mul, Matrix.mul_submatrix_one]
+  rfl
 private lemma cnot_unitary {n : ℕ} (c t : Fin n) (h : c ≠ t) :
     gateCNOT c t ∈ Matrix.unitaryGroup (Bits n) ℂ ∧ (gateCNOT c t)ᴴ = gateCNOT c t := by
   have hi := cnot_involutive c t h
@@ -583,13 +580,10 @@ private lemma CNOT_mem {n : ℕ} (c t : Fin n) (h : c ≠ t) :
   Submonoid.subset_closure (Or.inl (Or.inr (Or.inr ⟨c, t, h, rfl⟩)))
 private lemma cnot_mulVec {n : ℕ} (c t : Fin n) (h : c ≠ t) (v : Bits n → ℂ) :
     gateCNOT c t *ᵥ v = fun x => v (cnotBits c t x) := by
-  ext x
   have hi := cnot_involutive c t h
-  have he (y : Bits n) : x = cnotBits c t y ↔ y = cnotBits c t x :=
-    eq_comm.trans hi.eq_iff
-  change (∑ y, (if x = cnotBits c t y then 1 else 0) * v y) = _
-  simp only [he, ite_mul, one_mul, zero_mul]
-  simp
+  change (1 : Op n).submatrix id hi.toPerm *ᵥ v = _
+  rw [Matrix.submatrix_mulVec_equiv, Matrix.one_mulVec]
+  rfl
 private def bellCircuit : Op 6 :=
   gateCNOT 2 5 * gateCNOT 1 4 * gateCNOT 0 3 *
     (localOp 0 gateH * localOp 1 gateH * localOp 2 gateH)
