@@ -8,14 +8,15 @@ internal sealed class GoldenResidualFiveDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A bounded 2,3,5,7 core with at most five residual primes, excluding 11, satisfies strict "
-            + "Robin. In the 5040 power-congruence branch this closes total support up to nine primes.",
-        H("Five Residual Primes in the 5040 Branch"),
+            + "Robin. In the 5040 power-congruence branch this closes total support up to thirty-nine primes.",
+        H("Strict Robin in the Bounded-Support 5040 Branch"),
         Blocks(
             Paragraph(Text(
                 "The objects here are integers n = 2^a*3^b*5*7*r with 4 <= a <= 6, "
                     + "2 <= b <= 3, r coprime to 210 and 11 not dividing r. The residual r may "
-                    + "contain arbitrary positive prime exponents. Its number of distinct prime "
-                    + "factors is restricted to at most five.")),
+                    + "contain arbitrary positive prime exponents. The first theorem assumes at most five "
+                    + "distinct residual primes; the power-congruence theorem below covers at most "
+                    + "thirty-nine total distinct prime factors.")),
             Describe.Lean(
                 DescribeId.Create("golden-residual-five-robin"),
                 DeclarationHandle.Create(Prefix + "robin_of_core_residual_le_five"),
@@ -65,5 +66,75 @@ internal sealed class GoldenResidualFiveDocument : IScribeDocumentDefinition
                             + "establish that every integer satisfies the branch hypotheses or "
                             + "bound residual support in general. The Riemann hypothesis remains "
                             + "open."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-congruence-thirty-nine-prime-robin"),
+                DeclarationHandle.Create(Prefix + "robin_of_modEq_2241_card_le_thirty_nine"),
+                H("Thirty-nine total primes in the congruence branch"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every natural n > 5040 such that 5040 divides n, "
+                            + "3^n is congruent to 2241 modulo n, and n has at most thirty-nine "
+                            + "distinct prime factors, strict Robin holds.")),
+                    Paragraph(Text(
+                        "The existing nine-prime result handles support at most nine. For larger "
+                            + "support, the shape theorem gives n = 2^a*3^b*5*7*r, with "
+                            + "4 <= a <= 6 and 2 <= b <= 3. Coprimality gives exactly four core "
+                            + "primes, so the residual r has between six and thirty-five distinct "
+                            + "prime factors. The existing small-prime exclusions force all of "
+                            + "them to be at least 47.")),
+                    Paragraph(Text(
+                        "For a finite set of k distinct integers each at least m+1, the Euler "
+                            + "product is at most (m+k)/m. Removing the largest integer proves "
+                            + "the bound by telescoping induction. The proof applies this with "
+                            + "m = 46 and combines it with the existing core bound 254/63.")),
+                    Paragraph(Text(
+                        "If the residual support k is at most fourteen, the ratio is at most "
+                            + "(254/63)*(60/46) = 2540/483 < 267/50. The bound "
+                            + "n >= 5040*47^5 > 2^33 and the existing rational logarithm "
+                            + "certificate give log(log(n)) > 3, so Robin's capacity exceeds "
+                            + "267/50.")),
+                    Paragraph(Text(
+                        "If k is greater than fourteen, the proof uses the weaker bound "
+                            + "k >= thirteen to obtain n >= 5040*47^13 > 2^84. The same "
+                            + "logarithm-certificate interface gives log(log(2^84)) > 4: first "
+                            + "log(2^84) > 58, then log(58) > 4. Since k <= 35, the ratio is "
+                            + "at most (254/63)*(81/46) = 1143/161 < 178/25. The existing "
+                            + "bound exp(gamma) > 89/50 puts Robin's capacity above 178/25.")),
+                    Paragraph(Text(
+                        "All prime exponents in r remain arbitrary. The theorem keeps the "
+                            + "divisibility, power-congruence and finite support hypotheses. It "
+                            + "does not bound unrestricted support or prove the Riemann "
+                            + "hypothesis."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-congruence-robin-counterexample-size"),
+                DeclarationHandle.Create(Prefix + "counterexample_size_lower_bound"),
+                H("Explicit size lower bound for a counterexample in this branch"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Suppose n > 5040, 5040 divides n, 3^n is congruent to 2241 modulo n, "
+                            + "and exp(gamma)*log(log(n)) <= sigma(1,n)/n. Then "
+                            + "5040*47^36 <= n.")),
+                    Paragraph(Text(
+                        "The proved thirty-nine-support theorem excludes a counterexample "
+                            + "with at most thirty-nine distinct primes. Thus n has at least "
+                            + "forty distinct primes. The existing shape has four coprime core "
+                            + "primes, leaving at least thirty-six distinct residual primes. "
+                            + "Each is at least 47 by the existing small-prime exclusions. "
+                            + "The same radical lower-bound helper used in the support theorem "
+                            + "gives 47^36 <= r, while the core is at least 5040.")),
+                    Paragraph(Text(
+                        "The exact threshold is "
+                            + "7905938326547719933989230085718562349144472262468774945155665840, "
+                            + "approximately 7.9059383265 times 10^63. This is a lower bound "
+                            + "for a hypothetical counterexample satisfying the stated "
+                            + "divisibility and congruence conditions. It does not establish "
+                            + "that such a counterexample exists or constrain counterexamples "
+                            + "outside this branch."))),
                 DescribeRole.Theorem))));
 }
