@@ -65,7 +65,7 @@ private lemma operator_polynomial {m : ℕ} (hm : 0 < m) (r : ℕ) (P : ℂ[X]) 
   rw [polynomial_jet P j (grid_mem hm (Nat.le_of_lt_succ (mem_range.mp hi)))]
   simp only [Complex.ofReal_div, Complex.ofReal_natCast]
 
-private lemma residual_jet {r j : ℕ} (hj : j ≤ r) {f : ℝ → ℂ}
+lemma residual_jet {r j : ℕ} (hj : j ≤ r) {f : ℝ → ℂ}
     (hf : ContDiffOn ℝ r f (Set.Icc (0 : ℝ) 1)) (P : ℂ[X]) {x : ℝ}
     (hx : x ∈ Set.Icc (0 : ℝ) 1) :
     iteratedDerivWithin j (fun y : ℝ => f y - P.eval (y : ℂ)) (Set.Icc 0 1) x =
