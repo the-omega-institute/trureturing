@@ -467,7 +467,7 @@ private lemma map_power {A B : Type*} [CStarAlgebra A] [CStarAlgebra B]
 def geometricMean (θ : ℝ) (B A : Matrix d d ℂ) : Matrix d d ℂ :=
   B ^ (1 / 2 : ℝ) * (B ^ (-1 / 2 : ℝ) * A * B ^ (-1 / 2 : ℝ)) ^ θ * B ^ (1 / 2 : ℝ)
 
-private lemma mean_strict {A B : Matrix d d ℂ} (hA : A.PosDef) (hB : B.PosDef) (θ : ℝ) :
+lemma mean_strict {A B : Matrix d d ℂ} (hA : A.PosDef) (hB : B.PosDef) (θ : ℝ) :
     IsStrictlyPositive (geometricMean θ B A) := by
   have hI := hB.isStrictlyPositive.rpow B (-1 / 2)
   have hS := hB.isStrictlyPositive.rpow B (1 / 2)
