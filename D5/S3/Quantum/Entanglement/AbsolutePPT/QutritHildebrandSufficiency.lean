@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/QutritHildebrandSufficiency
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QutritHildebrandSufficiency
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Hildebrand sufficiency from ordered Schmidt and trace pairings. -/

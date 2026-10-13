@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralFeasiblePerturbation
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralFeasiblePerturbation
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A nonzero spectral perturbation has a positive APPT feasible radius. -/

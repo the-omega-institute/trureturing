@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The achievable number of eigenvalue levels of extreme qutrit AP states is six. -/

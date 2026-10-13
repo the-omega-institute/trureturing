@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QutritSixLevelExtremality
-   mirror-E: none
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: A supporting functional forces extremality of a six-level qutrit state. -/
