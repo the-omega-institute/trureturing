@@ -5,43 +5,31 @@
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim; result=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.result; claim=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim
    digest: Boundary alpha-z magic additivity is refuted by a three-qubit marginal certificate. -/
-
 import D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
-
 set_option linter.style.longLine false
 set_option maxRecDepth 4096
 set_option autoImplicit false
-
 noncomputable section
 open Matrix
 open scoped BigOperators ComplexOrder MatrixOrder
-
 namespace D5.S3.Quantum.Magic.RenyiBoundaryMagicAdditivityRefutation
-
 open D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (Pauli pauliMatrix tensorOp wordOp localOp tensor_mul)
-
 def SupportLE {n : ℕ} (ρ σ : Op n) : Prop :=
   ∀ v : Bits n → ℂ, σ *ᵥ v = 0 → ρ *ᵥ v = 0
-
 def log2 (x : ℝ) : ℝ := Real.log x / Real.log 2
-
 def DPI (α z : ℝ) : Prop :=
   0 < z ∧ ((0 < α ∧ α < 1 ∧ max α (1 - α) ≤ z) ∨ α = 1 ∨
     (1 < α ∧ α ≤ 2 ∧ α / 2 ≤ z ∧ z ≤ α) ∨
     (2 ≤ α ∧ α - 1 ≤ z ∧ z ≤ α))
-
 private noncomputable def spectralPow {n : ℕ} (A : Op n) (x : ℝ) : Op n :=
   if h : A.IsHermitian then h.cfc (fun t => t ^ x) else 0
-
 private noncomputable def spectralLog {n : ℕ} (A : Op n) : Op n :=
   if h : A.IsHermitian then h.cfc Real.log else 0
-
 def Qaz {n : ℕ} (α z : ℝ) (ρ σ : Op n) : ℝ :=
   tr (spectralPow (spectralPow ρ (α / (2 * z)) *
     spectralPow σ ((1 - α) / z) * spectralPow ρ (α / (2 * z))) z)
-
 def Daz {n : ℕ} (α z : ℝ) (ρ σ : Op n) : EReal := by
   classical
   exact if α = 1 then
@@ -51,65 +39,38 @@ def Daz {n : ℕ} (α z : ℝ) (ρ σ : Op n) : EReal := by
     else if (α < 1 ∧ ρ * σ ≠ 0) ∨ SupportLE ρ σ then
       ((log2 (Qaz α z ρ σ) / (α - 1) : ℝ) : EReal)
     else ⊤
-
 def magic {n : ℕ} (α z : ℝ) (ρ : Op n) : EReal :=
   sInf ((fun σ : Op n => Daz α z ρ σ) '' STAB n)
-
 def claim : Prop :=
   ∀ α z : ℝ, DPI α z → |(1 - α) / z| = 1 →
   ∀ n m : ℕ, (n = 2 ∨ n = 3) → (m = 2 ∨ m = 3) →
   ∀ (ρ : Op n) (ω : Op m), IsState ρ → IsState ω →
     magic α z (tensor ρ ω) = magic α z ρ + magic α z ω
-
 private def rho : Op 3 := (11 / 88 : ℝ) • (1 : Op 3) + (1 / 22 : ℝ) • S
-
 private def rhoBar : Op 3 := conjugate rho
-
 private def C : Op 3 := (49 / 66 : ℝ) • (1 : Op 3) + (17 / 66 : ℝ) • S
-
 private def Q : ℝ := 1015 / 726
-
 private def sigmaInv : Op 3 := (28 / 3 : ℝ) • (1 : Op 3) - (4 / 3 : ℝ) • S
-
 private lemma source_certificate :
     (∀ (n : ℕ) (η : Op n), η ∈ STAB n → IsState η) ∧
     (IsState sigma ∧ tr (sigma * S) = 1) ∧
-    Sᴴ = S ∧ S * S = (7 : ℂ) • (1 : Op 3) ∧ S.trace = 0 ∧
-    (∀ η ∈ STAB 3, tr (η * S) ≤ 1 ∧ tr (η * conjugate S) ≤ 1) := by
+    Sᴴ = S ∧ S * S = (7 : ℂ) • (1 : Op 3) ∧ S.trace = 0 := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-  exact ⟨h.1, h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2.1,
-    h.2.2.2.2.2.1⟩
-
+  exact ⟨h.1, h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2.1⟩
 private lemma S_square_real : S * S = (7 : ℝ) • (1 : Op 3) := by
   rw [source_certificate.2.2.2.1]
   ext i j
   simp [Algebra.smul_def]
-
 private lemma two_coeff_mul (a b c d : ℝ) :
     ((a : ℝ) • (1 : Op 3) + b • S) * (c • 1 + d • S) =
       (a * c + 7 * b * d) • (1 : Op 3) + (a * d + b * c) • S := by
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.one_mul, Matrix.mul_one,
     Matrix.smul_mul, Matrix.mul_smul, smul_smul, S_square_real]
   module
-
-private def rhoInv : Op 3 := (968 / 9 : ℝ) • (1 : Op 3) - (352 / 9 : ℝ) • S
-
-private lemma rho_inverse_certificate : rho * rhoInv = (1 : Op 3) := by
-  unfold rho
-  unfold rhoInv
-  rw [sub_eq_add_neg]
-  simp only [← neg_smul]
-  rw [two_coeff_mul]
-  module
-
-private lemma rho_inverse : rho⁻¹ = rhoInv :=
-  Matrix.inv_eq_right_inv rho_inverse_certificate
-
 private lemma sigma_expanded : sigma = (1 / 8 : ℝ) • (1 : Op 3) + (1 / 56 : ℝ) • S := by
   change (1 / 56 : ℝ) • ((7 : ℝ) • (1 : Op 3) + S) = _
   simp only [smul_add, smul_smul]
   module
-
 private lemma sigma_inverse_certificate : sigma * sigmaInv = (1 : Op 3) := by
   rw [sigma_expanded]
   unfold sigmaInv
@@ -117,39 +78,48 @@ private lemma sigma_inverse_certificate : sigma * sigmaInv = (1 : Op 3) := by
   simp only [← neg_smul]
   rw [two_coeff_mul]
   module
-
 private lemma C_relation : rho * sigmaInv = C := by
   unfold rho sigmaInv C
   rw [sub_eq_add_neg]
   simp only [← neg_smul]
   rw [two_coeff_mul]
   module
-
 private lemma C_square : C * C = (1 / 4356 : ℝ) •
     ((4424 : ℝ) • (1 : Op 3) + (1666 : ℝ) • S) := by
   unfold C
   rw [two_coeff_mul]
   module
-
 private lemma actual_consumption : C * C = Q • W (119 / 316 : ℝ) := by
   unfold Q W
   rw [C_square]
   module
-
 private lemma polar_consumption (η : Op 3) (hη : η ∈ STAB 3) :
     tr (η * W (119 / 316 : ℝ)) ≤ 1 := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
   rcases h with ⟨_, _, _, _, _, _, _, _, _, _, hp, _, _⟩
   exact (hp η hη).1
-
-private lemma rho_C_trace : tr (rho * C) = Q := by
-  unfold rho C
-  rw [two_coeff_mul]
+private lemma sigma_C_square_trace : tr (sigma * (C * C)) = Q := by
+  have hs := source_certificate.2.1
+  have htr : tr sigma = 1 := by
+    change sigma.trace.re = 1
+    exact congrArg Complex.re hs.1.2
+  rw [C_square]
   unfold tr Q
-  simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
-    source_certificate.2.2.2.2.1]
-  norm_num
-
+  simp only [Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul,
+    Matrix.trace_add, Complex.smul_re]
+  change sigma.trace.re = 1 at htr
+  have he : (sigma * S).trace.re = 1 := by
+    simpa [tr] using hs.2
+  norm_num at htr he ⊢
+  linarith
+private lemma rho_C_trace : tr (rho * C) = Q := by
+  have he : sigma * C = rho := by
+    rw [sigma_expanded]
+    unfold C rho
+    rw [two_coeff_mul]
+    module
+  rw [← he, Matrix.mul_assoc]
+  exact sigma_C_square_trace
 private lemma completed_square_nonnegative (η E : Op 3) (hη : η.PosDef) :
     0 ≤ tr (Eᴴ * η⁻¹ * E) := by
   have hi : η⁻¹.PosDef := hη.inv
@@ -157,7 +127,6 @@ private lemma completed_square_nonnegative (η E : Op 3) (hη : η.PosDef) :
     hi.posSemidef.conjTranspose_mul_mul_same E
   change 0 ≤ (Eᴴ * η⁻¹ * E).trace.re
   exact (Complex.nonneg_iff.mp hp.trace_nonneg).1
-
 set_option linter.style.haveILetI false in
 private lemma completed_square_identity (X Y η : Op 3) (hη : η.PosDef)
     (hr : Xᴴ = X) (hc : Yᴴ = Y) (ht : tr (X * Y) = Q) :
@@ -191,14 +160,12 @@ private lemma completed_square_identity (X Y η : Op 3) (hη : η.PosDef)
       Matrix.mul_assoc]
   rw [hcycle, hCcycle]
   ring
-
 private lemma spectralPow_one {n : ℕ} (A : Op n) (hA : A.IsHermitian) :
     spectralPow A 1 = A := by
   unfold spectralPow
   rw [dif_pos hA]
   unfold Matrix.IsHermitian.cfc
   simpa only [Real.rpow_one, Function.comp_def] using hA.spectral_theorem.symm
-
 private lemma spectralPow_inv {n : ℕ} (A : Op n) (hA : A.PosDef) :
     spectralPow A (-1) = A⁻¹ := by
   unfold spectralPow
@@ -222,7 +189,6 @@ private lemma spectralPow_inv {n : ℕ} (A : Op n) (hA : A.PosDef) :
       rfl
     · simp only [Matrix.diagonal_apply_ne _ hij, Matrix.one_apply_ne hij]
   rw [hd, map_one]
-
 private lemma Daz_two_one_supported {n : ℕ} (ρ η : Op n)
     (hρ : IsState ρ) (hη : η.PosDef) :
     Daz 2 1 ρ η = ((log2 (tr (ρ * ρ * η⁻¹)) : ℝ) : EReal) := by
@@ -244,12 +210,10 @@ private lemma Daz_two_one_supported {n : ℕ} (ρ η : Op n)
   apply congrArg log2
   unfold tr
   rw [Matrix.trace_mul_cycle, Matrix.trace_mul_comm]
-
 private lemma Daz_two_one_outside {n : ℕ} (ρ σ : Op n)
     (h : ¬ SupportLE ρ σ) : Daz 2 1 ρ σ = ⊤ := by
   unfold Daz
   norm_num [h]
-
 private lemma C_square_expectation_bound (η : Op 3) (hη : η ∈ STAB 3) :
     tr (η * (C * C)) ≤ Q := by
   rw [actual_consumption]
@@ -259,7 +223,6 @@ private lemma C_square_expectation_bound (η : Op 3) (hη : η ∈ STAB 3) :
   simp only [Matrix.mul_smul]
   norm_num at hp ⊢
   nlinarith
-
 private lemma marginal_lower_bound (η : Op 3) (hη : η ∈ STAB 3)
     (hηp : η.PosDef) : Q ≤ tr (rho * rho * η⁻¹) := by
   have hsq := completed_square_nonnegative η (rho - η * C) hηp
@@ -270,22 +233,6 @@ private lemma marginal_lower_bound (η : Op 3) (hη : η ∈ STAB 3)
       Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]) rho_C_trace
   have hC := C_square_expectation_bound η hη
   linarith
-
-private lemma sigma_C_square_trace : tr (sigma * (C * C)) = Q := by
-  have hs := source_certificate.2.1
-  have htr : tr sigma = 1 := by
-    change sigma.trace.re = 1
-    exact congrArg Complex.re hs.1.2
-  rw [C_square]
-  unfold tr Q
-  simp only [Matrix.mul_smul, Matrix.mul_add, Matrix.trace_smul,
-    Matrix.trace_add, Complex.smul_re]
-  change sigma.trace.re = 1 at htr
-  have he : (sigma * S).trace.re = 1 := by
-    simpa [tr] using hs.2
-  norm_num at htr he ⊢
-  linarith
-
 private lemma full_rank_support_guard {n : ℕ} (ρ η : Op n)
     (hρ : ρ.PosDef) (hsing : ¬ IsUnit η) : ¬ SupportLE ρ η := by
   intro h
@@ -298,13 +245,11 @@ private lemma full_rank_support_guard {n : ℕ} (ρ η : Op n)
     simpa only [Matrix.mulVec_zero] using
       h (x - y) (by simpa [Matrix.mulVec_sub] using (sub_eq_zero.mpr hxy))
   exact hsing (Matrix.mulVec_injective_iff_isUnit.mp hi)
-
 private lemma rho_trace : rho.trace = 1 := by
   unfold rho
   simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
-    source_certificate.2.2.2.2.1]
+    source_certificate.2.2.2.2]
   norm_num
-
 private lemma rho_pos : rho.PosDef := by
   have h := stabilizer_polar_tensor_escape (4 / 11 : ℝ) (by norm_num) (by norm_num)
   rcases h with ⟨_, _, _, _, _, _, _, _, hW, _, _, _, _⟩
@@ -313,10 +258,8 @@ private lemma rho_pos : rho.PosDef := by
     module
   rw [he]
   exact hW.smul (by norm_num)
-
 private lemma rho_state : IsState rho := by
   exact ⟨rho_pos.posSemidef, rho_trace⟩
-
 private lemma magic_two_one_lower :
     ((log2 Q : ℝ) : EReal) ≤ magic 2 1 rho := by
   apply le_sInf
@@ -337,30 +280,31 @@ private lemma magic_two_one_lower :
   · change ((log2 Q : ℝ) : EReal) ≤ Daz 2 1 rho η
     rw [Daz_two_one_outside rho η (full_rank_support_guard rho η rho_pos hu)]
     exact le_top
-
 private def barAlg {n : ℕ} : Op n ≃ₐ[ℝ] Op n := Complex.conjAe.mapMatrix
-
 private lemma bar_transpose {n : ℕ} (A : Op n) (hA : A.IsHermitian) :
     conjugate A = Aᵀ := by
   change Aᴴᵀ = Aᵀ
   rw [hA]
-
 private lemma bar_trace {n : ℕ} (A : Op n) : tr (conjugate A) = tr A := by
   unfold tr conjugate
   change (A.map (starRingEnd ℂ)).trace.re = A.trace.re
   rw [← AddMonoidHom.map_trace (starRingEnd ℂ)]
   rfl
-
 private lemma rhoBar_pos : rhoBar.PosDef := by
-  unfold rhoBar
-  rw [bar_transpose rho rho_pos.isHermitian]
-  exact rho_pos.transpose
-
+  have h := stabilizer_polar_tensor_escape (4 / 11 : ℝ) (by norm_num) (by norm_num)
+  rcases h with ⟨_, _, _, _, _, _, _, _, _, hW, _, _, _⟩
+  have he : rhoBar = (15 / 88 : ℝ) • conjugate (W (4 / 11 : ℝ)) := by
+    change barAlg rho = (15 / 88 : ℝ) • barAlg (W (4 / 11 : ℝ))
+    rw [← map_smul]
+    congr 1
+    unfold rho W
+    module
+  rw [he]
+  exact hW.smul (by norm_num)
 private lemma rhoBar_state : IsState rhoBar := by
   refine ⟨rhoBar_pos.posSemidef, ?_⟩
   unfold rhoBar
   rw [bar_transpose rho rho_pos.isHermitian, Matrix.trace_transpose, rho_trace]
-
 private lemma conjugate_marginal_lower (η : Op 3) (hη : η ∈ STAB 3)
     (hηp : η.PosDef) : Q ≤ tr (rhoBar * rhoBar * η⁻¹) := by
   have hc : C.IsHermitian := by
@@ -391,7 +335,6 @@ private lemma conjugate_marginal_lower (η : Op 3) (hη : η ∈ STAB 3)
     have hQ : 0 < Q := by norm_num [Q]
     exact (mul_le_mul_of_nonneg_left hw hQ.le).trans_eq (mul_one Q)
   linarith
-
 private lemma magic_conjugate_lower :
     ((log2 Q : ℝ) : EReal) ≤ magic 2 1 rhoBar := by
   apply le_sInf
@@ -410,10 +353,8 @@ private lemma magic_conjugate_lower :
     rw [Daz_two_one_outside rhoBar η
       (full_rank_support_guard rhoBar η rhoBar_pos hu)]
     exact le_top
-
 private def blocks (n m : ℕ) : Bits (n + m) ≃ Bits n × Bits m :=
   (Fin.appendEquiv n m).symm
-
 private lemma tensor_product {n m : ℕ} (A C : Op n) (B D : Op m) :
     tensor A B * tensor C D = tensor (A * C) (B * D) := by
   change (Matrix.kronecker A B).submatrix (blocks n m) (blocks n m) *
@@ -422,28 +363,23 @@ private lemma tensor_product {n m : ℕ} (A C : Op n) (B D : Op m) :
   unfold Matrix.kronecker
   rw [← Matrix.mul_kronecker_mul]
   rfl
-
 private lemma tensor_identity (n m : ℕ) : tensor (1 : Op n) (1 : Op m) = 1 := by
   change (Matrix.kronecker (1 : Op n) (1 : Op m)).submatrix (blocks n m) (blocks n m) = _
   unfold Matrix.kronecker
   rw [Matrix.one_kronecker_one, Matrix.submatrix_one_equiv]
-
 private lemma tensor_star {n m : ℕ} (A : Op n) (B : Op m) :
     (tensor A B)ᴴ = tensor Aᴴ Bᴴ := by
   unfold tensor
   unfold Matrix.kronecker
   rw [Matrix.conjTranspose_submatrix, Matrix.conjTranspose_kronecker]
-
 private def tensorLeft {n m : ℕ} (A : Op n) : Op m →ₗ[ℝ] Op (n + m) where
   toFun := tensor A
   map_add' B D := by unfold tensor Matrix.kronecker; rw [Matrix.kronecker_add]; rfl
   map_smul' r B := by unfold tensor Matrix.kronecker; rw [Matrix.kronecker_smul]; rfl
-
 private def tensorRight {n m : ℕ} (B : Op m) : Op n →ₗ[ℝ] Op (n + m) where
   toFun := fun A => tensor A B
   map_add' A C := by unfold tensor Matrix.kronecker; rw [Matrix.add_kronecker]; rfl
   map_smul' r A := by unfold tensor Matrix.kronecker; rw [Matrix.smul_kronecker]; rfl
-
 private lemma tensor_local_left {n m : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     tensor (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp i A)
       (1 : Op m) =
@@ -463,7 +399,6 @@ private lemma tensor_local_left {n m : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin
     (1 : Op m) (fun j => x (Fin.natAdd n j)) (fun j => y (Fin.natAdd n j)) = _
   rw [Fin.prod_univ_add]
   simp [Function.update_apply, hdis, Matrix.one_apply, Fintype.prod_boole, ← funext_iff]
-
 private lemma tensor_local_right {n m : ℕ} (i : Fin m) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     tensor (1 : Op n)
       (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.localOp i A) =
@@ -483,7 +418,6 @@ private lemma tensor_local_right {n m : ℕ} (i : Fin m) (A : Matrix (Fin 2) (Fi
       (x (Fin.natAdd n j)) (y (Fin.natAdd n j))) = _
   rw [Fin.prod_univ_add]
   simp [Function.update_apply, hdis, Matrix.one_apply, Fintype.prod_boole, ← funext_iff]
-
 private lemma tensor_cnot_left {n m : ℕ} (c t : Fin n) :
     tensor (gateCNOT c t) (1 : Op m) = gateCNOT (Fin.castAdd m c) (Fin.castAdd m t) := by
   ext x y
@@ -514,7 +448,6 @@ private lemma tensor_cnot_left {n m : ℕ} (c t : Fin n) :
       (y (Fin.castAdd m t) + y (Fin.castAdd m c)) then 1 else 0
   simp only [he]
   split_ifs <;> simp_all
-
 private lemma tensor_cnot_right {n m : ℕ} (c t : Fin m) :
     tensor (1 : Op n) (gateCNOT c t) = gateCNOT (Fin.natAdd n c) (Fin.natAdd n t) := by
   ext x y
@@ -545,7 +478,6 @@ private lemma tensor_cnot_right {n m : ℕ} (c t : Fin m) :
       (y (Fin.natAdd n t) + y (Fin.natAdd n c)) then 1 else 0
   simp only [he]
   split_ifs <;> simp_all
-
 private lemma block_clifford {n m : ℕ} {U : Op n} {V : Op m}
     (hU : U ∈ Clifford n) (hV : V ∈ Clifford m) : tensor U V ∈ Clifford (n + m) := by
   have hl : ∀ A ∈ Clifford n, tensor A (1 : Op m) ∈ Clifford (n + m) := by
@@ -588,7 +520,6 @@ private lemma block_clifford {n m : ℕ} {U : Op n} {V : Op m}
       rwa [tensor_product, Matrix.one_mul] at ht
   have ht := (Clifford (n + m)).mul_mem (hl U hU) (hr V hV)
   rwa [tensor_product, Matrix.mul_one, Matrix.one_mul] at ht
-
 private lemma tensor_vacuum (n m : ℕ) : tensor (vacuum n) (vacuum m) = vacuum (n + m) := by
   change (Matrix.kronecker (Matrix.single (0 : Bits n) 0 (1 : ℂ))
     (Matrix.single (0 : Bits m) 0 (1 : ℂ))).submatrix (blocks n m) (blocks n m) =
@@ -599,7 +530,6 @@ private lemma tensor_vacuum (n m : ℕ) : tensor (vacuum n) (vacuum m) = vacuum 
   have hz : ((0 : Bits n), (0 : Bits m)) = blocks n m 0 := rfl
   simp only [Matrix.submatrix_apply, Matrix.single_apply, one_mul, hz,
     (blocks n m).injective.eq_iff]
-
 private lemma stab_tensor {n m : ℕ} {A : Op n} {B : Op m}
     (hA : A ∈ STAB n) (hB : B ∈ STAB m) : tensor A B ∈ STAB (n + m) := by
   have hp : ∀ X ∈ PureStabilizer n, ∀ Y ∈ PureStabilizer m,
@@ -614,7 +544,6 @@ private lemma stab_tensor {n m : ℕ} {A : Op n} {B : Op m}
       ((convex_convexHull ℝ _).linear_preimage (tensorLeft X))
   exact convexHull_min (fun X hX => hy X hX B hB)
     ((convex_convexHull ℝ _).linear_preimage (tensorRight B)) hA
-
 private def localHom {n : ℕ} (i : Fin n) : Matrix (Fin 2) (Fin 2) ℂ →* Op n where
   toFun := localOp i
   map_one' := by
@@ -627,8 +556,141 @@ private def localHom {n : ℕ} (i : Fin n) : Matrix (Fin 2) (Fin 2) ℂ →* Op 
     congr 1
     funext j
     by_cases h : j = i <;> simp [h]
-
-
+private lemma X_circuit : D5.S3.Quantum.FiniteDimensional.qubitX = gateH * gateS ^ 2 * gateH := by
+  have hs : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
+    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  ext i j; fin_cases i <;> fin_cases j
+  all_goals simp only [pow_two, Matrix.mul_apply, Fin.sum_univ_two]
+  all_goals apply Complex.ext <;>
+    norm_num [gateH, gateS, D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
+      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2, pauliMatrix,
+      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+      Complex.mul_re, Complex.mul_im] <;> nlinarith [hs]
+private def singlePrep (p : Pauli) (b : Fin 2) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (if p = .X then gateH else if p = .Y then gateS * gateH else 1) *
+    (if b = 0 then 1 else D5.S3.Quantum.FiniteDimensional.qubitX)
+private def productPrep (w : Fin 3 → Pauli) (b : Bits 3) : Op 3 :=
+  tensorOp (fun i => singlePrep (w i) (b i))
+private lemma productPrep_mem (w : Fin 3 → Pauli) (b : Bits 3) :
+    productPrep w b ∈ Clifford 3 := by
+  have hl (i : Fin 3) : localHom i (singlePrep (w i) (b i)) ∈ Clifford 3 := by
+    have hh : localHom i gateH ∈ Clifford 3 :=
+      Submonoid.subset_closure (Or.inl (Or.inl ⟨i, rfl⟩))
+    have hs : localHom i gateS ∈ Clifford 3 :=
+      Submonoid.subset_closure (Or.inl (Or.inr (Or.inl ⟨i, rfl⟩)))
+    unfold singlePrep
+    rw [map_mul]
+    apply (Clifford 3).mul_mem
+    · split_ifs
+      · exact hh
+      · rw [map_mul]; exact (Clifford 3).mul_mem hs hh
+      · rw [map_one]; exact (Clifford 3).one_mem
+    · split_ifs
+      · rw [map_one]; exact (Clifford 3).one_mem
+      · rw [X_circuit, map_mul, map_mul, map_pow]
+        exact (Clifford 3).mul_mem ((Clifford 3).mul_mem hh ((Clifford 3).pow_mem hs 2)) hh
+  have he : productPrep w b = localHom 0 (singlePrep (w 0) (b 0)) *
+      localHom 1 (singlePrep (w 1) (b 1)) * localHom 2 (singlePrep (w 2) (b 2)) := by
+    change tensorOp _ = localOp _ _ * localOp _ _ * localOp _ _
+    unfold localOp
+    rw [tensor_mul, tensor_mul]
+    congr 1
+    funext i
+    fin_cases i <;> simp
+  rw [he]
+  exact (Clifford 3).mul_mem ((Clifford 3).mul_mem (hl 0) (hl 1)) (hl 2)
+private lemma singlePrep_projector (p : Pauli) (b : Fin 2) :
+    singlePrep p b * Matrix.single (0 : Fin 2) 0 (1 : ℂ) * (singlePrep p b)ᴴ =
+      (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) +
+        (if b = 0 then (1 : ℂ) else -1) • pauliMatrix (if p = .I then .Z else p)) := by
+  have hs : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
+    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  cases p <;> fin_cases b
+  all_goals ext i j; fin_cases i <;> fin_cases j
+  all_goals dsimp only [singlePrep, gateS, gateH,
+    D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
+    D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2,
+    pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
+    D5.S3.Quantum.FiniteDimensional.qubitZ]
+  all_goals simp only [reduceCtorEq, if_true, if_false, Matrix.mul_apply,
+    Fin.sum_univ_two, Matrix.conjTranspose_apply, Matrix.smul_apply, Matrix.add_apply,
+    Matrix.single_apply, Matrix.one_apply, Matrix.diagonal_apply, smul_eq_mul]
+  all_goals apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im] <;> nlinarith [hs]
+private lemma productPrep_projector (w : Fin 3 → Pauli) (b : Bits 3) :
+    productPrep w b * vacuum 3 * (productPrep w b)ᴴ =
+      tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) +
+        (if b i = 0 then (1 : ℂ) else -1) •
+          pauliMatrix (if w i = .I then .Z else w i))) := by
+  have hv : vacuum 3 = tensorOp (fun _ => Matrix.single (0 : Fin 2) 0 (1 : ℂ)) := by
+    ext x y
+    change Matrix.single (0 : Bits 3) 0 (1 : ℂ) x y = _
+    simp only [Matrix.single_apply, tensorOp, Matrix.of_apply]
+    simp only [Fintype.prod_boole, forall_and, ← funext_iff]
+    rfl
+  have ha : (productPrep w b)ᴴ = tensorOp (fun i => (singlePrep (w i) (b i))ᴴ) := by
+    ext x y
+    simp only [productPrep, Matrix.conjTranspose_apply, tensorOp, Matrix.of_apply, star_prod]
+  rw [hv, ha]
+  unfold productPrep
+  rw [tensor_mul, tensor_mul]
+  congr 1
+  funext i
+  exact singlePrep_projector (w i) (b i)
+private def words : Fin 7 → Fin 3 → Pauli :=
+  ![![.X, .I, .I], ![.Y, .I, .I], ![.Z, .X, .I], ![.Z, .Y, .I],
+    ![.Z, .Z, .X], ![.Z, .Z, .Y], ![.Z, .Z, .Z]]
+private def parityBits (w : Fin 3 → Pauli) (b : Fin 2 × Fin 2) : Bits 3 :=
+  ![(if w 1 = .I then 0 else b.1) + (if w 2 = .I then 0 else b.2), b.1, b.2]
+set_option maxHeartbeats 2000000 in
+-- The seven Pauli identities reduce four tensor projectors at a time.
+private lemma halfspace_prepared (j : Fin 7) :
+    (1 / 8 : ℝ) • ((1 : Op 3) + wordOp (words j)) =
+      ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) •
+        (productPrep (words j) (parityBits (words j) b) * vacuum 3 *
+          (productPrep (words j) (parityBits (words j) b))ᴴ) := by
+  have hi := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.tensor_one
+    (n := 3)
+  rw [← hi]
+  simp only [productPrep_projector]
+  fin_cases j
+  all_goals first
+    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.X, .I, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.X, .I, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.X, .I, .I] : Fin 3 → Pauli) i = .I then .Z else (![.X, .I, .I] : Fin 3 → Pauli) i)))
+    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Y, .I, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Y, .I, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Y, .I, .I] : Fin 3 → Pauli) i = .I then .Z else (![.Y, .I, .I] : Fin 3 → Pauli) i)))
+    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .X, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .X, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .X, .I] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .X, .I] : Fin 3 → Pauli) i)))
+    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Y, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Y, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Y, .I] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Y, .I] : Fin 3 → Pauli) i)))
+    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Z, .X]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Z, .X] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Z, .X] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Z, .X] : Fin 3 → Pauli) i)))
+    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Z, .Y]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Z, .Y] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Z, .Y] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Z, .Y] : Fin 3 → Pauli) i)))
+    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Z, .Z]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Z, .Z] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Z, .Z] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Z, .Z] : Fin 3 → Pauli) i)))
+  all_goals ext x y
+  all_goals simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.add_apply,
+    tensorOp, wordOp, Matrix.of_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
+    Fin.prod_univ_succ, smul_eq_mul]
+  all_goals norm_num [parityBits, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons,
+    Matrix.cons_val_succ', Matrix.cons_val_zero', Fin.add_def, pauliMatrix, reduceCtorEq,
+    Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
+  all_goals simp only [reduceCtorEq, if_true, if_false]
+  all_goals try simp only [Matrix.smul_apply, smul_eq_mul]
+  all_goals norm_num
+  all_goals ring
+private lemma sigma_mem : sigma ∈ STAB 3 := by
+  have hj (j : Fin 7) : (1 / 8 : ℝ) • ((1 : Op 3) + wordOp (words j)) ∈ STAB 3 := by
+    rw [halfspace_prepared]
+    apply (convex_convexHull ℝ (PureStabilizer 3)).sum_mem (fun _ _ => by norm_num)
+      (by norm_num)
+    intro b _
+    exact subset_convexHull ℝ (PureStabilizer 3)
+      ⟨productPrep (words j) (parityBits (words j) b), productPrep_mem _ _, rfl⟩
+  have he : sigma = ∑ j : Fin 7, (1 / 7 : ℝ) •
+      ((1 / 8 : ℝ) • ((1 : Op 3) + wordOp (words j))) := by
+    rw [sigma_expanded]
+    have hw : S = ∑ j : Fin 7, wordOp (words j) := rfl
+    rw [hw]
+    simp only [smul_add, smul_smul, Finset.sum_add_distrib, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, ← Nat.cast_smul_eq_nsmul ℝ, smul_smul, ← Finset.smul_sum]
+    module
+  rw [he]
+  exact (convex_convexHull ℝ (PureStabilizer 3)).sum_mem (fun _ _ => by norm_num)
+    (by norm_num) (fun j _ => hj j)
 private lemma clifford_bar {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
     conjugate U ∈ Clifford n := by
   have ha (A : Op n) : (barAlg A)ᴴ = barAlg Aᴴ := by ext x y; rfl
@@ -691,7 +753,6 @@ private lemma clifford_bar {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
       · rw [← he, Matrix.conjTranspose_conjTranspose]; exact Or.inl hD
   | one => rw [map_one]; exact (Clifford n).one_mem
   | mul A B hA hB ihA ihB => rw [map_mul]; exact (Clifford n).mul_mem ihA ihB
-
 private lemma stab_bar {n : ℕ} {A : Op n} (hA : A ∈ STAB n) : conjugate A ∈ STAB n := by
   apply convexHull_min (t := barAlg.toLinearMap ⁻¹' STAB n) ?_
     ((convex_convexHull ℝ _).linear_preimage barAlg.toLinearMap) hA
@@ -706,34 +767,26 @@ private lemma stab_bar {n : ℕ} {A : Op n} (hA : A ∈ STAB n) : conjugate A �
     simp only [Matrix.single_apply, apply_ite star, star_one, star_zero]
   rw [hv]
   rfl
-
 private def tau : Op 6 := (4095 / 4096 : ℝ) • tensor sigma (conjugate sigma) +
   (1 / 4096 : ℝ) • bell
-
-
+private lemma tau_mem : tau ∈ STAB 6 := by
+  have hp := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
+  rcases hp with ⟨_, _, _, _, _, _, _, hb, _, _, _, _, _⟩
+  exact (convex_convexHull ℝ (PureStabilizer 6))
+    (stab_tensor sigma_mem (stab_bar sigma_mem)) hb
+    (by norm_num) (by norm_num) (by norm_num)
 private def baseFree : Op 6 := tensor sigma (conjugate sigma)
 private def baseInv : Op 6 := tensor sigmaInv (conjugate sigmaInv)
 private def joint : Op 6 := tensor rho rhoBar
 private def jointInv : Op 6 := (4096 / 4095 : ℝ) •
   (baseInv - (9 / 37751 : ℝ) • (baseInv * bell * baseInv))
 private def F : ℝ := 270853390336 / 138572892315
-
 private lemma tensor_trace {n m : ℕ} (A : Op n) (B : Op m) :
     (tensor A B).trace = A.trace * B.trace := by
   change (∑ x : Bits (n + m), (Matrix.kronecker A B) (blocks n m x) (blocks n m x)) = _
   unfold Matrix.kronecker
   exact ((blocks n m).sum_comp (fun x => (Matrix.kroneckerMap (· * ·) A B) x x)).trans
     (Matrix.trace_kronecker A B)
-
-private lemma tensor_bar {n m : ℕ} (A : Op n) (B : Op m) :
-    conjugate (tensor A B) = tensor (conjugate A) (conjugate B) := by
-  ext x y
-  change star (A ((blocks n m x).1) ((blocks n m y).1) *
-    B ((blocks n m x).2) ((blocks n m y).2)) = _
-  change star (_ : ℂ) = star (_ : ℂ) * star (_ : ℂ)
-  rw [star_mul, mul_comm]
-  rfl
-
 private lemma base_inverse : baseFree * baseInv = (1 : Op 6) := by
   unfold baseFree baseInv
   rw [tensor_product, sigma_inverse_certificate]
@@ -741,11 +794,9 @@ private lemma base_inverse : baseFree * baseInv = (1 : Op 6) := by
     change barAlg sigma * barAlg sigmaInv = 1
     rw [← map_mul, sigma_inverse_certificate, map_one]
   rw [hb, tensor_identity]
-
 private lemma sigma_pos : sigma.PosDef :=
   source_certificate.2.1.1.1.posDef_iff_isUnit.mpr
     (isUnit_iff_exists_inv.mpr ⟨sigmaInv, sigma_inverse_certificate⟩)
-
 private lemma tau_pos : tau.PosDef := by
   have hb : (conjugate sigma).PosDef := by
     rw [bar_transpose sigma sigma_pos.isHermitian]
@@ -755,7 +806,6 @@ private lemma tau_pos : tau.PosDef := by
   rcases h with ⟨hstates, _, _, _, _, _, _, hbell, _, _, _, _, _⟩
   exact (hf.smul (by norm_num : (0 : ℝ) < 4095 / 4096)).add_posSemidef
     ((hstates 6 bell hbell).1.smul (by norm_num : (0 : ℝ) ≤ 1 / 4096))
-
 private lemma bell_sandwich (A : Op 6) : bell * A * bell = (bell * A).trace • bell := by
   let v : Bits 6 → ℂ := fun x => if (blocks 3 3 x).1 = (blocks 3 3 x).2 then 1 else 0
   have hb : bell = (1 / 8 : ℂ) • Matrix.vecMulVec v v := by
@@ -772,7 +822,6 @@ private lemma bell_sandwich (A : Op 6) : bell * A * bell = (bell * A).trace • 
   simp only [smul_smul]
   congr 1
   ring
-
 private lemma baseInv_hermitian : baseInv.IsHermitian := by
   have hh : sigmaInv.IsHermitian := by
     change sigmaInvᴴ = sigmaInv
@@ -783,7 +832,6 @@ private lemma baseInv_hermitian : baseInv.IsHermitian := by
   rw [bar_transpose sigmaInv hh]
   change (tensor sigmaInv sigmaInvᵀ)ᴴ = tensor sigmaInv sigmaInvᵀ
   rw [tensor_star, hh, hh.transpose]
-
 private lemma base_bell_trace : tr (bell * baseInv) = 896 / 9 := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
   rcases h with ⟨_, _, _, _, _, _, ht, _, _, _, _, _, _⟩
@@ -800,9 +848,8 @@ private lemma base_bell_trace : tr (bell * baseInv) = 896 / 9 := by
   rw [two_coeff_mul]
   unfold tr
   simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
-    source_certificate.2.2.2.2.1]
+    source_certificate.2.2.2.2]
   norm_num
-
 private lemma base_bell_sandwich : bell * baseInv * bell = (896 / 9 : ℝ) • bell := by
   rw [bell_sandwich]
   have hb : bell.IsHermitian := by
@@ -818,7 +865,6 @@ private lemma base_bell_sandwich : bell * baseInv * bell = (896 / 9 : ℝ) • b
   change ((tr (bell * baseInv) : ℝ) : ℂ) • bell = _
   rw [base_bell_trace]
   rfl
-
 private lemma joint_inverse : tau⁻¹ = jointInv := by
   apply Matrix.inv_eq_left_inv
   have hi : baseInv * baseFree = (1 : Op 6) := mul_eq_one_comm.mp base_inverse
@@ -832,14 +878,10 @@ private lemma joint_inverse : tau⁻¹ = jointInv := by
   simp only [Matrix.smul_mul, Matrix.mul_add, Matrix.mul_smul, Matrix.sub_mul,
     smul_sub, smul_smul, hi, h1, h2]
   module
-
 private lemma joint_state : IsState joint := by
   refine ⟨(rho_pos.kronecker rhoBar_pos).posSemidef.submatrix (blocks 3 3), ?_⟩
   change (tensor rho rhoBar).trace = 1
   rw [tensor_trace, rho_state.2, rhoBar_state.2, one_mul]
-
--- The tensor trace identities reduce the inverse certificate without expanding its entries.
-set_option maxHeartbeats 2000000 in
 private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
   have hc : sigmaInv * rho = C := by
     unfold sigmaInv rho C
@@ -851,7 +893,7 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
     unfold rho C Q
     rw [two_coeff_mul]
     simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
-      source_certificate.2.2.2.2.1]
+      source_certificate.2.2.2.2]
     norm_num
   have hb : tr (joint * joint * baseInv) = Q ^ 2 := by
     unfold joint baseInv rhoBar
@@ -912,5 +954,36 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
   simp only [Matrix.trace_sub, Matrix.trace_smul, Complex.sub_re, Complex.smul_re, smul_eq_mul]
   rw [hb, hv]
   norm_num [Q, F]
-
+private lemma logarithmic_gap : log2 F < log2 Q + log2 Q := by
+  have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
+  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, he, hs⟩
+  have hid : Q ^ 2 - F = (29882962855 / 120195047396424 : ℝ) *
+      (tr (bell * tensor (W (119 / 316 : ℝ)) (conjugate (W (119 / 316 : ℝ)))) - 1) := by
+    rw [he]
+    norm_num [Q, F]
+  have hlt : F < Q ^ 2 := sub_pos.mp (hid ▸ mul_pos (by norm_num) (sub_pos.mpr hs))
+  unfold log2
+  have hl := Real.log_lt_log (by norm_num [F] : 0 < F) hlt
+  rw [Real.log_pow] at hl
+  have hd : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hdiv := (div_lt_div_iff_of_pos_right hd).mpr hl
+  simpa only [Nat.cast_ofNat, mul_div_assoc, two_mul, add_div] using hdiv
+private lemma magic_joint_upper : magic 2 1 joint ≤ ((log2 F : ℝ) : EReal) := by
+  have h : magic 2 1 joint ≤ Daz 2 1 joint tau :=
+    sInf_le ⟨tau, tau_mem, rfl⟩
+  rw [Daz_two_one_supported joint tau joint_state tau_pos, joint_evaluation] at h
+  exact h
+theorem result : ¬ claim := by
+  intro h
+  have ha := h 2 1 (by norm_num [DPI]) (by norm_num) 3 3
+    (Or.inr rfl) (Or.inr rfl) rho rhoBar rho_state rhoBar_state
+  have hl : ((log2 Q + log2 Q : ℝ) : EReal) ≤
+      magic 2 1 rho + magic 2 1 rhoBar := by
+    rw [EReal.coe_add]
+    exact add_le_add magic_two_one_lower magic_conjugate_lower
+  have hu := magic_joint_upper
+  change magic 2 1 (tensor rho rhoBar) ≤ _ at hu
+  rw [ha] at hu
+  have hh : ((log2 Q + log2 Q : ℝ) : EReal) ≤ ((log2 F : ℝ) : EReal) := hl.trans hu
+  exact (not_le.mpr logarithmic_gap) (EReal.coe_le_coe_iff.mp hh)
 end D5.S3.Quantum.Magic.RenyiBoundaryMagicAdditivityRefutation
