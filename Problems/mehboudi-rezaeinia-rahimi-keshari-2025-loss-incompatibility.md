@@ -49,7 +49,7 @@ The settlement would fail if the trace relation in `IsLossDual` did not define t
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Measurement/PureLossIncompatibility.lean` (867 lines).
+The canonical source is `D5/S3/Quantum/Measurement/PureLossIncompatibility.lean` (954 lines).
 - Public declarations: `H` (the frozen `FockSpace`), `K`, `Op`, `amplify`, `vacuumEmbedding`, `stinespring`, `dualLoss`, `IsLossDual`, `IsBinaryPOVM`, `HasParent`, `inverseTransmissivity`, `claim` and `result`.
 - It reuses frozen declarations:
   - `beamSplitter`, `tensor`, its Fock action `beamUnitary_fock` and `coherent` (`FockAttenuator/BeamSplitter`);
@@ -62,11 +62,11 @@ The canonical source is `D5/S3/Quantum/Measurement/PureLossIncompatibility.lean`
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registration `Reg/D5/S3/Quantum/Measurement/PureLossIncompatibility.lean` (template `DependentFamily.realize`, readout the binary effect fed to the pure-loss dual; the rejected realization, every effect ½·I, has a parent) is `declared_validated`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/PureLossIncompatibility.lean.json`, statement `sha256:60b90e16746dc9a99d4ffc72685c3cf7ade1afd1c4bf0cc7738c2a4d1228f9f9`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/PureLossIncompatibility.lean.json`, statement `sha256:0f55391b8e5da52873d52a827a7857946e3036fc19547493412707b74ff3edec`.
 
 Declaration statements:
 - `result`: `sha256:85d853dd71cd8fb2cf913d845f502053ae0e14efa15d981101222298d752122e`;
-- `claim`: `sha256:d8c90a2c57609e8e10a3dd9f52f91f9d50d71685d7bb21bb728ff9a58ba08c68`.
+- `claim`: `sha256:3263b3984a4574d057da3f214b45626503c168cdb0931c3fd236b02c6c4654c8`.
 
 ## Triage
 
