@@ -272,7 +272,7 @@ private theorem dual_rankOne_inner (τ : Set.Icc (0 : ℝ) 1) (μ : ℂ) (u v : 
   simp only [InnerProductSpace.rankOne_apply, inner_smul_right]
   ring
 
-private theorem vacuum_tensor (v : H) : vacuumEmbedding v = tensor v (e 0) := by
+theorem vacuum_tensor (v : H) : vacuumEmbedding v = tensor v (e 0) := by
   apply lp.ext
   funext k
   change (lp.single (E := fun _ : ℕ => H) 2 0 v) k = (e 0 k) • v

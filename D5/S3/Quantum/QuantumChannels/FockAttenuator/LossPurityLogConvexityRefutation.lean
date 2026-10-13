@@ -7,11 +7,7 @@
    digest: A three-level mixed state refutes log-convexity of purity under optical loss. -/
 
 import D5.S3.Quantum.Measurement.PureLossIncompatibility
-import Mathlib.Analysis.Convex.Function
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+import D5.S3.Quantum.QuantumChannels.FockAttenuator.Entropy
 
 noncomputable section
 open scoped BigOperators InnerProductSpace ENNReal
@@ -27,6 +23,7 @@ open D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtre
   (fockPair_apply)
 
 open D5.S3.Quantum.Measurement.PureLossIncompatibility (H K Op)
+open D5.S3.Quantum.QuantumChannels.FockAttenuator.Entropy (finiteDiagonal)
 
 /-- Vacuum-environment optical loss, with the second mode traced out. -/
 def loss {k : ℕ} (p : Fin k → ℝ) (φ : Fin k → H)
@@ -57,16 +54,9 @@ private def middleAmplitude (T : ℝ) : ℝ :=
 private theorem split_stinespring (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) (n : ℕ) :
     beamSplitter T hT (tensor (e n) (e 0)) =
       PureLossIncompatibility.stinespring ⟨T, hT⟩ (e n) := by
-  have hv (v : H) : tensor v (e 0) = PureLossIncompatibility.vacuumEmbedding v := by
-    apply lp.ext
-    funext j
-    change (e 0 j) • v = (lp.single (E := fun _ : ℕ => H) 2 0 v) j
-    unfold e
-    simp only [lp.single_apply, Pi.single_apply]
-    split_ifs <;> simp_all
   change beamSplitter T hT (tensor (e n) (e 0)) =
     beamSplitter T hT (PureLossIncompatibility.vacuumEmbedding (e n))
-  rw [hv]
+  rw [PureLossIncompatibility.vacuum_tensor]
 
 private theorem split_two (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
     beamSplitter T hT (tensor (e 2) (e 0)) = (T : ℂ) • fockPair 2 0 +
@@ -154,16 +144,18 @@ private theorem split_two_slice (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) (j : 
         rw [fockPair_apply, fockPair_apply, fockPair_apply]
         simp [hj0, hj1, hj2]
 
-private def proj (n : ℕ) : Op := InnerProductSpace.rankOne ℂ (e n) (e n)
-
-private def diag3 (a b c : ℝ) : Op :=
-  (a : ℂ) • proj 0 + (b : ℂ) • proj 1 + (c : ℂ) • proj 2
-
-private theorem proj_eq (n : ℕ) :
-    proj n = InnerProductSpace.rankOne ℂ (e n) (e n) := rfl
-
-private theorem diag3_eq (a b c : ℝ) :
-    diag3 a b c = (a : ℂ) • proj 0 + (b : ℂ) • proj 1 + (c : ℂ) • proj 2 := rfl
+private theorem finiteDiagonal_three_eq (a b c : ℝ) :
+    finiteDiagonal ![a, b, c] =
+      (a : ℂ) • InnerProductSpace.rankOne ℂ (e 0) (e 0) +
+      (b : ℂ) • InnerProductSpace.rankOne ℂ (e 1) (e 1) +
+      (c : ℂ) • InnerProductSpace.rankOne ℂ (e 2) (e 2) := by
+  change (∑ i : Fin 3, ((![(a : ℝ), b, c] : Fin 3 → ℝ) i : ℂ) •
+    InnerProductSpace.rankOne ℂ (e (i : ℕ)) (e (i : ℕ))) = _
+  simp only [Fin.sum_univ_succ]
+  change (a : ℂ) • InnerProductSpace.rankOne ℂ (e 0) (e 0) +
+    ((b : ℂ) • InnerProductSpace.rankOne ℂ (e 1) (e 1) +
+    ((c : ℂ) • InnerProductSpace.rankOne ℂ (e 2) (e 2) + 0)) = _
+  simp only [add_zero, add_assoc]
 
 private theorem rankOne_real_smul (a : ℝ) (v : H) :
     InnerProductSpace.rankOne ℂ ((a : ℂ) • v) ((a : ℂ) • v) =
@@ -193,29 +185,29 @@ private theorem middleAmplitude_sq (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
     Real.sq_sqrt hT.1, Real.sq_sqrt (sub_nonneg.mpr hT.2)]
 
 private theorem partialTrace_zero (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
-    purePartialTrace (beamSplitter T hT (tensor (e 0) (e 0))) = diag3 1 0 0 := by
+    purePartialTrace (beamSplitter T hT (tensor (e 0) (e 0))) = finiteDiagonal ![1, 0, 0] := by
   rw [partialTrace_three_slices _ (by
     intro j hj
     rw [split_zero_slice, if_neg (by omega)])]
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, split_zero_slice]
-  rw [diag3_eq, proj_eq, proj_eq, proj_eq]
+  rw [finiteDiagonal_three_eq]
   norm_num
 
 private theorem partialTrace_one (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
-    purePartialTrace (beamSplitter T hT (tensor (e 1) (e 0))) = diag3 (1 - T) T 0 := by
+    purePartialTrace (beamSplitter T hT (tensor (e 1) (e 0))) = finiteDiagonal ![1 - T, T, 0] := by
   rw [partialTrace_three_slices _ (by
     intro j hj
     rw [split_one_slice, if_neg (by omega), if_neg (by omega)])]
   simp only [Finset.sum_range_succ, Finset.sum_range_zero, split_one_slice]
   norm_num only [ite_true, ite_false, zero_add,
     rankOne_real_smul, Real.sq_sqrt hT.1, Real.sq_sqrt (sub_nonneg.mpr hT.2)]
-  rw [diag3_eq, proj_eq, proj_eq, proj_eq]
+  rw [finiteDiagonal_three_eq]
   simp only [Complex.ofReal_zero, zero_smul, add_zero, map_zero]
   ac_rfl
 
 private theorem partialTrace_two (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
     purePartialTrace (beamSplitter T hT (tensor (e 2) (e 0))) =
-      diag3 ((1 - T) ^ 2) (2 * T * (1 - T)) (T ^ 2) := by
+      finiteDiagonal ![(1 - T) ^ 2, 2 * T * (1 - T), T ^ 2] := by
   rw [partialTrace_three_slices _ (by
     intro j hj
     rw [split_two_slice, if_neg (by omega), if_neg (by omega), if_neg (by omega)])]
@@ -223,7 +215,7 @@ private theorem partialTrace_two (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
   norm_num only [ite_true, ite_false, zero_add,
     rankOne_real_smul]
   rw [middleAmplitude_sq T hT]
-  rw [diag3_eq, proj_eq, proj_eq, proj_eq]
+  rw [finiteDiagonal_three_eq]
   ac_rfl
 
 private def q0 (T : ℝ) : ℝ :=
@@ -235,7 +227,7 @@ private def q1 (T : ℝ) : ℝ :=
 private def q2 (T : ℝ) : ℝ := (6 / 25) * T ^ 2
 
 private theorem witness_output (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
-    loss weights vectors T hT = diag3 (q0 T) (q1 T) (q2 T) := by
+    loss weights vectors T hT = finiteDiagonal ![q0 T, q1 T, q2 T] := by
   unfold loss
   change (∑ i : Fin 3, (weights i : ℂ) •
     purePartialTrace (beamSplitter T hT (tensor (e i.val) (e 0)))) = _
@@ -244,22 +236,25 @@ private theorem witness_output (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
     (((3 / 4 : ℝ) : ℂ) • purePartialTrace (beamSplitter T hT (tensor (e 1) (e 0))) +
     (((6 / 25 : ℝ) : ℂ) • purePartialTrace (beamSplitter T hT (tensor (e 2) (e 0))) + 0)) = _
   rw [partialTrace_zero, partialTrace_one, partialTrace_two]
-  rw [diag3_eq, diag3_eq, diag3_eq, diag3_eq]
+  rw [finiteDiagonal_three_eq, finiteDiagonal_three_eq,
+    finiteDiagonal_three_eq, finiteDiagonal_three_eq]
   unfold q0 q1 q2
   simp only [smul_add, smul_smul, Complex.ofReal_zero, Complex.ofReal_one,
     one_smul, zero_smul, add_zero, Complex.ofReal_add, Complex.ofReal_mul,
     Complex.ofReal_div, Complex.ofReal_ofNat]
   module
 
-private theorem diag3_purity (a b c : ℝ) :
-    HasSum (fun n : ℕ => inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n)))
+private theorem finiteDiagonal_three_purity (a b c : ℝ) :
+    HasSum (fun n : ℕ => inner ℂ (e n)
+      ((finiteDiagonal ![a, b, c] ∘L finiteDiagonal ![a, b, c]) (e n)))
       ((a ^ 2 + b ^ 2 + c ^ 2 : ℝ) : ℂ) := by
   have hinner (i j : ℕ) : inner ℂ (e i) (e j) = if i = j then 1 else 0 := by
     simp [e, lp.inner_single_left, lp.single_apply, Pi.single_apply, RCLike.inner_apply]
-  have hdiag (n : ℕ) : diag3 a b c (e n) =
+  have hdiag (n : ℕ) : finiteDiagonal ![a, b, c] (e n) =
       ((if n = 0 then a else if n = 1 then b else if n = 2 then c else 0 : ℝ) : ℂ) •
         e n := by
-    simp only [diag3_eq, proj_eq, add_apply, smul_apply, InnerProductSpace.rankOne_apply, hinner]
+    simp only [finiteDiagonal_three_eq, add_apply, smul_apply,
+      InnerProductSpace.rankOne_apply, hinner]
     by_cases h0 : n = 0
     · subst n; norm_num
     · by_cases h1 : n = 1
@@ -268,7 +263,7 @@ private theorem diag3_purity (a b c : ℝ) :
         · subst n; norm_num
         · simp [h0, h1, h2, Ne.symm h0, Ne.symm h1, Ne.symm h2]
   have hterm (n : ℕ) :
-      inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n)) =
+      inner ℂ (e n) ((finiteDiagonal ![a, b, c] ∘L finiteDiagonal ![a, b, c]) (e n)) =
         if n = 0 then ((a ^ 2 : ℝ) : ℂ)
         else if n = 1 then ((b ^ 2 : ℝ) : ℂ)
         else if n = 2 then ((c ^ 2 : ℝ) : ℂ) else 0 := by
@@ -276,9 +271,9 @@ private theorem diag3_purity (a b c : ℝ) :
       hinner, ite_true]
     split_ifs <;> simp_all [pow_two]
   have hs : HasSum
-      (fun n : ℕ => inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n)))
+      (fun n : ℕ => inner ℂ (e n) ((finiteDiagonal ![a, b, c] ∘L finiteDiagonal ![a, b, c]) (e n)))
       (∑ n ∈ Finset.range 3,
-        inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n))) := by
+        inner ℂ (e n) ((finiteDiagonal ![a, b, c] ∘L finiteDiagonal ![a, b, c]) (e n))) := by
     apply hasSum_sum_of_ne_finset_zero
     intro n hn
     have hn3 : 3 ≤ n := by simpa only [Finset.mem_range, not_lt] using hn
@@ -303,7 +298,7 @@ private theorem witness_purity : IsPurityCurve weights vectors P := by
   intro T hT
   rw [witness_output]
   rw [← purity_polynomial]
-  exact diag3_purity (q0 T) (q1 T) (q2 T)
+  exact finiteDiagonal_three_purity (q0 T) (q1 T) (q2 T)
 
 private theorem midpoint_certificate :
     P (39 / 40) * P (197 / 200) < P (49 / 50) ^ 2 := by
