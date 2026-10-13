@@ -14,6 +14,9 @@ triage: anchor
 
 # Positive recurrences and real zeros
 
+## Verified locator
+
+The official source is https://dlmf.nist.gov/18.2.
 The source was read on 2026-10-13. Section 18.2(iv), equations
 (18.2.11_5)--(18.2.11_6), gives the monic three-term recurrence and
 the positivity of its recurrence coefficients. Section 18.2(viii)
@@ -21,6 +24,8 @@ states Favard's theorem for this recurrence with positive coefficients.
 Section 18.2(vi) states that all zeros of an orthogonal polynomial are
 simple and lie in its real interval of orthogonality. It also identifies
 the zeros with eigenvalues of the finite Jacobi matrix in (18.2.18).
+
+## Finite repository formulation
 
 The repository's finite scalar formulation has diagonal coefficient zero:
 
