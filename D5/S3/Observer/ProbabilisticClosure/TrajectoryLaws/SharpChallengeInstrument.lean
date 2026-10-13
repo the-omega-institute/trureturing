@@ -284,9 +284,10 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
       induction j with
       | zero =>
         intro hj xh
-        simp [execute, fixedPolicy, PMF.pure_map, PMF.pure_bind, instrument,
-          PMF.map_comp, PMF.map_apply, tsum_fintype, liveRecord, failureMass,
-          uniformPmf, PMF.ofFintype_apply, Function.comp_def]
+        simp only [execute, fixedPolicy, PMF.pure_map, PMF.pure_bind, instrument,
+          PMF.map_comp]
+        rw [PMF.map_apply, tsum_fintype]
+        simp [uniformPmf, PMF.ofFintype_apply, liveRecord, failureMass, Function.comp_def]
       | succ j ih =>
         intro hj xh
         have hj' : j ≤ n := by omega
@@ -301,9 +302,10 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
             else if q = (.fail, liveRecord a j r, a (j+1), .failure) then 1 else 0 := by
           by_cases hr : a (j+1) = r
           · subst r
-            simp [instrument, hk, PMF.map_comp, PMF.map_apply, tsum_fintype,
-              uniformPmf, PMF.ofFintype_apply, liveRecord, Function.comp_def, hcount]
-            congr 1
+            simp only [instrument, if_pos (rfl : a (j+1) = a (j+1)), dif_neg hk,
+              PMF.map_comp]
+            rw [PMF.map_apply, tsum_fintype]
+            simp [uniformPmf, PMF.ofFintype_apply, liveRecord, Function.comp_def, hcount]
           · simp [instrument, hr, PMF.pure_map, PMF.pure_apply]
         change ((execute (instrument n) (fixedPolicy a) (PMF.pure (.start z)) (j+1)).bind
           (fun sh => (PMF.pure (a (j+1))).bind fun b =>

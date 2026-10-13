@@ -71,31 +71,26 @@ theorem dense_word_run (w : List Bool) :
     let standard : Std.Sat.CNF (Conventional.Appearing F) := ⟨source.toArray⟩
     have relabelled : Std.Sat.CNF.relabel names.symm standard =
         unaryStandard (denseFormula F) := by
-      have relabelLiterals (l : List (Conventional.Appearing F × Bool)) :
-          Std.Sat.CNF.Clause.relabel names.symm (.ofLiterals l) =
-            .ofLiterals (l.map fun (i, p) => (names.symm i, p)) := by
-        apply Std.Sat.CNF.Clause.ext
-        simp
-      have literals_inj (xs ys : List (Fin dictionary.length × Bool)) :
-          Std.Sat.CNF.Clause.ofLiterals xs = Std.Sat.CNF.Clause.ofLiterals ys ↔ xs = ys := by
-        constructor
-        · intro h
-          simpa only [Std.Sat.CNF.Clause.literals_ofLiterals] using
-            congrArg Std.Sat.CNF.Clause.literals h
-        · exact congrArg Std.Sat.CNF.Clause.ofLiterals
       have lists : source.map (Std.Sat.CNF.Clause.relabel names.symm) = denseFormula F := by
-        simp [source,denseFormula,relabelLiterals,literals_inj,List.map_map,
-          names,dictionary,Conventional.dictionary,Equiv.trans,Equiv.subtypeEquivRight,
-          Equiv.subtypeEquiv,List.Nodup.getEquiv]
-        all_goals
-          intro c _ name
-          constructor <;> intro
-          all_goals
-            dsimp only [List.idxOf]
-            congr 1
-            funext x
-            apply Bool.eq_iff_iff.mpr
-            simp only [beq_iff_eq]
+        simp only [source,denseFormula,List.map_map,Function.comp_apply]
+        apply List.map_congr_left
+        intro c _
+        apply Std.Sat.CNF.Clause.ext
+        simp only [Std.Sat.CNF.Clause.literals_relabel,
+          Std.Sat.CNF.Clause.literals_ofLiterals,List.map_map,Function.comp_apply]
+        apply List.map_congr_left
+        intro literal _
+        apply Prod.ext
+        · apply Fin.ext
+          dsimp only [names,dictionary,Conventional.dictionary,Equiv.trans,
+            Equiv.subtypeEquivRight,Equiv.subtypeEquiv,List.Nodup.getEquiv,
+            Equiv.symm,Equiv.refl,Function.comp_def]
+          dsimp only [List.idxOf]
+          congr 1
+          funext x
+          apply Bool.eq_iff_iff.mpr
+          simp only [beq_iff_eq]
+        · rfl
       have arrays := congrArg (fun clauses : List (Std.Sat.CNF.Clause (Fin dictionary.length)) =>
         (⟨clauses.toArray⟩ : Std.Sat.CNF (Fin dictionary.length))) lists
       simpa only [Std.Sat.CNF.relabel,standard,unaryStandard,List.map_toArray] using arrays
