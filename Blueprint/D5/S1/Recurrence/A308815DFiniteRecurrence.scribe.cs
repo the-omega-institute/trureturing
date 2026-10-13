@@ -59,10 +59,10 @@ internal sealed class A308815DFiniteRecurrenceDocument : IScribeDocumentDefiniti
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a308815-" + name),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Mathar's D-finite recurrence for the alternating Catalan numbers.",
@@ -102,5 +102,8 @@ internal sealed class A308815DFiniteRecurrenceDocument : IScribeDocumentDefiniti
                 + "the Euler derivative cancels that coefficient, and m+5 < 2(m+3). Extracting coefficients "
                 + "and multiplying by 16^(m+3) produces the stated integer recurrence. "
                 + "The generating-function closed form and asymptotic formula are not proved by this module.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a308815-dfinite-recurrence"),
+                    ResolutionKind.Proved)))));
 }

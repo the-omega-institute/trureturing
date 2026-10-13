@@ -36,6 +36,10 @@ $$\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (n:\mathbb{Z}) \cdot (2 \cdot 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/A308815DFiniteRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a308815-dfinite-recurrence` (proved) by `D5/S1/Recurrence/A308815DFiniteRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a308815-dfinite-recurrence","declaration_gid":"D5/S1/Recurrence/A308815DFiniteRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; OEIS Foundation Inc. (2020). *OEIS A308815 — D-finite recurrence for alternating Catalan numbers*. URL: <https://oeis.org/A308815>.

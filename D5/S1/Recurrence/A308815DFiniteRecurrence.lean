@@ -13,6 +13,7 @@ Public theorem result:
   admission_basis: open-problem-resolution (#15713; Proved)
 Direct frozen dependencies: none.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15923
+DTR reading: DTR-Unregistered for result (Observe); no Reg mirror is delivered.
 The Catalan series and its quadratic equation use pinned Mathlib directly;
 no new Catalan-series alias or companion quadratic theorem is introduced.
 All private theorem steps are bind-only; their consumers are:
