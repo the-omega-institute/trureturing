@@ -13,6 +13,58 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
             + "right-special descent for every order at least two.",
         H("Sentinel Desubstitution of the m-bonacci Word"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("window-iterate-prefix"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.iterate_prefix"),
+                H("Nested actual iterates"), StatementSource.FromAuthor(WindowSupplier("iterate_prefix")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every order m at least two and natural k at most t, the kth iterate on zero is a prefix of the tth iterate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-iterate-growth"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.iterate_growth"),
+                H("Unbounded actual image lengths"), StatementSource.FromAuthor(WindowSupplier("iterate_growth")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every order m at least two and every natural k, the kth iterate on zero has length at least k+1. Each substitution step adds a nonempty image."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-word-eq-iterate"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.word_eq_iterate"),
+                H("Compatible readings of the actual word"), StatementSource.FromAuthor(WindowSupplier("word_eq_iterate")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every order m at least two, every k and every n less than the kth image length, the actual letter at n equals the letter at n of that iterate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-factor-get"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.factor_get"),
+                H("The exact letter of a factor"), StatementSource.FromAuthor(WindowSupplier("factor_get")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any order m, any function x from the naturals to Fin m, and naturals i,n,j with j<n, the jth letter of the length-n factor of x at i equals x(i+j)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("boundary-window"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.boundary_window"),
+                H("Every natural start has a source block"), StatementSource.FromAuthor(ConverseStatement("boundary_window")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every m at least two and every natural q, some i satisfies boundary(i) at most q and q less than boundary(i+1). The original strict and unbounded block construction includes q equal to zero. Images have at most two letters, so the converse has exactly the boundary offset zero or one cases."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("factor-add"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.factor_add"),
+                H("Exact contiguous factor concatenation"), StatementSource.FromAuthor(ConverseStatement("factor_add")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every alphabet size, every infinite word x and all natural i,n,t, factor(x,i,n+t) is factor(x,i,n) followed by factor(x,i+n,t). The converse uses this original identity to choose the next source letter at the end of a complete predecessor window."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("occ-cons"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.occ_cons"),
+                H("Exact first-letter removal"), StatementSource.FromAuthor(ConverseStatement("occ_cons")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every actual source order at least two, letter a, list s and natural q, occurrence of a followed by s at q is equivalent to word(q) equal to a and occurrence of s at q+1. This original bridge removes the first output zero in both offset-one cases."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("t-head"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.t_head"),
+                H("The original sentinel starts in zero"), StatementSource.FromAuthor(ConverseStatement("t_head")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every actual source order at least two and every source list s, T(s) is zero followed by a list. This includes empty s. It is the original first-letter supplier for additive count cancellation in the clipped transport."))),
+                DescribeRole.Theorem),
             Paragraph(Text("The alphabet is Fin m, with m at least two. Every occurrence is a "
                 + "contiguous list factor at a natural starting position. Position zero and the "
                 + "empty source word are included. No recurrence or fixed-word assumption is "
@@ -214,4 +266,103 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
     private static Formula SumOver(string x, Formula domain, Formula body) =>
         Seq(Sum, Underscore, Grp(F.Id(x), Sp, InMacro, Sp, domain), Sp,
             Seq(Open, body, Close));
+
+    private static Formula ConverseStatement(string name)
+    {
+        var m = F.Id("m"); var n = F.Id("n"); var k = F.Id("k");
+        var q = F.Id("q"); var i = F.Id("i"); var t = F.Id("t");
+        var r = F.Id("r"); var s = F.Id("s"); var a = F.Id("a");
+        var x = F.Id("x"); var count = F.Id("count");
+        Formula ns = CFCall("S", m, k);
+        Formula si = CFCall("sentinelIter", m, k);
+        Formula rho = CFCall("ncard", CFCall("parikhImage", m, n));
+        Formula minimum = CFEq(rho, m);
+        Formula sentinel = CFEx("k", CFN(), CFEq(n, ns));
+        Formula periodic = CFEx("k", CFN(), CFEq(CFCall("fullGreedy", m, n),
+            CFCall("periodicDigits", m, k)));
+        Formula body = name switch
+        {
+            "boundary_window" => CFAll("q", CFN(), CFEx("i", CFN(),
+                CFAnd(CFLe(CFCall("boundary", m, i), q),
+                    CFLt(q, CFCall("boundary", m, CFAdd(i, F.D(1))))))),
+            "t_head" => CFAll("s", CFCall("List", CFCall("Fin", m)),
+                CFEx("v", CFCall("List", CFCall("Fin", m)),
+                    CFEq(CFCall("T", m, s), CFCall("cons", F.D(0), F.Id("v"))))),
+            "occ_cons" => CFAll("a", CFCall("Fin", m),
+                CFAll("s", CFCall("List", CFCall("Fin", m)), CFAll("q", CFN(),
+                    CFIff(CFCall("Occ", m, CFCall("cons", a, s), q),
+                        CFAnd(CFEq(CFCall("word", m, q), a),
+                            CFCall("Occ", m, s, CFAdd(q, F.D(1)))))))),
+            "factor_add" => CFAll("x", CFCall("Function", CFN(), CFCall("Fin", m)),
+                CFAll("i", CFN(), CFAll("n", CFN(), CFAll("t", CFN(),
+                    CFEq(CFCall("factor", x, i, CFAdd(n, t)),
+                        CFCall("append", CFCall("factor", x, i, n),
+                            CFCall("factor", x, CFAdd(i, n), t))))))),
+            _ => throw new ArgumentOutOfRangeException(nameof(name)),
+        };
+        Formula bound = name == "uniform_minimum_characterization"
+            ? CFAnd(CFLe(F.D(2), m), CFLe(F.D(5), m)) : CFLe(F.D(2), m);
+        bool unrestricted = name is "star" or "star_injective" or "factor_add";
+        return F.Disp(CFAll("m", CFN(), unrestricted ? body : CFImp(bound, body)));
+    }
+
+    private static Formula CFN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    private static Formula CFCall(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula CFAll(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEx(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(x), domain, body);
+    private static Formula CFEq(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula CFLe(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula CFLt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula CFAdd(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula CFAnd(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula CFImp(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula CFIff(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula WindowSupplier(string name)
+    {
+        Formula m = F.Id("m"), k = F.Id("k"), t = F.Id("t"), n = F.Id("n");
+        Formula i = F.Id("i"), j = F.Id("j"), x = F.Id("x");
+        Formula alphabet = WC("Fin", m);
+        Formula P(Formula a) => WC("image", WC("phi", m), a, WC("zero", m));
+        Formula body = name switch
+        {
+            "iterate_prefix" => WA("k", WN(), WA("t", WN(), WI(WL(k, t),
+                WC("IsPrefix", P(k), P(t))))),
+            "iterate_growth" => WA("k", WN(), WL(WP(k, F.D(1)), WC("length", P(k)))),
+            "word_eq_iterate" => WA("k", WN(), WA("n", WN(),
+                WI(WT(n, WC("length", P(k))), WQ(WC("word", m, n), WC("getElem", P(k), n))))),
+            "factor_get" => WA("x", WC("Function", WN(), alphabet),
+                WA("i", WN(), WA("n", WN(), WA("j", WN(), WI(WT(j, n),
+                    WQ(WC("getElem", WC("factor", x, i, n), j),
+                        new Formula.Apply(x, [WP(i, j)]))))))),
+            _ => throw new ArgumentOutOfRangeException(nameof(name)),
+        };
+        return F.Disp(WA("m", WN(), name == "factor_get" ? body : WI(WL(F.D(2), m), body)));
+    }
+
+    private static Formula WN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    private static Formula WC(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula WA(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula WQ(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula WL(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula WT(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula WP(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula WI(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+
 }

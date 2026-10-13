@@ -344,7 +344,8 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         self.assertEqual([['release', 'list', '--repo', 'fixture/cache', '--limit', '100',
             '--json', 'tagName,createdAt,isDraft']],
             [json.loads(line) for line in (self.root / 'gh-calls.jsonl').read_text().splitlines()])
-        first = self.guarded_command(['make', 'lean-cache-to-github-without-mathlib'], env=self.env)
+        first = self.guarded_command(['make', 'lean-cache-to-github-without-mathlib'],
+            env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(first.returncode, 0, first.stdout + first.stderr
             + subprocess.check_output(['git', 'status', '--porcelain'], cwd=self.root, env=self.env, text=True))
         self.assertIn('"status":"published"', first.stdout)

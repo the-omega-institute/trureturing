@@ -75,7 +75,62 @@ internal sealed class ActualCornerTransportDocument : IScribeDocumentDefinition
                     Paragraph(Text("Over the reals, the finite-product norm is the supremum norm. The nonnegative bound 3*tau*Dstar therefore gives ||a_tau-a0||_infinity<=3*tau*Dstar. For any epsilon>0, a single global parameter tau=min(1/2,m/(6*Dstar),epsilon/(6*Dstar)) is positive, obeys the required threshold, and gives distance at most epsilon/2<epsilon. Thus strict angles and strict corner inequalities can be achieved arbitrarily close to a0 in the same affine M-fiber if and only if every D(z)>0. The choice is global across all components.")),
                     Paragraph(Text("For rational initial data, instantiate the construction over the rational field itself. The finite fiber sizes, deficit sums, extrema, weights, integer path counts and half-coefficients all give a rational occurrence vector for every rational admissible tau. Cast that very vector to the reals. Casting commutes with the finite sums defining M and Q, so M_R(cast(a),e)=cast(M_Q(a,e)) and Q_R(cast(a),c)=cast(Q_Q(a,c)); it also preserves the displayed inequalities and deficit formula. Given a real epsilon>0, choose a positive rational tau smaller than min(1/2,cast(m)/(6*cast(Dstar)),epsilon/(6*cast(Dstar))). This gives the same strictification with real norm distance below epsilon, without extracting rational output from a real existence assertion.")),
                     Paragraph(Text("If T is empty, the occurrence, corner and both quotient domains are empty. The conditions on their coordinates and classes are vacuous, and a=a0 has norm distance zero for every positive epsilon, over both the real and rational constructions. No minimum m or maximum Dstar is assigned to an empty domain. An arbitrary coordinate bound on an empty domain, in particular a negative one, does not imply the same bound on the norm, which is zero.")),
-                    Paragraph(Text("The transport theorem itself assumes no angle positivity, edge-degree bound, link-surface condition or common geometric length. The strictification application adds precisely the initial positivity, nonnegative deficit and positive component-total conditions above. It establishes neither the dimension formula in Theorem 41.2 nor the link Euler identity, the minimum-degree conclusion of Theorem 42.2, or compatibility of geometric edge lengths."))),
+                    Paragraph(Text("The complete linear image in Theorem 41.2 follows on these same occurrence and quotient carriers. Write S(h,z)=sum_{label(c)=z}h(c). The endpoint-multiset identity gives S(Q(a),z)=0 whenever M(a)=0. Conversely, for any signed real h with S(h,z)=0 for every z, put C=sum_c |h(c)| and d(c)=C+h(c). Then d is nonnegative and S(d,z)=F(z)*C. Apply the component averaging construction above with tau=1 and Dmax=sum_c d(c). Its single occurrence lift delta satisfies M(delta)=0 and -Q(delta,c)=C-d(c)=-h(c). Hence Q(ker M)=ker S, with no additional linear compatibility condition.")),
+                    Paragraph(Text("The pinned finite-function pushforward FunOnFinite.linearMap is exactly M for P and exactly S for label. Both quotient maps are surjective; Finsupp.mapDomain_surjective and the finite-function linear equivalences therefore give surjectivity of M and S, including empty domains. Let t=|T|, e=|GlobalEdge(q)| and b=|Vertex(q)|. Additive rank-nullity gives e+dim ker M=6*t and b+dim ker S=4*t. The range of Q restricted to ker M is ker S. The existing restricted-kernel and subtype equivalences identify its kernel dimension with dim(ker M intersect ker Q), so e+dim(ker M intersect ker Q)=2*t+b. Equivalently the dimension is 2*t-e+b as an integer, or (2*t+b)-e with natural-number subtraction. The additive identity gives e<=2*t+b; it does not assert e<=2*t.")),
+                    Paragraph(Text("The original face-transport supplement concerns the entire family F(i)=localLift(i)-localLift(J(i)), with all three corner choices on every paired face. Let X(i) be the difference of the two coordinate unit vectors at edge(i) and edge(J(i)). Reindexing the target face by its actual permutation gives F(x,r)=sum_s c(r,s)*X(x,s), where c(r,r)=1/2 and c(r,s)=-1/2 for distinct slots. The inverse identity is X(x,r)=F(x,r)-sum_s F(x,s). Thus these two exact families span the same subspace. Each X has M-image zero because the two actual paired-edge occurrences have the same P-label, so every F belongs to ker M.")),
+                    Paragraph(Text("For the reverse span inclusion, let W be the span of the F vectors. Pull back the submodule quotient relation modulo W along the coordinate-unit-vector map. Every actual edgeRel generator belongs to this relation by the inverse identity, so Setoid.eqvGen_le implies that the unit-vector difference for any two occurrences with the same P-label belongs to W. Choose an actual representative r(e) of each global-edge class, and let R be its finite-function pushforward. Finite basis expansion gives a-R(M(a))=sum_o a(o)*(unit(o)-unit(r(P(o)))). For M(a)=0 this expresses a in W, proving that all original face transports span ker M. Self-gluing, repeated labels, loops and singleton fibers require no exceptions: identical occurrences give a zero difference, and all sums retain occurrence multiplicity. When T is empty, the spaces and both quotient carriers have dimension zero and the same statements hold.")),
+                    Paragraph(Text("For the transverse-pair application in original CFMP Section 101.1, use this same Pairing q, its actual"
+                        + " occurrence projection P and its generated GlobalEdge quotient. Partition that edge set as H and its"
+                        + " complement S. In each tetrahedron t choose a genuine permutation rho(t) of its four vertices. Its"
+                        + " induced permutation of the six endpoint pairs sends the original slots (12,13,14,34,24,23) to the framed"
+                        + " slots. Require the labels at framed slots 1 and 4 to equal A(t), those at slots 2 and 5 to equal B(t),"
+                        + " and A(t), B(t) to be distinct members of H. The remaining framed slots 0 and 3 read R(t), O(t) directly"
+                        + " from P; they are unrestricted, may coincide, and may lie in H. H is a set of actual global edges, not"
+                        + " two colors or two numerical lengths.")),
+                    Paragraph(Text("Write Q(t)={A(t),B(t)}. If an occurrence has a label in S, its inverse-framed index is 0 or 3, because"
+                        + " every other index has its label in H. For an actual face f and target slot r, define Res(t,f,r) to be"
+                        + " the set of P(t,faceEdge(f,s)) for the two distinct slots s different from r. Before any vertex"
+                        + " relabeling, edge 0 has containing face-slot pairs (2,2) and (3,2), with residual edge indices (4,2) and"
+                        + " (5,1). Edge 3 has pairs (0,0) and (1,0), with residual indices (4,5) and (2,1). Each row therefore reads"
+                        + " one A(t) and one B(t). A genuine vertex permutation preserves face incidence and sends all six endpoint"
+                        + " pairs together; the same assertion holds in every chosen frame. Hence a special target has"
+                        + " Res(t,f,r)=Q(t). An arbitrary permutation of six edge slots does not preserve this incidence.")),
+                    Paragraph(Text("An actual face map at x=(t,f) gives"
+                        + " P(t,faceEdge(f,s))=P(p(x).tetrahedron,faceEdge(p(x).face,sigma(x)(s))) for every s: this is exactly one"
+                        + " generator of the existing edge quotient. Since sigma(x) is a permutation, it carries the complement of r"
+                        + " bijectively to the complement of sigma(x)(r). Thus Res(x,r)=Res(p(x),sigma(x)(r)). For a special"
+                        + " distinguished label, the local calculation applies at both ends, yielding equality of their actual"
+                        + " unordered pairs. The SAME face map transports all three labels; no matching or independent choice of"
+                        + " transverse data is assumed.")),
+                    Paragraph(Text("To propagate through the complete actual edge equivalence class, assign an occurrence o the value none"
+                        + " when P(o) is in H and some(Q(o.tetrahedron)) otherwise. Every actual paired-edge generator preserves P."
+                        + " In the first case it therefore preserves none, and in the second case the residual transport proves"
+                        + " equality of the two some values. Apply the pinned Relation.EqvGen.eqvGen_le to equality of this"
+                        + " invariant. For any o and z with P(o)=P(z) in S, quotient exactness gives their full generated relation,"
+                        + " so Q(o.tetrahedron)=Q(z.tetrahedron). This uses the actual generated quotient, rather than any external"
+                        + " label map that merges different equivalence classes. Finiteness or a connected normal-circle hypothesis"
+                        + " is not needed for this pair assertion.")),
+                    Paragraph(Text("Every existing global-edge quotient class has an actual representative. For e in S, choose one o with"
+                        + " P(o)=e and put Q(e)=Q(o.tetrahedron). The preceding equality proves independence of that representative"
+                        + " and equality at EVERY occurrence of e. Its two members belong to H and are distinct. Any other pair with"
+                        + " this occurrence property agrees at the chosen representative and is therefore equal to Q(e). If two"
+                        + " special labels occupy the two axial slots of a single tetrahedron, both read its same Q(t), so their"
+                        + " pairs agree. If both axial labels equal e, both local occurrences remain in the fiber; no passage to a"
+                        + " set of tetrahedra deletes the repetition. Different special stars may still have different pairs.")),
+                    Paragraph(Text("For any one global length assignment ell on these actual edges, write Q(e)={A(e),B(e)}. At every"
+                        + " occurrence of e the transverse width is the same number cosh(ell(A(e)))+cosh(ell(B(e))). This is a"
+                        + " consequence of equality of actual labels and one shared length function; it assumes neither equal"
+                        + " lengths on distinct labels nor independently optimized length assignments on different stars. It is"
+                        + " conditional on such a common length assignment and does not construct a geometric realization.")),
+                    Paragraph(Text("The even-degree conclusion in original Section 101.2 additionally concerns endpoint transport around a"
+                        + " complete actual normal circle. The corner slot opposite the target edge is not an endpoint of that edge;"
+                        + " an endpoint-resolved flag needs a second slot s different from r, selecting faceVertex(f,s). Changing to"
+                        + " the other containing face must preserve this SAME local endpoint, while the face map sends both r and s"
+                        + " through its SAME sigma. The local endpoint incidence and quotient-label identities are compatible with"
+                        + " this lift. Pair constancy alone does not identify the full-circle endpoint return, prove no endpoint"
+                        + " reversal, or identify its step count with the degree of the original triangulation. Those original"
+                        + " manifold and endpoint-return obligations remain separate from the transverse-pair application.")),
+                    Paragraph(Text("The transport and linear image, dimension and span applications assume no angle positivity, edge-degree bound, link-surface condition or common geometric length. The strictification application adds precisely the initial positivity, nonnegative deficit and positive component-total conditions above. The dimension counts real linear angle directions with fixed M and Q; it does not assert that arbitrary changes preserve angle inequalities. These results establish neither the link Euler identity, the minimum-degree conclusion of Theorem 42.2, nor compatibility of geometric edge lengths."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()

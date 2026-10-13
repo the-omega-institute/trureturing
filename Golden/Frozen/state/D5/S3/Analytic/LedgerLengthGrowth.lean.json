@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2156f218056efc09bf0af023cce474fec4a24b4a267a1b4e18aea813e8faa87a"}
+{"statement_id":"sha256:2156f218056efc09bf0af023cce474fec4a24b4a267a1b4e18aea813e8faa87a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),18:LedgerLengthGrowth),48:ledger_length_strict_mono_of_positive_generation)","kind":"theorem"}]}

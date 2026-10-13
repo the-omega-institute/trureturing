@@ -849,41 +849,63 @@ P_i^2=P_i
 
 ## 20. no-degenerate Fourier-mode lemma
 
-在 2-circulant construction 中，设一个 circulant row 由 unit phases `a,b,c` 给出。若某个 three-Fourier coefficient 消失：
+先固定 2-circulant Hadamard 的实际块方程，而不使用未声明的 ratio equation。令
 
 ```math
-a+\rho b+\rho^2c=0,
-\qquad \rho^3=1,
+H=\begin{pmatrix}A&B\\ B^*&-A^*\end{pmatrix},
 ```
 
-则三个 unit numbers `a,rho b,rho^2c` 构成 equilateral triple。纯代数地，若 unit `z_0+z_1+z_2=0`，则：
+其中 `A,B` 是 `3 x 3` circulant，且 `H H^*=6I`。设 `A`、`B` 的第一行分别为 unit phases `(a,b,c)`、`(d,e,f)`，取固定 primitive cube root `\omega`，并定义未归一化的 three-Fourier coefficients
 
 ```math
-z_0/z_1=z_1/z_2=z_2/z_0,
+\lambda_r=a+\omega^r b+\omega^{2r}c,
+\qquad
+\mu_r=d+\omega^r e+\omega^{2r}f,
+\qquad r\in\mathbb Z_3.
 ```
 
-且公共 ratio 是非平凡 cube root。
-
-因此：
+由 `HH^*=6I` 的左上块和 circulant 的 Fourier 对角化，得到逐模预算
 
 ```math
-a/b=b/c=c/a=t,
+\boxed{|\lambda_r|^2+|\mu_r|^2=6.}
+```
+
+**Unit-triple 子引理。** 若 `z_0,z_1,z_2` 都是 unit 且 `z_0+z_1+z_2=0`，则三者构成 equilateral triple：存在 primitive cube root `q` 使
+
+```math
+z_j=z_0q^j.
+```
+
+因此，如果某个 `\lambda_r=0`，令
+`(z_0,z_1,z_2)=(a,\omega^r b,\omega^{2r}c)`，便有
+
+```math
+(a,b,c)=u(1,t,t^2),
+\qquad |u|=1,
 \qquad t^3=1.
 ```
 
-结合 2-circulant ratio equation，另一组三个 unit ratios 的和被迫等于 `-3t`。triangle equality 迫使三者均为 `-t`，其乘积为 `-1`，与 cyclic ratio product `1` 矛盾。
+这里 `t=1` 的 constant-row edge case 必须保留；不能声称公共 ratio 一定是非平凡 cube root。该 geometric character 的 Fourier transform 只在一个 mode 非零，且该 mode 的系数为 `3u`。于是存在 `s` 使 `|\lambda_s|^2=9`，与逐模预算 `|\lambda_s|^2+|\mu_s|^2=6` 矛盾。故
 
-所以该 2-circulant Hadamard seed 的三个 Fourier modes 都非零。该 lemma 可消除 local fibre quadratic 中的 denominator-degenerate cases。
-
-形式化时先检索项目和 Mathlib 是否已有：
-
-```text
-three unit vectors summing to zero
-triangle equality for unit complex numbers
-primitive cube-root ratio lemmas
+```math
+\boxed{\lambda_r\ne0\quad\text{for every }r.}
 ```
 
-若没有，再建立通用小 lemma。不得把它埋入 order-six 专用证明中。
+交换 `A,B` 同理得到 `\mu_r\ne0`。特别地，constant row `a=b=c` 虽然会使两个非平凡 Fourier coefficients 消失，却被其 zero-mode modulus `3` 与预算一并排除。
+
+该结论只消除 local fibre quadratic 的 denominator-degenerate Fourier charts；它本身不推出 `\alpha_{\min}(T)>1`，也不完成 `\alpha=1` equality classification。后续 SoS/branch 证书仍须单独验证完整 compact branch。
+
+形式化建议分层：
+
+```text
+unit_sum_zero_is_cube_character
+cube_character_fourier_support_singleton
+circulant_hadamard_mode_budget
+no_zero_three_fourier_mode
+```
+
+先证明前两个通用复数/`Fin 3` 小引理，再由 `AA^*+BB^*=6I` 的 Fourier adapter 提供逐模预算；不引入未在块方程中声明的 off-diagonal ratio equation。
+
 
 ## 21. finite symmetry skeleton 作为备用分支
 

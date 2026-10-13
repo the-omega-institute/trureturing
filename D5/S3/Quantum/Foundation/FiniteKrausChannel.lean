@@ -335,7 +335,8 @@ theorem kron_def [CommSemiring R] (M₁ : MatrixMap A B R) (M₂ : MatrixMap C D
   · simp
 
 variable [CommSemiring R]
-private theorem add_kron (ML₁ ML₂ : MatrixMap A B R) (MR : MatrixMap C D R) : (ML₁ + ML₂) ⊗ₖₘ MR = ML₁ ⊗ₖₘ MR + ML₂ ⊗ₖₘ MR := by
+-- proof_shape: bind-only; consumer: MatrixMap.IsCompletelyPositive.add
+theorem add_kron (ML₁ ML₂ : MatrixMap A B R) (MR : MatrixMap C D R) : (ML₁ + ML₂) ⊗ₖₘ MR = ML₁ ⊗ₖₘ MR + ML₂ ⊗ₖₘ MR := by
   simp [kron, TensorProduct.map_add_left, Matrix.submatrix_add]
 
 @[simp]
@@ -384,7 +385,8 @@ def IsCompletelyPositive (M : MatrixMap A B R) : Prop :=
 
 namespace IsCompletelyPositive
 /-- Sums of IsCompletelyPositive maps are IsCompletelyPositive. -/
-private theorem add {M₁ M₂ : MatrixMap A B R} (h₁ : M₁.IsCompletelyPositive) (h₂ : M₂.IsCompletelyPositive) :
+-- proof_shape: bind-only; consumer: IptPptSquaredEquivalence.gamma_cp
+theorem add {M₁ M₂ : MatrixMap A B R} (h₁ : M₁.IsCompletelyPositive) (h₂ : M₂.IsCompletelyPositive) :
     (M₁ + M₂).IsCompletelyPositive :=
   fun n _ h ↦ by
   simp only [add_kron, LinearMap.add_apply]

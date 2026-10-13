@@ -1,0 +1,78 @@
+**Theorem 102.2 (a finite-parameter separation and a uniform
+vanishing-screening obstruction on the promised family).**
+For every fixed $h\ge0$, $\tau>0$ and integer $k\ge1$,
+put $\lambda_j=\tau/N_j$. For all sufficiently large $j$,
+
+$$
+p_h(T_j)=p_h(T_{j+k}),\qquad
+R_{\lambda_j}(T_j)-R_{\lambda_j}(T_{j+k})
+ \longrightarrow H(\tau)-H(\varphi^k\tau)>0.
+\tag{102.1}
+$$
+
+Thus even at a common declared $\lambda_j$, the identical local
+table misses a nonzero difference of the global response.
+More strongly, every estimator family of Assumption 102.1 obeys
+
+$$
+\limsup_{\lambda\downarrow0}
+ \sup_{n\ge0}
+ \left|E_{h,\lambda}(p_h(T_n))-R_\lambda(T_n)\right|
+ \ge\frac12\left(\frac{\sqrt5}{2}-1\right).
+\tag{102.2}
+$$
+
+The bound holds for every fixed $h$; it is compatible with
+Theorem 97.2's exact identification when $n\le2h+1$,
+its uniform approximation to $C_n$ as $h\to\infty$, and its
+uniform approximation to $R_\lambda(T_n)$ as $h\to\infty$
+for each fixed $\lambda>0$.
+
+**Proof.**
+For $j\ge2h+2$, both local tables consist entirely of branches,
+by Theorem 97.2. From (92.12),
+$N_{j+k}/N_j\to\varphi^k$.
+The common $\lambda_j$ tends to zero, with joint parameters
+$\tau$ and $\varphi^k\tau$ on the two original sources.
+Theorem 100.2 and strict decrease of $H$ prove (102.1).
+The estimator has the same real value on the two data sets,
+so at least one of its absolute errors is at least half their
+response difference.
+
+For the full bound use instead the actual original pair
+$T_j,T_{2j}$ and the common declared parameter
+
+$$
+\lambda_j=(N_jN_{2j})^{-1/2},\qquad
+N_j\lambda_j=\sqrt{N_j/N_{2j}}\longrightarrow0,\qquad
+N_{2j}\lambda_j=\sqrt{N_{2j}/N_j}\longrightarrow\infty.
+\tag{102.3}
+$$
+
+Binet's formula proves both ratio limits and $\lambda_j\to0$.
+Theorem 100.2 gives response limits $\sqrt5/2$ and one.
+Their tables agree eventually at every fixed $h$.
+Writing $e_j$ for the estimator's common value, the triangle
+inequality gives
+
+$$
+\max\{|e_j-R_{\lambda_j}(T_j)|,\,
+       |e_j-R_{\lambda_j}(T_{2j})|\}
+ \ge\frac12|R_{\lambda_j}(T_j)-R_{\lambda_j}(T_{2j})|.
+\tag{102.4}
+$$
+
+Taking the lower limit along this sequence yields (102.2).
+The counts used to specify the mathematical counterexample
+parameter in (102.3) are not data available to the estimator.
+
+The retained vector $w$ in (100.4), determined by the limiting
+all-node cylinder masses, supplies the positive finite-parameter
+difference in (102.1). It records a global source contribution
+left after removal of the constant trace; it is not obtained by
+postprocessing the common fixed-depth table.
+Neither (102.1) nor (102.2) changes the Fibonacci domain promise
+or the quantifiers in (97.2) and (97.4): a fixed positive
+$\lambda$ and a common range including $\lambda\downarrow0$
+are different approximation problems. $\square$
+

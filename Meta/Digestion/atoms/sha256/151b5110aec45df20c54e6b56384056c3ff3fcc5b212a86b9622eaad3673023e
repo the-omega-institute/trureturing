@@ -1,0 +1,25 @@
+**定理 13.2（无原位置 advice 的总存在解码器）。** 对全部 $u,k,p$，
+下列单一来源无关自适应宏精确返回 $r_u(p)$：先执行 $B_k(p)$。
+若所得 $b=1$，再执行 $C_k(p)$，以 $c=0$ 返回 $\beta$、$c=1$ 返回
+$\mathsf{branch}$。若 $b=0$ 且 $p=\varepsilon$，立即返回 $\alpha$。
+若 $b=0$ 且 $p\ne\varepsilon$，再执行 $G_k(p)$，以 $g=1$ 返回
+$\alpha$、$g=0$ 返回 $\mathsf{absent}$。
+
+非自适应宏在根固定执行 $[B_k(p),C_k(p)]$，非根固定执行
+$[G_k(p),B_k(p),C_k(p)]$，按上表解码；根的 $00,10,11$ 分别返回
+$\alpha,\beta,\mathsf{branch}$。为使程序在任意输入位词上也总定义，
+其余组合约定返回 absent；正确性只声明于实际像上的回复词。
+
+证明。$b=1$ 时引理 13.1 排除原 absence，已有标签表又排除 $\alpha$，
+余下两值由 $c$ 区分。$b=0$ 时仅剩 $\alpha$ 或 absence：根非空使后者
+不可能，非根则由 (ABT.42) 精确区分。固定宏直接使用完整表。每个分支最多
+执行两次或三次既有 Read，不执行任何改变寄存器的动作，且每次只按其存在位
+继续。因此全部地址和回复，包括原 absence，均在同一实际来源上取得。
+$\square$
+
+例如 $k=1,u=\beta,p=L$ 时，当前树为
+$\rho^2\beta=\langle\langle\beta,\alpha\rangle,\beta\rangle$。
+$p$ 现在存在，但标签探针是完整字面词 $LLL$、$LRL$，两者都 absent；
+守卫是 $RR$，也 absent。宏返回原 absence。把 $pLL,pRL$ 误当成
+$LL,RL$ 会得到另一问题的回复，不能作为本合同的反例。
+

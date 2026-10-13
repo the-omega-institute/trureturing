@@ -1,0 +1,22 @@
+**定理 12.2（全部钟比的实际纤维及单锚恢复）。** 对任何合法扰动 $t$，即 $\kappa+t\in\prod_v[l_v,u_v]$，有精确式
+
+$$
+\log\frac{r'_v/r'_u}{r_v/r_u}
+=-20\alpha b(e_v-e_u)^{\mathsf T}Kt.
+$$
+
+所有钟比保持不变当且仅当 $t$ 是空间常数。因此通过 $\kappa$ 的实际响应纤维恰为
+
+$$
+\left\{\kappa+c\mathbf1:
+\max_v(l_v-\kappa_v)\le c\le\min_v(u_v-\kappa_v)\right\}.
+$$
+
+它可在边界退化为一点；若所有 seam 均为区间内点，则含非零常数扰动。一个已知站点 seam 值与全部比值共同唯一恢复整个场。等价恢复公式为
+
+$$
+C\kappa=-\frac1{20\alpha b}L\log r-\frac1{20b}Cg.
+$$
+
+证明。数学引文 1.4 在每个站点给 $\rho'-\rho=20bt$，故 $\varphi'-\varphi=20bKt$。取对数得到首式。全部差向量湮灭该势差恰要求势差为常数；其均值零，故它为零。施 $L$ 得 $Ct=0$，反向由 $K\mathbf1=0$ 成立。将常数扰动逐坐标同合法区间相交即得精确纤维，不需要将环境空间秩误作每个实际纤维维数。一个锚令 $c=0$。最后对 $\log r=(\log r_0)\mathbf1-\alpha\varphi$ 施 $L$ 得恢复公式；任意代表全部比值的 $\log r$ 相差常数，右侧相同。∎
+

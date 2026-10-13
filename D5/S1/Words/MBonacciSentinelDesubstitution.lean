@@ -66,14 +66,14 @@ private theorem iterate_prefix_succ (k : ℕ) :
     image (phi hm) k (zero hm) <+: image (phi hm) (k + 1) (zero hm) := by
   rw [image_step]; exact List.prefix_append _ _
 
-private theorem iterate_prefix {k t : ℕ} (h : k ≤ t) :
+theorem iterate_prefix {k t : ℕ} (h : k ≤ t) :
     image (phi hm) k (zero hm) <+: image (phi hm) t (zero hm) := by
   obtain ⟨s, rfl⟩ := Nat.exists_eq_add_of_le h
   induction s with
   | zero => simp
   | succ s ih => exact (ih (by omega)).trans (iterate_prefix_succ hm (k + s))
 
-private theorem iterate_growth (k : ℕ) : k + 1 ≤ (image (phi hm) k (zero hm)).length := by
+theorem iterate_growth (k : ℕ) : k + 1 ≤ (image (phi hm) k (zero hm)).length := by
   induction k with
   | zero => simp [image]
   | succ k ih =>
@@ -85,7 +85,7 @@ private theorem iterate_growth (k : ℕ) : k + 1 ≤ (image (phi hm) k (zero hm)
 def word (n : ℕ) : Fin m :=
   (image (phi hm) (n + 1) (zero hm))[n]'(by have := iterate_growth hm (n + 1); omega)
 
-private theorem word_eq_iterate (k n : ℕ) (hn : n < (image (phi hm) k (zero hm)).length) :
+theorem word_eq_iterate (k n : ℕ) (hn : n < (image (phi hm) k (zero hm)).length) :
     word hm n = (image (phi hm) k (zero hm))[n] := by
   have hk := iterate_prefix hm (Nat.le_max_left k (n + 1))
   have hn' := iterate_prefix hm (Nat.le_max_right k (n + 1))
@@ -95,7 +95,7 @@ private theorem word_eq_iterate (k n : ℕ) (hn : n < (image (phi hm) k (zero hm
 private theorem factor_len (x : ℕ → Fin m) (i n : ℕ) : (factor x i n).length = n := by
   simp [factor]
 
-private theorem factor_add (x : ℕ → Fin m) (i n t : ℕ) :
+theorem factor_add (x : ℕ → Fin m) (i n t : ℕ) :
     factor x i (n + t) = factor x i n ++ factor x (i + n) t := by
   simp only [factor, List.range_add, List.map_append, List.map_map]
   congr 1
@@ -105,7 +105,7 @@ private theorem factor_add (x : ℕ → Fin m) (i n t : ℕ) :
   congr 1
   omega
 
-private theorem factor_get (x : ℕ → Fin m) (i n j : ℕ) (hj : j < n) :
+theorem factor_get (x : ℕ → Fin m) (i n j : ℕ) (hj : j < n) :
     (factor x i n)[j]'(by rw [factor_len]; exact hj) = x (i + j) := by
   simp [factor]
 
@@ -181,7 +181,7 @@ private theorem after_boundary (i : ℕ) : word hm (boundary hm i + 1) = rot hm 
     rw [boundary_succ] at hb
     simpa [phi, rot, h] using hb
 
-private theorem boundary_window (q : ℕ) :
+theorem boundary_window (q : ℕ) :
     ∃ i, boundary hm i ≤ q ∧ q < boundary hm (i + 1) := by
   induction q with
   | zero =>
@@ -266,7 +266,7 @@ private theorem occ_append (s t : List (Fin m)) (q : ℕ) :
 private theorem occ_singleton (a : Fin m) (q : ℕ) : Occ hm [a] q ↔ word hm q = a := by
   simp [Occ, factor]
 
-private theorem occ_cons (a : Fin m) (s : List (Fin m)) (q : ℕ) :
+theorem occ_cons (a : Fin m) (s : List (Fin m)) (q : ℕ) :
     Occ hm (a :: s) q ↔ word hm q = a ∧ Occ hm s (q + 1) := by
   simpa [occ_singleton] using occ_append hm [a] s q
 
@@ -290,7 +290,7 @@ private theorem transport {s : List (Fin m)} {i : ℕ} (h : Occ hm s i) :
     rw [← boundary_occ hm h]
     exact at_boundary hm _
 
-private theorem t_head (s : List (Fin m)) :
+theorem t_head (s : List (Fin m)) :
     ∃ v, T hm s = zero hm :: v := by
   cases s with
   | nil => exact ⟨[], rfl⟩

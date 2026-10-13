@@ -1,1 +1,1 @@
-{"statement_id":"sha256:900715e9b7e2db9b9d20c4db9aacd50c2ad338350511d4c733d9fce4aca0c56e"}
+{"statement_id":"sha256:900715e9b7e2db9b9d20c4db9aacd50c2ad338350511d4c733d9fce4aca0c56e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:PopStack),19:PopStackPrefixShape),18:prefix_nonterminal)","kind":"theorem"}]}

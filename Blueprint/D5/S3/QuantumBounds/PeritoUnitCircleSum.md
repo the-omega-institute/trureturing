@@ -6,7 +6,19 @@ The sum of distances from a unit complex phase to the negatives of the regular d
 
 Let d be an integer at least two and let omega be exp(2 pi i / d). For a complex number z of modulus one, consider the sum of |1 + omega^y z| over y from zero to d minus one.
 
-**Theorem 1.1 (The distance sum is bounded uniformly in the phase).**
+**Theorem 1.1 (The absolute cosine sum).**
+
+$$\forall d \in \mathbb{N},\; \forall s \in \mathbb{R},\; (2 \le d) \Rightarrow \operatorname{Finset.sum}\left(\operatorname{Finset.range}\left(d\right), \lambda (y:\mathbb{N}) \mapsto \operatorname{abs}\left(\operatorname{Real.cos}\left(s + \frac{\operatorname{Real.pi}}{\operatorname{Nat.cast}\left(d\right)} \cdot \operatorname{Nat.cast}\left(y\right)\right)\right)\right) \le \frac{1}{\operatorname{Real.sin}\left(\frac{\operatorname{Real.pi}}{2 \cdot \operatorname{Nat.cast}\left(d\right)}\right)}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/PeritoUnitCircleSum.abs_cos_sum_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d at least two and every real phase s, the sum over y in Finset.range d of the absolute value of Real.cos (s + Real.pi / d * y) is bounded by the half-angle cosecant.
+
+**Theorem 1.2 (The distance sum is bounded uniformly in the phase).**
 
 $$\forall d\in\mathbb{N}, 2\le d\Rightarrow \forall z\in\mathbb{C}, \Vert z\Vert=1\Rightarrow \sum_{y=0}^{d-1}\Vert1+omega^{y}z\Vert\le\frac{2}{\sin(\frac{\pi}{2d})}$$
 
@@ -24,5 +36,6 @@ The finite trigonometric sum identity gives the cosine sum as cos(t + (d - 1) pi
 
 ## References
 
+- Truth anchor: `D5/S3/QuantumBounds/PeritoUnitCircleSum.abs_cos_sum_le`
 - Truth anchor: `D5/S3/QuantumBounds/PeritoUnitCircleSum.unit_circle_sum_le`
 - Dependency: [D5/S3/Observer/WindowRegister](../Observer/WindowRegister.md)

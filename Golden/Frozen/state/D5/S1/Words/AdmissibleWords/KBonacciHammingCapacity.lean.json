@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e89d0607d59d13ebe5236e6df911bc657362743ee648dce0cf6046316ab8061c"}
+{"statement_id":"sha256:e89d0607d59d13ebe5236e6df911bc657362743ee648dce0cf6046316ab8061c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),15:AdmissibleWords),23:KBonacciHammingCapacity),32:kbonacci_actual_hamming_capacity)","kind":"theorem"}]}

@@ -1,0 +1,13 @@
+**Definition 54.1 (resource-aware congruence).** Fix a resource contract
+$\Gamma$. A relation is $\Gamma$-compatible when its action labels agree under
+$\Gamma$ and its successor relation preserves the same source-indexed cost
+composition. For additive costs, the trace cost satisfies
+
+$$
+C(q,aw)=\operatorname{cost}(q,a)+C(\operatorname{Next}(q,a),w).
+$$
+
+For maximum, cumulative, or weighted sourcewise resources, the aggregation
+operator must be part of $\Gamma$; coordinatewise maxima from different
+sources cannot be substituted for one same-source trace.
+

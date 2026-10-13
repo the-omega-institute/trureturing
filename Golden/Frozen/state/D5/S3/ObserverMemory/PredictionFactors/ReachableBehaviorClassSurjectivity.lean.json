@@ -1,1 +1,1 @@
-{"statement_id":"sha256:33ebb5ee7bad4f879cfaf749f6f226248e231477f7b06de1ab7f24c0cc62dbf2"}
+{"statement_id":"sha256:33ebb5ee7bad4f879cfaf749f6f226248e231477f7b06de1ab7f24c0cc62dbf2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),17:PredictionFactors),34:ReachableBehaviorClassSurjectivity),43:every_reachable_behavior_class_is_reachable)","kind":"theorem"}]}
