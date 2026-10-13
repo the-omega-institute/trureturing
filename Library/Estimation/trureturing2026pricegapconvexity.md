@@ -2191,7 +2191,7 @@ All supplier starts can be paid uniformly, since $A_a\ge\ell_X\to\infty$.
 
 ### Directly consume prime existence, rather than reprove a gap theorem
 
-The [Baker--Harman--Pintz primary Theorem 1](../Analytic/bakerharmanpintz2001primegaps.md)
+The [Baker--Harman--Pintz primary Theorem 1](../Scale/bakerharmanpintz2001primegaps.md)
 and its explicit forward conversion BHP-F supply $H(x)=2x^\vartheta$,
 $\vartheta=21/40$. Therefore every original core block satisfies
 

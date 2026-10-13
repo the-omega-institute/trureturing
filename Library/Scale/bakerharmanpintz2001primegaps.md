@@ -59,7 +59,7 @@ activation. The resulting bound concerns residence weight of that core
 in the original full window, rather than the mere existence of one
 unchanged-core edge.
 
-The [Guth--Maynard note](guthmaynard2024largevalues.md) supplies a different
+The [Guth--Maynard note](../Analytic/guthmaynard2024largevalues.md) supplies a different
 contract: uniform asymptotic prime counts in its stated longer intervals.
 BHP-F can be used when only prime existence is required; it does not
 replace the prime-count supplier elsewhere. This note makes no claim
