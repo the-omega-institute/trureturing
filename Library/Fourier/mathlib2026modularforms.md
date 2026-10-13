@@ -14,6 +14,10 @@ triage: anchor
 
 # Pinned formal sources for the integral discriminant bridge
 
+## Verified locator
+
+Source: https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/ModularForms
+
 This note identifies the formal source snapshot actually inspected, Mathlib
 `db584cd6d46c92f209a44c0f1c829460d327499d`, used with Lean v4.33.0.
 The year records this snapshot review; no separate paper publication is asserted.
