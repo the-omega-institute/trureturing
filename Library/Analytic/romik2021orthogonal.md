@@ -10128,7 +10128,7 @@ remain in $A=B_\epsilon/C$, and the actual simple bad node lies in
 the closed $D/16$ chart.
 
 For these fixed parameters and each fixed $k$, $A\to1/C$,
-$\mathscr T_kA\to1/C$ and $\mathscr T_kA\prime\to0$
+$\mathscr T_kA\to1/C$ and $\mathscr T_k(A')\to0$
 locally uniformly as $\epsilon\downarrow0$, while
 $J_k\to\mathscr T_k(Q/C)$. On a larger closed
 parameter disc their amplitudes are consequently nonzero, and Cauchy
@@ -10209,3 +10209,76 @@ moment conditions have been shown to force the required sign when combined
 with the actual first-defect and kernel hypotheses. The latter combined
 implication remains a separate research question, with the complete
 original source, its tails and every node retained.
+
+### Positive moments and all positive shifts still leave a finite sign gap
+
+The distinction in (LC392)--(LC393) does not by itself repair the node
+sign. Reuse the classical cosine transform of a symmetric three-point
+positive law, rather than claiming a new entire-function family. In the
+unchanged extraction convention, take
+
+$$
+\mu=\frac7{11}\delta_0+\frac2{11}(\delta_{-1}+\delta_1),\qquad
+f(z)=\frac{7+4\cos\sqrt z}{11},\qquad
+f(-z)=1+\frac4{11}\sum_{j\ge1}\frac{z^j}{(2j)!}.
+\tag{LC394}
+$$
+
+The square-root expressions mean their entire power series.
+Then $f(t^2)=\int e^{itx}\,d\mu(x)$, and every coefficient
+moment is genuinely the even moment $\mu_j=\int x^{2j}\,d\mu(x)$:
+$\mu_0=1$ and $\mu_j=4/11$ for $j\ge1$.
+Both ordinary and shifted Stieltjes Hankel matrices are positive
+semidefinite. Indeed, their quadratic forms are integrals of a squared
+polynomial, with an additional factor $x^2$ in the shifted case.
+This uses the standard moment representation directly.
+
+Set $J_k=\mathscr T_kf$, $G_k=\mathscr T_kf'$ as before. The first
+three rows and the second-row derivative response are
+
+$$
+\begin{aligned}
+J_1(t)&=1-2t/11,\\
+132J_2(t)&=t^2-24t+132,\\
+8910J_3(t)&=-t^3+90t^2-1620t+8910,\\
+1320G_2(t)&=-240+40t-t^2.
+\end{aligned}
+\tag{LC395}
+$$
+
+The first two rows are hyperbolic with positive simple roots. The
+monic cubic $-8910J_3$ has discriminant $-490106700<0$, hence
+one real root and one nonreal conjugate pair. At the lower actual
+second-row node $t_-=12-2\sqrt3>0$, use
+$t_-^2=24t_--132$ to obtain
+
+$$
+J_2'(t_-)=-\sqrt3/33<0,\qquad
+G_2(t_-)=(4t_--27)/330>0,\qquad
+\frac{G_2(t_-)}{J_2'(t_-)}
+=\frac{8\sqrt3-21}{10\sqrt3}<-\frac13.
+\tag{LC396}
+$$
+
+The ratio uses both extractions of this same complete source.
+Moreover, $f'(z)=-(2/11)\sin\sqrt z/\sqrt z$ has only positive
+real zeros. Its sine-product partial products converge locally
+uniformly. Their derivatives are real-rooted by Rolle's theorem,
+and their finite Jensen extractions are real-rooted by the supplier
+used in (LC384). Passing to each fixed derivative and extraction
+preserves hyperbolicity. Every resulting row has degree $k$, since
+its top coefficient is
+$(-1)^{h+k}4(h+k)!/[11(2h+2k)!k^k]\ne0$ for $h,k\ge1$.
+Consequently every positive-shift row $\mathscr T_kf^{(h)}$ is
+hyperbolic, on this same positive-law source.
+
+This is a parameter correspondence and direct application of classical
+cosine, moment and real-root suppliers, without a priority or Lean claim.
+It excludes a general finite-node implication using only positive-measure
+moments, the preceding actual hyperbolic rows and all positive-shift rows.
+It does not replace (LC379)--(LC391): the measure is atomic, its moment
+matrices need not be positive definite, its source has infinitely many
+nonreal pairs, and it does not supply that construction's arbitrarily
+large full-growth budget or the original theta source's smooth density
+and differential relations. No combined positive-theta/full-growth
+counterexample or actual theta signed estimate is asserted.
