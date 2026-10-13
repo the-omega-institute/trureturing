@@ -481,29 +481,6 @@ theorem strict_first_variable_jensen_violation {α p : ℝ}
 
 #print axioms strict_first_variable_jensen_violation
 
-/-- Consumed exact reference to the frozen row-Gram supplier. -/
-private lemma supplied_row_gram (A : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
-    schattenNorm A r ^ r = InverseMeanVariational.tracePower (r / 2) (A * Aᴴ) := by
-  run_tac
-    let goal ← Lean.Elab.Tactic.getMainGoal
-    let supplier ← Lean.Meta.mkConstWithFreshMVarLevels
-      (Lean.mkPrivateNameCore `D5.S3.Quantum.Hiai.InverseMeanVariational
-        `D5.S3.Quantum.Hiai.InverseMeanVariational.norm_rpow_rowGram)
-    Lean.Elab.Tactic.replaceMainGoal (← goal.apply supplier)
-  exact hr
-
-/-- Consumed exact reference to the frozen Holder/Young supplier. -/
-private lemma supplied_holder_young (U V : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
-    2 * schattenNorm (U * V) r ^ r - schattenNorm V (2 * r) ^ (2 * r) ≤
-      schattenNorm U (2 * r) ^ (2 * r) := by
-  run_tac
-    let goal ← Lean.Elab.Tactic.getMainGoal
-    let supplier ← Lean.Meta.mkConstWithFreshMVarLevels
-      (Lean.mkPrivateNameCore `D5.S3.Quantum.Hiai.InverseMeanVariational
-        `D5.S3.Quantum.Hiai.InverseMeanVariational.holder_two_young)
-    Lean.Elab.Tactic.replaceMainGoal (← goal.apply supplier)
-  exact hr
-
 private def gramCore (p : ℝ) (A B : Matrix d d ℂ) : Matrix d d ℂ :=
   A ^ (p / 2) * B ^ p * A ^ (p / 2)
 
@@ -568,7 +545,7 @@ private lemma tildeTrace_midpoint {p : ℝ} (hp : 0 < p) {A B : Matrix d d ℂ}
     rw [CFC.rpow_one L hL.posSemidef.nonneg]
     simpa only [mul_assoc] using midpoint_riccati hp hA
   have hg := InverseMeanVariational.norm_rpow_gram V (show 0 < 2 / p by positivity)
-  have hh := supplied_row_gram
+  have hh := InverseMeanVariational.norm_rpow_rowGram
     V (show 0 < 2 / p by positivity)
   rw [hc] at hg
   rw [hr] at hh
@@ -636,13 +613,13 @@ private lemma variational_upper {p : ℝ} (hp : 0 < p) {A B Z : Matrix d d ℂ}
   have hV : V * Vᴴ = Z⁻¹ * B ^ p * Z⁻¹ᴴ := by
     simp only [V, Matrix.conjTranspose_mul, hR, mul_assoc]
     rw [← mul_assoc (B ^ _) (B ^ _), power_half_square hB p]
-  have hh := supplied_holder_young
+  have hh := InverseMeanVariational.holder_two_young
     U V (one_div_pos.mpr hp)
   rw [hUV,
-    supplied_row_gram
+    InverseMeanVariational.norm_rpow_rowGram
       _ (one_div_pos.mpr hp), hM,
     InverseMeanVariational.norm_rpow_gram U (by positivity), hU,
-    supplied_row_gram
+    InverseMeanVariational.norm_rpow_rowGram
       V (by positivity), hV] at hh
   simp only [show 2 * (1 / p) / 2 = 1 / p by ring,
     show 1 / p / 2 = 1 / (2 * p) by ring] at hh
