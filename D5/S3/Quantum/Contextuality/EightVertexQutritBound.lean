@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: The Wagner and rank-five eight-vertex graphs have qutrit score at most three. -/
+   digest: Both eight-vertex graphs have sharp qutrit value three and minimum dimension four. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Combinatorics.SimpleGraph.Clique
@@ -169,20 +169,23 @@ private theorem force_third_ray {a b c x : E 3}
 private theorem parseval_three {a b c : E 3}
     (hON : Orthonormal ℝ ![a, b, c]) (ψ : E 3) :
     overlapSq ψ a + overlapSq ψ b + overlapSq ψ c = ‖ψ‖ ^ 2 := by
-  let b := basisOfOrthonormalOfCardEqFinrank hON (by simp)
-  have hb : Orthonormal ℝ b := by
-    simpa only [b, coe_basisOfOrthonormalOfCardEqFinrank] using hON
-  have h := (b.toOrthonormalBasis hb).sum_sq_inner_left ψ
-  simpa only [Module.Basis.coe_toOrthonormalBasis, b,
-    coe_basisOfOrthonormalOfCardEqFinrank, Fin.sum_univ_succ,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Fin.sum_univ_zero, add_zero,
-    overlapSq, add_assoc] using h
+  let B := basisOfOrthonormalOfCardEqFinrank hON (by simp)
+  have hB : (B : Fin 3 → E 3) = ![a, b, c] :=
+    coe_basisOfOrthonormalOfCardEqFinrank hON _
+  have hb : Orthonormal ℝ B := by rw [hB]; exact hON
+  have hcoe : ((B.toOrthonormalBasis hb) : Fin 3 → E 3) = ![a, b, c] := by
+    rw [Module.Basis.coe_toOrthonormalBasis]
+    exact hB
+  have h := (B.toOrthonormalBasis hb).sum_sq_inner_left ψ
+  rw [hcoe] at h
+  simpa only [Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+    Fin.sum_univ_zero, add_zero, overlapSq.eq_1, add_assoc] using h
 
 private theorem bessel_pair {d : ℕ} {x y : E d}
     (hx : ‖x‖ = 1) (hy : ‖y‖ = 1) (hxy : ⟪x, y⟫ = 0) (ψ : E d) :
     overlapSq ψ x + overlapSq ψ y ≤ ‖ψ‖ ^ 2 := by
   have h := (orthonormal_two hx hy hxy).sum_inner_products_le ψ (s := Finset.univ)
-  simpa only [Finset.mem_univ, Finset.sum_const_zero, Finset.sum_ite_irrel,
+  simpa only [Finset.sum_const_zero, Finset.sum_ite_irrel,
     Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
     Fin.sum_univ_zero, add_zero, Real.norm_eq_abs, sq_abs, real_inner_comm,
     overlapSq] using h
@@ -362,6 +365,236 @@ private theorem g5_pairDecomposition {v : Vertex → E 3} (hv : Realizes G5 v) :
 private theorem g5_upper_three : UpperBound G5 3 3 := by
   intro v hv
   exact bound_of_pairDecomposition hv (g5_pairDecomposition hv)
+
+private theorem attained_of_coloring {G : SimpleGraph Vertex} (color : Vertex → Fin 3)
+    (hproper : ∀ i j, G.Adj i j → color i ≠ color j)
+    (hcount : (Finset.univ.filter (fun i => color i = 0)).card = 3) :
+    3 ∈ UnitScores G 3 := by
+  let b := EuclideanSpace.basisFun (Fin 3) ℝ
+  refine ⟨fun i => b (color i), ⟨fun i => b.orthonormal.norm_eq_one _, ?_⟩,
+    b 0, b.orthonormal.norm_eq_one 0, ?_⟩
+  · intro i j hij
+    exact b.orthonormal.inner_eq_zero (hproper i j hij)
+  · unfold score overlapSq
+    have hi (i : Vertex) : ⟪b 0, b (color i)⟫ ^ 2 = if color i = 0 then 1 else 0 := by
+      by_cases h : color i = 0
+      · rw [h, real_inner_self_eq_norm_sq, b.orthonormal.norm_eq_one]; norm_num
+      · rw [if_neg h, b.orthonormal.inner_eq_zero (Ne.symm h)]; norm_num
+    simp_rw [hi]
+    rw [Finset.sum_boole, hcount]
+    norm_num
+
+private def normalize {d : ℕ} (u : E d) : E d := (Real.sqrt ⟪u, u⟫)⁻¹ • u
+
+private theorem normalize_unit {d : ℕ} {u : E d} (hu : 0 < ⟪u, u⟫) :
+    ‖normalize u‖ = 1 := by
+  unfold normalize
+  rw [← norm_eq_sqrt_real_inner]
+  apply norm_smul_inv_norm
+  intro h
+  rw [h, inner_zero_left] at hu
+  exact (lt_irrefl 0) hu
+
+private theorem normalize_orthogonal {d : ℕ} {u v : E d} (huv : ⟪u, v⟫ = 0) :
+    ⟪normalize u, normalize v⟫ = 0 := by
+  unfold normalize
+  rw [real_inner_smul_left, real_inner_smul_right, huv, mul_zero, mul_zero]
+
+private theorem overlapSq_normalize {d : ℕ} {p u : E d}
+    (hp : 0 < ⟪p, p⟫) (hu : 0 < ⟪u, u⟫) :
+    overlapSq (normalize p) (normalize u) = ⟪p, u⟫ ^ 2 / (⟪p, p⟫ * ⟪u, u⟫) := by
+  unfold overlapSq normalize
+  rw [real_inner_smul_left, real_inner_smul_right]
+  simp only [mul_pow, inv_pow, Real.sq_sqrt hp.le, Real.sq_sqrt hu.le]
+  rw [div_eq_mul_inv, mul_inv]
+  ring
+
+private theorem normalized_witness {G : SimpleGraph Vertex} {d : ℕ} {t : ℝ}
+    (u : Vertex → E d) (p : E d)
+    (hu : ∀ i, 0 < ⟪u i, u i⟫) (hp : 0 < ⟪p, p⟫)
+    (hEdges : ∀ i j, G.Adj i j → ⟪u i, u j⟫ = 0)
+    (hValue : (∑ i, ⟪p, u i⟫ ^ 2 / (⟪p, p⟫ * ⟪u i, u i⟫)) = t) :
+    t ∈ UnitScores G d := by
+  refine ⟨fun i => normalize (u i), ⟨fun i => normalize_unit (hu i), ?_⟩,
+    normalize p, normalize_unit hp, ?_⟩
+  · intro i j hij
+    exact normalize_orthogonal (hEdges i j hij)
+  · rw [score.eq_1]
+    simp_rw [overlapSq_normalize hp (hu _)]
+    exact hValue
+
+private def embedToThree {d : ℕ} (hd : d ≤ 3) : E d →ₗᵢ[ℝ] E 3 := by
+  let bd := EuclideanSpace.basisFun (Fin d) ℝ
+  let b3 := EuclideanSpace.basisFun (Fin 3) ℝ
+  let f : Fin d → Fin 3 := fun i => ⟨i.val, lt_of_lt_of_le i.isLt hd⟩
+  have hf : Function.Injective f := fun i j h => Fin.ext (congrArg (fun k : Fin 3 => k.val) h)
+  let L := bd.toBasis.constr ℝ (fun i => b3 (f i))
+  refine L.isometryOfOrthonormal (v := bd.toBasis) bd.orthonormal ?_
+  have heq : L ∘ bd.toBasis = fun i => b3 (f i) := by
+    funext i
+    exact bd.toBasis.constr_basis ℝ _ i
+  rw [heq]
+  exact b3.orthonormal.comp f hf
+
+private theorem upperBound_pullback {G : SimpleGraph Vertex} {d e : ℕ} {c : ℝ}
+    (J : E d →ₗᵢ[ℝ] E e) (h : UpperBound G e c) : UpperBound G d c := by
+  intro v hv ψ
+  have hj : Realizes G (fun i => J (v i)) := by
+    refine ⟨fun i => (J.norm_map _).trans (hv.1 i), ?_⟩
+    intro i j hij
+    rw [J.inner_map_map]
+    exact hv.2 i j hij
+  have hs := h _ hj (J ψ)
+  simpa only [score, overlapSq, J.inner_map_map, J.norm_map] using hs
+
+private theorem unitScores_bddAbove (G : SimpleGraph Vertex) (d : ℕ) :
+    BddAbove (UnitScores G d) := by
+  refine ⟨8, ?_⟩
+  rintro t ⟨v, hv, ψ, hψ, rfl⟩
+  have hi (i : Vertex) : overlapSq ψ (v i) ≤ 1 := by
+    have h := abs_real_inner_le_norm ψ (v i)
+    rw [hψ, hv.1 i, mul_one] at h
+    unfold overlapSq
+    nlinarith [sq_abs ⟪ψ, v i⟫, abs_nonneg ⟪ψ, v i⟫]
+  calc
+    score v ψ ≤ ∑ _i : Vertex, (1 : ℝ) := Finset.sum_le_sum (fun i _ => hi i)
+    _ = 8 := by norm_num
+
+private theorem eta_eq_of_upper_attained {G : SimpleGraph Vertex} {d : ℕ} {c : ℝ}
+    (hU : UpperBound G d c) (hA : c ∈ UnitScores G d) : eta G d = c := by
+  apply IsGreatest.csSup_eq
+  refine ⟨hA, ?_⟩
+  rintro t ⟨v, hv, ψ, hψ, rfl⟩
+  simpa only [hψ, one_pow, mul_one] using hU v hv ψ
+
+private theorem lt_eta_of_mem {G : SimpleGraph Vertex} {d : ℕ} {t c : ℝ}
+    (ht : t ∈ UnitScores G d) (hct : c < t) : c < eta G d :=
+  hct.trans_le (le_csSup (unitScores_bddAbove G d) ht)
+
+private theorem minimum_dimension_four {G : SimpleGraph Vertex}
+    (hα : G.indepNum = 3) (hLow : ∀ d : ℕ, d ≤ 3 → UpperBound G d 3)
+    (hFour : HasViolation G 4) : IsLeast {d : ℕ | HasViolation G d} 4 := by
+  refine ⟨hFour, ?_⟩
+  rintro d ⟨v, hv, ψ, hψ, hgt⟩
+  by_contra h
+  have hd : d ≤ 3 := by omega
+  have hs := hLow d hd v hv ψ
+  rw [hψ, one_pow, mul_one] at hs
+  rw [hα] at hgt
+  norm_num at hgt
+  exact (not_lt_of_ge hs) hgt
+
+/-- Sharp qutrit value, independence number, and least dimension of a violation. -/
+def Settled (G : SimpleGraph Vertex) : Prop :=
+  G.indepNum = 3 ∧
+  (∀ d : ℕ, d ≤ 3 → UpperBound G d 3) ∧
+  IsGreatest (UnitScores G 3) 3 ∧ eta G 3 = 3 ∧ 3 < eta G 4 ∧
+  IsLeast {d : ℕ | HasViolation G d} 4
+
+def claim : Prop := Settled W ∧ Settled G5
+
+private theorem settled_of_certificates {G : SimpleGraph Vertex}
+    (hα : G.indepNum = 3) (h3 : UpperBound G 3 3) (hAttained : 3 ∈ UnitScores G 3)
+    (hFour : ∃ t ∈ UnitScores G 4, 3 < t) : Settled G := by
+  have hLow (d : ℕ) (hd : d ≤ 3) : UpperBound G d 3 :=
+    upperBound_pullback (embedToThree hd) h3
+  have hGreatest : IsGreatest (UnitScores G 3) 3 := by
+    refine ⟨hAttained, ?_⟩
+    rintro t ⟨v, hv, ψ, hψ, rfl⟩
+    simpa only [hψ, one_pow, mul_one] using h3 v hv ψ
+  obtain ⟨t, ht, hgt⟩ := hFour
+  have hViolation : HasViolation G 4 := by
+    obtain ⟨v, hv, ψ, hψ, hs⟩ := ht
+    refine ⟨v, hv, ψ, hψ, ?_⟩
+    rw [hs, hα]
+    exact_mod_cast hgt
+  exact ⟨hα, hLow, hGreatest, eta_eq_of_upper_attained h3 hAttained,
+    lt_eta_of_mem ht hgt, minimum_dimension_four hα hLow hViolation⟩
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 4000000 in
+-- Finite independent-set enumeration and exact coordinate arithmetic share this budget.
+/-- Both eight-vertex graphs have sharp qutrit value three and least violation dimension four. -/
+theorem result : claim := by
+  have hαW : W.indepNum = 3 := by
+    have hi : W.IsIndepSet ({0, 3, 5} : Finset Vertex) := by decide
+    have hc : ∀ s : Finset Vertex, W.IsIndepSet s → s.card ≤ 3 := by decide
+    have hm : W.IsMaximumIndepSet ({0, 3, 5} : Finset Vertex) :=
+      ⟨hi, fun s hs => by simpa using hc s hs⟩
+    simpa using (W.maximumIndepSet_card_eq_indepNum _ hm).symm
+  have hαG5 : G5.indepNum = 3 := by
+    have hi : G5.IsIndepSet ({1, 2, 3} : Finset Vertex) := by decide
+    have hc : ∀ s : Finset Vertex, G5.IsIndepSet s → s.card ≤ 3 := by decide
+    have hm : G5.IsMaximumIndepSet ({1, 2, 3} : Finset Vertex) :=
+      ⟨hi, fun s hs => by simpa using hc s hs⟩
+    simpa using (G5.maximumIndepSet_card_eq_indepNum _ hm).symm
+  have hAW : 3 ∈ UnitScores W 3 := by
+    let color : Vertex → Fin 3 := ![0, 1, 2, 0, 1, 0, 1, 2]
+    have hp : ∀ i j, W.Adj i j → color i ≠ color j := by decide
+    have hc : (Finset.univ.filter (fun i => color i = 0)).card = 3 := by decide
+    exact attained_of_coloring color hp hc
+  have hAG5 : 3 ∈ UnitScores G5 3 := by
+    let color : Vertex → Fin 3 := ![2, 0, 0, 0, 1, 1, 1, 2]
+    have hp : ∀ i j, G5.Adj i j → color i ≠ color j := by decide
+    have hc : (Finset.univ.filter (fun i => color i = 0)).card = 3 := by decide
+    exact attained_of_coloring color hp hc
+  have h4W : ∃ t ∈ UnitScores W 4, 3 < t := by
+    let u : Vertex → E 4 := fun i => WithLp.toLp 2
+      (![![20, 15, 0, 0], ![9, -12, -12, 16], ![12, 16, 9, 12], ![20, -15, 0, 0],
+         ![0, 0, -15, 20], ![16, 12, 12, 9], ![-12, 9, 16, -12], ![0, 0, 15, 20]] i)
+    let p : E 4 := WithLp.toLp 2 ![4, 0, 0, 3]
+    have hn : ∀ i, ⟪u i, u i⟫ = 625 := by
+      intro i; fin_cases i <;>
+        norm_num [u, EuclideanSpace.inner_toLp_toLp, dotProduct,
+          EuclideanSpace.norm_sq_eq, Fin.sum_univ_succ]
+    have hp : ⟪p, p⟫ = 25 := by
+      norm_num [p, EuclideanSpace.inner_toLp_toLp, dotProduct,
+        EuclideanSpace.norm_sq_eq, Fin.sum_univ_succ]
+    have hpu : ∀ i, ⟪p, u i⟫ = (![80, 84, 84, 80, 60, 91, -84, 60] : Vertex → ℝ) i := by
+      intro i; fin_cases i <;>
+        norm_num [u, p, EuclideanSpace.inner_toLp_toLp, dotProduct,
+          EuclideanSpace.norm_sq_eq, Fin.sum_univ_succ]
+    have he : ∀ i j, W.Adj i j → ⟪u i, u j⟫ = 0 := by
+      intro i j hij; fin_cases i <;> fin_cases j
+      all_goals first
+        | exact absurd hij (by decide)
+        | norm_num [u, EuclideanSpace.inner_toLp_toLp, dotProduct,
+            Fin.sum_univ_succ, EuclideanSpace.norm_sq_eq]
+    refine ⟨49449 / 15625, ?_, by norm_num⟩
+    apply normalized_witness u p (fun i => by rw [hn]; norm_num) (by rw [hp]; norm_num) he
+    simp_rw [hpu, hn, hp]
+    norm_num [Fin.sum_univ_succ]
+  have h4G5 : ∃ t ∈ UnitScores G5 4, 3 < t := by
+    let u : Vertex → E 4 := fun i => WithLp.toLp 2
+      (![![19, 5, -13, 0], ![-2, 5, 29, -15], ![0, 0, 0, -1], ![8, -20, 4, -15],
+         ![2, 31, 1, 12], ![2, -5, 1, 0], ![-5, -2, 0, 0], ![-1, 0, 2, 0]] i)
+    let p : E 4 := WithLp.toLp 2 ![1, 2, -2, 1]
+    have hn : ∀ i, ⟪u i, u i⟫ =
+        (![555, 1095, 1, 705, 1110, 30, 29, 5] : Vertex → ℝ) i := by
+      intro i; fin_cases i <;>
+        norm_num [u, EuclideanSpace.inner_toLp_toLp, dotProduct,
+          EuclideanSpace.norm_sq_eq, Fin.sum_univ_succ]
+    have hp : ⟪p, p⟫ = 10 := by
+      norm_num [p, EuclideanSpace.inner_toLp_toLp, dotProduct,
+        EuclideanSpace.norm_sq_eq, Fin.sum_univ_succ]
+    have hpu : ∀ i, ⟪p, u i⟫ = (![55, -65, -1, -55, 74, -10, -9, -5] : Vertex → ℝ) i := by
+      intro i; fin_cases i <;>
+        norm_num [u, p, EuclideanSpace.inner_toLp_toLp, dotProduct,
+          EuclideanSpace.norm_sq_eq, Fin.sum_univ_succ]
+    have he : ∀ i j, G5.Adj i j → ⟪u i, u j⟫ = 0 := by
+      intro i j hij; fin_cases i <;> fin_cases j
+      all_goals first
+        | exact absurd hij (by decide)
+        | norm_num [u, EuclideanSpace.inner_toLp_toLp, dotProduct,
+            Fin.sum_univ_succ, EuclideanSpace.norm_sq_eq]
+    have hu : ∀ i, 0 < ⟪u i, u i⟫ := by
+      intro i; rw [hn]; fin_cases i <;> norm_num
+    refine ⟨846537181 / 276109725, ?_, by norm_num⟩
+    apply normalized_witness u p hu (by rw [hp]; norm_num) he
+    simp_rw [hpu, hn, hp]
+    norm_num [Fin.sum_univ_succ]
+  exact ⟨settled_of_certificates hαW w_upper_three hAW h4W,
+    settled_of_certificates hαG5 g5_upper_three hAG5 h4G5⟩
 
 end
 
