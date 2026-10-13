@@ -174,7 +174,7 @@ The structure has exactly the fields alice and bob, both with type Fin 4 → Fin
 
 **Definition 1.15 (Peres–Mermin observable grid).**
 
-Lean statement: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square`
+$$\begin{aligned}\operatorname{square}:\operatorname{Fin}\left(3\right) \to \left(\operatorname{Fin}\left(3\right) \to \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)\right)\\\operatorname{square} = \begin{bmatrix}\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitZ}, 1\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(1, \operatorname{qubitZ}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitZ}, \operatorname{qubitZ}\right)\\\operatorname{Matrix}.\operatorname{kronecker}\left(1, \operatorname{qubitX}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitX}, 1\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitX}, \operatorname{qubitX}\right)\\\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitZ}, \operatorname{qubitX}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitX}, \operatorname{qubitZ}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{pauliMatrix}\left(\operatorname{Pauli}.\operatorname{Y}\right), \operatorname{pauliMatrix}\left(\operatorname{Pauli}.\operatorname{Y}\right)\right)\end{bmatrix}\end{aligned}$$
 
 *Formalization.* `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square` (`✓ std3`).
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square`
 
 *Commentary.*
 
-The nine entries are the Peres–Mermin square: Z⊗I, I⊗Z, Z⊗Z; I⊗X, X⊗I, X⊗X; Z⊗X, X⊗Z, Y⊗Y. Matrix.kronecker uses the two-qubit product indexing. The grid is reused by the rank-three contextuality construction.
+The nine entries form the Peres–Mermin square. Matrix.kronecker acts on the two-qubit product indices; 1 is the single-qubit identity matrix.
 
 **Definition 1.16 (Validity of all eight settings).**
 
