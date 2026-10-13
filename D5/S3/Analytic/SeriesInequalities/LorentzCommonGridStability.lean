@@ -75,7 +75,7 @@ lemma residual_jet {r j : ℕ} (hj : j ≤ r) {f : ℝ → ℂ}
       ((hf.of_le (by exact_mod_cast hj)) x hx) ((polynomial_smooth P j) x hx),
     polynomial_jet P j hx]
 
-private lemma operator_residual {m r : ℕ} (hm : 0 < m) {f : ℝ → ℂ}
+lemma operator_residual {m r : ℕ} (hm : 0 < m) {f : ℝ → ℂ}
     (hf : ContDiffOn ℝ r f (Set.Icc (0 : ℝ) 1)) (P : ℂ[X]) :
     holderOperator m r (fun x : ℝ => f x - P.eval (x : ℂ)) =
       holderOperator m r f - lorentzOperator m r P := by
