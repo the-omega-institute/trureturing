@@ -114,7 +114,7 @@ The arXiv v1 PDF, p. 19: "Although the bounds in the above theorem are sufficien
 
 **Theorem 1.10 (Coordinates of a trace-one Hermitian qubit matrix).**
 
-$$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall h \in \operatorname{Matrix.IsHermitian}\left(A\right),\; \forall ht \in \operatorname{Matrix.trace}\left(A\right) = 1,\; A = \operatorname{D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix}\left(1, \operatorname{WithLp.toLp}\left(2, ![2 \cdot \operatorname{Complex.re}\left(A\left(0, 1\right)\right), 0 - 2 \cdot \operatorname{Complex.im}\left(A\left(0, 1\right)\right), 2 \cdot \operatorname{Complex.re}\left(A\left(0, 0\right)\right) - 1]\right)\right)$$
+$$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{Matrix.IsHermitian}\left(A\right)) \Rightarrow ((\operatorname{Matrix.trace}\left(A\right) = 1) \Rightarrow (A = \operatorname{D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix}\left(1, \operatorname{WithLp.toLp}\left(2, ![2 \cdot \operatorname{Complex.re}\left(A\left(0, 1\right)\right), 0 - 2 \cdot \operatorname{Complex.im}\left(A\left(0, 1\right)\right), 2 \cdot \operatorname{Complex.re}\left(A\left(0, 0\right)\right) - 1]\right)\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.density_coordinates` (`✓ std3`). ∎
 
