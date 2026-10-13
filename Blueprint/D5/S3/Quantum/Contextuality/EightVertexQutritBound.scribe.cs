@@ -95,7 +95,10 @@ internal sealed class EightVertexQutritBoundDocument : IScribeDocumentDefinition
                             + "scores exceed three. These realizations, together with the sharp "
                             + "qutrit bounds, establish the real minimum dimension four indicated "
                             + "in §IV and Table V(a)."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tamer-et-al-2026-eight-vertex-qutrit-dimension"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
