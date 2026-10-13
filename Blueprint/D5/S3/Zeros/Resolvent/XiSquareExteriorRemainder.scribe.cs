@@ -454,6 +454,49 @@ internal sealed class XiSquareExteriorRemainderDocument : IScribeDocumentDefinit
                         + "the standard axiom closure. Their constants and source disc differ from "
                         + "the 2D core's H and closed D disc.")),
                     Paragraph(Text(
+                        "For this same prescribed D core, the literal exterior itself is a real "
+                        + "source. Its value at zero is one; the normalization A_hat=k_core E_core "
+                        + "therefore makes the nonzero k_core real, and cancellation in the actual "
+                        + "A_hat reflection identity gives E_core(conj z)=conj E_core(z). Its actual "
+                        + "real restriction is smooth on the whole real line, and its complex "
+                        + "derivative and logarithmic derivative at a real x equal the corresponding "
+                        + "real derivative and derivative ratio. The original tilt theta=a/(1-a "
+                        + "logDeriv(E_core)(a)/n) has the identical real formula, with the same "
+                        + "totalized denominator convention. Real source coefficients remain distinct "
+                        + "from realness of original core roots.")),
+                    Paragraph(Text(
+                        "Choose the fixed U=H_D+S_D+1 and keep the same literal source. The original "
+                        + "degree budget n>=256U L T squared/rho squared pays norm(a)/sqrt(n)<=D/8 on "
+                        + "the entire source chart. The actual same-source rectangle preimage and paid "
+                        + "extraction response errors then give, for every closed target norm(t-T "
+                        + "squared)<=D/8, both norm(T_n(E_core prime)(t)/T_n E_core(t))<=2U L/D and "
+                        + "norm((T_n E_core) prime(t)/T_n E_core(t))<=8U L/D. These are separate "
+                        + "quotients. Neither the preimage, its scale, mass and drift, nor the target "
+                        + "nonzero condition is an additional premise.")),
+                    Paragraph(Text(
+                        "For the original extraction P=T_n E_core, let chi(t)=t-t squared "
+                        + "logDeriv(P)(t)/n. The stronger degree budget n>=65536U L T squared/rho "
+                        + "squared makes P nonzero and chi analytic on the closed D/8 target disc, and "
+                        + "pays norm(chi(t)-t)<=D/2048 there. At every center in the closed D/16 disc, "
+                        + "its closed Cauchy circle of radius D/16 lies in that same closed D/8 disc; "
+                        + "applying Cauchy to chi minus the identity proves norm(chi "
+                        + "prime(t)-1)<=1/128. These exact real-source, uniform-quotient and "
+                        + "near-identity applications passed Lean compilation with the standard axiom "
+                        + "closure. They introduce no independent analytic-response or "
+                        + "derivative-bound hypothesis.")),
+                    Paragraph(Text(
+                        "For the actual scale, enlarge the preceding fixed constant to U_plus=U+2304 "
+                        + "and impose n>=65536U_plus L T squared/rho squared. The same extraction "
+                        + "polynomial has real coefficients, by the already proved real-source jet and "
+                        + "extraction correspondence. Hence the same chi commutes with conjugation on "
+                        + "the whole plane. For every complex t in the closed D/16 disc, s(t)=t "
+                        + "squared chi prime(t)/n is nonzero and norm(s(t))>=(127/128)norm(t) "
+                        + "squared/n. On its real slice, chi prime(t) is real and at least 127/128, so "
+                        + "this actual s(t) is strictly positive. The square chart and degree budget "
+                        + "pay t nonzero and n positive. This exact scale application passed Lean "
+                        + "compilation with the standard axiom closure; positivity of the auxiliary "
+                        + "scale alone gives no original signed-cofactor conclusion.")),
+                    Paragraph(Text(
                         "These complete-source applications supply neither realness of the "
                         + "original core roots nor a sign for the original "
                         + "convolution cofactors. In particular, positive auxiliary node speeds and "
