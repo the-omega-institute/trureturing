@@ -2633,3 +2633,157 @@ HC1--HC3 are paper applications of the existing complete accounts,
 with no new generic theorem, literature-originality claim or Lean
 verification. They eliminate legal-height optimization from the leading
 unpaid issue; the original signed Robin target and RH remain unproved.
+
+## The published BHP count controls total local core occupation
+
+Keep all original qualifying full windows, all maximizing ties and the
+strict inventory from SM1--SM5. The additional supplier is the
+[unnumbered concluding estimate in the BHP proof](../Scale/bakerharmanpintz2001primegaps.md#the-published-proofs-quantitative-forward-count),
+printed p.562. Put $b_0=9/100$ and $\vartheta=21/40$. For all sufficiently
+large real $x$, that published estimate gives
+$\pi(x+x^\vartheta)-\pi(x)\ge b_0x^\vartheta/\log x$.
+It is a lower count, not an asymptotic prime-count formula or a new sieve
+theorem. The transfers below use this count directly.
+
+### A lower increment of the same complete strict inventory
+
+There is one finite real start such that, for all $v\ge u$ beyond it,
+
+$$
+\boxed{K(v)-K(u)\ge
+b_0\bigl(v-u-1-v^\vartheta\bigr)_+.}
+\tag{LO1}
+$$
+
+Here $z_+=\max(0,z)$. Equality $v=u$, and more generally $v-u\le1$,
+is covered by monotonicity. For $v-u>1$, start at $x_0=u$ and set
+$x_{j+1}=x_j+x_j^\vartheta$. Stop at the largest $n$ with
+$x_n\le v-1$. This is a finite construction, and
+
+$$
+0\le v-1-x_n<x_n^\vartheta\le v^\vartheta.
+$$
+
+In each completed interval the actual primes have $\log q\ge\log x_j$,
+so the cited count gives
+
+$$
+\sum_{x_j<q\le x_{j+1}}\log q
+\ge\log x_j[\pi(x_{j+1})-\pi(x_j)]
+\ge b_0x_j^\vartheta.
+$$
+
+These prime intervals are disjoint. Every such prime belongs to
+$(u,v-1]$. The existing first-layer rule $q<a_{q,1}<q+1$ puts its
+activation strictly in $(u,v)$, including when $q=v-1$. Its mass
+therefore occurs in $K(v)-K(u)$ with the original strict endpoints.
+Higher-layer and simultaneous activations remain in that complete
+inventory and have nonnegative mass. Summing the displayed lower
+bounds gives
+$K(v)-K(u)\ge b_0(x_n-u)\ge b_0(v-u-1-v^\vartheta)$.
+Combine this with monotonicity to obtain LO1. The allowance is at
+BHP scale $v^{21/40}$; it has not been reduced to $\sqrt v$.
+
+### Retain the total outgoing weight of a block of different cores
+
+For every consecutive block $0\le r\le s<m$ in a sufficiently large
+original full window, all-choice ordering gives $B_s\ge B_r$. Write
+$b=B_s-B_r$ and $\tau=t_s-t_r$. The exact source relations are
+
+$$
+A_s-A_r=b+\tau,\qquad K(A_s)-K(A_r)=b.
+$$
+
+Using the weaker linear form of LO1 gives
+$b\ge b_0(b+\tau-1-A_s^\vartheta)$, hence
+$\tau\le(91/9)b+1+A_s^\vartheta$. The complete weight telescope is
+$\sum_{i=r}^s\delta_i=t_{s+1}-t_r=\tau+\delta_s$. Consequently
+
+$$
+\boxed{\sum_{i=r}^s\delta_i
+\le\frac{91}{9}(B_s-B_r)+1+A_s^\vartheta+\delta_s.}
+\tag{LO2}
+$$
+
+This includes $r=s$. At $s=m-1$, $\delta_s$ uses precisely the original
+terminal label $p_m$. The last outgoing weight is kept even when its
+right endpoint has another core. LO2 requires no bound on the number
+of distinct cores in the block.
+
+Retain the same probability measure
+$\nu_X=L_X^{-1}\sum_{i<m}\delta_i\boldsymbol\delta_{B_i}$ and let
+$\mathfrak e_X=\max_{i<m}\delta_i$ denote the original label mesh,
+distinct from the prime error $E(u)$. For every $y,h\ge0$,
+
+$$
+\boxed{L_X\nu_X([y,y+h])\le
+\min\!\left\{L_X,\frac{91}{9}h+1+
+(y+h+2\ell_X)^\vartheta+\mathfrak e_X\right\}.}
+\tag{LO3}
+$$
+
+If the interval contains any actual clock, its indices form one
+consecutive block by all-choice monotonicity. On that block,
+$B_s-B_r\le h$, $A_s=B_s+t_s\le y+h+2\ell_X$ and
+$\delta_s\le\mathfrak e_X$. Apply LO2 and the trivial total-weight
+bound. An empty interval has zero weight. All actual $A_r$ tend to
+infinity uniformly, so the common start is independent of $y,h$ and
+of the tie assignment.
+
+### Total occupation at the original head's spatial resolution
+
+Let $B_{\min,X}=\min_{i<m}B_i$ and
+$B_{\max,X}=\max_{i<m}B_i$. For fixed $D>0$, put
+
+$$
+I_{y,D}=\left[y,y\exp\!\left(\frac D{\sqrt y}\right)\right],
+\qquad y\ge B_{\min,X}/2.
+$$
+
+Uniformly over all allowed ties, for sufficiently large original
+windows,
+
+$$
+\boxed{\sup_{y\ge B_{\min,X}/2}\nu_X(I_{y,D})
+\ll_D\frac{(B_{\max,X}+2\ell_X)^\vartheta+
+1+\mathfrak e_X}{L_X}.}
+\tag{LO4}
+$$
+
+A nonempty cell has $y\le B_{\max,X}$, and its length is at most
+$2D\sqrt y$ beyond one common start. Apply LO2 to its actual block,
+use $A_s\le B_{\max,X}+2\ell_X$, and absorb
+$\sqrt{B_{\max,X}}$ into $B_{\max,X}^{21/40}$.
+These cells have log-clock width $D/\sqrt y$, corresponding to the
+original heights comparable to $\sqrt B$. No height or mask is changed.
+
+In exactly the already paid SC4 region,
+
+$$
+\Theta<1,\qquad 1-\Theta<\eta<\frac12,
+\qquad \eta\le\frac{1-\Theta}{1-\Theta+21/40},
+$$
+
+SC4 gives $B_{\max,X}^{21/40}=o(L_X)$ uniformly in the ties.
+The existing $2\ell_X=o(B_{\max,X})$, $L_X\sim\ell_X$ and mesh
+bound then give
+
+$$
+\boxed{\sup_{\text{allowed ties}}
+\sup_{y\ge B_{\min,X}/2}\nu_X(I_{y,D})\longrightarrow0.}
+\tag{LO5}
+$$
+
+The original supplied $\eta$ is unchanged, and SC4's equality case
+remains included. Outside this region, and at $\Theta=1$, LO1--LO4
+still apply but no vanishing assertion follows from these bounds.
+LO5 controls the total normalized occupation of arbitrarily many
+different cores in each cell, rather than only individual atom masses.
+It does not provide phase balance, a bandwidth-weighted sampling
+estimate or an upper bound for the original signed $G_a$-mean.
+
+LO1--LO5 are source-specific paper applications of the published lower
+count and existing inventory/source contracts. The prime estimate
+belongs to BHP; no sieve improvement, literature-priority claim, new
+Lean declaration or kernel-verification claim is made. The remaining
+signed Robin estimate and RH are unproved.
