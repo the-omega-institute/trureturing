@@ -19,7 +19,11 @@ internal sealed class NativeStarGraftingDocument : IScribeDocumentDefinition
                 + "is U union SupplierStar(z), and domainGraph(D) is the actual three-generator Cayley "
                 + "graph induced on D. OldVertices(U) and UnionVertices(U,z) denote the corresponding "
                 + "subtypes. liftOld(z,u) includes an old vertex into that union. The contact and all gap "
-                + "circles are specified independently of the chosen paths.")),
+                + "circles are specified independently of the chosen paths. configurationEdges(w) maps "
+                + "the actual typed edge list of w through the subtype value map. OldUncut(w,x,y,e) "
+                + "means e occurs in that old list and differs from the actual contact {x.val,y.val}. "
+                + "NewUncut(z,e) means e is a NativeCircleEdge in a nonzero gap and differs from its "
+                + "literal b cut. ESeam(z,e) means e is {z_i*b,z_i*b*c} for an actual gap i.")),
             Describe.Lean(DescribeId.Create("native-one-contact-graft"),
                 DeclarationHandle.Create(Prefix + "native_one_contact_graft"),
                 H("The Actual E Ring Enlarges the Cycle and Retains Every Uncut Old Edge"),
@@ -32,7 +36,12 @@ internal sealed class NativeStarGraftingDocument : IScribeDocumentDefinition
                         + "circle Circle(x). Then there is an actual Hamilton cycle q on their full union, "
                         + "based at the configuration x. Every old edge other than {x,y} occurs in q. "
                         + "In each nonzero supplier gap, every native a/b edge other than that gap's "
-                        + "actual b cut occurs in q. The retained edges belong to this same constructed "
+                        + "actual b cut occurs in q. For every supplier gap i, the actual c edge from "
+                        + "z_i*b to z_i*b*c also occurs in q, including the final return to gap zero. "
+                        + "For every arbitrary undirected configuration edge e, membership in "
+                        + "configurationEdges(q) is equivalent to OldUncut(w,x,y,e), NewUncut(x,e), "
+                        + "or ESeam(x,e). Thus the full edge set contains exactly these three classes. "
+                        + "The retained edges and new seams belong to this same constructed "
                         + "cycle, including old c edges; the theorem does not choose unrelated witnesses.")),
                     Paragraph(Text(
                         "Open the supplied old cycle at its actual contact edge, rotate and reverse as "
@@ -50,7 +59,14 @@ internal sealed class NativeStarGraftingDocument : IScribeDocumentDefinition
                         + "Hamilton cycle from these actual full paths and real connections. Opening the "
                         + "old cycle removes exactly its contact edge. The native complement inventory "
                         + "retains every other a/b edge in a new circle, and injective induced edge maps "
-                        + "and the exact spliced edge list carry both inventories into q."))),
+                        + "and the exact spliced edge list carry both inventories into q. Adjacent "
+                        + "indexed pieces place every interior seam into that literal edge list. "
+                        + "The final piece is identified from the list's actual last element, and "
+                        + "(b*c)^m=1 identifies the initial closing edge as the final supplier seam. Exact opening "
+                        + "and complete native complement equivalences characterize every piece edge. "
+                        + "An exhaustive classification of the literal chainEdges list shows that any "
+                        + "remaining edge is one of the consecutive c seams. The closing first edge "
+                        + "is the last E seam. These are both directions of the complete edge inventory."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "The contact intersection and occurrence of the old b edge are explicit mathematical "
@@ -85,9 +101,19 @@ internal sealed class NativeStarGraftingDocument : IScribeDocumentDefinition
         Formula newInventory = All("i", Call("Fin", m), Implies(Not(Eq(val(i), D(0))),
             All("u", union, All("v", union, All("g", conf, Implies(newPremises,
                 Member(edge(F.Id("u"), F.Id("v")), Call("edges", q))))))));
+        Formula seamInventory = All("i", Call("Fin", m), Some("u", union, Some("v", union,
+            And(Eq(val(F.Id("u")), Call("mul", gap, b)),
+                And(Eq(val(F.Id("v")), Call("mul", val(F.Id("u")), c)),
+                    Member(edge(F.Id("u"), F.Id("v")), Call("edges", q)))))));
+        Formula rawEdge = F.Id("e");
+        Formula fullInventory = All("e", Call("Sym2Type", conf), Iff(
+            Member(rawEdge, Call("configurationEdges", q)),
+            Or(Call("OldUncut", w, x, y, rawEdge),
+                Or(Call("NewUncut", z, rawEdge), Call("ESeam", z, rawEdge)))));
         Formula cycle = Some("start", union, And(Eq(val(start), z),
             Some("q", Call("Walk", Call("domainGraph", Call("GraftDomain", u, z)), start, start),
-                And(Call("IsHamiltonianCycle", q), And(oldInventory, newInventory)))));
+                And(Call("IsHamiltonianCycle", q),
+                    And(oldInventory, And(newInventory, And(seamInventory, fullInventory)))))));
         Formula hypotheses = And(Call("IsHamiltonianCycle", w),
             And(Eq(val(y), Call("mul", z, b)), And(Member(cut, Call("edges", w)), contact)));
         return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
