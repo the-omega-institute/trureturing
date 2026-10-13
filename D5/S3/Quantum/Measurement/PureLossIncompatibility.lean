@@ -6,8 +6,6 @@
    utility: none
    digest: Pure-loss dual effects admit an exact compressed binary incompatibility certificate. -/
 
-import Mathlib.Analysis.Normed.Lp.lpHolder
-import D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter
 import D5.S3.Quantum.QuantumChannels.FockAttenuator.Attenuator
 import D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation
 import D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtremality

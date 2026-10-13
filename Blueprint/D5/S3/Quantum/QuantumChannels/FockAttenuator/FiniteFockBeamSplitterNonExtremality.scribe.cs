@@ -58,7 +58,7 @@ internal sealed class FiniteFockBeamSplitterNonExtremalityDocument : IScribeDocu
                         Eqn(Call("D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter.fockPair",
                             Id("m"), Id("n"), Id("q"), Id("p")),
                             Call("ite", And(Eqn(Id("p"), Id("m")), Eqn(Id("q"), Id("n"))),
-                                Seq(Open, D(1), Colon, Complex(), Close), D(0))))))))),
+                                Parenthesized(Seq(D(1), Colon, Complex())), D(0))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The coefficient of the two-mode Fock vector is one exactly when the retained occupation is m and the environment occupation is n. Every other coefficient vanishes."))),
                 DescribeRole.Theorem),

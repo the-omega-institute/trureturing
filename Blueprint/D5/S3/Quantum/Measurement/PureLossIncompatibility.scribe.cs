@@ -107,7 +107,8 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
         At(Qualified("lp"), LambdaIgnored(Naturals(), Local("H")), D(2)));
 
     private static Formula OpFormula() => Equal(Local("Op"),
-        At(Qualified("ContinuousLinearMap"), Complexes(), Local("H"), Local("H")));
+        At(Qualified("ContinuousLinearMap"), At(Qualified("RingHom", "id"), Complexes()),
+            Local("H"), Local("H")));
 
     private static Formula LossFormula() => Equal(Local("Loss"),
         At(Qualified("Set", "Icc"), Typed(D(0), Reals()), D(1)));
