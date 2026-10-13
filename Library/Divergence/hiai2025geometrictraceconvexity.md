@@ -12,7 +12,7 @@ license: citation-only
 triage: anchor
 ---
 
-# Original geometric trace and SPD variational assembly
+# Original geometric trace and support extension
 
 On page 4, (2.1) defines the base-first mean
 A #alpha B = A^(1/2) (A^(-1/2) B A^(-1/2))^alpha A^(1/2).
@@ -47,11 +47,32 @@ the two universal endpoint variational bounds give the desired estimate.
 The optimizer need not be selfadjoint; no optimizer uniqueness,
 compactness, or abstract supremum attainment is needed.
 
-This settles the SPD intermediate, not the full original PSD domain.
-The unpaid obligations are support inclusion s(A)>=s(B), generalized
-inverse zero on kernels, the same epsilon I on original A and B before
-p-powers, a norm/trace limit, and convexity of that support domain.
-No compression or block-support transport is assumed proved.
+For alpha>1 the original domain consists of PSD pairs with
+s(B)<=s(A), equivalently ker A contained in ker B (Section 2, page 5).
+Proposition 2.1(2), page 5, gives the simultaneous additive epsilon-I
+limit; Proposition 5.16(4), pages 31–32, uses it to reduce PSD to PD.
+These assertions concern G, the classical base-first mean, rather
+than SG or tilde-SG.
+
+The PSD extension in GeometricTraceConvexity proves that limit for the
+actual CFC formula. With Q=I-spectralSupport(A), both A Q and B Q
+vanish. Finite spectral calculus splits (A+epsilon I)^(-p/2) into
+a support-restricted factor and epsilon^(-p/2) Q. The exact powered
+B regularization acts on Q as epsilon^p Q, so the inner sandwich
+splits as the supported sandwich plus Q. Its support-restricted
+negative factors converge on the fixed finite spectrum; positive
+powers and trace are continuous on PSD. Spectral intertwining and
+the outer A^(p/2) factors remove Q at the limit, identifying the
+unchanged Moore–Penrose formula. The paired domain is convex by
+PSD quadratic forms. Apply the SPD inequality to the common epsilon-I
+regularizations and pass the three trace limits through closed order.
+
+The resulting ConvexOn endpoint includes singular supported pairs,
+empty carriers and both closed parameter intervals. It uses neither
+arbitrary continuity on the paired domain nor the SPD reverse-base
+identity at singular B. The literature fixes the target and supplies
+the ordinary boundary argument; it does not replace the Lean proof
+or establish a global novelty claim.
 
 ## Source binding
 

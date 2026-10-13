@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Hiai;
 internal sealed class GeometricTraceConvexityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Joint convexity of Hiai's original geometric trace on positive definite matrices.",
+        "Joint convexity of Hiai's original CFC geometric trace on supported PSD pairs.",
         H("GeometricTraceConvexity"), Blocks(
             Describe.Lean(DescribeId.Create("geometric-trace-joint-convexity"),
                 DeclarationHandle.Create("D5/S3/Quantum/Hiai/GeometricTraceConvexity.geometric_trace_jointly_convex"),
@@ -50,17 +50,50 @@ internal sealed class GeometricTraceConvexityDocument : IScribeDocumentDefinitio
                     + "Hiai, Carlen-Lieb, Zhang and the attributed Physlib suppliers "
                     + "retain their source credit. This is a connected formal "
                     + "assembly on SPD, with no novelty claim for reused theorems. "
-                    + "It covers the original open parameter rectangle on SPD and "
-                    + "known parameter endpoints; it does not complete the full "
-                    + "support-sensitive PSD original domain.")),
-                    Paragraph(Text("The remaining original obligations are PSD "
-                    + "support inclusion s(A)>=s(B), generalized inverse zero on "
-                    + "kernels, the same epsilon I added to ORIGINAL A and B before "
-                    + "their p-powers, a norm/trace limit, and support-domain "
-                    + "convexity. Compression transport and block-support "
-                    + "identities are not asserted. The native four-slot audit "
-                    + "remains unfinished under issue #5214; no declared_validated "
-                    + "registration or official acceptance is claimed."))), DescribeRole.Theorem))));
+                    + "It supplies the regularized original parameter rectangle on SPD and "
+                    + "known parameter endpoints for the extension to the full "
+                    + "support-sensitive PSD original domain below.")),
+                    Paragraph(Text("The PSD endpoint below uses the same epsilon I added "
+                    + "to both original matrices before their p-powers, the actual "
+                    + "support spectral identity, and a trace limit."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("geometric-trace-support-convexity"),
+                DeclarationHandle.Create("D5/S3/Quantum/Hiai/GeometricTraceConvexity.geometric_trace_support_convex"),
+                H("The original PSD support domain"), StatementSource.FromAuthor(SupportStatement()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Divergence/hiai2025geometrictraceconvexity")),
+                Blocks(Paragraph(Text("For every finite complex carrier d, including the empty "
+                    + "carrier, supportPairDomain consists exactly of pairs (A,B) with A and B "
+                    + "positive semidefinite and ker A contained in ker B. The unchanged "
+                    + "geometricTrace formula is ConvexOn over this coupled set of pairs "
+                    + "for 1 <= alpha <= 2 and 1/2 <= p <= 1. The mean is the classical "
+                    + "base-first quasi-geometric mean G of Hiai, with A to exponent p "
+                    + "as its base. It is distinct from SG and tilde-SG.")),
+                    Paragraph(Text("Fix a supported pair. Q=I-spectralSupport(A) is the "
+                    + "kernel projection, and both A Q and B Q vanish. Finite-spectrum "
+                    + "CFC gives the exact decomposition of (A+epsilon I) to exponent "
+                    + "-p/2 into a support-restricted factor and epsilon to exponent "
+                    + "-p/2 times Q. The inner sandwich is the supported sandwich plus "
+                    + "Q, because the powered B regularization acts on Q as epsilon "
+                    + "to exponent p. These use the actual curves (A+epsilon I) to "
+                    + "exponent p and (B+epsilon I) to exponent p.")),
+                    Paragraph(Text("The support-restricted negative powers converge on "
+                    + "the fixed finite spectrum. Positive powers are continuous on PSD "
+                    + "matrices. At the limit, finite spectral intertwining removes Q "
+                    + "between the outer A to exponent p/2 factors. The resulting mean "
+                    + "is exactly the original Moore-Penrose CFC formula, including "
+                    + "A=B=0 and empty carriers. Positive 1/p power continuity and "
+                    + "trace continuity give the required real trace limit.")),
+                    Paragraph(Text("For an interior mixture, vanishing of a PSD quadratic "
+                    + "form forces both endpoint A matrices to annihilate the vector. "
+                    + "Their kernel inclusions then give annihilation by the mixed B. "
+                    + "The t=0 and t=1 cases are separate. Adding the same epsilon I "
+                    + "commutes exactly with mixing; apply the preserved SPD convexity "
+                    + "theorem and pass the three trace limits through closed real order.")),
+                    Paragraph(Text("The limit concerns simultaneous additive epsilon I "
+                    + "regularization of a fixed supported pair. It asserts no continuity "
+                    + "on the entire support domain and uses no singular ring inverse "
+                    + "or reverse-base identity. The exact original-domain endpoint "
+                    + "is the formal target of Hiai Problem 5.18."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
     {
@@ -92,5 +125,21 @@ internal sealed class GeometricTraceConvexityDocument : IScribeDocumentDefinitio
                 Seq(Lambda, Sp, x, Comma, Sp, y, Mapsto,
                     Call("tracePower", new Formula.Fraction(D(1), p),
                         Call("geometricMean", a, Call("rpow", x, p), Call("rpow", y, p))))));
+    }
+
+    private static Formula SupportStatement()
+    {
+        var d = F.Id("d"); var a = F.Id("alpha"); var p = F.Id("p"); var z = F.Id("z");
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        return Seq(Forall, Sp, F.Id("u"), Colon, Sp, Call("Level"), Comma, Sp,
+            d, Colon, Sp, Call("Type", F.Id("u")), Comma, Sp,
+            OpenBracket, Call("Fintype", d), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", d), CloseBracket, Comma, Esc,
+            a, Comma, Sp, p, Colon, Sp, real, Comma, Esc,
+            D(1), Le, Sp, a, Sp, Le, Sp, D(2), Land, Sp,
+            new Formula.Fraction(D(1), D(2)), Le, Sp, p, Sp, Le, Sp, D(1), Implies, Esc,
+            Call("ConvexOn", real, Call("supportPairDomain", d),
+                Seq(Lambda, Sp, z, Mapsto,
+                    Call("geometricTrace", a, p, Call("fst", z), Call("snd", z)))));
     }
 }

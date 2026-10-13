@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Joint convexity of Hiai's original geometric trace on positive definite matrices.
+Joint convexity of Hiai's original CFC geometric trace on supported PSD pairs.
 
 **Theorem 1.1 (The boundary-inclusive SPD rectangle).**
 
@@ -24,12 +24,37 @@ Since (B to exponent p) squared equals B to exponent 2p, the objective is 2 C_Z(
 
 Choose ONLY the attained optimizer Zm at the mixed pair ((1-t)A0+tA1,(1-t)B0+tB1). Fixed-Zm objective convexity bounds F at this pair by the mixed endpoint objectives. Apply the universal variational upper bound at BOTH endpoints to that SAME Zm. Nonnegative weights then give joint convexity. No mixing of optimizers, uniqueness, compactness, assumed supremum attainment, A/B commutation, product positivity, or CFC transport through arbitrary congruence is used.
 
-The definition is Hiai (2.1)/(2.2), page 4 of arXiv:2510.04691v3; Problem 5.18 is on page 33. Classical Hiai, Carlen-Lieb, Zhang and the attributed Physlib suppliers retain their source credit. This is a connected formal assembly on SPD, with no novelty claim for reused theorems. It covers the original open parameter rectangle on SPD and known parameter endpoints; it does not complete the full support-sensitive PSD original domain.
+The definition is Hiai (2.1)/(2.2), page 4 of arXiv:2510.04691v3; Problem 5.18 is on page 33. Classical Hiai, Carlen-Lieb, Zhang and the attributed Physlib suppliers retain their source credit. This is a connected formal assembly on SPD, with no novelty claim for reused theorems. It supplies the regularized original parameter rectangle on SPD and known parameter endpoints for the extension to the full support-sensitive PSD original domain below.
 
-The remaining original obligations are PSD support inclusion s(A)>=s(B), generalized inverse zero on kernels, the same epsilon I added to ORIGINAL A and B before their p-powers, a norm/trace limit, and support-domain convexity. Compression transport and block-support identities are not asserted. The native four-slot audit remains unfinished under issue #5214; no declared_validated registration or official acceptance is claimed.
+The PSD endpoint below uses the same epsilon I added to both original matrices before their p-powers, the actual support spectral identity, and a trace limit.
+
+**Theorem 1.2 (The original PSD support domain).**
+
+$$\forall u: \operatorname{Level}(), d: \operatorname{Type}(u), [\operatorname{Fintype}(d)], [\operatorname{DecidableEq}(d)],\ alpha, p: \mathbb{R},\ 1\le alpha \le 2\land \frac{1}{2}\le p \le 1\implies\ \operatorname{ConvexOn}(\mathbb{R}, \operatorname{supportPairDomain}(d), \Lambda z\mapsto\operatorname{geometricTrace}(alpha, p, \operatorname{fst}(z), \operatorname{snd}(z)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Hiai/GeometricTraceConvexity.geometric_trace_support_convex` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Fumio Hiai (2025). *Log-majorizations between quasi-geometric type means for matrices*. URL: <https://arxiv.org/abs/2510.04691v3>.
+
+*Commentary.*
+
+For every finite complex carrier d, including the empty carrier, supportPairDomain consists exactly of pairs (A,B) with A and B positive semidefinite and ker A contained in ker B. The unchanged geometricTrace formula is ConvexOn over this coupled set of pairs for 1 <= alpha <= 2 and 1/2 <= p <= 1. The mean is the classical base-first quasi-geometric mean G of Hiai, with A to exponent p as its base. It is distinct from SG and tilde-SG.
+
+Fix a supported pair. Q=I-spectralSupport(A) is the kernel projection, and both A Q and B Q vanish. Finite-spectrum CFC gives the exact decomposition of (A+epsilon I) to exponent -p/2 into a support-restricted factor and epsilon to exponent -p/2 times Q. The inner sandwich is the supported sandwich plus Q, because the powered B regularization acts on Q as epsilon to exponent p. These use the actual curves (A+epsilon I) to exponent p and (B+epsilon I) to exponent p.
+
+The support-restricted negative powers converge on the fixed finite spectrum. Positive powers are continuous on PSD matrices. At the limit, finite spectral intertwining removes Q between the outer A to exponent p/2 factors. The resulting mean is exactly the original Moore-Penrose CFC formula, including A=B=0 and empty carriers. Positive 1/p power continuity and trace continuity give the required real trace limit.
+
+For an interior mixture, vanishing of a PSD quadratic form forces both endpoint A matrices to annihilate the vector. Their kernel inclusions then give annihilation by the mixed B. The t=0 and t=1 cases are separate. Adding the same epsilon I commutes exactly with mixing; apply the preserved SPD convexity theorem and pass the three trace limits through closed real order.
+
+The limit concerns simultaneous additive epsilon I regularization of a fixed supported pair. It asserts no continuity on the entire support domain and uses no singular ring inverse or reverse-base identity. The exact original-domain endpoint is the formal target of Hiai Problem 5.18.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Hiai/GeometricTraceConvexity.geometric_trace_jointly_convex`
+- Truth anchor: `D5/S3/Quantum/Hiai/GeometricTraceConvexity.geometric_trace_support_convex`
+- Dependency: [D5/S3/Quantum/Entanglement/PrecessionUniversalThresholdRefutation](../Entanglement/PrecessionUniversalThresholdRefutation.md)
 - Dependency: [D5/S3/Quantum/Hiai/CarlenLiebConvexity](CarlenLiebConvexity.md)
 - Dependency: [D5/S3/Quantum/Hiai/InverseGeometricIdentification](InverseGeometricIdentification.md)
+- Dependency: [D5/S3/Quantum/Recovery/SpectralTransposeRecovery](../Recovery/SpectralTransposeRecovery.md)
