@@ -34,6 +34,10 @@ $$(\forall (rho:Matrix\left((Fin\left(3\right)\times Fin\left(3\right)), (Fin\le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wang-chen-song-2026-appt-extreme-six-levels` (proved) by `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wang-chen-song-2026-appt-extreme-six-levels","declaration_gid":"D5/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nalan Wang; Lin Chen; Zhiwei Song (2026). *Extreme points of absolutely PPT states with exactly three distinct eigenvalues*. DOI: [10.1088/1402-4896/ae9148](https://doi.org/10.1088/1402-4896/ae9148). URL: <https://arxiv.org/abs/2603.20717v1>.
