@@ -7696,3 +7696,79 @@ is a uniform high-order sign and boundary estimate for this exact
 coupled recurrence on the actual original source. The local
 all-critical premise, all-height exclusion, RH and strict Robin for
 all integers $H>5040$ remain unresolved.
+
+
+## Joint source response and a gap-free two-zero application
+
+Retain the original source, every conditional local-critical and complete-removal
+premise in (LC263), all exterior zeros in $A$, and the fixed constants and
+parameters of (LC267)--(LC279). Set $R=C_1L$, $C_1=128S$ and
+$M_R=32R+R^2/2$. The additional bounds below are ordinary analytical
+applications of the existing finite multiplier and (LC276), not new
+factorization, degree-lowering or root-preservation theorems. They have
+no Lean certification or originality certification.
+
+### The two responses inherit an exact linkage
+
+For $H=\mathscr T_nA$ and $V=\mathscr T_nA'$, the same falling-factorial
+coefficient rule gives
+
+$$
+H'=V-\frac tnV',\qquad
+\ell-s=-\frac tn(s'+s\ell).
+\tag{LC280}
+$$
+
+This is a reused multiplier identity. In particular, the coefficient of
+$t^n$ in $V-(t/n)V'$ cancels; no missing top-degree term is discarded.
+It is also the normalization mechanism of the universal degree-lowering
+supplier in `Blueprint/D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.md`.
+The source-specific estimate comes from combining that linkage with the
+complete exterior response bound, rather than treating $\ell$ and $s$
+as unrelated functions. Since $1/n=D^2/(\nu c^2)$ and $|t|\le2c$,
+(LC276) and $|s\ell|\le(|s|+|\ell|)^2/4$ give
+
+$$
+\begin{aligned}
+|\ell-s|&\le\frac{M_R}{\nu c}
+&&(|t-c|\le D/16),\\
+|(\ell-s)'|&\le\frac{32M_R}{\nu cD}
+&&(|t-c|\le D/32).
+\end{aligned}
+\tag{LC281}
+$$
+
+Both are complex-disc estimates. The second applies Cauchy's estimate
+on a circle of radius $D/32$ inside the first disc. Consequently
+
+$$
+\begin{aligned}
+\eta-\chi'&=v'\ell+v(\ell-s)',\\
+|\eta-\chi'|&\le\frac Dc
+ \left(\frac{4R}{\nu}+\frac{128M_R}{\nu^2}\right)
+ <\frac{D}{32c}=\frac{\rho}{32T}
+\quad(|t-c|\le D/32,\ \nu\ge256R).
+\end{aligned}
+\tag{LC282}
+$$
+
+For the strict inequality, $R=128S\log(T+2)>384$ and
+$4R/\nu+128M_R/\nu^2\le1/64+1/(16R)+1/1024<1/32$.
+The constants $C_{\rm abs},C_b$ remain fixed source constants without a
+numerical instantiation. This is a stronger joint bound than separately
+estimating $|\chi'-1|$ and $|\eta-1|$ by $O(R/\nu)$.
+
+### The derivative discrepancy retains a separate forcing term
+
+For the unchanged recurrence (LC278), put $W_j=S_j-P_j'$. Differentiating
+its first equation and subtracting gives the exact bookkeeping
+
+$$
+W_j=(\mathcal B-\alpha_j)W_{j-1}
+       +v'P_{j-1}'+(\eta-\chi')P_{j-1},\qquad W_0=0.
+\tag{LC283}
+$$
+
+This identity is reuse, not a propagation estimate. In particular,
+$|v'|\le4\rho^2/\nu$ has no additional $1/T$ factor. A small coefficient
+in (LC282) does not bound $W_r/P_r'$ at a node with a small slope.
