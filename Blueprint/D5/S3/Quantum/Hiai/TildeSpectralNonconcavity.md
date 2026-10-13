@@ -51,4 +51,4 @@ Midpoint sufficiency is classical, including Zhang1811.01205v2. The retained con
 - Truth anchor: `D5/S3/Quantum/Hiai/TildeSpectralNonconcavity.joint_concavity_classification`
 - Truth anchor: `D5/S3/Quantum/Hiai/TildeSpectralNonconcavity.strict_first_variable_jensen_violation`
 - Dependency: [D5/S3/Quantum/Hiai/PsiMeanTraceConcavity](PsiMeanTraceConcavity.md)
-- Dependency: [D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation](../../QuantumChannels/CumulantRenyiDataProcessingRefutation.md)
+- Dependency: [D5/S3/Quantum/Matrix/TwoPointFunctionalCalculus](../Matrix/TwoPointFunctionalCalculus.md)

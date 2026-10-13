@@ -6,7 +6,8 @@
    utility: none
    digest: All-dimension SPD joint-concavity classification of the actual tilde spectral trace. -/
 
-import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
+import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
+import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Isometric
 import D5.S3.Quantum.Hiai.PsiMeanTraceConcavity
 
@@ -78,7 +79,7 @@ private lemma diagonal_rpow {x : ℝ} (hx : 0 < x) (t : ℝ) :
     fin_cases i <;> fin_cases j <;>
       simp [H, diagonal, Matrix.smul_apply, Complex.real_smul] <;> ring
   rw [CFC.rpow_eq_cfc_real (diagonal_posDef hx).posSemidef.nonneg, ← harg,
-    D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation.two_point_cfc _ _ _ _ hH hHH]
+    QuantumTwoPointFunctionalCalculus.two_point_cfc _ _ _ _ hH hHH]
   rw [show (x + 1) / 2 + (x - 1) / 2 = x by ring,
     show (x + 1) / 2 - (x - 1) / 2 = 1 by ring]
   ext i j
@@ -101,7 +102,7 @@ private lemma scaled_projection_rpow (Q : Mat) (hQ : Q.PosSemidef)
     dsimp [H]
     module
   rw [CFC.rpow_eq_cfc_real (hQ.smul hs).nonneg, ← harg,
-    D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation.two_point_cfc _ _ _ _ hH hHH]
+    QuantumTwoPointFunctionalCalculus.two_point_cfc _ _ _ _ hH hHH]
   rw [show s / 2 + s / 2 = s by ring, sub_self, Real.zero_rpow hq.ne', add_zero,
     sub_zero]
   dsimp [H]
@@ -766,7 +767,7 @@ private lemma involution_trace_rpow (H : Mat) (hH : IsSelfAdjoint H) (hHH : H * 
       (a + b) ^ q + (a - b) ^ q := by
   unfold InverseMeanVariational.tracePower
   rw [CFC.rpow_eq_cfc_real hX.nonneg,
-    D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation.two_point_cfc _ _ _ _ hH hHH]
+    QuantumTwoPointFunctionalCalculus.two_point_cfc _ _ _ _ hH hHH]
   simp [Matrix.trace_add, Matrix.trace_smul, htr, Matrix.trace_one]
 
 private lemma midpoint_density_middle {p s : ℝ} (hp : 0 < p) (hs : 0 ≤ s) (hs1 : s ≤ 1 / 2) :
@@ -798,7 +799,7 @@ private lemma midpoint_density_middle {p s : ℝ} (hp : 0 < p) (hs : 0 ≤ s) (h
   let b := ((1 - s) ^ p - s ^ p) / 2
   have hBpow : B ^ p = a • (1 : Mat) + b • H := by
     rw [CFC.rpow_eq_cfc_real hB.nonneg, hBform,
-      D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation.two_point_cfc _ _ _ _ hH hHH]
+      QuantumTwoPointFunctionalCalculus.two_point_cfc _ _ _ _ hH hHH]
     rw [show (1 / 2 : ℝ) + (1 / 2 - s) = 1 - s by ring,
       show (1 / 2 : ℝ) - (1 / 2 - s) = s by ring]
   have hhalf : ((1 / 2 : ℝ) • (1 : Mat)) ^ (p / 2) =
