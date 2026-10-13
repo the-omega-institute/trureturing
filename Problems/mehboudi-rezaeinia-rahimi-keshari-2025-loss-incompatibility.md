@@ -60,7 +60,7 @@ The canonical source is `D5/S3/Quantum/Measurement/PureLossIncompatibility.lean`
   - `IsPOVM` (`ConcealmentKernelNecessityRefutation`).
 - It also uses Mathlib's `lp`, adjoints, `Finset.card_product_filter_lt` and `Circle.exp_injOn_Ico`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
-- The escape registration `Reg/D5/S3/Quantum/Measurement/PureLossIncompatibility.lean` (template `DependentFamily.realize`, readout the binary effect fed to the pure-loss dual; the rejected realization, every effect ½·I, has a parent) is `declared_validated`.
+- The escape registration `Reg/D5/S3/Quantum/Measurement/PureLossIncompatibility.lean` (template `DependentFamily.realize`, readout the binary effect M b of each measurement; the rejected realization returns the identity for both outcomes, which violates binary normalization since I + I ≠ I) is `declared_validated`.
 
 Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/PureLossIncompatibility.lean.json`, statement `sha256:0f55391b8e5da52873d52a827a7857946e3036fc19547493412707b74ff3edec`.
 
@@ -87,7 +87,7 @@ Every other declaration is a definition used by `claim` or a private helper on t
 - For every m ≥ 2, 1/m < τ ≤ 1 and distinct unit phases, the displaced on-off measurements with x = Δ/(2(m + 4Q)) are incompatible after E*_τ.
 - The Stinespring form V†(M ⊗ I)V satisfies the source's trace relation tr(M E_τ(|ψ⟩⟨ψ|)) = ⟨ψ, N ψ⟩ and is the only operator that does.
 - The compression to span{|0⟩, |1⟩} is exact for the pure-loss dual of these effects, and any parent compresses to a 2 × 2 parent.
-- Any common subeffect of two compressed clicks has (1,1) entry at most 4δ/|z_i − z_j|², and every parent satisfies mc ≤ 1 + 4δQ.
+- Any common subeffect of two compressed clicks has (1,1) entry at most 4x/|z_i − z_j|², and every parent satisfies mc ≤ 1 + 4xQ. (The sharper constant δ = c − b²/a ≤ x in place of x follows from the same quadratic-form argument; that specialization is not on the proof path.)
 
 **Computed.** For regular phases, Q = m(m² − 1)/24, by the identity Σ_{k=1}^{m−1} csc²(πk/m) = (m² − 1)/3 (checked numerically for m ≤ 11). At m = n + 1 and τ = 1/n this gives Δ = 1/n and the closed form x = 3/(n(n + 1)(n² + 2n + 6)), which rests on that identity and is not formalized. It reproduces the values 1/28, 1/84, 1/200, 1/410 and 1/756 of the preregistration table for n = 2, …, 6. With the source's fixed amplitude r = 0.015 instead, the sufficient condition r²(m + 4Q) < Δ used here holds exactly for n ≤ 11. The proof therefore lets the amplitude shrink with n; whether r = 0.015 itself fails for large n is not decided.
 
