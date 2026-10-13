@@ -23,14 +23,22 @@ internal sealed class GoldenCubicBlockNonFifthPowerDocument : IScribeDocumentDef
                     Add(new Formula.Power(
                         new Formula.Subscript(F.Id("L"), new Formula.Power(D(3), F.Id("j"))),
                         D(2)), D(3))))))),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/bugeaud2006lebesguenagell")),
             Blocks(Paragraph(Text(
-                "The convention is L_n = trace(phi^n), with L_1 = 1. The existing actual "
+                "The integer exclusion is a specialization of the classical D=3 "
+                + "Lebesgue-Nagell result recorded in the cited literature: x^2+3 is not "
+                + "an integer fifth power. Substitute x=L_(3^j). The repository formal "
+                + "proof uses the following modular argument, with no novelty claim. "
+                + "The convention is L_n = trace(phi^n), with L_1 = 1. The existing actual "
                 + "Lucas recurrence sends x to x(x^2+3) at power-of-three indices. Induction "
                 + "over all j >= 1 gives the orbit 4, 10, 7, 1 modulo 11. The block has "
                 + "residue 8 or 4, whereas fifth powers have residue 0, 1, or 10. "
                 + "The finite checks establish the transition and obstruction; the theorem "
-                + "ranges over every positive depth and every integer, not a bounded sample. "
+                + "ranges over every positive depth and every integer, including even depths. "
+                + "This supplies the exponent-five part of DCE.1-DCE.2 and excludes "
+                + "the single-prime fifth-power alternative in DCE.3. It does not supply "
+                + "their arbitrary-exponent exclusion or close those parent obligations. "
                 + "For the original natural block B_j = natAbs(L_(3^j)^2+3), nonnegativity "
                 + "identifies its integer cast with this radicand. If a rational q satisfies "
                 + "q^5 = B_j, it is integral over the integers, since its fifth power is an "
