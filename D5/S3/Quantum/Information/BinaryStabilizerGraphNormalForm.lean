@@ -488,7 +488,7 @@ lemma tensor_unitary {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
   rw [he]
   exact tensor_one
 
-private lemma tensor_smul {N : ℕ} (r : Fin N → ℂ)
+lemma tensor_smul {N : ℕ} (r : Fin N → ℂ)
     (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
     tensorOp (fun i => r i • A i) = (∏ i, r i) • tensorOp A := by
   ext x y

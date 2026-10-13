@@ -162,6 +162,90 @@ noncomputable def registration :
 #print axioms registration
 
 end TensorUnitary
+namespace TensorScalar
+open _root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_smul)
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ N : ℕ, Fin N → ℂ)
+    (fun p => Fin p.1 → Matrix (Fin 2) (Fin 2) ℂ)
+    (fun p => Matrix (Fin p.1 → Fin 2) (Fin p.1 → Fin 2) ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ A => tensorOp A) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {N : ℕ} (r : Fin N → ℂ) (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ),
+    tensorOp (fun i => r i • A i) = (∏ i, r i) • R.readout () ⟨N, r⟩ A
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := congrArg (fun M => M (fun _ => (0 : Fin 2)) (fun _ => (0 : Fin 2)))
+    (h (N := 1) (fun _ => 1) (fun _ => 1))
+  change tensorOp (fun _ : Fin 1 => (1 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ))
+    (fun _ => 0) (fun _ => 0) = (∏ i : Fin 1, (1 : ℂ)) • (0 : ℂ) at he
+  simp [tensorOp, Matrix.one_apply] at he
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, fun _ => 1⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  change tensorOp (fun _ : Fin 1 => (0 : Matrix (Fin 2) (Fin 2) ℂ)) ≠
+    tensorOp (fun _ : Fin 1 => (1 : Matrix (Fin 2) (Fin 2) ℂ))
+  intro h
+  have he := congrArg (fun M => M (fun _ => (0 : Fin 2)) (fun _ => (0 : Fin 2))) h
+  simp [tensorOp, Matrix.one_apply] at he
+
+def source_registration : Registration arena (type_of% @tensor_smul) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨tensor_smul, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_smul)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorScalar.unit,
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorScalar
+    "source_registration",
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨source_registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ A => tensorOp A) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm,
+    definition := none,
+    coordinates := #[0, 1],
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "arg"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+end TensorScalar
+
 namespace GateUnitary
 open _root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (gate gate_unitary)
 

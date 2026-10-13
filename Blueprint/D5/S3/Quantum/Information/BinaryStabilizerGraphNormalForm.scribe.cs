@@ -26,6 +26,9 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Entry("tensor-unitary", "tensor_unitary", "Tensor products of unitary factors", TensorUnitary(),
                 "If every single-qubit factor is unitary, their tensor product is unitary on the full binary register.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("tensor-scalar", "tensor_smul", "Scalars in tensor products", TensorScalar(),
+                "Scaling each single-qubit factor scales the tensor product by the product of those scalars.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("gate", "gate", "Binary choices of Hadamard and phase gates", GateDefinition(),
                 "The binary phase choice multiplies the optional Hadamard gate on the left. Zero phase selects the identity and nonzero phase selects the diagonal matrix with entries 1 and i.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -59,6 +62,18 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
                         Qualified("Matrix", "unitaryGroup", Fin(D(2)), Complex))),
                 Seq(TensorOperator(V("A")), Sp, InMacro, Sp,
                     Qualified("Matrix", "unitaryGroup", Arrow(Fin(V("N")), Fin(D(2))), Complex)))));
+
+    private static Formula TensorScalar()
+    {
+        Formula factors = Seq(LambdaLower, Sp, Typed(V("i"), Fin(V("N"))), Sp, Mapsto, Sp,
+            Qualified("SMul", "smul", Apply(V("r"), V("i")), Apply(V("A"), V("i"))));
+        Formula coefficient = Seq(Sub(Prod, Seq(V("i"), Sp, InMacro, Sp, Fin(V("N")))),
+            Sp, Apply(V("r"), V("i")));
+        return All(V("N"), Nat, All(V("r"), Arrow(Fin(V("N")), Complex),
+            All(V("A"), Arrow(Fin(V("N")), Matrix(Fin(D(2)), Complex)),
+                Equal(TensorOperator(factors),
+                    Qualified("SMul", "smul", coefficient, TensorOperator(V("A")))))));
+    }
 
     private static Formula GateDefinition() => All(V("h"), V("Bool"), All(V("d"), Binary,
         Equal(Call("gate", V("h"), V("d")),

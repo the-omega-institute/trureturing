@@ -126,9 +126,9 @@ private lemma gateS_unitary : gateS ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
   have h := D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.gate_unitary
     false (1 : ZMod 2)
   convert h using 1
+  delta gateS D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.gate
   ext i j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [gateS, D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.gate]
+  fin_cases i <;> fin_cases j <;> norm_num
 private def cnotBits {n : ℕ} (c t : Fin n) (x : Bits n) : Bits n :=
   Function.update x t (x t + x c)
 private lemma cnot_involutive {n : ℕ} (c t : Fin n) (h : c ≠ t) :
@@ -248,24 +248,50 @@ private lemma local_word {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ)
     (w : Fin n → Pauli) (c : ℂ) (q : Pauli)
     (hq : A * pauliMatrix (w i) * Aᴴ = c • pauliMatrix q) :
     localOp i A * wordOp w * (localOp i A)ᴴ = c • wordOp (Function.update w i q) := by
-  rw [local_adjoint]
-  unfold localOp wordOp
-  rw [tensor_mul, tensor_mul]
-  have he : (fun j => Function.update (fun _ => (1 : Matrix (Fin 2) (Fin 2) ℂ)) i A j *
-      pauliMatrix (w j) * Function.update (fun _ => (1 : Matrix (Fin 2) (Fin 2) ℂ)) i Aᴴ j) =
-      Function.update (fun j => pauliMatrix (w j)) i (c • pauliMatrix q) := by
+  let R := wordOp (Function.update w i .I)
+  have hsplit (p : Pauli) :
+      localOp i (pauliMatrix p) * R = wordOp (Function.update w i p) := by
+    cases p with
+    | I => rw [show pauliMatrix .I = 1 from rfl, local_identity, one_mul]
+    | X | Y | Z =>
+      unfold localOp
+      change tensorOp _ * tensorOp _ = tensorOp _
+      rw [tensor_mul]
+      congr 1
+      funext j
+      by_cases hj : j = i
+      · subst j
+        simp only [Function.update_self, show pauliMatrix .I = 1 from rfl, mul_one]
+      · simp only [Function.update_of_ne hj, one_mul]
+  have hfactor : wordOp w = localOp i (pauliMatrix (w i)) * R := by
+    simpa only [Function.update_eq_self] using (hsplit (w i)).symm
+  have hcomm : R * localOp i Aᴴ = localOp i Aᴴ * R := by
+    unfold localOp
+    change tensorOp _ * tensorOp _ = tensorOp _ * tensorOp _
+    rw [tensor_mul, tensor_mul]
+    congr 1
     funext j
-    by_cases h : j = i <;> simp [h, hq]
-  rw [he]
-  ext x y
-  simp only [tensorOp, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
-  rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ i)]
-  conv_rhs => rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ i)]
-  simp only [Function.update_self, Matrix.smul_apply, smul_eq_mul, mul_assoc]
-  congr 2
-  apply Finset.prod_congr rfl
-  intro j hj
-  simp only [Function.update_of_ne (Finset.ne_of_mem_erase hj)]
+    by_cases hj : j = i
+    · subst j
+      simp only [Function.update_self, show pauliMatrix .I = 1 from rfl, one_mul, mul_one]
+    · simp only [Function.update_of_ne hj, one_mul, mul_one]
+  rw [local_adjoint, hfactor, mul_assoc, mul_assoc, hcomm, ← mul_assoc,
+    ← mul_assoc, local_product, local_product, hq]
+  unfold localOp
+  change tensorOp _ * tensorOp _ = c • tensorOp _
+  rw [tensor_mul]
+  have he : (fun j => Function.update (fun _ => (1 : Matrix (Fin 2) (Fin 2) ℂ))
+      i (c • pauliMatrix q) j * pauliMatrix (Function.update w i .I j)) =
+      fun j => Function.update (fun _ => (1 : ℂ)) i c j •
+        pauliMatrix (Function.update w i q j) := by
+    funext j
+    by_cases hj : j = i
+    · subst j
+      simp only [Function.update_self, show pauliMatrix .I = 1 from rfl, mul_one]
+    · simp only [Function.update_of_ne hj, one_mul, one_smul]
+  rw [he, D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_smul,
+    Finset.prod_update_of_mem (Finset.mem_univ i)]
+  simp only [Finset.prod_const_one, mul_one]
 private lemma local_normalizes {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ)
     (ha : A = gateH ∨ A = gateS ∨ A = gateSᴴ) (w : Fin n → Pauli) :
     localOp i A * wordOp w * (localOp i A)ᴴ ∈ PauliGroup n := by
@@ -546,8 +572,9 @@ private lemma stab_state {n : ℕ} {η : Op n} (hη : η ∈ STAB n) : IsState �
       D5.S3.Quantum.Fibers.PhysicalFiber.finite_dimensional_physical_fiber
         (0 : Op n →ₗ[ℂ] (Empty → ℂ)) (vacuum n) hv.1 hv.2
     change Convex ℝ {A : Op n | A.PosSemidef ∧ A.trace = 1}
-    simpa only [D5.S3.Quantum.Fibers.PhysicalFiber.physicalFiber,
-      LinearMap.zero_apply, true_and, eq_self] using hc.2.2
+    simpa only [true_and, eq_self] using
+      (show Convex ℝ {A : Op n | (0 : Empty → ℂ) = 0 ∧ A.PosSemidef ∧ A.trace = 1}
+        from hc.2.2)
 
 private lemma H_mem {n : ℕ} (i : Fin n) : localOp i gateH ∈ Clifford n :=
   Submonoid.subset_closure (Or.inl (Or.inl ⟨i, rfl⟩))
