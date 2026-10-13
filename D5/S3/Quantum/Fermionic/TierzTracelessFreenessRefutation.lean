@@ -4,22 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Fermionic/TierzTracelessFreenessRefutation.claim; result=D5/S3/Quantum/Fermionic/TierzTracelessFreenessRefutation.result; claim=D5/S3/Quantum/Fermionic/TierzTracelessFreenessRefutation.claim
-   digest: The traceless degree-five complex at matrix size four is not free over diagonal creators. -/
+   digest: Refutes diagonal freeness for the traceless degree-five complex at size four. -/
 
 import Mathlib.Algebra.Lie.Classical
 import Mathlib.Data.Complex.Basic
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.LinearAlgebra.CliffordAlgebra.Prod
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.Data.Nat.Bitwise
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Basis
-import Mathlib.LinearAlgebra.StdBasis
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
 
 set_option linter.style.longLine false
 
