@@ -319,13 +319,17 @@ private theorem fock_slice (m n k : ℕ) :
   simp only [fockPair, tensor, e, lp.single_apply, Pi.single_apply]
   split_ifs <;> simp_all
 
-private theorem vacuum_fock (n : ℕ) : vacuumEmbedding (e n) = fockPair n 0 := by
+private theorem vacuum_tensor (v : H) : vacuumEmbedding v = tensor v (e 0) := by
   apply lp.ext
   funext k
-  simp only [vacuumEmbedding, lp.singleContinuousLinearMap_apply, fockPair, tensor]
-  apply lp.ext
-  funext l
-  simp [e, lp.single_apply, Pi.single_apply]
+  simp only [vacuumEmbedding, lp.singleContinuousLinearMap_apply, tensor]
+  change (lp.single (E := fun _ : ℕ => H) 2 0 v) k = (e 0 k) • v
+  simp only [lp.single_apply, e, Pi.single_apply]
+  split_ifs <;> simp_all
+
+private theorem vacuum_fock (n : ℕ) : vacuumEmbedding (e n) = fockPair n 0 := by
+  rw [vacuum_tensor]
+  rfl
 
 private theorem split_zero (τ : Loss) : stinespring τ (e 0) = fockPair 0 0 := by
   unfold stinespring
