@@ -711,7 +711,7 @@ def nominalInstrument : QuantumChannel Q O :=
         norm_num [Fintype.sum_bool, Matrix.mul_apply, Matrix.conjTranspose_apply,
           Matrix.single, Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.one_apply]))
 
-private theorem nominal_instrument_apply (X : Matrix Q Q ℂ) :
+theorem nominal_instrument_apply (X : Matrix Q Q ℂ) :
     CStarMatrix.ofMatrix.symm (nominalInstrument.toCompletelyPositiveMap
       (CStarMatrix.ofMatrix X)) =
       fun p q => if p = (false, 0) ∧ q = (false, 0) then X 1 1
