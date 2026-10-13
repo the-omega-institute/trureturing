@@ -655,4 +655,64 @@ theorem binomial_mass_support_and_pascal (p : unitInterval) :
         Nat.choose_eq_zero_of_lt (by omega : n < i + 1),
         Nat.choose_eq_zero_of_lt (Nat.add_lt_add_right hi 1)]
 
+def translatedBinomial (l i I : ℕ) (p : unitInterval) : ℝ≥0∞ :=
+  if i ≤ I then binomialMass l (I - i) p else 0
+
+private theorem translated_binomial_above_support (p : unitInterval)
+    (l i I : ℕ) (h : i + l < I) : translatedBinomial l i I p = 0 := by
+  have hi : i ≤ I := by omega
+  simp only [translatedBinomial, if_pos hi]
+  exact (binomial_mass_support_and_pascal p).2.1 l (I - i) (by omega)
+
+/-- A finite old-count sum transports one actual Bernoulli answer, with only a
+support bound on the old count and no bound on the proposed new count. -/
+theorem bounded_one_coin_transport (p : unitInterval) (i l L I : ℕ)
+    (h : i + l ≤ L) :
+    (∑ x : Fin (L + 1), translatedBinomial l i x.val p *
+      (∑ b : Bool, if x.val + (if b then 1 else 0) = I then bernoulliMass p b else 0)) =
+        translatedBinomial (l + 1) i I p := by
+  classical
+  have select (t : ℕ) (c : ℝ≥0∞) :
+      (∑ x : Fin (L + 1), if x.val = t then translatedBinomial l i x.val p * c else 0) =
+        translatedBinomial l i t p * c := by
+    by_cases ht : t ≤ L
+    · let a : Fin (L + 1) := ⟨t, by omega⟩
+      have he (x : Fin (L + 1)) : x.val = t ↔ x = a :=
+        ⟨fun hx => Fin.ext hx, fun hx => congrArg Fin.val hx⟩
+      simp_rw [he]
+      simp [a]
+    · have hz := translated_binomial_above_support p l i t (by omega)
+      rw [hz, zero_mul]
+      apply Finset.sum_eq_zero
+      intro x _
+      have hx : x.val ≠ t := by have := x.isLt; omega
+      simp [hx]
+  simp only [Fintype.sum_bool, Bool.false_eq_true, ↓reduceIte, Nat.add_zero]
+  simp_rw [mul_add, mul_ite, mul_zero]
+  rw [Finset.sum_add_distrib]
+  cases I with
+  | zero =>
+    simp only [Nat.add_one_ne_zero, ↓reduceIte, Finset.sum_const_zero, zero_add]
+    rw [select 0]
+    by_cases hi : i = 0
+    · subst i
+      simpa only [translatedBinomial, le_refl, ↓reduceIte, Nat.sub_self] using
+        ((binomial_mass_support_and_pascal p).2.2.1 l).symm
+    · have hi0 : ¬ i ≤ 0 := by omega
+      simp [translatedBinomial, hi0]
+  | succ I =>
+    simp only [Nat.add_left_inj]
+    rw [select I, select (I + 1)]
+    by_cases hi : i ≤ I
+    · have hi' : i ≤ I + 1 := by omega
+      have he : I + 1 - i = (I - i) + 1 := by omega
+      simp only [translatedBinomial, if_pos hi, if_pos hi', he]
+      exact (add_comm _ _).trans ((binomial_mass_support_and_pascal p).2.2.2 l (I - i)).symm
+    · by_cases he : i = I + 1
+      · subst i
+        simpa only [translatedBinomial, if_neg hi, le_refl, ↓reduceIte, Nat.sub_self,
+          zero_mul, zero_add] using ((binomial_mass_support_and_pascal p).2.2.1 l).symm
+      · have hi' : ¬ i ≤ I + 1 := by omega
+        simp [translatedBinomial, hi, hi']
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
