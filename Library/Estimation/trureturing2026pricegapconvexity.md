@@ -2942,3 +2942,176 @@ without a new prime theorem, literature-priority or Lean-verification
 claim. This stronger local $B$--$A$ comparison does not bound HC3's
 future-deficit average minus $aE(B)$. The original signed-head upper
 estimate with $C_0<d(1-\kappa)/16$ and RH remain unproved.
+
+## The existing uniform count pays a sharper local comparison on longer lags
+
+The [Guth--Maynard supplier](../Analytic/guthmaynard2024largevalues.md#the-short-interval-input),
+Corollary 1.3 of arXiv:2405.20552v2, already gives a uniform prime-count
+asymptotic for lengths between $x^{17/30+\epsilon}$ and $x^{99/100}$.
+Use that existing theorem directly, without repeating its proof or its
+FIB sampling applications. Here its consumer is the original complete
+strict inventory between the same actual clocks $B_i$ and $A_i=B_i+t_i$.
+The source windows, supplied $\eta$, every maximizing tie and all outgoing
+weights remain unchanged.
+
+### Match the interval length using the paid clock ceiling
+
+Put $\Delta=1-\Theta>0$. Assume the original fixed parameters satisfy
+
+$$
+\boxed{1-\Theta<\eta<\frac12,\qquad
+\eta<\frac{1-\Theta}{1-\Theta+17/30}.}
+\tag{SI1}
+$$
+
+This is a restriction on the supplied $\eta$, not a choice of a new
+oscillation exponent. Fix once an interval exponent
+$17/30<r<99/100$ with $\eta\le\Delta/(\Delta+r)$; SI1 permits such
+a choice. SC2 and the original $\ell_X=(d/8)X^{1-\eta}\log X$ give
+
+$$
+\frac{B_{\max,X}^{r}}{\ell_X}
+\ll X^{r\eta/\Delta-(1-\eta)}
+(\log X)^{-1-r/\Delta}\longrightarrow0.
+$$
+
+The exponent of $X$ is nonpositive, including when
+$\eta=\Delta/(\Delta+r)$; the logarithmic exponent is strictly negative.
+Consequently $t_i/B_i^r\to\infty$ uniformly in labels and ties.
+The existing CR17 supplies $t_i/B_i\to0$. This range is contained in
+SC4, but its boundary at $\eta=\Delta/(\Delta+17/30)$ is not included:
+the cited theorem requires a fixed positive $\epsilon$.
+
+### Partition a long actual lag into admitted intervals
+
+For one actual label write $A=B+t$ and set $H=(2B)^r$.
+Eventually $A\le2B$ and $t/H\to\infty$ uniformly. Put
+$n=\lfloor t/H\rfloor\ge1$, $h=t/n$, and
+$x_j=B+jh$ for $0\le j<n$. Then
+
+$$
+H\le h\le2H,\qquad B\le x_j<A\le2B.
+$$
+
+With $\epsilon=r-17/30>0$ fixed, every block meets the supplier's
+moving-start conditions:
+
+$$
+x_j^{17/30+\epsilon}=x_j^r\le H\le h,
+\qquad h\le2(2B)^r\le x_j^{99/100}
+$$
+
+beyond a single common start. Thus no assumption that the whole lag
+$t$ is at most $B^{99/100}$ is needed. The count theorem on each block is
+
+$$
+\pi(x_j+h)-\pi(x_j)=\frac h{\log x_j}
++O_r\bigl(h\exp[-(\log x_j)^{1/4}]\bigr).
+$$
+
+For $\theta_1(x)=\sum_{q\le x,\ q\text{ prime}}\log q$, the logarithms
+of the primes in $(x_j,x_j+h]$ lie between $\log x_j$ and
+$\log(x_j+h)$. Multiplying the upper and lower count estimates by
+these endpoint logarithms gives, uniformly over the blocks,
+
+$$
+\left|\theta_1(x_j+h)-\theta_1(x_j)-h\right|
+\le C_rh\left[
+\log(2B)\exp[-(\log B)^{1/4}]
++\frac{H}{B\log B}\right].
+$$
+
+The blocks are disjoint in the original right-continuous counting
+convention. Summing their full lengths gives $t$, so define
+
+$$
+\varepsilon_r(B)=C_r\left[
+\log(2B)\exp[-(\log B)^{1/4}]
++\frac{B^{r-1}}{\log B}\right]\longrightarrow0
+$$
+
+with an enlarged fixed $C_r$. Then
+$|\theta_1(A)-\theta_1(B)-t|\le\varepsilon_r(B)t$.
+The existing complete normal form $Q=K-\psi=O(\sqrt x)$ and the
+classical higher-power bound $\psi-\theta_1=O(\sqrt x)$ give
+$K-\theta_1=O(\sqrt x)$ on all real clocks. These are full cumulative
+estimates: strict activation endpoints, simultaneous layers and higher
+prime powers are retained, rather than identified with the first-layer
+count. Since $A/B\to1$, their endpoint correction is $O(\sqrt B)$.
+For the same actual $D=K(A)-K(B)$ this yields
+
+$$
+\boxed{|D-t|\le\varepsilon_r(B)t+C\sqrt B,\qquad
+\frac{D_i}{t_i}\longrightarrow1}
+\tag{SI2}
+$$
+
+uniformly over every original label and maximizing tie in SI1.
+The last assertion uses $t_i/B_i^r\to\infty$ and $r>1/2$.
+No convergence rate in $X$ or numerical supplier start is asserted.
+
+### Retain the absolute local error and the original compensation
+
+Use the same-source identities from CR44 and ST4,
+$E(B)=D+Q(B)$ and
+$\psi(A)-\psi(B)-t=D-t+Q(B)-Q(A)$. With an enlarged constant,
+
+$$
+\begin{aligned}
+|E(B_i)-t_i|&\le\varepsilon_r(B_i)t_i+C\sqrt{B_i},\\
+|\psi(A_i)-\psi(B_i)-t_i|
+&\le\varepsilon_r(B_i)t_i+C\sqrt{B_i}.
+\end{aligned}
+$$
+
+All original weights are positive. Hence the full outgoing sum,
+including the last weight with endpoint $p_m$, satisfies
+
+$$
+\boxed{\sum_{i<m}\delta_i
+\frac{|\psi(A_i)-\psi(B_i)-t_i|}{\sqrt{B_i}}
+\le\sum_{i<m}\delta_i\varepsilon_r(B_i)
+\frac{t_i}{\sqrt{B_i}}+CL_X
+=o_X(V_X^{\rm lag})+O(L_X).}
+\tag{SI3}
+$$
+
+The relative little-o is uniform in ties: the actual minimum core clock
+tends to infinity, so the supremum of $\varepsilon_r(B_i)$ tends to zero.
+This replaces the positive fixed local coefficient in ST4 by a vanishing
+relative allowance only in the stricter range SI1. It does not extend
+SI1 to $\Theta=1$ or to SC4's remaining parameters.
+
+Finally keep HC3's complete future term
+
+$$
+\mathcal H_X=\sum_{i<m}\frac{\delta_i}{\sqrt{B_i}}
+\int_1^\infty E(B_iv)k_{\log B_i}(v)\,dv.
+$$
+
+Its existing convergence and all original coefficients are unchanged.
+The same local estimate, with the original fixed $a$, gives
+
+$$
+\boxed{
+\left|\mathcal G_X-
+(\mathcal H_X-aV_X^{\rm lag})\right|
+\le a\sum_{i<m}\delta_i\varepsilon_r(B_i)
+\frac{t_i}{\sqrt{B_i}}+C_aL_X.}
+\tag{SI4}
+$$
+
+In particular the subtraction is retained, with a controlled error
+on the same actual clocks; it is not discarded or assigned an independent
+sign. The displayed error is $o(V_X^{\rm lag})+O_a(L_X)$.
+No bound $V_X^{\rm lag}=O(M_XL_X)$ has been supplied here, so this is
+not asserted to be $o(M_XL_X)$. The subexponential relative allowance
+from the cited theorem must not be treated as an arbitrary power saving.
+The complete future term $\mathcal H_X$ and its joint relation to the
+original lag remain unpaid.
+
+SI1--SI4 are an application of the existing uniform count and paid clock
+ceiling to the original local interval and compensation. They introduce
+no new prime theorem, generic sampling theorem, literature-priority claim
+or Lean declaration. The original all-tie signed comparison, its strict
+constant and RH remain unproved.
