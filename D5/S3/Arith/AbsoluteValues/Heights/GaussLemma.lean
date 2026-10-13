@@ -125,27 +125,27 @@ private lemma le_iSup_coeff_mul [LinearOrder σ] {v : AbsoluteValue K ℝ} (hv :
     hmin (toLex : (σ →₀ ℕ) → Lex (σ →₀ ℕ)) (Finsupp.support_nonempty_iff.mp (support_nonempty.mpr hp)) v
   obtain ⟨j, hj, hjlt⟩ :=
     hmin (toLex : (σ →₀ ℕ) → Lex (σ →₀ ℕ)) (Finsupp.support_nonempty_iff.mp (support_nonempty.mpr hq)) v
-  change v (MvPolynomial.coeff i p) =
-    (⨆ m : σ →₀ ℕ, v (MvPolynomial.coeff m p)) at hi
-  change v (MvPolynomial.coeff j q) =
-    (⨆ m : σ →₀ ℕ, v (MvPolynomial.coeff m q)) at hj
+  change v (AddMonoidAlgebra.coeff p i) =
+    (⨆ m : σ →₀ ℕ, v (AddMonoidAlgebra.coeff p m)) at hi
+  change v (AddMonoidAlgebra.coeff q j) =
+    (⨆ m : σ →₀ ℕ, v (AddMonoidAlgebra.coeff q m)) at hj
   change ∀ a : σ →₀ ℕ, toLex a < toLex i →
-    v (MvPolynomial.coeff a p) < (⨆ m : σ →₀ ℕ, v (MvPolynomial.coeff m p)) at hilt
+    v (AddMonoidAlgebra.coeff p a) < (⨆ m : σ →₀ ℕ, v (AddMonoidAlgebra.coeff p m)) at hilt
   change ∀ b : σ →₀ ℕ, toLex b < toLex j →
-    v (MvPolynomial.coeff b q) < (⨆ m : σ →₀ ℕ, v (MvPolynomial.coeff m q)) at hjlt
+    v (AddMonoidAlgebra.coeff q b) < (⨆ m : σ →₀ ℕ, v (AddMonoidAlgebra.coeff q m)) at hjlt
   have key : v ((p * q).coeff (i + j)) = v (p.coeff i * q.coeff j) := by
     rw [MvPolynomial.coeff_mul]
-    refine hv.apply_sum_eq_of_lt (fun a ↦ (v.map_neg a).symm)
-      (s := Finset.antidiagonal (i + j))
-      (l := fun x : (σ →₀ ℕ) × (σ →₀ ℕ) ↦ p.coeff x.1 * q.coeff x.2)
+    refine hv.apply_sum_eq_of_lt
+      (fun x : (σ →₀ ℕ) × (σ →₀ ℕ) ↦ p.coeff x.1 * q.coeff x.2)
+      (fun a ↦ v.map_neg a) (s := Finset.antidiagonal (i + j))
       (k := (i, j)) (Finset.mem_antidiagonal.mpr rfl) ?_
     rintro ⟨a, b⟩ hab hne
     have hsum : a + b = i + j := Finset.mem_antidiagonal.mp hab
     have hane : a ≠ i := by
       rintro rfl
       exact hne (by simp [add_left_cancel hsum])
-    change v (MvPolynomial.coeff a p * MvPolynomial.coeff b q) <
-      v (MvPolynomial.coeff i p * MvPolynomial.coeff j q)
+    change v (AddMonoidAlgebra.coeff p a * AddMonoidAlgebra.coeff q b) <
+      v (AddMonoidAlgebra.coeff p i * AddMonoidAlgebra.coeff q j)
     rw [map_mul, map_mul, hi, hj]
     rcases lt_or_gt_of_ne (fun h ↦ hane (toLex.injective h)) with h | h
     · exact lt_of_le_of_lt (mul_le_mul_of_nonneg_left (le_ciSup hbq b) (v.nonneg _))

@@ -14,7 +14,7 @@ Authors: The Tau Ceti contributors
 -/
 module
 
-public import D5.S3.Factorization.Mordell.SymmetricSquareAddition
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.AddSubMap
 public import Mathlib.NumberTheory.Height.EllipticCurve
 public import Mathlib.LinearAlgebra.QuadraticForm.Basic
 public import Mathlib.Order.Northcott
@@ -82,11 +82,6 @@ namespace WeierstrassCurve.Affine
 
 open Height
 
-/-- The logarithmic height of the homogeneous x-coordinate, including infinity. -/
-@[expose] noncomputable def Point.naiveHeight {F : Type*} [Field F]
-    [AdmissibleAbsValues F] {W : Affine F} (P : W.Point) : ℝ :=
-  logHeight P.xRep
-
 variable {F : Type*} [Field F] {W : Affine F} [AdmissibleAbsValues F] [DecidableEq F]
 
 /-- **The canonical (Néron–Tate) height** `canonicalHeight P = lim h(2ⁿ P) / (2 · 4ⁿ)`.
@@ -121,7 +116,7 @@ theorem Point.canonicalHeight_properties [W.toAffine.IsElliptic] :
             P.xRep 0 * Q.xRep 1 + P.xRep 1 * Q.xRep 0,
             P.xRep 1 * Q.xRep 1] := by
         cases P <;> cases Q <;> simp (config := { congrConsts := false }) [← Point.zero_def]
-      simp (config := { congrConsts := false }) only [Point.naiveHeight, hsym2x]
+      simp (config := { congrConsts := false }) only [Point.naiveHeight_eq_logHeight, hsym2x]
       have H₁ := logHeight_fun_mul_eq P.xRep_ne_zero Q.xRep_ne_zero
       have H (v : Fin 2 → F) : ![v 0, v 1] = v := by
         ext i : 1
@@ -148,7 +143,7 @@ theorem Point.canonicalHeight_properties [W.toAffine.IsElliptic] :
   have hC (Q : W.Point) : |(2 • Q).naiveHeight - 4 * Q.naiveHeight| ≤ C := by
     have h := hbound Q Q
     have hz : (0 : W.Point).naiveHeight = 0 := by
-      simp (config := { congrConsts := false }) [Point.naiveHeight, Point.xRep_zero]
+      simp (config := { congrConsts := false }) [Point.naiveHeight_eq_logHeight, Point.xRep_zero]
     rw [sub_self, hz] at h
     rw [two_nsmul]
     convert h using 2

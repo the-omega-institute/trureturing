@@ -130,7 +130,7 @@ private theorem translated_head {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) �
     (v : EuclideanSpace ℂ (Fin (n+1))) :
     (Matrix.toEuclideanLin (A-c•1) v) 0 =
       (A 0 0-c)*v 0 + ∑ j, A 0 j.succ * ((fun (v : EuclideanSpace ℂ (Fin (n+1))) => WithLp.toLp 2 (Fin.tail v.ofLp)) v) j := by
-  simp [Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,Fin.sum_univ_succ,Fin.tail]
+  simp [Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,Fin.sum_univ_succ,Fin.tail]
   ring
 
 private theorem translated_tail {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) (c : ℂ)
@@ -139,7 +139,7 @@ private theorem translated_tail {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) �
       v 0 • (fun (A : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) => WithLp.toLp 2 (A.col 0 ∘ Fin.succ)) A + Matrix.toEuclideanLin (A.submatrix Fin.succ Fin.succ) ((fun (v : EuclideanSpace ℂ (Fin (n+1))) => WithLp.toLp 2 (Fin.tail v.ofLp)) v) - c • (fun (v : EuclideanSpace ℂ (Fin (n+1))) => WithLp.toLp 2 (Fin.tail v.ofLp)) v := by
   ext i
   simp [Fin.tail,Matrix.col,Function.comp_apply,
-    Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,
+    Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,
     Fin.sum_univ_succ,Finset.sum_sub_distrib,mul_comm]
 
 private theorem translated_component_bounds {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) (c : ℂ)
@@ -191,7 +191,7 @@ theorem blockNorm_domination {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)
     have h1 := (sq_le_sq₀ (norm_nonneg _) hp).mpr hb.1
     have h2 := (sq_le_sq₀ (norm_nonneg _) hq).mpr hb.2
     simpa [EuclideanSpace.norm_sq_eq,Fin.sum_univ_two,comparisonMatrix,u,
-      Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,mul_comm] using add_le_add h1 h2
+      Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,mul_comm] using add_le_add h1 h2
   calc
     _ ≤ ‖Matrix.toEuclideanLin (comparisonMatrix A c) u‖ :=
       (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp hsq
@@ -350,7 +350,7 @@ private theorem pure_first_variance {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1
     variance A ((Matrix.vecMulVec (WithLp.ofLp (EuclideanSpace.single 0 1)) (star (WithLp.ofLp (EuclideanSpace.single 0 1))))) =
       (((@norm (Matrix _ _ ℂ) Matrix.frobeniusSeminormedAddCommGroup.toNorm) ((fun (A : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) => A.submatrix (fun _ : Fin 1 => (0 : Fin (n+1))) Fin.succ) A))^2+‖(fun (A : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) => WithLp.toLp 2 (A.col 0 ∘ Fin.succ)) A‖^2)/2  := by
   rw [pure_variance_norms]
-  simp [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toEuclideanLin_apply,
+  simp [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply,
     Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply, Fin.sum_univ_succ,
     rectNorm_sq, EuclideanSpace.norm_sq_eq, Complex.normSq_eq_norm_sq,
     Complex.norm_conj, Complex.star_def]
@@ -430,7 +430,7 @@ private theorem maximizing_block_frame {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (
   let C := (U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ))ᴴ*A*(U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ))
   have hw : Matrix.toEuclideanLin (U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) (EuclideanSpace.single 0 1) = v := by
     ext i
-    simp [Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,hU]
+    simp [Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,hU]
   have hc := commutator_norm_bound_of_pure (by omega : 0<n+1) A v
     (commutator_pure_max_bound A v hv hm)
   have he := pure_variance_conjugation A U (EuclideanSpace.single 0 1)

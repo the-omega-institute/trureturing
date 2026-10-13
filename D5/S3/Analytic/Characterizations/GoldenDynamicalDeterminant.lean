@@ -339,6 +339,7 @@ theorem golden_continuation : continuationContract := by
     simpa only [coe_nnnorm, Complex.norm_real, Real.norm_of_nonneg hr.le] using
       (ENNReal.ofReal_coe_nnreal (p := ‖(r : ℂ)‖₊)).symm
   have hsrad : spectralRadius ℂ adjacency = ENNReal.ofReal p := by
+    rw [spectralRadius_eq_of_unital]
     apply le_antisymm
     · refine iSup_le fun z => iSup_le fun hz => ?_
       have hz' : z = (p : ℂ) ∨ z = (Real.goldenConj : ℂ) := by simpa [hspectrum, p] using hz

@@ -1,10 +1,10 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
 
 // ensure 的收据渲染。与状态机正交：状态机决定「发生了什么」，这里只决定「怎么写下来」。
-// 拆出来是因为 LeanCacheEnsureCommand.cs 触到了 SL-003 的 800 行硬线（第 8 条：桶满则裂）。
 internal static partial class LeanCacheEnsureCommand
 {
     private static CommandResult SuccessReceipt(
@@ -71,16 +71,18 @@ internal static partial class LeanCacheEnsureCommand
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         out string root,
-        out string? donorRepository)
+        out string? donorRepository,
+        out string? exactDonorWorktree)
     {
         var path = repositoryRoot;
         var selectedPath = false;
         donorRepository = null;
+        exactDonorWorktree = null;
         root = string.Empty;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count || string.IsNullOrWhiteSpace(arguments[index + 1])
-                || arguments[index + 1] is "--path" or "--donor-repository" or "--") return false;
+                || arguments[index + 1] is "--path" or "--donor-repository" or "--donor-worktree" or "--") return false;
             switch (arguments[index])
             {
                 case "--path" when !selectedPath:
@@ -90,6 +92,9 @@ internal static partial class LeanCacheEnsureCommand
                 case "--donor-repository" when donorRepository is null:
                     donorRepository = Path.GetFullPath(arguments[index + 1]);
                     break;
+                case "--donor-worktree" when exactDonorWorktree is null:
+                    exactDonorWorktree = Path.GetFullPath(arguments[index + 1]);
+                    break;
                 default: return false;
             }
         }
@@ -97,6 +102,49 @@ internal static partial class LeanCacheEnsureCommand
         root = Path.GetFullPath(path);
         return true;
     }
+
+    private static string ShellQuote(string value) => "'" + value.Replace("'", "'\"'\"'") + "'";
+
+    private static string ProjectOleanRoot(string lake) =>
+        Path.Combine(lake, "build", "lib", "lean");
+
+    private static string MathlibOleanRoot(string lake) =>
+        Path.Combine(lake, "packages", "mathlib", ".lake", "build", "lib", "lean");
+
+    private static bool TryParseWriter(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        out string root,
+        out string[] command,
+        out string? donorRepository,
+        out string? exactDonorWorktree)
+    {
+        var index = 0;
+        while (index < arguments.Count && arguments[index] != "--") index++;
+        if (!TryParseWorktreeRoot(repositoryRoot, arguments.Take(index).ToArray(), out root, out donorRepository, out exactDonorWorktree)
+            || index + 1 >= arguments.Count)
+        {
+            command = [];
+            return false;
+        }
+        command = arguments.Skip(index + 1).ToArray();
+        return true;
+    }
+
+    private static string? JoinReasons(string? first, string? second)
+    {
+        if (string.IsNullOrWhiteSpace(first)) return second;
+        if (string.IsNullOrWhiteSpace(second)) return first;
+        return first + "; " + second;
+    }
+
+    private static string? ReceiptStampMiss(LeanCacheStampState state) => state switch
+    {
+        LeanCacheStampState.Missing => "missing",
+        LeanCacheStampState.Corrupt => "corrupt",
+        LeanCacheStampState.Mismatch => "mismatch",
+        _ => null,
+    };
 
     private static string RenderReceipt(
         string status,
@@ -143,4 +191,89 @@ internal static partial class LeanCacheEnsureCommand
             LeanArchiveOutcome.Failed => "failed",
             _ => "not_attempted",
         };
+    private static CommandResult LinkedLaneReseedFailure(
+        string root,
+        LeanPinSet pins,
+        LeanWorktreeLocation location,
+        string? stampMiss,
+        ClonefileReceipt? clonefile = null,
+        string? reason = null)
+    {
+        var lake = ShellQuote(LeanCacheGuard.PhysicalPath(Path.Combine(root, ".lake")));
+        var remediation = "the lane's content layer is cold while the main checkout is warm: "
+            + $"remove {lake} and re-run so ensure seeds it from the main checkout";
+        return FailureReceipt(
+            "failed",
+            root,
+            location.MainCheckout,
+            "none",
+            pins.Sha256,
+            JoinReasons(reason, remediation) ?? remediation,
+            stampMiss,
+            clonefile,
+            LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
+    }
+
+    private static CommandResult LinkedFailure(
+        string root,
+        LeanPinSet pins,
+        LeanWorktreeLocation location,
+        string? reason,
+        string? stampMiss,
+        ClonefileReceipt? clonefile = null)
+    {
+        var remediation = "sync dev and warm the dev cache: "
+            + $"make -C {ShellQuote(location.MainCheckout)} warm-donor";
+        var completeReason = reason?.Contains(remediation, StringComparison.Ordinal) == true
+            ? reason
+            : JoinReasons(reason, remediation) ?? remediation;
+        return FailureReceipt(
+            "failed",
+            root,
+            location.MainCheckout,
+            "none",
+            pins.Sha256,
+            completeReason,
+            stampMiss,
+            clonefile,
+            LeanArchiveAttempt.Skipped(LinkedArchiveDisabled));
+    }
+
+    private static string RecordColdBuildConsent(string receipt)
+    {
+        const string prefix = "LEAN_CACHE ";
+        if (!receipt.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Lean cache receipt has an unexpected prefix");
+        }
+        var payload = JsonNode.Parse(receipt[prefix.Length..]) as JsonObject
+            ?? throw new InvalidOperationException("Lean cache receipt is not a JSON object");
+        payload["cold_build_consent"] = true;
+        return prefix + payload.ToJsonString() + "\n";
+    }
+
+    private static string RecordCacheState(string receipt, CacheState cacheState)
+    {
+        const string prefix = "LEAN_CACHE ";
+        if (!receipt.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Lean cache receipt has an unexpected prefix");
+        }
+        var payload = JsonNode.Parse(receipt[prefix.Length..]) as JsonObject
+            ?? throw new InvalidOperationException("Lean cache receipt is not a JSON object");
+        payload["mathlib_olean_state"] = ReceiptWarmth(cacheState.Mathlib.State);
+        payload["mathlib_olean_probe_error"] = cacheState.Mathlib.Error;
+        payload["project_olean_state"] = ReceiptWarmth(cacheState.Project.State);
+        payload["project_olean_probe_error"] = cacheState.Project.Error;
+        return prefix + payload.ToJsonString() + "\n";
+    }
+
+    private static string ReceiptWarmth(OleanWarmth warmth) => warmth switch
+    {
+        OleanWarmth.Cold => "cold",
+        OleanWarmth.Warm => "warm",
+        OleanWarmth.ProbeFailed => "probe_failed",
+        _ => throw new ArgumentOutOfRangeException(nameof(warmth), warmth, null),
+    };
+
 }

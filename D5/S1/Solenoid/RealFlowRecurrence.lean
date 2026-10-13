@@ -13,6 +13,7 @@
 -/
 
 import D5.S1.Solenoid.RealFlowInjectivity
+import Mathlib.Order.Filter.AtTopBot.Archimedean
 
 namespace D5.S1.Solenoid.RealFlowRecurrence
 

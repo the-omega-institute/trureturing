@@ -104,19 +104,19 @@ theorem actual_q_record_newton_nonnegative :
   have Q : B*Z^2*M^2+(A*Z-1)*M+1 = 0 := by
     dsimp [A,B,Z]
     linear_combination -M_eq
-  have QD : (2*B*Z^2*M+A*Z-1)*PowerSeries.derivative (PowerSeries ℚ) M +
+  have QD : (2*B*Z^2*M+A*Z-1)*PowerSeries.derivative (R := (PowerSeries ℚ)) M +
       2*B*Z*M^2+A*M = 0 := by
-    have h := congrArg (PowerSeries.derivative (PowerSeries ℚ)) Q
+    have h := congrArg (PowerSeries.derivative (R := (PowerSeries ℚ))) Q
     dsimp [A,B,Z] at h ⊢
     simp only [map_add,map_sub,Derivation.leibniz,PowerSeries.derivative_C,
       PowerSeries.derivative_one,PowerSeries.derivative_X,
       PowerSeries.derivative_pow,smul_eq_mul,map_zero] at h
     norm_num at h
     linear_combination h
-  have DE : Z*(1-2*A*Z-K*Z^2)*PowerSeries.derivative (PowerSeries ℚ) M+
+  have DE : Z*(1-2*A*Z-K*Z^2)*PowerSeries.derivative (R := (PowerSeries ℚ)) M+
       (2-3*A*Z-K*Z^2)*M = 2 := by
     have prod : (2*B*Z^2*M+A*Z-1)*
-        (Z*(1-2*A*Z-K*Z^2)*PowerSeries.derivative (PowerSeries ℚ) M+
+        (Z*(1-2*A*Z-K*Z^2)*PowerSeries.derivative (R := (PowerSeries ℚ)) M+
           (2-3*A*Z-K*Z^2)*M-2) = 0 := by
       rw [KB]
       linear_combination Z*(1-2*A*Z-(4*B-A^2)*Z^2)*QD-2*(A*Z-1)*Q
@@ -130,9 +130,9 @@ theorem actual_q_record_newton_nonnegative :
       (r+4 : ℚ) • PowerSeries.coeff (r+2) M =
         (2*r+5 : ℚ) • (a*PowerSeries.coeff (r+1) M)+
         (r+1 : ℚ) • (c*PowerSeries.coeff r M) := by
-    have form : Z*PowerSeries.derivative (PowerSeries ℚ) M-
-        2*A*Z^2*PowerSeries.derivative (PowerSeries ℚ) M-
-        K*Z^3*PowerSeries.derivative (PowerSeries ℚ) M+
+    have form : Z*PowerSeries.derivative (R := (PowerSeries ℚ)) M-
+        2*A*Z^2*PowerSeries.derivative (R := (PowerSeries ℚ)) M-
+        K*Z^3*PowerSeries.derivative (R := (PowerSeries ℚ)) M+
         2*M-3*A*Z*M-K*Z^2*M = 2 := by linear_combination DE
     have h := congrArg (PowerSeries.coeff (r+2)) form
     dsimp [Z,A,K] at h
@@ -182,13 +182,13 @@ theorem actual_q_record_newton_nonnegative :
   have substC (t : ℚ) : substQ (PowerSeries.C t) = PowerSeries.C t := by
     rw [substApply]; exact PowerSeries.subst_C t
   let signKernel : PowerSeries ℚ := 1-2*PowerSeries.X-PowerSeries.X^2
-  have qDerivative : substQ signKernel*PowerSeries.derivative ℚ q = (1+q)^2 := by
-    have hd := congrArg (PowerSeries.derivative ℚ) qQuadratic
+  have qDerivative : substQ signKernel*PowerSeries.derivative (R := ℚ) q = (1+q)^2 := by
+    have hd := congrArg (PowerSeries.derivative (R := ℚ)) qQuadratic
     simp only [map_add,Derivation.leibniz,PowerSeries.derivative_X,
       PowerSeries.derivative_pow,smul_eq_mul] at hd
     dsimp [signKernel]
     simp only [map_sub,map_mul,map_pow,map_one,map_ofNat,substX]
-    linear_combination (1+q)*hd-PowerSeries.derivative ℚ q*qQuadratic
+    linear_combination (1+q)*hd-PowerSeries.derivative (R := ℚ) q*qQuadratic
   have positiveMul (f g : PowerSeries ℚ)
       (hf : ∀ n, 0 ≤ PowerSeries.coeff n f) (hg : ∀ n, 0 ≤ PowerSeries.coeff n g) :
       ∀ n, 0 ≤ PowerSeries.coeff n (f*g) := by
@@ -217,25 +217,25 @@ theorem actual_q_record_newton_nonnegative :
       PowerSeries.constantCoeff (OfNat.ofNat a : PowerSeries ℚ) =
         (OfNat.ofNat a : ℚ) := PowerSeries.constantCoeff_C (OfNat.ofNat a : ℚ)
   have dNum (a : ℕ) [a.AtLeastTwo] :
-      PowerSeries.derivative ℚ (OfNat.ofNat a : PowerSeries ℚ) = 0 :=
+      PowerSeries.derivative (R := ℚ) (OfNat.ofNat a : PowerSeries ℚ) = 0 :=
     PowerSeries.derivative_C
   have certificateNonneg (f N : PowerSeries ℚ) (cert : ℕ → ℕ)
       (hcert : signKernel*PowerSeries.mk (fun n => (cert n : ℚ)) = N)
-      (hpoly : PowerSeries.derivative ℚ f*(1+PowerSeries.X)^2 = N)
+      (hpoly : PowerSeries.derivative (R := ℚ) f*(1+PowerSeries.X)^2 = N)
       (hf0 : 0 ≤ PowerSeries.constantCoeff f) :
       ∀ n, 0 ≤ PowerSeries.coeff n (substQ f) := by
     let V : PowerSeries ℚ := PowerSeries.mk (fun n => (cert n : ℚ))
-    have fDerivative : PowerSeries.derivative ℚ (substQ f) = substQ V := by
+    have fDerivative : PowerSeries.derivative (R := ℚ) (substQ f) = substQ V := by
       have hp := congrArg substQ hpoly
       simp only [map_add,map_mul,map_pow,map_one,substX] at hp
       have hc := congrArg substQ hcert
       simp only [map_mul] at hc
-      have chain : PowerSeries.derivative ℚ (substQ f) =
-          substQ (PowerSeries.derivative ℚ f)*PowerSeries.derivative ℚ q := by
+      have chain : PowerSeries.derivative (R := ℚ) (substQ f) =
+          substQ (PowerSeries.derivative (R := ℚ) f)*PowerSeries.derivative (R := ℚ) q := by
         rw [substApply,substApply]; exact PowerSeries.derivative_subst hq
-      have hcalc : substQ signKernel*PowerSeries.derivative ℚ (substQ f) = substQ N := by
+      have hcalc : substQ signKernel*PowerSeries.derivative (R := ℚ) (substQ f) = substQ N := by
         rw [chain]
-        linear_combination hp+substQ (PowerSeries.derivative ℚ f)*qDerivative
+        linear_combination hp+substQ (PowerSeries.derivative (R := ℚ) f)*qDerivative
       have hK : substQ signKernel ≠ 0 := by
         intro he
         have hc0 := congrArg PowerSeries.constantCoeff he
@@ -284,12 +284,12 @@ theorem actual_q_record_newton_nonnegative :
   let nc (p : List ℚ) (n : ℕ) : ℚ :=
     (n+1)*pc p (n+1)+(2*n)*pc p n+((n-1 : ℕ) : ℚ)*pc p (n-1)
   have numerator_coeff (p : List ℚ) (n : ℕ) :
-      PowerSeries.coeff n (PowerSeries.derivative ℚ (poly p)*(1+PowerSeries.X)^2) = nc p n := by
-    have form : PowerSeries.derivative ℚ (poly p)*(1+PowerSeries.X)^2 =
-        PowerSeries.derivative ℚ (poly p)+
-        (PowerSeries.X*PowerSeries.derivative ℚ (poly p)+
-          PowerSeries.X*PowerSeries.derivative ℚ (poly p))+
-        PowerSeries.X^2*PowerSeries.derivative ℚ (poly p) := by ring
+      PowerSeries.coeff n (PowerSeries.derivative (R := ℚ) (poly p)*(1+PowerSeries.X)^2) = nc p n := by
+    have form : PowerSeries.derivative (R := ℚ) (poly p)*(1+PowerSeries.X)^2 =
+        PowerSeries.derivative (R := ℚ) (poly p)+
+        (PowerSeries.X*PowerSeries.derivative (R := ℚ) (poly p)+
+          PowerSeries.X*PowerSeries.derivative (R := ℚ) (poly p))+
+        PowerSeries.X^2*PowerSeries.derivative (R := ℚ) (poly p) := by ring
     rw [form]
     rcases n with _ | n
     · simp only [map_add,PowerSeries.coeff_zero_X_mul,PowerSeries.coeff_X_pow_mul',
@@ -315,7 +315,7 @@ theorem actual_q_record_newton_nonnegative :
       (h0 : 0 ≤ pc p 0) : ∀ n, 0 ≤ PowerSeries.coeff n (substQ (poly p)) := by
     let cert := stream seed s t
     let V : PowerSeries ℚ := PowerSeries.mk (fun n => (cert n : ℚ))
-    have hcert : signKernel*V = PowerSeries.derivative ℚ (poly p)*(1+PowerSeries.X)^2 := by
+    have hcert : signKernel*V = PowerSeries.derivative (R := ℚ) (poly p)*(1+PowerSeries.X)^2 := by
       have form : signKernel*V = V-(PowerSeries.X*V+PowerSeries.X*V)-PowerSeries.X^2*V := by
         dsimp only [signKernel]; ring
       rw [form]

@@ -41,12 +41,12 @@ theorem result : claim := by
   have hprod_mono (s : Finset ℕ) :
       (∏ p ∈ s, (n.factorization p + 1)) ≤
         ∏ p ∈ s, (m.factorization p + 1) := by
-    exact Finset.prod_le_prod (fun _ _ ↦ Nat.zero_le _)
+    exact Finset.prod_le_prod₀ (fun _ _ ↦ Nat.zero_le _)
       (fun p _ ↦ Nat.add_le_add_right (hfac p) 1)
   have hprod_extend (s : Finset ℕ) (hs : s ⊆ m.factorization.support) :
       (∏ p ∈ s, (m.factorization p + 1)) ≤
         ∏ p ∈ m.factorization.support, (m.factorization p + 1) := by
-    exact Finset.prod_le_prod_of_subset_of_one_le hs
+    exact Finset.prod_le_prod_of_subset_of_one_le₀ hs
       (fun _ _ ↦ Nat.zero_le _) (fun p _ _ ↦ by omega)
   apply (Nat.factorization_le_iff_dvd hm.ne' (pow_ne_zero 2 hn.ne')).mp
   rw [Nat.factorization_pow]

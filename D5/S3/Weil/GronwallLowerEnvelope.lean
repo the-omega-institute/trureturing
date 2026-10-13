@@ -178,9 +178,7 @@ theorem gronwall_lower_envelope (ε : ℝ) (hε : 0 < ε) :
             (1 + Real.log c / Real.log y)) atTop (𝓝 b) := by
     have h := (normalized_mertens.const_mul b).div hcorr (by norm_num : (1 : ℝ) ≠ 0)
     convert h using 1
-    · ext y
-      rfl
-    · simp only [mul_one, div_one]
+    simp only [mul_one, div_one]
   intro N
   obtain ⟨y, hyN, hy0, hylog, hybound⟩ :=
     ((eventually_ge_atTop N).and

@@ -617,16 +617,16 @@ theorem actual_four_record_first_decline :
         rw [hN, show n+1+1 = n+2 by omega, hv]
         push_cast
         ring
-  have qDerivative : substQ K * PowerSeries.derivative ℚ q = (1+q)^2 := by
-    have hd := congrArg (PowerSeries.derivative ℚ) qQuadratic
+  have qDerivative : substQ K * PowerSeries.derivative (R := ℚ) q = (1+q)^2 := by
+    have hd := congrArg (PowerSeries.derivative (R := ℚ)) qQuadratic
     simp only [map_add, Derivation.leibniz, PowerSeries.derivative_X,
       PowerSeries.derivative_pow, smul_eq_mul] at hd
     dsimp [K]
     simp only [map_sub, map_mul, map_pow, map_one, map_ofNat, substX]
-    linear_combination (1+q) * hd - PowerSeries.derivative ℚ q * qQuadratic
-  have polyDerivative : PowerSeries.derivative ℚ P * (1+PowerSeries.X)^2 = N := by
+    linear_combination (1+q) * hd - PowerSeries.derivative (R := ℚ) q * qQuadratic
+  have polyDerivative : PowerSeries.derivative (R := ℚ) P * (1+PowerSeries.X)^2 = N := by
     have dNum (a : ℕ) [a.AtLeastTwo] :
-        PowerSeries.derivative ℚ (OfNat.ofNat a : PowerSeries ℚ) = 0 := by
+        PowerSeries.derivative (R := ℚ) (OfNat.ofNat a : PowerSeries ℚ) = 0 := by
       exact PowerSeries.derivative_C
     dsimp [P, N]
     simp only [map_sub, map_add, Derivation.leibniz, dNum,
@@ -634,18 +634,18 @@ theorem actual_four_record_first_decline :
       smul_eq_mul]
     norm_num
     ring
-  have PDerivative : PowerSeries.derivative ℚ (substQ P) = substQ V := by
+  have PDerivative : PowerSeries.derivative (R := ℚ) (substQ P) = substQ V := by
     have hp := congrArg substQ polyDerivative
     simp only [map_add, map_mul, map_pow, map_one, substX] at hp
     have hc := congrArg substQ certificate
     simp only [map_mul] at hc
-    have chain : PowerSeries.derivative ℚ (substQ P) =
-        substQ (PowerSeries.derivative ℚ P) * PowerSeries.derivative ℚ q := by
+    have chain : PowerSeries.derivative (R := ℚ) (substQ P) =
+        substQ (PowerSeries.derivative (R := ℚ) P) * PowerSeries.derivative (R := ℚ) q := by
       rw [substApply, substApply]
       exact PowerSeries.derivative_subst hq
-    have hcalc : substQ K * PowerSeries.derivative ℚ (substQ P) = substQ N := by
+    have hcalc : substQ K * PowerSeries.derivative (R := ℚ) (substQ P) = substQ N := by
       rw [chain]
-      linear_combination hp + substQ (PowerSeries.derivative ℚ P) * qDerivative
+      linear_combination hp + substQ (PowerSeries.derivative (R := ℚ) P) * qDerivative
     have hK : substQ K ≠ 0 := by
       intro he
       have hc0 := congrArg PowerSeries.constantCoeff he

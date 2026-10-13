@@ -122,7 +122,7 @@ theorem extended_quantum_relative_entropy_channel_dpi
           rw [← quadratic X y, hy, dotProduct_zero]
         have hz := (Finset.sum_eq_zero_iff_of_nonneg (fun c (_ : c ∈ (Finset.univ : Finset (Fin (Fintype.card b) × Fin (Fintype.card a)))) =>
             hX.dotProduct_mulVec_nonneg ((kraus c)ᴴ *ᵥ y))).mp hsum
-        intro c; exact (hX.dotProduct_mulVec_zero_iff _).mp (hz c (Finset.mem_univ _))
+        intro c; exact (hX.dotProduct_mulVec_zero_iff (x := _)).mp (hz c (Finset.mem_univ _))
       · intro hz
         rw [Matrix.sum_mulVec]; apply Finset.sum_eq_zero; intro c _; rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, hz c, Matrix.mulVec_zero]
     have outputSupport : SupportContained (Φ.mapState ρ) (Φ.mapState σ) := by

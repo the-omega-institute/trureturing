@@ -133,7 +133,7 @@ theorem fragment_mass_interval_of_perpetuity
   let nu := Measure.map (fun c : FiniteMeasure ℝ => (c.mass : ℝ)) (fragmentLaw zeta)
   letI : IsProbabilityMeasure (fragmentLaw zeta) := fragmentLaw_isProbabilityMeasure zeta
   letI : IsProbabilityMeasure nu :=
-    Measure.isProbabilityMeasure_map measurable_fragment_mass_real.aemeasurable
+    inferInstance
   have hnonnegative : ∀ᵐ s ∂nu, 0 ≤ s := by
     rw [ae_iff]
     change nu {s : ℝ | ¬ 0 ≤ s} = 0

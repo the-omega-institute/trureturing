@@ -900,7 +900,7 @@ theorem catalan_square_hankel_det_upper (n : Nat) :
       _ ≤ ∏ j : Fin n, Matrix.gram Real u j j :=
         (D5.S3.Arith.GoldenResource.IntegerHadamard.real_posDef_hadamard hpd).1
       _ ≤ ∏ j : Fin n, (4 * A) * 16 ^ j.1 := by
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro j _
           rw [Matrix.gram_apply]
           exact real_inner_self_nonneg

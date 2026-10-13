@@ -64,7 +64,7 @@ private theorem complete_first_step (phase : ActivePhase) (r : unitInterval) :
 private lemma probability (phase : ActivePhase) (r : unitInterval) :
     IsProbabilityMeasure (explicitStoppedWordLaw phase r) := by
   rw [← (actual_fourth_segment_stopped_word_law r phase).2]
-  exact Measure.isProbabilityMeasure_map (measurable_stopped_read_word phase).aemeasurable
+  exact inferInstance
 
 private theorem q_first_real (r : unitInterval) (E : Set RawTail) :
     (explicitStoppedWordLaw .p r).real E =

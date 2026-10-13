@@ -389,7 +389,7 @@ theorem result (G : V → V → Prop) (first last : Symbol → Bool)
         mul_le_mul_of_nonneg_left (fiber_bound b) (right.nonnegative b)
   have fixed_lower : rho ^ S.card ≤ left.mass fixed := by
     have hp : (∏ _i : Inside, rho) ≤ ∏ i : Inside, (laws i.1).mass (fixed i) :=
-      Finset.prod_le_prod (fun _ _ => rho_pos.le) (fun i _ => lower i.1 (fixed i))
+      Finset.prod_le_prod₀ (fun _ _ => rho_pos.le) (fun i _ => lower i.1 (fixed i))
     have hcard : Fintype.card Inside = S.card := Fintype.card_coe S
     simpa only [Finset.prod_const, Finset.card_univ, hcard, left,
       independentSourceLaw] using hp

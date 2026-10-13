@@ -261,7 +261,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
   letI dataLaw_probability (M : Matrix p n ℝ) (β τ : ℝ) :
       IsProbabilityMeasure (dataLaw M β τ) := by
     unfold dataLaw
-    exact (inputLaw β τ).isProbabilityMeasure_map (by fun_prop)
+    infer_instance
   letI translatedKernel_markov (K : E p →L[ℝ] E n) (ν : Measure (E n))
       [IsProbabilityMeasure ν] : IsMarkovKernel (translatedKernel K ν) := by
     unfold translatedKernel
@@ -289,7 +289,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       (X : Ω → E n) (Y : Ω → E p) (R : Ω → E n) (hY : Measurable Y) (hR : Measurable R) (K : E p →L[ℝ] E n) (ν : Measure (E n)) [IsProbabilityMeasure ν]
       (hind : IndepFun Y R P) (hlaw : P.map R = ν) (hX : ∀ ω, X ω = K (Y ω) + R ω) : P.map (fun ω => (Y ω, X ω)) =
         (P.map Y) ⊗ₘ translatedKernel K ν := by
-    letI : IsProbabilityMeasure (P.map Y) := P.isProbabilityMeasure_map hY.aemeasurable
+    letI : IsProbabilityMeasure (P.map Y) := inferInstance
     rw [translatedKernel_compProd, ← hlaw, ← hind.map_prod_eq_prod_map_map hY.aemeasurable hR.aemeasurable,
       Measure.map_map (by fun_prop) (hY.prodMk hR)]
     congr 1
@@ -399,7 +399,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
           rfl
         _ = (c • (volume : Measure (EuclideanSpace ℝ n))).map (fun x => m + x) := by rw [hvolL']
         _ = c • volume := by
-          rw [Measure.map_smul, map_add_left_eq_self (volume : Measure (EuclideanSpace ℝ n)) m]
+          rw [Measure.map_smul c (by fun_prop), map_add_left_eq_self (volume : Measure (EuclideanSpace ℝ n)) m]
     have htransport : ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f =
         ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := by
       ext s hs
@@ -900,7 +900,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
     exact withDensity_absolutelyContinuous _ _
   letI : IsProbabilityMeasure joint := by
     dsimp [joint, jointLaw]
-    exact (inputLaw β τ).isProbabilityMeasure_map (by fun_prop)
+    infer_instance
   letI : IsProbabilityMeasure product := by
     dsimp [product]
     infer_instance

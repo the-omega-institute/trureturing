@@ -53,6 +53,7 @@
 
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Matrix.Order
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 import Mathlib.LinearAlgebra.Matrix.Gershgorin
@@ -269,13 +270,13 @@ private theorem hermitian_range {ι : Type*} [Fintype ι] [DecidableEq ι] {A : 
   let T := A.toEuclideanLin; have ht : T.IsSymmetric := Matrix.isSymmetric_toEuclideanLin_iff.mpr hA;
   have he : T.range = T.kerᗮ := by { rw [←ht.orthogonal_range,Submodule.orthogonal_orthogonal] };
   have hm : v ∈ LinearMap.range A.mulVecLin ↔ (WithLp.toLp 2 v : EuclideanSpace ℂ ι) ∈ T.range := by {
-    constructor; · { rintro ⟨x,hx⟩; refine ⟨WithLp.toLp 2 x,?_⟩; simpa [T,Matrix.toEuclideanLin_apply_piLp_toLp] using congrArg (WithLp.toLp 2) hx };
-    · { rintro ⟨x,hx⟩; refine ⟨WithLp.ofLp x,?_⟩; simpa [T,Matrix.toEuclideanLin_apply,Matrix.mulVecLin_apply] using congrArg WithLp.ofLp hx } };
+    constructor; · { rintro ⟨x,hx⟩; refine ⟨WithLp.toLp 2 x,?_⟩; simpa [T,Matrix.toLpLin_toLp] using congrArg (WithLp.toLp 2) hx };
+    · { rintro ⟨x,hx⟩; refine ⟨WithLp.ofLp x,?_⟩; simpa [T,Matrix.toLpLin_apply,Matrix.mulVecLin_apply] using congrArg WithLp.ofLp hx } };
   rw [hm,he,Submodule.mem_orthogonal]; constructor;
-  · { intro h x hx; have hh := h (WithLp.toLp 2 x) (by { change T (WithLp.toLp 2 x)=0; simpa [T,Matrix.toEuclideanLin_apply_piLp_toLp] using congrArg (WithLp.toLp 2) hx }); simpa [EuclideanSpace.inner_eq_star_dotProduct,dotProduct,mul_comm] using hh };
-  · { intro h x hx; have hh := h (WithLp.ofLp x) (by { change T x=0 at hx; simpa [T,Matrix.toEuclideanLin_apply] using congrArg WithLp.ofLp hx }); simpa [EuclideanSpace.inner_eq_star_dotProduct,dotProduct,mul_comm] using hh } }
+  · { intro h x hx; have hh := h (WithLp.toLp 2 x) (by { change T (WithLp.toLp 2 x)=0; simpa [T,Matrix.toLpLin_toLp] using congrArg (WithLp.toLp 2) hx }); simpa [EuclideanSpace.inner_eq_star_dotProduct,dotProduct,mul_comm] using hh };
+  · { intro h x hx; have hh := h (WithLp.ofLp x) (by { change T x=0 at hx; simpa [T,Matrix.toLpLin_apply] using congrArg WithLp.ofLp hx }); simpa [EuclideanSpace.inner_eq_star_dotProduct,dotProduct,mul_comm] using hh } }
 private theorem lap_complex_range {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι] (G : SimpleGraph ι) [DecidableRel G.Adj] (hc : G.Preconnected) (v : ι → ℂ) : v ∈ LinearMap.range (G.lapMatrix ℂ).mulVecLin ↔ ∑ i, v i=0 := by {
-  rw [hermitian_range (lap_complex_psd G).isHermitian]; constructor; · { intro h; simpa using h (fun _=>1) (G.lapMatrix_mulVec_const_eq_zero) };
+  rw [hermitian_range (lap_complex_psd G).isHermitian]; constructor; · { intro h; simpa using h (fun _=>1) (G.lapMatrix_mulVec_one_eq_zero ℂ) };
   · { intro h x hx; let i₀ := Classical.choice (inferInstance : Nonempty ι); have he : ∀ i, x i=x i₀ := fun i => (lap_complex_kernel G hc x).mp hx i i₀; simp_rw [he]; rw [←Finset.mul_sum,h,mul_zero] } }
 end Cycle
 namespace Cycle
@@ -905,8 +906,8 @@ private theorem rho_reindex {n : ℕ} (hn : 3≤n) (a b : Fin n→ℂ) (r : ℝ)
     rw [rho_diagonal_cross_zero a b r j i.val.1 i.val.2 i.property,star_zero] at he; simpa [rhoAddress,RhoBlock,Matrix.blockDiagonal'] using he.symm };
   · { simp [rhoAddress,RhoBlock,Matrix.blockDiagonal'] } }
 private theorem rho_psd_rank {n : ℕ} (hn : 3≤n) (a b : Fin n→ℂ) (r : ℝ) (hab : Admissible a b) (hr : 0<r) (hd : (D a b r).PosSemidef) (hdrank : (D a b r).rank=n-1) : (rho a b r).PosSemidef ∧ (rho a b r).rank=n*n-1 := by {
-  letI : ∀ t:Bool,Fintype (RhoCarrier n t) := fun t=>by { cases t <;> dsimp [RhoCarrier] <;> infer_instance };
-  letI : ∀ t:Bool,DecidableEq (RhoCarrier n t) := fun t=>by { cases t <;> dsimp [RhoCarrier] <;> infer_instance };
+  letI : ∀ t:Bool,Fintype (RhoCarrier n t) := fun t=>by { cases t <;> simp only [RhoCarrier, cond_false, cond_true] <;> infer_instance };
+  letI : ∀ t:Bool,DecidableEq (RhoCarrier n t) := fun t=>by { cases t <;> simp only [RhoCarrier, cond_false, cond_true] <;> infer_instance };
   have hp := rho_offdiag_posDef hn a b r hab hr; constructor;
   · { rw [←Matrix.posSemidef_submatrix_equiv (rhoAddress n),rho_reindex hn a b r hab hr]; apply Blocks.psd_block; intro t; cases t; · { exact hd }; · { exact hp.posSemidef } };
   · {

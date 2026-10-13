@@ -47,7 +47,7 @@ theorem lagrange_coefficient (root factor : PowerSeries ℚ) (zero : constantCoe
       rw [subst_pow substitution, ← mul_pow, ← equation]
     rw [powers, coeff_X_pow_mul', if_pos bound]
   have derivativeCoefficients (source : PowerSeries ℚ) (degree : ℕ) :
-      coeff degree (X * derivative ℚ source) = (degree : ℚ) * coeff degree source := by
+      coeff degree (X * PowerSeries.derivative (R := ℚ) source) = (degree : ℚ) * coeff degree source := by
     cases degree with
     | zero => simp
     | succ degree =>
@@ -68,7 +68,7 @@ theorem lagrange_coefficient (root factor : PowerSeries ℚ) (zero : constantCoe
     have differenceSmaller : degree - power < degree := by omega
     have weighted : (degree - power : ℕ) * coeff degree (root ^ power) =
         coeff (degree - power)
-          (X * derivative ℚ (factor ^ power) * factor ^ (degree - power)) := by
+          (X * PowerSeries.derivative (R := ℚ) (factor ^ power) * factor ^ (degree - power)) := by
       rw [shifted degree power bounded, finiteSubstitution, Finset.mul_sum]
       rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
       apply Finset.sum_congr rfl
@@ -82,8 +82,8 @@ theorem lagrange_coefficient (root factor : PowerSeries ℚ) (zero : constantCoe
         (by omega) indexBound
       linear_combination coeff index (factor ^ power) * inductionResult
     have derivativeIdentity :
-        (degree : PowerSeries ℚ) * (X * derivative ℚ (factor ^ power) * factor ^ (degree - power)) =
-          (power : PowerSeries ℚ) * (X * derivative ℚ (factor ^ degree)) := by
+        (degree : PowerSeries ℚ) * (X * PowerSeries.derivative (R := ℚ) (factor ^ power) * factor ^ (degree - power)) =
+          (power : PowerSeries ℚ) * (X * PowerSeries.derivative (R := ℚ) (factor ^ degree)) := by
       rw [derivative_pow, derivative_pow]
       have exponent : power - 1 + (degree - power) = degree - 1 := by omega
       rw [← exponent, pow_add]

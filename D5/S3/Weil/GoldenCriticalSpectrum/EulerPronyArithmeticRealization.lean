@@ -251,7 +251,7 @@ theorem continued_euler_trace_principal_part
       logDeriv (fun w : ℂ => (w - rho) ^ m * u w) z =
         logDeriv (fun w : ℂ => (w - rho) ^ m) z +
           logDeriv u z := by
-    exact logDeriv_mul z (pow_ne_zero m hzSub) hzUnit
+    exact logDeriv_fun_mul z (pow_ne_zero m hzSub) hzUnit
       (by fun_prop) hzAnalytic.differentiableAt
   have hPower :
       logDeriv (fun w : ℂ => (w - rho) ^ m) z =

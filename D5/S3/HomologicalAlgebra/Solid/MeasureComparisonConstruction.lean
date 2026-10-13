@@ -65,7 +65,7 @@ theorem integerRoundCoordinate_numerator (S : LightProfinite)
       familyToIntegerMeasures (NinfTensor S) (integerRoundFamily S x) := by
   apply Pi.hom_ext
   intro j
-  simp only [Category.assoc, integerRoundTensor, familyToIntegerMeasures, Pi.lift_π]
+  simp only [Category.assoc, integerRoundTensor, familyToIntegerMeasures, Pi.lift_comp_π]
   apply (freeHomIntAddEquiv (NinfTensor S)).injective
   change freeProductHomEquiv (ℕ∪{∞}) S
       ((P_proj ▷ freeOn S) ≫ integerRoundCoordinate S x j) = _
@@ -78,7 +78,7 @@ theorem familyToIntegerMeasures_add (S : LightProfinite)
       familyToIntegerMeasures S c + familyToIntegerMeasures S d := by
   apply Pi.hom_ext
   intro j
-  simp only [familyToIntegerMeasures, Pi.lift_π, Preadditive.add_comp, Pi.add_apply]
+  simp only [familyToIntegerMeasures, Pi.lift_comp_π, Preadditive.add_comp, Pi.add_apply]
   exact (freeHomIntAddEquiv S).symm.map_add _ _
 
 theorem familyToIntegerMeasures_sub (S : LightProfinite)
@@ -87,7 +87,7 @@ theorem familyToIntegerMeasures_sub (S : LightProfinite)
       familyToIntegerMeasures S c - familyToIntegerMeasures S d := by
   apply Pi.hom_ext
   intro j
-  simp only [familyToIntegerMeasures, Pi.lift_π, Preadditive.sub_comp, Pi.sub_apply]
+  simp only [familyToIntegerMeasures, Pi.lift_comp_π, Preadditive.sub_comp, Pi.sub_apply]
   exact (freeHomIntAddEquiv S).symm.map_sub _ _
 
 /-- Every genuinely bounded family is killed by the actual quotient map. -/
@@ -134,7 +134,7 @@ theorem integerRoundTensor_naturality {S' S : LightProfinite} (f : S' ⟶ S)
       integerRoundTensor S' (integerMeasures.obj.map f.op x) := by
   apply Pi.hom_ext
   intro j
-  simp only [Category.assoc, integerRoundTensor, Pi.lift_π]
+  simp only [Category.assoc, integerRoundTensor, Pi.lift_comp_π]
   apply (cancel_epi (P_proj ▷ freeOn S')).1
   rw [← Category.assoc, ← whisker_exchange, Category.assoc]
   apply (freeProductHomEquiv (ℕ∪{∞}) S').injective
@@ -285,7 +285,7 @@ theorem familyToIntegerMeasures_precomp {T S : LightProfinite} (f : T ⟶ S)
       familyToIntegerMeasures T (fun j => (c j).comap f.hom.hom) := by
   apply Pi.hom_ext
   intro j
-  simp only [Category.assoc, familyToIntegerMeasures, Pi.lift_π]
+  simp only [Category.assoc, familyToIntegerMeasures, Pi.lift_comp_π]
   apply (freeHomDiscreteEquiv ℤ T (ModuleCat.of ℤ ℤ)).injective
   change freeHomDiscreteEquiv ℤ T (ModuleCat.of ℤ ℤ)
     ((free ℤ).map (lightProfiniteToLightCondSet.map f) ≫
@@ -390,7 +390,7 @@ theorem measureTailSection_integerRoundTensor (S : LightProfinite)
       (freeSectionEquiv S integerMeasures).symm x := by
   apply Pi.hom_ext
   intro j
-  simp only [Category.assoc, integerRoundTensor, Pi.lift_π]
+  simp only [Category.assoc, integerRoundTensor, Pi.lift_comp_π]
   apply (freeHomDiscreteEquiv ℤ S (ModuleCat.of ℤ ℤ)).injective
   ext s
   dsimp only [measureTailSection]

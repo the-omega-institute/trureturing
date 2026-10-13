@@ -48,7 +48,7 @@ private theorem U_H : U * H = 1 := PowerSeries.inv_mul_cancel H (by rw [H_zero];
 private theorem U_zero : constantCoeff U = 1 := by simp [U, constantCoeff_inv, H_zero]
 private theorem L_zero : constantCoeff L = 0 := constantCoeff_logOf H_zero
 
-private theorem H_derivative : derivative ℚ H = 2 * H - 1 := by
+private theorem H_derivative : PowerSeries.derivative (R := ℚ) H = 2 * H - 1 := by
   have he : rescale (2 : ℚ) (exp ℚ) = exp ℚ ^ 2 := (exp_pow_eq_rescale_exp 2).symm
   simp only [H, he, map_add, map_sub, Derivation.leibniz, derivative_one,
     derivative_C, derivative_pow, derivative_exp, smul_eq_mul]
@@ -57,38 +57,38 @@ private theorem H_derivative : derivative ℚ H = 2 * H - 1 := by
     rw [show (2 : PowerSeries ℚ) = C (2 : ℚ) by exact (map_ofNat (C (R := ℚ)) 2).symm, ← map_mul]; norm_num
   linear_combination h
 
-private theorem log_derivative_mul : derivative ℚ (log ℚ) * (1 + X) = 1 := by
+private theorem log_derivative_mul : PowerSeries.derivative (R := ℚ) (log ℚ) * (1 + X) = 1 := by
   have h := congrArg (rescale (-1 : ℚ)) (mk_one_mul_one_sub_eq_one ℚ)
-  have he : rescale (-1 : ℚ) (mk 1) = derivative ℚ (log ℚ) := by
+  have he : rescale (-1 : ℚ) (mk 1) = PowerSeries.derivative (R := ℚ) (log ℚ) := by
     ext n
     simp [deriv_log]
   simpa [he] using h
 
-private theorem L_derivative : derivative ℚ L = 2 - U := by
+private theorem L_derivative : PowerSeries.derivative (R := ℚ) L = 2 - U := by
   have hs : HasSubst (H - 1) := .of_constantCoeff_zero (by change constantCoeff (H - 1) = 0; simp [H_zero])
   have hone : subst (H - 1) (1 : PowerSeries ℚ) = 1 := by
     rw [← coe_substAlgHom hs]; exact map_one _
   have h := congrArg (subst (H - 1)) log_derivative_mul
-  have hmul : (derivative ℚ (log ℚ)).subst (H - 1) * H = 1 := by
+  have hmul : (PowerSeries.derivative (R := ℚ) (log ℚ)).subst (H - 1) * H = 1 := by
     simpa only [subst_mul hs, subst_add hs, hone, subst_X hs,
       add_sub_cancel] using h
-  have hEq : (derivative ℚ (log ℚ)).subst (H - 1) = U := by
+  have hEq : (PowerSeries.derivative (R := ℚ) (log ℚ)).subst (H - 1) = U := by
     calc
-      _ = ((derivative ℚ (log ℚ)).subst (H - 1) * H) * U := by
+      _ = ((PowerSeries.derivative (R := ℚ) (log ℚ)).subst (H - 1) * H) * U := by
         rw [mul_assoc, mul_comm H U, U_H, mul_one]
       _ = U := by rw [hmul, one_mul]
   rw [L, logOf_eq, derivative_subst hs, hEq, map_sub, derivative_one,
     sub_zero, H_derivative]
   linear_combination 2 * U_H
 
-private theorem U_derivative : derivative ℚ U = U ^ 2 - 2 * U := by
+private theorem U_derivative : PowerSeries.derivative (R := ℚ) U = U ^ 2 - 2 * U := by
   rw [U, derivative_inv', H_derivative]
   change -(U ^ 2) * (2 * H - 1) = U ^ 2 - 2 * U
   linear_combination -2 * U * U_H
 
 private theorem F_zero : F 0 = 1 := by simp [F]
 private theorem F_derivative (r : ℕ) :
-    derivative ℚ (F (r + 1)) = (2 - U) * F r := by
+    PowerSeries.derivative (R := ℚ) (F (r + 1)) = (2 - U) * F r := by
   have hf : (r.factorial : ℚ) ≠ 0 := by exact_mod_cast r.factorial_ne_zero
   have hc : C (1 / ((r + 1).factorial : ℚ)) * (r + 1 : PowerSeries ℚ) =
       C (1 / (r.factorial : ℚ)) := by
@@ -102,7 +102,7 @@ private theorem F_derivative (r : ℕ) :
   linear_combination L ^ r * (2 - U) * hc
 
 private theorem U_pow_derivative (j : ℕ) :
-    derivative ℚ (U ^ j) = C (j : ℚ) * U ^ (j + 1) - C (2 * j : ℚ) * U ^ j := by
+    PowerSeries.derivative (R := ℚ) (U ^ j) = C (j : ℚ) * U ^ (j + 1) - C (2 * j : ℚ) * U ^ j := by
   cases j with
   | zero => simp
   | succ j =>
@@ -113,7 +113,7 @@ private theorem U_pow_derivative (j : ℕ) :
     ring
 
 private theorem B_derivative (r j : ℕ) :
-    derivative ℚ (B r j) = C (j : ℚ) * B r (j + 1) - C (2 * j : ℚ) * B r j +
+    PowerSeries.derivative (R := ℚ) (B r j) = C (j : ℚ) * B r (j + 1) - C (2 * j : ℚ) * B r j +
       if r = 0 then 0 else 2 * B (r - 1) j - B (r - 1) (j + 1) := by
   cases r with
   | zero => simpa only [B, F_zero, mul_one, if_true, add_zero] using U_pow_derivative j
@@ -131,7 +131,7 @@ private def W : ℕ → ℕ → ℕ → ℤ
       if r = 0 then 0 else 2 * W n (r - 1) j - W n (r - 1) (j + 1)
 
 private theorem scaled_derivative (f : PowerSeries ℚ) (n : ℕ) :
-    (n.factorial : ℚ) * coeff n (derivative ℚ f) =
+    (n.factorial : ℚ) * coeff n (PowerSeries.derivative (R := ℚ) f) =
       ((n + 1).factorial : ℚ) * coeff (n + 1) f := by
   rw [coeff_derivative, Nat.factorial_succ]
   push_cast

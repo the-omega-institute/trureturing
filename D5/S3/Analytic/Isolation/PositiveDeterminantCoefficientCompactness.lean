@@ -60,7 +60,7 @@ private theorem positive_determinant_norm_le_exp
   calc
     ∏ j, ‖1 + w * (eigenvalue j : ℂ)‖ ≤
         ∏ j, (1 + ‖w‖ * eigenvalue j) := by
-      exact Finset.prod_le_prod
+      exact Finset.prod_le_prod₀
         (fun j _ => norm_nonneg _)
         (fun j _ => by
           calc

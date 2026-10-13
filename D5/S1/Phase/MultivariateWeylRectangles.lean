@@ -341,25 +341,25 @@ private theorem translation_jet (i : Fin d) (h : ℤ) (Q : MvPolynomial (Fin d) 
     le_totalDegree hv
   constructor
   · have he : coordinateTranslation i h Q =
-        ∑ v ∈ Q.support, coordinateTranslation i h (monomial v (coeff v Q)) := by
+        ∑ v ∈ Q.support, coordinateTranslation i h (monomial v (Q.coeff v)) := by
       rw [← map_sum, ← Q.as_sum]
     rw [he]
     exact (low (Q.totalDegree + 1)).sum_mem (fun v hv' =>
-      low_mono (translation_jet_monomial i h v (coeff v Q)).1 (Nat.add_le_add_right (hv v hv') 1))
+      low_mono (translation_jet_monomial i h v (Q.coeff v)).1 (Nat.add_le_add_right (hv v hv') 1))
   constructor
   · have he : coordinateTranslation i h Q - Q =
-        ∑ v ∈ Q.support, (coordinateTranslation i h (monomial v (coeff v Q)) - monomial v (coeff v Q)) := by
+        ∑ v ∈ Q.support, (coordinateTranslation i h (monomial v (Q.coeff v)) - monomial v (Q.coeff v)) := by
       rw [sum_sub_distrib, ← map_sum, ← Q.as_sum]
     rw [he]
     exact (low Q.totalDegree).sum_mem (fun v hv' =>
-      low_mono (translation_jet_monomial i h v (coeff v Q)).2.1 (hv v hv'))
+      low_mono (translation_jet_monomial i h v (Q.coeff v)).2.1 (hv v hv'))
   · have he : coordinateTranslation i h Q - Q - C h * pderiv i Q =
-        ∑ v ∈ Q.support, (coordinateTranslation i h (monomial v (coeff v Q)) - monomial v (coeff v Q) -
-          C h * pderiv i (monomial v (coeff v Q))) := by
+        ∑ v ∈ Q.support, (coordinateTranslation i h (monomial v (Q.coeff v)) - monomial v (Q.coeff v) -
+          C h * pderiv i (monomial v (Q.coeff v))) := by
       simp only [sum_sub_distrib, ← mul_sum, ← map_sum, ← Q.as_sum]
     rw [he]
     exact (low (Q.totalDegree - 1)).sum_mem (fun v hv' =>
-      low_mono (translation_jet_monomial i h v (coeff v Q)).2.2 (Nat.sub_le_sub_right (hv v hv') 1))
+      low_mono (translation_jet_monomial i h v (Q.coeff v)).2.2 (Nat.sub_le_sub_right (hv v hv') 1))
 
 private theorem low_homogeneous_zero {p : MvPolynomial (Fin d) ℤ} {n : ℕ}
     (hp : p ∈ low n) : homogeneousComponent n p = 0 := by
@@ -396,8 +396,8 @@ private theorem exists_top_coordinate (Q : MvPolynomial (Fin d) ℤ) (hD : 0 < Q
       (fun v : Fin d →₀ ℕ => v.degree)
     have hvdeg : v.degree = Q.totalDegree := hmax.symm
     intro hz
-    have hc := congrArg (coeff v) hz
-    rw [coeff_homogeneousComponent, if_pos hvdeg, coeff_zero] at hc
+    have hc := congrArg (fun p => AddMonoidAlgebra.coeff p v) hz
+    rw [coeff_homogeneousComponent, if_pos hvdeg, MvPolynomial.coeff_zero] at hc
     exact mem_support_iff.mp hv hc
   by_contra! hall
   have he := (homogeneousComponent_isHomogeneous Q.totalDegree Q).sum_X_mul_pderiv
@@ -467,7 +467,7 @@ private theorem degree_one_cancellation (α : ℝ) (hα : Irrational α)
       𝔼 n ∈ Fintype.piFinset (fun j => range (N j)), polynomialPhase α Q n) atTop (𝓝 0) := by
   classical
   obtain ⟨i, hi⟩ := exists_top_coordinate Q (by omega)
-  have hdec : Q = C (coeff 0 Q) + homogeneousComponent 1 Q := by
+  have hdec : Q = C (Q.coeff 0) + homogeneousComponent 1 Q := by
     have hs := sum_homogeneousComponent Q
     simpa [hD, sum_range_succ, homogeneousComponent_zero] using hs.symm
   have hp : pderiv i Q = pderiv i (homogeneousComponent 1 Q) := by
@@ -476,7 +476,7 @@ private theorem degree_one_cancellation (α : ℝ) (hα : Irrational α)
     rw [hp]
     exact Nat.eq_zero_of_le_zero (by
       simpa using (homogeneousComponent_isHomogeneous 1 Q).pderiv.totalDegree_le)
-  let a : ℤ := coeff 0 (pderiv i Q)
+  let a : ℤ := (pderiv i Q).coeff 0
   have haeq : pderiv i Q = C a := totalDegree_eq_zero_iff_eq_C.mp hpd
   have ha : a ≠ 0 := by
     intro hz
@@ -651,7 +651,7 @@ private theorem shifted_polynomial (Q : MvPolynomial (Fin d) ℤ)
   change T (-a) (T a Q) = _ at he
   rw [← AlgHom.comp_apply, hinv] at he
   have hc : Q = MvPolynomial.C
-      (MvPolynomial.coeff 0 (T a Q)) := by simpa [T] using he
+      (AddMonoidAlgebra.coeff (T a Q) 0) := by simpa [T] using he
   rw [hc, MvPolynomial.totalDegree_C] at hQ
   omega
 
@@ -721,7 +721,7 @@ theorem monomial_rectangular_equidistribution {d : ℕ} (α : ℝ) (hα : Irrati
   by_contra hn
   have hC := MvPolynomial.totalDegree_eq_zero_iff_eq_C.mp (Nat.eq_zero_of_not_pos hn)
   obtain ⟨j, hj⟩ := Function.ne_iff.mp hk
-  have hc := congrArg (MvPolynomial.coeff (e j)) hC
+  have hc := congrArg (fun p => AddMonoidAlgebra.coeff p (e j)) hC
   simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial] at hc
   have hcoeff : (∑ i : κ, if e i = e j then k i else 0) = k j := by
     simp [he.eq_iff]

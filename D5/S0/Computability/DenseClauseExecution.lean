@@ -610,6 +610,7 @@ def denseExecution (w : List Bool) :
         apply single
         dsimp [FinTM2.step, TM2.step, denseMachine, haltList, TM2.stepAux, denseWordCfg, denseWordStacks,
           denseLocal, denseWordState]
+        dsimp only [cond]
         congr 2
         funext k
         cases k with
