@@ -101,7 +101,7 @@ def K2 (l : Fin 9 → ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
 def boundaryValues (k : ℕ) (l : Fin (3*(3+k)) → ℝ) : Fin 9 → ℝ :=
   fun q => l (if h : q.val < 3 then ⟨q.val, by omega⟩ else ⟨3*k+q.val, by omega⟩)
 
-private noncomputable def bell : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ := fun (i,j) (k,l) =>
+noncomputable def bell : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ := fun (i,j) (k,l) =>
   if i=j then if (i,j)=(k,l) then 1 else 0
   else if (i,j)=(k,l) then (if i<j then (Real.sqrt 2 : ℂ)⁻¹ else -(Real.sqrt 2 : ℂ)⁻¹)
   else if (i,j)=(l,k) then (Real.sqrt 2 : ℂ)⁻¹ else 0
@@ -119,7 +119,7 @@ private noncomputable def extendUnitary (k : ℕ) (V : unitaryGroup (Fin 3 × Fi
         simpa only [Matrix.star_eq_conjTranspose] using mem_unitaryGroup_iff.mp V.property
       simp [fromBlocks_conjTranspose, fromBlocks_multiply, hv, fromBlocks_one]⟩
 
-private noncomputable def permutationU {I : Type} [Fintype I] [DecidableEq I]
+noncomputable def permutationU {I : Type} [Fintype I] [DecidableEq I]
     (e : Equiv.Perm I) : unitaryGroup I ℂ := ⟨e.permMatrix ℂ, by
   rw [mem_unitaryGroup_iff,Matrix.star_eq_conjTranspose,Matrix.conjTranspose_permMatrix,
     ← Matrix.permMatrix_mul]
