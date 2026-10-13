@@ -10282,3 +10282,177 @@ nonreal pairs, and it does not supply that construction's arbitrarily
 large full-growth budget or the original theta source's smooth density
 and differential relations. No combined positive-theta/full-growth
 counterexample or actual theta signed estimate is asserted.
+
+## Strict positive moments still do not give a universal first-defect sign
+
+The classical positive-law comparison in (LC394)--(LC396) can be
+extended to strictly positive moment matrices and arbitrary prescribed
+finite prefix length. This is a source-to-extraction correspondence
+using classical Bessel, beta-integral and Laguerre suppliers, without
+an originality or Lean claim. It does not impose the actual theta
+density, complete original exterior or full-growth local budgets.
+
+### One Bessel probability source supplies every positive shift
+
+For $a>0$ and $b\ge1/2$, set
+
+$$
+B_b(z)={}_0F_1(;b;-z/4)
+=\sum_{j\ge0}\frac{(-1)^jz^j}{4^j j!(b)_j},\qquad
+f_{a,b}(z)=\frac{a+B_b(z)}{1+a},\qquad
+P_{k,b}(t)=\frac{k!}{(b)_k}L_k^{b-1}(t/(4k)).
+\tag{LC397}
+$$
+
+Here $(b)_j$ is the rising factorial. Reuse the Laguerre expression
+in [DLMF 18.5.12](https://dlmf.nist.gov/18.5.E12).
+[DLMF Table 18.3.1](https://dlmf.nist.gov/18.3#T1) supplies weight
+$e^{-x}x^\alpha$ on $(0,\infty)$ for $\alpha>-1$. Here
+$\alpha=b-1$ or $b+h-1$, both $>-1$. Reuse its zero theorem in
+[DLMF 18.2(vi)](https://dlmf.nist.gov/18.2.vi). Directly applying the
+unchanged coefficient multiplier gives, for integers $h,k\ge1$,
+
+$$
+\begin{aligned}
+J_k&=\mathscr T_kf_{a,b}=(a+P_{k,b})/(1+a),\\
+\mathscr T_kf_{a,b}^{(h)}(t)
+&=\frac{(-1)^h}{(1+a)4^h(b)_h}
+ \frac{k!}{(b+h)_k}L_k^{b+h-1}(t/(4k)).
+\end{aligned}
+\tag{LC398}
+$$
+
+Thus every positive-shift row has $k$ positive simple roots for this
+one fixed source. The nonzero leading coefficients preserve complete
+row degrees. No simultaneous perturbation of infinitely many rows
+is used. For $b=1/2$, $B_b(z)=\cos\sqrt z$. For $b>1/2$, the beta
+integral [DLMF 5.12.1](https://dlmf.nist.gov/5.12.E1) gives the even
+probability density
+
+$$
+d\eta_b(x)=\frac{\Gamma(b)}{\sqrt\pi\Gamma(b-1/2)}
+ (1-x^2)^{b-3/2}\mathbf1_{(-1,1)}(x)\,dx,\qquad
+\nu_{a,b}=\frac{a}{1+a}\delta_0+\frac1{1+a}\eta_b.
+\tag{LC399}
+$$
+
+Its even moments are $(1/2)_j/(b)_j$ before mixing, so
+$f_{a,b}(t^2)=\int e^{itx}\,d\nu_{a,b}(x)$. Compact support gives
+every square-exponential moment. For every nonzero real polynomial
+$p$ and integer $\ell\ge0$, the density part makes
+$\int x^{2\ell}p(x^2)^2\,d\nu_{a,b}>0$. Hence every finite matrix
+$(\mu_{i+j+\ell})_{0\le i,j\le m}$ is positive definite, with
+$\mu_j=\int x^{2j}\,d\nu_{a,b}$ and $m,\ell\ge0$.
+
+The finite coefficient relation
+$P_{n,b}=(n+b)P_{n,b+1}/b+4nP_{n,b}'$ yields at every actual
+$J_n$ node
+
+$$
+G_n=\mathscr T_nf_{a,b}',\qquad
+G_n(t)=\frac{n}{n+b}J_n'(t)
+ +\frac{a}{4(1+a)(n+b)}\quad\text{if }J_n(t)=0.
+\tag{LC400}
+$$
+
+The strictly positive second term is not removed by moment positivity.
+
+### A rational node and a repeated node with strict moment matrices
+
+Take $a=3/5$, $b=3/2$. Then
+$f=(3+5\sin\sqrt z/\sqrt z)/8$ and
+$\nu=(3/8)\delta_0+(5/8)U[-1,1]$. Its moments are
+$\mu_0=1$, $\mu_j=5/[8(2j+1)]$ for $j\ge1$, and
+$\mu_1\mu_3-\mu_2^2=1/336>0$. The first row has one positive
+simple root, and
+
+$$
+\begin{aligned}
+J_2(t)&=(t-16)(t-24)/384,\\
+G_2(t)&=-5/48+t/96-t^2/5376,\\
+J_2'(16)&=-1/48,\qquad G_2(16)=5/336,\qquad
+G_2(16)/J_2'(16)=-5/7,\\
+J_3(t)&=1-5t/48+t^2/288-t^3/36288.
+\end{aligned}
+\tag{LC401}
+$$
+
+The critical values of $J_3$ at $42\pm6\sqrt{14}$ are
+$(17\pm4\sqrt{14})/24>0$. Thus the third row has one real root
+and one nonreal pair: it is the first defect. All positive shifts
+remain hyperbolic by (LC398). In the same $b=3/2$ family, taking
+$a=2/3$ instead gives $J_2=(t-20)^2/400$ and
+$G_2(20)=1/35\ne0$. Strict moment positivity therefore also does
+not force a repeated node to be a common zero of the two responses.
+
+### Arbitrarily long real prefixes and unbounded negative node ratios
+
+Fix an integer $N\ge2$ and a real $M>0$. There are fixed parameters
+$a>1$, $b>1/2$ for which $J_k$ has $k$ positive simple roots for
+every $1\le k\le N$, $J_{N+1}$ is nonhyperbolic, and some actual
+positive simple node of $J_N$ has $G_N/J_N'<-M$. The source also
+has all the strict moment and positive-shift properties above.
+
+To establish this, first take $b=1/2$ and write $P_n=P_{n,1/2}$.
+For each integer $n\ge2$, let $u_n$ be its first positive critical point and
+$A_n=-P_n(u_n)$. The classical Laguerre equation for
+$y(x)=P_n(4nx)$ is
+$xy''+(1/2-x)y'+ny=0$; see
+[DLMF 18.8](https://dlmf.nist.gov/18.8). It implies
+
+$$
+\frac{d}{dx}\left(y^2+\frac{x}{n}(y')^2\right)
+=\frac{2x}{n}(y')^2.
+\qquad A_n>1,\qquad
+ a+P_n\text{ is hyperbolic}\iff a\le A_n\quad(a>0).
+\tag{LC402}
+$$
+
+Indeed, the energy strictly increases between consecutive critical
+points, starting at $y(0)=1$. Interlacing of the positive simple
+Laguerre roots and derivative roots therefore makes the first
+negative minimum the smallest absolute extremal value. A horizontal
+line at $-a$ meets all $n$ monotone intervals exactly when $a\le A_n$;
+for $a<A_n$ all intersections are positive and simple.
+The first row is handled separately: $J_1(t)=1-t/[4b(1+a)]$,
+with one positive simple root for every $a>0$.
+
+The existing reciprocal derivative tower gives $A_{n+1}\le A_n$.
+The inequality is strict. At $a=A_n$, $J_n$ has a double root $u_n$,
+while (LC400) gives $G_n(u_n)>0$. The existing exact adjacent-row
+identity is
+$J_{n+1}(u_n/\alpha_n)=J_n(u_n)+(u_n/n)G_n(u_n)>0$,
+where $\alpha_n=n/(n+1)$. Thus the next reciprocal row has a repeated
+derivative root at $\alpha_n/u_n$, but is nonzero there. This is
+impossible for a real-rooted polynomial: each derivative zero away
+from its roots is simple, by the strictly negative derivative of
+its logarithmic derivative. Consequently $A_{n+1}<A_n$.
+
+Choose $A_{N+1}<a<A_N$ and increase $a$ toward $A_N$.
+At the first minimum's left node $t_-(a)$,
+$P_N'(t_-(a))\to0^-$, and (LC400) gives
+
+$$
+\frac{G_N(t_-(a))}{J_N'(t_-(a))}
+=\frac{N}{N+1/2}
+ +\frac{a}{4(N+1/2)P_N'(t_-(a))}\longrightarrow-\infty.
+\tag{LC403}
+$$
+
+Fix $a$ with ratio below $-M$. The finitely many simple real prefix
+rows, the nonreal next row and the strict actual-node ratio persist
+for one fixed $b>1/2$ sufficiently close to $1/2$ by coefficient and
+simple-root continuity. All infinitely many positive shifts are
+supplied directly by (LC398) for that fixed $b$. Formula (LC399)
+then gives all strictly positive moment matrices. The parameter
+conditions are open, so rational $a,b$ can also be selected.
+
+This excludes a universal finite-node repair based only on strict
+positive-law moments, arbitrarily long preceding actual hyperbolic
+rows and all positive shifts. Each prescribed $N,M$ uses its own
+fixed comparison source; no uniform source across all prefixes is
+claimed. Nor is an exact two-root defect claimed for every $N+1$.
+These laws have an atom at zero and a compactly supported density
+component; they are not the original smooth theta law. Complete
+original-source local/exterior budgets, the actual moving-band
+location, all-node cofactor signs, RH and strict Robin remain unpaid.
