@@ -60,6 +60,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/CirculantBraceletNonUnistochastic.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rajchel-korzekwa-puchala-zyczkowski-2021-circulant-bracelet-sufficiency` (refuted) by `D5/S3/Quantum/Matrix/CirculantBraceletNonUnistochastic.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rajchel-korzekwa-puchala-zyczkowski-2021-circulant-bracelet-sufficiency","declaration_gid":"D5/S3/Quantum/Matrix/CirculantBraceletNonUnistochastic.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Grzegorz Rajchel-Mieldzioć, Kamil Korzekwa, Zbigniew Puchała, Karol Życzkowski (2021). *Algebraic and geometric structures inside the Birkhoff polytope*. DOI: [10.1063/5.0046581](https://doi.org/10.1063/5.0046581). URL: <https://arxiv.org/abs/2101.11288>.
