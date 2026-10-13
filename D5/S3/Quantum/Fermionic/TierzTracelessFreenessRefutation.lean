@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Fermionic/TierzTracelessFreenessRefutation.claim; result=D5/S3/Quantum/Fermionic/TierzTracelessFreenessRefutation.result; claim=D5/S3/Quantum/Fermionic/TierzTracelessFreenessRefutation.claim
    digest: The traceless degree-five complex at matrix size four is not free over diagonal creators. -/
 
+import Mathlib.Algebra.Lie.Classical
 import Mathlib.Data.Complex.Basic
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.LinearAlgebra.CliffordAlgebra.Prod
@@ -26,19 +27,16 @@ noncomputable section
 
 namespace D5.S3.Quantum.Fermionic.TierzTracelessFreenessRefutation
 
-abbrev Mat4 := Matrix (Fin 4) (Fin 4) ℂ
-
 /-- The source's complex space of traceless matrices. -/
-def traceless : Submodule ℂ Mat4 := LinearMap.ker (Matrix.traceLinearMap (Fin 4) ℂ ℂ)
-
-abbrev V := ↥traceless
+abbrev V := ↥(LieAlgebra.SpecialLinear.sl (Fin 4) ℂ)
 abbrev E := ExteriorAlgebra ℂ V
 
 /-- The traceless part of the matrix-unit creator. -/
 def creatorVec (i j : Fin 4) : V :=
-  ⟨Matrix.single i j 1 - (if i = j then (1 / 4 : ℂ) else 0) • (1 : Mat4), by
+  ⟨Matrix.single i j 1 - (if i = j then (1 / 4 : ℂ) else 0) •
+    (1 : Matrix (Fin 4) (Fin 4) ℂ), by
     change Matrix.trace (Matrix.single i j (1 : ℂ) -
-      (if i = j then (1 / 4 : ℂ) else 0) • (1 : Mat4)) = 0
+      (if i = j then (1 / 4 : ℂ) else 0) • (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 0
     by_cases h : i = j
     · subst j
       simp only [Matrix.trace_sub, Matrix.trace_single_eq_same,
@@ -52,7 +50,7 @@ def A : Matrix (Fin 4) (Fin 4) E := fun i j => ExteriorAlgebra.ι ℂ (creatorVe
 /-- The degree-five differential element. -/
 def Q : E := Matrix.trace (A ^ 5)
 
-private def coordMat (x : Fin 15 → ℂ) : Mat4 :=
+private def coordMat (x : Fin 15 → ℂ) : Matrix (Fin 4) (Fin 4) ℂ :=
   !![(3 * x 0 - x 1 - x 2) / 4, x 3, x 4, x 5;
      x 6, (3 * x 1 - x 0 - x 2) / 4, x 7, x 8;
      x 9, x 10, (3 * x 2 - x 0 - x 1) / 4, x 11;
@@ -531,22 +529,22 @@ private theorem right_left (x : E) : x*Q = -CliffordAlgebra.involute (Q*x) := by
 private theorem cycle_left (x : E) : x*Q=0 ↔ Q*x=0 := by
   rw [right_left,neg_eq_zero]
   exact (map_eq_zero_iff _ CliffordAlgebra.involute_involutive.injective)
-private abbrev Edeg (n : ℕ) := ExteriorAlgebra.exteriorPower ℂ n V
-private def proj (n : ℕ) : E →ₗ[ℂ] E := GradedAlgebra.proj (fun i => Edeg i) n
 private theorem range_left (x : E) : (∃ t : E, t*Q=x) ↔ ∃ t : E, Q*t=x := by
   constructor
   · rintro ⟨t,rfl⟩
     exact ⟨CliffordAlgebra.involute t,(odd_comm Q Q_hom t).symm⟩
   · rintro ⟨t,rfl⟩
     exact ⟨CliffordAlgebra.involute t,by rw [odd_comm Q Q_hom,CliffordAlgebra.involute_involute]⟩
-private theorem degree_four_boundary (t : E) : proj 4 (t*Q)=0 := by
+private theorem degree_four_boundary (t : E) :
+    GradedAlgebra.proj (fun i : ℕ => ⋀[ℂ]^i V) 4 (t*Q)=0 := by
   obtain ⟨u,hu⟩ := (range_left (t*Q)).mp ⟨t,rfl⟩
   rw [←hu]
-  exact DirectSum.coe_decompose_mul_of_left_mem_of_not_le (fun i => Edeg i) Q_hom (by decide)
+  exact DirectSum.coe_decompose_mul_of_left_mem_of_not_le
+    (fun i : ℕ => ⋀[ℂ]^i V) Q_hom (by decide)
 private theorem free_lift (u : H) (hu : u ≠ 0) (z : E)
-    (hz : z ∈ Edeg 4) (hcycle : z * Q = 0)
+    (hz : z ∈ ⋀[ℂ]^4 V) (hcycle : z * Q = 0)
     (hkill : ExteriorAlgebra.ι ℂ (u : V) * z = 0) (hfree : claim) :
-    ∃ x : Edeg 3, Q*(x:E)=0 ∧ ExteriorAlgebra.ι ℂ (u:V)*(x:E)=z := by
+    ∃ x : ⋀[ℂ]^3 V, Q*(x:E)=0 ∧ ExteriorAlgebra.ι ℂ (u:V)*(x:E)=z := by
   let : Module.Free R B0 := hfree
   let zc : Cycles := ⟨z,hcycle⟩
   let cls : B0 := Submodule.Quotient.mk zc
@@ -568,25 +566,29 @@ private theorem free_lift (u : H) (hu : u ≠ 0) (z : E)
     change t*Q = actionMap (ExteriorAlgebra.ι ℂ u)*xc.val-z at he
     rw [actionMap,ExteriorAlgebra.map_apply_ι] at he
     exact he.symm
-  let x3 : Edeg 3 := DirectSum.decompose (fun i => Edeg i) xc.val 3
+  let x3 : ⋀[ℂ]^3 V := DirectSum.decompose (fun i : ℕ => ⋀[ℂ]^i V) xc.val 3
   let x : E := x3
-  have hul : ExteriorAlgebra.ι ℂ (u:V) ∈ Edeg 1 := by
-    simpa only [Edeg,ExteriorAlgebra.exteriorPower,pow_one] using LinearMap.mem_range_self (ExteriorAlgebra.ι ℂ) (u:V)
+  have hul : ExteriorAlgebra.ι ℂ (u:V) ∈ ⋀[ℂ]^1 V := by
+    simpa only [ExteriorAlgebra.exteriorPower,pow_one] using LinearMap.mem_range_self (ExteriorAlgebra.ι ℂ) (u:V)
   have hel : ExteriorAlgebra.ι ℂ (u:V)*x=z := by
-    have hp := congrArg (proj 4) he
+    have hp := congrArg (GradedAlgebra.proj (fun i : ℕ => ⋀[ℂ]^i V) 4) he
     rw [map_sub,degree_four_boundary] at hp
-    have hpz : proj 4 z=z := DirectSum.decompose_of_mem_same (fun i => Edeg i) hz
-    have hpl : proj 4 (ExteriorAlgebra.ι ℂ (u:V)*xc.val)=ExteriorAlgebra.ι ℂ (u:V)*x :=
-      DirectSum.coe_decompose_mul_add_of_left_mem (fun i => Edeg i) (i := 1) (j := 3) hul
+    have hpz : GradedAlgebra.proj (fun i : ℕ => ⋀[ℂ]^i V) 4 z=z :=
+      DirectSum.decompose_of_mem_same (fun i : ℕ => ⋀[ℂ]^i V) hz
+    have hpl : GradedAlgebra.proj (fun i : ℕ => ⋀[ℂ]^i V) 4
+        (ExteriorAlgebra.ι ℂ (u:V)*xc.val)=ExteriorAlgebra.ι ℂ (u:V)*x :=
+      DirectSum.coe_decompose_mul_add_of_left_mem
+        (fun i : ℕ => ⋀[ℂ]^i V) (i := 1) (j := 3) hul
     rw [hpz,hpl] at hp
     exact sub_eq_zero.mp hp
   refine ⟨x3,?_,hel⟩
   have hcq : Q*xc.val=0 := (cycle_left xc.val).mp xc.property
-  have hp := congrArg (proj 8) hcq
+  have hp := congrArg (GradedAlgebra.proj (fun i : ℕ => ⋀[ℂ]^i V) 8) hcq
   rw [map_zero] at hp
-  exact (DirectSum.coe_decompose_mul_add_of_left_mem (fun i => Edeg i) (i := 5) (j := 3) Q_hom).symm.trans hp
+  exact (DirectSum.coe_decompose_mul_add_of_left_mem
+    (fun i : ℕ => ⋀[ℂ]^i V) (i := 5) (j := 3) Q_hom).symm.trans hp
 private theorem eval_hom (p : Poly) (n : ℕ)
-    (hp : ∀ t ∈ p, weight 15 t.1.val = n) : eval p ∈ Edeg n := by
+    (hp : ∀ t ∈ p, weight 15 t.1.val = n) : eval p ∈ ⋀[ℂ]^n V := by
   induction p with
   | nil => exact Submodule.zero_mem _
   | cons t p ih =>
@@ -649,11 +651,11 @@ theorem result : ¬ claim := by
   let ell : E := ExteriorAlgebra.ι ℂ (ellH:V)
   let z : E := ell*y
   have hell : eval ld=ell := eval_ell
-  have hy : y ∈ Edeg 3 := eval_hom yd 3 (by decide)
-  have hl : ell ∈ Edeg 1 := by
-    simpa only [Edeg,ExteriorAlgebra.exteriorPower,pow_one] using
+  have hy : y ∈ ⋀[ℂ]^3 V := eval_hom yd 3 (by decide)
+  have hl : ell ∈ ⋀[ℂ]^1 V := by
+    simpa only [ExteriorAlgebra.exteriorPower,pow_one] using
       LinearMap.mem_range_self (ExteriorAlgebra.ι ℂ) (ellH:V)
-  have hz : z ∈ Edeg 4 := SetLike.mul_mem_graded hl hy
+  have hz : z ∈ ⋀[ℂ]^4 V := SetLike.mul_mem_graded hl hy
   have hqz : Q*z=0 := by
     change Q*(ell*eval yd)=0
     rw [←hell,Q_eq_eval,←eval_mul,←eval_mul]
