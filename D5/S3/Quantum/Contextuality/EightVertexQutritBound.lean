@@ -9,8 +9,6 @@
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Normed.Module.Normalize
 import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -35,8 +33,8 @@ def G5 : SimpleGraph Vertex := fromEdges
   {(0, 3), (0, 5), (1, 4), (1, 5), (1, 6), (2, 5), (2, 6), (2, 7),
    (3, 6), (3, 7), (4, 7), (5, 7)}
 
-instance : DecidableRel W.Adj := inferInstanceAs (DecidableRel (SimpleGraph.fromRel _).Adj)
-instance : DecidableRel G5.Adj := inferInstanceAs (DecidableRel (SimpleGraph.fromRel _).Adj)
+private instance : DecidableRel W.Adj := inferInstanceAs (DecidableRel (SimpleGraph.fromRel _).Adj)
+private instance : DecidableRel G5.Adj := inferInstanceAs (DecidableRel (SimpleGraph.fromRel _).Adj)
 
 noncomputable section
 
