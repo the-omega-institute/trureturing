@@ -228,3 +228,151 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,1
 #print axioms cylinderProof
 #print axioms proof
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.EmbedReadout
+
+abbrev signature : Signature where
+  Params := Address
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Reply
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ a t => readout a t) (fun e => nomatch e)
+def bad : Realization signature := realize signature (fun _ _ _ => .absent) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (a : Address) (t : Source), completionReadout a (embed t) = R.readout () a t
+
+private theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  have h := law [] (.of true)
+  change Reply.alpha = Reply.absent at h
+  cases h
+
+def proof : Registration arena (type_of% (@embed_readout)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨embed_readout,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,bad_law⟩,fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨[],.of true,.of false,?_⟩
+    intro h
+    cases h
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@embed_readout) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.EmbedReadout.embed_readout
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.EmbedReadout.proof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨proof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ a t => readout a t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms proof
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.EmbedReadout
+
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.TreeCases
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := CompletionTree
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ b => leaf b) (fun e => nomatch e)
+def bad : Realization signature := realize signature (fun _ _ _ => leaf false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {P : CompletionTree → Prop} (T : CompletionTree),
+    (∀ b, P (R.readout () () b)) → (∀ l r, P (node l r)) → P T
+
+private theorem bad_law : ¬ arena.Law bad := by
+  intro law
+  have h := law (P := fun t => completionReadout [] t ≠ .alpha) (leaf true)
+    (fun _ => by intro h; cases h) (fun _ _ => by intro h; cases h)
+  apply h
+  rfl
+
+def proof : Registration arena (type_of% (@tree_cases)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@tree_cases,bad,bad_law⟩
+  sensitivity := ⟨fun i => ⟨bad, fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,bad_law⟩,fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨(),true,false,?_⟩
+    intro h
+    have no := congrArg (completionReadout []) h
+    change Reply.alpha = Reply.beta at no
+    cases no
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@tree_cases) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.TreeCases.tree_cases
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.TreeCases.proof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨proof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ b => leaf b) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting
+    definition := none
+    coordinates := #[ ]
+    readouts := #[{
+      path := #["body","body","domain","body","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms proof
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting.TreeCases
