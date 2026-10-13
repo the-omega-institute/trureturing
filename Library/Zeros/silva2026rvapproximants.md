@@ -102,7 +102,7 @@ not the endpoint nonvanishing condition.
 
 The independent experimental program and directed data are in the
 private [experiments repository](https://github.com/the-omega-institute/trureturing-experiments),
-[`experiments/xi-rv-quartic/`](https://github.com/the-omega-institute/trureturing-experiments/tree/exp/rh-rv-source-01a0ee10/experiments/xi-rv-quartic). It reuses the original theta-jet and
+[`experiments/xi-rv-quartic/`](https://github.com/the-omega-institute/trureturing-experiments/tree/b4f751e4df5a715a8f492d1599d5a24e2605cf29/experiments/xi-rv-quartic). It reuses the original theta-jet and
 scalar-envelope implementations in `docs/reports/theta-mixed-matrix`.
 The 256-bit computation includes the infinite theta-series error. For
 the integration beyond $v=3$, an explicit bound is less than
