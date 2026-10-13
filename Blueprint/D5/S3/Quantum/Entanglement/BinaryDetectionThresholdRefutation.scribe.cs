@@ -31,7 +31,8 @@ internal sealed class BinaryDetectionThresholdRefutationDocument : IScribeDocume
                     Paragraph(Text("The model is the sum of these weighted deterministic response indicators and the all-failure atom. There are 1716 ordered distinct triples; for a fixed input 396 contain it and 1320 miss it. The two orientations give joint entries 18/625 on the prescribed parity and zero on the other parity, each single-failure entry 57/625, and the double-failure entry 361/625. Thus the model equals lossy (6/25) of the parity box for every G, and that lossy parity box is local.")),
                     Paragraph(Text("The active leader part has total weight 624/625. Its joint conclusive probability is c = 3/52 and each party's single conclusive probability is d = 25/104, so the calibrated efficiency is c/d = 6/25. Optimizing raw joint success alone does not optimize this ratio.")),
                     Paragraph(Text("Every binary no-signalling box is reconstructed as a finite mixture of locally mapped parity boxes. A common uniform threshold selects active inputs and gives pair activation probabilities equal to the minimum of their activation parameters. Independent parity bits then match each minor-output joint mass; normalization and the two marginals determine the other three entries. Local output maps preserve locality and commute with lossy, and normalized mixtures preserve both identities. This extends the leader model to every IsNSBox at m = 13."))
-                ), DescribeRole.Theorem)
+                ), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("cope-2021-binary-detection-threshold"), ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,

@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cope-2021-binary-detection-threshold` (refuted) by `D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cope-2021-binary-detection-threshold","declaration_gid":"D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Cope (2021). *The Binary-Outcome Detection Loophole*. DOI: [10.1088/1367-2630/ac10a5](https://doi.org/10.1088/1367-2630/ac10a5). URL: <https://arxiv.org/abs/2005.03344v3>.
@@ -101,7 +105,10 @@ Every binary no-signalling box is reconstructed as a finite mixture of locally m
 - Truth anchor: `D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.lossy`
 - Truth anchor: `D5/S3/Quantum/Entanglement/BinaryDetectionThresholdRefutation.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Learning/RawCorrelationConfidenceFailure](../../Arith/FibonacciAtomic/Learning/RawCorrelationConfidenceFailure.md)
-- Dependency: [D5/S3/Divergence/ChainRule](../../Divergence/ChainRule.md)
+- Dependency: [D5/S3/Entropy/Forgetting/CompletionEntropyMinimality](../../Entropy/Forgetting/CompletionEntropyMinimality.md)
+- Dependency: [D5/S3/Entropy/NamingWindow/FutureWordInformationChain](../../Entropy/NamingWindow/FutureWordInformationChain.md)
 - Dependency: [D5/S3/Entropy/NamingWindow/GreenClassWindowEntropy](../../Entropy/NamingWindow/GreenClassWindowEntropy.md)
+- Dependency: [D5/S3/Entropy/NamingWindow/SumProductUpdate](../../Entropy/NamingWindow/SumProductUpdate.md)
+- Dependency: [D5/S3/Estimation/DataProcessing/FiniteSimplexFiberPolytope](../../Estimation/DataProcessing/FiniteSimplexFiberPolytope.md)
 - Dependency: [D5/S3/TotalVariation/CycleSingleCutMinimax](../../TotalVariation/CycleSingleCutMinimax.md)
 - Dependency: [D5/S3/TotalVariation/Equality/FiberwiseEqualDistanceLift](../../TotalVariation/Equality/FiberwiseEqualDistanceLift.md)
