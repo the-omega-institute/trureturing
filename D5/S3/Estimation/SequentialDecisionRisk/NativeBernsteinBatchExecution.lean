@@ -889,4 +889,76 @@ theorem lift_preserves_bernstein_evaluation (N M N' M' : ℕ) (hN : N ≤ N') (h
   have hm := translated_binomial_sum q (M' - M) j.val M' (by omega)
   simp only [← Finset.mul_sum, hn, hm, mul_one]
 
+private theorem liftTwo_residual (N M N' M' : ℕ) (hN : N ≤ N') (hM : M ≤ M')
+    (f : Bool → Fin (N + 1) → Fin (M + 1) → ℝ) (I : Fin (N' + 1)) (J : Fin (M' + 1)) :
+    liftTwo N M N' M' (fun i j => 1 - ∑ e, f e i j) I J =
+      1 - ∑ e, liftTwo N M N' M' (f e) I J := by
+  have hs : (∑ i : Fin (N + 1), ∑ j : Fin (M + 1),
+      hypergeometricWeight N N' I.val i.val * hypergeometricWeight M M' J.val j.val) = 1 := by
+    simp only [← Finset.mul_sum, (hypergeometric_stochastic_rows M M' hM J).2,
+      mul_one, (hypergeometric_stochastic_rows N N' hN I).2]
+  simp only [liftTwo, Fintype.sum_bool, sub_mul, one_mul, add_mul,
+    Finset.sum_sub_distrib, Finset.sum_add_distrib]
+  rw [hs]
+
+abbrev CoefficientFamily (D d : ℕ → ℕ) :=
+  (k : ℕ) → Bool → Fin (D k + 1) → Fin (d k + 1) → ℝ
+
+section Coefficients
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+
+structure CompatibleCoefficients : Prop where
+  nonneg : ∀ k e i j, 0 ≤ a k e i j
+  total : ∀ k i j, (∑ e, a k e i j) ≤ 1
+  step : ∀ k e I J,
+    liftTwo (D k) (d k) (D (k + 1)) (d (k + 1)) (a k e) I J ≤ a (k + 1) e I J
+
+def residualCoefficients (k : ℕ) (i : Fin (D k + 1)) (j : Fin (d k + 1)) : ℝ :=
+  1 - ∑ e, a k e i j
+
+def incomingCoefficients : (k : ℕ) → Fin (D k + 1) → Fin (d k + 1) → ℝ
+  | 0, _, _ => 1
+  | k + 1, I, J =>
+    liftTwo (D k) (d k) (D (k + 1)) (d (k + 1)) (residualCoefficients D d a k) I J
+
+def exitCoefficients : (k : ℕ) → Bool → Fin (D k + 1) → Fin (d k + 1) → ℝ
+  | 0, e, i, j => a 0 e i j
+  | k + 1, e, I, J =>
+    a (k + 1) e I J - liftTwo (D k) (d k) (D (k + 1)) (d (k + 1)) (a k e) I J
+
+/-- Compatibility supplies nonnegative exit and unresolved masses whose sum
+is the incoming mass, including the initial node and nodes of zero mass. -/
+theorem coefficient_node_balance (hD : Monotone D) (hd : Monotone d)
+    (hc : CompatibleCoefficients D d a) (k : ℕ) (i : Fin (D k + 1)) (j : Fin (d k + 1)) :
+    0 ≤ residualCoefficients D d a k i j ∧ 0 ≤ incomingCoefficients D d a k i j ∧
+    (∀ e, 0 ≤ exitCoefficients D d a k e i j) ∧
+    (∑ e, exitCoefficients D d a k e i j) + residualCoefficients D d a k i j =
+      incomingCoefficients D d a k i j ∧ incomingCoefficients D d a k i j ≤ 1 := by
+  have hg (k i j) : 0 ≤ residualCoefficients D d a k i j := sub_nonneg.mpr (hc.total k i j)
+  have hl (k : ℕ) (f : Fin (D k + 1) → Fin (d k + 1) → ℝ) (hf : ∀ i j, 0 ≤ f i j)
+      (I : Fin (D (k + 1) + 1)) (J : Fin (d (k + 1) + 1)) :
+      0 ≤ liftTwo (D k) (d k) (D (k + 1)) (d (k + 1)) f I J := by
+    exact Finset.sum_nonneg (fun i _ => Finset.sum_nonneg (fun j _ =>
+      mul_nonneg (mul_nonneg (hf i j)
+        ((hypergeometric_stochastic_rows _ _ (hD (Nat.le_succ k)) I).1 i))
+        ((hypergeometric_stochastic_rows _ _ (hd (Nat.le_succ k)) J).1 j)))
+  cases k with
+  | zero =>
+    refine ⟨hg 0 i j, zero_le_one, fun e => hc.nonneg 0 e i j, ?_, le_rfl⟩
+    simp only [exitCoefficients, residualCoefficients, incomingCoefficients]
+    ring
+  | succ k =>
+    have hz : incomingCoefficients D d a (k + 1) i j =
+        1 - ∑ e, liftTwo (D k) (d k) (D (k + 1)) (d (k + 1)) (a k e) i j :=
+      liftTwo_residual _ _ _ _ (hD (Nat.le_succ k)) (hd (Nat.le_succ k)) (a k) i j
+    refine ⟨hg (k + 1) i j, hl k _ (hg k) i j,
+      fun e => sub_nonneg.mpr (hc.step k e i j), ?_, ?_⟩
+    · rw [hz]
+      simp only [exitCoefficients, residualCoefficients, Finset.sum_sub_distrib]
+      ring
+    · rw [hz]
+      exact sub_le_self 1 (Finset.sum_nonneg (fun e _ => hl k (a k e) (hc.nonneg k e) i j))
+
+end Coefficients
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
