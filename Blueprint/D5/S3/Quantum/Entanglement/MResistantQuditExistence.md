@@ -16,6 +16,12 @@ $$\forall V \in Type,\; \forall L \in Type,\; [\operatorname{Fintype}\left(V\rig
 
 Quinta, Andre, Burchardt and Zyczkowski, arXiv:1908.10390v1, Section III, page 3: "Definition: (m-resistance) An entangled state of N parties is called m-resistant if:" "It remains entangled as any m of its N subsystems are traced away;" "It becomes separable if a partial trace is performed over an arbitrary set of m + 1 subsystems." The initial entangled state gives the first conjunct. Separability means full separability, as in the later pure-state restatement. V labels sites and L labels a local basis; psi is the amplitude function. Both loss quantifiers range over every finite loss set J.
 
+The pure density uses D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity. Its implicit index type n is V -> L here; its amplitude argument precedes the row and column indices x and y. The outer product Matrix.vecMulVec psi (star psi) has entries:
+
+$$
+\forall n \in Type,\; \forall psi \in (n)\to \mathbb{C},\; \forall x \in n,\; \forall y \in n,\; \operatorname{D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity}\left(psi, x, y\right) = psi\left(x\right) \cdot \operatorname{star}\left(psi\left(y\right)\right)
+$$
+
 **Definition 1.2 (The qudit existence conjecture).**
 
 $$claim \Leftrightarrow (\forall N \in \mathbb{N},\; \forall m \in \mathbb{N},\; (3 \le N) \Rightarrow ((m + 2 \le N) \Rightarrow (\exists d \in \mathbb{N},\; \exists psi \in ((\operatorname{Fin}\left(N\right))\to \operatorname{Fin}\left(d\right))\to \mathbb{C},\; (\sum_{x:(\operatorname{Fin}\left(N\right))\to \operatorname{Fin}\left(d\right)} (\operatorname{Complex.normSq}\left(psi\left(x\right)\right)) = 1) \land (\operatorname{IsMResistant}\left(m, psi\right)))))$$

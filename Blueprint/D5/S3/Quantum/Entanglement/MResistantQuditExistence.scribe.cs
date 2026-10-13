@@ -15,7 +15,9 @@ internal sealed class MResistantQuditExistenceDocument : IScribeDocumentDefiniti
         Blocks(
             Describe.Lean(DescribeId.Create("m-resistant-definition"), DeclarationHandle.Create(Prefix + "IsMResistant"),
                 H("Resistance to particle loss"), StatementSource.FromAuthor(ResistantFormula()), AssessedProvenance.FromLiterature(Quinta),
-                Blocks(Paragraph(Text("Quinta, Andre, Burchardt and Zyczkowski, arXiv:1908.10390v1, Section III, page 3: \"Definition: (m-resistance) An entangled state of N parties is called m-resistant if:\" \"It remains entangled as any m of its N subsystems are traced away;\" \"It becomes separable if a partial trace is performed over an arbitrary set of m + 1 subsystems.\" The initial entangled state gives the first conjunct. Separability means full separability, as in the later pure-state restatement. V labels sites and L labels a local basis; psi is the amplitude function. Both loss quantifiers range over every finite loss set J."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("Quinta, Andre, Burchardt and Zyczkowski, arXiv:1908.10390v1, Section III, page 3: \"Definition: (m-resistance) An entangled state of N parties is called m-resistant if:\" \"It remains entangled as any m of its N subsystems are traced away;\" \"It becomes separable if a partial trace is performed over an arbitrary set of m + 1 subsystems.\" The initial entangled state gives the first conjunct. Separability means full separability, as in the later pure-state restatement. V labels sites and L labels a local basis; psi is the amplitude function. Both loss quantifiers range over every finite loss set J.")),
+                    Paragraph(Text("The pure density uses D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity. Its implicit index type n is V -> L here; its amplitude argument precedes the row and column indices x and y. The outer product Matrix.vecMulVec psi (star psi) has entries:")),
+                    new DocumentBlock.DisplayFormula(PureDensityFormula())), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("m-resistant-claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("The qudit existence conjecture"), StatementSource.FromAuthor(ClaimFormula()), AssessedProvenance.FromLiterature(Quinta),
                 Blocks(Paragraph(Text("Quinta, Andre, Burchardt and Zyczkowski, arXiv:1908.10390v1, Section V, page 10: \"Conjecture 1. For any N and m, there exists an m-resistant N-qudit state in some local dimension d.\" Fin N replaces particle labels by 0,...,N-1 and Fin d labels a common local basis. Natural m is nonnegative. The whole admissible pure-state range is N >= 3 and m + 2 <= N: a remaining single particle cannot be entangled. Complex.normSq is the squared absolute value, so the finite sum fixes unit normalization."))), DescribeRole.Definition),
@@ -45,6 +47,15 @@ internal sealed class MResistantQuditExistenceDocument : IScribeDocumentDefiniti
     private static Formula Instances(string name, Formula body) => Seq(OpenBracket, Call("Fintype", F.Id(name)), CloseBracket, Sp,
         OpenBracket, Call("DecidableEq", F.Id(name)), CloseBracket, Comma, Sp, body);
     private static Formula SumOver(string name, Formula type, Formula body) => Seq(new Formula.Subscript(Sum, Seq(F.Id(name), Colon, type)), Sp, Parenthesized(body));
+    private static Formula PureDensityFormula()
+    {
+        Formula n = F.Id("n"), psi = F.Id("psi"), x = F.Id("x"), y = F.Id("y");
+        Formula owner = Seq(Operatorname, Grp(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Quantum"), Dot,
+            F.Id("PureState"), Dot, F.Id("PureStateHandshake"), Dot, F.Id("rankOneDensity")));
+        Formula entry = Eqn(Apply(owner, psi, x, y),
+            new Formula.Binary(Apply(psi, x), FormulaBinaryOperator.Multiply, Call("star", Apply(psi, y))));
+        return Disp(All("n", F.Id("Type"), All("psi", Arr(n, Complex()), All("x", n, All("y", n, entry)))));
+    }
     private static Formula ResistantFormula()
     {
         Formula v = F.Id("V"), l = F.Id("L"), m = F.Id("m"), psi = F.Id("psi"), j = F.Id("J");
