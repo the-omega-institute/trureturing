@@ -616,4 +616,38 @@ theorem compressed_block_causal_lift (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ)
   · simp [diagonalMarginal, Matrix.trace, Fin.sum_univ_two]
   · simp [diagonalMarginal]
 
+
+/-- Every original causal repair supplies the three diagonal budgets of its complex principal
+block, with the original early-output marginal parameter. -/
+theorem causal_principal_block_budgets (S : Matrix Wire Wire ℂ)
+    (sigma : Matrix (Fin 2) (Fin 2) ℂ) (hS : Causal S sigma) :
+    let p := (sigma 1 1).re
+    let P := S.submatrix mainAddress mainAddress
+    0 ≤ p ∧ p ≤ 1 ∧ P.PosSemidef ∧
+      (P 0 0).re ≤ 1 - p ∧ (P 1 1).re ≤ 1 - p ∧ (P 2 2).re ≤ p := by
+  intro p P
+  have hsig0 : 0 ≤ (sigma 0 0).re := (Complex.nonneg_iff.mp hS.2.1.diag_nonneg).1
+  have hsig1 : 0 ≤ (sigma 1 1).re := (Complex.nonneg_iff.mp hS.2.1.diag_nonneg).1
+  have hst := congrArg Complex.re hS.2.2.1
+  simp [Matrix.trace, Fin.sum_univ_two] at hst
+  have hb (ab : AB) (d : Fin 3) :
+      (S (ab, d) (ab, d)).re ≤ (sigma ab.2 ab.2).re := by
+    have h := congrArg (fun M : Matrix AB AB ℂ => (M ab ab).re) hS.2.2.2
+    simp [partialTraceRight, Matrix.kronecker, Matrix.kroneckerMap_apply] at h
+    calc
+      _ ≤ ∑ k : Fin 3, (S (ab, k) (ab, k)).re :=
+        Finset.single_le_sum (fun k _ =>
+          (Complex.nonneg_iff.mp (hS.1.diag_nonneg (i := (ab, k)))).1) (Finset.mem_univ d)
+      _ = _ := h
+  have hp1 : p ≤ 1 := by dsimp [p]; linarith
+  refine ⟨hsig1, hp1, hS.1.submatrix mainAddress, ?_, ?_, ?_⟩
+  · change (S ((0, 0), 0) ((0, 0), 0)).re ≤ 1 - p
+    dsimp [p]
+    linarith [hb (0, 0) 0]
+  · change (S ((1, 0), 1) ((1, 0), 1)).re ≤ 1 - p
+    dsimp [p]
+    linarith [hb (1, 0) 1]
+  · change (S ((1, 1), 2) ((1, 1), 2)).re ≤ p
+    exact hb (1, 1) 2
+
 end D5.S3.Quantum.Foundation.TwoRoundPhaseAverage
