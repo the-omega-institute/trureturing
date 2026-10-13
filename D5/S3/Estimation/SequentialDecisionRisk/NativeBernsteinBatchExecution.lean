@@ -792,11 +792,54 @@ theorem zero_safe_binomial_split (N N' i I : ℕ) (hN : N ≤ N')
       rw [hpp, hqq]
       unfold weight
       field_simp
-      <;> ring
     · have hd : N' - N < I - i := by omega
       have hw : weight N' N I i = 0 := weight_eq_zero (Or.inr hd)
       simp [translatedBinomial, hypergeometricWeight, hiI, hw,
         (binomial_mass_support_and_pascal p).2.1 (N' - N) (I - i) hd]
   · simp [translatedBinomial, hypergeometricWeight, hiI]
+
+def liftTwo (N M N' M' : ℕ) (f : Fin (N + 1) → Fin (M + 1) → ℝ)
+    (I : Fin (N' + 1)) (J : Fin (M' + 1)) : ℝ :=
+  ∑ i, ∑ j, f i j * hypergeometricWeight N N' I.val i.val *
+    hypergeometricWeight M M' J.val j.val
+
+/-- The two-source lift transports the joint count mass through both fresh
+blocks; the coefficient array need not factor between the two old counts. -/
+theorem two_source_hypergeometric_lift (N M N' M' : ℕ) (hN : N ≤ N') (hM : M ≤ M')
+    (f : Fin (N + 1) → Fin (M + 1) → ℝ) (hf : ∀ i j, 0 ≤ f i j)
+    (p q : unitInterval) (I : Fin (N' + 1)) (J : Fin (M' + 1)) :
+    (∑ i, ∑ j, ENNReal.ofReal (f i j) * binomialMass N i.val p * binomialMass M j.val q *
+      translatedBinomial (N' - N) i.val I.val p * translatedBinomial (M' - M) j.val J.val q) =
+    ENNReal.ofReal (liftTwo N M N' M' f I J) * binomialMass N' I.val p *
+      binomialMass M' J.val q := by
+  have hGN := (hypergeometric_stochastic_rows N N' hN I).1
+  have hGM := (hypergeometric_stochastic_rows M M' hM J).1
+  have hcoef (i : Fin (N + 1)) (j : Fin (M + 1)) :
+      0 ≤ f i j * hypergeometricWeight N N' I.val i.val *
+        hypergeometricWeight M M' J.val j.val :=
+    mul_nonneg (mul_nonneg (hf i j) (hGN i)) (hGM j)
+  have hl : ENNReal.ofReal (liftTwo N M N' M' f I J) =
+      ∑ i, ∑ j, ENNReal.ofReal (f i j * hypergeometricWeight N N' I.val i.val *
+        hypergeometricWeight M M' J.val j.val) := by
+    rw [liftTwo, ENNReal.ofReal_sum_of_nonneg
+      (fun i _ => Finset.sum_nonneg (fun j _ => hcoef i j))]
+    apply Finset.sum_congr rfl
+    intro i _
+    exact ENNReal.ofReal_sum_of_nonneg (fun j _ => hcoef i j)
+  rw [hl]
+  simp only [Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [ENNReal.ofReal_mul (mul_nonneg (hf i j) (hGN i)), ENNReal.ofReal_mul (hf i j)]
+  calc
+    _ = ENNReal.ofReal (f i j) *
+        (binomialMass N i.val p * translatedBinomial (N' - N) i.val I.val p) *
+        (binomialMass M j.val q * translatedBinomial (M' - M) j.val J.val q) := by ac_rfl
+    _ = _ := by
+      rw [zero_safe_binomial_split N N' i.val I.val hN (by omega) (by omega) p,
+        zero_safe_binomial_split M M' j.val J.val hM (by omega) (by omega) q]
+      ac_rfl
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
