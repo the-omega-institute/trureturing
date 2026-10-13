@@ -97,6 +97,153 @@ noncomputable def registration :
   familyRecord := none,
   options := #[] }
 
+namespace LocalGates
+open _root_.D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (localOp)
+
+/-- A local embedding observes a single-qubit matrix at a specified coordinate. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ n : ℕ, Fin n)
+    (fun _ => Matrix (Fin 2) (Fin 2) ℂ) (fun p => Op p.1)
+
+def actual : Realization signature :=
+  realize signature (fun _ p A => localOp p.2 A) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, 0⟩, 0, 1, ?_⟩
+  change localOp (0 : Fin 1) 0 ≠ localOp (0 : Fin 1) 1
+  rw [local_identity]
+  have hzero : localOp (0 : Fin 1) (0 : Matrix (Fin 2) (Fin 2) ℂ) = 0 := by
+    ext x y
+    change (∏ j : Fin 1, Function.update (fun _ => (1 : Matrix (Fin 2) (Fin 2) ℂ))
+      0 0 j (x j) (y j)) = 0
+    simp
+  rw [hzero]
+  exact zero_ne_one
+
+namespace Identity
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (i : Fin n),
+    R.readout () ⟨n, i⟩ (1 : Matrix (Fin 2) (Fin 2) ℂ) = (1 : Op n)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (0 : Fin 1)
+  change (0 : Op 1) = 1 at he
+  exact zero_ne_one he
+
+def source_registration : Registration arena (type_of% @local_identity) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨local_identity, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.local_identity)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.LocalGates.Identity.unit,
+  realizationName :=
+    Lean.Name.str
+      `Reg.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.LocalGates.Identity
+      "source_registration",
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨source_registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ p A => localOp p.2 A) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape,
+    definition := none,
+    coordinates := #[0, 1],
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end Identity
+
+namespace Product
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (i : Fin n) (A B : Matrix (Fin 2) (Fin 2) ℂ),
+    localOp i A * localOp i B = R.readout () ⟨n, i⟩ (A * B)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (0 : Fin 1) 1 1
+  change localOp (0 : Fin 1) 1 * localOp (0 : Fin 1) 1 = (0 : Op 1) at he
+  rw [local_identity, one_mul] at he
+  exact one_ne_zero he
+
+def source_registration : Registration arena (type_of% @local_product) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨local_product, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.local_product)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.LocalGates.Product.unit,
+  realizationName :=
+    `Reg.D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.LocalGates.Product.source_registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨source_registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ p A => localOp p.2 A) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape,
+    definition := none,
+    coordinates := #[0, 1],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end Product
+end LocalGates
+
 #print axioms source_registration
 #print axioms registration
 

@@ -6,8 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim; result=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.result; claim=D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.claim
    digest: Boundary alpha-z magic additivity is refuted by a three-qubit marginal certificate. -/
 import D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
-import Mathlib.Algebra.Star.CHSH
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 set_option linter.style.longLine false
 set_option maxRecDepth 4096
 set_option autoImplicit false
