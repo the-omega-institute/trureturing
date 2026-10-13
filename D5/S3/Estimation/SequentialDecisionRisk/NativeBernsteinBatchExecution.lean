@@ -959,6 +959,31 @@ theorem coefficient_node_balance (hD : Monotone D) (hd : Monotone d)
     · rw [hz]
       exact sub_le_self 1 (Finset.sum_nonneg (fun e _ => hl k (a k e) (hc.nonneg k e) i j))
 
+def fiberRow (hD : Monotone D) (hd : Monotone d) (hc : CompatibleCoefficients D d a)
+    (k : ℕ) (i : Fin (D k + 1)) (j : Fin (d k + 1)) : PMF (Option Bool) :=
+  stageRow (ENNReal.ofReal (incomingCoefficients D d a k i j))
+    (fun e => ENNReal.ofReal (exitCoefficients D d a k e i j))
+    (ENNReal.ofReal (residualCoefficients D d a k i j)) (by
+      have h := coefficient_node_balance D d a hD hd hc k i j
+      rw [← ENNReal.ofReal_sum_of_nonneg (fun e _ => h.2.2.1 e),
+        ← ENNReal.ofReal_add (Finset.sum_nonneg (fun e _ => h.2.2.1 e)) h.1, h.2.2.2.1])
+    ENNReal.ofReal_ne_top
+
+theorem fiber_rows_classification (hD : Monotone D) (hd : Monotone d)
+    (hc : CompatibleCoefficients D d a) (k : ℕ) (i : Fin (D k + 1)) (j : Fin (d k + 1)) :
+    (∀ e, ENNReal.ofReal (incomingCoefficients D d a k i j) *
+      fiberRow D d a hD hd hc k i j (some e) = ENNReal.ofReal (exitCoefficients D d a k e i j)) ∧
+    ENNReal.ofReal (incomingCoefficients D d a k i j) * fiberRow D d a hD hd hc k i j none =
+      ENNReal.ofReal (residualCoefficients D d a k i j) := by
+  unfold fiberRow
+  exact compatible_stage_classification _ _ _ _ _
+
+def rowNat (hD : Monotone D) (hd : Monotone d) (hc : CompatibleCoefficients D d a)
+    (k i j : ℕ) : PMF (Option Bool) :=
+  if hi : i < D k + 1 then
+    if hj : j < d k + 1 then fiberRow D d a hD hd hc k ⟨i, hi⟩ ⟨j, hj⟩ else fallbackRow
+  else fallbackRow
+
 end Coefficients
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
