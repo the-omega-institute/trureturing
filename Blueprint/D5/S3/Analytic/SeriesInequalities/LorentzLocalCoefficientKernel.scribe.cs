@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.SeriesInequalities;
 internal sealed class LorentzLocalCoefficientKernelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/SeriesInequalities/LorentzLocalCoefficientKernel.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/holtznazarovperes2011smoothcoins");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Estimation/holtznazarovperes2011smoothcoins");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Inverse central-moment corrections give endpoint-sensitive local coefficient bounds.",

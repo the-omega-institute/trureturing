@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.SeriesInequalities;
 internal sealed class LorentzCoefficientRemainderDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Analytic/holtznazarovperes2011smoothcoins");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Estimation/holtznazarovperes2011smoothcoins");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual Lorentz remainder is uniformly small in the original Bernstein coefficient norm.",
