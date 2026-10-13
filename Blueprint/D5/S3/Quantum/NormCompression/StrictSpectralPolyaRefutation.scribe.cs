@@ -26,7 +26,10 @@ internal sealed class StrictSpectralPolyaRefutationDocument : IScribeDocumentDef
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The universal convergence claim is false", Seq(Neg, Sp, F.Id("claim")),
                 "Set A = I₃, H = [[1,0,1],[0,-2,0],[1,0,0]], E = Matrix.diagonal (Pi.single 2 1), and M = Submodule.span ℂ {H,E}. The residuals are [[1+s,0,s],[0,1-2s,0],[s,0,t]]. The two leading diagonal constraints force s = 0 on the spectral-optimal face, whose lexicographic minimum is diag(1,1,0), so E is strict. Schatten-p minimizers exist for every p > 1. Their real last residual entry is eventually below -1/4, contradicting convergence to the strict residual. Hermitian projection reduces the complex minimization to a real comparison. No uniqueness or exact residual limit is needed.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zietak-2017-strict-spectral-polya-conjecture"),
+                    ResolutionKind.Refuted)),
             Describe.Remark(DescribeId.Create("zietak-grover"), H("Grover–Gupta Theorem 3.7"),
                 F.Id("GroverGuptaTheorem37"), AssessedProvenance.FromLiterature(FollowUp),
                 Blocks(Paragraph(Text("Grover–Gupta Theorem 3.7 establishes the convergence statement when min(m,n) is at most two; the present refutation uses three-by-three matrices.")))),
@@ -38,9 +41,10 @@ internal sealed class StrictSpectralPolyaRefutationDocument : IScribeDocumentDef
     private const string ClaimQuote = "Page 309, Conjecture 1.1, verbatim: \"Let ℳ be a linear subspace of ℂᵐˣⁿ and let Bₚ ∈ ℳ be the cₚ-approximant to A ∈ ℂᵐˣⁿ. As p tends to ∞, the matrix Rₚ = A − Bₚ converges to A − B⁽ˢᵗ⁾, where B⁽ˢᵗ⁾ is the strict spectral approximant to A.\" The quantifiers range over all dimensions, complex linear subspaces, targets, strict approximants and functions B of the real exponent p. Minimization is required for every p > 1, and the residual converges in the matrix topology as p tends to infinity.";
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("zietak-" + id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Q(string owner, string name)
