@@ -18,7 +18,9 @@ internal sealed class MBonacciFactorWindowDocument : IScribeDocumentDefinition
                 DescribeId.Create("factor-window"),
                 DeclarationHandle.Create("D5/S1/Words/MBonacciFactorWindow.factor_window"),
                 H("Every start is represented by the bounded window"),
-                StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Statement()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Words/turek2013abelian")),
                 Blocks(
                     Paragraph(Text("For all natural k and all positive n at most U_m(k), "
                         + "every factor starting at any natural q has an identical occurrence "
@@ -41,10 +43,9 @@ internal sealed class MBonacciFactorWindowDocument : IScribeDocumentDefinition
                         + "the initial copy of P_k. Since P_k is a prefix of P_(k+m), the new "
                         + "start satisfies the exact non-strict bound."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The statement is the m-bonacci specialization of Turek's "
-                + "factor-containing prefix result: arXiv:1201.2109v1, Observation 4.1, "
-                + "Propositions 4.4 and 4.8; Theoretical Computer Science 469 (2013), 77-91, "
-                + "doi:10.1016/j.tcs.2012.10.034. His F_k is U_m(k), and his prefix "
+            Paragraph(Text("The statement is the m-bonacci specialization of the cited "
+                + "factor-containing prefix result, Observation 4.1 and Propositions 4.4 "
+                + "and 4.8. Its F_k is U_m(k), and its prefix "
                 + "u_[n] is factor(u_m,0,n). Observation 4.1 places each length-n factor "
                 + "in phi^k(0t0), with no zero in t, including an empty t. Here the "
                 + "substitution images between successive zeroes give the corresponding "
