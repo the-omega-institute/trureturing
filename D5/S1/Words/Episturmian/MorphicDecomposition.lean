@@ -1,7 +1,7 @@
 /- GID: D5/S1/Words/Episturmian/MorphicDecomposition
    generality: G
-   mirror-B: none
-   mirror-E: none
+   mirror-B: D5/B/S1/Words/Episturmian/MorphicDecomposition
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Justin morphic decomposition and finite central prefixes -/
