@@ -3115,3 +3115,55 @@ ceiling to the original local interval and compensation. They introduce
 no new prime theorem, generic sampling theorem, literature-priority claim
 or Lean declaration. The original all-tie signed comparison, its strict
 constant and RH remain unproved.
+
+
+### The same error is below the target scale on the original large-core part
+
+Keep every original index and weight; divide the account only by the
+actual condition $B_i\ge X$. Put
+$\mathcal I_X^+=\{i<m:B_i\ge X\}$ and retain its complementary indices
+in the full target. The original $t_i\le2\ell_X$ gives
+
+$$
+V_X^+=\sum_{i\in\mathcal I_X^+}\delta_i\frac{t_i}{\sqrt{B_i}}
+\le\frac{2\ell_X}{\sqrt X}L_X
+=\frac d4 M_XL_X.
+$$
+
+In SI1, $\sup_{B\ge X}\varepsilon_r(B)\to0$, since the displayed
+function tends to zero. The SI3 pointwise estimates therefore imply
+
+$$
+\boxed{
+\sum_{i\in\mathcal I_X^+}\frac{\delta_i}{\sqrt{B_i}}
+\bigl(|E(B_i)-t_i|+
+|\psi(A_i)-\psi(B_i)-t_i|\bigr)
+=o_X(M_XL_X).}
+\tag{SI5}
+$$
+
+Here $L_X=o(M_XL_X)$ uses the unchanged $\eta<1/2$.
+The estimate is uniform in all ties, including an empty large-core part;
+its last original outgoing weight is included whenever its index meets
+the condition. With
+
+$$
+\mathcal G_X^+=\sum_{i\in\mathcal I_X^+}\delta_iG_a(B_i),\qquad
+\mathcal H_X^+=\sum_{i\in\mathcal I_X^+}\frac{\delta_i}{\sqrt{B_i}}
+\int_1^\infty E(B_iv)k_{\log B_i}(v)\,dv,
+$$
+
+the original compensated quantity consequently satisfies
+
+$$
+\mathcal G_X^+=\mathcal H_X^+-aV_X^+
++o_X(M_XL_X).
+$$
+
+This pays the local replacement error on the actual large-core part at
+the original target scale. It does not bound $\mathcal H_X^+$ or its
+signed combination, and the original small-core part $B_i<X$ is still
+retained and unpaid. No new source family, favorable window or eventual
+absence of small cores is inferred. This application keeps SI1's narrower
+range and does not assert a global $V_X^{\rm lag}=O(M_XL_X)$.
+SI1 has a nonempty supplied-parameter range only when $\Theta>17/30$.
