@@ -958,3 +958,466 @@ archive access or new physical update capability is inferred from these
 antecedents or from the recovery equations.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Repeated partners on a complete depth-three one-image fiber
+
+### 9.1 The entire current-row fiber and the reading contract
+
+**Definition 9.1 (fixed row and predecessor target).** Keep the original
+finite ordered sources, substitution, occurrence addresses and four-reply
+reading of Definition 1.1. Fix the complete cut
+$P=\{L,R\}^3$. Let $R_*=(C_*,\pi_*)$ have the perfect depth-three exterior
+with one occurrence hole at each $p\in P$. Its complete class partition is
+
+$$
+\pi_*=
+\bigl\{\{LLL,LRL\},\{LLR\},\{LRR\},
+       \{RLL,RRL\},\{RLR\},\{RRR\}\bigr\}.
+\tag{NBP.9.1}
+$$
+
+Call these six public classes $a,b_1,b_2,c,b_3,b_4$, respectively, as
+shorthand for their canonical first-occurrence names. These symbols are
+not acquired hidden values. All different classes assert disequality.
+For a tuple of actual finite class values $x$, write its filling as
+
+$$
+\mathscr S(x)=
+\left\langle
+ \left\langle\langle x_a,x_{b_1}\rangle,
+                  \langle x_a,x_{b_2}\rangle\right\rangle,
+ \left\langle\langle x_c,x_{b_3}\rangle,
+                  \langle x_c,x_{b_4}\rangle\right\rangle
+\right\rangle.
+\tag{NBP.9.2}
+$$
+
+The comparison domain and required answer are exactly
+
+$$
+\mathcal U_*=
+ \{u\in\mathcal T:R_P(\rho u)=R_*\},
+\qquad F(u)=R_P(u).
+\tag{NBP.9.3}
+$$
+
+Thus every actual finite origin compatible with the entire current row
+belongs to the domain. There is no additional family promise, source-size
+bound, chosen predecessor, or retained origin row. Put
+$q_1=LL,q_2=LR,q_3=RL,q_4=RR$; the sibling classes at $q_i$ are
+$(a,b_i)$ for $i=1,2$ and $(c,b_i)$ for $i=3,4$.
+
+**Assumption 9.2 (acquired current data, actual export and complete cut).**
+Exactly one genuine authenticated $\rho$ update binds the one supplied
+origin $u$ to the current register $t=\rho u$. The complete current row
+is lawfully acquired on this stationary version. Before the complete
+access cut, a producer possesses genuinely acquired same-source,
+same-version finite data: either the lossless current tree $t$, or the
+current row and one acquired finite subtree value for each of its six
+classes. A supplement is computed from those data and actually exported
+with the row before their access is lost. Equality in the row is computed
+on acquired finite terms, as in Assumption 8.1; there is no hidden-value
+equality service.
+
+A separately supplied lawful entry allows a common deterministic reader
+to receive $P,R_*$, the exported supplement, and common source-independent
+controls. These determine its entire accessible initial state, from
+which the declared inputs are recoverable. Authentication certifies the
+same origin/register relationship and the single update without revealing
+which member of $\mathcal U_*$ is actual. No other source-dependent field
+is accessible: origin identity, predecessor data, alpha marker, acquired
+values, traces, caches, archives, pointers, control fields, acquisition
+order or counts, lengths, meters, timing and update packets add no
+undeclared distinction. A field determined by the retained payload adds
+no extra distinction; any further accessible field changes this contract.
+
+The same current register is stationary throughout fresh reading. Every
+finite address is legal, and its reply is precisely the native
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$ readout at that address.
+No further update is allowed. Every invocation counts, including repeats,
+absent-address calls and re-reads of addresses used in acquisition. The
+reader must terminate and return $F(u)$ for every $u\in\mathcal U_*$.
+
+These are supplied acquisition and access conditions, not consequences of
+a row identity. The finite producer of Theorem 8.2 can acquire $t$ using
+its native traversal, but its retained full trace does not automatically
+implement this narrower export or access cut. Actual export, lawful new
+entry, isolation from discarded fields and any entry after absorbing stop
+remain separate premises. No resume action is supplied by the stopped
+producer itself.
+
+For a supplement $\sigma$, let its conditional alphabet size be
+$|\sigma[\mathcal U_*]|$. For integers $r\ge1,q\ge0$, write
+$\mathsf{InvFeas}_*(r,q)$ when there exist an acquired/exported supplement
+with at most $r$ actual values and one reader whose fresh invocation count
+is at most $q$ on every origin in $\mathcal U_*$. Let
+$\mathsf Q_*(r)$ be the least such $q$. This is joint encoder/reader
+existence, not a performance guarantee for every $r$-value encoder.
+
+### 9.2 Image constraints and all five literal predecessor rows
+
+**Proposition 9.3 (complete image-fiber classification).** Let
+$\mathcal I=\rho[\mathcal T]$, with the exact grammar and inverse $\delta$
+of Transport--Memory Completion §22, (RA.2207). A filling $t=\mathscr S(x)$
+with six pairwise distinct values is in $\mathcal I$ if and only if exactly
+one of the following alternatives holds:
+
+1. All six values belong to $\mathcal I$.
+2. For exactly one $i\in\{1,2,3,4\}$, $x_{b_i}=\alpha$; its left partner
+   is $\beta$; every other class value belongs to $\mathcal I$.
+
+In the second alternative, the left partner is $x_a$ for $i=1,2$ and
+$x_c$ for $i=3,4$. Pairwise disequalities still apply, so every other
+class is different from that forced beta as well as from the alpha.
+In particular, neither $a$ nor $c$ can be the current alpha class.
+
+All five alternatives are attained by actual finite origins. Their
+predecessor rows are exactly $R_0,R_1,R_2,R_3,R_4$ defined as follows.
+For alternative zero, $R_0=R_*$. For alternative $i>0$, set
+
+$$
+O_i=P\setminus\{q_iL,q_iR\}.
+\tag{NBP.9.4}
+$$
+
+The exterior of $R_i$ is $C_*$ with precisely the pair of holes at $q_i$
+replaced by one concrete beta leaf. Its partition is $\pi_*|_{O_i}$,
+with canonical names recomputed on $O_i$. All retained equalities and
+all retained disequalities are part of this answer. Consequently
+
+$$
+|F[\mathcal U_*]|=5.
+\tag{NBP.9.5}
+$$
+
+**Proof.** The supplied image grammar has disjoint cases beta, the special
+block $E=\langle\beta,\alpha\rangle$, and a pair of image subtrees;
+alpha is not an image. The root of $t$ and its two depth-one children
+are branches whose right children are branches. None is $E$. Applying
+the general-pair case successively shows that all four subtrees at $q_i$
+are images. At any such subtree the image grammar allows exactly an
+$E$ block or a pair of image values. Its left value is therefore always
+an image. Its right value is either an image or alpha; alpha occurs
+precisely in the $E$ case and forces its left value to be beta.
+
+The complete partition makes the four right-class values distinct, so
+at most one is alpha. This proves the necessity of the alternatives,
+including the restrictions on both repeated left values. Conversely,
+in alternative zero every $q_i$ is a pair of images. In alternative
+$i>0$, the $q_i$ block is $E$ and each other $q_j$ is a pair of images.
+Pairing upwards puts the entire $t$ in $\mathcal I$. Its unique finite
+origin is $u=\delta(t)$, with $\rho u=t$. Literal filling by an injective
+class valuation gives exactly $R_*$, including every disequality, by
+the native row fiber of Definition 1.2. Thus these sufficient conditions
+refer to actual sources, not merely locally consistent formal labels.
+
+Reuse Theorem 3.2's current-alpha/birth criterion and Theorem 2.2's
+occurrence repair. In alternative zero all eight cut occurrences are
+old. In alternative $i>0$, precisely the two children of the $E$ block
+at $q_i$ are newborn. Every other cut occurrence is old, giving (NBP.9.4).
+Inverse parsing takes that $E$ to a concrete beta at $q_i$ and preserves
+each other exterior bracket, stopping at the old holes. Injectivity of
+$\rho$ preserves equality and disequality among their hidden values.
+Theorem 2.2 therefore gives exactly the claimed complete rows. Their
+reached sets are different, so the five rows are pairwise different.
+
+In particular, when $i=1$ or $2$, only one of the two occurrences of
+class $a$ is newborn. The other is an old hole whose current beta value
+is the image of an old hidden alpha. One must retain this hole and
+recompute its class name, not replace both occurrences of $a$ by a
+concrete leaf. The same observation applies to $c$ for $i=3,4$. This is
+the occurrence-sensitive repair of §2, not a classwise deletion rule.
+
+For simultaneous finite realizations, use the distinct native orbit
+$T_j=\rho^j\alpha$ cited in Theorem 3.3. Here
+$T_0=\alpha,T_1=\beta$, and every $T_j$ with $j\ge2$ is a branch in
+$\mathcal I$. Set $A=T_2,C=T_3,D_j=T_{j+3}$ for $1\le j\le4$. Define
+five tuples, indexed by $h\in\{0,1,2,3,4\}$, by
+
+$$
+\begin{aligned}
+x_a^{(h)}&=\begin{cases}\beta,&h\in\{1,2\},\\A,&h\notin\{1,2\},\end{cases}\\
+x_c^{(h)}&=\begin{cases}\beta,&h\in\{3,4\},\\C,&h\notin\{3,4\},\end{cases}\\
+x_{b_j}^{(h)}&=\begin{cases}\alpha,&h=j,\\D_j,&h\ne j.\end{cases}
+\end{aligned}
+\tag{NBP.9.6}
+$$
+
+In each tuple the six values are pairwise distinct: the unmodified values
+are distinct orbit elements of index at least two, and the modifications
+introduce at most one beta and one alpha. The tuple has exactly alternative
+$h$, so $t_h=\mathscr S(x^{(h)})$ is an actual image and
+$u_h=\delta(t_h)\in\mathcal U_*$. Its predecessor row is $R_h$. Together
+with the exhaustive classification, these witnesses prove (NBP.9.5).
+The inverse here constructs proof witnesses; it is not an input given
+to the reader or a physical inverse operation. $\square$
+
+### 9.3 Arbitrary native addresses on actual lower-bound witnesses
+
+**Proposition 9.4 (all-address binary bridge).** On the five fixed current
+trees $(t_h)_{h=0}^4$ from (NBP.9.6), every finite native address has at
+most two different replies. At each of the two occurrences of $a$, a
+query can separate the group $\{1,2\}$ from its complement; for $c$ the
+corresponding group is $\{3,4\}$. At a $b_j$ occurrence, any nonconstant
+query separates only $j$. These are statements about actual native
+replies on these witnesses, not about the number of replies on the
+whole fiber.
+
+**Proof.** An address $v$ of length less than three is at a common skeleton
+branch, and has constant reply $\mathsf{branch}$. Every address of length
+at least three has a unique decomposition $v=pw$ with $p\in P$ and
+finite suffix $w$. Write $d=[p]_{\pi_*}$. Native descent into the actual
+filled hole gives the exact equality
+
+$$
+r_{t_h}(pw)=r_{x_d^{(h)}}(w).
+\tag{NBP.9.7}
+$$
+
+The possible subtree values in this equation are the following two fixed
+finite trees, with the stated sets of exceptional indices:
+
+| Class $d$ | Default subtree | Exceptional indices | Exceptional subtree |
+| --- | --- | --- | --- |
+| $a$ | $A$ | $1,2$ | $\beta$ |
+| $c$ | $C$ | $3,4$ | $\beta$ |
+| $b_j$ | $D_j$ | $j$ | $\alpha$ |
+
+For any $w$, applying the native four-reply reading to those two trees
+gives either one common value or two specified values. No condition
+that $w$ be reached is imposed: at a leaf every nonempty suffix gives
+absent, and at a branch the finite-tree descent determines the reply,
+including any later blocking leaf. All deep, absent and leaf-continuation
+cases are therefore included. Repeated class occurrences obey the same
+equation, but one address enters just one occurrence cone. Repeated
+invocations return the same stationary value and still count as calls.
+This covers every finite native address, with no equality, archive or
+timing query. In particular the empty-suffix query at $p=LLL$ returns
+beta on $h=1,2$ and branch on $h=0,3,4$, giving an actual two-versus-three
+split. $\square$
+
+For clarity, the full domain is not a binary-reply native system. At
+address $LLRR$, inside the right child of class $b_1$, choose respectively
+$x_{b_1}=\beta,E,\langle\beta,\beta\rangle,
+\langle\beta,E\rangle$. These are four different image values and give
+absent, alpha, beta and branch, respectively. Choose the five remaining
+class values to be mutually distinct higher orbit elements, different
+from those four trees. All six values are then images and Proposition 9.3
+puts all four fillings in the full actual fiber. The binary bridge is a
+lower-bound restriction to five realizations, not a restriction of the
+reader's native interface or of $\mathcal U_*$.
+
+### 9.4 Exact joint supplement and fresh-invocation frontier
+
+**Theorem 9.5 (attained full-fiber frontier).** Under Assumption 9.2, for
+all integers $r\ge1,q\ge0$,
+
+$$
+\mathsf{InvFeas}_*(r,q)\quad\Longleftrightarrow\quad r\,2^q\ge5.
+\tag{NBP.9.8}
+$$
+
+Equivalently, the exact least worst-case fresh invocation count is
+
+$$
+\mathsf Q_*(r)=
+\begin{cases}
+3,&r=1,\\
+2,&r=2,\\
+1,&r=3\text{ or }4,\\
+0,&r\ge5.
+\end{cases}
+\tag{NBP.9.9}
+$$
+
+**Proof, necessity.** Restrict any feasible acquired encoder and reader to
+the actual finite origins $u_0,\ldots,u_4$ of Proposition 9.3. For each
+used supplement value $s$, put
+$H_s=\{h:\sigma(u_h)=s\}$. The nonempty $H_s$ partition five indices
+into at most $r$ parts, even if $\sigma$ depends on every acquired current
+class value. All initial reader inputs are identical within one part.
+Its required rows $R_h$ are different, so it must distinguish all indices
+in that part using its native replies.
+
+At any chosen address, Proposition 9.4 supplies at most two possible
+replies on the witnesses. Encode its default reply by zero and its
+possible different reply by one, using zero alone in the constant case.
+Given the address, this bit reconstructs the entire native reply. At an
+adaptive history, the next address is determined by the common initial
+state and reconstructed previous replies, so the correspondence holds
+at every subsequent query, not only along a designated path. Histories
+with no realizing witness can be assigned constant zero questions.
+After the reader stops, pad the mathematical transcript to length $q$
+with constant zeros; these padding symbols are not native invocations.
+
+The resulting length-$q$ transcripts are injective on $H_s$. If two
+were identical, deterministic reconstruction would give the same native
+history and stopping decision for both. Early stopping adds no extra
+symbol: once that common history determines a stop, both candidates
+stop there with the same output. This contradicts the different rows.
+The argument accommodates absence and repeated invocations through the
+all-address bridge and counts every real invocation before padding.
+
+Apply the existing
+[BinaryProtocolDepthLowerBound](../../../D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.lean),
+`adaptive_binary_protocol_depth_lower_bound`, to the finite source type
+$H_s$, constant already-known concept, target $h\mapsto R_h$ and the
+adaptive binary transcript just constructed. Its worst fiber diversity
+is $|H_s|$, so it gives $\lceil\log_2|H_s|\rceil\le q$, equivalently
+$|H_s|\le2^q$. Summing over the nonempty parts yields
+
+$$
+5=\sum_s|H_s|\le |\{s:H_s\ne\varnothing\}|\,2^q\le r\,2^q.
+\tag{NBP.9.10}
+$$
+
+This uses the existing binary identification capacity, not a new generic
+counting theorem. The five witnesses are alternative fixed sources with
+their own truthful acquisition and export. No source changes during a
+reading run, and no equality of discarded acquisition records is assumed.
+
+**Proof, full-domain attainments.** By Proposition 9.3, the acquired current
+data determine the unique label $h\in\{0,1,2,3,4\}$: inspect the acquired
+right-class values for alpha, taking $h=0$ if none is alpha. This is a
+finite computation on genuinely acquired terms, not a free retained
+marker. The encoders below export only their specified block index.
+Their tables and the five complete row outputs are public finite data
+computed from $P,R_*$ using Proposition 9.3 and Theorem 2.2. Every label
+is actually attained, so each listed block is nonempty on $\mathcal U_*$.
+
+For $r=1$, export one common value. First query $LLL$, a representative
+root of class $a$. Its value is an image, so the reply is beta or branch.
+If it is beta, the actual label lies in $\{0,1,2\}$: a selected $3$ or
+$4$ would force $x_c=\beta=x_a$, contradicting the retained disequality.
+If it is branch, the actual label lies in $\{0,3,4\}$: a selected $1$
+or $2$ would force $x_a=\beta$.
+
+In the beta case, query the root at $q_1R=LLR$; an alpha reply identifies
+$h=1$ and stops. Otherwise query $q_2R=LRR$; alpha identifies $h=2$ and
+any other reply gives $h=0$. In the branch case perform the same tests
+at $q_3R=RLR$ and $q_4R=RRR$, returning $3,4$ or $0$. All these roots
+are reached. Non-alpha replies may be beta or branch; their distinction
+is not needed. Each source is classified correctly with at most three
+calls. In particular $h=0$ remains possible on both outcomes of the
+first query: an image filling with no alpha may still have $x_a=\beta$.
+The strategy does not pretend to make a target-only group test on the
+entire fiber. On $u_0$ it makes all three calls, attaining this bound.
+
+For $r=2$, export the block of the actual label in
+$\{0,1,2\}\mid\{3,4\}$. In the first block, test $b_1$ and then, if
+needed, $b_2$ at their cut roots for alpha; if neither is alpha, return
+zero. In the second block test $b_3$ for alpha; otherwise infer $4$.
+This is correct on every origin of the full fiber with at most two
+calls, and $u_0$ attains two.
+
+For $r=3$, use $\{0\}\mid\{1,2\}\mid\{3,4\}$. The singleton block
+needs no query; in either two-member block test its first right-class
+root for alpha and infer the other member on a non-alpha reply. The
+worst count is one, attained on both non-singleton blocks. For $r=4$
+one may use the four nonempty blocks
+$\{0\}\mid\{1\}\mid\{2\}\mid\{3,4\}$, again with worst count one.
+For $r\ge5$, export the actual label itself, using five values, and
+return its complete row with zero fresh invocations. This last endpoint
+is the attained predecessor/current-alpha correspondence of Theorem 3.2
+and the zero-query acquired-record recovery of Theorem 8.2.
+
+Each construction uses one common deterministic reader and actual
+pre-cut export from the supplied current data. After identifying $h$ it
+returns the entire $R_h$, including canonical restricted class names,
+all disequalities and the absent-cut guards from its concrete beta leaf.
+The reader never asks for a predecessor tree or an unknown-subtree
+comparison. Necessity rules out two calls when $r=1$, one when $r=2$,
+and zero when $r=3,4$. For $r\ge5$ zero is minimal. This proves (NBP.9.9).
+For integer $q\ge0$ these cases are exactly $r2^q\ge5$; a strategy with
+fewer than $q$ calls already satisfies the upper budget, with no extra
+calls required. Hence (NBP.9.8) follows. $\square$
+
+### 9.5 Transfer failure, attribution and resource boundaries
+
+**Corollary 9.6 (target cardinality does not transfer the forward law).**
+The cardinality $m=|F[\mathcal U_*]|=5$ does not by itself force
+$r(q+1)\ge m$ for predecessor-row recovery on a complete actual
+one-image current-row fiber. Here $r=1,q=3$ is feasible while
+$r(q+1)=4<5$.
+
+**Proof.** Proposition 9.3 proves the exact full-domain target count and
+Theorem 9.5 supplies the constant-supplement three-call reader on that
+same domain. On its actual witnesses, reading $LLL$ separates two
+origins from three, as Proposition 9.4 shows; it is not a
+singleton-or-constant question. On the full fiber the same query gives
+the legal three-label covers $\{0,1,2\}$ and $\{0,3,4\}$, followed by
+native right-root tests. The image constraint and retained left-class
+disequality are the reason these covers are valid.
+
+[Native Alpha Recut Memory, Theorem 9.4](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+retains its original hypotheses and conclusion. It starts with the
+unrestricted old-row fiber and asks for the next entire row after one
+update. Its Proposition 9.3 constructs updated witnesses on which every
+native address is singleton-or-constant. The present task starts with a
+fixed current row, restricts the current source to an actual image, and
+asks for its predecessor row. The repeated partners impose relations
+between the feasible alpha label and the other hidden values, so the
+forward witness bridge is not available for this inverse target.
+This counterexample concerns transfer of a cardinality-only law, not
+the validity of the forward theorem. $\square$
+
+**Mathematical citation 9.7 (suppliers and precise scope).** The native
+finite source, legal row fibers, equality/disequality convention and
+occurrence-sensitive inverse are the suppliers in Definitions 1.1--1.2,
+Theorems 2.2 and 3.2, and Transport--Memory Completion §22. The forward
+alpha-collision recurrence and its acquired extraction and two endpoint
+optima are supplied by Native Alpha Recut Memory §§2--7; its §9 supplies
+the separate forward joint frontier. None of those results is rederived
+as a generic theorem here. The ordinary source-specific deduction is the
+exhaustive repeated-partner image classification, the five actual finite
+realizations and their all-address binary bridge, and the matched
+encoder/reader strategies on the entire actual fiber.
+
+The classical finite-label and adaptive decision-tree methods are
+intermediate suppliers. The invocation/retention distinction and
+fixed-encoder caution are already explicit in
+[Word Retention and Geometric Reaccess §4](RECURSIVE_RELATIONAL_OBSERVATION_WORD_RETENTION_AND_GEOMETRIC_REACCESS.md).
+The binary depth lower bound used above is the cited existing
+`adaptive_binary_protocol_depth_lower_bound`, with its finite-domain
+hypotheses supplied by the actual five witnesses. General query geometry
+is a mature precedent: Robert Nowak, *The Geometry of Generalized Binary
+Search*, [arXiv:0910.4397v5](https://arxiv.org/abs/0910.4397v5), §V.A,
+printed p.14 / PDF p.15, contrasts disjoint-interval singleton testing
+and its linear query cost with richer dyadic tests and logarithmic
+identification. That passage motivates checking the actual permitted
+queries; it supplies neither a new native subset-query port nor the
+image constraints or numerical frontier of this example. Here the
+split is realized by an ordinary address in the unchanged four-reply
+native interface. These are source-specific ordinary deductions using
+known methods, with no claim of literature priority.
+
+The alphabet bound counts only exported supplemental values conditional
+on the already acquired row. It does not bound total controller states,
+programs, workspace, addresses, row/register storage, authentication,
+outputs or physical memory. With no fresh reading the five labels need
+three fixed-width supplemental bits; this is an alphabet representation
+count only. Producer acquisition, local term comparison, export, retained
+payload access, permissions and address transmission remain separate
+costs. Zero fresh calls do not imply zero acquisition or total work;
+three abstract calls do not imply a corresponding bound on physical
+time. No native-to-physical resource equivalence is supplied.
+
+Theorem 9.5 optimizes encoder and reader jointly. An encoder that is
+constant still has the three-call lower bound even if an alphabet of
+capacity five is available. Neither unused alphabet values nor balanced
+block cardinalities alone prove a fixed arbitrary encoder's performance.
+The witnesses used for necessity do not weaken the full-fiber contract;
+the strategies used for sufficiency cover every actual origin in it.
+Changed cuts, extra accessible data, later images, further updates,
+randomization and address-weighted prices require their own analysis.
+
+[Native Alpha Recut Memory §10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+has the distinct elapsed-update target from two acquired rows across
+possibly different cuts, with no supplied numeric update count. Its
+two endpoint rows are additional inputs for that separate target.
+They are not predecessor-query coverage and are not added to the inputs
+of Assumption 9.2. This appendix uses only the fixed complete current row,
+the expressly acquired/exported supplement and fresh stationary native
+replies after exactly one authenticated update.
+
+## 追加锚（本行以下为增补区）
