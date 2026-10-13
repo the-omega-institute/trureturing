@@ -16,6 +16,23 @@ internal sealed class FibonacciPrimeSupportDocument : IScribeDocumentDefinition
                     + "and smaller indices give 0, 1, 2, 3 and 5. The integers considered here are "
                     + "those whose prime factors all lie in this set; exponents are unrestricted.")),
             Describe.Lean(
+                DescribeId.Create("prime-support-euler-ratio-bound"),
+                DeclarationHandle.Create(Prefix + "ratio_le_prod"),
+                H("The divisor ratio is bounded by its support Euler product"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every natural number n != 0, sigma(1,n)/n <= prod p/(p-1) over "
+                            + "the distinct prime factors of n. No Fibonacci hypothesis is needed.")),
+                    Paragraph(Text(
+                        "This is the existing geometric-sum saturation lemma, now exposed for "
+                            + "reuse by the five-prime residual proof. The finite product of prime "
+                            + "powers reconstructs n, and each normalized geometric sum is at "
+                            + "most p/(p-1). The original Fibonacci proof continues to consume "
+                            + "the same declaration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fibonacci-support-ratio-bound"),
                 DeclarationHandle.Create(Prefix + "sigma_div_lt_of_fibonacci_primeFactors"),
                 H("A uniform bound for the divisor ratio"),

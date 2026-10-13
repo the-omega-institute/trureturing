@@ -2926,7 +2926,7 @@ $e^\gamma\log\log n-\sigma(n)/n$ 的同源有符号下界。
 
 ## 二　无条件无限对数凹性不是 RH
 
-[Liu--Mao, arXiv:2610.04972v1](../../../Library/Analytic/liu2026xilogconcavity.md)
+[Liu--Mao, arXiv:2610.04972v1](../../../Library/Zeros/liu2026xilogconcavity.md)
 对
 
 $$
