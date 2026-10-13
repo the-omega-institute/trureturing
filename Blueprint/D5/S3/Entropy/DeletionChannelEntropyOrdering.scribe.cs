@@ -59,13 +59,18 @@ internal sealed class DeletionChannelEntropyOrderingDocument : IScribeDocumentDe
                 + "The sum of w log(w) is the logarithm of the integer product of w to the power w. "
                 + "A strict product comparison gives the strict entropy comparison, hence the negation of claim. "
                 + "This finite comparison leaves the source's asymptotic minimization theorem unchanged.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("atashpendar-mestel-roscoe-ryan-2018-kappa2-entropy-ordering"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("deletion-channel-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
