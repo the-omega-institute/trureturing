@@ -85,7 +85,7 @@ Every other declaration is a definition used by a public statement or a compiler
 **Proved by `result`:** the even-legged reconstruction (B2) holds for every N, with the explicit rational leg-factors above, independent of N. It holds for every real complement-symmetric set function vanishing at ∅, so positivity, subadditivity and realizability by a quantum state are not needed.
 
 **Established inside the proof.**
-- For such functions the odd-ranked hyperlinks are determined by the even-ranked ones: J_I = −Σ_{K⊋I} J_K for odd |I|. This confirms the source's remark that "odd-ranked EHLs can be obtained from the even-ranked ones".
+- For such functions the odd-ranked hyperlinks are determined by the even-ranked ones: J_I = −(1/2) Σ_{K⊋I} J_K for odd |I|. This confirms the source's remark that "odd-ranked EHLs can be obtained from the even-ranked ones".
 - The coefficients c_r invert the triangular system J_I = h_I + (1/2) Σ_{K⊋I even} h_K.
 
 **Computed, not formalized** (orchestrator, exact rational arithmetic, 14 October 2026):
