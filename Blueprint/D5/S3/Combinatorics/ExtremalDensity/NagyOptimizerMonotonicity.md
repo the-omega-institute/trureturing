@@ -22,6 +22,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ExtremalDensity/NagyOptimizerMonotonicity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/day-sarkar-2021-t-optimizer-monotonicity` (refuted) by `D5/S3/Combinatorics/ExtremalDensity/NagyOptimizerMonotonicity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"day-sarkar-2021-t-optimizer-monotonicity","declaration_gid":"D5/S3/Combinatorics/ExtremalDensity/NagyOptimizerMonotonicity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. N. Day; A. Sarkar (2021). *On a Conjecture of Nagy on Extremal Densities*. DOI: [10.1137/19M1296525](https://doi.org/10.1137/19M1296525). URL: <https://arxiv.org/abs/1910.13465>.

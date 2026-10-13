@@ -51,7 +51,10 @@ internal sealed class NagyOptimizerMonotonicityDocument : IScribeDocumentDefinit
                         + "respectively. The increasing coordinate map transfers these intervals "
                         + "to disjoint, reversed bounds for q. This conclusion concerns the "
                         + "seven-vertex graph and these two densities; no uniform interval of "
-                        + "decrease or assertion for every pendant-star graph is made."))), DescribeRole.Theorem))));
+                        + "decrease or assertion for every pendant-star graph is made."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("day-sarkar-2021-t-optimizer-monotonicity"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula V(string name) => FormulaDsl.Id(name);
     private static Formula N(int n) => new Formula.Number(n);
