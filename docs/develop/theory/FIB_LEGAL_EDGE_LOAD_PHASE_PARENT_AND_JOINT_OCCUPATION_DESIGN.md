@@ -3673,3 +3673,608 @@ that captures the slowest phase for every length and every
 positive activity law.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Legal occupation polynomials and their exact parent forms
+
+### 11.1. A common product law on a finite exclusion graph
+
+**Definition 11.1 (Legal monomial coordinates).** Let $G$ be a finite
+simple graph with vertex set $V$. Its legal configurations are the
+independent sets $\Omega_G$. Fix $\lambda_i>0$ and normalized
+$\omega_i>0$. Retain one law and one insertion form:
+
+$$
+p(s)=\frac{\lambda_s}{Z},\qquad
+\lambda_s=\prod_{i\in s}\lambda_i,\qquad
+Z=\sum_{s\in\Omega_G}\lambda_s,
+\qquad q_i=\frac{\lambda_i}{1+\lambda_i}.
+\tag{11.1}
+$$
+
+For real functions put
+
+$$
+\mathcal E_G(f,g)=
+\sum_{\substack{s\in\Omega_G,\ i\notin s\\s\cup\{i\}\in\Omega_G}}
+p(s)\omega_iq_i
+\bigl(f(s\cup\{i\})-f(s)\bigr)
+\bigl(g(s\cup\{i\})-g(s)\bigr).
+\tag{11.2}
+$$
+
+Every edge is counted once. For $I\subseteq V$ define
+$m_I(s)=\mathbf1_{I\subseteq s}$ and $\mu_I=\mathbb E_pm_I$.
+Thus $m_\varnothing=1$ and $m_I=0$ when $I$ is illegal. Let $N[I]$
+be the closed neighborhood of $I$, and let $Z_T$ be the partition
+function after deleting $T$ with all surviving activities retained.
+For legal $I$,
+
+$$
+\mu_I=\frac{\lambda_I Z_{N[I]}}{Z}.
+\tag{11.3}
+$$
+
+Indeed the configurations containing $I$ are exactly $I\cup J$
+with $J$ an independent set in $G\setminus N[I]$. The empty-set
+case gives $\mu_\varnothing=1$. Formula (11.3) computes a moment
+of the original law; deletion does not change its dynamics.
+
+**Theorem 11.2 (Exact monomial covariance and insertion-energy matrices).**
+For every $I,J\subseteq V$, including illegal sets,
+
+$$
+\begin{aligned}
+V_{IJ}&:=\operatorname{Cov}_p(m_I,m_J)
+=\mu_{I\cup J}-\mu_I\mu_J,\\
+A_{IJ}&:=\mathcal E_G(m_I,m_J)
+=\mu_{I\cup J}
+\sum_{i\in I\cap J}\frac{\omega_i}{1+\lambda_i}.
+\end{aligned}
+\tag{11.4}
+$$
+
+Proof. The product of the two Boolean monomials is $m_{I\cup J}$,
+giving the covariance identity. On an insertion at $i$, the
+increment of $m_I$ is zero unless $i\in I$; in that case it is
+$\mathbf1_{I\setminus\{i\}\subseteq s}$. Both increments are
+one exactly when $i\in I\cap J$ and the occupied endpoint
+$t=s\cup\{i\}$ contains $I\cup J$. Detailed balance gives
+
+$$
+p(t)=\lambda_i p(s),\qquad
+p(s)q_i=\frac{p(t)}{1+\lambda_i}.
+\tag{11.5}
+$$
+
+Insertion and erasure are mutually inverse between these empty
+and occupied endpoints. For fixed $i\in I\cap J$, summing
+$p(t)$ over the occupied endpoints containing $I\cup J$ gives
+$\mu_{I\cup J}$. Multiplication by $\omega_i/(1+\lambda_i)$
+and summation over $i$ prove (11.4). If the union is illegal,
+there are no such endpoints and both descriptions give zero.
+No independence of the occupations under $p$ is assumed. $\square$
+
+The covariance identity is the elementary moment identity. The
+energy identity here uses the actual heat-bath insertion and its
+occupied-endpoint mass; a Metropolis rate would give a different
+coefficient. These are repository-derived deductions from the
+specified forms, without a literature-priority claim.
+
+In particular, disjoint monomials have zero bilinear insertion
+energy even when their covariance is nonzero. The two matrices
+encode different relations: $V$ records joint fluctuations,
+whereas $A$ requires a common site whose flip changes both
+monomials. For singleton coordinates (11.4) recovers
+$A_{ij}=0$ for $i\ne j$ and
+$A_{ii}=\omega_i\mu_i/(1+\lambda_i)$.
+
+### 11.2. Exact polynomial degree and a nested phase menu
+
+**Definition 11.3 (Nested legal phase menus).** Let $\mathcal P_d$ be the span of legal
+monomials of cardinality at most $d$, and define for $d\ge1$
+
+$$
+\gamma^{(d)}=
+\min_{\substack{f\in\mathcal P_d\\\operatorname{Var}_p(f)>0}}
+\frac{\mathcal E_G(f,f)}{\operatorname{Var}_p(f)}.
+\tag{11.6}
+$$
+
+The exact matrices (11.4) admit the following standard finite-basis
+derivation. The functions $(m_I)_{I\in\Omega_G}$ form a basis of all
+real functions on $\Omega_G$. For a nonempty graph vertex set,
+
+$$
+\gamma\le\gamma^{(d+1)}\le\gamma^{(d)},\qquad
+\gamma^{(\alpha(G))}=\gamma,
+\tag{11.7}
+$$
+
+where $\alpha(G)$ is the independence number. For a nonempty
+$T\subseteq V$, the zero-cylinder indicator has exact legal
+polynomial degree $\alpha(G[T])$.
+
+Order legal sets by nondecreasing cardinality, using any
+fixed ordering for ties. The evaluation matrix has entries
+$m_I(s)=\mathbf1_{I\subseteq s}$. A nonzero entry with distinct
+indices requires $|I|<|s|$. The matrix is triangular with diagonal
+one, hence invertible. This proves the basis statement and the
+uniqueness of every legal monomial expansion.
+
+For $f=\sum_Ic_Im_I$, bilinearity and Theorem 11.2 give
+
+$$
+\operatorname{Var}_p(f)=c^{\mathsf T}Vc,\qquad
+\mathcal E_G(f,f)=c^{\mathsf T}Ac.
+\tag{11.8}
+$$
+
+Constants are omitted from the quotient, or equivalently one
+works modulo their one-dimensional subspace. Positivity of $p$
+makes variance positive on every remaining nonzero function.
+The nested finite-dimensional spaces prove (11.7), and the full
+basis is reached at degree $\alpha(G)$.
+
+Boolean expansion gives
+
+$$
+\mathbf1_{A_T}(s)
+=\prod_{i\in T}(1-s_i)
+=\sum_{\substack{I\subseteq T\\I\in\Omega_G}}(-1)^{|I|}m_I(s).
+\tag{11.9}
+$$
+
+Every legal coefficient in this expansion is nonzero, and some
+legal subset of $T$ has size $\alpha(G[T])$. Uniqueness of the
+basis expansion precludes a lower-degree representation.
+Centering changes only the constant coefficient. These inclusion
+and variational steps are classical ingredients in the application
+of the actual energy matrix, rather than new general basis theorems.
+
+For the original open path, $\alpha(G)=\lceil n/2\rceil$.
+Theorem 10.2 supplies the strict separation
+
+$$
+\gamma^{(2)}<\frac1{10}\le\gamma^{(1)}
+\quad\text{for the law and weights (10.1)}.
+\tag{11.10}
+$$
+
+It does not identify $\gamma^{(2)}$ with the full gap. The degree
+of a particular cylinder can grow with length; that fact does not
+exclude every other uniformly bounded-degree family of slow
+directions.
+
+For the diagonal occupation operator
+$\hat M_I=\prod_{i\in I}\hat n_i$, its centered phase tangent is
+$v_I=D(m_I-\mu_I)$. The stochastic-parent correspondence of
+Chapter 1 gives the same Gram and parent matrices:
+
+$$
+\langle v_I,v_J\rangle=V_{IJ},\qquad
+\langle v_I,H_{\lambda,\omega}v_J\rangle=A_{IJ}.
+\tag{11.11}
+$$
+
+Thus joint occupation extends the phase-generator menu inside
+one common preparation. Equation (11.11) neither changes the
+occupation law nor supplies a physical energy scale or control
+implementation.
+
+## 12. A linear occupation signal has slow spectral overlap
+
+### 12.1. The legal particle-hole order and a quantitative overlap
+
+**Definition 12.1 (Staggered signal and the heat-bath spectrum).**
+Return to the open path $B_n$, positive activities and positive
+normalized site weights. Let $E_i$ be conditional expectation
+given all sites except $i$, and set on real $L^2(p)$
+
+$$
+P=\sum_i\omega_iE_i,\qquad H_{\rm cl}=I-P.
+\tag{12.1}
+$$
+
+Every $E_i$ is an orthogonal projection. Consequently $P$ is
+self-adjoint with spectrum in $[0,1]$ and $H_{\rm cl}$ has
+spectrum in $[0,1]$. Its Dirichlet form is (9.4). The legal-flip
+graph is connected: remove every occupied site to reach the
+vacuum, then insert the sites of any legal target. Positive rates
+therefore make the zero eigenspace of $H_{\rm cl}$ exactly the
+constants. Write $\gamma>0$ for its smallest positive eigenvalue,
+$\Lambda$ for its largest eigenvalue and $\Pi_\gamma$ for its
+$L^2(p)$ orthogonal gap projection.
+
+Use the particle-hole coordinates and linear signal
+
+$$
+y_i=\begin{cases}s_i,&i\text{ odd},\\1-s_i,&i\text{ even},\end{cases}
+\qquad
+S=\sum_i y_i
+=\lfloor n/2\rfloor+\sum_{i\text{ odd}}s_i-\sum_{i\text{ even}}s_i,
+\qquad S_0=S-\mathbb E_pS.
+\tag{12.2}
+$$
+
+The order is coordinatewise in $y$. Across each physical edge,
+legality is exactly $y_{\rm odd}\le y_{\rm even}$.
+
+**Theorem 12.2 (Positive slow overlap with an explicit actual-law bound).**
+For every $n\ge1$ in Definition 12.1,
+
+$$
+\eta:=\frac{\|\Pi_\gamma S_0\|_{L^2(p)}^2}
+{\operatorname{Var}_p(S)}>0,\qquad
+\eta\ge\frac{p_{\min}}{n^2},\qquad
+p_{\min}=\min_{s\in B_n}p(s)>0.
+\tag{12.3}
+$$
+
+Proof. Conditional on the other legal coordinates, the chance
+that the updated $y_i$ is one is
+
+$$
+\begin{cases}
+q_i\displaystyle\prod_{j\in N(i)}y_j,&i\text{ odd},\\
+1-q_i\displaystyle\prod_{j\in N(i)}(1-y_j),&i\text{ even}.
+\end{cases}
+\tag{12.4}
+$$
+
+Both expressions increase with the neighboring $y$ coordinates.
+Use the same selected site and the same uniform random number
+for two ordered inputs. The updated configurations remain legal
+and ordered. Hence $P$ preserves increasing functions, as does
+
+$$
+e^{-tH_{\rm cl}}=e^{-t}\sum_{k\ge0}\frac{t^k}{k!}P^k.
+\tag{12.5}
+$$
+
+The increasing-eigenfunction spectral-projection method is an
+established ingredient: Nacu [Nacu03], Lemma 3 attributed to
+Y. Peres, uses it for monotone Ising dynamics. On the present
+legal finite poset its required spanning argument is as follows.
+Principal-upset indicators form a triangular inclusion matrix
+in a linear extension of the poset, with diagonal one; thus they
+span all functions. At least one such increasing function $f$
+has nonzero gap projection. By the finite self-adjoint spectral
+decomposition,
+
+$$
+e^{\gamma t}e^{-tH_{\rm cl}}(f-\mathbb E_pf)
+\longrightarrow h:=\Pi_\gamma(f-\mathbb E_pf)\ne0.
+\tag{12.6}
+$$
+
+Each term is increasing; the finite pointwise limit $h$ is
+increasing, centered and a gap eigenfunction. This step uses
+neither an FKG inequality nor invariance of a linear subspace.
+
+Normalize $\operatorname{Var}_p(h)=1$, and let
+$R=\max h-\min h>0$. On every upward legal edge the increments
+of $h$ and $S$ are respectively nonnegative and one. Therefore
+
+$$
+\mathcal E_\omega(h,S)
+=\sum_{\text{legal edges }e}c_e|\Delta_e h|,
+\qquad
+\mathcal E_\omega(h,h)
+\le R\mathcal E_\omega(h,S),
+\qquad c_e>0.
+\tag{12.7}
+$$
+
+Connectivity and nonconstancy make the first sum positive. The
+eigenfunction equation and normalization give
+
+$$
+\gamma=\mathcal E_\omega(h,h),\qquad
+\mathcal E_\omega(h,S)=\gamma\operatorname{Cov}_p(h,S),\qquad
+\operatorname{Cov}_p(h,S)\ge R^{-1}>0.
+\tag{12.8}
+$$
+
+Since $\sum_sp(s)h(s)^2=1$, one has
+$|h(s)|\le p_{\min}^{-1/2}$ and $R\le2p_{\min}^{-1/2}$.
+Orthogonal projection and Cauchy--Schwarz now imply
+
+$$
+\|\Pi_\gamma S_0\|^2
+\ge\langle h,S_0\rangle_p^2
+\ge\frac{p_{\min}}4.
+\tag{12.9}
+$$
+
+The signal lies in $[0,n]$. Expanding its variance around the
+constant $n/2$ gives $\operatorname{Var}_p(S)\le n^2/4$.
+It is nonconstant on the positive carrier. Division proves
+(12.3). $\square$
+
+The quantitative hard-core overlap is the deduction here.
+Nacu's Corollary 6 instead establishes a linear gap eigenfunction
+for zero-field ferromagnetic Ising on a cycle. That linear
+invariance is not a premise of Theorem 12.2: at an interior path
+site the hard-core update contains the genuine quadratic
+neighbor product in (12.4).
+
+### 12.2. Time filtering, polynomial growth and their resource boundary
+
+**Theorem 12.3 (A finite-law filtering bridge with parameter-dependent rate).**
+Define the stationary classical covariance
+
+$$
+C(t)=\langle S_0,e^{-tH_{\rm cl}}S_0\rangle_p
+=\operatorname{Cov}(S(X_0),S(X_t)),\qquad t\ge0.
+\tag{12.10}
+$$
+
+Here $X_t$ is the stationary continuous-time heat-bath chain with
+generator $P-I$. Then $C(t)>0$ and
+
+$$
+-\lim_{t\to\infty}\frac1t\log C(t)=\gamma.
+\tag{12.11}
+$$
+
+If $H_{\rm cl}$ has a distinct eigenvalue above $\gamma$, let
+$\sigma$ be the separation to the next one. Its effective rate obeys
+
+$$
+0\le-\frac{d}{dt}\log C(t)-\gamma
+\le(\Lambda-\gamma)\frac{1-\eta}{\eta}e^{-\sigma t}.
+\tag{12.12}
+$$
+
+If there is no such eigenvalue, the left side is identically zero.
+For $n\ge2$, $\gamma<1$, and the nonzero polynomials
+$f_k=P^kS_0$ have legal degree at most $k+1$. Their Rayleigh
+quotients $R_k$ decrease to $\gamma$. When $\sigma$ exists,
+
+$$
+0\le R_k-\gamma
+\le(\Lambda-\gamma)\frac{1-\eta}{\eta}
+\left(\frac{1-\gamma-\sigma}{1-\gamma}\right)^{2k},
+\qquad k\ge1,
+\tag{12.13}
+$$
+
+and $\gamma\le\gamma^{(k+1)}\le R_k$.
+
+Proof. Write $a_\ell=\|\Pi_\ell S_0\|^2$ for the distinct positive
+eigenvalues $\ell$ of $H_{\rm cl}$. Theorem 12.2 gives
+$a_\gamma>0$ and $a_\gamma=\eta\operatorname{Var}_p(S)$.
+The finite spectral expansion is
+
+$$
+C(t)=\sum_\ell a_\ell e^{-\ell t}.
+\tag{12.14}
+$$
+
+Its leading term proves (12.11). In the logarithmic derivative,
+the excess over $\gamma$ is
+$\sum_{\ell>\gamma}(\ell-\gamma)a_\ell e^{-\ell t}/C(t)$.
+Use $C(t)\ge a_\gamma e^{-\gamma t}$,
+$\ell-\gamma\le\Lambda-\gamma$ and
+$\ell-\gamma\ge\sigma$ to obtain (12.12).
+
+For $n\ge2$, choose any centered singleton occupation $g$ and a
+different site $i$. Then $E_ig=g$ and
+$\langle g,Pg\rangle_p\ge\omega_i\|g\|^2>0$.
+Thus $P$ has a positive eigenvalue on the centered subspace,
+which implies $1-\gamma>0$. The gap component of $f_k$ is
+$(1-\gamma)^k\Pi_\gamma S_0$, so $f_k\ne0$.
+
+For a legal monomial $m_I$, a conditional update at $i\notin I$
+leaves it unchanged; at $i\in I$ it replaces it by
+
+$$
+q_i m_{I\setminus\{i\}}
+\prod_{j\in N(i)}(1-s_j).
+\tag{12.15}
+$$
+
+The open path has degree at most two at every site. Expansion
+and removal of illegal monomials show
+$P\mathcal P_d\subseteq\mathcal P_{d+1}$. Starting from the
+linear $S_0$ proves the degree bound.
+
+The quotient $R_k$ is the average of $\ell$ with nonnegative
+weights $a_\ell(1-\ell)^{2k}$. Multiplication by
+$(1-\ell)^2$, a decreasing function on $[0,1]$, decreases that
+average. Explicitly, for $b_\ell=a_\ell(1-\ell)^{2k}$ the
+difference of the two averages has numerator
+
+$$
+\frac12\sum_{\ell,r}b_\ell b_r(\ell-r)
+\bigl((1-r)^2-(1-\ell)^2\bigr)\ge0.
+\tag{12.16}
+$$
+
+The denominator is the positive product of the two weight sums.
+The ratio of all faster weight to gap weight is at most
+$((1-\gamma-\sigma)/(1-\gamma))^{2k}(1-\eta)/\eta$,
+proving (12.13), convergence and the variational comparison.
+For $n=1$, $\gamma=1$ and $PS_0=0$, so this power-iteration
+assertion excludes that endpoint. $\square$
+
+Theorem 10.2 and Theorem 12.2 concern different questions.
+A linear signal can have nonzero overlap with the slow eigenspace
+while its immediate Rayleigh quotient exceeds that of a joint
+phase. Filtering redistributes the spectral weights, and its
+polynomial degree increases. Neither (12.12) nor (12.13) supplies
+a uniform finite-time or uniformly bounded-degree result over
+all lengths and arbitrary positive parameters: their constants
+retain $p_{\min}$, $\eta$ and the distinct-eigenvalue separation.
+Whether a different argument gives such a resource guarantee
+remains a separate question.
+
+### 12.3. The same spectral weights in imaginary and real quantum time
+
+**Proposition 12.4 (Quantum correlation of the staggered tangent).**
+For the supplied coherent preparation and parent of Chapter 1,
+put $D=\operatorname{diag}(\sqrt p)$ and $v_S=DS_0$. Then
+
+$$
+\begin{aligned}
+\langle v_S,e^{-tH_{\lambda,\omega}}v_S\rangle&=C(t),\\
+\langle v_S,e^{-itE_0H_{\lambda,\omega}/\hbar}v_S\rangle
+&=\sum_\ell a_\ell e^{-itE_0\ell/\hbar}.
+\end{aligned}
+\tag{12.17}
+$$
+
+Here $E_0>0$ is a supplied physical energy scale. The real-time
+correlation has nonzero spectral weight at excitation energy
+$E_0\gamma$ and angular frequency $E_0\gamma/\hbar$.
+
+Proof. The existing stochastic-matrix-form similarity is
+$H_{\lambda,\omega}=DH_{\rm cl}D^{-1}$, and $D$ is an isometry
+from $L^2(p)$ to the real-amplitude subspace. Apply the same
+finite spectral functional calculus to the two exponential
+functions. Theorem 12.2 gives $a_\gamma>0$. $\square$
+
+The similarity and its spectral correspondence are established
+stochastic-matrix-form mathematics; see [Castelnovo05]. The
+hard-core staggered-overlap theorem supplies the particular
+nonzero spectral weight used here. Imaginary time reproduces
+classical relaxation. Real-time unitary evolution of this finite
+system produces an oscillatory finite sum, so the decay formula
+(12.11) is not a formula for that real-time correlation.
+Equation (12.17) specifies a correlation in the supplied model;
+it supplies neither a measurement protocol, finite-sample error,
+efficient preparation nor control cost.
+
+## 13. An independently inhomogeneous all-length certificate
+
+**Theorem 13.1 (High-activity box with nearly uniform site weights).**
+For every $n\ge7$, suppose there exists $L\ge100$ such that
+
+$$
+L\le\lambda_i\le\frac{11L}{10}\quad(1\le i\le n),\qquad
+\omega_i>0,\qquad\sum_i\omega_i=1,\qquad
+\frac{\max_i\omega_i}{\min_i\omega_i}\le\frac{11}{10}.
+\tag{13.1}
+$$
+
+Activities and weights can vary independently at every site.
+For these original-path parameters,
+
+$$
+\gamma<1-\Lambda.
+\tag{13.2}
+$$
+
+Proof. Put $m=\lfloor n/2\rfloor$, $T=\{1,3,5,\ldots\}\cap[n]$,
+$a=\min_i\omega_i$, $b=\max_i\omega_i$, $U=11L/10$, and use
+the matching $\mathcal M=\{(1,2),(3,4),\ldots,(2m-1,2m)\}$.
+For each matched pair, monotonicity of $xy/(x+y)$ gives
+$\omega_i\omega_j/(\omega_i+\omega_j)\ge a/2$.
+Also $1+U\le111L/100$ and
+
+$$
+1-q_iq_j\ge1-\left(\frac{U}{1+U}\right)^2
+\ge\frac{2U}{(1+U)^2}
+\ge\frac{22000}{12321L}>\frac7{4L}.
+\tag{13.3}
+$$
+
+Consequently Corollary 9.3 supplies
+
+$$
+\sum_{ij\in\mathcal M}r_{ij}\ge\frac{7ma}{8L}.
+\tag{13.4}
+$$
+
+Conditioned on $A_T$, all even sites are independent with
+their original activities, because every edge has an odd
+endpoint fixed empty. This is conditional independence under
+the original law, not unconditional independence of occupations.
+Thus with $R=Z/Z_T>1$ the exact cylinder quotient is
+
+$$
+\kappa_T=\frac{R}{R-1}\bar h_T,\qquad
+\bar h_T=\sum_{i\in T}\omega_iq_i
+\prod_{j\in N(i)}(1+\lambda_j)^{-1}.
+\tag{13.5}
+$$
+
+Summing first over the occupied odd subset also gives the exact
+positive-term expansion
+
+$$
+R=\sum_{I\subseteq T}\lambda_I
+\prod_{j\in N(I)}(1+\lambda_j)^{-1}.
+\tag{13.6}
+$$
+
+Every subset of $T$ is legal. The empty subset contributes one;
+other terms below are retained lower bounds on this same sum.
+
+For odd $n=2m+1$, there are two odd endpoints of degree one and
+$m-1$ odd sites of degree two. Hence
+
+$$
+\frac{L\bar h_T}{a}
+\le\frac{11}{10}\left(2+\frac{m-1}{100}\right).
+\tag{13.7}
+$$
+
+At $n=7$, the full odd-set term in (13.6) yields
+$R\ge L^4/(1+U)^3\ge100(100/111)^3>50$.
+Therefore $R/(R-1)<10/9$, and
+
+$$
+\frac{L\kappa_T}{a}
+<\frac{1111}{450}<\frac{21}{8}=\frac{7m}{8}.
+\tag{13.8}
+$$
+
+For odd $n$ with $m\ge4$, retain the two singleton odd-endpoint
+terms in (13.6). Each is at least $L/(1+U)\ge100/111$.
+Thus $R/(R-1)\le311/200$ and
+
+$$
+\frac{L\kappa_T}{a}
+\le\frac{3421(m+199)}{200000}<\frac{7m}{8}.
+\tag{13.9}
+$$
+
+The last comparison holds at $m=4$, since $694463<700000$,
+and its right side grows faster as $m$ increases.
+
+For even $n=2m\ge8$, there is one odd endpoint of degree one
+and $m-1$ odd sites of degree two. The endpoint singleton term
+gives $R/(R-1)\le211/100$, so
+
+$$
+\frac{L\kappa_T}{a}
+\le\frac{2321(m+99)}{100000}<\frac{7m}{8}.
+\tag{13.10}
+$$
+
+At $m=4$, $239063<350000$; once again the right side has
+larger slope. Equations (13.8)--(13.10), (13.4) and Chapter 9
+give
+
+$$
+\gamma\le\kappa_T
+<\sum_{ij\in\mathcal M}r_{ij}
+\le D_{\mathcal M}\le1-\Lambda.
+\tag{13.11}
+$$
+
+All endpoint counts use the original open path. $\square$
+
+This certificate extends the homogeneous-activity parity family
+in §9.3 to a box with genuinely independent site parameters.
+It does not settle $\gamma\le1-\Lambda$ for arbitrary positive
+activity and weight vectors at lengths at least seven. Its
+proof is a repository-derived cylinder-and-matching comparison;
+no literature-priority claim is made.
+
+[Nacu03]: ../../../Library/StatisticalMechanics/nacu2003monotone.md
+
+[Castelnovo05]: ../../../Library/StatisticalMechanics/castelnovo2005stochasticmatrixform.md
+
+## 追加锚（本行以下为增补区）
