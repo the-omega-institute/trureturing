@@ -227,4 +227,39 @@ theorem finite_stopping_layer_telescope
     exact hs.symm.trans hleft
   rw [hprefix K, ← hsum]
 
+/-- Actual records grow by at most one entry, remain prefixes of all later
+records, and stay fixed after a return action. -/
+theorem acquired_history_geometry
+    {Seed Tape : Type} (π : Seed → Bool → List (Bool × Bool) → Bool ⊕ (Bool × Bool))
+    (S : Bool) (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) :
+    (∀ n, (acquiredHistory π S answer n ω).length ≤ n) ∧
+    (∀ n m, n ≤ m → List.IsPrefix (acquiredHistory π S answer n ω)
+      (acquiredHistory π S answer m ω)) ∧
+    (∀ n cell, π ω.1 S (acquiredHistory π S answer n ω) = Sum.inr cell →
+      ∀ r, acquiredHistory π S answer (n + r) ω = acquiredHistory π S answer n ω) := by
+  have hstep (n : ℕ) : List.IsPrefix (acquiredHistory π S answer n ω)
+      (acquiredHistory π S answer (n + 1) ω) := by
+    rw [acquiredHistory]
+    split
+    · exact ⟨_, rfl⟩
+    · exact ⟨[], List.append_nil _⟩
+  refine ⟨?_, ?_, ?_⟩
+  · intro n
+    induction n with
+    | zero => simp [acquiredHistory]
+    | succ n ih =>
+      rw [acquiredHistory]
+      split
+      · simpa only [List.length_append, List.length_singleton] using Nat.add_le_add_right ih 1
+      · exact ih.trans (Nat.le_succ n)
+  · intro n m hnm
+    induction m, hnm using Nat.le_induction with
+    | base => exact ⟨[], List.append_nil _⟩
+    | succ m hnm ih => exact ih.trans (hstep m)
+  · intro n cell hreturn r
+    induction r with
+    | zero => rfl
+    | succ r ih =>
+      rw [Nat.add_succ, acquiredHistory, ih, hreturn]
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
