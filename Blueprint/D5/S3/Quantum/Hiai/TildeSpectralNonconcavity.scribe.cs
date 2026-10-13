@@ -13,7 +13,7 @@ internal sealed class TildeSpectralNonconcavityDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Quantum/Hiai/TildeSpectralNonconcavity.strict_first_variable_jensen_violation"),
                 H("Off-midpoint strict Jensen violations"),
                 StatementSource.FromAuthor(Endpoint()),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/hiai2026quasigeometric")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumBounds/hiai2026quasigeometric")),
                 Blocks(
                     Paragraph(Text("For every 0 < alpha < 1, alpha different from one half, and p > 0, "
                         + "positive definite complex 2 by 2 matrices A, C and one common B violate "
@@ -41,7 +41,7 @@ internal sealed class TildeSpectralNonconcavityDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Quantum/Hiai/TildeSpectralNonconcavity.joint_concavity_classification"),
                 H("All-dimension SPD classification"),
                 StatementSource.FromAuthor(Classification()),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/hiai2026quasigeometric")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumBounds/hiai2026quasigeometric")),
                 Blocks(
                     Paragraph(Text("Under 0 < alpha < 1 and p > 0, joint concavity on SPD complex matrix pairs "
                         + "simultaneously in every Fin n dimension is equivalent to alpha=1/2 and p<=1. "
