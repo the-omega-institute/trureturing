@@ -1,0 +1,161 @@
+**Theorem 110.2 (Class-preserving feasibility transport).** For every
+sequence (110.2) and every $0<\varepsilon\le1$,
+
+$$
+\begin{aligned}
+\exists N\in\mathcal N_2:\ e_a(N)\le\varepsilon
+ &\quad\Longleftrightarrow\quad
+             \mathcal F_N(a,\varepsilon)\ne\varnothing,\\
+\exists O\in\mathcal O_2:\ e_a(O)\le\varepsilon
+ &\quad\Longleftrightarrow\quad
+             \mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\end{aligned}
+\tag{110.7}
+$$
+
+In particular any globally cap-feasible finite $\mathcal N_2$ kernel
+satisfying (109.1) supplies an original $\mathcal O_2$ rule at that
+same closed cap. This rule reproduces that finite kernel's laws at
+every actual low word, and on every actual tail source its error is
+
+$$
+\max\{1-p_{1^L}(0),a_{n(x)}\}\le\varepsilon.
+\tag{110.8}
+$$
+
+The original-to-finite direction transports feasibility, without
+asserting preservation of an arbitrary original competitor's laws.
+
+**Proof.** Use the measurable original-tape projection $\pi_L$ of
+[Acquisition Resources, (83.7)--(83.9)](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#83-a-complete-finite-query-tree-criterion-for-positive-error-hard-counts):
+it fixes $\theta_1,\ldots,\theta_L$ and sends every other tape to
+$\theta_0$. Event pullbacks contract TV. It fixes (110.3) when
+$n(x)\le L$ and projects it to $\delta_{\theta_0}$ otherwise.
+For a law supported on these $L+1$ marks and $n>L$, the same supplier
+gives the exact identity
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^Lp(j)\delta_{\theta_j},
+                  (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+          =\max\{1-p(0),a_n\}.
+\tag{110.9}
+$$
+
+Here projection is a device for proving finite feasibility; the
+constructed acquisitions will output actual original marks.
+
+For necessity fix an original competitor $A$ in either restricted
+class. Countability of $X$ gives one common probability-one seed
+event $G$ on which every actual execution hands off finitely with
+$K\le2$. For $\mathcal N_2$ its preselected schedule has length at
+most two, and for $\mathcal O_2$ the same bound follows from its
+contract and the schedule normalization in Proposition 90.2. On a
+null complement it may be replaced by an empty schedule. Its maximum
+preselected address $M_S$ is measurable and finite almost surely;
+therefore
+
+$$
+J_m=\{M_S>m\},\qquad \gamma_m=\mathsf P_A(J_m)\longrightarrow0.
+\tag{110.10}
+$$
+
+This is a common seed event controlling the entire preselected
+schedule. It is not a separate sourcewise address bound.
+
+For each $m\ge L+1$ and each $b\in B_L$, fix an actual source
+$x_{b,m}$ with low word $b$ and zero replies at every index
+$L<i\le m$. Boundaries, Theorem 35.2 supplies this finite family
+before seeds. Its projected selected targets are precisely $\eta_b$:
+a low word with a zero has its prescribed first absence, and the
+all-positive low word has actual first absence $L+1$. Choose a
+deterministic transition cutoff $t_m$ for this finite family such that
+
+$$
+\max_{b\in B_L}\mathsf P_A
+       \{\text{handoff at }x_{b,m}\text{ occurs after }t_m\}\le1/m.
+\tag{110.11}
+$$
+
+Sourcewise almost-sure finite handoff supplies this cutoff. It is
+not a uniform transition bound over $X$.
+
+Apply the finite simulation and whole-execution transport of the
+proof of Theorem 83.3: supply low replies $b$, supply zero at
+$L<i\le m$, and output label zero before any address above $m$,
+third request or transition beyond $t_m$. At an original handoff
+project its tape by $\pi_L$. Repetitions are counted during this
+simulation. For each seed it gives a deterministic output function
+$f_{s,m}:B_L\to J_L$; its label events are measurable by the
+finite-record witness argument in that proof. Finite actual witnesses
+for consistent reply words are fixed before seeds, and the
+finite-execution supplier is [Source-Correlated Laws, Lemma
+45.3](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#45-lawful-acquisition-through-one-inherited-seed).
+
+The restricted class survives this construction. In the preselected
+case, all variable replies belong to the at most two distinct low
+indices of the seed's schedule. Acquire these low replies first and
+then evaluate the truncated table using them and the fixed high
+replies. This is a finite preselected table, even when its output is
+a cutoff label or an original early output. Repeated low requests
+need no second observation in this representation. In the stopped
+case, all high indices follow all selected low indices. A selected
+low zero stops before any high question; if the low schedule is
+exhausted positively, its high continuation has fixed replies.
+Consequently two low words in the same stopped low cell have the
+same truncated output. A transition cutoff also gives the same
+output on such a cell, because processing is deterministic on the
+same acquired transcript and seed. The resulting function is thus
+represented by an increasing stopped low schedule of length at most
+two. No high-coordinate simulation is used as an uncounted source
+observation in the eventual acquisition.
+
+In either class the deterministic low catalog is finite. Choose once
+one representative schedule and table for each representable output
+function. The measurable map $s\mapsto(f_{s,m}(b))_{b\in B_L}$
+then supplies a common probability vector $w^{(m)}$ on that class's
+finite catalog. On the whole event
+
+$$
+G\setminus J_m\ \cap\
+\{\text{handoff at }x_{b,m}\text{ occurs by }t_m\},
+\tag{110.12}
+$$
+
+the simulation and original finite execution agree after projection.
+The complement has probability at most $\gamma_m+1/m$.
+The supplied event coupling and projection contraction therefore give
+for the finite laws $p_b^{(m)}$
+
+$$
+\operatorname{TV}(p_b^{(m)},\eta_b)
+                \le\varepsilon+\gamma_m+1/m
+                   \qquad\text{for every }b\in B_L.
+\tag{110.13}
+$$
+
+The finite catalog simplex is compact. A subsequence of its common
+weight vectors converges to one weight vector in the same class.
+All finitely many law coordinates and TV constraints are continuous
+in these weights. Its limit $p$ therefore satisfies the exact closed
+cap at every word, with $p\in\mathscr N_L$ in the preselected case
+and $p\in\mathscr O_L$ in the stopped case. This proves the two
+necessary finite feasibility statements, with full-carrier outputs,
+arbitrary addresses and repetitions retained in the original
+competitor.
+
+Conversely, execute any finite rule by actually querying its scheduled
+low primes and handing its leaf mark to the unchanged consumer.
+The finite common seed and table give finite handoff for every seed
+and actual source, using at most two actual requests. At a source
+with $n(x)\le L$, its low word has exactly the selected target in
+(110.5), regardless of all later zero patterns. At every actual
+$n(x)>L$, the acquired low word is $1^L$, and no tail mark is
+emitted. Since $a_{n(x)}\le\varepsilon$, (110.9) proves (110.8),
+including equality of a tail amplitude with the cap. This gives the
+first sufficient direction. For the second use
+$\mathscr O_L=\mathscr C_L\subseteq\mathscr N_L$ from Theorem
+109.1. Its explicit seed construction supplies the stopped rule.
+All required caps concern the mixed law, not individual schedules.
+When $\varepsilon=1$, $L=0$ and immediate base output is such a
+rule. $\square$
+

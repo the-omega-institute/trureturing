@@ -230,7 +230,47 @@ internal sealed class NormalizedJensenDegreeLoweringDocument : IScribeDocumentDe
                     + "complex-root branches, target-disc node counts, endpoint "
                     + "existence criteria or uniform growing-core control. Those "
                     + "interfaces, all-height exclusion, RH and strict Robin above "
-                    + "5040 remain unresolved by this application."))),
+                    + "5040 remain unresolved by this application.")),
+                    Paragraph(Text(
+                    "For the fixed reference cubic Cstar(z)=z^3-3(a+sigma^2)z-b, "
+                    + "assume a>=0, sigma>0 and |b|<=2a sqrt(a). Writing "
+                    + "h=sqrt(a+sigma^2), the endpoint signs and the intermediate "
+                    + "value theorem construct roots in (-2h,-h), (-h,h) and "
+                    + "(h,2h). The preceding slope comparison gives distance at "
+                    + "least sigma/2 from either adjacent critical point, hence "
+                    + "both adjacent reference-root gaps are at least sigma. "
+                    + "No root labels are imposed as hypotheses.")),
+                    Paragraph(Text(
+                    "For each fixed complex U and V_3 with "
+                    + "|U-sigma^2|<sigma^2/32 and |V_3|<sigma^3/32, compare "
+                    + "C(z)=z^3-3(a+U)z-b+V_3 with Cstar on the fixed square "
+                    + "around each reference root, of halfwidth sigma/12. "
+                    + "The square lies strictly inside the sigma/8 disc, and "
+                    + "its border is at distance at least sigma/12 from the "
+                    + "center. Factoring Cstar and using the reference slope "
+                    + "gives the border lower bound "
+                    + "(147/1536)sigma^2(|lambda|+h), strictly exceeding the "
+                    + "original perturbation budget (3/32)sigma^2(|lambda|+h). "
+                    + "The existing rectangle Rouche zero-count supplier "
+                    + "therefore gives one unique simple C-zero in each square.")),
+                    Paragraph(Text(
+                    "These three zeros are distinct and satisfy "
+                    + "|s_j-lambda_j|<sigma/8. Their actual root equations imply "
+                    + "the complete identity C(z)=(z-s_1)(z-s_2)(z-s_3) at "
+                    + "every complex z. This is a pointwise construction for "
+                    + "every allowed pair U,V_3; neither the zeros nor the "
+                    + "factorization are assumed. It reuses the same scalar "
+                    + "comparison and existing complex analytic zero count.")),
+                    Paragraph(Text(
+                    "The pointwise cubic construction does not yet construct "
+                    + "analytic parameter labels on a neighborhood of the closed "
+                    + "target disc. Label gluing, the implicit speed bound, full "
+                    + "complex binding to the actual J and source-derivative "
+                    + "response, conjugation and injectivity, and inclusive "
+                    + "endpoint criteria remain separate obligations. Uniform "
+                    + "actual-source estimates, growing-core geometry, removal "
+                    + "of local all-critical premises, RH and strict Robin for "
+                    + "every integer above 5040 remain unresolved."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-jensen-canonical-bridge"),
