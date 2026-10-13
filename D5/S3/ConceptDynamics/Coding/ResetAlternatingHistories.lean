@@ -24,12 +24,12 @@ namespace Alternating
 open D5.S3.ConceptDynamics.Coding.EssentialWordRealization
 open D5.S3.ConceptDynamics.Coding.FiniteWindowTableCriterion
 
-private theorem source_typed {q : ℕ} (hq : 0 < q)
+theorem source_typed {q : ℕ} (hq : 0 < q)
     (p : Edge (resetMatrix q) × Sign) :
     sourceB (typedEdge p) = (expandedGraph (resetMatrix q)).source p := by
   rw [← actual_source hq, original_typed]
 
-private theorem target_typed {q : ℕ} (hq : 0 < q)
+theorem target_typed {q : ℕ} (hq : 0 < q)
     (p : Edge (resetMatrix q) × Sign) :
     targetB hq (typedEdge p) = (expandedGraph (resetMatrix q)).target p := by
   rw [← actual_target hq, original_typed]
@@ -299,7 +299,7 @@ open D5.S3.ConceptDynamics.Coding.NumberedSameCutWholeRay
 /- Numbering for a sum is coefficientwise: the first summand occupies
    [0,M.coeff), and the second occupies [M.coeff,M.coeff+N.coeff).
    The source, target, group label and every Fin copy are retained. -/
-private def addLeft {q : ℕ} (M N : GroupMat Sign q q) (e : Edge M) :
+def addLeft {q : ℕ} (M N : GroupMat Sign q q) (e : Edge M) :
     Edge (M + N) :=
   ⟨e.source, e.target, e.label, ⟨e.number.val, by
     have h := e.number.isLt
@@ -309,7 +309,7 @@ private def addLeft {q : ℕ} (M N : GroupMat Sign q q) (e : Edge M) :
       (N e.source e.target).coeff e.label
     omega⟩⟩
 
-private def addRight {q : ℕ} (M N : GroupMat Sign q q) (e : Edge N) :
+def addRight {q : ℕ} (M N : GroupMat Sign q q) (e : Edge N) :
     Edge (M + N) :=
   ⟨e.source, e.target, e.label,
     ⟨(M e.source e.target).coeff e.label + e.number.val, by
@@ -373,7 +373,7 @@ private theorem joinAdd_split {q : ℕ} (M N : GroupMat Sign q q)
         (e.number.val - (M e.source e.target).coeff e.label) = e.number.val
       omega
 
-private def expandedAddEquiv {q : ℕ} (M N : GroupMat Sign q q) :
+def expandedAddEquiv {q : ℕ} (M N : GroupMat Sign q q) :
     Sum (Edge M × Sign) (Edge N × Sign) ≃ Edge (M + N) × Sign where
   toFun p := match p with
     | .inl e => (addLeft M N e.1, e.2)
@@ -397,7 +397,7 @@ private def expandedAddEquiv {q : ℕ} (M N : GroupMat Sign q q) :
         simpa only [hs] using
           (Prod.ext h rfl : (addRight M N e, p.2) = p)
 
-private theorem identity_coefficient {q : ℕ} (i j : Fin q) (g : Sign) :
+theorem identity_coefficient {q : ℕ} (i j : Fin q) (g : Sign) :
     ((1 : GroupMat Sign q q) i j).coeff g =
       if i = j ∧ g = 1 then 1 else 0 := by
   classical
@@ -405,7 +405,7 @@ private theorem identity_coefficient {q : ℕ} (i j : Fin q) (g : Sign) :
     simp [Matrix.one_apply, MonoidAlgebra.one_def, MonoidAlgebra.coeff_single,
       Finsupp.single_apply, hij, hg, eq_comm]
 
-private def identityEdge {q : ℕ} (i : Fin q) : Edge (1 : GroupMat Sign q q) :=
+def identityEdge {q : ℕ} (i : Fin q) : Edge (1 : GroupMat Sign q q) :=
   ⟨i, i, 1, ⟨0, by rw [identity_coefficient]; simp⟩⟩
 
 private theorem identity_support {q : ℕ} (e : Edge (1 : GroupMat Sign q q)) :
@@ -417,7 +417,7 @@ private theorem identity_support {q : ℕ} (e : Edge (1 : GroupMat Sign q q)) :
   · exact h
   · omega
 
-private def identityExpandedEquiv (q : ℕ) :
+def identityExpandedEquiv (q : ℕ) :
     Vertex q ≃ Edge (1 : GroupMat Sign q q) × Sign where
   toFun v := (identityEdge v.1, v.2)
   invFun p := (p.1.source, p.2)
