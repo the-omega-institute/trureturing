@@ -1,0 +1,20 @@
+**Theorem 46.6 (sound finite synthesis after the correction).** Under the
+finite chart, action and reply assumptions of Theorem 44.2, if a
+source-total horizon or certified regular-history certificate is supplied,
+and all predicates above are Presburger-definable, finite-budget feasibility
+and the finite Pareto basis are decidable by the stated finite enumeration.
+
+**Proof.** The certificate makes the path family finite and complete: no
+admitted source, response branch, or nonterminal extension is omitted. The
+universal source formula therefore decides legality, termination, terminal-row
+equality and the actual same-source cost bound for each finite controller
+graph. Presburger elimination decides that formula. Upward closure and
+Dickson's lemma then compute the finite Pareto basis, using
+$\operatorname{Feas}^{\mathrm{fin}}_K$ for mixed boxes. \(\square\)
+
+Finally, $q_r+1$ is a terminal-run convention: it counts response-producing
+phases together with the terminal phase only when a terminal event exists. An
+infinite passive loop has no terminal phase, so the notation does not assign
+it a completed phase count. In either case, it does not bound the raw ordered
+event history.
+
