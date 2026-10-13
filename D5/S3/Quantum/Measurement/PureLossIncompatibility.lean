@@ -131,11 +131,7 @@ private theorem amplify_add (M N : Op) : amplify (M + N) = amplify M + amplify N
   apply lp.ext
   funext k
   change (amplify (M + N) w) k = ((amplify M + amplify N) w) k
-  rw [amplify_apply, _root_.add_apply]
-  rw [_root_.add_apply]
-  rw [show ((amplify M) w + (amplify N) w).1 k =
-      (amplify M w) k + (amplify N w) k by rfl]
-  rw [amplify_apply, amplify_apply]
+  simp only [amplify_apply, _root_.add_apply, lp.coeFn_add, Pi.add_apply]
 
 private theorem amplify_one : amplify (1 : Op) = 1 := by
   apply ContinuousLinearMap.ext
@@ -191,11 +187,8 @@ private theorem dualLoss_add (τ : Loss) (M N : Op) :
 private theorem dualLoss_one (τ : Loss) : dualLoss τ 1 = 1 := by
   unfold dualLoss
   rw [stinespring_eq_iso, amplify_one]
-  have hcomp : (1 : K →L[ℂ] K) ∘L (stinespringIso τ).toContinuousLinearMap =
-      (stinespringIso τ).toContinuousLinearMap := by
-    ext x
-    rfl
-  rw [hcomp]
+  rw [show (1 : K →L[ℂ] K) = ContinuousLinearMap.id ℂ K from rfl,
+    ContinuousLinearMap.id_comp]
   exact LinearIsometry.adjoint_comp_self (stinespringIso τ)
 
 private theorem dualLoss_binary (τ : Loss) (M : Fin 2 → Op)
