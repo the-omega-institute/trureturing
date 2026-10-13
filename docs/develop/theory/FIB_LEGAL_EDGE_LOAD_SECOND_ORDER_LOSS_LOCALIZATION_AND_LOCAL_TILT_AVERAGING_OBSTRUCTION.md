@@ -1231,3 +1231,84 @@ three-component local response can remain efficient while the global boundary
 requires additional memory or multiplicity to represent the same source.
 
 ## 12.99 追加锚（本行以下为增补区）
+
+## 13. Spectral decimation is not an ambient dimension
+
+The latest DEV also contains an exact Riesz/CMV decimation package. Its
+relevant facts are spectral: the moment form makes Laurent monomials with
+different residues modulo four orthogonal, the exponent map
+
+$$
+J(T^i)=T^{4i}
+\tag{13.1}
+$$
+
+is an isometry between the corresponding moment forms, and the associated
+projection norms agree across the scale-four replacement. These facts
+describe a graded spectral address, not four local spatial axes.
+
+**Definition 13.1 (Finite residue sectors).** For a finite Laurent-polynomial
+window, let
+
+$$
+\mathcal P_r
+=\operatorname{span}\{T^i:i\equiv r\pmod4\},
+\qquad r\in\{0,1,2,3\}.
+\tag{13.2}
+$$
+
+The DEV residue-orthogonality theorem says that distinct $\mathcal P_r$ are
+orthogonal for the Riesz moment form. Every finite Laurent polynomial is the
+sum of its four residue components, so this is an orthogonal sector
+decomposition of the finite spectral window. Equation (13.1) transports the
+zero-residue address under decimation; it does not identify the residue label
+with a coordinate direction.
+
+**Proposition 13.2 (Sector count and response rank are different quantities).**
+Let a finite response map respect a direct-sum decomposition
+
+$$
+\mathcal V=\bigoplus_{r=0}^{3}\mathcal V_r,
+\qquad
+\mathcal Y=\bigoplus_{r=0}^{3}\mathcal Y_r,
+\qquad
+\mathscr R_r:\mathcal V_r\to\mathcal Y_r,
+\qquad
+\mathscr R=\bigoplus_{r=0}^{3}\mathscr R_r.
+\tag{13.3}
+$$
+
+Then
+
+$$
+\boxed{
+\operatorname{rank}\mathscr R
+=\sum_{r=0}^{3}\operatorname{rank}\mathscr R_r.
+}
+\tag{13.4}
+$$
+
+The four-sector index therefore gives no value for
+$\operatorname{rank}\mathscr R$ without separate information about the four
+sector maps.
+
+**Proof.** In bases adapted to the two direct sums, $\mathscr R$ is block
+diagonal. Its image is the direct sum of the four block images inside the
+mutually disjoint summands $\mathcal Y_r$, so the dimensions add. $\square$
+
+Consequently, scale-four self-similarity can coexist with a one-component
+sector, a three-component local response, or any larger multiplicity. The
+number four records a decimation and residue structure; it does not prove
+$d=4$, $d=3$, or an $SO(3)$ action. To obtain a three-dimensional local
+claim, one still needs a source-level certificate such as Proposition 11.3
+or an independently supplied equivariant interface from Section 9.
+
+This distinction also limits how the new Riesz results can be transferred to
+FIB. The exact DEV statements establish the spectral identities for their
+declared moment forms and walks. They do not by themselves provide a FIB
+source map, a common legal continuation family, a physical metric, or a
+transport-to-space correspondence. Under the common-realization gate of
+Section 12, they can supply a graded response decomposition only after such
+a bridge is constructed.
+
+## 13.99 追加锚（本行以下为增补区）
