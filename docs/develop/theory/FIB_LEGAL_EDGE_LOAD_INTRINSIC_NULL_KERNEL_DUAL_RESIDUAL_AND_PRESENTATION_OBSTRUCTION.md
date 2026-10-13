@@ -4480,6 +4480,8 @@ root and all-weight equality conditions.
 In the strict crossing branch of (13.20), no real rank-one
 optimal spectral certificate exists. A complex Hermitian
 rank-one matrix can encode the same two real active directions.
+Every finite positive law satisfies $F_*>1/2$, hence
+$1/4<\omega_1^*=\omega_3^*<1/2$ and $0<\omega_2^*<1/2$.
 For every branch, the center has more samples than either
 endpoint exactly when $F_*<1$. The entire strict interval
 pattern (12.22) holds exactly when $1/2<F_*<1$.
@@ -4518,12 +4520,29 @@ The imaginary cross terms cancel. This is a complex rank-one
 certificate, whose real part is (13.18); it packages two real
 phase directions and is not one real phase perturbation.
 
+At the even stationary root, put $f=F(\widehat t)$.
+Using $C_0+C_1+C_2=1$ and $f^2=R(\widehat t)^2$ gives
+
+$$
+(2f-1)((2-\widehat t)f+1)
+=\frac{q(2-q)C_1}{(q-\widehat t)^2}>0.
+\tag{13.22a}
+$$
+
+The second factor is positive because $0<\widehat t<q<2$.
+Therefore $f>1/2$. Since $t_*\le\widehat t$ and $F$ is
+decreasing, $F_*\ge f>1/2$.
+
 Finally (13.8) gives
 $y>x\iff1>F_*$,
 $x>1/4\iff F_*>1/2$,
 $x<1/3\iff F_*<1$, and
 $y<1/2\iff F_*>1/2$. These are the stated necessary and
 sufficient tests. $\square$
+
+Thus only the center-versus-endpoint ordering can fail in the
+older interval pattern; its endpoint lower bound survives every
+finite positive joint weight.
 
 Thus rank assertions require the coefficient field and parameter
 space. Neither certificate rank counts quantum memory dimension,
@@ -4697,5 +4716,162 @@ longer-chain locality and physical preparation require separate
 arguments.
 
 [CC13]: AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md
+
+### 13.6. Distinct thresholds for active sectors and the center premium
+
+**Theorem 13.5 (Explicit negative-determinant thresholds).**
+Fix $a,c>0$ with $c<a^2$. Define
+
+$$
+B=\frac{2(a+c)^2}{TU},\qquad C=\frac{ac}{U},\qquad
+\ell=\frac{c(1+a)^2}{(a^2-c)T},
+\tag{13.36}
+$$
+
+$$
+J_d=\frac{qB}{2(q-d)^2}+\frac{C}{(2-d)^2},\qquad
+s=d^2J_d,
+\tag{13.37}
+$$
+
+$$
+b_{\mathrm{act}}
+=\frac{2}{2\ell+s+\sqrt{s^2+4s(\ell+1)}},\qquad
+b_{\mathrm{prem}}=\frac{1-d}{\ell+d}.
+\tag{13.38}
+$$
+
+Then $0<b_{\mathrm{prem}}<b_{\mathrm{act}}$.
+For $b<b_{\mathrm{act}}$ the strict even--odd crossing is
+active; at equality the modes meet; for $b>b_{\mathrm{act}}$
+only the even mode is active. Independently, the center has
+less, equal or more weight than each endpoint according as
+$b<b_{\mathrm{prem}}$, $b=b_{\mathrm{prem}}$ or
+$b>b_{\mathrm{prem}}$.
+
+Proof. Here $0<d<1<q$, and substitution into (13.5) gives
+
+$$
+F(d)=\frac{1-\ell b}{d(1+b)},\qquad
+R(d)^2=\frac{b}{1+b}J_d.
+\tag{13.39}
+$$
+
+The first quantity decreases strictly from $1/d>0$ and
+vanishes at $b=1/\ell$; the second increases strictly from
+zero. Thus their positive square roots meet exactly once
+in $(0,1/\ell)$. The equation is
+$(1-\ell b)^2=sb(1+b)$, whose selected root is (13.38).
+The branch test (13.20) proves the active-sector statements.
+
+At the even stationary root, put $f=F(\widehat t)$.
+The normalization and stationary equation also give
+
+$$
+\frac{2(2-q)C_2}{(2-\widehat t)^2}
+=1-\widehat t f-2(q-\widehat t)f^2>0.
+\tag{13.40}
+$$
+
+If $f\ge1$ and $q\ge1$, the right side is at most
+$1-2q+\widehat t<1-q\le0$, a contradiction. Hence the
+even stationary branch has $f<1$ throughout $q\ge1$.
+For $c<a^2$, monotonicity of $F$ therefore gives
+$F_*<1\iff F(d)<1$. Solving (13.39) at one gives
+$b_{\mathrm{prem}}$. At that value $F(d)=1>f$, so
+$d<\widehat t$ and $F(d)>R(d)$; it lies strictly below
+$b_{\mathrm{act}}$. Theorem 13.3 proves the ordering.
+For $c=a^2$, $q=d=1$ and only the even stationary mode is
+active, so (13.40) recovers the center premium for all
+$b>0$. $\square$
+
+The determinant-zero surface and the active-sector surface
+are different. In particular a negative determinant permits
+a crossing but does not force it; the center can have a
+premium within the crossing branch itself.
+
+For all signs of the determinant there is also a scalar
+necessary and sufficient premium test. Let $t_1\in(0,t_0)$
+be the unique solution of $F(t_1)=1$, selected by the cubic
+$N(t_1)=t_1(q-t_1)(2-t_1)$. Then
+
+$$
+F_*<1\iff t_1<d\ \text{ and }\ R(t_1)<1.
+\tag{13.41}
+$$
+
+Indeed $F_*<1\iff t_*>t_1$, and
+$\widehat t>t_1\iff F(t_1)>R(t_1)$ by strict monotonicity.
+This test does not treat determinant sign as a substitute
+for the center-overlap coefficients.
+
+### 13.7. Crossing the active surface inside one marginal fiber
+
+**Proposition 13.6 (A fixed-marginal active-sector crossing).**
+At $X=9/16$ and $z=1/28$, three strictly positive laws in
+the same occupation fiber have the following exact data:
+
+| $\kappa$ | $(a,b,c)$ | $d$ | $F(d)$ | $R(d)^2$ | Active sector |
+| --- | --- | --- | --- | --- | --- |
+| $1/4$ | $(7/2,2/5,14/5)$ | $2/3$ | $5/6$ | $1/4$ | Strict crossing |
+| $9/32$ | $(7/3,8/27,7/3)$ | $4/5$ | $2/3$ | $4/9$ | Meeting surface |
+| $5/16$ | $(28/17,4/17,35/17)$ | $14/15$ | $10/63$ | $265/96$ | Even only |
+
+The conditional-independence point of this same fiber is
+$\kappa_0=21/64>5/16$.
+
+Proof. Reconstruct the parameters of each actual law by
+
+$$
+p_0=1-z-2X+\kappa,\qquad
+a=\frac{X-\kappa}{p_0},\quad
+b=\frac z{p_0},\quad c=\frac\kappa{p_0}.
+\tag{13.42}
+$$
+
+All five entries are positive. Substitution in
+(13.3)--(13.5) gives the displayed fractions, and (13.20)
+selects the three sectors. Equation (13.31) gives
+$\kappa_0=X^2/(1-z)=21/64$. Thus the active meeting surface
+can be crossed before the determinant changes sign.
+All spectral coefficients change with the actual law in
+(13.42); none is held fixed while only $\kappa$ is replaced.
+$\square$
+
+### 13.8. A disappearing center and two different boundary problems
+
+**Proposition 13.7 (Positive-support limit versus restricted support).**
+Fix $a,c>0$ and put $m=\min\{d,q\}=1-|d-1|>0$.
+As $b\downarrow0$ through positive laws,
+
+$$
+\omega^*\longrightarrow\frac{(1,m,1)}{2+m},\qquad
+\gamma^*\longrightarrow\frac m{2+m}.
+\tag{13.43}
+$$
+
+If the zero-probability center phase is first removed and
+the experiment is optimized on the remaining four-state
+support, $(1/2,0,1/2)$ is optimal with gap $m/2$.
+
+Proof. In the five-dimensional limit, $u\to-e_2$,
+$C_0\to1$ and $C_1,C_2\to0$. The symmetric spectrum on
+the complement of the ground ray becomes
+$\{y,qx,2x,dx\}$, so its minimum is $\min\{y,mx\}$.
+With $y=1-2x$ the unique symmetric maximizer satisfies
+$y=mx$, giving (13.43). Continuity of the finite matrices
+and eigenvalues is uniform over the compact weight
+simplex; their maxima therefore converge to this value.
+The finite positive maximizers are symmetric by Theorem
+13.2, so their limit is the stated symmetric maximizer.
+
+On restricted four-state support, $K_2$ vanishes. Reflection
+averaging preserves total endpoint budget and cannot lower
+the minimum eigenvalue. With that budget $s\le1$, the
+best symmetric allocation has gap $sm/2$, attained at
+$s=1$. This gives the restricted-support result. Since
+$m>0$, $m/(2+m)<m/2$. The difference comes from retaining
+or deleting a phase direction, rather than from changing
+the meaning of one sample. $\square$
 
 ## 追加锚（本行以下为增补区）
