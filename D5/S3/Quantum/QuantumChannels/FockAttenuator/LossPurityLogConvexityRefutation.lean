@@ -6,9 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/QuantumChannels/FockAttenuator/LossPurityLogConvexityRefutation.claim; result=D5/S3/Quantum/QuantumChannels/FockAttenuator/LossPurityLogConvexityRefutation.result; claim=D5/S3/Quantum/QuantumChannels/FockAttenuator/LossPurityLogConvexityRefutation.claim
    digest: A three-level mixed state refutes log-convexity of purity under optical loss. -/
 
-import D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation
-import D5.S3.Quantum.QuantumChannels.FockAttenuator.DisplacementCovariance
-import D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtremality
+import D5.S3.Quantum.Measurement.PureLossIncompatibility
 import Mathlib.Analysis.Convex.Function
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic.FinCases
@@ -21,6 +19,7 @@ open scoped BigOperators InnerProductSpace ENNReal
 namespace D5.S3.Quantum.QuantumChannels.FockAttenuator.LossPurityLogConvexityRefutation
 
 open D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation (FockSpace e)
+open D5.S3.Quantum.Measurement
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.DisplacementCovariance
   (purePartialTrace mixture)
@@ -72,23 +71,18 @@ private def split (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) (n : ℕ) : PairH :
 private def middleAmplitude (T : ℝ) : ℝ :=
   Real.sqrt 2 * Real.sqrt T * Real.sqrt (1 - T)
 
-private theorem split_zero (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
-    split T hT 0 = fockPair 0 0 := by
-  unfold split
-  change beamSplitter T hT (fockPair 0 0) = _
-  unfold beamSplitter
-  rw [beamUnitary_fock]
-  norm_num [fockExpansion, Fin.sum_univ_succ]
-
-private theorem split_one (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
-    split T hT 1 = (Real.sqrt T : ℂ) • fockPair 1 0 +
-      (Real.sqrt (1 - T) : ℂ) • fockPair 0 1 := by
-  unfold split
-  change beamSplitter T hT (fockPair 1 0) = _
-  unfold beamSplitter
-  rw [beamUnitary_fock]
-  norm_num [fockExpansion, Fin.sum_univ_succ]
-  ac_rfl
+private theorem split_stinespring (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) (n : ℕ) :
+    split T hT n = PureLossIncompatibility.stinespring ⟨T, hT⟩ (e n) := by
+  have hv (v : H) : tensor v (e 0) = PureLossIncompatibility.vacuumEmbedding v := by
+    apply lp.ext
+    funext j
+    change (e 0 j) • v = (lp.single (E := fun _ : ℕ => H) 2 0 v) j
+    unfold e
+    simp only [lp.single_apply, Pi.single_apply]
+    split_ifs <;> simp_all
+  change beamSplitter T hT (tensor (e n) (e 0)) =
+    beamSplitter T hT (PureLossIncompatibility.vacuumEmbedding (e n))
+  rw [hv]
 
 private theorem split_two (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
     split T hT 2 = (T : ℂ) • fockPair 2 0 +
@@ -124,41 +118,15 @@ private theorem split_two (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
 
 private theorem split_zero_slice (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) (j : ℕ) :
     split T hT 0 j = if j = 0 then e 0 else 0 := by
-  rw [split_zero]
-  apply lp.ext
-  funext p
-  simp only [fockPair_apply]
-  split_ifs <;> simp_all [e, lp.single_apply]
+  rw [split_stinespring]
+  exact PureLossIncompatibility.split_zero_coord ⟨T, hT⟩ j
 
 private theorem split_one_slice (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) (j : ℕ) :
     split T hT 1 j =
       if j = 0 then (Real.sqrt T : ℂ) • e 1
       else if j = 1 then (Real.sqrt (1 - T) : ℂ) • e 0 else 0 := by
-  rw [split_one]
-  by_cases hj0 : j = 0
-  · subst j
-    apply lp.ext
-    funext p
-    change (Real.sqrt T : ℂ) * fockPair 1 0 0 p +
-      (Real.sqrt (1 - T) : ℂ) * fockPair 0 1 0 p = (Real.sqrt T : ℂ) * e 1 p
-    rw [fockPair_apply, fockPair_apply]
-    simp [e, lp.single_apply, Pi.single_apply]
-  · by_cases hj1 : j = 1
-    · subst j
-      apply lp.ext
-      funext p
-      change (Real.sqrt T : ℂ) * fockPair 1 0 1 p +
-        (Real.sqrt (1 - T) : ℂ) * fockPair 0 1 1 p =
-          (Real.sqrt (1 - T) : ℂ) * e 0 p
-      rw [fockPair_apply, fockPair_apply]
-      simp [e, lp.single_apply, Pi.single_apply]
-    · rw [if_neg hj0, if_neg hj1]
-      apply lp.ext
-      funext p
-      change (Real.sqrt T : ℂ) * fockPair 1 0 j p +
-        (Real.sqrt (1 - T) : ℂ) * fockPair 0 1 j p = 0
-      rw [fockPair_apply, fockPair_apply]
-      simp [hj0, hj1]
+  rw [split_stinespring]
+  exact PureLossIncompatibility.split_one_coord ⟨T, hT⟩ j
 
 private theorem split_two_slice (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) (j : ℕ) :
     split T hT 2 j =
@@ -290,6 +258,89 @@ private theorem witness_output (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) :
     one_smul, zero_smul, add_zero, Complex.ofReal_add, Complex.ofReal_mul,
     Complex.ofReal_div, Complex.ofReal_ofNat]
   module
+
+private theorem diag3_purity (a b c : ℝ) :
+    HasSum (fun n : ℕ => inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n)))
+      ((a ^ 2 + b ^ 2 + c ^ 2 : ℝ) : ℂ) := by
+  have hinner (i j : ℕ) : inner ℂ (e i) (e j) = if i = j then 1 else 0 := by
+    simp [e, lp.inner_single_left, lp.single_apply, Pi.single_apply, RCLike.inner_apply]
+  have hdiag (n : ℕ) : diag3 a b c (e n) =
+      ((if n = 0 then a else if n = 1 then b else if n = 2 then c else 0 : ℝ) : ℂ) •
+        e n := by
+    simp only [diag3, proj, add_apply, smul_apply, InnerProductSpace.rankOne_apply, hinner]
+    by_cases h0 : n = 0
+    · subst n; norm_num
+    · by_cases h1 : n = 1
+      · subst n; norm_num
+      · by_cases h2 : n = 2
+        · subst n; norm_num
+        · simp [h0, h1, h2, Ne.symm h0, Ne.symm h1, Ne.symm h2]
+  have hterm (n : ℕ) :
+      inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n)) =
+        if n = 0 then ((a ^ 2 : ℝ) : ℂ)
+        else if n = 1 then ((b ^ 2 : ℝ) : ℂ)
+        else if n = 2 then ((c ^ 2 : ℝ) : ℂ) else 0 := by
+    simp only [ContinuousLinearMap.comp_apply, hdiag, map_smul, inner_smul_right,
+      hinner, ite_true]
+    split_ifs <;> simp_all [pow_two]
+  have hs : HasSum
+      (fun n : ℕ => inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n)))
+      (∑ n ∈ Finset.range 3,
+        inner ℂ (e n) ((diag3 a b c ∘L diag3 a b c) (e n))) := by
+    apply hasSum_sum_of_ne_finset_zero
+    intro n hn
+    have hn3 : 3 ≤ n := by simpa only [Finset.mem_range, not_lt] using hn
+    rw [hterm, if_neg (by omega), if_neg (by omega), if_neg (by omega)]
+  convert hs using 1
+  simp only [Finset.sum_range_succ, Finset.sum_range_zero, hterm]
+  norm_num
+
+private def P (T : ℝ) : ℝ :=
+  (1728 * T ^ 4 - 8856 * T ^ 3 + 17529 * T ^ 2 - 12300 * T + 5000) / 5000
+
+private theorem purity_polynomial (T : ℝ) :
+    q0 T ^ 2 + q1 T ^ 2 + q2 T ^ 2 = P T := by
+  unfold q0 q1 q2 P
+  ring
+
+private theorem witness_purity : IsPurityCurve witness P := by
+  intro T hT
+  rw [witness_output]
+  rw [← purity_polynomial]
+  exact diag3_purity (q0 T) (q1 T) (q2 T)
+
+private theorem midpoint_certificate :
+    P (39 / 40) * P (197 / 200) < P (49 / 50) ^ 2 := by
+  norm_num [P]
+
+theorem result : ¬ claim := by
+  intro hclaim
+  obtain ⟨F, hF, hconv⟩ := hclaim 3 witness
+  have hx : (39 / 40 : ℝ) ∈ Set.Icc (0 : ℝ) 1 := by norm_num
+  have hm : (49 / 50 : ℝ) ∈ Set.Icc (0 : ℝ) 1 := by norm_num
+  have hy : (197 / 200 : ℝ) ∈ Set.Icc (0 : ℝ) 1 := by norm_num
+  have heq (T : ℝ) (hT : T ∈ Set.Icc (0 : ℝ) 1) : F T = P T := by
+    exact_mod_cast (hF T hT).unique (witness_purity T hT)
+  have hc := hconv.2 hx hy (show (0 : ℝ) ≤ 1 / 2 by norm_num)
+    (show (0 : ℝ) ≤ 1 / 2 by norm_num) (by norm_num)
+  have hmid : (1 / 2 : ℝ) • (39 / 40 : ℝ) + (1 / 2 : ℝ) • (197 / 200 : ℝ) =
+      (49 / 50 : ℝ) := by norm_num
+  rw [hmid] at hc
+  dsimp only at hc
+  rw [heq _ hm, heq _ hx, heq _ hy] at hc
+  have hlog : 2 * Real.log (P (49 / 50)) ≤
+      Real.log (P (39 / 40)) + Real.log (P (197 / 200)) := by
+    simp only [smul_eq_mul] at hc
+    linarith
+  have hpx : 0 < P (39 / 40) := by norm_num [P]
+  have hpm : 0 < P (49 / 50) := by norm_num [P]
+  have hpy : 0 < P (197 / 200) := by norm_num [P]
+  have hle : P (49 / 50) ^ 2 ≤ P (39 / 40) * P (197 / 200) := by
+    apply (Real.log_le_log_iff (pow_pos hpm 2) (mul_pos hpx hpy)).mp
+    rw [Real.log_pow, Real.log_mul hpx.ne' hpy.ne']
+    norm_num only [Nat.cast_ofNat]
+    exact hlog
+  exact (not_lt_of_ge hle) midpoint_certificate
 
 end D5.S3.Quantum.QuantumChannels.FockAttenuator.LossPurityLogConvexityRefutation
 
