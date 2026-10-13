@@ -8235,3 +8235,273 @@ complex branches and boundary crossings, and discharge of the local
 all-critical premise remain unresolved. No FIB ATOM bridge to these
 signed complete-source estimates is supplied. RH and strict Robin
 for every integer $H>5040$ remain unproved.
+
+## Complete dual kernels and a shared root-response transport
+
+Retain the original source, local all-critical and complete-removal
+premises of (LC263), and the regrouping (LC284). In particular, every
+exterior zero and every far selected factor remains in
+$\widehat A=AQ_{\rm far}=F/Q_{\rm core}$. The core polynomial is monic,
+of degree $q\le C_0L$, with real roots $\alpha_j$ satisfying
+$|\alpha_j-c|\le D$; repeated core roots are allowed. Use
+$E=128(S+3C_0)L$ and the complete auxiliary functions
+$\widehat H,\widehat\ell,\widehat s,\widehat\chi,\widehat\eta$ from
+(LC276)--(LC286), with $E$ replacing $C_1L$. Here
+$\widehat H=\mathscr T_n\widehat A$,
+$\widehat\ell=\widehat H'/\widehat H$,
+$\widehat s=\mathscr T_n(\widehat A')/\widehat H$,
+$v=t^2/n$, $\widehat\chi=t-v\widehat\ell$ and
+$\widehat\eta=1-v\widehat s'$. Write
+$\mathcal D=\{|t-c|\le D/16\}$ and
+$I=[t_-,t_+]=[c-D/16,c+D/16]$.
+
+This is a repo-derived analytical application of existing extraction
+and finite-free suppliers, without Lean or originality certification.
+The exact representation below does not certify its kernels' root
+geometry or signed residues at growing degree. Those are separate
+conditions, stated explicitly below.
+
+### Literature suppliers and the coefficient convention
+
+Martínez-Finkelshtein, Morales and Perales,
+[*Real roots of hypergeometric polynomials via finite free convolution*,
+arXiv:2309.10970v2](https://arxiv.org/html/2309.10970v2), Definition 2.5,
+Propositions 2.11 and 2.13, supply the additive coefficient convention,
+oriented interlacing and mesh preservation. Marcus, Spielman and
+Srivastava, [*Finite free convolutions of polynomials*,
+arXiv:1504.00350](https://arxiv.org/pdf/1504.00350), Definition 1.1
+and Theorem 2.11, supply the same normalization and permutation average.
+Sinclair, [*Finite free convolution via reproducing kernels and
+squarefree algebras*, arXiv:2606.10870v2](https://arxiv.org/html/2606.10870v2),
+Lemma 3.8, Proposition 3.9 and Corollary 3.11, connect the kernel pairing,
+polarization and the classical Grace--Walsh--Szegő interface.
+
+Throughout this application the convention, including lower-degree
+arguments, is
+
+$$
+(P\boxplus_q R)(z)=\frac1{q!}\sum_{k=0}^q
+ P^{(k)}(z)R^{(q-k)}(0).
+\tag{LC304}
+$$
+
+This is the descending-coefficient convention of the first two
+suppliers. Sinclair's ascending convention is used only through its
+symmetric multiaffine polarization interface, not by identifying its
+convolution symbol with (LC304). These general literature theorems are
+reused, rather than reproved or counted as new source results.
+
+### Generate both kernels from the same complete factor
+
+For a holomorphic germ at $u=0$, set
+
+$$
+\begin{aligned}
+\psi_t(u)&=\frac{t}{1+tu/n},&
+K_t(u)&=(1+tu/n)^n\frac{\widehat H(\psi_t(u))}{\widehat H(t)},\\
+M_t(u)&=e^{-\widehat\chi(t)u}K_t(u),&
+b_t(u)&=u+\widehat s(\psi_t(u))-\widehat s(t),\qquad
+N_t(u)=M_t(u)b_t(u),\\
+M_t(u)&=\sum_{k\ge0}a_k(t)\frac{u^k}{k!},&
+N_t(u)&=\sum_{k\ge0}d_k(t)\frac{u^k}{k!}.
+\end{aligned}
+\tag{LC305}
+$$
+
+In particular $a_0=1,a_1=0,d_0=0,d_1=\widehat\eta$.
+Define a monic value kernel and a lower-degree response kernel by
+
+$$
+\begin{gathered}
+R_{q,t}(z)=\sum_{k=0}^q\binom qk a_k(t)z^{q-k},\qquad
+U_{q,t}(z)=\sum_{k=0}^q\binom qk d_k(t)z^{q-k},\\
+\overline Q(z)=Q_{\rm core}(c+z),\qquad x(t)=\widehat\chi(t)-c,\\
+C_t=\overline Q\boxplus_q R_{q,t},\qquad
+W_t=\overline Q\boxplus_q U_{q,t},\qquad
+C_t=\sum_{k=0}^q\frac{a_k}{k!}\overline Q^{(k)},\quad
+W_t=\sum_{k=0}^q\frac{d_k}{k!}\overline Q^{(k)}.
+\end{gathered}
+\tag{LC306}
+$$
+
+Apply the exact exponential-tilt identity (LC202) to $\widehat A$
+and to its source derivative. It gives, with the same $K_t$,
+
+$$
+\frac{\mathscr T_n(e^{uz}\widehat A)(t)}{\widehat H(t)}=K_t(u),
+\qquad
+\frac{\mathscr T_n((e^{uz}\widehat A)')(t)}{\widehat H(t)}
+ =K_t(u)[u+\widehat s(\psi_t(u))].
+\tag{LC307}
+$$
+
+Subtract $\widehat s(t)$ times the first identity from the second,
+then apply $Q_{\rm core}(\partial_u)|_{u=0}$. The exact auxiliary
+recurrences (LC278), now for the core, consequently have the representation
+
+$$
+\begin{gathered}
+p_q(t)=C_t(x(t)),\qquad w_q(t)=W_t(x(t)),\\
+J=\widehat H C_t(x),\qquad
+G=\widehat H[\widehat s C_t(x)+W_t(x)].
+\end{gathered}
+\tag{LC308}
+$$
+
+This applies the existing tilt to both responses. The kernel is an
+operator-symbol encoding; it does not replace the actual core by a
+fictional repeated-root source or discard any exterior contribution.
+
+### A common nonnegative weight transfers speed and response
+
+Fix real $t\in I$ and suppose $R_{q,t}$ has simple real roots
+$\beta_1<\cdots<\beta_q$. For $q\ge2$, mesh preservation makes
+$C_t$ simple real-rooted even when $\overline Q$ has repeated roots.
+The degree-one case follows directly from (LC304). Denote its ordered
+roots by $\lambda_1<\cdots<\lambda_q$, and set
+
+$$
+R_{t,j}(z)=\frac{R_{q,t}(z)}{z-\beta_j},\qquad
+\omega_{ij}=\frac{(\overline Q\boxplus_q R_{t,j})(\lambda_i)}
+ {\partial_zC_t(\lambda_i)},\qquad
+\gamma_j=\frac{U_{q,t}(\beta_j)}{\partial_zR_{q,t}(\beta_j)}.
+\tag{LC309}
+$$
+
+Moving just one kernel root a sufficiently small positive distance
+gives an oriented interlacing pair. Preservation of that orientation
+implies that no ordered output root moves left. Implicit differentiation
+identifies $\omega_{ij}=\partial\lambda_i/\partial\beta_j\ge0$.
+Simultaneous translation gives the row sums; differentiating the sum
+of output roots, which is the sum of the two input root sums, gives
+the column sums. Linearity applied to
+$U_{q,t}=\sum_j\gamma_jR_{t,j}$ then gives
+
+$$
+\begin{gathered}
+\omega_{ij}\ge0,\qquad \sum_j\omega_{ij}=1,\qquad
+\sum_i\omega_{ij}=1,\\
+\lambda_i'=\sum_j\omega_{ij}\beta_j',\qquad
+\frac{W_t(\lambda_i)}{\partial_zC_t(\lambda_i)}
+ =\sum_j\omega_{ij}\gamma_j.
+\end{gathered}
+\tag{LC310}
+$$
+
+Here derivatives in $t$ use local analytic root labels. At an actual
+node $x(t)=\lambda_i(t)$, put
+$\delta_j=\widehat\chi'-\beta_j'$. The same weights occur in both
+node amplitudes:
+
+$$
+p_q'=\partial_zC_t(\lambda_i)\sum_j\omega_{ij}\delta_j,
+\qquad
+w_q=\partial_zC_t(\lambda_i)\sum_j\omega_{ij}\gamma_j.
+\tag{LC311}
+$$
+
+If all $\delta_j>0$, define
+$\widetilde\omega_{ij}=\omega_{ij}\delta_j/
+\sum_k\omega_{ik}\delta_k$. These weights are nonnegative with row
+sum one, and the original complete response ratio is
+
+$$
+\frac{G(t)}{J'(t)}=\frac{w_q(t)}{p_q'(t)}
+ =\sum_j\widetilde\omega_{ij}\frac{\gamma_j}{\delta_j},\qquad
+\min_j\frac{\gamma_j}{\delta_j}\le\frac{G(t)}{J'(t)}
+ \le\max_j\frac{\gamma_j}{\delta_j}.
+\tag{LC312}
+$$
+
+Thus this transmission introduces no degree factor or division by a
+separately estimated minimal actual-node slope. The missing signed
+information has moved to the actual complete kernels, rather than
+being supplied by the convex-combination formula.
+
+### The precise kernel conditions still required
+
+At $\nu\ge512E$, the complete jets already give
+
+$$
+|\widehat\chi'-1|\le68E/\nu<1/4,\qquad
+|\widehat\eta-1|\le64E/\nu\le1/8
+\quad(t\in\mathcal D).
+\tag{LC313}
+$$
+
+For each growing degree under consideration, require the following
+additional certificate, denoted $\mathsf K$:
+
+* for every real $t\in I$, $R_{q,t}$ has $q$ simple real roots;
+* for every complex $t\in\mathcal D$ and every root $\beta$ of $R_{q,t}$,
+  $|\Im\beta|\le|\Im t|/4$;
+* at every real $t\in I$, every residue $\gamma_j$ in (LC309) is strictly
+  positive.
+
+No quantitative mesh lower bound or degree-independent residue floor
+is assumed here. None of these growing-degree conditions has been
+established for the actual source by the preceding jets.
+
+For any complex parameter, the permutation formula identifies $C_t(z)$
+with the symmetric multiaffine polarization of $\overline Q$ evaluated
+at $z-\beta_1,\ldots,z-\beta_q$. All arguments are in the same open
+upper or lower half-plane when $\Im z$ lies outside their root strip.
+The half-plane polarization supplier therefore gives
+
+$$
+C_t(z)=0\ \Longrightarrow\
+\min_j\Im\beta_j(t)\le\Im z\le\max_j\Im\beta_j(t),
+\qquad
+J(t)=0\ \Longrightarrow\
+\Im\widehat\chi(t)\in[\min_j\Im\beta_j(t),\max_j\Im\beta_j(t)].
+\tag{LC314}
+$$
+
+This necessary condition uses the actual kernel, with no real-root
+assumption on it at a complex parameter. If $t=a+iy\in\mathcal D$,
+the vertical segment is in the same disc and (LC313) gives
+$|\Im\widehat\chi(t)|\ge3|y|/4$. Under $\mathsf K$ this contradicts
+(LC314) unless $y=0$, including on the closed target boundary.
+For real parameters, expanding a simple kernel root along the imaginary
+direction in $\mathsf K$ gives $|\beta_j'|\le1/4$, with the endpoint
+values obtained by continuity. Consequently $\delta_j\ge1/2$.
+
+It follows under $\mathsf K$ that every actual target node is real and
+simple, with the original signed product
+
+$$
+P_r'S_r=\left(\frac{\widehat H}{H}\right)^2
+ [\partial_zC_t(\lambda_i)]^2
+ \left(\sum_j\omega_{ij}\delta_j\right)
+ \left(\sum_j\omega_{ij}\gamma_j\right)>0.
+\tag{LC315}
+$$
+
+Both $H$ and $\widehat H$ are the nonzero real amplitudes of the
+original interfaces. Their squared ratio is retained without an
+assumed size bound. On $I$, the branches
+$f_i(t)=\widehat\chi(t)-c-\lambda_i(t)$ have derivative at least $1/2$.
+Thus the exact count, with both endpoints included, is
+
+$$
+N_J(\mathcal D)=\sum_{i=1}^q
+ \mathbf1_{\{f_i(t_-)\le0\le f_i(t_+)\}}\le q.
+\tag{LC316}
+$$
+
+No existence of all $q$ branch nodes is asserted. For $q=0$,
+$J=\widehat H$ gives zero target nodes directly.
+
+If a fixed $C_{\rm ker}$ were to certify $\mathsf K$ for the actual
+kernels at $q\le C_0L$, $\nu\ge C_{\rm ker}L$, the transmission stage
+would require only
+$\nu\ge\max\{C_{\rm ker},65536(S+3C_0)\}L$.
+The existence of that $C_{\rm ker}$ remains unproved.
+The already known identity $\sum_j\gamma_j=q\widehat\eta>0$ supplies
+a total residue, not positivity of every residue.
+More generally, putting
+$V_t=\partial_tR_{q,t}+\widehat\chi'\partial_zR_{q,t}$, a certificate
+that every real-pole residue of $(U_{q,t}-gV_t)/R_{q,t}$ is nonnegative
+for some $g>0$ would give $G/J'\ge g$ by (LC312).
+This relative certificate too remains unpaid for growing degree.
+
