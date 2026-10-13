@@ -720,6 +720,116 @@ private theorem weighted_counting_bound {m : ℕ} (c x Q : ℝ)
     _ = 1 + ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), p i j := by
       exact congrArg (fun r : ℝ => 1 + r) hpairs
     _ ≤ 1 + 4 * x * Q := by linarith
+private def phaseQ {m : ℕ} (z : Fin m → ℂ) : ℝ :=
+  ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), (‖z i - z j‖ ^ 2)⁻¹
 
+private theorem pair_count {m : ℕ} (ω : Fin m → Fin 2) (r : ℝ) :
+    (Nat.choose (Finset.univ.filter (fun i => ω i = 1)).card 2 : ℝ) * r =
+      ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j),
+        if ω i = 1 ∧ ω j = 1 then r else 0 := by
+  let S := Finset.univ.filter (fun i : Fin m => ω i = 1)
+  calc
+    _ = ∑ p ∈ (S ×ˢ S).filter (fun p => p.1 < p.2), r := by
+      simp only [Finset.sum_const, Finset.card_product_filter_lt, nsmul_eq_mul]
+      rfl
+    _ = ∑ i ∈ S, ∑ j ∈ S, if i < j then r else 0 := by
+      rw [Finset.sum_filter, Finset.sum_product]
+    _ = _ := by
+      dsimp only [S]
+      simp only [Finset.sum_filter]
+      apply Finset.sum_congr rfl
+      intro i hi
+      by_cases hωi : ω i = 1
+      · simp only [hωi, true_and, ite_true]
+        apply Finset.sum_congr rfl
+        intro j hj
+        by_cases hωj : ω j = 1 <;> by_cases hij : i < j <;> simp [hωj, hij]
+      · simp [hωi]
+
+private theorem parent_bound {m : ℕ} (a b c x : ℝ) (ha : 0 < a)
+    (hδ : c - b ^ 2 / a ≤ x) (z : Fin m → ℂ)
+    (hz : ∀ i, ‖z i‖ = 1) (hinj : Function.Injective z)
+    (G : (Fin m → Fin 2) → Matrix (Fin 2) (Fin 2) ℂ) (hG : IsPOVM G)
+    (hmarg : ∀ i, (∑ ω ∈ Finset.univ.filter (fun ω : Fin m → Fin 2 => ω i = 1),
+      G ω) = !![(a : ℂ), -(b : ℂ) * starRingEnd ℂ (z i); -(b : ℂ) * z i, (c : ℂ)]) :
+    (m : ℝ) * c ≤ 1 + 4 * x * phaseQ z := by
+  let s (i : Fin m) := Finset.univ.filter (fun ω : Fin m → Fin 2 => ω i = 1)
+  let t (i j : Fin m) :=
+    Finset.univ.filter (fun ω : Fin m → Fin 2 => ω i = 1 ∧ ω j = 1)
+  let H (i j : Fin m) := ∑ ω ∈ t i j, G ω
+  let g (ω : Fin m → Fin 2) := (G ω 1 1).re
+  let k (ω : Fin m → Fin 2) := (Finset.univ.filter (fun i => ω i = 1)).card
+  have hpos (i j : Fin m) : (H i j).PosSemidef :=
+    Matrix.posSemidef_sum (t i j) (fun ω _ => hG.1 ω)
+  have hres (i j : Fin m) :
+      (!![(a : ℂ), -(b : ℂ) * starRingEnd ℂ (z i);
+        -(b : ℂ) * z i, (c : ℂ)] - H i j).PosSemidef := by
+    have hsub : t i j ⊆ s i := by
+      intro ω hω
+      exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, (Finset.mem_filter.mp hω).2.1⟩
+    have hle := Finset.sum_le_sum_of_subset_of_nonneg hsub
+      (fun ω _ _ => (hG.1 ω).nonneg)
+    rw [hmarg i] at hle
+    exact Matrix.le_iff.mp hle
+  have hres' (i j : Fin m) :
+      (!![(a : ℂ), -(b : ℂ) * starRingEnd ℂ (z j);
+        -(b : ℂ) * z j, (c : ℂ)] - H i j).PosSemidef := by
+    have ht : t i j = t j i := by
+      ext ω
+      simp only [t, Finset.mem_filter, Finset.mem_univ, true_and, and_comm]
+    simpa only [H, ht] using hres j i
+  have hg : ∀ ω, 0 ≤ g ω := fun ω =>
+    (Complex.nonneg_iff.mp (hG.1 ω).diag_nonneg).1
+  have hsum : ∑ ω, g ω = 1 := by
+    have h := congrArg (fun T : Matrix (Fin 2) (Fin 2) ℂ => (T 1 1).re) hG.2
+    simpa [g, Matrix.sum_apply] using h
+  have hm (i : Fin m) : ∑ ω ∈ s i, g ω = c := by
+    have h := congrArg (fun T : Matrix (Fin 2) (Fin 2) ℂ => (T 1 1).re) (hmarg i)
+    simpa [s, g, Matrix.sum_apply] using h
+  have hmc : (m : ℝ) * c = ∑ ω, (k ω : ℝ) * g ω := by
+    calc
+      _ = ∑ i : Fin m, c := by simp
+      _ = ∑ i : Fin m, ∑ ω ∈ s i, g ω := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        exact (hm i).symm
+      _ = ∑ ω, ∑ i : Fin m, if ω i = 1 then g ω else 0 := by
+        simp only [s, Finset.sum_filter]
+        rw [Finset.sum_comm]
+      _ = _ := by
+        apply Finset.sum_congr rfl
+        intro ω hω
+        rw [← Finset.sum_filter]
+        simp [k]
+  have hpairs : ∑ ω, (Nat.choose (k ω) 2 : ℝ) * g ω =
+      ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j), (H i j 1 1).re := by
+    calc
+      _ = ∑ ω, ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j),
+          if ω i = 1 ∧ ω j = 1 then g ω else 0 := by
+        exact Finset.sum_congr rfl (fun ω _ => pair_count ω (g ω))
+      _ = ∑ i, ∑ j ∈ Finset.univ.filter (fun j : Fin m => i < j),
+          ∑ ω, if ω i = 1 ∧ ω j = 1 then g ω else 0 := by
+        rw [Finset.sum_comm]
+        exact Finset.sum_congr rfl (fun i _ => Finset.sum_comm)
+      _ = _ := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        apply Finset.sum_congr rfl
+        intro j hj
+        simp only [H, t, Matrix.sum_apply, Complex.re_sum, Finset.sum_filter]
+        apply Finset.sum_congr rfl
+        intro ω hω
+        by_cases hωij : ω i = 1 ∧ ω j = 1 <;> simp [hωij, g]
+  apply weighted_counting_bound c x (phaseQ z) g k
+    (fun i j => (H i j 1 1).re) (fun i j => (‖z i - z j‖ ^ 2)⁻¹)
+    hg hsum hmc hpairs
+  · intro i j hj
+    have hij : i ≠ j := ne_of_lt (Finset.mem_filter.mp hj).2
+    have hne : z i ≠ z j := fun h => hij (hinj h)
+    have hi := residual_quad_le a b c x ha (z i) (hz i) (H i j) (hres i j) hδ
+    have hj' := residual_quad_le a b c x ha (z j) (hz j) (H i j) (hres' i j) hδ
+    simpa only [div_eq_mul_inv] using
+      common_subeffect_bound a b x (z i) (z j) (hz i) (hz j) hne (H i j) (hpos i j) hi hj'
+  · rfl
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
