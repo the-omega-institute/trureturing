@@ -96,7 +96,8 @@ internal sealed class TildeSpectralNonconcavityDocument : IScribeDocumentDefinit
             Call("JointlyConcaveOn", spd, spd, Call("tildeTrace", alpha, p)));
         var right = Seq(alpha, Eq, new Formula.Fraction(D(1), D(2)), Land, Sp, p, Le, D(1));
         return Seq(Forall, Sp, alpha, Comma, Sp, p, Colon, Sp, real, Comma, Esc,
-            Conditions(alpha, p), Implies, Esc, Open, left, Close, Sp, Iff, Sp, Open, right, Close);
+            Conditions(alpha, p), Implies, Esc, Open,
+            Open, left, Close, Sp, Iff, Sp, Open, right, Close, Close);
     }
 
     private static Formula Endpoint()

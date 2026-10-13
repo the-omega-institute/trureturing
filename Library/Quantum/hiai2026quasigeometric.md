@@ -35,8 +35,10 @@ The project classification on positive definite complex matrix pairs is
 $$
 0<\alpha<1,\quad p>0
 \quad\Longrightarrow\quad
+\Bigl(
 \bigl[\text{$T_{\alpha,p}$ is jointly concave in every finite dimension}\bigr]
-\iff \bigl[\alpha=1/2\ \text{and}\ p\le1\bigr].
+\iff \bigl[\alpha=1/2\ \text{and}\ p\le1\bigr]
+\Bigr).
 $$
 
 The all-dimension quantifier lies inside the left side of this single

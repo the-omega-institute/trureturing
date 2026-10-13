@@ -211,7 +211,8 @@ noncomputable def registration :
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
-  familyRecord := none }
+  familyRecord := none
+  options := #[] }
 
 #print axioms family
 end Classification
