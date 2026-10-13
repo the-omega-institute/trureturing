@@ -69,7 +69,10 @@ internal sealed class CamassaHolmPeakonTransferExpansionDocument : IScribeDocume
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The matrix S + A has zero entries whenever the row position is at most the column position. Triangularity with blocks labelled by positions gives determinant one for its formal resolvent pencil, including coincident positions. The vectors with entries w_i exp(nu q_i/2) and w_i exp(−nu q_i/2) give the rank-two decomposition of T and A. The relation (5.18), together with the determinant identity for a rank-two perturbation and ordinary transposition, yields det(1 − tL) = 1 − Lambda sum over k ≥ 1 of (h_k/k)t^k as an identity of formal power series. Jacobi's formula gives the generating series of the transfer traces as the negative logarithmic derivative. Extracting each positive-degree coefficient and regrouping compositions by their multisets of parts gives m (j−1)! divided by the product of the parts and their multiplicity factorials. This family satisfies each of the three prescribed values and the expansion of Conjecture 5.2."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("avan-frappat-ragoucy-2026-peakon-transfer-expansion"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
