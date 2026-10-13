@@ -11,6 +11,7 @@
 import D5.S3.Estimation.SequentialDecisionRisk.NativeBernoulliFactoryCriticalMoment
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
 import Mathlib.Probability.Distributions.Binomial
+import D5.S3.Analytic.SeriesInequalities.HNPCorrectionLiftAdvantage
 
 noncomputable section
 
@@ -714,5 +715,55 @@ theorem bounded_one_coin_transport (p : unitInterval) (i l L I : ℕ)
           zero_mul, zero_add] using ((binomial_mass_support_and_pascal p).2.2.1 l).symm
       · have hi' : ¬ i ≤ I + 1 := by omega
         simp [translatedBinomial, hi, hi']
+
+open D5.S3.Analytic.SeriesInequalities.HNPCorrectionLiftAdvantage
+  (weight weight_nonneg weight_eq_zero weight_sum)
+
+def hypergeometricWeight (N N' I i : ℕ) : ℝ :=
+  if i ≤ I then weight N' N I i else 0
+
+/-- Degree elevation averages over a stochastic row, including zero old
+degree and target counts at either boundary. -/
+theorem hypergeometric_stochastic_rows (N N' : ℕ) (hN : N ≤ N') (I : Fin (N' + 1)) :
+    (∀ i : Fin (N + 1), 0 ≤ hypergeometricWeight N N' I.val i.val) ∧
+      (∑ i : Fin (N + 1), hypergeometricWeight N N' I.val i.val) = 1 := by
+  classical
+  refine ⟨fun i => ?_, ?_⟩
+  · unfold hypergeometricWeight
+    split
+    · exact weight_nonneg _ _ _ _
+    · exact le_rfl
+  · rw [Fin.sum_univ_eq_sum_range (hypergeometricWeight N N' I.val) (N + 1)]
+    have hs : (∑ i ∈ Finset.range (I.val + 1), weight N' N I.val i) = 1 :=
+      weight_sum hN (by omega)
+    by_cases hi : I.val ≤ N
+    · have hsub : Finset.range (I.val + 1) ⊆ Finset.range (N + 1) :=
+        Finset.range_subset_range.mpr (by omega)
+      calc
+        _ = ∑ i ∈ Finset.range (I.val + 1), hypergeometricWeight N N' I.val i := by
+          symm
+          apply Finset.sum_subset hsub
+          intro i _ hi'
+          have hnot : ¬ i ≤ I.val := by simpa using hi'
+          simp [hypergeometricWeight, hnot]
+        _ = ∑ i ∈ Finset.range (I.val + 1), weight N' N I.val i := by
+          apply Finset.sum_congr rfl
+          intro i hi'
+          simp [hypergeometricWeight, Nat.le_of_lt_succ (Finset.mem_range.mp hi')]
+        _ = 1 := hs
+    · calc
+        _ = ∑ i ∈ Finset.range (N + 1), weight N' N I.val i := by
+          apply Finset.sum_congr rfl
+          intro i hi'
+          have hle : i ≤ I.val := by have := Finset.mem_range.mp hi'; omega
+          simp [hypergeometricWeight, hle]
+        _ = ∑ i ∈ Finset.range (I.val + 1), weight N' N I.val i := by
+          apply Finset.sum_subset (Finset.range_subset_range.mpr (by omega))
+          intro i _ hi'
+          apply weight_eq_zero
+          left
+          have hni : ¬ i < N + 1 := by simpa only [Finset.mem_range] using hi'
+          omega
+        _ = 1 := hs
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
