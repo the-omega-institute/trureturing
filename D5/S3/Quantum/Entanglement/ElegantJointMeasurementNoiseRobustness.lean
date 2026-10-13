@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseRobustness
    mirror-E: none(waiver:physical-noise-bound-consumer)
-   anchors: [D5/S3/Quantum/Entanglement/ElegantJointMeasurementNoiseBounds]
+   anchors: []
    utility: none
    digest: An actual positive EJM inflation score excludes a strict physical noise box. -/
 
