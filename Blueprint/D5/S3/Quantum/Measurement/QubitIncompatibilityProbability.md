@@ -10,6 +10,10 @@ $$\neg \operatorname{OrderedRootCoordinates.claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/QubitIncompatibilityProbability.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-et-al-2019-qubit-incompatibility-probability` (refuted) by `D5/S3/Quantum/Measurement/QubitIncompatibilityProbability.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-et-al-2019-qubit-incompatibility-probability","declaration_gid":"D5/S3/Quantum/Measurement/QubitIncompatibilityProbability.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lin Zhang; Hua Xiang; Xiao Li-Jost; Shao-Ming Fei (2019). *Incompatibility probability of random quantum measurements*. DOI: [10.1103/PhysRevE.100.062139](https://doi.org/10.1103/PhysRevE.100.062139). URL: <https://arxiv.org/abs/1912.12321>.
