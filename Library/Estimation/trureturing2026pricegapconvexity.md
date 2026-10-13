@@ -1917,3 +1917,719 @@ improvement, cannot replace the missing signed cancellation. The required
 input remains a same-height upper bound retaining the actual phases,
 real parts and multiplicities; improving a fixed strip exponent above
 $1/2$ does not supply that bound.
+
+## A fixed-zero obstruction to individual complex-modulus budgets
+
+Keep H1's one fixed exponent $\eta$, its $d>0$, every original full
+window, every maximizing tie, the positive weights $\delta_i$, and the
+actual core clocks $B_i$. Assume RH failure and put
+
+$$
+\Theta=\sup_{\gamma>0}\operatorname{Re}\rho\in(1/2,1],\qquad
+1-\Theta<\eta<1/2,\qquad
+\ell_X=(d/8)X^{1-\eta}\log X,\qquad
+M_X=X^{1/2-\eta}\log X.
+$$
+
+Use CR45--CR47's fixed real comparison parameter $0<a<5\kappa/8$
+and each actual selected height
+$\tau_i\in[(\sqrt{B_i}-4)/4,(\sqrt{B_i}-4)/2]$ with its original
+explicit-formula error contract. The argument does not select new
+heights, discard ties, change the window or replace its weights.
+Its conclusion concerns the budget
+
+$$
+\mathcal A_X=2\sum_i\delta_i
+ \sum_{0<\gamma\le\tau_i}m_\rho|c_{B_i,a}(\rho)|,\qquad
+c_{B,a}(s)=s_BF_B(s)-\frac{aB^s}{\sqrt B\,s}.
+$$
+
+The complex modulus is taken before conjugate pairing and before
+aggregation of labels or zeros. This is a different quantity from
+$\sum_i\delta_iH_{B_i,a}(\tau_i)$, from the modulus of an aggregated
+complex sum, and from a sum of absolute real parts.
+
+### A real compensation cannot remove the imaginary coefficient
+
+Reuse the complete Laplace representation VJ1 in
+[the Mertens note](../ArithSums/fabbian2026mertens.md).
+For $L=\log B\ge2$, write
+
+$$
+d\mu_L(z)=L(1+z)e^{-Lz}\,dz,\qquad
+J_L(s)=\int_0^\infty\frac{d\mu_L(z)}{1+z-s},\qquad
+c_{B,a}(s)=\frac{B^{s-1/2}}s[J_L(s)-a].
+$$
+
+All these integrals converge on $0<\operatorname{Re}s<1$.
+For $\rho=\beta+i\gamma$, $0<\beta<1$, $\gamma>0$,
+
+$$
+\operatorname{Im}J_L(\rho)
+=\int_0^\infty
+ \frac{\gamma}{(1+z-\beta)^2+\gamma^2}\,d\mu_L(z).
+$$
+
+The elementary exponential moments give
+
+$$
+q_L:=\mu_L([0,\infty))=1+1/L,\qquad
+\int_0^\infty(1+z)^2\,d\mu_L(z)
+=1+3/L+6/L^2+6/L^3.
+$$
+
+Since $0\le\beta\le1$ and $z\ge0$,
+$(1+z-\beta)^2\le(1+z)^2$. The normalized second moment is at most
+$19/6$ for $L\ge2$: after clearing its positive denominators, the
+required inequality is exactly
+
+$$
+(L-2)(13L^2+27L+18)\ge0.
+$$
+
+Apply the usual integral Jensen inequality for the convex reciprocal
+function to the probability measure $q_L^{-1}\mu_L$ and the positive
+denominator $(1+z-\beta)^2+\gamma^2$. Its denominator and reciprocal
+are integrable, the latter being bounded by $\gamma^{-2}$. It gives
+
+$$
+\operatorname{Im}J_L(\rho)
+\ge\frac{q_L\gamma}{\gamma^2+19/6}.
+$$
+
+Jensen and its equivalent Cauchy--Schwarz application are the standard
+integral inequalities in [Durrett, *Probability: Theory and Examples*,
+version 5, Theorems 1.5.1--1.5.2, printed page 25](https://sites.math.duke.edu/~rtd/PTE/PTE5_011119.pdf).
+Reciprocal convexity and the exponential moments are also reused
+standard results. The number $19/6$ is the maximum of the stated
+normalized second-moment relaxation, attained at $L=2,\beta=0$;
+this does not assert sharpness or equality for the resolvent integral
+on the original open zero strip. Because $a$ is real,
+$|J_L(\rho)-a|\ge\operatorname{Im}J_L(\rho)$. Therefore
+
+$$
+\boxed{
+|c_{B,a}(\rho)|\ge
+\frac{q_L\gamma}{|\rho|(\gamma^2+19/6)}B^{\beta-1/2}.}
+\tag{MB1}
+$$
+
+MB1 is valid for every real $a$. Its use here keeps the original
+fixed allowed parameter. It is stronger than the bound obtained by
+restricting the same integral to $0\le z\le1/L$, which has factor
+$(1-e^{-1})\gamma/(\gamma^2+4)$. Positive imaginary part before
+multiplication by $B^{i\gamma}/\rho$ gives no sign for the resulting
+real part.
+
+### Every original core eventually contains one fixed zero in its head
+
+Reuse the complete original zero formula and its pole and trivial-zero
+correction $r_B=O(B^{-1/2})$ from
+[the Nicolas note](../ArithSums/nicolas2025comparison.md), and the
+classical zero-count consequence
+$S_2=\sum_{\gamma>0}m_\rho/\gamma^2<\infty$.
+In VJ1 the real part of $\rho(1+z-\rho)$ is
+$\gamma^2+\beta(1+z-\beta)\ge\gamma^2$.
+Thus the complete original, uncompensated coefficients satisfy
+
+$$
+|s_BF_B(\rho)|\le q_L B^{\beta-1/2}/\gamma^2,
+\qquad
+|s_BI_\psi(B)|\le C B^{\Theta-1/2}\quad(B\ge e^2)
+$$
+
+for a fixed $C>0$. This sums the full degree-two original
+coefficients; it does not assert absolute convergence of the
+compensated infinite series. In particular it remains valid when
+$\Theta=1$, without inserting a coarse $O(x^\Theta)$ prime-error
+bound into an improper integral.
+
+CR20 gives $-s_BI_\psi(B)\ge\kappa t/\sqrt B$ for every original
+label and tie. Combining these two inequalities, with $t_i\ge\ell_X$,
+yields
+
+$$
+\boxed{B_i\ge b_X:=((\kappa/C)\ell_X)^{1/\Theta}.}
+\tag{MB2}
+$$
+
+Set
+
+$$
+\beta_c=\frac12+\frac{\Theta(1/2-\eta)}{1-\eta}.
+$$
+
+Then $\Theta-\beta_c=(\Theta+\eta-1)/(2(1-\eta))>0$.
+By the definition of the supremum, choose one fixed actual zero
+$\rho_*=\beta_*+i\gamma_*$ with $\gamma_*>0$ and $\beta_*>\beta_c$.
+No zero attaining $\Theta$ is required. Put
+
+$$
+q_*=(\beta_*-1/2)/\Theta>0,\qquad
+\varepsilon=(1-\eta)q_*-(1/2-\eta)>0.
+$$
+
+MB2 implies $b_X\to\infty$. Hence the lower bound on every original
+$\tau_i$ eventually exceeds this one fixed $\gamma_*$, uniformly
+over the full window and all ties. MB1, $q_L\ge1$, and the original
+positive weights now give
+
+$$
+\mathcal A_X\ge C_*\sum_i\delta_i B_i^{\beta_*-1/2}
+\ge C_* b_X^{\beta_*-1/2}L_X
+$$
+
+with a fixed $C_*>0$, after changing the constant where necessary.
+Consequently, for every sufficiently large qualifying original window,
+every maximizing-tie assignment and every height satisfying the
+original height contracts,
+
+$$
+\boxed{
+\frac{\mathcal A_X}{M_XL_X}
+\ge C_{**}X^\varepsilon(\log X)^{q_*-1}\longrightarrow\infty.}
+\tag{MB3}
+$$
+
+The fixed zero and common starting point are not asserted computable.
+The proof also covers $\Theta=1$; it uses $\Theta+\eta>1$ and never
+requires supremum attainment.
+
+### What the budget obstruction leaves unresolved
+
+MB3 rules out paying CR47's remaining target by $\mathcal A_X$, or
+by an upper allowance no smaller than this individual-complex-modulus
+budget. It supplies no corresponding lower bound for the signed head,
+for a sum of absolute real parts, or for a sum aggregated before
+taking its modulus. Conjugate pairing, cross-zero cancellation and
+cross-label cancellation remain available routes.
+
+For example, if a future same-source estimate establishes
+$S_X:=\sum_i\delta_iH_{B_i,a}(\tau_i)\le C_0M_XL_X$, then MB3 forces
+
+$$
+\frac{(S_X)_+}{\mathcal A_X}
+\ll X^{-\varepsilon}(\log X)^{1-q_*}\longrightarrow0.
+$$
+
+This quantifies a necessary one-sided cancellation for such an upper-bound
+route; it does not establish the cancellation. To leave CR20's strict
+remaining margin, the displayed upper-bound route additionally needs
+$C_0<d(1-\kappa)/16$. The joint signed
+estimate in CR47 and RH remain unresolved. MB1--MB3 are
+supplier-relative paper deductions using the cited original formula,
+H1, CR20 and CR45--CR47, with no originality or Lean-verification claim.
+
+## Prime existence bounds the weight of each actual core
+
+Retain the same qualifying RH-false full windows, every original label
+$p_0<\cdots<p_m$, and every allowed assignment of full-domain maximizing
+ties. Write, as in CR17--CR47,
+
+$$
+N_i=p_iU_i,\quad U_i=N_{A_i}^{\rm str},\quad
+t_i=\log p_i,\quad B_i=\log U_i,\quad A_i=B_i+t_i,
+\qquad 0\le i\le m.
+$$
+
+The weighted labels are $0\le i<m$, with
+$\delta_i=t_{i+1}-t_i>0$, $L_X=\sum_{i<m}\delta_i$, and
+$\max_{i<m}\delta_i\le E=e^{-5\ell_X/12}$. The final label $p_m$
+is still the original boundary. Existing full-window counting gives
+$L_X\sim\ell_X$; no label thinning is made.
+
+Use the [N2 all-choice ordering](../ArithSums/trureturing2026extrawindowpairing.md#4-n2-the-exact-common-finite-core-and-all-choices-of-ties):
+$U_i\mid U_j$ and $B_i\le B_j$ whenever $i<j$, and $A_i<A_j$.
+Consequently all weighted occurrences of one actual core $U$ form a
+contiguous block $a\le i\le b<m$. This is equality of literal integer
+cores, not equality of coarse FIB labels or of an approximate clock.
+The [existing cofinal constant-core edge result CW2](../ArithSums/nicolas2025comparison.md#exact-log-2-rigidity)
+is reused; it asserts neither a long constant-core run nor a bound for
+the total weight of a repeated core. The estimate here applies to every
+such block in every allowed tie assignment, whether or not CW2 selects
+one of its edges.
+
+### Retain the strict activation and the last outgoing weight
+
+Suppose a prime-existence supplier gives, for every sufficiently large
+real $x$, a prime $q$ with $x<q\le x+H(x)$. Use it at the actual
+departure $x=A_a$. The already paid first-layer interface gives
+$q<a_{q,1}<q+1\le A_a+H(A_a)+1$.
+
+Strict inventory equality $N_{A_a}^{\rm str}=N_{A_b}^{\rm str}=U$
+excludes every actual activation in $[A_a,A_b)$. Indeed a layer activating
+there is excluded at $A_a$ and included at $A_b$, contradicting equality.
+If $A_b\ge A_a+H(A_a)+1$, then the displayed $a_{q,1}$ lies strictly
+between $A_a$ and $A_b$, giving this contradiction. Thus
+
+$$
+A_b-A_a<H(A_a)+1.
+$$
+
+The case $a=b$ satisfies the same inequality. Higher-layer and
+simultaneous activations are retained in the inventory; they can only
+shorten this constant-core interval. No upper bound for their number
+is assumed, and no equality layer is inserted at a strict endpoint.
+
+Since $B_b=B_a$, the exact weighted telescope is
+
+$$
+\begin{aligned}
+w_X(U)&:=\sum_{i=a}^b\delta_i
+=t_{b+1}-t_a\\
+&=(A_b-A_a)+\delta_b
+\le H(A_a)+1+E.
+\end{aligned}
+\tag{SM1}
+$$
+
+The term $\delta_b$ is indispensable: its left endpoint has core $U$
+even if label $b+1$ has another core. For the terminal block $b=m-1$
+it uses precisely the original boundary label $p_m$. SM1 therefore does
+not drop either a switching weight or the last weight of the full window.
+All supplier starts can be paid uniformly, since $A_a\ge\ell_X\to\infty$.
+
+### Directly consume prime existence, rather than reprove a gap theorem
+
+The [Baker--Harman--Pintz primary Theorem 1](../Scale/bakerharmanpintz2001primegaps.md)
+and its explicit forward conversion BHP-F supply $H(x)=2x^\vartheta$,
+$\vartheta=21/40$. Therefore every original core block satisfies
+
+$$
+\boxed{w_X(U)\le2A_a^{21/40}+1+E.}
+\tag{SM2}
+$$
+
+This does not replace the stronger prime-count contracts used in N1 or
+the original full-window construction. The original GM mesh $E$ is kept.
+No new prime-gap or sieve theorem, numerical analytic start, literature
+priority or complete Lean verification is claimed.
+
+Define the original probability measure on actual core clocks by
+
+$$
+\nu_X=\frac1{L_X}\sum_{i<m}\delta_i\,\boldsymbol\delta_{B_i},
+\qquad B_{\max,X}=\max_{i<m}B_i,
+$$
+
+where $\boldsymbol\delta_B$ is a Dirac mass. Since $t_a\le2\ell_X$,
+SM2 gives both the local and full-window bounds
+
+$$
+\begin{aligned}
+\nu_X(\{B\})&\le
+\min\left(1,\frac{2(B+2\ell_X)^{21/40}+1+E}{L_X}\right),\\
+\sup_B\nu_X(\{B\})&\le
+\min\left(1,\frac{2(B_{\max,X}+2\ell_X)^{21/40}+1+E}{L_X}\right).
+\end{aligned}
+\tag{SM3}
+$$
+
+The first formula is for clocks of actual cores; absent clocks have zero
+mass. These are deterministic bounds for the original positive weights,
+uniform in all original tie choices. No probability law for independent
+zero phases has been substituted for $\nu_X$.
+
+### The additional clock regime and the signed-head debt
+
+With $L_X\sim\ell_X$, a sufficient extra regime for SM3 to imply
+$\sup_B\nu_X(\{B\})\to0$ is
+
+$$
+B_{\max,X}=o(\ell_X^{40/21}).
+\tag{SM4}
+$$
+
+For an all-choice assertion this regime must hold uniformly over the
+allowed tie assignments. The existing exponential ceiling $R$ does not
+supply SM4. Conversely, MB2 supplies
+$B_{\min,X}\ge c\ell_X^{1/\Theta}$ for one fixed $c>0$. If
+$\Theta\le21/40$, this lower bound excludes the sufficient regime SM4.
+That failure does not prove actual concentration: SM4 is a sufficient
+condition for this particular upper bound, not a necessary condition for
+the actual atom masses to vanish.
+
+For the existing CR45--CR47 core-selected-height route, one may apply
+the CHJ supplier once per distinct $B$ and choose its resulting $\tau_B$
+for every label with that core. All that route's error contracts depend
+on this same $B$, so the exact remaining head can then be written
+
+$$
+\sum_{i<m}\delta_iH_{B_i,a}(\tau_{B_i})
+=L_X\int H_{B,a}(\tau_B)\,d\nu_X(B).
+\tag{SM5}
+$$
+
+This is a finite regrouping of the existing admissible-height route;
+it does not impose a common height on different cores. Arbitrary previously
+chosen individual masks cannot be replaced by $\tau_B$ without their
+own unchanged contracts. The other $A$-selected-height route remains
+subject to its separate hypotheses.
+
+Even a supplied SM4 and vanishing atom masses would not establish
+cancellation of $e^{i\gamma\log B}$, control the growing family of zero
+frequencies, or bound the amplitude-weighted signed integral in SM5.
+SM1--SM3 pay an actual residence-weight interface using existing
+arithmetic and prime existence; they do not pay the signed upper estimate
+with CR20's required strict margin. CR21/CR23, CR47 and RH remain unproved.
+
+## The retained witness height bounds the actual selected core clocks
+
+Keep the original fixed $\Theta,\eta,d$, every qualifying full window,
+and all maximizing ties from MB1--MB3 and SM1--SM5. The following
+additional clock estimate consumes the existing unabridged CR19 height
+and the complete uncompensated zero-series bound from MB2's proof.
+It requires no prime-distribution, ambient sampling or phase hypothesis.
+
+Beyond one common source start CR18 has $\chi_{p,u}>0$, and CR19 gives
+
+$$
+-s_B I_\psi(B)\ge
+\frac d2\sqrt B\log B\,X^{-\eta}
++\chi_{p,u}\frac t{\sqrt B}.
+$$
+
+The already paid complete bound is
+$|s_BI_\psi(B)|\le C B^{\Theta-1/2}$. It retains the full
+uncompensated original coefficient and its convergent reciprocal-square
+zero sum; no compensated infinite $1/\rho$ series is made absolutely
+summable. Dropping only the nonnegative second term in the lower bound
+therefore gives
+
+$$
+\frac d2\sqrt B\log B\,X^{-\eta}
+\le C B^{\Theta-1/2},\qquad
+\boxed{B^{1-\Theta}\log B\le C_dX^\eta.}
+\tag{SC1}
+$$
+
+This is a necessary estimate on each actual selected $B$, uniform in
+the original labels and tie assignments. The height is not spent twice:
+SC1 only constrains the possible clocks by the same already-established
+lower and upper values of the complete response. No second independent
+positive reserve is created.
+
+### A polynomial ceiling when the zero-real-part supremum is below one
+
+If $\Delta:=1-\Theta>0$, MB2 and
+$\ell_X=(d/8)X^{1-\eta}\log X$ give $\log B\ge c_1\log X$
+uniformly for one $c_1>0$ and sufficiently large original witnesses.
+Substitution in SC1 yields
+
+$$
+\boxed{
+B_{\max,X}\ll_{\Theta,\eta,d}
+\left(\frac{X^\eta}{\log X}\right)^{1/(1-\Theta)}.}
+\tag{SC2}
+$$
+
+The implied constant includes the fixed original suppliers and is
+independent of label and tie choice. No uniformity as $\Theta\uparrow1$
+is asserted. SC2 bounds actual selected clocks; it is stronger than
+using the exponential source-window ceiling alone. At $\Theta=1$,
+SC1 instead gives only $\log B\ll X^\eta$, which does not improve
+the existing $\log R\asymp X^{\eta/2}$ ceiling.
+
+### The range in which the repeated-core mass actually decays
+
+Put $\alpha_X=\sup_B\nu_X(\{B\})$. Existing CR17 has
+$t_i/B_i\to0$ uniformly, with $t_i\ge\ell_X$, so
+$B_{\max,X}+2\ell_X\le2B_{\max,X}$ eventually. Combining SC2 with
+SM3 and the unchanged $L_X\sim\ell_X$, for $\vartheta=21/40$,
+gives
+
+$$
+\alpha_X\ll
+X^{\vartheta\eta/(1-\Theta)-(1-\eta)}
+(\log X)^{-1-\vartheta/(1-\Theta)}+\ell_X^{-1}.
+\tag{SC3}
+$$
+
+Thus the previously sufficient clock regime SM4, and consequently
+$\alpha_X\to0$, are paid for every allowed tie assignment whenever
+the original fixed parameters satisfy
+
+$$
+\boxed{
+\Theta<1,\qquad 1-\Theta<\eta<\frac12,\qquad
+\eta\le\frac{1-\Theta}{1-\Theta+21/40}.}
+\tag{SC4}
+$$
+
+The last inequality permits equality: the power of $X$ in SC3 is then
+zero and the negative logarithmic power still tends to zero. Equivalently,
+SC2 divided by $\ell_X^{40/21}$ tends to zero in this same range.
+Every statement here retains the original supplied $\eta$; no stronger
+oscillation supplier or a more favorable replacement exponent is assumed.
+The parameter interval in SC4 can be nonempty only when $\Theta>21/40$.
+For other fixed parameters with $\Theta<1$, SC2 still holds but this
+bound need not imply mass decay. The $\Theta\le21/40$ incompatibility
+already stated after SM4 concerns that sufficient regime, not an
+arithmetic concentration theorem.
+
+SC1--SC4 are source-specific paper applications of the existing CR19
+and MB2 bounds. They add no generic inequality, prime theorem or Lean
+declaration, and make no literature-originality or kernel-verification
+claim. The quantity tending to zero in SC4 is the maximum **normalized**
+single-core mass; the unnormalized maximum $w_X(U)$ need not tend to
+zero. Even in this paid parameter range, phases, amplitude weights,
+zero multiplicities and actual individual masks remain jointly constrained
+in SM5. Neither SC4 nor mass decay supplies the signed finite-head bound
+with the strict coefficient $C_0<d(1-\kappa)/16$. Robin/RH remain unproved.
+
+## The paid clock ceiling removes a lower real-part sector of the finite head
+
+Keep the original RH-failure suppliers, fixed $\Theta,\eta,d$, every
+qualifying full window, every maximizing tie and CR45--CR47's fixed
+$0<a<5\kappa/8$. In particular the original $\eta$ is not replaced.
+The following application uses SC2 and the exact-coefficient majorants
+already used in MB2 and the zero-free-strip comparison. It adds no
+zero-density, zero-free or generic summation theorem.
+
+For a fixed $\sigma\ge1/2$, define a subhead at the same actual height
+by restricting the existing finite sum:
+
+$$
+H^{\le\sigma}_{B,a}(T)=2\operatorname{Re}
+\sum_{\substack{0<\operatorname{Im}\rho\le T\\
+                  \operatorname{Re}\rho\le\sigma}}
+m_\rho\left[s_BF_B(\rho)-\frac{aB^\rho}{\sqrt B\,\rho}\right].
+$$
+
+Let $H^{>\sigma}_{B,a}(T)$ be its complementary subhead. Thus
+$H_{B,a}(T)=H^{\le\sigma}_{B,a}(T)+H^{>\sigma}_{B,a}(T)$ exactly.
+All actual real parts, multiplicities, labels and height masks remain;
+the already paid suffix and compensation change are not reapplied to
+either subhead separately.
+
+### Apply the existing coefficient bounds to the retained submultiset
+
+MB2 already uses
+$|s_BF_B(\rho)|\le(1+1/\log B)B^{\beta-1/2}/\gamma^2$
+and $\sum_{\gamma>0}m_\rho/\gamma^2<\infty$. The existing zero-count
+consequence also gives
+$\sum_{0<\gamma\le T}m_\rho/|\rho|=O(1+\log^2T)$.
+For $\beta\le\sigma$, $B\ge e^2$ and the original
+$\tau_B\asymp\sqrt B$, these bounds directly supply
+
+$$
+\left|H^{\le\sigma}_{B,a}(\tau_B)\right|
+\le C_a B^{\sigma-1/2}(1+\log^2 B).
+\tag{SR1}
+$$
+
+The constant is independent of the original labels, ties and legal
+heights. This is the owner's existing absolute majorant applied to a
+submultiset, not a new estimate for the zeros.
+
+Put $M_X=X^{1/2-\eta}\log X$ and
+$S_X^{\le\sigma}=\sum_{i<m}\delta_i
+H^{\le\sigma}_{B_i,a}(\tau_{B_i})$. Suppose first that
+$\Delta=1-\Theta>0$. With $h=\sigma-1/2\ge0$, SC2 gives
+$B_{\max,X}^{h}\ll X^{\eta h/\Delta}(\log X)^{-h/\Delta}$
+and $1+\log^2 B_{\max,X}\ll(\log X)^2$. Since all original
+$\delta_i$ are positive and sum to $L_X$, the quantitative consequence is
+
+$$
+\boxed{
+\frac{|S_X^{\le\sigma}|}{M_XL_X}
+\ll_{\Theta,\eta,d,a,\sigma}
+X^{-\varepsilon_\sigma}
+(\log X)^{1-(\sigma-1/2)/(1-\Theta)},\qquad
+\varepsilon_\sigma=
+\frac12-\eta-\frac{\eta(\sigma-1/2)}{1-\Theta}.}
+\tag{SR2}
+$$
+
+This bound retains the negative logarithmic power in SC2. Therefore,
+with all parameters fixed as supplied,
+
+$$
+\boxed{
+\frac12\le\sigma<\sigma_{\rm safe}:=
+\frac12+\frac{(1-\Theta)(1/2-\eta)}{\eta}
+\quad\Longrightarrow\quad
+|S_X^{\le\sigma}|=o(M_XL_X).}
+\tag{SR3}
+$$
+
+At $\sigma=\sigma_{\rm safe}$ the remaining logarithmic power is
+$2-1/(2\eta)$. Hence this endpoint also obeys SR3 when the original
+$\eta<1/4$. For $\eta\ge1/4$ SR2 alone does not supply the endpoint
+little-$o$ conclusion; it does not prove that the actual sector is large.
+No SC4 atom-decay hypothesis or cross-label phase cancellation is used.
+
+### Retain the spectral range and the strict remaining margin
+
+The original $\eta>1-\Theta$ gives
+
+$$
+\Theta-\sigma_{\rm safe}
+=\frac{\eta-(1-\Theta)}{2\eta}>0.
+\tag{SR4}
+$$
+
+Thus SR3 leaves a nonempty possible real-part range below the actual
+zero-real-part supremum. It neither proves that no zeros remain nor
+bounds their signed aggregate. For any allowed fixed cut, the original
+target with a constant strictly below $d(1-\kappa)/16$ is equivalent
+to the same target for $S_X^{>\sigma}$, allowing an arbitrarily small
+fixed loss of margin: the absolute difference is $o(M_XL_X)$ uniformly
+over the original windows, all ties and admissible heights.
+
+When $\Theta=1$, SC2 is unavailable. For the sector $\sigma=1/2$ only,
+the original ceiling $B_i\le R$ with
+$\log R\asymp X^{\eta/2}$ instead gives
+
+$$
+\frac{|S_X^{\le1/2}|}{M_XL_X}
+\ll_a\frac{X^{2\eta-1/2}}{\log X}.
+\tag{SR5}
+$$
+
+Consequently this sector is negligible when the original
+$0<\eta\le1/4$, including equality. No positive-width sector above
+$1/2$ is removed by this argument when $\Theta=1$.
+
+SR1--SR5 are source-specific paper applications of the already paid
+clock and coefficient estimates. They narrow an unpaid spectral range;
+they do not supply its signed bound, replace an original mask, establish
+literature originality or constitute Lean verification. The full Robin
+comparison and RH remain unproved.
+
+## Legal core-height choices differ only below the target scale
+
+Keep the complete original coefficient, the same actual core clocks,
+all labels and ties, and CR45--CR47's fixed $a,\kappa$. This application
+uses the already paid degree-two suffix and CHJ contracts. A height is
+called admissible here only if it lies in CR45's interval
+
+$$
+\frac{\sqrt B-4}{4}\le T\le\frac{\sqrt B-4}{2}
+$$
+
+and satisfies that route's original complete formula
+
+$$
+\psi(B)=B-Z_B(T)+e_B(T),\qquad |e_B(T)|\le80\sqrt B.
+$$
+
+CR45 supplies an admissible height for every sufficiently large actual
+core. This definition does not declare every point in the interval
+admissible, or change an existing mask from a different height route.
+
+### Remove the legal-height variable using the complete accounts
+
+Write $E(u)=u-\psi(u)$ and define the height-independent same-clock
+quantity
+
+$$
+G_a(B)=-s_BI_\psi(B)-\frac{aE(B)}{\sqrt B},
+\qquad
+\mathcal G_X=\sum_{i<m}\delta_iG_a(B_i).
+$$
+
+The original full formula and CR34's degree-two suffix are
+
+$$
+-s_BI_\psi(B)=2s_B\operatorname{Re}
+\sum_{\gamma>0}m_\rho F_B(\rho)+r_B,
+\qquad
+T_F(B,T)=-\mu_B(T)+e_F(B,T).
+$$
+
+Their complete endpoint and elementary terms are retained. In
+particular $\mu_B\ge0$, $|e_F|\le\varepsilon_F$, and at
+$T\asymp\sqrt B$ the already established bounds give
+$|r_B|+\mu_B(T)+\varepsilon_F(B,T)=o_X(1)$ uniformly in the
+original sources and allowed heights. The CHJ formula at that same
+height gives $Z_B(T)=E(B)+e_B(T)$. Subtracting these two complete
+accounts, rather than optimizing an independently chosen head, yields
+
+$$
+\boxed{
+H_{B,a}(T)=G_a(B)-r_B+\mu_B(T)-e_F(B,T)
+-\frac{ae_B(T)}{\sqrt B},\qquad
+|H_{B,a}(T)-G_a(B)|\le80a+o_X(1).}
+\tag{HC1}
+$$
+
+This conclusion holds also when $\Theta=1$. It uses the actual
+CHJ error and signed suffix contracts; no absolute summability of
+the compensated infinite $1/\rho$ series is imposed.
+
+For any admissible assignment of the original individual heights,
+positivity of the original weights therefore gives
+
+$$
+\boxed{
+|S_X(\boldsymbol T)-\mathcal G_X|
+\le(80a+o_X(1))L_X.}
+\tag{HC2}
+$$
+
+Two admissible assignments on the same window and the same maximizing
+ties consequently differ by at most $(160a+o_X(1))L_X$. Repeated
+cores need not be given the same height for this comparison, although
+SM5 permits that choice in this route. Different cores are not asserted
+to share a common admissible height.
+
+### Preserve the cofinal quantifiers and the strict constant
+
+The original $M_X=X^{1/2-\eta}\log X$ tends to infinity because
+the supplied $\eta<1/2$. Thus HC2 is $o(M_XL_X)$. Put
+$C_*=d(1-\kappa)/16$. The existence of a constant $C_0<C_*$ such
+that the original sufficient signed-head estimate holds is equivalent
+to the corresponding estimate for $\mathcal G_X$, with an arbitrarily
+small fixed loss of margin in either direction.
+
+Both statements retain the same source quantifiers: beyond every common
+finite source start there is an original qualifying full window on
+which every maximizing tie assignment satisfies the bound; the head
+version also requires admissible heights. If the head estimate holds,
+HC2 transfers it to $\mathcal G_X$. Conversely, if the latter estimate
+holds, CR45 supplies heights for each actual core, and HC2 transfers
+the bound to every such admissible assignment. Choose a fixed
+$\epsilon<C_*-C_0$ and then one common start with
+$(80a+o_X(1))/M_X<\epsilon$ to preserve the strict constant.
+The original $\eta,a$ and all full-window outgoing weights are unchanged.
+
+In particular, searching among heights satisfying these same contracts
+can change the aggregate only by $O_a(L_X)$. It cannot by itself supply
+an $M_XL_X$-scale saving. HC2 does not bound $\mathcal G_X$ or
+show that the required favorable full windows exist.
+
+### The remaining same-clock comparison is a future prime-deficit average
+
+The original improper integral gives an exact alternative readout. For
+$L=\log B$, set
+
+$$
+k_L(v)=\frac{L(1+L+\log v)}{v^2(L+\log v)^2},\qquad v\ge1.
+$$
+
+Changing variables $u=Bv$ in $I_\psi(B)$ yields
+
+$$
+\boxed{
+G_a(B)=\frac1{\sqrt B}
+\left[\int_1^\infty E(Bv)k_{\log B}(v)\,dv-aE(B)\right].}
+\tag{HC3}
+$$
+
+The convergence is the original integral's convergence. The kernel is
+positive and normalized: it is the negative derivative of
+$L/[v(L+\log v)]$, whose values at $v=1$ and at infinity are $1$
+and $0$. This is a change of variable in the existing formula, not a
+new prime-error estimate.
+
+CR44 already controls a specified same-source interaction through
+$A=B+t$ and $K(A)=B$. It does not control the future-deficit average
+in HC3. A bound for that average at the actual selected cores is still
+needed. A FIB re-encoding or rotation of the same readout supplies no
+such estimate without an additional proved source relation.
+
+HC1--HC3 are paper applications of the existing complete accounts,
+with no new generic theorem, literature-originality claim or Lean
+verification. They eliminate legal-height optimization from the leading
+unpaid issue; the original signed Robin target and RH remain unproved.

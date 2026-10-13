@@ -55,7 +55,7 @@ private theorem context_spec (k : ℕ) :
       by simp only [leftContext, OutputContext.plug, ih.2.1, rotated],
       by simp only [leftContext, OutputContext.holeAddress, ih.2.2, List.replicate_succ]⟩
 
-private theorem iterate_length (p : Source) (k : ℕ) :
+theorem iterate_length (p : Source) (k : ℕ) :
     (substitution^[k] p).length =
       Nat.fib (k+1) * (composition p).1 + Nat.fib (k+2) * (composition p).2 := by
   induction k generalizing p with

@@ -14,7 +14,7 @@ internal sealed class ElegantJointMeasurementSourceNoiseDocument : IScribeDocume
                 H("Three independent singlet visibilities give the exact equality-pattern polynomial"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Quantum/gisin2017elegantjointmeasurement")),
+                    LibraryNoteRef.Create("D5/L/QuantumContext/gisin2017elegantjointmeasurement")),
                 Blocks(
                     Paragraph(Text("The four tetrahedral signs have product one. The EJM vector before normalization has computational-basis entries sx+i sy, sz+1, sz-1, -sx+i sy. Each effect is its outer product scaled by 1/8. This realizes the singlet-plus-Cartesian-triplet elegant joint basis using exact complex rational matrix entries.")),
                     Paragraph(Text("The EJM construction and ideal singlet-triangle distribution are due to Nicolas Gisin, Section II equation (11) and Section III equations (12)–(14) of arXiv:1708.05556v1. The source treats nonlocality as a conjecture without proof. The present Lean result verifies the explicit physical matrix model and its three-visibility noisy law.")),

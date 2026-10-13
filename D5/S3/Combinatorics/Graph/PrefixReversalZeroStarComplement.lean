@@ -39,15 +39,15 @@ def a (m : ℕ) : Configuration m := prefixReversal (m + 1) le_rfl
 def b (m : ℕ) : Configuration m := prefixReversal m (by omega)
 
 def c (m : ℕ) : Configuration m := prefixReversal (m - 1) (by omega)
-private theorem a_apply {m : ℕ} (i : Fin (m + 1)) : a m i = i.rev := by
+theorem a_apply {m : ℕ} (i : Fin (m + 1)) : a m i = i.rev := by
   apply Fin.ext
   simp [a, prefixReversal, reverseIndex, i.isLt, Fin.rev]
-private theorem b_apply {m : ℕ} (i : Fin (m + 1)) : (b m i).val = if i.val < m then m - 1 - i.val else i.val := by
+theorem b_apply {m : ℕ} (i : Fin (m + 1)) : (b m i).val = if i.val < m then m - 1 - i.val else i.val := by
   by_cases hi : i.val < m <;> simp [b, prefixReversal, reverseIndex, hi]
-private theorem c_apply {m : ℕ} (i : Fin (m + 1)) : (c m i).val = if i.val < m - 1 then m - 2 - i.val else i.val := by
+theorem c_apply {m : ℕ} (i : Fin (m + 1)) : (c m i).val = if i.val < m - 1 then m - 2 - i.val else i.val := by
   by_cases hi : i.val < m - 1 <;>
     simp [c, prefixReversal, reverseIndex, hi] <;> omega
-private theorem ab_eq_rotate (m : ℕ) : a m * b m = finRotate (m + 1) := by
+theorem ab_eq_rotate (m : ℕ) : a m * b m = finRotate (m + 1) := by
   apply Equiv.ext
   intro i
   apply Fin.ext
@@ -61,7 +61,7 @@ private theorem ab_eq_rotate (m : ℕ) : a m * b m = finRotate (m + 1) := by
   · have he : i = Fin.last m := Fin.ext (by simpa using (show i.val = m by omega))
     subst i
     simp
-private theorem bc_apply {m : ℕ} (hm : 2 ≤ m) (i : Fin (m + 1)) : (b m * c m) i =
+theorem bc_apply {m : ℕ} (hm : 2 ≤ m) (i : Fin (m + 1)) : (b m * c m) i =
       if hi : i.val < m then
         (⟨(i.val + 1) % m, (Nat.mod_lt _ (by omega)).trans_le (by omega)⟩ :
           Fin (m + 1))
@@ -79,7 +79,7 @@ private theorem bc_apply {m : ℕ} (hm : 2 ≤ m) (i : Fin (m + 1)) : (b m * c m
       simp [hsmall, hmid, he, show 0 < m by omega,
         Nat.sub_add_cancel (show 1 ≤ m by omega)]
     · simp [hsmall, hmid]
-private theorem full_reverse_list {m : ℕ} (v : Configuration m) : List.ofFn (v * a m) = (List.ofFn v).reverse := by
+theorem full_reverse_list {m : ℕ} (v : Configuration m) : List.ofFn (v * a m) = (List.ofFn v).reverse := by
   apply List.ext_getElem
   · simp
   · intro i hi hj
@@ -97,7 +97,7 @@ private theorem rotate_list {m : ℕ} (v : Configuration m) : List.ofFn (v * fin
     congr 1
     apply Fin.ext
     simp [finRotate_apply, Fin.add_def]
-private theorem rotate_pow_list {m : ℕ} (v : Configuration m) (k : ℕ) : List.ofFn (v * finRotate (m + 1) ^ k) = (List.ofFn v).rotate k := by
+theorem rotate_pow_list {m : ℕ} (v : Configuration m) (k : ℕ) : List.ofFn (v * finRotate (m + 1) ^ k) = (List.ofFn v).rotate k := by
   induction k with
   | zero => simp
   | succ k ih =>
@@ -192,7 +192,7 @@ def coordinate {m : ℕ} (z : Configuration m)
     (p : Fin m × Fin (m + 1) × Bool) : Configuration m :=
   gapAnchor z p.1 * finCycle p.2.1 *
     (if p.2.2 then a m else 1)
-private theorem rotate_pow_eq_cycle {m : ℕ} (k : ℕ) : finRotate (m + 1) ^ k = finCycle (k : Fin (m + 1)) := by
+theorem rotate_pow_eq_cycle {m : ℕ} (k : ℕ) : finRotate (m + 1) ^ k = finCycle (k : Fin (m + 1)) := by
   induction k with
   | zero =>
     apply Equiv.ext
@@ -269,11 +269,11 @@ private theorem cycle_mul {m : ℕ} (r s : Fin (m + 1)) : finCycle r * finCycle 
   intro i
   simp only [Equiv.Perm.mul_apply, finCycle_apply]
   abel
-private theorem cycle_zero (m : ℕ) : finCycle (0 : Fin (m + 1)) = 1 := by
+theorem cycle_zero (m : ℕ) : finCycle (0 : Fin (m + 1)) = 1 := by
   apply Equiv.ext
   intro i
   simp
-private theorem a_sq (m : ℕ) : a m * a m = 1 := by
+theorem a_sq (m : ℕ) : a m * a m = 1 := by
   apply Equiv.ext
   intro i
   simp [Equiv.Perm.mul_apply, a_apply]
@@ -285,14 +285,14 @@ private theorem a_cycle {m : ℕ} (r : Fin (m + 1)) : a m * finCycle r = finCycl
   apply Equiv.ext
   intro i
   simp [Equiv.Perm.mul_apply, a_apply, Fin.rev_add, sub_eq_add_neg]
-private theorem b_eq_cycle_a (m : ℕ) : b m = finCycle (-1 : Fin (m + 1)) * a m := by
+theorem b_eq_cycle_a (m : ℕ) : b m = finCycle (-1 : Fin (m + 1)) * a m := by
   have hr : finRotate (m + 1) = finCycle (1 : Fin (m + 1)) := by
     simpa using rotate_pow_eq_cycle (m := m) 1
   calc
     b m = a m * (a m * b m) := by rw [← mul_assoc, a_sq, one_mul]
     _ = a m * finCycle (1 : Fin (m + 1)) := by rw [ab_eq_rotate, hr]
     _ = finCycle (-1 : Fin (m + 1)) * a m := a_cycle _
-private theorem b_last (m : ℕ) : b m (Fin.last m) = Fin.last m := by
+theorem b_last (m : ℕ) : b m (Fin.last m) = Fin.last m := by
   apply Fin.ext
   simp [b_apply]
 private theorem residual_b {m : ℕ} (v : Configuration m) : residualList (v * b m) = (residualList v).reverse := by
@@ -407,11 +407,11 @@ def uWord (m : ℕ) : ℕ → List (Configuration m)
 def zWord (m j : ℕ) : List (Configuration m) :=
   uWord m j ++ (List.replicate (m - 1) (c m :: uWord m m)).flatten ++
     c m :: uWord m (m - j - 1)
-private theorem uWord_length (m k : ℕ) : (uWord m k).length = 2 * k + 1 := by
+theorem uWord_length (m k : ℕ) : (uWord m k).length = 2 * k + 1 := by
   induction k with
   | zero => simp [uWord]
   | succ k ih => simp [uWord, ih]; omega
-private theorem uWord_product (m k : ℕ) : (uWord m k).prod = finRotate (m + 1) ^ k * a m := by
+theorem uWord_product (m k : ℕ) : (uWord m k).prod = finRotate (m + 1) ^ k * a m := by
   induction k with
   | zero => simp [uWord]
   | succ k ih =>
@@ -571,7 +571,7 @@ private theorem native_step {m : ℕ} [NeZero (m * ((m + 1) * 2))] (hm : 3 ≤ m
         omega
       rw [rank_next_true hm k r hv]
       simpa [nativeVertex, nativeGenerator, hr] using coordinate_b z k r
-private theorem c_sq (m : ℕ) : c m * c m = 1 := by
+theorem c_sq (m : ℕ) : c m * c m = 1 := by
   apply Equiv.ext
   intro i
   exact reverseIndex_involutive (L := m - 1) (by omega) i
