@@ -140,7 +140,19 @@ $$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\
 
 At radius zero the value is zero. At positive radius the complex exponential gives the prescribed angle and preserves the radius.
 
-**Theorem 1.12 (Exact fibers of the radial map).**
+**Theorem 1.12 (The original exact radial norm).**
+
+$$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\; norm\left(radial\left(x\right)\right) = radius\left(x\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Gluing/CyclicTriangleDisk.radial_norm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This is the existing radius identity, now public with its statement and proof unchanged. The actual affine-link strict chart consumes it to identify the preimage of the open unit disk with a+b<1. This API exposure is not a new mathematical theorem.
+
+**Theorem 1.13 (Exact fibers of the radial map).**
 
 $$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\; \forall y \in Point\left(n\right),\; radial\left(x\right) = radial\left(y\right) \Leftrightarrow Related\left(x, y\right)\right)$$
 
@@ -152,7 +164,7 @@ $$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\
 
 The radial expression agrees across every actual seam, including the final sector wrapping to sector zero. Equality of images recovers the common radius from the complex norm. Positive canonical representatives have angles in [0,2*pi), where the circle parametrization is injective at nonzero radius. Disjoint half-open sector intervals recover the label, then the angular fraction and both triangle coordinates. The already constructed seam paths identify the original points.
 
-**Definition 1.13 (The closed unit disk).**
+**Definition 1.14 (The closed unit disk).**
 
 $$\forall z \in C,\; z \in Disk \Leftrightarrow norm\left(z\right) \le 1$$
 
@@ -164,7 +176,7 @@ $$\forall z \in C,\; z \in Disk \Leftrightarrow norm\left(z\right) \le 1$$
 
 The disk is the complex norm sublevel set with radius one.
 
-**Definition 1.14 (The radial map with disk codomain).**
+**Definition 1.15 (The radial map with disk codomain).**
 
 $$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\; value\left(diskRadial\left(x\right)\right) = radial\left(x\right)\right)$$
 
@@ -176,7 +188,7 @@ $$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\
 
 The image norm equals a+b and therefore is at most one.
 
-**Definition 1.15 (The equivalence structure of the seams).**
+**Definition 1.16 (The equivalence structure of the seams).**
 
 $$\forall n \in N,\; 0 < n \Rightarrow seamSetoid\left(n\right) = Setoid\left(Related\left(n\right)\right)$$
 
@@ -188,7 +200,7 @@ $$\forall n \in N,\; 0 < n \Rightarrow seamSetoid\left(n\right) = Setoid\left(Re
 
 The equivalence closure supplies the reflexivity, symmetry and transitivity laws.
 
-**Definition 1.16 (The topological seam quotient).**
+**Definition 1.17 (The topological seam quotient).**
 
 $$\forall n \in N,\; 0 < n \Rightarrow Fan\left(n\right) = Quotient\left(seamSetoid\left(n\right)\right)$$
 
@@ -200,7 +212,7 @@ $$\forall n \in N,\; 0 < n \Rightarrow Fan\left(n\right) = Quotient\left(seamSet
 
 The projection from the sector copies induces the quotient topology.
 
-**Definition 1.17 (The induced map on seam classes).**
+**Definition 1.18 (The induced map on seam classes).**
 
 $$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\; quotientRadial\left(Class\left(x\right)\right) = diskRadial\left(x\right)\right)$$
 
@@ -212,7 +224,7 @@ $$\forall n \in N,\; 0 < n \Rightarrow \left(\forall x \in Point\left(n\right),\
 
 Constancy on the generated seam classes gives a well-defined disk-valued map.
 
-**Theorem 1.18 (The quotient is the closed disk).**
+**Theorem 1.19 (The quotient is the closed disk).**
 
 $$\forall n \in N,\; 0 < n \Rightarrow IsHomeomorph\left(quotientRadial\left(n\right)\right)$$
 
@@ -224,7 +236,7 @@ $$\forall n \in N,\; 0 < n \Rightarrow IsHomeomorph\left(quotientRadial\left(n\r
 
 At the apex, the identity norm(radial(x))=radius(x) proves continuity without an angular limit. Away from the apex, division by the nonzero radius and the complex exponential are continuous. To obtain a preimage of a nonzero disk point, choose its angle theta in [0,2*pi), set t=n*theta/(2*pi), and use sector floor(t). With f=t-floor(t) and r equal to the point's norm, the triangle coordinates are r*f and r*(1-f). They have radius r and the prescribed angle. The exact fiber theorem gives injectivity on the quotient. The triangle, its finitely many sector copies and the quotient are compact, while the disk is Hausdorff. Thus the continuous bijection is a homeomorphism.
 
-**Definition 1.19 (Bundled radial homeomorphism).**
+**Definition 1.20 (Bundled radial homeomorphism).**
 
 $$\forall n \in N,\; 0 < n \Rightarrow underlying\left(homeomorphism\left(n\right)\right) = quotientRadial\left(n\right)$$
 
@@ -252,6 +264,7 @@ The bundled homeomorphism has exactly the induced radial map as its forward func
 - Truth anchor: `D5/S3/Geometry/Gluing/CyclicTriangleDisk.quotientRadial_isHomeomorph`
 - Truth anchor: `D5/S3/Geometry/Gluing/CyclicTriangleDisk.radial`
 - Truth anchor: `D5/S3/Geometry/Gluing/CyclicTriangleDisk.radial_eq_iff_related`
+- Truth anchor: `D5/S3/Geometry/Gluing/CyclicTriangleDisk.radial_norm`
 - Truth anchor: `D5/S3/Geometry/Gluing/CyclicTriangleDisk.radius`
 - Truth anchor: `D5/S3/Geometry/Gluing/CyclicTriangleDisk.related_iff_normal_eq`
 - Truth anchor: `D5/S3/Geometry/Gluing/CyclicTriangleDisk.seam`

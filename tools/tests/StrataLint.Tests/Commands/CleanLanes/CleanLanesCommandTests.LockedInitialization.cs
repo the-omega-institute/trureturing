@@ -16,7 +16,7 @@ public sealed partial class CleanLanesCommandTests
         fixture.LockLane(lane, reason);
         var preview = fixture.Run("--lanes-only");
         Assert.True(preview.Success, preview.Error);
-        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "stale_lock"));
+        Assert.Contains(ReadItems(preview.Output), item => ItemMatches(item, lane, "would_remove", "merged_to_dev"));
         Assert.True(Directory.Exists(lane));
         var result = fixture.Run("--force", "--lanes-only");
         Assert.True(result.Success, result.Error);

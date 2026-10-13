@@ -1,0 +1,64 @@
+**定理 29.9（同一端点截断的尖锐全时间输入误差）。** 对定义 29.7 的链，
+每个 $n\ge1,s\ge0$，令 $r=r(s)$。有
+
+$$
+R_n(s)=r\frac{1-r^{2n}}{1-r^{2n+2}},\qquad
+\Delta_n(s):=r(s)-R_n(s)
+=\frac{r^{2n+1}(1-r^2)}{1-r^{2n+2}},\qquad
+0<\Delta_n(s)\le\varphi^{-(4n+2)}.
+$$
+
+记
+
+$$
+\delta_n=\Delta_n(0)=\varphi^{-2}-\frac{F_{2n}}{F_{2n+2}}>0.
+$$
+
+对任意 $U\ge0$，输入类取全部可测标量 $u$，满足
+$\|u\|_{L^\infty}\le U$；两系统同输入、同零初态，则
+
+$$
+\sup_{\|u\|_{L^\infty}\le U}\ \sup_{t\ge0}|y_\infty(t)-y_n(t)|
+=U\delta_n\le U\varphi^{-(4n+2)}.
+$$
+
+常输入 $u(t)=U$ 随 $t\to\infty$ 趋近这个上确界。
+给定 $\varepsilon>0,U>0$，充分的整数链长为
+
+$$
+n\ge\max\left(1,\left\lceil
+\frac{\log(U/\varepsilon)/\log\varphi-2}{4}
+\right\rceil\right).
+$$
+
+精确容差判据为 $U\delta_n\le\varepsilon$。
+$U=0$ 时任意 $n\ge1$ 的误差为零，包括 $\varepsilon=0$；
+$U>0,\varepsilon=0$ 时任何有限截断都不能满足整个输入类的要求。
+容差域为 $\varepsilon\ge0$。
+
+证明。将定理 29.8 的经典行列式递推的两根写成 $r,r^{-1}$，初值给
+
+$$
+D_n(s)=\frac{r^{-(n+1)}-r^{n+1}}{r^{-1}-r}.
+$$
+
+取相邻项之比即得 $R_n$，相减给 $\Delta_n$。
+$0<r\le\varphi^{-2}<1$ 且 $n\ge1$ 保证
+$0<(1-r^2)/(1-r^{2n+2})\le1$，所以显示的指数界成立。
+时间域令 $g_n(t)=M_\infty(t)-M_n(t)$。定理 29.8 的**邻接**路径展开
+给 $g_n\ge0$，指数支配使其可积，且
+$\int_0^\infty g_n(t)\,dt=\delta_n$。
+对同一个实际输入，
+
+$$
+|y_\infty(t)-y_n(t)|
+=\left|\int_0^tg_n(v)u(t-v)\,dv\right|
+\le U\int_0^tg_n(v)\,dv\le U\delta_n.
+$$
+
+输入 $u=U$ 去掉积分中的绝对值损失，单调收敛给其时间上确界恰为
+$U\delta_n$。对 $U>0,\varepsilon>0$，解
+$U\varphi^{-(4n+2)}\le\varepsilon$ 得充分链长；
+$\delta_n>0$ 给零容差的边界。这是该截断、该输入类及该范数的尖锐诱导误差。
+它没有优化所有可能的近似实现，也没有把链长换算成取得成本或位复杂度。∎
+

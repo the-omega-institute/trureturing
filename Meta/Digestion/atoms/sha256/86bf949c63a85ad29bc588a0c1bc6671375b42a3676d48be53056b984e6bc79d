@@ -1,0 +1,27 @@
+**定义 44.5（混合未来隐藏核）。** 令 $\mathcal G$ 是由被动动作
+$P$ 和全部干预 $T_a$ 组成的有限动作字母表，令
+
+$$
+L_P=A,\qquad L_{T_a}=T_a,
+$$
+
+并按时间顺序把词 $w=b_1\cdots b_m$ 解释为
+
+$$
+L_w=L_{b_m}\cdots L_{b_1}.
+$$
+
+定义
+
+$$
+K_{\mathrm{mix}}
+ =
+ \bigcap_{w\in\mathcal G^*}
+ \bigcap_{\ell}\ker(C_\ell L_w).
+\tag{44.5}
+$$
+
+若合同允许的词族只有“先执行一个干预词、再执行被动演化”，才可以把
+$K_{\mathrm{mix}}$ 简化为 §107 的 $K_{\mathrm{fut}}$；允许任意交错时，
+必须使用（44.5）。
+

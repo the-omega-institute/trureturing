@@ -1,0 +1,1 @@
+| M. Hein, J. Eisert, H. J. Briegel, *Multiparty entanglement in graph states*, Phys. Rev. A 69 (2004) 062311, arXiv:quant-ph/0307130 | `literature-attested`:图态由 $K_w=X_w\prod_{u\in N(w)}Z_u$ 稳定且被其生成的稳定子群唯一确定(约定 2.5;该文 §II.B);图态上的局部补规则(该文 §III.E 命题 8「LU-equivalence」)。节号与命题号按 arXiv:quant-ph/0307130 v6 与 v7 的 TeX 源,两版一致,与母卷第 8 节所引的同文命题 3 编号体系相同;期刊版编号未逐一核对。本卷只把这些作为引用步骤。 

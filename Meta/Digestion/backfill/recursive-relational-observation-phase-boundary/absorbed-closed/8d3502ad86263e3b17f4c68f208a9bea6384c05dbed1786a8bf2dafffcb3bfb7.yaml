@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8d3502ad86263e3b17f4c68f208a9bea6384c05dbed1786a8bf2dafffcb3bfb7
+  normalized_sha256: sha256:8d3502ad86263e3b17f4c68f208a9bea6384c05dbed1786a8bf2dafffcb3bfb7
+cas_ref: sha256:8d3502ad86263e3b17f4c68f208a9bea6384c05dbed1786a8bf2dafffcb3bfb7
+coverage_gids:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/SeededBernoulliStoppedMoment.bernoulli_stopped_score_moment
+    target_statement_id: sha256:027ac061d0e7ae5d2190766e24c3afa0c928d3395e063d59d13921e7310f9c16
+receipts:
+  unresolved_subitems: []

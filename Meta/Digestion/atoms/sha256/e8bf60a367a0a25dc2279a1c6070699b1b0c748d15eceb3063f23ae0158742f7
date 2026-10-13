@@ -1,0 +1,14 @@
+**假设 12.1（图站点上的五态律场）。** 固定 $n\ge1$ 个站点组成的有限连通对称正电导图，Laplacian 为 $L$。每个站点 $v$ 另有一个局部五态律 $p^v$；这是 $n$ 份律的场，不是把一个概率律当作图上密度。固定合法边界 $b_v=(X_v,Z_v,Y_v)$，取数学引文 1.2 的区间 $\kappa_v\in[l_v,u_v]$。提取这些边界、图和观察者嵌入均属于定义 9.1 的数据。
+
+令 $C=I-\mathbf1\mathbf1^{\mathsf T}/n$，令 $K=L^\dagger$ 为在 $\mathbf1^\perp$ 上的逆、在常数上为零。所引 [von Luxburg 的 Laplacian 核及逆](../../../Library/Geometry/vonluxburg2007spectralclustering.md)给 $LK=KL=C$。取实系数 $a,b$，$b\ne0$，以及 $\alpha,r_0>0$，指定
+
+$$
+\begin{aligned}
+\rho_v&=a\mathbb E_{p^v}W+b\mathbb E_{p^v}W^2=g_v+20b\kappa_v,\\
+g_v&=a(2X_v+3Z_v+5Y_v)+b(4X_v+9Z_v+25Y_v),\\
+\varphi&=KC\rho,\qquad r_v=r_0e^{-\alpha\varphi_v}.
+\end{aligned}
+$$
+
+势取零均值规范。$r_v$ 是规定的正钟读数；若要认作路径每单位参数的累计率，还须另供如命题 11.2 的实现。加常数规范将全部 $r_v$ 乘同一因子，所有比值不变。
+
