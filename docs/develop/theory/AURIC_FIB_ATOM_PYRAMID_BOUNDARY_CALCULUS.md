@@ -2067,3 +2067,1025 @@ $\Gamma_n$、合法位置指标 $u_i$、事件概率和同源条件记录；
 [PE-G]: https://arxiv.org/abs/quant-ph/0602096v1
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 配对记忆、关联转移与局域时间的闭合条件
+
+### 16.1 五模式、配对副本与已有概率纤维
+
+**定义 16.1（有序副本及标签对应）。** 令单副本空间
+$\mathcal H=\mathbb C^5$ 的正交单位基按
+$\mathcal S=(0,1,2,3,13)$ 排列。其占位向量采用 $(x,y,z)$ 次序：
+
+$$
+v_0=(0,0,0),\quad v_1=(1,0,0),\quad v_2=(0,0,1),\quad
+v_3=(0,1,0),\quad v_{13}=(1,1,0).
+$$
+
+$|0\rangle$（亦记 $s_0$）是范数一的基向量，不是零向量。
+本卷 §4–5 的数量标签与本章位置标签的精确双射是
+
+$$
+(0,2,3,5,25)_{\rm old}\longleftrightarrow(0,1,2,3,13),
+\qquad
+(p_0,p_2,p_3,p_5,p_{25})_{\rm old}
+=(p_0,p_1,p_2,p_3,p_{13}).
+$$
+
+这是定义 15.2 的同一重标记；其张量位置次序 $(x,z,y)$
+与此处画金字塔用的 $(x,y,z)$ 仅交换后两个坐标。
+令 $E_s=|s\rangle\langle s|$，
+$N_x=E_1+E_{13},N_y=E_3+E_{13},N_z=E_2$。
+本卷 4.2、4.3、6.2 已分别供应概率逆式、行列式和整数核。
+在上述双射下直接消费为
+
+$$
+\begin{gathered}
+r=1-Z,\qquad
+p_\kappa=(r-X-Y+\kappa,X-\kappa,Z,Y-\kappa,\kappa),\\
+0\le Z\le1,\quad 0\le X,Y\le r,\quad
+\max(0,X+Y-r)\le\kappa\le\min(X,Y),\\
+d=(1,-1,0,-1,1),\qquad
+v_0+v_{13}=v_1+v_3,\qquad
+\Delta=p_0p_{13}-p_1p_3=r\kappa-XY.
+\end{gathered}
+$$
+
+因此同三均值的差为实数倍 $d$，同总数及总占位的整数计数差为整数倍 $d$。
+这里不把已有反解或核另立为新定理。
+
+有序配对空间是 $\mathcal H_A\otimes\mathcal H_B$，
+$|s,t\rangle=|s\rangle_A\otimes|t\rangle_B$，共二十五个基标签。
+这两个因子是两个完整五模式副本；它们不同于单个副本内部
+定义 15.2 的三个位置 qubit 因子，也不同于沿原生扫描相邻的两个守卫窗口。
+后者要满足本卷 7.1 的接缝条件，此处没有把二十五个有序副本标签
+宣布为全部合法的相邻原生输入。算子 $\mathsf S|s,t\rangle=|t,s\rangle$
+交换两个副本。全文密度矩阵均有限维、半正定且迹一；配对初态满足
+$\mathsf S\rho\mathsf S=\rho$，不预设乘积性。
+交换不变态可以同时含对称和反对称子空间的质量，不要求支撑包含于
+$\operatorname{Sym}^2\mathcal H$。
+
+### 16.2 固定配对的两个旋转读数
+
+**命题 16.2（总占位守恒与配对旋转）。** 在整个配对空间上定义
+
+$$
+\begin{gathered}
+A=|0,13\rangle\langle1,3|+|13,0\rangle\langle3,1|,
+\qquad K=A+A^\dagger,\qquad U(u)=e^{-iuK},\\
+P_+=AA^\dagger,\qquad P_-=A^\dagger A,\qquad P=P_++P_-,\\
+B=P_+-P_-,\qquad J=-i(A-A^\dagger),\qquad
+\rho(u)=U(u)\rho U(u)^\dagger,\\
+b=\operatorname{Tr}(\rho B),\quad j=\operatorname{Tr}(\rho J),\quad
+b(u)=\operatorname{Tr}(\rho(u)B),\quad j(u)=\operatorname{Tr}(\rho(u)J).
+\end{gathered}
+$$
+
+则 $K$ 与 $\mathsf S$ 及每个
+$N_\alpha\otimes I+I\otimes N_\alpha$ 对易，$\alpha=x,y,z$。
+对每个实数 $u$，
+
+$$
+\begin{gathered}
+[K,B]=-2iJ,\qquad [K,J]=2iB,\\
+b(u)=b\cos2u+j\sin2u,\qquad
+j(u)=j\cos2u-b\sin2u,\\
+b(u)^2+j(u)^2=b^2+j^2.
+\end{gathered}
+$$
+
+证明。两个跃迁的源、靶是四个不同正交基向量，故
+$A^2=(A^\dagger)^2=0$，$P_+P_-=0$，$K^2=P$，$KP=PK=K$。
+$\mathsf S$ 互换 $A$ 的两项，所以 $\mathsf S A\mathsf S=A$。
+每个总占位算子在各跃迁两端的特征值相等，正是
+$v_0+v_{13}=v_1+v_3$ 的三个分量；在其他基向量上 $K$ 为零。
+这证明全空间对易，也给出
+
+$$
+U(u)=I+(\cos u-1)P-i\sin u\,K.
+$$
+
+直接用 $AP_-=P_+A=A$、$AP_+=P_-A=0$ 及其伴随，得到两个交换子。
+Heisenberg 导数为
+$\frac{d}{du}(U^\dagger BU)=iU^\dagger[K,B]U=2U^\dagger JU$
+及 $\frac{d}{du}(U^\dagger JU)=-2U^\dagger BU$。
+具有初值 $(B,J)$ 的线性方程唯一解是对应的旋转公式；取迹即得读数式。
+平方和由实平面旋转保持。$b,j$ 都是二副本可观测量的期望，
+并非任意单副本边缘的函数。这里 $K$ 交换两对活动配置，
+它不等于交换整个子系统的 $\mathsf S$。证毕。
+
+### 16.3 一般相关态的完整边缘概率公式
+
+**定理 16.3（全空间边缘纤维运动）。** 令
+$\rho_A(u)=\operatorname{Tr}_B\rho(u)$，
+$p_s(u)=\operatorname{Tr}(\rho_A(u)E_s)$。
+对于定义 16.1 的任意交换不变初态，包括任意允许的相干项，
+
+$$
+\boxed{\quad
+p(u)=p(0)+\frac d4\,[b(\cos2u-1)+j\sin2u].\quad}
+$$
+
+各单副本均值 $X,Y,Z$ 分别不变，且
+
+$$
+\kappa(u)-\kappa(0)=\frac{b(u)-b}{4}.
+$$
+
+证明。$U$ 与 $\mathsf S$ 对易，所以 $\rho(u)$ 始终交换不变，
+两边完整约化矩阵相等。定义全空间上的对称局域投影平均
+
+$$
+M_s=\frac12(E_s\otimes I+I\otimes E_s).
+$$
+
+于是 $p_s(u)=\operatorname{Tr}(\rho(u)M_s)$。
+在 $P_+$ 的两个配置中，$M_0=M_{13}=1/2$、$M_1=M_3=M_2=0$；
+在 $P_-$ 的两个配置中，$M_1=M_3=1/2$、$M_0=M_{13}=M_2=0$。
+因 $M_s$ 对角，它不连接 $P$ 与 $P^\perp$。因此全空间恒等式为
+
+$$
+M_s=R_s+\frac{d_s}{4}B,\qquad
+R_s=(I-P)M_s(I-P)+\frac{\mathbf1_{\{s\ne2\}}}{4}P.
+$$
+
+$K$ 在 $P^\perp$ 为零，在 $P$ 内与标量对易，故 $[K,R_s]=0$。
+这不是仅在四个活动向量上的等式：两侧在 $P^\perp$ 同为 $M_s$，
+且所有跨块矩阵元同为零。故对任意 $\rho$，无论它在活动块之间、
+活动与非活动之间或非活动内部有何相干，均有
+
+$$
+\operatorname{Tr}(\rho(u)M_s)-\operatorname{Tr}(\rho M_s)
+=\frac{d_s}{4}[b(u)-b].
+$$
+
+代入 16.2 即覆盖五个模式。对 $s=13$ 就是 $\kappa$ 的公式。
+向量 $d$ 对 $N_x,N_y,N_z$ 的三个占位行求和都为零，所以各均值不变。
+等价地，总占位守恒且两边均值相同，每边都等于总均值的一半。
+
+交换不变性用于从 $M_s$ 回到每个单边概率，不能删除。
+例如不对称输入 $|0,13\rangle\langle0,13|$ 在 $u=\pi/2$ 变为
+$|1,3\rangle\langle1,3|$；第一副本的 $x$ 均值从零变一，
+第二副本从一变零，总量仍为一。
+一般不对称输入只由上述条件保证总量及对称边缘平均的公式。证毕。
+
+### 16.4 有限读出任务的预测闭合
+
+**命题 16.4（概率未来曲线的充分且必要数据）。** 固定 16.2 的 $K$。
+允许的未来任务为：不作中途测量、反馈、复位或其他操作，
+只在任意指定最终参数 $u$ 读取单副本的五模式概率。
+两个交换不变初态具有相同的全部此类未来曲线，当且仅当
+它们的 $(p(0),b,j)$ 相同。
+
+证明。相同三组数据代入 16.3 给相同曲线。反向，令 $u=0$ 得到 $p(0)$ 相同。
+函数是解析的，读取 $s=13$ 的曲线并取原点导数，有
+
+$$
+\kappa'(0)=j/2,\qquad \kappa''(0)=-b.
+$$
+
+故曲线相同要求 $j,b$ 分别相同；即使只允许所有 $u\ge0$，
+原点右导数也给同一结论。退化纤维、零概率和 $b=j=0$
+均由同一解析公式处理，不需极角或正支撑假设。证毕。
+
+这份任务数据不声称恢复整个 $25\times25$ 配对矩阵，
+也不声称决定全部约化矩阵的非对角元或所有干预协议。
+数据为连续实数，并未给定精度、编码、可达读口或有限位数上界。
+
+### 16.5 乘积输入与四角相位的自包含桥
+
+**命题 16.5（相同乘积态的专门化）。** 若
+$\rho=\sigma\otimes\sigma$，$\sigma$ 为任意单副本密度矩阵，
+$p_s=\langle s|\sigma|s\rangle$，则
+
+$$
+b=2(p_0p_{13}-p_1p_3)=2\Delta,\qquad
+j=4\operatorname{Im}(\sigma_{1,0}\sigma_{3,13}).
+$$
+
+特别地，对相同纯乘积输入
+$|\psi\rangle\otimes|\psi\rangle$，在所用振幅非零处写
+$\psi_s=\sqrt{p_s}e^{-i\theta_s}$，并令
+
+$$
+R=\sqrt{p_0p_1p_3p_{13}},\qquad
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}.
+$$
+
+则 $j=4R\sin\chi$，且
+
+$$
+\kappa(u)-\kappa(0)=-\Delta\sin^2u+R\sin\chi\sin2u.
+$$
+
+证明。$P_+$ 读取两个对角概率 $p_0p_{13}$，$P_-$ 读取两个 $p_1p_3$，
+故第一式对混合乘积同样成立，并不刻画纯态。
+按 $\sigma_{s,t}=\langle s|\sigma|t\rangle$，
+$\operatorname{Tr}(\rho A)=2\sigma_{1,0}\sigma_{3,13}$。
+$\operatorname{Tr}(\rho A^\dagger)$ 是它的共轭，给第二式。
+纯态时令 $\alpha=\psi_0\psi_{13}$、$\beta=\psi_1\psi_3$，则
+
+$$
+\sigma_{1,0}\sigma_{3,13}
+=\overline\alpha\beta=R e^{i\chi}.
+$$
+
+将 $b=2\Delta,j=4\operatorname{Im}(\overline\alpha\beta)$ 代入 16.3，
+再用 $\cos2u-1=-2\sin^2u$，得到所列桥。
+若有振幅为零，直接使用
+$\operatorname{Im}(\overline\alpha\beta)$，不定义该零振幅的相位。
+对角乘积态的上述非对角矩阵元为零，故 $j=0$。
+一般相关配对态既无乘积因子分解，也不能从 $p$ 确定 $b$ 或 $j$。
+例如 $p_s=1/5$ 的纯乘积族改变 $\chi$ 即改变 $j$，
+而下一命题给相同完整局域矩阵但不同 $b$ 的实例。证毕。
+
+### 16.6 同完整局域态的配对来源反例
+
+**命题 16.6（局域最大混合仍遗漏配对记忆）。** 记
+$\Pi_{s,t}=|s,t\rangle\langle s,t|$，取
+
+$$
+\begin{aligned}
+\rho_+&=\tfrac15(\Pi_{0,13}+\Pi_{13,0}+\Pi_{1,1}+\Pi_{3,3}+\Pi_{2,2}),\\
+\rho_-&=\tfrac15(\Pi_{0,0}+\Pi_{13,13}+\Pi_{1,3}+\Pi_{3,1}+\Pi_{2,2}).
+\end{aligned}
+$$
+
+两态都交换不变、对角且归一化半正定，两边完整边缘均为 $I_5/5$。
+两者共有 $X=Y=2/5,Z=\kappa=1/5,\Delta=0$，而
+$b_+=2/5,b_-=-2/5,j_+=j_-=0$。在 $u=\pi/2$，
+
+$$
+p_+=(0,2/5,1/5,2/5,0),\qquad
+p_-=(2/5,0,1/5,0,2/5).
+$$
+
+证明。每式是五个正交投影等权混合；非对角有序标签总成交换对，
+对角标签自身不动。每个副本的每个模式恰在一项出现一次，
+所以偏迹就是 $I_5/5$，并非仅对角概率相同。
+$\rho_+$ 恰有两个 $P_+$ 配置而无 $P_-$ 配置，$\rho_-$ 反之；
+两态对角使 $J$ 的期望为零。代入 16.3，
+位移分别为 $-d/5$、$d/5$，得到两组结果。
+也可由 $U(\pi/2)$ 逐对交换活动配置直接得到同样边缘。
+相同的外加局域时钟读数可以赋给这两份初态；它不改变其 $b$ 差异，
+所以完整局域密度矩阵连同这种相同钟读数仍不足以预测该任务。证毕。
+
+### 16.7 全支撑约定下的关联与局域熵收支
+
+**定义 16.7（本章统一的自然对数）。** 对概率律使用
+$H(p)=-\sum_s p_s\ln p_s$，对密度矩阵使用
+$S(\sigma)=-\operatorname{Tr}(\sigma\ln\sigma)$，均取 $0\ln0=0$。
+量子相对熵为
+$D(\sigma\Vert\tau)=\operatorname{Tr}[\sigma(\ln\sigma-\ln\tau)]$
+当 $\operatorname{supp}\sigma\subseteq\operatorname{supp}\tau$，
+否则为 $+\infty$；对数在相应正支撑上取值。
+经典 $D(p\Vert q)$ 采用同一支持约定。
+$\mathsf I(A:B)_\sigma=S(\sigma_A)+S(\sigma_B)-S(\sigma)$。
+所有当前熵量的单位为 nat；本卷 §5.1–5.2 的二底量须乘 $\ln2$：
+
+$$
+H=(\ln2)H_2,\qquad D=(\ln2)D_2,\qquad
+\mathsf I=(\ln2)\mathsf I_2.
+$$
+
+**定理 16.8（相关输入也成立的精确熵收支）。** 对 16.2 的一般交换不变态，
+
+$$
+\boxed{\quad
+2[S(\rho_A(u))-S(\rho_A(0))]
+=\mathsf I(A:B)_{\rho(u)}-\mathsf I(A:B)_\rho.\quad}
+$$
+
+这里两个互信息有限且非负，并且
+$\mathsf I(A:B)_\sigma=D(\sigma\Vert\sigma_A\otimes\sigma_B)$，
+包括奇异态。相同乘积输入给 $S(\rho_A(u))\ge S(\rho_A(0))$，
+但不推出沿 $u$ 的导数非负。
+
+证明中先完整落实所用的标准有限维熵恒等式。
+若 $Q_A$ 是 $\ker\sigma_A$ 的投影，则
+$\operatorname{Tr}[\sigma(Q_A\otimes I)]=0$。
+该数是 $\|(Q_A\otimes I)\sigma^{1/2}\|_{\rm HS}^2$，
+故 $\sigma$ 的支撑正交于 $\ker\sigma_A\otimes\mathcal H_B$。
+对 $B$ 同理，二者合起来给
+
+$$
+\operatorname{supp}\sigma\subseteq
+\operatorname{supp}\sigma_A\otimes\operatorname{supp}\sigma_B.
+$$
+
+在右侧空间上两边缘都严格正，谱分解直接给
+$\ln(\sigma_A\otimes\sigma_B)=\ln\sigma_A\otimes I+I\otimes\ln\sigma_B$。
+用偏迹定义取期望得到
+
+$$
+D(\sigma\Vert\sigma_A\otimes\sigma_B)
+=-S(\sigma)+S(\sigma_A)+S(\sigma_B).
+$$
+
+为同时说明非负性，对任意归一化 $\tau$ 及
+$\operatorname{supp}\sigma\subseteq\operatorname{supp}\tau$，
+把 $\sigma$ 的正谱写为 $\sum_i a_i|e_i\rangle\langle e_i|$，
+令 $t_i=\langle e_i|\tau|e_i\rangle>0$。
+在 $\tau$ 的正特征基内，以 $|\langle e_i|f_k\rangle|^2$ 为权用
+标量 $\ln$ 的凹性，得
+$\langle e_i|\ln\tau|e_i\rangle\le\ln t_i$。
+因此
+
+$$
+D(\sigma\Vert\tau)\ge\sum_i a_i\ln(a_i/t_i)
+\ge\sum_i(a_i-t_i)=1-\sum_i t_i\ge0.
+$$
+
+第二个不等式是 $-\ln x\ge1-x$，最后用这些 $e_i$ 只占一个子空间且
+$\operatorname{Tr}\tau=1$。不满足支撑包含时的无穷值也非负。
+这些步骤覆盖了奇异乘积边缘，不曾在零特征值上机械取对数。
+
+回到配对演化，酉共轭保持联合谱，故 $S(\rho(u))=S(\rho)$。
+交换不变性使两边缘熵相等。在互信息定义中相减，便得所列收支式。
+相同乘积输入的联合熵是两倍输入熵，故输入互信息为零；
+输出非负性给相对于初始值的不等式。
+
+在 16.6 的两种相关输入中，联合谱均为五个 $1/5$，
+初始局域熵为 $\ln5$；最终边缘概率为两个 $2/5$、一个 $1/5$，其余零。
+因这些边缘对角，
+
+$$
+S_A(\pi/2)=\ln5-\tfrac45\ln2,\qquad
+\Delta S_A=-\tfrac45\ln2,\qquad
+\Delta\mathsf I=-\tfrac85\ln2.
+$$
+
+这展示相关输入的局域熵可降低。证毕。
+
+数学引文与范围。[Groisman–Popescu–Winter][PM-GPW] 的
+*On the quantum, classical and total amount of correlations in a quantum state*，
+§II、Theorem II.3，将量子互信息识别为渐近多副本去关联所需的最小局域噪声率。
+其式 (2)–(3) 的局域随机酉和近似去关联操作不同于这里的单个联合 $U(u)$。
+本章消费互信息的标准含义及熵工具，不把该渐近操作定理当作本碰撞的成本等式。
+有相干时 $H(p)$ 只是指定模式测量的 Shannon 熵，不能替换 $S(\rho_A)$；
+例如一般纯 $\psi$ 的 $S=0$ 而 $H(p)>0$。
+
+### 16.8 固定纤维的已有最大熵补全
+
+**数学引文 16.9（闭支撑最大熵与条件信息的准确消费）。**
+按 16.1 的双射与 16.7 的换底，本卷 5.1–5.2 已给出整个闭纤维上
+唯一最大熵律。对 $r>0$，其当前写法为
+
+$$
+\kappa^\star=XY/r,\qquad
+p^\star=\left(\frac{(r-X)(r-Y)}r,
+\frac{X(r-Y)}r,Z,\frac{(r-X)Y}r,\frac{XY}r\right).
+$$
+
+令底面条件概率矩阵（行是 $x$，列是 $y$）为
+
+$$
+Q=\frac1r\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}.
+$$
+
+它是本卷 4.3 未归一化矩阵除以 $r$。
+5.2 的条件边缘映为 $(1-X/r,X/r)$ 与 $(1-Y/r,Y/r)$；
+供应结论准确给
+
+$$
+D(p\Vert p^\star)=H(p^\star)-H(p)
+=r\,\mathsf I_Q(x:y)\ge0.
+$$
+
+这里 $\mathsf I_Q$ 是条件在 $z=0$ 后的二元互信息，
+不是把原三占位 $(x,y,z)$ 宣告为无条件独立。
+$0\le X,Y\le r$ 的退化边缘也在原供应定理内：任何 $p$ 的正底格
+对应正的行、列边缘，故该 $p^\star$ 格为正，
+即 $\operatorname{supp}p\subseteq\operatorname{supp}p^\star$。
+于是上述 $D$ 有限，并且等于零当且仅当 $p=p^\star$。
+若 $r=0$，$X=Y=\kappa=0$，唯一律为中位模式 $p_2=1$，定义 $D=0$；
+加权条件贡献为零，不在零概率事件上定义 $Q$ 或 $\mathsf I_Q$。
+
+以下涉及非退化连续纤维时主要取
+$0<Z<1,\ 0<X,Y<r$。这保证 $p^\star$ 的四个底格严格正，
+但任一实际 $p$ 仍可位于纤维端点。
+本节的闭支撑熵式及后面的离散交换式也适用于 $Z=0$ 和退化边缘；
+含四个底格对数比或 Fisher 倒数的微分式则只在底格全正处使用。
+
+### 16.9 对角同分布输入的精确关联转移
+
+**定理 16.10（内部条件信息转为副本间互信息）。** 令
+$\rho_p=\sum_s p_sE_s$，初态为独立同分布的
+$\rho_p\otimes\rho_p$。对所有实数 $u$，输出的两个边缘仍为对角态，且
+
+$$
+p(u)=p-\Delta\sin^2u\,d=(1-\lambda)p+\lambda p^\star,
+\qquad \lambda=r\sin^2u\in[0,1].
+$$
+
+当 $r=0$ 时右式按 $p=p^\star$ 解释。对 $r>0$，
+
+$$
+\boxed{\quad
+\mathsf I(A:B)_{\rho(u)}
+=2[D(p\Vert p^\star)-D(p(u)\Vert p^\star)]
+=2r[\mathsf I_Q(x:y)-\mathsf I_{Q(u)}(x:y)].\quad}
+$$
+
+顶点处三种加权信息量均为零。
+
+证明。对角输入只在两个活动二乘二块内发生变化；
+一个块内记 $e_+=|0,13\rangle,e_-=|1,3\rangle$，
+输入两质量为 $a_+=p_0p_{13},a_-=p_1p_3$。
+在次序 $(e_+,e_-)$ 下，$U$ 的矩阵为
+$\begin{pmatrix}c&-it\\-it&c\end{pmatrix}$，$c=\cos u,t=\sin u$。
+输出为
+
+$$
+\begin{pmatrix}
+c^2a_++t^2a_-&ict(a_+-a_-)\\
+-ict(a_+-a_-)&t^2a_++c^2a_-
+\end{pmatrix}.
+$$
+
+另一个块 $(|13,0\rangle,|3,1\rangle)$ 完全同形，
+非活动部分保留原对角。新非对角项的两个配置在两侧标签都不同，
+所以对任意一侧作偏迹均为零；初态没有其他跨块相干可以演化出交叉项。
+这证明完整边缘对角性，而非只计算其五个对角元。
+16.5 给 $b=2\Delta,j=0$，16.3 遂给第一种概率写法。
+对于 $r>0$，已有反解给
+$p-p^\star=(\kappa-\kappa^\star)d$ 及
+$\Delta=r(\kappa-\kappa^\star)$，于是得到凸组合。
+$r=0$ 时初态只含 $|2,2\rangle$，$K$ 在其上为零。
+
+初态为乘积，联合熵是 $2H(p)$；酉演化保持它。
+边缘对角且相等，使输出互信息为 $2[H(p(u))-H(p)]$。
+同纤维的 $p,p(u)$ 共用 16.9 的唯一 $p^\star$，
+相减其熵缺口恰得第一条转移式；再代入 $D=r\mathsf I_Q$ 得第二条。
+所有边界项均由 16.9 的支持包含和 16.8 的乘积支撑证明保证有限。
+
+一般 $ct\Delta\ne0$ 时联合矩阵具有上式的相干；
+不能把所有部分交换的输出都当作经典联合表。
+在 $u=\pi/2$，两个块的非对角元为零，质量交换，
+此时对角联合表上的作用确为配置置换。
+守恒的是联合酉熵；所列下降量属于单副本底面条件信息，
+其两倍准确进入副本间互信息，并非一般信息消失定理。证毕。
+
+### 16.10 闭合周期与另行规定的复位序列
+
+**命题 16.11（概率返回不等于闭合弛豫）。** 对任意 16.2 初态，
+$p(u+\pi)=p(u)$；但 $U(\pi)=I-2P$，不是全空间恒等算子。
+$U(2\pi)=I$。因此同一闭合配对不构成沿 $u$ 单调的普遍弛豫。
+
+证明。16.3 的两个三角函数均以 $\pi$ 为周期，直接给概率式。
+16.2 的 $U$ 表达式给后两式；活动与非活动之间的相干在 $\pi$ 时可变号。
+例如交换对称单位向量
+$e_+=(|0,13\rangle+|13,0\rangle)/\sqrt2$ 与
+$e_0=|2,2\rangle$ 的归一化叠加 $(e_++e_0)/\sqrt2$
+在 $\pi$ 后变成 $(-e_++e_0)/\sqrt2$，其密度矩阵不相同。
+故概率返回不保证整个量子态返回。
+任何连续、周期而单调的实函数都必须为常数；
+16.10 中只要 $\Delta\ne0$，$\sin^2u$ 项即给非恒定概率往返。
+例如 $(X,Y,Z,\kappa)=(2/5,2/5,1/5,3/10)$ 给
+$p=(3/10,1/10,1/5,1/10,3/10)$，
+$\kappa(\pi/2)=11/50\ne3/10$，而 $\kappa(\pi)=3/10$。
+其 $\pi/2$ 输出互信息严格正：联合谱中的质量 $1/100$ 重数四仍在，
+但输出边缘 $(11/50,9/50,10/50,9/50,11/50)$ 的乘积态
+全部特征值至少 $81/2500>1/100$，所以输出不是乘积。
+也可直接用严格熵凹性及 16.9：$\lambda=4/5\in(0,1)$、$p\ne p^\star$
+给 $H(p(\pi/2))>H(p)$。随后回到初值，局域熵不能全过程单调。
+这与每个时刻均不低于初始熵的乘积输入结论相容。证毕。
+
+**定义 16.12（重新独立配对）。** 第 $n$ 轮输入另行规定为
+$\rho_{p_n}\otimes\rho_{p_n}$，作用参数 $u_n$ 后仅保留共同对角边缘
+作为 $p_{n+1}$，下一轮再次制备两份当前边缘的独立副本。
+这丢弃上一轮的联合相关，并添加了重新配对的制备规则；
+它不是在原来那一对上继续作用 $U$，也不是由酉动力学自动产生独立性。
+
+**命题 16.13（任意有限复位日程的闭式）。** 固定各轮共有的 $X,Y,Z$。
+对 $r>0$，令 $D_n=D(p_n\Vert p^\star)$，则
+
+$$
+\begin{gathered}
+\kappa_{n+1}-\kappa^\star
+=(1-r\sin^2u_n)(\kappa_n-\kappa^\star),\\
+\kappa_N-\kappa^\star
+=(\kappa_0-\kappa^\star)\prod_{n=0}^{N-1}(1-r\sin^2u_n),\\
+D_{n+1}\le(1-r\sin^2u_n)D_n.
+\end{gathered}
+$$
+
+$r=0$ 时唯一顶点律恒定，$D_n=0$。全交换轮 $u_n=\pi/2$ 给
+$\kappa_{n+1}=Z\kappa_n+XY$。
+
+证明。16.10 每轮保持同三均值，且
+$p_{n+1}=(1-\lambda_n)p_n+\lambda_n p^\star$，
+$\lambda_n=r\sin^2u_n$，取第 $13$ 坐标再归纳便得乘积式。
+对 $p_s^\star>0$，函数 $t\mapsto t\ln(t/p_s^\star)$
+在 $t>0$ 的二阶导数为 $1/t>0$，连续延拓到 $t=0$ 后仍凸。
+$p_s^\star=0$ 的格在整条纤维上恒零，不参与。
+故对各格应用凸性并求和，得到
+$D((1-\lambda)p+\lambda p^\star\Vert p^\star)
+\le(1-\lambda)D(p\Vert p^\star)$。
+令 $\lambda=r$ 及 $1-r=Z$ 得全交换递推。
+
+对于非平衡初值，收敛到 $\kappa^\star$ 的准确日程条件是
+$\prod_{n\ge0}(1-\lambda_n)=0$。
+若某个 $\lambda_n=1$，它立即成立；否则各因子正，等价于
+$\sum_n-\ln(1-\lambda_n)=+\infty$，由有限乘积取对数后取极限得到。
+所有 $u_n=0$ 即反例，不能删去日程条件。
+当 $0<Z<1$，每轮斜率 $1-r\sin^2u_n\ge Z>0$，
+故各有限轮映射在纤维上到其像为单射，可以在像内代数反演。
+收缩不自动等于数学上的非单射；被舍弃的是所声明任务外的联合相关。
+$Z$ 仅是此全交换复位模型的保留系数，不能称为闭合配对的衰减率。证毕。
+
+### 16.11 整数网格上的两种连续极限
+
+**定理 16.14（复位边缘的尺度极限）。** 固定 $r\in[0,1]$、
+有限实数 $g$、$\nu>0$ 及 $\tau\ge0$。每个整数 $n\ge1$ 取
+$h=\tau/n$，在同一网格的 $n$ 轮使用同一碰撞参数 $u_h$。
+复位递推的乘数有
+
+$$
+\begin{array}{ll}
+u_h=gh:& (1-r\sin^2(gh))^n\longrightarrow1,\\
+u_h=\sqrt{\nu h}:&
+(1-r\sin^2\sqrt{\nu h})^n\longrightarrow e^{-\nu r\tau}.
+\end{array}
+$$
+
+第二种极限边缘保持三均值，且满足
+
+$$
+\dot\kappa=-\nu(r\kappa-XY),\qquad
+\kappa(\tau)=\kappa^\star+(\kappa(0)-\kappa^\star)e^{-\nu r\tau}
+\quad(r>0).
+$$
+
+$r=0$ 时唯一顶点律保持不变，不使用 $XY/r$。
+
+证明。$\tau=0$ 或 $r=0$ 时所有乘数直接为一。
+以下 $\tau>0$，对每个固定参数组，充分大 $n$ 时
+$x_n=r\sin^2u_h\in[0,1/2]$，所以 $1-x_n>0$ 可取实对数。
+当 $x=0$ 时 $\ln(1-x)=0$；整个区间内
+
+$$
+\ln(1-x)=-x+O(x^2),\qquad
+\sin^2 t=t^2+O(t^4)\quad(t\to0).
+$$
+
+第一条的余项也可由
+$\ln(1-x)+x=-\int_0^x t/(1-t)\,dt$
+绝对值至多 $x^2$ 得到，故没有在可能为零的有限轮因子上取对数。
+若 $u_h=gh$，则
+
+$$
+n\ln(1-x_n)=-nr g^2h^2+O(nh^4)
+=-rg^2\tau h+O(\tau h^3)\longrightarrow0.
+$$
+
+$g=0$ 时直接恒为零。若 $u_h=\sqrt{\nu h}$，则
+
+$$
+x_n=r\nu h+O(h^2),\qquad
+n\ln(1-x_n)=-r\nu\tau+O(\tau h)\longrightarrow-r\nu\tau.
+$$
+
+指数连续性及 16.13 给两种极限，再将仿射概率逆式逐坐标代入。
+对得到的极限函数求导即给 ODE，并在 $r=0$ 使用 $X=Y=0$。
+因此这是每个固定 $\tau$ 的整数网格复位边缘极限；
+没有构造或断言所有轮次的完整联合量子态有同一极限。
+
+若一轮历时 $h>0$ 且写成 Hamiltonian 强度 $g_hK$，
+则 $g_h=u_h/h$。第二种尺度要求 $g_h=\sqrt{\nu/h}$ 发散，
+第一种则保持有限 $g$，其弛豫消失。
+时间网格变细本身不选择非零弛豫率。
+[Ciccarello、Lorenzo、Giovannetti、Palma][PM-CM] 的
+*Quantum collision models: open system dynamics from repeated interactions*，
+§17、§19 区分粗粒化与发散耦合的严格连续极限；
+其一般主方程还有第一阶 Hamiltonian 等条件。
+此处极限由准确标量递推证明，未借该综述省略模型条件。证毕。
+
+### 16.12 亲和力、Fisher 曲率与可变率耗散
+
+**命题 16.15（同纤维上的耗散链）。** 在四个底格都正的部分，令
+
+$$
+a_+=p_0p_{13},\quad a_-=p_1p_3,\quad
+\mathcal A=\ln(a_+/a_-),\quad
+\mathcal I_F=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+[HiddenRelations C-4.6][PM-H] 已供应自然对数下
+$H'=-\vartheta$、$\vartheta'=\mathcal I_F$ 及 Fisher 线元；
+[Symplectic §35.7][PM-S] 采用同一负相位约定。
+精确映射为供应者的 $\vartheta\mapsto\mathcal A$、
+$\mathcal I\mapsto\mathcal I_F$、纤维变量仍为 $\kappa$。
+消费该曲率及 16.9，当前缺口有
+
+$$
+\partial_\kappa D=\mathcal A,\qquad
+\partial_\kappa^2D=\mathcal I_F.
+$$
+
+于是 16.14 的流在该域满足
+
+$$
+\frac{dD}{d\tau}
+=-\nu(a_+-a_-)\ln(a_+/a_-)\le0.
+$$
+
+更一般地，令 $\nu(\tau)\ge0$ 在时间域每个紧区间上可积，
+$\Lambda(\tau)=\int_0^\tau\nu(t)\,dt$，则 $r>0$ 时绝对连续的唯一解为
+
+$$
+\kappa(\tau)-\kappa^\star
+=(\kappa(0)-\kappa^\star)e^{-r\Lambda(\tau)}.
+$$
+
+证明。$H(p^\star)$ 在固定纤维上为常数，故已有 $H'$ 和 $H''$
+直接给 $D$ 的两个导数。新动力学链使用
+$r\kappa-XY=a_+-a_-$，将 ODE 代入
+$\frac{dD}{d\tau}=\partial_\kappa D\,\dot\kappa$。
+对正 $a_+,a_-$，$\ln$ 单调使
+$(a_+-a_-)(\ln a_+-\ln a_-)\ge0$，得到符号。
+这并不要求 $Z>0$，只要求四个实际底格为正。
+
+可变率方程写成 $y'=-r\nu y$，$y=\kappa-\kappa^\star$。
+绝对连续积分因子 $e^{r\Lambda}$ 给 $(e^{r\Lambda}y)'=0$ 几乎处处，
+所以显示的解存在且唯一；任意两解之差用同一等式即为零。
+它还给
+
+$$
+p(\tau)=e^{-r\Lambda(\tau)}p(0)
++(1-e^{-r\Lambda(\tau)})p^\star.
+$$
+
+因指数介于零、一，整个闭纤维保持可行。
+对于 $0<X,Y<r$，$p^\star$ 四底格正；
+即使初态在端点，只要 $\Lambda(\tau)>0$，就已进入正底面。
+在 $\Lambda=0$ 的初段边界律保持原样；熵缺口用有限和的连续延拓定义，
+不将 $0\cdot\ln0$ 型的速率乘积擅自算作有限导数。
+如需要起点斜率，应取实际曲线的单侧差商，允许其为无穷；
+耗散恒等式只在正底面几乎处处使用。
+任意两时刻之间的凸组合及 16.13 的凸性证明仍给闭域上 $D$ 不增。
+若 $X$ 或 $Y$ 等于零或 $r$，纤维为点，$D=0$，
+缺失底格的亲和力不定义；$r=0$ 的顶点同理。
+
+[Rao–Esposito][PM-RE] 的 *Nonequilibrium Thermodynamics of Chemical Reaction Networks:
+Wisdom from Stochastic Thermodynamics*，§III.5.2、式 (74)–(77)，
+在质量作用、闭合详细平衡网络中给自由能差与广义相对熵的 Lyapunov 关系。
+此处标量通量 $a_+-a_-$ 与对数亲和力的非负乘积使用同一熵方法，
+但概率始终归一化，证明直接如上；没有从该化学模型输入温度、热、功或物理实现。证毕。
+
+### 16.13 校准时钟、绕行记录与任务边界
+
+**命题 16.16（时间重参数与累计交换）。** 对 16.15 的解，令
+$t=h(\tau)$ 为 $C^1$ 严格递增校准，$h'(\tau)>0$、$h(0)=0$。
+在其像时间域定义 $\widetilde\kappa(t)=\kappa(h^{-1}(t))$。
+它满足相同轨道方程，但速率为
+
+$$
+\widetilde\nu(t)=\frac{\nu(h^{-1}(t))}{h'(h^{-1}(t))},\qquad
+\frac{d\widetilde\kappa}{dt}
+=-\widetilde\nu(t)(r\widetilde\kappa-XY).
+$$
+
+并有
+$\int_0^{h(\tau)}\widetilde\nu(t)\,dt=\Lambda(\tau)$。
+
+证明。每个紧区间上 $h'$ 有正下界，逆函数为 $C^1$，
+复合保持局部绝对连续。链式法则几乎处处给所示除以 $h'$ 的速率；
+变量代换 $t=h(s)$ 给积分恒等式。由 16.15 的唯一解，
+相同累计交换意味着对应时刻相同 $\kappa$，从而相同 $p$。
+这只说明此任务中有校准关系的两种参数化，不提供普遍公共时钟，
+也不推出因果传播速度或其他动力学的相同钟率。证毕。
+
+**命题 16.17（周期相位不足以记录任意绕行次数）。** 对同一闭合配对，
+令 $R_{BJ}=\sqrt{b^2+j^2}$。若 $R_{BJ}>0$，
+
+$$
+b(u)+ij(u)=(b+ij)e^{-2iu}
+$$
+
+只有模 $2\pi$ 的极角；其读数不能区分 $u$ 与 $u+\pi\ell$，
+$\ell\in\mathbb Z$。因此只读当前 $(p,b,j)$ 的任何函数都不能
+对任意多圈给出精确累计绕行数。若 $R_{BJ}=0$，根本没有极角。
+
+证明。16.2 给复数旋转式，16.3 同时给 $p$ 的 $\pi$ 周期。
+对任意正整数 $L$，$u,u+\pi,\ldots,u+L\pi$ 的当前读数完全相同，
+而累计圈数不同；读数的后处理不能给它们不同答案。
+半径零时复数恒零，$\arg0$ 不定义，不能拿任意选定角当观测。
+若任务要求区分累计圈数，需另供绕行计数、轮次记录或足以重建它们的历史；
+该附加记录不是由周期相位自带。
+
+预测闭合总要连同实际未来操作规则指定：
+16.4 的无干预概率任务用 $(p,b,j)$；16.12 的重新独立配对任务
+另给每轮制备规则和 $u_n$；16.16 的轨道重参数另给校准 $h$。
+即使保留完整局域态，16.6 仍要求必要的配对信息。
+这些都是指定观察与操作族的闭合陈述，不是关于一切物理时钟的定理，
+也不把闭合配对的 $u$ 与复位极限的 $\tau$ 认作同一过程。证毕。
+
+### 16.14 合法长路径的矩纤维与熵基准
+
+**定义 16.18（同一合法模式空间上的低阶矩）。** 对整数 $n\ge0$，
+$\Gamma_n$ 为路径 $[n]$ 的所有独立集，包含空集；
+$\Gamma_0=\{\varnothing\}$。令 $N=|\Gamma_n|$，
+$\mathcal H_n=\mathbb C^N$，基为 $|I\rangle$，$I\in\Gamma_n$。
+对合法 $T$ 定义
+
+$$
+f_T(I)=\mathbf1_{\{T\subseteq I\}},\qquad
+F_T=\sum_{I\in\Gamma_n}f_T(I)|I\rangle\langle I|,\qquad
+\mu_T(p)=\sum_I p_I f_T(I).
+$$
+
+固定整数 $q\ge1$ 以及全部非空合法 $|T|\le q$ 的矩，并固定
+$\mu_\varnothing=1$。可行纤维 $\mathcal F$ 是这些线性等式
+与概率单纯形的交，假定非空。
+[Correlation §23.2][PM-C] 已供应函数基、对偶方向与概率逆式：
+
+$$
+D_T(I)=(-1)^{|T|-|I|}\mathbf1_{\{I\subseteq T\}},\qquad
+\langle f_S,D_T\rangle=\mathbf1_{\{S=T\}},\qquad
+p_I=\sum_{T\supseteq I}(-1)^{|T|-|I|}\mu_T.
+$$
+
+参数对应是其 $m_T\mapsto f_T$，$\mathcal O_r\mapsto$
+本章质量及 $|T|\le q$ 的矩报告，阶数参数 $r\mapsto q$；
+它的有符号数组 $D_T$ 保持原义，不是相对熵 $D(\cdot\Vert\cdot)$。
+[Symplectic §35.13][PM-S] 消费同一逆式并配上相位。
+这里只使用每个合法集的包含区间是 Boolean 区间的事实；
+$n\ge2$ 时全部 $\Gamma_n$ 并不是 Boolean 格。
+
+**数学引文 16.19（有限矩最大熵工具在本纤维的完整应用）。**
+有限集合的线性矩约束最大熵与指数族对偶是既有工具，
+参见 [Wainwright–Jordan][PM-WJ]，§§3.5–3.6、Theorems 3.3–3.4。
+这里取计数基测度、状态 $I\in\Gamma_n$、充分统计量
+$(f_T)_{0<|T|\le q}$、自然对数。
+以下给出本应用的完整有限维桥，尤其保留最大点的正性条件。
+
+若 $\mathcal F$ 含有每个 $I$ 上均正的可行律，
+则存在唯一最大熵律 $p^\star$，它也处处正，而且有有限实系数
+
+$$
+\ln p_I^\star=c+\sum_{\substack{T\in\Gamma_n\\0<|T|\le q}}
+\lambda_T f_T(I).
+$$
+
+对同纤维任何律 $p$，包括含零质量的律，
+
+$$
+D(p\Vert p^\star)=H(p^\star)-H(p).
+$$
+
+应用证明。$\mathcal F$ 非空、闭且有界，有限维中为紧集。
+$-t\ln t$ 连续延拓于 $[0,1]$，故熵最大值存在。
+该标量函数在不同两点之间严格凹（内部由二阶导数 $-1/t<0$，
+涉及零的端点由 $-(at)\ln(at)>-a t\ln t$，$0<a<1,t>0$）。
+两份不同概率至少一个坐标不同，所以 $H$ 在单纯形上严格凹；
+$\mathcal F$ 凸，最大者唯一。
+
+设 $v$ 是全正可行律，若最大者 $p^\star$ 的零格集合 $Z_0$ 非空，
+考察同纤维 $p_t=(1-t)p^\star+tv$。
+在 $p_I^\star>0$ 的有限多格上，光滑性给熵变化 $O(t)$；
+在零格上，熵增量恰为
+
+$$
+-\sum_{I\in Z_0}tv_I\ln(tv_I)
+=-t\ln t\sum_{I\in Z_0}v_I-t\sum_{I\in Z_0}v_I\ln v_I.
+$$
+
+因 $\sum_{Z_0}v_I>0$，第一项压过任何 $O(t)$，
+充分小 $t>0$ 时总熵严格增加，矛盾。因此最大者全正。
+
+令矩阵 $C$ 的行是常数一和所固定的 $f_T$。
+对于每个实向量 $w\in\ker C$，全正性保证充分小正负 $t$
+都使 $p^\star+tw$ 可行；沿该方向熵导数必须为零：
+
+$$
+\sum_I(-1-\ln p_I^\star)w_I=0.
+$$
+
+有限维正交分解 $ (\ker C)^\perp=\operatorname{im}C^{\mathsf T}$
+给出所列仿射对数式，将常数及系数符号吸收进 $c,\lambda_T$。
+这一步不以“可写乘子”为理由跳过边界正性。
+既有对偶基还保证全空间所选矩行独立；
+即使换成有冗余的统计量，行空间结论也仍成立，只是系数可不唯一。
+
+由于 $C(p-p^\star)=0$，对数式给
+$\sum_I(p_I-p_I^\star)\ln p_I^\star=0$。于是
+
+$$
+\begin{aligned}
+D(p\Vert p^\star)
+&=\sum_{I:p_I>0}p_I\ln p_I-\sum_I p_I\ln p_I^\star\\
+&=-H(p)-\sum_I p_I^\star\ln p_I^\star
+=H(p^\star)-H(p).
+\end{aligned}
+$$
+
+每个 $p_I^\star>0$，因此零输入质量不会造成支撑问题，证明完整。
+
+边界纤维也有准确版本，供下一节覆盖全部输入支撑。
+令 $\mathcal J=\bigcup_{p\in\mathcal F}\operatorname{supp}p$。
+有限性保证：对每个 $I\in\mathcal J$ 选一个在该格为正的可行律，
+将这些律等权平均，就得到在整个 $\mathcal J$ 上正的可行律。
+所有可行律在其余格恒零。将上述紧性、严格凹性、小混合及行空间论证
+逐一限制到 $\mathcal J$，得到唯一最大者，且
+$p_I^\star>0$ 恰在 $\mathcal J$ 内。
+对数仿射式只需在 $I\in\mathcal J$ 成立；限制后的行可以相关，
+但同样的正交分解仍给有限系数。
+任意可行 $p$ 的支撑包含于 $\mathcal J$，所以同一熵缺口式仍有限且成立。
+这没有把有限对数参数延拓到被迫为零的格，也没有把边界纤维维数
+当成全正纤维的维数。若纤维只有一点，最大者就是该点，所有缺口为零。
+当 $n=0$ 时这正是唯一模式的平凡情形。
+
+### 16.15 多副本的相位群约束与相关预算
+
+**定理 16.20（保持低阶总矩的精确多副本预算）。**
+取 16.18 的 $n,q,\mathcal F$ 及任意 $p\in\mathcal F$，
+令 $m\ge1$ 为整数。输入为独立同分布的
+$\rho_p^{\otimes m}$，$\rho_p=\sum_I p_I|I\rangle\langle I|$。
+在完整空间 $\mathcal H_n^{\otimes m}$ 上取酉算子 $V$，假设它与
+每个副本置换 $W_\pi$ 及全部低阶总荷对易：
+
+$$
+[V,W_\pi]=0\quad(\pi\in\mathfrak S_m),\qquad
+[V,Q_T]=0,\qquad Q_T=\sum_{a=1}^m F_T^{(a)},
+\quad 0<|T|\le q.
+$$
+
+输出 $\sigma=V\rho_p^{\otimes m}V^\dagger$ 的每个边缘是同一个对角态
+$\rho_{p'}$，$p'\in\mathcal F$。以 16.19 的同纤维最大者为基准，
+
+$$
+\begin{gathered}
+\mathsf I_m(\sigma):=\sum_{a=1}^m S(\sigma_a)-S(\sigma)
+=D\left(\sigma\,\middle\Vert\,\bigotimes_{a=1}^m\sigma_a\right)\ge0,\\
+\boxed{\quad
+\mathsf I_m(\mathrm{out})=m[H(p')-H(p)]
+=m[D(p\Vert p^\star)-D(p'\Vert p^\star)].\quad}
+\end{gathered}
+$$
+
+该结论允许输入在任意可行支撑上、输出含任意满足条件的联合相干，
+不假设输出仍是乘积。
+
+证明。输入的每一因子相同，故对每个置换 $W_\pi$ 不变；
+$V$ 对易使输出同样不变。任意两位置由一个置换互换，
+所以其完整边缘矩阵相同。
+
+现在证明完整边缘对角，不能只以共同均值或活动块计算代替。
+因为 $q\ge1$，所有单点 $T=\{i\}$ 的总占位荷都在对易假设内。
+对任意 $\boldsymbol t\in\mathbb R^n$，定义单副本相位群
+
+$$
+D(\boldsymbol t)=\exp\left(i\sum_{i=1}^n t_i F_{\{i\}}\right),\qquad
+D(\boldsymbol t)^{\otimes m}
+=\exp\left(i\sum_i t_i Q_{\{i\}}\right).
+$$
+
+对角输入与这个总相位群对易，$V$ 也与之对易，所以
+$D(\boldsymbol t)^{\otimes m}\sigma D(\boldsymbol t)^{\dagger\otimes m}=\sigma$。
+对其他 $m-1$ 因子偏迹；它们上的酉共轭不改变偏迹，得到
+
+$$
+D(\boldsymbol t)\sigma_aD(\boldsymbol t)^\dagger=\sigma_a.
+$$
+
+若 $I\ne J$ 是两合法模式，其占位向量不同，选一个
+$i\in I\mathbin\triangle J$，仅令 $t_i=\pi$，其余为零。
+矩阵元 $\langle I|\sigma_a|J\rangle$ 在这个共轭下乘 $-1$，
+又必须保持不变，故等于零。此论证覆盖所有模式对与全部相干来源，
+包括非活动部分、稀疏输入及多维总荷简并空间。
+$n=0$ 时只有一个模式，不存在非对角元；$m=1$ 时同一论证仍成立。
+于是每个边缘都是共同对角概率 $p'$。
+
+总荷守恒给
+
+$$
+m\mu_T(p')=\operatorname{Tr}(\sigma Q_T)
+=\operatorname{Tr}(\rho_p^{\otimes m}Q_T)=m\mu_T(p).
+$$
+
+$m>0$，故所有固定矩相同；归一化由密度矩阵的偏迹保证，
+从而 $p'\in\mathcal F$。这也使边界情况下 $p'$ 的支撑包含于
+16.19 的同一 $\mathcal J$。
+
+互信息的支撑论证同样覆盖所有副本。对每个 $a$，
+令 $R_a$ 为 $\ker\sigma_a$ 的投影，则
+$\operatorname{Tr}(\sigma R_a^{(a)})=0$，
+$\|R_a^{(a)}\sigma^{1/2}\|_{\rm HS}=0$。
+因此 $\operatorname{supp}\sigma$ 同时位于所有
+$\operatorname{supp}\sigma_a$ 对应的子空间中，交集恰为
+$\bigotimes_a\operatorname{supp}\sigma_a$。
+在此乘积支撑上谱分解给
+
+$$
+\ln\left(\bigotimes_a\sigma_a\right)
+=\sum_a (\ln\sigma_a)^{(a)}.
+$$
+
+取 $\sigma$ 的期望及偏迹就得 $\mathsf I_m=D$；
+16.8 的一般相对熵非负证明适用于这里的有限维配对
+$(\sigma,\bigotimes_a\sigma_a)$，无须所有 $\sigma_a$ 满秩。
+酉保持联合谱，输入独立使
+$S(\sigma)=mH(p)$；相同对角边缘给
+$\sum_aS(\sigma_a)=mH(p')$。
+最后对同纤维两律应用 16.19 的缺口式，便得完整预算。
+$m=1$ 时 $\mathsf I_1=0$，预算仍为零；
+$q$ 足以固定全部合法矩时已有逆式令纤维为点，也与公式相容。证毕。
+
+上述置换与总荷条件是充分条件，不是所有可能操作的必要分类。
+总荷简并空间中的联合相干可以存在；被相位群排除的是单副本的非对角元。
+$\mathsf I_m$ 是全部副本的总相关，不等于把所有两两互信息相加。
+对于五模式取 $n=3,q=1,m=2$，
+$F_{\{1\}},F_{\{2\}},F_{\{3\}}=(N_x,N_z,N_y)$，
+$V=U(u)$；16.2 核验所需的置换和总荷对易，
+16.19 的最大者在本纤维就是 16.9 的 $p^\star$。
+因此此一般预算确实接回 16.10 的同一实际五模式转移。
+
+### 16.16 九位置的既有维数与离散延续记忆
+
+**数学引文及应用 16.21（八十九模式上的预算与五十一对边界）。**
+取 $n=9,q=2$，在 $\Gamma_9$ 上固定质量、全部单点矩和合法二点矩。
+[Correlation §23.2][PM-C] 的既有阶数计数直接给
+
+$$
+(|\Gamma_9^{(0)}|,|\Gamma_9^{(1)}|,\ldots,|\Gamma_9^{(5)}|)
+=(1,9,28,35,15,1),\qquad |\Gamma_9|=89.
+$$
+
+其双向反演及对偶核给全正可行纤维的高阶概率方向数
+$35+15+1=51$；这不是新增计数。
+[Symplectic 命题 35.13][PM-S] 的阶数参数 $r$ 在本应用为 $q=2$：
+在所有 $p_I>0$ 的射影振幅层上，先固定这些矩，再除去非空低阶矩的
+Hamilton 相位平移，得到五十一对高阶矩—共轭角。
+其原射线实维 $2(89-1)=176$，非空低阶生成元数 $9+28=37$，
+约化实维 $176-2\cdot37=102=2\cdot51$。
+这一约化要求全正部分上的自由相位作用；
+在零支撑或奇异层上不能直接沿用此维数。
+
+将此处 $\Gamma_9$、$q=2$、任意整数 $m\ge1$
+代入 16.20，若 $V$ 满足其全部假设，则得到这条纤维上的精确预算
+
+$$
+\mathsf I_m(\mathrm{out})
+=m[D(p\Vert p^\star)-D(p'\Vert p^\star)].
+$$
+
+应用依据就是 16.20 的单点相位群、各低阶总荷和置换不变性，
+与五十一这个数没有额外的动力学推断。
+五十一维概率核不保证任意方向都能由给定交换菜单实现；
+五十一对辛坐标也不证明某菜单连通、遍历、混合或收敛到最大熵。
+这些结论另需指定允许的交换和相应动力学分析。
+一百零二维是上述数学约化的实维，不是物理时空维数或仪器数。
+
+[NativeContinuation Assumption 21.1、Theorem 23.2][PM-N]
+则属于另一任务。其固定十五来源纤维与目标为
+
+$$
+C=\{(1,0),(1,1),(0,1)\}\cup\{(15,j),(j,15):0\le j\le5\},
+\qquad \ell_{a,b}=17-b.
+$$
+
+它在同一已取得入口上，要求四值原生 Read、即时零或一合法位写入、
+当前合法词承载全部可变状态，且没有另存的时钟、回复、程序计数器或历史。
+在其固定服务和不可变表格条件下，最小词宽是
+$L(0)=L(1)=\infty,L(2)=6,L(k)=5$（每个有限 $k\ge3$）。
+这里的参数映射仅是照用该来源的 $C,\ell,k,d$ 与完整状态合同；
+没有将连续配对变量 $(p,b,j)$ 映成其有限控制器。
+改变精度或读写合同就改变问题；五、六位结论不能作为本章连续状态的位数。
+同样，副本置换不变和原生接缝守卫是不同假设，互不授予访问服务。
+
+### 16.17 数学供应与适用假设
+
+**数学引文 16.22（工具、应用与边界对应）。**
+本章具体的五模式配对公式、反例、复位专门化及长路径预算桥
+是对下列已有工具与仓内坐标的应用；一般熵恒等式、指数族对偶、
+整数核、概率逆式、Fisher 曲率及已有维数各保留原归属。
+
+| 供应者及准确范围 | 当前参数对应与消费 | 使用条件 |
+| --- | --- | --- |
+| 本卷 4.2–4.3、5.1–5.2、6.2、15.2–15.3 | 旧 $(0,2,3,5,25)$ 映到 $(0,1,2,3,13)$；$r=1-Z$、$d$、$\Delta$、$p^\star$；旧 $H_2,D_2,I_2$ 乘 $\ln2$ | 最大熵是固定三均值的选择；条件底面互信息，含闭支撑与顶点 |
+| HiddenRelations C-4.6；Symplectic §35.7–35.9 | $\vartheta=\mathcal A$、$\mathcal I=\mathcal I_F$；$\psi_s=\sqrt{p_s}e^{-i\theta_s}$、$\chi=\theta_0-\theta_1-\theta_3+\theta_{13}$ | 曲率只用于正底格；本章固定二副本线性 $K$ 由 16.2–16.5 自行建立，不把单副本四次流当成相同生成元 |
+| Correlation §23.2；Symplectic §35.13 | $m_T=f_T$、阶数 $r=q$、$\mu_T$、$D_T$、$\Gamma_n$；$n=9,q=2$ 的八十九与五十一 | 有符号核不是概率本身；逆坐标需非负；辛维数限全正自由作用层 |
+| Wainwright–Jordan，*Graphical Models, Exponential Families, and Variational Inference*，§§3.5–3.6、Theorems 3.3–3.4 | 有限计数测度，状态 $I$，低阶包含指标作为统计量；16.19 完整给出正最大者、对数仿射和熵缺口桥 | 有全正可行点时用整个 $\Gamma_n$；否则只在已证明的活支撑 $\mathcal J$ 上用对数 |
+| Groisman–Popescu–Winter，quant-ph/0410091v2，§II、Theorem II.3 | 标准量子互信息与总相关含义；自然对数统一单位；16.8、16.20 展开有限维支撑和迹恒等式 | 原操作率定理为渐近多副本局域随机酉去关联，不等于本章联合碰撞或制备成本 |
+| [Şenyaşa、Kesgin、Karpat、Çakmak，*Entropy production in non-Markovian collision models: Information backflow vs system-environment correlations*][PM-SC]，2204.09522v2，§II 式 (2)–(5) | 保留或丢弃已建联合相关的操作区别，与 16.12 的明示重新配对条件对照 | 原文为 qubit 系统—环境及环境间 partial SWAP；本章 $K$ 不是子系统 SWAP，率符号不从该例直接移植 |
+| Ciccarello、Lorenzo、Giovannetti、Palma，2106.11974v2，§17、§19 | 碰撞时长与耦合强度分开；本章用 $h=\tau/n,u_h=gh$ 或 $\sqrt{\nu h}$ | 这里只证明复位边缘的网格极限；一般主方程的附加假设保持在供应者范围 |
+| Rao–Esposito，1602.07257v3，§III.5.2、式 (74)–(77) | 相对熵 Lyapunov 与通量—亲和力方法；本章为 $\Delta\ln(a_+/a_-)$ | 原文质量作用及详细平衡化学条件不能自动赋予概率模型热力学量；16.15 直接证明所需符号 |
+| NativeContinuation Assumption 21.1、Definition 21.2、Theorem 23.2 | 同十五历史、完整滞后目标、原生 Read 与完整可变词合同，$L(2)=6,L(k\ge3)=5$ | 独立的离散观察及写入任务；不识别为 $(p,b,j)$ 的连续编码 |
+
+本章的论域是所列有限维态、允许操作、概率纤维及校准映射；
+每个结论依赖其对应假设。单副本内部条件关联、副本间总相关、
+共轭角、离散延续词宽分别属于明确的对象和任务。
+这些对应不给出未知态参数的取得方式、任意交换菜单的混合性、
+时钟的普遍统一性或物理装置的实现结论。
+
+[PM-H]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[PM-S]: SYMPLECTIC_PREDICTIVE_COMPLETION.md
+[PM-C]: AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[PM-N]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[PM-WJ]: https://people.eecs.berkeley.edu/~jordan/papers/wainwright-jordan-fnt.pdf
+[PM-GPW]: https://arxiv.org/abs/quant-ph/0410091v2
+[PM-SC]: https://arxiv.org/abs/2204.09522v2
+[PM-CM]: https://arxiv.org/abs/2106.11974v2
+[PM-RE]: https://arxiv.org/abs/1602.07257v3
+
+## 追加锚（本行以下为增补区）
