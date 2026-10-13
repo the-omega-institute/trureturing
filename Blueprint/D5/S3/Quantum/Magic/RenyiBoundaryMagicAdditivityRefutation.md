@@ -116,4 +116,5 @@ The universal statement in §5 is false. At alpha = 2 and z = 1, take rho = (11I
 - Truth anchor: `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.log2`
 - Truth anchor: `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.magic`
 - Truth anchor: `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.result`
+- Dependency: [D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow](../Dynamics/ProjectionProbabilityFlow.md)
 - Dependency: [D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape](ThreeQubitStabilizerPolarEscape.md)

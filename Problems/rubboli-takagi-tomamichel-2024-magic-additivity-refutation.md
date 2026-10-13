@@ -54,17 +54,17 @@ The refutation would fail if the source's stabilizer set were smaller than the c
 ## Evidence
 
 The canonical sources are two modules.
-- `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (803 lines):
+- `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (797 lines):
   - definitions of qubit registers, tensor products, the generated Clifford group, pure stabilizer states, `STAB`, `S`, `sigma`, `bell`, `W` and `gammaWords`;
   - the public theorem `stabilizer_polar_tensor_escape`, and the public local-gate laws `local_identity` and `local_product`, which the second module consumes.
-- `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean` (970 lines): the definitions `SupportLE`, `log2`, `DPI`, `Qaz`, `Daz` and `magic`; `claim` and `result`.
+- `D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean` (960 lines): the definitions `SupportLE`, `log2`, `DPI`, `Qaz`, `Daz` and `magic`; `claim` and `result`.
 - They reuse the frozen `StabilizerPairLocalUnitaryInequivalence` Pauli words and local operators, the frozen `Operator` of `StabilizerPovmMaximalEntanglementRefutation`, `IsDensity` of `GHZMeasureBiseparableBound`, `RHLinalg.rtrace`, `tensor_adj` of `BinaryStabilizerGraphNormalForm` (made public here), the frozen Hadamard of `NandiMutualPredictabilityLOCCRefutation`, and Mathlib's Hermitian functional calculus, `CFC.inverse_eq_rpow_neg_one`, convex hulls and Kronecker products.
 - Both use only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registrations in `Reg/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean` (three, one per public theorem of the first module) are `declared_validated`.
 
 Frozen states:
-- `Golden/Frozen/state/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean.json`, statement `sha256:ba7ce0842886756516f6810c87e56810ed1c38403925120ef9b368724e8cf0a7`;
-- `Golden/Frozen/state/D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean.json`, statement `sha256:7c99867260f0e4a50437604f7b6ca1cd3094c4104f799aad7000e3220856fd8e`.
+- `Golden/Frozen/state/D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.lean.json`, statement `sha256:aea03a163d528e58c6f4490119d0c57898b1409a45f75bf7b7ef418ae1d72946`;
+- `Golden/Frozen/state/D5/S3/Quantum/Magic/RenyiBoundaryMagicAdditivityRefutation.lean.json`, statement `sha256:e4f5cd2beb922aceff5c87bb3727c54e357649241b4412a39e1d53fce514b577`.
 
 Declaration statements:
 - `result`: `sha256:85b461556b71c65f84900a8d5d3fd3031093ad22faabc6e07085d93b35d48327`;
