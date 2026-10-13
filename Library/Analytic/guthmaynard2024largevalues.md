@@ -466,3 +466,103 @@ remove that leading factor. For the existing full-$Q$ forward consumer,
 one still needs a same-source lower coefficient strictly smaller than
 $c_Q=(\sqrt2-1)/4$; (F5)–(F6) do not supply it. A diverging allowance
 is not a lower bound on the actual error or a Robin violation.
+
+## A globally consistent model separates interval accuracy from the signed target
+
+The preceding allowance alone does not prove that the interval premise
+is insufficient: a nonsharp allowance may miss a stronger consequence.
+The following elementary model supplies that distinction for the
+specified premises. It is a paper-level application to the same forward
+kernel, not a new prime-distribution result or a Lean-verified refutation.
+
+Put $X_0=e^{16}$ and, for $t\ge X_0$, define
+
+$$
+f(t)=\exp[-(\log t)^{3/4}],\qquad
+M(x)=\int_{X_0}^{x}(1-f(t))\,dt,\qquad
+\Pi(x)=\int_{X_0}^{x}\frac{1-f(t)}{\log t}\,dt.
+\tag{F7}
+$$
+
+These are nondecreasing continuous cumulative functions, with
+$dM(t)=\log t\,d\Pi(t)$. Since $f$ is decreasing, for every real
+$X_0\le u<v$,
+
+$$
+(1-f(u))(v-u)\le M(v)-M(u)\le v-u.
+\tag{F8}
+$$
+
+In particular (F1) holds on every finite domain beginning at $A\ge X_0$
+with $\epsilon=f(A)$, for every choice of $H>0$. This is one global
+measure, not a different measure chosen separately for each window.
+
+It also has the cited count estimate's accuracy, uniformly in the cited
+length range. For $u\ge X_0$ and $0<r\le u^{99/100}$,
+
+$$
+0\le\frac r{\log u}-[\Pi(u+r)-\Pi(u)]
+\le\frac{rf(u)}{\log u}+\frac{r^2}{u\log^2u}.
+\tag{F9}
+$$
+
+The first term bounds the density deficit; the second uses
+$0\le1/\log u-1/\log t\le(t-u)/(u\log^2u)$ on the interval.
+After division by $r\exp[-(\log u)^{1/4}]$, both terms tend to zero,
+uniformly for $r\le u^{99/100}$. Thus the same $\Pi$ obeys the displayed
+Corollary 1.3-shaped count error, in particular on
+$u^{7/12}\le r\le u^{99/100}$.
+
+The global mass error is small as well:
+
+$$
+M(x)-x=-(1+o(1))xf(x).
+\tag{F10}
+$$
+
+Indeed, $xf(x)\to\infty$ and
+$(xf(x))'=f(x)[1-\tfrac34(\log x)^{-1/4}]$; comparison of derivatives
+gives $\int_{X_0}^x f(t)\,dt\sim xf(x)$. In particular (F10) is
+smaller in magnitude than
+$x\exp[-c(\log x)^{3/5}(\log\log x)^{-1/5}]$ for every fixed $c>0$,
+eventually. Such a global error scale still does not pay the forward
+target in this model.
+
+Take $h=A^{4/5}$. Uniformly for $0\le r\le h$,
+$f(A+r)/f(A)\to1$ and $\rho_A(r)\to1$. For the first limit, use
+
+$$
+\left|\log\frac{f(A+r)}{f(A)}\right|
+\le\frac{3h}{4A(\log A)^{1/4}}\longrightarrow0;
+$$
+
+the second follows directly from the explicit positive kernel $w$.
+Keeping the complete signed response gives
+
+$$
+\begin{aligned}
+\mathcal T_M(A,h)
+&=-\int_0^h\left(\int_A^{A+r}f(t)\,dt\right)\rho_A(r)\,dr\\
+&=-(1+o(1))\frac{f(A)h^2}{2},\\
+\frac{\mathcal T_M(A,A^{4/5})}{A^{11/10}}
+&=-(1+o(1))\frac{\sqrt A\,f(A)}2\longrightarrow-\infty.
+\end{aligned}
+\tag{F11}
+$$
+
+The last limit follows from
+$\log(\sqrt A f(A))=\tfrac12\log A-(\log A)^{3/4}\to\infty$.
+It shows that the leading $\epsilon\sqrt A/2$ term in (F5) reflects
+an attainable deficit under the interval premise, even with a much
+smaller relative error than (F6) and no sub-threshold irregularity.
+
+Consequently monotonicity and these interval/count accuracy estimates,
+by themselves, cannot imply any fixed finite eventual lower coefficient
+on the displayed forward scale for all cumulative functions satisfying
+them. The model is continuous and has no actual prime support,
+prime-power inventory, Euler product, or CA own-price source. It is
+neither an arithmetic counterexample nor a refutation of the cofinal
+selected-source obligation in CW5. An argument using those additional
+same-source arithmetic relations remains outside this countermodel's
+scope; the missing inequality must use information beyond the specified
+accuracy estimates if it is to exclude this deficit.
