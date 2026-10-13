@@ -4,6 +4,8 @@
 
 An unrestricted convergent maximal family.
 
+Information audit is unfinished: the exact source scope and compiled Reg attempt do not establish validated raw source reconstruction. The concrete missing evidence for this theorem is tracked in https://github.com/the-omega-institute/trureturing/issues/16293. This does not add a mathematical assumption or claim a complete adaptive-refinement counterexample.
+
 **Theorem 1.1 (Actual maximal family containing the branches).**
 
 $$\exists M: \operatorname{Set}\left(\operatorname{Set}\left(Word\right)\right), \operatorname{range}\left(branchSet\right) \subseteq M \land \operatorname{MADFamily}\left(M\right) \land \forall A: \operatorname{Set}\left(Word\right), A \in M \Rightarrow \exists r: unitInterval, \operatorname{ConvergesOn}\left(wordValue, A, r\right)$$

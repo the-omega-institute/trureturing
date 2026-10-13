@@ -27,6 +27,7 @@ internal sealed class ConvergentBranchesDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four-letter convergent branches.", H("Four-letter convergent branches"), Blocks(
+            Paragraph(Text("Information audit is unfinished: the exact source scope and compiled Reg attempt do not establish validated raw source reconstruction. The concrete missing evidence for this theorem is tracked in https://github.com/the-omega-institute/trureturing/issues/16293. This does not add a mathematical assumption or claim a complete adaptive-refinement counterexample.")),
             Describe.Lean(
                 DescribeId.Create("branch-system"),
                 DeclarationHandle.Create("D5/S3/Topology/AlmostDisjoint/ConvergentBranches.branch_system"),

@@ -37,6 +37,7 @@ internal sealed class NeighborhoodIdealDocument : IScribeDocumentDefinition
         "Convergent maximal families have large value neighborhoods and a common threshold color support.",
         H("Neighborhood ideal and common color support"),
         Blocks(
+            Paragraph(Text("Information audit is unfinished: the exact source scope and compiled Reg attempt do not establish validated raw source reconstruction. The concrete missing evidence for this theorem is tracked in https://github.com/the-omega-institute/trureturing/issues/16293. This does not add a mathematical assumption or claim a complete adaptive-refinement counterexample.")),
             Paragraph(Text(
                 "InFiniteUnionIdeal(M,E) means that E is contained in the union of finitely many actual M(x), together with a finite set. "
                 + "ColorSupport(M,u,D) contains the r for which every neighborhood V of r has u-preimage(V) intersected with D outside this ideal. "

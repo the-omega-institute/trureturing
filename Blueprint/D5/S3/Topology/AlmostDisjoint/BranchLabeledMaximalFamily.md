@@ -4,6 +4,8 @@
 
 Branch-labeled convergent maximal family on Nat.
 
+Information audit is unfinished: the exact source scope and compiled Reg attempt do not establish validated raw source reconstruction. The concrete missing evidence for this theorem is tracked in https://github.com/the-omega-institute/trureturing/issues/16293. This does not add a mathematical assumption or claim a complete adaptive-refinement counterexample.
+
 **Theorem 1.1 (Same-limit attachment and natural-number presentation).**
 
 $$\exists M: Branch \to \operatorname{Set}\left(Nat\right), {\forall x: Branch, \operatorname{natBranch}\left(x\right) \subseteq \operatorname{M}\left(x\right)} \land {\forall x: Branch, \forall y: Branch, x \neq y \Rightarrow \operatorname{Finite}\left(\operatorname{inter}\left(\operatorname{M}\left(x\right), \operatorname{M}\left(y\right)\right)\right)} \land \operatorname{MADFamily}\left(\operatorname{range}\left(M\right)\right) \land \forall x: Branch, \operatorname{ConvergesOn}\left(natValue, \operatorname{M}\left(x\right), \operatorname{limitValue}\left(x\right)\right)$$

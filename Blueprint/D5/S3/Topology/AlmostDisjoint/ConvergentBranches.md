@@ -4,6 +4,8 @@
 
 Four-letter convergent branches.
 
+Information audit is unfinished: the exact source scope and compiled Reg attempt do not establish validated raw source reconstruction. The concrete missing evidence for this theorem is tracked in https://github.com/the-omega-institute/trureturing/issues/16293. This does not add a mathematical assumption or claim a complete adaptive-refinement counterexample.
+
 **Theorem 1.1 (The actual four-letter branch system).**
 
 $$\forall n: Nat, {\forall x: Branch, \operatorname{wordValue}\left(\operatorname{wordPrefix}\left(x, n\right)\right) = \operatorname{finiteDyadicSum}\left(x, n\right)} \land {\forall x: Branch, \operatorname{Infinite}\left(\operatorname{branchSet}\left(x\right)\right)} \land {\forall x: Branch, \forall y: Branch, x \neq y \Rightarrow \operatorname{Finite}\left(\operatorname{inter}\left(\operatorname{branchSet}\left(x\right), \operatorname{branchSet}\left(y\right)\right)\right)} \land {\forall x: Branch, \operatorname{ConvergesOn}\left(wordValue, \operatorname{branchSet}\left(x\right), \operatorname{limitValue}\left(x\right)\right)} \land \operatorname{Continuous}\left(limitValue\right) \land \operatorname{Surjective}\left(limitValue\right) \land \forall r: unitInterval, \operatorname{cardinal}\left(\operatorname{fiber}\left(limitValue, r\right)\right) = continuum$$

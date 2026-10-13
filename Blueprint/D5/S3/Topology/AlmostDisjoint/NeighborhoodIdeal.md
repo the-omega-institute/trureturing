@@ -4,6 +4,8 @@
 
 Convergent maximal families have large value neighborhoods and a common threshold color support.
 
+Information audit is unfinished: the exact source scope and compiled Reg attempt do not establish validated raw source reconstruction. The concrete missing evidence for this theorem is tracked in https://github.com/the-omega-institute/trureturing/issues/16293. This does not add a mathematical assumption or claim a complete adaptive-refinement counterexample.
+
 InFiniteUnionIdeal(M,E) means that E is contained in the union of finitely many actual M(x), together with a finite set. ColorSupport(M,u,D) contains the r for which every neighborhood V of r has u-preimage(V) intersected with D outside this ideal. LowerThird is {n : natValue(n) ≤ 1/3}; UpperTwoThirds is {n : natValue(n) < 2/3}. All inequalities concern the real coercion of the unit-interval value. nhds, preimage, inter and compl denote literal Lean neighborhoods and set operations.
 
 **Theorem 1.1 (Actual maximal family with large value neighborhoods).**
