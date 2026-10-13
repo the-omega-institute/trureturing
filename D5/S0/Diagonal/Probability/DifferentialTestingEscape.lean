@@ -75,7 +75,7 @@ theorem directory_escape_probability_exact [Fintype A] [Fintype Y] [Nonempty Y]
       letI : IsEmpty A := hA
       have hcardA : Fintype.card A = 0 := Fintype.card_eq_zero_iff.mpr hA
       rw [hcardA]
-      simp [directoryEscapeProbability, uniformPmf_toOuterMeasure_apply,
+      simp [directoryEscapeProbability, uniformPmf, PMF.ofFintype_apply,
         directoryEscapes, diagonalMutant, escaped_listing_card, Nat.card_eq_fintype_card]
   | inr hA =>
       letI : Nonempty A := hA

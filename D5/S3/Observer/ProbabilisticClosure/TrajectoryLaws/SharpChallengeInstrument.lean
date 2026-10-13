@@ -7,8 +7,11 @@
    digest: A homogeneous challenge instrument separates fixed words from causal feedback. -/
 
 import D5.S3.TotalVariation.Metric
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Tactic.DeriveFintype
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 noncomputable section
 
@@ -57,12 +60,12 @@ abbrev Policy (A Y : Type) := ∀ t, Record A Y t → PMF A
 /-- One joint output/successor sample. The emitted and stored challenges are the same draw. -/
 def instrument {A : Type} [Fintype A] [Nonempty A] [DecidableEq A]
     (n : ℕ) (a : A) : State A n → PMF (Output A × State A n)
-  | .start z => (PMF.uniformOfFintype A).map fun r =>
+  | .start z => (uniformPmf A).map fun r =>
       (.challenge r, .awaiting z ⟨n, Nat.lt_succ_self n⟩ r)
   | .awaiting z k r =>
       if a = r then
         if hk : k.val = 0 then PMF.pure (.bit z, .done)
-        else (PMF.uniformOfFintype A).map fun s =>
+        else (uniformPmf A).map fun s =>
           (.challenge s, .awaiting z ⟨k.val - 1, by omega⟩ s)
       else PMF.pure (.failure, .fail)
   | .fail => PMF.pure (.failure, .fail)
@@ -283,7 +286,7 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
         intro hj xh
         simp [execute, fixedPolicy, PMF.pure_map, PMF.pure_bind, instrument,
           PMF.map_comp, PMF.map_apply, tsum_fintype, liveRecord, failureMass,
-          PMF.uniformOfFintype_apply, Function.comp_def]
+          uniformPmf, PMF.ofFintype_apply, Function.comp_def]
       | succ j ih =>
         intro hj xh
         have hj' : j ≤ n := by omega
@@ -299,7 +302,7 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
           by_cases hr : a (j+1) = r
           · subst r
             simp [instrument, hk, PMF.map_comp, PMF.map_apply, tsum_fintype,
-              PMF.uniformOfFintype_apply, liveRecord, Function.comp_def, hcount]
+              uniformPmf, PMF.ofFintype_apply, liveRecord, Function.comp_def, hcount]
             congr 1
           · simp [instrument, hr, PMF.pure_map, PMF.pure_apply]
         change ((execute (instrument n) (fixedPolicy a) (PMF.pure (.start z)) (j+1)).bind

@@ -251,7 +251,7 @@ def denseLiteralWord (dictionary : List Conventional.Name) (literal : Convention
     List Bool := [true,true,literal.2] ++ List.replicate (dictionary.idxOf literal.1) true ++ [false]
 
 def denseClauseWord (dictionary : List Conventional.Name) (clause : Std.Sat.CNF.Clause Conventional.Name) :
-    List Bool := [false,true] ++ clause.flatMap (denseLiteralWord dictionary) ++ [true,false]
+    List Bool := [false,true] ++ clause.literals.flatMap (denseLiteralWord dictionary) ++ [true,false]
 
 def denseBodyWord (dictionary : List Conventional.Name) (formula : Conventional.Formula) : List Bool :=
   formula.flatMap (denseClauseWord dictionary) ++ [false,false]
@@ -264,7 +264,7 @@ def denseLiteralClock (dictionary : List Conventional.Name) (literal : Conventio
     4*literal.1.length + dictionary.idxOf literal.1 + 8
 
 def denseClauseClock (dictionary : List Conventional.Name) (clause : Std.Sat.CNF.Clause Conventional.Name) :
-    Nat := (clause.map (denseLiteralClock dictionary)).sum + 4
+    Nat := (clause.literals.map (denseLiteralClock dictionary)).sum + 4
 
 
 def denseHeaderCfg (input stream dimension reversed output : List Bool) : denseMachine.Cfg :=
@@ -361,7 +361,7 @@ theorem dense_parser_run (w : List Bool) :
         · simp [Conventional.readName,hr,canonical] at h
     have clauseExact : ∀ budget word clause tail,
         Conventional.readClause budget word = some (clause,tail) →
-          word = clause.flatMap Conventional.literalWord ++ [true,false] ++ tail ∧
+          word = clause.literals.flatMap Conventional.literalWord ++ [true,false] ++ tail ∧
             clause.length ≤ budget := by
       intro budget
       induction budget with
@@ -377,7 +377,7 @@ theorem dense_parser_run (w : List Bool) :
               | false =>
                 simp only [Conventional.readClause, Option.some.injEq, Prod.mk.injEq] at h
                 obtain ⟨rfl,rfl⟩ := h
-                exact ⟨rfl,by simp⟩
+                exact ⟨rfl,by simp [Std.Sat.CNF.Clause.length]⟩
               | true => cases word <;> simp [Conventional.readClause] at h
       | succ budget ih =>
         intro word clause tail h
@@ -391,7 +391,7 @@ theorem dense_parser_run (w : List Bool) :
               | false =>
                 simp only [Conventional.readClause, Option.some.injEq, Prod.mk.injEq] at h
                 obtain ⟨rfl,rfl⟩ := h
-                exact ⟨rfl,by simp⟩
+                exact ⟨rfl,by simp [Std.Sat.CNF.Clause.length]⟩
               | true => cases word with
                 | nil => cases h
                 | cons polarity word =>
@@ -407,7 +407,7 @@ theorem dense_parser_run (w : List Bool) :
                       obtain ⟨rfl,rfl⟩ := h
                       obtain ⟨shape,width⟩ := ih rest c remaining hc
                       have nameShape := nameExact word name rest hn
-                      refine ⟨?_,by simpa using Nat.succ_le_succ width⟩
+                      refine ⟨?_,by simpa [Std.Sat.CNF.Clause.length] using Nat.succ_le_succ width⟩
                       rw [nameShape,shape]
                       simp [Conventional.literalWord, List.append_assoc]
     have bodyExact : ∀ fuel word formula,

@@ -26,13 +26,13 @@ open scoped BigOperators ENNReal
 
 abbrev Tape := ℕ → Bool
 
-private noncomputable def uniformPmf (α : Type*) [Fintype α] [Nonempty α] : PMF α :=
+noncomputable def uniformPmf (α : Type*) [Fintype α] [Nonempty α] : PMF α :=
   PMF.ofFintype (fun _ => (Fintype.card α : ℝ≥0∞)⁻¹) (by
     simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
     exact ENNReal.mul_inv_cancel (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
       (ENNReal.natCast_ne_top _))
 
-private theorem uniformPmf_toOuterMeasure_apply (α : Type*) [Fintype α] [Nonempty α]
+theorem uniformPmf_toOuterMeasure_apply (α : Type*) [Fintype α] [Nonempty α]
     (s : Set α) [Fintype s] :
     (uniformPmf α).toOuterMeasure s = Fintype.card s / Fintype.card α := by
   classical

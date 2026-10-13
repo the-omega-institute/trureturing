@@ -704,7 +704,7 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Compile and inspect the failed compatibility roots
+      - name: Compile and inspect the compatibility roots
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
@@ -721,14 +721,32 @@ jobs:
           compatibility_roots=(
             D5.S0.Certificates.SkeletonSlotCNF
             D5.S0.Certificates.TreeBottomPinnacleNonunique
-            D5.S0.Computability.ClauseQueryPreprocessor
-            D5.S0.Computability.ConventionalClauseWords
+            D5.S0.Computability.ReverseClauseConversion
             D5.S0.Diagonal.Probability.DifferentialTestingEscape
-            D5.S0.Diagonal.Probability.EquivariantEscape
+            D5.S0.Diagonal.Probability.GeneralEquivariantEscape
             D5.S0.Naming.GreenClassMeasure
-            D5.S0.Tower.DBonacci.TerminalSampling
+            D5.S0.Tower.DBonacci.TerminalSamplingLaw
             D5.S0.Tower.NonPisot.GapCounts
             D5.S1.Digit.Carry.SuccessorShortest
+            D5.S1.Words.Patterns.Separable.CappedExploration
+            D5.S1.Words.Patterns.Separable.EndpointHistoryKernel
+            D5.S1.Words.Patterns.Separable.MinimumCutKernel
+            D5.S1.Words.Patterns.Separable.StableEndpointCodes
+            D5.S3.Analytic.Asymptotics.CycleCayleyMeasureWeakLimit
+            D5.S3.ConceptDynamics.Agency.NoncanonicalAgencyCountermodels
+            D5.S3.ConceptDynamics.InterventionLaws.BlockInterventionalLawFactorization
+            D5.S3.ConceptDynamics.InterventionsExchange.RandomizationBridge
+            D5.S3.Estimation.ExperimentCost.OutputStateRandomnessSeparation
+            D5.S3.Fourier.CharacterSelection.FiniteGraphProbabilityLift
+            D5.S3.Observer.MeasureSeparation.EpsilonStoppingPairEvidenceCompletion
+            D5.S3.Observer.ProbabilisticClosure.GraphMechanismLawSeparation
+            D5.S3.Observer.ProbabilisticClosure.SingleSampleLawNonimplication
+            D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SharpChallengeInstrument
+            D5.S3.Observer.ProbabilisticClosure.TransitiveInvariantDistribution
+            D5.S3.Resource.MinimumRetrievalTime
+            D5.S3.Resource.SimplexCoverageProbability
+            D5.S3.Resource.VandermondeHyperbolicRefutation
+            D5.S3.StatisticalMechanics.Hopfield.GayrardMixedMemoryRefutation
           )
           make lean-report-scoped \
             LEAN_REPORT=.lake/build/stratalint/upgrade-compatibility-scoped-report.json \

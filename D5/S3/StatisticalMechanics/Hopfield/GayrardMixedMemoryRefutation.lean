@@ -23,9 +23,12 @@ import D5.S3.Combinatorics.IsingUniquenessSets
 import D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
 import Mathlib.Probability.Independence.InfinitePi
 import Mathlib.Probability.StrongLaw
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Data.Real.Sign
 import Mathlib.Analysis.Calculus.Deriv.Mul
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -204,7 +207,7 @@ theorem result : ¬ claim := by
       rw [heq0,abs_mul,hp,one_mul]
       exact hh
     norm_num [m,w] at hh'
-  let b := (PMF.uniformOfFintype Bool).toMeasure
+  let b := (uniformPmf Bool).toMeasure
   let q := Measure.infinitePi (fun _ : ℕ => b)
   let P := Measure.infinitePi (fun _ : ℕ => q)
   let ξ : ℕ → ℕ → (ℕ → ℕ → Bool) → ℝ := fun μ i ω => sgn (ω i μ)
@@ -229,7 +232,7 @@ theorem result : ¬ claim := by
     have heqn : {x : Bool | sgn x = -1} = {false} := by ext x; cases x <;> norm_num [sgn]
     rw [heqp] at hp
     rw [heqn] at hn
-    simpa [b,ξ,PMF.uniformOfFintype_apply] using And.intro hp hn
+    simpa [b,ξ,uniformPmf, PMF.ofFintype_apply] using And.intro hp hn
   have hspin (N i : ℕ) (ω : ℕ → ℕ → Bool) :
       memorySpin F (fun _ => 5) m ξ N i ω =
         Real.sign (∑ k : Fin 5, ((w k : ℝ)/8) * sgn (ω i k.val)) := by
@@ -244,7 +247,7 @@ theorem result : ¬ claim := by
   have hfinite (f : (Fin 5 → Bool) → ℝ) :
       (∫ x, f (fun j : Fin 5 => x j.val) ∂q) = (1/32:ℝ) * ∑ x : Fin 5 → Bool, f x := by
     have hb (a : Bool) : b {a} = 1/2 := by
-      simp [b, PMF.uniformOfFintype_apply]
+      simp [b, uniformPmf, PMF.ofFintype_apply]
     have hi : iIndepFun (fun j : Fin 5 => fun x : ℕ → Bool => x j.val) q :=
       (iIndepFun_infinitePi (X := fun _ : ℕ => (id : Bool → Bool))
         (P := fun _ => b) (fun _ => measurable_id)).precomp Fin.val_injective
