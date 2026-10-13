@@ -280,6 +280,85 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Prewarm and inspect the mathlib upgrade resource roots
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+          STRATALINT_CACHE_WRITES: 'false'
+        run: |
+          set -euo pipefail
+          unset LEAN_NUM_THREADS
+          mkdir -p build/lean-cache
+          observe_resources() {
+            local delay_pid=''
+            trap 'if [[ -n "$delay_pid" ]]; then kill "$delay_pid" 2>/dev/null || true; wait "$delay_pid" 2>/dev/null || true; fi' EXIT
+            trap 'exit 0' TERM INT
+            while :; do
+              printf 'RESOURCE_PROBE_OBSERVATION %s LEAN_NUM_THREADS=%s\n' "$(date -u +%FT%TZ)" "${LEAN_NUM_THREADS:-runtime-default}"
+              awk '$1 ~ /^(MemTotal:|MemAvailable:|SwapTotal:|SwapFree:)/' /proc/meminfo || true
+              awk '$1 ~ /^(oom_kill|pswpin|pswpout)$/' /proc/vmstat || true
+              ps -C lean,lake,inputDiscovery,reportInspector \
+                -o pid,ppid,etime,time,pcpu,rss,stat,args --sort=-rss || true
+              while read -r lean_pid; do
+                [[ "$lean_pid" =~ ^[0-9]+$ ]] || continue
+                printf 'LEAN_PROCESS_MEMORY pid=%s\n' "$lean_pid"
+                awk '$1 ~ /^(VmHWM:|VmRSS:|RssAnon:|RssFile:|RssShmem:)/' "/proc/$lean_pid/status" 2>/dev/null || true
+                lean_cgroup="$(awk -F: '$1 == "0" && $2 == "" {print $3; exit}' "/proc/$lean_pid/cgroup" 2>/dev/null || true)"
+                if [[ "$lean_cgroup" == /* ]]; then
+                  for memory_file in memory.current memory.peak memory.max memory.events; do
+                    memory_path="/sys/fs/cgroup${lean_cgroup%/}/$memory_file"
+                    if [[ -r "$memory_path" ]]; then
+                      printf 'RESOURCE_SOURCE pid=%s path=%s\n' "$lean_pid" "$memory_path"
+                      cat "$memory_path" || true
+                    fi
+                  done
+                fi
+              done < <(ps -C lean -o pid= || true)
+              for pressure in /proc/pressure/cpu /proc/pressure/memory; do
+                if [[ -r "$pressure" ]]; then printf 'RESOURCE_SOURCE %s\n' "$pressure"; cat "$pressure"; fi
+              done
+              sleep 30 &
+              delay_pid=$!
+              wait "$delay_pid"
+              delay_pid=''
+            done
+          }
+          observe_resources > build/lean-cache/resource-probe.log 2>&1 &
+          observer_pid=$!
+          trap 'kill "$observer_pid" 2>/dev/null || true; wait "$observer_pid" 2>/dev/null || true' EXIT
+          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
+          if [[ -n "$producer" ]]; then
+            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+          else
+            unset STRATALINT_LEAN_PRODUCER_DLL
+          fi
+          resource_roots=(
+            D5.S1.Digit.GoldenBase4TwentyStatePrefixBarrier
+            D5.S1.Recurrence.Invariants.CloitreActualExteriorEntrance
+            D5.S1.Recurrence.Invariants.CloitreActualDeficitFourBand
+            D5.S0.Tower.TribonacciPeriodicNine.EnumerationNineDistinct
+          )
+          for module in "${resource_roots[@]}"; do
+            printf 'RESOURCE_PROBE_ROOT module=%s boundary=start time=%s\n' "$module" "$(date -u +%FT%TZ)"
+            make lean-report-scoped \
+              LEAN_REPORT=".lake/build/stratalint/upgrade-resource-${module}.json" \
+              LEAN_TARGETS="$module"
+            printf 'RESOURCE_PROBE_ROOT module=%s boundary=finish time=%s\n' "$module" "$(date -u +%FT%TZ)"
+          done
+          make lean-report-scoped \
+            LEAN_REPORT=.lake/build/stratalint/upgrade-resource-scoped-report.json \
+            LEAN_TARGETS="${resource_roots[*]}"
+      - name: Export prewarming reports and resource diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathlib-prewarm-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .lake/build/stratalint/upgrade-resource-*.json*
+            build/lean-cache/resource-probe.log
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 3
       - name: Build the report and run the compiled judge
         env:
           GH_TOKEN: ${{ github.token }}
