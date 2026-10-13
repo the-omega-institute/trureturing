@@ -2167,3 +2167,881 @@ unrestricted space/time/boundary/memory recovery claim is part of
 these ordinary statements.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Two-read equality and exact saturated zero-origin completion
+
+**Definition 13.1 (class readability, runs and native saturation).**
+Specialize Assumption 9.1 to $k=2$, retaining its entire acquisition,
+causal export, discard, same-original pure-$\rho$ continuation and
+stationary literal-Read contract. In particular the original family is
+$X_{a,b}=\langle T_a,T_{q+b}\rangle$, $0\le a,b<q$, and an encoder
+exports exactly $q$ attained labels from the genuinely acquired original
+empty-cut row before either future choice. Its public table is common
+to all originals. Every other source-bearing field is discarded.
+
+A nonempty subset $C\subseteq[0,q-1]^2$ is *two-readable under
+$\lambda$* if it can serve as one entire code class: both cut-specific
+controllers recover the lag on every nonempty complete fiber of
+Theorem 5.2 with at most two chronological actual Reads. This definition
+does not require that the complement admits the other $q-1$ classes.
+On right visibility the candidates, hidden ages and targets are
+$b\le z-\lambda$, $z+a-b$ and $b$; on left visibility they are
+$a\le z-\lambda$, $q+z-a+b$ and $a$. The whole rows, reached holes
+and singleton partitions are precisely (NARC.5.3)--(NARC.5.6).
+Each candidate has its own fixed-original history and indicated lag.
+At a later transcript the support contains every candidate giving all
+its actual replies. It is never replaced by a selected path of histories.
+
+Whenever $d=a-b$ is injective, list $C=(p_0,\ldots,p_{m-1})$ in
+strictly increasing $d$. Write $p_i=(a_i,b_i)$ and set
+
+$$
+\begin{aligned}
+I_a&=\{i\in\{1,\ldots,m-1\}:a_i\ne a_{i-1}\},\\
+I_b&=\{i\in\{1,\ldots,m-1\}:b_i\ne b_{i-1}\},\\
+r_a&=1+|I_a|,\qquad r_b=1+|I_b|,\qquad
+\sigma=|I_a\cap I_b|,\qquad \delta(C)=19-m.
+\end{aligned}
+\tag{NARC.13.1}
+$$
+
+Thus $r_a,r_b$ count maximal constant-coordinate runs, including
+separated runs that revisit a value. They are not counts of different
+targets. An $A$ edge changes only $a$, a $B$ edge changes only $b$,
+and a $D$ edge changes both. Increasing $d$ makes every pure $A$
+edge an increase of $a$ and every pure $B$ edge a decrease of $b$.
+Their lengths are the corresponding positive integer increments.
+A class of size nineteen is called *saturated*. This term refers to
+the native two-read bound, not to a chain-partition $k$-norm.
+
+**Theorem 13.2 (exact run defect and the ten-run equality condition).**
+For every class two-readable at all positive lags, $d$ is injective,
+$r_a,r_b\le10$, and
+
+$$
+\begin{aligned}
+|C|&=r_a+r_b-1-\sigma,\\
+\delta(C)&=(10-r_a)+(10-r_b)+\sigma.
+\end{aligned}
+\tag{NARC.13.2}
+$$
+
+For either coordinate having ten runs, its nine change positions are
+three disjoint intervals of three consecutive edge positions. The
+middle edge of each interval has $d$ increment one. Conversely,
+for a $d$-injective class, these conditions for a particular ten-run
+coordinate give a two-read full-reference certificate for that target.
+If they hold for both coordinate targets, Theorem 10.2 gives both-cut
+service at every positive lag. These statements allow repeated
+nonadjacent coordinate values.
+
+**Proof.** Use the collision and ordered-leaf argument of Theorem 9.2,
+with $k=2$ and its genuine full fibers at $Z=q+1$. It supplies
+$d$ injectivity and at most $L_2=10$ ordered interval leaves for
+each target. Every coordinate change must be a leaf boundary, so
+$r_a,r_b\le10$. Distinct consecutive origins change at least one
+coordinate. Hence $I_a\cup I_b$ is the whole set of $m-1$ edge
+positions. Inclusion-exclusion gives
+$m-1=(r_a-1)+(r_b-1)-\sigma$, proving both identities. This uses
+the supplied bound without introducing another general-$k$ result.
+
+Consider a target with ten runs, ordered by increasing hidden age.
+At the reference entry every age is at least two. Ten runs require
+at least ten ordered leaves, and the supplied capacity permits exactly
+ten. Consequently each leaf is exactly one maximal target run: no run
+can be split and no two consecutive different runs can be merged.
+After removal of entry-constant requests, a ten-leaf tree must have
+a $P_t$ first request and a $P$ request on each of its two tails.
+Indeed, an $S$ root has at most $4+1+4=9$ leaves, an $E$ root
+is constant on these reference ages, and a missing root cell or a
+tail with fewer than four cells also loses a leaf. Each singleton
+root cell contains one origin by $d$ injectivity. A tail with four
+cells must use $P$, with both adjacent singleton cells occupied.
+Thus the ten run cardinalities, in this order, are
+
+$$
+(x_1,1,1,x_4,1,1,x_7,1,1,x_{10}),
+\qquad x_1,x_4,x_7,x_{10}\ge1.
+\tag{NARC.13.3}
+$$
+
+The ages of runs $2,3$ are consecutive, as are those of runs $5,6$
+and $8,9$. Incoming, middle and outgoing edges around the two
+singleton runs of each pair are three consecutive target changes.
+These are exactly changes $1,2,3$, then $4,5,6$, then $7,8,9$.
+The middle edge joins adjacent singleton ages and has $d$ increment
+one. For the left target, increasing hidden age reverses the $d$
+list. Reversal of ten runs preserves the three paired positions and
+the middle-increment condition in the original $d$ order.
+
+Conversely, the three change intervals make runs $2,3,5,6,8,9$
+singletons. The unit middle increments make each indicated pair
+consecutive in hidden age, in either orientation. At the full reference
+query $P$ at the age of run $5$; after absence query at the age of
+run $2$, and after branch at the age of run $8$. All thresholds
+are at least two. The resulting leaves are precisely runs $1$ through
+$10$, with their constant targets. This is an actual finite native
+certificate using Definition 5.3, rather than an arbitrary ten-cell
+partition. The positive translation and restriction in Theorem 10.2
+serve every complete actual positive-lag fiber without additional
+calls, including fibers that are not intervals in $d$. $\square$
+
+**Theorem 13.3 (exact nineteen-point positive-lag normal form).**
+A nineteen-point subset of the source square is two-readable on both
+cuts at every positive lag if and only if, in increasing $d$ order,
+its eighteen edges are six consecutive pure triples, three $AAA$
+and three $BBB$, with the middle edge of each triple of length one.
+Every other pure step has an arbitrary positive integer length,
+subject only to membership in the square. Equivalently the second,
+fifth and eighth changes of each coordinate have unit length.
+All twenty macro words are permitted: if $U=AAA$ and $W=BBB$,
+they are exactly the six-letter words with three $U$ and three $W$,
+whose number is $\binom63=20$.
+
+**Proof.** If the class is readable, (NARC.13.2) at $|C|=19$
+forces $r_a=r_b=10$ and $\sigma=0$. Every edge is pure, so $a$
+is nondecreasing and $b$ nonincreasing. Theorem 13.2 supplies three
+consecutive change triples for each coordinate. Their disjoint union
+is all eighteen edges, so they tile that list by the six stated blocks.
+On a pure edge the $d$ increment is exactly its coordinate length;
+the six middle increments are therefore unit lengths.
+
+Conversely, each such word has nine changes of each coordinate,
+three consecutive change triples with the required middle increments.
+All pure lengths are positive, so $d$ increases strictly and the
+vertices are distinct. The two full-reference trees of Theorem 13.2
+and the positive part of Theorem 10.2 prove all positive lags.
+There is no symmetry or endpoint-label hypothesis in either direction.
+The count twenty chooses the three positions of $U$ among six;
+it counts direction words, not coordinate embeddings or encoders.
+$\square$
+
+**Theorem 13.4 (exact nonnegative-lag first-step exclusion).**
+Let $C=(p_0,\ldots,p_{18})$ have the normal form of Theorem 13.3,
+with $p_0=(a_0,b_0)$. It is two-readable under $\lambda=0$ exactly
+when
+
+$$
+\neg\bigl(a_0=0\ \text{and the first edge is a unit }B\bigr).
+\tag{NARC.13.4}
+$$
+
+This additional condition concerns saturated classes. It is not a
+criterion for arbitrary smaller or fused classes.
+
+**Proof, the obstructed complete fiber.** In the excluded case the
+right-visible entry at $z=b_0$ has the whole class as its fiber,
+because $b$ is nonincreasing. Its first two origins are $(0,b_0)$
+at lag zero and $(0,b_0-1)$ at lag one. Their hidden ages are zero
+and one; their $b$ targets differ. Every origin gives the same complete
+row $\mathcal R^R_{b_0}$, including its actual reached guard and
+singleton partition. There are ten ordered $b$ runs with distinct
+targets, so at least ten nonempty interval leaves are required.
+
+A first $E$ gives at most two singleton leaves and four leaves on
+its branch tail, totaling six. A first $S$ gives at most nine. For
+any first $P_t$, $t\ge2$, ages zero and one are both absent.
+The remaining query in this cell must be $E$: every nonempty
+relative word still merges these two ages, and root or visible-slot
+queries are constant. This cell has at most three leaves. The root's
+two singleton cells and its other tail contribute at most $1+1+4$,
+giving at most nine altogether. Early halts and constant requests
+cannot improve these bounds. Hence no actual adaptive two-read
+controller separates the complete fiber. This is the missing-$P_1$
+obstruction, not a claim that the origins can never be distinguished
+with more reads.
+
+**Proof, all-clock sufficiency.** Left-hidden ages are always at least
+$q$, so the positive-age translation in Theorem 10.2 serves that cut
+even at lag zero. It also serves every right entry whose entire support
+has positive hidden ages. It remains to consider a right fiber with
+age zero. Such a point has $a=0$, lag zero and $b=z$ by Theorem
+5.2. In a saturated class the fiber $b\le z$ is a suffix of complete
+$b$ runs. Its zero-age point is its first point: strict increase of
+$d$ and nonnegative actual ages exclude any earlier surviving point.
+Thus the first surviving run, say $r$, begins at age zero.
+
+Number the full class's ten $b$ runs by increasing $d$. Let $u,s,v$
+be the predicted ages of singleton runs $2,5,8$, respectively,
+computed as $z+d$ from their public points. Deleted runs may have
+negative predicted ages. Their partners have ages $u+1,s+1,v+1$,
+and
+
+$$
+s\ge u+3,\qquad v\ge s+3.
+\tag{NARC.13.5}
+$$
+
+The ordinary full diagram has root $P_s$ and lower/upper tests
+$P_u,P_v$. The following table gives actual tests for every possible
+first surviving run at zero. A named tail is restricted by all previous
+actual replies and the entire fiber. A constant-target tail halts.
+
+| First surviving run $r$ | Predicted ages | Actual schedule |
+| --- | --- | --- |
+| $1$ | $u\ge2$ | $P_s$; $P_u$ on absence and $P_v$ on branch |
+| $2$ | $u=0$, $s\ge3$ | $P_s$; $E$ on absence and $P_v$ on branch |
+| $3$ | $u=-1$, $s\ge2$ | $P_s$; $E$ on absence and $P_v$ on branch |
+| $4$ | $s\ge2$ | $P_s$; absence halts and branch uses $P_v$ |
+| $4$ | $s=1$, $v\ge4$ | $P_2$; $E$ on absence and $P_v$ on branch |
+| $5$ | $s=0$, $v\ge3$ | $E$; $P_v$ on branch |
+| $6$ | $s=-1$, $v\ge2$ | $E$; $P_v$ on branch |
+| $7$ | $v\ge2$ | $P_v$ |
+| $7$ | $v=1$ | $E$; $P_2$ on branch |
+| $8$ | $v=0$ | $E$ |
+| $9$ | $v=-1$ | $E$ |
+| $10$ | unrestricted | halt |
+
+Here is the target verification and exhaustion of the table. If $r=1$,
+strict integer ages give $u\ge1$. When $u=1$, run $1$ must consist
+of the single age-zero point, and run $2$ is the next point at age
+one. Its incoming edge changes $b$ and is pure by saturation, so it
+is a unit $B$. Zero at $p_0$ gives $a_0=0,z=b_0$, exactly the
+excluded case. Otherwise $u\ge2$, and all three diagram thresholds
+are actual legal $P$ tests.
+
+For $r=2$, the lower $E$ separates run $2$ at zero, run $3$ at
+one and run $4$ at ages at least two. For $r=3$, it separates
+run $3$ at zero from the remaining constant run-$4$ tail; its beta
+and branch replies, if occupied, both have the run-$4$ target.
+When $r=4$, run $5$ begins at an integer $s\ge1$. For $s\ge2$
+the diagram's lower tail is constant. For $s=1$, actual $P_2$
+puts only run $4$ at zero and run $5$ at one into absence; $E$
+separates them. Its alpha reply is run $6$ at two, and its beta
+reply, if occupied, is run $7$ at three. Its branch is separated
+by legal $P_v$, since the run-$8,9$ pair starts at $v\ge4$.
+
+For $r=5$, $E$ isolates runs $5,6$ at zero and one; its branch
+contains runs $7$--$10$ and is separated by $P_v$. For $r=6$,
+$E$ isolates run $6$ at zero, its beta belongs to run $7$ if
+occupied, and $P_v$ separates its branch. For $r=7$, run $8$
+starts at $v\ge1$. If $v\ge2$, one $P_v$ separates the constant
+run-$7$ tail, the two singleton runs $8,9$, and run $10$. If
+$v=1$, $E$ separates run $7$ at zero and run $8$ at one;
+on its branch $P_2$ isolates run $9$ at two, while both higher
+reply cells have run-$10$ target. For $r=8$, one $E$ separates
+runs $8,9,10$. For $r=9$, its alpha isolates run $9$ and both
+positive reply cells have run-$10$ target. For $r=10$ the whole
+fiber has a constant target. These cases exhaust ranks $1$--$10$
+and every integer spacing allowed by the diagram.
+
+Each submitted $P$ has threshold at least two. Every $E$ is the
+paid hidden-slot word, and each $P$ uses the fully materialized
+hidden-slot-prefixed representative (NARC.5.8). No actual $P_1$
+is requested. At every truthful transcript the same original remains
+a candidate, and the final common $b$ is its own, giving its lag
+$z-b$. The table covers all integer clocks with a zero-containing
+fiber; Theorem 10.2 covers all remaining clocks. $\square$
+
+## 14. Unrestricted nineteen-label constrained covers
+
+**Definition 14.1 (the complete saturated path families).** In the
+$19\times19$ square let $\mathcal P_t^+$ contain every nineteen-point
+class of Theorem 13.3 containing $(t,t)$, for $0\le t\le18$.
+The generation permits all twenty macro words, every initial point
+and every positive integer outer step that stays in the square.
+The six middle steps are unit. Equivalently choose ten increasing
+$a$ values, ten decreasing $b$ values and a macro word, with the
+second, fifth and eighth gaps of each coordinate equal to one,
+then take its nineteen vertices. Retain all such embeddings containing
+the anchor. Let $\mathcal P_t^0$ be the subfamily passing
+(NARC.13.4). The superscripts $+$ and $0$ mean positive and
+nonnegative lags, respectively.
+
+A *constrained exact cover* chooses one $C_t$ from each corresponding
+family, pairwise disjoint, with union the entire square. In finite
+binary-variable notation the same condition is
+
+$$
+\sum_{t=0}^{18}\ \sum_{C\in\mathcal P_t^\lambda:\,p\in C}x_{t,C}=1
+\quad(p\in[0,18]^2),\qquad x_{t,C}\in\{0,1\},
+\tag{NARC.14.1}
+$$
+
+where $\mathcal P_t^1=\mathcal P_t^+$ and
+$\mathcal P_t^0$ has the meaning above. A candidate has exactly
+one diagonal point by strict increase of $d$, so the equations on
+diagonal points already force one selected candidate per anchor.
+Duplicate descriptions of the same subset are treated as one candidate.
+
+**Theorem 14.2 (exact unrestricted encoder-cover equivalence).**
+Under Definition 13.1, a $q=19$ encoder with both-cut two-read
+service exists for $\lambda=1$ if and only if the families
+$\mathcal P_t^+$ have a constrained exact cover. For $\lambda=0$
+the same equivalence holds with $\mathcal P_t^0$.
+
+**Proof.** Theorem 9.2 bounds each of the nineteen nonempty attained
+classes by nineteen. They partition $19^2$ originals, so each has
+exactly nineteen points. Theorems 13.3--13.4 give precisely the
+appropriate class condition. Injectivity of $d$ allows at most one
+diagonal point per class; nineteen diagonal points and nineteen classes
+give exactly one in each. Relabel that class by its anchor $t$.
+This is a bijective relabeling of the attained alphabet, not retention
+of extra source information. It yields the asserted exact cover.
+
+Conversely, an exact cover gives the public table $e(a,b)=t$ for
+the unique selected $C_t$ containing $(a,b)$. The genuinely acquired
+original empty-cut row computes that entry; export only $t$ and discard
+the row and every other source-bearing field. Every label is attained
+at $(t,t)$. The appropriate theorem supplies a reader for each entire
+class, using only its public table, the acquired later row and earlier
+actual replies. Those are exactly the complete fibers of Theorem 5.2.
+Thus the cover defines a lawful encoder under the original native
+contract, for every legal lag, with the two supplied cut controllers.
+No endpoint rule, symmetry or selected family was imposed on an
+arbitrary encoder in the forward direction. $\square$
+
+**Theorem 14.3 (six boundary corners, unequal gates and incidence).**
+In every cover of Theorem 14.2, write $e(t,t)=t$. Then:
+
+1. Every point $(a,b)\in C_t$ satisfies
+   $\min(a,b)\le t\le\max(a,b)$. Classes $C_0,C_1,C_2$ have
+   macro order $BBB\,BBB\,BBB\,AAA\,AAA\,AAA$, with their
+   minimum-coordinate corner exactly $(t,t)$. Classes
+   $C_{16},C_{17},C_{18}$ have the reverse macro order and their
+   maximum-coordinate corner exactly $(t,t)$. Each of these six
+   L paths has two ten-point arms. Their nonmiddle gaps remain free.
+2. There are distinct $m_+,m_-\in\{2,\ldots,16\}$ such that
+
+$$
+\begin{aligned}
+e(i+1,i)&=\begin{cases}i,&i<m_+,\\i+1,&i\ge m_+,\end{cases}\\
+e(i,i+1)&=\begin{cases}i,&i<m_-,\\i+1,&i\ge m_-,\end{cases}
+\qquad 0\le i\le17.
+\end{aligned}
+\tag{NARC.14.2}
+$$
+
+   Consequently adjacent-diagonal asymmetry occurs exactly at
+   $\min(m_+,m_-)\le i<\max(m_+,m_-)$, a nonempty interval.
+   No symmetric encoder $e(a,b)=e(b,a)$ can work at $q=19$.
+3. Every nonempty intersection of a class with a fixed row or column
+   has size $1+3j$ with $0\le j\le3$. If $N_a$ counts classes
+   meeting the line with fixed first coordinate $a$, and $M_b$
+   those meeting the line with fixed second coordinate $b$, then
+
+$$
+\begin{gathered}
+N_a,M_b\in\{4,7,10,13,16,19\},\\
+\sum_{a=0}^{18}N_a=190=\sum_{b=0}^{18}M_b.
+\end{gathered}
+\tag{NARC.14.3}
+$$
+
+   For coordinates $0,1,2,16,17,18$ the corresponding incidence
+   counts belong to $\{4,7,10\}$.
+
+All these necessities hold under both lag conventions. They give
+$15\cdot14=210$ ordered gate pairs as constraints, not 210 feasible
+encoders or an exclusion of every nonsymmetric encoder.
+
+**Proof, anchors and corners.** Before the anchor $(t,t)$, monotonicity
+gives $a\le t\le b$; afterwards it gives $b\le t\le a$.
+This proves the belt inequality without assuming labels are endpoints.
+For $t\le2$, at most $t$ pure $A$ changes can precede the anchor,
+since they increase $a$ by at least one from a nonnegative start.
+At most $t$ pure $B$ changes can follow it. If an $A$ triple
+preceded a later $B$ triple, the anchor would have to lie strictly
+before completion of the former (otherwise three $A$ changes precede
+it), and strictly after commencement of the latter (otherwise three
+$B$ changes follow it). The two requirements contradict their order.
+Thus every $B$ triple precedes every $A$ triple, giving $B^9A^9$.
+
+Write its corner as $(u,v)$. Both $u,v\le t$, and one equals $t$,
+because the anchor lies on one of the two arms. Each arm contains
+ten distinct points. Two of these lower-corner paths cannot share
+a corner's first coordinate: their ten-point fixed-first-coordinate
+arms would intersect within a nineteen-point line. They cannot share
+a corner's second coordinate for the same reason. For $t=0$ the
+corner is $(0,0)$. At $t=1$, neither corner coordinate can be zero,
+so the corner is $(1,1)$. At $t=2$, neither can be zero or one,
+so it is $(2,2)$. Reflect both coordinates by $x\mapsto18-x$ and
+reverse the path list. This preserves the normal form and disjoint
+coverage and gives the three upper-corner assertions.
+
+**Proof, independent gates and their inequality.** The belt makes each
+adjacent-diagonal cell's label one of its two endpoint indices. All
+eighteen labels on either band are different: within a class $d$
+is injective, whereas a band has constant $d=1$ or $d=-1$.
+A sequence of lower/upper choices cannot have an upper choice
+followed later by a lower choice. At its first upper-to-lower transition,
+positions $i$ and $i+1$ would both have label $i+1$. Thus each
+band consists of a lower prefix followed by an upper suffix, with
+a threshold in $\{0,\ldots,18\}$ and that threshold as its unique
+missing label. The two bands may initially have different thresholds.
+Class $C_2$, with minimum corner $(2,2)$, cannot contain $(1,2)$
+or $(2,1)$, so both those cells have label one and both thresholds
+are at least two. Class $C_{16}$ cannot contain $(16,17)$ or
+$(17,16)$, so both have label seventeen and both thresholds are
+at most sixteen.
+
+Suppose both thresholds equal $m$, and put $t=m-1$. Equations
+(NARC.14.2) force the consecutive $d=-1,0,1$ points
+
+$$
+(t,t+1),\quad(t,t),\quad(t+1,t)
+\tag{NARC.14.4}
+$$
+
+into $C_t$. They are consecutive because differences are distinct
+integers. This is a $B$-to-$A$ turn, hence a junction of triples.
+The edge entering the anchor is the last $B$ in its triple, so the
+previous middle $B$ edge is unit and forces $(t,t+2)$. The edge
+leaving the anchor is the first $A$ in its triple, so the following
+middle $A$ edge forces $(t+2,t)$. On the other hand $C_{m+1}$
+contains consecutive points
+$(m,m+1),(m+1,m+1),(m+1,m)$, an $A$-to-$B$ junction. Its
+two neighboring middle edges force $(m-1,m+1)$ and $(m+1,m-1)$.
+These are exactly the two extra points just forced into $C_t$.
+All lie in the square because $2\le m\le16$. Disjointness is
+contradicted, proving $m_+\ne m_-$. The asymmetry interval and
+the symmetric-encoder exclusion follow directly from (NARC.14.2).
+
+**Proof, joint row and column incidence.** On a saturated path the
+first coordinate never returns after an $A$ change. Its intersection
+with any fixed-first-coordinate line is consequently one run of
+vertices, and all edges inside it are whole $B$ triples. Its size
+is $1+3j$, $0\le j\le3$. The argument for fixed second coordinate
+uses whole $A$ triples. Each class occupies ten distinct first
+coordinates and ten distinct second coordinates.
+
+In a nineteen-point line, summing the nonempty intersection sizes
+makes its incidence count congruent to one modulo three. Each
+intersection has at most ten points, so at least two classes meet
+the line. These facts give precisely the displayed allowed incidence
+counts. Double-counting class-line memberships gives nineteen times
+ten in each direction. Each of the six boundary lines has a ten-point
+arm of its corresponding corner class, leaving only nine points for
+other classes, so its count is at most ten. These are simultaneous
+necessary equations on one cover; separately satisfiable arms or
+incidence lists do not supply a joint realization. $\square$
+
+## 15. Eighteen-label defect budgets and nonmonotone fusion
+
+**Theorem 15.1 (all defect allocations and the precise fusion case).**
+For any encoder satisfying Definition 13.1,
+
+$$
+\sum_{\gamma}\delta(C_\gamma)=q(19-q).
+\tag{NARC.15.1}
+$$
+
+At $q=18$ the total defect is eighteen. If no class is saturated,
+all eighteen classes have size eighteen. More generally,
+
+$$
+\#\{\gamma:\delta(C_\gamma)=0\}
+=\sum_{\gamma:\delta(C_\gamma)\ge2}
+       (\delta(C_\gamma)-1).
+\tag{NARC.15.2}
+$$
+
+An eighteen-point readable class has exactly one of
+
+$$
+(r_a,r_b,\sigma)=(9,10,0),\quad(10,9,0),\quad(10,10,1).
+\tag{NARC.15.3}
+$$
+
+The first two cases are axis-monotone. The ten-run coordinate has
+the three change triples and unit middle increments of Theorem 13.2;
+readability of that coordinate alone does not assert readability of
+the other nine-run target.
+
+For a $d$-injective eighteen-point class with $(r_a,r_b,\sigma)=
+(10,10,1)$, positive-lag two-readability on both cuts is equivalent
+to the following normal form. Its seventeen edges consist of four
+pure triples, two $AAA$ and two $BBB$, and one fused block
+
+$$
+AA\,D\,BB\qquad\text{or}\qquad BB\,D\,AA.
+\tag{NARC.15.4}
+$$
+
+Before the one-edge overlap, there are three coordinate-change triples
+of each kind. All six middle edges are unshared pure unit edges.
+Every other pure length is an arbitrary positive integer. The shared
+edge $D$ changes both coordinates and has
+$\Delta a-\Delta b>0$; its coordinate changes need not have the
+monotone signs. All vertices must belong to the source square.
+If the class also has $a\ge1$ everywhere, this form suffices for
+nonnegative lags. No general zero-origin iff for fused classes is
+asserted by (NARC.15.4).
+
+**Proof.** Sum $19-|C_\gamma|$ over the $q$ classes that partition
+$q^2$ points. This gives (NARC.15.1). All defects are nonnegative
+by Theorem 13.2. At $q=18$ they sum to eighteen over eighteen
+nonempty classes. With no zero defect, each is at least one and
+therefore exactly one. Subtracting eighteen from the defect sum
+gives (NARC.15.2). It leaves saturated classes, both defect-one
+geometries and every higher-defect allocation in the domain.
+
+At size eighteen, (NARC.13.2) expresses one as three nonnegative
+integers, giving exactly (NARC.15.3). When $\sigma=0$ every edge
+is pure, so its sign follows from increasing $d$ and the class is
+axis-monotone. The coordinate with ten runs obeys Theorem 13.2.
+
+In the $(10,10,1)$ case that theorem gives three disjoint length-three
+intervals of change positions for each coordinate. Their union has
+seventeen positions and their intersection has one. Exactly one
+$a$ interval and one $b$ interval overlap, at a single edge.
+Two intervals of length three can intersect in exactly one position
+only when it is the last position of one and the first of the other.
+Thus this pair contributes one five-edge fused block of (NARC.15.4),
+and the remaining four intervals are pure triples. The shared edge
+is not a middle edge of either triple. Theorem 13.2 supplies all
+six middle increments, which on pure edges are unit coordinate steps.
+The sole conditions on the shared signs are that both changes are
+nonzero and the difference increases.
+
+Conversely, the fused diagram gives each coordinate three disjoint
+consecutive triples of changes with unit middle increments. It has
+nine changes of each coordinate, seventeen total edges and exactly
+one double change. Increasing $d$ follows from the pure signs and
+the stated condition on $D$. The full-reference trees of Theorem
+13.2 separate each coordinate's ten runs, even if the shared edge
+causes a coordinate to revisit a previous value. Theorem 10.2
+translates them to every complete positive-lag fiber; no suffix
+assumption is needed for nonmonotone classes. If $a\ge1$ everywhere,
+right-hidden ages $a+\ell$ are positive also at zero lag, and left-hidden
+ages are always positive. The same supplied translation then serves
+both cuts under $\lambda=0$. $\square$
+
+**Theorem 15.2 (a complete native cover domain at eighteen labels).**
+For $q=18$, define $\mathcal A_t^\lambda$ to contain every nonempty
+$d$-injective subset $C\subseteq[0,17]^2$ containing $(t,t)$ for
+which $D_2$ of Definition 10.1 holds on both full-reference states
+(NARC.10.3), and, when $\lambda=0$, on every state
+
+$$
+\bigl((z+a-b,b)\bigr)_{(a,b)\in C,\ b\le z}
+\quad\text{with }(0,z)\in C,quad 0\le z\le17.
+\tag{NARC.15.5}
+$$
+
+An eighteen-label two-read encoder exists exactly when one can choose
+one member of each $\mathcal A_t^\lambda$, pairwise disjoint and
+covering all $324$ points. Every such cover has (NARC.15.1)--(NARC.15.2).
+This domain includes the two nine-run cases, the fused case, saturated
+classes, and all permitted higher defects. It imposes neither a common
+class size nor a common macro word or symmetry.
+
+**Proof.** A lawful encoder has $d$ injective by Theorem 9.2. Its
+eighteen diagonal points force exactly one diagonal point in each
+class, so the classes can be indexed by $t$. Theorem 10.2 with
+$k=2$ gives precisely the two reference tests and the complete
+zero-containing fibers (NARC.15.5). Thus each class belongs to the
+corresponding family. Conversely an exact cover defines the public
+table and genuinely acquired exported label just as in Theorem 14.2.
+The selected certificates and Theorem 10.2 supply all legal lags.
+Each family member has only one diagonal point by $d$ injectivity,
+so all eighteen labels are attained. The defect identities follow
+from Theorems 13.2 and 15.1.
+
+This is an exact finite predicate, not a geometric classification of
+the nine-run target: its $D_2$ test retains the actual $E/P$ menu
+and every indexed reply cell. In particular, satisfying the ten-run
+coordinate conditions alone is not substituted for the second test.
+For zero-containing smaller classes, the tests in (NARC.15.5) are
+entire fibers, and (NARC.13.4) is not used as their replacement.
+$\square$
+
+**Proposition 15.3 (one positive-coordinate nonmonotone class with
+literal service under both conventions).** For every $q\ge12$,
+start at $p_0=(1,8)$ and apply the seventeen increments
+
+$$
+AA\,D\,BB\,AAA\,BBB\,AAA\,BBB,
+\qquad A=(1,0),\quad B=(0,-1),\quad D=(2,1).
+\tag{NARC.15.6}
+$$
+
+The eighteen vertices form a class two-readable at every legal lag
+under each $\lambda\in\{0,1\}$. It is contained in no monotone
+saturated path, even in a larger square. This supplies a class,
+not a complete $q$-label encoder.
+
+**Proof, vertices and entire entry.** Its vertices are
+
+$$
+\begin{aligned}
+&(1,8),(2,8),(3,8),(5,9),(5,8),(5,7),\\
+&(6,7),(7,7),(8,7),(8,6),(8,5),(8,4),\\
+&(9,4),(10,4),(11,4),(11,3),(11,2),(11,1).
+\end{aligned}
+\tag{NARC.15.7}
+$$
+
+All coordinates lie in $[1,11]$ and $d(p_i)=i-7$, $0\le i\le17$.
+The $a$ change positions are $1,2,3;6,7,8;12,13,14$; the $b$
+positions are $3,4,5;9,10,11;15,16,17$. Thus $r_a=r_b=10$
+and $\sigma=1$, with all middle edges unit. The two points
+$(3,8),(5,9)$ are incomparable in the order with $a$ increasing
+and $b$ decreasing. A monotone path cannot contain both, proving
+the asserted failure of the monotone-deletion restriction.
+
+If this is an encoder's entire preimage, initialize candidates to
+the complete $F_R(C,z,\lambda)$ or $F_L(C,z,\lambda)$ of Theorem
+5.2. Initially and after a reply, halt whenever the visible-origin
+target is constant. Otherwise use the following schedule, with
+$h=q+z$ for left visibility. Each second request is selected only
+after the indicated actual first reply.
+
+| Visible region | First experiment | Second after ambiguous $\bot$ | Second after ambiguous $\mathsf b$ |
+| --- | --- | --- | --- |
+| right | $P_{z+2}$ | $P_{z-4}$ | $P_{z+8}$ |
+| left | $P_h$ | $P_{h-6}$ | $P_{h+5}$ |
+
+Its complete whole-class target certificates are as follows. The
+four-entry tuples use actual reply order
+$(\bot,\alpha,\beta,\mathsf b)$, and conditional cells are intersected
+with the first reply's support.
+
+| Visible region | First $\alpha$ target | First $\beta$ target | Lower second targets | Upper second targets |
+| --- | --- | --- | --- | --- |
+| right, target $b$ | $6$ | $5$ | $(8,9,8,7)$ | $(4,3,2,1)$ |
+| left, target $a$ | $7$ | $6$ | $(11,10,9,8)$ | $(5,3,2,1)$ |
+
+For the right table, $n=z+i-7$, so the first threshold $z+2$
+singles out $i=9,10$. Its lower tail is $i\le8$, and threshold
+$z-4$ singles out $i=3,4$: indices $0,1,2$ have $b=8$,
+$i=3$ has $b=9$, $i=4$ has $b=8$, and indices $5$--$8$
+have $b=7$. Its upper tail is $i\ge11$, and $z+8$ singles
+out $i=15,16$: indices $11$--$14$ have $b=4$, then targets
+are $3,2,1$. For the left table, $n=h+7-i$. First $P_h$
+singles out $i=7,6$. Its lower tail is $i\ge8$, and $h-6$
+singles out $i=13,12$: indices $14$--$17$ have $a=11$,
+followed in increasing age by $a=10,9$ and the $a=8$ group.
+Its upper tail is $i\le5$, and $h+5$ singles out $i=2,1$:
+indices $3$--$5$ have $a=5$, followed by targets $3,2,1$.
+These calculations prove every table entry symbolically. Restriction
+to the full compatible fiber only deletes indices from the certified
+cells; it cannot introduce a second target into a cell.
+
+**Proof, actual legality and all lags.** A nonempty right fiber has
+$z\ge1+\lambda$, since the minimum $b$ is one. Its first and
+upper thresholds are therefore at least three. The lower second
+threshold is submitted only on an ambiguous first-absence cell.
+All points of that cell with $b<8$ have the common target seven.
+Ambiguity therefore requires a surviving point with $b\ge8$.
+Its complete-fiber membership gives $z\ge8+\lambda$, so the
+needed lower threshold satisfies $z-4\ge4+\lambda$.
+On the left, a nonempty fiber has $z\ge1+\lambda$ and $q\ge12$,
+so $h-6\ge7+\lambda$; every left threshold is legal as well.
+Thus neither $P_1$ nor a virtual or negative test is ever submitted,
+under either lag convention.
+
+For each requested $t=2m$, materialize $w_t=R^m$, and for
+$t=2m+1$, materialize $w_t=LR^m$, with $m\ge1$. Submit
+the entire word $Lw_t$ on right visibility or $Rw_t$ on left
+visibility to the actual stationary original root. These are the
+literal requests of Definition 5.3, each costing one chronological
+Read. Retain exactly the public candidates giving its actual reply.
+The actual original belongs to the initial complete fiber and survives
+every truthful reply. Each terminal cell has the displayed constant
+origin $v$, so its output $z-v$ is that original's own legal lag.
+The inequalities and reply identities hold for every integer $z$,
+not just a finite lag window. All choices use only the attained label,
+later acquired row, public class table, selected region and actual
+earlier replies. Nothing consults the discarded original row or a
+hidden-age port. No covering claim about the complement is made.
+$\square$
+
+**Proposition 15.4 (why the saturated diagonal belt is not a local
+eighteen-point lemma).** A positive-lag two-readable eighteen-point
+class in $[0,17]^2$ can contain $(11,11)$ and $(0,9)$. Thus the
+anchor-belt conclusion of Theorem 14.3 cannot be transferred to
+arbitrary readable defect-one classes as a candidate restriction in
+Theorem 15.2.
+
+**Proof.** Use the word (NARC.15.6), start at $(0,9)$, and replace
+only its shared increment by $D=(9,2)$. Its first vertices are
+$(0,9),(1,9),(2,9),(11,11),(11,10),(11,9)$; its remaining vertices
+are $(12,9),(13,9),(14,9),(14,8),(14,7),(14,6),(15,6),(16,6),
+$(17,6),(17,5),(17,4),(17,3)$. All lie in the square. Pure edges
+have unit lengths and the shared edge has $d$ increment seven.
+Theorem 15.1 proves positive-lag readability. The diagonal point
+is $(11,11)$, yet at $(0,9)$ the proposed belt would require
+$11\le\max(0,9)$, which is false. This is a counterexample to
+the local transfer, not to a global eighteen-label theorem with
+additional packing hypotheses. It supplies neither a complete encoder
+nor a nonnegative-lag certificate for this auxiliary class. $\square$
+
+## 16. Temporal alignment, selected boundary memory and the remaining cover
+
+**Theorem 16.1 (the recovered original cut row and saturated residual).**
+For any successful class reader above, the output recovers the complete
+original row at the same selected cut. For right visibility this row
+is
+
+$$
+R_{\{L\}}(X_{a,b})=
+\bigl(\langle\square_L,T_{q+b}\rangle,\{\{L\}\}\bigr),
+\tag{NARC.16.1}
+$$
+
+and for left visibility it is
+
+$$
+R_{\{R\}}(X_{a,b})=
+\bigl(\langle T_a,\square_R\rangle,\{\{R\}\}\bigr).
+\tag{NARC.16.2}
+$$
+
+This does not reconstruct the hidden original filling. More sharply,
+at a full reference entry of a saturated class, every correct two-read
+lag controller has a truthful terminal transcript compatible with at
+least four different originals, all with the same recovered lag and
+selected original cut row. Full original reconstruction with the same
+alphabet and two-read budget is impossible at $q=18$ or $q=19$,
+by the stronger-task bound of Proposition 12.2.
+
+**Proof.** The certified terminal target is the initial coordinate of
+the visible slot. Theorem 5.2 identifies that target as $b$ on the
+right and $a$ on the left, with the acquired normalized clock minus
+the target giving the actual lag. Substituting the recovered origin
+in the original family yields (NARC.16.1) or (NARC.16.2), including
+the same reached guard and full singleton partition. This is a
+reconstruction from the acquired entry and actual replies; it is not
+another acquisition or recovery of a previously unknown cut.
+
+At a saturated full reference entry, Theorem 13.2 forces every
+successful reader's ten leaves to be exactly its ten coordinate runs.
+Six are singleton runs. Each other run has size $1+3j$: its interior
+edges are whole opposite-coordinate triples. Across these four runs
+the corresponding four nonnegative integers sum to three, since
+the class has nineteen points. Hence one has size at least four.
+Its origins have the same visible coordinate and, at this common
+clock, the same lag; their hidden coordinates differ. They share the
+received label, entire later row and actual terminal transcript, but
+their hidden original trees are distinct. This proves a real residual
+source ambiguity for every two-read lag controller on that entry.
+
+Proposition 12.2 already proves that universal two-read full-original
+reconstruction with exactly $q$ labels requires $q\le10$. Applying
+that existing result to $q=18,19$ makes the stronger task impossible,
+irrespective of whether their lag-recovery covers exist. Extra native
+information can change that task: [NAR, Theorem 16.5][NAR] supplies
+finite current recovery, and a $d$-injective public class together with
+both current ages determines its original pair and lag. Such additional
+acquisition or calls are not supplied by the two-read transcript.
+$\square$
+
+**Definition 16.2 (mathematical correspondences and separate resources).**
+The exact semantic suppliers remain those of Mathematical citation
+8.1 and Assumption 12.5. Their parameter correspondence here is
+two ordered slots, original offsets $0,q$, actual free-magma source
+$X_{a,b}$, substitution count $\ell$, literal original-root word,
+four-valued constructor reply, and complete cut exterior plus actual
+hole partition. The Lean source meanings are `Source` and
+`substitution` in GenealogicalFiberTransport; `Address`, `Reply` and
+`readout` in ActualTreeReadoutAcquisition; `rightClock`,
+`right_clock_iterate` and `right_clock_readout` in DelayedOriginalReadout;
+and `literalRecord`, `actualPartition` and `canonicalRow_record_iff`
+in ActualCutPartitionDecoder. Acquired visible-literal parsing computes
+$z$; it does not measure a hidden age. Theorem 9.2 supplies the
+ordered reference bound, Theorem 10.2 the exact finite/all-lag bridge,
+and Proposition 12.2 the stronger reconstruction boundary. None of
+these semantic correspondences identifies the new geometric statements
+with an existing kernel proof.
+
+The ordered-search representation is literature-attested in Bruno,
+De Prisco, De Santis and Vaccaro,
+[*Bounds and Algorithms for Alphabetic Codes and Binary Search Trees*,
+arXiv:2407.16443v1, §§I--II](https://arxiv.org/html/2407.16443v1).
+Their alphabetic trees preserve the order of searched symbols, and
+their comparison-search descriptions distinguish binary outcomes
+from ternary outcomes. Here the ordered symbols are $d$-indexed
+origins, terminal leaves are intervals, and the task is coordinate
+recovery. Their probability-weighted average costs do not supply
+our worst-depth-two four-reply capacity, two adjacent singleton cells,
+missing-$P_1$ boundary or a grid partition. The allowed-query
+distinction is also the primary point-test/dyadic-test comparison in
+Nowak, [*The Geometry of Generalized Binary Search*,
+arXiv:0910.4397v5, §V.A](https://arxiv.org/html/0910.4397v5),
+already used in Assumption 12.5. Its binary hypothesis framework
+does not authorize stronger native tests here.
+
+After reversing the second coordinate, saturated classes are chains
+in the coordinate-product order. The relevant primary definitions
+are Liu and West, [*Duality for semiantichains and unichain coverings
+in products of special posets*, §1 and Example 2.1](https://dwest.web.illinois.edu/pubs/semianch.pdf).
+A unichain there is constant in one coordinate throughout, whereas
+our saturated paths turn between coordinates. Its cover results do
+not produce a native six-triple exact cover. Greene--Kleitman
+$k$-saturation is equality between a chain partition's
+$\sum_C\min(k,|C|)$ and the largest union of $k$ antichains,
+as defined also in West, [*Poly-unsaturated Posets: The
+Greene-Kleitman Theorem Is Best Possible*, Journal of Combinatorial
+Theory A 41, 105--116](https://dwest.web.illinois.edu/pubs/polyuns.pdf).
+That is different from saturation of our native ordered leaves.
+Even ordinary equal-size chains are insufficient: the nineteen grid
+rows themselves partition the square into nineteen nineteen-point
+product-order chains, but have a constant coordinate and nineteen
+runs of the other coordinate, violating Theorem 13.2. No cited
+chain-cover or ordered-search theorem supplies the new native
+zero filter, unequal gates or fusion geometry. Those are repo-derived
+ordinary deductions under the stated contract; this correspondence
+makes no global novelty claim.
+
+The call resource is a chronological submission of one fully
+materialized finite word. A hidden $E$ costs one call. A $P_t$
+representative has whole-word length $1+\lceil t/2\rceil$, including
+the hidden-slot prefix. The displayed witness thresholds grow with
+the acquired clock. Initial and later whole-row acquisition, parsing
+and storage, retained-label representation, public tables, changing
+workspace, arithmetic, controller representation, address production
+and total submitted length, output size and physical time are separate
+resources. Two calls do not imply a uniform address bound or a finite
+uniform Moore implementation. Time here is the count of pure-$\rho$
+steps; space is ordered constructor structure; boundary is the supplied
+singleton cut; retained memory is the exported source-dependent label.
+These meanings do not assert a physical model.
+
+**Definition 16.3 (the exact remaining mathematical gap).**
+For nineteen labels the remaining question is existence of a cover in
+(NARC.14.1), separately with $\mathcal P_t^+$ and $\mathcal P_t^0$.
+The six boundary corners, the 210 ordered unequal gate pairs and
+the incidence equations constrain that same cover. They are not
+a construction, and their individual consistency is not sufficient.
+A class-complete obstruction could, for each remaining gate pair,
+give real cell weights $w_p$ and bounds $\mu_t$ valid for every
+candidate of anchor $t$ compatible with that pair, such that
+
+$$
+\sum_{p\in C}w_p\le\mu_t\quad\text{for every such }C,
+\qquad
+\sum_{p\in[0,18]^2}w_p>\sum_{t=0}^{18}\mu_t.
+\tag{NARC.16.3}
+$$
+
+A disjoint full cover would contradict this inequality by summing
+over its actual classes. Its validity must include every allowed
+macro word and integer gap, rather than a symmetric, endpoint,
+unit-step or L-only subfamily. No such complete obstruction or
+full cover is supplied here.
+
+For eighteen labels the remaining question is a cover of the complete
+families $\mathcal A_t^\lambda$ in Theorem 15.2, with total defect
+eighteen. The geometric gaps include the native nine-run target
+conditions in the two axis-monotone defect-one cases, the zero-containing
+fibers of general fused classes, and compatibility of every permitted
+mixture of saturated and higher-defect classes. The finite criterion
+defines all of them without omitting a defect allocation; the fusion
+witness does not solve their joint packing. Thus unrestricted
+$q=18$ and $q=19$ whole-grid feasibility remains unresolved under
+each convention.
+
+In the broader alpha/beta programme, these results identify precisely
+which retained source relation and fresh native replies can align the
+current visible structure with its original coordinate, and thereby
+recover the selected original boundary row and substitution count.
+The saturated residual shows why this recovery can leave hidden
+spatial distinctions in memory's original fiber. Recovering the other
+original cut row or the full hidden filling demands further information.
+The next gap is the complete compatible cover or its unrestricted
+obstruction, followed by any additional hypotheses needed for stronger
+mutual reconstruction. Neither that gap nor the full space/time/boundary/
+memory programme is settled by the local class theorems.
+
+## 追加锚（本行以下为增补区）
