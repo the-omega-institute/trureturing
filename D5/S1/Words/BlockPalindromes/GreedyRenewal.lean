@@ -12,42 +12,44 @@
    proof_shape: bpWidth=not-applicable (definition).
    proof_shape: largestBPWidth=not-applicable (definition).
    proof_shape: flatten_length_ge=bind-only.
-     consumers: bpWidth_le_length.
+     consumers: GreedyRenewal.bpWidth_le_length.
    proof_shape: bpWidth_le_length=bind-only.
-     consumers: largestBPWidth_le_length, factor_widths_bounded.
+     consumers: GreedyRenewal.factor_widths_bounded, GreedyRenewal.largestBPWidth_le_length.
    proof_shape: factor_widths_nonempty=bind-only.
-     consumers: largestBPWidth_le_length, largest_attained.
+     consumers: GreedyRenewal.largestBPWidth_le_length, GreedyRenewal.largest_attained.
    proof_shape: factor_widths_bounded=bind-only.
-     consumers: le_largestBPWidth, largest_attained.
+     consumers: GreedyRenewal.largest_attained, GreedyRenewal.le_largestBPWidth.
    proof_shape: largestBPWidth_le_length=bind-only.
-     consumers: peelPairs_le_length.
+     consumers: LargestFactorizationExpectedWidth.peelPairs_le_length, LargestFactorizationExpectedWidth.width_count_grouping.
    proof_shape: le_largestBPWidth=bind-only.
-     consumers: largest_outer_recursion, maximal_outer_unbordered.
+     consumers: GreedyRenewal.largest_outer_recursion, GreedyRenewal.maximal_outer_unbordered.
    proof_shape: IsBorder=not-applicable (definition).
    proof_shape: IsUnbordered=not-applicable (definition).
    proof_shape: IsShortestBorder=not-applicable (definition).
-   proof_shape: shortest_border_unbordered=content. escape_witness: GreedyRenewal.shortest_border_unbordered.
+   proof_shape: shortest_border_unbordered=bind-only.
+     consumers: GreedyRenewal.largest_eq_peelWidth, GreedyRenewal.peelPairs_succ_iff, GreedyRenewal.shortest_partition, LargestFactorizationExpectedWidth.emptyCentre_iff_outer.
    proof_shape: exists_shortest_border=bind-only.
-     consumers: shortest_partition, shortestBorder, shortestBorder_spec, maximal_outer_unbordered.
+     consumers: GreedyRenewal.maximal_outer_unbordered, GreedyRenewal.shortestBorder, GreedyRenewal.shortestBorder_spec, GreedyRenewal.shortest_partition.
    proof_shape: shortest_border_unique=bind-only.
-     consumers: core_of_unbordered_outer, outerWords_disjoint, largest_outer_recursion.
+     consumers: GreedyRenewal.core_of_unbordered_outer, GreedyRenewal.largest_outer_recursion, GreedyRenewal.outerWords_disjoint.
    proof_shape: shortest_border_le_half=content. escape_witness: GreedyRenewal.shortest_border_le_half.
-   proof_shape: unbordered_outer_shortest=content. escape_witness: GreedyRenewal.unbordered_outer_shortest.
+   proof_shape: unbordered_outer_shortest=bind-only.
+     consumers: GreedyRenewal.core_of_unbordered_outer, GreedyRenewal.largest_outer_recursion, GreedyRenewal.outerWords_disjoint, GreedyRenewal.peelPairs_outer, GreedyRenewal.shortest_partition, LargestFactorizationExpectedWidth.peelCentre_outer.
    proof_shape: split_nonoverlapping_border=content. escape_witness: GreedyRenewal.split_nonoverlapping_border.
    proof_shape: largest_attained=bind-only.
-     consumers: largest_outer_recursion, largest_unbordered.
+     consumers: GreedyRenewal.largest_outer_recursion, GreedyRenewal.largest_unbordered.
    proof_shape: factor_outer_eq=bind-only.
-     consumers: largest_outer_recursion, maximal_outer_unbordered, largest_unbordered.
+     consumers: GreedyRenewal.largest_outer_recursion, GreedyRenewal.largest_unbordered, GreedyRenewal.maximal_outer_unbordered.
    proof_shape: add_outer_factor=bind-only.
-     consumers: largest_outer_recursion.
+     consumers: GreedyRenewal.largest_outer_recursion.
    proof_shape: bpWidth_append=bind-only.
-     consumers: largest_outer_recursion, maximal_outer_unbordered.
+     consumers: GreedyRenewal.largest_outer_recursion, GreedyRenewal.maximal_outer_unbordered.
    proof_shape: maximal_outer_unbordered=content. escape_witness: GreedyRenewal.maximal_outer_unbordered.
    proof_shape: largest_unbordered=content. escape_witness: GreedyRenewal.largest_unbordered.
    proof_shape: largest_outer_recursion=content. escape_witness: GreedyRenewal.largest_outer_recursion.
    proof_shape: shortestBorder=not-applicable (definition).
    proof_shape: shortestBorder_spec=bind-only.
-     consumers: core_of_unbordered_outer, emptyCentre_iff_outer, peeledCore_spec, peeledCore_shorter, peelPairs_succ_iff, largest_eq_peelWidth.
+     consumers: GreedyRenewal.core_of_unbordered_outer, GreedyRenewal.largest_eq_peelWidth, GreedyRenewal.peelPairs_succ_iff, GreedyRenewal.peeledCore_shorter, GreedyRenewal.peeledCore_spec, LargestFactorizationExpectedWidth.emptyCentre_iff_outer.
    proof_shape: peeledCore=not-applicable (definition).
    proof_shape: peeledCore_spec=content. escape_witness: GreedyRenewal.split_nonoverlapping_border.
      consumers: peelCentre_length_mod_two, core_of_unbordered_outer, emptyCentre_iff_outer, peeledCore_shorter, peelPairs_succ_iff, largest_eq_peelWidth.
@@ -56,65 +58,68 @@
    proof_shape: peelWidth=not-applicable (definition).
    proof_shape: largest_eq_peelWidth=content. escape_witness: GreedyRenewal.largest_eq_peelWidth.
    proof_shape: mem_words=bind-only.
-     consumers: uCount_one, pair_tail_sum.
+     consumers: GreedyRenewal.uCount_one, LargestFactorizationExpectedWidth.pair_tail_sum, LargestFactorizationExpectedWidth.sum_words_ofFn, LargestFactorizationExpectedWidth.width_count_grouping.
    proof_shape: card_words=bind-only.
-     consumers: unbordered_count_recurrence, tailProbability_zero, card_outerWords, expectedWidth_tail_formula, unbordered_count_add, uCount_one, uCount_bound.
+     consumers: GreedyRenewal.card_outerWords, GreedyRenewal.uCount_bound, GreedyRenewal.uCount_one, GreedyRenewal.unbordered_count_add, GreedyRenewal.unbordered_count_recurrence, LargestFactorizationExpectedWidth.expectedWidth_tail_formula, LargestFactorizationExpectedWidth.tailProbability_zero.
    proof_shape: ubWords=not-applicable (definition).
    proof_shape: uCount=not-applicable (definition).
    proof_shape: mem_ubWords=bind-only.
-     consumers: card_tailOuterWords, card_outerWords, card_emptyOuterWords, uCount_one.
+     consumers: GreedyRenewal.card_outerWords, GreedyRenewal.card_tailOuterWords, GreedyRenewal.uCount_one, LargestFactorizationExpectedWidth.card_emptyOuterWords.
    proof_shape: uCount_bound=bind-only.
-     consumers: qCoeff_summable, unbordered_q_lt_one.
+     consumers: GreedyRenewal.qCoeff_summable, GreedyRenewal.unbordered_q_lt_one.
    proof_shape: outerWords=not-applicable (definition).
    proof_shape: mem_outerWords=bind-only.
-     consumers: shortest_partition, empty_centre_count, outerWords_disjoint, renewal_tail_count.
-   proof_shape: outerWords_disjoint=content. escape_witness: GreedyRenewal.outerWords_disjoint.
-   proof_shape: card_outerWords=content. escape_witness: GreedyRenewal.card_outerWords.
+     consumers: GreedyRenewal.outerWords_disjoint, GreedyRenewal.renewal_tail_count, GreedyRenewal.shortest_partition, LargestFactorizationExpectedWidth.empty_centre_count.
+   proof_shape: outerWords_disjoint=bind-only.
+     consumers: GreedyRenewal.renewal_tail_count, GreedyRenewal.unbordered_count_add, GreedyRenewal.unbordered_count_recurrence, LargestFactorizationExpectedWidth.empty_centre_count.
+   proof_shape: card_outerWords=bind-only.
+     consumers: GreedyRenewal.unbordered_count_add, GreedyRenewal.unbordered_count_recurrence.
    proof_shape: borderedWords=not-applicable (definition).
    proof_shape: shortest_partition=content. escape_witness: GreedyRenewal.shortest_partition.
    proof_shape: unbordered_count_recurrence=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
    proof_shape: uCount_one=bind-only.
-     consumers: uCount_two.
+     consumers: GreedyRenewal.uCount_two.
    proof_shape: uCount_two=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
      consumers: unbordered_q_lt_one.
    proof_shape: q=not-applicable (definition).
    proof_shape: q_summable_of_bound=bind-only.
-     consumers: qCoeff_summable, q_lt_one_of_second_strict.
+     consumers: GreedyRenewal.qCoeff_summable, GreedyRenewal.q_lt_one_of_second_strict.
    proof_shape: q_lt_one_of_second_strict=bind-only.
-     consumers: unbordered_q_lt_one.
+     consumers: GreedyRenewal.unbordered_q_lt_one.
    proof_shape: unbordered_q_lt_one=content. escape_witness: GreedyRenewal.uCount_two.
      consumers: positive_q_powers_tsum, empty_even_summable, empty_partial_sum_bound, positive_q_powers_summable, unbordered_composition_series.
    proof_shape: peelPairs=not-applicable (definition).
-   proof_shape: core_of_unbordered_outer=content. escape_witness: GreedyRenewal.unbordered_outer_shortest.
+   proof_shape: core_of_unbordered_outer=content. escape_witness: GreedyRenewal.split_nonoverlapping_border.
      consumers: peelPairs_outer, peelCentre_outer.
-   proof_shape: peelPairs_outer=content. escape_witness: GreedyRenewal.unbordered_outer_shortest.
+   proof_shape: peelPairs_outer=content. escape_witness: GreedyRenewal.split_nonoverlapping_border.
      consumers: peelPairs_succ_iff.
    proof_shape: peelPairs_unbordered=bind-only.
-     consumers: peelPairs_succ_iff.
+     consumers: GreedyRenewal.peelPairs_succ_iff.
    proof_shape: peelPairs_succ_iff=content. escape_witness: GreedyRenewal.peelPairs_succ_iff.
    proof_shape: tailWords=not-applicable (definition).
    proof_shape: mem_tailWords=bind-only.
-     consumers: tail_partition, tailWords_empty.
+     consumers: GreedyRenewal.tail_partition, LargestFactorizationExpectedWidth.tailWords_empty.
    proof_shape: tailOuterWords=not-applicable (definition).
    proof_shape: mem_tailOuterWords=bind-only.
-     consumers: tail_partition, renewal_tail_count.
-   proof_shape: card_tailOuterWords=content. escape_witness: GreedyRenewal.card_tailOuterWords.
+     consumers: GreedyRenewal.renewal_tail_count, GreedyRenewal.tail_partition.
+   proof_shape: card_tailOuterWords=bind-only.
+     consumers: GreedyRenewal.renewal_tail_count.
    proof_shape: tail_partition=content. escape_witness: GreedyRenewal.tail_partition.
    proof_shape: renewal_tail_count=content. escape_witness: GreedyRenewal.renewal_tail_count.
    proof_shape: tailWords_zero=bind-only.
-     consumers: tailProbability_zero.
+     consumers: LargestFactorizationExpectedWidth.tailProbability_zero.
    proof_shape: qCoeff=not-applicable (definition).
    proof_shape: qCoeff_nonneg=bind-only.
-     consumers: renewal_tail_bound, renewal_tail_limit, empty_partial_sum_bound, unbordered_composition_series.
+     consumers: CompositionInversion.unbordered_composition_series, LargestFactorizationExpectedWidth.empty_partial_sum_bound, LargestFactorizationExpectedWidth.renewal_tail_bound, LargestFactorizationExpectedWidth.renewal_tail_limit.
    proof_shape: qCoeff_summable=bind-only.
-     consumers: tsum_qCoeff, renewal_tail_bound, renewal_tail_limit, empty_partial_sum_bound, unbordered_composition_series.
+     consumers: CompositionInversion.unbordered_composition_series, GreedyRenewal.tsum_qCoeff, LargestFactorizationExpectedWidth.empty_partial_sum_bound, LargestFactorizationExpectedWidth.renewal_tail_bound, LargestFactorizationExpectedWidth.renewal_tail_limit.
    proof_shape: tsum_qCoeff=bind-only.
-     consumers: renewal_tail_bound, renewal_tail_limit, empty_partial_sum_bound, unbordered_composition_series.
+     consumers: CompositionInversion.unbordered_composition_series, LargestFactorizationExpectedWidth.empty_partial_sum_bound, LargestFactorizationExpectedWidth.renewal_tail_bound, LargestFactorizationExpectedWidth.renewal_tail_limit.
    proof_shape: q_nonneg=bind-only.
-     consumers: positive_q_powers_tsum, renewal_tail_bound, renewal_tail_limit, positive_q_powers_summable.
-   proof_shape: unbordered_count_add=content. escape_witness: GreedyRenewal.outerWords_disjoint.
+     consumers: LargestFactorizationExpectedWidth.positive_q_powers_summable, LargestFactorizationExpectedWidth.positive_q_powers_tsum, LargestFactorizationExpectedWidth.renewal_tail_bound, LargestFactorizationExpectedWidth.renewal_tail_limit.
+   proof_shape: unbordered_count_add=content. escape_witness: GreedyRenewal.shortest_partition.
      consumers: qCoeff_recurrence.
-   proof_shape: qCoeff_recurrence=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
+   proof_shape: qCoeff_recurrence=content. escape_witness: GreedyRenewal.unbordered_count_add.
      consumers: unbordered_composition_series.
    escape_witness: renewal_tail_count
    admission_basis: escape-witness
@@ -123,8 +128,8 @@
      statement_id: sha256:ac39f4d6ac85644b4d36960e026f51c85dafd409386991d3defafb1ebead5aa6.
    No other frozen D5 declaration is used.
    The frozen words declaration above is used by:
-     mem_words, card_words, ubWords, uCount, mem_ubWords, uCount_bound, outerWords,
-     mem_outerWords, outerWords_disjoint, card_outerWords, borderedWords, shortest_partition,
+     mem_words, card_words, ubWords, uCount, mem_ubWords, uCount_bound, outerWords, mem_outerWords,
+     outerWords_disjoint, card_outerWords, borderedWords, shortest_partition,
      unbordered_count_recurrence, uCount_one, uCount_two, unbordered_q_lt_one, tailWords,
      mem_tailWords, tailOuterWords, mem_tailOuterWords, card_tailOuterWords, tail_partition,
      renewal_tail_count, tailWords_zero, qCoeff, qCoeff_nonneg, qCoeff_summable, tsum_qCoeff,

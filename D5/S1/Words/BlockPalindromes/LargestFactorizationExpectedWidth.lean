@@ -10,9 +10,9 @@
    The empty word is assigned width zero. The source's Lemma 3 is not used.
    proof_shape: tailProbability=not-applicable (definition).
    proof_shape: tailProbability_nonneg=bind-only.
-     consumers: renewal_tail_limit, expectedWidth_limit.
+     consumers: LargestFactorizationExpectedWidth.expectedWidth_limit, LargestFactorizationExpectedWidth.renewal_tail_limit.
    proof_shape: tailProbability_zero=bind-only.
-     consumers: renewal_tail_bound, renewal_tail_limit.
+     consumers: LargestFactorizationExpectedWidth.renewal_tail_bound, LargestFactorizationExpectedWidth.renewal_tail_limit.
    proof_shape: renewal_tail_bound=content. escape_witness: LargestFactorizationExpectedWidth.renewal_tail_bound.
    proof_shape: tailProbability_recursion=content. escape_witness: GreedyRenewal.renewal_tail_count.
      consumers: renewal_tail_bound, tsum_tailTerm.
@@ -21,25 +21,26 @@
      consumers: renewal_tail_limit.
    proof_shape: renewal_tail_limit=content. escape_witness: LargestFactorizationExpectedWidth.renewal_tail_limit.
    proof_shape: peelCentre=not-applicable (definition).
-   proof_shape: peelCentre_outer=content. escape_witness: GreedyRenewal.unbordered_outer_shortest.
+   proof_shape: peelCentre_outer=content. escape_witness: GreedyRenewal.split_nonoverlapping_border.
      consumers: empty_partition, emptyCentre_iff_outer.
    proof_shape: peelCentre_empty=bind-only.
-     consumers: emptyWords_zero.
+     consumers: LargestFactorizationExpectedWidth.emptyWords_zero.
    proof_shape: emptyCentre_iff_outer=content. escape_witness: LargestFactorizationExpectedWidth.emptyCentre_iff_outer.
    proof_shape: emptyWords=not-applicable (definition).
    proof_shape: mem_emptyWords=bind-only.
-     consumers: empty_partition, emptyProbability_odd, emptyWords_zero.
+     consumers: LargestFactorizationExpectedWidth.emptyProbability_odd, LargestFactorizationExpectedWidth.emptyWords_zero, LargestFactorizationExpectedWidth.empty_partition.
    proof_shape: emptyWords_zero=bind-only.
-     consumers: emptyProbability_zero.
+     consumers: LargestFactorizationExpectedWidth.emptyProbability_zero.
    proof_shape: emptyOuterWords=not-applicable (definition).
    proof_shape: mem_emptyOuterWords=bind-only.
-     consumers: empty_partition, empty_centre_count.
-   proof_shape: card_emptyOuterWords=content. escape_witness: LargestFactorizationExpectedWidth.card_emptyOuterWords.
+     consumers: LargestFactorizationExpectedWidth.empty_centre_count, LargestFactorizationExpectedWidth.empty_partition.
+   proof_shape: card_emptyOuterWords=bind-only.
+     consumers: LargestFactorizationExpectedWidth.empty_centre_count.
    proof_shape: empty_partition=content. escape_witness: LargestFactorizationExpectedWidth.empty_partition.
    proof_shape: empty_centre_count=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_count.
    proof_shape: emptyProbability=not-applicable (definition).
    proof_shape: emptyProbability_zero=bind-only.
-     consumers: empty_centre_powerSeries.
+     consumers: LargestFactorizationExpectedWidth.empty_centre_powerSeries.
    proof_shape: emptyProbability_recursion=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_count.
      consumers: emptyProbability_even_recursion.
    proof_shape: emptyProbability_even_recursion=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_count.
@@ -47,10 +48,10 @@
    proof_shape: QSeries=not-applicable (definition).
    proof_shape: ESeries=not-applicable (definition).
    proof_shape: QSeries_constant_zero=bind-only.
-     consumers: empty_centre_powerSeries, empty_even_convolution.
+     consumers: LargestFactorizationExpectedWidth.empty_centre_powerSeries, LargestFactorizationExpectedWidth.empty_even_convolution.
    proof_shape: empty_centre_powerSeries=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_powerSeries.
    proof_shape: emptyProbability_nonneg=bind-only.
-     consumers: empty_probability_limit, empty_even_summable.
+     consumers: LargestFactorizationExpectedWidth.empty_even_summable, LargestFactorizationExpectedWidth.empty_probability_limit.
    proof_shape: empty_even_convolution=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_powerSeries.
      consumers: empty_partial_sum.
    proof_shape: empty_partial_sum=content. escape_witness: LargestFactorizationExpectedWidth.empty_centre_powerSeries.
@@ -78,11 +79,11 @@
      consumers: expectedWidth_tail_formula.
    proof_shape: expectedWidth=not-applicable (definition).
    proof_shape: sum_words_ofFn=bind-only.
-     consumers: expectedWidth_uniform_average, expectedWidth_tail_formula.
+     consumers: LargestFactorizationExpectedWidth.expectedWidth_weighted_count.
    proof_shape: width_count_grouping=bind-only.
-     consumers: expectedWidth_uniform_average.
-   proof_shape: expectedWidth_uniform_average=bind-only.
-     consumers: expectedWidth_tail_formula.
+     consumers: LargestFactorizationExpectedWidth.expectedWidth_tail_formula, LargestFactorizationExpectedWidth.expectedWidth_weighted_count.
+   proof_shape: expectedWidth_weighted_count=bind-only.
+     consumers: LargestFactorizationExpectedWidth.expectedWidth_tail_formula.
    proof_shape: expectedWidth_tail_formula=content. escape_witness: LargestFactorizationExpectedWidth.largest_pairs_centre.
      consumers: expectedWidth_limit.
    proof_shape: positive_q_powers_summable=content. escape_witness: GreedyRenewal.unbordered_count_recurrence.
@@ -106,21 +107,19 @@
    admission_basis: open-problem-resolution (#15445; Proved)
    Direct frozen dependencies: D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality.words
      statement_id: sha256:ac39f4d6ac85644b4d36960e026f51c85dafd409386991d3defafb1ebead5aa6.
-   Supporting lane modules are frozen in dependency order.
    The frozen words declaration above is used by:
-     tailProbability, tailProbability_nonneg, tailProbability_zero, tailProbability_recursion,
-     renewal_tail_bound, tailTerm, tsum_tailTerm, renewal_tail_limit, emptyWords,
-     mem_emptyWords, emptyWords_zero, emptyOuterWords, mem_emptyOuterWords,
-     card_emptyOuterWords, empty_partition, empty_centre_count, emptyProbability,
-     emptyProbability_zero, emptyProbability_recursion, emptyProbability_even_recursion,
-     QSeries, ESeries, QSeries_constant_zero, empty_centre_powerSeries,
-     emptyProbability_nonneg, empty_even_convolution, empty_partial_sum,
-     empty_partial_sum_bound, empty_even_summable, emptyProbability_odd,
-     empty_probability_limit, tailWords_empty, tsum_positive_tails, pair_tail_sum,
-     mean_pairs_tail, expectedWidth, sum_words_ofFn, width_count_grouping,
-     expectedWidth_uniform_average, expectedWidth_tail_formula, positive_q_powers_summable,
+     tailProbability, tailProbability_nonneg, tailProbability_zero, renewal_tail_bound,
+     tailProbability_recursion, tailTerm, tsum_tailTerm, renewal_tail_limit, emptyWords,
+     mem_emptyWords, emptyWords_zero, emptyOuterWords, mem_emptyOuterWords, card_emptyOuterWords,
+     empty_partition, empty_centre_count, emptyProbability, emptyProbability_zero,
+     emptyProbability_recursion, emptyProbability_even_recursion, QSeries, ESeries,
+     QSeries_constant_zero, empty_centre_powerSeries, emptyProbability_nonneg,
+     empty_even_convolution, empty_partial_sum, empty_partial_sum_bound, empty_even_summable,
+     emptyProbability_odd, empty_probability_limit, tailWords_empty, tsum_positive_tails,
+     pair_tail_sum, mean_pairs_tail, sum_words_ofFn, width_count_grouping,
+     expectedWidth_weighted_count, expectedWidth_tail_formula, positive_q_powers_summable,
      positive_q_powers_tsum, expectedWidth_limit, stable_series_identity,
-     conjectured_limit_identity, coefficient_limit_results, claim, result.
+     conjectured_limit_identity, coefficient_limit_results, result.
    Direct frozen dependencies of all other declarations: none.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15783
    DTR reading: DTR-Unregistered (Observe) for all 4 public theorem audit targets.
@@ -605,11 +604,8 @@ private lemma mean_pairs_tail (k n : ℕ) :
   rw [tsum_positive_tails, pair_tail_sum,Finset.sum_div]
   rfl
 
-noncomputable def expectedWidth (k n : ℕ) : ℝ := by
-  classical
-  exact (∑ i ∈ Finset.Icc 1 n, (i : ℝ) *
-    (((DepthBudgetIidGreedyOptimality.words (α := Fin k) n).filter
-      (fun w => largestBPWidth w = i)).card : ℝ)) / (k : ℝ)^n
+noncomputable def expectedWidth (k n : ℕ) : ℝ :=
+  (∑ w : Fin n → Fin k, (largestBPWidth (List.ofFn w) : ℝ)) / (k : ℝ) ^ n
 
 private lemma sum_words_ofFn (k n : ℕ) (f : List (Fin k) → ℝ) :
     (∑ w ∈ DepthBudgetIidGreedyOptimality.words (α := Fin k) n, f w) = ∑ w : Fin n → Fin k, f (List.ofFn w) := by
@@ -654,9 +650,11 @@ private lemma width_count_grouping (k n : ℕ) :
       Finset.mem_Icc.mpr ⟨Nat.one_le_iff_ne_zero.mpr hz, hle⟩
     simp [hmem]
 
-private lemma expectedWidth_uniform_average (k n : ℕ) :
+private lemma expectedWidth_weighted_count (k n : ℕ) :
     expectedWidth k n =
-      (∑ w : Fin n → Fin k, (largestBPWidth (List.ofFn w) : ℝ)) / (k : ℝ)^n := by
+      (∑ i ∈ Finset.Icc 1 n, (i : ℝ) *
+        (((DepthBudgetIidGreedyOptimality.words (α := Fin k) n).filter
+          (fun w => largestBPWidth w = i)).card : ℝ)) / (k : ℝ) ^ n := by
   rw [expectedWidth, width_count_grouping, sum_words_ofFn]
 
 private lemma expectedWidth_tail_formula {k : ℕ} (hk : 2 ≤ k) (n : ℕ) :
@@ -674,7 +672,7 @@ private lemma expectedWidth_tail_formula {k : ℕ} (hk : 2 ≤ k) (n : ℕ) :
     simp only [Finset.sum_sub_distrib,Finset.sum_add_distrib,← Finset.mul_sum,
       Finset.sum_const, nsmul_eq_mul, mul_one,Finset.sum_boole]
     rfl
-  rw [expectedWidth_uniform_average, ← sum_words_ofFn k n (fun w => (largestBPWidth w : ℝ)),hsum,card_words]
+  rw [expectedWidth_weighted_count, width_count_grouping, hsum, card_words]
   push_cast
   rw [sub_div,add_div,mul_div_assoc, mean_pairs_tail]
   have hkn : (k : ℝ)^n ≠ 0 := by positivity
@@ -716,9 +714,10 @@ theorem expectedWidth_limit {k : ℕ} (hk : 2 ≤ k) :
 
 
 
-def claim : Prop := ∀ k : ℕ, 2 ≤ k →
-    Tendsto (fun n => expectedWidth k n) atTop
-      (𝓝 (1 + ∑' i : ℕ, 2 * (a274190 (2 * (i + 1)) (i + 1) : ℝ) / (k : ℝ) ^ (i + 1)))
+def claim : Prop := ∀ k : ℕ, 2 ≤ k → ∃ a : ℕ → ℝ,
+    (∀ d, Tendsto (fun N : ℕ => (a274190 N (N - d) : ℝ)) atTop (𝓝 (a d))) ∧
+    Summable (fun i : ℕ => 2 * a (i + 1) / (k : ℝ) ^ (i + 1)) ∧
+    Tendsto (fun n => expectedWidth k n) atTop (𝓝 (1 + ∑' i : ℕ, 2 * a (i + 1) / (k : ℝ) ^ (i + 1)))
 
 private lemma stable_series_summable {k : ℕ} (hk : 2 ≤ k) :
     Summable (fun d : ℕ => (a274190 (2 * d) d : ℝ) / (k : ℝ)^d) := by
@@ -756,18 +755,7 @@ private lemma coefficient_limit_results : ∀ k : ℕ, 2 ≤ k → ∃ a : ℕ �
   · exact coefficient_series_summable hk
   · simpa only [conjectured_limit_identity hk] using expectedWidth_limit hk
 
-theorem result : claim := by
-  intro k hk
-  obtain ⟨a, hrow, hs, hlimit⟩ := coefficient_limit_results k hk
-  have ha (d : ℕ) : a d = (a274190 (2 * d) d : ℝ) :=
-    tendsto_nhds_unique (hrow d) (a274190_diagonal_limit d)
-  have hsum : HasSum
-      (fun i : ℕ => 2 * (a274190 (2 * (i + 1)) (i + 1) : ℝ) / (k : ℝ)^(i + 1))
-      (∑' i : ℕ, 2 * a (i + 1) / (k : ℝ)^(i + 1)) :=
-    hs.hasSum.congr_fun (fun i => by rw [ha (i + 1)])
-  have he := hsum.tsum_eq
-  simpa only [he] using hlimit
-
+theorem result : claim := coefficient_limit_results
 
 
 end D5.S1.Words.BlockPalindromes.LargestFactorizationExpectedWidth

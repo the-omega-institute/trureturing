@@ -38,21 +38,17 @@ internal sealed class LargestFactorizationExpectedWidthDocument : IScribeDocumen
                 "The coefficient of degree m is the empty-centre probability at length 2m. Its convolution recursion gives the inverse of one minus the renewal series.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("bpal-expectedwidth", "expectedWidth",
                 Disp(Seq(Forall, Sp, Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, N())), Sp, Comma, Sp, Forall, Sp, Parenthesized(Seq(FormulaDsl.Id("n"), Sp, Colon, Sp, N())), Sp, Comma, Sp, Const("expectedWidth"), Sp, FormulaDsl.Id("k"), Sp, FormulaDsl.Id("n"), Sp, Eq, Sp,
-                    new Formula.Fraction(D(1), new Formula.Power(Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, R())), FormulaDsl.Id("n"))), Sp, Cdot, Sp, WeightedCountSum())),
+                    new Formula.Fraction(UniformWidthSum(), new Formula.Power(Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, R())), FormulaDsl.Id("n"))))),
                 "The source states (arXiv v2, p. 5): “From the definition of expected value, it follows that Eₙ,ₖ = (1/kⁿ)∑ᵢ₌₁ⁿ i·LBPₖ(n,i).” The cardinality counts length-n words whose largest BP-factorization has width i; the empty word has width zero.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("bpal-expectedwidth-limit", "expectedWidth_limit",
                 Disp(Seq(Forall, Sp, Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, N())), Sp, Comma, Sp, Parenthesized(Seq(D(2), Sp, Leq, Sp, FormulaDsl.Id("k"))), Sp, Rightarrow, Sp, Parenthesized(Seq(Const("Tendsto"), Sp, Parenthesized(Seq(Const("expectedWidth"), Sp, FormulaDsl.Id("k"))), Sp, Const("atTop"), Sp, Parenthesized(Seq(Const("nhds"), Sp, Parenthesized(Seq(D(2), Sp, Slash, Sp, Parenthesized(Seq(D(1), Sp, Minus, Sp, FormulaDsl.Id("q"), Sp, FormulaDsl.Id("k"), Sp, Parenthesized(Seq(Const("uCount"), Sp, FormulaDsl.Id("k"))))), Sp, Minus, Sp, D(1))))))))),
                 "The width equals twice the number of peeled pairs plus the indicator of a nonempty centre. Geometric domination of the tails and vanishing empty-centre probability give the stated limit.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("bpal-claim", "claim",
-                Disp(Seq(Const("claim"), Sp, Iff, Sp, Forall, Sp, Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, N())), Sp, Comma, Sp, D(2), Sp, Leq, Sp, FormulaDsl.Id("k"), Sp, Rightarrow, Sp,
-                    Const("Tendsto"), Sp, Parenthesized(Seq(Const("fun"), Sp, Parenthesized(Seq(FormulaDsl.Id("n"), Sp, Colon, Sp, N())), Sp, Mapsto, Sp, Const("expectedWidth"), Sp, FormulaDsl.Id("k"), Sp, FormulaDsl.Id("n"))), Sp, Const("atTop"), Sp,
-                    Parenthesized(Seq(Const("nhds"), Sp, Parenthesized(Seq(D(1), Sp, Plus, Sp, Seq(Sum, Apos, Underscore, Grp(Seq(FormulaDsl.Id("i"), Sp, Colon, Sp, N()))), Sp,
-                        D(2), Sp, Cdot, Sp, Parenthesized(Seq(Const("a274190"), Sp, Parenthesized(Seq(D(2), Sp, Cdot, Sp, Parenthesized(Seq(FormulaDsl.Id("i"), Sp, Plus, Sp, D(1))))), Sp, Parenthesized(Seq(FormulaDsl.Id("i"), Sp, Plus, Sp, D(1))), Sp, Colon, Sp, R())), Sp, Slash, Sp,
-                        Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, R())), Sp, Seq(Caret, Grp(Seq(FormulaDsl.Id("i"), Sp, Plus, Sp, D(1)))))))))),
+                Disp(ClaimStatement()),
                 "Conjecture 5 (arXiv v2, §3, p. 5): “Let k ≥ 2. Then E_k = 1+∑_{i=1}^∞ a_i k^{-i} where the sequence (a_n/2)_{n≥1} is A274199 in the On-Line Encyclopedia of Integer Sequences (OEIS).” A274199(d) is the stabilized diagonal a274190 (2*d) d. The positive index is i+1, so the source expansion starts with coefficients 2,4,6,10.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("bpal-result", "result",
                 Disp(Const("claim")),
-                "For every alphabet size k≥2, the expected largest width tends to the A274199 coefficient series. The proof uses the exact renewal recursion and does not use the source Lemma 3.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                "For every alphabet size k≥2, every reverse-row coefficient converges, the positively indexed coefficient series is summable, and the expected largest width converges to one plus that series. The proof uses the exact renewal recursion and does not use the source Lemma 3.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("gabric-shallit-2023-block-palindrome-expected-width"),
                     ResolutionKind.Proved)))));
@@ -62,15 +58,34 @@ internal sealed class LargestFactorizationExpectedWidthDocument : IScribeDocumen
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(name),
         StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
-    private static Formula WeightedCountSum() => Seq(
-        Sum, Underscore, Grp(Seq(FormulaDsl.Id("i"), Sp, InMacro, Sp, Const("Finset"), Dot, Const("Icc"), Sp, D(1), Sp, FormulaDsl.Id("n"))), Sp,
-        Parenthesized(Seq(FormulaDsl.Id("i"), Sp, Colon, Sp, R())), Sp, Cdot, Sp,
-        Parenthesized(Seq(
-            Parenthesized(Seq(
-                Parenthesized(Seq(Const("DepthBudgetIidGreedyOptimality"), Dot, Const("words"), Sp, FormulaDsl.Id("n"), Sp, Colon, Sp, Const("Finset"), Sp,
-                    Parenthesized(Seq(Const("List"), Sp, Parenthesized(Seq(Const("Fin"), Sp, FormulaDsl.Id("k"))))))),
-                Dot, Const("filter"), Sp, Parenthesized(Seq(Const("fun"), Sp, FormulaDsl.Id("w"), Sp, Mapsto, Sp, Const("largestBPWidth"), Sp, FormulaDsl.Id("w"), Sp, Eq, Sp, FormulaDsl.Id("i"))))),
-            Dot, Const("card"), Sp, Colon, Sp, R())));
+    private static Formula UniformWidthSum() => Seq(
+        Sum, Underscore, Grp(Seq(FormulaDsl.Id("w"), Sp, Colon, Sp,
+            Const("Fin"), Sp, FormulaDsl.Id("n"), Sp, To, Sp, Const("Fin"), Sp, FormulaDsl.Id("k"))), Sp,
+        Parenthesized(Seq(Const("largestBPWidth"), Sp,
+            Parenthesized(Seq(Const("List"), Dot, Const("ofFn"), Sp, FormulaDsl.Id("w"))), Sp, Colon, Sp, R())));
+    private static Formula CoefficientTerm() => Seq(
+        D(2), Sp, Cdot, Sp, FormulaDsl.Id("a"), Sp,
+        Parenthesized(Seq(FormulaDsl.Id("i"), Sp, Plus, Sp, D(1))), Sp, Slash, Sp,
+        new Formula.Power(Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, R())),
+            Seq(FormulaDsl.Id("i"), Sp, Plus, Sp, D(1))));
+    private static Formula CoefficientFunction() => Parenthesized(Seq(
+        Const("fun"), Sp, Parenthesized(Seq(FormulaDsl.Id("i"), Sp, Colon, Sp, N())), Sp, Mapsto, Sp, CoefficientTerm()));
+    private static Formula ClaimStatement() => Seq(
+        Const("claim"), Sp, Iff, Sp, Forall, Sp, Parenthesized(Seq(FormulaDsl.Id("k"), Sp, Colon, Sp, N())), Sp, Comma, Sp,
+        D(2), Sp, Leq, Sp, FormulaDsl.Id("k"), Sp, Rightarrow, Sp,
+        Exists, Sp, Parenthesized(Seq(FormulaDsl.Id("a"), Sp, Colon, Sp, N(), Sp, To, Sp, R())), Sp, Comma, Sp,
+        Parenthesized(Seq(Forall, Sp, FormulaDsl.Id("d"), Sp, Comma, Sp,
+            Const("Tendsto"), Sp, Parenthesized(Seq(Const("fun"), Sp,
+                Parenthesized(Seq(FormulaDsl.Id("N"), Sp, Colon, Sp, N())), Sp, Mapsto, Sp,
+                Parenthesized(Seq(Const("a274190"), Sp, FormulaDsl.Id("N"), Sp,
+                    Parenthesized(Seq(FormulaDsl.Id("N"), Sp, Minus, Sp, FormulaDsl.Id("d"))), Sp, Colon, Sp, R())))), Sp,
+            Const("atTop"), Sp, Parenthesized(Seq(Const("nhds"), Sp,
+                Parenthesized(Seq(FormulaDsl.Id("a"), Sp, FormulaDsl.Id("d"))))))), Sp, Land, Sp,
+        Const("Summable"), Sp, CoefficientFunction(), Sp, Land, Sp,
+        Const("Tendsto"), Sp, Parenthesized(Seq(Const("fun"), Sp, FormulaDsl.Id("n"), Sp, Mapsto, Sp,
+            Const("expectedWidth"), Sp, FormulaDsl.Id("k"), Sp, FormulaDsl.Id("n"))), Sp, Const("atTop"), Sp,
+        Parenthesized(Seq(Const("nhds"), Sp, Parenthesized(Seq(D(1), Sp, Plus, Sp,
+            Sum, Apos, Underscore, Grp(Seq(FormulaDsl.Id("i"), Sp, Colon, Sp, N())), Sp, CoefficientTerm())))));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Const(string name) => Seq(Operatorname, Grp(FormulaDsl.Id(name)));
     private static Formula N() => Seq(Mathbb, Grp(FormulaDsl.Id("N")));

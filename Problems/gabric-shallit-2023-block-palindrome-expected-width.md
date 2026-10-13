@@ -26,9 +26,9 @@ A274199 has offset zero. The paper's displayed coefficients $2,4,6,10,16,\ldots$
 | $w=w_m\cdots w_1w_0w_1\cdots w_m$, with nonempty outer blocks and possibly empty centre | `GreedyRenewal.IsBPFactorization` | `bs` lists the outer blocks from the centre outwards; the two flattenings have the source order. |
 | Width $2m$ or $2m+1$ according to the centre | `GreedyRenewal.bpWidth` | The empty word has width zero, extending the source without affecting a limit at infinity. |
 | Largest width over all valid factorizations | `GreedyRenewal.largestBPWidth` | The supremum is over valid widths; its boundedness is proved. |
-| $E_{n,k}=k^{-n}\sum_{i=1}^n i\,\mathrm{LBP}_k(n,i)$ | `LargestFactorizationExpectedWidth.expectedWidth` | The literal width-count expression is used. Its private `expectedWidth_uniform_average` consumer proves equality with the uniform function-space average. |
+| $E_{n,k}=k^{-n}\sum_{i=1}^n i\,\mathrm{LBP}_k(n,i)$ | `LargestFactorizationExpectedWidth.expectedWidth` | The definition is the uniform function-space average. The private `expectedWidth_weighted_count` identity gives the source's weighted width-count expression. |
 | A274199 is the limiting reverse row of A274190 | `CompositionInversion.a274190_stable` and `a274190_diagonal_limit` | For $N\geq2d$, the diagonal equals $g(2d,d)$. The triangle includes $g(n,0)=1$ and the recurrence for every positive column. |
-| Every integer $k\geq2$ and convergence to $1+2\sum_{i\geq1}\mathrm{A274199}(i)k^{-i}$ | `LargestFactorizationExpectedWidth.claim` and `result` | `claim` uses the stabilized coefficients literally. The private consumed `coefficient_limit_results` also proves diagonal convergence and summability. |
+| Every integer $k\geq2$ and convergence to $1+2\sum_{i\geq1}\mathrm{A274199}(i)k^{-i}$ | `LargestFactorizationExpectedWidth.claim` and `result` | `claim` states existence of every reverse-row limit, summability of the positively indexed series, and convergence of the uniform average to one plus that series. `result` applies `coefficient_limit_results` to all three clauses. |
 
 The auxiliary parameters in border and peeling statements range over arbitrary list alphabets. They strengthen the supporting statements and add no hypothesis to the settling result.
 

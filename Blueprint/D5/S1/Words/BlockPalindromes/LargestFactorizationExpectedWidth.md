@@ -102,7 +102,7 @@ The coefficient of degree m is the empty-centre probability at length 2m. Its co
 
 **Definition 1.9 (expectedWidth).**
 
-$$\forall (k : \mathbb{N}) , \forall (n : \mathbb{N}) , \operatorname{expectedWidth} k n = \frac{1}{(k : \mathbb{R})^{n}} \cdot \sum_{i \in \operatorname{Finset}.\operatorname{Icc} 1 n} (i : \mathbb{R}) \cdot (((\operatorname{DepthBudgetIidGreedyOptimality}.\operatorname{words} n : \operatorname{Finset} (\operatorname{List} (\operatorname{Fin} k))).\operatorname{filter} (\operatorname{fun} w \mapsto \operatorname{largestBPWidth} w = i)).\operatorname{card} : \mathbb{R})$$
+$$\forall (k : \mathbb{N}) , \forall (n : \mathbb{N}) , \operatorname{expectedWidth} k n = \frac{\sum_{w : \operatorname{Fin} n \to \operatorname{Fin} k} (\operatorname{largestBPWidth} (\operatorname{List}.\operatorname{ofFn} w) : \mathbb{R})}{(k : \mathbb{R})^{n}}$$
 
 *Formalization.* `D5/S1/Words/BlockPalindromes/LargestFactorizationExpectedWidth.expectedWidth` (`✓ std3`).
 
@@ -126,7 +126,7 @@ The width equals twice the number of peeled pairs plus the indicator of a nonemp
 
 **Definition 1.11 (claim).**
 
-$$\operatorname{claim} \iff \forall (k : \mathbb{N}) , 2 \leq k \Rightarrow \operatorname{Tendsto} (\operatorname{fun} (n : \mathbb{N}) \mapsto \operatorname{expectedWidth} k n) \operatorname{atTop} (\operatorname{nhds} (1 + \sum'_{i : \mathbb{N}} 2 \cdot (\operatorname{a274190} (2 \cdot (i + 1)) (i + 1) : \mathbb{R}) / (k : \mathbb{R}) ^{i + 1}))$$
+$$\operatorname{claim} \iff \forall (k : \mathbb{N}) , 2 \leq k \Rightarrow \exists (a : \mathbb{N} \to \mathbb{R}) , (\forall d , \operatorname{Tendsto} (\operatorname{fun} (N : \mathbb{N}) \mapsto (\operatorname{a274190} N (N - d) : \mathbb{R})) \operatorname{atTop} (\operatorname{nhds} (a d))) \land \operatorname{Summable} (\operatorname{fun} (i : \mathbb{N}) \mapsto 2 \cdot a (i + 1) / (k : \mathbb{R})^{i + 1}) \land \operatorname{Tendsto} (\operatorname{fun} n \mapsto \operatorname{expectedWidth} k n) \operatorname{atTop} (\operatorname{nhds} (1 + \sum'_{i : \mathbb{N}} 2 \cdot a (i + 1) / (k : \mathbb{R})^{i + 1}))$$
 
 *Formalization.* `D5/S1/Words/BlockPalindromes/LargestFactorizationExpectedWidth.claim` (`✓ std3`).
 
@@ -152,7 +152,7 @@ $$\operatorname{claim}$$
 
 *Commentary.*
 
-For every alphabet size k≥2, the expected largest width tends to the A274199 coefficient series. The proof uses the exact renewal recursion and does not use the source Lemma 3.
+For every alphabet size k≥2, every reverse-row coefficient converges, the positively indexed coefficient series is summable, and the expected largest width converges to one plus that series. The proof uses the exact renewal recursion and does not use the source Lemma 3.
 
 ## References
 
