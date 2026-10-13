@@ -30,10 +30,10 @@ internal sealed class QutritExtremeSixLevelsDocument : IScribeDocumentDefinition
     private static Formula States => Seq(OpenBrace,Id("rho"),Mid,Sp,And(Ps(Id("rho")),Eq(Tr(Id("rho")),Int(1)),Call("APPT",Id("rho"))),CloseBrace);
     private static Formula J => Prod(Fin(Int(3)),Fin(Int(3)));
     private static Formula M => Mat(J,C);
-    private static DocumentBlock Desc(string name,string title,Formula f,string prose,DescribeRole role=DescribeRole.Theorem,AssessedProvenance? p=null) => Describe.Lean(
+    private static DocumentBlock Desc(string name,string title,Formula f,string prose,DescribeRole role=DescribeRole.Theorem,AssessedProvenance? p=null,OpenProblemResolutionClaim? resolution=null) => Describe.Lean(
         DescribeId.Create(("wcs-QutritExtremeSixLevels-"+name.Replace(".","-").Replace("_","-")).ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QutritExtremeSixLevels."+name.Split('.')[name.Split('.').Length - 1]),H(title),StatementSource.FromAuthor(Disp(f)),
-        p ?? AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),role);
+        p ?? AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),role,resolution);
     private static AssessedProvenance Wcs => AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumBounds/wangchensong2026extremeappt"));
 
     private static Formula ClaimBody => And(All("rho",M,Imp(In(Id("rho"),Call("Set.extremePoints",R,Id("apStates"))),Le(Card(Call("spectrum",C,Id("rho"))),Int(6)))),Ex("rho",M,And(In(Id("rho"),Call("Set.extremePoints",R,Id("apStates"))),Eq(Card(Call("spectrum",C,Id("rho"))),Int(6)))));
@@ -44,5 +44,5 @@ internal sealed class QutritExtremeSixLevelsDocument : IScribeDocumentDefinition
         Desc("claim","The achievable upper bound",Eq(Id("claim"),Parenthesized(ClaimBody)),
             "Section VII, Conclusions, page 29: “Fourth, what is the achievable upper bound of distinct eigenvalues of extreme two-qutrit AP states?” The encoding uses Set.extremePoints over the real scalar field and the complex spectrum. Set.ncard counts distinct eigenvalues without multiplicity. The upper bound is six, and six is attained.",DescribeRole.Definition,Wcs),
         Desc("result","Six is the sharp bound",ClaimBody,
-            "Every extreme two-qutrit AP state has at most six distinct eigenvalues, and an extreme state with six distinct eigenvalues exists. A feasible two-sided perturbation excludes seven or more levels; the supporting functional proves attainment.",p:AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumBounds/wangchensong2026extremeappt"))))));
+            "Every extreme two-qutrit AP state has at most six distinct eigenvalues, and an extreme state with six distinct eigenvalues exists. A feasible two-sided perturbation excludes seven or more levels; the supporting functional proves attainment.",p:AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumBounds/wangchensong2026extremeappt")),resolution:new OpenProblemResolutionClaim(ProblemSlugRef.Create("wang-chen-song-2026-appt-extreme-six-levels"),ResolutionKind.Proved)))));
 }
