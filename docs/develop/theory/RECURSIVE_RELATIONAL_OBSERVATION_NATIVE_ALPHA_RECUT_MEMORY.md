@@ -3661,7 +3661,7 @@ working-space optimum or physical-time recovery follows.
 
 ## 追加锚（本行以下为增补区）
 
-## 15. Intersection heights, native reference codes and finite converse obstructions
+## 15. Intersection heights, native reference codes and uniform arbitrary-label converses
 
 **Assumption 15.1 (intersection order on the separated-age family).** Retain
 Assumption 14.1, the complete-row equivalence (NAR.14.3), the native conflict
@@ -3672,6 +3672,16 @@ has nonempty intersection. Equivalently, every $q$-tuple of menu members,
 with repetitions allowed, has nonempty intersection. Repetitions are part of
 the definition: they make the condition meaningful when the menu has fewer
 than $q$ members.
+
+The encoder uses the genuinely acquired initial row and exports the code
+before the future member $S$ and lag are chosen, then discards that row.
+The only later inputs are
+the code, the public controls and $S$, and the complete later row specified
+in Assumption 14.1. Its guards and hidden equality/disequality partition are
+included. All surviving source-bearing distinctions count toward the code;
+there is no additional Read, hidden-value, source or epoch oracle. Both lag
+conventions and the genuine same-source pure-$\rho$ histories of that
+assumption remain in force. A code's labels have no prescribed order.
 
 For $a,b\in A_H$, write $a\mathrel{\to_+}b$ when some $S\in\mathcal M$
 and some integer $d>0$ satisfy $b_i-a_i=d$ for every $i\in S$. Write
@@ -3730,14 +3740,16 @@ Let $R_<(a)$ and $R_+(a)$ be the maximum numbers of edges in paths ending at
 $a$. A path ending at the constant vector $C_t=(t,\ldots,t)$ has length at
 most $t$: its length is at most $H$ by the preceding paragraph, so the
 intersection of all its witnessing regions is nonempty and one common
-coordinate has increased once per edge. The chain
+coordinate has increased by at least one per edge. The chain
 $C_0\to_+C_1\to_+\cdots\to_+C_H$ shows that every value $0,\ldots,H$ is
-attained. Thus any proper code has at least $q$ values.
+attained by both ranks. Those constants are also pairwise adjacent: every
+pair has a nonzero constant displacement on any nonempty menu member.
+Thus any proper code has at least $q$ values.
 
-For a path of length $m$ ending at $a$, the last $j$ witnessing regions have
-a common coordinate increased at least $j$ times. This is exactly the suffix
-condition in (NAR.15.2), so every path gives an admissible sequence there.
-Conversely, suppose $S_1,\ldots,S_m$ satisfies that condition. Set
+For a path of length $m$ ending at $a$, every coordinate in the intersection
+of the last $j$ witnessing regions has increased at least $j$ times. This is
+exactly the suffix condition in (NAR.15.2), so every path gives an admissible
+sequence there. Conversely, suppose $S_1,\ldots,S_m$ satisfies that condition. Set
 $x^m=a$ and, for $k=m,\ldots,1$, define
 
 $$
@@ -3757,8 +3769,9 @@ bound on $a_i$. Thus every $x^k$ lies in $A_H$, and
 $x^{k-1}\to_+x^k$ with displacement $1$ on $S_k$. This proves
 $R_+(a)=E(a)=R_<(a)$.
 
-If $a\to_+b$, appending that edge to a longest path gives
-$E(a)<E(b)$, so $E$ is a proper code for the native conflict graph. The
+If $a\to_<b$, appending that edge to a longest path gives
+$E(a)<E(b)$. This holds in particular on every $\to_+$ edge, so $E$ is a
+proper code for the native conflict graph. The
 complete-row equality and the two legal lag choices in (NAR.14.3)--(NAR.14.5)
 are therefore separated by this code. Formula (NAR.14.6) supplies its input;
 the candidate test (NAR.15.3) is exactly the finite decoder already justified
@@ -3796,13 +3809,16 @@ $x^k_i=x^{k-1}_i+1$; otherwise it is reset to zero. No coordinate has a run
 of length $q$, because the padded $q$-fold intersection is empty, so every
 $x^k$ lies in $A_H$. Consequently
 $x^0\to_+x^1\to_+\cdots\to_+x^q$ is a $q$-edge walk. A strictly increasing
-map into $q$ ordered values cannot exist. Repeating the padded list
-periodically gives the same construction on a periodic state sequence and
-therefore a closed directed walk; extracting a simple cycle from that walk is
-legitimate, but no chromatic conclusion follows merely from its existence.
+map into $q$ ordered values cannot exist. Repeat the padded list periodically.
+Every coordinate is reset at least once per period. After the first period,
+its terminal consecutive-membership run therefore depends only on the
+periodic region list, so $x^{2q}=x^q$. All run lengths are at most $q-1$,
+and the next period gives a closed directed walk in $A_H$. Extracting a
+simple cycle is legitimate, but no chromatic conclusion follows merely
+from its existence.
 $\square$
 
-**Theorem 15.4 (missing-region replication reduces the arbitrary converse).**
+**Theorem 15.4 (missing-region replication preserves native conflicts).**
 For $t\ge2$, let $F_{H,t}$ have vertex set $\{0,\ldots,H\}^{t}$, with an
 edge between distinct $x,y$ when for some $j\in\{1,\ldots,t\}$ and some
 $d\ne0$,
@@ -3812,8 +3828,9 @@ x_h-y_h=d\qquad(h\ne j).
 \tag{NAR.15.6}
 $$
 
-If nonempty $S_1,\ldots,S_t\in\mathcal M$ have empty intersection, choose
-$g:I\to\{1,\ldots,t\}$ with $i\notin S_{g(i)}$ and put
+The difference at the exceptional coordinate $j$ is unrestricted; it may
+also equal $d$. If nonempty $S_1,\ldots,S_t\in\mathcal M$ have empty
+intersection, choose $g:I\to\{1,\ldots,t\}$ with $i\notin S_{g(i)}$ and put
 
 $$
 \phi(x)_i=x_{g(i)}.
@@ -3821,96 +3838,124 @@ $$
 $$
 
 Then every edge of $F_{H,t}$ maps to a native conflict edge. The map need not
-be injective, and the image need not be induced. In particular, for fixed
-$q\ge2$ and $H=q-1$,
+be injective, and its image need not be induced. In particular,
+$\chi(F_{H,t})\le N_H(\mathcal M)$.
+
+**Proof.** Empty intersection ensures a missing member for every $i$, so
+$g$ exists. If (NAR.15.6) is witnessed outside abstract coordinate $j$, then
+for every $i\in S_j$ one has $g(i)\ne j$, hence (NAR.15.7) has the same
+nonzero difference $d$ throughout $S_j$. Since $S_j$ is nonempty, at least
+one actual coordinate changes: no required edge collapses to a single
+vertex. Thus $\phi$ is a graph homomorphism. Pulling back any proper native
+code gives a proper code on $F_{H,t}$, proving the displayed inequality.
+
+The actual image sources are $X_{\phi(x)}$ from (NAR.14.1), with every
+original offset $iq$ retained and every age outside $I$ fixed at zero. In
+each image history the hidden slot exponents still lie in disjoint intervals
+$[iq+\ell,iq+H+\ell]$. All depth-$D$ slots are reached and the full hidden
+partition is discrete. For an image edge with difference $d$ on $S_j$, take
 
 $$
-\bigl[\,\forall\mathcal M\;\bigl(N_H(\mathcal M)=q\ \Longleftrightarrow\ \mathcal M\text{ is }q\text{-wise}\bigr)\,\bigr]
-\Longleftrightarrow
-\chi(F_{q-1,q})>q.
+\ell=\lambda_0+\max(0,-d),\qquad
+\ell'=\lambda_0+\max(0,d).
+$$
+
+These are unequal allowed lags and give
+$\phi(x)_i+\ell=\phi(y)_i+\ell'$ throughout $S_j$. By (NAR.14.3) the two
+complete later rows agree, including the literal exterior, labels, brackets,
+reached/absent guards and all within-row hidden equality and disequality.
+Each history continues its own fixed initial source under pure $\rho$;
+there is no splicing of histories. Taking $\lambda_0=1$ also supplies
+strictly positive witnesses for the nonnegative-lag convention. Initial
+acquisition and export remain those of (NAR.14.2), and (NAR.14.6) supplies
+every image age to the encoder. This is a whole-row lag obstruction under
+both conventions, with no new acquisition or source-reconstruction premise.
+$\square$
+
+**Theorem 15.5 (the uniform arbitrary-color clique-chain obstruction).**
+For every $q\ge2$ and $2\le t\le q$, the graph $F_{q-1,t}$ contains a
+$q+(q-1)(t-1)$-vertex subgraph that cannot be colored by $q$ arbitrary
+colors. Consequently $\chi(F_{q-1,t})\ge q+1$.
+
+**Proof.** Use the following one-spare-color invariant. Let $\mathcal C$ be
+any set of $q$ colors, and let $(p_u)_{0\le u\le q-2}$ and
+$(r_u)_{0\le u\le q-2}$ be two injective lists in $\mathcal C$. If
+$p_u\ne r_v$ whenever $u\ne v$, then the lists differ at at most one
+matching position. Indeed, the $p$-list omits exactly one color $z$. At a
+changed position $u$, the color $r_u$ differs from $p_u$ by the change and
+from every $p_v$ with $v\ne u$ by the cross-index constraints. Hence
+$r_u=z$. Two changed positions would repeat $z$ in the injective $r$-list.
+For $q=2$ the lists each have one position, so the conclusion also holds,
+even though the cross-index constraints are vacuous. This argument uses
+only equality and cardinality, without an order on $\mathcal C$.
+
+The certificate vertices are
+
+$$
+\begin{aligned}
+C_c&=(c,\ldots,c),&&0\le c\le q-1,\\
+V_{u,j}&=(\underbrace{u+1,\ldots,u+1}_{j},
+          \underbrace{u,\ldots,u}_{t-j}),
+ &&0\le u\le q-2,\quad1\le j\le t-1.
+\end{aligned}
 \tag{NAR.15.8}
 $$
 
-**Proof.** If (NAR.15.6) is witnessed outside abstract coordinate $j$, then
-for every $i\in S_j$ one has $g(i)\ne j$, hence (NAR.15.7) has the same
-nonzero difference on all of $S_j$. Since $S_j$ is nonempty, at least one
-coordinate changes, so an edge cannot collapse to a single vertex. This is a
-graph homomorphism, not an embedding. Composing a proper native code with
-$\phi$ gives a proper code on $F_{H,t}$.
+Every coordinate is in $\{0,\ldots,q-1\}$. The constants are distinct, and
+each nonconstant vertex determines its two values $u,u+1$ and its initial
+run length $j$. Thus the displayed count is exact. The subgraph uses the
+following edges, all witnessed directly by (NAR.15.6).
 
-The map changes only ages. In the native realization, retain every original
-offset $jb$, every age outside $I$ equal to zero, and the full literal row.
-The disjoint offset intervals and the hidden equality/disequality partition
-therefore remain those of (NAR.14.1)--(NAR.14.3). Each mapped edge has the
-actual unequal-lag witnesses (NAR.14.5), for either lag convention. No source
-reconstruction statement is being made.
-
-For (NAR.15.8), Theorem 15.2 proves the forward implication for all
-$q$-wise menus. If $\chi(F_{q-1,q})>q$, any menu failing the condition has a
-subfamily of at most $q$ empty-intersection regions; repeat regions to get
-exactly $q$ and apply the homomorphism above, so its native graph is not
-$q$-colorable. Conversely, take the $q$ co-singletons of a $q$-element
-index set. Its native graph is exactly $F_{q-1,q}$. The constant vectors form
-a $q$-clique, so a $q$-coloring would give $N_{q-1}=q$ for a non-$q$-wise
-menu. This proves the equivalence. $\square$
-
-**Theorem 15.5 (uniform fourfold and fivefold obstructions).** If
-$H\ge3$, an empty fourfold intersection in $\mathcal M$ forces
-$N_H(\mathcal M)>H+1$. If $H\ge4$, an empty fivefold intersection forces
-$N_H(\mathcal M)>H+1$.
-
-**Proof, four regions.** It suffices by Theorem 15.4 to rule out an
-$(H+1)$-coloring of $F_{H,4}$. Normalize the colors of the constant vectors
-$C_c$ to be $c$. A shadow with three coordinates equal to $c$ and the fourth
-equal to $c+1$ (when $c<H$), or equal to $c-1$ (when $c>0$), is adjacent to
-every $C_d$ with $d\ne c$ and is therefore forced to color $c$.
-
-Take $x=(1,1,2,2)$. For $c=0$ use $y^c=(0,0,0,1)$; for $c=2$ use
-$y^c=(2,2,2,3)$; for every other $c$ use
-$y^c=(c-1,c,c,c)$. The displayed vectors are valid when $H\ge3$. In the
-first two cases $x-y^c$ is constant and nonzero on coordinates
-$1,2,4$; in the last case it is constant and nonzero on coordinates
-$1,3,4$. Thus $x$ is adjacent to one forced shadow of every color, an
-impossibility.
-
-**Proof, five regions.** Again work in $F_{H,5}$ and normalize constant
-colors. A word with four entries $c$ and one entry $c+1$ is forced to color
-$c$ for $c<H$, and the analogous word with one entry $c-1$ is forced to
-color $c$ for $c>0$.
-
-A word with three entries $u$ and two entries $u+1$ is adjacent, for every
-$c\ne u$, to an upper shadow of color $c$ whose exceptional position is one
-of the two $u+1$ positions. Its possible colors are therefore contained in
-$\{u,H\}$. A word with three entries $u$ and two entries $u-1$ similarly
-has possible colors contained in $\{0,u\}$, by choosing a lower shadow whose
-exceptional position is one of the two $u-1$ positions. For $H\ge4$ consider
+The constants form $K_q$, since $C_c-C_{c'}$ has the same nonzero
+difference $c-c'$ everywhere when $c\ne c'$. For each fixed $j$, the column
+$\{V_{u,j}:0\le u\le q-2\}$ forms $K_{q-1}$, because
+$V_{u,j}-V_{v,j}$ is everywhere the nonzero difference $u-v$ when
+$u\ne v$. Between consecutive columns, for $u\ne v$,
 
 $$
-A=(0,0,0,1,1),\quad B=(2,1,1,2,2),\quad
-C=(2,2,2,3,3),\quad D=(H,H-1,H-1,H,H).
+(V_{u,j}-V_{v,j+1})_h=
+\begin{cases}
+u-v-1,&h=j+1,\\
+u-v,&h\ne j+1.
+\end{cases}
 \tag{NAR.15.9}
 $$
 
-Their possible-color sets are contained respectively in
-$\{0,H\}$, $\{0,2\}$, $\{2,H\}$ and $\{0,H\}$. The six ordered differences
-for $B-A,C-A,D-A,C-B,D-B,D-C$ are
+The common displacement $u-v$ is nonzero. Zero at the exceptional
+coordinate is permitted, so these are legal edges for every
+$1\le j\le t-2$. Finally, $V_{u,1}$ is adjacent to every $C_c$ with
+$c\ne u$: outside coordinate $1$ the difference is the nonzero $u-c$.
+Likewise $V_{u,t-1}$ is adjacent to every $C_c$ with $c\ne u+1$, using
+exceptional coordinate $t$ and nonzero displacement $u+1-c$. These are all
+the edge families needed; any additional edges of $F_{q-1,t}$ may remain.
+
+Suppose a proper coloring by at most $q$ colors exists. The constant clique
+uses all $q$ colors, so name the color of $C_c$ by $c$. This is a renaming
+of an arbitrary palette, without any inequality requirement on labels.
+The first-column endpoint edges force $V_{u,1}$ to have color $u$; the
+last-column endpoint edges force $V_{u,t-1}$ to have color $u+1$.
+Each column is an injective $(q-1)$-list of colors. Equation (NAR.15.9)
+imposes all unequal-index cross exclusions on successive lists. By the
+one-spare invariant at most one matching position can change across each
+transition. Every one of the $q-1$ positions must change between its first
+and last colors. Therefore, when $t\ge3$,
 
 $$
-(2,1,1,1,1),\ (2,2,2,2,2),\ (H,H-1,H-1,H-1,H-1),
-\ (0,1,1,1,1),\ (H-2,H-2,H-2,H-2,H-2),
-\ (H-2,H-3,H-3,H-3,H-3).
+q-1\le\sum_{j=1}^{t-2}
+ \#\{u:\operatorname{col}(V_{u,j})\ne
+              \operatorname{col}(V_{u,j+1})\}
+\le t-2\le q-2,
 \tag{NAR.15.10}
 $$
 
-Each has four equal nonzero coordinates, so (NAR.15.9) is a four-clique.
-It can use only the three colors $0,2,H$, a contradiction. The last vector
-in (NAR.15.10) explains the sharp stated boundary: at $H=3$ its four
-displayed differences include zero and the edge argument does not apply.
-The replication map and (NAR.14.5) transfer both obstructions to every
-native menu with the corresponding empty intersection. $\square$
+which is impossible. At $t=2$ the first and last columns coincide, and
+their two endpoint requirements already force the same vertex to have the
+distinct colors $u$ and $u+1$. In particular, $q=t=2$ gives the triangle
+$00,11,10$. No transition is needed in this boundary case. This proves the
+obstruction for every stated parameter. $\square$
 
-**Corollary 15.6 (the exact low-alphabet range).** For $q=2,3,4,5$ and
-$H=q-1$,
+**Corollary 15.6 (the universal minimum-alphabet classification).** For
+all $H\ge1$, with $q=H+1$,
 
 $$
 N_H(\mathcal M)=q
@@ -3919,17 +3964,38 @@ N_H(\mathcal M)=q
 \tag{NAR.15.11}
 $$
 
-**Proof.** Sufficiency is Theorem 15.2. If a twofold intersection is empty,
-the disjoint-block clique from Theorem 14.5 has $q^2>q$ vertices. An empty
-triple intersection gives the $H+2=q+1$ clique of Theorem 14.6 whenever it
-can occur in this range. Empty fourfold and fivefold intersections are ruled
-out at the required parameters by Theorem 15.5. Every failed $q$-wise
-condition contains one of these cases, after repetition if necessary.
-$\square$
+If the intersection condition fails, $N_H(\mathcal M)\ge q+1$. This
+necessity quantifies all retained encoders, without requiring their labels
+to increase along either oriented relation of Assumption 15.1.
 
-**Theorem 15.7 (all $k$-subsets and the effective threshold).** Let
-$I$ have $r$ positions and let $\mathcal M_{r,k}$ consist of every
-$k$-subset of $I$. For every $q\ge2$,
+**Proof.** For every nonempty menu the constant age vectors
+$C_0,\ldots,C_H$ form a native $q$-clique: each pair has a nonzero constant
+displacement on any selected nonempty region. Thus $N_H(\mathcal M)\ge q$.
+Under $q$-wise intersection Theorem 15.2 supplies exactly $q$ labels, with
+its acquired-row factor and effective decoder.
+
+If the condition fails, take $t\le q$ members with empty intersection.
+Nonemptiness of every member ensures $t\ge2$. Theorem 15.4 maps
+$F_{q-1,t}$ into the actual native conflict graph without collapsing any
+edge, and Theorem 15.5 forbids a $q$-coloring of its certificate. Any
+sufficient retained code must separate all those image edges by Reuse 14.2.
+Composing it with the replication map would otherwise color the
+certificate with $q$ colors. The unequal legal lags and equal complete
+later rows in Theorem 15.4 are exactly the native witnesses for this
+contradiction. Conversely, the proper rank code is acquired before the
+future choice and decodes with no extra input by (NAR.15.3). Both arguments
+apply to both lag conventions.
+
+Theorem 15.3 remains the separate ordered-code characterization; its cycle
+alone is not the arbitrary-color proof. The bound $q+1$ here does not
+replace a stronger bound for a particular menu. In particular, disjoint
+regions still force $q^2$ labels by Theorem 14.5, and the binary price can
+never be three by Theorem 14.3. The exact binary half-boundary and stronger
+binary diameter bounds in section 13 retain their stated force. $\square$
+
+**Theorem 15.7 (all $k$-subsets and the exact minimum-alphabet threshold).**
+Let $I$ have $r\ge1$ positions, let $1\le k\le r$, and let
+$\mathcal M_{r,k}$ consist of every $k$-subset of $I$. For every $q\ge2$,
 
 $$
 \mathcal M_{r,k}\text{ is }q\text{-wise}
@@ -3938,19 +4004,29 @@ q(r-k)<r.
 \tag{NAR.15.12}
 $$
 
-Hence (NAR.15.1) gives a $q$-label native reference whenever
-$q(r-k)<r$; for $q=2,3,4,5$ this threshold is also necessary by
-(NAR.15.11). For $q\ge6$ no arbitrary-code necessity is asserted.
+Consequently, for $H\ge1$ and $q=H+1$, $N_H(r,k)=q$ exactly when this
+strict inequality holds; otherwise $N_H(r,k)\ge q+1$. For $H=0$, the
+single age profile has $N_0(\mathcal M)=1$ for every nonempty menu in
+Assumption 14.1, independently of this threshold.
 
 **Proof.** The intersection of $q$ members is empty exactly when their
 complements, each of size $r-k$, cover $I$. If $q(r-k)<r$, their total
-capacity cannot cover all $r$ positions. If $q(r-k)\ge r$ and $r-k>0$,
-assign the positions among $q$ blocks of capacity $r-k$ and fill each block
-to that size; the complements of those blocks are $q$ members with empty
-intersection. The case $k=r$ is the already covered full-intersection case.
-$\square$
+capacity cannot cover all $r$ positions, and the same is true for fewer
+members. If $q(r-k)\ge r$ and $r-k>0$, distribute the positions among
+$q$ blocks of size at most $r-k$, then extend each block to size $r-k$
+within $I$. These extended blocks cover $I$. Their complements are menu
+members with empty intersection; repetitions can be removed, leaving at
+most $q$ members. When $k=r$, the complements are empty and the strict
+inequality holds. Formula (NAR.15.11) now supplies the native equivalence
+for every $q\ge2$.
 
-For $H=2$, $r=4$ and $k=3$, the direct encoder supplied by (NAR.15.2) is
+At $H=0$ there is just $a=0$. Every nonempty selected region displays
+normalized values $z_i=\ell$, so a single retained value and any public
+$i\in S$ recover the lag under either convention. This is also the
+zero-age case of Theorem 14.5. $\square$
+
+**Proposition 15.8 (a direct ternary rank and median collisions).** For
+$H=2$, $r=4$ and $k=3$, the direct encoder supplied by (NAR.15.2) is
 
 $$
 E(a)=
@@ -3962,25 +4038,103 @@ E(a)=
 \tag{NAR.15.13}
 $$
 
-The first branch must be tested first. Rank at least one means that some
-three-subset is entirely positive, hence at most one zero; rank at least two
-means that two such three-subsets have an intersection of two positions both
-at least two, hence at least two entries equal to two. This proves
-(NAR.15.13), and Theorem 15.2 supplies its native decoder.
+Neither the lower nor the upper median is a sufficient retained code for
+this native menu, although (NAR.15.13) is a sufficient three-label code.
+
+**Proof.** The first branch must be tested first. Rank at least one means that some
+three-subset is entirely positive, equivalently at most one zero. Rank at
+least two further requires the two witnessing three-subsets to intersect
+only at positions of age two; their intersection has at least two positions.
+Conversely, if at most one age is zero and at least two ages are two, choose
+a positive three-subset containing two such positions and a second
+three-subset whose intersection with it is exactly those two. These are the
+two suffix conditions in (NAR.15.2). This proves (NAR.15.13), and Theorem
+15.2 supplies its native decoder.
 
 The lower median does not supply this code: $a=(1,0,1,1)$ and
 $b=(0,1,2,2)$ both have lower median $1$, whereas (NAR.15.13) gives $1$ and
 $2$. The upper median also fails: $a=(1,0,0,1)$ and
 $b=(0,1,1,2)$ both have upper median $1$, whereas their codes are $0$ and
-$1$. In both examples $b-a=(-1,1,1,1)$ on the selected triple
-$S=\{1,2,3\}$. With original offsets $0,3,6,9$, the two actual histories at
+$1$. In both examples $b-a=(-1,1,1,1)$, so the displacement is $1$ throughout
+the selected triple $S=\{1,2,3\}$. With original offsets $0,3,6,9$, the two
+actual histories at
 lags $2$ and $1$ have equal normalized selected values and therefore equal
 complete later rows by (NAR.14.3), including their hidden partition. These
 are native collisions, not merely equal summaries of four numbers. The
 failure is a failure of the median rules, while the three-label encoder
-remains valid.
+remains valid. $\square$
 
-**Mathematical citation 15.8 (correspondence and boundaries).** The native
+**Proposition 15.9 (a six-region, thirty-one-source native consumer).**
+At $D=3$ write $W_3=\{w_0,\ldots,w_7\}$ in the original lexicographic
+order $LLL,LLR,LRL,LRR,RLL,RLR,RRL,RRR$. Take
+$P=\{w_6,w_7\}$, $I=\{0,\ldots,5\}$, $H=5$ and $q=6$. The actual
+source family is
+
+$$
+X_a=\mathcal B_3[T_{a_0},T_{6+a_1},T_{12+a_2},T_{18+a_3},
+                 T_{24+a_4},T_{30+a_5},T_{36},T_{42}],
+\qquad a\in\{0,\ldots,5\}^{6}.
+\tag{NAR.15.14}
+$$
+
+Let $\mathcal M=\{S_h:0\le h\le5\}$, where $S_h=I\setminus\{h\}$,
+so $Q_{S_h}=\{w_h,w_6,w_7\}$. The $q=t=6$ certificate of (NAR.15.8)
+gives $31$ distinct actual sources and $195$ distinct named native conflict
+edges. Under either lag convention,
+
+$$
+7\le N_5(6,5)\le36.
+\tag{NAR.15.15}
+$$
+
+No exact alphabet size beyond these bounds is asserted.
+
+**Proof.** The six co-singletons are $5$-wise intersecting, since any at
+most five exclude at most five positions, but their sixfold intersection
+is empty. Index abstract coordinates by $1,\ldots,6$ and let abstract
+region $i+1$ denote $S_i$. The only member missing original position $i$
+is $S_i$, so the replication choice is $g(i)=i+1$ and
+$\phi(x)_i=x_{i+1}$. This identifies the six abstract ages with the six
+original exposed ages. The $6+5\cdot5=31$ distinct profiles in (NAR.15.8) therefore
+give $31$ distinct sources in (NAR.15.14), with the two other ages fixed at
+zero and the original offsets $0,6,12,18,24,30,36,42$ unchanged.
+
+The named edges consist of $\binom62=15$ constant-clique edges,
+$5\binom52=50$ within-column edges, $4\cdot5\cdot4=80$
+unequal-index edges between consecutive columns, and $2\cdot5\cdot5=50$
+endpoint-to-constant edges. These four families are disjoint: they join,
+respectively, two constants, two vertices in one column, two vertices in
+successive columns, or a constant and a vertex in one of the two distinct
+endpoint columns. Thus their total is $195$. The identities in Theorem
+15.5 supply a nonzero displacement on the co-singleton outside the
+exceptional coordinate for each edge.
+
+Every depth-three slot is reached in each history. At every lag the eight
+exponent intervals of length at most five are disjoint. Therefore all three
+hidden values at $Q_{S_h}$ are pairwise unequal, and the complete hidden
+partition is discrete, including the two fixed original slots. Applying
+Theorem 15.4's lags gives equal complete later rows on each named edge;
+with $\lambda_0=1$ those witnesses have $1\le\ell,\ell'\le6$ and work
+under either lag convention. Initial acquisition displays the six variable
+subtrees and computes their ages by (NAR.14.6). Theorem 15.5 rules out
+six retained labels for this genuine future-menu task, proving the lower
+bound.
+
+For the upper bound retain the acquired ages at two distinct public
+exposed positions, for example $(a_0,a_1)$. Every five-position region
+contains at least one of them; use its later normalized value minus its
+retained age. All $6^2=36$ tuples occur, so this is a proper $36$-label
+encoder, also the transversal bound of Theorem 14.5. Its export precedes
+the future region choice. Thus (NAR.15.15) follows.
+
+The fixed-width representation price satisfies only
+$3\le\lceil\log_2N_5(6,5)\rceil\le6$. Increasing the forced alphabet
+from six to at least seven does not force a fourth bit, since both six and
+seven labels fit in three bits. Label and fixed-width bit counts exclude
+acquisition, source storage, decoder controls, parsing, arithmetic width,
+workspace, transmission and physical time. $\square$
+
+**Mathematical citation 15.10 (correspondence and boundaries).** The native
 clock, literal-row and full hidden-partition suppliers are
 right_clock_iterate in
 [DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean),
@@ -3998,24 +4152,51 @@ zero-error coding correspondence; their stochastic, asymptotic or unrestricted
 side-information hypotheses are not imported.
 
 The longest-path coloring mechanism is the classical direction of Roy,
-*Nombre chromatique et plus longs chemins d'un graphe* (1967), with the
+[*Nombre chromatique et plus longs chemins d'un graphe* (1967),
+Theorems 1--2](https://www.numdam.org/item/M2AN_1967__1_5_129_0.pdf), with the
 finite directed formulation also recorded by Fujita--Kitaev--Sato--Tong,
 arXiv:2102.08432, Theorems 3--4. The use here is the explicit native rank
 (NAR.15.2), not a claim that one directed cycle lower-bounds an arbitrary
 chromatic number. Freixas--Kurz, arXiv:1711.06611, supplies the Nakamura
 empty-intersection parameter analogy for simple games; it does not identify
-the native age alphabet with their alternatives. Mycielski, *Sur le coloriage
-des graphs* (1955), is a structural reference for shadow forcing; the
-fourfold and fivefold contradictions above are given edge by edge and do not
-invoke a Mycielski theorem.
+the native age alphabet with their alternatives.
 
-These are finite separated-age, complete-record, unknown-lag statements.
-They do not assert a physical memory or time optimum, source reconstruction,
-all-source coverage, acquisition legality, or worldwide novelty, and they
-contain no Lean or kernel-verification claim. The residual arbitrary-code
-obligation for $q\ge6$ is exactly the graph question in (NAR.15.8): determine
-whether $F_{q-1,q}$ is not $q$-colorable, or find a countercoloring. Its
-resolution is not a precondition for the established intersection encoder,
-ordered converse, replication map, low-alphabet range, or all-$k$ threshold.
+For the clique-chain correspondence use Briceño--Bulatov--Dalmau--Larose,
+[*Dismantlability, connectedness, and mixing in relational structures*,
+arXiv:1901.04398v3, §2.4 and Lemma 2.9](https://arxiv.org/html/1901.04398v3).
+Their reflexive recoloring graph $C(G,K)$ joins two homomorphisms differing
+at at most one source vertex. Their link graph $L(G,K)$ instead imposes
+all mixed-tuple constraints, and Lemma 2.9 identifies homomorphisms from a
+link product $\mathbb L_\ell\times G$ with length-$\ell$ walks in $L(G,K)$.
+For $t\ge3$ set $G=K_{q-1}$, $K=K_q$, $\ell=t-2$, and map source vertex
+$u$ at link position $j-1$ to the color of $V_{u,j}$. Within-column
+injectivity is exactly the homomorphism condition into loopless $K_q$;
+the mixed constraints are exactly the unequal-index exclusions in
+(NAR.15.9). The one-spare invariant in Theorem 15.5 proves directly, for
+these particular complete graphs, that each such link step changes at most
+one position. The two forced endpoint maps differ at every one of the
+$q-1$ positions, so no walk of the stated length exists. At $t=2$ the
+endpoint contradiction is separate; no length-zero version of the cited
+lemma is assumed. No mixing, dismantlability, connectivity or general
+recoloring-diameter theorem is used.
+
+The native minimum-alphabet classification, direct rank formula,
+missing-region transfer and six-region consumer are repo-derived ordinary
+deductions from the stated suppliers and explicit proofs. The literature
+above supplies the coding, rank and link/recoloring correspondences as
+intermediate methods, not an asserted published native memory theorem.
+There is no worldwide novelty or Lean/kernel-verification claim.
+
+These statements concern the entire stated finite independent-age family,
+the public finite nonempty future menu, a code exported before its member
+and the lag are chosen, and exactly one complete later row. They recover
+lag without asserting source reconstruction, all-source coverage, acquisition
+legality, a physical memory or time optimum, or an acquisition/authentication
+optimum. Rank paths compare alternative profiles and are not actual
+$\rho$ histories. The minimal-$q$ regime is classified for every $q$.
+The classification does not determine the price for a general menu above
+$q$; in particular, the exact value of $N_5(6,5)$ within (NAR.15.15)
+remains undetermined. The exact prices and sharper bounds of sections 13
+and 14 retain their stated scope.
 
 ## 追加锚（本行以下为增补区）
