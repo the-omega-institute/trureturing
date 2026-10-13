@@ -1,42 +1,33 @@
-/- GID: D5/S3/Quantum/Foundation/TwoRoundSpectralEvents
+/- GID: D5/S3/Quantum/Foundation/TwoRoundRankOneReductionSpectral
    generality: G
-   mirror-B: D5/B/S3/Quantum/Foundation/TwoRoundSpectralEvents
+   mirror-B: D5/B/S3/Quantum/Foundation/TwoRoundRankOneReductionSpectral
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Singular normalization and attained full spectral quantum events. -/
+   digest: Singular event interval machinery and consumed rank-one spectral mass.
+-/
 
-import D5.S3.Quantum.Foundation.TwoRoundPhaseAverage
+import D5.S3.Quantum.Foundation.TwoRoundRankOneReductionPhase
 import Mathlib.Analysis.Matrix.Order
-
 noncomputable section
-
 open Matrix Unitary
 open scoped BigOperators ComplexOrder MatrixOrder
-
 namespace D5.S3.Quantum.Foundation.TwoRoundSpectralEvents
-
+open D5.S3.Quantum.Foundation.TwoRoundPhaseAverage
 variable {n : Type*} [Fintype n] [DecidableEq n]
-
-/-- A complete event interval, including singular normalization operators. -/
 def EventInterval (M E : Matrix n n ℂ) : Prop :=
   E.PosSemidef ∧ (M - E).PosSemidef
-
-/-- The positive square root expressed in the normalization's spectral basis. -/
 private def spectralRoot {M : Matrix n n ℂ} (hM : M.PosSemidef) : Matrix n n ℂ :=
   hM.isHermitian.cfc Real.sqrt
-
 private theorem conjugate_pos (U : Matrix.unitaryGroup n ℂ)
     {E : Matrix n n ℂ} (hE : E.PosSemidef) :
     (conjStarAlgAut ℂ _ U E).PosSemidef := by
   rw [conjStarAlgAut_apply]
   exact hE.mul_mul_conjTranspose_same _
-
 omit [Fintype n] in
 private theorem diagonal_real_star (d : n → ℝ) :
     (diagonal (fun i => (d i : ℂ)))ᴴ = diagonal (fun i => (d i : ℂ)) := by
   simp [diagonal_conjTranspose]
-
 private theorem spectralRoot_sq {M : Matrix n n ℂ} (hM : M.PosSemidef) :
     spectralRoot hM * spectralRoot hM = M := by
   unfold spectralRoot Matrix.IsHermitian.cfc
@@ -47,7 +38,6 @@ private theorem spectralRoot_sq {M : Matrix n n ℂ} (hM : M.PosSemidef) :
   change (Real.sqrt (hM.isHermitian.eigenvalues i) : ℂ) *
     (Real.sqrt (hM.isHermitian.eigenvalues i) : ℂ) = (hM.isHermitian.eigenvalues i : ℂ)
   rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hM.eigenvalues_nonneg i)]
-
 private theorem spectralRoot_hermitian {M : Matrix n n ℂ} (hM : M.PosSemidef) :
     (spectralRoot hM).IsHermitian := by
   unfold spectralRoot Matrix.IsHermitian.cfc
@@ -56,7 +46,6 @@ private theorem spectralRoot_hermitian {M : Matrix n n ℂ} (hM : M.PosSemidef) 
     (isHermitian_diagonal_iff.mpr (fun i => by
       change IsSelfAdjoint (Real.sqrt (hM.isHermitian.eigenvalues i) : ℂ)
       simp [IsSelfAdjoint]))
-
 private theorem spectralRoot_eq_sqrt {M : Matrix n n ℂ} (hM : M.PosSemidef) :
     spectralRoot hM = CFC.sqrt M := by
   have hpos : (spectralRoot hM).PosSemidef := by
@@ -68,7 +57,6 @@ private theorem spectralRoot_eq_sqrt {M : Matrix n n ℂ} (hM : M.PosSemidef) :
     change (0 : ℂ) ≤ (Real.sqrt (hM.isHermitian.eigenvalues i) : ℂ)
     exact_mod_cast Real.sqrt_nonneg (hM.isHermitian.eigenvalues i)
   exact (CFC.sqrt_unique (spectralRoot_sq hM) hpos.nonneg).symm
-
 omit [Fintype n] [DecidableEq n] in
 private theorem zero_diag_column [Finite n] {E : Matrix n n ℂ} (hE : E.PosSemidef)
     {i : n} (hi : E i i = 0) (j : n) : E j i = 0 := by
@@ -78,7 +66,6 @@ private theorem zero_diag_column [Finite n] {E : Matrix n n ℂ} (hE : E.PosSemi
     simpa using hi
   have hz := (hE.dotProduct_mulVec_zero_iff _).mp hq
   simpa using congrFun hz j
-
 private theorem diagonal_interval_factorization (d : n → ℝ) (hd : ∀ i, 0 ≤ d i)
     {E : Matrix n n ℂ} (hE : EventInterval (diagonal (fun i => (d i : ℂ))) E) :
     ∃ F : Matrix n n ℂ, EventInterval 1 F ∧
@@ -147,8 +134,6 @@ private theorem diagonal_interval_factorization (d : n → ℝ) (hd : ∀ i, 0 �
     have hcj : (s j : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hsj
     simp only [r, Complex.ofReal_inv]
     field_simp
-
-/-- Every event under a possibly singular normalization is a congruence of a full effect. -/
 theorem singular_interval_factorization {M E : Matrix n n ℂ} (hM : M.PosSemidef) :
     EventInterval M E ↔ ∃ F : Matrix n n ℂ,
       EventInterval 1 F ∧ E = CFC.sqrt M * F * CFC.sqrt M := by
@@ -182,19 +167,12 @@ theorem singular_interval_factorization {M E : Matrix n n ℂ} (hM : M.PosSemide
     · have := hF.2.conjTranspose_mul_mul_same (spectralRoot hM)
       simpa only [hH, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one,
         spectralRoot_sq] using this
-
-
-/-- Real trace pairing of arbitrary finite complex matrices. -/
 def eventResponse (X E : Matrix n n ℂ) : ℝ := (trace (X * E)).re
-
-/-- The sum of all positive eigenvalues, retaining multiplicity. -/
 def positiveSpectralMass {X : Matrix n n ℂ} (hX : X.IsHermitian) : ℝ :=
   ∑ i, max (hX.eigenvalues i) 0
-
 private theorem trace_conjugate (U : Matrix.unitaryGroup n ℂ) (A : Matrix n n ℂ) :
     trace (conjStarAlgAut ℂ _ U A) = trace A := by
   rw [conjStarAlgAut_apply, trace_mul_cycle, coe_star_mul_self, Matrix.one_mul]
-
 private theorem trace_spectral_pair {X : Matrix n n ℂ} (hX : X.IsHermitian)
     (F : Matrix n n ℂ) :
     eventResponse X F = ∑ i, hX.eigenvalues i *
@@ -206,13 +184,11 @@ private theorem trace_spectral_pair {X : Matrix n n ℂ} (hX : X.IsHermitian)
   unfold eventResponse
   rw [hpair, trace_conjugate]
   simp [Matrix.trace, Matrix.diagonal_mul, Complex.mul_re, a]
-
 private theorem conjugate_interval (U : Matrix.unitaryGroup n ℂ)
     {F : Matrix n n ℂ} (hF : EventInterval 1 F) :
     EventInterval 1 (conjStarAlgAut ℂ _ U F) := by
   refine ⟨conjugate_pos U hF.1, ?_⟩
   simpa only [map_sub, map_one] using conjugate_pos U hF.2
-
 omit [Fintype n] in
 private theorem effect_diagonal_bounds {F : Matrix n n ℂ} (hF : EventInterval 1 F)
     (i : n) : 0 ≤ (F i i).re ∧ (F i i).re ≤ 1 := by
@@ -222,7 +198,6 @@ private theorem effect_diagonal_bounds {F : Matrix n n ℂ} (hF : EventInterval 
   · exact (RCLike.nonneg_iff.mp h₁).1
   · have := (RCLike.nonneg_iff.mp h₂).1
     simpa using this
-
 private theorem effect_positive_spectral_max {X : Matrix n n ℂ} (hX : X.IsHermitian) :
     ∃ P : Matrix n n ℂ, EventInterval 1 P ∧
       eventResponse X P = positiveSpectralMass hX ∧
@@ -265,19 +240,13 @@ private theorem effect_positive_spectral_max {X : Matrix n n ℂ} (hX : X.IsHerm
       simpa only [mul_one] using mul_le_mul_of_nonneg_left hb.2 hi
     · rw [max_eq_right (le_of_not_ge hi)]
       exact mul_nonpos_of_nonpos_of_nonneg (le_of_not_ge hi) hb.1
-
-/-- The weighted Hermitian operator for a full event interval. -/
 def weightedOperator (M X : Matrix n n ℂ) : Matrix n n ℂ :=
   (CFC.sqrt M)ᴴ * X * CFC.sqrt M
-
 private theorem weighted_hermitian (M : Matrix n n ℂ) {X : Matrix n n ℂ}
     (hX : X.IsHermitian) : (weightedOperator M X).IsHermitian :=
   isHermitian_conjTranspose_mul_mul _ hX
-
-/-- The full weighted positive spectrum, with no rank or support restriction. -/
 def weightedPositiveMass (M : Matrix n n ℂ) {X : Matrix n n ℂ} (hX : X.IsHermitian) : ℝ :=
   positiveSpectralMass (weighted_hermitian M hX)
-
 private theorem response_congruence (M X F : Matrix n n ℂ) :
     eventResponse X (CFC.sqrt M * F * CFC.sqrt M) =
       eventResponse (weightedOperator M X) F := by
@@ -291,7 +260,6 @@ private theorem response_congruence (M X F : Matrix n n ℂ) :
         trace ((X * CFC.sqrt M * F) * CFC.sqrt M) := by simp only [Matrix.mul_assoc]
     _ = trace (CFC.sqrt M * (X * CFC.sqrt M * F)) := trace_mul_comm _ _
     _ = trace (CFC.sqrt M * X * CFC.sqrt M * F) := by simp only [Matrix.mul_assoc]
-
 private theorem interval_positive_spectral_max {M X : Matrix n n ℂ}
     (hM : M.PosSemidef) (hX : X.IsHermitian) :
     ∃ E : Matrix n n ℂ, EventInterval M E ∧
@@ -305,9 +273,6 @@ private theorem interval_positive_spectral_max {M X : Matrix n n ℂ}
     obtain ⟨Q, hQ, rfl⟩ := (singular_interval_factorization hM).mp hF
     rw [response_congruence]
     exact hb Q hQ
-
-/-- Both directions and the absolute event error are attained in the complete singular interval.
-The backward branch retains the full normalization trace. -/
 theorem attained_two_direction_spectral_events {M X : Matrix n n ℂ}
     (hM : M.PosSemidef) (hX : X.IsHermitian) :
     ∃ Ep En : Matrix n n ℂ,
@@ -353,66 +318,49 @@ theorem attained_two_direction_spectral_events {M X : Matrix n n ℂ}
       have h₀ : 0 ≤ max (-eventResponse X M) 0 := le_max_right _ _
       have h₁ : -eventResponse X M ≤ max (-eventResponse X M) 0 := le_max_left _ _
       constructor <;> linarith
-
-
 open D5.S3.Quantum.Foundation.TwoRoundPhaseAverage
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open scoped Kronecker
-
-/-- Diagonal full-tester normalization in the original port order. -/
 def testerWeight (q t : ℝ) (ab : AB) : ℝ :=
   if ab.1 = 0 then if ab.2 = 0 then q else 1 - t
   else if ab.2 = 0 then 1 - q else t
-
 def diagonalTester (q t : ℝ) : Matrix AB AB ℂ :=
   diagonal (fun ab => (testerWeight q t ab : ℂ))
-
 def testerNormalization (q t : ℝ) : Matrix Wire Wire ℂ :=
   diagonalTester q t ⊗ₖ (1 : Matrix (Fin 3) (Fin 3) ℂ)
-
-/-- The normalization restricted to the three candidate addresses. -/
 def compressedNormalization (q t : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
   diagonal (fun k => if k = 0 then (q : ℂ) else if k = 1 then (1 - q : ℝ) else t)
-
 def compressedDifference (eps : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ) :
     Matrix (Fin 3) (Fin 3) ℂ :=
   (candidate eps).submatrix mainAddress mainAddress - P
-
 private theorem compressed_difference_hermitian (eps : ℝ)
     {P : Matrix (Fin 3) (Fin 3) ℂ} (hP : P.PosSemidef) :
     (compressedDifference eps P).IsHermitian :=
   ((posSemidef_vecMulVec_self_star (candidateVector eps)).isHermitian.submatrix mainAddress).sub
     hP.isHermitian
-
-/-- The complete positive spectral objective of the compressed block. -/
 def compressedPositiveMass (eps q t : ℝ) {P : Matrix (Fin 3) (Fin 3) ℂ}
     (hP : P.PosSemidef) : ℝ :=
   weightedPositiveMass (compressedNormalization q t) (compressed_difference_hermitian eps hP)
-
 private theorem mainAddress_of_support {i : Wire} (hi : MainSupport i) :
     mainAddress i.2 = i := by
   rcases hi with rfl | rfl | rfl <;> decide
-
 private theorem blockEmbedding_gram : blockEmbeddingᴴ * blockEmbedding = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.mul_apply, blockEmbedding, Matrix.conjTranspose_apply, MainSupport,
       Fintype.sum_prod_type, Fin.sum_univ_three]
-
 private theorem block_compression (E : Matrix Wire Wire ℂ) :
     blockEmbeddingᴴ * E * blockEmbedding = E.submatrix mainAddress mainAddress := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.mul_apply, blockEmbedding, Matrix.conjTranspose_apply, MainSupport,
       mainAddress, Fintype.sum_prod_type, Fin.sum_univ_three]
-
 private theorem compress_embed (F : Matrix (Fin 3) (Fin 3) ℂ) :
     blockEmbeddingᴴ * embedBlock F * blockEmbedding = F := by
   calc
     _ = (blockEmbeddingᴴ * blockEmbedding) * F * (blockEmbeddingᴴ * blockEmbedding) := by
       simp only [embedBlock, Matrix.mul_assoc]
     _ = F := by rw [blockEmbedding_gram, Matrix.one_mul, Matrix.mul_one]
-
 private theorem candidate_embed (eps : ℝ) :
     candidate eps = embedBlock ((candidate eps).submatrix mainAddress mainAddress) := by
   classical
@@ -429,42 +377,35 @@ private theorem candidate_embed (eps : ℝ) :
         mainAddress_of_support hi, mainAddress_of_support hj]
     · simp [hi, hj, candidate, Matrix.vecMulVec_apply, hz j hj, Pi.star_apply]
   · simp [hi, candidate, Matrix.vecMulVec_apply, hz i hi, Pi.star_apply]
-
 private theorem testerWeight_nonneg (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
     (ht : 0 ≤ t) (ht1 : t ≤ 1) (ab : AB) : 0 ≤ testerWeight q t ab := by
   unfold testerWeight
   split_ifs <;> linarith
-
 private theorem diagonalTester_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
     (ht : 0 ≤ t) (ht1 : t ≤ 1) : (diagonalTester q t).PosSemidef := by
   apply PosSemidef.diagonal
   intro ab
   change (0 : ℂ) ≤ (testerWeight q t ab : ℂ)
   exact_mod_cast testerWeight_nonneg q t hq hq1 ht ht1 ab
-
 private theorem diagonalTester_normalized (q t : ℝ) :
     partialTraceLeft (diagonalTester q t) = (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [partialTraceLeft, diagonalTester, testerWeight, diagonal, Fin.sum_univ_two]
-
 private theorem testerNormalization_diagonal (q t : ℝ) :
     testerNormalization q t = diagonal (fun i => (testerWeight q t i.1 : ℂ)) := by
   unfold testerNormalization diagonalTester
   rw [← diagonal_one, diagonal_kronecker_diagonal]
   simp only [mul_one]
-
 private theorem testerNormalization_compression (q t : ℝ) :
     blockEmbeddingᴴ * testerNormalization q t * blockEmbedding = compressedNormalization q t := by
   rw [block_compression, testerNormalization_diagonal]
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.submatrix_apply, mainAddress, testerWeight, compressedNormalization, diagonal]
-
 private def outsideDiagonal (w : Wire → ℂ) : Matrix Wire Wire ℂ := by
   classical
   exact diagonal (fun i => if MainSupport i then 0 else w i)
-
 private theorem diagonal_embedding_split (w : Wire → ℂ) :
     diagonal w = embedBlock (diagonal (fun k => w (mainAddress k))) + outsideDiagonal w := by
   classical
@@ -482,7 +423,6 @@ private theorem diagonal_embedding_split (w : Wire → ℂ) :
     · have hij : i ≠ j := fun h => hj (h ▸ hi)
       simp [hi, hj, hij, outsideDiagonal, diagonal]
   · simp [hi, outsideDiagonal, diagonal]
-
 private theorem testerNormalization_split (q t : ℝ) :
     testerNormalization q t = embedBlock (compressedNormalization q t) +
       outsideDiagonal (fun i => (testerWeight q t i.1 : ℂ)) := by
@@ -491,7 +431,6 @@ private theorem testerNormalization_split (q t : ℝ) :
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [mainAddress, testerWeight, compressedNormalization, diagonal]
-
 private theorem compressedNormalization_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
     (ht : 0 ≤ t) (ht1 : t ≤ 1) : (compressedNormalization q t).PosSemidef := by
   have hM := (diagonalTester_pos q t hq hq1 ht ht1).kronecker
@@ -499,7 +438,6 @@ private theorem compressedNormalization_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q 
   change (testerNormalization q t).PosSemidef at hM
   simpa only [testerNormalization_compression] using
     hM.conjTranspose_mul_mul_same blockEmbedding
-
 private theorem lift_compressed_event (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
     (ht : 0 ≤ t) (ht1 : t ≤ 1) {F : Matrix (Fin 3) (Fin 3) ℂ}
     (hF : EventInterval (compressedNormalization q t) F) :
@@ -518,14 +456,12 @@ private theorem lift_compressed_event (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
   convert h using 1
   simp only [embedBlock, Matrix.mul_sub, Matrix.sub_mul]
   abel
-
 private theorem compress_full_event (q t : ℝ) {E : Matrix Wire Wire ℂ}
     (hE : EventInterval (testerNormalization q t) E) :
     EventInterval (compressedNormalization q t) (blockEmbeddingᴴ * E * blockEmbedding) := by
   refine ⟨hE.1.conjTranspose_mul_mul_same _, ?_⟩
   have h := hE.2.conjTranspose_mul_mul_same blockEmbedding
   simpa only [Matrix.mul_sub, Matrix.sub_mul, testerNormalization_compression] using h
-
 private theorem response_embed (F : Matrix (Fin 3) (Fin 3) ℂ) (E : Matrix Wire Wire ℂ) :
     eventResponse (embedBlock F) E = eventResponse F (blockEmbeddingᴴ * E * blockEmbedding) := by
   unfold eventResponse embedBlock
@@ -536,11 +472,9 @@ private theorem response_embed (F : Matrix (Fin 3) (Fin 3) ℂ) (E : Matrix Wire
     _ = trace ((blockEmbeddingᴴ * E) * (blockEmbedding * F)) := trace_mul_comm _ _
     _ = trace ((blockEmbeddingᴴ * E * blockEmbedding) * F) := by simp only [Matrix.mul_assoc]
     _ = _ := trace_mul_comm _ _
-
 private theorem diagonal_response (w : Wire → ℝ) (E : Matrix Wire Wire ℂ) :
     eventResponse (diagonal (fun i => (w i : ℂ))) E = ∑ i, w i * (E i i).re := by
   simp [eventResponse, Matrix.trace, Matrix.diagonal_mul, Complex.mul_re]
-
 private theorem completion_response (eps p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ)
     (E : Matrix Wire Wire ℂ) :
     eventResponse (candidate eps - causalCompletion p P) E =
@@ -554,7 +488,6 @@ private theorem completion_response (eps p : ℝ) (P : Matrix (Fin 3) (Fin 3) �
   rw [response_embed, response_embed, diagonal_response]
   simp only [compressedDifference, eventResponse, Matrix.sub_mul, Matrix.trace_sub, Complex.sub_re]
   ring
-
 private theorem completion_lifted_response (eps p : ℝ) (P F : Matrix (Fin 3) (Fin 3) ℂ) :
     eventResponse (candidate eps - causalCompletion p P) (embedBlock F) =
       eventResponse (compressedDifference eps P) F := by
@@ -569,8 +502,6 @@ private theorem completion_lifted_response (eps p : ℝ) (P F : Matrix (Fin 3) (
       simp [hw]
     · simp [embedBlock_entry, hi]
   rw [hz, sub_zero]
-
-
 private theorem normalization_trace (S : Matrix Wire Wire ℂ)
     (sigma : Matrix (Fin 2) (Fin 2) ℂ) (C : Matrix AB AB ℂ)
     (hSn : partialTraceRight S = Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ) sigma)
@@ -597,7 +528,6 @@ private theorem normalization_trace (S : Matrix Wire Wire ℂ)
     _ = trace (C * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigma)) := trace_mul_comm _ _
     _ = trace (partialTraceLeft C * sigma) := dualL C sigma
     _ = 1 := by rw [hCn, Matrix.one_mul, hst]
-
 private theorem candidate_normalization_response (eps q t : ℝ) (he : 0 ≤ eps) (he1 : eps ≤ 1) :
     eventResponse (candidate eps) (testerNormalization q t) = 1 - eps * (1 - q - t) := by
   rw [testerNormalization_diagonal]
@@ -606,9 +536,6 @@ private theorem candidate_normalization_response (eps q t : ℝ) (he : 0 ≤ eps
     Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re,
     Real.mul_self_sqrt he, Real.mul_self_sqrt (sub_nonneg.mpr he1)]
   ring
-
-/-- The arbitrary complex compressed block determines the full attained event objective of its
-causal completion. Complementary mass enters the reverse event through the normalization trace. -/
 theorem compressed_completion_tester_value (eps p q t : ℝ)
     (P : Matrix (Fin 3) (Fin 3) ℂ) (he : 0 ≤ eps) (he1 : eps ≤ 1)
     (hp : 0 ≤ p) (hp1 : p ≤ 1) (hq : 0 ≤ q) (hq1 : q ≤ 1) (ht : 0 ≤ t) (ht1 : t ≤ 1)
@@ -698,8 +625,6 @@ theorem compressed_completion_tester_value (eps p q t : ℝ)
     rw [hmass, htrace]
     congr 2
     ring
-
-
 private theorem completion_phase_fixed (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ) (g : Phase) :
     signConjugate (phaseWire g) (causalCompletion p P) = causalCompletion p P := by
   classical
@@ -734,7 +659,6 @@ private theorem completion_phase_fixed (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ
   have hdij := congrArg (fun M : Matrix Wire Wire ℂ => M i j) hd
   simpa only [signConjugate, causalCompletion, Matrix.add_apply, mul_add, add_mul] using
     congrArg₂ (fun x y : ℂ => x + y) heij hdij
-
 private theorem diagonal_tester_parameters {C : Matrix AB AB ℂ} (hC : C.PosSemidef)
     (hCn : partialTraceLeft C = 1) (hCd : C.IsDiag) :
     ∃ q t : ℝ, 0 ≤ q ∧ q ≤ 1 ∧ 0 ≤ t ∧ t ≤ 1 ∧ C = diagonalTester q t := by
@@ -774,9 +698,6 @@ private theorem diagonal_tester_parameters {C : Matrix AB AB ℂ} (hC : C.PosSem
   calc
     C = diagonal (fun ab => C ab ab) := hCd.diagonal_diag.symm
     _ = diagonalTester q t := congrArg diagonal (funext hd)
-
-/-- Error bounds over all original full testers are exactly the compressed spectral bounds over
-all diagonal normalizations. The same actual causal completion occurs on both sides. -/
 theorem full_tester_compressed_objective (eps p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ)
     (he : 0 ≤ eps) (he1 : eps ≤ 1) (hp : 0 ≤ p) (hp1 : p ≤ 1) (hP : P.PosSemidef)
     (h0 : (P 0 0).re ≤ 1 - p) (h1 : (P 1 1).re ≤ 1 - p) (h2 : (P 2 2).re ≤ p) (b : ℝ) :
@@ -812,8 +733,6 @@ theorem full_tester_compressed_objective (eps p : ℝ) (P : Matrix (Fin 3) (Fin 
     change |response (candidate eps - S) E| ≤ b
     rw [← hresp]
     exact h.trans (hBound q t hq hq1 ht ht1)
-
-
 private theorem response_compressed_event (X : Matrix Wire Wire ℂ)
     (F : Matrix (Fin 3) (Fin 3) ℂ) :
     eventResponse X (embedBlock F) = eventResponse (X.submatrix mainAddress mainAddress) F := by
@@ -821,9 +740,6 @@ private theorem response_compressed_event (X : Matrix Wire Wire ℂ)
     _ = eventResponse (embedBlock F) X := congrArg Complex.re (trace_mul_comm X (embedBlock F))
     _ = eventResponse F (blockEmbeddingᴴ * X * blockEmbedding) := response_embed F X
     _ = _ := by rw [block_compression]; exact congrArg Complex.re (trace_mul_comm F _)
-
-/-- An arbitrary original causal repair supplies a complex principal block whose actual causal
-completion keeps the same marginal entry and transports every full-tester error bound. -/
 theorem causal_compressed_repair_domination (eps : ℝ) (S : Matrix Wire Wire ℂ)
     (sigma : Matrix (Fin 2) (Fin 2) ℂ) (he : 0 ≤ eps) (he1 : eps ≤ 1) (hS : Causal S sigma) :
     let p := (sigma 1 1).re
@@ -886,5 +802,190 @@ theorem causal_compressed_repair_domination (eps : ℝ) (S : Matrix Wire Wire �
       exact hneg
     · rw [max_eq_right (le_of_not_ge hc), add_zero]
       exact hpos
-
+def quadratic {n : Type*} [Fintype n] (A : Matrix n n ℂ) (z : n → ℂ) : ℝ :=
+  (star z ⬝ᵥ (A *ᵥ z)).re
+theorem quadratic_real {n : Type*} [Fintype n]
+    (A : Matrix n n ℂ) (z : n → ℝ) :
+    quadratic A (fun i => (z i : ℂ)) = ∑ i, ∑ j, (A i j).re * z i * z j := by
+  simp only [quadratic, dotProduct, mulVec, Pi.star_apply,
+    Complex.star_def, Complex.conj_ofReal, Finset.mul_sum, Complex.re_sum,
+    Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, mul_zero]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  ring
+theorem quadratic_le_mass {n : Type*} [Fintype n] [DecidableEq n]
+    {A : Matrix n n ℂ} (hA : A.IsHermitian) (z : n → ℂ) :
+    quadratic A z ≤ positiveSpectralMass hA * (star z ⬝ᵥ z).re := by
+  classical
+  let L := positiveSpectralMass hA
+  let U := hA.eigenvectorUnitary
+  let a := conjStarAlgAut ℂ (Matrix n n ℂ) U
+  have hL (i : n) : hA.eigenvalues i ≤ L := by
+    calc
+      _ ≤ max (hA.eigenvalues i) 0 := le_max_left _ _
+      _ ≤ ∑ j, max (hA.eigenvalues j) 0 :=
+        Finset.single_le_sum (fun j _ => le_max_right _ _) (Finset.mem_univ i)
+  have hd : diagonal (fun i => ((L - hA.eigenvalues i : ℝ) : ℂ)) =
+      (L : ℂ) • (1 : Matrix n n ℂ) - diagonal (fun i => (hA.eigenvalues i : ℂ)) := by
+    ext i j
+    by_cases hij : i = j <;> simp [Matrix.diagonal, hij]
+  have ha : a (diagonal (fun i => ((L - hA.eigenvalues i : ℝ) : ℂ))) =
+      (L : ℂ) • (1 : Matrix n n ℂ) - A := by
+    rw [hd, map_sub, map_smul, map_one]
+    congr 1
+    exact hA.spectral_theorem.symm
+  have hpos : ((L : ℂ) • (1 : Matrix n n ℂ) - A).PosSemidef := by
+    rw [← ha, conjStarAlgAut_apply]
+    apply PosSemidef.mul_mul_conjTranspose_same
+    exact PosSemidef.diagonal (fun i => Complex.nonneg_iff.mpr
+      ⟨by simpa using sub_nonneg.mpr (hL i), by simp⟩)
+  have h := hpos.re_dotProduct_nonneg z
+  simp only [sub_mulVec, smul_mulVec, one_mulVec, dotProduct_sub, dotProduct_smul] at h
+  change 0 ≤ ((L : ℂ) * (star z ⬝ᵥ z) - star z ⬝ᵥ (A *ᵥ z)).re at h
+  simp only [Complex.sub_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+    zero_mul, sub_zero] at h
+  change quadratic A z ≤ L * _
+  dsimp [quadratic]
+  linarith
+theorem real_eigenvalue_le_mass {H : Matrix (Fin 3) (Fin 3) ℝ}
+    (hH : H.IsHermitian) {A : Matrix (Fin 3) (Fin 3) ℂ} (hA : A.IsHermitian)
+    (hoff : ∀ i j, i ≠ j → 0 ≤ H i j) (hentry : ∀ i j, H i j ≤ (A i j).re)
+    {lam : ℝ} (hlam : lam ∈ spectrum ℝ H) : lam ≤ positiveSpectralMass hA := by
+  obtain ⟨k, hk⟩ := hH.spectrum_real_eq_range_eigenvalues ▸ hlam
+  let v : Fin 3 → ℝ := hH.eigenvectorBasis k
+  let z : Fin 3 → ℝ := fun i => |v i|
+  have hv : ∑ i, v i ^ 2 = 1 := by
+    have hn := hH.eigenvectorBasis.orthonormal.1 k
+    have hs := PiLp.norm_sq_eq_of_L2 (fun _ : Fin 3 => ℝ) (hH.eigenvectorBasis k)
+    rw [hn, one_pow] at hs
+    simpa [v, Real.norm_eq_abs, sq_abs] using hs.symm
+  have he : lam = ∑ i, ∑ j, H i j * v i * v j := by
+    rw [← hk, hH.eigenvalues_eq]
+    simp only [RCLike.re_to_real, star_trivial, dotProduct, mulVec, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    ring
+  have hcomp : (∑ i, ∑ j, H i j * v i * v j) ≤
+      ∑ i, ∑ j, (A i j).re * z i * z j := by
+    apply Finset.sum_le_sum
+    intro i _
+    apply Finset.sum_le_sum
+    intro j _
+    have hnorm : H i j * v i * v j ≤ H i j * z i * z j := by
+      by_cases hij : i = j
+      · subst j
+        dsimp [z]
+        apply le_of_eq
+        calc
+          _ = H i i * (v i ^ 2) := by ring
+          _ = H i i * (|v i| ^ 2) := by rw [sq_abs]
+          _ = H i i * |v i| * |v i| := by ring
+      · have hb : v i * v j ≤ z i * z j := by
+          simpa only [z, abs_mul] using le_abs_self (v i * v j)
+        nlinarith [mul_le_mul_of_nonneg_left hb (hoff i j hij)]
+    exact hnorm.trans (by
+      have hb := mul_le_mul_of_nonneg_right (hentry i j)
+        (mul_nonneg (abs_nonneg (v i)) (abs_nonneg (v j)))
+      simpa only [mul_assoc, z] using hb)
+  have hq := quadratic_le_mass hA (fun i => (z i : ℂ))
+  have hz : (star (fun i => (z i : ℂ)) ⬝ᵥ (fun i => (z i : ℂ))).re = 1 := by
+    simpa [dotProduct, z, ← Complex.ofReal_mul, ← sq, ← Complex.ofReal_pow,
+      sq_abs] using hv
+  rw [quadratic_real, hz, mul_one] at hq
+  rw [he]
+  exact hcomp.trans hq
 end D5.S3.Quantum.Foundation.TwoRoundSpectralEvents
+namespace D5.S3.Quantum.Foundation.TwoRoundRankOneReduction
+open D5.S3.Quantum.Foundation.TwoRoundPhaseAverage
+open D5.S3.Quantum.Foundation.TwoRoundSpectralEvents
+def realOuter (u : Fin 3 → ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  vecMulVec (fun i => (u i : ℂ)) (star (fun i => (u i : ℂ)))
+def gramU (u : Fin 3 → ℝ) : ℝ := ∑ i, u i ^ 2
+def gramW (u v : Fin 3 → ℝ) : ℝ := ∑ i, u i * v i
+def positiveRoot (u v : Fin 3 → ℝ) : ℝ :=
+  (gramU u - gramU v + Real.sqrt ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2)) / 2
+def negativeRoot (u v : Fin 3 → ℝ) : ℝ :=
+  (gramU u - gramU v - Real.sqrt ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2)) / 2
+theorem gram_nonneg (u v : Fin 3 → ℝ) :
+    0 ≤ gramU u ∧ 0 ≤ gramU v ∧ gramW u v ^ 2 ≤ gramU u * gramU v := by
+  refine ⟨Finset.sum_nonneg (fun i _ => sq_nonneg _),
+    Finset.sum_nonneg (fun i _ => sq_nonneg _), ?_⟩
+  dsimp [gramU, gramW]
+  exact Finset.sum_mul_sq_le_sq_mul_sq _ _ _
+theorem root_relations (u v : Fin 3 → ℝ) :
+    0 ≤ positiveRoot u v ∧ negativeRoot u v ≤ 0 ∧
+      positiveRoot u v + negativeRoot u v = gramU u - gramU v ∧
+      positiveRoot u v * negativeRoot u v = gramW u v ^ 2 - gramU u * gramU v := by
+  obtain ⟨hU, hV, hW⟩ := gram_nonneg u v
+  have hd : 0 ≤ (gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2 := by
+    nlinarith [sq_nonneg (gramU u - gramU v)]
+  have hs := Real.sq_sqrt hd
+  have hn := Real.sqrt_nonneg ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2)
+  have hb : |gramU u - gramU v| ≤
+      Real.sqrt ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2) := by
+    rw [abs_le]
+    constructor <;> nlinarith [sq_nonneg (gramU u - gramU v)]
+  dsimp [positiveRoot, negativeRoot]
+  refine ⟨by linarith [abs_le.mp hb], by linarith [abs_le.mp hb], by ring, ?_⟩
+  nlinarith [hs]
+theorem difference_charpoly (u v : Fin 3 → ℝ) :
+    (realOuter u - realOuter v).charpoly =
+      Polynomial.X * (Polynomial.X - Polynomial.C (positiveRoot u v : ℂ)) *
+        (Polynomial.X - Polynomial.C (negativeRoot u v : ℂ)) := by
+  obtain ⟨_, _, hs, hp⟩ := root_relations u v
+  have hs' := congrArg (fun r : ℝ => (r : ℂ)) hs
+  have hp' := congrArg (fun r : ℝ => (r : ℂ)) hp
+  simp only [Complex.ofReal_add, Complex.ofReal_sub, Complex.ofReal_mul,
+    Complex.ofReal_pow] at hs' hp'
+  have hsum : Polynomial.C (positiveRoot u v : ℂ) + Polynomial.C (negativeRoot u v : ℂ) =
+      Polynomial.C ((gramU u : ℂ) - (gramU v : ℂ)) := by rw [← map_add, hs']
+  have hprod : Polynomial.C (positiveRoot u v : ℂ) * Polynomial.C (negativeRoot u v : ℂ) =
+      Polynomial.C ((gramW u v : ℂ) ^ 2 - (gramU u : ℂ) * (gramU v : ℂ)) := by
+    rw [← map_mul, hp']
+  calc
+    _ = Polynomial.X ^ 3 -
+        Polynomial.C ((gramU u : ℂ) - (gramU v : ℂ)) * Polynomial.X ^ 2 +
+        Polynomial.C ((gramW u v : ℂ) ^ 2 - (gramU u : ℂ) * (gramU v : ℂ)) * Polynomial.X := by
+      simp [Matrix.charpoly, Matrix.charmatrix, Matrix.det_fin_three,
+        realOuter, Matrix.vecMulVec_apply, Matrix.scalar, Matrix.diagonal,
+        gramU, gramW, Fin.sum_univ_three, Polynomial.C_add, Polynomial.C_sub,
+        Polynomial.C_mul, Polynomial.C_pow]
+      ring
+    _ = _ := by rw [← hsum, ← hprod]; ring
+theorem positive_mass_diagonal (d : Fin 3 → ℝ)
+    (hD : (diagonal (fun i => (d i : ℂ))).IsHermitian) :
+    positiveSpectralMass hD = ∑ i, max (d i) 0 := by
+  have hr := hD.roots_charpoly_eq_eigenvalues
+  rw [charpoly_diagonal, Polynomial.roots_prod] at hr
+  · have hm := congrArg (fun s : Multiset ℂ => (s.map (fun z => max z.re 0)).sum) hr
+    simpa [positiveSpectralMass, Fin.sum_univ_three, add_assoc] using hm.symm
+  · exact Finset.prod_ne_zero_iff.mpr (fun i _ => Polynomial.X_sub_C_ne_zero _)
+theorem rank_one_positive_mass (u v : Fin 3 → ℝ) :
+    positiveSpectralMass
+      ((posSemidef_vecMulVec_self_star (fun i => (u i : ℂ))).isHermitian.sub
+        (posSemidef_vecMulVec_self_star (fun i => (v i : ℂ))).isHermitian) =
+      positiveRoot u v := by
+  let hB : (realOuter u - realOuter v).IsHermitian :=
+    (posSemidef_vecMulVec_self_star _).isHermitian.sub
+      (posSemidef_vecMulVec_self_star _).isHermitian
+  let d : Fin 3 → ℝ := ![positiveRoot u v, negativeRoot u v, 0]
+  let hD : (diagonal (fun i => (d i : ℂ))).IsHermitian :=
+    isHermitian_diagonal_iff.mpr (fun i => by
+      change IsSelfAdjoint (d i : ℂ); simp [IsSelfAdjoint])
+  have hc : (realOuter u - realOuter v).charpoly = (diagonal (fun i => (d i : ℂ))).charpoly := by
+    rw [difference_charpoly, charpoly_diagonal]
+    simp [d, Fin.prod_univ_three]
+    ring
+  have he := (hB.eigenvalues_eq_eigenvalues_iff hD).mpr hc
+  change positiveSpectralMass hB = _
+  change (∑ i, max (hB.eigenvalues i) 0) = _
+  rw [he]
+  change positiveSpectralMass hD = _
+  rw [positive_mass_diagonal]
+  obtain ⟨hp, hn, _, _⟩ := root_relations u v
+  simp [d, Fin.sum_univ_three, max_eq_left hp, max_eq_right hn]
+end D5.S3.Quantum.Foundation.TwoRoundRankOneReduction

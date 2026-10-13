@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Foundation/TwoRoundPhaseAverage
+/- GID: D5/S3/Quantum/Foundation/TwoRoundRankOneReductionPhase
    generality: G
-   mirror-B: D5/B/S3/Quantum/Foundation/TwoRoundPhaseAverage
+   mirror-B: D5/B/S3/Quantum/Foundation/TwoRoundRankOneReductionPhase
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -373,7 +373,7 @@ private theorem phaseWire_charge (g : Phase) (i : Wire) :
   fin_cases a <;> fin_cases b <;> fin_cases i <;> fin_cases j <;> fin_cases d <;>
     norm_num [phaseWire, phaseAB, phaseD, bitSign, charge]
 
-private theorem character_sum (i j : AB) :
+theorem character_sum (i j : AB) :
     (∑ g : Phase, phaseAB g i * phaseAB g j) = if i = j then 4 else 0 := by
   rcases i with ⟨a, b⟩
   rcases j with ⟨a', b'⟩

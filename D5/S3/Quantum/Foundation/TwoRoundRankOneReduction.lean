@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Same-marginal rank-one tester reduction with attained original global extrema. -/
+   digest: Same-marginal rank-one tester reduction with attained original global extrema.
+-/
 
-import D5.S3.Quantum.Foundation.TwoRoundSpectralEvents
+import D5.S3.Quantum.Foundation.TwoRoundRankOneReductionSpectral
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Topology.Order.Compact
 import Mathlib.Analysis.Normed.Module.FiniteDimension
@@ -15,208 +16,9 @@ noncomputable section
 
 open Matrix Unitary
 open scoped BigOperators ComplexOrder MatrixOrder
-
 namespace D5.S3.Quantum.Foundation.TwoRoundRankOneReduction
-
 open D5.S3.Quantum.Foundation.TwoRoundPhaseAverage
 open D5.S3.Quantum.Foundation.TwoRoundSpectralEvents
-
-private def realOuter (u : Fin 3 → ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
-  vecMulVec (fun i => (u i : ℂ)) (star (fun i => (u i : ℂ)))
-
-private def gramU (u : Fin 3 → ℝ) : ℝ := ∑ i, u i ^ 2
-private def gramW (u v : Fin 3 → ℝ) : ℝ := ∑ i, u i * v i
-
-private def positiveRoot (u v : Fin 3 → ℝ) : ℝ :=
-  (gramU u - gramU v + Real.sqrt ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2)) / 2
-
-private def negativeRoot (u v : Fin 3 → ℝ) : ℝ :=
-  (gramU u - gramU v - Real.sqrt ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2)) / 2
-
-private theorem gram_nonneg (u v : Fin 3 → ℝ) :
-    0 ≤ gramU u ∧ 0 ≤ gramU v ∧ gramW u v ^ 2 ≤ gramU u * gramU v := by
-  refine ⟨Finset.sum_nonneg (fun i _ => sq_nonneg _),
-    Finset.sum_nonneg (fun i _ => sq_nonneg _), ?_⟩
-  dsimp [gramU, gramW]
-  exact Finset.sum_mul_sq_le_sq_mul_sq _ _ _
-
-private theorem root_relations (u v : Fin 3 → ℝ) :
-    0 ≤ positiveRoot u v ∧ negativeRoot u v ≤ 0 ∧
-      positiveRoot u v + negativeRoot u v = gramU u - gramU v ∧
-      positiveRoot u v * negativeRoot u v = gramW u v ^ 2 - gramU u * gramU v := by
-  obtain ⟨hU, hV, hW⟩ := gram_nonneg u v
-  have hd : 0 ≤ (gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2 := by
-    nlinarith [sq_nonneg (gramU u - gramU v)]
-  have hs := Real.sq_sqrt hd
-  have hn := Real.sqrt_nonneg ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2)
-  have hb : |gramU u - gramU v| ≤
-      Real.sqrt ((gramU u + gramU v) ^ 2 - 4 * gramW u v ^ 2) := by
-    rw [abs_le]
-    constructor <;> nlinarith [sq_nonneg (gramU u - gramU v)]
-  dsimp [positiveRoot, negativeRoot]
-  refine ⟨by linarith [abs_le.mp hb], by linarith [abs_le.mp hb], by ring, ?_⟩
-  nlinarith [hs]
-
-private theorem difference_charpoly (u v : Fin 3 → ℝ) :
-    (realOuter u - realOuter v).charpoly =
-      Polynomial.X * (Polynomial.X - Polynomial.C (positiveRoot u v : ℂ)) *
-        (Polynomial.X - Polynomial.C (negativeRoot u v : ℂ)) := by
-  obtain ⟨_, _, hs, hp⟩ := root_relations u v
-  have hs' := congrArg (fun r : ℝ => (r : ℂ)) hs
-  have hp' := congrArg (fun r : ℝ => (r : ℂ)) hp
-  simp only [Complex.ofReal_add, Complex.ofReal_sub, Complex.ofReal_mul,
-    Complex.ofReal_pow] at hs' hp'
-  have hsum : Polynomial.C (positiveRoot u v : ℂ) + Polynomial.C (negativeRoot u v : ℂ) =
-      Polynomial.C ((gramU u : ℂ) - (gramU v : ℂ)) := by rw [← map_add, hs']
-  have hprod : Polynomial.C (positiveRoot u v : ℂ) * Polynomial.C (negativeRoot u v : ℂ) =
-      Polynomial.C ((gramW u v : ℂ) ^ 2 - (gramU u : ℂ) * (gramU v : ℂ)) := by
-    rw [← map_mul, hp']
-  calc
-    _ = Polynomial.X ^ 3 -
-        Polynomial.C ((gramU u : ℂ) - (gramU v : ℂ)) * Polynomial.X ^ 2 +
-        Polynomial.C ((gramW u v : ℂ) ^ 2 - (gramU u : ℂ) * (gramU v : ℂ)) * Polynomial.X := by
-      simp [Matrix.charpoly, Matrix.charmatrix, Matrix.det_fin_three,
-        realOuter, Matrix.vecMulVec_apply, Matrix.scalar, Matrix.diagonal,
-        gramU, gramW, Fin.sum_univ_three, Polynomial.C_add, Polynomial.C_sub,
-        Polynomial.C_mul, Polynomial.C_pow]
-      ring
-    _ = _ := by rw [← hsum, ← hprod]; ring
-
-private theorem positive_mass_diagonal (d : Fin 3 → ℝ)
-    (hD : (diagonal (fun i => (d i : ℂ))).IsHermitian) :
-    positiveSpectralMass hD = ∑ i, max (d i) 0 := by
-  have hr := hD.roots_charpoly_eq_eigenvalues
-  rw [charpoly_diagonal, Polynomial.roots_prod] at hr
-  · have hm := congrArg (fun s : Multiset ℂ => (s.map (fun z => max z.re 0)).sum) hr
-    simpa [positiveSpectralMass, Fin.sum_univ_three, add_assoc] using hm.symm
-  · exact Finset.prod_ne_zero_iff.mpr (fun i _ => Polynomial.X_sub_C_ne_zero _)
-
-private theorem rank_one_positive_mass (u v : Fin 3 → ℝ) :
-    positiveSpectralMass
-      ((posSemidef_vecMulVec_self_star (fun i => (u i : ℂ))).isHermitian.sub
-        (posSemidef_vecMulVec_self_star (fun i => (v i : ℂ))).isHermitian) =
-      positiveRoot u v := by
-  let hB : (realOuter u - realOuter v).IsHermitian :=
-    (posSemidef_vecMulVec_self_star _).isHermitian.sub
-      (posSemidef_vecMulVec_self_star _).isHermitian
-  let d : Fin 3 → ℝ := ![positiveRoot u v, negativeRoot u v, 0]
-  let hD : (diagonal (fun i => (d i : ℂ))).IsHermitian :=
-    isHermitian_diagonal_iff.mpr (fun i => by
-      change IsSelfAdjoint (d i : ℂ); simp [IsSelfAdjoint])
-  have hc : (realOuter u - realOuter v).charpoly = (diagonal (fun i => (d i : ℂ))).charpoly := by
-    rw [difference_charpoly, charpoly_diagonal]
-    simp [d, Fin.prod_univ_three]
-    ring
-  have he := (hB.eigenvalues_eq_eigenvalues_iff hD).mpr hc
-  change positiveSpectralMass hB = _
-  change (∑ i, max (hB.eigenvalues i) 0) = _
-  rw [he]
-  change positiveSpectralMass hD = _
-  rw [positive_mass_diagonal]
-  obtain ⟨hp, hn, _, _⟩ := root_relations u v
-  simp [d, Fin.sum_univ_three, max_eq_left hp, max_eq_right hn]
-
-private def quadratic {n : Type*} [Fintype n] (A : Matrix n n ℂ) (z : n → ℂ) : ℝ :=
-  (star z ⬝ᵥ (A *ᵥ z)).re
-
-private theorem quadratic_real {n : Type*} [Fintype n]
-    (A : Matrix n n ℂ) (z : n → ℝ) :
-    quadratic A (fun i => (z i : ℂ)) = ∑ i, ∑ j, (A i j).re * z i * z j := by
-  simp only [quadratic, dotProduct, mulVec, Pi.star_apply,
-    Complex.star_def, Complex.conj_ofReal, Finset.mul_sum, Complex.re_sum,
-    Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, mul_zero]
-  apply Finset.sum_congr rfl
-  intro i _
-  apply Finset.sum_congr rfl
-  intro j _
-  ring
-
-private theorem quadratic_le_mass {n : Type*} [Fintype n] [DecidableEq n]
-    {A : Matrix n n ℂ} (hA : A.IsHermitian) (z : n → ℂ) :
-    quadratic A z ≤ positiveSpectralMass hA * (star z ⬝ᵥ z).re := by
-  classical
-  let L := positiveSpectralMass hA
-  let U := hA.eigenvectorUnitary
-  let a := conjStarAlgAut ℂ (Matrix n n ℂ) U
-  have hL (i : n) : hA.eigenvalues i ≤ L := by
-    calc
-      _ ≤ max (hA.eigenvalues i) 0 := le_max_left _ _
-      _ ≤ ∑ j, max (hA.eigenvalues j) 0 :=
-        Finset.single_le_sum (fun j _ => le_max_right _ _) (Finset.mem_univ i)
-  have hd : diagonal (fun i => ((L - hA.eigenvalues i : ℝ) : ℂ)) =
-      (L : ℂ) • (1 : Matrix n n ℂ) - diagonal (fun i => (hA.eigenvalues i : ℂ)) := by
-    ext i j
-    by_cases hij : i = j <;> simp [Matrix.diagonal, hij]
-  have ha : a (diagonal (fun i => ((L - hA.eigenvalues i : ℝ) : ℂ))) =
-      (L : ℂ) • (1 : Matrix n n ℂ) - A := by
-    rw [hd, map_sub, map_smul, map_one]
-    congr 1
-    exact hA.spectral_theorem.symm
-  have hpos : ((L : ℂ) • (1 : Matrix n n ℂ) - A).PosSemidef := by
-    rw [← ha, conjStarAlgAut_apply]
-    apply PosSemidef.mul_mul_conjTranspose_same
-    exact PosSemidef.diagonal (fun i => Complex.nonneg_iff.mpr
-      ⟨by simpa using sub_nonneg.mpr (hL i), by simp⟩)
-  have h := hpos.re_dotProduct_nonneg z
-  simp only [sub_mulVec, smul_mulVec, one_mulVec, dotProduct_sub, dotProduct_smul] at h
-  change 0 ≤ ((L : ℂ) * (star z ⬝ᵥ z) - star z ⬝ᵥ (A *ᵥ z)).re at h
-  simp only [Complex.sub_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-    zero_mul, sub_zero] at h
-  change quadratic A z ≤ L * _
-  dsimp [quadratic]
-  linarith
-
-/-- Absolute-valued eigenvectors compare a real Metzler matrix with the positive spectral
-mass of a complex Hermitian matrix. This comparison does not assert Loewner order. -/
-private theorem real_eigenvalue_le_mass {H : Matrix (Fin 3) (Fin 3) ℝ}
-    (hH : H.IsHermitian) {A : Matrix (Fin 3) (Fin 3) ℂ} (hA : A.IsHermitian)
-    (hoff : ∀ i j, i ≠ j → 0 ≤ H i j) (hentry : ∀ i j, H i j ≤ (A i j).re)
-    {lam : ℝ} (hlam : lam ∈ spectrum ℝ H) : lam ≤ positiveSpectralMass hA := by
-  obtain ⟨k, hk⟩ := hH.spectrum_real_eq_range_eigenvalues ▸ hlam
-  let v : Fin 3 → ℝ := hH.eigenvectorBasis k
-  let z : Fin 3 → ℝ := fun i => |v i|
-  have hv : ∑ i, v i ^ 2 = 1 := by
-    have hn := hH.eigenvectorBasis.orthonormal.1 k
-    have hs := PiLp.norm_sq_eq_of_L2 (fun _ : Fin 3 => ℝ) (hH.eigenvectorBasis k)
-    rw [hn, one_pow] at hs
-    simpa [v, Real.norm_eq_abs, sq_abs] using hs.symm
-  have he : lam = ∑ i, ∑ j, H i j * v i * v j := by
-    rw [← hk, hH.eigenvalues_eq]
-    simp only [RCLike.re_to_real, star_trivial, dotProduct, mulVec, Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro i _
-    apply Finset.sum_congr rfl
-    intro j _
-    ring
-  have hcomp : (∑ i, ∑ j, H i j * v i * v j) ≤
-      ∑ i, ∑ j, (A i j).re * z i * z j := by
-    apply Finset.sum_le_sum
-    intro i _
-    apply Finset.sum_le_sum
-    intro j _
-    have hnorm : H i j * v i * v j ≤ H i j * z i * z j := by
-      by_cases hij : i = j
-      · subst j
-        dsimp [z]
-        apply le_of_eq
-        calc
-          _ = H i i * (v i ^ 2) := by ring
-          _ = H i i * (|v i| ^ 2) := by rw [sq_abs]
-          _ = H i i * |v i| * |v i| := by ring
-      · have hb : v i * v j ≤ z i * z j := by
-          simpa only [z, abs_mul] using le_abs_self (v i * v j)
-        nlinarith [mul_le_mul_of_nonneg_left hb (hoff i j hij)]
-    exact hnorm.trans (by
-      have hb := mul_le_mul_of_nonneg_right (hentry i j)
-        (mul_nonneg (abs_nonneg (v i)) (abs_nonneg (v j)))
-      simpa only [mul_assoc, z] using hb)
-  have hq := quadratic_le_mass hA (fun i => (z i : ℂ))
-  have hz : (star (fun i => (z i : ℂ)) ⬝ᵥ (fun i => (z i : ℂ))).re = 1 := by
-    simpa [dotProduct, z, ← Complex.ofReal_mul, ← sq, ← Complex.ofReal_pow,
-      sq_abs] using hv
-  rw [quadratic_real, hz, mul_one] at hq
-  rw [he]
-  exact hcomp.trans hq
 
 /-- The saturated principal-block amplitudes at the original marginal parameter. -/
 def repairVector (p : ℝ) (i : Fin 3) : ℝ :=
@@ -758,5 +560,6 @@ theorem attained_original_minimum_and_same_p_reduction (eps : ℝ)
   obtain ⟨hR, hsig, hdom⟩ := same_p_error_domination eps S sigma he hehalf hS hlo hhi
   obtain ⟨hb, hs⟩ := hdom _ hbound
   exact ⟨hR, hsig, le_antisymm (tester_norm_le hb) (hmin _ _ hR), hs⟩
+
 
 end D5.S3.Quantum.Foundation.TwoRoundRankOneReduction
