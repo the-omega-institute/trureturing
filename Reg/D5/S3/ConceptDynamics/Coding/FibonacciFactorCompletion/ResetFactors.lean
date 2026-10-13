@@ -1,3 +1,6 @@
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
+import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
 import Reg.Support.SingleDependentReadout
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot
 import LeanInformationAuditInterface.Contract.Registration
@@ -671,3 +674,119 @@ def factor_rate_of_power_count_registration :
 #print axioms factor_rate_of_power_count_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal143
+
+
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150
+  (observationSignature actual)
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit
+  (budgetLower budget budget_interval)
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+open Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge.ResetBudgetReadout
+  (rejected reset_floor_rejected)
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal144
+noncomputable section
+
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (o : Ownership) (b : ℝ) (K : ℕ)
+    (hK : 2 ≤ K)
+    (hqb : lam - g^2*chi^K*hSide .high < b)
+    (hbp : b < lam - g^2*chi^K*(aSide .high/(1-rho*chi^K))),
+    ∃ R : Return, R.r = 1 ∧
+    (max (max (xSide .high) (ySide .high))
+      ((lam-r.readout () () b)/g^2/chi^K) <
+      hSide .high-rho^R.m*(hSide .high-chi*aSide .high)) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+    let d := (lam-b)/g^2/chi^K
+    let delta := hSide .high-rho^R.m*(hSide .high-chi*aSide .high)-initial .high sourceModel
+    let V := {xs : List Return //
+      GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs = N}
+    let L := N+20+6*R.m
+    0 < delta ∧ 0 < delta*g^N ∧
+    0 < min (b-actualAutomaticCost K) (g^2*chi^K*(delta*g^N))/2 ∧ Finite V ∧
+    (∀ (targetModel : Model) (words : List V),
+      let execution := resetConcatenation R (words.map Subtype.val)
+      GuardTrace K (d+delta*g^N) false .high execution (initial .high targetModel) ∧
+      ActualPairSupply targetModel o
+        (b-min (b-actualAutomaticCost K) (g^2*chi^K*(delta*g^N))/2) .strict execution) ∧
+    ∃ n : ℕ, K ≤ n ∧ hSide .high*rho^n < chi^(K-1)*(delta*g^N) ∧
+      (∀ choices : ℤ → V,
+        let W := fun j => executionWord (R::(choices j).val)
+        ∃ ω : ℤ → CuLetter,
+          ω ∈ AuxiliaryLanguage K (d+delta*g^N) ∧ ω ∈ LowerMemoryLanguage n K d ∧
+          (∀ j (k : Fin (W j).length), ω (blockCut W j+(k : ℕ))=(W j)[k]) ∧
+          (∀ j, GuardTrace K (d+delta*g^N) false .high (R::(choices j).val)
+            (pastState ω (blockCut W j)))) ∧
+      (∀ q : ℕ,
+        let f := fun z : Fin q → V => resetFactor R (List.ofFn (fun i => (z i).val))
+        Function.Injective f ∧
+        (∀ z, wordWeight (f z) = q*L ∧
+          ∃ ω ∈ LowerMemoryLanguage n K d, Occurs ω (f z)) ∧
+        (∃ family : Finset (List CuLetter), family.card = Nat.card V^q ∧
+          (∀ w, w ∈ family ↔ ∃ z, f z = w) ∧
+          (∀ w ∈ family, wordWeight w = q*L ∧
+            ∃ ω ∈ LowerMemoryLanguage n K d, Occurs ω w)) ∧
+        Nat.card V^q ≤ factorCount (LowerMemoryLanguage n K d) (q*L)) ∧
+      Real.logb 2 ((max 1 (Nat.card V) : ℕ) : ℝ)/(L : ℝ) ≤
+        weightedFactorRate (LowerMemoryLanguage n K d)
+
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => budgetLower) (fun e => nomatch e)
+
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro h
+  obtain ⟨R, _, floor, _⟩ :=
+    h (fun _ => false) budget 2 le_rfl budget_interval.1 budget_interval.2
+  exact reset_floor_rejected R floor
+
+def evidence : Registration sourceArena
+    (type_of% @D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.same_reset_factor_cardinality) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.same_reset_factor_cardinality,
+    rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
+  dependence := Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.ExactOriginal150.evidence.dependence
+
+def same_reset_factor_cardinality_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.same_reset_factor_cardinality)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ state => state) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal144.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal144.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ state => state) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms same_reset_factor_cardinality_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetFactors.ExactOriginal144
