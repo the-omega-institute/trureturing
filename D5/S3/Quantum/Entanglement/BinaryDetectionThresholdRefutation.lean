@@ -10,12 +10,19 @@
 escape_witness: none
 admission_basis: open-problem-resolution (#15572; Refuted)
 Direct frozen dependencies: CycleSingleCutMinimax.push, ChainRule.marginal,
+FutureWordInformationChain.marginal_nonnegative,
+CompletionEntropyMinimality.pushforward_is_law, CapacityMonotone.pushforward,
+SumProductUpdate.sum_prod_update, FiniteSimplexFiberPolytope.pushMass,
 FiberwiseEqualDistanceLift.labelKernel, GreenClassWindowEntropy.windowLaw and windowLaw_sum_eq_one,
 RawCorrelationConfidenceFailure.ScoreBridge.bernoulliMass.
 The finite two-output pushforward applies CycleSingleCutMinimax.push to the product outcome space.
+Its weighted-sum identity applies the linear map FiniteSimplexFiberPolytope.pushMass.
 The two one-output marginals apply ChainRule.marginal, with the coordinates swapped for Bob.
+Their nonnegativity applies FutureWordInformationChain.marginal_nonnegative to the corresponding joint laws.
+Their normalization and the deterministic-strategy weights apply CompletionEntropyMinimality.pushforward_is_law.
 The response indicators apply FiberwiseEqualDistanceLift.labelKernel on paired outputs.
 The product bit law applies GreenClassWindowEntropy.windowLaw to the complemented ScoreBridge.bernoulliMass bits.
+Its coordinate moment applies SumProductUpdate.sum_prod_update.
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 There are no other authored public theorems; additional public theorem audits without four-slot evidence are unfinished under https://github.com/the-omega-institute/trureturing/issues/15774.
 RelaxedHardyNoSignallingOptimum.IsNSBox has binary inputs and d outcomes for N parties; here there are m inputs and binary outcomes for two parties.
@@ -125,12 +132,13 @@ proof_shape: result: bind-only; consumers: settling result.
 -/
 
 import D5.S3.TotalVariation.CycleSingleCutMinimax
-import D5.S3.Divergence.ChainRule
+import D5.S3.Estimation.DataProcessing.FiniteSimplexFiberPolytope
+import D5.S3.Entropy.NamingWindow.FutureWordInformationChain
+import D5.S3.Entropy.Forgetting.CompletionEntropyMinimality
+import D5.S3.Entropy.NamingWindow.SumProductUpdate
 import D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy
 import D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift
 import D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -333,26 +341,21 @@ private lemma IsLocal_of_atoms {I : Type} [Fintype I] (w : I → ℝ)
     (hw : ∀ i, 0 ≤ w i) (hs : (∑ i, w i) = 1)
     (hq : ∀ x y a b, q x y a b = ∑ i, w i * delta (S i) x y a b) : IsLocal q := by
   classical
-  refine ⟨fun s => ∑ i, if S i = s then w i else 0, ?_, ?_, ?_⟩
-  · intro s
-    apply Finset.sum_nonneg
-    intro i hi
-    split_ifs <;> simp [hw]
-  · rw [Finset.sum_comm]
-    simpa using hs
+  have hLaw := D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law w S ⟨hw, hs⟩
+  refine ⟨D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward S w, hLaw.1, hLaw.2, ?_⟩
   · intro x y a b
     rw [hq]
-    simp only [delta, D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift.labelKernel, Prod.mk.injEq]
+    simp only [D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward,
+      delta, D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift.labelKernel, Prod.mk.injEq]
     simp_rw [Finset.sum_mul]
     rw [Finset.sum_comm]
     apply Finset.sum_congr rfl
     intro i hi
-    have hf (s : ((Fin m → Option Bool) × (Fin m → Option Bool))) :
-        (if S i = s then w i else 0) * (if s.1 x = a ∧ s.2 y = b then (1 : ℝ) else 0) =
-          if S i = s then w i * (if s.1 x = a ∧ s.2 y = b then 1 else 0) else 0 := by
-      split_ifs <;> simp
-    simp_rw [hf]
-    simp
+    rw [Finset.sum_eq_single (S i)]
+    · simp
+    · intro s hs hne
+      simp [Ne.symm hne]
+    · simp
 
 private def parityBox (G : (Fin 13) → (Fin 13) → Bool) (x y : (Fin 13)) (a b : Bool) : ℝ :=
   if a.xor b = G x y then 1 / 2 else 0
@@ -500,24 +503,16 @@ private lemma bitLaw_sum (r : I → ℝ) : (∑ s, bitLaw r s) = 1 := by
 private lemma bitLaw_moment (r : I → ℝ) (i : I) (f : Bool → ℝ) :
     (∑ s, bitLaw r s * f (s i)) = r i * f false + (1 - r i) * f true := by
   classical
-  have h := Fintype.prod_sum (fun (j : I) (a : Bool) =>
-    (if a then 1-r j else r j) * (if j=i then f a else 1))
+  let p := fun j b => D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge.bernoulliMass (r j) (!b)
   have hg (s : I → Bool) :
-      (∏ j, (if s j then 1-r j else r j) * (if j=i then f (s j) else 1)) =
-        bitLaw r s * f (s i) := by
-    have hb (j : I) : (if s j then 1-r j else r j) =
-        D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge.bernoulliMass (r j) (!(s j)) := by cases s j <;> rfl
-    rw [Finset.prod_mul_distrib]
-    simp_rw [hb]
-    simp [bitLaw, D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy.windowLaw, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge.bernoulliMass, Finset.prod_ite_eq', Finset.mem_univ]
-  have hf (j : I) :
-      (∑ a : Bool, (if a then 1-r j else r j) * (if j=i then f a else 1)) =
-        if j=i then r i*f false + (1-r i)*f true else 1 := by
-    by_cases hj : j=i
-    · subst j; simp [add_comm]
-    · simp [hj]
-  simp_rw [hg, hf] at h
-  simpa only [Finset.prod_ite_eq',Finset.mem_univ,if_true] using h.symm
+      bitLaw r s * f (s i) =
+        (∏ j ∈ Finset.univ.erase i, p j (s j)) * (p i (s i) * f (s i)) := by
+    change (∏ j, p j (s j)) * f (s i) = _
+    rw [← Finset.mul_prod_erase _ (fun j => p j (s j)) (Finset.mem_univ i)]
+    ring
+  simp_rw [hg]
+  rw [D5.S3.Entropy.NamingWindow.SumProductUpdate.sum_prod_update p i (fun a => p i a * f a)]
+  simp [p, D5.S3.Arith.FibonacciAtomic.Learning.RawCorrelationConfidenceFailure.ScoreBridge.bernoulliMass, add_comm]
 
 private def active (u : I → ℝ) (t : ℝ) : I → Bool := fun i => decide (t ≤ u i)
 private lemma active_measurable (u : I → ℝ) : Measurable (active u) := by
@@ -644,16 +639,15 @@ private lemma push_mix {I : Type} [Fintype I] {A B : Type} [Fintype A] [Fintype 
       fun x y a b => ∑ i, w i*push (q i) f g x y a b := by
   classical
   funext x y a b
-  unfold push D5.S3.TotalVariation.CycleSingleCutMinimax.push
-  simp only [Fintype.sum_prod_type, Prod.mk.injEq]
-  have hi (c : A) (d : B) :
-      (if f x c = a ∧ g y d = b then ∑ i, w i*q i x y c d else 0) =
-        ∑ i, w i * (if f x c = a ∧ g y d = b then q i x y c d else 0) := by
-    by_cases h : f x c = a ∧ g y d = b <;> simp [h]
-  simp_rw [hi]
-  have hswapA (F : A → I → ℝ) : (∑ c, ∑ i, F c i) = ∑ i, ∑ c, F c i := Finset.sum_comm
-  have hswapB (F : B → I → ℝ) : (∑ d, ∑ i, F d i) = ∑ i, ∑ d, F d i := Finset.sum_comm
-  simp_rw [hswapB, hswapA, ← Finset.mul_sum]
+  let L := D5.S3.Estimation.DataProcessing.FiniteSimplexFiberPolytope.pushMass
+    (fun z : A × B => (f x z.1, g y z.2))
+  have h := congrFun (map_sum L (fun i => w i • (fun z : A × B => q i x y z.1 z.2)) Finset.univ) (a, b)
+  simp only [map_smul] at h
+  dsimp [L, D5.S3.Estimation.DataProcessing.FiniteSimplexFiberPolytope.pushMass] at h
+  simpa only [push,
+    D5.S3.TotalVariation.CycleSingleCutMinimax.push, Fintype.sum_prod_type, Prod.mk.injEq, Finset.sum_apply, Pi.smul_apply,
+    smul_eq_mul] using h
+
 
 private lemma IsLocal_push (q : (Fin m → Fin m → Option Bool → Option Bool → ℝ)) (hq : IsLocal q)
     (f g : Fin m → Option Bool → Option Bool) : IsLocal (push q f g) := by
@@ -678,20 +672,28 @@ private lemma marginalB_eq (p : (Fin 13 → Fin 13 → Bool → Bool → ℝ)) (
   exact hp.2.2.2 0 x y b
 private lemma marginalA_nonneg (p : (Fin 13 → Fin 13 → Bool → Bool → ℝ)) (hp : IsNSBox p) (x : (Fin 13)) (a : Bool) :
     0 ≤ marginalA p x a := by
-  unfold marginalA D5.S3.Divergence.ChainRule.marginal
-  exact Finset.sum_nonneg (fun b _ => hp.1 x 0 a b)
+  exact D5.S3.Entropy.NamingWindow.FutureWordInformationChain.marginal_nonnegative
+    (fun z : Bool × Bool => p x 0 z.1 z.2) (fun z => hp.1 x 0 z.1 z.2) a
 private lemma marginalB_nonneg (p : (Fin 13 → Fin 13 → Bool → Bool → ℝ)) (hp : IsNSBox p) (y : (Fin 13)) (b : Bool) :
     0 ≤ marginalB p y b := by
-  unfold marginalB D5.S3.Divergence.ChainRule.marginal
-  exact Finset.sum_nonneg (fun a _ => hp.1 0 y a b)
+  exact D5.S3.Entropy.NamingWindow.FutureWordInformationChain.marginal_nonnegative
+    (fun z : Bool × Bool => p 0 y z.2 z.1) (fun z => hp.1 0 y z.2 z.1) b
 private lemma marginalA_norm (p : (Fin 13 → Fin 13 → Bool → Bool → ℝ)) (hp : IsNSBox p) (x : (Fin 13)) :
     marginalA p x false + marginalA p x true = 1 := by
-  have h := hp.2.1 x 0
-  simpa [marginalA, D5.S3.Divergence.ChainRule.marginal, add_comm] using h
+  have h := (D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law
+    (fun z : Bool × Bool => p x 0 z.1 z.2) Prod.fst
+    ⟨(fun z => hp.1 x 0 z.1 z.2), by
+      simpa only [Fintype.sum_prod_type] using hp.2.1 x 0⟩).2
+  simpa [D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward, Fintype.sum_prod_type,
+    marginalA, D5.S3.Divergence.ChainRule.marginal, add_comm] using h
 private lemma marginalB_norm (p : (Fin 13 → Fin 13 → Bool → Bool → ℝ)) (hp : IsNSBox p) (y : (Fin 13)) :
     marginalB p y false + marginalB p y true = 1 := by
-  have h := hp.2.1 0 y
-  simpa [marginalB, D5.S3.Divergence.ChainRule.marginal, add_comm, add_left_comm, add_assoc] using h
+  have h := (D5.S3.Entropy.Forgetting.CompletionEntropyMinimality.pushforward_is_law
+    (fun z : Bool × Bool => p 0 y z.2 z.1) Prod.fst
+    ⟨(fun z => hp.1 0 y z.2 z.1), by
+      simpa [Fintype.sum_prod_type, add_comm, add_left_comm, add_assoc] using hp.2.1 0 y⟩).2
+  simpa [D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward, Fintype.sum_prod_type,
+    marginalB, D5.S3.Divergence.ChainRule.marginal, add_comm] using h
 
 private def minorA (p : (Fin 13 → Fin 13 → Bool → Bool → ℝ)) (x : (Fin 13)) : Bool := if marginalA p x false ≤ 1 / 2 then false else true
 private def minorB (p : (Fin 13 → Fin 13 → Bool → Bool → ℝ)) (y : (Fin 13)) : Bool := if marginalB p y false ≤ 1 / 2 then false else true
