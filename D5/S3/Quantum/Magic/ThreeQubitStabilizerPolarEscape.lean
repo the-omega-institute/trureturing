@@ -50,7 +50,7 @@ def vacuum (n : ℕ) : Op n :=
 def PureStabilizer (n : ℕ) : Set (Op n) :=
   {ρ | ∃ U : Op n, U ∈ Clifford n ∧ ρ = U * vacuum n * Uᴴ}
 def STAB (n : ℕ) : Set (Op n) := convexHull ℝ (PureStabilizer n)
-private def gammaWords : Fin 7 → Fin 3 → Pauli :=
+def gammaWords : Fin 7 → Fin 3 → Pauli :=
   ![![.X, .I, .I], ![.Y, .I, .I], ![.Z, .X, .I], ![.Z, .Y, .I],
     ![.Z, .Z, .X], ![.Z, .Z, .Y], ![.Z, .Z, .Z]]
 def S : Op 3 := ∑ j : Fin 7, wordOp (gammaWords j)
@@ -138,14 +138,14 @@ private lemma local_adjoint {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) �
   congr 1
   funext j
   by_cases h : j = i <;> simp [h]
-private lemma local_product {n : ℕ} (i : Fin n) (A B : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma local_product {n : ℕ} (i : Fin n) (A B : Matrix (Fin 2) (Fin 2) ℂ) :
     localOp i A * localOp i B = localOp i (A * B) := by
   unfold localOp
   rw [tensor_mul]
   congr 1
   funext j
   by_cases h : j = i <;> simp [h]
-private lemma local_identity {n : ℕ} (i : Fin n) :
+lemma local_identity {n : ℕ} (i : Fin n) :
     localOp i (1 : Matrix (Fin 2) (Fin 2) ℂ) = 1 := by
   unfold localOp
   rw [Function.update_eq_self_iff.mpr rfl, tensor_one]

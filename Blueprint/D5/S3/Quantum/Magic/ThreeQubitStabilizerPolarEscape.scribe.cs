@@ -74,6 +74,16 @@ internal sealed class ThreeQubitStabilizerPolarEscapeDocument : IScribeDocumentD
                     Call("convexHull", Reals(), Local("PureStabilizer", X("n"))))),
                 "The mixed stabilizer states in §2 form the convex hull over the real numbers of the pure stabilizer projectors.",
                 DescribeRole.Definition, Literature()),
+            Node("gamma-words", "The seven Pauli words", "gammaWords",
+                Equal(Name("gammaWords"), GammaWordsFormula()),
+                "The seven three-qubit words are XII, YII, ZXI, ZYI, ZZX, ZZY and ZZZ.",
+                DescribeRole.Definition),
+            Node("local-product", "Local gates preserve products", "local_product", LocalProductFormula(),
+                "Embedding two single-qubit operators at the same coordinate preserves their product.",
+                DescribeRole.Theorem),
+            Node("local-identity", "The local identity gate", "local_identity", LocalIdentityFormula(),
+                "Embedding the single-qubit identity at any coordinate gives the identity on the full register.",
+                DescribeRole.Theorem),
             Node("s", "Seven anticommuting Pauli terms", "S", SFormula(),
                 "The seven words are XII, YII, ZXI, ZYI, ZZX, ZZY and ZZZ. Their Pauli operators anticommute pairwise, so the cross terms in the square cancel.",
                 DescribeRole.Definition),
@@ -134,12 +144,26 @@ internal sealed class ThreeQubitStabilizerPolarEscapeDocument : IScribeDocumentD
             Ex("U", Op(X("n")), And(Mem(X("U"), Local("Clifford", X("n"))),
                 Equal(X("rho"), Mul(Mul(X("U"), Local("vacuum", X("n"))), Adjoint(X("U")))))))));
 
+    private static Formula GammaWordsFormula() => Vector(
+        PauliWord("X", "I", "I"), PauliWord("Y", "I", "I"),
+        PauliWord("Z", "X", "I"), PauliWord("Z", "Y", "I"),
+        PauliWord("Z", "Z", "X"), PauliWord("Z", "Z", "Y"), PauliWord("Z", "Z", "Z"));
+
+    private static Formula LocalProductFormula() => All("n", Naturals(), All("i", Fin(X("n")),
+        All("A", QubitOp(), All("B", QubitOp(),
+            Equal(Mul(LocalOp(X("i"), X("A")), LocalOp(X("i"), X("B"))),
+                LocalOp(X("i"), Mul(X("A"), X("B"))))))));
+
+    private static Formula LocalIdentityFormula() => All("n", Naturals(), All("i", Fin(X("n")),
+        Equal(LocalOp(X("i"), Typed(Num(1), QubitOp())), Typed(Num(1), Op(X("n"))))));
+
+    private static Formula QubitOp() => Call("Matrix", Fin(Num(2)), Fin(Num(2)), Complexes());
+    private static Formula LocalOp(Formula i, Formula matrix) =>
+        At(Information("StabilizerPairLocalUnitaryInequivalence", "localOp"), i, matrix);
+
     private static Formula SFormula() => Equal(Name("S"), SumOver("j", Fin(Num(7)),
         At(Information("StabilizerPairLocalUnitaryInequivalence", "wordOp"),
-            At(Vector(PauliWord("X", "I", "I"), PauliWord("Y", "I", "I"),
-                PauliWord("Z", "X", "I"), PauliWord("Z", "Y", "I"),
-                PauliWord("Z", "Z", "X"), PauliWord("Z", "Z", "Y"),
-                PauliWord("Z", "Z", "Z")), X("j")))));
+            At(GammaWordsFormula(), X("j")))));
 
     private static Formula BellFormula() => All("x", Bits(Num(6)), All("y", Bits(Num(6)),
         Equal(At(Name("bell"), X("x"), X("y")), Call("ite",
