@@ -4,7 +4,19 @@
 
 Partial traces give density-state marginals, and independent product states have zero quantum mutual information.
 
-**Theorem 1.1 (Density states are positive in matrix coordinates).**
+**Theorem 1.1 (The trace of a spectral function).**
+
+$$\forall (n : Type), [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall (A : \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \forall (hA : \operatorname{Matrix}.\operatorname{IsHermitian}\left(A\right)), \forall (f : (\mathbb{R} \to \mathbb{R})), \operatorname{Complex}.\operatorname{re}\left(\operatorname{Matrix}.\operatorname{trace}\left(\operatorname{cfc}\left(f, A\right)\right)\right) = \sum_{i : n} f\left(\operatorname{Matrix}.\operatorname{IsHermitian}.\operatorname{eigenvalues}\left(hA, i\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/PartialTraceMutualInformation.re_trace_cfc` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a Hermitian matrix and any real function, the real trace of its continuous functional calculus equals the sum of that function over its eigenvalues.
+
+**Theorem 1.2 (Density states are positive in matrix coordinates).**
 
 $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall rho \in \operatorname{DensityState}\left(n\right),\; \operatorname{Matrix.PosSemidef}\left(\operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right)$$
 
@@ -16,7 +28,7 @@ $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\
 
 The star algebra equivalence from CStarMatrix to Matrix preserves nonnegativity, hence positive semidefiniteness.
 
-**Theorem 1.2 (Tracing out the left factor preserves positivity).**
+**Theorem 1.3 (Tracing out the left factor preserves positivity).**
 
 $$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTraceLeft}\left(M\right)\right)$$
 
@@ -28,7 +40,7 @@ $$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{P
 
 For arbitrary finite carriers A and B, the reduced matrix is a finite sum of principal submatrices.
 
-**Theorem 1.3 (Tracing out the right factor preserves positivity).**
+**Theorem 1.4 (Tracing out the right factor preserves positivity).**
 
 $$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTraceRight}\left(M\right)\right)$$
 
@@ -40,7 +52,7 @@ $$\forall M, \operatorname{PosSemidef}\left(M\right) \Rightarrow \operatorname{P
 
 The same principal-submatrix argument applies to the other factor.
 
-**Theorem 1.4 (The left partial trace preserves trace).**
+**Theorem 1.5 (The left partial trace preserves trace).**
 
 $$\forall M, \operatorname{trace}\left(\operatorname{partialTraceLeft}\left(M\right)\right) = \operatorname{trace}\left(M\right)$$
 
@@ -52,7 +64,7 @@ $$\forall M, \operatorname{trace}\left(\operatorname{partialTraceLeft}\left(M\ri
 
 For every joint matrix, summing the reduced diagonal recovers its diagonal sum.
 
-**Theorem 1.5 (The right partial trace preserves trace).**
+**Theorem 1.6 (The right partial trace preserves trace).**
 
 $$\forall M, \operatorname{trace}\left(\operatorname{partialTraceRight}\left(M\right)\right) = \operatorname{trace}\left(M\right)$$
 
@@ -64,7 +76,7 @@ $$\forall M, \operatorname{trace}\left(\operatorname{partialTraceRight}\left(M\r
 
 Together with positivity, trace preservation gives a normalized marginal.
 
-**Definition 1.6 (Spectral entropy of a Hermitian matrix).**
+**Definition 1.7 (Spectral entropy of a Hermitian matrix).**
 
 $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall rho \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \forall h \in \operatorname{Matrix.IsHermitian}\left(rho\right),\; \operatorname{spectralEntropy}\left(h\right) = \sum_{i:n} \operatorname{Real.negMulLog}\left(\operatorname{Matrix.IsHermitian.eigenvalues}\left(h, i\right)\right)$$
 
@@ -76,9 +88,9 @@ $$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\
 
 For any Hermitian matrix on a finite carrier, spectralEntropy sums Real.negMulLog over its eigenvalues. On density matrices this is von Neumann entropy in nats, including singular states with the zero-eigenvalue contribution set to zero.
 
-**Definition 1.7 (Mutual information of a joint density state).**
+**Definition 1.8 (Mutual information of a joint density state).**
 
-$$\operatorname{quantumMutualInformation}\left(\rho\right) = \operatorname{vonNeumannEntropy}\left(\operatorname{marginalRight}\left(\rho\right)\right) + \operatorname{vonNeumannEntropy}\left(\operatorname{marginalLeft}\left(\rho\right)\right) - \operatorname{vonNeumannEntropy}\left(\rho\right)$$
+$$\forall (A : Type), \forall (B : Type), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall (rho : \operatorname{DensityState}\left((A \times B)\right)), \operatorname{quantumMutualInformation}\left(rho\right) = \operatorname{vonNeumannEntropy}\left(\operatorname{marginalRight}\left(rho\right)\right) + \operatorname{vonNeumannEntropy}\left(\operatorname{marginalLeft}\left(rho\right)\right) - \operatorname{vonNeumannEntropy}\left(rho\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation` (`✓ std3`).
 
@@ -88,7 +100,7 @@ $$\operatorname{quantumMutualInformation}\left(\rho\right) = \operatorname{vonNe
 
 The only input is the joint state. marginalRight retains A and marginalLeft retains B; each is constructed by partial trace.
 
-**Theorem 1.8 (Entropy adds on independent product states).**
+**Theorem 1.9 (Entropy adds on independent product states).**
 
 $$\forall \rho, \sigma, \operatorname{vonNeumannEntropy}\left(\operatorname{productState}\left(\rho, \sigma\right)\right) = \operatorname{vonNeumannEntropy}\left(\rho\right) + \operatorname{vonNeumannEntropy}\left(\sigma\right)$$
 
@@ -100,7 +112,7 @@ $$\forall \rho, \sigma, \operatorname{vonNeumannEntropy}\left(\operatorname{prod
 
 The spectrum of the product is the multiset of pairwise eigenvalue products. For any two density states on finite carriers, including singular states, the proof uses the zero value of x log x at zero.
 
-**Theorem 1.9 (Independent product states have zero mutual information).**
+**Theorem 1.10 (Independent product states have zero mutual information).**
 
 $$\forall \rho, \sigma, \operatorname{quantumMutualInformation}\left(\operatorname{productState}\left(\rho, \sigma\right)\right) = 0$$
 
@@ -119,6 +131,7 @@ The actual partial traces recover the two factors. Their entropies cancel the en
 - Truth anchor: `D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight_posSemidef`
 - Truth anchor: `D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation`
 - Truth anchor: `D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation_productState`
+- Truth anchor: `D5/S3/Quantum/Information/PartialTraceMutualInformation.re_trace_cfc`
 - Truth anchor: `D5/S3/Quantum/Information/PartialTraceMutualInformation.spectralEntropy`
 - Truth anchor: `D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceLeft`
 - Truth anchor: `D5/S3/Quantum/Information/PartialTraceMutualInformation.trace_partialTraceRight`

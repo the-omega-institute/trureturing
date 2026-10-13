@@ -13,6 +13,10 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
             + "zero quantum mutual information.",
         H("Partial Trace and Quantum Mutual Information"),
         Blocks(
+            Describe.Lean(DescribeId.Create("trace-cfc"), DeclarationHandle.Create(Module + "re_trace_cfc"),
+                H("The trace of a spectral function"), StatementSource.FromAuthor(TraceCfcFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a Hermitian matrix and any real function, the real trace of its continuous functional calculus equals the sum of that function over its eigenvalues."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("density-positive"),
                 DeclarationHandle.Create(Module + "density_posSemidef"),
@@ -108,11 +112,19 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
         Call("trace", Call(partialTrace, F.Id("M"))), Sp, Eq, Sp,
         Call("trace", F.Id("M"))));
 
-    private static Formula MutualInformationFormula() => Disp(Seq(
-        Call("quantumMutualInformation", Rho), Sp, Eq, Sp,
-        Call("vonNeumannEntropy", Call("marginalRight", Rho)), Sp, Plus, Sp,
-        Call("vonNeumannEntropy", Call("marginalLeft", Rho)), Sp, Minus, Sp,
-        Call("vonNeumannEntropy", Rho)));
+    private static Formula MutualInformationFormula()
+    {
+        Formula a = F.Id("A"), b = F.Id("B"), rho = F.Id("rho");
+        Formula body = Seq(Call("quantumMutualInformation", rho), Sp, Eq, Sp,
+            Call("vonNeumannEntropy", Call("marginalRight", rho)), Sp, Plus, Sp,
+            Call("vonNeumannEntropy", Call("marginalLeft", rho)), Sp, Minus, Sp,
+            Call("vonNeumannEntropy", rho));
+        body = All("rho", Call("DensityState", Parenthesized(Seq(a, Sp, Times, Sp, b))), body);
+        foreach (var carrier in new[] { b, a })
+            body = Seq(OpenBracket, Call("Fintype", carrier), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", carrier), CloseBracket, Sp, body);
+        return Disp(All("A", F.Id("Type"), All("B", F.Id("Type"), body)));
+    }
 
     private static Formula SpectralEntropyFormula()
     {
@@ -146,4 +158,29 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
         Forall, Sp, Rho, Comma, Sp, SigmaLower, Comma, Sp,
         Call("quantumMutualInformation", Call("productState", Rho, SigmaLower)), Sp, Eq, Sp,
         Num(0)));
+
+    private static Formula TraceCfcFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("A"), h = F.Id("hA"), f = F.Id("f"), i = F.Id("i");
+        Formula real = Seq(Mathbb, Grp(F.Id("R"))), complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula body = Seq(new Formula.Apply(Qualified("Complex", "re"),
+            [new Formula.Apply(Qualified("Matrix", "trace"), [Call("cfc", f, a)])]), Sp, Eq, Sp,
+            Sum, Underscore, Grp(i, Sp, Colon, Sp, n), Sp,
+            new Formula.Apply(f, [new Formula.Apply(Qualified("Matrix.IsHermitian", "eigenvalues"), [h, i])]));
+        body = All("f", Parenthesized(Seq(real, Sp, To, Sp, real)), body);
+        body = All("hA", new Formula.Apply(Qualified("Matrix", "IsHermitian"), [a]), body);
+        body = All("A", Call("Matrix", n, n, complex), body);
+        body = Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp, OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, body);
+        return Disp(All("n", F.Id("Type"), body));
+    }
+    private static Formula Qualified(string owner, string name)
+    {
+        var parts = owner.Split('.').Append(name).ToArray();
+        Formula result = Seq(Operatorname, Grp(F.Id(parts[0])));
+        foreach (var part in parts.Skip(1)) result = Seq(result, Dot, Operatorname, Grp(F.Id(part)));
+        return result;
+    }
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp,
+        Parenthesized(Seq(F.Id(name), Sp, Colon, Sp, type)), Comma, Sp, body);
 }

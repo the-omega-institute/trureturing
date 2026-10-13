@@ -19,6 +19,7 @@ import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
    Changes: specialize to complex matrices, retain partialTrace, and adapt to CStarMatrix.
    Retire these ports when this repository's pinned Mathlib supplies equivalent declarations.
    Search receipts and the revised registration are in docs/reports/qmutualinfo/.
+proof_shape: re_trace_cfc: bind-only; consumer: vonNeumannEntropy_eq_spectral.
 -/
 
 set_option autoImplicit false
@@ -277,7 +278,7 @@ private theorem spectralEntropy_kronecker {m : Type*} [Fintype m] [DecidableEq m
           Finset.sum_congr rfl fun i _ => by rw [← Finset.mul_sum]]
     rw [← Finset.sum_mul, hsumρ, one_mul]
 
-private theorem re_trace_cfc {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ) :
+theorem re_trace_cfc {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ) :
     (cfc f A).trace.re = ∑ i, f (hA.eigenvalues i) := by
   rw [hA.cfc_eq f]
   unfold Matrix.IsHermitian.cfc
@@ -326,12 +327,5 @@ theorem quantumMutualInformation_productState
   unfold quantumMutualInformation
   rw [marginalRight_productState, marginalLeft_productState, vonNeumannEntropy_productState]
   exact sub_self _
-
-#print axioms quantumMutualInformation_productState
-
-#print axioms partialTraceLeft_posSemidef
-#print axioms partialTraceRight_posSemidef
-#print axioms marginalLeft
-#print axioms marginalRight
 
 end D5.S3.Quantum.Information.PartialTraceMutualInformation
