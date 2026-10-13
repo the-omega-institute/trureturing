@@ -67,6 +67,10 @@ private lemma two_coeff_mul (a b c d : ℝ) :
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.one_mul, Matrix.mul_one,
     Matrix.smul_mul, Matrix.mul_smul, smul_smul, S_square_real]
   module
+private lemma two_coeff_hermitian (a b : ℝ) :
+    (a • (1 : Op 3) + b • S).IsHermitian :=
+  (Matrix.isHermitian_one.smul (IsSelfAdjoint.all a)).add
+    ((show S.IsHermitian from source_certificate.2.2.1).smul (IsSelfAdjoint.all b))
 private lemma sigma_expanded : sigma = (1 / 8 : ℝ) • (1 : Op 3) + (1 / 56 : ℝ) • S := by
   change (1 / 56 : ℝ) • ((7 : ℝ) • (1 : Op 3) + S) = _
   simp only [smul_add, smul_smul]
@@ -223,28 +227,6 @@ private lemma C_square_expectation_bound (η : Op 3) (hη : η ∈ STAB 3) :
   simp only [Matrix.mul_smul]
   norm_num at hp ⊢
   nlinarith
-private lemma marginal_lower_bound (η : Op 3) (hη : η ∈ STAB 3)
-    (hηp : η.PosDef) : Q ≤ tr (rho * rho * η⁻¹) := by
-  have hsq := completed_square_nonnegative η (rho - η * C) hηp
-  have hid := completed_square_identity rho C η hηp
-    (by unfold rho; simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
-      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1])
-    (by unfold C; simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
-      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]) rho_C_trace
-  have hC := C_square_expectation_bound η hη
-  linarith
-private lemma full_rank_support_guard {n : ℕ} (ρ η : Op n)
-    (hρ : ρ.PosDef) (hsing : ¬ IsUnit η) : ¬ SupportLE ρ η := by
-  intro h
-  have hρi : Function.Injective ρ.mulVec :=
-    Matrix.mulVec_injective_iff_isUnit.mpr hρ.isUnit
-  have hi : Function.Injective η.mulVec := by
-    intro x y hxy
-    apply sub_eq_zero.mp
-    apply hρi
-    simpa only [Matrix.mulVec_zero] using
-      h (x - y) (by simpa [Matrix.mulVec_sub] using (sub_eq_zero.mpr hxy))
-  exact hsing (Matrix.mulVec_injective_iff_isUnit.mp hi)
 private lemma rho_trace : rho.trace = 1 := by
   unfold rho
   simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one,
@@ -260,6 +242,25 @@ private lemma rho_pos : rho.PosDef := by
   exact hW.smul (by norm_num)
 private lemma rho_state : IsState rho := by
   exact ⟨rho_pos.posSemidef, rho_trace⟩
+private lemma marginal_lower_bound (η : Op 3) (hη : η ∈ STAB 3)
+    (hηp : η.PosDef) : Q ≤ tr (rho * rho * η⁻¹) := by
+  have hsq := completed_square_nonnegative η (rho - η * C) hηp
+  have hid := completed_square_identity rho C η hηp
+    rho_pos.isHermitian (two_coeff_hermitian _ _) rho_C_trace
+  have hC := C_square_expectation_bound η hη
+  linarith
+private lemma full_rank_support_guard {n : ℕ} (ρ η : Op n)
+    (hρ : ρ.PosDef) (hsing : ¬ IsUnit η) : ¬ SupportLE ρ η := by
+  intro h
+  have hρi : Function.Injective ρ.mulVec :=
+    Matrix.mulVec_injective_iff_isUnit.mpr hρ.isUnit
+  have hi : Function.Injective η.mulVec := by
+    intro x y hxy
+    apply sub_eq_zero.mp
+    apply hρi
+    simpa only [Matrix.mulVec_zero] using
+      h (x - y) (by simpa [Matrix.mulVec_sub] using (sub_eq_zero.mpr hxy))
+  exact hsing (Matrix.mulVec_injective_iff_isUnit.mp hi)
 private lemma magic_two_one_lower :
     ((log2 Q : ℝ) : EReal) ≤ magic 2 1 rho := by
   apply le_sInf
@@ -307,11 +308,7 @@ private lemma rhoBar_state : IsState rhoBar := by
   rw [bar_transpose rho rho_pos.isHermitian, Matrix.trace_transpose, rho_trace]
 private lemma conjugate_marginal_lower (η : Op 3) (hη : η ∈ STAB 3)
     (hηp : η.PosDef) : Q ≤ tr (rhoBar * rhoBar * η⁻¹) := by
-  have hc : C.IsHermitian := by
-    change Cᴴ = C
-    unfold C
-    simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
-      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]
+  have hc : C.IsHermitian := two_coeff_hermitian _ _
   have hbc : (conjugate C).IsHermitian := by
     rw [bar_transpose C hc]
     exact hc.transpose
@@ -655,13 +652,13 @@ private lemma halfspace_prepared (j : Fin 7) :
   simp only [productPrep_projector]
   fin_cases j
   all_goals first
-    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.X, .I, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.X, .I, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.X, .I, .I] : Fin 3 → Pauli) i = .I then .Z else (![.X, .I, .I] : Fin 3 → Pauli) i)))
-    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Y, .I, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Y, .I, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Y, .I, .I] : Fin 3 → Pauli) i = .I then .Z else (![.Y, .I, .I] : Fin 3 → Pauli) i)))
-    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .X, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .X, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .X, .I] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .X, .I] : Fin 3 → Pauli) i)))
-    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Y, .I]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Y, .I] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Y, .I] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Y, .I] : Fin 3 → Pauli) i)))
-    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Z, .X]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Z, .X] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Z, .X] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Z, .X] : Fin 3 → Pauli) i)))
-    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Z, .Y]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Z, .Y] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Z, .Y] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Z, .Y] : Fin 3 → Pauli) i)))
-    | change (1 / 8 : ℝ) • (tensorOp (fun _ : Fin 3 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) + wordOp ![.Z, .Z, .Z]) = ∑ b : Fin 2 × Fin 2, (1 / 4 : ℝ) • tensorOp (fun i => (1 / 2 : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) + (if parityBits ![.Z, .Z, .Z] b i = 0 then (1 : ℂ) else -1) • pauliMatrix (if (![.Z, .Z, .Z] : Fin 3 → Pauli) i = .I then .Z else (![.Z, .Z, .Z] : Fin 3 → Pauli) i)))
+    | erw [show words 0 = ![.X, .I, .I] from rfl]
+    | erw [show words 1 = ![.Y, .I, .I] from rfl]
+    | erw [show words 2 = ![.Z, .X, .I] from rfl]
+    | erw [show words 3 = ![.Z, .Y, .I] from rfl]
+    | erw [show words 4 = ![.Z, .Z, .X] from rfl]
+    | erw [show words 5 = ![.Z, .Z, .Y] from rfl]
+    | erw [show words 6 = ![.Z, .Z, .Z] from rfl]
   all_goals ext x y
   all_goals simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.add_apply,
     tensorOp, wordOp, Matrix.of_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
@@ -827,26 +824,21 @@ private lemma bell_sandwich (A : Op 6) : bell * A * bell = (bell * A).trace • 
   simp only [smul_smul]
   congr 1
   ring
+private lemma sigmaInv_hermitian : sigmaInv.IsHermitian := by
+  unfold sigmaInv
+  rw [sub_eq_add_neg, ← neg_smul]
+  exact two_coeff_hermitian _ _
 private lemma baseInv_hermitian : baseInv.IsHermitian := by
-  have hh : sigmaInv.IsHermitian := by
-    change sigmaInvᴴ = sigmaInv
-    unfold sigmaInv
-    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
-      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]
   unfold baseInv
-  rw [bar_transpose sigmaInv hh]
+  rw [bar_transpose sigmaInv sigmaInv_hermitian]
   change (tensor sigmaInv sigmaInvᵀ)ᴴ = tensor sigmaInv sigmaInvᵀ
-  rw [tensor_star, hh, hh.transpose]
+  rw [tensor_star, sigmaInv_hermitian, sigmaInv_hermitian.transpose]
 private lemma base_bell_trace : tr (bell * baseInv) = 896 / 9 := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
   rcases h with ⟨_, _, _, _, _, _, ht, _, _, _, _, _, _⟩
   unfold baseInv
   rw [ht]
-  have hh : sigmaInvᴴ = sigmaInv := by
-    unfold sigmaInv
-    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
-      Matrix.conjTranspose_one, star_trivial, source_certificate.2.2.1]
-  rw [hh]
+  rw [sigmaInv_hermitian]
   unfold sigmaInv
   rw [sub_eq_add_neg]
   simp only [← neg_smul]
