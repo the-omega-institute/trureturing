@@ -120,11 +120,7 @@ internal sealed class StableCoreObservationDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "This finite carrier is the intended input to finite joint-observation stages and their all-time restriction "
                         + "bonds. The present module proves the carrier finiteness; it does not yet construct those stages, prove the "
-                        + "orbit-range identity, or invoke the existing Mittag–Leffler shadowing theorem. "
-                        + "Reg retains the original telescopes, explicit enrolled-template source selections, whole-family variation, "
-                        + "sensitivity and observational dependence. The current report validates the uniform-tail cutoff and "
-                        + "prefix-length bindings. The Boolean finiteness readout remains declared_unresolved at Classical.choice "
-                        + "under issue #5214; its mathematical theorem and four-slot proof terms are kernel-checked."))),
+                        + "orbit-range identity, or invoke the existing Mittag–Leffler shadowing theorem."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
