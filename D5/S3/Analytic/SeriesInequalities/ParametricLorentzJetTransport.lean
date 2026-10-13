@@ -131,7 +131,7 @@ private lemma functional_eq {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
   intro s hs ν hν i hi
   simp [extendSamples,hs,hν,hi]
 
-private lemma linear_iterated {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+lemma linear_iterated {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [NormedAddCommGroup F] [NormedSpace ℝ F] (L : E →L[ℝ] F)
     {f : ℝ → E} {x : ℝ} {m : ℕ} (hf : ContDiffAt ℝ m f x) :
     iteratedDeriv m (fun y => L (f y)) x = L (iteratedDeriv m f x) := by
@@ -264,7 +264,7 @@ private lemma qjet_scale_smooth {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
   · exact (iterated_smooth hφ ν).contDiffAt.comp x
       (contDiffAt_const.div contDiffAt_id hx)
 
-private lemma reference_transport {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
+lemma reference_transport {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
     {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ) (η a d : ℝ) (r k D J m : ℕ)
     {x : ℝ} (hx : 0 < x) :
     iteratedDeriv m (fun y => bernsteinCoefficient D J
@@ -633,7 +633,7 @@ private lemma weight_mass {xstar x : ℝ} {b : ℕ}
     simp only [scaleWeight,← sum_div]
     exact (div_le_one hp).mpr (hs.sum_le_tsum _ (fun i _ => bump_nonneg _))
 
-private lemma active_ring {xstar x : ℝ} {b j : ℕ}
+lemma active_ring {xstar x : ℝ} {b j : ℕ}
     (hxstar : 0 < xstar) (hx : 0 < x) (hb : 1 < b)
     (hw : scaleWeight xstar b j x ≠ 0) : ringScale xstar b j / Real.sqrt b ≤ x := by
   have hbR : (1 : ℝ) < b := by exact_mod_cast hb
@@ -739,7 +739,7 @@ private lemma eventual_width (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ 
       rw [← sum_mul,hsum]; ring
     _ ≤ _ := mul_le_mul_of_nonneg_right (by linarith) (Real.rpow_nonneg (by positivity) _)
 
-private lemma coefficient_smooth {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
+lemma coefficient_smooth {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
     {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ) (η a d : ℝ) (r k D t : ℕ)
     {x : ℝ} (hx : 0 < x) : ContDiffAt ℝ ∞
       (fun y => bernsteinCoefficient D t
