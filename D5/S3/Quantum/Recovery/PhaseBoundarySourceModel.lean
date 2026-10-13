@@ -84,7 +84,7 @@ private theorem eta_trace {ell : ℝ} (hl : 0 ≤ ell) (hu : ell ≤ 1)
   push_cast
   ring
 
-private theorem eta_positive {ell beta gamma w : ℝ} (hb : 0 < beta)
+theorem eta_positive {ell beta gamma w : ℝ} (hb : 0 < beta)
     (hw : 0 ≤ w) (hmax : w ≤ beta / (beta ^ 2 + gamma ^ 2)) (s : Qubit) :
     (eta ell beta gamma w s).PosSemidef := by
   have hk : 0 < beta ^ 2 + gamma ^ 2 := by positivity
@@ -732,12 +732,12 @@ private def averageChannel {A B : Type} [Fintype A] [DecidableEq A]
       (G.toCompletelyPositiveMap X + H.toCompletelyPositiveMap X)) = Matrix.trace X
     rw [Matrix.trace_smul, Matrix.trace_add, G.trace_preserving, H.trace_preserving]
     ring
-private theorem average_entry {A B : Type} [Fintype A] [DecidableEq A]
+theorem average_entry {A B : Type} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (G H : QuantumChannel A B)
     (X : CStarMatrix A A ℂ) (a b : B) :
     (averageChannel G H).toCompletelyPositiveMap X a b =
       (1 / 2 : ℂ) * (G.toCompletelyPositiveMap X a b + H.toCompletelyPositiveMap X a b) := rfl
-private def flipFlag (s : Qubit) : Qubit := if s = 0 then 1 else 0
+def flipFlag (s : Qubit) : Qubit := if s = 0 then 1 else 0
 private theorem flag_conjugation_exists :
     ∃ U : QuantumChannel (Qubit × Qubit) (Qubit × Qubit),
       ∀ (X : CStarMatrix (Qubit × Qubit) (Qubit × Qubit) ℂ) (p q : Qubit × Qubit),
@@ -759,16 +759,16 @@ private theorem flag_conjugation_exists :
   fin_cases s <;> fin_cases a <;> fin_cases t <;> fin_cases b <;>
     simpa [K, flipFlag, flagSign, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fintype.sum_prod_type, Fin.sum_univ_two] using hh
-private def flagConjugation : QuantumChannel (Qubit × Qubit) (Qubit × Qubit) :=
+def flagConjugation : QuantumChannel (Qubit × Qubit) (Qubit × Qubit) :=
   flag_conjugation_exists.choose
-private theorem flag_conjugation_entry
+theorem flag_conjugation_entry
     (X : CStarMatrix (Qubit × Qubit) (Qubit × Qubit) ℂ) (p q : Qubit × Qubit) :
     flagConjugation.toCompletelyPositiveMap X p q =
       (flagSign p.2 : ℂ) * X (flipFlag p.1, p.2) (flipFlag q.1, q.2) * (flagSign q.2 : ℂ) :=
   flag_conjugation_exists.choose_spec X p q
 private def routPhase : QuantumChannel (Qubit × Qubit) (Qubit × Qubit) :=
   receiverChannel (M := Qubit) inputPhase
-private theorem rout_entry (X : CStarMatrix (Qubit × Qubit) (Qubit × Qubit) ℂ)
+theorem rout_entry (X : CStarMatrix (Qubit × Qubit) (Qubit × Qubit) ℂ)
     (p q : Qubit × Qubit) :
     routPhase.toCompletelyPositiveMap X p q = (flagSign p.2 : ℂ) * X p q * (flagSign q.2 : ℂ) := by
   change (receiverChannel inputPhase).toCompletelyPositiveMap X p q = _
