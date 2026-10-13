@@ -66,7 +66,7 @@ theorem unused_suffix {S : Type} (decode : S → Instruction S)
 
 def fairBit : PMF Bool := PMF.bernoulli (1/2) (by norm_num)
 
-private theorem fair_bit_mass (b : Bool) : fairBit b = (1/2 : ℝ≥0∞) := by
+theorem fair_bit_mass (b : Bool) : fairBit b = (1/2 : ℝ≥0∞) := by
   cases b <;> norm_num [fairBit,PMF.bernoulli_apply]
 
 def tapeLaw : Measure (ℕ → Bool) := Measure.infinitePi (fun _ => fairBit.toMeasure)

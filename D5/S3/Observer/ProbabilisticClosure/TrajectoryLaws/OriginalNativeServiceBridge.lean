@@ -285,7 +285,7 @@ def graphPrefix (A : Architecture S Head Symbol B) (s : S) (ω : ℕ → Bool) :
       ⟨(r.1.1, receipt) :: p.statesAndReceipts, p.unused,
         (if A.action s = .freshBit then 1 else 0) + p.requests⟩
 
-private theorem tick_refinement (A : Architecture S Head Symbol B)
+theorem tick_refinement (A : Architecture S Head Symbol B)
     (s : S) (ω : ℕ → Bool) :
     nativeTick A s ω = successor (primitiveInstruction A s) ω := by
   by_cases he : A.enabled s
@@ -375,7 +375,7 @@ def initInstruction (A : Architecture S Head Symbol B) (s : S) :
 
 variable [Fintype S] [MeasurableSpace S] [MeasurableSingletonClass S]
 
-private theorem native_until_refinement (A : Architecture S Head Symbol B)
+theorem native_until_refinement (A : Architecture S Head Symbol B)
     (a : S ⊕ Ready A) (ω : ℕ → Bool) (n : ℕ) :
     nativeUntil A a ω n = path (initInstruction A) a ω n := by
   induction n generalizing a ω with
