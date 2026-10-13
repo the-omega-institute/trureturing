@@ -60,7 +60,7 @@ $$
 
 These are cited results, not new convergence or depoissonization
 theorems. The theorem applies to real coefficient sequences without
-assuming real-rootedness of $g$. The [original-source application](romik2021orthogonal.md)
+assuming real-rootedness of $g$. The [original-source application](../Analytic/romik2021orthogonal.md)
 must separately map its coefficients, control this remainder and capture
 the actual polynomial nodes. A generic supplier is not an all-height
 Jensen margin or an RH/Robin proof.

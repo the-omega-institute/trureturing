@@ -42,10 +42,10 @@ simple zeros and its specific measure and orthogonal polynomials.
 
 ## Derivative suppliers and their variable scopes
 
-The [second-level concavity source](planatsole2026secondlevel.md)
+The [second-level concavity source](../Zeros/planatsole2026secondlevel.md)
 states a finite-order inequality for $K(\sqrt T)$ in Csordas'
 normalization $\Phi(x)=2K(x/2)$, so its receiving coordinate is
-$T=x^2/4$. The [original-variable derivative counterexample](sra2026thetakernelcounterexample.md)
+$T=x^2/4$. The [original-variable derivative counterexample](../Zeros/sra2026thetakernelcounterexample.md)
 reports failure of a different all-order inequality for $K(u)$.
 The signed neighboring-row comparison at every prescribed Jensen node
 and the extra common-zero vanishing remain unpaid interfaces to these
@@ -879,7 +879,7 @@ The local convergence mechanism is already classical:
 [O'Sullivan, section 3.1, proof sketch following Theorem 3.1](https://arxiv.org/html/2007.13582v2#S3.SS1)
 uses $g_n(F;z/n)\to F(z)$ locally uniformly. Its coefficient convention
 and the repository's unchanged zero-shift normalization are recorded in
-[the existing Jensen supplier](osullivan2021modifiedjensen.md) and
+[the existing Jensen supplier](../Zeros/osullivan2021modifiedjensen.md) and
 [the normalized source tower](../../Blueprint/D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.md).
 That convergence, its generic proof and the known finite-degree coverage
 are reused; they are not additional mathematical results here.
@@ -1065,7 +1065,7 @@ originality claim.
 ## Multiple real source zeros on a fixed band
 
 The arbitrary-center Poisson–Charlier bound in
-[Zacharovas, Theorem 2.8](zacharovas2025depoissonization.md)
+[Zacharovas, Theorem 2.8](../Asymptotics/zacharovas2025depoissonization.md)
 provides a local application beyond the simple-source-zero premise in
 (LC18). The source, coefficients and actual nodes in (LC16) are unchanged.
 The following is a parameter application of that bound, classical
@@ -4299,7 +4299,7 @@ does not by itself imply a defect increase in a degenerate step;
 The literature's existing finite-degree coverage supplies
 $\Delta_n=0$ for $n\le9\cdot10^{24}$ under the actual coefficient
 correspondence in
-[the Jensen supplier](osullivan2021modifiedjensen.md#known-finite-degree-coverage-from-verified-zero-height).
+[the Jensen supplier](../Zeros/osullivan2021modifiedjensen.md#known-finite-degree-coverage-from-verified-zero-height).
 Eliminating every later increase would preserve zero defect at every
 degree and pay the classical Jensen/RH criterion. The sparse-degree
 bound and the localization of a possible witness do not eliminate
@@ -5090,7 +5090,7 @@ no Lean or numerical-constant certificate and no originality claim.
 ### Reuse the verified-height lower bound at the first source height
 
 The known finite-degree implication (VH) is already recorded in
-[the Jensen supplier](osullivan2021modifiedjensen.md#known-finite-degree-coverage-from-verified-zero-height).
+[the Jensen supplier](../Zeros/osullivan2021modifiedjensen.md#known-finite-degree-coverage-from-verified-zero-height).
 Its primary source is Griffin, Ono, Rolen, Thorner, Tripp and Wagner,
 [*Jensen polynomials for the Riemann xi-function*, arXiv:1910.01227v3](https://arxiv.org/abs/1910.01227v3),
 Theorem 1.2 at $m=0$, which the authors identify as Chasse's
@@ -6074,7 +6074,7 @@ selection of every multiplicity in its closed disc, source count
 $r\le C_0L$, original coefficient shift zero, and original $F$,
 $\mathcal J_n$, $\mathcal G_n$ are exactly those of (LC212)--(LC220).
 The arbitrary-center Poisson--Charlier supplier already cited in
-[Zacharovas, Theorem 2.8](zacharovas2025depoissonization.md) supplies
+[Zacharovas, Theorem 2.8](../Asymptotics/zacharovas2025depoissonization.md) supplies
 the truncation-error context; its absolute coefficient remainder alone
 is not a node-relative budget. Exact finite Taylor extraction here
 comes from the previously established finite tilt. Only a high-order
@@ -7167,3 +7167,173 @@ Local $B,K$ bounds alone do not supply those properties.
 This finite-model application certifies neither original-source local
 realness at every height, global Jensen hyperbolicity, RH nor strict
 Robin for every integer $H>5040$.
+
+
+## Retain absolute exterior-zero mass from the original source count
+
+The local logarithmic curvature in (LC204)--(LC205) is a signed
+complex sum. It need not measure the exterior zeros' total influence.
+The complete fixed-source count in (LC180) supplies an additional
+initial estimate without assuming that the exterior zeros are real.
+This is a source-specific application of the existing count and
+canonical-product suppliers, not a new zero-count theorem. The
+estimates below are ordinary analysis without Lean or originality
+certification; their propagation to actual finite nodes remains open.
+
+Retain $T\ge32$, $L=\log(T+2)$, $0<\rho\le1/8$, $c=T^2$,
+$R=T\rho/4$, a positive integer $n$, $\sigma=c/\sqrt n$ and
+$\nu=n\rho^2/T^2$. Use the same conditional local premise as (LC204): every source zero
+in the closed radius-$4\rho$ disc about $1/2+iT$ is critical, and
+$Q$ removes all of them with their full multiplicities. Set $A=F/Q$.
+Every sum below counts multiplicities and includes every exterior
+zero of the unchanged entire source $F$.
+
+### Use the full count before taking an absolute value
+
+Represent a zero $\zeta$ of $F$ by $\zeta=t_\zeta^2$, where
+$t_\zeta=\gamma+i\eta$, $\gamma>0$ and $|\eta|<1/2$.
+This selects the positive-ordinate source zero once, rather than
+counting both square-root signs. On $|z-c|\le R$ take the local
+square root $t_z$ with positive real part. Then
+
+$$
+|t_z-T|\le\rho/4,\qquad
+|z-\zeta|=|t_z-t_\zeta|\,|t_z+t_\zeta|,
+\qquad |t_z+t_\zeta|\ge T-\rho/4+\gamma.
+\tag{LC262}
+$$
+
+Every unremoved source zero has $|t_\zeta-T|>4\rho$, hence its
+distance from this working $z$ disc is at least $3T\rho$.
+The upper-count argument of (LC180) applies at every height
+$u\ge32$: it uses the Euler-anchored normalization at $2+iu$,
+not the conditional existence of an off-line zero. It gives
+$O(\log(u+2))$ zeros in each fixed unit-height window. Fixed low
+heights contribute a finite constant. Summing those same window
+counts also gives $N(U)=O(U\log(U+2))$.
+
+For $|\gamma-T|\le2$, the complete count is $O(L)$ and the
+clearance just obtained gives $CL/(T^2\rho^2)$. For comparable
+heights $T/2\le\gamma\le2T$ outside that near window, (LC262)
+gives $|z-\zeta|\ge c_1T|\gamma-T|$; the unit windows sum to
+$CLT^{-2}\sum_{k\ge1}k^{-2}$. Zeros below $T/2$ cost
+$O(L/T^3)$, using $N(T/2)=O(TL)$ and distance $\gg T^2$.
+Those above $2T$ cost the same order by summing
+$O(\log(k+2))k^{-4}$ over $k\ge2T$. Consequently
+
+$$
+\mathcal K_{\rm abs}:=
+\sup_{|z-c|\le R}
+\sum_{\zeta\in Z(F)\setminus Z(Q)}\frac1{|z-\zeta|^2}
+\le \frac{C_{\rm abs}L}{T^2\rho^2},\qquad
+\sigma^2\mathcal K_{\rm abs}\le C_{\rm abs}\frac L\nu.
+\tag{LC263}
+$$
+
+The constants depend on the fixed original source and windows,
+not on $n$, $\rho$, the selected multiplicities or their spacings.
+All exterior-zero sums are absolute. In particular, at
+$\nu\sim C_*L$, their scaled mass has limsup at most
+$C_{\rm abs}/C_*$; it can be made small by choosing a sufficiently
+large fixed degree constant. This is an initial-source estimate, not an evolving-zero
+or extracted-response estimate.
+
+### What this mass supplies to every higher logarithmic jet
+
+The source's order-$1/2$ square shadow is already recorded in
+[the Jensen supplier](../Zeros/osullivan2021modifiedjensen.md).
+Reuse the classical genus-zero canonical product; no new
+factorization theorem is asserted. Removing the finite factor $Q$
+leaves the exterior-zero product. The finite partial-fraction and
+central-moment identities are already present in
+`D5/S3/Analytic/FiniteGenusZeroMomentExpansion`; they are not new
+formalization targets. The infinite convergence and source estimate
+here are ordinary analytical obligations. With $D=3T\rho$,
+$b=A'(c)/A(c)$ and $\kappa_c=\sum_{\rm ext}|c-\zeta|^{-2}$,
+termwise logarithmic differentiation gives
+
+$$
+\left|(\log A)^{(k)}(c)\right|
+\le (k-1)!\frac{\kappa_c}{D^{k-2}}
+\quad(k\ge2),\qquad \kappa_c\le\mathcal K_{\rm abs}.
+\tag{LC264}
+$$
+
+Indeed the exact derivative is
+$(-1)^{k-1}(k-1)!\sum_{\rm ext}(c-\zeta)^{-k}$.
+The canonical product converges locally, and these differentiated
+sums converge absolutely. In the disc $|w|<D$, use the analytic
+logarithm equal to zero at $w=0$. The same exterior factors yield
+
+$$
+\begin{aligned}
+\log\frac{A(c+w)}{A(c)}-bw
+ &=\sum_{\rm ext}\left[
+ \log\left(1+\frac{w}{c-\zeta}\right)
+                   -\frac{w}{c-\zeta}\right],\\
+\left|\log\frac{A(c+w)}{A(c)}-bw\right|
+ &\le \frac{\kappa_c|w|^2}{2(1-|w|/D)}.
+\end{aligned}
+\tag{LC265}
+$$
+
+This retains absolute zero mass as well as signed jets. It does
+not make the logarithmic remainder uniformly small on the cluster
+scale $|w|\asymp\sigma\sqrt r$. When $|w|/D\le q<1$ with fixed
+$q$, its upper order there is $r\sigma^2\mathcal K_{\rm abs}$,
+which can grow with $r$; without that restriction retain the full
+denominator in (LC265).
+
+### Small absolute mass still does not repair tangent normalization
+
+The already analysed quartic family (LC250) makes this distinction
+explicit without constructing another model. Its $4r$ exterior
+zeros all have distance $D_0=16T\rho$ from $c$. Thus
+
+$$
+\sigma^2\kappa_{*,c}=\frac r{64\nu},\qquad
+\sigma^2\mathcal K_{*,\rm abs}
+\le\frac r{64\nu}\left(\frac{64}{63}\right)^2.
+\tag{LC266}
+$$
+
+Here the supremum uses the same radius $R=D_0/64$.
+For $r/L\to\epsilon>0$ and $\nu\sim C_*L$, this mass can be
+made smaller than any prescribed positive constant by a large
+fixed $C_*$. Nevertheless, for each such fixed $C_*$ the signed
+derivative ratio in (LC252) still diverges, since its lower bound is
+$[1+r^2/(16^4\nu^2)]^r$. The complete finite responses and the
+actual central-node conclusion keep the distinct scopes established
+in (LC255)--(LC261). This observation excludes an inference from
+small absolute mass to small tangent-relative derivative error;
+it does not refute actual-node positivity or identify this model
+with the original $\Xi$.
+
+### Published local dynamics leave a propagation obligation
+
+Polymath, [arXiv:1904.12438v2](https://arxiv.org/html/1904.12438v2),
+Proposition 3.1 supplies the instantaneous simple-zero velocity
+and Hermite splitting of a repeated zero for its original-variable
+heat flow. Its repeated-zero error may depend on the multiplicity;
+Proposition 3.3 additionally requires initial, terminal and whole-time
+zero-free barriers. These are published suppliers, not a uniform
+continuation theorem under just (LC263). Squaring the original
+variable also changes the heat generator.
+
+Höfert--Jalowy--Kabluchko,
+[arXiv:2512.17808v2](https://arxiv.org/html/2512.17808v2),
+Lemma 3.12 and Remark 3.13 allow complex initial roots, but their
+finite heat localization radius depends on the entire polynomial
+degree. It cannot be replaced by the selected local count $r$ or
+applied to an infinite source by discarding its distant zeros.
+Hall--Ho--Jalowy--Kabluchko's order-less-than-one instantaneous
+root-velocity supplier likewise does not identify the heat operation
+with $\mathscr T_n$.
+
+The remaining task is to propagate the same original source's
+absolute exterior mass and complete tails to a nonvanishing response
+amplitude or direct actual-node estimate, uniformly for growing
+selected multiplicity. A heat route must also pay the evolving
+barriers and the finite-extraction comparison. Equations (LC263)--
+(LC265) provide initial data for that task, not its solution.
+RH and strict Robin for every integer $H>5040$ remain unresolved.

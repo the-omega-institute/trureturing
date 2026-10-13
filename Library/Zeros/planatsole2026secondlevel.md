@@ -46,7 +46,7 @@ independently executed here, and no Lean proof of Theorem 1.1 is supplied.
 
 ## Correspondence with the fixed repository source
 
-The source formulas in [Romik's kernel note](romik2021orthogonal.md)
+The source formulas in [Romik's kernel note](../Analytic/romik2021orthogonal.md)
 give the normalization correspondence
 
 $$

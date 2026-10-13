@@ -36,7 +36,7 @@ The paper combines saddle estimates, a two-index recurrence for logarithmic rati
 
 To distinguish these coefficients from the prescribed Jensen node parameter,
 write $b_j=\lambda_j=\xi^{(2j)}(1/2)/(2j)!$. With the
-[Romik source normalization](romik2021orthogonal.md), put
+[Romik source normalization](../Analytic/romik2021orthogonal.md), put
 
 $$
 T=x^2/4,\qquad S(T)=\Phi(2\sqrt T),\qquad

@@ -79,7 +79,7 @@ inequality correspondence.
 ## Correspondence with the actual theta coefficients
 
 Use the original full-axis theta representation in
-[Romik's owning note](romik2021orthogonal.md), with
+[Romik's owning note](../Analytic/romik2021orthogonal.md), with
 $\Xi(z)=\xi(1/2+iz)$ and
 $\Xi(z)=\int_{\mathbb R}\Phi(t)e^{izt}\,dt$. The actual normalized
 coefficients are

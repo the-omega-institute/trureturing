@@ -46,7 +46,7 @@ range $n\le8$.
 
 ## Source normalization and limits of transfer
 
-The [repository's original kernel](romik2021orthogonal.md) has
+The [repository's original kernel](../Analytic/romik2021orthogonal.md) has
 $\Phi(x)=2K(x/2)$. The chain rule gives the paper-level transport
 
 $$
