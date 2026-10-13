@@ -1032,3 +1032,135 @@ the FIB source with an $SO(3)$ representation or with a physical ambient
 space.
 
 ## 10.99 追加锚（本行以下为增补区）
+
+## 11. Source-level finite-rank certificate
+
+Sections 9–10 leave the rotation interface explicit. A separate finite
+certificate can connect a predictive-dimension claim to actual FIB sources
+without asserting that the native source already carries that interface.
+
+**Definition 11.1 (Affine response minor).** Let $S$ be a source set, let
+$p_1,p_2,p_3$ be continuations that are legal for every source under
+consideration, and let $y$ be a scalar readout. For sources
+$s_0,s_1,s_2,s_3\in S$, define
+
+$$
+M_{ij}=y(T_{p_i}s_j)-y(T_{p_i}s_0),
+\qquad 1\le i,j\le3.
+\tag{11.1}
+$$
+
+An affine predictive boundary of dimension $k$ for these responses is a map
+$z:S\to\mathbb R^k$ for which, for each $i$, there are $a_i\in\mathbb R$ and
+$\ell_i\in(\mathbb R^k)^*$ satisfying
+
+$$
+y(T_{p_i}s)=a_i+\ell_i(z(s))
+\qquad\text{for every }s\in S.
+\tag{11.2}
+$$
+
+**Theorem 11.2 (Finite minor lower bound).** If an affine predictive boundary
+as in Definition 11.1 exists and
+
+$$
+\det M\ne0,
+\tag{11.3}
+$$
+
+then $k\ge3$. If a three-dimensional affine boundary exists, the minimum
+dimension for this response task is therefore exactly three.
+
+**Proof.** Let $Z$ be the $k\times3$ matrix whose $j$-th column is
+$z(s_j)-z(s_0)$, and let $L$ be the $3\times k$ matrix whose $i$-th row is
+$\ell_i$. Subtracting the $s_0$ response in (11.2) gives
+
+$$
+M=LZ.
+$$
+
+Thus $3=\operatorname{rank}M\le\operatorname{rank}Z\le k$. The last
+statement follows by comparing with the supplied three-dimensional
+realization. $\square$
+
+The minor condition is a source-and-task statement: it uses the same actual
+sources in every row and the same legal continuation family in every column.
+It cannot be replaced by three unrelated response ranks from different
+source domains.
+
+**Proposition 11.3 (A source-compatible FIB witness).** Put
+
+$$
+q(\alpha)=e_1,\qquad q(\beta)=e_2,
+$$
+
+$$
+q(\langle s,t\rangle)=q(s)\times q(t),
+\qquad q(\rho t)=Rq(t),
+$$
+
+where
+
+$$
+R=
+\begin{pmatrix}
+0&0&-1\\
+1&0&0\\
+0&-1&0
+\end{pmatrix}\in SO(3).
+$$
+
+Using the FIB recursion
+$\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$ and the identity
+$R(u\times v)=(Ru)\times(Rv)$, these clauses are compatible. Define the
+source readout by
+
+$$
+y(s)=e_1^{\mathsf T}q(s);
+$$
+
+equivalently, the vector readout is $\widetilde y(v)=e_1^{\mathsf T}v$ and
+$y=\widetilde y\circ q$. Take sources
+
+$$
+s_0=\langle\alpha,\alpha\rangle,
+\quad s_1=\alpha,
+\quad s_2=\beta,
+\quad s_3=\langle\beta,\alpha\rangle,
+$$
+
+and continuations $p_1=\varepsilon$, $p_2=\rho$, $p_3=\rho^2$. They are
+all legal on these FIB terms. Since
+
+$$
+q(s_0)=0,
+\quad q(s_1)=e_1,
+\quad q(s_2)=e_2,
+\quad q(s_3)=-e_3,
+$$
+
+the response minor is
+
+$$
+M=
+\begin{pmatrix}
+1&0&0\\
+0&0&1\\
+0&1&0
+\end{pmatrix},
+\qquad
+\det M=-1.
+\tag{11.4}
+$$
+
+The map $q$ itself is a three-dimensional affine predictive boundary for
+this finite response family, so Theorem 11.2 makes its dimension minimal.
+
+This is a finite source-compatible continuation certificate, not a native
+closed-loop holonomy result: for example, $\rho^3\alpha\ne\alpha$ as FIB
+terms. Restricting the source set or changing the readout can change the
+minor rank. The witness therefore supplies the missing source-level
+instantiation for this task only; it does not establish a native $SO(3)$
+action, metric transport, or physical ambient dimension for FIB.
+
+## 11.99 追加锚（本行以下为增补区）
