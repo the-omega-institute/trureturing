@@ -294,6 +294,17 @@ internal sealed class NormalizedJensenDegreeLoweringDocument : IScribeDocumentDe
                     + "therefore give analyticOrderNatAt(J,t)=1 at every actual J zero, including a boundary "
                     + "point of S. No openness of S or additional margin hypothesis is required.")),
                     Paragraph(Text(
+                    "When the complex source B has a supplied smooth real restriction f, B(x)=f(x) on the real "
+                    + "axis, and Qfar is mapped from a real polynomial, the iterated derivatives at zero agree "
+                    + "with the real-source derivatives by uniqueness. Thus the actual H is the map of the same "
+                    + "real finite extraction. The explicit quotient jets chi,U,V3 commute with conjugation at "
+                    + "every complex parameter, including a zero of H under totalized division. This supplies "
+                    + "all three coordinate conjugation identities used above. Under the same six uniform "
+                    + "nonzero, value and derivative budgets, the same actual J therefore has real simple "
+                    + "zeros and cardinality at most three on the entire closed target S; no separate "
+                    + "coordinate analyticity or conjugation premise is needed. The real source realization "
+                    + "and the numerical source budgets remain explicit conditions.")),
+                    Paragraph(Text(
                     "These applications use standard pinned complex analytic, implicit-function, zero-count, "
                     + "mean-value and set-cardinality results. They are bind-only with admission_basis none and "
                     + "are recorded here as source-derived applications rather than new retained D5 declarations. "
