@@ -1196,7 +1196,10 @@ the stationary common-matrix comparison law in the latest
 [DEV global/local rank result](FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md)
 has, for every fixed block length $m$, independently minimized
 conditional defects whose total tends to zero, while every one global
-rank-two candidate obeys
+rank-two candidate for that same family obeys the following bound. For the
+same stationary law $P$ and its marginals $\mu_n=P_{[1,n]}$, with $N=2$,
+$n\ge5$, and $(n-1)\Delta\ge8$, where $v>0$ and $\Delta>0$ are the constants
+defined in Theorem 5.1 of the cited result,
 
 $$
 \mathscr R_{2,n}(\mu_n)
@@ -1208,8 +1211,8 @@ v-2\exp\!\left(-\frac{(n-1)\Delta^2}{64}\right)
 \tag{12.2}
 $$
 
-Thus the local minimizers cannot be slices of a common global candidate with
-the same rank constraint. Consequently they cannot be used as the individual
+Thus those local minimizers cannot be slices of a common global candidate in
+the same rank-two family. Consequently they cannot be used as the individual
 summands of a joint response Gram operator without an additional common lift.
 
 **Proof.** The lower bound and the vanishing fixed-block sums are the two
