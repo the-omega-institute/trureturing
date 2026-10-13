@@ -18,7 +18,7 @@ internal sealed class EvenLeggedHyperlinkReconstructionDocument : IScribeDocumen
                 "Equation (5) defines the hyperlink by inclusion-exclusion over all subsets of I. The exponent is the natural-number difference between the two cardinalities, and the sign and set-function values are real. No symmetry or vanishing hypothesis is needed for this definition.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("leg-inverse-coeff", "The triangular inverse coefficients", "legInverseCoeff", InverseCoefficientFormula(),
-                "The coefficient at rank zero is one. Odd ranks have coefficient zero. At a positive even rank r, the coefficient is minus one half of the sum over even j less than r of Nat.choose r j times the coefficient at j. Each binomial coefficient is cast to the rational numbers before multiplication. This recurrence determines a rational sequence by strong recursion.",
+                "The coefficient at rank zero is one. Odd ranks have coefficient zero. At a positive even rank r, the coefficient is minus one half of the sum over j : Fin r, whose summand is Nat.choose r val(j) times the coefficient at val(j) when val(j) is even, and zero otherwise. Here val(j) is the natural value of j : Fin r. Each binomial coefficient is cast to the rational numbers before multiplication. This recurrence determines a rational sequence by strong recursion.",
                 AssessedProvenance.FromRepo()),
             Node("leg-factor", "The rational leg factors", "legFactor", LegFactorFormula(),
                 "For p at most m, the sum ranges over even k between two and m, inclusive. The binomial difference counts the k-element subsets of an m-element set meeting both sides of a split into p and m minus p elements. Each binomial coefficient is cast to the rational numbers before subtraction. Both m minus k and m minus p use natural-number subtraction. The value is zero when p exceeds m.",
@@ -118,8 +118,10 @@ internal sealed class EvenLeggedHyperlinkReconstructionDocument : IScribeDocumen
 
     private static Formula InverseCoefficientFormula()
     {
-        Formula sum = SumWhere("j", At(Qualified("Finset", "range"), X("r")), EvenRank(X("j")),
-            Multiply(ChooseRational(X("r"), X("j")), LocalCall("legInverseCoeff", X("j"))));
+        Formula jval = Call("val", X("j"));
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(X("j"), Colon, Sp, At(Qualified("Fin"), X("r")))),
+            Sp, Parenthesized(IfThenElse(EvenRank(jval),
+                Multiply(ChooseRational(X("r"), jval), LocalCall("legInverseCoeff", jval)), D(0))));
         return All("r", Naturals(), Equal(LocalCall("legInverseCoeff", X("r")),
             IfThenElse(Equal(X("r"), D(0)), D(1),
                 IfThenElse(EvenRank(X("r")), Multiply(MinusHalf(), sum), D(0)))));
