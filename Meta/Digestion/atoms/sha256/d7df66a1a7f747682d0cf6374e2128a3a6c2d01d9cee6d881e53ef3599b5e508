@@ -1,0 +1,15 @@
+Use (2.3)–(2.4) on each successful supplied action. Induction gives
+the correct boundary and its exact next-action domains at every stage.
+A known prefix determines its residual and tail from the fixed $C$.
+
+For an encoded boundary, decode using the known current type, apply
+the strict update, and encode using the new type. Fiber labels may
+be reused between different types because the decoder knows the
+type. The finiteness of $C$, the action alphabet and the type range
+makes all relevant images finite. This argument consumes the existing
+factorization principle with the explicit anchored updates; it does
+not assert a new general reconstruction theorem or a bound on the
+work, scratch space or transition description needed by an encoding.
+It also does not acquire an initial value when (6.1) fails.
+$\square$
+

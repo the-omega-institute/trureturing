@@ -1,0 +1,12 @@
+For $d<k$, a fiber of $\rho_{d+1,d}$ above $(T,t)\in Q_{k,d}$ has
+exactly
+
+$$
+I_{k,d}(T)=
+\sum_{a\in A}
+|\{S\in\mathcal R_{k-d-1}:\partial_aS=T\}|
+\tag{3.5}
+$$
+
+points. Thus the least supplement for this refinement is the maximum
+of (3.5) over attained targets; 
