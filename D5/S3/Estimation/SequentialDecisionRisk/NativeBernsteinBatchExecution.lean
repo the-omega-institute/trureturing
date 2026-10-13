@@ -142,7 +142,7 @@ theorem acquiredHistory_sourceCount_partition
       (acquiredHistory π S answer n ω).length := by
   exact sourceCount_partition _
 
-theorem acquiredHistory_source_counts_sum_before_return
+private theorem acquiredHistory_source_counts_sum_before_return
     {Seed Tape : Type} (π : Seed → Bool → List (Bool × Bool) → Bool ⊕ (Bool × Bool))
     (S : Bool) (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) (n : ℕ)
     (hn : (n : WithTop ℕ) ≤
@@ -154,7 +154,7 @@ theorem acquiredHistory_source_counts_sum_before_return
   rw [acquiredHistory_sourceCount_partition]
   exact acquired_history_length_before_return π S answer ω n hn
 
-theorem acquiredHistory_source_counts_sum_at_return
+private theorem acquiredHistory_source_counts_sum_at_return
     {Seed Tape : Type} (π : Seed → Bool → List (Bool × Bool) → Bool ⊕ (Bool × Bool))
     (S : Bool) (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) (n : ℕ)
     (hn : hittingAfter (fun m (_ : Seed × Tape) =>
