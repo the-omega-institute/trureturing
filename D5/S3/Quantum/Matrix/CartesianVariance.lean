@@ -451,14 +451,4 @@ theorem commutator_pure_max_bound {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ))
     exact hb.trans (mul_le_mul_of_nonneg_left (hm _ (commutatorDensity_density B hB))
       (mul_nonneg (by norm_num) (frobSq_nonneg B)))
 
-#print axioms frobSq_eq_sum
-#print axioms frobSq_nonneg
-#print axioms vectorize_norm_sq
-#print axioms D5.S3.Quantum.BlockNorm.EssentiallyHermitian.outer_pairing_trace
-#print axioms pure_variance_maximizer
-#print axioms matrix_pairing
-#print axioms frobSq_star
-#print axioms trace_product_cauchy
-#print axioms commutator_pure_max_bound
-
 end D5.S3.Quantum.Matrix.CartesianVariance
