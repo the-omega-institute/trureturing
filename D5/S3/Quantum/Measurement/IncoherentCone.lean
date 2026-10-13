@@ -7,12 +7,6 @@
    digest: IncoherentCone supports the overlap bound. -/
 
 /-
-proof_shape: gram_entry_bound: bind-only; consumer: psd_entry_bound
-escape_witness: gram_entry_bound: none
-Direct frozen dependencies: gram_entry_bound: none
-proof_shape: psd_sqrt_gram_factor: bind-only; consumer: psd_entry_bound
-escape_witness: psd_sqrt_gram_factor: none
-Direct frozen dependencies: psd_sqrt_gram_factor: F5, F6, F7, F8, F9
 proof_shape: incoherent_zero: bind-only; consumer: incoherent_separation
 escape_witness: incoherent_zero: none
 Direct frozen dependencies: incoherent_zero: none
@@ -40,18 +34,18 @@ Direct frozen dependencies: rankone_trace: F3, F4
 proof_shape: incoherent_rankone: bind-only; consumer: incoherent_separation
 escape_witness: incoherent_rankone: none
 Direct frozen dependencies: incoherent_rankone: none
-proof_shape: psd_entry_bound: bind-only; consumer: psd_entry_bound_of_trace, quantitative_spectral_condition
-escape_witness: psd_entry_bound: none
-Direct frozen dependencies: psd_entry_bound: F5, F6, F7, F8, F9
 proof_shape: psd_entry_bound_of_trace: bind-only; consumer: incoherent_closed
 escape_witness: psd_entry_bound_of_trace: none
-Direct frozen dependencies: psd_entry_bound_of_trace: F4, F5, F6, F7, F8, F9
+Same-delivery owner dependency: psd_entry_bound_of_trace: F5
+Direct frozen dependencies: psd_entry_bound_of_trace: F4
 proof_shape: incoherent_closed: content; consumer: incoherent_separation
 escape_witness: incoherent_closed: incoherent_closed
-Direct frozen dependencies: incoherent_closed: F4, F5, F6, F7, F8, F9
+Same-delivery owner dependency: incoherent_closed: F5
+Direct frozen dependencies: incoherent_closed: F4
 proof_shape: incoherent_separation: content; consumer: spectral_balanced_incoherent
 escape_witness: incoherent_separation: incoherent_separation
-Direct frozen dependencies: incoherent_separation: F1, F2, F3, F4, F5, F6, F7, F8, F9
+Same-delivery owner dependency: incoherent_separation: F5
+Direct frozen dependencies: incoherent_separation: F1, F2, F3, F4
 admission_basis: escape-witness
 Frozen declaration identities:
 F1: owner GID: D5/S3/Quantum/Matrix/CartesianVariance; declaration: D5.S3.Quantum.Matrix.CartesianVariance.matrix_pairing
@@ -62,16 +56,9 @@ F3: owner GID: D5/S3/Weil/ZetaLinear/Sylvester; declaration: RHLinalg.hermForm
   declaration statement_id: sha256:80fb2c125caa6f180274d058b22d584cf1572b3089380febbc5dfae997f03ebf
 F4: owner GID: D5/S3/Weil/ZetaLinear/PosIndex; declaration: RHLinalg.rtrace
   declaration statement_id: sha256:355bea6db8a05c6ea83567c442e2673342fec1402e04cd71a61594040520ce82
-F5: owner GID: D5/S3/Weil/ZetaLinear/HermitianPosPart; declaration: RHLinalg.specMap
-  declaration statement_id: sha256:e1543a97599b6cc90234c264dc99210b245061ed4d182b4351174881ce0384e7
-F6: owner GID: D5/S3/Weil/ZetaLinear/HermitianPosPart; declaration: RHLinalg.specMap._proof_1
-  declaration statement_id: sha256:4505c32a9d334197dcdfbfe76a2b9041ae47c40d056e290040f762933ca6facf
-F7: owner GID: D5/S3/Weil/ZetaLinear/HermitianPosPart; declaration: RHLinalg.specMap._proof_2
-  declaration statement_id: sha256:71a8beda364a4cfc5bb497eb18cfcd54f8c12abc40e9a37962ca4f717d42c1e5
-F8: owner GID: D5/S3/Weil/ZetaLinear/HermitianPosPart; declaration: RHLinalg.specMap_isHermitian
-  declaration statement_id: sha256:8eaaf395a5d8810c697d036c8729b5974aade8efbc4111a5132de5a598ab00b6
-F9: owner GID: D5/S3/Weil/ZetaLinear/HermitianPosPart; declaration: RHLinalg.specMap_mul
-  declaration statement_id: sha256:7676c10505b22f0e9db5f08c8be82f86e9eb4db5a663554bc93b31c13a2aa6dc
+Same-delivery declaration in a baseline-frozen owner (pending re-pin):
+F5: owner GID: D5/S3/Quantum/Matrix/CartesianVariance; declaration: D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound
+  declaration statement_id: sha256:029989c48264702a7ddb2f7963b30fbc3260f0c293862ce2cf6561a7a358a67e
 Definition rows classify unfolding; they assert no proposition and supply no escape witness.
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
@@ -91,64 +78,7 @@ namespace D5.S3.Quantum.Measurement.IncoherentCone
 noncomputable section
 open D5.S3.Quantum.Measurement.AntidistinguishabilityGram
 
-section
-variable {ι κ : Type*} [Fintype ι] [Fintype κ] [DecidableEq ι] [DecidableEq κ]
 
-private theorem gram_entry_bound (V : Matrix ι κ ℂ)
-    (hdiag : ∀ i, ((V * Vᴴ) i i).re ≤ 1) (i j : ι) : ‖(V * Vᴴ) i j‖ ≤ 1 := by
-  let xi : EuclideanSpace ℂ κ := WithLp.toLp 2 (V i)
-  let xj : EuclideanSpace ℂ κ := WithLp.toLp 2 (V j)
-  have hin : inner ℂ xj xi = (V * Vᴴ) i j := by
-    rw [EuclideanSpace.inner_eq_star_dotProduct]
-    simp only [xi, xj, Matrix.mul_apply, Matrix.conjTranspose_apply, dotProduct]
-    rfl
-  have hsq : ∀ k : ι, ‖(WithLp.toLp 2 (V k) : EuclideanSpace ℂ κ)‖ ^ 2 = ((V * Vᴴ) k k).re := by
-    intro k
-    rw [EuclideanSpace.norm_sq_eq]
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
-    change _ = Complex.reAddGroupHom (∑ j, V k j * star (V k j))
-    rw [map_sum]
-    apply sum_congr rfl
-    intro l _
-    rw [← Complex.normSq_eq_norm_sq]
-    simp [Complex.normSq_apply, Complex.mul_re, Complex.star_def]
-  have hi : ‖xi‖ ≤ 1 := by
-    have hs := hsq i
-    change ‖xi‖ ^ 2 = _ at hs
-    nlinarith [hdiag i, norm_nonneg xi]
-  have hj : ‖xj‖ ≤ 1 := by
-    have hs := hsq j
-    change ‖xj‖ ^ 2 = _ at hs
-    nlinarith [hdiag j, norm_nonneg xj]
-  rw [← hin]
-  exact (norm_inner_le_norm xj xi).trans
-    ((mul_le_mul hj hi (norm_nonneg xi) (by norm_num)).trans_eq (by ring))
-
-end
-
-section
-variable {ι κ : Type*} [Fintype ι] [Fintype κ] [DecidableEq ι] [DecidableEq κ]
-
-private theorem psd_sqrt_gram_factor {A : Matrix ι ι ℂ} (hA : A.PosSemidef) :
-    RHLinalg.specMap hA.isHermitian Real.sqrt *
-      (RHLinalg.specMap hA.isHermitian Real.sqrt)ᴴ = A := by
-  rw [(RHLinalg.specMap_isHermitian hA.isHermitian Real.sqrt).eq,
-    ← RHLinalg.specMap_mul]
-  have he : (Real.sqrt * Real.sqrt) ∘ hA.isHermitian.eigenvalues =
-      hA.isHermitian.eigenvalues := by
-    funext k
-    exact Real.mul_self_sqrt (hA.eigenvalues_nonneg k)
-  unfold RHLinalg.specMap
-  conv_rhs => rw [hA.isHermitian.spectral_theorem]
-  congr 1
-  ext i j
-  by_cases hij : i=j
-  · subst j
-    simp only [Matrix.diagonal_apply_eq, Function.comp_apply, Pi.mul_apply]
-    exact_mod_cast Real.mul_self_sqrt (hA.eigenvalues_nonneg i)
-  · simp [Matrix.diagonal_apply_ne _ hij]
-
-end
 
 section
 variable {n : ℕ}
@@ -277,15 +207,6 @@ private theorem incoherent_rankone (j : Fin n) (x : Fin n → ℂ) (hx : x j=0) 
 
 end
 
-section
-variable {ι κ : Type*} [Fintype ι] [Fintype κ] [DecidableEq ι] [DecidableEq κ]
-
-theorem psd_entry_bound {A : Matrix ι ι ℂ} (hA : A.PosSemidef)
-    (hdiag : ∀ i, (A i i).re ≤ 1) (i j : ι) : ‖A i j‖ ≤ 1 := by
-  rw [← psd_sqrt_gram_factor hA] at hdiag ⊢
-  exact gram_entry_bound _ hdiag i j
-
-end
 
 section
 variable {n : ℕ}
@@ -299,7 +220,14 @@ private theorem psd_entry_bound_of_trace {A : Matrix (Fin n) (Fin n) ℂ} (hA : 
     have hk := (psd_diag_le_trace hA k).trans htr
     have hm := mul_le_mul_of_nonneg_left hk (inv_nonneg.mpr hR.le)
     simpa [hR.ne'] using hm
-  have hb := psd_entry_bound hpsd hd i j
+  have hb : ‖(R⁻¹ • A) i j‖ ≤ 1 := by
+    have h := D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hpsd i j
+    rw [Complex.normSq_eq_norm_sq] at h
+    have hj : 0 ≤ ((R⁻¹ • A) j j).re :=
+      (Complex.nonneg_iff.mp (hpsd.diag_nonneg (i := j))).1
+    have hp : ((R⁻¹ • A) i i).re * ((R⁻¹ • A) j j).re ≤ 1 := by
+      simpa using mul_le_mul (hd i) (hd j) hj (by norm_num : (0 : ℝ) ≤ 1)
+    nlinarith [norm_nonneg ((R⁻¹ • A) i j)]
   simp only [Matrix.smul_apply, norm_smul, Real.norm_eq_abs,
     abs_of_nonneg (inv_nonneg.mpr hR.le)] at hb
   have hc := mul_le_mul_of_nonneg_left hb hR.le

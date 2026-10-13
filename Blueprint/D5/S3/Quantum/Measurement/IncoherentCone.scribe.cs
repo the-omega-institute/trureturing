@@ -12,10 +12,6 @@ internal sealed class IncoherentConeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite-dimensional spectral and overlap bounds for antidistinguishability.",
         H("IncoherentCone"), Blocks(
-            Describe.Lean(DescribeId.Create("psd-entry-bound"),
-                DeclarationHandle.Create(Owner + ".psd_entry_bound"), H("psd entry bound"),
-                StatementSource.FromAuthor(Disp(Formula0())), AssessedProvenance.FromRepo(Paper),
-                Blocks(Paragraph(Text("The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("incoherent-closed"),
                 DeclarationHandle.Create(Owner + ".incoherent_closed"), H("incoherent closed"),
                 StatementSource.FromAuthor(Disp(Formula1())), AssessedProvenance.FromRepo(Paper),
@@ -24,9 +20,6 @@ internal sealed class IncoherentConeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + ".incoherent_separation"), H("incoherent separation"),
                 StatementSource.FromAuthor(Disp(Formula2())), AssessedProvenance.FromRepo(Paper),
                 Blocks(Paragraph(Text("The formula states the complete estimate or implication. Matrix entries, finite index sets, and proof parameters retain their Lean meanings. Proof fields of finite-index constructors are omitted."))), DescribeRole.Theorem))));
-
-    private static Formula Formula0() =>
-        Seq(Forall, Sp, Parenthesized(Seq(Iota, Sp, Colon, Sp, F.Id("Type"))), Sp, Seq(OpenBracket, Seq(F.Id("Fintype"), Sp, Iota), CloseBracket), Sp, Seq(OpenBracket, Seq(F.Id("DecidableEq"), Sp, Iota), CloseBracket), Sp, Seq(OpenBrace, Seq(F.Id("A"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Iota, Sp, Iota, Sp, Seq(Mathbb, Grp(F.Id("C")))), CloseBrace), Sp, Comma, Sp, Parenthesized(Seq(F.Id("A"), Sp, Dot, Sp, F.Id("PosSemidef"))), Sp, To, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, Colon, Sp, Iota)), Sp, Comma, Sp, Parenthesized(Seq(F.Id("A"), Sp, F.Id("i"), Sp, F.Id("i"))), Sp, Dot, Sp, F.Id("re"), Sp, Leq, Sp, D(1))), Sp, To, Sp, Forall, Sp, Parenthesized(Seq(F.Id("i"), Sp, F.Id("j"), Sp, Colon, Sp, Iota)), Sp, Comma, Sp, Vert, Sp, F.Id("A"), Sp, F.Id("i"), Sp, F.Id("j"), Sp, Vert, Sp, Leq, Sp, D(1));
 
     private static Formula Formula1() =>
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, F.Id("IsClosed"), Sp, Seq(OpenBrace, Seq(F.Id("A"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Bar, Sp, F.Id("IsIncoherent"), Sp, F.Id("A")), CloseBrace));

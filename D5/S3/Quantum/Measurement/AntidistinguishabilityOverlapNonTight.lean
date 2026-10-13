@@ -99,6 +99,7 @@ escape_witness: not_tight_of_quantitative: none
 Direct frozen dependencies: not_tight_of_quantitative: none
 proof_shape: quantitative_spectral_condition: content; consumer: quantitative_state_spectral_condition
 escape_witness: quantitative_spectral_condition: quantitative_spectral_condition
+Same-delivery owner dependency: quantitative_spectral_condition: F43
 Direct frozen dependencies: quantitative_spectral_condition: F8, F10, F11, F12, F13, F14, F15, F19, F20, F21, F22, F23, F24, F28, F31, F32, F34, F35, F36, F38, F39, F40, F42
 proof_shape: claim: bind-only; consumer: none
 escape_witness: claim: none
@@ -209,6 +210,9 @@ F42: owner GID: D5/S3/Weil/ZetaLinear/VonNeumann; declaration: RHLinalg.vonNeuma
 Definition rows classify unfolding; they assert no proposition and supply no escape witness.
 Utility: none; finite-dimensional symbolic mathematics for arbitrary parameters.
 Published owner references use the protected baseline private declaration identities.
+Same-delivery declaration in a baseline-frozen owner (pending re-pin):
+F43: owner GID: D5/S3/Quantum/Matrix/CartesianVariance; declaration: D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound
+  declaration statement_id: sha256:029989c48264702a7ddb2f7963b30fbc3260f0c293862ce2cf6561a7a358a67e
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
 DTR reading: DTR-Unregistered for the public theorem targets in this module. The result Reg candidate has DTR-Undeclared.
 The candidate diagnostic is IE-C050 ClosedTruthReadout: unclassified_form under
@@ -827,9 +831,24 @@ private theorem quantitative_spectral_condition (n : ℕ) (hn : 10 ≤ n)
     rw [he] at hs
     simpa only [sum_const, nsmul_eq_mul, D5.S3.Quantum.Measurement.OverlapLowRankDistance.offDiag_card, Nat.cast_mul,
       Nat.cast_sub (by omega : 1 ≤ n), Nat.cast_one] using hs
-  have hGnorm : ∀ i j, ‖G i j‖ ≤ 1 := psd_entry_bound hG (by simp [hdiag])
-  have hTnorm : ∀ i j, ‖topThree hG.isHermitian i j‖ ≤ 1 :=
-    psd_entry_bound (topThree_psd hG) (topThree_diag_le hG hdiag)
+  have hGnorm : ∀ i j, ‖G i j‖ ≤ 1 := by
+    intro i j
+    have h := D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hG i j
+    rw [Complex.normSq_eq_norm_sq, hdiag i, hdiag j] at h
+    norm_num only [Complex.one_re, one_mul] at h
+    nlinarith [norm_nonneg (G i j)]
+  have hTnorm : ∀ i j, ‖topThree hG.isHermitian i j‖ ≤ 1 := by
+    intro i j
+    have hT := topThree_psd hG
+    have hd := topThree_diag_le hG hdiag
+    have h := D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hT i j
+    rw [Complex.normSq_eq_norm_sq] at h
+    have hj : 0 ≤ (topThree hG.isHermitian j j).re :=
+      (Complex.nonneg_iff.mp (hT.diag_nonneg (i := j))).1
+    have hp : (topThree hG.isHermitian i i).re *
+        (topThree hG.isHermitian j j).re ≤ 1 := by
+      simpa using mul_le_mul (hd i) (hd j) hj (by norm_num : (0 : ℝ) ≤ 1)
+    nlinarith [norm_nonneg (topThree hG.isHermitian i j)]
   have hHK : RHLinalg.frobSq (H-K) ≤ ((n : ℝ)-9)/16 := by
     have hs := norm_square_frob_distance_le G (topThree hG.isHermitian) hGnorm hTnorm
     have ht := topThree_failure_distance hG (by omega) hfail
