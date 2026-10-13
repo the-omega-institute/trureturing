@@ -16,6 +16,8 @@ M. Mehboudi, F. Rezaeinia and S. Rahimi-Keshari, *Measurement incompatibility un
 
 Issue [#15985](https://github.com/the-omega-institute/trureturing/issues/15985) fixes the reading. For every n ≥ 1 there are n + 1 binary POVMs on the single-mode Fock space ℓ²(ℕ) whose images under E*_{1/n} have no parent POVM. A parent ranges over all 2^{n+1} outcome strings and has exactly the given effects as marginals.
 
+The Lean statement takes E*_τ in the source's own form: N is the image of M when tr(M E_τ(|ψ⟩⟨ψ|)) = ⟨ψ, N ψ⟩ for every ψ. Here E_τ(|ψ⟩⟨ψ|) = tr₂(U_BS(|ψ⟩⟨ψ| ⊗ |0⟩⟨0|)U_BS†) is built from the frozen beam splitter and partial trace, and the trace is the Fock-basis sum. Pure states determine an operator, so this relation determines E*_τ(M). The statement asserts both that such images exist and that no family of them has a parent.
+
 ## Motivation
 
 Loss is the dominant noise in optical quantum communication. Result 2 shows that transmissivity 1/n destroys the incompatibility of every n measurements, and so every steering test built from n settings. Result 3 says that one more setting always survives the same loss. Together they would make 1/n a sharp threshold, and they rest the sharpness on displaced on-off detectors, which are standard laboratory equipment.
@@ -43,14 +45,15 @@ Result 3 is the case m = n + 1, τ = 1/n and z_j = e^{2πij/(n+1)}.
 
 ## Falsifier
 
-The settlement would fail if `dualLoss` were not the source's E*_τ, for instance if the beam splitter kept the reflected mode (amplitude √(1−τ)) or used a non-vacuum environment, or if `HasParent` dropped outcome strings or allowed approximate marginals. The module proves the compressed click matrix from the frozen beam splitter's Fock action, so its entries carry √τ. `HasParent` requires exact marginals over all outcome strings. The claim also fails if the construction degenerates: x > 0 needs mτ > 1, and Q > 0 needs distinct phases. Both are proved, including at n = 1, where τ = 1.
+The settlement would fail if the trace relation in `IsLossDual` did not define the source's E*_τ, for instance if the beam splitter kept the reflected mode (amplitude √(1−τ)) or used a non-vacuum environment, or if `HasParent` dropped outcome strings or allowed approximate marginals. The module proves that the Stinespring form V†(M ⊗ I)V satisfies that relation and is the only operator that does. It also proves the compressed click matrix from the frozen beam splitter's Fock action, so its entries carry √τ. `HasParent` requires exact marginals over all outcome strings. The claim also fails if the construction degenerates: x > 0 needs mτ > 1, and Q > 0 needs distinct phases. Both are proved, including at n = 1, where τ = 1.
 
 ## Evidence
 
 The canonical source is `D5/S3/Quantum/Measurement/PureLossIncompatibility.lean` (867 lines).
-- Public declarations: `H` (the frozen `FockSpace`), `K`, `Op`, `amplify`, `vacuumEmbedding`, `stinespring`, `dualLoss`, `IsBinaryPOVM`, `HasParent`, `inverseTransmissivity`, `claim` and `result`.
+- Public declarations: `H` (the frozen `FockSpace`), `K`, `Op`, `amplify`, `vacuumEmbedding`, `stinespring`, `dualLoss`, `IsLossDual`, `IsBinaryPOVM`, `HasParent`, `inverseTransmissivity`, `claim` and `result`.
 - It reuses frozen declarations:
-  - `beamSplitter`, its Fock action `beamUnitary_fock` and `coherent` (`FockAttenuator/BeamSplitter`);
+  - `beamSplitter`, `tensor`, its Fock action `beamUnitary_fock` and `coherent` (`FockAttenuator/BeamSplitter`);
+  - the pure-state partial trace `purePartialTrace` (`FockAttenuator/DisplacementCovariance`);
   - `coherentDensity` (`FockAttenuator/Attenuator`), whose `trace_one` gives the unit norm of coherent states;
   - the Fock basis `e` and the compression `compression` (`TransmissivityBetaPriorProbeRefutation`);
   - `fockPair_apply` (`FiniteFockBeamSplitterNonExtremality`, made public here);
@@ -78,14 +81,15 @@ Every other declaration is a definition used by `claim` or a private helper on t
 
 ### What the settlement shows
 
-**Proved by `result`:** for every n ≥ 1, the n + 1 displaced on-off measurements with regular phases e^{2πij/(n+1)} and squared amplitude x = 3/(n(n + 1)(n² + 2n + 6)) have no parent after E*_{1/n}. The case n = 1 (τ = 1, two measurements, no loss) is included.
+**Proved by `result`:** for every n ≥ 1, the n + 1 displaced on-off measurements with regular phases e^{2πij/(n+1)} and squared amplitude x = Δ/(2(m + 4Q)), where m = n + 1, Δ = mτ − 1 and Q = Σ_{i<j} |z_i − z_j|^{−2}, have images under E*_{1/n}. No family of these images has a parent. The case n = 1 (τ = 1, two measurements, no loss) is included.
 
 **Established inside the proof.**
 - For every m ≥ 2, 1/m < τ ≤ 1 and distinct unit phases, the displaced on-off measurements with x = Δ/(2(m + 4Q)) are incompatible after E*_τ.
+- The Stinespring form V†(M ⊗ I)V satisfies the source's trace relation tr(M E_τ(|ψ⟩⟨ψ|)) = ⟨ψ, N ψ⟩ and is the only operator that does.
 - The compression to span{|0⟩, |1⟩} is exact for the pure-loss dual of these effects, and any parent compresses to a 2 × 2 parent.
 - Any common subeffect of two compressed clicks has (1,1) entry at most 4δ/|z_i − z_j|², and every parent satisfies mc ≤ 1 + 4δQ.
 
-**Computed.** For regular phases, Q = m(m² − 1)/24, by the identity Σ_{k=1}^{m−1} csc²(πk/m) = (m² − 1)/3 (checked numerically for m ≤ 11). At m = n + 1 and τ = 1/n this gives Δ = 1/n and the value of x above, which reproduces the values 1/28, 1/84, 1/200, 1/410 and 1/756 of the preregistration table for n = 2, …, 6. With the source's fixed amplitude r = 0.015 instead, the sufficient condition r²(m + 4Q) < Δ used here holds exactly for n ≤ 11. The proof therefore lets the amplitude shrink with n; whether r = 0.015 itself fails for large n is not decided.
+**Computed.** For regular phases, Q = m(m² − 1)/24, by the identity Σ_{k=1}^{m−1} csc²(πk/m) = (m² − 1)/3 (checked numerically for m ≤ 11). At m = n + 1 and τ = 1/n this gives Δ = 1/n and the closed form x = 3/(n(n + 1)(n² + 2n + 6)), which rests on that identity and is not formalized; it which reproduces the values 1/28, 1/84, 1/200, 1/410 and 1/756 of the preregistration table for n = 2, …, 6. With the source's fixed amplitude r = 0.015 instead, the sufficient condition r²(m + 4Q) < Δ used here holds exactly for n ≤ 11. The proof therefore lets the amplitude shrink with n; whether r = 0.015 itself fails for large n is not decided.
 
 **Argued, not formalized.**
 - *The sharp threshold.* Combined with the source's Result 2, which this module does not formalize, the private theorem gives the exact threshold for m settings. Every m measurements become compatible when τ ≤ 1/m, and some m displaced on-off measurements stay incompatible for every τ > 1/m. This is stronger than Result 3: it allows any τ above 1/m, not only 1/(m − 1).
