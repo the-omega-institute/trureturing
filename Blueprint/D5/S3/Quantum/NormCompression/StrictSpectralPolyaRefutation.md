@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/NormCompression/StrictSpectralPolyaRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zietak-2017-strict-spectral-polya-conjecture` (refuted) by `D5/S3/Quantum/NormCompression/StrictSpectralPolyaRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zietak-2017-strict-spectral-polya-conjecture","declaration_gid":"D5/S3/Quantum/NormCompression/StrictSpectralPolyaRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Krystyna Ziętak (2017). *From the strict Chebyshev approximant of a vector to the strict spectral approximant of a matrix*. DOI: [10.4064/bc112-0-16](https://doi.org/10.4064/bc112-0-16). URL: <https://doi.org/10.4064/bc112-0-16>.

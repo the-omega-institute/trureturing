@@ -25,7 +25,10 @@ internal sealed class StrictSpectralPolyaRefutationDocument : IScribeDocumentDef
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The universal convergence claim is false", Seq(Neg, Sp, F.Id("claim")),
                 "Set A = I₃, H = [[1,0,1],[0,-2,0],[1,0,0]], E = Matrix.diagonal (Pi.single 2 1), and M = Submodule.span ℂ {H,E}. The residuals are [[1+s,0,s],[0,1-2s,0],[s,0,t]]. The two leading diagonal constraints force s = 0 on the spectral-optimal face, whose lexicographic minimum is diag(1,1,0), so E is strict. Schatten-p minimizers exist for every p > 1. Their real last residual entry is eventually below -1/4, contradicting convergence to the strict residual. Hermitian projection reduces the complex minimization to a real comparison. No uniqueness or exact residual limit is needed.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zietak-2017-strict-spectral-polya-conjecture"),
+                    ResolutionKind.Refuted)),
             Paragraph(Text("Grover–Gupta's Theorem 3.7 for min(m,n) ≤ 2 remains valid. The three-dimensional example uses a repeated leading singular-value cluster and a coupling that does not commute with E. Eventual superiority against each fixed competitor does not give a uniform comparison against moving minimizers.")),
             Paragraph(Text("Priyanka Grover and Krishna Kumar Gupta, Properties of best approximations with respect to the Ky Fan p-k norm, and the strict spectral approximant of a matrix, LAA 743 (2026), DOI 10.1016/j.laa.2026.04.016; arXiv:2603.07498v2."))),
         []));
