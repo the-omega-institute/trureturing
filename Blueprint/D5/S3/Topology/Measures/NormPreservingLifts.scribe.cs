@@ -65,7 +65,7 @@ internal sealed class NormPreservingLiftsDocument : IScribeDocumentDefinition
                         + "For each fixed locally constant real f this condition holds eventually in l; no one stage works for every f. If the s functionals converge to F in the actual weak-star topology, the t functionals converge to the same F.")),
                     Paragraph(Text(
                         "Mathlib's variation_map_le, SignedMeasure.totalVariation_eq_variation and finite-measure equality from domination and equal total mass give totalVariation(map(s,p))=map(totalVariation(s),p). "
-                        + "This consumed bind-only step pulls the support concentration back to K. For a clopen test A, the compact image p[A intersect p-preimage(V)] is closed and hence measurable. "
+                        + "This identity pulls the support concentration back to K. For a clopen test A, the compact image p[A intersect p-preimage(V)] is closed and hence measurable. "
                         + "Fibre constancy makes its pullback agree with A on the support. Both set differences have zero variation, so the two lifts give the same value on A. "
                         + "Applying this to all inverse images of a locally constant f makes the actual signed pushforwards along f equal. Mathlib's signed vector integral_map then gives equality of the f integrals.")),
                     Paragraph(Text(
