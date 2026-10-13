@@ -276,7 +276,9 @@ private partial def dictionary (type : Expr) : M Bool := do
     withLocalDecl n bi d fun x => dictionary (b.instantiate1 x)
   | _ => return (← read).provenance.view.isClass (type.getAppFn.constName?.getD .anonymous)
 
-def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
+/-- Resolve the original binding before optional observation selection. -/
+def resolveOriginal (info : ConstantInfo) (selection : SourceSelection)
+    (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
   unless info.isTheorem do fail "unclassified_form:source.theorem"
   let owner ← ownerOf info.name
   unless selection.owner == owner do fail "unclassified_form:source.owner"
@@ -297,9 +299,9 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
         fail "forbidden_dependency:source.definition_safety"
       unless definitionInfo.type == mkSort .zero do
         fail "unclassified_form:source.definition_type"
-      unless definitionInfo.levelParams.length == info.levelParams.length do
+      unless definitionInfo.levelParams.length == universeArguments.length do
         fail "unclassified_form:source.definition_universes"
-      let reference := mkConst selected.name (info.levelParams.map Level.param)
+      let reference := mkConst selected.name universeArguments
       let occurrence ← if selected.path.isEmpty then pure info.type
         else if selected.path == #["arg"] && info.type.isAppOfArity ``Not 1 then
           pure info.type.getAppArgs[0]!
@@ -311,9 +313,9 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
             readout.path.extract 0 selected.path.size == selected.path do
           fail "unclassified_form:source.definition_readout_path"
       let value := declaration.value.instantiateLevelParams definitionInfo.levelParams
-        (info.levelParams.map Level.param)
+        universeArguments
       let type := definitionInfo.type.instantiateLevelParams definitionInfo.levelParams
-        (info.levelParams.map Level.param)
+        universeArguments
       pure (some {
         path := selected.path
         owner := definitionOwner
@@ -331,6 +333,16 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     if telescope.size ≥ 64 then fail "incomplete_closure:E8.source_binders"
     telescope := telescope.push { name := n, info := bi, domain := d : SourceBinder }
     e := b
+  return {
+    source := info.type, expanded := source, definition := definition,
+    levels := info.levelParams, selection := selection, telescope := telescope,
+    coordinates := #[], readouts := #[] }
+
+/-- Ordinary source audits require actual selected observations. -/
+def resolve (info : ConstantInfo) (selection : SourceSelection)
+    (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
+  let scope ← resolveOriginal info selection universeArguments
+  let source := scope.expanded
   let slots := selection.coordinates
   if slots.size > 64 || selection.readouts.isEmpty || selection.readouts.size > 64 then
     fail "unclassified_form:source.selection_size"
@@ -432,10 +444,10 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
   return {
     source := info.type
     expanded := reconstructedSource
-    definition := definition
+    definition := scope.definition
     levels := info.levelParams
     selection := selection
-    telescope := telescope
+    telescope := scope.telescope
     coordinates := coordinates
     readouts := readouts }
 

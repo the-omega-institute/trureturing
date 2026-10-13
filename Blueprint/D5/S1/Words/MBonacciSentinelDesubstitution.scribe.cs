@@ -14,6 +14,30 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
         H("Sentinel Desubstitution of the m-bonacci Word"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("window-iterate-prefix"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.iterate_prefix"),
+                H("Nested actual iterates"), StatementSource.FromAuthor(WindowSupplier("iterate_prefix")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every order m at least two and natural k at most t, the kth iterate on zero is a prefix of the tth iterate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-iterate-growth"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.iterate_growth"),
+                H("Unbounded actual image lengths"), StatementSource.FromAuthor(WindowSupplier("iterate_growth")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every order m at least two and every natural k, the kth iterate on zero has length at least k+1. Each substitution step adds a nonempty image."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-word-eq-iterate"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.word_eq_iterate"),
+                H("Compatible readings of the actual word"), StatementSource.FromAuthor(WindowSupplier("word_eq_iterate")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every order m at least two, every k and every n less than the kth image length, the actual letter at n equals the letter at n of that iterate."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-factor-get"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.factor_get"),
+                H("The exact letter of a factor"), StatementSource.FromAuthor(WindowSupplier("factor_get")),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any order m, any function x from the naturals to Fin m, and naturals i,n,j with j<n, the jth letter of the length-n factor of x at i equals x(i+j)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("boundary-window"),
                 DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.boundary_window"),
                 H("Every natural start has a source block"), StatementSource.FromAuthor(ConverseStatement("boundary_window")),
@@ -303,4 +327,42 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
         new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula CFIff(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula WindowSupplier(string name)
+    {
+        Formula m = F.Id("m"), k = F.Id("k"), t = F.Id("t"), n = F.Id("n");
+        Formula i = F.Id("i"), j = F.Id("j"), x = F.Id("x");
+        Formula alphabet = WC("Fin", m);
+        Formula P(Formula a) => WC("image", WC("phi", m), a, WC("zero", m));
+        Formula body = name switch
+        {
+            "iterate_prefix" => WA("k", WN(), WA("t", WN(), WI(WL(k, t),
+                WC("IsPrefix", P(k), P(t))))),
+            "iterate_growth" => WA("k", WN(), WL(WP(k, F.D(1)), WC("length", P(k)))),
+            "word_eq_iterate" => WA("k", WN(), WA("n", WN(),
+                WI(WT(n, WC("length", P(k))), WQ(WC("word", m, n), WC("getElem", P(k), n))))),
+            "factor_get" => WA("x", WC("Function", WN(), alphabet),
+                WA("i", WN(), WA("n", WN(), WA("j", WN(), WI(WT(j, n),
+                    WQ(WC("getElem", WC("factor", x, i, n), j),
+                        new Formula.Apply(x, [WP(i, j)]))))))),
+            _ => throw new ArgumentOutOfRangeException(nameof(name)),
+        };
+        return F.Disp(WA("m", WN(), name == "factor_get" ? body : WI(WL(F.D(2), m), body)));
+    }
+
+    private static Formula WN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+    private static Formula WC(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula WA(string x, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
+    private static Formula WQ(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula WL(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula WT(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula WP(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula WI(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+
 }
