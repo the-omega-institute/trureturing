@@ -50,9 +50,10 @@ transfinite splitting construction, signed-measure (A)-(G), or the
 retrospective paired-Dirac capture argument. Problem 8.2 remains
 unresolved by this module. The result is not claimed as new mathematics.
 
-## Verified source scope
+## Verified locator
 
-Source: https://arxiv.org/pdf/2607.06808v2.
+Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
+Verified full PDF: https://arxiv.org/pdf/2607.06808v2.
 PDF SHA256: b99499c33606ed02448c329e848c4fcbc38f5f0521326b1b017ec36895f7b1b4.
 Extracted-text SHA256: 501eafa8e27fdcdca8769c8068ac5013d2afeac838a1598df60e1907634cef23.
 The entire source was read; PDF pages 10, 11 and 14 were additionally
