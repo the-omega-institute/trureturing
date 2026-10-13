@@ -49,7 +49,10 @@ internal sealed class Diploid10245DensityDocument : IScribeDocumentDefinition
         string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            declaration == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("fuks-fates-2026-diploid-10-245-density"),
+                ResolutionKind.Proved) : null);
 
     private static Formula Rule10Formula() => Neighbourhood(
         Equal(LocalCall("rule10", X("x"), X("y"), X("z")),
