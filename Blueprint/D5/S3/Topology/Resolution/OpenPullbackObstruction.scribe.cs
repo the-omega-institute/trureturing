@@ -91,7 +91,7 @@ internal sealed class OpenPullbackObstructionDocument : IScribeDocumentDefinitio
                         + "The certificate also retains the actual pullback homeomorphism, so no proper subset or replacement relation is called the full pullback. "
                         + "This is not a counterexample to Res(B), a resolution of Peng Question 5.1, or a global novelty or unique-result claim. "
                         + "The relative metric-kernel supplier remains applicable to the constructed metrizable T. "
-                        + "Context is in Library/Topology/project2026relativeopenresolution.md and Library/Topology/valov2008milyutinmaps.md; "
+                        + "The construction is recorded in Library/Topology/project2026openpullbackobstruction.md. Context is in Library/Topology/project2026relativeopenresolution.md and Library/Topology/valov2008milyutinmaps.md; "
                         + "the self-contained obstruction is a project derivation, without attributing it to uninspected primary-source bodies."))),
                 DescribeRole.Theorem),
             Describe.Lean(
