@@ -1,3 +1,7 @@
+import Reg.Support.FibonacciOperations.OriginalOperationCommonStem
+import Reg.Support.FibonacciOperations.OriginalEqualWeightCodebook
+import Reg.Support.FibonacciOperations.SuppliedCodebookStorageLiminf
+import Reg.Support.FibonacciOperations.OriginalCodebookStorageLiminf
 import Reg.Support.FibonacciConsensusUniverse
 import Reg.Support.FibonacciQuadratic
 import Mathlib.Logic.Encodable.Basic
@@ -410,3 +414,209 @@ def original_operation_decoder_storage_registration :
 #print axioms original_operation_decoder_storage_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalOperationDecoderStorage
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalOperationCommonStem
+noncomputable section
+universe u v
+
+theorem rejected_complete_law : ¬ sourceArena.{u,v}.Law rejected := by
+  obtain ⟨b, bp, bl, supply⟩ := OriginalOperationDecoderStorage.joint_supply_witness (fun _ => false)
+  exact rejected_law b bp bl supply
+
+def evidence : Registration sourceArena.{u,v} (type_of% @original_operation_common_stem.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@original_operation_common_stem.{u,v}, rejected, rejected_complete_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_complete_law
+  dependence := by
+    intro i
+    exact ⟨(), [], [Label.L0], by simp [actual, realize]⟩
+
+def original_operation_common_stem_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.original_operation_common_stem.{u,v})
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ w => w.length+1) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalOperationCommonStem.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalOperationCommonStem.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena.{u,v}⟩
+  objectArena := .source ⟨sourceArena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena.{u,v} ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ w => w.length+1) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #[
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "arg", "body", "arg", "body", "arg", "arg", "arg",
+        "arg", "arg"]
+      stateBinder := 16
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_operation_common_stem_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalOperationCommonStem
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalEqualWeightCodebook
+noncomputable section
+
+def original_equal_weight_codebook_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.original_equal_weight_codebook)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ R => R.r) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalEqualWeightCodebook.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalEqualWeightCodebook.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ R => R.r) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #[
+        "body", "body", "body", "body", "body", "body", "arg", "body",
+        "fn", "arg", "fn", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_equal_weight_codebook_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalEqualWeightCodebook
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.SuppliedCodebookStorageLiminf
+noncomputable section
+universe u
+
+def supplied_codebook_storage_liminf_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.supplied_codebook_storage_liminf.{u})
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ B => (B : ℝ)) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.SuppliedCodebookStorageLiminf.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.SuppliedCodebookStorageLiminf.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena.{u}⟩
+  objectArena := .source ⟨sourceArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena.{u} ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ B => (B : ℝ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #[
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "fn",
+        "arg", "body", "body", "body", "body", "arg"]
+      stateBinder := 24
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms supplied_codebook_storage_liminf_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.SuppliedCodebookStorageLiminf
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalCodebookStorageLiminf
+noncomputable section
+universe u
+
+def original_codebook_storage_liminf_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.original_codebook_storage_liminf.{u})
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ R => R.r) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalCodebookStorageLiminf.unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalCodebookStorageLiminf.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena.{u}⟩
+  objectArena := .source ⟨sourceArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena.{u} ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ R => R.r) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #[
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "arg",
+        "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 15
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_codebook_storage_liminf_registration
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations.OriginalCodebookStorageLiminf
