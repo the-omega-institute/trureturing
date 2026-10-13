@@ -1679,3 +1679,629 @@ the meaning of one sample. $\square$
 [BC8]: AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Full pure-state information and the five-state spectral complement
+
+### 5.1. The actual tangent space and the same preparation budget
+
+**Definition 5.1 (Probability and phase directions).** Fix a finite
+$n\ge1$, a strictly positive normalized law $p$ on $B_n$, and the
+supplied real reference $\psi=(\sqrt{p_s})_{s\in B_n}$.
+Put $V=\psi^\perp\cap\mathbb R^{B_n}$. For $u,v\in V$, use the
+normalized pure-state path
+
+$$
+z(t)=\frac{\psi+t(u+iv)}{\|\psi+t(u+iv)\|}.
+\tag{5.1}
+$$
+
+Its derivative at zero is $u+iv$. These are all horizontal
+pure-state directions, rather than only derivatives within the
+activity family. In the negative-phase convention,
+$\dot p_s=2\psi_su_s$ and $\dot\theta_s=-v_s/\psi_s$.
+Thus normalization and the common-phase gauge are respectively
+$\sum_s\dot p_s=0$ and $\sum_sp_s\dot\theta_s=0$.
+
+Keep the complete recorded-site quadrature experiment of
+Parent/Readout Chapter 8 fixed at this reference. For a legal
+site-$i$ pair $\{s,t\}$ its phase projection is
+
+$$
+K_{st}=\frac{(\psi_t e_s-\psi_s e_t)
+(\psi_t e_s-\psi_s e_t)^{\mathsf T}}{p_s+p_t},\qquad
+K_i=\sum_{\{s,t\}\text{ at }i}K_{st}.
+\tag{5.2}
+$$
+
+At a fixed site the pairs are disjoint, and blocked words remain
+separate outcomes. Let $\omega_i\ge0$, $\sum_i\omega_i=1$ and
+$H_\omega=\sum_i\omega_iK_i$. A sample uses a quadrature site
+with total probability $r\in[0,1]$, conditional probabilities
+$\omega_i$, or a full mode-basis measurement with probability
+$1-r$. All setting labels and outputs are retained. The
+probabilities $r,\omega_i$ and the measurement effects do not
+change along (5.1).
+
+Write $B_\omega=H_\omega|_V$ and
+$\gamma(\omega)=\lambda_{\min}(B_\omega)$. Define the full local
+information ratio by
+
+$$
+\Gamma(r,\omega)=\inf_{(u,v)\ne(0,0)}
+\frac{J_{r,\omega}(u,v)}{4(\|u\|^2+\|v\|^2)}.
+\tag{5.3}
+$$
+
+The denominator is the pure-state QFI at the supplied reference.
+The ratio concerns first-order information, not an assertion of
+global identification or finite-sample minimax risk. Supplying
+the reference and coherent controls is an assumption separate
+from the sample count.
+
+### 5.2. Pointwise transfer without reflection symmetry
+
+**Theorem 5.2 (All positive five-state laws).** Take $n=3$ with
+the order $(0,1,2,3,13)$, any strictly positive law $p$, every site
+distribution $\omega$, and every $0\le r\le1$. Then
+
+$$
+\boxed{\Gamma(r,\omega)=r\gamma(\omega).}
+\tag{5.4}
+$$
+
+Consequently the full probability-and-phase optimum has the same
+site distributions as the phase-only optimum, and every overall
+optimum in the enlarged menu has $r=1$. For the reflected laws
+of Theorem 4.2, its explicit unique site distribution is also
+the unique full-tangent optimum. Reflection symmetry is not
+needed for the pointwise identity (5.4).
+
+Proof. First compute the information of the actual experiment.
+On a pair set $S=p_s+p_t$,
+$\alpha=\psi_su_s+\psi_tu_t$ and
+$\beta=\psi_sv_t-\psi_tv_s$. At the reference the two
+probabilities are $S/2$, and their derivatives are
+$\alpha+\beta$ and $\alpha-\beta$, up to the fixed outcome-sign
+convention. Their Fisher contributions add to
+
+$$
+\frac{(\alpha+\beta)^2+(\alpha-\beta)^2}{S/2}
+=\frac{4(\alpha^2+\beta^2)}S.
+\tag{5.5}
+$$
+
+The normalized vectors
+$(\psi_se_s+\psi_te_t)/\sqrt S$ and
+$(\psi_te_s-\psi_se_t)/\sqrt S$ are orthonormal on the pair.
+A blocked word contributes $4u_s^2$ and no phase term.
+The mode-basis setting contributes $4\|u\|^2$.
+Summing pairs, blocked outcomes and recorded settings gives
+
+$$
+J_{r,\omega}(u,v)
+=4\bigl[u^{\mathsf T}(I-rH_\omega)u
++r v^{\mathsf T}H_\omega v\bigr].
+\tag{5.6}
+$$
+
+Polarization therefore gives the complete reference matrices
+in orthonormal horizontal coordinates:
+
+$$
+F_{r,\omega}=4\begin{pmatrix}I_V-rB_\omega&0\\0&rB_\omega\end{pmatrix},
+\qquad Q=4I_{2\dim V}.
+\tag{5.7}
+$$
+
+Every $K_i$ is a projection annihilating $\psi$, so
+$0\preceq B_\omega\preceq I_V$. Hence
+
+$$
+\Gamma(r,\omega)=
+\min\{r\lambda_{\min}(B_\omega),
+1-r\lambda_{\max}(B_\omega)\}.
+\tag{5.8}
+$$
+
+The paired calculation is an application of established
+rank-one measurement information algebra: see Li--Ferrie--
+Gross--Kalev--Caves, equations (12), (15)--(16) [FSIC5]. Its
+specialization here retains the actual legal blocks, blocked
+outcomes and setting budget. The block diagonal form uses the
+real calibrated reference and opposite quadratures; rank one
+alone does not set arbitrary classical cross blocks to zero.
+
+It remains to prove the five-state spectral inequality. On
+the four square states, $K_1$ and $K_3$ are rank-two orthogonal
+projections. Their common kernel is the one-dimensional ray of
+the restricted square-root law: their four pair equations
+connect the square. The sum of their ranges has dimension
+three, so their common range has dimension one. These two
+common spaces are orthogonal. Their two-dimensional orthogonal
+complement is invariant under both projections, each of rank
+one there.
+
+Put $s=\omega_1+\omega_3$. On $V$, the eigenvalues of
+$A=\omega_1K_1+\omega_3K_3$ are
+
+$$
+0,\lambda_-,\lambda_+,s,\qquad
+0\le\lambda_-\le\lambda_+\le s,\qquad
+\lambda_-+\lambda_+=s.
+\tag{5.9}
+$$
+
+The zero direction comes from the center state and the common
+square kernel after removing $\psi$. The common range has
+eigenvalue $s$. The remaining block has trace $s$ and is
+bounded above by $sI$, proving (5.9), including zero weights.
+
+Write $\mu_1\le\cdots\le\mu_4$ for the eigenvalues of
+$B_\omega=A+\omega_2K_2|_V$. Positivity of the added rank-one
+projection and the variational eigenvalue principle give
+$\mu_2\ge\lambda_-$ and $\mu_3\ge\lambda_+$.
+Meanwhile
+
+$$
+\sum_j\mu_j=2s+\omega_2=1+s,
+\qquad
+\mu_1+\mu_4
+=1+s-(\mu_2+\mu_3)\le1.
+\tag{5.10}
+$$
+
+Thus $1-r\mu_4\ge r\mu_1$ for $0\le r\le1$, and (5.8)
+is (5.4). The connected legal graph and any strictly positive
+site distribution give a positive phase gap. Its maximum
+$\gamma^*>0$ exists by continuity on the compact simplex.
+Equation (5.4) gives $\max_\omega\Gamma(r,\omega)=r\gamma^*$;
+therefore every overall optimum has $r=1$ and a phase-optimal
+site distribution. Apply Theorem 4.2 for reflected laws.
+$\square$
+
+The argument uses the square-plus-center projection geometry.
+It neither assumes independent endpoint occupations nor
+identifies a mixed-state tangent space with $V\oplus iV$.
+
+### 5.3. The same conjugate information budget
+
+For any real unit $h\in V$, the two conjugate tangent
+directions $h$ and $ih$ have normalized information
+$1-rh^{\mathsf T}B_\omega h$ and
+$rh^{\mathsf T}B_\omega h$. Their sum is one. Restricting
+to the supplied relation family of Parent/Readout §9.10,
+with $h_s=d_s/(\sqrt{\bar p_s}\sqrt{I_0})$, therefore gives
+
+$$
+\frac{F_{\kappa\kappa}}{I_0}=1-t,\qquad
+\frac{I_0F_{\chi\chi}}4=t,\qquad
+F_{\kappa\chi}=0,\qquad t=rh^{\mathsf T}B_\omega h.
+\tag{5.11}
+$$
+
+The local model's vanishing classical cross term does not
+remove its imaginary horizontal Gram pairing. Equation
+(5.11) lies inside the arbitrary-measurement directional
+budget already proved in Parent/Readout §§9.11 and 10.7.
+It does not give both individual QFI limits simultaneously.
+
+Likewise the $2\dim V$ generalized eigenvalues in (5.7)
+sum to $\dim V$: each eigenvalue of $rB_\omega$ is paired
+with its complement. This consumes the existing pure-state
+Fisher trace budget, rather than creating a new uncertainty
+principle. The unrestricted local half-QFI measurement of
+[FSIC5] and Parent/Readout §10.9 uses additional calibrated
+global operations. It is a different menu from the single-site
+controls studied here. Parent/Readout §8.5 already records
+the separate mixed-state observation kernel.
+
+[FSIC5]: https://arxiv.org/abs/1507.06904v2
+
+## 追加锚（本行以下为增补区）
+
+## 6. A rare vacuum separates phase and full-tangent designs
+
+### 6.1. Positive laws and the graph left after vacuum deletion
+
+**Definition 6.1 (A supplied rare-vacuum law).** Fix a finite
+$n\ge4$, let $0$ denote the empty word in $B_n$, and put
+$M=|B_n|-1$. For $\epsilon>0$, define
+
+$$
+p_\epsilon(0)=\frac\epsilon{M+\epsilon},\qquad
+p_\epsilon(s)=\frac1{M+\epsilon}\quad(s\ne0).
+\tag{6.1}
+$$
+
+Use the pure reference $\psi_\epsilon=\sqrt{p_\epsilon}$ and
+the same fixed quadrature settings, blocked-word outcomes,
+recorded labels and preparation budget as Definition 5.1.
+Write $\gamma_\epsilon(\omega)$ and
+$\Gamma_\epsilon(r,\omega)$ for the corresponding ratios.
+Let $G_n^\circ$ be the legal-toggle graph induced by the
+nonempty words, and let $L_n^\circ$ be its unweighted
+combinatorial Laplacian. Define
+
+$$
+g_n=\lambda_2\!\left(\frac1{2n}L_n^\circ\right),
+\tag{6.2}
+$$
+
+with the eigenvalues ordered increasingly, including the
+constant zero mode. The graph and $g_n$ are fixed before
+letting $\epsilon$ tend to zero.
+
+**Theorem 6.2 (Separation at every finite length at least four).**
+For every site distribution $\omega$,
+
+$$
+\Gamma_\epsilon(1,\omega)
+\le\frac{\epsilon(M-1)}{M(1+\epsilon)}.
+\tag{6.3}
+$$
+
+For the uniform distribution $\bar\omega_i=1/n$,
+
+$$
+0<g_n\le1,\qquad
+\gamma_\epsilon(\bar\omega)\longrightarrow g_n,
+\qquad
+\lambda_{\max}(B_{\bar\omega,\epsilon})
+\longrightarrow1.
+\tag{6.4}
+$$
+
+Consequently, for each fixed $0<r<1$ and all sufficiently
+small positive $\epsilon$,
+
+$$
+\Gamma_\epsilon(r,\bar\omega)
+>\sup_\omega\Gamma_\epsilon(1,\omega).
+\tag{6.5}
+$$
+
+Thus a mode-basis setting can strictly improve the full
+pure-state information criterion under the same preparation
+budget. All compared laws have full support, and all
+horizontal directions are retained.
+
+Proof. Every site pairs the empty word with its singleton.
+The vacuum diagonal entry of each $K_i$ is $1/(1+\epsilon)$,
+and $H_\omega\psi_\epsilon=0$. Put
+
+$$
+u_\epsilon=(I-\psi_\epsilon\psi_\epsilon^{\mathsf T})e_0.
+\tag{6.6}
+$$
+
+Then $u_\epsilon\in V_\epsilon$ and
+
+$$
+\|u_\epsilon\|^2=\frac M{M+\epsilon},\qquad
+u_\epsilon^{\mathsf T}H_\omega u_\epsilon
+=\frac1{1+\epsilon}.
+\tag{6.7}
+$$
+
+The amplitude direction $(u_\epsilon,0)$ in (5.6), with
+$r=1$, has information ratio
+
+$$
+\frac{u_\epsilon^{\mathsf T}(I-H_\omega)u_\epsilon}
+{\|u_\epsilon\|^2}
+=\frac{\epsilon(M-1)}{M(1+\epsilon)}.
+\tag{6.8}
+$$
+
+This proves the uniform upper bound (6.3), independently
+of the site allocation.
+
+For uniform sites the finite matrices have the limit
+
+$$
+H_{\bar\omega,\epsilon}\longrightarrow
+\begin{pmatrix}1&0\\0&L_n^\circ/(2n)\end{pmatrix},
+\qquad
+\psi_\epsilon\longrightarrow
+\left(0,\frac{\mathbf1}{\sqrt M}\right).
+\tag{6.9}
+$$
+
+Indeed each vacuum--singleton pair has matrix entries
+$1/(1+\epsilon)$ at the vacuum,
+$\epsilon/(1+\epsilon)$ at the singleton, and
+$-\sqrt\epsilon/(1+\epsilon)$ off diagonal. Each pair of
+nonempty words has equal probabilities and contributes
+$(e_s-e_t)(e_s-e_t)^{\mathsf T}/(2n)$ to the uniform
+operator. This proves (6.9) entry by entry.
+
+The graph $G_n^\circ$ is connected. Delete occupied sites
+from any nonempty independent set until a singleton is
+reached, retaining at least one occupied site throughout.
+Singletons $i,j$ with $|i-j|\ge2$ are connected by the
+two-edge route $\{i\},\{i,j\},\{j\}$. The graph of these
+singleton compatibilities is the complement of the path
+$P_n$. Its first four vertices are connected by the edges
+$\{1,3\},\{1,4\},\{2,4\}$, and every vertex $j\ge5$
+is adjacent to vertex 1. Hence its connectivity holds for
+every $n\ge4$.
+
+Connectivity gives a simple constant kernel and a positive
+finite $g_n$. Each $H_{\bar\omega,\epsilon}$ is a convex
+combination of orthogonal projections, so it lies between
+zero and identity; its limiting nonvacuum block does also.
+Thus $g_n\le1$. At the limit the full operator has exactly
+one zero mode, the limiting ground vector, while its
+nonzero spectrum consists of the nonvacuum positive
+spectrum and the vacuum eigenvalue 1. Continuity of the
+ordered eigenvalues of these finite symmetric matrices
+therefore proves (6.4).
+
+For every positive $\epsilon$, (5.8) and the projection
+contraction give
+
+$$
+\Gamma_\epsilon(r,\bar\omega)
+\ge\min\{r\gamma_\epsilon(\bar\omega),1-r\}.
+\tag{6.10}
+$$
+
+For sufficiently small $\epsilon$ this is at least
+$\min\{rg_n/2,1-r\}>0$, whereas (6.3) tends to zero.
+This proves (6.5). $\square$
+
+The limiting graph is used to prove a bound for positive
+laws. It does not replace the tangent space by a reduced
+support space. In particular, the vacuum amplitude
+direction (6.6) remains a tested direction in every
+comparison. The result is for each fixed finite $n$;
+it supplies no uniform lower bound as $n\to\infty$.
+
+### 6.2. Short lengths and the activity-family boundary
+
+**Proposition 6.3 (Exceptions and locality of the supplied law).**
+Deleting the vacuum disconnects the legal-toggle graph at
+$n=2$ and $n=3$. Every positive law at $n=2$ satisfies
+$\Gamma(r,\omega)=r\gamma(\omega)$. At $n=1$ the sole quadrature setting has
+$\gamma=1$ and $\Gamma(r)=\min\{r,1-r\}$, so mixing with
+the mode basis improves the joint criterion by a different
+mechanism. For $n\ge3$ and $\epsilon\ne1$, (6.1) is not
+a single-site activity law
+$p(s)\propto\prod_i\lambda_i^{s_i}$ on $B_n$.
+
+Proof. At $n=2$ only two isolated singleton words remain
+after deletion. At $n=3$ the center singleton is isolated,
+while the endpoint singletons connect through their pair.
+This prevents the positive $g_n$ argument of Theorem 6.2
+at those lengths. Theorem 5.2 nevertheless treats every
+positive law at $n=3$ directly.
+
+At $n=2$ the two site projections each have rank one
+and annihilate $\psi$. Their weighted sum on the
+two-dimensional $V$ has trace one, so its two eigenvalues
+$\gamma,\Lambda$ satisfy $\gamma+\Lambda=1$.
+Equation (5.8) proves the stated identity for every $r$.
+
+At $n=1$ the one legal pair spans the entire two-state
+space. Its $K_1$ is identity on the one-dimensional $V$,
+so (5.8) gives the asserted ratios.
+
+For the activity claim, the singleton-to-vacuum ratios
+would force $\lambda_i=1/\epsilon$ for every site. A legal
+nonadjacent pair exists at $n\ge3$. Its actual ratio to
+the vacuum is $1/\epsilon$, whereas the product formula
+would give $1/\epsilon^2$. Equality requires
+$\epsilon=1$. $\square$
+
+Theorem 6.2 thus distinguishes general positive supplied
+laws from a restricted local activity family. It does
+not establish the same separation inside that family,
+or supply a local preparation Hamiltonian for (6.1).
+
+### 6.3. An exact positive eight-state comparison
+
+**Proposition 6.4 (A rational length-four witness).** Order
+the legal words as
+
+$$
+(0000,0001,0010,0100,0101,1000,1001,1010)
+\tag{6.11}
+$$
+
+and take
+
+$$
+p=\frac{(1,100,100,100,100,100,100,100)}{701}.
+\tag{6.12}
+$$
+
+For every quadrature site allocation,
+$\Gamma(1,\omega)\le6/707$. Uniform conditional site
+allocation with quadrature fraction $r=9/10$ satisfies
+
+$$
+\Gamma(9/10,\bar\omega)\ge\frac9{500}
+>\frac6{707},\qquad
+\frac9{500}-\frac6{707}=\frac{3363}{353500}.
+\tag{6.13}
+$$
+
+Proof. Here $M=7$ and $\epsilon=1/100$, so (6.3) gives
+$6/707$. For the uniform phase lower bound use indices
+$0,\ldots,7$ in order (6.11). The site pair sets are
+
+$$
+\begin{aligned}
+1 &: \{\{0,5\},\{1,6\},\{2,7\}\},\\
+2 &: \{\{0,3\},\{1,4\}\},\\
+3 &: \{\{0,2\},\{5,7\}\},\\
+4 &: \{\{0,1\},\{3,4\},\{5,6\}\}.
+\end{aligned}
+\tag{6.14}
+$$
+
+For $D=\operatorname{diag}(\sqrt p)$ and $u=Df$, the
+condition $u\perp\sqrt p$ is $\sum_sp_sf_s=0$, and
+
+$$
+\|u\|^2=\operatorname{Var}_p(f),\qquad
+u^{\mathsf T}H_{\bar\omega}u
+=\sum_{\{s,t\}\text{ legal}}c_{st}(f_s-f_t)^2,
+\quad c_{st}=\frac{p_sp_t}{4(p_s+p_t)}.
+\tag{6.15}
+$$
+
+Use the spanning tree whose long path is
+$2\!-\!7\!-\!5\!-\!6\!-\!1\!-\!4\!-\!3$
+and whose remaining leaf edge is $0\!-\!5$.
+For each unordered pair $\{s,t\}$ let $P_{st}$ be its
+unique tree path. The variance identity and Cauchy's
+inequality along that path give
+
+$$
+\begin{aligned}
+\operatorname{Var}_p(f)
+&=\sum_{s<t}p_sp_t(f_s-f_t)^2\\
+&\le\sum_{e\text{ in the tree}}L_e(\nabla_e f)^2,
+\qquad
+L_e=\sum_{s<t:e\in P_{st}}p_sp_t|P_{st}|.
+\end{aligned}
+\tag{6.16}
+$$
+
+The exact edge loads relative to (6.15) are
+
+| Tree edge $e$ | $L_e/c_e$ |
+|---|---:|
+| $\{2,7\}$ | $24$ |
+| $\{5,7\}$ | $40$ |
+| $\{5,6\}$ | $33712/701$ |
+| $\{1,6\}$ | $33696/701$ |
+| $\{1,4\}$ | $28072/701$ |
+| $\{3,4\}$ | $16840/701$ |
+| $\{0,5\}$ | $8080/701$ |
+
+These fractions follow by enumerating the 28 unordered
+pairs in (6.16); their maximum is $33712/701<50$. All remaining
+legal-edge energies are nonnegative. Consequently
+
+$$
+\operatorname{Var}_p(f)
+\le50\,u^{\mathsf T}H_{\bar\omega}u,
+\qquad\gamma(\bar\omega)\ge\frac{701}{33712}>\frac1{50}.
+\tag{6.17}
+$$
+
+For $r=9/10$, the amplitude block $I-rB_{\bar\omega}$
+is at least $I/10$, and the phase block
+$rB_{\bar\omega}$ is at least $9I/500$.
+Equation (5.8) and exact rational subtraction prove
+(6.13). $\square$
+
+The gain concerns the worst direction of the full
+horizontal pure-state tangent at a supplied calibrated
+reference. It neither makes the classical Fisher
+matrix equal to QFI nor proves simultaneous attainment
+of individual QFI limits. The comparison uses the same
+number of preparations and changes the recorded setting
+distribution; it supplies no finite-sample risk theorem,
+hardware implementation or physical energy assignment.
+
+### 6.4. The global sign fiber and the nearby indistinguishable ray
+
+**Proposition 6.5 (No uniform identifiable neighborhood).**
+For any positive law on $B_n$, the fixed menu of Definition
+5.1 gives the same recorded distribution on all rays
+
+$$
+\psi^\sigma=\sum_{s\in B_n}\sigma_s\sqrt{p_s}\,e_s,
+\qquad \sigma_s\in\{-1,1\}.
+\tag{6.18}
+$$
+
+There are $2^{|B_n|-1}$ distinct rays in this displayed
+family. For the law (6.1), flipping only the vacuum sign
+gives a distinct ray with the same distribution, represented
+at distance $2\sqrt{\epsilon/(M+\epsilon)}$ from the positive
+reference. Thus no fixed positive-radius neighborhood of
+these references is identifiable uniformly as
+$\epsilon\downarrow0$, despite the positive limiting local
+information ratio of Theorem 6.2.
+
+Proof. On a pair the two quadrature probabilities at
+(6.18) are
+
+$$
+\frac12\left|\sigma_s\sqrt{p_s}
+\mathbin{\pm} i\sigma_t\sqrt{p_t}\right|^2
+=\frac{p_s+p_t}{2}.
+\tag{6.19}
+$$
+
+Mode-basis and blocked-word probabilities remain $p_s$.
+Recorded setting probabilities are state-independent,
+so the entire distribution is unchanged for every $r$
+and $\omega$. Full support makes two sign vectors define
+the same ray exactly when they differ by an overall sign,
+giving the count. A vacuum-only flip changes precisely
+one coordinate by $2\sqrt{p_\epsilon(0)}$; both normalized
+states remain in the legal carrier. For any fixed radius
+this distance is smaller than that radius at sufficiently
+small positive $\epsilon$, while the two rays remain
+distinct. This proves the nonuniform-neighborhood claim.
+$\square$
+
+This boundary concerns the fixed single-quadrature menu.
+Parent/Readout Theorem 8.6 uses both real and imaginary
+edge observations, which supply the missing sign-sensitive
+data on connected support. Its pure-state propagation
+result is not contradicted by (6.19). A local Fisher lower
+bound at the calibrated reference does not itself supply
+those additional observations.
+
+**Attribution 6.6 (The specific increment and established tools).**
+The full tangent Fisher algebra in Chapter 5 consumes
+[FSIC5]. The five-state increment is the all-positive,
+all-weight extremal-eigenvalue inequality (5.10) and its
+complete optimizer transfer. The larger-state increment
+is the fixed-menu rare-vacuum separation of Theorem 6.2
+and its exact positive comparison (6.13). The elementary
+connectivity and path inequalities inside these proofs
+are supporting methods, not new graph or congestion
+principles.
+
+Huang--Preskill--Soleimanifar, [arXiv:2404.07281v1][HPS6],
+equations (19)--(25) and Proposition 3, already use the
+same heat-bath transition weights and diagonal
+symmetrization in quantum-state certification. At level
+one and zero reference phase, their support-restricted
+transition operator corresponds to
+$I-D^{-1}H_{\bar\omega}D$, with
+$D=\operatorname{diag}(\sqrt p)$. Their Appendix D.2,
+equation (42) and Proposition 12, gives the classical
+length-weighted canonical-path gap bound and attributes
+it to Sinclair. Equation (6.16) is the elementary
+variance proof of that method for the selected tree;
+the tree and its exact loads are the instance-specific
+data.
+
+Mao--Chen--Huang--Preskill--Zhou,
+[arXiv:2608.01617v1][MCHPZ6], Appendix C, Definition S4,
+Theorem S5 and equations (C.1)--(C.3), provide a close
+multiparameter antecedent using the same heat-bath
+operator. Their single-qubit setting is randomly chosen
+from $X,Y,Z$, with $Z$ on the other qubits; their full
+Fisher guarantee uses the chain's relaxation time.
+That broader menu includes the real-edge observations
+absent from (6.19). Its guarantee is not substituted
+for the exact narrower-menu comparison here.
+
+No literature priority is claimed for these specific
+conclusions. In particular, (6.1) provides neither a
+local activity realization nor an attainment statement
+for the original finite-producer optimization problem.
+
+[HPS6]: https://arxiv.org/abs/2404.07281v1
+[MCHPZ6]: https://arxiv.org/abs/2608.01617v1
+
+## 追加锚（本行以下为增补区）
