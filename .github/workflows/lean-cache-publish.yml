@@ -285,6 +285,46 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
+          set -euo pipefail
+          observe_producer() {
+            local delay_pid='' cgroup_memory_events=''
+            trap 'if [[ -n "$delay_pid" ]]; then kill "$delay_pid" 2>/dev/null || true; wait "$delay_pid" 2>/dev/null || true; fi' EXIT
+            trap 'exit 0' TERM INT
+            while IFS=: read -r hierarchy controllers cgroup_path; do
+              if [[ "$hierarchy" == 0 && -z "$controllers" && "$cgroup_path" == /* ]]; then
+                cgroup_memory_events="/sys/fs/cgroup${cgroup_path%/}/memory.events"
+                break
+              fi
+            done < /proc/self/cgroup
+            while :; do
+              printf 'CACHE_PRODUCER_OBSERVATION %s\n' "$(date -u +%FT%TZ)"
+              ps -C lean,lake,inputDiscovery,reportInspector \
+                -o pid,ppid,etime,time,pcpu,rss,stat,args --sort=-pcpu | head -n 13 || true
+              for observation in /proc/pressure/cpu /proc/pressure/memory "$cgroup_memory_events"; do
+                if [[ -r "$observation" ]]; then
+                  printf 'RESOURCE_SOURCE %s\n' "$observation"
+                  cat "$observation"
+                else
+                  printf 'RESOURCE_UNAVAILABLE %s\n' "${observation:-current-cgroup-memory.events}"
+                fi
+              done
+              phase_file=.lake/build/stratalint/raw-lean-report.json.logs/native-phases.jsonl
+              if [[ -f "$phase_file" ]]; then tail -n 1 "$phase_file"; fi
+              for lake_log in .lake/build/stratalint/raw-lean-report.json.logs/report.{stdout,stderr}.log; do
+                if [[ -f "$lake_log" ]]; then
+                  printf 'LAKE_OUTPUT_SOURCE %s\n' "$lake_log"
+                  tail -n 3 "$lake_log"
+                fi
+              done
+              sleep 60 &
+              delay_pid=$!
+              wait "$delay_pid"
+              delay_pid=''
+            done
+          }
+          observe_producer &
+          observer_pid=$!
+          trap 'kill "$observer_pid" 2>/dev/null || true; wait "$observer_pid" 2>/dev/null || true' EXIT
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
             export STRATALINT_LEAN_PRODUCER_DLL="$producer"
@@ -293,6 +333,17 @@ jobs:
           fi
           make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
           make compiled-judge-test
+      - name: Export producer diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-producer-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .lake/build/stratalint/raw-lean-report.json.logs/
+            .lake/build/lean-inspector/inputs.json
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 3
       - name: Export the Lean report bundle
         if: ${{ always() && hashFiles('.lake/build/stratalint/raw-lean-report.json') != '' }}
         uses: actions/upload-artifact@v4
