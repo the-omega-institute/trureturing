@@ -13,7 +13,7 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 abbrev signature : Signature where
-  Params := ℝ × ℝ
+  Params := Σ _ : ℝ, ℝ
   State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -30,7 +30,7 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law r := ∀ x y z a b c, r.readout () (x, y) z a b c = ejmNoiseTable x y z a b c
+  Law r := ∀ x y z a b c, r.readout () ⟨x, y⟩ z a b c = ejmNoiseTable x y z a b c
 
 theorem actual_law : arena.Law actual := ejm_noise_probability
 
@@ -54,7 +54,7 @@ def registration : Registration arena (arena.Law actual) where
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨((1 : ℝ), (1 : ℝ)), (0 : ℝ), (1 : ℝ), ?_⟩
+    refine ⟨⟨(1 : ℝ), (1 : ℝ)⟩, (0 : ℝ), (1 : ℝ), ?_⟩
     intro h
     have hh := congrArg (fun p => p 0 0 0) h
     change ejmProbability 1 1 0 0 0 0 = ejmProbability 1 1 1 0 0 0 at hh
