@@ -113,7 +113,8 @@ class NativeRecoveryConsumerTests:
         work = self.root / 'module-work.jsonl'
         self.env['STRATALINT_INSPECTOR_MODULE_WORK'] = str(work)
         result = self.guarded_command(['make', 'lean-report',
-            'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'], env=self.env)
+            'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'],
+            env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         report = self.root / '.lake/build/stratalint/raw-lean-report.json'
         log = Path(str(report) + '.logs/report.stdout.log')
         output = log.read_text() if log.exists() else result.stdout + result.stderr
