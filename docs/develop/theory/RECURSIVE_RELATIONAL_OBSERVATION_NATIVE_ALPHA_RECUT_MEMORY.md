@@ -855,3 +855,319 @@ No generic automaton construction or worldwide originality conclusion
 is needed for the native proofs.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Joint conditional supplement and first-version invocation frontier
+
+**Assumption 9.1 (acquired supplement and complete updated entry).** Fix a
+finite public prefix-free cut $P$, a realized complete old row $R=(C,\pi)$,
+its canonically ordered class set $B$ with $k=|B|$, and the full unrestricted
+original-source fiber $\mathcal U_R$ of (NAR.1.4). Before losing access to
+old values, the producer has the truthful same-source, same-version finite
+data of Assumption 4.1. A supplement $\sigma(u)$ is computed from these
+actually acquired data and is actually exported together with $R$ before
+the complete access cut. Semantic existence of a legal filling, or a
+semantic inverse of a source name, does not supply these premises.
+
+The reader's entire accessible initial state is a function of
+$P,R,\sigma(u)$ and common source-independent controls, and these inputs
+are recoverable from it. There is no additional source-dependent initial
+field: old trees, representative values, archives, pointers, source
+identity, readable control, acquisition order, lengths, meters and timing
+are not extra inputs. A length or other field determined by the retained
+payload does not add a distinction; any further accessible distinction
+would change this assumption and its source fibers.
+
+A separately supplied legal entry preserves the same source register,
+and exactly one actual authenticated legal $\rho$ update gives
+$y=\rho u$. The register is stationary during reading, and every reply
+is the native four-reply value $r_y(a)$ at its requested finite address.
+Continuity and authentication certify that register and version, without
+revealing which $u\in\mathcal U_R$ is actual. No source-revealing update
+packet is supplied. An already stopped producer is not resumed by this
+assumption; the new entry and update are separate supplied conditions.
+These are the supplement-bearing form of Definition 4.3 and Assumption
+7.1, with the acquired full-row and serial boundary supplied by
+[Sparse Literal History Transport, §§59--62](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+
+**Definition 9.2 (two conditional prices and joint feasibility).** A
+supplement may depend on all acquired finite class values, not only on
+$A_P(u)$. Its conditional state count is
+
+$$
+m_R(\sigma)=|\sigma[\mathcal U_R]|.
+\tag{NAR.9.1}
+$$
+
+One common deterministic reader receives the inputs of Assumption 9.1.
+It may compute locally and choose arbitrary finite native addresses
+adaptively from those inputs and its chronological replies. It must
+terminate on every $u\in\mathcal U_R$ and output the entire
+$R_P(\rho u)$. Let $Q(u)$ count its fresh native invocations during this
+stationary first-updated-version phase. Every invocation counts, including
+repeated addresses, absent-address calls, and re-reads of addresses
+queried during old acquisition.
+
+For integers $r\ge1$ and $q\ge0$, write $\mathsf{Feas}_R(r,q)$ if there
+exist such an acquired and exported supplement and such a reader with
+$m_R(\sigma)\le r$ and $Q(u)\le q$ for every $u\in\mathcal U_R$.
+Write $\mathsf Q_R(r)$ for the least feasible integer $q$, when it exists.
+This optimizes the existence of the encoder and reader jointly; it does
+not assert that every supplement using at most $r$ values admits the same
+call bound.
+
+The first coordinate counts extra retained values conditional on the
+already supplied row. It is not total controller states, workspace,
+row size, program bytes or physical memory. The second coordinate counts
+fresh invocations, not lifetime distinct addresses or physical time.
+Acquisition, export and retention, the old row, local computation,
+addresses and their transmission, authentication, actual updates and
+later execution lie outside these two coordinates. They remain separate
+requirements and costs, as in Definition 7.3 and
+[Sparse History Proposition 62.4](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+
+**Proposition 9.3 (updated native witnesses and all-address correspondence).**
+Put $H=B\cup\{\bot\}$. There is a family
+$(u_i)_{i\in H}\subseteq\mathcal U_R$ with $A_P(u_i)=i$ such that every
+finite native address on $(\rho u_i)_{i\in H}$ has a constant reply or a
+reply differing from one common value at at most one index $b\in B$.
+If $L_C\ne\varnothing$, the required entire next rows
+$(R_P(\rho u_i))_{i\in H}$ are pairwise distinct. These statements include
+$k=0$, when the family has one member.
+
+**Proof.** Use the mutually distinct non-alpha trees from Theorem 5.2,
+$c_0=\beta$ and $c_{j+1}=\langle\beta,c_j\rangle$. Choose from this
+sequence a distinct tree $t_b$ for each canonically named $b\in B$.
+Define class tuples by
+
+$$
+z_c^{\bot}=t_c,\qquad
+z_c^b=
+\begin{cases}
+\alpha,&c=b,\\
+t_c,&c\ne b,
+\end{cases}
+\qquad
+u_i=C[(z_{[p]}^i)_{p\in O}].
+\tag{NAR.9.2}
+$$
+
+Every tuple has distinct values on distinct classes, since the assigned trees are
+distinct and none is alpha. All occurrences of the same class use the
+same value. Thus (NAR.1.4), supplied by
+[NativeCutFibers](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean),
+`legal_values_row` and `rowFiberEquiv`, makes these actual original sources
+with exactly the same complete row, including its disequalities and
+absent-cut guards. Their alpha labels are exactly their indices. For
+$k=0$ the empty filling gives $u_{\bot}=C$.
+
+Fix any finite address $a$. If no old hole address is a prefix of $a$,
+the native descent never enters a replaced value. Substitution changes
+only the fixed concrete part along that descent, so its reply is the
+same for all $i$. In particular, every strict ancestor of an old hole
+remains a branch, while a descent blocked in the transported concrete
+exterior is blocked identically for every candidate. This is the
+hole-exterior case of
+[Sparse History Definition 60.1 and Theorem 60.2](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+
+Otherwise prefix-freeness gives a unique $p\in O$ and suffix $w$ with
+$a=pw$. Put $b=[p]$. The actual old-hole transport and the defining
+native descent give
+
+$$
+r_{\rho u_i}(pw)=r_{\rho z_b^i}(w)=
+\begin{cases}
+r_{\beta}(w),&i=b,\\
+r_{\rho t_b}(w),&i\ne b.
+\end{cases}
+\tag{NAR.9.3}
+$$
+
+This uses the actual
+[native four-reply `readout`](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+not an extra comparison port. There is no depth or existence restriction
+on $w$: the first value is beta for the empty suffix and absent for every
+nonempty suffix; the other value is whatever the fixed tree $\rho t_b$
+really returns. If the two values agree the query is constant, and if
+they differ it separates only candidate $b$. Multiple occurrences of
+$b$ obey the same equation, but one address enters only one old hole
+cone. Thus repeated occurrences, repeated queries, deep and absent
+addresses, and strict ancestors give no missing case.
+
+When a left birth $\ell\in L_C$ exists, Theorem 2.1 says that in the next
+partition it is equal to old representative $p_b$ exactly on source
+$u_b$. On $u_{\bot}$ it is unequal to every old class. Hence the complete
+next partitions, and therefore next rows, are distinct for all indices.
+Equivalently this is Theorem 3.1's exact conditional distinction.
+For the one-member family the distinction is vacuous. $\square$
+
+**Theorem 9.4 (attained joint conditional frontier).** Under Assumption 9.1,
+for every integer $r\ge1$ and $q\ge0$, if $L_C\ne\varnothing$ then
+
+$$
+\mathsf{Feas}_R(r,q)
+\quad\Longleftrightarrow\quad
+r(q+1)\ge k+1,
+\qquad
+\mathsf Q_R(r)=\left\lceil\frac{k+1}{r}\right\rceil-1.
+\tag{NAR.9.4}
+$$
+
+If $L_C=\varnothing$, a constant supplement and zero fresh invocations
+suffice, so $\mathsf{Feas}_R(r,q)$ holds for all these $r,q$ and
+$\mathsf Q_R(r)=0$. The nonempty-left-birth formula concerns the full
+original fiber and the first updated version, with arbitrary
+full-value-dependent supplements and arbitrary adaptive native queries.
+
+**Proof, necessity.** Suppose $L_C\ne\varnothing$ and restrict any feasible
+supplement and reader to Proposition 9.3's actual witness family. For
+each used supplement value $s$, put
+
+$$
+H_s=\{i\in H:\sigma(u_i)=s\}.
+\tag{NAR.9.5}
+$$
+
+The nonempty $H_s$ partition $H$ into at most $r$ parts, regardless of
+how the supplement depends on the full old values. Within one such part,
+the entire initial state is common. Authentication and the update do
+not add a source distinction. Pairwise distinct required rows mean that
+the reader must distinguish every index in $H_s$.
+
+For a query entering class $b$, encode its reply on the witnesses by a
+bit which is true exactly when it differs from the common default
+$r_{\rho t_b}(w)$ in (NAR.9.3). If both displayed replies agree, use
+constant false. For a query outside all old cones also use constant
+false. At the selected address the bit reconstructs the entire native
+reply: the address fixes the default and the possible exceptional value.
+Thus no four-reply information is lost on this family. Every resulting
+question is constant or true on at most the single index $b$, including
+after restriction to $H_s$.
+
+The correspondence applies at every adaptive history: the reader's next
+address is determined by the common state and earlier replies, which
+are reconstructed from the earlier bits. Once a run has stopped, pad
+its mathematical transcript to length $q$ with constant false questions;
+these padding symbols are not native invocations. At a bit history not
+realized by any candidate, set all further questions constant false.
+Such a history is detected by simulation on the finite witness set and
+cannot be a prefix of an actual candidate's transcript. This gives the
+all-histories question condition, not merely a condition on one run.
+
+The length-$q$ bit transcripts are injective on $H_s$. Indeed, if two
+candidates had the same transcript, deterministic reconstruction would
+give the same native addresses, replies, stopping decision and returned
+row. Early stopping does not lose information in padding: the stopping
+decision is itself determined by the common preceding history, so a
+second candidate with that prefix stops there too. Equal outputs would
+contradict Proposition 9.3.
+
+Apply the existing adaptive capacity bound
+[SingletonQueryCapacity](../../../D5/S3/ConceptDynamics/Coding/SingletonQueryCapacity.lean),
+`singleton_or_constant_query_capacity`, with finite source type $H_s$
+and depth $q$. Its singleton-or-constant, all-histories and injectivity
+hypotheses have just been supplied by the actual updated native queries
+and whole-row target. It gives $|H_s|\le q+1$. Summing over the nonempty
+parts yields
+
+$$
+k+1=\sum_{s:H_s\ne\varnothing}|H_s|
+\le |\{s:H_s\ne\varnothing\}|(q+1)
+\le r(q+1).
+\tag{NAR.9.6}
+$$
+
+The witnesses are alternative fixed sources, each with its own actual
+acquisition and export. The argument neither edits a register during
+reading nor assumes that their discarded acquisition records agree.
+
+**Proof, attainment.** Let $N=k+1$ and $d=\min\{r,N\}$. In the public
+canonical order of $H$, with $\bot$ placed last, partition $H$ into $d$
+nonempty blocks $G_1,\ldots,G_d$ whose sizes differ by at most one.
+Their largest size is
+
+$$
+\max_j|G_j|=\left\lceil\frac{N}{d}\right\rceil
+=\left\lceil\frac{N}{r}\right\rceil.
+\tag{NAR.9.7}
+$$
+
+The finite block table depends only on the old row and $r$. From the
+actually acquired data, Theorem 4.2 extracts the actual alpha label
+$A_P(u)$ without additional acquisition queries. Export as $\sigma(u)$
+only its block index $j$. All labels are realized on $\mathcal U_R$ by
+Theorem 5.2, so this supplement uses exactly $d\le r$ actual values.
+The block table is common; the actual block index is the entire extra
+source-dependent initial input.
+
+On receiving $j$, choose an omitted label $t_j$: choose $\bot$ if it
+belongs to $G_j$, and otherwise the least class in $G_j$. Query one old
+representative root $p_b$ for each $b\in G_j\setminus\{t_j\}$, in
+canonical order, stopping at the first beta reply. Every queried label
+is an old class, since a block containing $\bot$ omits it. The actual
+updated-root replies are exactly (NAR.7.2): beta means $A_P(u)=b$, and
+branch means $A_P(u)\ne b$. Alpha and absence do not occur at these
+persisting roots. If all tests give branch, the only remaining label
+in $G_j$ is $t_j$, which is therefore the actual label. In a singleton
+block there are no tests.
+
+This identifies the label on every source in the full fiber, not only
+on the witnesses. Using that label with $P,R$, Theorem 2.1 constructs
+the whole next exterior and complete partition. The reader therefore
+returns the entire required next row with at most
+
+$$
+|G_j|-1\le\left\lceil\frac{k+1}{r}\right\rceil-1
+\tag{NAR.9.8}
+$$
+
+fresh invocations. A source whose label is the omitted member of a
+largest block realizes all those negative tests, so this reader's
+worst-case count is exactly the right-hand side. Such a source exists
+by Theorem 5.2. For integer $q\ge0$, the inequality $r(q+1)\ge k+1$ is
+equivalent to $q\ge\lceil(k+1)/r\rceil-1$. Necessity and attainment
+give (NAR.9.4).
+
+If there is no left birth, Theorem 2.1 already computes the next row
+from $P,R$ alone; export one common supplement and make zero calls.
+If $k=0$, $H=\{\bot\}$ and the formula also gives zero for every
+$r\ge1$, even when a left birth exists. With a left birth and $r=1$,
+the formula is $k$, the endpoint of Theorem 7.2. With $q=0$ it requires
+exactly $r\ge k+1$, the endpoint of Theorem 5.2; every $r\ge k+1$
+admits singleton blocks and zero calls. These are the supplied endpoints
+and their degenerate cases, not additional endpoint discoveries. $\square$
+
+**Mathematical citation 9.5 (intermediate coverage and application boundary).**
+The equality-search memory/call arithmetic and balanced encoder argument
+are already supplied, on a different static comb family and geometric
+target, by
+[Word Retention and Geometric Reaccess, Theorem 4.2 and Corollary 4.3](RECURSIVE_RELATIONAL_OBSERVATION_WORD_RETENTION_AND_GEOMETRIC_REACCESS.md).
+Their use here has $N=k+1$ candidate labels and $r$ supplement values;
+their $2^b$-value case is the corresponding finite-state capacity case.
+The generic adaptive singleton capacity is the cited existing
+`singleton_or_constant_query_capacity`. Neither counting principle is
+proposed as a new theorem here. The source-specific ordinary derivation
+is Proposition 9.3's legal full-row-fiber family, its exhaustive
+updated-native-address correspondence and next-whole-row distinction,
+combined with Theorem 9.4's acquired/exported encoder and attainment on
+the entire unrestricted fiber; this derivation is `repo-derived`.
+
+The native algebra, collision recurrence, extraction and endpoint
+suppliers remain Definitions 1.1--1.4 and Theorems 2.1, 3.1, 4.2, 5.2
+and 7.2. The retained-view literature context belongs to Mathematical
+citation 8.3; the classical decision-tree and equality-search context
+belongs to the citations adjoining the cited geometric-reaccess results.
+Those mature methods are intermediate coverage. This native application
+does not assert worldwide novelty or a new generic advice/query law.
+
+For a fixed arbitrary full-value-dependent supplement, its own fibers
+can differ from the balanced alpha-label blocks; (NAR.9.4) is an
+existential optimum, not a per-encoder performance guarantee. Additional
+retained history can shrink $\mathcal U_R$ and exclude the witness family,
+as Theorem 5.3 already demonstrates. No sharp lower law for such a
+restricted fiber follows without a separate proof. The theorem likewise
+does not transfer its sharp law to later image-restricted versions,
+randomized readers, changed cuts or other resource coordinates. Its
+output is a row value; neither a raw acquisition event nor a later actual
+execution is furnished by that value.
+
+## 追加锚（本行以下为增补区）
