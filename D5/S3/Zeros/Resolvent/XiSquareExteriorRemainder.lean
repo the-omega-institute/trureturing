@@ -45,25 +45,20 @@ open D5.S3.Weil.ZetaBridge.ClassicExplicitFormula
 open D5.S3.Zeros.CompletedZeta
 open D5.S3.Analytic.Dilation.ScalarUnitDressing
 open scoped Topology
-
 private def repeatedIndex (Z : ZeroData) := Σ i : ℕ, Fin (Z.multiplicity i)
-
 private def squareReciprocal (Z : ZeroData) (k : repeatedIndex Z) : ℂ :=
   if 0 < (Z.gamma k.1).re then ((Z.gamma k.1) ^ 2)⁻¹ else 0
-
 private def squareCanonicalProduct (Z : ZeroData) (z : ℂ) : ℂ :=
   ∏' k : repeatedIndex Z, (1 - z * squareReciprocal Z k)
 
 def xiSquareSource (z : ℂ) : ℂ :=
   xiReading ((1 / 2 : ℂ) + Complex.I * Complex.sqrt z) / xiReading (1 / 2)
-
 private theorem xi_center_nonzero : xiReading (1 / 2 : ℂ) ≠ 0 := by
   have hp := D5.S3.Analytic.Fourier.XiThetaTransform.source_theta_normalized.2.1
   intro hz
   have hr := congrArg Complex.re hz
   simp only [Complex.zero_re] at hr
   linarith
-
 private theorem xi_square_source_entire_and_composition :
     Differentiable ℂ xiSquareSource ∧
       ∀ w : ℂ, xiSquareSource (w ^ 2) =
@@ -92,12 +87,10 @@ private theorem xi_square_source_entire_and_composition :
   · intro w
     rw [heq]
     exact congrArg (fun x : ℂ => x / xiReading (1 / 2)) (hF.2 w)
-
 private theorem xi_square_source_at_zero : xiSquareSource 0 = 1 := by
   have h := xi_square_source_entire_and_composition.2 0
   simpa only [zero_pow (by norm_num : (2 : ℕ) ≠ 0), mul_zero, add_zero,
     div_self xi_center_nonzero] using h
-
 private theorem actual_square_zero_order (Z : ZeroData) (n : ℕ) :
     analyticOrderNatAt xiSquareSource ((Z.gamma n) ^ 2) = Z.multiplicity n := by
   have hgamma : Z.gamma n ≠ 0 := by
@@ -155,7 +148,6 @@ private theorem actual_square_zero_order (Z : ZeroData) (n : ℕ) :
   unfold analyticOrderNatAt
   rw [← hc, hfun, hscalar, ha]
   exact hxiOrder
-
 private theorem weighted_inverse_square_summable (Z : ZeroData) :
     Summable (fun i : ℕ => (Z.multiplicity i : ℝ) / ‖Z.gamma i‖ ^ 2) := by
   have h := (zeroEquiv Z).summable_iff.mpr (Zeta23.WeilEF.zero_sum_inv_sq Zeta23.zetaSeam)
@@ -182,7 +174,6 @@ private theorem weighted_inverse_square_summable (Z : ZeroData) :
   apply (div_le_div_iff₀ hp (by positivity : 0 < 1 + ‖Z.gamma i‖ ^ 2)).mpr
   have hq : 0 ≤ ‖Z.gamma i‖ ^ 2 - 1 := by nlinarith
   nlinarith [mul_nonneg (Nat.cast_nonneg (Z.multiplicity i)) hq]
-
 private theorem square_reciprocal_norm_summable (Z : ZeroData) :
     Summable (fun k : repeatedIndex Z => ‖squareReciprocal Z k‖) := by
   classical
@@ -201,7 +192,6 @@ private theorem square_reciprocal_norm_summable (Z : ZeroData) :
         rfl
       · simp only [if_neg hi, norm_zero, Finset.sum_const_zero]
         positivity
-
 private theorem square_product_compact_convergence (Z : ZeroData)
     (K : Set ℂ) (hK : IsCompact K) :
     HasProdUniformlyOn (fun k : repeatedIndex Z => fun z => 1 - z * squareReciprocal Z k)
@@ -215,7 +205,6 @@ private theorem square_product_compact_convergence (Z : ZeroData)
       exact mul_le_mul_of_nonneg_right (hb z hz) (norm_nonneg _)))
     (fun k => by fun_prop)
   convert! hp using 1 <;> simp only [sub_eq_add_neg, squareCanonicalProduct]
-
 private theorem square_product_locally_uniform (Z : ZeroData) :
     HasProdLocallyUniformlyOn
       (fun k : repeatedIndex Z => fun z => 1 - z * squareReciprocal Z k)
@@ -223,7 +212,6 @@ private theorem square_product_locally_uniform (Z : ZeroData) :
   apply hasProdLocallyUniformlyOn_of_forall_compact isOpen_univ
   intro K _ hK
   exact square_product_compact_convergence Z K hK
-
 private theorem square_product_entire (Z : ZeroData) :
     Differentiable ℂ (squareCanonicalProduct Z) := by
   classical
@@ -231,11 +219,9 @@ private theorem square_product_entire (Z : ZeroData) :
   apply (square_product_locally_uniform Z).differentiableOn
     (Filter.Eventually.of_forall (fun s => ?_)) isOpen_univ
   exact (Differentiable.fun_finsetProd (fun k hk => by fun_prop)).differentiableOn
-
 private theorem square_product_at_zero (Z : ZeroData) :
     squareCanonicalProduct Z 0 = 1 := by
   simp [squareCanonicalProduct]
-
 private theorem xi_logDeriv_reflection (s : ℂ) :
     logDeriv xiReading (1 - s) = -logDeriv xiReading s := by
   have hc := logDeriv_comp (xi_reading_differentiable (1 - s))
@@ -247,7 +233,6 @@ private theorem xi_logDeriv_reflection (s : ℂ) :
   have hd : deriv (fun z : ℂ => 1 - z) s = -1 := by simp
   rw [hd, mul_neg_one] at hc
   simpa only [neg_neg] using (congrArg Neg.neg hc).symm
-
 private theorem xi_square_logDeriv_composition (w : ℂ) :
     logDeriv xiSquareSource (w ^ 2) * (2 * w) =
       Complex.I * logDeriv xiReading ((1 / 2 : ℂ) + Complex.I * w) := by
@@ -267,7 +252,6 @@ private theorem xi_square_logDeriv_composition (w : ℂ) :
   rw [hdp] at hc
   rw [hdl] at hg
   exact hc.symm.trans (hg.trans (mul_comm _ _))
-
 private theorem actual_square_resolvent_hasSum (Z : ZeroData) (w : ℂ)
     (hw : w ≠ 0) (hF : xiSquareSource (w ^ 2) ≠ 0) :
     HasSum (fun i : ℕ => (Z.multiplicity i : ℂ) / (w ^ 2 - (Z.gamma i) ^ 2))
@@ -338,10 +322,8 @@ private theorem actual_square_resolvent_hasSum (Z : ZeroData) (w : ℂ)
 
 -- These bindings are development helpers for the single complete actual-source
 -- product/remainder endpoint. No separate retention or admission is claimed.
-
 private def positiveSquareResolvent (Z : ZeroData) (z : ℂ) (i : ℕ) : ℂ :=
   if 0 < (Z.gamma i).re then (Z.multiplicity i : ℂ) / (z - (Z.gamma i) ^ 2) else 0
-
 private theorem gamma_real_nonzero (Z : ZeroData) (i : ℕ) : (Z.gamma i).re ≠ 0 := by
   have h := D5.S3.Weil.ZetaBridge.AlternatingZetaContinuation.ZeroData.im_ne_zero
     Z i (Z.zero_isNontrivial i)
@@ -349,7 +331,6 @@ private theorem gamma_real_nonzero (Z : ZeroData) (i : ℕ) : (Z.gamma i).re ≠
     simp [ZeroData.gamma, spectralParameter, D5.S3.Weil.Convention.criticalAbscissa,
       Complex.div_re, Complex.normSq_I]
   rwa [heq]
-
 private theorem actual_positive_square_resolvent_hasSum (Z : ZeroData) (w : ℂ)
     (hw : w ≠ 0) (hF : xiSquareSource (w ^ 2) ≠ 0) :
     HasSum (positiveSquareResolvent Z (w ^ 2)) (logDeriv xiSquareSource (w ^ 2)) := by
@@ -375,7 +356,6 @@ private theorem actual_positive_square_resolvent_hasSum (Z : ZeroData) (w : ℂ)
     simpa only [two_mul] using hs.unique ha
   have hv := mul_left_cancel₀ (by norm_num : (2 : ℂ) ≠ 0) he
   exact hv ▸ hp.hasSum
-
 private theorem actual_positive_square_resolvent_hasSum_at (Z : ZeroData) (z : ℂ)
     (hz : z ≠ 0) (hF : xiSquareSource z ≠ 0) :
     HasSum (positiveSquareResolvent Z z) (logDeriv xiSquareSource z) := by
@@ -387,15 +367,12 @@ private theorem actual_positive_square_resolvent_hasSum_at (Z : ZeroData) (z : �
     rw [hw, zero_pow (by norm_num : (2 : ℕ) ≠ 0)] at hsq
     exact hz hsq.symm
   simpa only [hsq] using actual_positive_square_resolvent_hasSum Z w hw (hsq ▸ hF)
-
 private def squareProductRadius (Z : ZeroData) : ℝ :=
   (4 * (1 + ∑' k : repeatedIndex Z, ‖squareReciprocal Z k‖))⁻¹
-
 private theorem square_product_radius_positive (Z : ZeroData) : 0 < squareProductRadius Z := by
   have h : 0 ≤ ∑' k : repeatedIndex Z, ‖squareReciprocal Z k‖ := tsum_nonneg (fun _ => norm_nonneg _)
   dsimp [squareProductRadius]
   positivity
-
 private theorem small_square_factor_bound (Z : ZeroData) (z : ℂ)
     (hz : ‖z‖ < squareProductRadius Z) (k : repeatedIndex Z) :
     ‖z * squareReciprocal Z k‖ ≤ 1 / 4 ∧
@@ -417,14 +394,12 @@ private theorem small_square_factor_bound (Z : ZeroData) (z : ℂ)
   have hb := norm_sub_norm_le (1 : ℂ) (z * squareReciprocal Z k)
   rw [norm_one] at hb
   linarith
-
 private theorem linear_factor_logDeriv (a z : ℂ) :
     logDeriv (fun v : ℂ => 1 - v * a) z = -a / (1 - z * a) := by
   have hd : deriv (fun v : ℂ => 1 - v * a) z = -a := by
     convert! ((hasDerivAt_const z (1 : ℂ)).sub ((hasDerivAt_id z).mul_const a)).deriv using 1
     simp
   rw [logDeriv_apply, hd]
-
 private theorem square_factor_logDeriv_norm_summable (Z : ZeroData) (z : ℂ)
     (hz : ‖z‖ < squareProductRadius Z) :
     Summable (fun k : repeatedIndex Z =>
@@ -436,7 +411,6 @@ private theorem square_factor_logDeriv_norm_summable (Z : ZeroData) (z : ℂ)
     have hd := (small_square_factor_bound Z z hz k).2
     apply (div_le_iff₀ (by linarith : 0 < ‖1 - z * squareReciprocal Z k‖)).mpr
     nlinarith [norm_nonneg (squareReciprocal Z k)]
-
 private theorem square_factor_logDeriv_hasSum_fiber (Z : ZeroData) (z : ℂ)
     (hz : ‖z‖ < squareProductRadius Z) (i : ℕ) :
     HasSum (fun j : Fin (Z.multiplicity i) =>
@@ -478,7 +452,6 @@ private theorem square_factor_logDeriv_hasSum_fiber (Z : ZeroData) (z : ℂ)
   simp only [hterm, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
     positiveSquareResolvent]
   split_ifs <;> simp [div_eq_mul_inv]
-
 private theorem square_product_logDeriv_eq_source_off_zero (Z : ZeroData) (z : ℂ)
     (hz : z ≠ 0) (hsmall : ‖z‖ < squareProductRadius Z)
     (hF : xiSquareSource z ≠ 0) (hP : squareCanonicalProduct Z z ≠ 0) :
@@ -499,7 +472,6 @@ private theorem square_product_logDeriv_eq_source_off_zero (Z : ZeroData) (z : �
   have hf := hs.hasSum.sigma (square_factor_logDeriv_hasSum_fiber Z z hsmall)
   have ha := actual_positive_square_resolvent_hasSum_at Z z hz hF
   exact hprod.trans (hf.unique ha)
-
 private theorem actual_xi_square_complete_product (Z : ZeroData) :
     xiSquareSource = squareCanonicalProduct Z := by
   have hF := xi_square_source_entire_and_composition.1
@@ -556,9 +528,7 @@ private theorem actual_xi_square_complete_product (Z : ZeroData) :
     Filter.mem_of_superset (Metric.ball_mem_nhds (0 : ℂ) hr) hc
   exact ((hP.differentiableOn.analyticOnNhd isOpen_univ).eq_of_eventuallyEq
     (hF.differentiableOn.analyticOnNhd isOpen_univ) hevent).symm
-
 private def primaryFactor (u : ℂ) : ℂ := (1 - u) * Complex.exp u
-
 private theorem primary_factor_norm_bound (u : ℂ) :
     ‖primaryFactor u‖ ≤ Real.exp (‖u‖ ^ 2 / 2) := by
   have hn : ‖1 - u‖ ^ 2 = 1 - 2 * u.re + ‖u‖ ^ 2 := by
@@ -576,7 +546,6 @@ private theorem primary_factor_norm_bound (u : ℂ) :
         linarith [Real.add_one_le_exp (-2 * u.re + ‖u‖ ^ 2)]
       _ = Real.exp (2 * (‖u‖ ^ 2 / 2)) := by rw [← Real.exp_add]; congr 1; ring
   nlinarith [norm_nonneg (primaryFactor u), Real.exp_pos (‖u‖ ^ 2 / 2)]
-
 private theorem primary_factor_remainder_integral (u : ℂ) :
     primaryFactor u - 1 = -u ^ 2 *
       ∫ t : ℝ in 0..1, (t : ℂ) * Complex.exp ((t : ℂ) * u) := by
@@ -593,7 +562,6 @@ private theorem primary_factor_remainder_integral (u : ℂ) :
   simpa only [intervalIntegral.integral_const_mul, Complex.ofReal_one, one_mul,
     Complex.ofReal_zero, zero_mul, primaryFactor, sub_zero, Complex.exp_zero, mul_one]
     using hi.symm
-
 private theorem primary_factor_remainder_bound (u : ℂ) :
     ‖primaryFactor u - 1‖ ≤
       (Real.exp (1 / 2) - 1) * ‖u‖ ^ 2 * Real.exp (‖u‖ ^ 2 / 2) := by
@@ -629,7 +597,6 @@ private theorem primary_factor_remainder_bound (u : ℂ) :
       _ = _ := by rw [intervalIntegral.integral_const_mul, hi]
   rw [primary_factor_remainder_integral, norm_mul, norm_neg, norm_pow]
   exact (mul_le_mul_of_nonneg_left hb (sq_nonneg ‖u‖)).trans_eq (by ring)
-
 private theorem finite_primary_product_remainder_bound {ι : Type*}
     (s : Finset ι) (a : ι → ℂ) :
     ‖(∏ i ∈ s, primaryFactor (a i)) - 1‖ ≤
@@ -670,10 +637,8 @@ private theorem finite_primary_product_remainder_bound {ι : Type*}
         exact le_mul_of_one_le_right (by positivity) hE
       _ = _ := by rw [show (‖a i‖ ^ 2 + S) / 2 = ‖a i‖ ^ 2 / 2 + S / 2 by ring,
           Real.exp_add]; ring
-
 private def primaryProduct {ι : Type*} (a : ι → ℂ) (w : ℂ) : ℂ :=
   ∏' i, primaryFactor (w * a i)
-
 private theorem primary_product_compact_convergence {ι : Type*} (a : ι → ℂ)
     (ha : Summable (fun i => ‖a i‖ ^ 2)) (K : Set ℂ) (hK : IsCompact K) :
     HasProdUniformlyOn (fun i w => primaryFactor (w * a i)) (primaryProduct a) K := by
