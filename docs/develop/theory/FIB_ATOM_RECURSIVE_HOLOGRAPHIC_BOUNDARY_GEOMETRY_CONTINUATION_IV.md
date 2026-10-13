@@ -4477,3 +4477,429 @@ The complete through-2027 why-three programme remains active; this finite
 repair is not its completion criterion.
 
 ## 112.99 追加锚（本行以下为增补区）
+
+## 113. The original-tree boundary kernel, acquired scale, and INITIAL cut rows
+
+### 113.1 All occurrences of every original source
+
+**Definition 113.1 (source, scale and descendant cylinders).** Retain the
+entire free ordered algebra $\mathcal T$, the actual substitution $\rho$,
+four-valued Reads and complete INITIAL rows of Definition 112.1 and
+Contract 112.1a. Write $a(u),b(u)$ for the original alpha/beta leaf counts,
+$\ell(u)=a(u)+b(u)$ and
+
+$$
+W(u)=a(u)+\varphi b(u),\qquad \varphi=(1+\sqrt5)/2,
+\qquad T_k=\rho^k\alpha.
+\tag{113.1}
+$$
+
+Thus $W(\alpha)=1$, $W(\beta)=\varphi$ and
+$W(\langle x,y\rangle)=W(x)+W(y)$. Use the address space and
+$s(p)=\#_L(p)+2\#_R(p)$ of (98.1), with $s(\varepsilon)=0$.
+At each $n\ge0$, put mass $1/N_n(u)$ at **every** actual node of
+$\rho^n u$, where $N_n(u)=|V_{\rho^n u}|$. Denote this finite counting
+probability by $\mu_{u,n}$ and its reached-descendant mass by
+$m_{u,n}(p)=\mu_{u,n}\{x:p\preceq x\}$. In particular
+$m_{u,n}(\varepsilon)=1$. These probabilities are on finite addresses;
+the boundary probabilities below are on $\Omega=\{L,R\}^{\mathbb N}$.
+
+**Theorem 113.2 (exact finite masses and their pointwise boundary).** For
+every $u\in\mathcal T$ and $n\ge0$, the supplier (108.9) gives
+
+$$
+N_n(u)=2\bigl(a(u)F_{n+1}+b(u)F_{n+2}\bigr)-1.
+\tag{113.2}
+$$
+
+For an originally reached $p$, including any internal node or terminal,
+write $u_p=u|_p$. Then
+
+$$
+m_{u,n}(p)=\frac{2(a(u_p)F_{n+1}+b(u_p)F_{n+2})-1}{N_n(u)},
+\qquad \lim_{n\to\infty}m_{u,n}(p)=\frac{W(u_p)}{W(u)}.
+\tag{113.3}
+$$
+
+If $p$ is originally absent, there is a unique original terminal $q$
+strictly preceding $p$; write $p=qr$ with $r\ne\varepsilon$, and put
+$j=0$ for an alpha at $q$, $j=1$ for a beta there. Define
+$d=n+j-s(r)$. The exact birth/reach rule and mass are
+
+$$
+\begin{aligned}
+p\in V_{\rho^n u}
+&\iff d\ge0\ \text{and}\ n+j-s(r^-)\ge2,\\
+m_{u,n}(p)
+&=\begin{cases}(2F_{d+1}-1)/N_n(u),&p\text{ reached},\\
+0,&p\text{ absent},\end{cases}\\
+\lim_{n\to\infty}m_{u,n}(p)&=\frac{\varphi^{j-s(r)}}{W(u)}.
+\end{aligned}
+\tag{113.4}
+$$
+
+A reached such node is alpha for $d=0$, beta for $d=1$, and internal
+for $d\ge2$. At an original terminal use the same classification with
+$d=n+j$; original internal nodes remain internal. Every reached node,
+including the root and each terminal, has point mass $1/N_n(u)$; absent
+nodes have point mass zero. All fixed-address point masses tend to zero.
+There is a unique boundary probability $\nu_u$ with cylinder masses
+equal to the limits in (113.3)--(113.4), and $\nu_u([\varepsilon])=1$.
+
+Proof. The original $\ell(u)-1$ internal nodes keep their addresses, and
+each original terminal is replaced, at its own address, by $T_{n+j}$.
+This is the original skeleton decomposition used in (108.9), not a
+restriction to the single-leaf orbit. An original subtree is therefore
+exactly $\rho^n u_p$, giving (113.3). Below a terminal the reached
+criterion, residual labels and subtree $T_d$ are precisely Theorem 98.2;
+its last-parent condition includes the asymmetric left/right birth
+endpoints. Its actual subtree size is $2F_{d+1}-1$.
+For a fixed original $u$, Binet's formula gives
+
+$$
+\varphi^{-n}N_n(u)\longrightarrow \frac{2\varphi}{\sqrt5}W(u)>0.
+\tag{113.5}
+$$
+
+Taking ratios proves all displayed limits. This includes both singleton
+sources, $n=0,1$, root mass one, every initially missing address, and the
+first reached alpha/beta endpoints. For every fixed depth $h$,
+
+$$
+\mu_{u,n}\{x:|x|<h\}\le(2^h-1)/N_n(u)\longrightarrow0.
+\tag{113.6}
+$$
+
+At each finite node the exact identity is
+$m_{u,n}(p)=\mu_{u,n}(\{p\})+m_{u,n}(pL)+m_{u,n}(pR)$.
+Consequently the limiting masses have no finite-address remainder.
+The probability explicitly constructed in Definition 113.3 realizes
+them; its values on cylinders determine it uniquely. The calculation
+counts internal and terminal occurrences with the same actual divisor;
+it never substitutes a terminal-only probability. $\square$
+
+### 113.2 The measure value and the actual accepted substitution
+
+**Definition 113.3 (boundary value without description syntax).** Reuse
+the Bernoulli probability $M$ of (98.3), so $M([p])=\varphi^{-s(p)}$.
+Let $\mathcal L(u)$ be the original terminal-address antichain, and
+$j(q)\in\{0,1\}$ its terminal label as above. Define
+
+$$
+\nu_u=\sum_{q\in\mathcal L(u)}
+ \frac{\varphi^{j(q)}}{W(u)}(\omega\mapsto q\omega)_*M,
+\qquad
+f_u=\frac{d\nu_u}{dM}
+ =\frac{\varphi^{s(q)+j(q)}}{W(u)}\quad\text{on }[q].
+\tag{113.7}
+$$
+
+The original leaves partition $\Omega$; their weights sum to $W(u)$.
+Thus this is a probability and a positive finite cylinder density.
+Above original leaves its cylinder masses sum the weights of that
+original subtree; below one leaf they multiply by $M([r])$. These are
+exactly (113.3)--(113.4). The retained object is the **measure value**,
+or equivalently the density modulo $M$-almost-everywhere equality.
+An unreduced list of original leaf cylinders is not additional retained
+information. If a finite density description is used, identify equal
+functions: two sibling cylinders with the same constant may merge,
+recursively. The resulting maximal constant cylinders are unique, since
+every cylinder has positive $M$ mass and the original density is finite.
+
+**Theorem 113.4 (invariance and scale action).** On the full source domain,
+
+$$
+\nu_{\rho u}=\nu_u,\qquad W(\rho u)=\varphi W(u).
+\tag{113.8}
+$$
+
+Proof. The actual leaf-count transformation is $(a,b)\mapsto(b,a+b)$;
+$\varphi^2=\varphi+1$ gives the scale identity. An original alpha at
+$q$ becomes beta at $q$: both the numerator and denominator of its
+density multiply by $\varphi$. An original beta at $q$ becomes the
+ordered beta/alpha pair at $qL,qR$. The two new numerators are
+$\varphi^{s(q)+2}$ and $\varphi^{s(q)+2}$, while the denominator is
+$\varphi W(u)$; both give the old value
+$\varphi^{s(q)+1}/W(u)$ throughout $[q]$. The original branch skeleton
+is unchanged. Hence the density functions agree, although their
+unreduced syntax need not agree. $\square$
+
+### 113.3 Exactly the lost phase and the scale that restores it
+
+**Theorem 113.5 (injective source representation and exact kernel).** The map
+$\mathcal J:u\mapsto(\nu_u,W(u))$ is injective, with the actual substitution
+represented on its attained image by $(\nu,w)\mapsto(\nu,\varphi w)$.
+For all original finite sources $u,v$,
+
+$$
+\nu_u=\nu_v
+\iff \exists n,m\ge0:\rho^n u=\rho^m v.
+\tag{113.9}
+$$
+
+More precisely, on equal-measure sources $W(v)/W(u)=\varphi^k$ for a
+unique $k\in\mathbb Z$. If $k\ge0$ then $v=\rho^k u$; if $k<0$ then
+$u=\rho^{-k}v$. Thus each boundary fiber is a single chain of actual
+forward iterates, starting at a unique source with no predecessor.
+
+Proof. A finite source has $W=1$ exactly for alpha, $W=\varphi$ exactly
+for beta, and $W\ge2$ exactly for a branch. For a branch
+$u=\langle x,y\rangle$, the measure and scale give
+
+$$
+W(x)=W(u)\nu_u([L]),\quad W(y)=W(u)\nu_u([R]),\quad
+\nu_x([p])=\frac{\nu_u([Lp])}{\nu_u([L])},\quad
+\nu_y([p])=\frac{\nu_u([Rp])}{\nu_u([R])}.
+\tag{113.10}
+$$
+
+Both child masses are positive. Induction on the original finite tree
+therefore proves that equal pairs have equal root constructor, equal
+child pairs and equal children. This uses only measure values and scale,
+not the leaf partition of a density description. It also gives a finite
+reconstruction on the attained image: at an original reached $p$ the
+subtree scale is $W(u)\nu_u([p])$, and reconstruction stops at scales
+$1$ or $\varphi$. It makes no claim about arbitrary unattained pairs.
+
+Suppose now that $\nu_u=\nu_v$. Choose a cylinder $[z]$ deeper than both
+original trees. On it each density in (113.7) is a single constant,
+say $\varphi^A/W(u)$ and $\varphi^B/W(v)$, with integer $A,B$.
+Equal measures and $M([z])>0$ force those constants to agree, so
+$W(v)/W(u)=\varphi^{B-A}$. Put $k=B-A$. For $k\ge0$, (113.8) gives
+$\mathcal J(\rho^k u)=\mathcal J(v)$; injectivity gives $\rho^k u=v$.
+For $k<0$ reverse the roles. Conversely, equality of any two actual
+forward iterates implies equal measures by (113.8). This proves (113.9)
+without an abstract substitution recognizability premise.
+The same injective representation and scale action show that $\rho$ is
+injective; predecessor steps, when they exist, divide $W$ by $\varphi$.
+Since every finite source has $W\ge1$, their number is finite, and the
+least predecessor is unique. Its forward chain is the whole fiber.
+In particular $\alpha,\beta,T_2,T_3,\ldots$ all have measure $M$,
+while their scales are $1,\varphi,\varphi^2,\varphi^3,\ldots$.
+The measure erases source-step phase; its unreduced syntax cannot restore
+that phase. The acquired original scale can. $\square$
+
+### 113.4 Complete INITIAL rows on the two full domains
+
+**Definition 113.6 (factorization of the authentic row).** For a finite
+prefix-free $Q$, including $\varnothing$ and the root cut, let $R_Q(u)$
+be exactly Sparse Literal History Transport, Definition 59.1, equivalently
+Native Alpha Recut Memory, Definition 1.2. Its reached holes are
+$I_Q(u)=Q\cap V_u$ in lexicographic order; its concrete exterior retains
+all remaining ordered brackets and leaf labels; its complete partition
+equates holes exactly when their entire original subtrees agree.
+An absent address produces no hole. On $D=\mathcal T$ or on the entire
+authentic branch domain $D=\mathcal B$ of (112.1), factorization means
+there exists a value function $F_Q$ on the attained boundary measures
+such that $R_Q(u)=F_Q(\nu_u)$ for **every** $u\in D$.
+This target is always INITIAL $u$, regardless of later accepted updates.
+
+**Theorem 113.7 (exhaustive INITIAL changed-cut classification).** The exact
+classifications are
+
+$$
+\begin{array}{c|c}
+D&Q\text{ for which the whole }R_Q\text{ factors through }\nu\\ \hline
+\mathcal T&\{\varepsilon\}\\
+\mathcal B&\{\varepsilon\}\ \text{or}\ \{L,R\}.
+\end{array}
+\tag{113.11}
+$$
+
+Empty cuts fail in both domains. On $\mathcal B$, the retained value for
+$Q=\{L,R\}$ is the entire row (112.2), including its equality flag.
+Writing $t=\nu_u([L])$ and using the two conditional measures in
+(113.10), that flag is explicitly
+
+$$
+u|_L=u|_R\iff t=\tfrac12\ \text{and}\ \nu_{u|_L}=\nu_{u|_R}.
+\tag{113.12}
+$$
+
+Proof. The root row is constant for every nonempty original source:
+one reached root hole, exterior $\square_1$, and one class.
+For any other prefix-free $Q$, the root is not in $Q$. On the full
+domain the sources alpha and beta have equal measure $M$, every such
+cut address is absent in both, and the concrete exteriors are the
+different labelled singletons. This rejects every other $Q$, including
+the empty cut.
+
+On the branch domain, $u=\langle x,y\rangle$ always has both child
+addresses reached. For $Q=\{L,R\}$ its reached list and exterior are
+fixed, and (113.10) gives the child weights. If $t=1/2$, they agree;
+equal conditional measures then give $x=y$ by Theorem 113.5. The reverse
+implication is immediate. This proves (113.12) and the complete row
+factorization, with distinct numbered holes even in the equal case.
+Conditional measures alone would be insufficient: alpha and beta have
+the same measure but unequal weights.
+
+For every remaining $Q$ without the root, prefix-freeness implies that
+at least one of $L,R$ is not in $Q$. Compare the actual branch sources
+$u=\langle\alpha,\alpha\rangle$ and $v=\rho u=\langle\beta,\beta\rangle$.
+Their measures agree. Each of $L,R$ belonging to $Q$ is a reached hole;
+all deeper cut addresses are absent in both sources. An immediate child
+not belonging to $Q$ remains a concrete alpha in the first exterior and
+a concrete beta in the second. The complete rows therefore differ.
+If both children belong to $Q$, prefix-freeness forces $Q=\{L,R\}$.
+This rejects all other cuts and retains the complete branch domain,
+rather than selecting a smaller family. In particular an empty cut
+returns the full concrete source and is not invariant. $\square$
+
+**Proposition 113.8 (births, equality and operations do not change the target).**
+For $u=\langle\beta,\alpha\rangle$ and $Q=\{LL,LR,R\}$, the INITIAL
+reached list is $(R)$, the exterior is $\langle\beta,\square_1\rangle$
+and its partition has one class. The successor has reached list
+$(LL,LR,R)$, exterior $\langle\langle\square_1,\square_2\rangle,
+\square_3\rangle$, and partition $\{\{1,3\},\{2\}\}$.
+These sources have equal boundary measures and different complete rows.
+For $Q=\{L,R\}$ on a branch, every actual accepted update preserves
+the reached list, exterior and whole-subtree equality partition.
+
+Proof. The actual successor is
+$\rho u=\langle\langle\beta,\alpha\rangle,\beta\rangle$.
+Its born children give exactly the displayed lists and values;
+absence at INITIAL $LL,LR$ creates no INITIAL holes. An accepted
+update transports both original child subtrees by the same $\rho$;
+its injectivity from Theorem 113.5 preserves equality and disequality.
+The root remains branch and both original children remain reached.
+Refusal changes neither source nor row; Stop permits no suffix.
+These facts use precisely Contract 112.1a. They do not turn a successor
+row into an INITIAL row at a changed cut. $\square$
+
+### 113.5 Acquired scale and representation evaluation
+
+**Proposition 113.9 (inherited paid acquisition, not a new optimum).**
+Conditional on an authentic same-source epoch-zero immutable register and
+the allowed four-valued Read service, the existing
+`ActualTreeReadoutAcquisition` frontier, `acquisitionTrace` and report-only
+`restore` supply the complete original $u$ on every finite source.
+Using that acquired value to compute $\mathcal J(u)$ and any $R_Q(u)$
+requires no extra native Read or Apply. From the supplier's empty phase
+history the sufficient inherited coordinates are
+
+$$
+(q,a,\lambda,k_{\rm phase})=
+\left(S(u),0,\sum_{p\in V_u}|p|,S(u)\right),\qquad S(u)=|V_u|.
+\tag{113.13}
+$$
+
+Here $q$ counts raw Reads, $a$ counts Apply attempts, $\lambda$ sums
+their Read-address lengths, and $k_{\rm phase}$ counts distinct acquired
+addresses in the supplier phase.
+On the branch entry of (112.1), its root-first schedule and repeated
+pre/post-entry root have exactly the raw, literal-length and paid-cache
+scopes (112.20a): total raw Reads $S+1$, total literal length
+$\sum_{p\in V_u}|p|$, cumulative distinct charge $S$ under one
+immutable-source cache, with incremental charge $S-1$; separate empty
+phase ledgers instead charge $1$ and $S$. No new optimal bound for
+acquiring the measure, scale or source is asserted.
+
+Proof. Reuse the acquisition/restoration supply of Definition 112.9 and
+Theorem 112.10; its structural argument applies also to the two singleton
+leaves. Each branch report queues its actual children, each terminal
+queues none, and the finite report history reconstructs the original
+ordered labels and brackets. The reply-driven traversal does not receive
+an initial size or fuel bound. Its nodes, depths and repetitions give
+(113.13) and the inherited branch cache scopes. Leaf counting on this
+acquired description supplies the exact integer pair $(a,b)$ for $W$;
+(113.7) supplies a finite cylinder density, interpreted as a measure
+value, and (113.10) supplies its inverse on the attained image.
+This is a different consumer of the same lossless acquisition phase,
+not a change to the supplier's original Boolean `Strategy` task.
+The source-bearing description and its price have not been obtained
+by merely writing a computable source-indexed function. $\square$
+
+**Specification 113.10 (evaluation and retained permission boundary).**
+The representation is an exact mathematical correspondence **on its
+attained image**. Given its genuinely acquired value, an allowed Read
+can be evaluated as the original four-valued readout of the reconstructed
+source. An actual accepted Apply sends $(\nu,w)$ to $(\nu,\varphi w)$;
+an actual refused Apply leaves it fixed. Acceptance is still determined
+by the common $G(\gamma,e,H)$ of Contract 112.1a, with the real accepted
+epoch and complete chronological Read/status history. Those fields and
+absorbing Stop are not replaced by $\nu$ or by $W$. In particular an
+invariant boundary cannot itself simulate arbitrary Reads: the two
+singletons have equal boundary and different root replies, and the two
+branch witnesses in Theorem 113.7 have different child replies.
+Any history-dependent guard using those replies retains them under its
+own contract. Locally computing a reply is not an actual Read event and
+cannot be inserted into the authentic history as one.
+Representation evaluation grants no new Read, equality
+port, reset, backward action, actuator, status oracle or acquisition right.
+
+On an actually supplied boundary value, Theorem 113.7 concerns only
+factorization of the complete INITIAL **value**. It supplies neither a
+native finite-measure oracle nor a certificate of exact measure equality
+from approximations. Returning such a value does not perform its original
+producer, erase accessible acquisition records, or establish a complete
+new access cut. The access isolation and separate handoff remain those of
+Sparse Literal History Transport, Assumptions 59.3 and 74.1, §§74--75,
+and Native Alpha Recut Memory, Definition 4.3 and Theorem 8.2.
+Source preparation, root/epoch authentication, address generation,
+storage, local computation, duration and physical actuation retain the
+unpriced boundaries of §112.5. Neither an unknown $u$, an unknown $W(u)$
+nor its boundary measure is supplied for free.
+
+### 113.6 Scope of the synthesis and the remaining correspondence
+
+**Specification 113.11 (mature neighbors and precise unresolved bridges).**
+The source-specific synthesis is (113.9), the scale-injective original
+representation, and the exhaustive complete INITIAL row classification
+(113.11), derived from the existing all-occurrence/count and authentic
+row/acquisition suppliers. Bernoulli cylinder probabilities and the
+Fibonacci asymptotics are mature intermediates, not new results.
+[Bezuglyi--Kwiatkowski--Medynets--Solomyak, arXiv:0812.1088v2,
+§§2--4](https://arxiv.org/html/0812.1088v2) classifies tail-invariant
+path measures of stationary Bratteli diagrams using their incidence
+matrix. [Akiyama--Tan--Yuasa, arXiv:1801.03536v1, §1 and Theorem
+1.1](https://arxiv.org/html/1801.03536v1) assumes a primitive aperiodic
+word substitution with a one-sided fixed point and concerns natural
+cutting positions. [Cabezas--Leroy, arXiv:2403.11357v2,
+§§2.3, 5--6](https://arxiv.org/html/2403.11357v2) concerns constant-shape
+subshifts on an already specified $\mathbb Z^d$, support and expansion
+matrix. None of those scopes is identified here with the original finite
+ordered-tree kernel or a native acquisition contract. No world-novelty
+or exhaustive literature-absence claim is made.
+
+`NativeUniformAnalysis.materialize_analysis_exact` supplies the full
+computable analysis serialization and its original $K_0$ from common
+row/cut/history code; it is not an unknown-source value acquisition.
+`NativePayloadHistoryInstallation.payload_history_exact` supplies a
+same-source semantic equivalence for reached equality records under its
+locator premise, not acquired equality ports. Their owning Blueprints
+retain those boundaries. The complete Xi square-product/analytic-order,
+symbolic residual prime-power and positive-orientation hyperideal
+relabeling applications keep their respective analytic, arithmetic and
+already supplied geometric inputs; they are not premises for (113.9).
+
+The limits in Theorem 113.2 have the explicit quantifiers
+$\forall u\ \forall p\ \lim_{n\to\infty}$, with $u,p$ fixed. They do
+not assert a uniform rate over moving sources/addresses, nor a joint
+normalized full-state/operator limit. Even on the common measurable
+space of finite and infinite addresses, each $\mu_{u,n}$ gives the finite
+addresses mass one while $\nu_u$ gives them mass zero: total variation
+in the supremum-over-events convention is exactly one. Cylinder
+convergence has a different topology and does not remove that fact.
+The centered ancestry transport of Definition 109.1 moreover has the
+strictly positive fixed-positive-time defect in Theorem 109.2 on the
+actual single-leaf orbit. Its failure is not repaired by (113.8).
+The different gradient/polar comparison of §103 retains its own scope;
+an all-original-source uniform normalized full-state correspondence for
+an actual supplied transport remains a separate obligation.
+
+An occurrence probability is not an acquired signed occurrence field.
+Preparation, an actual field-transfer map with its domains/norms and
+readouts, and a native heat actuator with the closed unit-edge generator
+$-L$ still require the correspondence of Assumption 109.3 and §112.6.
+Accepted source-step count, semigroup/occupation comparison time,
+paid acquisition chronology and physical duration remain distinct;
+$(\nu,w)\mapsto(\nu,\varphi w)$ supplies no physical clock conversion.
+The binary address boundary supplies neither a spatial dimension nor
+stable physical matter. Those claims still require a spatial/physical
+realization and the missing operation, preparation, transport and clock
+bridges, rather than an already given support or fitted metric.
+These are ordinary mathematical proofs; no new Lean/kernel verification,
+formal registration or freezing is asserted. No finite result here
+completes the active through-2027 host programme.
+
+## 113.99 追加锚（本行以下为增补区）
