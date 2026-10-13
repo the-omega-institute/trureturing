@@ -186,8 +186,8 @@ private theorem compress_pos (X : Op) (hX : X.IsPositive) : (compress X).PosSemi
   · intro v
     have hq := hX.inner_nonneg_right (embed v)
     rw [show star v ⬝ᵥ (compress X) *ᵥ v = inner ℂ (embed v) (X (embed v)) by
-      unfold compress embed
-      simp [dotProduct, Matrix.mulVec, Fin.sum_univ_two]
+      dsimp only [compress, embed, dotProduct, Matrix.mulVec]
+      simp [Fin.sum_univ_two]
       ring]
     exact hq
 
@@ -531,40 +531,9 @@ private theorem common_subeffect_bound
     have hz'' : star z * z = 1 := by simpa only [starRingEnd_apply] using hz'
     have hc : star (z • v) ⬝ᵥ (H *ᵥ (z • v)) =
         star v ⬝ᵥ (H *ᵥ v) := by
-      simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.smul_apply,
-        StarModule.star_smul, smul_eq_mul]
-      ring_nf
-      have h1 : star z * star v 0 * H 0 0 * z * v 0 =
-          star v 0 * H 0 0 * v 0 := by
-        calc
-          _ = (star z * z) * (star v 0 * H 0 0 * v 0) := by ring
-          _ = _ := by rw [hz'']; simp
-      have h2 : star z * star v 0 * z * H 0 1 * v 1 =
-          star v 0 * H 0 1 * v 1 := by
-        calc
-          _ = (star z * z) * (star v 0 * H 0 1 * v 1) := by ring
-          _ = _ := by rw [hz'']; simp
-      have h3 : v 0 * star z * z * star v 1 * H 1 0 =
-          v 0 * star v 1 * H 1 0 := by
-        calc
-          _ = (star z * z) * (v 0 * star v 1 * H 1 0) := by ring
-          _ = _ := by rw [hz'']; simp
-      have h4 : v 1 * star z * z * star v 1 * H 1 1 =
-          v 1 * star v 1 * H 1 1 := by
-        calc
-          _ = (star z * z) * (v 1 * star v 1 * H 1 1) := by ring
-          _ = _ := by rw [hz'']; simp
-      have h5 : star z * z * v 0 * star v 1 * H 1 0 =
-          v 0 * star v 1 * H 1 0 := by
-        calc
-          _ = (star z * z) * (v 0 * star v 1 * H 1 0) := by ring
-          _ = _ := by rw [hz'']; simp
-      have h6 : star z * z * v 1 * star v 1 * H 1 1 =
-          v 1 * star v 1 * H 1 1 := by
-        calc
-          _ = (star z * z) * (v 1 * star v 1 * H 1 1) := by ring
-          _ = _ := by rw [hz'']; simp
-      rw [h1, h2, h5, h6]
+      simp only [star_smul, Matrix.mulVec_smul, smul_dotProduct, dotProduct_smul,
+        smul_smul]
+      rw [mul_comm z (star z), hz'', one_smul]
     dsimp [quad]
     exact congrArg Complex.re hc
   have hp : quad H p ≤ x := by
@@ -580,14 +549,8 @@ private theorem common_subeffect_bound
         (2 : ℂ) * (star p ⬝ᵥ (H *ᵥ p)) +
             (2 : ℂ) * (star q ⬝ᵥ (H *ᵥ q)) -
             star (p + q) ⬝ᵥ (H *ᵥ (p + q)) := by
-      have hs : star (p - q) = star p - star q := by
-        funext k
-        simp
-      have hs' : star (p + q) = star p + star q := by
-        funext k
-        simp
-      rw [hs, hs']
-      simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Pi.sub_apply, Pi.add_apply]
+      simp only [star_sub, star_add, Matrix.mulVec_sub, Matrix.mulVec_add,
+        sub_dotProduct, dotProduct_sub, add_dotProduct, dotProduct_add]
       ring
     dsimp [quad]
     simpa [map_mul, map_sub] using congrArg Complex.re hh
@@ -608,25 +571,11 @@ private theorem common_subeffect_bound
         _ = 0 := by rw [hzi', hzj']; ring
     · dsimp [p, q, schurVector]
       simp
-  have hdiag : (H 1 1).im = 0 := by
-    have hh := (Matrix.IsHermitian.ext_iff.mp hH.isHermitian)
-      (1 : Fin 2) (1 : Fin 2)
-    have ht := congrArg Complex.im hh
-    simp at ht
-    linarith
   have hentry :
       quad H (![0, zi - zj] : Fin 2 → ℂ) =
         ‖zi - zj‖ ^ 2 * (H 1 1).re := by
-    dsimp [quad]
-    simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Matrix.cons_val_zero,
-      Matrix.cons_val_one]
-    simp only [mul_zero]
-    rw [show H (1 : Fin 2) (1 : Fin 2) =
-        ((H (1 : Fin 2) (1 : Fin 2)).re : ℂ) by
-      apply Complex.ext
-      · rfl
-      · simp [hdiag]]
-    simp [Complex.sq_norm, Complex.normSq, Complex.mul_re]
+    dsimp only [quad, dotProduct, Matrix.mulVec]
+    simp [Fin.sum_univ_two, Complex.sq_norm, Complex.normSq, Complex.mul_re]
     ring
   rw [hpq, hentry] at hbound
   have hdist : 0 < ‖zi - zj‖ ^ 2 := by
@@ -656,13 +605,13 @@ private theorem residual_quad_le (a b c x : ℝ) (ha : 0 < a)
   have hsum : quad H (schurVector a b z) + quad
       (!![(a : ℂ), -(b : ℂ) * starRingEnd ℂ z;
         -(b : ℂ) * z, (c : ℂ)] - H) (schurVector a b z) = c - b ^ 2 / a := by
-    dsimp [quad, schurVector]
+    dsimp only [quad, schurVector, dotProduct, Matrix.mulVec]
     have hzn : z.re ^ 2 + z.im ^ 2 = 1 := by
       have ht : Complex.normSq z = 1 := by
         rw [← Complex.sq_norm, hz]
         norm_num
       simpa [Complex.normSq, pow_two] using ht
-    simp [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Complex.mul_re]
+    simp [Fin.sum_univ_two, Complex.mul_re]
     field_simp
     ring_nf at hzn ⊢
     linear_combination (-b ^ 2 * a) * hzn
@@ -835,22 +784,25 @@ private theorem phaseQ_pos {m : ℕ} (hm : 2 ≤ m) (z : Fin m → ℂ)
   refine ⟨j, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hij⟩, ?_⟩
   exact inv_pos.mpr (pow_pos (norm_pos_iff.mpr (sub_ne_zero.mpr hne)) _)
 
+private def chosenX {m : ℕ} (τ : Loss) (z : Fin m → ℂ) : ℝ :=
+  ((m : ℝ) * τ.1 - 1) / (2 * ((m : ℝ) + 4 * phaseQ z))
+
 private theorem stronger {m : ℕ} (hm : 2 ≤ m) (τ : Loss) (hτ : 0 < τ.1)
     (hgap : 1 < (m : ℝ) * τ.1) (z : Fin m → ℂ)
     (hz : ∀ i, ‖z i‖ = 1) (hinj : Function.Injective z) :
-    ∃ M : Fin m → Fin 2 → Op, (∀ j, IsBinaryPOVM (M j)) ∧
-      ¬ HasParent (fun j b => dualLoss τ (M j b)) := by
+    (∀ j, IsBinaryPOVM (onOff ((Real.sqrt (chosenX τ z) : ℂ) * z j))) ∧
+      ¬ HasParent (fun j b => dualLoss τ (onOff ((Real.sqrt (chosenX τ z) : ℂ) * z j) b)) := by
   have hQ := phaseQ_pos hm z hinj
   have hm0 : 0 < (m : ℝ) :=
     (mul_pos_iff_of_pos_right hτ).mp (lt_trans zero_lt_one hgap)
   have hden : 0 < (m : ℝ) + 4 * phaseQ z := by linarith
-  let x := ((m : ℝ) * τ.1 - 1) / (2 * ((m : ℝ) + 4 * phaseQ z))
+  let x := chosenX τ z
   have hx : 0 < x := div_pos (sub_pos.mpr hgap) (by positivity)
   let a := 1 - Real.exp (-x)
   let b := Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x
   let c := 1 - Real.exp (-x) * (1 - τ.1 + τ.1 * x)
   have hs := scalar_bounds τ x hx
-  refine ⟨fun j => onOff ((Real.sqrt x : ℂ) * z j), fun j => onOff_binary _, ?_⟩
+  refine ⟨fun j => onOff_binary _, ?_⟩
   intro hparent
   obtain ⟨G, hG, hmarg⟩ := compressed_parent _ hparent
   have hcount : (m : ℝ) * c ≤ 1 + 4 * x * phaseQ z := by
@@ -893,6 +845,7 @@ theorem result : claim := by
     apply (lt_div_iff₀ hn0).mpr
     push_cast
     linarith
+  refine ⟨fun j => onOff ((Real.sqrt (chosenX (inverseTransmissivity n hn) z) : ℂ) * z j), ?_⟩
   exact stronger (by omega) (inverseTransmissivity n hn) hτ hgap z hz hinj
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
