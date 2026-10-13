@@ -95,7 +95,7 @@ Every other declaration is a definition used by a public statement or a bind-onl
 - The free six-qubit state τ gives D_{2,1}(ρ ⊗ ρ̄) ≤ log₂(270853390336/138572892315) < 2 log₂(1015/726).
 
 **Argued, not formalized.**
-- *Where additivity breaks.* At (2, 1) the lower bound for each marginal comes from the polar element C² = Q·W_{119/316}: Tr(ηC²) ≤ Q on S̄₃. For a product of three-qubit stabilizer states, Tr((η₁ ⊗ η₂)(S ⊗ S̄)) = Tr(η₁S) Tr(η₂S̄) ≤ 1. On the three-Bell-pair state, however, Tr(P (S ⊗ S̄)) = Tr(S²)/8 = 7. Mixing a small weight of P into σ ⊗ σ̄ therefore lowers the joint divergence below the sum of the marginal ones.
+- *Where additivity breaks.* At (2, 1) the lower bound for each marginal comes from the polar element C² = Q·W_{119/316}: Tr(ηC²) ≤ Q on S̄₃. For three-qubit stabilizer states, |Tr(η₁S)| ≤ 1 and |Tr(η₂S̄)| ≤ 1: the module proves Tr(ηS) ≤ 1, and the same argument applied to the seven pairwise anticommuting words −P_j gives Tr(ηS) ≥ −1, likewise for S̄. Hence for a product state Tr((η₁ ⊗ η₂)(S ⊗ S̄)) = Tr(η₁S) Tr(η₂S̄) ≤ |Tr(η₁S)| |Tr(η₂S̄)| ≤ 1. On the three-Bell-pair state, however, Tr(P (S ⊗ S̄)) = Tr(S²)/8 = 7. Mixing a small weight of P into σ ⊗ σ̄ therefore lowers the joint divergence below the sum of the marginal ones.
 - *A family.* With ρ_t = (I + tS)/8 the same argument works for every t in ((19 − 3√2)/49, 1/√7), with a t-dependent Bell weight ε (#15943 design comment). The fixed weight 1/4096 does not serve the whole interval; for example it fails at t = 151/500.
 - The construction uses seven pairwise anticommuting Paulis, which exist only from three qubits on (n qubits carry at most 2n + 1). Whether the five-term analogue on two qubits also violates additivity was not checked.
 
