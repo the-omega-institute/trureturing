@@ -6,7 +6,6 @@
    utility: none
    digest: Native T cuts have genuinely distinct complete circle owners. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
-import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSwitches
 
 set_option autoImplicit false
 
@@ -91,7 +90,6 @@ end D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
-open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSwitches
 open Equiv
 open Fin.NatCast
 
@@ -296,5 +294,295 @@ theorem native_t_cross_circle_disjoint {m : ℕ} (hm : 4 ≤ m)
     split_ifs at he2 <;> omega
 
 #print axioms native_t_cross_circle_disjoint
+
+end D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
+
+
+namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
+open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement
+open Equiv
+open Fin.NatCast
+
+private theorem star_iff_gap_circle {m : ℕ} (hm : 3 ≤ m)
+    (z v : Configuration m) :
+    Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1))) v ↔
+      ∃ i : Fin m, Circle (gapAnchor z i) v := by
+  constructor
+  · intro hv
+    let p := (coordinateEquiv hm z).symm ⟨v, hv⟩
+    have hp := congrArg Subtype.val ((coordinateEquiv hm z).apply_symm_apply ⟨v, hv⟩)
+    change coordinate z p = v at hp
+    refine ⟨p.1, ?_⟩
+    have hc := ((circleEquiv hm (gapAnchor z p.1)) p.2).property
+    change Circle (gapAnchor z p.1) (coordinate z p) at hc
+    exact hp ▸ hc
+  · rintro ⟨i, hi⟩
+    obtain ⟨p, hp⟩ := circle_repr hm (gapAnchor z i) v hi
+    have hc := (coordinateEquiv hm z (i, p)).property
+    change Star (z (Fin.last m)) (residualList z : Cycle (Fin (m + 1)))
+      (circleCoordinate (gapAnchor z i) p) at hc
+    exact hp ▸ hc
+
+private theorem circle_rotation {m : ℕ} (z : Configuration m) :
+    configurationCycle (z * finRotate (m + 1)) = configurationCycle z := by
+  apply Cycle.coe_eq_coe.mpr
+  rw [show List.ofFn (z * finRotate (m + 1)) = (List.ofFn z).rotate 1 from
+    by simpa only [pow_one] using rotate_pow_list z 1]
+  exact List.IsRotated.symm ⟨1, rfl⟩
+
+private theorem lower_core_swap {m : ℕ} (hm : 4 ≤ m) :
+    gapAnchor (a m * c m) ⟨m - 2, by omega⟩ =
+      Equiv.swap (0 : Fin (m + 1)) (Fin.last m) := by
+  apply Equiv.ext
+  intro i
+  apply Fin.ext
+  change ((a m * c m) (((b m * c m) ^ (m - 2)) i)).val = _
+  rw [ac_apply_val (by omega : 3 ≤ m), bc_pow_val (by omega : 2 ≤ m)]
+  rw [Equiv.swap_apply_def]
+  by_cases hi0 : i = 0
+  · subst i
+    simp only [Fin.val_zero, zero_add, if_pos (by omega : 0 < m),
+      Nat.mod_eq_of_lt (by omega : m - 2 < m),
+      if_pos (by omega : m - 2 < m - 1), ↓reduceIte, Fin.val_last]
+    omega
+  · by_cases hil : i = Fin.last m
+    · subst i
+      simp only [Fin.val_last, lt_self_iff_false, if_false,
+        if_neg (by omega : ¬ m < m - 1), if_neg hi0, ↓reduceIte, Fin.val_zero]
+      omega
+    · have hi : i.val < m := by
+        have hb := i.isLt
+        have hn : i.val ≠ m := fun h => hil (Fin.ext h)
+        omega
+      have hi0v : i.val ≠ 0 := fun h => hi0 (Fin.ext h)
+      simp only [if_pos hi, if_neg hi0, if_neg hil]
+      by_cases hi1 : i.val = 1
+      · rw [hi1, show 1 + (m - 2) = m - 1 by omega,
+          Nat.mod_eq_of_lt (by omega : m - 1 < m)]
+        simp only [lt_self_iff_false, if_false]
+        omega
+      · have hmod : (i.val + (m - 2)) % m = i.val - 2 := by
+          rw [show i.val + (m - 2) = (i.val - 2) + m by omega,
+            Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
+        rw [hmod, if_pos (by omega : i.val - 2 < m - 1)]
+        omega
+
+private theorem lower_core_rotation {m : ℕ} (hm : 4 ≤ m) :
+    gapAnchor (a m * c m) ⟨m - 1, by omega⟩ = finRotate (m + 1) := by
+  apply Equiv.ext
+  intro i
+  apply Fin.ext
+  change ((a m * c m) (((b m * c m) ^ (m - 1)) i)).val = _
+  rw [ac_apply_val (by omega : 3 ≤ m), bc_pow_val (by omega : 2 ≤ m),
+    finRotate_apply]
+  simp only [Fin.val_add, Fin.val_one', Nat.mod_eq_of_lt (by omega : 1 < m + 1)]
+  by_cases hil : i = Fin.last m
+  · subst i
+    simp only [Fin.val_last, lt_self_iff_false, if_false,
+      if_neg (by omega : ¬ m < m - 1)]
+    rw [Nat.mod_self]
+    omega
+  · have hi : i.val < m := by
+      have hb := i.isLt
+      have hn : i.val ≠ m := fun h => hil (Fin.ext h)
+      omega
+    simp only [if_pos hi]
+    rw [Nat.mod_eq_of_lt (by omega : i.val + 1 < m + 1)]
+    by_cases hi0 : i.val = 0
+    · rw [hi0, zero_add, Nat.mod_eq_of_lt (by omega : m - 1 < m)]
+      simp only [lt_self_iff_false, if_false]
+      omega
+    · have hmod : (i.val + (m - 1)) % m = i.val - 1 := by
+        rw [show i.val + (m - 1) = (i.val - 1) + m by omega,
+          Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
+      rw [hmod, if_pos (by omega : i.val - 1 < m - 1)]
+      omega
+
+
+private theorem upper_core_one {m : ℕ} (hm : 4 ≤ m) :
+    gapAnchor (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m))
+      ⟨m - 2, by omega⟩ = 1 := by
+  rw [gapAnchor, mul_assoc, ← gapAnchor, lower_core_swap hm]
+  exact Equiv.swap_mul_self _ _
+
+private theorem upper_core_rotation {m : ℕ} (hm : 4 ≤ m) :
+    gapAnchor (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m))
+      ⟨m - 1, by omega⟩ =
+        Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * finRotate (m + 1) := by
+  rw [gapAnchor, mul_assoc, ← gapAnchor, lower_core_rotation hm]
+
+private theorem lower_last_circle {m : ℕ} (hm : 4 ≤ m) (v : Configuration m) :
+    Circle (gapAnchor (a m * c m) ⟨m - 1, by omega⟩) v ↔ Circle 1 v := by
+  have hr := circle_rotation (1 : Configuration m)
+  simp only [one_mul] at hr
+  rw [lower_core_rotation hm]
+  simp only [Circle, hr]
+
+private theorem upper_last_circle {m : ℕ} (hm : 4 ≤ m) (v : Configuration m) :
+    Circle (gapAnchor (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m))
+      ⟨m - 1, by omega⟩) v ↔
+        Circle (Equiv.swap (0 : Fin (m + 1)) (Fin.last m)) v := by
+  rw [upper_core_rotation hm]
+  simp only [Circle, circle_rotation]
+
+private theorem lower_upper_gap_disjoint {m : ℕ} (hm : 4 ≤ m)
+    (k : Fin m) (j : Fin (m - 2)) :
+    Disjoint {v : Configuration m | Circle (gapAnchor (a m * c m) k) v}
+      {v : Configuration m | Circle (upperPort j) v} := by
+  by_cases hk : k.val < m - 2
+  · simpa only [gapAnchor, lowerPort, upperPort] using
+      native_t_cross_circle_disjoint hm ⟨k.val, hk⟩ j
+  · rw [Set.disjoint_left]
+    intro v hv hu
+    have hu' : Circle
+        (gapAnchor (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m))
+          ⟨j.val, by have hj := j.isLt; omega⟩) v := by
+      simpa only [Set.mem_setOf_eq, upperPort, lowerPort, gapAnchor, mul_assoc] using hu
+    by_cases hk2 : k.val = m - 2
+    · have he : k = ⟨m - 2, by omega⟩ := Fin.ext hk2
+      rw [he, lower_core_swap hm] at hv
+      have hv' := (upper_last_circle hm v).mpr hv
+      have h := gap_circle_common (by omega : 3 ≤ m)
+        (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) v
+        ⟨m - 1, by omega⟩ ⟨j.val, by have hj := j.isLt; omega⟩ hv' hu'
+      have heq := congrArg Fin.val h
+      have hj := j.isLt
+      simp only [Fin.val_mk] at heq
+      omega
+    · have he : k = ⟨m - 1, by omega⟩ :=
+        Fin.ext (by change k.val = m - 1; have hb := k.isLt; omega)
+      rw [he] at hv
+      have hv' : Circle
+          (gapAnchor (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m))
+            ⟨m - 2, by omega⟩) v := by
+        rw [upper_core_one hm]
+        exact (lower_last_circle hm v).mp hv
+      have h := gap_circle_common (by omega : 3 ≤ m)
+        (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) v
+        ⟨m - 2, by omega⟩ ⟨j.val, by have hj := j.isLt; omega⟩ hv' hu'
+      have heq := congrArg Fin.val h
+      have hj := j.isLt
+      simp only [Fin.val_mk] at heq
+      omega
+
+/-- The two independently defined T supplier stars have exactly the two
+complete actual core circles in common. -/
+theorem native_t_core_intersection {m : ℕ} (hm : 4 ≤ m) (v : Configuration m) :
+    (Star ((a m * c m) (Fin.last m))
+        (residualList (a m * c m) : Cycle (Fin (m + 1))) v ∧
+      Star ((Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) (Fin.last m))
+        (residualList (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) :
+          Cycle (Fin (m + 1))) v) ↔
+      Circle (1 : Configuration m) v ∨
+        Circle (Equiv.swap (0 : Fin (m + 1)) (Fin.last m)) v := by
+  rw [star_iff_gap_circle (by omega : 3 ≤ m),
+    star_iff_gap_circle (by omega : 3 ≤ m)]
+  constructor
+  · rintro ⟨⟨i, hi⟩, ⟨j, hj⟩⟩
+    by_cases hjn : j.val < m - 2
+    · have hj' : Circle (upperPort ⟨j.val, hjn⟩) v := by
+        simpa only [upperPort, lowerPort, gapAnchor, mul_assoc] using hj
+      exact (Set.disjoint_left.mp (lower_upper_gap_disjoint hm i ⟨j.val, hjn⟩)
+        hi hj').elim
+    · by_cases hj2 : j.val = m - 2
+      · have he : j = ⟨m - 2, by omega⟩ := Fin.ext hj2
+        rw [he, upper_core_one hm] at hj
+        exact Or.inl hj
+      · have he : j = ⟨m - 1, by omega⟩ :=
+          Fin.ext (by change j.val = m - 1; have hb := j.isLt; omega)
+        rw [he] at hj
+        exact Or.inr ((upper_last_circle hm v).mp hj)
+  · intro h
+    rcases h with h | h
+    · refine ⟨⟨⟨m - 1, by omega⟩, (lower_last_circle hm v).mpr h⟩,
+        ⟨⟨m - 2, by omega⟩, ?_⟩⟩
+      rwa [upper_core_one hm]
+    · refine ⟨⟨⟨m - 2, by omega⟩, ?_⟩,
+        ⟨⟨m - 1, by omega⟩, (upper_last_circle hm v).mpr h⟩⟩
+      rwa [lower_core_swap hm]
+
+#print axioms native_t_core_intersection
+
+
+/-- Complete lower-supplier circles and upper-supplier noncore circles form the
+actual T cut-owner inventory. The lower family includes both shared cores. -/
+def tCircleAnchor {m : ℕ} : Fin m ⊕ Fin (m - 2) → Configuration m
+  | .inl i => gapAnchor (a m * c m) i
+  | .inr j => Equiv.swap (0 : Fin (m + 1)) (Fin.last m) *
+      (a m * c m * (b m * c m) ^ j.val)
+
+private theorem upperPort_gap {m : ℕ} (j : Fin (m - 2)) :
+    upperPort j = gapAnchor
+      (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m))
+      ⟨j.val, by have hj := j.isLt; omega⟩ := by
+  simp only [upperPort, lowerPort, gapAnchor, mul_assoc]
+
+private theorem t_circle_owner_unique {m : ℕ} (hm : 4 ≤ m) (v : Configuration m)
+    (p q : Fin m ⊕ Fin (m - 2))
+    (hp : Circle (tCircleAnchor p) v) (hq : Circle (tCircleAnchor q) v) : p = q := by
+  cases p with
+  | inl i =>
+    cases q with
+    | inl j =>
+      exact congrArg Sum.inl (gap_circle_common (by omega : 3 ≤ m)
+        (a m * c m) v i j hp hq)
+    | inr j =>
+      exact (Set.disjoint_left.mp (lower_upper_gap_disjoint hm i j) hp hq).elim
+  | inr i =>
+    cases q with
+    | inl j =>
+      exact (Set.disjoint_left.mp (lower_upper_gap_disjoint hm j i) hq hp).elim
+    | inr j =>
+      change Circle (upperPort i) v at hp
+      change Circle (upperPort j) v at hq
+      rw [upperPort_gap] at hp hq
+      have h := gap_circle_common (by omega : 3 ≤ m)
+        (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) v
+        ⟨i.val, by have hi := i.isLt; omega⟩
+        ⟨j.val, by have hj := j.isLt; omega⟩ hp hq
+      have heq : i.val = j.val := congrArg (fun x : Fin m => x.val) h
+      exact congrArg Sum.inr (Fin.ext heq)
+
+/-- Every actual vertex in the independently defined two-star union belongs
+to exactly one full circle from the T cut inventory. -/
+theorem native_t_circle_partition {m : ℕ} (hm : 4 ≤ m) (v : Configuration m) :
+    (Star ((a m * c m) (Fin.last m))
+        (residualList (a m * c m) : Cycle (Fin (m + 1))) v ∨
+      Star ((Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) (Fin.last m))
+        (residualList (Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (a m * c m)) :
+          Cycle (Fin (m + 1))) v) ↔
+      ∃! p : Fin m ⊕ Fin (m - 2), Circle (tCircleAnchor p) v := by
+  rw [star_iff_gap_circle (by omega : 3 ≤ m),
+    star_iff_gap_circle (by omega : 3 ≤ m)]
+  constructor
+  · intro h
+    have hex : ∃ p : Fin m ⊕ Fin (m - 2), Circle (tCircleAnchor p) v := by
+      rcases h with ⟨i, hi⟩ | ⟨j, hj⟩
+      · exact ⟨.inl i, hi⟩
+      · by_cases hjn : j.val < m - 2
+        · refine ⟨.inr ⟨j.val, hjn⟩, ?_⟩
+          simpa only [tCircleAnchor, gapAnchor, mul_assoc] using hj
+        · by_cases hj2 : j.val = m - 2
+          · have he : j = ⟨m - 2, by omega⟩ := Fin.ext hj2
+            rw [he, upper_core_one hm] at hj
+            exact ⟨.inl ⟨m - 1, by omega⟩, (lower_last_circle hm v).mpr hj⟩
+          · have he : j = ⟨m - 1, by omega⟩ :=
+              Fin.ext (by change j.val = m - 1; have hb := j.isLt; omega)
+            rw [he] at hj
+            have hc := (upper_last_circle hm v).mp hj
+            refine ⟨.inl ⟨m - 2, by omega⟩, ?_⟩
+            change Circle (gapAnchor (a m * c m) ⟨m - 2, by omega⟩) v
+            rwa [lower_core_swap hm]
+    obtain ⟨p, hp⟩ := hex
+    exact ⟨p, hp, fun q hq => t_circle_owner_unique hm v q p hq hp⟩
+  · rintro ⟨p, hp, _⟩
+    cases p with
+    | inl i => exact Or.inl ⟨i, hp⟩
+    | inr j =>
+      refine Or.inr ⟨⟨j.val, by have hj := j.isLt; omega⟩, ?_⟩
+      simpa only [tCircleAnchor, gapAnchor, mul_assoc] using hp
+
+#print axioms native_t_circle_partition
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleOwnership
