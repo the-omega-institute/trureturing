@@ -77,7 +77,7 @@ def claim : Prop :=
       ¬ HasParent (fun j b =>
         dualLoss (inverseTransmissivity n hn) (M j b))
 
-def onOff (μ : ℂ) (b : Fin 2) : Op :=
+private def onOff (μ : ℂ) (b : Fin 2) : Op :=
   if b = 0 then
     InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)
   else
@@ -380,5 +380,113 @@ private theorem rank_entry (τ : Loss) (μ : ℂ) (i j : Fin 2) :
   have hk' : k ≠ 0 ∧ k ≠ 1 := by simpa using hk
   fin_cases i <;> fin_cases j <;>
     simp [split_zero_coord, split_one_coord, hk'.1, hk'.2]
+
+private theorem coherent_entries (x : ℝ) (hx : 0 < x) (z : ℂ) (hz : ‖z‖ = 1) :
+    inner ℂ (e 0) (coherent ((Real.sqrt x : ℂ) * z)) = (Real.exp (-x / 2) : ℂ) ∧
+    inner ℂ (e 1) (coherent ((Real.sqrt x : ℂ) * z)) =
+      (Real.exp (-x / 2) : ℂ) * (Real.sqrt x : ℂ) * z := by
+  have hμ : ‖(Real.sqrt x : ℂ) * z‖ ^ 2 = x := by
+    rw [norm_mul, hz, mul_one, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (Real.sqrt_nonneg x), Real.sq_sqrt hx.le]
+  have hf (k : ℕ) (μ : ℂ) : inner ℂ (e k) (coherent μ) = coherentCoeff μ k := by
+    unfold e
+    rw [lp.inner_single_left]
+    change coherentCoeff μ k * (starRingEnd ℂ) 1 = _
+    simp
+  rw [hf, hf]
+  constructor
+  · simp only [coherentCoeff, hμ, pow_zero, Nat.factorial_zero, Nat.cast_one,
+      Real.sqrt_one, Complex.ofReal_one, mul_one, div_one]
+  · simp only [coherentCoeff, hμ, pow_one, Nat.factorial_one, Nat.cast_one,
+      Real.sqrt_one, Complex.ofReal_one, div_one]
+    ring
+
+private theorem compressed_rankOne (τ : Loss) (x : ℝ) (hx : 0 < x)
+    (z : ℂ) (hz : ‖z‖ = 1) :
+    compress (dualLoss τ (InnerProductSpace.rankOne ℂ
+      (coherent ((Real.sqrt x : ℂ) * z)) (coherent ((Real.sqrt x : ℂ) * z)))) =
+    !![(Real.exp (-x) : ℂ),
+        (Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x : ℝ) * starRingEnd ℂ z;
+       (Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x : ℝ) * z,
+        (Real.exp (-x) * (1 - τ.1 + τ.1 * x) : ℝ)] := by
+  have h0 := (coherent_entries x hx z hz).1
+  have h1 := (coherent_entries x hx z hz).2
+  have hc0 : inner ℂ (coherent ((Real.sqrt x : ℂ) * z)) (e 0) =
+      (Real.exp (-x / 2) : ℂ) := by
+    rw [← inner_conj_symm, h0, Complex.conj_ofReal]
+  have hc1 : inner ℂ (coherent ((Real.sqrt x : ℂ) * z)) (e 1) =
+      (Real.exp (-x / 2) : ℂ) * (Real.sqrt x : ℂ) * starRingEnd ℂ z := by
+    rw [← inner_conj_symm, h1, map_mul, map_mul, Complex.conj_ofReal, Complex.conj_ofReal]
+  have ht : (Real.sqrt τ.1 : ℂ) ^ 2 = (τ.1 : ℂ) := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt τ.2.1]
+  have hr : (Real.sqrt (1 - τ.1) : ℂ) ^ 2 = (1 - τ.1 : ℝ) := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt (by linarith [τ.2.2])]
+  have hx' : (Real.sqrt x : ℂ) ^ 2 = (x : ℂ) := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt hx.le]
+  have he : (Real.exp (-x / 2) : ℂ) ^ 2 = (Real.exp (-x) : ℂ) := by
+    rw [← Complex.ofReal_pow, sq, ← Real.exp_add]
+    congr 2
+    ring
+  have hz' : z * starRingEnd ℂ z = 1 := by
+    rw [RCLike.mul_conj, hz]
+    norm_num
+  ext i j
+  rw [rank_entry, Finset.sum_pair (by decide : (0 : ℕ) ≠ 1)]
+  fin_cases i <;> fin_cases j <;>
+    simp only [split_zero_coord, split_one_coord, ite_true, Nat.zero_ne_one, Nat.one_ne_zero,
+      ite_false, inner_smul_left, inner_smul_right, inner_zero_left, inner_zero_right,
+      mul_zero, zero_mul, add_zero, zero_add, Complex.conj_ofReal, h0, h1, hc0, hc1]
+  · change (Real.exp (-x / 2) : ℂ) * (Real.exp (-x / 2) : ℂ) = (Real.exp (-x) : ℂ)
+    exact (pow_two _).symm.trans he
+  · change (Real.exp (-x / 2) : ℂ) * ((Real.sqrt τ.1 : ℂ) *
+        ((Real.exp (-x / 2) : ℂ) * (Real.sqrt x : ℂ) * starRingEnd ℂ z)) =
+        (Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x : ℝ) * starRingEnd ℂ z
+    rw [Complex.ofReal_mul, Complex.ofReal_mul, ← he]
+    ring
+  · change ((Real.sqrt τ.1 : ℂ) *
+        ((Real.exp (-x / 2) : ℂ) * (Real.sqrt x : ℂ) * z)) * (Real.exp (-x / 2) : ℂ) =
+        (Real.sqrt τ.1 * Real.exp (-x) * Real.sqrt x : ℝ) * z
+    rw [Complex.ofReal_mul, Complex.ofReal_mul, ← he]
+    ring
+  · change ((Real.sqrt τ.1 : ℂ) * ((Real.exp (-x / 2) : ℂ) * (Real.sqrt x : ℂ) * z)) *
+        ((Real.sqrt τ.1 : ℂ) *
+          ((Real.exp (-x / 2) : ℂ) * (Real.sqrt x : ℂ) * starRingEnd ℂ z)) +
+        ((Real.sqrt (1 - τ.1) : ℂ) * (Real.exp (-x / 2) : ℂ)) *
+          ((Real.sqrt (1 - τ.1) : ℂ) * (Real.exp (-x / 2) : ℂ)) =
+        (Real.exp (-x) * (1 - τ.1 + τ.1 * x) : ℝ)
+    calc
+      _ = (Real.exp (-x / 2) : ℂ) ^ 2 *
+          ((Real.sqrt τ.1 : ℂ) ^ 2 * (Real.sqrt x : ℂ) ^ 2 *
+            (z * starRingEnd ℂ z) + (Real.sqrt (1 - τ.1) : ℂ) ^ 2) := by ring
+      _ = _ := by
+        rw [he, ht, hx', hz', hr, mul_one, Complex.ofReal_mul,
+          Complex.ofReal_add, Complex.ofReal_mul]
+        ring
+
+private def clickMatrix (τ : Loss) (x : ℝ) (z : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  let A := Real.exp (-x)
+  let a := 1 - A
+  let b := Real.sqrt τ.1 * A * Real.sqrt x
+  let c := 1 - A * (1 - τ.1 + τ.1 * x)
+  !![(a : ℂ), -(b : ℂ) * starRingEnd ℂ z; -(b : ℂ) * z, (c : ℂ)]
+
+private theorem dualLoss_sub (τ : Loss) (M N : Op) :
+    dualLoss τ (M - N) = dualLoss τ M - dualLoss τ N := by
+  have h := dualLoss_add τ (M - N) N
+  rw [sub_add_cancel] at h
+  exact eq_sub_iff_add_eq.mpr h.symm
+
+private theorem compress_sub (X Y : Op) : compress (X - Y) = compress X - compress Y := by
+  ext i j
+  simp [compress]
+
+private theorem compressed_click (τ : Loss) (x : ℝ) (hx : 0 < x)
+    (z : ℂ) (hz : ‖z‖ = 1) :
+    compress (dualLoss τ (onOff ((Real.sqrt x : ℂ) * z) 1)) = clickMatrix τ x z := by
+  change compress (dualLoss τ (1 - InnerProductSpace.rankOne ℂ
+    (coherent ((Real.sqrt x : ℂ) * z)) (coherent ((Real.sqrt x : ℂ) * z)))) = _
+  rw [dualLoss_sub, dualLoss_one, compress_sub, compress_one, compressed_rankOne τ x hx z hz]
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [clickMatrix]
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility
