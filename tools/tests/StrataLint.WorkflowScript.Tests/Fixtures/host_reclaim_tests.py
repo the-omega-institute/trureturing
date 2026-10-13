@@ -354,6 +354,7 @@ class HostReclaimTests(unittest.TestCase):
         self.age(artifacts)
         recent = artifacts / "recent-fifo"
         os.mkfifo(recent)
+        os.utime(recent, (self.cutoff + 1, self.cutoff + 1))
         rows = self.run_sweep()
         reasons = {row.get("path"): (row.get("action"), row.get("reason")) for row in rows}
         self.assertFalse(os.path.lexists(fifo) or os.path.lexists(endpoint),
