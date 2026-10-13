@@ -1,0 +1,17 @@
+**Theorem 109.1 (Stopped output-law realizability).** For every integer
+$L\ge0$ and every probability-vector kernel $p$ on all of $B_L$ whose
+multilinear expansion has degree at most two,
+
+$$
+p\in\mathscr O_L
+\quad\Longleftrightarrow\quad
+c\ge H\ \hbox{coordinatewise and}\ \beta\le1.
+\tag{109.1}
+$$
+
+The sufficient direction gives one source-independent common seed and
+an increasing first-zero-stop rule with at most two actual requests,
+whose law is exactly $p_b$ at every word. All inequalities are
+non-strict, including zero schedule weights and every degenerate case.
+Consequently $\mathscr O_L=\mathscr C_L$.
+
