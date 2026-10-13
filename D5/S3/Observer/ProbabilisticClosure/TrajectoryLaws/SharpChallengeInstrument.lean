@@ -288,6 +288,10 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
           PMF.map_comp]
         rw [PMF.map_apply, tsum_fintype]
         simp [uniformPmf, PMF.ofFintype_apply, liveRecord, failureMass, Function.comp_def]
+        all_goals
+          apply Finset.sum_congr rfl
+          intro r _
+          split_ifs <;> rfl
       | succ j ih =>
         intro hj xh
         have hj' : j ≤ n := by omega
@@ -302,10 +306,17 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
             else if q = (.fail, liveRecord a j r, a (j+1), .failure) then 1 else 0 := by
           by_cases hr : a (j+1) = r
           · subst r
-            simp only [instrument, if_pos (rfl : a (j+1) = a (j+1)), dif_neg hk,
-              PMF.map_comp]
-            rw [PMF.map_apply, tsum_fintype]
+            have hrow :
+                instrument n (a (j+1)) (.awaiting z ⟨n-j, by omega⟩ (a (j+1))) =
+                  (uniformPmf A).map (fun u =>
+                    (Output.challenge u, State.awaiting z ⟨n-(j+1), by omega⟩ u)) := by
+              simp [instrument, hk, hcount]
+            rw [hrow, PMF.map_comp, PMF.map_apply, tsum_fintype]
             simp [uniformPmf, PMF.ofFintype_apply, liveRecord, Function.comp_def, hcount]
+            all_goals
+              apply Finset.sum_congr rfl
+              intro u _
+              split_ifs <;> rfl
           · simp [instrument, hr, PMF.pure_map, PMF.pure_apply]
         change ((execute (instrument n) (fixedPolicy a) (PMF.pure (.start z)) (j+1)).bind
           (fun sh => (PMF.pure (a (j+1))).bind fun b =>

@@ -82,11 +82,11 @@ theorem dense_word_run (w : List Bool) :
         intro literal _
         apply Prod.ext
         · apply Fin.ext
-          dsimp only [names,dictionary,Conventional.dictionary,Equiv.trans,
-            Equiv.subtypeEquivRight,Equiv.subtypeEquiv,List.Nodup.getEquiv,
-            Equiv.symm,Equiv.refl,Function.comp_def]
+          simp only [names,Equiv.symm_trans_apply,Equiv.subtypeEquivRight_symm_apply,
+            List.Nodup.getEquiv,Equiv.coe_fn_symm_mk]
           dsimp only [List.idxOf]
-          congr 1
+          change dictionary.findIdx _ = dictionary.findIdx _
+          apply congrArg (fun test : Conventional.Name → Bool => dictionary.findIdx test)
           funext x
           apply Bool.eq_iff_iff.mpr
           simp only [beq_iff_eq]
