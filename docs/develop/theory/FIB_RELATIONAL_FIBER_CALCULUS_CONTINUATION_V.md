@@ -12,20 +12,30 @@ below; it is not user-provided original theory. It is a pure theory reference
 and makes no Lean/kernel-verification claim.
 
 [FIB Relational Fiber Calculus · Continuation IV](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md)
-supplied an executable ExactChart boundary and a conditional resource
-feasibility contract. Its §44.2 mixed-budget route to an effective finite
-frontier is superseded by §§58.18--58.21 below. The next distinction is between
+supplies an executable ExactChart boundary and a conditional resource
+feasibility contract, read with its published §§46--50 corrections. Its
+historical §44.2 mixed-budget wording is superseded there by finite-profile
+feasibility, uniform source-total history certificates, and the corresponding
+weighted-threshold restriction. Sections 58.18--58.21 reuse this corrected
+interface; §58.20 gives one explicit sufficient finite-family implementation.
+The next distinction is between
 two different minimization problems. A quotient that predicts every allowed
 future action is canonical;
 a controller minimized for one target may choose one of several incompatible
 strategies and therefore need not have a unique coarsest quotient.
 
 [FIB Atom Recursive Holographic Boundary Geometry · Continuation IV, §107](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#107-root-readout-action-closure-and-future-memory)
-gives a finite-dimensional linear action-closure boundary: passive readout
-invisibility must also be invariant under every declared intervention.
-That contract does not transport resource tails. This volume first treats
+gives a finite-dimensional linear boundary for intervention words followed
+by passive evolution and readout, in the order $C_\ell A^jT_w$. It does not
+cover arbitrary interleavings of passive evolution and intervention;
+[Relational II, §§44.5--44.7](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#44-固定原生菜单的边界因子化与交错动作修正)
+supplies the mixed action-word contract used for that purpose here.
+Neither linear contract transports resource tails. This volume first treats
 deterministic finite contracts, then states a source-uniform record-law
 extension under additional measurability and field-factorization assumptions.
+Section 59 uses the source-specific signed occurrence states and fixed-time
+root-readout gap of Holographic IV §110 to derive a necessary noise and
+absolute-precision boundary for predicting that comparison future.
 
 ## 51. Complete action systems
 
@@ -135,8 +145,12 @@ A summary that preserves only the current readout is safe only if the readout
 fibers are already action-closed. This is the action-closed future-memory
 boundary made explicit in
 [FIB Atom Recursive Holographic Boundary Geometry · Continuation IV, §107](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#107-root-readout-action-closure-and-future-memory):
-a static quotient can lose a future response after an allowed intervention.
-That linear result supplies no resource or record-law transport assumption;
+a static quotient can lose a response after an intervention word followed
+by passive evolution. Its signature $C_\ell A^jT_w$ has that prescribed
+order. For arbitrary mixed words, including passive evolution before an
+intervention, use
+[Relational II, §§44.5--44.7](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#44-固定原生菜单的边界因子化与交错动作修正).
+These linear results supply no resource or record-law transport assumption;
 §58.3 gives the precise executable-summary criterion used here.
 
 ## 53. Task-relative controller quotients
@@ -334,10 +348,14 @@ conditions in §56.1 by 58.7--58.8 and 58.11. The resource assertions of §54 ar
 conditional on 58.9--58.10. The conditional record-law statements in
 55.1--55.3 use the explicit record assumptions and meet limitations
 in 58.12--58.15.
-The effective-frontier inference of
+The historical effective-frontier wording of
 [FIB Relational Fiber Calculus · Continuation IV, §44.2](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#44-conditional-resource-feasibility-and-its-pareto-basis)
-is superseded by 58.18--58.21; its ordinary mixed-box negative test is not
-an exact finite-vector test. Section 56.1 and its assertion of a forced order
+is superseded by that volume's §§46--50. Its effective predicate is the
+finite-profile alias of §49, subject to §§47--48's uniform boundedness and
+source-total history requirements. Sections 58.18--58.21 distinguish this
+predicate from the historical ordinary mixed test and give an explicit
+sufficient implementation, without replacing the published repair.
+Section 56.1 and its assertion of a forced order
 are replaced by the conditional workflow in 58.16. The introductory references
 to stochastic results and §55.3 are comparisons of mathematical settings, not attributions
 of these statements to an exact Lean declaration; 58.17 gives their scope.
@@ -624,8 +642,9 @@ formed before the source supremum, exactly as in Continuation IV §44.3. ∎
 
 **Assumption 58.11 (conditional fixed-budget synthesis).** The
 fixed-budget feasibility argument from
-[FIB Relational Fiber Calculus · Continuation IV, §§41--44](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md)
-requires the following hypotheses, in addition to
+[FIB Relational Fiber Calculus · Continuation IV, §§41--44, corrected by §§46--50](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md)
+uses the finite-profile predicate of its §49 and requires the following
+hypotheses, in addition to
 the tagged, completed, observation-based, and $\Gamma$-preserving contracts
 above.
 
@@ -639,13 +658,15 @@ above.
    updates, and exact same-source semantics hold for the full ordered action
    language, including passive actions, interventions, and silent events.
    Complete target-row equality and correctness are preserved.
-3. For each requested finite budget $B$, or mixed budget in
-   $(\mathbb N\cup\{\infty\})^d$ with a constrained coordinate, an independently
-   certified effective raw-event horizon $T_K(B)$ covers every successful
-   budget-feasible candidate. Alternatively, supply the certified regular
-   history encoding of Continuation IV §42.2 with an effective rank or exact
-   acceleration procedure deciding termination, complete terminal rows, and
-   resource maxima. Response-phase bounds and plain regularity are insufficient.
+3. For each requested finite budget $B$, an independently certified
+   effective raw-event horizon $T_K(B)$ is uniform over all admitted sources
+   and response branches of every source-total budget-feasible candidate.
+   A mixed finite-profile query additionally certifies one finite vector
+   bounding every coordinate uniformly over sources, as in Continuation IV
+   §§47.1--49. Alternatively, a certified regular-history encoding or exact
+   acceleration decides source-total termination, complete terminal rows,
+   and these finite uniform bounds. A merely per-source decreasing rank,
+   response-phase bound, or plain regularity is insufficient.
 4. Admission, replies, legality, definedness, successors, epoch updates,
    exact event costs, complete-row equality, and the pathwise resource
    thresholds for the chosen $\Gamma$ are effectively Presburger-definable,
@@ -656,16 +677,19 @@ above.
    defined, correct terminal path. Separate existential witnesses on
    different source fibers do not supply this universal condition.
 
-These assumptions decide the stated fixed-budget feasibility by the
-finite path argument in 58.21. They do not establish the effective-frontier
-conclusion of Continuation IV §44.2. In that proof the existence of a finite
-feasible vector outside an upward closure is incorrectly identified with
-ordinary mixed-box feasibility; 58.19 supplies a counterexample even with a
-finite uniform seed. For effective finite-family extraction, additionally
-decide each candidate's source-total success, decide uniform boundedness of
-every coordinate, and extract exact finite bounds as in 58.20. The budget
-horizons $T_K(B)$ alone do not supply a budget-independent family horizon
-or these boundedness decisions. Neither finite alphabets, a
+These assumptions decide the specified finite-budget feasibility by the
+finite path argument in 58.21. Effective frontier extraction also requires
+an exact finite-profile decision for every queried mixed box, including the
+all-infinite box, as required by Continuation IV §§47--49. The historical
+uncorrected §44.2 test used ordinary mixed feasibility in its place; 58.19
+illustrates that distinction even with a finite uniform seed. For the
+explicit finite-family implementation in 58.20, decide each candidate's
+source-total success, decide uniform boundedness of every coordinate, and
+extract exact finite bounds. Budget horizons $T_K(B)$ alone supply neither a
+budget-independent family horizon nor those boundedness decisions. The
+published repair requires them rather than deriving them from a per-source
+rank. Weighted thresholds retain Continuation IV §50's finite-profile
+restriction. Neither finite alphabets, a
 semantic greatest quotient, nor existence of a finite residual quotient
 alone proves effective synthesis, effective quotient computation, or an
 unconditional decidability theorem.
@@ -825,9 +849,9 @@ $$
 $$
 
 is a sound workflow. Finite controller minimization requires 58.4--58.7;
-effective fixed-budget resource decisions require 58.11, and effective
-finite-family frontier extraction additionally requires 58.20. Randomized transport,
-when used, additionally requires 58.12--58.14.
+effective fixed-budget resource decisions require 58.11, and 58.20 gives
+one sufficient package for effective finite-family frontier extraction.
+Randomized transport, when used, additionally requires 58.12--58.14.
 
 Proof. Visible factorization gives one legal first action on every compatible
 source. The observed response determines the same controller update, while
@@ -865,11 +889,16 @@ The resource arguments use the following prior methods:
    the classical finite-dimensional well-quasi-order principle used for
    existence in 58.21.
 
-Their application here specifies the missing FIB action, source, residual,
-and aggregation interfaces; the counterexamples delimit these interfaces.
-In particular, 58.19 and the interface repair in 58.20 are repository-derived
-mathematical additions, using the cited classical methods.
-No priority claim is made for the background methods or their combination.
+Their use here makes the action, source, residual, and aggregation
+hypotheses explicit. The finite-profile and mixed-box repair, uniform
+source-total history requirements, all-infinite decision, and weighted
+restriction are already supplied by Relational IV §§46--50. Section 58.18
+uses a distinct name for its corrected finite-profile predicate; 58.19 is a
+concrete illustration of the historical failure, and 58.20 is an explicit
+sufficient implementation of the published corrected interface for a
+certified finite candidate family. These resource clauses reuse the
+published repair and classical decision methods; they are not new general
+feasibility discoveries in this volume. No priority claim is made.
 All statements in §58 are ordinary mathematical definitions and arguments.
 Neither the stochastic comparison in §55.3 nor a reference to results in
 another volume certifies an exact Lean application of this contract.
@@ -885,6 +914,8 @@ presentation of an appropriate action-closed interface for a general signed
 FIB fibre remain separate unresolved obligations, as in §57.
 
 **Definition 58.18 (finite-vector versus ordinary mixed feasibility).**
+Use Relational IV §§46--49's corrected finite-profile contract, with the
+following notation separating it from the historical ordinary mixed test.
 Fix $d\ge1$, a nonempty source domain $D$, and an admissible controller class
 $\mathcal C$. Let $\mathcal C_{\mathrm{ok}}$ consist of controllers that are
 legal, defined, terminating and correct on every source. For such $C$, the
@@ -945,6 +976,9 @@ $\mathcal F\ne\varnothing$. A decision/extraction oracle for
 $\operatorname{FinBox}$ must explicitly return a finite vector with a
 uniformly bounded controller witness, or decide that none exists.
 An oracle for $\operatorname{MixFeas}$ has a different contract.
+Here $\operatorname{FinBox}$ is exactly the finite-profile feasibility
+predicate of Relational IV §49, not an additional feasibility notion required
+by the repair. Its all-infinite query has the exact decision meaning of IV §48.
 
 **Proposition 58.19 (a mixed witness outside the finite frontier test).**
 Let the source be $(n,z)\in\mathbb N\times\{0,1\}$, with target $z$.
@@ -994,13 +1028,16 @@ $C_b$ is feasible exactly at finite budgets dominating $(2,2)$, proving
 the displayed finite region and the empty difference. In contrast $C_a$
 satisfies the mixed box $(1,\infty)$ on every source. Choosing the first
 coordinate of $(2,2)$ in the box construction of 58.18 produces that very
-box. Hence the right side of IV §44.2's ordinary mixed-feasibility test is
-true while its finite-vector left side is false. A finite seed, a finite
-candidate family and even a budget-independent horizon do not repair this
-implication: horizon bounds control event count, not cost magnitudes over
-the source domain. ∎
+box. Hence the historical uncorrected §44.2 ordinary mixed test has a true
+right side and a false finite-vector left side. The effective IV §§47--49
+predicate rejects this witness because $C_a$ lacks a finite second-coordinate
+bound. This example instantiates the failure already delimited there: horizon
+bounds control event count, not cost magnitudes over the source domain. ∎
 
-**Theorem 58.20 (effective frontier for a certified finite candidate family).**
+**Theorem 58.20 (explicit sufficient implementation of the corrected finite-profile interface).**
+For a certified finite candidate family, the following implements the
+published Relational IV §§47--49 interface by exact success and boundedness
+decisions. It is a sufficient construction relative to that family.
 Use 58.18's nonempty source domain and integer resource contract. Suppose:
 
 1. The admissible family $\mathcal C$ is finite and effectively listed,
@@ -1120,10 +1157,13 @@ $\exists M\,\forall s\,c_{C,i}(s)\le M$. Proposition 58.19 meets the
 stronger horizon package: this algorithm discards $C_a$ and returns
 $\mathcal B=\{(2,2)\}$. ∎
 
-**Proposition 58.21 (retained fixed-budget decision and basis existence).**
+**Proposition 58.21 (fixed-budget decision and basis existence under the published repair).**
 Under 58.11, feasibility of each specified finite budget is decidable.
-The same argument decides an ordinary mixed budget only when its effective
-horizon or exact decision certificate is supplied. Independently, for any
+A mixed finite-profile budget is decidable when its certificate also decides
+the existence of a finite uniform bound in every coordinate, as in IV
+§§47--49. An ordinary mixed query, if separately requested, uses
+$\operatorname{MixFeas}$ and requires its own exact horizon or decision
+certificate; it is not the effective IV frontier predicate. Independently, for any
 controller class with the source-total integer semantics of 58.18 and
 fixed finite $d$, the finite-budget region has a finite minimal basis,
 possibly empty. The latter is an existence result, not an effective
@@ -1138,8 +1178,13 @@ decides feasibility and selects a candidate when true. Exact paths and
 universal source coverage prove soundness. The independent horizon
 covering every successful budget-feasible candidate proves completeness.
 The certified alternative must supply the same exact decision, including
-termination. No decision of an all-infinite budget follows from horizons
-specified only for budgets with a constrained coordinate.
+termination. For a mixed finite-profile query, constrained pathwise bounds
+alone do not enforce boundedness in unconstrained coordinates; the
+$\operatorname{FinBox}$ certificate must provide that additional exact
+decision. No all-infinite decision follows from horizons specified only for
+budgets with a constrained coordinate. Relational IV §48 explicitly requires
+this decision as an additional hypothesis, and 58.20 supplies it for its
+certified finite family.
 
 For basis existence, $\mathcal F\subseteq\mathbb N^d$ is upward closed by
 its definition: a controller fitting $x$ also fits every larger vector.
@@ -1158,8 +1203,291 @@ decide emptiness, locate the minimal elements, or provide an exact
 outside-closure test. It requires neither a finite seed nor a finite
 candidate family for existence. The effective conclusion for a finite
 family uses the additional decisions in 58.20; 58.19 rules out replacing
-them by the mixed test in IV §44.2. These are paper proofs under the
+them by the historical uncorrected mixed test in IV §44.2. The active
+finite-profile predicate and weighted restriction remain those of IV
+§§47--50. These are paper proofs under the
 declared mathematical premises, with no Lean/kernel verification or
 unconditional general signed-fiber construction. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 59. Future root prediction from noisy old passive curves
+
+**Definition 59.1 (the original source and the two comparison preparations).**
+Use the original ordered substitution sources $T_n=\rho^n(\alpha)$ and all
+occurrence vertices of each source, with
+
+$$
+N_n=|V_{T_n}|=2F_{n+1}-1,\qquad
+F_0=0,\quad F_1=1,\quad F_{j+2}=F_{j+1}+F_j.
+$$
+
+On the real counting space $\mathcal V_n=\ell^2(V_{T_n})$, let $L_n$ be the
+closed unit-edge Laplacian, without a root killing term, and let $P_n$ be
+orthogonal projection onto the zero-counting-mean subspace. Retain precisely
+[Holographic IV, Definitions 109.1 and 110.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#110-root-visible-ancestry-memory-of-homogeneous-occurrence-states)'s
+actual ancestry pullback $J_n$, which fixes old vertices and copies each old
+beta parent's value to both its new children. Write
+
+$$
+S_n(a)=e^{-N_naL_n},\qquad
+\mathcal C_nf=\sqrt{N_n}\,f(r),\qquad
+\mathcal A_n=\sqrt{\frac{N_n}{N_{n+1}}}\,P_{n+1}J_nP_n.
+$$
+
+The operators and norms use every occurrence and counting measure. In
+particular $\mathcal C_n$ and $\mathcal A_n$ are the normalized port and
+ancestry comparison map, not the scalar finite-part quantities of
+Holographic IV §92. Let $x_n\in P_n\mathcal V_n$, $n\ge2$, be the centered
+unit vectors supplied by its Definition 110.1. The two preparations in this
+section are $0$ and $x_n$ on the **same** deterministic old source $T_n$;
+there is no probability law or mixture over sources or preparations.
+
+Fix $a_0>0$. The optimistic old observation is the entire passive root curve
+
+$$
+\eta_n(f)(a)=\mathcal C_nS_n(a)f\quad(a\ge a_0),\qquad
+\eta_n(f)\in\mathscr Y:=C_b([a_0,\infty),\mathbb R),
+\quad \|y\|_\infty=\sup_{a\ge a_0}|y(a)|.
+$$
+
+Continuity follows from the finite-dimensional heat semigroup; boundedness
+follows from contraction and the positive-time root smoothing bound of
+Holographic IV (110.11). A supplied finite bank at declared times
+$a_1,\ldots,a_m\ge a_0$ is the projection
+$y\mapsto(y(a_1),\ldots,y(a_m))$, with maximum norm. Giving the entire curve
+is a stronger comparison observation than giving this bank; it asserts no
+native acquisition of either one.
+
+Choose one fixed $s$ in the positive window $[s_*/2,s_*]$ of Holographic IV
+Theorem 110.3, independently of $n$, and put
+
+$$
+g_{n,s}(f)=\mathcal C_{n+1}S_{n+1}(s)\mathcal A_nf,\qquad
+q_n=|g_{n,s}(x_n)-g_{n,s}(0)|=|g_{n,s}(x_n)|.
+$$
+
+The actual chronological order of this target is ancestry comparison,
+successor heat, then successor root readout. The supplier proves
+
+$$
+g_{n,s}(x_n)\longrightarrow D(s)\ne0,\qquad
+q_n\longrightarrow |D(s)|>0,\qquad g_{n,s}(0)=0.
+$$
+
+The choice of the fixed window is essential: nonvanishing is not asserted
+at every positive $s$, at a particular numerical time, or through $s=0$.
+
+**Definition 59.2 (one common adversarial report contract).** Define the old
+curve separation, a distance rather than a time, by
+
+$$
+a_n=\|\eta_n(x_n)-\eta_n(0)\|_\infty.
+$$
+
+At a prescribed radius $E\ge0$, every $y\in\mathscr Y$ with
+$\|y-\eta_n(f)\|_\infty\le E$ is an allowed report for preparation $f$.
+Both preparations use this same report channel. The report is the only
+state-dependent datum: stopping, timing, and class tags cannot distinguish
+preparations with the same report. For arbitrary predictor maps
+$\widehat g_n:\mathscr Y\to\mathbb R$, define
+
+$$
+R_n(E)=\inf_{\widehat g_n}\;
+ \max_{f\in\{0,x_n\}}\;
+ \sup_{\substack{y\in\mathscr Y\\
+                 \|y-\eta_n(f)\|_\infty\le E}}
+ |\widehat g_n(y)-g_{n,s}(f)|.
+$$
+
+A predictor may depend on $n$, $a_0$, and $s$, and need not be linear,
+continuous, measurable, or effectively computable. This grants the source
+comparison metadata to strengthen the impossibility statement; it does not
+make $n$ or $N_n$ a freely acquired native observation. The channel contract
+is adversarial absolute error, not a stochastic noise model.
+
+**Theorem 59.3 (the FIB future-readout noise and precision transfer).**
+For the preparations, fixed times, normalization, and common report channel
+of Definitions 59.1--59.2, there are $K>0$ and $n_0\ge2$, independent of
+$n$, such that
+
+$$
+a_n\le\frac{K}{\sqrt{N_n}}\quad(n\ge n_0).
+\tag{59.1}
+$$
+
+For every $n\ge2$ and $E\ge0$ with $2E\ge a_n$,
+
+$$
+R_n(E)\ge\frac{q_n}{2}.
+\tag{59.2}
+$$
+
+Consequently, the vanishing choice $E_n=a_n/2$ satisfies
+
+$$
+E_n\longrightarrow0,\qquad
+\liminf_{n\to\infty}R_n(E_n)\ge\frac{|D(s)|}{2}>0.
+\tag{59.3}
+$$
+
+Every radius sequence with $E_n\ge K/(2\sqrt{N_n})$ for all sufficiently
+large $n$ has the same lower bound on its limiting inferior risk.
+
+If $0\le\delta<|D(s)|/2$, any family of predictors guaranteeing worst error
+at most $\delta$ on both preparations and every allowed report for all
+sufficiently large $n$ must satisfy, eventually,
+
+$$
+2E_n<a_n\le\frac{K}{\sqrt{N_n}}.
+\tag{59.4}
+$$
+
+In particular, for the dyadic absolute-error radius $E_n=2^{-p_n}$,
+
+$$
+p_n>\frac12\log_2N_n+1-\log_2K,\qquad
+\liminf_{n\to\infty}\frac{p_n}{n}\ge\frac12\log_2\varphi,
+\quad \varphi=\frac{1+\sqrt5}{2}.
+\tag{59.5}
+$$
+
+The overlap bounds also hold for any supplied finite bank in Definition
+59.1 under its common maximum-norm error contract, since the bank separation
+is no greater than $a_n$. Thus (59.5) remains a necessary condition for such
+a bank to give the same guarantee; the bank can require still finer error.
+
+Proof. The source-specific input is Holographic IV (110.16), which gives at
+the fixed time $a_0/2$ constants $M>0$ and $n_0\ge2$ such that
+
+$$
+\|S_n(a_0/2)x_n\|
+ \le M\left(\frac{2n}{a_0N_n}+\frac1{\sqrt{N_n}}\right)
+ \quad(n\ge n_0).
+\tag{59.6}
+$$
+
+For the root port, its (110.11) supplies the finite uniform constant
+
+$$
+\|\mathcal C_nS_n(t)\|\le B_t=\frac{V}{\sqrt{2et}},\qquad
+V=\sup_j\|v_j^{\mathrm e}\|<\infty\quad(t>0),
+$$
+
+where $v_j^{\mathrm e}$ is the supplier's common-edge-carrier vector. The
+positive semidefinite closed Laplacian makes $S_n$ a contraction on the
+centered counting space. For every $a\ge a_0$, split the heat at $a_0/2$:
+
+$$
+\begin{aligned}
+|\mathcal C_nS_n(a)x_n|
+ &\le \|\mathcal C_nS_n(a_0/2)\|\,
+         \|S_n(a-a_0/2)x_n\|\\
+ &\le B_{a_0/2}\,\|S_n(a_0/2)x_n\|\\
+ &\le \frac{B_{a_0/2}M}{\sqrt{N_n}}
+          \left(1+\frac{2n}{a_0\sqrt{N_n}}\right).
+\end{aligned}
+\tag{59.7}
+$$
+
+The second inequality uses
+$S_n(a-a_0/2)=S_n(a-a_0)S_n(a_0/2)$ and $a-a_0\ge0$.
+It therefore covers the entire unbounded interval $[a_0,\infty)$, without
+assuming that the supplier's compact-interval convergence is already
+uniform there. Binet's formula and $N_n=2F_{n+1}-1$ give
+
+$$
+H:=\sup_{n\ge n_0}\frac{n}{\sqrt{N_n}}<\infty,
+\qquad \frac{\log_2N_n}{n}\longrightarrow\log_2\varphi.
+$$
+
+Choose any positive $K\ge B_{a_0/2}M(1+2H/a_0)$ and take the supremum
+in (59.7). Since $\eta_n(0)=0$, this proves (59.1), derived from the
+supplier's state relaxation and root smoothing rather than assumed.
+The constant depends on $a_0$ and the fixed supplier family, not on $n$.
+
+For the noise step, the bounded continuous midpoint curve
+
+$$
+y_n^*=\frac{\eta_n(x_n)+\eta_n(0)}2
+$$
+
+has distance exactly $a_n/2$ from both true curves. When $2E\ge a_n$ it
+is an allowed report for both preparations. Any predictor therefore assigns
+the same number $z=\widehat g_n(y_n^*)$ to two targets separated by $q_n$.
+The triangle inequality gives
+
+$$
+q_n\le |z-g_{n,s}(0)|+|z-g_{n,s}(x_n)|
+ \le 2\max_{f\in\{0,x_n\}}|z-g_{n,s}(f)|.
+$$
+
+Taking the allowed-report supremum and then the infimum over predictor maps
+proves (59.2). This midpoint/radius-of-information step is a classical
+optimal-recovery ingredient; see Micchelli and Rivlin, *A Survey of Optimal
+Recovery*, in *Optimal Estimation in Approximation Theory*,
+[doi:10.1007/978-1-4684-2388-4_1](https://doi.org/10.1007/978-1-4684-2388-4_1),
+and the bounded-error optimal-recovery setting of Foucart and Liao,
+*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, But
+What of the Parameter?*,
+[doi:10.1007/s00365-022-09590-5](https://doi.org/10.1007/s00365-022-09590-5).
+The same two-consistent-input triangle-inequality step appears explicitly in
+the proof of Theorem 1 of Foucart, *Learning the maximum of a Hölder function
+from inexact data*,
+[doi:10.1090/proc/17456](https://doi.org/10.1090/proc/17456).
+Only that lower-bound ingredient is used: no sufficient recovery theorem,
+Hilbert-space regularization rule, or Hölder-model hypothesis is transferred
+to the curve carrier. The displayed argument proves the needed step directly.
+
+Equation (59.1) implies $a_n\to0$, whereas the supplier's fixed-$s$ limit
+gives $q_n\to|D(s)|>0$. Substituting $E_n=a_n/2$ proves (59.3).
+If $E_n\ge K/(2\sqrt{N_n})$, (59.1) also implies $2E_n\ge a_n$.
+For a fixed $\delta<|D(s)|/2$, eventually $q_n>2\delta$.
+Then overlapping report balls would contradict a worst-error guarantee of
+$\delta$ by (59.2), proving (59.4). With $E_n=2^{-p_n}$, (59.4) gives
+$2^{1-p_n}<K/\sqrt{N_n}$. Taking logarithms of these positive quantities,
+then using the Fibonacci growth limit, proves (59.5).
+For a finite bank its projected midpoint is again allowed at both
+preparations, and its separation is bounded by the full-curve separation;
+the same argument applies. $\square$
+
+**Convention 59.4 (scope, degeneracies, and provenance).** If $a_n=0$ at
+some finite $n$ with $q_n>0$, even the zero-radius report is shared and
+$R_n(0)\ge q_n/2$. The theorem takes no logarithm of $a_n$, presumes no
+strictly positive finite-$n$ old curve gap, and supplies no noiseless
+reconstruction algorithm.
+
+The exponent in (59.5) is necessary for the declared dyadic **absolute-error
+radius** under this common channel. It is not a sufficient precision
+algorithm or a storage optimum: it counts neither representations of an
+entire curve nor acquired index metadata. It supplies no physical energy or
+duration law. The observation cutoff $a_0$ and successor readout time $s$
+are fixed positive comparison times; the proof supplies no uniform bound
+as $a_0\downarrow0$, and no conclusion is drawn for observation times tending
+to zero with $n$.
+
+Normalization is part of the target. With ordinary unnormalized successor
+root evaluation on the same unit counting-norm inputs and map $\mathcal A_n$,
+$g_{n,s}(x_n)$ is divided by $\sqrt{N_{n+1}}$ and tends to zero, as in
+Holographic IV §110.5. That target does not have the fixed positive gap used
+in (59.3)--(59.5). Changing instead to the pointwise fields
+$\sqrt{N_n}x_n$ changes the input scale and its noise contract; it is not
+an unchanged precision claim.
+
+This is `repo-derived` source-specific composition of Holographic IV
+§§110.3--110.5 with the cited `literature-attested` optimal-recovery
+ingredient; no claim of originality is made for the composition. The
+uncertainty here is between signed homogeneous preparations, not between
+two native root-query replies or two separate source-size experiments.
+Native preparation of these signed fields and realization of heat, both
+centering projections, ancestry transfer, and real root ports through $\mathsf{Read}$ and
+$\mathsf{ApplyRho}$ remain unproved. A bridge would have to preserve the
+same actual source and joint action history, immutable target, epoch and
+presence guards, permissions and refusals, absorbing Stop, and every
+declared preparation, acquisition, address, update, arithmetic, memory, and
+output cost required by Holographic IV §110.5. Comparison time remains
+separate from physical duration until that correspondence is proved.
+These are ordinary paper statements, without a Lean/kernel-verification
+claim.
 
 ## 追加锚（本行以下为增补区）
