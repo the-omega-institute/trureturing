@@ -255,7 +255,7 @@ private lemma history_of_trace (π : Seed → Bool → History → Action) (S : 
       (List.ofFn_succ' (fun i : Fin (n + 1) => t i)).symm
 
 omit [MeasurableSpace Seed] in
-private lemma trace_event_sections (π : Seed → Bool → History → Action) (S : Bool)
+lemma trace_event_sections (π : Seed → Bool → History → Action) (S : Bool)
     (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) :
     TraceEvent π S p q t n = (SeedSection π S t n) ×ˢ (TapeSection p q t n) := by
   ext ω
@@ -333,7 +333,7 @@ local notation "RowLaw" => fun table : (Bool × History) → PMF Action =>
 local notation "TablePolicy" => fun (seed : (Bool × History) → Action) S h => seed (S, h)
 
 omit [MeasurableSpace Seed] in
-private lemma trace_action_seed_event (π : Seed → Bool → History → Action) (S : Bool)
+lemma trace_action_seed_event (π : Seed → Bool → History → Action) (S : Bool)
     (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (a : Action) :
     (TraceEvent π S p q t n) ∩ {ω | Act π S p q n ω = a} =
       (TraceEvent π S p q t n) ∩ Prod.fst ⁻¹' {seed | π seed S (Prefix t n) = a} := by
@@ -347,7 +347,7 @@ private lemma trace_action_seed_event (π : Seed → Bool → History → Action
     rwa [history_of_trace π S p q t n ω ht]
 
 omit [MeasurableSpace Seed] in
-private lemma trace_return_call_count (π : Seed → Bool → History → Action) (S : Bool)
+lemma trace_return_call_count (π : Seed → Bool → History → Action) (S : Bool)
     (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (cell : Bool × Bool)
     (ω : Seed × (ℕ → ℝ)) (ht : ω ∈ TraceEvent π S p q t n)
     (ha : Act π S p q n ω = .inr cell) : Calls π S p q ω = (n : WithTop ℕ) := by
