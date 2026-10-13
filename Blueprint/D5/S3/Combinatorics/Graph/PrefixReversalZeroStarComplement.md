@@ -10,7 +10,187 @@ Put R=ab and B=bc. R rotates the entire tuple left by one position; B rotates it
 
 Write E(k,r) and O(k,r) for the false and true coordinates. The native order is E(k,0), O(k,0), E(k,1), O(k,1), through E(k,m), O(k,m). An a-edge joins E(k,r) to O(k,r), a b-edge joins O(k,r) to E(k,r+1) for r less than m, and a c-edge joins O(k,m) to E(k+1,0), with k read modulo m. Thus the literal circular word is (Hc)^m, where U_k=(ab)^k a and H=U_m. There are exactly 2m(m+1) configurations.
 
-**Theorem 1.1 (The Exact Hamiltonian Complement).**
+**Theorem 1.1 (Full reversal on positions).**
+
+$$\forall m \in \mathrm{Nat},\; \forall i \in \mathrm{Fin}\left(m + 1\right),\; \mathrm{apply}\left(\mathrm{a}\left(m\right), i\right) = \mathrm{rev}\left(i\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The full reversal sends every native position to its Fin reversal. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.2 (Prefix reversal on positions).**
+
+$$\forall m \in \mathrm{Nat},\; \forall i \in \mathrm{Fin}\left(m + 1\right),\; \mathrm{val}\left(\mathrm{apply}\left(\mathrm{b}\left(m\right), i\right)\right) = \mathrm{ite}\left(\mathrm{val}\left(i\right) < m, m - 1 - \mathrm{val}\left(i\right), \mathrm{val}\left(i\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.b_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The m-prefix reversal reverses positions below m and fixes the last position. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.3 (Short prefix reversal on positions).**
+
+$$\forall m \in \mathrm{Nat},\; \forall i \in \mathrm{Fin}\left(m + 1\right),\; \mathrm{val}\left(\mathrm{apply}\left(\mathrm{c}\left(m\right), i\right)\right) = \mathrm{ite}\left(\mathrm{val}\left(i\right) < m - 1, m - 2 - \mathrm{val}\left(i\right), \mathrm{val}\left(i\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.c_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The (m-1)-prefix reversal reverses positions below m-1 and fixes the final two positions. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.4 (Full rotation from two reversals).**
+
+$$\forall m \in \mathrm{Nat},\; \mathrm{a}\left(m\right) \cdot \mathrm{b}\left(m\right) = \mathrm{finRotate}\left(m + 1\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.ab_eq_rotate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual product ab rotates all m+1 positions by one. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.5 (Prefix rotation from two reversals).**
+
+$$\forall m \in \mathrm{Nat},\; (2 \le m) \Rightarrow (\forall i \in \mathrm{Fin}\left(m + 1\right),\; \mathrm{apply}\left(\mathrm{b}\left(m\right) \cdot \mathrm{c}\left(m\right), i\right) = \mathrm{ite}\left(\mathrm{val}\left(i\right) < m, \mathrm{mkFin}\left(\mathrm{mod}\left(\mathrm{val}\left(i\right) + 1, m\right), m + 1\right), i\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.bc_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For m at least two, bc rotates the first m positions by one and fixes the last position. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.6 (Actual tuple reversal).**
+
+$$\forall m \in \mathrm{Nat},\; \forall v \in \mathrm{Configuration}\left(m\right),\; \mathrm{ofFn}\left(v \cdot \mathrm{a}\left(m\right)\right) = \mathrm{reverse}\left(\mathrm{ofFn}\left(v\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.full_reverse_list` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Right multiplication by a reverses the full actual configuration tuple. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.7 (Actual tuple rotations).**
+
+$$\forall m \in \mathrm{Nat},\; \forall v \in \mathrm{Configuration}\left(m\right),\; \forall k \in \mathrm{Nat},\; \mathrm{ofFn}\left(v \cdot \mathrm{pow}\left(\mathrm{finRotate}\left(m + 1\right), k\right)\right) = \mathrm{rotate}\left(\mathrm{ofFn}\left(v\right), k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.rotate_pow_list` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every power of the full rotation produces the corresponding literal tuple rotation. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.8 (Full rotation power coordinates).**
+
+$$\forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \mathrm{pow}\left(\mathrm{finRotate}\left(m + 1\right), k\right) = \mathrm{finCycle}\left(\mathrm{natCast}\left(k, m + 1\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.rotate_pow_eq_cycle` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Natural powers of the full rotation equal finCycle at the corresponding finite cyclic index. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.9 (Zero full rotation).**
+
+$$\forall m \in \mathrm{Nat},\; \mathrm{finCycle}\left(\mathrm{zeroFin}\left(m + 1\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.cycle_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The zero finCycle is the identity position permutation. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.10 (Full reversal involution).**
+
+$$\forall m \in \mathrm{Nat},\; \mathrm{a}\left(m\right) \cdot \mathrm{a}\left(m\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two full native reversals have product identity. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.11 (The native b reflection coordinate).**
+
+$$\forall m \in \mathrm{Nat},\; \mathrm{b}\left(m\right) = \mathrm{finCycle}\left(\mathrm{negOneFin}\left(m + 1\right)\right) \cdot \mathrm{a}\left(m\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.b_eq_cycle_a` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The b reversal is full cyclic index minus one followed by a. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.12 (The last position is fixed by b).**
+
+$$\forall m \in \mathrm{Nat},\; \mathrm{apply}\left(\mathrm{b}\left(m\right), \mathrm{last}\left(m\right)\right) = \mathrm{last}\left(m\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.b_last` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The actual b reversal fixes the final position. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.13 (Literal native complementary length).**
+
+$$\forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \mathrm{length}\left(\mathrm{uWord}\left(m, k\right)\right) = 2 \cdot k + 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.uWord_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The generator list U_k has exactly 2k+1 entries. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.14 (Literal native complementary endpoint).**
+
+$$\forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \mathrm{prod}\left(\mathrm{uWord}\left(m, k\right)\right) = \mathrm{pow}\left(\mathrm{finRotate}\left(m + 1\right), k\right) \cdot \mathrm{a}\left(m\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.uWord_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The product of U_k is the kth full rotation followed by a. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.15 (Short reversal involution).**
+
+$$\forall m \in \mathrm{Nat},\; \mathrm{c}\left(m\right) \cdot \mathrm{c}\left(m\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.c_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two short native reversals have product identity. This existing proof is exposed for live reuse by native switching polygons and complete native circle complements.
+
+**Theorem 1.16 (The Exact Hamiltonian Complement).**
 
 $$\forall m \in \mathrm{Nat},\; (3 \le m) \Rightarrow (\forall t \in \mathrm{Fin}\left(m + 1\right),\; \forall W \in \mathrm{Cycle}\left(\mathrm{Fin}\left(m + 1\right)\right),\; \forall v \in \mathrm{Configuration}\left(m\right),\; \forall j \in \mathrm{Fin}\left(m\right),\; (\mathrm{Star}\left(t, W, v\right) \land \mathrm{apply}\left(v, \mathrm{castSucc}\left(j\right)\right) = t) \Rightarrow (\mathrm{Star}\left(t, W, \mathrm{rightMultiply}\left(v, \mathrm{b}\left(m\right)\right)\right) \land \left(\exists w \in \mathrm{Walk}\left(\mathrm{deleteEdges}\left(\mathrm{starFactor}\left(t, W\right), \mathrm{singletonEdge}\left(v, \mathrm{rightMultiply}\left(v, \mathrm{b}\left(m\right)\right)\right)\right), v, \mathrm{rightMultiply}\left(v, \mathrm{b}\left(m\right)\right)\right),\; \mathrm{IsHamiltonian}\left(w\right) \land \left(\mathrm{length}\left(w\right) = 2 \cdot m \cdot \left(m + 1\right) - 1 \land \mathrm{map}\left(\mathrm{support}\left(w\right), \mathrm{underlyingConfiguration}\right) = \mathrm{scanl}\left(\mathrm{rightMultiply}, v, \mathrm{zWord}\left(m, \mathrm{val}\left(j\right)\right)\right)\right)\right)))$$
 
@@ -28,6 +208,21 @@ The result concerns one zero star and its retained factor. It does not connect d
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_apply`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.a_sq`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.ab_eq_rotate`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.b_apply`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.b_eq_cycle_a`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.b_last`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.bc_apply`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.c_apply`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.c_sq`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.cycle_zero`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.full_reverse_list`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.rotate_pow_eq_cycle`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.rotate_pow_list`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.uWord_length`
+- Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.uWord_product`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement.zeroStar_b_complement_hamiltonian`
 - Dependency: [D5/S0/CayleyGrowth/PrefixReversalTripleOddNonGeneration](../../../S0/CayleyGrowth/PrefixReversalTripleOddNonGeneration.md)
 - Dependency: [D5/S3/Combinatorics/CircularWords/CircularDeletionTransport](../CircularWords/CircularDeletionTransport.md)
