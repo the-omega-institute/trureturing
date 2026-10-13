@@ -132,6 +132,21 @@ class BuildWorkContracts(unittest.TestCase):
                 self.assertNotIn("LEAN_BUILD_WORK ", result.stdout)
                 self.assertEqual(previous, fact.read_bytes())
 
+    def test_fib_leaf_work_preserves_project_publication_work_schema(self):
+        root, logs, fact = self.recorder_inputs(activity=(
+            {"kind": "extract", "count": 1}, {"kind": "aggregate", "count": 1},
+            {"kind": "fib-generated", "count": 2}, {"kind": "fib-reused", "count": 7},
+            {"kind": "fib-unavailable", "count": 3}))
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(0, result.returncode, result.stderr)
+        value = json.loads(fact.read_text())
+        self.assertEqual(set(value), {"schema_version", "run_id", "run_attempt",
+                                     "repository", "report", "programs"})
+        self.assertEqual((2, 0), (value['report'], value['programs']))
+        reading = next(line.removeprefix('LEAN_INSPECTOR_FIB_WORK ') for line in
+                       result.stdout.splitlines() if line.startswith('LEAN_INSPECTOR_FIB_WORK '))
+        self.assertEqual(json.loads(reading), {'generated': 2, 'reused': 7, 'unavailable': 3})
+
     def test_extensionless_executable_captions_resolve_project_and_package_outputs(self):
         for caption, expected in (("projectProbe", 1), ("fixture/projectProbe:exe", 1),
                                   ("packageProbe", 0), ("dependency/packageProbe:exe", 0)):
