@@ -518,8 +518,6 @@ jobs:
       actions: read
     env:
       STRATALINT_CACHE_WRITES: 'false'
-      # Task-pool initialization policy override: #11432. This is not a child-process cap.
-      LEAN_NUM_THREADS: '1'
       STRATALINT_NATIVE_RESULT_DIR: ${{ github.workspace }}/build/lean-cache/resource-fixtures
     steps:
       - uses: actions/checkout@v5
@@ -574,20 +572,23 @@ jobs:
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Check native registration and recovery with the resource schedule
-        run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj TEST_FILTER=FullyQualifiedName~InspectorNativeRecoveryTests
-      - name: Compile and inspect the resource modules
+        run: |
+          unset LEAN_NUM_THREADS
+          make -C tools test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj TEST_FILTER=FullyQualifiedName~InspectorNativeRecoveryTests
+      - name: Compile and inspect each resource root, then their combined scope
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: |
           set -euo pipefail
+          unset LEAN_NUM_THREADS
           mkdir -p build/lean-cache
           observe_resources() {
             local delay_pid=''
             trap 'if [[ -n "$delay_pid" ]]; then kill "$delay_pid" 2>/dev/null || true; wait "$delay_pid" 2>/dev/null || true; fi' EXIT
             trap 'exit 0' TERM INT
             while :; do
-              printf 'RESOURCE_PROBE_OBSERVATION %s LEAN_NUM_THREADS=%s\n' "$(date -u +%FT%TZ)" "$LEAN_NUM_THREADS"
+              printf 'RESOURCE_PROBE_OBSERVATION %s LEAN_NUM_THREADS=%s\n' "$(date -u +%FT%TZ)" "${LEAN_NUM_THREADS:-runtime-default}"
               awk '$1 ~ /^(MemTotal:|MemAvailable:|SwapTotal:|SwapFree:)/' /proc/meminfo || true
               awk '$1 ~ /^(oom_kill|pswpin|pswpout)$/' /proc/vmstat || true
               ps -C lean,lake,inputDiscovery,reportInspector \
@@ -625,16 +626,29 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
+          resource_roots=(
+            D5.S1.Digit.GoldenBase4TwentyStatePrefixBarrier
+            D5.S1.Recurrence.Invariants.CloitreActualExteriorEntrance
+            D5.S1.Recurrence.Invariants.CloitreActualDeficitFourBand
+            D5.S0.Tower.TribonacciPeriodicNine.EnumerationNineDistinct
+          )
+          for module in "${resource_roots[@]}"; do
+            printf 'RESOURCE_PROBE_ROOT module=%s boundary=start time=%s\n' "$module" "$(date -u +%FT%TZ)"
+            make lean-report-scoped \
+              LEAN_REPORT=".lake/build/stratalint/upgrade-resource-${module}.json" \
+              LEAN_TARGETS="$module"
+            printf 'RESOURCE_PROBE_ROOT module=%s boundary=finish time=%s\n' "$module" "$(date -u +%FT%TZ)"
+          done
           make lean-report-scoped \
             LEAN_REPORT=.lake/build/stratalint/upgrade-resource-scoped-report.json \
-            LEAN_TARGETS="D5.S1.Digit.GoldenBase4TwentyStatePrefixBarrier D5.S1.Recurrence.Invariants.CloitreActualExteriorEntrance D5.S1.Recurrence.Invariants.CloitreActualDeficitFourBand D5.S0.Tower.TribonacciPeriodicNine.EnumerationNineDistinct"
+            LEAN_TARGETS="${resource_roots[*]}"
       - name: Export resource diagnostics, fixtures and scoped report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: mathlib-upgrade-resources-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            .lake/build/stratalint/upgrade-resource-scoped-report.json*
+            .lake/build/stratalint/upgrade-resource-*.json*
             build/lean-cache/resource-probe.log
             build/lean-cache/resource-fixtures/
           include-hidden-files: true
