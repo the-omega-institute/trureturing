@@ -16,6 +16,8 @@ open scoped BigOperators InnerProductSpace ENNReal NNReal ComplexOrder MatrixOrd
 open Matrix
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.BeamSplitter
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.Attenuator
+open D5.S3.Quantum.QuantumChannels.FockAttenuator.DisplacementCovariance
+  (purePartialTrace mixture)
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
 open D5.S3.Estimation.TransmissivityBetaPriorProbeRefutation (e compression)
 open D5.S3.Quantum.QuantumChannels.FockAttenuator.FiniteFockBeamSplitterNonExtremality
@@ -45,6 +47,11 @@ def stinespring (τ : Set.Icc (0 : ℝ) 1) : H →L[ℂ] K :=
 def dualLoss (τ : Set.Icc (0 : ℝ) 1) (M : Op) : Op :=
   (stinespring τ).adjoint ∘L amplify M ∘L stinespring τ
 
+def IsLossDual (τ : Set.Icc (0 : ℝ) 1) (M N : Op) : Prop :=
+  ∀ ψ : H, HasSum (fun n : ℕ =>
+    ⟪e n, (M ∘L purePartialTrace (beamSplitter τ.1 τ.2 (tensor ψ (e 0)))) (e n)⟫_ℂ)
+    ⟪ψ, N ψ⟫_ℂ
+
 def IsBinaryPOVM (M : Fin 2 → Op) : Prop :=
   (∀ b, (M b).IsPositive) ∧ M 0 + M 1 = 1
 
@@ -68,8 +75,10 @@ def claim : Prop :=
   ∀ (n : ℕ) (hn : 1 ≤ n),
     ∃ M : Fin (n + 1) → Fin 2 → Op,
       (∀ j, IsBinaryPOVM (M j)) ∧
-      ¬ HasParent (fun j b =>
-        dualLoss (inverseTransmissivity n hn) (M j b))
+      (∃ N : Fin (n + 1) → Fin 2 → Op,
+        ∀ j b, IsLossDual (inverseTransmissivity n hn) (M j b) (N j b)) ∧
+      ∀ N : Fin (n + 1) → Fin 2 → Op,
+        (∀ j b, IsLossDual (inverseTransmissivity n hn) (M j b) (N j b)) → ¬ HasParent N
 
 private def onOff (μ : ℂ) (b : Fin 2) : Op :=
   if b = 0 then
@@ -270,6 +279,75 @@ private theorem vacuum_tensor (v : H) : vacuumEmbedding v = tensor v (e 0) := by
   unfold e
   simp only [lp.single_apply, Pi.single_apply]
   split_ifs <;> simp_all
+
+private theorem trace_partialTrace (M : Op) (w : K) :
+    HasSum (fun n : ℕ => ⟪e n, (M ∘L purePartialTrace w) (e n)⟫_ℂ)
+      (∑' k : ℕ, ⟪w k, M (w k)⟫_ℂ) := by
+  have hw := lp.hasSum_norm (p := (2 : ℝ≥0∞)) (by norm_num) w
+  simp only [ENNReal.toReal_ofNat, Real.rpow_two] at hw
+  have hr : Summable (fun k => InnerProductSpace.rankOne ℂ (w k) (w k)) := by
+    apply Summable.of_norm
+    simpa only [InnerProductSpace.norm_rankOne, ← sq] using hw.summable
+  let f (k n : ℕ) : ℂ := inner ℂ (w k n) (M (w k) n)
+  have hf (k n : ℕ) : f k n = ⟪w k, e n⟫_ℂ * ⟪e n, M (w k)⟫_ℂ := by
+    simp only [f, e, lp.inner_single_left, lp.inner_single_right,
+      RCLike.inner_apply, map_one, one_mul, mul_one]
+    ring
+  have hn (k n : ℕ) : ‖f k n‖ = ‖w k n‖ * ‖M (w k) n‖ := by
+    simp only [f, RCLike.inner_apply, norm_mul, RCLike.norm_conj, mul_comm]
+  have hholder (k : ℕ) := lp.tsum_mul_le_mul_norm
+    (by rw [Real.holderConjugate_iff]; norm_num) (w k) (M (w k))
+  have habs (k : ℕ) : Summable (fun n => ‖f k n‖) := by
+    simpa only [hn] using (hholder k).1
+  have hbound (k : ℕ) : (∑' n, ‖f k n‖) ≤ ‖M‖ * ‖w k‖ ^ 2 := by
+    simp only [hn]
+    calc
+      _ ≤ ‖w k‖ * ‖M (w k)‖ := (hholder k).2
+      _ ≤ ‖w k‖ * (‖M‖ * ‖w k‖) :=
+        mul_le_mul_of_nonneg_left (M.le_opNorm _) (norm_nonneg _)
+      _ = _ := by ring
+  have hall : Summable (fun p : ℕ × ℕ => f p.1 p.2) := by
+    apply Summable.of_norm
+    apply (summable_prod_of_nonneg (fun p => norm_nonneg (f p.1 p.2))).2
+    exact ⟨habs, Summable.of_nonneg_of_le (fun k => tsum_nonneg (fun n => norm_nonneg _))
+      hbound (hw.summable.mul_left ‖M‖)⟩
+  have hrow (k : ℕ) : HasSum (f k) ⟪w k, M (w k)⟫_ℂ :=
+    lp.hasSum_inner (w k) (M (w k))
+  have hcol (n : ℕ) : HasSum (fun k => f k n)
+      ⟪e n, (M ∘L purePartialTrace w) (e n)⟫_ℂ := by
+    let L := (innerSL ℂ (e n)).comp (M.comp (ContinuousLinearMap.apply ℂ H (e n)))
+    have h := hr.hasSum.mapL L
+    change HasSum (fun k => ⟪e n, M (InnerProductSpace.rankOne ℂ (w k) (w k) (e n))⟫_ℂ)
+      ⟪e n, M ((∑' k, InnerProductSpace.rankOne ℂ (w k) (w k)) (e n))⟫_ℂ at h
+    convert h using 1
+    · funext k
+      rw [hf, InnerProductSpace.rankOne_apply, map_smul, inner_smul_right]
+    · rfl
+  have ht := hall.hasSum.prod_fiberwise hrow
+  have hs := hall.prod_symm.hasSum.prod_fiberwise hcol
+  have hswap : (∑' p : ℕ × ℕ, f p.swap.1 p.swap.2) = ∑' p : ℕ × ℕ, f p.1 p.2 :=
+    (Equiv.prodComm ℕ ℕ).tsum_eq (fun p : ℕ × ℕ => f p.1 p.2)
+  rw [hswap, ← ht.tsum_eq] at hs
+  exact hs
+
+private theorem isLossDual_dualLoss (τ : Set.Icc (0 : ℝ) 1) (M : Op) :
+    IsLossDual τ M (dualLoss τ M) := by
+  intro ψ
+  rw [dual_inner]
+  have heq : beamSplitter τ.1 τ.2 (tensor ψ (e 0)) = stinespring τ ψ := by
+    change _ = beamSplitter τ.1 τ.2 (vacuumEmbedding ψ)
+    rw [vacuum_tensor]
+  rw [heq]
+  exact trace_partialTrace M (stinespring τ ψ)
+
+private theorem eq_dualLoss_of_isLossDual (τ : Set.Icc (0 : ℝ) 1) (M N : Op)
+    (h : IsLossDual τ M N) : N = dualLoss τ M := by
+  apply ContinuousLinearMap.coe_injective
+  apply (ext_inner_map N.toLinearMap (dualLoss τ M).toLinearMap).mp
+  intro ψ
+  change ⟪N ψ, ψ⟫_ℂ = ⟪dualLoss τ M ψ, ψ⟫_ℂ
+  simpa only [inner_conj_symm] using
+    congrArg (starRingEnd ℂ) ((h ψ).unique (isLossDual_dualLoss τ M ψ))
 
 private theorem vacuum_fock (n : ℕ) : vacuumEmbedding (e n) = fockPair n 0 := by
   rw [vacuum_tensor]
@@ -862,6 +940,15 @@ theorem result : claim := by
     push_cast
     linarith
   refine ⟨fun j => onOff ((Real.sqrt (chosenX (inverseTransmissivity n hn) z) : ℂ) * z j), ?_⟩
-  exact stronger (by omega) (inverseTransmissivity n hn) hτ hgap z hz hinj
+  obtain ⟨hM, hno⟩ := stronger (by omega) (inverseTransmissivity n hn) hτ hgap z hz hinj
+  refine ⟨hM, ⟨fun j b => dualLoss (inverseTransmissivity n hn)
+    (onOff ((Real.sqrt (chosenX (inverseTransmissivity n hn) z) : ℂ) * z j) b),
+    fun j b => isLossDual_dualLoss _ _⟩, ?_⟩
+  intro N hN
+  have heq : N = fun j b => dualLoss (inverseTransmissivity n hn)
+      (onOff ((Real.sqrt (chosenX (inverseTransmissivity n hn) z) : ℂ) * z j) b) := by
+    funext j b
+    exact eq_dualLoss_of_isLossDual _ _ _ (hN j b)
+  rwa [heq]
 
 end D5.S3.Quantum.Measurement.PureLossIncompatibility

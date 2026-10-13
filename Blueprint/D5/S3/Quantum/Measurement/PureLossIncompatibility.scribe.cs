@@ -41,7 +41,11 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
                 "First place the environment in the vacuum, then apply the full two-mode beam splitter. Subtype.val supplies the transmissivity and Subtype.property supplies its interval condition. The isometry is viewed as a continuous linear map.",
                 AssessedProvenance.FromRepo()),
             Node("dual-loss", "The dual pure-loss action on effects", "dualLoss", DualLossFormula(),
-                "The paragraph The loss channel describes a beam splitter with a vacuum second input and a discarded second output. Its dual action, used in Result 2, pulls the amplified effect back along the dilation. ContinuousLinearMap.adjoint is the Hilbert-space adjoint, and ContinuousLinearMap.comp is composition.",
+                "Pull the amplified operator back along the vacuum beam-splitter dilation. This operator satisfies the trace relation defining the loss dual and is its unique solution. ContinuousLinearMap.adjoint is the Hilbert-space adjoint, and ContinuousLinearMap.comp is composition.",
+                AssessedProvenance.FromLiterature(Source)),
+            Node("is-loss-dual", "The defining trace relation of the loss dual", "IsLossDual",
+                IsLossDualFormula(),
+                "For every pure input psi, apply beamSplitter to tensor psi (e 0) and discard the environment with purePartialTrace. The Fock-basis sum is the trace of M times this output state; HasSum requires convergence to the quadratic form of N. The frozen tensor convention places the environment in the outer sequence coordinate. The vectors e n form the retained-mode Fock basis. This is the source's dual relation on pure states, which determines the bounded operator uniquely.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("binary-povm", "A binary positive operator-valued measurement", "IsBinaryPOVM",
                 BinaryPOVMFormula(),
@@ -56,7 +60,7 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo()),
             Node("claim", "Incompatibility at reciprocal integer transmissivity", "claim",
                 ClaimFormula(),
-                "Result 3 asserts the existence of n+1 measurements that remain incompatible at transmissivity 1/n. Here the measurements are binary POVMs on the completed Fock space, and incompatibility means that their dual-loss effects have no parent with the displayed marginals. Every natural n at least one is included, also n=1.",
+                "Result 3 asserts the existence of n+1 measurements that remain incompatible at transmissivity 1/n. Their dual images exist by the defining trace relation. Every family satisfying that relation has no parent with the displayed marginals. Every natural n at least one is included, also n=1.",
                 AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
                 DescribeId.Create("pure-loss-result"), DeclarationHandle.Create(Prefix + "result"),
@@ -64,6 +68,15 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
                 StatementSource.FromAuthor(Disp(Local("claim"))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
+                    Paragraph(Text(
+                        "The reduced pure output is the sum of the rank-one operators of its "
+                            + "environment slices. Their squared norms are summable. "
+                            + "Cauchy-Schwarz and the operator norm bound make the double "
+                            + "Fock-basis and environment sum absolutely summable. Interchanging "
+                            + "the sums and applying Parseval identifies its trace with the "
+                            + "quadratic form of dualLoss. Uniqueness of the sum and complex "
+                            + "polarization identify every operator satisfying IsLossDual "
+                            + "with this pullback.")),
                     Paragraph(Text(
                         "Use the coherent-state projectors of Eq. (4) and their complements. "
                             + "For m distinct unit phases z_j and a transmissivity tau with "
@@ -150,6 +163,28 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
             Equal(Add(At(X("M"), D(0)), At(X("M"), D(1))),
                 Typed(D(1), Local("Op"))))));
 
+    private static Formula IsLossDualFormula()
+    {
+        Formula E(Formula n) => At(Qualified("D5", "S3", "Estimation",
+            "TransmissivityBetaPriorProbeRefutation", "e"), n);
+        Formula beamSplitter = At(Qualified("D5", "S3", "Quantum", "QuantumChannels",
+                "FockAttenuator", "BeamSplitter", "beamSplitter"),
+            At(Qualified("Subtype", "val"), X("tau")),
+            At(Qualified("Subtype", "property"), X("tau")));
+        Formula tensor = At(Qualified("D5", "S3", "Quantum", "QuantumChannels",
+            "FockAttenuator", "BeamSplitter", "tensor"), X("psi"), E(D(0)));
+        Formula output = At(Qualified("D5", "S3", "Quantum", "QuantumChannels",
+            "FockAttenuator", "DisplacementCovariance", "purePartialTrace"),
+            At(beamSplitter, tensor));
+        Formula summand = At(Qualified("inner"), Complexes(), E(X("n")),
+            At(Compose(X("M"), output), E(X("n"))));
+        Formula value = At(Qualified("inner"), Complexes(), X("psi"), At(X("N"), X("psi")));
+        return All("tau", LossType(), All("M", Local("Op"), All("N", Local("Op"),
+            Equivalence(LocalCall("IsLossDual", X("tau"), X("M"), X("N")),
+                All("psi", Local("H"), At(Qualified("HasSum"),
+                    LambdaOf("n", Naturals(), summand), value))))));
+    }
+
     private static Formula ParentFormula()
     {
         Formula outcomes = Outcomes(X("m"));
@@ -177,12 +212,15 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
     private static Formula ClaimFormula()
     {
         Formula settings = Add(X("n"), D(1));
-        Formula images = LambdaOf("j", FinOf(settings), LambdaOf("b", FinOf(D(2)),
-            LocalCall("dualLoss", LocalCall("inverseTransmissivity", X("n"), X("hn")),
-                At(X("M"), X("j"), X("b")))));
+        Formula relations = All("j", FinOf(settings), All("b", FinOf(D(2)),
+            LocalCall("IsLossDual", LocalCall("inverseTransmissivity", X("n"), X("hn")),
+                At(X("M"), X("j"), X("b")), At(X("N"), X("j"), X("b")))));
         Formula family = And(
             All("j", FinOf(settings), LocalCall("IsBinaryPOVM", At(X("M"), X("j")))),
-            new Formula.Not(Parenthesized(LocalCall("HasParent", images))));
+            And(Ex("N", Measurements(settings), relations),
+                All("N", Measurements(settings), new Formula.Logic(Parenthesized(relations),
+                    FormulaLogicOperator.Implies,
+                    new Formula.Not(Parenthesized(LocalCall("HasParent", X("N"))))))));
         return Equivalence(Local("claim"), All("n", Naturals(),
             All("hn", LE(D(1), X("n")), Ex("M", Measurements(settings), family))));
     }
