@@ -193,4 +193,38 @@ theorem commonStageTable_path_mass
   | some e =>
       simpa [commonPathMass, hp] using hclass.1 e
 
+/-! The finite path version of the B0 telescope.  The indicator is attached to
+the stopping layer itself, so the identity does not replace the two actual
+source counters by a total history length. -/
+
+theorem finite_stopping_layer_telescope
+    (D : ℕ → ℝ) (J K : ℕ) (hK : K ≤ J) :
+    D K = D 0 + ∑ k ∈ Finset.range J, if k < K then D (k + 1) - D k else 0 := by
+  have hprefix : ∀ n : ℕ,
+      D n = D 0 + ∑ k ∈ Finset.range n, (D (k + 1) - D k) := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ n ih =>
+        rw [Finset.sum_range_succ, ih]
+        ring
+  have hsum :
+      (∑ k ∈ Finset.range J, if k < K then D (k + 1) - D k else 0) =
+        ∑ k ∈ Finset.range K, (D (k + 1) - D k) := by
+    have hs :
+        (∑ k ∈ Finset.range K, if k < K then D (k + 1) - D k else 0) =
+          ∑ k ∈ Finset.range J, if k < K then D (k + 1) - D k else 0 := by
+      apply Finset.sum_subset ((Finset.range_subset_range).2 hK)
+      intro k hkJ hkK
+      have hkK' : ¬ k < K := by simpa using hkK
+      simp [hkK']
+    have hleft :
+        (∑ k ∈ Finset.range K, if k < K then D (k + 1) - D k else 0) =
+          ∑ k ∈ Finset.range K, (D (k + 1) - D k) := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      simp [Finset.mem_range.mp hk]
+    exact hs.symm.trans hleft
+  rw [hprefix K, ← hsum]
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
