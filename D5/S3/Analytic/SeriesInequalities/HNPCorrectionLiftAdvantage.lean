@@ -216,6 +216,82 @@ private lemma weight_sum {N K n : ℕ} (hK : K ≤ N) (hn : n ≤ N) :
       ((N - K).choose (n - k) : ℝ) = (N.choose n : ℝ) := by exact_mod_cast h
   rw [hR, div_self hc]
 
+private lemma weight_product {N K L t i k : ℕ} (hLK : L ≤ K)
+    (ht : t ≤ N) (hki : k ≤ i) :
+    weight N K t i * weight K L i k =
+      (L.choose k : ℝ) * ((K - L).choose (i - k) : ℝ) *
+        ((N - K).choose (t - i) : ℝ) / (N.choose t : ℝ) := by
+  by_cases hi : i ≤ K
+  · have hCi : (K.choose i : ℝ) ≠ 0 := by exact_mod_cast Nat.choose_ne_zero hi
+    have hCt : (N.choose t : ℝ) ≠ 0 := by exact_mod_cast Nat.choose_ne_zero ht
+    unfold weight
+    field_simp
+  · have hKi : K.choose i = 0 := Nat.choose_eq_zero_of_lt (by omega)
+    have hz : L.choose k * (K - L).choose (i - k) = 0 := by
+      by_cases hk : k ≤ L
+      · rw [Nat.choose_eq_zero_of_lt (show K - L < i - k by omega), Nat.mul_zero]
+      · rw [Nat.choose_eq_zero_of_lt (show L < k by omega), Nat.zero_mul]
+    have hzR : (L.choose k : ℝ) * ((K - L).choose (i - k) : ℝ) = 0 := by
+      exact_mod_cast hz
+    simp [weight, hKi, hzR]
+
+/-- Successive Bernstein elevations have exactly the direct coefficients. -/
+private lemma lift_compose {N K L t : ℕ} (hLK : L ≤ K) (hKN : K ≤ N)
+    (ht : t ≤ N) (v : ℕ → ℝ) :
+    lift N K t (fun i => lift K L i v) = lift N L t v := by
+  have htri :
+      (∑ i ∈ range (t + 1), ∑ k ∈ range (i + 1),
+        (L.choose k : ℝ) * ((K - L).choose (i - k) : ℝ) *
+          ((N - K).choose (t - i) : ℝ) / (N.choose t : ℝ) * v k) =
+      ∑ k ∈ range (t + 1), ∑ i ∈ Ico k (t + 1),
+        (L.choose k : ℝ) * ((K - L).choose (i - k) : ℝ) *
+          ((N - K).choose (t - i) : ℝ) / (N.choose t : ℝ) * v k := by
+    simpa only [Nat.Ico_zero_eq_range] using
+      (sum_Ico_Ico_comm 0 (t + 1) (fun k i =>
+        (L.choose k : ℝ) * ((K - L).choose (i - k) : ℝ) *
+          ((N - K).choose (t - i) : ℝ) / (N.choose t : ℝ) * v k)).symm
+  calc
+    _ = ∑ i ∈ range (t + 1), ∑ k ∈ range (i + 1),
+        (L.choose k : ℝ) * ((K - L).choose (i - k) : ℝ) *
+          ((N - K).choose (t - i) : ℝ) / (N.choose t : ℝ) * v k := by
+      unfold lift
+      simp only [mul_sum]
+      apply sum_congr rfl
+      intro i hi
+      apply sum_congr rfl
+      intro k hk
+      rw [← mul_assoc, weight_product hLK ht (by simpa using hk)]
+    _ = _ := htri
+    _ = lift N L t v := by
+      unfold lift
+      apply sum_congr rfl
+      intro k hk
+      have hkt : k ≤ t := by simpa using hk
+      rw [sum_Ico_eq_sum_range]
+      have hlen : t + 1 - k = t - k + 1 := by omega
+      rw [hlen]
+      have hv : ∑ j ∈ range (t - k + 1),
+          (K - L).choose j * (N - K).choose (t - k - j) = (N - L).choose (t - k) := by
+        have h := Nat.add_choose_eq (K - L) (N - K) (t - k)
+        rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at h
+        have he : K - L + (N - K) = N - L := by omega
+        simpa only [he] using h.symm
+      have hvR : ∑ j ∈ range (t - k + 1),
+          ((K - L).choose j : ℝ) * ((N - K).choose (t - k - j) : ℝ) =
+          ((N - L).choose (t - k) : ℝ) := by exact_mod_cast hv
+      calc
+        _ = ((L.choose k : ℝ) * v k / (N.choose t : ℝ)) *
+            ∑ j ∈ range (t - k + 1),
+              ((K - L).choose j : ℝ) * ((N - K).choose (t - k - j) : ℝ) := by
+          rw [mul_sum]
+          apply sum_congr rfl
+          intro j hj
+          have hjk : k + j - k = j := by omega
+          have htj : t - (k + j) = t - k - j := by omega
+          rw [hjk, htj]
+          ring
+        _ = _ := by rw [hvR]; unfold weight; ring
+
 /-- The quadratic profile sampled on the degree `K` grid, divided by `K`.
 The natural subtraction makes it zero outside that grid. -/
 def sample (K k : ℕ) : ℝ := (k : ℝ) * ((K - k : ℕ) : ℝ) / (K : ℝ) ^ 3
@@ -370,7 +446,7 @@ private lemma two_mul_rpow_le {x y a : ℝ} (hx : 0 ≤ x) (hxy : 2 * x ≤ y)
 /-- On a sufficiently separated grid, the actual coarse correction, elevated
  to the same degree as the fine correction, dominates twice the latter.
  The conclusion includes the two endpoint coefficients. -/
-theorem correction_lift_advantage {n m r t : ℕ} {ρ θ : ℝ}
+private theorem direct_correction_lift_advantage {n m r t : ℕ} {ρ θ : ℝ}
     (hn : 2 ≤ n) (hm : 16 * n ≤ m) (hr : r ≤ m) (ht : t ≤ m + r)
     (hρ : 2 ≤ ρ) (hθ : 0 ≤ θ) :
     2 * lift (m + r) m t (correction ρ θ m) ≤
@@ -404,6 +480,33 @@ theorem correction_lift_advantage {n m r t : ℕ} {ρ θ : ℝ}
     nlinarith [mul_le_mul_of_nonneg_left hden hθ]
   have := mul_le_mul_of_nonneg_left hupp (by norm_num : (0 : ℝ) ≤ 2)
   dsimp [v] at hpow
+  linarith
+
+/-- A positive constant floor remains positive after elevation. -/
+private lemma correction_lift_pos {N K t : ℕ} {ρ θ : ℝ}
+    (hK : K ≤ N) (ht : t ≤ N) (hK0 : 0 < K) (hθ : 0 < θ) :
+    0 < lift N K t (correction ρ θ K) := by
+  unfold lift correction
+  simp only [mul_add, sum_add_distrib, ← sum_mul, weight_sum hK ht, one_mul]
+  apply add_pos_of_pos_of_nonneg
+  · exact div_pos hθ (Real.rpow_pos_of_pos (by exact_mod_cast hK0) ρ)
+  · exact sum_nonneg fun k _ => mul_nonneg (weight_nonneg _ _ _ _)
+      (Real.rpow_nonneg (sample_nonneg K k) _)
+
+/-- The original correction rises first from `n` to `n+r`, then to `m+r`.
+It dominates the fine correction by a factor two, and strictly dominates it
+when `theta` is positive, including both endpoint coefficients. -/
+theorem correction_lift_advantage {n m r t : ℕ} {ρ θ : ℝ}
+    (hn : 2 ≤ n) (hm : 16 * n ≤ m) (hr : r ≤ m) (ht : t ≤ m + r)
+    (hρ : 2 ≤ ρ) (hθ : 0 ≤ θ) :
+    (2 * lift (m + r) m t (correction ρ θ m) ≤
+      lift (m + r) (n + r) t (fun i => lift (n + r) n i (correction ρ θ n))) ∧
+    (0 < θ → lift (m + r) m t (correction ρ θ m) <
+      lift (m + r) (n + r) t (fun i => lift (n + r) n i (correction ρ θ n))) := by
+  rw [lift_compose (by omega) (by omega) ht]
+  have h := direct_correction_lift_advantage hn hm hr ht hρ hθ
+  refine ⟨h, fun hθ' => ?_⟩
+  have hp := correction_lift_pos (ρ := ρ) (by omega : m ≤ m + r) ht (by omega : 0 < m) hθ'
   linarith
 
 end D5.S3.Analytic.SeriesInequalities.HNPCorrectionLiftAdvantage
