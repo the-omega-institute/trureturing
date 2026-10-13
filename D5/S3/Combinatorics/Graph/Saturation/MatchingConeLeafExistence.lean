@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Saturation/MatchingConeLeafExistence
    mirror-E: none(waiver:structural-proof)
-   anchors: [D5/S3/Combinatorics/Graph/Saturation/MatchingConeLeafUniversality.H, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Copy, mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Copy, mathlib/module/Mathlib.Combinatorics.SimpleGraph.DegreeSum]
    utility: none
    digest: Every maximal matching-cone-free graph of order at least twenty with at most order plus five edges has a leaf. -/
 import D5.S3.Combinatorics.Graph.Saturation.MatchingConeLeafUniversality
