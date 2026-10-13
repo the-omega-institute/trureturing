@@ -18,7 +18,7 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (Pauli pauliMatrix tensorOp wordOp localOp tensor_mul)
 def SupportLE {n : ℕ} (ρ σ : Op n) : Prop :=
   ∀ v : Bits n → ℂ, σ *ᵥ v = 0 → ρ *ᵥ v = 0
-def log2 (x : ℝ) : ℝ := Real.log x / Real.log ((2 : ℕ) : ℝ)
+def log2 (x : ℝ) : ℝ := Real.logb ((2 : ℕ) : ℝ) x
 def DPI (α z : ℝ) : Prop :=
   0 < z ∧ ((0 < α ∧ α < 1 ∧ max α (1 - α) ≤ z) ∨ α = 1 ∨
     (1 < α ∧ α ≤ ((2 : ℕ) : ℝ) ∧ α / ((2 : ℕ) : ℝ) ≤ z ∧ z ≤ α) ∨
@@ -264,8 +264,7 @@ private lemma magic_two_one_lower :
     have ht := marginal_lower_bound η hη hηp
     have hQ : (0 : ℝ) < Q := by unfold Q; norm_num
     unfold log2
-    apply (div_le_div_iff_of_pos_right (Real.log_pos (by norm_num))).2
-    exact Real.log_le_log hQ ht
+    exact Real.logb_le_logb_of_le (by norm_num) hQ ht
   · change ((log2 Q : ℝ) : EReal) ≤ Daz 2 1 rho η
     rw [Daz_two_one_outside rho η (full_rank_support_guard rho η rho_pos hu)]
     exact le_top
@@ -334,8 +333,7 @@ private lemma magic_conjugate_lower :
     have ht := conjugate_marginal_lower η hη hηp
     have hQ : 0 < Q := by unfold Q; norm_num
     unfold log2
-    exact (div_le_div_iff_of_pos_right (Real.log_pos (by norm_num))).mpr
-      (Real.log_le_log hQ ht)
+    exact Real.logb_le_logb_of_le (by norm_num) hQ ht
   · change ((log2 Q : ℝ) : EReal) ≤ Daz 2 1 rhoBar η
     rw [Daz_two_one_outside rhoBar η
       (full_rank_support_guard rhoBar η rhoBar_pos hu)]
@@ -947,11 +945,10 @@ private lemma logarithmic_gap : log2 F < log2 Q + log2 Q := by
     norm_num
   have hlt : F < Q ^ 2 := sub_pos.mp (hid ▸ mul_pos (by norm_num) (sub_pos.mpr hs))
   unfold log2
-  have hl := Real.log_lt_log (by unfold F; norm_num : 0 < F) hlt
-  rw [Real.log_pow] at hl
-  have hd : 0 < Real.log 2 := Real.log_pos (by norm_num)
-  have hdiv := (div_lt_div_iff_of_pos_right hd).mpr hl
-  simpa only [Nat.cast_ofNat, mul_div_assoc, two_mul, add_div] using hdiv
+  have hl := Real.logb_lt_logb (by norm_num : 1 < ((2 : ℕ) : ℝ))
+    (by unfold F; norm_num : 0 < F) hlt
+  rw [Real.logb_pow] at hl
+  simpa only [Nat.cast_ofNat, two_mul] using hl
 private lemma magic_joint_upper : magic 2 1 joint ≤ ((log2 F : ℝ) : EReal) := by
   have h : magic 2 1 joint ≤ Daz 2 1 joint tau :=
     sInf_le ⟨tau, tau_mem, rfl⟩
