@@ -160,12 +160,9 @@ private theorem finiteDiagonal_three_eq (a b c : ℝ) :
 private theorem rankOne_real_smul (a : ℝ) (v : H) :
     InnerProductSpace.rankOne ℂ ((a : ℂ) • v) ((a : ℂ) • v) =
       ((a ^ 2 : ℝ) : ℂ) • InnerProductSpace.rankOne ℂ v v := by
-  apply ContinuousLinearMap.ext
-  intro x
-  simp only [InnerProductSpace.rankOne_apply, inner_smul_left, Complex.conj_ofReal,
-    smul_apply, smul_smul, Complex.ofReal_pow]
-  congr 1
-  ring
+  rw [ContinuousLinearMap.map_smul, smul_apply, ContinuousLinearMap.map_smulₛₗ,
+    starRingEnd_apply, Complex.star_def, Complex.conj_ofReal, smul_smul,
+    ← pow_two, ← Complex.ofReal_pow]
 
 private theorem partialTrace_three_slices (v : K) (hv : ∀ j : ℕ, 3 ≤ j → v j = 0) :
     purePartialTrace v =
