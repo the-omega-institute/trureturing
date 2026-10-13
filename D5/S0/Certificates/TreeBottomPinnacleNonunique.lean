@@ -29,7 +29,7 @@ private def adjacent (vertex neighbor : Fin 6) : Prop :=
 def tree : SimpleGraph (Fin 6) where
   Adj := adjacent
   symm := ⟨by unfold adjacent; decide⟩
-  loopless := ⟨by unfold adjacent; decide⟩
+  loopless := ⟨by intro vertex; fin_cases vertex <;> decide⟩
 
 instance treeAdjDecidable : DecidableRel tree.Adj :=
   fun _ _ => by unfold tree adjacent; infer_instance
