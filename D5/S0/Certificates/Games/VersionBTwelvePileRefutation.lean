@@ -149,7 +149,8 @@ private theorem certificate_checked :
       (d : Fin (13-a.val-b.val-c.val)) (e : Fin (13-a.val-b.val-c.val-d.val))
       (f : Fin (13-a.val-b.val-c.val-d.val-e.val)),
       check ⟨a.val,b.val,c.val,d.val,e.val,f.val⟩ = true := by
-  decide +kernel
+  intro a
+  fin_cases a <;> intro b <;> fin_cases b <;> decide +kernel
 
 private theorem certificate_recurrence (s : Position) (hs : pileCount s ≤ 12) :
     marked s = true ↔ ∀ t, Move s t → marked t ≠ true := by
