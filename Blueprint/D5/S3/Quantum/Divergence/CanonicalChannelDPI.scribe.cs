@@ -11,6 +11,16 @@ internal sealed class CanonicalChannelDPIDocument : IScribeDocumentDefinition
         H("Canonical Quantum Channel Data Processing"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("diagonal-log-comparison"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/CanonicalChannelDPI.diagonal_log_comparison"),
+                H("Norm-saturated diagonal logarithm comparison"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original DPI proof's diagonal logarithm comparison is extracted once "
+                    + "with the full positive-spectrum, contraction, matrix comparison, vector "
+                    + "mapping and unit norm hypotheses. The original public DPI consumes it. "
+                    + "This proof organization claims no independent mathematical gain."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("canonical-channel-relative-entropy-dpi"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Divergence/CanonicalChannelDPI.extended_quantum_relative_entropy_channel_dpi"),
