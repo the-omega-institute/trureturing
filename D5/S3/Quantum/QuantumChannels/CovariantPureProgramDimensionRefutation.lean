@@ -48,9 +48,9 @@ u_r: proof_shape: bind-only; escape_witness: none;
   consumers: u_irreducible_coordinates; Direct frozen dependencies: none
 u_s: proof_shape: bind-only; escape_witness: none;
   consumers: u_irreducible_coordinates; Direct frozen dependencies: none
-u_irreducible_coordinates: proof_shape: content; escape_witness: u_irreducible_coordinates;
+u_irreducible_coordinates: proof_shape: bind-only; escape_witness: none;
   consumers: u_irreducible; Direct frozen dependencies: none
-u_irreducible: proof_shape: content; escape_witness: u_irreducible_coordinates;
+u_irreducible: proof_shape: bind-only; escape_witness: none;
   consumers: result; Direct frozen dependencies: F8
 replacement: proof_shape: definition; escape_witness: none;
   consumers: mixed_replacement_channel, not_pure_programmable, one_replacement_channel, plus_replacement_channel, pure_replacement_channel, replacement_covariant, zero_replacement_channel; Direct frozen dependencies: none
