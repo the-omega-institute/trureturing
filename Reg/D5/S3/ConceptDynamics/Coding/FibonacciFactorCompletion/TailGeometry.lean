@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciOriginalSourceWitness.Source155
 import Reg.Support.FibonacciFactorCompletion.TailSourceReadouts
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
@@ -856,3 +857,47 @@ def block_supply_append_registration :
 #print axioms block_supply_append_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ExactOriginal172
+
+namespace Reg.Support.FibonacciOriginalSourceWitness.Source155
+noncomputable section
+
+def original_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competing_tail_orbit_criterion)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ q x => q.2+q.1*(x-q.2)) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.Support.FibonacciOriginalSourceWitness.Source155.original_unit
+  realizationName := `Reg.Support.FibonacciOriginalSourceWitness.Source155.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ q x => q.2+q.1*(x-q.2)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+    definition := none
+    coordinates := #[2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "value", "body"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_registration
+end
+end Reg.Support.FibonacciOriginalSourceWitness.Source155

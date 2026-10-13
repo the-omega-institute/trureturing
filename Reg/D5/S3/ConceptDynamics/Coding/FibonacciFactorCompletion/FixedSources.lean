@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciOriginalSourceWitness.Source84
 import Reg.Support.FibonacciFactorCompletion.FixedHistoryReadouts
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
@@ -881,3 +882,48 @@ def fixed_omega_tail_all_histories_registration :
 #print axioms fixed_omega_tail_all_histories_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.ExactOriginal80
+
+namespace Reg.Support.FibonacciOriginalSourceWitness.Source84
+noncomputable section
+universe u
+
+def original_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources.original_synchronous_common_stem.{u})
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ lo => lo) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.Support.FibonacciOriginalSourceWitness.Source84.original_unit
+  realizationName := `Reg.Support.FibonacciOriginalSourceWitness.Source84.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena.{u}⟩
+  objectArena := .source ⟨sourceArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena.{u} ⟨evidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ lo => lo) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.FixedSources
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 25
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_registration
+end
+end Reg.Support.FibonacciOriginalSourceWitness.Source84

@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciOriginalSourceWitness.Source110
 import Reg.Support.FibonacciFactorWitnesses
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
@@ -883,3 +884,47 @@ def forbidden_run_reversal_registration :
 #print axioms forbidden_run_reversal_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.ExactOriginal108
+
+namespace Reg.Support.FibonacciOriginalSourceWitness.Source110
+noncomputable section
+
+def original_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.prepend_bilateral_path)
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ ν => ν 0) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.Support.FibonacciOriginalSourceWitness.Source110.original_unit
+  realizationName := `Reg.Support.FibonacciOriginalSourceWitness.Source110.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena⟩
+  objectArena := .source ⟨sourceArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ ν => ν 0) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 14
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_registration
+end
+end Reg.Support.FibonacciOriginalSourceWitness.Source110

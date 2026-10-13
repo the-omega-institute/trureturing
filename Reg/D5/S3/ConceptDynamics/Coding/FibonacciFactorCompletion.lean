@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciOriginalSourceWitness.Source20
 import Reg.Support.FibonacciFactorCompletion.SynchronousCommonStemReadout
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
 import D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
@@ -888,3 +889,48 @@ def actual_exact_uniform_family_margin_registration :
 #print axioms actual_exact_uniform_family_margin_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ExactOriginal28
+
+namespace Reg.Support.FibonacciOriginalSourceWitness.Source20
+noncomputable section
+universe u
+
+def original_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.original_complete_storage_liminf.{u})
+      (type_of% (realize.{0,0,0,0,0} observationSignature
+        (fun _ _ x => ENat.toENNReal x) (fun e => nomatch e))) Unit Unit where
+  unitName := `Reg.Support.FibonacciOriginalSourceWitness.Source20.original_unit
+  realizationName := `Reg.Support.FibonacciOriginalSourceWitness.Source20.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨sourceArena.{u}⟩
+  objectArena := .source ⟨sourceArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source sourceArena.{u} ⟨evidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0} observationSignature
+    (fun _ _ x => ENat.toENNReal x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms evidence
+#print axioms original_registration
+end
+end Reg.Support.FibonacciOriginalSourceWitness.Source20
