@@ -91,7 +91,10 @@ internal sealed class PureLossIncompatibilityDocument : IScribeDocumentDefinitio
                             + "Finally take m=n+1, tau=1/n and the regular phases "
                             + "z_j = exp(2 pi i j/(n+1)). They are distinct unit complex numbers, "
                             + "and m tau > 1 for every n at least one, proving the proposition."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mehboudi-rezaeinia-rahimi-keshari-2025-loss-incompatibility"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
