@@ -68,4 +68,56 @@ theorem construct_fixed_block_schedule (D d : ℕ → ℕ) (hD : StrictMono D) (
 def fixedSchedule (D d : ℕ → ℕ) (hD : StrictMono D) (hd : StrictMono d) : ℕ → Bool :=
   Classical.choose (construct_fixed_block_schedule D d hD hd)
 
+
+def Legal (σ : ℕ → Bool) (h : History) : Prop :=
+  h.map Prod.fst = List.ofFn (fun i : Fin h.length => σ i.val)
+
+def encodeStage (σ : ℕ → Bool) (n : ℕ) : Option Bool → Action
+  | none => .inl (σ n)
+  | some e => .inr (false, e)
+
+section Table
+variable (D d : ℕ → ℕ) (a : CoefficientFamily D d)
+  (hD : StrictMono D) (hd : StrictMono d) (hc : CompatibleCoefficients D d a)
+
+def batchTable : (Bool × History) → PMF Action := by
+  classical
+  let σ := fixedSchedule D d hD hd
+  exact fun row => if Legal σ row.2 then
+    if hk : ∃ k, row.2.length = D k + d k then
+      (rowNat D d a hD.monotone hd.monotone hc (Nat.find hk)
+        (successCount false row.2) (successCount true row.2)).map (encodeStage σ row.2.length)
+    else PMF.pure (.inl (σ row.2.length))
+  else PMF.pure (.inl (σ row.2.length))
+
+/-- One rate-independent table only calls the scheduled source and returns
+only at a batch landmark, with the first output coordinate fixed to false. -/
+theorem batchTable_supported_actions (S : Bool) (h : History) (a' : Action)
+    (ha : batchTable D d a hD hd hc (S, h) a' ≠ 0) :
+    (∀ s, a' = Sum.inl s → s = fixedSchedule D d hD hd h.length) ∧
+    (∀ cell, a' = Sum.inr cell → ∃ k, h.length = D k + d k ∧ cell.1 = false) := by
+  classical
+  unfold batchTable at ha
+  split_ifs at ha with hlegal hk
+  · obtain ⟨out, _, hout⟩ := (PMF.mem_support_map_iff _ _ _).mp ha
+    cases out with
+    | none =>
+      simp only [encodeStage] at hout
+      subst a'
+      exact ⟨fun s hs => (Sum.inl.inj hs).symm, fun cell he => by cases he⟩
+    | some e =>
+      simp only [encodeStage] at hout
+      subst a'
+      refine ⟨(fun s he => by cases he), fun cell he => ?_⟩
+      cases he
+      exact ⟨Nat.find hk, Nat.find_spec hk, rfl⟩
+  · have he := (PMF.mem_support_pure_iff _ _).mp ha
+    subst a'
+    exact ⟨fun s hs => (Sum.inl.inj hs).symm, fun cell he => by cases he⟩
+  · have he := (PMF.mem_support_pure_iff _ _).mp ha
+    subst a'
+    exact ⟨fun s hs => (Sum.inl.inj hs).symm, fun cell he => by cases he⟩
+
+end Table
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinScheduledExecution
