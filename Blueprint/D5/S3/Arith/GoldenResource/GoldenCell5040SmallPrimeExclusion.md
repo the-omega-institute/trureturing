@@ -2,6 +2,13 @@
 
 ## Abstract
 
+The reusable kernel `modEq_period_not_dvd` proves the obstruction used by the
+5040 instance: if `a^n` is congruent to `r` modulo `n`, while a divisor `p`
+sees a period `a^k = 1` with `k | n`, then `p` cannot divide `n` whenever
+`r` is not congruent to one modulo `p`.  It is independent of the numeric
+choice `a = 3`, `r = 2241` and is consumed by the concrete residual-prime
+theorem below.
+
 The power residue excludes every additional prime below forty seven.
 
 Let the natural index be divisible by 5040 and satisfy the power congruence with residue 2241. The earlier exponent-window theorem fixes the old primes two, three, five and seven. Here every prime strictly between seven and forty seven is excluded from the index. This is a statement about all indices satisfying the two hypotheses, with no bound on the index.
