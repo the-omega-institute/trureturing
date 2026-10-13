@@ -766,4 +766,37 @@ theorem hypergeometric_stochastic_rows (N N' : ℕ) (hN : N ≤ N') (I : Fin (N'
           omega
         _ = 1 := hs
 
+/-- The hypergeometric split is a multiplication identity even at zero
+binomial masses. Only the positive combinatorial denominator is cancelled. -/
+theorem zero_safe_binomial_split (N N' i I : ℕ) (hN : N ≤ N')
+    (hi : i ≤ N) (hI : I ≤ N') (p : unitInterval) :
+    binomialMass N i p * translatedBinomial (N' - N) i I p =
+      ENNReal.ofReal (hypergeometricWeight N N' I i) * binomialMass N' I p := by
+  by_cases hiI : i ≤ I
+  · by_cases hdelta : I - i ≤ N' - N
+    · have hp : 0 ≤ (p : ℝ) := p.2.1
+      have hq : 0 ≤ 1 - (p : ℝ) := sub_nonneg.mpr p.2.2
+      have hc : (N'.choose I : ℝ) ≠ 0 := by exact_mod_cast Nat.choose_ne_zero hI
+      have hpp : (p : ℝ) ^ I = (p : ℝ) ^ i * (p : ℝ) ^ (I - i) := by
+        rw [← pow_add, Nat.add_sub_of_le hiI]
+      have hqq : (1 - (p : ℝ)) ^ (N' - I) =
+          (1 - (p : ℝ)) ^ (N - i) * (1 - (p : ℝ)) ^ (N' - N - (I - i)) := by
+        rw [← pow_add]
+        congr 1
+        omega
+      simp only [translatedBinomial, hypergeometricWeight, if_pos hiI,
+        binomialMass, binomial_singleton]
+      rw [← ENNReal.ofReal_mul (by positivity),
+        ← ENNReal.ofReal_mul (weight_nonneg N' N I i)]
+      apply congrArg ENNReal.ofReal
+      rw [hpp, hqq]
+      unfold weight
+      field_simp
+      <;> ring
+    · have hd : N' - N < I - i := by omega
+      have hw : weight N' N I i = 0 := weight_eq_zero (Or.inr hd)
+      simp [translatedBinomial, hypergeometricWeight, hiI, hw,
+        (binomial_mass_support_and_pascal p).2.1 (N' - N) (I - i) hd]
+  · simp [translatedBinomial, hypergeometricWeight, hiI]
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
