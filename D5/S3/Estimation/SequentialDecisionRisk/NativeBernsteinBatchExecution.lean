@@ -381,4 +381,81 @@ theorem native_execution_measurable
       ((ha i) measurableSet_range_inr))
   simpa only [Set.compl_ofPred, not_le] using hm.compl
 
+def rawLaw {Seed : Type} [MeasurableSpace Seed] (ν : Measure Seed) : Measure (Seed × Tape) :=
+  ν.prod (Measure.infinitePi (fun _ : ℕ => volume.restrict (Set.Icc (0 : ℝ) 1)))
+
+def rowLaw (table : (Bool × History) → PMF Action) : Measure RowSeed :=
+  Measure.infinitePi (fun row => (table row).toMeasure)
+
+def tablePolicy (seed : RowSeed) (S : Bool) (h : History) : Action := seed (S, h)
+
+def extendHistory (h : History) (i : ℕ) : Bool × Bool :=
+  if hi : i < h.length then h[i] else (false, false)
+
+private theorem prefix_extend_history (h : History) :
+    wordPrefix (extendHistory h) h.length = h := by
+  simp [wordPrefix, extendHistory]
+
+def historyPathWeight (table : (Bool × History) → PMF Action) (S : Bool)
+    (h : History) : ℝ≥0∞ :=
+  ∏ i ∈ Finset.range h.length,
+    table (S, wordPrefix (extendHistory h) i) (.inl (extendHistory h i).1)
+
+def historyLikelihood (p q : unitInterval) (h : History) : ℝ≥0∞ :=
+  ∏ i ∈ Finset.range h.length,
+    (bernoulliMeasure true false (if (extendHistory h i).1 then q else p))
+      {(extendHistory h i).2}
+
+def reachedHistory {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (h : History) : Set (Seed × Tape) :=
+  {ω | nativeHistory π S p q h.length ω = h}
+
+/-- The ordered-history leaf law refers to the actual acquired record. -/
+theorem actual_history_leaf_law (table : (Bool × History) → PMF Action) (S : Bool)
+    (p q : unitInterval) (h : History) (a : Action) :
+    rawLaw (rowLaw table) (reachedHistory tablePolicy S p q h ∩
+      {ω | nativeAction tablePolicy S p q h.length ω = a}) =
+      (historyPathWeight table S h * table (S, h) a) * historyLikelihood p q h := by
+  have hb := NativeBernoulliFactoryCriticalMoment.native_policy_table_leaf_law
+    table S p q (extendHistory h) h.length a
+  change rawLaw (rowLaw table) (nativeTrace tablePolicy S p q (extendHistory h) h.length ∩
+      {ω | nativeAction tablePolicy S p q h.length ω = a}) =
+      (historyPathWeight table S h * table (S, wordPrefix (extendHistory h) h.length) a) *
+        historyLikelihood p q h at hb
+  simpa only [trace_iff_exact_acquired_history, prefix_extend_history, reachedHistory] using hb
+
+/-- Summing the terminal action leaves recovers the arrival mass, including
+zero-probability histories and endpoint source rates. -/
+theorem actual_history_reach_law (table : (Bool × History) → PMF Action) (S : Bool)
+    (p q : unitInterval) (h : History) :
+    rawLaw (rowLaw table) (reachedHistory tablePolicy S p q h) =
+      historyPathWeight table S h * historyLikelihood p q h := by
+  classical
+  have ha := (native_execution_measurable tablePolicy
+    (fun S h => measurable_pi_apply (S, h)) S p q).2.1 h.length
+  have hsum := sum_measure_preimage_singleton
+    (μ := (rawLaw (rowLaw table)).restrict (reachedHistory tablePolicy S p q h))
+    (f := nativeAction tablePolicy S p q h.length) (Finset.univ : Finset Action)
+    (fun a _ => ha (action_singleton_measurable a))
+  simp only [Finset.coe_univ, Set.preimage_univ, Measure.restrict_apply_univ] at hsum
+  calc
+    rawLaw (rowLaw table) (reachedHistory tablePolicy S p q h) =
+        ∑ a : Action, rawLaw (rowLaw table) (reachedHistory tablePolicy S p q h ∩
+          {ω | nativeAction tablePolicy S p q h.length ω = a}) := by
+      rw [← hsum]
+      apply Finset.sum_congr rfl
+      intro a _
+      rw [Measure.restrict_apply (ha (action_singleton_measurable a)), Set.inter_comm]
+      rfl
+    _ = ∑ a : Action, (historyPathWeight table S h * table (S, h) a) *
+        historyLikelihood p q h := by
+      apply Finset.sum_congr rfl
+      intro a _
+      exact actual_history_leaf_law table S p q h a
+    _ = historyPathWeight table S h * historyLikelihood p q h := by
+      rw [← Finset.sum_mul, ← Finset.mul_sum]
+      have hn : (∑ a : Action, table (S, h) a) = 1 := by
+        simpa only [tsum_fintype] using (table (S, h)).tsum_coe
+      rw [hn, mul_one]
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
