@@ -8,7 +8,7 @@ url: https://github.com/the-omega-institute/trureturing/blob/0d8903a599ca95dc10b
 claim: Under the supplied original source-window hypotheses, actual envelope gaps have zero mass and price moments and a convex-order constraint. The original discrete prime response splits into exterior stock flux minus selected occupancy, gap costs and the complete Q term. The favorable exterior lower estimate remains unproved.
 strata_touched: []
 license: Apache-2.0
-triage: frontier
+triage: anchor
 ---
 
 # Actual price gaps and the same-source signed estimate
