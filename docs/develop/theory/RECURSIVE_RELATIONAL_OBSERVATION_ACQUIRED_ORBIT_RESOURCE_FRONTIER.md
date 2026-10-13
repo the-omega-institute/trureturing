@@ -990,3 +990,305 @@ provide neither (AOF.25)'s zero correction nor (AOF.29)'s literal peak.
 This bounded comparison makes no worldwide novelty or priority claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Minimum internal Moore states with common call and peak attainment
+
+**Definition 10.1 (one stationary finite table for a declared interval).**
+Keep exactly Definition 8.1: public integers $0\le L\le U$, one unknown
+stationary actual $T_n$ with $n\in[L,U]$, literal four-valued
+$\mathsf{Read}$ alone, and required complete numeric answer $n$.
+A finite Moore controller has a disjoint state set $\mathcal K=Q\sqcup H$,
+one common initial state $s_0\in\mathcal K$, and fixed tables
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^*,\\
+\operatorname{next}&:Q\times\mathcal A\longrightarrow\mathcal K,
+&\mathcal A&=\{\alpha,\beta,\mathsf b,\bot\},\\
+\operatorname{out}&:H\longrightarrow\mathbb N.
+\end{aligned}
+\tag{AOF.30}
+$$
+
+At a running state $s$ it submits the one fixed fully materialized word
+$\operatorname{addr}(s)$, receives its actual reply $a$, and changes to
+$\operatorname{next}(s,a)$. The transition table is total on all four
+replies. A halt returns its fixed complete integer $\operatorname{out}(s)$,
+without another source call. Every installed state counts, including
+unused states, redundant halts and unreachable transition destinations.
+The current state is the entire changing accessible configuration.
+There is no separate address, reply, age, phase, interval, clock, counter,
+history or payload register and no source-dependent output decoder.
+In particular two different answers require two different halting states.
+
+The same table and initial state serve every age in this one interval.
+Literal addresses, transitions and outputs may depend on the declared
+endpoints. Their representation, static storage, installation, address
+transmission and complete output production have separate costs. This
+contract counts abstract states, chronological calls and peak submitted
+literal length, rather than total physical memory or elapsed time.
+Write $J_{\min}(L,U)$ and $S_{\min}(L,U)$ for the minimum running and
+total state counts among controllers terminating correctly throughout
+the interval. The call and peak coordinates keep (AOF.23)'s conventions,
+including one paid empty-word call and zero peak for no submissions.
+
+**Theorem 10.2 (exact state minima and one common native witness).** Put
+$N=U-L+1$ and
+
+$$
+J(L,U)=
+\begin{cases}
+0,&N=1,\\
+\left\lceil\dfrac{N-1}{3}\right\rceil,&N\ge2,\ L\ge1,\\
+\left\lceil\dfrac N3\right\rceil,&N\ge2,\ L=0.
+\end{cases}
+\tag{AOF.31}
+$$
+
+Under Definition 10.1,
+
+$$
+J_{\min}(L,U)=J(L,U),\qquad S_{\min}(L,U)=N+J(L,U).
+\tag{AOF.32}
+$$
+
+One actual controller has exactly $J(L,U)$ running states and $N$ halts
+and simultaneously attains the supplied $K(L,U)$ and $M(L,U)$ of
+Theorems 8.3 and 9.2. All its states are reached on admitted sources.
+The separate worst call and peak values need not occur on the same age.
+
+**Proof.** First obtain the state lower bound on general shared graphs.
+For $N\ge2$ the common initial state cannot halt. Take the directed
+union of the $N$ actual finite runs, with $j$ running vertices and
+exactly $N$ terminal vertices. There are exactly $N$ because the runs
+are deterministic, their required integers differ, and each run ends
+at one fixed-output halt. Every vertex is reachable from the common
+initial vertex. Select one incoming edge along a shortest root path
+for each noninitial vertex. These distinct edges give
+
+$$
+j+N-1\le e\le4j,
+\tag{AOF.33}
+$$
+
+where $e$ counts distinct directed successor edges used by actual runs.
+The upper bound uses at most four actual replies per running state;
+two replies going to one successor can only decrease this edge count.
+This is the rooted reachable-edge method of [Transport--Memory
+Completion, Theorem 66.3][TM-Moore] and [Native Birth Provenance,
+Proposition 11.2][NBP-Moore], applied to the present one-root domain.
+It does not assume a tree-shaped controller or an acyclic union graph.
+
+If $L=0$, the two admitted sources $T_0,T_1$ return absence at every
+nonempty word. Their state paths agree until an empty-word query.
+Such a running state must be reached: without it the two runs cannot
+terminate at different correct halts. At that state the root is never
+absent on any source, so there are at most three actual successors.
+Thus $e\le4j-1$, and (AOF.33) sharpens to $N\le3j$. The empty-word
+state is required somewhere on this common path, not necessarily at
+the initial state. These inequalities give $j\ge J(L,U)$ and at
+least $N+J(L,U)$ installed states. Merges, union cycles across different
+source runs, repeated queries, early halts and unused states are all
+included. On a single stationary source, revisiting a running state
+would repeat its deterministic suffix forever; this excludes a loop
+on that run without excluding cycles in the union. When $N=1$, one
+initial halt outputting $L$ is minimal and has both other prices zero.
+
+For the upper bound use only the actual $E$ and shortest $P_t$ words
+of Definition 8.2. The following finite trees specify immutable tables,
+not runtime interval or recursion registers. For every integer $r\ge0$
+and $l\ge1$, define $\mathsf{Plus}(l,r)$ on $[l,l+3r]$. At $r=0$
+it is the halt outputting $l$. At $r\ge1$ put
+
+$$
+a=\left\lfloor\frac{r-1}{2}\right\rfloor,
+\qquad b=r-1-a,\qquad t=l+3a+1.
+\tag{AOF.34}
+$$
+
+Its root queries the materialized shortest $P_t$ word and has the four
+successors
+
+| Actual reply | Successor of $\mathsf{Plus}(l,r)$ |
+| --- | --- |
+| $\bot$ | $\mathsf{Plus}(l,a)$ |
+| $\alpha$ | Halt with fixed output $t$ |
+| $\beta$ | Halt with fixed output $t+1$ |
+| $\mathsf b$ | $\mathsf{Plus}(t+2,b)$ |
+
+Here $t\ge2$, so no nonexistent $P_1$ is used. By (AOF.24) the four
+actual cells are $[l,t-1],\{t\},\{t+1\},[t+2,l+3r]$. The tails
+have sizes $3a+1$ and $3b+1$. Induction proves sourcewise correctness,
+exactly $r$ running nodes and $3r+1$ distinct numeric halts. Each node
+and halt is reached by an actual age in this full interval.
+
+For $r\ge1$, define $\mathsf{Zero}(r)$ on $[0,3r-1]$ using the same
+$a,b$ in (AOF.34). If $a\ge1$, its root queries $P_{3a}$, with
+successors
+
+| Actual reply | Successor when $a\ge1$ |
+| --- | --- |
+| $\bot$ | $\mathsf{Zero}(a)$ |
+| $\alpha$ | Halt with fixed output $3a$ |
+| $\beta$ | Halt with fixed output $3a+1$ |
+| $\mathsf b$ | $\mathsf{Plus}(3a+2,b)$ |
+
+The corresponding cells have sizes $3a,1,1,3b+1$. If $a=0$, use
+$E$: alpha goes to the halt zero, beta to the halt one, and branch to
+$\mathsf{Plus}(2,b)$; the absent entry goes to the existing halt zero.
+The absent reply is impossible and the three actual cells have sizes
+$1,1,3b+1$. This case includes $r=1$ and $r=2$. Induction gives exactly
+$r$ running nodes and $3r$ fixed-output halts, correct throughout the
+full interval. There is exactly one $E$ node along its zero-origin
+recursion, and all other thresholds are at least three. Every submitted
+power of $R$ or $LR^s$ denotes the expanded literal word in its table.
+
+For either tree, if $r\le2^k-1$, then $a,b\le2^{k-1}-1$ at a running
+root. Induction gives depth at most $k$; a halt has depth zero, and the
+$E$ case has only its positive continuation. For $N\ge2$, set $j=J(L,U)$
+and $k=K(L,U)$. The supplied capacities (AOF.25) give
+
+$$
+\begin{aligned}
+N\le C_k&\Longleftrightarrow
+ \left\lceil(N-1)/3\right\rceil\le2^k-1,\\
+N\le A_k&\Longleftrightarrow
+ \left\lceil N/3\right\rceil\le2^k-1\quad(k\ge1).
+\end{aligned}
+\tag{AOF.35}
+$$
+
+Consequently $j\le2^k-1$. Start with $\mathsf{Plus}(L,j)$ if $L\ge1$,
+or $\mathsf{Zero}(j)$ if $L=0$. Its full source interval extends past
+$U$ by $d=3j+1-N$ or $d=3j-N$ respectively, with $0\le d\le2$.
+Keep its $j$ running states and delete only the $d$ largest output
+halts. Redirect every transition to a deleted halt to the retained halt
+with output $L$. Such an edge cannot be used on any admitted source:
+the full tree was correct, and its state path on that fixed source ends
+at that source's own retained halt. Therefore the restricted table has
+the same sourcewise state paths and outputs, $j$ running states, exactly
+$N$ halts and depth at most $k$. The lower bound already proved forces
+every one of these $j$ states to be reached, for otherwise the actual-run
+union would have fewer than $J(L,U)$ running vertices. This establishes
+(AOF.32) without a pruning or acyclicity assumption about competitors.
+Theorem 8.3's call lower bound applies to this table as to any reader,
+so its worst calls are exactly $K(L,U)$. No call-capacity formula is
+newly derived here.
+
+Finally preserve this exact counted state set while attaining the
+supplied peak. For a nonsingleton $U\ge1$, put $m=M(L,U)$ as in
+(AOF.29). For each running state $s$, apply Theorem 9.1 to its fixed
+word $p_s$, giving the fixed word $q_s$ and total reply map $\phi_s$.
+For this tree the supplied choice is explicit. If $U\le2$, use $q_s=E$
+and map its alpha, beta and branch replies to the old word's values
+at ages $0,1,2$; fill its absent entry arbitrarily. If $U\ge3$, keep
+every word of length at most $m$ with the identity map. An overlong
+tree word is a shortest $P_t$ with $t\ge2m+1$; use $q_s=R^m$ and
+
+$$
+\phi_s(\bot)=\bot,\quad
+\phi_s(\alpha)=P_t(2m),\quad
+\phi_s(\beta)=P_t(2m+1),\quad
+\phi_s(\mathsf b)=P_t(2m+2).
+$$
+
+These are fixed values of (AOF.24), the $P$ cases of Theorem 9.1's
+supplied map, not new acquisitions. Install in that same state
+
+$$
+\operatorname{addr}'(s)=q_s,\qquad
+\operatorname{next}'(s,a)=\operatorname{next}(s,\phi_s(a)).
+\tag{AOF.36}
+$$
+
+Keep the initial state, state partition and fixed halt outputs. The
+four entries of this new transition row contain the composed successor
+indices; no decoded reply, decoder state or external register is used.
+For each admitted $n$, (AOF.28) says precisely
+$r_{T_n}(p_s)=\phi_s(r_{T_n}(q_s))$. Induction along this fixed source's
+run therefore preserves its entire state sequence, halt and call count.
+One genuine paid call replaces one call, including when $q_s=E$.
+The raw reply belongs to $q_s$, and is not asserted to be a receipt at
+$p_s$. All new words have length at most $m$. Theorem 9.2's independent
+peak lower bound forces the maximum to be exactly $M(L,U)$.
+
+This uses the paid state-local response-recoding method already supplied
+by [Native Birth Provenance, Theorem 12.3 and (NBP.12.7)][NBP-Moore].
+The required native interval correspondence is (AOF.28) on every actual
+age in this interval; it is not that theorem's padded inverse-source
+correspondence. Because the map depends on the installed state alone,
+the composition is also valid for an arbitrary shared graph, regardless
+of the history reaching a state. For the constructed table it preserves
+all reached states. Thus one table attains all four displayed counts
+$J,N+J,K,M$ without combining separate optimizers. $\square$
+
+**Proposition 10.3 (the extra state distinction and its representation
+boundary).** For a fixed nonsingleton interval, $N$ complete-output halts
+require exactly $J(L,U)$ additional running states in a minimum table.
+Compared with a positive interval of the same size, the zero origin
+requires one extra running state exactly when $N\equiv1\pmod3$ and
+$N\ge4$. An injective fixed-width binary representation of the complete
+minimum state set needs and admits $\lceil\log_2(N+J(L,U))\rceil$ bits.
+This width excludes the immutable literal, transition and output tables.
+
+On $[0,3]$ there are two running states and four halts: one state reads
+$E$, sends alpha and beta to outputs zero and one, and sends branch to
+the second state, which reads $R$ and sends alpha and beta to outputs
+two and three. Fill the remaining entries with the halt zero. On $[1,4]$
+one running state reads $R$ and sends absent, alpha, beta and branch
+directly to the four respective fixed outputs $1,2,3,4$.
+
+Positive intervals $[l,l+1]$, $l\ge1$, have three total states and one
+call, while their minimum peak is $\lfloor l/2\rfloor$, unbounded in
+$l$. A single finite table with fixed numeric halts cannot identify all
+unbounded ages. These state, call and literal-length results impose no
+summed-length minimum or physical-memory or physical-time equivalence.
+
+**Proof.** The counts and the two literal examples follow from Theorem
+10.2 and (AOF.24). Comparing the two ceilings in (AOF.31) gives the
+stated residue class; the singleton is separately one halt. An injective
+$w$-bit state encoding exists exactly when $2^w\ge N+J(L,U)$.
+The translation claim is Theorems 8.3 and 9.2 at $N=2$. Its address
+constants and output integers vary with $l$, so their representation
+costs are not bounded by three abstract states. Finally a fixed finite
+halt set has finite output image, whereas unbounded ages require an
+infinite image. $\square$
+
+**Mathematical citation 10.4 (source-specific content and reused methods).**
+Definitions 8.1--8.2 and Theorems 8.3, 9.1--9.2 at the immutable source
+[1f90f2ec304615c711e1ab2cdef401881881fcc9](https://github.com/the-omega-institute/trureturing/blob/1f90f2ec304615c711e1ab2cdef401881881fcc9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md#8-stationary-interval-reading-with-a-zero-origin)
+supply the stationary interval contract, actual guarded query partitions,
+legal shortest words, call capacities and bounded-query reply refinement.
+Their ARH/JRF/SLH suppliers retain the scopes specified there. The
+rooted-edge count is the existing TM66.3/NBP11.2 method. The fixed-address,
+complete-output Moore convention and paid shared-state recoding are
+[NBP, Definitions 11.1, 12.1--12.2, Theorem 12.3 and Proposition
+12.5][NBP-Moore] at immutable revision
+$\mathtt{0ec296c8f9cfd78898ea44f5faf5d1eaa49aa656}$.
+
+In NBP12 the target is a whole predecessor row on an actual one-image
+fiber, with acquired exported initialization and a class-root task.
+Here there is one common initial state, $N$ distinct numeric outputs,
+and the reply identity holds on every declared actual $T_n$. That
+identity validates the same state-local transition composition; no
+inverse-fiber numerical frontier, advice optimization or arbitrary
+fixed-encoder theorem is transferred. Generic shared-graph recoding,
+rooted counting and the existing $K/M$ formulas are attributed supply.
+The repo-derived content is the interval-specific sharp $J,N+J$ bound,
+its obligatory three-reply root defect and the all-size native tree
+realizing that bound at the supplied optimal call depth and peak.
+
+Classical state-associated output terminology is attributed to Edward
+F. Moore, *Gedanken-Experiments on Sequential Machines*, *Automata
+Studies*, [DOI:10.1515/9781400882618-006](https://doi.org/10.1515/9781400882618-006).
+This is bibliographic attribution; no external minimization theorem is
+a premise. For the distinction between allowed query geometry and
+decision-tree depth compare Nowak's primary text cited in Mathematical
+citation 9.4, especially §§II-A and V-A. Its binary-query bounds supply
+none of the present state constants or common witness. These scoped
+correspondences make no worldwide novelty or priority claim.
+
+[TM-Moore]: https://github.com/the-omega-institute/trureturing/blob/1f90f2ec304615c711e1ab2cdef401881881fcc9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#TM66-T3
+[NBP-Moore]: https://github.com/the-omega-institute/trureturing/blob/0ec296c8f9cfd78898ea44f5faf5d1eaa49aa656/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#12-exact-joint-record-total-moore-state-and-call-transfer-on-every-full-fiber
+
+## 追加锚（本行以下为增补区）
