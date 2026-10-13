@@ -43,7 +43,7 @@ internal sealed class TriangleInflationSoundnessDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("original-response-witness"),
                 DeclarationHandle.Create(Prefix + "isTriangleLocal_responseModel"),
                 H("The original local model supplies the responses"),
-                StatementSource.FromAuthor(Disp(Implies(Call("IsTriangleLocal", F.Id("p")),
+                StatementSource.FromAuthor(Disp(Call("Implies", Call("IsTriangleLocal", F.Id("p")),
                     Call("ExistsRepresentingResponseModel", F.Id("p"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Unpack the original continuous local-model witness. Its three measurable, "
@@ -72,8 +72,8 @@ internal sealed class TriangleInflationSoundnessDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("independent-block-factorization"),
                 DeclarationHandle.Create(Prefix + "marginalMass_disjoint_source_factorization"),
                 H("Blocks using disjoint sources factor"),
-                StatementSource.FromAuthor(Disp(Equal(Call("MarginalMass", F.Id("J_union_K")),
-                    Mul(Call("MarginalMass", F.Id("J")), Call("MarginalMass", F.Id("K")))))),
+                StatementSource.FromAuthor(Disp(Equal(Call("MarginalMass", Call("Union", F.Id("J"), F.Id("K"))),
+                    Multiply(Call("MarginalMass", F.Id("J")), Call("MarginalMass", F.Id("K")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Suppose the node blocks J and K are disjoint and their exact incident "
                     + "source supports are disjoint. Product-source coordinate independence gives independence "
@@ -109,6 +109,24 @@ internal sealed class TriangleInflationSoundnessDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text("Under the same correctly wired triangle hypotheses, the A-node "
                     + "marginal equals the sum of p(a,b,c) over b and c. Sum out C and then B from the "
                     + "derived triangle marginal; no one-party distribution is supplied as a premise."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("admissible-b-party"),
+                DeclarationHandle.Create(Prefix + "marginalMass_singleton_B"),
+                H("The B-node marginal is the observed one-party marginal"),
+                StatementSource.FromAuthor(Disp(Equal(Call("MarginalMass", F.Id("B")),
+                    Call("SumAC", F.Id("p"), F.Id("b"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a correctly wired copied triangle represented by R, the B-node "
+                    + "marginal is the sum of p(a,b,c) over a and c. This follows by summing the actual "
+                    + "A and C response factors, with no party symmetry assumption."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("admissible-c-party"),
+                DeclarationHandle.Create(Prefix + "marginalMass_singleton_C"),
+                H("The C-node marginal is the observed one-party marginal"),
+                StatementSource.FromAuthor(Disp(Equal(Call("MarginalMass", F.Id("C")),
+                    Call("SumAB", F.Id("p"), F.Id("c"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a correctly wired copied triangle represented by R, the C-node "
+                    + "marginal is the sum of p(a,b,c) over a and b. Sum out A and B under the same "
+                    + "continuous lift; arbitrary raw responses need not be symmetric."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("source-copy-symmetry"),
                 DeclarationHandle.Create(Prefix + "inflationMass_copy_symmetry"),
                 H("Reindexing identical source copies preserves q"),

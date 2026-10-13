@@ -417,6 +417,72 @@ theorem marginalMass_singleton_A
   rw [← hsmall]
   simp_rw [← hlarge, htri]
 
+/-- Summing the A and C outcomes gives the B-party admissible marginal. -/
+theorem marginalMass_singleton_B
+    (S : InflationSpec Copy Node) (R : ResponseModel)
+    (p : Outcome → Outcome → Outcome → ℝ) (hp : Represents R p)
+    (vA vB vC : Node) (α β γ : Copy) (o : Node → Outcome)
+    (hA : S.party vA = 0) (hB : S.party vB = 1) (hC : S.party vC = 2)
+    (hA₁ : S.firstCopy vA = β) (hA₂ : S.secondCopy vA = γ)
+    (hB₁ : S.firstCopy vB = γ) (hB₂ : S.secondCopy vB = α)
+    (hC₁ : S.firstCopy vC = α) (hC₂ : S.secondCopy vC = β) :
+    marginalMass S R {vB} o = ∑ a : Outcome, ∑ c : Outcome, p a (o vB) c := by
+  have hAB : vA ≠ vB := by
+    intro h; have := congrArg Fin.val (hA.symm.trans (h ▸ hB)); norm_num at this
+  have hAC : vA ≠ vC := by
+    intro h; have := congrArg Fin.val (hA.symm.trans (h ▸ hC)); norm_num at this
+  have hBC : vB ≠ vC := by
+    intro h; have := congrArg Fin.val (hB.symm.trans (h ▸ hC)); norm_num at this
+  have hsmall := marginalMass_sum_insert S R {vB} vA o (by simpa using hAB)
+  have hlarge (a : Outcome) := marginalMass_sum_insert S R {vA, vB} vC
+    (Function.update o vA a) (by simp [hAC.symm, hBC.symm])
+  have hset : insert vC ({vA, vB} : Finset Node) = {vA, vB, vC} := by
+    ext v
+    simp only [Finset.mem_insert, Finset.mem_singleton]
+    tauto
+  simp_rw [hset] at hlarge
+  have htri (a c : Outcome) :
+      marginalMass S R {vA, vB, vC}
+        (Function.update (Function.update o vA a) vC c) = p a (o vB) c := by
+    simpa [hAB.symm, hBC, hAC] using marginalMass_triangle S R p hp vA vB vC α β γ
+      (Function.update (Function.update o vA a) vC c)
+      hA hB hC hA₁ hA₂ hB₁ hB₂ hC₁ hC₂
+  rw [← hsmall]
+  simp_rw [← hlarge, htri]
+
+/-- Summing the A and B outcomes gives the C-party admissible marginal. -/
+theorem marginalMass_singleton_C
+    (S : InflationSpec Copy Node) (R : ResponseModel)
+    (p : Outcome → Outcome → Outcome → ℝ) (hp : Represents R p)
+    (vA vB vC : Node) (α β γ : Copy) (o : Node → Outcome)
+    (hA : S.party vA = 0) (hB : S.party vB = 1) (hC : S.party vC = 2)
+    (hA₁ : S.firstCopy vA = β) (hA₂ : S.secondCopy vA = γ)
+    (hB₁ : S.firstCopy vB = γ) (hB₂ : S.secondCopy vB = α)
+    (hC₁ : S.firstCopy vC = α) (hC₂ : S.secondCopy vC = β) :
+    marginalMass S R {vC} o = ∑ a : Outcome, ∑ b : Outcome, p a b (o vC) := by
+  have hAB : vA ≠ vB := by
+    intro h; have := congrArg Fin.val (hA.symm.trans (h ▸ hB)); norm_num at this
+  have hAC : vA ≠ vC := by
+    intro h; have := congrArg Fin.val (hA.symm.trans (h ▸ hC)); norm_num at this
+  have hBC : vB ≠ vC := by
+    intro h; have := congrArg Fin.val (hB.symm.trans (h ▸ hC)); norm_num at this
+  have hsmall := marginalMass_sum_insert S R {vC} vA o (by simpa using hAC)
+  have hlarge (a : Outcome) := marginalMass_sum_insert S R {vA, vC} vB
+    (Function.update o vA a) (by simp [hAB.symm, hBC])
+  have hset : insert vB ({vA, vC} : Finset Node) = {vA, vB, vC} := by
+    ext v
+    simp only [Finset.mem_insert, Finset.mem_singleton]
+    tauto
+  simp_rw [hset] at hlarge
+  have htri (a b : Outcome) :
+      marginalMass S R {vA, vB, vC}
+        (Function.update (Function.update o vA a) vB b) = p a b (o vC) := by
+    simpa [hAB, hAC.symm, hBC.symm] using marginalMass_triangle S R p hp vA vB vC α β γ
+      (Function.update (Function.update o vA a) vB b)
+      hA hB hC hA₁ hA₂ hB₁ hB₂ hC₁ hC₂
+  rw [← hsmall]
+  simp_rw [← hlarge, htri]
+
 /-- A simultaneous permutation of source copies and the correspondingly
 wired observable nodes preserves the actual lifted observable law. -/
 theorem inflationMass_copy_symmetry
