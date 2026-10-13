@@ -103,21 +103,11 @@ private theorem coherent_norm (μ : ℂ) : ‖coherent μ‖ = 1 := by
 
 private theorem rankOne_complement_pos (v : H) (hv : ‖v‖ = 1) :
     (1 - InnerProductSpace.rankOne ℂ v v).IsPositive := by
-  rw [ContinuousLinearMap.isPositive_iff]
-  constructor
-  · exact LinearMap.IsSymmetric.one.sub (InnerProductSpace.isSymmetric_rankOne_self v)
-  · intro x
-    simp only [_root_.sub_apply, one_apply_eq_self,
-      InnerProductSpace.rankOne_apply, inner_sub_left, inner_smul_left]
-    have hi := (norm_inner_le_norm (𝕜 := ℂ) (E := H) v x)
-    have hi0 : ‖inner ℂ v x‖ ≤ ‖x‖ := by simpa [hv] using hi
-    have hi' : ‖inner ℂ v x‖ ^ 2 ≤ ‖x‖ ^ 2 :=
-      (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mpr hi0
-    rw [RCLike.conj_mul, inner_self_eq_norm_sq_to_K]
-    have hreal : 0 ≤ ‖x‖ ^ 2 - ‖inner ℂ v x‖ ^ 2 := by linarith
-    have hc := Complex.zero_le_real.mpr hreal
-    rw [Complex.ofReal_sub, Complex.ofReal_pow, Complex.ofReal_pow] at hc
-    exact hc
+  have hp : IsStarProjection (InnerProductSpace.rankOne ℂ v v) :=
+    ⟨InnerProductSpace.isIdempotentElem_rankOne_self hv,
+      ContinuousLinearMap.isSelfAdjoint_iff_isSymmetric.mpr
+        (InnerProductSpace.isSymmetric_rankOne_self v)⟩
+  exact ContinuousLinearMap.IsPositive.of_isStarProjection hp.one_sub
 
 private theorem onOff_binary (μ : ℂ) : IsBinaryPOVM (onOff μ) := by
   have hv := coherent_norm μ
