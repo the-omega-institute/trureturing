@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/TriangleInflationSoundness
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/TriangleInflationSoundness
    mirror-E: none(waiver:continuous-triangle-local-lift)
    anchors: []
