@@ -48,8 +48,9 @@ theorem does not by itself construct a zero-dimensional open
 resolution of an arbitrary compact Hausdorff open surjection. That
 resolution and Peng's Questions 5.1/5.2 remain outside this result.
 
-## Source binding
+## Verified locator
 
+Source page: https://arxiv.org/abs/0801.1721v2.
 The inspected source is https://arxiv.org/pdf/0801.1721v2.
 PDF SHA256: a0e85b826148a74883f5ebbc29fa0ae8656f07bbb4b6e3883d9b99a946bbffdf.
 Extracted-text SHA256: f27f58557b7f1347e4429bbc778bd560a206c2da71d1fc97f919dd92d5eaddbf.
