@@ -6754,3 +6754,243 @@ The whole unpaid moving band, source-realness certification,
 first-defect closure, RH and strict Robin for every integer $H>5040$
 remain unresolved. This application asserts no global Jensen-root
 matching or numerical degree.
+
+
+## A quadratic tangent leaves a distinct same-source high-order obligation
+
+The source-centered budget (LC245) removes the unnecessary linear-drift
+normalization condition. For growing clusters, its remaining curvature
+cost suggests incorporating a quadratic source factor into the local
+model. The exact Gaussian identity needed for that model already exists;
+it does not control the actual source's higher-order factor.
+The following application and countermodel distinguish those obligations.
+They are ordinary analysis without Lean, numerical-constant or originality
+certification, and do not assert a counterexample to RH or to actual-node
+positivity of the original $\Xi$ source.
+
+### Reuse the published quadratic identity with its actual coordinates
+
+Hall--Ho--Jalowy--Kabluchko,
+[*The heat flow, GAF, and $SL(2,\mathbb R)$*, arXiv:2304.06665v2](https://arxiv.org/html/2304.06665v2),
+Proposition 2.8, equation (2.13), gives the exponential-quadratic
+conjugacy for the heat operator. Its hypothesis is a finite order-two
+type bound (2.2), with heat time less than
+$1/(2\sigma_0+|a|)$. A polynomial has type $\sigma_0=0$, so for
+real $a,b$, $h>0$, $|a|h<1$, the cited theorem applies directly.
+With $x=t-c$, $\widetilde Q(x)=Q(c+x)$, put
+
+$$
+\begin{aligned}
+\mathcal H_h&=e^{-hD^2/2},\qquad d=1+ah>0,\qquad v=h/d,\qquad
+ y=(x-bh)/d,\\
+P(y)&=\mathcal H_v\widetilde Q(y),\\
+E(x)&=\frac{A(c)}{\sqrt d}
+ \exp\!\left(\frac{ax^2+2bx-hb^2}{2d}\right).
+\end{aligned}
+\tag{LC247}
+$$
+
+For the frozen model
+$f(c+x)=A(c)e^{bx+ax^2/2}\widetilde Q(x)$, that published identity
+states $\mathcal H_hf(c+x)=E(x)P(y)$.
+Its amplitude, effective heat time and physical coordinates must all
+be transported. In particular $E(0)/A(c)=d^{-1/2}e^{-hb^2/(2d)}$.
+If the polynomial $P$ has a simple root $\beta_i$, the corresponding
+physical model node and its derivative are
+
+$$
+t_i=c+bh+d\beta_i,\qquad
+(\mathcal H_hf)'(t_i)=E(t_i-c)P'(\beta_i)/d.
+\tag{LC248}
+$$
+
+The heat operator commutes with differentiation, so its adjacent
+response equals this same derivative. The physical separation is
+$d|\beta_i-\beta_j|$, not just the separation in the $y$ coordinate.
+These are direct parameter applications of the cited formula;
+no generic heat-flow theorem is reproved or presented as new.
+They do not imply global hyperbolicity of the finite Jensen extraction:
+for instance $\mathscr T_2(e^{az^2/2})=1+az^2/4$ has nonreal roots
+when $a>0$.
+
+For the actual $F$, a comparison with this Gaussian model splits into
+
+$$
+\begin{aligned}
+\mathcal R_nF-\mathcal R_{\rm G}f
+&=\mathcal R_n(F-f)+(\mathcal R_nf-\mathcal R_{\rm G}f),\\
+\mathcal R_nu&=(\mathscr T_nu,D\mathscr T_nu,\mathscr T_nDu),\qquad
+\mathcal R_{\rm G}f=(\mathcal H_hf,D\mathcal H_hf,D\mathcal H_hf).
+\end{aligned}
+\tag{LC249}
+$$
+
+The second term is a finite-operator/Gaussian comparison.
+The first is the original source's tangent remainder, with its own
+signed low terms and complete tails. Paying the second term cannot
+remove the first. The countermodel below makes the first term large
+in the proposed derivative-product units, even with no linear or
+quadratic source drift.
+
+### A locally real cluster with zero quadratic jet
+
+Fix $\rho=1/64$ and $C_*>0$. Let $T\to\infty$,
+$L=\log(T+2)$, and let $r$ be odd with $r/L\to\epsilon>0$,
+where $\epsilon$ is small enough for $r\le C_0L$.
+Put $c=T^2$, $R=T\rho/4$,
+$n=\lceil C_*T^2L/\rho^2\rceil$,
+$\sigma=c/\sqrt n$, $\nu=n\rho^2/T^2$, and
+
+$$
+D_0=16T\rho=64R,\qquad
+Q_*(z)=(z-c)^r,\qquad
+A_*(z)=\left[1+\frac{(z-c)^4}{D_0^4}\right]^r,
+\qquad F_*=A_*Q_*.
+\tag{LC250}
+$$
+
+On $|z-c|\le R$, with $w=z-c$, the factor is zero-free and
+
+$$
+\begin{aligned}
+|A_*(z)|&\ge(1-64^{-4})^r,\\
+A_*'/A_*&=\frac{4rw^3}{D_0^4+w^4},\\
+(\log A_*)''&=\frac{12rw^2}{D_0^4+w^4}
+             -\frac{16rw^6}{(D_0^4+w^4)^2}.
+\end{aligned}
+\tag{LC251}
+$$
+
+The two derivatives have the same upper orders
+$CL/(T\rho)$ and $CL/(T^2\rho^2)$ as (LC212), and the first
+line is an independent nonvanishing floor. At the center,
+$A_*(c)=1$ and $(\log A_*)'(c)=(\log A_*)''(c)=0$.
+Thus its quadratic tangent is exactly $Q_*$.
+All zeros of $A_*$ lie at distance $D_0$ from $c$.
+Under the original map $z=-(s-1/2)^2$, points
+$s=1/2+iT+u$, $|u|\le4\rho$, satisfy
+$|z-c|\le8T\rho+16\rho^2<D_0$ for large $T$.
+The closed source disc therefore contains only the central critical-line
+zero, with multiplicity $r$; the extra nonreal zeros are outside it.
+This verifies the actual local zero geometry instead of stipulating
+it for an unrelated formal factor.
+
+This family is a countermodel to an inference from just the displayed
+local factor data. It is not the original $\Xi$, its theta kernel,
+or a certificate of the original complete remote-source envelope.
+Multiplying both $F_*$ and its model by a nonzero real scalar leaves
+all relative derivative comparisons below unchanged. A scalar amplitude
+floor alone therefore cannot remedy this local obstruction.
+
+### The signed Gaussian derivative already has exponential amplification
+
+Set $M=\mathcal H_{\sigma^2}Q_*$.
+The classical probabilists' Hermite polynomial normalization used in
+(LC24)--(LC26) gives
+$\mathcal H_{\sigma^2}(z-c)^m
+=\sigma^m\operatorname{He}_m((z-c)/\sigma)$.
+Since $r$ is odd, $c$ is a simple model root and
+$M'(c)=\sigma^{r-1}\operatorname{He}_r'(0)\ne0$.
+Expand the finite polynomial $F_*$ from (LC250).
+The exact Hermite coefficients at zero give
+
+$$
+\begin{aligned}
+\frac{\operatorname{He}_{r+4j}'(0)}{\operatorname{He}_r'(0)}
+ &=\prod_{k=1}^{2j}(r+2k)>0,\\
+\frac{(\mathcal H_{\sigma^2}F_*)'(c)}{M'(c)}
+ &=\sum_{j=0}^r\binom rj
+   \left(\frac\sigma{D_0}\right)^{4j}
+   \prod_{k=1}^{2j}(r+2k)
+ \ge\left(1+\frac{\sigma^4r^2}{D_0^4}\right)^r.
+\end{aligned}
+\tag{LC252}
+$$
+
+All summands have the same sign; this is an actual signed response,
+not an absolute-contour upper bound. Now
+$\sigma^4r^2/D_0^4=r^2/(16^4\nu^2)
+\to\epsilon^2/(16^4C_*^2)>0$.
+The ratio in (LC252) grows at least exponentially in $r$.
+The Gaussian model derivative floor $|M'(c)|$ thus fails to normalize
+the original-source derivative remainder to a small quantity at
+$\nu\asymp C_*L$, even though the quadratic jet is zero.
+The fourth-order logarithmic coefficient is $r/D_0^4$;
+on the cluster scale $\sigma\sqrt r$ its magnitude is
+$\sigma^4r^3/D_0^4\asymp L$, not a vanishing quantity.
+
+### The same obstruction survives the complete finite extraction
+
+Write $p_m(z)=(z-c)^m$. The already established exact exponential
+extraction gives
+$\sum_m\mathscr T_np_m(t)u^m/m!=e^{-cu}(1+tu/n)^n$.
+Set $w=\sigma u$ and differentiate with all parameters fixed.
+The two complete finite response generators at $t=c$ are
+
+$$
+\begin{aligned}
+\sum_{m\ge0}\frac{(\mathscr T_np_m)'(c)}{\sigma^{m-1}}
+ \frac{w^m}{m!}
+ &=w e^{-\sqrt n w}(1+w/\sqrt n)^{n-1},\\
+\sum_{m\ge0}\frac{\mathscr T_n(p_m')(c)}{\sigma^{m-1}}
+ \frac{w^m}{m!}
+ &=w e^{-\sqrt n w}(1+w/\sqrt n)^n.
+\end{aligned}
+\tag{LC253}
+$$
+
+Uniformly over the odd $1\le m\le5r$, these imply
+
+$$
+(\mathscr T_np_m)'(c),\quad \mathscr T_n(p_m')(c)
+=\sigma^{m-1}\operatorname{He}_m'(0)
+       [1+O(r^2/\sqrt n)].
+\tag{LC254}
+$$
+
+For completeness this is a coefficient estimate at a fixed center,
+not a general growing-degree Charlier theorem. For $m>1$ let
+$k=m-1$, which is even, and use the Cauchy circle $|w|=\sqrt k$.
+For $\ell=0,1$,
+$-\sqrt n w+(n-\ell)\log(1+w/\sqrt n)
+=-w^2/2+O(k^{3/2}/\sqrt n)$ uniformly on that circle.
+The error is small because $r^3/n\to0$.
+The exact comparison coefficient is
+$[w^k]e^{-w^2/2}=(-1)^{k/2}/(2^{k/2}(k/2)!)$.
+Cauchy's bound on the difference is
+$k^{-k/2}e^{k/2}O(k^{3/2}/\sqrt n)$.
+Dividing by the exact coefficient and applying Stirling increases
+this by only $O(\sqrt k)$, proving $O(k^2/\sqrt n)$.
+The case $m=1$ is exact. These bounds are uniform across all
+$r+4j$, $0\le j\le r$, and keep their signed Hermite coefficients.
+
+For $J_* =\mathscr T_nF_*$, $G_* =\mathscr T_nF_*'$,
+linearity and the same-sign expansion (LC252) consequently give
+
+$$
+\frac{J_*'(c)}{M'(c)},\qquad\frac{G_*(c)}{M'(c)}
+\ge [1-O(r^2/\sqrt n)]
+ \left(1+\frac{\sigma^4r^2}{D_0^4}\right)^r
+\longrightarrow+\infty.
+\tag{LC255}
+$$
+
+The same conclusion holds if the denominator is replaced by the
+finite-model response $(\mathscr T_nQ_*)'(c)$ or
+$\mathscr T_nQ_*'(c)$, respectively, since (LC254) compares those
+with $M'(c)$ by a factor tending to one.
+No circle arc or source/model tail is omitted: (LC253) is an exact
+finite coefficient identity. The physical center $c$ need not be a
+zero of $J_*$, and its two derivative responses amplify with the same
+sign. Thus (LC255) refutes only the proposed relative derivative
+smallness from the listed local data, not actual-node positivity,
+original-source RH, or the finite source-centered budget (LC245).
+
+The remaining route must use additional structure of the same original
+$\Xi$ factor, or absorb its signed high-order contributions into a
+common nonvanishing response amplitude with controlled variation.
+A standalone finite/Gaussian comparison for the quadratic tangent
+would leave the first term of (LC249) unpaid.
+That same-source amplitude construction, growing-cluster actual-node
+margins and query exclusion at the complete moving scale remain open.
+RH and strict Robin for every integer $H>5040$ remain unresolved.
