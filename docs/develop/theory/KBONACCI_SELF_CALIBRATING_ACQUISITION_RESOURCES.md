@@ -2509,3 +2509,880 @@ and the two restricted scalar regimes do not assert such an expression.
 The original nonatomic-target problem of Theorem 67.5 is unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 90. Adaptive, preselected and increasing first-zero-stop acquisitions
+
+**Definition 90.1 (Three classes under the original hard-count contract).**
+Retain Definitions 71.1, 73.1, 77.1 and 83.1. In particular, the entire
+countable labeled source $X$, its static prime answers, zero advice,
+original tape carrier and consumer, and positive monotone vanishing
+amplitude sequence (73.3) remain fixed. For an original lawful acquisition
+$A$, write
+
+$$
+e_a(A)=\sup_{x\in X}\operatorname{TV}
+       (\widehat\lambda_{A,x},\lambda_x^a).
+\tag{90.1}
+$$
+
+Randomness is only the one source-independent seed of $A$. After that
+seed is fixed, one deterministic rule applies to every actual source.
+No probability measure on $X$ is introduced. The output may lie anywhere
+in the full original carrier, and handoff is sourcewise almost surely
+finite. $K$ counts all actual requests, including repetitions, with the
+nonhandoff convention of Definition 71.2.
+
+For $k\in\mathbb N_0$, let $\mathcal A_k$ contain all these acquisitions
+with $\mathsf P_A\{K_{A,x}\le k\}=1$ at every $x\in X$.
+The subclass $\mathcal N_k$ selects a finite sequence of at most $k$
+prime indices measurably from its seed, before receiving any answers,
+requests that sequence, and then makes any lawful output choice using
+its seed and the acquired replies. Its preselected indices can be
+arbitrarily large and can repeat. The class $\mathcal O_k$ instead
+preselects a strictly increasing sequence of at most $k$ indices, requests
+it until its first queried zero or its exhaustion, and uses only this
+acquired transcript and its seed to choose its output. A queried zero
+need not be the actual first absence. The output need not be that zero's
+mark. All terminal randomness is already part of the same seed.
+
+Define
+
+$$
+\begin{aligned}
+E_{\mathcal C}(k;a)&=\inf_{A\in\mathcal C_k} e_a(A),\\
+\kappa^{\mathcal C}_\varepsilon(a)
+ &=\inf\{k\in\mathbb N_0:\exists A\in\mathcal C_k,
+                                  \ e_a(A)\le\varepsilon\},
+\qquad \mathcal C\in\{\mathcal A,\mathcal N,\mathcal O\},
+\end{aligned}
+\tag{90.2}
+$$
+
+with the empty-set convention $\inf\varnothing=\infty$.
+Thus $\kappa^{\mathcal A}_\varepsilon(a)$ is the original
+$\kappa_\varepsilon$, rather than an address or mean resource.
+
+**Proposition 90.2 (Law-preserving hard-count containment).** Every
+$\mathcal O_k$ output-law family is attainable in $\mathcal N_k$ using
+the same seed law and hard count bound. Consequently
+
+$$
+\begin{aligned}
+E_{\mathcal A}(k;a)&\le E_{\mathcal N}(k;a)
+                         \le E_{\mathcal O}(k;a),\\
+\kappa^{\mathcal A}_\varepsilon(a)&\le
+\kappa^{\mathcal N}_\varepsilon(a)\le
+\kappa^{\mathcal O}_\varepsilon(a).
+\end{aligned}
+\tag{90.3}
+$$
+
+Allowing early handoff in a preselected request schedule, while retaining
+the sourcewise hard bound $k$, does not enlarge its attainable law families
+beyond $\mathcal N_k$. Similarly, an increasing schedule required to
+continue until its first zero or exhaustion cannot have length greater
+than $k$ on a positive-probability seed event under this hard bound.
+These assertions preserve output laws and the hard bound, rather than
+sourcewise mean count or handoff time.
+
+**Proof.** For an $\mathcal O_k$ rule, acquire its entire preselected
+sequence, reconstruct the transcript up to its original first zero, and
+make its original output choice while ignoring the later replies. This
+is a lawful $\mathcal N_k$ rule. Equivalently, store the original chosen
+tape, finish the preselected questions, and hand off that tape. The seed
+and output on every original finite execution are unchanged, and at most
+$k$ requests are made. Since every $\mathcal N_k$ rule is an original
+adaptive rule, (90.3) follows.
+
+To justify schedule normalization, countability of $X$ supplies a common
+full-measure seed event $G$ on which every actual execution hands off
+finitely with $K\le k$. An early-stopping preselected rule can be
+simulated after acquiring the first $k$ entries of its schedule, or its
+whole schedule when shorter. On $G$, every reply needed by its original
+execution has been acquired, so the same finite computation produces
+the same tape. Any unused acquired replies are ignored. On the null
+complement the normalized rule can use a fixed immediate tape; this
+changes no source law. Measurability follows from the measurable schedule
+and the countable finite-record decomposition of the simulation.
+
+For an increasing first-zero-stop schedule with more than $k$ entries,
+partition the corresponding seed event by its first $k+1$ indices.
+There are countably many possible tuples. For each tuple, fix an actual
+source at which all those indices answer one, using Boundaries,
+Theorem 35.2. These witnesses are chosen independently of seeds. At a
+seed in $G$ with that tuple, the rule at its witness cannot stop at a
+zero or at exhaustion before making its $(k+1)$st request. It also
+cannot avoid that request by divergence, because $G$ includes finite
+handoff there. This contradicts the hard bound. Thus all these tuple
+events are null. The same argument covers a preselected infinite
+increasing list whose only stopping condition is a queried zero.
+Padding can increase $K$ and the maximum requested index at a particular
+source; no mean or sourcewise address-preservation claim follows.
+$\square$
+
+## 91. A five-event obstruction for all preselected two-request rules
+
+**Theorem 91.1 (Full-carrier, arbitrary-address necessary bound).** For
+every sequence (73.3), every $0\le\varepsilon\le1$, and every
+$A\in\mathcal N_2$ with $e_a(A)\le\varepsilon$,
+
+$$
+5\varepsilon\ge a_1+a_3+a_4-1.
+\tag{91.1}
+$$
+
+The same bound holds in $\mathcal O_2$. It is a necessary obstruction,
+not a complete feasibility test on five patterns.
+
+**Proof.** First consider the five finite words
+
+$$
+w_t=1^t0^{4-t}\quad(0\le t\le4),\qquad
+(H_0,H_1,H_2,H_3,H_4)
+ =\bigl(\{1\},\{0,2\},\{3\},\{4\},\{0\}\bigr),
+\tag{91.2}
+$$
+
+where a label $j$ means tape $\theta_j$. Fix a deterministic rule
+asking at most two preselected low coordinates and then outputting a
+label. Coordinate $i$ changes from zero to one at $t=i$ on this ordered
+list of words. Thus two distinct queried low coordinates partition the
+list into at most three contiguous transcript cells. Output must be
+constant within each cell. The only intersection between distinct
+required output sets in (91.2) is $H_1\cap H_4=\{0\}$.
+
+If two distinct low coordinates were constant on both $w_1$ and $w_4$,
+both would have to equal coordinate 1: those two words differ at
+coordinates 2, 3 and 4. Therefore with two distinct low coordinates no
+cell contains both rows 1 and 4. Its common output satisfies at most
+one required event, and the total score is at most three. With only one
+distinct low coordinate there are at most two cells; only a cell
+containing rows 1 and 4 can score twice, so again the total is at most
+three. With no low coordinate there is one cell and its score is at
+most two. Repetitions do not refine these partitions. In all cases,
+
+$$
+\sum_{t=0}^4\mathbf1_{\{\text{output on }w_t\in H_t\}}\le3.
+\tag{91.3}
+$$
+
+This bounds every possible deterministic terminal choice, including
+base output and unqueried marks.
+
+Now take the original $A$, with arbitrary addresses and full-carrier
+output. Use the measurable projection $\pi_4$ of (83.7), retaining
+$\theta_1,\ldots,\theta_4$ and sending every other original tape to
+$\theta_0$. It fixes each target with first absence at most four and
+sends each later target to $\delta_{\theta_0}$. Pullback of events gives
+the TV contraction (83.8), so the projected law remains within
+$\varepsilon$ of the corresponding projected target.
+
+For each integer $m\ge5$, choose five actual sources $x_{t,m}$ whose
+first four replies are $w_t$ and whose replies at indices $5,\ldots,m$
+are all zero. Boundaries, Theorem 35.2 supplies these finite patterns
+in the original Fibonacci windows. For each $m$, the whole finite family
+is fixed before any seed is used. Its first absences are respectively
+$1,2,3,4,5$; no infinite all-positive source is involved.
+
+Let $R(s)$ be the seed-selected sequence of at most two requested indices,
+and put
+
+$$
+\gamma_m=\mathsf P_A\{\max R(s)>m\},\qquad\max\varnothing=0.
+\tag{91.4}
+$$
+
+Every such sequence is finite almost surely, so continuity from above
+gives $\gamma_m\to0$. This is the preselected-sequence form of the
+common high-address control used in (70.3)--(70.4); it imposes no fixed
+address ceiling. Work on the common full-measure finite-handoff and
+hard-bound event furnished by countability of $X$. Outside the event
+in (91.4), all high requested replies, at indices $5,\ldots,m$, are
+the same zero at all five sources. Two sources agreeing at the selected
+low coordinates therefore have the same complete acquired transcript.
+Finite execution transport, Source-Correlated Laws, Lemma 45.3, gives
+the same output at that seed. The induction is over each actual finite
+execution and requires no common transition bound. Projection yields a
+common label in each transcript cell, so (91.3) applies there.
+
+On the exceptional high-address event the score is at most five.
+Integration therefore bounds the sum of the five projected output-event
+probabilities by $3+2\gamma_m$. The five TV constraints give the lower
+bounds
+
+$$
+\begin{array}{c|c|c}
+\text{low word}&\text{projected output event}&\text{required probability}\\
+\hline
+0000&\{\theta_1\}&a_1-\varepsilon\\
+1000&\{\theta_0,\theta_2\}&1-\varepsilon\\
+1100&\{\theta_3\}&a_3-\varepsilon\\
+1110&\{\theta_4\}&a_4-\varepsilon\\
+1111&\{\theta_0\}&1-\varepsilon
+\end{array}
+\tag{91.5}
+$$
+
+The last row uses the projected target at the actual first absence 5.
+Hence
+
+$$
+a_1+a_3+a_4+2-5\varepsilon\le3+2\gamma_m.
+\tag{91.6}
+$$
+
+Letting $m\to\infty$ proves (91.1). Comparison sources can vary with
+$m$, but never with an individual seed. Their unprescribed real prime
+tails remain actual finite supports. Proposition 90.2 gives the
+$\mathcal O_2$ conclusion. Only necessity used these five words; upper
+constructions must still check the whole cube and every actual tail.
+$\square$
+
+## 92. An exact two-request separation on a four-coordinate family
+
+**Theorem 92.1 (Attained adaptive and restricted errors).** Let
+$0<s\le1$ and retain any positive monotone vanishing tail satisfying
+
+$$
+a_1=1,\qquad a_2=a_3=a_4=s,\qquad
+a_5\le e(s),\qquad
+e(s)=\max\{s/3,(3s-1)/5\}.
+\tag{92.1}
+$$
+
+Then
+
+$$
+E_{\mathcal A}(2;a)=e(s),\qquad
+E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=2s/5.
+\tag{92.2}
+$$
+
+All three infima are attained on the entire original $X$ by common-seed
+rules handing off everywhere. If $0<s<1$, then for every exact cap
+$\varepsilon\in[e(s),2s/5)$,
+
+$$
+\kappa^{\mathcal A}_\varepsilon(a)=2,
+\qquad
+\kappa^{\mathcal N}_\varepsilon(a)
+ =\kappa^{\mathcal O}_\varepsilon(a)=3.
+\tag{92.3}
+$$
+
+At $\varepsilon=2s/5$ all three counts are two. The error gap is
+
+$$
+2s/5-e(s)=
+\begin{cases}s/15,&0<s\le3/4,\\(1-s)/5,&3/4\le s\le1.
+\end{cases}
+\tag{92.4}
+$$
+
+**Proof.** Let an arbitrary original hard-two rule have uniform error
+$r$. Theorem 85.1 at $n=4$, $k=2$ gives
+$2(s-r)_+\le4r$, and hence $r\ge s/3$. If $r\ge s$,
+then also $r\ge(3s-1)/5$. Otherwise $0<r<s$, and the mean lower bound
+of Theorem 79.2 yields
+
+$$
+2\ge\sup_x\mathsf E_AK_{A,x}\ge
+\left(\sum_{i\ge1}(a_i-r)_+-r\right)_+
+\ge(1+3s-5r)_+.
+\tag{92.5}
+$$
+
+It follows that $r\ge(3s-1)/5$. Thus $r\ge e(s)$ in every case.
+These are two necessary bounds on the original arbitrary adaptive class;
+their sufficiency here will follow from a separate actual rule.
+
+For the construction write $[i;T_0,T_1]$ for a query of $p_i$, with
+the zero and one branches $T_0,T_1$. A leaf $j$ emits original tape
+$\theta_j$. On the four-bit cube, let $\eta^{(t)}$ be the finite
+target which is $\delta_{\theta_1}$ at first zero 1,
+$(1-t)\delta_{\theta_0}+t\delta_{\theta_n}$ at first zero
+$n\in\{2,3,4\}$, and $\delta_{\theta_0}$ at word $1111$.
+These are auxiliary finite vectors, not replacements for any original
+tail law. The rule
+
+$$
+R=[1;1,0]
+\tag{92.6}
+$$
+
+realizes $\eta^{(0)}$ exactly. Define $C$ by choosing each of the
+following four trees with probability $1/4$:
+
+$$
+\begin{aligned}
+C_1&=[1;1,[2;2,0]],& C_2&=[1;1,[2;2,4]],\\
+C_3&=[3;[1;1,3],[4;4,0]],&
+C_4&=[3;[2;0,3],[1;1,0]].
+\end{aligned}
+\tag{92.7}
+$$
+
+Every tree has at most two requests. In particular, the zero branch of
+$C_4$ at its second query of index 2 emits label 0. The complete law
+table of this particular kernel is as follows; its entries are the
+numerators of $(p_0,p_1,p_2,p_3,p_4)$ over denominator four:
+
+$$
+\begin{array}{c|rrrrr}
+b&4p_0&4p_1&4p_2&4p_3&4p_4\\\hline
+0000&1&3&0&0&0\\
+0001&1&3&0&0&0\\
+0010&0&3&0&0&1\\
+0011&1&3&0&0&0\\
+0100&0&3&0&1&0\\
+0101&0&3&0&1&0\\
+0110&0&3&0&0&1\\
+0111&1&3&0&0&0\\
+1000&1&0&2&1&0\\
+1001&1&0&2&1&0\\
+1010&1&0&2&0&1\\
+1011&2&0&2&0&0\\
+1100&1&0&0&2&1\\
+1101&1&0&0&2&1\\
+1110&2&0&0&0&2\\
+1111&3&0&0&0&1
+\end{array}
+\tag{92.8}
+$$
+
+The table follows directly from the four leaf indicators in (92.7).
+For the eight words beginning with zero, $C_1,C_2$ emit 1, and exactly
+one of $C_3,C_4$ emits 1: it is $C_3$ when $b_3=0$ and $C_4$ when
+$b_3=1$. For words beginning $10$, the first two trees emit 2, while
+$C_3$ emits 3 if $b_3=0$, otherwise 4 or 0 according to $b_4$;
+$C_4$ emits 0. For words beginning $110$, the four outputs are
+$0,4,3,3$. At $1110$ they are $0,4,4,0$, and at $1111$ they are
+$0,4,0,0$. These cases exhaust the entire cube, including every
+multiple-zero word.
+
+For a target $(1-t)\delta_{\theta_0}+t\delta_{\theta_n}$, the TV
+error of a finite marked law $p$ is the sum of its two possible deficits,
+
+$$
+(1-t-p_0)_+ +(t-p_n)_+,
+\tag{92.9}
+$$
+
+as supplied by (84.2). Equation (92.8) thus gives error $1/4$ against
+$\eta^{(3/4)}$ at every word. At $1111$ this is $1-p_0=1/4$.
+
+Denote by $P_{\ell,k}$ the finite label construction used in the proof
+of Theorem 87.1: order $1<\cdots<\ell<\ast$, select uniformly a
+$(k+1)$-element subset, query its first $k$ labels increasingly until
+a zero, and otherwise emit its last unqueried label. Label $\ast$
+means $\theta_0$ and is never queried. This supplies an
+$\mathcal O_k$ kernel. The inclusion argument (87.5) gives correct-mark
+probability $(k+1)/(\ell+1)$ for every low first-zero word, irrespective
+of all its suffix replies, and the same base probability at the finite
+all-positive word. In particular $P_{4,2}$ has finite error $2/5$
+against $\eta^{(1)}$. This established ingredient is used without
+changing any actual tail or adding a source.
+
+For $0<s\le3/4$, choose $R$ with probability $1-4s/3$ and $C$ with
+probability $4s/3$. The probabilities are nonnegative and sum to one,
+and at each finite word
+
+$$
+\eta^{(s)}=(1-4s/3)\eta^{(0)}+(4s/3)\eta^{(3/4)}.
+\tag{92.10}
+$$
+
+Convexity of TV gives finite error at most $s/3$. At every word with
+first zero 1 the correct-mark probability is exactly $1-s/3$, so this
+bound is attained. Its $1111$ output is
+$(1-s/3)\delta_{\theta_0}+(s/3)\delta_{\theta_4}$.
+
+For $3/4\le s\le1$, put $v=4s-3$ and choose $C$ with probability
+$1-v$ and $P_{4,2}$ with probability $v$. At each finite word,
+
+$$
+\eta^{(s)}=(1-v)\eta^{(3/4)}+v\eta^{(1)}.
+\tag{92.11}
+$$
+
+The finite error is at most
+$(1-v)/4+2v/5=(3s-1)/5$. At first zero 1 the correct-mark deficit
+equals this quantity. At $1111$ its total mass outside the base is
+also exactly this quantity. Equations (92.10)--(92.11) are statements
+about the finite vectors only; no interpolation of the given actual
+tail sequence is assumed.
+
+In both ranges the final rule has $K\le2$, $M\le4$, and its
+all-positive low output has nonbase mass $e(s)$. At an actual source
+with first absence $n>4$, it emits no $\theta_n$, so the original
+tail identity (83.9) gives
+
+$$
+\operatorname{TV}(\widehat\lambda_{A,x},\lambda_x^a)
+ =\max\{e(s),a_n\}=e(s).
+\tag{92.12}
+$$
+
+Every other actual source has one of the already checked low words.
+Thus the unchanged tail is covered, and the lower adaptive bound is
+attained.
+
+Theorem 91.1 gives $r\ge2s/5$ for every $\mathcal N_2$ competitor.
+For a matching $\mathcal O_2$ rule, choose $R$ with probability $1-s$
+and $P_{4,2}$ with probability $s$. At first absence 1 its correct
+mass is $(1-s)+3s/5=1-2s/5$. At first absence $2\le n\le4$ its
+correct mass is $3s/5$ and its base mass is at least $1-s$, so
+(92.9) gives exactly $2s/5$. These calculations use the plateau
+inclusion probability for every suffix, rather than only single-zero
+patterns. At $1111$ its nonbase mass is $2s/5$, and at each actual
+tail source its error is $\max\{2s/5,a_n\}=2s/5$ by (92.1).
+Padding gives the same laws in $\mathcal N_2$ by Proposition 90.2.
+This proves (92.2).
+
+To obtain the restricted three-request upper bound, use the same mixture
+$(1-s)R+sP_{4,3}$. Its low first-zero error is $s/5$, and its actual
+tail error is $\max\{s/5,a_n\}\le e(s)$. It is an
+$\mathcal O_3$ rule and can be padded to $\mathcal N_3$.
+For a hard-one original competitor, Theorem 85.1 at $n=4$ gives
+$3(s-\varepsilon)_+\le4\varepsilon$. Whenever
+$\varepsilon\le2s/5<s$, this requires
+$\varepsilon\ge3s/7$, contradicting $2s/5<3s/7$.
+Thus no class has hard count zero or one throughout the asserted
+closed interval. Below $2s/5$, (91.1) excludes restricted count two;
+the preceding attainers prove (92.3) and its endpoint claim. At $s=1$
+the gap vanishes, while the attained errors remain $2/5$.
+
+Each mixture, subset and terminal choice is selected by coordinates of
+one source-independent seed, or by a finite partition of one uniform
+seed. All displayed trees are executed as actual requests to $p_i$,
+and their leaves hand the indicated original tapes to the unchanged
+consumer. Their finite records and outputs are measurable categorical
+events. All branches hand off finitely at every actual source and
+every seed. For example, $s=1/2$ and $a_{4+j}=1/(6j)$, $j\ge1$,
+satisfy (92.1), giving errors $1/6$ and $1/5$ and counts two and three
+at cap $1/6$. No original source, tail target or observation has been
+removed. $\square$
+
+## 93. Minimal active dimension and request depth for a feasibility gap
+
+**Proposition 93.1 (No smaller active cube or smaller request budget).**
+For every sequence (73.3) and every $0<\varepsilon\le1$, the three
+classes have identical feasibility at hard budgets zero and one.
+If the active length $L$ of (83.2) is at most three, they have identical
+feasibility at every hard budget. Hence active dimension four and hard
+budget two are minimal for the strict feasibility gaps in Theorem 92.1.
+This does not assert minimality of the number of comparison sources or
+of their numerical labels.
+
+**Proof.** At budget zero there is no source observation, and every
+lawful rule is already preselected and ordered with an empty sequence.
+At budget one, Theorem 83.3 supplies a common mixture of leaves and
+one-query trees for any feasible original rule. Every such tree is an
+$\mathcal O_1$ rule, so its original exact-cap feasibility is attained
+in both restricted classes. Containment gives the converse. This uses
+the theorem's feasibility transport, not preservation of an arbitrary
+adaptive competitor's laws.
+
+The near-full-depth case provides the remaining bridge. For any
+$L\ge1$, original feasibility with $k=L-1$ is equivalent to
+
+$$
+a_L\le(L+1)\varepsilon,
+\tag{93.1}
+$$
+
+and when feasible it is attained in $\mathcal O_{L-1}$. Necessity is
+Theorem 85.1 at $n=L$, $k=L-1$: since $a_L>\varepsilon$ by the
+definition of $L$, it gives $a_L-\varepsilon\le L\varepsilon$.
+For sufficiency use the nonnegative probabilities
+
+$$
+w_0=1-a_1,\quad w_j=a_j-a_{j+1}\ (1\le j<L),\quad w_L=a_L.
+\tag{93.2}
+$$
+
+They sum to one. Branch zero emits $\theta_0$. Branch $j<L$ queries
+$1,\ldots,j$ increasingly until its first zero and emits that zero's
+mark, or emits $\theta_0$ on exhaustion. Branch $L$ uses the existing
+$P_{L,L-1}$ kernel from Theorem 87.1, with its inclusion probability
+$L/(L+1)$. This is only an auxiliary finite mixture within the
+minimality proof.
+
+At any actual first absence $n\le L$, the exact branches $n\le j<L$
+contribute correct-mark mass $a_n-a_L$, while the last branch contributes
+$a_LL/(L+1)$. Hence
+
+$$
+p_n=a_n-\frac{a_L}{L+1},\qquad p_0\ge1-a_n.
+\tag{93.3}
+$$
+
+The base lower bound comes from branches $j<n$, including branch zero.
+All other target coordinates are zero, so (92.9) gives error exactly
+$a_L/(L+1)$ regardless of all multiple-zero suffixes. At any actual
+first absence $n>L$, every selected numerical query is positive; the
+shorter branches emit base, and the last branch emits base with
+probability $L/(L+1)$. There is no emitted tail mark, so
+
+$$
+\operatorname{TV}(\widehat\lambda_x,\lambda_x^a)
+ =\max\{a_L/(L+1),a_n\}\le\varepsilon
+\tag{93.4}
+$$
+
+under (93.1). Each branch is an increasing first-zero-stop rule with
+at most $L-1$ requests. These finite categorical branches give one
+common seed rule on all actual sources, without altering the original
+positive tail.
+
+If $L=0$, immediate base is feasible. At any $k\ge L$, the ordered
+full-active-prefix sampler in the proof of Theorem 83.3 is feasible:
+sample the exact low target at its first zero and emit base on an
+all-positive active prefix. For $L\le3$, budgets zero, one and $k\ge L$
+leave only $L=3$, $k=2$ to check. Equation (93.1) and its ordered
+attainer settle that case. The interval in (92.3) has $L=4$ because
+all four leading amplitudes exceed its cap and $a_5$ does not.
+Its strict gap therefore attains both claimed minima. No analogous
+normal form for $L\ge4$ follows. $\square$
+
+## 94. A strict gap with four unequal amplitudes and a stable region
+
+**Theorem 94.1 (An attained unequal-amplitude example).** Retain any
+positive monotone vanishing tail with
+
+$$
+(a_1,a_2,a_3,a_4)=(1,3/4,1/2,1/4),\qquad a_5\le1/8.
+\tag{94.1}
+$$
+
+Then
+
+$$
+E_{\mathcal A}(2;a)=1/8,
+\qquad E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=3/20.
+\tag{94.2}
+$$
+
+For $\varepsilon\in[1/8,3/20)$ the three hard-count optima are
+respectively two, three and three. At $\varepsilon=3/20$ they are all
+two. In particular the capability loss is not confined to equal
+secondary amplitudes.
+
+**Proof.** Choose the following five trees with their indicated
+probabilities. The notation is that of (92.7), but this is a separate
+kernel $V$:
+
+$$
+\begin{array}{c|c}
+\text{tree}&\text{probability}\\\hline
+[1;1,0]&1/8\\
+[1;1,[2;2,0]]&4/8\\
+[1;1,[2;2,3]]&1/8\\
+[3;[1;1,3],[4;4,0]]&1/8\\
+[3;[2;2,3],[1;1,0]]&1/8
+\end{array}
+\tag{94.3}
+$$
+
+Every path has at most two actual requests and indices at most four.
+Its complete law table has denominator eight:
+
+$$
+\begin{array}{c|rrrrr}
+b&8p_0&8p_1&8p_2&8p_3&8p_4\\\hline
+0000&0&7&1&0&0\\
+0001&0&7&1&0&0\\
+0010&0&7&0&0&1\\
+0011&1&7&0&0&0\\
+0100&0&7&0&1&0\\
+0101&0&7&0&1&0\\
+0110&0&7&0&0&1\\
+0111&1&7&0&0&0\\
+1000&1&0&6&1&0\\
+1001&1&0&6&1&0\\
+1010&2&0&5&0&1\\
+1011&3&0&5&0&0\\
+1100&5&0&0&3&0\\
+1101&5&0&0&3&0\\
+1110&6&0&0&1&1\\
+1111&7&0&0&1&0
+\end{array}
+\tag{94.4}
+$$
+
+For $b_1=0$, the first three trees contribute six eighths at mark 1,
+and one of the last two trees contributes one more eighth there:
+the fourth when $b_3=0$, the fifth when $b_3=1$. The remaining eighth
+is mark 2 or 3 when $b_3=0$, according to $b_2$, and mark 4 or base
+when $b_3=1$, according to $b_4$. For words beginning $10$, the second
+and third trees contribute five eighths at mark 2; the first gives
+base, the fourth gives mark 3 when $b_3=0$ and otherwise mark 4 or
+base, and the fifth gives mark 2 when $b_3=0$ and otherwise base.
+For $110*$ the outputs are base, base, mark 3, mark 3, mark 3 with
+the weights in (94.3). For $1110$ they are base, base, mark 3, mark 4,
+base; for $1111$ only the third tree emits a nonbase mark, namely 3.
+This proves every row of (94.4) from the stated trees.
+
+At first zero 1 the target is pure mark 1 and the error is $1/8$.
+At first zero 2, rows $100*$ have a base deficit $1/8$, while rows
+$101*$ have a correct-mark deficit $1/8$. At first zero 3, rows $110*$
+have a correct-mark deficit $1/8$. At first zero 4 the same deficit is
+$1/8$ at mark 4. In each case (92.9) shows that there is no additional
+negative discrepancy. At every actual tail source the last row has
+nonbase mass $1/8$ and no tail mark, so its error is
+$\max\{1/8,a_n\}=1/8$. Conversely Theorem 85.1 at $n=3$, $k=2$
+forces $(1/2-r)_+\le3r$, hence $r\ge1/8$ for any adaptive hard-two
+rule. This proves the adaptive equality in (94.2).
+
+For a restricted attainer, preselect one of the following increasing
+sequences and terminal rules. The three terminal labels in each row
+are respectively the output at a zero in the first position, a zero
+in the second position, and all-positive exhaustion:
+
+$$
+\begin{array}{c|ccc|c}
+\text{sequence}&\text{first zero}&\text{second zero}&\text{exhaustion}
+ &\text{probability}\\\hline
+(2,3)&0&3&0&3/20\\
+(1,2)&1&0&4&2/20\\
+(1,2)&1&2&0&11/20\\
+(1,2)&1&2&3&1/20\\
+(1,3)&1&3&0&3/20
+\end{array}
+\tag{94.5}
+$$
+
+The weights sum to one. The following exhaustive cases give its laws:
+at $0***$ the mass at mark 1 is $17/20$, with other mass totaling
+$3/20$; for all other words the full vectors are
+
+$$
+\begin{array}{c|rrrrr}
+b&20p_0&20p_1&20p_2&20p_3&20p_4\\\hline
+100*&5&0&12&3&0\\
+101*&8&0&12&0&0\\
+110*&11&0&0&7&2\\
+1110&17&0&0&1&2\\
+1111&17&0&0&1&2
+\end{array}
+\tag{94.6}
+$$
+
+Here each star independently means either bit. The first case follows
+because all four rows of (94.5) starting with index 1 emit mark 1 at
+its zero. At $100*$ the first and second rows emit base, the next two
+emit mark 2 and the last emits mark 3; at $101*$ the last instead
+emits base. At $110*$ the first and last emit mark 3, and the three
+middle rows give their exhaustion labels. At $111*$ all rows give
+exhaustion labels. Thus every multiple-zero word is included.
+
+At first absence 1 the error is $3/20$. At first absence 2, the target
+has masses $5/20$ at base and $15/20$ at mark 2, so both rows in
+(94.6) have error $3/20$. At first absence 3 its base and correct
+masses are $10/20,10/20$, giving correct-mark deficit $3/20$.
+At first absence 4 they are $15/20,5/20$, again giving deficit
+$3/20$. At every actual first absence $n>4$, the last row has error
+$\max\{3/20,a_n\}=3/20$. This is an $\mathcal O_2$ attainer;
+padding gives an $\mathcal N_2$ attainer. Theorem 91.1 gives the
+matching universal restricted lower bound
+$(1+1/2+1/4-1)/5=3/20$.
+
+Hard one is impossible throughout the asserted interval, since
+Theorem 85.1 at $n=2$, $k=1$ requires $r\ge1/4$. Three ordered
+requests suffice already at cap $1/8$: query $1,2,3$ until their first
+zero, sampling its exact original two-point selected law there. On
+three positive replies, emit $\theta_4$ with probability $1/8$ and
+otherwise $\theta_0$. At first absence 4 the error is $1/8$; at
+every later first absence it is $\max\{1/8,a_n\}\le1/8$.
+This proves all hard counts and the closed endpoint.
+
+All choices in (94.3), (94.5) and the three-request sampler use one
+source-independent seed; no output randomness is supplied by the
+source or newly introduced at handoff. Every execution is finite and
+measurable and hands an original mark to the original consumer.
+For a concrete positive tail one may take $a_{4+j}=1/(8j)$,
+$j\ge1$. Every low word is realized inside the original source
+family by Theorem 35.2. More explicitly, $F_{19}=4181$ and the
+permitted window is $419\le g\le836$. Since
+$4181\cdot11\equiv1\pmod{210}$, for any $b\in\{0,1\}^4$ the CRT
+residue $r_b\in\{0,\ldots,209\}$ specified by
+
+$$
+r_b\equiv
+\begin{cases}-11\pmod{p_i},&b_i=1,\\0\pmod{p_i},&b_i=0,
+\end{cases}
+\qquad 1\le i\le4
+\tag{94.7}
+$$
+
+has a representative
+$g_b=419+((r_b-419)\bmod210)$ between 419 and 628.
+The actual label $(19,g_b)$ consequently has precisely that four-bit
+static answer word. These fixed labels illustrate full low-pattern
+realization; the arbitrary-address lower bound still uses the separate
+families $x_{t,m}$ of Theorem 91.1. All real high tails, not just these
+sixteen labels, were covered in the output calculations. $\square$
+
+**Corollary 94.2 (A stable region of unequal amplitudes).** Retain (73.3),
+let $0\le\delta<1/64$, and suppose
+
+$$
+|a_i-A_i|\le\delta\quad(1\le i\le4),\qquad
+(A_1,A_2,A_3,A_4)=(1,3/4,1/2,1/4),\qquad
+a_5\le\varepsilon=1/8+\delta.
+\tag{94.8}
+$$
+
+Then $L=4$ and
+
+$$
+\kappa^{\mathcal A}_\varepsilon(a)=2,
+\qquad
+\kappa^{\mathcal N}_\varepsilon(a)
+ =\kappa^{\mathcal O}_\varepsilon(a)=3.
+\tag{94.9}
+$$
+
+No strict conclusion at $\delta=1/64$ is asserted by these bounds.
+
+**Proof.** Keep exactly the kernel $V$ of (94.3). On a low first-zero
+class $n\le4$, changing the target amplitude from $A_n$ to $a_n$
+changes its two-point law by TV exactly $|a_n-A_n|$. The triangle
+inequality and (94.4) bound the error by $1/8+\delta$ on every such
+word. At a real tail source its output is still
+$(7/8)\delta_{\theta_0}+(1/8)\delta_{\theta_3}$, with error
+$\max\{1/8,a_n\}\le\varepsilon$.
+
+Theorem 91.1 bounds every restricted hard-two error below by
+$3/20-3\delta/5$. Its excess over the proposed cap is
+
+$$
+\frac{3}{20}-\frac{3\delta}{5}
+   -\left(\frac18+\delta\right)
+ =\frac1{40}-\frac{8\delta}{5}>0.
+\tag{94.10}
+$$
+
+Hard one is impossible in the original class because
+$a_2\ge3/4-\delta>3(1/8+\delta)$, contrary to Theorem 85.1
+at $n=2$, $k=1$.
+
+For restricted hard three, query $1,2,3$ increasingly until a zero and
+sample the exact selected law there. On all three positive replies emit
+mark 4 with probability $r=a_4-\varepsilon$ and base otherwise.
+The assumptions give
+
+$$
+a_4\ge1/4-\delta>\varepsilon,
+\qquad a_4\le1/4+\delta\le2\varepsilon,
+\qquad 0<r\le\varepsilon.
+\tag{94.11}
+$$
+
+Its error at first absence 4 is $a_4-r=\varepsilon$ and at every
+later first absence is $\max\{r,a_n\}\le\varepsilon$.
+This gives an $\mathcal O_3$ rule and, by padding, an
+$\mathcal N_3$ rule with the same laws. Equation (94.11) and
+$a_5\le\varepsilon$ also prove $L=4$. Combining these upper bounds
+with the two impossibility bounds proves (94.9). $\square$
+
+## 95. Resource and original-target range of the strategy separation
+
+**Proposition 95.1 (Separate resource statements and unchanged consumer).**
+The adaptive attainers in Theorems 92.1 and 94.1 satisfy $K\le2$ and
+$M\le4$ everywhere. The restricted attainers in Theorem 92.1 have
+$K\le2$, $M\le4$ at their optimal two-request error, and $K\le3$,
+$M\le4$ at the smaller separating caps. The restricted two-request
+attainer (94.5) has $M\le3$; its three-request prefix attainer also
+has $M\le3$. The same bounds hold for the corresponding padded
+nonadaptive rules.
+
+For the unequal adaptive kernel $V$, the sourcewise means are
+
+$$
+\mathsf E_VK_{V,x}=
+\begin{cases}5/4,&q_1(x)=0,\\15/8,&q_1(x)=1.
+\end{cases}
+\tag{95.1}
+$$
+
+Its uniform mean $15/8$ equals the supplied unrestricted mean optimum
+$D$ at cap $1/8$ for (94.1). For the ordered rule $W$ of (94.5),
+
+$$
+\mathsf E_WK_{W,x}=1+\frac{17}{20}q_1(x)+\frac3{20}q_2(x),
+\tag{95.2}
+$$
+
+while its fully acquired nonadaptive padding has $K=2$ everywhere.
+Thus even the law-preserving containment need not preserve sourcewise
+mean requests. All attainers hand off finitely everywhere, but these
+statements impose no transition-time, physical-time or effective
+real-probability sampling bound.
+
+Every attainer here has TV distance one from every unchanged original
+nonatomic target $\mu_x$ of Source-Correlated Laws, Theorem 67.5, and
+the unchanged consumer returns unknown on its handed tape.
+
+**Proof.** The hard-count and address bounds follow by inspecting the
+stated finite request sequences and trees. In (94.3) the first tree
+always uses one request. The next two, with total weight $5/8$, use
+one request at $q_1=0$ and two at $q_1=1$. The last two always use
+two. This gives (95.1). Both first-answer values occur at actual sources,
+so the supremum is $15/8$. At cap $1/8$, (79.1) gives leading residuals
+$7/8,5/8,3/8,1/8$ and zero tail residuals, hence
+$D=(2-1/8)=15/8$. This comparison uses the established mean formula;
+it does not turn a mean into a general hard-count criterion.
+
+In (94.5), every selected sequence has two entries and its first request
+is always made. Its second is made on a positive first reply. The total
+weight of sequences starting at index 1 is $17/20$, and the weight
+starting at index 2 is $3/20$, proving (95.2). The padded version
+requests both entries regardless of their replies. In particular the
+sourcewise change in mean is visible even though the laws are identical.
+For (94.1) at cap $1/8$, the supplied optimal maximum-address value
+is $h_{1/8}=3$: the residual sums after indices 2 and 3 are respectively
+$1/2$ and $1/8$. Thus the adaptive two-request rule's use of index 4
+does not identify its count with the separately optimal address budget.
+The restricted lower bound imposed no address ceiling at all.
+
+Every displayed output is one of the original points
+$\theta_0,\ldots,\theta_4$ in $B_1$. Their finite Borel support has
+output probability one and probability zero under each original
+nonatomic $\mu_x$. The event definition of TV therefore gives distance
+one. The original consumer returns unknown on $B_1$ by (73.1).
+Consequently all errors and capability gaps in Sections 90--94 concern
+only the selected marked laws (73.4); none supplies a cap below one or
+the positive-proposal row for those original nonatomic targets.
+$\square$
+
+**Mathematical citation 95.2 (Suppliers and unresolved scope).** Actual
+finite-pattern realization is supplied by Boundaries, Theorem 35.2;
+finite whole-execution transport by Source-Correlated Laws, Lemma 45.3.
+The full-carrier TV projection and actual-tail identity are (83.8)--(83.9).
+The complete finite criterion remains Theorems 83.3 and 84.1; the
+late-mark bound is Theorem 85.1, the mean bound is Theorem 79.2, and
+the subset plateau kernel is the construction of Theorem 87.1.
+The finite tree and TV ingredients retain the mature-source credits in
+83.4 and 84.4. TV convexity used above follows directly by applying the
+event definition to a mixture on each fixed source. These ingredients
+are suppliers to the source-specific deductions, with no
+literature-priority or kernel-verification assertion.
+
+The strict gaps disprove a universal replacement of arbitrary adaptive
+rules by either $\mathcal N$ or $\mathcal O$ at the same hard request
+count and exact uniform selected-law TV cap. They do not establish a
+general equality between $\mathcal N$ and $\mathcal O$, identify the
+optima of their means, or classify other reduced adaptive families.
+The five-event obstruction alone supplies no complete restricted domain.
+The near-full-depth bridge in Proposition 93.1 establishes the minimal
+active dimension; it is not a general analytic hard-count formula.
+For arbitrary monotone amplitudes and arbitrary budgets, a general
+analytic classification of the original $\kappa_\varepsilon$ remains
+unresolved. The exact finite criterion of Sections 83--84 retains that
+full scope, including all multiple-zero words. Zero-error and unit-cap
+boundaries remain Proposition 89.1. The real weights and finite
+constructions assert no finite-precision representation, efficient
+optimization, or general execution-time estimate.
+
+## 追加锚（本行以下为增补区）
