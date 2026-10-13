@@ -51,7 +51,10 @@ internal sealed class LossPurityLogConvexityRefutationDocument : IScribeDocument
                             + "7296233469022569/15625000000000000000000. All three values are positive. "
                             + "Convexity of their logarithms would give the opposite weak inequality, "
                             + "so Conjecture 7 fails for this mixed state."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hertz-lupu-gladstein-heshami-goldberg-2025-loss-purity-log-convexity"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
