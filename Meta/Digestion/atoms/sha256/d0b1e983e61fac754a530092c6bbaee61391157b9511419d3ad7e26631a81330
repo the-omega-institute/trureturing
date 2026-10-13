@@ -1,0 +1,38 @@
+## 48. Supersession and the all-infinite query
+
+For the avoidance of a false mixed-budget reading, Definitions 46.3 and 47.1
+are normative for this volume. They **supersede** the unqualified frontier and
+feasibility sentences in Definitions 44.1 and Theorem 44.2: every occurrence
+of $\mathcal F_K$ and $\operatorname{Feas}_K$ in that theorem is to be read as
+$\mathcal F_K^{\mathrm{fin}}$ and
+$\operatorname{Feas}_K^{\mathrm{fin}}$, with the bounded-profile and
+source-total certificates of Sections 46--47. A per-source terminating
+controller with an infinite coordinate is not a feasible finite-frontier
+witness.
+
+The all-infinite box is therefore a genuine decision query, not an
+unbounded search instruction. The hypothesis corresponding to item 4 of
+Theorem 44.2 is strengthened to:
+
+$$
+\operatorname{Feas}^{\mathrm{fin}}_K((\infty,\ldots,\infty))
+$$
+
+is decided by an exact finite-profile synthesis or by a proof that no finite
+profile exists. “No finite controller has been found” is not a negative
+answer. Once this all-infinite query is decided, the mixed-box extraction may
+start with a finite witness or terminate with an empty finite Pareto basis;
+the Dickson argument then concerns only the finite vectors in
+$\mathcal F_K^{\mathrm{fin}}$.
+
+The ambient type of the unbounded coordinatewise supremum is
+
+$$
+b(C)=\sup_{s\in D}c_C(s)\in(\mathbb N\cup\{\infty\})^d.
+$$
+
+Membership in $\mathcal C_K^{\mathrm{fin}}$ means exactly that this extended
+supremum happens to lie in the finite subspace $\mathbb N^d$. This typing is
+part of the correction: it makes the distinction between finite budget
+feasibility and merely sourcewise finite execution explicit.
+

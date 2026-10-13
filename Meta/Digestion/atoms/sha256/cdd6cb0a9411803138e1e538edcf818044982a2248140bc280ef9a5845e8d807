@@ -1,0 +1,29 @@
+**Definition 46.3 (finite resource frontier and mixed feasibility).** A
+controller may have finite cost on every individual source while its
+coordinatewise worst cost over an infinite source domain is unbounded. Define
+
+$$
+\mathcal C_K^{\mathrm{fin}}
+ =\{C\in\mathcal C_K:b(C)\in\mathbb N^d\},
+$$
+
+$$
+\mathcal F_K^{\mathrm{fin}}
+ =\{B\in\mathbb N^d:\exists C\in\mathcal C_K^{\mathrm{fin}},\ b(C)\le B\}.
+$$
+
+For a mixed budget $\bar B\in(\mathbb N\cup\{\infty\})^d$, use the
+finite-profile predicate
+
+$$
+\operatorname{Feas}^{\mathrm{fin}}_K(\bar B)
+\iff
+\exists x\in\mathbb N^d,
+\quad x\le\bar B\quad\land\quad x\in\mathcal F_K^{\mathrm{fin}}.
+$$
+
+An $\infty$ coordinate therefore removes a constraint; it does not license an
+infinite worst coordinate as a member of the finite frontier. If an
+all-infinite synthesis procedure is used, it must either return a controller
+with a finite profile or report that only unbounded profiles were found.
+
