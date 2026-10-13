@@ -14,21 +14,21 @@ The public result is the designated refutation result (`basis=refutes`) and is
 exempt from four-slot escape registration (CLAUDE.md §3.9).
 Singular values use the preregistered function body; proofs use
 LinearMap.singularValues directly without a duplicate definition.
-The frozen owner identities below precede publication of its private declarations.
+The owner identities below are declaration statement_ids from the scoped Lean report.
 Non-propositional definitions encode the matrix family and scalar comparison.
-F1: D5/S3/Quantum/Information/PartialTraceMutualInformation.re_trace_cfc; statement_id: sha256:15721fa472c8a675112132c464c2a13f2c199e590564dba88af6d796de266a97
-F2: D5/S3/Quantum/NormCompression/UpperBranchReduction.diagonal_power_le_eigenvalue_power; statement_id: sha256:a5bd705764f47f6f04881558d321d26bf197c775aebc23561f2455c73f8c76c4
-F3: D5/S3/Quantum/NormCompression/UpperBranchReduction.expectation_eq_eigenvalue_sum; statement_id: sha256:55fab1e32f2c293b948eb1684992e374929953950d88a1c6e485d3582b52493a
+F1: D5/S3/Quantum/Information/PartialTraceMutualInformation.re_trace_cfc; statement_id: sha256:842be170b064cf5b6fa757573bdceff91d2ed026e4e695a809d2db341276db97
+F2: D5/S3/Quantum/NormCompression/UpperBranchReduction.diagonal_power_le_eigenvalue_power; statement_id: sha256:03d15849b4321e9d735117ced3bf4471deb0f994c29d0c9ba729f2ae7141f440
+F3: D5/S3/Quantum/NormCompression/UpperBranchReduction.expectation_eq_eigenvalue_sum; statement_id: sha256:0d39d88eeabb46d813df17d701780348c43576e9f0d1bb99e2ef587c53ac9090
 F4: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenNorm; statement_id: sha256:02fdf214898933eff1a32234bd5f4868da16db800b68e3790e820d4c60e070bd
-F5: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenNorm_nonneg; statement_id: sha256:1f852f6f9bafcd1e9d346af6a5c8fc8217542296a9626f80ff3f087e40a8bc01
-F6: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenNorm_rpow; statement_id: sha256:23ee26490a8b4e31d895d5db3fad5fad7878d9348243394a039f0d9e2d9afea7
+F5: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenNorm_nonneg; statement_id: sha256:43666f702cfab70ba4261d59baa4e6e86d51d15aaf130f183161147d0935cbbb
+F6: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenNorm_rpow; statement_id: sha256:786d90e773903cc7f0d7f34789781586e19f768740a7ae5cd3b6ba9cff6b3bd7
 F7: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow; statement_id: sha256:d89d93b393dcd229e6d2b67f603b5fb8c30c589e2b35d5b74ce0e6147ddf3eb7
 F8: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow._proof_1; statement_id: sha256:a66dd7b795c3399720b01de384eef119b6d2618ef78348798e438a8a2cebf335
 F9: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow._proof_2; statement_id: sha256:39fa90cdb13817cbc8cea638edc11d553f35c1dce5a08ade6f9aba1adcf1679d
 F10: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow._proof_3; statement_id: sha256:eccc6cf19eea6d3a9809139f36eeda665142a5103590bc328b547aad5955a471
-F11: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_columnGram; statement_id: sha256:f4d5c39480c9aea6fd6e4ea056fb78e1bc1a508361ec9f5be79d381a734b7abf
-F12: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_nonneg; statement_id: sha256:67fe25ab7259ef10ac2a0cb59801d8bb933aba50cd93d5e65648316b74dae801
-F13: D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex; statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
+F11: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_eq_columnGram; statement_id: sha256:d642ee6ac6eba0dc6698eff622ca63b6f12758091e4ee26b7c3de3991546637a
+F12: D5/S3/Quantum/NormCompression/UpperBranchReduction.schattenPow_nonneg; statement_id: sha256:9e230c8440a1171a6c06fd33baecf3f99fa91c9e71b6a1aa6817b51048e7fc0f
+F13: RHLinalg.sum_eigenvalues_reindex; statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
 proof_shape: IsCpApproximant: bind-only; escape_witness: none; consumer: chosenApproximant, chosenApproximant_spec, claim, cp_minimizers_separated, cp_power_min, exists_cp_approximant, cp_projects_to_real_min, result; Direct frozen dependencies: F4.
 proof_shape: IsStrictSpectralApproximant: bind-only; escape_witness: none; consumer: claim; Direct frozen dependencies: none.
 proof_shape: claim: bind-only; escape_witness: none; consumer: result; Direct frozen dependencies: F4.
