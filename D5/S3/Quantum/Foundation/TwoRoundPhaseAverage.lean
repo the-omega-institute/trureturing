@@ -543,7 +543,7 @@ def diagonalMarginal (p : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
   Matrix.diagonal (fun b => if b = 0 then (1 - p : ℝ) else p : Fin 2 → ℝ) |>.map
     (fun r : ℝ => (r : ℂ))
 
-private theorem embedBlock_entry (P : Matrix (Fin 3) (Fin 3) ℂ) (i j : Wire) :
+theorem embedBlock_entry (P : Matrix (Fin 3) (Fin 3) ℂ) (i j : Wire) :
     embedBlock P i j = if MainSupport i then if MainSupport j then P i.2 j.2 else 0
       else 0 := by
   classical
@@ -551,7 +551,7 @@ private theorem embedBlock_entry (P : Matrix (Fin 3) (Fin 3) ℂ) (i j : Wire) :
     simp [embedBlock, Matrix.mul_apply, blockEmbedding, Matrix.conjTranspose_apply,
       hi, hj, eq_comm]
 
-private theorem complementWeight_nonneg (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ)
+theorem complementWeight_nonneg (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ)
     (hp : 0 ≤ p) (h0 : (P 0 0).re ≤ 1 - p) (h1 : (P 1 1).re ≤ 1 - p)
     (h2 : (P 2 2).re ≤ p) (i : Wire) : 0 ≤ complementWeight p P i := by
   unfold complementWeight

@@ -205,7 +205,7 @@ private theorem trace_spectral_pair {X : Matrix n n ℂ} (hX : X.IsHermitian)
     rw [map_mul, StarAlgEquiv.apply_symm_apply, ← hdiag]
   unfold eventResponse
   rw [hpair, trace_conjugate]
-  simp [Matrix.trace, Matrix.diagonal_mul, Complex.mul_re, a, conjStarAlgAut_symm_apply]
+  simp [Matrix.trace, Matrix.diagonal_mul, Complex.mul_re, a]
 
 private theorem conjugate_interval (U : Matrix.unitaryGroup n ℂ)
     {F : Matrix n n ℂ} (hF : EventInterval 1 F) :
@@ -353,5 +353,350 @@ theorem attained_two_direction_spectral_events {M X : Matrix n n ℂ}
       have h₀ : 0 ≤ max (-eventResponse X M) 0 := le_max_right _ _
       have h₁ : -eventResponse X M ≤ max (-eventResponse X M) 0 := le_max_left _ _
       constructor <;> linarith
+
+
+open D5.S3.Quantum.Foundation.TwoRoundPhaseAverage
+open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open scoped Kronecker
+
+/-- Diagonal full-tester normalization in the original port order. -/
+def testerWeight (q t : ℝ) (ab : AB) : ℝ :=
+  if ab.1 = 0 then if ab.2 = 0 then q else 1 - t
+  else if ab.2 = 0 then 1 - q else t
+
+def diagonalTester (q t : ℝ) : Matrix AB AB ℂ :=
+  diagonal (fun ab => (testerWeight q t ab : ℂ))
+
+def testerNormalization (q t : ℝ) : Matrix Wire Wire ℂ :=
+  diagonalTester q t ⊗ₖ (1 : Matrix (Fin 3) (Fin 3) ℂ)
+
+/-- The normalization restricted to the three candidate addresses. -/
+def compressedNormalization (q t : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  diagonal (fun k => if k = 0 then (q : ℂ) else if k = 1 then (1 - q : ℝ) else t)
+
+def compressedDifference (eps : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ) :
+    Matrix (Fin 3) (Fin 3) ℂ :=
+  (candidate eps).submatrix mainAddress mainAddress - P
+
+private theorem compressed_difference_hermitian (eps : ℝ)
+    {P : Matrix (Fin 3) (Fin 3) ℂ} (hP : P.PosSemidef) :
+    (compressedDifference eps P).IsHermitian :=
+  ((posSemidef_vecMulVec_self_star (candidateVector eps)).isHermitian.submatrix mainAddress).sub
+    hP.isHermitian
+
+/-- The complete positive spectral objective of the compressed block. -/
+def compressedPositiveMass (eps q t : ℝ) {P : Matrix (Fin 3) (Fin 3) ℂ}
+    (hP : P.PosSemidef) : ℝ :=
+  weightedPositiveMass (compressedNormalization q t) (compressed_difference_hermitian eps hP)
+
+private theorem mainAddress_of_support {i : Wire} (hi : MainSupport i) :
+    mainAddress i.2 = i := by
+  rcases hi with rfl | rfl | rfl <;> decide
+
+private theorem blockEmbedding_gram : blockEmbeddingᴴ * blockEmbedding = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, blockEmbedding, Matrix.conjTranspose_apply, MainSupport,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three]
+
+private theorem block_compression (E : Matrix Wire Wire ℂ) :
+    blockEmbeddingᴴ * E * blockEmbedding = E.submatrix mainAddress mainAddress := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, blockEmbedding, Matrix.conjTranspose_apply, MainSupport,
+      mainAddress, Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three]
+
+private theorem compress_embed (F : Matrix (Fin 3) (Fin 3) ℂ) :
+    blockEmbeddingᴴ * embedBlock F * blockEmbedding = F := by
+  calc
+    _ = (blockEmbeddingᴴ * blockEmbedding) * F * (blockEmbeddingᴴ * blockEmbedding) := by
+      simp only [embedBlock, Matrix.mul_assoc]
+    _ = F := by rw [blockEmbedding_gram, Matrix.one_mul, Matrix.mul_one]
+
+private theorem candidate_embed (eps : ℝ) :
+    candidate eps = embedBlock ((candidate eps).submatrix mainAddress mainAddress) := by
+  classical
+  have hz (i : Wire) (hi : ¬ MainSupport i) : candidateVector eps i = 0 := by
+    have h0 : i ≠ ((0, 0), 0) := fun h => hi (Or.inl h)
+    have h1 : i ≠ ((1, 0), 1) := fun h => hi (Or.inr (Or.inl h))
+    have h2 : i ≠ ((1, 1), 2) := fun h => hi (Or.inr (Or.inr h))
+    simp [candidateVector, h0, h1, h2]
+  ext i j
+  rw [embedBlock_entry]
+  by_cases hi : MainSupport i
+  · by_cases hj : MainSupport j
+    · simp only [hi, hj, if_true, Matrix.submatrix_apply,
+        mainAddress_of_support hi, mainAddress_of_support hj]
+    · simp [hi, hj, candidate, Matrix.vecMulVec_apply, hz j hj, Pi.star_apply]
+  · simp [hi, candidate, Matrix.vecMulVec_apply, hz i hi, Pi.star_apply]
+
+private theorem testerWeight_nonneg (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
+    (ht : 0 ≤ t) (ht1 : t ≤ 1) (ab : AB) : 0 ≤ testerWeight q t ab := by
+  unfold testerWeight
+  split_ifs <;> linarith
+
+private theorem diagonalTester_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
+    (ht : 0 ≤ t) (ht1 : t ≤ 1) : (diagonalTester q t).PosSemidef := by
+  apply PosSemidef.diagonal
+  intro ab
+  change (0 : ℂ) ≤ (testerWeight q t ab : ℂ)
+  exact_mod_cast testerWeight_nonneg q t hq hq1 ht ht1 ab
+
+private theorem diagonalTester_normalized (q t : ℝ) :
+    partialTraceLeft (diagonalTester q t) = (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [partialTraceLeft, diagonalTester, testerWeight, diagonal, Fin.sum_univ_two] <;> ring
+
+private theorem testerNormalization_diagonal (q t : ℝ) :
+    testerNormalization q t = diagonal (fun i => (testerWeight q t i.1 : ℂ)) := by
+  unfold testerNormalization diagonalTester
+  rw [← diagonal_one, diagonal_kronecker_diagonal]
+  simp only [mul_one]
+
+private theorem testerNormalization_compression (q t : ℝ) :
+    blockEmbeddingᴴ * testerNormalization q t * blockEmbedding = compressedNormalization q t := by
+  rw [block_compression, testerNormalization_diagonal]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.submatrix_apply, mainAddress, testerWeight, compressedNormalization, diagonal]
+
+private def outsideDiagonal (w : Wire → ℂ) : Matrix Wire Wire ℂ := by
+  classical
+  exact diagonal (fun i => if MainSupport i then 0 else w i)
+
+private theorem diagonal_embedding_split (w : Wire → ℂ) :
+    diagonal w = embedBlock (diagonal (fun k => w (mainAddress k))) + outsideDiagonal w := by
+  classical
+  ext i j
+  rw [Matrix.add_apply, embedBlock_entry]
+  by_cases hi : MainSupport i
+  · by_cases hj : MainSupport j
+    · have heq : i.2 = j.2 ↔ i = j := by
+        constructor
+        · intro h
+          rw [← mainAddress_of_support hi, ← mainAddress_of_support hj, h]
+        · rintro rfl
+          rfl
+      simp [hi, hj, outsideDiagonal, diagonal, heq, mainAddress_of_support hi]
+    · have hij : i ≠ j := fun h => hj (h ▸ hi)
+      simp [hi, hj, hij, outsideDiagonal, diagonal]
+  · simp [hi, outsideDiagonal, diagonal]
+
+private theorem testerNormalization_split (q t : ℝ) :
+    testerNormalization q t = embedBlock (compressedNormalization q t) +
+      outsideDiagonal (fun i => (testerWeight q t i.1 : ℂ)) := by
+  rw [testerNormalization_diagonal, diagonal_embedding_split]
+  congr 2
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [mainAddress, testerWeight, compressedNormalization, diagonal]
+
+private theorem compressedNormalization_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
+    (ht : 0 ≤ t) (ht1 : t ≤ 1) : (compressedNormalization q t).PosSemidef := by
+  have hM := (diagonalTester_pos q t hq hq1 ht ht1).kronecker
+    (PosSemidef.one : (1 : Matrix (Fin 3) (Fin 3) ℂ).PosSemidef)
+  change (testerNormalization q t).PosSemidef at hM
+  simpa only [testerNormalization_compression] using
+    hM.conjTranspose_mul_mul_same blockEmbedding
+
+private theorem lift_compressed_event (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1)
+    (ht : 0 ≤ t) (ht1 : t ≤ 1) {F : Matrix (Fin 3) (Fin 3) ℂ}
+    (hF : EventInterval (compressedNormalization q t) F) :
+    EventInterval (testerNormalization q t) (embedBlock F) := by
+  classical
+  refine ⟨hF.1.mul_mul_conjTranspose_same _, ?_⟩
+  rw [testerNormalization_split]
+  have ho : (outsideDiagonal (fun i => (testerWeight q t i.1 : ℂ))).PosSemidef := by
+    apply PosSemidef.diagonal
+    intro i
+    dsimp [outsideDiagonal]
+    split_ifs
+    · exact le_rfl
+    · exact_mod_cast testerWeight_nonneg q t hq hq1 ht ht1 i.1
+  have h := (hF.2.mul_mul_conjTranspose_same blockEmbedding).add ho
+  convert h using 1
+  simp only [embedBlock, Matrix.mul_sub, Matrix.sub_mul]
+  abel
+
+private theorem compress_full_event (q t : ℝ) {E : Matrix Wire Wire ℂ}
+    (hE : EventInterval (testerNormalization q t) E) :
+    EventInterval (compressedNormalization q t) (blockEmbeddingᴴ * E * blockEmbedding) := by
+  refine ⟨hE.1.conjTranspose_mul_mul_same _, ?_⟩
+  have h := hE.2.conjTranspose_mul_mul_same blockEmbedding
+  simpa only [Matrix.mul_sub, Matrix.sub_mul, testerNormalization_compression] using h
+
+private theorem response_embed (F : Matrix (Fin 3) (Fin 3) ℂ) (E : Matrix Wire Wire ℂ) :
+    eventResponse (embedBlock F) E = eventResponse F (blockEmbeddingᴴ * E * blockEmbedding) := by
+  unfold eventResponse embedBlock
+  congr 1
+  calc
+    _ = trace ((blockEmbedding * F) * (blockEmbeddingᴴ * E)) := by
+      simp only [Matrix.mul_assoc]
+    _ = trace ((blockEmbeddingᴴ * E) * (blockEmbedding * F)) := trace_mul_comm _ _
+    _ = trace ((blockEmbeddingᴴ * E * blockEmbedding) * F) := by simp only [Matrix.mul_assoc]
+    _ = _ := trace_mul_comm _ _
+
+private theorem diagonal_response (w : Wire → ℝ) (E : Matrix Wire Wire ℂ) :
+    eventResponse (diagonal (fun i => (w i : ℂ))) E = ∑ i, w i * (E i i).re := by
+  simp [eventResponse, Matrix.trace, Matrix.diagonal_mul, Complex.mul_re]
+
+private theorem completion_response (eps p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ)
+    (E : Matrix Wire Wire ℂ) :
+    eventResponse (candidate eps - causalCompletion p P) E =
+      eventResponse (compressedDifference eps P) (blockEmbeddingᴴ * E * blockEmbedding) -
+        ∑ i, complementWeight p P i * (E i i).re := by
+  rw [candidate_embed eps]
+  simp only [causalCompletion, eventResponse, Matrix.sub_mul, Matrix.add_mul,
+    Matrix.trace_sub, Matrix.trace_add, Complex.sub_re, Complex.add_re]
+  change eventResponse (embedBlock ((candidate eps).submatrix mainAddress mainAddress)) E -
+    (eventResponse (embedBlock P) E + eventResponse (diagonal _) E) = _
+  rw [response_embed, response_embed, diagonal_response]
+  simp only [compressedDifference, eventResponse, Matrix.sub_mul, Matrix.trace_sub, Complex.sub_re]
+  ring
+
+private theorem completion_lifted_response (eps p : ℝ) (P F : Matrix (Fin 3) (Fin 3) ℂ) :
+    eventResponse (candidate eps - causalCompletion p P) (embedBlock F) =
+      eventResponse (compressedDifference eps P) F := by
+  classical
+  rw [completion_response, compress_embed]
+  have hz : ∑ i : Wire, complementWeight p P i * (embedBlock F i i).re = 0 := by
+    apply Finset.sum_eq_zero
+    intro i _
+    by_cases hi : MainSupport i
+    · have hw : complementWeight p P i = 0 := by
+        rcases hi with rfl | rfl | rfl <;> simp [complementWeight]
+      simp [hw]
+    · simp [embedBlock_entry, hi]
+  rw [hz, sub_zero]
+
+
+private theorem normalization_trace (S : Matrix Wire Wire ℂ)
+    (sigma : Matrix (Fin 2) (Fin 2) ℂ) (C : Matrix AB AB ℂ)
+    (hSn : partialTraceRight S = Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ) sigma)
+    (hst : trace sigma = 1) (hCn : partialTraceLeft C = 1) :
+    trace (S * (C ⊗ₖ (1 : Matrix (Fin 3) (Fin 3) ℂ))) = 1 := by
+  have dualR : ∀ {a b : Type} [Fintype a] [Fintype b] [DecidableEq b]
+      (T : Matrix (a × b) (a × b) ℂ) (Y : Matrix a a ℂ),
+      trace (T * (Y ⊗ₖ (1 : Matrix b b ℂ))) = trace (partialTraceRight T * Y) := by
+    intro a b _ _ _ T Y
+    simp [Matrix.trace, Matrix.mul_apply, Matrix.kroneckerMap_apply, partialTraceRight,
+      Matrix.one_apply, Fintype.sum_prod_type, Finset.sum_mul]
+    exact Finset.sum_congr rfl fun _ _ => Finset.sum_comm
+  have dualL : ∀ {a b : Type} [Fintype a] [Fintype b] [DecidableEq a]
+      (T : Matrix (a × b) (a × b) ℂ) (Y : Matrix b b ℂ),
+      trace (T * ((1 : Matrix a a ℂ) ⊗ₖ Y)) = trace (partialTraceLeft T * Y) := by
+    intro a b _ _ _ T Y
+    simp [Matrix.trace, Matrix.mul_apply, Matrix.kroneckerMap_apply, partialTraceLeft,
+      Matrix.one_apply, Fintype.sum_prod_type, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl fun _ _ => Finset.sum_comm
+  calc
+    _ = trace (partialTraceRight S * C) := dualR S C
+    _ = trace (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigma) * C) := by rw [hSn]; rfl
+    _ = trace (C * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigma)) := trace_mul_comm _ _
+    _ = trace (partialTraceLeft C * sigma) := dualL C sigma
+    _ = 1 := by rw [hCn, Matrix.one_mul, hst]
+
+private theorem candidate_normalization_response (eps q t : ℝ) (he : 0 ≤ eps) (he1 : eps ≤ 1) :
+    eventResponse (candidate eps) (testerNormalization q t) = 1 - eps * (1 - q - t) := by
+  rw [testerNormalization_diagonal]
+  simp [eventResponse, candidate, candidateVector, testerWeight, Matrix.trace,
+    Matrix.mul_diagonal, Matrix.vecMulVec_apply, Pi.star_apply, Complex.star_def,
+    Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_three, Complex.mul_re,
+    Real.mul_self_sqrt he, Real.mul_self_sqrt (sub_nonneg.mpr he1)]
+  ring
+
+/-- The arbitrary complex compressed block determines the full attained event objective of its
+causal completion. Complementary mass enters the reverse event through the normalization trace. -/
+theorem compressed_completion_tester_value (eps p q t : ℝ)
+    (P : Matrix (Fin 3) (Fin 3) ℂ) (he : 0 ≤ eps) (he1 : eps ≤ 1)
+    (hp : 0 ≤ p) (hp1 : p ≤ 1) (hq : 0 ≤ q) (hq1 : q ≤ 1) (ht : 0 ≤ t) (ht1 : t ≤ 1)
+    (hP : P.PosSemidef) (h0 : (P 0 0).re ≤ 1 - p) (h1 : (P 1 1).re ≤ 1 - p)
+    (h2 : (P 2 2).re ≤ p) :
+    Causal (causalCompletion p P) (diagonalMarginal p) ∧
+    ∃ Ep En : Matrix Wire Wire ℂ,
+      Tester (diagonalTester q t) Ep ∧ Tester (diagonalTester q t) En ∧
+      response (candidate eps - causalCompletion p P) Ep = compressedPositiveMass eps q t hP ∧
+      response (causalCompletion p P - candidate eps) En =
+        compressedPositiveMass eps q t hP + eps * (1 - q - t) ∧
+      (∀ E, Tester (diagonalTester q t) E →
+        response (candidate eps - causalCompletion p P) E ≤ compressedPositiveMass eps q t hP ∧
+        response (causalCompletion p P - candidate eps) E ≤
+          compressedPositiveMass eps q t hP + eps * (1 - q - t)) ∧
+      IsGreatest {r : ℝ | ∃ E, Tester (diagonalTester q t) E ∧
+        |response (candidate eps - causalCompletion p P) E| = r}
+        (compressedPositiveMass eps q t hP + max (eps * (1 - q - t)) 0) := by
+  let S := causalCompletion p P
+  let X := candidate eps - S
+  let M := testerNormalization q t
+  have hS := (compressed_block_causal_lift p P hp hp1 hP h0 h1 h2).1
+  have hC := diagonalTester_pos q t hq hq1 ht ht1
+  have hCn := diagonalTester_normalized q t
+  have hM : M.PosSemidef := hC.kronecker PosSemidef.one
+  have hX : X.IsHermitian := (posSemidef_vecMulVec_self_star (candidateVector eps)).isHermitian.sub
+    hS.1.isHermitian
+  have hB := compressedNormalization_pos q t hq hq1 ht ht1
+  obtain ⟨F, _, hF, _, hvF, _, hbF, _⟩ :=
+    attained_two_direction_spectral_events hB (compressed_difference_hermitian eps hP)
+  have hupper (E : Matrix Wire Wire ℂ) (hE : EventInterval M E) :
+      eventResponse X E ≤ compressedPositiveMass eps q t hP := by
+    have hb := (hbF _ (compress_full_event q t hE)).1
+    have hc : 0 ≤ ∑ i, complementWeight p P i * (E i i).re := by
+      apply Finset.sum_nonneg
+      intro i _
+      exact mul_nonneg (complementWeight_nonneg p P hp h0 h1 h2 i)
+        (RCLike.nonneg_iff.mp (hE.1.diag_nonneg (i := i))).1
+    change eventResponse (candidate eps - causalCompletion p P) E ≤ _
+    rw [completion_response]
+    dsimp [compressedPositiveMass]
+    linarith
+  obtain ⟨Ep, En, hEp, hEn, hv, hnv, hb, hgreat⟩ :=
+    attained_two_direction_spectral_events hM hX
+  have hmass : weightedPositiveMass M hX = compressedPositiveMass eps q t hP := by
+    apply le_antisymm
+    · have := hupper Ep hEp
+      rw [hv] at this
+      exact this
+    · have hLift := lift_compressed_event q t hq hq1 ht ht1 hF
+      have h := (hb (embedBlock F) hLift).1
+      change eventResponse (candidate eps - causalCompletion p P) (embedBlock F) ≤ _ at h
+      rw [completion_lifted_response, hvF] at h
+      exact h
+  have htrace : eventResponse X M = -eps * (1 - q - t) := by
+    have hst := normalization_trace S (diagonalMarginal p) (diagonalTester q t)
+      hS.2.2.2 hS.2.2.1 hCn
+    have hR := candidate_normalization_response eps q t he he1
+    have h : eventResponse X M = eventResponse (candidate eps) M - 1 := by
+      simp [X, eventResponse, Matrix.sub_mul, Matrix.trace_sub, M, testerNormalization, hst]
+    rw [h, hR]
+    ring
+  have hrev (E : Matrix Wire Wire ℂ) :
+      response (S - candidate eps) E = -eventResponse X E := by
+    simp [X, response, eventResponse, Matrix.sub_mul, trace_sub]
+  refine ⟨hS, Ep, En, ⟨hC, hCn, hEp⟩, ⟨hC, hCn, hEn⟩, ?_, ?_, ?_, ?_⟩
+  · exact hv.trans hmass
+  · rw [hrev, hnv, hmass, htrace]
+    ring
+  · intro E hE
+    have h := hb E ⟨hE.2.2.1, hE.2.2.2⟩
+    refine ⟨h.1.trans_eq hmass, ?_⟩
+    rw [hrev]
+    rw [hmass, htrace] at h
+    linarith [h.2]
+  · have hset : {r : ℝ | ∃ E, Tester (diagonalTester q t) E ∧ |response X E| = r} =
+        {r : ℝ | ∃ E, EventInterval M E ∧ |eventResponse X E| = r} := by
+      ext r
+      constructor
+      · rintro ⟨E, hE, hr⟩
+        exact ⟨E, ⟨hE.2.2.1, hE.2.2.2⟩, hr⟩
+      · rintro ⟨E, hE, hr⟩
+        exact ⟨E, ⟨hC, hCn, hE⟩, hr⟩
+    change IsGreatest {r : ℝ | ∃ E, Tester (diagonalTester q t) E ∧ |response X E| = r} _
+    rw [hset]
+    convert hgreat using 1
+    rw [hmass, htrace]
+    congr 2
+    ring
 
 end D5.S3.Quantum.Foundation.TwoRoundSpectralEvents
