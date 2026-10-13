@@ -316,7 +316,10 @@ theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
             all_goals
               apply Finset.sum_congr rfl
               intro u _
-              split_ifs <;> rfl
+              by_cases hq : q =
+                  (State.awaiting z ⟨n-(j+1), by omega⟩ u,
+                    liveRecord a j (a (j+1)), a (j+1), Output.challenge u)
+              <;> simp_all
           · simp [instrument, hr, PMF.pure_map, PMF.pure_apply]
         change ((execute (instrument n) (fixedPolicy a) (PMF.pure (.start z)) (j+1)).bind
           (fun sh => (PMF.pure (a (j+1))).bind fun b =>
