@@ -350,7 +350,7 @@ private theorem omega_memory {ell : ℝ} (hl : 0 ≤ ell) (hu : ell ≤ 1)
       Matrix.vecMulVec_apply, Matrix.diagonal] <;>
     ring_nf <;> simp [Complex.I_sq, hr, he]
 
-private theorem source_reference {F : Type*} [Fintype F] [DecidableEq F]
+theorem source_reference {F : Type*} [Fintype F] [DecidableEq F]
     (ell beta gamma : ℝ) (w : Qubit → ℝ)
     (hl : 0 ≤ ell) (hu : ell ≤ 1) (hb : 0 < beta)
     (hw : ∀ j, 0 ≤ w j) (hmax : ∀ j, w j ≤ beta / (beta ^ 2 + gamma ^ 2))
@@ -365,7 +365,7 @@ private theorem source_reference {F : Type*} [Fintype F] [DecidableEq F]
   simpa only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
     CStarMatrix.ofMatrix_symm_apply] using hh
 
-private theorem target_reference {F : Type*} [Fintype F] [DecidableEq F]
+theorem target_reference {F : Type*} [Fintype F] [DecidableEq F]
     (ell : ℝ) (hl : 0 ≤ ell) (hu : ell ≤ 1)
     (X : CStarMatrix (F × Qubit) (F × Qubit) ℂ)
     (f g : F) (p q : Qubit × (Qubit × Qubit)) :
@@ -373,7 +373,7 @@ private theorem target_reference {F : Type*} [Fintype F] [DecidableEq F]
       X (f, p.2.1) (g, q.2.1) * xi ell (p.1, p.2.2) * star (xi ell (q.1, q.2.2)) :=
   (coherent_channel hl hu).choose_spec _ p q
 
-private theorem receiver_reference {F M : Type*} {A B : Type u}
+theorem receiver_reference {F M : Type*} {A B : Type u}
     [Fintype F] [DecidableEq F] [Fintype M] [DecidableEq M]
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (D : QuantumChannel A B)
