@@ -2253,3 +2253,117 @@ $\square$
 把完整补偿拆分后当成两份独立增加的预算。
 
 ## 追加锚（本行以下为增补区）
+
+## 460. 实际自匹配源对单独头部证书的条件性障碍
+
+本节记录一个条件性障碍，不能当作无条件的 Robin 结论或 RH 结论。取主卷
+§111.4 的实际自匹配链 \(N_j\)，置
+
+$$
+A_j=\log N_j,\qquad L_j=\log A_j,\qquad T_j=\sqrt{A_j}\,L_j.
+$$
+
+沿用同一窗口的头部定义
+
+$$
+D_j=\lfloor A_j^{1/8}\rfloor,\qquad
+G_j=\sum_{\substack{d\le D_j\\d\mid\operatorname{rad}(N_j)}}
+       \frac{\mu^2(d)}{\varphi(d)},\qquad
+h_j=\min\{L_j/2000,G_j/100\},\qquad B_j=A_j e^{h_j}.
+$$
+
+令 \(Y_j=\sqrt{B_j}\)，令 \(P_j\) 为所有满足 \(p\le Y_j\) 且 \(p\mid N_j\) 的素数之积，
+并记
+
+$$
+S_j^\circ=\sum_{\substack{A_j<r\le B_j\\(r,P_j)=1}}\frac1r
+-\sum_{\substack{k\ge2,\ A_j<p^k\le B_j\\p\nmid N_j}}\frac1{p^k},\qquad
+V_j=-\frac{\vartheta(A_j)-A_j}{A_jL_j}
+ +\log\frac{L_j+h_j}{L_j}-S_j^\circ.
+$$
+
+§111.4 的链具有唯一的全正整数价格极值性质。对充分大的 \(j\) 和
+\(p\le Y_j\)，首层价格满足
+
+$$
+r_{p,1}=\frac{\log(1+1/p)}{\log p}
+>\frac1{(p+1)\log p}
+>\frac1{A_j\log A_j}=\lambda(A_j),
+$$
+
+因为 \(Y_j=A_j^{1/2+1/4000}\)，而
+\((Y_j+1)\log Y_j<A_j\log A_j\) 最终成立。因此这些素数确实都出现在
+\(N_j\) 的支撑中。再用标准的平方自由和估计
+
+$$
+\sum_{d\le x}\frac{\mu^2(d)}{\varphi(d)}=\log x+O(1)
+$$
+
+得到
+
+$$
+G_j=\sum_{d\le D_j}\frac{\mu^2(d)}{\varphi(d)}=\log D_j+O(1),
+\qquad G_j\ge L_j/20
+\quad\text{对充分大的 }j,
+$$
+
+从而
+
+$$
+h_j=L_j/2000,\qquad B_j=A_j^{1+1/2000},\qquad
+S_j^\circ=\sum_{A_j<p\le B_j}\frac1p.
+$$
+
+在这个实际支撑上，头部的有效缺口为零；下文只讨论零缺口的头部证书。
+
+同一窗口的 Abel 恒等式为
+
+$$
+J_1^\vartheta(A_j)=V_j+R_\vartheta(B_j)+f_j.
+$$
+
+若另外假设 RH，并接受 [Nicolas 比较笔记](../../../Library/ArithSums/nicolas2025comparison.md)
+中所列的零点公式、互反素数估计及其误差范围，则
+
+$$
+|T_jJ_1^\psi(A_j)|\le c_0+o(1),\qquad
+c_0=2+\gamma-\log(4\pi)<1/20,
+$$
+
+而同一笔记的 GPP1--GPP4 给出
+
+$$
+T_jJ_1^{\psi-\vartheta}(A_j)\longrightarrow-2.
+$$
+
+于是
+
+$$
+T_jJ_1^\vartheta(A_j)\ge2-c_0-o(1).
+$$
+
+同一 RH 端点估计给出
+
+$$
+T_jR_\vartheta(B_j)=O(A_j^{-1/7200}L_j^2)\longrightarrow0,
+$$
+
+从而
+
+$$
+\liminf_{j\to\infty}T_jV_j\ge2-c_0>\frac{39}{20}.
+$$
+
+因此，在这些明确的条件下，不存在一种适用于所有实际整数、只使用该头部的统一零缺口点态证书，
+其预算强迫
+
+$$
+T_jV_j\le b(A_j),
+\qquad
+b(A_j)\le b_0<1.
+$$
+
+这个障碍只排除单独头部证书。GPP1--GPP4 同时保留补偿项
+\(T_jH_\mu=-2m_\mu+o(1)\)，所以配对完整预算仍是另一项研究对象。端点估计和零点公式
+属于外部文献输入，未在本库独立 Lean 验证；本节不宣称无条件非存在，也不涉及只在假设的
+Robin 极值整数上选取的证书。
