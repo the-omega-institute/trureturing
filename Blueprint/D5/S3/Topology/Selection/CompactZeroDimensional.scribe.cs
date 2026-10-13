@@ -94,7 +94,8 @@ internal sealed class CompactZeroDimensionalDocument : IScribeDocumentDefinition
                         + "The full selection theorem applied to it gives both membership in the original fibers and the prescribed equality.")),
                     Paragraph(Text(
                         "This is the compact-domain form of Michael's classical zero-dimensional selection principle. "
-                        + "Valov's arXiv:0801.1721v2 uses the classical principle in Lemma 2.2 and cites Michael's Selected selection theorems. "
+                        + "Valov's arXiv:0801.1721v2 uses the classical principle in Lemma 2.2 and cites Michael's Selected selection theorems; "
+                        + "the consulted source and its scope are recorded in Library/Topology/valov2008milyutinmaps.md. "
                         + "No theorem number from the uninspected original Michael article or from Semenov and Shchepin's article is asserted here. "
                         + "The result supplies prescribed sections for a future open-map resolution argument under a metrizable-kernel hypothesis. "
                         + "That resolution is not asserted by these selection statements, and neither Peng Question 5.1 nor Question 5.2 is resolved here."))),
