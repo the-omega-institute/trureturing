@@ -2996,3 +2996,419 @@ continued research outside this bounded transfer require their own
 premises and proofs.
 
 ## 追加锚（本行以下为增补区）
+## 13. Joint literal-address budgets on the full stationary Moore fiber
+
+### 13.1 Submitted words and shortest reached occurrences
+
+**Definition 13.1 (four upper budgets).** Retain Definitions 10.1--10.3
+and 12.1--12.2 without changing their domain or operational premises.
+Thus $\mathcal U_*\ne\varnothing$ contains every actual finite ordered
+$\alpha/\beta$ origin with $R_P(\rho u)=R_*$, and $\Theta_*$ is its
+attained root chart. The complete exterior, reached support $H$,
+partition, different-class disequalities and blocked-cut guards remain
+fixed. The target is the entire predecessor row
+$F(u)=G_*(\theta_x)$ of Theorem 10.4. There is no bound on source size,
+depth or intrinsic rank.
+
+For each unchanged class name $d\in D$, choose
+
+$$
+a_d=\underset{p\in H,\ [p]=d}{\operatorname{argmin}}\, (|p|,p),
+\qquad \lambda(d)=|a_d|.
+\tag{NBP.13.1}
+$$
+
+The first coordinate is minimized first and the second uses the common
+lexicographic order to break ties. This is the shortest physical
+occurrence convention of Serial Joint Resource Frontier Lemma 3.4.
+The canonical class name is still the original first-hole name; neither
+$a_d$ nor $\lambda(d)$ renames it. In particular the first
+lexicographic occurrence need not be shortest.
+
+For a terminating native run with successive running-state visits
+$b_1,\ldots,b_n$, define its literal submission cost by
+
+$$
+\ell_N(u)=\sum_{i=1}^{n}|\operatorname{addr}(b_i)|,
+\qquad q_N(u)=n.
+\tag{NBP.13.2}
+$$
+
+For a root run on $\theta$, replace the summand by
+$\lambda(\operatorname{coord}(b_i))$ and write $\ell_R(\theta)$ and
+$q_R(\theta)=n$. These are sums along one run before any worst bound.
+Each invocation costs one call, including repeated coordinates,
+absences and the empty native word, whose literal length is zero.
+An initial halt has both costs zero.
+
+For integers $r\ge1,K\ge1,q\ge0,\ell\ge0$, let
+$\mathsf{MooreInvFeas}_*(r,K,q,\ell)$ mean Definition 12.1's joint
+existence with the additional requirement $\ell_N(u)\le\ell$ for
+every $u\in\mathcal U_*$. Let
+$\mathsf{MooreRootFeas}_{*,\lambda}(r,K,q,\ell)$ mean Definition 12.2's
+joint existence with $\ell_R(\theta)\le\ell$ for every attained
+$\theta$. The other requirements remain actual exported initial-state
+range at most $r$, all installed running and complete-output halting
+states at most $K$, and every run terminating correctly within $q$
+calls. Unused states count. The initial-state export is normalized
+before the access cut as in (NBP.12.2); only that current state remains
+accessible after entry. Both encoder and controller may be reselected.
+
+The added coordinate prices only the physical words actually submitted
+to the native port. Address construction, address and table storage,
+whole-output representation, local work, elapsed time, acquisition,
+export, authentication, isolation, entry and native service retain their
+separate costs and supplied premises.
+
+### 13.2 Static forced-successor contraction and the four-budget bridge
+
+**Theorem 13.2 (exact joint four-upper-budget correspondence).** Under
+the supplied premises of Definition 12.1, on every nonempty full actual
+fixed-row one-image fiber, for all the integers in Definition 13.1,
+
+$$
+\mathsf{MooreInvFeas}_*(r,K,q,\ell)
+\quad\Longleftrightarrow\quad
+\mathsf{MooreRootFeas}_{*,\lambda}(r,K,q,\ell).
+\tag{NBP.13.3}
+$$
+
+Necessity weakly decreases the four upper resources; sufficiency keeps
+the root table's installed states, initialization range, calls and
+literal sums on every actual origin. No prescribed-encoder or
+unchanged-native-trace assertion is part of the equivalence.
+
+**Proof, static contraction within the native-to-root direction.**
+Take a feasible native table on $\mathcal K=Q\sqcup Z$ and its actual
+normalized export $\tau$. Let $B\subseteq Q$ consist of all installed
+states whose word, when traversed in $C_*$, never enters a reached hole.
+For $b\in B$ the complete exterior determines a reply $z_b$ on every
+actual current tree in the fiber. Visible ancestors of holes, concrete
+leaves, blocked cones and absent extensions of concrete leaves are
+included. Put $f(b)=\operatorname{next}(b,z_b)$.
+
+There is at least one installed halt: a nonempty fiber and a terminating
+correct run supply one. Fix such a halt $z_0$. Define a single map
+
+$$
+g:\mathcal K\longrightarrow\mathcal K\setminus B
+\tag{NBP.13.4}
+$$
+
+as follows. Outside $B$ it is the identity. Starting inside $B$, follow
+$f$ until first leaving $B$ and take that exit as $g(b)$. If the
+successor sequence never leaves $B$, take $g(b)=z_0$. Finiteness makes
+the latter case exactly eventual entry into a cycle contained in $B$;
+the same completion is used for its whole basin.
+
+No actual initialized run can reach that basin. Every reply while in
+$B$ is its fixed $z_b$, so such a run would follow the forced cycle
+forever, contradicting termination on that same origin. This excludes
+only forced constant cycles on required runs, not cycles in the union
+of transitions from different sources. It also covers initial states
+in $B$: their forced sequence must exit on every actual use.
+
+Install the following reduced native table:
+
+$$
+\begin{aligned}
+\mathcal K'&=(Q\setminus B)\sqcup Z,\\
+\operatorname{addr}'(b)&=\operatorname{addr}(b)
+                       &&(b\in Q\setminus B),\\
+\operatorname{next}'(b,z)&=g(\operatorname{next}(b,z)),\\
+\operatorname{out}'&=\operatorname{out},\qquad
+\tau'(u)=g(\tau(u)).
+\end{aligned}
+\tag{NBP.13.5}
+$$
+
+All original halts, their fixed whole outputs and all unused surviving
+states remain installed and counted. No state is added. The finite map
+$g$ is substituted into the common transition table. Before the cut,
+the producer computes and actually exports the new initial-state code
+$g(\tau(u))$ from its acquired data, using the supplied lawful entry.
+The original export is not retained as an additional field. If the
+forced initial sequence exits at a halt, this code initializes that
+halt directly. No silent transition, phase, cache or table selection
+is executed after entry.
+
+Fix one actual $u$. Delete its $B$-visits from the original finite state
+path. Between consecutive remaining states there is either an original
+edge or a finite forced $B$-segment. Formula (NBP.13.5) sends the earlier
+state directly to the later one. The initial code skips precisely the
+initial forced segment. The original terminal halt is retained.
+Induction on the remaining visits therefore gives the reduced run and
+the same complete output. Its calls and submitted words are exactly
+the surviving calls and words of this one original run. Hence
+
+$$
+\begin{aligned}
+|\tau'[\mathcal U_*]|&\le|\tau[\mathcal U_*]|,&
+|\mathcal K'|&\le|\mathcal K|,\\
+q_{N'}(u)&\le q_N(u),&
+\ell_{N'}(u)&\le\ell_N(u).
+\end{aligned}
+\tag{NBP.13.6}
+$$
+
+The arbitrary completion of a forced-cycle basin is used only on
+initial codes or edges that no required actual run takes. It cannot
+change these inequalities. This contraction is an intermediate step
+of the full-fiber theorem, not a new general epsilon-removal theorem.
+
+**Proof, padded state-local recoding after contraction.** Suppose first
+that $D\ne\varnothing$. Every surviving running word enters a reached
+hole. Set
+
+$$
+L=\max\bigl(\{0\}\cup
+ \{|\operatorname{addr}'(b)|:b\in Q\setminus B\}\bigr).
+\tag{NBP.13.7}
+$$
+
+Unused running states are included. Apply Proposition 10.5, without
+reproving its deep actual-image supplier, to obtain one fixed actual
+$u^\theta$ for every $\theta\in\Theta_*$. These origins preserve the
+entire exterior, repetitions and all class disequalities. Their
+branch-valued classes have minimum leaf depth greater than $L$, and
+$F(u^\theta)=G_*(\theta)$. This bounds the chosen table's finite address
+menu, not the allowed sources.
+
+For each surviving state $b$, write its word as $v=pw$ at the first
+entered hole and set $d=[p]$. Reuse the hole-entering part of
+(NBP.12.5): $h_v(z)=z$ if $w=\varepsilon$, while for a nonempty suffix
+$h_v(\alpha)=h_v(\beta)=\mathsf{absent}$ and
+$h_v(\mathsf{branch})=\mathsf{branch}$. Extend $h_v$ arbitrarily to
+the unreachable root argument $\mathsf{absent}$. Proposition 10.5
+gives $r_{\rho u^\theta}(v)=h_v(\theta(d))$.
+
+On exactly $\mathcal K'$ install coordinate $d$ at this state and
+transition $\operatorname{next}'(b,h_v(z))$ on root reply $z$. Retain
+the halting outputs and set $c(\theta)=\tau'(u^\theta)$.
+This finite coloring has range at most $|\tau'[\mathcal U_*]|$.
+It selects truthful actual exports on the chosen witnesses; it does
+not require the original arbitrary encoder to factor through root type.
+
+For this one fixed $\theta$, induction on states identifies the entire
+root path with the reduced native path on the one actual $u^\theta$,
+including early halts, shared states and repeated coordinates.
+Every surviving invocation satisfies
+
+$$
+\lambda(d)=|a_d|\le |p|\le |pw|=|v|.
+\tag{NBP.13.8}
+$$
+
+The first inequality is precisely the shortest-occurrence supplier.
+Summing only over this common path gives
+
+$$
+q_R(\theta)=q_{N'}(u^\theta)\le q_N(u^\theta)\le q,\qquad
+\ell_R(\theta)\le\ell_{N'}(u^\theta)\le\ell_N(u^\theta)\le\ell.
+\tag{NBP.13.9}
+$$
+
+Thus both bounds use the same actual input and truthful initial code
+before a worst bound is taken. No separately optimizing origins or
+marginal sums are combined. State-local rules handle convergences and
+different-source union cycles without cloning histories. Necessity
+follows with at most the original $r$ and $K$.
+
+**Proof, root-to-native on every actual origin.** Given a root table
+and coloring, retain its entire installed state set, partition,
+transitions and complete halting outputs. Replace coordinate $d$ by
+the native word $a_d$. The supplier in (NBP.13.1) changes a physical
+representative, not its canonical class identity. Every $a_d$ is
+reached on every current tree in the original fixed-row fiber and has
+reply $\theta_x(d)$ for every actual valuation $x\in\mathcal X_*$.
+
+From its genuinely acquired class values the producer inspects the
+roots, computes $\theta_x$ and actually exports $c(\theta_x)$ before
+the cut. Local inspection of acquired terms is not a fresh invocation.
+Proposition 10.2 makes every type attained, so this actual code range
+equals $c[\Theta_*]$. The new code itself is recoverable from the
+initial state; no discarded value or separate color register survives.
+
+For an arbitrary original $u_x$, state induction identifies its native
+run with the root run on $\theta_x$. Every call is genuine, its word
+has exactly length $\lambda(d)$, and repetitions are counted again.
+The call counts and literal sums agree on this actual source. The halt
+returns $G_*(\theta_x)=F(u_x)$, including inverse exterior, canonical
+restricted partition, all disequalities and every predecessor guard.
+No padded-witness restriction appears in this direction.
+
+If $D=\varnothing$, Proposition 10.2 gives one empty type and
+Theorem 10.4 gives one whole target. On either side, one halt with that
+complete output and its one actually exported initial code uses
+$r=K=1$ and $q=\ell=0$. There is no running state or nonexistent
+coordinate to recode. These resources satisfy every stated upper
+budget. This proves (NBP.13.3) in all cases. $\square$
+
+### 13.3 Finite shared-table synthesis and zero-budget endpoints
+
+**Corollary 13.3 (literal sums in the shared-table criterion).** For
+finite $P,R_*$ with nonempty actual fiber and the four integer upper
+budgets, the joint feasibility problem (NBP.13.3) is decidable. A
+positive answer supplies an acquired encoder and one fixed-address
+stationary Moore table on the entire actual fiber under the supplied
+services.
+
+**Proof.** Reuse Corollary 12.7's finite enumeration of state sets of
+size at most $K$, running/halting partitions, coordinates $Q\to D$,
+four-reply transitions, whole halt outputs in $G_*[\Theta_*]$, and
+initial-state colorings of range at most $r$. Compute $\lambda$ from
+the finitely many actual reached occurrences in the complete row.
+
+For each candidate and each attained $\theta$, follow its one run from
+$c(\theta)$. At every running visit add one call and
+$\lambda(\operatorname{coord}(b))$ to that input's accumulated sum.
+Require the correct complete halt within $q$ calls and sum at most
+$\ell$. All summands are nonnegative. Reaching a running state after
+$q$ calls fails, even if its coordinate has price zero; an initial halt
+has zero sum. This is a finite additional check on the existing
+enumeration, without a global acyclicity demand.
+
+Every feasible root table occurs in that enumeration up to state
+renaming; the existing replacement of unused halt outputs loses no
+run or resource. A passing table is a root witness, and Theorem 13.2
+installs it using the shortest actual words and acquired initial codes.
+Conversely necessity puts every feasible native comparator into the
+same bounded finite search. This consumes the four-budget bridge,
+rather than trying to infer state preservation from decision-tree
+unrolling. No generic weighted minimax theorem is added. $\square$
+
+**Corollary 13.4 (zero calls, zero literal budget and edge cuts).**
+Put $m=|G_*[\Theta_*]|=|F[\mathcal U_*]|\ge1$. On either side of
+(NBP.13.3), if $q=0$ or if $\ell=0$, feasibility is exactly
+$r\ge m$ and $K\ge m$, with the other upper budget arbitrary.
+A constant whole target always admits $r=K=1,q=\ell=0$.
+Empty cuts, a root cut and zero reached classes have that target;
+blocked cuts retain their complete predecessor guards.
+
+**Proof.** The zero-call endpoint is Corollary 12.6: $m$ whole-output
+halts and $m$ initial codes are necessary and suffice, and their
+literal sum is zero. If $P$ does not contain the root, every reached
+occurrence has positive length. Thus every root invocation has
+positive price, and a zero literal sum forces zero calls on every
+attained input. The same endpoint applies by Theorem 13.2.
+If $P$ contains the root, prefix freedom gives $P=\{\varepsilon\}$;
+its predecessor target is constant by Corollary 10.10. The one-halt
+construction satisfies both zero budgets. Empty and entirely blocked
+cuts are the zero-class cases already covered. The guards and
+partitions are parts of the whole installed outputs. $\square$
+
+### 13.4 A strict entire-fiber example and the paid-constant boundary
+
+**Proposition 13.5 (one right hole separates length feasibility from
+unchanged-path recoding).** Take $P=\{R\}$ and the complete current
+row with exterior $\langle\beta,\square_R\rangle$ and its singleton
+reached class $d$. Its full actual origin fiber and two entire targets
+are
+
+$$
+\begin{aligned}
+\mathcal U_*&=\{\beta\}\ \cup\
+                    \{\langle\alpha,z\rangle:z\in\mathcal T\},\\
+F(\beta)&=Y_0=(\beta,\varnothing),\\
+F(\langle\alpha,z\rangle)&=
+ Y_1=(\langle\alpha,\square_R\rangle,\{\{R\}\}).
+\end{aligned}
+\tag{NBP.13.10}
+$$
+
+Here $Y_0$ has $R$ blocked at its concrete root beta, and $Y_1$ has
+$R$ reached; their complete partitions and guards are as displayed.
+The chart attains all three types of $d$, and $\lambda(d)=1$.
+The four-budget problem is feasible at $(1,3,1,1)$ and infeasible
+with $r=1,\ell=0$ for every $K,q$. A native table feasible at
+$(1,4,2,1)$ can nevertheless have literal cost two after Theorem
+12.3's unchanged-path paid constant-query recoding.
+
+**Proof.** A current tree with this complete row is exactly
+$\langle\beta,x\rangle$. For a leaf origin, only $\beta$ works:
+its image is $E=\langle\beta,\alpha\rangle$. For a paired origin
+$\langle s,z\rangle$, the left image must be beta. The image inverse
+(RA.2207) forces $s=\alpha$, and every finite $z$ then works.
+This proves the entire fiber in (NBP.13.10), not a finite selection.
+Its predecessor rows follow directly from the cut definition.
+
+The right current value is alpha at origin beta and $\rho z$ on every
+paired origin. It is respectively beta or branch when $z=\alpha$ or
+$z=\beta$, so all three root types are attained. On every paired
+origin it is never alpha, by the image grammar. One running state
+querying $R$ therefore goes to the complete halt $Y_0$ on alpha and
+to $Y_1$ on beta or branch; give its absent edge any existing halt.
+A constant actual initial code and these two halts use three states,
+one call and literal sum one on the entire fiber.
+
+If $r=1$ and the literal budget is zero, every actually invoked word
+must be $\varepsilon$. Its reply is branch on every tree of this
+fiber. The common initial state and deterministic stationary rule
+then give the identical state path and output on origins beta and
+$\langle\alpha,\alpha\rangle$, whose required rows differ.
+Termination cannot repair this contradiction, for any $K,q$.
+This proves the strict length-budget obstruction directly.
+
+Finally insert an initial running state querying $\varepsilon$ and
+going on every reply to the running $R$-state just constructed.
+All four installed states are reached on some actual input. Every
+run has two calls and literal sum $0+1=1$. In Theorem 12.3 the sole
+available root coordinate is $d$: its first paid query is ignored
+through the constant response map, and the second queries $d$ again.
+Both have price one, so the unchanged path has sum two. The static
+contraction in Theorem 13.2 removes the initial exterior-constant
+state and exports the surviving state's code; the three-state,
+one-call table again has sum one. Thus the stronger unchanged-path
+literal domination fails, while the joint upper-budget correspondence
+holds. $\square$
+
+### 13.5 Mathematical suppliers and attribution
+
+**Mathematical citation 13.6 (the bounded source-specific composition).**
+Proposition 10.2 supplies the attained chart, Theorem 10.4 the whole
+predecessor factorization, and Proposition 10.5 the simultaneous actual
+image padding. Its suppliers remain
+[Retained Literal Root Depth Theorem 2.2](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md)
+and [Transport--Memory Completion (RA.2207)](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md).
+Definitions 12.1--12.2 supply the stationary state-only shared-table
+contract and actual initial-code normalization. The hole-entering
+response map of Theorem 12.3 is reused; Proposition 13.5 identifies
+the exact literal-cost boundary of its paid constant case.
+[Serial Joint Resource Frontier Lemma 3.4](RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md)
+already owns shortest physical occurrences and unchanged class names.
+
+[Native Signed Feasibility Proposition 7.4 and Theorem 8.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md)
+and [Atomic Block Conjugacy §§6.2--6.4](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md)
+already treat same-source literal charges, cleanup or weighted protocol
+trees in their respective contracts. They supply no installed-state
+bound for this contraction. No cached reply simulation or history
+expansion is used to preserve $K$ here.
+
+Classical graph reduction is attributed to Mehryar Mohri,
+*Weighted Automata Algorithms*, §6.1, Theorem 4 and its algorithm,
+[author PDF pp.21--22](https://cs.nyu.edu/~mohri/pub/hwa.pdf).
+The weighted epsilon-removal statement assumes a complete semiring
+and computable closures; the displayed returned transducer keeps
+the state set $Q$. Randal E. Bryant,
+*Graph-Based Algorithms for Boolean Function Manipulation*,
+IEEE Transactions on Computers C-35(8), pp.677--691,
+[DOI:10.1109/TC.1986.1676819](https://doi.org/10.1109/TC.1986.1676819),
+Definition 5 and §4.2,
+[author PDF pp.5,10--11](https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf),
+gives the redundant-vertex reduction for ordered acyclic Boolean
+function graphs. These inspected passages are structural precedents,
+not premises about paid native invocations, lawful acquired export,
+forced-cycle basins or four-budget full-fiber feasibility. Theorem
+13.2 proves those obligations directly.
+
+The result is repo-derived synthesis of these mature graph methods
+with the actual one-image and shortest-occurrence suppliers. Its
+consumer is Corollary 13.3's per-attained-input literal check on the
+existing shared-table enumeration. It makes no global novelty or
+Lean-kernel claim. Joint encoder/controller reselection and upper
+budgets are essential to the stated transfer; exact original graphs,
+call counts and traces, prescribed-encoder performance, arbitrary
+program extraction and physical resource certification remain outside
+it. No additional update or observation service is supplied.
+
+## 追加锚（本行以下为增补区）
