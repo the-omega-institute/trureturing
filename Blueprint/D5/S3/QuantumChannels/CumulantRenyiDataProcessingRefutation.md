@@ -110,5 +110,6 @@ Fix alpha > 1, put t = alpha - 1, x = 16^(1 + 1/t), r = (x - 1)/(x + 1) and a = 
 - Truth anchor: `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.result`
 - Truth anchor: `D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation.two_point_cfc`
 - Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
+- Dependency: [D5/S3/Quantum/Matrix/TwoPointFunctionalCalculus](../Quantum/Matrix/TwoPointFunctionalCalculus.md)
 - Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](CoPRelativeQuantumnessRefutation.md)
 - Dependency: [D5/S3/QuantumChannels/ProjectionDiagnostics/StaticDynamicScalarSeparation](ProjectionDiagnostics/StaticDynamicScalarSeparation.md)

@@ -41,7 +41,7 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
                 H("The Exact Hamiltonian Complement"),
                 StatementSource.FromAuthor(ComplementFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every m at least six, every marked label t, every residual circle W, and every v in Star(t,W), "
+                    "For every m at least three, every marked label t, every residual circle W, and every v in Star(t,W), "
                     + "suppose t occurs at position j with j in Fin(m). Then vb is also in Star(t,W). After deleting "
                     + "the undirected edge between v and vb from the induced factor, there is a Hamiltonian walk "
                     + "from v to vb of length 2m(m+1)-1. Its configuration support is exactly the successive right "
@@ -74,7 +74,7 @@ internal sealed class PrefixReversalZeroStarComplementDocument : IScribeDocument
             Call("scanl", Call("rightMultiply"), v, Call("zWord", m, Call("val", j))));
         Formula conclusion = And(Call("Star", t, residual, vb),
             Exists("w", Call("Walk", graph, v, vb), And(Call("IsHamiltonian", w), And(length, trace))));
-        return Disp(All("m", Call("Nat"), Implies(Le(D(6), m),
+        return Disp(All("m", Call("Nat"), Implies(Le(D(3), m),
             All("t", Call("Fin", n), All("W", Call("Cycle", Call("Fin", n)),
                 All("v", Call("Configuration", m), All("j", Call("Fin", m),
                     Implies(And(star, position), conclusion))))))));
