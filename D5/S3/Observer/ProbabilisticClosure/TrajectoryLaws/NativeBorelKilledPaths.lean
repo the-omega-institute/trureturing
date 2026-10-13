@@ -875,7 +875,7 @@ theorem common_flow_immortal_identity (F : CommonFlow) :
     rw [← Measure.restrict_congr_set he, Measure.restrict_singleton, hcs]
   have hid : μ.restrict immortal =
       ((originalTrajectory F).restrict {x | x 0 = a}).map includePath := by
-    rw [hx, hcr, Measure.map_smul, Measure.map_dirac]
+    rw [hx, hcr, Measure.map_smul _ hin.aemeasurable, Measure.map_dirac]
     rfl
   have hle : μ.restrict immortal ≤ (originalTrajectory F).map includePath := by
     rw [hid]

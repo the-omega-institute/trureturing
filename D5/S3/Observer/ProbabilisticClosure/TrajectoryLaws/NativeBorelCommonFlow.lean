@@ -232,7 +232,7 @@ private theorem CommonFlow.residualB (F : CommonFlow) : ∀ᵐ Q ∂F.nuP, law Q
   filter_upwards [F.normalizedB] with Q hQ
   have hpos : 1 - u Q ≠ 0 := ne_of_gt (tsub_pos_iff_lt.mpr (Q.property.2.1.trans_lt hu))
   have hfin : 1 - u Q ≠ ⊤ := ENNReal.sub_ne_top (by simp)
-  rw [← hQ, NativeBorelCommonFlow.residualB, Measure.map_smul, smul_smul,
+  rw [← hQ, NativeBorelCommonFlow.residualB, Measure.map_smul _ prependB_embedding.measurable.aemeasurable, smul_smul,
     ENNReal.mul_inv_cancel hpos hfin, one_smul]
   exact partition_reconstruct _ prependB_embedding _ p_not_prefix p_partition _
 
@@ -243,7 +243,7 @@ private theorem CommonFlow.residualA (F : CommonFlow) : ∀ᵐ W ∂F.nuB, law W
   filter_upwards [F.normalizedA] with W hW
   have hpos : v W ≠ 0 := ne_of_gt (hl.trans_le W.property.1)
   have hfin : v W ≠ ⊤ := ENNReal.sub_ne_top (by simp)
-  rw [← hW, NativeBorelCommonFlow.residualA, Measure.map_smul, smul_smul,
+  rw [← hW, NativeBorelCommonFlow.residualA, Measure.map_smul _ prependA_embedding.measurable.aemeasurable, smul_smul,
     ENNReal.mul_inv_cancel hpos hfin, one_smul]
   have hv : 1 - v W = law W {betaStop} :=
     ENNReal.sub_sub_cancel (by simp) prob_le_one

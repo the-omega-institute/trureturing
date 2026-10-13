@@ -236,7 +236,13 @@ internal sealed partial class LeanSourceCatalog
             .ToImmutableArray();
         if (matches.IsEmpty)
         {
-            if (IsCompilerGeneratedName(recordedSegments))
+            if (IsCompilerGeneratedName(recordedSegments)
+                || recordedSegments.Any(static segment => LeafName(segment).StartsWith("tactic", StringComparison.Ordinal))
+                    && GeneratorCommands(moduleDeclarations[0].AmbientTokens).Any(static command =>
+                    {
+                        var header = command.TakeWhile(static token => token.Text != "=>").ToImmutableArray();
+                        return header.Length >= 2 && header[^2].Text == ":" && header[^1].Text == "tactic";
+                    }))
             {
                 return CreateGeneratorClosure(moduleDeclarations, recorded.Kind);
             }
@@ -289,11 +295,24 @@ internal sealed partial class LeanSourceCatalog
                 }
             }
 
+            foreach (var command in GeneratorCommands(declaration.AmbientTokens))
+            {
+                foreach (var dependency in ResolveTokenDependencies(declaration, command, respectBinders: false))
+                    yield return dependency;
+            }
+
             yield break;
         }
 
-        var bound = BoundIdentifiers(declaration.SemanticTokens);
-        foreach (var name in QualifiedIdentifiers(declaration.SemanticTokens)
+        foreach (var dependency in ResolveTokenDependencies(declaration, declaration.SemanticTokens, respectBinders: true))
+            yield return dependency;
+    }
+
+    private IEnumerable<LeanSourceDeclaration> ResolveTokenDependencies(
+        LeanSourceDeclaration declaration, ImmutableArray<LeanSourceToken> tokens, bool respectBinders)
+    {
+        var bound = respectBinders ? BoundIdentifiers(tokens) : ImmutableHashSet<string>.Empty;
+        foreach (var name in QualifiedIdentifiers(tokens)
             .Where(name => !IsBoundIdentifier(name, bound) && !ReservedIdentifiers.Contains(name))
             .Distinct(StringComparer.Ordinal))
         {
@@ -423,10 +442,23 @@ internal sealed partial class LeanSourceCatalog
                 RejectCustomSyntaxDependency(source);
             }
 
+            foreach (var command in GeneratorCommands(declaration.AmbientTokens))
+            {
+                var isRules = command.Any(static token => token.Text is "macro_rules" or "elab_rules");
+                RejectCustomSyntaxTokens(declaration, isRules ? command
+                    : command.SkipWhile(static token => token.Text != "=>").Skip(1));
+            }
+
             return;
         }
 
-        var semantic = declaration.SemanticTokens
+        RejectCustomSyntaxTokens(declaration, declaration.SemanticTokens);
+    }
+
+    private void RejectCustomSyntaxTokens(
+        LeanSourceDeclaration declaration, IEnumerable<LeanSourceToken> tokens)
+    {
+        var semantic = tokens
             .Select(static token => LeanCustomSyntaxCatalog.NormalizeLiteral(token.Text))
             .ToImmutableHashSet(StringComparer.Ordinal);
         var used = customSyntaxCatalog.VisibleFrom(declaration).FirstOrDefault(semantic.Contains);
@@ -619,6 +651,21 @@ internal sealed partial class LeanSourceCatalog
         }
 
         return result.ToImmutable();
+    }
+
+    private static IEnumerable<ImmutableArray<LeanSourceToken>> GeneratorCommands(
+        ImmutableArray<LeanSourceToken> tokens)
+    {
+        var starts = FindCommandStarts(tokens);
+        for (var index = 0; index < starts.Length; index++)
+        {
+            var start = starts[index];
+            var end = index + 1 < starts.Length ? starts[index + 1] : tokens.Length;
+            var command = tokens[start..end];
+            if (command.Any(static token =>
+                token.Text is "macro" or "macro_rules" or "syntax" or "notation" or "elab" or "elab_rules"))
+                yield return command;
+        }
     }
 
     private static ImmutableArray<string> ParseImports(
