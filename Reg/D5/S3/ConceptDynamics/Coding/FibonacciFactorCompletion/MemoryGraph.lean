@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciOriginalSourceWitness.WeightedPaths
 import Reg.Support.FibonacciOriginalSourceWitness.Source110
 import Reg.Support.FibonacciFactorWitnesses
 import LeanInformationAuditInterface.Contract.Registration
@@ -928,3 +929,16 @@ def original_registration :
 #print axioms original_registration
 end
 end Reg.Support.FibonacciOriginalSourceWitness.Source110
+
+open Reg.Support.FibonacciOriginalSourceWitness.WeightedPaths in
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.original_weighted_adjacency_paths_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.original_weighted_adjacency_paths)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ p choices => coreMonomial p.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1 p.2.2.2.2.2.2 choices) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph.original_weighted_adjacency_paths_registration_unit, realizationName := `Reg.Support.FibonacciOriginalSourceWitness.WeightedPaths.evidence,
+  realizationSource := none, generated := false, arena := .source ⟨sourceArena⟩,
+  objectArena := .source ⟨sourceArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source sourceArena ⟨evidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} observationSignature (fun _ p choices => coreMonomial p.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2.1 p.2.2.2.2.2.2 choices) (fun e => nomatch e)), variation := .absent,
+  sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.MemoryGraph, definition := none, coordinates := #[0, 1, 2, 3, 4, 5, 6], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "body", "body", "arg", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }

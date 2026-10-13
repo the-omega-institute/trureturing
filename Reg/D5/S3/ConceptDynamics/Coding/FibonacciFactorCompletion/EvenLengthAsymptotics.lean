@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciOriginalSourceWitness.EvenLimits
 import Reg.Support.FibonacciObservationCountWitness
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ActualCountRateBridge
 import LeanInformationAuditInterface.Contract.Registration
@@ -956,3 +957,39 @@ def actual_observation_count_correspondence_registration :
 #print axioms actual_observation_count_correspondence_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.ObservedCountCorrespondence
+open Reg.Support.FibonacciOriginalSourceWitness.EvenLimits.Floor in
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.full_even_floor_ratio_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.full_even_floor_ratio)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ L v => (paddingCopies L (2 * v) : ℝ) / ((2 * v : ℕ) : ℝ)) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.full_even_floor_ratio_registration_unit, realizationName := `Reg.Support.FibonacciOriginalSourceWitness.EvenLimits.Floor.evidence,
+  realizationSource := none, generated := false, arena := .source ⟨sourceArena⟩,
+  objectArena := .source ⟨sourceArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source sourceArena ⟨evidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} observationSignature (fun _ L v => (paddingCopies L (2 * v) : ℝ) / ((2 * v : ℕ) : ℝ)) (fun e => nomatch e)), variation := .absent,
+  sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+open Reg.Support.FibonacciOriginalSourceWitness.EvenLimits.ContractRate in
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.contract_even_raw_asymptotics_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.contract_even_raw_asymptotics)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ p v => Real.logb 2 (contractCount p.2.2.2.1 p.1 p.2.1 p.2.2.2.2 (2 * v) : ℝ) / ((2 * v : ℕ) : ℝ)) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.contract_even_raw_asymptotics_registration_unit, realizationName := `Reg.Support.FibonacciOriginalSourceWitness.EvenLimits.ContractRate.evidence,
+  realizationSource := none, generated := false, arena := .source ⟨sourceArena⟩,
+  objectArena := .source ⟨sourceArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source sourceArena ⟨evidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} observationSignature (fun _ p v => Real.logb 2 (contractCount p.2.2.2.1 p.1 p.2.1 p.2.2.2.2 (2 * v) : ℝ) / ((2 * v : ℕ) : ℝ)) (fun e => nomatch e)), variation := .absent,
+  sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics, definition := none, coordinates := #[0, 1, 2, 6, 7], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+open Reg.Support.FibonacciOriginalSourceWitness.EvenLimits.Reindexing in
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.observation_even_reindexing_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.observation_even_reindexing)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ model v => observationOffset model + 2 * v) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics.observation_even_reindexing_registration_unit, realizationName := `Reg.Support.FibonacciOriginalSourceWitness.EvenLimits.Reindexing.evidence,
+  realizationSource := none, generated := false, arena := .source ⟨sourceArena⟩,
+  objectArena := .source ⟨sourceArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source sourceArena ⟨evidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} observationSignature (fun _ model v => observationOffset model + 2 * v) (fun e => nomatch e)), variation := .absent,
+  sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.EvenLengthAsymptotics, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "arg", "fn", "arg", "fn", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }

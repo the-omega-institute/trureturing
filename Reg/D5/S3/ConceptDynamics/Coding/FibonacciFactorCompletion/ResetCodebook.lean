@@ -1,3 +1,4 @@
+import Reg.Support.FibonacciOriginalSourceWitness.PositiveTiling
 import Reg.Support.FibonacciOriginalSourceWitness.Source135
 import Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply
 import Reg.Support.SingleDependentReadout
@@ -770,3 +771,16 @@ def original_registration :
 #print axioms original_registration
 end
 end Reg.Support.FibonacciOriginalSourceWitness.Source135
+
+open Reg.Support.FibonacciOriginalSourceWitness.PositiveTiling in
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.positive_block_tiling_registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.positive_block_tiling)
+      (type_of% (realize.{0,0,0,0,0} observationSignature (fun _ _ ω => ω) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.positive_block_tiling_registration_unit, realizationName := `Reg.Support.FibonacciOriginalSourceWitness.PositiveTiling.evidence,
+  realizationSource := none, generated := false, arena := .source ⟨sourceArena⟩,
+  objectArena := .source ⟨sourceArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source sourceArena ⟨evidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} observationSignature (fun _ _ ω => ω) (fun e => nomatch e)), variation := .absent,
+  sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "arg", "arg", "arg", "arg", "body", "body", "body", "fn", "arg", "fn"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
