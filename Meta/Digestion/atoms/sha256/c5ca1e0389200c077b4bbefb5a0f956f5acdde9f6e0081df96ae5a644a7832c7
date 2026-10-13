@@ -1,0 +1,34 @@
+**定理 6.2（完全多部型的秩与负修正）。** 设 $n\ge3$ 为奇数,$\mathtt q\ge2$,着色 $\mathrm{col}$ 占据 $p$ 个方,并设 $\Gamma$ 满足:凡 $\mathrm{col}(u)\ne\mathrm{col}(v)$ 都有 $\Gamma_{uv}=1$(同一方内的边任意)。对 $t\in G$ 记 $k_t$ 为 $f_t$ 在被占据方上取到的不同值的个数。则对每个 $t\in G$,
+
+$$
+\rho_t=\begin{cases}2, & k_t\ge2,\\ 0, & k_t=1,\end{cases}\qquad r(\pi_t)=2\Big\lfloor\frac{k_t}{2}\Big\rfloor .
+$$
+
+满足 $k_t=k$ 的 $t$ 恰有 $S(p,k)\,(n-1)_{k-1}\,n^{\mathtt q-p}$ 个,于是
+
+$$
+\Delta=-2\,n^{\mathtt q-p}\sum_{k=4}^{\min(p,n)}S(p,k)\,(n-1)_{k-1}\Big(\Big\lfloor\frac k2\Big\rfloor-1\Big),\tag{6.1}
+$$
+
+空和为 $0$。特别地 $\Delta\le0$,且 $\Delta<0$ 当且仅当 $p\ge4$ 且 $n\ge5$;当 $k_t\ge2$ 时 $\rho_t/r(\pi_t)=1/\lfloor k_t/2\rfloor$。$p=4$ 时 $\Delta=-2D$。
+
+**证明。** 对 $u\ne v$:若 $\mathrm{col}(u)\ne\mathrm{col}(v)$,则 $\Gamma_{uv}=1$,$(M_t)_{uv}=\lambda_u+\lambda_v$;若 $\mathrm{col}(u)=\mathrm{col}(v)$,则 $\lambda_u=\lambda_v$,$(M_t)_{uv}=0=\lambda_u+\lambda_v$。对角元为 $0=\lambda_u+\lambda_u$。故以 $\lambda=(\lambda_u)_u$ 与全一列向量 $\mathbf 1$ 记,
+
+$$
+M_t=\lambda\,\mathbf 1^{\mathsf T}+\mathbf 1\,\lambda^{\mathsf T},
+$$
+
+其秩至多为 $2$。$k_t=1$ 时 $\lambda$ 在全部量子比特上是常数(空方不含量子比特),$M_t=0$。$k_t\ge2$ 时存在 $\lambda_u\ne\lambda_v$,$M_t$ 非零,秩至少为 $2$,故 $\rho_t=2$。
+
+对 $r(\pi_t)$:$\Gamma^{\pi_t}_{uv}=1$ 当且仅当 $\lambda_u\ne\lambda_v$。按 $\lambda$ 的值把 $[N]$ 分成 $k=k_t$ 个非空纤维 $V_1,\dots,V_k$,则 $u\in V_i$ 所在的行是 $V_i$ 的补集的示性向量。同一纤维内的行彼此相同,列亦然;删去重复的行与列不改变秩,所得 $k\times k$ 矩阵是 $J_k-I_k$($J_k$ 为全一阵)。在 $\mathbb F_2$ 上 $(J_k-I_k)^2=J_k^2-2J_k+I_k=kJ_k+I_k$。$k$ 为偶数时它等于 $I_k$,秩为 $k$。$k$ 为奇数时 $(J_k-I_k)\mathbf 1=(k-1)\mathbf 1=0$,秩至多 $k-1$,而删去最后一行一列所得 $J_{k-1}-I_{k-1}$ 的阶为偶数,秩为 $k-1$。故秩为 $2\lfloor k/2\rfloor$。
+
+计数:设 $O$ 为被占据方之集。若 $\mathtt q\in O$,满足 $k_t=k$ 的 $f_t|_O$ 对应于把 $O$ 分成 $k$ 块、含 $\mathtt q$ 的块取值 $0$、其余 $k-1$ 块取两两不同的非零值,共 $S(p,k)(n-1)_{k-1}$ 种;$O$ 外的 $\mathtt q-p$ 个坐标 $t_c$ 自由,得 $S(p,k)(n-1)_{k-1}n^{\mathtt q-p}$。若 $\mathtt q\notin O$,共 $S(p,k)(n)_k$ 种,$O$ 外有 $\mathtt q-1-p$ 个自由坐标,而 $(n)_k\,n^{\mathtt q-1-p}=(n-1)_{k-1}\,n^{\mathtt q-p}$,结果相同。由于 $k_t\le\min(p,n)$,
+
+$$
+\Delta=\sum_{k=2}^{\min(p,n)}S(p,k)(n-1)_{k-1}n^{\mathtt q-p}\Big(2-2\Big\lfloor\frac k2\Big\rfloor\Big),
+$$
+
+$k=2,3$ 的项为零,即得 (6.1)。各项非正;存在 $k\ge4$ 的项当且仅当 $\min(p,n)\ge4$,而 $n$ 为奇数,即 $p\ge4$ 且 $n\ge5$,此时 $k=4$ 的项为 $-2n^{\mathtt q-p}S(p,4)(n-1)_3<0$。$p=4$ 时 (6.1) 只剩 $k=4$ 一项 $-2n^{\mathtt q-4}(n-1)(n-2)(n-3)=-2D$。∎
+
+满足定理 6.2 假设的例子有:$p$ 个量子比特位于 $p$ 个不同方的完全图 $K_p$;各部分别恰为一个方的全部量子比特的完全多部图。
+

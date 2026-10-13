@@ -43,7 +43,7 @@ def frontierList : {d : Nat} → (p : Pattern d) → List (Frontier p)
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem frontier_complete {d : Nat} (p : Pattern d) (x : Frontier p) :
+theorem frontier_complete {d : Nat} (p : Pattern d) (x : Frontier p) :
     x ∈ frontierList p := by
   induction d with
   | zero => cases p; cases x; exact List.mem_cons_self
@@ -59,7 +59,7 @@ def classList (C : LiteralRow) : List (Classes C) :=
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem class_complete (C : LiteralRow) (b : Classes C) : b ∈ classList C := by
+theorem class_complete (C : LiteralRow) (b : Classes C) : b ∈ classList C := by
   apply List.mem_map.mpr
   refine ⟨⟨b.val, (Finset.mem_sort _).mpr b.property⟩, by simp, ?_⟩
   rfl
@@ -69,7 +69,7 @@ def variableList {C : LiteralRow} {d : Nat} (η : Patterns C d) : List (Variable
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem variable_complete {C : LiteralRow} {d : Nat} (η : Patterns C d)
+theorem variable_complete {C : LiteralRow} {d : Nat} (η : Patterns C d)
     (x : Variables η) : x ∈ variableList η := by
   rw [variableList, List.mem_dedup]
   exact List.mem_flatMap.mpr ⟨x.1, class_complete C x.1,
@@ -88,7 +88,7 @@ def patternList : (d : Nat) → List (Pattern d)
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem pattern_complete (d : Nat) (p : Pattern d) : p ∈ patternList d := by
+theorem pattern_complete (d : Nat) (p : Pattern d) : p ∈ patternList d := by
   induction d with
   | zero => cases p; exact List.mem_cons_self
   | succ d ih => cases p with
@@ -618,7 +618,7 @@ private theorem embedded_ground {X : Type} (p : Presentation X) (g : Source) :
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem evaluate_embedded {X : Type} (v : X → Source) (g : Source) :
+theorem evaluate_embedded {X : Type} (v : X → Source) (g : Source) :
     NativeTermUnification.evaluate v (FreeMagma.map Sum.inl g) = g := by
   induction g with
   | of b => rfl

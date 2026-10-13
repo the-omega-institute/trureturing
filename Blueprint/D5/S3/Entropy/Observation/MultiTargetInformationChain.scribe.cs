@@ -15,6 +15,18 @@ internal sealed class MultiTargetInformationChainDocument : IScribeDocumentDefin
         H("Multi-Target Information Chain"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("marginal-pushforward-pair"),
+                DeclarationHandle.Create(DeclarationPrefix + "marginal_pushforward_pair"),
+                H("The first marginal of a joint pushforward"),
+                StatementSource.FromAuthor(MarginalFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Summing the joint law of two readouts over the second coordinate gives "
+                        + "the law of the first readout. The coordinate marginal identity uses "
+                        + "this equality, and the product contextuality construction applies it "
+                        + "to finite restriction fibers."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("multi-target-information-chain"),
                 DeclarationHandle.Create(DeclarationPrefix + "multi_target_information_chain"),
                 H("Total target information is independent of target order"),
@@ -49,6 +61,33 @@ internal sealed class MultiTargetInformationChainDocument : IScribeDocumentDefin
 
     private static Formula Entropy(Formula law) =>
         Call("H", law);
+
+    private static Formula MarginalFormula()
+    {
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula state = F.Id("X");
+        Formula firstType = F.Id("A");
+        Formula secondType = F.Id("B");
+        Formula mass = F.Id("mu");
+        Formula first = F.Id("f");
+        Formula second = F.Id("g");
+        Formula x = F.Id("x");
+        Formula pair = Seq(Open, first, Open, x, Close, Comma, Sp, second, Open, x, Close, Close);
+        Formula joint = Seq(x, Sp, Mapsto, Sp, pair);
+        return Disp(All("X", type, All("A", type, All("B", type,
+            Seq(OpenBracket, Call("Fintype", state), CloseBracket, Sp,
+                OpenBracket, Call("Fintype", secondType), CloseBracket, Sp,
+                All("mu", Arrow(state, Seq(Mathbb, Grp(F.Id("R")))),
+                    All("f", Arrow(state, firstType), All("g", Arrow(state, secondType),
+                        Eqn(Call("marginal", Call("pushforward", joint, mass)),
+                            Call("pushforward", first, mass))))))))));
+    }
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Typed(F.Id(name), type), Comma, Sp, body);
+
+    private static Formula Eqn(Formula left, Formula right) =>
+        Seq(left, Sp, Eq, Sp, right);
 
     private static Formula TheoremFormula()
     {

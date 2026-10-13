@@ -1,0 +1,16 @@
+**Theorem 107.6 (finite-horizon stabilization of each fixed action family).**
+
+Let $d=\dim V$. For every fixed intervention word $w$ and port $C_\ell$,
+
+$$
+\bigcap_{j\ge0}\ker(C_\ell A^jT_w)
+=
+\bigcap_{0\le j<d}\ker(C_\ell A^jT_w).
+\tag{107.8}
+$$
+
+Consequently, the infinite time index in (107.1) is not the source of an
+infinite-dimensional carrier; any non-finiteness of the exact future quotient
+comes from the unbounded family of action words or from an unbounded source
+family.
+

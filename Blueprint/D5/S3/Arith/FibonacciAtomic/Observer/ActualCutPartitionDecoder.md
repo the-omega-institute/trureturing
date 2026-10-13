@@ -184,7 +184,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.
 
 This pair computes the addressed exterior and the complete finite partition independently of the class-labelled row representation.
 
-**Theorem 1.16 (Faithful representation bridge).**
+**Definition 1.16 (Address-to-role naming).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.nameExterior`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.nameExterior` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any total function names from original addresses to natural numbers, nameExterior is the free-magma lift sending a concrete Boolean leaf to that same literal leaf and an addressed hole p to the role leaf names(p). It preserves every ordered binary pair and every occurrence, including repeated role names. It neither reads a source nor requires names to be injective, and it applies to ground exteriors and a single root hole.
+
+**Theorem 1.17 (Exact structural naming).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.nameExterior_correct`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.nameExterior_correct` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary prefix-free P, root, names, address a and finite subtree t, if names agrees with classOrdinal at every reached ordered P hole and subtree a root is some t, then nameExterior names (cutExterior P a t) equals literalRow P root a t. Both concrete leaves and all reached cut holes are preserved. The statement includes empty and root cuts and arbitrary subtrees of the same root. Together with exteriorHoles_cut and findIdx/idxOf normalization, this structural naming result identifies recordRow of an actual literalRecord with canonicalRow without another structural decoder.
+
+**Theorem 1.18 (Faithful representation bridge).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.canonicalRow_record_iff`
 
@@ -196,7 +220,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.
 
 Two sources have the same canonicalRow exactly when their independent exterior and complete partition records agree. The forward direction extracts the exterior and partition. The reverse direction fixes the same reached-hole ordering and first matching indices, then renames the same exterior. Consequently the canonical representation carries exactly the record information, including empty and root holes, without disclosing hidden values, sizes or acquisition traces.
 
-**Theorem 1.17 (Independent exterior hole support).**
+**Theorem 1.19 (Independent exterior hole support).**
 
 $$\forall P: CutSet, (\forall a: Address, (\forall t: Source, (\operatorname{exteriorHoles}\left(a, \operatorname{cutExterior}\left(P, a, t\right)\right) = \operatorname{reachedHoles}\left(P, a, t\right))))$$
 
@@ -227,6 +251,8 @@ The decoder compares actual retained syntax, not independently renumbered local 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.decoderHoles`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.exteriorHoles_cut`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.literalRecord`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.nameExterior`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.nameExterior_correct`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.recutRow`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.rowDecoder`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionRecovery](ActualCutPartitionRecovery.md)

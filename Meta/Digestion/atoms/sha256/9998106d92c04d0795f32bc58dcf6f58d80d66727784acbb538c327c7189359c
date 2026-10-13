@@ -1,0 +1,25 @@
+### 15.1 固定表示滞后与单一实际寄存器
+
+令 $\delta:C\to\operatorname{Op}(C,O)$ 是实际 NativeSerialMachine 的
+来源无关程序。其四种指令为
+$\mathsf{localStep}(c')$、$\mathsf{read}(p,f)$、$\mathsf{applyRho}(c')$、
+$\mathsf{stop}(o)$；$f$ 接受全部四种 Reply。解释器只看控制 $c$，不直接看
+寄存器、纪元或历史；若原策略使用已取得历史，该历史须在原控制中按原合同保留。
+有限非终止片段指 nativeStep 的有限可达路径，实际终止则使用原 Run；
+不把只描述终止执行的 Run 偷换为任意前缀。
+
+在一个逻辑边界，以 $r=\rho^e u$ 表示逻辑当前树，唯一实际物理寄存器为
+
+$$
+\widehat r=\rho^N r=\rho^{e+N}u,
+\qquad \widehat e=e+N,
+\qquad N=2k\text{ 固定}.
+\tag{ABT.49}
+$$
+
+$r,u$ 是证明参数，不另存一个隐藏寄存器。初始 $\widehat r=\rho^N u$、
+$\widehat e=N$ 及同一实际原来源的证书由合同供给；不要求控制器自行发现或认证
+未知来源。允许一般起始逻辑纪元 $e_0$，但须同时供应同源初始关系
+$r_0=\rho^{e_0}u$、$\widehat r_0=\rho^{e_0+N}u$ 和纪元偏移。
+程序中的 $k$ 是认证表示滞后，不是随绝对纪元重算的 $\widehat e/2$。
+

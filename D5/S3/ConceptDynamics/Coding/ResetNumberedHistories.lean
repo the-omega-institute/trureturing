@@ -59,7 +59,7 @@ private theorem kernel_support (q : ℕ) (hq : 0 < q) (s t : State q) :
   · exact iff_of_true (div_pos (mul_pos hp.1 (hp.2 t.2)) (hp.2 s.2)) (Or.inr h₁)
   · simp [h₀, h₁]
 
-private theorem matrix_coefficient (q : ℕ) (i j : Fin q) (g : Sign) :
+theorem matrix_coefficient (q : ℕ) (i j : Fin q) (g : Sign) :
     ((resetMatrix q) i j).coeff g =
       if (j.val = 0 ∧ g = ofAdd true) ∨ (j.val = i.val + 1 ∧ g = 1)
         then 1 else 0 := by

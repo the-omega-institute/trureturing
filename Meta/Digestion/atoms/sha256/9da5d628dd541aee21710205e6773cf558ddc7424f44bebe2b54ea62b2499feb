@@ -1,0 +1,8 @@
+**约定 31.14（数学来源、取得边界与计量类型）。** 本节的新推导为 `repo-derived`：从定义 31.1 的实际来源、原游程几何及已知时刻解码，推导合同 $\mathsf C$ 下的取得、半周期根标签、完整状态构造、受限全部策略下界与费用结论。[Model Blueprint](https://github.com/the-omega-institute/trureturing/blob/0a9a82d6e7ffa54a2795c5207f21d8b3fc702748/Blueprint/D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorModel.md) 和 [Recovery Blueprint](https://github.com/the-omega-institute/trureturing/blob/0a9a82d6e7ffa54a2795c5207f21d8b3fc702748/Blueprint/D5/S3/ObserverMemory/ContextUpdates/CyclicSelectorRecovery.md) 是这些原数学接口的叙述来源。后者的标量迹剖面与实际游程重数刻画使用完整窗口和给定模型数据；它们不提供顺序取得接口，也不提供本节完整 $c,u,v$ 状态界。
+
+本卷定义 26.1、定理 27.2 的控制器与支持—秩证书在本节分别作原子控制语义和成功判据；[续篇一定义 15.2](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION.md) 的目标—剩余状态关系在 $C_k$ 中保留。续篇一的局部 13–21 编号与原卷增补 13–16 独立，本节的这些跨卷引用按所列卷名解释。
+
+输出反馈实现的背景来自 Majumdar、Ozay、Schmuck，*On Abstraction-Based Controller Design With Output Feedback*，[arXiv:2002.02687v1](https://arxiv.org/abs/2002.02687v1)，以及 Reissig、Weber、Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/abs/1503.03715v3)，DOI [10.1109/TAC.2016.2593947](https://doi.org/10.1109/TAC.2016.2593947)。这两项背景不承担本节原循环来源的取得界、半周期签名或状态最小值；本节不据综合推导提出文献原创主张。
+
+所引 `recoverArithmetic` 的群运算、比较及外置原语账目属于给定快照后的算术调度。它与本节的实际读取数、单位命令数及完整控制状态数分别计量。控制表的静态描述长度、端点解码计算、工作区、顺序响应锁存和物理实现也分别计量：原子 $v$ 可以处理一张完整带标签响应，并不由此得到逐坐标或逐位实现的免费工作区。根签名的 $r-2$ 位、定长状态名的十二或十六位、装置的完整剩余来源状态均具有各自不同的类型。上述纸面条件结论不给出物理总记忆、延迟、能耗、通信或位运算界，也不声称这些新增结论已作 Lean kernel 核验。
+

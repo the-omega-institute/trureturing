@@ -7,7 +7,7 @@ internal sealed class OriginalMovingWindowMomentDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/Arith/Robin/OriginalMovingWindowMoment.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "An explicit uniform error controls the continuous decaying moment of the original Robin moving-window kernel.",
+        "The original Robin moving-window kernel supplies quantitative continuous moments and a complete source-faithful signed integral assembly.",
         H("The Original Moving-Window Moment"),
         Blocks(
             Paragraph(Text(
@@ -68,157 +68,125 @@ internal sealed class OriginalMovingWindowMomentDocument : IScribeDocumentDefini
                         + "claims remain outside this theorem. The full signed "
                         + "Robin/RH obligation remains open."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("original-cut-row-lattice-estimate"),
-                DeclarationHandle.Create(Prefix + "original_cut_row_lattice_estimate"),
-                H("A moving-cut row with its continuum compensation"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Let 256<=ell<R, J=[ell,R], t in J and d>=1 be an integer. "
-                        + "Use the same literal kernel, K_J(x)=integral_J k(s,x) ds, "
-                        + "N_d(x)=integral_(J intersect {s<d^(500/151)}) k(s,x) ds "
-                        + "and r_d(x)=N_d(x)/K_J(x), with zero ratio at zero mass. "
-                        + "Write F_(t,d)(x)=log(x/d)k(t,x) "
-                        + "(1_{t<d^(500/151)}-r_d(x)) and "
-                        + "b(t)=(lambda(t)-lambda(B(t)))/(w(t)t^(11/10)).")),
-                    Paragraph(Text(
-                        "The complete row remainder is the sum over "
-                        + "1<=m<=floor(2R)/d of log(m)k(t,dm) "
-                        + "(1_{t<d^(500/151)}-r_d(dm)), minus "
-                        + "(1/d)integral_t^B(t) F_(t,d)(x) dx. Its absolute value "
-                        + "is at most 3 b(t) log(2t). The height satisfies "
-                        + "0<=b(t)<=t^(-3/10). The sum includes the zero log at "
-                        + "m=1, every nonzero Mobius row remains available for "
-                        + "subsequent signed summation, and the floor is applied "
-                        + "before the natural-number division.")),
-                    Paragraph(Text(
-                        "Cross multiplication of the literal kernels and two "
-                        + "integral comparisons show that r_d decreases wherever "
-                        + "K_J is positive. Positivity of k(t,x) for t in J "
-                        + "implies positivity of K_J(x), including the ends of J. "
-                        + "The ratio's zero extension need not decrease. On a "
-                        + "single window use the decreasing extension taking "
-                        + "value 1 on x<=t and 0 on x>=B(t); multiplication by "
-                        + "k(t,x) agrees exactly with the original ratio at "
-                        + "all x, including both zero endpoints.")),
-                    Paragraph(Text(
-                        "For d<=B(t)^(151/500), the logarithmic price body "
-                        + "decreases on [t,B(t)]. Its zero extension has the "
-                        + "lower-end jump and variation at most 2 b(t)log(2t). "
-                        + "The decreasing ratio adds at most b(t)log(2t). "
-                        + "For d>=B(t)^(151/500) the original row is zero, "
-                        + "since all its positive reference mass precedes "
-                        + "the divisor clock. Variation on adjacent lattice "
-                        + "cells adds to variation on the full grid. The "
-                        + "initial zero cell and the entire last cell are "
-                        + "included; the last grid endpoint exceeds 2R.")),
-                    Paragraph(Text(
-                        "This row estimate supplies no count of crossing "
-                        + "integer rows and no summed bound with exponent "
-                        + "-99/500. Integral interchange over an arbitrary "
-                        + "complete selected S, the favorable paired term, "
-                        + "the early-error estimate and cofinal positive-mass "
-                        + "original witnesses are not conclusions of this "
-                        + "theorem. The full signed Robin/RH obligation "
-                        + "remains open."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("original-cut-row-pointwise-budget"),
-                DeclarationHandle.Create(Prefix + "original_cut_row_pointwise_budget"),
-                H("The complete pointwise crossing budget"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "For 256<=ell<R and t in [ell,R], sum the actual "
-                        + "signed-row magnitudes over every integer "
-                        + "1<=d<=floor(B(t)^(151/500)). Rows with "
-                        + "d<=floor((t-t^(4/5))^(151/500)) vanish from the "
-                        + "literal strict-left cutoff, including zero-normalizer "
-                        + "and endpoint cases. The remaining interval has at most "
-                        + "2*t^(51/500) integer labels.")),
-                    Paragraph(Text(
-                        "Applying the source-specific row estimate and "
-                        + "|mu(d)|<=1, then b(t)<=t^(-3/10), gives the complete "
-                        + "bound sum_d |mu(d)|*|latticeRowRemainder(ell,R,t,d)| "
-                        + "<= 6*t^(-99/500)*log(2t). The original divisor rows "
-                        + "remain available with their signed Mobius factors for "
-                        + "later aggregation; absolute values pay only this "
-                        + "pointwise budget.")),
-                    Paragraph(Text(
-                        "The complete crossing budget supplies the aggregate "
-                        + "estimate below on any measurable complete S. The "
-                        + "paired baseline inequality, early-error decay, "
-                        + "cofinal witnesses and full signed Robin/RH "
-                        + "conclusion remain separate obligations."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("original-cut-aggregate-estimate"),
-                DeclarationHandle.Create(Prefix + "original_cut_aggregate_estimate"),
-                H("The native cut identity on a complete measurable selection"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Let 256<=ell<R, let S be any measurable subset of "
-                        + "J=[ell,R], and retain M=volume(S)>0. Set N=floor(2R). "
-                        + "The original C_cut(S) integrates over S the full sum "
-                        + "on positive integer pairs of "
-                        + "mu(d)log(m)k(t,dm)(1_{t<d^(500/151)} "
-                        + "-r_d(dm)). The actual kernel makes every term with "
-                        + "dm>N zero. Thus its exact finite form uses "
-                        + "1<=d<=N and 1<=m<=N/d, where N/d is "
-                        + "natural-number division. These are exactly all "
-                        + "positive integer pairs with dm<=N.")),
-                    Paragraph(Text(
-                        "Define P_t(x)=sum over 1<=d<=floor(t^(151/500)) of "
-                        + "mu(d)log(x/d)/d and Pbar(x)=integral_J k(s,x)P_s(x) ds "
-                        + "divided by K_J(x), with the real zero convention. "
-                        + "The original P_cut(S) is integral_S integral_t^B(t) "
-                        + "k(t,x)(P_t(x)-Pbar(x)) dx dt. The exact floor identity "
-                        + "d<=floor(t^(151/500)) iff t>=d^(500/151) preserves "
-                        + "all equality endpoints. On the weighted support, "
-                        + "k(t,x)(P_t(x)-Pbar(x))=-sum over 1<=d<=N of "
-                        + "mu(d)F_(t,d)(x)/d. If K_J(x)=0, k(t,x)=0 for "
-                        + "t in J, so this equality still holds.")),
-                    Paragraph(Text(
-                        "The kernel is jointly measurable in (t,x); its "
-                        + "parameter integrals K_J and N_d and their zero-safe "
-                        + "ratio are measurable. On t in J each row is bounded "
-                        + "in absolute value by log(2R)+log(d), with support "
-                        + "inside [0,2R]. This proves the actual integrability "
-                        + "needed for the finite sum and integral exchanges. "
-                        + "Moving-window integrals equal fixed-support "
-                        + "integrals because the literal kernel vanishes at "
-                        + "both endpoints and outside each window.")),
-                    Paragraph(Text(
-                        "The resulting identity is C_cut(S)+P_cut(S)="
-                        + "integral_S sum over 1<=d<=N of "
-                        + "mu(d)latticeRowRemainder(ell,R,t,d) dt. Every row "
-                        + "past floor(B(t)^(151/500)) is exactly zero. Therefore "
-                        + "the complete pointwise budget gives "
-                        + "|C_cut+P_cut|<=6 integral_S t^(-99/500)log(2t) dt "
-                        + "<=6 M ell^(-99/500)log(2ell). The last step follows "
-                        + "from the nonpositive derivative of the actual "
-                        + "log-power envelope for all t>=256. The estimate "
-                        + "depends on neither R nor the number or placement "
-                        + "of components of S.")),
-                    Paragraph(Text(
-                        "The kernel, complete original selections, higher "
-                        + "prime-power reference layers and two distinct "
-                        + "costs retain the conventions of EL Definitions "
-                        + "1.1-1.2 and EL Assumption 1.3 in "
-                        + "FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_SELECTED_EULER_LAYERS. "
-                        + "The cut identity controls this signed remainder; "
-                        + "it gives no favorable paired baseline, early "
-                        + "cancellation or cofinal original positive-mass "
-                        + "witnesses. The identity identifying the complete "
-                        + "original I_X with its paired, early and strip "
-                        + "terms remains outside this theorem, as do the "
-                        + "stationary FIB and Riemannian-manifold realization "
-                        + "bridges. The full all-integer Robin/RH obligation "
-                        + "remains open."))),
-                DescribeRole.Theorem))));
+            Paragraph(Text(
+                "For a source-faithful application, take the OriginalWindow X "
+                + "and OriginalBounds X ell R from OriginalFirstClockTransport, "
+                + "with 256<=ell<R. Let S=selectedDomain X: the union of every "
+                + "original good-edge interval, with overlaps counted once. "
+                + "Its canonical sources are the least actual full-domain "
+                + "maximizers over positive multiples of 5040p. Neither the "
+                + "prime labels, the good-edge selector nor the integration "
+                + "domain is replaced by an auxiliary probability law.")),
+            Paragraph(Text(
+                "Put J=floor(2R), alpha=151/500, D(t)=floor(t^alpha), "
+                + "tau_d=d^(500/151), W(x)=integral_S k(t,x) dt, "
+                + "Z_d(t)=sum_(1<=m<=floor(J/d)) log(m)k(t,dm), "
+                + "and Y_d(t)=d^(-1)integral_t^B(t) log(x/d)k(t,x) dx. "
+                + "The kernel support proves that Z_d equals the original "
+                + "row with terminal floor(B(t)/d); added fixed-support terms "
+                + "vanish. The complete von Mangoldt convolution gives "
+                + "I=sum_(n<=J) Lambda(n)W(n)-integral W(x) dx. "
+                + "The Chebyshev prime-power reindexing writes its sum as "
+                + "J_prime+H_ref, where J_prime=sum_(prime p<=J)log(p)W(p) "
+                + "and H_ref contains every exponent 2<=k<=floor(log(2R)/log(2)) "
+                + "and every prime p<=(2R)^(1/k), with mass log(p)W(p^k). "
+                + "All further terms vanish by the same original support.")),
+            Paragraph(Text(
+                "Use the full reference interval [ell,R] to define "
+                + "K(x)=integral_[ell,R] k(t,x) dt, "
+                + "r_d(x)=integral_([ell,R] intersect {t<tau_d}) k(t,x) dt/K(x), "
+                + "P(t,x)=sum_(1<=d<=D(t)) mu(d)log(x/d)/d, and "
+                + "Pbar(x)=integral_[ell,R] k(t,x)P(t,x) dt/K(x). "
+                + "Both quotients use the real zero convention at K(x)=0. "
+                + "The before-cut indicator is precisely 1_(t<tau_d); "
+                + "the complementary early indicator includes t=tau_d.")),
+            Paragraph(Text(
+                "Define the frozen paired baseline directly by "
+                + "B_pair=integral_S [sum_(d<=J) mu(d)sum_(m<=floor(J/d)) "
+                + "log(m)k(t,dm)r_d(dm) "
+                + "+integral_t^B(t) k(t,x)Pbar(x) dx-a(t)] dt. "
+                + "Here a(t)=[log(log(B(t)))-log(log(t)) "
+                + "-H(t)lambda(B(t))]/[w(t)t^(11/10)]. "
+                + "This definition uses the actual frozen row and posterior; "
+                + "it is not a residual defined by subtracting the other "
+                + "terms from I.")),
+            Paragraph(Text(
+                "Let E_early(t)=sum_(d<=D(t))mu(d)[Z_d(t)-Y_d(t)]. "
+                + "Let C_cut be integral_S of the full positive-pair sum "
+                + "mu(d)log(m)k(t,dm)[1_(t<tau_d)-r_d(dm)], "
+                + "and P_cut=integral_S integral_t^B(t) "
+                + "k(t,x)[P(t,x)-Pbar(x)] dx dt. "
+                + "Then exactly I=B_pair+integral_S E_early+C_cut+P_cut. "
+                + "Indeed frozen rows plus C_cut restore all late lattice "
+                + "rows, while the frozen posterior plus P_cut restore "
+                + "all early continuous rows. Adding E_early restores "
+                + "the missing early lattice rows, so the full finite "
+                + "Mobius convolution remains unchanged.")),
+            Paragraph(Text(
+                "The interchange obligations are part of this application. "
+                + "S is compact and lies in [ell,R]; the original joint "
+                + "kernel is measurable, between zero and one there, "
+                + "and supported in S times [0,2R]. Hence Fubini gives "
+                + "integral W=integral_S a(t) dt, and the elementary "
+                + "log-log primitive gives the displayed exact a(t). "
+                + "Finite row sums, bounded logarithmic rows, the original "
+                + "cutoff indicators and the posterior compensation pay "
+                + "integrability of each integrated term. Initial atoms "
+                + "t=x are excluded; terminal atoms x=B(t) have zero weight.")),
+            Paragraph(Text(
+                "For M=(volume S).toReal>0, the original paired strip "
+                + "estimate on this same S gives "
+                + "|I-B_pair-integral_S E_early| "
+                + "<=6 M ell^(-99/500) log(2ell). This bounds the combined "
+                + "cut correction. The early-row supplier separately bounds "
+                + "the residual after subtracting boundaryHeight times "
+                + "endpointSum; it does not yet bound the whole E_early.")),
+            Paragraph(Text(
+                "This application reuses Mathlib's "
+                + "moebius_mul_log_eq_vonMangoldt and "
+                + "Chebyshev.sum_PrimePow_eq_sum_sum. The detailed early-row "
+                + "and paired-cut suppliers were consumed from project source "
+                + "checkpoints bfd899aa4198fc3cd9a965d29ea85c61a9bca1a3 and "
+                + "71ffdcd2c961011602d16a5c1b35ff0a027ea9e7. "
+                + "The application creates no additional canonical Lean "
+                + "theorem or claim that those separate suppliers are "
+                + "declarations in this module. It supplies no favorable "
+                + "signed lower bound for B_pair, no full early-boundary "
+                + "cancellation and no cofinal positive-mass original "
+                + "integer witnesses. The separate discrete and continuous "
+                + "costs in the Robin upper estimates are unchanged.")),
+            Paragraph(Text(
+                "The original early supplier can also be consumed on this "
+                + "same full S without discarding its signed initial endpoint. "
+                + "Set b(t)=[lambda(t)-lambda(B(t))]/[w(t)t^(11/10)] and "
+                + "Q_D(t)=sum_(1<=d<=D(t))mu(d)log(t/d)[fract(t/d)-1/2]. "
+                + "The literal Bernoulli value at every integer is -1/2. "
+                + "The endpoint body b(t)Q_D(t) is measurable and integrable "
+                + "on S: its moving divisor sum extends exactly to the fixed "
+                + "finite J by the original cutoff indicator, each smooth "
+                + "coefficient is integrable on [ell,R], and the Bernoulli "
+                + "factor is bounded by 1/2. No probability or polynomial "
+                + "approximation replaces it.")),
+            Paragraph(Text(
+                "The exact early-row residual gives "
+                + "|E_early(t)-b(t)Q_D(t)|<=t^(-62/125)log(t)/6. This "
+                + "budget decreases for t>=256, so "
+                + "|integral_S E_early-integral_S bQ_D| "
+                + "<=M ell^(-62/125)log(ell)/6. Combined with the original "
+                + "paired strip budget, |I-B_pair-integral_S bQ_D| "
+                + "<=M delta(ell), where delta(ell)=6ell^(-99/500)log(2ell) "
+                + "+ell^(-62/125)log(ell)/6. Thus "
+                + "I>=B_pair+integral_S bQ_D-M delta(ell), preserving the "
+                + "full original J_prime+H_ref and exact centering.")),
+            Paragraph(Text(
+                "This leaves a joint signed target, allowing cancellation "
+                + "between the baseline and the actual endpoint term. For "
+                + "the original fixed kappa<c_Q allowance with "
+                + "c_Q=(sqrt(2)-1)/4, a sufficient remaining inequality is "
+                + "B_pair+integral_S bQ_D>=-(kappa-delta(ell))M on the "
+                + "cofinal actual positive-mass windows. The refinement "
+                + "proves the residual budget only; that favorable joint "
+                + "inequality and the cofinal witness obligation remain "
+                + "open. It does not require I to be positive and introduces "
+                + "no new canonical Lean declaration.")))));
 }
