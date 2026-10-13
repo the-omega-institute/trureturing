@@ -3537,3 +3537,145 @@ the existing actual-source and quadrature suppliers, without a new
 sampling theorem, literature-priority claim or Lean verification.
 No $\Theta<1$, SI1, SC4 or DH1 condition is needed for this transport;
 the original signed comparison and RH remain unproved.
+
+
+## The complete compensated sum has a tie-independent continuous account
+
+Keep CQ1--CQ3's actual finite core selector and every original full-window
+endpoint. Reuse the [Trudgian all-prime-power PNT bound](../Weil/trudgian2014pnt.md),
+Theorem 1 of arXiv:1401.2689v2. Its recorded modulus $b(\log v)$ satisfies
+$(\log v)^2b(\log v)\to0$. Thus some fixed $C_{\rm PNT}$ and one common
+real start give
+
+$$
+|E(v)|=|v-\psi(v)|\le C_{\rm PNT}\frac v{\log^2v}.
+$$
+
+This is a weaker consequence of the existing unconditional supplier,
+not a new prime-error theorem, an RH premise or an estimate at selected
+phases. Every prime power and the weak endpoint convention of $\psi$
+remain. The lower endpoint's original all-tie core clock tends to
+infinity; N2 therefore puts every intervening active core above this
+same PNT start after enlarging only the common source start.
+
+### A coarse majorant pays the whole improper future integral
+
+For an active core clock $B$, let $L=\log B\ge1$ and use the original
+HC3 kernel, subtraction and infinite upper endpoint. Directly applying
+the reused PNT bound gives
+
+$$
+\begin{aligned}
+\left|\int_1^\infty E(Bv)k_L(v)\,dv\right|
+&\le C_{\rm PNT}B
+\int_1^\infty\frac{v k_L(v)}{(L+\log v)^2}\,dv\\
+&=C_{\rm PNT}BL
+\int_0^\infty\frac{1+L+y}{(L+y)^4}\,dy\\
+&=C_{\rm PNT}B\left(\frac1{2L}+\frac1{3L^2}\right).
+\end{aligned}
+$$
+
+The last integral is absolutely convergent. It integrates the complete
+future error majorant, rather than using the nonintegrable coarse bound
+$|E(Bv)|=O(Bv)$ with the same kernel. Applying the same PNT supplier
+also to the retained local subtraction yields
+
+$$
+\boxed{
+|G_a(B)|\le C_{\rm PNT}\sqrt B
+\left[\frac1{2\log B}+\frac{a+1/3}{\log^2 B}\right]
+\le C_{\rm PNT}(a+5/6)\sqrt{R_X}.}
+\tag{CQ4}
+$$
+
+This is only a coarse absolute majorant for quadrature. It is not the
+original $M_X$-scale signed upper estimate, and the favorable PNT
+decay has not been promoted to a saving on that target.
+
+### Apply the original quadrature to the entire compensated readout
+
+Define the same-envelope continuous account
+
+$$
+\mathcal J_X=\int_{t_0}^{t_m}G_a(\mathcal B_X(t))\,dt.
+$$
+
+It uses the original full label interval, actual integer-core response,
+complete future prime-deficit average and fixed original $a$. CQ2 and
+CQ4 give uniformly in every original maximizing-tie assignment
+
+$$
+\boxed{
+\sup_{\mathcal T}
+|\mathcal G_{X,\mathcal T}-\mathcal J_X|
+\le\frac{4C_{\rm PNT}(a+5/6)}{\log2}
+\varepsilon_X^{\rm lab}R_X^{3/2}=o_X(1).}
+\tag{CQ5}
+$$
+
+The scale tends to zero by the already established exponent comparison
+in CQ3. In particular, any two allowed original tie assignments have
+compensated sums differing by $o_X(1)$, not just a relative stock error.
+The original full-window estimate with a constant strictly below
+$C_*=d(1-\kappa)/16$ is consequently equivalent to the estimate
+
+$$
+\mathcal J_X\le C_0 M_XL_X,\qquad C_0<C_*,
+\qquad M_X=X^{1/2-\eta}\log X,
+$$
+
+with an arbitrarily small fixed loss of strict margin in either
+direction. Indeed $M_XL_X\to\infty$ and CQ5 pays the absolute difference
+uniformly in all ties on each original window. Both statements keep
+one common cofinal sequence of qualifying original full windows;
+CQ5 does not prove that a favorable sequence exists.
+
+No $\Theta<1$, SI1, SC4 or DH1 assumption is used in CQ4--CQ5.
+Thus this transfer also applies when $\Theta=1$, under the same original
+source suppliers. It neither changes $\eta$ nor transports a free-center
+average onto the original source without paying that transport.
+The measure in $B$ is still the occupation of $\mathcal B_X(t)$,
+including all its skips and constant-core branches; no smooth inverse
+inventory, Fourier decay or phase independence follows.
+
+### The already reduced common head transports by the same account
+
+If DH1 also holds, retain its same actual growing cutoff $H_X=X^h$,
+fixed real-part cut $\sigma_0$ and exact common-head readout
+
+$$
+P_X(B)=2\operatorname{Re}
+\sum_{\substack{0<\gamma\le H_X\\\beta>\sigma_0}}
+ m_\rho c_{B,a}(\rho).
+$$
+
+The existing complete coefficient majorants and zero-count consequence,
+as already used in SR1, give
+$\sup_{B\in\mathscr B_X}|P_X(B)|
+\ll_a\sqrt{R_X}(1+\log^2H_X)$.
+CQ2 pays its transport by
+$O_a(\varepsilon_X^{\rm lab}R_X^{3/2}(1+\log^2H_X))=o_X(1)$.
+Reuse DH4 once and exchange only its finite common sum to obtain
+
+$$
+\boxed{
+\mathcal J_X=
+2\operatorname{Re}
+\sum_{\substack{0<\gamma\le H_X\\\beta>\sigma_0}}
+ m_\rho\int_{t_0}^{t_m}
+ c_{\mathcal B_X(t),a}(\rho)\,dt
++o_X(M_XL_X).}
+\tag{CQ6}
+$$
+
+The original subtraction, real parts, phases and multiplicities remain.
+No explicit formula is applied at $H_X$, no original legal mask is
+optimized, and no error is summed over an infinite compensated series.
+CQ6 is a quantitative continuous representation of the same unpaid
+common head; its growing joint signed bound is still required.
+
+CQ4--CQ6 are source-specific paper applications of existing PNT,
+quadrature and spectral suppliers. They supply no new PNT, generic
+sampling theorem, literature-priority claim, Lean declaration or kernel
+verification. The actual continuous signed estimate, original Robin
+comparison and RH remain unproved.
