@@ -165,7 +165,7 @@ private theorem name_injective : Function.Injective finName := by
   have := congrArg (fun s : String => s.toList.length) h
   simpa [finName] using this
 
-private theorem native_lift (n : Nat) (t : Term (Fin n)) :
+theorem native_lift (n : Nat) (t : Term (Fin n)) :
     nativeTerm (liftTerm t) = encode (finPresentation n) t := by
   induction t using FreeMagma.recOn with
   | of a => cases a <;> rfl
@@ -448,7 +448,7 @@ private theorem fold_mul {A B : Type} (leaf : A → B) (node : B → B → B)
       node ((@FreeMagma.lift A B ⟨node⟩ leaf) l)
         ((@FreeMagma.lift A B ⟨node⟩ leaf) r) := rfl
 
-private theorem apply_prim : Primrec₂ apply := by
+theorem apply_prim : Primrec₂ apply := by
   have leaf : Primrec₂ (fun (S : Store) (a : Bool ⊕ Nat) =>
       Sum.elim (fun b => FreeMagma.of (Sum.inl b))
         (fun x => (S.lookup x).getD (.of (.inr x))) a) := by
@@ -471,7 +471,7 @@ private theorem apply_prim : Primrec₂ apply := by
         rw [fold_mul, hl, hr]
         rfl)
 
-private theorem vars_prim : Primrec vars := by
+theorem vars_prim : Primrec vars := by
   have leaf : Primrec₂ (fun (_ : Nat) (a : Bool ⊕ Nat) =>
       Sum.elim (fun _ => ([] : List Nat)) (fun x => [x]) a) :=
     Primrec.sumCasesOn Primrec.snd (Primrec.const []).to₂
