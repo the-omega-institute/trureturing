@@ -3045,3 +3045,825 @@ mutual reconstruction. Neither that gap nor the full space/time/boundary/
 memory programme is settled by the local class theorems.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. The acquired native entry and complete read/write memory
+
+**Assumption 17.1 (causal code, entire entry and conditional services).**
+Use the actual ordered-tree algebra, homomorphic substitution and
+complete-row semantics of [NAR, Definitions 1.1--1.2][NAR-RW]. Thus
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+T_0=\alpha,\quad T_1=\beta,\quad
+T_{n+2}=\langle T_{n+1},T_n\rangle=\rho^{n+2}\alpha.
+\tag{NARC.17.1}
+$$
+
+The allowed originals are all
+$X_{a,b}=\langle T_a,T_{16+b}\rangle$, $0\le a,b\le15$.
+Genuinely acquire the entire initial empty-cut row, compute the
+restricted encoder $e_{16}$ of Definition 11.1 from that row, and
+export only its label before the future lag and visible region are
+chosen. Discard the row, its parsed coordinates and every other
+source-bearing field. Retain the acquisition, export, discard and
+same-original pure-$\rho$ premises of Assumptions 5.1 and 9.1.
+Require positive lags; the conditional fiber below also satisfies
+the nonnegative-lag convention.
+
+Condition on label $1$, visible region $R$, cut $\{L\}$, and genuine
+acquisition of the entire later row
+
+$$
+\mathcal I=
+\left(1,R,
+ \bigl(\langle\square_L,T_{33}\rangle,\{\{L\}\}\bigr)\right).
+\tag{NARC.17.2}
+$$
+
+Equality includes every literal exterior label and bracket, the
+reached left hole and the complete singleton partition. The partition
+supplies no hidden-visible comparison. The current actual tree is
+stationary throughout capture and all subsequent native Reads.
+Every finite original-root word is a legal constructor query, including
+absent addresses, with replies in the order
+$\mathcal A=(\bot,\alpha,\beta,\mathsf b)$.
+Every invocation, including a repeated request, counts as one
+chronological Read.
+
+A separately supplied terminating compiler may use only this common
+acquired entry and public source and encoder data. It installs one
+common table and one common initial state for the entire compatible
+fiber, then closes access to all mutable compilation inputs and
+workspace. It cannot select a table using the unknown actual origin,
+hidden age or lag. Acquisition, encoding, export, later capture,
+parsing, compilation, installation and initialization are distinct
+conditional services with separate costs.
+
+**Proposition 17.2 (exact acquired label-one histories).** The inverse
+class and the entire compatible histories of (NARC.17.2) are exactly
+
+$$
+\begin{aligned}
+C&=e_{16}^{-1}(1)
+ =\{(1,0),(1,1),(0,1)\}
+   \cup\{(15,j),(j,15):0\le j\le5\},\\
+\ell_{a,b}&=17-b\ge2,\qquad
+n_{a,b}=17+a-b,\\
+Y_{a,b}&=\rho^{\ell_{a,b}}X_{a,b}
+ =\langle T_{n_{a,b}},T_{33}\rangle.
+\end{aligned}
+\tag{NARC.17.3}
+$$
+
+The following table lists every history; each original is continued
+by its own indicated lag and remains the same source during its Reads.
+
+| Origin $(a,b)$ | Actual original $X_{a,b}$ | Lag $\ell_{a,b}$ | Actual current source $Y_{a,b}$ |
+| --- | --- | --- | --- |
+| $(0,15)$ | $\langle T_0,T_{31}\rangle$ | $2$ | $\langle T_2,T_{33}\rangle$ |
+| $(1,15)$ | $\langle T_1,T_{31}\rangle$ | $2$ | $\langle T_3,T_{33}\rangle$ |
+| $(2,15)$ | $\langle T_2,T_{31}\rangle$ | $2$ | $\langle T_4,T_{33}\rangle$ |
+| $(3,15)$ | $\langle T_3,T_{31}\rangle$ | $2$ | $\langle T_5,T_{33}\rangle$ |
+| $(4,15)$ | $\langle T_4,T_{31}\rangle$ | $2$ | $\langle T_6,T_{33}\rangle$ |
+| $(5,15)$ | $\langle T_5,T_{31}\rangle$ | $2$ | $\langle T_7,T_{33}\rangle$ |
+| $(0,1)$ | $\langle T_0,T_{17}\rangle$ | $16$ | $\langle T_{16},T_{33}\rangle$ |
+| $(1,1)$ | $\langle T_1,T_{17}\rangle$ | $16$ | $\langle T_{17},T_{33}\rangle$ |
+| $(1,0)$ | $\langle T_1,T_{16}\rangle$ | $17$ | $\langle T_{18},T_{33}\rangle$ |
+| $(15,5)$ | $\langle T_{15},T_{21}\rangle$ | $12$ | $\langle T_{27},T_{33}\rangle$ |
+| $(15,4)$ | $\langle T_{15},T_{20}\rangle$ | $13$ | $\langle T_{28},T_{33}\rangle$ |
+| $(15,3)$ | $\langle T_{15},T_{19}\rangle$ | $14$ | $\langle T_{29},T_{33}\rangle$ |
+| $(15,2)$ | $\langle T_{15},T_{18}\rangle$ | $15$ | $\langle T_{30},T_{33}\rangle$ |
+| $(15,1)$ | $\langle T_{15},T_{17}\rangle$ | $16$ | $\langle T_{31},T_{33}\rangle$ |
+| $(15,0)$ | $\langle T_{15},T_{16}\rangle$ | $17$ | $\langle T_{32},T_{33}\rangle$ |
+
+**Proof.** Definition 11.1 normally returns $\max(a,b)$. Its unchanged
+maximum-one base is precisely $(0,1),(1,0),(1,1)$. The only
+reassignment to label one is $(\max(a,b),\min(a,b))=(15,j)$,
+$0\le j\le5$, in both orientations. Its label-zero star at maximum
+sixteen is outside the restricted square, and all other reassignment
+labels differ from one. Hence the displayed fifteen-element set is
+the exact inverse class, without an all-label decoder premise.
+
+The supplied acquired-literal clock satisfies
+$c(\alpha)=0$, $c(\beta)=1$,
+$c(\langle s,t\rangle)=2+c(t)$ and $c(T_m)=m$.
+The genuinely acquired original row therefore computes
+$a=c(T_a)$ and $b=c(T_{16+b})-16$ before the future choice.
+The code is a finite deterministic function of that acquired row;
+the parsed coordinates do not survive its export and discard.
+
+For a member of $C$, homomorphism at lag $17-b$ gives exactly the
+listed $Y_{a,b}$. Both original-root slots are reached, and replacing
+the entire left filling leaves $\langle\square_L,T_{33}\rangle$.
+One reached hole has precisely the partition $\{\{L\}\}$,
+independently of its filling. Thus every listed history realizes the
+entire row, rather than just its clock.
+
+Conversely, a history with this entry has original in $C$ because
+its exported label is one. Its visible literal must obey
+$T_{16+b+\ell}=T_{33}$. Applying the clock gives
+$16+b+\ell=33$, so $\ell=17-b$ and $a+\ell=17+a-b$.
+There is no other lag for that original and no other compatible
+original. This is both directions of Theorem 5.2 specialized to
+$q=16,z=17$; all $b\le15$ meet its feasibility restriction under
+either lag convention. The definition of the encoder and this local
+fiber calculation require neither the full Theorem 11.6 nor any
+packing conclusion of §§13--16. $\square$
+
+**Definition 17.3 (proof coordinates and the lag target).** The fifteen
+distinct hidden ages and their visible-origin target function are
+
+$$
+\begin{aligned}
+D&=\{2,3,4,5,6,7,16,17,18,27,28,29,30,31,32\},\\
+\tau(n)&=
+\begin{cases}
+15,&2\le n\le7,\\
+1,&n=16,17,\\
+0,&n=18,\\
+32-n,&27\le n\le32,
+\end{cases}
+\qquad g(n)=17-\tau(n),\\
+D_L&=\{2,3,4,5,6,7,16,17,18\},\qquad
+D_U=\{29,30,31,32\}.
+\end{aligned}
+\tag{NARC.17.4}
+$$
+
+The required output is the complete numeric lag $g(n)$, with image
+$\{2,12,13,14,15,16,17\}$. Distinct $\tau$ values are exactly
+distinct required outputs. The coordinates $n,\tau$ parametrize
+actual histories for proofs; they are not observer inputs. In
+particular the task does not require identifying all fifteen ages.
+
+**Assumption 17.4 (all installed states and immediate writes).**
+Impose the complete Moore discipline of Assumption 4.1 and
+[AOF, Definition 10.1][AOF-RW] on the arbitrary-code entry of
+Assumption 17.1. A table has finite disjoint running and halting
+sets $K=Q\sqcup H$, one common initial state $R$, a fixed fully
+materialized original-root word $\operatorname{addr}(s)$ for each
+$s\in Q$, a total map $\operatorname{next}:Q\times\mathcal A\to K$,
+and one fixed complete natural-number output at each $h\in H$.
+It must first halt correctly after at most two chronological Reads
+on each of the fifteen actual sources. All installed states count,
+including unreachable, redundant and unused states.
+
+After installation the current state is the entire mutable accessible
+configuration. There is no separately accessible input code or row,
+reply latch, program counter, phase, clock, history, mutable selector,
+address register, output accumulator or arithmetic decoder. The
+installed address, transition and complete-output table is immutable,
+with separately supplied reading and output services and separately
+charged storage. There is no free control step between Reads.
+
+For the writable variant additionally impose [FIB, Definition
+45.1][FIB-RW]: one fixed-length binary word without adjacent ones
+is the entire mutable configuration. The current word and the actual
+reply choose that same installed word or one legal bit flip immediately,
+then discard the reply. The next instruction is selected solely by
+the updated word. There is no intermediate write instruction or
+additional write phase. Initialization, immutable-table access,
+Read execution, atomic response writing and complete output are
+conditional services; legal names alone supply none of them physically.
+All configuration needed by a proposed device must satisfy this
+complete-state contract to receive the bounds below.
+
+This combines the arbitrary-code fiber and two-Read budget of
+Assumption 9.1 with an additional finite Moore restriction. It does
+not substitute $e_{16}$ for the fixed reference $e=a_0$ in Theorem
+4.2, or transfer AOF's interval age-identification numerical optima.
+The acquisition and compilation phases have their own memory and
+cost contracts; the writable restriction here concerns recovery
+after complete installation.
+
+**Definition 17.5 (optimization and actual supported edges).** Let
+$\mathfrak M_2$ be all tables satisfying Assumption 17.4's abstract
+contract on this exact entry. Let $\mathfrak W_2$ be those also
+satisfying its immediate-write contract, allowing arbitrary finite
+word lengths and counted state refinement. Define
+
+$$
+M_2=\min_{\mathcal K\in\mathfrak M_2}|K|,\qquad
+W_2=\min_{\mathcal K\in\mathfrak W_2}|K|,\qquad
+L_2=\min_{\mathcal K\in\mathfrak W_2}d(\mathcal K).
+\tag{NARC.17.5}
+$$
+
+In $L_2$ the number of installed states ranges over every finite
+budget. Write $L_{11}$ for the length minimum restricted to exactly
+eleven installed states.
+
+The actual support graph $G_{\mathcal K}$ has every installed state
+as a vertex. It has an undirected edge $\{s,t\}$, $s\ne t$, exactly
+when some allowed original uses that response transition on its own
+actual stationary run. Empty-support states remain vertices.
+For a writable table, its complete words give an injective
+edge-preserving map to
+
+$$
+\Gamma_d=
+\bigl(\{w\in\{0,1\}^d:w_iw_{i+1}=0\ (1\le i<d)\},
+       \{\{w,w'\}:d_H(w,w')=1\}\bigr).
+\tag{NARC.17.6}
+$$
+
+This is the exact-supported version of [FIB, Definitions 45.3 and
+Theorem 45.4][FIB-RW]. Neither induced nor isometric preservation
+is required. Ambient legal words without installed instruction rows
+are not installed states; adding such rows makes them count.
+
+## 18. Universal native query rigidity and the actual degree path
+
+**Theorem 18.1 (forced queries at every finite state budget).**
+Every table in $\mathfrak M_2$ has distinct reached running states
+$R,A,B$ with hidden-relative response functions respectively
+$P_{27},P_{16},P_{30}$. The first absence and branch successors
+are $A$ and $B$. Its actual support contains
+
+$$
+A-R-B,\qquad
+\deg_{G_{\mathcal K}}(A)\ge4,\qquad
+\deg_{G_{\mathcal K}}(B)\ge5.
+\tag{NARC.18.1}
+$$
+
+These requirements hold over all finite literal addresses, all
+installed-state budgets, shared successor configurations, early
+halts and installed states with empty support.
+
+**Proof, all-address correspondence.** Every original-root word is
+$\varepsilon$, $Rp$ or $Lp$. The first is constantly branch on
+$\langle T_n,T_{33}\rangle$; $Rp$ is evaluated on the same
+$T_{33}$ throughout the fiber, including when its reply is absence.
+The reply at $Lp$ is precisely the native relative reply at $p$ on
+that origin's actual $T_n$.
+
+Apply Definition 5.3 and [AOF, Definition 8.2][AOF-RW], including
+their proper-prefix reach guard. For completeness of the parameter
+correspondence, give $L$ weight one and $R$ weight two. If $p$
+is nonempty, traversal is possible exactly when
+$n\ge w(p^-)+2$, where $p^-$ deletes the last letter. All earlier
+pre-edge branch guards are weaker because prefix weights increase.
+When traversal is possible its filling is $T_{n-w(p)}$. A final
+$R$ gives $t=w(p)\ge2$ and response $P_t$; a final $L$ gives
+$t=w(p)+1\ge2$ and response $S_t$. An empty suffix gives $E$.
+Their supplied functions are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t&n<t&n=t&n=t+1&n\ge t+2\\
+S_t&n<t&\text{never}&n=t&n\ge t+1.
+\end{array}
+\tag{NARC.18.2}
+$$
+
+Thus every arbitrary relative literal is accounted for. In particular
+there is no $P_1$: the weight-one word $L$ gives $S_2$.
+$E$ is constant on $D$. The proof has not replaced a literal Read
+by an age or subtree oracle, nor limited the length of allowed words.
+
+**Proof, one remaining Read and the lower tail.** At a running state
+entered after the first Read, every supported successor after its
+Read must halt; otherwise that source would issue a third Read.
+Equal actual replies have one fixed successor and one fixed complete
+output. Its whole arriving support must therefore be target-constant
+in each reply cell, and can contain at most four distinct targets.
+Merged arrivals strengthen this condition; extra installed states
+do not create extra replies or another allowed phase.
+
+On $D_L$, a $P_s$ with $s\le15$ gives branch at both ages
+$17,18$, whose targets are $1,0$. A $P_s$ with $s\ge17$ gives
+absence at both ages $2,16$, whose targets are $15,1$. Consequently
+only $P_{16}$ can work. It does work, with targets
+$(15,1,1,0)$ in the four reply cells. For $S_s$, separating
+$17,18$ requires $s\ge17$, while separating $2,16$ requires
+$s\le16$, an impossibility. Constants, including $E$, fail as well.
+This forces the response function, without requiring a unique literal
+spelling of it.
+
+**Proof, the initial query.** Seven distinct lags prevent an initial
+halt. A constant first query leaves seven targets for one remaining
+Read and fails. For first function $P_t$ with $t\le26$, its branch
+cell contains ages $28,29,30,31,32$ with five distinct targets
+$4,3,2,1,0$. For $t\ge29$, its absence cell contains
+$2,16,18,27,28$ with five distinct targets $15,1,0,5,4$.
+Neither cell can be served by a halt or one four-valued Read.
+At $t=28$, its absence cell contains $D_L$ and age $27$.
+A remaining solver must solve $D_L$, so must use $P_{16}$;
+but that query merges $18,27$ in branch with targets $0,5$.
+Thus only $P_{27}$ survives.
+
+For first function $S_t$, $t\le27$ puts the same five upper targets
+in branch, $t\ge29$ puts the same five lower targets in absence,
+and $t=28$ has the same failed $D_L$-plus-$27$ absence cell.
+These cases exhaust all $S_t$, including thresholds larger than
+every supported age. Along with the constant queries already
+excluded, they exhaust every original-root literal.
+
+**Proof, the upper tail and distinct states.** $P_{27}$ partitions
+the actual ages into $D_L,\{27\},\{28\},D_U$ in reply order.
+Both tails are target-nonconstant, so their destinations $A,B$ run.
+$A$ must have function $P_{16}$. On $D_U$ the four targets
+$3,2,1,0$ are distinct, so constants and all $S_s$, which have
+at most three realized replies, fail. A $P_s$ with $s\le29$
+merges $31,32$ in branch; a $P_s$ with $s\ge31$ merges $29,30$
+in absence. Hence $B$ must have function $P_{30}$, which works.
+One fixed literal has one function from (NARC.18.2); its necessary
+parameters on these supports are different. Therefore $R,A,B$ are
+pairwise distinct. Equivalently, merging $A,B$ would ask one
+remaining four-valued query to serve the five targets in
+$D_L\cup D_U$.
+
+**Proof, actual neighborhoods and stationarity.** Actual lower and
+upper origins witness edges $R-A$ and $R-B$ of the same installed
+table. $A$'s second Read must enter at least three distinct halts,
+for complete lags $2,16,17$. These halts are disjoint from running
+$R$, so $A$ has at least four distinct neighbors. $B$ must enter
+four distinct halts, for $14,15,16,17$, and has $R$ as a fifth
+distinct neighbor. Halt duplication cannot decrease either count.
+Root singleton origins may use extra states or halt early without
+removing any of these actual edges.
+
+If any one stationary source revisits the same complete running
+state, determinism repeats its entire future query, reply and
+successor sequence. It cannot subsequently have a first halt.
+Thus self updates or reachable repeated-state cycles cannot supply
+an uncounted phase or clock. This does not require the undirected
+union of edges from different source runs to be a tree. Extra or
+unreachable states remain counted but cannot weaken the forced
+path or its neighborhoods. $\square$
+
+## 19. One exact same-source read/write certificate
+
+**Definition 19.1 (eleven complete words and immutable instructions).**
+Install the following running rows. Columns after the address give
+successors in the reply order $\bot,\alpha,\beta,\mathsf b$.
+
+| Running state | Complete mutable word | Complete original-root address | Length | $\bot$ | $\alpha$ | $\beta$ | $\mathsf b$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $R$ | `000000` | `LLRRRRRRRRRRRRR` | $15$ | $A$ | $H_5$ | $H_4$ | $B$ |
+| $A$ | `001000` | `LRRRRRRRR` | $9$ | $H_{15}$ | $H_{1L}$ | $H_{1L}$ | $H_0$ |
+| $B$ | `100000` | `LRRRRRRRRRRRRRRR` | $16$ | $H_3$ | $H_2$ | $H_{1U}$ | $H_0$ |
+
+These are the fully materialized original-root representatives
+$Lw_{27}=LLR^{13}$, $Lw_{16}=LR^8$, $Lw_{30}=LR^{15}$ of
+Definition 5.3. The actual submitted objects are the displayed
+literal strings; powers and query indices are mathematical notation.
+Install the following complete-output halt rows, with no Read or
+response transition at a halt.
+
+| Halt state | Complete mutable word | Installed complete lag output | Exact hidden-age support |
+| --- | --- | --- | --- |
+| $H_0$ | `101000` | $17$ | $\{18,32\}$ |
+| $H_5$ | `010000` | $12$ | $\{27\}$ |
+| $H_4$ | `000100` | $13$ | $\{28\}$ |
+| $H_{15}$ | `001010` | $2$ | $\{2,3,4,5,6,7\}$ |
+| $H_{1L}$ | `001001` | $16$ | $\{16,17\}$ |
+| $H_3$ | `100100` | $14$ | $\{29\}$ |
+| $H_2$ | `100010` | $15$ | $\{30\}$ |
+| $H_{1U}$ | `100001` | $16$ | $\{31\}$ |
+
+The common initial word is `000000`. State names are proof labels.
+The $H_j$ instruction already contains the complete number $17-j$;
+no subtraction or target lookup is performed after entry. The two
+states bearing subscript one have the same numeric output and
+different complete control words. Only these eleven words have
+installed instruction rows.
+
+**Proposition 19.2 (all fifteen actual first-halt traces).** Under
+Assumptions 17.1 and 17.4's conditional services, Definition 19.1
+is a correct immediately writable controller. Its full traces are
+as follows. An ordered list of addresses means chronological
+submissions, and an ordered word path includes its first halt.
+Every row refers to the one actual $Y_{a,b}$ of Proposition 17.2.
+
+| Origin $(a,b)$ | Submitted actual literals in order | Actual replies in order | Complete word path | First halt | Complete output | Reads | Response writes | Peak | Sum |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $(0,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(1,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(2,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(3,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(4,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(5,15)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `000000` → `001000` → `001010` | $H_{15}$ | $2$ | $2$ | $2$ | $15$ | $24$ |
+| $(0,1)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\alpha$ | `000000` → `001000` → `001001` | $H_{1L}$ | $16$ | $2$ | $2$ | $15$ | $24$ |
+| $(1,1)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\beta$ | `000000` → `001000` → `001001` | $H_{1L}$ | $16$ | $2$ | $2$ | $15$ | $24$ |
+| $(1,0)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\mathsf b$ | `000000` → `001000` → `101000` | $H_0$ | $17$ | $2$ | $2$ | $15$ | $24$ |
+| $(15,5)$ | `LLRRRRRRRRRRRRR` | $\alpha$ | `000000` → `010000` | $H_5$ | $12$ | $1$ | $1$ | $15$ | $15$ |
+| $(15,4)$ | `LLRRRRRRRRRRRRR` | $\beta$ | `000000` → `000100` | $H_4$ | $13$ | $1$ | $1$ | $15$ | $15$ |
+| $(15,3)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\bot$ | `000000` → `100000` → `100100` | $H_3$ | $14$ | $2$ | $2$ | $16$ | $31$ |
+| $(15,2)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\alpha$ | `000000` → `100000` → `100010` | $H_2$ | $15$ | $2$ | $2$ | $16$ | $31$ |
+| $(15,1)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\beta$ | `000000` → `100000` → `100001` | $H_{1U}$ | $16$ | $2$ | $2$ | $16$ | $31$ |
+| $(15,0)$ | `LLRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\mathsf b$ | `000000` → `100000` → `101000` | $H_0$ | $17$ | $2$ | $2$ | $16$ | $31$ |
+
+**Proof, actual readout and writes.** The three addresses have native
+functions $P_{27},P_{16},P_{30}$. Equation (NARC.18.2) gives
+$P_{27}$ cells $D_L,\{27\},\{28\},D_U$;
+$P_{16}$ on $D_L$ has cells $\{2,\ldots,7\},\{16\},\{17\},\{18\}$;
+$P_{30}$ on $D_U$ has cells $\{29\},\{30\},\{31\},\{32\}$.
+Substitution of the fifteen ages in Proposition 17.2 gives exactly
+the displayed actual replies and first halts. The final constants
+are their respective $17-b$. Every running row realizes all four
+reply labels on its exact arriving support; no unsupported-response
+completion is needed here.
+
+All eleven displayed words are distinct, length six, and contain no
+adjacent ones. Number coordinates from the left by $1,\ldots,6$.
+The immediate response flips, in reply order, are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+R&3&2&4&1\\
+A&5&6&6&1\\
+B&4&5&6&3.
+\end{array}
+\tag{NARC.19.1}
+$$
+
+For example the lower branch transition is
+`001000` → `101000`, flipping coordinate one, while the upper
+branch is `100000` → `101000`, flipping coordinate three.
+Each listed actual transition changes exactly one bit to a legal
+installed word. The response is discarded at that update, with
+no added instruction or mutable field. All eleven installed words
+are reached by at least one displayed origin.
+
+**Proof, the same-source closed loop.** For every state $s$ define
+the exact proof support
+
+$$
+\mathcal C_s=
+\{(\ell_{a,b},Y_{a,b}):(a,b)\in C
+          \text{ and the displayed run visits }s\}.
+\tag{NARC.19.2}
+$$
+
+The running supports are all $C$ at $R$, the nine origins of $D_L$
+at $A$, and the four origins of $D_U$ at $B$. The halt supports
+are exactly those in Definition 19.1. Every actual Read is legal
+and has identity source transition: its successor source is that
+same $Y_{a,b}$. The response-cell calculation places that same
+$(\ell_{a,b},Y_{a,b})$ in the prescribed successor support.
+Every halt support has its halt's correct constant lag. Take proof
+rank two at $R$, one at $A,B$, and zero at every halt. Rank strictly
+decreases on every supported step. Initial coverage, action legality,
+same-source successor closure, rank descent and halt correctness
+are therefore exactly [FIB, Theorem 27.2][FIB-RW]'s conditions.
+Neither supports nor ranks are accessible inputs or runtime counters.
+
+The non-self supported edges are precisely
+
+$$
+\begin{aligned}
+&RA,\ RH_5,\ RH_4,\ RB,\\
+&AH_{15},\ AH_{1L},\ AH_0,\\
+&BH_3,\ BH_2,\ BH_{1U},\ BH_0.
+\end{aligned}
+\tag{NARC.19.3}
+$$
+
+Every edge is witnessed in the displayed actual-source table.
+The words give its injective edge-preserving map into $\Gamma_6$.
+[FIB, Theorem 45.4][FIB-RW] hence transfers the same closed-loop
+certificate under the conditional write service. The different
+source alternatives supply requirements on one installed table;
+no execution splices their trees or histories. $\square$
+
+**Proposition 19.3 (ten-state quotient and exact native schedule).**
+Identify $H_{1L},H_{1U}$ as one abstract halt $H_1$ with complete
+output $16$, fixing every other state. The quotient has exactly
+ten installed states and the following total running table:
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+R&A&H_5&H_4&B\\
+A&H_{15}&H_1&H_1&H_0\\
+B&H_3&H_2&H_1&H_0.
+\end{array}
+\tag{NARC.19.4}
+$$
+
+Its seven halt outputs are $2,12,13,14,15,16,17$ at
+$H_{15},H_5,H_4,H_3,H_2,H_1,H_0$, respectively, and it uses
+the same three literal addresses. For each original, projection
+from Definition 19.1 preserves the actual literal requests, replies,
+stationary source, complete output and first-halting Read count.
+
+**Proof.** The projection changes only two halts with the same
+output. It fixes all running rows except for their successor names.
+Induction along each row of Proposition 19.2 therefore fixes every
+requested literal and actual reply, and maps the first halt to the
+same numeric-output first halt. No additional Read or write phase
+is introduced.
+
+This is the class-one schedule already supplied in the coordinate
+reply certificates of Theorem 11.5: with its $(h,u,v)=(17,a-b,b)$,
+offsets $(10,-1,13)$ give thresholds $(27,16,30)$, singleton
+first targets $(5,4)$ and second target tuples $(15,1,1,0)$ and
+$(3,2,1,0)$. The displayed certificate checks this row directly
+on its entire acquired fiber. The writable table is an actual-path
+refinement in [FIB, Definition 47.1][FIB-RW]'s sense, with the
+split distinction counted as part of the complete halt word.
+The schedule itself is reused; no full-encoder theorem is needed
+to establish this conditional correspondence. $\square$
+
+## 20. Sharp conditional separation and relational recovery
+
+**Theorem 20.1 (abstract states, immediately writable states and bits).**
+Under Assumptions 17.1 and 17.4, on the exact acquired entry
+(NARC.17.2), the optima of Definition 17.5 are
+
+$$
+\boxed{M_2=10,\qquad W_2=11,\qquad L_2=6.}
+\tag{NARC.20.1}
+$$
+
+The $L_2$ lower bound holds at every finite installed-state budget.
+Definition 19.1 simultaneously attains $W_2$ and $L_2$, so also
+$L_{11}=6$. These are complete recovery-control coordinates under
+the named conditional services, with separately charged acquisition,
+compilation, immutable storage, address submission and physical costs.
+
+**Proof, the abstract state minimum.** Theorem 18.1 requires three
+distinct reached running states. The seven distinct complete lags
+require at least seven distinct reached halts, disjoint from running
+states. Thus every table has at least ten installed states, whether
+or not it has extra unreachable states. Proposition 19.3 attains ten,
+giving $M_2=10$.
+
+**Proof, the writable state minimum.** At exactly ten installed states
+there are precisely the forced three running states and one halt
+for each required lag. Write $H_0,H_1$ for the unique halts with
+outputs $17,16$. Actual lower and upper second responses require
+both $A,B$ to be adjacent to both these halts. They are also both
+adjacent to $R$. These three common neighbors are distinct, so
+every ten-state controller's actual support contains
+
+$$
+K_{2,3}\quad\text{with parts }\{A,B\},\{R,H_0,H_1\}.
+\tag{NARC.20.2}
+$$
+
+The graph obstruction is classical: [Havel--Morávek, Propositions
+1--2 and Example 1][HM-RW], pp.340--342, supply adjacency-preserving
+injective cube coding and exclusion of $K_{2,3}$, as reused in
+[FIB, Proposition 46.2][FIB-RW]. Its local specialization is that
+two distinct cube words with a common neighbor differ in exactly
+two coordinates, and have just the two intermediate words as
+possible common neighbors. They cannot have three. Since
+$\Gamma_d$ is a subgraph of the binary cube, (NARC.20.2) precludes
+an injective edge-preserving implementation at every finite length.
+The task-specific premise is the universally forced actual native
+support, rather than the obstruction of just one chosen table.
+
+Every admissible word device is itself a Moore table on all its
+installed complete words and is subject to Theorem 18.1. Thus the
+argument excludes all ten-state writable competitors, including
+newly synthesized tables, and the abstract bound excludes fewer.
+Definition 19.1 supplies eleven immediately writable states, hence
+$W_2=11$.
+
+For the exact ten-state boundary, singleton first ages $27,28$
+cannot enter $A$: its $P_{16}$ branch successor is already required
+to output $17$ for lower age $18$, whereas their outputs are $12,13$.
+They cannot enter $B$: its $P_{30}$ absence successor already
+outputs $14$ for upper age $29$. Returning to $R$ cannot terminate
+on the stationary source. There is no other running state, so
+they halt directly at $H_5,H_4$. All lower-bound states are reached;
+an unused installed state does not repair this boundary.
+
+**Proof, word length independently of state budget.** Use the actual
+path $A-R-B$ and degree bounds of Theorem 18.1 for an arbitrary
+finite competitor, without assuming ten or eleven states.
+The needed ambient degree facts are literature-attested consequences
+of [Klavžar--Mollard--Petkovšek][KMP-RW]. In their notation
+$f_{n,k,w}$ counts degree-$k$, weight-$w$ vertices of $\Gamma_n$.
+Corollary 3.4 (author manuscript p.7), at $n=5,m=0$, satisfies
+its hypothesis $n\ge2m+2$ and gives one degree-five vertex.
+The word `00000` has all five unit words as neighbors, so it is
+that unique vertex. Theorem 4.6 (p.12) gives
+
+$$
+f_{n,k,w}=
+\binom{w+1}{n-w-k+1}\binom{n-2w}{k-w},\qquad
+f_{5,k,2}=\binom3{4-k}\binom1{k-2}=0\quad(k=4,5).
+\tag{NARC.20.3}
+$$
+
+The binomial coefficient is zero outside its allowed lower-index
+range. Since degree is at most five, every legal weight-two vertex
+of $\Gamma_5$ has degree at most three. These are intermediate
+classical graph facts, not new graph-theory claims.
+
+Suppose a correct writable controller embeds its actual support
+into $\Gamma_5$. Injectivity and edge preservation give each image
+at least as many distinct ambient neighbors as its supported degree.
+If $\deg(B)>5$ this is already impossible; otherwise $B$ must map
+to `00000`. Its distinct neighbor $R$ maps to a unit word $e_i$.
+A neighbor of $e_i$ other than zero has weight two. Because
+$A\ne B$ and the map is injective, $A$ must map to such a legal
+weight-two word. It then has at most three ambient neighbors,
+contradicting $\deg(A)\ge4$.
+
+For a shorter word length $d<5$, append $5-d$ trailing zeros.
+This preserves injectivity, absence of adjacent ones and every
+Hamming-one edge, and would give the already excluded embedding
+into $\Gamma_5$. Thus every finite-state immediate controller
+in this exact two-Read competition class needs at least six bits.
+The six-bit certificate gives $L_2\le6$, proving equality and the
+restricted $L_{11}=6$. No classification of eleven-state controllers
+or square-based lower-bound route enters the argument. $\square$
+
+**Proposition 20.2 (joint resources and separate service costs).**
+For the same eleven-state, six-bit controller the actual sourcewise
+vector $(\text{Reads},\text{response writes},\text{peak},\text{sum})$
+is
+
+$$
+\begin{cases}
+(2,2,15,24),&n\in D_L,\\
+(1,1,15,15),&n=27,28,\\
+(2,2,16,31),&n\in D_U.
+\end{cases}
+\tag{NARC.20.4}
+$$
+
+The three independently stored addresses contain forty letters in
+this table representation. This is table accounting, not a storage
+optimum. Response writes exclude initialization. Mutable word length,
+installed states, immutable table/output/address storage and submitted
+address lengths remain different resources.
+
+**Proof.** Proposition 19.2 gives every first-halt trace and exactly
+one response flip per Read. Lower traces submit lengths $15,9$;
+root singleton traces submit length $15$; upper traces submit
+$15,16$. Taking maximum and sum on that same actual trace gives
+(NARC.20.4). In particular each individual upper origin simultaneously
+attains two Reads, two writes, peak sixteen and sum thirty-one with
+the same installed table. No coordinate comes from another source
+or another controller. The independent literal storage total is
+$15+9+16=40$; shared representations could have a different charge.
+
+Following [FIB, Definition 45.2][FIB-RW], let costs be separately
+supplied nonnegative scalars or resource vectors. For a trace with
+$m$ Reads and complete halt output $\ell$, one service account is
+
+$$
+\begin{aligned}
+\mathcal C={}&C_{\rm initial\ capture}+C_{\rm encode/export}
+ +C_{\rm continuation}+C_{\rm later\ capture/parse}
+ +C_{\rm compile/install}+C_{\rm init}+C_{\rm immutable}\!\\
+&+\sum_{t<m}\left(C_{\rm table}(w_t)
+ +C_{\rm submit}(p_t)+C_{\rm Read}(p_t,Y_{a,b})
+ +C_{\rm response\ write}(w_t,o_t)\right)\\
+&+C_{\rm table}(w_m)+C_{\rm output}(\ell).
+\end{aligned}
+\tag{NARC.20.5}
+$$
+
+Choose these accounts without double counting any shared service;
+none is made free by the finite state proof. Initialization writes
+belong to $C_{\rm init}$, and the fixed literal/output representation
+belongs to the installation and immutable accounts. Equation
+(NARC.20.5) provides no numerical physical cost unless those
+services and costs are actually supplied. Six mutable recovery bits
+therefore imply neither six bits of total physical storage nor any
+physical latency, energy or acquisition bound. $\square$
+
+**Proposition 20.3 (selected temporal recovery and operational memory).**
+Under the exact acquired-entry and service contract, acquired literal
+boundary structure and the causally exported origin relation, together
+with the permitted native Reads, recover the number of intervening
+substitutions. This recovery neither determines the full source nor
+identifies every hidden age. The additional writable state records
+an operational distinction for legal updates, while the sixth bit
+is forced by the actual transition geometry.
+
+**Proof.** The acquired right exterior gives the relation $b+\ell=17$.
+The causal label restricts $(a,b)$ to $C$. Actual native replies
+resolve $b$ to a common target at the reached halt, whose installed
+constant is exactly $\ell=17-b$. This links current spatial boundary
+data with elapsed substitution count relative to the genuinely
+acquired original. It gives no physical elapsed time or absolute epoch.
+
+Before a fresh Read, for example $(0,15)$ at lag two and $(15,0)$
+at lag seventeen have the same code and entire later row. Thus that
+entry alone does not determine the lag. Even one four-valued Read
+cannot serve its seven distinct lag values. The certificate completes
+recovery in at most two Reads, and Theorem 18.1 identifies the native
+partitions necessary to do so.
+
+The six origins $(j,15)$, $0\le j\le5$, have the same acquired
+entry and the same entire two-reply transcript, but distinct originals
+and current hidden ages $2,\ldots,7$. They all halt at $H_{15}$
+with output two. No decoder of that completed trace can reconstruct
+all those originals or hidden fillings. At output sixteen the lower
+origins $(0,1),(1,1)$ also share a halt. These collisions witness the
+precise distinction between target recovery and full reconstruction.
+
+The ten-state quotient freely shares equal-output halts. Immediate
+single-bit permission excludes its three-common-neighbor support.
+Splitting the output-sixteen halt distinguishes the lower and upper
+operational paths without changing their acquired information,
+observations, numeric answer or first halt. It supplies a counted
+legal-write configuration distinction, rather than an extra source
+fact. Partitioning legal words by initial $0$ or $10$ gives counts
+$a_d=a_{d-1}+a_{d-2}$, with $a_0=1,a_1=2$, hence $a_5=13$.
+Thus $\Gamma_5$ has enough legal names for eleven states, but its
+neighborhoods fail the universally forced path.
+Cardinality and representation alone do not grant the necessary write
+permission. The conditional atomic-write service grants that operation;
+the six-bit certificate does not prove its physical availability.
+
+These statements concern one fixed acquired entry. A single finite
+table has only finitely many fixed halt constants and cannot return
+every unbounded lag. Other labels, rows, cuts and Read budgets need
+their own acquired-fiber and controller proofs. This result establishes
+neither an all-input controller for $q=17$, a uniform finite memory
+bound over unbounded lags, a global resource frontier, nor completion
+of the space/time/boundary/memory programme. $\square$
+
+**Definition 20.4 (mathematical supplier correspondence).** Native
+definitions and results used here are the exact §§4.1, 5.2, 5.3,
+9.1 and 11.1 in [NARC at the fixed base][NARC-RW-base]. Those
+sections, together with the class-one coordinate certificate of
+Theorem 11.5, are also the same text in the immutable
+[native supplier revision][NARC-RW-source]. Integration status of
+other theory increments is not a mathematical hypothesis. The
+following correspondence specifies the retained semantic parameters.
+
+| Supplier at the native supplier revision | Exact parameter or semantic correspondence | Boundary of its use |
+| --- | --- | --- |
+| [NAR Definitions 1.1--1.2 and Reuse 16.2][NAR-RW] | Actual ordered trees, homomorphic $\rho$, four-valued literal Read, entire exterior and reached-hole partition; acquired literals compute their clocks | No hidden-origin, epoch, subtree or hidden-visible comparison port |
+| NARC Theorem 5.2 and Definition 5.3 | $q=16,z=17,C=e_{16}^{-1}(1)$; $n=17+a-b$, $\ell=17-b$; guarded $E/P/S$ laws | Whole-row compatibility is retained; no interval age-identification formula |
+| NARC Assumptions 4.1 and 9.1; [AOF Definitions 8.2 and 10.1][AOF-RW] | Common installed table, complete mutable state, fixed literals and complete outputs; chronological two-Read budget and shortest native representatives | The Moore restriction is added explicitly; fixed-reference and interval numerical optima are not applied |
+| NARC Definition 11.1 and class-one certificate of Theorem 11.5 | Actual right offset sixteen; code inverse class $C$; offsets $10,-1,13$ at $h=17$ | No premise about the rest of the full encoder or its packing |
+| [GenealogicalFiberTransport: `Source`, `substitution`][RW-Source] | `FreeMagma Bool`, `true` = $\alpha$, `false` = $\beta$; actual homomorphic leaf images | Semantic correspondence only |
+| [ActualTreeReadoutAcquisition: `Address`, `Reply`, `readout`][RW-Read] | `List Bool`, `false` = $L$, `true` = $R$; a nonempty suffix at a leaf returns absence | Its distinct-address payment is not chronological Read count |
+| [DelayedOriginalReadout: `rightClock`, `right_clock_iterate`, `right_clock_readout`][RW-Clock] | Literal clock increases by the substitution count; $R^s$ yields thresholds $2s,2s+1$ | A decoder supplied a known epoch does not recover an unknown lag |
+| [ActualCutPartitionDecoder: `literalRecord`, `actualPartition`, `canonicalRow_record_iff`][RW-Row] | Prefix-free cut $\{L\}$; complete exterior and all reached-hole equality pairs | Singleton partition adds no hidden-visible comparison or acquisition trace |
+| [NativeCutFibers: `legal_values_row`, `rowFiberEquiv`][RW-Fiber] | Legal fillings and actual complete-row fibers | Filling coordinates in a proof are not accessible values |
+| [ActualFibonacciSupportChain: local recurrence in `actual_fibonacci_support_chain`][RW-Orbit] | $T_n=\rho^n\alpha$ and $T_{n+2}=\langle T_{n+1},T_n\rangle$ | The support-chain conclusion supplies no controller optimum |
+
+The response-write supplier is [FIB §§45--47 at its immutable
+revision][FIB-RW], with its Definitions 26.1--26.2 and Theorem
+27.2. The exact support is $\mathcal C_s$ of (NARC.19.2), the
+source transition is identity, and the target coordinate is the full
+lag. FIB45.1--45.4 supply the conditional complete-word service,
+separate costs and injective supported-edge criterion. FIB46.2
+reuses the classical cube obstruction; here Theorem 18.1 supplies
+the missing universal native-task premise. FIB47.1 supplies the
+actual-path refinement contract met by Proposition 19.3.
+
+FIB47.2's generic finite-history refinement uses [Cabello--Eppstein--
+Klavžar, Corollary 3.6][CEK-RW]: for a finite tree $T$,
+$\operatorname{fdim}(T)=\operatorname{idim}(T)=|E(T)|$ under
+isometric embedding. That is a safe existence supplier for a larger
+history refinement, not the optimum eleven or six. Isometric tree
+dimension is not a lower bound for the weaker edge-preserving
+shared-halt encoding used here. No tree-dimension proof is repeated.
+
+The cube obstruction and Fibonacci degree counts consumed in Theorem
+20.1 are literature-attested intermediate results. The increment is
+the repo-derived universal acquired-native-query/support correspondence
+and its attained conditional resource separation. It asserts no global
+originality. The ordinary arguments do not assert a new Lean theorem,
+current kernel verification or any digestion or frozen-state status.
+
+The primary mathematical citations attached to these consuming proofs
+are Ivan Havel and Jaroslav Morávek, *B-valuations of graphs*,
+Czechoslovak Mathematical Journal 22(2), 338--351 (1972),
+DOI [10.21136/cmj.1972.101102][HM-RW], Propositions 1--2 and
+Example 1, [primary text pp.340--342][HM-RW-full]; Sandi Klavžar,
+Michel Mollard and Marko Petkovšek, *The degree sequence of Fibonacci
+and Lucas cubes*, Discrete Mathematics 311(14), 1310--1322 (2011),
+DOI [10.1016/j.disc.2011.03.019][KMP-RW-doi], Corollary 3.4 and
+Theorem 4.6, [author manuscript pp.7 and 12][KMP-RW]; and Sergio
+Cabello, David Eppstein and Sandi Klavžar, *The Fibonacci Dimension
+of a Graph*, The Electronic Journal of Combinatorics 18(1), P55
+(2011), DOI [10.37236/542][CEK-RW], Corollary 3.6,
+[primary preprint pp.7--8][CEK-RW-full].
+
+[NARC-RW-base]: https://github.com/the-omega-institute/trureturing/blob/8d16d2f170a857dc60923345f02127947dc53f11/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[NARC-RW-source]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[NAR-RW]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[AOF-RW]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[FIB-RW]: https://github.com/the-omega-institute/trureturing/blob/8d9ce47ac151e4ff332c8b1fb44759ebd0e0f11c/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+[RW-Source]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[RW-Read]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[RW-Clock]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[RW-Row]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[RW-Fiber]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[RW-Orbit]: https://github.com/the-omega-institute/trureturing/blob/154126ff1e0d3bf6c7283e3765b6c496e69ca005/D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean
+[HM-RW]: https://doi.org/10.21136/cmj.1972.101102
+[HM-RW-full]: https://dml.cz/bitstream/handle/10338.dmlcz/101102/CzechMathJ_22-1972-2_15.pdf
+[KMP-RW]: https://users.fmf.uni-lj.si/klavzar/preprints/DegSeqRevised.pdf
+[KMP-RW-doi]: https://doi.org/10.1016/j.disc.2011.03.019
+[CEK-RW]: https://doi.org/10.37236/542
+[CEK-RW-full]: https://arxiv.org/pdf/0903.2507
+
+## 追加锚（本行以下为增补区）
