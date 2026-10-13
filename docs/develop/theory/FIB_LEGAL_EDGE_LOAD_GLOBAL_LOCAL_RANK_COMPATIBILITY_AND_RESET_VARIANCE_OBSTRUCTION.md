@@ -38,7 +38,7 @@ $$
 \Theta_N=\left\{(\lambda,M_0,M_1):
 \begin{array}{l}
 \lambda\ge0,\ \lambda\mathbf1=1,\ M_0,M_1\ge0,\\
-A=M_0+M_1,\ A\mathbf1=\mathbf1,\ \lambda A=\lambda,\ 
+A=M_0+M_1,\ A\mathbf1=\mathbf1,\ \lambda A=\lambda,\
 \lambda M_1^2\mathbf1=0
 \end{array}\right\}.
 \tag{1.3}
