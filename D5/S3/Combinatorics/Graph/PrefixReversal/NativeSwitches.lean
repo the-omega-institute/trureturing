@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeSwitches
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/PrefixReversalZeroStarComplement]
+   anchors: []
    utility: none
    digest: Native T and E switching words close with exact simple prefix traces. -/
 import D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement

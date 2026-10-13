@@ -31,6 +31,17 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "Actual tuple rotations preserve next and previous labels, while whole reversal exchanges "
                     + "them. This invariant is the reusable boundary for cross-supplier ownership."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("t-cross-circle-disjoint"),
+                DeclarationHandle.Create(Prefix + "native_t_cross_circle_disjoint"),
+                H("The Two Native T Suppliers Have Disjoint Circle Domains"),
+                StatementSource.FromAuthor(TCrossFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every m at least four, the lower ports a*c*(bc)^i and the upper ports "
+                    + "swap(0,last)*a*c*(bc)^j have disjoint complete rotation-and-reversal circle "
+                    + "domains. At the label m, the lower neighbours are 1 and m-1, whereas the upper "
+                    + "neighbours are j+2 and either 1 or j+1; the unordered-neighbour invariant then "
+                    + "gives the arithmetic contradiction."))),
                 DescribeRole.Theorem))));
 
     private static Formula Formula()
@@ -54,6 +65,21 @@ internal sealed class NativeCircleOwnershipDocument : IScribeDocumentDefinition
         return Disp(All("m", Call("Nat"), All("z", Call("Configuration", m),
             All("v", Call("Configuration", m), All("x", fin,
                 Implies(Call("Circle", z, v), Or(same, rev)))))));
+    }
+
+    private static Formula TCrossFormula()
+    {
+        Formula m = F.Id("m"), i = F.Id("i"), j = F.Id("j"), v = F.Id("v");
+        Formula ac = Call("mul", Call("a", m), Call("c", m));
+        Formula bc = Call("mul", Call("b", m), Call("c", m));
+        Formula lower(Formula k) => Call("mul", ac, Call("pow", bc, Call("val", k)));
+        Formula upper(Formula k) => Call("mul", Call("swap", D(0), Call("last", m)), lower(k));
+        Formula lowerDomain = Call("circleDomain", lower(i));
+        Formula upperDomain = Call("circleDomain", upper(j));
+        Formula body = Call("Disjoint", lowerDomain, upperDomain);
+        Formula fin = Call("Fin", Call("sub", m, D(2)));
+        Formula sets = All("i", fin, All("j", fin, body));
+        return Disp(All("m", Call("Nat"), Implies(Le(D(4), m), sets)));
     }
 
     private static Formula Call(string name, params Formula[] args) =>

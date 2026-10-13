@@ -2,10 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/PathRingSplicing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Walks/EdgeSlicing]
+   anchors: []
    utility: none
-   digest: Actual connections splice spanning graph pieces into a Hamilton cycle
-     with exact support and edge lists. -/
+   digest: Actual graph connections splice piece paths into an exact Hamilton cycle. -/
 import D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
 
 set_option autoImplicit false
