@@ -1,6 +1,7 @@
 """Git, filesystem and cache-guard contracts for host artifact reclamation."""
 
 import contextlib
+import errno
 import importlib.util
 import io
 import json
@@ -454,6 +455,27 @@ raise SystemExit(cleanup.run_clean(options))
             rows = self.run_sweep()
         self.assertFalse(old.exists())
         self.assertTrue(any(row.get("reason") == "vanished" for row in rows))
+
+    def test_unreadable_recent_artifact_does_not_abort_the_sweep(self):
+        blocked = self.root / "artifacts/TemporaryItems"
+        blocked.mkdir(parents=True)
+        os.utime(blocked, (self.cutoff + 1, self.cutoff + 1))
+        old = self.root / "artifacts/old"
+        old.write_text("artifact")
+        os.utime(old, (self.cutoff - 10, self.cutoff - 10))
+        iterdir = Path.iterdir
+        def restricted(path):
+            if path == blocked:
+                raise PermissionError(errno.EPERM, "Operation not permitted", str(path))
+            return iterdir(path)
+        with patch.object(cleanup, "candidates", return_value=iter([("tmp", blocked), ("tmp", old)])), \
+             patch.object(Path, "iterdir", restricted):
+            rows = self.run_sweep()
+        self.assertFalse(old.exists(), rows)
+        self.assertTrue(blocked.exists())
+        self.assertIn(("lean_staging", str(blocked), "kept", "unreadable"),
+                      {(row.get("category"), row.get("path"), row.get("action"), row.get("reason")) for row in rows})
+        self.assertIsNone(rows[-1]["inventory_error"], rows)
 
 
 if __name__ == "__main__":
