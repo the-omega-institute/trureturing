@@ -9712,3 +9712,174 @@ remain required. The infinite exterior has not been assumed real.
 No unconditional local realness, FIB ATOM arithmetic bridge, RH or
 strict Robin for every integer $H>5040$ follows without the remaining
 premises and global argument.
+
+## Complete local removal does not require critical-line zeros
+
+Keep the unchanged $F(z)=\Xi(\sqrt z)/\xi(1/2)$, $T\ge32$,
+$0<\rho\le1/8$, $L=\log(T+2)$, $c=T^2$ and $D=T\rho$.
+Keep $n\in\mathbb N_{>0}$ and $\nu=n\rho^2/T^2$.
+In this section remove the local all-critical premise. Select instead
+**every** zero $\omega$ of $\xi$ in the closed disc
+$|\omega-(1/2+iT)|\le4\rho$, with its multiplicity, and set
+
+$$
+\Phi(s)=-(s-1/2)^2,\qquad
+Q(z)=\prod_{\omega\ \mathrm{selected}}(z-\Phi(\omega)),\qquad
+A=F/Q.
+\tag{LC372}
+$$
+
+The source's functional equation and conjugation make the selection
+invariant under $\omega\mapsto1-\overline\omega$.
+Since $\Phi(1-\overline\omega)=\overline{\Phi(\omega)}$,
+$Q$ has real coefficients, although its roots need not be real.
+Every multiplicity and every closed-boundary zero is retained.
+The local square map is injective and noncritical at this height,
+so the multiplicities removed from $F$ are exactly those selected.
+The unit-window count already used in (LC180), (LC193) gives
+$r=\deg Q\le C_0L$ after fixing one sufficiently large source constant
+$C_0$. No selected-root spacing or realness is used.
+
+This is a repository-derived source-interface extension of the
+existing pole-removal and full derivative-chain estimates, without
+Lean or originality certification. The fixed Titchmarsh pole sum,
+source count, genus-zero product, complete coefficient-circle extraction
+and exponential tilt are reused. The added correspondence checks which
+inputs survive complete removal of possibly nonreal local zeros.
+It supplies no signed convolution estimate for a nonreal core.
+
+### Cancel the actual poles before taking an absolute bound
+
+For each selected $\omega$, the exact factorization is
+
+$$
+\Phi(s)-\Phi(\omega)=-(s-\omega)(s-(1-\omega)),\qquad
+\frac{\Phi'(s)}{\Phi(s)-\Phi(\omega)}
+=\frac1{s-\omega}+\frac1{s-(1-\omega)}.
+\tag{LC373}
+$$
+
+Thus in
+$g(s)=\xi'(s)/\xi(s)-\sum_{\rm selected}
+\Phi'(s)/(\Phi(s)-\Phi(\omega))$
+all actual near poles cancel with their multiplicities.
+The second pole has negative ordinate; on the radius-$2\rho$
+working disc its distance is at least $2T-6\rho>T$.
+Each unremoved pole in the fixed height window is more than $4\rho$
+from the center, hence more than $2\rho$ from this working disc.
+The already-cited Titchmarsh Theorem 9.6(A), fixed-window replacement
+and Gamma factor estimate from (LC204) therefore give
+
+$$
+|g(s)|\le C L/\rho\quad(|s-s_0|\le2\rho),\qquad
+|g'(s)|\le C L/\rho^2\quad(|s-s_0|\le\rho).
+\tag{LC374}
+$$
+
+This is an analytic pole-removed function across every selected zero.
+The local inverse and chain rule from (LC205) give
+$|A'(c)/A(c)|\le C_bL/D$ and the same local logarithmic-jet bounds,
+with no reference to the real parts of the selected zeros.
+Since $A,Q,F$ are real, $A(c)$ and that drift are real, including
+when $c$ was a removed source zero.
+
+For an unremoved source zero write $\zeta=t_\zeta^2$, with
+$t_\zeta=\gamma+i\eta_\zeta$, $\gamma>0$ and $|\eta_\zeta|<1/2$.
+Completeness of (LC372) implies $|t_\zeta-T|>4\rho$.
+The same square-root clearance, unit-window count and all-height
+summation in (LC262)--(LC263) consequently give
+
+$$
+\sup_{|a-c|\le D/4}
+\sum_{\zeta\in Z(A)}|a-\zeta|^{-2}
+\le C_{\rm abs}L/D^2.
+\tag{LC375}
+$$
+
+Every unremoved zero of the infinite source remains in the sum.
+The full coefficient-circle estimates (LC267)--(LC276) use only
+(LC374)--(LC375), the reality of $A$, and the source drift.
+They therefore supply $H=\mathscr T_nA\ne0$ on $|t-c|\le D/8$
+and the same complete complex jets for all $\nu\ge32SL$,
+$S=C_{\rm abs}+C_b+1$. This nonvanishing is a conclusion of the
+complete source estimate, rather than an additional real-zero premise.
+
+### Regroup the core without imposing real-rootedness
+
+Select $Q_{\rm core}$ by $|\alpha-c|\le D$ among the actual roots of
+$Q$, counting multiplicities, and put
+$Q_{\rm far}=Q/Q_{\rm core}$,
+$\widehat A=AQ_{\rm far}=F/Q_{\rm core}$.
+Put $q=\deg Q_{\rm core}$,
+$\mathcal D=\{|t-c|\le D/16\}$ and $I=[c-D/16,c+D/16]$.
+Both factors have real coefficients because the cutoff is conjugation
+invariant. For every $|a-c|\le D/4$, each far root is more than
+$3D/4$ away. The existing estimate (LC284) consequently holds as
+written, with complex far roots also included:
+
+$$
+K_{\widehat A}(a)\le(C_{\rm abs}+2C_0)L/D^2,
+\qquad
+|\widehat A'(c)/\widehat A(c)|\le(C_b+C_0)L/D.
+\tag{LC376}
+$$
+
+This uses their absolute distances and count, not positive factors.
+All original exterior and far selected zeros remain.
+The actual $\widehat H,\widehat\ell,\widehat s,\widehat\chi,
+\widehat\eta$ and complete kernels of (LC305) inherit their full jets
+with $E=128(S+3C_0)L$ and the nonzero amplitude on the same outer disc.
+Apply only the kernel steps (LC357)--(LC369): their derivative-chain,
+real-coefficient homotopy and both actual tangents do not require that
+$Q_{\rm core}$ itself have real roots. For
+$\nu\ge2^{32}(E+q)$ the actual auxiliary kernel therefore has simple
+holomorphic labels throughout the closed parameter disc, is real-rooted
+on its real diameter, and obeys
+
+$$
+|\beta_j'|<2^{-16},\qquad
+|\Im\beta_j(t)|\le|\Im t|/4,\qquad
+|\gamma_j-\widehat\eta|\le2^{19}(E/\nu)\sqrt{q/\nu},
+\quad\gamma_j>3/4\quad(t\in I).
+\tag{LC377}
+$$
+
+The last inequality is restricted to real parameters.
+The same fixed $C_{\rm ker}=2^{32}(1+128(S+3C_0)+C_0)$ pays this
+for every $q\le C_0L$ and every larger $\nu$.
+For $q=0$, $J=\widehat H\ne0$ gives no target node directly.
+This gives an auxiliary-kernel certificate for complete local removal
+without a local critical-line premise.
+
+### The original convolution still needs its own sign information
+
+The exact identities $C_t=\overline Q\boxplus_qR_{q,t}$,
+$W_t=\overline Q\boxplus_qU_{q,t}$ and (LC308) survive because they
+are algebraic and $\overline Q=Q_{\rm core}(c+z)$ has real
+coefficients. Their sign consequences (LC314)--(LC316), (LC370)
+do not follow merely from (LC377): those used the **real roots** of
+$\overline Q$ for half-plane polarization and nonnegative weights.
+Reality of its coefficients is not that hypothesis.
+
+At a real actual $J$-node, with $R_j=R_{q,t}/(z-\beta_j)$, define
+$a_j=(\overline Q\boxplus_qR_j)(\widehat\chi-c)$.
+The existing linear convolution identities give, without dividing by
+$\sum_ja_j$,
+
+$$
+J'(t)G(t)=\widehat H(t)^2
+\left[\sum_j(\widehat\chi'-\beta_j')a_j\right]
+\left[\sum_j\gamma_j a_j\right].
+\tag{LC378}
+$$
+
+This is reuse of the signed cofactor interface, not an additional
+joint lower bound. The cofactor signs, their common cancellation
+and the case $\sum_ja_j=0$ remain unbounded. In particular,
+$\gamma_j>0$ and $\widehat\chi'-\beta_j'>0$ alone do not decide this product.
+A hyperbolic previous actual Jensen row at the first defect also
+requires a separate relation to these same-source cofactors; it does
+not imply real-rootedness of $Q_{\rm core}$ by definition.
+No original-node nonreal exclusion, principal signed product,
+all-degree Jensen hyperbolicity, RH, FIB arithmetic bridge or
+all-integer Robin conclusion is supplied by (LC377) alone.
