@@ -1,0 +1,7 @@
+**Theorem 53.3 (minimal controller for a fixed policy).** If $K_\pi$ is finite
+and deterministic, quotienting it by policy-relative future equivalence yields
+a successful controller with the fewest states among controllers implementing
+the same visible response/output behaviour. Any two distinct quotient classes
+are separated by a finite visible continuation or by a different selected
+action, so no further merge preserves that behaviour.
+
