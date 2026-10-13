@@ -307,6 +307,58 @@ private lemma radius_local_comparison {m r : ℕ} (hm : 0 < m) {p t : ℝ}
     nlinarith [mul_nonneg (show 0 ≤ (r : ℝ)*((r : ℝ)+1) by positivity) (sq_nonneg δ)]
   · exact hsmall.trans (by nlinarith [mul_nonneg (show 0 ≤ (r : ℝ) by positivity) hδ.le])
 
+/-- Weighted grid bounds control the coefficients at the output grid, uniformly
+over every positive `m ≥ r`. The same actual Lorentz jet is used at both sides.
+The case `γ = 0` is consumed by the polynomial stability estimate below. -/
+lemma local_jet_coefficient_bound (r : ℕ) (γ : ℝ) (hγ : 0 ≤ γ) :
+    ∃ K : ℝ, 1 ≤ K ∧ ∀ m : ℕ, 0 < m → r ≤ m → ∀ L : ℝ, 0 ≤ L →
+      ∀ f : ℕ → ℕ → ℂ,
+      (∀ ν : ℕ, ν ≤ r → ∀ i : ℕ, i ≤ m →
+        ‖f ν i‖ ≤ L * (derivativeRadius m 1 ((i : ℝ)/m)) ^ (γ-(ν : ℝ))) →
+      ∀ J : ℕ, J ≤ m+r →
+      ‖bernsteinCoefficient (m+r) J (lorentzJet m r f)‖ ≤
+        K * L * (derivativeRadius m 1 ((J : ℝ)/(m+r))) ^ γ := by
+  obtain ⟨B, hB, hb⟩ := local_coefficient_bound r
+  let c : ℝ := (r : ℝ)+1
+  have hc : 1 ≤ c := by dsimp [c]; have := Nat.cast_nonneg (α := ℝ) r; linarith
+  have hc0 : 0 ≤ c := zero_le_one.trans hc
+  let A : ℝ := c ^ γ * c ^ r
+  have hA : 1 ≤ A := one_le_mul_of_one_le_of_one_le
+    (Real.one_le_rpow hc hγ) (one_le_pow₀ hc)
+  refine ⟨B*A, one_le_mul_of_one_le_of_one_le hB hA, ?_⟩
+  intro m hm hr L hL f hf J hJ
+  have hmR : 0 < (m : ℝ) := by exact_mod_cast hm
+  have hp : (J : ℝ)/(m+r) ∈ Set.Icc (0 : ℝ) 1 := by
+    refine ⟨by positivity, (div_le_one (by positivity)).mpr ?_⟩
+    exact_mod_cast hJ
+  let δ := derivativeRadius m 1 ((J : ℝ)/(m+r))
+  have hδ : 0 < δ := (radius_properties hm (by omega : 0 < 1) hp).1
+  have hh := hb m hm hr J hJ (A * L * δ ^ γ) (by positivity) f
+  apply (hh ?_).trans_eq
+  · dsimp [δ]; ring
+  intro ν hν i hi hiJ hJi
+  obtain ⟨ht, _, hdist⟩ := grid_geometry hm hJ hi hiJ hJi
+  let ρ := derivativeRadius m 1 ((i : ℝ)/m)
+  have hρ : 0 < ρ := (radius_properties hm (by omega : 0 < 1) ht).1
+  have hforward : ρ ≤ c * δ := radius_local_comparison hm ht hp hdist
+  have hbackward : δ ≤ c * ρ := radius_local_comparison hm hp ht
+    (by simpa only [abs_sub_comm] using hdist)
+  have hnum : ρ ^ γ ≤ c ^ γ * δ ^ γ := by
+    simpa only [Real.mul_rpow hc0 hδ.le] using
+      Real.rpow_le_rpow hρ.le hforward hγ
+  have hden : δ ^ ν ≤ c ^ r * ρ ^ ν := by
+    calc
+      _ ≤ (c*ρ)^ν := pow_le_pow_left₀ hδ.le hbackward ν
+      _ = c^ν * ρ^ν := mul_pow _ _ _
+      _ ≤ c^r * ρ^ν := mul_le_mul_of_nonneg_right (pow_le_pow_right₀ hc hν)
+        (pow_nonneg hρ.le _)
+  apply (hf ν hν i hi).trans
+  rw [Real.rpow_sub hρ, Real.rpow_natCast, ← mul_div_assoc]
+  apply (div_le_div_iff₀ (pow_pos hρ _) (pow_pos hδ _)).mpr
+  calc
+    _ ≤ (L * (c^γ * δ^γ)) * (c^r * ρ^ν) := by gcongr
+    _ = _ := by dsimp [A]; ring
+
 private lemma original_derivative_bound {d : ℕ} (hd : 0 < d)
     (c : Fin (d+1) → ℂ) (ν : ℕ) {p : ℝ} (hp : p ∈ Set.Icc (0 : ℝ) 1) :
     ‖(derivative^[ν] (bernsteinRealization d c)).eval (p : ℂ)‖ ≤
@@ -324,50 +376,42 @@ private lemma original_lorentz_stability (r : ℕ) :
     ∃ K : ℝ, 1 ≤ K ∧ ∀ d m : ℕ, 0 < d → r < d → d ≤ m →
       ∀ c : Fin (d+1) → ℂ, ∀ J : ℕ, J ≤ m+r →
       ‖bernsteinCoefficient (m+r) J (lorentzOperator m r (bernsteinRealization d c))‖ ≤ K*‖c‖ := by
-  obtain ⟨L, hL, hlocal⟩ := local_coefficient_bound r
-  let A := (r.factorial : ℝ) * Real.exp 6 * ((r : ℝ)+1)^r
+  obtain ⟨L, hL, hlocal⟩ := local_jet_coefficient_bound r 0 le_rfl
+  let A := (r.factorial : ℝ) * Real.exp 6
   let K := max 1 (L*A)
   refine ⟨K, le_max_left _ _, ?_⟩
   intro d m hd hrd hdm c J hJ
   have hm : 0 < m := hd.trans_le hdm
   have hA : 0 ≤ A := by dsimp [A]; positivity
-  have h := hlocal m hm (by omega) J hJ (A*‖c‖) (by positivity)
+  have h := hlocal m hm (by omega) (A*‖c‖) (by positivity)
     (fun ν i => (derivative^[ν] (bernsteinRealization d c)).eval ((i : ℂ)/m))
-  apply (h ?_).trans
-  · nlinarith [mul_le_mul_of_nonneg_right (le_max_right 1 (L*A)) (norm_nonneg c)]
-  intro ν hν i hi hiJ hJi
-  obtain ⟨ht, hp, hdist⟩ := grid_geometry hm hJ hi hiJ hJi
+  apply (h ?_ J hJ).trans
+  · simpa only [Real.rpow_zero, mul_one, mul_assoc] using
+      mul_le_mul_of_nonneg_right (le_max_right 1 (L*A)) (norm_nonneg c)
+  intro ν hν i hi
   let t : ℝ := (i : ℝ)/m
-  let p : ℝ := (J : ℝ)/(m+r)
+  have ht : t ∈ Set.Icc (0 : ℝ) 1 := by
+    refine ⟨by positivity, (div_le_one (by exact_mod_cast hm)).mpr ?_⟩
+    exact_mod_cast hi
   let ρ := derivativeRadius d 1 t
-  let δ := derivativeRadius m 1 p
+  let δ := derivativeRadius m 1 t
   have hρ := (radius_properties hd (by omega : 0 < 1) ht).1
-  have hδ := (radius_properties hm (by omega : 0 < 1) hp).1
-  have hmono : derivativeRadius m 1 t ≤ ρ := by
+  have hδ := (radius_properties hm (by omega : 0 < 1) ht).1
+  have hmono : δ ≤ ρ := by
     apply (radius_scale hd hdm ht).trans
     have hs : Real.sqrt ((d : ℝ)/m) ≤ 1 := (Real.sqrt_le_one).mpr
       ((div_le_one (by exact_mod_cast hm : 0 < (m : ℝ))).mpr (by exact_mod_cast hdm))
     nlinarith
-  have hcomp : δ ≤ ((r : ℝ)+1)*ρ :=
-    (radius_local_comparison hm hp ht (by simpa [abs_sub_comm] using hdist)).trans
-      (mul_le_mul_of_nonneg_left hmono (by positivity))
   have hf : (ν.factorial : ℝ) ≤ r.factorial := by exact_mod_cast Nat.factorial_le hν
-  have hpw : ((r : ℝ)+1)^ν ≤ ((r : ℝ)+1)^r := pow_le_pow_right₀ (by have := Nat.cast_nonneg (α := ℝ) r; linarith) hν
   have hb := original_derivative_bound hd c ν ht
   have hcast : (((i : ℝ)/(m : ℝ) : ℝ) : ℂ) = (i : ℂ)/m := by push_cast; rfl
   rw [hcast] at hb
   apply hb.trans
-  apply (div_le_div_iff₀ (pow_pos hρ _) (pow_pos hδ _)).mpr
-  have hpow := pow_le_pow_left₀ hδ.le hcomp ν
-  rw [mul_pow] at hpow
-  have hc : (ν.factorial : ℝ)*((r : ℝ)+1)^ν ≤ (r.factorial : ℝ)*((r : ℝ)+1)^r :=
-    mul_le_mul hf hpw (by positivity) (by positivity)
+  rw [zero_sub, Real.rpow_neg hδ.le, Real.rpow_natCast, ← div_eq_mul_inv]
+  change _ ≤ (A*‖c‖)/δ^ν
+  apply div_le_div₀ (by positivity) ?_ (pow_pos hδ _) (pow_le_pow_left₀ hδ.le hmono ν)
   dsimp [A]
-  calc
-    _ ≤ ((ν.factorial : ℝ) * (‖c‖ * Real.exp 6)) * (((r : ℝ)+1)^ν*ρ^ν) := by gcongr
-    _ ≤ ((r.factorial : ℝ)*((r : ℝ)+1)^r) * (‖c‖*Real.exp 6) * ρ^ν := by
-      nlinarith [mul_le_mul_of_nonneg_right hc (show 0 ≤ (‖c‖*Real.exp 6)*ρ^ν by positivity)]
-    _ = _ := by ring
+  nlinarith [mul_le_mul_of_nonneg_right hf (show 0 ≤ ‖c‖*Real.exp 6 by positivity)]
 
 private lemma large_local_remainder (r : ℕ) :
     ∃ A L : ℝ, 1 ≤ A ∧ 1 ≤ L ∧ ∀ d m : ℕ, 0 < d → A*(d : ℝ) ≤ m →
