@@ -1257,3 +1257,913 @@ therefore precisely an alphabet and native-call boundary for this
 acquired-input contract. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Adaptive native calls and a joint-coordinate obstruction
+
+**Assumption 9.1 (the acquired-code contract at a general call budget).**
+Keep every source, acquisition, causal export, discard, complete-row,
+original-offset and stationarity premise of Assumption 5.1. Replace only
+its at-most-one-call restriction by at most $k$ fresh chronological Reads,
+where $k\ge0$ is public. After a reply, the next finite literal word or
+halt decision may depend on that reply and the earlier replies. The
+controllers for the two visible regions may be different. Every repeated
+request is another call. All local computation must terminate on a
+promised input; its cost is separate from calls. No restriction to a
+fixed finite Moore controller or uniformly bounded address is imposed.
+
+Write $C_\gamma=e^{-1}(\gamma)$ for an attained class, and $d=a-b$.
+The complete fibers, targets and all-address correspondence are exactly
+Theorem 5.2, used also at later adaptive nodes by restricting its fiber
+to the origins producing the preceding replies. The native $E/P/S$
+law and literal representatives are Definition 5.3. These statements
+and Theorem 7.5 are the published suppliers at
+[revision 45fce68e14e6414d58c1ca396723012fa364aeea](https://github.com/the-omega-institute/trureturing/blob/45fce68e14e6414d58c1ca396723012fa364aeea/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md).
+In particular, an adaptive extension changes neither the information
+in an acquired row nor the meaning of a constructor Read.
+
+**Theorem 9.2 (arbitrary-code adaptive class and alphabet bounds).**
+Under Assumption 9.1, every attained class satisfies
+
+$$
+|C_\gamma|\le6\cdot2^k-5.
+\tag{NARC.9.1}
+$$
+
+Consequently, with exactly $q$ attained labels,
+
+$$
+q\le6\cdot2^k-5.
+\tag{NARC.9.2}
+$$
+
+These are necessary bounds under each lag convention. They cover
+arbitrary deterministic acquired encoders, adaptive actual words,
+different cut-specific controllers, repeated target coordinates and
+early halts; they are not sufficient readability or packing criteria.
+
+**Proof.** The supplied common-translation obstruction [NAR, Theorem
+16.3][NAR] makes $d$ injective on each class even if arbitrarily many
+adaptive current Reads are allowed. Indeed, its two-slot specialization
+identifies two same-code, same-$d$ distinct origins with the same whole
+current tree and entire acquired entry at legal positive lags, but
+different required outputs. Equal entry and equal earlier replies force
+the same next request or halt; the equal current trees give the same
+next reply. Thus increasing the call budget cannot remove that
+obstruction. We use this supplier rather than a one-call assumption.
+
+Fix $Z=q+1$. By Theorem 5.2 both visible regions at normalized clock
+$Z$ have complete fiber $C_\gamma$, under either convention. The right
+hidden ages are $Z+d\in[2,2q]$; the left hidden ages are
+$q+Z-d\in[q+2,3q]$. Order the $m=|C_\gamma|$ origins by increasing
+$d$. Their right hidden ages increase strictly and their left hidden
+ages decrease strictly.
+
+Consider one of the two controllers on its own full acquired entry.
+Root and visible-slot requests have entry-constant replies by Theorem
+5.2 and can be simulated locally. Each hidden request is an $E$, $P_t$
+or $S_t$ experiment by Definition 5.3. Its reply cells are intervals
+in the ordered origins. A $P_t$ has two tails and at most two singleton
+cells; an $S_t$ has two tails and at most one singleton. Injectivity of
+$d$ is essential here: a singleton age contains at most one origin.
+$E$ is constant branch on these reference ages. Intersecting an
+interval support with a reply cell again gives an interval support.
+Thus every nonempty adaptive transcript leaf is an ordered interval,
+even for a sparse class or response-dependent next address.
+
+Let $L_j=3\cdot2^j-2$, so $L_0=1$ and $L_j=2L_{j-1}+2$ for
+$j\ge1$. A depth-zero tree has at most one nonempty leaf. Inductively,
+each tail after a first request has at most $L_{j-1}$ leaves, and each
+singleton cell has at most one, regardless of the subsequent control.
+There are therefore at most $2L_{j-1}+2=L_j$ leaves. An $S_t$, a
+constant request or an early halt gives no more. This proves the bound
+for every adaptive depth-$j$ tree. A terminating deterministic program
+on this finite entry induces such a tree: at each common transcript
+its next action is fixed, and at most four replies and $j$ calls can
+occur. Uncharged computation adds no source-dependent branches.
+
+Correctness of the right-visible controller makes $b$ constant on
+each of its at most $L_k$ interval leaves, because the required lag is
+$Z-b$. Its leaf partition therefore has at most $L_k-1$ boundaries
+between consecutive ordered origins. Independently, correctness of
+the left-visible controller makes $a$ constant on each of its at most
+$L_k$ leaves, with at most $L_k-1$ boundaries in the same $d$ order;
+reversing age order does not change the number or contiguity of blocks.
+The common refinement has at most $2L_k-1$ nonempty blocks. Each block
+fixes both $a$ and $b$ and hence contains only one origin. It follows
+that $m\le2L_k-1=6\cdot2^k-5$.
+
+This counts transcript blocks, not distinct outputs: the same $b$ or
+$a$ may occur in several separated leaves. The two partitions are
+mathematical partitions of the same origin class from two lawful
+families of complete histories; no execution combines different cuts
+or splices their sources. Finally, the $q$ nonempty attained classes
+partition the $q^2$ allowed originals. Summing (NARC.9.1) gives
+$q^2\le q(6\cdot2^k-5)$, proving (NARC.9.2). $\square$
+
+## 10. An exact finite fixed-encoder all-lag criterion
+
+**Definition 10.1 (origin-indexed native target separation).** Fix
+public $q\ge1$ and the finite actual-query menu
+
+$$
+\mathcal M_q=\{E,P_2,P_3,\ldots,P_{3q+1}\}.
+\tag{NARC.10.1}
+$$
+
+A finite state consists of a finite index set $I$ with integer ages
+$n_i\ge0$ and targets $v_i$. Indices remain distinct when ages agree;
+in particular, conflicting targets at the same age are not collapsed.
+For $A\in\mathcal M_q$ and actual reply $r$, let $I_{A,r}$ contain
+exactly the indices giving $r$ under (NARC.5.7). Restriction retains
+each index's age and target. Define $D_0(I)$ to mean target constancy,
+with empty states vacuous, and recursively
+
+$$
+\begin{aligned}
+D_{j+1}(I)\quad\Longleftrightarrow\quad&
+\text{the target is constant on }I\quad\text{or}\quad\\
+&\exists A\in\mathcal M_q\,
+\forall r\in\{\bot,\alpha,\beta,\mathsf b\},\quad
+D_j(I_{A,r}).
+\end{aligned}
+\tag{NARC.10.2}
+$$
+
+An indexed constant-target state halts with that target. A witness of
+the other alternative is a finite native tree whose next experiment
+is $A$ and whose reply children are the indicated witnesses. Thus the
+predicate preserves actual reply partitions and permits different
+adaptive subtrees, rather than arbitrary four-way partitions.
+
+**Theorem 10.2 (finite certification is equivalent to all-lag service).**
+Fix any deterministic acquired encoder $e$ in Assumption 9.1 and a
+budget $k\ge0$. Put $Z=q+1$. For each attained class $C_\gamma$, form
+the two full origin-indexed states
+
+$$
+\begin{aligned}
+S_R(\gamma)&=\bigl((Z+a-b,b)\bigr)_{(a,b)\in C_\gamma},\\
+S_L(\gamma)&=\bigl((q+Z-a+b,a)\bigr)_{(a,b)\in C_\gamma}.
+\end{aligned}
+\tag{NARC.10.3}
+$$
+
+For nonnegative lags also form the at most $q$ complete boundary states
+
+$$
+S_0(z)=\bigl((z+a-b,b)\bigr)_
+ {\substack{(a,b)\in C_{e(0,z)}\\b\le z}},
+\qquad 0\le z<q.
+\tag{NARC.10.4}
+$$
+
+For $\lambda=1$, all-lag recovery with at most $k$ actual Reads on
+both visible regions exists exactly when $D_k$ holds on every state
+in (NARC.10.3). For $\lambda=0$, it exists exactly when $D_k$ holds
+on those states and every state in (NARC.10.4). The latter states
+include the entire compatible fibers, not only their zero-age origins.
+The finite menu (NARC.10.1) suffices for every certificate. This menu
+bound is not a bound on the addresses used at unbounded runtime lags.
+
+**Proof, native trees and necessity.** By induction on $j$, Definition
+10.1 is equivalent to target separation by a depth-at-most-$j$ tree
+using its menu. Every state tested here has ages in $[0,3q]$:
+the right reference range is $[2,2q]$, the left reference range is
+$[q+2,3q]$, and the boundary range is $[0,2q-2]$. Every descendant
+inherits this bound. A threshold $t>3q+1$ has constant absence and
+may be deleted. Every finite relative word otherwise has $E/P/S$
+response geometry by Definition 5.3. Replace an $S_t$ node by the
+actual $P_t$ and send replies $(\bot,\alpha,\beta,\mathsf b)$ to
+$(\bot,\beta,\mathsf b,\mathsf b)$ before following its former
+child. This refines its partition with the same call budget. Delete
+root and visible-slot queries by the all-address correspondence of
+Theorem 5.2, and delete any remaining constant nodes. The resulting
+tree uses (NARC.10.1). This argument retains origin indices even if
+two ages coincide, and proves that the finite predicate is exact for
+each tested state.
+
+Every reference state is a genuine whole acquired-input fiber at
+$z=Z$, with its target coordinate determining the required lag by
+subtraction from $Z$. Every boundary state is the complete right-visible
+fiber at the entry $(e(0,z),\mathcal R^R_z)$ for $\lambda=0$;
+it contains origin $(0,z)$ at lag zero. Theorem 5.2 realizes every
+indexed alternative by its own original and legal continuation. An
+all-lag controller restricted to one such entry therefore supplies
+the required native decision tree. This proves necessity.
+
+**Proof, positive translation.** Choose reference witnesses and delete
+their $E$ nodes: every reference age is at least two, so all such
+replies are branch. All remaining query nodes are actual $P_t$ with
+$t\ge2$. At a later entry with normalized clock $z$, restrict the
+appropriate reference tree to its exact fiber in Theorem 5.2. For each
+of its origins the age changes by the same integer
+$\Delta=z-Z$, while its target coordinate does not change. At a
+reference $P_t$ node put $s=t+\Delta$. Its reply on the same origin
+is the following partition of the actual age $n$:
+
+$$
+\widehat P_s(n)=
+\begin{cases}
+\bot,&n<s,\\
+\alpha,&n=s,\\
+\beta,&n=s+1,\\
+\mathsf b,&n\ge s+2.
+\end{cases}
+\tag{NARC.10.5}
+$$
+
+This notation is an algebraic reply to be simulated; it does not add
+an experiment to the native menu. On an actual positive support,
+$n\ge1$, it has the following lawful implementations:
+
+| Shifted threshold | Actual request | Reply supplied to the reference node |
+| --- | --- | --- |
+| $s\ge2$ | $P_s$ | unchanged actual reply |
+| $s=1$ | $P_2$ | $\bot\mapsto\alpha$, $\alpha\mapsto\beta$, $\beta,\mathsf b\mapsto\mathsf b$ |
+| $s=0$ | $E$ | unchanged actual reply |
+| $s\le-1$ | no request | constant $\mathsf b$ |
+
+For $s=1$, the absence cell of actual $P_2$ on positive ages contains
+only $n=1$; its alpha cell is $n=2$, and all higher ages require
+branch at the simulated node. For $s=0$, the only nonbranch positive
+age is $n=1$, giving beta under both $E$ and (NARC.10.5). For
+$s\le-1$, every positive age is at least $s+2$. These observations
+prove all four identities pointwise. Every paid experiment is prefixed
+by the actual hidden-slot address and uses (NARC.5.8). In particular,
+the $s=1$ case requests actual $P_2$, never $P_1$.
+
+Feed the implemented reply into the current reference node before
+selecting its next child. Induction down the finite reference tree
+shows that each actual origin follows exactly its reference transcript
+after these reply maps. A skipped step still descends the finite tree,
+and each paid step replaces at most one reference call. The final
+reference target is therefore valid on the actual restricted fiber,
+with at most $k$ paid Reads. This includes sparse fibers, conflicting
+age indices and adaptive second or subsequent thresholds; if a
+reference witness exists, its terminal target is constant on every
+surviving index.
+
+**Proof, zero boundary and sufficiency.** Left-hidden ages are always
+at least $q$ by Theorem 5.2, so are positive. A right-hidden age equals
+$a+\ell$ and is zero exactly when $a=0$ and $\ell=0$. This requires
+$\lambda=0$, $z=b<q$ and label $e(0,z)$. These conditions are
+recognizable from the acquired $z$, label and public encoder table;
+no hidden-age test is used. On such an entry choose the separately
+certified complete tree (NARC.10.4). All other entries have positive
+hidden support and use the translated reference tree. In either case
+the final target $v$ gives $\ell=z-v$, with the same actual original
+retained as a compatible index throughout the actual replies.
+
+At $n=0,s=1$, actual $P_2$ returns absence, whereas its positive
+reply map would supply alpha instead of the required absence in
+(NARC.10.5). Thus the positive translation cannot justify omission
+of the boundary trees. The finite cases above exhaust that exception;
+the translation proves all remaining, arbitrarily large lags. No
+finite lag window is used as an all-lag inference. $\square$
+
+**Proposition 10.3 (positive certificates can miss a complete zero fiber).**
+For $q\ge13$, consider the symmetric class
+
+$$
+C_{\rm bad}=
+\{(a,b)\in[0,q-1]^2:\max(a,b)=6\}\ \cup\
+\{(A,0),(0,A):A\in\{10,11,12\}\}.
+\tag{NARC.10.6}
+$$
+
+Both of its full reference target states at $Z=q+1$ have depth-two
+native certificates. Nevertheless, if this is a code class, its
+complete right-visible entry at $z=12$ under $\lambda=0$ admits no
+two-read controller. This is an obstruction to that class and entry,
+not to every encoder on the square or to positive-lag service.
+
+**Proof.** In coordinates $u=a-b,v=b$, write $h=Z$ for the right
+reference and $h=q+Z$ for the left reference, exchanging $a,b$ for
+the latter. A $P_{h+s}$ partitions $u$ at $s,s+1$. At these reference
+clocks all of the following thresholds are at least two. Use first
+offset $1$, lower offset $-11$ after absence, and upper offset $4$
+after branch. The first alpha and beta cells have targets $5,4$.
+The lower second cells, in $(\bot,\alpha,\beta,\mathsf b)$ order,
+have targets $(12,11,10,6)$; the upper second cells have targets
+$(3,2,1,0)$. This follows from the three negative extras
+$(-12,12),(-11,11),(-10,10)$, the base arm with $u\le0,v=6$,
+and the positive base arm and target-zero extras. Symmetry supplies
+the left reference. These are actual finite certificates for this class.
+
+At $z=12$, every one of its nineteen origins has $b\le12$, so the
+whole class is the complete fiber in Theorem 5.2. The ordered
+hidden-age-to-target groups are
+
+$$
+\begin{array}{c|cccccccccc}
+n&0&1&2&[6,12]&13&14&15&16&17&\{18,22,23,24\}\\ \hline
+v&12&11&10&6&5&4&3&2&1&0.
+\end{array}
+\tag{NARC.10.7}
+$$
+
+Each target corresponds to lag $12-v$ on its own lawful fixed
+original, with the same code and entire later row, reached hole and
+singleton partition. There are ten ordered target runs. Every native
+transcript leaf is an interval in this age order, so at least ten
+nonempty target-constant leaves are required.
+
+If the first informative request is $E$, it has two singleton cells
+and one branch tail. One remaining request gives at most four leaves
+on that tail, for at most six altogether. If the first informative
+request is nonempty, Definition 5.3 makes both ages zero and one
+absent. Their different targets force the remaining request on that
+cell to be $E$: every nonempty relative word still merges them,
+and root or visible-slot requests are constant. That child has at
+most three leaves. The two possible singleton first cells contribute
+at most two leaves, and the upper tail at most four, totaling at most
+nine. An $S_t$ first request gives no more than this $P_t$ bound;
+constant requests and early halts do not improve it. Ten runs cannot
+be covered. This exhibits a necessary consumer of the complete zero
+tests in Theorem 10.2 and of the column-gap condition below. $\square$
+
+## 11. A genuinely acquired two-read code through seventeen labels
+
+**Definition 11.1 (one symmetric master encoder).** For
+$0\le a,b\le16$, put $A=\max(a,b)$ and $B=\min(a,b)$.
+Normally set $e_{17}(a,b)=A$. Replace that value by $c$ exactly on
+the following unordered pairs, including both orientations:
+
+| Label $c$ | Reassigned $(A,B)$ |
+| --- | --- |
+| $0$ | $(16,B)$ for $0\le B\le6$ |
+| $1$ | $(15,B)$ for $0\le B\le5$ |
+| $2$ | $(13,3),(14,0),(14,1)$ |
+| $3$ | $(12,0),(14,3),(14,4)$ |
+| $4$ | $(12,2),(13,2),(14,2)$ |
+| $5$ | $(11,1),(12,1),(13,1)$ |
+| $6$ | $(10,0),(11,0),(13,0)$ |
+
+For $1\le q\le17$, define $e_q$ by restriction to $[0,q-1]^2$.
+The actual original remains $X_{a,b}=\langle T_a,T_{q+b}\rangle$;
+its right offset is $q$, not seventeen. From the genuinely acquired
+initial empty-cut row compute $a=c(T_a)$ and $b=c(T_{q+b})-q$
+using the supplied acquired-literal clock. Export only $e_q(a,b)$
+before the future region and lag are known. Discard the row, the two
+coordinates and every other source-bearing field. The displayed
+encoder table and all later certificate tables are public data common
+to every source; they are not source-dependent surviving selections.
+
+**Proposition 11.2 (alphabet and class geometry).** The encoder $e_q$
+has exactly $q$ attained labels, the inherited minimum alphabet of
+[NAR, Theorem 16.3][NAR]. Every one of its classes has distinct
+differences $d=a-b$. In the master square, let $u=a-b,v=b$. For
+$0\le c\le6$, class $c$ consists of its entire maximum-$c$ base
+
+$$
+\begin{cases}
+-c\le u\le0,&v=c,\\
+1\le u\le c,&v=c-u,
+\end{cases}
+\tag{NARC.11.1}
+$$
+
+and its listed symmetric extras. For $7\le c\le16$, put
+$r=\min(c,9)$. Its class is exactly
+
+$$
+\begin{cases}
+-r\le u\le0,&v=c,\\
+1\le u\le r,&v=c-u.
+\end{cases}
+\tag{NARC.11.2}
+$$
+
+Smaller squares restrict these classes by deleting origins.
+
+**Proof.** Every reassignment label satisfies $0\le c\le A$,
+and $e_{17}(t,t)=t$. Thus a prefix square exports no label outside
+$[0,q-1]$, and its diagonal attains every label in that interval.
+The minimum-alphabet conclusion is the cited whole-current supplier,
+without a new alphabet lower proof.
+
+The seven reassignment rows contain $7+6+5\cdot3=28$ unordered
+pairs. For $A=10,11,12,13,14,15,16$, respectively, they contain
+all $A-9$ pairs with $B\le A-10$: the first five sets are read
+directly from the five finite reassignment rows, and the last two are
+the displayed stars. Hence they are exactly the pairs with $A-B\ge10$.
+All other pairs keep their maximum. This proves (NARC.11.1)--(NARC.11.2).
+
+The positive extra differences for labels $0,\ldots,6$ are,
+respectively,
+
+$$
+[10,16],\ [10,15],\ \{10,13,14\},\ \{10,11,12\},\
+\{10,11,12\},\ \{10,11,12\},\ \{10,11,13\}.
+\tag{NARC.11.3}
+$$
+
+Each is distinct within its class and disjoint from the base
+differences in $[-c,c]$. The reversed extras have their negative
+differences, and the diagonal is the sole difference-zero point.
+The normal classes have one point at each displayed $u$. Thus $d$
+is injective in every master class and remains so upon restriction.
+$\square$
+
+**Definition 11.3 (oriented certificates and public pruning).** On a
+right-visible entry set $(h,u,v)=(z,a-b,b)$; on a left-visible entry
+set $(h,u,v)=(q+z,b-a,a)$. Symmetry of $e_q$ makes the same class
+tables apply in both orientations. The exact candidate set is its
+class restricted by $v\le z-\lambda$, and the hidden age and lag
+are $h+u$ and $z-v$, by Theorem 5.2.
+
+Write $Q(s)$ for the four-cell partition
+
+$$
+u<s,\qquad u=s,\qquad u=s+1,\qquad u\ge s+2,
+\tag{NARC.11.4}
+$$
+
+in reply order $(\bot,\alpha,\beta,\mathsf b)$. When $h+s\ge2$
+it is the actual hidden-slot-prefixed $P_{h+s}$ request. At other
+thresholds this is partition notation only; the actual replacements
+are specified below. Initially and after each reply, halt whenever
+the surviving public candidates have constant $v$. A partition
+constant on all remaining candidates can be followed locally without
+a request. Both decisions use the finite candidate table and the
+acquired entry, not a hidden tree or origin oracle.
+
+**Lemma 11.4 (separated column triples with a lawful zero boundary).**
+Let $B,A_1,A_2,A_3$ be nonnegative integers, with
+$c\in\{4,5,6\}$, $0\le B<A_1$, $A_2=A_1+1<A_3$,
+$A_1-B\ge10$, and public integer $q>A_3$.
+Add the symmetric pairs $(A_i,B),(B,A_i)$, $i=1,2,3$, to the
+maximum-$c$ base. Suppose $B=0$ if $c=6$, and suppose also
+
+$$
+B\ge1\quad\text{or}\quad A_3\ge A_2+2.
+\tag{NARC.11.5}
+$$
+
+For this class, the target $v$ on every feasible fiber in Definition
+11.3 is readable with at most two actual Reads under either lag
+convention. The partition schedule is first $Q(1)$, then
+$Q(B-A_2)$ after ambiguous absence or $Q(4)$ after ambiguous
+branch, with the actual lower-threshold replacements in the proof.
+This supplies classes $4,5,6$ of Definition 11.1 at
+
+$$
+(B;A_1,A_2,A_3)=
+(2;12,13,14),\quad(1;11,12,13),\quad(0;10,11,13).
+\tag{NARC.11.6}
+$$
+
+All three lower offsets equal $-11$. The lemma is a sufficient class
+family, not a characterization of every two-read class or encoder.
+
+**Proof.** The negative extras have $(u,v)=(B-A_i,A_i)$,
+with distinct $u\le-10$. The base negative arm has $u\ge-c$
+and target $c$, and positive extras have $(A_i-B,B)$ with $u\ge10$.
+First $Q(1)$ has singleton middle targets $c-1,c-2$. On its lower
+cell, $Q(B-A_2)$ gives targets $(A_3,A_2,A_1,c)$: its two
+singleton positions are $B-A_2$ and $B-A_1$, and all base points
+lie above these positions. On its upper cell, $Q(4)$ gives
+$c-3,c-4,c-5$ in its first three positions when present. Its last
+cell contains all positive extras, with target $B$. At $c=4$ the
+beta base cell is absent, and at $c=5$ all three positions are
+present. At $c=6$ the last cell also contains the base point $u=6$
+with target zero, explaining the sufficient condition $B=0$.
+Every terminal partition is therefore target-constant.
+
+It remains to realize the thresholds on feasible actual fibers.
+Right visibility with $h=0$ already has $v=0$ throughout and halts.
+Otherwise $h\ge1$; this is also true on every left-visible fiber.
+First $P_{h+1}$ and upper $P_{h+4}$ are then legal. A nonconstant
+lower cell requires a negative extra, since all its base points have
+target $c$. For right visibility such an extra has $v=A_i\le z$
+and $h=z$, so $h\ge A_1$. Put $t=h+B-A_2$. Thus $t\ge B-1$.
+If $t\ge2$, use actual $P_t$. If $t=0$, use actual $E$, whose
+reply is exactly the partition at threshold zero.
+
+The only possible negative threshold is $t=-1$, requiring $B=0$
+and $h=A_1$. Then only the $A_1$ negative extra can be feasible;
+it has age zero, while every lower base age is at least
+$A_1-c\ge4$. Actual $E$ separates their targets. At $t=1$, every
+feasible negative extra has age $h+B-A_i\ge B$, and the lower base
+ages are again positive. If $B\ge1$ this whole lower support is
+positive. If $B=0$, then $h=A_2+1$, and (NARC.11.5) excludes
+the $A_3$ extra; the remaining extra ages are one and two. Thus
+the support is still positive, and actual $P_2$ with the threshold-one
+reply map of Theorem 10.2 realizes the desired partition. No $P_1$
+is submitted. These cases exhaust $t<2$ whenever the lower target
+is nonconstant. Feasibility restrictions can only remove points.
+
+For left visibility, an ambiguous lower cell still requires
+$z\ge A_1$, but $h=q+z$. Its threshold satisfies
+$h+B-A_2\ge q+B-1\ge2$, so no exceptional lower request is
+needed. Symmetry gives the same target partitions on both cuts.
+The three instances (NARC.11.6) satisfy every hypothesis. The
+consecutive zero-column triple of Proposition 10.3 fails precisely
+the gap premise at its problematic clock, and that proposition
+proves that dropping the premise wholesale is invalid. $\square$
+
+**Theorem 11.5 (complete finite certificates for the master and every prefix).**
+For every $1\le q\le17$, the encoder of Definition 11.1 satisfies
+$D_2$ on both full reference states for every class, and on every
+complete boundary state (NARC.10.4).
+
+**Proof, coordinate reply certificates.** In the full master classes
+use the following offset schedules. The middle first replies halt;
+the lower or upper second experiment is needed only if its surviving
+target is nonconstant.
+
+| Class $c$ | First offset | Second after $\bot$ | Second after $\mathsf b$ |
+| --- | --- | --- | --- |
+| $0$ | $11$ | $0$ | $14$ |
+| $1$ | $10$ | $-1$ | $13$ |
+| $2$ | $1$ | $-11$ | $12$ |
+| $3$ | $1$ | $-11$ | $10$ |
+| $4,5,6$ | $1$ | $-11$ | $4$ |
+| $7\le c\le16$ | $4$ | $1$ | $7$ |
+
+Each pair of four-entry tuples below gives the targets of the second
+reply cells after first absence and first branch, respectively.
+$\varnothing$ denotes an empty cell, not an output target.
+
+| $c$ | First $\alpha$ target | First $\beta$ target | Lower second $(\bot,\alpha,\beta,\mathsf b)$ | Upper second $(\bot,\alpha,\beta,\mathsf b)$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $5$ | $4$ | $(16,0,\varnothing,6)$ | $(3,2,1,0)$ |
+| $1$ | $5$ | $4$ | $(15,1,1,0)$ | $(3,2,1,0)$ |
+| $2$ | $1$ | $0$ | $(14,\varnothing,13,2)$ | $(3,\varnothing,1,0)$ |
+| $3$ | $2$ | $1$ | $(12,14,14,3)$ | $(0,4,3,0)$ |
+| $4$ | $3$ | $2$ | $(14,13,12,4)$ | $(1,0,\varnothing,2)$ |
+| $5$ | $4$ | $3$ | $(13,12,11,5)$ | $(2,1,0,1)$ |
+| $6$ | $5$ | $4$ | $(13,11,10,6)$ | $(3,2,1,0)$ |
+
+Here is a direct derivation of every exceptional row. Class zero has
+negative extras $u=-16,\ldots,-10$ all with $v=16$, its base point
+$(0,0)$, and positive extras $u=10,\ldots,16$ with $v=16-u$.
+First offset eleven singles out targets five and four. Its lower
+cell contains the negative group, the base, and $(u,v)=(10,6)$;
+offset zero gives the displayed three nonempty target groups. Its
+upper cell has $u=13,14,15,16$, which offset fourteen separates
+as displayed. Class one similarly has negative extras
+$u=-15,\ldots,-10$, all with target fifteen, base targets one at
+$u=-1,0$ and zero at $u=1$, and positive extras
+$u=10,\ldots,15$ with target $15-u$. Offsets ten, minus one
+and thirteen give exactly its row.
+
+Class two's negative extras are $(-14,14),(-13,14),(-10,13)$;
+its positive extras are $(10,3),(13,1),(14,0)$. Its base lower
+arm has target two, and its positive base points at $u=1,2$ have
+targets one and zero. Offsets one and minus eleven partition the
+lower group into targets fourteen, an empty singleton, thirteen and
+two. Offset twelve on its upper extras gives three, an empty
+singleton, one and zero. Class three's negative extras are
+$(-12,12),(-11,14),(-10,14)$, and its positive extras are
+$(10,4),(11,3),(12,0)$. Its lower base target is three, and its
+upper cell also contains the base point $(3,0)$. The offsets in
+its schedule now give its complete displayed row. Classes four
+through six are exactly the instances of Lemma 11.4, which proves
+their lower tuples and upper target mergers.
+
+For a normal class (NARC.11.2), first offset four has middle targets
+$c-4,c-5$. Its lower second offset one gives
+$(c,c-1,c-2,c-3)$, and its upper second offset seven gives
+$(c-6,c-7,c-8,c-9)$ wherever the indicated support points exist.
+If $r<9$, the corresponding terminal positions are simply empty.
+This proves target constancy in every occupied terminal cell for
+every master class. Prefix restriction, and later entry feasibility,
+only delete origins from these algebraic partitions.
+
+**Proof, positive full reference realization.** At the right reference
+$h=q+1$ and the left reference $h=2q+1$, every needed first
+threshold is legal. Prune any target-constant state and any
+constant-reply node. If a threshold exceeds $3q+1$, all tested
+ages are below it, so its constant absence node is deleted as in
+Theorem 10.2. The remaining first and second queries lie in the
+finite menu whenever their thresholds are at least two.
+
+For class zero, nontrivial extras first appear at $q=17$, so its
+needed lower threshold $h$ is legal. For class one, $q\ge2$ gives
+right lower threshold $h-1=q\ge2$, and the left threshold is
+larger. For classes two through six, a nonconstant lower cell
+requires a negative extra. Its smallest possible maximum coordinate
+$A$ is, respectively, $13,12,12,11,10$. Since a prefix containing
+it has $q\ge A+1$, the right lower threshold $h-11=q-10$
+is at least two except at $q=11,c=6$. There its surviving lower
+cell consists of the extra point of age two and target ten, and
+base ages $6,\ldots,12$ of target six. Use actual $P_2$:
+its alpha and branch cells separate these targets. The formal
+threshold-one partition is not requested. For smaller prefixes
+the corresponding lower cell is already target-constant. Every
+needed left-reference lower threshold is legal, since an extra
+requires $q\ge11$ and $h=2q+1$. All upper offsets are positive.
+Normal-class offsets are positive as well. Thus the displayed
+coordinate certificates give actual $D_2$ reference witnesses for
+every prefix, including this sole positive-reference replacement.
+
+**Proof, the complete zero-containing fibers.** The master boundary
+labels are
+
+$$
+\bigl(e_{17}(0,z)\bigr)_{z=0}^{16}
+=(0,1,2,3,4,5,6,7,8,9,6,6,3,6,2,1,0).
+\tag{NARC.11.7}
+$$
+
+For any prefix take only $z<q$ and delete origins outside its square.
+These are exactly the labels indexing (NARC.10.4), whose whole
+fiber retains every class member with $b\le z$. Right visibility
+has $h=z$, independently of the changed right offset $q$.
+At $z=0$ all candidates have $v=b=0$, so halt. At every other
+listed boundary clock the first threshold is legal; prune it if
+constant. Upper second thresholds are positive and legal when
+needed. The only nonconstant lower cells requiring $E$ in place
+of the schedule's nonempty threshold are the following:
+
+| $(c,z)$ | Complete remaining lower age-to-target groups | Actual second experiment |
+| --- | --- | --- |
+| $(1,1)$ | $\{0,1\}\mapsto1$, $2\mapsto0$ | $E$ |
+| $(6,10)$ | $0\mapsto10$, $[4,10]\mapsto6$ | $E$ |
+| $(6,11)$ | $0\mapsto11$, $1\mapsto10$, $[5,11]\mapsto6$ | $E$ |
+| $(3,12)$ | $0\mapsto12$, $[9,12]\mapsto3$ | $E$ |
+
+These groups follow from the base lower arms and the feasible negative
+extras: at clock ten only $A=10$ survives in class six; at eleven
+only $A=10,11$ survive there; at twelve only $(0,12)$ survives
+among class three's negative extras. At $(1,1)$ no negative extra
+with target fifteen is feasible, so the lower cell is exactly its
+three-point base. Actual $E$ has separate alpha, beta and branch
+cells and separates the stated targets in every row. Prefix
+restriction can only remove some of these groups.
+
+For exhaustion, at clocks $z=2,\ldots,6$ the label is $c=z$.
+All negative extras have target greater than $z$, so the lower cell
+has only its constant base target $c$ and halts. At clocks seven
+through nine the normal-class positive offsets are legal. The
+remaining four clocks have the following legal lower experiments
+and target tuples:
+
+| $(c,z)$ | Lower experiment | Lower $(\bot,\alpha,\beta,\mathsf b)$ targets |
+| --- | --- | --- |
+| $(6,13)$ | $P_2$ | $(13,11,10,6)$ |
+| $(2,14)$ | $P_3$ | $(14,\varnothing,13,2)$ |
+| $(1,15)$ | $P_{14}$ | $(15,1,1,0)$ |
+| $(0,16)$ | $P_{16}$ | $(16,0,\varnothing,6)$ |
+
+In the first row the feasible negative extra ages are zero, two and
+three, with targets thirteen, eleven and ten; the base lower ages
+are $[7,13]$. There is no age-one extra. In the second row the
+negative extras have ages zero and one at target fourteen, and age
+four at target thirteen, with lower base target two. The last two
+rows are the star certificates already derived, translated to their
+displayed clocks. Each occupied actual reply cell is target-constant.
+Together with the four $E$ rows and the initial constant halt, this
+exhausts (NARC.11.7), including every member of every complete
+zero-containing fiber. Oversized constant-absence nodes are again
+pruned, so these are witnesses using (NARC.10.1). $\square$
+
+**Theorem 11.6 (exactly-$q$-label two-read service for every legal lag).**
+For every $1\le q\le17$, Definition 11.1 supplies a genuinely
+acquired deterministic encoder with exactly $q$ attained labels and
+a decoder using at most two actual chronological original-root Reads,
+for every original, both singleton visible regions, and separately
+$\ell\ge0$ and $\ell\ge1$.
+
+**Proof.** Proposition 11.2 proves the attained alphabet. Theorem 11.5
+supplies both full positive certificates and every required complete
+zero certificate. Invoke Theorem 10.2 with $k=2$, rather than
+extrapolating a bounded selection of lag values. At runtime the
+controller enumerates the public class, restricts it to the complete
+acquired fiber of Theorem 5.2, and chooses either its certified zero
+tree or the lawful translated reference tree using only the label,
+visible region, normalized acquired clock and public lag convention.
+Every actual reply is evaluated on the same stationary original's
+current tree and is mapped, if required, exactly as in Theorem 10.2.
+The original's index survives every restriction. The terminal common
+target $v$ therefore equals that original's visible-origin coordinate,
+and $z-v$ is its actual lag.
+
+All requested words are the hidden-slot prefix followed by the
+materialized representative (NARC.5.8), or the hidden-slot word
+itself for $E$. No source-bearing part of the discarded initial row
+is consulted, no $P_1$ is issued, and no age, equality or subtree
+oracle is used. The right original offset changes to the actual $q$
+in every prefix: its left-hidden full reference is $h=2q+1$, and
+its later translated age is $q+z+b-a$. These are the states proved
+in Theorem 11.5 and the correspondence used in Theorem 10.2;
+smaller-$q$ source correctness is not asserted merely from a subset
+of seventeen-offset sources. $\square$
+
+## 12. Exact supported minima, task scope and resource correspondence
+
+**Theorem 12.1 (supported call optima and the remaining two-read range).**
+Let $K_{\min}(q,\lambda)$ be the minimum worst fresh-call count over
+all exactly-$q$-label encoders and controllers in Assumption 9.1.
+Under either lag convention,
+
+$$
+K_{\min}(q,\lambda)=
+\begin{cases}
+0,&q=1,\\
+1,&2\le q\le6,\\
+2,&7\le q\le17.
+\end{cases}
+\tag{NARC.12.1}
+$$
+
+Retaining the fixed coordinate $e(a,b)=b$ instead has exact worst
+call count $K_+(q)$ of [AOF, Theorem 8.3][AOF], and supports two
+calls exactly for $q\le10$. Every exactly-$q$-label encoder requires
+more than two calls for $q\ge20$. Two-read feasibility for $q=18$
+and for $q=19$ remains unresolved separately for $\lambda=0$ and
+$\lambda=1$; neither a construction nor an exclusion for those
+four cases follows from these results.
+
+**Proof.** The zero and one optima in (NARC.12.1), including the
+one-read impossibility for every $q\ge7$, are exactly the published
+Theorem 7.5. Theorem 11.6 supplies the upper bound two through
+seventeen; that published impossibility makes it sharp for
+$7\le q\le17$. It does not assert that the particular master
+encoder attains the one-call optimum at every smaller $q$.
+
+For the fixed-$b$ comparison, right visibility determines the lag
+from $z-b$ with no new call. On a left-visible fiber the compatible
+$a$ values form a consecutive interval of at most $q$ integers,
+and hidden ages $q+b+z-a$ form a positive consecutive interval
+of the same size. Identifying its hidden age is equivalent to
+recovering the required lag $z-a$, since $q,b,z$ are known.
+The supplied positive interval theorem therefore gives worst price
+at most $K_+(q)$. At $z=q$, every $a\in[0,q-1]$ survives under
+either convention; its own lag $q-a\ge1$ realizes the same whole
+left-visible row and fixed code $b$. The hidden-age interval is
+$[q+b+1,2q+b]$, of length $q$. The all-address correspondence
+of Theorem 5.2 makes the same supplier's lower bound applicable.
+Thus this fixed encoder has exact price $K_+(q)$, and its
+two-read capacity is $3\cdot2^2-2=10$. The relational code
+improves that encoder-qualified range without contradicting it.
+
+Finally, Theorem 9.2 at $k=2$ requires $q\le19$. This excludes
+$q\ge20$ under both conventions. It is only necessary: even at
+$k=1$ its allowance $q\le7$ is weaker than the supplied true
+boundary $q\le6$. Neither it nor the sufficient construction
+settles the four stated eighteen/nineteen cases. $\square$
+
+**Proposition 12.2 (lag recovery leaves a different reconstruction task).**
+Theorem 11.6 recovers the lag and the initial coordinate of the
+subsequently visible slot. It does not require its two-read transcript
+to identify the hidden initial coordinate or the full original tree.
+For the stronger target of reconstructing the entire original pair,
+exactly $q$ labels and $k$ native calls on both cuts necessarily satisfy
+
+$$
+q\le3\cdot2^k-2.
+\tag{NARC.12.2}
+$$
+
+In particular, two-call original-profile reconstruction cannot hold
+at $q=17$ with that alphabet, even though lag recovery does.
+
+**Proof.** At $q=17$ take originals $(a,b)=(0,16)$ and $(1,16)$
+at lag one. Both export label zero and have the same complete
+right-visible row with exterior $T_{34}$, the reached left hole and
+its singleton partition. Their normalized clock is $z=17$.
+The certified class-zero tree first requests $P_{28}$ in the
+hidden slot, the whole word $LR^{14}$, and after absence requests
+$P_{17}$ there, the whole word $LLR^8$. Both actual hidden ages,
+one and two, return absence on both requests. Their common terminal
+target is $b=16$ and both outputs are $17-16=1$, but their initial
+left trees and their current hidden trees differ. An additional Read
+at the slot word $L$ gives beta versus branch. Thus the lag-constant
+leaf really can retain a hidden spatial distinction.
+
+For the stronger general target, use a full reference entry of
+Theorem 9.2. Same-age conflicting originals cannot be separated;
+otherwise its ordered-leaf argument bounds a class's nonempty leaves
+by $L_k=3\cdot2^k-2$. Every successful reconstruction leaf must
+contain a single original, rather than merely a common target
+coordinate. Hence $|C_\gamma|\le L_k$, and summing over $q$
+labels gives (NARC.12.2). At two calls it requires $q\le10$.
+This is a necessary reconstruction bound, not an exact reconstruction
+frontier under either convention.
+
+The lost distinction is specific to the declared task transcript.
+For the constructed code, difference injectivity means that code plus
+both entire current ages identifies the original pair and lag. The
+finite current-recovery supplier [NAR, Theorem 16.5][NAR] can acquire
+the missing hidden-age information with additional native requests.
+The two-read result neither denies that later recovery nor restores
+an arbitrary original cut row without it. $\square$
+
+**Definition 12.3 (the resource and source interpretation).** A
+chronological fresh call is one submission of one fully materialized
+original-root word. An $E$ request submits $L$ or $R$ and costs
+one call. A $P_t$ request has word length $1+\lceil t/2\rceil$
+using (NARC.5.8). Initial and later entire-row acquisition, parsing
+of acquired literals, retained-label representation, public tables,
+local candidate enumeration and arithmetic, changing workspace,
+controller states, address production, total submitted length, lag
+output representation and physical elapsed time are separate resource
+coordinates. No numerical relationship among them is stipulated here.
+
+The same-original pure-$\rho$ continuation, truthful entire-row
+acquisition, causal export and actual discard are premises. A correct
+lag output does not authenticate those premises or provide an absolute
+epoch or a history archive. The cut and its spatial slot identity are
+already part of the acquired entry; they are not inferred from the
+retained label. The recovered temporal relation is the number of
+intervening substitutions, not physical elapsed time.
+
+**Proposition 12.4 (finite literal words with unbounded peaks).** The
+decoder obtained from the certificates of Theorem 11.5 and translation
+in Theorem 10.2 has finite materialized words at every promised input.
+Writing $h=z$ for right visibility and $h=q+z$ for left visibility,
+its submitted words satisfy
+
+$$
+|w|\le1+\left\lceil\frac{h+14}{2}\right\rceil.
+\tag{NARC.12.3}
+$$
+
+For each fixed $2\le q\le17$, this specified decoder's worst
+submitted length is unbounded over legal lags under either convention.
+The call theorem supplies no uniform address cap, fixed finite Moore
+realization or physical-resource bound.
+
+**Proof.** All reference offsets in Theorem 11.5 are at most fourteen.
+Its sole reference replacement uses threshold two at $h=12$, so
+its offset is minus ten and satisfies the same bound. Translation
+adds $z-Z$ to a reference threshold, giving at most the actual
+$h+14$. A shifted threshold one uses actual $P_2$ instead; this
+also satisfies the bound. Shifted threshold zero and the four
+boundary replacements use $E$, with word length one; negative
+shifted thresholds are skipped. The remaining boundary thresholds
+are exactly the legal schedule thresholds and satisfy the same
+offset bound. Formula (NARC.5.8) gives (NARC.12.3), and each
+finite acquired clock produces a finite integer threshold and word.
+
+For unboundedness use label one and left visibility at arbitrarily
+large $z$, where its complete fiber is the full class. If $q<16$,
+that class is its maximum-one base, with targets one at $u=-1,0$
+and zero at $u=1$. Its first offset-ten partition is constant and
+is pruned; its needed lower reference experiment translates to
+$P_{h-1}$, whose length diverges with $z$. If $q\ge16$, class
+one also contains the star extras at maximum fifteen. Its first
+offset-ten experiment is nonconstant on the full class and
+translates to $P_{h+10}$, again with divergent length. In both
+cases sufficiently large $z$ makes every full-class alternative's
+lag legal under either convention. These are lengths of actual
+submitted words, not just hypothetical thresholds.
+
+The decoder has input-dependent integer calculations and public
+finite trees with separately constructed literal addresses and outputs.
+A bound on tree depth alone does not bound those objects, their
+production or physical service. The resource restrictions needed for
+the fixed installed Moore statements of §4 are additional premises
+and are absent from Assumption 9.1. $\square$
+
+**Assumption 12.5 (mathematical supplier correspondence and limits).**
+The native source and port correspond to `Source`, `substitution`,
+`Address`, `Reply` and `readout` in the pinned suppliers cited in
+Mathematical citation 8.1. Acquired coordinate parsing corresponds to
+`rightClock` and `right_clock_iterate`; actual word replies correspond
+to `right_clock_readout` and Definition 5.3. Whole-row equality
+corresponds to `literalRecord`, `actualPartition` and
+`canonicalRow_record_iff`. In particular, the singleton partition
+does not expose a hidden-visible comparison. These semantic suppliers
+do not already assert the adaptive class bound, finite all-lag
+criterion or seventeen-label packing. Their distinct-address payment
+or supplied-epoch decoder services are different contracts from the
+chronological calls and unknown lag here.
+
+The zero-error conflict method is literature-attested in Charpenay,
+Le Treust and Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definitions II.1, III.1 and IV.5,
+and Theorem III.4](https://arxiv.org/html/2211.03649v2). A common
+compatible side-information value with unequal required outputs is
+the analogue of a common entire acquired entry with unequal lags.
+Their prefix-free probabilistic block code, expected length and
+asymptotic chromatic-entropy rate are not this attained-label,
+worst-native-call objective; their graph conditions do not authorize
+the reply partitions used here.
+
+Restricted adaptive query geometry is literature-attested in Nowak,
+[*The Geometry of Generalized Binary Search*, arXiv:0910.4397v5,
+Theorem 1 and §V.A](https://arxiv.org/html/0910.4397v5). Its binary
+hypothesis-identification bound assumes neighborliness and coherence,
+and its point-test versus dyadic-test comparison distinguishes
+different allowed query spaces. Here the hypotheses are compatible
+origins, the task is only target-coordinate recovery, and allowed
+queries have the supplied four-cell native geometry. No binary-search
+bound or arbitrary partition is transferred numerically.
+
+The repo-derived ordinary mathematical increment is the composition
+of the native adaptive two-coordinate obstruction, the exact finite
+criterion with its complete zero boundary, and the consumed symmetric
+packing and actual certificates through $q=17$. The separate
+[same-law stochastic predictive-quotient supplier, §§1--2](https://github.com/the-omega-institute/trureturing/blob/411caa2ef2896bc9c39706cf3d1239d4265f325d/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_PREDICTIVE_QUOTIENT_UNIFILAR_ERASURE_TAIL_AND_STRICT_SCOPE.md)
+relates task defects to class-identification error; it supplies no
+deterministic native-call or changing-source handoff theorem here.
+No stochastic, thermodynamic or physical realization follows from
+this correspondence, and no kernel verification, global priority or
+unrestricted space/time/boundary/memory recovery claim is part of
+these ordinary statements.
+
+## 追加锚（本行以下为增补区）
