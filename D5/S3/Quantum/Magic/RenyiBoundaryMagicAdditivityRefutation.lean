@@ -18,23 +18,23 @@ open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (Pauli pauliMatrix tensorOp wordOp localOp tensor_mul)
 def SupportLE {n : ℕ} (ρ σ : Op n) : Prop :=
   ∀ v : Bits n → ℂ, σ *ᵥ v = 0 → ρ *ᵥ v = 0
-def log2 (x : ℝ) : ℝ := Real.log x / Real.log 2
+def log2 (x : ℝ) : ℝ := Real.log x / Real.log ((2 : ℕ) : ℝ)
 def DPI (α z : ℝ) : Prop :=
   0 < z ∧ ((0 < α ∧ α < 1 ∧ max α (1 - α) ≤ z) ∨ α = 1 ∨
-    (1 < α ∧ α ≤ 2 ∧ α / 2 ≤ z ∧ z ≤ α) ∨
-    (2 ≤ α ∧ α - 1 ≤ z ∧ z ≤ α))
+    (1 < α ∧ α ≤ ((2 : ℕ) : ℝ) ∧ α / ((2 : ℕ) : ℝ) ≤ z ∧ z ≤ α) ∨
+    (((2 : ℕ) : ℝ) ≤ α ∧ α - 1 ≤ z ∧ z ≤ α))
 private noncomputable def spectralPow {n : ℕ} (A : Op n) (x : ℝ) : Op n :=
   if h : A.IsHermitian then h.cfc (fun t => t ^ x) else 0
 private noncomputable def spectralLog {n : ℕ} (A : Op n) : Op n :=
   if h : A.IsHermitian then h.cfc Real.log else 0
 def Qaz {n : ℕ} (α z : ℝ) (ρ σ : Op n) : ℝ :=
-  tr (spectralPow (spectralPow ρ (α / (2 * z)) *
-    spectralPow σ ((1 - α) / z) * spectralPow ρ (α / (2 * z))) z)
+  tr (spectralPow (spectralPow ρ (α / (((2 : ℕ) : ℝ) * z)) *
+    spectralPow σ ((1 - α) / z) * spectralPow ρ (α / (((2 : ℕ) : ℝ) * z))) z)
 def Daz {n : ℕ} (α z : ℝ) (ρ σ : Op n) : EReal := by
   classical
   exact if α = 1 then
       if SupportLE ρ σ then
-        ((tr (ρ * (spectralLog ρ - spectralLog σ)) / Real.log 2 : ℝ) : EReal)
+        ((tr (ρ * (spectralLog ρ - spectralLog σ)) / Real.log ((2 : ℕ) : ℝ) : ℝ) : EReal)
       else ⊤
     else if (α < 1 ∧ ρ * σ ≠ 0) ∨ SupportLE ρ σ then
       ((log2 (Qaz α z ρ σ) / (α - 1) : ℝ) : EReal)
@@ -109,7 +109,7 @@ private lemma sigma_C_square_trace : tr (sigma * (C * C)) = Q := by
     Matrix.trace_add, Complex.smul_re]
   change sigma.trace.re = 1 at htr
   have he : (sigma * S).trace.re = 1 := by
-    simpa [tr] using hs.2
+    exact hs.2
   norm_num at htr he ⊢
   linarith
 private lemma rho_C_trace : tr (rho * C) = Q := by
@@ -218,7 +218,7 @@ private lemma C_square_expectation_bound (η : Op 3) (hη : η ∈ STAB 3) :
     tr (η * (C * C)) ≤ Q := by
   rw [actual_consumption]
   have hp := polar_consumption η hη
-  have hQ : (0 : ℝ) < Q := by norm_num [Q]
+  have hQ : (0 : ℝ) < Q := by unfold Q; norm_num
   unfold tr at hp ⊢
   simp only [Matrix.mul_smul]
   norm_num at hp ⊢
@@ -273,7 +273,7 @@ private lemma magic_two_one_lower :
     rw [Daz_two_one_supported rho η rho_state hηp]
     apply (EReal.coe_le_coe_iff).2
     have ht := marginal_lower_bound η hη hηp
-    have hQ : (0 : ℝ) < Q := by norm_num [Q]
+    have hQ : (0 : ℝ) < Q := by unfold Q; norm_num
     unfold log2
     apply (div_le_div_iff_of_pos_right (Real.log_pos (by norm_num))).2
     exact Real.log_le_log hQ ht
@@ -332,7 +332,7 @@ private lemma conjugate_marginal_lower (η : Op 3) (hη : η ∈ STAB 3)
     rw [hcc]
     unfold tr
     simp only [Matrix.mul_smul, Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
-    have hQ : 0 < Q := by norm_num [Q]
+    have hQ : 0 < Q := by unfold Q; norm_num
     exact (mul_le_mul_of_nonneg_left hw hQ.le).trans_eq (mul_one Q)
   linarith
 private lemma magic_conjugate_lower :
@@ -345,7 +345,7 @@ private lemma magic_conjugate_lower :
     rw [Daz_two_one_supported rhoBar η rhoBar_state hηp]
     apply EReal.coe_le_coe_iff.mpr
     have ht := conjugate_marginal_lower η hη hηp
-    have hQ : 0 < Q := by norm_num [Q]
+    have hQ : 0 < Q := by unfold Q; norm_num
     unfold log2
     exact (div_le_div_iff_of_pos_right (Real.log_pos (by norm_num))).mpr
       (Real.log_le_log hQ ht)
@@ -561,11 +561,11 @@ private lemma X_circuit : D5.S3.Quantum.FiniteDimensional.qubitX = gateH * gateS
     nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
   ext i j; fin_cases i <;> fin_cases j
   all_goals simp only [pow_two, Matrix.mul_apply, Fin.sum_univ_two]
-  all_goals apply Complex.ext <;>
-    norm_num [gateH, gateS, D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
-      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2, pauliMatrix,
-      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
-      Complex.mul_re, Complex.mul_im] <;> nlinarith [hs]
+  all_goals dsimp only [gateH, gateS,
+    D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
+    D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2, pauliMatrix,
+    D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ]
+  all_goals apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im] <;> nlinarith [hs]
 private def singlePrep (p : Pauli) (b : Fin 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   (if p = .X then gateH else if p = .Y then gateS * gateH else 1) *
     (if b = 0 then 1 else D5.S3.Quantum.FiniteDimensional.qubitX)
@@ -629,7 +629,8 @@ private lemma productPrep_projector (w : Fin 3 → Pauli) (b : Bits 3) :
     rfl
   have ha : (productPrep w b)ᴴ = tensorOp (fun i => (singlePrep (w i) (b i))ᴴ) := by
     ext x y
-    simp only [productPrep, Matrix.conjTranspose_apply, tensorOp, Matrix.of_apply, star_prod]
+    unfold productPrep
+    simp only [Matrix.conjTranspose_apply, tensorOp, Matrix.of_apply, star_prod]
   rw [hv, ha]
   unfold productPrep
   rw [tensor_mul, tensor_mul]
@@ -665,13 +666,16 @@ private lemma halfspace_prepared (j : Fin 7) :
   all_goals simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.add_apply,
     tensorOp, wordOp, Matrix.of_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
     Fin.prod_univ_succ, smul_eq_mul]
-  all_goals norm_num [parityBits, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons,
-    Matrix.cons_val_succ', Matrix.cons_val_zero', Fin.add_def, pauliMatrix, reduceCtorEq,
+  all_goals unfold parityBits
+  all_goals norm_num [Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons,
+    Matrix.cons_val_succ', Matrix.cons_val_zero', Fin.add_def, reduceCtorEq,
     Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
   all_goals simp only [reduceCtorEq, if_true, if_false]
+  all_goals dsimp only [pauliMatrix]
   all_goals try simp only [Matrix.smul_apply, smul_eq_mul]
-  all_goals norm_num
-  all_goals ring
+  all_goals with_unfolding_all simp only [Matrix.one_apply]
+  all_goals with_unfolding_all norm_num
+  all_goals split_ifs <;> ring
 private lemma sigma_mem : sigma ∈ STAB 3 := by
   have hj (j : Fin 7) : (1 / 8 : ℝ) • ((1 : Op 3) + wordOp (words j)) ∈ STAB 3 := by
     rw [halfspace_prepared]
@@ -708,11 +712,12 @@ private lemma clifford_bar {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
     ext i j
     change star (gateH i j) = gateH i j
     fin_cases i <;> fin_cases j
-    all_goals norm_num only [gateH,
-      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
-      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2,
+    all_goals dsimp only [gateH,
+      D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard]
+    all_goals dsimp only [D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2,
       pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
-      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.add_apply,
+      D5.S3.Quantum.FiniteDimensional.qubitZ]
+    all_goals norm_num only [Matrix.add_apply,
       Matrix.smul_apply, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.cons_val_succ', Matrix.cons_val_zero', star_mul, star_div, star_ofNat,
       star_one, star_neg, Complex.star_def, Complex.conj_ofReal, Complex.real_smul, smul_eq_mul, mul_one, one_mul, mul_neg_one, neg_one_mul]
@@ -953,17 +958,19 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
   unfold tr at hb hv ⊢
   simp only [Matrix.trace_sub, Matrix.trace_smul, Complex.sub_re, Complex.smul_re, smul_eq_mul]
   rw [hb, hv]
-  norm_num [Q, F]
+  unfold Q F
+  norm_num
 private lemma logarithmic_gap : log2 F < log2 Q + log2 Q := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
   rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, he, hs⟩
   have hid : Q ^ 2 - F = (29882962855 / 120195047396424 : ℝ) *
       (tr (bell * tensor (W (119 / 316 : ℝ)) (conjugate (W (119 / 316 : ℝ)))) - 1) := by
     rw [he]
-    norm_num [Q, F]
+    unfold Q F
+    norm_num
   have hlt : F < Q ^ 2 := sub_pos.mp (hid ▸ mul_pos (by norm_num) (sub_pos.mpr hs))
   unfold log2
-  have hl := Real.log_lt_log (by norm_num [F] : 0 < F) hlt
+  have hl := Real.log_lt_log (by unfold F; norm_num : 0 < F) hlt
   rw [Real.log_pow] at hl
   have hd : 0 < Real.log 2 := Real.log_pos (by norm_num)
   have hdiv := (div_lt_div_iff_of_pos_right hd).mpr hl
@@ -975,7 +982,7 @@ private lemma magic_joint_upper : magic 2 1 joint ≤ ((log2 F : ℝ) : EReal) :
   exact h
 theorem result : ¬ claim := by
   intro h
-  have ha := h 2 1 (by norm_num [DPI]) (by norm_num) 3 3
+  have ha := h 2 1 (by unfold DPI; norm_num) (by norm_num) 3 3
     (Or.inr rfl) (Or.inr rfl) rho rhoBar rho_state rhoBar_state
   have hl : ((log2 Q + log2 Q : ℝ) : EReal) ≤
       magic 2 1 rho + magic 2 1 rhoBar := by
