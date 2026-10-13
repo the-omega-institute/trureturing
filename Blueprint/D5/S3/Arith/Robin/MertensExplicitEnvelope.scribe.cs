@@ -8,7 +8,7 @@ internal sealed class MertensExplicitEnvelopeDocument : IScribeDocumentDefinitio
         "An elementary prime-product envelope with an explicit error constant is valid at every real cutoff at least 286.",
         H("An Explicit Elementary Mertens Envelope"),
         Blocks(
-            Paragraph(Text("The classical Mertens identities are reused from the attributed PrimeNumberTheoremAnd port. The numerical constants below are derived in this repository. Rosser and Schoenfeld, Approximate formulas for some functions of prime numbers, Theorem 8, gives a stronger classical bound; its finite tables and zero information are not premises of this elementary proof. The result is an unconditional analytic estimate and makes no claim to resolve the Riemann hypothesis.")),
+            Paragraph(Text("The classical Mertens identities are reused from the attributed PrimeNumberTheoremAnd port. The numerical constants below are derived in this repository. The module has instance classification because fixed rational certificates from RobinRationalBasis bear the proof; its estimate is uniform for every real cutoff at least 286. Rosser and Schoenfeld, Approximate formulas for some functions of prime numbers, Theorem 8, gives a stronger classical bound; its finite tables and zero information are not premises of this elementary proof. The result is an unconditional analytic estimate and makes no claim to resolve the Riemann hypothesis.")),
             Describe.Lean(
                 DescribeId.Create("explicit-prime-power-constant"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/MertensExplicitEnvelope.explicit_mertens_E1_le_four_fifths"),

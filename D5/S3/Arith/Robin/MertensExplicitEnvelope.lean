@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/MertensExplicitEnvelope
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/MertensExplicitEnvelope
    mirror-E: none(waiver:analytic-estimate)
    anchors: []
@@ -15,6 +15,8 @@ import Mathlib.Tactic
 /-
 The numerical input is the kernel-normalized rational weighted head through 512,
 bounded by 39/50, together with the proved integral tail. These imply E1 ≤ 4/5.
+The instance classification records the fixed numerical certificates imported
+from RobinRationalBasis; the estimate remains uniform for every x ≥ 286.
 The full prime-power decomposition pays a 7/25 linear budget above 286. Refined
 factorial estimates and fourteen explicit prime powers then put E1p in the
 interval [-91/50, 2/25]. The one-sided Mertens identity consumes that interval

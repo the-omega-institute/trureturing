@@ -4,7 +4,7 @@
 
 An elementary prime-product envelope with an explicit error constant is valid at every real cutoff at least 286.
 
-The classical Mertens identities are reused from the attributed PrimeNumberTheoremAnd port. The numerical constants below are derived in this repository. Rosser and Schoenfeld, Approximate formulas for some functions of prime numbers, Theorem 8, gives a stronger classical bound; its finite tables and zero information are not premises of this elementary proof. The result is an unconditional analytic estimate and makes no claim to resolve the Riemann hypothesis.
+The classical Mertens identities are reused from the attributed PrimeNumberTheoremAnd port. The numerical constants below are derived in this repository. The module has instance classification because fixed rational certificates from RobinRationalBasis bear the proof; its estimate is uniform for every real cutoff at least 286. Rosser and Schoenfeld, Approximate formulas for some functions of prime numbers, Theorem 8, gives a stronger classical bound; its finite tables and zero information are not premises of this elementary proof. The result is an unconditional analytic estimate and makes no claim to resolve the Riemann hypothesis.
 
 **Theorem 1.1 (The convergent prime-power error is at most four fifths).**
 
