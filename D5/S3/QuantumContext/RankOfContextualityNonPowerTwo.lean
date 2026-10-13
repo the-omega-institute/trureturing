@@ -9,7 +9,7 @@
 /-
 proof_shape: result: content; escape_witness: result
 admission_basis: open-problem-resolution (#15370; Proved)
-Direct frozen dependencies: the references F0--F4 below are declaration identities; S0 is the same-delivery owner re-pin.
+Direct frozen dependencies: the references F0--F4 below are declaration identities; S0 and S1 are owner re-pins in this delivery.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15745; DTR-Unregistered.
 The typed Reg metadata does not decode: contract.cannot_decode:metadata:computation_required; source-bound E1–E8 evidence is missing.
 The finite distributions and marginal diagonal argument establish rank three.
@@ -28,6 +28,8 @@ F4: D5/S3/Quantum/FiniteDimensional.qubitZ
     sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
 S0 (same-delivery owner re-pin): D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square
     sha256:754c699a224cabc64d19c5ea4f68f316677444ee3b0036e8b2ede03a3f62d0d2
+S1 (owner re-pin): D5/S3/Entropy/Observation/MultiTargetInformationChain.marginal_pushforward_pair
+    sha256:9e730756b3d566a76007798f0a459585083efa4ef7dff728b70e719b5454e43f
 Rows: name | proof_shape | direct frozen dependencies | consumer(s).
 Content rows name their own escape witness; bind-only rows have a live consumer.
 Behavior | bind-only | none | IsQuantum
@@ -39,7 +41,7 @@ IsQuantum | bind-only | none | claim
 claim | bind-only | none | result (type)
 push_filter | bind-only | F0 | Product.chosen_spec
 push_mass | bind-only | F0 | Product.marginal1_nc
-sum_joint_first | bind-only | none | Product.marginal1_sum
+sum_joint_first | bind-only | S1 | Product.marginal1_sum
 dist_nc | bind-only | F0 | Product.marginal1_nc
 Lower.no_two_cover | content; escape_witness=Lower.no_two_cover | none | Product.cover_lower
 Square.idx | bind-only | none | Square.C
@@ -59,7 +61,7 @@ Square.mu | bind-only | none | Product.law_agrees
 Square.muTable | content; escape_witness=Square.support_card | none | Square.fiber_sum
 Square.Ndef | bind-only | F0 | Square.defect_agrees
 Square.mu_nonneg | bind-only | none | Product.model_nc
-Square.mu_mass | content; escape_witness=Square.support_card | none | Product.model_nc
+Square.mu_mass | bind-only | none | Product.model_nc
 Square.fiber_sum | content; escape_witness=Square.muTable | none | Square.defect_agrees
 Square.fiber_card | content; escape_witness=Square.fiber_card | none | Square.defect_agrees
 Square.defect_agrees | content; escape_witness=Square.fiber_card | F0 | Product.law_agrees
@@ -77,7 +79,7 @@ Product.productDist_mass | bind-only | none | Product.model_nc
 Product.productDist_factor | bind-only | F0 | Product.model_agrees
 Product.law_agrees | content; escape_witness=Square.defect_agrees | F0 | Product.model_agrees
 Product.model | bind-only | F0 | Product.cover
-Product.model_nc | content; escape_witness=Square.mu_mass | F0 | Product.cover_nc
+Product.model_nc | bind-only | F0 | Product.cover_nc
 Product.model_agrees | content; escape_witness=Product.law_agrees | F0 | Product.cover_agrees
 Product.marginal1 | bind-only | F0 | Product.cover_lower
 Product.marginal2 | bind-only | F0 | Product.cover_lower
@@ -94,7 +96,7 @@ Product.marginal2_bad | content; escape_witness=Square.contextual | F0 | Product
 Product.cover_lower | content; escape_witness=Lower.no_two_cover | F0,F1 | Product.cover_card
 Product.third_row | bind-only | none | Product.cover_agrees
 Product.cover | bind-only | F0 | Product.cover_agrees
-Product.cover_nc | content; escape_witness=Product.model_nc | F0 | Product.cover_card, Product.rank_three
+Product.cover_nc | bind-only | F0 | Product.cover_card, Product.rank_three
 Product.cover_agrees | content; escape_witness=Product.model_agrees | F0 | Product.cover_card, Product.rank_three
 Product.cover_card | content; escape_witness=Product.cover_lower | F0,F1 | Product.rank_three
 Product.rank_three | content; escape_witness=Product.cover_lower | F0,F1 | result
@@ -145,6 +147,7 @@ result | content; escape_witness=result | F0,F1 | terminal result
 -/
 
 import D5.S3.Entropy.Forgetting.PushforwardComposition
+import D5.S3.Entropy.Observation.MultiTargetInformationChain
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.QuantumBounds.StatisticalStrengthMagicSquare
 
@@ -211,11 +214,15 @@ private lemma sum_joint_first {G A B : Type*} [Fintype G] [Fintype B]
     (∑ b, ∑ g with f g = a ∧ r g = b, mu g) =
       ∑ g with f g = a, mu g := by
   classical
-  simp only [Finset.sum_filter]
-  rw [Finset.sum_comm]
+  have h := congrFun
+    (D5.S3.Entropy.Observation.MultiTargetInformationChain.marginal_pushforward_pair mu f r) a
+  convert h using 1 <;>
+    simp [D5.S3.Divergence.ChainRule.marginal,
+    D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward, Finset.sum_filter,
+    Prod.mk.injEq]
   apply Finset.sum_congr rfl
   intro g _
-  by_cases h : f g = a <;> simp [h]
+  by_cases hg : f g = a <;> simp [hg]
 
 private lemma dist_nc {k m : ℕ} (C : Fin k → List (Fin m))
     (mu : (Fin m → Bool) → ℝ) (hn : ∀ g, 0 ≤ mu g) (hm : ∑ g, mu g = 1) :
@@ -847,16 +854,20 @@ private lemma tensor_hermitian (A B : (Matrix (Fin 4) (Fin 4) ℂ)) (ha : A.IsHe
   rw [Matrix.IsHermitian, Matrix.conjTranspose_kronecker, ha, hb]
 private lemma tensor_smul_left (s : ℂ) (A B : (Matrix (Fin 4) (Fin 4) ℂ)) :
     tensor (s • A) B = s • tensor A B := by
-  ext i j; simp [tensor, Matrix.kroneckerMap, Matrix.submatrix, mul_assoc]
+  unfold tensor
+  rw [Matrix.smul_kronecker, Matrix.submatrix_smul]; rfl
 private lemma tensor_smul_right (s : ℂ) (A B : (Matrix (Fin 4) (Fin 4) ℂ)) :
     tensor A (s • B) = s • tensor A B := by
-  ext i j; simp [tensor, Matrix.kroneckerMap, Matrix.submatrix, mul_left_comm]
+  unfold tensor
+  rw [Matrix.kronecker_smul, Matrix.submatrix_smul]; rfl
 private lemma tensor_add_left (A B D : (Matrix (Fin 4) (Fin 4) ℂ)) :
     tensor (A+B) D = tensor A D + tensor B D := by
-  ext i j; simp [tensor, Matrix.kroneckerMap, Matrix.submatrix, add_mul]
+  unfold tensor
+  rw [Matrix.add_kronecker, Matrix.submatrix_add]; rfl
 private lemma tensor_add_right (A B D : (Matrix (Fin 4) (Fin 4) ℂ)) :
     tensor A (B+D) = tensor A B + tensor A D := by
-  ext i j; simp [tensor, Matrix.kroneckerMap, Matrix.submatrix, mul_add]
+  unfold tensor
+  rw [Matrix.kronecker_add, Matrix.submatrix_add]; rfl
 private lemma tensor_proj_left (s : ℂ) (A : (Matrix (Fin 4) (Fin 4) ℂ)) :
     tensor ((1/2 : ℂ) • (1+s•A)) 1 = (1/2 : ℂ) • (1+s•tensor A 1) := by
   rw [tensor_smul_left, tensor_add_left, tensor_smul_left, tensor_one]

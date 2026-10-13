@@ -111,15 +111,19 @@ The kernel-checked statements, all under namespace
 The axiom closure of every public declaration is contained in
 $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 The content declarations are `Lower.no_two_cover`, `Square.parity_miss`,
-`Square.support_card`, `Square.muTable`, `Square.mu_mass`, `Square.fiber_sum`,
+`Square.support_card`, `Square.muTable`, `Square.fiber_sum`,
 `Square.fiber_card`, `Square.defect_agrees`, `Square.contextual`,
-`Product.law_agrees`, `Product.model_nc`, `Product.model_agrees`,
+`Product.law_agrees`, `Product.model_agrees`,
 `Product.marginal1_bad`, `Product.marginal2_bad`, `Product.cover_lower`,
-`Product.cover_nc`, `Product.cover_agrees`, `Product.cover_card`,
+`Product.cover_agrees`, `Product.cover_card`,
 `Product.rank_three`, `Matrices.born_probability`, `Product.quantum` and
 `result`. Their witnesses are the generic cover obstruction, the parity and
 cardinality results, the Born calculation and their stated consequences.
-The remaining helpers are bind-only with consumers named in the module.
+`Square.mu_mass` is bind-only, consumed by `Product.model_nc`;
+`Product.model_nc` is bind-only, consumed by `Product.cover_nc`;
+`Product.cover_nc` is bind-only, consumed by `Product.cover_card` and
+`Product.rank_three`. The remaining helpers are bind-only with consumers
+named in the module.
 Admission is the external open-problem resolution of #15370 (Proved), with
 no atom and no cover operation.
 

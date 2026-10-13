@@ -121,5 +121,6 @@ The behavior is the product of two Peres–Mermin squares: 18 observable labels,
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.restrict`
 - Truth anchor: `D5/S3/QuantumContext/RankOfContextualityNonPowerTwo.result`
 - Dependency: [D5/S3/Entropy/Forgetting/PushforwardComposition](../Entropy/Forgetting/PushforwardComposition.md)
+- Dependency: [D5/S3/Entropy/Observation/MultiTargetInformationChain](../Entropy/Observation/MultiTargetInformationChain.md)
 - Dependency: [D5/S3/Quantum/FiniteDimensional](../Quantum/FiniteDimensional.md)
 - Dependency: [D5/S3/QuantumBounds/StatisticalStrengthMagicSquare](../QuantumBounds/StatisticalStrengthMagicSquare.md)
