@@ -98,6 +98,120 @@ def physicalFreeEnergy (β : ℝ) (μ : Measure (E n)) : ℝ := (∫ x, physical
 def mutualInformation (M : Matrix p n ℝ) (β τ : ℝ) : ℝ≥0∞ := InformationTheory.klDiv (jointLaw M β τ) ((jointLaw M β τ).fst.prod (jointLaw M β τ).snd)
 
 
+/-- The existing standard Gaussian product density, used in affine density transport. -/
+theorem std_gaussian_density {n : Type} [Fintype n] [DecidableEq n] : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
+    (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
+  classical
+  have hPi : Measure.pi (fun _ : n => gaussianReal 0 1) = (volume : Measure (n → ℝ)).withDensity
+        (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
+    refine Measure.pi_eq fun s hs => ?_
+    rw [withDensity_apply _ (MeasurableSet.univ_pi hs)]
+    rw [volume_pi, Measure.restrict_pi_pi]
+    have hInt : Integrable (fun x : n → ℝ => ∏ i, gaussianPDFReal 0 1 (x i)) (Measure.pi (fun i => (volume : Measure ℝ).restrict (s i))) :=
+      Integrable.fintype_prod (fun i => (integrable_gaussianPDFReal 0 1).restrict)
+    rw [← ofReal_integral_eq_lintegral_ofReal hInt (ae_of_all _ (fun x => Finset.prod_nonneg (fun i _ => gaussianPDFReal_nonneg 0 1 (x i))))]
+    rw [integral_fintype_prod_eq_prod]
+    rw [ENNReal.ofReal_prod_of_nonneg (fun i _ => integral_nonneg (fun x => gaussianPDFReal_nonneg 0 1 x))]
+    exact Finset.prod_congr rfl (fun i _ => (gaussianReal_apply_eq_integral 0 (v := 1) one_ne_zero (s i)).symm)
+  have hG : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
+        (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
+    rw [← map_pi_eq_stdGaussian, hPi]
+    refine Measure.ext fun s hs => ?_
+    rw [Measure.map_apply (PiLp.volume_preserving_toLp n).measurable hs, withDensity_apply _ ((PiLp.volume_preserving_toLp n).measurable hs), withDensity_apply _ hs]
+    exact (PiLp.volume_preserving_toLp n).setLIntegral_comp_preimage_emb
+      (MeasurableEquiv.toLp 2 (n → ℝ)).measurableEmbedding
+      (fun x : EuclideanSpace ℝ n => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) s
+  exact hG
+
+/-- The existing affine Gaussian density, used by the observation law's logarithm and likelihood proofs. -/
+theorem multivariate_gaussian_density {n : Type} [Fintype n] [DecidableEq n]
+    (m : EuclideanSpace ℝ n) (S : Matrix n n ℝ) (hS : S.PosDef) : ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ∞ ∧
+      multivariateGaussian m S = (volume : Measure (EuclideanSpace ℝ n)).withDensity
+        (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) ∧
+      c = ENNReal.ofReal
+        |(LinearMap.det ((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)).toLinearMap)⁻¹| := by
+  classical
+  let A := CFC.sqrt S
+  let L := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A
+  let R := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹
+  let f : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun x => m + L x
+  let finv : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun y => R (y - m)
+  let d : EuclideanSpace ℝ n → ℝ≥0∞ := fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))
+  have hd : Measurable d := by
+    dsimp [d]
+    exact (Finset.measurable_prod _ fun i _ => (measurable_gaussianPDFReal 0 1).comp ((measurable_pi_apply i).comp (WithLp.measurable_ofLp 2 (n → ℝ)))).ennreal_ofReal
+  have hAdet : A.det ≠ 0 := by
+    dsimp [A]
+    rw [hS.posSemidef.det_sqrt]
+    simpa only [RCLike.sqrt_real] using (Real.sqrt_pos.2 hS.det_pos).ne'
+  have hAunit : IsUnit A := A.isUnit_iff_isUnit_det.mpr (isUnit_iff_ne_zero.mpr hAdet)
+  have hRL (x : EuclideanSpace ℝ n) : R (L x) = x := by
+    calc
+      R (L x) = (((Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹).comp ((Matrix.toEuclideanCLM (𝕜 := ℝ)) A)) x := rfl
+      _ = (Matrix.toEuclideanCLM (𝕜 := ℝ)) (A⁻¹ * A) x := by
+        rw [map_mul]
+        rfl
+      _ = x := by
+        rw [Matrix.nonsing_inv_mul A (A.isUnit_iff_isUnit_det.mp hAunit)]
+        rw [map_one]
+        rfl
+  have hleft (x : EuclideanSpace ℝ n) : finv (f x) = x := by
+    simp only [finv, f, add_sub_cancel_left]
+    exact hRL x
+  have hLinDet : LinearMap.det L.toLinearMap ≠ 0 := by
+    change (Matrix.toLpLin 2 2 A).det ≠ 0
+    rw [LinearMap.det_toLpLin]
+    exact hAdet
+  let c : ℝ≥0∞ := ENNReal.ofReal |(LinearMap.det L.toLinearMap)⁻¹|
+  have hc : 0 < c := by
+    dsimp [c]
+    exact ENNReal.ofReal_pos.mpr (abs_pos.mpr (inv_ne_zero hLinDet))
+  have hcfin : c ≠ ∞ := ENNReal.ofReal_ne_top
+  have hvolL : (volume : Measure (EuclideanSpace ℝ n)).map L.toLinearMap = c • volume := by
+    simpa only [c] using
+      (Measure.map_linearMap_addHaar_eq_smul_addHaar (volume : Measure (EuclideanSpace ℝ n)) hLinDet)
+  have hvolL' : (volume : Measure (EuclideanSpace ℝ n)).map L = c • volume := by
+    have hfun : (⇑L.toLinearMap : EuclideanSpace ℝ n → EuclideanSpace ℝ n) = (⇑L : EuclideanSpace ℝ n → EuclideanSpace ℝ n) := by
+      funext x
+      rfl
+    simpa only [hfun] using hvolL
+  have hf : Measurable f := by fun_prop
+  have hfinv : Measurable finv := by fun_prop
+  have hvolf : (volume : Measure (EuclideanSpace ℝ n)).map f = c • volume := by
+    calc
+      (volume : Measure (EuclideanSpace ℝ n)).map f =
+          ((volume : Measure (EuclideanSpace ℝ n)).map L).map (fun x => m + x) := by
+        rw [Measure.map_map (by fun_prop) (by fun_prop)]
+        rfl
+      _ = (c • (volume : Measure (EuclideanSpace ℝ n))).map (fun x => m + x) := by rw [hvolL']
+      _ = c • volume := by
+        rw [Measure.map_smul, map_add_left_eq_self (volume : Measure (EuclideanSpace ℝ n)) m]
+  have htransport : ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f =
+      ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := by
+    ext s hs
+    rw [Measure.map_apply hf hs, withDensity_apply _ (hs.preimage hf), withDensity_apply _ hs]
+    change (∫⁻ a in f ⁻¹' s, d a ∂(volume : Measure (EuclideanSpace ℝ n))) = ∫⁻ a in s, (d ∘ finv) a ∂((volume : Measure (EuclideanSpace ℝ n)).map f)
+    rw [setLIntegral_map hs (hd.comp hfinv) hf]
+    apply lintegral_congr_ae
+    filter_upwards [] with x
+    change d x = d (finv (f x))
+    rw [hleft x]
+  have hlaw : multivariateGaussian m S = (stdGaussian (EuclideanSpace ℝ n)).map f := by
+    dsimp [f, L, A]
+    rfl
+  refine ⟨c, hc, hcfin, ?_, rfl⟩
+  calc
+    multivariateGaussian m S = ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f := by
+      rw [hlaw, std_gaussian_density]
+    _ = ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := htransport
+    _ = (c • (volume : Measure (EuclideanSpace ℝ n))).withDensity (fun y => d (finv y)) := by
+      rw [hvolf]
+    _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * d (finv y)) := by
+      rw [withDensity_smul_measure]
+      change c • (volume : Measure (EuclideanSpace ℝ n)).withDensity (d ∘ finv) = (volume : Measure (EuclideanSpace ℝ n)).withDensity (c • (d ∘ finv))
+      exact (withDensity_smul c (hd.comp hfinv)).symm
+    _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) := rfl
+
 theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Fintype p] [DecidableEq p]
     (M : Matrix p n ℝ) (β σ : ℝ) (hβ : 0 < β) (hσ : 0 < σ ^ 2) :
   let τ := (σ ^ 2)⁻¹
@@ -316,116 +430,6 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
     intro z
     have hm := congrArg (fun A : Matrix n (n ⊕ p) ℝ => action A z) (signal_reconstruction M β τ hβ hτ)
     simpa only [action_add, ContinuousLinearMap.add_apply, ← action_comp, ContinuousLinearMap.comp_apply] using hm
-  have hStd : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
-      (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
-    have hPi : Measure.pi (fun _ : n => gaussianReal 0 1) = (volume : Measure (n → ℝ)).withDensity
-          (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
-      refine Measure.pi_eq fun s hs => ?_
-      rw [withDensity_apply _ (MeasurableSet.univ_pi hs)]
-      rw [volume_pi, Measure.restrict_pi_pi]
-      have hInt : Integrable (fun x : n → ℝ => ∏ i, gaussianPDFReal 0 1 (x i)) (Measure.pi (fun i => (volume : Measure ℝ).restrict (s i))) :=
-        Integrable.fintype_prod (fun i => (integrable_gaussianPDFReal 0 1).restrict)
-      rw [← ofReal_integral_eq_lintegral_ofReal hInt (ae_of_all _ (fun x => Finset.prod_nonneg (fun i _ => gaussianPDFReal_nonneg 0 1 (x i))))]
-      rw [integral_fintype_prod_eq_prod]
-      rw [ENNReal.ofReal_prod_of_nonneg (fun i _ => integral_nonneg (fun x => gaussianPDFReal_nonneg 0 1 x))]
-      exact Finset.prod_congr rfl (fun i _ => (gaussianReal_apply_eq_integral 0 (v := 1) one_ne_zero (s i)).symm)
-    have hG : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
-          (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
-      rw [← map_pi_eq_stdGaussian, hPi]
-      refine Measure.ext fun s hs => ?_
-      rw [Measure.map_apply (PiLp.volume_preserving_toLp n).measurable hs, withDensity_apply _ ((PiLp.volume_preserving_toLp n).measurable hs), withDensity_apply _ hs]
-      exact (PiLp.volume_preserving_toLp n).setLIntegral_comp_preimage_emb
-        (MeasurableEquiv.toLp 2 (n → ℝ)).measurableEmbedding
-        (fun x : EuclideanSpace ℝ n => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) s
-    exact hG
-
-  have hDensity
-      (m : EuclideanSpace ℝ n) (S : Matrix n n ℝ) (hS : S.PosDef) : ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ∞ ∧
-        multivariateGaussian m S = (volume : Measure (EuclideanSpace ℝ n)).withDensity
-          (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) ∧
-        c = ENNReal.ofReal
-          |(LinearMap.det ((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)).toLinearMap)⁻¹| := by
-    let A := CFC.sqrt S
-    let L := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A
-    let R := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹
-    let f : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun x => m + L x
-    let finv : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun y => R (y - m)
-    let d : EuclideanSpace ℝ n → ℝ≥0∞ := fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))
-    have hd : Measurable d := by
-      dsimp [d]
-      exact (Finset.measurable_prod _ fun i _ => (measurable_gaussianPDFReal 0 1).comp ((measurable_pi_apply i).comp (WithLp.measurable_ofLp 2 (n → ℝ)))).ennreal_ofReal
-    have hAdet : A.det ≠ 0 := by
-      dsimp [A]
-      rw [hS.posSemidef.det_sqrt]
-      simpa only [RCLike.sqrt_real] using (Real.sqrt_pos.2 hS.det_pos).ne'
-    have hAunit : IsUnit A := A.isUnit_iff_isUnit_det.mpr (isUnit_iff_ne_zero.mpr hAdet)
-    have hRL (x : EuclideanSpace ℝ n) : R (L x) = x := by
-      calc
-        R (L x) = (((Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹).comp ((Matrix.toEuclideanCLM (𝕜 := ℝ)) A)) x := rfl
-        _ = (Matrix.toEuclideanCLM (𝕜 := ℝ)) (A⁻¹ * A) x := by
-          rw [map_mul]
-          rfl
-        _ = x := by
-          rw [Matrix.nonsing_inv_mul A (A.isUnit_iff_isUnit_det.mp hAunit)]
-          rw [map_one]
-          rfl
-    have hleft (x : EuclideanSpace ℝ n) : finv (f x) = x := by
-      simp only [finv, f, add_sub_cancel_left]
-      exact hRL x
-    have hLinDet : LinearMap.det L.toLinearMap ≠ 0 := by
-      change (Matrix.toLpLin 2 2 A).det ≠ 0
-      rw [LinearMap.det_toLpLin]
-      exact hAdet
-    let c : ℝ≥0∞ := ENNReal.ofReal |(LinearMap.det L.toLinearMap)⁻¹|
-    have hc : 0 < c := by
-      dsimp [c]
-      exact ENNReal.ofReal_pos.mpr (abs_pos.mpr (inv_ne_zero hLinDet))
-    have hcfin : c ≠ ∞ := ENNReal.ofReal_ne_top
-    have hvolL : (volume : Measure (EuclideanSpace ℝ n)).map L.toLinearMap = c • volume := by
-      simpa only [c] using
-        (Measure.map_linearMap_addHaar_eq_smul_addHaar (volume : Measure (EuclideanSpace ℝ n)) hLinDet)
-    have hvolL' : (volume : Measure (EuclideanSpace ℝ n)).map L = c • volume := by
-      have hfun : (⇑L.toLinearMap : EuclideanSpace ℝ n → EuclideanSpace ℝ n) = (⇑L : EuclideanSpace ℝ n → EuclideanSpace ℝ n) := by
-        funext x
-        rfl
-      simpa only [hfun] using hvolL
-    have hf : Measurable f := by fun_prop
-    have hfinv : Measurable finv := by fun_prop
-    have hvolf : (volume : Measure (EuclideanSpace ℝ n)).map f = c • volume := by
-      calc
-        (volume : Measure (EuclideanSpace ℝ n)).map f =
-            ((volume : Measure (EuclideanSpace ℝ n)).map L).map (fun x => m + x) := by
-          rw [Measure.map_map (by fun_prop) (by fun_prop)]
-          rfl
-        _ = (c • (volume : Measure (EuclideanSpace ℝ n))).map (fun x => m + x) := by rw [hvolL']
-        _ = c • volume := by
-          rw [Measure.map_smul, map_add_left_eq_self (volume : Measure (EuclideanSpace ℝ n)) m]
-    have htransport : ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f =
-        ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := by
-      ext s hs
-      rw [Measure.map_apply hf hs, withDensity_apply _ (hs.preimage hf), withDensity_apply _ hs]
-      change (∫⁻ a in f ⁻¹' s, d a ∂(volume : Measure (EuclideanSpace ℝ n))) = ∫⁻ a in s, (d ∘ finv) a ∂((volume : Measure (EuclideanSpace ℝ n)).map f)
-      rw [setLIntegral_map hs (hd.comp hfinv) hf]
-      apply lintegral_congr_ae
-      filter_upwards [] with x
-      change d x = d (finv (f x))
-      rw [hleft x]
-    have hlaw : multivariateGaussian m S = (stdGaussian (EuclideanSpace ℝ n)).map f := by
-      dsimp [f, L, A]
-      rfl
-    refine ⟨c, hc, hcfin, ?_, rfl⟩
-    calc
-      multivariateGaussian m S = ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f := by
-        rw [hlaw, hStd]
-      _ = ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := htransport
-      _ = (c • (volume : Measure (EuclideanSpace ℝ n))).withDensity (fun y => d (finv y)) := by
-        rw [hvolf]
-      _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * d (finv y)) := by
-        rw [withDensity_smul_measure]
-        change c • (volume : Measure (EuclideanSpace ℝ n)).withDensity (d ∘ finv) = (volume : Measure (EuclideanSpace ℝ n)).withDensity (c • (d ∘ finv))
-        exact (withDensity_smul c (hd.comp hfinv)).symm
-      _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) := rfl
-
   have hLog
       (m : E n) (S : Matrix n n ℝ) (hS : S.PosDef) : ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ∞ ∧
         multivariateGaussian m S = (volume : Measure (E n)).withDensity
@@ -436,7 +440,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
         (∫ y : E n, Real.log ((c * ENNReal.ofReal (∏ i, ProbabilityTheory.gaussianPDFReal 0 1 ((action (CFC.sqrt S)⁻¹) (y - m) i))).toReal) ∂multivariateGaussian m S) =
           -Real.log S.det / 2 - (Fintype.card n : ℝ) *
             (Real.log (Real.sqrt (2 * Real.pi)) + 1 / 2) := by
-    obtain ⟨c, hc, hcfin, hLaw, hcDet⟩ := hDensity m S hS
+    obtain ⟨c, hc, hcfin, hLaw, hcDet⟩ := multivariate_gaussian_density m S hS
     change c = ENNReal.ofReal |(LinearMap.det (action (CFC.sqrt S)).toLinearMap)⁻¹| at hcDet
     have hwhite : Integrable (fun y : E n => Real.log (∏ i, ProbabilityTheory.gaussianPDFReal 0 1 ((action (CFC.sqrt S)⁻¹) (y - m) i))) (multivariateGaussian m S) ∧
       (∫ y : E n, Real.log (∏ i, ProbabilityTheory.gaussianPDFReal 0 1 ((action (CFC.sqrt S)⁻¹) (y - m) i)) ∂multivariateGaussian m S) = -(Fintype.card n : ℝ) *
@@ -684,8 +688,8 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       intro i
       exact inv_pos.mpr hβ
     have hCov : (covariance M β τ).PosDef := (precision_posDef M β τ hβ hτ.le).inv
-    obtain ⟨cprior, hcprior, hcpriorFin, hpriorLaw, hcpriorDet⟩ := hDensity (0 : E n) (β⁻¹ • (1 : Matrix n n ℝ)) hpriorPD
-    obtain ⟨cpost, hcpost, hcpostFin, _, hcpostDet⟩ := hDensity (0 : E n) (covariance M β τ) hCov
+    obtain ⟨cprior, hcprior, hcpriorFin, hpriorLaw, hcpriorDet⟩ := multivariate_gaussian_density (0 : E n) (β⁻¹ • (1 : Matrix n n ℝ)) hpriorPD
+    obtain ⟨cpost, hcpost, hcpostFin, _, hcpostDet⟩ := multivariate_gaussian_density (0 : E n) (covariance M β τ) hCov
     let dprior : E n → ℝ≥0∞ := transportedGaussianDensity cprior (β⁻¹ • (1 : Matrix n n ℝ)) 0
     let dpost : E p → E n → ℝ≥0∞ := fun y =>
       transportedGaussianDensity cpost (covariance M β τ) (action (gain M β τ) y)
@@ -722,7 +726,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       exact ENNReal.mul_ne_top hcpriorFin ENNReal.ofReal_ne_top
     have hpostLaw (y : E p) :
         posteriorKernel M β τ y = (volume : Measure (E n)).withDensity (dpost y) := by
-      obtain ⟨cy, _, _, hcyLaw, hcyDet⟩ := hDensity (action (gain M β τ) y) (covariance M β τ) hCov
+      obtain ⟨cy, _, _, hcyLaw, hcyDet⟩ := multivariate_gaussian_density (action (gain M β τ) y) (covariance M β τ) hCov
       have hcy : cy = cpost := hcyDet.trans hcpostDet.symm
       rw [hcy] at hcyLaw
       have hm : posteriorKernel M β τ y =

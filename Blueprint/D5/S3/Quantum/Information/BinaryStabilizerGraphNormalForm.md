@@ -28,7 +28,67 @@ $$\forall (N : \mathbb{N}), \forall (\Gamma : \operatorname{Matrix}\left(\operat
 
 Each edge contributes its binary quadratic monomial. The ordered upper-triangular sum is normalExponent; graphAmp is the complexSign value of that exponent, equivalently −1 raised to its natural representative. This definition accepts every binary matrix, without a symmetry or diagonal hypothesis.
 
-**Theorem 1.3 (A graph amplitude for every stabilizer line).**
+**Lemma 1.3 (Adjoints of tensor products).**
+
+$$\forall (N : \mathbb{N}), \forall (A : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), Matrix.\operatorname{conjTranspose}\left(D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(A\right)\right) = D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(\lambda (i : \operatorname{Fin}\left(N\right)) \mapsto Matrix.\operatorname{conjTranspose}\left(A(i)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_adj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The conjugate transpose of a tensor product is the tensor product of the conjugate transposes of its factors.
+
+**Lemma 1.4 (Tensor products of unitary factors).**
+
+$$\forall (N : \mathbb{N}), \forall (A : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), (\forall (i : \operatorname{Fin}\left(N\right)), A(i) \in Matrix.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \Rightarrow (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(A\right) \in Matrix.\operatorname{unitaryGroup}\left((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)), \mathbb{C}\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If every single-qubit factor is unitary, their tensor product is unitary on the full binary register.
+
+**Lemma 1.5 (Scalars in tensor products).**
+
+$$\forall (N : \mathbb{N}), \forall (r : (\operatorname{Fin}\left(N\right) \to \mathbb{C})), \forall (A : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(\lambda (i : \operatorname{Fin}\left(N\right)) \mapsto SMul.\operatorname{smul}\left(r(i), A(i)\right)\right) = SMul.\operatorname{smul}\left(\prod_{i \in \operatorname{Fin}\left(N\right)} r(i), D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.\operatorname{tensorOp}\left(A\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_smul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Scaling each single-qubit factor scales the tensor product by the product of those scalars.
+
+**Definition 1.6 (Binary choices of Hadamard and phase gates).**
+
+$$\forall (h : Bool), \forall (d : \operatorname{ZMod}\left(2\right)), \operatorname{gate}\left(h, d\right) = (if d = 0 then 1 else Matrix.\operatorname{diagonal}\left(![1, Complex.\operatorname{I}\left(\right)]\right)) * (if h then BinaryStabilizerLocalInequivalence.\operatorname{hadamard}\left(\right) else 1)$$
+
+*Formalization.* `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.gate` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The binary phase choice multiplies the optional Hadamard gate on the left. Zero phase selects the identity and nonzero phase selects the diagonal matrix with entries 1 and i.
+
+**Lemma 1.7 (Unitarity of the binary gate family).**
+
+$$\forall (h : Bool), \forall (d : \operatorname{ZMod}\left(2\right)), \operatorname{gate}\left(h, d\right) \in Matrix.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.gate_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every combination of the binary phase choice and the Hadamard choice is a unitary single-qubit matrix.
+
+**Theorem 1.8 (A graph amplitude for every stabilizer line).**
 
 $$\forall (N : \mathbb{N}), \forall (\psi : ((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right)) \to \mathbb{C})), \operatorname{StabilizedBy}\left(pauliSet, \psi\right) \Rightarrow (\exists (U : (\operatorname{Fin}\left(N\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))), \exists (\Gamma : \operatorname{Matrix}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(N\right), \operatorname{ZMod}\left(2\right)\right)), \exists (c : \mathbb{C}), (\forall (i : \operatorname{Fin}\left(N\right)), \operatorname{U}\left(i\right) \in \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \land ((\Gamma).IsSymm \land ((\forall (i : \operatorname{Fin}\left(N\right)), \Gamma(i, i) = 0) \land (\psi = SMul.\operatorname{smul}\left(c, (\operatorname{tensorOp}\left(U\right) *_{v} \operatorname{graphAmp}\left(\Gamma\right))\right)))))$$
 
@@ -43,8 +103,13 @@ The Pauli stabilizers of a nonzero common eigenline span a binary Lagrangian sub
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.complex_sign_val`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.gate`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.gate_unitary`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.graphAmp`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.stabilizer_graph_normal_form`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_adj`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_smul`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm.tensor_unitary`
 - Dependency: [D5/S3/Quantum/Information/BinaryLagrangianGraphForm](BinaryLagrangianGraphForm.md)
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](BinaryStabilizerLocalInequivalence.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](../../VertexAlgebra/LatticeTwistedGroundRealization.md)
