@@ -3201,3 +3201,1219 @@ general tools.
 [GM9]: https://arxiv.org/abs/quant-ph/9902063v2
 
 ## 追加锚（本行以下为增补区）
+## 10. Relation overlap, highest-order chains and common phase-readout ports
+
+### 10.1. Legal moment directions and the supplied inverse
+
+**Definition 10.1 (Selected relation coordinates).** Fix $n\ge1$ and identify
+$B_n$ with all independent subsets of the path $[n]$, including $\varnothing$.
+Write $d_n=|B_n|=F_{n+2}$, with $F_0=0,F_1=1$. For every legal $T$ put
+
+$$
+m_T(I)=1_{\{T\subseteq I\}},\qquad
+d_T(I)=(-1)^{|T|-|I|}1_{\{I\subseteq T\}},\qquad
+\mu_T(p)=\sum_{I\in B_n}p_I m_T(I).
+\tag{10.1}
+$$
+
+These are the moment functions and inverse columns supplied by
+[Correlation, §23.2][Correlation10]. Its $\Gamma_n,T',S',D_{T'}$ map to
+$B_n,T,S,d_T$ here; its signed measure $D_{T'}$ is identified with its
+coordinate column on the finite set $B_n$. In particular, for all legal
+$S,T$, including the empty set, its Boolean-interval calculation reads
+
+$$
+\sum_{I\in B_n}m_S(I)d_T(I)=
+\begin{cases}
+\displaystyle\sum_{S\subseteq I\subseteq T}(-1)^{|T|-|I|}
+ =(1-1)^{|T\setminus S|},&S\subseteq T,\\
+0,&S\not\subseteq T,
+\end{cases}
+=\delta_{ST}.
+\tag{10.2}
+$$
+
+Here the zero-exponent value is one. Every subset of a legal $T$ is legal,
+which is the precise Boolean interval needed in this sum; the whole
+independent-set poset need not be a Boolean lattice. The supplier's inverse
+and counting formulas therefore apply without changing the domain:
+
+$$
+p=\sum_{T\in B_n}\mu_T(p)d_T,\qquad
+p_I=\sum_{\substack{T\in B_n\\I\subseteq T}}
+(-1)^{|T|-|I|}\mu_T(p).
+\tag{10.3}
+$$
+
+The counting correspondence sends a legal $a$-tuple
+$i_1<\cdots<i_a$ to $i_j-(j-1)$ in $[n-a+1]$, giving
+$\binom{n-a+1}{a}$ sets of size $a$. Splitting words by the last bit gives
+$d_n=d_{n-1}+d_{n-2}$ with $d_0=1,d_1=2$, hence $F_{n+2}$.
+Taking $S=\varnothing$ in (10.2) shows that every nonempty $d_T$ has
+total mass zero. The empty column has mass one and is excluded from the
+probability perturbations below. For $n=3$, in the order
+$(\varnothing,\{1\},\{2\},\{3\},\{1,3\})$, the column is exactly
+$d_{\{1,3\}}=(1,-1,0,-1,1)^{\mathsf T}$ of Definition 9.7.
+
+Choose $r\ge1$ distinct nonempty legal sets $T_1,\ldots,T_r$, and let
+$D$ be the $d_n\times r$ matrix with columns $d_{T_j}$. Choose one known
+reference probability $p^0$ strictly positive on every $I\in B_n$. Set
+
+$$
+P=\operatorname{diag}(p^0_I),\qquad
+\mathcal U=\{\xi\in\mathbb R^r:p^0+D\xi>0\},\qquad
+p^\xi=p^0+D\xi.
+\tag{10.4}
+$$
+
+The inequality is entrywise. This is an open convex domain containing zero,
+and every $p^\xi$ has total mass one. Formula (10.2) gives, exactly,
+
+$$
+\mu_{T_j}(p^\xi)=\mu_{T_j}(p^0)+\xi_j,\qquad
+\mu_S(p^\xi)=\mu_S(p^0)\quad
+(S\notin\{T_1,\ldots,T_r\}).
+\tag{10.5}
+$$
+
+Thus the selected moments vary independently while every other moment is
+fixed. Indeed, pairing $Dc=0$ with each $m_{T_j}$ gives $c_j=0$.
+Consequently $D$ has full column rank and $r\le d_n-1$. This is exact
+consumption of the existing inverse, not an additional assumption of
+independence for overlapping statistical scores.
+
+### 10.2. All-pair Fisher overlap on the positive fiber
+
+**Theorem 10.2 (Overlap matrix for the selected moments).** For a full-mode
+observation $I$ with law $p^\xi$, the reference score, as a column in
+$\mathbb R^r$, and its Fisher matrix are
+
+$$
+s(I)=\frac{D_{I,\cdot}^{\mathsf T}}{p^0_I},\qquad
+\mathbb E_0s=0,\qquad
+G=\mathbb E_0ss^{\mathsf T}=D^{\mathsf T}P^{-1}D>0.
+\tag{10.6}
+$$
+
+For any two of the selected sets $S,T$ their entry is
+
+$$
+G_{ST}=(-1)^{|S|+|T|}
+\sum_{I\subseteq S\cap T}\frac1{p^0_I}.
+\tag{10.7}
+$$
+
+In particular every entry is nonzero. If $S\cap T=\varnothing$ it is
+$(-1)^{|S|+|T|}/p^0_\varnothing$. At the uniform reference,
+
+$$
+G_{ST}=d_n(-1)^{|S|+|T|}2^{|S\cap T|},\qquad
+\operatorname{Corr}_0(s_S,s_T)
+=(-1)^{|S|+|T|}2^{-|S\mathbin{\triangle}T|/2}.
+\tag{10.8}
+$$
+
+Proof. Differentiating $\log p^\xi_I$ at zero gives (10.6). Its mean
+vanishes by the zero column sums of $D$. For $c\ne0$,
+$c^{\mathsf T}Gc=\sum_I(Dc)_I^2/p^0_I>0$ by full column rank and
+positivity. A summand in $G_{ST}$ can be nonzero only for
+$I\subseteq S\cap T$. On this intersection its numerator is
+$(-1)^{|S|+|T|-2|I|}=(-1)^{|S|+|T|}$. No cancellation occurs, and the
+empty subset always contributes. At $p^0_I=1/d_n$ there are
+$2^{|S\cap T|}$ terms. The diagonal entries are $d_n2^{|S|}$ and
+$d_n2^{|T|}$; their geometric mean yields (10.8). $\square$
+
+Here overlap is an inner product of two scores of the same probability
+experiment. The common empty-word term is a positive-probability event,
+not a zero-probability event. A change to orthogonal score coordinates,
+for example by $G^{-1/2}$, mixes the specified moment labels. Neither
+the nonzero entries nor such a change of coordinates defines a physical
+interaction between positions. Complex amplitudes and phase observations
+are additional structures, introduced in §10.6.
+
+### 10.3. The even highest-order chain and its classical inverse
+
+**Theorem 10.3 (Highest-order overlap on an even path).** Let $n=2k$,
+$k\ge1$, and take all maximum independent sets, indexed from $0$ to $k$:
+
+$$
+T_j=\{1,3,\ldots,2j-1\}\ \cup\
+\{2j+2,2j+4,\ldots,2k\},\qquad 0\le j\le k.
+\tag{10.9}
+$$
+
+Empty pieces in this expression are omitted. There are exactly $k+1$
+such sets, each of size $k$, and
+$|T_i\cap T_j|=k-|i-j|$. For their uniform-reference Fisher matrix,
+
+$$
+G=d_n2^k K,\qquad K_{ij}=2^{-|i-j|},\qquad
+G^{-1}=\frac{B}{3d_n2^k},
+\tag{10.10}
+$$
+
+where the only nonzero entries of the symmetric matrix $B$ are
+
+$$
+B_{00}=B_{kk}=4,\qquad
+B_{jj}=5\ (1\le j\le k-1),\qquad
+B_{j,j+1}=B_{j+1,j}=-2\ (0\le j<k).
+\tag{10.11}
+$$
+
+For $k=1$ there are two endpoint entries and no interior entry.
+
+Proof. If $a_1<\cdots<a_k$ is legal, the compressed positions
+$b_\ell=a_\ell-(\ell-1)$ form a $k$-element subset of $[k+1]$.
+Exactly one position $j+1$ is missing. Before that gap $a_\ell=2\ell-1$;
+after it $a_\ell=2\ell$, which gives (10.9). There cannot be $k+1$
+occupied positions in a path of length $2k$, since they would need
+at least $2k+1$ places. For $i\le j$, the common odd positions number
+$i$ and the common even positions number $k-j$, proving the intersection
+formula. Formula (10.8) now gives $G=d_n2^kK$.
+
+The inverse is the classical Kac–Murdock–Szegö inverse specialized to
+order $k+1$ and parameter $\rho=1/2$. In George Fikioris,
+*Spectral properties of Kac-Murdock-Szegö matrices with a complex
+parameter*, [Theorem 2.1(i)][KMS10], the matrix of order $m\ge2$ is
+$K_m(\rho)=(\rho^{|a-b|})$, and for $\rho\ne\pm1$ its inverse has
+endpoint diagonal $1$, interior diagonal $1+\rho^2$ and adjacent
+entries $-\rho$, all divided by $1-\rho^2$. The correspondence is
+$m=k+1$, $a=i+1$, $b=j+1$; multiplication by the external scale
+$d_n2^k$ gives (10.10).
+
+For completeness, the product at this parameter can be checked directly.
+In the first column,
+$(KB)_{i0}=4K_{i0}-2K_{i1}$ is $3$ at $i=0$ and zero for $i\ge1$;
+the last column is symmetric. In an interior column $j$,
+
+$$
+(KB)_{ij}=-2K_{i,j-1}+5K_{ij}-2K_{i,j+1}.
+\tag{10.12}
+$$
+
+At $i=j$ it equals $-1+5-1=3$. At $i<j$, factor
+$2^{-(j-i)}$ to obtain $-4+5-1=0$; at $i>j$ the reflected
+calculation gives zero. Thus $KB=3I_{k+1}$, including the two-column
+case where only the endpoint calculation is present. $\square$
+
+For $n=6$, $k=3$, $d_6=F_8=21$, the sets are
+$246,146,136,135$, where each string lists occupied positions, and
+
+$$
+G=21\begin{pmatrix}
+8&4&2&1\\4&8&4&2\\2&4&8&4\\1&2&4&8
+\end{pmatrix},\qquad
+G^{-1}=\frac1{504}\begin{pmatrix}
+4&-2&0&0\\-2&5&-2&0\\0&-2&5&-2\\0&0&-2&4
+\end{pmatrix}.
+\tag{10.13}
+$$
+
+These values follow by substitution in (10.10). The chain index records
+the location of the missing compressed position. Adjacency of these
+indices is not adjacency of physical positions in the original path.
+
+The odd case has a different top layer. On $n=2k+1$, $k\ge0$, a maximum
+independent set has $k+1$ positions. Compression now sends it to a
+$(k+1)$-element subset of $[k+1]$, so it is uniquely
+$\{1,3,\ldots,2k+1\}$. Its uniform top-layer information is the scalar
+$d_n2^{k+1}$. This includes $n=1$, whose information is $4$.
+There is no even-style top chain on odd lengths; $n=0$ has no nonempty
+target and is outside the selected-family assumptions.
+
+### 10.4. Dual readouts and the minimum phase profile
+
+**Theorem 10.4 (Matrix duality on the selected fiber).** Under Definition
+10.1 set
+
+$$
+W=P^{-1}DG^{-1},\qquad h(I)=W_{I,\cdot}^{\mathsf T}.
+\tag{10.14}
+$$
+
+Then
+
+$$
+D^{\mathsf T}W=I_r,\qquad
+(p^0)^{\mathsf T}W=0,\qquad
+W^{\mathsf T}PW=G^{-1},\qquad
+\mathbb E_{p^\xi}h=\xi.
+\tag{10.15}
+$$
+
+At the reference $\operatorname{Cov}_0h=G^{-1}$. Among all centered
+linear readout matrices $\widetilde W$ satisfying
+$\mathbb E_{p^\xi}\widetilde W_{I,\cdot}^{\mathsf T}=\xi$ for
+every $\xi\in\mathcal U$, this covariance is minimal in Loewner order.
+For any $\Phi\in\mathbb R^r$, the constraints
+
+$$
+D^{\mathsf T}\theta=\Phi,\qquad (p^0)^{\mathsf T}\theta=0
+\tag{10.16}
+$$
+
+have the unique minimum-$P$-norm solution
+$\theta=W\Phi$, with minimum squared norm $\Phi^{\mathsf T}G^{-1}\Phi$.
+
+Proof. The first three equalities in (10.15) follow by multiplying
+(10.14), using $D^{\mathsf T}P^{-1}D=G$ and $D^{\mathsf T}\mathbf1=0$.
+For the fourth,
+$W^{\mathsf T}(p^0+D\xi)=\xi$. Since $\mathcal U$ is an open
+neighborhood of zero, an alternative readout has the stipulated mean
+exactly when $(p^0)^{\mathsf T}\widetilde W=0$ and
+$D^{\mathsf T}\widetilde W=I_r$. Write $\widetilde W=W+Z$.
+Then $D^{\mathsf T}Z=0$, $(p^0)^{\mathsf T}Z=0$ and
+
+$$
+W^{\mathsf T}PZ=G^{-1}D^{\mathsf T}Z=0,\qquad
+\operatorname{Cov}_0(\widetilde h)=G^{-1}+Z^{\mathsf T}PZ
+\succeq G^{-1}.
+\tag{10.17}
+$$
+
+Because $P>0$, equality of the covariance matrices forces $Z=0$.
+For (10.16), $W\Phi$ is feasible. Every feasible $\theta$ can be written
+$W\Phi+z$ with $D^{\mathsf T}z=0$ and $(p^0)^{\mathsf T}z=0$.
+The same orthogonality gives
+
+$$
+\theta^{\mathsf T}P\theta
+=\Phi^{\mathsf T}G^{-1}\Phi+z^{\mathsf T}Pz.
+\tag{10.18}
+$$
+
+Strict positivity forces $z=0$ at the minimum. $\square$
+
+The $P$-norm is the probability-weighted quadratic size of the phase
+profile; (10.18) does not define physical energy. Off reference the exact
+mean identity still holds, but the covariance is
+
+$$
+\operatorname{Cov}_{p^\xi}h
+=W^{\mathsf T}\operatorname{diag}(p^\xi)W-\xi\xi^{\mathsf T},
+\tag{10.19}
+$$
+
+which is not asserted to be constant. For $r=1$, with column $d_T$,
+$G=I_T=\sum_{I\subseteq T}1/p^0_I$ and
+$h(I)=d_T(I)/(p^0_I I_T)$. The $n=3,T=\{1,3\}$ instance is precisely
+the fixed-fiber score and dual residual in Definition 9.7 and (9.42):
+$\xi=\kappa-\kappa_0$, $I_T=I_0$, $W_I=d_I/(\bar p_I I_0)$.
+The reference $p^0$ maps to that $\bar p$, with its occupancies fixed.
+For several targets the inverse in (10.14) is the full inverse of $G$;
+replacing it by independent diagonal reciprocals would violate
+$D^{\mathsf T}W=I_r$ whenever $r>1$, by (10.7).
+
+### 10.5. Neighboring relation labels in the dual top-chain readout
+
+**Corollary 10.5 (Three-column formula for the dual).** For the uniform
+even top chain of Theorem 10.3, writing $W_j$ for the $j$th column,
+one has
+
+$$
+\begin{aligned}
+W_0&=\frac{4d_{T_0}-2d_{T_1}}{3\,2^k},\\
+W_j&=\frac{-2d_{T_{j-1}}+5d_{T_j}-2d_{T_{j+1}}}{3\,2^k},
+ &&1\le j\le k-1,\\
+W_k&=\frac{4d_{T_k}-2d_{T_{k-1}}}{3\,2^k}.
+\end{aligned}
+\tag{10.20}
+$$
+
+Proof. At the uniform law $P^{-1}=d_nI$. Therefore (10.14) and (10.10)
+give $W=DB/(3\,2^k)$, whose columns are (10.20). For $k=1$ both
+endpoint formulas apply and the interior range is empty. $\square$
+
+The score matrix has no zero overlap entry, but inversion combines only
+neighboring relation columns. These two statements concern different
+matrices. The sparse formula in relation labels neither makes $h(I)$
+a function of one path position nor supplies a sparse physical operation.
+
+### 10.6. A chosen conjugate family with negative phases
+
+**Definition 10.6 (Calibrated amplitude completion).** Supply the legal
+Hilbert space with orthonormal basis $|I\rangle$, $I\in B_n$, and
+introduce independent local real angle coordinates $\Phi\in\mathbb R^r$.
+Keep the matrix $W$ fixed at the reference (10.14), and define
+
+$$
+|\psi(\xi,\Phi)\rangle
+=\sum_{I\in B_n}\sqrt{p^0_I+(D\xi)_I}\,
+ \exp[-i(W\Phi)_I]|I\rangle,\qquad \xi\in\mathcal U.
+\tag{10.21}
+$$
+
+All geometric and information matrices below are at $(\xi,\Phi)=(0,0)$
+unless explicitly stated otherwise. The amplitudes in (10.21) are
+additional to the probability model. The phases use local real lifts;
+no periodic identification of the chosen $W\Phi$ chart is assumed.
+
+**Proposition 10.7 (Canonical form and reference tangent matrices).**
+The actual relation angles in (10.21) are
+$D^{\mathsf T}\theta=\Phi$. For the negative-phase normalization
+
+$$
+\lambda=\sum_Ip_I\,d\theta_I,\qquad
+\Omega=-d\lambda=\sum_I d\theta_I\wedge dp_I,
+\tag{10.22}
+$$
+
+the pullback on all of $\mathcal U$ times the local angle chart is
+$\sum_{j=1}^r d\Phi_j\wedge d\xi_j$. At the reference, the columns of the
+probability and phase derivative matrices are
+
+$$
+A=\tfrac12P^{-1/2}D,\qquad
+C=-iP^{-1/2}DG^{-1}.
+\tag{10.23}
+$$
+
+They are horizontal to $\psi_0=(\sqrt{p^0_I})_I$. Their Hermitian Gram
+matrix and symmetric logarithmic derivative quantum Fisher matrix are
+
+$$
+\begin{pmatrix}
+A^\dagger A&A^\dagger C\\C^\dagger A&C^\dagger C
+\end{pmatrix}
+=
+\begin{pmatrix}
+G/4&-iI_r/2\\iI_r/2&G^{-1}
+\end{pmatrix},\qquad
+H=4\operatorname{Re}
+\begin{pmatrix}
+A^\dagger A&A^\dagger C\\C^\dagger A&C^\dagger C
+\end{pmatrix}
+=
+\begin{pmatrix}G&0\\0&4G^{-1}\end{pmatrix}.
+\tag{10.24}
+$$
+
+Proof. Formula (10.15) gives $D^{\mathsf T}W\Phi=\Phi$.
+Since $dp=D\,d\xi$ and $d\theta=W\,d\Phi$, substitution in (10.22)
+gives the coefficient $W^{\mathsf T}D=I_r$ for the pullback.
+This computation is valid throughout the positive chart and does not
+differentiate $W$. At the reference, differentiation of square roots
+and exponentials gives (10.23).
+The inner products with $\psi_0$ are
+$\tfrac12\mathbf1^{\mathsf T}D=0$ and
+$-i\mathbf1^{\mathsf T}DG^{-1}=0$, respectively.
+Multiplication gives all four Gram blocks in (10.24).
+For a normalized pure state with horizontal derivatives $v_a$,
+$\partial_a\rho=|v_a\rangle\langle\psi|+|\psi\rangle\langle v_a|$.
+The symmetric logarithmic derivative
+$2(|v_a\rangle\langle\psi|+|\psi\rangle\langle v_a|)$
+therefore gives $H_{ab}=4\operatorname{Re}\langle v_a|v_b\rangle$,
+which proves the last identity. $\square$
+
+The sign and scale in (10.22) consume [Symplectic, Definition 35.12 and
+Proposition 35.13][Symplectic10]: its $\Gamma_n$ is $B_n$, its $D_T$
+is $d_T$, its moment $\mu_{T_j}$ is $\mu_{T_j}(p^0)+\xi_j$ and its
+angle $\Phi_{T_j}$ is the actual $j$th component of $D^{\mathsf T}\theta$.
+All other moments are fixed; other relation angles can vary as dictated
+by the chosen lift $W\Phi$. The supplier uses $\exp(-i\theta_I)$ and
+projective-line symplectic area $2\pi$, exactly the convention above.
+Its full phase-torus coordinates are not identified with an arbitrary
+globally periodic $W$ lift.
+
+The pure-state tangent formalism is the one in Keiji Matsumoto,
+*A new approach to the Cramer-Rao type bound of the pure state model*,
+[§3, equations (7)–(16), and Theorem 5][Matsumoto10].
+His horizontal SLD lifts $l_a$ map here to twice the columns of
+$(A,C)$; his $J^S=\operatorname{Re}L^\dagger L$ maps to $H$.
+The purely imaginary cross block is relevant to joint estimation;
+it is not a cross block of classical Fisher information for every
+measurement. Inverting $H$ uses the full matrices $G^{-1}$ and $G/4$,
+rather than reciprocals of their separate diagonal entries.
+
+### 10.7. A directional matrix budget for arbitrary joint measurements
+
+**Theorem 10.8 (Conjugate Fisher budget on independent pure copies).**
+Take $N\ge1$ identical independent copies of (10.21), and any fixed,
+parameter-independent positive operator-valued measure (POVM) on their
+full product Hilbert space. At the reference let $F$ be its regular
+classical Fisher matrix, partitioned by $(\xi,\Phi)$. Then
+
+$$
+F_{\xi\xi}+\tfrac14G F_{\Phi\Phi}G\preceq NG.
+\tag{10.25}
+$$
+
+This includes collective measurements. The reference-score convention
+uses only outcomes of positive reference density. For subsequent
+estimator inequalities assume square-integrable scores and valid
+differentiation under both likelihood and estimator integrals.
+
+Proof. For each real $v\in\mathbb R^r$ consider the two directions
+$\delta\xi=v$ and $\delta\Phi=Gv/2$. Their one-copy horizontal tangents
+are, by (10.23),
+
+$$
+a=Av=\tfrac12P^{-1/2}Dv,\qquad
+b=C(Gv/2)=-ia,\qquad
+4\|a\|^2=v^{\mathsf T}Gv.
+\tag{10.26}
+$$
+
+For one positive effect $M$, put
+$q=\langle\psi_0|M|\psi_0\rangle$ and
+$z=\langle\psi_0|M|a\rangle$. The two directional probability
+derivatives are $2\operatorname{Re}z$ and $2\operatorname{Im}z$;
+the second sign uses $\operatorname{Re}(-iz)=\operatorname{Im}z$.
+Cauchy–Schwarz for $M^{1/2}$ gives
+
+$$
+|z|^2\le q\,\langle a|M|a\rangle.
+\tag{10.27}
+$$
+
+On $q>0$, the sum of the two directional Fisher contributions is
+$4|z|^2/q\le4\langle a|M|a\rangle$. Summing effects gives
+$4\|a\|^2$. No assumption about other tangent directions was used.
+
+For $N$ copies write $\Psi=\psi_0^{\otimes N}$ and
+
+$$
+a_N=\sum_{\nu=1}^N
+ \psi_0^{\otimes(\nu-1)}\otimes a\otimes
+ \psi_0^{\otimes(N-\nu)},\qquad b_N=-ia_N.
+\tag{10.28}
+$$
+
+Different summands are orthogonal because
+$\langle\psi_0|a\rangle=0$. Hence
+$\langle\Psi|a_N\rangle=0$ and $\|a_N\|^2=N\|a\|^2$.
+Product differentiation gives exactly these tangents.
+Apply (10.27) with $\Psi,a_N$ to an arbitrary joint effect, without
+factoring that effect into one-copy effects. Summation yields
+
+$$
+v^{\mathsf T}F_{\xi\xi}v+
+(Gv/2)^{\mathsf T}F_{\Phi\Phi}(Gv/2)
+\le4\|a_N\|^2=Nv^{\mathsf T}Gv.
+\tag{10.29}
+$$
+
+Since this holds for all real $v$, it is (10.25).
+
+For a general measurable outcome space, use the finite control measure
+$\nu(E)=\operatorname{Tr}M(E)$ on the product space of dimension $d_n^N$.
+Every matrix entry of $M$ is dominated by $\nu$; its Radon–Nikodym
+densities form a positive matrix $m(y)$ almost everywhere, satisfying
+$\int m(y)\,d\nu(y)=I$. Positivity follows by testing a countable dense
+set of vectors, and the normalization follows entrywise. Put
+$q(y)=\langle\Psi|m(y)|\Psi\rangle$ and
+$z(y)=\langle\Psi|m(y)|a_N\rangle$. Finite-dimensional smooth state
+derivatives give the displayed first-derivative formulas under the
+integral; the trace density supplies an integrable bound.
+Inequality (10.27) holds almost everywhere and gives integrability of
+the score squares. The Fisher entries are
+
+$$
+F_{\alpha\beta}=
+\int_{\{q>0\}}
+\frac{(\partial_\alpha q)(\partial_\beta q)}q\,d\nu.
+\tag{10.30}
+$$
+
+At $q=0$, positivity gives $m(y)^{1/2}\Psi=0$, so $z=0$ and both
+first derivatives vanish. These outcomes have no reference-score
+contribution. Integration of (10.27) proves (10.29) again.
+Probabilities emerging to second order do not receive a
+direction-dependent limiting Fisher value in (10.30). $\square$
+
+The cross blocks $F_{\xi\Phi}$ can be nonzero; (10.25) does not discard
+or set them to zero. Richard D. Gill and Serge Massar,
+*State estimation for large ensembles*, [Theorem I, equation (27),
+and §V.A–B][GM10], give pure-state information tradeoffs and
+product-copy tangent methods. Their ambient-dimension bound is
+$\operatorname{tr}(H^{-1}F)\le N(d_n-1)$ here. It is not the directional
+matrix assertion (10.25). The proof above supplies the actual relation
+$b_N=-ia_N$ for each $v$ in this model and never substitutes an ambient
+dimension of two or an unproved restriction of the joint POVM.
+The corresponding claim for collective measurements on mixed inputs
+does not follow from this argument.
+
+### 10.8. The weighted joint estimation cost
+
+**Theorem 10.9 (Full-gradient local joint error).** Suppose a regular
+measurement as in Theorem 10.8 admits finite-covariance estimators
+$\widehat\xi,\widehat\Phi$ with reference means zero and full local
+expectation Jacobian $I_{2r}$ in the family (10.21). In particular, each
+estimate has zero expectation derivative in the other parameter block.
+Let their reference marginal covariance blocks be $\Sigma_\xi$ and
+$\Sigma_\Phi$. Then
+
+$$
+\operatorname{Tr}(G\Sigma_\xi)
++4\operatorname{Tr}(G^{-1}\Sigma_\Phi)\ge\frac{4r}{N}.
+\tag{10.31}
+$$
+
+Proof. Use positive symmetric square roots of $G$ and standardize by
+
+$$
+u=G^{1/2}\xi,\qquad v=2G^{-1/2}\Phi.
+\tag{10.32}
+$$
+
+The corresponding estimates retain the full identity Jacobian.
+The transformed Fisher blocks are
+$F_{uu}=G^{-1/2}F_{\xi\xi}G^{-1/2}$ and
+$F_{vv}=\tfrac14G^{1/2}F_{\Phi\Phi}G^{1/2}$.
+Thus (10.25) becomes $F_{uu}+F_{vv}\preceq NI_r$.
+For each coordinate $j$, the scalar score identity and Cauchy–Schwarz
+give
+
+$$
+1=\mathbb E_0[\widehat u_j S_{u_j}],\qquad
+\operatorname{Var}_0\widehat u_j\ge\frac1{(F_{uu})_{jj}},
+\qquad
+\operatorname{Var}_0\widehat v_j\ge\frac1{(F_{vv})_{jj}}.
+\tag{10.33}
+$$
+
+Here the scores are those of the whole $N$-copy outcome law, so its
+$F$ already includes the sample count. A zero denominator makes
+the score zero almost surely and contradicts the identity with one;
+then joint local estimability with finite covariance is impossible.
+When both are positive, writing $a=(F_{uu})_{jj}$,
+$b=(F_{vv})_{jj}$ gives
+$a+b\le N$ and $1/a+1/b\ge4/(a+b)\ge4/N$.
+Sum over $j$ and use
+$\operatorname{Cov}\widehat u=G^{1/2}\Sigma_\xi G^{1/2}$,
+$\operatorname{Cov}\widehat v=4G^{-1/2}\Sigma_\Phi G^{-1/2}$
+to obtain (10.31). $\square$
+
+Only marginal variances enter this trace, but neither classical
+cross Fisher blocks nor cross covariance blocks have been assumed zero
+in the proof. The weights specify a dimensionless total error in these
+coordinates; they do not assert a universal physical uncertainty
+normalization for arbitrary choices of relation units.
+
+### 10.9. Calibrated global readout and exact finite-sample attainment
+
+**Proposition 10.10 (Two full-mode settings).** At the supplied reference,
+setting $A$ measures the basis $|I\rangle$. Introduce, as an additional
+global calibrated operation,
+
+$$
+\Pi_0=|\psi_0\rangle\langle\psi_0|,\qquad
+U_\star=\Pi_0+i(I-\Pi_0).
+\tag{10.34}
+$$
+
+Setting $B$ first applies $U_\star$ and then measures the same full-mode
+basis. Its availability is an extra measurement assumption. The
+one-copy information matrices, in the order $(\xi,\Phi)$, are
+
+$$
+F_A=\begin{pmatrix}G&0\\0&0\end{pmatrix},\qquad
+F_B=\begin{pmatrix}0&0\\0&4G^{-1}\end{pmatrix}.
+\tag{10.35}
+$$
+
+Proof. The orthogonal projectors $\Pi_0,I-\Pi_0$ sum to the identity,
+so $U_\star^\dagger U_\star=I$.
+It fixes $\psi_0$ and multiplies every horizontal vector by $i$.
+In setting $A$ the probabilities are $p^\xi_I$, independent of $\Phi$,
+and (10.6) gives scores $(s(I),0)$.
+For setting $B$, at the reference,
+$U_\star A=iA$ and $U_\star C=P^{-1/2}DG^{-1}$.
+The first derivative of a Born probability in a direction $x$ is
+$2\operatorname{Re}(\sqrt{p^0_I}\,x_I)$.
+Therefore its probability derivatives are zero in $\xi$ and
+$2(DG^{-1})_{I,\cdot}$ in $\Phi$.
+The resulting score is $(0,2h(I))$, with covariance
+$\operatorname{diag}(0,4G^{-1})$ by (10.15). All reference probabilities
+are $p^0_I>0$, so the two likelihoods are regular there. $\square$
+
+Both settings read all their respective target directions
+simultaneously. In particular the phase block is $4G^{-1}$, with its
+full correlations. Formula (10.34) specifies a unitary on the entire
+legal space; it is not identified with a single site operation of
+Definition 9.1 or assigned a depth in that menu.
+
+**Theorem 10.11 (Recorded random settings attain the matrix cost).**
+For any real $0<t<1$ and any integer $N\ge1$, independently choose
+setting $A$ with probability $t$ on each copy and otherwise choose $B$;
+record both the setting and the complete mode. Then
+
+$$
+F_t=N\begin{pmatrix}tG&0\\0&4(1-t)G^{-1}\end{pmatrix}
+\tag{10.36}
+$$
+
+is the exact reference Fisher matrix. The fixed-reference estimates
+
+$$
+\widehat\xi=\frac{G^{-1}}{Nt}\sum_{\nu:A_\nu}s(I_\nu),\qquad
+\widehat\Phi=\frac{G}{4N(1-t)}\sum_{\nu:B_\nu}2h(I_\nu)
+\tag{10.37}
+$$
+
+have full local Jacobian $I_{2r}$, zero reference means, and
+
+$$
+\Sigma_\xi=\frac{G^{-1}}{Nt},\qquad
+\Sigma_\Phi=\frac{G}{4N(1-t)},\qquad
+\operatorname{Cov}_0(\widehat\xi,\widehat\Phi)=0.
+\tag{10.38}
+$$
+
+At $t=1/2$, (10.31) is attained for every $N\ge1$.
+
+Proof. The observed-setting likelihood is $tq_A(I)$ or
+$(1-t)q_B(I)$; $t$ is parameter independent. Its scores are exactly
+the two block vectors in the proof of Proposition 10.10. Their means
+are zero and their covariance is the one-copy version of (10.36).
+Independence multiplies it by $N$. If $S_N$ is the joint vector score
+evaluated at the reference, (10.37) is $F_t^{-1}S_N$.
+Differentiating the sampling law while holding this statistic fixed
+gives expectation Jacobian $F_t^{-1}F_t=I_{2r}$.
+Its covariance is $F_t^{-1}F_tF_t^{-1}=F_t^{-1}$, proving (10.38).
+Equivalently, each one-copy product of an $A$ contribution and a $B$
+contribution is zero, and contributions from different copies have
+zero cross expectation by independence. This explains the vanishing
+cross covariance for this particular construction.
+The weighted trace equals
+$r/[Nt]+r/[N(1-t)]$, whose minimum is $4r/N$ at $t=1/2$. $\square$
+
+The denominators in (10.37) use the fixed design probabilities and
+total $N$. They never divide by the observed random setting counts.
+Empty sums are zero. The events with no $A$ observations or no $B$
+observations, of probabilities $(1-t)^N$ and $t^N$, are included in the
+expectations above, so the assertion includes $N=1$.
+
+For a deterministic schedule with $m$ copies assigned to $A$,
+$1\le m\le N-1$, the independent score calculation instead gives
+
+$$
+F_{\rm det}=\operatorname{diag}(mG,4(N-m)G^{-1}),\qquad
+\widehat\xi=\frac{G^{-1}}m\sum_A s,\quad
+\widehat\Phi=\frac{G}{4(N-m)}\sum_B2h.
+\tag{10.39}
+$$
+
+It attains (10.38) only with $t=m/N$. Balanced deterministic allocation
+requires even $N$, and $N=1$ has no deterministic two-setting allocation.
+At $t=0$ or $t=1$ one entire score block vanishes, precluding joint
+local unbiasedness with finite covariance.
+
+The two-basis method has its primary precedent in Nan Li, Christopher
+Ferrie, Jonathan A. Gross, Amir Kalev and Carlton M. Caves,
+*Fisher-symmetric informationally complete measurements for pure
+states*, [equation (18) and Supplemental Material §II,
+(A.10)–(A.13)][FisherSymmetric10]. Their dimension is $d=d_n$ and
+their fiducial $|0\rangle$ is $\psi_0$. Choose a real orthonormal
+completion of $\psi_0$; the original mode basis has strictly positive
+fiducial overlaps $\sqrt{p^0_I}$. Their two bases differ by a quarter
+turn of the fiducial component, equivalently a relative quarter turn
+of the orthogonal complement as in (10.34). Their setting probabilities
+$p_\chi,p_\tau$ map to $t,1-t$. Conjugating the imaginary-coordinate
+convention accounts for the negative phases here and leaves Fisher
+information unchanged. Their full pure-state tangent dimension is
+$2d_n-2$; our $2r$ directions form the specified subspace (10.23).
+The score computation and fixed-reference statistics above establish
+the exact finite-$N$ application, including its recorded random design.
+
+### 10.10. The separate full-phase nuisance task
+
+**Definition 10.12 (All mode phases unknown).** Fix a positive calibrated
+law $p$ on all $B_n$ and put $P=\operatorname{diag}p$,
+$G=D^{\mathsf T}P^{-1}D$. In this section and §§10.11–10.13 the state is
+
+$$
+|\psi_\theta\rangle=\sum_I\sqrt{p_I}e^{-i\theta_I}|I\rangle,\qquad
+\Phi(\theta)=D^{\mathsf T}\theta,
+\tag{10.40}
+$$
+
+where every mode phase may vary in a local real chart. The reference is
+the supplied same-phase point $\theta=0$ for the site menu. A target
+estimator has mean zero there and the full expectation derivative
+
+$$
+\left.\frac{\partial}{\partial\theta}
+\mathbb E_\theta\widehat\Phi\right|_0=D^{\mathsf T}.
+\tag{10.41}
+$$
+
+This is a task with all phase nuisance directions; its phase vector is
+not restricted to $W\Phi$. The common phase is immaterial because
+$D^{\mathsf T}\mathbf1=0$. The probability law is fixed; no probability
+nuisance gradient is part of (10.41).
+
+The recorded site menu is exactly Definition 9.1 and Proposition 9.2,
+with the same legal matching pairs, blocked outcomes, negative phases
+and calibrated quadrature basis. For fixed probabilities
+$\eta_i\ge0$, $\sum_i\eta_i=1$, its one-copy information is
+
+$$
+J_\eta=4L_\eta,\qquad
+L_\eta=\sum_i\eta_iL_i,\qquad
+L_i=\sum_{\substack{e=(u,v)\\\text{legal site-}i\text{ pair}}}
+\frac{p_up_v}{p_u+p_v}(e_u-e_v)(e_u-e_v)^{\mathsf T}.
+\tag{10.42}
+$$
+
+The correspondences to (9.4)–(9.7) are identity maps for $p,\theta,\eta$,
+the complete record $(i,e,\pm)$ or $(i,w,\mathrm{blocked})$, and sample
+count $N$. No new outcome erasure or instrument is introduced.
+
+**Theorem 10.13 (Quantum target matrix with all phase nuisances).**
+For a regular fixed POVM on $N$ identical independent copies of
+(10.40), every estimator satisfying (10.41) with finite covariance obeys
+
+$$
+\operatorname{Cov}_0\widehat\Phi\succeq\frac{G}{4N}.
+\tag{10.43}
+$$
+
+The same bound holds at any supplied phase reference, with the target
+and its local gradient evaluated there. If the global calibrated
+setting (10.34) is allowed, it attains the whole matrix (10.43) at the
+same-phase reference under the full nuisance condition (10.41).
+
+Proof. Let $a\in\mathbb R^r$ be nonzero and set
+$\ell=Da$, $f=P^{-1}\ell$, $A_\ell=\ell^{\mathsf T}P^{-1}\ell$.
+Then $\sum_Ip_If_I=\sum_I\ell_I=0$ and
+$\sum_Ip_If_I^2=A_\ell=a^{\mathsf T}Ga>0$.
+On the actual subpath $\theta=tf$,
+$a^{\mathsf T}\Phi(\theta)=tA_\ell$.
+The horizontal state derivative is $-i\sqrt p\,f$, with squared
+norm $A_\ell$. On $N$ copies the squared norm is $NA_\ell$ by
+the orthogonality of distinct differentiated factors.
+For any effect, the derivative has the form
+$2\operatorname{Re}\langle\Psi|M|\dot\Psi\rangle$.
+Inequality (10.27), with $\dot\Psi$ in place of $a_N$, bounds the
+scalar Fisher information by $4NA_\ell$, also for continuous
+outcomes by (10.30). Full local unbiasedness gives derivative
+$A_\ell$ for $a^{\mathsf T}\widehat\Phi$ along this subpath.
+The scalar score identity yields
+
+$$
+a^{\mathsf T}\operatorname{Cov}_0(\widehat\Phi)a
+\ge\frac{A_\ell^2}{4NA_\ell}
+=\frac{a^{\mathsf T}Ga}{4N}.
+\tag{10.44}
+$$
+
+If that scalar information is zero, its required nonzero derivative
+is impossible. The case $a=0$ is immediate. This proves (10.43)
+in every real direction. At another supplied phase reference the
+diagonal phase factors do not change the derivative norm or this proof.
+This is also the exact scalar application of Theorem 9.10 with its
+contrast $\ell=Da$, not only with individual columns $d_T$.
+
+To verify simultaneous attainment in the larger nuisance model,
+use $\psi_0=\sqrt p$ in (10.34). In an arbitrary phase direction $g$,
+write $c=p^{\mathsf T}g$. The state derivative decomposes as
+$-ic\psi_0-i\sqrt p\,(g-c\mathbf1)$.
+After $U_\star$ it is
+$-ic\psi_0+\sqrt p\,(g-c\mathbf1)$, so the mode score in that
+direction is $2(g_I-c)$. Thus the full phase score vector at outcome
+$I$ is $2(e_I-p)$. Use the statistic
+
+$$
+X(I)=\frac{D_{I,\cdot}^{\mathsf T}}{2p_I},\qquad
+\widehat\Phi=\frac1N\sum_{\nu=1}^N X(I_\nu).
+\tag{10.45}
+$$
+
+Its mean is $D^{\mathsf T}\mathbf1/2=0$ and its one-copy
+covariance is $G/4$. Its full expectation Jacobian is
+
+$$
+\sum_Ip_I\,\frac{D_{I,\cdot}^{\mathsf T}}{2p_I}
+\,2(e_I-p)^{\mathsf T}
+=D^{\mathsf T}-D^{\mathsf T}\mathbf1\,p^{\mathsf T}
+=D^{\mathsf T}.
+\tag{10.46}
+$$
+
+Independence proves the asserted covariance and all nuisance
+derivatives. At a different supplied reference, a fixed diagonal
+calibration reduces to the same calculation. $\square$
+
+When $p=p^0$, restriction of (10.41) to $\theta=W\Phi$ gives
+Jacobian $D^{\mathsf T}W=I_r$, and (10.45) becomes the phase-only
+instance of (10.37). Conversely, an identity Jacobian only along
+$W\Phi$ does not imply (10.41); the larger task needs (10.46).
+This explains why the two tasks have the same optimal covariance
+value without equating their nuisance spaces.
+
+### 10.11. Exactly which site budgets attain one relation benchmark
+
+**Theorem 10.14 (Single-target support criterion).** In the full-phase
+task of Definition 10.12, fix a nonempty legal $T$ and write
+
+$$
+f_T=P^{-1}d_T,\qquad I_T=d_T^{\mathsf T}P^{-1}d_T
+=\sum_{I\subseteq T}p_I^{-1}.
+\tag{10.47}
+$$
+
+For the recorded site menu (10.42), its quantum target value
+$I_T/(4N)$ is attainable with the full phase gradient $d_T$ if and
+only if $\operatorname{supp}\eta\subseteq T$.
+In that case $L_\eta f_T=d_T$ and $R_\eta(d_T)=I_T$.
+If any positive budget lies outside $T$, every finite-variance
+full-gradient estimator, when one exists, has variance strictly
+larger than $I_T/(4N)$. Failure of component balance means no such
+estimator exists.
+
+Proof. The vector $f=f_T$ has $p$-mean zero and
+$p$-variance $I_T$. For $i\in T$, every $J\subseteq T\setminus\{i\}$
+is paired legally with $J\cup\{i\}$, since $T$ is independent.
+Their coefficients in $d_T$ are opposite. If $d_T(u)=a$ and
+$d_T(v)=-a$ on such a pair, its Laplacian contribution at $u$ is
+
+$$
+\frac{p_up_v}{p_u+p_v}
+\left(\frac a{p_u}+\frac a{p_v}\right)=a.
+\tag{10.48}
+$$
+
+The contribution at $v$ is $-a$. Every other site-$i$ pair has both
+coefficients zero, and no supported word is blocked at $i$.
+Therefore $L_if=d_T$ on all vertices, including all zero-coefficient
+and blocked vertices. When $\operatorname{supp}\eta\subseteq T$,
+summing gives $L_\eta f=d_T$.
+Thus $d_T$ is in the image of $L_\eta$, equivalently it is balanced
+on every positive-edge component. Moreover
+$L_\eta^+d_T$ differs from $f$ by a vector in $\ker L_\eta$.
+Pairing that difference with $d_T$ gives zero, so
+
+$$
+d_T^{\mathsf T}L_\eta^+d_T=d_T^{\mathsf T}f=I_T.
+\tag{10.49}
+$$
+
+Theorem 9.4, with its $\ell=d_T$ and the same $p,\eta,N$, gives
+the full-gradient reference-score estimator and variance $I_T/(4N)$.
+This extends the one-site sufficient construction of Theorem 9.13
+to all budgets supported in $T$.
+
+For necessity, let $\mathcal E_i$ be the partition that retains all
+bits except bit $i$ in this finite experiment. Its fibers are exactly
+the legal site-$i$ pairs and blocked singletons. The conditional
+variance identity underlying Proposition 8.13 becomes
+
+$$
+f^{\mathsf T}L_if
+=\mathbb E_p\operatorname{Var}(f\mid\mathcal E_i)
+=I_T-\mathbb E_p\bigl(\mathbb E_p[f\mid\mathcal E_i]\bigr)^2.
+\tag{10.50}
+$$
+
+Indeed, on a pair of masses $a,b$, its contribution is
+$ab(f_u-f_v)^2/(a+b)$, and on a singleton it is zero; summing
+gives the first equality. The second follows from $\mathbb E_pf=0$.
+For $i\in T$, the conditional mean on every fiber is zero by opposite
+coefficients, in agreement with (10.48). For $i\notin T$, each
+fiber contains at most one subset of $T$. In particular the fiber
+with all other bits zero is the legal pair
+$\{\varnothing,\{i\}\}$, and its conditional mean is
+
+$$
+\frac{p_\varnothing f(\varnothing)+p_{\{i\}}f(\{i\})}
+{p_\varnothing+p_{\{i\}}}
+=\frac{(-1)^{|T|}}{p_\varnothing+p_{\{i\}}}\ne0.
+\tag{10.51}
+$$
+
+Its probability is strictly positive. Thus the conditional-mean
+square in (10.50) is strictly positive. More generally any blocked
+singleton carrying a nonzero coefficient would also contribute to
+that square; blocked modes cannot be dropped. Consequently
+$f^{\mathsf T}L_if<I_T$ for every $i\notin T$, whereas
+$f^{\mathsf T}L_if\le I_T$ for all sites. Any positive outside
+budget therefore gives $Q_\eta:=f^{\mathsf T}L_\eta f<I_T$.
+
+On the admissible subpath $\theta=tf$, the target derivative is $I_T$
+and the menu Fisher information on $N$ copies is $4NQ_\eta$.
+If $Q_\eta>0$, the scalar score inequality forces
+
+$$
+\operatorname{Var}_0\widehat\Phi_T
+\ge\frac{I_T^2}{4NQ_\eta}>\frac{I_T}{4N}.
+\tag{10.52}
+$$
+
+If $Q_\eta=0$, its zero score contradicts the required derivative
+$I_T>0$. Separately, if the target is unbalanced on a positive-edge
+component, the likelihood invariance in Theorem 9.4 excludes a
+full-gradient estimator, even if $Q_\eta>0$.
+These alternatives exhaust the cases and prove necessity. $\square$
+
+Both strict positivity on every legal word and $T\ne\varnothing$
+are used: the former makes (10.51) a positive-probability obstruction,
+and the latter makes $d_T$ a nonzero contrast of total mass zero.
+The zero-budget sites supply no events. A pseudoinverse number for
+an unbalanced target is not a finite attainable resistance.
+
+### 10.12. The common-port criterion for a family of targets
+
+**Theorem 10.15 (Simultaneous optimum if and only if a common site
+exists).** For the distinct nonempty targets $T_1,\ldots,T_r$ and a
+fixed recorded site budget $\eta$, the full-phase task admits a
+locally unbiased vector estimator with
+
+$$
+\operatorname{Cov}_0\widehat\Phi=\frac{G}{4N}
+\tag{10.53}
+$$
+
+if and only if
+
+$$
+\operatorname{supp}\eta\subseteq\bigcap_{j=1}^rT_j.
+\tag{10.54}
+$$
+
+In particular some site budget attains (10.53) if and only if that
+intersection is nonempty.
+
+Proof. Equality of the covariance matrices implies, on every
+diagonal, $\operatorname{Var}_0\widehat\Phi_j=G_{jj}/(4N)
+=I_{T_j}/(4N)$. Condition (10.41) supplies each full target gradient.
+Theorem 10.14 forces $\operatorname{supp}\eta\subseteq T_j$ for
+each $j$, proving necessity.
+
+Conversely assume (10.54). Formula (10.48) holds columnwise for every
+site in the budget, hence
+
+$$
+L_\eta P^{-1}D=D.
+\tag{10.55}
+$$
+
+All columns are therefore in $\operatorname{im}L_\eta$ and are balanced
+on every component, including isolated vertices.
+Let $J_\eta=4L_\eta$ and use the exact reference score $s_\theta(Y)$
+of (9.5) on the complete one-copy record. Define
+
+$$
+\widehat\Phi=\frac1N\sum_{\nu=1}^N
+D^{\mathsf T}J_\eta^+s_\theta(Y_\nu).
+\tag{10.56}
+$$
+
+Its mean is zero and its full expectation Jacobian is
+$D^{\mathsf T}J_\eta^+J_\eta=D^{\mathsf T}$, since each column
+of $D$ is in the image. The difference
+$P^{-1}D-L_\eta^+D$ has columns in $\ker L_\eta$ by (10.55).
+Pairing with $D$ removes those columns, so
+
+$$
+D^{\mathsf T}L_\eta^+D=D^{\mathsf T}P^{-1}D=G.
+\tag{10.57}
+$$
+
+Using $\mathbb E_0s_\theta s_\theta^{\mathsf T}=J_\eta$ and
+independence, (10.56) has covariance
+$D^{\mathsf T}J_\eta^+D/N=G/(4N)$. This is the matrix version of
+the same reference-score estimator in Theorem 9.4, with every nuisance
+derivative checked. Finally a probability budget has nonempty support.
+Such a support can lie in the intersection exactly when the intersection
+contains a site, in which case all budget may be placed there. $\square$
+
+The off-diagonal entries of $G$ remain present in (10.53);
+simultaneous attainment does not make the target errors independent.
+An empty common intersection is a restriction of this recorded site
+menu. It is not an intrinsic incompatibility of the phase targets under
+all quantum measurements: Theorem 10.13 supplies their simultaneous
+full-gradient optimum under the additional global setting.
+
+### 10.13. A quantitative loss for the two alternating highest targets
+
+**Theorem 10.16 (Alternating-target obstruction and efficiency).**
+Let $n=2k$, $k\ge1$, with uniform $p_I=1/d_n$, and retain the two
+alternating maximum sets
+$T_0=\{2,4,\ldots,2k\}$ and $T_k=\{1,3,\ldots,2k-1\}$.
+They are disjoint, so no site budget attains the two quantum target
+variances simultaneously, and hence none attains the whole $k+1$-target
+maximum-set chain simultaneously. Put $I_\star=d_n2^k$ and
+$f_T=P^{-1}d_T$ for either target. Define
+
+$$
+\epsilon_i(T)=\frac{f_T^{\mathsf T}L_if_T}{I_\star},\qquad
+\epsilon_\eta(T)=\sum_i\eta_i\epsilon_i(T).
+\tag{10.58}
+$$
+
+Then
+
+$$
+\epsilon_i(T)=
+\begin{cases}
+1,&i\in T,\\
+1/4,&i\notin T,\ i\in\{1,2k\},\\
+1/8,&i\notin T,\ 1<i<2k.
+\end{cases}
+\tag{10.59}
+$$
+
+The last case has an empty range when $k=1$.
+Every budget obeys
+$\epsilon_\eta(T_0)+\epsilon_\eta(T_k)\le5/4$.
+If both targets have finite-variance full-gradient estimators in
+the same menu experiment, at least one satisfies
+
+$$
+\operatorname{Var}_0\widehat\Phi_T
+\ge\frac85\,\frac{I_\star}{4N}.
+\tag{10.60}
+$$
+
+If either target fails component balance, it has no such estimator;
+its extended target resistance is infinite.
+
+Proof. Disjointness and Theorem 10.15 prove the first assertion.
+Each $f_T$ equals $d_n d_T$, and
+$d_T^{\mathsf T}P^{-1}d_T=d_n2^k=I_\star$.
+For $i\in T$, Theorem 10.14 gives
+$f_T^{\mathsf T}L_if_T=I_\star$.
+For $i\notin T$, let $b$ be the number of neighbors of $i$ lying in $T$.
+An edge with exactly one supported endpoint has that endpoint
+$J\subseteq T$, with all $b$ neighbors omitted, and its other endpoint
+is $J\cup\{i\}$. These are all legal and are all the nonzero
+energy-contributing site-$i$ edges. There are $2^{k-b}$ choices of $J$.
+On each edge the conductance is $1/(2d_n)$ and the potential difference
+has squared magnitude $d_n^2$, contributing $d_n/2$.
+All other pairs have both potentials zero. A supported but blocked
+word has no edge contribution at this site. Hence
+
+$$
+f_T^{\mathsf T}L_if_T
+=\frac{d_n}{2}\,2^{k-b},\qquad
+\epsilon_i(T)=2^{-b-1}.
+\tag{10.61}
+$$
+
+For an alternating target, an outside endpoint has $b=1$ and an
+outside interior site has $b=2$. This proves (10.59), including
+$n=2$, which has only endpoints.
+
+Every site belongs to exactly one of $T_0,T_k$. Thus the sum of
+its two efficiencies is $1+1/4=5/4$ at an endpoint, and
+$1+1/8=9/8$ in the interior. Averaging with $\eta$ proves the
+sum bound; consequently at least one of the two efficiencies is
+at most $5/8$. Along that target's actual subpath $\theta=tf_T$
+the derivative of $\Phi_T$ is $I_\star$, and its Fisher information
+is $4NI_\star\epsilon_\eta(T)$. Applying the scalar score inequality
+gives
+
+$$
+\operatorname{Var}_0\widehat\Phi_T
+\ge\frac{I_\star}{4N\epsilon_\eta(T)}
+\ge\frac85\,\frac{I_\star}{4N}.
+\tag{10.62}
+$$
+
+This argument applies to every estimator with the full target gradient
+when it exists. When a component is unbalanced, the component-shift
+invariance of the observed likelihood gives nonexistence instead,
+as specified in Theorem 9.4. $\square$
+
+**Corollary 10.17 (Six-position values and the limitation of a ray
+calculation).** For $n=6$, the two alternating targets each have
+$I_\star=21\cdot8=168$ and individual quantum variance $42/N$.
+For every site budget, either a target is not fully locally estimable,
+or at least one of the two variances is at least $336/(5N)$.
+Assigning equal budget to the two endpoint sites makes both efficiencies
+in (10.58) equal to $5/8$, but it does not in general attain the
+full-nuisance variance bound.
+
+Proof. The numerical values are the substitutions
+$I_\star/(4N)=168/(4N)$ and
+$(8/5)\,42/N=336/(5N)$ in Theorem 10.16.
+With $\eta_1=\eta_{2k}=1/2$, each alternating target receives efficiency
+one from its own endpoint and $1/4$ from the opposite endpoint,
+so its mean efficiency is $5/8$.
+
+For every supported $J\subseteq T_0$, the right endpoint $2k$ is
+always unblocked, belongs to the budget, and reverses $d_{T_0}$
+when toggled. It pairs the source coefficients within each component,
+so $T_0$ is balanced; the left endpoint gives the analogous pairing
+for $T_k$. Both targets are therefore estimable in this budget.
+Nevertheless equality in the scalar subpath bound would require
+the reference estimate to be proportional to the subpath score.
+For target $T_0$, that statistic has full gradient proportional to
+$L_\eta f_{T_0}$. Its proportionality could be the required
+$d_{T_0}$ only if $L_\eta f_{T_0}$ were a scalar multiple of $d_{T_0}$.
+At the unsupported singleton $\{1\}$, the site-$1$ edge to
+$\varnothing$ contributes
+$-\tfrac14d_{T_0}(\varnothing)\ne0$ to $L_\eta f_{T_0}$,
+whereas the site-$2k$ contribution is zero there.
+Thus this vector is not proportional to $d_{T_0}$.
+Reflection proves the same for $T_k$, including $k=1$.
+Consequently the endpoint efficiency equality alone does not supply
+equality in (10.62) under the full gradient condition. $\square$
+
+The constant in (10.60) is a proved lower factor for this one-site
+recorded menu. No exact minimax allocation or optimal full-nuisance
+value is inferred from it. Sequential multi-operation experiments
+have a different likelihood and are outside this menu bound.
+
+### 10.14. Supplier correspondence and primary mathematical attributions
+
+**Convention 10.18 (Scope of the mathematical applications).** The
+preceding results use the following exact correspondences. Existing
+inverse transforms, scalar target bounds and classical matrix structures
+retain their indicated sources; the relation-specific conclusions are
+the combinations proved above.
+
+| Source | Objects and hypotheses used here | Consequence and limit |
+| --- | --- | --- |
+| [Correlation §23.2][Correlation10] | $\Gamma_n=B_n$, $D_{T'}=d_T$, $\mu_{T'}=\mu_T$, all legal subsets including $\varnothing$; its named HiddenRelations C-28 suppliers give the complete inverse. | (10.2)–(10.5), independent columns and the legal-set count; no phase experiment follows from this classical inverse. |
+| [Symplectic §35.13][Symplectic10] | $\psi_I=\sqrt{p_I}e^{-i\theta_I}$, $\mu_{T_j}=\mu^0_{T_j}+\xi_j$, $\Phi_{T_j}=d_{T_j}^{\mathsf T}\theta$; positive chart and symplectic area $2\pi$. | The sign and scale in (10.22), restricted by $\theta=W\Phi$; the supplier's complete torus is distinct from this local chosen lift. |
+| This volume, Definition 9.7, (9.42) and Definition 9.14 | $n=3$, $T=\{1,3\}$, $(\varnothing,1,2,3,13)$, $d=(1,-1,0,-1,1)$, $\xi=\kappa-\kappa_0$, $p^0=\bar p$, $G=I_0$, $W_I=d_I/(\bar p_I I_0)$, $\Phi=\chi$. | The existing fixed-fiber score, residual and negative-phase conjugate model are the scalar instance of (10.14) and (10.21). Several targets require $G^{-1}$. |
+| This volume, Proposition 8.13, Definition 9.1, Proposition 9.2 and Theorem 9.4 | Same full positive $p$, site-$i$ legal fibers, resolved signs and blocked modes, fixed recorded $\eta$, full nuisance gradient, same iid count $N$. | $J_\eta=4L_\eta$, the conditional-variance identity, component balance and exact reference-score saturation used in (10.49) and (10.56); no erased record is substituted. |
+| This volume, Theorems 9.10 and 9.13 | Scalar contrast $\ell=Da$ for arbitrary real $a$, or $\ell=d_T$ for a single nonempty target; regular POVMs on independent pure copies. | (10.44) consumes the arbitrary-contrast bound; the one-site sufficiency is extended to the support iff and common-port iff, keeping all phase nuisance directions. |
+| Fikioris, [Theorem 2.1(i)][KMS10] | Matrix order $m=k+1\ge2$, $\rho=1/2$, external scale $d_n2^k$. | The classical tridiagonal inverse in (10.10); its indices label maximum relations, not the sites of the legal path. |
+| Matsumoto, [§3 and Theorem 5][Matsumoto10] | Smooth local pure model, SLD lifts $l_a=2\partial_a\psi$ at the horizontal reference, $J^S=H$; full model parameters number $2r$. | Pure tangent/QFI and imaginary-Gram compatibility background. Phase-only derivatives have real Gram; the probability–phase family has the imaginary cross block (10.24). |
+| Gill–Massar, [Theorem I and §V.A–B][GM10] | Ambient dimension $d_n$, $N$ identical independent pure states, possibly collective measurements. | Information tradeoff background; (10.26)–(10.30) separately prove the stronger directional statement required here. No collective mixed-input extension is used. |
+| Li–Ferrie–Gross–Kalev–Caves, [equation (18), Supplemental §II][FisherSymmetric10] | $d=d_n$, fiducial $\psi_0$, positive overlaps $\sqrt{p^0_I}$, two real/imaginary quadratures, setting probabilities $t,1-t$. | The two-basis construction underlies (10.34)–(10.38); arbitrary finite $N$ with real $t$ uses recorded random settings. It does not establish availability within the restricted site menu. |
+
+### 10.15. Distinct conclusions and support boundaries
+
+Theorem 10.2 concerns overlap of classical probability scores.
+Theorem 10.8 concerns competition between probability and conjugate
+phase information in the chosen pure family (10.21), for all regular
+joint measurements on independent copies.
+Theorems 10.14–10.16 concern a specified site menu in the different
+full-phase nuisance task (10.40).
+Their matrices share $D,P,G$, but their sample spaces, parameter
+constraints and allowed measurements have been specified separately.
+In particular, the absence of a common optimal site cannot be used
+to strengthen (10.25) for unrestricted measurements.
+
+The empty word is a shared statistical reference with mass
+$p_\varnothing>0$. Its inverse mass in (10.7) is neither a zero-event
+singularity nor a physical energy or gravitational source.
+All inverse-$P$ statements require full positive support. At a boundary
+with some $p_I=0$, one must specify the actual support, allowed
+two-sided tangents and reference score regularity afresh; deleting
+denominators or assigning limiting Fisher values does not extend these
+theorems. Likewise the fixed-reference identities do not assert that
+their covariance matrices remain constant away from the reference.
+
+The general tools cited in §10.14 are used with their stated hypotheses.
+The selected-relation overlap, top-chain substitutions, dual lift,
+directional budget, common-port equivalence and alternating-target
+loss are ordinary mathematical applications with the proofs above.
+They concern neither a stationary attaining producer nor the arbitrary
+finite-producer question in Open Problem 7.2. All its hypotheses and
+its unresolved status are separate from the finite calibrated models
+of this chapter.
+
+[Correlation10]: AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md#232-层析及奇偶应用所用的已有观察坐标
+[Symplectic10]: SYMPLECTIC_PREDICTIVE_COMPLETION.md#3513-长路径关系矩与共轭差分相位
+[KMS10]: https://arxiv.org/abs/1804.08140v1
+[Matsumoto10]: https://arxiv.org/abs/quant-ph/9711008v1
+[GM10]: https://arxiv.org/abs/quant-ph/9902063v2
+[FisherSymmetric10]: https://arxiv.org/abs/1507.06904v2
+
+## 追加锚（本行以下为增补区）
