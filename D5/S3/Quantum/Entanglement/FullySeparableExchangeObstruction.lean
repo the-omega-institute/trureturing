@@ -84,7 +84,7 @@ private theorem density_zero_col (σ : DensityState L) (a b : L)
   have hquad : star (Pi.single a (1 : ℂ)) ⬝ᵥ
       ((CStarMatrix.ofMatrix.symm σ.val) *ᵥ Pi.single a 1) = 0 := by
     simpa [Matrix.mulVec, dotProduct, Pi.single_apply] using hz
-  have h := ((density_psd σ).dotProduct_mulVec_zero_iff (Pi.single a 1)).mp hquad
+  have h := ((density_psd σ).dotProduct_mulVec_zero_iff (x := (Pi.single a 1))).mp hquad
   simpa [Matrix.mulVec, dotProduct, Pi.single_apply] using congrFun h b
 
 private theorem density_zero_row (σ : DensityState L) (a b : L)
