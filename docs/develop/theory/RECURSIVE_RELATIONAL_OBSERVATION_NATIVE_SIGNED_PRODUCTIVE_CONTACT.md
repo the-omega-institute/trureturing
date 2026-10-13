@@ -1857,3 +1857,369 @@ factoring remain supplied premises.
 [SPC-SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
 
 ## 追加锚（本行以下为增补区）
+## 13. A deterministic one-counter realization of the closed reply interface
+
+**Definition 13.1 (normalized closed inputs and four replies).** Use the
+closed defining subsystem of Definition 7.1, with every explicitly supplied
+ground state definition inlined and every fixed native power distributed
+through an explicit pair. A normalized expression has the finite syntax
+
+$$
+e ::= \alpha\mid\beta\mid\Omega\mid\langle e,e\rangle
+       \mid \rho^aX_i,
+\qquad a\in\mathbb N.
+\tag{SPC.50}
+$$
+
+The right side of a defining equation is a pair of expressions (or a
+finite ground after the permitted inlining), so its root is never a
+positive-power state. Every state occurrence remains below an explicit
+pair. States are nullary and repeated names denote one shared value. Outputs
+may use the same syntax, exact finite constants and $\Omega$; an output
+root need not itself be pair guarded. Negative, variable and
+parameter-recursive powers are outside this definition. The zero-state case
+is allowed.
+
+Let $\Sigma=\{L,R\}$ and
+$\mathcal R=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$. For a
+completed output $Z$, let $r_Z(p)$ be its exact reply at every original
+address $p\in\Sigma^*$, including the root and every absent suffix. Put
+$\mathcal L_\tau(Z)=\{p:r_Z(p)=\tau\}$. These are the same original-address
+replies used by Definitions 1.1 and 7.1; normal-code depth and an
+unlabelled reached-address trace are not substituted for them.
+
+The native identities needed below are
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{n+2}=\langle T_{n+1},T_n\rangle,
+\qquad T_n=\rho^n\alpha .
+\tag{SPC.51}
+$$
+
+They follow from the leaf laws and distribution of $\rho$ through pairing.
+Thus $\rho^c\beta=T_{c+1}$, while an explicit syntax pair preserves its
+accumulated exponent when an original letter is consumed.
+
+**Definition 13.2 (the finite one-counter machines).** A configuration is
+$(q,c)$ with $c\in\mathbb N$. A transition tests $c=0$ or $c>0$, reads
+$L$, $R$ or $\varepsilon$, and changes $c$ by $-1$, $0$ or $+1$; a decrement
+is present only on a positive test. Give every explicit pair occurrence
+$e=\langle e_L,e_R\rangle$ a control $P_e$, and use controls
+$q_\alpha,q_\beta,O_\Omega$. For each occurrence $\rho^aX_i$, include
+$J_{d,i}$ for $0\le d\le a$, sharing a control whenever $(d,i)$ is the
+same. Add $A,V,B,H_\alpha,H_\beta,N$. The transition table is
+
+| control | test | read | destination | update |
+| --- | --- | --- | --- | --- |
+| $P_{\langle e_L,e_R\rangle}$ | either | $L$ | $q_{e_L}$ | $0$ |
+| $P_{\langle e_L,e_R\rangle}$ | either | $R$ | $q_{e_R}$ | $0$ |
+| $O_\Omega$ | either | $L$ or $R$ | $O_\Omega$ | $0$ |
+| $q_\alpha$ | either | $\varepsilon$ | $A$ | $0$ |
+| $q_\beta$ | either | $\varepsilon$ | $A$ | $+1$ |
+| $J_{d,i}$, $d>0$ | either | $\varepsilon$ | $J_{d-1,i}$ | $+1$ |
+| $J_{0,i}$ | either | $\varepsilon$ | $q_{E_i}$ | $0$ |
+| $A$ | $0$ | $\varepsilon$ | $H_\alpha$ | $0$ |
+| $A$ | $>0$ | $\varepsilon$ | $V$ | $-1$ |
+| $V$ | $0$ | $\varepsilon$ | $H_\beta$ | $0$ |
+| $V$ | $>0$ | $\varepsilon$ | $B$ | $-1$ |
+| $B$ | either | $L$ | $A$ | $+1$ |
+| $B$ | either | $R$ | $A$ | $0$ |
+| $H_\alpha,H_\beta$ | either | $L$ or $R$ | $N$ | $0$ |
+| $N$ | either | $L$ or $R$ | $N$ | $0$ |
+
+Here $q_{E_i}$ denotes the control for the normalized root
+$\langle E_i,F_i\rangle$ of the defining right side, and $q_O$ is the
+output-root control. The initial configuration is
+$(q_O,0)$. Stable controls are all $P_e$, $O_\Omega$, $B$,
+$H_\alpha,H_\beta,N$. The four accepting sets are
+
+$$
+F_\alpha=\{H_\alpha\},\quad F_\beta=\{H_\beta\},\quad
+F_{\mathsf{branch}}=\{P_e:e\text{ is a pair occurrence}\}\cup\{O_\Omega,B\},
+\quad F_{\mathsf{absent}}=\{N\}.
+\tag{SPC.52}
+$$
+
+For each reply $\tau$, write $M_{O,\tau}$ for this common transition
+system with initial state $(q_O,0)$ and accepting set $F_\tau$. Acceptance is
+finite-word final-state acceptance at any nonnegative counter. Epsilon moves
+consume no original address letter. Administrative controls are nonaccepting.
+
+**Theorem 13.3 (determinism, lawful updates and finite administration).**
+The machines of Definition 13.2 are classical deterministic one-counter
+machines with epsilon moves. For each control, input letter and counter test
+there is at most one transition; an epsilon rule excludes input rules at the
+same control and test. All reachable counters are nonnegative. From the
+initial configuration and after every consumed address letter, finite
+administration reaches exactly one stable head, and every stable head has
+both next-letter moves.
+
+**Proof.** The normalized syntax and the finite set of fixed remainders give
+finitely many controls. Every displayed update is a unit update. The only
+negative updates have explicit positive tests, so induction from counter zero
+proves nonnegativity. Pair and stable-head controls have only input rules;
+all other controls have exactly one epsilon rule for each test and no input
+rule. Shared $J_{d,i}$ controls therefore give one transition, not competing
+ones.
+
+At $J_{d,i}$, exactly $d$ increments reach $J_{0,i}$, whose zero-update
+step enters the normalized defining root. Pair guardedness makes that root a
+pair or a ground leaf, never another decorated-state root, so this chain
+cannot form an epsilon cycle. A ground leaf enters $A$ and reaches a stable
+head in at most two further tests. The $A$ and $V$ rules implement the two
+lawful decrements in (SPC.51); no arbitrary threshold or hidden restoration
+is present. A decorated occurrence with exponent $a$ uses at most $a+4$
+epsilon steps, independently of the entering counter.
+
+A pair and $O_\Omega$ are already stable. From $B$, an input enters $A$;
+from a stable leaf, either input enters $N$; from an explicit pair an input
+selects its child without changing the counter. Thus administration is finite
+at the root and after every letter. Stable controls have no epsilon rules
+and total $L,R$ moves, proving uniqueness of the terminal stable head. This
+is a finite-chain termination statement, not a native-description size or
+compact-input complexity bound. $\square$
+
+**Theorem 13.4 (exact four-language correspondence).** For every normalized
+closed input of Definition 13.1 and every output $O$,
+
+$$
+L(M_{O,\tau})=\mathcal L_\tau(\llbracket O\rrbracket)
+\qquad(\tau\in\mathcal R).
+\tag{SPC.53}
+$$
+
+Consequently the four languages partition $\Sigma^*$, including the empty
+address, native leaf images and every absent suffix.
+
+**Proof.** Interpret configurations by
+
+$$
+\begin{aligned}
+(q_{e},c)&\longmapsto\rho^c\llbracket e\rrbracket,\qquad
+(J_{d,i},c)\longmapsto\rho^{c+d}\llbracket X_i\rrbracket,\\
+(A,c)&\longmapsto T_c,&(V,c)&\longmapsto T_{c+1},&(B,c)&\longmapsto T_{c+2},\\
+(H_\alpha,c)&\longmapsto\alpha,&(H_\beta,c)&\longmapsto\beta,&
+(O_\Omega,c)&\longmapsto\Omega.
+\end{aligned}
+\tag{SPC.54}
+$$
+
+$N$ denotes an absent position and every descendant. A $J$ increment preserves
+$c+d$. At $J_{0,i}$ the defining equation identifies the interpreted state
+with its normalized root. At $q_\alpha$ and $q_\beta$, (SPC.51) gives $T_c$
+and $T_{c+1}$. At $A$, zero is $T_0$ and a positive counter decrements to
+$V$ without changing the represented $T_c$; at $V$, zero is $T_1$ and a
+positive counter decrements to $B$ while preserving $T_{c+1}$.
+
+For an explicit pair, native distribution gives
+$\rho^c\langle s,t\rangle=\langle\rho^cs,\rho^ct\rangle$, so its $L,R$
+transitions select exactly the addressed child and keep $c$. From $(B,c)$,
+(SPC.51) gives left subtree $T_{c+1}$ and right subtree $T_c$; the $L$ rule
+enters $(A,c+1)$ and the $R$ rule enters $(A,c)$. From $O_\Omega$ both
+children are $\Omega$. From either stable leaf both children are absent and
+$N$ remains absent on every suffix.
+
+Induct on address length. The initial finite administration reaches the
+root's unique stable head with its exact reply. After a letter, the stable
+transition selects the actual child or the absent convention, and the finite
+administration preserves and classifies that child by (SPC.54). This proves
+that the stable label after exactly $p$ is $r_{\llbracket O\rrbracket}(p)$,
+including $p=\varepsilon$. Administrative controls never accept and stable
+controls have no epsilon successors, so a run cannot accept by stopping in
+the middle of administration. The four accepting sets therefore give
+(SPC.53) and its partition. $\square$
+
+**Theorem 13.5 (equality through the classical one-counter supplier).** For
+two outputs $O,O'$ of Definition 13.1,
+
+$$
+\llbracket O\rrbracket=\llbracket O'\rrbracket
+\Longleftrightarrow
+\bigwedge_{\tau\in\mathcal R}
+L(M_{O,\tau})=L(M_{O',\tau}).
+\tag{SPC.55}
+$$
+
+The right side is decidable by the classical deterministic one-counter
+language-equivalence result of Böhm, Göller and Jančar, *Equivalence of
+Deterministic One-Counter Automata is NL-complete*, arXiv:1301.2181v1,
+Theorem 3 and Appendix, PDF pp.23--24
+([primary source](https://arxiv.org/pdf/1301.2181v1)). The Appendix's classical
+interface is the one used here: finite controls and alphabet, transitions
+with zero/positive tests and updates in $\{-1,0,1\}$, no decrement at zero,
+unique transition per control/letter/test, epsilon/input exclusivity, initial
+counter zero, and final-state acceptance at any nonnegative counter. Its
+reduction may add an internal acceptance letter; that letter is not an
+original address.
+
+**Proof.** A completed ordered labelled tree is determined by its reply at
+every finite address, so equality is equivalent to equality of its four
+reply languages. Theorem 13.4 gives (SPC.55)'s machine languages. The
+supplier's Appendix explicitly transfers decidability from its normalized
+presentation to this classical final-state convention. Apply it separately
+to the four finite machine pairs. No real-time-only, empty-counter-only or
+unlabelled-trace convention is used, and the supplier's NL classification is
+not transferred to a compact-input complexity claim for these native
+expressions. $\square$
+
+
+**Proposition 13.6 (diagnostics and the exact presentation boundary).** The
+one-counter correspondence has the following concrete checks.
+
+1. Pair traversal keeps the whole exponent: the $L$ subtree of
+   $\rho^2\langle\alpha,\alpha\rangle$ is $T_2$, hence a branch, rather
+   than $T_1=\beta$.
+2. A beta leaf entered with counter $c$ has rank $c+1$, because
+   $\rho^c\beta=T_{c+1}$.
+3. $T_2=\langle\beta,\alpha\rangle$ replies $\alpha$ at $R$ and
+   $\mathsf{absent}$ at $RL$.
+4. If reply labels are erased, the total reached-address traces of
+   $\alpha$ and $\beta$ coincide, so the four labelled languages are
+   necessary for equality.
+5. If the pair guard is removed, the equation $X=\rho X$ yields an
+   infinite $J$-chain; the finite-administration and correspondence claims
+   therefore do not extend to that unguarded syntax.
+
+**Proof.** The first item is exactly the zero-update pair rule together with
+native distribution. The second and third follow from (SPC.51). The fourth
+holds because both finite leaves have no reached children. In the fifth item,
+$J_{d,X}$ has no finite remainder to reach a stable root, so the epsilon
+chain never terminates. These checks delimit the construction; they are not
+claims about all unguarded semantics or about decidability outside
+Definition 13.1. $\square$
+
+## 14. Concrete record interface for signed prescribed-row consumers
+
+**Definition 14.1 (concrete records).** For a chart supplied by the complete
+native correspondence of [PDC, Theorem 5.2][PDC] and the joint signed support
+of [NAC, Definition 5.1 and Theorem 6.1][NAC], a record $d$ contains exactly:
+
+1. For each scalar coordinate, either an exact label $\overline n=q$ with
+   $q\in\mathbb N$ or an infinity label $\overline n=\infty$. The labels
+   denote $T_q$ and $\Omega$, respectively.
+2. A partition of residual coordinates into $F$ and $I$, an exact finite
+   native tree $f_t$ for every $t\in F$, and a finite nullary pair-guarded
+   system plus one output expression $O_t$ for every $t\in I$. Every such
+   expression satisfies Definition 13.1. An $I$ output contains $\Omega$ or
+   reaches a directed cycle in its defining dependency graph; this is the
+   supplied witness that its completed value is genuinely infinite.
+3. Shared systems occur once and are combined with independent systems only
+   after disjoint renaming. Repeated chart names keep one value. No record
+   asserts a point merely by naming an arbitrary completed tree.
+
+The record denotes
+$\operatorname{pt}(d)=(\mathbf t,\mathbf Z)$, with $t_a=T_{q_a}$ or $\Omega$
+according to its scalar label, $Z_t=f_t$ for $t\in F$, and
+$Z_t=\llbracket O_t\rrbracket$ for $t\in I$. Its effective prefix interface
+$\operatorname{Pref}_d(t,h)$ returns every reply through inclusive depth $h$,
+including root and absent replies: finite $f_t$ is evaluated directly, while
+an $I$ output uses the supplied guarded iteration, with $h+1$ pair-guarded
+iterations sufficient through depth $h$. This is an interface for supplied
+records, not a representation of arbitrary completion points.
+
+After all finite residuals are frozen, the chart's complete whole-negative
+list is retained in one predicate $\Gamma$ on the full Cartesian residual
+carrier. Positive, image and navigation conditions have already been
+eliminated by the cited chart suppliers. With $K$ the exact remaining
+Presburger condition, write
+
+$$
+\begin{aligned}
+S_f(\mathbf n)&\Longleftrightarrow
+ K(\mathbf n)\land\exists\mathbf w_I\in\mathcal T^I\;
+ \Gamma(\mathbf n,(f_t)_{t\in F},\mathbf w_I),\\
+\operatorname{Cof}(d)&\Longleftrightarrow
+ \forall b\in\mathbb N\;\exists\mathbf n\in\mathbb N^k\quad
+ S_f(\mathbf n)\land
+ \bigwedge_{a\notin J}n_a=q_a\land
+ \bigwedge_{a\in J}n_a\ge b,
+\end{aligned}
+\tag{SPC.56}
+$$
+
+where $J$ is the set of infinity-labelled scalars. One tuple of residuals
+satisfies all whole negatives at the same scalar vector. Empty products and
+conjunctions have their literal meanings; when $J$ is empty, cofinality is
+fixed-rank feasibility.
+
+**Theorem 14.2 (decidable supplied-record certificate and productive
+finite witnesses).** For records $d_i,d_j$ in two distinct complete row
+charts, define
+
+$$
+\operatorname{Accept}(d_i,d_j)\Longleftrightarrow
+\operatorname{Cof}_i(d_i)\land\operatorname{Cof}_j(d_j)\land
+Y_i(d_i)=Y_j(d_j),
+\tag{SPC.57}
+$$
+
+where each $Y$ is the chart output obtained from the record, with fixed
+source-template exponents and all shared references preserved. The predicate
+(SPC.57) is decidable. If it holds, then for every inclusive depth $h$ there
+are finite $u_h,v_h$ in the entire acquired domain with their prescribed,
+distinct complete rows and $u_h\equiv_hv_h$. The witnesses and their finite
+coordinate tuples may vary independently with $h.
+
+**Proof.** Substitute each finite $f_t$ in every occurrence of $\Gamma$.
+The remaining full Cartesian residual condition is exactly the fixed-power
+Presburger support supplied by [URR, Corollary 3.2][URR], so both quantified
+sentences in (SPC.56) are decidable with the displayed quantifier order.
+The combined systems and outputs satisfy Definition 13.1; Theorem 13.5
+decides the equality conjunct by four original-address language comparisons.
+The chart correspondences of [PDC, Theorem 5.2][PDC] and [NAC, Definition 5.1 and Theorem 6.1][NAC]
+then identify each cofinal record with its own complete row closure and
+supply finite realizations at every requested depth. Their whole-negative
+list, endpoint reach guards, old row, exterior, partitions, repeated names,
+classes and cross-class inequalities remain checked on each finite source.
+The supplied prefix interface makes the construction productive; raw
+unfoldings alone do not replace the joint finite completion.
+
+If cofinality is false, the same support theorem supplies a finite
+coordinate neighborhood disjoint from that chart. If equality is false,
+Theorem 13.5 supplies a finite original address with different replies.
+Either failure rejects this supplied candidate pair only; it does not reject
+another record or another distinct-label pair. The construction proves
+neither description completeness nor a search procedure over all records.
+$\square$
+
+**Corollary 14.3 (equality-premise substitution).** Whenever a cited signed
+consumer has an ordinary premise asserting equality of two completed outputs,
+Theorem 13.5 may replace that premise for records satisfying Definition 14.1.
+The remaining cofinality, finite freezing, joint support and whole-source
+hypotheses are unchanged. The substitution does not produce an ordinary
+finite equational derivation, a complete description language, or an
+unrestricted contact solver.
+
+## 15. Current scope and retained boundary
+
+**Convention 15.1 (supplier ownership).** The one-counter construction and
+its reply correspondence in Theorems 13.3--13.5 are repo-derived ordinary
+mathematics. The exact classical supplier boundary is BGJ Theorem 3 together
+with its Appendix pp.23--24. The concrete-record consumer reuses PDC's
+complete signed charts, NAC's joint support/common-contact synthesis, URR's
+full-Cartesian Presburger support and the existing closed-presentation
+interface of Section 7. No external novelty or priority claim is made.
+
+NAC's complete NIC exact-cover result supplies automatic common-contact
+synthesis and total stopping within its stated finite chart class. NPL's
+Theorem 5.3 decides the complete finite whole-row image; its infinite-image
+branch excludes a finite $H$ through PDC Corollary 8.3. Those results do not
+make the supplied-record checker complete for arbitrary semantic points.
+
+The retained open boundary is arbitrary-description equality, including
+parameter-recursive or unrestricted equality beyond fixed nonnegative
+powers and finite nullary pair-guarded systems; exhaustive synthesis of all
+records or all contacts; and the unrestricted signed stopping problem of
+Open problem 10.1. Physical observer acquisition, complete-state factoring,
+paid receipts, compact-input complexity, undecidability, novelty and
+Lean/kernel certification are not claimed. A finite equality decision also
+does not identify private completion holes of different residuals or turn
+separate row witnesses into one source.
+
+[BGJ]: https://arxiv.org/pdf/1301.2181v1
+[PDC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_POSITIVE_DOMAIN_CORRESPONDENCE.md
+[NAC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_AMBIENT_CONTACT_DECISION.md
+[URR]: RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_RESIDUAL_REALIZATION.md
+
+## 追加锚（本行以下为增补区）
