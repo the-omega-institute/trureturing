@@ -1469,3 +1469,1285 @@ $\Psi(\operatorname{Cl}(S_0))=\operatorname{Cl}'(\Psi(S_0))$。重新着色不�
 不能改写为精确可逆或精确恢复。完整的 $n>5040$ 全局覆盖仍是原证书的独立义务。
 
 ## 追加锚（本行以下为增补区）
+
+## 21. 固定颜色的一阶状态、可逆方格与有限隐藏未来
+
+### 21.1. 同一五模式律的自由速度与固定颜色
+
+**定义 21.1（固定颜色合同及一阶来源域）。** 沿用定义 20.1 的
+$\Sigma=(O,L,T,R,J)$，以此顺序排列概率和带符号变化；它们对应索引
+$(\mathrm{null},1,2,3,\{1,3\})$，对应数量列表
+$(\mathrm{null},[2],[3],[5],[2,5])$。坐标仍为低—高—中
+$(x,y,z)$，印刷位串仍为低—中—高。固定命题 20.2 的五个实三维颜色、
+$b,A,j$，它们不随参数变化。取全正概率域
+
+$$
+\Delta_4^\circ=\{p\in\mathbb R^5:p_s>0,\ \sum_s p_s=1\},\qquad
+T_0=\{h:\sum_s h_s=0\}.
+$$
+
+一阶来源是 $(p,h)\in\Delta_4^\circ\times T_0$，即一条双侧可微概率曲线的
+当前律与当前速度。以 $m=(X,Y,Z)$、$\kappa=p_J$ 表示 $p$，
+以 $\dot m=(h_L+h_J,h_R+h_J,h_T)$、$\dot\kappa=h_J$ 表示 $h$。
+每个这样的速度都由充分短的曲线 $p+th$ 实现。这里的参数不指定物理时间。
+实际边界曲线的可行条件采用
+[局部源分裂卷定义 3.2、定理 3.3–3.4](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)，
+不把仿射包络中的全部速度授予零概率点。
+
+本合同使用本卷推导 3.2、数学引文 4.1 和
+[基础公式卷数学引文 2.2、4.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+的五函数基、概率逆式和归一化核。具体配对为
+
+$$
+\langle f,h\rangle=\sum_s f_s h_s,\qquad
+d=(1,-1,0,-1,1),\qquad
+\langle f,d\rangle=f_J-f_L-f_R+f_O.
+$$
+
+故函数商
+$\mathbb R^\Sigma/\operatorname{span}\{1,x,y,z\}$
+的一维余类 $[xy]$ 与概率差方向 $\mathbb Rd$ 经这个配对对偶，
+$\langle xy,d\rangle=1$；两者不是同一个空间，也未指定规范正交补。
+全 $\mathbb R^5$ 上的位置核另含空模式质量方向，只有限制到 $T_0$ 才为
+$\mathbb Rd$。联合一阶报告定义为
+
+$$
+\mathcal J_c(p,h)=(m,\bar c,\dot m,\dot{\bar c}),\qquad
+\bar c=b+Am+j\kappa,\quad
+\dot{\bar c}=A\dot m+j\dot\kappa.
+\tag{21.1}
+$$
+
+**命题 21.2（五模式联合一阶报告的实际秩）。** 在定义 21.1 的整个自由
+一阶来源域上，$\mathcal J_c$ 的像维数及微分秩均为
+$8$ 当 $j\ne0$，均为 $6$ 当 $j=0$。前者恢复 $(p,h)$；
+后者只确定 $(m,\dot m)$。这是固定五模式颜色的联合报告结论。
+
+证明。概率逆式使 $(m,\kappa)$ 成为 $\Delta_4^\circ$ 的四维开坐标，
+其速度有四个独立坐标。令
+
+$$
+B_c=\begin{pmatrix}I_3&0\\A&j\end{pmatrix}.
+$$
+
+式（21.1）除常数外是两个独立的 $B_c$ 块。前三列因上方 $I_3$
+独立，第四列与它们独立恰当且仅当 $j\ne0$。因此两块的秩分别为
+$2\cdot4$、$2\cdot3$，并且开来源域的像在相应线性像中相对开。
+在 $j\ne0$ 时，命题 20.3 的反解和它的速度式给出
+
+$$
+\kappa=\frac{j^{\mathsf T}(\bar c-b-Am)}{j^{\mathsf T}j},\qquad
+\dot\kappa=\frac{j^{\mathsf T}(\dot{\bar c}-A\dot m)}{j^{\mathsf T}j};
+\tag{21.2}
+$$
+
+再用同一概率逆式及其导数得到全部 $p,h$。当 $j=0$，两个
+$\kappa$ 坐标均不参与报告。$A$ 的奇异性不影响这些结论，因为位置均值本身
+仍在报告中。
+
+在非空固定支持 $S\subseteq\Sigma$ 的相对内部，来源改为
+$\Delta_S^\circ\times T_S$，其中
+$T_S=\{h:\operatorname{supp}h\subseteq S,\sum h_s=0\}$。
+若 $j\ne0$，像维数为 $2(|S|-1)$；若 $j=0$，为
+$2\operatorname{affdim}\{v_s:s\in S\}$。这是把上述两个块限制到实际
+$T_S$ 得到的，不给边界额外速度。例如仅四个底角为正时，前者为六、后者为四；
+单点支持均为零。固定整个 $m$ 的非退化纤维及其切空间只剩
+$(\kappa,\dot\kappa)$ 两个来源坐标，报告秩为二或零，仍按 $j\ne0$ 或
+$j=0$ 区分；单点纤维没有这两个自由坐标。若另给
+可微 $F:\Delta_4^\circ\to T_0$ 并指定 $h=F(p)$，
+则来源是四维状态图，报告秩至多四；自由速度的八／六结论
+不能套到这个约束动力学上。
+
+比较所需的另外两个模型时，用经典切空间坐标与链式法则作为中间工具
+（[Tong，§2.2.1 的曲线切向量与 §2.2.2 的向量场](https://www.damtp.cam.ac.uk/user/tong/gr/grhtml/S2.html)）。
+独立位置 $q\in\mathbb R^3$ 和独立颜色 $c\in\mathbb R^3$ 的来源
+$E=\mathbb R_q^3\times\mathbb R_c^3$ 为六维，其速度态
+$(q,c;\dot q,\dot c)\in TE$ 为十二维；若把参数 $t$ 本身也放入曲线的一阶
+jet，则 $\mathbb R_t\times TE$ 为十三维。若改为定义 20.1 的
+$c=\Phi(q)$，则 $\dot c=D\Phi(q)\dot q$，图上的速度态只有六维。
+这三种来源与式（21.1）的概率来源各有不同约束，十二、六、八不能相加。
+相同的数字十二也不同于
+[联合投影卷 theorem 18.2](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+的二十一合法边、十顶点、一个连通分量的双窗口边缘核；
+后者为 $21-10+1=12$，且非全正支持时还须使用该条目的边界限定。
+
+一个实际固定颜色选择是
+$c_s=(S_s,S_s^2,e^{\lambda S_s})$，
+$S=2x+5y+3z$，$\lambda\in\mathbb R\setminus\{0\}$。
+本卷推导 3.3 已给
+$J_S=0$、$J_{S^2}=20$ 及两个相应期望式；
+在五函数展开中代入这个指数函数，其第三系数为
+
+$$
+e^{7\lambda}-e^{2\lambda}-e^{5\lambda}+1
+=(e^{2\lambda}-1)(e^{5\lambda}-1)>0.
+$$
+
+故这个颜色的 $j=(0,20,(e^{2\lambda}-1)(e^{5\lambda}-1))$ 非零，
+在全正来源取得八维联合一阶报告；三项只补同一条隐藏方向，并非三条新方向。
+这里联合模式的数值是七，标签 $25$ 和列表 $[2,5]$ 不是数值二十五。
+
+同一均值纤维上颜色如何反映相关，直接消费
+[基础公式卷数学引文 5.2、命题 7.3、定理 9.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)：
+当 $r=1-Z>0$ 时，令 $\kappa_0=XY/r$ 和
+$\bar c_0=b+Am+j\kappa_0$，则
+
+$$
+\Delta=r\kappa-XY,\qquad
+\operatorname{Cov}(x,y\mid z=0)=\Delta/r^2,\qquad
+\bar c-\bar c_0=j\Delta/r.
+$$
+
+这些只是本报告的既有中间关系。自然对数熵 $H=-\sum_s p_s\ln p_s$
+在固定 $m$、四个底角质量都正时对 $\kappa$ 的导数满足
+$H'=\log(p_Lp_R/(p_Op_J))$、
+$H''=-(1/p_O+1/p_L+1/p_R+1/p_J)<0$；
+若采用所引定理的二底熵，导数同除 $\ln2$。
+其唯一最大熵律正是所引的条件独立补全；闭边界由该定理的零质量惯例处理。
+在 $r=0$ 的顶点 $T$，唯一律、$\kappa$ 和颜色都已确定，不定义底面条件律。
+$j=0$ 时颜色残差始终零，不能据零残差反推 $\Delta=0$；
+非退化纤维才有两份待分离的律。$\square$
+
+### 21.2. FIB 方格的仿射运输及根颜色条件
+
+**定义 21.3（方格、附枝与形式逆向遍历）。** 使用定义 7.1、推导 7.2
+的五模式单翻转图，给底面定向
+
+$$
+O\to L\to J,\qquad O\to R\to J,\qquad O\to T.
+$$
+
+每个节点 $s$ 另有颜色纤维 $C_s\cong\mathbb R^3$。
+每条边供应一个仿射同构
+$g_{st}(u)=T_{st}u+\eta_{st}$，
+$T_{st}\in\mathrm{GL}_3(\mathbb R)$、$\eta_{st}\in C_t$；
+所写矩阵使用已指定的各纤维坐标。可逆走法允许形式反边，并规定
+
+$$
+g_{ts}=g_{st}^{-1},\qquad
+T_{ts}=T_{st}^{-1},\quad
+\eta_{ts}=-T_{st}^{-1}\eta_{st}.
+\tag{21.3}
+$$
+
+这定义数学比较路径，不据此授予原生读者逆向动作。按走过的次序
+$e_1,\ldots,e_k$，复合为
+
+$$
+g_\gamma(u)=T_\gamma u+\eta_\gamma,\qquad
+T_\gamma=T_{e_k}\cdots T_{e_1},\quad
+\eta_\gamma=\sum_{i=1}^k T_{e_k}\cdots T_{e_{i+1}}\eta_{e_i};
+\tag{21.4}
+$$
+
+空乘积为单位阵，空路径的增量为零。
+取两条 $O$ 到 $J$ 路径
+$P_1=g_{LJ}\circ g_{OL}$、
+$P_2=g_{RJ}\circ g_{OR}$，写
+$P_i(u)=B_i u+\beta_i$。
+
+**命题 21.4（方格颜色相容的精确根纤维）。** 在定义 21.3 的走法下，
+固定根颜色 $u_O$ 后，全部根到同一节点的走法给相同颜色，
+当且仅当
+
+$$
+H(u_O)=u_O,\qquad
+H=P_2^{-1}\circ P_1,\qquad
+(B_1-B_2)u_O+\beta_1-\beta_2=0.
+\tag{21.5}
+$$
+
+因此相容的根颜色集合为式（21.5）的仿射解集，可以为空、单点或正维集合。
+对所有根颜色均路径无关，当且仅当
+$B_1=B_2$ 且 $\beta_1=\beta_2$，亦即
+$T_H=I_3,\eta_H=0$。静态模式颜色的混合差 $j$ 不决定这些条件。
+
+证明。仿射群的复合和逆运算是中间工具，式（21.3）两侧复合逐项给恒等，
+式（21.4）由逐边代入得到。此处具体计算为
+
+$$
+\begin{aligned}
+B_1&=T_{LJ}T_{OL},&
+\beta_1&=T_{LJ}\eta_{OL}+\eta_{LJ},\\
+B_2&=T_{RJ}T_{OR},&
+\beta_2&=T_{RJ}\eta_{OR}+\eta_{RJ},\\
+T_H&=B_2^{-1}B_1,&
+\eta_H&=B_2^{-1}(\beta_1-\beta_2).
+\end{aligned}
+$$
+
+路径独立先要求 $P_1(u_O)=P_2(u_O)$，等价于式（21.5）。
+反之，用边 $OL,OR,OT,RJ$ 选一棵生成树。任意闭走消去相邻的边及其反边，
+附枝 $OT$ 不产生剩余回路；唯一非树边 $LJ$ 每次连同树中返回路线产生
+$H$ 或 $H^{-1}$。故每条根闭走的仿射映射是 $H$ 的整数次幂，
+固定 $u_O$。这只消费图的经典路径约化
+（[Hatcher，§1A 的生成树与图基本群](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)），
+不把它另列为一般新定理。
+这里采用的可逆运输平坦性判据是：对指定初色，所有根闭走固定它
+当且仅当同终点路径独立；对全部初色，条件改为每个根回路映射恒等。
+必要性把闭走与空走法比较，充分性用一条路径的仿射逆返回根。
+对两条同终点走法 $\gamma,\delta$，
+$\delta^{-1}\gamma$ 是根闭走，故
+$g_\delta^{-1}g_\gamma(u_O)=u_O$；乘回 $g_\delta$ 得两端颜色相同。
+对全部 $u_O$ 的版本由仿射式的系数相等得到。
+例如取 $P_2=I$、$P_1=\operatorname{diag}(2,1,1)$，即使
+$H\ne I$，根颜色满足 $u_{O,1}=0$ 时仍相容。
+
+对命题 20.2 的任意静态颜色 $c_s$，另选
+$T_{st}=I$、$\eta_{st}=c_t-c_s$，则每条路径望远镜相消，$H=I$，
+不论 $j$ 是否为零。特别 $c_s=\Phi(v_s)$ 给 $j=e_3$；
+四角差非零，而通常梯度闭走仍为
+
+$$
+(c_L-c_O)+(c_J-c_L)-(c_J-c_R)-(c_R-c_O)=0.
+$$
+
+若边运输独立供应，即使静态标签全部为零而 $j=0$，
+也可取 $P_1=I$、$P_2(u)=u+e_1$，得到
+$H(u)=u-e_1$，无相容根颜色。此时静态标签不被宣称是该运输的截面。
+这两份具体方格分别分离混合差与 holonomy。
+若要求标签本身构成相容截面，准确的附加条件是
+$c_t=T_{st}c_s+\eta_{st}$ 对每条供应边成立；
+这在其所选根颜色上保证路径一致，不自动给所有根颜色的一致性。
+量词边界与
+[局部钟场卷 Q3、Q4、Q7](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)
+保持相同。$\square$
+
+**命题 21.5（仅沿有向边的菱形反例）。** 若定义 21.3 只允许所写有向边，
+“所有根有向闭走固定初色”不充分于终点颜色路径独立。
+
+证明。取 $o=O,a=L,b=R,v=J$，四条底边的 $T_e=I$，
+除了 $\eta_{RJ}=e_1$ 外全部增量为零，$u_O=0$。
+路径 $O\to L\to J$ 给零，$O\to R\to J$ 给 $e_1$。
+这个有向图没有非空有向闭走；唯一根闭走为空走法，固定每个根颜色。
+附加的 $O\to T$ 零增量边也不产生回路。因此连“对所有初色均固定”
+都不能修复有向版本。反边 $J\to R$ 不在该有向图中；
+在定义 21.3 的可逆走法中它应有 $T=I,\eta=-e_1$，
+闭走 $O\to L\to J\to R\to O$ 给 $u\mapsto u-e_1$，恰检出障碍。
+故可逆比较版使用仿射逆，不能把普通有向返回路径默认为逆。
+本命题是
+[局部钟场卷 Q3](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)
+所指出的平行路径缺口在本五模式颜色方格上的明确实现。$\square$
+
+### 21.3. 七位 RGB 读口与同一平稳隐藏模型
+
+**定义 21.6（长窗口颜色及 separator 合同）。** 对
+$W_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\}$，
+固定每个 $c_w\in\mathbb R^3$ 并令
+$C_n(p)=\sum_{w\in W_n}p_wc_w$。
+$S_n(p)$ 保留完整的长度 $n-1$ 前缀边缘和后缀边缘，
+$K_n=\ker S_n$ 是带符号差空间；因边缘包含总质量，$K_n$ 自动归一化。
+这里 $C_n$ 是三条固定线性统计读口，参数 $c_w$ 不依赖未知律。
+
+计数与 separator 核直接取
+[响应对比与长窗口卷 theorem 6.1、theorem 7.1 及 Q2、Q5、Q6](AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md)：
+$N_0=1,N_1=2,N_n=N_{n-1}+N_{n-2}$；
+只保留单位置均值的核维数为 $N_n-1-n$，
+而此 $K_n$ 的维数为
+$g_n=N_n-2N_{n-1}+N_{n-2}$，$n\ge4$ 时为 $N_{n-4}$。
+三、四、五、六、七位分别给 $g_n=1,1,2,3,5$。
+其五条七位基方向可明确写为
+
+$$
+\mathcal Q_7=\{00000,01000,00100,00010,01010\},\qquad
+h_q=\delta_{0q0}-\delta_{0q1}-\delta_{1q0}+\delta_{1q1}.
+\tag{21.6}
+$$
+
+各 $q$ 首尾为零，四词全部合法；不同 $q$ 的支持不交。
+本节的七位统计、定义 21.3 的模式节点运输、
+以及五边左右各三个顶点的二部运输图是不同对象。
+后一图的左、右 $00,10,01$ 必须保持为六个不同顶点；
+其五条模式边与核 $d$ 直接复用所引卷 theorem 2.1。
+
+**命题 21.7（七位 RGB 在正 separator 纤维上的实际遗漏）。**
+对任意定义 21.6 的固定七位颜色，只要该完整 separator 纤维含有
+每个合法词都为正的律 $p^\circ$，其中就存在两份不同的正律
+$p^+,p^-$，具有完全相同的 separator 和均值颜色。
+
+证明。复用
+[局部源分裂卷定理 8.3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)
+的实际全正分离判据，以其隐藏子空间取 $N=K_7$，
+三个读口取颜色三个坐标。由式（21.6），颜色在这五条方向上的列为
+
+$$
+J_q=c_{1q1}-c_{1q0}-c_{0q1}+c_{0q0}.
+$$
+
+标准秩–零化度作为中间工具给
+$\operatorname{rank}[J_q]_{q\in\mathcal Q_7}\le3$，
+因此存在非零 $a=(a_q)$ 使 $\sum_q a_qJ_q=0$；
+这样的系数空间维数至少二。置
+$h=\sum_q a_qh_q\ne0$，则 $S_7h=0,C_7h=0$。
+明确取
+
+$$
+0<\varepsilon<
+\min_{w:h_w\ne0}\frac{p_w^\circ}{|h_w|},\qquad
+p^\pm=p^\circ\pm\varepsilon h.
+\tag{21.7}
+$$
+
+五个基方向均质量零，故 $p^\pm$ 归一化；该严格界使每个概率仍正。
+这是同一实际概率纤维内的两个律，不只是一份形式核向量。
+在一般 $K_n$ 上，所引判据要求附加 $r$ 条固定线性读口的限制秩为
+$g_n$ 才能分离全正纤维，所以 $r\ge g_n$；零质量或受限制备纤维应改查
+其实际差异集，不能仅套这个维数。
+该论证没有限制任意非线性或无限精度编码。
+也未把一个点的奇异导数当作局部不单射证据：
+实映射 $u\mapsto u^3$ 在零处导数为零却单射。
+此处不可区分性来自固定线性读口的精确核及式（21.7）的两个可行点。$\square$
+
+**定义 21.8（同一平稳律的颜色与条件未来）。** 在
+[普适后验与有限隐藏分离卷定义 4.1、命题 4.2](FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md)
+的完整 $\Theta_N$ 中取
+$\theta=(\lambda,M_0,M_1)$。令
+
+$$
+p_{\theta,n}(w)=\lambda M_w\mathbf1,\qquad
+C_n(\theta)=\sum_{w\in W_n}p_{\theta,n}(w)c_w.
+$$
+
+同一 $P_\theta$ 下，正概率可见过去词 $u$ 后的完整有限未来柱概率为
+
+$$
+\mathscr L_\theta^u(w)=
+\frac{\lambda M_uM_w\mathbf1}{\lambda M_u\mathbf1}.
+\tag{21.8}
+$$
+
+空 $w$ 的值为一，不合法接续为零；全部有限柱概率及其相容扩张决定
+这个可见未来律。这个平稳位过程没有原生 Read／Stop 的额外菜单。
+三位边缘的模式对应为
+$000\mapsto O,100\mapsto L,010\mapsto T,001\mapsto R,101\mapsto J$，
+于是 $Q(p_{\theta,3})$ 使用的正是同一律的 $m,\kappa,\bar c$。
+此处 $N$ 是非负边发射表示的状态数，不是颜色分量数、$g_n$、
+速度态维数或最小表示维数。$\Theta_N$ 仍包含零质量隐藏状态和零可见柱；
+只在式（21.8）所用过去词的分母为正时条件化。
+
+**命题 21.9（相同颜色报告的两份二十一状态平稳实现）。** 对任意固定
+七位 RGB 颜色，存在 $\theta^+,\theta^-\in\Theta_{21}$，
+其可见律都有完整合法词支撑，且满足：
+全部六位边缘相同，七位均值颜色相同，三位完整律及其任意固定模式颜色
+报告相同；但某个正概率六位过去词之后，下一位条件概率不同。
+特别，即使三位颜色合同的 $j\ne0$，它恢复该三位律也不使完整未来相同。
+
+证明。取供应卷命题 7.1 的原两状态链 $R^{1/3}$，
+令 $p^\circ$ 为其七位边缘，$\pi$ 为其六位边缘。
+该供应链在全部合法词上正，平稳性使 $p^\circ$ 的前缀和后缀均为 $\pi$。
+把这份 $p^\circ$ 代入命题 21.7，得 $p^\pm$；
+它们的前、后六位边缘仍为同一个严格正的 $\pi$。
+用合法六位词 $u\in W_6$ 作隐藏状态，共 $N_6=21$ 个，令
+$\lambda_u^\pm=\pi(u)$，并定义
+
+$$
+M_x^\pm(u,v)=
+\begin{cases}
+p^\pm(ux)/\pi(u),
+&ux\in W_7,\quad v=u_2u_3u_4u_5u_6x,\\
+0,&\text{其余情形}.
+\end{cases}
+\tag{21.9}
+$$
+
+对每个 $u$，行和为
+$\sum_xp^\pm(ux)/\pi(u)=1$；
+输入到每个 $v$ 的平稳质量为
+$\sum_{ux:\,\operatorname{suffix}_6(ux)=v}p^\pm(ux)=\pi(v)$。
+故 $\lambda^\pm(M_0^\pm+M_1^\pm)=\lambda^\pm$。
+发射一后隐藏词末位为一，下一位一没有合法边，因而
+$M_1^\pm M_1^\pm=0$；所有定义 4.1 条件成立。
+用其命题 4.2 得到同一相容两侧联合律及实际可见 $P_{\theta^\pm}$，
+而不是独立拼接几个边缘。
+
+每步隐藏词移去第一位并追加当步发射位；走完六步后，隐藏词恰为这六个
+发射位。平稳隐藏分布为 $\pi$，所以实际六位可见分布为 $\pi$，
+七位分布为 $\pi(u)M_x^\pm(u,\operatorname{suffix}_6(ux))=p^\pm(ux)$。
+每条合法转移正，故任意合法长词从一个有正质量的相容六位前史开始，
+其发射概率是有限个正因子的乘积；全部合法词均有正概率。
+命题 21.7 遂给七位颜色相同。共同六位律边缘化给共同三位律，
+故包括式（21.1）静态部分在内的任意固定三位均值颜色均相同。
+因 $h\ne0$，某个 $ux$ 有 $p^+(ux)\ne p^-(ux)$，从式（21.8）得到
+
+$$
+\mathscr L_{\theta^+}^u(x)-\mathscr L_{\theta^-}^u(x)
+=\frac{2\varepsilon h_{ux}}{\pi(u)}\ne0.
+\tag{21.10}
+$$
+
+因此这里颜色与未来的缺口已在实际有限隐藏模型中实现。
+
+对此同一族使用供应卷定理 2.2 时，
+$q_\theta=E_{P_\theta}[X_0\mid\sigma(X_i:i\ne0)]$、
+$F_0=\{X_{-1}=X_1=0\}$、$I=[1/4,1/2]$，
+得到原目标的
+
+$$
+c_\star-d(P_\theta)\ge
+\Delta(P_\theta)
+=E_{P_\theta}[\mathbf1_{F_0}\operatorname{dist}(q_\theta,I)^2].
+$$
+
+这个 $\Delta(P_\theta)$ 是后验缺陷，不是前文五模式的
+$\det Q=r\kappa-XY$。供应卷命题 7.1–7.2 已给后验区间不足以达到的
+见证；本构造不计算或比较两律的 $d$。
+在供应卷定义 6.1 的整个紧 $\Theta_N$ 上，
+其定理 6.2 给 $C_N$ 取到，并给
+$C_N=c_\star$ 当且仅当存在至多 $N$ 个边发射隐藏状态的精确达到律，
+该达到律再由其定理 3.1 自动取得完整可见支撑。
+全支撑不是定义紧域的前置。其推论 7.3 给
+$C_N\le c_\star$、单调性与 $\sup_NC_N=c_\star$；
+开放问题 7.4 的某个有限 $N$ 是否达到仍是待解问题。
+这些全局量词既不由颜色恢复推出，也不由式（21.10）的未来分离否定。$\square$
+
+### 21.4. 原生活动未来与统一关系的有类型接口
+
+**定义 21.10（原生历史接口与共同来源合同）。** 若未来目标改为
+[动态未来商卷第一部分定理 1、推论 1](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+的原生剩余转录律，历史域必须是该卷 Q1–Q4 指定的第三标记写入并锁存后、
+正概率第四段活动历史。一个固定有限或可数正整数深度先验至少有两个正支持
+深度；$K$ 一次抽取，并由全部条件独立付费 Read 共享。
+其条件字母概率为
+$r_k=\mathrm{Fib}_{k+1}/\mathrm{Fib}_{k+3}$、
+$s_k=\mathrm{Fib}_{k+2}/\mathrm{Fib}_{k+3}$，满足 $r_k+s_k=1$。
+$a(h)\in\{p,\beta\}$ 与从首次付费 Read 开始的计数 $A_h,B_h$
+保留原 parser、控制、记录、renderer 和 Read／Stop 权限，
+计数包含拒绝、重试、合法返回和部分解析，不以未来接受条件化。
+在这些原条件下，所引定理的准确对应为
+
+$$
+\sigma(h)=(a(h),A_h,B_h),\qquad
+\mathscr L_h=\mathscr L_{h'}
+\ \Longleftrightarrow\ \sigma(h)=\sigma(h').
+$$
+
+其正向推导是同一先验的 Bayes 权重
+$\mu(k)r_k^{A_h}s_k^{B_h}$、共同后验和相同活动相位；
+反向使用该来源的完整未来律可识别性及 Fibonacci 整数比率分离，
+不是一般混合模型的推论。其推论 1 对任何未来充分摘要 $S$ 给
+$S(h)=S(h')\Rightarrow\sigma(h)=\sigma(h')$。
+实际可达摘要不被假设填满任意计数格。
+pending$_0$、pending$_1$ 保留各自原强制 Stop 且禁止 Read，
+delivered 未来为空；活动定理不能继续用于这些边界。
+式（21.8）的有限隐藏平稳词未来和这个原生未来有不同来源与菜单，
+二者没有被识别为同一律。
+
+把静态颜色接到任一未来模型时，须给同一实际历史上的条件模式律 $p_h$，
+以及同一个未来事件空间 $\mathcal Y$ 上固定的模式条件响应核
+$L_s\in\mathcal P(\mathcal Y)$，并验证
+$\mathscr L_h=\sum_s p_h(s)L_s$。
+若核另依赖深度或历史，则须保留那个联合律与其条件核；
+只保留两个边缘不确定它们的耦合，具体障碍采用
+[局部钟场卷 Q9](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)。
+在确有固定五个 $L_s$ 的合同内，
+[联合投影卷 theorem 27.1 及 corollary 29.1](AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md)
+直接以同一有符号测度空间给出
+
+$$
+\begin{aligned}
+J_L&=L_J-L_L-L_R+L_O,\\
+\mathscr L(p)&=L_O+(L_L-L_O)X+(L_R-L_O)Y+(L_T-L_O)Z+J_L\kappa.
+\end{aligned}
+$$
+
+固定 $m$ 的非退化纤维上，$J_L\ne0$ 才使该完整响应分离 $\kappa$；
+$J_L=0$ 时其恒定。颜色系数 $j$ 与测度系数 $J_L$ 仍是不同类型。
+有 $j\ne0$ 时 $Q(p_h)$ 确定当前 $p_h$；只有已经验证这个固定核分解，
+才进一步确定目标未来律。命题 21.9 展示缺少该分解时，
+同一完整三位律也不能替代历史或更长窗口关系。
+
+本应用中的统一对象可写为
+$\mathfrak A=(\Sigma,\mathcal A,\mathcal P,\mathcal F_\kappa,
+C,\{T_e,\eta_e\},\mathscr L)$，其中 $\mathcal A$ 是定义 21.1 引用的
+五态函数代数，$\mathcal P$ 是位置均值体，
+$\mathcal F_\kappa(m)$ 是命题 20.3 的实际概率区间，
+$C$ 是固定模式颜色读口，边运输使用定义 21.3 的节点颜色纤维，
+$\mathscr L$ 使用已选来源的条件未来。
+这个结构集合不自动证明各部分能共同实现。
+四角顶点关系经概率配对给 $d$，
+$p_J$ 给 $\kappa$；固定 $m$ 且 $r>0$ 才有
+$\Delta\leftrightarrow\kappa$，$j\ne0$ 才从联合颜色报告恢复非退化隐藏方向；
+静态颜色梯度不等于供应仿射运输；到未来还需上述共同来源和响应核合同。
+同样，
+[响应对比与长窗口卷 §9、Q3](AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md)
+的质量矩阵
+
+$$
+\mathsf T(p)=
+\begin{pmatrix}p_O&0&p_R\\p_L&0&p_J\\0&p_T&0\end{pmatrix},
+\qquad \det\mathsf T=-Z\Delta
+$$
+
+只在 $Z>0$ 时给线性可逆性等价于 $\Delta\ne0$；
+$Z=0$ 时仍奇异。它的符号采用此处 $(O,L,T,R,J)$ 字典，
+不是定义 21.3 的三维颜色边同构 $T_e$，
+也不是概率保持的逆更新或原生物理反演。
+
+## 追加锚（本行以下为增补区）
+
+
+## 22. 几何连接中的隐藏调整与原生叶数递归
+
+### 22.1. 同一五态切向载体上的二次接口
+
+本章五态有理二次式、按实际叶数的几何读出及固定 $J$ 的 Fisher 来源族反例为 repo-derived 综合应用，不主张原创性；完成平方、Schur 变分、谱几何均值及压缩方法为 literature-attested 的中间工具，其文献和已有接口在各项实际推导中引用。
+
+**定义 22.1（完整切向与另供的正定二次式）。** 沿用定义20.1的
+$(O,L,T,R,J)$ 状态顺序、低—高—中占位 $(x,y,z)$、
+命题20.3的概率逆式。在五项全正的律
+
+$$
+p=(1-X-Y-Z+\kappa, X-\kappa, Z, Y-\kappa, \kappa)
+$$
+
+处，取 $u=(\delta X,\delta Y,\delta Z)^{\mathsf T}$、
+$\eta=\delta\kappa$，则实际归一化切向映射为
+
+$$
+J\binom u\eta=
+(-u_1-u_2-u_3+\eta, u_1-\eta, u_3, u_2-\eta, \eta)^{\mathsf T}.
+\tag{22.1}
+$$
+
+第五、第二、第四、第三分量依次恢复 $\eta,u_1,u_2,u_3$，所以它单射，
+像是四维零质量切空间。全正律允许每个方向的双侧充分小扰动。
+$J(0,1)=d=(1,-1,0,-1,1)$ 是固定可见报告的垂直方向；
+尚未指定度量时，不把它称为与所有可见方向正交的法向。
+
+在这个共同四维坐标载体上，另供实对称正定二次式
+
+$$
+Q=\begin{pmatrix}A&B\\B^{\mathsf T}&D\end{pmatrix},
+\qquad A\in\mathbb R^{3\times3},\ B\in\mathbb R^{3\times1},\ D>0,
+\qquad v=(u^{\mathsf T},\eta)^{\mathsf T},\quad \mathcal E_Q(u,\eta)=v^{\mathsf T}Qv.
+$$
+
+定义
+
+$$
+G=A-BD^{-1}B^{\mathsf T},\qquad L=-D^{-1}B^{\mathsf T},\qquad Eu=(u,0).
+\tag{22.2}
+$$
+
+本接口使用经典完成平方和分块逆作为中间工具：
+
+$$
+\begin{aligned}
+\mathcal E_Q(u,\eta)&=u^{\mathsf T}Gu+(\eta-Lu)^{\mathsf T}D(\eta-Lu),\\
+\min_\eta\mathcal E_Q(u,\eta)&=u^{\mathsf T}Gu,\qquad \eta_*=Lu,\\
+Q&=\begin{pmatrix}G+L^{\mathsf T}DL&-L^{\mathsf T}D\\-DL&D\end{pmatrix},
+\qquad G^{-1}=E^{\mathsf T}Q^{-1}E.
+\end{aligned}
+\tag{22.3}
+$$
+
+代入 $DL=-B^{\mathsf T}$ 展开即得平方式，$D>0$ 给唯一极小点，
+分块逆的可见主块给最后式。可引用
+[Schur 二次最小的已有接口](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean)
+和 Lami–Hirche–Adesso–Winter，
+[*Schur complement inequalities for covariance matrices and monogamy of quantum correlations*，
+性质(v)、定理1](https://arxiv.org/abs/1607.05285)
+的 Schur 变分背景；本文只在下列具体五态应用中消费这些工具。
+一般四阶正定式的 $(G,L,D)$ 有 $6+3+1=10$ 个参数，重构式保留全部十项；
+它们不是十个原子。只保留 $G$ 删除了隐藏调整 $L$ 与偏离代价 $D$。
+同一中间配方与块逆对有限维正定隐藏块 $D$ 仍成立，$L$ 相应成为矩阵；
+以下实际五态实例固定一个隐藏坐标，不由块推广增添物理自由度。
+任意另供 $Q$ 不被宣称来自五态 Fisher 源族；该源族另在命题22.4检验。
+
+### 22.2. 相同可见端点的有理路径
+
+**命题 22.2（相反隐藏调整的五态二次反例）。** 在定义22.1的实际切向
+载体上供应
+
+$$
+\mathcal E_0=\|u\|^2+(\eta-3u_1/4)^2,\qquad
+\mathcal E_1=\|u\|^2+(\eta+3u_1/4)^2.
+$$
+
+它们的完整矩阵为
+
+$$
+Q_0=\begin{pmatrix}25/16&0&0&-3/4\\0&1&0&0\\0&0&1&0\\-3/4&0&0&1\end{pmatrix},
+\quad
+Q_1=\begin{pmatrix}25/16&0&0&3/4\\0&1&0&0\\0&0&1&0\\3/4&0&0&1\end{pmatrix}.
+\tag{22.4}
+$$
+
+两者正定，$G_0=G_1=I_3$，
+$L_0=(3/4,0,0)$、$L_1=(-3/4,0,0)$、$D_0=D_1=1$。
+令 $\mathcal S(Q)$ 表示式（22.2）的 $G$。按照加权正定几何均值连接完整式，
+
+$$
+Q_0\#_tQ_1=Q_0^{1/2}
+(Q_0^{-1/2}Q_1Q_0^{-1/2})^tQ_0^{1/2},\qquad t\in\mathbb R,
+\tag{22.5}
+$$
+
+其全实参数路径为
+
+$$
+Q_t=\begin{pmatrix}
+5\cosh\nu/4&0&0&\sinh\nu\\
+0&1&0&0\\0&0&1&0\\
+\sinh\nu&0&0&4\cosh\nu/5
+\end{pmatrix},\qquad \nu=(2t-1)\log2.
+\tag{22.6}
+$$
+
+每点正定、行列式一，且
+
+$$
+\mathcal S(Q_t)=\operatorname{diag}\left(\frac5{4\cosh\nu},1,1\right).
+\tag{22.7}
+$$
+
+尤其完整中点为 $R=\operatorname{diag}(5/4,1,1,4/5)$，
+有效可见中点为 $\operatorname{diag}(5/4,1,1)$；
+先消元再取几何中点则为 $I_3$。完整算术中点消元后为
+$\operatorname{diag}(25/16,1,1)$。当 $t=2$ 时，
+$\mathcal S(Q_2)=\operatorname{diag}(4/13,1,1)\preceq I_3$ 且不相等，
+所以区间内的次序比较不能直接外推至全部实权重。
+
+证明。两个能量式是正定平方和；式（22.3）给端点接口。
+直接计算 $RQ_0^{-1}R=Q_1$，$R$ 是唯一正定解：
+将 $XQ_0^{-1}X=Q_1$ 同余归一化后，唯一正定平方根确定 $X$。
+为验证整条路径确实是式（22.5），令
+$P=R^{1/2}$，令 $H$ 只在坐标 $(u_1,\eta)$ 上为
+$\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，其余为零。
+则
+
+$$
+Q_0=P e^{-(\log2)H}P,\qquad Q_1=P e^{(\log2)H}P,
+\qquad Q_t=P e^{(2t-1)(\log2)H}P.
+$$
+
+同一 $H$ 的指数交换，幂运算直接给参数插值。
+$\cosh^2\nu-\sinh^2\nu=1$ 给非平凡块行列式一，
+正对角和行列式给其正定性；直接 Schur 消元得式（22.7）。
+$\cosh(3\log2)=65/16$ 给 $4/13$，其余两个方向恒为一，
+因此不能把该非零半正定差写成正定差。
+
+**本路径及后续节点所用的几何均值工具。**
+经典共同同余与反演公式对任意实 $t$ 给
+
+$$
+(T^{\mathsf T}Q_0T)\#_t(T^{\mathsf T}Q_1T)
+=T^{\mathsf T}(Q_0\#_tQ_1)T,\qquad
+(Q_0\#_tQ_1)^{-1}=Q_0^{-1}\#_tQ_1^{-1}.
+\tag{22.8}
+$$
+
+这里 $T$ 可逆，所有矩阵位于同一载体。
+令 $C=Q_0^{-1/2}Q_1Q_0^{-1/2}$；
+$U=Q_0^{1/2}T(T^{\mathsf T}Q_0T)^{-1/2}$ 为正交矩阵，
+变换后的归一化矩阵为 $U^{\mathsf T}CU$，谱幂的正交相容性恢复第一式。
+第二式两边同为 $Q_0^{-1/2}C^{-t}Q_0^{-1/2}$。
+交换公式 $Q_0\#_tQ_1=Q_1\#_{1-t}Q_0$ 和
+$Q_0\#_{-t}Q_1=Q_0(Q_0\#_tQ_1)^{-1}Q_0$
+沿用加权几何均值的已有
+[交换与逆夹心接口](../../../D5/S3/Quantum/Hiai/InverseGeometricIdentification.lean)。
+这些经典公式是本实际路径和递归的中间工具，不另编号为新定理。
+
+其经典几何背景见 Moakher，
+[*A Differential Geometric Approach to the Geometric Mean of Symmetric
+Positive-Definite Matrices*](https://doi.org/10.1137/S0895479803436937)。
+在度量 $\langle U,V\rangle_Q=\operatorname{tr}(Q^{-1}UQ^{-1}V)$ 下，
+共同归一化路径 $e^{t\log C}$ 满足
+$\ddot Q=\dot Q Q^{-1}\dot Q$，直接对指数微分即验证该方程。
+这里连接两份二次响应；不同位置的矩阵仍须先供应共同标架或运输。
+
+**本例消元不相容的压缩解释。** 以一般共同分块作为此例、命题22.3的树
+节点及命题22.4的 Fisher 对的中间比较接口，记
+$K_i=Q_i^{-1}$、$C_i=E^{\mathsf T}K_iE=G_i^{-1}$，并令
+
+$$
+V=K_0^{1/2}EC_0^{-1/2},\quad V^{\mathsf T}V=I,
+\quad T=K_0^{-1/2}K_1K_0^{-1/2}.
+$$
+
+对 $0<t<1$，经典压缩幂不等式
+$V^{\mathsf T}T^tV\preceq(V^{\mathsf T}TV)^t$
+及其等号在此可完整解释。补成正交标架，写
+$T=\left(\begin{smallmatrix}C&R_1\\R_1^{\mathsf T}&D_1\end{smallmatrix}\right)$。
+对每个 $s>0$，
+
+$$
+V^{\mathsf T}(T+sI)^{-1}V
+=(C+sI-R_1(D_1+sI)^{-1}R_1^{\mathsf T})^{-1}
+\succeq(C+sI)^{-1}.
+$$
+
+代入经典正幂积分
+
+$$
+x^t=\frac{\sin\pi t}{\pi}\int_0^\infty
+s^{t-1}\frac{x}{s+x}\,ds
+$$
+
+即得压缩不等式。$R_1\ne0$ 时每个参数的逆差为非零半正定，
+其正权积分不可能是零矩阵；等号当且仅当 $R_1=0$，
+亦即 $T$ 保持 $\operatorname{ran}V$。写回并用式（22.8）反序求逆，得到
+
+$$
+\mathcal S(Q_0\#_tQ_1)\succeq G_0\#_tG_1,\qquad 0\le t\le1.
+\tag{22.9}
+$$
+
+内部权重的矩阵等号要求
+$K_1E\subseteq\operatorname{ran}(K_0E)$；由式（22.3）
+
+$$
+K_iE=\binom{G_i^{-1}}{L_iG_i^{-1}},
+$$
+
+它们的列空间是图 $\{(u,L_i u)\}$，故等号恰为 $L_0=L_1$。
+端点自动等号；非零半正定缺口仍可有可见方向的核。
+这些压缩与短算子的经典中间方法只用于本例和下面的实际来源应用。
+
+**本例共用隐藏变量的算术比较。** 更一般的本接口混合
+$u^{\mathsf T}G_i u+c_i(\eta-L_i u)^2$，$c_i>0$，
+权重 $0<t<1$ 时，把 $a=(1-t)c_0,b=tc_1$ 完成平方，得到
+
+$$
+\begin{aligned}
+\eta_*&=\frac{aL_0u+bL_1u}{a+b},\\
+\min_\eta\bigl((1-t)\mathcal E_0+t\mathcal E_1\bigr)
+&=u^{\mathsf T}((1-t)G_0+tG_1)u+\frac{ab}{a+b}((L_0-L_1)u)^2.
+\end{aligned}
+$$
+
+本例 $c_0=c_1=1$，额外代价为 $9t(1-t)u_1^2/4$，
+中点恰为 $9u_1^2/16$。对所有方向都消失等价于共同 $L$，
+对某一个方向则只需 $(L_0-L_1)u=0$。
+这是同一个隐藏变量的极小化，未引入独立环境或量子操作。$\square$
+
+### 22.3. 原生叶数加权后的非消失差异
+
+**命题 22.3（原 Fibonacci 树上的几何读出及接口界）。** 采用原有有序树
+$T_0=\alpha,T_1=\beta,T_{n+2}=\langle T_{n+1},T_n\rangle$，
+其语法与组成归属见
+[基础公式卷定义1.1、数学引文1.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。
+另供命题22.2的 $Q_0,Q_1$ 作为叶读出，令 $\ell$ 是实际叶数，定义
+
+$$
+\mathcal Q(\alpha)=Q_0,\quad\mathcal Q(\beta)=Q_1,\quad
+\mathcal Q(\langle s,t\rangle)=\mathcal Q(s)\#_{\ell(t)/(\ell(s)+\ell(t))}\mathcal Q(t).
+$$
+
+则取 $F_0=0,F_1=1$，对全部 $n\ge0$ 有
+
+$$
+\ell(T_n)=F_{n+1},\quad N_\beta(T_n)=F_n,\quad
+\mathcal Q(T_n)=Q_0\#_{\theta_n}Q_1,\qquad \theta_n=F_n/F_{n+1},
+$$
+
+并有精确误差
+
+$$
+|\theta_n-\varphi^{-1}|=\frac{\varphi^{-(n+1)}}{F_{n+1}},
+\qquad\varphi=(1+\sqrt5)/2.
+$$
+
+因此完整几何读出收敛，其有效边界极限为
+
+$$
+\operatorname{diag}\left(\frac5{4\cosh((2\varphi^{-1}-1)\log2)},1,1\right)\ne I_3.
+\tag{22.10}
+$$
+
+第一系数严格大于一；若先把每片叶压成 $I_3$，同一递归每层都为 $I_3$。
+几何读出的收敛不消去这份来源压缩差。
+
+证明。两个叶计数按相同树递推，初值给所列 Fibonacci 数。
+共同同余归一化后，同一测地线各点只是 $C$ 的谱幂，故
+
+$$
+(Q_0\#_aQ_1)\#_t(Q_0\#_bQ_1)=Q_0\#_{(1-t)a+tb}Q_1.
+$$
+
+叶数加权令参数等于 $\beta$ 叶数比例，归纳给 $\theta_n$。
+Binet 恒等式给 $F_{n+1}/\varphi-F_n=(-1)^n\varphi^{-(n+1)}$，
+除以 $F_{n+1}$ 得误差并涵盖 $n=0,1$。
+代入式（22.7）得极限；$0<\varphi^{-1}<1$ 和
+$\cosh\log2=5/4$ 证明第一系数大于一。
+本读出只保留叶比例，合并不同叶序与括号；
+叶数权不同于 Fibonacci 原子数值，不被当作忠实原生表示或顺序相干表示。
+
+**同一类树读出的保守接口。** 若在相同有序树上另供共同载体的正定叶式，
+以同一 $[0,1]$ 权重递归完整 $Q$，仅在叶保留 $G_i=\mathcal S(Q_i)$，
+递归 $\widehat G=\widehat G_0\#_t\widehat G_1$，则逐节点式（22.9）与
+几何均值的同输入单调性给 $\mathcal S(Q_{\rm full})\succeq\widehat G$。
+该经典单调性可从正幂积分的 resolvent 反序推出固定输入的单调性，
+再用交换式控制另一输入；亦可引用
+[既有均值单调接口](../../../D5/S3/Quantum/Hiai/GeometricMeanOrder.lean)。
+这是树节点的归纳下界，不是精确响应。
+若子节点已认证 $\widehat G_i\succeq\varepsilon_iI$，$\varepsilon_i>0$，
+则父界为
+
+$$
+\widehat G_0\#_t\widehat G_1
+\succeq\varepsilon_0^{1-t}\varepsilon_1^tI.
+$$
+
+若所有叶共同给同一 $L$，用一个可逆剪切
+$(u,\eta)\mapsto(u,\eta-Lu)$ 同时写成 $\operatorname{diag}(G_i,D_i)$。
+同余相容和分块谱幂使每个新节点继续有相同 $L$，
+整棵树上的消元与连接于是精确交换。命题22.2的两叶不满足此条件。
+完整接口仍是式（22.3）的 $(G,L,D)$，不是仅有 $G$。
+
+对原目标应用此界，须先在同一区域认证
+$F_{\rm true}\ge c+u^{\mathsf T}Gu+(\eta-Lu)^{\mathsf T}D(\eta-Lu)-\varepsilon$。
+正定平方项给 $F_{\rm true}\ge c+u^{\mathsf T}Gu-\varepsilon$；
+若 $G\succeq\delta I$，再得 $c+\delta\|u\|^2-\varepsilon$。
+常数、可能的一次项、有效区域和余项上界必须随原任务保留；
+有额外一次项时需重新处理其极小化，不能由 Hessian 正定直接推原目标为正。
+本树界没有建立 Robin 整数指数、预算与原目标的控制桥，
+也没有把实二次极小化解释为测量、环境擦除或物理反演。
+若另接相干量子历史来源，合同还须保存会参与后续干涉的历史间非对角块，
+并供应实际相干分支实现；本实二次接口未供应这两项。
+位置、颜色或声音读口的联合使用仍须来自同一实际载体和已给运输，
+不能分别重置共享隐藏变量的最小点。$\square$
+
+### 22.4. 原五态 Fisher 族的中点反例
+
+**命题 22.4（共同均值的原生 Fisher 对不对中点封闭）。** 在式（22.1）的
+固定 $J$ 坐标中，取真正五态 Fisher 式
+$Q(p)=J^{\mathsf T}\operatorname{diag}(1/p_s)J$，$p_s>0$；
+它沿用
+[隐藏关系卷C-18.4](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)
+的概率度量。取
+
+$$
+p^{(0)}=(1/10,3/10,1/5,3/10,1/10),\quad
+p^{(1)}=(3/10,1/10,1/5,1/10,3/10).
+$$
+
+二者共享 $(X,Y,Z)=(2/5,2/5,1/5)$，$D_i=80/3$，
+$L_0=(1/2,1/2,3/8)$、$L_1=(1/2,1/2,1/8)$。
+以 $a=\sqrt3,b=\sqrt{15}$，完整几何中点为
+
+$$
+R=\frac5{12}
+\begin{pmatrix}
+8a+4b&4b&4a+2b&-8b\\
+4b&8a+4b&4a+2b&-8b\\
+4a+2b&4a+2b&4a+5b&-4b\\
+-8b&-8b&-4b&16b
+\end{pmatrix}.
+\tag{22.11}
+$$
+
+在同一固定坐标中，不存在全正概率 $p$ 使 $R=Q(p)$。
+同时，式（22.9）的有效边界中点不等号并非矩阵等号。
+
+证明。实际代入给 $Q(p^{(i)})=(5/3)H_i$，其中
+
+$$
+H_0=\begin{pmatrix}8&6&6&-8\\6&8&6&-8\\6&6&9&-6\\-8&-8&-6&16\end{pmatrix},\quad
+H_1=\begin{pmatrix}8&2&2&-8\\2&8&2&-8\\2&2&5&-2\\-8&-8&-2&16\end{pmatrix}.
+$$
+
+从隐藏块和交叉项直接得到上述 $D_i,L_i$。
+令 $M=12R/5$，则
+
+$$
+Q(p^{(0)})^{-1}=\frac1{100}Z,\qquad
+Z=\begin{pmatrix}24&-6&-8&6\\-6&24&-8&6\\-8&-8&16&-2\\6&6&-2&9\end{pmatrix},
+\qquad MZM=960H_1.
+$$
+
+第一式由 $H_0Z=60I$；第二式将 $M=aM_a+bM_b$ 分离后，
+混合项 $M_aZM_b=0$，其余项代 $a^2=3,b^2=15$ 逐项给所列整数矩阵。
+因而 $RQ(p^{(0)})^{-1}R=MZM/576=(5/3)H_1=Q(p^{(1)})$。
+
+为证 $R$ 正定，去掉正因子 $5/12$，以隐藏元 $16b>0$ 消元，余下
+
+$$
+\begin{pmatrix}8a&0&4a\\0&8a&4a\\4a&4a&4a+4b\end{pmatrix}.
+$$
+
+再以 $8aI_2$ 消元得 $4b>0$。因此正定方程的唯一性使 $R$ 确为中点。
+另一方面，任意固定 $J$ 的 Fisher 源式必须满足
+$Q_{XY}=Q_{XZ}=Q_{YZ}=1/p_O$，因为三对坐标交叉都只来自 $O$ 行。
+式（22.11）却有
+
+$$
+R_{XY}-R_{XZ}=\frac{5\sqrt3(\sqrt5-2)}6>0,
+$$
+
+违背源约束。两端 $L_i$ 不同，又由式（22.9）的内部等号条件给非零
+半正定边界缺口；不声称它沿所有可见方向严格。
+本反例只检验固定五态坐标中的 Fisher 来源族。
+任意正定锥的几何均值封闭，不代表该更小来源族封闭；
+二者均不自动提供物理场、仪器、量子相位或完整未来历史的实现。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 23. 从实际空窗统计到任意阶原生关系
+
+### 23.1 单窗、位置与实际读序的参数对应
+
+本章实际空窗的有限阶组成层析及全空窗长度的原生分离是 repo-derived 综合应用，不主张原创性；已有矩基、反演、计数与奇偶方向保持原归属，有限包含排除和 Vandermonde 等为 literature-attested 中间工具，分别在下列实际来源推导中消费。
+
+**约定 23.1（同一五模式及初始化）。** 沿用定义 1.1、3.1、8.1 的对象，以下概率坐标改按
+
+$$
+\Sigma=(O,L,T,R,J)
+=(F[\mathrm{null}],F[1],F[2],F[3],F[1,3])
+$$
+
+排列。这里 $T$ 是中模式；下文带下标的 $T_k$ 是位置集合，两者类型不同。原有标签、印字与位移的对应为
+
+| 模式 | 原标签 | 印字 $(x,z,y)$ | 数量 | 组成位移 $d_\sigma$ |
+| --- | --- | --- | ---: | --- |
+| $O$ | $[null]$ | $000$ | $0$ | $(0,0)^{\mathsf T}$ |
+| $L$ | $[2]$ | $100$ | $2$ | $(1,0)^{\mathsf T}$ |
+| $T$ | $[3]$ | $010$ | $3$ | $(0,1)^{\mathsf T}$ |
+| $R$ | $[5]$ | $001$ | $5$ | $(1,1)^{\mathsf T}$ |
+| $J$ | $[25]=[2,5]$ | $101$ | $7$ | $(2,1)^{\mathsf T}$ |
+
+因此定义 3.1 的向量 $(p_0,p_2,p_5,p_{25},p_3)$ 在这里成为 $(p_O,p_L,p_R,p_J,p_T)$；按新顺序书写时则是 $(p_O,p_L,p_T,p_R,p_J)$。坐标仍是 $X=\mathbb E x$、$Y=\mathbb E y$、$Z=\mathbb E z$，不交换中、高位置。
+
+实际状态为 $(s,C)$，$C=(U,V)^{\mathsf T}\in\mathbb N^2$，初态固定为 $s_0=0,C_0=0$。每次从高窗口向低窗口输入，守卫及成功更新仍是
+
+$$
+s\,y(\sigma)=0,\qquad C'=SC+d_\sigma,\qquad s'=x(\sigma),
+\qquad
+S=\begin{pmatrix}1&2\\2&3\end{pmatrix},\quad q=(2,3).
+$$
+
+空词保留初态；实际空窗 $O$ 在任一接缝上合法，并执行 $C'=SC,s'=0$。它与恒等操作、停止或结束符不同。非法输入的错误标签与合法数量分开；本章概率来源只支撑在实际合法有限词上。
+
+**数学引文（单窗已有纤维）。** 推导 3.2–3.3、数学引文 4.1 及 [HiddenRelations C-28.5.2][H49] 的精确参数替换是
+
+$$
+(\mu_1,\mu_2,\mu_3,\mu_{13})=(X,Z,Y,\kappa),\qquad \kappa=p_J.
+$$
+
+它们给出的已归一化五律，在本章顺序下为
+
+$$
+p=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad
+\max(0,X+Y+Z-1)\le\kappa\le\min(X,Y).
+$$
+
+保持总质量及三个位置均值的有符号方向为 $d=(1,-1,0,-1,1)$。不保留总质量时，仅三个位置均值的核是 $\operatorname{span}\{\delta_O,d\}$，不是一维；因为这三个读口在五模式空间上秩三，$\delta_O,d$ 独立且均被其消去。单窗数量及平方的已有展开是
+
+$$
+q_{\rm win}=2x+3z+5y,\qquad
+q_{\rm win}^2=4x+9z+25y+20xy.
+$$
+
+故数量均值只用 $X,Z,Y$，二次均值另用 $\kappa$。这些公式继续由原条目承担，不另立单窗恢复定理。
+
+**约定 23.2（位置报告与已有矩坐标）。** 令 $n\ge0,r\ge0$ 为整数，将 [HiddenRelations C-28.1.2、C-28.2.1][H49] 的 $N,\Sigma_N,b_i,A$ 分别记作 $n,\Gamma_n,u_i,T'$：
+
+$$
+\Gamma_n=\{I\subseteq[n]:I\text{ 不含相邻位置}\},\qquad
+u_i(I)=\mathbf1_{i\in I},\qquad
+m_{T'}(I)=\mathbf1_{T'\subseteq I}=\prod_{i\in T'}u_i(I).
+$$
+
+空积 $m_\varnothing=1$；$\Gamma_0=\{\varnothing\}$。来源律满足 $p_I\ge0,\sum_Ip_I=1$，$\mu_{T'}=\mathbb E_p m_{T'}$，特别 $\mu_\varnothing=1$。非法位置集合的共同占位恒零。阶数报告为
+
+$$
+\mathcal O_r(p)=(\mu_{T'}:T'\in\Gamma_n, |T'|\le r).
+$$
+
+它包括质量，等价于每组至多 $r$ 个位置的完整联合律：精确零一元组的事件指示按所选零位展开补事件，得到所含各阶 $m_{T'}$；反向从这些联合律取全一事件即可。非法的全一事件概率为零，并未添加非法来源。
+
+对 $n=3L$，低到高分块为 $\{1,2,3\},\ldots,\{3L-2,3L-1,3L\}$；实际时间按相反块序输入。[HiddenRelations C-28.1.4][H49] 与 [关系延拓几何定理 7.2][N49] 已证明它与定义 8.1 的零初始化、自由末接缝合法 $L$ 窗词域 $\Omega_L$ 双射。其参数是
+
+$$
+u_{3(L-j)+1}=x(\sigma_j),\quad
+u_{3(L-j)+2}=z(\sigma_j),\quad
+u_{3(L-j)+3}=y(\sigma_j),\qquad 1\le j\le L.
+$$
+
+印刷位序没有改成时间顺序。$n$ 不被三整除时，$\Gamma_n$ 仍是合法位置域，但不据此声称具有整数个完整原生窗口。
+
+### 23.2 层析及奇偶应用所用的已有观察坐标
+
+**数学引文（完整基、计数与支撑）。** [HiddenRelations C-28.2.2–C-28.3.3、C-28.5.1][H49] 已给完整函数基、按阶计数和双向概率反演。以下只固定本章两项应用的对应，不将这些结果重新编号。
+
+函数 $g:\Gamma_n\to\mathbb R$ 的已有系数记作
+
+$$
+J_{T'}g=\sum_{I\subseteq T'}(-1)^{|T'\setminus I|}g(I),\qquad
+g=\sum_{T'\in\Gamma_n}(J_{T'}g)m_{T'}.
+$$
+
+为定位定理 23.2 中实际来源差，采用与此基对偶的有符号数组记号
+
+$$
+D_{T'}=\sum_{I\subseteq T'}(-1)^{|T'|-|I|}\delta_I.
+$$
+
+它只是下述原生应用消费的有限包含反演中间坐标。若 $S'\not\subseteq T'$，$\langle m_{S'},D_{T'}\rangle=0$；若 $S'\subseteq T'$，该配对为
+
+$$
+\sum_{S'\subseteq I\subseteq T'}(-1)^{|T'|-|I|}
+=(1-1)^{|T'\setminus S'|}=\mathbf1_{S'=T'}.
+$$
+
+每个 $T'$ 的全部子集都合法，故求和区间是 Boolean 区间；整个 $\Gamma_n$ 偏序不是 Boolean 格，相邻单点没有合法并集。两族大小均为 $|\Gamma_n|$，上述配对给对偶基。于是原有逆式也可写为
+
+$$
+p=\sum_{T'\in\Gamma_n}\mu_{T'}D_{T'},\qquad
+p_I=\sum_{\substack{T'\in\Gamma_n\\T'\supseteq I}}
+(-1)^{|T'\setminus I|}\mu_{T'}.
+$$
+
+这与 C-28.5.1 的反向重构是同一变换；候选矩成为概率律的条件仍是 $\mu_\varnothing=1$ 和每个逆坐标非负。非空 $T'$ 的 $D_{T'}$ 总质量零，只改变完整矩中的 $\mu_{T'}$；$D_\varnothing=\delta_\varnothing$ 携带质量。$D_{\{1,3\}}$ 按约定 23.1 的五模式顺序就是 $d$。
+
+因此本章所用的阶数遗漏坐标精确为
+
+$$
+\ker\mathcal O_r=\operatorname{span}\{D_{T'}:|T'|>r\},\qquad
+\dim\ker\mathcal O_r=
+\sum_{k=r+1}^{\lceil n/2\rceil}\binom{n-k+1}{k}.
+$$
+
+空和为零。这里的核是完整有符号来源空间上的线性核；由于已含质量，其每个方向都总质量零。C-28.3.2 的计数双射是把合法 $k$ 元组 $i_1<\cdots<i_k$ 压为 $i_\ell-(\ell-1)$，成为 $[n-k+1]$ 的 $k$ 元组；这就是公式所用的经典路径独立集计数。记其原有计数多项式为 $H_n(t)$，则
+
+$$
+H_0=1,\quad H_1=1+t,\quad H_n=H_{n-1}+tH_{n-2}\ (n\ge2),\quad
+H_n(1)=F_{n+2},\quad F_0=0,F_1=1.
+$$
+
+与原条目的逐阶行对应为
+
+| $n$ | 各阶数 | 总数 | 全部二阶及以下报告的遗漏维数 |
+| ---: | --- | ---: | ---: |
+| $3$ | $1,3,1$ | $5$ | $0$ |
+| $6$ | $1,6,10,4$ | $21$ | $4$ |
+| $9$ | $1,9,28,35,15,1$ | $89$ | $51$ |
+
+尤其 $H_9(t)=1+9t+28t^2+35t^3+15t^4+t^5$。若某个报告纤维含处处正的律，允许各核方向作足够小的双侧扰动，故上述核维数也是可行纤维的仿射维数。在边界则沿用 C-28.3.3：对含质量的报告矩阵 $H$ 和报告 $y$，令 $J$ 是所有可行律支撑的并，维数为 $|J|-\operatorname{rank}(H|_J)$；不能仅取某一稀疏律的支撑。
+
+**证明中的目标判据。** 定理 23.1 将数量矩拉回这些函数，定理 23.2 将给具体非零 $D_{T_k}$。对它们的任意实际目标 $g$，完整基直接给
+
+$$
+\mathbb E_p g=\sum_{T'}(J_{T'}g)\mu_{T'}.
+$$
+
+因而对 $\Gamma_n$ 上全部概率律，$\mathcal O_r$ 决定 $\mathbb E_p g$ 当且仅当所有 $|T'|>r$ 的 $J_{T'}g$ 为零。充分性由上式。必要性按 [HiddenRelations C-28.11.2][H49] 的全律反证取处处正的 $p$：若 $J_{T'}g\ne0$，令
+
+$$
+0<\varepsilon<\min_{I:D_{T'}(I)\ne0}\frac{p_I}{|D_{T'}(I)|}.
+$$
+
+则 $p\pm\varepsilon D_{T'}$ 非负归一化，报告相同，目标差为 $2\varepsilon J_{T'}g\ne0$。所以即使允许报告的任意非线性后处理，全律恢复也失败。这是已有函数基和全正双律判据在本章目标上的消费，不另立一般充分统计定理。限定某个支撑、来源族或单一纤维时，必要性只检查其中实际可行的差方向，不能照搬全域条件。
+
+**约定 23.3（完整窗口报告与质量）。** 取有限非空窗口族 $\mathcal W=(W_j)$，$W_j\subseteq[n]$，报告每个 $W_j$ 上完整的同源位置联合律。按前述补事件展开，该报告正好给
+
+$$
+\mathcal V_{\mathcal W}=\{T'\in\Gamma_n:T'\subseteq W_j\text{ 对某个 }j\}
+$$
+
+中的全部矩，包括 $\mu_\varnothing$。反向从矩也恢复每个报告事件。故其有符号核由 $T'\notin\mathcal V_{\mathcal W}$ 的 $D_{T'}$ 张成，报告秩为 $|\mathcal V_{\mathcal W}|$。若采用空窗口族，本章约定另保留总质量，令 $\mathcal V_\varnothing=\{\varnothing\}$；若连质量也不保留，则有符号报告秩零，核包含 $D_\varnothing$，不得把这两个合同混用。
+
+对实际 $L\ge1$ 个不交的连续三位置窗口，C-28.2.2 的同一完整基在每块给四个非常数函数 $x,z,y,xy$；各块只共用常数，且这 $4L$ 个合法矩互异。因此该原生来源上的完整单窗报告秩及全正遗漏维数为
+
+$$
+1+4L,\qquad F_{3L+2}-(1+4L).
+$$
+
+它在 $L=2$ 精确回到 [HiddenRelations C-28.4.2][H49] 与本卷定理 12.1 的九个已见坐标、十二个遗漏坐标；高窗为行、低窗为列，跨缝守卫是 $u_4u_3=0$。本卷式 (12.2) 的十二个混合函数，与 C-28.4.2 的八个跨块合法对和四个三元，通过该完整基互为坐标，不能把每一混合函数都视为二阶位置关系。
+
+若改给所有位置的二阶及以下矩，C-28.3.2 给秩
+
+$$
+1+3L+\binom{3L-1}{2}.
+$$
+
+在九位置上，两种合同分别为 $89-13=76$ 与 $89-38=51$ 个遗漏方向。前者未报告跨窗对，后者报告了所有合法对；后者在 $L=2$ 为 $21-17=4$，而非十二。上述维数在存在全正补全时成立，其他可行支撑按 C-28.3.3 限制重算。守卫只排除相邻同时占位；独立、条件独立或因子化律均须另给来源假设，如本卷命题 8.9，不能据共享接缝降低参数。
+
+这些有限包含排除、秩零度与二项计数均是经典中间工具；这里把它们用于同一原生来源的观察域和下列实际目标，不将它们另列为新的一般定理。[ResponseHigherBlock §§6–7][R49] 的单位置均值、完整 prefix/suffix separator 是另外两份观察合同：其 $h_S$ 保持一次矩，却通常改变其他完整矩；其固定内部词的方形方向保持 prefix/suffix。两者都不能代替本章的 $D_{T'}$ 或任意 $\mathcal W$ 的完整报告。
+
+### 23.3 只用实际空窗的有限阶组成层析
+
+**定理 23.1（实际 Fibonacci 比率恢复有限阶联合组成矩）。** 固定任意 $L\ge0$ 及 $\Omega_L$ 上任意概率律，在同一个零初始化读者读完来源词后，记其实际组成为 $C=(U,V)^{\mathsf T}$。对整数 $h\ge0$，在这份词后追加 $h$ 个实际空窗，记数量为 $Q_h$；$h=0$ 表示当前终值。则
+
+$$
+Q_h=qS^hC=\alpha_hU+\beta_hV,\qquad
+\alpha_h=F_{3h+3},\quad\beta_h=F_{3h+4},\qquad
+Q_{h+2}=4Q_{h+1}+Q_h.
+$$
+
+对任意整数 $r\ge0$，两份理想统计资料
+
+$$
+\mathcal A_r=\{\mathbb E Q_h^m:h\ge0,\ 0\le m\le r\},\qquad
+\mathcal B_r=\{\mathbb E U^aV^b:a,b\ge0,\ a+b\le r\}
+$$
+
+互相确定。仅 $0\le h\le r$ 的空窗数量矩已经足够；更精确地，每一齐次次数 $m$ 只需 $0\le h\le m$ 的 $m$ 次矩。因此至多需要 $\binom{r+2}{2}$ 个独立标量统计量，其中包括质量一；在受限历史支撑上秩可更低。全部未来均值只消费 $\mathbb E U,\mathbb E V$。增加空窗长度不会使这些至多 $r$ 次的统计取得更高次的独立组成矩。
+
+证明。合法词的组成和实际递推沿用本卷定义 8.1、式 (13.9) 及 [HiddenRelations C-28.1.4][H49]。实际空窗位移零、守卫总合法，故追加 $h$ 次正好给 $S^hC$，首次追加即使原末接缝为一也将其置零。数量恒等式用 $S=M^3$，$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$；$qM^t=(F_{t+3},F_{t+4})$ 从 $t=0$ 的 $(2,3)$ 和 Fibonacci 递推得到。因此 $qS^h$ 给所列系数。直接相乘 $S^2=4S+I$ 给数量递推，与 [关系延拓几何定理 7.3][N49] 的两读数更新是同一实际作用。
+
+二项式展开给每个次数 $m$ 的正向式
+
+$$
+\mathbb E Q_h^m
+=\sum_{j=0}^m\binom mj\alpha_h^{m-j}\beta_h^j\,
+\mathbb E U^{m-j}V^j.
+$$
+
+反向只用上述实际系数，未增加任意方向的测量。令 $t_h=\beta_h/\alpha_h$，$\alpha_h>0$。对 $k>h\ge0$，把两行共同右因子 $S^h$ 提出，得到
+
+$$
+\begin{aligned}
+\alpha_h\beta_k-\beta_h\alpha_k
+&=\det\begin{pmatrix}qS^h\\qS^k\end{pmatrix}\\
+&=(-1)^h\det\begin{pmatrix}q\\qS^{k-h}\end{pmatrix}\\
+&=(-1)^h\bigl(2F_{3(k-h)+4}-3F_{3(k-h)+3}\bigr)\\
+&=(-1)^hF_{3(k-h)}\ne0.
+\end{aligned}
+$$
+
+这里 $\det S=-1$，而 $2F_{n+4}-3F_{n+3}=F_n$ 由两次递推展开得到。故实际 Fibonacci 比率节点两两不同；不要求按 $h$ 单调排列。
+
+将各行除以 $\alpha_h^m$，令 $e_j=\binom mj\mathbb E U^{m-j}V^j$，则已知量是多项式 $\sum_{j=0}^m e_jt^j$ 在 $t_0,\ldots,t_m$ 的值。经典 Vandermonde 可逆性给唯一 $e_j$，再除以非零的 $\binom mj$ 得全部 $m$ 次联合矩。其矩阵就是 [有限 Vandermonde 原声明][V49] 中 `vandermonde_det_ne_zero_of_injective` 的评价矩阵；原 `finiteMomentReadout` 用节点振幅行向量乘此矩阵，本处用系数列向量被它左乘。非零行列式同时给这两个转置方向的可逆性，不把原声明的“矩索引”误认成这里的“空窗索引”。$m=0$ 是单元矩阵，仅恢复质量；$L=0$ 时 $U=V=0$，正次数资料全零，亦满足结论。
+
+逐次取 $m=0,\ldots,r$，所需个数为 $\sum_{m=0}^r(m+1)=\binom{r+2}{2}$。每个 $Q_h$ 是同一 $U,V$ 的线性函数，故所有至多 $r$ 次资料都属于这个有限矩空间，且这个反演已给其全部；不能靠更多 $h$ 突破次数上界。
+
+在 $n=3L$ 的位置表示中，$U,V$ 都是所选位置指示函数的固定线性组合，来自同一组成位移的 Horner 展开。因此 $Q_h^m$ 多线性化后只含 $|T'|\le m$ 的合法共同事件。§23.2 的目标判据说明：它们可由相应位置阶数报告计算，但组成矩的恢复不等于所有同阶位置矩逐一恢复。完整窗口边缘的 $1+4L$ 秩也不能被一次数量均值替换；一个平方矩只给跨关系的某个加权组合。证毕。
+
+**假设 23.4（概率来源扩展及统计范围）。** 定理 23.1 的固定长度来源是有限的，全部矩自动有限。若改用可数的合法有限词来源、允许无界长度，保持同一零初始化，须对给定 $r$ 另要求 $\mathbb E(|U|+|V|)^r<\infty$；$r=0$ 只要求概率质量一。该条件使全部所需联合绝对矩及每个有限 $h$ 的 $|Q_h|^m$ 可积，有限二项和的交换与同一反演仍成立。若初始组成另供为同一个确定常数，必须保留它在终组成内的贡献；不能逐样本把它当成零。
+
+理想统计资料是同一概率律下的精确期望；连续输入得到的随机回复、一次已取得值、采样估计及完整未知律是不同对象。这里没有噪声稳定性、任意探针、复位、免费复制或取得这些资料的测量结论。有限矩恢复只恢复其声明的目标；不反演组成所遗忘的原树，也不从经典统计恢复量子态。
+
+### 23.4 中模式奇偶来源在每个空窗长度上的首次可见阶
+
+**定理 23.2（全零接缝的任意阶原生分离）。** 固定整数 $k\ge2$。每个来源位 $A_j\in\{0,1\}$ 决定第 $j$ 个按高到低时间输入的窗口：$A_j=0$ 输入 $O$，$A_j=1$ 输入 $T$。取两个有限来源律
+
+$$
+P_{\rm even}(A)=2^{1-k}\mathbf1_{\sum_j A_j\equiv0\pmod2},\qquad
+P_{\rm odd}(A)=2^{1-k}\mathbf1_{\sum_j A_j\equiv1\pmod2}.
+$$
+
+所有 $2^k$ 份词在约定 23.1 的同一初态合法，实际全部接缝为零。两律的每个真子窗口组 $B\subsetneq[k]$ 都有同一个完整联合律，每个二元元组的质量为 $2^{-|B|}$；带完整接缝向量的联合报告也相同。对每个 $h\ge0$ 的实际空窗延续，
+
+$$
+Q_h=\sum_{j=1}^k w_{j,h}A_j,\qquad
+w_{j,h}=F_{3(h+k-j)+4}.
+$$
+
+全部 $0\le m<k$ 次数量矩在两个来源下相同，第一次非零差在 $k$ 次，准确为
+
+$$
+\mathbb E_{\rm even}Q_h^k-\mathbb E_{\rm odd}Q_h^k
+=(-1)^k2^{1-k}k!\prod_{j=1}^k w_{j,h}.
+$$
+
+对每个 $h$，两份完整数量分布支撑不交，按 $\operatorname{TV}(\nu,\nu')=\sup_E|\nu(E)-\nu'(E)|=\tfrac12\sum_t|\nu(t)-\nu'(t)|$ 定义的总变差为一。这里的纯奇偶律支撑在中模式子语言，并非整个 $\Gamma_{3k}$ 的全支撑律。
+
+证明。$O,T$ 的两端占位都为零，$d_T=(0,1)^{\mathsf T}$，故每步守卫成立，新接缝零。该同源嵌入正是 [HiddenRelations C-21.1–C-21.2、C-28.6.1][H49]、本卷式 (13.6) 及 [原生联合来源的 `bitWindow`、`embed`][J49]；此处取普通偶、奇计数符号。任一真子集漏掉至少一位，在该位求和使奇偶项抵消，完整边缘遂为均匀律。空组的质量一也在其中。不是用各窗边缘独立性代替联合来源。
+
+组成和数量仍来自实际执行：
+
+$$
+C_k=\sum_{j=1}^k S^{k-j}d_TA_j,\qquad
+qS^hC_k=\sum_{j=1}^k qM^{3(h+k-j)}d_TA_j.
+$$
+
+$qM^td_T=F_{t+4}$ 给权重。$h=0$ 恰是 [HiddenRelations C-22.1][H49] 的原生终值，$h=1$ 恰是本卷式 (13.19) 的继续回复；一般 $h$ 保持同一来源及实际连续空窗更新。
+
+对次数 $m<k$ 展开 $Q_h^m$，二值幂等使每个单项式只依赖至多 $m$ 个不同 $A_j$，其期望已由真子组联合律固定。$m=k$ 时，只有每个位各出现一次的项同时含全部 $k$ 位，其系数为 $k!\prod_jw_{j,h}$。全一串在偶减奇中的质量差为 $(-1)^k2^{1-k}$，给准确差。这正消费 [HiddenRelations C-22.2][H49] 的有限差分证明，参数替换为该实际 $h$ 的权重；不是另立一般 parity 定理。
+
+用 §23.2 的对偶坐标，令
+
+$$
+T_k=\{2,5,\ldots,3k-1\}\subseteq[3k],\qquad
+I(A)=\{3(k-j)+2:A_j=1\}.
+$$
+
+这些位置两两间隔三，全部子集合法，且按从低到高标号与时间 $j$ 逆序对应。两来源的有符号差精确为
+
+$$
+P_{\rm even}-P_{\rm odd}=(-1)^k2^{1-k}D_{T_k}.
+$$
+
+故它只改变完整矩中的 $\mu_{T_k}$；其它全部合法共同矩相同，不仅是某一组窗口边缘相同。实际目标有
+
+$$
+J_{T_k}(Q_h^m)=0\ (m<k),\qquad
+J_{T_k}(Q_h^k)=k!\prod_jw_{j,h}>0.
+$$
+
+这把 §23.2 的全律目标判据落实到真实来源上的首次可见目标；纯端点的合法性由上述概率构造保证，不以在任意边界上沿 $D_{T_k}$ 任意移动为前提。
+
+取本证明的 $k=3,h=0$，实际九位置的时间与占位字典为
+
+| 高到低时间 $j$ | 低到高位置中的中位 | 位变量 | 原生数量权 |
+| ---: | ---: | --- | ---: |
+| $1$ | $8$ | $A_1=u_8$ | $55$ |
+| $2$ | $5$ | $A_2=u_5$ | $13$ |
+| $3$ | $2$ | $A_3=u_2$ | $3$ |
+
+所以 $Q_0=55A_1+13A_2+3A_3$，两来源的输出和前三次均值为
+
+| 来源 | 四个输出，各质量 $1/4$ | $\mathbb E Q_0$ | $\mathbb E Q_0^2$ | $\mathbb E Q_0^3$ |
+| --- | --- | ---: | ---: | ---: |
+| 偶 | $0,16,58,68$ | $71/2$ | $2061$ | $128410$ |
+| 奇 | $3,13,55,71$ | $71/2$ | $2061$ | $263255/2$ |
+
+全部两窗口完整联合律相同，同窗 $\kappa$ 恒零，全部位置二阶矩也相同，但奇减偶的三次均值为 $6435/2$。按偶减奇的固定方向，位置数组差是 $-D_{\{2,5,8\}}/4$，属于实际第三阶关系。
+
+时间字典由约定 23.2 的 $3(k-j)+2$ 得到，不能把 $55$ 给最低中位。四个偶位串为 $000,011,101,110$，四个奇位串为 $001,010,100,111$；代入实际 $Q_0$ 给表。两组平方和同为 $8244$，偶立方和为 $513640$，奇立方和为 $526510$，各除四得到表中数。其差还由上面的完整混合项系数给
+
+$$
+\frac{3!}{4}\,55\cdot13\cdot3=\frac{6435}{2}.
+$$
+
+任取两个窗口的四个二元元组各质量 $1/4$，故完整两窗口报告相同，不是只匹配两个均值。每窗只含 $O,T$，端点占位恒零，因而单窗 $\kappa=0$。对 $T_3=\{2,5,8\}$，上面的有符号来源差系数是 $(-1)^3/4=-1/4$；对偶配对保证其他全部完整矩不变。这个实例延续 C-22.1 的权重与 C-22.2 的差分，准确数量和九位置对应共同给出了原生三阶消费者。
+
+最后证明完整数量支撑的分离。对 $j<k$，令 $n'=3(h+k-j-1)+4\ge4$。Fibonacci 递推给
+
+$$
+w_{j,h}=F_{n'+3}=3F_{n'}+2F_{n'-1}>3F_{n'}=3w_{j+1,h}.
+$$
+
+因此 $\sum_{\ell=j+1}^k w_{\ell,h}<w_{j,h}\sum_{a=1}^{k-j}3^{-a}<w_{j,h}$；末位的尾和为零，亦小于正权。两位串在时间顺序上首个不同位置的权差超过其余全部权差之和，故加权数量映射单射。偶、奇位串集合不交，它们的数量像也不交；取偶像为事件即得总变差一。证明使用每个 $h$ 的实际正权，不借未声明的任意编码。证毕。
+
+**证明中的全支撑对应。** 若要求整个 $\Omega_k\cong\Gamma_{3k}$ 上全支撑，令 $u$ 是该域任一处处正的共同背景律，取 $0<\lambda<1$，置
+
+$$
+\widetilde P_{\rm even}=(1-\lambda)u+\lambda P_{\rm even},\qquad
+\widetilde P_{\rm odd}=(1-\lambda)u+\lambda P_{\rm odd}.
+$$
+
+所有合法质量均严格正；共同背景在差中抵消，真子窗口联合报告及全部 $m<k$ 的每个 $h$ 数量矩仍相同，$k$ 次差乘 $\lambda$。来源及每个 $h$ 的完整数量律总变差均为 $\lambda$，不能同时称为全支撑且总变差一。$k\ge3$、$h=1$、均匀背景时，这精确回到本卷定理 13.2、命题 13.4；[原生 `native_probability_separation`][J49] 用 $n=k$、$\mathrm{mix}=\lambda$，符号 $\varepsilon=\prod_j(2A_j-1)=(-1)^{k-\sum A_j}$，所以偶来源对应 $\varepsilon=(-1)^k$，奇来源对应其负号。其零回复纤维归 [原生 `null_reply_zero_iff`][Z49]，是整个初始化有限词域中全空词的纤维，未改成低阶统计的判据。
+
+### 23.6 固定有限阶报告的适用边界
+
+**固定阶报告应用（定理23.2在任意有限长度的后果）。** 给任意整数 $r\ge1$，取 $k=r+1$。存在两份同一零初始化、实际合法、全零接缝的 $k$ 窗有限来源律，使每组至多 $r$ 个窗口的完整联合报告相同，且
+
+$$
+\mathbb E_{\rm even}Q_h^m=\mathbb E_{\rm odd}Q_h^m
+\quad\text{对所有 }h\ge0,\ 0\le m\le r,
+$$
+
+但每个 $h$ 的完整数量律不同，其总变差为一。因此在允许任意历史长度及任意合法有限来源律的类上，固定阶窗口联合报告连同全部这些实际空窗矩，不能统一恢复完整未来数量律。
+
+证明。采用定理 23.2 的 $k=r+1$ 来源，至多 $r$ 窗的组都是真子组，所需 $m$ 都小于 $k$，而每个 $h$ 的数量像仍为不交的奇偶两类。同样任取 $k>r$ 都成立，故固定 $r$ 时反例长度可以任意大。若坚持全支撑，可用该定理的共同正背景混合，所有相等保留，总变差改为任意所选 $\lambda\in(0,1)$。$r=0$ 的质量报告也不能恢复完整律，例如同一 $k=2$ 的两个端点；这不要求把定理23.2的主参数范围改为 $k=1$。证毕。
+
+本结论区分了三个目标：数量均值的充分性、有限窗口组的完整联合律、全部历史或未来数量律。定理 23.1 的均值闭包仍成立；有限阶组成层析也仍成立，其目标是有限阶矩。若已知来源只可能是定理 23.2 的两个纯端点，并实际取得一次精确 $Q_h$，不交支撑立即识别该次来源类别。因此这里不是计算、测量或有限样本取得的下界，也未证明需要无限多基本模式。
+
+这里每个 $r$ 分别给一对普通有限来源。删去奇偶律的一位后，余下位为均匀律，故非零奇偶偏好的各长度族并不自动成为同一无限过程的相容边缘；这一范围与 [HiddenRelations C-21.2][H49]、本卷命题 13.5 及 [JointProjection §20][P49] 的原量词一致。本章也不把 $\Omega_k$ 的经典律识别成原树、物理时空、量子态或任何零点与约数不等式目标。
+
+**数学引文（本应用的经典歧义与情境拼接）。** 上述两份不同共同经典律都已经存在，且产生同一所保留报告；这是一份报告的非唯一提升。Abramsky–Brandenburger，*The Sheaf-Theoretic Structure Of Non-Locality and Contextuality*，[arXiv:1102.0264v7](https://arxiv.org/html/1102.0264v7)，§§2.4–2.5、3、Theorem 8.1，处理给定测量覆盖及在交叠上相容的各情境概率律：在普通非负概率情形，全局分布须同时限制为全部情境律；其不存在才是该框架的非情境拼接障碍。Theorem 8.1 的隐变量分布独立于情境，各隐变量的单测量边缘相容且情境响应因子化；Bell 情形另有各方测量选择的覆盖结构。定理 23.2 的已有两份全局律各自提供全局提升，因而其局部不充分并不建立这种不存在性。
+
+Werner，*Quantum states with Einstein-Podolsky-Rosen correlations admitting a hidden-variable model*，Physical Review A 40, 4277，[DOI 10.1103/PhysRevA.40.4277](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.40.4277)，摘要给非经典相关态仍可有隐变量模型的反例。其指定投影测量类的局域模型条件在这里仅列为有范围的待核引文，不作为本章证明前提，也不扩为全部 POVM。经典联合律不等于乘积律，不意味着量子纠缠，更不推出 Bell 违反。这些文献只限定本原生应用的解释范围，不另列一般量子定理。
+
+[H49]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[N49]: FIB_RELATIONAL_CONTINUATION_GEOMETRY.md
+[R49]: AURIC_FIB_ATOM_RESPONSE_CONTRAST_HIGHER_BLOCK_CYCLES_AND_FUTURE_VISIBILITY.md
+[P49]: AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS.md
+[V49]: ../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean
+[J49]: ../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean
+[Z49]: ../../../D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean
+
+## 追加锚（本行以下为增补区）

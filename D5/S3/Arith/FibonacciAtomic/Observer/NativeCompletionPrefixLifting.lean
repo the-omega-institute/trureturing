@@ -62,7 +62,7 @@ def HasInfiniteBranch (t : CompletionTree) : Prop :=
   ∃ b : Nat → Bool, ∀ d : Nat,
     completionReadout (List.ofFn (fun i : Fin d => b i.val)) t ≠ .absent
 
-private theorem tree_cases {R : CompletionTree → Prop} (T : CompletionTree)
+theorem tree_cases {R : CompletionTree → Prop} (T : CompletionTree)
     (leaf_case : ∀ b, R (leaf b)) (node_case : ∀ l r, R (node l r)) : R T := by
   refine PFunctor.M.casesOn' T ?_
   intro a g
@@ -78,7 +78,7 @@ private theorem tree_cases {R : CompletionTree → Prop} (T : CompletionTree)
       rw [he]
       exact node_case (g false) (g true)
 
-private theorem embed_readout (a : Address) (t : Source) :
+theorem embed_readout (a : Address) (t : Source) :
     completionReadout a (embed t) = readout a t := by
   induction a generalizing t with
   | nil => cases t with

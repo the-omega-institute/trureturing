@@ -1,0 +1,6 @@
+**Theorem 54.2 (quotient preserves a declared resource objective).** If $R$
+is a $\Gamma$-compatible action congruence, every finite policy trace and its
+contracted resource value are invariant under replacing a state by its
+$R$-class. Consequently, finite-budget feasibility and fixed-policy resource
+thresholds are preserved by the quotient.
+

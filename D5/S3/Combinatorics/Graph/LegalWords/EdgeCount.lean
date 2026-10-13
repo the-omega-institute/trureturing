@@ -23,7 +23,7 @@ abbrev Legal (n : ℕ) := {w : Fin n → Bool // Adm n w}
 def supportCount (n k : ℕ) : ℕ :=
   (Finset.univ.filter (fun b : Legal n => occupationCount b.val = k)).card
 
-private def erase {n : ℕ} (b : Legal n) (i : Fin n) : Legal n :=
+def erase {n : ℕ} (b : Legal n) (i : Fin n) : Legal n :=
   ⟨Function.update b.val i false, by
     rw [adm_iff_no_adjacent_true]
     intro j k hjk
@@ -50,7 +50,7 @@ private theorem erase_occupation {n : ℕ} (b : Legal n) (i : Fin n)
   rw [he]
   simpa [hi, occupationCount] using hsum
 
-private theorem erase_adj {n : ℕ} (b : Legal n) (i : Fin n)
+theorem erase_adj {n : ℕ} (b : Legal n) (i : Fin n)
     (hi : b.val i = true) : (legalWordGraph n).Adj b (erase b i) := by
   classical
   change (Finset.univ.filter (fun j => b.val j ≠ (erase b i).val j)).card = 1
@@ -63,16 +63,16 @@ private theorem erase_adj {n : ℕ} (b : Legal n) (i : Fin n)
     · simp [hj]
   rw [he, Finset.card_singleton]
 
-private abbrev Marked (n : ℕ) := Σ b : Legal n, {i : Fin n // b.val i = true}
+abbrev Marked (n : ℕ) := Σ b : Legal n, {i : Fin n // b.val i = true}
 
 open Classical in
-private noncomputable def deletionEdge (n : ℕ) (p : Marked n) :
+noncomputable def deletionEdge (n : ℕ) (p : Marked n) :
     ↥((legalWordGraph n).edgeFinset) := by
   classical
   exact ⟨s(p.1, erase p.1 p.2.val),
     SimpleGraph.mem_edgeFinset.mpr (erase_adj p.1 p.2.val p.2.property)⟩
 
-private theorem deletionEdge_bijective (n : ℕ) : Function.Bijective (deletionEdge n) := by
+theorem deletionEdge_bijective (n : ℕ) : Function.Bijective (deletionEdge n) := by
   classical
   constructor
   · rintro ⟨b, i⟩ ⟨c, j⟩ he

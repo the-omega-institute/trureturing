@@ -1,0 +1,49 @@
+**Theorem 98.2 (source masses, compact trace and covariance convergence).**
+For a nonempty $p$, put $d=n-s(p)$. The address is reached exactly
+when $d\ge0$ and $n-s(p^{-})\ge2$. In that case its entire descendant
+source is $T_d$, and
+
+$$
+m_n(p)=\frac{N_d}{N_n}.
+\tag{98.4}
+$$
+
+Otherwise $m_n(p)=0$. A reached $d=0$ is an alpha terminal, a reached
+$d=1$ is a beta terminal, and a reached $d\ge2$ is a branch.
+Each reached node has point mass $1/N_n$; a terminal has no strict
+descendant addresses. At the root the same label classification uses
+$d=n$, including the singletons $n=0,1$.
+
+For every fixed $p$, $m_n(p)\to m(p)$. There is a uniform bound
+$m_n(p)\le K a^{|p|}$ with $K=2\varphi$, and $m(p)\le a^{|p|}$.
+If $P_h$ is the coordinate projection onto $1\le |p|\le h$, then
+
+$$
+\begin{aligned}
+\|J_n(I-P_h)\|&\le
+ \left(\frac{K a^{h+1}}{1-a}\right)^{1/2},\\
+\|J(I-P_h)\|&\le
+ \left(\frac{a^{h+1}}{1-a}\right)^{1/2}.
+\end{aligned}
+\tag{98.5}
+$$
+
+Consequently $J$ has a unique bounded compact extension,
+and, on the specified common edge space,
+
+$$
+v_n\longrightarrow v\text{ in }\ell^2,\qquad
+B_n\longrightarrow B,\quad \Sigma_n\longrightarrow\Sigma
+       \text{ in operator norm}.
+\tag{98.6}
+$$
+
+For the actual counting-measure screening, including $n=0,1$,
+
+$$
+R_\lambda(T_n)
+ =\left\langle v_n,(I+N_n\lambda\Sigma_n)^{-1}v_n\right\rangle
+ \qquad(\lambda>0).
+\tag{98.7}
+$$
+
