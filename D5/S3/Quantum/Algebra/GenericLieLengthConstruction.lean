@@ -24,7 +24,7 @@
    heapEdge: proof_shape: bind-only; escape_witness: none; consumers: B,B_apply,B_hermitian,B_trace,T,T_transpose,T_zero_row,anchor_forward_selector,anchor_reverse_selector,anchor_unique,bulk_edge_color_ne,color_pair_gap_iff,complex_edge_gap,edge_gap,edge_ne,edge_symm,heapEdgeDecidable,neighbor_of_child_color,selector_entry,transfer_column,transfer_selector.
    heapEdgeDecidable: proof_shape: bind-only; escape_witness: none; consumers: B,B_apply,B_hermitian,B_trace,T,T_transpose,T_zero_row,anchor_forward_selector,anchor_reverse_selector,selector_entry,transfer_column,transfer_selector.
    edge_symm: proof_shape: bind-only; escape_witness: none; consumers: B_apply,B_hermitian,T_transpose.
-   edge_ne: proof_shape: bind-only; escape_witness: none; consumers: B_apply,B_trace.
+   edge_ne: proof_shape: bind-only; escape_witness: none; consumers: B_apply.
    bulk_energy_ne: proof_shape: bind-only; escape_witness: none; consumers: bulk_gap.
    gapSet: proof_shape: bind-only; escape_witness: none; consumers: anchor_forward_selector,anchor_reverse_selector,anchor_units_mem,bulk_gap,color_gap_mem,complex_edge_gap,edge_gap,gapSet_card,selector_entry,selector_mem_eight,transferGap_mem,transfer_mem_eight,transfer_selector.
    bulk_gap: proof_shape: bind-only; escape_witness: none; consumers: edge_gap.
@@ -53,22 +53,22 @@
    centeredEnergy: proof_shape: bind-only; escape_witness: none; consumers: A,A_hermitian,A_trace,anchor_forward_selector,anchor_reverse_selector,anchor_units_mem,centered_gap,complex_edge_gap,selector_entry,selector_mem_eight,transfer_mem_eight,transfer_selector.
    A: proof_shape: bind-only; escape_witness: none; consumers: A_trace,gen.
    B: proof_shape: bind-only; escape_witness: none; consumers: B_apply,B_hermitian,B_trace,anchor_forward_selector,anchor_reverse_selector,anchor_units_mem,gen,selector_entry,selector_mem_eight,transfer_mem_eight,transfer_selector.
-   B_apply: proof_shape: bind-only; escape_witness: none; consumers: B_hermitian,B_trace,anchor_forward_selector,anchor_reverse_selector,selector_entry,transfer_selector.
+   B_apply: proof_shape: bind-only; escape_witness: none; consumers: B_hermitian,anchor_forward_selector,anchor_reverse_selector,selector_entry,transfer_selector.
    gen: proof_shape: bind-only; escape_witness: none; consumers: B_mem,adjusted_units_mem,anchor_units_mem,anchored_units_mem,anchored_units_uniform,iGen,iGen_su,real_full_span,selector_mem_eight,traceless_full_span,transfer_mem_eight.
    centered_gap: proof_shape: bind-only; escape_witness: none; consumers: complex_edge_gap,selector_entry.
    complex_edge_gap: proof_shape: bind-only; escape_witness: none; consumers: selector_entry.
    gapSet_card: proof_shape: bind-only; escape_witness: none; consumers: selector_mem_eight.
    B_mem: proof_shape: bind-only; escape_witness: none; consumers: selector_mem_eight.
-   selector_mem_eight: proof_shape: content; escape_witness: generator_bracket_mem; consumers: anchor_units_mem,transfer_mem_eight.
+   selector_mem_eight: proof_shape: bind-only; escape_witness: none; consumers: anchor_units_mem,transfer_mem_eight.
    selector_entry: proof_shape: bind-only; escape_witness: none; consumers: anchor_forward_selector,anchor_reverse_selector,transfer_selector.
    anchor_forward_selector: proof_shape: bind-only; escape_witness: none; consumers: anchor_units_mem.
    anchor_reverse_selector: proof_shape: bind-only; escape_witness: none; consumers: anchor_units_mem.
-   anchor_units_mem: proof_shape: content; escape_witness: generator_bracket_mem; consumers: anchored_units_mem.
+   anchor_units_mem: proof_shape: bind-only; escape_witness: none; consumers: anchored_units_mem.
    T: proof_shape: bind-only; escape_witness: none; consumers: T_transpose,T_zero_row,anchored_units_mem,transfer_column,transfer_mem_eight,transfer_row,transfer_selector.
    transferGap: proof_shape: bind-only; escape_witness: none; consumers: transferGap_mem,transfer_mem_eight,transfer_selector.
    transferGap_mem: proof_shape: bind-only; escape_witness: none; consumers: transfer_mem_eight,transfer_selector.
    transfer_selector: proof_shape: bind-only; escape_witness: none; consumers: transfer_mem_eight.
-   transfer_mem_eight: proof_shape: content; escape_witness: generator_bracket_mem; consumers: anchored_units_mem.
+   transfer_mem_eight: proof_shape: bind-only; escape_witness: none; consumers: anchored_units_mem.
    T_zero_row: proof_shape: bind-only; escape_witness: none; consumers: transfer_column.
    T_transpose: proof_shape: bind-only; escape_witness: none; consumers: transfer_row.
    parent: proof_shape: bind-only; escape_witness: none; consumers: anchored_units_mem,transfer_column,transfer_row.
@@ -777,10 +777,9 @@ private theorem B_hermitian (n : ℕ) : (B n).IsHermitian := by
   simp [Matrix.conjTranspose_apply, B_apply, edge_symm j.val i.val]
 
 private theorem B_trace (n : ℕ) : Matrix.trace (B n) = 0 := by
-  apply Finset.sum_eq_zero
-  intro i hi
-  have hh : ¬ heapEdge i.val i.val := fun h => edge_ne _ _ h rfl
-  simp [B_apply, hh]
+  simpa only [B] using
+    (SimpleGraph.trace_adjMatrix (α := ℂ)
+      (SimpleGraph.fromRel (fun i j : Fin (n + 2) => heapEdge i.val j.val)))
 
 def iGen (n : ℕ) (i : Fin 2) : (Matrix (Fin (n + 2)) (Fin (n + 2)) ℂ) := Complex.I • gen n i
 

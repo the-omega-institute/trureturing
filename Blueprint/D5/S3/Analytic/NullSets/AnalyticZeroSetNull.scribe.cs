@@ -12,7 +12,7 @@ internal sealed class AnalyticZeroSetNullDocument : IScribeDocumentDefinition
         H("AnalyticZeroSetNull"),
         Blocks(Describe.Lean(DescribeId.Create("analytic-zero-set-null-ae-ne-zero"),
             DeclarationHandle.Create(Prefix + "ae_ne_zero_of_analytic"), H("ae_ne_zero_of_analytic"),
-            StatementSource.FromAuthor(Statement()), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Statement()), AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/AnalyticClosure/mityagin2015zeroset")),
             Blocks(Paragraph(Text("The one-dimensional identity theorem rules out a positive-measure zero set for a nontrivial analytic function. Induction on dimension applies this fact to sections, with Fubini and the measure-preserving decomposition of finite coordinate space. Polynomial evaluations and analytic circuit determinants are two applications."))), DescribeRole.Theorem)),
         []));
 

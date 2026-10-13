@@ -39,7 +39,6 @@ import D5.S3.Quantum.Algebra.GenericLieLengthConstruction
 import D5.S3.Analytic.NullSets.AnalyticZeroSetNull
 import Mathlib.Analysis.Analytic.Polynomial
 import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Topology.Algebra.MvPolynomial
 
 
 

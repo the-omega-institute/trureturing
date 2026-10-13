@@ -21,13 +21,13 @@
    eval: proof_shape: bind-only; escape_witness: none; consumers: ae_span_top_of_witness,combination_mem,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,eval_boundedPolynomial,eval_spanningPolynomial,eval_wordPolynomial,exactWordSpan,generator_bracket_mem,layer_eq_exactWordSpan,reindex_eval,rightSpan,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_real_le_su,rightSpan_reindex_le,word_bracket_mem,word_map,word_mem,word_scaled,word_su_mem.
    length_pos: proof_shape: bind-only; escape_witness: none; consumers: cumulative_eq_rightSpan,layer_eq_exactWordSpan,mem_words.
    rightSpan: proof_shape: bind-only; escape_witness: none; consumers: ad_pow_mem,adjusted_units_mem,ae_rightSpan_eq,ae_span_top_of_witness,anchor_units_mem,anchored_units_mem,anchored_units_uniform,combination_mem,compactPair_span_top,cumulative_eq_rightSpan,determinant_ne_zero_implies_span_top,extendedPair_span_top,generator_bracket_mem,lieLength_attained,lieLength_le_of_span,lower_lieLength_of_saturation,lower_log_of_saturation,polynomial_ad_mem,real_full_span,result,rightSpan_bracket_mem,rightSpan_complex_to_real,rightSpan_eq_range,rightSpan_finrank_le,rightSpan_le_scaled,rightSpan_map,rightSpan_mono,rightSpan_reindex_le,saturation_count,selector_mem_eight,traceless_full_span,transfer_mem_eight,word_bracket_mem.
-   word_mem: proof_shape: bind-only; escape_witness: none; consumers: B_mem,combination_mem,cumulative_eq_rightSpan,generator_bracket_mem,rightSpan_le_scaled,rightSpan_reindex_le,word_bracket_mem.
+   word_mem: proof_shape: bind-only; escape_witness: none; consumers: B_mem,combination_mem,cumulative_eq_rightSpan,rightSpan_le_scaled,rightSpan_reindex_le,word_bracket_mem.
    rightSpan_mono: proof_shape: bind-only; escape_witness: none; consumers: adjusted_units_mem,anchored_units_mem,anchored_units_uniform,polynomial_ad_mem,rightSpan_bracket_mem.
-   generator_bracket_mem: proof_shape: content; escape_witness: generator_bracket_mem; consumers: ad_pow_mem,word_bracket_mem.
+   generator_bracket_mem: proof_shape: bind-only; escape_witness: none; consumers: ad_pow_mem,word_bracket_mem.
    word_bracket_mem: proof_shape: content; escape_witness: word_bracket_mem; consumers: rightSpan_bracket_mem.
-   rightSpan_bracket_mem: proof_shape: content; escape_witness: generator_bracket_mem; consumers: adjusted_units_mem,anchored_units_mem.
-   ad_pow_mem: proof_shape: content; escape_witness: generator_bracket_mem; consumers: polynomial_ad_mem.
-   polynomial_ad_mem: proof_shape: content; escape_witness: generator_bracket_mem; consumers: selector_mem_eight.
+   rightSpan_bracket_mem: proof_shape: content; escape_witness: word_bracket_mem; consumers: adjusted_units_mem,anchored_units_mem.
+   ad_pow_mem: proof_shape: bind-only; escape_witness: none; consumers: polynomial_ad_mem.
+   polynomial_ad_mem: proof_shape: bind-only; escape_witness: none; consumers: selector_mem_eight.
    skewProjection_apply: proof_shape: bind-only; escape_witness: none; consumers: reconstruction,skewProject_complex_smul,skewProject_su.
    skewProject_of_skew: proof_shape: bind-only; escape_witness: none; consumers: combine_injective,real_span_of_complex_span.
    skewProject_complex_smul: proof_shape: bind-only; escape_witness: none; consumers: combine_injective,real_span_of_complex_span.
@@ -159,14 +159,13 @@ theorem rightSpan_mono (S : I → M) {a b : ℕ} (h : a ≤ b) :
 
 private theorem generator_bracket_mem (S : I → M) (i : I) {L : ℕ} {x : M}
     (hx : x ∈ rightSpan (K := K) S L) : ⁅S i, x⁆ ∈ rightSpan (K := K) S (L + 1) := by
-  change x ∈ Submodule.span K _ at hx
-  induction hx using Submodule.span_induction with
-  | mem x hx =>
-    obtain ⟨w, hw, rfl⟩ := hx
-    exact word_mem S (.cons i w) _ (by simpa [RightWord.length] using Nat.add_le_add_right hw 1)
-  | zero => simpa using (rightSpan (K := K) S (L + 1)).zero_mem
-  | add x y hx hy ihx ihy => simpa [lie_add] using (rightSpan (K := K) S (L + 1)).add_mem ihx ihy
-  | smul r x hx ih => simpa [lie_smul] using (rightSpan (K := K) S (L + 1)).smul_mem r ih
+  have h : rightSpan (K := K) S L ≤
+      (rightSpan (K := K) S (L + 1)).comap (LieAlgebra.ad K M (S i)) := by
+    apply Submodule.span_le.mpr
+    rintro y ⟨w, hw, rfl⟩
+    exact Submodule.subset_span ⟨RightWord.cons i w,
+      by simpa only [RightWord.length] using Nat.add_le_add_right hw 1, rfl⟩
+  exact h hx
 
 theorem word_bracket_mem (S : I → M) (u v : RightWord I) :
     ⁅u.eval S, v.eval S⁆ ∈ rightSpan (K := K) S (u.length + v.length) := by

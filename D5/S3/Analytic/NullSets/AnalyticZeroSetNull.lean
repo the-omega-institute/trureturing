@@ -14,9 +14,7 @@
 -/
 
 import Mathlib.Analysis.Analytic.IsolatedZeros
-import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.MeasureTheory.Measure.Typeclasses.NullSingletonClass
 
 open MeasureTheory
 
