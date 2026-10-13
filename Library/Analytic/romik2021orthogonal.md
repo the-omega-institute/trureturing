@@ -8235,3 +8235,873 @@ complex branches and boundary crossings, and discharge of the local
 all-critical premise remain unresolved. No FIB ATOM bridge to these
 signed complete-source estimates is supplied. RH and strict Robin
 for every integer $H>5040$ remain unproved.
+
+## Complete dual kernels and a shared root-response transport
+
+Retain the original source, local all-critical and complete-removal
+premises of (LC263), and the regrouping (LC284). In particular, every
+exterior zero and every far selected factor remains in
+$\widehat A=AQ_{\rm far}=F/Q_{\rm core}$. Retain total selected
+multiplicity $r\le C_0L$, with $q\le r$. The core polynomial is monic,
+of degree $q$, with real roots $\alpha_j$ satisfying
+$|\alpha_j-c|\le D$; repeated core roots are allowed. Use
+$E=128(S+3C_0)L$ and the complete auxiliary functions
+$\widehat H,\widehat\ell,\widehat s,\widehat\chi,\widehat\eta$ from
+(LC276)--(LC286), with $E$ replacing $C_1L$. Here
+$\widehat H=\mathscr T_n\widehat A$,
+$\widehat\ell=\widehat H'/\widehat H$,
+$\widehat s=\mathscr T_n(\widehat A')/\widehat H$,
+$v=t^2/n$, $\widehat\chi=t-v\widehat\ell$ and
+$\widehat\eta=1-v\widehat s'$. Write
+$\mathcal D=\{|t-c|\le D/16\}$ and
+$I=[t_-,t_+]=[c-D/16,c+D/16]$.
+
+This is a repo-derived analytical application of existing extraction
+and finite-free suppliers, without Lean or originality certification.
+The exact representation below does not certify its kernels' root
+geometry or signed residues at growing degree. Those are separate
+conditions, stated explicitly below.
+
+### Literature suppliers and the coefficient convention
+
+Martínez-Finkelshtein, Morales and Perales,
+[*Real roots of hypergeometric polynomials via finite free convolution*,
+arXiv:2309.10970v2](https://arxiv.org/html/2309.10970v2), Definition 2.5,
+Propositions 2.11 and 2.13, supply the additive coefficient convention,
+oriented interlacing and mesh preservation. Marcus, Spielman and
+Srivastava, [*Finite free convolutions of polynomials*,
+arXiv:1504.00350](https://arxiv.org/pdf/1504.00350), Definition 1.1
+and Theorem 2.11, supply the same normalization and permutation average.
+Sinclair, [*Finite free convolution via reproducing kernels and
+squarefree algebras*, arXiv:2606.10870v2](https://arxiv.org/html/2606.10870v2),
+Lemma 3.8, Proposition 3.9 and Corollary 3.11, connect the kernel pairing,
+polarization and the classical Grace--Walsh--Szegő interface.
+
+Throughout this application the convention, including lower-degree
+arguments, is
+
+$$
+(P\boxplus_q R)(z)=\frac1{q!}\sum_{k=0}^q
+ P^{(k)}(z)R^{(q-k)}(0).
+\tag{LC304}
+$$
+
+This is the descending-coefficient convention of the first two
+suppliers. Sinclair's ascending convention is used only through its
+symmetric multiaffine polarization interface, not by identifying its
+convolution symbol with (LC304). These general literature theorems are
+reused, rather than reproved or counted as new source results.
+
+### Generate both kernels from the same complete factor
+
+For a holomorphic germ at $u=0$, set
+
+$$
+\begin{aligned}
+\psi_t(u)&=\frac{t}{1+tu/n},&
+K_t(u)&=(1+tu/n)^n\frac{\widehat H(\psi_t(u))}{\widehat H(t)},\\
+M_t(u)&=e^{-\widehat\chi(t)u}K_t(u),&
+b_t(u)&=u+\widehat s(\psi_t(u))-\widehat s(t),\qquad
+N_t(u)=M_t(u)b_t(u),\\
+M_t(u)&=\sum_{k\ge0}a_k(t)\frac{u^k}{k!},&
+N_t(u)&=\sum_{k\ge0}d_k(t)\frac{u^k}{k!}.
+\end{aligned}
+\tag{LC305}
+$$
+
+In particular $a_0=1,a_1=0,d_0=0,d_1=\widehat\eta$.
+Define a monic value kernel and a lower-degree response kernel by
+
+$$
+\begin{gathered}
+R_{q,t}(z)=\sum_{k=0}^q\binom qk a_k(t)z^{q-k},\qquad
+U_{q,t}(z)=\sum_{k=0}^q\binom qk d_k(t)z^{q-k},\\
+\overline Q(z)=Q_{\rm core}(c+z),\qquad x(t)=\widehat\chi(t)-c,\\
+C_t=\overline Q\boxplus_q R_{q,t},\qquad
+W_t=\overline Q\boxplus_q U_{q,t},\qquad
+C_t=\sum_{k=0}^q\frac{a_k}{k!}\overline Q^{(k)},\quad
+W_t=\sum_{k=0}^q\frac{d_k}{k!}\overline Q^{(k)}.
+\end{gathered}
+\tag{LC306}
+$$
+
+Apply the exact exponential-tilt identity (LC202) to $\widehat A$
+and to its source derivative. It gives, with the same $K_t$,
+
+$$
+\frac{\mathscr T_n(e^{uz}\widehat A)(t)}{\widehat H(t)}=K_t(u),
+\qquad
+\frac{\mathscr T_n((e^{uz}\widehat A)')(t)}{\widehat H(t)}
+ =K_t(u)[u+\widehat s(\psi_t(u))].
+\tag{LC307}
+$$
+
+Subtract $\widehat s(t)$ times the first identity from the second,
+then apply $Q_{\rm core}(\partial_u)|_{u=0}$. The exact auxiliary
+recurrences (LC278), now for the core, consequently have the representation
+
+$$
+\begin{gathered}
+p_q(t)=C_t(x(t)),\qquad w_q(t)=W_t(x(t)),\\
+J=\widehat H C_t(x),\qquad
+G=\widehat H[\widehat s C_t(x)+W_t(x)].
+\end{gathered}
+\tag{LC308}
+$$
+
+This applies the existing tilt to both responses. The kernel is an
+operator-symbol encoding; it does not replace the actual core by a
+fictional repeated-root source or discard any exterior contribution.
+
+### A common nonnegative weight transfers speed and response
+
+Fix real $t\in I$ and suppose $R_{q,t}$ has simple real roots
+$\beta_1<\cdots<\beta_q$. For $q\ge2$, mesh preservation makes
+$C_t$ simple real-rooted even when $\overline Q$ has repeated roots.
+The degree-one case follows directly from (LC304). Denote its ordered
+roots by $\lambda_1<\cdots<\lambda_q$, and set
+
+$$
+R_{t,j}(z)=\frac{R_{q,t}(z)}{z-\beta_j},\qquad
+\omega_{ij}=\frac{(\overline Q\boxplus_q R_{t,j})(\lambda_i)}
+ {\partial_zC_t(\lambda_i)},\qquad
+\gamma_j=\frac{U_{q,t}(\beta_j)}{\partial_zR_{q,t}(\beta_j)}.
+\tag{LC309}
+$$
+
+Moving just one kernel root a sufficiently small positive distance
+gives an oriented interlacing pair. Preservation of that orientation
+implies that no ordered output root moves left. Implicit differentiation
+identifies $\omega_{ij}=\partial\lambda_i/\partial\beta_j\ge0$.
+Simultaneous translation gives the row sums; differentiating the sum
+of output roots, which is the sum of the two input root sums, gives
+the column sums. Linearity applied to
+$U_{q,t}=\sum_j\gamma_jR_{t,j}$ then gives
+
+$$
+\begin{gathered}
+\omega_{ij}\ge0,\qquad \sum_j\omega_{ij}=1,\qquad
+\sum_i\omega_{ij}=1,\\
+\lambda_i'=\sum_j\omega_{ij}\beta_j',\qquad
+\frac{W_t(\lambda_i)}{\partial_zC_t(\lambda_i)}
+ =\sum_j\omega_{ij}\gamma_j.
+\end{gathered}
+\tag{LC310}
+$$
+
+Here derivatives in $t$ use local analytic root labels. At an actual
+node $x(t)=\lambda_i(t)$, put
+$\delta_j=\widehat\chi'-\beta_j'$. The same weights occur in both
+node amplitudes:
+
+$$
+p_q'=\partial_zC_t(\lambda_i)\sum_j\omega_{ij}\delta_j,
+\qquad
+w_q=\partial_zC_t(\lambda_i)\sum_j\omega_{ij}\gamma_j.
+\tag{LC311}
+$$
+
+If all $\delta_j>0$, define
+$\widetilde\omega_{ij}=\omega_{ij}\delta_j/
+\sum_k\omega_{ik}\delta_k$. These weights are nonnegative with row
+sum one, and the original complete response ratio is
+
+$$
+\frac{G(t)}{J'(t)}=\frac{w_q(t)}{p_q'(t)}
+ =\sum_j\widetilde\omega_{ij}\frac{\gamma_j}{\delta_j},\qquad
+\min_j\frac{\gamma_j}{\delta_j}\le\frac{G(t)}{J'(t)}
+ \le\max_j\frac{\gamma_j}{\delta_j}.
+\tag{LC312}
+$$
+
+Thus this transmission introduces no degree factor or division by a
+separately estimated minimal actual-node slope. The missing signed
+information has moved to the actual complete kernels, rather than
+being supplied by the convex-combination formula.
+
+### The precise kernel conditions still required
+
+At $\nu\ge512E$, the complete jets already give
+
+$$
+|\widehat\chi'-1|\le68E/\nu<1/4,\qquad
+|\widehat\eta-1|\le64E/\nu\le1/8
+\quad(t\in\mathcal D).
+\tag{LC313}
+$$
+
+For each growing degree under consideration, require the following
+additional certificate, denoted $\mathsf K$:
+
+* for every real $t\in I$, $R_{q,t}$ has $q$ simple real roots;
+* for every complex $t\in\mathcal D$ and every root $\beta$ of $R_{q,t}$,
+  $|\Im\beta|\le|\Im t|/4$;
+* at every real $t\in I$, every residue $\gamma_j$ in (LC309) is strictly
+  positive.
+
+No quantitative mesh lower bound or degree-independent residue floor
+is assumed here. None of these growing-degree conditions has been
+established for the actual source by the preceding jets.
+
+For any complex parameter, the permutation formula identifies $C_t(z)$
+with the symmetric multiaffine polarization of $\overline Q$ evaluated
+at $z-\beta_1,\ldots,z-\beta_q$. All arguments are in the same open
+upper or lower half-plane when $\Im z$ lies outside their root strip.
+The half-plane polarization supplier therefore gives
+
+$$
+C_t(z)=0\ \Longrightarrow\
+\min_j\Im\beta_j(t)\le\Im z\le\max_j\Im\beta_j(t),
+\qquad
+J(t)=0\ \Longrightarrow\
+\Im\widehat\chi(t)\in[\min_j\Im\beta_j(t),\max_j\Im\beta_j(t)].
+\tag{LC314}
+$$
+
+This necessary condition uses the actual kernel, with no real-root
+assumption on it at a complex parameter. If $t=a+iy\in\mathcal D$,
+the vertical segment is in the same disc and (LC313) gives
+$|\Im\widehat\chi(t)|\ge3|y|/4$. Under $\mathsf K$ this contradicts
+(LC314) unless $y=0$, including on the closed target boundary.
+For real parameters, expanding a simple kernel root along the imaginary
+direction in $\mathsf K$ gives $|\beta_j'|\le1/4$, with the endpoint
+values obtained by continuity. Consequently $\delta_j\ge1/2$.
+
+It follows under $\mathsf K$ that every actual target node is real and
+simple, with the original signed product
+
+$$
+P_r'S_r=\left(\frac{\widehat H}{H}\right)^2
+ [\partial_zC_t(\lambda_i)]^2
+ \left(\sum_j\omega_{ij}\delta_j\right)
+ \left(\sum_j\omega_{ij}\gamma_j\right)>0.
+\tag{LC315}
+$$
+
+Both $H$ and $\widehat H$ are the nonzero real amplitudes of the
+original interfaces. Their squared ratio is retained without an
+assumed size bound. On $I$, the branches
+$f_i(t)=\widehat\chi(t)-c-\lambda_i(t)$ have derivative at least $1/2$.
+Thus the exact count, with both endpoints included, is
+
+$$
+N_J(\mathcal D)=\sum_{i=1}^q
+ \mathbf1_{\{f_i(t_-)\le0\le f_i(t_+)\}}\le q.
+\tag{LC316}
+$$
+
+No existence of all $q$ branch nodes is asserted. For $q=0$,
+$J=\widehat H$ gives zero target nodes directly.
+
+If a fixed $C_{\rm ker}$ were to certify $\mathsf K$ for the actual
+kernels at $q\le C_0L$, $\nu\ge C_{\rm ker}L$, the transmission stage
+would require only
+$\nu\ge\max\{C_{\rm ker},65536(S+3C_0)\}L$.
+The existence of that $C_{\rm ker}$ remains unproved.
+For real parameters and $q\ge1$, the already known identity
+$\sum_j\gamma_j=q\widehat\eta>0$ supplies a total residue, not
+positivity of every residue. Retaining the simple-real-root and
+complex-strip clauses of $\mathsf K$, hence $\delta_j>0$, put
+$V_t=\partial_tR_{q,t}+\widehat\chi'\partial_zR_{q,t}$. A certificate
+that every real-pole residue of $(U_{q,t}-gV_t)/R_{q,t}$ is nonnegative
+for some $g>0$ would give $G/J'\ge g$ by (LC312).
+This relative certificate too remains unpaid for growing degree.
+
+
+## A local Euler response pays sign once branch geometry is available
+
+Retain the same complete source and auxiliary functions of
+(LC263), (LC276)--(LC280) and (LC284), with
+$E=128(S+3C_0)L$, total selected multiplicity $r\le C_0L$,
+$1\le q\le r$ and $\nu\ge\max\{256E,128q\}$. The exact core
+recurrences remain
+$p_0=1,w_0=0$ and
+$p_j=(\widehat\chi-v\partial_t-\alpha_j)p_{j-1}$,
+$w_j=(\widehat\chi-v\partial_t-\alpha_j)w_{j-1}
+ +\widehat\eta p_{j-1}$.
+This conditional analytical application reuses the exact Euler identity;
+it does not assume the kernel residue condition in $\mathsf K$.
+It instead requires a quantitative local branch certificate, whose
+availability for growing degree is likewise unresolved.
+
+Let $t_0$ be a real actual node with $|t_0-c|\le D/64$ and fix
+$\delta>0$. Put
+
+$$
+h=\frac{\delta}{64(q+E\delta/D)}\le\frac D{64E}.
+\tag{LC317}
+$$
+
+The additional certificate is that, throughout $[t_0,t_0+h]$,
+$p_q=\prod_{k=1}^q f_k$ with real $C^1$ factors satisfying
+$1/2\le f_k'\le3/2$, exactly one $f_j(t_0)=0$, and
+$|f_k(t_0)|\ge\delta$ for $k\ne j$.
+The segment lies within $|t-c|<D/32$. The certificate concerns
+factor geometry, not $G$ or its sign, and is not asserted for every
+actual node. For $q=1$ the other-factor condition is empty.
+
+### Bound the endpoint independently of its sign
+
+On nested complex discs with radii
+$D/16-jD/(32q)$, $j=0,\ldots,q$, the complete jets give
+$|\widehat\chi-\alpha_j|<2D$,
+$|v|\le4D^2/\nu$, $|\widehat\eta|\le3/2$ and
+$|\widehat\ell|+|\widehat s|\le E/D$.
+Cauchy's estimate across a radius step $D/(32q)$ makes the recursive
+operator norm at most $2D+128qD/\nu\le3D$. Induction yields
+
+$$
+\|p_q\|_{D/32}\le(3D)^q,\qquad
+\|w_q\|_{D/32}\le\frac{3q}{2}(3D)^{q-1}.
+\tag{LC318}
+$$
+
+The other $f_k$ retain their signs on the short segment, and their
+product has magnitude at least
+$\delta^{q-1}(1-3/(128q))^{q-1}\ge(125/128)\delta^{q-1}$.
+Moreover $\widehat H(s)/\widehat H(t_0)\ge e^{-Eh/D}>1/2$.
+Direct differentiation gives
+
+$$
+J'(s)=\widehat H(s)\prod_{k\ne j}f_k(s)
+ \left[f_j'(s)+f_j(s)
+  \left(\widehat\ell(s)+\sum_{k\ne j}\frac{f_k'(s)}{f_k(s)}\right)\right].
+\tag{LC319}
+$$
+
+Here $0\le f_j(s)\le3h/2$,
+$\sum_{k\ne j}|f_k'/f_k|\le3q/\delta$ and the second bracket term
+has magnitude at most $3/32$. The bracket is at least $13/32$.
+Thus $J'(s)$ has the sign of $J'(t_0)$ on the whole segment, with
+
+$$
+\begin{gathered}
+|J'(s)|>d:=\frac18|\widehat H(t_0)|\delta^{q-1},\qquad
+|J'(t_0)|\ge\frac12|\widehat H(t_0)|\delta^{q-1},\\
+|G(t_0+h)|\le M:=2|\widehat H(t_0)|(3D)^{q-1}(3E+3q/2),\\
+M/d\le B:=16(3E+3q/2)(3D/\delta)^{q-1}.
+\end{gathered}
+\tag{LC320}
+$$
+
+The endpoint estimate uses (LC318),
+$G=\widehat H(\widehat s p_q+w_q)$ and
+$|\widehat H(t_0+h)|<2|\widehat H(t_0)|$.
+The common nonzero amplitude cancels in $M/d$; no absolute amplitude
+floor or endpoint sign has been assumed.
+
+### Keep and suppress the homogeneous contribution
+
+Apply the original exact identity $J'=G-(t/n)G'$ from (LC280).
+Integrating the derivative of $G(s)s^{-n}$ over only the short segment
+gives
+
+$$
+\begin{gathered}
+G(t_0)=\beta G(t_0+h)+nt_0^n
+ \int_{t_0}^{t_0+h}J'(s)s^{-n-1}\,ds,\\
+\beta=\left(\frac{t_0}{t_0+h}\right)^n
+ \le e^{-nh/(2c)},\qquad
+nt_0^n\int_{t_0}^{t_0+h}s^{-n-1}\,ds=1-\beta.
+\end{gathered}
+\tag{LC321}
+$$
+
+The actual endpoint term is retained. If
+$nh/(2c)>\log[4(1+B)]$, then
+$\operatorname{sgn}(J'(t_0))G(t_0)>3d/4$ and the original coupled
+node margin is
+
+$$
+P_r'(t_0)S_r(t_0)>\frac3{64}
+ \left(\frac{\widehat H(t_0)}{H(t_0)}\right)^2\delta^{2q-2}
+ >\frac1{32}\left(\frac{\widehat H(t_0)}{H(t_0)}\right)^2
+ \delta^{2q-2}>0.
+\tag{LC322}
+$$
+
+The endpoint bound is essential: adding a homogeneous term proportional
+to $t^n$ leaves the Euler identity unchanged and need not preserve sign.
+
+### A fixed linear budget pays every larger degree parameter
+
+Suppose the geometric certificate is available with
+$\delta=D/(K\sqrt{\nu q})$ for a fixed $K\ge1$.
+Write $E=C_EL$, where $C_E=128(S+3C_0)$, and define fixed constants
+
+$$
+\begin{aligned}
+a&=KC_0^{3/2},& b&=\max\{1,3K\sqrt{C_0}\},\\
+P&=\max\{1,48C_E+24C_0\},&
+A&=\log(8P)+1+C_0(1+\log b),\qquad U=a+C_E,\\
+C_*&=\max\{1,256C_E,128C_0,(1024AU)^4\}.
+\end{aligned}
+\tag{LC323}
+$$
+
+For every $\nu\ge C_*L$, put $\Lambda=\nu/L\ge C_*$.
+The exponent and endpoint bound obey
+
+$$
+\begin{gathered}
+X:=\frac{nh}{2c}
+ =\frac{\nu T}{128\rho(Kq\sqrt{\nu q}+E)}
+ \ge\frac{\sqrt\Lambda\,T}{16UL}
+ \ge\frac{\sqrt\Lambda\,L^2}{192U},\\
+B\le PL(bL\sqrt\Lambda)^{C_0L},\qquad
+\log[4(1+B)]\le AL(1+\log L+\log\Lambda)
+ \le AL^2(1+\log\Lambda).
+\end{gathered}
+\tag{LC324}
+$$
+
+Indeed $q\sqrt{\nu q}\le C_0^{3/2}L^2\sqrt\Lambda$,
+$\rho\le1/8$, $L>3$ and
+$T=e^L-2\ge e^L/2\ge L^3/12$. Also
+$1+\log\Lambda\le4\Lambda^{1/4}$ for $\Lambda\ge1$.
+The choice (LC323) ensures
+$\sqrt\Lambda/(192U)\ge(1024/192)A\Lambda^{1/4}
+ >4A\Lambda^{1/4}$, so $X>\log[4(1+B)]$.
+Both initial thresholds are paid. This holds for every larger $\nu$,
+uniformly for $T\ge32$ and all $0<\rho\le1/8$.
+
+This gives a conditional sign route at the stated central real nodes
+if growing-core branch geometry and the quantitative gap are supplied.
+It does not certify reality, a gap at every node, or target-boundary
+crossings. Reapplying it to $q\le3$ is reuse: (LC293)--(LC303) already
+give stronger results on that paid range. Likewise (LC218) and (LC245)
+remain suppliers at their larger or adaptive budgets.
+
+The complete-kernel certificate $\mathsf K$ and this quantitative
+geometric certificate are two different unpaid routes. The exact
+dual-kernel reduction, common-weight transmission and Euler endpoint
+estimate do not discharge either certificate at growing degree.
+No local all-critical premise has been removed, no FIB ATOM bridge to
+these complete signed responses has been established, and RH and
+strict Robin for every integer $H>5040$ remain unproved.
+
+## Wider analytic room pays the original response at every target node
+
+Retain the complete source and all local critical-zero and full-removal
+premises of (LC263), the regrouping (LC284), total selected multiplicity
+$r\le C_0L$, and core degree $q\le r$. Every far selected factor and
+possibly nonreal infinite exterior zero remains in $\widehat A$.
+The dual kernels and coupled responses are those of (LC305)--(LC308).
+This analytical application reuses the common-weight and Euler interfaces;
+its extra value-kernel geometry is a stated hypothesis, not a conclusion
+about the actual source. No Lean or originality certification is supplied.
+
+For $q\ge1$, use $E=C_EL=128(S+3C_0)L$ and
+$\nu\ge\max\{512E,256q\}$. Retain the closed target
+$\mathcal D=\{|t-c|\le D/16\}$ and its real diameter $I$, and enlarge
+only the real certificate interval to
+$I^+=[c-D/16,c+D/12]$. For a fixed $K\ge1$, put
+$\delta=D/(K\sqrt{\nu q})$.
+Assume the following quantitative value-kernel certificate:
+
+* on $I^+$, $R_{q,t}$ has simple ordered real roots $\beta_j(t)$ with
+  $|\beta_j'(t)|\le1/4$;
+* its mesh is at least $\delta$ throughout $I^+$ when $q\ge2$;
+* for every $t\in\mathcal D$ and every root $\beta$ of $R_{q,t}$,
+  $|\Im\beta|\le|\Im t|/4$.
+
+For $q=1$, the mesh condition is empty. No individual response residue
+$\gamma_j>0$ is assumed. This certificate requires quantitative value
+geometry on a wider interval than $\mathsf K$; neither certificate is
+asserted to follow from the already known jets.
+
+The paid bound $|\widehat\ell|+|\widehat s|\le E/D$ on $D/8$
+and Cauchy radii $D/40$ and $D/24$ give
+
+$$
+\begin{aligned}
+|\widehat\eta-1|&\le160E/\nu\le5/16
+ &&(|t-c|\le D/10),\\
+|\widehat\chi'-1|&\le100E/\nu<1/4
+ &&(|t-c|\le D/12).
+\end{aligned}
+\tag{LC325}
+$$
+
+On $D/10$, $|\widehat\chi-\alpha_j|<2D$ and
+$|\widehat\eta|<3/2$. Nested radii $D/10-jD/(64q)$ end at
+$27D/320>D/12$. The exact recurrence norm is now
+$2D+256qD/\nu\le3D$, so (LC318) holds on $D/12$.
+Mesh preservation and the common speed weights (LC310) give real factors
+$f_i=\widehat\chi-c-\lambda_i$ with $1/2<f_i'<3/2$ on $I^+$.
+At each actual real $t_0\in I$, one factor vanishes and the others
+have magnitude at least $\delta$. In (LC317),
+$h\le D/(64E)<D/48=D/12-D/16$, using $E>384$.
+Thus $[t_0,t_0+h]\subset I^+$ even at either target endpoint.
+
+Apply (LC319)--(LC322) with this larger endpoint disc. The common
+nonzero $\widehat H$ amplitude and its actual homogeneous endpoint
+term are retained; $M/d\le B$ is unchanged. Reusing $a,b,P,A,U$
+and the uniform budget argument of (LC323)--(LC324), only the initial
+thresholds increase:
+
+$$
+\begin{gathered}
+C_*^+=\max\{1,512C_E,256C_0,(1024AU)^4\},\qquad
+\nu\ge C_*^+L,\\
+P_r'(t_0)S_r(t_0)>\frac1{32}
+ \left(\frac{\widehat H(t_0)}{H(t_0)}\right)^2
+ \delta^{2q-2}>0
+ \quad\text{at every actual real }t_0\in I.
+\end{gathered}
+\tag{LC326}
+$$
+
+This covers every larger $\nu$, uniformly for $T\ge32$ and
+$0<\rho\le1/8$. Both original amplitudes survive the return to $P_r'S_r$.
+
+The assumed complex strip and (LC325) exclude every nonreal target
+node by (LC314). The real branches are strictly increasing, so all
+actual nodes on the closed target are simple, at most $q$, and have
+exactly the inclusive endpoint count (LC316). The case $q=0$ is again
+$J=\widehat H\ne0$.
+Thus quantitative wider value geometry would suffice for the entire
+conditional local target without a separate positive-residue hypothesis
+on $U_{q,t}$. This does not assert positivity of every $\gamma_j$ at every
+real parameter. The wider geometry, its growth-degree uniformity, and
+removal of the local all-critical premise remain unproved. The argument
+supplies no actual growing-core certificate, FIB ATOM bridge, RH proof,
+or strict Robin conclusion for every integer $H>5040$.
+
+## A restricted growing-core certificate from the complete matrix pair
+
+Retain the original source, the local critical-zero and complete-removal
+premises of (LC263), and the full regrouping (LC284). In particular, every
+source zero in the closed radius-$4\rho$ disc about $1/2+iT$ is assumed
+critical and fully removed; no condition is imposed on exterior zeros.
+Form the full selected factor $Q$ with every such multiplicity first,
+then write $Q=Q_{\rm core}Q_{\rm far}$ as in (LC284).
+Use the complete $\widehat A=F/Q_{\rm core}$, both nonzero amplitudes
+$H,\widehat H$, and the exact kernels (LC305)--(LC308). Write
+$E=C_EL$, where $C_E=128(S+3C_0)$, and retain $r\le C_0L$, $q\le r$,
+$T\ge32$, $0<\rho\le1/8$, $c=T^2$, $D=T\rho$, and
+$\nu=n\rho^2/T^2$ for a positive integer $n$.
+
+The following is a repo-derived conditional analytical application, with
+no Lean or originality certification. The Appell recurrence, multiplication
+matrix, determinant differentiation, Hermite comparison and Riesz
+perturbation argument are generic tools, not new general theorems.
+For the Appell recurrence, Srivastava, Jabee and Shadab,
+[*Differential equation and recurrence relations of the Sheffer-Appell
+polynomial sequence: A matrix approach*, arXiv:1903.09620v1](https://arxiv.org/html/1903.09620v1),
+Theorem 4, equation (3.23), applies with $h(u)=u$ and
+$l(u)=M_t(u)^{-1/2}$ as a normalized local germ. Its generating factor
+$[l(h^{-1}(u))l(u)]^{-1}$ is then exactly $M_t(u)$.
+Finite nilpotent matrix encodings of Appell families are classical; see
+Aceto, Malonek and Tomaz, [*A unified matrix approach to the representation
+of Appell polynomials*, arXiv:1406.1444v1](https://arxiv.org/html/1406.1444v1),
+section 3, Theorem 1, for the transfer-matrix construction. That theorem
+does not supply the complete-source spectral estimates below.
+The shared-weight and polarization transmission (LC309)--(LC316) is
+reused without another proof.
+
+### Quantitative range
+
+Put $\delta=E/\nu$ and $\varepsilon=D/c=\rho/T\le1/256$.
+For $q\ge1$, the sufficient conditions are
+
+$$
+\nu\ge2^{24}(E+q),\qquad
+\Theta_q:=(\delta+\varepsilon)\frac{q^{3/2}}{\sqrt\nu}
+\le2^{-19}.
+\tag{LC327}
+$$
+
+Under these conditions the actual $R_{q,t}$ has simple real roots for
+real $t\in I$, and its roots have compatible holomorphic labels on the
+whole closed $\mathcal D=\{|t-c|\le D/16\}$. Every label obeys
+$|\beta_j'|<1/4$ and $|\Im\beta_j(t)|\le|\Im t|/4$.
+For real $t\in I$, every actual response residue is greater than $3/4$.
+These conclusions are derived from the complete jets, rather than added
+as a kernel certificate. The local critical-zero premise is retained.
+
+### Preserve the value and response in one finite matrix
+
+Define the local EGF logarithmic coefficients by
+$\log M_t(u)=\sum_{m\ge2}\kappa_m(t)u^m/m!$.
+They are ordinary logarithmic coefficients; no identification with
+finite-free cumulants is used. Direct differentiation of (LC305) gives
+
+$$
+\partial_u\log M_t(u)
+=\widehat\chi(\psi_t(u))-\widehat\chi(t),\qquad
+b_t'(u)=\widehat\eta(\psi_t(u)),\qquad
+\kappa_2=-\frac{t^2}{n}\widehat\chi'.
+\tag{LC328}
+$$
+
+The paid jets imply
+$|\widehat\chi'-1|\le68\delta$ and
+$|\widehat\eta-1|\le64\delta$ on $\mathcal D$.
+Thus there is a holomorphic choice
+$\sigma=(t/\sqrt n)\sqrt{\widehat\chi'}$, positive on $I$, with
+$D/(2\sqrt\nu)\le|\sigma|\le2D/\sqrt\nu$.
+
+On $\mathbb C^q$ in its standard orthonormal basis, let
+$Ye_j=\sqrt j\,e_{j-1}$, $Ye_0=0$. Then $Y^q=0$ and
+$\|Y\|\le\sqrt q$. Define
+
+$$
+\begin{aligned}
+\mathcal A_q
+&=\sigma Y^*-
+ \sum_{k=1}^{q-1}\frac{\kappa_{k+1}}{k!\sigma^k}Y^k
+ =\sigma(Y^*+Y)+\mathcal E_q,\\
+\mathcal B_q&=b_t'(Y/\sigma)
+ =\widehat\eta\bigl(\psi_t(Y/\sigma)\bigr),\\
+R_{q,t}(z)&=\det(zI-\mathcal A_q),\qquad
+\frac{U_{q,t}(z)}{R_{q,t}(z)}
+ =\operatorname{tr}\bigl[(zI-\mathcal A_q)^{-1}\mathcal B_q\bigr].
+\end{aligned}
+\tag{LC329}
+$$
+
+All analytic matrix functions here mean finite Taylor evaluation at a
+nilpotent matrix. To check the first identity, the generating function
+$e^{zu}M_t(u)$ gives
+$zR_j=R_{j+1}-\sum_{k=1}^j\binom jk\kappa_{k+1}R_{j-k}$.
+Multiplication by $z$ modulo $R_q$, in the basis
+$R_j/(\sigma^j\sqrt{j!})$, has matrix $\mathcal A_q$.
+For the second identity, vary the germ formally as $M_t e^{h b_t}$,
+holding $\sigma$ fixed. The polynomial derivative is the actual $U_q$,
+and the multiplication matrix becomes $\mathcal A_q-h\mathcal B_q$.
+Jacobi's determinant formula gives the stated trace. This tangent
+calculation preserves the original response; it does not change the
+actual source or choose an Euler homogeneous term.
+
+If $\Pi_j$ is a rank-one Riesz projection at a simple root, then
+
+$$
+\gamma_j=\operatorname{tr}(\Pi_j\mathcal B_q),\qquad
+|\gamma_j-\widehat\eta|
+\le\|\Pi_j\|\,\|\mathcal B_q-\widehat\eta I\|.
+\tag{LC330}
+$$
+
+The trace norm of a rank-one operator equals its operator norm. No
+factor $q$ is lost in this individual-residue estimate.
+
+### Complete jets bound the finite matrices
+
+The product rule and (LC276), with $E$ replacing $C_1L$, give
+
+$$
+\begin{aligned}
+\frac{|\widehat\chi^{(j)}|}{j!}
+ &\le5\delta16^jD^{1-j} &&(j\ge2),\\
+\frac{|\widehat\eta^{(j)}|}{j!}
+ &\le128\delta(32/D)^j &&(j\ge1).
+\end{aligned}
+\tag{LC331}
+$$
+
+For the first line the three product terms are at most
+$\delta D^{1-j}(4\,16^j+4\,16^{j-1}+16^{j-2})$.
+For the second they are at most
+$\delta(16/D)^j[64(j+1)+4j+(j-1)/16]$,
+which is bounded by the displayed right side.
+Put $r_0=\sqrt{q/\nu}$ and $a=t/(n\sigma)$, and set
+
+$$
+\Delta=\psi_t(Y/\sigma)-tI
+=-\frac{\sigma}{\widehat\chi'}Y(I+aY)^{-1},\qquad
+r_0\le2^{-12},\quad
+\|aY\|\le2\varepsilon r_0,\quad
+\|\Delta\|\le2|\sigma|\sqrt q\le4Dr_0.
+\tag{LC332}
+$$
+
+The exact value remainder and the resulting estimates are
+
+$$
+\begin{aligned}
+\mathcal E_q
+ &=-\sigma aY^2(I+aY)^{-1}
+ -\sum_{j\ge2}\frac{\widehat\chi^{(j)}}{j!}\Delta^j,\\
+\|\mathcal E_q\|
+ &\le2^{15}|\sigma|(\delta+\varepsilon)q/\sqrt\nu,\\
+\|\mathcal B_q-\widehat\eta I\|
+ &\le2^{15}\delta r_0.
+\end{aligned}
+\tag{LC333}
+$$
+
+The sums terminate by nilpotence. The first value term costs at most
+$3|\sigma|q/\sqrt n$. The rest costs at most
+$5\delta D\sum_{j\ge2}(16\|\Delta\|/D)^j
+\le20480\delta|\sigma|q/\sqrt\nu$.
+The response estimate uses
+$128\delta\sum_{j\ge1}(32\|\Delta\|/D)^j
+\le2^{15}\delta r_0$.
+All coefficients of the complete source up to the required order
+remain in these finite evaluations.
+
+For parameter differentiation, freeze $\sigma$ at the point being
+evaluated. This keeps a fixed basis while the actual source parameter
+changes. Differentiating (LC328) yields
+
+$$
+\begin{gathered}
+\partial_t[\widehat\chi(\psi_t(u))-\widehat\chi(t)]
+=\widehat\chi'(\psi_t(u))(1+tu/n)^{-2}-\widehat\chi'(t),\\
+\|\dot{\mathcal A}^{\rm fr}_q\|
+\le40960\delta r_0+10\varepsilon r_0
+\le2^{16}(\delta+\varepsilon)r_0.
+\end{gathered}
+\tag{LC334}
+$$
+
+Indeed (LC331) bounds the first change of $\widehat\chi'$ by
+$80\delta\sum_{j\ge1}(j+1)(16\|\Delta\|/D)^j
+\le20480\delta r_0$; use
+$\|(I+aY)^{-2}\|\le2$ and
+$\|(I+aY)^{-2}-I\|\le4\|aY\|$.
+No scalar evaluation outside the target is assumed: these are bounds
+from the full jets at $t$ and finite nilpotent Taylor calculus.
+They apply at closed-boundary parameters as well.
+
+### Isolated spectrum pays every individual response
+
+The real symmetric Jacobi matrix $Y+Y^*$ has the simple roots $h_j$
+of probabilist Hermite $\mathrm{He}_q$ as eigenvalues. The standard
+Hermite equation for $w=e^{-x^2/4}\mathrm{He}_q(x)$ is
+$w''+(q+1/2-x^2/4)w=0$.
+Integration between adjacent zeros and the Dirichlet Poincare inequality
+give
+
+$$
+h_{j+1}-h_j\ge\frac\pi{\sqrt{q+1/2}}>\frac2{\sqrt q}.
+\tag{LC335}
+$$
+
+For complex $t$, the matrix $\sigma(Y+Y^*)$ is still normal.
+By (LC327) and (LC333),
+$\|\mathcal E_q\|\le|\sigma|/(16\sqrt q)$.
+The circles of radius $|\sigma|/(4\sqrt q)$ about $\sigma h_j$
+are disjoint. On each circle the normal reference resolvent is bounded
+by the reciprocal radius; the perturbation ratio is at most $1/4$.
+The Neumann series, homotopy count and Riesz integral therefore give
+one simple eigenvalue in each circle and
+
+$$
+\|\Pi_j\|\le4/3,
+\qquad \operatorname{mesh}(R_{q,t})\ge\sigma/\sqrt q
+\quad(t\in I,\ q\ge2).
+\tag{LC336}
+$$
+
+The disjoint labels are holomorphic throughout $\mathcal D$ and a
+neighborhood of its boundary. At real parameters each circle is
+conjugation-invariant, so its unique root is real.
+Using (LC330), (LC333) and the first condition of (LC327) gives
+
+$$
+|\gamma_j-\widehat\eta|\le2^{16}\delta r_0\le2^{-20},
+\qquad |\widehat\eta-1|\le2^{-18},
+\qquad \gamma_j>3/4\quad(t\in I).
+\tag{LC337}
+$$
+
+For $q\ge2$, the frozen-basis eigenvalue derivative satisfies
+
+$$
+|\beta_j'|
+=|\operatorname{tr}(\Pi_j\dot{\mathcal A}^{\rm fr}_q)|
+\le2^{17}(\delta+\varepsilon)r_0
+\le\frac1{4q}\le\frac18<\frac14.
+\tag{LC338}
+$$
+
+For $q=1$, $R_{1,t}=z$, $U_{1,t}=\widehat\eta$, so
+$\beta_1'=0$ and the same residue conclusion holds directly.
+Integrating each label along the vertical segment from $\Re t$ to $t$
+inside the closed disc gives
+$|\Im\beta_j(t)|\le|\Im t|/4$.
+This proves every clause of $\mathsf K$ in the restricted range (LC327).
+
+There is also a relative signed certificate. Let
+$V_{q,t}=\partial_tR_{q,t}+\widehat\chi'\partial_zR_{q,t}$ and
+$\delta_j=\widehat\chi'-\beta_j'$. For real $t$,
+$1/2<\delta_j<3/2$, so both $U_q/R_q$ and
+$(U_q-V_q/2)/R_q$ have real simple poles and strictly positive residues.
+They are strictly proper rational functions and have strictly negative
+imaginary part on the upper half-plane. This is a statement about
+the actual finite pair at fixed real $t$, not a Pick-closure assertion
+for the infinite exterior or an iterative reciprocal gauge.
+
+### A fixed linear budget covers an unbounded restricted degree range
+
+Let
+
+$$
+A_*=1+C_E+C_0,\qquad C_{\rm part}=2^{30}A_*^3.
+\tag{LC339}
+$$
+
+If $1\le q\le C_0L^{1/3}$ and $\nu\ge C_{\rm part}L$, then
+$E+q\le(C_E+C_0)L$ pays the first condition of (LC327), and
+
+$$
+\Theta_q\le C_0^{3/2}
+\left(\frac{C_E}{C_{\rm part}^{3/2}}
++\frac1{256\sqrt{C_{\rm part}}}\right)
+\le2^{-45}+2^{-23}<2^{-19}.
+\tag{LC340}
+$$
+
+Both inequalities improve with every larger $\nu$. The constants are
+fixed in $T,\rho,n$, depending only on the supplied source constants
+and $C_0$. The original total selected multiplicity may still grow
+to $C_0L$; all its far factors remain in $\widehat A$.
+
+Apply (LC310)--(LC316) to these now-certified actual kernels. At every
+actual target node, the same nonnegative row weights, with
+$\sum_j\omega_{ij}=1$, give the exact original amplitudes
+
+$$
+P_r'=\frac{\widehat H}{H}\partial_zC_t(\lambda_i)
+ \sum_j\omega_{ij}\delta_j,\qquad
+S_r=\frac{\widehat H}{H}\partial_zC_t(\lambda_i)
+ \sum_j\omega_{ij}\gamma_j.
+$$
+
+For the ratio, use
+$\widetilde\omega_{ij}=\omega_{ij}\delta_j/
+\sum_k\omega_{ik}\delta_k$ from (LC312).
+Since $\delta_j>1/2$, $\delta_j<3/2$ and $\gamma_j>3/4$,
+the complete original quantities satisfy
+
+$$
+\frac{G}{J'}>\frac12,\qquad
+P_r'S_r>\frac38
+ \left(\frac{\widehat H}{H}\right)^2
+ [\partial_z C_t(\lambda_i)]^2>0,
+\qquad
+N_J(\mathcal D)=\sum_{i=1}^q
+ \mathbf1_{\{f_i(t_-)\le0\le f_i(t_+)\}}\le q.
+\tag{LC341}
+$$
+
+Every target node is real and simple, including either endpoint;
+no existence of all $q$ nodes is asserted. Both original amplitudes
+are retained without a size assumption. For $q=0$, the unchanged
+identity $J=\widehat H\ne0$ gives no target nodes.
+The fixed source constants have not been numerically instantiated.
+
+This restricted unbounded-degree application uses the already-paid
+fixed-degree results without recertifying $q\le3$. It does not meet
+the full $q\le C_0L$ target: at $q\asymp C_0L$ and $\nu=C_*L$,
+the source part of $\Theta_q$ has order
+$C_EC_0^{3/2}L/C_*^{3/2}$. No fixed $C_*$ makes this absolute-norm
+perturbation condition small for every $L$. The loss comes from
+comparison with the microscopic Hermite gap, not a counterexample
+to the actual kernels. At full growth the missing step is simple real
+spectrum with sufficiently bounded individual projections for the
+complete matrix. The local all-critical premise, that full-growth
+estimate, a FIB ATOM bridge, RH and strict Robin for every integer
+$H>5040$ remain unresolved.

@@ -324,7 +324,7 @@ private theorem trace_F (R : L → L → Prop) [DecidableRel R]
   field_simp
   <;> ring
 
-private theorem tau_smul (R : L → L → Prop) (d : L → ℝ) (δ : ℝ)
+theorem tau_smul (R : L → L → Prop) (d : L → ℝ) (δ : ℝ)
     (n : ℕ) (s : L) (c : ℂ) (X : C R n s) :
     tau R d δ n s (c • X) = c * tau R d δ n s X := by
   simp only [tau, Pi.smul_apply, Matrix.trace_smul, smul_eq_mul]
