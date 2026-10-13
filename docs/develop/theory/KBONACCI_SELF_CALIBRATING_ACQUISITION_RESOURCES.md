@@ -4340,3 +4340,654 @@ nonatomic targets remain unresolved. The four-coordinate theorem is a
 finite addition to that programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 102. Seven active amplitudes distinguish acquisition from first-zero stopping
+
+**Definition 102.1 (The retained task and separating parameters).** Use
+Definitions 71.1, 73.1, 77.1 and 90.1 without changing their source,
+carrier, consumer or observation rule. Thus $X$ is the actual countable
+labeled set in (71.1), $q_i(x)$ are its static prime replies, advice is
+zero, and all randomness is one source-independent seed. A hard budget
+bounds actual requests, including repetitions. Output errors use the
+whole original measurable tape carrier and the uniform event-TV cap.
+The selected marked target remains the separately declared law
+$\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}}$;
+$n(x)$ is not an available observation. Write
+
+$$
+A=(4/5,4/5,4/5,3/5,2/5,2/5,1/5),\qquad
+\varepsilon_0=\frac{248}{1425},\qquad r_0=\frac7{40}.
+\tag{102.1}
+$$
+
+The base sequence has $(a_1,\ldots,a_7)=A$ and any tail satisfying
+(73.3) and $a_8\le\varepsilon_0$. All $128$ low words and every
+actual tail source remain in the task. Competitors have no address
+ceiling and no support restriction on their output laws.
+
+**Theorem 102.2 (An attained exact-cap separation).** For every base
+sequence of Definition 102.1 there is $N\in\mathcal N_3$ with
+$e_a(N)=\varepsilon_0$, handing off everywhere with $K=3$ and $M\le7$.
+Moreover
+
+$$
+E_{\mathcal N}(3;a)\le\varepsilon_0
+< E_{\mathcal O}(3;a)=r_0,\qquad
+r_0-\varepsilon_0=\frac{11}{11400}.
+\tag{102.2}
+$$
+
+The $\mathcal O_3$ value is attained by an everywhere-finite rule with
+$M\le7$. For every $\varepsilon_0\le\varepsilon<r_0$,
+
+$$
+(\kappa^{\mathcal A}_\varepsilon,
+ \kappa^{\mathcal N}_\varepsilon,
+ \kappa^{\mathcal O}_\varepsilon)=(3,3,4).
+\tag{102.3}
+$$
+
+At $\varepsilon=r_0$ the tuple is $(3,3,3)$. The tail equality
+$a_8=\varepsilon_0$ is permitted.
+
+**Proof.** The explicit $N$ attainer is Theorem 103.2. The universal
+$\mathcal O_3$ lower bound is Theorem 104.1, and its endpoint attainer
+is Theorem 105.1. The hard-count conclusions follow from Theorem 106.1.
+These proofs concern existence at the displayed closed caps themselves.
+They do not assert an exact $\mathcal N_3$ optimum. $\square$
+
+## 103. An executable preselected kernel and its complete-cube certificate
+
+**Definition 103.1 (Integer blocks and terminal cells).** A row with
+schedule $S=(i_1,i_2,i_3)$ and block size $w$ represents $w$ positions
+of a uniform integer seed in $\{0,\ldots,D-1\}$. Put the row blocks
+consecutively in their displayed order. A cell containing a single
+label $j$ assigns all its $w$ positions to $\theta_j$. A cell
+$(j_1:m_1,\ldots,j_h:m_h)$ assigns consecutive local seed intervals
+of integer lengths $m_1,\ldots,m_h$ to the corresponding original
+tapes, in the displayed order. Each cell's masses sum to $w$.
+The same local seed position is used for every possible transcript.
+Thus the seed fixes both the schedule and the whole deterministic
+terminal table before any answer; cells do not introduce new randomness.
+
+For a preselected row, acquire all three actual replies, even after a
+zero, and use its column in order $000,001,010,011,100,101,110,111$.
+Let $m_{S,t}(j)$ be the integer mass assigned to label $j$ in column
+$t$. If $b=(q_1(x),\ldots,q_7(x))$, its full handed-tape law is
+
+$$
+\nu_b=\sum_{j=0}^7p_b(j)\delta_{\theta_j},\qquad
+Dp_b(j)=\sum_Sm_{S,(b_{i_1},b_{i_2},b_{i_3})}(j).
+\tag{103.1}
+$$
+
+Every seed position has one output on each word. This specifies one
+executable common rule, not separate probabilities chosen per source.
+
+**Theorem 103.2 (The hard-three preselected attainer).** The following
+integer blocks, with $D=1425$, define an everywhere-finite $N$ with
+$K=3$, $M\le7$ and $e_a(N)=248/1425$ for every base sequence.
+
+| Schedule $S$ | Block $w$ | 000 | 001 | 010 | 011 | 100 | 101 | 110 | 111 |
+|---|---:|---|---|---|---|---|---|---|---|
+| 1,2,3 | 644 | (0:21,1:623) | 1 | (0:102,1:542) | (0:81,1:563) | (0:102,2:542) | 2 | 3 | (0:447,4:105,6:92) |
+| 1,2,4 | 145 | 1 | 1 | 1 | 1 | 2 | 2 | 4 | 0 |
+| 1,2,5 | 77 | 1 | 0 | 1 | 1 | (0:15,2:62) | 2 | 5 | 0 |
+| 1,2,6 | 4 | 1 | 0 | 1 | 1 | 2 | 2 | 6 | 0 |
+| 1,3,4 | 113 | 1 | (0:33,1:80) | (0:21,1:92) | 1 | (0:54,3:59) | 3 | 4 | 0 |
+| 1,3,5 | 11 | 1 | 1 | 1 | 1 | 3 | 3 | 5 | 0 |
+| 1,4,5 | 33 | 0 | 0 | 1 | 1 | (0:22,4:11) | 4 | 5 | 0 |
+| 2,3,4 | 113 | (0:7,2:106) | 2 | 2 | (0:102,2:11) | 3 | 3 | 4 | 0 |
+| 2,3,5 | 11 | 2 | 2 | 0 | 2 | 3 | 3 | 5 | 0 |
+| 2,4,5 | 33 | (0:11,2:22) | (0:11,2:22) | 2 | 0 | (0:22,4:11) | 4 | 5 | 0 |
+| 3,4,5 | 62 | 3 | (0:55,3:7) | 0 | 0 | 4 | (0:44,4:18) | 5 | (0:11,6:51) |
+| 3,4,6 | 47 | 3 | 3 | 0 | 0 | 4 | 4 | 6 | 0 |
+| 3,5,6 | 4 | 0 | 0 | 0 | 0 | 5 | 5 | 6 | 0 |
+| 4,5,6 | 91 | 0 | 0 | 0 | 0 | 5 | 5 | 6 | 0 |
+| 5,6,7 | 37 | 0 | 0 | 0 | 0 | (0:4,6:33) | (0:4,6:33) | 7 | 0 |
+
+**Proof.** The block sizes sum to $1425$. The cell definitions assign
+every local position once, so (103.1) gives nonnegative probabilities
+summing to one on every word. Actual requests are the three primes
+$p_{i_1},p_{i_2},p_{i_3}$ in that row. After their replies the indicated
+original tape is handed off. All records and outputs are measurable
+finite seed subsets, and the rule uses no information about $x$ other
+than these replies. In particular the cells labeled $4$ or $6$ on
+schedule $1,2,3$ are fixed tape choices, not uncounted observations.
+
+Here is a complete arithmetic reduction of (103.1). For the first
+$112$ words, let $h=b_1b_2b_3b_4$ be one of the following fourteen
+prefixes, let $n$ be its first zero, and put $u=b_5,v=b_6,z=b_7$.
+The two middle columns are the exact integer polynomials
+$F_h=Dp_b(0)$ and $G_h=Dp_b(n)$. The final column gives
+$(\min F_h,\min G_h,\min(F_h+G_h))$ over all eight $(u,v,z)$.
+
+| Prefix $h$ | $F_h$ | $G_h$ | Three minima |
+|---|---|---|---|
+| 0000 | $204+4v+99u-4uv+37uvz$ | $973-77u-4v$ | 204,892,1177 |
+| 0001 | $204+4v+77u+87uv+37uvz$ | $973-77u-4v$ | 204,892,1177 |
+| 0010 | $204+4v+77u+37uvz$ | $973-77u-4v$ | 204,892,1177 |
+| 0011 | $150+51v+77u+91uv+37uvz$ | $1027-77u-4v$ | 150,946,1177 |
+| 0100 | $289-4uv+37uvz$ | $892$ | 285,892,1177 |
+| 0101 | $285+87uv+37uvz$ | $892$ | 285,892,1177 |
+| 0110 | $285+37uvz$ | $892$ | 285,892,1177 |
+| 0111 | $231+47v+22u+91uv+37uvz$ | $946$ | 231,946,1177 |
+| 1000 | $343-15u-4uv+37uvz$ | $892+15u$ | 324,892,1231 |
+| 1001 | $267+18u+87uv+37uvz$ | $910-18u$ | 267,892,1177 |
+| 1010 | $187-26u+37uvz$ | $990+26u$ | 161,990,1177 |
+| 1011 | $278+47v+29u+91uv+37uvz$ | $899-7u$ | 278,892,1177 |
+| 1100 | $230+4v+55u-4uv+37uvz$ | $947-55u$ | 230,892,1177 |
+| 1101 | $295+4v+110u+87uv+37uvz$ | $892$ | 295,892,1187 |
+
+These identities follow by selecting the eight terminal columns in
+(103.1), with the specified four-bit prefix. Each polynomial has the
+form $c+\alpha u+\beta v+\gamma uv+37uvz$; its minimum is
+$\min\{c,c+\alpha,c+\beta,c+\alpha+\beta+\gamma\}$, since the
+coefficient of $uvz$ is nonnegative. The same calculation applies to
+$F_h+G_h$, and $G_h$ is affine in $u,v$. Thus the displayed minima
+are exact identities on all eight suffixes, including every
+multiple-zero suffix. For example at $h=0000$,
+$F_h+G_h=1177+22u-4uv+37uvz\ge1177$, while at $h=1000$ it is
+$1235-4uv+37uvz\ge1231$.
+
+The remaining first-zero classes have the following exact pairs:
+
+$$
+\begin{array}{c|c|c}
+n&Dp_b(0)&Dp_b(n)\\\hline
+4&619+66b_5+4b_6+37b_5b_6b_7&607\\
+5&855+51b_6&322\\
+6&998&322\\
+7&1140&37
+\end{array}
+\tag{103.2}
+$$
+
+There are respectively $8,4,2,1$ words in these classes. Combining
+these identities gives the following three minima over each entire
+class $1^{n-1}0\{0,1\}^{7-n}$; each minimum is taken separately.
+
+| First zero $n$ | Minimum $Dp_b(0)$ | Minimum $Dp_b(n)$ | Minimum $D(p_b(0)+p_b(n))$ |
+|---|---:|---:|---:|
+| 1 | 150 | 892 | 1177 |
+| 2 | 161 | 892 | 1177 |
+| 3 | 230 | 892 | 1177 |
+| 4 | 619 | 607 | 1226 |
+| 5 | 855 | 322 | 1177 |
+| 6 | 998 | 322 | 1320 |
+| 7 | 1140 | 37 | 1177 |
+
+At cap $248/D$, the required base and correct-mark numerators in
+(84.1) are respectively
+
+$$
+\begin{aligned}
+D(1-A_n-\varepsilon_0)&=(37,37,37,322,607,607,892)_n,\\
+D(A_n-\varepsilon_0)&=(892,892,892,607,322,322,37)_n,\\
+D(1-\varepsilon_0)&=1177.
+\end{aligned}
+\tag{103.3}
+$$
+
+All three inequalities hold by the tables. In particular the pair
+inequality is checked independently; it does not follow by adding
+singleton minima. The supplied full TV identity (84.2) proves the
+cap on all $127$ words with a zero.
+
+On $1111111$, (103.1) gives
+
+$$
+D(p_b(0),\ldots,p_b(7))=(1177,0,0,0,105,0,143,0).
+\tag{103.4}
+$$
+
+At every actual $x$ with $n(x)>7$, these are the acquired low replies,
+and no $\theta_{n(x)}$ is emitted. Formula (83.9) therefore gives
+$\operatorname{TV}(\nu_b,\lambda_x^a)=\max\{248/D,a_{n(x)}\}
+=248/D$. This covers every actual tail source; it uses no infinite
+all-positive source. Finally, at the realizable word $1111110$,
+$p_b(0)=1140/D=1-A_7$ and $p_b(7)=37/D$. Its correct deficit is
+$(285-37)/D=248/D$. Occupation by Boundaries, Theorem 35.2 supplies
+an actual source realizing this equality. Hence $e_a(N)=248/D$.
+$\square$
+
+## 104. A weighted-event obstruction against every stopped rule
+
+**Theorem 104.1 (A universal hard-three ordered inequality).** For every
+sequence satisfying (73.3) and every original $O\in\mathcal O_3$,
+with arbitrary seed-selected addresses and full-carrier outputs,
+
+$$
+16e_a(O)\ge a_3+2a_4+2a_5+2a_6+a_7-1.
+\tag{104.1}
+$$
+
+In particular the base sequence forces $e_a(O)\ge7/40$. No tail
+size hypothesis is needed for this lower bound.
+
+**Proof.** First consider one deterministic increasing stopped schedule
+$S=(i_1,\ldots,i_r)\subseteq\{1,\ldots,7\}$, $r\le3$, with any
+terminal labels in $\{0,\ldots,7\}$. Its cells are
+
+$$
+C_t(S)=\{b:b_{i_1}=\cdots=b_{i_{t-1}}=1,\ b_{i_t}=0\}
+\quad(1\le t\le r),\qquad
+C_*(S)=\{b:b_{i_1}=\cdots=b_{i_r}=1\}.
+\tag{104.2}
+$$
+
+One output label is constant on each cell. Use these eighteen weighted
+rows; the two rows at each repeated word are different events.
+
+| Low word $b$ | Labels $H$ | Weight $v$ |
+|---|---|---:|
+| 0101010 | 0,1 | 1 |
+| 0101101 | 0,1 | 1 |
+| 0110011 | 0,1 | 1 |
+| 0110100 | 0,1 | 1 |
+| 0111000 | 0,1 | 1 |
+| 1001011 | 0,2 | 1 |
+| 1001101 | 0,2 | 1 |
+| 1010010 | 0,2 | 1 |
+| 1010100 | 0,2 | 1 |
+| 1011001 | 0,2 | 1 |
+| 1100000 | 3 | 2 |
+| 1100000 | 0,3 | 2 |
+| 1110101 | 4 | 4 |
+| 1111000 | 5 | 4 |
+| 1111100 | 6 | 4 |
+| 1111110 | 7 | 2 |
+| 1111110 | 0,7 | 2 |
+| 1111111 | 0 | 2 |
+
+For an output map $f$, its score is
+$\sum_{(b,H,v)}v\mathbf1_{\{f(b)\in H\}}$. The total row weight
+is $32$. The greatest score for a given stopped schedule is exactly
+
+$$
+V(S)=\sum_{C\in\{C_1,\ldots,C_r,C_*\}}
+       \max_{0\le j\le7}\sum_{(b,H,v):\ b\in C,\ j\in H}v.
+\tag{104.3}
+$$
+
+The maximum in each cell is independent because its terminal label
+may be chosen arbitrarily. For the empty schedule the maximum is $16$.
+For singleton schedules and pairs, the cell maxima are explicitly
+
+$$
+\begin{array}{c|c|c}
+S&\text{cell maxima}&\text{allowed indices}\\\hline
+(i)&5,11&i=1,2\\
+(i)&6,10&i=3,4\\
+(i)&8,8&i=5,6\\
+(7)&9,7&\\
+(1,2)&5,5,6&\\
+(i,j)&5,4,7&i=1,2,\ j=3,4\\
+(i,j)&5,5,6&i=1,2,\ j=5,6\\
+(1,7)&5,6,5&\\
+(2,7)&5,7,4&\\
+(3,j)&6,4,6&j=4,5,6\\
+(4,j)&6,4,6&j=5,6,7\\
+(3,7)&6,6,4&\\
+(i,j)&8,4,4&5\le i<j\le7
+\end{array}
+\tag{104.4}
+$$
+
+For the $35$ triples, the four maxima are as follows. Each third index
+listed in a row gives precisely its displayed tuple.
+
+| First two indices | Third index or indices | Four cell maxima |
+|---|---|---|
+| 1,2 | 3,4,5,6,7 | 5,5,4,4 |
+| 1,3 | 4,5,6 | 5,4,4,5 |
+| 1,3 | 7 | 5,4,4,4 |
+| 1,4 | 5,6,7 | 5,4,4,5 |
+| 1,5 | 6,7 | 5,5,4,4 |
+| 1,6 | 7 | 5,5,4,3 |
+| 2,3 | 4,5,6 | 5,4,4,5 |
+| 2,3 | 7 | 5,4,4,4 |
+| 2,4 | 5,6 | 5,4,4,5 |
+| 2,4 | 7 | 5,4,4,3 |
+| 2,5 | 6,7 | 5,5,4,4 |
+| 2,6 | 7 | 5,5,4,3 |
+| 3,4 | 5,6 | 6,4,4,4 |
+| 3,4 | 7 | 6,4,4,3 |
+| 3,5 | 6,7 | 6,4,4,4 |
+| 3,6 | 7 | 6,4,4,3 |
+| 4,5 | 6,7 | 6,4,4,4 |
+| 4,6 | 7 | 6,4,4,3 |
+| 5,6 | 7 | 8,4,4,2 |
+
+The entries are direct sums from the eighteen event rows using
+(104.2)--(104.3), rather than bounds tied to a particular schedule
+distribution. For example schedule $(1,2,3)$ puts the five first-zero-1
+rows in $C_1$, the five first-zero-2 rows in $C_2$, the two
+$1100000$ rows in $C_3$, and the remaining rows in $C_*$. Their maxima
+are $5,5,4,4$. For $(5,6,7)$ the maxima are $8,4,4,2$.
+The displayed groups exhaust every increasing schedule of length
+at most three. Consequently every such deterministic rule has score
+at most $18$, even with arbitrary terminal labels.
+
+It remains to prove this against unrestricted original competitors.
+Apply the measurable projection $\pi_7$ of (83.7) to the entire output
+carrier, fixing $\theta_1,\ldots,\theta_7$ and sending all other
+tapes to $\theta_0$. Its event pullbacks contract TV by (83.8).
+For each $m\ge8$, choose one actual source $x_{b,m}$ for each of the
+sixteen distinct displayed low words, with those replies through $7$
+and zero replies at every index $8,\ldots,m$. Boundaries, Theorem 35.2
+supplies them. These sources are fixed before seeds. The word $1^7$
+has actual first absence $8$ and its target projects to
+$\delta_{\theta_0}$; every other displayed word retains its
+first-absence target exactly.
+
+Countability of $X$ supplies one probability-one event $G$ of finite
+handoff and $K\le3$ at every actual source. The increasing preselected
+schedule has length at most three, by Definition 90.1 and Proposition
+90.2. Its source-independent measurable maximum index is finite on
+$G$. Thus, for the event $J_m$ that this preselected maximum exceeds
+$m$, $\gamma_m=\mathsf P_O(J_m)\to0$. This bounds a common seed
+event, not separate sourcewise tails.
+
+On $G\setminus J_m$, every requested high reply in the entire fixed
+source family is zero. Since the schedule is increasing, all high
+questions come after its selected low questions. A low zero stops
+before every high question; if all selected low replies are positive,
+the fixed high continuation merely fixes the exhaustion output.
+Contracting these high replies leaves one stopped low schedule of
+length at most three. Whole finite-execution transport from
+Source-Correlated Laws, Lemma 45.3 identifies its projected output on
+each cell, for the same seed. In particular terminal processing cannot
+distinguish two sources whose complete acquired stopped transcripts
+agree. The score is at most $18$ on this whole event and at most $32$
+on $J_m$. Integrating gives the upper bound $18+14\gamma_m$.
+No source was chosen through a seed and no competitor address ceiling
+or transition-time ceiling has been imposed.
+
+If the original error is $e=e_a(O)$, each weighted projected event is
+at least its projected target mass minus $e$. The five union events
+with mark $1$ and the five with mark $2$ have target mass one. The
+$1100000$ events contribute $2a_3+2$; the next singleton rows
+contribute $4a_4+4a_5+4a_6$; the two $1111110$ rows contribute
+$2a_7+2$; and the all-positive base event contributes $2$. Hence
+
+$$
+16+2a_3+4a_4+4a_5+4a_6+2a_7-32e
+\le18+14\gamma_m.
+\tag{104.5}
+$$
+
+Letting $m\to\infty$ proves (104.1), including equality. At $A$ the
+left side before subtracting $32e$ is $118/5$, giving $e\ge7/40$.
+The argument transports full-carrier events on actual finite-pattern
+sources; no added all-positive source or output-support premise enters.
+$\square$
+
+## 105. The exact ordered endpoint has an explicit common-seed attainer
+
+**Theorem 105.1 (Attainment at $7/40$).** For every base sequence,
+$E_{\mathcal O}(3;a)=7/40$ is attained by the following integer blocks
+with $D=240$. Use Definition 103.1's single seed, but stop at the first
+queried zero. Columns $z_1,z_2,z_3,*$ mean first zero at the first,
+second or third scheduled position, and all-positive exhaustion.
+
+| Schedule $S$ | Block $w$ | $z_1$ | $z_2$ | $z_3$ | $*$ |
+|---|---:|---|---|---|---|
+| 1,2,3 | 112 | 1 | 2 | 3 | (0:92,4:15,6:5) |
+| 1,2,4 | 28 | 1 | 2 | 4 | (0:19,6:9) |
+| 1,2,5 | 4 | 1 | 2 | 5 | 0 |
+| 1,2,6 | 2 | 1 | 2 | 6 | 0 |
+| 1,3,4 | 19 | 1 | 3 | 4 | 0 |
+| 1,3,5 | 4 | 1 | 0 | 5 | 0 |
+| 1,4,5 | 4 | 1 | 4 | 5 | 0 |
+| 2,3,4 | 19 | 0 | 3 | 4 | 0 |
+| 2,3,5 | 4 | 2 | 0 | 5 | 0 |
+| 2,4,5 | 4 | 0 | 4 | 5 | 0 |
+| 3,4,5 | 13 | 0 | 4 | 5 | 6 |
+| 3,5,6 | 2 | 0 | 5 | 6 | 0 |
+| 4,5,6 | 19 | 0 | 5 | 6 | 0 |
+| 5,6,7 | 6 | 0 | (0:2,6:4) | 7 | 0 |
+
+**Proof.** The blocks sum to $240$, and each cell's masses sum to its
+block size. Replace the column selector in (103.1) by
+$t_S(b)=\min\{h:b_{i_h}=0\}$, or $*$ on exhaustion. This is one
+source-independent deterministic stopped table at each seed, with
+$K\le3$, $M\le7$ and finite handoff everywhere. Only acquired replies
+are used. The integer sums give the following whole-class minima;
+the correct-mark numerator is constant on each first-zero class.
+
+| First zero $n$ | Minimum $Dp_b(0)$ | $Dp_b(n)$ | Minimum $D(p_b(0)+p_b(n))$ |
+|---|---:|---:|---:|
+| 1 | 25 | 173 | 198 |
+| 2 | 48 | 150 | 198 |
+| 3 | 48 | 150 | 198 |
+| 4 | 117 | 102 | 219 |
+| 5 | 155 | 54 | 209 |
+| 6 | 171 | 54 | 225 |
+| 7 | 192 | 6 | 198 |
+
+For a direct all-suffix calculation of the first three rows, write
+$h=b_1b_2b_3b_4$, $u=b_5,v=b_6,z=b_7$. The base numerators below
+are exact, and their minima are over all eight suffixes. The correct
+numerators are respectively $173,150,150$ according to the first zero.
+
+| Prefix $h$ | $Dp_b(0)$ | Minimum |
+|---|---|---:|
+| 0000 | $63-4u-2uv+6uvz$ | 57 |
+| 0001 | $44-4u+17uv+6uvz$ | 40 |
+| 0010 | $48-4u+6uvz$ | 44 |
+| 0011 | $29-4u+19uv+6uvz$ | 25 |
+| 0100 | $44-4u-2uv+6uvz$ | 38 |
+| 0101 | $25+17uv+6uvz$ | 25 |
+| 0110 | $25+6uvz$ | 25 |
+| 0111 | $25+4u+19uv+6uvz$ | 25 |
+| 1000 | $67-4u-2uv+6uvz$ | 61 |
+| 1001 | $48+17uv+6uvz$ | 48 |
+| 1010 | $48+6uvz$ | 48 |
+| 1011 | $48+4u+19uv+6uvz$ | 48 |
+| 1100 | $48+2v-2uv+6uvz$ | 48 |
+| 1101 | $48+8u+2v+17uv+6uvz$ | 48 |
+
+Each minimum follows from the same four-number formula used in
+Theorem 103.2, now with nonnegative coefficient $6uvz$. For later
+classes the exact base numerators are $117+8b_5+2b_6+6b_5b_6b_7$,
+$155+2b_6$, $171$, and $192$. These identities account for every
+$127$ low word with a zero. At error $42/240=7/40$, the required base
+numerators are $(6,6,6,54,102,102,150)$, the correct numerators are
+$(150,150,150,102,54,54,6)$, and the required pair numerator is $198$.
+All three TV rows hold, including the pair row.
+
+The all-positive law has integer vector
+$(198,0,0,0,15,0,27,0)$. Hence every actual tail source has error
+$\max\{42/240,a_{n(x)}\}=7/40$ by (83.9), since
+$a_8\le\varepsilon_0<7/40$. At the actual word $1111110$, the base
+mass is $192/240=1-A_7$ and the correct mass is $6/240$, giving
+error $(48-6)/240=7/40$. The universal bound of Theorem 104.1
+proves optimality against all original $\mathcal O_3$ rules.
+$\square$
+
+## 106. A scaled infinite-tail family and exact hard-count consequences
+
+**Theorem 106.1 (Scaled separation and four-request feasibility).** Let
+
+$$
+\frac{1425}{1447}<s\le1,\qquad
+(a_1,\ldots,a_7)=sA,\qquad a_8\le s\varepsilon_0,
+\tag{106.1}
+$$
+
+and retain any positive nonincreasing vanishing tail. There is an
+$N_s\in\mathcal N_3$ with exact error $s\varepsilon_0$, finite
+handoff everywhere and $M\le7$. Every original $O\in\mathcal O_3$
+satisfies
+
+$$
+e_a(O)\ge r_s:=\frac{19s-5}{80}>s\varepsilon_0,\qquad
+r_s-s\varepsilon_0=\frac{1447s-1425}{22800}.
+\tag{106.2}
+$$
+
+For every $s\varepsilon_0\le\varepsilon<r_s$, the hard-count tuple
+is $(3,3,4)$. For $s=1$ it is $(3,3,3)$ at $\varepsilon=r_0$.
+Both equalities $\varepsilon=s\varepsilon_0$ and
+$a_8=s\varepsilon_0$ are included. For example an entire admissible
+sequence is $a_{7+j}=s\varepsilon_0/j$ for every $j\ge1$.
+
+**Proof.** Mix the kernel $N$ of Theorem 103.2 with immediate base
+output, in weights $s$ and $1-s$. One uniform real seed selects a
+branch and, on the $N$ branch, its uniform integer position; both
+choices are fixed before replies. On a low first-zero class,
+
+$$
+\nu_{s,b}=(1-s)\delta_{\theta_0}+s\nu_b,\qquad
+\lambda^{sA}_n=(1-s)\delta_{\theta_0}+s\lambda^A_n.
+\tag{106.3}
+$$
+
+The difference of these signed measures is $s(\nu_b-\lambda^A_n)$,
+so event-TV scales exactly by $s$. All low errors are at most
+$s\varepsilon_0$, and the realizable $1111110$ attains equality.
+At an actual tail source the nonbase mass is $s\varepsilon_0$, no
+tail mark is emitted, and (83.9) gives
+$\max\{s\varepsilon_0,a_{n(x)}\}=s\varepsilon_0$.
+Thus the original all-source cap is attained, with $K=3$ on the
+positive-probability kernel branch and $K=0$ on the base branch.
+Theorem 104.1 at $sA$ gives the non-strict bound $r_s$; the strict
+comparison is the exact rational identity in (106.2).
+
+For a four-request upper rule, let $U_j$ be the exact ordered prefix
+through $j$: stop at its first zero and emit that mark, otherwise
+emit base. Let $P_{\ell,4}$ be the already supplied subset kernel
+of Theorem 87.1 on labels $1,\ldots,\ell,*$. Its auxiliary target
+is the pure first-absence mark through $\ell$, otherwise base, and
+its error relative to that target is $(\ell-4)/(\ell+1)$ on every
+word, including every multiple-zero suffix. Use the common mixture
+
+$$
+(1-4s/5)\,\delta_{\theta_0}
++\frac{s}{5}\,U_3+\frac{s}{5}\,U_4
++\frac{s}{5}\,P_{6,4}+\frac{s}{5}\,P_{7,4}.
+\tag{106.4}
+$$
+
+Here $\delta_{\theta_0}$ denotes the immediate-base rule. Its
+nonnegative weights sum to one. Each component is in $\mathcal O_4$,
+uses only actual requests with indices at most $7$, and hands off
+finitely for every source and seed. To make its categorical execution
+explicit, the two subset branches choose uniformly among the
+$\binom75=21$ five-subsets of $\{1,\ldots,6,*\}$ and the
+$\binom85=56$ five-subsets of $\{1,\ldots,7,*\}$, respectively.
+Their first four labels are queried increasingly until a zero; on
+exhaustion their final unqueried label is emitted. All component and
+subset choices form one finite partition of one uniform real seed.
+
+The four auxiliary pure-prefix target vectors mix to $sA$: their
+combined mark weights at indices $1,2,3$ are $4s/5$, at $4$ are
+$3s/5$, at $5,6$ are $2s/5$, and at $7$ are $s/5$. TV convexity
+therefore bounds every low-word error of (106.4) by
+
+$$
+\frac{s}{5}\left(\frac27+\frac38\right)
+=\frac{37s}{280}<s\varepsilon_0.
+\tag{106.5}
+$$
+
+At $1^7$, its nonbase mass is exactly $37s/280$. At every actual
+$n(x)>7$ it emits no tail mark and has error
+$\max\{37s/280,a_{n(x)}\}\le s\varepsilon_0$. Thus it is an
+original hard-four attainer for that cap, including the tail equality.
+
+For the lower count, Theorem 85.1 with $k=2,n=3$ forces
+$e_a(B)\ge a_3/4=s/5$ for every $B\in\mathcal A_2$. Indeed
+$(a_3-e)_+\le3e$ gives that bound when $e<a_3$, and when
+$e\ge a_3$ it is automatic. Since
+$s/5-r_s=(5-3s)/80>0$, every cap in the stated interval excludes
+all adaptive hard-two competitors. Containment (90.3), the
+$N_s$ attainer and the hard-four ordered rule now give $(3,3,4)$.
+At $s=1,\varepsilon=r_0$, Theorem 105.1 gives hard-three ordered
+feasibility, while $1/5>r_0$ excludes hard two in all classes.
+This proves the endpoint tuple $(3,3,3)$ as well. $\square$
+
+## 107. The comparison boundary and its calibration meaning
+
+**Proposition 107.1 (Sorting and stopping cannot preserve optimal
+exact-cap feasibility in general).** There is no implication
+$\mathcal N_k$ feasible at $(a,\varepsilon)$ implies
+$\mathcal O_k$ feasible at the same $(a,\varepsilon)$ for every
+finite $k$, every sequence (73.3) and every exact cap. This failure
+holds under the original source, tape, seed and hard-request contract,
+even if the replacement may change the entire output-law family and
+its distribution of preselected schedules.
+
+**Proof.** Take $k=3$, the base sequence and
+$\varepsilon=\varepsilon_0$. Theorems 103.2 and 104.1 give a feasible
+$\mathcal N_3$ rule and exclude every $\mathcal O_3$ rule.
+The exclusion does not condition on its schedule distribution and
+does not require preservation of the $N$ laws. It therefore refutes
+the feasibility implication itself. At this cap, a stopped schedule
+needs four requests whereas preselected acquisition needs three.
+For (106.1) the same argument holds at $s\varepsilon_0$.
+The actual first absence, the first queried zero, and the first zero
+in a seed-specific completion remain distinct notions.
+
+Mathematically, stopping coarsens the acquired reply cells of each
+schedule: an observed zero identifies all its later selected suffixes.
+The table in Theorem 103.2 uses those suffixes in a joint law common
+to all sources. For instance schedule $1,2,3$ assigns different
+$0/1$ masses on $000,001,010,011$, even though all four stopped
+transcripts end at query $1$. Sourcewise TV controls the mixed law
+at a fixed actual source; it does not control a mixture obtained by
+choosing a different comparison source through the schedule part
+of the seed. The event inequality (104.1) shows that even arbitrary
+redistribution among all stopped schedules cannot repair this family
+at the same hard-three cap. The active-four equality (96.2) remains
+valid within its stated regime and entails no universal normalization.
+$\square$
+
+**Definition 107.2 (Suppliers and remaining mathematical range).** The
+finite-pattern and whole-execution suppliers are Boundaries, Theorem
+35.2 and Source-Correlated Laws, Lemma 45.3. The measurable
+full-carrier projection, exact TV rows and actual-tail identity are
+(83.8), (84.2) and (83.9); the arbitrary-address late-mark obstruction
+and the subset kernels are Theorems 85.1 and 87.1. These are reused
+without new generic finite-tree feasibility results. The integer
+kernels, weighted stopped-score inequality, exact ordered endpoint
+and scaled separation above are `repo-derived` ordinary deductions.
+
+Deterministic query depth and a single distribution over deterministic
+rules are the mature frame in Buhrman and de Wolf,
+[*Complexity Measures and Decision Tree Complexity: A Survey*,
+Sections 3.1--3.2](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf).
+Their randomized depth takes both the worst input and the worst
+random outcome. Here the actual-source and full-carrier bridge is
+proved using the stated suppliers, rather than imported from their
+finite Boolean-function model. Hellerstein, Kletenik, Liu and Witter,
+[*Adaptivity Gaps for the Stochastic Boolean Function Evaluation
+Problem*, Section 1, version 1](https://arxiv.org/html/2208.03810v1),
+study known independent bit probabilities, positive testing costs,
+expected evaluation cost and a fixed permutation stopped when a
+Boolean value is determined. Those hypotheses supply no theorem
+about adversarial all-source TV generation with a hard request cap.
+Neither an input distribution nor an expected-cost substitution is
+used in (102.2) or (106.2). These citations assert no literary priority.
+
+The separator does not determine $E_{\mathcal N}(3;a)$, the least
+separating dimension or budget, or a classification of all sequences
+and hard budgets. For $s<1$, $r_s$ is a lower bound, not an asserted
+attained $\mathcal O_3$ optimum. At $s=1425/1447$ this certificate
+only equals the $N_s$ cap; it decides neither ordered feasibility
+there nor equality of optima. The closed base and tail endpoints
+proved above are not replaced by equality-of-infima claims.
+
+The attainers use original marks in $B_1$, so their full output laws
+have TV distance exactly one from every unchanged nonatomic original
+target and the unchanged consumer returns unknown, by Theorem 82.1.
+They concern the separately declared selected marked task. Address
+bounds stated for the attainers restrict no lower-bound competitor.
+Mean count, maximum address, finite precision, computation and
+physical time remain separate resources; measurable real-seed
+partitions assert no effective finite-precision realization. The universal equality question is answered negatively,
+while the general resource classification and the original
+nonatomic-target acquisition problem remain unresolved.
+
+## 追加锚（本行以下为增补区）
