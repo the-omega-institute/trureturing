@@ -819,3 +819,338 @@ physical realization or assertion of kernel verification.
 [BDDSV]: https://arxiv.org/html/2407.16443v1
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Coordinate residue duplication and projection gaps
+
+**Definition 7.1 (the two projections of one chosen cover).** Fix any
+one complete cover $\mathcal C=(C_t)_{t=0}^{18}$ of Definition 1.2
+with $q=19$ and $\lambda\in\{0,1\}$. All projection statistics
+below refer to these same nineteen chosen classes. Set
+
+$$
+\begin{aligned}
+S_t^a&=\{a:\exists b,\ (a,b)\in C_t\},&
+S_t^b&=\{b:\exists a,\ (a,b)\in C_t\},\\
+\gamma_t^a&=\max S_t^a-\min S_t^a-9,&
+\gamma_t^b&=\max S_t^b-\min S_t^b-9,\\
+\Gamma_a&=\sum_{t=0}^{18}\gamma_t^a,&
+\Gamma_b&=\sum_{t=0}^{18}\gamma_t^b,\\
+N_i&=\#\{t:i\in S_t^a\},&
+M_i&=\#\{t:i\in S_t^b\},\\
+\eta_a&=19-N_9,&\eta_b&=19-M_9.
+\end{aligned}
+\tag{NAGC.7.1}
+$$
+
+Here $0\le i\le18$. [NARC, Theorem 13.3][NARC] supplies nine
+strict increases of $a$ and nine strict decreases of $b$, with no
+returns in either coordinate. Thus $|S_t^a|=|S_t^b|=10$;
+$\gamma_t^a,\gamma_t^b$ count the missing integers in their
+respective coordinate spans and are nonnegative. Applying the
+existing path identity (NAGC.4.1) to this same $C_t$ gives
+
+$$
+g_t=\gamma_t^a+\gamma_t^b,\qquad
+G(\mathcal C)=\Gamma_a+\Gamma_b.
+\tag{NAGC.7.2}
+$$
+
+The symbols $N_i,M_i$ are exactly the fixed-first-coordinate and
+fixed-second-coordinate incidence counts in [NARC, Theorem 14.3,
+(NARC.14.3)][NARC]. In particular
+
+$$
+\begin{gathered}
+N_i,M_i\in\{4,7,10,13,16,19\},\qquad
+\sum_{i=0}^{18}N_i=\sum_{i=0}^{18}M_i=190,\\
+\eta_a,\eta_b\in\{0,3,6,9,12,15\}.
+\end{gathered}
+\tag{NAGC.7.3}
+$$
+
+These are inherited projection and incidence facts. The relation
+between their residue imbalance and the coordinate span gaps is
+provided by the following lemma.
+
+**Lemma 7.2 (one-axis residue charge).** Let
+$S_0,\ldots,S_{18}\subseteq\{0,\ldots,18\}$ be any nineteen
+sets of cardinality ten. Define
+
+$$
+n_i=\#\{t:i\in S_t\},\qquad
+\gamma_t=\max S_t-\min S_t-9,\qquad
+\Gamma=\sum_{t=0}^{18}\gamma_t.
+\tag{NAGC.7.4}
+$$
+
+Suppose $n_i\equiv1\pmod3$ for every $0\le i\le18$, and put
+$\eta=19-n_9$. Then $\eta\in\{0,3,6,9,12,15,18\}$ and
+
+$$
+\Gamma\ge\max\left\{\eta,\ 6+\frac{\eta}{3}\right\}.
+\tag{NAGC.7.5}
+$$
+
+No path structure or independent covering assumption is needed for
+these sets.
+
+**Proof.** For $0\le j\le9$ write
+
+$$
+\varepsilon_{t,j}
+=\#\{x\in S_t:x\equiv j\pmod{10}\}-1,
+\qquad x_+=\max(x,0).
+\tag{NAGC.7.6}
+$$
+
+Each $S_t$ has ten elements, so
+$\sum_{j=0}^{9}\varepsilon_{t,j}=0$. Within $\{0,\ldots,18\}$
+a residue has at most two representatives. A positive
+$\varepsilon_{t,j}$ is therefore exactly one and occurs precisely
+when $0\le j\le8$ and $j,j+10\in S_t$. For $s_t=\min S_t$
+and $u_t=\max S_t$, such a duplicate requires
+$s_t\le j\le u_t-10$. Since $u_t-s_t\ge9$, this interval
+contains $u_t-s_t-9=\gamma_t$ integers, including zero integers
+when the span is nine. Consequently
+
+$$
+\sum_{j=0}^{9}(\varepsilon_{t,j})_+\le\gamma_t.
+\tag{NAGC.7.7}
+$$
+
+Thus every duplicated residue in a set is charged to that set's
+actual coordinate span gap. Define the aggregate imbalance and its
+positive part by
+
+$$
+W_j=\sum_{t=0}^{18}\varepsilon_{t,j},\qquad
+Q=\sum_{j=0}^{9}(W_j)_+.
+\tag{NAGC.7.8}
+$$
+
+Taking positive parts after summation cannot increase their total.
+Summing (NAGC.7.7) therefore gives the entire charge chain
+
+$$
+\Gamma\ge\sum_{t=0}^{18}\sum_{j=0}^{9}
+ (\varepsilon_{t,j})_+\ge Q.
+\tag{NAGC.7.9}
+$$
+
+For $0\le j\le8$ there are two possible representatives of
+residue $j$, whereas residue nine has only the representative nine.
+Hence
+
+$$
+\begin{aligned}
+W_j&=n_j+n_{j+10}-19\equiv1\pmod3 &&(0\le j\le8),\\
+W_9&=n_9-19=-\eta\le0,&
+\sum_{j=0}^{8}W_j&=\eta.
+\end{aligned}
+\tag{NAGC.7.10}
+$$
+
+The sum identity follows from $\sum_jW_j=0$. Also
+$0\le n_9\le19$ and $n_9\equiv1\pmod3$, so
+$n_9\in\{1,4,7,10,13,16,19\}$, proving the stated range of
+$\eta$.
+
+Let $k$ be the number of positive entries among $W_0,\ldots,W_8$.
+None of these nine entries is zero. Every positive one is at least
+one and every negative one is at most minus two. Their positive
+sum is $Q$, because $W_9\le0$, and their negative magnitudes
+sum to $Q-\eta$. It follows that
+
+$$
+Q\ge k,\qquad
+Q-\eta\ge2(9-k)\ge18-2Q,\qquad Q-\eta\ge0.
+\tag{NAGC.7.11}
+$$
+
+The middle inequality gives $Q\ge6+\eta/3$, and the last gives
+$Q\ge\eta$. Together with (NAGC.7.9) these prove (NAGC.7.5).
+$\square$
+
+## 8. A universal thirteen-gap bound and necessary equality structure
+
+**Theorem 8.1 (the central anchor couples the actual axes).** Every
+chosen complete nineteen-label cover $\mathcal C$ of Definition 1.2,
+under either $\lambda=0$ or $\lambda=1$, satisfies
+
+$$
+\begin{aligned}
+\Gamma_a&\ge\max\left\{\eta_a,6+\frac{\eta_a}{3}\right\},&
+\Gamma_b&\ge\max\left\{\eta_b,6+\frac{\eta_b}{3}\right\},\\
+\eta_a+\eta_b&\ge3,&G(\mathcal C)&\ge13.
+\end{aligned}
+\tag{NAGC.8.1}
+$$
+
+This quantifies over all twenty permitted macro orders, every initial
+point and anchor, and every positive integer outer length admitted by
+Definition 1.2; it selects no gate pair, endpoint rule or smaller path
+family.
+
+**Proof.** Apply Lemma 7.2 first with $S_t=S_t^a$, $n_i=N_i$,
+$\Gamma=\Gamma_a$, $\eta=\eta_a$, and then with $S_t=S_t^b$,
+$n_i=M_i$, $\Gamma=\Gamma_b$, $\eta=\eta_b$. Definition 7.1
+and the inherited incidence congruences verify all its hypotheses.
+Both applications concern the same actual cover $\mathcal C$.
+
+Consider its actual central class $C_9$ and anchor $(9,9)$. This
+vertex belongs to a path with nineteen vertices, so it is incident
+to at least one edge, including when it is an endpoint. Every edge
+is pure. An incident $B$ edge gives at least two vertices of $C_9$
+on $a=9$; an incident $A$ edge gives at least two on $b=9$.
+By [NARC, Theorem 14.3, part 3][NARC], a nonempty class-line
+intersection has size $1+3j$, and hence the indicated intersection
+has at least four points. The other classes meeting that same line
+each occupy at least one of its nineteen points. Disjointness gives
+
+$$
+N_9\le16\quad\hbox{or}\quad M_9\le16.
+\tag{NAGC.8.2}
+$$
+
+Since both deficits are nonnegative, this proves
+$\eta_a+\eta_b\ge3$. Finally the reused identity (NAGC.7.2)
+and the two one-axis bounds give
+
+$$
+G(\mathcal C)=\Gamma_a+\Gamma_b
+\ge12+\frac{\eta_a+\eta_b}{3}\ge13.
+\tag{NAGC.8.3}
+$$
+
+The central-line argument did not combine separately attainable
+projection data: its two incidences and its anchor all belong to
+$\mathcal C$. The proof uses the common saturated geometry of both
+lag families. A nonnegative-lag cover already satisfies its additional
+native first-step condition; no symmetry of that condition or removal
+of its zero-lag states is used. $\square$
+
+**Corollary 8.2 (span and signed moment necessities).** Every cover
+in Theorem 8.1 satisfies
+
+$$
+\sum_{t=0}^{18}(U_t-L_t)\ge355,\qquad H^+=H^-\ge7.
+\tag{NAGC.8.4}
+$$
+
+**Proof.** Use Theorem 2.2 with $q=19$, the same $C_t$ and the
+same $G$: its span total is $342+G$, now at least $355$.
+For Theorem 3.2 every $\delta_t=0$, so $H^+=H^-$, and its
+classwise inequalities sum to $H^++H^-\ge G$. Thus their
+common integer value $H$ satisfies $2H\ge13$ and $H\ge7$.
+This is a lower bound on the common moment, not an assertion that
+it equals seven. $\square$
+
+**Proposition 8.3 (necessary structure if the gap bound is attained).**
+If a cover in Theorem 8.1 has $G(\mathcal C)=13$, then
+
+$$
+(\Gamma_a,\Gamma_b;N_9,M_9)
+\in\{(6,7;19,16),(7,6;16,19)\}.
+\tag{NAGC.8.5}
+$$
+
+On the central line with incidence nineteen, each of the nineteen
+classes occupies exactly one point. On the other central line,
+$C_9$ occupies exactly four points, fifteen other classes occupy
+one point each, and three classes are absent. Those four points
+are precisely the vertices of one complete pure triple of $C_9$
+containing its anchor. These are necessary conditions only.
+
+**Proof.** Let $Q_a,Q_b$ denote the two values of $Q$ in the
+applications of Lemma 7.2. Under $G=13$ the complete inequality
+chain is
+
+$$
+13=\Gamma_a+\Gamma_b
+\ge Q_a+Q_b
+\ge12+\frac{\eta_a+\eta_b}{3}
+\ge13.
+\tag{NAGC.8.6}
+$$
+
+Every inequality is an equality. In particular
+$\eta_a+\eta_b=3$, and (NAGC.7.3) says that both summands
+are nonnegative multiples of three. They must therefore be
+$(0,3)$ or $(3,0)$. In either order, the individual bounds force
+$\Gamma_a=Q_a=6+\eta_a/3$ and
+$\Gamma_b=Q_b=6+\eta_b/3$. This proves (NAGC.8.5), with
+equality in each axis's charge chain (NAGC.7.9) as well.
+
+Take first $N_9=19$ and $M_9=16$. The nineteen nonempty,
+disjoint intersections on $a=9$ partition its nineteen points,
+so all are singletons. In particular no $B$ edge of $C_9$ can
+be incident to $(9,9)$. At least one incident edge exists, so
+it is an $A$ edge. Thus $C_9$ has at least four points on $b=9$.
+The sixteen classes meeting this line use at least
+$4+15=19$ points; equality is forced by the line's cardinality.
+This gives four points for $C_9$, fifteen singleton intersections
+and exactly three absent classes.
+
+Because $b$ is nonincreasing along $C_9$, its four vertices on
+$b=9$ form one consecutive run. Its three internal edges are
+all $A$, and every maximal $A$ run is a concatenation of complete
+$AAA$ blocks. A run of exactly three edges is therefore one whole
+pure triple. For $N_9=16$, $M_9=19$, the same argument within
+the original cover exchanges the coordinate names: the four-point
+line is $a=9$ and the triple is $BBB$. This exchange in the proof
+does not require transposing a nonnegative-lag cover into another
+native-admissible cover. No existence of either configuration is
+inferred. $\square$
+
+## 9. Projection supplier correspondence and remaining cover obligations
+
+**Mathematical attribution 9.1 (local parameters and the new coupling).**
+The supplier correspondence for Sections 7--8 is as follows.
+
+| Existing result | Parameters used here | Supplied statement and its use |
+| --- | --- | --- |
+| [NARC, Theorem 14.2][NARC] and Definition 1.2 | $q=19$, the same $\lambda$, original pair $(a,b)$, attained label $t$ and entire class $C_t$ | Exact correspondence between native encoder service and one simultaneous disjoint whole-square cover. |
+| [NARC, Theorem 13.3][NARC] | The increasing-$d$ path of each chosen $C_t$; its actual first and second coordinates | Six pure triples, nine changes of each coordinate, ten distinct values on each axis and no coordinate returns. All macro orders and legal positive outer lengths remain in scope. |
+| [NARC, Theorem 14.3, part 3][NARC] | Its fixed-first-coordinate count at $i$ is $N_i$; its fixed-second-coordinate count is $M_i$ | Nonempty line intersections have size $1+3j$; the loads satisfy (NAGC.7.3). These supply the hypotheses for Lemma 7.2 and the central-anchor count. |
+| Definition 4.1, equation (NAGC.4.1) | The same class $C_t$, its actual coordinate extrema and gap $g_t$ | The existing span decomposition becomes $g_t=\gamma_t^a+\gamma_t^b$ after the two baseline spans of nine are separated. |
+| Theorem 2.2 | $q=19$, the actual $D_t,L_t,U_t$ and $G(\mathcal C)$ of Definition 2.1 | The existing total-span identity is $\sum_t(U_t-L_t)=342+G(\mathcal C)$. |
+| Theorem 3.2 | The actual positive and negative difference lists of the same classes, with $\delta_t=0$ for every $t$ | The existing identities and inequalities give $H^+=H^-$ and $H^++H^-\ge G(\mathcal C)$. |
+
+The repo-derived increment is the classwise residue-duplication charge
+(NAGC.7.7), its combination with the inherited incidence congruences,
+and the central anchor's coupling of the two actual projection deficits.
+These yield the thirteen-gap necessity and its conditional equality
+structure. The span decomposition, projection cardinalities, incidence
+congruences and signed-moment identities are reused results, not new
+identities. The proofs require no external numerical theorem or
+literature-based sufficiency criterion, and make no global novelty claim.
+
+**Scope 9.2 (native contract and unresolved attainment).** Theorem 8.1
+keeps Assumption 1.1's genuinely acquired original label, discard of
+every other source-bearing field, continuation of that same original,
+complete future acquired rows and all permitted lags and cuts. Recovery
+still uses at most two chronological native Reads with fully materialized
+finite original-root requests, on a stationary current tree and with
+termination on every promised input. No finite controller, address or
+workspace bound is added. The gap and moment bounds describe selected
+cover classes, not physical costs of that service.
+
+The universal necessary range for nineteen-label covers is now
+$G\ge13$ under either lag convention. Proposition 8.3 does not
+construct a cover, establish sharpness or exclude every larger gap
+value. Even excluding its equality configurations would leave all
+$G>13$ possibilities to be addressed. The four statements of
+Definition 6.2 remain unresolved, as does attainment by an arbitrary
+finite producer under the corresponding full native contract.
+
+For $q=18$, Definition 1.2 still admits every allowed defect
+allocation, saturated and higher-defect classes, both nine-run cases,
+fused nonmonotone classes and every required complete zero-containing
+state. Such classes need not have ten distinct values in each
+projection or line intersections congruent to one modulo three.
+Neither those saturated premises nor the thirteen-gap conclusion is
+transferred to the full eighteen-label families. Their general span
+and defect-moment identities in Theorems 2.2 and 3.2 retain their
+original scope.
+
+## 追加锚（本行以下为增补区）
