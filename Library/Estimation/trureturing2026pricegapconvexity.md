@@ -3167,3 +3167,149 @@ retained and unpaid. No new source family, favorable window or eventual
 absence of small cores is inferred. This application keeps SI1's narrower
 range and does not assert a global $V_X^{\rm lag}=O(M_XL_X)$.
 SI1 has a nonempty supplied-parameter range only when $\Theta>17/30$.
+
+
+## The existing density estimate pays a growing high-frequency head sector
+
+Reuse the [Guth--Maynard fixed-real-part density supplier](../Analytic/guthmaynard2024largevalues.md#the-zero-density-input-for-cumulative-contributions),
+Theorem 1.2 of arXiv:2405.20552v2. Write its exponent as
+
+$$
+g(\sigma)=\frac{15(1-\sigma)}{3+5\sigma},\qquad
+N(\sigma,T)\le T^{g(\sigma)+o(1)}.
+$$
+
+Only finitely many fixed real-part arguments will be used; no uniform
+$o(1)$ over moving $\sigma$ is assumed. The actual zeros and their
+multiplicities are the same as in the original compensated heads.
+This application introduces no density theorem or new zero-free premise.
+Keep the original fixed $\Theta,\eta,d,a$, all qualifying full windows,
+every maximizing tie and every original outgoing weight.
+
+### Conditions on the original parameters and the fixed cuts
+
+Put $\Delta=1-\Theta>0$, $m=1/2-\eta$ and retain SR3's
+$\sigma_{\rm safe}=1/2+\Delta(1/2-\eta)/\eta$. Assume
+
+$$
+\boxed{\sigma_{\rm safe}>\frac35,\qquad
+h_*:=\frac{\eta-\Delta}{2\Delta[1-g(\Theta)]}
+<\frac{1-\eta}{2}.}
+\tag{DH1}
+$$
+
+The original $\Delta<\eta<1/2$ gives
+$\sigma_{\rm safe}<\Theta$. Thus DH1 implies $\Theta>3/5$,
+$g(\Theta)<1$ and $h_*>0$, so its denominator is positive.
+These are additional restrictions on the supplied parameters; $\eta$
+is not reselected. Neither SI1 nor SC4 is assumed, and no claim at
+$\Theta=1$ is made.
+
+Fix $h_*<h<(1-\eta)/2$ and define
+
+$$
+\mathfrak p_h(\sigma)=
+\frac{\eta(\sigma-1/2)}{\Delta}+h[g(\sigma)-1].
+$$
+
+At the already defined safe boundary,
+
+$$
+\mathfrak p_h(\sigma_{\rm safe})
+=m+h[g(\sigma_{\rm safe})-1]<m,
+$$
+
+while
+
+$$
+\mathfrak p_h(\Theta)-m
+=\frac{\eta-\Delta}{2\Delta}-h[1-g(\Theta)]<0.
+$$
+
+By continuity fix once $3/5<\sigma_0<\sigma_{\rm safe}$ sufficiently
+close to $\sigma_{\rm safe}$ that $\mathfrak p_h(\sigma_0)<m$.
+All these cuts depend only on the original fixed parameters.
+Since $g''(\sigma)=1200/(3+5\sigma)^3>0$, the power allowance is
+convex on $[\sigma_0,\Theta]$. Its maximum is at an endpoint. Hence
+
+$$
+\varepsilon_0:=m-
+\max\{\mathfrak p_h(\sigma_0),\mathfrak p_h(\Theta)\}>0.
+\tag{DH2}
+$$
+
+### Apply the density estimate to the complete original coefficients
+
+Keep the exact original coefficient
+
+$$
+c_{B,a}(\rho)=s_BF_B(\rho)-\frac{aB^\rho}{\sqrt B\,\rho}
+=\frac{B^{\rho-1/2}}{\rho}[J_{\log B}(\rho)-a].
+$$
+
+For $B\ge e^2$ and $\rho=\beta+i\gamma$ with $\gamma\ge1$,
+MB2's existing degree-two bound and $|\rho|\ge\gamma$ give
+
+$$
+|c_{B,a}(\rho)|
+\le B^{\beta-1/2}
+\left[\frac{1+1/\log B}{\gamma^2}+\frac a\gamma\right]
+\le(a+2)\frac{B^{\beta-1/2}}\gamma.
+$$
+
+This bounds the entire coefficient, including the original subtraction;
+it is not a degree-two-only estimate or a change of compensation.
+Put $H_X=X^h$. At the original individual legal heights $\tau_i$, define
+
+$$
+\mathcal R_X=2\sum_{i<m}\delta_i
+\sum_{\substack{H_X<\gamma\le\tau_i\\\beta>\sigma_0}}
+m_\rho|c_{B_i,a}(\rho)|.
+$$
+
+Then, uniformly over all original ties and legal height assignments,
+
+$$
+\boxed{\mathcal R_X=o(M_XL_X).}
+\tag{DH3}
+$$
+
+To verify the estimate, choose a fixed finite partition of
+$[\sigma_0,\Theta]$ of maximum width $\delta>0$. For a bin with left
+endpoint $\sigma_j$, the existing fixed-parameter density bound and
+dyadic summation imply, for every sufficiently small fixed $\epsilon>0$,
+
+$$
+\sum_{\substack{\gamma>H_X\\\beta\ge\sigma_j}}
+\frac{m_\rho}{\gamma}
+\ll_{\sigma_j,\epsilon}H_X^{g(\sigma_j)-1+\epsilon}.
+$$
+
+Indeed, on $(2^kH_X,2^{k+1}H_X]$ the reciprocal height is at most
+$(2^kH_X)^{-1}$ and the count is at most
+$C(2^{k+1}H_X)^{g(\sigma_j)+\epsilon}$. The geometric sum converges
+when $g(\sigma_0)+\epsilon<1$. The same $\epsilon$ and one common
+height start suffice for the finitely many fixed bins.
+
+SC2 gives $B_{\max,X}\ll X^{\eta/\Delta}$ after discarding only its
+favorable logarithmic factor. A bin therefore contributes at most
+
+$$
+C L_X B_{\max,X}^{\sigma_j+\delta-1/2}
+H_X^{g(\sigma_j)-1+\epsilon}
+\ll L_X X^{\mathfrak p_h(\sigma_j)+\eta\delta/\Delta+h\epsilon}.
+$$
+
+Fix $\delta,\epsilon$ small enough that
+$\eta\delta/\Delta+h\epsilon<\varepsilon_0/2$ and
+$g(\sigma_0)+\epsilon<1$. DH2 now bounds the finite bin sum by
+$O(L_XX^{m-\varepsilon_0/2})=o(M_XL_X)$, proving DH3.
+Extending the nonnegative absolute sum beyond each actual $\tau_i$ is
+used only as an upper bound for the original masked sector. No actual
+mask, coefficient, phase or multiplicity is replaced.
+
+This restricted high-real-part reciprocal-height sum is absolutely
+convergent because $g(\sigma_0)<1$. It does not make the full compensated
+$1/\rho$ series absolutely summable; CR34 and the earlier complete
+compensation obstruction remain unchanged. DH3 pays a specified growing
+high-frequency sector, not the full signed head or RH.
