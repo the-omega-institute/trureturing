@@ -775,7 +775,6 @@ theorem stabilizer_polar_tensor_escape (s : ℝ) (hl : 1 / 3 < s) (hu : 7 * s ^ 
     (∀ (n : ℕ) (η : Op n), η ∈ STAB n → IsState η) ∧
     (IsState sigma ∧ tr (sigma * S) = 1) ∧
     Sᴴ = S ∧ S * S = (7 : ℂ) • (1 : Op 3) ∧ S.trace = 0 ∧
-    (∀ η ∈ STAB 3, tr (η * S) ≤ 1 ∧ tr (η * conjugate S) ≤ 1) ∧
     (∀ A B : Op 3, tr (bell * tensor A (conjugate B)) = tr (A * Bᴴ) / 8) ∧
     bell ∈ STAB 6 ∧ (W s).PosDef ∧ (conjugate (W s)).PosDef ∧
     (∀ η ∈ STAB 3, tr (η * W s) ≤ 1 ∧ tr (η * conjugate (W s)) ≤ 1) ∧
@@ -786,8 +785,8 @@ theorem stabilizer_polar_tensor_escape (s : ℝ) (hl : 1 / 3 < s) (hu : 7 * s ^ 
     have he := conjugate_linear (1 / (1 + s)) ((1 / (1 + s)) * s) S
     dsimp only [W] ; simpa only [smul_add, smul_smul] using he
   refine ⟨fun n η hη => stab_state hη, sigma_state_support, S_adjoint, S_square, S_trace,
-    fun η hη => ⟨S_support hη, conjugate_S_support hη⟩, bell_trace, bell_mem,
-    (linear_posDef S S_adjoint S_square_real s hu).smul (by positivity), ?_, ?_, W_bell s, ?_⟩
+    bell_trace, bell_mem, (linear_posDef S S_adjoint S_square_real s hu).smul (by positivity),
+    ?_, ?_, W_bell s, ?_⟩
   · rw [hc]
     exact (linear_posDef (conjugate S) (by rw [conjugate_adjoint, S_adjoint])
       conjugate_S_square s hu).smul (by positivity)

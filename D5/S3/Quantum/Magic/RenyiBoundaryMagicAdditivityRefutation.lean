@@ -100,7 +100,7 @@ private lemma actual_consumption : C * C = Q • W (119 / 316 : ℝ) := by
 private lemma polar_consumption (η : Op 3) (hη : η ∈ STAB 3) :
     tr (η * W (119 / 316 : ℝ)) ≤ 1 := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, hp, _, _⟩
+  rcases h with ⟨_, _, _, _, _, _, _, _, _, hp, _, _⟩
   exact (hp η hη).1
 private lemma sigma_C_square_trace : tr (sigma * (C * C)) = Q := by
   have hs := source_certificate.2.1
@@ -234,7 +234,7 @@ private lemma rho_trace : rho.trace = 1 := by
   norm_num
 private lemma rho_pos : rho.PosDef := by
   have h := stabilizer_polar_tensor_escape (4 / 11 : ℝ) (by norm_num) (by norm_num)
-  rcases h with ⟨_, _, _, _, _, _, _, _, hW, _, _, _, _⟩
+  rcases h with ⟨_, _, _, _, _, _, _, hW, _, _, _, _⟩
   have he : rho = (15 / 88 : ℝ) • W (4 / 11 : ℝ) := by
     unfold rho W
     module
@@ -293,7 +293,7 @@ private lemma bar_trace {n : ℕ} (A : Op n) : tr (conjugate A) = tr A := by
   rfl
 private lemma rhoBar_pos : rhoBar.PosDef := by
   have h := stabilizer_polar_tensor_escape (4 / 11 : ℝ) (by norm_num) (by norm_num)
-  rcases h with ⟨_, _, _, _, _, _, _, _, _, hW, _, _, _⟩
+  rcases h with ⟨_, _, _, _, _, _, _, _, hW, _, _, _⟩
   have he : rhoBar = (15 / 88 : ℝ) • conjugate (W (4 / 11 : ℝ)) := by
     change barAlg rho = (15 / 88 : ℝ) • barAlg (W (4 / 11 : ℝ))
     rw [← map_smul]
@@ -323,7 +323,7 @@ private lemma conjugate_marginal_lower (η : Op 3) (hη : η ∈ STAB 3)
     change barAlg C * barAlg C = Q • barAlg (W (119 / 316 : ℝ))
     rw [← map_mul, actual_consumption, map_smul]
   have hp := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-  rcases hp with ⟨_, _, _, _, _, _, _, _, _, _, hp, _, _⟩
+  rcases hp with ⟨_, _, _, _, _, _, _, _, _, hp, _, _⟩
   have hw := (hp η hη).2
   have hb : tr (η * (conjugate C * conjugate C)) ≤ Q := by
     rw [hcc]
@@ -773,7 +773,7 @@ private def tau : Op 6 := (4095 / 4096 : ℝ) • tensor sigma (conjugate sigma)
   (1 / 4096 : ℝ) • bell
 private lemma tau_mem : tau ∈ STAB 6 := by
   have hp := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-  rcases hp with ⟨_, _, _, _, _, _, _, hb, _, _, _, _, _⟩
+  rcases hp with ⟨_, _, _, _, _, _, hb, _, _, _, _, _⟩
   exact (convex_convexHull ℝ (PureStabilizer 6))
     (stab_tensor sigma_mem (stab_bar sigma_mem)) hb
     (by norm_num) (by norm_num) (by norm_num)
@@ -805,7 +805,7 @@ private lemma tau_pos : tau.PosDef := by
     exact sigma_pos.transpose
   have hf : baseFree.PosDef := (sigma_pos.kronecker hb).submatrix (blocks 3 3).injective
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-  rcases h with ⟨hstates, _, _, _, _, _, _, hbell, _, _, _, _, _⟩
+  rcases h with ⟨hstates, _, _, _, _, _, hbell, _, _, _, _, _⟩
   exact (hf.smul (by norm_num : (0 : ℝ) < 4095 / 4096)).add_posSemidef
     ((hstates 6 bell hbell).1.smul (by norm_num : (0 : ℝ) ≤ 1 / 4096))
 private lemma bell_sandwich (A : Op 6) : bell * A * bell = (bell * A).trace • bell := by
@@ -835,7 +835,7 @@ private lemma baseInv_hermitian : baseInv.IsHermitian := by
   rw [tensor_star, sigmaInv_hermitian, sigmaInv_hermitian.transpose]
 private lemma base_bell_trace : tr (bell * baseInv) = 896 / 9 := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-  rcases h with ⟨_, _, _, _, _, _, ht, _, _, _, _, _, _⟩
+  rcases h with ⟨_, _, _, _, _, ht, _, _, _, _, _, _⟩
   unfold baseInv
   rw [ht]
   rw [sigmaInv_hermitian]
@@ -851,7 +851,7 @@ private lemma base_bell_sandwich : bell * baseInv * bell = (896 / 9 : ℝ) • b
   rw [bell_sandwich]
   have hb : bell.IsHermitian := by
     have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-    rcases h with ⟨hstates, _, _, _, _, _, _, hbell, _, _, _, _, _⟩
+    rcases h with ⟨hstates, _, _, _, _, _, hbell, _, _, _, _, _⟩
     exact (hstates 6 bell hbell).1.isHermitian
   have hr : ((bell * baseInv).trace.re : ℂ) = (bell * baseInv).trace :=
     Complex.conj_eq_iff_re.mp (by
@@ -937,7 +937,7 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
       (Q • conjugate (W (119 / 316 : ℝ)))))) = _
     rw [map_smul]
     have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-    rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, htW, _⟩
+    rcases h with ⟨_, _, _, _, _, _, _, _, _, _, htW, _⟩
     unfold tr at htW ⊢
     simp only [smul_smul, Matrix.mul_smul, Matrix.trace_smul, Complex.smul_re, smul_eq_mul]
     change Q * Q * (bell * tensor (W (119 / 316 : ℝ))
@@ -954,7 +954,7 @@ private lemma joint_evaluation : tr (joint * joint * tau⁻¹) = F := by
   norm_num
 private lemma logarithmic_gap : log2 F < log2 Q + log2 Q := by
   have h := stabilizer_polar_tensor_escape (119 / 316 : ℝ) (by norm_num) (by norm_num)
-  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, _, he, hs⟩
+  rcases h with ⟨_, _, _, _, _, _, _, _, _, _, he, hs⟩
   have hid : Q ^ 2 - F = (29882962855 / 120195047396424 : ℝ) *
       (tr (bell * tensor (W (119 / 316 : ℝ)) (conjugate (W (119 / 316 : ℝ)))) - 1) := by
     rw [he]
