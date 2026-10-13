@@ -297,7 +297,7 @@ has identical action for the two remote values of site $4$.
 The matrix transform survives, but the stated tensor locality does not.
 $\square$
 
-[SMF1]: ../../../Library/QuantumReadoutDesign/castelnovo2005stochasticmatrixform.md
+[SMF1]: ../../../Library/StatisticalMechanics/castelnovo2005stochasticmatrixform.md
 
 ### 8.6. The recorded menu supplies the five-mode history readout
 
@@ -1066,8 +1066,8 @@ no optimum over arbitrary quantum measurements, physical control
 availability or pair-interaction family with joint weight distinct
 from $a^2$.
 
-[DG3]: ../../../Library/QuantumReadoutDesign/dettegrigoriev2014eoptimal.md
-[BDX3]: ../../../Library/QuantumReadoutDesign/boyddiaconisxiao2004fastestmixing.md
+[DG3]: ../../../Library/Estimation/dettegrigoriev2014eoptimal.md
+[BDX3]: ../../../Library/Estimation/boyddiaconisxiao2004fastestmixing.md
 
 ## 追加锚（本行以下为增补区）
 
@@ -2734,8 +2734,8 @@ quantum parent, not a preparation or a hardware
 realization. No literature priority is claimed
 for the source-specific inequalities above.
 
-[DGU7]: ../../../Library/QuantumReadoutDesign/dyergreenhillullrich2014heatbath.md
-[L7]: ../../../Library/QuantumReadoutDesign/lesanovsky2012constrainedspinchain.md
+[DGU7]: ../../../Library/StatisticalMechanics/dyergreenhillullrich2014heatbath.md
+[L7]: ../../../Library/StatisticalMechanics/lesanovsky2012constrainedspinchain.md
 
 
 ## 8. Real readout completes the same local information design
