@@ -2119,3 +2119,156 @@ $C_0<d(1-\kappa)/16$. The joint signed
 estimate in CR47 and RH remain unresolved. MB1--MB3 are
 supplier-relative paper deductions using the cited original formula,
 H1, CR20 and CR45--CR47, with no originality or Lean-verification claim.
+
+## Prime existence bounds the weight of each actual core
+
+Retain the same qualifying RH-false full windows, every original label
+$p_0<\cdots<p_m$, and every allowed assignment of full-domain maximizing
+ties. Write, as in CR17--CR47,
+
+$$
+N_i=p_iU_i,\quad U_i=N_{A_i}^{\rm str},\quad
+t_i=\log p_i,\quad B_i=\log U_i,\quad A_i=B_i+t_i,
+\qquad 0\le i\le m.
+$$
+
+The weighted labels are $0\le i<m$, with
+$\delta_i=t_{i+1}-t_i>0$, $L_X=\sum_{i<m}\delta_i$, and
+$\max_{i<m}\delta_i\le E=e^{-5\ell_X/12}$. The final label $p_m$
+is still the original boundary. Existing full-window counting gives
+$L_X\sim\ell_X$; no label thinning is made.
+
+Use the [N2 all-choice ordering](../ArithSums/trureturing2026extrawindowpairing.md#4-n2-the-exact-common-finite-core-and-all-choices-of-ties):
+$U_i\mid U_j$ and $B_i\le B_j$ whenever $i<j$, and $A_i<A_j$.
+Consequently all weighted occurrences of one actual core $U$ form a
+contiguous block $a\le i\le b<m$. This is equality of literal integer
+cores, not equality of coarse FIB labels or of an approximate clock.
+The [existing cofinal constant-core edge result CW2](../ArithSums/nicolas2025comparison.md#exact-log-2-rigidity)
+is reused; it asserts neither a long constant-core run nor a bound for
+the total weight of a repeated core. The estimate here applies to every
+such block in every allowed tie assignment, whether or not CW2 selects
+one of its edges.
+
+### Retain the strict activation and the last outgoing weight
+
+Suppose a prime-existence supplier gives, for every sufficiently large
+real $x$, a prime $q$ with $x<q\le x+H(x)$. Use it at the actual
+departure $x=A_a$. The already paid first-layer interface gives
+$q<a_{q,1}<q+1\le A_a+H(A_a)+1$.
+
+Strict inventory equality $N_{A_a}^{\rm str}=N_{A_b}^{\rm str}=U$
+excludes every actual activation in $[A_a,A_b)$. Indeed a layer activating
+there is excluded at $A_a$ and included at $A_b$, contradicting equality.
+If $A_b\ge A_a+H(A_a)+1$, then the displayed $a_{q,1}$ lies strictly
+between $A_a$ and $A_b$, giving this contradiction. Thus
+
+$$
+A_b-A_a<H(A_a)+1.
+$$
+
+The case $a=b$ satisfies the same inequality. Higher-layer and
+simultaneous activations are retained in the inventory; they can only
+shorten this constant-core interval. No upper bound for their number
+is assumed, and no equality layer is inserted at a strict endpoint.
+
+Since $B_b=B_a$, the exact weighted telescope is
+
+$$
+\begin{aligned}
+w_X(U)&:=\sum_{i=a}^b\delta_i
+=t_{b+1}-t_a\\
+&=(A_b-A_a)+\delta_b
+\le H(A_a)+1+E.
+\end{aligned}
+\tag{SM1}
+$$
+
+The term $\delta_b$ is indispensable: its left endpoint has core $U$
+even if label $b+1$ has another core. For the terminal block $b=m-1$
+it uses precisely the original boundary label $p_m$. SM1 therefore does
+not drop either a switching weight or the last weight of the full window.
+All supplier starts can be paid uniformly, since $A_a\ge\ell_X\to\infty$.
+
+### Directly consume prime existence, rather than reprove a gap theorem
+
+The [Baker--Harman--Pintz primary Theorem 1](../Analytic/bakerharmanpintz2001primegaps.md)
+and its explicit forward conversion BHP-F supply $H(x)=2x^\vartheta$,
+$\vartheta=21/40$. Therefore every original core block satisfies
+
+$$
+\boxed{w_X(U)\le2A_a^{21/40}+1+E.}
+\tag{SM2}
+$$
+
+This does not replace the stronger prime-count contracts used in N1 or
+the original full-window construction. The original GM mesh $E$ is kept.
+No new prime-gap or sieve theorem, numerical analytic start, literature
+priority or complete Lean verification is claimed.
+
+Define the original probability measure on actual core clocks by
+
+$$
+\nu_X=\frac1{L_X}\sum_{i<m}\delta_i\,\boldsymbol\delta_{B_i},
+\qquad B_{\max,X}=\max_{i<m}B_i,
+$$
+
+where $\boldsymbol\delta_B$ is a Dirac mass. Since $t_a\le2\ell_X$,
+SM2 gives both the local and full-window bounds
+
+$$
+\begin{aligned}
+\nu_X(\{B\})&\le
+\min\left(1,\frac{2(B+2\ell_X)^{21/40}+1+E}{L_X}\right),\\
+\sup_B\nu_X(\{B\})&\le
+\min\left(1,\frac{2(B_{\max,X}+2\ell_X)^{21/40}+1+E}{L_X}\right).
+\end{aligned}
+\tag{SM3}
+$$
+
+The first formula is for clocks of actual cores; absent clocks have zero
+mass. These are deterministic bounds for the original positive weights,
+uniform in all original tie choices. No probability law for independent
+zero phases has been substituted for $\nu_X$.
+
+### The additional clock regime and the signed-head debt
+
+With $L_X\sim\ell_X$, a sufficient extra regime for SM3 to imply
+$\sup_B\nu_X(\{B\})\to0$ is
+
+$$
+B_{\max,X}=o(\ell_X^{40/21}).
+\tag{SM4}
+$$
+
+For an all-choice assertion this regime must hold uniformly over the
+allowed tie assignments. The existing exponential ceiling $R$ does not
+supply SM4. Conversely, MB2 supplies
+$B_{\min,X}\ge c\ell_X^{1/\Theta}$ for one fixed $c>0$. If
+$\Theta\le21/40$, this lower bound excludes the sufficient regime SM4.
+That failure does not prove actual concentration: SM4 is a sufficient
+condition for this particular upper bound, not a necessary condition for
+the actual atom masses to vanish.
+
+For the existing CR45--CR47 core-selected-height route, one may apply
+the CHJ supplier once per distinct $B$ and choose its resulting $\tau_B$
+for every label with that core. All that route's error contracts depend
+on this same $B$, so the exact remaining head can then be written
+
+$$
+\sum_{i<m}\delta_iH_{B_i,a}(\tau_{B_i})
+=L_X\int H_{B,a}(\tau_B)\,d\nu_X(B).
+\tag{SM5}
+$$
+
+This is a finite regrouping of the existing admissible-height route;
+it does not impose a common height on different cores. Arbitrary previously
+chosen individual masks cannot be replaced by $\tau_B$ without their
+own unchanged contracts. The other $A$-selected-height route remains
+subject to its separate hypotheses.
+
+Even a supplied SM4 and vanishing atom masses would not establish
+cancellation of $e^{i\gamma\log B}$, control the growing family of zero
+frequencies, or bound the amplitude-weighted signed integral in SM5.
+SM1--SM3 pay an actual residence-weight interface using existing
+arithmetic and prime existence; they do not pay the signed upper estimate
+with CR20's required strict margin. CR21/CR23, CR47 and RH remain unproved.
