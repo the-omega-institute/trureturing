@@ -1,0 +1,154 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Gluing;
+
+internal sealed class ActualCornerPointPeriodsDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Geometry/Gluing/ActualCornerPointPeriods.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Minimal point returns enumerate the four actual ordered-corner components.",
+        H("Actual corner point periods"),
+        Blocks(
+            Def("corner", "Ordered first endpoints",
+                "The rows L0, L1, H2, H0 have first-endpoint vectors (0,2,1), (1,3,2), (2,0,3), (0,3,1)."),
+            Def("tip", "Ordered second endpoints",
+                "The corresponding vectors are (1,3,2), (0,2,1), (0,3,1), (2,0,3). The pair (3,0) remains ordered. The twelve positions cover each j different from k exactly once; raw diagonal darts are excluded."),
+            Def("outgoing", "Forward face choices",
+                "The low rows use faces (2,0,0); the high rows use (1,1,0). These are the forward tours in the original group-transport construction."),
+            Def("incoming", "Backward face choices",
+                "The low rows use faces (3,1,3); the high rows use (3,2,2). The two displayed faces are exactly those omitting neither ordered endpoint."),
+            Def("returnWord", "Source return words",
+                "Both low rows use ell = v inverse times u squared. Both high rows use h = v squared times u. Multiplication is the published right-action convention. After corner normalization the four oriented words are c1, inverse c3, c2, inverse c4; inverse directions are not silently renamed."),
+            Def("offset", "Phase offsets",
+                "The low rows have offsets (1,v inverse,v inverse times u); the high rows have (1,v,v squared). These offsets specify actual sheets at each phase."),
+            Def("tour", "The three-phase permutation",
+                "A tour state consists of a root sheet and a phase. The phase advances, and only the crossing from phase two to phase zero acts on the root by the return word. The inverse acts by the inverse word at phase zero. This tracks ordered endpoints, not a full transported frame."),
+            Def("encode", "Actual dart encoding",
+                "Apply the phase offset to the root sheet and retain the ordered pair from the same row. The encoding is injective within each row. The actual guarded DartStep is proved equivalent to the image of the tour or its inverse."),
+            Def("pointPeriod", "Minimal return at the selected point",
+                "The period is Function.minimalPeriod of right multiplication by the row's return word at the selected sheet. The component theorem assumes only that the acted-on set is finite; the group may be infinite, and the action may be nonfaithful, nonfree or nontransitive."),
+            Def("occurrence", "Finite indexed occurrences",
+                "For an index in Fin(3r), iterate the source-derived tour from phase zero and encode its actual dart. The proof derives the tour period 3r from the minimal point return r using pinned periodic-point lemmas."),
+            Describe.Lean(DescribeId.Create("actual-corner-component-enumeration"),
+                DeclarationHandle.Create(Prefix + "actual_component_enumeration"),
+                H("The complete actual component and its two generators"),
+                StatementSource.FromAuthor(F.Disp(FormulaFor("actual_component_enumeration"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every row and every point of an arbitrary finite original right action, the period is positive, the Fin(3r) occurrence map is injective, and its image is the entire EqvGen component of the actual seed. The theorem also gives unique coverage of all twelve valid ordered endpoint types and the exact successor-or-predecessor characterization of every allowed generator.")),
+                    Paragraph(Text("The forward inclusion proves a source-specific invariant of the full original DartRelated chain: every intermediate remains encoded in the same row and in the same tour cycle. The converse constructs actual successor chains. Finite positivity, reduction modulo the minimal period and injectivity before return directly use Mathlib.Dynamics.PeriodicPts; the SameCycle API supplies natural iterate representatives.")),
+                    Paragraph(Text("No equation W to the r equals one is used. A singleton nonfaithful action has r equal to one and three occurrences, even though the complete transported frame can exchange the two complementary labels after those three crossings. Empty acted-on sets are covered by the point-quantified statement without an extra nonempty assumption.")),
+                    Paragraph(Text("The prerequisite ActualLinkCornerChains definitions supply the original face words, whole-face permutations, DartStep and DartRelated. This theorem concerns those combinatorial components. It does not establish the guarded affine Step correspondence with CyclicTriangleDisk seams, an origin normal form for the affine quotient, an open disk chart, the truncation-slice comparison, orientability or a global genus formula.")),
+                    Paragraph(Text("The source is the original group-transport section 122 and its supplemental 122.3 interface. Pinned Mathlib periodic-point and permutation-cycle declarations supply the generic orbit machinery. The newer FourColor orbit-list API is an advisory source with a different pin and is not imported. No literature-priority claim is made."))),
+                DescribeRole.Theorem))));
+
+    private static DocumentBlock.Describe Def(string name, string heading, string text) =>
+        Describe.Lean(DescribeId.Create("actual-corner-period-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(heading),
+            StatementSource.FromAuthor(F.Disp(FormulaFor(name))), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), DescribeRole.Definition);
+
+    private static Formula FormulaFor(string name)
+    {
+        var g = F.Id("G"); var o = F.Id("Omega");
+        var u = F.Id("u"); var v = F.Id("v"); var c = F.Id("c");
+        var s = F.Id("s"); var x = F.Id("x"); var y = F.Id("y"); var d = F.Id("d");
+        var i = F.Id("i"); var j = F.Id("j"); var k = F.Id("k");
+        var f3 = Call("Fin",F.D(3)); var f4 = Call("Fin",F.D(4));
+        var w = Call("returnWord",u,v,c);
+        var r = Call("pointPeriod",u,v,c,x);
+        var n = Product(F.D(3),r);
+        var index = Call("Fin",n);
+        var seed = Call("encode",u,v,c,Tuple(x,F.D(0)));
+        var occurrence = Call("occurrence",u,v,c,x,i);
+        var t = Call("tour",u,v,c);
+        var phase = Call("second",y); var root = Call("first",y);
+        var lowOffset = Tuple(F.D(1),Call("inverse",v),Product(Call("inverse",v),u));
+        var highOffset = Tuple(F.D(1),v,Call("square",v));
+        Formula Row(Formula table) => All("c",f4,All("s",f3,
+            Eq(Call(name,c,s),Call("entry",table,c,s))));
+        Formula Scope(Formula body) => All("G",F.Id("Group"),
+            All("Omega",Call("RightAction",g),All("u",g,All("v",g,All("c",f4,body)))));
+        var coverage = All("j",f4,All("k",f4,Iff(Ne(j,k),UniquePair(j,k,Product(f4,f3)))));
+        var generators = All("y",Product(o,f3),All("d",Call("Dart",o),
+            Iff(Call("DartStep",u,v,Call("encode",u,v,c,y),d),Or(
+                Eq(d,Call("encode",u,v,c,Call("apply",t,y))),
+                Eq(d,Call("encode",u,v,c,Call("apply",Call("inverse",t),y)))))));
+        var period = Eq(Call("minimalPeriod",t,Tuple(x,F.D(0))),n);
+        var explicitOccurrence = All("i",index,Eq(occurrence,Call("encode",u,v,c,
+            Tuple(Call("iterate",Call("rightMultiply",w),Call("div",i,F.D(3)),x),
+                Call("mod",i,F.D(3))))));
+        return name switch
+        {
+            "corner" => Row(Tuple(Tuple(F.D(0),F.D(2),F.D(1)),Tuple(F.D(1),F.D(3),F.D(2)),
+                Tuple(F.D(2),F.D(0),F.D(3)),Tuple(F.D(0),F.D(3),F.D(1)))),
+            "tip" => Row(Tuple(Tuple(F.D(1),F.D(3),F.D(2)),Tuple(F.D(0),F.D(2),F.D(1)),
+                Tuple(F.D(0),F.D(3),F.D(1)),Tuple(F.D(2),F.D(0),F.D(3)))),
+            "outgoing" => Row(Tuple(Tuple(F.D(2),F.D(0),F.D(0)),Tuple(F.D(2),F.D(0),F.D(0)),
+                Tuple(F.D(1),F.D(1),F.D(0)),Tuple(F.D(1),F.D(1),F.D(0)))),
+            "incoming" => Row(Tuple(Tuple(F.D(3),F.D(1),F.D(3)),Tuple(F.D(3),F.D(1),F.D(3)),
+                Tuple(F.D(3),F.D(2),F.D(2)),Tuple(F.D(3),F.D(2),F.D(2)))),
+            "returnWord" => Scope(Eq(w,Call("entry",Tuple(
+                Product(Call("inverse",v),Call("square",u)),Product(Call("inverse",v),Call("square",u)),
+                Product(Call("square",v),u),Product(Call("square",v),u)),c))),
+            "offset" => Scope(All("s",f3,Eq(Call("offset",u,v,c,s),
+                Call("entry",Tuple(lowOffset,lowOffset,highOffset,highOffset),c,s)))),
+            "tour" => Scope(All("y",Product(o,f3),Eq(Call("apply",t,y),
+                Call("if",Eq(phase,F.D(2)),Tuple(Call("act",root,w),F.D(0)),
+                    Tuple(root,Call("add",phase,F.D(1))))))),
+            "encode" => Scope(All("y",Product(o,f3),Eq(Call("encode",u,v,c,y),
+                Tuple(Tuple(Call("act",root,Call("offset",u,v,c,phase)),Call("corner",c,phase)),
+                    Call("tip",c,phase))))),
+            "pointPeriod" => Scope(All("x",o,Eq(r,
+                Call("minimalPeriod",Call("rightMultiply",w),x)))),
+            "occurrence" => Scope(All("x",o,All("i",index,Eq(occurrence,
+                Call("encode",u,v,c,Call("iterate",t,i,Tuple(x,F.D(0)))))))),
+            "actual_component_enumeration" => Scope(All("x",o,Implies(Call("Finite",o),And(
+                Lt(F.D(0),r),Call("Injective",Call("occurrence",u,v,c,x)),
+                All("d",Call("Dart",o),Iff(Call("DartRelated",u,v,seed,d),
+                    Exists("i",index,Eq(occurrence,d)))),
+                coverage,generators,period,explicitOccurrence)))),
+            _ => throw new System.ArgumentOutOfRangeException(nameof(name))
+        };
+    }
+
+    private static Formula All(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(name),domain,body);
+    private static Formula Exists(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(name),domain,body);
+    private static Formula UniquePair(Formula j, Formula k, Formula domain)
+    {
+        var cs = F.Id("cs"); var ds = F.Id("ds");
+        Formula Matches(Formula z) => And(
+            Eq(Call("corner",Call("first",z),Call("second",z)),j),
+            Eq(Call("tip",Call("first",z),Call("second",z)),k));
+        return Exists("cs",domain,And(Matches(cs),All("ds",domain,
+            Implies(Matches(ds),Eq(ds,cs)))));
+    }
+    private static Formula Call(string name, params Formula[] args) => new Formula.Apply(F.Id(name),[.. args]);
+    private static Formula Tuple(params Formula[] xs)
+    {
+        var parts = new System.Collections.Generic.List<Formula> { F.Open };
+        for (var i = 0; i < xs.Length; i++)
+        {
+            if (i > 0) { parts.Add(F.Comma); parts.Add(F.Sp); }
+            parts.Add(xs[i]);
+        }
+        parts.Add(F.Close);
+        return F.Seq([.. parts]);
+    }
+    private static Formula Product(Formula a, Formula b) => F.Seq(a,F.Sp,F.Times,F.Sp,b);
+    private static Formula And(params Formula[] xs)
+    {
+        var r = xs[^1];
+        for (var i = xs.Length-2; i >= 0; i--) r = new Formula.Logic(xs[i],FormulaLogicOperator.And,r);
+        return r;
+    }
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
+    private static Formula Ne(Formula a, Formula b) => F.Seq(a,F.Sp,F.Neq,F.Sp,b);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Iff,b);
+    private static Formula Implies(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
+    private static Formula Or(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Or,b);
+}
