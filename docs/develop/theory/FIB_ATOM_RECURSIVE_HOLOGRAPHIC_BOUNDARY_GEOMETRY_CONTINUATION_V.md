@@ -1864,3 +1864,642 @@ with no new Lean/kernel, registration, freezing or physical verification
 claim, and no completion of the ongoing through-2027 why-three programme.
 
 ## 116.99 追加锚（本行以下为增补区）
+## 117. Uniform final heat after literal serial conservative ingress
+
+The positive adjacent maps of §116 have a chronological conservative
+product whose unsmoothed norm need not stay bounded. Nevertheless one
+final positive dwell compares uniformly with heat on the initial carrier,
+over all finite original sources and all finite accepted horizons. The
+proof retains the chronological split, including the mass left forever
+at each parent when it becomes internal.
+
+### 117.1 The literal products and their cofinal ancestry bounds
+
+**Definition 117.1 (serial ingress on the actual finite history).** For
+every original $u\in\mathcal T$ retain exactly $s_j=\rho^ju$, $V_j$,
+$N_j$, $\mu_j$, $H_j$, $L_j$ and $A_j=N_jL_j$ of (116.1), with
+$S_j(t)=e^{-tA_j}$. Thus every original bracket, order, label and repeated
+occurrence is retained, with $\rho\alpha=\beta$,
+$\rho\beta=\langle\beta,\alpha\rangle$ and homomorphism on pairs.
+The operator is the closed unit-edge counting Laplacian. Its energy is
+$\mathfrak a_j(f,f)=\sum_{\{x,y\}\in\mathcal E_j}(f(x)-f(y))^2$,
+and $\|f\|_{1,j}^2=\|f\|_{\mu_j}^2+\mathfrak a_j(f,f)$.
+No counting occurrence or edge is removed by probability normalization.
+
+Use exactly the adjacent maps (116.3), now writing their actual fibre
+size as $b_j=1+2\mathbf1_{\{\text{actual beta leaf of }s_j\}}$:
+
+$$
+\begin{aligned}
+r_j&=N_{j+1}/N_j,& E_jf&=f\circ\pi_j,&
+D_j&=r_j^{-1}E_j^{\mathsf T},&
+C_j&=r_jE_j\operatorname{diag}(b_j)^{-1},\\
+P_{n,m}&=C_{m-1}\cdots C_n,&
+E_{n,m}&=E_{m-1}\cdots E_n,&
+D_{n,m}&=D_n\cdots D_{m-1}=E_{n,m}^* .
+\end{aligned}
+\tag{117.1}
+$$
+
+Here and below adjoints use the indicated probability Hilbert spaces.
+All empty products are identities. The map $\pi_j$ fixes old addresses
+and takes each newborn to its actual beta parent. The product $P_{n,m}$
+has no intervening heat. Define its counting kernel and probability
+adjoint by
+
+$$
+Q_{n,m}=\frac{N_n}{N_m}P_{n,m},\qquad
+T_{n,m}=Q_{n,m}^{\mathsf T}=P_{n,m}^*.
+\tag{117.2}
+$$
+
+These are analytical maps computed from genuine birth relations, not
+additional actions in the native menu.
+
+The finite contracts of Theorem 116.2 compose without an approximation:
+$P,E,D$ are positive, $E_{n,m}\mathbf1=\mathbf1$,
+$D_{n,m}P_{n,m}=I$, and $P_{n,m}$ and $D_{n,m}$ preserve their respective
+probability integrals. Also $Q_{n,m}$ preserves the counting sum.
+The identity $DP=I$ follows by cancelling each adjacent $D_jC_j$ in
+reverse order; integral preservation follows by composing the adjacent
+integral identities. It recovers only the attained unheated ingress
+range. In general $D_{n,m}\mathbf1\ne\mathbf1$; it is not an inverse
+heat or an arbitrary-successor recovery assertion.
+
+**Lemma 117.2 (bounded ancestry and summable mass and restriction errors).**
+Put $c=\varphi^{-1}$, $\Delta_j=2F_{j+1}-1$, and, for $n\ge2$, define
+
+$$
+B=\sqrt6,\qquad
+h_n=\frac{\varphi^{-n/2}}{1-\varphi^{-1/2}},\qquad
+a_n=60h_n,\qquad k_n=Bh_n.
+\tag{117.3}
+$$
+
+For every original $u$, every finite $m\ge n$, and all $f,g\in H_n$,
+with $W_{n,m}=D_{n,m}E_{n,m}$,
+
+$$
+\begin{aligned}
+\|E_{n,m}\|=\|D_{n,m}\|&\le B,\\
+\mathfrak a_m(E_{n,m}f,E_{n,m}g)&=\mathfrak a_n(f,g),\\
+|\langle(W_{n,m}-I)f,g\rangle_{\mu_n}|
+ &\le a_n\|f\|_{1,n}\|g\|_{1,n}.
+\end{aligned}
+\tag{117.4}
+$$
+
+For an arbitrary final field $z\in H_m$, let $z_j=z|_{V_j}$ be its
+literal restriction and $g=z_n$. Then
+
+$$
+\mathfrak a_n(g,g)\le\mathfrak a_m(z,z),\qquad
+\|z-E_{n,m}g\|_{\mu_m}\le k_n\sqrt{\mathfrak a_m(z,z)}.
+\tag{117.5}
+$$
+
+Proof. Let $\ell$ be the number of leaves of the actual $s_n$, and set
+$d=m-n$. Each old internal vertex has a singleton ancestry fibre.
+Each old alpha leaf has its entire actual $T_d$ fibre, with $\Delta_d$
+vertices; each old beta leaf has its actual $T_{d+1}$ fibre. The count
+supply IV (108.9), applied to $s_n$ itself, gives
+
+$$
+N_n=2\ell-1,\qquad N_m\ge\ell\Delta_d,\qquad
+1\le\Delta_d\le\Delta_{d+1}\le3\Delta_d\quad(d\ge0).
+\tag{117.6}
+$$
+
+The last inequality follows either from the Fibonacci recurrence or
+from the adjacent at-most-three birth factor. If $v(x)$ is the final
+fibre size of $x\in V_n$, then
+
+$$
+\|E_{n,m}f\|_{\mu_m}^2
+ =\frac1{N_n}\sum_{x\in V_n}\frac{v(x)}{N_m/N_n}f(x)^2,
+\qquad \frac{v(x)}{N_m/N_n}\le6.
+\tag{117.7}
+$$
+
+This proves the first bound, including $d=0$. New edges have zero
+ancestry-extension gradient, proving the energy identity. In particular
+$\|E_{n,j}f\|_{1,j}\le B\|f\|_{1,n}$ at every intermediate $j$.
+
+Reuse the relative adjacent mass estimate (116.8), with its exact
+$\vartheta_j$ in (116.7). Telescoping the probability inner products
+along this same history gives
+
+$$
+\begin{aligned}
+\langle(W_{n,m}-I)f,g\rangle_{\mu_n}
+ =\sum_{j=n}^{m-1}
+ \langle(D_jE_j-I)E_{n,j}f,E_{n,j}g\rangle_{\mu_j}.
+\end{aligned}
+\tag{117.8}
+$$
+
+Its modulus is at most
+$6\sum_{j=n}^{m-1}\vartheta_j\|f\|_{1,n}\|g\|_{1,n}$.
+For clarity the following geometric bound makes the constants explicit:
+
+$$
+\Delta_j\ge\varphi^{j-1},\qquad
+\vartheta_j\le10\varphi^{-j/2}\quad(j\ge2),\qquad
+\sum_{j=n}^{\infty}\Delta_{j+1}^{-1/2}\le h_n.
+\tag{117.9}
+$$
+
+Indeed $F_{j+1}\ge\varphi^{j-1}$ by induction and
+$\Delta_j\ge F_{j+1}$. In (116.7) the four terms of $\vartheta_j$ are
+bounded, respectively, by
+$3\sqrt{3\varphi/2}\varphi^{-j/2}$,
+$\sqrt2c\varphi^{-j/2}$, $2c\varphi^{-j/2}$ and
+$(1+2c^2)\varphi^{-j/2}$. Here the last term is
+$(c+2c^{j+1})/\Delta_j$, and $j\ge2$ was used.
+Their constants sum to less than ten: $\varphi<5/3$, $c<2/3$ give
+respective upper bounds $5,1,2,2$. This proves (117.9) and then
+the mass bound in (117.4). It is a form bound, not a small raw
+$H_n$-operator norm of $W_{n,m}-I$.
+
+For (117.5), the difference $z_{j+1}-E_jz_j$ vanishes on old vertices
+and has exactly one born-edge difference at each newborn. Consequently
+
+$$
+\|z_{j+1}-E_jz_j\|_{\mu_{j+1}}
+ \le\frac{\sqrt{\mathfrak a_m(z,z)}}{\sqrt{N_{j+1}}},\qquad
+z-E_{n,m}g=\sum_{j=n}^{m-1}
+ E_{j+1,m}(z_{j+1}-E_jz_j).
+\tag{117.10}
+$$
+
+Use $\|E_{j+1,m}\|\le B$, $N_{j+1}\ge\Delta_{j+1}$ from
+IV (108.9), and (117.9). Restriction retains a subset of the actual
+edges, proving the other assertion. No original-size, depth or balance
+bound was imposed. $\square$
+
+### 117.2 The actual chronological density after many births
+
+**Lemma 117.3 (bounded averaged displacement of serial ingress).**
+For every $n\ge0$, finite $m\ge n$ and final field $z$, with
+$g=z|_{V_n}$,
+
+$$
+\|T_{n,m}z-g\|_{\mu_n}
+ \le\sqrt{\frac2{7N_n}}\sqrt{\mathfrak a_m(z,z)}.
+\tag{117.11}
+$$
+
+The estimate concerns the literal chronological $P_{n,m}$, even when
+its raw Hilbert norm is large.
+
+Proof. After cancelling the global factors $r_j$, the counting kernel
+$Q_{n,m}$ is the chronological product of $r_j^{-1}C_j$.
+At an actual beta split its mass is divided equally among the retained
+parent and its two born children. At an alpha-to-beta step or an
+internal vertex it remains at that very address. Once a parent has
+become internal its retained third stays there in all later factors.
+Every column is therefore a probability supported in its actual
+ancestry fibre. An old internal vertex has its point-mass column.
+
+Fix an old leaf $x$. For every actual descendant edge $e$ in its final
+fibre, let $d(e)\ge1$ be the depth of its child below $x$. Exactly
+$d(e)$ genuine branch splits are needed along that path. Each sends
+one third of the incoming mass to the selected child, and no subsequent
+split moves mass out of that child's subtree. Hence the total final
+column mass below $e$ is exactly $3^{-d(e)}$. Waiting at an alpha
+changes the birth epoch but not this coefficient. Finite path summation
+therefore gives
+
+$$
+(T_{n,m}z)(x)-z(x)
+ =\sum_{e\text{ strictly below }x}3^{-d(e)}\nabla_ez,
+\qquad
+\sum_{e\text{ strictly below }x}3^{-2d(e)}
+ \le\sum_{d\ge1}2^d3^{-2d}=\frac27.
+\tag{117.12}
+$$
+
+The edge sum on the left is finite. The convergent geometric series
+only bounds it; no infinite or completed source is introduced.
+Cauchy--Schwarz bounds the square of the first expression by
+$\frac27\sum_{e\text{ below }x}|\nabla_ez|^2$.
+The descendant edge sets of different old leaves are disjoint, while
+the difference vanishes at every old internal vertex. Sum over all
+old vertices and divide by $N_n$ to obtain (117.11). This also handles
+an empty born set and an unchanged singleton. $\square$
+
+For example, start from the beta singleton and take two accepted steps.
+The final five addresses are $\varepsilon,L,R,LL,LR$. The one counting
+column has weights $1/3,1/9,1/3,1/9,1/9$ in that order. They sum to one
+and are not the uniform final-fibre weights $1/5$. Thus (117.12) has
+not replaced serial ingress by final-fibre redistribution. At a permanent
+old internal root the known raw amplification
+$\sqrt{N_m/N_n}$ is compatible with (117.11), which bounds its
+energy-tested adjoint rather than the raw ingress norm.
+
+### 117.3 A uniform resolvent bound despite raw amplification
+
+**Theorem 117.4 (cofinal serial resolvent comparison).** Let
+
+$$
+q_n=\sqrt{\frac2{7\Delta_n}},\qquad
+\rho_n=3a_n+\frac{Bk_n}2+\frac{q_n}2
+       =183h_n+\frac{q_n}2.
+\tag{117.13}
+$$
+
+Choose $n_*\ge2$ so that, for every $n\ge n_*$,
+$a_n\le1/2$, $k_n\le1$ and $\rho_n\le1$. These displayed scalar
+sequences decrease to zero, so such a source-independent $n_*$ exists.
+Write $R_j=(I+A_j)^{-1}$. For every original $u$, finite $m\ge n\ge n_*$
+and integer $l\ge1$,
+
+$$
+\begin{aligned}
+\|R_mP_{n,m}-E_{n,m}R_n\|&\le\rho_n,\\
+\|R_mP_{n,m}\|&\le B+\rho_n,\\
+\|R_m^lP_{n,m}-E_{n,m}R_n^l\|&\le2l\rho_n.
+\end{aligned}
+\tag{117.14}
+$$
+
+All norms are $H_n\to H_m$; the constants are independent of the horizon.
+
+Proof. Abbreviate the products to $P,E,D,T$ and put $W=DE$.
+Take arbitrary $f\in H_n$, $v\in H_m$, and set
+
+$$
+z=R_mv,\qquad g=z|_{V_n},\qquad w=R_nf.
+\tag{117.15}
+$$
+
+The finite nonnegative spectral estimates (116.15), which include the
+zero eigenvalue, give
+$\|z\|_{\mu_m}\le\|v\|_{\mu_m}$,
+$\sqrt{\mathfrak a_m(z,z)}\le\|v\|_{\mu_m}/2$ and
+$\|w\|_{1,n}\le\|f\|_{\mu_n}$.
+The form estimate (117.4) and (117.5) control the literal restriction
+without any bound on $N_m/N_n$:
+
+$$
+\begin{aligned}
+(1-a_n)\|g\|_{1,n}^2
+ &\le\|Eg\|_{\mu_m}^2+\mathfrak a_n(g,g)\\
+ &\le(\|z\|_{\mu_m}+k_n\sqrt{\mathfrak a_m(z,z)})^2
+           +\mathfrak a_m(z,z),\\
+\|g\|_{1,n}&\le\sqrt5\|v\|_{\mu_m}\le3\|v\|_{\mu_m}.
+\end{aligned}
+\tag{117.16}
+$$
+
+The first inequality follows from the lower mass bound
+$\|Eg\|^2\ge\|g\|^2-a_n\|g\|_{1,n}^2$; the last uses
+$a_n\le1/2$, $k_n\le1$ and the preceding spectral estimates.
+
+Because $Ew$ is constant along every post-$n$ edge,
+$\mathfrak a_m(z,Ew)=\mathfrak a_n(g,w)$ exactly.
+The two resolvent equations, $P^*=T$ and $E^*=D$ yield
+
+$$
+\begin{aligned}
+\langle v,(R_mP-ER_n)f\rangle_{\mu_m}
+ &=\langle f,Tz-g\rangle_{\mu_n}
+                -\langle Dz-g,w\rangle_{\mu_n},\\
+Dz-g&=D(z-Eg)+(W-I)g.
+\end{aligned}
+\tag{117.17}
+$$
+
+For completeness, $\langle v,Ew\rangle
+=\mathfrak a_n(g,w)+\langle Dz,w\rangle
+=\langle g,f\rangle+\langle Dz-g,w\rangle$; subtraction from
+$\langle v,R_mPf\rangle=\langle Tz,f\rangle$ proves the first line.
+It holds for every signed final test $v$.
+
+Lemma 117.3 bounds the first term in (117.17) by
+$q_n\|v\|\|f\|/2$. Equations (117.4)--(117.5) and (117.16) bound
+the two parts of the second term, respectively, by
+$Bk_n\|v\|\|f\|/2$ and $3a_n\|v\|\|f\|$.
+This proves the first line of (117.14); the second follows from
+$\|ER_n\|\le B$.
+
+To compare higher powers, let $l\ge1$ and set
+$h=R_n^lf$, $w=R_n^{l+1}f$. The same cross-form calculation gives
+
+$$
+\langle v,(R_mER_n^l-ER_n^{l+1})f\rangle_{\mu_m}
+ =\langle Dz-g,h-w\rangle_{\mu_n}.
+\tag{117.18}
+$$
+
+Both $R_n^l$ and $R_n^{l+1}$ map $H_n$ to its form space with norm
+at most one. Thus $\|h-w\|_{1,n}\le2\|f\|$.
+The decomposition in (117.17) now bounds (117.18) by
+$2(3a_n+Bk_n/2)\|v\|\|f\|$.
+Writing $U_l=R_m^lP-ER_n^l$, the exact recursion is
+
+$$
+U_{l+1}=R_mU_l+(R_mER_n^l-ER_n^{l+1}).
+\tag{117.19}
+$$
+
+Since $\|R_m\|\le1$, it gives
+$\|U_l\|\le\rho_n+2(l-1)(3a_n+Bk_n/2)\le2l\rho_n$.
+No raw bound on $P$, identification of $DE$ with $I$, or final-fibre
+replacement was used. $\square$
+
+### 117.4 The source- and horizon-uniform final-heat theorem
+
+**Theorem 117.5 (literal serial ingress with one final positive dwell).**
+Fix $0<\varepsilon\le T<\infty$, and set
+
+$$
+\begin{aligned}
+K_{\varepsilon,T}&=\frac{e^T}{e\varepsilon},\\
+M_{\varepsilon,T}&=e^T\left(\frac4{e^2\varepsilon^2}
+                       +\frac{27T}{e^3\varepsilon^3}\right),\\
+\eta_n(\varepsilon,T)
+ &=\inf_{J\in\mathbb N_{\ge1}}\left\{
+ \frac{3M_{\varepsilon,T}}{\sqrt J}
+ +2K_{\varepsilon,T}(J+1)3^J\rho_n\right\}
+ \quad(n\ge n_*).
+\end{aligned}
+\tag{117.20}
+$$
+
+Then $\eta_n(\varepsilon,T)\to0$, and
+
+$$
+\sup_{u\in\mathcal T}\ \sup_{m\ge n,\ m<\infty}\ \sup_{t\in[\varepsilon,T]}
+\|S_m(t)P_{n,m}-E_{n,m}S_n(t)\|_{H_n\to H_m}
+ \le\eta_n(\varepsilon,T)
+ \qquad(n\ge n_*).
+\tag{117.21}
+$$
+
+Every original source, finite horizon, time, unit signed initial field
+and unit signed final linear test may move jointly in this supremum.
+
+Proof. Reuse the finite continuous functional calculus and Bernstein
+approximation method of §§115.3 and 116.4. The required scalar function
+is different because $P$ has no uniform raw norm. Put
+
+$$
+G_t(x)=e^{-t(1-x)/x},\qquad
+H_t(x)=x^{-1}G_t(x)\quad(0<x\le1),\qquad
+G_t(0)=H_t(0)=0.
+\tag{117.22}
+$$
+
+For every actual resolvent, $S_j(t)=H_t(R_j)R_j$.
+Uniformly in $t\in[\varepsilon,T]$, the scalar bounds are
+
+$$
+\|H_t\|_\infty\le K_{\varepsilon,T},\qquad
+|H_t'(x)|
+ \le e^T(x^{-2}+Tx^{-3})e^{-\varepsilon/x}
+ \le M_{\varepsilon,T}.
+\tag{117.23}
+$$
+
+They follow by maximizing $y^re^{-\varepsilon y}$ for $r=1,2,3$;
+the extension at zero is continuous and satisfies the same Lipschitz
+bound. Let $p_{J,t}$ be its degree-$J$ Bernstein polynomial on $[0,1]$.
+The already used binomial variance estimate and monomial expansion give
+
+$$
+\|H_t-p_{J,t}\|_\infty\le\frac{M_{\varepsilon,T}}{2\sqrt J},
+\qquad
+\sum_{i=0}^J|[x^i]p_{J,t}|\le K_{\varepsilon,T}3^J.
+\tag{117.24}
+$$
+
+Now apply the polynomial to the already smoothed product $R_mP$:
+
+$$
+\begin{aligned}
+\|S_m(t)P-ES_n(t)\|
+\le{}&\|(H_t-p_{J,t})(R_m)R_mP\|\\
+ &+\|E(H_t-p_{J,t})(R_n)R_n\|\\
+ &+\|p_{J,t}(R_m)R_mP-Ep_{J,t}(R_n)R_n\|\\
+\le{}&\frac{(2B+1)M_{\varepsilon,T}}{2\sqrt J}
+       +2K_{\varepsilon,T}(J+1)3^J\rho_n\\
+\le{}&\frac{3M_{\varepsilon,T}}{\sqrt J}
+       +2K_{\varepsilon,T}(J+1)3^J\rho_n.
+\end{aligned}
+\tag{117.25}
+$$
+
+The first two terms use $\|R_mP\|\le B+1$, $\|E\|\le B$ and
+$\|R_n\|\le1$. Every monomial in the last term is a coefficient times
+$U_{i+1}$ of (117.14), so (117.24) bounds it as displayed.
+The inequality $2B+1<6$ gives the last line. In particular no
+approximation error is multiplied by the raw norm of $P$.
+Taking the infimum proves (117.21). First fix $J$ and let $n$ tend
+to infinity, and then let $J$ tend to infinity; this proves the limit.
+
+A completely scalar accuracy threshold is available. Given $\delta>0$,
+choose an integer
+
+$$
+J>(6M_{\varepsilon,T}/\delta)^2,
+\qquad
+n_0\ge n_*\text{ such that }
+\rho_{n_0}<\frac{\delta}{4K_{\varepsilon,T}(J+1)3^J}.
+\tag{117.26}
+$$
+
+The closed decreasing formulae (117.3), (117.13) make this a specified
+finite threshold, independent of the original and horizon. For all
+$n\ge n_0$, (117.25) is less than $\delta$. The proof uses only finite
+actual carriers; no completed endpoint or source-history splicing is
+involved. $\square$
+
+### 117.5 Endpoints, mass, readouts and actual service correspondence
+
+**Corollary 117.6 (joint signed tests and finite endpoint distinctions).**
+For all $n\ge n_*$, finite $m\ge n$, $t\in[\varepsilon,T]$ and arbitrary
+signed $f\in H_n$, $g\in H_m$,
+
+$$
+|\langle g,(S_m(t)P_{n,m}-E_{n,m}S_n(t))f\rangle_{\mu_m}|
+ \le\eta_n(\varepsilon,T)\|g\|_{\mu_m}\|f\|_{\mu_n}.
+\tag{117.27}
+$$
+
+For counting-mass ingress the corresponding comparison is
+
+$$
+\left\|S_m(t)Q_{n,m}-\frac{N_n}{N_m}E_{n,m}S_n(t)\right\|
+ \le\frac{N_n}{N_m}\eta_n(\varepsilon,T).
+\tag{117.28}
+$$
+
+Proof. Pair (117.21) with $g$ for the first statement, and multiply it
+by $N_n/N_m$ for the second. $\square$
+
+The case $m=n$ has exactly zero error for every $t\ge0$.
+The alpha singleton's first accepted step has no births and all three
+adjacent maps are identities. The beta singleton's first accepted step
+has $E=C$ repeating its value and $D$ taking the three-node mean.
+These are precisely the endpoint contracts already checked in §116.6;
+the chronological argument includes them and every empty birth factor.
+They require no deleted root or added edge.
+
+The closed zero-eigenvalue mode is retained throughout:
+$R_j\mathbf1=S_j(t)\mathbf1=\mathbf1$ and $H_t(1)=1$.
+The exact conserved integral on the left is
+$\int S_m(t)P_{n,m}f\,d\mu_m=\int f\,d\mu_n$.
+An ancestry extension need not preserve the integral at a finite horizon.
+Its mass error after old heat is nevertheless controlled by (117.4):
+
+$$
+\left|\int E_{n,m}S_n(t)f\,d\mu_m-\int f\,d\mu_n\right|
+ \le a_n\sqrt{1+(2e\varepsilon)^{-1}}\,\|f\|_{\mu_n}.
+\tag{117.29}
+$$
+
+Indeed the difference is
+$\langle(W_{n,m}-I)S_n(t)f,\mathbf1\rangle$, and
+$\|S_n(t)f\|_{1,n}^2\le[1+(2et)^{-1}]\|f\|^2$ by the nonnegative
+spectral bound $\lambda e^{-2t\lambda}\le(2et)^{-1}$.
+Thus mass was neither centered away nor assumed exactly preserved by $E$.
+There is no assertion that $E_{n,m}S_n(t)D_{n,m}$ is an exact finite
+conservative successor semigroup. Reverse recovery remains $DP=I$
+on the unheated attained range, with no inverse heat.
+
+A literal final point evaluation has probability-functional norm
+$\sqrt{N_m}$. Therefore (117.27) supplies at most
+$\sqrt{N_m}\eta_n\|f\|$ for such a point, not uniform absolute point
+accuracy. Independently injected arbitrary later fields in $H_m$ are
+not the input domain of (117.21). Every old signed direction and every
+final unit linear test are included. Whole-successor cofinal two-map
+comparison and interleaved shrinking-dwell products are separate targets;
+(117.21) does not settle them or the exact finite clock obstruction of
+§114.
+
+**Mathematical citation 117.7 (reused supplies and the actual owner split).**
+The ordinary source-specific additions are the cofinal mass/restriction
+estimates, the exact chronological $3^{-d}$ displacement bound and the
+resulting source- and horizon-uniform final-heat estimate. IV §§108,
+112 and 113 and V §§115--116 supply the original occurrence geometry,
+counts, adjacent maps and comparison context. The adjacent identities,
+beta corrector, acquisition foundation, continuous functional calculus
+and Bernstein variance argument are reused. Finite spectral calculus
+has precisely the finite symmetric nonnegative hypotheses already
+checked in §116.8, with the same mature supplier, Teschl,
+[*Mathematical Methods in Quantum Mechanics*, Theorems 3.7 and 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+No varying-space convergence theorem is invoked with unchecked map
+hypotheses. These are repo-derived ordinary deductions without a global
+literature-priority, Lean/kernel or physical evidence claim.
+
+[Native Leaf Depth Contact, Definitions 1.1--1.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md)
+and [Acquired Relation History, Assumption 1.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md)
+own the finite free ordered source domain, original entire rows,
+authentic entry and same-register Read/ApplyRho/Stop menu.
+The source-indexed operator correspondence is IV (112.5)--(112.9):
+every accepted update retains precisely the old addresses and adds
+precisely the two children of each actual beta parent, with the closed
+unit-edge block. The controller records actual replies and acceptances,
+and retains Stop. It neither certifies the analytical estimate nor
+gains a new field operation from the source-indexed matrices.
+
+The inspected `NativeSerialMachine` declarations `Op`, `nativeStep`,
+`Run` and `actual_register_execution` carry one register and its exact
+update/read trace; the interpreter receives control, not an unknown
+source. The inspected `NativeSerialEffective` declarations
+`OriginalState`, `OriginalRun` and `original_service_simulation` retain
+unrestricted finite common input, workspace, certified epoch, acquired
+history and terminal output. These Lean statements were read, not
+compiled here. Their all-accepted API is not a proof of guarded refusal.
+The separately declared common history-only guard is IV Contract 112.1a.
+
+Under the uncapped original menu every requested finite block is reached
+by actual serial updates. Under a declared common effective
+$G(\gamma,e,H)$, permission depends only on the common parameter, actual
+accepted epoch and complete chronological history. Each observed
+acceptance supplies its exact factor in (117.1); refusal changes neither
+carrier nor epoch and contributes identity. Repeated and absent Reads
+retain their actual addresses and literal replies; local work is local
+work. Stop is absorbing and supplies no suffix. The theorem applies
+to every finite endpoint actually reached, without a cofinal-permission
+promise for a guarded service. It does not use a source-indexed
+permission oracle.
+
+`ActualTreeReadoutAcquisition` and its Scribe own the immutable
+four-reply queries, distinct-address charge, reply-driven
+`acquisitionStep`/`frontier` and report-only `restore`. Their original
+Boolean third-substitution-image `Strategy` remains unchanged. Reuse
+only the acquisition/restoration phase on a lawful authenticated
+stationary epoch-zero native register, exactly as IV §112.5 and V §115.6
+do. Its fuel is a pointwise termination witness, not initial size advice.
+The separate acquired-description consumer may retain the full syntax
+and compute all actual masks, counts and finite factors from that syntax
+and observed accepted records; no finite-alphabet restriction is added.
+It does not require the supplier to solve equality, Apply/refusal,
+amplitude acquisition, serial field execution or physical timing.
+
+With $S(u)=|V_u|$ and $\Lambda(u)=\sum_{p\in V_u}|p|$, the inherited
+phase coordinates are exactly
+$(\text{raw Reads},\text{Apply attempts},\text{literal Read length},
+\text{phase-distinct addresses})=(S,0,\Lambda,S)$.
+They are finite sourcewise and unbounded across the original domain.
+On the branch entry the separately paid pre-entry root remains: total
+raw Reads $S+1$, literal length $\Lambda$, cumulative distinct addresses
+$S$ on one immutable-source cache and incremental post-entry distinct
+charge $S-1$. Separate empty phase ledgers charge $1$ and $S$.
+No reset, refund or interphase tariff follows. Both singleton acquisition
+phases have coordinates $(1,0,0,1)$; any actual pre-entry call is separately
+counted. Preparation, authentication and access isolation remain supplied
+premises.
+
+The accepted epochs $n,m$, the $m-n$ accepted updates in the comparison
+block, and actual Apply attempts are different coordinates. Retained
+syntax and genuine acceptance records permit finite matrix calculation
+without additional constructor queries. A calculated reply is not a
+fresh Read; a calculated successor does not execute Apply. New-version
+reacquisition has its own genuine calls and version evidence; old
+immutable reports are not cached new-version reports.
+
+The task target is still every original INITIAL row: reached holes in
+original order, numbered concrete exterior and the complete whole-subtree
+equality partition. On the branch service this is exactly IV (112.2).
+The already paid description consumer may return that entire row.
+Signed field tests and current successor rows do not replace it.
+
+[Native Birth Provenance §10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md)
+supplies its conditional joint same-$r,q$ acquired/exported supplement
+and stationary fresh-query feasibility reduction on each full actual
+one-image fibre. Its acquisition, export, isolation and stationary-entry
+premises remain its own; the root-type chart is not an arbitrary
+occurrence amplitude field, and that existence reduction preserves
+neither all native traces nor physical execution cost.
+[Native Alpha Recut Memory §13](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+supplies its separated-age restricted-future-menu whole-row collisions
+and retained-code criteria on its stated source families. Its code
+alphabet is not an occurrence amplitude field. Neither owner supplies
+an extra serial-heat obligation or actuator. The analytical consumer
+owns (117.21); the acquisition producer and native-operation supplier
+are used only within their actual supplied contracts.
+
+The integers $n,m$ are observed accepted source counts. The variable
+$t$ is normalized comparison time, with mathematical heat parameters
+$N_nt$ and $N_mt$. The IV §108 old-set occupation inverse, paid
+acquisition chronology and physical duration have different types.
+Serial growth followed by one final dwell is not an interleaved heat
+schedule, and neither schedule provides a native or physical clock
+conversion. The theorem has no zero-time or shrinking-time uniformity.
+
+Signed-amplitude preparation, lawful execution of $C,E,D$, closed-heat
+actuation, real-linear amplitude measurement, precision/encoding prices,
+matrix work/storage/communication prices, physical clocks, metrics,
+spatial dimension and stable matter remain unsupplied. Their physical
+realization is ASSUMED-UNVERIFIED. This limits an implementation claim;
+it neither blocks nor refutes the conditional analytical theorem.
+No new Lean, Blueprint, Reg, ingestion, registration, freezing, judge,
+CI or physical verification is asserted. The full ongoing through-2027
+why-three programme and its remaining spatial and implementation bridges
+are not completed by this finite ordinary theorem.
+
+## 117.99 追加锚（本行以下为增补区）
+
