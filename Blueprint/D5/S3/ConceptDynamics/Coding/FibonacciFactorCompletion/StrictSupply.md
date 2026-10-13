@@ -40,7 +40,7 @@ $$\forall model \in Model, o \in Ownership, budget \in Real, execution \in \oper
 
 This supplier exposes the existing whole-source cost construction with its actual lower-budget hypothesis budget>lam-rho. It is the same fixed source, history, external block order and literal tail used by the strict record theorem. StrictControl recursively tests lam-g^2*chi^r*D at each actual return start. The stem tests chi times the final whole-list state, and the paid anchor tests chi times X_H, not its output Y_H.
 
-For a six-block input D<h_j, the nth outer input is h_j-rho^n*(h_j-D). Its active cost minus the next active cost is g^2*rho^n*(1-rho)*(h_j-D)>0. literal_full_slot_readout supplies every six-slot and twenty-slot departure above lam-rho. High/low ordering transports the high costs to the actual paired low source, and the finite departure errors extend by zero on the prescribed future.
+For a six-block input D<h_j, the nth outer input is h_j-rho^n*(h_j-D). Its active cost minus the next active cost is g^2*rho^n*(1-rho)*(h_j-D)>0. The proof applies the original affine suffix law, interval existence and finite normalization locally at each actual six-slot and twenty-slot departure above lam-rho. The complete block application and its ownership and input domains are given in the Literal source exposition. High/low ordering transports the high costs to the actual paired low source, and the finite departure errors extend by zero on the prescribed future.
 
 Sharp endpoints of the original fixed-tail family
 

@@ -14,7 +14,7 @@ $$\forall model \in Model, o \in Ownership, b \in Real, execution \in \operatorn
 
 *Commentary.*
 
-For either fixed original or anchored source pair, closed acquisition is equivalent to the cap and high guard. Owning the first cut point permits equality; otherwise the high guard is strict. The proof assembles all departure errors on those same literal sources, through every six- and twenty-slot repetition, stem and paid anchor, and extends them by zero on the unchanged original futures. High equality uses the owned nearest point from the actual clipped readout law. The paired low costs are strictly smaller. All five flags remain parameters, and returns beyond the cap fail at the actual control slot.
+For either fixed original or anchored source pair, closed acquisition is equivalent to the cap and high guard. Owning the first cut point permits equality; otherwise the high guard is strict. The proof assembles all departure errors on those same literal sources, through every six- and twenty-slot repetition, stem and paid anchor, and extends them by zero on the unchanged original futures. The proof applies the original affine suffix law, interval existence and finite normalization locally at those actual inputs; its twenty-slot errors are the strict witnesses weakened to the closed bound. High equality uses the owned nearest point from the actual clipped readout law. The complete block application is given in the Literal source exposition. The paired low costs are strictly smaller. All five flags remain parameters, and returns beyond the cap fail at the actual control slot.
 
 **Theorem 1.2 (One paid actual reset and first-return output dominance).**
 
