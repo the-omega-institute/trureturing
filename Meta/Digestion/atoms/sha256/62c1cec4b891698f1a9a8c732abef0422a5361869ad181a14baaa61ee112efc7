@@ -1,0 +1,19 @@
+**Proposition 58.13 (equal visible responses need not give equal full records).**
+A common seed, a common visible rule, and equal visible prefixes determine
+the same policy instructions and visible-memory updates wherever both are
+defined. Equality of the full finite action history additionally requires
+matching stopping/status behavior. These premises do not determine arbitrary
+source-dependent record fields.
+
+Proof. Let a one-action rule always receive response $0$ and halt with
+output $0$. Let its event cost be $0$ at source $s$ and $1$ at source $t$.
+All seeds and responses agree, while the complete resource records differ.
+More generally, to conclude equality of complete records on a measurable
+event $E$, require finite termination at both sources on $E$ and equality
+almost everywhere there of every compared field. A sufficient hypothesis
+is that each such field is the same measurable function of the seed and the
+matched complete visible history, including the stopping/status information.
+Induction determines the visible action/history record; the stated field
+factorizations then determine the other fields. Without them, only the
+record projection whose fields do factor can be compared this way. ∎
+

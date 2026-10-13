@@ -1,0 +1,56 @@
+**Theorem 5.2 (exact selector-family profile).** For $C_m$ the full
+forward profile is
+
+$$
+r_k=
+\begin{cases}
+2^k,&0\le k\le2m,\\
+2^{m-\ell},&k=2m+1+\ell,\quad0\le\ell\le m.
+\end{cases}
+\tag{5.4}
+$$
+
+The full one-credit profile, whose types start at $k=1$, is
+
+$$
+N_{k,1}=
+\begin{cases}
+2^k,&1\le k\le2m,\\
+2M^2,&k=2m+1,\\
+2^{m-\ell+1},&k=2m+1+\ell,\quad1\le\ell\le m.
+\end{cases}
+\tag{5.5}
+$$
+
+Consequently $K_0=M^2$ and $K_1=2M^2$, attaining (5.2)'s binary
+factor-two bound. The difference of conditional peak binary widths
+is one bit, from $2m$ to $2m+1$, while the width difference at the
+selector cut alone is $m+1$ bits.
+
+Proof. Before the selector every binary prefix is extendable. Distinct
+prefixes already specify different bits in $i$ or $j$. Complete the
+unfinished pair according to one representative, choose selector $0$
+if an $i$-bit differs, or $1$ if the difference is in $j$, and append
+the chosen component. That completion is legal from the representative
+and not the other prefix. Thus all $2^k$ prefixes have different
+forward residuals for $k\le2m$. A one-credit boundary still maps onto
+these forward residuals and cannot exceed its carrier $P_k$; its
+count is therefore also $2^k$ in that range.
+
+After the selector and $\ell$ copied bits, a forward residual is
+the singleton unappended selected suffix, of length $m-\ell$.
+Every such suffix is realized, giving the second line of (5.4).
+For $\ell\ge1$, the one-credit anchor is already after the selector.
+Its residual is a singleton $\{ar\}$, where $a$ is the most recently
+appended bit and $r$ is the still unappended selected suffix.
+The tail is precisely $a$, so the boundary point is
+$(\{ar\},a)$. Every word $ar$ of length $m-\ell+1$ occurs, giving
+the last line of (5.5). At the selector Theorem 4.3 supplies the
+remaining count.
+
+The maxima and binary widths follow from these exact powers of two.
+In particular the forward preparation already distinguishes both
+blocks at cut $2m$. The unbounded cut-local supplement in Theorem 4.3
+does not create unbounded additional peak capacity over that
+preparation. $\square$
+

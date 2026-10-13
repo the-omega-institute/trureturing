@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00b991800e639d95d1325fe38cc5c43f8daafdee5fbaa9c49ca4e01e1eb4c68f
+  normalized_sha256: sha256:00b991800e639d95d1325fe38cc5c43f8daafdee5fbaa9c49ca4e01e1eb4c68f
+cas_ref: sha256:00b991800e639d95d1325fe38cc5c43f8daafdee5fbaa9c49ca4e01e1eb4c68f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only reuse; no project GID supplies the whole generic claim and no new Lean declaration is retained. For arbitrary AddCommGroup G/A and f:G→+A, translation preserves card-three Finsets and Set.InjOn f without finiteness; under Finite G and t≠0 the actual filtered fixed-family Nat.card is (if 3•t=0 and f t≠0 then Nat.card G/3 else0). Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d supplies Finset.card_vadd_finset/mem_vadd_finset, map_add and cancellation for preservation; Finset.sum_image/sum_add_distrib/sum_const for 3•t=0; InjOn and map_add for kernel exclusion; addOrderOf_eq_prime, nsmul_injOn_Iio_addOrderOf, Finset.card_image_of_injOn/card_range and map_nsmul for the order-three set; AddAction.mem_stabilizer_finset', AddSubgroup.nsmul_mem, Finset.eq_of_subset_of_card_le and AddAction.mem_orbit_iff for the actual single-orbit family; AddAction.mem_stabilizer_iff, Equiv.subtypeEquivRight, Nat.card_eq_finsetCard, AddAction.orbitProdStabilizerEquivAddGroup, Nat.card_congr/card_prod/mul_div_cancel/card_eq_zero for the exact census. All proposed intermediate facts reduce to these suppliers and normalization after inlining; proof_shape=bind-only, admission_basis=none. No finite-A, global-injectivity or cyclic-G restriction. This writer records the permitted tracking disposition, not a new proof, refutation, freeze, project coverage or validated REG.
+    previous_atom_id: 713246155e7c8f9f79a60a0a8f9a7a97ddf4e8e59cccd5dd10910e715297736d
+    next_atom_id: 7f7538a28dd0453124d98d96c7fad0187fcbb0ccff4f45893f8111c99154079f

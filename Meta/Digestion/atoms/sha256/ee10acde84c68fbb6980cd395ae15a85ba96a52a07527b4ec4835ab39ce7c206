@@ -1,0 +1,9 @@
+**Definition 100.1 (the joint centered profile).**
+For $0\le\tau<\infty$ set
+
+$$
+H(\tau)=\langle v,(I+\tau\Sigma)^{-1}v\rangle,
+\qquad H(\infty)=1.
+\tag{100.1}
+$$
+

@@ -6,7 +6,21 @@ If every prime factor of n is a Fibonacci number, then sigma(1,n)/n < 241/50, an
 
 A prime Fibonacci number is 2, 3, 5 or F_k with k >= 7, since F_6 = 8 is not prime and smaller indices give 0, 1, 2, 3 and 5. The integers considered here are those whose prime factors all lie in this set; exponents are unrestricted.
 
-**Theorem 1.1 (A uniform bound for the divisor ratio).**
+**Theorem 1.1 (The divisor ratio is bounded by its support Euler product).**
+
+Lean statement: `D5/S3/Arith/Robin/FibonacciPrimeSupport.ratio_le_prod`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/FibonacciPrimeSupport.ratio_le_prod` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural number n != 0, sigma(1,n)/n <= prod p/(p-1) over the distinct prime factors of n. No Fibonacci hypothesis is needed.
+
+This is the existing geometric-sum saturation lemma, now exposed for reuse by the five-prime residual proof. The finite product of prime powers reconstructs n, and each normalized geometric sum is at most p/(p-1). The original Fibonacci proof continues to consume the same declaration.
+
+**Theorem 1.2 (A uniform bound for the divisor ratio).**
 
 Lean statement: `D5/S3/Arith/Robin/FibonacciPrimeSupport.sigma_div_lt_of_fibonacci_primeFactors`
 
@@ -22,7 +36,7 @@ The frozen geometric-sum bound gives sigma(1,n)/n <= prod p/(p-1) over the prime
 
 The bound does not grow with n: the Fibonacci primes are too sparse for their Euler product to diverge. Integers supported on them therefore never approach the colossally abundant numbers, whose ratio grows like e^gamma*log(log(n)).
 
-**Theorem 1.2 (Robin's inequality on Fibonacci-prime support).**
+**Theorem 1.3 (Robin's inequality on Fibonacci-prime support).**
 
 Lean statement: `D5/S3/Arith/Robin/FibonacciPrimeSupport.robin_of_fibonacci_primeFactors`
 
@@ -40,6 +54,7 @@ By Robin's criterion as recalled in `D5/L/ArithSums/choie2006robincriterion`, th
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/FibonacciPrimeSupport.ratio_le_prod`
 - Truth anchor: `D5/S3/Arith/Robin/FibonacciPrimeSupport.robin_of_fibonacci_primeFactors`
 - Truth anchor: `D5/S3/Arith/Robin/FibonacciPrimeSupport.sigma_div_lt_of_fibonacci_primeFactors`
 - Dependency: [D5/S3/Arith/Robin/FewDistinctPrimes](FewDistinctPrimes.md)

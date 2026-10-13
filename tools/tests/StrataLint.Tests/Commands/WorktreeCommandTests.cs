@@ -53,6 +53,7 @@ public sealed partial class WorktreeCommandTests
         using var environment = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         MathlibProjectionFixture.Write(Path.Combine(repository.Path, ".lake"));
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         var lake = Path.Combine(environment.Path, "toolchain", "lake");
         Directory.CreateDirectory(Path.GetDirectoryName(lake)!);
         File.WriteAllText(lake, "fake lake\n");

@@ -123,7 +123,114 @@ internal sealed class NormalizedJensenDegreeLoweringDocument : IScribeDocumentDe
                     + "The prime denotes Polynomial.derivative and the circle denotes "
                     + "polynomial composition. Comparing coefficients reduces it to the "
                     + "falling-factorial recurrence, including the top index k=d and all "
-                    + "indices beyond d. The degree bound makes both d and d-1 nonzero."))),
+                    + "indices beyond d. The degree bound makes both d and d-1 nonzero.")),
+                    Paragraph(Text(
+                    "A same-source analytic application uses T_n f with coefficients "
+                    + "((n)_k/n^k) f^(k)(0)/k!, for n nonzero and k from zero through n. "
+                    + "For a complex smooth source preserving the real axis, derivative "
+                    + "uniqueness identifies these complex jets with the embedded jets of "
+                    + "its real restriction. The preceding canonical normalization theorem "
+                    + "therefore identifies T_n f with normalizedJensen at that exact jet "
+                    + "sequence. This identification does not assert that the fixed "
+                    + "theta-density moments above already equal the jets of the actual xi source.")),
+                    Paragraph(Text(
+                    "The same coefficient recurrence gives T_n(zf) = t T_n f "
+                    + "- (t^2/n)(T_n f)' and (T_n f)' = T_n(f') - (t/n)(T_n(f'))'. "
+                    + "The top coefficient cancels in the second identity. Consequently, "
+                    + "multiplication by z-a acts by L_a P = (t-a)P - (t^2/n)P'. "
+                    + "Applying this exact operator twice extracts f(z) = "
+                    + "(z-a_2)(z-a_1) Ahat(z), while source differentiation gives "
+                    + "T_n(f') = L_a1 Hhat + L_a2(Hhat + L_a1 Vhat). Here "
+                    + "Hhat = T_n Ahat and Vhat = T_n(Ahat'); the second response "
+                    + "extracts the source derivative and is distinct from the derivative "
+                    + "of the first response.")),
+                    Paragraph(Text(
+                    "For the original selection, regroup Q = Qfar Qcore and Ahat = A Qfar, "
+                    + "with Qcore(z) = (z-a_1)(z-a_2). The far polynomial may have arbitrary "
+                    + "degree and the real roots a_1 and a_2 may coincide, so both "
+                    + "multiplicities remain present. The complete original source is "
+                    + "f = A Qfar Qcore. Put J = T_n f, G = T_n(f'), H = T_n A and "
+                    + "V = T_n(A'). On H nonzero, retain the original responses "
+                    + "P = J/H and S = G/H - (V/H)P.")),
+                    Paragraph(Text(
+                    "On Hhat nonzero, set v = t^2/n, ell = Hhat'/Hhat, s = Vhat/Hhat, "
+                    + "chi = t-v ell and eta = 1-v s'. These are derived from the same "
+                    + "extracted source. With m = (a_1+a_2)/2, delta = (a_1-a_2)/2, "
+                    + "x = chi-m and U = v chi', the exact core identities are "
+                    + "p = x^2-delta^2-U, p' = 2x chi'-U' and w = 2 eta x-v eta'. "
+                    + "Thus J = Hhat p and G = Hhat(s p+w).")),
+                    Paragraph(Text(
+                    "At a real actual node J(t)=0, assume H and Hhat nonzero, v>0, "
+                    + "chi'>1/2, eta>1/2, |U'|<sqrt(v)/8 and |v eta'|<sqrt(v)/8. "
+                    + "The node forces x^2 = delta^2+v chi' >= v/2. Both core responses "
+                    + "have the sign of x and magnitude greater than 3|x|/4, which gives "
+                    + "p'w > x^2/2 >= v/4. The exact original amplitude identity is "
+                    + "H^2 P'S = J'G = Hhat^2 p'w, hence "
+                    + "P'S > (1/4)(Hhat/H)^2 v. In the complex source application the "
+                    + "same real-node product has zero imaginary part and positive real "
+                    + "part; the node is simple.")),
+                    Paragraph(Text(
+                    "This conditional quadratic-core application uses the existing "
+                    + "normalization, iterated derivative product rule, quotient rule and "
+                    + "ordered-field estimates. It introduces no independent "
+                    + "root-preservation or convolution theorem. Applying it to the "
+                    + "actual xi source still requires its analytic factorization and jet "
+                    + "correspondence, the local all-critical premise, exterior response "
+                    + "estimates and central total multiplicity at most two. It does not "
+                    + "establish arbitrary growing-core positivity, all-height exclusion, "
+                    + "RH or strict Robin for every integer above 5040.")),
+                    Paragraph(Text(
+                    "The same-source application also treats a core of exactly three "
+                    + "real source roots a_1,a_2,a_3, including repeated roots. Retain "
+                    + "Ahat=A Qfar with no degree restriction on Qfar, and extract "
+                    + "f=(z-a_3)(z-a_2)(z-a_1) Ahat. Three applications of L_a give "
+                    + "J=L_a3 L_a2 L_a1 Hhat. Source differentiation gives "
+                    + "G=L_a2 L_a1 Hhat+L_a3(L_a1 Hhat+L_a2(Hhat+L_a1 Vhat)); "
+                    + "it is the extraction of f', with the same exterior and far factor.")),
+                    Paragraph(Text(
+                    "Put m=(a_1+a_2+a_3)/3, beta_i=a_i-m, "
+                    + "a=sum(beta_i^2)/6 and b=beta_1 beta_2 beta_3. The real-source "
+                    + "discriminant gives a>=0 and |b|<=2a sqrt(a), even when roots "
+                    + "coincide. Set x=chi-m, U=v chi', V_3=v U', "
+                    + "Z_3=v(v eta')' and M_3=3(x^2-a-U). Quotient and product "
+                    + "differentiation of the actual Hhat,Vhat yields "
+                    + "p_3=x^3-3(a+U)x-b+V_3, "
+                    + "p_3'=chi' M_3-3U' x+V_3' and "
+                    + "w_3=eta M_3-3v eta' x+Z_3. Thus "
+                    + "J=Hhat p_3 and G=Hhat(s p_3+w_3). Both V_3 and Z_3 "
+                    + "retain the noncommuting derivative terms.")),
+                    Paragraph(Text(
+                    "For a>=0, u>0, |b|<=2a sqrt(a) and |e|<=u sqrt(u), an "
+                    + "actual real root x of C(z)=z^3-3(a+u)z-b+e satisfies "
+                    + "|C'(x)|>=(3/2)sqrt(u)(|x|+sqrt(a+u))>=(3/2)u. "
+                    + "Indeed, with h=sqrt(a+u) and y=|x|, the source bounds give "
+                    + "|b-e|<=2h^3-u h. The root equation forces y<2h and "
+                    + "(y-h)^2(y+2h)>=u h, hence |y-h|>=sqrt(u)/2. "
+                    + "Factoring |C'(x)|=3|y-h|(y+h) gives the stated margin. "
+                    + "This pointwise comparison does not assume the roots have "
+                    + "already been labeled or analytically continued.")),
+                    Paragraph(Text(
+                    "At an actual real J-node, assume H and Hhat nonzero, v>0, "
+                    + "sigma>0, |U-sigma^2|<sigma^2/32, |V_3|<sigma^3/32, "
+                    + "|chi'-1|<1/64 and |eta-1|<=1/128. Also assume "
+                    + "|U'|<sigma/256, |V_3'|<sigma^2/256, "
+                    + "|v eta'|<sigma/256 and |Z_3|<sigma^2/256. Applying the "
+                    + "cubic slope bound at u=U,e=V_3 yields "
+                    + "sigma |x|<=|M_3| and sigma^2<2|M_3|. Each response "
+                    + "correction has magnitude below 5|M_3|/256. Consequently "
+                    + "p_3'/M_3 and w_3/M_3 exceed 1/2, and "
+                    + "p_3'w_3>M_3^2/4>v^2/4. The original identity "
+                    + "H^2 P'S=J'G=Hhat^2 p_3'w_3 therefore gives "
+                    + "P'S>(1/4)(Hhat/H)^2 v^2>0.")),
+                    Paragraph(Text(
+                    "This cubic real-node application remains conditional on the "
+                    + "complete exterior jet estimates, actual xi factorization and "
+                    + "jet correspondence, the local all-critical premise and central "
+                    + "total multiplicity exactly three. It does not prove moving "
+                    + "complex-root branches, target-disc node counts, endpoint "
+                    + "existence criteria or uniform growing-core control. Those "
+                    + "interfaces, all-height exclusion, RH and strict Robin above "
+                    + "5040 remain unresolved by this application."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-jensen-canonical-bridge"),

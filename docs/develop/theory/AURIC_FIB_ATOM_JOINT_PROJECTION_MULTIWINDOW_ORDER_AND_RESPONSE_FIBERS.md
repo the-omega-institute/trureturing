@@ -4141,3 +4141,367 @@ $$
 物理 programme 的继承义务全部保持未解决：同一来源、原固定 cap、实际已 populated 的完整空间 particle/Fock/field/reference/auxiliary 载体上的 state-independent controlled operation，真正 accepted 的非空 $\beta$ whole-$\rho$、已取得的 enable/alignment 数据与原始记录更新；完整 domain/collision/ground/mixed-trace 保持，以及每个固定完整联合向量经实际 raw/restricted identifications 对应原 66.2 tensor-field/auxiliary identity 的桥接。全部 complements、两个 cross blocks、旧 mass-one amplitudes、任意 particle/field/reference/auxiliary correlations、bank、actual balanced stiffness、78.53 的 LINEAR same-inverse-diagonal compensation（particle/reference 两支）和 reference evolution 均保留。finite-energy/number-class tolerances、ingress/alignment、preinstallation/control precision、service/paid holds、physical/service clocks 与总 lifetime/storage/maintenance resources 仍须分别履行，不能升级为 unit-ball、source-growing 或联合极限结论。refusal、$\beta$-empty、Read、Stop、chronological record covariances、Left/Right graft laws 及 unique physical-three closure 也未由本节完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 36. 原生第三标记切面的停止选择律与响应障碍
+
+### definition 36.1: 同源切面、实际前缀与观察域
+
+令 $\mu$ 为正整数深度上的任意概率质量函数。在
+
+$$
+\Omega=\mathbb N_{>0}\times\{0,1\}^{\mathbb N},\qquad
+\mathbb P_\mu=\sum_{k\ge1}\mu_k\bigl(\delta_k\otimes P_k\bigr)
+$$
+
+上，$P_k$ 是字母 $0,1$ 的独立流律，质量分别为
+
+$$
+r_k=\frac{\mathrm{Fib}_{k+1}}{\mathrm{Fib}_{k+3}},\quad
+s_k=\frac{\mathrm{Fib}_{k+2}}{\mathrm{Fib}_{k+3}}=1-r_k,\quad
+q_k=r_ks_k,\quad d_k=1-q_k=r_k+s_k^2,\quad
+u_k=\frac{r_k}{d_k},\quad v_k=\frac{s_k^2}{d_k}.
+$$
+
+此律取原 `NativeConditionalControl.DepthLaw.jointLaw(μ)` 的实数质量读法；$K$ 是一次抽取后保持的第一坐标。运行取原 `initial`、`nativeRead`、`nativeStop` 和 `nativeDrive`。令 $\tau_3$ 为第一次达到完成数 $3$ 的事件数，未达到时取 $\infty$。此前只有 Read，所以 $\tau_3$ 同时是该切面的付费 Read 数。这里事件数不指定物理耗时。
+
+在 $\tau_3<\infty$ 时，$h_3$ 是实际发出的前缀，$c_3$ 是其完整 acquired state。用原唯一 `PrefixForm` 写成
+
+$$
+h_3=\operatorname{reads}\!\left(
+\operatorname{retryWord}(a)\,\operatorname{seedWord}(\rho)
+\,p(j_0,b_0)\,p(j_1,b_1)\,p(j_2,b_2)\right),
+\qquad p(j,b)=(10)^j\begin{cases}0,&b=0,\\11,&b=1.\end{cases}
+$$
+
+其中 $a$ 是实际拒绝对的有序种类词，$\rho\in\{0,1\}$ 是取得的种子，$b=(b_0,b_1,b_2)\in\{0,1\}^3$ 是按完成次序写入的标记。相应 `PayloadForm` 为三次 `segment` 后接 `active 0 p`。定义
+
+$$
+n_0=\#_0a,\quad n_1=\#_1a,\quad
+J=j_0+j_1+j_2,\quad w=b_0+b_1+b_2.
+$$
+
+从字母历史生成的过滤为 $\mathcal F_n=\sigma(\omega_0,\ldots,\omega_{n-1})$，不含隐藏 $K$ 的直接读口。$\mathcal F_{\tau_3}$ 取通常的停止 $\sigma$ 代数：事件 $A$ 满足 $A\cap\{\tau_3\le n\}\in\mathcal F_n$。完整停止记录为 $(\tau_3,h_3,c_3)$；数学计数记录为 $(\rho,b,J,A,B)$；无计数记录为 $R=(\rho,b)$。未完成处各记录取单独的 $\dagger$。记 $\mathcal G_R=\sigma(R)$，它是上述停止记录的粗化。$J$ 是原 state 的 `payloadReturns` 在切面上的值，不是新设的 selected-count bank；有序词 $a$ 和各 $j_\ell$ 是前缀证明数据，不是虚构的运行字段。
+
+附属来源：[NativeAcquiredPrefixState](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixState.lean)，`render`、`reconstruct`、`writeMarker`；[NativeAcquiredPrefixReconstruction](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.lean)，`native_acquired_prefix_reconstruction`；[NativeConditionalControl](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeConditionalControl.lean)，`DepthLaw.jointLaw`。这些对象供应原前缀语法、重构和同一深度流。
+
+### definition 36.2: 五个原 Window 标签与选择
+
+令 $\mathcal S=\{000,100,010,101,001\}$，仅在 $b\in\mathcal S$ 时定义标签
+
+$$
+000\mapsto\mathrm{zero},\quad100\mapsto\mathrm{low},\quad
+010\mapsto\mathrm{middle},\quad101\mapsto\mathrm{ends},\quad
+001\mapsto\mathrm{high}.
+$$
+
+它们采用原 `Window.bits` 的低至高印字次序 $(b_0,b_1,b_2)$；占位轴仍为 $(x,y,z)=(b_0,b_2,b_1)$。扩大的数学输出域分别含五个选中标签、三个互异的排除标签 $\mathrm{excluded}(011)$、$\mathrm{excluded}(110)$、$\mathrm{excluded}(111)$ 及 $\dagger$。定义选择事件 $\mathsf S=\{\tau_3<\infty,b\in\mathcal S\}$；不把排除标签映到 zero。
+
+此定义只给 acquired-state 统计及其数学 pushforward，不把 `LiteralWindowEnd.triple` 在非法三位上的默认值应用于原生标记。标签对应取自 [LiteralWindowEnd](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean)，`Window`、`bits`；其 `step`、`observe` 是另有定义域的操作。
+
+### proposition 36.1: 实际第三完成的停止、选择与保留返回律
+
+在 definition 36.1 的原运行中，$\tau_3$ 是 $\mathcal F_n$ 的停止时刻且 $\mathbb P_\mu(\tau_3<\infty)=1$。每个有限切面均满足
+
+$$
+\begin{aligned}
+c_3&=\operatorname{reconstruct}(\mathrm{nf}),\qquad
+c_3.\mathrm{control}=\mathrm{fourth}(\mathrm{active}\ p),\\
+\operatorname{recoverMarkers}(c_3.\mathrm{finiteFields})&=b,\qquad
+c_3.\mathrm{payloadReturns}=J,\\
+A&=4-w+2n_0+J,\qquad B=1+2w+2n_1+J,\\
+T_3=\tau_3=A+B&=5+w+2(n_0+n_1+J).
+\end{aligned}
+$$
+
+对指定 $\rho,b,a,(j_0,j_1,j_2)$，实际前缀柱的联合深度质量恰为 $\mu_k r_k^A s_k^B$。对所有实际重试求和后，指定种子的深度条件质量为 $1/2$，且
+
+$$
+\begin{aligned}
+\mathbb P_\mu(K=k,\rho,b)&=\frac{\mu_k}{2}m_w(k),
+&m_w(k)&=u_k^{3-w}v_k^w,\\
+\mathbb P_\mu(K=k,\rho,b,J=\ell)
+&=\frac{\mu_k}{2}\binom{\ell+2}{2}
+q_k^\ell r_k^{3-w}s_k^{2w}.
+\end{aligned}
+$$
+
+两式同时适用于全部八个三位词，包括 $w=3$ 的排除词。定义
+
+$$
+M_w=\sum_{k\ge1}\mu_k m_w(k),\qquad
+C=M_0+3M_1+M_2.
+$$
+
+则 $M_w>0$，$M_0+3M_1+3M_2+M_3=1$，$0<C<1$，且 $\mathbb P_\mu(\mathsf S)=C$。在选择后的无计数记录上，当前实际模式—深度联合律为
+
+$$
+\pi^{\mathsf S}_\mu(M,k)=\frac{\mu_k m_{w(M)}(k)}{C},\qquad
+p^{\mathsf S}_\mu=\frac{(M_0,M_1,M_1,M_2,M_1)}{C}
+$$
+
+（模式次序为 zero、low、middle、ends、high），给定模式的深度律为
+
+$$
+\nu_w(k)=\frac{\mu_k m_w(k)}{M_w}.
+$$
+
+若仍保留指定种子，联合单元多出因子 $1/2$，$\nu_w$ 不变。精确保留 $J=\ell$ 时的深度后验则为
+
+$$
+\nu_{w,\ell}(k)=
+\frac{\mu_k q_k^\ell r_k^{3-w}s_k^{2w}}
+{\sum_h\mu_h q_h^\ell r_h^{3-w}s_h^{2w}},
+$$
+
+它与无计数的 $\nu_w$ 有不同的条件事件。
+
+证明。达到第三完成只检查已发出的有限 Read，故 $\{\tau_3\le n\}\in\mathcal F_n$。原 seed 表使相等对成为重试，首个不等对取得 $\rho$；原 payload 表使每段从 $p$ 出发经历零个或多个 $10$ 返回后，恰由 $0$ 或 $11$ 完成。第三段之前每次完成重置下一段为 $p$。因此每个首次第三完成前缀有且仅有 definition 36.1 的形式，其此前任何真前缀完成数小于 $3$。反向按原部分事务逐字运行该形式，第三次写入恰在最后一字完成，故该形式没有附加的未来接受条件。
+
+原重构定理的 `PrefixFacts` 取 $t=3$、`pendingExponent=0`，给出 $A,B,J$ 和恢复式；`completionControl 2 b₂=payloadControl 3 p` 给出活动第四段。计数相加给出 $T_3$。原 [NativeAcquiredPrefixCylinder](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixCylinder.lean) 的 `native_acquired_prefix_cylinder` 以 `run h₃=some c₃` 为条件，将该实际发出事件识别为完整 Read 词的柱，而不是任意编造的历史。因此指定有序重试及返回分配的质量为 $\mu_k r_k^A s_k^B$。
+
+在固定 $k$，指定种子的每个成功提种对质量为 $r_ks_k$。有 $n$ 个拒绝对时，所有有序拒绝词的质量和为 $(r_k^2+s_k^2)^n$，从而
+
+$$
+\sum_{n\ge0}r_ks_k(r_k^2+s_k^2)^n
+=\frac{r_ks_k}{1-r_k^2-s_k^2}=\frac12.
+$$
+
+这里只在完成数切面求和；从零付费计数仍含每个拒绝对。固定 $n_0,n_1$ 但忘记拒绝次序时有 $\binom{n_0+n_1}{n_0}$ 个有序重试词，故其质量为
+
+$$
+\mu_k\binom{n_0+n_1}{n_0}
+r_k^{4-w+2n_0+J}s_k^{1+2w+2n_1+J}.
+$$
+
+对指定的三段返回分配，载荷质量为 $q_k^J r_k^{3-w}s_k^{2w}$；求和 $j_0,j_1,j_2$ 得
+
+$$
+r_k^{3-w}s_k^{2w}\left(\sum_{j\ge0}q_k^j\right)^3
+=\frac{r_k^{3-w}s_k^{2w}}{d_k^3}=m_w(k).
+$$
+
+原 [FourthSegmentStoppedLaw](https://github.com/the-omega-institute/trureturing/blob/fa35d5b92f08d07c133bfdb44ecc1966ee2247a3/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.lean) 的 `actual_fourth_segment_stopped_word_law` 在活动 $p$ 的 Read 表上供应单段权重 $r_kq_k^j$、$s_k^2q_k^j$；前三段在完成时重置而不 Stop，使用的是同一 Read 表和未读尾的柱分解，不是执行第四段的 Stop。恰有 $\binom{\ell+2}{2}$ 个三元非负分配满足 $J=\ell$，得到保留返回质量。
+
+对任意正深度，$0<r_k,s_k<1$、$r_k^2+s_k^2<1$、$q_k\le1/4<1$。无限提种重试的质量被 $(r_k^2+s_k^2)^n$ 控制并趋零；任一载荷段的无限返回质量被 $q_k^n$ 控制并趋零。把先前完成的可数前缀柱分解后，三段中任一不完成仍为零质量；再按 $\mu$ 求和保持零。此证明只要求每个深度的有限完成，不要求有限深度支持或有限均值。每个 $\rho,b$ 切面原像都是可数个互不相交的前缀柱，因而可测；完成原像的补集给出 $\dagger$ 的可测原像，且其质量为零。
+
+由 $u_k+v_k=1$，八个词的质量和为 $(u_k+v_k)^3=1$。三个排除词的质量为 $2M_2+M_3>0$，每个选中词也严格为正；因 $\mu$ 至少有一个正支撑点，得到 $M_w>0$、$0<C<1$。按这些互不相交的选中单元归一化，得到 $\pi^{\mathsf S}_\mu$、$p^{\mathsf S}_\mu$、$\nu_w$ 及 $\nu_{w,\ell}$。给定 $k,b$ 的返回数分布是 $\binom{\ell+2}{2}d_k^3q_k^\ell$；对 $\ell$ 求和恰为 $1$，再次恢复 $m_w(k)$。证毕。
+
+附属数学引文：[Hendriksen–de Heide–Grünwald，Optional Stopping with Bayes Factors，§2.1](https://arxiv.org/abs/1807.09077) 的精确停止数据推导使用已观察完整词逻辑蕴含其停止时刻。本命题的精确前缀也有此性质；遗忘重试、返回和时刻后的 $m_w$ 则须对其整个原像求和，不能保留一个代表词的单项似然。这里 $m_w(k)$ 是 $P_k(b\text{ 在实际停止切面})$，是生成模式的联合单元似然；它不是另设独立模式先验后某记录的模式条件似然。§§30、35 的乘积模式—深度模型仍只作其各自条件背景。
+
+附属供应对应：[Boundary Dynamics，propositions 97.2、97.4、100.2](https://github.com/the-omega-institute/trureturing/blob/e1b1da7803107ff92a5591cf36652ef15daeec05/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) 分别供应同一深度的段乘积、返回分配计数及实际重试求和后的种子独立性。取 $n=3$、其合并摘要 $(S,B)=(J,w)$；保留指定标记词时不再乘标记位置数 $\binom3w$，而返回分配数仍为 $\binom{J+2}{2}$。[Future Response Sufficiency，§13 的 proposition 13.2 及其指定种子1、标记100条件式](https://github.com/the-omega-institute/trureturing/blob/e1b1da7803107ff92a5591cf36652ef15daeec05/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) 已给同一书签长度生成函数及该单元的粗化权重；其 $a_k$ 对应这里 $q_k$，其标记100权重 $u_k$ 对应这里 $m_1(k)$，并非这里的单段 $u_k$。本命题在原重构切面同时保留八个词、原生 $J$ 及选中五单元的同一归一化；这些供应不作为单独新增的一般几何级数或充分统计结果。
+
+### definition 36.3: 共同合法残余转录及四角响应
+
+令 $\mathcal T$ 为原 `Control.Transcript=ℕ→Visible` 的共同可测域，其中 `Visible` 为 `Option (List Operation × NativeControl)`，取乘积 $\sigma$ 代数。对切面完整 state $c$ 和未读流 $\omega'$，定义
+
+$$
+V_c(\omega')(n)=\operatorname{visible}(\operatorname{nativeDrive}(c,\omega',n)).
+$$
+
+只观察从切面起的原合法操作及 control；不把完整前史或寄存器加入 $\mathcal T$。所有切面 control 均为 `fourth(active p)`，故原 `drive_control` 使此函数与所取切面 state 的其余字段无关。记其固定深度律为 $L_k$。具体事件 $E\subset\mathcal T$ 是第一项发出 Read0 并进入 pending0 的事件；在每个切面都合法。它不读取 pending 后的字母，也不包括提前 Stop。
+
+定义当前无计数模式条件未来律及有符号四角差
+
+$$
+\mathscr L_w^\mu=\sum_k\nu_w(k)L_k,\qquad
+\mathcal J_\mu=\mathscr L_2^\mu-2\mathscr L_1^\mu+\mathscr L_0^\mu.
+$$
+
+三种单点模式的核相等；故此差与 §§27、29 的 ends−low−high+zero 相同，中位模式在该差中的系数为零。$\mathcal J_\mu$ 属于共同域 $\mathcal T$ 上有限有符号测度空间，定义不含任意模式单纯形干预。
+
+### proposition 36.2: 同一深度的停止粗化续接与先验曲率
+
+在 proposition 36.1 的切面上，definition 36.3 给出真实条件残余转录律。特别地
+
+$$
+L_k(E)=r_k,\qquad f_w^\mu=\mathscr L_w^\mu(E)=\sum_k\nu_w(k)r_k,\qquad
+J_E^\mu=f_2^\mu-2f_1^\mu+f_0^\mu.
+$$
+
+对任意先验，令
+
+$$
+t_k=\frac{v_k}{u_k}=\frac{s_k^2}{r_k},\qquad
+a_k^\mu=\mu_ku_k^3\left(\frac{t_k^2}{M_2}-\frac{2t_k}{M_1}+\frac1{M_0}\right).
+$$
+
+则 $\sum_k|a_k^\mu|\le4$、$\sum_ka_k^\mu=0$，并有精确曲率判据
+
+$$
+\mathcal J_\mu=\sum_ka_k^\mu L_k,\qquad
+J_E^\mu=\sum_ka_k^\mu r_k.
+$$
+
+若 $\mu$ 恰支撑两个不同深度 $i,j$，且 $\mu_i,\mu_j>0$，令
+
+$$
+\lambda=\frac{\mu_ju_j^3}{\mu_iu_i^3},\qquad
+\eta=\frac{t_j}{t_i},\qquad
+H(\lambda,\eta)=
+\frac{\lambda(\eta-1)^2(1-\lambda\eta)}
+{(1+\lambda)(1+\lambda\eta)(1+\lambda\eta^2)}.
+$$
+
+则
+
+$$
+J_E^\mu=(r_j-r_i)H(\lambda,\eta),\qquad
+\mathcal J_\mu=H(\lambda,\eta)(L_j-L_i).
+$$
+
+证明。原 `drive_measurable` 对每个完整 state $c$ 和有限事件数 $n$ 给出驱动的可测性；`visible` 是可数输出域上的投影，故 $V_c$ 逐坐标可测。停止切面的完整 state 与已读长度由可数个有限前缀柱划分，所以随机切面上的 $V_{c_3}$ 也可测。对每个实际前缀 $h_3$，原 `sameK_conditional_tail` 的假设是 $\mu$ 为 PMF、$h_3$ 为有限合法历史及 `run h₃=some c₃`。前述重构已给出该假设；其严格正有限柱归一化常数使条件化合法。定理保持 $K$，只把流移到实际已付费的 $T_3$，得到以真实历史后验混合的原流律。再由 `native_acquired_prefix_resumption`，续接起点是完整的 $c_3$，不是重置状态。在固定 $k$，每个柱之后的未读流仍为 $P_k$；所有这样的切面 control 相同，`drive_control` 给出相同的残余 $V_c$。因此在给定 $\rho,b$ 的可数柱分解中，每项共同的未来因子都是 $L_k$，求和后得到
+
+$$
+\mathbb P_\mu(K=k,\rho,b,V_{c_3}\in D)
+=\frac{\mu_k}{2}m_w(k)L_k(D)
+$$
+
+对每个可测 $D\subseteq\mathcal T$ 成立；未读流始终在实际 $T_3$ 处移位。归一化恰给出 $\mathscr L_w^\mu$。给定选中模式等于给定其单个三位词，选择不再附加未来条件。$p$ 的原第一笔 Read0 质量为 $r_k$，且后继为 pending0，故得到 $f_w^\mu$。
+
+因 $m_w(k)=u_k^3t_k^w$，有 $a_k^\mu=\nu_2(k)-2\nu_1(k)+\nu_0(k)$；绝对收敛及总和零由三概率律直接给出。于是逐项求和得到两个曲率式。若只有 $i,j$，记
+
+$$
+z_w=\nu_w(j)=\frac{\lambda\eta^w}{1+\lambda\eta^w},\qquad
+\mathscr L_w^\mu=L_i+z_w(L_j-L_i).
+$$
+
+公分母 $D=(1+\lambda)(1+\lambda\eta)(1+\lambda\eta^2)>0$ 上，
+
+$$
+\begin{aligned}
+D(z_2-2z_1+z_0)
+={}&\lambda\eta^2(1+\lambda)(1+\lambda\eta)
+-2\lambda\eta(1+\lambda)(1+\lambda\eta^2)\\
+&+\lambda(1+\lambda\eta)(1+\lambda\eta^2)\\
+={}&\lambda(\eta-1)^2(1-\lambda\eta).
+\end{aligned}
+$$
+
+系数相同的 $L_i$ 项在四角中消去，得到结论。这里改变 $\mu$ 同时改变 $p^{\mathsf S}_\mu$ 和 $\mathscr L_w^\mu$，不是保持核不变的模式质量干预。证毕。
+
+### corollary 36.1: 共同可见未来律的完全抵消条件
+
+在同一个 definition 36.3 的观察域内，$\mathcal J_\mu=0$ 当且仅当以下之一成立：$\mu$ 是单点先验；或者 $\mu$ 恰支撑两个不同深度 $i,j$ 并满足 $\lambda\eta=1$。两点情形也有 $J_E^\mu=0\iff\lambda\eta=1$；三个或更多正支撑点时，整个 $\mathcal J_\mu$ 非零，但单个事件 $J_E^\mu=0$ 本身仍不能据此排除。
+
+证明。首先证明 $\mathcal J_\mu=0\iff a_k^\mu=0$ 对每个 $k$ 成立。反向由绝对收敛的曲率式立即得到。正向取共同合法事件 $D_j$：第四段恰发出 $\operatorname{reads}((10)^j0)$ 后进入 pending0，再唯一发出 Stop0 并 delivered。该事件由转录在 $2j+2$ 处的一项决定，质量为 $L_k(D_j)=r_kq_k^j$。原 `native_first_pending` 的假设为活动相位、该 Read 词的真实柱及其 `WordFamily p 0`；它们在此满足。该 Stop 的原输入只取已有 pending 颜色，无额外 Read。
+
+因此 $\mathcal J_\mu=0$ 蕴含 $\sum_ka_k^\mu r_kq_k^j=0$ 对所有 $j\ge0$ 成立。Fibonacci 递推给出 $\mathrm{Fib}_{k+3}=2\mathrm{Fib}_{k+1}+\mathrm{Fib}_k$，故 $0<r_k<1/2$。不同 $k$ 的 $r_k$ 互异：连续 Fibonacci 数互素，因而 $\mathrm{Fib}_{k+1}/\mathrm{Fib}_{k+3}$ 已约分；若两个比值相等，则其分子相等，而 $\mathrm{Fib}_{k+1}$ 在 $k\ge1$ 严格递增。于是 $q_k=r_k(1-r_k)$ 也互异，且位于 $[0,1/4]$。
+
+固定 $k_0$，取多项式 $P_n(x)=(1-16(x-q_{k_0})^2)^n$。在 $[0,1/4]$ 上它介于 $0,1$；在 $q_{k_0}$ 处等于 $1$，在其他 $q_k$ 处趋零。全部矩为零使 $\sum_ka_k^\mu r_kP_n(q_k)=0$。由 $\sum_k|a_k^\mu|r_k<\infty$ 的支配收敛，极限为 $a_{k_0}^\mu r_{k_0}$，故它为零。$r_{k_0}>0$ 给出 $a_{k_0}^\mu=0$。
+
+若 $\mu_k>0$，这个零条件要求
+
+$$
+\frac{t_k^2}{M_2}-\frac{2t_k}{M_1}+\frac1{M_0}=0.
+$$
+
+函数 $t(r)=(1-r)^2/r$ 在 $0<r<1/2$ 的导数为 $1-r^{-2}<0$，所以不同深度的 $t_k$ 互异。此二次多项式首项系数 $1/M_2>0$，至多有两个根，排除三个或更多正支撑点的完全抵消。单点先验下所有 $\nu_w$ 相等，故完全抵消。两点下 $r_i\ne r_j$、$t_i\ne t_j$、$\lambda>0$，proposition 36.2 的非零分母及 $(\eta-1)^2>0$ 给出 $J_E^\mu=0\iff\lambda\eta=1$；此时整个有符号律同时抵消，反之整个律为零必使其在 $E$ 上为零。证毕。
+
+该证明的矩与支配收敛仅用于判断所定义有符号未来律是否为零，不宣告实际接收者取得了全部精确矩或隐藏深度。Fibonacci 互素性取自欧几里得递推：$\gcd(F_{n+1},F_n)=\gcd(F_n,F_{n-1})=\cdots=\gcd(1,0)=1$；$\gcd(F_{k+1},F_{k+3})=\gcd(F_{k+1},F_{k+2})$。严格递增由 $F_{n+1}=F_n+F_{n-1}$ 在 $n\ge2$ 给出。这些是本判据中的经典中间事实，不是单列的新结果。
+
+### proposition 36.3: 两个实际深度的非零响应与正先验抵消
+
+取 $\mu_1=\mu_2=1/2$、其余深度质量为零。则当前选中模式律和选择质量为
+
+$$
+C=\frac{2802127}{4705274},\qquad
+p^{\mathsf S}_\mu=
+\frac{(528193,555624,555624,607062,555624)}{2802127},
+$$
+
+共同事件 $E$ 的响应恰为
+
+$$
+(f_0^\mu,f_1^\mu,f_2^\mu)
+=\left(\frac{198931}{528193},\frac{17149}{46302},\frac{110438}{303531}\right),\qquad
+J_E^\mu=-\frac{113712356758}{412404067053437}\ne0.
+$$
+
+另取正先验 $\widetilde\mu_1=8575/15434$、$\widetilde\mu_2=6859/15434$，其余深度质量为零。则
+
+$$
+\widetilde C=\frac{9085}{15434},\qquad
+p^{\mathsf S}_{\widetilde\mu}=
+\frac{(335,360,360,402,360)}{1817},\qquad
+\mathcal J_{\widetilde\mu}=0.
+$$
+
+它抵消整个共同可见/control 残余未来有符号律，而不只是一个标量事件。
+
+证明。$r_1=1/3,s_1=2/3,d_1=7/9,u_1=3/7,v_1=4/7$；$r_2=2/5,s_2=3/5,d_2=19/25,u_2=10/19,v_2=9/19$。故对 $w=0,1,2,3$，
+
+$$
+(m_w(1))_w=\frac{(27,36,48,64)}{343},\qquad
+(m_w(2))_w=\frac{(1000,900,810,729)}{6859}.
+$$
+
+等质量先验给出
+
+$$
+(M_0,M_1,M_2,M_3)=
+\frac{(528193,555624,607062,689023)}{4705274}.
+$$
+
+代入 $C=M_0+3M_1+M_2$ 及 $f_w=(\mu_1m_w(1)/3+2\mu_2m_w(2)/5)/M_w$，得到所列精确有理数及其四角差。也可取 $\lambda=343000/185193$、$\eta=27/40$，得到 $\lambda\eta=8575/6859>1$；$r_2-r_1=1/15>0$，曲率严格为负。
+
+对 $\widetilde\mu$，直接求和给出 $(\widetilde M_0,\widetilde M_1,\widetilde M_2,\widetilde M_3)=(1675,1800,2010,2329)/15434$，得到所列选择质量与模式律。其 $\widetilde\lambda=40/27$、$\eta=27/40$，故 $\widetilde\lambda\eta=1$。proposition 36.2 的有符号测度式遂给出整个 $\mathcal J_{\widetilde\mu}=0$；corollary 36.1 同样包含单深度先验的完全抵消。证毕。
+
+### proposition 36.4: 接收记录、时钟、操作与可达纤维的四重障碍
+
+在以上原 source 和观察域中，下述受限对应及障碍同时成立。
+
+（一）完整有限字段能按 `recoverMarkers` 恢复八个标记词；裸 `ThirdSnapshot` 不能。实际 ordinal writers 在第三完成的输出如下，$\sigma_\rho$ 是种子为 $\rho$ 时的 syndrome，所有加法在字母域模 $2$ 中解释。
+
+| 原生词 | $w$ | QOne | QTwo | Z | $\sigma_0$ | $\sigma_1$ | 标签 |
+| --- | ---: | --- | --- | ---: | ---: | ---: | --- |
+| 000 | 0 | ac | c | 0 | 1 | 0 | zero |
+| 100 | 1 | ac | bc | 1 | 0 | 1 | low |
+| 010 | 1 | ac | bc | 0 | 1 | 1 | middle |
+| 101 | 2 | ad | b | 1 | 1 | 0 | ends |
+| 001 | 1 | ac | cb | 0 | 0 | 1 | high |
+| 011 | 2 | ad | b | 0 | 0 | 0 | excluded(011) |
+| 110 | 2 | da | b | 1 | 0 | 0 | excluded(110) |
+| 111 | 3 | d | b | 1 | 1 | 1 | excluded(111) |
+
+种子 $1$ 的三个 singleton 均有同一裸快照 $(1,1,1)$；选中 101 与排除 110 均有裸快照 $(1,2,0)$。裸快照不决定选择事件。无计数数学记录也不决定已支付计数、时刻或完整历史。
+
+（二）若接收记录保留 $T_3$ 或总计数 $A+B$，则
+
+$$
+T_3\equiv1+w\pmod2.
+$$
+
+所以三个 weight-one 模式在偶数时刻，zero 与 ends 在奇数时刻。同一个精确时刻条件下，五个模式不可能全部为正质量；上述正五单元共同模型是遗忘时刻后的模型。
+
+（三）该切面不准执行 `nativeStop`；Read0、Read1 均准许。Read0 进入 pending0 后仅准 Stop0，Read1 进入活动 $\beta$；pending 与 delivered 均无 Read。五个标签的数学对应不保持 `LiteralWindowEnd` 的操作、守卫或 End 结果。
+
+（四）令 $\mathcal A=\{p^{\mathsf S}_\mu:\mu\text{ 为正整数深度 PMF}\}$。每个 $p\in\mathcal A$ 的 low、middle、high 质量相等，记为 $c$；因而
+
+$$
+X=Y=c+p_{\mathrm{ends}},\qquad Z=c,\qquad
+\kappa=p_{\mathrm{ends}}=X-Z.
+$$
+
+对任意固定 $(X,Y,Z)$，$\mathcal A$ 中的可达模式律纤维至多一个点。非零 $J_E^\mu$ 不产生该族中的正宽度隐藏 $\kappa$ 纤维，也不供应任意模式单纯形变化或固定模式核干预。$\mathcal J_{\widetilde\mu}=0$ 不扩展到任意完整 state 或寄存器观察。
+
+证明。（一）对原 `writeRecords` 顺序代入三个位，更新 weight，第一位写 Z；随后 syndrome 为
+
+$$
+\sigma_\rho=1+\rho+b_0+\rho b_1+b_2.
+$$
+
+所得即表格；每个 QOne/QTwo/Z 组合按原 `recoverFromRegisters` 唯一读回相应三位，符合 `marker_fields_recover`。第三次 `writeMarker` 才锁存裸快照，其仅含 seed、weight、syndrome，省略表中的 QOne/QTwo/Z。取 $a$ 空、所有 $j_\ell=0$ 的真实正柱，种子 $1$ 配 100、010、001 即得同快照而不同完整字段；同样配 101、110 即得选择冲突。对种子 $0$，100 与 001 也有同一裸快照 $(0,1,0)$。这些碰撞的双方均为真正 acquired 的正质量前缀，不假定未取得的端点。
+
+再固定任意 $\rho,b$，比较无重试前缀与先拒绝 00 再取得同种子的前缀。两者有相同无计数记录和 $J$，第二个却多出两次 Read0，$A$ 增加 $2$、$T_3$ 增加 $2$。在具有 $r_i\ne r_j$ 的两点先验中，精确历史后验深度赔率相差 $(r_j/r_i)^2\ne1$，所以无计数后验不是每个具体历史后验。另一方面，拒绝对次序 $00,11$ 与 $11,00$ 后取得同种子、完成同一三位词，给出不同历史而相同完整 acquired state、计数及切面时刻。原 state 没有有序重试档案，但原 `Visible` 的操作列表保留这些历史。可见、持有、粗化和交付不能互换。
+
+（二）proposition 36.1 的时刻式立即给出奇偶关系。固定同一个 $T_3$ 时，若一个 weight-one 单元为正，其余 weight-zero/two 单元必为零，反之亦然。因此完整时刻条件和无计数选择条件不能混用。$J$、$A,B$、有序 history 各可生成更细记录；只保留 $J$ 的律则恰是 proposition 36.1 的返回族。
+
+（三）原 `finiteStop` 在 `fourth(active p)` 返回 none；原 `finiteRead` 表给出所列两种后继及 pending/delivered 权限。与此对照，`LiteralWindowEnd.step` 从 `some(true,true)` 读 low 或 ends 时，因 `first=true` 而拒绝；本切面 low、ends 却有严格正质量。该 Window 运行读单个 zero 后 `nonzero=false`，所以 `endable=false`；本源 000 的第三完成仍是活动第四段而非 End。`step`、`observe` 的参数和 terminal 合同都不同，标签字典不足以给出操作模拟。
+
+（四）proposition 36.1 的当前质量直接给出三种 singleton 相等。取原占位轴计算得到显示的三个均值和 $\kappa$。若两可达律的 $(X,Y,Z)$ 相同，则 $c=Z$、$p_{\mathrm{ends}}=X-Z$；剩余 zero 质量为 $1-3c-p_{\mathrm{ends}}$，故完整五态律相同。若沿 §§27–29 的四角方向变化，则 low、high 减而 middle 不变，一切非零变化立即离开此对称族。那些节的正宽度纤维判据仍要求同一可达纤维和固定共同模式核；改变 $\mu$ 一般同时改变质量与核，不能代入为该干预。
+
+最后，把观察域改为第一笔原合法 Read 后返回的完整 state。前三次 ordinal 写入后 Z 持有 $b_0$；第四段 Read1 只改相位，Read0 的第四次 marker 写入也保持 QOne/QTwo/Z。因此完整 state 事件 Z=1 对四角 zero、low、high、ends 的概率分别为 $0,1,0,1$，在 low、middle、high 中为 $1,0,0$，三个 singleton 观察核已不相等。完整 state 事件 QOne=ad 且 Z=1 对 ends 的概率为 $1$，对 zero、low、high 为 $0$，四角差为 $1$，对任何先验成立。此事件允许第一笔 Read 的两种真实结果，不附加 Read0 条件；它使用原持有字段，在共同 `Visible` 投影中被省略，故不能由 $\mathcal J_{\widetilde\mu}=0$ 推出其抵消。证毕。
+
+附属数学引文：[Grünwald–Halpern，Updating Probabilities，theorem 3.1](https://arxiv.org/abs/cs/0306124) 将忽略观测机制的条件化等式与正支撑世界上相同粗化概率的 CAR 条件联系起来。这里只在原历史空间上对明确函数 $R$ 的原像条件化，没有借 CAR 忽略某个未知交付机制。若另有接收者端口，其实际交付、遗忘、时钟保留及共同未来事件合同是额外假设；两个世界在数学粗记录下相同，不意味着原 source 已删除其字段或允许接收者访问它们。本节的来源实现只到停止选择的数学 pushforward 和原可见/control 残余律。
+
+## 追加锚（本行以下为增补区）

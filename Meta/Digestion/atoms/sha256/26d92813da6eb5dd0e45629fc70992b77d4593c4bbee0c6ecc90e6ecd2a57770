@@ -1,0 +1,30 @@
+**假设 22.4（外形式三元的比较接口）。** 为比较而额外供给实余向量空间 $W^*=\operatorname{span}(\theta^0,\theta^1,\theta^3)$，有序定向体积 $\mathrm{vol}_W=\theta^0\wedge\theta^1\wedge\theta^3$ 和余度规 $\operatorname{diag}(\sigma,1,1)$，其中 $\sigma=1$ 为 Euclidean，$\sigma=-1$ 为 $2+1$ Lorentzian。取诱导外幂内积，以 $\alpha\wedge\star\beta=\langle\alpha,\beta\rangle\mathrm{vol}_W$ 定义 Hodge 星号。由 [Tong 的 Hodge 定义及星号平方公式 (3.97)–(3.98)](../../../Library/Geometry/tong2021general.md)，在这个明确约定下
+
+$$
+\star\theta^{01}=\sigma\theta^3,\qquad
+\star\theta^{03}=-\sigma\theta^1,\qquad
+\star\theta^{13}=\theta^0,\qquad
+\star^2|_{\Lambda^2W^*}=\sigma I,
+\quad \theta^{ij}:=\theta^i\wedge\theta^j.
+$$
+
+例如 $\theta^{03}\wedge\theta^1=-\mathrm{vol}_W$、$\langle\theta^{03},\theta^{03}\rangle=\sigma$，给第二个符号；其余同理。这三个系数是所给三维载体上一个二形式的完整坐标，Hodge 把它送到同载体的一形式。若另供带余标架 $(\theta^0,\theta^1,\theta^2,\theta^3)$ 和余度规 $\operatorname{diag}(-1,1,1,1)$ 的 $3+1$ 载体，$\sigma=-1$ 的上述模型正是其 $013$ 子载体。固定 $\theta^0,\theta^1$ 且将 $\theta^3\mapsto\theta^2,\theta^2\mapsto-\theta^3$ 的空间旋转，把 $\theta^{03},\theta^{13}$ 送到 $\theta^{02},\theta^{12}$。所以这个混合子空间不在全空间旋转群 $SO(3)$ 下不变；所选 $2+1$ 载体内的 Hodge 同构不是该全空间群的三轴表示。
+
+同一比较中，若另供实四维余空间上的 $F=\sum_{i<j}F_{ij}\theta^{ij}$，外积运算给
+
+$$
+F\wedge F=2(F_{01}F_{23}-F_{02}F_{13}+F_{03}F_{12})\,
+\theta^0\wedge\theta^1\wedge\theta^2\wedge\theta^3.
+$$
+
+这里 $F\wedge F=0$ 等价于 $F$ 可写为两个一形式的外积，允许 $F=0$。这是 [Conrad §8 的可分解外积背景](../../../Library/Geometry/conrad2026exterior.md)在四维的坐标计算：非零时置换指标使 $F_{01}\ne0$，零平方条件恰使
+
+$$
+F=\left(\theta^0-\frac{F_{12}}{F_{01}}\theta^2-\frac{F_{13}}{F_{01}}\theta^3\right)
+\wedge\left(F_{01}\theta^1+F_{02}\theta^2+F_{03}\theta^3\right).
+$$
+
+反向由重复外因子给零。采用 [Tong §2.4.2、式 (2.87)](../../../Library/Geometry/tong2021general.md)的 $c=1$ 电磁符号 $E_i=-F_{0i}$、$B=(F_{23},F_{31},F_{12})$，上述平方系数为 $-2E\cdot B$；这不是任何经典协方差。若进一步写 $F=d\mathscr A$，须另供流形和局部或全局的一形式势 $\mathscr A$，其范围依供给而定。
+
+与五态源比较时，只按假设 19.3 另给有类型的读出、群作用及所需交织；没有这些映射，$u_i$、函数 $x,z,y$、矩 $X,Z,Y$ 和 $F_{0i}$ 没有等同关系。三维光滑流形上的 $1,3,3,1$ 是每点 $\Lambda^kT_s^*M$ 的秩；$\Omega^k(M)$ 是光滑截面空间，不能把这些秩报成整空间维数。此接口未供应 Maxwell 方程、传播态、物理空间、度量提取或引力／颜色实现。
+

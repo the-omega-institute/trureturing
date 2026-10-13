@@ -1,0 +1,37 @@
+## 定理 32.2（有限图表边界可判定性）
+
+固定有限 $I,E,A,O,\Delta$、阶段界 $B$ 和 descriptor 数值维数 $r$。在
+`ExactChart` 合同下，下列问题可由一条有效 Presburger 判定：
+
+$$
+\begin{aligned}
+\exists\text{ descriptor 赋值与有限控制表，使}\quad
+&\operatorname{Total},\\
+&\operatorname{Shared},\\
+&\operatorname{Same},\\
+&\operatorname{Guard/Next/Cost}
+\end{aligned}
+$$
+
+在所有来源和所有允许阶段上同时成立。
+
+若判定为真，则可以有效提取一个 descriptor 元组、每个控制位置的动作、
+所有回复分支和每个停止位置的完整目标行。
+
+### 证明
+
+先枚举有限的 descriptor type、有限控制图和每个位置的有限事件分支形状。
+数值参数 $n$ 不枚举具体上界，而作为 Presburger 存在量保留。对每个候选
+形状，把 `Reply`、`Same`、`Shared`、后继闭合和资源条件写成一条 Presburger
+公式；有限次合取仍是 Presburger。
+
+来源类型与控制位置有限，阶段长度至多为 $B$，所以没有未界的控制图结构留
+在量词外。对所有来源、epoch 和回复分支的要求使用 Presburger 普遍量词，
+再通过否定和量词消去转成判定问题。
+
+若公式为真，Presburger 判定过程提供一个满足赋值；有限图表枚举同时给出
+动作、回复分支和停止行。因此得到实际的 finite controller witness。
+
+该证明依赖的是图表接口已经把树来源、原生动作和完整目标行翻译成
+Presburger 关系；它不声称任意 FIB 树或任意 signed fiber 都有这种翻译。∎
+

@@ -3418,3 +3418,1299 @@ source family persists through arbitrary finite observation depth; it cannot
 choose the carrier on which that persistence propagates.
 
 ## 88.99 追加锚（本行以下为增补区）
+
+## 89. Cubic capacity and recurrent propagation on the complete finite atomic orbit
+
+**Definition 89.1 (one source orbit and its declared comparison geometry).**
+Use the free ordered source and forward substitution of the base volume,
+Definition 1.1, equivalently [Process44, Definition 44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
+Fix INITIAL to be the actual one-leaf tree $\alpha$, and put
+
+$$
+T_n=\rho^n(\alpha),\qquad
+h_n=(\underbrace{\rho,\ldots,\rho}_{n\text{ forward updates}}),\qquad
+s_n=(\mathrm{INITIAL}=\alpha,h_n,\mathrm{current}=T_n),
+\quad n\in\mathbb N_0.
+\tag{89.1}
+$$
+
+Every $h_n$ is a finite legal history in that contract. It has one current
+register, no graft, no Read and no Stop yet. Any chosen finite prefix may be
+stopped under the original contract; no later update is appended to a stopped
+history. Each $T_n$ retains its entire ordered labelled tree, including every
+bracket and occurrence. The collection $\mathcal S=\{s_n:n\in\mathbb N_0\}$
+is a mathematical family of finite snapshots of the same forward lineage,
+not an acquired simultaneous archive and not a source after an infinite
+execution. Retaining, reconstructing or comparing these snapshots as actual
+records would require its own acquisition and retention contract. No such
+operation is needed to define this family.
+
+Take the carrier to be an identical copy $X=\{x_n:n\in\mathbb N_0\}$ of
+these complete states, with $\chi(s_n)=x_n$. Thus $\chi$ has singleton
+fibres and does not identify states with equal direction, composition,
+prefix reply or leaf position. Declare
+
+$$
+d(x_m,x_n)=|m-n|^{1/3},\qquad
+\mu(\{x_n\})=1,\qquad
+F(x_n)=x_{n+1}=\chi(s_{n+1}).
+\tag{89.2}
+$$
+
+The exponent in this metric is a supplied scale choice. It is not inferred
+from a three-component readout. The standard operation $d_0\mapsto d_0^a$,
+$0<a\le1$, is snowflaking; its metric property is stated in
+Naor–Neiman, [*Assouad's theorem with dimension independent of the snowflaking*,
+Introduction, p. 1](https://arxiv.org/pdf/1012.2307v1).
+Only that elementary metric construction is used here, not an embedding
+theorem or an assertion about an ambient Euclidean dimension. The measure in
+(89.2) counts complete source states, not leaves of $T_n$, spatial sites of
+an apparatus or quotient multiplicities. Balls are closed:
+$B_d(x,R)=\{y:d(x,y)\le R\}$. A strict $\varepsilon$-packing consists of
+points with pairwise distance greater than $\varepsilon$.
+
+Supply one comparison operator on $\ell^2(X,\mu)$, with unit conductance
+on each adjacent pair:
+
+$$
+\begin{aligned}
+(Lu)_0&=u_0-u_1,\\
+(Lu)_n&=2u_n-u_{n-1}-u_{n+1}\quad(n\ge1),\\
+\mathcal E(u)&=\langle u,Lu\rangle
+ =\sum_{n\ge0}|u_{n+1}-u_n|^2,\qquad P=I-L/2,\\
+(Pu)_0&=(u_0+u_1)/2,\qquad
+(Pu)_n=(u_{n-1}+u_{n+1})/2\quad(n\ge1).
+\end{aligned}
+\tag{89.3}
+$$
+
+Here $u_n=u(x_n)$. The propagation clock is one unit per application of
+$P$; the normalization $L=2(I-P)$ is fixed throughout. The root boundary
+is reflecting, with holding probability $1/2$ at $x_0$; there is no killing
+at infinity and no screening term. The local energy of a set $A$ is
+$\mathcal E_A(u)=\sum_{x_n,x_{n+1}\in A}|u_{n+1}-u_n|^2$.
+All nonholding transitions have declared metric length one. The reverse
+comparison transition $x_{n+1}\to x_n$ is not a native source action:
+Process44's source contract supplies forward $\rho$, not an inverse update,
+a reset or a copied old current register. Equation (89.3) is an additional
+analytic law on the state carrier; it does not grant those operations.
+
+For $N\in\mathbb N_0$, let $D_N=\{x_0,\ldots,x_N\}$ and define $L_N^D$
+by restricting this same $L$ with zero exterior value at $x_{N+1}$.
+The superscript distinguishes this outer Dirichlet killing from the
+unchanged reflecting root. In particular
+
+$$
+\mathcal E_N^D(u)
+ =\sum_{n=0}^{N-1}|u_{n+1}-u_n|^2+|u_N|^2,
+\qquad P_N^D=I-L_N^D/2.
+\tag{89.4}
+$$
+
+The empty sum applies when $N=0$. This is a killed restriction of the
+declared propagation, not a new finite reflecting propagation. Its field
+Green is $G_N=(L_N^D)^{-1}$, and the nonnegative unscreened occupation
+Green of the infinite comparison law is the extended-valued kernel
+
+$$
+G(x,y)=\frac12\sum_{j=0}^{\infty}P^j(x,y).
+\tag{89.5}
+$$
+
+The factor $1/2$ matches $L=2(I-P)$ and the counting measure. No subtraction
+of a recurrent constant, pseudoinverse, finite-time truncation or screened
+inverse is meant by (89.5).
+
+**Theorem 89.2 (source-matched cubic-capacity counterexample).** For the
+single datum (89.1)–(89.5), the trees $T_n$ are pairwise distinct finite
+actual source terms, $\chi$ is injective, the carrier is proper, and its
+original forward transport $F$ is an isometry with unit displacements.
+The comparison law is reversible for the declared counting measure and
+has uniformly local unit edges. Nevertheless the following capacity,
+energy and Green statements coexist.
+
+For every $k\in\mathbb N_0$, $R\ge0$ and $\varepsilon>0$, set
+$q=\lfloor R^3\rfloor$, $a=\max(0,k-q)$, $b=k+q$ and
+$h=\lfloor\varepsilon^3\rfloor+1$. Then
+
+$$
+\begin{aligned}
+B_d(x_k,R)&=\{x_a,\ldots,x_b\},\\
+\mu(B_d(x_k,R))&=q+\min(k,q)+1,\\
+\operatorname{Pack}_{>\varepsilon}(B_d(x_k,R))
+ &=\left\lfloor\frac{q+\min(k,q)}{h}\right\rfloor+1.
+\end{aligned}
+\tag{89.6}
+$$
+
+In particular the two-sided cubic bounds, uniformly in the centre, are
+
+$$
+\begin{aligned}
+R^3&\le\mu(B_d(x_k,R))\le3R^3&& (R\ge1),\\
+\frac12(R/\varepsilon)^3
+ &\le\operatorname{Pack}_{>\varepsilon}(B_d(x_k,R))
+ \le3(R/\varepsilon)^3&& (R\ge\varepsilon\ge1).
+\end{aligned}
+\tag{89.7}
+$$
+
+For $N\ge1$, put $R_N=N^{1/3}$, so that $D_N=B_d(x_0,R_N)$.
+If $C_N$ is the best reflecting-ball Poincaré constant defined by
+
+$$
+C_N=\sup_{u\text{ nonconstant on }D_N}
+\frac{\sum_{n=0}^N|u_n-\bar u_{D_N}|^2}
+     {\mathcal E_{D_N}(u)},\qquad
+\bar u_{D_N}=\frac1{N+1}\sum_{n=0}^N u_n,
+\tag{89.8}
+$$
+
+then
+
+$$
+\frac{(N+1)(N+2)}{12}\le C_N\le\frac{N^2}{2}.
+\tag{89.9}
+$$
+
+Thus $C_N$ is of order $R_N^6$, not $R_N^2$. More strongly, for every
+fixed $\lambda\ge1$ and every finite $C\ge0$, the quadratic inequality
+
+$$
+\sum_{x\in B_d(x_0,R)}|u(x)-\bar u_{B_d(x_0,R)}|^2
+ \le C R^2\mathcal E_{B_d(x_0,\lambda R)}(u)
+\tag{89.10}
+$$
+
+fails for some $R\ge1$ and finitely supported real $u$.
+The same assertion holds with the larger full energy $\mathcal E(u)$ on
+the right. Quantitatively the witnesses below give a quotient at least
+$R_N^4/24$ for every $N\ge1$, even against that full energy.
+
+For the same operator, measure, clock and specified boundaries, the killed
+root field and the mean exit time are exactly
+
+$$
+\begin{aligned}
+G_N(x_0,x_n)&=N+1-n &&(0\le n\le N),\\
+\mathbb E_{x_n}\tau_N
+ &=(N+1)(N+2)-n(n+1)&& (0\le n\le N),
+\end{aligned}
+\tag{89.11}
+$$
+
+where $\tau_N$ is the first arrival at $x_{N+1}$ in the unit $P$ clock.
+Consequently $\mathbb E_{x_0}\tau_N$ is of order $R_N^6$ and
+
+$$
+G(x_0,x_0)=\infty.
+\tag{89.12}
+$$
+
+The comparison propagation is recurrent, and there is no finite
+nonnegative root-source solution $g$ of $Lg=1_{\{x_0\}}$ on $X$.
+In particular these cubic-capacity and locality hypotheses do not supply
+a finite nonnegative unscreened three-dimensional second-order root
+Green for the same datum.
+
+**Proof.** Finiteness of every $T_n$ follows from the finite tree
+substitution. Distinctness does not use a direction readout. Writing
+$c(t)=(A,B)$, the source formula $c(\rho t)=(B,A+B)$ gives
+
+$$
+(2,3)c(\rho t)-(2,3)c(t)=A+2B>0
+\tag{89.13}
+$$
+
+for every nonempty tree. This is the strict forward source quantity of
+Process44, Theorem 44.6. It separates all $T_n$, while (89.1) also retains
+their original history and INITIAL. The calculation is a proof of source
+distinctness, not a free CountRead. It changes none of the legal source
+actions.
+
+The usual snowflake triangle inequality here follows directly from
+$|i-k|\le|i-j|+|j-k|$ and
+$(v+w)^{1/3}\le v^{1/3}+w^{1/3}$ for $v,w\ge0$. This is the elementary
+metric tool credited in Definition 89.1. Formula (89.2) also gives
+$d(Fx_i,Fx_j)=d(x_i,x_j)$ and $d(x_n,Fx_n)=1$. Its ball condition is
+$|n-k|\le R^3$, giving the first two equalities of (89.6). Every bounded
+set is contained in a finite ball, and every closed bounded set is compact;
+hence the carrier is proper. In particular the source rank escapes every
+bounded metric ball.
+
+For a strict packing, successive ordered indices must differ by at least
+$h$: the condition is $|i-j|>\varepsilon^3$, including when
+$\varepsilon^3$ is an integer. If there are $M$ points in the interval
+$[a,b]$, its span gives $(M-1)h\le b-a$. Conversely
+$a,a+h,\ldots,a+\lfloor(b-a)/h\rfloor h$ attains this bound.
+This proves the packing equality. For $R\ge1$,
+$q+1\ge R^3$ and $2q+1\le3R^3$. For $\varepsilon\ge1$,
+$\varepsilon^3<h\le2\varepsilon^3$, while
+$q+1\le b-a+1\le2R^3+1$. Since
+
+$$
+\left\lfloor\frac{b-a}{h}\right\rfloor+1
+ =\left\lceil\frac{b-a+1}{h}\right\rceil,
+\tag{89.14}
+$$
+
+the lower bound in (89.7) follows from $(b-a+1)/h$; the upper follows
+from $(b-a)/h+1\le2(R/\varepsilon)^3+1$ and $R\ge\varepsilon$.
+For $0<\varepsilon<1$, every distinct carrier point is separated and the
+exact packing is instead the ball cardinality. Thus (89.7) is a coarse
+capacity statement on its displayed scale domain, not a continuum
+three-dimensional small-scale measure law.
+
+The matrix of $P$ in (89.3) is symmetric and stochastic, including the
+root row. Counting measure is therefore reversible. Jensen's inequality
+and its column sums make $P$ a contraction on $\ell^2(X,\mu)$; thus
+$L=2(I-P)$ is bounded self-adjoint and nonnegative on that entire space.
+Its energy identity follows by summing the edge differences, first on
+finite support and then by $\ell^2$ approximation. No metric or measure
+is changed in this calculation.
+
+For the finite ball, the standard path finite-difference estimate is an
+intermediate energy calculation. The variance identity and Cauchy–Schwarz
+along its actual adjacent chain give
+
+$$
+\begin{aligned}
+\sum_{n=0}^N|u_n-\bar u_{D_N}|^2
+ &=\frac1{N+1}\sum_{0\le i<j\le N}|u_j-u_i|^2,\\
+|u_j-u_i|^2
+ &\le(j-i)\sum_{n=i}^{j-1}|u_{n+1}-u_n|^2
+ \le N\mathcal E_{D_N}(u).
+\end{aligned}
+\tag{89.15}
+$$
+
+There are $N(N+1)/2$ pairs, proving the upper bound in (89.9).
+For $u_n=n$ on $D_N$, the mean is $N/2$, the energy is $N$, and
+
+$$
+\sum_{n=0}^N(n-N/2)^2=\frac{N(N+1)(N+2)}{12}.
+\tag{89.16}
+$$
+
+This proves the lower bound. To keep (89.10) inside the common full
+operator domain, use the finitely supported test
+
+$$
+u^{(N)}_n=
+\begin{cases}
+n,&0\le n\le N,\\
+2N-n,&N<n\le2N,\\
+0,&n>2N.
+\end{cases}
+\qquad \mathcal E(u^{(N)})=2N.
+\tag{89.17}
+$$
+
+It has the same ball variance (89.16). For every $\lambda\ge1$,
+$\mathcal E_{B_d(x_0,\lambda R_N)}(u^{(N)})\le2N$, so
+
+$$
+\frac{\sum_{D_N}|u^{(N)}-\bar u^{(N)}_{D_N}|^2}
+     {R_N^2\mathcal E(u^{(N)})}
+ =\frac{(N+1)(N+2)}{24N^{2/3}}
+ \ge\frac{R_N^4}{24}\longrightarrow\infty.
+\tag{89.18}
+$$
+
+This also disproves (89.10) with its local energy and any fixed dilation.
+The finite-difference method and the network interpretation of edge energy
+are standard tools, not additional general theorems claimed here; the latter
+is recorded in Lyons–Peres, [*Probability on Trees and Networks*,
+Chapter 2, §§2.1–2.3](https://rdlyons.pages.iu.edu/prbtree/book_online.pdf).
+
+For the Green calculation, (89.4) is strictly positive on every nonzero
+finite vector: zero energy forces all entries equal and $u_N=0$.
+The candidate $g^{(N)}_n=N+1-n$, with $g^{(N)}_{N+1}=0$, satisfies
+
+$$
+(L_N^Dg^{(N)})_0=1,\qquad
+(L_N^Dg^{(N)})_n=0\quad(1\le n\le N).
+\tag{89.19}
+$$
+
+It is the unique killed root field. This is the unit-resistance path
+calculation; the classical Green-as-voltage relation and series law are
+credited to Lyons–Peres, Proposition 2.1 and §2.3. The direct equation
+(89.19) fixes the reflecting-root and counting-measure normalization
+needed for this source datum.
+
+From any state of $D_N$, taking forward steps reaches $x_{N+1}$ within
+$N+1$ steps with probability at least $2^{-(N+1)}$. Applying this bound
+in successive blocks shows that $P_N^D$ is absorbed almost surely, has
+finite mean absorption time, and its matrix powers tend to zero
+geometrically. Therefore
+
+$$
+G_N=\frac12\sum_{j\ge0}(P_N^D)^j.
+\tag{89.20}
+$$
+
+Each killed path is an allowed comparison path of $P$, so its return
+probability is bounded by the corresponding infinite-chain probability.
+The nonnegative sum (89.5) hence dominates $G_N(x_0,x_0)=N+1$ for
+every $N$, proving (89.12). Infinite expected return occupation is the
+standard recurrence criterion for this irreducible chain. Equivalently,
+for an excursion from $x_1$, the probability of reaching $x_{N+1}$ before
+$x_0$ is $1/(N+1)$, by the harmonic function $n/(N+1)$ on that finite
+interval. A path that avoids $x_0$ cannot stay in a fixed finite interval
+forever, by the same block argument. Letting $N\to\infty$ makes its
+escape probability zero, giving recurrence directly. Holding at the root
+does not alter this conclusion.
+
+The first-step equations for the finite mean exit time $v_n$ are
+$v_0-v_1=2$ and $2v_n-v_{n-1}-v_{n+1}=2$ for $1\le n\le N$, with
+$v_{N+1}=0$. The unique solution is
+$v_n=(N+1)(N+2)-n(n+1)$, proving the second line of (89.11) in exactly
+the declared unit clock. Finally, if a finite nonnegative root field on
+the infinite carrier solved $Lg=1_{\{x_0\}}$, its root equation would
+give $g_1=g_0-1$ and every subsequent second difference would vanish.
+Thus $g_n=g_0-n$, contradicting nonnegativity for $n>g_0$.
+All three tests use the same $L$, $P$, $d$, $\mu$ and root boundary.
+$\square$
+
+**Definition 89.3 (scale and operator tests for a proposed source bridge).**
+For a declared source-to-carrier map, specify the legal forward relation,
+the carrier metric and measure, the propagation $P$, its energy operator
+$L$ and normalization, the propagation clock, and both root and exterior
+boundaries before taking any scale limit. Two distinct calibration tests
+for a quadratic propagation claim are a radius-independent Poincaré bound
+of the form (89.10), on the claimed centres and scale range, and a
+radius-independent mean-exit bound
+
+$$
+\mathbb E_x\tau_{B_d(x,R)}\le C_{\mathrm{exit}}R^2.
+\tag{89.21}
+$$
+
+The exit time in (89.21) is measured in that declared propagation clock.
+If the proposed claim includes a nonnegative unscreened root response,
+its Green test concerns (89.5) for that same operator, measure and
+boundary. These tests specify particular mathematical obligations; their
+sufficiency for a three-dimensional Green estimate is not assumed.
+They are distinct from the acquisition of any metric or energy readout
+and from the native or physical implementation of the propagation.
+
+**Proposition 89.4 (the diagnosed calibration defect and its scope).**
+On the complete finite orbit of Definition 89.1, the shortest adjacent
+comparison-chain length and the number of forward native updates from
+$s_m$ to $s_n$, for $m\le n$, both equal
+
+$$
+\ell(x_m,x_n)=n-m=d(x_m,x_n)^3.
+\tag{89.22}
+$$
+
+The ratio of this length to $d$ is unbounded. Properness, forward metric
+escape, isometric unit transport, reversible unit conductances and the
+two-sided cubic capacity (89.7) therefore do not imply either calibration
+test of Definition 89.3 or finiteness of its unscreened root response.
+The defect occurs without forgetting any source state in a quotient.
+The conditional assertions in the base §9 and in §§81, 82 and 88 retain
+their original hypotheses.
+
+**Proof.** An adjacent chain must change its index by one at every
+nonholding step, so the monotone chain attains the shortest length
+$|n-m|$. Each native $\rho$ advances the index by exactly one, and
+distinctness in (89.13) prevents any shorter forward word from reaching
+$T_n$. This proves (89.22), and for $m=0$ the ratio is $n^{2/3}$.
+Although the two distances agree on every unit edge, their long-range
+scales differ. The path's energy and unit-clock exit scale are quadratic
+in $\ell$ and hence sixth order in this supplied $d$. Equations
+(89.18), (89.11) and (89.12) prove the three failures directly; naming a
+missing condition does not prove its repair.
+
+The base §9 uses smooth three-dimensional comparison surfaces, an induced
+Euclidean metric and a calibration form. None is supplied by (89.2).
+Section 81's whole-rho occurrence tree and its separate §52 common
+spine carrier are different from the present carrier of complete
+successive source states; no factor map or replacement of their
+operators is asserted. Section 82 assumes a stratified transport group
+and its horizontal field, not (89.3). The carrier and analytic hypotheses
+of Theorem 88.6 include an operator order and Green estimates on that
+same carrier. The present choice proves that cubic packing and proper
+source escape do not discharge those additional hypotheses; it does not
+refute their conditional consequence or turn source rank into physical
+radius.
+
+The source identity in (89.1) is exact, but a native bridge to the
+comparison operator would additionally have to realize its reverse
+transitions and its clock under the actual permission contract. Neither
+the metric nor the counting measure grants that realization. A physical
+interpretation would further need a map from complete source states to
+spatial positions, with its joint field, measure, acquisition, boundary
+and clock correspondences. A different metric, rate law, measure,
+screening or boundary would be a different datum requiring its own
+analysis. The counterexample excludes the stated inference within this
+comparison class; it proves neither impossibility of a native bridge nor
+a physical dimension assignment. $\square$
+
+## 89.99 追加锚（本行以下为增补区）
+
+## 90. Actual source quotients and two incompatible source scales
+
+This appendix compares complete finite sources in the acquired fiber of
+[ARH, Proposition 23.2](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md).
+Its serial metric uses the full event list of
+[NativeFullSourceProducer](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.md),
+including local actions. The source, the canonical cut row and a numerical
+observation are different objects. All conclusions below are ordinary
+mathematics; no new Lean validation or physical realization is asserted.
+
+### 90.1. The entire retained-input fiber and its distinct targets
+
+**Definition 90.1 (unchanged acquired input).** Let $\mathcal T$ be the nonempty
+finite free ordered trees generated by $\alpha,\beta$ and pairing, with
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+An address is a finite word in $L,R$, rooted at $\varepsilon$. The original
+reply $r_u(p)$ is $\alpha,\beta,\mathsf{branch}$ or $\mathsf{absent}$.
+Fix any common certified $N\ge2$. Retain exactly the CE input
+$I=(P,(C,\pi),H_0,H_{\rm rel},Q,N)$, where
+
+$$
+\begin{aligned}
+P&=\{LL,LR,R\},&
+C&=\langle\langle\square_1,\square_2\rangle,\square_3\rangle,&
+\pi&=\{\{1\},\{2\},\{3\}\},\\
+H_0&=((0,RLR,\alpha),(0,RRR,\beta)),\\
+H_{\rm rel}&=((1,LL,0,RLL,=),(2,LR,0,RRL,=),\\
+&\hspace{14mm}(0,LL,2,LR,\ne),(0,LR,1,LL,\ne),(1,LL,2,LR,\ne)),\\
+Q&=\{LL,LR,RLL,RLR,RRL,RRR\}.
+\end{aligned}
+\tag{90.1}
+$$
+
+Here a relation requires both endpoints to be reached at their stated epochs
+and compares their entire ordered subtrees. The complete retained state
+recovers $I$ and factors through $I$ and common parameters, under ARH
+Assumption 1.3. Every accessible source-bearing acquisition field is subject
+to that access cut. No source size, label, traversal length or original-tree
+archive is added to $I$.
+
+**Proposition 90.2 (full fiber and native target).** The entire original-source
+fiber of (90.1), without a restriction on size or shape, is
+
+$$
+\begin{aligned}
+\mathcal D_{\rm CE}&=\{u(x,y):x,y\in\mathcal T,\ D(x,y)\},\\
+u(x,y)&=\langle\langle x,y\rangle,
+ \langle\langle\rho(x),\alpha\rangle,\langle\rho^2(y),\beta\rangle\rangle\rangle,\\
+D(x,y)&\iff x\ne y\ \land\ x\ne\rho^2(y)\ \land\ y\ne\rho(x)
+ \ \land\ \rho(x)\ne\rho^2(y).
+\end{aligned}
+\tag{90.2}
+$$
+
+The native $R_Q(u)$ is the reached original holes, their whole concrete
+numbered-hole exterior, and the complete equality partition of their whole
+subtrees. All six holes are reached on (90.2), with exterior
+
+$$
+C_Q=\langle\langle\square_1,\square_2\rangle,
+ \langle\langle\square_3,\square_4\rangle,
+             \langle\square_5,\square_6\rangle\rangle\rangle.
+\tag{90.3}
+$$
+
+Apart from identities and their transitive consequences, the partition is
+generated by
+
+$$
+\begin{array}{c|c}
+\text{source condition}&\text{equal hole ordinals}\\ \hline
+x=\alpha&1=4,\ 3=6\\
+x=\beta&1=6\\
+y=\alpha&2=4\\
+y=\beta&2=6.
+\end{array}
+\tag{90.4}
+$$
+
+The separately named **complete subtree valuation** is the stronger target
+
+$$
+V_Q(u(x,y))=(x,y,\rho(x),\alpha,\rho^2(y),\beta).
+\tag{90.5}
+$$
+
+It determines $R_Q$ and is injective on $\mathcal D_{\rm CE}$; $R_Q$ is not
+asserted to determine (90.5) or the source.
+
+Proof. This is the exact source correspondence of ARH Proposition 23.2,
+with its guards retained. To check both directions, write the old three
+class values as $x,y,z$. The literals force
+$z=\langle\langle a,\alpha\rangle,\langle b,\beta\rangle\rangle$.
+The reached positive endpoints force $a=\rho(x),b=\rho^2(y)$; the three
+negative records give the last three inequalities of $D$. The remaining
+old-class condition is $x\ne y$. The other two old inequalities follow from
+
+$$
+\ell(z)=\ell(\rho(x))+\ell(\rho^2(y))+2>\ell(x),\ell(y),
+$$
+
+where $\ell$ counts leaf occurrences. Every finite pair satisfying $D$
+conversely satisfies the old row, both literals and all five guarded
+relations. Thus (90.2) is the complete fiber, not just a family of witnesses.
+
+Cutting at $Q$ gives (90.3) and the six values (90.5). For the partition,
+the four values $x,y,\rho(x),\rho^2(y)$ are pairwise distinct: four pairs
+are guarded by $D$, and $x\ne\rho(x),y\ne\rho^2(y)$ follow from the clock
+$\kappa(\rho^j t)=\kappa(t)+j$ in ARH.4.2. No positive image is $\alpha$;
+$\rho(t)=\beta$ holds exactly for $t=\alpha$; no second image is $\beta$.
+These facts follow directly from the three constructors of $\rho$. They
+leave exactly (90.4), exhausting all fifteen unordered comparisons.
+The first two entries of (90.5) reconstruct (90.2), proving its injectivity.
+The row omits those values. This agrees with
+[ActualCutPartitionDecoder.canonicalRow_record_iff](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean),
+whose record contains the exterior and partition, with no source value,
+size or acquisition trace. $\square$
+
+**Definition 90.3 (the three-component observation).** Use precisely the
+$q$ port of [Process Geometry, Definition 44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md):
+in the fixed oriented Euclidean space $\mathbb R^3$, put
+
+$$
+a=e_1=(1,0,0),\quad b=e_2=(0,1,0),\qquad
+q(\alpha)=a,\quad q(\beta)=b,\quad
+q(\langle s,t\rangle)=q(s)\times q(t).
+\tag{90.6}
+$$
+
+The observation here is the ordered triple
+$(q_1(u),q_2(u),q_3(u))$ of the **entire original source** in that fixed
+basis. It is not $V_Q$, a tuple of subtree observations, the composition
+port $c$, the joint port $\eta=(c,q)$ or a spatial position. Evaluating this
+mathematical function supplies no numerical read permission or free acquisition.
+
+### 90.2. Unbounded finite source families and their actual quotients
+
+**Definition 90.4 (test sources).** For $h\ge1$, let
+$L_h=\{L,R\}^h$, $m=2^h$, and $\omega:L_h\to\{0,1\}$.
+The perfect height-$h$ tree $X_{h,\omega}$ has branches above depth $h$
+and leaf $\alpha$ or $\beta$ at $p$ according as $\omega(p)=0$ or $1$.
+Set
+
+$$
+B_0=\alpha,\quad B_{j+1}=\langle B_j,B_j\rangle,\quad
+Y_h=B_{h+3},\quad \nu_{h,\omega}=u(X_{h,\omega},Y_h),\quad
+\mathcal F_h=\{\nu_{h,\omega}:\omega\in\{0,1\}^{L_h}\}.
+\tag{90.7}
+$$
+
+These are tested subfamilies of the entire domain (90.2). The retained $I$
+does not include $h$ or the promise of membership in $\mathcal F_h$.
+
+**Proposition 90.5 (identity survives while both actual observations collapse).**
+For every $h\ge1$ and every labelling, $\nu_{h,\omega}\in\mathcal D_{\rm CE}$.
+The map $\omega\mapsto\nu_{h,\omega}$ is injective,
+$|\mathcal F_h|=2^m$, and the families have no finite bound on cardinality.
+On their union the native row is the single row with reached set $Q$,
+exterior $C_Q$ and six singleton classes; $q(\nu_{h,\omega})=(0,0,0)$.
+The complete subtree valuation remains injective, also across different $h$.
+Consequently, on each $\mathcal F_h$, the source and $V_Q$ equality quotients
+have $2^m$ classes, while the $R_Q$, $q$ and joint $(R_Q,q)$ quotients each
+have one class.
+
+Proof. The right-spine clock is
+$\kappa(\alpha)=0,\kappa(\beta)=1,
+\kappa(\langle s,t\rangle)=2+\kappa(t)$ (ARH.4.2).
+It gives $\kappa(X)\in\{2h,2h+1\}$, $\kappa(Y)=2h+6$, and hence
+
+$$
+\kappa(X)<\kappa(\rho X)<\kappa(Y)<\kappa(\rho^2Y).
+\tag{90.8}
+$$
+
+All four CE inequalities hold. The construction and Proposition 90.2 retain
+every old-class, literal and reached-endpoint guard, not just these clocks.
+Different labellings differ at an actual $LLp$ leaf; $X$ has exactly height
+$h$, so different heights cannot coincide either. There are $m$ independent
+binary labels and therefore $2^m$ different sources.
+
+Both $X,Y$ are branches. So are $\rho X,\rho^2Y$; their mutual
+inequalities are already established. None equals either constant leaf,
+and $\alpha\ne\beta$. Thus (90.4) gives six singleton classes at every
+height. For $j\ge1$, $q(B_j)=0$, since $a\times a=0$ at the first pairing
+and $0\times0=0$ thereafter. In particular $q(Y)=0$, whence
+$q(\langle X,Y\rangle)=q(X)\times0=0$ and $q(\nu)=0$.
+Injectivity of $V_Q$ follows from its first entry and the source formula.
+This proves all the quotient assertions. $\square$
+
+The row collapse holds on this family, not on all of $\mathcal D_{\rm CE}$.
+For example, $y=\langle\alpha,\alpha\rangle$ and either $x=\alpha$ or
+$x=\beta$ satisfy $D$ but have different partitions in (90.4). On the full
+domain ARH Proposition 23.2 supplies a static at-most-two-read service:
+at the actual $\rho^N u$ it reads $LLR^{\lceil N/2\rceil}$ and
+$LRR^{\lceil N/2\rceil}$, decodes the original root cases of $x,y$, and
+outputs (90.3)--(90.4). On the promised union of (90.7), the constant row
+can instead be output with zero new raw reads. Neither task identifies $\omega$.
+
+### 90.3. Address depth and its source-specific packing obstruction
+
+**Definition 90.6 (full-source address scale).** For distinct $u,v$ in
+$\mathcal F_h$, put
+
+$$
+\delta_A(u,v)=\min\{|p|:r_u(p)\ne r_v(p)\}=h+2,
+\qquad
+ d^A_h(u,v)=s_h>0,\qquad d^A_h(u,u)=0.
+\tag{90.9}
+$$
+
+Here $s_h$ is any independently chosen positive scale. In particular it
+may be $a_h2^{-(h+2)}$ with any $a_h>0$. To verify the stated minimum,
+$X$ first varies at $LLp$, of full address length $h+2$. Above that depth
+all of $X$ has its fixed branch shape. Its other occurrence is inside
+$\rho X$ at prefix $RLL$, whose first varying replies occur at depth
+$h+3$: a changed $X$ leaf becomes $\beta$ versus a branch under $\rho$.
+All other source subtrees are fixed at this $h$. Thus original prefixes
+through depth $h+1$ coincide and the minimum is exactly $h+2$.
+The resulting equilateral $d^A_h$ is an ultrametric on this actual family.
+
+**Proposition 90.7 (uniform finite-dimensional exclusion).** Fix an integer
+$k\ge1$ and $0<c\le C<\infty$. No family of maps
+$\Phi_h:\mathcal F_h\to\mathbb R^k$ satisfies simultaneously for all
+$h\ge1$ and all pairs
+
+$$
+ c\,d^A_h(u,v)\le\|\Phi_h(u)-\Phi_h(v)\|_2\le C\,d^A_h(u,v).
+\tag{90.10}
+$$
+
+This holds for every independent choice of the $s_h$. More quantitatively,
+any such constants on a single $\mathcal F_h$ must satisfy
+
+$$
+2^m\le(1+2C/c)^k,
+\qquad C/c\ge\tfrac12(2^{m/k}-1).
+\tag{90.11}
+$$
+
+Proof. Fix one image point. All $2^m$ images lie within radius $Cs_h$
+of it; the open balls of radius $cs_h/2$ about the images are disjoint.
+Their union lies within radius $(C+c/2)s_h$ of that point. Euclidean
+volume scales as the $k$th power of radius, giving (90.11). The scale
+cancels and the cardinality tends to infinity. This is the classical
+disjoint-ball estimate applied after the actual fiber construction and
+its quotient calculation; it does not turn source cardinality into
+physical dimension. $\square$
+
+In particular $k=3$ has no uniform distortion constants here, just as
+any other fixed finite $k$ does. The source configurations being compared
+are not spatial points. A finite cutoff or a changed metric changes a
+premise; no minimal coding dimension is asserted.
+
+### 90.4. The actual full-event prefix scale and a bounded-coordinate code
+
+**Definition 90.8 (sourcewise chronology).** Write $T_a(t)$ for the exact
+$\operatorname{productionTrace}\ a\ t$. With read tokens carrying epoch,
+physical address and reply, and $\mathsf{Local}$ the real local-step token,
+its recursion is
+
+$$
+\begin{aligned}
+T_a(\alpha)&=[\mathsf{Read}(0,a,\alpha)],&
+T_a(\beta)&=[\mathsf{Read}(0,a,\beta)],\\
+T_a(\langle s,t\rangle)&=[\mathsf{Read}(0,a,\mathsf{branch})]
+ \mathbin{+\!+}T_{aL}(s)\mathbin{+\!+}[\mathsf{Local}]
+ \mathbin{+\!+}T_{aR}(t)\mathbin{+\!+}[\mathsf{Local}],\\
+E_{h,\omega}&=T_\varepsilon(\nu_{h,\omega}).
+\end{aligned}
+\tag{90.12}
+$$
+
+The run starts at the common $\mathsf{Visit}(\varepsilon,[])$ control,
+epoch zero, empty prior trace and the source-specific register
+$\nu_{h,\omega}$. It ends at $\mathsf{Deliver}(\nu_{h,\omega},[])$, whose
+instruction is $\mathsf{Stop}(\nu_{h,\omega})$. Native Stop is terminal:
+it is not an additional event in $E$ and has no outgoing native step.
+The complete chronology object here is $(E,\mathsf{Stop}(\nu))$.
+No original address, local step or terminal control is discarded.
+
+Order $L_h$ lexicographically as $p_1,\ldots,p_m$, the actual preorder
+of its leaf occurrences. Let $e_h(j)$ be the one-based full-event index
+of leaf $p_j$ in the perfect $X$ subtree's own trace. The index is
+independent of the labels. It is specified for all $j$ by
+
+$$
+\begin{aligned}
+e_0(1)&=1,\\
+e_{r+1}(j)&=
+ \begin{cases}
+ 1+e_r(j),&1\le j\le2^r,\\
+ 4\cdot2^r-1+e_r(j-2^r),&2^r<j\le2^{r+1},
+ \end{cases}\\
+n_h(j)&=2+e_h(j).
+\end{aligned}
+\tag{90.13}
+$$
+
+For distinct sources in $\mathcal F_h$, put
+
+$$
+j(u,v)=\min\{j:\omega(p_j)\ne\omega'(p_j)\},\qquad
+ n(u,v)=n_h(j(u,v)),\qquad
+ d^E_h(u,v)=3^{-n(u,v)},\quad d^E_h(u,u)=0.
+\tag{90.14}
+$$
+
+Thus the exponent is an actual **full-event** index, including preceding
+branch reads and local actions, not the rank in a filtered reply list.
+
+**Proposition 90.9 (exact index correspondence and code).** For every $h$
+and pair of labellings, the first unequal full event of their chronologies
+is exactly the read at $LLp_{j(u,v)}$, at index $n(u,v)$ in (90.14).
+The extrema of the selected leaf indices are
+
+$$
+n_h(1)=h+3,\qquad n_h(m)=4m-h-1.
+\tag{90.15}
+$$
+
+The full-event prefix metric is an ultrametric, and the code
+
+$$
+Z^E_h(\nu_{h,\omega})=\sum_{j=1}^{m}2\omega(p_j)3^{-n_h(j)}\in[0,1)
+\tag{90.16}
+$$
+
+satisfies, uniformly in $h$,
+
+$$
+ d^E_h(u,v)\le|Z^E_h(u)-Z^E_h(v)|\le3d^E_h(u,v).
+\tag{90.17}
+$$
+
+At fixed known $h$, it is an injective one-coordinate representation of
+the entire source and hence of its complete event list and terminal Stop.
+This is a mathematical encoding on (90.7), not a new native output port.
+
+Proof. A full binary tree with $M$ leaves has $2M-1$ node reads and
+$2(M-1)$ local actions under (90.12), hence $4M-3$ full events. The left
+half of a perfect tree therefore contributes $4\cdot2^r-3$ events.
+Adding the parent read and the switch gives exactly (90.13). Two ancestor
+reads, at $\varepsilon$ and $L$, precede the $X$ trace, giving its global
+shift of two. The first leaf of $X$ follows $h$ branch reads; the last
+leaf is followed by exactly $h$ combinations. These give (90.15).
+
+Before the first differently labelled $X$ leaf, all visited replies,
+addresses, epochs, switches and combinations in (90.12) agree. The rest
+of the original source has not yet been visited except for the two
+common ancestors. At the stated leaf the replies are $\alpha$ versus
+$\beta$. This proves the actual first-event claim for every labelling,
+even when later transformed subtrees and total trace lengths differ.
+The usual common-prefix inequality for three binary label words and
+the increasing $n_h(j)$ proves the ultrametric inequality for (90.14).
+
+For $n=n(u,v)$, the leading summand in the code difference has magnitude
+$2\cdot3^{-n}$. All later selected indices are distinct integers greater
+than $n$, so the absolute tail is bounded by
+$\sum_{r>n}2\cdot3^{-r}=3^{-n}$. This proves (90.17).
+Also the finite sum in (90.16) is less than
+$\sum_{r\ge1}2\cdot3^{-r}=1$. Injectivity follows from its positive lower
+bound. Recover the finite ternary digits at the known indices, then
+$X$, then (90.2), then (90.12) and its terminal output. This proves
+complete representation on the declared source domain without inventing
+a free acquisition, copying operation or execution after Stop. $\square$
+
+For comparison only, the selected-leaf projection has metric
+$d^P_h(u,v)=3^{-j(u,v)}$ and code
+$Z^P_h(u)=\sum_{j=1}^m2\omega(p_j)3^{-j}$, with the same bounds $1,3$.
+Its exponent omits intervening events. At the first and last selected
+leaves its indices are $1,m$, whereas the full-event indices are
+(90.15). The projection is not the full-event metric used in (90.17).
+
+**Proposition 90.10 (non-correspondence under independent rescaling).**
+There are no constants $0<c\le C<\infty$ and positive factors
+$a_h,b_h$ such that, for every $h$ and every pair in $\mathcal F_h$,
+
+$$
+c\,a_hd^A_h(u,v)\le b_hd^E_h(u,v)\le C\,a_hd^A_h(u,v).
+\tag{90.18}
+$$
+
+Proof. Compare two sources differing only at $p_1$, and two differing
+only at $p_m$. Both address distances are $s_h$. Their full-event
+distances have ratio
+
+$$
+\frac{3^{-(h+3)}}{3^{-(4m-h-1)}}=3^{4m-2h-4}\longrightarrow\infty.
+\tag{90.19}
+$$
+
+Equation (90.18) would bound this ratio by $C/c$, independently of both
+scale factors. This is impossible. Thus an exact bounded-coordinate
+serial code and the address-depth packing obstruction coexist on the
+same sources; the missing implication is metric correspondence.
+The projected metric also fails to correspond uniformly to $d^E_h$:
+its endpoint ratio is $3^{m-1}$, so the ratio of the full-event endpoint
+ratio to that projected ratio is $3^{3m-2h-3}$, unbounded. Independent
+per-$h$ rescaling cannot remove this discrepancy either. $\square$
+
+### 90.5. Exact producer resources and representation-relative precision
+
+**Proposition 90.11 (resources of this producer on all the test sources).**
+Let $t=|\{p\in L_h:\omega(p)=1\}|$. For precisely the run (90.12),
+
+$$
+\begin{aligned}
+\ell(\nu_{h,\omega})&=26m+t+2,\\
+\#\mathsf{Read}(E)&=52m+2t+3,\\
+\#\text{leaf replies}(E)&=26m+t+2,\\
+\#\mathsf{Local}(E)&=52m+2t+2,\\
+|E|&=104m+4t+5,\\
+\operatorname{ht}(\nu_{h,\omega})&=h+7,
+\qquad \max\#\text{stack frames}=h+7.
+\end{aligned}
+\tag{90.20}
+$$
+
+There are no absent replies or updates. The terminal acquired tree has
+$52m+2t+3$ node occurrences. These are counts for the declared symbolic
+tree, trace and frame-list representations, not machine-byte or physical
+space lower bounds for arbitrary algorithms.
+
+Proof. The six $Q$ subtrees contribute respectively
+$m,8m,m+t,1,16m,1$ leaves. In $\rho X$ each original alpha supplies one
+leaf and each beta two. Each of the $8m$ alpha leaves of $Y$ supplies two
+leaves in $\rho^2Y$. This proves the first and third formulas. A full
+binary tree with $L$ leaves has $L-1$ branches and $2L-1$ nodes;
+(90.12) reads each node once and adds two locals per branch, proving all
+trace counts. Stop itself is not counted in $|E|$.
+
+The depths of $X,Y,\rho X,\alpha,\rho^2Y,\beta$ beneath their hole
+addresses give global heights $h+2,h+5,\le h+4,3,h+7,3$.
+In particular $\rho^2\alpha=\langle\beta,\alpha\rangle$ makes the
+fifth height exactly $h+7$. In sourceControl, visiting a child adds one
+frame for its parent; switching left to right replaces that frame;
+combining removes it. Induction along the traversal makes stack length
+at a visit equal the address depth. Every intervening delivery has the
+frames for its ancestors. The maximum is therefore exactly the maximum
+leaf depth $h+7$. The stopped control carries the complete acquired tree
+by the producer contract. All statements are sourcewise and apply to
+every labelling. $\square$
+
+**Proposition 90.12 (finite codebook separation and sufficient resolution).**
+At fixed $h$, the exact minimum separations of (90.16) and of the named
+projection code are
+
+$$
+\Delta_E=2\cdot3^{-(4m-h-1)},\qquad \Delta_P=2\cdot3^{-m}.
+\tag{90.21}
+$$
+
+For $p\in\mathbb N_0$ and $z\in[0,1)$ specify the uniform binary quantizer
+$Q_p(z)=\lfloor2^pz\rfloor$, with exactly $2^p$ possible labels.
+A sufficient resolution for injectivity on either codebook is
+
+$$
+2^{-p}\le\Delta_E\quad\hbox{or, respectively,}\quad2^{-p}\le\Delta_P.
+\tag{90.22}
+$$
+
+These are sufficient conditions, not necessary conditions for this
+finite codebook and this alignment of bins. The necessary cardinality
+condition for any injective $p$-bit output on $\mathcal F_h$ is only
+$p\ge m$; no stronger necessary precision bound is inferred here.
+
+Proof. For selected exponents $n_1<\cdots<n_m$ and first difference at
+$n_j$, bounding the tail by all integer positions through $n_m$ gives
+
+$$
+\left|\sum_l2(\omega_l-\omega'_l)3^{-n_l}\right|
+\ge 2\cdot3^{-n_j}-\sum_{r=n_j+1}^{n_m}2\cdot3^{-r}
+=3^{-n_j}+3^{-n_m}\ge2\cdot3^{-n_m}.
+$$
+
+Equality is attained by changing only the last bit. Use (90.15) for
+$Z^E$ and $n_j=j$ for $Z^P$ to get (90.21). Two points in one half-open
+quantizer bin are separated by strictly less than its width $2^{-p}$;
+(90.22) thus suffices. Necessity of $p\ge m$ follows instead from
+$2^p\ge|\mathcal F_h|=2^m$ and uses no metric or bin-width argument.
+For example, at $h=1$ the projected codebook is
+$0,2/9,2/3,8/9$; $Q_3$ gives $0,1,5,7$. Thus an alleged necessary
+$p>m\log_2 3$ would already fail on this codebook. $\square$
+
+A sharp cardinality representation exists for every $h$: with $h$ known,
+
+$$
+W_h(\nu_{h,\omega})=\sum_{j=1}^m\omega(p_j)2^{-j},\qquad
+Q_m(W_h)=\sum_{j=1}^m\omega(p_j)2^{m-j}.
+\tag{90.23}
+$$
+
+The integer on the right ranges bijectively over $0,\ldots,2^m-1$;
+its $m$-bit expansion reconstructs the entire source by (90.7).
+Its finite codebook separation is $2^{-m}$. This proves sufficiency of
+$m$ bits for identity at fixed $h$, without preserving either specified
+metric with uniform distortion. For $d^A$ this follows from Proposition
+90.7 with $k=1$. For $d^E$, the two endpoint-bit changes have $W_h$ distance
+ratio $2^{m-1}$, while their event-distance ratio is (90.19). The quotient
+$2^{m-1}/3^{4m-2h-4}$ tends to zero, excluding uniform multiplicative
+constants even after per-$h$ rescaling. Knowing $h$ in this representation task
+is an explicit side input, not an extra field of the CE retained $I$.
+The radix separations (90.21) tend to zero. A single exact real coordinate
+therefore supplies no uniform positive separation for these codebooks;
+Proposition 90.13 also excludes a fixed-bit exact source output across all
+$h$. The acquired-tree and trace counts remain those of (90.20).
+
+### 90.6. Task, input access and the handoff boundary
+
+**Proposition 90.13 (what source counting does and does not force).** Fix
+$h$. A finite-valued code from which a deterministic decoder recovers the
+source or $V_Q$ on $\mathcal F_h$, using only that code and common
+parameters, has at least $2^m$ code values. If those values are stored
+as a fixed $p$-bit word, then $p\ge m$. The same holds for a retained
+state that is the decoder's sole source-bearing input. For the $R_Q$,
+$q$ or $(R_Q,q)$ task on this family, one output value suffices.
+
+Proof. If two different sources gave the same code or sole retained
+state, the decoder would return the same answer for them. Source
+identity and (90.5) distinguish them, so the map must be injective.
+Proposition 90.5 counts its domain and proves that each of the three
+other tasks is constant. This argument counts output or sole-state
+values; it asserts no lower bound on working memory when other input
+access, streamed output or externally retained data is allowed. $\square$
+
+A consumer independently supplied the already acquired original tree
+can compute $V_Q$, $R_Q$ or an encoding locally with **zero additional raw
+reads**. A consumer independently supplied (90.12) can decode the original
+labelled tree from its preorder reads and then do the same, again with
+zero new raw reads. These are different input contracts from receiving
+only $I$. Their acquisition and retention costs are not refunded. Even
+for raw acquisition, on the separately promised epoch-zero $\mathcal F_h$
+with known $h$, the $m$ reads at $LLp_1,\ldots,LLp_m$ suffice to reconstruct
+$X$ and then the whole source (90.7). Consequently the producer's
+$52m+2t+3$ reads, its frame-stack bound and the radix-specific sufficient
+precision in (90.22) cannot be transferred to arbitrary source consumers.
+
+The mathematical epoch-zero producer comparison is separate from the
+actual CE handoff. NativeFullSourceProducer has the same initialControl
+in every run, but each immutable register is initialized to its own
+$\nu_{h,\omega}$ and remains at that source and epoch zero. It terminates
+with the acquired tree and complete trace at an absorbing Stop. Its theorem
+supplies neither entry into a later task nor a post-Stop handoff right.
+
+ARH Proposition 2.1 and Proposition 23.2 supply a different paid
+acquisition contract: acquire original descriptions and the specified
+literals, execute real updates on the same register, acquire the required
+epoch-one and epoch-two endpoint descriptions, compare them while retained,
+reach the common certified $N$, then impose the complete access cut.
+The resulting accessible state has exactly fiber (90.2) and the physical
+register is $\rho^N u$. The original descriptions and traversal are no
+longer accessible. The sourcewise function $u\mapsto E(u)$ is not an
+archive inside that state, and its coding theorem is not an instruction
+to rerun an epoch-zero producer there. Neither source continuity nor
+certified $N$ gives a reset, inverse, clone, source identity port or
+old-version access. Alternative mathematical sources in the family are
+not live modifications of one register.
+
+### 90.7. Combined result, sources and remaining bridge
+
+**Theorem 90.14 (source-fiber scale contrast with faithful task quotients).**
+For the full CE fiber (90.2) there are finite subfamilies $\mathcal F_h$
+of unbounded cardinality, all with the same acquired $I$, the same native
+$Q$-row and the same three-component $q$ observation. Complete source
+identity and the stronger $V_Q$ distinguish all their members. On these
+same subfamilies, the full-source address metric has no uniformly bounded
+distortion into any fixed finite-dimensional Euclidean space, even with
+independent scale choices. The actual full-event prefix metric has the
+uniform bounded-coordinate code (90.16)--(90.17), but it cannot correspond
+to address depth under independent per-scale rescaling. Its producer costs,
+representation precision and sole-state capacity have exactly the scopes
+in Propositions 90.11--90.13. In particular no whole-row memory lower bound
+follows from this family.
+
+Proof. Proposition 90.2 establishes the unchanged entire input and target.
+Proposition 90.5 gives the actual source counts and all stated quotients;
+Proposition 90.7 applies packing to these source identities. Propositions
+90.9--90.10 use the real first unequal event to prove both the code and
+the non-correspondence. Propositions 90.11--90.13 prove the separately
+qualified cost and information conclusions. The access distinction in
+§90.6 prevents substituting an acquired full source for the CE retained
+input or treating sourcewise initialization as a post-cut reset. $\square$
+
+The repository overlap is bounded to the unchanged contracts used here:
+ARH Definitions 1.1--1.2, Assumption 1.3, ARH.4.2 and Proposition 23.2;
+[FFM Definitions 1.2--1.3 and §§6, 9](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md)
+for full-row versus complete-field tasks and access-qualified memory;
+Process Geometry Definition 44.1 for the specific $q$ port;
+[NativeFullSourceProducer.sourceControl, productionTrace and native_source_producer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean)
+for the exact program and chronology; and
+[NativeSerialMachine.nativeStep](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean)
+for terminal Stop and the retained event types. These source definitions,
+and ActualCutPartitionDecoder's canonical-row equivalence, are consumed
+with their existing targets. Earlier occurrence-space packing in §81 and
+atomic-orbit metrics in §89 do not identify the present source-fiber
+quotient or the first-event indices (90.13).
+
+The disjoint-ball volume bound is a mature intermediate (J. Matoušek,
+[*Lectures on Discrete Geometry*](https://doi.org/10.1007/978-1-4613-0039-7)).
+Finite prefix coding and fixed-length output counting are mature
+intermediates (T. M. Cover and J. A. Thomas,
+[*Elements of Information Theory*](https://doi.org/10.1002/047174882X)).
+Their elementary forms used here are proved above. The source-specific
+combined result is repository-derived: these ingredients are applied
+after the full CE guards, actual target quotients and native event
+positions are established. This bounded source comparison makes no
+exhaustive literature or global originality claim.
+
+A source-to-space conclusion still requires a separately supplied map
+with its task, metric, measure, lawful operations, operator domain, clock
+and resource correspondence. Neither $q\in\mathbb R^3$, the radix code,
+the absence of uniform address-metric distortion, nor the complete-source
+producer supplies that bridge. No physical space dimension, minimal
+coding dimension, native operator transport or physical clock transport
+is inferred; the §52/§55 propagation contracts retain their own premises.
+
+## 90.99 追加锚（本行以下为增补区）
+
+## 91. Native prefix certificates for the same screened root response
+
+### 91.1. The original table and the owned scalar
+
+For a nonempty finite ordered native tree $t$, retain every actual occurrence, its
+left/right address and its $\alpha/\beta$ leaf label. For $h\geq0$, define the
+inclusive four-reply table
+
+$$
+p_h(t)(a)=
+\begin{cases}
+\alpha,\ \beta,&a\text{ is an actual leaf occurrence},\\
+\mathsf{branch},&a\text{ is an actual pair occurrence},\\
+\mathsf{absent},&a\text{ is not an occurrence},
+\end{cases}
+\qquad |a|\leq h .
+\tag{91.1}
+$$
+
+The root, early terminals and all absent strict extensions are part of this table. Let
+$L_t$ be the closed finite $N$ combinatorial Laplacian of §52.1–§52.7: every
+parent–child seam has unit conductance, counting measure is used, and the root has no
+outgoing killing seam. Put
+
+$$
+P_t=I-L_t/3,\qquad
+G_\lambda(t)=\langle\delta_r,(L_t+\lambda I)^{-1}\delta_r\rangle,\qquad
+q_\lambda=\frac3{3+\lambda}\quad(\lambda>0).
+\tag{91.2}
+$$
+
+The native source and the immutable $\mathrm{INITIAL}$ are the same object in
+$p_h(t)$ and $G_\lambda(t)$; a later current register is not substituted for either.
+The native substitution $\rho$ is unchanged; $P_t$ is only the declared comparison
+law on the retained actual occurrences.
+Because $L_t=3(I-P_t)$,
+
+$$
+G_\lambda(t)=\frac1{3+\lambda}
+ \sum_{n\geq0}q_\lambda^n\mu_n(t),\qquad
+\mu_n(t):=\langle\delta_r,P_t^n\delta_r\rangle .
+\tag{91.3}
+$$
+
+For $n\leq2h+2$, define $\mu_n(p)$ to be $\mu_n(t)$ for any finite native
+tree with $p_h(t)=p$, and set
+
+$$
+S_h(p)=\frac1{3+\lambda}\sum_{n=0}^{2h+2}q_\lambda^n\mu_n(p).
+\tag{91.4}
+$$
+
+### 91.2. Prefix locality and a uniform certificate
+
+**Lemma 91.1 (closed-walk locality).** The quantities $\mu_n(p)$ in (91.4) are
+well-defined. If $p_h(t)=p_h(u)$, then
+
+$$
+\mu_n(t)=\mu_n(u)\quad(0\leq n\leq2h+2).
+\tag{91.5}
+$$
+
+**Proof.** The matrix $P_t$ is nonnegative and stochastic: an edge step has weight
+$1/3$, while a hold at $x$ has weight $1-\deg(x)/3$. Expand $\mu_n(t)$ as the
+sum of weights of length-$n$ walks which start and end at the root, allowing holds.
+A walk which reaches depth $d$ and returns has at least $2d$ edge steps. Thus, for
+$n\leq2h+2$, it cannot use a vertex below depth $h+1$. The table gives every
+vertex and every edge through depth $h$, and it gives the number of children of every
+branch at depth $h$. A newly exposed depth-$h+1$ vertex can only be an immediate
+turning point at this length, so its hold weight and its children are not used. Hence
+each walk has the same weight in any two trees with the same table. This includes a
+singleton, an early terminal leaf and every absent address. The sum is therefore
+independent of the realizing tree, proving (91.5). This is the finite-tree instance of
+the sparse-matrix locality viewpoint of Benzi–Boito–Razouk, [BBR](https://arxiv.org/abs/1203.3953); no general decay theorem is invoked. $\square$
+
+**Theorem 91.2 (same-operator prefix approximation).** For every finite native ordered
+tree $t$, every $h\geq0$ and every $\lambda>0$,
+
+$$
+0\leq G_\lambda(t)-S_h(p_h(t))
+ \leq \lambda^{-1}q_\lambda^{\,2h+3}.
+\tag{91.6}
+$$
+
+Consequently, if $p_h(t)=p_h(u)$, then
+
+$$
+|G_\lambda(t)-G_\lambda(u)|
+ \leq \lambda^{-1}q_\lambda^{\,2h+3}.
+\tag{91.7}
+$$
+
+There is no factor $2$ in (91.7). At $\lambda=1$, $G_1(t)$ is exactly the
+closed INITIAL response $F_{\mathrm{spec}}(t)$ of §52.21.
+
+**Proof.** By Lemma 91.1, (91.4) is the initial segment of (91.3). Every
+$\mu_n(t)$ is nonnegative and at most one because $P_t$ is stochastic. Therefore
+
+$$
+0\leq G_\lambda(t)-S_h(p_h(t))
+\leq\frac1{3+\lambda}\sum_{n\geq2h+3}q_\lambda^n
+=\lambda^{-1}q_\lambda^{2h+3}.
+$$
+
+If the two tables agree, both responses lie in the same interval
+$[S_h,S_h+\lambda^{-1}q_\lambda^{2h+3}]$, which proves (91.7). The identity at
+$\lambda=1$ is $L_t+I=\mathcal H_t^{(0)}+2I$ by §52.21. $\square$
+
+### 91.3. All-depth native witnesses and sharpness
+
+Let $t_{\mathrm{bal}}$ and $t_{\mathrm{comb}}$ be the two actual fifteen-node trees
+with common word
+
+$$
+\omega=\alpha\beta\beta\alpha\beta\alpha\alpha\beta
+$$
+
+and the balanced and left-comb bracketings displayed in §52.19–§52.20. For
+$h\geq0$, define actual finite sources
+
+$$
+W_0(t)=t,\qquad W_{h+1}(t)=\langle W_h(t),\alpha\rangle .
+\tag{91.8}
+$$
+
+**Lemma 91.3 (common native data).** For every $h$, the two sources
+$W_h(t_{\mathrm{bal}})$ and $W_h(t_{\mathrm{comb}})$ have the same leaf word
+$\omega\alpha^h$, composition $(4+h,4)$, $15+2h$ occurrences, and root
+cross-product value $q_0=0$. They also satisfy
+
+$$
+p_h(W_h(t_{\mathrm{bal}}))=p_h(W_h(t_{\mathrm{comb}})).
+\tag{91.9}
+$$
+
+**Proof.** The first three assertions follow by appending one $\alpha$ leaf and its
+parent at each step. §52.20 gives the common word, composition and $q_0=0$ at
+$h=0$; the parent rule $q\langle x,y\rangle=q(x)\times q(y)$ preserves zero.
+If a fixed leaf cap $H$ is imposed, the source has $8+h$ leaves and therefore
+requires $H\geq8+h$; this is a per-source cap condition, not free cap growth.
+At depth at most $h$, a table address either meets the added left spine or the
+right $\alpha$ leaf, or reaches the root of the original fifteen-node tree exactly
+at depth $h$. That root is a branch in both sources; the first differing descendants
+are below the observed depth. Thus all four replies, including absence, agree. $\square$
+
+Put $g_h(t)=G_1(W_h(t))$ and
+
+$$
+f(g)=\frac{2(1+g)}{5+3g}.
+\tag{91.10}
+$$
+Here $f^0$ is the identity and $f^{h+1}=f\circ f^h$.
+
+**Theorem 91.4 (all-depth response ambiguity).** For every $h\geq0$,
+
+$$
+g_h(t_{\mathrm{bal}})=f^h\!\left(\frac5{12}\right),\qquad
+g_h(t_{\mathrm{comb}})=f^h\!\left(\frac{62614}{136883}\right),
+\tag{91.11}
+$$
+
+and the second value is strictly larger. Hence every scalar estimator depending only
+on $p_h$ has two-source worst-case error at least
+
+$$
+\frac12\left[f^h\!\left(\frac{62614}{136883}\right)-
+f^h\!\left(\frac5{12}\right)\right]>0.
+\tag{91.12}
+$$
+
+**Proof.** If a rooted tree has response $g$, attaching one parent seam changes the
+child-root response to $g/(1+g)$ by the rank-one Schur complement. In
+$W_{h+1}$, the other child is a leaf with attached response $1/2$, while the new
+root diagonal of $L+I$ is $3$. Therefore
+
+$$
+g_{h+1}=\frac1{3-g_h/(1+g_h)-1/2}=f(g_h).
+$$
+
+The initial values are exactly §52.21–§52.22. Since
+$f'(g)=4/(5+3g)^2>0$, strict inequality persists under every iterate. Any common
+$p_h$-based estimate has the same output on the pair in (91.9); the elementary
+two-point midpoint bound gives (91.12). $\square$
+
+**Theorem 91.5 (sharp moment horizon, not a rate claim).** With
+$\mu_n^{\mathrm{bal}}=\mu_n(W_h(t_{\mathrm{bal}}))$ and
+$\mu_n^{\mathrm{comb}}=\mu_n(W_h(t_{\mathrm{comb}}))$,
+
+$$
+\mu_n^{\mathrm{comb}}-\mu_n^{\mathrm{bal}}=0\quad(0\leq n\leq2h+2),
+\qquad
+\mu_{2h+3}^{\mathrm{comb}}-\mu_{2h+3}^{\mathrm{bal}}
+=\frac2{3^{\,2h+3}}.
+\tag{91.13}
+$$
+
+**Proof.** The first equality is Lemma 91.1. At the original root, the comb has a
+right $\beta$ leaf and the balanced tree has a right branch. After the common left
+spine of length $h$, these are the only newly visible vertices whose hold weight can
+differ at length $2h+3$: the leaf has diagonal $1-1/3=2/3$, whereas the
+non-root branch has diagonal $1-3/3=0$. The unique differing walk goes down the
+spine and to that right child, holds once, and returns. Its two edge traversals have
+weight $3^{-(2h+2)}$, so the difference is
+$3^{-(2h+2)}(2/3)=2/3^{2h+3}$. Every other walk of this length either stays within
+the common table or reaches the new level without a hold and has equal weight. This
+proves (91.13). It identifies the first missing moment; it does not assert an optimal
+resolvent constant or approximation rate. $\square$
+
+### 91.4. Lawful prefix supply and limits
+
+**Assumption 91.6 (conditional prefix supply).** A certified even epoch $N=2k\geq2$
+may supply $p_h(t)$ through the original-root, same-source ordered support/address
+service of [ABT §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
+with its source/version authentication, epoch certification, refusal and absorbing
+Stop rules. Under the paid presence-only service of [FFM §§10–11](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md), the supplied prefix has
+
+$$
+q\leq2(2^{h+1}-1),\qquad \max|a|\leq h+k+1,\qquad a_{\mathrm{post}}=0.
+\tag{91.14}
+$$
+
+These are premises of the cited services, not consequences of a numerical response
+catalog, old $q/c/\text{word}$ replies, a CE post-cut state or mathematical existence
+of a decoder.
+
+**Corollary 91.7 (conditional original target estimate).** Under Assumption 91.6,
+the actual original $G_\lambda(t)$ admits the certified output $S_h(p_h(t))$ with
+the uniform error (91.6). The corollary concerns fixed positive screening and the
+scalar root response of the same closed operator. It supplies no full-spectrum or
+multiplicity recovery, no operator-factor or physical-dimension statement, no clock or
+metric transport, no native symmetric-transport permission, no unrestricted sensor,
+and no infinite-completion correspondence. Native realization, acquisition, clock,
+source-state versus spatial-position, and operator/boundary permissions remain
+separate hypotheses; the exclusions of §§55, 81, 89 and 90 continue to apply.
+
+The witnesses and estimate are ordinary finite-source mathematics on the original
+counting-measure operator. They do not identify a physical space dimension or complete
+the broader why-three programme.
+
+## 91.99 追加锚（本行以下为增补区）
