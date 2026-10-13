@@ -4,10 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Same-marginal rank-one repairs and the complete scalar tester objective. -/
+   digest: Same-marginal rank-one tester reduction with attained original global extrema. -/
 
 import D5.S3.Quantum.Foundation.TwoRoundSpectralEvents
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+import Mathlib.Topology.Order.Compact
+import Mathlib.Analysis.Normed.Module.FiniteDimension
 
 noncomputable section
 
@@ -164,6 +166,8 @@ private theorem quadratic_le_mass {n : Type*} [Fintype n] [DecidableEq n]
   dsimp [quadratic]
   linarith
 
+/-- Absolute-valued eigenvectors compare a real Metzler matrix with the positive spectral
+mass of a complex Hermitian matrix. This comparison does not assert Loewner order. -/
 private theorem real_eigenvalue_le_mass {H : Matrix (Fin 3) (Fin 3) ℝ}
     (hH : H.IsHermitian) {A : Matrix (Fin 3) (Fin 3) ℂ} (hA : A.IsHermitian)
     (hoff : ∀ i j, i ≠ j → 0 ≤ H i j) (hentry : ∀ i j, H i j ≤ (A i j).re)
@@ -539,5 +543,220 @@ theorem same_p_error_domination (eps : ℝ) (S : Matrix Wire Wire ℂ)
         (S.submatrix mainAddress mainAddress) he hehalf hp hplo hphi hP h0 h1 h2 hq hq1 ht
       linarith [hScalar q t hq hq1 ht ht1]
     exact ⟨hRepair, (rank_one_full_objective eps p b he he1 hp hp1).mp hRepair⟩
+
+open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open scoped Matrix.Norms.L2Operator
+
+private theorem psd_closed {n : Type*} [Finite n] [Nonempty n] :
+    IsClosed {M : Matrix n n ℂ | M.PosSemidef} := by
+  classical
+  let := Fintype.ofFinite n
+  have heq : {M : Matrix n n ℂ | M.PosSemidef} = Set.Ici 0 := by
+    ext M
+    exact Matrix.nonneg_iff_posSemidef.symm
+  rw [heq]
+  exact isClosed_Ici
+
+private theorem psd_trace_entry {n : Type*} [Fintype n]
+    {M : Matrix n n ℂ} (hM : M.PosSemidef) {r : ℝ} (hr : 0 ≤ r)
+    (htr : M.trace.re ≤ r) (i j : n) : ‖M i j‖ ≤ r := by
+  classical
+  have hd (k : n) : (M k k).re ≤ r := by
+    apply le_trans _ htr
+    simpa only [Matrix.trace, Matrix.diag_apply, Complex.re_sum] using
+      (Finset.single_le_sum (fun l _ => (Complex.nonneg_iff.mp (hM.diag_nonneg (i := l))).1)
+        (Finset.mem_univ k))
+  have hn (k : n) : 0 ≤ (M k k).re := (Complex.nonneg_iff.mp (hM.diag_nonneg (i := k))).1
+  have h := D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.psd_entry_bound hM i j
+  rw [Complex.normSq_eq_norm_sq] at h
+  have hm := mul_le_mul (hd i) (hd j) (hn j) hr
+  nlinarith [norm_nonneg (M i j)]
+
+private theorem bounded_psd_compact {n : Type*} [Fintype n] [Nonempty n]
+    (r : ℝ) (hr : 0 ≤ r) :
+    IsCompact {M : Matrix n n ℂ | M.PosSemidef ∧ M.trace.re ≤ r} := by
+  classical
+  have hc : IsClosed {M : Matrix n n ℂ | M.PosSemidef ∧ M.trace.re ≤ r} :=
+    psd_closed.inter (isClosed_le
+      (show Continuous (fun M : Matrix n n ℂ => M.trace.re) from by
+        simp only [Matrix.trace, Matrix.diag_apply]
+        fun_prop) continuous_const)
+  have hb : IsCompact {M : Matrix n n ℂ | ∀ i j, M i j ∈ Metric.closedBall 0 r} :=
+    isCompact_pi_infinite (fun _ => isCompact_pi_infinite (fun _ => isCompact_closedBall 0 r))
+  apply hb.of_isClosed_subset hc
+  intro M hM i j
+  rw [Metric.mem_closedBall, dist_zero_right]
+  exact psd_trace_entry hM.1 hr hM.2 i j
+
+private def causalPairs : Set (Matrix Wire Wire ℂ × Matrix (Fin 2) (Fin 2) ℂ) :=
+  {z | Causal z.1 z.2}
+
+private def testerPairs : Set (Matrix AB AB ℂ × Matrix Wire Wire ℂ) :=
+  {z | Tester z.1 z.2}
+
+private theorem causal_trace {S : Matrix Wire Wire ℂ} {sigma : Matrix (Fin 2) (Fin 2) ℂ}
+    (hS : Causal S sigma) : S.trace = 2 := by
+  rw [← trace_partialTraceRight, hS.2.2.2, Matrix.kronecker, Matrix.trace_kronecker, hS.2.2.1]
+  simp
+
+private theorem tester_trace {C : Matrix AB AB ℂ} {E : Matrix Wire Wire ℂ}
+    (hT : Tester C E) : C.trace = 2 ∧ E.trace.re ≤ 6 := by
+  have hc : C.trace = 2 := by
+    rw [← trace_partialTraceLeft, hT.2.1]
+    simp
+  refine ⟨hc, ?_⟩
+  have h := (Complex.nonneg_iff.mp hT.2.2.2.trace_nonneg).1
+  rw [Matrix.trace_sub, Matrix.kronecker, Matrix.trace_kronecker, hc] at h
+  norm_num at h
+  linarith
+
+private theorem causal_pairs_compact : IsCompact causalPairs := by
+  have h1 : IsClosed {z : Matrix Wire Wire ℂ × Matrix (Fin 2) (Fin 2) ℂ |
+      z.1.PosSemidef} := psd_closed.preimage continuous_fst
+  have h2 : IsClosed {z : Matrix Wire Wire ℂ × Matrix (Fin 2) (Fin 2) ℂ |
+      z.2.PosSemidef} := psd_closed.preimage continuous_snd
+  have h3 : IsClosed {z : Matrix Wire Wire ℂ × Matrix (Fin 2) (Fin 2) ℂ |
+      z.2.trace = 1} := isClosed_eq (by unfold Matrix.trace; fun_prop) continuous_const
+  have h4 : IsClosed {z : Matrix Wire Wire ℂ × Matrix (Fin 2) (Fin 2) ℂ |
+      partialTraceRight z.1 = Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ) z.2} := by
+    apply isClosed_eq
+    · unfold partialTraceRight
+      fun_prop
+    · apply continuous_pi
+      intro i
+      apply continuous_pi
+      intro j
+      simp only [Matrix.kronecker, Matrix.kroneckerMap_apply]
+      fun_prop
+  have hclosed : IsClosed causalPairs := h1.inter (h2.inter (h3.inter h4))
+  apply ((bounded_psd_compact (n := Wire) 2 (by norm_num)).prod
+    (bounded_psd_compact (n := Fin 2) 1 (by norm_num))).of_isClosed_subset hclosed
+  intro z hz
+  exact ⟨⟨hz.1, by rw [causal_trace hz]; norm_num⟩,
+    ⟨hz.2.1, by rw [hz.2.2.1]; norm_num⟩⟩
+
+private theorem tester_pairs_compact : IsCompact testerPairs := by
+  have h1 : IsClosed {z : Matrix AB AB ℂ × Matrix Wire Wire ℂ | z.1.PosSemidef} :=
+    psd_closed.preimage continuous_fst
+  have h2 : IsClosed {z : Matrix AB AB ℂ × Matrix Wire Wire ℂ |
+      partialTraceLeft z.1 = (1 : Matrix (Fin 2) (Fin 2) ℂ)} := by
+    apply isClosed_eq
+    · unfold partialTraceLeft
+      fun_prop
+    · exact continuous_const
+  have h3 : IsClosed {z : Matrix AB AB ℂ × Matrix Wire Wire ℂ | z.2.PosSemidef} :=
+    psd_closed.preimage continuous_snd
+  have h4 : IsClosed {z : Matrix AB AB ℂ × Matrix Wire Wire ℂ |
+      (Matrix.kronecker z.1 (1 : Matrix (Fin 3) (Fin 3) ℂ) - z.2).PosSemidef} := by
+    apply psd_closed.preimage
+    apply continuous_pi
+    intro i
+    apply continuous_pi
+    intro j
+    simp only [Matrix.sub_apply, Matrix.kronecker, Matrix.kroneckerMap_apply]
+    fun_prop
+  have hclosed : IsClosed testerPairs := h1.inter (h2.inter (h3.inter h4))
+  apply ((bounded_psd_compact (n := AB) 2 (by norm_num)).prod
+    (bounded_psd_compact (n := Wire) 6 (by norm_num))).of_isClosed_subset hclosed
+  intro z hz
+  obtain ⟨hc, he⟩ := tester_trace hz
+  exact ⟨⟨hz.1, by rw [hc]; norm_num⟩, ⟨hz.2.2.1, he⟩⟩
+
+private theorem original_pairs_nonempty : causalPairs.Nonempty ∧ testerPairs.Nonempty := by
+  have h := rank_one_scalar_events 0 0 0 0 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  obtain ⟨Ep, En, hEp, _, _⟩ := h.2
+  exact ⟨⟨(rankOneRepair 0, diagonalMarginal 0), h.1⟩, ⟨(diagonalTester 0 0, Ep), hEp⟩⟩
+
+/-- The supremum is over the original full normalization and event pair. -/
+def testerNorm (X : Matrix Wire Wire ℂ) : ℝ :=
+  sSup ((fun z => |response X z.2|) '' testerPairs)
+
+/-- The infimum is over the original causal pair, including all complex repairs. -/
+def optimalError (eps : ℝ) : ℝ :=
+  sInf ((fun z => testerNorm (candidate eps - z.1)) '' causalPairs)
+
+private theorem response_continuous :
+    Continuous (fun z : Matrix Wire Wire ℂ ×
+      (Matrix AB AB ℂ × Matrix Wire Wire ℂ) => |response z.1 z.2.2|) := by
+  simp only [response, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply]
+  fun_prop
+
+theorem tester_norm_continuous : Continuous testerNorm :=
+  tester_pairs_compact.continuous_sSup response_continuous
+
+theorem tester_norm_attained (X : Matrix Wire Wire ℂ) :
+    ∃ C E, Tester C E ∧ |response X E| = testerNorm X ∧ ErrorBound X (testerNorm X) := by
+  let f : Matrix AB AB ℂ × Matrix Wire Wire ℂ → ℝ := fun z => |response X z.2|
+  have hg : Continuous (fun z : Matrix AB AB ℂ × Matrix Wire Wire ℂ => (X, z)) :=
+    continuous_const.prodMk continuous_id
+  have hf0 := response_continuous.comp hg
+  have hf : Continuous f := hf0
+  obtain ⟨z, hz, hm⟩ := tester_pairs_compact.exists_isMaxOn original_pairs_nonempty.2
+    hf.continuousOn
+  have hb : BddAbove (f '' testerPairs) := tester_pairs_compact.bddAbove_image hf.continuousOn
+  have hn : f z = sSup (f '' testerPairs) := by
+    apply le_antisymm
+    · exact le_csSup hb (Set.mem_image_of_mem f hz)
+    · apply csSup_le (original_pairs_nonempty.2.image f)
+      rintro r ⟨w, hw, rfl⟩
+      exact hm hw
+  refine ⟨z.1, z.2, hz, hn, ?_⟩
+  intro C E hT
+  exact le_csSup (a := f (C, E)) hb
+    (Set.mem_image_of_mem f (show (C, E) ∈ testerPairs from hT))
+
+private theorem tester_norm_le {X : Matrix Wire Wire ℂ} {b : ℝ} (hb : ErrorBound X b) :
+    testerNorm X ≤ b := by
+  obtain ⟨C, E, hT, hn, _⟩ := tester_norm_attained X
+  rw [← hn]
+  exact hb C E hT
+
+theorem original_minimum_attained (eps : ℝ) :
+    ∃ S sigma, Causal S sigma ∧ testerNorm (candidate eps - S) = optimalError eps ∧
+      ∀ T tau, Causal T tau → optimalError eps ≤ testerNorm (candidate eps - T) := by
+  let f : Matrix Wire Wire ℂ × Matrix (Fin 2) (Fin 2) ℂ → ℝ :=
+    fun z => testerNorm (candidate eps - z.1)
+  have hg : Continuous (fun z : Matrix Wire Wire ℂ × Matrix (Fin 2) (Fin 2) ℂ =>
+      candidate eps - z.1) := continuous_const.sub continuous_fst
+  have hf0 := tester_norm_continuous.comp hg
+  have hf : Continuous f := hf0
+  obtain ⟨z, hz, hm⟩ := causal_pairs_compact.exists_isMinOn original_pairs_nonempty.1
+    hf.continuousOn
+  have hb : BddBelow (f '' causalPairs) := causal_pairs_compact.bddBelow_image hf.continuousOn
+  have hn : f z = sInf (f '' causalPairs) := by
+    apply le_antisymm
+    · apply le_csInf (original_pairs_nonempty.1.image f)
+      rintro r ⟨w, hw, rfl⟩
+      exact hm hw
+    · exact csInf_le hb (Set.mem_image_of_mem f hz)
+  refine ⟨z.1, z.2, hz, hn, ?_⟩
+  intro T tau hT
+  exact csInf_le (a := f (T, tau)) hb
+    (Set.mem_image_of_mem f (show (T, tau) ∈ causalPairs from hT))
+
+/-- Original global extrema exist. Every original optimum in the comparison interval has
+an actual same-marginal rank-one optimum and the complete scalar objective at that value. -/
+theorem attained_original_minimum_and_same_p_reduction (eps : ℝ)
+    (he : 0 ≤ eps) (hehalf : eps ≤ 1 / 2) :
+    (∃ S sigma, Causal S sigma ∧ testerNorm (candidate eps - S) = optimalError eps) ∧
+    (∀ X : Matrix Wire Wire ℂ, ∃ C E, Tester C E ∧
+      |response X E| = testerNorm X ∧ ErrorBound X (testerNorm X)) ∧
+    ∀ S sigma, Causal S sigma → testerNorm (candidate eps - S) = optimalError eps →
+      1 - Real.sqrt (1 - eps) ≤ (sigma 1 1).re → (sigma 1 1).re ≤ eps →
+      let p := (sigma 1 1).re
+      Causal (rankOneRepair p) (diagonalMarginal p) ∧
+        diagonalMarginal p 1 1 = sigma 1 1 ∧
+        testerNorm (candidate eps - rankOneRepair p) = optimalError eps ∧
+        ∀ q t : ℝ, 0 ≤ q → q ≤ 1 → 0 ≤ t → t ≤ 1 →
+          scalarLambda eps p q t + max (eps * (1 - q - t)) 0 ≤ optimalError eps := by
+  obtain ⟨S0, sigma0, hS0, hn0, hmin⟩ := original_minimum_attained eps
+  refine ⟨⟨S0, sigma0, hS0, hn0⟩, tester_norm_attained, ?_⟩
+  intro S sigma hS hn hlo hhi p
+  obtain ⟨C, E, hT, hval, hbound⟩ := tester_norm_attained (candidate eps - S)
+  rw [hn] at hbound
+  obtain ⟨hR, hsig, hdom⟩ := same_p_error_domination eps S sigma he hehalf hS hlo hhi
+  obtain ⟨hb, hs⟩ := hdom _ hbound
+  exact ⟨hR, hsig, le_antisymm (tester_norm_le hb) (hmin _ _ hR), hs⟩
 
 end D5.S3.Quantum.Foundation.TwoRoundRankOneReduction
