@@ -36,7 +36,7 @@ def kernel (t x : ℝ) : ℝ :=
 def moment (t β : ℝ) : ℝ :=
   ∫ x in t..endpoint t, kernel t x * (x - 2) ^ (-β)
 
-private lemma weight_pos {x : ℝ} (hx : 1 < x) : 0 < weight x := by
+lemma weight_pos {x : ℝ} (hx : 1 < x) : 0 < weight x := by
   unfold weight
   positivity [Real.log_pos hx]
 
@@ -51,7 +51,7 @@ private lemma weight_continuous {a b : ℝ} (ha : 1 < a) :
     (mul_ne_zero (pow_ne_zero 2 hx0.ne') (pow_ne_zero 2 hl.ne'))
     |>.continuousWithinAt
 
-private lemma log_large {x : ℝ} (hx : 4 ≤ x) : 1 ≤ Real.log x := by
+lemma log_large {x : ℝ} (hx : 4 ≤ x) : 1 ≤ Real.log x := by
   have h := Real.log_pow (2 : ℝ) 2
   norm_num at h
   have h2 := Real.log_two_gt_d9
@@ -94,7 +94,7 @@ private lemma weight_ratio_lower {t y : ℝ} (ht : 4 ≤ t) (hty : t ≤ y) :
       _ = _ := by field_simp [ht0.ne', hy0.ne', hl.ne'] <;> ring
   exact hscaled.trans (by linarith)
 
-private lemma price_drop {t x b : ℝ} (ht : 4 ≤ t) (htx : t ≤ x) (hxb : x ≤ b) :
+lemma price_drop {t x b : ℝ} (ht : 4 ≤ t) (htx : t ≤ x) (hxb : x ≤ b) :
     weight b * (b - x) ≤ g x - g b ∧
       g x - g b ≤ weight t * (b - x) := by
   have hx1 : 1 < x := by linarith

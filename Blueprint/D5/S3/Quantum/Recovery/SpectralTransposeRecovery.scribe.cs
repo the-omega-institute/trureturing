@@ -6,11 +6,12 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
 internal sealed class SpectralTransposeRecoveryDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The existing finite-matrix functional calculus constructs a support projection and spectral inverse square root. Explicit Kraus completion gives a canonical CPTP candidate even for a zero CP branch. Exact recoverability and smoothness are separate conclusions.",
+        "The existing finite-matrix functional calculus constructs a support projection and spectral inverse square root. The shared decoder normalization lemma is the existing proof extracted once and consumed by both the original candidate and the reference completion; it claims no independent mathematical gain. Explicit Kraus completion gives a canonical CPTP candidate even for a zero CP branch. Exact recoverability and smoothness are separate conclusions.",
         H("SpectralTransposeRecovery"),
         Blocks(new[]
         {
             "spectral_support_on_kraus",
+            "spectral_decoder_normalization",
             "spectral_transpose_candidate"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
@@ -18,6 +19,6 @@ internal sealed class SpectralTransposeRecoveryDocument : IScribeDocumentDefinit
             H(name.Replace('_', ' ')),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/barnumknill2002reversal")),
-            Blocks(Paragraph(Text("The existing finite-matrix functional calculus constructs a support projection and spectral inverse square root. Explicit Kraus completion gives a canonical CPTP candidate even for a zero CP branch. Exact recoverability and smoothness are separate conclusions."))),
+            Blocks(Paragraph(Text("The existing finite-matrix functional calculus constructs a support projection and spectral inverse square root. The shared decoder normalization lemma is the existing proof extracted once and consumed by both the original candidate and the reference completion; it claims no independent mathematical gain. Explicit Kraus completion gives a canonical CPTP candidate even for a zero CP branch. Exact recoverability and smoothness are separate conclusions."))),
             DescribeRole.Theorem)).ToArray())));
 }
