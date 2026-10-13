@@ -13,6 +13,18 @@ internal sealed class GoldenResourceSupremumDocument : IScribeDocumentDefinition
         H("Golden Resource Supremum"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("golden-prime-local-original-layer-sum"),
+                DeclarationHandle.Create(Prefix + "local_eq_layer_sum"),
+                H("Original prime-local telescoping identity"),
+                StatementSource.FromAuthor(LocalLayerSumFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original generic private proof is exposed in place for "
+                    + "ActualReservePrimeMask. For every real price, actual prime and natural exponent, "
+                    + "the local objective is the sum over k in Icc 1 a of log p times "
+                    + "(goldenLayerMarginal p k - lambda). Exponent zero gives an empty sum. "
+                    + "This visibility change preserves the original statement and proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-objective-at-optimal-positive-part-sum"),
                 DeclarationHandle.Create(Prefix + "objective_at_optimal_eq_positive_part_sum"),
                 H("The objective at the minimal-count configuration"),
@@ -112,6 +124,21 @@ internal sealed class GoldenResourceSupremumDocument : IScribeDocumentDefinition
                         + "of that layer. This companion is a direct application of the frozen "
                         + "single-layer delta to the equality-price clause."))),
                 DescribeRole.Theorem))));
+
+    private static Formula LocalLayerSumFormula()
+    {
+        Formula lambda = F.Id("lambda");
+        Formula p = F.Id("p");
+        Formula a = F.Id("a");
+        Formula k = F.Id("k");
+        Formula sum = Seq(Sum, Underscore,
+            Grp(Seq(k, InMacro, Sp, Call("Icc", D(1), a))), Sp,
+            Product(Call("log", p), Seq(Open, Subtract(Marginal(p, k), lambda), Close)));
+        return Disp(ForAll(
+            [Bound("lambda", Reals()), Bound("p", Naturals()), Bound("a", Naturals())],
+            Implies(Call("Prime", p),
+                Equal(Call("goldenPrimeLocalObjective", lambda, p, a), sum))));
+    }
 
     private static Formula ActiveSum(Formula lambda)
     {
