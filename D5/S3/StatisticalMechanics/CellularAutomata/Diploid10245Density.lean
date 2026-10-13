@@ -7,12 +7,7 @@
    digest: Diploid rule 10-245 has exact density 1/4 + λ/2 from time one. -/
 
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Topology.Neighborhoods
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -23,14 +18,13 @@ open Filter
 
 namespace D5.S3.StatisticalMechanics.CellularAutomata.Diploid10245Density
 
-def bit (b : Bool) : ℝ := if b then 1 else 0
-
 def rule10 (x _y z : Bool) : Bool := (!x) && z
 
 def rule245 (x y z : Bool) : Bool := !(rule10 x y z)
 
 def p (lam : ℝ) (x y z : Bool) : ℝ :=
-  (1 - lam) * bit (rule10 x y z) + lam * bit (rule245 x y z)
+  (1 - lam) * ((Bool.toNat (rule10 x y z) : ℕ) : ℝ) +
+    lam * ((Bool.toNat (rule245 x y z) : ℕ) : ℝ)
 
 def w (lam : ℝ) (b x y z : Bool) : ℝ :=
   if b then p lam x y z else 1 - p lam x y z
@@ -68,7 +62,8 @@ def claim : Prop :=
       (𝓝 (1 / ((4 : ℕ) : ℝ) + lam / ((2 : ℕ) : ℝ)))
 
 /-- Indicator of a zero followed by a one at distance two. -/
-private def A (x z : Bool) : ℝ := (1 - bit x) * bit z
+private def A (x z : Bool) : ℝ :=
+  (1 - ((Bool.toNat x : ℕ) : ℝ)) * ((Bool.toNat z : ℕ) : ℝ)
 
 /-- The probability of the two specified endpoints, summing over the middle spin. -/
 private def q (lam : ℝ) (t : ℕ) : ℝ :=
@@ -83,8 +78,8 @@ private theorem P_succ (lam : ℝ) (t n : ℕ) (b : Fin n → Bool) :
 private theorem p_affine (lam : ℝ) (x y z : Bool) :
     p lam x y z = lam + (1 - 2 * lam) * A x z := by
   cases x <;> cases z
-  all_goals dsimp only [p, rule10, rule245, bit, A]
-  all_goals simp
+  all_goals dsimp only [p, rule10, rule245, A]
+  all_goals simp [Bool.toNat_true, Bool.toNat_false]
   all_goals ring
 
 private theorem w_sum (lam : ℝ) (x y z : Bool) :
@@ -97,8 +92,8 @@ private theorem w_nonneg (lam : ℝ) (hlam : lam ∈ Set.Icc (0 : ℝ) 1)
     (b x y z : Bool) : 0 ≤ w lam b x y z := by
   obtain ⟨h0, h1⟩ := hlam
   cases b <;> cases x <;> cases z
-  all_goals dsimp only [w, p, rule10, rule245, bit]
-  all_goals simp
+  all_goals dsimp only [w, p, rule10, rule245]
+  all_goals simp [Bool.toNat_true, Bool.toNat_false]
   all_goals linarith
 
 private theorem sum_cons (n : ℕ) (F : (Fin (n + 1) → Bool) → ℝ) :
@@ -223,8 +218,9 @@ private theorem q_sum (lam : ℝ) (t : ℕ) :
   rw [sum_cons 2]
   simp_rw [sum_cons 1, sum_cons 0]
   have h2 : (2 : Fin 3) = (0 : Fin 1).succ.succ := rfl
-  dsimp only [q, A, bit]
-  simp only [Fintype.sum_unique, Fintype.sum_bool, h2, Fin.cons_zero, Fin.cons_succ]
+  dsimp only [q, A]
+  simp only [Fintype.sum_unique, Fintype.sum_bool, h2, Fin.cons_zero, Fin.cons_succ,
+    Bool.toNat_true, Bool.toNat_false]
   norm_num
   congr 5
 
@@ -286,8 +282,8 @@ private theorem q_update (lam : ℝ) (t : ℕ) :
 
 private theorem A_overlap_zero (x y z : Bool) : A x y * A y z = 0 := by
   cases y
-  all_goals dsimp only [A, bit]
-  all_goals simp
+  all_goals dsimp only [A]
+  all_goals simp [Bool.toNat_true, Bool.toNat_false]
 
 private theorem p_pair (lam : ℝ) (x y z u v : Bool) :
     (1 - p lam x y z) * p lam z u v = lam * (1 - lam) +

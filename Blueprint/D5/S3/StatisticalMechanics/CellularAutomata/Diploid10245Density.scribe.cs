@@ -13,9 +13,6 @@ internal sealed class Diploid10245DensityDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For every mixing parameter in [0,1], diploid rule 10-245 has density 1/4 + λ/2 at every time from one onwards, starting from the fair Bernoulli cylinder law.",
         H("Exact density of diploid rule 10-245"), Blocks(
-            Node("bit", "Boolean spins as real numbers", "bit", BitFormula(),
-                "The Boolean spin is read as the real number one for true and zero for false. This expresses the binary states used in §2, Eqs. (1)–(3), of Fukś–Fatès.",
-                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("rule10", "Elementary rule 10", "rule10", Rule10Formula(),
                 "For an ordered left, centre and right neighbourhood, rule 10 returns true exactly when the left spin is false and the right spin is true. The centre spin does not affect the output. Thus the neighbourhoods 001 and 011 give one, as in the rule 10-245 table of §3.2.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -54,11 +51,6 @@ internal sealed class Diploid10245DensityDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), role);
 
-    private static Formula BitFormula() => All("b", Booleans(),
-        Equal(LocalCall("bit", X("b")),
-            At(Qualified("ite"), Equal(X("b"), Qualified("Bool", "true")),
-                Typed(D(1), Reals()), Typed(D(0), Reals()))));
-
     private static Formula Rule10Formula() => Neighbourhood(
         Equal(LocalCall("rule10", X("x"), X("y"), X("z")),
             At(Qualified("Bool", "and"), At(Qualified("Bool", "not"), X("x")), X("z"))));
@@ -70,9 +62,11 @@ internal sealed class Diploid10245DensityDocument : IScribeDocumentDefinition
     private static Formula ProbabilityFormula() => All("lam", Reals(), Neighbourhood(
         Equal(LocalCall("p", X("lam"), X("x"), X("y"), X("z")),
             Add(Multiply(Parenthesized(Subtract(D(1), X("lam"))),
-                    LocalCall("bit", LocalCall("rule10", X("x"), X("y"), X("z")))),
+                    RealNatural(At(Qualified("Bool", "toNat"),
+                        LocalCall("rule10", X("x"), X("y"), X("z"))))),
                 Multiply(X("lam"),
-                    LocalCall("bit", LocalCall("rule245", X("x"), X("y"), X("z"))))))));
+                    RealNatural(At(Qualified("Bool", "toNat"),
+                        LocalCall("rule245", X("x"), X("y"), X("z")))))))));
 
     private static Formula KernelFormula() => All("lam", Reals(), All("b", Booleans(),
         Neighbourhood(Equal(LocalCall("w", X("lam"), X("b"), X("x"), X("y"), X("z")),
