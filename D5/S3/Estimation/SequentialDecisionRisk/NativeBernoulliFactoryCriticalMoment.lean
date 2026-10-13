@@ -236,7 +236,7 @@ local notation "TraceEvent" => fun {Seed : Type} (π : Seed → Bool → History
     Act π S p q i ω = .inl (t i).1 ∧ Read p q (t i).1 i ω.2 = (t i).2}
 
 omit [MeasurableSpace Seed] in
-private lemma history_of_trace (π : Seed → Bool → History → Action) (S : Bool)
+lemma history_of_trace (π : Seed → Bool → History → Action) (S : Bool)
     (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) (ω : Seed × (ℕ → ℝ))
     (htrace : ω ∈ TraceEvent π S p q t n) :
     acquiredHistory π S (Read p q) n ω = Prefix t n := by

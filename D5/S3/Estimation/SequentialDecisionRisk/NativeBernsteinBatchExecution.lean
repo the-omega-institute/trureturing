@@ -262,4 +262,75 @@ theorem acquired_history_geometry
     | succ r ih =>
       rw [Nat.add_succ, acquiredHistory, ih, hreturn]
 
+abbrev Action := Bool ⊕ (Bool × Bool)
+abbrev History := List (Bool × Bool)
+abbrev Tape := ℕ → ℝ
+abbrev RowSeed := (Bool × History) → Action
+
+def sourceRead (p q : unitInterval) (source : Bool) (n : ℕ) (tape : Tape) : Bool :=
+  decide (tape n ≤ ((if source then q else p) : unitInterval))
+
+def nativeHistory {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (n : ℕ) : Seed × Tape → History :=
+  acquiredHistory π S (sourceRead p q) n
+
+def nativeAction {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (n : ℕ) (ω : Seed × Tape) : Action :=
+  π ω.1 S (nativeHistory π S p q n ω)
+
+def wordPrefix (t : ℕ → Bool × Bool) (n : ℕ) : History :=
+  List.ofFn (fun i : Fin n => t i)
+
+def nativeTrace {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) : Set (Seed × Tape) :=
+  {ω | ∀ i < n, nativeAction π S p q i ω = .inl (t i).1 ∧
+    sourceRead p q (t i).1 i ω.2 = (t i).2}
+
+/-- A trace is exactly the event that the actual record has the specified full
+length and ordered labels and answers. In particular, no early return is lost. -/
+theorem trace_iff_exact_acquired_history
+    {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) (t : ℕ → Bool × Bool) (n : ℕ) :
+    nativeTrace π S p q t n = {ω | nativeHistory π S p q n ω = wordPrefix t n} := by
+  ext ω
+  constructor
+  · exact NativeBernoulliFactoryCriticalMoment.history_of_trace π S p q t n ω
+  · intro he
+    induction n with
+    | zero => exact fun i hi => False.elim (Nat.not_lt_zero i hi)
+    | succ n ih =>
+      have hlen := (acquired_history_geometry π S (sourceRead p q) ω).1 n
+      change nativeHistory π S p q (n + 1) ω = wordPrefix t (n + 1) at he
+      have hstep : nativeHistory π S p q (n + 1) ω =
+          match π ω.1 S (nativeHistory π S p q n ω) with
+          | .inl s => nativeHistory π S p q n ω ++ [(s, sourceRead p q s n ω.2)]
+          | .inr _ => nativeHistory π S p q n ω := by
+        simp only [nativeHistory, acquiredHistory]
+        cases π ω.1 S (acquiredHistory π S (sourceRead p q) n ω) <;> rfl
+      rw [hstep] at he
+      cases ha : π ω.1 S (nativeHistory π S p q n ω) with
+      | inl source =>
+        rw [ha, wordPrefix, List.ofFn_succ'] at he
+        have hparts : nativeHistory π S p q n ω = wordPrefix t n ∧
+            (source, sourceRead p q source n ω.2) = t n := by
+          apply List.concat_inj.mp
+          simpa only [List.concat_eq_append, wordPrefix, Fin.val_castSucc,
+            Fin.val_last] using he
+        have hp := ih hparts.1
+        intro i hi
+        by_cases hin : i < n
+        · exact hp i hin
+        · have hie : i = n := by omega
+          subst i
+          have hs := congrArg Prod.fst hparts.2
+          have hb := congrArg Prod.snd hparts.2
+          exact ⟨by simpa only [nativeAction, ← hs] using ha,
+            by simpa only [← hs] using hb⟩
+      | inr cell =>
+        rw [ha] at he
+        have hlength := congrArg List.length he
+        simp only [wordPrefix, List.length_ofFn] at hlength
+        change (nativeHistory π S p q n ω).length ≤ n at hlen
+        omega
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
