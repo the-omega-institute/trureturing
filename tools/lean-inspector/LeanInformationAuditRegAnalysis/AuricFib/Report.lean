@@ -11,8 +11,7 @@ private def disposition (status reason : String) : Json := Json.mkObj [
   ("multiwindow_continuation", toJson "unknown; no multiwindow joint contract"),
   ("cost_and_research_value", toJson "not assessed; no aggregate score")]
 
-private def readingReasons (hasLaw : Bool) (continuation : Json)
-    (layerReason : Option String) : Json := Id.run do
+private def readingReasons (hasLaw : Bool) (continuation : Json) : Json := Id.run do
   let available := fun reason => Json.mkObj [("kind", toJson "available"), ("reason", toJson reason)]
   let unknown := Json.mkObj [("kind", toJson "unknown"),
     ("reason", toJson "single-window source law unacquired; finite state counts do not supply it")]
@@ -36,9 +35,8 @@ private def readingReasons (hasLaw : Bool) (continuation : Json)
     ("escape_pairs", available "complete ordered off-diagonal five-state census"),
     ("escape_rate", available "complete finite N=5; denominator 20"),
     ("unique_capture", available "complete leave-one-out census"),
-    ("layered_spectrum", match layerReason with
-      | none => available "initial and all ordered successor layers, including collapsed layers"
-      | some reason => Json.mkObj [("kind", toJson "unavailable"), ("reason", toJson reason)]),
+    ("layered_spectrum",
+      available "initial and all ordered successor layers, including collapsed layers"),
     ("continuation_target", available "total same-state high suffix, including rejection"),
     ("pyramid_coordinates", law), ("association_coordinate", law), ("residuals", law),
     ("conditional_reply_law", conditional),
@@ -78,8 +76,6 @@ def analyze (request : Json) : Except String Json := do
     unless arena = "native-single-window" do throw "unsupported arena"
   let input ← parseSource request
   let schedule ← parseSchedule request
-  let layerReason := if schedule.layers.length ≤ 64 then none else
-    some "requested native successor layers exceed the supported acquisition limit of 64"
   let macroResult ← input.law.mapM (macroAnalysis input)
   let responseFields := match macroResult with
     | some result => (result.response.getObj?.toOption.map (·.toArray.toList)).getD []
@@ -124,8 +120,7 @@ def analyze (request : Json) : Except String Json := do
     ("continuation_target", continuation), ("kernel", kernelJson),
     ("escape_pairs", pairsJson (nativeCatalog.escapePairs nativeCatalog.fullIndexSet)),
     ("escape_rate", (pairRate (some nativeArena.card) fused.full).getD Json.null),
-    ("unique_capture", uniqueJson),
-    ("layered_spectrum", if layerReason.isNone then layersJson schedule else Json.null),
+    ("unique_capture", uniqueJson), ("layered_spectrum", layersJson schedule),
     ("residuals", macroResult.map (·.residuals) |>.getD Json.null),
     ("disposition", Json.mkObj (((disposition (if input.law.isSome then "deferred" else "open")
       (if input.law.isSome then
@@ -134,6 +129,6 @@ def analyze (request : Json) : Except String Json := do
       else
         "unverified source; finite native micro analysis computed; \
           source law or nonempty archive is missing")).getObj?.toOption.get!.toArray.toList) ++
-      [("readings", readingReasons input.law.isSome continuation layerReason)]))]
+      [("readings", readingReasons input.law.isSome continuation)]))]
 
 end LeanInformationAudit.AuricFib
