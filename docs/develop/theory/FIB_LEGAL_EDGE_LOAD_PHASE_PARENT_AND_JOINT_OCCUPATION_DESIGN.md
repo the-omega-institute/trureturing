@@ -297,7 +297,7 @@ has identical action for the two remote values of site $4$.
 The matrix transform survives, but the stated tensor locality does not.
 $\square$
 
-[SMF1]: ../../../Library/Quantum/castelnovo2005stochasticmatrixform.md
+[SMF1]: ../../../Library/QuantumReadoutDesign/castelnovo2005stochasticmatrixform.md
 
 ## 追加锚（本行以下为增补区）
 
@@ -1005,8 +1005,8 @@ no optimum over arbitrary quantum measurements, physical control
 availability or pair-interaction family with joint weight distinct
 from $a^2$.
 
-[DG3]: ../../../Library/Quantum/dettegrigoriev2014eoptimal.md
-[BDX3]: ../../../Library/Quantum/boyddiaconisxiao2004fastestmixing.md
+[DG3]: ../../../Library/QuantumReadoutDesign/dettegrigoriev2014eoptimal.md
+[BDX3]: ../../../Library/QuantumReadoutDesign/boyddiaconisxiao2004fastestmixing.md
 
 ## 追加锚（本行以下为增补区）
 
@@ -2303,5 +2303,840 @@ for the original finite-producer optimization problem.
 
 [HPS6]: https://arxiv.org/abs/2404.07281v1
 [MCHPZ6]: https://arxiv.org/abs/2608.01617v1
+
+## 7. Activity laws retain the phase optimum beyond five states
+
+### 7.1. The upper spectral edge and exclusion sectors
+
+**Definition 7.1 (Activity and complementary operators).**
+Fix $n\ge2$, positive activities $\lambda_i=a_i$ and the
+law of (1.1), and a site distribution $\omega$. Use the
+site projections of (5.2), and put
+
+$$
+\begin{aligned}
+q_i&=\frac{\lambda_i}{1+\lambda_i},&
+b_i&=\frac{\omega_i}{1+\lambda_i},&
+\rho_i&=\mathbb E_p s_i,\\
+Se_s&=(-1)^{|s|}e_s,&
+C_{\lambda,\omega}&=I-SH_{\lambda,\omega}S,&
+\delta&=\lambda_{\min}(C_{\lambda,\omega})=1-\Lambda(\omega).
+\end{aligned}
+\tag{7.1}
+$$
+
+Here $H_{\lambda,\omega}=\sum_i\omega_iK_i$ and
+$\Lambda=\lambda_{\max}(H_{\lambda,\omega}|_V)$.
+The zero ground mode does not change this maximum.
+Let $\Pi_i^{\rm blocked}$ project onto legal words
+with an occupied neighbor of $i$. For a physical path
+edge $e=\{i,j\}$ define
+
+$$
+d_e=\frac{\omega_i+\omega_j-
+\sqrt{(\omega_i-\omega_j)^2+4\omega_i\omega_jq_iq_j}}2,
+\qquad D_{\mathcal M}=\sum_{e\in\mathcal M}d_e,
+\tag{7.2}
+$$
+
+where $\mathcal M$ is a matching of the physical path.
+This is an operator comparison on the same legal
+carrier, with no additional measurement setting.
+
+**Theorem 7.2 (Complement bound and arbitrary weights through length six).**
+For every positive activity vector and every site
+distribution,
+
+$$
+C_{\lambda,\omega}
+=H_{\lambda^{-1},\omega}+\sum_i\omega_i\Pi_i^{\rm blocked},
+\qquad \delta\ge D_{\mathcal M}
+\quad\text{for every matching }\mathcal M.
+\tag{7.3}
+$$
+
+At every length $2\le n\le6$ these operators satisfy
+
+$$
+\gamma(\omega)+\Lambda(\omega)\le1,
+\qquad\Gamma(r,\omega)=r\gamma(\omega)
+\quad(0\le r\le1).
+\tag{7.4}
+$$
+
+Proof. On an oriented legal pair the activity-law
+projection has the matrix
+
+$$
+K_i=\begin{pmatrix}
+q_i&-\sqrt{q_i(1-q_i)}\\
+-\sqrt{q_i(1-q_i)}&1-q_i
+\end{pmatrix}.
+\tag{7.5}
+$$
+
+The parity conjugation reverses the off-diagonal sign.
+Its complement exchanges $q_i$ and $1-q_i$ and has
+negative off-diagonal entries, giving the projection
+for reciprocal activity. On a blocked singleton,
+$K_i=0$ and its complement is identity. Since
+$\sum_i\omega_i=1$, these pair and singleton
+calculations prove the first identity in (7.3).
+
+For an adjacent pair $\{i,j\}$ fix the complete
+exterior word. When both sites are externally free,
+the allowed pair states are $00,10,01$. The two unit
+projector vectors have inner product $\sqrt{q_iq_j}$.
+Their weighted sum has eigenvalues
+$0,d_e,\omega_i+\omega_j-d_e$; its complementary
+operator therefore has minimum $d_e$. When one site
+is externally blocked, its complement contributes
+its entire weight, and the other complement is
+nonnegative. The minimum is at least $\omega_i$ or
+$\omega_j$, respectively. When both are blocked,
+the complement equals $(\omega_i+\omega_j)I$.
+The expression (7.2) gives
+$0\le d_e\le\min(\omega_i,\omega_j)$, so every
+exterior sector satisfies
+
+$$
+\omega_i(I-SK_iS)+\omega_j(I-SK_jS)\succeq d_eI.
+\tag{7.6}
+$$
+
+Sum over a matching and keep the nonnegative
+unmatched terms. This proves the second part of (7.3).
+In particular, if an adjacent pair has positive
+weights then $d_e>0$, because $q_iq_j<1$.
+The complementary operator has positive minimum
+energy and is not a frustration-free zero-ground
+operator.
+
+If any $\omega_i=0$, the centered occupation
+$s_i-\rho_i$ is nonconstant and is unchanged by
+every remaining site update. Its tangent vector
+$D(s_i-\rho_i)$ is killed by those projections.
+Thus $\gamma=0$; since $H\preceq I$, the inequality
+in (7.4) follows. It suffices to prove the result
+when every weight is positive. Length two follows
+from Proposition 6.3's trace calculation and length
+three from Theorem 5.2's two-projection argument.
+
+For lengths four through six, delete selected
+exclusion edges, splitting the physical path into
+blocks of lengths two or three. Write $\Omega_0$
+for the enlarged legal carrier, $H_0$ for the block
+operator with exactly the same activities and weights,
+and $J:\mathbb R^{B_n}\to\mathbb R^{\Omega_0}$ for
+the coordinate embedding. Then
+
+$$
+H_{\lambda,\omega}=J^{\mathsf T}H_0J-R,\qquad
+R_{ss}=\sum_{\substack{i:\ s\to s\cup\{i\}\text{ legal in }\Omega_0\\
+s\to s\cup\{i\}\text{ forbidden in }B_n}}\omega_iq_i\ge0.
+\tag{7.7}
+$$
+
+Indeed, surviving off-diagonal toggles have the
+identical activity odds (7.5). An insertion newly
+forbidden by the restored exclusion contributes
+only its $\omega_iq_i$ diagonal entry to the
+compression, and this is precisely the subtracted
+term. A removal of an occupied site remains legal.
+Thus (7.7) accounts for every entry. The auxiliary
+carrier is used only for comparison.
+
+For block $j$, let $s_j$ be its total inherited
+weight, $g_j$ its gap, and $\Lambda_j$ its maximum
+eigenvalue. Scale the length-two or length-three
+result by $s_j$ to obtain $\Lambda_j\le s_j-g_j$.
+Put $D_0=\sum_jg_j$. The tensor-sum operator $H_0$
+has maximum at most $\sum_j(s_j-g_j)=1-D_0$.
+Choosing either a ground vector or a first-excited
+vector independently in each of the $k$ blocks
+gives $2^k$ orthogonal eigenvectors with energy
+at most $D_0$.
+
+Let $c_0=|\Omega_0|-|B_n|$, with eigenvalues indexed
+in increasing order starting at 1. Compression
+interlacing and $R\succeq0$ give
+
+$$
+\gamma(\omega)=\lambda_2(H_{\lambda,\omega})
+\le\lambda_{c_0+2}(H_0),\qquad
+\Lambda(\omega)\le\lambda_{\max}(H_0).
+\tag{7.8}
+$$
+
+The required dimension counts are
+
+| $n$ | Block lengths | $|\Omega_0|$ | $|B_n|$ | $c_0+2$ | $2^k$ |
+|---|---|---:|---:|---:|---:|
+| 4 | $2+2$ | 9 | 8 | 3 | 4 |
+| 5 | $2+3$ | 15 | 13 | 4 | 4 |
+| 6 | $2+2+2$ | 27 | 21 | 8 | 8 |
+
+Thus $\gamma\le D_0$ and $\Lambda\le1-D_0$ in
+all three cases. Equation (5.8) then yields (7.4).
+$\square$
+
+### 7.2. A certificate at every length
+
+**Theorem 7.3 (Occupation certificate and uniform-site designs).**
+For arbitrary positive activities and site weights,
+put
+
+$$
+U=\min_i\frac{b_i}{1-\rho_i}.
+\tag{7.9}
+$$
+
+Then $\gamma\le U$, and $U\le D_{\mathcal M}$
+for any matching is sufficient for
+$\gamma+\Lambda\le1$. At $n\ge4$, if every weight
+is positive and there are two vertex-disjoint
+adjacent pairs with equal endpoint weights within
+each pair, then $\gamma+\Lambda<1$. Consequently,
+uniform site weights satisfy $\gamma+\Lambda\le1$
+at every length $n\ge2$, for arbitrary positive
+activities.
+
+Proof. Conditional on the complete exterior of
+site $i$, the bit is either blocked and zero or
+is Bernoulli with parameter $q_i$. If the exterior
+is free with probability $t_i$, then
+$\rho_i=t_iq_i$ and
+$\mathbb E_p\operatorname{Var}(s_i\mid\text{exterior})
+=t_iq_i(1-q_i)=\rho_i/(1+\lambda_i)$.
+Only site $i$ changes the observable $s_i$.
+Its Dirichlet energy and variance are therefore
+
+$$
+\mathcal E_\omega(s_i,s_i)=b_i\rho_i,
+\qquad\operatorname{Var}_p(s_i)=\rho_i(1-\rho_i).
+\tag{7.10}
+$$
+
+The Rayleigh quotient gives (7.9). The marginals
+$\rho_i$ are those of the actual constrained law;
+the independent Bernoulli parameters $q_i$ do not
+replace them. Combine $\gamma\le U$ with (7.3)
+to obtain the sufficient certificate.
+
+For adjacent $i,j$, exclusion and positive vacuum
+mass give $\rho_i+\rho_j<1$. Taking a weighted
+average of the two occupation bounds yields
+
+$$
+\gamma\le\min\left\{\frac{b_i}{1-\rho_i},
+\frac{b_j}{1-\rho_j}\right\}
+\le\frac{b_i+b_j}{2-\rho_i-\rho_j}<b_i+b_j.
+\tag{7.11}
+$$
+
+If $\omega_i=\omega_j=a$, (7.2) and the
+arithmetic--geometric mean inequality give
+
+$$
+d_{\{i,j\}}=a(1-\sqrt{q_iq_j})
+\ge\frac{a(2-q_i-q_j)}2=\frac{b_i+b_j}2.
+\tag{7.12}
+$$
+
+For the two disjoint pairs $e,f$, write
+$B_e=\sum_{i\in e}b_i$, $B_f=\sum_{i\in f}b_i$.
+Equations (7.3), (7.11) and (7.12) give
+
+$$
+\delta\ge d_e+d_f\ge\frac{B_e+B_f}2
+\ge\min(B_e,B_f)>\gamma.
+\tag{7.13}
+$$
+
+Every path of length at least four contains two
+disjoint adjacent pairs. Uniform weights satisfy
+their equalities; Theorem 7.2 supplies the shorter
+lengths. $\square$
+
+**Corollary 7.4 (Activity-law transfer and the remaining quantifiers).**
+At $2\le n\le6$, the joint optimum in Definition 5.1
+equals $\max_\omega\gamma(\omega)$, and every
+overall optimum has $r=1$ and a phase-optimal site
+distribution. At every $n\ge2$, $r=1$ is optimal
+for the fixed uniform site distribution. At $n\ge7$,
+the inequality for arbitrary positive nonuniform
+weights not covered by Theorem 7.3 remains an open
+question here.
+
+Proof. The finite connected legal graph and uniform
+positive weights give a positive phase gap, while
+continuity on the compact weight simplex gives a
+phase maximizer. Apply (7.4), or Theorem 7.3 with
+(5.8), respectively. The compression argument
+does not automatically extend: at $n=7$ a $3+4$
+split has ambient dimension 40 and legal dimension
+34, so (7.8) requires eight low-band vectors.
+The length-three block supplies two; the
+length-four $2+2$ compression guarantees three,
+so this count supplies only six. Neither this
+failed count nor the sufficient certificate proves
+or refutes the remaining universal inequality.
+$\square$
+
+### 7.3. Conditional relations retain the legal carrier
+
+**Proposition 7.5 (Activity characterization and a support obstruction).**
+For a positive law on $B_n$, activity form is
+equivalent to the square identities
+$p_Rp_{R\cup\{i,j\}}=p_{R\cup\{i\}}p_{R\cup\{j\}}$
+on every doubly free fixed-exterior square at
+nonadjacent sites. It is also equivalent to
+$[K_i,K_j]=0$ for every $|i-j|\ge2$.
+These separated-site relations alone, if the
+exclusion carrier is discarded, do not imply the
+spectral inequality of Theorem 7.2.
+
+Proof. Activity form immediately gives each square
+identity. Conversely, the insertion odds
+$p_{R\cup\{i\}}/p_R$ do not change when one
+occupied exterior site is deleted, by the relevant
+square identity. Such a site is nonadjacent to
+the legally inserted $i$. Deleting all exterior
+occupations gives the constant odds
+$\lambda_i=p_{\{i\}}/p_0$. Successive legal
+insertions then give $p_R=p_0\prod_{i\in R}\lambda_i$.
+This is the conditional-factorization argument
+specialized to the exclusion support, not a claim
+of unconditional occupation independence.
+
+For commutation fix the complete exterior of
+nonadjacent sites. Its legal sector is a product
+of two sets, each either $\{0\}$ or $\{0,1\}$.
+One- and two-state sectors commute automatically.
+On a four-state sector write its positive masses
+as $A=p_{00},B=p_{10},C=p_{01},D=p_{11}$ and
+$\Delta=AD-BC$. The two conditional-expectation
+projections, transported to Euclidean coordinates,
+have a common constant direction and one remaining
+principal angle. Directly computing that angle gives
+
+$$
+z=\frac{\Delta^2}{(A+B)(A+C)(B+D)(C+D)},
+\qquad\|[K_i,K_j]\|_F^2=2z(1-z).
+\tag{7.14}
+$$
+
+The denominator minus $\Delta^2$ is
+$(A+B+C+D)(ABC+ABD+ACD+BCD)>0$.
+Thus $0\le z<1$, and commutation is equivalent
+to $\Delta=0$, exactly the square identity.
+
+For the support obstruction take the full two-bit
+cube with uniform product law and weights $1/2,1/2$.
+Its independent toggle projections commute and
+have a common zero ground vector, but their sum
+has spectrum $0,1/2,1/2,1$. Hence
+$\gamma+\Lambda=3/2$. This restores the word $11$
+forbidden in $B_2$ and is not a counterexample
+on the legal carrier. $\square$
+
+**Attribution 7.6 (Established operators and the specific comparison).**
+The conditional-resampling transition operator is
+$T=I-D^{-1}H_{\lambda,\omega}D$.
+[Dyer--Greenhill--Ullrich][DGU7], Definition 1.1
+and Lemma 1.2, establish nonnegative spectrum for
+such heat-bath mixtures. This supplies $H\preceq I$,
+not the stronger comparison $\gamma+\Lambda\le1$.
+Projection geometry, conditional factorization,
+Rayleigh quotients and compression interlacing are
+established tools; the block counts and combined
+two-edge bounds above are the specific deductions
+on this carrier.
+
+There is also an exact local correspondence with
+[Lesanovsky][L7], equations (1)--(2). Writing
+$z_i=\sqrt{\lambda_i}$, its constrained local term
+is
+
+$$
+h_i(z_i)=P_{i-1}(\sigma_x+z_iP_i+z_i^{-1}n_i)P_{i+1},
+\qquad SK_iS=\frac{h_i(z_i)}{z_i+z_i^{-1}}.
+\tag{7.15}
+$$
+
+Its homogeneous periodic spectral formulas do not
+transfer to arbitrary open-path activities and
+weights. Its unpinned open-boundary conserved edge
+sectors also differ from the present endpoint
+updates. The correspondence gives an established
+quantum parent, not a preparation or a hardware
+realization. No literature priority is claimed
+for the source-specific inequalities above.
+
+[DGU7]: ../../../Library/QuantumReadoutDesign/dyergreenhillullrich2014heatbath.md
+[L7]: ../../../Library/QuantumReadoutDesign/lesanovsky2012constrainedspinchain.md
+
+
+## 8. Real readout completes the same local information design
+
+### 8.1. A different supplied control menu
+
+**Definition 8.1 (Recorded real pair readout).** Fix $n\ge2$,
+a positive normalized reference law $p$ on $B_n$ and
+$\psi=\sqrt p$. Orient each legal site pair $\{s,t\}$ so
+that $t$ has the occupied bit at that site. Choose one
+fixed parameter
+
+$$
+0<\tau<\min_{\{s,t\}\text{ oriented legal pair}}
+\frac{\psi_t}{\psi_s},\qquad
+c=\frac1{\sqrt{1+\tau^2}},\quad
+d=\frac\tau{\sqrt{1+\tau^2}}.
+\tag{8.1}
+$$
+
+The minimum is positive because the carrier and pair
+set are finite and $p$ is positive. At each real site
+setting use the orthonormal pair vectors
+
+$$
+R_{st,+}=ce_s+de_t,\qquad
+R_{st,-}=-de_s+ce_t,
+\tag{8.2}
+$$
+
+and keep every blocked word as a resolved singleton.
+Choose quadrature site $i$ with probability $r\omega_i$
+and real site $i$ with probability $(1-r)\eta_i$, where
+$\omega,\eta$ are distributions. The common $\tau$,
+setting probabilities and effects stay fixed as the
+unknown state varies. Every setting and outcome remains
+recorded, and each preparation uses one setting.
+
+The real rotation axis and its calibration are supplied
+additional controls. This menu replaces the mode-basis
+choice of Definition 5.1; it is not identified with that
+original control menu or with the same hardware cost.
+The common budget being compared is the number of
+preparations.
+
+### 8.2. The unchanged local Fisher matrix and global pure injection
+
+**Theorem 8.2 (Local equivalence and pure-state completion).**
+At the reference of Definition 8.1, on the full
+horizontal tangent $u+iv$, $u,v\in V$, the new menu has
+
+$$
+F_{\rm real}=4\begin{pmatrix}I_V-rB_\omega&0\\0&rB_\omega\end{pmatrix}
+=F_{\rm mode},\qquad Q=4I.
+\tag{8.3}
+$$
+
+This equality holds for every $r\in[0,1]$ and every
+$\eta$. If $0<r<1$ and every $\omega_i,\eta_i$ is
+positive, its exact observation-law map is injective
+on the pure rays whose amplitudes are all nonzero.
+This global statement does not assume that the unknown
+state equals the supplied reference.
+If any site is omitted from either readout family,
+the menu is not injective on this entire full-support
+pure-ray domain.
+
+Proof. At the reference the two real overlaps on a pair
+are $A=c\psi_s+d\psi_t>0$ and
+$C=-d\psi_s+c\psi_t>0$, by (8.1). The probabilities
+are $A^2,C^2$. Along the normalized horizontal path
+(5.1), their derivatives are
+
+$$
+2A(cu_s+du_t),\qquad 2C(-du_s+cu_t).
+\tag{8.4}
+$$
+
+The imaginary tangent has zero first derivative in this
+real basis. Nonzero overlaps allow ordinary Fisher
+division, and orthogonality gives the pair contribution
+
+$$
+4(cu_s+du_t)^2+4(-du_s+cu_t)^2
+=4(u_s^2+u_t^2).
+\tag{8.5}
+$$
+
+A blocked word contributes $4u_s^2$. Hence every real
+site has total information $4\|u\|^2$, independent of
+its site and of $\eta$. Combine this with the quadrature
+calculation (5.6) to obtain (8.3). The real-basis
+information algebra is a use of the pure-state machinery
+of [FSIC5]; it is not a new Fisher budget.
+
+For injection write $\rho=zz^*$ for an unknown pure
+state. Every nonempty legal word has an occupied site
+$i$ with a neighbor $j$, since $n\ge2$. At site $j$ that
+word is blocked. Its resolved singleton probability
+therefore supplies $p_s=\rho_{ss}$, after division by
+the known positive setting probability. All nonvacuum
+diagonals are recovered this way, and
+$p_0=1-\sum_{s\ne0}p_s$ gives the remaining diagonal.
+
+For each legal pair, the conditional quadrature and
+real probabilities satisfy
+
+$$
+\begin{aligned}
+q_{Y,-}-q_{Y,+}&=2\operatorname{Im}\rho_{st},\\
+q_{R,+}-q_{R,-}
+&=(c^2-d^2)(p_s-p_t)+4cd\operatorname{Re}\rho_{st}.
+\end{aligned}
+\tag{8.6}
+$$
+
+Here $Y_\pm=(e_s\pm i e_t)/\sqrt2$ fixes the sign
+convention. Both $c,d$ and both setting probabilities
+are positive, so all complex edge coherences are
+recovered. The full legal graph is connected, and the
+unknown state has nonzero amplitudes on it. Apply
+Parent/Readout Theorem 8.6's existing pure-state phase
+propagation result to these actual diagonals and edges.
+This gives a unique pure ray. $\square$
+
+For the necessity of coverage, if real site $i$ is
+omitted, the rays $z_s=\psi_s$ and
+$z'_s=(-1)^{s_i}\psi_s$ have identical records.
+Every imaginary edge coherence vanishes, while all
+remaining real pairs preserve bit $i$ and hence their
+real coherence. If quadrature site $i$ is omitted,
+take $z_s^\pm=\psi_s e^{\pm i\theta s_i}$ with
+$0<\theta<\pi$. Every remaining quadrature edge has
+real coherence; the real site-$i$ outcomes depend
+on the same cosine for the two states. Blocked
+probabilities are identical in both constructions.
+The rays in each pair are distinct because both
+bit values occur on the positive carrier.
+
+The equality is at the supplied real reference. It
+neither equates the menus' Fisher matrices at every
+complex state nor proves global mixed-state tomography.
+The recovered density entries are still only the
+diagonals and legal edges; the mixed-state nonedge
+kernel of Parent/Readout §8.5 remains.
+
+### 8.3. A uniform inverse that does not divide by the vacuum
+
+**Theorem 8.3 (Fixed-length stability across a disappearing vacuum).**
+Fix $n\ge4$, $0<r<1$, positive $\omega,\eta$, and
+$c,d>0$ with $c^2+d^2=1$. Put $M=|B_n|-1$ and choose
+$0<\delta\le1/\sqrt M$. Let $\mathcal U_\delta$ be the
+pure rays with
+
+$$
+|z_s|\ge\delta\quad(s\ne0),
+\tag{8.7}
+$$
+
+allowing $z_0=0$. For each ray choose the normalized
+representative whose singleton-$1$ coordinate is
+positive real. Let $q(z)$ be its full recorded
+observation-law vector in the quadrature/real menu.
+Define
+
+$$
+\begin{aligned}
+a&=r\min_i\omega_i>0,\qquad
+b=(1-r)\min_i\eta_i>0,\\
+C&=\frac1a+
+\frac{2/b+(M+1)|c^2-d^2|/a}{4cd},\\
+K_0&=\frac1{2\delta a},\qquad
+K_{j+1}=\frac{C+K_j}{\delta}.
+\end{aligned}
+\tag{8.8}
+$$
+
+Then the map is injective on $\mathcal U_\delta$, and
+for any two of its chosen representatives,
+
+$$
+\|z-z'\|_2\le\sqrt{M+1}\,K_M
+\|q(z)-q(z')\|_\infty.
+\tag{8.9}
+$$
+
+In particular, neither the inverse nor this bound
+divides by $|z_0|$.
+
+Proof. The nonvacuum graph is connected by the graph
+argument in Theorem 6.2. Choose a spanning tree on it,
+rooted at singleton $1$, and attach the vacuum as a
+leaf to that singleton. All parents in this augmented
+tree are nonvacuum vertices. Its maximum depth is at
+most $M$.
+
+Recover the nonvacuum diagonals from blocked outputs
+as in Theorem 8.2. Root amplitude is $z_{\{1\}}$
+equal to the positive square root of its diagonal.
+On a tree edge with recovered parent $s$ and child $t$,
+use
+
+$$
+z_t=\frac{\overline{\rho_{st}}}{\overline{z_s}}.
+\tag{8.10}
+$$
+
+If the stored orientation is reversed, use the
+conjugate coherence first. For the vacuum leaf use
+$z_0=\rho_{0,\{1\}}/\overline{z_{\{1\}}}$.
+The same formulas are valid at $z_0=0$. Thus every
+coordinate is recovered without a zero denominator,
+proving injection.
+
+Put $h=\|q(z)-q(z')\|_\infty$. A chosen blocked output
+gives $|p_s-p'_s|\le h/a$ for $s\ne0$. Normalization
+gives $|p_0-p'_0|\le Mh/a$. Dividing the two outcomes
+in (8.6) by their fixed setting probabilities gives
+
+$$
+\begin{aligned}
+|\operatorname{Im}(\rho_{st}-\rho'_{st})|&\le h/a,\\
+|\operatorname{Re}(\rho_{st}-\rho'_{st})|
+&\le\frac{2/b+(M+1)|c^2-d^2|/a}{4cd}\,h.
+\end{aligned}
+\tag{8.11}
+$$
+
+The bound $M+1$ covers an edge incident to the vacuum;
+two nonvacuum diagonals require only 2. Consequently
+$|\rho_{st}-\rho'_{st}|\le Ch$ for every legal edge.
+At the root,
+
+$$
+|z_{\{1\}}-z'_{\{1\}}|
+\le\frac{|p_{\{1\}}-p'_{\{1\}}|}
+{|z_{\{1\}}|+|z'_{\{1\}}|}\le K_0h.
+\tag{8.12}
+$$
+
+For every child step, $\rho_{st}=z_s\overline{z_t}$,
+$|z_s|,|z'_s|\ge\delta$ and $|z'_t|\le1$ give
+
+$$
+|z_t-z'_t|
+\le\frac{|\rho_{st}-\rho'_{st}|+|z_s-z'_s|}{\delta}.
+\tag{8.13}
+$$
+
+This holds also for the vacuum child. Induction along
+the tree bounds a coordinate at depth $j$ by $K_jh$.
+Since $\delta\le1$ the constants in (8.8) are
+nondecreasing, so all coordinates are bounded by
+$K_Mh$. Summing their squared errors proves (8.9).
+$\square$
+
+The bound is for compatible pure-state observation
+laws and a fixed finite length. It is not a guarantee
+for an estimator applied to arbitrary noisy vectors,
+and no uniform constant as $n\to\infty$ is asserted.
+The nonvacuum amplitude lower bound and both positive
+setting budgets are explicit premises.
+
+**Corollary 8.4 (The rare-vacuum comparison with completed controls).**
+For every fixed $n\ge4$, in the laws (6.1) with
+$0<\epsilon\le1$, use $\tau=1/2$, positive fixed
+$\omega,\eta$ and $0<r<1$. The local Fisher matrix
+is exactly that of the corresponding quadrature/mode
+mixture. The states lie in the same
+$\mathcal U_{1/\sqrt{M+1}}$, so (8.9) gives a uniform
+inverse bound independent of $\epsilon$.
+
+All recorded outcome probabilities at these real
+references are at least
+
+$$
+\min\left\{\frac{a}{2(M+1)},\frac{b}{5(M+1)}\right\}>0.
+\tag{8.14}
+$$
+
+With uniform quadrature sites the joint ratio tends
+to $\min\{rg_n,1-r\}>0$. At the rational length-four
+reference (6.12), $r=9/10$ and uniform $\omega,\eta$
+retain the bound $9/500>6/707$ while the completed
+menu is globally injective on full-support pure rays.
+For this rational reference the best design in the
+completed family is attained with $0<r<1$ and every
+quadrature site weight positive. Any positive real
+site distribution then supplies global pure injection.
+
+Proof. Nonvacuum amplitudes equal
+$1/\sqrt{M+\epsilon}\ge1/\sqrt{M+1}$. The oriented
+amplitude ratio is 1 on a nonvacuum pair and
+$1/\sqrt\epsilon\ge1$ on a vacuum pair, so (8.1)
+holds with $\tau=1/2$. Here $c=2/\sqrt5,d=1/\sqrt5$.
+The conditional real probabilities are
+
+$$
+\begin{aligned}
+q_{R,+}^{\rm vac}&=\frac{(2\sqrt\epsilon+1)^2}{5(M+\epsilon)},&
+q_{R,-}^{\rm vac}&=\frac{(2-\sqrt\epsilon)^2}{5(M+\epsilon)},\\
+q_{R,+}^{\rm nonvac}&=\frac9{5(M+\epsilon)},&
+q_{R,-}^{\rm nonvac}&=\frac1{5(M+\epsilon)}.
+\end{aligned}
+\tag{8.15}
+$$
+
+Every blocked word is nonvacuum with probability
+$1/(M+\epsilon)$. The quadrature probabilities are
+$(1+\epsilon)/[2(M+\epsilon)]$ on a vacuum pair and
+$1/(M+\epsilon)$ on a nonvacuum pair. These formulas
+prove (8.14). Apply Theorems 8.2–7.3, (6.4) and (5.8).
+For (6.12) the real probabilities are $144/3505$ and
+$361/3505$ on vacuum pairs, $180/701$ and $20/701$
+on nonvacuum pairs. Actual setting probabilities are
+$9/40$ for each quadrature site and $1/40$ for each
+real site. Proposition 6.4 and (8.3) supply the same
+information bound. $\square$
+
+For attainment at the rational reference, the ratio
+in (5.8) is continuous on the compact closed
+$(r,\omega)$ domain. It is zero at $r=0$ or whenever
+a quadrature site is omitted, by the centered-bit
+kernel used below. Every $r=1$ design is bounded
+by $6/707$, strictly below the exhibited interior
+design. A global maximizer therefore lies in
+$0<r<1$ with all quadrature weights positive.
+The fixed $\tau=1/2$ is regular independently of
+these weights, and (8.3) is independent of $\eta$.
+
+### 8.4. A Fisher supremum outside the globally identifying menu
+
+**Proposition 8.5 (A positive real budget outside an attained Fisher optimum).**
+Fix any positive reference law at $n=2$ or $n=3$,
+or an activity-law reference at $2\le n\le6$, and
+let $\gamma^*=\max_\omega\gamma(\omega)>0$. Within
+the regular menus of Definition 8.1 with both families
+and every site receiving positive probability, the
+joint information ratio has supremum $\gamma^*$
+and no maximizer. Every $r<1$ gives a value strictly
+below that supremum. The excluded $r=1$ menu has the
+global sign fiber of Proposition 6.5.
+
+Proof. Equations (8.3), (5.4), Proposition 6.3 and
+the activity-law transfer of Corollary 7.4 give
+$\Gamma=r\gamma(\omega)$. The phase maximum is
+positive by connectedness and uniform positive site
+weights, and is attained on the compact weight simplex.
+If $\omega_i=0$, the nonzero tangent
+$u_s=\psi_s(s_i-\mathbb E_p s_i)$ is killed by all
+remaining site projections, so $\gamma(\omega)=0$.
+Hence every maximizing phase distribution has all
+weights positive. Use such a distribution, positive
+$\eta$, an allowed $\tau$, and let $r\uparrow1$ to
+approach $\gamma^*$. For any $r<1$,
+$r\gamma(\omega)\le r\gamma^*<\gamma^*$, proving
+nonattainment. At $r=1$ the real family is absent and
+Proposition 6.5 applies. $\square$
+
+This is a boundary of the specified global pure-ray
+identification promise. A promised local neighborhood
+can use the original calibrated Fisher optimum; that
+is a different target. No conclusion about original
+finite-producer attainment follows from this menu.
+
+### 8.5. A regular endpoint with both vacuum coordinates
+
+**Proposition 8.6 (Endpoint neighborhood and short-length obstruction).**
+Fix $n\ge4$, $\tau=1/2$, $0<r<1$ and positive
+$\omega,\eta$. The completed menu extends regularly
+to the normalized real state
+$\psi_*=(0,\mathbf1/\sqrt M)$ at $\epsilon=0$.
+With $h=\mathbf1/\sqrt M$ on the nonvacuum words,
+put
+
+$$
+C_\omega=\frac12\sum_{\{s,t\}\in E(G_n^\circ)}
+\omega_{i(s,t)}(e_s-e_t)(e_s-e_t)^{\mathsf T},
+\qquad g_\omega=\lambda_{\min}(C_\omega|_{h^\perp})>0.
+\tag{8.16}
+$$
+
+The endpoint worst information ratio on the full
+horizontal tangent is
+
+$$
+\Gamma_* =\min\{1-r,rg_\omega\}>0.
+\tag{8.17}
+$$
+
+There is a fixed projective neighborhood of $\psi_*$
+on which the probability-law map is injective with
+a Lipschitz inverse on its image. It contains all
+sufficiently small positive-$\epsilon$ references,
+with one inverse constant independent of $\epsilon$.
+At $n=2,3$ independent phases of the nonvacuum
+connected components prevent this endpoint conclusion.
+
+Proof. The probabilities (8.15) have strictly positive
+limits at $\epsilon=0$, as do all active quadrature
+and blocked probabilities. The vacuum is never a
+blocked word. Therefore ordinary score Fisher
+division remains valid at this endpoint. The limiting
+parent and real horizontal space are
+
+$$
+H_*=1\oplus C_\omega,\qquad
+V_* =\mathbb R e_0\oplus h^\perp.
+\tag{8.18}
+$$
+
+The nonvacuum graph is connected by Theorem 6.2,
+and all its edge weights are positive, so
+$g_\omega>0$. Also $0\preceq C_\omega\preceq I$.
+The local calculation of Theorem 8.2 still applies
+because every measurement overlap is nonzero, even
+though the vacuum coordinate itself is zero.
+On $V_*$ the largest parent eigenvalue is 1 and the
+smallest is $g_\omega\le1$, proving (8.17).
+In particular, the real vacuum direction has ratio
+$1-r$ and its imaginary counterpart has ratio $r$;
+both directions remain in the tested space.
+
+For the inverse neighborhood use the projective
+chart with the singleton-$1$ coordinate positive.
+Every nonvacuum coordinate at $\psi_*$ has magnitude
+$1/\sqrt M$. A sufficiently small fixed neighborhood
+has every such magnitude at least
+$\delta=1/(2\sqrt M)$. It is contained in
+$\mathcal U_\delta$ of Theorem 8.3. That theorem's
+explicit bound proves injection and Lipschitz
+stability of the normalized root-gauged vectors,
+without division by a vacuum amplitude. The same
+neighborhood contains the rare-vacuum references
+for all sufficiently small $\epsilon>0$, so its
+inverse constant is independent of $\epsilon$.
+
+For $n=2,3$, deleting the vacuum leaves the components
+of Proposition 6.3. At $\epsilon=0$ all vacuum edge
+coherences vanish. Independently changing component
+phases therefore leaves every diagonal and legal
+edge coherence unchanged, hence every outcome law
+unchanged. The phases can change by arbitrarily
+small amounts while giving distinct rays. Thus no
+injective projective neighborhood exists there.
+This does not contradict full-support injection
+for each positive $\epsilon$. $\square$
+
+**Attribution 8.7 (Application and added correspondence).**
+Real-basis Fisher saturation uses [FSIC5]; reconstruction
+from actual diagonals and complex edges uses
+Parent/Readout Theorem 8.6 and its polarization source.
+The paired local controls have close predecessors in
+[HPS6] and the broader $X,Y,Z$ menu of [MCHPZ6].
+The source-specific correspondence here is replacement
+of the mode setting by recorded real-site settings
+without changing the local Fisher blocks, together
+with a fixed-length inverse through the nonvacuum tree
+and the associated menu-attainment boundary. It does
+not assign new ownership to basis saturation, phase
+propagation or Lipschitz estimates, and no literature
+priority is claimed.
+
 
 ## 追加锚（本行以下为增补区）
