@@ -634,7 +634,7 @@ private theorem error_le_distance {A B : Type}
     (G H : QuantumChannel A B) (n : ℕ) (rho : DensityState (Fin n × A)) :
     referenceError G H rho ≤ diamondDistance G H :=
   le_csSup (distance_bounded G H) (Or.inr ⟨n, rho, rfl⟩)
-private theorem distance_nonnegative {A B : Type}
+theorem distance_nonnegative {A B : Type}
     [Fintype A] [DecidableEq A] [Fintype B] [DecidableEq B]
     (G H : QuantumChannel A B) : 0 ≤ diamondDistance G H :=
   le_csSup (distance_bounded G H) (Or.inl (Set.mem_singleton 0))

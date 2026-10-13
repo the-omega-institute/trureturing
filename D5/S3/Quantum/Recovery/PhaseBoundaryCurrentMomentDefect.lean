@@ -129,7 +129,7 @@ private theorem F_bounds (Γ : Instrument) {beta gamma w : ℝ} (hb : 0 < beta) 
 /-- Receiver Z conjugation, without an operation on the inaccessible memory. -/
 def phaseInput (X : CStarMatrix Qubit Qubit ℂ) : CStarMatrix Qubit Qubit ℂ :=
   CStarMatrix.ofMatrix fun a b => (flagSign a : ℂ) * X a b * (flagSign b : ℂ)
-private theorem sym_operation_entry (Γ : Instrument) (j s a b : Qubit) (X : CStarMatrix Qubit Qubit ℂ) : (symInstrument Γ).operation j s X a b = (1 / 2 : ℂ) * (Γ.operation j s X a b + (flagSign a : ℂ) * Γ.operation j (if s = 0 then 1 else 0) (phaseInput X) a b * (flagSign b : ℂ)) := by
+theorem sym_operation_entry (Γ : Instrument) (j s a b : Qubit) (X : CStarMatrix Qubit Qubit ℂ) : (symInstrument Γ).operation j s X a b = (1 / 2 : ℂ) * (Γ.operation j s X a b + (flagSign a : ℂ) * Γ.operation j (if s = 0 then 1 else 0) (phaseInput X) a b * (flagSign b : ℂ)) := by
   change (PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder (instrumentRealization Γ)).toCompletelyPositiveMap
     (insertBlock s X) (j,a) (j,b) = _
   rw [PhaseBoundaryReferenceReduction.flagSymmetrizedDecoder,PhaseBoundaryReferenceReduction.average_entry]
@@ -304,15 +304,15 @@ private theorem even_entry (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j)
         rfl
       _ = _ := (Finset.mul_sum _ _ _).symm
   · simp only [if_neg hjk]
-private theorem upper_entry (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) (j k : Qubit) : evenBlock ell beta gamma w hl hu hb hw hm Γ c hc (j,0) (k,0) = (1 - ell : ℝ) * (c j * star (c k) - if j = k then (c j * star (c j)) * (F (symInstrument Γ) beta gamma (w j) j : ℝ) else 0) := by
+theorem upper_entry (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) (j k : Qubit) : evenBlock ell beta gamma w hl hu hb hw hm Γ c hc (j,0) (k,0) = (1 - ell : ℝ) * (c j * star (c k) - if j = k then (c j * star (c j)) * (F (symInstrument Γ) beta gamma (w j) j : ℝ) else 0) := by
   rw [even_entry]; have hs : ((Real.sqrt (1 - ell) : ℝ) : ℂ) ^ 2 = ((1 - ell : ℝ) : ℂ) := by
     exact_mod_cast Real.sq_sqrt (sub_nonneg.mpr hu)
   simp only [xi,ite_true,Complex.star_def,Complex.conj_ofReal]; rw [current_zero_block Γ hl hu hb (hw j) (hm j)]; push_cast at hs
   split_ifs <;> push_cast <;> linear_combination (c j * (starRingEnd ℂ) (c k)) * hs
-private theorem cross_entry (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) (j k : Qubit) : evenBlock ell beta gamma w hl hu hb hw hm Γ c hc (j,0) (k,1) = (Real.sqrt (1 - ell) * Real.sqrt ell : ℝ) * (c j * star (c k) - if j = k then (c j * star (c j)) * T (symInstrument Γ) beta gamma (w j) j else 0) := by
+theorem cross_entry (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) (j k : Qubit) : evenBlock ell beta gamma w hl hu hb hw hm Γ c hc (j,0) (k,1) = (Real.sqrt (1 - ell) * Real.sqrt ell : ℝ) * (c j * star (c k) - if j = k then (c j * star (c j)) * T (symInstrument Γ) beta gamma (w j) j else 0) := by
   rw [even_entry,current_cross_block]; simp only [xi,ite_true,show ((1,1) : Qubit × Qubit) ≠ ((0,0) : Qubit × Qubit) from by decide,ite_false, Complex.star_def,Complex.conj_ofReal]
   split_ifs <;> push_cast <;> ring
-private theorem lower_entry (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) (j k : Qubit) : evenBlock ell beta gamma w hl hu hb hw hm Γ c hc (j,1) (k,1) = (ell : ℂ) * (c j * star (c k) - if j = k then (c j * star (c j)) * (G (symInstrument Γ) beta gamma (w j) j : ℝ) else 0) := by
+theorem lower_entry (c : Qubit → ℂ) (hc : ∑ j, Complex.normSq (c j) = 1) (j k : Qubit) : evenBlock ell beta gamma w hl hu hb hw hm Γ c hc (j,1) (k,1) = (ell : ℂ) * (c j * star (c k) - if j = k then (c j * star (c j)) * (G (symInstrument Γ) beta gamma (w j) j : ℝ) else 0) := by
   rw [even_entry]; have hs : ((Real.sqrt ell : ℝ) : ℂ) ^ 2 = (ell : ℂ) := by exact_mod_cast Real.sq_sqrt hl
   simp only [xi,show ((1,1) : Qubit × Qubit) ≠ ((0,0) : Qubit × Qubit) from by decide,ite_false,ite_true, Complex.star_def,Complex.conj_ofReal]; rw [current_one_block Γ hl hu hb (hw j) (hm j)]; push_cast at hs
   split_ifs <;> push_cast <;> linear_combination (c j * (starRingEnd ℂ) (c k)) * hs
@@ -449,10 +449,10 @@ structure CoupledPoint (p : Parameters) where
 namespace CoupledPoint
 variable {p : Parameters} (x : CoupledPoint p)
 def weights (j : Qubit) : ℝ := rate p.R j * x.eps
-private theorem weights_nonneg (j : Qubit) : 0 ≤ x.weights j := by
+theorem weights_nonneg (j : Qubit) : 0 ≤ x.weights j := by
   have hR := p.R_gt_one; have heps := x.eps_pos
   fin_cases j <;> simp [weights,rate] <;> positivity
-private theorem weights_legal (j : Qubit) : x.weights j ≤ p.beta / (p.beta ^ 2 + p.gamma ^ 2) := by
+theorem weights_legal (j : Qubit) : x.weights j ≤ p.beta / (p.beta ^ 2 + p.gamma ^ 2) := by
   fin_cases j <;> simp [weights,rate]
   · have h := x.input_le
     nlinarith [p.R_gt_one,x.eps_pos]
@@ -633,7 +633,7 @@ private theorem moment_near_disk (p : Parameters) (x : CoupledPoint p) (Γ : Ins
 def diskValues (p : Parameters) (h : ℝ) : Set ℝ :=
   {v | ∃ m n : ℝ, 0 ≤ m ∧ 0 ≤ n ∧ m ^ 2 + n ^ 2 ≤ 1 / 4 ∧ v = diskQ p h m n}
 def Phi (p : Parameters) (h : ℝ) : ℝ := sInf (diskValues p h)
-private theorem disk_minimum (p : Parameters) (h : ℝ) : ∃ m n : ℝ, 0 ≤ m ∧ 0 ≤ n ∧ m ^ 2 + n ^ 2 ≤ 1 / 4 ∧ Phi p h = diskQ p h m n ∧ ∀ a b : ℝ, 0 ≤ a → 0 ≤ b → a ^ 2 + b ^ 2 ≤ 1 / 4 → diskQ p h m n ≤ diskQ p h a b := by
+theorem disk_minimum (p : Parameters) (h : ℝ) : ∃ m n : ℝ, 0 ≤ m ∧ 0 ≤ n ∧ m ^ 2 + n ^ 2 ≤ 1 / 4 ∧ Phi p h = diskQ p h m n ∧ ∀ a b : ℝ, 0 ≤ a → 0 ≤ b → a ^ 2 + b ^ 2 ≤ 1 / 4 → diskQ p h m n ≤ diskQ p h a b := by
   let S : Set (ℝ × ℝ) := {v | 0 ≤ v.1 ∧ 0 ≤ v.2 ∧ v.1 ^ 2 + v.2 ^ 2 ≤ 1 / 4}; have hs : IsClosed S := by
     have hg : Continuous (fun v : ℝ × ℝ => v.1 ^ 2 + v.2 ^ 2) := by fun_prop
     exact (isClosed_le continuous_const continuous_fst).inter
