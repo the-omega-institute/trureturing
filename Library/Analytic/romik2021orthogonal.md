@@ -8127,3 +8127,111 @@ $$
 Both nonzero amplitudes are real on $I$, so the returned margin
 retains their squared ratio. This proves a relative node bound;
 positivity of $\widehat\chi'$ and $\widehat\eta$ alone is insufficient.
+
+### Complex branches on the entire closed target disc
+
+Define $C_t(z)=z^3-3(a+U(t))z-b+V_3(t)$ and the fixed
+$C_*(z)=z^3-3(a+\sigma^2)z-b$.
+The latter has distinct real roots
+$\lambda_1^0<\lambda_2^0<\lambda_3^0$, with gaps at least $\sigma$,
+by (LC299). Put $h_0=\sqrt{a+\sigma^2}$.
+On each fixed circle $|z-\lambda_j^0|=\sigma/8$,
+
+$$
+\begin{aligned}
+|C_*(z)|&\ge\frac{\sigma}{8}\left(\frac78\right)^2
+ |C_*'(\lambda_j^0)|
+ \ge\frac{147}{1024}\sigma^2(|\lambda_j^0|+h_0),\\
+|C_t(z)-C_*(z)|&\le3|U-\sigma^2||z|+|V_3|
+ <\frac3{32}\sigma^2(|\lambda_j^0|+h_0)
+ <|C_*(z)|.
+\end{aligned}
+\tag{LC301}
+$$
+
+For the perturbation bound use $|z|\le|\lambda_j^0|+\sigma/8$
+and $h_0\ge\sigma$. Rouché gives exactly one simple moving root
+$\lambda_j(t)$ in each fixed disc, for every $t\in\mathcal D$.
+The roots have analytic labels on a neighborhood of the closed
+parameter disc and preserve conjugation by uniqueness. In particular
+$|\lambda_j(t)-\lambda_j^0|<\sigma/8$.
+Each pairwise distance loses at most $\sigma/4$, giving
+$|\partial_z C_t(\lambda_j)|\ge(9/16)|C_*'(\lambda_j^0)|$.
+Implicit differentiation, rather than a Cauchy estimate on a smaller
+disc, now gives
+
+$$
+\begin{gathered}
+\lambda_j'=\frac{3U'\lambda_j-V_3'}{3(\lambda_j^2-a-U)},\qquad
+|\lambda_j'|\le\frac{32}{9}\frac{|U'|}{\sigma}
+ +\frac{32}{27}\frac{|V_3'|}{\sigma^2}
+ <\frac1{54}<\frac1{32},\\
+f_j(t)=\widehat\chi(t)-m-\lambda_j(t),\qquad
+p_3=f_1f_2f_3,\quad J=\widehat Hf_1f_2f_3,\qquad
+|f_j'-1|<\frac3{64}<\frac12.
+\end{gathered}
+\tag{LC302}
+$$
+
+Here $|\lambda_j|\le|\lambda_j^0|+\sigma/8
+\le|\lambda_j^0|+h_0$ pays the numerator bound.
+Line-segment integration in the convex closed $\mathcal D$ gives
+$|f_j(t)-f_j(u)-(t-u)|\le(3/64)|t-u|$, so each branch is injective.
+A nonreal zero would supply its distinct conjugate in the same branch,
+contradicting injectivity. Branches cannot share a node because their
+$\lambda_j(t)$ lie in disjoint fixed discs. The derivative bound and
+zero-free $\widehat H$ imply simplicity, also at the target boundary.
+This proves realness and at most three actual nodes on all of
+$\mathcal D$, without deducing it merely from the reference cubic.
+
+On $I$ each branch is real and strictly increasing, so its exact
+existence criterion, including endpoint equality, and localization are
+
+$$
+\begin{gathered}
+f_j(t_-)\le0\le f_j(t_+),\qquad
+N_J(\mathcal D)=\sum_{j=1}^3
+\mathbf1_{\{f_j(t_-)\le0\le f_j(t_+)\}},\\
+b_j^*=m+\lambda_j^0,\qquad
+\Delta_3=4ED/\nu+\sigma/8,\qquad
+|f_j(t)-(t-b_j^*)|\le\Delta_3\quad(t\in I).
+\end{gathered}
+\tag{LC303}
+$$
+
+Every existing branch node lies within $\Delta_3$ of $b_j^*$.
+Containment of $[b_j^*-\Delta_3,b_j^*+\Delta_3]$ in $I$ is sufficient
+for existence; it is not a necessary condition. No three-node
+existence, complete interlacing chain or membership of all original
+selected roots in the target interval is asserted.
+
+### Reused comparison and remaining interfaces
+
+Nakano, Trinh and Wang, [*Beta Ensembles in the Freezing Regime and
+Finite Free Convolutions*, arXiv:2603.01356v1](https://arxiv.org/html/2603.01356v1),
+Theorem 3.1 and Lemma 3.9, supply the fixed finite-$N$ Hermite
+finite-free comparison with real ordered initial data, allowing repeats.
+For $N=3$, initial roots $\beta_i$ and time $\tau=\sigma^2$, their
+probabilist-Hermite normalization identifies
+$e^{-(\sigma^2/2)\partial_z^2}(z^3-3az-b)=C_*(z)$.
+This finite comparison is reused literature, not a theorem for the
+complete $J,G$ pair or its possibly nonreal infinite exterior.
+The complete-source perturbation, joint amplitude and branch-speed
+estimates above supply that restricted application interface.
+
+The arbitrary-multiplicity real-node sign at the larger polynomial
+budget (LC218) is also reused. The application here concerns a fixed
+linear logarithmic $\nu$ budget with complex-node and boundary control.
+At the stronger threshold (LC293), combine this three-core result with
+(LC289)--(LC292) for $q\le2$: there are at most $q$ target nodes, all
+real and simple, and for $1\le q\le3$ the node margin is
+$P_r'S_r>(\widehat H/H)^2v^{q-1}/4$.
+Repeated core roots are allowed subject to $q\le3$, while the total
+selected multiplicity may grow to $C_0L$.
+
+The fixed source constants remain numerically uninstantiated.
+Uniform growing-core estimates for $q\le C_0L$ at $\nu=C_*L$, their
+complex branches and boundary crossings, and discharge of the local
+all-critical premise remain unresolved. No FIB ATOM bridge to these
+signed complete-source estimates is supplied. RH and strict Robin
+for every integer $H>5040$ remain unproved.
