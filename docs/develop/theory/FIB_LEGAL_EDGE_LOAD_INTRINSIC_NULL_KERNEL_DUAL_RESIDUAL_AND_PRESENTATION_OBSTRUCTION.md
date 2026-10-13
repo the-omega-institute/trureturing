@@ -1947,3 +1947,276 @@ $\square$
 [SMF9]: ../../../Library/Quantum/castelnovo2005stochasticmatrixform.md
 
 ## 追加锚（本行以下为增补区）
+
+## 10. The exact optimal five-state phase-readout design
+
+### 10.1. The fixed law and grouped site operators
+
+Use the uniform law on the five legal words
+$(000,100,010,001,101)$, in that order, and the calibrated reference
+experiment of §8. All three activities in §9 are one. Write
+$e_0,e_1,e_2,e_3,e_{13}$ for the corresponding orthonormal vectors and
+$\psi=\mathbf1/\sqrt5$. The normalized site operators are
+
+$$
+\begin{aligned}
+K_1&=\tfrac12\bigl[
+(e_0-e_1)(e_0-e_1)^{\mathsf T}
++(e_3-e_{13})(e_3-e_{13})^{\mathsf T}\bigr],\\
+K_2&=\tfrac12(e_0-e_2)(e_0-e_2)^{\mathsf T},\\
+K_3&=\tfrac12\bigl[
+(e_0-e_3)(e_0-e_3)^{\mathsf T}
++(e_1-e_{13})(e_1-e_{13})^{\mathsf T}\bigr].
+\end{aligned}
+\tag{10.1}
+$$
+
+Each $K_i$ is an orthogonal projection and annihilates $\psi$.
+For a recorded site distribution
+$\omega\in\Delta_3=\{\omega_i\ge0:\sum_i\omega_i=1\}$, define
+
+$$
+H_\omega=\sum_i\omega_iK_i,\qquad
+\gamma(\omega)=\lambda_{\min}(H_\omega|_{\psi^\perp}).
+\tag{10.2}
+$$
+
+The experiment's exact Fisher/QFI identity gives
+
+$$
+\gamma(\omega)=
+\inf_{f:\mathcal Q_p[f]>0}
+\frac{\mathcal J_\omega[f]}{\mathcal Q_p[f]}.
+\tag{10.3}
+$$
+
+The budget is one sampled site per trial, and the site label is retained.
+The two edges attached to each endpoint site share its single weight;
+they cannot be assigned independent edge budgets.
+
+**Definition 10.1 (An isolated algebraic parameter).** Let $\tau$ be
+the unique root in $(1/2,13/25)$ of
+
+$$
+P_4(t)=12t^4+20t^3-2t^2-4t-1.
+\tag{10.4}
+$$
+
+Set
+
+$$
+q=4\tau^2+2\tau-1,\qquad
+D=2q+4\tau(1-\tau^2),\qquad
+x=\frac qD,\qquad y=\frac{4\tau(1-\tau^2)}D.
+\tag{10.5}
+$$
+
+These definitions are unambiguous:
+$P_4(1/2)=-1/4$ and $P_4(13/25)=26857/390625>0$, while
+$P_4'(t)=48t^3+60t^2-4t-4\ge373/25>0$ throughout the
+isolating interval. The intermediate value theorem and strict
+monotonicity give existence and uniqueness there. Also $q>0$,
+$0<x<1/2$, $y>0$, and $2x+y=1$.
+
+### 10.2. A primal spectrum and a common test direction
+
+**Theorem 10.2 (Exact global optimum).** The unique maximizer of
+(10.2) over the entire site simplex is
+
+$$
+\boxed{\omega^\star=(x,y,x),\qquad
+\gamma^\star=(1-\tau)x.}
+\tag{10.6}
+$$
+
+In particular, the optimization includes nonsymmetric distributions
+and every zero-weight boundary. Numerical values are
+
+$$
+\tau\approx0.51588140,\qquad
+\omega^\star\approx(0.29574131,0.40851737,0.29574131),\qquad
+\gamma^\star\approx0.14317387.
+\tag{10.7}
+$$
+
+Proof. Consider the vector
+
+$$
+v=(2\tau^2-1,\ \tau,\ -2\tau(\tau+1),\ \tau,\ 1)^{\mathsf T}.
+\tag{10.8}
+$$
+
+Its coordinates sum to zero, and
+$yq=4\gamma^\star\tau(\tau+1)$ by (10.5).
+Direct substitution into (10.1) gives
+$(H_{\omega^\star}v)_{13}=x(1-\tau)$,
+$(H_{\omega^\star}v)_1=(H_{\omega^\star}v)_3
+=x\tau(1-\tau)$, and
+$(H_{\omega^\star}v)_2=-yq/2$.
+These are the corresponding coordinates of $\gamma^\star v$.
+The remaining coordinate agrees because $H_{\omega^\star}\mathbf1=0$
+and both vectors have coordinate sum zero. Thus
+
+$$
+H_{\omega^\star}v=\gamma^\star v.
+\tag{10.9}
+$$
+
+To identify this eigenvalue as the gap, take any $x,y>0$ and
+$H_{(x,y,x)}$. The endpoint-odd vector $e_1-e_3$ has eigenvalue $x$.
+In the orthonormal even basis
+$(e_2,e_0,(e_1+e_3)/\sqrt2,e_{13})$, the matrix is
+
+$$
+T_{x,y}=
+\begin{pmatrix}
+y/2&-y/2&0&0\\
+-y/2&x+y/2&-x/\sqrt2&0\\
+0&-x/\sqrt2&x&-x/\sqrt2\\
+0&0&-x/\sqrt2&x
+\end{pmatrix}.
+\tag{10.10}
+$$
+
+Its characteristic polynomial is $sC_{x,y}(s)$, where
+
+$$
+C_{x,y}(s)=s^3-(3x+y)s^2+
+\left(2x^2+\tfrac52xy\right)s-\tfrac54yx^2.
+\tag{10.11}
+$$
+
+The positive-weight legal graph is connected, so its only zero mode
+is constant and the three roots $r_1\le r_2\le r_3$ of $C_{x,y}$
+are positive. Their sum is $3x+y>3x$, so $r_3>x$.
+Since $C_{x,y}(x)=yx^2/4>0$, the factorization
+$C_{x,y}(x)=\prod_j(x-r_j)$ then forces
+
+$$
+0<r_1<x<r_2\le r_3.
+\tag{10.12}
+$$
+
+Consequently $r_1$ is simple. The candidate
+$\gamma^\star=x(1-\tau)$ lies in $(0,x)$, so (10.9) and
+(10.12) prove that it is the gap of $H_{\omega^\star}$.
+
+Now write
+
+$$
+N_v=v^{\mathsf T}v
+=8\tau^4+8\tau^3+2\tau^2+2,\qquad
+Z^\star=\frac{vv^{\mathsf T}}{N_v}.
+\tag{10.13}
+$$
+
+This is positive semidefinite, has trace one and annihilates $\psi$.
+The three grouped energies are
+
+$$
+\begin{aligned}
+v^{\mathsf T}K_1v=v^{\mathsf T}K_3v
+&=\tfrac12(1-\tau)^2\bigl((2\tau+1)^2+1\bigr),\\
+v^{\mathsf T}K_2v&=\tfrac12q^2.
+\end{aligned}
+\tag{10.14}
+$$
+
+Their equality follows from the exact polynomial identity
+
+$$
+q^2-(1-\tau)^2\bigl((2\tau+1)^2+1\bigr)=P_4(\tau)=0.
+\tag{10.15}
+$$
+
+Together with (10.9) and $\sum_i\omega_i^\star=1$, this gives
+
+$$
+\operatorname{Tr}(Z^\star K_i)
+=\frac{q^2}{2N_v}=\gamma^\star
+\quad\text{for every }i.
+\tag{10.16}
+$$
+
+For every $\omega\in\Delta_3$, the Rayleigh quotient of this same
+vector therefore supplies the global upper bound
+
+$$
+\gamma(\omega)
+\le\frac{v^{\mathsf T}H_\omega v}{N_v}
+=\sum_i\omega_i\operatorname{Tr}(Z^\star K_i)
+=\gamma^\star.
+\tag{10.17}
+$$
+
+The candidate attains the bound. Equivalently, with
+$\Pi=I-\psi\psi^{\mathsf T}$, its primal and dual certificates are
+
+$$
+H_{\omega^\star}-\gamma^\star\Pi\succeq0,\qquad
+(H_{\omega^\star}-\gamma^\star\Pi)Z^\star=0,
+\tag{10.18}
+$$
+
+together with (10.13) and (10.16).
+
+For uniqueness, equality in (10.17) requires
+$H_\omega v=\gamma^\star v$. Its endpoint-coordinate difference is
+
+$$
+(H_\omega v)_1-(H_\omega v)_3
+=(\omega_1-\omega_3)(1-\tau^2).
+\tag{10.19}
+$$
+
+Since $v_1=v_3$ and $1-\tau^2>0$, the weights satisfy
+$\omega_1=\omega_3$. The $13$ coordinate then yields
+
+$$
+\frac{\omega_1+\omega_3}{2}(1-\tau)=\gamma^\star,
+\tag{10.20}
+$$
+
+so both endpoint weights are $x$, and the remaining weight is $y$.
+This proves uniqueness among all site distributions. $\square$
+
+### 10.3. Observable consequences and scope
+
+If $\omega_2=0$, state $2$ is isolated. If $\omega_1=0$,
+$\{1,13\}$ separates from the remaining states; if $\omega_3=0$,
+$\{3,13\}$ separates. The graph is disconnected throughout the
+simplex boundary, and $\gamma(\omega)=0$ there.
+
+The center weight at the optimum is larger than either endpoint
+weight. Indeed $y-x=[1+2\tau-4\tau^2-4\tau^3]/D>0$:
+the numerator decreases on the isolating interval and its value at
+$13/25$ is $6187/15625>0$. Uniqueness then shows that uniform
+site sampling is strictly suboptimal. Its gap is approximately
+$0.13831892$, compared with (10.7).
+
+The worst reference-phase direction at the optimum is explicitly
+
+$$
+g^\star=\frac v{\sqrt{N_v}},\qquad
+f^\star=\frac{\sqrt5\,v}{\sqrt{N_v}},\qquad
+\mathbb E_pf^\star=0,\qquad
+\mathcal Q_p[f^\star]=4,\qquad
+\mathcal J_{\omega^\star}[f^\star]=4\gamma^\star.
+\tag{10.21}
+$$
+
+The factor $1/2$ in (10.1) is retained throughout. A graph
+Laplacian that instead gives each selected edge weight $\omega_i$
+is $L_\omega=2H_\omega$ and has twice this gap. The sampled
+Fisher/QFI ratio uses $H_\omega$, hence (10.6).
+
+The conclusion concerns the fixed uniform five-state law, the
+recorded-site measurement menu and the calibrated reference phase.
+It proves neither optimality among arbitrary quantum measurements
+nor a result away from that reference. Unequal sampling changes
+this menu's information operator; it does not change the occupation
+law or identify dimensionless information with physical energy.
+The activity-matched distribution of §9 supplies an exact parent
+spectrum correspondence, while (10.6) separately optimizes this
+five-state sampling budget. General activities and longer legal
+chains require their own optimality certificates.
