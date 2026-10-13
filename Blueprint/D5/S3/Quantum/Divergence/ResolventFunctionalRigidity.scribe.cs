@@ -17,6 +17,32 @@ internal sealed class ResolventFunctionalRigidityDocument : IScribeDocumentDefin
                         + "rigidity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("finite-resolvent-defects-force-functional-intertwining"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/ResolventFunctionalRigidity.finite_resolvent_defects_force_functional_intertwining"),
+                H("Finite positive samples determine the spectral calculus"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyi2017reversibility")),
+                Blocks(Paragraph(Text("Let A and B be arbitrary finite positive semidefinite complex matrices and V a "
+                        + "contraction with V* A V <= B. Suppose V preserves the norm of the distinguished vector b. "
+                        + "If the actual resolvent quadratic defects vanish at an injective finite family of "
+                        + "positive shifts, and the number of shifts is at least the number of distinct eigenvalues "
+                        + "in the union of the two spectra, then f(A) Vb = V f(B)b for every real function f. "
+                        + "The two matrix carriers and the sampling carrier have independent universes; empty "
+                        + "carriers, repeated eigenvalues and zero eigenvalues remain in scope.")),
+                    Paragraph(Text("Group repeated spectral values before clearing the common resolvent denominator. "
+                        + "The numerator has degree at most the number of distinct spectral sites minus one. "
+                        + "Its distinct positive sample roots force it to vanish, and evaluation at each negative "
+                        + "spectral site isolates its residue. The contraction defect identity supplies actual "
+                        + "resolvent-vector equality; finite spectral expansion then supplies every f. No "
+                        + "continuity of f and no recovery equation are assumed. The existing all-positive-shift "
+                        + "theorem consumes this finite result in the live logarithm-to-Petz proof.")),
+                    Paragraph(Text("Hiai and Mosonyi's Theorem 3.18 identifies the related spectral-cardinality "
+                        + "support condition for standard quantum f-divergence reversibility. This result supplies "
+                        + "the finite spectral rigidity step. A representing measure, its support-to-defect bridge "
+                        + "and the singular standard f-divergence boundary terms are separate obligations; this "
+                        + "theorem does not establish the full f-divergence recovery equivalence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("zero-resolvent-defects-force-functional-intertwining"),
                 DeclarationHandle.Create("D5/S3/Quantum/Divergence/ResolventFunctionalRigidity.zero_resolvent_defects_force_functional_intertwining"),
                 H("All spectral functions intertwine"), StatementSource.WithoutFormula(),
