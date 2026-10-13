@@ -94,5 +94,70 @@ noncomputable def registration :
 #print axioms source_registration
 #print axioms registration
 
+namespace TensorUnitary
+open _root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_unitary)
+
+/-- Unitary membership observes the tensor product of the complete factor family. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ),
+    (∀ i, A i ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
+      R.readout () N A ∈ Matrix.unitaryGroup (Fin N → Fin 2) ℂ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hz := Matrix.mem_unitaryGroup_iff.mp
+    (h (N := 1) (fun _ => 1) (fun _ => (Matrix.unitaryGroup (Fin 2) ℂ).one_mem))
+  change (0 : Matrix (Fin 1 → Fin 2) (Fin 1 → Fin 2) ℂ) * star 0 = 1 at hz
+  have he := congrArg (fun M => M (fun _ => (0 : Fin 2)) (fun _ => (0 : Fin 2))) hz
+  simpa using he
+
+def source_registration : Registration arena (type_of% @tensor_unitary) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨tensor_unitary, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_unitary)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorUnitary.unit,
+  realizationName :=
+    `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorUnitary.source_registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨source_registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ A => tensorOp A) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "arg"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end TensorUnitary
 end
 end Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm

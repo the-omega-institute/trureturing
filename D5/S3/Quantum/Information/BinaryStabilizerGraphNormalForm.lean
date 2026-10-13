@@ -477,7 +477,7 @@ lemma tensor_adj {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
   ext x y
   simp [tensorOp, Matrix.conjTranspose_apply]
 
-private lemma tensor_unitary {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
+lemma tensor_unitary {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
     (hA : ∀ i, A i ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
     tensorOp A ∈ Matrix.unitaryGroup (Fin N → Fin 2) ℂ := by
   apply Matrix.mem_unitaryGroup_iff'.mpr

@@ -147,9 +147,12 @@ lemma local_identity {n : ℕ} (i : Fin n) :
   rw [Function.update_eq_self_iff.mpr rfl, tensor_one]
 private lemma local_unitary {n : ℕ} (i : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ)
     (ha : A ∈ Matrix.unitaryGroup (Fin 2) ℂ) : localOp i A ∈ Matrix.unitaryGroup (Bits n) ℂ := by
-  rw [Matrix.mem_unitaryGroup_iff] at ha ⊢
-  rw [Matrix.star_eq_conjTranspose] at ha ⊢
-  rw [local_adjoint, local_product, ha, local_identity]
+  apply D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_unitary
+  intro j
+  by_cases h : j = i
+  · subst j
+    simpa only [Function.update_self] using ha
+  · simpa only [Function.update_of_ne h] using (Matrix.unitaryGroup (Fin 2) ℂ).one_mem
 private lemma gateS_unitary : gateS ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff]
   rw [Matrix.star_eq_conjTranspose]
@@ -248,8 +251,8 @@ private lemma cnot_normalizes {n : ℕ} (c t : Fin n) (h : c ≠ t) (w : Fin n �
 private lemma local_table (A : Matrix (Fin 2) (Fin 2) ℂ)
     (ha : A = gateH ∨ A = gateS ∨ A = gateSᴴ) (p : Pauli) :
     ∃ (c : ℂ) (q : Pauli), Phase c ∧ A * pauliMatrix p * Aᴴ = c • pauliMatrix q := by
-  have hs : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
-    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have hs := TsirelsonInequality.sqrt_two_inv_mul_self
+  rw [← Real.sqrt_div_self, ← pow_two, ← one_div] at hs
   rcases ha with rfl | rfl | rfl <;> cases p
   case' inl.I => refine ⟨1, .I, Or.inl rfl, ?_⟩
   case' inl.X => refine ⟨1, .Z, Or.inl rfl, ?_⟩
@@ -643,8 +646,8 @@ private lemma bellCircuit_vec : bellCircuit *ᵥ Pi.single 0 1 =
 private lemma bell_prepared : bell = bellCircuit * vacuum 6 * bellCircuitᴴ := by
   rw [vacuum_vec, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
   rw [← Matrix.star_mulVec, bellCircuit_vec]
-  have hs : (Real.sqrt 2 / 2) ^ 2 = (1 / 2 : ℝ) := by
-    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have hs := TsirelsonInequality.sqrt_two_inv_mul_self
+  rw [← Real.sqrt_div_self, ← pow_two, ← one_div] at hs
   have hr : ((Real.sqrt 2 / 2 : ℝ) : ℂ) ^ 2 = (1 / 2 : ℂ) := by
     calc
       _ = (((Real.sqrt 2 / 2) ^ 2 : ℝ) : ℂ) := (Complex.ofReal_pow _ _).symm
