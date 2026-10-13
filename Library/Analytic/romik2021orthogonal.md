@@ -9424,3 +9424,291 @@ $\mathcal D$. The local all-critical premise, actual source constants,
 full-growth certificate and the bridge to an unconditional global
 statement remain unpaid. RH and strict Robin for every integer
 $H>5040$ remain unresolved.
+
+## A complete derivative chain pays the full growing core
+
+Retain the original source, local all-critical selection and complete
+removal, all multiplicities, $Q=Q_{\rm core}Q_{\rm far}$, and
+$\widehat A=F/Q_{\rm core}=AQ_{\rm far}$ from (LC263), (LC284)
+and (LC304). Every far selected factor and every possibly nonreal
+infinite exterior zero remains in $\widehat A$. Keep both original
+nonzero amplitudes $H,\widehat H$, $T\ge32$, $0<\rho\le1/8$,
+$L=\log(T+2)$, $c=T^2$, $D=T\rho$, $r\le C_0L$, $q\le r$,
+$\nu=n\rho^2/T^2$, $E=C_EL$ and $C_E=128(S+3C_0)$.
+Use exactly the actual kernels and responses in (LC305)--(LC308),
+and the holomorphic $\sigma^2=v\chi'$ from (LC342).
+Suppress hats only on $\chi,\eta$ in this section.
+
+This is a conditional repository-derived analytical application,
+without Lean or originality certification. The complete Appell matrix
+and differential equation, Hermite real-root starting point,
+holomorphic root continuation, coefficient majorants and finite-free
+transmission are reused. The derivative-chain estimate below is
+applied to the complete source, including both distinct actual
+tangents. It does not estimate the condition numbers of the complex
+Laguerre Jacobi matrix.
+
+### Bound the actual finite derivative chain at its own root
+
+For a germ $\Phi(u)=\sum_m\phi_mu^m$, let
+$\|\Phi\|_a^\#=\sum_m|\phi_m|a^m$.
+At a fixed parameter put $P(z)=M(\partial_z)z^q$,
+$M(0)=1$, $M'(0)=0$, and
+
+$$
+f(u)=M'(u)/M(u)=-\sigma^2u+g(u),\quad g(u)=O(u^2),\quad
+a=8\sqrt q/|\sigma|,\quad
+e=\frac{\|g\|_a^\#}{|\sigma|^2a}\le\frac1{16}.
+\tag{LC357}
+$$
+
+The Appell differential equation is
+$(z+f(\partial_z))P'=qP$.
+For a published form, Srivastava, Jabee and Shadab,
+[*Differential equation and recurrence relations of the Sheffer-Appell
+polynomial sequence: A matrix approach*, arXiv:1903.09620v1](https://arxiv.org/html/1903.09620v1),
+Theorem 1, equation (2.11), give this specialization with
+their $h(u)=u$ and $l(u)=M(u)^{-1/2}$; their Theorem 4,
+equation (3.23), gives the corresponding recurrence.
+The same equation follows from the existing coefficient recurrence
+before (LC330). These general identities are reused.
+
+First use the complete matrix (LC329) only for coarse root location:
+$A=\sigma(Y+Y^*)-g(Y/\sigma)$, with
+$\|Y/\sigma\|\le a/8$. Since $g$ starts at degree two,
+$\|g(Y/\sigma)\|\le\|g\|_a^\#/64$. Every root $\beta$ has
+
+$$
+|\beta|\le\|A\|\le(2+e/8)|\sigma|\sqrt q
+ <3|\sigma|\sqrt q.
+\tag{LC358}
+$$
+
+Write the reused differential equation as
+$\sigma^2P''-zP'+qP=g(\partial_z)P'$.
+Its $k$th derivative at an actual root is
+
+$$
+\sigma^2P^{(k+2)}(\beta)
+=\beta P^{(k+1)}(\beta)-(q-k)P^{(k)}(\beta)
+ +\sum_{m\ge2}g_mP^{(k+m+1)}(\beta).
+\tag{LC359}
+$$
+
+Set $d_k=P^{(k)}(\beta)/a^k$ for $0\le k\le q$,
+and $D_* =\max_k|d_k|$. Monicity gives $d_q\ne0$ and
+$D_*>0$, while $d_0=0$. For $0\le k\le q-2$, derivatives of
+order greater than $q$ vanish, and (LC358)--(LC359) give
+
+$$
+|d_{k+2}|
+\le\left(\frac38+\frac1{64}+e\right)D_*
+\le\frac{29}{64}D_*<D_*.
+\tag{LC360}
+$$
+
+Thus the maximum occurs only at $k=1$, also when $q=1$.
+In particular every actual root is simple, and
+
+$$
+\left|\frac{P^{(m)}(\beta)}{P'(\beta)}\right|
+\le a^{m-1}\quad(1\le m\le q),\qquad
+\left|\frac{\Phi(\partial_z)P(\beta)}{P'(\beta)}\right|
+\le\sum_{m=1}^q|\phi_m|a^{m-1}.
+\tag{LC361}
+$$
+
+The constant coefficient vanishes at the root. Taylor expansion gives,
+for $0<|w|\le1/a$,
+$|P(\beta+w)/(P'(\beta)w)-1|\le\exp(1)-2<1$.
+No other root is in that closed disc, so distinct roots are more
+than $1/a$ apart. Neither this chain nor its coarse location uses
+bounded individual spectral projections.
+
+### The complete source pays the chain at a linear budget
+
+Now use the actual $P=R_{q,t}$ and
+$g_t=f_t+\sigma^2u$ for every $t\in\mathcal D$.
+Assume only the sufficient budget
+
+$$
+\nu\ge2^{32}(E+q),\qquad
+\delta=E/\nu\le2^{-32},\quad
+r_0=\sqrt{q/\nu}\le2^{-16},\quad
+\varepsilon=D/c\le2^{-8}.
+\tag{LC362}
+$$
+
+The inherited complete complex jets (LC313), (LC331) and (LC342)
+give $|\chi'-1|\le68\delta$, $|\eta-1|\le64\delta$,
+$D/(2\sqrt\nu)\le|\sigma|\le2D/\sqrt\nu$,
+$|\tau|/|\sigma|\le2\varepsilon/\sqrt\nu$ and
+$|v|\le2|\sigma|^2$, with $\tau=t/n$.
+Define the actual scalar displacement
+$\Delta(u)=-vu/(1+\tau u)$ and put
+
+$$
+A_0=|\tau|a\le16\varepsilon r_0\le2^{-20},\quad
+d=\|\Delta\|_a^\#=\frac{|v|a}{1-A_0}
+ \le32|\sigma|\sqrt q\le64Dr_0,\quad
+x=16d/D\le1024r_0\le1/64.
+\tag{LC363}
+$$
+
+These displacement bounds keep the scalar germ within the supplied
+analytic room at every parameter; the target disc is not reduced.
+The actual $f_t(u)=\chi(t+\Delta(u))-\chi(t)$ gives exactly
+
+$$
+g_t(u)=\frac{\sigma^2\tau u^2}{1+\tau u}
+ +\sum_{j\ge2}\frac{\chi^{(j)}(t)}{j!}\Delta(u)^j.
+\tag{LC364}
+$$
+
+The full logarithmic remainder is retained. Coefficient majorants and
+(LC331) give
+
+$$
+\|g_t\|_a^\#
+\le|\sigma|^2a\frac{A_0}{1-A_0}
+ +5\delta D\frac{x^2}{1-x},\qquad
+e_t\le(2^{22}\delta+32\varepsilon)r_0
+\le2^{-26}+2^{-19}<2^{-18}<1/16.
+\tag{LC365}
+$$
+
+Here $|\sigma|^2a=8|\sigma|\sqrt q\ge4Dr_0$.
+The geometric sums in (LC364)--(LC365) include every higher
+coefficient of the complete source; no Schwarzian sign or independent
+high-order cancellation is assumed. The finite-chain bound (LC361)
+therefore holds at every actual root of every complex-parameter
+$R_{q,t}$.
+
+### Establish real roots before continuing the actual labels
+
+At a real parameter, the actual coefficients and $\sigma$ are real,
+with $\sigma>0$. For $0\le\lambda\le1$, use only as a proof device
+
+$$
+M_\lambda(u)=\exp\left(-\sigma^2u^2/2
+ +\lambda\int_0^u g_t(w)\,dw\right),\qquad
+P_\lambda=M_\lambda(\partial_z)z^q.
+\tag{LC366}
+$$
+
+Its logarithmic remainder is $\lambda g_t$, so (LC357)--(LC361)
+exclude multiple roots throughout this real-coefficient homotopy.
+At $\lambda=0$ the roots are those of the scaled Hermite polynomial,
+all simple and real. A pair of roots could leave the real axis only
+through a collision. Thus the actual endpoint $R_{q,t}=P_1$ also has
+$q$ simple real roots. This argument does not replace its source or
+actual response by the Gaussian model.
+
+The actual coefficients are holomorphic on a neighborhood of
+$\mathcal D$, and the actual discriminant is nonzero on the whole
+compact disc by (LC365). It remains nonzero on a slightly larger
+disc. The existing simple-root continuation argument from (LC336)
+supplies compatible holomorphic labels $\beta_j$ there, real on $I$.
+
+### Keep the two distinct actual tangents
+
+At fixed original $z,u$, set $a_t(u)=\partial_t\log M_t(u)$.
+Since $M_t(0)=1$ and its linear logarithmic coefficient is identically
+zero, $a_t(0)=a_t'(0)=0$. Exact generating functions give
+
+$$
+\partial_tR_{q,t}=a_t(\partial_z)R_{q,t},\qquad
+U_{q,t}=b_t(\partial_z)R_{q,t},\qquad
+a_t'=\partial_tf_t,\quad b_t'=\eta(\psi_t(u)).
+\tag{LC367}
+$$
+
+The parameter tangent and original response remain different
+operations. The complete kernel and its normalizations are
+differentiated as actual functions, not frozen as an artificial
+family. Using the same $A_0,d,x$ and full jets,
+
+$$
+\begin{aligned}
+\partial_tf_t(u)
+ &=\chi'(t+\Delta(u))(1+\tau u)^{-2}-\chi'(t),\\
+\|\chi'(t+\Delta)-\chi'(t)\|_a^\#
+ &\le80\delta[(1-x)^{-2}-1]\le320\delta x,\\
+\|\partial_tf_t\|_a^\#
+ &\le640\delta x+8A_0
+ \le(2^{20}\delta+128\varepsilon)r_0<2^{-16},\\
+\|\eta(t+\Delta)-\eta(t)\|_a^\#
+ &\le128\delta\frac{2x}{1-2x}
+ \le2^{19}\delta r_0\le2^{-29}.
+\end{aligned}
+\tag{LC368}
+$$
+
+The inverse-square majorant is below two; its change costs at most
+$4A_0$. Integration of the Taylor coefficients of $a_t'$ and
+$b_t'-\eta$ and application of the actual-root bound (LC361) give
+
+$$
+|\beta_j'|
+=\left|\frac{a_t(\partial_z)R_{q,t}(\beta_j)}
+ {\partial_zR_{q,t}(\beta_j)}\right|
+\le\|\partial_tf_t\|_a^\#<2^{-16}<1/4,\qquad
+|\gamma_j-\eta|\le2^{19}\delta r_0,
+\quad\gamma_j=\frac{U_{q,t}(\beta_j)}
+ {\partial_zR_{q,t}(\beta_j)}.
+\tag{LC369}
+$$
+
+These estimates hold at every complex parameter, including the closed
+boundary. For real parameters, $|\eta-1|\le2^{-26}$ gives
+$\gamma_j>3/4$.
+The already-established real values and whole-disc holomorphic labels
+now permit integration along the vertical segment from $\Re t$ to $t$:
+$|\Im\beta_j(t)|\le|\Im t|/4$.
+
+### Reuse the original-node transmission at full growth
+
+Equations (LC366)--(LC369) pay precisely the actual kernel certificate
+$\mathsf K$ before (LC314). Apply the existing half-plane polarization
+and common nonnegative weights of (LC309)--(LC316).
+Every original target node in the entire closed $\mathcal D$ is real
+and simple. With $d_j=\chi'-\beta_j'$, both distinct responses use
+the same weights and satisfy $1/2<d_j<3/2$, $\gamma_j>3/4$.
+Thus both original amplitudes remain in
+
+$$
+P_r'S_r>\frac38\left(\frac{\widehat H}{H}\right)^2
+ [\partial_zC_t(\lambda_i)]^2>0,\qquad
+\frac{G}{J'}>\frac12,\qquad
+N_J(\mathcal D)=\sum_{i=1}^q
+\mathbf1_{\{f_i(t_-)\le0\le f_i(t_+)\}}\le q.
+\tag{LC370}
+$$
+
+Here $f_i=\chi-c-\lambda_i$ and $f_i'>1/2$.
+Both endpoints are included, and existence of all $q$ original nodes
+is not asserted. No amplitude-size premise is added. For $q=0$,
+reuse $J=\widehat H\ne0$ directly.
+
+Take $C_{\rm ker}=2^{32}(1+C_E+C_0)$. Then
+
+$$
+q\le C_0L,\qquad\nu\ge C_{\rm ker}L
+\quad\Longrightarrow\quad\nu\ge2^{32}(E+q).
+\tag{LC371}
+$$
+
+All sufficient estimates improve for every larger $\nu$, uniformly
+in every allowed $T,\rho$. The formerly unpaid full-growth kernel
+condition is supplied under the inherited local source premises.
+The paid quantity is
+$(2^{22}E/\nu+32\varepsilon)\sqrt{q/\nu}$, which is bounded
+independently of $L$ at a fixed linear budget. This scalar route has
+not established a bound on complex Jacobi spectral projections.
+
+The local all-critical premise, complete removal of those zeros,
+source constant instantiation and unconditional global transmission
+remain required. The infinite exterior has not been assumed real.
+No unconditional local realness, FIB ATOM arithmetic bridge, RH or
+strict Robin for every integer $H>5040$ follows without the remaining
+premises and global argument.
