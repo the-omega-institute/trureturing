@@ -100,7 +100,8 @@ are globally open.
 v1 source review identified no later theorem invoking Conjecture 10. The proved sharpness
 above upgrades Proposition 9's tail upper bound to the exact optimum. The source's
 independently established path, cycle and spectral results and its separate grid question
-acquire no new proof from this settlement. Section 5, Example 23 has ell=2 and k=2,
+acquire no new proof from this settlement. Section 4.2 (Multiplicities), Example 23 (PDF page 15;
+https://arxiv.org/html/2610.03892v1#S4.SS2) has ell=2 and k=2,
 outside ell>=k+1; it retains its separate source result and is not covered by `result`.
 
 ## ASSUMED-UNVERIFIED
