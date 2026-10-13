@@ -4019,3 +4019,648 @@ resolution is not a precondition for the established intersection encoder,
 ordered converse, replication map, low-alphabet range, or all-$k$ threshold.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Retained origin reference and paid stationary current-source recovery
+
+**Assumption 16.1 (a current port after acquisition, export and discard).**
+Use the actual finite ordered trees, homomorphic $\rho$, four-valued
+literal Read and complete rows of Definitions 1.1--1.2. Fix public
+integers $D,H\ge0$, and write
+
+$$
+\begin{aligned}
+P&=\varnothing,&r&=2^D,&q&=H+1,\\
+W_D&=(w_0,\ldots,w_{r-1}),&I&=\{0,\ldots,r-1\},\\
+T_n&=\rho^n\alpha,&
+X_a&=\mathcal B_D[(T_{jq+a_j})_{j\in I}],&
+a&\in\{0,\ldots,H\}^{I}.
+\end{aligned}
+\tag{NAR.16.1}
+$$
+
+The original words are in lexicographic order, with $w_0=L^D$;
+$\mathcal B_D$ is the complete ordered depth-$D$ skeleton. All original
+slots have independent variable ages, and their offsets remain $jq$.
+Let $\mathcal M$ be any nonempty public family of nonempty subsets of
+$I$. For a later selected $S\in\mathcal M$ put
+$Q_S=W_D\setminus\{w_i:i\in S\}$. Fix $\lambda_0\in\{0,1\}$ and
+allow every integer lag $\ell\ge\lambda_0$. The stationary current tree
+and its supplied later row are
+
+$$
+Y(a,\ell)=\rho^\ell X_a
+ =\mathcal B_D[(T_{jq+a_j+\ell})_{j\in I}],
+\qquad V_S(a,\ell)=R_{Q_S}(Y(a,\ell)).
+\tag{NAR.16.2}
+$$
+
+The encoder computes one code solely from the genuinely acquired
+initial $R_{\varnothing}(X_a)$, before both $S$ and $\ell$ are chosen.
+It exports that code and discards the initial row and every other
+source-bearing field. Write its induced finite age function as $e(a)$.
+All surviving source-bearing distinctions count as code: retained IDs,
+clock values, epochs, logs, sizes, readable pointers, allocation
+choices, archives and source-dependent controller states have no
+separate uncharged channel. Public parameters and installed tables
+common to all sources are not acquired facts about the chosen source.
+
+The decoder starts with $S$, $e(a)$ and the full acquired $V_S(a,\ell)$.
+This includes the literal exterior, every label and bracket, all reached
+or absent-cut guards, and all within-row hidden equalities and
+disequalities. It contains no hidden subtree values or cross-row links.
+In addition, the decoder may pay for a fresh native Read at any finite
+literal original-root address $p\in\{L,R\}^{<\omega}$ of this same
+stationary CURRENT $Y(a,\ell)$. The replies are
+$\mathsf{absent},\alpha,\beta,\mathsf{branch}$. A request returns one
+constructor reply, not a subtree or a numerical age. There is no old
+source reread, epoch advice, free equality or age oracle, reroot service,
+or native update during the later capture or decoder queries.
+
+A deterministic adaptive controller chooses its next finite address or
+halts from the supplied entry and its acquired reply history. Correct
+finite recovery means one encoder and controller satisfy
+
+$$
+\forall a\ \forall S\in\mathcal M\ \forall\ell\ge\lambda_0:
+\quad\mathsf{Dec}^{\operatorname{Read}_{Y(a,\ell)}}
+       (S,e(a),V_S(a,\ell))\text{ halts with output }\ell.
+\tag{NAR.16.3}
+$$
+
+Each actual invocation is one raw call, including an absent reply, a
+repeated address or a visible-address reread. Local evaluation of an
+already acquired literal exterior is not a fresh source call. It still
+has parsing and arithmetic costs. The literal word $R^s$ has $s$ actual
+letters; an integer specifying $s$ is not a compressed native request.
+
+Acquisition, truthful export/discard, stationary capture, permissions
+and same-source, same-root, pure-$\rho$ continuation are premises.
+They grant neither a value of $\ell$ nor authentication by the output.
+Labels, fixed-width bits, fresh calls, literal address lengths and their
+sum, acquisition, row storage, parsing, arithmetic, address production,
+controller workspace and lag-output size are separate resources.
+This explicitly enlarged current-access contract does not alter the
+zero-extra-read contracts of §§13--14.
+
+**Reuse 16.2 (the acquired factors and the complete later-record supplier).**
+On (NAR.16.1), the right clock $c$ supplied by `right_clock_iterate`
+satisfies $c(T_n)=n$. The initial acquired literal row therefore computes
+
+$$
+a_j=c(X_a|_{w_j})-jq,\qquad j\in I.
+\tag{NAR.16.4}
+$$
+
+Thus any finite function $e(a)$ can be encoded from the initial row,
+without access to an unacquired age profile. For every displayed slot,
+local parsing of the later acquired literal tree gives
+
+$$
+z_i=c(Y(a,\ell)|_{w_i})-iq=\ell+a_i,\qquad i\in S.
+\tag{NAR.16.5}
+$$
+
+Reuse Theorem 13.3, or (NAR.14.3), separately for each $S$:
+
+$$
+V_S(a,\ell)=V_S(b,\ell')
+\quad\Longleftrightarrow\quad
+ a_i+\ell=b_i+\ell'\quad(i\in S).
+\tag{NAR.16.6}
+$$
+
+This is equality of the whole row. Every original depth-$D$ slot is
+reached, including leaf fillings. Within either history the exponent
+bands $[jq+\ell,jq+H+\ell]$ are disjoint at different $j$, so every
+hidden partition is discrete. Equality of displayed literals fixes the
+entire exterior, all guards and every hidden comparison. A scalar
+collision without this complete-record supplier would be insufficient.
+The inherited zero-read conflict relation is
+
+$$
+a\sim_{\mathcal M}b
+\quad\Longleftrightarrow\quad
+\exists S\in\mathcal M\ \exists d\ne0:\quad a_i-b_i=d\quad(i\in S).
+\tag{NAR.16.7}
+$$
+
+By the existing finite candidate decoder in §13.3 and Reuse 14.2,
+zero-extra-read recovery for $e$ is equivalent to separating every edge
+of (NAR.16.7). This graph principle is reused; the current-port and
+address conclusions below require additional native arguments.
+
+**Theorem 16.3 (whole-current equivalence and irrecoverable common origin).**
+Two histories in Assumption 16.1 have identical replies at every finite
+current address exactly when
+
+$$
+Y(a,\ell)=Y(b,\ell')
+\quad\Longleftrightarrow\quad
+ a_j+\ell=b_j+\ell'\quad(j\in I).
+\tag{NAR.16.8}
+$$
+
+Unequal-lag whole-current collisions are consequently exactly common
+nonzero translations $a-b=(\ell'-\ell)\mathbf1$ of all initial ages.
+Even arbitrary input-dependent finite adaptive all-address querying
+requires at least $q$ attained retained labels in (NAR.16.3).
+
+**Proof.** Complete four-valued Read separates finite ordered trees.
+At the root it separates $\alpha$, $\beta$ and branch. For two branches
+with unequal children, descend to an unequal child and continue by
+structural induction. The distinguishing child word, prefixed by $L$
+or $R$, is a finite original-root word. Equal trees have equal replies,
+including all absent-address replies. Hence all-address equality is
+literal tree equality, rather than equality of a coarser summary.
+
+At each reached original $w_j$, equality of the whole current trees
+forces equality of $T_{jq+a_j+\ell}$ and $T_{jq+b_j+\ell'}$.
+Applying $c(T_n)=n$ gives the right side of (NAR.16.8). Conversely those
+exponent equalities give the same filling in every slot of the same
+ordered skeleton, proving equality of the whole current trees.
+
+For $t=0,\ldots,H$, let $a^{(t)}=t\mathbf1$ and choose the positive
+lag $\ell_t=q-t$. Every one of these $q$ histories has the same WHOLE
+current tree
+
+$$
+Y(a^{(t)},\ell_t)=\mathcal B_D[(T_{jq+q})_{j\in I}].
+\tag{NAR.16.9}
+$$
+
+Fix any one $S\in\mathcal M$. Its full later row is also identical for
+all these histories. If two initial profiles received one code, the two
+decoders would have exactly the same entry. Equal entry and equal past
+reply history determine equal next addresses or equal halt decisions.
+The identical stationary current tree gives equal replies at the chosen
+addresses. Induction therefore gives equal adaptive histories and
+outputs, whenever they halt. Finite correctness would require different
+outputs $q-t$, a contradiction. The $q$ codes must be distinct.
+
+More generally, any nonzero common translation can be realized at
+positive lags: if $a-b=d\mathbf1$, take
+$\ell=\max(1,1-d)$ and $\ell'=\ell+d$. The same induction applies.
+These compare different histories at different lags. At a fixed $\ell$,
+(NAR.16.8) instead forces $a=b$; no fixed-epoch noninjectivity of
+$\rho$ is asserted. $\square$
+
+**Theorem 16.4 (an acquired first-slot reference attains the exact label price).**
+Retain only
+
+$$
+e_0(a)=a_0=c(X_a|_{w_0}),\qquad w_0=L^D.
+\tag{NAR.16.10}
+$$
+
+This code has exactly $q$ attained labels and permits recovery with at
+most $\lfloor\log_2q\rfloor$ fresh raw calls, uniformly in $a,S,\ell$.
+It uses zero fresh calls whenever $0\in S$. Thus the exact minimum
+retained alphabet under (NAR.16.3) is $q$, and its fixed-width binary
+representation price is $\lceil\log_2q\rceil$ bits. The stated raw-call
+bound is sufficient, without a general optimal-call assertion.
+
+**Proof, the acquired interval.** Formula (NAR.16.4) computes the code
+from the initial literal row; the public reference address does not
+make its initial age public. If $0\in S$, return $z_0-e_0(a)$ using the
+already acquired exterior and no new Read. Otherwise choose the public
+$i=\min S$, parse $z=z_i$, and write $c_0=e_0(a)$. Since
+$z=\ell+a_i$, $0\le a_i\le H$ and $\ell\ge\lambda_0$, the unknown
+first-slot exponent $n_0=\ell+c_0$ lies in the finite integer interval
+
+$$
+[A,B]=[c_0+\max(\lambda_0,z-H),\ c_0+z],
+\qquad 1\le B-A+1\le q.
+\tag{NAR.16.11}
+$$
+
+It is nonempty on every promised input because it contains $n_0$.
+The upper size bound follows from $\max(\lambda_0,z-H)\ge z-H$.
+
+**Proof, one actual Read and interval restriction.** For every reached
+slot $w_j$ with filling $T_n$, the supplied `right_clock_readout`
+applied to that subtree gives the following single-address experiment:
+
+$$
+\begin{array}{c|cccc}
+\operatorname{Read}_{Y}(w_jR^s)
+ &\mathsf{absent}&\alpha&\beta&\mathsf{branch}\\ \hline
+\text{condition on }n
+ &n<2s&n=2s&n=2s+1&n\ge2s+2.
+\end{array}
+\tag{NAR.16.12}
+$$
+
+Read follows the reached public prefix $w_j$ before its literal right
+suffix. The upper reply interval includes $2s+2$. The four answers are
+native constructors and absence; the decoder is never given $n$ by an
+oracle. Here $T_0=\alpha$, $T_1=\beta$ and
+$T_{n+2}=\langle T_{n+1},T_n\rangle$ are the underlying recurrence.
+
+For a current integer candidate interval $[L,U]$ of size $K\ge2$, put
+
+$$
+m=L+\lfloor K/2\rfloor,\qquad
+ t=2\lfloor m/2\rfloor,\qquad s=t/2.
+\tag{NAR.16.13}
+$$
+
+These are nonnegative integers, and $t$ is either $m$ or $m-1$.
+Submit the one literal word $w_jR^s$. Intersect $[L,U]$ with the reply
+block from (NAR.16.12): respectively
+
+$$
+(-\infty,t-1],\qquad\{t\},\qquad\{t+1\},\qquad[t+2,\infty).
+\tag{NAR.16.14}
+$$
+
+Every nonempty block is an integer interval. The lower block has at
+most $\lfloor K/2\rfloor$ candidates. For the upper block, writing
+$f=\lfloor K/2\rfloor$, the worst case $t=L+f-1$ gives at most
+$K-f-1\le f$ candidates. The two singleton blocks have size one,
+which is also at most $f$. Empty blocks cannot be the actual reply.
+Thus every call preserves the actual exponent and reduces the candidate
+count to at most $\lfloor K/2\rfloor$. A singleton is output locally,
+without an additional confirmation Read.
+
+Induction on $K$ gives at most $\lfloor\log_2K\rfloor$ calls:
+for $K=1$ the count is zero, and for $K\ge2$ it is at most
+$1+\lfloor\log_2\lfloor K/2\rfloor\rfloor
+ =\lfloor\log_2K\rfloor$. Apply this actual interval procedure at
+$j=0$ to (NAR.16.11), and return the recovered $n_0-c_0=\ell$.
+All query choices use only code, acquired later row and previous replies.
+Every $c_0\in\{0,\ldots,H\}$ occurs, for example on a constant profile.
+Theorem 16.3 supplies the matching retained-label lower bound.
+The native halving calculation establishes the claimed service bound;
+it does not authorize arbitrary subset tests. $\square$
+
+**Theorem 16.5 (exact feasibility for every fixed encoder).** For a fixed
+acquired encoder $e$ on (NAR.16.1), the following are equivalent:
+
+1. It supports finite adaptive current recovery in (NAR.16.3).
+2. It separates every pair $a,b$ with $a-b=d\mathbf1$ and $d\ne0$.
+3. It supports current recovery with one finite raw-call bound uniform
+   over all profiles, menu choices and legal unbounded lags.
+
+When condition 2 holds, a native construction uses at most
+
+$$
+C_e(S)=(r-|S|)\lfloor\log_2(2H+1)\rfloor
+\tag{NAR.16.15}
+$$
+
+fresh calls on every input with that $S$. Its bound over the menu is
+$\max_{S\in\mathcal M}C_e(S)\le(r-1)\lfloor\log_2(2H+1)\rfloor$.
+This is an attained upper bound for the specified encoder, not its
+minimum call count.
+
+**Proof.** Condition 3 implies condition 1. If condition 2 fails,
+Theorem 16.3 realizes a same-code pair with the identical whole current
+tree at positive distinct lags, refuting condition 1.
+
+For condition 2 implying condition 3, choose any public $i\in S$ and
+parse $z=z_i$. Set $A_\ell=\max(\lambda_0,z-H)$ and $B_\ell=z$.
+For every hidden slot $j\notin S$, its unknown exponent
+$n_j=jq+a_j+\ell$ lies in
+
+$$
+[jq+A_\ell,\ jq+B_\ell+H],
+\qquad B_\ell+H-A_\ell+1\le2H+1.
+\tag{NAR.16.16}
+$$
+
+Use exactly the native interval procedure (NAR.16.12)--(NAR.16.14)
+at $w_jR^s$ for each hidden slot. Visible $n_j$ are already parsed
+from their acquired literals. This obtains the whole normalized vector
+$x_j=n_j-jq$ with the fresh-call bound (NAR.16.15). It acquires clock
+values through finite native replies, without traversing whole trees.
+
+Enumerate the finite age cube using the fixed source-independent table
+for $e$. For each $b$ with the received code, let $h=x_i-b_i$ and keep
+it exactly when $h\ge\lambda_0$ and $x_j=b_j+h$ for every $j\in I$.
+The actual $a$ with $h=\ell$ survives. If two survivors $b,b'$ gave
+different $h,h'$, then $b-b'=(h'-h)\mathbf1$ would be a same-code
+nonzero common translation, contrary to condition 2. Return their unique
+common lag; uniqueness of the initial profile is unnecessary.
+This finite enumeration and interval search terminate on promised inputs.
+The intervals contain a uniformly bounded number of integers even when
+their endpoints, tree sizes and query words grow with $\ell$.
+Pointwise finite full-tree traversal alone would not have supplied this
+uniform raw-call conclusion. $\square$
+
+**Theorem 16.6 (uniform literal-address caps recover the zero-read obligation).**
+Fix any acquired encoder $e$. There exists a correct finite current
+recovery protocol and a finite $B$ such that every fresh query satisfies
+$|p|\le B$ on every promised input if and only if $e$ already separates
+every edge of the zero-read menu relation (NAR.16.7). No uniform bound
+on the number of those capped calls is needed for the necessity.
+
+More precisely, suppose $e(a)=e(b)$ and a conflict is witnessed by
+$S,d$ with $a_i-b_i=d\ne0$ for $i\in S$. Choose positive baseline lags
+$\ell_0,\ell'_0$ with $\ell'_0-\ell_0=d$, and define
+
+$$
+\mu=\min_{j\in I}\{jq+a_j+\ell_0,\ jq+b_j+\ell'_0\},
+\qquad M_K=K+\mu.
+\tag{NAR.16.17}
+$$
+
+For every integer $K\ge0$ with $M_K\ge2$, any correct recovery protocol
+for $e$, if one exists, must on these shifted histories issue a
+distinguishing native query of length at least
+
+$$
+D+\left\lfloor\frac{K+\mu}{2}\right\rfloor.
+\tag{NAR.16.18}
+$$
+
+This gives a linear address witness even when the encoder is otherwise
+feasible under Theorem 16.5. If the pair also collides as a whole current
+tree, recovery is impossible outright by Theorem 16.3.
+
+**Proof, common shifts preserve the whole later entry.** Choose
+$\ell_0=\max(1,1-d)$ and $\ell'_0=\ell_0+d$. At every common added
+$K$, (NAR.16.6) gives
+
+$$
+V_S(a,\ell_0+K)=V_S(b,\ell'_0+K).
+\tag{NAR.16.19}
+$$
+
+The proof includes the entire exterior and hidden partition, because
+separated original offset bands remain disjoint after the shift.
+The two codes and public inputs agree too, whereas required lag outputs
+remain distinct. The common later row can vary with $K$; equality is
+between the two histories at each $K$, not between different shifts.
+
+**Proof, shallow-prefix stabilization.** The least leaf depth $h(n)$ of
+$T_n$ satisfies $h(0)=h(1)=0$ and, from the recurrence,
+$h(n+2)=1+\min(h(n+1),h(n))$. Induction gives $h(n)=\lfloor n/2\rfloor$.
+Every word shorter than that least leaf depth reaches a branch: complete
+binary branching ensures the word is reached, and minimality excludes
+a leaf. In the whole tree (NAR.16.2), the complete skeleton contributes
+$D$ edges before a slot. Since all slot exponents in both shifted trees
+are at least $M_K$, every finite word with
+
+$$
+|p|<D+\lfloor M_K/2\rfloor
+\tag{NAR.16.20}
+$$
+
+has reply $\mathsf{branch}$ on both histories. Equivalently the common
+all-branch prefix includes depths through
+$D+\lfloor(M_K-2)/2\rfloor$. This assertion is about full replies,
+not only agreement of address presence. It applies to all words in that
+prefix, not only right rays.
+
+**Proof, adaptive induction and the converse.** Until a first differing
+reply the decoder histories are identical: equal entries and replies
+force equal local computations, next words and halt decisions. Correct
+finite recovery of different lags must eventually obtain a differing
+reply; otherwise the two halt outputs would agree. By (NAR.16.20) that
+first distinguishing word obeys (NAR.16.18). Repeated shallow requests,
+arbitrarily many finite capped requests, and unbounded local arithmetic
+cannot change the induction.
+
+For any alleged uniform cap $B$, choose $K$ so large that
+$D+\lfloor(K+\mu)/2\rfloor>B$. Every allowed request then has the same
+branch reply on the two entries, contradicting finite correctness.
+Thus a code merging any zero-read edge admits no uniform address cap.
+Conversely, if it separates all these edges, Reuse 16.2's finite
+zero-read candidate decoder already returns the lag. It makes no
+requests and has the vacuous address cap zero. This proves both
+directions for every fixed encoder. $\square$
+
+**Proposition 16.7 (explicit retained, raw-call and address coordinates).**
+For the first-slot protocol, let $Q=\lfloor\log_2q\rfloor$. On every
+promised input its retained and newly queried quantities satisfy
+
+$$
+\begin{aligned}
+\#\text{ attained retained labels}&=q,\\
+\text{fixed-width retained bits}&=\lceil\log_2q\rceil,\\
+K_{\mathrm{fresh}}&\le Q,\\
+|p|&\le D+\left\lfloor\frac{\ell+2H}{2}\right\rfloor
+          &&\text{for every fresh word},\\
+\sum_{\mathrm{fresh\ calls}}|p|
+ &\le Q\left(D+\left\lfloor\frac{\ell+2H}{2}\right\rfloor\right).
+\end{aligned}
+\tag{NAR.16.21}
+$$
+
+If $0\in S$, both fresh-call quantities and the address-length sum are
+zero. For the general feasible-encoder construction of Theorem 16.5,
+the analogous per-word and summed-length bounds are
+
+$$
+|p|\le D+\left\lfloor\frac{(r-1)q+\ell+2H}{2}\right\rfloor,
+\qquad
+\sum|p|\le C_e(S)
+ \left(D+\left\lfloor\frac{(r-1)q+\ell+2H}{2}\right\rfloor\right).
+\tag{NAR.16.22}
+$$
+
+These price post-entry literal requests only.
+
+**Proof.** In (NAR.16.13), $t\le L+\lfloor K/2\rfloor\le U$ when
+$K\ge2$, so $s\le\lfloor U/2\rfloor$. Every later interval is a
+subinterval of the initial one. For the first-slot search its original
+upper endpoint $c_0+z=\ell+a_0+a_i$ is at most $\ell+2H$.
+The word has $D+s$ literal letters. Multiply its bound by the already
+established call bound. For a hidden $j$ in Theorem 16.5 the upper
+endpoint is $jq+z+H\le jq+\ell+2H$, and $j\le r-1$, giving
+(NAR.16.22). Label attainment and representation follow from Theorem
+16.4. No optimum for summed or maximum addresses follows from an upper
+bound on this particular construction.
+
+The acquired rows can themselves grow with the lag. Parsing their
+literal syntax, computing clocks and interval endpoints, constructing
+and transmitting long words, and enumerating compatible profiles have
+costs outside the retained-label and raw-call coordinates. The integer
+output has unbounded size as $\ell$ ranges without bound; its usual
+binary representation has $\lceil\log_2(\ell+1)\rceil$ bits for
+$\ell\ge1$, with a separate representation convention at zero.
+A public table for a fixed $e$ is common control data, while a
+source-dependent pre-discard table choice would count as retained code.
+No total or peak memory, running-time, execution, acquisition-cost or
+physical-time bound is established by (NAR.16.21)--(NAR.16.22).
+$\square$
+
+**Proposition 16.8 (a native two-slot strict saving with a long-address witness).**
+Take $D=1,H=1$, so $r=q=2$, and
+$\mathcal M=\{\{0\},\{1\}\}$. Zero-extra-read recovery needs exactly
+four retained labels, whereas current recovery needs exactly two and
+the code $e_0=a_0$ uses at most one fresh Read. For any two-label code
+with a correct current decoder, at least one fresh call is necessary in
+the worst case; the displayed first-slot protocol attains one.
+The retained fixed-width representations cost respectively two bits
+with zero fresh reads and one bit with the displayed current protocol.
+
+**Proof.** The four actual initial sources have the form
+$X_a=\langle T_{a_0},T_{2+a_1}\rangle$, $a\in\{0,1\}^2$.
+Any pair of distinct vectors differs at some singleton position by
+$1$ or $-1$, hence conflicts under (NAR.16.7). The zero-read graph is
+$K_4$: four distinct labels are necessary, and retaining both ages is
+sufficient. Theorems 16.3--16.4 give exactly two current-access labels
+and at most $\lfloor\log_22\rfloor=1$ Read. A two-label zero-call
+protocol would contradict the just established four-label necessity.
+
+For an explicit cost transfer let
+
+$$
+a=(0,0),\qquad b=(0,1),\qquad S=\{1\},\qquad
+\ell=N,\quad\ell'=N-1,\qquad N\ge2.
+\tag{NAR.16.23}
+$$
+
+Both codes $a_0,b_0$ are zero. Both complete later exteriors are
+$\langle\square_L,T_{N+2}\rangle$, with the same reached singleton
+hidden class and all the same visible absence guards. The current trees
+are $\langle T_N,T_{N+2}\rangle$ and
+$\langle T_{N-1},T_{N+2}\rangle$. Their hidden subtrees differ.
+All words of length less than $1+\lfloor(N-1)/2\rfloor$ reply branch
+on both. Thus any correct decoder for this code must issue a
+distinguishing word of length at least $1+\lfloor(N-1)/2\rfloor$.
+The one-call saving has no lag-uniform literal-address cap. $\square$
+
+**Proposition 16.9 (degenerate cases, alternative memory and a different domain).**
+If $H=0$, one label and zero fresh calls suffice. If $D=0$, every
+nonempty $S$ contains the only slot and the first-slot protocol makes
+zero calls; for arbitrary $D$, the same holds when $S=I$. The exact
+$q$-label necessity still holds when $H>0$ in these visible-anchor cases.
+All conclusions above apply to positive and nonnegative lag conventions.
+
+The alternative code $e_{\min}(a)=\min_{j\in I}a_j$ is feasible and
+has $q$ attained labels. Theorem 16.5's construction followed by
+
+$$
+\ell=\min_{j\in I}(n_j-jq)-e_{\min}(a)
+\tag{NAR.16.24}
+$$
+
+gives a valid protocol with (NAR.16.15)'s sufficient call bound. The
+first-slot code has the stronger stated uniform guarantee of Theorem
+16.4; neither is asserted to dominate all other resource coordinates.
+
+A proper variable set $I'\subsetneq I$ with one public fixed-age-zero
+slot $j_*\notin I'$ is a different source domain. If a nonempty selected
+region lies in $I'$ and the same all-address current port is permitted,
+a constant retained code suffices with at most $\lfloor\log_2q\rfloor$
+fresh calls, irrespective of whether that anchor is displayed.
+
+**Proof.** At $H=0$ every acquired visible $z_i$ is already $\ell$.
+At $D=0$ nonempty selection forces $S=\{0\}$, and at $S=I$ the
+first-slot clock is displayed. Subtraction uses zero new Reads, while
+the identical-whole-current witnesses (NAR.16.9) still force $q$ labels.
+Those witnesses have positive lags, so apply to both conventions;
+$\lambda_0$ only adjusts the search lower endpoint.
+
+A common translation by $d$ changes the minimum age by $d$.
+Thus $e_{\min}$ separates every nonzero common translation and Theorem
+16.5 applies without a separate weaker search proof. All its labels are
+attained on constant profiles; (NAR.16.24) follows because
+$n_j-jq=\ell+a_j$.
+
+For the different domain retain the original offsets, set
+$a_{j_*}=0$ publicly, and choose a visible variable slot with
+$z=\ell+a_i$. Its current anchor exponent is $j_*q+\ell$, lying in
+
+$$
+[j_*q+\max(\lambda_0,z-H),\ j_*q+z].
+\tag{NAR.16.25}
+$$
+
+This has at most $q$ integers. Search it at literal words $w_{j_*}R^s$
+using the same native procedure, then subtract the known $j_*q$.
+No chosen-source fact was retained. The fixed anchor excludes nonzero
+common translations of all ages, so Theorem 16.3's $q$-history
+obstruction does not hold on this changed domain. If the anchor is
+hidden, querying it requires the explicitly enlarged current permission;
+its presence in a hidden partition alone does not provide its value.
+Read at an absent suffix or at a previously queried address remains a
+paid invocation under every one of these protocols. $\square$
+
+**Mathematical citation 16.10 (suppliers, prior coverage and remaining gap).**
+The native carriers and query interpretation are `Source` and
+`substitution` in
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+and `Address`, `Reply`, `readout` in
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+The acquired literal exterior and full hidden comparisons use
+`literalRecord` and `canonicalRow_record_iff` in
+[ActualCutPartitionDecoder](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean),
+including its `eraseClasses` and `eraseClasses_literal` interpretation.
+The right clock, physical `rights`, `right_clock_iterate` and exact
+`right_clock_readout` in
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean)
+are inspected at immutable
+[1ca0bc3ada92f404ee3e9e1d5c236c73310013cf](https://github.com/the-omega-institute/trureturing/tree/1ca0bc3ada92f404ee3e9e1d5c236c73310013cf).
+Its `clock_step` proof and the orbit recurrence in
+[ActualFibonacciSupportChain](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean)
+are supporting native suppliers. The support-chain result concerns
+presence agreement; the all-branch argument in Theorem 16.6 supplies
+the stronger full-reply statement needed here.
+
+Sections 11, 13.3 and Reuse 14.2 supply the acquired factors and full
+later-row collisions. Their zero-read graph bridge belongs to
+[Transport--Memory Completion §8.2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#82-标签恰须切开可能混淆的前缀).
+The present unit does not require section 15. No age value or unknown
+lag is supplied by the certified-epoch `original_decoder_service`:
+that theorem has a given epoch, whereas the present output is the epoch
+lag itself after discarding the original row.
+
+At the same immutable pin,
+[Native Birth Provenance §10](https://github.com/the-omega-institute/trureturing/blob/1ca0bc3ada92f404ee3e9e1d5c236c73310013cf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#10-exact-class-root-experiments-on-every-full-actual-one-image-fiber)
+uses bounded four-reply unrolling on a fixed complete current-row entry
+after one authenticated update. A bounded tree at that fixed entry has
+finitely many addresses. Here later acquired literal rows vary over
+unbounded lags; a bound on each decision depth yields no common maximum
+address across those entries, as Theorem 16.6 demonstrates.
+[Acquired Relation History §31](https://github.com/the-omega-institute/trureturing/blob/1ca0bc3ada92f404ee3e9e1d5c236c73310013cf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md#31-the-inherited-paid-consumer-and-the-retained-resource-boundary)
+already separates epoch-uniform raw calls from epoch-dependent word
+lengths under a certified-epoch original-row contract. That distinction
+is reused; it supplies no forgotten-origin or unknown-lag decoder.
+
+Charpenay--Le Treust--Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definition III.1 and Theorem III.4's
+proof outline](https://arxiv.org/html/2211.03649v2), defines characteristic
+edges by different target values at a common compatible side-information
+value. This is the mature separation principle, not a new general
+coloring theorem. Its probabilistic i.i.d. blocks, expected prefix-code
+lengths and asymptotic rate objective do not establish the present
+adversarial one-export alphabet price or native service costs.
+
+Buhrman--de Wolf, [*Complexity Measures and Decision Tree Complexity*,
+§3.1](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf), defines
+adaptive query depth as the number of queried input variables on a
+worst-case path. The native alphabet here has four replies and its tests
+are finite words. This standard decision-tree viewpoint does not price
+those words or grant hidden-subtree queries. Nowak,
+[*The Geometry of Generalized Binary Search*, arXiv:0910.4397v5,
+§V.A](https://arxiv.org/html/0910.4397v5), explicitly contrasts allowed
+point tests with stronger dyadic-subinterval tests. Its binary-valued
+hypothesis-space results are not transferred as a native halving oracle;
+(NAR.16.12)--(NAR.16.14) establish the actual permitted partitions.
+
+The coding and adaptive-query methods are literature-attested
+ingredients. The full-current translation classification, attained
+unknown-lag first-slot service, fixed-encoder feasibility construction
+and uniform literal-address obstruction are repo-derived ordinary
+mathematical deductions for Assumption 16.1. The compared owner, named
+D5 suppliers and primary literature provide no directly matching
+unknown-lag acquired-input service. This bounded comparison is not a
+worldwide novelty assertion, exhaustive absence certificate or new
+Lean/kernel verification.
+
+The exact intermediate retained-memory versus call curve, minimum raw
+calls for arbitrary encoders and menus, and joint address optimization
+remain undetermined here. A faithful next mathematical gap is to
+characterize which reply partitions of a finite compatible lag set are
+realizable by one literal current-address Read, together with their
+address lengths. Such a characterization would constrain joint encoder
+and query choices; it is not needed for the endpoint and obstruction
+proved above. Acquisition and authentication, all-native-source
+extensions, total or peak memory, physical time and execution remain
+outside these finite-family retained-reference results.
+
+## 追加锚（本行以下为增补区）
