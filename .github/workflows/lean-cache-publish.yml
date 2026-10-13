@@ -354,3 +354,71 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+      - name: Produce the frozen alignment scoped report
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          python3 - <<'PY'
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          root = Path.cwd()
+          sys.path.insert(0, str(root / 'tools/lean-inspector'))
+          import scoped
+
+          class AlignmentEntry(scoped.Entry):
+              def discover(self, roots):
+                  inputs = scoped.public.selection.Selection(self.root)
+                  inputs.validate('lean-report')
+                  if not set(roots) <= inputs.modules().keys():
+                      raise ValueError('alignment roots must be registered report modules')
+                  utility_file = self.phase('utility', [
+                      'dotnet', self.producer, 'lean-utility-input'])
+                  utility_scope_file = self.phase('utility-scope', [
+                      'dotnet', self.producer, 'lean-utility-input', '--scope'])
+                  utilities = scoped.public.read_json(utility_file.read_bytes())
+                  utility_inputs = scoped.public.read_json(utility_scope_file.read_bytes())
+                  request = self.temporary / 'scope-request.json'
+                  selected = self.temporary / 'selected-modules.json'
+                  request.write_bytes(scoped.materials.canonical_json(dict(
+                      roots=roots, modules=sorted(inputs.modules()),
+                      utilities=utilities, utility_inputs=utility_inputs)))
+                  self.phase('scope', self.guarded('script', 'run',
+                      'leanInspector/reportScope', str(request), str(selected)))
+                  scope = scoped.public.read_json(selected.read_bytes())
+                  scoped.check_scope(self.root, scope, roots)
+                  self.environment['STRATALINT_INSPECTOR_SCOPE_FILE'] = str(selected)
+                  self.environment['STRATALINT_INSPECTOR_UTILITY_INPUT'] = str(utility_file)
+                  return scope, utilities
+
+          roots = sorted({
+              path.relative_to(root / 'Golden/Frozen/state').as_posix()
+                  .removesuffix('.lean.json').replace('/', '.')
+              for path in (root / 'Golden/Frozen/state').rglob('*.lean.json')
+              if (root / path.relative_to(root / 'Golden/Frozen/state')
+                  .as_posix().removesuffix('.json')).is_file()
+          })
+          if not roots:
+              raise ValueError('frozen alignment requires nonempty retained roots')
+          output = root / '.lake/build/stratalint/frozen-alignment-report.json'
+          logs = Path(str(output) + '.logs')
+          logs.mkdir(parents=True, exist_ok=True)
+          with tempfile.TemporaryDirectory(prefix='frozen-alignment.') as temporary:
+              entry = AlignmentEntry(root, temporary, logs)
+              entry.provision()
+              scoped.produce(entry, output, roots)
+          PY
+      - name: Export the frozen alignment scoped report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-alignment-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .lake/build/stratalint/frozen-alignment-report.json
+            .lake/build/stratalint/frozen-alignment-report.json.sha256
+            .lake/build/stratalint/frozen-alignment-report.json.input.attestation
+            .lake/build/stratalint/frozen-alignment-report.json.provenance.json
+            .lake/build/stratalint/frozen-alignment-report.json.materials.zip
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 3
