@@ -1,0 +1,11 @@
+**证明。** 由 $\lambda$ 两两不同,每个因子 $\lambda_u+\lambda_v$ 非零,故 $\omega_j\ne0$。展开:
+
+$$
+\begin{aligned}
+\omega_1&=\lambda_1\lambda_3+\lambda_1\lambda_4+\lambda_2\lambda_3+\lambda_2\lambda_4,\\
+\omega_2&=\lambda_1\lambda_2+\lambda_1\lambda_4+\lambda_3\lambda_2+\lambda_3\lambda_4,\\
+\omega_3&=\lambda_1\lambda_2+\lambda_1\lambda_3+\lambda_4\lambda_2+\lambda_4\lambda_3 .
+\end{aligned}
+$$
+
+六个单项式 $\lambda_u\lambda_v$($u<v$)中每一个恰好出现在两行里,特征 $2$ 中相消,得 (4.1)。
