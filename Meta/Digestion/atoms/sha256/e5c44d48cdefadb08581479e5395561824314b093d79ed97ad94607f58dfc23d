@@ -1,0 +1,12 @@
+**Proof.** Fix the common seed and its increasing schedule. If it
+includes coordinate $4$, the executions at $b^{00}$ and $b^{01}$
+agree until querying $4$, and both stop there; coordinate $5$ cannot
+precede it. They therefore have the same acquired transcript and
+output. If the schedule does not include $4$, then $b^{01}$ and
+$b^{11}$ agree on every scheduled coordinate, so their executions
+and outputs agree. Thus the indicator of output in $E$ at the middle
+word is bounded by the sum of the indicators at the other two words.
+Integrating under the one common seed proves (112.1). No condition
+on the output label or on a schedule's individual error was used.
+$\square$
+

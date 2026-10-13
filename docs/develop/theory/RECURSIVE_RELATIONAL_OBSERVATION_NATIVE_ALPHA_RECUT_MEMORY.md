@@ -2086,3 +2086,1053 @@ several slots remain outside the sharp known-index comparison proved
 here.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Exact native epochs from a family of acquired cut rows
+
+**Assumption 12.1 (the entire multirecord input).** Use the finite ordered
+native trees, homomorphic substitution and complete literal rows of
+Definitions 1.1--1.2. Fix $m\ge1$ and public finite prefix-free cuts
+$P_0,\ldots,P_{m-1}$, each permitting the empty and root cuts. The entire
+source-dependent input is the ordered family
+
+$$
+\begin{aligned}
+\mathbf R&=(R_{P_i}(\rho^{n_i}t))_{0\le i<m},\\
+t&\in\mathcal T,\qquad 0=n_0\le n_1\le\cdots\le n_{m-1}.
+\end{aligned}
+\tag{NAR.12.1}
+$$
+
+Every row is truthfully acquired on its stationary version, in this
+chronological order, along one genuine same-source, same-root, pure-$\rho$
+history. The reference $n_0=0$ counts updates relative to the first
+capture; $t$ is any finite source at that capture, with no designated
+alpha origin. Continuity supplies no other numeric epoch, counter or
+source name. Equal capture epochs are allowed.
+
+The decoder receives exactly the public cuts, this ordered row family
+and these common promises. Each row retains its entire literal exterior,
+reached and absent-cut guards, and complete within-row equality/disequality
+partition. Hidden subtree values, cross-row hidden-value links, source
+IDs, origin calibration, logs, timing metadata, readable pointers,
+distinguishing allocation or size fields, earlier archives and additional
+source-bearing memory are absent. An accessible such datum would enlarge
+the declared input. Acquisition, lawful handoffs and actual continuity
+remain paid or supplied premises as in Assumptions 10.1 and 11.1.
+
+For fixed cuts, a uniform effective decoder is one terminating rule on
+this promise domain that gives the requested answer for every finite
+$t$ and every chronological epoch vector in (NAR.12.1). This is an
+all-source, all-epoch requirement, without a source-size, late-entry or
+saturation restriction. It neither certifies an arbitrary row family's
+compatibility nor authenticates an execution or a physical duration.
+
+**Definition 12.2 (visible cells and the overlap graph).** Reuse the finite
+frontier of Definition 11.2, putting
+
+$$
+\begin{aligned}
+D&=\max\bigl(\{0\}\cup\{|p|:p\in P_i,\ 0\le i<m\}\bigr),\\
+W_D&=\{L,R\}^D,\qquad W_0=\{\varepsilon\},\\
+S_i&=A_D(P_i)=\{w\in W_D:\nexists p\in P_i\text{ with }p\preceq w\},\\
+i\mathrel{\sim_G}j&\iff i\ne j\text{ and }S_i\cap S_j\ne\varnothing.
+\end{aligned}
+\tag{NAR.12.2}
+$$
+
+Let $\mathcal C$ be the connected components of this finite undirected
+graph, $C(i)$ the component of capture $i$, $C_*=C(0)$ and
+$h=|\mathcal C|$. A singleton graph is connected. Each component's
+reference $r_C$ is its least capture index.
+
+The finite prefix geometry of Theorem 10.2 identifies an edge exactly
+with an uncovered binary ray for $P_i\cup P_j$. Indeed, an uncovered
+ray's depth-$D$ prefix lies in $S_i\cap S_j$, and every extension of a
+word in that intersection remains uncovered. Since all cut depths are
+at most $D$, such a word is incomparable with every member of either
+cut. The union need not be prefix-free. All cells, edges, components
+and references can be found by finite enumeration of the public cuts.
+
+**Theorem 12.3 (effective recovery within each component).** Under
+Assumption 12.1, the entire vector
+
+$$
+\bigl(n_i-n_{r_{C(i)}}\bigr)_{0\le i<m}
+\tag{NAR.12.3}
+$$
+
+is uniformly effectively recoverable. In particular a connected graph
+permits recovery of $(n_i)_{0\le i<m}$. No single direction need be
+visible in every capture.
+
+**Proof.** Reuse the right-clock variant $J^c_w$ of Definition 11.2,
+its exact all-source law (NAR.11.6) and actual-row factor (NAR.11.7).
+They already include arbitrary finite addresses, reached or absent.
+For each edge choose the lexicographically least
+$w_{ij}=w_{ji}\in S_i\cap S_j$. For its orientation $i\to j$, compute
+from the two acquired rows
+
+$$
+\begin{aligned}
+d_{ij}
+&=\gamma_{P_j,w_{ij}}(R_j)-\gamma_{P_i,w_{ij}}(R_i)\\
+&=(J^c_{w_{ij}}(t)+n_j)-(J^c_{w_{ij}}(t)+n_i)
+=n_j-n_i,\qquad d_{ji}=-d_{ij}.
+\end{aligned}
+\tag{NAR.12.4}
+$$
+
+Here $R_i$ denotes the corresponding member of $\mathbf R$. Navigation
+in the exterior may stop at an early concrete blocking leaf. In that
+case the supplied factor uses that leaf, never a hidden or absent
+subtree. The right-clock recursion and navigation are finite; neither
+the partition nor an additional source Read is needed for this factor.
+Different edges may use different words.
+
+Choose a spanning forest by finite traversal, rooted at each $r_C$.
+Assign $z_{r_C}=0$ and, on each forest edge away from its root, assign
+$z_j=z_i+d_{ij}$. Induction on the traversal gives
+$z_i=n_i-n_{r_C}$. These are integer additions and subtractions: a path
+can traverse an edge towards an earlier capture, even though capture
+indices themselves are chronological. Every other path gives the same
+answer, since the actual-history equalities in (NAR.12.4) telescope and
+every closed-path sum is zero. If the graph is connected its reference
+is $0$, with $n_0=0$. This is the usual integration of exact additive
+offsets on a finite graph, applied to the supplied native row factors.
+It supplies no new graph-integration mechanism. $\square$
+
+**Lemma 12.4 (simultaneous component-owned whole-row collision).** For
+any cuts in Definition 12.2 there is one attained whole-input fiber
+containing $2^{h-1}$ distinct strictly chronological epoch vectors,
+one for each independent bit on the components other than $C_*$.
+All its alternatives are genuine native histories satisfying
+Assumption 12.1. The corresponding complete row families coincide,
+including every exterior, guard and partition bit.
+
+**Proof.** Enumerate $W_D$ in lexicographic order as
+$w_0,\ldots,w_{2^D-1}$. For each cell define its visibility set
+$V_j=\{i:w_j\in S_i\}$. Any two distinct members of $V_j$ share that
+cell and are adjacent. Thus a nonempty $V_j$ lies in one component.
+Define its owner $o(j)$ to be that component, or $\bot$ if $V_j$ is
+empty. This is one owner for the whole cell, simultaneously across all
+captures, rather than a separate assignment for each row pair.
+
+Let $\mathcal B_D$ be the full ordered depth-$D$ binary skeleton,
+with $\mathcal B_0$ a single slot, and reuse $T_a=\rho^a\alpha$.
+For independent bits $\delta_C\in\{0,1\}$ on $C\ne C_*$, put
+$\delta_{C_*}=\delta_\bot=0$ and define
+
+$$
+\begin{aligned}
+M&=2D+2,\qquad A_j=2+Mj,\\
+t^\delta
+&=\mathcal B_D\bigl[(T_{A_j-\delta_{o(j)}})_{0\le j<2^D}\bigr],\\
+n_i^\delta&=2i+\delta_{C(i)}.
+\end{aligned}
+\tag{NAR.12.5}
+$$
+
+Every initial leaf age is at least one, so all fillings are actual
+finite native trees. Also $n_0^\delta=0$ and
+$n_{i+1}^\delta-n_i^\delta\ge2-1=1$. Each alternative therefore
+uses one fixed source $t^\delta$ and its genuine forward trajectory,
+with nonnegative strictly chronological captures. Choosing a different
+positive original age is a construction of another original source,
+not an inverse action, a replacement between captures or a rerooting.
+
+Homomorphism of $\rho$ preserves the skeleton and advances each filling's
+age. If capture $i$ sees cell $j$, its owner is $C(i)$, and its entire
+actual subtree at that slot is
+
+$$
+T_{A_j-\delta_{o(j)}+n_i^\delta}=T_{A_j+2i},
+\qquad w_j\in S_i.
+\tag{NAR.12.6}
+$$
+
+It is independent of all the bits. Prune the skeleton at the addresses
+in $P_i$. Every surviving depth-$D$ slot is precisely a member of $S_i$
+and has the fixed filling (NAR.12.6); all intervening brackets and
+address-marked holes are fixed too. Hence the entire concrete exterior
+of row $i$ agrees in every alternative. No comparison of projected
+scores substitutes for this literal equality. Every cut address has
+depth at most $D$ and is reached in the full skeleton, in every version.
+Thus each reached list is exactly $P_i$, and all absence guards agree.
+For $D=0$ the same argument concerns the single root slot.
+
+It remains to preserve the complete hidden partition. For a hole
+$p\in P_i$, let $j(p)$ index its rightmost depth-$D$ descendant
+$pR^{D-|p|}$. Reuse $c(T_a)=a$ and
+$c(\langle x,y\rangle)=2+c(y)$ from (NAR.10.11). At any epoch $k\ge0$
+the actual hidden subtree has clock
+
+$$
+c\bigl((\rho^k t^\delta)|_p\bigr)
+=A_{j(p)}+2(D-|p|)-\delta_{o(j(p))}+k.
+\tag{NAR.12.7}
+$$
+
+Distinct holes in one prefix-free cut have distinct $j(p)$: sharing a
+descendant would make the two addresses comparable. The corresponding
+$A$ values differ by at least $M$, whereas each remaining depth-and-bit
+offset $2(D-|p|)-\delta_{o(j(p))}$ lies in $[-1,2D]$. Consequently,
+for distinct $p,q\in P_i$, the absolute difference of their clocks is
+at least $M-(2D+1)=1$, including when the holes have different depths.
+Equal finite native subtrees have equal right clocks. Therefore every
+row's distinct hidden holes have unequal values at every epoch, for
+every bit choice. Each row has exactly the same discrete partition,
+with every reflexive equality and every off-diagonal disequality.
+Empty and singleton partitions require no separate spacing assumption.
+Together with the exterior and guards, Definition 1.2 gives
+
+$$
+R_{P_i}(\rho^{n_i^\delta}t^\delta)
+=R_{P_i}(\rho^{2i}t^0)
+\qquad(0\le i<m).
+\tag{NAR.12.8}
+$$
+
+The alternatives may have different originals, as the input contract
+allows; each alternative itself has one unchanged original and root.
+Each nonreference component contains a capture, necessarily indexed
+above zero, whose epoch changes when that component's bit changes.
+Thus the $2^{h-1}$ vectors are distinct. Some originals can coincide
+when a component owns no visible cells; distinct originals are not
+needed for distinct epoch vectors. All displayed rows can be truthfully
+acquired from their respective finite stationary versions. $\square$
+
+**Theorem 12.5 (sharp uniform recovery criterion).** For any fixed public
+cuts in Assumption 12.1, the whole vector $(n_i)$ is uniformly effectively
+recoverable if and only if $G$ is connected. For any fixed capture indices
+$a,b$, the signed difference $n_b-n_a$ is uniformly effectively recoverable
+if and only if $C(a)=C(b)$. In either negative case no single-valued rule,
+even without an effectiveness requirement, works on every promised input.
+
+**Proof.** Theorem 12.3 supplies both positive claims. For indices in the
+same component, subtract their recovered coordinates in (NAR.12.3).
+
+If $h>1$, Lemma 12.4 supplies an identical entire decoder input with
+different required epoch vectors. Hence one rule cannot recover the
+whole vector universally. If $C(a)\ne C(b)$, at least one of those
+components is not $C_*$. Toggle just that component's bit, holding all
+other bits fixed in the lemma. This changes $n_b-n_a$ by one or minus
+one without changing the supplied rows. It excludes every universal
+difference decoder. The collision is of whole row families, so any
+higher-order inference from their exteriors, guards and within-row
+partitions has identical input as well. It is not a necessity argument
+inferred solely from linear edge equations. $\square$
+
+**Proposition 12.6 (componentwise constraints do not classify every fiber).**
+For arbitrary fixed rows define the chronological realization fiber
+
+$$
+\begin{aligned}
+\mathcal E(\mathbf P,\mathbf R)
+=\{\mathbf n\in\mathbb N^m:\ &0=n_0\le\cdots\le n_{m-1},\\
+ &\exists t\in\mathcal T\ \forall i<m,\ R_{P_i}(\rho^{n_i}t)=R_i\}.
+\end{aligned}
+\tag{NAR.12.9}
+$$
+
+If this fiber contains $\mathbf n$ and $\mathbf n'$, then
+$n'_i-n_i$ is constant on each component, and zero on $C_*$. This is a
+necessary constraint, not a claim that every componentwise shift is
+feasible. Disconnected cuts can have a singleton realization fiber.
+
+**Proof.** Apply (NAR.12.4) to both realizations of the same rows. Every
+edge gives $n'_j-n'_i=n_j-n_i$, so the differences are constant along
+paths. At index zero both vectors vanish. The simultaneous feasible
+bits in Lemma 12.4 belong to its deliberately constructed fiber; they
+impose no affine-lattice classification on other fibers.
+
+For a singleton disconnected instance take $m=2$, $P_0=\{L\}$ and
+$P_1=\{R\}$, with both exteriors literally alpha, no reached holes and
+empty partitions. Their union covers, so the graph has two components.
+The first row forces $t=\alpha$. The second row forces
+$\rho^{n_1}\alpha=\alpha$, hence $n_1=0$: $T_1=\beta$, and $T_k$ is
+branched for every $k\ge2$. Thus this fiber is exactly $\{(0,0)\}$.
+The all-source impossibility in Theorem 12.5 does not assert ambiguity
+of every individual disconnected input.
+
+Even coordinate consistency does not establish compatibility. With
+both cuts empty, let the first full row be alpha and the second be
+$\langle\alpha,\alpha\rangle$. Their root right-clock difference is
+$2\ge0$, but the first row forces $t=\alpha$, and its epoch-two source
+is $T_2=\langle\beta,\alpha\rangle$, not the second row. The factor law
+excludes every other epoch, so the fiber is empty. Neither the forest
+calculation nor fiber inhabitation authenticates a physical execution.
+$\square$
+
+**Proposition 12.7 (degenerate cuts and essential edge examples).** The
+preceding claims include $m=1$, $D=0$, empty, root and ray-covering cuts,
+early absence and equal epochs. A connected family need not have a ray
+visible in every capture, and disconnected families admit concrete
+strictly chronological whole-row collisions.
+
+**Proof.** For $m=1$ the graph is connected and the required vector is
+the known relative reference $(0)$, even for a root cut. Empty cuts
+have $S_i=W_D$ and expose full trees; a root or any ray-covering cut
+has $S_i=\varnothing$, hence is an isolated vertex. Such an isolated
+vertex prevents whole-vector uniform recovery when $m>1$, regardless
+of the particular row's reached guards. At $D=0$ every cut is empty
+or the root singleton; the empty-cut vertices form a clique and each
+root-cut vertex is isolated. This is exactly the same criterion.
+
+No early absence is removed from the positive theorem. For example,
+$P_0=\{L\}$ and $P_1=\{LL\}$ have a common visible depth-two cell
+$RL$. At $t=\beta$ it is absent, with $J^c_{RL}(\beta)=1$. After one
+update $T_2$ still blocks the full $RL$ address at its right alpha leaf,
+with $J^c_{RL}(T_2)=2$. The exterior factors recover lag one while
+retaining the literal reachedness information separately. Equal epochs
+give zero on each applicable edge; strict chronology is a strengthening
+of the negative witnesses, not a restriction of the decoder contract.
+
+For a family needing different edge directions take
+
+$$
+\begin{aligned}
+P_0&=\{RL,RR\},& S_0&=\{LL,LR\},\\
+P_1&=\{LL,RR\},& S_1&=\{LR,RL\},\\
+P_2&=\{LL,LR\},& S_2&=\{RL,RR\}.
+\end{aligned}
+\tag{NAR.12.10}
+$$
+
+The graph is the path $0$--$1$--$2$, with witnesses $LR$ and $RL$,
+while $S_0\cap S_1\cap S_2=\varnothing$. The first and third cuts
+alone have a covering union; the middle capture joins the two native
+differences and permits whole-vector recovery. Reordering the cuts as
+$P_0,P_2,P_1$ gives the path $0$--$2$--$1$. Its forest traversal uses
+$d_{21}=n_1-n_2$, which can be negative on chronological inputs.
+
+For a concrete disconnected collision put $P_0=\{R\}$,
+$P_1=\{L\}$ and
+
+$$
+X=\langle T_2,T_6\rangle,\qquad Y=\langle T_2,T_5\rangle.
+\tag{NAR.12.11}
+$$
+
+Capture $X$ at epochs $(0,2)$ and $Y$ at $(0,3)$. Both first rows have
+exterior $\langle T_2,\square_R\rangle$; both second rows have exterior
+$\langle\square_L,T_8\rangle$. Each row has its indicated reached
+singleton hole and its singleton partition. These are equal whole
+inputs with different positive lags on actual fixed-source histories.
+The general lemma supplies the additional simultaneous mixed-depth
+partition argument for arbitrary cut families. $\square$
+
+**Proposition 12.8 (canonical boundary-density interpretation of the right
+clock).** Reuse [Boundary Geometry Continuation IV, Definition 113.3 and
+Theorems 113.4--113.5](https://github.com/the-omega-institute/trureturing/blob/30389d09d00d57c6887798af0c6aa3363c0240b8/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md).
+Let $\varphi=(1+\sqrt5)/2$, $\Omega=\{L,R\}^{\mathbb N}$ and let the
+Bernoulli probability satisfy $M([p])=\varphi^{-s(p)}$, with $s$ as in
+Definition 11.2. For each finite $u$, write $W(u)=a(u)+\varphi b(u)$
+for its alpha/beta leaf scale. On each original leaf cylinder $[p]$,
+with label $\ell_p=0$ for alpha and $1$ for beta, use the canonical
+locally constant representative
+
+$$
+f_u(\omega)=\frac{\varphi^{s(p)+\ell_p}}{W(u)}
+\quad(\omega\in[p]),\qquad \nu_u=f_u M.
+\tag{NAR.12.12}
+$$
+
+For every finite $u\in\mathcal T$ and every finite address $q$, reached
+or absent, the exact identity is
+
+$$
+\varphi^{J^c_q(u)}=W(u)f_u(qR^\infty).
+\tag{NAR.12.13}
+$$
+
+The locally constant representative is uniquely determined by the
+attained measure value $\nu_u$. Arbitrary almost-everywhere representatives
+and replacement of $J^c$ by $J^\nu$ do not satisfy this identity in general.
+It gives a semantic interpretation, without supplying the decoder an
+unacquired global measure, scale or point-evaluation oracle.
+
+**Proof.** Every infinite ray in a finite tree reaches exactly one
+original terminal leaf. Let $p$ be the terminal address on $qR^\infty$.
+If $q$ is absent, $p$ is exactly its blocking leaf and
+$J^c_q(u)=s(p)+\ell_p$. If $q$ is reached, then $p=qR^r$ for some
+$r\ge0$. The right-clock recursion gives
+$c(u|_q)=2r+\ell_p$, so again
+$J^c_q(u)=s(q)+2r+\ell_p=s(p)+\ell_p$.
+Substitution into (NAR.12.12) proves (NAR.12.13) in both cases, including
+the root and terminal addresses.
+
+Every finite cylinder has positive $M$ mass. If two locally constant
+representatives of the same measure differed at one point, each would
+be constant on a cylinder neighborhood of that point. On their common
+smaller cylinder the two constants would differ, contradicting equality
+almost everywhere. Thus the representative is unique; no unreduced
+original-leaf description is extra information. A finite native tree's
+leaf cylinders cover all of $\Omega$, so this proof uses the full source
+domain, not merely eventually reached addresses.
+
+The restriction on representatives is necessary. For $u=\alpha$ and
+$q=\varepsilon$, the canonical $f_u$ is one, $W(u)=1$ and $J^c_q(u)=0$.
+The singleton $\{R^\infty\}$ has zero mass, since
+$M([R^r])=\varphi^{-2r}\to0$. Changing the density to two just at that
+point gives the same Radon--Nikodym class and measure, but breaks the
+identity. Point evaluation is justified by the canonical locally
+constant representative, not by an arbitrary Radon--Nikodym derivative.
+
+For $u=\langle\alpha,\alpha\rangle$ at the root,
+$W(u)f_u(R^\infty)=\varphi^2$ and $J^c_\varepsilon(u)=2$.
+In contrast, $J^\nu_\varepsilon(u)=\nu(u)=0$ by Definition 11.2 and
+the supplied finite-tree image parser. Hence intrinsic inverse depth
+cannot replace the right clock. The boundary measure $\nu_u$, scalar
+intrinsic depth $\nu(u)$ and right clock $c(u)$ are distinct objects.
+
+On a genuine history, the supplied scale action is
+$W(\rho^n t)=\varphi^nW(t)$ and the boundary measure is invariant.
+Uniqueness makes its canonical densities agree pointwise. For any one
+edge word in (NAR.12.4), (NAR.12.13) therefore yields
+
+$$
+\frac{W(\rho^{n_j}t)f_{\rho^{n_j}t}(w_{ij}R^\infty)}
+     {W(\rho^{n_i}t)f_{\rho^{n_i}t}(w_{ij}R^\infty)}
+=\varphi^{n_j-n_i}.
+\tag{NAR.12.14}
+$$
+
+All densities are positive. This interprets the already observable
+integer difference; the decoder computes (NAR.12.4) from local acquired
+exteriors. It does not acquire or consume either global factor in
+(NAR.12.14). Identity (NAR.12.13) also holds semantically at covered
+addresses, where the required value need not be observable from a row.
+A density or clock value is not an address-presence test. $\square$
+
+**Mathematical citation 12.9 (suppliers, content and acquisition boundaries).**
+Definitions 1.1--1.2 and the cited `canonicalRow_record_iff`,
+`legal_values_row` and `rowFiberEquiv` own the native algebra and complete
+row semantics. Section 10 owns the two-cut theorem and separated-age
+partition mechanism. Section 11, Theorem 11.3 and (NAR.11.6)--(NAR.11.7)
+own the absence-safe all-source right-clock factors reused here;
+$J^\nu$ has its separately supplied intrinsic-depth factor. Neither clock
+is rediscovered or numerically identified with the other.
+
+Exact-offset integration is mature. [Singer, *Angular synchronization
+by eigenvectors and semidefinite programming*, arXiv:0905.3174v2,
+§1](https://arxiv.org/html/0905.3174v2) explicitly gives spanning-tree
+recovery on a connected graph and the undetermined offsets between
+components. Its angular sums are modulo $2\pi$; its clock application
+uses real offsets. The present native differences are exact integers.
+The additive path formulation is already supplied by
+[ZeroLoopPotentialEquivalence](../../../D5/S3/Observer/AgencyHolonomy/ZeroLoopPotentialEquivalence.lean),
+`closed_path_zero_iff_exists_potential`, for an additive commutative
+group on a connected groupoid, with composition additivity and inverse
+antisymmetry. Here the path cost sums (NAR.12.4), $\mathbb Z$ supplies
+the coefficient group, and actual-history telescoping supplies zero
+loop costs on each connected component. Finite forest traversal makes
+this application effective. This algebra does not itself prove that a
+native whole-input collision realizes independent component offsets.
+
+[NativeSymbolicRecutting](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean),
+`symbolic_recut_exact`, assumes every cut depth is strictly less than its
+representation depth. It cannot be applied directly with that depth
+equal to $D$ for the depth-$D$ holes here. Lemma 12.4 instead proves the
+actual fields directly. [NativePositiveContextFiber](https://github.com/the-omega-institute/trureturing/blob/30389d09d00d57c6887798af0c6aa3363c0240b8/D5/S3/Arith/FibonacciAtomic/Observer/NativePositiveContextFiber.lean),
+`positive_context_history_exact` and `positiveContextEquiv`, supplies
+positive repeated-role contexts with supplied epoch-zero constraints,
+without different-role disequality. It does not supply this unknown-epoch
+chronological family with complete partitions.
+[NativeRankedNavigationCompiler](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeRankedNavigationCompiler.lean)
+retains each endpoint's supplied epoch, while
+[NativePassiveServiceRealization](https://github.com/the-omega-institute/trureturing/blob/30389d09d00d57c6887798af0c6aa3363c0240b8/D5/S3/Arith/FibonacciAtomic/Observer/NativePassiveServiceRealization.lean),
+`bounded_passive_realization`, carries its certified epoch and prior
+chronological record. These are distinct input contracts, not decoders
+for (NAR.12.1). [Reversible five-state FIB harmonic-edge-load optimization](https://github.com/the-omega-institute/trureturing/blob/30389d09d00d57c6887798af0c6aa3363c0240b8/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_REVERSIBLE_FIVE_STATE_SLICE_UNIFORM_SEPARATION.md)
+has legal binary words and stationary laws as its objects; that task
+supplies no multirecord native epoch theorem.
+
+The substantive repo-derived content is the simultaneous component-owner
+realization of Lemma 12.4, preserving genuine chronology and every full
+row at once, and the resulting sharp uniform criterion. Proposition 12.8
+is a dependent finite-density compatibility consequence of the existing
+boundary profile and right clock. These statements have ordinary proofs
+above; no worldwide originality or new kernel certification is asserted.
+
+The consumer starts with all the declared rows acquired and retained.
+Literal exteriors, partitions, public addresses and their transmission,
+finite parsing, integer widths, workspace, source storage, permissions,
+stationary entries, lawful handoffs and genuine continuity remain separate
+resources or premises. No fixed-width optimum, full feasible-vector
+solver, source reconstruction from rows, free full-profile acquisition,
+future-row closure, update service, physical duration or execution
+authentication follows from this relative-epoch theorem.
+
+## 追加锚（本行以下为增补区）
+
+## 13. Several visible positions and the memory retained before recutting
+
+**Assumption 13.1 (one retained code and a k-position future menu).**
+Use the actual finite ordered native trees, homomorphic $\rho$ and
+complete literal rows of Definitions 1.1--1.2. Fix public $P,D,H$ as in
+Definitions 11.2 and 11.4, with $H\ge0$ and $r=|A_D(P)|\ge1$. Keep the
+original enumeration $W_D=(w_0,\ldots,w_{m-1})$, $m=2^D$, and put
+$I=\{j:w_j\in A_D(P)\}$ and $b=H+1$. The source domain is exactly the
+separated-age family of Definition 11.4:
+
+$$
+\begin{aligned}
+X_a&=\mathcal B_D[(T_{jb+a_j})_{0\le j<m}],
+&T_n&=\rho^n\alpha,\\
+a&\in\{0,\ldots,H\}^{I},
+&a_j&=0\quad(j\notin I).
+\end{aligned}
+\tag{NAR.13.1}
+$$
+
+In particular, offsets remain $jb$ at the original cell indices;
+renumbering the exposed coordinates does not renumber these offsets.
+Choose a public integer $1\le k\le r$. The future menu consists of
+all $k$-subsets $S\subseteq I$, with associated cuts
+
+$$
+Q_S=W_D\setminus\{w_i:i\in S\}.
+\tag{NAR.13.2}
+$$
+
+The encoder receives only the truthfully acquired initial $R_P(X_a)$,
+exports one code before $S$ and the lag are known, and discards that
+initial row. The decoder receives the code, public $P,D,H,k,S$ and
+exactly the entire truthful later $R_{Q_S}(\rho^\ell X_a)$. Its target
+is the unknown elapsed update count $\ell$. The required quantifiers are
+
+$$
+\exists E,\mathsf{Dec}\quad
+\forall a\in\{0,\ldots,H\}^{I}\quad
+\forall S\subseteq I, |S|=k\quad
+\forall\ell\in L:\quad
+\mathsf{Dec}(S,E(R_P(X_a)),R_{Q_S}(\rho^\ell X_a))=\ell,
+\tag{NAR.13.3}
+$$
+
+where either $L=\mathbb N$ or $L=\mathbb N_{>0}$ is fixed publicly.
+The letter $k$ counts visible positions, never the lag. Let
+$N_H(r,k)$ be the smallest number of attained retained code values for
+this task. Theorems below show it is the same for the two choices of $L$.
+Its fixed-width binary representation price is
+$\lceil\log_2 N_H(r,k)\rceil$.
+
+Each capture is stationary and genuinely acquired, and the continuation
+is genuinely same-source, same-root and pure-$\rho$. These are premises,
+not information supplying $\ell$. All surviving source-bearing data
+count as code, including IDs, numeric epochs, clocks, logs, sizes,
+readable pointers or allocation distinctions and archives. The decoder
+gets no hidden subtree values, cross-row hidden links or unacquired
+whole-source profile. It does get every literal exterior label and
+bracket, every reached or absent-cut guard and every within-row hidden
+equality/disequality. Paid acquisition and lawful handoff are those of
+Assumptions 10.1 and 11.1. This finite source restriction and restricted
+future menu are essential; they do not replace the all-source or
+all-allowed-cut contracts of §11.
+
+**Definition 13.2 (the native menu conflict graph).** On the age vectors
+in (NAR.13.1), define a finite undirected graph $G_{H,r,k}$ by
+
+$$
+a\mathrel{\sim_G}a'
+\quad\Longleftrightarrow\quad
+\exists d\in\mathbb Z\setminus\{0\}:\quad
+|\{i\in I:a_i-a'_i=d\}|\ge k.
+\tag{NAR.13.4}
+$$
+
+Exchanging the two vectors exchanges $d$ with $-d$, so the graph is
+symmetric and has no loops. A code is proper when it gives different
+values to adjacent vectors. Coordinates in graph calculations may be
+identified with $1,\ldots,r$ by the public order of $I$; this leaves the
+native offsets in (NAR.13.1) unchanged.
+
+**Theorem 13.3 (whole-row collisions and exact retained-alphabet criterion).**
+For every fixed $S$, all vectors $a,a'$ and all $\ell,\ell'\ge0$,
+
+$$
+\begin{aligned}
+R_{Q_S}(\rho^\ell X_a)=R_{Q_S}(\rho^{\ell'}X_{a'})
+&\quad\Longleftrightarrow\quad
+ a_i+\ell=a'_i+\ell'\quad(i\in S).
+\end{aligned}
+\tag{NAR.13.5}
+$$
+
+There is a common entire later row at unequal allowed lags for some
+menu choice exactly when (NAR.13.4) holds. An encoder in (NAR.13.3)
+is sufficient exactly when its induced code on the age vectors is
+proper. Consequently, with $\chi$ denoting ordinary finite chromatic
+number,
+
+$$
+N_H(r,k)=\chi(G_{H,r,k}).
+\tag{NAR.13.6}
+$$
+
+Every proper finite code has one effective finite decoder on the promised
+inputs. None of these conclusions takes an equivalence closure of the
+conflict relation or requires recovering the whole initial age vector.
+
+**Proof, actual entire rows.** Every $Q_S$ is prefix-free. A ray through
+any selected $w_i$ is uncovered by both $P$ and $Q_S$, so
+$Q_S\in\mathcal Q_D(P)$. This includes $D=0$, $r=k=1$, where
+$Q_S=\varnothing$. Homomorphism retains the full depth-$D$ skeleton and
+puts $T_{jb+a_j+\ell}$ in its original slot $j$ at lag $\ell$.
+The $Q_S$ exterior is therefore precisely that skeleton with these
+literal trees at the selected slots and address-marked holes at every
+other slot. All depth-$D$ slots are reached, even when a filling is
+alpha. Every cut guard is reached; there are no absent cut members.
+Inside a displayed tree, its labels, brackets and absent-address replies
+are determined by that literal tree.
+
+The clock supplier used in §11 gives $c(T_n)=n$. Hence $T_n=T_{n'}$
+if and only if $n=n'$. In either history, the exponents at distinct slots
+lie in the disjoint intervals
+
+$$
+[jb+\ell,jb+H+\ell],\qquad 0\le j<m.
+\tag{NAR.13.7}
+$$
+
+Indeed, for $j<j'$ the gap between the intervals is at least
+$(j'-j)b-H\ge1$. This includes slots outside $I$, whose ages are fixed
+to zero. Thus every off-diagonal hidden comparison is false and every
+reflexive one is true. The complete hidden partition is always discrete
+in the public hole order, also for alternative histories with different
+lags. A zero- or one-hole partition has the corresponding empty or
+singleton form. There are no hidden-visible or cross-row comparisons
+in the row contract.
+
+Equality of entire rows therefore forces equality of every displayed
+$T_{ib+a_i+\ell}$, giving the right side of (NAR.13.5). Conversely those
+equalities fix the entire exterior, all its concrete labels and brackets,
+every reached-cut guard and the same complete discrete hidden partition.
+Definition 1.2, or its supplied `canonicalRow_record_iff`, then gives
+whole-row equality. The graph reduction uses this complete-record proof;
+a scalar alone would not have licensed the converse.
+
+For unequal lags in (NAR.13.5), put $d=\ell'-\ell\ne0$. At least the
+$k$ selected indices satisfy $a_i-a'_i=d$, proving a conflict edge.
+Conversely, choose any $k$ indices having the same nonzero displacement
+$d$ and take
+
+$$
+\ell=\max(1,1-d),\qquad \ell'=\ell+d.
+\tag{NAR.13.8}
+$$
+
+Both lags are positive and distinct, and the selected translated ages
+agree. Equation (NAR.13.5) gives the common whole row. Thus allowing zero
+lags adds no edge to the positive-lag task. Each witness is one fixed
+actual $X_a$ with its own pure-$\rho$ continuation; different histories
+are compared, not spliced.
+
+**Proof, the two coding directions and effectivity.** Initial $P$ rows
+are distinct and display each exposed slot, by Theorem 11.5. The encoder
+can compute its age from that acquired literal subtree alone:
+
+$$
+a_i=c(X_a|_{w_i})-ib
+     =\gamma_{P,w_i}(R_P(X_a))-s(w_i)-ib.
+\tag{NAR.13.9}
+$$
+
+Thus every code on the finite age domain is realizable from the actual
+initial row without an age oracle. If a sufficient encoder gave the same
+code to adjacent $a,a'$, (NAR.13.8) would present its decoder with the
+same public $S$, the same code and the same entire later row, but different
+required outputs. Necessity follows.
+
+For sufficiency, parse the received later exterior at the selected slots
+and subtract their public offsets to obtain
+
+$$
+z_i=c((\rho^\ell X_a)|_{w_i})-ib=a_i+\ell\qquad(i\in S).
+\tag{NAR.13.10}
+$$
+
+Enumerate the finitely many vectors $u$ with the received code. Fix one
+$i_0\in S$, set $h=z_{i_0}-u_{i_0}$ in $\mathbb Z$, and retain the
+candidate if $h\in L$ and $z_i-u_i=h$ for all $i\in S$. This is a finite
+procedure on acquired finite trees. One may also construct its finite
+$R_{Q_S}(\rho^hX_u)$ and compare the complete literal record; on promised
+inputs (NAR.13.5) makes this an equivalent test. The genuine source is
+among the candidates. Two surviving candidates with different $h$ would
+have a common nonzero displacement on $S$, contradicting properness.
+All surviving candidates therefore have one and the same lag. Return
+that lag. Several different initial vectors at the same lag are harmless.
+Malformed or unpromised inputs may return failure.
+
+This is the single-shot zero-error side-information bridge already proved
+in [Transport--Memory Completion §8.2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#82-标签恰须切开可能混淆的前缀),
+instantiated with the native entire-row collision just established.
+Numbering the colors gives (NAR.13.6); the generic coloring principle is
+not additional mathematical content here. Overlapping possible later
+inputs are not the fibers of one deterministic source readout. For
+example, when $H=1,r=3,k=2$, the pairs $000,110$ and $110,001$ are edges,
+while $000,001$ is not. Replacing this graph by connected components
+would introduce a false separation obligation. $\square$
+
+**Theorem 13.4 (general finite-age bounds and matched endpoints).** For
+$H\ge0$ and $1\le k\le r$,
+
+$$
+(H+1)^{\lfloor r/k\rfloor}
+\ \le\ N_H(r,k)\ \le\ (H+1)^{r-k+1}.
+\tag{NAR.13.11}
+$$
+
+In particular,
+
+$$
+N_0(r,k)=1,\qquad N_H(r,1)=(H+1)^r,\qquad N_H(r,r)=H+1.
+\tag{NAR.13.12}
+$$
+
+If a single selected $k$-subset $S$ is known before encoding and is the
+only future cut, its exact retained-value price is $H+1$, irrespective
+of $k$. All these statements hold for either lag convention.
+
+**Proof.** Put $q=\lfloor r/k\rfloor$. Partition $qk$ exposed indices
+into $q$ disjoint $k$-blocks. Let each block have one freely chosen common
+age in $\{0,\ldots,H\}$ and fix every leftover age to zero. There are
+$b^q$ such actual sources. Any two choices differ on some entire block
+by one nonzero displacement, hence are adjacent by Theorem 13.3.
+This is a clique, so every proper code uses at least $b^q$ values.
+The witnesses retain the original slot offsets and their complete native
+row interpretation; they do not install a new subset-query port.
+
+For the upper bound choose a fixed public set $F\subseteq I$ of size
+$r-k+1$ and retain precisely $(a_i)_{i\in F}$, computed by (NAR.13.9).
+Every $k$-subset $S$ intersects $F$, since $|I\setminus F|=k-1$.
+Choose $i\in S\cap F$ from the public order and return $z_i-a_i$.
+This uses $b^{r-k+1}$ attained values and works at every allowed lag.
+Equivalently, vectors with the same retained coordinates cannot have a
+nonzero displacement on an entire selected $S$. This construction proves
+sufficiency, without asserting that the bound is generally sharp.
+
+For $H=0$, the single vector gives $z_i=\ell$, so no distinguishing
+memory is required. For $k=1$ the two bounds coincide at $b^r$; any pair
+of different vectors has a differing coordinate and is an edge. For
+$k=r$ they coincide at $b$; one retained acquired coordinate suffices.
+
+For a known fixed $S$, retain the age at one public $i\in S$ and use the
+same subtraction. For necessity let all selected ages have a common
+value $v\in\{0,\ldots,H\}$, fixing the other ages to zero. The initial
+rows are distinct. At the positive lags $H+1-v$, every selected normalized
+age is $H+1$, so Theorem 13.3 gives one entire later row for these $b$
+sources and $b$ distinct required lags. They require $b$ codes. This proves
+the exact known-menu comparison, including $H=0$. $\square$
+
+**Theorem 13.5 (sharp binary half-visibility boundary).** On precisely the
+binary-age family $H=1$,
+
+$$
+\begin{aligned}
+N_1(r,k)=2&\quad\Longleftrightarrow\quad 2k>r,\\
+2k\le r&\quad\Longrightarrow\quad
+ N_1(r,k)\ge 2^{\lfloor r/k\rfloor}\ge4,\\
+r=2k&\quad\Longrightarrow\quad N_1(r,k)=4.
+\end{aligned}
+\tag{NAR.13.13}
+$$
+
+Thus the exact one-bit threshold is $k>r/2$. There is no parameter pair
+in this binary domain whose optimal retained alphabet has three values.
+At equality $r=2k$ the exact fixed-width price is two bits.
+
+**Proof, a majority code and its actual decoder.** Write
+$w(a)=\sum_{i\in I}a_i$. When $2k>r$, retain the bit
+
+$$
+E(a)=\begin{cases}1,&2w(a)>r,\\0,&2w(a)\le r.\end{cases}
+\tag{NAR.13.14}
+$$
+
+This convention assigns any global tie to zero. Binary displacements
+in a conflict edge can only be $1$ or $-1$. If $a_i-a'_i=1$ on at least
+$k$ positions, then $w(a)\ge k>r/2$ and
+$w(a')\le r-k<r/2$. The two codes differ; the reverse displacement is
+symmetric. This proves properness.
+
+There is also a direct decoder using (NAR.13.10). If the selected ages
+are mixed, their normalized later values include both $\ell$ and
+$\ell+1$, so return $\min_{i\in S}z_i$. The retained bit is unnecessary
+on this input. If the $z_i$ are uniform, say all equal $t$, the selected
+ages are either all zero with lag $t$, or all one with lag $t-1$.
+Because $k>r/2$, their common selected age is the strict global majority:
+all zero leaves at most $r-k<r/2$ ones, and all one provides at least
+$k>r/2$ ones. Thus the retained bit is exactly that common age; return
+$t-E(a)$. On promised inputs this has the correct allowed sign. The
+same proof covers $k=1$ when it satisfies the threshold and $k=r$ when
+the whole selected row may be mixed. No numeric epoch is retained.
+
+The all-zero and all-one vectors are adjacent for every $k\le r$,
+so a single code value is impossible. Both bit values are attained,
+proving $N_1(r,k)=2$ above the threshold. At or below it the clique from
+Theorem 13.4 has at least four members; this proves necessity, excludes
+two- and three-value optima and supplies the stronger displayed block
+lower bound.
+
+**Proof, four attained colors at equality.** Let $r=2k$, choose one public
+exposed index $i_*$ and assign four labels by
+
+$$
+C(a)=\begin{cases}
+0,&w(a)<k,\\
+1,&w(a)>k,\\
+2+a_{i_*},&w(a)=k.
+\end{cases}
+\tag{NAR.13.15}
+$$
+
+Two vectors with weight below $k$ cannot have $k$ positive or $k$
+negative binary differences: either direction would require one of them
+to have at least $k$ ones. Two vectors with weight above $k$ cannot be
+adjacent either: the smaller side in either directed edge would have at
+least $k$ zeros and hence weight at most $k$. For two weight-$k$ vectors,
+a conflict needs $k$ directed differences. Equal weights force $k$
+reverse differences too; there are only $2k$ positions. The vectors are
+therefore complementary and differ at $i_*$, so their labels differ.
+Different weight categories already have disjoint labels. The code is
+proper, and Theorem 13.3 supplies its effective decoder. All four labels
+occur: all zero, all one, and weight-$k$ vectors with either value at
+$i_*$. The two-disjoint-block clique has four members, giving the matched
+lower bound. In particular, ties cannot be resolved by one arbitrary
+majority bit at this boundary. $\square$
+
+**Proposition 13.6 (native edge cases and the three-position contrast).**
+The binary conclusions include $r=1,k=1$, all $k=r$ and all $k=1$.
+Their exact alphabet sizes are respectively $2$, $2$ and $2^r$. A native
+$r=3,k=2$ menu needs one bit, whereas the section 11 task on the same
+binary source family needs three fixed-width bits when singleton
+exposures remain allowed. This saving concerns the changed visibility
+requirement, not an extra acquired source statistic.
+
+**Proof.** The first two cases follow from Theorems 13.4--13.5. At $k=1$
+every pair of distinct binary vectors is adjacent, so $2^r$ values are
+both necessary and sufficient. For $r=2,k=1$ this is also the exact
+half-boundary four-value case; for $r=2k$ at any $k$ Theorem 13.5 applies.
+
+For a literal three-position realization take $D=2$, $P=\{RR\}$,
+$I=\{0,1,2\}$ in the order $LL,LR,RL,RR$. The actual sources are
+
+$$
+X_a=\left\langle
+       \langle T_{a_0},T_{2+a_1}\rangle,
+       \langle T_{4+a_2},T_6\rangle
+     \right\rangle,
+\qquad a\in\{0,1\}^3.
+\tag{NAR.13.16}
+$$
+
+The initial row displays the three variable trees and hides only $T_6$.
+Each future $Q_S$ displays exactly two of those positions and hides the
+other two depth-two slots. At any lag their hidden exponents are distinct,
+so the whole hidden partition is discrete and all cut guards are reached.
+Theorem 13.5's majority bit and its uniform/mixed decoder therefore apply
+to these actual complete rows. Necessity follows already from the actual
+$000,111$ pair: at lags $2,1$ the selected trees agree for every two-slot
+choice, and the full rows agree by Theorem 13.3.
+
+If the future menu instead allows each singleton $\{i\}$, Theorem 11.5
+provides its fixed entire row at lags $1-a_i$, or $2-a_i$ for positive
+lags. Every pair of distinct vectors differs at some exposed index, so
+Theorem 11.6 forces all eight codes. The section 13 two-slot requirement
+excludes exactly those singleton witnesses. It does not lower the price
+under the broader section 11 menu. $\square$
+
+**Proposition 13.7 (ternary multiset obstruction and a four-source clique).**
+At $H=2,r=3,k=2$, a code depending only on the multiset of the initial
+ages is insufficient. In particular the median, every fixed order
+statistic, any tuple of quantiles and the entire sorted age list cannot
+by themselves be a sufficient retained code. Independently,
+
+$$
+4\le N_2(3,2)\le9.
+\tag{NAR.13.17}
+$$
+
+Neither assertion determines the exact ternary optimum.
+
+**Proof, an entire-row positive-lag obstruction.** Keep $D=2$, $P=\{RR\}$
+and $I=\{0,1,2\}$, but the original public offsets are now $0,3,6,9$.
+Take $a=(0,1,2)$ and $a'=(1,2,0)$ and select $S=\{0,1\}$, so
+$Q_S=\{RL,RR\}$. The actual original trees and lags are
+
+$$
+\begin{aligned}
+X_a&=\langle\langle T_0,T_4\rangle,
+                    \langle T_8,T_9\rangle\rangle,&\ell&=2,\\
+X_{a'}&=\langle\langle T_1,T_5\rangle,
+                    \langle T_6,T_9\rangle\rangle,&\ell'&=1.
+\end{aligned}
+\tag{NAR.13.18}
+$$
+
+Both later exteriors are exactly
+$\langle\langle T_2,T_6\rangle,
+\langle\square_{RL},\square_{RR}\rangle\rangle$.
+The hidden trees in the first history are $T_{10},T_{11}$ and in the
+second are $T_7,T_{10}$. In both, the two holes are reached and their
+values unequal, so the complete partitions coincide, as do every
+visible label, bracket and absent-address guard supplied by the literal
+exterior. These are equal whole later rows with distinct strictly positive
+lags. The two initial rows differ, but both age multisets are $\{0,1,2\}$.
+Any permutation-invariant code therefore identifies them and fails.
+The binary majority proof depended on a uniform binary selected age
+being the global strict majority; a selected common translation of two
+different ternary ages has no such implication.
+
+For the lower bound on all codes, consider the four vectors
+
+$$
+000,\qquad 110,\qquad 211,\qquad 222.
+\tag{NAR.13.19}
+$$
+
+In their displayed order, the larger-minus-smaller coordinate difference
+vectors for the six pairs are
+$110,211,222,101,112,011$. Each contains a common nonzero displacement
+at least twice: respectively $1,1,2,1,1,1$. All six pairs are native
+conflict edges, with genuine positive-lag whole-row witnesses supplied
+by (NAR.13.8). They form a four-clique and force four values regardless
+of the code's symmetry. The upper bound is Theorem 13.4's two retained
+fixed coordinates, using nine attained values. Failure of the symmetric
+codes is thus separate from the lower bound for arbitrary codes. The
+four-clique rules out three values for every code. No code attaining four
+values, or proof that nine are necessary, is supplied. $\square$
+
+**Proposition 13.8 (a valid binary diameter comparison).** For $H=1$ and
+$2(k-1)<r$, the native price satisfies the additional lower bound
+
+$$
+N_1(r,k)\ \ge\
+\left\lceil\frac{2^r}{\displaystyle\sum_{j=0}^{k-1}\binom rj}\right\rceil.
+\tag{NAR.13.20}
+$$
+
+This bound can exceed the disjoint-block bound: at $r=6,k=2$ it gives
+$N_1(6,2)\ge10$, whereas the latter gives only eight. A maximum
+permissible color-class size does not supply an optimal coloring.
+
+**Proof.** Identify a binary vector with its support $A\subseteq I$.
+For two supports $A,B$, the positive and negative displacement counts
+are $|A\setminus B|$ and $|B\setminus A|$. Therefore a color class must
+satisfy, for every pair in it,
+
+$$
+|A\setminus B|\le k-1,\qquad |B\setminus A|\le k-1.
+\tag{NAR.13.21}
+$$
+
+Equivalently its diameter in
+$d_{\rm as}(A,B)=\max(|A\setminus B|,|B\setminus A|)$ is at most $k-1$.
+This is a maximum-distance condition on an anticode, not the
+minimum-distance condition of an error-correcting code. It implies
+Hamming diameter at most $2(k-1)$, since Hamming distance is the sum of
+the two directed differences. The converse implication is false in
+general: $\varnothing$ and a two-element set have Hamming distance two
+but directed maximum two, so at $k=2$ they cannot share a color.
+One cannot identify the native independent classes with all Hamming
+anticodes of that diameter.
+
+Use only the forward implication and
+[Huang--Klurman--Pohoata, *On subsets of the hypercube with prescribed
+Hamming distances*, arXiv:1812.05989v1, Theorem 1.1](https://arxiv.org/html/1812.05989v1).
+Its hypotheses are binary vectors of length $n$ with all pairwise
+Hamming distances at most $d<n$; for $d=2t$ it bounds size by
+$\sum_{j=0}^{t}\binom nj$. Here the exact substitutions are
+$n=r$, $t=k-1$, $d=2(k-1)<r$. Every color class consequently has at most
+the denominator in (NAR.13.20) members. Partitioning all $2^r$ vectors
+into $N$ classes yields that bound. This known diameter theorem is an
+intermediate literature-attested supplier, not a new theorem claimed
+here. At $r=6,k=2$, the denominator is $1+6=7$ and
+$\lceil64/7\rceil=10>2^3$.
+
+The zero-centered Hamming ball of radius $k-1$ satisfies (NAR.13.21):
+each support has size at most $k-1$, so each directed difference does too.
+It is therefore a native independent class of the denominator's size.
+Thus the size upper bound is attained by this one class, without asserting
+a disjoint covering of the whole cube by equally large classes. For
+$r=3,k=2$ it is four, and the two classes of the majority code happen to
+attain a full partition; the $r=6,k=2$ lower bound makes no analogous
+partition assertion.
+
+For $H>1$, disagreements can have several nonzero magnitudes. The edge
+criterion in (NAR.13.4) counts each exact displacement separately.
+It is not a threshold on the number of positive differences or on
+Hamming distance. Already at $H=2,r=2,k=2$, $00$ and $12$ differ in
+both coordinates and in one sign direction, but have no repeated
+nonzero displacement and hence are nonadjacent. Thus the binary
+asymmetric-distance correspondence does not extend merely by using the
+same name or replacing the alphabet. No asymmetric-anticode or
+set-family extremum is imported with unmatched parameters. $\square$
+
+**Mathematical citation 13.9 (suppliers and the retained-resource boundary).**
+The native algebra and complete record are Definitions 1.1--1.2 and the
+cited `literalRecord`, `canonicalRow_record_iff`, `legal_values_row` and
+`rowFiberEquiv`. The clock used here is the right clock $c$, with
+`right_clock_iterate` from
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean).
+It is not numerically identified with the intrinsic inverse depth $\nu$.
+The finite separated-age source family, initial-row acquisition factor
+and singleton entire-row mechanism are from
+[published §11](https://github.com/the-omega-institute/trureturing/blob/d32f66a819e5fa524c1d876fb69c8a4dad3fd343/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md#11-retaining-a-reference-before-the-future-cut-is-known).
+Section 12 concerns multiple acquired and retained chronological rows;
+no result from its component theorem is a premise for the single-code,
+single-later-row task here.
+
+The graph coding bridge belongs to Transport--Memory Completion §8.2,
+which cites H. Witsenhausen, *The zero-error side information problem and
+chromatic numbers (Corresp.)*, IEEE Transactions on Information Theory
+22(5), 592--593, [doi:10.1109/TIT.1976.1055607](https://doi.org/10.1109/TIT.1976.1055607).
+Theorem 13.3 explicitly supplies both directions for the present target;
+no detailed historical full-text theorem is needed beyond that reused
+finite argument. Charpenay--Le Treust--Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definitions II.1 and IV.5 and Theorem
+IV.8](https://arxiv.org/html/2211.03649v2), defines edges by differing
+function values at a common feasible side-information value. That is
+the relevant mature coding relation. Its rates use i.i.d. source laws,
+expected prefix-code lengths and asymptotic blocks; these hypotheses do
+not provide an exact adversarial single-record alphabet price here.
+The only imported combinatorial inequality is Theorem 1.1 of the cited
+Huang--Klurman--Pohoata version, with the strict diameter hypothesis
+verified in Proposition 13.8. Its Hamming-class size conclusion is not
+an exact chromatic formula.
+
+The latest compared immutable public suppliers have different contracts.
+[Native Birth Provenance §9](https://github.com/the-omega-institute/trureturing/blob/a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#9-repeated-partners-on-a-complete-depth-three-one-image-fiber)
+asks for a predecessor row after exactly one authenticated update, with
+acquired current hidden-class values and fresh stationary queries. Its
+repeated partners constrain that image fiber; it supplies no unknown-lag
+future-menu code. [Boundary Geometry V §114](https://github.com/the-omega-institute/trureturing/blob/a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_V.md#114-static-linear-transport-across-an-actual-accepted-rho-step)
+compares time-independent real-linear heat transport on all-occurrence
+signed-state spaces. Its semigroup clocks and linear ranks are neither
+unknown native update counts nor finite retained alphabets.
+
+The substantive conclusions here are the complete native $k$-slot
+collision criterion, its binary visibility threshold and matched
+half-boundary price, the finite-age bounds and actual ternary
+obstructions. They are repo-derived ordinary deductions using the
+stated suppliers and known coding methods, without a worldwide
+originality assertion or new kernel verification. The remaining general
+chromatic values, including $N_2(3,2)$ within (NAR.13.17), are undetermined
+by these results. An arbitrary restricted menu requires its own collision
+analysis; no all-menu classification is supplied.
+
+The price is the number of exported retained values, or its fixed-width
+binary representation. Even a one-value code does not price source
+storage, acquired rows, installed decoder controls, tree parsing,
+arithmetic widths, workspace, public addresses or transmission. Paid
+acquisition, code export and discard, stationary capture, permissions,
+lawful handoffs and genuine continuation remain premises or separately
+priced resources. A code can recover $\ell$ while many initial vectors
+remain compatible, so recovery does not certify source identity or the
+history. No acquisition optimum, physical-memory optimum, physical
+elapsed-time statement, native update service or unrestricted-source
+majority code follows from this finite-family theorem.
+
+## 追加锚（本行以下为增补区）

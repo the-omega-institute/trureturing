@@ -116,7 +116,7 @@ def navigationValue {k : Nat} (n : Fin k → Nat) : Navigation k → Option Sour
   | .whole E => some (rankedEval n Fin.elim0 E)
   | .atomic j a p => subtree p (substitution^[n j+a] (.of true))
 
-private theorem navigate_value {k : Nat} (n : Fin k → Nat) (E : RankedExpr k 0)
+theorem navigate_value {k : Nat} (n : Fin k → Nat) (E : RankedExpr k 0)
     (p : Address) : navigationValue n (navigate E p) = subtree p (rankedEval n Fin.elim0 E) := by
   induction p generalizing E with
   | nil => rfl
@@ -194,7 +194,7 @@ def guardFormula {k : Nat} (s : Navigation k) (i : Fin 2) : presburger.Formula (
         equalityFormula Fin.elim0 (.residual a (.inl (Fin.castAdd 2 j)))
           (.residual (pathCost p) (.inl (Fin.natAdd k i)))
 
-private theorem guard_realize {k : Nat} (n : Fin k → Nat) (w : Fin 2 → Nat)
+theorem guard_realize {k : Nat} (n : Fin k → Nat) (w : Fin 2 → Nat)
     (s : Navigation k) (i : Fin 2) :
     (guardFormula s i).Realize (Fin.addCases n w) ↔
       navigationValue n s = some (rankedEval (Fin.addCases n w) Fin.elim0 (reachedExpr s i)) := by
@@ -248,7 +248,7 @@ private theorem close_realize {k : Nat} (f : presburger.Formula (Fin (k + 2)))
   apply congrArg (BoundedFormula.Realize f (Fin.addCases n w))
   exact Subsingleton.elim _ _
 
-private theorem navigation_witness {k : Nat} (n : Fin k → Nat) (s : Navigation k)
+theorem navigation_witness {k : Nat} (n : Fin k → Nat) (s : Navigation k)
     (i : Fin 2) (u : Source) (hu : navigationValue n s = some u) :
     ∃ r : Nat, ∀ w : Fin 2 → Nat, w i = r →
       (guardFormula s i).Realize (Fin.addCases n w) ∧
