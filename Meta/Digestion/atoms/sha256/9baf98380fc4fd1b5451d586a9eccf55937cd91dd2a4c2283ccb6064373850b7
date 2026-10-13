@@ -1,0 +1,45 @@
+**Proposition 7.2 (no-adjacent-ones inclusion preserves the example, not
+the whole base interface).** Let
+$E(x_1\cdots x_m)=x_1\,0\cdots x_m\,0$ and define
+
+$$
+C'_m=
+\{E(i)E(j)0\,0E(i):i,j\in\{0,1\}^m\}
+\ \cup\
+\{E(i)E(j)1\,0E(j):i,j\in\{0,1\}^m\}.
+\tag{7.1}
+$$
+
+Every word has length $6m+2$ and no adjacent ones. At cut $K=4m+1$,
+with the controlled actions of Definition 1.2 for this new relation,
+its widths and supplements are again $M,2M^2$ and $2M,M$.
+This inclusion does not identify its guards or inverse edges with
+the unrestricted no-adjacent-ones base.
+
+Proof. Each encoded block ends in zero, and each possible one is
+followed by zero, including the selector. At cut $4m$ the residual is
+
+$$
+\{0\,0E(i),1\,0E(j)\}.
+$$
+
+Its selector derivatives are $\{0E(i)\}$ and $\{0E(j)\}$.
+Injectivity of $E$ and the same literal one-symbol selector deletion
+give precisely the distinct pairs and fiber counts of Theorem 4.3;
+a separator then supplies the new branch, its forced zero and the
+encoded component. No two-symbol block deletion is substituted.
+
+The language theorem
+[BinaryZeckendorfLanguage](../../../D5/S0/Automata/BinaryZeckendorfLanguage.lean),
+declaration `base_success_iff_noAdjacentOnes`, supplies ambient forward acceptance
+of these words, including their padded prefixes. It does not impose
+the copy constraints in (7.1). At prefix $E(i)E(j)0$, the next $+1$
+is absent in this relation because the following symbol is forced
+zero. In the no-adjacent-ones base a one after this terminal zero is
+legal. Thus even append domains disagree. The exact transition
+projection required by
+[TypedPartialDFAO](../../../D5/S0/Automata/TypedPartialDFAO.lean),
+field `Machine.type_preserving`, preserves and reflects missing edges;
+mere language inclusion supplies neither this equation nor a delete
+operation. $\square$
+
