@@ -7500,3 +7500,199 @@ with all growing-multiplicity coupling terms retained. The local
 critical-line premise also remains conditional. Original-source
 all-node signs, RH and strict Robin for every integer $H>5040$ remain
 unresolved.
+
+
+## Complete exterior dual responses and the exact coupled recurrence
+
+Retain the unchanged original source, every local critical-zero and
+complete-removal premise of (LC263), and every parameter of
+(LC267)--(LC271). Write $S=C_{\rm abs}+C_b+1$. The following is a
+repo-derived analytical extension of the existing exterior certificate.
+The canonical product, finite coefficient circle and exponential tilt
+are reused. No global exterior real-root assumption, Lean verification
+or originality certification is supplied.
+
+### Two derivative operations remain distinct
+
+For the complete centered product in (LC267), differentiation of finite
+products and locally uniform convergence give
+
+$$
+|g_a'(a+w)|\le\sqrt e\,K_a|w|e^{K_a|w|^2/2}.
+\tag{LC272}
+$$
+
+Indeed $E'(u)=-ue^{-u}$ and
+$e^{-\Re u}\le\sqrt e\,e^{|u|^2/2}$. Each differentiated term is
+bounded by $\sqrt e\,|w|\,|a-\zeta|^{-2}$ times the same complete
+Gaussian product majorant. Summing the absolutely convergent mass
+proves the estimate without a logarithmic derivative pole at a zero.
+
+Use the same exact coefficient circle (LC176). Its elementary Stirling
+bound gives $|\mathcal K_n(\theta)|\le e\sqrt n\,
+ e^{-n(1-\cos\theta)}/(2\pi)$. Put
+$\sigma_a=|a|/\sqrt n$ and $k_a=\sigma_a^2K_a<1$. The first and third
+absolute Gaussian moments, with (LC272) and (LC267), respectively give
+
+$$
+\begin{aligned}
+|\mathscr T_n(g_a')(a)|
+ &\le\frac{4K_a\sigma_a}{1-k_a},\\
+|(\mathscr T_ng_a)'(a)|
+ &\le\frac{7K_a\sigma_a}{(1-k_a)^2}.
+\end{aligned}
+\tag{LC273}
+$$
+
+For the second line use the exact integration-by-parts identity
+
+$$
+(\mathscr T_ng_a)'(a)=\frac na
+\int_{-\pi}^{\pi}\mathcal K_n(\theta)(1-e^{i\theta})
+\bigl(g_a(ae^{i\theta})-1\bigr)\,d\theta.
+$$
+
+The constant function contribution vanishes. The Gaussian constants
+are $e\pi\sqrt e/4<4$ and
+$e\pi^3(\sqrt e-1)/8<7$. All points $a$ in the source disc are nonzero.
+These are two different extraction responses, not a commutation of
+$\mathscr T_n$ with differentiation.
+
+Set
+$H=\mathscr T_nA$, $V=\mathscr T_nA'$,
+$\ell=H'/H$, $s=V/H$ and $v(t)=t^2/n$ wherever $H\ne0$.
+For a fixed $a$, keep $b_a$ fixed inside the tilt, and let
+$d_a=1-ab_a/n$, $t=\Theta_n(a)$ and
+$\epsilon_a=\mathscr T_ng_a(a)-1$. The exact tilt gives
+
+$$
+\begin{aligned}
+s(t)&=b_a+\frac{\mathscr T_n(g_a')(a)}{1+\epsilon_a},\\
+\ell(t)&=d_ab_a+d_a^2
+\frac{(\mathscr T_ng_a)'(a)}{1+\epsilon_a}.
+\end{aligned}
+\tag{LC274}
+$$
+
+The second line differentiates the fixed-tilt identity, whose argument
+is $t/(1+b_at/n)$ and whose amplitude is $(1+b_at/n)^n$.
+It does not differentiate a freely moving source normalization.
+For $k_a\le1/16$, (LC268) makes $|\epsilon_a|<1/4$, so
+
+$$
+|s(t)-b_a|\le6K_a\sigma_a,\quad
+|\ell(t)-d_ab_a|\le12|d_a|^2K_a\sigma_a,\quad
+|\chi(t)-a|\le12K_a\sigma_a^3,
+\qquad \chi(t)=t-v(t)\ell(t).
+\tag{LC275}
+$$
+
+For the last bound, $t-v(t)d_ab_a=a$ and
+$v(t)d_a^2=a^2/n$ cancel exactly. This retains the complete amplitude
+and strengthens the transported-coordinate error to
+$O(DL/\nu^{3/2})$ under the existing source mass bound.
+
+### An explicit linear budget controls both local coefficients
+
+For $\nu\ge32SL$, reuse the complex coverage in (LC270)--(LC271).
+It supplies a source preimage $|a-c|<D/4$ for every
+$|t-c|\le D/8$, with $k_a<1/16$, $|d_a|<2$,
+$|b_a|\le(C_b+C_{\rm abs}/4)L/D$ and
+$\sigma_a\le2D/\sqrt\nu$.
+With the loose explicit constant $C_1=128S$, (LC274)--(LC275) imply
+
+$$
+\begin{aligned}
+|\ell(t)|+|s(t)|&\le C_1L/D
+&&(|t-c|\le D/8),\\
+|\ell^{(m)}(t)|+|s^{(m)}(t)|
+&\le C_1m!16^mL/D^{m+1}
+&&(|t-c|\le D/16,\ m\ge0).
+\end{aligned}
+\tag{LC276}
+$$
+
+The functions are holomorphic because $H$ is nonzero on the outer
+disc. Apply the Cauchy estimate to each function on a circle of radius
+$D/16$; their combined bound is the displayed one.
+These constants do not depend on selected degree or initial spacing.
+
+Put $\eta(t)=1-v(t)s'(t)$ and increase the threshold to
+$\nu\ge256C_1L=32768SL$. Since $|t|\le2c$ on the inner disc,
+$v(t)\le4D^2/\nu$ on its real diameter. Equation (LC276) gives
+$|\chi'-1|\le68C_1L/\nu$ and
+$|\eta-1|\le64C_1L/\nu$. Consequently
+
+$$
+\frac12<\chi'(t)<\frac32,\qquad
+\frac12<\eta(t)<\frac32,\qquad
+|\chi(t)-t|\le4C_1DL/\nu
+\quad(t\in\mathbb R,\ |t-c|\le D/16).
+\tag{LC277}
+$$
+
+The degree requirement is the explicit conditional threshold
+$n\ge32768S\,T^2\log(T+2)/\rho^2$. It retains the source constants;
+no numerical instantiation of $C_{\rm abs}$ or $C_b$ is asserted.
+
+### The full source remains a coupled, noncommutative problem
+
+Absorb a nonzero real scalar into $A$ and write
+$Q(z)=\prod_{j=1}^r(z-\alpha_j)$, with every multiplicity retained.
+The coefficient rule
+$(n)_{\underline{k+1}}n^{-k-1}=(1-k/n)(n)_{\underline k}n^{-k}$
+gives the exact multiplication operator
+$\mathfrak L_n=t-(t^2/n)\partial_t$. Thus, for the original full source,
+
+$$
+J=\mathscr T_n(AQ)=Q(\mathfrak L_n)H,\qquad
+G=\mathscr T_n((AQ)')=Q'(\mathfrak L_n)H+Q(\mathfrak L_n)V.
+$$
+
+Here $G$ extracts the source derivative; it differs from $J'$.
+Conjugating $\mathfrak L_n$ by $H$ gives
+$\mathcal Bf=\chi f-vf'$. Starting from $P_0=1$, $S_0=0$, define
+
+$$
+\begin{aligned}
+P_j&=(\mathcal B-\alpha_j)P_{j-1},\\
+S_j&=(\mathcal B-\alpha_j)S_{j-1}+\eta P_{j-1}.
+\end{aligned}
+\qquad
+J=HP_r,\quad G=H(sP_r+S_r).
+\tag{LC278}
+$$
+
+To verify the second recursion, first set $R_0=s$ and
+$R_j=P_{j-1}+(\mathcal B-\alpha_j)R_{j-1}$. Source differentiation
+and exact multiplication give $G=HR_r$. Then $S_j=R_j-sP_j$ and
+$[\mathcal B,M_s]=-vM_{s'}$ give precisely (LC278).
+This algebra is an application of the unchanged multiplier, not a new
+general convolution-preservation theorem.
+
+At every real actual node in the $H$-nonvanishing disc,
+$J(t)=0$ is equivalent to $P_r(t)=0$, and
+
+$$
+J'(t)G(t)=H(t)^2P_r'(t)S_r(t).
+\tag{LC279}
+$$
+
+No simplicity is assumed in this identity. At a multiple node the
+right-hand side vanishes; strict positivity would also have to exclude
+that case. The positive coefficients in (LC277) do not prove positivity
+of $P_r'S_r$ after all $r\le C_0L$ steps. Already
+$S_1=\eta$ and
+$S_2=\eta(2\chi-\alpha_1-\alpha_2)-v\eta'$ expose a derivative term
+with unpaid sign and slope comparison. Higher steps retain further
+noncommuting derivatives.
+
+There is also a boundary obligation: the selected source zeros have
+$\alpha_j=(T+\delta_j)^2$, $|\delta_j|\le4\rho$, so only
+$|\alpha_j-c|\le8D+16\rho^2$ follows. They need not all lie in the
+$D/8$ exterior nonvanishing disc. A complete interlacing root chain
+inside the smaller interval cannot be assumed. What remains missing
+is a uniform high-order sign and boundary estimate for this exact
+coupled recurrence on the actual original source. The local
+all-critical premise, all-height exclusion, RH and strict Robin for
+all integers $H>5040$ remain unresolved.
