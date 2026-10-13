@@ -735,3 +735,157 @@ stated law and block; no uncontrolled joint limit or new coverage of all finite 
 [ME]: https://terrytao.wordpress.com/2008/01/30/254a-lecture-8-the-mean-ergodic-theorem/
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Conditional spectral interface and triplet boundary capacity
+
+The preceding sections produce finite exterior tests for a scalar square
+residual. They do not by themselves identify three spatial channels. The
+following result records exactly what would follow if a future realization
+supplies such channels with a common rotation action.
+
+**Definition 9.1 (Finite response contract).** Let
+
+$$
+\mathcal V=\mathbb R^m\otimes\mathbb R^3,
+\qquad
+\mathcal Y=\mathbb R^q,
+$$
+
+and let $\mathscr R:\mathcal V\to\mathcal Y$ be the linear map formed by a
+finite list of declared measurements. A measurement may be one of the finite
+tests from §§4–5 after a three-channel interface has been specified. Put
+
+$$
+G=\mathscr R^{\mathsf T}\mathscr R.
+$$
+
+Assume, as an additional interface hypothesis, that for every
+$Q\in SO(3)$ there is an orthogonal $W_Q$ on $\mathcal Y$ such that
+
+$$
+\mathscr R(I_m\otimes Q)=W_Q\mathscr R.
+\tag{9.1}
+$$
+
+This is an equivariance contract, not a consequence of (1.5)–(1.6),
+$\mathsf Z(P)$, or the finite-cylinder construction.
+
+**Lemma 9.2 (Equivariant Gram form).** Under (9.1), there is a positive
+semidefinite $m\times m$ matrix $A$ such that
+
+$$
+\boxed{G=A\otimes I_3.}
+\tag{9.2}
+$$
+
+**Proof.** Since $W_Q$ is orthogonal, (9.1) gives
+
+$$
+(I_m\otimes Q)^{\mathsf T}G(I_m\otimes Q)=G.
+$$
+
+Write $G$ as an $m\times m$ block matrix with $3\times3$ blocks. Every
+block commutes with every $Q\in SO(3)$. Commutation with half-turns about
+the coordinate axes first removes all off-diagonal entries. Commutation with
+a quarter-turn taking one coordinate axis to another then makes the three
+diagonal entries equal. Hence each block is a scalar multiple of $I_3$;
+symmetry and positivity give (9.2). $\square$
+
+**Theorem 9.3 (Exact spectral boundary capacity).** Let the nonzero
+eigenvalues of $A$ be
+
+$$
+\lambda_1\ge\cdots\ge\lambda_s>0.
+$$
+
+Then
+
+$$
+\boxed{\operatorname{rank}\mathscr R=3s.}
+\tag{9.3}
+$$
+
+Every exact linear boundary $S:\mathcal V\to\mathbb R^k$ for which there
+exists a linear decoder $D:\mathbb R^k\to\mathcal Y$ satisfying
+$$
+\mathscr R=DS
+$$
+for all $v$ satisfies
+
+$$
+k\ge3s.
+$$
+
+Conversely, $3s$ coordinates suffice by retaining a basis of
+$\operatorname{im}\mathscr R$. Thus each nonzero spectral mode is a complete
+three-component response; the additional capacity is a multiplicity space,
+not a fourth local spatial direction.
+
+**Proof.** The rank of $A\otimes I_3$ is $3\operatorname{rank}A$. If
+$\mathscr R=DS$ for some linear decoder $D$, then
+$\operatorname{rank}\mathscr R\le\operatorname{rank}S\le k$. Choosing a
+row-space basis of $\mathscr R$ gives a summary with $k=\operatorname{rank}
+\mathscr R$. $\square$
+
+**Theorem 9.4 (Finite-precision triplet selection).** Suppose the source
+coefficient $v$ is centered and whitened, namely
+$$
+\mathbb E[v]=0,
+\qquad
+\mathbb E[vv^{\mathsf T}]=I_{3m},
+$$
+and restrict compression to the equivariant orthogonal projections
+
+$$
+P=P_m\otimes I_3,
+\qquad
+P_m=P_m^{\mathsf T}=P_m^2,
+\qquad
+0\le r:=\operatorname{rank}P_m\le m.
+$$
+
+Write the complete spectrum of $A$ as
+$$
+\lambda_1\ge\cdots\ge\lambda_m\ge0.
+$$
+
+The minimum squared response error is
+
+$$
+\boxed{
+\min_P\mathbb E\|\mathscr R(v-Pv)\|^2
+ =3\sum_{i=r+1}^{m}\lambda_i.
+}
+\tag{9.4}
+$$
+
+The optimal $P_m$ retains eigenvectors for the $r$ largest eigenvalues.
+If $r<m$, adding the next complete three-component response lowers the error
+by $3\lambda_{r+1}$; if $r=m$, there is no next response group and the gain
+is zero.
+
+**Proof.** The error is
+
+$$
+\operatorname{tr}\bigl(G(I-P)\bigr)
+ =3\operatorname{tr}\bigl(A(I-P_m)\bigr).
+$$
+
+The spectral theorem and the finite-dimensional Ky Fan variational principle
+select the $r$ largest eigenvalues of $A$, giving (9.4). $\square$
+
+For example, if $A=\operatorname{diag}(9,4)$, the response spectrum is
+$9,9,9,4,4,4$ when the multiplicity spaces are written explicitly, and
+keeping only the first triplet leaves squared error $12$ under the stated
+identity-covariance convention. The example is a response-capacity
+calculation, not a claim about the present FIB source.
+
+**Scope 9.5 (What the triplet result does and does not establish).** If a
+future source-level bridge identifies three local FIB channels with the
+equivariant contract (9.1), Theorems 9.3–9.4 show that exact or approximate
+boundary maintenance should count complete three-component response groups.
+They do not supply that bridge, a native $SO(3)$ action, a metric, transport
+closure, a Green kernel, or a physical dimension theorem. Under the current
+DEV assumptions, the established content remains finite response
+localization and its square-residual detection; the triplet conclusion is
+conditional on the separately stated interface.
