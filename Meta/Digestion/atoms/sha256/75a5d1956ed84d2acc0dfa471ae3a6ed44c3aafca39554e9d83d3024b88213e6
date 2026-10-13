@@ -1,0 +1,7 @@
+**Proof.** Use the three calibration histories from Continuation II: each pair
+has a common one-step experiment, but all three together have no common safe
+first experiment. The partitions $\{1,2\}|\{3\}$ and
+$\{1,3\}|\{2\}$ are both feasible, while their common coarsening is not. A
+universal action congruence retains the distinctions required by every action;
+a task quotient may retain only those required by one selected policy. ∎
+

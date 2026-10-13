@@ -1,0 +1,16 @@
+**Proposition 58.10 (same-source resource preservation).** A congruence
+preserves $\Gamma$ when, for each original source and each contracted trace,
+the quotient preserves all inputs to $G_\Gamma$ and uses the same aggregation
+law. It then preserves $c^\pi_\Gamma(s)$ for each $s$, and consequently the
+declared sourcewise bounds on the same source domain.
+
+Proof. For recursive aggregation, induct on actual events using the equal
+initial accumulator, equal input labels, and equal update rule; apply the
+same terminal evaluation. Otherwise apply the same function $G_\Gamma$ to
+equal contracted traces. Pointwise equality permits the same outer supremum.
+It does not permit assembling coordinates from different source traces.
+For instance, two source costs $(1,0)$ and $(0,1)$ give
+$\sup_s(c_1(s)+c_2(s))=1$, whereas
+$\sup_s c_1(s)+\sup_s c_2(s)=2$. Thus a weighted same-run objective must be
+formed before the source supremum, exactly as in Continuation IV §44.3. ∎
+
