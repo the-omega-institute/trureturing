@@ -22,7 +22,7 @@
    proof_shape: wordPower_period: bind-only; consumer: DensePowerWindow.powerChunks_cover
    proof_shape: wordPrefix_constant: bind-only; consumer: DensePowerWindow.powerChunk_exists
    definition: imagePrefix; consumer: DensePowerWindow.imagePrefix_add
-   proof_shape: imagePrefix_add: bind-only; consumer: DensePowerWindow.imagePrefix_succ
+   proof_shape: imagePrefix_add: bind-only; consumer: DensePowerWindow.morphicImage_segment
    proof_shape: imagePrefix_succ: bind-only; consumer: DensePowerWindow.imagePrefix_length_ge
    proof_shape: imagePrefix_length_ge: bind-only; consumer: DensePowerWindow.powerChunks_cover
    definition: PowerChunk; consumer: DensePowerWindow.powerChunk_exists
