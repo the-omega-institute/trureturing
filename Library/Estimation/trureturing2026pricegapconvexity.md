@@ -2496,3 +2496,140 @@ clock and coefficient estimates. They narrow an unpaid spectral range;
 they do not supply its signed bound, replace an original mask, establish
 literature originality or constitute Lean verification. The full Robin
 comparison and RH remain unproved.
+
+## Legal core-height choices differ only below the target scale
+
+Keep the complete original coefficient, the same actual core clocks,
+all labels and ties, and CR45--CR47's fixed $a,\kappa$. This application
+uses the already paid degree-two suffix and CHJ contracts. A height is
+called admissible here only if it lies in CR45's interval
+
+$$
+\frac{\sqrt B-4}{4}\le T\le\frac{\sqrt B-4}{2}
+$$
+
+and satisfies that route's original complete formula
+
+$$
+\psi(B)=B-Z_B(T)+e_B(T),\qquad |e_B(T)|\le80\sqrt B.
+$$
+
+CR45 supplies an admissible height for every sufficiently large actual
+core. This definition does not declare every point in the interval
+admissible, or change an existing mask from a different height route.
+
+### Remove the legal-height variable using the complete accounts
+
+Write $E(u)=u-\psi(u)$ and define the height-independent same-clock
+quantity
+
+$$
+G_a(B)=-s_BI_\psi(B)-\frac{aE(B)}{\sqrt B},
+\qquad
+\mathcal G_X=\sum_{i<m}\delta_iG_a(B_i).
+$$
+
+The original full formula and CR34's degree-two suffix are
+
+$$
+-s_BI_\psi(B)=2s_B\operatorname{Re}
+\sum_{\gamma>0}m_\rho F_B(\rho)+r_B,
+\qquad
+T_F(B,T)=-\mu_B(T)+e_F(B,T).
+$$
+
+Their complete endpoint and elementary terms are retained. In
+particular $\mu_B\ge0$, $|e_F|\le\varepsilon_F$, and at
+$T\asymp\sqrt B$ the already established bounds give
+$|r_B|+\mu_B(T)+\varepsilon_F(B,T)=o_X(1)$ uniformly in the
+original sources and allowed heights. The CHJ formula at that same
+height gives $Z_B(T)=E(B)+e_B(T)$. Subtracting these two complete
+accounts, rather than optimizing an independently chosen head, yields
+
+$$
+\boxed{
+H_{B,a}(T)=G_a(B)-r_B+\mu_B(T)-e_F(B,T)
+-\frac{ae_B(T)}{\sqrt B},\qquad
+|H_{B,a}(T)-G_a(B)|\le80a+o_X(1).}
+\tag{HC1}
+$$
+
+This conclusion holds also when $\Theta=1$. It uses the actual
+CHJ error and signed suffix contracts; no absolute summability of
+the compensated infinite $1/\rho$ series is imposed.
+
+For any admissible assignment of the original individual heights,
+positivity of the original weights therefore gives
+
+$$
+\boxed{
+|S_X(\boldsymbol T)-\mathcal G_X|
+\le(80a+o_X(1))L_X.}
+\tag{HC2}
+$$
+
+Two admissible assignments on the same window and the same maximizing
+ties consequently differ by at most $(160a+o_X(1))L_X$. Repeated
+cores need not be given the same height for this comparison, although
+SM5 permits that choice in this route. Different cores are not asserted
+to share a common admissible height.
+
+### Preserve the cofinal quantifiers and the strict constant
+
+The original $M_X=X^{1/2-\eta}\log X$ tends to infinity because
+the supplied $\eta<1/2$. Thus HC2 is $o(M_XL_X)$. Put
+$C_*=d(1-\kappa)/16$. The existence of a constant $C_0<C_*$ such
+that the original sufficient signed-head estimate holds is equivalent
+to the corresponding estimate for $\mathcal G_X$, with an arbitrarily
+small fixed loss of margin in either direction.
+
+Both statements retain the same source quantifiers: beyond every common
+finite source start there is an original qualifying full window on
+which every maximizing tie assignment satisfies the bound; the head
+version also requires admissible heights. If the head estimate holds,
+HC2 transfers it to $\mathcal G_X$. Conversely, if the latter estimate
+holds, CR45 supplies heights for each actual core, and HC2 transfers
+the bound to every such admissible assignment. Choose a fixed
+$\epsilon<C_*-C_0$ and then one common start with
+$(80a+o_X(1))/M_X<\epsilon$ to preserve the strict constant.
+The original $\eta,a$ and all full-window outgoing weights are unchanged.
+
+In particular, searching among heights satisfying these same contracts
+can change the aggregate only by $O_a(L_X)$. It cannot by itself supply
+an $M_XL_X$-scale saving. HC2 does not bound $\mathcal G_X$ or
+show that the required favorable full windows exist.
+
+### The remaining same-clock comparison is a future prime-deficit average
+
+The original improper integral gives an exact alternative readout. For
+$L=\log B$, set
+
+$$
+k_L(v)=\frac{L(1+L+\log v)}{v^2(L+\log v)^2},\qquad v\ge1.
+$$
+
+Changing variables $u=Bv$ in $I_\psi(B)$ yields
+
+$$
+\boxed{
+G_a(B)=\frac1{\sqrt B}
+\left[\int_1^\infty E(Bv)k_{\log B}(v)\,dv-aE(B)\right].}
+\tag{HC3}
+$$
+
+The convergence is the original integral's convergence. The kernel is
+positive and normalized: it is the negative derivative of
+$L/[v(L+\log v)]$, whose values at $v=1$ and at infinity are $1$
+and $0$. This is a change of variable in the existing formula, not a
+new prime-error estimate.
+
+CR44 already controls a specified same-source interaction through
+$A=B+t$ and $K(A)=B$. It does not control the future-deficit average
+in HC3. A bound for that average at the actual selected cores is still
+needed. A FIB re-encoding or rotation of the same readout supplies no
+such estimate without an additional proved source relation.
+
+HC1--HC3 are paper applications of the existing complete accounts,
+with no new generic theorem, literature-originality claim or Lean
+verification. They eliminate legal-height optimization from the leading
+unpaid issue; the original signed Robin target and RH remain unproved.
