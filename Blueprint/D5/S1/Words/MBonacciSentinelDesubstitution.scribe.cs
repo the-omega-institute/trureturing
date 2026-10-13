@@ -14,6 +14,13 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
         H("Sentinel Desubstitution of the m-bonacci Word"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("factor-length"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.factor_len"),
+                H("Exact factor length"), StatementSource.FromAuthor(WindowSupplier("factor_len")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every alphabet size m, every function x from the naturals to Fin m, and all natural i and n, the length-n factor of x at i has length n. This identity gives the lengths of finite prefixes in periodic intervals."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("window-iterate-prefix"),
                 DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.iterate_prefix"),
                 H("Nested actual iterates"), StatementSource.FromAuthor(WindowSupplier("iterate_prefix")),
@@ -344,9 +351,13 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
                 WA("i", WN(), WA("n", WN(), WA("j", WN(), WI(WT(j, n),
                     WQ(WC("getElem", WC("factor", x, i, n), j),
                         new Formula.Apply(x, [WP(i, j)]))))))),
+            "factor_len" => WA("x", WC("Function", WN(), alphabet),
+                WA("i", WN(), WA("n", WN(),
+                    WQ(WC("length", WC("factor", x, i, n)), n)))),
             _ => throw new ArgumentOutOfRangeException(nameof(name)),
         };
-        return F.Disp(WA("m", WN(), name == "factor_get" ? body : WI(WL(F.D(2), m), body)));
+        return F.Disp(WA("m", WN(), name == "factor_get" || name == "factor_len"
+            ? body : WI(WL(F.D(2), m), body)));
     }
 
     private static Formula WN() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
