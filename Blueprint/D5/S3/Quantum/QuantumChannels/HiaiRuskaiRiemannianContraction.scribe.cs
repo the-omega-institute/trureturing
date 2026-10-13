@@ -34,6 +34,12 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
             Definition("admissible", "The non-unital channel parameters", AdmissibleDefinition(),
                 "Section 6, p. 19: \"Below we assume that α ≥ 0 and α² + τ² ≤ 1.\" The nonsingular non-unital range is 0 < |tau| < 1. There is no strict positivity condition on alpha."),
             Definition("claim", "Hiai-Ruskai Conjecture 6.3", Disp(Iff(Id("claim"), ClaimBody())), ConjectureQuote),
+            Describe.Lean(DescribeId.Create("hiai-ruskai-density-coordinates"),
+                DeclarationHandle.Create(Prefix + "density_coordinates"),
+                H("Coordinates of a trace-one Hermitian qubit matrix"),
+                StatementSource.FromAuthor(DensityCoordinates()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any Hermitian complex two-by-two matrix A with trace one, its Bloch coordinates are twice the real part of A(0,1), minus twice the imaginary part of A(0,1), and twice the real part of A(0,0) minus one. This formula identifies arbitrary density inputs with the coordinates used in matrix_contraction_from_pauli and in the affine reconstruction of an isolated qubit ensemble."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("hiai-ruskai-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("All three bounds are exact"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
@@ -84,6 +90,18 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
     private static Formula Square(Formula x) => new Formula.Power(Parenthesized(x), D(2));
     private static Formula ToComplex(Formula x) => Parenthesized(Seq(x, Sp, Colon, Sp, Complexes()));
     private static Formula Hermitian(Formula x) => Call("Matrix.IsHermitian", x);
+    private static Formula DensityCoordinates()
+    {
+        var a = Id("A");
+        var coordinates = Seq(Bang, OpenBracket,
+            Mul(D(2), Call("Complex.re", Apply(a, D(0), D(1)))), Comma, Sp,
+            Sub(D(0), Mul(D(2), Call("Complex.im", Apply(a, D(0), D(1))))), Comma, Sp,
+            Sub(Mul(D(2), Call("Complex.re", Apply(a, D(0), D(0)))), D(1)), CloseBracket);
+        var matrix = Call("D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix",
+            D(1), Call("WithLp.toLp", D(2), coordinates));
+        return Disp(All("A", QubitMatrix(), Implies(Hermitian(a),
+            Implies(Eq(Call("Matrix.trace", a), D(1)), Eq(a, matrix)))));
+    }
     private static Formula StarMatrix(Formula x) => Call("Matrix.conjTranspose", x);
     private static Formula Smul(Formula scalar, Formula matrix) => Call("SMul.smul", scalar, matrix);
     private static Formula Lambda(string name, Formula type, Formula body) =>
