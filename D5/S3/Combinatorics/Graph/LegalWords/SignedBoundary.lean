@@ -31,7 +31,7 @@ open D5.S1.Words.AdmissibleWords.AdmissibleCount
 open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 open D5.S3.Combinatorics.Graph.LegalWordDegree
 open D5.S3.Combinatorics.Graph.LegalWords.EdgeCount
-open private erase erase_adj erase_occupation from
+open private erase_occupation from
   D5.S3.Combinatorics.Graph.LegalWords.EdgeCount
 
 abbrev Orientation (G : SimpleGraph α) :=
