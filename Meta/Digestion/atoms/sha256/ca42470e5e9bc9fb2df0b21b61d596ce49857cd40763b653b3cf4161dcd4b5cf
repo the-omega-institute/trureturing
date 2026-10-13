@@ -1,0 +1,14 @@
+**定理 6.2（完全多部型的秩与负修正）。** 设 $n\ge3$ 为奇数,$\mathtt q\ge2$,着色 $\mathrm{col}$ 占据 $p$ 个方,并设 $\Gamma$ 满足:凡 $\mathrm{col}(u)\ne\mathrm{col}(v)$ 都有 $\Gamma_{uv}=1$(同一方内的边任意)。对 $t\in G$ 记 $k_t$ 为 $f_t$ 在被占据方上取到的不同值的个数。则对每个 $t\in G$,
+
+$$
+\rho_t=\begin{cases}2, & k_t\ge2,\\ 0, & k_t=1,\end{cases}\qquad r(\pi_t)=2\Big\lfloor\frac{k_t}{2}\Big\rfloor .
+$$
+
+满足 $k_t=k$ 的 $t$ 恰有 $S(p,k)\,(n-1)_{k-1}\,n^{\mathtt q-p}$ 个,于是
+
+$$
+\Delta=-2\,n^{\mathtt q-p}\sum_{k=4}^{\min(p,n)}S(p,k)\,(n-1)_{k-1}\Big(\Big\lfloor\frac k2\Big\rfloor-1\Big),\tag{6.1}
+$$
+
+空和为 $0$。特别地 $\Delta\le0$,且 $\Delta<0$ 当且仅当 $p\ge4$ 且 $n\ge5$;当 $k_t\ge2$ 时 $\rho_t/r(\pi_t)=1/\lfloor k_t/2\rfloor$。$p=4$ 时 $\Delta=-2D$。
+
