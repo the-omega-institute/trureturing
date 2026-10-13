@@ -27,9 +27,11 @@ internal sealed class NativeRectangleEnvironmentDocument : IScribeDocumentDefini
             Theorem("native-minimal-four-cell-law", "NativeRectangleEnvironment.native_minimal_four_cell_law",
                 "For every natural M, q, s, support S : Support M q, real r, experiment e in {pair,path} and complete history o : Obs M s e, with finite Sites s e, 1 <= q < M, 0 < r < 1 and 0 <= compensation M q r < 1, for every natural k,l,t and representative z : Fiber S e o, conditionalFiberMass S r e o (Env filtered by a(y)=t)/conditionalFiberMass S r e o Env equals choose(R,t)*choose(N-R,U-t)/choose(N,U) if t<=U, and equals zero otherwise. N,R,U,Env and a are those defined above from this z; the complete fiber has its induced finite enumeration."),
             Theorem("kernel-second-central-moment", "RectangleHypergeometricMoments.kernel_second_central_moment",
-                "For every natural N,K,n with K<=N, n<=N and N>1, sum_{t=0}^n H N K n t*(t-n*K/N)^2 = n*(K/N)*(1-K/N)*((N-n)/(N-1)), with every quotient, subtraction outside binomial arguments and count cast in this formula taken in the reals."),
+                "For every natural N,K,n with K<=N, n<=N and N>1, sum_{t=0}^n H N K n t*(t-n*K/N)^2 = n*(K/N)*(1-K/N)*((N-n)/(N-1)), with every quotient, subtraction outside binomial arguments and count cast in this formula taken in the reals.",
+                AssessedProvenance.FromLiterature(ClassicalTools[0])),
             Theorem("kernel-central-tail", "RectangleHypergeometricMoments.kernel_central_tail",
-                "For every natural N,K,n with K<=N, n<=N and N>1 and every real L>0, sum of H N K n t over 0<=t<=n with L*sqrt(N)<|t-n*K/N| is at most 1/(4*L^2). The threshold is strict."),
+                "For every natural N,K,n with K<=N, n<=N and N>1 and every real L>0, sum of H N K n t over 0<=t<=n with L*sqrt(N)<|t-n*K/N| is at most 1/(4*L^2). The threshold is strict.",
+                AssessedProvenance.FromLiterature(ClassicalTools[0])),
             Theorem("native-kernel-event-mass", "RectangleHypergeometricMoments.native_kernel_event_mass",
                 "For every natural M, q, s, support S : Support M q, real r, experiment e in {pair,path} and complete history o : Obs M s e, with finite Sites s e, 1 <= q < M, 0 < r < 1 and 0 <= compensation M q r < 1, for every natural k,l, representative z : Fiber S e o and decidable predicate P on the naturals, conditionalFiberMass S r e o (Env filtered by P(a(y)))/conditionalFiberMass S r e o Env = sum over t in range(U+1) satisfying P(t) of H N R U t. The complete fiber has its induced finite enumeration."),
             Theorem("native-minimal-central-tail", "RectangleHypergeometricMoments.native_minimal_central_tail",
@@ -45,15 +47,16 @@ internal sealed class NativeRectangleEnvironmentDocument : IScribeDocumentDefini
             Theorem("full-native-conditional-mass-eq", "NativeGlobalRectangleEnvironment.full_native_conditional_mass_eq",
                 "For every natural M,q,s, support S : Support M q, real r, experiment e, complete history o, natural k,l and arbitrary predicate P on Obs M s e, assume 1<=q<M, 0<r<1 and 0<=compensation M q r<1. The sum of probability r e S x over all original x with fullRectangleReadout S e k l x=fullRectangleReadout S e k l o and P(x), divided by the sum over that full-readout event, equals conditionalFiberMass S r e o of {y in Fiber S e o: nativeMinimalRectangleReadout S e o k l y=nativeMinimalRectangleReadout S e o k l (o,rfl) and P(y.val)}, divided by conditionalFiberMass S r e o of {y in Fiber S e o: nativeMinimalRectangleReadout S e o k l y=nativeMinimalRectangleReadout S e o k l (o,rfl)}. The induced finite fiber enumeration and classical decisions for P are used; no decidability hypothesis is added to the theorem."),
             Describe.Lean(DescribeId.Create("full-rectangle-readout"),
-                DeclarationHandle.Create(Module + "NativeGlobalRectangleEnvironment.fullRectangleReadout"),
+                DeclarationHandle.Create(Module + "fullRectangleReadout"),
                 H("Full rectangle readout"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural M,q,s, support S : Support M q, experiment e, natural k,l and complete history x : Obs M s e, fullRectangleReadout S e k l x = (collapsedObs S e x, nativeMinimalRectangleReadout S e x k l (x,rfl))."))), DescribeRole.Definition),
             Paragraph(Text("Hypergeometric moments, Chebyshev tails and Poisson-binomial comparison are classical tools. Their finite formulas and the explicit formal consequences below are distinguished from the repo-derived identification of native conditioning events. No approximation theorem substitutes for that exact identification. See "),
                 Ref("D5/L/Estimation/siegrist2026hypergeometric"), Text("; "), Ref("D5/L/Estimation/grinsteadsnell2006probability"), Text("; "), Ref("D5/L/Estimation/lahirichatterjeemaiti2007hypergeometric"), Text("; "), Ref("D5/L/Estimation/lecam1960poissonbinomial"), Text("."))
         )));
 
-    private static DocumentBlock.Describe Theorem(string id, string name, string statement) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + name),
-            H(name), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(ClassicalTools),
+    private static DocumentBlock.Describe Theorem(string id, string name, string statement,
+        AssessedProvenance? provenance = null) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + name[(name.LastIndexOf('.') + 1)..]),
+            H(name), StatementSource.WithoutFormula(), provenance ?? AssessedProvenance.FromRepo(ClassicalTools),
             Blocks(Paragraph(Text(statement))), DescribeRole.Theorem);
 }
