@@ -10456,3 +10456,347 @@ These laws have an atom at zero and a compactly supported density
 component; they are not the original smooth theta law. Complete
 original-source local/exterior budgets, the actual moving-band
 location, all-node cofactor signs, RH and strict Robin remain unpaid.
+
+## Atomless primitive sources retain positive shifts but not the zero row
+
+This is a source-interface application of the classical beta/Bessel product,
+Laguerre--Polya derivative closure and Jensen criterion. It is not a new
+Bessel or Fourier theorem, a priority claim, Lean verification or an
+actual-theta/RH counterexample. It addresses whether excluding the
+zero-frequency atom and requiring Fourier decay repair the preceding
+positive-law obstruction.
+
+For real $c\ge64$, let $k_0(x)=(1-x^2)^5$ on $[-1,1]$, put
+$k_c=k_0+2k_0''/c+k_0^{(4)}/c^2$ on this interval, and define
+
+$$
+p_c(x)=-k_c'(x)/x,\qquad
+Z_c=\int_{-1}^1p_c(x)\,dx
+=\frac{512(c^2-36c+504)}{63c^2}.
+\tag{LC404}
+$$
+
+The quotient at zero has its polynomial extension. The probability law
+has density $p_c/Z_c$ on $[-1,1]$ and zero density outside it.
+It has no atoms. Its density is analytic in the open interval, but
+is not claimed continuous at the support endpoints or smooth on the
+whole real line.
+
+Set $y=x^2$. The polynomial $p_c$ has the degree-eight Bernstein
+expansion $\sum_{j=0}^8 b_j\binom8j y^j(1-y)^{8-j}$, with
+
+$$
+\begin{aligned}
+(b_0,\ldots,b_8)=c^{-2}\bigl(&10(c^2-48c+720),\
+5(c^2-36c+600),\
+\tfrac{15}7(c^2-56),\\
+&\tfrac57(c^2+120c-3024),\
+\tfrac17(c^2+720c-21840),\\
+&\tfrac{60}7(9c-350),\
+\tfrac{120}7(2c-105),\
+480,\ 3840\bigr).
+\end{aligned}
+\tag{LC405}
+$$
+
+Every coefficient is strictly positive for $c\ge64$. Thus $p_c>0$
+on $[-1,1]$ and $Z_c>0$. In particular, if
+$\mu_j=\int x^{2j}p_c(x)/Z_c\,dx$, then every finite matrix
+$(\mu_{i+j+\ell})_{0\le i,j\le m}$ is strictly positive definite,
+for all nonnegative $m,\ell$: its quadratic form is the integral
+of $x^{2\ell}r(x^2)^2$ against a density positive on an interval.
+All square-exponential moments are finite.
+
+Define the entire source
+$$
+f_c(z)=Z_c^{-1}\int_{-1}^1p_c(x)\cos(x\sqrt z)\,dx.
+\tag{LC406}
+$$
+The cosine means its entire power series in $z$. Thus $f_c(0)=1$,
+$f_c(-z)$ has strictly positive coefficients, and $f_c$ has
+order at most $1/2$. Riemann--Lebesgue gives $f_c(t)\to0$ for
+real $t\to+\infty$.
+
+Let
+$$
+B_b(z)={}_0F_1(;b;-z/4),\qquad
+\kappa_c=\frac{c^2}{22(c^2-36c+504)}.
+\tag{LC407}
+$$
+The beta integral and integration by parts give the exact SAME-source identity
+$$
+f_c'(z)=-\kappa_c(1-z/c)^2B_{13/2}(z).
+\tag{LC408}
+$$
+
+Indeed, $k_0$ and its derivatives through order four vanish at the
+support endpoints as needed. If $K_c(w)=\int k_c(x)e^{iwx}\,dx$,
+then $K_c(w)=(1-w^2/c)^2K_0(w)$, while differentiating the
+density transform gives $\frac{d}{dw}f_c(w^2)=-wK_c(w)/Z_c$.
+The normalized $K_0$ is $B_{13/2}(w^2)$, and
+$\int k_0=512/693$. This yields the displayed coefficient,
+including its factor of two.
+
+DLMF 10.21(i), 10.21.15 supplies the positive Bessel zeros and their
+canonical product for order $11/2\ge0$. Consequently $B_{13/2}$
+is Laguerre--Polya; multiplication by the real-rooted factor
+$(1-z/c)^2$ preserves that class. Classical derivative closure
+and the Jensen criterion therefore imply that
+$\mathscr T_k f_c^{(h)}$ is hyperbolic for EVERY $h,k\ge1$,
+on the same fixed $c$, where $J_k=\mathscr T_kf_c$,
+$G_k=\mathscr T_kf_c'$, and the finite multiplier
+$\mathscr T_kh=\sum_{j\le k}(k)_{\underline j}h_jt^j/k^j$
+is unchanged. Its alternating, nonzero coefficients also exclude
+nonpositive roots. No separate parameter is chosen for different
+shifts or degrees; simplicity of all these shifted rows is not asserted.
+
+The zero row is not forced into this class. Set
+$$
+H(c)=c^2Z_cf_c(c)=\int_{-1}^1c^2p_c(x)\cos(x\sqrt c)\,dx.
+\tag{LC409}
+$$
+This extends to an entire function of $c$, because $c^2p_c$
+is polynomial in $c$ and the cosine has an entire series.
+It has $H(0)=4096\ne0$. Its positive real zeros are isolated,
+so arbitrarily large $c$ avoid them. For every such $c$,
+$$
+f_c(c)\ne0,\qquad f_c'(c)=f_c''(c)=0.
+\tag{LC410}
+$$
+If the nonconstant $f_c$ were Laguerre--Polya, its order below
+one and positive $f_c(-t)$ would give a genus-zero product with
+at least one positive root. Off its roots that product obeys
+$$
+(f_c'/f_c)'(c)=-\sum_r m_r/(c-r)^2<0.
+\tag{LC411}
+$$
+The two vanishing derivatives instead make it zero, a contradiction.
+Thus the classical Jensen criterion forces a nonhyperbolic finite
+zero-shift row for every such $c$.
+
+Moreover, as $c\to\infty$, the coefficients of $f_c$ converge
+to those of $B_{11/2}$. The latter's finite zero-shift rows are
+scaled $L_k^{9/2}$, with positive simple roots. For any prescribed
+finite $N$, their stability supplies a threshold beyond which all
+first $N$ rows of $f_c$ are also positive and simple. Choosing
+one $c$ above that threshold with $H(c)\ne0$ gives a single
+atomless positive source with an arbitrarily long normal prefix,
+all positive-shift rows hyperbolic, and a later zero-shift defect.
+This does not assert that the first defect is exactly $N+1$.
+
+For the explicit parameter $c=64$, the probability density is
+$$
+\frac{45}{5248}(256x^8-448x^6+381x^4-274x^2+109),
+\qquad -1\le x\le1.
+\tag{LC412}
+$$
+It has $Z_{64}=41/9$ and $\kappa_{64}=256/3157$.
+Exact rational coefficient extraction, square-free checks and
+Sturm counts give $k$ positive simple roots for $1\le k\le12$,
+and eleven positive simple roots for the degree-thirteen row.
+Thus its first defect is thirteen, with two nonreal roots.
+At the unique actual $J_{12}$ node in
+$(131/2,6551/100)$, rational Sturm signs of $G_{12}$, $J_{12}'$,
+$G_{12}+\frac75J_{12}'$ and $G_{12}+\frac32J_{12}'$ give
+$$
+-\frac32<\frac{G_{12}}{J_{12}'}<-\frac75.
+\tag{LC413}
+$$
+The [exact source program and rational certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/22e6d97d280e17e99117cbbf2e1d8457840085da/experiments/jensen-atomless-primitive)
+retain the coefficient extraction, Bernstein check, square-free checks,
+root counts and the four sign certificates on the same interval.
+These are computed finite facts; the infinite positive-shift statement
+and arbitrarily long-prefix result follow from the preceding suppliers
+and argument, not from those finite counts.
+
+The retained combination is stricter than adding a zero-frequency atom:
+it preserves absolute continuity, every strictly positive moment packet,
+all square-exponential moments, order at most $1/2$, Fourier decay,
+every positive derivative-shift row and an arbitrarily long finite
+zero-shift prefix. It does NOT preserve the actual theta density,
+whole-real-line strict positivity or smoothness, theta's quantitative
+Fourier decay, the actual Xi exterior, the full-growth parameter budget,
+or the original moving-band witness. Therefore the actual-source
+signed cofactor target and RH remain open; the new excluded generic
+repair is only "remove atoms and impose Fourier decay".
+
+## A smooth full-support version keeps the same infinite shifts
+
+Retain the compact primitive source, its $c\ge64$, $k_c$,
+$p_c=-k_c'/x$, $Z_c$ and $f_c$ from the preceding application.
+Extend $k_c$ by zero outside $[-1,1]$. It is nonnegative, even,
+continuous, absolutely continuous, strictly decreasing on $(0,1)$,
+and has $k_c(\pm1)=0$. Its distributional derivative is the
+ordinary function $-xp_c(x)\mathbf1_{[-1,1]}(x)$, with no boundary atom.
+
+For $a>0$, let
+$$
+g_a(x)=\frac{e^{-a\cosh(2x)}}{K_0(a)},\quad
+\widetilde k_{c,a}=k_c*g_a,\quad
+\widetilde p_{c,a}(x)=-\widetilde k_{c,a}'(x)/x,\quad
+\widetilde Z_{c,a}=\int_{\mathbb R}\widetilde p_{c,a}.
+\tag{LC414}
+$$
+Here $K_\nu$ is the Macdonald function.
+The exact integral $\int_{\mathbb R}e^{-a\cosh(2x)}dx=K_0(a)$
+uses the published Macdonald integral; the divisor at zero takes
+its smooth even extension. This $g_a$ is a whole probability law,
+not separate smoothing for different rows.
+
+For $x>0$,
+$$
+-\widetilde k_{c,a}'(x)
+=\int_0^1t p_c(t)\,[g_a(x-t)-g_a(x+t)]\,dt>0,
+\tag{LC415}
+$$
+since $g_a$ is strictly decreasing in $|x|$.
+At zero its extension satisfies
+$$
+\widetilde p_{c,a}(0)
+=-2\int_0^1t p_c(t)g_a'(t)\,dt>0.
+\tag{LC416}
+$$
+Thus $\widetilde p/\widetilde Z$ is an everywhere positive,
+even, smooth, atomless probability density on the whole real line.
+Normalization is finite and positive. Each finite shifted square-moment
+matrix is strictly positive definite, and all square-exponential
+moments exist.
+
+For fixed $c,a$, its tails obey
+$$
+\widetilde p_{c,a}(x)
+\le C_{c,a}(1+e^{2|x|})
+\exp[-(a/(2e^2))e^{2|x|}]
+\quad(|x|\ge2).
+\tag{LC417}
+$$
+This follows directly from $|t|\le1$,
+$\cosh2(x-t)\ge e^{2(|x|-1)}/2$, the bound for $g_a'$,
+and division by $|x|$. In particular, when $a>2\pi e^2$,
+one may absorb the extra $e^{2|x|}$ in the stronger exponential
+to obtain an upper tail $C_{c,a}\exp[-\pi e^{2|x|}]$.
+This is a theta-scale upper tail, not equality with its actual density.
+
+Define
+$$
+\widetilde f_{c,a}(z)
+=\widetilde Z_{c,a}^{-1}\int_{\mathbb R}
+\widetilde p_{c,a}(x)\cos(x\sqrt z)\,dx,\qquad
+D_a(z)=\frac{K_{i\sqrt z/2}(a)}{K_0(a)}.
+\tag{LC418}
+$$
+Both are entire in $z$, using the even Fourier power series.
+The exact convolution/integration-by-parts calculation gives
+$$
+\widetilde f_{c,a}'(z)
+=-\widetilde\kappa_{c,a}(1-z/c)^2B_{13/2}(z)D_a(z),
+\qquad
+\widetilde\kappa_{c,a}
+=\frac{512/693}{2\widetilde Z_{c,a}}>0.
+\tag{LC419}
+$$
+
+The classical Macdonald order-zero supplier is reused with argument
+$a>0$ and order $i\sqrt z/2$: Sasaki, arXiv:1611.02467v2,
+§2.1 and Theorem 3.1, (41), through the Dirichlet exponential
+Schrödinger eigenvalue correspondence; Paris, arXiv:2108.01447v2,
+(1.1) records the integral normalization. The Dirichlet spectrum
+is positive and simple. Every complex order zero corresponds to
+that same finite-norm eigenfunction, so its spectral square must
+be positive real; this excludes nonreal $z$, not merely produces
+a list of real zeros.
+Explicitly, for any complex $K_\alpha(a)=0$, put
+$y(s)=K_\alpha(ae^s)$. The reused Bessel equation and fixed-order
+decay give a nonzero finite-norm Dirichlet eigenfunction. Integration
+against its conjugate gives
+$$
+-\alpha^2=
+\frac{\int_0^\infty(|y'|^2+a^2e^{2s}|y|^2)\,ds}
+{\int_0^\infty|y|^2\,ds}>a^2.
+\tag{LC420}
+$$
+For $D_a(z)$, $\alpha=i\sqrt z/2$, so $z=4(-\alpha^2)>0$.
+This all-zero energy implication is distinct from Theorem 3.1's
+assertion of infinitely many imaginary-order zeros.
+ Superexponential decay bounds the square-variable
+growth by $\exp[O(\sqrt{|z|}\log(|z|+2))]$, hence order at most $1/2$.
+The nonzero normalized $D_a$ therefore has the genus-zero product
+on its positive zeros and is Laguerre--Polya. These are the
+source's classical spectral/Fourier properties, not a new
+Hilbert--Pólya construction for Xi.
+
+The product in the exact derivative is consequently Laguerre--Polya.
+Derivative closure and the classical Jensen criterion give
+$\mathscr T_k\widetilde f_{c,a}^{(h)}$ hyperbolic simultaneously
+for every $h,k\ge1$. The smoothed source still has strictly alternating
+nonzero coefficients. Its square-variable order is at most $1/2$.
+
+There is also exponential Fourier decay. For fixed
+$0<\eta<\pi/4$, shifting the contour of
+$\widetilde p_{c,a}$ by $i\eta$ is justified: its possible
+division singularity at zero is removable, $\cos(2\eta)>0$,
+and the whole shifted density has integrable superexponential tails.
+Thus
+$$
+|\widetilde f_{c,a}(w^2)|\le C_{c,a,\eta}e^{-\eta|w|}
+\quad(w\in\mathbb R).
+\tag{LC421}
+$$
+The exact critical rate $\pi/4$, its prefactor, lower asymptotics
+and the theta modular identity are not asserted.
+
+As $a\to\infty$, $g_a$ is an approximate identity and tends
+to the point mass at zero. The resulting unnormalized density
+converges locally away from the two original support endpoints;
+its total mass and every fixed even moment converge to those of
+$p_c$. One way to justify total-mass convergence without division
+at zero is
+$$
+\int_{\mathbb R}\frac{-k'(x)}x\,dx
+=2\int_0^\infty\frac{k(0)-k(x)}{x^2}\,dx.
+\tag{LC422}
+$$
+Apply this to $k_c*g_a$, using a uniform second-derivative bound
+near zero and the uniformly bounded $k_c$ elsewhere. Fixed moments
+of positive order follow directly by integration by parts:
+$\int x^{2j}(-k'/x)=(2j-1)\int x^{2j-2}k$.
+For all $a\ge A>0$, the shifted compact-support convolution admits
+a superexponential tail majorant uniform in $a$. It gives locally
+uniform convergence of the transforms in $z$, including their
+normalization, as $a\to\infty$.
+
+Choose first a fixed $c$ for which the compact source has an arbitrary
+prescribed number of initial simple positive rows and $f_c(c)\ne0$,
+as supplied above. Then choose one sufficiently large finite $a$.
+Coefficient/root stability retains those rows, and
+$\widetilde f_{c,a}(c)\ne0$. The same exact derivative still gives
+$\widetilde f'(c)=\widetilde f''(c)=0$, so the strict
+genus-zero logarithmic derivative again excludes Laguerre--Polya
+membership of the zero row. A later finite row must be nonhyperbolic.
+No first-defect index is inferred merely from this existence argument.
+
+For the compact parameter $c=64$, the preceding finite Sturm
+certificate gives twelve simple positive initial rows, a simple
+degree-thirteen defect and a simple actual $J_{12}$ node with
+$-3/2<G_{12}/J_{12}'<-7/5$.
+All these open finite conditions persist at ONE sufficiently large
+finite $a$, including that actual moving root and its same-source
+response. Hence there also exists a smooth everywhere positive,
+full-support, atomless, theta-upper-tail source with exactly this
+finite first-defect pattern and a negative actual response ratio,
+while every positive shift remains hyperbolic.
+No explicit finite $a$ threshold or numerical smooth-source
+certificate is claimed.
+
+This combined construction rules out the generic repair that adds
+whole-real-line positivity/smoothness, absence of atoms, all
+square-exponential moments, theta-scale upper tails, every subcritical
+Fourier exponential-decay rate, all shifted moment positivity and all
+positive-shift hyperbolicity to a long zero-row prefix. It does NOT
+preserve the exact theta density, its modular/differential identity,
+the actual Xi exterior, the original full-growth budget or the required
+moving-band witness. The actual-source cofactor sign, RH, Robin and
+the FIB arithmetic bridge remain unresolved. Ordinary source
+applications and existence continuity are distinguished from the
+finite exact compact-source computations; no Lean or priority claim
+is made.
