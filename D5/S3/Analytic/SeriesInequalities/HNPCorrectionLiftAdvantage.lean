@@ -78,7 +78,7 @@ private lemma correction_controls_delta {n r t : ℕ} {ρ θ : ℝ}
       θ⁻¹ ≤ 1+θ⁻¹ := by linarith
       _ ≤ _ := le_mul_of_one_le_right (by positivity) hpow
 
-private lemma correction_uniform_bound {n r t : ℕ} {ρ θ : ℝ}
+lemma correction_uniform_bound {n r t : ℕ} {ρ θ : ℝ}
     (hn : 0 < n) (hr : r ≤ n) (ht : t ≤ n+r) (hρ : 0 ≤ ρ) (hθ : 0 ≤ θ) :
     lift (n+r) n t (correction ρ θ n) ≤ (θ+1)*(n : ℝ)^(-ρ/2) := by
   have hnR : (1 : ℝ) ≤ n := by exact_mod_cast hn

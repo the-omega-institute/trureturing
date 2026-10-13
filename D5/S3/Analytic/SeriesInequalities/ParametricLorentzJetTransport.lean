@@ -131,8 +131,6 @@ private lemma functional_eq {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
   intro s hs ν hν i hi
   simp [extendSamples,hs,hν,hi]
 
-
-
 private lemma linear_iterated {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [NormedAddCommGroup F] [NormedSpace ℝ F] (L : E →L[ℝ] F)
     {f : ℝ → E} {x : ℝ} {m : ℕ} (hf : ContDiffAt ℝ m f x) :
@@ -177,8 +175,6 @@ private lemma coefficient_transport {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
     exact hi.trans (hcomm s.2.1.val (by omega) _ hq)
   rw [hjet]
   exact functional_eq hτ hb r k D J hm
-
-
 
 private lemma deriv_profile {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ) (k m : ℕ) :
     deriv (profile φ k m) = profile (deriv φ) (k+1) m := by
@@ -230,8 +226,6 @@ private lemma full_mixed_commute {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
       simpa only [add_sub_cancel_left,
         iteratedDeriv_const_add (Nat.succ_pos ell),
         iteratedDeriv_const_add (Nat.succ_pos m)] using hc
-
-
 
 private lemma qjet_formula {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ)
     (η a d : ℝ) (ν : ℕ) (x q : ℝ) :
@@ -325,8 +319,6 @@ private lemma reference_transport {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
       fullQxJet] using hi
   have h := hc hf hs hm hcomm
   simpa only [hcast] using h
-
-
 
 /-- One already fixed initial grid works for every parameter derivative order.
 The actual coefficient history has the coarse ring scale, while its actual
@@ -548,7 +540,6 @@ theorem reference_center_mixed_scales {χ : ℝ → ℝ} (hχ : ContDiff ℝ ∞
         mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right hEC (by positivity))
           (Real.rpow_nonneg (delta_pos (by positivity) q).le _)
 
-
 /-- A compact smooth profile supported strictly inside `(-1,1)`. -/
 def scaleBump (z : ℝ) : ℝ := expNegInvGlue (9/16-z^2)
 
@@ -685,6 +676,68 @@ def publicUpper (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
     (1-ringUpper (N*b^j) b r ρ θ (D*(ringScale xstar b j)^(-ρ))
       (fun q => (reference φ η a d x q : ℂ)) (k-j) t)
 
+private lemma eventual_width (φ : ℝ → ℝ) (η a d : ℝ) (r : ℕ) (ρ θ : ℝ)
+    (b N : ℕ) (D xstar W β x : ℝ) (hb : 1 < b) (hN : 0 < N) (hNr : r ≤ N)
+    (hD : 0 ≤ D) (hW : 0 ≤ W) (hρ : 0 ≤ ρ) (hθ : 0 ≤ θ)
+    (hx : 0 < x) (hxx : x ≤ xstar) :
+    ∃ K : ℕ, ∃ C : ℝ, 0 < C ∧ ∀ k : ℕ, K ≤ k → ∀ t ≤ N*b^k+r,
+      publicUpper φ η a d r ρ θ b N D xstar W β k t x-
+        publicLower φ η a d r ρ θ b N D xstar W β k t x ≤ C*((N*b^k : ℕ) : ℝ)^(-ρ/2) := by
+  have hxstar : 0 < xstar := hx.trans_le hxx
+  obtain ⟨K,hK⟩ := exists_nat_gt (scaleCoordinate xstar b x+1)
+  let v := fun j => scaleWeight xstar b j x
+  let A := fun j => 2*D*(ringScale xstar b j)^(-ρ)*(θ+1)
+  let S := ∑ j ∈ range K, v j*A j
+  have hv := (weight_mass hx hxx hb 0).1
+  have hA (j : ℕ) : 0 ≤ A j := by
+    have hs : 0 ≤ ringScale xstar b j := by dsimp [ringScale]; positivity
+    dsimp [A]; positivity
+  have hS : 0 ≤ S := sum_nonneg (fun j _ => mul_nonneg (hv j) (hA j))
+  have hw : 0 ≤ W*x^β := mul_nonneg hW (Real.rpow_nonneg hx.le _)
+  refine ⟨K,1+W*x^β*S,by positivity,?_⟩
+  intro k hk t ht
+  have htail (j : ℕ) (hj : K ≤ j) : v j = 0 := by
+    dsimp [v,scaleWeight]
+    rw [bump_tail hK hj,zero_div]
+  have hmass : ∑ j ∈ range (k+1), v j = 1 := by
+    dsimp [v,scaleWeight]
+    rw [← sum_div,← denominator_finite (by exact hK.trans_le (by exact_mod_cast (show K ≤ k+1 by omega)))]
+    exact div_self (denominator_positive (coordinate_nonneg hx hxx hb)).ne'
+  have hsum : (∑ j ∈ range (k+1), v j*A j) = S := by
+    symm
+    apply sum_subset (range_mono (by omega : K ≤ k+1))
+    intro j hj hn
+    rw [htail j (by simpa using hn),zero_mul]
+  let low := fun j => ringLower (N*b^j) b r ρ θ (D*(ringScale xstar b j)^(-ρ))
+    (fun q => (reference φ η a d x q : ℂ)) (k-j) t
+  let upp := fun j => ringUpper (N*b^j) b r ρ θ (D*(ringScale xstar b j)^(-ρ))
+    (fun q => (reference φ η a d x q : ℂ)) (k-j) t
+  have hgap (j : ℕ) (hj : j ∈ range (k+1)) : upp j-low j ≤ A j*((N*b^k : ℕ) : ℝ)^(-ρ/2) := by
+    have hjk : j ≤ k := by have := mem_range.mp hj; omega
+    have he : (N*b^j)*b^(k-j) = N*b^k := by rw [mul_assoc,← pow_add,Nat.add_sub_of_le hjk]
+    have hb0 : 0 < b := by omega
+    have hn : 0 < N*b^k := by positivity
+    have hrn : r ≤ N*b^k := hNr.trans (Nat.le_mul_of_pos_right N (pow_pos hb0 k))
+    have hc := HNPCorrectionLiftAdvantage.correction_uniform_bound hn hrn ht hρ hθ
+    have hDj : 0 ≤ D*(ringScale xstar b j)^(-ρ) := by
+      have hs : 0 ≤ ringScale xstar b j := by dsimp [ringScale]; positivity
+      positivity
+    dsimp only [upp,low,ringUpper,ringLower]
+    rw [he]
+    dsimp [A]
+    nlinarith [mul_le_mul_of_nonneg_left hc (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) hDj)]
+  calc
+    _ = W*x^β*∑ j ∈ range (k+1), v j*(upp j-low j) := by
+      change (1+W*x^β)/2-W*x^β*(∑ j ∈ range (k+1), v j*(1-upp j))-
+        ((1-W*x^β)/2+W*x^β*(∑ j ∈ range (k+1), v j*low j)) = _
+      simp only [mul_sub,mul_one,sum_sub_distrib,hmass]
+      ring
+    _ ≤ W*x^β*∑ j ∈ range (k+1), v j*(A j*((N*b^k : ℕ) : ℝ)^(-ρ/2)) :=
+      mul_le_mul_of_nonneg_left (sum_le_sum (fun j hj => mul_le_mul_of_nonneg_left (hgap j hj) (hv j))) hw
+    _ = (W*x^β*S)*((N*b^k : ℕ) : ℝ)^(-ρ/2) := by
+      simp_rw [← mul_assoc]
+      rw [← sum_mul,hsum]; ring
+    _ ≤ _ := mul_le_mul_of_nonneg_right (by linarith) (Real.rpow_nonneg (by positivity) _)
 
 private lemma coefficient_smooth {τ b : ℕ} (hτ : 0 < τ) (hb : 0 < b)
     {φ : ℝ → ℝ} (hφ : ContDiff ℝ ∞ φ) (η a d : ℝ) (r k D t : ℕ)
@@ -755,7 +808,12 @@ theorem reference_public_array_regular {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
           upper (k+1) t x ≤ HNPCorrectionLiftAdvantage.lift (N*b^(k+1)+r) (N*b^k+r) t (fun i => upper k i x))) ∧
       (0 < β → ∀ k t : ℕ, t ≤ N*b^k+r →
         ContinuousOn (lower k t) (Set.Icc 0 xstar) ∧
-        ContinuousOn (upper k t) (Set.Icc 0 xstar)) := by
+        ContinuousOn (upper k t) (Set.Icc 0 xstar)) ∧
+      (∀ x : ℝ, 0 < x → x ≤ xstar → ∃ K : ℕ, ∃ C : ℝ, 0 < C ∧
+        ∀ k : ℕ, K ≤ k → ∀ t ≤ N*b^k+r,
+          (upper k t x-lower k t x ≤ C*((N*b^k : ℕ) : ℝ)^(-ρ/2))) ∧
+      (∀ x : ℝ, 0 < x → x ≤ xstar → ∀ ε : ℝ, 0 < ε →
+        ∃ K : ℕ, ∀ k : ℕ, K ≤ k → ∀ t ≤ N*b^k+r, upper k t x-lower k t x < ε) := by
   obtain ⟨B,hB,hb⟩ := reference_ring_envelopes hχ hcχ hT hβ hsχ hχrange
     a d r ρ θ hρ hρ1 hρ2 hθ
   refine ⟨B,hB,?_⟩
@@ -834,7 +892,6 @@ theorem reference_public_array_regular {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
       · nlinarith [mul_nonneg hw0 hSU]
       constructor <;> rw [abs_le] <;> constructor <;>
         nlinarith [mul_nonneg hw0 hSL,mul_nonneg hw0 hSU,mul_nonneg hw0 (sub_nonneg.mpr hsum)]
-  
     · intro t ht
       have hb0 : 0 < b := by omega
       have hb1 : 1 < b := by omega
@@ -893,34 +950,49 @@ theorem reference_public_array_regular {χ : ℝ → ℝ} (hχ : ContDiff ℝ �
         rw [lift_mixture hd ht]
         simpa only [upper,publicUpper,sub_eq_add_neg,neg_mul,up,v,f,old,next] using
         add_le_add (le_refl ((1+W*x^β)/2)) (mul_le_mul_of_nonpos_left hUS (neg_nonpos.mpr hw))
-
-  refine ⟨hpos,?_⟩
-  intro hβ0 k t ht
-  have hzL : lower k t 0 = 1/2 := by simp [lower,publicLower,Real.zero_rpow hβ0.ne']
-  have hzU : upper k t 0 = 1/2 := by simp [upper,publicUpper,Real.zero_rpow hβ0.ne']
-  have hc0 (A : ℝ → ℝ) (hA0 : A 0 = 1/2)
-      (hA : ∀ x : ℝ, 0 < x → x ≤ xstar → |A x-1/2| ≤ W*x^β/2) :
-      ContinuousWithinAt A (Set.Icc 0 xstar) 0 := by
-    rw [ContinuousWithinAt,hA0,tendsto_iff_norm_sub_tendsto_zero]
-    have hbnd : Tendsto (fun x : ℝ => W*x^β/2) (𝓝[Set.Icc 0 xstar] 0) (𝓝 0) := by
-      have hc : ContinuousAt (fun x : ℝ => W*x^β/2) 0 :=
-        (continuousAt_const.mul (Real.continuousAt_rpow_const _ _ (Or.inr hβ0.le))).div_const 2
-      simpa [Real.zero_rpow hβ0.ne'] using hc.tendsto.mono_left nhdsWithin_le_nhds
-    apply squeeze_zero' (Eventually.of_forall (fun x => norm_nonneg _)) _ hbnd
-    filter_upwards [self_mem_nhdsWithin] with x hx
-    rw [Real.norm_eq_abs]
-    rcases eq_or_lt_of_le hx.1 with he | he
-    · subst x
-      simp [hA0,Real.zero_rpow hβ0.ne']
-    · exact hA x he hx.2
-  have hLc := hc0 _ hzL (fun x hx hxx => ((hpos k x hx hxx).1 t ht).2.2.2.2.2.1)
-  have hUc := hc0 _ hzU (fun x hx hxx => ((hpos k x hx hxx).1 t ht).2.2.2.2.2.2)
-  constructor <;> intro x hx
-  · rcases eq_or_lt_of_le hx.1 with he | he
-    · simpa [← he] using hLc
-    · exact (((hpos k x he hx.2).1 t ht).1).continuousAt.continuousWithinAt
-  · rcases eq_or_lt_of_le hx.1 with he | he
-    · simpa [← he] using hUc
-    · exact (((hpos k x he hx.2).1 t ht).2.1).continuousAt.continuousWithinAt
-
+  refine ⟨hpos,?_,?_,?_⟩
+  · intro hβ0 k t ht
+    have hzL : lower k t 0 = 1/2 := by simp [lower,publicLower,Real.zero_rpow hβ0.ne']
+    have hzU : upper k t 0 = 1/2 := by simp [upper,publicUpper,Real.zero_rpow hβ0.ne']
+    have hc0 (A : ℝ → ℝ) (hA0 : A 0 = 1/2)
+        (hA : ∀ x : ℝ, 0 < x → x ≤ xstar → |A x-1/2| ≤ W*x^β/2) :
+        ContinuousWithinAt A (Set.Icc 0 xstar) 0 := by
+      rw [ContinuousWithinAt,hA0,tendsto_iff_norm_sub_tendsto_zero]
+      have hbnd : Tendsto (fun x : ℝ => W*x^β/2) (𝓝[Set.Icc 0 xstar] 0) (𝓝 0) := by
+        have hc : ContinuousAt (fun x : ℝ => W*x^β/2) 0 :=
+          (continuousAt_const.mul (Real.continuousAt_rpow_const _ _ (Or.inr hβ0.le))).div_const 2
+        simpa [Real.zero_rpow hβ0.ne'] using hc.tendsto.mono_left nhdsWithin_le_nhds
+      apply squeeze_zero' (Eventually.of_forall (fun x => norm_nonneg _)) _ hbnd
+      filter_upwards [self_mem_nhdsWithin] with x hx
+      rw [Real.norm_eq_abs]
+      rcases eq_or_lt_of_le hx.1 with he | he
+      · subst x
+        simp [hA0,Real.zero_rpow hβ0.ne']
+      · exact hA x he hx.2
+    have hLc := hc0 _ hzL (fun x hx hxx => ((hpos k x hx hxx).1 t ht).2.2.2.2.2.1)
+    have hUc := hc0 _ hzU (fun x hx hxx => ((hpos k x hx hxx).1 t ht).2.2.2.2.2.2)
+    constructor <;> intro x hx
+    · rcases eq_or_lt_of_le hx.1 with he | he
+      · simpa [← he] using hLc
+      · exact (((hpos k x he hx.2).1 t ht).1).continuousAt.continuousWithinAt
+    · rcases eq_or_lt_of_le hx.1 with he | he
+      · simpa [← he] using hUc
+      · exact (((hpos k x he hx.2).1 t ht).2.1).continuousAt.continuousWithinAt
+  · intro x hx hxx
+    exact eventual_width (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D xstar W β x
+      (by omega) (by omega) (by omega)
+      hD.le hW (by linarith) hθ.le hx hxx
+  · intro x hx hxx ε hε
+    obtain ⟨K,C,hC,hbound⟩ := eventual_width (cutoff χ β) (2/(5*T^β)) a d r ρ θ b N D xstar W β x
+      (by omega) (by omega) (by omega) hD.le hW (by linarith) hθ.le hx hxx
+    have hn : Tendsto (fun k : ℕ => ((N*b^k : ℕ) : ℝ)) atTop atTop := by
+      simp only [Nat.cast_mul,Nat.cast_pow]
+      exact (tendsto_const_mul_atTop_of_pos (by exact_mod_cast (show 0 < N by omega))).mpr
+        (tendsto_pow_atTop_atTop_of_one_lt (by exact_mod_cast (show 1 < b by omega)))
+    have hlim : Tendsto (fun k : ℕ => C*((N*b^k : ℕ) : ℝ)^(-ρ/2)) atTop (𝓝 0) := by
+      simpa only [Function.comp_def,neg_div,mul_zero] using
+        ((tendsto_rpow_neg_atTop (by linarith : 0 < ρ/2)).comp hn).const_mul C
+    obtain ⟨K',hK'⟩ := eventually_atTop.mp (hlim.eventually (gt_mem_nhds hε))
+    exact ⟨max K K',fun k hk t ht => (hbound k ((le_max_left _ _).trans hk) t ht).trans_lt
+      (hK' k ((le_max_right _ _).trans hk))⟩
 end D5.S3.Analytic.SeriesInequalities.ParametricLorentzJetTransport
