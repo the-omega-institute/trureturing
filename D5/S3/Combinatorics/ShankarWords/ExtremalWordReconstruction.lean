@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/ShankarWords/ExtremalWordReconstruction
    mirror-E: none(waiver:structural-word-reconstruction)
-   anchors: [mathlib/module/Mathlib.Data.List.Triplewise,
-     mathlib/module/Mathlib.Data.List.Induction]
+   anchors: [mathlib/module/Mathlib.Data.List.Triplewise, mathlib/module/Mathlib.Data.List.Induction]
    utility: none
    digest: Exact literal reconstruction of every actual extremal word. -/
 
