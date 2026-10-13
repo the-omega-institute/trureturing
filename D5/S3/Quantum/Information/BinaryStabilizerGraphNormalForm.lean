@@ -572,7 +572,7 @@ private lemma stabilizer_weyl {N : ℕ} (ψ : (Fin N → ZMod 2) → ℂ)
   simpa only [hop] using hline'
 
 
-private def gate (h : Bool) (d : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
+def gate (h : Bool) (d : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   (if d = 0 then 1 else !![1, 0; 0, Complex.I]) *
     (if h then BinaryStabilizerLocalInequivalence.hadamard else 1)
 
@@ -588,7 +588,7 @@ private lemma wmat_unitary (a b : ZMod 2) :
       Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply]
 
-private lemma gate_unitary (h : Bool) (d : ZMod 2) :
+lemma gate_unitary (h : Bool) (d : ZMod 2) :
     gate h d ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
   have hs : s2 ^ 2 = 1 / 2 := by
     simp only [s2]

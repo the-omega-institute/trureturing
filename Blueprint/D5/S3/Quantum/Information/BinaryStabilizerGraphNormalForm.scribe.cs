@@ -26,6 +26,12 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Entry("tensor-unitary", "tensor_unitary", "Tensor products of unitary factors", TensorUnitary(),
                 "If every single-qubit factor is unitary, their tensor product is unitary on the full binary register.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("gate", "gate", "Binary choices of Hadamard and phase gates", GateDefinition(),
+                "The binary phase choice multiplies the optional Hadamard gate on the left. Zero phase selects the identity and nonzero phase selects the diagonal matrix with entries 1 and i.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Entry("gate-unitary", "gate_unitary", "Unitarity of the binary gate family", GateUnitary(),
+                "Every combination of the binary phase choice and the Hadamard choice is a unitary single-qubit matrix.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("normal-form", "stabilizer_graph_normal_form", "A graph amplitude for every stabilizer line", NormalForm(),
                 "The Pauli stabilizers of a nonzero common eigenline span a binary Lagrangian subspace. Coordinate swaps and a diagonal shear express that subspace as the graph of a symmetric matrix with zero diagonal. Hadamard and phase gates implement these transformations, and Pauli signs identify the remaining line with the quadratic amplitude. Taking the inverse gates gives the unitaries U and the scalar c in the displayed equation; SMul.smul denotes scalar action on the amplitude vector.",
                 DescribeRole.Theorem, AssessedProvenance.FromLiterature(GraphStates)))));
@@ -53,6 +59,19 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
                         Qualified("Matrix", "unitaryGroup", Fin(D(2)), Complex))),
                 Seq(TensorOperator(V("A")), Sp, InMacro, Sp,
                     Qualified("Matrix", "unitaryGroup", Arrow(Fin(V("N")), Fin(D(2))), Complex)))));
+
+    private static Formula GateDefinition() => All(V("h"), V("Bool"), All(V("d"), Binary,
+        Equal(Call("gate", V("h"), V("d")),
+            Seq(Parenthesized(Seq(V("if"), Sp, Equal(V("d"), D(0)), Sp, V("then"), Sp,
+                    D(1), Sp, V("else"), Sp, Qualified("Matrix", "diagonal",
+                        Seq(Bang, OpenBracket, D(1), Comma, Sp, Qualified("Complex", "I"), CloseBracket)))), Sp, Star, Sp,
+                Parenthesized(Seq(V("if"), Sp, V("h"), Sp, V("then"), Sp,
+                    Qualified("BinaryStabilizerLocalInequivalence", "hadamard"), Sp,
+                    V("else"), Sp, D(1)))))));
+
+    private static Formula GateUnitary() => All(V("h"), V("Bool"), All(V("d"), Binary,
+        Seq(Call("gate", V("h"), V("d")), Sp, InMacro, Sp,
+            Qualified("Matrix", "unitaryGroup", Fin(D(2)), Complex))));
 
     private static Formula TensorOperator(Formula a) => Seq(V("D5"), Dot, V("S3"), Dot,
         V("Quantum"), Dot, V("Information"), Dot,

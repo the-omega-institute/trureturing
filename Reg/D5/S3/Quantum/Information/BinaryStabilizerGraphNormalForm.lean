@@ -110,7 +110,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
     (h (N := 1) (fun _ => 1) (fun _ => (Matrix.unitaryGroup (Fin 2) ℂ).one_mem))
   change (0 : Matrix (Fin 1 → Fin 2) (Fin 1 → Fin 2) ℂ) * star 0 = 1 at hz
   have he := congrArg (fun M => M (fun _ => (0 : Fin 2)) (fun _ => (0 : Fin 2))) hz
-  simpa using he
+  simp at he
 
 def source_registration : Registration arena (type_of% @tensor_unitary) where
   actual := actual
@@ -124,9 +124,12 @@ noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.tensor_unitary)
       (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorUnitary.unit,
+  unitName :=
+    `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorUnitary.unit,
   realizationName :=
-    `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorUnitary.source_registration,
+    Lean.Name.str
+      `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.TensorUnitary
+      "source_registration",
   realizationSource := none,
   generated := false,
   arena := .source ⟨arena⟩,
@@ -159,5 +162,88 @@ noncomputable def registration :
 #print axioms registration
 
 end TensorUnitary
+namespace GateUnitary
+open _root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (gate gate_unitary)
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Bool
+    (fun _ => ZMod 2) (fun _ => Matrix (Fin 2) (Fin 2) ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ h d => gate h d) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (h : Bool) (d : ZMod 2),
+    R.readout () h d ∈ Matrix.unitaryGroup (Fin 2) ℂ
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hz := Matrix.mem_unitaryGroup_iff.mp (h false 0)
+  change (0 : Matrix (Fin 2) (Fin 2) ℂ) * star 0 = 1 at hz
+  have he := congrArg (fun M => M 0 0) hz
+  simp at he
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨false, 0, 1, ?_⟩
+  change gate false 0 ≠ gate false 1
+  intro h
+  have he := congrArg (fun M => M 1 1) h
+  norm_num [gate] at he
+  have him := congrArg Complex.im he
+  norm_num at him
+
+def source_registration : Registration arena (type_of% @gate_unitary) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨gate_unitary, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@_root_.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.gate_unitary)
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.GateUnitary.unit,
+  realizationName :=
+    `Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.GateUnitary.source_registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨source_registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ h d => gate h d) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "arg"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end GateUnitary
+
 end
 end Reg.D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm

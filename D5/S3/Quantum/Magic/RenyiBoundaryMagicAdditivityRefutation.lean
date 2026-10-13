@@ -170,9 +170,8 @@ private lemma completed_square_identity (X Y η : Op 3) (hη : η.PosDef)
 private lemma spectralPow_one {n : ℕ} (A : Op n) (hA : A.IsHermitian) :
     spectralPow A 1 = A := by
   unfold spectralPow
-  rw [dif_pos hA]
-  unfold Matrix.IsHermitian.cfc
-  simpa only [Real.rpow_one, Function.comp_def] using hA.spectral_theorem.symm
+  rw [dif_pos hA, ← hA.cfc_eq]
+  simpa only [Real.rpow_one] using cfc_id' ℝ A (show IsSelfAdjoint A from hA)
 private lemma spectralPow_inv {n : ℕ} (A : Op n) (hA : A.PosDef) :
     spectralPow A (-1) = A⁻¹ := by
   unfold spectralPow
@@ -669,7 +668,8 @@ private lemma sigma_mem : sigma ∈ STAB 3 := by
     (by norm_num) (fun j _ => hj j)
 private lemma clifford_bar {n : ℕ} {U : Op n} (hU : U ∈ Clifford n) :
     conjugate U ∈ Clifford n := by
-  have ha (A : Op n) : (barAlg A)ᴴ = barAlg Aᴴ := by ext x y; rfl
+  have ha (A : Op n) : (barAlg A)ᴴ = barAlg Aᴴ :=
+    (Matrix.conjTranspose_map star (fun _ => rfl)).symm
   have hl (i : Fin n) (M : Matrix (Fin 2) (Fin 2) ℂ) :
       barAlg (localHom i M) = localHom i (M.map star) := by
     ext x y
