@@ -1,0 +1,21 @@
+**Definition 51.1 (boundary state and action response).** Let $Q$ be a set of
+complete reachable boundary states. A state contains the controller position,
+all epoch and ordered-history information needed by later actions, the hidden
+physical state, and the current target row. Let $A$ be a set of primitive
+non-halt actions and let $O_\bot$ be a visible response alphabet containing
+$\bot$ for silent actions.
+
+For $q\in Q$ and $a\in A$, write
+
+$$
+\operatorname{Leg}(q,a)\in\{0,1\},
+\qquad
+\operatorname{Resp}(q,a)\in O_\bot,
+\qquad
+\operatorname{Next}(q,a)\in Q,
+$$
+
+and let $\operatorname{cost}(q,a)$ be a resource vector. A halt state carries
+a complete target row. A controller can observe the response but cannot read
+an arbitrary coordinate of $q$.
+

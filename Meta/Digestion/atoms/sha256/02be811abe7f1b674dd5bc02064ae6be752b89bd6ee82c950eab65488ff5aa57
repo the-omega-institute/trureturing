@@ -1,0 +1,22 @@
+**Definition 7.3 (native source/action bridge obligation).** A transfer
+to literal $\alpha,\beta$ tree cuts requires a specified map from
+one actual native source family to the word-prefix states, a
+correspondence of public types and named actions, and preservation
+and reflection of each legal domain, label and successor. To transfer
+the full lower counts, the compared native family must realize the
+relevant word boundary image, or have an independently identified
+equally large separated image. A native acquisition claim additionally
+requires an actual initial record decoding the mapped boundary and
+updates commuting with that decoding as in Proposition 6.2.
+
+The native result
+[NativeSymbolicRecutting](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean),
+declaration `symbolic_recut_exact`, concerns ordered FreeMagma sources, prefix-free
+address cuts, residual variables below a depth bound, reached subtrees,
+filled exteriors and equality partitions. Those objects and operations
+are distinct from the controlled word-prefix relation. Neither (7.1)
+nor an alphabet identification defines the required bridge.
+Recovery of physical spatial or temporal readouts further requires
+their explicit same-source relations; the finite width counts do not
+provide them.
+

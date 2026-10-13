@@ -1,0 +1,24 @@
+## 50. Weighted thresholds inherit the finite-profile boundary
+
+Corollary 44.6 is likewise read over
+
+$$
+\mathcal C_K^{\mathrm{fin}},
+$$
+
+not over the larger class of merely source-total controllers. Its threshold
+set is therefore
+
+$$
+\widetilde{\mathcal W}^{\mathrm{fin}}_{K,\lambda}
+ =\{z\in\mathbb N:\exists C\in\mathcal C_K^{\mathrm{fin}},\;
+                         M W_\lambda(C)\le z\}.
+$$
+
+The path certificate must include the same finite vector $x$ and uniform
+source bound from Sections 47--49 before it decides this set. A controller
+with $b(C)=(0,\infty)$ can have finite weighted cost for a weight that ignores
+the unbounded coordinate, but it is not a witness for the finite-profile
+threshold set. If unrestricted source-total weighted optimization is desired,
+it is a separate problem requiring its own decision and attainment hypothesis;
+it is not supplied by the finite Pareto theorem.

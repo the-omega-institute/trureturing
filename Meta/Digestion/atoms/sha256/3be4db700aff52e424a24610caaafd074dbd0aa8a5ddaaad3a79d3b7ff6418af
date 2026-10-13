@@ -1,0 +1,20 @@
+**Corollary 52.4 (static summaries are safe exactly when action-closed).** A
+summary map $\eta:Q\to M$ is a sound universal behavior quotient exactly when
+
+$$
+\eta(q)=\eta(q')
+\Longrightarrow q\,R_\infty\,q'.
+$$
+
+A summary that preserves only the current readout is safe only if the readout
+fibers are already action-closed. This is the action-closed future-memory
+boundary made explicit in
+[FIB Atom Recursive Holographic Boundary Geometry · Continuation IV, §107](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#107-root-readout-action-closure-and-future-memory):
+a static quotient can lose a response after an intervention word followed
+by passive evolution. Its signature $C_\ell A^jT_w$ has that prescribed
+order. For arbitrary mixed words, including passive evolution before an
+intervention, use
+[Relational II, §§44.5--44.7](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#44-固定原生菜单的边界因子化与交错动作修正).
+These linear results supply no resource or record-law transport assumption;
+§58.3 gives the precise executable-summary criterion used here.
+
