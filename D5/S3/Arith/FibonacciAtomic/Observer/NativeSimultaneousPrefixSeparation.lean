@@ -43,7 +43,7 @@ theorem eval_shift {ι : Type} (a : Nat) (z : ι → Source) (E : MixedExpr ι) 
       exact (Function.Semiconj₂.iterate
         (fun s t => substitution.map_mul s t) a (eval z A) (eval z B)).symm
 
-private theorem eval_bind {ι κ : Type} (contexts : ι → MixedExpr κ)
+theorem eval_bind {ι κ : Type} (contexts : ι → MixedExpr κ)
     (z : κ → Source) (E : MixedExpr ι) :
     eval z (bind contexts E) = eval (fun i => eval z (contexts i)) E := by
   induction E with

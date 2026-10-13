@@ -13,14 +13,14 @@ internal sealed class PhysicalProductTotalityDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("physical-hermite-function"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/Hermite/PhysicalProductTotality.physicalHermite"),
                 H("The actual physical product function"), StatementSource.FromAuthor(Disp(PhysicalFormula())),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Analytic/tauceti2026gaussianpolynomial")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/tauceti2026gaussianpolynomial")),
                 Blocks(Paragraph(Text("The equation gives the actual function for arbitrary real parameters. Positivity is required by the totality theorem below."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("physical-product-totality"),
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/Hermite/PhysicalProductTotality.physical_product_totality"),
                 H("Every positive-parameter physical test family is total"),
                 StatementSource.FromAuthor(Disp(TheoremFormula())),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Analytic/tauceti2026gaussianpolynomial")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Fourier/tauceti2026gaussianpolynomial")),
                 Blocks(
                 Paragraph(Text("For every natural dimension d, E is EuclideanSpace Real (Fin d). ambientLebesgue is exactly "
                     + "the canonical volume measure on E; every MemLp and integral uses that same measure. hbar is positive "
