@@ -59,7 +59,9 @@ private theorem attach_same_limit (M : Set (Set Word))
     rw [hj A]
     exact hr A
 
-private theorem finite_sUnion_converges {α : Type*} (u : α → unitInterval)
+/-- Finite unions preserve convergence to a common value. This supplier is consumed by the
+branch attachment and by actual threshold-partitioner elimination. -/
+theorem finite_sUnion_converges {α : Type*} (u : α → unitInterval)
     (F : Set (Set α)) (hF : F.Finite) (r : unitInterval)
     (hc : ∀ A ∈ F, ConvergesOn u A r) : ConvergesOn u (⋃₀ F) r := by
   intro V hV

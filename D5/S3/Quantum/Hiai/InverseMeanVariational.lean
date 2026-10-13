@@ -42,7 +42,8 @@ lemma norm_rpow_gram (A : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
   congr 1
   ring
 
-private lemma norm_rpow_rowGram (A : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
+/-- Schatten powers are spectral traces of the row Gram matrix, including empty dimension. -/
+lemma norm_rpow_rowGram (A : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
     schattenNorm A r ^ r = tracePower (r / 2) (A * Aᴴ) := by
   rw [norm_rpow_gram A hr,
     tracePower_eq_sum (Matrix.posSemidef_conjTranspose_mul_self A),
@@ -51,7 +52,8 @@ private lemma norm_rpow_rowGram (A : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
     (hB := Matrix.isHermitian_mul_conjTranspose_self A)
   rw [he.mpr (Matrix.charpoly_mul_comm Aᴴ A)]
 
-private lemma holder_two_young (U V : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
+/-- The two-factor Schatten Hölder bound followed by the quadratic Young inequality. -/
+lemma holder_two_young (U V : Matrix d d ℂ) {r : ℝ} (hr : 0 < r) :
     2 * schattenNorm (U * V) r ^ r - schattenNorm V (2 * r) ^ (2 * r) ≤
       schattenNorm U (2 * r) ^ (2 * r) := by
   have hh := schattenNorm_mul_le U V hr (by positivity : 0 < 2 * r)
