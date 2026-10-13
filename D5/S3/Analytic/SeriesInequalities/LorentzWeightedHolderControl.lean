@@ -35,7 +35,7 @@ open D5.S3.Analytic.SeriesInequalities.LorentzLowDegreeCoefficientRemainder
 def delta (n : ℕ) (p : ℝ) : ℝ :=
   max (Real.sqrt (p * (1-p) / n)) (1 / n)
 
-private lemma delta_pos {n : ℕ} (hn : 0 < n) (p : ℝ) : 0 < delta n p :=
+lemma delta_pos {n : ℕ} (hn : 0 < n) (p : ℝ) : 0 < delta n p :=
   (div_pos zero_lt_one (by exact_mod_cast hn)).trans_le (le_max_right _ _)
 
 private lemma delta_variance {n : ℕ} (hn : 0 < n) {p : ℝ}
@@ -689,7 +689,7 @@ private lemma delta_square_comparison {m : ℕ} (hm : 0 < m) {x y : ℝ}
     have hc : (|x-y|/(m : ℝ))*(m : ℝ)=|x-y| := div_mul_cancel₀ _ hmR.ne'
     nlinarith
 
-private lemma inverse_delta_comparison {m : ℕ} (hm : 0 < m) {x y : ℝ}
+lemma inverse_delta_comparison {m : ℕ} (hm : 0 < m) {x y : ℝ}
     (hx : x ∈ Set.Icc (0 : ℝ) 1) (hy : y ∈ Set.Icc (0 : ℝ) 1) :
     delta m x / delta m y ≤ 1 + |x - y|/delta m x := by
   have hs := delta_square_comparison hm hx hy

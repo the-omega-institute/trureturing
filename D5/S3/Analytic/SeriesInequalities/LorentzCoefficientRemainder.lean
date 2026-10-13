@@ -561,7 +561,7 @@ private lemma pointwise_remainder_bound (r : ℕ) :
         nlinarith [mul_le_mul_of_nonneg_left hp (show 0 ≤ (1+S)*‖c‖ by positivity)]
       _ ≤ _ := by gcongr
 
-private lemma lorentz_degree (m r : ℕ) (f : ℕ → ℕ → ℂ) :
+lemma lorentz_degree (m r : ℕ) (f : ℕ → ℕ → ℂ) :
     (lorentzJet m r f).natDegree ≤ m+r := by
   unfold lorentzJet
   apply natDegree_sum_le_of_forall_le
