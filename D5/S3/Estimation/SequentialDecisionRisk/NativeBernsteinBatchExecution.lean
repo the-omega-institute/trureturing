@@ -842,4 +842,51 @@ theorem two_source_hypergeometric_lift (N M N' M' : ℕ) (hN : N ≤ N') (hM : M
         zero_safe_binomial_split M M' j.val J.val hM (by omega) (by omega) q]
       ac_rfl
 
+private theorem translated_binomial_sum (p : unitInterval) (l i L : ℕ) (h : i + l ≤ L) :
+    (∑ I : Fin (L + 1), translatedBinomial l i I.val p) = 1 := by
+  rw [Fin.sum_univ_eq_sum_range (fun I => translatedBinomial l i I p) (L + 1)]
+  have hsplit : L + 1 = i + (L + 1 - i) := by omega
+  rw [hsplit, Finset.sum_range_add]
+  have hz : (∑ x ∈ Finset.range i, translatedBinomial l i x p) = 0 := by
+    apply Finset.sum_eq_zero
+    intro x hx
+    simp [translatedBinomial, not_le.mpr (Finset.mem_range.mp hx)]
+  rw [hz, zero_add]
+  simp only [translatedBinomial, Nat.le_add_right, ↓reduceIte, Nat.add_sub_cancel_left]
+  have ht : (∑ x ∈ Finset.range (l + 1), binomialMass l x p) =
+      ∑ x ∈ Finset.range (L + 1 - i), binomialMass l x p := by
+    apply Finset.sum_subset (Finset.range_subset_range.mpr (by omega))
+    intro x _ hx
+    have hnx : ¬ x < l + 1 := by simpa only [Finset.mem_range] using hx
+    exact (binomial_mass_support_and_pascal p).2.1 l x (by omega)
+  rw [← ht, ← Fin.sum_univ_eq_sum_range (fun x => binomialMass l x p) (l + 1)]
+  exact (binomial_mass_support_and_pascal p).1 l
+
+def bernsteinEval (N M : ℕ) (f : Fin (N + 1) → Fin (M + 1) → ℝ)
+    (p q : unitInterval) : ℝ≥0∞ :=
+  ∑ i, ∑ j, ENNReal.ofReal (f i j) * binomialMass N i.val p * binomialMass M j.val q
+
+/-- Elevation preserves evaluation. This algebraic statement does not add
+source observations to an execution that has already returned. -/
+theorem lift_preserves_bernstein_evaluation (N M N' M' : ℕ) (hN : N ≤ N') (hM : M ≤ M')
+    (f : Fin (N + 1) → Fin (M + 1) → ℝ) (hf : ∀ i j, 0 ≤ f i j) (p q : unitInterval) :
+    bernsteinEval N' M' (liftTwo N M N' M' f) p q = bernsteinEval N M f p q := by
+  unfold bernsteinEval
+  simp_rw [← two_source_hypergeometric_lift N M N' M' hN hM f hf p q]
+  simp_rw [Finset.sum_comm (s := (Finset.univ : Finset (Fin (M' + 1))))
+    (t := (Finset.univ : Finset (Fin (N + 1))))]
+  rw [Finset.sum_comm (s := (Finset.univ : Finset (Fin (N' + 1))))
+    (t := (Finset.univ : Finset (Fin (N + 1))))]
+  simp_rw [Finset.sum_comm (s := (Finset.univ : Finset (Fin (M' + 1))))
+    (t := (Finset.univ : Finset (Fin (M + 1))))]
+  simp_rw [Finset.sum_comm (s := (Finset.univ : Finset (Fin (N' + 1))))
+    (t := (Finset.univ : Finset (Fin (M + 1))))]
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  have hn := translated_binomial_sum p (N' - N) i.val N' (by omega)
+  have hm := translated_binomial_sum q (M' - M) j.val M' (by omega)
+  simp only [← Finset.mul_sum, hn, hm, mul_one]
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
