@@ -23,6 +23,11 @@ on:
         description: '40-hex commit reachable from source_ref; the producer checks this pin'
         required: true
         type: string
+      prewarm_targets:
+        description: 'Optional ordered, space-separated registered Lean module roots to prewarm'
+        required: false
+        type: string
+        default: ''
 
 permissions: {}
 
@@ -139,6 +144,56 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Prewarm explicitly selected modules for the manual cache
+        if: github.event_name == 'workflow_dispatch' && inputs.prewarm_targets != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREWARM_TARGETS: ${{ inputs.prewarm_targets }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+          STRATALINT_CACHE_WRITES: 'false'
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          root = Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          sys.path.insert(0, str(root / 'tools/lean-inspector'))
+          import scoped
+
+          value = os.environ['PREWARM_TARGETS']
+          validated = scoped.parse_targets(value)
+          selection = scoped.public.selection.Selection(root)
+          selection.validate('lean-report')
+          if not set(validated) <= selection.modules().keys():
+              raise ValueError('prewarm targets must be registered report modules')
+          targets = list(dict.fromkeys(value.split()))
+          environment = dict(os.environ)
+          producer = subprocess.check_output([
+              'bash', str(root / 'tools/scripts/workflow/judge-lean-producer.sh'),
+              str(root / 'tools/StrataLint.Cli/bin/Release/net10.0')],
+              cwd=root, text=True).strip()
+          if producer:
+              environment['STRATALINT_LEAN_PRODUCER_DLL'] = producer
+          else:
+              environment.pop('STRATALINT_LEAN_PRODUCER_DLL', None)
+          for module in targets:
+              print('CACHE_PREWARM_ROOT module=' + module, flush=True)
+              subprocess.run([
+                  'make', 'lean-report-scoped', 'LEAN_TARGETS=' + module,
+                  'LEAN_REPORT=.lake/build/stratalint/manual-prewarm-' + module + '.json'],
+                  cwd=root, env=environment, check=True)
+          PY
+      - name: Export manual prewarming reports and diagnostics
+        if: always() && github.event_name == 'workflow_dispatch' && inputs.prewarm_targets != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-prewarm-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .lake/build/stratalint/manual-prewarm-*.json*
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 3
       - name: Build the report and run the compiled judge
         if: github.event_name == 'workflow_dispatch'
         env:
