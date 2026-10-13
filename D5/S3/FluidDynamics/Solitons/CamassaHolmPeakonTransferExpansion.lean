@@ -10,12 +10,7 @@ import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Data.Sign.Basic
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
 import Mathlib.RingTheory.PowerSeries.Derivative
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.Tactic.Ring.Basic
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
