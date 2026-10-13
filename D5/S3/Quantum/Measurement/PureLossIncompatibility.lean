@@ -631,7 +631,7 @@ private theorem common_subeffect_bound
     dsimp [quad]
     simp only [dotProduct, Fin.sum_univ_two, Matrix.mulVec, Matrix.cons_val_zero,
       Matrix.cons_val_one]
-    simp only [zero_mul]
+    simp only [zero_mul, mul_zero]
     rw [show H (1 : Fin 2) (1 : Fin 2) =
         ((H (1 : Fin 2) (1 : Fin 2)).re : ℂ) by
       apply Complex.ext
