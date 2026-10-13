@@ -100,7 +100,7 @@ private theorem events_append (decode : S → Symbol → Option OriginalEvent)
     (p v : List (Receipt S Symbol)) : events decode (p ++ v) = events decode p ++ events decode v :=
   List.filterMap_append
 
-private theorem prepend (A : Architecture S Head Symbol B) (C : ReturnCut A)
+theorem prepend (A : Architecture S Head Symbol B) (C : ReturnCut A)
     {a p s v y} (hp : Prefix A C a p s) (hv : Complete A C s v y) :
     Complete A C a (p ++ v) y := by
   induction hp generalizing v with
@@ -167,7 +167,7 @@ private theorem fair_prefix_mass (n : ℕ) (ω : ℕ → Bool) :
   simp_rw [hb]
   simp
 
-private theorem finite_good (A : Architecture S Head Symbol B) (C : ReturnCut A)
+theorem finite_good (A : Architecture S Head Symbol B) (C : ReturnCut A)
     (a : S ⊕ Ready A) (n : ℕ)
     (Good : (S ⊕ Ready A) × List (Receipt S Symbol) → Prop)
     (hgood : ∀ᵐ σ ∂tapeLaw, Good (sourceTrace A C a σ n)) :
@@ -276,7 +276,7 @@ private theorem prefix_reachable (A : Architecture S Head Symbol B) (C : ReturnC
   | nil => exact Reachable.entrance a ha
   | step hp he ih => exact Reachable.step _ _ ih (edge_positive A C he)
 
-private theorem prefix_completable (A : Architecture S Head Symbol B) (C : ReturnCut A)
+theorem prefix_completable (A : Architecture S Head Symbol B) (C : ReturnCut A)
     (E : Set (S ⊕ Ready A)) (hE : ∀ a ∈ E, tapeLaw (never (instruction A C) a) = 0)
     {a p s} (ha : Sum.inl a ∈ E) (hp : Prefix A C a p s) :
     ∃ v y, Complete A C s v y := by
