@@ -172,4 +172,81 @@ noncomputable def exteriorHoles_cut_registration : LeanInformationAudit.Contract
 #print axioms supportProof
 #print axioms exteriorHoles_cut_registration
 
+open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
+
+abbrev namingSignature : Signature where
+  Params := Σ _ : CutSet, Σ _ : Source, Σ _ : Address → Nat, Address
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := LiteralRow
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def namingActual : Realization namingSignature := realize namingSignature
+  (fun _ p t => nameExterior p.2.2.1 (cutExterior p.1 p.2.2.2 t)) (fun e => nomatch e)
+
+def namingBad : Realization namingSignature := realize namingSignature
+  (fun _ _ _ => .of (.inl false)) (fun e => nomatch e)
+
+abbrev namingArena : Arena where
+  signature := namingSignature
+  Law R := ∀ (P : CutSet) (_ : CutPrefixFree P) (root : Source)
+    (names : Address → Nat),
+    (∀ p ∈ orderedHoles P root, names p = classOrdinal P root p) →
+    ∀ (a : Address) (t : Source), subtree a root = some t →
+    R.readout () ⟨P,⟨root,⟨names,a⟩⟩⟩ t = literalRow P root a t
+
+private theorem naming_bad_law : ¬ namingArena.Law namingBad := by
+  intro law
+  have bad := law ∅ empty_prefixFree (.of true) (fun _ => 0)
+    (by simp [orderedHoles,reachedHoles]) [] (.of true) rfl
+  change (FreeMagma.of (.inl false) : LiteralRow) = .of (.inl true) at bad
+  cases bad
+
+def namingProof : Registration namingArena (type_of% (@nameExterior_correct)) where
+  actual := namingActual
+  bridge := Iff.rfl
+  variation := ⟨@nameExterior_correct,namingBad,naming_bad_law⟩
+  sensitivity := ⟨fun i => ⟨namingBad,
+    fun j h => (h (Subsingleton.elim j i)).elim,rfl,naming_bad_law⟩,fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨⟨∅,⟨.of true,⟨fun _ => 0,[]⟩⟩⟩,.of true,.of false,?_⟩
+    simp [namingActual,realize,nameExterior,cutExterior]
+    decide
+
+noncomputable def nameExterior_correct_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder.nameExterior_correct)
+    (Realization namingSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder.nameExterior_correct
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder.namingProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨namingArena⟩
+  objectArena := .source ⟨namingArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source namingArena ⟨namingProof⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize namingSignature namingActual.readout namingActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder
+    definition := none
+    coordinates := #[0,2,3,5]
+    readouts := #[{ path := #["body","body","body","body","body","body","body","body","fn","arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms namingProof
+#print axioms nameExterior_correct_registration
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualCutPartitionDecoder

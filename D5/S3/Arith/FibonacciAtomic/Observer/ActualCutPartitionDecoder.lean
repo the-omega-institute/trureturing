@@ -320,7 +320,7 @@ def literalRecord (P : CutSet) (u : Source) : HoleExterior × Finset (Address ×
 def nameExterior (names : Address → Nat) : HoleExterior → LiteralRow :=
   FreeMagma.lift (fun x => .of (Sum.map id names x))
 
-private theorem nameExterior_correct (P : CutSet) (hP : CutPrefixFree P) (root : Source)
+theorem nameExterior_correct (P : CutSet) (hP : CutPrefixFree P) (root : Source)
     (names : Address → Nat)
     (labels : ∀ p ∈ orderedHoles P root, names p = classOrdinal P root p)
     (a : Address) (t : Source) (ht : subtree a root = some t) :
