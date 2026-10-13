@@ -298,8 +298,39 @@ jobs:
             done < /proc/self/cgroup
             while :; do
               printf 'CACHE_PRODUCER_OBSERVATION %s\n' "$(date -u +%FT%TZ)"
+              printf 'RESOURCE_SOURCE /proc/meminfo\n'
+              awk '$1 ~ /^(MemTotal:|MemAvailable:|SwapTotal:|SwapFree:)/' /proc/meminfo || true
+              printf 'RESOURCE_SOURCE /proc/vmstat\n'
+              awk '$1 ~ /^(oom_kill|pswpin|pswpout)$/' /proc/vmstat || true
+              printf 'RESOURCE_SOURCE kernel-oom\n'
+              if kernel_log="$(sudo -n dmesg --time-format iso 2>/dev/null)"; then
+                printf '%s\n' "$kernel_log" | awk '/oom-kill|Out of memory|Killed process|invoked oom-killer|Memory cgroup out of memory/' | tail -n 20 || true
+              else
+                printf 'RESOURCE_UNAVAILABLE kernel-oom\n'
+              fi
               ps -C lean,lake,inputDiscovery,reportInspector \
                 -o pid,ppid,etime,time,pcpu,rss,stat,args --sort=-pcpu | head -n 13 || true
+              while read -r lean_pid; do
+                [[ "$lean_pid" =~ ^[0-9]+$ ]] || continue
+                printf 'LEAN_PROCESS_MEMORY pid=%s\n' "$lean_pid"
+                awk '$1 ~ /^(VmHWM:|VmRSS:|RssAnon:|RssFile:|RssShmem:)/' "/proc/$lean_pid/status" 2>/dev/null || true
+                if [[ -r "/proc/$lean_pid/smaps_rollup" ]]; then
+                  awk '$1 ~ /^(Pss:|Private_Clean:|Private_Dirty:|Swap:)/' "/proc/$lean_pid/smaps_rollup" 2>/dev/null || true
+                fi
+                lean_cgroup="$(awk -F: '$1 == "0" && $2 == "" {print $3; exit}' "/proc/$lean_pid/cgroup" 2>/dev/null || true)"
+                printf 'LEAN_PROCESS_CGROUP pid=%s path=%s\n' "$lean_pid" "${lean_cgroup:-UNAVAILABLE}"
+                if [[ "$lean_cgroup" == /* ]]; then
+                  for memory_file in memory.current memory.peak memory.max memory.events; do
+                    memory_path="/sys/fs/cgroup${lean_cgroup%/}/$memory_file"
+                    if [[ -r "$memory_path" ]]; then
+                      printf 'RESOURCE_SOURCE pid=%s path=%s\n' "$lean_pid" "$memory_path"
+                      cat "$memory_path" || true
+                    else
+                      printf 'RESOURCE_UNAVAILABLE pid=%s path=%s\n' "$lean_pid" "$memory_path"
+                    fi
+                  done
+                fi
+              done < <(ps -C lean -o pid= --sort=-pcpu | head -n 12 || true)
               for observation in /proc/pressure/cpu /proc/pressure/memory "$cgroup_memory_events"; do
                 if [[ -r "$observation" ]]; then
                   printf 'RESOURCE_SOURCE %s\n' "$observation"
@@ -314,6 +345,8 @@ jobs:
                 if [[ -f "$lake_log" ]]; then
                   printf 'LAKE_OUTPUT_SOURCE %s\n' "$lake_log"
                   tail -n 3 "$lake_log"
+                  printf 'LAKE_ERROR_OUTPUT_SOURCE %s\n' "$lake_log"
+                  awk '/error:|✖|"severity"[[:space:]]*:[[:space:]]*"error"/' "$lake_log" | tail -n 20 || true
                 fi
               done
               sleep 60 &
