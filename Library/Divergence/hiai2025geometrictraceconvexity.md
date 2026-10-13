@@ -1,9 +1,9 @@
 ---
 bibkey: hiai2025geometrictraceconvexity
 authors: Fumio Hiai
-year: 2025
+year: 2026
 title: Log-majorizations between quasi-geometric type means for matrices
-doi: null
+doi: 10.1016/j.laa.2026.01.003
 url: https://arxiv.org/abs/2510.04691v3
 claim: Equations (2.1)/(2.2) identify the original geometric trace; Problem 5.18 asks its joint convexity on the interior parameter rectangle.
 strata_touched:
@@ -13,6 +13,18 @@ triage: anchor
 ---
 
 # Original geometric trace and support extension
+
+This entry carries the canonical DOI metadata for the article and records
+its Problem 5.18 application. The companion note
+[`hiai2025logmajorizationle`](hiai2025logmajorizationle.md) records
+Problem 3.20 and links back to this publication entry.
+
+The author-deposited v3 is explicitly labelled “Final print version” in the
+arXiv metadata, updated 20 January 2026, and associated with the published
+article in Linear Algebra and its Applications 735 (2026), 123–174.
+Problem 5.18 remains explicitly open in that author-final text. This
+identifies the author-deposited publication version; the publisher body
+was not independently compared.
 
 On page 4, (2.1) defines the base-first mean
 A #alpha B = A^(1/2) (A^(-1/2) B A^(-1/2))^alpha A^(1/2).
@@ -76,6 +88,7 @@ or establish a global novelty claim.
 
 ## Verified locator
 
+Published article DOI: https://doi.org/10.1016/j.laa.2026.01.003.
 Source page: https://arxiv.org/abs/2510.04691v3.
 Primary PDF: https://arxiv.org/pdf/2510.04691v3.
 SHA256: 517793e372e0d145619e517e7be0772e4852536ce65821cd5142e714e19e1a4b.
@@ -84,3 +97,11 @@ aa28e51ce917d745be733f307d25bd1322fe0fa2f34b0db0032eb69a9ecbf8a5.
 Its byte-LF lines 122-124 state support semantics, 139-142 contain
 (2.1)/(2.2), and 2045-2047 state Problem 5.18. No proof text is
 transcribed from the paper; it fixes the target and applicability boundary.
+
+The bounded later-primary check inspected arXiv:2609.00034v1
+(alternative means and data processing), arXiv:2512.22807v1
+(spectral-family Ando–Hiai inequalities), and arXiv:2609.32095v1
+(local determinant defects for the alpha–z Renyi kernel, equation (47)
+and comparison section 8.4). None of those inspected results supplies
+original-G joint convexity. This bounded search does not establish
+worldwide priority of the repository solution.

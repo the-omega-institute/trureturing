@@ -1,0 +1,26 @@
+**Definition 110.3 (The remaining hard-two intersection question).**
+For the original source and every sequence (110.2), the general
+hard-two exact-cap comparison asks whether
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing
+\qquad(0<\varepsilon\le1)
+\tag{110.14}
+$$
+
+always holds. This implication remains unresolved for general active
+length in this theory. Its quantifier allows replacement of the
+entire feasible mixed kernel. Failure of (109.1) for one feasible
+kernel only excludes its exact-law realization, and does not exclude
+a different kernel in the same cap slice.
+
+The budget-zero/one and near-full-depth cases are supplied by
+[Acquisition Resources, Proposition
+93.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#93-minimal-active-dimension-and-request-depth-for-a-feasibility-gap);
+the active-four hard-two comparison is [Theorem
+96.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#96-the-analytic-hard-two-boundary-for-four-active-amplitudes).
+The plateau rules used below are Theorem 87.1. These results retain
+their own scopes and are not a general implication (110.14).
+

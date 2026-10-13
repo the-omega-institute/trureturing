@@ -12,6 +12,8 @@ admission_basis: open-problem-resolution (#15145; Proved)
 escape_witness: none (settling result uses open-problem-resolution)
 Direct frozen dependencies: none; all prerequisites are pinned Mathlib or this delivery.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15483
+Published owner escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15716
+Published owner DTR reading: DTR-Unregistered; the typed family bridge, law-violating variation, slot sensitivity and observational-dependence evidence remain missing.
 Per-declaration judgement form (definitions carry no new-content claim):
 proof_shape: antitoneSortPerm: bind-only; consumer=LogScalarCurvatureMonotone.sorted; witness=none
 proof_shape: antitone_comp_antitoneSortPerm: bind-only; consumer=LogScalarCurvatureMonotone.sorted_antitone; witness=none
@@ -104,7 +106,7 @@ private lemma permutation_positive_chain {n : ℕ} (x : Fin n → ℝ) (hx : ∀
     have hp : ∀ i, 0 < (x ∘ σ) i := fun i => hx _
     have hc := Relation.ReflTransGen.single (r := PositiveT) ⟨htr,hp,ttransform_positive htr hp,ttransform_sum htr⟩
     simpa only [Function.comp_assoc, Equiv.Perm.coe_mul] using ih.trans hc
-private lemma moreMixed_positive_chain {n : ℕ} (x y : Fin n → ℝ)
+lemma moreMixed_positive_chain {n : ℕ} (x y : Fin n → ℝ)
     (hx : x ∈ simplex n) (hy : y ∈ simplex n) (hxy : moreMixed x y) :
     Relation.ReflTransGen PositiveT y x := by
   have hxsorted : ∀ i, 0 < sorted x i := fun i => hx.1 _

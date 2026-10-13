@@ -141,6 +141,110 @@ def registration : Registration arena (type_of% (@weighted_path_markov_trace.{u}
 
 #print axioms registration
 
+-- The public scalar-linearity helper keeps its original unrestricted telescope.
+abbrev scalarSignature : Signature where
+  Params := NativeData.{u}
+  State p := C p.R p.n p.s
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def scalarActual : Realization scalarSignature := realize scalarSignature
+  (fun _ p X => by
+    letI := p.finite
+    letI := p.eq
+    exact tau p.R p.d p.δ p.n p.s X) (fun e => nomatch e)
+def scalarRejected : Realization scalarSignature := realize scalarSignature
+  (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev scalarArena : Arena where
+  signature := scalarSignature
+  Law r := ∀ {L : Type u} [Fintype L] [DecidableEq L]
+    (R : L → L → Prop) (d : L → ℝ) (δ : ℝ)
+    (n : ℕ) (s : L) (c : ℂ) (X : C R n s),
+    r.readout () (data R d δ n s) (c • X) =
+      c * r.readout () (data R d δ n s) X
+
+def scalarActual_law : scalarArena.Law scalarActual := by
+  intro L _ _ R d δ n s c X
+  exact tau_smul R d δ n s c X
+
+def scalarRejected_law : ¬ scalarArena.{u}.Law scalarRejected.{u} := by
+  intro h
+  have hh := @h (ULift.{u} Unit) inferInstance inferInstance testRelation
+    (fun _ => 1) 1 0 testStart 0 1
+  norm_num [scalarRejected, realize] at hh
+
+def scalarFamily : Registration scalarArena (type_of% (@tau_smul.{u})) where
+  actual := scalarActual
+  bridge := Iff.rfl
+  variation := ⟨scalarActual_law, scalarRejected, scalarRejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨scalarRejected, ?_, rfl, scalarRejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨data testRelation (fun _ => 1) 1 0 testStart, 0, 1, ?_⟩
+    change tau testRelation (fun _ => 1) 1 0 testStart 0 ≠
+      tau testRelation (fun _ => 1) 1 0 testStart 1
+    rw [(test_law.{u} 0 testStart).2.2.2.2.2.2.2.2.1]
+    simp [tau]
+
+#print axioms scalarFamily
+
+def scalarRegistration_1.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@tau_smul.{u_1}) (Realization scalarSignature.{u_1}) Unit Unit where
+  unitName := `D5.S3.Quantum.Algebra.Knot.WeightedPathMarkovTrace.tau_smul.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Algebra.Knot.WeightedPathMarkovTrace.scalarFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨scalarArena.{u_1}⟩
+  objectArena := .source ⟨scalarArena.{u_1}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source scalarArena.{u_1} ⟨scalarFamily.{u_1}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature.{u_1}
+    (fun _ p X => by
+      letI := p.finite
+      letI := p.eq
+      exact tau p.R p.d p.δ p.n p.s X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Algebra.Knot.WeightedPathMarkovTrace
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4, 5, 6, 7]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false
+    }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false
+    }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms scalarRegistration_1
 
 
 end Reg.D5.S3.Quantum.Algebra.Knot.WeightedPathMarkovTrace

@@ -253,7 +253,7 @@ class HostCleanupTests(unittest.TestCase):
              patch.object(cleanup, "clean_worktrees", return_value=0), contextlib.redirect_stdout(output):
             result = cleanup.run_clean(options)
         self.assertEqual(0, result, output.getvalue())
-        self.assertEqual(3, activity.call_count)
+        self.assertEqual(1, activity.call_count)
         self.assertTrue(all(call.args == (options.codex_home,) for call in activity.call_args_list))
         summary = json.loads(output.getvalue().splitlines()[-1])
         self.assertEqual("succeeded", summary["status"])

@@ -122,7 +122,7 @@ private theorem choi_of_eb (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matri
       (fun a => star (if a.1 = a.2 then (1 : 𝕜) else 0))) ∈ SEP 𝕜 m n at hs
   rw [← MatrixMap.choi_matrix_eq_map_proj] at hs
   exact sep_swap hs
-private theorem choi_psd_of_cp (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜)
+theorem choi_psd_of_cp (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜)
     (h : MatrixMap.IsCompletelyPositive Phi) :
     ((MatrixMap.choi_matrix Phi).submatrix Prod.swap Prod.swap).PosSemidef :=
   ((MatrixMap.choi_PSD_iff_CP_map Phi).mp h).submatrix Prod.swap

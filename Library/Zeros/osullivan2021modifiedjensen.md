@@ -324,3 +324,81 @@ a replay of the numerical certificate. For the zero-shift criterion
 (ZF), degrees above $9\cdot10^{24}$ remain outside this finite input.
 It supplies no all-degree conclusion, signed Robin-tail budget or
 local Lean certification.
+
+## A weak ratio asymptotic does not supply a hyperbolicity margin
+
+Banerjee, Bringmann and Rolen, *The Jensen–Pólya program and inequalities
+for arithmetic sequences*,
+[arXiv:2609.14295v2](https://arxiv.org/abs/2609.14295v2), version dated
+18 September 2026, concerns arithmetic sequences and fixed-degree
+Jensen polynomials at large coefficient shift. Its printed Theorem 1.1,
+p.2, assumes (C1), for each fixed integer $0\le j\le m$,
+
+$$
+\log\frac{a(n+j)}{a(n)}
+=A(n)j-\delta(n)^2j^2+o(1),
+\qquad \delta(n)>0,\quad\delta(n)\longrightarrow0,
+\tag{WR1}
+$$
+
+and claims eventual hyperbolicity of
+$J_a^{m,n}(X)=\sum_{j=0}^m\binom mj a(n+j)X^j$.
+Both the versioned PDF and HTML print this unscaled $o(1)$ remainder.
+The stated hypotheses alone are insufficient, already for $m=2$.
+
+Indeed, for every integer $n\ge0$, take
+
+$$
+a(n)=\frac{n+2}{n+1}>0,\qquad
+A(n)=\frac1{(n+1)^2}>0,\qquad
+\delta(n)=\frac1{n+1}>0.
+\tag{WR2}
+$$
+
+For $0\le j\le m$ the exact ratio and the (WR1) remainder are
+
+$$
+\frac{a(n+j)}{a(n)}
+=1-\frac{j}{(n+j+1)(n+2)},
+\qquad
+r_{n,j}=\log\!\left(1-\frac{j}{(n+j+1)(n+2)}\right)
++\frac{j^2-j}{(n+1)^2}.
+\tag{WR3}
+$$
+
+For fixed $m$, uniformly over its finitely many integer offsets,
+$r_{n,j}=O_m((n+1)^{-2})=o(1)$. Thus (WR1) holds, including positive
+$A$ and $\delta$, and both tend to zero. However the quadratic Jensen
+polynomial has discriminant
+
+$$
+\begin{aligned}
+\operatorname{disc}(J_a^{2,n})
+&=4\bigl(a(n+1)^2-a(n)a(n+2)\bigr)\\
+&=-\frac{4(2n+5)}{(n+1)(n+2)^2(n+3)}<0
+\qquad(n\ge0).
+\end{aligned}
+\tag{WR4}
+$$
+
+It has two nonreal roots at every shift. This tests the printed general
+criterion, not the actual $\xi$ coefficients or RH, and it does not
+adjudicate the paper's other specialized results.
+
+The specific proof gap is the first expansion in the proof of
+Theorem 3.1, pp.9–10, leading to equation (3.1): offset-dependent
+$1+o(1)$ factors are extracted as one common relative factor from a
+cancelling binomial sum, before division by $\delta(n)^m$. A uniform
+unscaled error cannot justify that extraction. The paper's own
+Theorem 2.4, p.9, quotes the classical Hermite–Jensen theorem with a
+remainder $o(\delta(n)^m)$ and higher coefficients
+$A_k(n)=o(\delta(n)^k)$. That established stronger theorem remains the
+supplier; (WR1) cannot replace its error conditions.
+
+For the original zero-shift/full-degree $\xi$ problem, one must in
+addition map the source, coefficient shift, degree and normalized
+error to the actual family. The stated fixed-degree result does not provide this map or a
+growing-degree uniform margin for the complete local kernel.
+This is a primary-source applicability check and ordinary analytical
+calculation, with no new Lean declaration, RH conclusion or
+originality certification.

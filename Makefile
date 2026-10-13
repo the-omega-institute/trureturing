@@ -11,6 +11,8 @@ LEAN_REPORT_CACHE_MISS_POLICY ?= fetch-or-fail
 REBUILD_REPORT_CACHE ?= 0
 REFRESH_STALE ?= 0
 export LEAN_SKIP_LOCK ?= 0
+# .NET processes started from these targets create no diagnostic pipes or sockets.
+export DOTNET_EnableDiagnostics ?= 0
 .PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report lean-report-scoped build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch ingest mathlib-reanchor search-atoms show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose settle settle-clear worktree worktree-clean worktree-remove worktree-checkpoint worktree-publish worktree-finalize pr pr-open pr-watch gate compiled-judge-test
 
 help:

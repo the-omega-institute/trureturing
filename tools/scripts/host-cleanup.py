@@ -131,7 +131,9 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
             return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
-        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)):
+        # FIFOs and sockets hold no data; reclaimable trees treat them like empty files.
+        if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)
+                or reclaim and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))):
             return dict(reason="special_file")
         if info.st_mtime > cutoff:
             return dict(reason="recent")
@@ -542,10 +544,12 @@ def clean_from_anchor(options, caller, disk_descriptor):
                 clean_staging(lake)
                 result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
             else:
+                # Temporary candidates rely on the registrations and activity read at sweep start.
+                refresh = category != "tmp"
                 result = clean_candidate(path, cutoff, protections[category], options.delete,
-                                         repository=None if category == "codex" else main_checkout,
-                                         activity=fresh_protection, reclaim=category != "codex",
-                                         refresh_activity=True)
+                                         repository=main_checkout if category == "sshx" else None,
+                                         activity=fresh_protection if refresh else None,
+                                         reclaim=category != "codex", refresh_activity=refresh)
             record(category, result)
             if category != "codex" and result["action"] == "kept" and result["reason"] == "recent":
                 for lake, repository in artifact_lakes(path, protections[category], worktrees, unobservable):
