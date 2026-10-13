@@ -3719,7 +3719,7 @@ with $J$ an independent set in $G\setminus N[I]$. The empty-set
 case gives $\mu_\varnothing=1$. Formula (11.3) computes a moment
 of the original law; deletion does not change its dynamics.
 
-**Theorem 11.2 (Exact monomial covariance and insertion-energy matrices).**
+**Definition 11.2 (Inherited monomial forms at the specified heat-bath rates).**
 For every $I,J\subseteq V$, including illegal sets,
 
 $$
@@ -3754,11 +3754,15 @@ and summation over $i$ prove (11.4). If the union is illegal,
 there are no such endpoints and both descriptions give zero.
 No independence of the occupations under $p$ is assumed. $\square$
 
-The covariance identity is the elementary moment identity. The
-energy identity here uses the actual heat-bath insertion and its
-occupied-endpoint mass; a Metropolis rate would give a different
-coefficient. These are repository-derived deductions from the
-specified forms, without a literature-priority claim.
+The monomial mechanism is established in Miao--Yin [MY26], §3.2,
+equations (13), (21) and (22), for auxiliary unit-deletion dynamics
+on positive downward-closed supports. At retention one, their
+unnormalized energy is $|I\cap J|\mu_{I\cup J}$. Formula (11.4)
+applies that mechanism with the specified occupied-site deletion
+rates $\omega_i/(1+\lambda_i)$. A Metropolis rate would give a
+different coefficient. This calculation is an attributed ingredient
+in the phase-menu and filtering applications, not a new general
+monomial energy principle.
 
 In particular, disjoint monomials have zero bilinear insertion
 energy even when their covariance is nonzero. The two matrices
@@ -3801,7 +3805,7 @@ indices requires $|I|<|s|$. The matrix is triangular with diagonal
 one, hence invertible. This proves the basis statement and the
 uniqueness of every legal monomial expansion.
 
-For $f=\sum_Ic_Im_I$, bilinearity and Theorem 11.2 give
+For $f=\sum_Ic_Im_I$, bilinearity and the monomial calculation in Definition 11.2 give
 
 $$
 \operatorname{Var}_p(f)=c^{\mathsf T}Vc,\qquad
@@ -4276,5 +4280,426 @@ no literature-priority claim is made.
 [Nacu03]: ../../../Library/StatisticalMechanics/nacu2003monotone.md
 
 [Castelnovo05]: ../../../Library/StatisticalMechanics/castelnovo2005stochasticmatrixform.md
+
+## 追加锚（本行以下为增补区）
+
+## 14. Additive approximation and a vanishing-overlap obstruction
+
+### 14.1. A sharper actual-law overlap and separation-free accuracy
+
+**Proposition 14.1 (Endpoint-mass and additive filtering bounds).**
+In Definition 12.1 let $s^+$ occupy every odd site and $s^-$
+every even site, and put $p_+=p(s^+)$, $p_-=p(s^-)$.
+Then Theorem 12.2's overlap satisfies
+
+$$
+\eta\ge\frac{p_+p_-}{(p_++p_-)\operatorname{Var}_p(S)}
+\ge\frac{2p_{\min}}{n^2}.
+\tag{14.1}
+$$
+
+For $t>0$, the effective imaginary-time rate obeys the bound
+independent of the next distinct eigenvalue:
+
+$$
+0\le-\frac{d}{dt}\log C(t)-\gamma
+\le\frac{\log(1/\eta)}{t}.
+\tag{14.2}
+$$
+
+For $n\ge2$ and $k\ge1$, the power-filtering quotient satisfies
+
+$$
+0\le R_k-\gamma
+\le(1-\gamma)\bigl(1-\eta^{1/(2k)}\bigr)
+\le\frac{(1-\gamma)\log(1/\eta)}{2k}.
+\tag{14.3}
+$$
+
+Proof. The legal particle-hole poset has minimum $s^-$ and
+maximum $s^+$. For the normalized increasing gap eigenfunction
+in (12.6), its range is therefore
+
+$$
+R=\left\langle h,
+\frac{\mathbf1_{s^+}}{p_+}-\frac{\mathbf1_{s^-}}{p_-}
+\right\rangle_p,\qquad
+R^2\le\frac1{p_+}+\frac1{p_-}.
+\tag{14.4}
+$$
+
+Combine (12.8) with orthogonal projection. This gives the first
+bound in (14.1). The harmonic product of the endpoint masses
+is at least $p_{\min}/2$, and $\operatorname{Var}_p(S)\le n^2/4$.
+
+Let $\nu_\ell=a_\ell/\operatorname{Var}_p(S)$ and
+$F(t)=e^{\gamma t}C(t)/\operatorname{Var}_p(S)$.
+The spectral expansion gives $\eta\le F(t)\le1$. Its negative
+logarithmic derivative $g(t)$ is the exponentially tilted mean
+of $\ell-\gamma$, and
+$g'(t)=-\operatorname{Var}_t(\ell)\le0$.
+Thus
+
+$$
+t g(t)\le\int_0^t g(u)\,du
+=-\log F(t)\le\log(1/\eta),
+\tag{14.5}
+$$
+
+proving (14.2).
+
+For the power bound retain only eigenvalues with $\ell<1$;
+the others vanish after one power. Put
+$x_\ell=-\log((1-\ell)/(1-\gamma))\ge0$ and use the tilted
+weights $\nu_\ell e^{-2kx_\ell}$. Their total mass before
+tilting is at most one, and the mass at $x_\gamma=0$ is $\eta$.
+The same logarithmic-partition argument bounds their tilted
+mean of $x$ by $\log(1/\eta)/(2k)$; if the initial mass is
+less than one, its logarithm only decreases this upper bound.
+Since $\ell-\gamma=(1-\gamma)(1-e^{-x_\ell})$ and
+$1-e^{-x}$ is concave, Jensen's inequality proves (14.3).
+The inequality $1-e^{-x}\le x$ gives its last form. $\square$
+
+These estimates answer additive energy approximation. They do
+not estimate the projector onto an isolated gap eigenspace;
+that stronger task retains a separation requirement. The rate
+still depends on the actual spectral overlap.
+
+### 14.2. A fixed readout has no parameter-uniform waiting time
+
+**Theorem 14.2 (Positive two-site vanishing-overlap family).**
+On the original two-site legal carrier, take
+
+$$
+\omega_1=\frac14,\qquad\omega_2=\frac34,\qquad
+\lambda_1=\varepsilon>0,\qquad\lambda_2=1,
+\qquad S=1+s_1-s_2.
+\tag{14.6}
+$$
+
+For each fixed finite $t\ge0$ and each fixed integer $k\ge0$,
+
+$$
+\lim_{\varepsilon\downarrow0}\gamma_\varepsilon=\frac14,
+\qquad
+\lim_{\varepsilon\downarrow0}\left[-\frac{d}{dt}
+\log C_\varepsilon(t)\right]=\frac34,
+\qquad
+\lim_{\varepsilon\downarrow0}R_{k,\varepsilon}=\frac34.
+\tag{14.7}
+$$
+
+Consequently no fixed parameter-independent $t$ or $k$ gives
+additive gap error at most $1/4$ for this prescribed signal
+over all positive activities, even at length two.
+
+Proof. The state masses at $00,10,01$ are proportional to
+$1,\varepsilon,1$. In that order the function-generator parent
+is
+
+$$
+H_{\rm cl}=\begin{pmatrix}
+\omega_1q_1+\omega_2q_2&-\omega_1q_1&-\omega_2q_2\\
+-\omega_1(1-q_1)&\omega_1(1-q_1)&0\\
+-\omega_2(1-q_2)&0&\omega_2(1-q_2)
+\end{pmatrix}.
+\tag{14.8}
+$$
+
+Its zero eigenvector is constant. Its trace is one, and the
+product of the two positive eigenvalues is
+$\omega_1\omega_2(1-q_1q_2)$. Therefore, writing
+
+$$
+d_\varepsilon=\sqrt{\frac14+
+\frac{3\varepsilon}{8(1+\varepsilon)}},\qquad
+\gamma_\varepsilon=\frac{1-d_\varepsilon}{2},\qquad
+\Lambda_\varepsilon=\frac{1+d_\varepsilon}{2},
+\tag{14.9}
+$$
+
+both are positive and distinct. Direct evaluation on the same
+three states gives
+
+$$
+\operatorname{Var}_p(S)=\frac{1+5\varepsilon}{(2+\varepsilon)^2},
+\qquad
+R_{0,\varepsilon}=
+\frac{(2+\varepsilon)(3+5\varepsilon)}
+{8(1+\varepsilon)(1+5\varepsilon)}.
+\tag{14.10}
+$$
+
+There are just two positive spectral weights, so
+
+$$
+\eta_\varepsilon=
+\frac{\Lambda_\varepsilon-R_{0,\varepsilon}}
+{\Lambda_\varepsilon-\gamma_\varepsilon}\longrightarrow0.
+\tag{14.11}
+$$
+
+The gap and upper edge tend to $1/4$ and $3/4$, respectively.
+The separation tends to $1/2$. For finite $t$, the tilted gap
+weight is proportional to
+$\eta_\varepsilon e^{-t\gamma_\varepsilon}$; for finite $k$
+it is proportional to
+$\eta_\varepsilon(1-\gamma_\varepsilon)^{2k}$.
+The corresponding faster weights have strictly positive limits.
+Hence both tilted means tend to $3/4$, proving (14.7).
+Every model used has positive activities. The excluded boundary
+$\varepsilon=0$ evaluates a limit only. $\square$
+
+This is a vanishing spectral-weight obstruction, with no closing
+separation. It concerns the prescribed staggered readout, not
+every optimally chosen linear or joint signal. Moreover,
+$\gamma_\varepsilon=1-\Lambda_\varepsilon$ at this length.
+Whenever the signal also has faster weight, finite filtering
+does not attain that non-strict threshold, even though its
+quotient converges to the gap.
+
+### 14.3. Optimizing the probe gives a different additive-degree answer
+
+**Theorem 14.3 (Uniform additive degree in the normalized clock).**
+For every $d\ge1$, every $n\ge1$ and all positive activities
+and positive normalized site weights,
+
+$$
+0\le\gamma^{(d)}-\gamma<\frac1{2d+1}.
+\tag{14.12}
+$$
+
+Proof. If $n\le2d$, the maximal legal monomial degree
+$\lceil n/2\rceil$ is at most $d$, so (11.7) gives equality
+of the two gaps. If $n\ge2d+1$, every site has a neighbor.
+Write $\rho_i=\mathbb E_ps_i$. Conditional resampling gives
+$\rho_i=q_i p(s_j=0\text{ for all }j\in N(i))<q_i$:
+a singleton occupied neighbor has positive mass. Formula
+(11.4), or the existing singleton calculation (7.10), gives
+
+$$
+\frac{\mathcal E_\omega(s_i,s_i)}{\operatorname{Var}_p(s_i)}
+=\frac{\omega_i}{(1+\lambda_i)(1-\rho_i)}<\omega_i.
+\tag{14.13}
+$$
+
+Choose a minimum-weight site. The degree-$d$ menu includes it,
+and $\min_i\omega_i\le1/n$, so
+$\gamma^{(d)}<1/n\le1/(2d+1)$. Subtract the positive $\gamma$
+and use the variational lower bound. $\square$
+
+This concerns an optimized probe with fixed additive accuracy
+and the specific normalization $\sum_i\omega_i=1$. It supplies
+neither relative accuracy nor an exact gap eigenfunction of
+uniform degree. It therefore coexists with Theorem 14.2's
+failure for a fixed readout. If an independently established
+margin $1-\Lambda-\gamma\ge\epsilon>0$ is available, any
+$d$ with $1/(2d+1)\le\epsilon$ gives a degree-$d$ witness
+below $1-\Lambda$. No such universal positive margin is
+asserted; the arbitrary-parameter comparison remains unresolved.
+
+The estimates and the positive two-site family are deductions
+for the stipulated normalized path. Their literature priority
+is not claimed. The monomial energy mechanism used above is
+the published insertion-deletion calculation of Miao--Yin
+[MY26], §3.2, equations (13), (21) and (22), with the actual
+site deletion rates $\omega_i/(1+\lambda_i)$ substituted.
+Their quantitative polynomial-approximation theorem requires
+field-dynamics stability and integrability not supplied here.
+
+[MY26]: ../../../Library/StatisticalMechanics/miaoyin2026matchings.md
+
+## 追加锚（本行以下为增补区）
+
+## 15. Soft occupation profiles and a strict joint-phase certificate
+
+### 15.1. Multiplicative profiles retain one probability law
+
+**Definition 15.1 (Soft occupation profiles).** On the original
+path and law let $a,b\in\mathbb R^n$ and define
+
+$$
+F_a(s)=\prod_i\bigl(1+(a_i-1)s_i\bigr).
+\tag{15.1}
+$$
+
+Let $Z_G(x)$ be the independent-set partition polynomial with
+coordinate argument $x$. Coordinatewise multiplication of
+arguments is denoted by juxtaposition. Direct expectation under
+the original positive $p$ gives
+
+$$
+\operatorname{Cov}_p(F_a,F_b)
+=\frac{Z_G(\lambda ab)}{Z_G(\lambda)}
+-\frac{Z_G(\lambda a)Z_G(\lambda b)}{Z_G(\lambda)^2},
+\tag{15.2}
+$$
+
+and the same occupied-endpoint calculation as in Definition 11.2 gives
+
+$$
+\mathcal E_\omega(F_a,F_b)
+=\frac1{Z_G(\lambda)}\sum_i
+\frac{\omega_i\lambda_i}{1+\lambda_i}
+(a_i-1)(b_i-1)Z_{G\setminus N[i]}(\lambda ab).
+\tag{15.3}
+$$
+
+To see the second identity, the erasure increment at an occupied
+$i$ is $(a_i-1)\prod_{j\in s\setminus\{i\}}a_j$.
+Both increments multiply to $(a_i-1)(b_i-1)$ times the product
+of $a_jb_j$ on the remaining occupied sites. Every neighbor of
+$i$ is empty, so summing their product-activity mass leaves
+exactly the deleted partition polynomial in (15.3).
+These are algebraic evaluations under the original law even
+when some arguments are zero or negative; $\lambda ab$ is not
+a replacement stationary distribution. A vacancy cylinder
+sets $a_i=0$ on its marked sites and one elsewhere.
+
+The profiles provide a structured phase menu and bilinear
+matrix entries for its linear combinations. The expectation
+and deletion computations are inherited finite-sum ingredients;
+their use in the strict certificate below keeps the original
+preparation, generator and site normalization.
+
+### 15.2. Vacancy and occupation improve each other strictly
+
+**Theorem 15.2 (Joint vacancy-central occupation improvement).**
+Let $n\ge2$, choose a site $v$ and a nonempty
+$T\subseteq N(v)$, and put
+
+$$
+X=\prod_{i\in T}(1-s_i),\qquad Y=s_v,\qquad
+\alpha=\mathbb E_pX,\qquad\rho=\mathbb E_pY.
+\tag{15.4}
+$$
+
+Define $u=\alpha(1-\alpha)$, $z=\rho(1-\rho)$,
+$c=\rho(1-\alpha)$ and the actual energies
+$e=\mathcal E_\omega(X,X)$, $d=\mathcal E_\omega(Y,Y)$.
+Then $0<\rho<\alpha<1$, $e,d>0$ and
+
+$$
+V=\begin{pmatrix}u&c\\c&z\end{pmatrix},\qquad
+A=\begin{pmatrix}e&0\\0&d\end{pmatrix},\qquad
+\Delta=\det V=\rho(1-\alpha)(\alpha-\rho)>0.
+\tag{15.5}
+$$
+
+The smaller generalized eigenvalue is
+
+$$
+r_-=
+\frac{ez+du-\sqrt{(ez+du)^2-4\Delta ed}}{2\Delta},
+\qquad
+\gamma\le r_-<\min\left\{\frac eu,\frac dz\right\}.
+\tag{15.6}
+$$
+
+It is attained by a real linear combination of the two centered
+signals. For an interior site this joint phase has degree at
+most two; an endpoint gives a degree-one two-site combination.
+
+Proof. Legality implies $Y\le X$. The vacuum has $X=1,Y=0$,
+a singleton at $v$ has both one, and a singleton at a site
+of $T$ has $X=Y=0$. All three have positive mass, proving the
+strict probability inequalities. The variance and covariance
+entries in (15.5) follow from their Boolean values. The displayed
+determinant is positive, so every nonzero centered combination
+has positive variance.
+
+A single-site flip cannot change both $X$ and $Y$, since they
+depend on disjoint coordinate sets. Thus their bilinear energy
+is zero. Positive conductances and nonconstancy give $e>0$.
+The singleton calculation gives
+$d=\omega_v\rho/(1+\lambda_v)>0$.
+
+The Rayleigh quotient of $X+tY$ is
+
+$$
+\frac{e+dt^2}{u+2ct+zt^2}.
+\tag{15.7}
+$$
+
+Its derivative at zero is $-2ec/u^2<0$. Equivalently, for
+any sufficiently small positive $t$, the quotient is strictly
+less than $e/u$. Applying the same argument to $Y+tX$ gives
+strict improvement below $d/z$. The generalized minimum over
+all nonzero coefficient vectors is consequently below both
+component quotients. A $2\times2$ determinant expansion gives
+$\det(A-rV)=ed-r(ez+du)+r^2\Delta$, whose smaller root is
+(15.6). Positive definiteness of $A,V$ ensures two positive
+roots; the nonzero off-diagonal covariance makes them distinct.
+Compactness of the coefficient unit circle in the $V$ norm
+gives attainment. The full variational principle bounds
+$\gamma$ by this restricted minimum. $\square$
+
+The strict gain comes from a shared actual covariance even
+though no legal flip changes both signals. It generalizes the
+structure of (10.3) without claiming that this two-dimensional
+menu attains the full gap.
+
+**Proposition 15.3 (Spectral relation of full neighbor vacancy).**
+For $T=N(v)$, let $X_0=X-\alpha$ and $Y_0=Y-\rho$.
+For every positive eigenvalue $\ell$,
+
+$$
+\rho=q_v\alpha,\qquad
+H_{\rm cl}Y=\omega_v(Y-q_vX),\qquad
+\Pi_\ell X_0=
+\frac{\omega_v-\ell}{\omega_vq_v}\Pi_\ell Y_0.
+\tag{15.8}
+$$
+
+Proof. Conditioning on the entire complement of site $v$ gives
+$E_vY=q_vX$; other site updates leave $Y$ unchanged.
+Taking its expectation and using stationarity proves the first
+identity. The update formula gives the second. Project onto
+the $\ell$ eigenspace and subtract constants; positive
+$\omega_vq_v$ permits the last division. $\square$
+
+### 15.3. The exact threshold and its unresolved coverage
+
+**Corollary 15.4 (Two-component determinant threshold).**
+Let $\beta>0$ be an independently established lower bound on
+$1-\Lambda$. If $e/u\ge\beta$ and $d/z\ge\beta$, then
+the joint minimum meets that sufficient threshold exactly when
+
+$$
+r_-\le\beta
+\quad\Longleftrightarrow\quad
+(e-\beta u)(d-\beta z)\le\beta^2c^2.
+\tag{15.9}
+$$
+
+Whenever this holds, $\gamma\le1-\Lambda$ follows. If either
+component is already below $\beta$, its separate quotient
+suffices without the determinant test.
+
+Proof. The diagonal entries of $A-\beta V$ are nonnegative
+under the stated hypotheses. This symmetric matrix has a
+nonpositive eigenvalue exactly when its determinant is
+nonpositive; a positive determinant makes both eigenvalues
+positive. Congruence by $V^{-1/2}$ identifies these signs with
+the signs of the generalized eigenvalues minus $\beta$.
+Expanding the determinant proves (15.9), and (15.6) gives the
+gap comparison. $\square$
+
+For example, Chapter 9 supplies $\beta=D_{\mathcal M}$ for
+any matching with a positive lower bound. Equations
+(15.2)--(15.3) evaluate every matrix entry on the actual
+inhomogeneous path and yield a sufficient domain at every
+length. The strictly improved local menu does not establish
+that these domains cover all positive parameter vectors;
+failure of the test neither disproves the two-edge conjecture
+nor rules out other joint profiles. The matching lower bound
+can itself be nonsharp.
+
+The displayed joint-phase consequences are deductions for the
+stipulated law. Their covariance-pencil minimization uses
+classical finite-dimensional variational algebra; their
+literature priority is not claimed. As in Chapters 10--12,
+the diagonal phase interpretation supplies no control protocol
+or physical energy scale.
 
 ## 追加锚（本行以下为增补区）
