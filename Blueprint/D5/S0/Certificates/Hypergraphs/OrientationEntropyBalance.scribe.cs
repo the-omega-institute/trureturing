@@ -69,7 +69,10 @@ internal sealed class OrientationEntropyBalanceDocument : IScribeDocumentDefinit
                     + "summing to N, entropy equals log₂ N − log₂(∏c^c)/N, with 0^0=1. "
                     + "Monotonicity of the logarithm therefore proves global maximality in this "
                     + "class, although the degrees at vertices zero and two differ by two."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pelekis-2018-orientation-entropy-balance"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("pel-balance-" + name.ToLowerInvariant().Replace("_", "-")),
