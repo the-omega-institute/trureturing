@@ -106,7 +106,10 @@ internal sealed class WeakShuffleNormalizationDocument : IScribeDocumentDefiniti
                     + "forces barriers for every exceptional pair, and the path exponent "
                     + "identity makes the rescaling intertwine the two products. Thus the "
                     + "source conjecture holds for every alphabet, including uncountable ones."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mammez-2022-weak-shuffle-normalization"),
+                    ResolutionKind.Proved)))));
 
     private static Formula KXFormula() =>
         All("X", F.Id("Type"), All("K", F.Id("Type"),

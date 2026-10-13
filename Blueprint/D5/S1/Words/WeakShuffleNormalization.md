@@ -96,6 +96,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/WeakShuffleNormalization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mammez-2022-weak-shuffle-normalization` (proved) by `D5/S1/Words/WeakShuffleNormalization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mammez-2022-weak-shuffle-normalization","declaration_gid":"D5/S1/Words/WeakShuffleNormalization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Mammez (2022). *Weak stuffle algebras*. DOI: [10.24330/ieja.1060709](https://doi.org/10.24330/ieja.1060709). URL: <https://arxiv.org/abs/2003.09142>.
