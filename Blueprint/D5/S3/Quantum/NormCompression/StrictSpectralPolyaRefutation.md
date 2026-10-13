@@ -54,18 +54,6 @@ $$\neg claim$$
 
 Set A = I₃, H = [[1,0,1],[0,-2,0],[1,0,0]], E = Matrix.diagonal (Pi.single 2 1), and M = Submodule.span ℂ {H,E}. The residuals are [[1+s,0,s],[0,1-2s,0],[s,0,t]]. The two leading diagonal constraints force s = 0 on the spectral-optimal face, whose lexicographic minimum is diag(1,1,0), so E is strict. Schatten-p minimizers exist for every p > 1. Their real last residual entry is eventually below -1/4, contradicting convergence to the strict residual. Hermitian projection reduces the complex minimization to a real comparison. No uniqueness or exact residual limit is needed.
 
-**Remark 1.5 (Grover–Gupta Theorem 3.7).**
-
-$$
-GroverGuptaTheorem37
-$$
-
-*Citation.* Priyanka Grover; Krishna Kumar Gupta (2026). *Properties of best approximations with respect to the Ky Fan p-k norm, and the strict spectral approximant of a matrix*. DOI: [10.1016/j.laa.2026.04.016](https://doi.org/10.1016/j.laa.2026.04.016). URL: <https://arxiv.org/abs/2603.07498v2>.
-
-*Commentary.*
-
-Grover–Gupta Theorem 3.7 establishes the convergence statement when min(m,n) is at most two; the present refutation uses three-by-three matrices.
-
 Grover–Gupta's Theorem 3.7 for min(m,n) ≤ 2 remains valid. The three-dimensional example uses a repeated leading singular-value cluster and a coupling that does not commute with E. Eventual superiority against each fixed competitor does not give a uniform comparison against moving minimizers.
 
 Priyanka Grover and Krishna Kumar Gupta, Properties of best approximations with respect to the Ky Fan p-k norm, and the strict spectral approximant of a matrix, LAA 743 (2026), DOI 10.1016/j.laa.2026.04.016; arXiv:2603.07498v2.
