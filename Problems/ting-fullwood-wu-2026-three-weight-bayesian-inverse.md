@@ -17,7 +17,7 @@ unital qubit channels*, [arXiv:2605.10375v1](https://arxiv.org/html/2605.10375v1
 Section V, leave the alternative that a Pauli channel with precisely three
 nonzero weights admits Bayesian inverses only at the maximally mixed state, or
 that the admissible states form a measure-zero subset of the Bloch ball.
-The [literature note](../Library/QuantumStates/ting2026operational.md) contains
+The [literature note](../Library/QuantumChannels/ting2026operational.md) contains
 the exact quotation and the unrestricted Section II definition.
 
 The full target associated with
