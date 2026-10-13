@@ -39,6 +39,8 @@ internal sealed class ActualCutPartitionDecoderDocument : IScribeDocumentDefinit
                 "The finite set contains exactly the pairs of reached holes with equal actual subtrees. Every other reached pair records a genuine disequality."),
             Definition("literalRecord", "Exterior and partition record",
                 "This pair computes the addressed exterior and the complete finite partition independently of the class-labelled row representation."),
+            Definition("nameExterior", "Address-to-role naming",
+                "For any total function names from original addresses to natural numbers, nameExterior is the free-magma lift sending a concrete Boolean leaf to that same literal leaf and an addressed hole p to the role leaf names(p). It preserves every ordered binary pair and every occurrence, including repeated role names. It neither reads a source nor requires names to be injective, and it applies to ground exteriors and a single root hole."),
             Theorem("canonicalRow_record_iff", "Faithful representation bridge",
                 "Two sources have the same canonicalRow exactly when their independent exterior and complete partition records agree. The forward direction extracts the exterior and partition. The reverse direction fixes the same reached-hole ordering and first matching indices, then renames the same exterior. Consequently the canonical representation carries exactly the record information, including empty and root holes, without disclosing hidden values, sizes or acquisition traces."),
             Describe.Lean(DescribeId.Create("actualcutpartitiondecoder-exteriorholes-cut"),

@@ -317,7 +317,7 @@ def actualPartition (P : CutSet) (u : Source) : Finset (Address × Address) :=
 def literalRecord (P : CutSet) (u : Source) : HoleExterior × Finset (Address × Address) :=
   (cutExterior P [] u, actualPartition P u)
 
-private def nameExterior (names : Address → Nat) : HoleExterior → LiteralRow :=
+def nameExterior (names : Address → Nat) : HoleExterior → LiteralRow :=
   FreeMagma.lift (fun x => .of (Sum.map id names x))
 
 private theorem nameExterior_correct (P : CutSet) (hP : CutPrefixFree P) (root : Source)
