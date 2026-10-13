@@ -3,20 +3,26 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class DagLedgerMathlibReanchorWriter
+internal static partial class DagLedgerMathlibReanchorWriter
 {
     internal static CommandResult Reanchor(string root, IRepositoryGateway repository,
         ILeanReportSource source, IReadOnlyList<string> arguments)
     {
         try
         {
-            if (arguments.Count != 2 || arguments[0] != "--base" || string.IsNullOrWhiteSpace(arguments[1]))
-                throw new InvalidOperationException("USAGE: StrataLint ledger-reanchor-mathlib --base REV");
+            var options = ParseArguments(arguments);
             var protectedBase = Decode(DagLedgerCommandPreparation.Ask(() =>
-                repository.ReadRevisionProjection(arguments[1], TruthExportCommand.IsTruthInput)));
+                repository.ReadRevisionProjection(options.ProtectedBase, TruthExportCommand.IsTruthInput)));
             var state = FrozenStateCatalog.Load(protectedBase);
+            if (options.Retired.Any(path => !state.Records.ContainsKey(path)))
+                throw new InvalidOperationException("retired upstream port must be a protected-base frozen member");
             if (state.Records.IsEmpty) return new(true, "MATHLIB_REANCHOR replacement_modules=0 drift_seed_modules=0 recognition=not-required\n", string.Empty);
-            var truth = DagLedgerCommandPreparation.BuildTruthScoped(repository, source, state.Selectors);
+            var retained = state.Selectors.Where(path => !options.Retired.Contains(path)).ToImmutableArray();
+            var truth = retained.IsEmpty
+                ? DagLedgerCommandPreparation.BuildTruth(repository, source)
+                : DagLedgerCommandPreparation.BuildTruthScoped(repository, source, retained);
+            if (!options.Retired.IsEmpty)
+                return ValidateCompletedUpstreamRetirements(protectedBase, truth, state, options.Retired, retained);
             var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
             var planned = state.Selectors.ToDictionary(static path => path, path =>
                 truth.Report.Files.TryGetValue(path, out var module) && states.TryGetValue(path, out var status) && status is TruthState.Closed
@@ -54,6 +60,25 @@ internal static class DagLedgerMathlibReanchorWriter
                 + (exception.InnerException is null ? string.Empty : " Cause: " + exception.InnerException.Message) + "\n");
         }
     }
+
+    private static ReanchorOptions ParseArguments(IReadOnlyList<string> arguments)
+    {
+        if (arguments.Count < 2 || arguments[0] != "--base" || string.IsNullOrWhiteSpace(arguments[1]))
+            throw new InvalidOperationException("USAGE: StrataLint ledger-reanchor-mathlib --base REV [--retired-upstream-port MODULE ...]");
+        var retired = ImmutableHashSet.CreateBuilder<RepoPath>();
+        for (var index = 2; index < arguments.Count; index += 2)
+        {
+            if (arguments[index] != "--retired-upstream-port" || index + 1 >= arguments.Count
+                || !RepoPath.TryCreate(arguments[index + 1], out var path)
+                || !path.Value.StartsWith("D5/", StringComparison.Ordinal))
+                throw new InvalidOperationException("retired upstream port must name a canonical D5 module");
+            _ = FrozenStatePath.FromModulePath(path);
+            if (!retired.Add(path)) throw new InvalidOperationException("duplicate retired upstream port");
+        }
+        return new(arguments[1], retired.ToImmutable());
+    }
+
+    private sealed record ReanchorOptions(string ProtectedBase, ImmutableHashSet<RepoPath> Retired);
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) => SnapshotDecoder.Decode(raw) switch
     {
