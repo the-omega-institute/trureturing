@@ -1248,3 +1248,619 @@ analytical outcome does not satisfy or terminate the complete active
 through-2027 why-three programme.
 
 ## 115.99 追加锚（本行以下为增补区）
+
+## 116. Positive local ingress and the complete successor heat comparison
+
+The occurrence geometry and signed-state comparison of §115 do not by
+themselves make its polar transfers positive or local. This section gives
+a different pair of positive maps on each authentic accepted rho step.
+The reverse is adjoint to literal ancestry, while the conservative ingress
+has a different normalization. Their complete positive-time comparison
+includes every successor direction, not just ingress states.
+
+### 116.1 Actual carriers and the two endpoint maps
+
+**Definition 116.1 (the original step and its forms).** On every nonempty
+finite ordered original $u\in\mathcal T$ of IV Definition 112.1, retain
+$s_n=\rho^n u$, every literal occurrence and label, and the closed unit-edge
+counting Laplacian $L_n$ of §115.1. The substitution is still
+$\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$, homomorphically
+on ordered pairs. For one actual accepted step abbreviate
+
+$$
+\begin{aligned}
+V&=V_n,& V'&=V_{n+1},& N&=N_n,& N'&=N_{n+1},& r&=N'/N,\\
+H&=L^2(V,\mu),& H'&=L^2(V',\mu'),&
+\mu&=N^{-1}\sum_{x\in V}\delta_x,&
+\mu'&=(N')^{-1}\sum_{y\in V'}\delta_y,\\
+A&=NL_n,& A'&=N'L_{n+1},&
+S(t)&=e^{-tA},& S'(t)&=e^{-tA'}.
+\end{aligned}
+\tag{116.1}
+$$
+
+Every repeated occurrence remains distinct. Probability normalization
+changes the norm and readout convention; it removes no unit counting mass
+and changes no literal edge or closed Laplacian. Write $\mathcal E$ and
+$\mathcal E'$ for the actual old and successor edge sets. The associated
+real bilinear forms are exactly
+
+$$
+\begin{aligned}
+\mathfrak a(f,g)&=\langle f,Ag\rangle_\mu
+ =\sum_{\{x,y\}\in \mathcal E}(f(x)-f(y))(g(x)-g(y)),\\
+\mathfrak a'(h,k)&=\langle h,A'k\rangle_{\mu'},\\
+\|f\|_1^2&=\|f\|_\mu^2+\mathfrak a(f,f),&
+\|h\|_{1'}^2&=\|h\|_{\mu'}^2+\mathfrak a'(h,h).
+\end{aligned}
+\tag{116.2}
+$$
+
+Write $H_1=(H,\|\cdot\|_1)$ and $H'_1=(H',\|\cdot\|_{1'})$.
+Let $\mathcal B$ be the actual old beta-leaf set and $\mathcal Z$ its two
+born children per parent, as in IV (112.6)--(112.9). The map
+$\pi:V'\to V$ fixes old addresses and sends each born child to its actual
+parent. Put $m(x)=|\pi^{-1}(x)|=1+2\mathbf1_{\mathcal B}(x)$ and define
+
+$$
+E f=f\circ\pi,\qquad
+D=E^{*_\mu}=r^{-1}E^{\mathsf T},\qquad
+C=r E\operatorname{diag}(m)^{-1},\qquad
+F=r^{-1}C.
+\tag{116.3}
+$$
+
+Here $E^{\mathsf T}$ is the raw counting transpose, while the indicated
+adjoint uses the two probability inner products. These names are local
+to this section; $D$ here is not the incidence operator of §115.
+
+**Theorem 116.2 (finite positive endpoint contracts).** All four maps in
+(116.3) are order-positive and supported within occurrence distance one.
+Their exact contracts, for every signed $f,g\in H$ and $h\in H'$, are
+
+$$
+\begin{aligned}
+E\mathbf1&=\mathbf1,& (Ef)(x)&=f(x)\quad(x\in V),\\
+D\mathbf1&=m/r,&
+(C\mathbf1)(y)&=r/m(\pi(y)),&
+DC&=I_H,\\
+\int Dh\,d\mu&=\int h\,d\mu',&
+\int Cf\,d\mu'&=\int f\,d\mu,&
+\sum_{y\in V'}(Ff)(y)&=\sum_{x\in V}f(x),\\
+\langle Eg,Cf\rangle_{\mu'}&=\langle g,f\rangle_\mu,&
+\mathfrak a'(Ef,Eg)&=\mathfrak a(f,g).
+\end{aligned}
+\tag{116.4}
+$$
+
+Furthermore $1\le r\le3$ and
+
+$$
+\|E\|=\|D\|\le\sqrt3,\qquad
+\|C\|\le\sqrt3,\qquad
+\|Cf\|_{\mu'}\ge3^{-1/2}\|f\|_\mu.
+\tag{116.5}
+$$
+
+Thus $D$ reverses $C$ on its attained range. It is not a recovery of
+arbitrary successor inputs.
+
+Proof. Every fibre has one old member and either zero or two born
+children. Direct summation on these actual fibres gives
+
+$$
+E^{\mathsf T}E=\operatorname{diag}(m),\qquad
+W:=DE=\operatorname{diag}(m/r),\qquad
+\|Ef\|_{\mu'}^2=\frac1N\sum_x\frac{m(x)}r f(x)^2,\qquad
+\|Cf\|_{\mu'}^2=\frac1N\sum_x\frac r{m(x)}f(x)^2.
+\tag{116.6}
+$$
+
+The same summation proves the integrals, pairing and $DC=I$ in (116.4).
+All nonzero coefficients are positive and join either equal addresses
+or a newborn and its parent. Born-edge differences of $Ef$ vanish;
+every old-edge difference is retained, proving the form identity.
+The actual count $N'=N+2|\mathcal B|$ gives $1\le r\le3$.
+Since $1\le m\le3$, (116.6) proves every norm and lower bound.
+No inverse on the additional successor directions follows. $\square$
+
+### 116.2 Source-uniform control of the mass discrepancy
+
+**Lemma 116.3 (a relative bilinear mass estimate).** Put
+$c=\varphi^{-1}$, $\Delta_n=2F_{n+1}-1$, and, for $n\ge2$, set
+
+$$
+\begin{aligned}
+e_n&=\frac{c+2c^{n+1}}{\Delta_n},&
+\xi_n&=c\,2^{-\lfloor n/2\rfloor}+2c^{n+1}+e_n,\\
+\vartheta_n&=3\sqrt{\frac3{2\Delta_n}}+\xi_n.
+\end{aligned}
+\tag{116.7}
+$$
+
+These numbers depend only on $n$ and tend to zero. On every original
+source and every accepted pair,
+
+$$
+|\langle (W-I)f,g\rangle_\mu|
+ \le\vartheta_n\|f\|_1\|g\|_1
+\qquad(f,g\in H).
+\tag{116.8}
+$$
+
+This is a form estimate. No small operator norm of $W-I$ on $H$ is
+asserted.
+
+Proof. Reuse the exact beta-charge corrector in IV (108.10)--(108.12)
+on the actual $s_n$, including its full original skeleton. Those
+identities supply an actual potential $h$ such that
+
+$$
+2\mathbf1_{\mathcal B}-c=L_nh+c\delta_{\mathrm{root}}+\epsilon,
+\qquad
+|\nabla h|\le2,\qquad
+\|\epsilon\|_\infty\le2c^{n+1}.
+\tag{116.9}
+$$
+
+They also supply $N\ge\Delta_n$ and $|r-\varphi|\le e_n$ uniformly
+over all originals. Their hypotheses are precisely the finite ordered
+source, literal rho blocks and closed unit-edge operator retained here.
+For $j=\lfloor n/2\rfloor$, the actual tree contains every binary level
+through $j$. The root-spreading potential of IV (108.15),
+$b_j(x)=2^{-\min(|x|,j)}$, obeys
+
+$$
+L_nb_j=\delta_{\mathrm{root}}
+       -2^{-j}\mathbf1_{\{|x|=j\}}.
+\tag{116.10}
+$$
+
+Consequently, using $m-r=2\mathbf1_{\mathcal B}-c-(r-\varphi)$,
+the potential $v=h+cb_j$ satisfies
+
+$$
+m-r=L_nv+\eta,\qquad
+|\nabla v|\le3,\qquad
+\|\eta\|_\infty\le\xi_n.
+\tag{116.11}
+$$
+
+The root is included, rather than removed from the carrier.
+
+Counting integration by parts applied to the pointwise product $fg$
+now bounds its flux term by
+
+$$
+\begin{aligned}
+\left|\frac1{rN}\sum_x (L_nv)(x)f(x)g(x)\right|
+&\le\frac3{2rN}\sum_{\{x,y\}\in \mathcal E}
+ \bigl(|f(x)-f(y)|\,|g(x)+g(y)|\\
+&\hspace{42mm}
+       +|g(x)-g(y)|\,|f(x)+f(y)|\bigr)\\
+&\le\frac3r\sqrt{\frac3{2N}}\,
+ \bigl(\sqrt{\mathfrak a(f,f)}\,\|g\|_\mu
+       +\|f\|_\mu\sqrt{\mathfrak a(g,g)}\bigr)\\
+&\le3\sqrt{\frac3{2\Delta_n}}\|f\|_1\|g\|_1.
+\end{aligned}
+\tag{116.12}
+$$
+
+Here the exact maximum degree is at most three, so
+$\sum_{\{x,y\}}(g(x)+g(y))^2\le6N\|g\|_\mu^2$, and likewise for $f$.
+The last line uses Cauchy--Schwarz in the two coordinates
+$(\sqrt{\mathfrak a(f,f)},\|f\|_\mu)$ and
+$(\|g\|_\mu,\sqrt{\mathfrak a(g,g)})$, and $r\ge1$.
+The remainder in (116.11) is at most
+$\xi_n\|f\|_\mu\|g\|_\mu/r$. Since
+$\langle(W-I)f,g\rangle_\mu=(rN)^{-1}\sum_x(m(x)-r)f(x)g(x)$,
+this proves (116.8). The exponential growth of $\Delta_n$ and the
+displayed vanishing terms prove $\vartheta_n\to0$.
+No bound on original depth, balance or size has been used. $\square$
+
+### 116.3 Every successor direction in the resolvent comparison
+
+**Theorem 116.4 (full successor resolvent and compositional bounds).**
+Define
+
+$$
+R=(I+A)^{-1},\qquad R'=(I+A')^{-1},\qquad
+a_n=3\vartheta_n+\frac{1+\sqrt6}{2\sqrt{\Delta_n}},
+\qquad d_n=3(a_n+\vartheta_n).
+\tag{116.13}
+$$
+
+For every original, every accepted pair at $n\ge2$, and every integer
+$j\ge1$,
+
+$$
+\|R'-ERD\|_{H'\to H'}\le a_n,\qquad
+\|R'^j-ER^jD\|_{H'\to H'}\le j d_n.
+\tag{116.14}
+$$
+
+Both estimates are on the whole successor space.
+
+Proof. Finite self-adjoint nonnegative spectral calculus gives
+
+$$
+\|R\|_{H\to H_1}\le1,\qquad
+\sqrt{\mathfrak a(Rf,Rf)}\le\tfrac12\|f\|_\mu,
+\tag{116.15}
+$$
+
+and the corresponding two statements for $R'$.
+Indeed the scalar multipliers are $(1+\lambda)^{-1/2}\le1$
+and $\sqrt\lambda/(1+\lambda)\le1/2$ for every $\lambda\ge0$.
+These facts include the zero eigenvalue.
+
+Take arbitrary $h,k\in H'$, and put
+$z=R'k$, $f=RDh$, and $g=z|_V$, the literal old restriction.
+The actual born-edge energy gives
+
+$$
+\|z-Eg\|_{\mu'}\le\frac{\sqrt{\mathfrak a'(z,z)}}{\sqrt{N'}},
+\qquad
+\mathfrak a(g,g)\le\mathfrak a'(z,z),\qquad
+\|g\|_\mu\le\sqrt r\,\|z\|_{\mu'}.
+\tag{116.16}
+$$
+
+In particular $\|g\|_1\le\sqrt3\|k\|_{\mu'}$ and
+$\|f\|_1\le\sqrt3\|h\|_{\mu'}$.
+
+There is an exact cross-form identity
+$\mathfrak a'(Ef,z)=\mathfrak a(f,g)$: $Ef$ has zero born-edge
+gradient and its old-edge gradient is precisely that of $f$.
+The two resolvent equations and $D=E^{*_\mu}$ therefore give
+
+$$
+\begin{aligned}
+\langle k,Ef\rangle_{\mu'}
+ &=\mathfrak a'(z,Ef)+\langle z,Ef\rangle_{\mu'}\\
+ &=\mathfrak a(g,f)+\langle Dz,f\rangle_\mu\\
+ &=\langle h,Eg\rangle_{\mu'}+\langle Dz-g,f\rangle_\mu,\\
+\langle k,(R'-ERD)h\rangle_{\mu'}
+ &=\langle h,z-Eg\rangle_{\mu'}
+       -\langle Dz-g,f\rangle_\mu.
+\end{aligned}
+\tag{116.17}
+$$
+
+This equality uses arbitrary inputs and tests, with no ancestry-range
+restriction. Summing the actual fibre in $Dz$ gives
+
+$$
+Dz-g=(W-I)g+b,\qquad
+b(x)=\frac1r\sum_{\substack{y\in\mathcal Z\\\pi(y)=x}}
+                        (z(y)-g(x)).
+\tag{116.18}
+$$
+
+Lemma 116.3 bounds the $(W-I)g$ term in (116.17) by
+$3\vartheta_n\|h\|_{\mu'}\|k\|_{\mu'}$. For the remaining term,
+
+$$
+\begin{aligned}
+|\langle f,b\rangle_\mu|
+&=\left|\frac1{N'}\sum_{y\in\mathcal Z}
+              f(\pi(y))(z(y)-g(\pi(y)))\right|\\
+&\le\sqrt{\frac2r}\,\|f\|_\mu
+          \frac{\sqrt{\mathfrak a'(z,z)}}{\sqrt{N'}}\\
+&\le\frac{\sqrt6}{2\sqrt{N'}}\|h\|_{\mu'}\|k\|_{\mu'}.
+\end{aligned}
+\tag{116.19}
+$$
+
+The factor two is the actual number of children per beta parent.
+The first term of the last line in (116.17) is at most
+$\|h\|_{\mu'}\|k\|_{\mu'}/(2\sqrt{N'})$ by (116.15)--(116.16).
+Since $N'\ge N\ge\Delta_n$, this proves the first bound in (116.14).
+
+For the powers, (116.15) also gives
+$\|R^j\|_{H\to H_1}\le1$ for every $j\ge1$. Applying (116.8) to
+$R f$ and $R^j g$ proves the sandwiched discrepancy estimate
+
+$$
+\|R(W-I)R^j\|_{H\to H}\le\vartheta_n\qquad(j\ge1).
+\tag{116.20}
+$$
+
+Let $T_j=R'^j-ER^jD$. Because $DE=W$, there is the exact identity
+
+$$
+T_{j+1}
+ =R'T_j+(R'-ERD)ER^jD+ER(W-I)R^jD.
+\tag{116.21}
+$$
+
+The three bounds $\|R'\|\le1$, $\|E\|\|D\|\le3$ and (116.20)
+give $\|T_{j+1}\|\le\|T_j\|+3a_n+3\vartheta_n$.
+Starting from $\|T_1\|\le a_n$ proves
+$\|T_j\|\le a_n+3(j-1)(a_n+\vartheta_n)\le j d_n$.
+Thus the nonidentity factor $DE$ has been accounted for explicitly;
+the identification maps were not treated as a unitary pair. $\square$
+
+### 116.4 The uniform complete positive-time target
+
+**Theorem 116.5 (positive two-map full-successor comparison).**
+Fix $0<\varepsilon\le S<\infty$. Set
+
+$$
+M_{\varepsilon,S}=\frac{4Se^S}{e^2\varepsilon^2},\qquad
+\omega_n(\varepsilon,S)=
+ \min\left\{4,\ \inf_{j\ge1}
+       \left(\frac{2M_{\varepsilon,S}}{\sqrt j}
+                    +j3^j d_n\right)\right\}
+\quad(n\ge2).
+\tag{116.22}
+$$
+
+Then $\omega_n(\varepsilon,S)\to0$ and, on the complete original domain,
+
+$$
+\sup_{u\in\mathcal T}\ \sup_{t\in[\varepsilon,S]}
+ \|S_{n+1}(t)-E_n S_n(t)D_n\|_{H_{n+1}\to H_{n+1}}
+ \le\omega_n(\varepsilon,S).
+\tag{116.23}
+$$
+
+The originals, unit signed successor inputs and unit successor linear
+tests may all depend on $n$ and $t$. The conclusion does not require a
+common upper spectral bound.
+
+Proof. Reuse the elementary positive-contraction polynomial argument of
+§115.3 with the resolvents in (116.13), rather than its edge covariances.
+For $0<x\le1$ put $G_t(x)=e^{-t(1-x)/x}$ and put $G_t(0)=0$.
+Finite spectral calculus gives
+
+$$
+G_t(R)=S(t),\qquad G_t(R')=S'(t).
+\tag{116.24}
+$$
+
+All operators here are finite symmetric nonnegative functions of the
+actual closed Laplacians, so the continuous functional calculus applies
+also at the spectral endpoints. For the stated $t$ interval,
+$0\le G_t\le1$ and
+$|G_t'(x)|=t x^{-2}e^t e^{-t/x}\le M_{\varepsilon,S}$.
+In particular $G_t$ has a common scalar Lipschitz bound, not an
+assumed operator Lipschitz bound.
+
+Its degree-$j$ Bernstein polynomial is
+
+$$
+p_{j,t}(x)=\sum_{i=0}^j G_t(i/j)\binom ji x^i(1-x)^{j-i}.
+\tag{116.25}
+$$
+
+The binomial variance bound proves
+$\sup_{x\in[0,1]}|G_t(x)-p_{j,t}(x)|
+ \le M_{\varepsilon,S}/(2\sqrt j)$ uniformly in $t$.
+Crucially, $p_{j,t}(0)=0$: its monomial expansion has no identity term.
+The total absolute monomial coefficient sum is at most $3^j$, by
+expanding the displayed powers and using $0\le G_t(i/j)\le1$.
+Consequently (116.14) gives
+
+$$
+\begin{aligned}
+\|S'(t)-ES(t)D\|
+&\le\|G_t(R')-p_{j,t}(R')\|
+ +\|E(G_t(R)-p_{j,t}(R))D\|\\
+&\hspace{9mm}+\|p_{j,t}(R')-Ep_{j,t}(R)D\|\\
+&\le\frac{2M_{\varepsilon,S}}{\sqrt j}+j3^j d_n.
+\end{aligned}
+\tag{116.26}
+$$
+
+The first two terms use $\|E\|\|D\|\le3$.
+Also $\|S'(t)\|\le1$ and $\|ES(t)D\|\le3$, so four is a valid
+uniform cap. Taking the infimum proves (116.23).
+First fixing $j$ and letting $n$ grow, then letting $j$ grow, proves
+the limit in (116.22).
+
+For an explicit source-independent threshold at accuracy $\delta>0$,
+choose an integer $j>(4M_{\varepsilon,S}/\delta)^2$ and take any
+$n_0\ge2$ with $j3^j d_n<\delta/2$ for all $n\ge n_0$.
+The formulae (116.7), (116.13) are decreasing to zero for $n\ge2$,
+so one may choose the first such $n_0$ by their displayed scalar
+inequality. Then (116.23) is less than $\delta$ for every original
+and every $n\ge n_0$.
+This is a universal proof; finite matrix trends are not its premise.
+$\square$
+
+### 116.5 Conservative ingress and the different readout endpoints
+
+**Corollary 116.6 (full tests, ingress and positive-time old readouts).**
+With $\omega_n=\omega_n(\varepsilon,S)$, for every
+$t\in[\varepsilon,S]$,
+
+$$
+\begin{aligned}
+\|S'(t)C-ES(t)\|_{H\to H'}&\le\sqrt3\,\omega_n,\\
+\|S'(t)F-r^{-1}ES(t)\|_{H\to H'}&\le(\sqrt3/r)\,\omega_n,\\
+|\langle k,(S'(t)-ES(t)D)h\rangle_{\mu'}|
+ &\le\omega_n\|k\|_{\mu'}\|h\|_{\mu'}.
+\end{aligned}
+\tag{116.27}
+$$
+
+For an old readout $g$, let $Qg=r\,\operatorname{zeroext}_V(g)$.
+Then
+
+$$
+\begin{aligned}
+\|Qg\|_{\mu'}&=\sqrt r\,\|g\|_\mu,&
+\langle Qg,ES(t)f\rangle_{\mu'}&=\langle g,S(t)f\rangle_\mu,\\
+|\langle Qg,S'(t)Cf\rangle_{\mu'}
+               -\langle g,S(t)f\rangle_\mu|
+ &\le3\omega_n\|g\|_\mu\|f\|_\mu.
+\end{aligned}
+\tag{116.28}
+$$
+
+The exact ingress pairing $\langle Eg,Cf\rangle_{\mu'}=\langle g,f\rangle_\mu$
+and the positive-time pairing in (116.28) are different endpoint contracts.
+
+Proof. Multiply (116.23) by $C$ on the right and use $DC=I$,
+then divide by $r$ for $F$. Pairing the full norm estimate with arbitrary
+$k,h$ proves the third line of (116.27). Literal old zero extension gives
+$\|Qg\|_{\mu'}^2=r\|g\|_\mu^2$ and the exact pairing in (116.28).
+Pair its error with the first line of (116.27) and use
+$\sqrt r\,\sqrt3\le3$. $\square$
+
+No statement that $\langle Eg,S'(t)Cf\rangle_{\mu'}$ uniformly approaches
+$\langle g,S(t)f\rangle_\mu$ for every old $g$ is part of this corollary.
+Inserting $Eg$ instead of $Qg$ in its limiting expression gives the
+different exact quantity
+$\langle g,W S(t)f\rangle_\mu$. The estimate (116.8) does not bound this
+uniformly by $\langle g,S(t)f\rangle_\mu$ when $g$ is an arbitrary
+unsmoothed unit vector. Likewise $D$ is an exact ingress reverse,
+not a claimed reverse of the old state after heat.
+
+A literal evaluation at a successor address has probability-functional
+norm $\sqrt{N'}$, with Riesz vector $N'\delta_y$. Thus (116.23)
+bounds its error on a unit probability input by
+$\sqrt{N'}\,\omega_n$, without a source-uniform absolute point guarantee.
+For an old point readout in (116.28), the bound carries $\sqrt N$.
+All hidden signed modes remain in the operator domain even when a
+constructor or a particular point readout does not detect them.
+
+### 116.6 Endpoints, source services and the remaining bridge
+
+**Proposition 116.7 (zero time and exact finite distinctions).**
+The finite identities above include both singleton labels and empty
+birth blocks. With births, zero time cannot be included in the uniform
+full-successor convergence: there is a unit $h\in\ker D$ and
+
+$$
+(I-ED)h=h,\qquad \|I-ED\|_{H'\to H'}\ge1.
+\tag{116.29}
+$$
+
+The conservative ingress $C$ sends uniform old density to $r/m$,
+rather than to the new uniform equilibrium whenever $m$ is nonconstant.
+The family $ES(t)D$ is positive, but is not in general an exact finite
+conservative semigroup on the successor.
+
+Proof. For an alpha singleton the accepted alpha-to-beta step has no
+birth, $N=N'=1$, and $E=D=C=I$. For a beta singleton the successor has
+three nodes, $r=m=3$, $E$ repeats the old value, $D$ takes the mean,
+and $C=E$. These satisfy all displayed finite contracts; no edge or
+inverse is inserted into the singleton old carrier.
+An empty birth block on a general old source similarly gives
+$V'=V$, $r=m=1$ and the same underlying operators and identity maps.
+
+With births $|V'|>|V|$, so $D$ has a nonzero kernel by $DC=I$.
+Any unit vector in that kernel proves (116.29). For example opposite
+values on two born siblings give such a vector. All sources have births
+at sufficiently large accepted epochs, including the alpha orbit, so
+this is also a uniform-domain zero-time obstruction.
+
+The constant and integral formulae are already (116.4).
+In particular $ED$ need not be the identity at zero. On a pair with
+nonconstant $m$, conservation of $ES(t)D$ would require
+$S(t)W\mathbf1=\mathbf1$: its successor integral is
+$\langle S(t)W\mathbf1,Dh\rangle_\mu$, whereas the integral of $h$ is
+$\langle\mathbf1,Dh\rangle_\mu$, and $D$ is onto.
+As $S(t)$ is invertible and fixes constants at every finite $t$,
+that equality would force $W\mathbf1=\mathbf1$, which fails.
+Thus no exact finite conservative-semigroup contract is supplied.
+$\square$
+
+**Mathematical citation 116.8 (ordinary synthesis and actual operations).**
+IV §108 supplies the literal birth/count identities, uniform ratio and
+bounded-gradient beta corrector; IV §112.2 supplies their all-node
+accepted-step correspondence. Section 115 already supplies complete
+signed-state comparison and consecutive polar transfers. Its compact
+positive-time scalar functional calculus argument is reused in
+(116.24)--(116.26). Finite self-adjoint spectral calculus has exactly the
+hypotheses of the mature supplier cited there, Teschl,
+[*Mathematical Methods in Quantum Mechanics*, Theorem 3.7 and Theorem
+6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf):
+the operators here are finite symmetric nonnegative, and their resolvents
+are positive contractions. No covariance norm bound is needed.
+
+The varying-space form/semigroup framework of Mugnolo--Nittka--Post,
+[*Norm convergence of sectorial operators on varying Hilbert spaces*,
+Definition 2.3 and Example 3.9](https://files.ele-math.com/articles/oam-07-54.pdf),
+is context, not a theorem invoked with unverified identification
+hypotheses. In particular (116.8) is not a small $H$-operator norm of
+$DE-I$, and an automatic multiplication of identification maps would
+miss (116.20). The new source-specific ordinary synthesis is the full
+successor estimate (116.23), paid by the literal mass discrepancy,
+arbitrary successor resolvent tests, and the compositional correction.
+The positive local finite identities alone would not settle that target.
+These deductions are repo-derived, without an exhaustive novelty or
+worldwide priority claim.
+
+The exact arbitrary-clock finite obstruction in §114 remains intact.
+The centered ancestry obstruction of IV §109 remains intact: the present
+claim compares $S'$ with $ESD$ and uses the different ingress $C$;
+it does not assert same-map intertwining $S'E=ES$.
+Neither positivity nor locality makes $C$ a positive equilibrium-preserving
+isometry with a positive unital reverse. Its norm bounds and attained-range
+recovery are (116.5), with $D\mathbf1=m/r$.
+
+The field maps require genuinely acquired source data: actual addresses
+and birth-parent incidence, the beta mask, and the actual counts $N,N'$.
+Conditional on an authenticated stationary register and lawful access,
+the reply-driven full-description acquisition of IV §112.5 and §115.6
+allows their finite local calculation. This is a sufficient paid route,
+not a free size/index oracle or an optimized uniform acquisition bill.
+Computing a successor from a retained description is not a fresh Read
+or an executed Apply. Old version records and current version replies,
+repeated and absent invocations, and the complete chronological history
+retain their existing distinctions.
+
+The native contract is exactly IV Contract 112.1a: four-valued
+constructor Read, accepted/refused actual Apply under its declared common
+guard, and absorbing Stop on the same original-root register.
+A refused attempt leaves the carrier, operator and epoch unchanged;
+its comparison uses identity maps on that unchanged carrier.
+Stop executes no suffix and has no fictitious successor. The analytic
+limit is indexed by accepted epochs, conditional on their being reached;
+no guard is assumed to grant infinitely many updates. The uncapped
+all-accepted service and every declared lawful guarded history retain
+their original scope.
+
+On the branch service the entire INITIAL target remains IV (112.2):
+the reached ordered list $(L,R)$, exterior
+$\langle\square_1,\square_2\rangle$, and the complete partition according
+to equality of the two entire initial ordered subtrees. No heat value,
+birth mask or current-row target replaces it. Other original sources,
+including the singletons, remain in the mathematical comparison domain.
+
+[Native Birth Provenance §10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md)
+owns its same-$r,q$ joint acquired/exported supplement and fresh-query
+reduction on each full actual one-image fibre. Its paid acquisition,
+common entry, authentic update, stationary reading and isolation are
+assumptions; its class-root experiments are constructor tests.
+[Native Alpha Recut Memory §13](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+owns its separated-age restricted-menu whole-row conflict graph and
+binary retained-code criterion. Neither result supplies an occurrence
+amplitude field, a heat actuator or a spatial port. Their source, history,
+permission and resource contracts are reused without extending them.
+
+The integer $n$ is an accepted source epoch; $t$ is comparison time,
+with unaccelerated heat parameters $Nt$ and $N't$.
+Acquisition chronology, old-set occupation time of IV §108 and physical
+elapsed time are separate. The modulus (116.22) does not identify them.
+There is no zero-time or shrinking-time uniformity, inverse heat,
+complete finite-spectrum recovery, automatic point accuracy or physical
+clock conversion in this conclusion.
+
+Constructor acquisition and local matrix calculation do not install
+signed-amplitude preparation, lawful execution of $C$, $D$, $E$ or $F$,
+closed-heat evolution or real-linear readout services. Encoding and
+precision, computation/storage/communication prices, authentication,
+access isolation, actuation permissions, physical duration, metric,
+spatial dimension and stable matter still require their actual bridges.
+The result narrows the original-source/operator/transport gap by a
+positive, occurrence-local analytical correspondence on the complete
+successor space. Native or physical implementation and spatial
+propagation remain unsupplied. This is ordinary mathematical source,
+with no new Lean/kernel, registration, freezing or physical verification
+claim, and no completion of the ongoing through-2027 why-three programme.
+
+## 116.99 追加锚（本行以下为增补区）
