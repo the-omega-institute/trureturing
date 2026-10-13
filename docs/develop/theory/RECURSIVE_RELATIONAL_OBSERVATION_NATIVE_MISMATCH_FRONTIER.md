@@ -1104,3 +1104,639 @@ sequence do not discharge that obligation, by Theorems 4.1,
 [BP]: https://arxiv.org/html/2311.16607v1
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Entire shift-copy products and normalized ray mass
+
+**Definition 8.1 (the retained shift-copy input).** Fix a supplied
+integer $a\ge1$, put $S=\rho^a$, and define
+
+$$
+U_a(x,y)=\langle x,\langle y,Sy\rangle\rangle.
+\tag{NMF.8.1}
+$$
+
+The two occurrences of $y$ use the same whole finite native value.
+Take $P=\{\varepsilon\}$ with its complete one-hole old row, final
+epoch $N=a$, target cut $Q=\{L,RL,RR\}$ in that order, and exactly
+
+$$
+\begin{aligned}
+H_0=\{&(0,\varepsilon,\mathsf{branch}),
+       (0,R,\mathsf{branch}),\\
+      &(a,\varepsilon,\mathsf{branch}),
+       (a,R,\mathsf{branch})\},\\
+H_{\rm rel}=\{&(a,RL,0,RR,=),\
+              (0,RL,0,RR,\ne),\
+              (0,\varepsilon,0,L,\ne)\}.
+\end{aligned}
+\tag{NMF.8.2}
+$$
+
+There are no other records or image/rank conditions in this instance.
+Definition 1.1's paid-source and complete-state premise is retained.
+The off-task root/left comparison is part of the input.
+
+**Theorem 8.2 (entire source reconstruction and all attained rows).**
+The entire fiber of Definition 8.1 is
+
+$$
+D^{(a)}=\{U_a(x,y):x,y\in\mathcal T\}.
+\tag{NMF.8.3}
+$$
+
+Its complete target-row image has exactly three attained labels.
+Every label has reached set $Q$ and the entire exterior
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$.
+Their partitions and entire strata are
+
+$$
+\begin{aligned}
+r_0&:\{\{1,2\},\{3\}\},&
+D_0^{(a)}&=\{U_a(t,t):t\in\mathcal T\},\\
+r_1&:\{\{1,3\},\{2\}\},&
+D_1^{(a)}&=\{U_a(St,t):t\in\mathcal T\},\\
+r_2&:\{\{1\},\{2\},\{3\}\},&
+D_2^{(a)}&=\{U_a(x,t):x,t\in\mathcal T,\
+                         x\ne t,\ x\ne St\}.
+\end{aligned}
+\tag{NMF.8.4}
+$$
+
+Both directions recover the original source itself, including every
+literal, both endpoint guards of every sign, and the off-task negative.
+
+Proof. The epoch-zero literals force
+$u=\langle x,\langle y,z\rangle\rangle$, with $x,y,z$ nonempty.
+Existing native branch nodes survive every iterate. Thus the epoch-$a$
+root and $R$ literals hold, and the subtree at epoch-$a$ address $RL$
+is $Sy$. The first relation in (NMF.8.2) has reached endpoints and
+forces $z=Sy$.
+
+For any finite $t$, all its original branch nodes survive $S$.
+At each original alpha leaf the new root reply is beta for $a=1$
+and branch for $a\ge2$. At each original beta leaf it is branch for
+every $a\ge1$. These statements follow from the native leaf laws:
+after beta becomes a branch, subsequent updates preserve that branch.
+There is at least one original leaf, so $t\ne St$.
+Consequently the second relation is true for every $U_a(x,y)$,
+with both its original $RL,RR$ endpoints reached.
+
+For the last relation, finite leaf count gives
+
+$$
+\ell(U_a(x,y))=\ell(x)+\ell(y)+\ell(Sy)>\ell(x),
+$$
+
+so the reached original root differs from its reached left subtree.
+The old root row has one reached hole and one class for every
+nonempty source. Therefore every $U_a(x,y)$ satisfies that old row,
+all four literals, and all three guarded records. Together with
+the forced decomposition, this proves (NMF.8.3) in both directions.
+
+The target values are exactly $x,y,Sy$, and $y\ne Sy$ on the entire
+finite domain. Thus $x$ can equal the second value, the third value,
+or neither, giving exactly the partitions and conditions in
+(NMF.8.4). The first two rows are attained for every $t$ by their
+displayed sources. The third is attained with $x=S^2t$: one has
+$S^2t\ne St$ by applying the preceding leaf argument to $St$, and
+$S^2t\ne t$ by applying it to $\rho^{2a}$ on $t$.
+No exterior or row label is discarded.
+
+All relation epochs are $0$ or $a\le N$. Instantiating
+[ARH, Proposition 2.1][ARH] with these fixed public coordinates
+supplies their source-total paid acquisition correspondence,
+conditional on its complete access cut. In particular every finite
+source in (NMF.8.3) gives the same stipulated retained input.
+This uses that producer's supplied contract and imposes no additional
+cross-source equality or source-bearing field. $\square$
+
+**Definition 8.3 (biased normalized frontier mass).** For a fixed real
+$0<\theta<1$, give a finite address $p$ the weight
+
+$$
+\nu_\theta(p)=
+ \theta^{\#_L(p)}(1-\theta)^{\#_R(p)}.
+$$
+
+For the first-disagreement frontier of Definition 2.1 put
+
+$$
+M_\theta(\mathbf u)=
+ \sum_{p\in\Delta(\mathbf u)}\nu_\theta(p),
+\qquad
+D_\theta(s,t)=M_\theta(s,t).
+\tag{NMF.8.5}
+$$
+
+These are per-original-address weights. In particular
+$M_{1/2}=W_{1/2}$; inserted nodes of a marker presentation carry
+no extra factor.
+
+**Theorem 8.4 (exact infima on both entire products).** For every
+$a\ge1$ and every $0<\theta<1$,
+
+$$
+\begin{aligned}
+\inf_{(u_0,u_1)\in D_0^{(a)}\times D_1^{(a)}}
+ M_\theta(u_0,u_1)
+ &=\min(\theta,1-\theta),\\
+\inf_{(u_0,u_1,u_2)\in
+ D_0^{(a)}\times D_1^{(a)}\times D_2^{(a)}}
+ M_\theta(u_0,u_1,u_2)
+ &=\min(\theta,1-\theta).
+\end{aligned}
+\tag{NMF.8.6}
+$$
+
+Both infima are attained. The lower bounds hold for every tuple
+in the stated entire products, with independent parameters across
+alternative originals.
+
+Proof. The elementary cylinder facts needed in this proof can be
+expressed entirely at a finite level. Choose a level $n$ beyond the
+heights of the finitely many trees being compared. Give a word
+$w\in\{L,R\}^n$ weight $\nu_\theta(w)$; the weights sum to
+$(\theta+(1-\theta))^n=1$. A cylinder with prefix $p$ has total
+weight $\nu_\theta(p)$, since the suffix weights sum to one.
+Disjoint cylinders of a prefix-free frontier therefore have total
+weight equal to (NMF.8.5).
+
+Along such a word, compare the original reply traces at all its
+prefixes, including absent replies below leaves. The traces of $s,t$
+differ if and only if that word extends a member of $\Delta(s,t)$.
+Indeed any disagreement has a shortest disagreeing prefix.
+If the traces of $s,t$ differ, then those of $s,z$ or those of $z,t$
+differ. Summing this pointwise event inclusion proves
+
+$$
+D_\theta(s,t)\le D_\theta(s,z)+D_\theta(z,t).
+\tag{NMF.8.7}
+$$
+
+It also proves $0\le D_\theta\le1$.
+A pair's trace-disagreement event is contained in the corresponding
+multiway event, so its mass is at most the tuple's mass.
+Symmetry and positivity of every nonempty cylinder make
+$D_\theta$ a metric on finite trees. Only the triangle inequality,
+the upper bound one, and the event containment are used below.
+
+The leaf argument in Theorem 8.2 identifies the exact frontier
+
+$$
+\Delta(t,St)=\operatorname{Leaf}(t).
+\tag{NMF.8.8}
+$$
+
+Every original branch agrees before those leaves, and every leaf
+already disagrees at its own root. No proper descendant can be a
+first disagreement. The leaf cylinders of any finite full binary
+tree partition the level-$n$ words for $n$ at least its height:
+following any word meets exactly one leaf. Hence
+
+$$
+\sum_{p\in\operatorname{Leaf}(t)}\nu_\theta(p)=1,
+\qquad D_\theta(t,St)=1.
+\tag{NMF.8.9}
+$$
+
+This is the usual finite leaf-cylinder partition identity, used
+as an intermediate step. It holds for arbitrary uneven finite
+trees as well as for perfect trees. The same reasoning gives
+
+$$
+\Delta(t,St,S^2t)=\operatorname{Leaf}(t),
+\tag{NMF.8.10}
+$$
+
+because all three trees retain every original branch of $t$, while
+$t$ and $St$ already disagree at every leaf of $t$.
+
+Now take arbitrary independent $s,t\in\mathcal T$.
+By (NMF.8.4) these parameterize an arbitrary pair
+$u_0=U_a(s,s)$, $u_1=U_a(St,t)$ in the entire pair product.
+Set
+
+$$
+A=D_\theta(s,St),\qquad
+B=D_\theta(s,t),\qquad
+C=D_\theta(Ss,St).
+$$
+
+The two originals have identical branch exteriors. Their frontier
+is the disjoint union of the local frontiers prefixed by $L,RL,RR$.
+The multiplicative cylinder weights therefore give the exact identity
+
+$$
+M_\theta(u_0,u_1)
+ =\theta A+\theta(1-\theta)B+(1-\theta)^2C.
+\tag{NMF.8.11}
+$$
+
+Apply (NMF.8.7) to $(t,s,St)$ and to $(s,St,Ss)$.
+Equation (NMF.8.9) gives respectively
+
+$$
+A+B\ge1,\qquad A+C\ge1.
+$$
+
+Since $0\le A\le1$ and all coefficients are nonnegative,
+
+$$
+\begin{aligned}
+M_\theta(u_0,u_1)
+ &\ge\theta A+
+       \bigl(\theta(1-\theta)+(1-\theta)^2\bigr)(1-A)\\
+ &=\theta A+(1-\theta)(1-A)\\
+ &\ge\min(\theta,1-\theta).
+\end{aligned}
+\tag{NMF.8.12}
+$$
+
+No shared parameter was assumed in deriving this lower bound.
+Taking $s=t$ makes $A=1,B=C=0$, attaining $\theta$.
+Taking $s=St$ makes $A=0,B=C=1$, attaining $1-\theta$;
+here the assertion about $C$ is (NMF.8.9) applied to $St$.
+This proves the pair formula and attainment.
+
+In every tuple of the entire three-row product, its first two
+coordinates lie in that entire pair product. Pair-event containment
+therefore proves the same lower bound for every triple, irrespective
+of its third coordinate. To attain it, choose any finite $t$.
+The following two triples belong respectively to all three strata:
+
+$$
+\begin{aligned}
+\mathbf v_t
+ &=\bigl(U_a(t,t),\ U_a(St,t),\ U_a(S^2t,t)\bigr),\\
+\mathbf w_t
+ &=\bigl(U_a(St,St),\ U_a(St,t),\ U_a(St,S^2t)\bigr).
+\end{aligned}
+\tag{NMF.8.13}
+$$
+
+For $\mathbf v_t$, row-two membership follows from
+$S^2t\ne t,St$. Its complete right subtree is common to all
+coordinates, and (NMF.8.10) gives
+
+$$
+\Delta(\mathbf v_t)=L\operatorname{Leaf}(t),
+\qquad M_\theta(\mathbf v_t)=\theta.
+\tag{NMF.8.14}
+$$
+
+For $\mathbf w_t$, its third coordinate has parameter $y=S^2t$
+and $x=St$. The required negatives are $St\ne S^2t$ and
+$St\ne S^3t$, obtained from positive shifts on $St$.
+All left subtrees equal $St$. At $RL$ the value tuple is
+$(St,t,S^2t)$, and at $RR$ it is $(S^2t,St,S^3t)$.
+Equation (NMF.8.10), also applied with base $St$, gives
+
+$$
+\begin{aligned}
+\Delta(\mathbf w_t)
+ &=RL\operatorname{Leaf}(t)\ \cup\
+   RR\operatorname{Leaf}(St),\\
+M_\theta(\mathbf w_t)
+ &=\theta(1-\theta)+(1-\theta)^2
+ =1-\theta.
+\end{aligned}
+\tag{NMF.8.15}
+$$
+
+Both triples are finite originals satisfying the entire retained
+input, by Theorem 8.2. Selecting $\mathbf v_t$ when
+$\theta\le1/2$ and $\mathbf w_t$ when $\theta\ge1/2$ proves
+the second exact infimum and its attainment. $\square$
+
+**Theorem 8.5 (all-depth finite witnesses in the entire three-row
+product).** Put $B=(r_0,r_1,r_2)$ for Definition 8.1.
+Then $J_B(h)$ holds for every inclusive depth $h$.
+For the perfect trees $A_n$ from the proof of Theorem 4.1,
+the actual triple $\mathbf v_{A_n}$ of (NMF.8.13) satisfies
+
+$$
+d(\mathbf v_{A_n})=n+1,\qquad
+W_q(\mathbf v_{A_n})=q(2q)^n\quad(q>0).
+\tag{NMF.8.16}
+$$
+
+Proof. The reused perfect-tree calculation gives
+$\operatorname{Leaf}(A_n)=\{w:|w|=n\}$.
+Equation (NMF.8.14) thus identifies the entire first-disagreement
+frontier as $\{Lw:|w|=n\}$. It has $2^n$ points, all at depth
+$n+1$, proving both equalities. At requested depth $h$ choose
+$n=h$. Theorem 2.2 gives agreement of all four original replies
+through $h$, and Theorem 8.2 gives all three exact row labels and
+every finite guarded history. These witnesses may change with $h$.
+Restricting a triple to its first two coordinates also witnesses
+every depth in the entire pair product. $\square$
+
+## 9. The entire-product critical boundary
+
+**Corollary 9.1 (normalized mass cannot replace joint depth).**
+For the entire three-row product of Definition 8.1, and also for
+its entire $r_0,r_1$ pair product,
+
+$$
+\forall h\ J_B(h),\qquad
+\inf_{\mathbf u}W_{1/2}(\mathbf u)=\frac12.
+\tag{NMF.9.1}
+$$
+
+For every fixed $0<\theta<1$, the normalized biased infimum is
+$\min(\theta,1-\theta)>0$. For every real $q\ge1/2$,
+
+$$
+\inf_{\mathbf u}W_q(\mathbf u)\ge\frac12.
+\tag{NMF.9.2}
+$$
+
+For every rational $0<q<1/2$, the infimum remains zero.
+
+Proof. Combine Theorems 8.4–8.5 and $M_{1/2}=W_{1/2}$.
+For $q\ge1/2$, every frontier term satisfies
+$q^{|p|}\ge2^{-|p|}$, so every tuple has
+$W_q\ge W_{1/2}\ge1/2$. For $0<q<1/2$ the finite triples
+in (NMF.8.16) have masses tending to zero; their pair restrictions
+have the same frontier. This also directly instantiates the valid
+strict-discount equivalence of Theorem 3.2.
+
+The paragraph following Theorem 4.1 leaves failure of the reverse
+critical zero-infimum implication on entire signed row products
+unasserted. Equations (NMF.8.12) and (NMF.9.1) supply that
+entire-product counterexample. Theorem 4.1 itself concerns a
+different input, (NMF.13), whose entire critical infimum is zero;
+its conclusion remains as stated. A balanced subsequence alone
+could not establish (NMF.9.1). The all-tuple lower bound is what
+prevents an alternative source tuple from decreasing this
+infimum to zero. $\square$
+
+**Definition 9.2 (supplier scope and remaining recovery obligation).**
+The complete-row and guarded-epoch meanings are those of
+Definitions 1.1–1.2 and [ARH, Definitions 1.1–1.2][ARH].
+The acquisition correspondence is conditional on ARH Assumption 1.3
+and uses its Proposition 2.1. [NIC, Theorems 3.2 and 4.3][NIC]
+already supply exact whole-source image normalization and reconstruction;
+the direct descriptions (NMF.8.3)–(NMF.8.4) instantiate that scope
+for this input. No missing positive residual normalizer is presumed.
+
+The finite cylinder identity and triangle inequality in the proof
+of Theorem 8.4 are standard intermediate facts. The deductions here
+are their exact all-tuple native shift-copy bound, its attaining
+three-row tuples, and its whole retained-source correspondence.
+They carry no external-priority assertion.
+
+The minimum original mismatch depth and the every-branch marker
+count of Theorem 2.5 continue to agree on these witnesses.
+The every-branch diagonal property of
+[Barozzini, Clemente, Colcombet and Parys, §4.4][BCCP44]
+counts markers on every branch of one chosen tree; it is not a
+normalized branching probability. Its safe-scheme decision in
+[§5][BCCP5] still has the exact-carrier premise of Definition 6.1.
+Corollary 9.1 refutes substitution of normalized mass for that
+depth property, and supplies no faithful safe carrier.
+
+Thus Open problem 7.3 remains the unrestricted recovery and
+classification obligation for the entire coupled original sources.
+The finite negative $y\ne Sy$ is proved on each finite source.
+It need not hold at the all-branch completion $\Omega$, where
+$\rho\Omega=\Omega$. No infinite negative, free observer port,
+acquisition cost bound, native undecidability or general stopping
+theorem follows from the mass obstruction.
+
+## 追加锚（本行以下为增补区）
+
+## 10. Even substitution is a strict-discount contraction
+
+**Definition 10.1 (the even substitution map).** Put
+
+$$
+E(u)=\rho^2u.
+$$
+
+The native equations give
+
+$$
+E(\alpha)=\langle\beta,\alpha\rangle,
+\qquad
+E(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\qquad
+E(\langle s_0,s_1\rangle)=\langle E(s_0),E(s_1)\rangle.
+\tag{NMF.10.1}
+$$
+
+Thus $E(u)$ is a branch for every finite nonempty native $u$.
+
+**Lemma 10.2 (the complete root cases).** Fix a rational
+$0<q<1/2$. For finite native $s,t$ the following cases exhaust the
+roots.
+
+1. If $s=t$, then $D_q(E(s),E(t))=0$.
+2. If $s,t$ are distinct leaves, then
+   $D_q(E(s),E(t))=2q$.
+3. If exactly one of $s,t$ is a branch, then
+   $D_q(E(s),E(t))\le2q$.
+4. If $s=\langle s_0,s_1\rangle$ and
+   $t=\langle t_0,t_1\rangle$, then
+
+   $$
+   D_q(E(s),E(t))
+   =q\bigl(D_q(E(s_0),E(t_0))
+          +D_q(E(s_1),E(t_1))\bigr).
+   \tag{NMF.10.2}
+   $$
+
+Proof. The first case is substitution of equal terms. In the second,
+the two roots in (NMF.10.1) are both branches. For the pair
+$(\alpha,\beta)$, its left replies are $\beta$ and
+$\langle\beta,\alpha\rangle$, and its right replies are $\alpha$ and
+$\beta$; hence its frontier is exactly $\{L,R\}$ and its mass is
+$2q$. The same calculation with the order of the leaves exchanged is
+identical.
+
+In the third case, (NMF.10.1) makes both transformed roots branches.
+The metric recursion of Theorem 3.3 applies at this common branch root,
+and each of the two child distances is at most one by that theorem.
+Consequently the transformed distance is at most $q(1+1)=2q$.
+The fourth case is the same metric recursion, now with the displayed
+child identities in (NMF.10.1). These cases include every combination
+of leaf and branch roots. $\square$
+
+**Theorem 10.3 (two-step native contraction).** For every finite
+nonempty native $s,t$ and every rational $0<q<1/2$,
+
+$$
+\boxed{
+D_q(\rho^2s,\rho^2t)\le 2q\,D_q(s,t).}
+\tag{NMF.10.3}
+$$
+
+Proof. Use structural induction on the pair $(s,t)$. Equal inputs give
+zero on both sides. If $s,t$ are distinct leaves, their root frontier is
+$\{\varepsilon\}$, so $D_q(s,t)=1$; Lemma 10.2 gives equality with
+$2q$. If exactly one input is a branch, the original root is already a
+first disagreement, hence again $D_q(s,t)=1$, and the third case of the
+lemma proves the bound.
+
+It remains that both inputs are branches. Their original metric
+recursion is
+
+$$
+D_q(s,t)=q\bigl(D_q(s_0,t_0)+D_q(s_1,t_1)\bigr).
+$$
+
+Each child pair is structurally smaller, so the induction hypotheses and
+(NMF.10.2) give
+
+$$
+\begin{aligned}
+D_q(E(s),E(t))
+&\le q\bigl(2qD_q(s_0,t_0)+2qD_q(s_1,t_1)\bigr)\\
+&=2qD_q(s,t).
+\end{aligned}
+$$
+
+This is a map-level Lipschitz estimate for $E$. The recursion in
+Theorem 3.3 is only the equality for a pair whose two displayed roots
+are both branches; it does not by itself cover the leaf--branch case
+or the distinct-leaf case used above. $\square$
+
+**Corollary 10.4 (all iterates, including equality and zero steps).**
+For every finite nonempty native $s,t$, every rational $0<q<1/2$,
+and every $n\in\mathbb N_0$,
+
+$$
+\boxed{
+D_q(\rho^{2n}s,\rho^{2n}t)
+\le (2q)^nD_q(s,t).}
+\tag{NMF.10.4}
+$$
+
+For $n=0$ this is equality. If $s=t$, both sides are zero for every
+$n$. For the induction step apply Theorem 10.3 to
+$\rho^{2n}s,\rho^{2n}t$ and use
+$\rho^{2(n+1)}=\rho^2\!\circ\rho^{2n}$:
+
+$$
+D_q(\rho^{2(n+1)}s,\rho^{2(n+1)}t)
+\le2qD_q(\rho^{2n}s,\rho^{2n}t)
+\le(2q)^{n+1}D_q(s,t).
+$$
+$\square$
+
+**Proposition 10.5 (sharp coefficient at the atomic pair).** For every
+rational $0<q<1/2$,
+
+$$
+D_q(\rho^2\alpha,\rho^2\beta)
+=2q
+=2q\,D_q(\alpha,\beta).
+\tag{NMF.10.5}
+$$
+
+Hence no constant smaller than $2q$ can replace $2q$ in
+(NMF.10.3) uniformly over finite native inputs. This is exact equality
+at $(s,t)=(\alpha,\beta)$, not an asymptotic estimate.
+
+## 11. Atomic trajectory and the critical boundary
+
+**Definition 11.1 (the even atomic pair).** For $n\in\mathbb N_0$ put
+
+$$
+A_n=\rho^{2n}\alpha,\qquad B_n=\rho^{2n}\beta.
+\tag{NMF.11.1}
+$$
+
+The finite-source supplier [SLH, Lemma 55.2 and Theorem 55.3][SLH]
+already establishes, in its own source and readout contract, that the
+first disagreement of $A_n,B_n$ has address depth $n$ and that a current
+read at the right address $R^n$ distinguishes the atomic value. Those
+are reused address-depth and one-read facts. They are not a new theorem
+of this section and do not assert that one read, or the address $R^n$,
+is an optimal physical read strategy.
+This denial concerns physical-strategy optimality and leaves intact any
+combinatorial address/call minima the supplier establishes under its own
+contract.
+
+The metric consequence supplied by Corollary 10.4 is the separate
+inequality
+
+$$
+D_q(A_n,B_n)\le(2q)^nD_q(\alpha,\beta)=(2q)^n.
+\tag{NMF.11.2}
+$$
+
+At the boundary $q=1/2$, for every finite nonempty native $s,t$ and
+every $n\in\mathbb N_0$, the same finite root calculation gives the
+nonexpansive inequality:
+
+$$
+D_{1/2}(\rho^{2n}s,\rho^{2n}t)\le D_{1/2}(s,t).
+\tag{NMF.11.3}
+$$
+
+For the one-step bound, equal inputs have empty frontiers before and
+after $E$. If the original roots disagree, then their frontier is
+$\{\varepsilon\}$, so $D_{1/2}(s,t)=1$. By (NMF.10.1) both
+$E$-images are branches, and each of their two corresponding child
+distances is at most one by the finite prefix-free frontier/Kraft bound.
+Their distance is therefore at most $\tfrac12(1+1)=1$. At a common
+original branch, splitting the frontier into its $L$ and $R$ parts gives
+one half of the sum of the child distances; structural induction on the
+two smaller child pairs proves the one-step inequality there. Iterating
+this inequality proves (NMF.11.3), including equality at $n=0$.
+
+The already established balanced witnesses of Theorem 4.1, and the
+pair restrictions recorded in Theorem 8.5, give the reused critical
+trajectory
+
+$$
+W_{1/2}(\mathbf u_n)=\frac12\qquad(n\ge0).
+\tag{NMF.11.4}
+$$
+
+Here $\mathbf u_n$ denotes the balanced tuple sequence of Theorem 4.1,
+constructed from its recursively doubled perfect trees. This is a
+different family from the even atomic pair $(A_n,B_n)$ in Definition 11.1.
+
+Thus the strict-discount decay in (NMF.10.4) has the correct critical
+boundary. Equation (NMF.11.4) is a reused consequence of those existing
+frontier witnesses; it is not an additional claim about the metric value
+of the atomic pair in (NMF.11.1).
+
+## 12. Scope of substitution, resources, and the finite limit
+
+**Definition 12.1 (scope of the pointwise estimate).** The domain of
+(NMF.10.3) and (NMF.10.4) is the set of finite nonempty native trees.
+No row label, acquired history, or joint original product is a parameter
+of either inequality. Simultaneous substitution by $\rho^{2n}$ therefore
+need not preserve a fixed acquired row/history fiber or carry a joint
+tuple of original sources into the same product. The estimates are
+pointwise statements about the native algebra and the frontier metric.
+
+**Proposition 12.2 (separate depth, calls, cost, and limit statements).**
+For the atomic pair in Definition 11.1, the supplier's depth statement
+is an address-depth statement ($n$), and its one-read statement is a
+call-count statement (one current read at $R^n$). The combinatorial word
+$R^n$ has address length $n$; no physical fee, transport time, source
+acquisition price, or physical-strategy optimality of that call follows
+from either fact. This leaves intact any combinatorial address/call
+minima the supplier establishes under its own contract.
+
+For fixed finite $s,t$ and rational $0<q<1/2$, (NMF.10.4) gives the
+separate scalar limit
+
+$$
+\lim_{n\to\infty}D_q(\rho^{2n}s,\rho^{2n}t)=0,
+\tag{NMF.12.1}
+$$
+
+because $0<2q<1$. This is a limit of metric values for finite trees. It
+does not assert an infinite native tree $\lim_n\rho^{2n}s$, an infinite
+physical execution, a finite or infinite call bound, convergence of row
+labels or histories, or any physical-cost theorem. At $q=1/2$ only
+(NMF.11.3) and the reused critical boundary (NMF.11.4) are available.
+
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+
+## 追加锚（本行以下为增补区）

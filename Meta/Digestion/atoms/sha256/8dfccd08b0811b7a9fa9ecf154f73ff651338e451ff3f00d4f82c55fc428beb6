@@ -1,0 +1,54 @@
+**Proof.**
+Monotone convergence gives
+
+$$
+\lim_{s\downarrow0}k(s)=\int_{(0,M_*]}x^{-1}\,d\eta_w(x).
+\tag{105.2}
+$$
+
+Let $A=(I-\mathbf1\otimes\mathbf1)J:\mathscr H\to L^2_0(M)$,
+so $A^*A=\Sigma$. If (105.2) were finite, spectral calculus would
+define $z=\Sigma^{-1/2}w\in\mathscr K$.
+In the polar decomposition $A=V\Sigma^{1/2}$, set $h=Vz$.
+Then $h\in L^2_0(M)$ and
+$A^*h=\Sigma^{1/2}V^*Vz=w$.
+Since $h$ has mean zero, $A^*h=J^*h$.
+On each nonempty cylinder the adjoint relation and (99.1) give
+
+$$
+\int_{[p]}h\,dM=m(p)-2^{-|p|},\qquad
+\mathbb E_M[h\mid[p]]=1-\frac{2^{-|p|}}{m(p)}.
+\tag{105.3}
+$$
+
+For the depth-$d$ cylinder partition $\mathcal F_d$, conditional
+expectation is an $L^2(M)$ contraction, but (105.3) would imply
+
+$$
+\begin{aligned}
+\|\mathbb E_M[h\mid\mathcal F_d]\|_2^2
+ &=\sum_{|p|=d}m(p)
+       \left(1-\frac{2^{-d}}{m(p)}\right)^2\\
+ &=4^{-d}\sum_{|p|=d}\frac1{m(p)}-1
+ =\left(\frac1{4a}+\frac1{4b}\right)^d-1
+ =\left(\frac1{4ab}\right)^d-1.
+\end{aligned}
+\tag{105.4}
+$$
+
+Because $a+b=1$ and $a\ne b$, $ab<1/4$, so this expression
+diverges. It cannot be bounded by the fixed $\|h\|_2^2$.
+This contradiction proves the infinite endpoint.
+Integrability was proved separately in (104.5). In particular,
+$\|h(s)\|^2=k(2s)\to\infty$ as $s\downarrow0$, by (103.11)
+and (104.2), so the limiting root orbit itself has no strong
+initial vector in $\mathscr H$.
+The polar decomposition is the mature supply cited in Theorem 103.2;
+the cylinder adjoint is the tree Hardy relation in
+[Arcozzi et al., *Potential theory on trees, graphs and Ahlfors-regular
+metric spaces*, §5.1, equation (41)](https://arxiv.org/html/1010.4788v3),
+already instantiated in (98.11).
+The divergence (105.4) uses the actual biased all-occurrence law.
+Replacing it by the fair dyadic law changes its base to one and
+removes this contradiction. $\square$
+

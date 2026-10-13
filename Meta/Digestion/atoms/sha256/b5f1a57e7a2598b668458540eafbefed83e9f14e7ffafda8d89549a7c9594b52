@@ -1,0 +1,30 @@
+**Proof.**
+Connectedness gives $\ker L_n=\mathbb R\mathbf1$. On actual edges
+$D_nJ_nz=z$. With counting inner products on both spaces, set
+$C_n^{\rm path}=P_nJ_n:\mathscr E_n\to P_n\mathcal V_n$.
+Subtracting a constant changes no gradient, and
+$P_nJ_nD_nu=u$ for mean-zero $u$. Thus $C_n^{\rm path}=D_n^{-1}$
+between spaces of dimension $N_n-1$, and
+
+$$
+(C_n^{\rm path})^*C_n^{\rm path}
+=K_n^{-1}=N_n\Sigma_n\big|_{\mathscr E_n}.
+\tag{103.6}
+$$
+
+The last factor comes from the node inner product in §98 being
+$N_n^{-1}$ times the counting inner product.
+Also $U_n^*U_n=L_n^{+1/2}L_nL_n^{+1/2}=P_n$.
+Equal dimensions give unitarity; $D_nL_n=K_nD_n$ gives (103.3).
+Finite spectral calculus gives (103.4)–(103.5).
+On one eigenspace the root functional has rank one precisely when
+$E_{n,\lambda}\delta_r\ne0$, proving its invisible dimension.
+
+Spectral and polar calculus are mature intermediate supplies; see
+[Teschl, *Mathematical Methods in Quantum Mechanics*, §3.1,
+Theorem 3.7 and Problem 3.11, and §6.2, Theorem 6.6](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The scalar-versus-complete-spectrum distinction is retained in
+[the boundary geometry, §52.4](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md).
+Equation (103.6) connects those supplies to the closed counting
+operator and source covariance of §98. $\square$
+

@@ -1,0 +1,10 @@
+**Definition 51.2 (action-labelled future).** For a state $q$, define its
+finite labelled future language $L(q)$ recursively by all legal words whose
+successive responses, terminal row, and accumulated resource labels are
+obtained from the same state $q$. A word that reaches a halt is terminal; a
+nonterminal word may be extended only when the next action is legal.
+
+The full future includes silent actions as events. Therefore two states with
+the same response phase count can still have different future languages because
+one may admit a silent loop or a different resource trace.
+

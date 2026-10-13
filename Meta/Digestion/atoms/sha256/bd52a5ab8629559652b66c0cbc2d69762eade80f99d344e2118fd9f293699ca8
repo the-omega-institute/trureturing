@@ -1,0 +1,35 @@
+**定义 39.1（固定有限域、端点读数与同源后继）。** 取全部规范标签
+
+$$
+D=\operatorname{Labels}(2)=(\mathbb Z/2\mathbb Z)^2,
+\qquad f(a_0,a_1)=(a_1,a_0+a_1),
+\qquad q(a)=\operatorname{sourceCarry}(2,2,1,a).
+$$
+
+这里的标签与动作逐字采用 [FibonacciOutputAlgebra](../../../D5/S3/Quantum/Algebra/CarryTransport/FibonacciOutputAlgebra.lean) 的 `Labels`、`fibonacci`，端点读数采用 [FibonacciEndpointAlgebra](../../../D5/S3/Quantum/Algebra/CarryTransport/FibonacciEndpointAlgebra.lean) 的 `integerEvolution`、`sourceCarry`，低轨道采用 [FibonacciPrefix](../../../D5/S3/Quantum/Transport/FibonacciPrefix.lean) 的 `lowTrajectory`。本节的参数对应固定参照提交 `7f52221f2e23da81475058d5b5b6620e68709401`。设 $u_i\in\{0,1\}$ 是 $a_i$ 的规范整数代表；整数一步为 $(u_1,u_0+u_1)$，低轨道一步取其逐坐标模二代表，故原整数商定义给出
+
+$$
+q(a)=\left(0,\left\lfloor\frac{u_0+u_1}{2}\right\rfloor\bmod2\right).
+\tag{39.1}
+$$
+
+所有四个标签均作为允许初态；$f(D)=D$，所以该域在此非终止动作下封闭。这里没有指定从单一初态可达所有标签，也没有提供取得或初始化协议。固定 $Q=q(D)$，一步下降是存在 $\bar f:Q\to Q$ 使
+
+$$
+q(f(s))=\bar f(q(s))\qquad(s\in D).
+\tag{39.2}
+$$
+
+式（39.2）是[续篇一第20节](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION.md#二十语义压缩何时保持实际取证能力)精确商合同的后继条件。此处始终使用同一个 $q$：先做原生一步，再对新规范标签计算一步端点 carry；$q(f(s))$ 不改写成原初标签的二步累计 carry `sourceCarry 2 2 2 s`。
+
+对任意原目标集合 $Z$ 和候选关系 $B\subseteq Z\times D$，唯一使用的确定性联合更新是
+
+$$
+\Xi(B)=(\operatorname{id}_Z\times f)_*B
+       =\{(z,f(s)):(z,s)\in B\},\qquad
+q_*B=\{(z,q(s)):(z,s)\in B\}.
+\tag{39.3}
+$$
+
+$\Xi$ 保留同一实际来源的目标—状态配对，不从两个边缘集合重建关系，不引入另一耦合。
+

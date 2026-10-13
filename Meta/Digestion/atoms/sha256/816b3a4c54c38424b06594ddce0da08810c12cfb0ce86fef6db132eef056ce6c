@@ -1,0 +1,14 @@
+## ——有符号纤维的有限图表接口与可执行边界
+
+上一续篇把 FIB 的安全压缩、有限取得和闭环控制分开；最新 `dev` 中的
+《Recursive Relational Observation: Uniform Descriptor Boundary》又给出了一
+个有限控制器、有限 descriptor type、无界数值参数和全 epoch `Reply/Same`
+接口。本篇把这两个方向接起来，但只在一组明确的有限图表假设下工作。
+
+本篇的目标不是宣称任意有符号纤维都已经可判定，而是给出一个可复用的
+充分接口：一旦来源、动作、descriptor 和完整目标行都能落入同一个有限
+Presburger 图表，FIB 边界就可以被判定并编译为有限控制器。接口缺一项时，
+只能得到局部响应或有限前缀结果，不能自动得到完整取得。
+
+---
+

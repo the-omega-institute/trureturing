@@ -3,6 +3,7 @@
 
 import argparse
 from collections import Counter
+from contextlib import ExitStack
 import fcntl
 import hashlib
 import json
@@ -22,6 +23,34 @@ REPOSITORY = Path(__file__).resolve().parents[2]
 # BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
 PROTECTED_FLAGS = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
                    stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
+
+
+def worktree_modules():
+    """Load the canonical Git preservation and physical cache-lock owners on demand."""
+    directory = str(Path(__file__).resolve().parent / "worktree")
+    if directory not in sys.path:
+        sys.path.insert(0, directory)
+    import worktree_preservation
+    import lean_cache_release
+    return worktree_preservation, lean_cache_release
+
+
+def macos_active_paths():
+    """Read absolute paths held by the current user's processes."""
+    try:
+        result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fftn"],
+                                capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.SubprocessError) as error:
+        raise OSError("activity_unobservable") from error
+    if result.returncode == 0 and result.stdout:
+        observed = set()
+        for row in result.stdout.splitlines():
+            if row.startswith("n") and row[1:].startswith("/"):
+                observed.add(Path(row[1:].removesuffix(" (deleted)")))
+        return observed
+    if result.returncode == 1 and not result.stdout and not result.stderr:
+        return set()
+    raise OSError("activity_unobservable")
 
 
 class LowDiskSpace(RuntimeError):
@@ -66,20 +95,30 @@ class ProtectedPaths:
         return path in self.prefixes
 
 
-def inspect_candidate(path, cutoff, protected):
+def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
-    if path.name == ".git":
+    if path.name == ".git" and not reclaim:
         return dict(reason="repository")
     if not isinstance(protected, ProtectedPaths):
         protected = ProtectedPaths(protected)
     if path in protected:
         return dict(reason="protected")
+    if repository is not None:
+        try:
+            registrations = registered_worktrees(repository)
+            if any(path == tree or path in tree.parents or tree in path.parents for tree in registrations):
+                return dict(reason="protected")
+        except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
+            return dict(reason="repository_unverifiable", detail=str(error))
     root_stat = path.lstat()
     if stat.S_ISLNK(root_stat.st_mode):
         return dict(reason="symlink")
+    if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
+        return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
+    lakes = []
     pending = [path]
     while pending:
         entry = pending.pop()
@@ -104,10 +143,13 @@ def inspect_candidate(path, cutoff, protected):
         elif stat.S_ISDIR(info.st_mode):
             with os.scandir(entry) as children:
                 names = sorted(child.name for child in children)
-            if ".git" in names:
+            if not reclaim and ".git" in names:
                 return dict(reason="repository")
+            if reclaim and entry.name == ".lake":
+                lakes.append(str(entry))
             pending.extend(entry / name for name in names)
-    return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes)
+    return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes,
+                lakes=lakes)
 
 
 def remove_tree(path):
@@ -120,29 +162,43 @@ def remove_tree(path):
     shutil.rmtree(path)
 
 
-def clean_candidate(path, cutoff, protected, delete=False):
+def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
+                    reclaim=True, refresh_activity=False):
+    path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
     try:
-        before = inspect_candidate(path, cutoff, protected)
-        result.update({key: value for key, value in before.items() if key != "fingerprint"})
+        kwargs = {} if repository is None else {"repository": repository}
+        if not reclaim:
+            kwargs["reclaim"] = False
+        def observe(protection):
+            return inspect_candidate(path, cutoff, protection, **kwargs)
+        before = observe(protected)
+        result.update({key: before[key] for key in ("reason", "detail", "apparent_bytes") if key in before})
         if before["reason"] is not None:
             return result
         if not delete:
             result["action"] = "would_remove"
             return result
-        after = inspect_candidate(path, cutoff, protected)
-        if after != before:
-            result["reason"] = "changed"
-            return result
-        removal_started = True
-        if path.is_dir():
-            remove_tree(path)
-        else:
-            path.unlink()
-        result["action"] = "removed"
-    except FileNotFoundError:
-        result["reason"] = "vanished"
+        with ExitStack() as stack:
+            for lake in before.get("lakes", []):
+                _, release = worktree_modules()
+                stack.enter_context(release.cache_guard(Path(lake).parent))
+            refreshed = ProtectedPaths(activity()) if activity and (repository is not None or refresh_activity) else protected
+            after = observe(refreshed)
+            if after != before:
+                result["reason"] = "changed"
+                return result
+            removal_started = True
+            if path.is_dir():
+                remove_tree(path)
+            else:
+                path.unlink()
+            result["action"] = "removed"
+    except BlockingIOError:
+        result["reason"] = "cache_busy"
+    except FileNotFoundError as error:
+        result.update(action="failed" if removal_started else "kept", reason="vanished", detail=str(error))
     except PermissionError as error:
         if removal_started:
             result.update(action="failed", reason=str(error))
@@ -281,13 +337,8 @@ def active_paths(codex, scopes=()):
             if missing_cwd is not None:
                 linux_observation_unavailable(process, "cwd", missing_cwd)
     elif sys.platform == "darwin":
-        result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
-                                capture_output=True, text=True, timeout=120)
-        if result.returncode != 0:
-            raise OSError("cannot inspect active files with lsof: " + result.stderr.strip())
-        for line in result.stdout.splitlines():
-            if line.startswith("n/"):
-                open_path(line[1:].removesuffix(" (deleted)"))
+        for path in macos_active_paths():
+            open_path(str(path))
     else:
         raise OSError("host cleanup supports macOS and Linux")
     result = subprocess.run(["ps", "-axo", "uid=,pid=,args=" if scopes else "uid=,args="],
@@ -331,11 +382,48 @@ def active_paths(codex, scopes=()):
 
 
 def registered_worktrees(repository):
-    result = subprocess.run(["git", "-C", str(repository), "worktree", "list", "--porcelain", "-z"],
-                            capture_output=True, check=True, timeout=60)
+    preservation, _ = worktree_modules()
+    result = preservation.git(repository, "worktree", "list", "--porcelain", "-z", timeout=60)
     # Git lists the main worktree first; it survives registered-tree cleanup.
     return [Path(os.fsdecode(field[len(b"worktree "):])).resolve()
             for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")]
+
+
+def containing_repository(path):
+    """Find the governing Git boundary, including nested project directories."""
+    for parent in (path, *path.parents):
+        marker = parent / ".git"
+        if os.path.lexists(marker):
+            return parent
+        if all((parent / name).exists() for name in ("HEAD", "objects", "refs")):
+            return parent
+    return None
+
+
+def artifact_lakes(path, protected, worktrees, unobservable):
+    """Find private cache roots without splitting ordinary siblings or entering Git metadata.
+
+    An entry that vanished or cannot be read is reported and skipped; it holds no reachable staging.
+    """
+    device, pending = None, [path]
+    while pending:
+        entry = pending.pop()
+        try:
+            info = entry.lstat()
+            device = info.st_dev if device is None else device
+            if (not stat.S_ISDIR(info.st_mode) or info.st_dev != device or info.st_uid != os.getuid()
+                    or getattr(info, "st_flags", 0) & PROTECTED_FLAGS
+                    or entry in protected or any(tree == entry or tree in entry.parents for tree in worktrees)):
+                continue
+            if entry.name == ".lake":
+                found = containing_repository(entry.parent) is not None
+            else:
+                pending.extend(child for child in entry.iterdir() if child.name != ".git")
+                continue
+        except (FileNotFoundError, PermissionError) as error:
+            unobservable(entry, error)
+            continue
+        yield entry, found
 
 
 def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
@@ -385,6 +473,8 @@ def clean_from_anchor(options, caller, disk_descriptor):
         if root.exists() and not root.is_dir():
             raise OSError("artifact root must be a directory: " + str(root))
     roots = {path for path in roots if not any(parent in roots for parent in path.parents)}
+    # Registered-tree disposal can remove this program's source checkout.
+    worktree_modules()
     inventory = registered_worktrees(options.repository)
     worktrees = set(inventory)
     lanes_exit = clean_worktrees(options.repository, options.base, options.delete,
@@ -398,28 +488,69 @@ def clean_from_anchor(options, caller, disk_descriptor):
     protected = active | worktrees | {caller}
     protections = {"codex": ProtectedPaths(protected), "sshx": ProtectedPaths(protected),
                    "tmp": ProtectedPaths(protected | {codex, sshx})}
-    cutoff = time.time() - options.min_age_hours * 3600
+    now = time.time()
+    cutoff = now - options.min_age_hours * 3600
     before = shutil.disk_usage(disk_descriptor).free
     counts, skipped = Counter(), Counter()
     apparent_bytes = 0
     seen = set()
     inventory_error = None
+    main_checkout = next(iter(inventory), options.repository)
+    seen_lakes = set()
+    def record(category, result):
+        nonlocal apparent_bytes
+        counts[category + ":" + result["action"]] += 1
+        if result["action"] in ("would_remove", "removed"):
+            apparent_bytes += result["apparent_bytes"]
+        elif result["action"] == "kept":
+            skipped[result["reason"]] += 1
+        if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
+            emit("host_cleanup_item", category=category, **result)
+
+    def unobservable(path, error):
+        reason = "vanished" if isinstance(error, FileNotFoundError) else "unreadable"
+        record("lean_staging", dict(path=str(path), action="kept", reason=reason, detail=str(error),
+                                    apparent_bytes=0))
+
+    def fresh_protection():
+        return active_paths(codex) | set(registered_worktrees(main_checkout)) | {caller}
+
+    def clean_staging(lake):
+        if lake in seen_lakes:
+            return
+        seen_lakes.add(lake)
+        _, release = worktree_modules()
+        def inspect(path):
+            protection = ProtectedPaths(active_paths(codex) | {caller}) if options.delete else ProtectedPaths(active | {caller})
+            return inspect_candidate(path, cutoff, protection)
+        for result in release.clean_staging(lake, cutoff=cutoff, now=now,
+                                          delete=options.delete, inspect=inspect):
+            record("lean_staging", result)
     try:
+        for tree in inventory:
+            lake = tree / ".lake"
+            if lake.is_dir() and not lake.is_symlink():
+                clean_staging(lake)
         for category, path in candidates(codex, sshx, roots):
             if path in seen:
                 continue
             seen.add(path)
             if any(parent in worktrees for parent in path.parents):
                 result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
+            elif category != "codex" and any(parent.name == ".lake" for parent in path.parents):
+                lake = next(parent for parent in path.parents if parent.name == ".lake")
+                clean_staging(lake)
+                result = dict(path=str(path), action="kept", reason="protected", apparent_bytes=0)
             else:
-                result = clean_candidate(path, cutoff, protections[category], options.delete)
-            counts[category + ":" + result["action"]] += 1
-            if result["action"] in ("would_remove", "removed"):
-                apparent_bytes += result["apparent_bytes"]
-            elif result["action"] == "kept":
-                skipped[result["reason"]] += 1
-            if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
-                emit("host_cleanup_item", category=category, **result)
+                result = clean_candidate(path, cutoff, protections[category], options.delete,
+                                         repository=None if category == "codex" else main_checkout,
+                                         activity=fresh_protection, reclaim=category != "codex",
+                                         refresh_activity=True)
+            record(category, result)
+            if category != "codex" and result["action"] == "kept" and result["reason"] == "recent":
+                for lake, repository in artifact_lakes(path, protections[category], worktrees, unobservable):
+                    if repository:
+                        clean_staging(lake)
     except OSError as error:
         inventory_error = str(error)
     failed = inventory_error is not None or lanes_exit != 0 or any(key.endswith(":failed") for key in counts)
