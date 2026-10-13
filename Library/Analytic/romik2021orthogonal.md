@@ -6994,3 +6994,176 @@ would leave the first term of (LC249) unpaid.
 That same-source amplitude construction, growing-cluster actual-node
 margins and query exclusion at the complete moving scale remain open.
 RH and strict Robin for every integer $H>5040$ remain unresolved.
+
+
+## Same-source amplitude gives an actual node in the quartic obstruction
+
+The obstruction (LC250)--(LC255) concerns small error measured against a
+quadratic tangent. It leaves the actual-node sign unanswered.
+For that same finite source, the signed contributions can instead be
+kept in one common derivative amplitude. This application reuses the
+complete finite generators (LC253) and the classical Hermite coefficients
+already used in (LC252)--(LC254). The additional estimate is uniform on
+a neighborhood and produces an actual finite node; it is not another
+generic heat identity or a claim of a new published theorem.
+The argument is ordinary analysis without Lean, numerical-constant or
+originality certification.
+
+### Keep all contributions of one odd congruence class
+
+Let $r\ge1$ be odd, $c>0$, let $n$ be a positive integer with
+$n\ge M=r+4J$, and take a finite source
+
+$$
+\begin{aligned}
+P(z)&=\sum_{j=0}^J a_j(z-c)^{m_j},\qquad m_j=r+4j,\\
+a_j&\ge0,\qquad \sum_j a_j>0,\qquad \sigma=c/\sqrt n,\\
+J_P&=\mathscr T_nP,\qquad G_P=\mathscr T_nP',\\
+\mathcal D_P&=\sum_j a_j\sigma^{m_j-1}\operatorname{He}_{m_j}'(0).
+\end{aligned}
+\tag{LC256}
+$$
+
+All $\operatorname{He}_{m_j}'(0)$ have sign $(-1)^{(r-1)/2}$.
+Consequently $|\mathcal D_P|$ equals the sum of the moduli of its
+summands and is strictly positive. The coefficients may depend on
+$c,n,M$; none of the following constants depends on them.
+This amplitude uses the entire finite source, not its quadratic jet.
+
+Fix $\eta=1/4$ and write $t=c+\sigma v$ with
+$|v|\le\eta/\sqrt M$. The interval is positive.
+For odd $m=2k+1$ put $Z_m(v)=\operatorname{He}_m(v)/
+\operatorname{He}_m'(0)$. The already used Hermite coefficient formula
+and its derivative give
+
+$$
+\begin{aligned}
+Z_m'(v)&=\sum_{\ell=0}^k
+ \frac{(-1)^\ell2^\ell(k)_{\underline\ell}v^{2\ell}}{(2\ell)!},\\
+|Z_m'(v)-1|&\le\cosh(\sqrt{m-1}|v|)-1
+ \le\cosh\eta-1<1/8,\qquad Z_m(0)=0.
+\end{aligned}
+\tag{LC257}
+$$
+
+Thus $\mathcal H_{\sigma^2}P$ has derivative with
+$\mathcal D_P$'s sign and modulus at least $7|\mathcal D_P|/8$
+on this whole interval. Its endpoint values have the respective signs
+of $\pm\mathcal D_P$, with modulus at least
+$7\sigma|\mathcal D_P|\eta/(8\sqrt M)$.
+These margins sum same-sign source responses; they do not compare
+against the unamplified tangent derivative.
+
+### Extend the complete finite coefficient estimate to that interval
+
+For $p_m(z)=(z-c)^m$ put
+$E_{n,v}(w)=e^{-\sqrt n w}(1+w/\sqrt n+vw/n)^n$.
+The exact generating identity behind (LC253), now evaluated at $t$, is
+
+$$
+\begin{aligned}
+\sum_m\frac{\mathscr T_np_m(t)}{\sigma^m}\frac{w^m}{m!}
+ &=E_{n,v}(w),\\
+\sum_m\frac{(\mathscr T_np_m)'(t)}{\sigma^{m-1}}\frac{w^m}{m!}
+ &=w e^{-\sqrt n w}(1+w/\sqrt n+vw/n)^{n-1},\\
+\sum_m\frac{\mathscr T_np_m'(t)}{\sigma^{m-1}}\frac{w^m}{m!}
+ &=w E_{n,v}(w).
+\end{aligned}
+\tag{LC258}
+$$
+
+For every odd $3\le m\le M$, use the Cauchy circle
+$|w|=\sqrt k$, $k=m-1$. Uniformly in this $v$ interval and
+$\ell=0,1$,
+$-\sqrt n w+(n-\ell)\log(1+w/\sqrt n+vw/n)
+=vw-w^2/2+O(m^{3/2}/\sqrt n)$.
+Under $M^2/\sqrt n$ sufficiently small, the logarithm has its analytic
+branch on the disc and the error tends uniformly to zero.
+The Gaussian modulus on the circle is at most $e^{k/2+\eta}$.
+Cauchy's coefficient bound, divided by the exact normalization
+$|\operatorname{He}_m'(0)|=m!/[2^{k/2}(k/2)!]$, gives
+
+$$
+\begin{aligned}
+\frac{|\mathscr T_np_m(t)/\sigma^m-\operatorname{He}_m(v)|}
+ {|\operatorname{He}_m'(0)|}
+ &\le C m^{3/2}/\sqrt n,\\
+\frac{|(\mathscr T_np_m)'(t)/\sigma^{m-1}-\operatorname{He}_m'(v)|}
+ {|\operatorname{He}_m'(0)|}
+ &\le C m^2/\sqrt n,\\
+\frac{|\mathscr T_np_m'(t)/\sigma^{m-1}-\operatorname{He}_m'(v)|}
+ {|\operatorname{He}_m'(0)|}
+ &\le C m^2/\sqrt n.
+\end{aligned}
+\tag{LC259}
+$$
+
+For the value, the coefficient normalization costs only
+$2^{k/2}(k/2)!k^{-(k+1)/2}e^{k/2}=O(1)$.
+For either derivative the extra $w$ raises that cost to $O(\sqrt k)$,
+as in (LC254). There is no exponential comparison loss.
+All three formulas are exact at $m=1$.
+No source or model arc is removed; these are complete polynomial
+coefficients, including the original derivative and adjacent response.
+
+### The normalization now pays endpoint and actual-node margins
+
+Sum (LC259) with the coefficients in (LC256). Sign coherence gives
+
+$$
+\begin{aligned}
+|J_P-\mathcal H_{\sigma^2}P|
+ &\le C\sigma|\mathcal D_P|M^{3/2}/\sqrt n,\\
+|J_P'-(\mathcal H_{\sigma^2}P)'|
+ +|G_P-(\mathcal H_{\sigma^2}P)'|
+ &\le C|\mathcal D_P|M^2/\sqrt n.
+\end{aligned}
+\tag{LC260}
+$$
+
+There is a sufficiently small absolute $c_\eta>0$ such that
+$M^2/\sqrt n\le c_\eta$ makes the value error smaller than both
+endpoint margins and makes each response error at most
+$|\mathcal D_P|/8$. The derivative and adjacent response then have
+$\mathcal D_P$'s sign and modulus at least $3|\mathcal D_P|/4$
+on the entire interval. The endpoint signs and strict monotonicity
+therefore supply exactly one actual real simple $J_P$ node $t_*$ there,
+with
+
+$$
+\begin{aligned}
+J_P'(t_*)G_P(t_*)&\ge9|\mathcal D_P|^2/16>0,\\
+|t_*-c|&\le C\sigma M^{3/2}/\sqrt n.
+\end{aligned}
+\tag{LC261}
+$$
+
+The displacement follows from the value error at $c$ and the same
+nonzero derivative bound. The assertion is about this central interval;
+it makes no claim about the remaining roots or all degrees.
+
+For the actual quartic family (LC250), take
+$a_j=\binom rjD_0^{-4j}$ and $M=5r$. At fixed $\rho$, with
+$r\sim\epsilon\log T$ and $n\sim C_*T^2\log T/\rho^2$,
+$M^2/\sqrt n=O(\log^{3/2}T/T)\to0$.
+Thus (LC261) applies for all sufficiently large $T$.
+The interval lies inside $|t-c|\le T\rho/64$ eventually, since
+$\sigma\eta/(\sqrt M T\rho)=\eta/\sqrt{\nu M}\to0$.
+Meanwhile (LC252) gives
+$|\mathcal D_P|/|\sigma^{r-1}\operatorname{He}_r'(0)|\to\infty$
+at least exponentially in $r$.
+The same source therefore has a strict actual-node positive margin
+even while its tangent-normalized derivative error grows exponentially.
+This does not weaken the earlier obstruction: it answers a different,
+stronger node question with a different independently nonzero amplitude.
+
+The restricted nonnegative coefficients in one odd congruence class
+are the load-bearing source structure. They have not been established
+for the original $\Xi$ factor. Its mixed parity and opposite-congruence
+contributions, infinite remainder and complete source tails still need
+joint signed control, with a nonzero shared response amplitude and
+coverage of every actual node in the full moving band.
+Local $B,K$ bounds alone do not supply those properties.
+This finite-model application certifies neither original-source local
+realness at every height, global Jensen hyperbolicity, RH nor strict
+Robin for every integer $H>5040$.
