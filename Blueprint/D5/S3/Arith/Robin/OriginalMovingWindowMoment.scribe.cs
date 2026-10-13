@@ -154,5 +154,39 @@ internal sealed class OriginalMovingWindowMomentDocument : IScribeDocumentDefini
                 + "signed lower bound for B_pair, no full early-boundary "
                 + "cancellation and no cofinal positive-mass original "
                 + "integer witnesses. The separate discrete and continuous "
-                + "costs in the Robin upper estimates are unchanged.")))));
+                + "costs in the Robin upper estimates are unchanged.")),
+            Paragraph(Text(
+                "The original early supplier can also be consumed on this "
+                + "same full S without discarding its signed initial endpoint. "
+                + "Set b(t)=[lambda(t)-lambda(B(t))]/[w(t)t^(11/10)] and "
+                + "Q_D(t)=sum_(1<=d<=D(t))mu(d)log(t/d)[fract(t/d)-1/2]. "
+                + "The literal Bernoulli value at every integer is -1/2. "
+                + "The endpoint body b(t)Q_D(t) is measurable and integrable "
+                + "on S: its moving divisor sum extends exactly to the fixed "
+                + "finite J by the original cutoff indicator, each smooth "
+                + "coefficient is integrable on [ell,R], and the Bernoulli "
+                + "factor is bounded by 1/2. No probability or polynomial "
+                + "approximation replaces it.")),
+            Paragraph(Text(
+                "The exact early-row residual gives "
+                + "|E_early(t)-b(t)Q_D(t)|<=t^(-62/125)log(t)/6. This "
+                + "budget decreases for t>=256, so "
+                + "|integral_S E_early-integral_S bQ_D| "
+                + "<=M ell^(-62/125)log(ell)/6. Combined with the original "
+                + "paired strip budget, |I-B_pair-integral_S bQ_D| "
+                + "<=M delta(ell), where delta(ell)=6ell^(-99/500)log(2ell) "
+                + "+ell^(-62/125)log(ell)/6. Thus "
+                + "I>=B_pair+integral_S bQ_D-M delta(ell), preserving the "
+                + "full original J_prime+H_ref and exact centering.")),
+            Paragraph(Text(
+                "This leaves a joint signed target, allowing cancellation "
+                + "between the baseline and the actual endpoint term. For "
+                + "the original fixed kappa<c_Q allowance with "
+                + "c_Q=(sqrt(2)-1)/4, a sufficient remaining inequality is "
+                + "B_pair+integral_S bQ_D>=-(kappa-delta(ell))M on the "
+                + "cofinal actual positive-mass windows. The refinement "
+                + "proves the residual budget only; that favorable joint "
+                + "inequality and the cofinal witness obligation remain "
+                + "open. It does not require I to be positive and introduces "
+                + "no new canonical Lean declaration.")))));
 }
