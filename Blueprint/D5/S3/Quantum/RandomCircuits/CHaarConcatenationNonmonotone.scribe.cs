@@ -28,6 +28,9 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
                 "cHaarChannel", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("moment", "The literal moment operator", Moment(), MomentQuote,
                 "momentOp", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("norm", "The squared Hilbert-Schmidt norm", Norm(),
+                "The squared Hilbert-Schmidt norm is the sum of Complex.normSq over all matrix entries. The concatenation assertion compares this quantity for two powers of the moment operator.",
+                "hsNormSq", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The concatenation monotonicity assertion", Claim(), ClaimQuote,
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The concatenation assertion is false", new Formula.Not(Call("claim")),
@@ -63,17 +66,21 @@ internal sealed class CHaarConcatenationNonmonotoneDocument : IScribeDocumentDef
     private static Formula Claim()
     {
         Formula d=F.Id("d"),e=F.Id("e"),t=F.Id("t"),k=F.Id("k"),j=F.Id("j");
-        Formula sumJ=Seq(Sum,Sp,Underscore,Grp(F.Id("r")),Sp,
-            Seq(Sum,Sp,Underscore,Grp(F.Id("c")),Sp,
-                QCall("Complex.normSq",At(Pow(Call("momentOp",d,e,t),j),F.Id("r"),F.Id("c")))));
-        Formula sumK=Seq(Sum,Sp,Underscore,Grp(F.Id("r")),Sp,
-            Seq(Sum,Sp,Underscore,Grp(F.Id("c")),Sp,
-                QCall("Complex.normSq",At(Pow(Call("momentOp",d,e,t),k),F.Id("r"),F.Id("c")))));
-        Formula conclusion=Leq(sumJ,sumK);
+        Formula conclusion=Leq(Call("hsNormSq",Pow(Call("momentOp",d,e,t),j)),
+            Call("hsNormSq",Pow(Call("momentOp",d,e,t),k)));
         Formula body=All("d",Nat(),All("e",Nat(),All("t",Nat(),Instance(Call("NeZero",e),
             Implies(Leq(D(1),d),Implies(Leq(D(1),t),All("k",Nat(),All("j",Nat(),
                 Implies(Leq(D(1),k),Implies(Leq(k,j),conclusion))))))))));
         return Eqn(Call("claim"),body);
+    }
+    private static Formula Norm()
+    {
+        Formula i=F.Id("i"),m=F.Id("M");
+        Formula sum=Seq(Sum,Sp,Underscore,Grp(F.Id("r")),Sp,
+            Seq(Sum,Sp,Underscore,Grp(F.Id("c")),Sp,
+                QCall("Complex.normSq",At(m,F.Id("r"),F.Id("c")))));
+        return All("i",F.Id("Type"),Instance(Call("Fintype",i),
+            All("M",MatrixOf(i),Eqn(Call("hsNormSq",m),sum))));
     }
     private static Formula Nat() => Seq(Mathbb,Grp(F.Id("N")));
     private static Formula Complex() => Seq(Mathbb,Grp(F.Id("C")));

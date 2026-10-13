@@ -11,6 +11,7 @@ admission_basis: open-problem-resolution (#15553; Refuted).
 escape_witness: none.
 proof_shape: cHaarChannel: bind-only; consumers: momentOp, cHaarSingle, twoCopyIntegrand, momentOp2HaarEntries.
 proof_shape: momentOp: bind-only; consumers: claim, momentOp2HaarEntries, momentOp2Formula, moment22Reindex, instanceN4, instanceN5, result.
+proof_shape: hsNormSq: bind-only; consumers: claim, result.
 proof_shape: claim: bind-only; consumers: result.
 proof_shape: swapHermitian: bind-only; consumers: twirlSwapTrace.
 proof_shape: swapSquare: bind-only; consumers: twirlFormula.
@@ -55,39 +56,40 @@ proof_shape: instanceN4: bind-only; consumers: result.
 proof_shape: instanceN5: bind-only; consumers: result.
 proof_shape: result: bind-only; consumers: none (designated refutation result).
 The aPow induction is a consumed invariant, not an escape witness for the finite refutation.
-Direct frozen dependencies (baseline declaration statement_id, not module pins):
-F1: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceRight
+Direct frozen dependencies (declaration statement_id, not module pins):
+F1: D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight
   sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77
-F2: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_apply
-  sha256:5d34ccf16bf552fd006f9d0a0ee878d0894f3cbde156602967f58d21c4017981
-F3: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.haarAverage
+F2: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply
+  sha256:e3427bb6efbbe3e9b723be03b86574ca66e788ed2d360508fdb706fa7b764080
+F3: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage
   sha256:643023e91c290d010b39ef66865832300da6bc0e9e247a1d942263cdbaef62ba
-F4: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.haarAverage_hermitian
+F4: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_hermitian
   sha256:e2c73307f067b03207d0f3f7d1d834657288c35f0eccfdf141f5cf0d50ef2c08
-F5: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.haarAverage_identity_fixed
-  sha256:b77ed3378cc37199cfdd4ac29f06c692cfd609aeaa75266298b2da1a31cba175
-F6: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.haarAverage_image_span
-  sha256:3ccfd5d83d263e9e6fe06a5ab27578e57357e867bb55227a4010444a84c8d878
-F7: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.haarAverage_swap_fixed
-  sha256:257fa5cfc06978abe146636d0fa2689d01f67c5b92c2081e5e9bbfd7b50ea90d
-F8: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.hermitian_fixed_pairing
-  sha256:5015cbd87cf96c2feb55cc532e8a8852f9a36068a38f1f96bf7d356a685e9b91
-F9: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.literalMoment
+F5: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_identity_fixed
+  sha256:b7e1bc0bee2a33d3da5732a7d8d3c96dadf292c003f4698a39bc9f6d6ae544f7
+F6: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_image_span
+  sha256:9c148163365a59f540f3e854581a5066b8373b36936af617f39db9e095a337af
+F7: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.haarAverage_swap_fixed
+  sha256:4140ddf84490bd3b1b543ceeadf3f3208a4d8d9335600bc17a932777dae22758
+F8: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.hermitian_fixed_pairing
+  sha256:9ea713521ccc6215fc514afd9c2c5507a4e5dcc7b677cf819086214ea0a54163
+F9: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.literalMoment
   sha256:6d3808f646b3a2dccfb6f436f49901190286d1e2981e01de7c972ab57d7d214d
-F10: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.literalMoment_integrable
-  sha256:819e4e5a7837e9828da7161f86fca649d13db594b5ae777ec21dfc4957e9155a
-F11: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryBorelSpace
+F10: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.literalMoment_integrable
+  sha256:6aeca34ab3850c51aee19232cf3d90e3fed0e26d6714c829c20c1904fdb6f3c6
+F11: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryBorelSpace
   sha256:757f890bf0f7c651f03551550d08fb6b7b44524790dd9502bb910d11d5d7843a
-F12: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryCompactSpace
+F12: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryCompactSpace
   sha256:2cec9c00a5ea65c8a268bcfb410af53b86bea819b3619fe6453185aea736e95d
-F13: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryMeasurableSpace
+F13: D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryMeasurableSpace
   sha256:abb9c185cb4644ae2b034b61c7aa2a837e9832ef73855984512122acadf02844
-F14: D5/S3/Weil/ZetaLinear/PosIndex.frobSq
+F14: RHLinalg.frobSq
   sha256:a1114d4731d26d6c5ef81acb0a254cdc6e0ed6e629ccb2dcf75d7faa00f4ccce
-F15: D5/S3/Quantum/GNSMatrix.frobenius_norm_sq_eq_trace
+F15: D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace
   sha256:470140292aee89705512206af514f5a42fdc3948e5c9195d302613a47b859917
 Direct frozen dependencies: cHaarChannel: F1.
 Direct frozen dependencies: momentOp: F13, F11, F12, F1.
+Direct frozen dependencies: hsNormSq: none.
 Direct frozen dependencies: claim: F13, F11, F12, F1.
 Direct frozen dependencies: swapHermitian: none.
 Direct frozen dependencies: swapSquare: none.
@@ -140,7 +142,7 @@ partial trace over the environment. Its ancilla is Matrix.single 0 0 1.
 The two-copy average is expressed through haarAverage acting on Matrix.vec;
 Matrix.of with Function.curry and Prod.swap performs the inverse vectorization.
 No separate twirl, swap matrix, identity vector or coordinate equivalence is defined.
-The claim inlines #15553's hsNormSq body. The frozen
+The claim uses hsNormSq, the double sum of Complex.normSq. The frozen
 `GNSMatrix.frobenius_norm_sq_eq_trace` identity supplies the trace form; taking
 real parts and using Mathlib's Frobenius norm and `Complex.normSq_eq_norm_sq`
 gives exactly the double sum.
@@ -173,10 +175,12 @@ def momentOp (d e t : ℕ) [NeZero e] :
       cHaarChannel d e U.val (Matrix.single (c.1 s) (c.2 s) 1) (r.1 s) (r.2 s)
         ∂(Measure.haarMeasure ⊤)
 
+def hsNormSq {ι : Type*} [Fintype ι] (M : Matrix ι ι ℂ) : ℝ :=
+  ∑ r, ∑ c, Complex.normSq (M r c)
+
 def claim : Prop := ∀ (d e t : ℕ) [NeZero e],
   1 ≤ d → 1 ≤ t → ∀ k k' : ℕ, 1 ≤ k → k ≤ k' →
-    (∑ r, ∑ c, Complex.normSq (((momentOp d e t)^k') r c)) ≤
-      (∑ r, ∑ c, Complex.normSq (((momentOp d e t)^k) r c))
+    hsNormSq ((momentOp d e t)^k') ≤ hsNormSq ((momentOp d e t)^k)
 
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
@@ -493,6 +497,7 @@ private theorem instanceN5 : RHLinalg.frobSq ((momentOp 2 2 2)^5) = (30362908/29
 theorem result : ¬ claim := by
   intro h
   have hi := h 2 2 2 (by norm_num) (by norm_num) 4 5 (by norm_num) (by norm_num)
+  unfold hsNormSq at hi
   rw [← hsNormSqCorrespondence, ← hsNormSqCorrespondence] at hi
   rw [instanceN4, instanceN5] at hi
   norm_num at hi

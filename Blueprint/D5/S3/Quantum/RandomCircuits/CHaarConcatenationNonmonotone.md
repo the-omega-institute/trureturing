@@ -28,9 +28,21 @@ $$\forall d \in \mathbb{N},\; \forall e \in \mathbb{N},\; \forall t \in \mathbb{
 
 Page 3: "We can then define the t-th order moment operator as the superoperator of the t-th order twirl," followed by equation (9). The entry at r,c integrates the product of the t channel matrix-unit entries with the same Haar unitary U. This defines every order t, not only the second order.
 
-**Definition 1.3 (The concatenation monotonicity assertion).**
+**Definition 1.3 (The squared Hilbert-Schmidt norm).**
 
-$$\operatorname{claim}\left(\right) = \left(\forall d \in \mathbb{N},\; \forall e \in \mathbb{N},\; \forall t \in \mathbb{N},\; [\operatorname{NeZero}\left(e\right)] (1 \le d) \Rightarrow ((1 \le t) \Rightarrow (\forall k \in \mathbb{N},\; \forall j \in \mathbb{N},\; (1 \le k) \Rightarrow ((k \le j) \Rightarrow (\sum _{r} \sum _{c} \operatorname{Complex.normSq}\left(\left((\operatorname{momentOp}\left(d, e, t\right))^{j}\right)\left(r, c\right)\right) \le \sum _{r} \sum _{c} \operatorname{Complex.normSq}\left(\left((\operatorname{momentOp}\left(d, e, t\right))^{k}\right)\left(r, c\right)\right)))))\right)$$
+$$\forall i \in Type,\; [\operatorname{Fintype}\left(i\right)] \forall M \in \operatorname{Matrix}\left(i, i, \mathbb{C}\right),\; \operatorname{hsNormSq}\left(M\right) = \sum _{r} \sum _{c} \operatorname{Complex.normSq}\left(M\left(r, c\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.hsNormSq` (`✓ std3`).
+
+*Citation.* Matthew Duschenes, Diego García-Martín, Zoë Holmes, and M. Cerezo (2026). *Moments of Quantum Channel Ensembles*. DOI: [10.1103/grdp-jph9](https://doi.org/10.1103/grdp-jph9). URL: <https://arxiv.org/abs/2511.12700v2>.
+
+*Commentary.*
+
+The squared Hilbert-Schmidt norm is the sum of Complex.normSq over all matrix entries. The concatenation assertion compares this quantity for two powers of the moment operator.
+
+**Definition 1.4 (The concatenation monotonicity assertion).**
+
+$$\operatorname{claim}\left(\right) = \left(\forall d \in \mathbb{N},\; \forall e \in \mathbb{N},\; \forall t \in \mathbb{N},\; [\operatorname{NeZero}\left(e\right)] (1 \le d) \Rightarrow ((1 \le t) \Rightarrow (\forall k \in \mathbb{N},\; \forall j \in \mathbb{N},\; (1 \le k) \Rightarrow ((k \le j) \Rightarrow (\operatorname{hsNormSq}\left((\operatorname{momentOp}\left(d, e, t\right))^{j}\right) \le \operatorname{hsNormSq}\left((\operatorname{momentOp}\left(d, e, t\right))^{k}\right)))))\right)$$
 
 *Formalization.* `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.claim` (`✓ std3`).
 
@@ -40,7 +52,7 @@ $$\operatorname{claim}\left(\right) = \left(\forall d \in \mathbb{N},\; \forall 
 
 Appendix B, Conjecture 1, page 32: "it is conjectured that such a hierarchy holds for all concatenations k, orders t, and dimensions d,d_E. Further, it is conjectured that the cHaar norm is monotonically non-increasing with environment dimension and concatenations," followed by the displayed concatenation inequality for every k′ ≥ k. Here d,d_E are d,e; the order is t; k and j are positive concatenation counts with k ≤ j. Page 3: "The choice of norm ∥·∥ is task-dependent, and unless noted, we use the Hilbert-Schmidt norm as it is overall the simplest to compute." The squared Hilbert-Schmidt norm of the Liouville matrix is the existing RHLinalg.frobSq, equal to the double sum of Complex.normSq. The environment-dimension clause is a separate assertion.
 
-**Theorem 1.4 (The concatenation assertion is false).**
+**Theorem 1.5 (The concatenation assertion is false).**
 
 $$\neg \operatorname{claim}\left(\right)$$
 
@@ -62,6 +74,7 @@ At d = e = t = 2 the fourth power has squared norm 1213852/1171875, and the fift
 
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.cHaarChannel`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.claim`
+- Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.hsNormSq`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.momentOp`
 - Truth anchor: `D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.result`
 - Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)

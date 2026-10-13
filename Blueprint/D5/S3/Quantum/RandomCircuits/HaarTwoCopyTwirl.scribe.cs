@@ -9,8 +9,14 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumStates/belkinallenclark2025secondmoments");
     private static DocumentBlock Node(string id,string title,Formula formula,string prose,string declaration,DescribeRole role,AssessedProvenance? provenance = null) =>
-        Describe.Lean(DescribeId.Create("haar-"+id),DeclarationHandle.Create(Prefix+declaration),H(title),StatementSource.FromAuthor(Disp(formula)),
+        Describe.Lean(DescribeId.Create("haar-"+id),DeclarationHandle.Create(Prefix+Selector(declaration)),H(title),StatementSource.FromAuthor(Disp(formula)),
             provenance ?? AssessedProvenance.FromLiterature(Source),Blocks(Paragraph(DefinitionDsl.Text(prose))),role);
+
+    private static string Selector(string declaration)
+    {
+        var parts = declaration.Split('.');
+        return parts[parts.Length - 1];
+    }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The normalized two-copy Haar average is Hermitian and idempotent. Its action on two-site identity/swap vectors has coefficient q/(q squared + 1).",
@@ -32,7 +38,7 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("globalswap","The full swap vector is fixed",GenericSwap(),"Exchanging the two copies commutes with the tensor square of every unitary.","haarAverage_swap_fixed",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("imagespan","The image is in the identity/swap span",ImageSpan(),"Two distinct coordinates suffice for the commutant argument. Each averaged vector is a linear combination of the vectorized identity and replica swap.","haarAverage_image_span",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("fixedpairing","Pairing against a Hermitian fixed vector",FixedPairing(),"Moving a Hermitian matrix to the other side of the pairing preserves every fixed vector.","hermitian_fixed_pairing",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
-            Node("replicaswap","Entries of the replica swap",ReplicaSwapEntry(),"The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.","replicaSwap_apply",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
+            Node("replicaswap","Entries of the replica swap",ReplicaSwapEntry(),"The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.","D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("gram","The physical two-site Gram matrix",Gram(),"The one-site overlap of equal identity/swap choices is one; distinct choices have overlap 1/q. The two-site overlap is the product of the two one-site overlaps.","localPermutation_gram",DescribeRole.Theorem),
             Node("identity","The identity vector is fixed",Fixed(D(0)),"The identity commutes with the two-copy unitary action, so the Haar expectation fixes it.","local_identity_fixed",DescribeRole.Theorem),
             Node("swap","The swap vector is fixed",Fixed(D(1)),"The replica swap commutes with the two-copy unitary action, so the Haar expectation fixes it.","local_swap_fixed",DescribeRole.Theorem),

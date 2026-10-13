@@ -24,7 +24,7 @@ The verbal source clause is: “Further, it is conjectured that the cHaar norm i
 | --- | --- | --- |
 | Haar unitary on system and environment, with fixed pure ancilla; partial trace over environment. | `cHaarChannel d e U X`. | Reuses `PartialTraceMutualInformation.partialTraceRight`; its sum is exactly the preregistered sum. `Matrix.single 0 0 1` is the pure coordinate-zero ancilla. |
 | The order-$t$ ensemble moment of the channel tensor power. | `momentOp d e t`. | All tensor factors use the same Haar sample, for every $t$. |
-| Hilbert–Schmidt norm, squared. | The literal double sum of `Complex.normSq` in `claim`. | The body of #15553's `hsNormSq` is inlined in the assertion. Private `hsNormSqCorrespondence` equates it with the frozen `RHLinalg.frobSq` used by `normReindex`, `normNormal` and `result`. |
+| Hilbert–Schmidt norm, squared. | `hsNormSq`, used in `claim`. | The definition is the double sum of `Complex.normSq` specified by #15553. Private `hsNormSqCorrespondence` equates this sum with the frozen `RHLinalg.frobSq` used by `normReindex`, `normNormal` and `result`. |
 | All positive dimensions, moment orders and concatenation counts, with $k'\geq k$. | `claim`. | Positive $d,t,k$ and nonzero $e$; positive counts suffice for the witness. |
 | Refutation at $d=e=t=2$, $k=4$, $k'=5$. | `result : ¬ claim`. | Literal universal claim negation; exact instance values are `instanceN4`, `instanceN5`. |
 
