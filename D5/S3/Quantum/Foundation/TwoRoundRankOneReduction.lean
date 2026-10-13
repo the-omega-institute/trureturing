@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Same-marginal rank-one tester reduction with attained original global extrema.
--/
+   digest: Same-marginal rank-one tester reduction with attained original global extrema. -/
 import D5.S3.Quantum.Foundation.TwoRoundRankOneReductionSpectral
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Topology.Order.Compact
@@ -206,7 +205,7 @@ private theorem completion_compression (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.submatrix_apply, causalCompletion, embedBlock_entry, complementWeight,
       MainSupport, mainAddress, Matrix.diagonal]
-private theorem compressed_block_causal_lift (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ) (hp : 0 ≤ p)
+theorem compressed_block_causal_lift (p : ℝ) (P : Matrix (Fin 3) (Fin 3) ℂ) (hp : 0 ≤ p)
     (hp1 : p ≤ 1) (hP : P.PosSemidef) (h0 : (P 0 0).re ≤ 1 - p) (h1 : (P 1 1).re ≤ 1 - p) (h2 : (P 2
     2).re ≤ p) : Causal (causalCompletion p P) (diagonalMarginal p) ∧ (causalCompletion p
     P).submatrix mainAddress mainAddress = P ∧ diagonalMarginal p 1 1 = (p : ℂ) := by
@@ -217,7 +216,7 @@ private theorem compressed_block_causal_lift (p : ℝ) (P : Matrix (Fin 3) (Fin 
         ⟨by simpa using complementWeight_nonneg p P hp h0 h1 h2 i, by simp⟩))
   · simp [diagonalMarginal, Matrix.trace, Fin.sum_univ_two]
   · simp [diagonalMarginal]
-private theorem causal_principal_block_budgets (S : Matrix Wire Wire ℂ) (sigma : Matrix (Fin 2) (Fin
+theorem causal_principal_block_budgets (S : Matrix Wire Wire ℂ) (sigma : Matrix (Fin 2) (Fin
     2) ℂ) (hS : Causal S sigma) : let p := (sigma 1 1).re
     let P := S.submatrix mainAddress mainAddress
     0 ≤ p ∧ p ≤ 1 ∧ P.PosSemidef ∧
@@ -298,11 +297,11 @@ private theorem testerWeight_nonneg (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1) (
     (ab : AB) : 0 ≤ testerWeight q t ab := by
   unfold testerWeight
   split_ifs <;> linarith
-private theorem diagonalTester_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1) (ht : 0 ≤ t) (ht1 : t ≤ 1) :
+theorem diagonalTester_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1) (ht : 0 ≤ t) (ht1 : t ≤ 1) :
     (diagonalTester q t).PosSemidef := by
   apply PosSemidef.diagonal; intro ab; change (0 : ℂ) ≤ (testerWeight q t ab : ℂ)
   exact_mod_cast testerWeight_nonneg q t hq hq1 ht ht1 ab
-private theorem diagonalTester_normalized (q t : ℝ) : partialTraceLeft (diagonalTester q t) = (1 :
+theorem diagonalTester_normalized (q t : ℝ) : partialTraceLeft (diagonalTester q t) = (1 :
     Matrix (Fin 2) (Fin 2) ℂ) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
@@ -340,7 +339,7 @@ private theorem compressedNormalization_pos (q t : ℝ) (hq : 0 ≤ q) (hq1 : q 
   change (testerNormalization q t).PosSemidef at hM
   simpa only [testerNormalization_compression] using
     hM.conjTranspose_mul_mul_same blockEmbedding
-private theorem lift_compressed_event (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1) (ht : 0 ≤ t) (ht1 : t ≤
+theorem lift_compressed_event (q t : ℝ) (hq : 0 ≤ q) (hq1 : q ≤ 1) (ht : 0 ≤ t) (ht1 : t ≤
     1) {F : Matrix (Fin 3) (Fin 3) ℂ} (hF : EventInterval (compressedNormalization q t) F) :
     EventInterval (testerNormalization q t) (embedBlock F) := by
   classical
@@ -395,7 +394,7 @@ private theorem completion_lifted_response (eps p : ℝ) (P F : Matrix (Fin 3) (
       simp [hw]
     · simp [embedBlock_entry, hi]
   rw [hz, sub_zero]
-private theorem normalization_trace (S : Matrix Wire Wire ℂ) (sigma : Matrix (Fin 2) (Fin 2) ℂ) (C :
+theorem normalization_trace (S : Matrix Wire Wire ℂ) (sigma : Matrix (Fin 2) (Fin 2) ℂ) (C :
     Matrix AB AB ℂ) (hSn : partialTraceRight S = Matrix.kronecker (1 : Matrix (Fin 2) (Fin 2) ℂ)
     sigma) (hst : trace sigma = 1) (hCn : partialTraceLeft C = 1) : trace (S * (C ⊗ₖ (1 : Matrix
     (Fin 3) (Fin 3) ℂ))) = 1 := by
@@ -410,7 +409,7 @@ private theorem normalization_trace (S : Matrix Wire Wire ℂ) (sigma : Matrix (
       Matrix.one_apply, Fintype.sum_prod_type, Finset.sum_mul, Fin.sum_univ_three]
     ring
   rw [hR, hSn, Matrix.kronecker, trace_mul_comm, hL, hCn, Matrix.one_mul, hst]
-private theorem candidate_normalization_response (eps q t : ℝ) (he : 0 ≤ eps) (he1 : eps ≤ 1) :
+theorem candidate_normalization_response (eps q t : ℝ) (he : 0 ≤ eps) (he1 : eps ≤ 1) :
     eventResponse (candidate eps) (testerNormalization q t) = 1 - eps * (1 - q - t) := by
   rw [testerNormalization_diagonal]
   simp [eventResponse, candidate, candidateVector, testerWeight, Matrix.trace,
@@ -567,7 +566,7 @@ theorem full_tester_compressed_objective (eps p : ℝ) (P : Matrix (Fin 3) (Fin 
     have h := hgreat.2 ⟨averageWire E, hAvg, rfl⟩
     change |response (candidate eps - S) E| ≤ b; rw [← hresp]
     exact h.trans (hBound q t hq hq1 ht ht1)
-private theorem response_compressed_event (X : Matrix Wire Wire ℂ) (F : Matrix (Fin 3) (Fin 3) ℂ) :
+theorem response_compressed_event (X : Matrix Wire Wire ℂ) (F : Matrix (Fin 3) (Fin 3) ℂ) :
     eventResponse X (embedBlock F) = eventResponse (X.submatrix mainAddress mainAddress) F := by
   calc
     _ = eventResponse (embedBlock F) X := congrArg Complex.re (trace_mul_comm X (embedBlock F))
@@ -654,9 +653,9 @@ private def weightedInput (eps q t : ℝ) (i : Fin 3) : ℝ :=
   weightVector q t i * inputVector eps i
 private def weightedRepair (p q t : ℝ) (i : Fin 3) : ℝ :=
   weightVector q t i * repairVector p i
-private theorem rankOneBlock_pos (p : ℝ) : (rankOneBlock p).PosSemidef :=
+theorem rankOneBlock_pos (p : ℝ) : (rankOneBlock p).PosSemidef :=
   posSemidef_vecMulVec_self_star _
-private theorem rankOneBlock_budgets (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) : (rankOneBlock p 0 0).re =
+theorem rankOneBlock_budgets (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) : (rankOneBlock p 0 0).re =
     1 - p ∧ (rankOneBlock p 1 1).re = 1 - p ∧ (rankOneBlock p 2 2).re = p := by
   simp [rankOneBlock, repairVector, vecMulVec_apply, Real.mul_self_sqrt hp,
     Real.mul_self_sqrt (sub_nonneg.mpr hp1)]
@@ -959,7 +958,7 @@ theorem tester_norm_attained (X : Matrix Wire Wire ℂ) : ∃ C E, Tester C E �
   obtain ⟨z, hz, hn, hm⟩ := tester_pairs_compact.exists_sSup_image_eq_and_ge
     original_pairs_nonempty.2 hf.continuousOn
   exact ⟨z.1, z.2, hz, hn.symm, fun C E hT => (hm (C, E) hT).trans_eq hn.symm⟩
-private theorem tester_norm_le {X : Matrix Wire Wire ℂ} {b : ℝ} (hb : ErrorBound X b) : testerNorm X
+theorem tester_norm_le {X : Matrix Wire Wire ℂ} {b : ℝ} (hb : ErrorBound X b) : testerNorm X
     ≤ b := by
   obtain ⟨C, E, hT, hn, _⟩ := tester_norm_attained X
   rw [← hn]; exact hb C E hT
