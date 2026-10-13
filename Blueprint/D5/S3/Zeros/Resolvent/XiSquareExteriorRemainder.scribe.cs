@@ -160,7 +160,42 @@ internal sealed class XiSquareExteriorRemainderDocument : IScribeDocumentDefinit
                         + "3/4 and T_n H_a(a) nonzero. The combined complete actual-source statement passed an exact "
                         + "Lean compilation with the standard axiom closure and permits a=0. This full-height removal "
                         + "budget does not establish the local selected-degree C_0 log(T) budget from the growing-core "
-                        + "theory, all-node signs, target-disc coverage or RH.")),
+                        + "theory, all-node signs or RH. Target-disc coverage additionally uses the degree condition below.")),
+                    Paragraph(Text(
+                        "A further application covers a whole closed target disc for the original extraction T_n A_s. "
+                        + "Keep the same full-height cutoff, complete exterior and original multiplicities. Define C_s "
+                        + "as the sum of the norms of exteriorReciprocal(Z,s,k) over every repeated exterior index k; "
+                        + "the existing exterior reciprocal summability proves that this complete sum is finite. Let "
+                        + "r be nonnegative and h positive, with r+2h at most (T+1) squared / 2. Assume n positive, "
+                        + "2 C_s r(r+2h) less than n h, and 5 R_T (r+2h) squared / n at most 1/16. Then T_n A_s(t) "
+                        + "is nonzero for every complex t with norm(t) at most r, including t=0.")),
+                    Paragraph(Text(
+                        "For nonzero t, use the closed rectangle centered at t with real and imaginary halfwidth h. "
+                        + "Its points satisfy norm(a) at most r+2h, and its border satisfies norm(a-t) at least h. "
+                        + "The full-height factor bound gives A_s(a) nonzero and norm(b_a) at most 2 C_s, where "
+                        + "b_a=A_s'(a)/A_s(a). Apply the existing rectangle Rouche zero supplier from "
+                        + "GermZeroCertificateReduction to the entire source-cleared function "
+                        + "G_t(a)=(a-t)A_s(a)+(t a/n)A_s'(a), with reference (a-t)A_s(a). The degree inequality "
+                        + "makes the perturbation strictly smaller on the border; the reference has just the simple "
+                        + "zero t in this rectangle. At the supplied zero a, cancellation gives a=t d_a with "
+                        + "d_a=1-a b_a/n. If d_a were zero then a would be zero, contradicting d_0=1. Thus d_a "
+                        + "is nonzero at this preimage, and t nonzero also makes a nonzero. No denominator nonzero "
+                        + "condition on the whole rectangle is assumed.")),
+                    Paragraph(Text(
+                        "The same full-height mass estimate gives M_s(a) norm(a) squared / n at most 1/16. The "
+                        + "fixed-tilt identities and actual-source nonzero amplitude above therefore apply to this "
+                        + "same a, n and A_s, giving T_n A_s(a/d_a) nonzero; a/d_a=t is the original target. At t=0, "
+                        + "the extraction's constant coefficient is exactly A_s(0)=1. This complete target-coverage "
+                        + "application was checked by exact Lean compilation with the standard axiom closure. It "
+                        + "retains the infinite exterior and every original multiplicity throughout.")),
+                    Paragraph(Text(
+                        "For fixed T, s, r and h satisfying the cutoff and geometric clearance, the two degree "
+                        + "budgets can also be discharged eventually. Choose a natural N greater than "
+                        + "max(1,max(2 C_s r(r+2h)/h,80 R_T (r+2h) squared)). Every n at least N is positive and "
+                        + "satisfies both budgets, so T_n A_s is nonzero on the entire closed target disc for every "
+                        + "such n. This Archimedean application also passed exact Lean compilation. It gives a "
+                        + "threshold for this fixed full-height exterior; it does not supply the local selected-degree "
+                        + "C_0 log(T) core, a uniform growing-core threshold, coupled-node signs or RH.")),
                     Paragraph(Text(
                         "A conditional closed-disc Cauchy application controls both original-source responses. For "
                         + "entire functions H and V, positive D, and H nonzero throughout norm(z-c) at most D/8, write "
@@ -174,12 +209,23 @@ internal sealed class XiSquareExteriorRemainderDocument : IScribeDocumentDefinit
                         + "Complex.norm_iteratedDeriv_le_of_forall_mem_sphere_norm_le separately with the two budgets "
                         + "and adding gives the combined constant 128 S.")),
                     Paragraph(Text(
+                        "The same conditional Cauchy application permits any positive circle radius R with "
+                        + "dist(t,c)+R at most D/8: the joint m-th derivative norm is at most "
+                        + "m! (128 S L/D) / R to the m. The complete closed circle and its interior lie in the "
+                        + "closed outer disc, including equality in the containment condition. In particular, "
+                        + "norm(t-c) at most D/10 permits R=D/40 and gives m!40 to the m times "
+                        + "128 S L / D to the m+1; norm(t-c) at most D/12 permits R=D/24 and gives the "
+                        + "corresponding factor 24 to the m. Both exact applications passed Lean compilation "
+                        + "with the standard axiom closure and retain m=0. They reuse the two separate outer "
+                        + "quotient budgets above, with their sum counted once.")),
+                    Paragraph(Text(
                         "For the actual extraction, H=T_n A_s and V=T_n A_s' are entire polynomials. The preceding "
                         + "Cauchy conclusion is an exact compiled application of the pinned supplier, including m=0 "
                         + "and the entire inner closed boundary. It retains outer-disc nonzero and the two separate "
-                        + "uniform quotient budgets as hypotheses. The actual target coverage and original-source "
-                        + "uniform mass and drift estimates needed to discharge those hypotheses are not established "
-                        + "here. The full-height cutoff application does not replace those local growing-core premises.")),
+                        + "uniform quotient budgets as hypotheses. For a full-height exterior, the target-coverage "
+                        + "application above supplies the nonzero hypothesis when its geometric and degree conditions "
+                        + "hold on that outer disc. The required original-source uniform quotient budgets remain "
+                        + "separate premises. This does not replace the local growing-core estimates.")),
                     Paragraph(Text(
                         "The general exterior remainder and transported-response results retain A_s(a) nonzero; the "
                         + "full-height application above derives it under its additional cutoff and radius conditions. "
