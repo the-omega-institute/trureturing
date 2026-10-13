@@ -16,6 +16,7 @@ noncomputable section
 open scoped BigOperators ENNReal
 
 namespace D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
+open SeededBernoulliFactoryExecution MeasureTheory ProbabilityTheory Filter
 
 /-! A row has one continuation outcome (`none`) and one outcome for every
 finite output colour.  The entries are absolute masses at a reached node. -/
@@ -98,5 +99,98 @@ theorem compatible_stage_classification
       calc
         z * (continuation * z⁻¹) = continuation * (z * z⁻¹) := by ac_rfl
         _ = continuation := by rw [ENNReal.mul_inv_cancel hz hz_top, mul_one]
+
+/-! The stage rows are chosen once, before either source rate is supplied.  The
+construction below is intentionally indexed by the level only: it cannot
+inspect `p`, `q`, or a private seed.  This is the part of the common-table
+argument that is useful even when the full acquired-history induction is still
+being discharged. -/
+
+def commonStageTable (z : ℕ → ℝ≥0∞) (delta : ℕ → E → ℝ≥0∞)
+    (continuation : ℕ → ℝ≥0∞)
+    (hmass : ∀ k, (∑ e, delta k e) + continuation k = z k)
+    (hz_top : ∀ k, z k ≠ ∞) : ℕ → PMF (Option E) :=
+  fun k => stageRow (z k) (delta k) (continuation k) (hmass k) (hz_top k)
+
+theorem commonStageTable_classification
+    (z : ℕ → ℝ≥0∞) (delta : ℕ → E → ℝ≥0∞)
+    (continuation : ℕ → ℝ≥0∞)
+    (hmass : ∀ k, (∑ e, delta k e) + continuation k = z k)
+    (hz_top : ∀ k, z k ≠ ∞) :
+    ∀ k, (∀ e, z k * commonStageTable z delta continuation hmass hz_top k (some e) = delta k e) ∧
+      z k * commonStageTable z delta continuation hmass hz_top k none = continuation k := by
+  intro k
+  exact compatible_stage_classification (z k) (delta k) (continuation k)
+    (hmass k) (hz_top k)
+
+/-! Source counters are taken from the actual acquired record.  In particular,
+they are not an input field asserting a new-layer count law. -/
+
+def sourceCount (source : Bool) (h : List (Bool × Bool)) : ℕ :=
+  (h.filter (fun v => v.1 = source)).length
+
+theorem sourceCount_partition (h : List (Bool × Bool)) :
+    sourceCount true h + sourceCount false h = h.length := by
+  have hcount := h.length_eq_length_filter_add (fun v : Bool × Bool => v.1)
+  simpa [sourceCount] using hcount.symm
+
+theorem acquiredHistory_sourceCount_partition
+    {Seed Tape : Type} (π : Seed → Bool → List (Bool × Bool) → Bool ⊕ (Bool × Bool))
+    (S : Bool) (answer : Bool → ℕ → Tape → Bool) (n : ℕ) (ω : Seed × Tape) :
+    sourceCount true (acquiredHistory π S answer n ω) +
+        sourceCount false (acquiredHistory π S answer n ω) =
+      (acquiredHistory π S answer n ω).length := by
+  exact sourceCount_partition _
+
+theorem acquiredHistory_source_counts_sum_before_return
+    {Seed Tape : Type} (π : Seed → Bool → List (Bool × Bool) → Bool ⊕ (Bool × Bool))
+    (S : Bool) (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) (n : ℕ)
+    (hn : (n : WithTop ℕ) ≤
+      hittingAfter (fun m (_ : Seed × Tape) =>
+          π ω.1 S (acquiredHistory π S answer m ω))
+        (Set.range (fun cell : Bool × Bool => (Sum.inr cell : Bool ⊕ (Bool × Bool)))) 0 ω) :
+    sourceCount true (acquiredHistory π S answer n ω) +
+        sourceCount false (acquiredHistory π S answer n ω) = n := by
+  rw [sourceCount_partition]
+  exact acquired_history_length_before_return π S answer ω n hn
+
+theorem acquiredHistory_source_counts_sum_at_return
+    {Seed Tape : Type} (π : Seed → Bool → List (Bool × Bool) → Bool ⊕ (Bool × Bool))
+    (S : Bool) (answer : Bool → ℕ → Tape → Bool) (ω : Seed × Tape) (n : ℕ)
+    (hn : hittingAfter (fun m (_ : Seed × Tape) =>
+        π ω.1 S (acquiredHistory π S answer m ω))
+      (Set.range (fun cell : Bool × Bool => (Sum.inr cell : Bool ⊕ (Bool × Bool)))) 0 ω =
+        (n : WithTop ℕ)) :
+    sourceCount true (acquiredHistory π S answer n ω) +
+        sourceCount false (acquiredHistory π S answer n ω) = n := by
+  exact acquiredHistory_source_counts_sum_before_return π S answer ω n hn.ge
+
+/-! A finite path through the one table has the corresponding absolute mass.
+This packages the zero-node case for an entire finite history: no factor is
+ever divided by `z k`, and the same table is used at every level. -/
+
+def commonPathMass (z : ℕ → ℝ≥0∞) (delta : ℕ → E → ℝ≥0∞)
+    (continuation : ℕ → ℝ≥0∞) (n : ℕ) (path : Fin n → Option E) : ℝ≥0∞ :=
+  ∏ k : Fin n, match path k with
+    | none => continuation k
+    | some e => delta k e
+
+theorem commonStageTable_path_mass
+    (z : ℕ → ℝ≥0∞) (delta : ℕ → E → ℝ≥0∞)
+    (continuation : ℕ → ℝ≥0∞)
+    (hmass : ∀ k, (∑ e, delta k e) + continuation k = z k)
+    (hz_top : ∀ k, z k ≠ ∞) (n : ℕ) (path : Fin n → Option E) :
+    (∏ k : Fin n, z k) *
+        (∏ k : Fin n, commonStageTable z delta continuation hmass hz_top k (path k)) =
+      commonPathMass z delta continuation n path := by
+  rw [← Finset.prod_mul_distrib]
+  apply Finset.prod_congr rfl
+  intro k hk
+  have hclass := commonStageTable_classification z delta continuation hmass hz_top k
+  cases hp : path k with
+  | none =>
+      simpa [commonPathMass, hp] using hclass.2
+  | some e =>
+      simpa [commonPathMass, hp] using hclass.1 e
 
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
