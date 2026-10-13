@@ -145,12 +145,6 @@ noncomputable def permutationU {I : Type} [Fintype I] [DecidableEq I]
     ← Matrix.permMatrix_mul]
   simp⟩
 
-private noncomputable def swapU : unitaryGroup (Fin 3 × Fin 3) ℂ :=
-  ⟨(Equiv.swap ((1,1) : Fin 3 × Fin 3) ((0,2) : Fin 3 × Fin 3)).permMatrix ℂ, by
-    rw [mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_permMatrix,
-      ← Matrix.permMatrix_mul]
-    simp⟩
-
 theorem spectral_reduction (k : ℕ)
     (rho : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)
     (hrho : rho.PosSemidef) (htrace : rho.trace = 1) (happt : APPT rho) :
@@ -204,7 +198,7 @@ theorem spectral_reduction (k : ℕ)
   let flip56 (l : Fin 9 → ℝ) : Fin 9 → ℝ := l ∘ Equiv.swap 5 6
 
   have swap_pack (l : Fin 9 → ℝ) :
-      (swapU : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)*diagonal (pack l)*(swapU : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)ᴴ =
+      ((permutationU swap56) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)*diagonal (pack l)*((permutationU swap56) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)ᴴ =
         diagonal (pack (flip56 l)) := by
     change swap56.permMatrix ℂ * diagonal (pack l) * (swap56.permMatrix ℂ)ᴴ = _
     rw [Matrix.conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
@@ -254,8 +248,8 @@ theorem spectral_reduction (k : ℕ)
 
 
   have extended_swap_pack (k : ℕ) (l : Fin 9 → ℝ) (mid : Fin 3 × Fin k → ℂ) :
-      (extendUnitary k swapU : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ) * diagonal (packExtended k l mid) *
-        (extendUnitary k swapU : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ)ᴴ = diagonal (packExtended k (flip56 l) mid) := by
+      (extendUnitary k (permutationU swap56) : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ) * diagonal (packExtended k l mid) *
+        (extendUnitary k (permutationU swap56) : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ)ᴴ = diagonal (packExtended k (flip56 l) mid) := by
     ext ⟨i,j⟩ ⟨a,b⟩
     rcases j with j|j <;> rcases b with b|b
     all_goals simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, extendUnitary,
@@ -269,7 +263,7 @@ theorem spectral_reduction (k : ℕ)
 
   have necessary_K2_extended (k : ℕ) (l : Fin 9 → ℝ) (mid : Fin 3 × Fin k → ℂ)
       (h : APPT (diagonal (packExtended k l mid))) : (KC2 l).PosSemidef := by
-    have h' := appt_conjugate h (extendUnitary k swapU)
+    have h' := appt_conjugate h (extendUnitary k (permutationU swap56))
     rw [extended_swap_pack] at h'
     exact necessary_K1_extended k _ mid h'
 

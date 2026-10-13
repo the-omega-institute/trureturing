@@ -93,7 +93,6 @@ SpectralBridge.spectral_reduction_ordered: proof_shape: bind-only; escape_witnes
 SpectralBridge.spectrum_eq_ordered_range: proof_shape: bind-only; escape_witness: none; frozen: none; same-delivery: none; compiler-closure: none; consumers: D5.S3.Quantum.Entanglement.AbsolutePPT.QutritExtremeSixLevels.StateDecomposition.nontrivial_decomposition; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSixLevelExtremality.RhoZero.rho0_spectrum_six
 Sufficiency.hildebrand_sufficiency: proof_shape: content; escape_witness: Sufficiency.hildebrand_sufficiency; frozen: F01,F02,F05,F06; same-delivery: none; compiler-closure: C33; consumers: D5.S3.Quantum.Entanglement.AbsolutePPT.QutritExtremeSixLevels.StateDecomposition.state_mem; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency.Criterion.hildebrand_criterion; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSixLevelExtremality.RhoZero.rho0_mem
 Sufficiency.psd_of_re_quadratic_nonneg: proof_shape: bind-only; escape_witness: none; frozen: none; same-delivery: none; compiler-closure: none; consumers: D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency.Sufficiency.hildebrand_sufficiency
-Sufficiency.quadratic_im_zero: proof_shape: bind-only; escape_witness: none; frozen: none; same-delivery: none; compiler-closure: none; consumers: D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency.Sufficiency.psd_of_re_quadratic_nonneg
 Sufficiency.sorted_eigenvalues_antitone: proof_shape: bind-only; escape_witness: none; frozen: none; same-delivery: none; compiler-closure: none; consumers: D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency.Sufficiency.hildebrand_sufficiency; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSixLevelExtremality.Extremality.rho0_decomposition_trivial; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSixLevelExtremality.SupportingFunctional.trace_support_ge; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSixLevelExtremality.SupportingFunctional.trace_support_zero_diagonal
 TraceBridge.trace_diagonal_conjugate: proof_shape: bind-only; escape_witness: none; frozen: F11; same-delivery: none; compiler-closure: C04; consumers: D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency.TraceBridge.trace_lower_of_monovary_diagonalization; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSixLevelExtremality.RearrangementEquality.aligned_of_trace_equality
 TraceBridge.trace_lower_of_monovary_diagonalization: proof_shape: bind-only; escape_witness: none; frozen: F10,F11,F12; same-delivery: none; compiler-closure: none; consumers: D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency.TraceBridge.trace_pair_lower_of_diagonalizations; D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSixLevelExtremality.SupportingFunctional.trace_support_ge
@@ -523,17 +522,12 @@ open D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency.OrderedD
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction (K1 K2)
 open D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment (APPT)
-private theorem quadratic_im_zero {J : Type} [Fintype J] (A : Matrix J J ℂ)
-    (H : A.IsHermitian) (v : J → ℂ) : (star v ⬝ᵥ (A *ᵥ v)).im = 0 := by
-  apply Complex.conj_eq_iff_im.mp
-  change star (star v ⬝ᵥ (A *ᵥ v)) = _
-  rw [← star_dotProduct, star_mulVec, ← dotProduct_mulVec, H.eq]
 private theorem psd_of_re_quadratic_nonneg {J : Type} [Fintype J] (A : Matrix J J ℂ)
     (H : A.IsHermitian) (h : ∀ v : J → ℂ, 0 ≤ (star v ⬝ᵥ (A *ᵥ v)).re) :
     A.PosSemidef := by
   apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg H
   intro v
-  exact Complex.nonneg_iff.mpr ⟨h v, (quadratic_im_zero A H v).symm⟩
+  exact Complex.nonneg_iff.mpr ⟨h v, (H.im_star_dotProduct_mulVec_self v).symm⟩
 theorem sorted_eigenvalues_antitone {J : Type} [Fintype J] [DecidableEq J] {n : ℕ}
     (hc : Fintype.card J = n) (A : Matrix J J ℂ) (H : A.IsHermitian) :
     Antitone ((fun i : Fin n => H.eigenvalues₀ (Fin.cast hc.symm i))) := by

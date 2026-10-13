@@ -341,10 +341,8 @@ private theorem psd_of_minors (a b c d e f : ℝ) (ha : 0<a) (hdel : 0<a*d-b^2)
   simpa only [Matrix.conjTranspose_eq_transpose_of_trivial] using hD.mul_mul_conjTranspose_same (lower a b c d e)
 private theorem leading_minor_nonneg (a b c d e f : ℝ) (h : (symm a b c d e f).PosSemidef)
     (ha : 0<a) : 0≤a*d-b^2 := by
-  have hh := h.dotProduct_mulVec_nonneg ![b,-a,0]
-  simp [symm,Matrix.mulVec, dotProduct, Fin.sum_univ_three] at hh
-  have ht : 0 ≤ a*(a*d-b^2) := by nlinarith [hh]
-  exact nonneg_of_mul_nonneg_right ht ha
+  have hh := (h.submatrix (Fin.castLE (by decide) : Fin 2 → Fin 3)).det_nonneg
+  simpa [symm, Matrix.det_fin_two, Matrix.submatrix, Fin.castLE, sq] using hh
 private theorem zero_leading_minor (a b c d e f : ℝ) (h : (symm a b c d e f).PosSemidef)
     (hz : a*d-b^2=0) : b*c-a*e=0 := by
   have hv : star ![b,-a,0] ⬝ᵥ (symm a b c d e f *ᵥ ![b,-a,0])=0 := by
@@ -466,8 +464,7 @@ namespace D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralFeasiblePerturbat
 open D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralFeasiblePerturbation.ThreeByThree
 private theorem det_zero_of_kernel (A : Matrix (Fin 3) (Fin 3) ℝ) (p : Fin 3 → ℝ)
     (hp : p≠0) (hk : A *ᵥ p=0) : A.det=0 := by
-  by_contra hd
-  exact hp (Matrix.mulVec_injective_of_det_ne_zero hd (by simpa using hk))
+  exact Matrix.exists_mulVec_eq_zero_iff.mp ⟨p, hp, hk⟩
 private theorem eventually_psd (a b c d e f : ℝ → ℝ)
     (haC : Continuous a) (hbC : Continuous b) (hcC : Continuous c)
     (hdC : Continuous d) (heC : Continuous e) (hfC : Continuous f)
