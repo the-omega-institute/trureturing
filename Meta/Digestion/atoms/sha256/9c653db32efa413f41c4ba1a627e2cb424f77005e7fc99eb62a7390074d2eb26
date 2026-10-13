@@ -1,0 +1,38 @@
+## —Action-closed quotients, task controllers, and source-uniform kernels
+
+> **Machine contract.** This is a `generic-v1` theory reference volume. The
+> definitions and results below are ordinary mathematical prose, not Lean
+> declarations. They make no kernel-verification claim. The volume is an
+> append-only source and ends with an append anchor.
+
+**来源。** AI-authored theory by a Codex implementation worker. This volume
+is a repository-derived mathematical exposition, with prior methods cited
+below; it is not user-provided original theory. It is a pure theory reference
+and makes no Lean/kernel-verification claim.
+
+[FIB Relational Fiber Calculus · Continuation IV](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md)
+supplies an executable ExactChart boundary and a conditional resource
+feasibility contract, read with its published §§46--50 corrections. Its
+historical §44.2 mixed-budget wording is superseded there by finite-profile
+feasibility, uniform source-total history certificates, and the corresponding
+weighted-threshold restriction. Sections 58.18--58.21 reuse this corrected
+interface; §58.20 gives one explicit sufficient finite-family implementation.
+The next distinction is between
+two different minimization problems. A quotient that predicts every allowed
+future action is canonical;
+a controller minimized for one target may choose one of several incompatible
+strategies and therefore need not have a unique coarsest quotient.
+
+[FIB Atom Recursive Holographic Boundary Geometry · Continuation IV, §107](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#107-root-readout-action-closure-and-future-memory)
+gives a finite-dimensional linear boundary for intervention words followed
+by passive evolution and readout, in the order $C_\ell A^jT_w$. It does not
+cover arbitrary interleavings of passive evolution and intervention;
+[Relational II, §§44.5--44.7](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#44-固定原生菜单的边界因子化与交错动作修正)
+supplies the mixed action-word contract used for that purpose here.
+Neither linear contract transports resource tails. This volume first treats
+deterministic finite contracts, then states a source-uniform record-law
+extension under additional measurability and field-factorization assumptions.
+Section 59 uses the source-specific signed occurrence states and fixed-time
+root-readout gap of Holographic IV §110 to derive a necessary noise and
+absolute-precision boundary for predicting that comparison future.
+

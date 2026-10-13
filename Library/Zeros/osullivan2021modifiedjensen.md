@@ -57,7 +57,7 @@ $$
 These are O'Sullivan's coefficients without an additional factor $8$.
 The [actual theta correspondence](holland2026jensenwedge.md#correspondence-with-the-actual-theta-coefficients)
 already supplies $\Gamma_k=\Xi(0)k!a_k$, with $a_0=1$, from the complete
-kernel in [Romik's owning note](romik2021orthogonal.md). That correspondence
+kernel in [Romik's owning note](../Analytic/romik2021orthogonal.md). That correspondence
 and the repository's normalization and primitive interfaces are reused.
 
 ## The complete zero-shift family already suffices
