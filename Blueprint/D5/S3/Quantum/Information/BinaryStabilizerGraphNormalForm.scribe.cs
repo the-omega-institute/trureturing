@@ -67,7 +67,7 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
     {
         Formula factors = Seq(LambdaLower, Sp, Typed(V("i"), Fin(V("N"))), Sp, Mapsto, Sp,
             Qualified("SMul", "smul", Apply(V("r"), V("i")), Apply(V("A"), V("i"))));
-        Formula coefficient = Seq(Sub(Prod, Seq(V("i"), Sp, InMacro, Sp, Fin(V("N")))),
+        Formula coefficient = Seq(new Formula.Subscript(Prod, Seq(V("i"), Sp, InMacro, Sp, Fin(V("N")))),
             Sp, Apply(V("r"), V("i")));
         return All(V("N"), Nat, All(V("r"), Arrow(Fin(V("N")), Complex),
             All(V("A"), Arrow(Fin(V("N")), Matrix(Fin(D(2)), Complex)),
