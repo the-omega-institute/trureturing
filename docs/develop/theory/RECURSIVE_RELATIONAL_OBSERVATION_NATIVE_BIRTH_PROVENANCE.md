@@ -3412,3 +3412,746 @@ program extraction and physical resource certification remain outside
 it. No additional update or observation service is supplied.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 14. Paid common-start preparation and code-only two-phase feasibility
+
+### 14.1 The full fiber and the changed pre-cut permission
+
+**Assumption 14.1 (same-register paid preparation and actual handoff).**
+Fix precisely the nonempty full actual fiber $\mathcal U_*$,
+class valuations $\mathcal X_*$, attained root chart $\Theta_*$ and
+whole predecessor target $F(u)=G_*(\theta_x)$ of Definitions
+10.1--10.3 and Theorem 10.4. Write $H_*$ for the fixed reached-hole
+support denoted $H$ there; $H$ below is a preparation-state budget.
+Retain the finite ordered source grammar,
+the single authenticated actual update $t=\rho u$, every repetition,
+different-class disequality and absent-cut guard, and every finite
+origin in that fiber. Keep the complete $P,R_*$ lawfully acquired.
+There is no restriction on source size, depth, rank or hidden values.
+
+Replace only the full-value-possession premise of Assumption 10.6:
+a new preparation begins from one fixed source-independent state,
+depending on $P,R_*$ and common installed tables. Neither the current
+tree nor any class subtree value is an input to that state. Any archive
+used to acquire the complete row is inaccessible to this preparation.
+Preparation is now explicitly permitted to invoke the same authenticated
+four-reply native register before the access cut. Every finite word is
+legal. The register is stationary throughout preparation, handoff and
+reading; there is no intervening update, change of root or source
+replacement. This pre-cut permission is an added operational premise,
+not a consequence of the old acquired-value contract.
+
+Preparation obtains its source distinctions only from these actual
+paid replies. It reaches a complete code latch, actually exports its
+code and stops. A supplied paid handoff makes all preparation state and
+material inaccessible, and lawfully enters the reader with that code
+as its entire mutable accessible state. The old stop is absorbing;
+reader entry is a new supplied invocation, not an action by a stopped
+producer. Authentication and public entry controls select no origin
+within $\mathcal U_*$. The reader has the common row, cut and installed
+tables, but no other source-bearing field: no values, archive, handle,
+pointer, transcript, acquisition order, counter, timing, code length,
+meter or source-dependent table selection. Inaccessible material need
+not be physically erased.
+
+The actual handoff transfers exactly one complete reader-state code.
+No source call or source-dependent computation intervenes between the
+latch and entry. Export, isolation and lawful entry are paid services,
+with their own declared prices, even for a constant code and an immediate
+reader halt. No generation, equality, image, provenance or inverse
+port is supplied. The ordinary inverse parser and complete output rows
+remain common finite mathematical data, not physical inverse actions.
+
+**Definition 14.2 (terminal-latch convention and seven upper budgets).**
+Choose one finite reader alphabet
+$\mathcal K=Q\sqcup Z$ and exactly the shared stationary tables
+$\operatorname{addr}_R,\operatorname{next}_R,\operatorname{out}$
+of (NBP.12.1). Each running state has one fixed finite native word,
+each transition depends only on its actual reply, and each halt has
+one fixed whole predecessor-row output. There is no after-entry
+output decoder or auxiliary register.
+
+Choose a nonempty installed set of codes $S\subseteq\mathcal K$ and
+a disjoint preparation alphabet
+
+$$
+\mathcal B=V\sqcup\widehat S,\qquad
+\widehat S=\{\widehat s:s\in S\},
+\qquad b_0\in\mathcal B,
+\tag{NBP.14.1}
+$$
+
+with one common initial state $b_0$ and fixed tables
+
+$$
+\operatorname{addr}_P:V\longrightarrow\{L,R\}^*,
+\qquad
+\operatorname{next}_P:V\times\mathcal A\longrightarrow\mathcal B,
+\qquad
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+\tag{NBP.14.2}
+$$
+
+At $v\in V$, one actual native invocation at
+$\operatorname{addr}_P(v)$ supplies the reply for
+$\operatorname{next}_P$. A terminal state $\widehat s$ is an atomic
+latch holding the complete code $s$. It makes no native call.
+The last preparation transition replaces the running state by this
+latch; if $b_0$ is a latch its code is a common constant. The latch
+has no additional continuing preparation control. A fixed paid
+handoff transfers that actual code and enters precisely state $s$,
+with the preparation alphabet thereafter inaccessible.
+
+This convention counts the live preparation control and the code
+latch in one alphabet, rather than supplying a separate free code
+register. During preparation the whole mutable configuration is one
+member of $\mathcal B$; in a terminal configuration it includes the
+latched code. During reading it is one member of $\mathcal K$.
+The phase and terminal status are part of these disjoint tagged
+configurations, not an uncharged mutable phase bit. There is no
+simultaneously live preparation/latch pair hidden behind a state
+name: the terminal latch replaces preparation control. A realization
+that retains both independently must charge those joint configurations
+and is outside this convention unless separately related to it.
+The handoff's physical transient storage and control have their own
+service prices; their realization is not inferred from the abstract
+replacement operation.
+
+All installed members of $\mathcal B$ and $\mathcal K$ count,
+including unused running states, unused latches, unused halts and
+different halts with the same output. Preparation latches carry literal
+reader-state codes, so their transfer uses inclusion into $\mathcal K$,
+not a code-dependent decoder. Fixed addresses, all four transition
+entries, latch labels and whole-output entries are installed common
+table data. The two cardinality budgets below charge every installed
+state record; the representations of these tables, words and complete
+rows, installation work and local transition work have separate prices.
+These cardinalities are not a claim about total physical bits.
+
+For each actual $u$, the preparation must terminate at some
+$\widehat{\tau(u)}$. Its genuinely generated and actually exported
+code is $\tau(u)\in S$. Starting the reader at that code must terminate
+with $F(u)$. If $v_1,\ldots,v_a$ and $w_1,\ldots,w_b$ are the respective
+running-state visits of this same execution, put
+
+$$
+\begin{aligned}
+q_P(u)&=a,&
+\ell_P(u)&=\sum_{i=1}^{a}|\operatorname{addr}_P(v_i)|,\\
+q_R(u)&=b,&
+\ell_R(u)&=\sum_{j=1}^{b}|\operatorname{addr}_R(w_j)|.
+\end{aligned}
+\tag{NBP.14.3}
+$$
+
+Every invocation is charged, including a repeated word, absence,
+a word previously invoked in the other phase and the empty word.
+The empty word costs one call and zero literal letters.
+No caching discounts a later invocation. An immediate latch or halt
+has zero native calls and zero literal sum in its phase. The one
+actual handoff still occurs and is charged separately.
+
+For integers $r,H,K\ge1$ and $p,\ell_P,q,\ell_R\ge0$, write
+
+$$
+\mathbf b=(r,H,K,p,\ell_P,q,\ell_R).
+\tag{NBP.14.4}
+$$
+
+Let $\mathsf{PaidNative}_*(\mathbf b)$ mean joint existence of the
+two installed tables, common start and actual handoff just specified,
+under Assumption 14.1, such that
+
+$$
+\begin{gathered}
+|\tau[\mathcal U_*]|\le r,\qquad
+|\mathcal B|\le H,\qquad|\mathcal K|\le K,\\
+q_P(u)\le p,\quad\ell_P(u)\le\ell_P,\quad
+q_R(u)\le q,\quad\ell_R(u)\le\ell_R
+\qquad(u\in\mathcal U_*).
+\end{gathered}
+\tag{NBP.14.5}
+$$
+
+The scalar $\ell_P$ or $\ell_R$ on the right is the corresponding
+upper budget; the argumented symbol on the left is the per-source
+sum. The actual export range can be smaller than the installed
+latch set. Neither is a supplied coloring of unknown sources.
+The budgets concern a coupled execution: the reader's initial state
+is what this preparation actually generates on this same source.
+The installed tables and all seven upper bounds are chosen jointly.
+
+The terminal-latch convention is sufficient to express code-only
+stopping preparation without an independent surviving producer state.
+It does not assert that every physical preparer can attain that
+convention or that the two cardinalities combine by addition or
+maximum into physical memory. Table storage, fixed output storage,
+authentication, row acquisition, pre-cut permission, native service,
+export, isolation and entry retain their separately paid premises.
+
+### 14.2 The finite root task has a generated code
+
+**Definition 14.3 (coupled root-table feasibility).** Reuse exactly
+$\Theta_*$, $G_*$ and the shortest reached occurrences $a_d$ and
+prices $\lambda(d)=|a_d|$ of (NBP.13.1); canonical class names are
+unchanged. A root preparation and root reader have precisely the
+alphabets, latches, common start, transitions and whole outputs of
+Definition 14.2, except that the two running-state address maps become
+
+$$
+\operatorname{coord}_P:V\longrightarrow D,\qquad
+\operatorname{coord}_R:Q\longrightarrow D.
+\tag{NBP.14.6}
+$$
+
+An invocation at either running state returns the corresponding
+$\theta(d)$ on input $\theta\in\Theta_*$. It costs one call and
+$\lambda(d)$ literal letters. Repeat invocations are charged anew.
+The fourth transition entry is installed and counted, but absence
+is unattained at these reached class roots. There is no constant-query
+port, silent local control phase or arbitrary initial coloring.
+
+The preparation starts at the same $b_0$ for every attained input.
+Its terminal latch defines the induced code $c(\theta)\in S$.
+Only after that run and its paid code transfer does the root reader
+start at $c(\theta)$. Let
+$\mathsf{PaidRoot}_{*,\lambda}(\mathbf b)$ require correctness
+$G_*(\theta)$, range $|c[\Theta_*]|\le r$, installed cardinalities
+$H,K$, and the separate call and literal upper bounds in
+(NBP.14.5), now computed along these two runs on this one $\theta$.
+The root task is a finite comparison presentation; it adds no new
+port to the actual source.
+
+If $D=\varnothing$, both coordinate maps force $V=Q=\varnothing$.
+The singleton attained empty type and its whole target admit one
+common code latch and one complete-output halt, with zero native
+costs in both phases and one actual paid handoff. This is within
+every budget vector in (NBP.14.4).
+
+### 14.3 The same-budget correspondence on both shared graphs
+
+**Theorem 14.4 (paid common-start full-fiber correspondence).**
+Under Assumption 14.1 and the terminal-latch convention, on every
+nonempty full actual fixed-row one-image fiber, for every vector
+$\mathbf b$ of (NBP.14.4),
+
+$$
+\mathsf{PaidNative}_*(\mathbf b)
+\quad\Longleftrightarrow\quad
+\mathsf{PaidRoot}_{*,\lambda}(\mathbf b).
+\tag{NBP.14.7}
+$$
+
+Necessity weakly decreases each of the seven upper resources.
+Sufficiency preserves the root witness's installed alphabets,
+actual code range, phase call counts and phase literal sums.
+Both directions retain one actual paid code-only handoff.
+The comparison is joint table existence, not preservation of an
+arbitrary prescribed encoder, graph or native trace.
+
+**Proof, coupled contraction of exterior-constant states.**
+Take a feasible native pair. Let $B_R\subseteq Q$ and $B_P\subseteq V$
+be the installed states whose words, traversed in the fixed exterior
+$C_*$, never enter a reached hole. Their replies are fixed on the
+entire fiber, including visible ancestors, exterior leaves, blocked
+cones and absent extensions. Use the finite forced-successor map
+of Theorem 13.2 on the reader:
+
+$$
+g_R:\mathcal K\longrightarrow
+\mathcal K'=(Q\setminus B_R)\sqcup Z.
+\tag{NBP.14.8}
+$$
+
+It is the identity outside $B_R$, follows constant successors to
+their first exit, and sends a forced-cycle basin to a fixed existing
+halt. Such a halt exists by nonempty-fiber termination. A forced
+cycle cannot be reached from any actually generated code on its
+source: its fixed replies would prevent that required reader from
+terminating. Theorem 13.2's static substitution therefore applies
+to every actual reader path, regardless of how its initial code
+was prepared. It removes only constant-state visits from that path.
+
+The acquired-value encoder replacement used in §13 is not available
+for free here. Instead set
+
+$$
+S'=g_R[S],\qquad
+\mathcal B'=(V\setminus B_P)\sqcup\widehat{S'}.
+\tag{NBP.14.9}
+$$
+
+Every old terminal latch $\widehat s$ is replaced by
+$\widehat{g_R(s)}$; equal new codes share one latch.
+This is a common replacement of installed terminal labels.
+It makes the new preparation generate $g_R(\tau(u))$ by its own
+transitions, rather than asking an external encoder to supply it.
+
+Define a fixed map $g_P:\mathcal B\to\mathcal B'$.
+At a surviving running state it is the identity.
+At an old latch it is the replacement just specified.
+Starting in $B_P$, follow the original constant-reply successors
+until the first state outside $B_P$, and apply these rules there.
+For a constant cycle and its basin, choose any fixed latch in
+$\widehat{S'}$. This alphabet is nonempty. No required preparation
+can reach such a basin: its initial state is common, its replies
+within the basin are fixed, and on any source that reached it the
+preparation would fail to terminate. Finiteness decides each
+successor chain of this particular installed graph.
+
+Install the reduced preparation with the common start
+$g_P(b_0)$ and transition table
+
+$$
+\operatorname{next}'_P(v,z)
+ =g_P(\operatorname{next}_P(v,z))
+ \qquad(v\in V\setminus B_P).
+\tag{NBP.14.10}
+$$
+
+Keep each surviving preparation word. Install the reduced reader
+with its surviving words, original whole halting outputs and
+$\operatorname{next}'_R(w,z)=
+g_R(\operatorname{next}_R(w,z))$.
+All these substitutions are in common fixed tables.
+The latch code already is $g_R(s)$; no live decoder or silent
+post-entry step executes either map.
+The new common start is a fixed state, not a source-dependent value.
+
+For one fixed actual $u$, delete $B_P$-visits from its finite
+preparation path and rename its terminal latch. Equation
+(NBP.14.10) connects exactly the surviving visits, ending at
+$\widehat{g_R(\tau(u))}$. The actual handoff exports that generated
+code. The reduced reader then has precisely the original reader
+path on this same $u$ with its $B_R$-visits deleted, beginning after
+any forced initial segment. It ends at the same complete halt.
+This is the static path argument of Theorem 13.2 applied with the
+coupled latch replacement, not independent choice of two encoders.
+
+Consequently, with $\tau'(u)=g_R(\tau(u))$,
+
+$$
+\begin{gathered}
+|\mathcal B'|\le|\mathcal B|,\qquad
+|\mathcal K'|\le|\mathcal K|,\qquad
+|\tau'[\mathcal U_*]|\le|\tau[\mathcal U_*]|,\\
+q'_P(u)\le q_P(u),\quad \ell'_P(u)\le\ell_P(u),\qquad
+q'_R(u)\le q_R(u),\quad \ell'_R(u)\le\ell_R(u).
+\end{gathered}
+\tag{NBP.14.11}
+$$
+
+Each cost inequality is deletion of nonnegative summands on the
+same actual source's phase path. Every unused surviving state and
+latch still counts. Arbitrary completions of forced-cycle basins
+are unreachable on required runs. The construction removes
+constant queries by changing the common start, transitions and
+latches; it does not perform free runtime transitions.
+
+**Proof, one padding family for the two remaining menus.**
+Assume $D\ne\varnothing$. Every surviving running word enters a
+reached hole. Let $L$ be the maximum of zero and the lengths of
+all installed surviving words in both phases, including unused
+states. Proposition 10.5 at this single $L$ supplies actual finite
+origins $u^\theta$ for every $\theta\in\Theta_*$.
+Their current trees retain the complete row, all repetitions,
+disequalities and absence guards. Branch class values have minimum
+leaf depth greater than $L$, and
+$F(u^\theta)=G_*(\theta)$.
+This bounds the chosen menus, not the source domain.
+
+At either phase's state, write its fixed word as $v=pw$ where
+$p\in H_*$ is the first entered hole, and put $d=[p]$.
+Reuse (NBP.12.5) and Proposition 10.5:
+
+$$
+r_{\rho u^\theta}(v)=h_v(\theta(d)),\qquad
+h_v(z)=
+\begin{cases}
+z,&w=\varepsilon,\\
+\mathsf{absent},&w\ne\varepsilon,\
+                  z\in\{\alpha,\beta\},\\
+\mathsf{branch},&w\ne\varepsilon,\
+                  z=\mathsf{branch}.
+\end{cases}
+\tag{NBP.14.12}
+$$
+
+Extend $h_v$ arbitrarily at the unattained root argument
+$\mathsf{absent}$. At that state install coordinate $d$ and
+replace its transition on $z$ by its reduced native transition
+on $h_v(z)$. Do this on both installed graphs, keeping
+$\mathcal B',\mathcal K'$, their latches, the common start and
+all whole outputs.
+
+Fix one $\theta$. State induction makes the root preparation
+identical to the reduced native preparation on this one actual
+$u^\theta$, hence it really reaches the latch with code
+
+$$
+c(\theta)=\tau'(u^\theta).
+\tag{NBP.14.13}
+$$
+
+This equality describes the generated code; it is not permission
+to install $c$ as a free source-dependent start.
+Both paired readers then start at this same code, and a second
+state induction identifies their paths and complete outputs.
+Using a different padding representative for the reader would
+not justify this step. Here both menus were padded together and
+both paths concern the same stationary realization.
+
+For every corresponding call in either phase, the shortest
+physical occurrence supplier gives
+
+$$
+\lambda(d)=|a_d|\le |p|\le|pw|=|v|.
+\tag{NBP.14.14}
+$$
+
+Calls agree along each compared path. Summing this inequality
+separately over its preparation and reader visits, and then using
+(NBP.14.11), proves the respective upper bounds $p,\ell_P,q,\ell_R$.
+The generated root code range is at most the reduced actual range
+because (NBP.14.13) uses actual sources. Installed state bounds
+are those of (NBP.14.11).
+No history unrolling or state cloning is used. Shared states,
+converging paths and cycles in the union of different-source paths
+obey one state-local transition map.
+This proves native-to-root necessity.
+
+**Proof, actual paid preparation on every original origin.**
+Given a feasible root pair, replace every coordinate $d$, in both
+phases, by the native shortest reached occurrence $a_d$.
+Keep the entire installed alphabets, common start, transition
+tables, terminal latch codes and whole halting outputs.
+For every original $u_x\in\mathcal U_*$, every such occurrence
+is reached and its actual native reply is $\theta_x(d)$.
+Proposition 10.2 puts this attained type in $\Theta_*$.
+
+Induction on the preparation states therefore gives its root
+path on $\theta_x$, one genuine paid invocation at each running
+visit, and exactly the root path's call count and literal sum.
+It ends at the actual latch $\widehat{c(\theta_x)}$.
+No class value or complete source was supplied to compute that
+code, and no computation inspects an unacquired value.
+Assumption 14.1 then supplies the one actual charged export,
+isolation and lawful entry into state $c(\theta_x)$.
+The reader has only this state and common data.
+
+Reader-state induction gives the root reader path on $\theta_x$
+with the same separate costs and whole output
+$G_*(\theta_x)=F(u_x)$ by Theorem 10.4.
+The output includes inverse exterior, canonically restricted
+partition, all class disequalities and all predecessor blocking
+guards. This holds for every original finite origin, without
+a padding restriction. Every root type is attained, so the
+actual code range is exactly $c[\Theta_*]$.
+The installed cardinalities are unchanged and each coordinate
+call has literal cost exactly $\lambda(d)$.
+
+If $D=\varnothing$, the common constant target and the one-latch,
+one-halt construction of Definition 14.3 give both feasibility
+statements for all allowed vectors. It also performs the actual
+paid handoff. No nonexistent coordinate is queried.
+This completes all cases of (NBP.14.7). $\square$
+
+### 14.4 The existing finite synthesis consumer with a preparation graph
+
+**Corollary 14.5 (finite criterion for the coupled budgets).**
+For finite $P,R_*$ with nonempty actual fiber and any vector
+$\mathbf b$ of (NBP.14.4), the bounded joint feasibility in
+(NBP.14.7) is decidable. A positive finite certificate specifies
+the common-start native preparation and state-only reader on
+the entire original fiber, conditional on Assumption 14.1.
+The code is generated by preparation, rather than selected
+from an independently supplied coloring.
+
+**Proof.** Compute the attained chart and each whole target using
+Proposition 10.2 and Theorem 10.4, and compute $\lambda$ by
+(NBP.13.1). Reuse Corollaries 12.7 and 13.3's finite inventory
+of reader state sets of size at most $K$, running/halting
+partitions, class-coordinate labels, four-reply transitions
+and whole halt outputs in $Y=G_*[\Theta_*]$.
+There is no need to enumerate arbitrary native words.
+
+For each reader candidate, choose a nonempty installed
+$S\subseteq\mathcal K$. Add a preparation running set $V$
+with $|V|+|S|\le H$, latches $\widehat S$, a single start
+in $V\sqcup\widehat S$, coordinate labels $V\to D$ and
+four-reply transitions into that same preparation alphabet.
+All choices are finite up to state renaming.
+This replaces the arbitrary initial-coloring choice of the
+earlier consumer by a counted common-start preparation graph;
+it does not assume that every coloring can be prepared.
+
+For each $\theta\in\Theta_*$, follow the preparation from its
+common start. At each running visit add one call and its
+coordinate price. Require a latch within $p$ calls and sum
+at most $\ell_P$. From that reached latch's literal reader
+code, follow the candidate reader, requiring the correct
+whole halt within $q$ calls and sum at most $\ell_R$.
+A still-running state at its phase's call limit fails even
+when its coordinate price is zero. Record the generated codes
+over all attained inputs and require their range at most $r$.
+Installed unused states and latches count against $H,K$;
+union-graph cycles are not excluded unless a required run
+actually fails.
+
+The bounded phase simulations terminate this finite test.
+Every feasible root pair occurs in this inventory after
+renaming. As in Corollary 12.7, the output of an unused
+reader halt may be replaced by any fixed member of nonempty
+$Y$, without changing any required path or resource.
+Conversely a passing pair is precisely Definition 14.3.
+Theorem 14.4 then proves completeness for all native pairs
+and installs a passing pair by actual queries at $a_d$ in
+both phases. Necessity is what makes this finite root
+inventory exhaustive despite arbitrary native finite words.
+
+This is an additional coupled use of the existing shared-table
+consumer. It is not an implementation enumerator, a generic
+automata minimization theorem, or an extraction procedure for
+arbitrary program text with computed addresses or unbounded
+workspace. $\square$
+
+### 14.5 Preparation cannot manufacture a free initial coloring
+
+**Proposition 14.6 (zero-information preparation obstruction).**
+Let $m=|F[\mathcal U_*]|=|G_*[\Theta_*]|\ge1$.
+In Definition 14.2, zero preparation calls force one actual
+export value, independently of the permitted $r,H,K$.
+If both phase call budgets are zero, feasibility is exactly
+$m=1$, for every $r,H,K\ge1$ and arbitrary nonnegative
+literal upper budgets. If the root is not cut, zero
+preparation literal budget also forces a constant actual code,
+even with an arbitrary finite preparation-call upper budget.
+
+More generally, if two actual sources give identical replies
+along the common preparation path, they reach the same code.
+If their reader replies from that code also agree along the
+reader path, a correct pair must give them the same whole target.
+The corresponding statement holds on the root task.
+
+**Proof.** At zero preparation calls the common initial state
+must already be a terminal latch on the nonempty domain;
+otherwise a required run invokes its running-state word.
+Its code is fixed. At zero reader calls the common exported
+code must already be a reader halt and gives one fixed output.
+Thus correctness on the entire fiber requires $m=1$.
+Conversely its one whole target, one common code latch and
+one fixed-output halt suffice, with zero native costs and
+one actual paid handoff.
+
+With the root uncut, the complete fixed exterior determines
+the current root constructor on every source of the fiber.
+A zero literal sum allows only empty-word invocations.
+Their replies are therefore constant. Induction from the
+common start makes all preparation state paths identical
+and their terminal code constant. Repeating a zero-length
+word costs another call but adds no distinction.
+
+For the general statement, determinism gives equal next
+states from equal current states and equal replies, first
+through preparation and then from the identical code
+through reading. A terminating identical reader path has
+one fixed whole output, so the targets must agree.
+This also proves the finite-root version.
+If the root is cut, prefix freedom gives
+$P=\{\varepsilon\}$ and the whole target is constant by
+Corollary 10.10; a zero-length call can then distinguish
+current root types but is still charged.
+These claims neither deny positive-information paid
+preparation nor transfer AG's different-port impossibility.
+$\square$
+
+**Proposition 14.7 (strict paid-preparation example on the entire
+one-right-hole fiber).** Use exactly Proposition 13.5's cut
+$P=\{R\}$, current exterior
+$\langle\beta,\square_R\rangle$, singleton class $d$ and
+whole targets $Y_0,Y_1$. In the coordinate order of
+(NBP.14.4), both vectors
+
+$$
+(2,3,2,1,1,0,0)
+\qquad\text{and}\qquad
+(1,1,3,0,0,1,1)
+\tag{NBP.14.15}
+$$
+
+are feasible on its entire original fiber.
+Any vector with $p=q=0$ is infeasible there, regardless of
+$r,H,K$. Even if both call upper bounds are positive,
+$\ell_P=\ell_R=0$ is infeasible for arbitrary $r,H,K$.
+
+**Proof.** Reuse, without selecting a finite subfiber,
+the supplier's exact description
+
+$$
+\mathcal U_*=\{\beta\}\cup
+ \{\langle\alpha,z\rangle:z\in\mathcal T\},
+\qquad
+F(\beta)=Y_0,\quad
+F(\langle\alpha,z\rangle)=Y_1.
+\tag{NBP.14.16}
+$$
+
+The current reply at $R$ is alpha precisely on origin
+$\beta$; every paired origin gives beta or branch.
+These are Proposition 13.5's full-fiber conclusions,
+and $\lambda(d)=1$.
+
+For the first vector, install two reader halts $z_0,z_1$
+with whole outputs $Y_0,Y_1$. Install preparation states
+$v,\widehat{z_0},\widehat{z_1}$ and common start $v$.
+At $v$ actually query $R$, go to $\widehat{z_0}$ on
+alpha and to $\widehat{z_1}$ on beta or branch; assign
+the unattained absence edge either existing latch.
+Preparation has one call and literal sum one.
+Its two codes are both actually attained.
+The actual handoff enters the corresponding reader halt,
+which needs no call. All three preparation/latch states
+and both reader halts are installed and counted.
+
+For the second vector, use the supplier's three-state
+reader: a state $w$ querying $R$ and the two whole halts,
+with the same reply-to-target rule. The preparation is
+the single common latch $\widehat w$. Its code is constant
+and its native costs are zero. After the actual paid
+handoff the reader pays one call and one literal letter.
+This constructs each asserted vector on every source
+in (NBP.14.16).
+
+The whole target has two values, so Proposition 14.6
+excludes $p=q=0$ even if the export upper capacity is
+large. For the last claim, all invoked words in either
+phase must be empty. The current root reply is branch
+on the entire fiber. Common-start preparation therefore
+generates one code, and the reader from it follows one
+identical deterministic path on every origin. Its one
+output cannot equal both $Y_0$ and $Y_1$.
+No additional numerical frontier is needed.
+
+In contrast, Corollary 12.6 permits the acquired-value
+producer to export the correct one of two whole-output
+halt codes with zero reader calls. It does not assign
+zero cost to acquiring those values and does not provide
+a zero-query common-start preparation. Here the first
+vector explicitly pays the necessary discriminating
+preparation query. $\square$
+
+### 14.6 Attribution and remaining operational boundaries
+
+**Mathematical citation 14.8 (source-specific suppliers and literature
+scope).** The source, four native replies and legality of every
+finite word are Definition 1.1 and
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+readout. The complete legal-row representation and its
+disequalities are supplied by
+[NativeCutFibers](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean),
+legal_values_row and rowFiberEquiv.
+Theorem 14.4 uses Proposition 10.2's attained chart,
+Theorem 10.4's whole predecessor target,
+Proposition 10.5's simultaneous actual image padding,
+Theorem 12.3's state-local hole-response function and
+Theorem 13.2's static constant-state contraction.
+Their source identity is the owning volume at revision
+[42868fd90886d99005c46c367ca502df5090c447](https://github.com/the-omega-institute/trureturing/blob/42868fd90886d99005c46c367ca502df5090c447/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md).
+
+The deeper padding supplier is
+[Retained Literal Root Depth Theorem 2.2](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md):
+finite free terms, a finite list of syntactically unequal
+negative pairs after fixed ground expansion, independently
+prescribed ranks, and one common minimum-leaf-depth lower
+bound. In the application of Proposition 10.5, its
+branch slots have rank one and hence are actual images;
+the constructed values retain repetitions and all required
+disequalities together. The image grammar and unique
+inverse are
+[Transport--Memory Completion (RA.2207)](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md).
+Shortest occurrence pricing is
+[Serial Joint Resource Frontier Lemma 3.4](RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md)
+and (NBP.13.1), without renaming any class.
+Corollaries 12.7 and 13.3 supply the finite reader-table
+inventory consumed by Corollary 14.5.
+
+Paid preparation itself is already present in
+[Retained Literal Root Depth Definition 4.3](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md)
+and its Theorem 4.4. That preparation pays for a full
+native traversal and computes a code, using the
+sourcewise finite acquisition of its Theorem 4.2.
+It has no uniform all-source traversal-cost bound.
+The sourcewise native acquisition theorem
+acquisition_foundation likewise supplies its own
+source-dependent trace, not a fixed finite preparation
+alphabet or the bounds in (NBP.14.5).
+The mathematical addition here is the bounded same-port
+two-phase correspondence with an induced initial code,
+a counted terminal latch and its coupled finite consumer.
+
+Classical state-associated output terminology is attributed
+to Edward F. Moore,
+*Gedanken-Experiments on Sequential Machines*, in
+*Automata Studies* (AM-34),
+[DOI:10.1515/9781400882618-006](https://doi.org/10.1515/9781400882618-006).
+This is bibliographic attribution only; no proposition
+from that paper is used. The Mohri weighted epsilon-removal
+and Bryant ordered acyclic graph precedents cited in
+Mathematical citation 13.6 are also not premises of this
+two-phase theorem. In particular no unread primary
+literature claim supplies preparation, export, state bounds
+or same-source coupling. The proofs here use the stated
+repository suppliers and ordinary finite path arguments.
+The composition is repo-derived and carries no claim of
+global novelty.
+
+**Assumption 14.9 (limits of operational interpretation).**
+The hypotheses of Assumption 14.1 must be provided for any
+physical application: lawful complete-row acquisition,
+fresh common-start pre-cut access to the same stationary
+register, installation of the selected tables, actual code
+export, complete isolation and lawful new entry.
+Theorem 14.4 is not a construction of those services.
+It preserves the declared abstract state-record and
+per-run native budgets, not table byte sizes, total
+physical memory, elapsed time, energy, fabrication,
+address generation or transient handoff workspace.
+Its fixed one-handoff convention does not quantify a
+physical write/erase instruction implementation.
+
+The additional faithful aligned generation-bit port,
+origin synchronization and protected latch of
+[Atomic Generation Acquisition §§9--11](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md)
+belong to that KBonacci source and action contract.
+They provide no port or preparation construction for
+this finite ordered-tree fiber. Its original-endpoint
+impossibility has different operations and cannot be
+transferred merely by identifying both tasks as recovery.
+
+The
+[paid core-return and menu re-entry result at its published source](https://github.com/the-omega-institute/trureturing/blob/4b808e6080d/Blueprint/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorLiteralController/ReturnMenu.md)
+retains the producer core and explicitly leaves full
+canonical Ready, live fresh service and COMPLETE/U
+unresolved. It does not discharge the code-only isolation
+or new-entry premise here.
+[Native Presburger decisions](https://github.com/the-omega-institute/trureturing/blob/4b808e6080d/Blueprint/D5/S0/Computability/NatPresburgerSolver.md)
+and
+[NoEvenCycleRank](https://github.com/the-omega-institute/trureturing/blob/4b808e6080d/Blueprint/D5/S3/Combinatorics/Graph/Walks/NoEvenCycleRank.md)
+supply no correspondence of native operations,
+preparation configurations or resource prices for
+(NBP.14.7); neither is used as a premise.
+
+An arbitrary fixed-coloring reader from §§10--13 becomes
+a witness here only if a preparation graph with the
+declared budgets actually generates its initial codes.
+An arbitrary program becomes a table witness only after
+its full configurations, fixed state-address rule,
+transitions and source inputs meet Definition 14.2.
+No program extraction, global numerical optimum or
+physical implementation follows from finite synthesis.
+The new propositions are ordinary mathematical
+statements and proofs; no Lean-kernel evidence is
+asserted for this two-phase layer.
+
+## 追加锚（本行以下为增补区）
