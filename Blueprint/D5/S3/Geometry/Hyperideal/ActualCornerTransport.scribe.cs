@@ -122,14 +122,49 @@ internal sealed class ActualCornerTransportDocument : IScribeDocumentDefinition
                         + " consequence of equality of actual labels and one shared length function; it assumes neither equal"
                         + " lengths on distinct labels nor independently optimized length assignments on different stars. It is"
                         + " conditional on such a common length assignment and does not construct a geometric realization.")),
-                    Paragraph(Text("The even-degree conclusion in original Section 101.2 additionally concerns endpoint transport around a"
-                        + " complete actual normal circle. The corner slot opposite the target edge is not an endpoint of that edge;"
-                        + " an endpoint-resolved flag needs a second slot s different from r, selecting faceVertex(f,s). Changing to"
-                        + " the other containing face must preserve this SAME local endpoint, while the face map sends both r and s"
-                        + " through its SAME sigma. The local endpoint incidence and quotient-label identities are compatible with"
-                        + " this lift. Pair constancy alone does not identify the full-circle endpoint return, prove no endpoint"
-                        + " reversal, or identify its step count with the degree of the original triangulation. Those original"
-                        + " manifold and endpoint-return obligations remain separate from the transverse-pair application.")),
+                    Paragraph(Text("The conditional even-degree application in original Section 101.2 uses the entire actual occurrence fiber"
+                        + " O(e)={o in T x Fin(6):P(o)=e}. Its cardinality counts repeated axial slots separately. An endpoint choice c(o)"
+                        + " takes one of the two distinct local vertices in endpoints(o.edge). For every named actual face slot i=(x,r)"
+                        + " over e and every endpoint slot s different from r, it satisfies faceVertex(x.face,s)=c(edge(i)) implies"
+                        + " faceVertex(p(x).face,sigma(x)(s))=c(edge(J(i))). The same sigma carries both r and s. This coherence condition"
+                        + " is an additional hypothesis, expressed on actual endpoint germs rather than their global ideal-vertex labels.")),
+                    Paragraph(Text("For a containing face and endpoint slot s different from r, put third(r,s)=-r-s in Fin(3). The other face edge"
+                        + " through that endpoint is faceEdge(f,third(r,s)). At either endpoint of an unframed axial edge, the two"
+                        + " containing faces read respectively one A and one B. A genuine vertex permutation carries this incidence and"
+                        + " both endpoints together. Consequently, at every actual occurrence and either chosen endpoint, exactly one"
+                        + " containing-face flag reads A(t) and exactly one reads B(t). No equality of geometric lengths or global choice"
+                        + " of two colors is used.")),
+                    Paragraph(Text("Choose one actual edge a in the constant distinct pair Q(e). Let Gamma(e,a,c) consist of actual face and"
+                        + " endpoint flags ((t,f),r,s) with P(edge((t,f),r))=e, r different from s, faceVertex(f,s)=c(edge((t,f),r)), and"
+                        + " P(t,faceEdge(f,third(r,s)))=a. The unique a-facing flag at each occurrence makes projection Gamma(e,a,c) to"
+                        + " O(e) bijective. This projection retains both occurrences when the two axial slots of one tetrahedron have the"
+                        + " same global label.")),
+                    Paragraph(Text("Cross a flag by sending ((t,f),r,s) to (p(t,f),sigma(t,f)(r),sigma(t,f)(s)). Actual face relations preserve"
+                        + " the target global edge and the other-edge readout; endpoint coherence preserves the chosen endpoint."
+                        + " Compatibility makes crossing an involution of Gamma(e,a,c). A fixed flag would fix its whole face under p,"
+                        + " contradicting the fixed-point-free face pairing. Thus the graph joining each flag to its crossing partner has"
+                        + " exactly one neighbor at every vertex. Apply the pinned SimpleGraph.Subgraph.isPerfectMatching_iff and"
+                        + " IsPerfectMatching.even_card to its full subgraph. The resulting even cardinality of Gamma equals the"
+                        + " cardinality of O(e) through the same projection bijection.")),
+                    Paragraph(Text("A sufficient endpoint condition can be stated without a separately supplied cycle. Define an actual endpoint"
+                        + " relation on (o,v) by the named face steps"
+                        + " ((edge(i),faceVertex(i.face,s)),(edge(J(i)),faceVertex(p(i.face),sigma(i.face)(s)))) with s different from"
+                        + " i.slot. Require that its equivalence closure never relates two different genuine endpoints of the same"
+                        + " occurrence over e. Each actual paired-edge step lifts from either endpoint, using a slot s in that same face."
+                        + " The reverse named slot J(i) supplies the inverse step. Quotient exactness and the pinned"
+                        + " Relation.EqvGen.eqvGen_eq_reflTransGen therefore lift every path from a fixed representative to every"
+                        + " occurrence in O(e).")),
+                    Paragraph(Text("Choose a genuine endpoint at the representative. At each occurrence select an endpoint reached from it by a"
+                        + " lifted actual path. If two such paths give different endpoints, reversing one path and composing with the"
+                        + " other relates these two germs at that same occurrence, contrary to the no-reversal condition. In particular,"
+                        + " crossing any named actual face must give the selected target endpoint. This constructs the coherent c used"
+                        + " above and proves even degree under the stated actual no-reversal condition. The construction needs no finite"
+                        + " normal-circle enumeration; finiteness enters the perfect-matching count.")),
+                    Paragraph(Text("An explicit tetrahedron orientation certificate suffices for the no-reversal condition. With increasing faceVertex order, choose eps(t) in {+1,-1} and require eps(t)(-1)^f sign(sigma(t,f)) = -eps(tprime)(-1)^g for every actual paired face p(t,f)=(tprime,g). The omitted-vertex factors are essential: requiring every three-slot sigma to be odd would impose a different condition. This certificate is stated on the original numbered tetrahedra and actual face maps.")),
+                    Paragraph(Text("On all actual face-edge slots use the crossing J and the switch K to the other containing face of the same local edge. Each is a fixed-point-free involution. Reuse the existing finite flag-orientation result to choose a normal-direction sign n with n(J(i))=-n(i) and n(K(i))=-n(i). This step requires no edge coloring, endpoint order, global label condition or supplied normal-circle enumeration. The ACT slot table is used throughout; the differently ordered EdgeStarTransitions face slots are not identified without conjugation.")),
+                    Paragraph(Text("For i=((t,f),r), let v=faceVertex(f,r) be the opposite corner, and let u,w be the two distinct local endpoints of edge(i). Choose their order so that eps(t) sign[f,v,u,w]=n(i). Exactly one order satisfies this equation. The K move exchanges the first two vertices and negates n, so this chosen endpoint order is independent of the containing-face flag. Under J the same sigma transports the opposite slot and both endpoint slots; the orientation certificate and the sign change of n make the transported endpoint order satisfy the target equation.")),
+                    Paragraph(Text("Equivalently, the chosen endpoint readout distinguishes the two germs of each occurrence and is preserved by every named actual face step. Equality of that readout is reflexive, symmetric and transitive, hence is preserved by the full equivalence closure of the actual endpoint relation, including loops, parallel maps and repeated occurrences. A closed path therefore cannot exchange the two germs. For the original distinct transverse-label frame, this gives the coherent c and the even cardinality of the complete occurrence fiber by the perfect-matching application above. The frame and actual-label hypotheses remain premises of the parity conclusion.")),
+                    Paragraph(Text("The geometric source bridge remains separate: an independently defined orientation of the same actual glued realization must provide the tetrahedron signs and the displayed face equation. This is not obtained by defining orientability to mean the existence of that certificate. The application does not identify the edge neighborhood with an annulus or exclude a Mobius neighborhood directly from the original manifold condition, and it does not by itself close original Section 101.2. Nor does it assert that arbitrary even-degree triangulations admit the original framed label pattern.")),
                     Paragraph(Text("The transport and linear image, dimension and span applications assume no angle positivity, edge-degree bound, link-surface condition or common geometric length. The strictification application adds precisely the initial positivity, nonnegative deficit and positive component-total conditions above. The dimension counts real linear angle directions with fixed M and Q; it does not assert that arbitrary changes preserve angle inequalities. These results establish neither the link Euler identity, the minimum-degree conclusion of Theorem 42.2, nor compatibility of geometric edge lengths."))),
                 DescribeRole.Theorem))));
 
