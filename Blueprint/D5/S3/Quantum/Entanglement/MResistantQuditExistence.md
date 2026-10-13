@@ -44,7 +44,7 @@ $$claim$$
 
 *Commentary.*
 
-Put k = N-m. Superpose the two bit branches of each k-element subset S. Every site records the common label S, while the branch bit is recorded only at sites in S. Tracing out m+1 sites meets every S and removes every off-diagonal entry; the diagonal marginal is a convex mixture of products of local basis projectors. After tracing out m sites, the kept k-element set supplies a surviving nonzero coherence. Exchanging one bit produces a zero diagonal, which the full-separability exchange theorem excludes. The same obstruction proves initial entanglement. The Lean construction embeds labels from Finset (Fin N) times Bool into Fin d by Fintype.equivFin; only k-element labels occur in its support.
+Put k = N-m. Superpose the two bit branches of each k-element subset S. Every site records the common label S, while the branch bit is recorded only at sites in S. Tracing out m+1 sites meets every S and removes every off-diagonal entry; the diagonal marginal is a convex mixture of products of local basis projectors. After tracing out m sites, the kept k-element set supplies a surviving nonzero coherence. Exchanging one bit produces a zero diagonal, which the full-separability exchange theorem excludes. The same obstruction proves initial entanglement. The Lean construction embeds labels from Finset (Fin N) times Bool into Fin d by Fintype.equivFin; this full carrier has cardinality 2^(N+1), and only k-element labels occur in its support.
 
 ## References
 

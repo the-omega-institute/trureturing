@@ -60,4 +60,3 @@ Write rho as a convex sum of products of local density matrices. All terms on th
 - Truth anchor: `D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.separable_exchange_zero`
 - Dependency: [D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence](LocalObservationPartialTraceEquivalence.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
-- Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)

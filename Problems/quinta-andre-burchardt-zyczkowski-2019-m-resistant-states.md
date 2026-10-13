@@ -28,13 +28,13 @@ The source leaves existence in some local dimension open for the full admissible
 
 ## Gap
 
-The construction has local dimension $d=2\binom{N}{m}$. The source conjecture asks only for existence in some dimension, so this closes its quantified claim. The least possible local dimension is not determined here. Qubit constructions for $m>(N-2)/2$ and the minimal local dimension remain open.
+The kernel-checked construction in `MResistantQuditExistence.result` uses the full local carrier `Finset (Fin N) × Bool`, carried to `Fin d`, with $d=2^{N+1}$. The source conjecture asks only for existence in some dimension, so this closes its quantified claim. The least possible local dimension is not determined here. Qubit constructions for $m>(N-2)/2$ and the minimal local dimension remain open.
 
 The literature screen in preregistration #15010 is bounded to the cited source, Zhang et al. (2025), Han et al. (2026), and its recorded searches; it supports `not-found-in-searched-scope` and does not assert exhaustive worldwide priority. The escape audit is unfinished under issue [#15589](https://github.com/the-omega-institute/trureturing/issues/15589). Its concrete gap is a faithful dependent-family registration with full source reconstruction and equivalence bridge, actual-positive law, whole-family variation, independent sensitivity, and observational-dependence evidence. The delivered-head DTR reading is `DTR-Unregistered` (Observe) for `separable_exchange_zero` and `result`; no `declared_validated` registration is claimed.
 
 ## Route
 
-Let $k=N-m$. Encode each $k$-subset $S$ together with a bit. Every site records the common subset label, and the bit is recorded only at sites in $S$. An explicit equivalence embeds these labels into a finite local basis of size $d=2\binom{N}{m}$. The state is the uniform superposition of the resulting distinct product-basis configurations.
+Let $k=N-m$. Encode each $k$-subset $S$ together with a bit. Every site records the common subset label, and the bit is recorded only at sites in $S$. The local carrier is `Finset (Fin N) × Bool`, and `Fintype.equivFin` carries it to a finite local basis of size $d=2^{N+1}$. Only $k$-subset labels occur in the state support. The state is the uniform superposition of the resulting distinct product-basis configurations.
 
 A loss of $m+1$ sites meets every $k$-subset, so all off-diagonal terms disappear. The remaining diagonal is a finite convex mixture of products of local basis projectors and is fully separable. A loss of $m$ sites leaves exactly one intact flag. Its surviving coherence has a zero exchanged diagonal; `separable_exchange_zero` rules out full separability. The same exchanged-diagonal obstruction gives initial entanglement.
 
@@ -55,14 +55,15 @@ The exact-rational reading is published at [`docs/reports/quinta-andre-burchardt
 | Item | Status | Evidence and boundary |
 | --- | --- | --- |
 | Flag-code every $k=N-m$ subset with a shared label and a bit localized to that subset; every $(m+1)$-loss is diagonal and fully separable; every $m$-loss retains an obstruction coherence. | proved | `MResistantQuditExistence.result` is kernel-checked; `separable_exchange_zero` supplies the exchanged-diagonal implication. |
-| Local dimension. | proved in prose | The construction uses $d=2\binom{N}{m}$, as described in Route. The least possible $d$ is open. |
-| Exact finite reading. | computed | `python3 check.py`, exit `0`, script SHA-256 `c25ee3e55a0028bdabbeffd0e80e260e26022c08bd59b97cf359d319e9f1bb70`, scope $3\leq N\leq6$, exact rational entries, final line `ALL_OK`. |
+| Local dimension of the kernel witness. | proved | Kernel-checked: `MResistantQuditExistence.result` chooses the cardinality of `Finset (Fin N) × Bool`, namely $d=2^{N+1}$. |
+| Restricted-label local dimension $d=2\binom{N}{m}$. | open | not kernel-checked (prose relabeling): restricting the common label to $k=N-m$ subsets leaves $\binom{N}{k}=\binom{N}{m}$ labels and two bit values per label, while relabeling the supported configurations preserves their amplitudes and partial traces. |
+| Exact finite reading. | computed | `python3 check.py`, exit `0`, script SHA-256 `c25ee3e55a0028bdabbeffd0e80e260e26022c08bd59b97cf359d319e9f1bb70`, scope $3\leq N\leq6$ and $0\leq m\leq N-2$, exact rational density entries and floating-point partial-transpose eigenvalues, final line `ALL_OK`. |
 | Qubit states for $m>(N-2)/2$. | open | The construction uses larger local dimensions; no qubit existence result in this range is claimed. |
 | Minimal local dimension. | open | No lower bound or optimality theorem is proved beyond the displayed construction. |
 
 ### What the settlement shows
 
-The decisive mechanism is the shared subset label plus a localized branch bit. It works uniformly for every admissible natural $N,m$ and yields the explicit dimension $2\binom{N}{m}$. The proof extends the source's known range $m\leq(N-2)/2$ to the whole pure-state existence conjecture in arbitrary local dimension. It does not settle qubit existence beyond that known range or optimize the local dimension. The source's ordinary resistance statements remain compatible: this result supplies the existence premise in the full admissible range, while minimal dimension and qubit-specific questions remain separate.
+The decisive mechanism is the shared subset label plus a localized branch bit. It works uniformly for every admissible natural $N,m$ and yields the kernel-witness dimension $2^{N+1}$. The proof extends the source's known range $m\leq(N-2)/2$ to the whole pure-state existence conjecture in arbitrary local dimension. It does not settle qubit existence beyond that known range or optimize the local dimension. The source's ordinary resistance statements remain compatible: this result supplies the existence premise in the full admissible range, while minimal dimension and qubit-specific questions remain separate.
 
 The public result is the settling result for the named open problem and is admitted under `open-problem-resolution (#15010; Proved)`. The escape audit remains unfinished under #15589 with the `DTR-Unregistered` reading above; no `declared_validated` registration is claimed.
 

@@ -11,8 +11,6 @@ admission_basis: escape-witness
 escape_witness: separable_exchange_zero
 Escape audit unfinished under issue #15589: the dependent-family registration still lacks full source reconstruction, equivalence, variation, sensitivity, and observational-dependence evidence; the delivered-head DTR reading is `DTR-Unregistered` (Observe) for `separable_exchange_zero`, and no `declared_validated` claim is made.
 Direct frozen dependencies:
-  D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity
-    statement_id: sha256:e18ab4fd557d4917e344a15c06172fc321b99eb187307a88fe4c7fa4f8a28bf3
   D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.partialTraceFirst
     statement_id: sha256:60de08083a292a636d655dff7f5b06843146c051021ffe2d0b604db457edc565
   D5/S3/Quantum/Foundation/FiniteStateChannel.DensityState
@@ -38,7 +36,6 @@ proof_shape: density_zero_row: bind-only; escape_witness: none
 proof_shape: separable_exchange_zero: content; escape_witness: separable_exchange_zero
   consumers: flagState_kept_entangled, flagState_entangled
   frozen dependencies: DensityState
-The #15010 pure-state convention is the frozen `D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity`; proofs use that owner directly, so no duplicate pure-state definition is introduced.
 Definitions are not proof declarations. Compiler-generated proof constants inherit
 the identity of their frozen source owner; they have no separate Freeze identity.
 utility none: arbitrary finite carriers and universal constructions; no bounded
@@ -47,7 +44,6 @@ enumeration, checker, numeric reduction, or certified finite instance.
 
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
-import D5.S3.Quantum.PureState.PureStateHandshake
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

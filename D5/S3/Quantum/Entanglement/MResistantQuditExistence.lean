@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#15010; Proved)
-escape_witness: none
+escape_witness: flagState_large_loss_diagonal, D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.separable_exchange_zero
 Escape audit unfinished under issue #15589: the dependent-family registration still lacks full source reconstruction, equivalence, variation, sensitivity, and observational-dependence evidence; the delivered-head DTR reading is `DTR-Unregistered` (Observe) for `result`, and no `declared_validated` claim is made.
 Direct frozen dependencies:
   D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity
@@ -67,7 +67,7 @@ proof_shape: word_restriction_injective: bind-only; escape_witness: none
 proof_shape: family_meets_large_loss: bind-only; escape_witness: none
   consumers: flagState_large_loss_diagonal
   frozen dependencies: none
-proof_shape: flagState_large_loss_diagonal: content; escape_witness: none
+proof_shape: flagState_large_loss_diagonal: content; escape_witness: flagState_large_loss_diagonal
   consumers: result
   frozen dependencies: partialTraceFirst
 proof_shape: amplitude_pos: bind-only; escape_witness: none
@@ -88,13 +88,13 @@ proof_shape: flagState_mixed_bits_zero: bind-only; escape_witness: none
 proof_shape: flagState_exchanged_diagonals: bind-only; escape_witness: none
   consumers: flagState_kept_entangled
   frozen dependencies: partialTraceFirst
-proof_shape: flagState_kept_entangled: content; escape_witness: none
+proof_shape: flagState_kept_entangled: content; escape_witness: D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.separable_exchange_zero
   consumers: result
   frozen dependencies: DensityState, partialTraceFirst
-proof_shape: flagState_entangled: content; escape_witness: none
+proof_shape: flagState_entangled: content; escape_witness: D5/S3/Quantum/Entanglement/FullySeparableExchangeObstruction.separable_exchange_zero
   consumers: result
   frozen dependencies: DensityState
-proof_shape: result: content; escape_witness: none
+proof_shape: result: content; escape_witness: flagState_large_loss_diagonal
   consumers: none (settling result)
   frozen dependencies: DensityState, partialTraceFirst, pointerState
 Definitions are not proof declarations. Compiler-generated proof constants inherit
