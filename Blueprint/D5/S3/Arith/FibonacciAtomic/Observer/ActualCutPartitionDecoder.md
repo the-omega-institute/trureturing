@@ -184,7 +184,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.
 
 This pair computes the addressed exterior and the complete finite partition independently of the class-labelled row representation.
 
-**Definition 1.16 (Canonical exterior naming).**
+**Definition 1.16 (Address-to-role naming).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.nameExterior`
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.
 
 *Commentary.*
 
-A finite address-marked exterior is mapped to a class-labelled literal row by a common address-to-class-number function.
+For any total function names from original addresses to natural numbers, nameExterior is the free-magma lift sending a concrete Boolean leaf to that same literal leaf and an addressed hole p to the role leaf names(p). It preserves every ordered binary pair and every occurrence, including repeated role names. It neither reads a source nor requires names to be injective, and it applies to ground exteriors and a single root hole.
 
 **Theorem 1.17 (Exact structural naming).**
 
