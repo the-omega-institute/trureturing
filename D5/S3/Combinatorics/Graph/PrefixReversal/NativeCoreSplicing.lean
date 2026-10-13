@@ -173,13 +173,26 @@ private theorem exists_native_complement {m : ℕ} (hm : 4 ≤ m)
     · simpa only [SimpleGraph.Walk.length_mapLe] using hl
     · simpa only [SimpleGraph.Walk.support_mapLe_eq_support] using hs
 
+/-- The literal old T cuts, specified from their native ports before choosing
+any complement or Hamilton cycle. -/
+def CoreDeletedEdge (m : ℕ) (e : Sym2 (Configuration m)) : Prop :=
+  ∃ p : Fin m ⊕ Fin (m - 2), e = s(cutStart p, cutStart p * cutGenerator p)
+
+private def retainsNative {m : ℕ} (p : Fin m ⊕ Fin (m - 2))
+    (r : Piece (coreGraph m)) : Prop :=
+  ∀ (x y : {v : Configuration m // CoreDomain m v}) (g : Configuration m),
+    Circle (tCircleAnchor p) x.val → (g = a m ∨ g = b m) →
+    y.val = x.val * g →
+    s(x.val, y.val) ≠ s(cutStart p, cutStart p * cutGenerator p) →
+    s(x, y) ∈ r.walk.edges
+
 set_option backward.isDefEq.respectTransparency.types false in
 private theorem exists_core_piece {m : ℕ} (hm : 4 ≤ m) (p : Fin m ⊕ Fin (m - 2)) :
     ∃ r : Piece (coreGraph m),
       r.start.val = cutStart p ∧ r.finish.val = cutStart p * cutGenerator p ∧
         r.walk.IsPath ∧ r.walk.length = 2 * (m + 1) - 1 ∧
           (∀ v : {v : Configuration m // CoreDomain m v},
-            v ∈ r.walk.support ↔ Circle (tCircleAnchor p) v.val) := by
+            v ∈ r.walk.support ↔ Circle (tCircleAnchor p) v.val) ∧ retainsNative p r := by
   obtain ⟨w, hp, hl, hs⟩ := exists_native_complement hm
     (cutStart p) (cutGenerator p) (cutGenerator_mem p)
   have hle : SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m)) ≤
@@ -201,7 +214,7 @@ private theorem exists_core_piece {m : ℕ} (hm : 4 ≤ m) (p : Fin m ⊕ Fin (m
     rw [SimpleGraph.Walk.support_map] at he
     change r.support.map Subtype.val = q.support at he
     exact he
-  refine ⟨⟨_, _, r⟩, rfl, rfl, ?_, ?_, ?_⟩
+  refine ⟨⟨_, _, r⟩, rfl, rfl, ?_, ?_, ?_, ?_⟩
   · apply SimpleGraph.Walk.IsPath.mk'
     have hmapped : (r.support.map Subtype.val).Nodup := by
       rw [hrs]
@@ -224,6 +237,23 @@ private theorem exists_core_piece {m : ℕ} (hm : 4 ≤ m) (p : Fin m ⊕ Fin (m
     rw [hmemb]
     simpa only [q, SimpleGraph.Walk.support_mapLe_eq_support] using
       (hs v.val).trans (cut_circle_iff hm p v.val)
+  · intro x y g hx hg hy hne
+    have he : s(x.val, y.val) ∈ w.edges := by
+      rw [hy]
+      apply (native_complement_edge_inventory (by omega : 3 ≤ m)
+        (cutStart p) (cutGenerator p) (cutGenerator_mem p) w hp hl hs
+        x.val g ((cut_circle_iff hm p x.val).mpr hx) hg).mpr
+      simpa only [hy] using hne
+    have hredges : r.edges.map (Sym2.map Subtype.val) = w.edges := by
+      have heq := congrArg SimpleGraph.Walk.edges (SimpleGraph.Walk.map_induce q hq)
+      rw [SimpleGraph.Walk.edges_map] at heq
+      change r.edges.map (Sym2.map Subtype.val) = q.edges at heq
+      simpa only [q, SimpleGraph.Walk.edges_mapLe_eq_edges] using heq
+    rw [← hredges] at he
+    obtain ⟨e, he, heq⟩ := List.mem_map.mp he
+    have heq' : Sym2.map Subtype.val e = Sym2.map Subtype.val s(x, y) := heq
+    have hexy : e = s(x, y) := Sym2.map.injective Subtype.val_injective heq'
+    exact hexy ▸ he
 
 
 private noncomputable def corePiece {m : ℕ} (hm : 4 ≤ m)
@@ -236,7 +266,8 @@ private theorem corePiece_spec {m : ℕ} (hm : 4 ≤ m) (p : Fin m ⊕ Fin (m - 
         (corePiece hm p).walk.IsPath ∧
           (corePiece hm p).walk.length = 2 * (m + 1) - 1 ∧
             (∀ v : {v : Configuration m // CoreDomain m v},
-              v ∈ (corePiece hm p).walk.support ↔ Circle (tCircleAnchor p) v.val) :=
+              v ∈ (corePiece hm p).walk.support ↔ Circle (tCircleAnchor p) v.val) ∧
+            retainsNative p (corePiece hm p) :=
   Classical.choose_spec (exists_core_piece hm p)
 
 private theorem owner_unique {m : ℕ} (hm : 4 ≤ m) (v : Configuration m)
@@ -332,8 +363,8 @@ private theorem core_support_nodup {m : ℕ} (hm : 4 ≤ m) :
       intro v hp hq
       apply hpq
       exact owner_unique hm v.val p q
-        ((corePiece_spec hm p).2.2.2.2 v |>.mp hp)
-        ((corePiece_spec hm q).2.2.2.2 v |>.mp hq))
+        ((corePiece_spec hm p).2.2.2.2.1 v |>.mp hp)
+        ((corePiece_spec hm q).2.2.2.2.1 v |>.mp hq))
 
 private def cutNext {m : ℕ} (p q : Fin m ⊕ Fin (m - 2)) : Prop :=
   cutStart p * cutGenerator p * c m = cutStart q
@@ -503,14 +534,33 @@ private theorem finish_seam {m : ℕ} (p q : Piece (coreGraph m))
   | nil => exact (List.isChain_cons_cons.mp h).1
   | cons r rs ih => exact ih r (List.isChain_cons_cons.mp h).2
 
+private theorem piece_edges_in_chain {V : Type*} {G : SimpleGraph V}
+    (p r : Piece G) (ps : List (Piece G)) (hr : r ∈ p :: ps)
+    (e : Sym2 V) (he : e ∈ r.walk.edges) : e ∈ chainEdges p ps := by
+  induction ps generalizing p with
+  | nil =>
+    have hre : r = p := List.mem_singleton.mp hr
+    subst r
+    exact he
+  | cons q qs ih =>
+    simp only [chainEdges, List.mem_append, List.mem_cons]
+    rcases List.mem_cons.mp hr with hre | hr
+    · subst r
+      exact Or.inl he
+    · exact Or.inr (Or.inr (ih q hr))
+
 /-- The actual native complements, with the literal alternating c connections,
 cover exactly the union of both deletion-defined T supplier stars. The first
-edge of the resulting Hamilton cycle is the actual closing c edge. -/
+edge of the resulting Hamilton cycle is the actual closing c edge. Every other
+native a/b edge in the core is retained. -/
 theorem native_core_hamiltonian_cycle {m : ℕ} (hm : 4 ≤ m) :
     ∃ z : {v : Configuration m // CoreDomain m v}, z.val = 1 ∧
       ∃ w : (coreGraph m).Walk z z, w.IsHamiltonianCycle ∧
-        ∃ y : {v : Configuration m // CoreDomain m v},
-          y.val = c m ∧ w.edges.head? = some s(z, y) := by
+        (∃ y : {v : Configuration m // CoreDomain m v},
+          y.val = c m ∧ w.edges.head? = some s(z, y)) ∧
+        ∀ (x y : {v : Configuration m // CoreDomain m v}) (g : Configuration m),
+          (g = a m ∨ g = b m) → y.val = x.val * g →
+          ¬ CoreDeletedEdge m s(x.val, y.val) → s(x, y) ∈ w.edges := by
   classical
   let : BEq {v : Configuration m // CoreDomain m v} := instBEqOfDecidableEq
   let first : Fin m ⊕ Fin (m - 2) := .inl ⟨m - 1, by omega⟩
@@ -541,7 +591,7 @@ theorem native_core_hamiltonian_cycle {m : ℕ} (hm : 4 ≤ m) :
     · obtain ⟨i, hi, _⟩ := (native_t_circle_partition hm v.val).mp v.property
       have hv : v ∈ (cutOrder hm).flatMap (fun z => (corePiece hm z).walk.support) :=
         List.mem_flatMap.mpr ⟨i, cutOrder_mem hm i,
-        ((corePiece_spec hm i).2.2.2.2 v).mpr hi⟩
+        ((corePiece_spec hm i).2.2.2.2.1 v).mpr hi⟩
       simpa only [horder, List.flatMap_cons, List.flatMap_map, Function.comp_def,
         p, ps] using hv
   have hsize : 3 ≤ ((p :: ps).flatMap (fun z => z.walk.support)).length := by
@@ -567,9 +617,22 @@ theorem native_core_hamiltonian_cycle {m : ℕ} (hm : 4 ≤ m) :
     rw [hstart] at hh
     have ht := congrArg (· * c m) hh
     simpa only [mul_assoc, c_sq, mul_one, one_mul] using ht
-  refine ⟨p.start, hstart, w, hw, finish p ps, hfinal, ?_⟩
-  rw [he]
-  rfl
+  refine ⟨p.start, hstart, w, hw, ?_, ?_⟩
+  · refine ⟨finish p ps, hfinal, ?_⟩
+    rw [he]
+    rfl
+  · intro x y g hg hy hdeleted
+    obtain ⟨i, hi, _⟩ := (native_t_circle_partition hm x.val).mp x.property
+    have hpiece : corePiece hm i ∈ p :: ps := by
+      have hmemb : corePiece hm i ∈ (cutOrder hm).map (corePiece hm) :=
+        List.mem_map.mpr ⟨i, cutOrder_mem hm i, rfl⟩
+      simpa only [horder, List.map_cons, p, ps] using hmemb
+    have hretained := (corePiece_spec hm i).2.2.2.2.2 x y g hi hg hy (by
+      intro heq
+      exact hdeleted ⟨i, heq⟩)
+    rw [he]
+    exact List.mem_cons_of_mem _ (List.mem_reverse.mpr
+      (piece_edges_in_chain p (corePiece hm i) ps hpiece _ hretained))
 
 #print axioms native_core_hamiltonian_cycle
 
