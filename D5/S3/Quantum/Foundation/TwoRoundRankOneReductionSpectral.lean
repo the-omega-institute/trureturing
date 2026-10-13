@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Singular event interval machinery and consumed rank-one spectral mass.
--/
+   digest: Singular event interval machinery and consumed rank-one spectral mass. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
