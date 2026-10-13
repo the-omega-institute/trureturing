@@ -9,9 +9,10 @@
 /-
 proof_shape: result: content; escape_witness: result
 admission_basis: open-problem-resolution (#15370; Proved)
-Direct frozen dependencies: the references F0--F4 below are declaration identities; S0 and S1 are owner re-pins in this delivery.
-Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15745; DTR-Unregistered.
-The typed Reg metadata does not decode: contract.cannot_decode:metadata:computation_required; source-bound E1–E8 evidence is missing.
+Direct frozen dependencies: the references F0--F4 below are declaration identities; S0--S2 are owner re-pins in this delivery.
+Escape audit unfinished for result and JointLaw.push_sum: https://github.com/the-omega-institute/trureturing/issues/15745; DTR-Unregistered.
+The result Reg metadata does not decode: contract.cannot_decode:metadata:computation_required; source-bound E1–E8 evidence is missing.
+The push_sum Reg metadata fails contract.discovery:rigid_universes; source-bound E1–E8 evidence is missing.
 The finite distributions and marginal diagonal argument establish rank three.
 The support definitions and consumed helpers reside in this settling module.
 The content theorems introduce the generic lower bound, finite parity/cardinality certificates, the marginal obstruction and its cover consequences, and the reindexed Born calculation; the remaining helpers are bind-only with the consumers listed below.
@@ -30,6 +31,8 @@ S0 (same-delivery owner re-pin): D5/S3/QuantumBounds/StatisticalStrengthMagicSqu
     sha256:754c699a224cabc64d19c5ea4f68f316677444ee3b0036e8b2ede03a3f62d0d2
 S1 (owner re-pin): D5/S3/Entropy/Observation/MultiTargetInformationChain.marginal_pushforward_pair
     sha256:9e730756b3d566a76007798f0a459585083efa4ef7dff728b70e719b5454e43f
+S2 (owner re-pin): D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.push_sum
+    sha256:ff8b9bdd78e520ec50b11766864e0a2bee95905fe5023c5f74a2d8a819746128
 Rows: name | proof_shape | direct frozen dependencies | consumer(s).
 Content rows name their own escape witness; bind-only rows have a live consumer.
 Behavior | bind-only | none | IsQuantum
@@ -40,7 +43,6 @@ IsRankOfContextuality | bind-only | none | claim
 IsQuantum | bind-only | none | claim
 claim | bind-only | none | result (type)
 push_filter | bind-only | F0 | Product.chosen_spec
-push_mass | bind-only | F0 | Product.marginal1_nc
 sum_joint_first | bind-only | S1 | Product.marginal1_sum
 dist_nc | bind-only | F0 | Product.marginal1_nc
 Lower.no_two_cover | content; escape_witness=Lower.no_two_cover | none | Product.cover_lower
@@ -83,8 +85,8 @@ Product.model_nc | bind-only | F0 | Product.cover_nc
 Product.model_agrees | content; escape_witness=Product.law_agrees | F0 | Product.cover_agrees
 Product.marginal1 | bind-only | F0 | Product.cover_lower
 Product.marginal2 | bind-only | F0 | Product.cover_lower
-Product.marginal1_nc | bind-only | F0 | Product.marginal1_bad
-Product.marginal2_nc | bind-only | F0 | Product.marginal2_bad
+Product.marginal1_nc | bind-only | F0,S2 | Product.marginal1_bad
+Product.marginal2_nc | bind-only | F0,S2 | Product.marginal2_bad
 Product.marginal1_sum | bind-only | F0,F1 | Product.marginal1_agrees
 Product.marginal2_sum | bind-only | F0,F1 | Product.marginal2_agrees
 Product.marginal1_agrees | bind-only | F0,F1 | Product.cover_lower
@@ -146,6 +148,7 @@ Product.quantum | content; escape_witness=Matrices.born_probability | none | res
 result | content; escape_witness=result | F0,F1 | terminal result
 -/
 
+import D5.S3.Arith.FibonacciAtomic.NativeContinuation.JointLaw
 import D5.S3.Entropy.Forgetting.PushforwardComposition
 import D5.S3.Entropy.Observation.MultiTargetInformationChain
 import D5.S3.Quantum.FiniteDimensional
@@ -200,13 +203,6 @@ private lemma push_filter {G H : Type*} [Fintype G] [DecidableEq H]
   apply Finset.sum_congr rfl
   intro g _
   split_ifs <;> rfl
-
-private lemma push_mass {G H : Type*} [Fintype G] [Fintype H]
-    (f : G → H) (mu : G → ℝ) : (∑ h, D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward f mu h) = ∑ g, mu g := by
-  classical
-  simp only [D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward]
-  rw [Finset.sum_comm]
-  simp only [Finset.sum_ite_eq, Finset.mem_univ, if_pos]
 
 private lemma sum_joint_first {G A B : Type*} [Fintype G] [Fintype B]
     [DecidableEq A] [DecidableEq B]
@@ -536,7 +532,7 @@ private lemma marginal1_nc (mu : (Fin 18 → Bool) → ℝ) (hn : ∀ g, 0 ≤ m
     unfold D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward
     exact Finset.sum_nonneg fun g _ => by
       split_ifs <;> simp_all only [le_refl, hn]
-  · rw [push_mass]; exact hm
+  · rw [D5.S3.Arith.FibonacciAtomic.NativeContinuation.JointLaw.push_sum]; exact hm
 private lemma marginal2_nc (mu : (Fin 18 → Bool) → ℝ) (hn : ∀ g, 0 ≤ mu g) (hm : ∑ g, mu g = 1) :
     NonContextual Square.C (marginal2 mu) := by
   apply dist_nc
@@ -544,7 +540,7 @@ private lemma marginal2_nc (mu : (Fin 18 → Bool) → ℝ) (hn : ∀ g, 0 ≤ m
     unfold D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward
     exact Finset.sum_nonneg fun g _ => by
       split_ifs <;> simp_all only [le_refl, hn]
-  · rw [push_mass]; exact hm
+  · rw [D5.S3.Arith.FibonacciAtomic.NativeContinuation.JointLaw.push_sum]; exact hm
 private lemma marginal1_sum (mu : (Fin 18 → Bool) → ℝ) (x : Fin 36) (a : Fin 3 → Bool) :
     marginal1 mu (((finProdFinEquiv : Fin 6 × Fin 6 ≃ Fin (6*6)).symm) x).1 a =
       ∑ b : Fin 3 → Bool, (D5.S3.Entropy.Forgetting.CapacityMonotone.pushforward (restrict C x) mu) (((Fin.appendEquiv (α := Bool) 3 3) (a,b))) := by

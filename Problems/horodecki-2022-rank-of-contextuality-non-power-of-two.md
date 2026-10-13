@@ -206,6 +206,12 @@ retained. Source-occurrence/scope validation, source-reconstruction and E1–E8
 binding evidence are missing. The target has DTR-Unregistered status; that
 observation does not certify four-slot completion.
 
+The public owner `D5.S3.Arith.FibonacciAtomic.NativeContinuation.JointLaw.push_sum`
+also has an unfinished escape audit under #15745. Its typed `Contract.Registration`
+compiles, but scoped decoding reports `contract.discovery:rigid_universes`.
+Source reconstruction, source-occurrence/scope validation and E1–E8 binding
+evidence are missing; no Reg mirror is retained.
+
 ## ASSUMED-UNVERIFIED
 
 Literature absence is limited to the preregistration's searched sources.
