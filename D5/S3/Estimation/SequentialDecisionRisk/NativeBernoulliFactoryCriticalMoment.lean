@@ -57,7 +57,7 @@ private lemma uniform_probability : IsProbabilityMeasure Uniform := by
   constructor
   simp [Real.volume_Icc]
 
-private lemma coin_measurable (p : unitInterval) : Measurable (Coin p) := by
+lemma coin_measurable (p : unitInterval) : Measurable (Coin p) := by
   apply measurable_to_bool
   convert (measurableSet_Iic : MeasurableSet (Iic (p : ℝ))) using 1
   ext u

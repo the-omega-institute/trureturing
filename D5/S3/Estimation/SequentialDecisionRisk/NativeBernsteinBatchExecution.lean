@@ -333,4 +333,52 @@ theorem trace_iff_exact_acquired_history
         change (nativeHistory π S p q n ω).length ≤ n at hlen
         omega
 
+def nativeCalls {Seed : Type} (π : Seed → Bool → History → Action) (S : Bool)
+    (p q : unitInterval) : Seed × Tape → WithTop ℕ :=
+  hittingAfter (nativeAction π S p q) (Set.range (fun c : Bool × Bool => (Sum.inr c : Action))) 0
+
+/-- Measurability uses the actual uniform innovation tape for both sources. -/
+theorem native_execution_measurable
+    {Seed : Type} [MeasurableSpace Seed] (π : Seed → Bool → History → Action)
+    (hπ : ∀ S h, Measurable (fun seed => π seed S h)) (S : Bool) (p q : unitInterval) :
+    letI : MeasurableSpace History := ⊤
+    (∀ n, Measurable (nativeHistory π S p q n)) ∧
+    (∀ n, Measurable (nativeAction π S p q n)) ∧
+    (∀ n : ℕ, MeasurableSet {ω | (n : WithTop ℕ) < nativeCalls π S p q ω}) := by
+  let : MeasurableSpace History := ⊤
+  let : MeasurableSingletonClass Action := ⟨action_singleton_measurable⟩
+  have hp : Measurable (fun z : Seed × History => π z.1 S z.2) :=
+    measurable_from_prod_countable_left (hπ S)
+  have hr (s : Bool) (n : ℕ) :
+      Measurable (fun ω : Seed × Tape => sourceRead p q s n ω.2) :=
+    (NativeBernoulliFactoryCriticalMoment.coin_measurable (if s then q else p)).comp
+      ((measurable_pi_apply n).comp measurable_snd)
+  have hh (n : ℕ) : Measurable (nativeHistory π S p q n) := by
+    induction n with
+    | zero => exact measurable_const
+    | succ n ih =>
+      have ha := hp.comp (measurable_fst.prodMk ih)
+      have hu : Measurable (fun z : History × Action × (Bool × Bool) =>
+          match z.2.1 with
+          | .inl s => z.1 ++ [(s, if s then z.2.2.2 else z.2.2.1)]
+          | _ => z.1) := Measurable.of_discrete
+      convert hu.comp (ih.prodMk (ha.prodMk ((hr false n).prodMk (hr true n)))) using 1
+      funext ω
+      simp only [nativeHistory, acquiredHistory, Function.comp_apply]
+      cases π ω.1 S (acquiredHistory π S (sourceRead p q) n ω) with
+      | inl s => cases s <;> rfl
+      | inr c => rfl
+  have ha (n : ℕ) : Measurable (nativeAction π S p q n) :=
+    hp.comp (measurable_fst.prodMk (hh n))
+  refine ⟨hh, ha, fun n => ?_⟩
+  have hm : MeasurableSet {ω | nativeCalls π S p q ω ≤ (n : WithTop ℕ)} := by
+    have he (ω : Seed × Tape) : nativeCalls π S p q ω ≤ (n : WithTop ℕ) ↔
+        ∃ j ∈ Set.Icc 0 n, nativeAction π S p q j ω ∈
+          Set.range (fun c : Bool × Bool => (Sum.inr c : Action)) :=
+      hittingAfter_le_iff
+    simp only [he, Set.ofPred_exists, Set.ofPred_and]
+    exact MeasurableSet.iUnion (fun i => (MeasurableSet.const _).inter
+      ((ha i) measurableSet_range_inr))
+  simpa only [Set.compl_ofPred, not_le] using hm.compl
+
 end D5.S3.Estimation.SequentialDecisionRisk.NativeBernsteinBatchExecution
