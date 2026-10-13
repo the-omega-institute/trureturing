@@ -12,11 +12,11 @@ internal sealed class DiophantineExponentCriterionDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Episturmian words: DiophantineExponentCriterion.", H("DiophantineExponentCriterion"),
         Blocks(
-            Node("result-0", "result", DeclarationHandle.Create(Prefix + "result"), Disp(ResultFormula()), "The alphabet is Fin d, letters are indexed from zero, and equality of Lang expresses equality of factor sets.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+            Node("result-0", "result", DeclarationHandle.Create(Prefix + "result"), Disp(ResultFormula()), "The alphabet is Fin d, letters are indexed from zero, and equality of Lang expresses equality of factor sets.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("peltomaki-2024-episturmian-diophantine-exponent"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string id, string title, DeclarationHandle declaration, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+    private static DocumentBlock Node(string id, string title, DeclarationHandle declaration, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolves = null) => Describe.Lean(
         DescribeId.Create(id), declaration, H(title), StatementSource.FromAuthor(formula), provenance,
-        Narrative(title, prose), role);
+        Narrative(title, prose), role, resolves);
 
 
     private static BlockSequence Narrative(string title, string prose) => title is "claim" or "result"

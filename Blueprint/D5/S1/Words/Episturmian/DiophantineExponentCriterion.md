@@ -10,6 +10,10 @@ $$\forall d \in (Nat),\; \forall Delta \in (((Nat) \to (Fin\left(d\right)))),\; 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Episturmian/DiophantineExponentCriterion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/peltomaki-2024-episturmian-diophantine-exponent` (proved) by `D5/S1/Words/Episturmian/DiophantineExponentCriterion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"peltomaki-2024-episturmian-diophantine-exponent","declaration_gid":"D5/S1/Words/Episturmian/DiophantineExponentCriterion.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Peltomäki (2024). *Initial nonrepetitive complexity of regular episturmian words and their Diophantine exponents*. DOI: [10.1016/j.ejc.2024.103942](https://doi.org/10.1016/j.ejc.2024.103942). URL: <https://arxiv.org/abs/2103.08351v3>.
