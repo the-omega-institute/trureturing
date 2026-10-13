@@ -92,7 +92,8 @@ private theorem coherent_norm (μ : ℂ) : ‖coherent μ‖ = 1 := by
       (inner ℂ (e n) (InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ) (e n))).re =
         ‖coherent μ n‖ ^ 2 := by
     intro n
-    simp only [InnerProductSpace.rankOne_apply, inner_smul_right, e,
+    unfold e
+    simp only [InnerProductSpace.rankOne_apply, inner_smul_right,
       lp.inner_single_left, lp.inner_single_right, RCLike.inner_apply,
       map_one, one_mul, mul_one, RCLike.conj_mul]
     norm_cast
@@ -119,11 +120,11 @@ private theorem onOff_binary (μ : ℂ) : IsBinaryPOVM (onOff μ) := by
       exact InnerProductSpace.isPositive_rankOne_self (coherent μ)
     · have hb1 : b = 1 := by fin_cases b <;> simp_all
       subst b
-      simp only [onOff]
-      norm_num
+      change (1 - InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)).IsPositive
       exact rankOne_complement_pos _ hv
-  · ext v
-    simp [onOff]
+  · change InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ) +
+      (1 - InnerProductSpace.rankOne ℂ (coherent μ) (coherent μ)) = 1
+    abel
 
 private theorem amplify_add (M N : Op) : amplify (M + N) = amplify M + amplify N := by
   apply ContinuousLinearMap.ext
@@ -156,29 +157,6 @@ private theorem stinespring_eq_iso (τ : Loss) :
   ext v k
   rfl
 
-private theorem amplify_pos (M : Op) (hM : M.IsPositive) : (amplify M).IsPositive := by
-  rw [ContinuousLinearMap.isPositive_iff]
-  constructor
-  · intro x y
-    rw [lp.inner_eq_tsum, lp.inner_eq_tsum]
-    apply tsum_congr
-    intro k
-    change inner ℂ (amplify M x k) (y k) = inner ℂ (x k) (amplify M y k)
-    rw [amplify_apply, amplify_apply]
-    exact hM.isSymmetric (x k) (y k)
-  · intro x
-    rw [lp.inner_eq_tsum]
-    apply tsum_nonneg
-    intro k
-    change inner ℂ (amplify M x k) (x k) ≥ 0
-    rw [amplify_apply]
-    exact hM.inner_nonneg_left _
-
-private theorem dualLoss_pos (τ : Loss) (M : Op) (hM : M.IsPositive) :
-    (dualLoss τ M).IsPositive := by
-  unfold dualLoss
-  exact (amplify_pos M hM).adjoint_conj (stinespring τ)
-
 private theorem dualLoss_add (τ : Loss) (M N : Op) :
     dualLoss τ (M + N) = dualLoss τ M + dualLoss τ N := by
   unfold dualLoss
@@ -191,12 +169,6 @@ private theorem dualLoss_one (τ : Loss) : dualLoss τ 1 = 1 := by
     ContinuousLinearMap.id_comp]
   exact LinearIsometry.adjoint_comp_self (stinespringIso τ)
 
-private theorem dualLoss_binary (τ : Loss) (M : Fin 2 → Op)
-    (hM : IsBinaryPOVM M) : IsBinaryPOVM (fun b => dualLoss τ (M b)) := by
-  refine ⟨fun b => dualLoss_pos τ (M b) (hM.1 b), ?_⟩
-  change dualLoss τ (M 0) + dualLoss τ (M 1) = 1
-  rw [← dualLoss_add, hM.2, dualLoss_one]
-
 -- Compression pulls quadratic forms back through the two-dimensional Fock embedding.
 private def compress (X : Op) : Matrix (Fin 2) (Fin 2) ℂ :=
   fun i j => inner ℂ (e i.val) (X (e j.val))
@@ -207,41 +179,54 @@ private theorem compress_pos (X : Op) (hX : X.IsPositive) : (compress X).PosSemi
   apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
   · rw [Matrix.IsHermitian]
     ext i j
-    simp only [Matrix.conjTranspose_apply, compress]
+    simp only [Matrix.conjTranspose_apply]
     change (starRingEnd ℂ) (inner ℂ (e j.val) (X (e i.val))) = _
     rw [inner_conj_symm]
     exact hX.isSymmetric (e i.val) (e j.val)
   · intro v
     have hq := hX.inner_nonneg_right (embed v)
     rw [show star v ⬝ᵥ (compress X) *ᵥ v = inner ℂ (embed v) (X (embed v)) by
-      simp [dotProduct, Matrix.mulVec, compress, embed, Fin.sum_univ_two]
+      unfold compress embed
+      simp [dotProduct, Matrix.mulVec, Fin.sum_univ_two]
       ring]
     exact hq
 
 private theorem compress_one : compress (1 : Op) = (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  unfold compress
   ext i j
   by_cases h : i = j
   · subst j
-    simp [compress, e]
+    unfold e
+    simp
   · have hv : (j : ℕ) ≠ i := by
       intro hj
       apply h
       exact Fin.ext hj.symm
-    simp [compress, e, lp.inner_single_right, h, hv]
+    unfold e
+    simp [lp.inner_single_right, h, hv]
 
 private theorem compress_add (X Y : Op) : compress (X + Y) = compress X + compress Y := by
   ext i j
-  simp [compress]
+  simp only [Matrix.add_apply]
+  change inner ℂ (e i.val) ((X + Y) (e j.val)) =
+    inner ℂ (e i.val) (X (e j.val)) + inner ℂ (e i.val) (Y (e j.val))
+  simp
 
 private theorem compress_sum {ι : Type} [Fintype ι] (X : ι → Op) :
     compress (∑ i, X i) = ∑ i, compress (X i) := by
   ext i j
-  simp [compress, Matrix.sum_apply]
+  simp only [Matrix.sum_apply]
+  change inner ℂ (e i.val) ((∑ k, X k) (e j.val)) =
+    ∑ k, inner ℂ (e i.val) (X k (e j.val))
+  simp
 
 private theorem compress_finset_sum {ι : Type} (s : Finset ι) (X : ι → Op) :
     compress (s.sum X) = s.sum (fun i => compress (X i)) := by
   ext i j
-  simp [compress, Matrix.sum_apply]
+  simp only [Matrix.sum_apply]
+  change inner ℂ (e i.val) ((∑ k ∈ s, X k) (e j.val)) =
+    ∑ k ∈ s, inner ℂ (e i.val) (X k (e j.val))
+  simp
 
 private theorem compressed_parent {m : ℕ} (F : Fin m → Fin 2 → Op)
     (hF : HasParent F) :
@@ -287,15 +272,16 @@ private theorem dual_rankOne_inner (τ : Loss) (μ : ℂ) (u v : H) :
 
 private theorem fock_slice (m n k : ℕ) :
     fockPair m n k = if k = n then e m else 0 := by
-  simp only [fockPair, tensor, e, lp.single_apply, Pi.single_apply]
+  unfold fockPair tensor e
+  simp only [lp.single_apply, Pi.single_apply]
   split_ifs <;> simp_all
 
 private theorem vacuum_tensor (v : H) : vacuumEmbedding v = tensor v (e 0) := by
   apply lp.ext
   funext k
-  simp only [vacuumEmbedding, lp.singleContinuousLinearMap_apply, tensor]
   change (lp.single (E := fun _ : ℕ => H) 2 0 v) k = (e 0 k) • v
-  simp only [lp.single_apply, e, Pi.single_apply]
+  unfold e
+  simp only [lp.single_apply, Pi.single_apply]
   split_ifs <;> simp_all
 
 private theorem vacuum_fock (n : ℕ) : vacuumEmbedding (e n) = fockPair n 0 := by
@@ -313,7 +299,8 @@ private theorem split_zero (τ : Loss) : stinespring τ (e 0) = fockPair 0 0 := 
   change beamUnitary (Real.sqrt τ.1) (Real.sqrt (1 - τ.1)) hτ
       (fockPair 0 0) = _
   rw [beamUnitary_fock]
-  simp [fockExpansion, fockPair, tensor, lp.single_apply, Pi.single_apply]
+  unfold fockExpansion fockPair tensor
+  simp [lp.single_apply, Pi.single_apply]
 
 private theorem split_one (τ : Loss) : stinespring τ (e 1) =
     (Real.sqrt τ.1 : ℂ) • fockPair 1 0 +
@@ -328,7 +315,8 @@ private theorem split_one (τ : Loss) : stinespring τ (e 1) =
   change beamUnitary (Real.sqrt τ.1) (Real.sqrt (1 - τ.1)) hτ
       (fockPair 1 0) = _
   rw [beamUnitary_fock]
-  simp [fockExpansion, fockPair, tensor, lp.single_apply, Pi.single_apply]
+  unfold fockExpansion fockPair tensor
+  simp [lp.single_apply, Pi.single_apply]
   ac_rfl
 
 private theorem split_zero_coord (τ : Loss) (k : ℕ) :
@@ -464,8 +452,9 @@ private theorem compressed_click (τ : Loss) (x : ℝ) (hx : 0 < x)
   change compress (dualLoss τ (1 - InnerProductSpace.rankOne ℂ
     (coherent ((Real.sqrt x : ℂ) * z)) (coherent ((Real.sqrt x : ℂ) * z)))) = _
   rw [dualLoss_sub, dualLoss_one, compress_sub, compress_one, compressed_rankOne τ x hx z hz]
+  unfold clickMatrix
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [clickMatrix]
+  fin_cases i <;> fin_cases j <;> simp
 
 private theorem scalar_bounds (τ : Loss) (x : ℝ) (hx : 0 < x) :
     let A := Real.exp (-x)
