@@ -8679,3 +8679,91 @@ estimate do not discharge either certificate at growing degree.
 No local all-critical premise has been removed, no FIB ATOM bridge to
 these complete signed responses has been established, and RH and
 strict Robin for every integer $H>5040$ remain unproved.
+
+## Wider analytic room pays the original response at every target node
+
+Retain the complete source and all local critical-zero and full-removal
+premises of (LC263), the regrouping (LC284), total selected multiplicity
+$r\le C_0L$, and core degree $q\le r$. Every far selected factor and
+possibly nonreal infinite exterior zero remains in $\widehat A$.
+The dual kernels and coupled responses are those of (LC305)--(LC308).
+This analytical application reuses the common-weight and Euler interfaces;
+its extra value-kernel geometry is a stated hypothesis, not a conclusion
+about the actual source. No Lean or originality certification is supplied.
+
+For $q\ge1$, use $E=C_EL=128(S+3C_0)L$ and
+$\nu\ge\max\{512E,256q\}$. Retain the closed target
+$\mathcal D=\{|t-c|\le D/16\}$ and its real diameter $I$, and enlarge
+only the real certificate interval to
+$I^+=[c-D/16,c+D/12]$. For a fixed $K\ge1$, put
+$\delta=D/(K\sqrt{\nu q})$.
+Assume the following quantitative value-kernel certificate:
+
+* on $I^+$, $R_{q,t}$ has simple ordered real roots $\beta_j(t)$ with
+  $|\beta_j'(t)|\le1/4$;
+* its mesh is at least $\delta$ throughout $I^+$ when $q\ge2$;
+* for every $t\in\mathcal D$ and every root $\beta$ of $R_{q,t}$,
+  $|\Im\beta|\le|\Im t|/4$.
+
+For $q=1$, the mesh condition is empty. No individual response residue
+$\gamma_j>0$ is assumed. This certificate requires quantitative value
+geometry on a wider interval than $\mathsf K$; neither certificate is
+asserted to follow from the already known jets.
+
+The paid bound $|\widehat\ell|+|\widehat s|\le E/D$ on $D/8$
+and Cauchy radii $D/40$ and $D/24$ give
+
+$$
+\begin{aligned}
+|\widehat\eta-1|&\le160E/\nu\le5/16
+ &&(|t-c|\le D/10),\\
+|\widehat\chi'-1|&\le100E/\nu<1/4
+ &&(|t-c|\le D/12).
+\end{aligned}
+\tag{LC325}
+$$
+
+On $D/10$, $|\widehat\chi-\alpha_j|<2D$ and
+$|\widehat\eta|<3/2$. Nested radii $D/10-jD/(64q)$ end at
+$27D/320>D/12$. The exact recurrence norm is now
+$2D+256qD/\nu\le3D$, so (LC318) holds on $D/12$.
+Mesh preservation and the common speed weights (LC310) give real factors
+$f_i=\widehat\chi-c-\lambda_i$ with $1/2<f_i'<3/2$ on $I^+$.
+At each actual real $t_0\in I$, one factor vanishes and the others
+have magnitude at least $\delta$. In (LC317),
+$h\le D/(64E)<D/48=D/12-D/16$, using $E>384$.
+Thus $[t_0,t_0+h]\subset I^+$ even at either target endpoint.
+
+Apply (LC319)--(LC322) with this larger endpoint disc. The common
+nonzero $\widehat H$ amplitude and its actual homogeneous endpoint
+term are retained; $M/d\le B$ is unchanged. Reusing $a,b,P,A,U$
+and the uniform budget argument of (LC323)--(LC324), only the initial
+thresholds increase:
+
+$$
+\begin{gathered}
+C_*^+=\max\{1,512C_E,256C_0,(1024AU)^4\},\qquad
+\nu\ge C_*^+L,\\
+P_r'(t_0)S_r(t_0)>\frac1{32}
+ \left(\frac{\widehat H(t_0)}{H(t_0)}\right)^2
+ \delta^{2q-2}>0
+ \quad\text{at every actual real }t_0\in I.
+\end{gathered}
+\tag{LC326}
+$$
+
+This covers every larger $\nu$, uniformly for $T\ge32$ and
+$0<\rho\le1/8$. Both original amplitudes survive the return to $P_r'S_r$.
+
+The assumed complex strip and (LC325) exclude every nonreal target
+node by (LC314). The real branches are strictly increasing, so all
+actual nodes on the closed target are simple, at most $q$, and have
+exactly the inclusive endpoint count (LC316). The case $q=0$ is again
+$J=\widehat H\ne0$.
+Thus quantitative wider value geometry would suffice for the entire
+conditional local target without a separate positive-residue hypothesis
+on $U_{q,t}$. This does not assert positivity of every $\gamma_j$ at every
+real parameter. The wider geometry, its growth-degree uniformity, and
+removal of the local all-critical premise remain unproved. The argument
+supplies no actual growing-core certificate, FIB ATOM bridge, RH proof,
+or strict Robin conclusion for every integer $H>5040$.
