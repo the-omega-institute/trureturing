@@ -13,6 +13,7 @@ internal sealed class SpectralNonconcavityDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The UNTILDE spectral trace has a strict affine Jensen violation at every off-midpoint parameter, already among real symmetric faithful qubit density matrices.",
         H("Off-midpoint obstruction for the original spectral mean"), Blocks(
+            Paragraph(Text("SpectralNonconcavityScalars owns the pure real ordered-root algebra, exact scale identities, strict interior gap and finite-factor limits. This matrix owner consumes those original names directly in root_power, native_two_scale, actual_roots, actual_power, weightedColumns_limit and the strict density witnesses.")),
             Node("matrix", "Complex qubit matrices", Equal(Id("Mat"), Matrix()),
                 "Real symmetric witnesses are represented as complex matrices with zero imaginary entries.",
                 "Mat", DescribeRole.Definition),
@@ -46,7 +47,9 @@ internal sealed class SpectralNonconcavityDocument : IScribeDocumentDefinition
                 "claim", DescribeRole.Definition),
             Node("result", "No off-midpoint pair is jointly concave", new Formula.Not(Id("claim")),
                 "The all-parameter constructive theorem contradicts joint concavity along the literal affine segment with its fixed argument. The midpoint alpha=1/2 is outside this theorem's parameter range.",
-                "result", DescribeRole.Theorem))));
+                "result", DescribeRole.Theorem)),
+        [DocumentEdge.Dependency.Create(GidRef.Create(
+            "D5/S3/Quantum/Hiai/SpectralNonconcavityScalars"))]));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
         string prose, string declaration, DescribeRole role, params string[] details)

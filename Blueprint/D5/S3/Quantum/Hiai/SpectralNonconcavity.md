@@ -4,6 +4,8 @@
 
 The UNTILDE spectral trace has a strict affine Jensen violation at every off-midpoint parameter, already among real symmetric faithful qubit density matrices.
 
+SpectralNonconcavityScalars owns the pure real ordered-root algebra, exact scale identities, strict interior gap and finite-factor limits. This matrix owner consumes those original names directly in root_power, native_two_scale, actual_roots, actual_power, weightedColumns_limit and the strict density witnesses.
+
 **Definition 1.1 (Complex qubit matrices).**
 
 $$Mat = \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)$$
@@ -165,5 +167,6 @@ The all-parameter constructive theorem contradicts joint concavity along the lit
 - Truth anchor: `D5/S3/Quantum/Hiai/SpectralNonconcavity.result`
 - Truth anchor: `D5/S3/Quantum/Hiai/SpectralNonconcavity.spectralTrace`
 - Dependency: [D5/S3/Quantum/Hiai/InverseGeometricIdentification](InverseGeometricIdentification.md)
+- Dependency: [D5/S3/Quantum/Hiai/SpectralNonconcavityScalars](SpectralNonconcavityScalars.md)
 - Dependency: [D5/S3/Quantum/Matrix/AlternativeMeanLinearization](../Matrix/AlternativeMeanLinearization.md)
 - Dependency: [D5/S3/QuantumChannels/CumulantRenyiDataProcessingRefutation](../../QuantumChannels/CumulantRenyiDataProcessingRefutation.md)
