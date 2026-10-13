@@ -46,6 +46,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Walks/RieszWalkSelfSimilarity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanaoka-konno-2021-riesz-walk-self-similarity` (proved) by `D5/S3/Quantum/Walks/RieszWalkSelfSimilarity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanaoka-konno-2021-riesz-walk-self-similarity","declaration_gid":"D5/S3/Quantum/Walks/RieszWalkSelfSimilarity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ryota Hanaoka, Norio Konno (2021). *Return probability and self-similarity of the Riesz walk*. DOI: [10.26421/QIC21.5-6-5](https://doi.org/10.26421/QIC21.5-6-5). URL: <https://arxiv.org/abs/2010.04518v3>.

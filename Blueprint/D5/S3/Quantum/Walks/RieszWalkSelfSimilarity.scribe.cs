@@ -15,12 +15,15 @@ internal sealed class RieszWalkSelfSimilarityDocument : IScribeDocumentDefinitio
             Node("D5/S3/Quantum/Walks/RieszWalkSelfSimilarity.claim", "claim", Disp(Seq(Seq(Operatorname, Grp(F.Id("claim"))), Sp, Iff, Sp, Forall, Sp, Parenthesized(Seq(F.Id("t"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, new Formula.Number(1), Sp, Leq, Sp, F.Id("t"), Sp, To, Sp, Forall, Sp, Parenthesized(Seq(F.Id("k"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, F.Id("k"), Sp, Leq, Sp, F.Id("t"), Sp, To, Sp, Seq(Operatorname, Grp(F.Id("prob"))), Sp, Parenthesized(Seq(new Formula.Number(2), Sp, Cdot, Sp, F.Id("t"))), Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("Tset"))), Sp, F.Id("t"), Sp, F.Id("k"))), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("prob"))), Sp, Parenthesized(Seq(new Formula.Number(8), Sp, Cdot, Sp, F.Id("t"))), Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("Tset"))), Sp, F.Id("t"), Sp, F.Id("k"))))),
                 "Section 4, Conjecture 4.2, arXiv PDF p. 12: “Let ℤ_> = {1, 2, 3, …}. For each n ∈ ℤ_>, we put T₀(n) = {0}, and Tₖ(n) = ((k − 1)/n, k/n] (1 ≤ k ≤ n). Then, for the measure of the Riesz walk with initial state of Ψ₀ = [1, 0]ᵀδ₀, P(X₂ₜ/(2t) ∈ Tₖ(t)) = P(X₈ₜ/(8t) ∈ Tₖ(t)), for any t ∈ ℤ_>.” Here t and k are natural numbers, 1 ≤ t and k ≤ t. The two coordinates at site x are 2x and 2x+1. The intervals have rational endpoints and probabilities are real.", DescribeRole.Definition, AssessedProvenance.FromLiterature(HK)),
             Node("D5/S3/Quantum/Walks/RieszWalkSelfSimilarity.result", "result", Disp(Seq(Operatorname, Grp(F.Id("claim")))),
-                "Cumulative probabilities are squared norms of projections onto the Laurent windows. Fourth-power decimation and the parity-weighted projection identity make these norms equal at the two scales. Interval differences give the assertion, including the singleton interval at the origin.", DescribeRole.Theorem, AssessedProvenance.FromRepo(HK))), []));
+                "Cumulative probabilities are squared norms of projections onto the Laurent windows. Fourth-power decimation and the parity-weighted projection identity make these norms equal at the two scales. Interval differences give the assertion, including the singleton interval at the origin.", DescribeRole.Theorem, AssessedProvenance.FromRepo(HK),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanaoka-konno-2021-riesz-walk-self-similarity"),
+                    ResolutionKind.Proved))), []));
     private static DocumentBlock Node(string handle, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("hk-" + handle.Replace('/', '-').Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(handle), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Qualified(name.Split('.')), [.. args]);
     private static Formula Qualified(params string[] parts) => Seq(Operatorname, Grp(Seq([.. parts.Select((x,i) =>
