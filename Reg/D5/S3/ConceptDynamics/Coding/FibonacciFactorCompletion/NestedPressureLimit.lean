@@ -546,3 +546,146 @@ def upper_memory_subshift_registration :
 #print axioms upper_memory_subshift_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.ExactOriginal120
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources
+noncomputable section
+open _root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.WeightedPressure
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature (ℕ → Set (ℤ → CuLetter)) (fun _ => ℕ) (fun _ => Set (ℤ → CuLetter))
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ Y j => Y j) (fun e => nomatch e)
+theorem dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨(fun j => if j = 0 then {fun _ : ℤ => CuLetter.u} else ∅), 0, 1, ?_⟩
+  simp [actual, realize]
+def singletonSequence : ℕ → Set (ℤ → CuLetter) := fun _ => {fun _ => CuLetter.u}
+theorem singleton_shift : ∀ j (ω : ℤ → CuLetter), ω ∈ singletonSequence j → ∀ a : ℤ,
+    (fun i => ω (i + a)) ∈ singletonSequence j := by
+  intro j ω hω a
+  change ω = (fun _ => CuLetter.u) at hω
+  subst ω; rfl
+abbrev pressureArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (Y : ℕ → Set (ℤ → CuLetter))
+    (compact : ∀ j, IsCompact (Y j)) (occupied : ∀ j, (Y j).Nonempty)
+    (decreasing : Antitone Y)
+    (shift : ∀ j (ω : ℤ → CuLetter), ω ∈ Y j → ∀ a : ℤ, (fun i => ω (i + a)) ∈ Y j) (θ : ℝ),
+    (⋂ j, r.readout () Y j).Nonempty ∧ Antitone (fun j => pressure (Y j) θ) ∧
+    (⨅ j, pressure (Y j) θ) = pressure (⋂ j, Y j) θ ∧
+    Tendsto (fun j => pressure (Y j) θ) atTop (𝓝 (pressure (⋂ j, Y j) θ))
+def emptyRejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ => ∅) (fun e => nomatch e)
+theorem pressure_rejected_law : ¬ pressureArena.Law emptyRejected := by
+  intro law
+  obtain ⟨ω, hω⟩ := (law singletonSequence (fun _ => isCompact_singleton)
+    (fun _ => ⟨fun _ => CuLetter.u, rfl⟩) (fun _ _ _ => Set.Subset.rfl) singleton_shift 0).1
+  exact Set.mem_iInter.mp hω 0
+def pressureEvidence : Registration pressureArena (type_of% @nested_pressure_limit) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@nested_pressure_limit, emptyRejected, pressure_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity pressureArena.Law actual emptyRejected pressure_rejected_law
+  dependence := dependence
+theorem empty_rate : weightedFactorRate (∅ : Set (ℤ → CuLetter)) = 0 := by
+  have counts (T : ℕ) : factorCount (∅ : Set (ℤ → CuLetter)) T = 0 := by
+    letI : IsEmpty (FactorDictionary (∅ : Set (ℤ → CuLetter)) T) :=
+      ⟨fun w => by obtain ⟨ω, hω, _⟩ := w.property.1; exact hω⟩
+    exact Nat.card_of_isEmpty
+  simp [weightedFactorRate, counts]
+def rateRejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ j => if j = 0 then ∅ else MemoryLanguage .upper 0 2 0) (fun e => nomatch e)
+abbrev rateArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (Y : ℕ → Set (ℤ → CuLetter))
+    (compact : ∀ j, IsCompact (Y j)) (occupied : ∀ j, (Y j).Nonempty)
+    (decreasing : Antitone Y)
+    (shift : ∀ j (ω : ℤ → CuLetter), ω ∈ Y j → ∀ a : ℤ, (fun i => ω (i + a)) ∈ Y j),
+    Antitone (fun j => weightedFactorRate (r.readout () Y j)) ∧
+    Tendsto (fun j => weightedFactorRate (Y j)) atTop (𝓝 (weightedFactorRate (⋂ j, Y j)))
+theorem rate_rejected_law : ¬ rateArena.Law rateRejected := by
+  intro law
+  have bad := (law singletonSequence (fun _ => isCompact_singleton)
+    (fun _ => ⟨fun _ => CuLetter.u, rfl⟩) (fun _ _ _ => Set.Subset.rfl) singleton_shift).1
+    (show (0 : ℕ) ≤ 1 by decide)
+  change weightedFactorRate (MemoryLanguage .upper 0 2 0) ≤ weightedFactorRate (∅ : Set (ℤ → CuLetter)) at bad
+  rw [empty_rate] at bad
+  have pos := original_positive_weighted_rate .upper 0 2 0 le_rfl
+  linarith
+def rateEvidence : Registration rateArena (type_of% @nested_rate_limit) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@nested_rate_limit, rateRejected, rate_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity rateArena.Law actual rateRejected rate_rejected_law
+  dependence := dependence
+abbrev upperSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => ℝ → Set (ℤ → CuLetter))
+def upperActual : Realization upperSignature :=
+  realize upperSignature (fun _ n K => MemoryLanguage .upper n K) (fun e => nomatch e)
+abbrev upperArena : Arena.{0,0,0,0,0} where
+  signature := upperSignature
+  Law r := ∀ (K : ℕ) (d : ℝ) (positive : 1 ≤ K),
+    Antitone (fun n => weightedFactorRate (r.readout () n K d)) ∧
+    Tendsto (fun n => weightedFactorRate (MemoryLanguage .upper n K d)) atTop
+      (𝓝 (weightedFactorRate (AuxiliaryLanguage K d)))
+def upperRejected : Realization upperSignature :=
+  realize _ (fun _ n _ _ => if n = 0 then ∅ else MemoryLanguage .upper 0 2 0) (fun e => nomatch e)
+theorem upper_rejected_law : ¬ upperArena.Law upperRejected := by
+  intro law
+  have bad := (law 1 0 le_rfl).1 (show (0 : ℕ) ≤ 1 by decide)
+  change weightedFactorRate (MemoryLanguage .upper 0 2 0) ≤ weightedFactorRate (∅ : Set (ℤ → CuLetter)) at bad
+  rw [empty_rate] at bad
+  have pos := original_positive_weighted_rate .upper 0 2 0 le_rfl
+  linarith
+def upperEvidence : Registration upperArena (type_of% @original_upper_rate_limit) where
+  actual := upperActual
+  bridge := Iff.rfl
+  variation := ⟨@original_upper_rate_limit, upperRejected, upper_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity upperArena.Law
+    upperActual upperRejected upper_rejected_law
+  dependence := by
+    intro i
+    refine ⟨0, 1, 2, ?_⟩
+    intro eq
+    exact Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.SetWitness.upper_separation
+      (congrFun eq (hSide .high + 1))
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.Pressure
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.nested_pressure_limit)
+    (type_of% Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.actual) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.Pressure.unit, realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.pressureEvidence, realizationSource := none, generated := false,
+  arena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.pressureArena⟩, objectArena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.pressureArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.pressureArena ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.pressureEvidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.observationSignature (fun _ Y j => Y j) (fun e => nomatch e)), variation := .absent, sensitivity := .absent,
+  partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg", "body", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.Pressure
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.Rate
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.nested_rate_limit)
+    (type_of% Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.actual) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.Rate.unit, realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.rateEvidence, realizationSource := none, generated := false,
+  arena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.rateArena⟩, objectArena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.rateArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.rateArena ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.rateEvidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.observationSignature (fun _ Y j => Y j) (fun e => nomatch e)), variation := .absent, sensitivity := .absent,
+  partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.Rate
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.UpperRate
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.original_upper_rate_limit)
+    (type_of% upperActual) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.UpperRate.unit, realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.upperEvidence, realizationSource := none, generated := false,
+  arena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.upperArena⟩, objectArena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.upperArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.upperArena ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.upperEvidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.upperSignature (fun _ n K => MemoryLanguage .upper n K) (fun e => nomatch e)), variation := .absent, sensitivity := .absent,
+  partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "body", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.NestedPressureLimit.LimitSources.UpperRate

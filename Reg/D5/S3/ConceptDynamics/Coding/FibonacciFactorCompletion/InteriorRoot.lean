@@ -979,3 +979,16 @@ def original_all_u_cycle_registration :
 #print axioms original_all_u_cycle_registration
 end
 end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.ExactOriginal93
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.UpperMemoryIntersection
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.original_upper_memory_intersection)
+    (type_of% Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation.actual) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.UpperMemoryIntersection.unit, realizationName := `Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation.evidence, realizationSource := none, generated := false,
+  arena := .source ⟨Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation.sourceArena⟩, objectArena := .source ⟨Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation.sourceArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation.sourceArena ⟨Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation.evidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation.observationSignature (fun _ n K => MemoryLanguage .upper n K) (fun e => nomatch e)), variation := .absent, sensitivity := .absent,
+  partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "fn", "arg", "arg", "body", "body", "body", "fn", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.UpperMemoryIntersection

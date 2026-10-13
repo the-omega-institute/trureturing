@@ -901,3 +901,84 @@ def original_registration :
 #print axioms original_registration
 end
 end Reg.Support.FibonacciOriginalSourceWitness.Source155
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+noncomputable section
+def disconnectedSet : Set ℝ := {z | z = 0 ∨ z = 2}
+theorem disconnected_set : ¬ disconnectedSet.OrdConnected := by
+  intro h
+  have impossible := h.out (show (0 : ℝ) ∈ disconnectedSet from Or.inl rfl)
+    (show (2 : ℝ) ∈ disconnectedSet from Or.inr rfl) (show (1 : ℝ) ∈ Set.Icc 0 2 by norm_num)
+  norm_num [disconnectedSet] at impossible
+abbrev ownedConnectedArena : Arena.{0,0,0,0,0} where
+  signature := ownedSignature
+  Law r := ∀ (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ) (c : Color),
+    {z | r.readout () ⟨o,θ⟩ c z}.OrdConnected
+def ownedConnectedRejected : Realization ownedSignature :=
+  realize ownedSignature (fun _ _ _ => disconnectedSet) (fun e => nomatch e)
+theorem owned_connected_rejected_law : ¬ ownedConnectedArena.Law ownedConnectedRejected :=
+  fun law => disconnected_set (law (fun _ => false) 0 le_rfl 0)
+def ownedConnectedEvidence : Registration ownedConnectedArena (type_of% @owned_color_ordConnected) where
+  actual := ownedActual
+  bridge := Iff.rfl
+  variation := ⟨@owned_color_ordConnected, ownedConnectedRejected, owned_connected_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity ownedConnectedArena.Law ownedActual ownedConnectedRejected owned_connected_rejected_law
+  dependence := owned_dependence
+abbrev competingParams := Σ _ : Ownership, Σ _ : ℝ, Σ _ : Guard, Σ _ : List Label, Σ _ : List Label, List Color
+abbrev competingSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature competingParams (fun _ => Bool → List Color) (fun _ => Set ℝ)
+def competingActual : Realization competingSignature :=
+  realize competingSignature (fun _ p W => CompetingT p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2 W) (fun e => nomatch e)
+abbrev competingConnectedArena : Arena.{0,0,0,0,0} where
+  signature := competingSignature
+  Law r := ∀ (o : Ownership) (θ : ℝ) (hθ : 0 ≤ θ) (s : Guard)
+    (Q V : List Label) (h : List Color) (W : Bool → List Color),
+    (r.readout () ⟨o,θ,s,Q,V,h⟩ W).OrdConnected
+def competingRejected : Realization competingSignature :=
+  realize competingSignature (fun _ _ _ => disconnectedSet) (fun e => nomatch e)
+theorem competing_rejected_law : ¬ competingConnectedArena.Law competingRejected :=
+  fun law => disconnected_set (law (fun _ => false) 0 le_rfl .G0 [] [] [] (fun _ => []))
+theorem competing_dependence : ObservationalDependence competingSignature competingActual := by
+  intro i
+  refine ⟨⟨(fun _ => false),0,.G0,[],[],[]⟩, (fun _ => []), (fun _ => [1]), ?_⟩
+  have yes : (-1 : ℝ) ∈ CompetingT (fun _ => false) 0 .G0 [] [] [] (fun _ => []) := by
+    refine ⟨boundary_supported, ?_, ?_⟩ <;> simp
+  intro eq
+  change CompetingT (fun _ => false) 0 .G0 [] [] [] (fun _ => []) =
+    CompetingT (fun _ => false) 0 .G0 [] [] [] (fun _ => [1]) at eq
+  have bad : (-1 : ℝ) ∈ CompetingT (fun _ => false) 0 .G0 [] [] [] (fun _ => [1]) := eq ▸ yes
+  exact boundary_owned_one (by simpa [compose] using bad.2.2 false 0 (by decide))
+def competingConnectedEvidence : Registration competingConnectedArena (type_of% @competingT_ordConnected) where
+  actual := competingActual
+  bridge := Iff.rfl
+  variation := ⟨@competingT_ordConnected, competingRejected, competing_rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity competingConnectedArena.Law competingActual competingRejected competing_rejected_law
+  dependence := competing_dependence
+end
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.OwnedConnected
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.owned_color_ordConnected)
+    (type_of% Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ownedActual) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.OwnedConnected.unit, realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ownedConnectedEvidence, realizationSource := none, generated := false,
+  arena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ownedConnectedArena⟩, objectArena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ownedConnectedArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ownedConnectedArena ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ownedConnectedEvidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.ownedSignature (fun _ p c => OwnedColor p.1 p.2 c) (fun e => nomatch e)), variation := .absent, sensitivity := .absent,
+  partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "body", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.OwnedConnected
+
+namespace Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.CompetingConnected
+noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingT_ordConnected)
+    (type_of% Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingActual) Unit Unit := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.CompetingConnected.unit, realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingConnectedEvidence, realizationSource := none, generated := false,
+  arena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingConnectedArena⟩, objectArena := .source ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingConnectedArena⟩, catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingConnectedArena ⟨Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingConnectedEvidence⟩, correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent, readout := some (realize.{0,0,0,0,0} Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.competingSignature (fun _ p W => CompetingT p.1 p.2.1 p.2.2.1 p.2.2.2.1 p.2.2.2.2.1 p.2.2.2.2.2 W) (fun e => nomatch e)), variation := .absent, sensitivity := .absent,
+  partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry, definition := none, coordinates := #[0, 1, 3, 4, 5, 6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.TailGeometry.CompetingConnected

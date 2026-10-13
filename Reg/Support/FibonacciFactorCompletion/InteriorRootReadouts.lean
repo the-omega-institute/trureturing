@@ -817,3 +817,37 @@ end Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.InteriorRoot.Exac
 
 
 
+
+namespace Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation
+noncomputable section
+abbrev observationSignature : Signature.{0,0,0,0,0} :=
+  Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => ℝ → Set (ℤ → CuLetter))
+def actual : Realization observationSignature :=
+  realize observationSignature (fun _ n K => MemoryLanguage .upper n K) (fun e => nomatch e)
+theorem dependence : ObservationalDependence observationSignature actual := by
+  intro i
+  refine ⟨0, 1, 2, ?_⟩
+  intro eq
+  exact Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.SetWitness.upper_separation
+    (congrFun eq (hSide .high + 1))
+abbrev sourceArena : Arena.{0,0,0,0,0} where
+  signature := observationSignature
+  Law r := ∀ (K : ℕ) (d : ℝ),
+    {ω | ∀ n : ℕ, K ≤ n → ω ∈ r.readout () n K d} = AuxiliaryLanguage K d
+def rejected : Realization observationSignature :=
+  realize observationSignature (fun _ _ _ _ => ∅) (fun e => nomatch e)
+theorem rejected_law : ¬ sourceArena.Law rejected := by
+  intro law
+  have yes := (original_memory_language_nesting 0 1 0).2.1
+    (Reg.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook.SetWitness.all_u_memory
+      .lower 1 1 0 (by decide))
+  have bad := (law 1 0).symm ▸ yes
+  exact bad 1 le_rfl
+def evidence : Registration sourceArena (type_of% @original_upper_memory_intersection) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@original_upper_memory_intersection, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity sourceArena.Law actual rejected rejected_law
+  dependence := dependence
+end
+end Reg.Support.FibonacciFactorCompletion.UpperMemoryObservation
