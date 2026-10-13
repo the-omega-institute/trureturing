@@ -2256,34 +2256,45 @@ $\square$
 
 ## 460. 实际自匹配源对单独头部证书的条件性障碍
 
-本节记录一个条件性障碍，不能当作无条件的 Robin 结论或 RH 结论。取主卷
-§111.4 的实际自匹配链 \(N_j\)，置
+本节将主卷 §111.4 的实际自匹配链接到同窗素数头部，得到一种证书路线的条件性障碍。
+这是既有来源的仓内应用（`repo-derived`），不主张文献原创性。假设 RH，并沿用
+[Nicolas 比较笔记](../../../Library/ArithSums/nicolas2025comparison.md) 的完整零点公式及误差范围；
+另明确采用 RH 下 $\vartheta(u)-u=O(\sqrt u\log^2u)$ 作为外部解析输入。
+下面的非存在结论只在这些条件下成立，不给出无条件 Robin 结论或 RH 结论。
+
+取主卷 §111.4 的同一实际链 $N_j$，置
 
 $$
 A_j=\log N_j,\qquad L_j=\log A_j,\qquad T_j=\sqrt{A_j}\,L_j.
 $$
 
-沿用同一窗口的头部定义
+定义这个整数自己的窗口：
 
 $$
-D_j=\lfloor A_j^{1/8}\rfloor,\qquad
-G_j=\sum_{\substack{d\le D_j\\d\mid\operatorname{rad}(N_j)}}
-       \frac{\mu^2(d)}{\varphi(d)},\qquad
-h_j=\min\{L_j/2000,G_j/100\},\qquad B_j=A_j e^{h_j}.
+\begin{aligned}
+D_j&=\lfloor A_j^{1/8}\rfloor,\\
+G_j&=\sum_{\substack{d\le D_j\\d\mid\operatorname{rad}(N_j)}}
+       \frac{\mu^2(d)}{\varphi(d)},\\
+h_j&=\min\{L_j/2000,G_j/100\},\qquad B_j=A_j e^{h_j}.
+\end{aligned}
 $$
 
-令 \(Y_j=\sqrt{B_j}\)，令 \(P_j\) 为所有满足 \(p\le Y_j\) 且 \(p\mid N_j\) 的素数之积，
-并记
+这里 $\mu$ 是 Möbius 函数。令 $Y_j=\sqrt{B_j}$，令 $P_j$ 为所有满足
+$p\le Y_j$ 且 $p\mid N_j$ 的素数之积，并记
 
 $$
-S_j^\circ=\sum_{\substack{A_j<r\le B_j\\(r,P_j)=1}}\frac1r
--\sum_{\substack{k\ge2,\ A_j<p^k\le B_j\\p\nmid N_j}}\frac1{p^k},\qquad
-V_j=-\frac{\vartheta(A_j)-A_j}{A_jL_j}
+\begin{aligned}
+S_j^\circ&=\sum_{\substack{A_j<r\le B_j\\(r,P_j)=1}}\frac1r
+-\sum_{\substack{k\ge2,\ A_j<p^k\le B_j\\p\nmid N_j}}\frac1{p^k},\\
+V_j&=-\frac{\vartheta(A_j)-A_j}{A_jL_j}
  +\log\frac{L_j+h_j}{L_j}-S_j^\circ.
+\end{aligned}
 $$
 
-§111.4 的链具有唯一的全正整数价格极值性质。对充分大的 \(j\) 和
-\(p\le Y_j\)，首层价格满足
+### 460.1. 实际支撑覆盖与零价格亏损
+
+因为 $0\le h_j\le L_j/2000$，先有
+$Y_j\le A_j^{1/2+1/4000}$。对充分大的 $j$ 和全部 $p\le Y_j$，首层价格满足
 
 $$
 r_{p,1}=\frac{\log(1+1/p)}{\log p}
@@ -2291,79 +2302,105 @@ r_{p,1}=\frac{\log(1+1/p)}{\log p}
 >\frac1{A_j\log A_j}=\lambda(A_j),
 $$
 
-因为 \(Y_j=A_j^{1/2+1/4000}\)，而
-\((Y_j+1)\log Y_j<A_j\log A_j\) 最终成立。因此这些素数确实都出现在
-\(N_j\) 的支撑中。再用标准的平方自由和估计
+因为 $(A_j^{1/2+1/4000}+1)\log(A_j^{1/2+1/4000})<A_j\log A_j$ 最终成立。
+§111.4 的唯一价格最优者取尽全部严格有益层，所以这些素数确实都出现在 $N_j$ 中。
+特别地，每个 $d\le D_j$ 的平方自由核都被支撑覆盖。
+
+此处只需要有限的调和和比较。按 $d=\operatorname{rad}(n)$ 分组，使用
+$\sum_{\operatorname{rad}(n)=d}1/n=1/\varphi(d)$（$d$ 平方自由），便有
 
 $$
-\sum_{d\le x}\frac{\mu^2(d)}{\varphi(d)}=\log x+O(1)
+H_{D_j}=\sum_{n\le D_j}\frac1n
+\le\sum_{d\le D_j}\frac{\mu^2(d)}{\varphi(d)}
+=G_j,\qquad H_{D_j}\ge\log(D_j+1)>L_j/8.
 $$
 
-得到
+因此最终 $h_j=L_j/2000$，$B_j=A_j^{1+1/2000}$。
+区间 $(A_j,B_j]$ 中的每个合数都有一个不超过 $Y_j$ 的素因子，
+而第二个和中的每个素数底数也不超过 $Y_j$；它们全被实际支撑覆盖。
+又有 $Y_j<A_j$，故
 
 $$
-G_j=\sum_{d\le D_j}\frac{\mu^2(d)}{\varphi(d)}=\log D_j+O(1),
-\qquad G_j\ge L_j/20
-\quad\text{对充分大的 }j,
-$$
-
-从而
-
-$$
-h_j=L_j/2000,\qquad B_j=A_j^{1+1/2000},\qquad
 S_j^\circ=\sum_{A_j<p\le B_j}\frac1p.
 $$
 
-在这个实际支撑上，头部的有效缺口为零；下文只讨论零缺口的头部证书。
-
-同一窗口的 Abel 恒等式为
+同一整数的价格亏损为
 
 $$
-J_1^\vartheta(A_j)=V_j+R_\vartheta(B_j)+f_j.
+d_{A_j}(N_j)
+=S(\lambda(A_j))-
+ \left(\log Z(N_j)-\lambda(A_j)\log N_j\right)=0,
 $$
 
-若另外假设 RH，并接受 [Nicolas 比较笔记](../../../Library/ArithSums/nicolas2025comparison.md)
-中所列的零点公式、互反素数估计及其误差范围，则
+其中 $S$、$Z$ 和 $\lambda$ 沿用主卷 §98.1；没有换成另一个极值整数。
+
+### 460.2. 完整尾项决定头部的条件性下界
+
+沿用 Nicolas 笔记的正核，明确置
+
+$$
+\begin{aligned}
+K(u)&=\frac{1+\log u}{u^2\log^2u},\\
+J_1^\vartheta(A)&=-\int_A^\infty(\vartheta(u)-u)K(u)\,du,\\
+J_1^\psi(A)&=-\int_A^\infty(\psi(u)-u)K(u)\,du,\\
+J_1^{\ge2}(A)&=-\int_A^\infty(\psi(u)-\vartheta(u))K(u)\,du,\\
+R_\vartheta(B)&=\frac{\vartheta(B)-B}{B\log B}+J_1^\vartheta(B).
+\end{aligned}
+$$
+
+这里 $\vartheta(u)=\sum_{p\le u}\log p$，
+$\psi(u)=\sum_{p^k\le u}\log p$；两者均保留包含端点的实际原子及其对数权重。
+有限 Stieltjes 分部积分保留 $(A_j,B_j]$ 的全部素数原子，直接给出
+
+$$
+J_1^\vartheta(A_j)=V_j+R_\vartheta(B_j).
+$$
+
+在本节的 RH 与完整显式公式条件下，对 Nicolas 笔记的 GR5–GR8 与 GAK10–GAK16
+取确定尺度 $c=1$，结合经典完整零点权重恒等式，得到
 
 $$
 |T_jJ_1^\psi(A_j)|\le c_0+o(1),\qquad
-c_0=2+\gamma-\log(4\pi)<1/20,
+c_0=2+\gamma-\log(4\pi)<1/20.
 $$
 
-而同一笔记的 GPP1--GPP4 给出
+这里保留完整积分系数及 GAK16 的初等修正；后者乘以 $T_j$ 后为 $O(A_j^{-1/2})$，
+不能把完整显式公式直接替换成零点首项。GPP1–GPP4 的同一完整高次幂估计在尺度 $c=1$ 给出
 
 $$
-T_jJ_1^{\psi-\vartheta}(A_j)\longrightarrow-2.
+T_jJ_1^{\ge2}(A_j)\longrightarrow-2.
 $$
 
-于是
+由于 $J_1^\vartheta=J_1^\psi-J_1^{\ge2}$，于是
 
 $$
 T_jJ_1^\vartheta(A_j)\ge2-c_0-o(1).
 $$
 
-同一 RH 端点估计给出
+RH 下 $\vartheta(u)-u=O(\sqrt u\log^2u)$ 还控制同一端点及整个尾项，故
 
 $$
-T_jR_\vartheta(B_j)=O(A_j^{-1/7200}L_j^2)\longrightarrow0,
+R_\vartheta(B_j)=O\!\left(\frac{\log B_j}{\sqrt{B_j}}\right),
+\qquad
+T_jR_\vartheta(B_j)=O(A_j^{-1/4000}L_j^2)\longrightarrow0.
 $$
 
-从而
+从而在这些完整条件下
 
 $$
 \liminf_{j\to\infty}T_jV_j\ge2-c_0>\frac{39}{20}.
 $$
 
-因此，在这些明确的条件下，不存在一种适用于所有实际整数、只使用该头部的统一零缺口点态证书，
-其预算强迫
+因此，不存在一种适用于所有实际整数、只使用上述头部的统一点态证书，
+其预算在价格亏损为零时强迫
 
 $$
-T_jV_j\le b(A_j),
-\qquad
-b(A_j)\le b_0<1.
+T_jV_j\le b(A_j),\qquad b(A_j)\le b_0<1.
 $$
 
-这个障碍只排除单独头部证书。GPP1--GPP4 同时保留补偿项
-\(T_jH_\mu=-2m_\mu+o(1)\)，所以配对完整预算仍是另一项研究对象。端点估计和零点公式
-属于外部文献输入，未在本库独立 Lean 验证；本节不宣称无条件非存在，也不涉及只在假设的
-Robin 极值整数上选取的证书。
+这只排除该类单独头部证书。GPP1–GPP4 保留的完整高次幂项提供同尺度补偿，
+所以同一实际整数、同一概率律上的头部与高次幂联合预算仍是另一项研究对象。
+这里没有排除只在额外选定的潜在 Robin 极值整数上要求成立的证书，
+也没有得到无条件非存在结论、Robin 反例或 RH 反例。
+
+## 追加锚（本行以下为增补区）
