@@ -62,7 +62,7 @@ private theorem reflection_involutive (M : Fin 4 → ℝ) (hM : lorentz M M ≠ 
   exact Module.involutive_preReflection hf
 
 set_option maxHeartbeats 800000 in
-private theorem positive_time_of_pair (X Y : Fin 4 → ℝ)
+theorem positive_time_of_pair (X Y : Fin 4 → ℝ)
     (hX : lorentz X X = -1) (hY : lorentz Y Y = -1)
     (ht : 0 < X 3) (hp : lorentz X Y < 0) : 0 < Y 3 := by
   simp [lorentz, Fin.sum_univ_succ] at hX hY hp
