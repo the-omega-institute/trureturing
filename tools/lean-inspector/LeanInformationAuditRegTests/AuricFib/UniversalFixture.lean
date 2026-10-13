@@ -25,7 +25,7 @@ def nativeEmpirical := LeanInformationAuditRegTests.AuricFib.CompiledFixture.emp
 def nativeApex := LeanInformationAuditRegTests.AuricFib.CompiledFixture.apex
 def nativeZeroCondition := LeanInformationAuditRegTests.AuricFib.CompiledFixture.zeroCondition
 def nativeUnsupported := LeanInformationAuditRegTests.AuricFib.CompiledFixture.unsupported
-def nativeRejected := LeanInformationAuditRegTests.AuricFib.CompiledFixture.rejected
+def nativeLayerLimited := LeanInformationAuditRegTests.AuricFib.CompiledFixture.layerLimited
 def nativeWrongTarget := LeanInformationAuditRegTests.AuricFib.CompiledFixture.wrongTarget
 def nativeParameterized := LeanInformationAuditRegTests.AuricFib.CompiledFixture.parameterized
 

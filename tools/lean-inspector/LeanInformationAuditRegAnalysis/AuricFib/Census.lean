@@ -88,7 +88,6 @@ def parseSchedule (request : Json) : Except String ScheduleInput := do
     | none => pure [] | some value => parseNames value
   let layers ← match (request.getObjVal? "layers").toOption with
     | none => pure [1, 2, 3, 0] | some value => parseNames value
-  unless layers.length ≤ 64 do throw "at most 64 finite successor layers are supported"
   return ⟨initial.toFinset, layers⟩
 
 def selectedAt (schedule : ScheduleInput) (position : Nat) : Finset (Fin 4) :=

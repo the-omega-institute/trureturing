@@ -85,7 +85,7 @@ def write_release_report(root):
     report.parent.mkdir(parents=True, exist_ok=True)
     rows = [dict(module=name, source_path=path, source_sha256="sha256:" + publication.digest(root / path),
                  imports=[], declarations=[]) for name, path in sorted(publication.selection.Selection(root).modules().items())]
-    report.write_bytes(materials.canonical_json(dict(schema=publication.selection.REPORT_FORMAT, modules=rows)))
+    report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
     with zipfile.ZipFile(publication.member(report, ".materials.zip"), "w"):
         pass
     origins = {row["module"]: dict(module=row["module"],

@@ -5,6 +5,7 @@ The command guard bounds infrastructure. No duration is a correctness criterion.
 Each fixture source and artifact belongs solely to this invocation.
 """
 import hashlib
+import copy
 import json
 import os
 from pathlib import Path
@@ -22,6 +23,55 @@ sys.path.insert(0, str(ROOT / 'tools/lean-inspector'))
 import fib_analysis
 import publication
 import native
+from test_auric_fib_analysis import assert_layer_limit
+
+PREVIOUS_FORMAT = "stratalint-raw-lean-report-v3"
+
+
+def previous_partial_artifact(artifact, directory):
+    """Canonical prior-reading fixture; compiled requests/materials/origin stay real.
+
+    This fixture is created during this test, not a historical occurrence.
+    The old partial parser rejected every schedule missing the full catalog.
+    """
+    report = directory / "previous-raw-lean-report.json"
+    with zipfile.ZipFile(artifact) as bundle:
+        for suffix in native.ROW_SUFFIXES:
+            Path(str(report) + suffix).write_bytes(bundle.read(publication.RAW + suffix))
+    row = publication.validate_rows(report, Path(str(report) + ".materials.zip"))[0]
+    origin = publication.validate_origin(report, [row])
+    partition = row["fib_analysis"]
+    partition["schema_version"] = 1
+    for leaf in partition["applications"]:
+        request = leaf["request"]
+        if request is not None and request.get("arena", "native-single-window") == "native-single-window":
+            selected = set(request.get("initial_readouts", [])) | set(request.get("layers", []))
+            if len(request.get("layers", [])) > 64 or selected != {"atom", "seam", "guard", "reply"}:
+                reading = dict.fromkeys(fib_analysis.FIELDS)
+                reading["arena"] = dict(kind="invalid-input", cardinality=None, ordered_pair_denominator=None)
+                reason = ("at most 64 finite successor layers are supported" if len(request.get("layers", [])) > 64
+                    else "the complete atom,seam,guard,reply bundle must remain in the final layer")
+                reading["disposition"] = dict(status="refuted", reason=reason, is_lean_proof=False,
+                    proof_escape="unchanged; downstream analysis only",
+                    physical_source_law="unknown; input validation is not source certification",
+                    multiwindow_continuation="unknown; no multiwindow joint contract",
+                    cost_and_research_value="not assessed; no aggregate score",
+                    readings={key: dict(kind="unavailable", reason=reason)
+                              for key in fib_analysis.FIELDS - {"disposition"}})
+                leaf["reading"] = reading
+    report.write_bytes(publication.materials.canonical_json(dict(
+        schema=publication.materials.REPORT_SCHEMA, modules=[row])))
+    publication.write_origin(report, row["module"],
+        {key: origin[key] for key in ("producer_sources_sha256", "inspector_executable_sha256")},
+        origin["input_projection"])
+    # Statement materials were validated before the reading-only transform;
+    # their bytes stay untouched. The current reader must reject this partition.
+    publication.validate_origin(report, [row])
+    temporary = artifact.with_suffix('.prior-fixture.tmp')
+    publication.zip_files(temporary, [(publication.RAW + suffix, publication.member(report, suffix))
+                                      for suffix in native.ROW_SUFFIXES])
+    os.replace(temporary, artifact)
+    return row
 
 MODULE = 'Reg.Support.AuricFibUniversalFixture'
 SIBLING = 'Reg.Support.AuricFibUniversalSibling'
@@ -94,7 +144,78 @@ end AuricFibUniversalProduction
             '  evidence := .unsupported "no acquired contract for this adapter"\n'
             'end AuricFibUniversalSibling\n')
         cls.sources[2].write_text(cls.source)
-        cls.first = cls.build()
+        # Acquire real compiler inputs under the retired semantic identifier.
+        reader = ROOT / 'tools/scripts/report/lean-report-selection.py'
+        original, metadata = reader.read_bytes(), reader.stat()
+        retired = original.replace(publication.selection.REPORT_FORMAT.encode(), PREVIOUS_FORMAT.encode())
+        reader.write_bytes(retired)
+        try:
+            fresh = cls.build()
+            cls.previous_row = previous_partial_artifact(cls.artifacts[0], cls.directory)
+            cls.previous_artifact = cls.directory / 'previous-module.zip'
+            shutil.copyfile(cls.artifacts[0], cls.previous_artifact)
+            sibling_prior = cls.directory / 'previous-sibling'
+            sibling_prior.mkdir()
+            previous_partial_artifact(cls.artifacts[1], sibling_prior)
+            # Same detached metadata/closure, retired partition: reissue every
+            # leaf through the production producer, with no fabricated binding.
+            current = copy.deepcopy(cls.previous_row)
+            current['fib_analysis']['schema_version'] = 2
+            for leaf in current['fib_analysis']['applications']:
+                leaf['reading'] = None
+            stats = fib_analysis.produce(current, cls.previous_artifact,
+                ROOT / 'tools/scripts/auric-fib-analysis.sh')
+            if stats['reused'] != 0:
+                raise AssertionError('same-metadata prior-format leaves survived migration')
+            generated = {row['application'].removeprefix(PREFIX): row
+                         for row in current['fib_analysis']['applications']
+                         if row['application'].startswith(PREFIX)}
+            if generated != fresh:
+                raise AssertionError('same-metadata migration differs from complete acquisition')
+            cls.current_complete_row = current
+            try:
+                fib_analysis.consume(cls.directory / 'previous-raw-lean-report.json')
+            except ValueError as error:
+                if str(error) != 'fib.invalid_partition':
+                    raise
+            else:
+                raise AssertionError('consumer accepted a retired reading partition')
+            # The canonical former reading is really reusable at module level.
+            prior_stamp = (publication.digest(cls.artifacts[0]), cls.artifacts[0].stat().st_mtime_ns)
+            cls.command([MODULE + ':report'])
+            if prior_stamp != (publication.digest(cls.artifacts[0]), cls.artifacts[0].stat().st_mtime_ns):
+                raise AssertionError('previous-format no-op changed the canonical fixture')
+            if cls.counts.get('extract', 0) != 0:
+                raise AssertionError('previous-format fixture was not reusable')
+        finally:
+            reader.write_bytes(original)
+            os.chmod(reader, metadata.st_mode)
+            os.utime(reader, ns=(metadata.st_atime_ns, metadata.st_mtime_ns))
+        sources = {p: publication.digest(p) for p in cls.sources}
+        compiled = {p: (publication.digest(p), p.stat().st_mtime_ns)
+                    for name in (MODULE, SIBLING, DATA)
+                    for p in (ROOT / '.lake/build/reg/lib/lean').glob(name.replace('.', '/') + '.*')}
+        if not compiled or not any(p.suffix == '.olean' for p in compiled):
+            raise AssertionError('migration requires real Reg compiler artifacts')
+        cls.first = cls.build(migration=True)
+        if sources != {p: publication.digest(p) for p in cls.sources}:
+            raise AssertionError('migration changed authored sources')
+        if publication.validate_rows(cls.report, Path(str(cls.report) + '.materials.zip'))[0] != cls.current_complete_row:
+            raise AssertionError('migrated complete module differs from current complete output')
+        if compiled != {p: (publication.digest(p), p.stat().st_mtime_ns) for p in compiled}:
+            raise AssertionError('semantic migration recompiled Reg inputs')
+        if cls.counts.get('extract') != 2 or cls.counts.get('fib-reused', 0) != 0:
+            raise AssertionError('semantic migration did not retire module and leaf reuse')
+        if cls.first != fresh:
+            raise AssertionError('migrated readings differ from current complete acquisition')
+        print('UNIVERSAL_ANALYSIS_MIGRATION ' + json.dumps(dict(
+            previous_format=PREVIOUS_FORMAT, current_format=publication.selection.REPORT_FORMAT,
+            previous_schema=1, current_schema=2, unchanged_reg_compiler_artifacts=len(compiled),
+            same_compiled_inputs=True, current_complete_equal=True, actual_work=cls.counts,
+            previous_artifact_sha256=publication.digest(cls.previous_artifact),
+            source_sha256={str(p.relative_to(ROOT)): sha for p, sha in sources.items()},
+            partial_input_identity=next(x['input_identity'] for x in cls.previous_row['fib_analysis']['applications']
+                                        if x['application'] == PREFIX + 'nativeAbsent'))), flush=True)
 
     @classmethod
     def cleanup(cls):
@@ -162,7 +283,7 @@ end AuricFibUniversalProduction
         return result
 
     @classmethod
-    def build(cls, *, full=False):
+    def build(cls, *, full=False, migration=False):
         sibling_before = ((hashlib.sha256(cls.artifacts[1].read_bytes()).hexdigest(),
                            cls.artifacts[1].stat().st_mtime_ns)
                           if cls.artifacts[1].exists() else None)
@@ -188,7 +309,7 @@ end AuricFibUniversalProduction
             print('UNIVERSAL_ANALYSIS_COMPLETE ' + json.dumps(dict(
                 modules=len(cls.artifacts), compiler_reports_byte_equal=True,
                 actual_work=cls.counts)), flush=True)
-        if not full and sibling_before is not None:
+        if not full and not migration and sibling_before is not None:
             sibling_after = (hashlib.sha256(cls.artifacts[1].read_bytes()).hexdigest(),
                              cls.artifacts[1].stat().st_mtime_ns)
             if sibling_before != sibling_after:
@@ -396,7 +517,10 @@ end AuricFibUniversalProduction
                          'unknown')
         self.assertEqual(current['nativeZeroCondition']['reading']['disposition']['readings']['conditional_reply_law']['kind'],
                          'not-applicable')
-        self.assertEqual(current['nativeRejected']['reading']['disposition']['status'], 'refuted')
+        limited = current['nativeLayerLimited']
+        self.assertEqual(len(limited['request']['layers']), 65)
+        self.assertEqual(limited['reading']['source_contract']['binding'], limited['request']['binding'])
+        assert_layer_limit(self, limited['reading'], current['nativeAbsent']['reading'], same_source=False)
         self.assertEqual(current['nativeUnavailableLaw']['reading']['arena']['cardinality'], 5)
         self.assertEqual(current['nativeUnavailableLaw']['reading']['disposition']['readings']['association_coordinate']['kind'],
                          'unavailable')
@@ -453,7 +577,7 @@ end AuricFibUniversalProduction
         self.sources[0].write_text(self.application)
         reader_changed = self.build()
         affected = {'nativeDeclared', 'nativeAbsent', 'nativeEmpirical', 'nativeApex',
-                    'nativeZeroCondition', 'nativeRejected', 'nativeWrongTarget',
+                    'nativeZeroCondition', 'nativeLayerLimited', 'nativeWrongTarget',
                     'nativeParameterized', 'nativeUnavailableLaw', 'changedLaw'}
         self.assertEqual({key for key in source_changed
                           if source_changed[key]['input_identity'] != reader_changed[key]['input_identity']},

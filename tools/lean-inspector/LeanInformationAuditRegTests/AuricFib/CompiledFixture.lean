@@ -56,8 +56,8 @@ def zeroCondition : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.
 def unsupported : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
   evidence := .unsupported "unbounded history source has no supported finite arena"
 
-def rejected : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
-  evidence := .native { reconstruction := .exact } bridge (.absent "overlength layer contract") []
+def layerLimited : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
+  evidence := .native { reconstruction := .exact } bridge (.absent "layer acquisition limited") []
     [.seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
      .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,
      .seam, .seam, .seam, .seam, .seam, .seam, .seam, .seam,

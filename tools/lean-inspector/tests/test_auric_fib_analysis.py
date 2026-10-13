@@ -67,6 +67,8 @@ LAYER_CASES = [
     (["reply", "reply"], ["reply", "guard"]),
     ([], ["seam"] * 64),
 ]
+LIMITED_LAYER_REQUESTS = [dict(request, initial_readouts=["reply"], layers=["seam", "guard"] * (n // 2) + ["seam"] * (n % 2))
+    for n in (65, 129) for request in ({}, law(["1/5"] * 5), law(["1", "0", "0", "0", "0"]))]
 NATIVE_READOUTS = {
     "atom": ["null", "2", "5", "25", "3"],
     "seam": [False, True, False, True, False],
@@ -122,6 +124,25 @@ def assert_layer_partition(test, report, initial, schedule):
     return spectrum
 
 
+def assert_layer_limit(test, reading, baseline, *, same_source=True):
+    test.assertEqual(set(reading), FIELDS)
+    test.assertNotEqual(reading['disposition']['status'], 'refuted')
+    test.assertEqual(reading['arena']['cardinality'], 5)
+    test.assertEqual(reading['arena']['ordered_pair_denominator'], 20)
+    test.assertIsNone(reading['layered_spectrum'])
+    test.assertEqual(reading['disposition']['readings']['layered_spectrum'], dict(kind='unavailable',
+        reason='requested native successor layers exceed the supported acquisition limit of 64'))
+    test.assertIsNotNone(reading['source_contract'])
+    fields = FIELDS - {'layered_spectrum', 'disposition'}
+    if not same_source:
+        fields.remove('source_contract')
+    for field in fields:
+        test.assertEqual(reading[field], baseline[field], field)
+    for field in set(baseline['disposition']['readings']) - {'layered_spectrum'}:
+        test.assertEqual(reading['disposition']['readings'][field],
+                         baseline['disposition']['readings'][field], field)
+
+
 class FiniteAnalysisContract(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -137,9 +158,9 @@ class FiniteAnalysisContract(unittest.TestCase):
         accepted += [law([f"{x}/4" for x in masses]) for masses in GRID]
         accepted += [law(["1/5"] * 5, initial_readouts=initial, layers=layers)
                      for initial, layers in LAYER_CASES]
-        accepted += NATIVE_METADATA_REQUESTS
+        accepted += NATIVE_METADATA_REQUESTS + LIMITED_LAYER_REQUESTS
         rejected = source_validation_requests() + [
-            law(["1/5"] * 5, layers=["seam"] * 65),
+            law(["1/5"] * 5, layers=["seam"] * 65 + ["delta"]),
             law(["1/5"] * 5, layers=["delta"]),
             law(["1/5"] * 5, layers="seam"),
             law(["1/5"] * 5, initial_readouts=[1]),
@@ -184,6 +205,13 @@ class FiniteAnalysisContract(unittest.TestCase):
         self.assertEqual(report["disposition"]["status"], "refuted")
         self.assertIsNone(report["escape_rate"])
         return report
+
+    def test_layer_acquisition_limit(self):
+        for request in LIMITED_LAYER_REQUESTS:
+            with self.subTest(length=len(request['layers']), law=request.get('law')):
+                baseline = self.execute({k: v for k, v in request.items()
+                                         if k not in {'layers', 'initial_readouts'}})
+                assert_layer_limit(self, self.execute(request), baseline)
 
     def test_raw_generic_evidence_boundary(self):
         request = {
@@ -358,7 +386,7 @@ class FiniteAnalysisContract(unittest.TestCase):
         self.assertEqual([layer["count"] for layer in partial["layered_spectrum"]["layers"]],
                          [0, 12, 0])
         self.assertEqual(partial["layered_spectrum"]["unresolved"]["count"], 8)
-        for malformed in (dict(layers=["seam"] * 65), dict(layers=["delta"]),
+        for malformed in (dict(layers=["delta"]), dict(layers=["seam"] * 65 + ["delta"]),
                           dict(layers="seam"), dict(initial_readouts=[1])):
             self.invalid(law(["1/5"] * 5, **malformed))
         self.invalid(law(["1/5"] * 5, initial_readouts=["delta"]))
