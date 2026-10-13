@@ -85,8 +85,11 @@ inductive Evidence {Statement : Prop} (occurrence : Statement) where
       (initial : List Readout) (layers : List Readout)
   | unsupported (reason : String)
 
-/-- Source-owned downstream analysis attached to an actual compiled theorem.
-This is neither a proof-escape registration nor an admission certificate. -/
+/-- Optional source-owned analysis selected by authoring this typed contract
+in Reg. The existing compiled audit/report chain acquires its downstream data;
+without an Application it performs no FIB acquisition or numerical analysis and
+adds no analysis registration obligation. This is neither a proof-escape
+registration nor an admission certificate. -/
 structure Application {Statement : Prop} (occurrence : Statement) where
   evidence : Evidence.{t,s,r,o,a,v} occurrence
 
