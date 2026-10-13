@@ -1,0 +1,56 @@
+**Proposition 3.4 (the cancellative comparison with the linear source).**
+If the residuals at each cut are pairwise equal or disjoint, every
+nonempty fixed-suffix derivative is injective on the actual residual
+family. Each adjacent refinement fiber in (3.5) then has size between
+one and $q$, and
+
+$$
+1\le \frac{N_{k,d+1}}{N_{k,d}}\le q.
+\tag{3.6}
+$$
+
+This premise holds for $C=\ker H$ over $\mathbb F_q$. The exact linear
+factors $1$ or $q$ additionally use the linear uniform-fiber structure
+of
+[Bounded Suffix Deletion Boundary, Theorems 4.2–4.3](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDED_SUFFIX_DELETION_BOUNDARY.md).
+Equal-or-disjoint residuals alone do not force that dichotomy.
+
+Proof. If $\partial_tS=\partial_tS'\ne\varnothing$, an element $f$
+in their common derivative gives $tf\in S\cap S'$. The premise forces
+$S=S'$. In (3.5) each letter therefore contributes at most one
+predecessor, while surjectivity gives at least one predecessor in total.
+Summing fibers gives (3.6).
+
+For a linear kernel, at one cut residuals are nonempty solution sets
+of the same completion map, with right-hand side the negative prefix
+syndrome. Different right-hand sides give disjoint fibers. Given
+current syndrome $s$ and tail $t$, the earlier syndrome is
+$s-H_Dt$ in the notation of the linear volume. This is exactly its
+conditional cancellation step. The structured forward state-space
+ingredient is Forney's
+[*Codes on Graphs: Fundamentals*, §§5.5 and 6.3](https://arxiv.org/html/1306.6264v2):
+its linear/group hypotheses and, for cycle-free minimality, connected
+normal realization with internal trimness and properness are retained.
+They do not impose uniform fibers on arbitrary nonlinear $C$.
+
+For failure of the dichotomy without linearity, take
+$C=\{000,011,101\}$. Its cut-one residuals are
+$\{00,11\}$ and $\{01\}$; its cut-two residuals are
+$\{0\}$ and $\{1\}$. At every cut distinct residuals are disjoint.
+Nevertheless (2.1) gives $N_{3,1}=2$ and $N_{3,2}=3$, so this adjacent
+ratio is $3/2$.
+
+Symbolwise injectivity of a partial automaton is established
+reversibility terminology; see Radionova and Okhotin,
+[*A hierarchy of reversible finite automata*, Definition 2](https://arxiv.org/html/2411.14538v1).
+Here it is used on the actual layered forward residual quotient.
+Existence of some larger reversible recognizing automaton does not
+make that quotient injective: every finite code has a reversible
+prefix trie, since each nonroot trie vertex has only one parent.
+The retained-input notion in Lavado, Pighizzini and Prigioniero,
+[*Weakly and Strongly Irreversible Regular Languages*, Definition 1](https://arxiv.org/pdf/1708.06465),
+likewise concerns reconstructing the immediate predecessor from recent
+inputs; its input length parameter is not a nonreplenishing deletion
+credit. These are attributed intermediate concepts in this comparison,
+not new reversibility claims. $\square$
+
