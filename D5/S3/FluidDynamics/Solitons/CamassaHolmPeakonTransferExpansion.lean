@@ -12,7 +12,8 @@ import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.RingTheory.PowerSeries.Derivative
+import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Tactic.Ring.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.LinearCombination
@@ -91,9 +92,11 @@ def claim : Prop := ∃ a : CoeffFamily,
 private lemma B_entry_eq_zero_of_le {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ)
     (ν : ℂ) (i j : Fin N) (hq : q i ≤ q j) : (S w q ν + A w q ν) i j = 0 := by
   rcases hq.lt_or_eq with hlt | heq
-  · simp only [Matrix.add_apply, S, Matrix.of_apply,
+  · unfold S
+    simp only [Matrix.add_apply, Matrix.of_apply,
       sign_neg (sub_neg.mpr hlt), SignType.coe_neg_one, neg_one_mul, neg_add_cancel]
-  · simp [S, A, phase, heq]
+  · unfold S A phase
+    simp [heq]
 
 private def u {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ) (ν : ℂ) (i : Fin N) : ℂ :=
   w i * Complex.exp (ν * (q i : ℂ) / 2)
@@ -111,20 +114,22 @@ private lemma source_rank_two {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ) 
     T w q ν = (1 / 2 : ℂ) • (U w q ν + V w q ν) ∧
     A w q ν = (1 / 2 : ℂ) • (U w q ν - V w q ν) := by
   have hp (i j : Fin N) : phase q ν i j = ν * (q i : ℂ) / 2 + -(ν * (q j : ℂ) / 2) := by
-    simp only [phase, Complex.ofReal_sub]; ring
+    unfold phase; simp only [Complex.ofReal_sub]; ring
   have hn (i j : Fin N) : -phase q ν i j = -(ν * (q i : ℂ) / 2) + ν * (q j : ℂ) / 2 := by
     rw [hp]; ring
   constructor <;> ext i j <;>
-    simp only [T, A, U, V, u, v, Matrix.of_apply, Matrix.smul_apply, Matrix.add_apply,
+    dsimp only [T, A, U, V] <;>
+    simp only [Matrix.of_apply, Matrix.smul_apply, Matrix.add_apply,
       Matrix.sub_apply, Matrix.vecMulVec_apply, smul_eq_mul, Complex.cosh, Complex.sinh] <;>
-      rw [hn, hp] <;> simp only [Complex.exp_add] <;> ring
+      unfold u v <;> rw [hn, hp] <;> simp only [Complex.exp_add] <;> ring
 
 private lemma B_sub_transpose {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ) (ν : ℂ) :
     (S w q ν + A w q ν) - (S w q ν + A w q ν)ᵀ = U w q ν - V w q ν := by
   have ha (i j : Fin N) : A w q ν j i = -A w q ν i j := by
     have hp : phase q ν j i = -phase q ν i j := by
-      simp only [phase, Complex.ofReal_sub]; ring
-    simp only [A, Matrix.of_apply, hp, Complex.sinh_neg]; ring
+      unfold phase; simp only [Complex.ofReal_sub]; ring
+    unfold A
+    simp only [Matrix.of_apply, hp, Complex.sinh_neg]; ring
   have hs (i j : Fin N) : S w q ν j i = S w q ν i j := by
     have he : q j - q i = -(q i - q j) := by ring
     change (SignType.sign (q j - q i) : ℂ) * A w q ν j i =
@@ -184,12 +189,14 @@ private def geom {N : ℕ} (M : Mat N) : Matrix (Fin N) (Fin N) PS :=
 
 private lemma coeff_lift_mul_geom {N : ℕ} (K M : Mat N) (i j : Fin N) (n : ℕ) :
     PowerSeries.coeff n ((liftMat K * geom M) i j) = (K * M ^ n) i j := by
-  simp only [Matrix.mul_apply, map_sum, liftMat, Matrix.map_apply,
-    PowerSeries.coeff_C_mul, geom, Matrix.of_apply, PowerSeries.coeff_mk]
+  unfold liftMat geom
+  simp only [Matrix.mul_apply, map_sum, Matrix.map_apply,
+    PowerSeries.coeff_C_mul, Matrix.of_apply, PowerSeries.coeff_mk]
 
 private lemma coeff_geom {N : ℕ} (M : Mat N) (i j : Fin N) (n : ℕ) :
     PowerSeries.coeff n (geom M i j) = (M ^ n) i j := by
-  simp only [geom, Matrix.of_apply, PowerSeries.coeff_mk]
+  unfold geom
+  simp only [Matrix.of_apply, PowerSeries.coeff_mk]
 
 private lemma coeff_matrix_one {N : ℕ} (i j : Fin N) (n : ℕ) :
     PowerSeries.coeff n ((1 : Matrix (Fin N) (Fin N) PS) i j) =
@@ -207,17 +214,7 @@ private lemma pencil_mul_geom {N : ℕ} (M : Mat N) : pencil M * geom M = 1 := b
     simp
 
 private lemma geom_mul_pencil {N : ℕ} (M : Mat N) : geom M * pencil M = 1 := by
-  rw [pencil, mul_sub, mul_one, Matrix.mul_smul]
-  ext i j n
-  have hc (n : ℕ) : PowerSeries.coeff n ((geom M * liftMat M) i j) = (M ^ n * M) i j := by
-    simp only [Matrix.mul_apply, map_sum, liftMat, Matrix.map_apply,
-      PowerSeries.coeff_mul_C, geom, Matrix.of_apply, PowerSeries.coeff_mk]
-  rw [Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, map_sub, coeff_geom,
-    coeff_matrix_one]
-  rcases n with _ | n
-  · simp [PowerSeries.coeff_zero_eq_constantCoeff_apply]
-  · rw [PowerSeries.coeff_succ_X_mul, hc, ← pow_succ]
-    simp
+  exact _root_.mul_eq_one_comm.mp (pencil_mul_geom M)
 
 private lemma det_rank_two {ι R : Type*} [Fintype ι] [DecidableEq ι] [CommRing R]
     (E Rm : Matrix ι ι R) (hRE : Rm * E = 1) (u v : ι → R) (a b : R) :
@@ -304,7 +301,8 @@ private lemma det_pencil_rank_two {N : ℕ} (B : Mat N) (u v : Fin N → ℂ)
         PowerSeries.C a * PowerSeries.C b * rankCross B u v := by
   rw [pencil_perturbation, liftMat_vecMulVec, liftMat_vecMulVec,
     det_rank_two (pencil B) (geom B) (geom_mul_pencil B), hB, one_mul]
-  simp only [rankTrace, rankCross, liftMat_vecMulVec]
+  unfold rankTrace rankCross
+  simp only [liftMat_vecMulVec]
   ring
 
 private lemma det_pencil_transpose {N : ℕ} (M : Mat N) :
@@ -312,7 +310,8 @@ private lemma det_pencil_transpose {N : ℕ} (M : Mat N) :
   have he : pencil Mᵀ = (pencil M)ᵀ := by
     apply Matrix.ext
     intro i j
-    simp only [pencil, liftMat, Matrix.sub_apply, Matrix.smul_apply,
+    unfold pencil liftMat
+    simp only [Matrix.sub_apply, Matrix.smul_apply,
       Matrix.map_apply, Matrix.transpose_apply, smul_eq_mul]
     simp [Matrix.one_apply, eq_comm]
   rw [he, Matrix.det_transpose]
@@ -359,7 +358,8 @@ private lemma L_rank_two {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ) (ν �
 private lemma rankTrace_linear {N : ℕ} (B K J : Mat N) (a b : ℂ) :
     rankTrace B (a • K + b • J) =
       PowerSeries.C a * rankTrace B K + PowerSeries.C b * rankTrace B J := by
-  simp only [rankTrace, liftMat_add, liftMat_smul, Matrix.add_mul, Matrix.smul_mul,
+  unfold rankTrace
+  simp only [liftMat_add, liftMat_smul, Matrix.add_mul, Matrix.smul_mul,
     Matrix.trace_add, Matrix.trace_smul, smul_eq_mul]
   ring
 
@@ -420,6 +420,352 @@ private lemma coeff_H {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ) (ν γ :
   rw [h, Nat.succ_sub_one]
   change Matrix.trace _ = (n.succ : ℂ) * Matrix.trace _ / (n.succ : ℂ)
   exact (mul_div_cancel_left₀ _ (Nat.cast_ne_zero.mpr (Nat.succ_ne_zero n))).symm
+
+private lemma derivative_prod {ι : Type*} [DecidableEq ι]
+    (s : Finset ι) (f : ι → PS) :
+    PowerSeries.derivative ℂ (∏ i ∈ s, f i) =
+      ∑ i ∈ s, PowerSeries.derivative ℂ (f i) * ∏ k ∈ s.erase i, f k := by
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert a s ha ih =>
+    rw [Finset.prod_insert ha, Derivation.leibniz, ih, Finset.sum_insert ha,
+      Finset.erase_insert ha]
+    simp only [smul_eq_mul, Finset.mul_sum]
+    rw [add_comm]
+    apply congrArg₂ (· + ·)
+    · exact mul_comm _ _
+    apply Finset.sum_congr rfl
+    intro i hi
+    have hia : i ≠ a := ne_of_mem_of_not_mem hi ha
+    rw [Finset.erase_insert_of_ne hia.symm, Finset.prod_insert]
+    · ring
+    · exact fun h => ha (Finset.mem_of_mem_erase h)
+
+private lemma derivative_det_rows {N : ℕ} (M : Matrix (Fin N) (Fin N) PS) :
+    PowerSeries.derivative ℂ (Matrix.det M) =
+      ∑ i, Matrix.det (M.updateRow i (fun j => PowerSeries.derivative ℂ (M i j))) := by
+  classical
+  have hd (K : Matrix (Fin N) (Fin N) PS) :
+      Matrix.det K = ∑ σ : Equiv.Perm (Fin N),
+        (((Equiv.Perm.sign σ : ℤ) : PS)) * ∏ i, K i (σ i) := by
+    rw [← Matrix.det_transpose, Matrix.det_apply']
+    rfl
+  rw [hd, map_sum]
+  simp_rw [Derivation.leibniz, Derivation.map_intCast, smul_zero, add_zero,
+    smul_eq_mul, derivative_prod, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [hd]
+  apply Finset.sum_congr rfl
+  intro σ _
+  congr 1
+  have he : (fun k => (M.updateRow i (fun j => PowerSeries.derivative ℂ (M i j)))
+      k (σ k)) = Function.update (fun k => M k (σ k)) i
+        (PowerSeries.derivative ℂ (M i (σ i))) := by
+    funext k
+    by_cases hk : k = i
+    · subst k; rw [Matrix.updateRow_self, Function.update_self]
+    · rw [Matrix.updateRow_ne hk, Function.update_of_ne hk]
+  rw [he, Finset.prod_update_of_mem (Finset.mem_univ i), Finset.sdiff_singleton_eq_erase]
+
+private lemma derivative_det_of_inverse {N : ℕ}
+    (M R : Matrix (Fin N) (Fin N) PS) (hRM : R * M = 1) :
+    PowerSeries.derivative ℂ (Matrix.det M) =
+      Matrix.det M * Matrix.trace ((M.map (PowerSeries.derivative ℂ)) * R) := by
+  classical
+  let D := M.map (PowerSeries.derivative ℂ)
+  have he : D * R * M = D := by rw [Matrix.mul_assoc, hRM, Matrix.mul_one]
+  rw [derivative_det_rows, Matrix.trace, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  have hr : (fun j => PowerSeries.derivative ℂ (M i j)) =
+      ∑ k, ((D * R) i k) • M k := by
+    funext j
+    have hh := congrArg (fun K : Matrix (Fin N) (Fin N) PS => K i j) he
+    simpa only [Matrix.mul_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+      D, Matrix.map_apply] using hh.symm
+  rw [hr, Matrix.det_updateRow_sum]
+  change (D * R) i i * Matrix.det M = Matrix.det M * (D * R) i i
+  exact mul_comm _ _
+
+private def detSeries {N : ℕ} (M : Mat N) : PS := Matrix.det (pencil M)
+private def traceSeries {N : ℕ} (M : Mat N) : PS :=
+  PowerSeries.mk fun n => Matrix.trace (M ^ (n + 1))
+
+private lemma detSeries_mul_traceSeries {N : ℕ} (M : Mat N) :
+    detSeries M * traceSeries M = -PowerSeries.derivative ℂ (detSeries M) := by
+  have hd : (pencil M).map (PowerSeries.derivative ℂ) = -liftMat M := by
+    apply Matrix.ext
+    intro i j
+    unfold pencil liftMat
+    simp only [Matrix.map_apply, Matrix.sub_apply, Matrix.smul_apply,
+      smul_eq_mul, map_sub, Derivation.leibniz, PowerSeries.derivative_X,
+      PowerSeries.derivative_C, Matrix.neg_apply]
+    by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
+  have ht : Matrix.trace (liftMat M * geom M) = traceSeries M := by
+    unfold traceSeries
+    ext n
+    simp only [Matrix.trace, map_sum, Matrix.diag_apply, coeff_lift_mul_geom,
+      PowerSeries.coeff_mk, ← pow_succ']
+  rw [detSeries, derivative_det_of_inverse _ _ (geom_mul_pencil M), hd,
+    Matrix.neg_mul, Matrix.trace_neg, ht, mul_neg, neg_neg]
+
+private lemma coeff_logderiv_of_one_sub (F G : PS)
+    (hF : PowerSeries.coeff 0 F = 0)
+    (hFG : (1 - F) * G = PowerSeries.derivative ℂ F)
+    (m : ℕ) (hm : 0 < m) :
+    PowerSeries.coeff (m - 1) G = (m : ℂ) *
+      ∑ j ∈ Finset.Icc 1 m, PowerSeries.coeff m (F ^ j) / (j : ℂ) := by
+  have hx : (PowerSeries.X : PS) ∣ F := PowerSeries.X_dvd_iff.mpr
+    (by simpa only [← PowerSeries.coeff_zero_eq_constantCoeff_apply] using hF)
+  have hz : PowerSeries.coeff (m - 1) (F ^ m * G) = 0 :=
+    PowerSeries.X_pow_dvd_iff.mp (dvd_mul_of_dvd_left (pow_dvd_pow_of_dvd hx m) G)
+      _ (by omega)
+  have he : G = (∑ r ∈ Finset.range m, F ^ r) * PowerSeries.derivative ℂ F + F ^ m * G := by
+    rw [← hFG, ← mul_assoc, geom_sum_mul_neg]
+    ring
+  have hc : PowerSeries.coeff (m - 1) G =
+      ∑ r ∈ Finset.range m, PowerSeries.coeff (m - 1)
+        (F ^ r * PowerSeries.derivative ℂ F) := by
+    rw [he, map_add, hz, add_zero, Finset.sum_mul, map_sum]
+  rw [hc, Finset.mul_sum]
+  have hs : (Finset.range m).sum (fun r => PowerSeries.coeff (m - 1)
+      (F ^ r * PowerSeries.derivative ℂ F)) =
+      (Finset.Icc 1 m).sum (fun j => PowerSeries.coeff (m - 1)
+        (F ^ (j - 1) * PowerSeries.derivative ℂ F)) := by
+    apply Finset.sum_bij (fun r _ => r + 1)
+    · intro r hr; simp only [Finset.mem_range] at hr; exact Finset.mem_Icc.mpr (by omega)
+    · intro a _ b _ hab; omega
+    · intro b hb
+      have := Finset.mem_Icc.mp hb
+      refine ⟨b - 1, Finset.mem_range.mpr (by omega), by omega⟩
+    · intro r _; simp only [Nat.add_sub_cancel]
+  rw [hs]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hj0 : (j : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (by have := Finset.mem_Icc.mp hj; omega)
+  have hp := congrArg (PowerSeries.coeff (m - 1)) (PowerSeries.derivative_pow F j)
+  rw [PowerSeries.coeff_derivative, show m - 1 + 1 = m by omega] at hp
+  have hcast : (j : PS) = PowerSeries.C (j : ℂ) := by simp
+  rw [hcast, mul_assoc, PowerSeries.coeff_C_mul] at hp
+  have hmcast : ((m - 1 : ℕ) : ℂ) + 1 = (m : ℂ) := by
+    exact_mod_cast (show m - 1 + 1 = m by omega)
+  rw [hmcast] at hp
+  rw [← mul_div_assoc]
+  apply (eq_div_iff hj0).mpr
+  linear_combination -hp
+
+private lemma prod_monomial (s : Multiset ℕ) (f : ℕ → ℂ) :
+    (s.map (fun k => PowerSeries.monomial k (f k))).prod =
+      PowerSeries.monomial s.sum (s.map f).prod := by
+  induction s using Multiset.induction_on with
+  | empty => simp
+  | @cons a s ih =>
+    simp only [Multiset.map_cons, Multiset.prod_cons, Multiset.sum_cons, ih,
+      PowerSeries.monomial_mul_monomial]
+
+private lemma coeff_pow_eq_partition_sum (F : PS) (hF : PowerSeries.coeff 0 F = 0)
+    (m j : ℕ) :
+    PowerSeries.coeff m (F ^ j) = ∑ π : Nat.Partition m,
+      if π.parts.card = j then (π.parts.countPerms : ℂ) *
+        (π.parts.map (fun k => PowerSeries.coeff k F)).prod else 0 := by
+  classical
+  let Q : PS := ∑ k ∈ Finset.Icc 1 m, PowerSeries.monomial k (PowerSeries.coeff k F)
+  have hQ (n : ℕ) (hn : n ≤ m) : PowerSeries.coeff n Q = PowerSeries.coeff n F := by
+    dsimp only [Q]
+    rw [map_sum]
+    by_cases hn0 : n = 0
+    · subst n
+      rw [hF]
+      apply Finset.sum_eq_zero
+      intro k hk
+      rw [PowerSeries.coeff_monomial, if_neg (by have := Finset.mem_Icc.mp hk; omega)]
+    · rw [Finset.sum_eq_single n]
+      · exact PowerSeries.coeff_monomial_same _ _
+      · intro b _ hbn; rw [PowerSeries.coeff_monomial, if_neg hbn.symm]
+      · intro hnmem; exact (hnmem (Finset.mem_Icc.mpr (by omega))).elim
+  have hpow : PowerSeries.coeff m (F ^ j) = PowerSeries.coeff m (Q ^ j) := by
+    have hx : (PowerSeries.X : PS) ^ (m + 1) ∣ F - Q := by
+      apply PowerSeries.X_pow_dvd_iff.mpr
+      intro n hn
+      rw [map_sub, hQ n (by omega), sub_self]
+    have hc := PowerSeries.X_pow_dvd_iff.mp
+      (hx.trans (sub_dvd_pow_sub_pow F Q j)) m (by omega)
+    rw [map_sub] at hc
+    exact sub_eq_zero.mp hc
+  rw [hpow]
+  dsimp only [Q]
+  rw [Finset.sum_pow, map_sum]
+  have hterm (s : Sym ℕ j) :
+      PowerSeries.coeff m ((s.val.countPerms : PS) *
+        (s.val.map (fun k => PowerSeries.monomial k (PowerSeries.coeff k F))).prod) =
+      if s.val.sum = m then (s.val.countPerms : ℂ) *
+        (s.val.map (fun k => PowerSeries.coeff k F)).prod else 0 := by
+    rw [prod_monomial]
+    have hc : (s.val.countPerms : PS) = PowerSeries.C (s.val.countPerms : ℂ) := by simp
+    rw [hc, PowerSeries.coeff_C_mul, PowerSeries.coeff_monomial]
+    by_cases hs : m = s.val.sum
+    · rw [if_pos hs, if_pos hs.symm]
+    · rw [if_neg hs, if_neg (Ne.symm hs), mul_zero]
+  simp_rw [hterm]
+  rw [← Finset.sum_filter, ← Finset.sum_filter]
+  apply Finset.sum_bij (fun s hs => (⟨s.val,
+    fun {k} hk => (Finset.mem_Icc.mp (Finset.mem_sym_iff.mp
+      (Finset.mem_filter.mp hs).1 k hk)).1,
+    (Finset.mem_filter.mp hs).2⟩ : Nat.Partition m))
+  · intro s hs
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, s.property⟩
+  · intro a _ b _ hab
+    apply Subtype.ext
+    exact congrArg Nat.Partition.parts hab
+  · intro π hπ
+    have hc := (Finset.mem_filter.mp hπ).2
+    let s : Sym ℕ j := ⟨π.parts, hc⟩
+    have hs : s ∈ (Finset.Icc 1 m).sym j := by
+      apply Finset.mem_sym_iff.mpr
+      intro k hk
+      exact Finset.mem_Icc.mpr ⟨π.parts_pos hk, Nat.Partition.le_of_mem_parts hk⟩
+    refine ⟨s, Finset.mem_filter.mpr ⟨hs, π.parts_sum⟩, ?_⟩
+    exact Nat.Partition.ext rfl
+  · intro s _; rfl
+
+private lemma multiplicity_countPerms {m : ℕ} (π : Nat.Partition m) :
+    multiplicityFactor π * π.parts.countPerms = Nat.factorial π.parts.card := by
+  unfold multiplicityFactor Multiset.countPerms
+  rw [Finsupp.multinomial_eq, Multiset.toFinsupp_support]
+  change (∏ r ∈ π.parts.toFinset, (π.parts.count r).factorial) *
+    Nat.multinomial π.parts.toFinset (fun r => π.parts.count r) = _
+  rw [Nat.multinomial_spec, Multiset.toFinset_sum_count_eq]
+
+private lemma universalCoeff_prescribed : prescribedValues universalCoeff := by
+  unfold prescribedValues
+  refine ⟨?_, ?_, ?_⟩
+  · intro m π hm hp
+    unfold universalCoeff multiplicityFactor
+    rw [hp]
+    simp [Nat.cast_ne_zero.mpr hm.ne']
+  · intro m π hm hp
+    have hmult : multiplicityFactor π = Nat.factorial m := by
+      unfold multiplicityFactor
+      rw [hp]
+      simp [Multiset.toFinset_replicate, hm.ne']
+    unfold universalCoeff
+    rw [hp, hmult]
+    simp only [Multiset.card_replicate, Multiset.prod_replicate, one_pow, Nat.cast_one,
+      one_mul]
+    have hf : (m : ℚ) * (Nat.factorial (m - 1) : ℚ) = (Nat.factorial m : ℚ) := by
+      exact_mod_cast (Nat.mul_factorial_pred hm.ne')
+    rw [hf, div_self (Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero m))]
+  · intro m j π hj hp
+    have hd : 1 < m - j := by omega
+    have hmult : multiplicityFactor π = Nat.factorial j := by
+      unfold multiplicityFactor
+      rw [hp]
+      by_cases hj0 : j = 0
+      · subst j; simp
+      · simp [Multiset.toFinset_replicate, hj0, Multiset.count_cons,
+          Multiset.count_replicate, ne_of_gt hd, (ne_of_gt hd).symm]
+    unfold universalCoeff
+    rw [hp, hmult]
+    simp only [Multiset.card_cons, Multiset.card_replicate, Nat.add_sub_cancel,
+      Multiset.prod_cons, Multiset.prod_replicate, one_pow, mul_one]
+    exact mul_div_mul_right _ _ (Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero j))
+
+private lemma trace_power_log_sum {N : ℕ} (w : Fin N → ℂ) (q : Fin N → ℝ)
+    (ν γ z : ℂ) (hz : 2 * z + γ ≠ 0) (m : ℕ) (hm : 0 < m) :
+    tau w q ν γ z m = (m : ℂ) * ∑ j ∈ Finset.Icc 1 m,
+      (Lambda γ z ^ j / (j : ℂ)) * PowerSeries.coeff m (H w q ν γ ^ j) := by
+  have hd := detSeries_mul_traceSeries (L w q ν γ z)
+  unfold detSeries at hd
+  rw [det_pencil_L w q ν γ z hz] at hd
+  change (1 - PowerSeries.C (Lambda γ z) * H w q ν γ) * traceSeries (L w q ν γ z) =
+    -PowerSeries.derivative ℂ (1 - PowerSeries.C (Lambda γ z) * H w q ν γ) at hd
+  have hf : PowerSeries.coeff 0 (PowerSeries.C (Lambda γ z) * H w q ν γ) = 0 := by
+    rw [PowerSeries.coeff_C_mul, coeff_H_zero, mul_zero]
+  have he := coeff_logderiv_of_one_sub _ _ hf
+    (by simpa only [map_sub, PowerSeries.derivative_one, zero_sub, neg_neg] using hd) m hm
+  have hc : PowerSeries.coeff (m - 1) (traceSeries (L w q ν γ z)) =
+      tau w q ν γ z m := by
+    unfold traceSeries tau
+    simp only [PowerSeries.coeff_mk, show m - 1 + 1 = m by omega]
+  rw [hc] at he
+  rw [he]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [mul_pow, ← map_pow, PowerSeries.coeff_C_mul]
+  ring
+
+private lemma partition_card_bounds {m : ℕ} (π : Nat.Partition m) (hm : 0 < m) :
+    π.parts.card ∈ Finset.Icc 1 m := by
+  have hn : π.parts.card ≠ 0 := by
+    intro hc
+    have hs := π.parts_sum
+    rw [Multiset.card_eq_zero.mp hc, Multiset.sum_zero] at hs
+    omega
+  have hl : π.parts.card • (1 : ℕ) ≤ π.parts.sum :=
+    Multiset.card_nsmul_le_sum (fun k hk => π.parts_pos hk)
+  simp only [nsmul_eq_mul, mul_one, π.parts_sum] at hl
+  exact Finset.mem_Icc.mpr ⟨by omega, hl⟩
+
+private lemma partition_coefficient {m : ℕ} (π : Nat.Partition m) (hm : 0 < m)
+    (f : ℕ → ℂ) :
+    ((m : ℂ) / (π.parts.card : ℂ)) * (π.parts.countPerms : ℂ) *
+      (π.parts.map (fun k => f k / (k : ℂ))).prod =
+      (universalCoeff m π : ℂ) * (π.parts.map f).prod := by
+  have hc : (π.parts.card : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr
+    (by have := Finset.mem_Icc.mp (partition_card_bounds π hm); omega)
+  have hmult : (multiplicityFactor π : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr
+    (Finset.prod_ne_zero_iff.mpr (fun k _ => Nat.factorial_ne_zero _) )
+  have hcount : (multiplicityFactor π : ℂ) * (π.parts.countPerms : ℂ) =
+      (π.parts.card : ℂ) * (Nat.factorial (π.parts.card - 1) : ℂ) := by
+    exact_mod_cast (multiplicity_countPerms π).trans
+      (Nat.mul_factorial_pred (Nat.cast_ne_zero.mp hc)).symm
+  have ha : (m : ℂ) / (π.parts.card : ℂ) * (π.parts.countPerms : ℂ) =
+      (m : ℂ) * (Nat.factorial (π.parts.card - 1) : ℂ) / (multiplicityFactor π : ℂ) := by
+    apply (eq_div_iff hmult).mpr
+    calc
+      _ = ((m : ℂ) / (π.parts.card : ℂ)) *
+          ((multiplicityFactor π : ℂ) * (π.parts.countPerms : ℂ)) := by ring
+      _ = ((m : ℂ) / (π.parts.card : ℂ)) *
+          ((π.parts.card : ℂ) * (Nat.factorial (π.parts.card - 1) : ℂ)) := by rw [hcount]
+      _ = _ := by rw [← mul_assoc, div_mul_cancel₀ _ hc]
+  rw [Multiset.prod_map_div, ← Nat.cast_multiset_prod, ha]
+  unfold universalCoeff
+  rw [Rat.cast_div]
+  simp only [Rat.cast_mul, Rat.cast_natCast, div_eq_mul_inv, _root_.mul_inv_rev]
+  ring
+
+private lemma universalCoeff_expansion : expansion universalCoeff := by
+  unfold expansion
+  intro N m w q ν γ z hm hz
+  rw [trace_power_log_sum w q ν γ z hz m hm]
+  simp_rw [coeff_pow_eq_partition_sum _ (coeff_H_zero w q ν γ) m]
+  simp only [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro π _
+  have hc := partition_card_bounds π hm
+  rw [Finset.sum_eq_single π.parts.card]
+  · rw [if_pos rfl]
+    have he : (π.parts.map (fun k => PowerSeries.coeff k (H w q ν γ))).prod =
+        (π.parts.map (fun k => h w q ν γ k / (k : ℂ))).prod := by
+      congr 1
+      exact Multiset.map_congr rfl (fun k hk => coeff_H w q ν γ k (π.parts_pos hk))
+    rw [he]
+    calc
+      _ = Lambda γ z ^ π.parts.card *
+          (((m : ℂ) / (π.parts.card : ℂ)) * (π.parts.countPerms : ℂ) *
+            (π.parts.map (fun k => h w q ν γ k / (k : ℂ))).prod) := by ring
+      _ = _ := by rw [partition_coefficient π hm]; unfold partMonomial; ring
+  · intro j _ hj
+    rw [if_neg (Ne.symm hj), mul_zero, mul_zero]
+  · exact fun hnot => (hnot hc).elim
+
+/-- The universal formula gives the peakon transfer expansion and prescribed coefficient values. -/
+theorem result : claim :=
+  ⟨universalCoeff, rfl, universalCoeff_prescribed, universalCoeff_expansion⟩
 
 end
 end D5.S3.FluidDynamics.Solitons.CamassaHolmPeakonTransferExpansion
