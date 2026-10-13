@@ -37,7 +37,7 @@ eigenvectors. In function-generator convention $\mathscr L=W^{\mathsf T}$,
 the same real symmetric Hamiltonian satisfies
 $H=-D\mathscr L D^{-1}$.
 
-The FIB legal-edge-load volume §9 uses $K=1$,
+The FIB legal-edge-load volume §10 uses $K=1$,
 $E_u=-\log p_u$ on a finite positive support and the unit-per-site
 conditional-resampling rates
 $r_{uv}=p_v/(p_u+p_v)$ along legal single-bit edges.
