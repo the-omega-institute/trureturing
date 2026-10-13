@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Runtime;
 
@@ -17,10 +18,26 @@ internal static class WorktreeProtocolCommand
     {
         // Isolated Python imports host libraries without searching a repository
         // cwd or PYTHONPATH for another implementation of a support module.
-        var result = runner.Run("python3", new[] { "-IB", "-c", Program.Value, "--source", root }.Concat(arguments).ToArray(),
+        var result = runner.Run("python3", new[] { "-IB", "-c", Program.Value
+            + "sys.exit(sys.modules['worktree_protocol'].main())\n", "--source", root }.Concat(arguments).ToArray(),
             root, timeout ?? BoundedProcessRunner.HangDetectionBudget);
         return new CommandResult(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput),
             Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
+    }
+
+    internal static IReadOnlyDictionary<string, string> InitializationEnvironment(string root)
+    {
+        // Use the protocol's environment policy without exporting environment values.
+        var result = new ProductionWorktreeProcessRunner().Run("python3",
+            ["-IB", "-c", Program.Value
+                + "import json\nprint(json.dumps(list(sys.modules['worktree_protocol'].git_environment())))\n"],
+            root, BoundedProcessRunner.HangDetectionBudget);
+        if (result.ExitCode != 0)
+            throw new InvalidOperationException(Encoding.UTF8.GetString(result.StandardError));
+        var names = JsonSerializer.Deserialize<string[]>(result.StandardOutput)
+            ?? throw new InvalidOperationException("worktree environment policy returned no names");
+        return names.Where(name => Environment.GetEnvironmentVariable(name) is not null)
+            .ToDictionary(name => name, name => Environment.GetEnvironmentVariable(name)!);
     }
 
     private static string LoadProgram()
@@ -39,7 +56,6 @@ internal static class WorktreeProtocolCommand
             program.Append($"m = types.ModuleType('{name}')\nsys.modules['{name}'] = m\n");
             program.Append($"exec(compile(base64.b64decode('{Convert.ToBase64String(bytes.ToArray())}'), '{name}.py', 'exec'), m.__dict__)\n");
         }
-        program.Append("sys.exit(sys.modules['worktree_protocol'].main())\n");
         return program.ToString();
     }
 }
