@@ -14,6 +14,10 @@ triage: anchor
 
 # Spectral support and reversibility
 
+## Verified locator
+
+https://arxiv.org/abs/1604.03089v4
+
 The source is arXiv:1604.03089v4, dated 27 June 2017, Theorem 3.18,
 printed pages 18–20. In item (iv), condition (3.21) compares the cardinality
 of the support of the operator-convex representing measure with the union
