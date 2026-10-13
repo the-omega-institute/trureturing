@@ -361,3 +361,108 @@ negative-power limit. Their axiom closures contain only `propext`,
 declarations. The kernel and sector arguments above are paper
 derivations; the improper integrals, the zero-density theorem and the
 actual-zeta bridge are not Lean-formalized here.
+
+## Retaining the two-sided error in the sub-threshold allowance
+
+This application connects the cited interval estimate to the original
+forward response in [the Nicolas note, CW4](../ArithSums/nicolas2025comparison.md#the-exact-forward-successor-on-the-same-original-integer).
+It uses the upper and lower interval bounds together. The existing
+[finite band-compensation theorem](../../D5/S3/Arith/Robin/ActualVonMangoldtBandCompensation.lean)
+uses a lower increment bound and keeps a short-range allowance without
+an error coefficient. The argument here applies directly to the forward
+kernel; it does not identify that kernel with the centered dilation
+kernel. It is an application of existing interval and kernel calculus,
+not a new short-interval theorem or a Lean-certified Robin estimate.
+
+Let $A>1$, $h\ge H>0$, $0\le\epsilon<1$, and
+$D=\max\{h,2H\}$. Suppose a nondecreasing, locally bounded cumulative
+function $M$ obeys, for all real $u<v$ in $[A,A+D]$,
+
+$$
+v-u\ge H\quad\Longrightarrow\quad
+(1-\epsilon)(v-u)\le M(v)-M(u)\le(1+\epsilon)(v-u).
+\tag{F1}
+$$
+
+Write $w(t)=(1+\log t)/(t^2\log^2t)$, the existing positive decreasing
+price derivative, and $\rho_A(r)=w(A+r)/w(A)$. The forward quantity is
+
+$$
+\mathcal T_M(A,h)=\int_0^h
+[M(A+r)-M(A)-r]\rho_A(r)\,dr.
+\tag{F2}
+$$
+
+For $0\le r<H$, use the two intervals of respective lengths $H+r$
+and $H$, with the same upper endpoint $A+H+r$. Subtraction gives
+
+$$
+\begin{aligned}
+M(A+r)-M(A)
+&=[M(A+H+r)-M(A)]-[M(A+H+r)-M(A+r)]\\
+&\ge(1-\epsilon)r-2\epsilon H.
+\end{aligned}
+\tag{F3}
+$$
+
+Every endpoint lies in the specified domain, since $H+r\le2H\le D$.
+For $H\le r\le h$, use (F1) directly to obtain the same inequality
+without the last term. Since $0<\rho_A(r)\le1$, integration yields
+
+$$
+\mathcal T_M(A,h)
+\ge-\epsilon\int_0^h r\rho_A(r)\,dr
+   -2\epsilon H\int_0^H\rho_A(r)\,dr
+\ge-\frac{\epsilon h^2}{2}-2\epsilon H^2.
+\tag{F4}
+$$
+
+All increments retain the convention $M(v)-M(u)$, corresponding to
+$(u,v]$ for a right-continuous cumulative measure. In particular no
+initial atom is added by the interval subtraction. The proof also
+permits atoms and requires no differentiation of $M$.
+
+For the actual reference, take $M=\vartheta$. The higher-prime-power
+cumulative function $\psi-\vartheta$ is nondecreasing, so
+$\mathcal T_\psi\ge\mathcal T_\vartheta$ on the same interval.
+No upper bound for higher prime powers is needed for this lower
+comparison. Thus (F4) supplies the sufficient bound
+
+$$
+\frac{\mathcal T_\psi(A,h)}{h^2/\sqrt A}
+\ge-\epsilon\sqrt A
+       \left(\frac12+2\frac{H^2}{h^2}\right).
+\tag{F5}
+$$
+
+To match the actual supplier at $h=A^{4/5}$, fix its exponent
+$17/30+1/60=7/12$ and take $H=(2A)^{7/12}$.
+Eventually $D=h< A$; for all starting points $u\in[A,A+D]$,
+$H\ge u^{7/12}$, while every required length is at most
+$h\le u^{0.99}$. These inequalities retain the moving starting point
+in Corollary 1.3. Converting its count to logarithmic prime mass gives
+(F1), eventually, with some fixed $C>0$ and
+
+$$
+\epsilon(A)=C\log(2A)\exp[-(\log A)^{1/4}]+\frac{2h}{A}
+\longrightarrow0.
+\tag{F6}
+$$
+
+Indeed, all primes counted in $(u,v]$ have logarithms between
+$\log u$ and $\log v$; the logarithm ratio contributes at most
+$h/(A\log A)$, bounded by the second term of (F6), and the count
+error contributes $O(\log(2A)\exp[-(\log A)^{1/4}])$.
+The harmless enlarged constant pays their product for sufficiently
+large $A$. The start remains the supplier's unknown common start.
+
+The lower-only short-range term $H^2/(h^2/\sqrt A)$ would grow as
+$A^{1/15}$. Equations (F3)–(F5) replace that term by one carrying
+$\epsilon(A)$; discarding the upper half of the supplier loses this
+improvement. The leading allowance still contains
+$\epsilon(A)\sqrt A/2$, which diverges for (F6).
+Changing the power of $h$ can reduce the cutoff term but does not
+remove that leading factor. For the existing full-$Q$ forward consumer,
+one still needs a same-source lower coefficient strictly smaller than
+$c_Q=(\sqrt2-1)/4$; (F5)–(F6) do not supply it. A diverging allowance
+is not a lower bound on the actual error or a Robin violation.
