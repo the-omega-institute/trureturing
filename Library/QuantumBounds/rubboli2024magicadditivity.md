@@ -19,6 +19,7 @@ R. Rubboli, R. Takagi and M. Tomamichel, *Mixed-state additivity properties of m
 
 ## Verified locator
 
+DOI: 10.22331/q-2024-10-04-1492 (Quantum 8, 1492, published 4 October 2024, open access; arXiv v4 carries the accepted text, "Accepted in Quantum 2024-09-19").
 Primary version read: https://arxiv.org/abs/2307.08258v4.
 Source: https://arxiv.org/pdf/2307.08258v4 (text read from the PDF):
 - §2, the Clifford group, the stabilizer states, Eq. (2), the DPI region D and Eq. (10);
