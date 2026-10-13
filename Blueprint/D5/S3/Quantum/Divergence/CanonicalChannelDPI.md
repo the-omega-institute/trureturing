@@ -4,7 +4,19 @@
 
 Support-aware quantum relative entropy decreases under every finite quantum channel.
 
-**Theorem 1.1 (Data processing including singular noncommuting states).**
+**Theorem 1.1 (Norm-saturated diagonal logarithm comparison).**
+
+Lean statement: `D5/S3/Quantum/Divergence/CanonicalChannelDPI.diagonal_log_comparison`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CanonicalChannelDPI.diagonal_log_comparison` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original DPI proof's diagonal logarithm comparison is extracted once with the full positive-spectrum, contraction, matrix comparison, vector mapping and unit norm hypotheses. The original public DPI consumes it. This proof organization claims no independent mathematical gain.
+
+**Theorem 1.2 (Data processing including singular noncommuting states).**
 
 $$\forall u, v: \operatorname{Level},\ a: \operatorname{Type} u, b: \operatorname{Type} v,\ [\operatorname{Fintype}(a)], [\operatorname{DecidableEq}(a)], [\operatorname{Nonempty}(a)],\ [\operatorname{Fintype}(b)], [\operatorname{DecidableEq}(b)], [\operatorname{Nonempty}(b)],\ \phi: \operatorname{QuantumChannel}(a, b),\ \rho, \sigma: \operatorname{DensityState}(a),\ \operatorname{extendedQuantumRelativeEntropy}(\operatorname{mapState}(\phi, \rho), \operatorname{mapState}(\phi, \sigma)) \le \operatorname{extendedQuantumRelativeEntropy}(\rho, \sigma).$$
 
@@ -24,6 +36,7 @@ Reflection across the isometry range and finite eigenvector intertwining give lo
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Divergence/CanonicalChannelDPI.diagonal_log_comparison`
 - Truth anchor: `D5/S3/Quantum/Divergence/CanonicalChannelDPI.extended_quantum_relative_entropy_channel_dpi`
 - Dependency: [D5/S3/Quantum/Divergence/CanonicalRelativeModularModel](CanonicalRelativeModularModel.md)
 - Dependency: [D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy](SupportAwareRelativeEntropy.md)
