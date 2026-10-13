@@ -423,8 +423,8 @@ set_option maxHeartbeats 800000 in
 private theorem cemetery_path_antitone (μ : Measure Cemetery) [IsProbabilityMeasure μ]
     (M : Kernel PDescriptor PDescriptor) (hsub : ∀ Q, M Q Set.univ ≤ 1) :
     ∀ᵐ x ∂cemeteryLaw μ M hsub, Antitone (fun n => x n ≠ Sum.inr ()) := by
+  dsimp only [cemeteryLaw]
   letI := cemetery_markov M hsub
-  change ∀ᵐ x ∂homogeneousLaw μ (cemetery M), Antitone (fun n => x n ≠ Sum.inr ())
   have hs (n : ℕ) : ∀ᵐ x ∂homogeneousLaw μ (cemetery M),
       x n = Sum.inr () → x (n + 1) = Sum.inr () := by
     have hk := Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
